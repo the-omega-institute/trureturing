@@ -1,0 +1,42 @@
+**命题 110.8（原W正则性与剩余差别的白话表述）。** 只用(VIII110.1)的原全态、
+全效应弱球关系，可以把全部混合边界连续收缩到与全部纯点一一同胚的球心集合；
+由此得到的是原纯点本身的邻域正则性及拓扑限制，而非附加正则性公理。
+
+证明与解释。原状态体的每个真正边界面，要么只有一个纯点，要么是某个纯点背后的
+完整排除球。一个非纯边界点只能在其中一张球的内部；若两张球都收留它，
+就违反既有真面相交规律。于是每个这样的点都有唯一的球标签。
+全效应紧性保证点接近时标签也接近；球心又由连续框架和决定。
+把每个混合边界点沿本球内的直线推向球心，就得到同时连续的收缩，
+无需先把所有球做成等维球丛。不同纯点的球心不同，所以全部球心保留了全部纯点的拓扑。
+
+整个凸边界本来同胚于一个球面，去掉闭纯点集后仍是一个开流形。
+球心集合是它的收缩核，因此在一个指定小区域附近，
+还可找到更小的区域，让它在前一个区域内连续缩成一点。
+这正好足以让原纯点成为欧氏邻域收缩核，并排除无限多个互相分离的道路分支。
+它并不说纯点都是孤立点，也不说每个小邻域本身就是球。
+
+混合边界与纯点具有同一同伦类型；另一方面，它们又互为同一球面中的补集。
+Alexander对偶把这两种关系合起来，迫使纯点的约化同调与互补次数的约化上同调相等。
+当原向量维数为偶数时，相配的约化Betti数在Euler交错和中符号相反，
+所以普通Euler特征只能为一。这里允许整数挠群，也允许纯点不连通。
+
+每个原三框架还有一个三点和。沿一张完整排除球，这个和不能改变，
+所以它可以连续下降到整个凸边界；其全部取值因而形成一个道路连通的紧集，
+三分之一的每个取值都严格落在原状态体内部。
+若不同框架的和真不一样，有限多个纯道路分支中至少一个必须承载这种变化。
+因此不能把潜在失败只藏在彼此不通的纯点块之间：必有一条实际连续的纯路径见证它，
+并能沿路径选出连续统多个框架和不同、背后完整球互不相交的纯点。
+这些点的严格连接弦均穿过整体内部。
+
+最后仍缺的是排除这种路径上的框架和变化。
+连续、局部可缩、有限道路分支和同调自对偶都没有在这里证明该变化为零；
+它们也没有把二阶读数拼成同一个二次形，更没有创造指定复合、事件或物理时钟。
+这正是110.2—110.7的完整结论及其范围。证毕。
+
+[Q110H]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology: Theorem A.7, Corollary A.8, pp.525–527; Corollaries 3.45–3.46, pp.255–256."
+[Q110AS]: https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/6236-11511_2006_Article_BF02392307.pdf "E. M. Alfsen and F. W. Shultz, State spaces of Jordan algebras, Acta Mathematica 140, 155–190: Theorem 7.2 and Corollary 7.5."
+[Q110MU]: https://arxiv.org/pdf/1110.3516v2 "Markus P. Müller and Cozmin Ududec, Structure of reversible computation determines the self-duality of quantum theory, Theorem 1."
+[Q110BH]: https://arxiv.org/pdf/1904.03753v1 "Howard Barnum and Joachim Hilgert, Strongly symmetric spectral convex bodies are Jordan algebra state spaces, Theorem 1.1."
+[Q110N]: https://arxiv.org/pdf/2312.13213v2 "Gerd Niestegge, Theorems 2–3: finite capacity and the stated order-unit hypotheses; Theorem 3 additionally requires symmetric transition probability."
+[Q110OTF]: OTF_001_ORTHOGONAL_TIME_FIELD_THEORY.md "OTF-001, sections 2 and 14–15."
+

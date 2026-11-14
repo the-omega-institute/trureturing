@@ -1,0 +1,26 @@
+在 $\nu=1$ 的任意正权关系(92.2)中，交换两侧并重编号，可使
+
+$$
+t=\alpha_1=\min\{\alpha_1,\ldots,\alpha_r,\beta_1,\ldots,\beta_s\}>0,
+\qquad p=a_1.
+\tag{92.4}
+$$
+
+对任意非空真子集 $J\subset\{1,\ldots,s\}$，令
+
+$$
+b=\sum_{j\in J}\beta_j,\qquad
+x=\frac1b\sum_{j\in J}\beta_jb_j,\qquad
+y=\frac1{1-b}\sum_{j\notin J}\beta_jb_j.
+\tag{92.5}
+$$
+
+则 $x,y$ 是整个原基中的态，且全原效应给出达到的精确值
+
+$$
+T_p(x)=T_p(y)=0,\qquad
+T_p\bigl((x+y)/2\bigr)=\frac{t}{2\max\{b,1-b\}}>0.
+\tag{92.6}
+$$
+
+允许其中一个态纯、另一个混；当某组含多个顶点时，不把它换成纯态量词。任意零系数顶点 $c_k$ 不改变这些结论。

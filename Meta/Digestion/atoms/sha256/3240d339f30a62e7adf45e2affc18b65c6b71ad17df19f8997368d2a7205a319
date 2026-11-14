@@ -1,0 +1,45 @@
+**定理 105.11（全读数最大值等于三谱平方和）。** 在 $\mathrm{EB}_{\ge1}+\mathrm G$ 下，
+105.1的原函数准确满足
+
+$$
+Q_3(v)=\lambda_{\min}(v)^2+\lambda_{\mathrm{mid}}(v)^2+\lambda_{\max}(v)^2.
+\tag{VII105.24}
+$$
+
+对 $L_p=\operatorname{lin}(D_p-c_p)$，取以 $D_p-c_p$ 为单位球的欧氏范数
+$\|\cdot\|_p$。在 $\operatorname{span}(\{p\}\cup D_p)$ 内有
+
+$$
+Q_3(\alpha p+\beta c_p+z)
+ =\alpha^2+\frac{\beta^2+\|z\|_p^2}{2},\qquad z\in L_p.
+\tag{VII105.25}
+$$
+
+这些局部二次公式尚不能推出全 $V$ 的 $\mathrm{PL}_3$。
+
+证明。在 $v=\sum_j\lambda_jq_j$ 的谱框架和任意读数框架 $(p_i;a_i)$ 之间，令
+$M_{ij}=a_i(q_j)$。它非负，列和为 $u(q_j)=1$，行和为
+$a_i(\sum_jq_j)=a_i(U)=1$，故双随机。逐行Jensen及列和给
+
+$$
+\sum_i a_i(v)^2=\sum_i\left(\sum_jM_{ij}\lambda_j\right)^2
+ \le\sum_{i,j}M_{ij}\lambda_j^2=\sum_j\lambda_j^2.
+\tag{VII105.26}
+$$
+
+此估计允许 $\lambda_j$ 有任意符号。在 $v$ 自己的谱框架上达到等号，得到(VII105.24)。
+没有将两个分别达到的最优框架当成同一框架。
+
+令 $\rho=\|z\|_p$。$\rho>0$ 时取 $q=c_p+z/\rho,r=c_p-z/\rho$；
+$\rho=0$ 时任选对径。则
+$\alpha p+\beta c_p+z=\alpha p+(\beta+\rho)q/2+(\beta-\rho)r/2$
+是一个原框架内的有符号谱，平方求和即(VII105.25)。
+表示的唯一性来自 $a_p(p)=1,a_p|_{\operatorname{span}D_p}=0$ 及 $u(z)=0$。
+每个向量在某个这样的子空间中有谱，不代表任意两个向量都在同一个这样的子空间中。
+所以不能据逐球公式拼接一个未经证明的全局双线性型或Jordan乘法。证毕。
+
+在这个较弱入口内，$\mathrm{PL}_3$、全Pair、覆盖律及完整 $S$ 仍由105.8准确等价。
+尚未证明 $\mathrm G\Rightarrow\mathrm{PL}_3$；也未给满足整个原域和EB加G却失败它的反例。
+谱存在及谱唯一性不能替代所缺的跨框架互易。
+完整长度候选由105.8—105.9推出G；这里未证明G的模型类严格更大。
+

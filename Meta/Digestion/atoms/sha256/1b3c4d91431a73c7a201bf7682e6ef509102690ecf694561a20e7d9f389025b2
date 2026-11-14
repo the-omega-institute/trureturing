@@ -1,0 +1,68 @@
+**定理 116.6（仅EB的全局单标签球）。** 仅在116.1原域，存在 $F\in\mathscr B$ 使
+$I(F)$ 为单点。任意这样的 $F$ 上每个 $q\in S(F)$ 都满足 $I(D_q)=\{q\}$，
+故整个 $S(F)$ 给出在全部 $P$ 中均无重复标签的单射子族。若全部 $d_p\ge2$，这种标签和球有连续统多个。
+
+证明。反设每张完整球均重复，116.2使所有不同完整球两两不交。
+正维真面使 $\dim\operatorname{aff}K\ge2$。这些块覆盖 $S=\partial_{\rm rel}K\cong S^m$，其中 $m=\dim V-2\ge1$：
+混边界点的非恒定支撑超平面切出非点真面，故是完整球；纯点 $x$ 则取 $q\in S(D_x)$，
+零对称给 $x\in D_q$。因而这些正维紧凸面块确实分割整个真实边界。
+定义 $x\sim y$ 为两点属于同一完整块，则准确有
+
+$$
+x\sim y\quad\Longleftrightarrow\quad (x+y)/2\in S.
+\tag{IX116.9}
+$$
+
+左推右由面凸且位于边界。右推左时，中点的支撑超平面同时含 $x,y$；若 $x\ne y$，
+其非点支撑面是完整块，若 $x=y$ 则自反性足够。因此等价关系在紧 $S\times S$ 中闭。
+闭等价关系的紧Hausdorff商定理给闭连续满射 $\pi:S\to Y=S/{\sim}$，且 $Y$ 紧Hausdorff。
+这里不假设 $Y$ 是ENR、流形、局部可缩、可度量或有限维。
+
+在 $\operatorname{aff}K$ 选坐标，枚举所有切过 $\operatorname{ri}K$ 的有理高度坐标超平面 $L$。
+任一块正维，故有某坐标不同的两点；取其间的有理高度。该高度严格介于 $K$ 的该坐标极值间，
+而该坐标在 $\operatorname{ri}K$ 上取遍此开区间，故所取 $L$ 确实切过 $\operatorname{ri}K$。
+所以 $Y=\bigcup_L\pi(S\cap L)$，各项紧闭；紧Hausdorff空间的Baire性给一张 $L$ 及
+非空开 $O\subseteq Y$，满足 $O\subseteq\pi(S\cap L)$。于是下面两映射是同一 $\pi$ 的限制：
+
+$$
+g_1:X_1=\pi^{-1}O\longrightarrow O,\qquad
+g_2:X_2=\pi^{-1}O\cap L\longrightarrow O.
+\tag{IX116.10}
+$$
+
+两者连续满射且proper：$A\subseteq O$ 紧时，$\pi^{-1}A$ 在 $S$ 中紧，和闭集 $L$ 的交也紧。
+其纤维分别是整个紧凸块及非空紧凸截面，均可缩。三空间局部紧Hausdorff。
+以下统一用系数 $\mathbb F_2$；紧Hausdorff上的Čech群采用与Alexander–Wallace–Spanier自然一致的版本。
+对局部紧Hausdorff空间定义 $H_c^j(Z)=\widetilde{\check H}^{\,j}(Z^+;\mathbb F_2)$，
+其中 $Z^+$ 为一点紧化；若 $Z$ 紧，仍加一个孤立的 $\infty$，此定义统一成立。
+
+proper性使实际限制延拓成保基点的连续满射 $g_i^+:X_i^+\to O^+$：在 $\infty$ 处，
+紧集补的原像仍为紧集补；$\infty$ 纤维为单点，其余纤维仍为非空紧凸集。
+固定 $j\ge0$ 并选整数 $n>j$，在整个紧Hausdorff目标 $O^+$ 上用
+[Lawson Corollary 3.7][Q116L]，可缩纤维保证点到纤维在 $0,\ldots,n-1$ 次的上同调映射均为同构，
+故 $(g_i^+)^*:\check H^j(O^+)\to\check H^j(X_i^+)$ 为同构。
+这些同构保持 $\infty$ 的限制；$j=0$ 取到该点的限制核，$j>0$ 用约化群等于普通群，直接得到
+
+$$
+g_i^*:H_c^j(O)\ \cong\ H_c^j(X_i)\qquad(i=1,2).
+\tag{IX116.11}
+$$
+
+$X_1$ 是非空 $m$ 维球面的开子流形；由于 $L$ 切过内点，
+$S\cap L=\partial_L(K\cap L)\cong S^{m-1}$，而 $X_2$ 是它的非空开子流形。
+此处等式确实使用 $L\cap\operatorname{ri}K\ne\varnothing$：若截面相对内点落在 $S$，其支撑泛函
+须在 $L$ 方向恒定，迫整个 $L$ 为支撑平面，与切过内点矛盾；其余包含显然。
+从截面内点径向参数化给上述球面同胚。
+仅对这两个可度量、局部可缩的流形源，使用VIII113.2、VIII113.12的常系数比较及成熟模二Poincaré对偶，得到
+$H_c^m(X_1)\cong H_0(X_1;\mathbb F_2)\ne0$，而 $H_c^m(X_2)=0$。
+它们却由(IX116.11)同构于同一 $H_c^m(O)$，矛盾。未对未知商目标使用奇异上同调或流形结论。
+Lawson原文§2明确采用Alexander–Wallace–Spanier理论；Corollary 3.7（印刷p71）对紧Hausdorff
+连续满射只要求上述逐纤维同构，给每个闭子集的拉回在 $0,\ldots,n-1$ 次同构、$n$ 次单射，
+允许任意交换系数群，无ENR、可度量或维数前件；这里闭子集取整个 $O^+$，无需成对长正合列。
+
+最后，任意单标签 $F$ 上若 $D_q$ 重复，116.2给与 $D_q$ 成对的 $G$，且
+$q\in I(D_q)=S(G)$。$G$ 与 $F$ 交于 $q$，孤立性迫 $G=F$，使 $F$ 重复，矛盾。
+故每个 $I(D_q)=\{q\}$，不同 $q$ 的 $D_q$ 必不同；全厚时 $S(F)$ 的基数为连续统。证毕。
+
+[Q116L]: https://web.archive.org/web/20250613232023id_/http://matwbn.icm.edu.pl/ksiazki/fm/fm65/fm6517.pdf "Jimmie D. Lawson, A generalized version of the Vietoris-Begle Theorem, Fundamenta Mathematicae 65 (1969), 65–72, §2 and Corollary 3.7, printed p71; DOI 10.4064/fm-65-1-65-72."
+

@@ -1,0 +1,11 @@
+**文献与复用。** [W87] Alexander Wilce，*Symmetry and Composition in Probabilistic Theories*，[arXiv:0910.1527v2 §2](https://arxiv.org/html/0910.1527v2#S2)：指定概率权的实张成、其生成锥、单位与原结果评价构成抽象状态空间。任意结果评价不是单位；原菜单仍是指定数据。[L87] 的 *Original probability images and the complete comparison interface* §§1—2、4—6 已给本原接口的有限坐标表示、效应与全实关系商、完整忠实运输及消费者；本章直接使用其参数对应。
+
+[F87] S. N. Filippov、S. Gudder、T. Heinosaari、L. Leppäjärvi，*Operational Restrictions in General Probabilistic Theories*，[arXiv:1912.08538v1 Theorem 3](https://arxiv.org/html/1912.08538v1#Thmtheorem3)，[DOI](https://doi.org/10.1007/s10701-020-00352-6)：生成区间中的凸效应子代数等于含单位的实线性子空间与该区间之交；§2.2 的菜单模拟与 §§4.4—5 的限制不能被误读为所有有界和或所有仪器自动可得。
+
+闭中点凸性及有界 Jensen／Cauchy 正则性均是成熟工具。F. Bernstein、G. Doetsch，*Zur Theorie der konvexen Funktionen*，Mathematische Annalen **76**, 514–526，[DOI](https://doi.org/10.1007/BF01458222)，仅作相关书目定位，不承担这里的具体版本或定理编号；引理 87.4 已给所需闭锥序界的自含证明。固定半比较及一般 EJA 忠实桥按 [L87]，PRE、复分类、校准、方向与所有 CP／更新／时间消费者按本卷 83—86 及其所引第四卷原结果使用。
+
+本章是成熟工具在完整原装饰数据上的关系接口应用：省去独立供应的无限实系数统计律，保留自身紧／闭的原像、原正质量、全部实现和实际来源。没有把改名、包装或上述一般工具算成新数学；有限检索不支持全球原创、历史优先权或最少独立物理公理，纸面证明不冒充 Lean 内核核验，也不主张实际可得或整体完成。
+
+[L87]: ../../../Library/QuantumStates/mullerududec2012selfduality.md
+[VII87]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_VII.md
+

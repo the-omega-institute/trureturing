@@ -1,0 +1,76 @@
+**定义 87.9（$\mathsf R_{\rm mid}(\mathcal O)$）。** 在共同合同 $\mathfrak S(\mathcal O)$ 内，先要求定义 87.1、87.3、87.6 及原带权合同 (87.8)，对其他原过程／参考遵守定义 87.3 的完整域条件与适用边界。此后依次要求以下全部内容。
+
+第一，在已恢复的原全效应上，置 $P_X=\operatorname{ext}K_X$，保留
+
+$$
+T^X_\xi(x)=\min\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T^X_\xi((\eta+x)/2)=\frac{T^X_\eta(\xi)+T^X_\xi(x)}2
+\quad(\xi,\eta\in P_X,\ x\in K_X).
+\tag{87.11}
+$$
+
+确认面非空且紧，最小值有定义。混态余项遍及整个原 $K_X$。先直接复用 [L87] 固定对半同载体定理恢复完整 $S$，再使用 86.1 所列完整一般有限 EJA 忠实条件桥：正对偶生成、共同完整框架、忠实态效应配对、有符号谱性、面投影、项目性及滤波纯性的全部义务保留。Barnum–Müller–Ududec Theorem 16 只按该桥已交付的完整前件使用；纯互反、自对偶或 bit symmetry 不代替该桥。这里仍允许异型直和、秩一与 Albert，复型是以后两接口分类的后果。
+
+第二，在所选忠实 Jordan 坐标中，整个原锥、态基、效应、单位、比较和原 $u_X=\tau_X$ 保持，内积为 $\langle x,y\rangle_X=\tau_X(x\circ y)$，各本原幂等元迹一。原参考确实供应 $\omega=1_D/m$，$m=\tau_D1_D$。使用 (87.7) 得到的同一个原 $L,p$ 定义
+
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),&J(a)&=M(a,1_A),\\
+H(d)&=L(d,1_A),&B_1&=pH,&Q(a,b,c)&=L(M(a,b),c),\\
+U&=M(1_A,1_A),&G&=H1_D.&
+\end{aligned}
+\tag{87.12}
+$$
+
+这里 $K(a)$ 是派生映射，不是态基 $K_X$。同一个 $p$ 连续使用两次，不独立供应 $M$。保留
+$\operatorname{span}_{\mathbb R}M(A,A)=D$、
+$\operatorname{span}_{\mathbb R}L(D,A)=E$，
+以及全部实 $a,b\in A$ 上的
+$Z:B_1M(a,b)=\tau_A(a)Jb$。原正性和两张成先给 $U,G>0$，才定义 $F=\mathsf P_{U^{-1/2}}M$；不提前把它叫等距。
+
+第三，原 $A=\bigoplus_iA_i$ 的简单理想有单位 $1_i$、规范迹 $\tau_i$、秩 $r_i$、实维数 $d_i$。严格保留原 (83.8) 的完整总等式：
+
+$$
+\begin{gathered}
+\Pi_i a_i=\tau_i(a_i)1_i/r_i,\qquad
+\mathsf C_i=\begin{cases}I_{A_i},&r_i=1,\\
+\Pi_i+\dfrac{r_i-1}{d_i-1}(I_{A_i}-\Pi_i),&r_i>1,\end{cases}
+\qquad\mathsf D_A=(\bigoplus_i\mathsf C_i)^{1/2},\\
+\mathcal T=H\widetilde F,\qquad
+\|J\mathsf D_A\|_{\rm HS}^2+
+\|\mathcal T(\mathsf D_A\otimes\mathsf D_A)\|_{\rm HS}^2
+=\|U\|_2^2+\|G\|_2^2.
+\end{gathered}
+\tag{87.13}
+$$
+
+全部范数、二次表示和 Hilbert–Schmidt 结构使用上述原迹几何。直接用 83.4 恢复完整 $D_J,D_H$，第二条遍及整个原 $D_+$；结合固定半入口与全实 $Z$ 才是精确 PRE，不由两个单位输出倒推它。
+
+第四，置 $n=\tau_A1_A$、$e=1_A/n$，保留
+
+$$
+\mathsf C_2:\tau_DM(e,e)=1,\qquad \mathsf G_1:G=1_E.
+\tag{87.14}
+$$
+
+$G=1_E$ 是整个原向量等式，不能换成总迹或单个标量锚。在精确 PRE 上直接用 86.4，(87.14) 恰好等价于原
+$C_{\rm joint}:\tau_EG+\tau_D(p1_E)\le2n^3$。
+
+第五，**仅在 (87.13) 恢复精确 PRE 之后**读取 86.5 的原 H13。原中心因子单位记 $c_i$、秩 $n_i$，令 $D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$、$\pi_{ik}$ 为其原中心投影，
+$\alpha_{ik}=F(-,c_k)|_{A_i}$、$\beta_{ik}=F(c_i,-)|_{A_k}$，
+$\mathcal I=\{(i,k):n_i,n_k\ge2\}$。保持
+
+$$
+\begin{aligned}
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal I,\ x=\pi_{ik}\rho,\quad
+&\alpha_{ik}\alpha_{ik}^*x-x\not\succeq0\\
+&\text{或 }\beta_{ik}\beta_{ik}^*x-x\not\succeq0\},\\
+T_{\rm raw}(a,c)&=L(Ja,c),\qquad
+I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1},\\
+\mathrm H13:\quad\exists\rho\in\mathcal H(F),\quad&I^{\rm raw}\rho\in E_+.
+\end{aligned}
+\tag{87.15}
+$$
+
+原迹伴随与未归一单位不重标；$\not\succeq0$ 指有严格负方向，不要求负定、纯性或两个差同时违例。资格迫使各活跃块有严格正质量，非活跃块任意正分量含零，所有块共享原总迹一；空活跃集时 $\mathcal H(F)=K_D$。要求同一个原资格态的**整个原输出**正，不逐块换态、不只看总质量、不由输出反选资格。逆映射只在上述精确阶段使用。
+

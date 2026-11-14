@@ -1,0 +1,29 @@
+**命题 116.3（整球分隔及统一残值）。** 对重复球对 $F,G$，存在同一原 $e\in\mathcal E$，
+其零面恰为 $F$、一值面恰为 $G$；并存在 $\varepsilon_F,\varepsilon_G>0$，使
+
+$$
+f(x)\ge\varepsilon_F\ (q\in S(F),x\in F,f\in F_q),\qquad
+f(y)\ge\varepsilon_G\ (t\in S(G),y\in G,f\in F_t).
+\tag{IX116.5}
+$$
+
+证明。取非零 $b\in C^*$ 且 $b|_F=0$，令 $M=\max_Kb>0$。最大面中每个纯点 $t$
+都由 $b/M$ 确认，故 $F\subseteq D_t$，极大性给 $D_t=F$、$t\in S(G)$。
+最大面由其极点凸生成，故包含于 $G$，特别地 $\max_Kb=\max_Gb$。
+取球图 $\chi:G\to B^d$、对径 $g_\pm=\chi^{-1}(\pm n)$ 及 $e_\pm\in\mathcal A_{g_\pm}$。
+二者零于 $F$；球支持等号给
+
+$$
+e_\pm(\chi^{-1}z)=1-\lambda_\pm\pm\lambda_\pm n\cdot z,\qquad0\le\lambda_\pm\le\tfrac12.
+\tag{IX116.6}
+$$
+
+若某个 $\lambda_\pm=0$，对应效应在整个 $G$ 为一，即可取为 $e$。
+否则 $h=\lambda_-e_++\lambda_+e_-$ 正、零于 $F$，在 $G$ 恒为
+$k=\lambda_-+\lambda_+-2\lambda_-\lambda_+>0$。前段给 $\max_Kh=k$，故 $e=h/k\in\mathcal E$。
+零面包含极大真面 $F$ 而不等于 $K$，故恰为 $F$；一值面同理恰为 $G$，零斜率情形亦然。
+$\mathcal E$ 紧：在由 $K$ 中点组成的线性基上所有读数均在 $[0,1]$。
+所以 $\{(q,x,f):q\in S(F),x\in F,f\in\mathcal E,f(q)=1\}$ 紧非空。
+若评价 $f(x)$ 的最小值为零，其达到点给 $x\in D_q=G$，与 $x\in F$ 矛盾。
+故该最小值 $\varepsilon_F>0$；另一侧相同。证毕。
+

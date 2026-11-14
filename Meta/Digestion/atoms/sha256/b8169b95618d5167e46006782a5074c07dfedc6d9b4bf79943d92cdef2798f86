@@ -1,0 +1,18 @@
+**命题 2.4（任意全空间解码权限的保留）。** 任意成功全空间方案经
+
+$$
+D_{y,s}=C D^H_{y,s}\iota:M_3\to M_3
+$$
+
+给出平均三能级信道 $\mathcal C$，满足
+
+$$
+\mathcal C-\operatorname{id}_3=C\circ(\mathcal E-\iota),\qquad
+\|\mathcal C-\operatorname{id}_3\|_\diamond\le\varepsilon.
+\tag{2.4}
+$$
+
+反之，任意三能级解码家族可取 $D^H_{y,s}=\iota D_{y,s}C$ 延拓，保持编码恢复误差恰好相等。
+
+证明。每个复合均具有所示定义域和值域，且是 CPTP；(2.4) 来自 $C\iota=\operatorname{id}_3$。引理 2.3 给出不增误差。反向延拓满足 $\mathcal E-\iota=\iota\circ(\mathcal C-\operatorname{id}_3)$；在每个参考维度使用迹范数等距得到误差相等。有限历史和绝对收敛的终端和可与种子积分交换。这是在原有平均信道上作变换，未选择任何成功种子。$\square$
+

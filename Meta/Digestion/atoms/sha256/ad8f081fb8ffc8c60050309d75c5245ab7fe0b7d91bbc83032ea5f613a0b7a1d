@@ -1,0 +1,61 @@
+**引理 97.2（指定拼接的正回缩与全部效应满射）。** 在(97.1)中，设全部纯射线的实射影集为
+$Y\cup Z$，两侧向量张成为 $U,W$，并有
+
+$$
+U+W=\mathbb R^n,\qquad S=U\cap W,\qquad
+Y\cap Z=\mathbb P(S).
+\tag{97.4}
+$$
+
+对一侧定义
+
+$$
+L_Y=\operatorname{span}_{\mathbb R}\{xx^{\mathsf T}:[x]\in Y\},\qquad
+C_Y=\operatorname{cone}\{xx^{\mathsf T}:[x]\in Y\},\qquad u_Y=u|_{L_Y},
+\tag{97.5}
+$$
+
+另一侧同样定义。则 $C_Y=L_Y\cap\operatorname{PSD}(U)$，它是原锥中支撑于 $U$ 的全部元素；
+两侧各自为实ROG截面。存在固定原 $C_Y$ 的正线性回缩 $R_Y:L\to L_Y$，满足
+
+$$
+u_Y(R_YX)\le u(X)\quad(X\in C),\qquad
+[0,u]_{C^*}\longrightarrow[0,u_Y]_{C_Y^*},\quad f\longmapsto f|_{L_Y}
+\text{ 为满射}.
+\tag{97.6}
+$$
+
+交换两侧亦成立。若原载体满足 $\mathrm G_2$，两侧便各自满足以其全部 proper 效应定义的 $\mathrm G_2$。
+
+证明。由(97.4)，$Z\cap\mathbb P(U)=\mathbb P(S)\subseteq Y$，故
+$(Y\cup Z)\cap\mathbb P(U)=Y$。原PSD矩阵的有限ROG分解中，每个向量都属于该矩阵的像空间：
+若 $X=\sum_kx_kx_k^{\mathsf T}$ 且 $h\in\ker X$，则 $\sum_k(h^{\mathsf T}x_k)^2=0$。
+因此原锥支撑于 $U$ 的元素恰由 $Y$ 中秩一元生成。
+$L_Y\subseteq L$，遂得(97.5)的截面等式；同理处理 $Z$。
+
+在已经由原 $u$ 取得的欧氏内积中，令 $\pi_S:W\to S$ 为正交投影，定义
+
+$$
+T:U+W\to U,\qquad T|_U=I_U,\quad T|_W=\pi_S,\qquad
+R_Y(X)=TXT^{\mathsf T}.
+\tag{97.7}
+$$
+
+两定义在 $S$ 上同为恒等，故 $T$ 良定义。若 $[x]\in Y$，则 $Tx=x$；
+若 $[x]\in Z$，则 $Tx\in S$，其像为零或属于 $Y$ 的秩一生成元。
+故 $R_Y(C)\subseteq C_Y$，且 $R_Y$ 在 $C_Y$ 及其张成 $L_Y$ 上为恒等。
+在 $Y$ 的生成元上 $\|Tx\|^2=\|x\|^2$，在 $Z$ 的生成元上
+$\|Tx\|^2\le\|x\|^2$；对同一ROG分解逐项相加即给(97.6)的单位不等式。
+这里不要求 $T$ 在整个环境向量空间上为收缩。
+
+任取 $f_Y\in[0,u_Y]_{C_Y^*}$，置 $f=f_Y\circ R_Y$。对每个原 $X\in C$，
+
+$$
+0\le f(X)\le u_Y(R_YX)\le u(X),\qquad f|_{L_Y}=f_Y.
+\tag{97.8}
+$$
+
+这同时控制原效应和其补，证明的是整个局部 proper 区间到整个原 proper 区间的延拓。
+局部纯点都是原归一秩一纯点。将局部两个零见证分别延拓，使用原 $\mathrm G_2$，
+再把所得共同确认效应限制回来，便得局部 $\mathrm G_2$。证毕。
+

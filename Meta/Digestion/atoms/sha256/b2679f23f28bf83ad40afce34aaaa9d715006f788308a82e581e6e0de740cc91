@@ -1,0 +1,62 @@
+**定理 105.12（弱入口内的极小不对称度二）。** 对 $z\in\operatorname{aff}K$、$s\ge1$ 定义
+
+$$
+\kappa_{z,s}(x)=\frac{(s+1)z-x}{s},\qquad
+Z_s(K)=\{z:\kappa_{z,s}(K)\subseteq K\},\qquad
+s(K)=\inf\{s\ge1:Z_s(K)\ne\varnothing\}.
+\tag{VII105.27}
+$$
+
+这是标准Minkowski不对称度，因为包含条件恰为 $-(K-z)\subseteq s(K-z)$，
+不是它的倒数。在 $\mathsf W$ 下，$s(K)\ge2$，并且
+
+$$
+\mathrm G\quad\Longleftrightarrow\quad Z_2(K)\ne\varnothing
+\quad\Longleftrightarrow\quad s(K)=2.
+\tag{VII105.28}
+$$
+
+成立时 $Z_2(K)=\{w\}$，中心唯一且在 $\operatorname{ri}K$。
+
+证明中先给所需标准凸几何步骤，以明确下确界的达到性。
+若 $z\in Z_s(K)$，对任意 $x\in K$ 置 $y=\kappa_{z,s}(x)\in K$，
+则 $z=(x+sy)/(s+1)\in K$。若 $z$ 在相对边界，取非恒定非负支撑仿射函数
+$h$，使 $h(z)=0$，并选 $h(x)>0$；则 $h(y)=-h(x)/s<0$，矛盾。
+因此任何有限可行中心都在相对内部。
+在一个内点 $z_0$ 周围取半径 $r>0$ 的相对闭球包含于 $K$，又以半径 $M\ge r$ 包含 $K$，
+则 $s=M/r$ 可行，所以下确界有限。
+取可行 $s_n\to s(K)$ 和中心 $z_n\in K$，紧性给共同子列 $z_n\to z$。
+对每个固定 $x\in K$，$\kappa_{z_n,s_n}(x)$ 收敛到 $\kappa_{z,s(K)}(x)$；
+原 $K$ 闭，故此极限仍在 $K$。同一中心子列对全部 $x$ 有效，证明下确界达到。
+
+对任意一组原三结果框架，若 $z\in Z_s(K)$，则
+$a_i(\kappa_{z,s}(p_i))\ge0$ 给 $(s+1)a_i(z)\ge1$。
+三式相加得 $s+1\ge3$，故 $s(K)\ge2$。
+这是成熟共同可区分容量下界在本章三结果上的应用，未将分别可区分当作joint。
+
+若G成立，$\kappa_{w,2}(p)=(3w-p)/2=c_p\in K$ 对全部原纯点成立。
+$K=\operatorname{conv}P$ 与仿射性遂给 $w\in Z_2(K)$，结合下界得 $s(K)=2$。
+反向设 $z\in Z_2(K)$。对每个三结果框架，上述三条不等式均须等号，
+所以每个纯点的唯一尺都有 $a_p(z)=1/3$。
+置 $y_p=(3z-p)/2\in K$，则 $a_p(y_p)=0$，故 $y_p\in D_p$。
+对每个 $q\in E_p$，零对称给 $a_q(p)=0$，于是 $a_q(y_p)=1/2$。
+在 $D_p$ 的球图中，104.4给
+
+$$
+\frac{1+\chi(q)\cdot\chi(y_p)}2=\frac12\qquad(q\in E_p).
+\tag{VII105.29}
+$$
+
+$\chi(q)$ 遍历整个单位球面，故 $\chi(y_p)=0$，即 $y_p=c_p$，线段情形也成立。
+因此对全部 $p$ 都有 $p+2c_p=3z$，得到G。
+两个参数二中心均须等于同一个 $(p+2c_p)/3$，所以唯一。
+若只给 $s(K)=2$，先用前面的达到性取得中心，再用此反向，不能省去达到步骤。证毕。
+
+标准定义、达到性、容量界及信息不对称恒等式的成熟归属是
+Matsumoto—Kimura [原始版本][Q105MK] §III(14)—(19)、Theorem 1(28)、Theorem 4(44)。
+本文的 $s(K)$ 对应该文 $m$；该文(19)中支配常数为 $m+1$。
+本定理新增的连接是：整排除球及原joint刻度使每个参数二临界中心恰是所有
+$(p+2c_p)/3$ 的共同值。这里不消费信息存储值，也不把数学测量等同于实际装置。
+逆向仍在 $\mathsf W$ 内；仅 $\mathrm{EB}_{\ge1}+s(K)=2$ 能否删除
+$\mathrm{Pair}_{\perp}$ 并回得上述结构，尚未证明。
+

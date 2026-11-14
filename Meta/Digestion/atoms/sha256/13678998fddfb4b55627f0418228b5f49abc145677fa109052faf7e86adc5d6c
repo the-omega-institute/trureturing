@@ -1,0 +1,9 @@
+因此
+
+$$
+\Psi(X)=M^{-1/2}(R\iota X)M^{-1/2},\qquad
+\operatorname{tr}\Psi(X)=u(X),\qquad \Psi(M_V)=I_n,
+\tag{93.9}
+$$
+
+其中 $M_V=(R\iota)^{-1}M$。取 $L=\Psi(V)$，即得(93.5)的前三项；合同保持秩一及ROG，Lemma 3.9给最后一项。对偶运输 $f\mapsto f\circ\Psi^{-1}$ 双射整个 proper 区间、确认集和零关系，双射 $K,P$ 及整个最小面，故保持 $\mathrm{Z0}$ 和 $S$。这项行列式驻点计算只是同载体归一化的矩阵工具，不是额外几何公理。

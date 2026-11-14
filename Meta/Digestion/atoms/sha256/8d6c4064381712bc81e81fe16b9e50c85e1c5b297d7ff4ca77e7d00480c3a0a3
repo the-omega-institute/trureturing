@@ -1,0 +1,48 @@
+**引理 109.4（共同延拓的跨球收缩）。** 固定 $p$，对 $q\in P\cap D_p$ 记
+$r=2c_p-q$，简写 $T_q=T(q\mid p)$，并以 $g_q$ 同时表示球内积及其在 $T_q$ 上的限制。
+对 $v\in T_q$ 定义同一原空间上的线性泛函
+
+$$
+J_q(v)=\Lambda_q h_v,\qquad
+h_v(c_q+y)=g_q(v,y)\quad(y\in L_q).
+\tag{VIII109.10}
+$$
+
+则 $J_q(v)|_{M_p}=0$，$J_q(v)(w)=g_q(v,w)$ 对 $w\in T_q$ 成立。
+对任意 $q'\in P\cap D_p$、$r'=2c_p-q'$、$w\in T_{q'}$，有
+
+$$
+\begin{gathered}
+c(q,q')=a_r(r')=a_q(q')
+ =\frac{1+g_p(q-c_p,q'-c_p)}2,\\
+|J_q(v)(w)|^2\le c(q,q')\,g_q(v,v)g_{q'}(w,w).
+\end{gathered}
+\tag{VIII109.11}
+$$
+
+证明。$\Lambda_q$ 在 $D_q$ 上限制为恒等，故在其方向空间给所写的 $g_q$。
+VIII108.5的圆弧效应恒等式给 $J_q(v)|_{M_p}=0$：
+对非零 $v$，该条的 $b_q$ 正是 $J_q(v)/(2\|v\|_q)$；零向量直接成立。
+球 $D_p$ 内的直径读数给 $c$ 的三个表达式，
+特别地只在这同一张球上使用了数值互易。
+
+先取 $g_q(v,v)=g_{q'}(w,w)=1$。对所有实 $t,s$，下列点均是各自原球面上的原纯态：
+
+$$
+\begin{gathered}
+X(t)=\frac{t^2p+r+2tv}{1+t^2},\qquad
+Y(s)=\frac{p+s^2r'+2sw}{1+s^2},\\
+a_{X(t)}=\frac{t^2a_p+a_r+tJ_q(v)}{1+t^2},\\
+0\le a_{X(t)}(Y(s))
+=\frac{t^2+c(q,q')s^2+2tsJ_q(v)(w)}{(1+t^2)(1+s^2)}.
+\end{gathered}
+\tag{VIII109.12}
+$$
+
+效应式是在整个 $V$ 上的等式，来自同一 $\Lambda_q$ 的线性性。
+分子计算使用 $T_q,T_{q'}\subseteq N_p$，以及 $J_q(v)$ 在 $M_p$ 上为零，
+所以没有遗漏其他线性或二次交叉项。令 $s=1$ 并最小化 $t$，
+得到 $|J_q(v)(w)|^2\le c(q,q')$。齐次缩放给一般向量；
+任一向量为零时也成立。此结论加强了VIII108.6只对共同切向量的比较，
+没有预设全纯互易、不同球的共同内积或任何切投影自伴随性。证毕。
+

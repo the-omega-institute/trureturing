@@ -1,0 +1,49 @@
+## 参考文献
+
+<a id="ref-repo-pin"></a>
+
+\[1\] The Omega Institute，*trureturing*，固定默认分支 `dev` 提交 [`0b9f2dda45b8`](https://github.com/the-omega-institute/trureturing/commit/0b9f2dda45b880862865f2c34ba94bf8ff1063ee)， 2026-11-05 04:16:19 Asia/Singapore。 [相对 C135 固定版本的比较](https://github.com/the-omega-institute/trureturing/compare/664de54986944b49cda0200e15020602fc8dae65...0b9f2dda45b880862865f2c34ba94bf8ff1063ee)。 实际核读范围与证明边界见第 1 节。
+
+<a id="ref-repo-c133ii"></a>
+
+\[2\] The Omega Institute， [*C133 整数续篇：三向配平，从整数比较到二次量子几何*](https://github.com/the-omega-institute/trureturing/blob/0b9f2dda45b880862865f2c34ba94bf8ff1063ee/docs/develop/theory/AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_II.md)， 定义 1.1–1.3、定理 2.1、式 (2.9)、§§3–5；既有一元自读、阿贝尔历史群与可加相位来源。
+
+<a id="ref-repo-c133bridge"></a>
+
+\[3\] The Omega Institute， [*任意标记的五点正性桥梁与仿射复几何*](https://github.com/the-omega-institute/trureturing/blob/0b9f2dda45b880862865f2c34ba94bf8ff1063ee/docs/develop/theory/AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md)， 全文；定理 1.3、命题 2.4、5.3、定理 6.2、问题 7.1。 完整 (R) 下的五点桥与仿射复表示；(R) 单独迫出五点正性仍未由该卷证明。
+
+<a id="ref-repo-c123"></a>
+
+\[4\] The Omega Institute， [*Native Reciprocal Comparison and Finite Endpoint Quantum C123*](https://github.com/the-omega-institute/trureturing/blob/0b9f2dda45b880862865f2c34ba94bf8ff1063ee/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md)， 新增 §§63–75；共同尺度、SJ 标定与闭准备加统一近零入口。 各结论保留原定义 41.1 或新具名 $\mathsf B_{\rm cl}$ 的完整前件。
+
+<a id="ref-repo-fib"></a>
+
+\[5\] The Omega Institute， [*FIB Atom Recursive Holographic Boundary Geometry, Continuation III, Appendix III*](https://github.com/the-omega-institute/trureturing/blob/0b9f2dda45b880862865f2c34ba94bf8ff1063ee/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md)， 新增 §153，尤其定理 153.2；同一原分割的全部有序二元及指定三个三元系数。 本轮未重新认证其全部继承分析供应。
+
+<a id="ref-jordan1935"></a>
+
+\[6\] P. Jordan and J. von Neumann, *On inner products in linear, metric spaces*, *Annals of Mathematics* **36**(3), 719–723 (1935). [原论文公开副本](https://www.mathematik.uni-muenchen.de/~michel/jordan-von_neumann_-_parallelogram_identity.pdf)，Theorem I。 经典平行四边形与内积表示；本稿的原入口为群而非已给实向量范数空间。
+
+<a id="ref-friis2006"></a>
+
+\[7\] P. de Place Friis and H. Stetkær, *On the quadratic functional equation on groups*, *Publicationes Mathematicae Debrecen* **69**(1–2), 65–93 (2006). [DOI:10.5486/pmd.2006.3270](https://doi.org/10.5486/pmd.2006.3270)； [出版者论文](https://publi.math.unideb.hu/load_doc.php?p=1111&t=pap)。 §1、Theorem 1.2 及非阿贝尔解与双加性解的区分；本稿给非负入口的初等证明。
+
+<a id="ref-sorkin1994"></a>
+
+\[8\] R. D. Sorkin, *Quantum mechanics as quantum measure theory*, *Modern Physics Letters A* **9**, 3119–3127 (1994). [arXiv:gr-qc/9401003v2](https://arxiv.org/pdf/gr-qc/9401003)， 三阶干涉与量子测度层级。 互不相交事件上的二阶可加，不代替本稿全部带符号比较的正性。
+
+<a id="ref-euclid"></a>
+
+\[9\] Euclid，*Elements*，Book IX，Proposition 20。 [D. E. Joyce 整理的原命题译文](https://mathcs.clarku.edu/~djoyce/elements/bookIX/propIX20.html)。 一个固定有限步骤为任意有限素数表产生表外素因子。
+
+<a id="ref-moretti2017"></a>
+
+\[10\] V. Moretti and M. Oppio, *Quantum theory in real Hilbert space: How the complex Hilbert space structure emerges from Poincaré symmetry*, *Reviews in Mathematical Physics* **29**, 1750021 (2017). [arXiv:1611.09029v4](https://arxiv.org/pdf/1611.09029)，Theorem 5.3。 本稿只消费不可约交换代数三分，不借入其额外物理对称前件的结论。
+
+<a id="ref-busch2003"></a>
+
+\[11\] P. Busch, *Quantum states and generalized observables: a simple proof of Gleason’s theorem*, *Physical Review Letters* **91**, 120403 (2003). [arXiv:quant-ph/9909073v3](https://arxiv.org/pdf/quant-ph/9909073)。 全效果一致正评价的密度态表示；实际全效果供应须单列。
+
+<a id="ref-watrous2018"></a>
+
+\[12\] J. Watrous，*The Theory of Quantum Information*, Cambridge University Press (2018). [作者公开第 2 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，Theorem 2.22。 有限 Choi、Kraus 与 Stinespring 表示；保留本稿原过程的保星与互读校准边界。

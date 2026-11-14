@@ -1,0 +1,38 @@
+**定义 37.1（原输入与二维比较资料）。** 在定义 32.1 的同一原空间中，取任意有限 $m\ge1$，按 $\mathbb Ce_1\oplus E\oplus\mathbb C^m$、$E=\operatorname{span}_{\mathbb C}(e_2,e_3)$ 写
+
+$$
+\begin{gathered}
+ C_E=\operatorname{diag}(2,3),\qquad
+ c=\operatorname{diag}(1,C_E,0_m),\qquad P=I_3\oplus0_m,\\
+ t=\begin{pmatrix}
+ \beta&a&v\\ a^*&T&0\\ v^*&0&D_{\rm env}
+ \end{pmatrix},\qquad
+ \beta\in\mathbb R,\quad a=(a_2,a_3)\in M_{1,2}(\mathbb C),\quad T=T^*\in M_2(\mathbb C),\\
+ D_{\rm env}=D_{\rm env}^*,\qquad
+ v\in M_{1,m}(\mathbb C),\qquad v(\ker D_{\rm env})\ne\{0\},\\
+ S=\operatorname{diag}(s_1,s_2,s_3),\quad s_j\in\mathbb R,\qquad
+ g=K_\sigma(c,t)+(S\oplus0_m),\qquad \iota=\sigma i,\quad \sigma=\pm1 .
+\end{gathered}
+\tag{37.1}
+$$
+
+这里 $V=e_1v$，原 $\mathcal W=\mathbb Ce_1\ne0$。$\beta,a,T,v,D_{\rm env}$ 均为固定原数据；$a$ 的大小和相位不受限制。只要 $a\ne0$，原 $t$ 就不保持 $E$。选同一原环境中的 $z_0$ 满足 $D_{\rm env}z_0=0$、$vz_0=1$：取任一 $y\in\ker D_{\rm env}$ 且 $vy\ne0$，令 $z_0=y/(vy)$ 即可，未改变环境矩阵。
+
+为说明运输，给定任意 $X=X^*\in M_2(\mathbb C)$，只在二维比较资料中定义
+
+$$
+\begin{gathered}
+ S_E=\operatorname{diag}(s_2,s_3),\qquad
+ h_E=\frac\iota2[C_E,X],\quad k_E=\frac{C_ET+TC_E}{2},\\
+ r_E=\frac{C_EX+XC_E}{2},\qquad
+ g_E=\frac\iota2[C_E,T]+S_E,\\
+ R_{\delta,E}=X+\delta(h_E-k_E),\qquad
+ S_{\delta,E}=T+\delta(r_E+g_E),\qquad \delta=\pm1,\\
+ L_E=-2X\circ(h_E-k_E)-2T\circ(r_E+g_E),\qquad
+ \psi_u(A)=u^*Au .
+\end{gathered}
+\tag{37.2}
+$$
+
+这些是比较用的矩阵表达式，不是把原 $t$ 换成另一输入。以 $\jmath_E:E\hookrightarrow\mathcal H$ 表示标准等距包含；所有原平方仍在完整 $M_{m+3}(\mathbb C)$ 中计算。
+

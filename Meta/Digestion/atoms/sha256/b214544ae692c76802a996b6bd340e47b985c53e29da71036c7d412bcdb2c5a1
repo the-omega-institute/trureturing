@@ -1,0 +1,26 @@
+**定理 127.3（无 PE 的极端单点零面塌缩）。** 在定义127.1的原域中，若 $C^{\ast}$ 有一条非零极端射线 $\mathbb R_+h$，且 $Z(h)=\{q\}$，则 $q\in P$，并存在实际原纯标签 $a_i\in P$ 和在整个 $B^{\ast}$ 上暴露的点 $n_i$，使
+
+$$
+\begin{gathered}
+n_i\longrightarrow h/h(x_0),\qquad
+Z(n_i)=D_{a_i},\qquad
+N_{c_{D_{a_i}}}=\mathbb R_+n_i,\\
+d_H(D_{a_i},\{q\})\longrightarrow0,\qquad
+\operatorname{diam}D_{a_i}\longrightarrow0.
+\end{gathered}
+\tag{X127.9}
+$$
+
+每张 $D_{a_i}$ 均是完整原正维球，中心是实际原混态。没有断言 $a_i\to q$，也没有预设原标签列有纯极限。
+
+证明。单点真面使 $q$ 为原极点。沿用124.5的射线与紧基极点对应，$n=h/h(x_0)\in\operatorname{ext}B^{\ast}$。有限维 Straszewicz 定理给整个基上的暴露点列 $n_i\to n$；所用的准确有限维陈述见 [Bru—de Siqueira Pedra §4.3，PDF第31页][Q124BP]，这里不使用其无限维推广。对每项应用命题127.2，取得完整原 $D_{a_i}=Z(n_i)$ 及实际混态球心。
+
+复用定理124.5的整零面紧性步骤，明确其量词如下。若
+
+$$
+\eta_i:=\max_{z\in Z(n_i)}\|z-q\|
+\not\longrightarrow0,
+$$
+
+则可取 $\varepsilon>0$、子列及 $z_i\in Z(n_i)$，使 $\|z_i-q\|\ge\varepsilon$。紧 $K$ 给再一子列 $z_i\to z\in K$，而 $n_i\to n$ 与有限维配对连续性给 $n(z)=0$。这迫使 $z=q$，矛盾。因此 $\eta_i\to0$。每个零面非空，故到单点的 Hausdorff 距离正是 $\eta_i$，直径至多 $2\eta_i$，证明 (X127.9)。此论证未使用 $P$ 闭或球维数固定。证毕。
+

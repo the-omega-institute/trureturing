@@ -1,0 +1,33 @@
+**约定 116.23（静态编码和实际过程的边界）。** 116.19的整个锥、效应区间和乘法恢复，
+明确在 $\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$ 分支进行；
+116.21的反向还明确要求原锥等于所写的整个三次不等式区域及原中心定位。
+单独在 $\ker u$ 放一个Cartan三次型不恢复任意原 $C$，116.20的平移反例保留。
+这些是可逆的静态几何编码，不是原EB单独已经完成重构或独立公理数已经减少。
+
+全部实际复合与过程仍按VIII113.11：保留同一共同来源域、全部有限份载体及其张量锥和单位、
+实际纠缠准备、各分块的界与相容性、全旁观者正性和CP/Kraus提升、逐输入预算、
+同族仪器、记录和粗粒化、正质量条件归一、Lüders校准，以及原钟、连续动态来源、单位与 $\hbar$。
+数学上给出了一个原三结果效应族，不等于已经给出可调用的实际仪器。
+原关联上的集合动作也不自动成为整个原凸体的物理对称。
+
+以下直观解释使用116.17的完整前件。起点始终是全部原态、全部原纯点和全部原测试：
+每个纯点背后，所有能被某张确认它的原测试读零的状态合起来，恰是一整颗三维实心球；
+每球只再找一条能被一张原全域效应读成一和零的满刻度直径。
+满刻度保留了两个分离点，先排除重复球标签，再保证纯点的极限仍是纯点；
+如果一颗球沿任何轴压扁，整块塌陷盘都会成为纯点，违反极点定义，所以三轴统一不能塌。
+沿这些真实原球的半径，整个原凸边界成为两份同一纯点空间的双映射柱。
+真实的二元交换、两个球丛投影与原边界的球面整体约束，不只限制Betti数，还限制环乘法；
+高次残留将产生把幂零元送到非零常数的下降导子，矛盾迫使原向量空间九维。
+同一四维纯点空间内，每张原球边都代表非零中间类，两颗球不能互相躲开，
+交点于是内生地补出第三纯点；全部方向满刻度、三轮闭合和原三结果效应随之成立，
+再接上复三能级全部密度态、全效应、Born评价、有限数学测量与谱分解。
+重复球块的精确四轮轨道说明了另一种被饱和排除的关联障碍，未被当作已实现的厚球反例。
+尚未证明的是球形本身会自动生出每球这条饱和直径；实际过程、复合、仪器、物理钟及 $\hbar$
+仍须VIII113.11的各自前件。
+
+[Q116VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "103—106章；完整排除球的原面分类及Pair后的共同完成接口。"
+[Q116VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "107—113章；VIII113.7、VIII113.9的同原锥同原单位重构及VIII113.11过程合同。"
+[Q116H]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology；Theorem 2C.3 pp179—180；§4.D Theorem 4D.1 pp432—434、Corollary 4D.9 p441、Theorem 4D.10 pp442—444及其后Gysin构造；Theorem A.7、Corollary A.8 pp525—527。"
+[Q116K]: https://arxiv.org/pdf/math/0104064v1 "Linus Kramer, Compact Polygons；§6.3，Proposition 6.3.2及Theorem 6.3.5 pp60—61：有限维局部紧ANR的奇异整数局部群、广义流形与方向层接口。"
+[Q116AFP]: https://arxiv.org/pdf/1303.1146v3 "C. Allday, M. Franz, V. Puppe, Equivariant Poincaré–Alexander–Lefschetz duality and the Cohen–Macaulay property；§2.1允许环面秩零，Lemma 3.1 p13、Theorem 3.4 pp15—17、Proposition 3.11(1) p19；取有理系数、可定向ENR同调流形及闭原二球。"
+

@@ -1,0 +1,23 @@
+**推论 103.8（三球分支的原完整概率字典）。** 在 $\mathrm{Pair}+\mathrm{EB}_3$ 下，取103.6的同单位 $\Phi:H_3(\mathbb C)\to V$。令 $\rho=\Phi^{-1}x$，则所有原归一态、全部原 proper 效应、原 least 与纯值分别为
+
+$$
+\begin{gathered}
+\rho\succeq0,\quad\operatorname{tr}\rho=1,\qquad
+f_E(x)=\operatorname{tr}(E\rho),\quad0\preceq E\preceq I_3,\\
+p=\Phi(vv^*),\quad v^*v=1,
+\qquad T_p(x)=\operatorname{tr}(vv^*\rho),\\
+q=\Phi(ww^*),\quad w^*w=1,
+\qquad T_p(q)=|v^*w|^2,\\
+D_p=\Phi\{\rho\succeq0:\operatorname{tr}\rho=1,\ \rho v=0\}.
+\end{gathered}
+\tag{VII103.30}
+$$
+
+有限数学效应族为完整测量恰要求 $E_i\succeq0,\sum_iE_i=I_3$。这识别全部原 proper 区间，但不自动供应每族的实际共同菜单。
+
+证明。103.7先选择复三阶类型，(VII103.21)、(VII103.25)直接给完整区间和 least；标准矩阵迹与秩一乘法给模方公式，正性给 $\operatorname{tr}(vv^*\rho)=0\Longleftrightarrow\rho v=0$。这些是既有 Jordan／Born 字典在新几何域上的参数代入，不是另证 Born 起源。原任意 $u$ 已由(VII103.23)—(VII103.25)准确处理，故不额外要求原坐标中的 $u=\operatorname{tr}$。
+
+实分支和四元分支相同地使用成熟 Jordan 迹及其关联矩阵字典；四元迹配对取实值的 Jordan 迹，归一向量的纯比较仍为 $|v^*w|^2$。Albert 分支仅使用本原幂等元 $c$、平方锥与 $\tau(c\circ x)$，不将任意非结合八元向量的 outer product 当作无条件纯态参数。首项旗标 join 也沿(VII103.21)保留整个 $[0,e]$ 与中央质量，不被矩阵表遗漏。
+
+若另有原实／复 unital PSD section 表示，则现有 [SectionROGFrame][Q103ROG] 的 `whole_pure_carrier` 在原 $\mathrm{ROG}(L)$ 下识别全部原纯点；`rog_frame` 另要求原 $I\in L$，给每个归一原秩一点进入同一个完整正交框架。其 `base` 就是全部 $L\cap\mathrm{PSD}\cap\{\operatorname{tr}=1\}$，不是所选纯子集。在本章分类后的实／复三阶全空间，$L=H_3(\mathbb F)$、原生域 $\mathbb F=\mathbb R$ 或 $\mathbb C$，谱分解满足 ROG 且 $I\in L$，因此可直接消费；在已有一般 ROG 表示的交集中，也只按这些原前件消费。对应Blueprint的全截面正泛函PSD提升、完整原效应的共同提升及其正补应用均保留原 unital 条件，不将环境 $E\le I$ 偷加到任意截面。它们与既有ROG框架不作为本章新的普遍重构，也未用于从(VII103.2)取得 $S$；本章无ROG输入的载体首先走103.4的既有一般桥。证毕。
+

@@ -9,6 +9,8 @@ import D5.S3.Geometry.FiniteConeCollapse
 import D5.S3.Geometry.SingletonRetractionBasedInverse
 import Mathlib.Analysis.Convex.Topology
 import Mathlib.Topology.Homeomorph.Quotient
+import Mathlib.Topology.Homotopy.Contractible
+import Mathlib.Topology.CompactOpen
 
 /-!
 # A finite union along a cone
@@ -48,7 +50,8 @@ def subsetSetoid {X : Type*} (C : Set X) : Setoid X where
 /-- The subset collapse with its quotient topology. -/
 abbrev Collapse {X : Type*} (C : Set X) := Quotient (subsetSetoid C)
 
-private def collapseMap {X : Type*} [TopologicalSpace X] (C : Set X) : C(X, Collapse C) :=
+/-- The canonical continuous map to the existing subset collapse. -/
+def collapseMap {X : Type*} [TopologicalSpace X] (C : Set X) : C(X, Collapse C) :=
   ⟨Quotient.mk (subsetSetoid C), continuous_quotient_mk'⟩
 
 private theorem collapse_eq {X : Type*} (C : Set X) (x y : X) :
@@ -63,6 +66,166 @@ private theorem collapse_eq_base {X : Type*} (C : Set X) {c : X} (hc : c ∈ C) 
     · exact hc
     · exact h.1
   · exact fun hx => Or.inr ⟨hx, hc⟩
+
+/-- The literal collapse of a closed contractible subspace, with inverse
+homotopies fixing the chosen point and its quotient class. The geometric input
+is a retraction onto the WHOLE bottom-or-subspace cylinder, fixing every point
+of that cylinder, and the existing singleton-cylinder data on the subspace.
+The forward map is exactly the original `collapseMap`, not an adjusted map.
+
+This is the classical contractible-cofibration quotient argument.
+The downstream finite-coordinate supplier in `FiniteSubcomplexCylinder`
+constructs `R`; the closed-cover consumer in `FiniteComponentClosure.ConeSplits`
+uses it without an `R` or `hR` premise. -/
+def contractibleCollapse {X : Type*} [TopologicalSpace X] [T1Space X]
+    (C : Set X) (hC : IsClosed C) (a : C) [ContractibleSpace C]
+    (R : C(X × I, {z : X × I | z.2 = 0 ∨ z.1 ∈ C}))
+    (hR : ∀ z : X × I, (z.2 = 0 ∨ z.1 ∈ C) → (R z).val = z)
+    (Ra : SingletonRetractionBasedInverse.CylinderRetraction a) :
+    {E : SingletonRetractionBasedInverse.BasedEquivalence
+      a.val (collapseMap C a.val) // E.forward = collapseMap C} := by
+  classical
+  -- Rectify ONLY the contraction of C. No based_inverse is applied to X -> X/C.
+  let e : C ≃ₕ Unit := Classical.choice (ContractibleSpace.hequiv_unit C)
+  let RU : SingletonRetractionBasedInverse.CylinderRetraction (() : Unit) :=
+    { map := ⟨fun z => ⟨z, Or.inr (Subsingleton.elim _ _)⟩,
+        continuous_id.subtype_mk _⟩
+      fixed := fun _ _ => rfl }
+  let γ : Path (e.toFun a) (() : Unit) :=
+    (Path.refl ()).cast (Subsingleton.elim _ _) rfl
+  let B := Classical.choose (SingletonRetractionBasedInverse.based_inverse
+    a () Ra RU e.toFun e.invFun
+    (Classical.choice e.left_inv) (Classical.choice e.right_inv) γ)
+  have hconst : B.backward.comp B.forward = ContinuousMap.const C a := by
+    apply ContinuousMap.ext
+    intro x
+    change B.backward (B.forward x) = a
+    rw [Subsingleton.elim (B.forward x) (), B.backward_point]
+  let c : (ContinuousMap.id C).HomotopyRel (ContinuousMap.const C a) {a} :=
+    B.left.symm.cast rfl hconst
+
+  -- Actual closed pasting on the supplied target. The bottom and vertical
+  -- restrictions meet at c(0,x)=x; no extension or quotient equivalence is assumed.
+  let T : Set (X × I) := {z | z.2 = 0 ∨ z.1 ∈ C}
+  let k : T → X := fun z =>
+    if hx : z.val.1 ∈ C then (c (z.val.2, ⟨z.val.1, hx⟩)).val else z.val.1
+  have hk_bottom (z : T) (hz : z.val.2 = 0) : k z = z.val.1 := by
+    dsimp only [k]
+    split_ifs with hx
+    · have hc : c (z.val.2, ⟨z.val.1, hx⟩) = ⟨z.val.1, hx⟩ := by
+        rw [hz]
+        exact c.apply_zero _
+      exact congrArg Subtype.val hc
+    · rfl
+  have hk_side (z : T) (hz : z.val.1 ∈ C) :
+      k z = (c (z.val.2, ⟨z.val.1, hz⟩)).val := by
+    dsimp only [k]
+    rw [dif_pos hz]
+  have hk : Continuous k := by
+    let T₀ : Set T := {z | z.val.2 = 0}
+    let T₁ : Set T := {z | z.val.1 ∈ C}
+    have hT₀ : IsClosed T₀ :=
+      isClosed_eq (continuous_snd.comp continuous_subtype_val) continuous_const
+    have hT₁ : IsClosed T₁ :=
+      hC.preimage (continuous_fst.comp continuous_subtype_val)
+    have hk₀ : ContinuousOn k T₀ := by
+      apply (continuous_fst.comp continuous_subtype_val).continuousOn.congr
+      intro z hz
+      exact hk_bottom z hz
+    have hk₁ : ContinuousOn k T₁ := by
+      apply continuousOn_iff_continuous_domRestrict.mpr
+      let j : T₁ → I × C := fun z => (z.val.val.2, ⟨z.val.val.1, z.property⟩)
+      have hj : Continuous j := by
+        exact (continuous_snd.comp (continuous_subtype_val.comp continuous_subtype_val)).prodMk
+          ((continuous_fst.comp (continuous_subtype_val.comp continuous_subtype_val)).subtype_mk _)
+      have hc : Continuous (fun z : T₁ => (c (j z)).val) :=
+        continuous_subtype_val.comp (c.continuous.comp hj)
+      apply hc.congr
+      intro z
+      exact (hk_side z.val z.property).symm
+    have hcover : T₀ ∪ T₁ = univ := by
+      ext z
+      simp only [mem_union, mem_setOf_eq, mem_univ, iff_true]
+      exact z.property
+    rw [← continuousOn_univ, ← hcover]
+    exact hk₀.union_of_isClosed hk₁ hT₀ hT₁
+  let E : C(I × X, X) :=
+    ⟨fun z => k (R (z.2, z.1)), hk.comp (R.continuous.comp continuous_swap)⟩
+  have hE₀ (x : X) : E (0, x) = x := by
+    have hr : R (x, 0) = ⟨(x, 0), Or.inl rfl⟩ :=
+      Subtype.ext (hR (x, 0) (Or.inl rfl))
+    change k (R (x, 0)) = x
+    rw [hr]
+    exact hk_bottom _ rfl
+  have hEC (t : I) (x : C) : E (t, x.val) = (c (t, x)).val := by
+    have hr : R (x.val, t) = ⟨(x.val, t), Or.inr x.property⟩ :=
+      Subtype.ext (hR (x.val, t) (Or.inr x.property))
+    change k (R (x.val, t)) = (c (t, x)).val
+    rw [hr]
+    exact hk_side _ x.property
+  have hE₁ (x : C) : E (1, x.val) = a.val :=
+    (hEC 1 x).trans (congrArg Subtype.val (c.apply_one x))
+  have hEa (t : I) : E (t, a.val) = a.val :=
+    (hEC t a).trans (congrArg Subtype.val (c.eq_fst t (by simp)))
+  have hEmem (t : I) (x : X) (hx : x ∈ C) : E (t, x) ∈ C := by
+    rw [hEC t ⟨x, hx⟩]
+    exact (c (t, ⟨x, hx⟩)).property
+
+  -- The endpoint factors through the EXISTING setoid. The inverse is a
+  -- continuous Quotient.lift; its continuity is proved from the endpoint map.
+  let q := collapseMap C
+  have hendpoint (x y : X) (h : (subsetSetoid C).r x y) :
+      E (1, x) = E (1, y) := by
+    rcases h with rfl | ⟨hx, hy⟩
+    · rfl
+    · exact (hE₁ ⟨x, hx⟩).trans (hE₁ ⟨y, hy⟩).symm
+  let g : C(Collapse C, X) :=
+    { toFun := Quotient.lift (fun x => E (1, x)) hendpoint
+      continuous_toFun := (E.continuous.comp
+        (continuous_const.prodMk continuous_id)).quotient_lift _ }
+  have hquot (t : I) (x y : X) (h : (subsetSetoid C).r x y) :
+      q (E (t, x)) = q (E (t, y)) := by
+    apply Quotient.sound
+    rcases h with rfl | ⟨hx, hy⟩
+    · exact Or.inl rfl
+    · exact Or.inr ⟨hEmem t x hx, hEmem t y hy⟩
+  let D : I → Collapse C → Collapse C := fun t =>
+    Quotient.lift (fun x => q (E (t, x))) (hquot t)
+  have hD : Continuous (fun z : I × Collapse C => D z.1 z.2) := by
+    -- Locally compact I is the parameter. No blanket product-quotient claim.
+    apply isQuotientMap_quotient_mk'.continuous_lift_prod_right
+    exact q.continuous.comp E.continuous
+  let L : (ContinuousMap.id X).HomotopyRel (g.comp q) {a.val} :=
+    { toFun := E
+      continuous_toFun := E.continuous
+      map_zero_left := hE₀
+      map_one_left := fun _ => rfl
+      prop' := by
+        intro t x hx
+        obtain rfl := Set.mem_singleton_iff.mp hx
+        exact hEa t }
+  let K : (ContinuousMap.id (Collapse C)).HomotopyRel (q.comp g) {q a.val} :=
+    { toFun := fun z => D z.1 z.2
+      continuous_toFun := hD
+      map_zero_left := by
+        intro z
+        induction z using Quotient.inductionOn with
+        | h x => exact congrArg q (hE₀ x)
+      map_one_left := by
+        intro z
+        induction z using Quotient.inductionOn with
+        | h x => rfl
+      prop' := by
+        intro t z hz
+        obtain rfl := Set.mem_singleton_iff.mp hz
+        exact congrArg q (hEa t) }
+  exact ⟨{
+    forward := q
+    backward := g
+    forward_point := rfl
+    backward_point := hE₁ a
+    left := L.symm
+    right := K.symm }, rfl⟩
 
 /-- Exactly the two distinguished points of the disjoint sum. -/
 def wedgePoints {X Y : Type*} (a : X) (b : Y) : Set (X ⊕ Y) :=
@@ -369,7 +532,8 @@ theorem realization_intersection (M N : PreAbstractSimplicialComplex V) :
     · exact hy.2.2 v (fun ht => hv (Finset.mem_inter.mpr ⟨hs, ht⟩))
     · exact hx.2.2 v hs
 
-private theorem realization_closed (M : PreAbstractSimplicialComplex V) :
+/-- Closedness of the original finite-coordinate realization. -/
+theorem realization_closed (M : PreAbstractSimplicialComplex V) :
     IsClosed (realization M) := by
   have he : realization M = ⋃ s : {s : Finset V // s ∈ M},
       convexHull ℝ ((fun v : V => Pi.single v (1 : ℝ)) '' (s.val : Set V)) := by

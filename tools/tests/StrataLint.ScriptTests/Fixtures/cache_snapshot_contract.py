@@ -710,6 +710,55 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         self.assertTrue((self.root / ".lake/.stratalint-lean-cache-stamp.json").is_file())
         self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
 
+    def test_ordinary_seed_allows_resume_without_certifying_an_incomplete_report(self):
+        owner = self.resume_setup()
+        self.work(0, 0)
+        action = (CACHE.parents[3] / ".github/actions/lean-cache-produce/action.yml").read_text()
+
+        def selected(step, values):
+            block = next(block for block in action.split("\n    - ") if block.startswith(step + "\n"))
+            condition = next(line.removeprefix("      if: ") for line in block.splitlines()
+                             if line.startswith("      if: "))
+            results = []
+            for term in condition.split(" && "):
+                field, operator, literal = term.split()
+                self.assertEqual("!=", operator)
+                self.assertTrue(literal.startswith("'") and literal.endswith("'"))
+                results.append(values[field] != literal[1:-1])
+            return all(results)
+
+        for seeded in ("0", "1"):
+            for adopted in ("false", "true"):
+                for released in ("false", "true"):
+                    with self.subTest(seeded=seeded, adopted=adopted, released=released):
+                        env = dict(self.env, STRATALINT_ACTIONS_CACHE_SEEDED=seeded,
+                                   STRATALINT_REPORT_SUCCEEDED="false")
+                        values = {"steps.prepared.outputs.adopted": adopted,
+                                  "env.STRATALINT_ACTIONS_CACHE_SEEDED": seeded,
+                                  "steps.release.outputs.restored": released}
+                        with mock.patch.dict(os.environ, env, clear=True), \
+                                contextlib.redirect_stdout(io.StringIO()) as receipts:
+                            owner.resume_record(self.root).unlink(missing_ok=True)
+                            spec = owner.resume_spec(self.root)
+                            owner.resume_snapshot(self.root, spec)
+                            lookup = selected("id: resume_lookup", values)
+                            values["steps.resume_lookup.outputs.cache-matched-key"] = spec["key"] if lookup else ""
+                            extracted = selected("id: resume", values)
+                            if selected("name: Validate the producer continuation", values):
+                                owner.resume_restore(self.root, spec, spec["key"] if extracted else "",
+                                                     "success" if extracted else "skipped")
+                            expected = adopted == "false" and released == "false"
+                            self.assertEqual(expected, lookup)
+                            self.assertEqual(expected, extracted)
+                            self.assertEqual(expected, owner.resume_verified(self.root))
+                            self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
+                            self.assertFalse(owner.actions_keys(self.root)["project_save_allowed"])
+                            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+                        self.assertIn('"complete": false', receipts.getvalue())
+                        self.assertIn("project_ready=false", receipts.getvalue())
+                        self.assertNotIn("STRATALINT_REPORT_SUCCEEDED=true", receipts.getvalue())
+        self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
+
     def test_incompatible_or_failed_resume_restore_discards_material_and_cannot_promote(self):
         for defect in ("foreign-key", "foreign-ref", "missing-marker", "transport-failed", "duplicate-marker"):
             with self.subTest(defect=defect):

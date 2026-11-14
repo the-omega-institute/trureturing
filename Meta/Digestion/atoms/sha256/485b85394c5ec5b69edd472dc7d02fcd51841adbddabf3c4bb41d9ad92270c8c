@@ -1,0 +1,17 @@
+**定义 83.1（同一原基底的固定对半入口）。** 完整保留定义 80.1 的 $\mathrm{PRE}_0^{\rm mix}$ 的全部原对象与其他谓词，只将比较主入口取为下述 FH1，记所得同类基底为 $\mathrm{PRE}_0^{1/2}$。具体地，每个 $X=A,D,E$ 非零有限维，具有闭尖生成锥 $X_+$、在非零正元上严格正的 $u_X$、整个紧态基 $K_X=\{x\in X_+:u_X(x)=1\}$、全部 proper 效应 $[0,u_X]$ 及纯态集 $P_X=\operatorname{ext}K_X$。对全部纯 $\xi,\eta\in P_X$ 及全部原混态 $x\in K_X$，要求
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T^X_\xi\!\left(\frac{\eta+x}{2}\right)=\frac{T^X_\eta(\xi)+T^X_\xi(x)}2.
+\tag{83.1}
+$$
+先应用固定来源 [FH] 的同载体完整定理 $\mathrm B_{1/2}\Longleftrightarrow S\Longleftrightarrow\mathrm B_{\rm mix}$，在每个原 $X$ 上恢复全部实 $t\in[0,1]$ 的纯端加混态比较律与完整有限混合律 $S$，再复用同一一般有限 EJA 条件纸面桥；正对偶生成、忠实态效应对应、共同框架、面投影、项目性与滤波纯性等义务全部保留。这里仅应用已有固定对半证明，不将它计作本章新数学；混态余项遍及整个原态基，不能缩为纯二项 $S_2$。忠实坐标中 $u_X=\tau_X$，原态基、效应区间、单位和比较配对均被保留。允许异型直和、秩一及 Albert，不预设复型、不可约性或 $\mathsf{JG}_3$。
+唯一供应的映射仍为全锥正实双线性 $L:D\times A\to E$ 和同一个全锥正实线性 $p:E\to D$，原参考 $\omega=1_D/\tau_D1_D$；正性覆盖全部原联合锥，包括纠缠方向。定义
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),&J(a)&=M(a,1_A),\\
+H_{\rm s}(d)&=L(d,1_A),&B_1&=pH_{\rm s},&U&=M(1_A,1_A),\quad G=H_{\rm s}1_D,\\
+F&=P_{U^{-1/2}}M,&\mathcal T&=H_{\rm s}\widetilde F:A\otimes_{\mathbb R}A\to E.
+\end{aligned}\tag{83.2}
+$$
+保留 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$ 和全部实 $a,b$ 上的 $Z:B_1M(a,b)=\tau_A(a)Jb$。两次读回均为这一个 $p$，不能独立供应 $M$。正性及两实张成先给 $U,G>0$，故零关系之前 $F$ 已正且 $F(1_A,1_A)=1_D$；这里使用 75.2／80.1 的先行内点结论。
+

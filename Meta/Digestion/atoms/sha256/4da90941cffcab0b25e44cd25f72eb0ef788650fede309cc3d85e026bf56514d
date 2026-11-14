@@ -1,0 +1,59 @@
+**定理 105.15（原三读数长度包的准确替换）。** 固定103.10、104.15的同一个
+$\mathcal O$、同一共同来源域及非空 $\mathcal J\subseteq\{A,D,E\}$，
+只在同一个 $\mathcal D_{3,\mathcal J}$ 中比较。保留全部 $\mathcal N(\mathcal O)$
+和未选几何项，定义
+
+$$
+\begin{aligned}
+\mathsf R_{\mathrm{readout},3}^{\mathcal J}(\mathcal O):\quad
+&\mathcal N(\mathcal O)\ \land\!\bigwedge_{X\notin\mathcal J}S_X\\
+&\land\!\bigwedge_{X\in\mathcal J}
+ (\mathrm{EB}_{\ge1,X}+\mathrm{Pair}_{\perp,X}+\mathrm{PL}_{3,X}).
+\end{aligned}
+\tag{VII105.32}
+$$
+
+每个 $\mathrm{PL}_{3,X}$ 用该原载体全部 $\mathcal T_{3,X}$ 定义，不换效应菜单。
+在上述共同域内，
+
+$$
+\begin{aligned}
+\mathsf R_{\mathrm{readout},3}^{\mathcal J}
+&\Longleftrightarrow\mathsf R_{\rm exclusion,3}^{\mathcal J}
+\Longleftrightarrow\mathsf R_S
+\Longleftrightarrow\mathsf R_{\rm polar}
+\Longleftrightarrow\mathsf R_{\rm zero\text{-}ball}\\
+&\Longleftrightarrow\mathsf R_{\rm mid}
+\Longleftrightarrow\mathsf R_{86}^{\rm ev}
+\Longleftrightarrow[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}.
+\end{aligned}
+\tag{VII105.33}
+$$
+
+证明。逐所选原 $X$ 应用105.8，将长度项准确替换为 $S_X+h(K_X)=3$。
+共同域已含高度约束；未选项和 $\mathcal N$ 不动，再直接使用103.10的(VII103.35)。
+在未限制高度的旧域中，准确右侧应为 $\mathsf R_S\land\bigwedge_{X\in\mathcal J}h(K_X)=3$，
+不能删除该共同域限定。
+
+这里完整保留的 $\mathcal N$ 仍包括原准备／测试／过程／参考／读回与装饰，
+原概率像自身紧及全部原中点实现，原测试的整个效应表，重复标签、零和不等质量、
+全部非负质量缩放与整个相关联合输入域。两次读回仍用同一个原 $p$，
+$L,K,M,\omega$、两实张成、全实 $Z$、完整(83.8)、VI(89.13)的两尺度等式、
+C2、整个 $G=1_E$ 及精确PRE后同一资格态与整个H13输出，均采用103.10的原式。
+活跃块严格负方向、共享总迹一、非活跃零质量与空活跃集均保留，不能逐块换态。
+
+共同来源合同仍量化设备、事件、来源绑定、菜单、分支、参考副本、相关联合、
+记录、权限、控制、原钟、单位、ready／flags、失败、拒绝、停止、销毁、返回、
+实际混合、全部合法未来、旧support及每个中间切口。
+VI89.9—89.10的全部原生／细化消费者仍保留原字与terminal futures、联合有符号关系、
+细标签粗归组、记录后条件未来、source-adoption与资源合同。
+同事件CP仍按原完整提升、实际探针及相容核条件认证；已有充分递归参考的结论直接复用。
+Kraus、TP／TNI和实际仪器各守原同族预算、接线、记录及共同输入校准；
+Lüders仍需同一分支的锐效应、接受态中性与输出校准；
+物理时间仍需原钟、连续齐次可逆群及实际动态来源。
+这些均不由105.5的数学滤子或105.13的正映射反向制造。
+
+若原复合合同使 $A,D=A\otimes A,E=D\otimes A$ 秩分别为 $3,9,27$，
+不能同时对三者施加本章秩三入口；$\mathcal J=\{A,D,E\}$ 与该合同的交集仍为空。
+同数据替换不解除这个不相容性，也不删来源以换取非空。证毕。
+

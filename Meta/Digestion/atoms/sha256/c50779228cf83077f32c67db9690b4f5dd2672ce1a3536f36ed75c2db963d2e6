@@ -1,0 +1,13 @@
+**Kraus 与实际仪器。** 逐块 CP 后才由成熟矩形 Choi／Kraus 表示取得
+$\Phi_{e,ji}(x)=\sum_\nu K_{e,ji,\nu}xK_{e,ji,\nu}^*$。
+原实际分支、typed 输入输出、真实参考、旁观者、全菜单、记录、顺序接线、同族真粗粒化及共同重置的输入行一致合同全部保留。未校准旁观者的两预算仍是
+
+$$
+\sum_{a,j}F^a_{ji}\le I_i,\qquad
+\sum_{a,j}F^a_{ji}\otimes u_{jk}\le I_i\otimes u_{ik},
+\qquad F^a_{ji}=\sum_\nu K_{a,ji,\nu}^*K_{a,ji,\nu}.
+\tag{87.23}
+$$
+
+这里 $u_{ik}$ 是原滤波权，不是概率单位 $u_X$。标准归一后 $u_{ik}=I_k$；同一完整实际菜单两边总 TP 才给 $\sum_{a,j,\nu}K_{a,ji,\nu}^*K_{a,ji,\nu}=I_i$，次单位只给 TNI。数学分解不供应独立调用、环境、全菜单或仪器实现。
+

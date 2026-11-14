@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4048a504d4fea8899567e053b3677a9017143cf117021d68871ef4ca2df3a24f
+  normalized_sha256: sha256:4048a504d4fea8899567e053b3677a9017143cf117021d68871ef4ca2df3a24f
+cas_ref: sha256:4048a504d4fea8899567e053b3677a9017143cf117021d68871ef4ca2df3a24f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This clause introduces the original third-candidate notation r_v=u-e_p-e_q and its substitution formula in the already specified g,H,rho coordinates. Its final sentence explicitly withholds positivity. It is a definition and scope boundary, not a proof of positivity, intersection, contact, or three-result completion; those mathematical assertions remain in the following theorem.
+    previous_atom_id: 1195ea264595cf378027f9bee4102ccd0bf066e532f0d6140d2fb3edb1ad0691
+    next_atom_id: d5d05e269313d59e40673bebe1a9e3d870863de73966bfea7009e4194578882f

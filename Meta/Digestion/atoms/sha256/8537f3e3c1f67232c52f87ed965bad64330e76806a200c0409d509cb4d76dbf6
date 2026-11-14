@@ -1,0 +1,27 @@
+**定义 78.1（完整原域）。** $\mathrm{PRE}_0$ 精确取定义 75.1、76.1：每个 $X=A,D,E$ 是非零有限维实有序系统，具有闭尖生成锥、严格正归一化泛函、整个紧态基 $K_X$、全部效应和纯态集。只在纯第一端点定义最小确认比较，并对每个纯 $\xi$、每个有限纯态族及每组概率权重要求
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T^X_\xi\!\left(\sum_\ell v_\ell\eta_\ell\right)=\sum_\ell v_\ell T^X_{\eta_\ell}(\xi). \tag{78.1}
+$$
+完整保留 75.1 的 $S$ 到一般有限 EJA 条件纸面桥、忠实态效应对应、正对偶生成、共同框架、面投影、项目性及滤波纯性。以下在该原忠实坐标中使用规范迹、完整平方锥、Jordan 乘积及 $\langle x,y\rangle=\tau(x\circ y)$；允许直和、秩一因子和 Albert，不预设复型。
+结合 77.18—77.19，也可在每个原系统把 (78.1) 的完整有限混合律等价换成混合余项二元律
+$$
+T^X_\xi(t\eta+(1-t)x)=tT^X_\eta(\xi)+(1-t)T^X_\xi(x)
+\quad(\xi,\eta\in P_X,\ x\in K_X,\ 0\le t\le1).
+$$
+记仅作这一入口替换的基底为 $\mathrm{PRE}_0^{\rm mix}$。它先在同一全态全效应载体上恢复完整 $S$，再使用原一般 EJA 桥；故与 $\mathrm{PRE}_0$ 是同实际模型类，不增加独立互反前件，不把混合余项改成纯态，也不供应实际纯态彩票。77.16 的原制备回路平衡是又一个等价入口，均按其全部纯参照量词保留。
+唯一供应的映射和参考仍为全锥正实双线性 $L:D\times A\to E$、全锥正实线性 $p:E\to D$ 及 $\omega=1_D/\tau_D1_D$。所有内部量取同一个实际 $p$：
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),&J(a)&=M(a,1_A),\\
+H_{\mathrm s}(d)&=L(d,1_A),&B_1&=pH_{\mathrm s},&U&=M(1_A,1_A),\quad G=H_{\mathrm s}1_D,\quad F=P_{U^{-1/2}}M.
+\end{aligned} \tag{78.2}
+$$
+保留两条实张成 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$，以及全实 $Z:B_1M(a,b)=\tau_A(a)Jb$。$L,p$ 的正性遍及整个原锥，包含纠缠方向；实张成不是正乘积锥生成。$U,G>0$ 在任何零表之前已由正性和两张成证明，故 $F$ 已全乘积正且 $F(1,1)=1_D$；此时尚不宣称其为迹等距或 Jordan 组合接口。
+取同一原几何中的 $s$ 套完整本原框架 $\mathfrak B=(B_r)$，定义
+$$
+\delta_J(\mathfrak B)=s\|U\|_2^2-\sum_r\sum_{e\in B_r}\|Je\|_2^2,\qquad
+\delta_H(\mathfrak B)=s\|G\|_2^2-\sum_r\sum_{e,f\in B_r}\|H_{\mathrm s}F(e,f)\|_2^2,\quad
+\delta=\delta_J+\delta_H. \tag{78.3}
+$$
+$\mathsf{JG}_3$ 仍指同一个 $1\le s\le3$ 的族 Jordan 生成整个 $A$，允许重复框架，不要求所选原子线性张满。见证取自原比较几何，其数学存在性不供应自然选取或物理制备。

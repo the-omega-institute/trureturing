@@ -1,0 +1,75 @@
+**命题 102.8（原中点精确缺口及七点实现）。** 在102.7中，对任一轻源 $a_i$、$i=1,2$，任意非负归一顶点分解均给
+
+$$
+T_{a_i}(x)=\lambda_i+n\varepsilon\min_j\mu_j.
+\tag{VII102.20}
+$$
+
+其 $D_{a_i}$ 是原暴露facet
+
+$$
+Q_{ij}=\operatorname{conv}(P\setminus\{a_i,b_j\})
+$$
+
+的并集。取原态
+
+$$
+x=b_1,\qquad y=\frac1{n-1}\sum_{j=2}^n b_j,\qquad w=(x+y)/2,
+$$
+
+有
+
+$$
+T_{a_i}(x)=T_{a_i}(y)=0,\qquad
+T_{a_i}(w)=\frac{n\varepsilon}{2(n-1)}>0,
+\qquad T_{a_i}(o)=\varepsilon.
+\tag{VII102.21}
+$$
+
+在 $m=5$ 可取七个整数坐标顶点
+
+$$
+\begin{gathered}
+a_0=(-1,-1;0,0,0),\quad a_1=(14,0;0,0,0),\quad a_2=(0,14;0,0,0),\\
+b_1=(0,0;1,1,1),\quad b_2=(0,0;1,-1,-1),\\
+b_3=(0,0;-1,1,-1),\quad b_4=(0,0;-1,-1,1),\\
+14a_0+a_1+a_2=4\sum_{j=1}^4b_j.
+\end{gathered}
+\tag{VII102.22}
+$$
+
+它满足 $\mathrm B+\mathrm G_3$ 而失败 $\mathrm G_4$ 和原混态 $\mathrm{Z0}$；上式轻源中点的最低原确认值为 $1/24$，共同内点值为 $1/16$。但原纯数值互易 $\mathrm R$ 失败。
+
+证明。在(VII102.15)中，轻源的约束为 $\sum_j\gamma_j=n\varepsilon<1/2$。任意可行向量都有
+
+$$
+\sum_j\mu_j\gamma_j\ge n\varepsilon\min_j\mu_j,
+$$
+
+把全部 $n\varepsilon$ 放在一个最小 $\mu_j$ 坐标即可达到，仍满足各坐标不超过一。这证明任意混态的(VII102.20)。其达到效应在 $a_i$ 取一、在相应 $b_j$ 取 $n\varepsilon$，其他顶点取零，因此整个零面为 $Q_{ij}$。删去这两个点后留下 $m$ 个仿射独立顶点，故它是维数 $m-1$ 的原facet；全部最低值为零当且仅当至少一张这样的效应取零，得到并集式。另一方面，重源及 $b_j$ 源的全部合格目标已有同一张效应排除，VII101.6直接给
+
+$$
+D_{a_0}=\operatorname{conv}\{a_1,a_2\},\qquad
+D_{b_j}=\operatorname{conv}\bigl(\{a_1,a_2\}\cup\{b_\ell:\ell\ne j\}\bigr).
+$$
+
+对(VII102.21)的 $w$，其 $B$ 权重为 $\mu_1=1/2$、$\mu_j=1/[2(n-1)]$（$j\ge2$），且 $\lambda_i=0$；全部 $B$ 顶点都有正权，所以最低值严格为正。$x$ 与 $y$ 各自缺少至少一个 $B$ 顶点，最低值为零。共同内点 $o=\sum_jb_j/n$ 给最低值 $\varepsilon$。这些分组态的中点值也正是VI92.2的已有效果：取 $t=\varepsilon$、分组权 $b=1/n$，其 $t/(2\max\{b,1-b\})$ 等于这里的数值；此特殊精确缺口属于复用。
+
+七点坐标的两方向分别张成 $\mathbb R^2$ 和 $\mathbb R^3$，两侧分别为三角形及四面体，正权重准确为
+
+$$
+(u_0,u_1,u_2)=(7/8,1/16,1/16),\qquad v_j=1/4.
+$$
+
+故 $\varepsilon=1/16,n=4$，(VII102.21)给 $4/(16\cdot6)=1/24$，共同内点值 $1/16$；102.7已核对全部七个源。
+
+一般族的重源与任一 $b_j$ 有
+
+$$
+T_{a_0}(b_j)=1-2n\varepsilon,\qquad
+T_{b_j}(a_0)=\frac{1/n-2\varepsilon}{1-2\varepsilon}.
+\tag{VII102.23}
+$$
+
+两值的共同正分子为 $1/n-2\varepsilon$，分母分别为 $1/n$ 和 $1-2\varepsilon$，二者不等；所以整个族均不满足 $\mathrm R$。七点例中准确为 $1/2$ 和 $1/7$。这些点仍是原边的对径端点，因而此族的 $\mathrm A$ 也失败；它同时失败 $\mathrm{Z0}$，没有反驳一般 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$。特别地，五维七点例不满足 $\mathrm B+\mathrm R+\mathrm G_3$ 的前件，不能据它否定该附加互易域的待证问题。仅 $\mathrm B$ 域的逐维最优性不能搬到 $\mathrm B+\mathrm R$ 域。证毕。
+

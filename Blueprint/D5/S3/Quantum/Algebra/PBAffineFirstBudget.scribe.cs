@@ -10,6 +10,14 @@ internal sealed class PBAffineFirstBudgetDocument : IScribeDocumentDefinition
         "The same original total response satisfies the affine first-label budget of source 162.2. Its two P2 estimates use one functional and the complete actual PB outer labels.",
         H("Original affine PB budgets"),
         Blocks(
+            Helper("leading_budget", "Leading scalar budgets", LeadingStatement(),
+                "For arbitrary real coefficients, the affine absolute-value bound implies the leading square-root bound. Reciprocal positive scaling and continuity include zero leading coefficients.", DescribeRole.Theorem),
+            Helper("gram_shift", "The shared-direction Gram expansion", ShiftStatement(),
+                "Symmetric bilinearity expands the affine determinant into its constant, linear and quadratic terms; the cubic and quartic terms cancel.", DescribeRole.Theorem),
+            Helper("realPerp", "Projection off one real line", PerpStatement(),
+                "For a unit eta this real-linear map removes its real inner-product component. In a complex representation the removed line is real, not complex.", DescribeRole.Definition),
+            Helper("two_ended_budget", "Both ends of a norm budget", EndsStatement(),
+                "A unit leading direction and the budget for every real t force equality of the two first-order norm corrections. Reciprocal scaling makes zero a differentiable minimum.", DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("gram"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBAffineFirstBudget.gram"),
                 H("The shared-readout Gram determinant"),
@@ -45,6 +53,45 @@ internal sealed class PBAffineFirstBudgetDocument : IScribeDocumentDefinition
                     Paragraph(Text("Subtract the left side to obtain an explicit differentiable function with a minimum at zero. Since norm(w)=1, Mathlib HasDerivAt.norm_sq and HasDerivAt.sqrt give derivatives -inner(w,zplus) and inner(w,zminus) for the two norm terms at zero. The absolute-value term has derivative 2rA there because its argument equals one. IsLocalMin.hasDerivAt_eq_zero then gives 2rA=inner(w,zminus)-inner(w,zplus). Orthogonality to eta removes the real projection, and the shared Z cancels, yielding the displayed identity. No derivative, limit, scaling law or additivity of D is used.")),
                     Paragraph(Text("This is the single-anchor real identity, not a complex operator identity or source 163.1. The unit-row r=0 branch of the eventual projection theorem remains an upstream original-response supplier. Both actual anchors, complex polarization, corner reconstruction and faithful return remain to be combined. The four-slot escape audit at https://github.com/the-omega-institute/trureturing/issues/28369 is unfinished; no freezing, atom coverage or full 192.2 completion is asserted."))),
                 DescribeRole.Theorem))));
+
+    private static DocumentBlock Helper(string name, string title, Formula formula, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create(name.Replace('_','-').ToLowerInvariant()),DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBAffineFirstBudget."+name),
+            H(title),StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(),Blocks(Paragraph(Text(prose))),role);
+    private static Formula RealHilbert(Formula body) => All("H",I("Type"),Seq(
+        OpenBracket,C("NormedAddCommGroup",I("H")),CloseBracket,
+        OpenBracket,C("InnerProductSpace",Rl,I("H")),CloseBracket,body));
+    private static Formula LeadingStatement()
+    {
+        Formula Poly(string pre) => Add(Add(I(pre+"zero"),Mul(Mul(N(2),I("a")),I(pre+"one"))),Mul(Sq(I("a")),I(pre+"two")));
+        var premise=All("a",Rl,Le(Abs(Sub(I("c"),Mul(I("a"),I("d")))),Add(C("sqrt",Poly("p")),C("sqrt",Poly("q")))));
+        Formula body=Imp(premise,Le(Abs(I("d")),Add(C("sqrt",I("ptwo")),C("sqrt",I("qtwo")))));
+        foreach(var name in new[]{"qtwo","qone","qzero","ptwo","pone","pzero","d","c"}) body=All(name,Rl,body);
+        return body;
+    }
+    private static Formula ShiftStatement()
+    {
+        var phi=I("phi"); var aa=I("A"); var bb=I("B"); var nn=I("n"); var th=I("theta"); var al=I("alpha");
+        Formula Read(Formula x) => App(phi,x);
+        Formula Gram(Formula x, Formula y) => C("gram",J,phi,x,y);
+        var coefficient=Sub(Add(Mul(Mul(th,Read(Jj(aa,aa))),Read(Jj(nn,bb))),Mul(Read(Jj(nn,aa)),Read(Jj(bb,bb)))),
+            Mul(Read(Jj(aa,bb)),Add(Read(Jj(nn,bb)),Mul(th,Read(Jj(nn,aa))))));
+        var result=Eq(Gram(Add(aa,Sm(al,nn)),Add(bb,Sm(Mul(th,al),nn))),
+            Add(Add(Gram(aa,bb),Mul(Mul(N(2),al),coefficient)),Mul(Sq(al),Gram(nn,Sub(bb,Sm(th,aa))))));
+        var sym=All("x",E,All("y",E,Eq(Jj(I("x"),I("y")),Jj(I("y"),I("x")))));
+        return ModuleBind(All("J",C("Bilinear",Rl,E,E,E),All("phi",C("LinearMap",Rl,E,Rl),
+            All("A",E,All("B",E,All("n",E,All("theta",Rl,All("alpha",Rl,Imp(sym,result)))))))));
+    }
+    private static Formula PerpStatement() => RealHilbert(All("eta",I("H"),All("z",I("H"),
+        Eq(C("realPerp",I("eta"),I("z")),Sub(I("z"),Sm(C("inner",I("eta"),I("z")),I("eta")))))));
+    private static Formula EndsStatement()
+    {
+        var r=I("r"); var a=I("A"); var w=I("w"); var zp=I("zp"); var zm=I("zm"); var t=I("t");
+        var budget=All("t",Rl,Le(Mul(Mul(N(2),Abs(r)),Abs(Add(t,a))),
+            Add(Norm(Sub(zp,Sm(Mul(r,t),w))),Norm(Add(zm,Sm(Mul(r,t),w))))));
+        var conditions=Conj(Imp(Eq(r,N(0)),I("False")),Eq(Norm(w),N(1)),budget);
+        var result=Eq(Mul(Mul(N(2),r),a),Sub(C("inner",w,zm),C("inner",w,zp)));
+        return RealHilbert(All("r",Rl,All("A",Rl,All("w",I("H"),All("zp",I("H"),All("zm",I("H"),Imp(conditions,result)))))));
+    }
 
     private static Formula I(string s) => F.Id(s);
     private static Formula C(string s, params Formula[] xs) => Call(s,xs);

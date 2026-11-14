@@ -1,0 +1,51 @@
+**定理 109.3（联合全态可辨的等价表述及真实反事实）。** 在W下，
+对固定原joint框架 $F$，下列条件等价：该框架满足(VIII109.4)；
+$Z_F=0$；联合映射 $v\mapsto(\Pi_pv,\Pi_qv,\Pi_rv)$ 在 $V$ 上注入；
+同一联合映射在整个 $K$ 上注入；(VIII109.2)对该框架成立；
+$d_p+d_q+d_r=n$。因此 $\mathrm{TFD}_3\Longleftrightarrow\mathrm{TRI2}$，
+也等价于每个框架的球维数和恰为 $n$。
+
+证明。投影 $\mathcal I_F$ 为零当且仅当其像为零；109.2的共同核和维数式
+立即给全空间注入与维数的等价。
+又有
+
+$$
+\operatorname{im}\Pi_i^*=\operatorname{span}Z_i,
+\qquad
+\operatorname{span}(Z_p\cup Z_q\cup Z_r)=V^*
+\ \Longleftrightarrow\ Z_F=0.
+\tag{VIII109.8}
+$$
+
+第一式由 $\Lambda_i$ 的正锥像为 $Z_i$，且非负仿射函数生成全部仿射函数得到。
+非零 $f\in Z_i$ 可用 $\max_Kf>0$ 缩放成 $\mathcal E$ 中仍在 $i$ 读零的效应，
+所以(VIII109.8)所用的零效应面没有超出原效应范围。
+这给全空间注入与(VIII109.2)的正向联系。
+
+反向和归一态注入必须处理有符号核。若 $0\ne z\in Z_F$，109.2给 $u(z)=0$。
+闭尖生成锥在有限维有内点；用严格正 $u$ 归一一个内点，得到
+$x\in\operatorname{ri}K$，且 $\operatorname{aff}K=\{u=1\}$。
+取足够小的 $\epsilon>0$，则
+
+$$
+x_+=x+\epsilon z\in K,\qquad x_-=x-\epsilon z\in K,\qquad
+x_+\ne x_-,\qquad \Pi_i x_+=\Pi_i x_-\quad(i=p,q,r).
+\tag{VIII109.9}
+$$
+
+每个原 $f\in\mathcal E$ 且 $f(i)=0$ 都属于 $Z_i$，因而在这两态上读数相同。
+这同时否定该框架的(VIII109.2)和归一态联合注入。
+然而原全效应仍能分离这两态：选 $\ell\in V^*$ 使 $\ell(z)\ne0$，
+$K$ 紧使 $M=\max_K|\ell|<\infty$，且 $M>0$。
+取 $0<\delta\le1/(2M)$，则
+$f=u/2+\delta\ell\in[0,u]$，而 $f(x_+)\ne f(x_-)$。
+所以反事实是同一模型中的两个真实原态；盲的是三张完整二元读回的联合，
+不是所有原效应，也不是将非正向量 $z$ 冒作态。证毕。
+
+(VIII109.5)的包含—排除算子属于成熟的无三阶干涉／二缝重构恒等式：
+[Ududec—Barnum—Emerson, arXiv:0909.4787v1][Q109UBE] Proposition 1及Appendix
+在其standing condition下证明对应的投影和线性张成等价。
+该standing condition要求每个暴露面有唯一中性互补滤子及唯一补滤子；
+本章不将它当作未核对的W前件，而在109.2—109.3中直接证明这里所需的原代数和全态等价。
+单凭这个成熟恒等式不推出Jordan重构。
+

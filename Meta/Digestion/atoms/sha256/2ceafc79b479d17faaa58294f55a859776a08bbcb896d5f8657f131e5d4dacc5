@@ -1,0 +1,37 @@
+**命题 78.5（真生成族上的非一致性）。** 即使固定维数、全部原态效应、$L,p,\omega$、$U,G$ 和完整 C13，仍不存在与生成框架见证无关的 $f(t)\to0$，使全部真生成三框架的全域保零残差均不超过 $f(\delta)$。
+
+**证明。** 固定 $0<\lambda<1$，使用 76.5 的同一个完整实际模型：
+$$
+A=H_4(\mathbb C),\quad D=H_{16}(\mathbb C),\quad E=H_{64}(\mathbb C),\qquad
+T_\lambda a=\frac{1+\lambda}{2}a+\frac{1-\lambda}{2}a^T,\quad
+L(d,a)=d\otimes T_\lambda a,\quad p=\operatorname{Tr}_1,\quad\omega=I_{16}/16. \tag{78.16}
+$$
+原 $p$ 始终为同一个四维首腿偏迹。$T_\lambda$ 全锥正、保单位、保迹且实线性可逆；两次读回给 $K(a)=I_4/4\otimes T_\lambda a$、$M(a,b)=T_\lambda a\otimes T_\lambda b$、$J(a)=T_\lambda a\otimes I_4$、$H_{\mathrm s}d=d\otimes I_4$、$U=I_{16}$、$G=I_{64}$、$F=M$。故两条实张成、全部实输入的 $Z$、完整 $D_H$ 均固定成立。$\widetilde M=T_\lambda\otimes T_\lambda$ 可逆且在 $I^{\rm raw}$ 中消去两端 $T_\lambda$；原插入为普通中间插单位，即 $d\mapsto d\otimes I_4$ 的腿置换，保整个原锥，给完整 C13。它对纠缠 $d$ 同样成立，不借尚未恢复的第一接口分类；正缺陷时不把分阶段 H13 宣称为已经成立。
+仍令 $X,Y,Z$ 为 Pauli 矩阵，省略张量符号。取 76.4 的 $E,F$ 两套框架，第三套改为
+$$
+N_\theta=\cos\theta X+\sin\theta Y,\qquad
+Q_{ab}(\theta)=\frac{I_4+aN_\theta I+bIN_\theta+abN_\theta N_\theta}{4},\quad a,b\in\{\pm1\}. \tag{78.17}
+$$
+这是两个可交换自伴随对合的四个联合谱投影，各迹一，故完整本原。前两套生成 $H_4(\mathbb R)$；具体地，$E$ 含对角 $e_j$，$q=F_{++}=\mathbf1\mathbf1^*/4$ 给 $16e_j\circ(e_k\circ q)=E_{jk}+E_{kj}$。当 $0<|\theta|<\pi/2$，第三套的带符号和给 $N_\theta I$，减去 $\cos\theta XI$ 并除以 $\sin\theta$ 得 $YI$。由 76.4 的虚 Peirce 分量及实边传播，得到全部虚反对称 Hermitian 矩阵单位，故 $\mathfrak B_\theta=(E,F,Q(\theta))$ 真正生成整个 $A$。$\theta=0$ 时第三套重复 $F$，只生成 $H_4(\mathbb R)$。
+写 $c=\cos\theta,t=\sin\theta$。在全转置下反号的部分恰为
+$$
+Q^-_{ab}=\frac{atYI+btIY+abct(XY+YX)}4,
+\qquad \|Q^-_{ab}\|_2^2=\frac12t^2(1+c^2).
+$$
+这四个 Pauli 张量迹正交、各范数平方四；其余部分被全转置固定。$T_\lambda$ 在两部分分别乘一和 $\lambda$，而每个 $Q_{ab}$ 的范数平方一，因此
+$$
+S_\theta=\sum_{a,b}\operatorname{Tr}[(T_\lambda Q_{ab})^2]
+=4-2(1-\lambda^2)t^2(1+c^2),\qquad d_\theta=4-S_\theta. \tag{78.18}
+$$
+另两套实框架各自的平方范数和为四。第一层每套像的平方范数和为 $4S_r$，第二层为 $4S_r^2$，故由 $\|U\|_2^2=16,\|G\|_2^2=64$ 直接得
+$$
+\delta_J=4d_\theta,\qquad
+\delta_H=4d_\theta(8-d_\theta),\qquad
+\boxed{\delta(\mathfrak B_\theta)=4d_\theta(9-d_\theta)\longrightarrow0.} \tag{78.19}
+$$
+但前两维角中的固定本原投影 $p_\pm=(I_2\pm Y)/2$（其余两维补零）正交，且
+$$
+\langle Jp_+,Jp_-\rangle_D=2(1-\lambda^2)>0. \tag{78.20}
+$$
+它们的谱范数均为一，故直接否定所述统一模量。全部接口与尺度不动，只有框架见证接近真子代数；每个非零角度的生成性均没有失效。证毕。
+

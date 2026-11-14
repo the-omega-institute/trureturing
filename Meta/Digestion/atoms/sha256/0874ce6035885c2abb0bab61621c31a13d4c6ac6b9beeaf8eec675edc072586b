@@ -1,0 +1,8 @@
+**Lemma 23.1 (Literal marked-core recovery).** For every $w\in\{0,\ldots,6\}^*$ and every $j\ge0$,
+
+$$
+\operatorname{Occ}_x(\eta(w)a,E_j)\ \Longrightarrow\ \operatorname{Occ}_u(w,j).
+$$
+
+*Proof.* Each image has exactly one marker, at its first position. If the next marker of a candidate first block were earlier or later than the next actual marker, one of the two marker-free tails would contain a marker. Their first block lengths therefore agree. Equality of the complete blocks and injectivity of the seven displayed images recover the first source letter. Induction on $w$ recovers the whole source core. The empty core is the base case; the empty tail $q_0$ permits adjacent markers.
+

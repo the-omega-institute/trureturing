@@ -1,0 +1,22 @@
+**应用 116.21（复型几何编码的准确反向）。** 设八维欧氏 $H=\ker u$ 上的齐次三次型满足
+
+$$
+\|\nabla F(x)\|^2=9Q(x)^2,\qquad\Delta_HF=0.
+\tag{IX116.66}
+$$
+
+保留 $u(c)=1$ 的定位点，且原 $C$ 恰等于(IX116.61)—(IX116.62)定义的整个区域，
+则原全态、全效应及原评价是复三能级模型；反向其派生数据满足这些条件。
+证明。准确采用[Tkachev Theorem 1.1][Q116T]的成熟分类前置：实齐次eikonal三次型正交等价于
+可约型 $F_0(s,z)=s^3-3s|z|^2$，或维数 $5,8,14,26$ 的四个Cartan型。
+$n$ 维中 $\Delta F_0=6(2-n)s$，故八维谐和排除可约型，余下八维型唯一。
+116.19的三实谱与 $k=2$ 基平方和计算表明标准 $\operatorname{Herm}_3(\mathbb C)_0$ 上的
+$F_{\mathbb C}(X)=\sqrt6\operatorname{Tr}(X^3)$ 属于此型，故有等距同构 $A$ 使 $F=F_{\mathbb C}\circ A$。
+映射 $tc+x\mapsto tI_3/3+Ax$ 保迹；原锥与区域相等的前件及三个实谱判据将原 $C$ 逐点送到全部PSD锥。
+同锥同单位随后将全部原效应送到 $0\preceq E\preceq I_3$，保留全部原概率及116.14的完整静态字典。
+反向取标准矩阵模型、$c=I_3/3$ 即得。不要求三次型到Jordan代数的一般反向分类。
+若只在任意八维 $\ker u$ 另放这样的三次型，而不要求原锥等于上述区域，则没有此原域结论；
+116.20也阻止删去定位。这是已重构分支的可逆几何编码，不是独立公理数减少，成熟分类不另计新定理。证毕。
+
+[Q116T]: https://arxiv.org/pdf/1001.2387v2 "V. G. Tkachev, A generalization of Cartan’s theorem on isoparametric cubics, Theorem 1.1; Proc. Amer. Math. Soc. 138 (2010), 2889–2895."
+

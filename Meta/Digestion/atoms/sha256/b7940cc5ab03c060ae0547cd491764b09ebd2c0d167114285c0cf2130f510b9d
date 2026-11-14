@@ -1,0 +1,62 @@
+**定理149.2的证明。** 先由 XII147 得 $\dim V=9$。引理149.5—149.10均在其原前件下成立。令 $H=\{u=1\}$、$\partial K=\partial_HK\cong S^7$。在引理149.10的同一个紧四维流形 $T\subset Q$ 上，整个实际球族 $x\mapsto D_x$ 连续。其秩三形状算子和局部标架给真正的闭三球丛及其内部丛
+
+$$
+\mathscr E=\{(x,z):x\in T,z\in D_x\},\qquad
+\mathscr E^\circ=\{(x,z):x\in T,z\in\operatorname{ri}D_x\}.
+\tag{149.23}
+$$
+
+局部参数为 $(x,v)\mapsto(x,c_x+B_xv)$，逆由连续左逆给出。$\mathscr E$ 在紧 $T\times K$ 中闭而紧；$\mathscr E^\circ$ 是七维无边界流形。评价
+
+$$
+\operatorname{ev}:\mathscr E^\circ\longrightarrow\partial K
+\tag{149.24}
+$$
+
+连续且单射。若两个球的相对内点相同，该点是原混态，VII103.2的点交规则使两球相同；它们的标签都在 $T\subset P_{\rm s}$，故标签也相同。源、靶均为七维无边界流形，区域不变性给
+
+$$
+\mathcal O=\bigcup_{x\in T}\operatorname{ri}D_x
+\text{ 在整个原 }\partial K\text{ 中开},\qquad
+\mathcal B=\bigcup_{x\in T}D_x\text{ 紧而闭}.
+\tag{149.25}
+$$
+
+这一步支付的是原凸边界中的真实开放性，前面的 $M$-开图没有被提前升级为 $P$-开图。
+
+若 $\mathcal B\ne\partial K$，取紧分离子 $Z=\partial_{\partial K}\mathcal B$。$\mathcal O$ 非空且 $\partial K\setminus\mathcal B$ 非空开，故 $Z$ 非空、真，且其补集分成两个非空不交开集。任取 $z\in Z$，有 $z\in D_x$、$x\in T$。若 $z$ 混，则 $z\in\operatorname{ri}D_x\subset\mathcal O$，违反边界定义。因此
+
+$$
+Z\subseteq\bigcup_{x\in T}S_x\subseteq Q\subseteq P_{\rm s}.
+\tag{149.26}
+$$
+
+这里最后的实际零邻封闭是关键：无需给分支外原纯点预付四维法向。XII147 已对这个 $Z$ 的**每一点**给四维法向。同149.6的原紧层，$Z_j=Z\cap X_j$ 是覆盖 $Z$ 的可数紧闭集，且同胚于 $\mathbb R^4$ 中的紧集。覆盖维数的闭子集单调性及正规空间闭子空间可数和定理，准确用 [Engelking Theorems 3.1.4、3.1.8、1.8.2][S149En]，给
+
+$$
+\dim_{\rm cov}Z\le4.
+\tag{149.27}
+$$
+
+另一方面，对任意非空紧真子集 $Z\subset S^7$ 的 Čech–Alexander 对偶，[Hatcher Corollary 3.45及页256—257的紧集扩张][S149Ha]给
+
+$$
+\check H^6(Z;\mathbb Z)\cong
+\widetilde H_0(S^7\setminus Z;\mathbb Z)\ne0.
+\tag{149.28}
+$$
+
+这里没有给 $Z$ 加局部可缩或流形前件。式(149.27)使每个有限开覆盖可细化为神经维数至多四的覆盖；Čech 群的覆盖神经直接极限于是给 $\check H^6(Z;\mathbb Z)=0$，矛盾。因此 $\mathcal B=\partial K$。
+
+最后返回全部实际标签。任取原 $a\in P$，取原混态 $z\in\operatorname{ri}D_a$。边界覆盖给某个 $x\in T$ 满足 $z\in D_x$；混点交使 $D_a=D_x$。这里只需 $x\in P_{\rm s}$ 的单标签性，便得 $a=x\in T$。所以
+
+$$
+P=T\subseteq Q\subseteq P_{\rm s}\subseteq P,
+\qquad Q=P_{\rm s}=P=M.
+\tag{149.29}
+$$
+
+全局 Inj 已付清，才直接消费 [XI 定理145.2][S149XI145] 的 EB3+Inj+九维分支，得到同锥同单位的(149.5)。其条件应用145.9给标准原效应和球中心；在(149.4)的 $q$ 处评价得到 $\kappa=e_q(q)+e_{q^\sharp}(q)=1$，因为标准球内对径是正交纯点。定理149.2证毕。
+
+此证明复用 [XI142.2第四、五步][S149XI142]的原边界评价和紧分离子方法，但重新支付其入口：紧四维 $T$ 来自(149.4)的紧纯闭包，球连续来自引理149.7；分离子不是任意未知原纯集，而由(149.26)确实落在已付四维法向的 $Q$ 内。没有调用 XI142.2的 Conn、全域根芽、全域 Inj 或全域法向作为前件。
+

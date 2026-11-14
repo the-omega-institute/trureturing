@@ -1,0 +1,17 @@
+**定义 33.1（完整有限合法同时核对）。** 取单位 $u\in\mathbb C^3$、$X=X^*\in M_3(\mathbb C)$、实际 $w\in\mathcal W$，记
+
+$$
+\begin{gathered}
+p=Xu,\qquad q=XCu,\qquad v=w-\iota p,\\
+\mathsf R_\delta=p+\frac\delta2\bigl(\iota(Cp-q)-Cw\bigr),\qquad
+\mathsf S_\delta=w+\frac\delta2\bigl(Cp+q+\iota Cw\bigr),\\
+\zeta_\delta=\beta_\delta-\delta\iota\alpha_\delta,
+\qquad 0<\alpha_\delta<\infty,\quad\beta_\delta\in\mathbb R,\\
+\mathsf S_\delta=\zeta_\delta\mathsf R_\delta\quad(\delta=+1,-1),
+\qquad F(S)=\operatorname{Re}(v^*Su).
+\end{gathered}
+\tag{33.1}
+$$
+
+两份比例均须在全部三坐标成立。这是 (32.5) 的完整核关系，不是分别投影后的关系；$X$ 必须同时实现 $Xu$ 与 $XCu$。
+

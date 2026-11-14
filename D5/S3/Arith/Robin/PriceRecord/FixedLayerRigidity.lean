@@ -154,7 +154,7 @@ private theorem eventually_prime_in_relative_window {A B : ℝ}
       (fun q _ _ => Real.log_natCast_nonneg q)
   exact hthetaless.not_ge htheta_le
 
-private theorem fixed_cardinality_prime_window {A B : ℝ}
+theorem fixed_cardinality_prime_window {A B : ℝ}
     (hA : 0 < A) (hAB : A < B) (N : ℕ) : ∃ Y : ℝ, ∀ x : ℝ, Y ≤ x → ∃ S : Finset ℕ,
       S.card = N ∧ ∀ q ∈ S,
         q.Prime ∧ A * x < (q : ℝ) ∧ (q : ℝ) ≤ B * x := by
@@ -554,7 +554,7 @@ private theorem prime_product_factorization {S : Finset ℕ}
   simpa [primePowerProduct] using
     (primeBlock_factorization hS (fun _ => 1) p)
 
-private theorem objective_exchange_delta (lambda : ℝ) {m : ℕ}
+theorem objective_exchange_delta (lambda : ℝ) {m : ℕ}
     (hm : 0 < m) (D U : Finset ℕ)
     (hD : ∀ p ∈ D, p.Prime) (hU : ∀ q ∈ U, q.Prime)
     (hDvd : ∀ p ∈ D, p ∣ m) (hDU : Disjoint D U) : let d : ℕ := ∏ p ∈ D, p

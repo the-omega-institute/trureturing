@@ -3445,3 +3445,1335 @@ $$
 白话说，在这个八次域里，完整二元关系表确实只藏着两个整体形状：原窗口和它的正交双胞胎，第三种形状已被排除。两种依赖图各自的实现由经典 $P_8$ 刚性锁住，而一个原域线性方程组把分裂表示收回同一来源中的实际乘数。再问一次“三份关系是否共享同一个非零见证”，就能在这两个形状之间作出选择。
 
 ## 追加锚（本行以下为增补区）
+
+## 43. 任意实际八次域的四平面原商支持纤维
+
+**定义 43.1（固定原域、四平面与迹对偶）。** 固定特征零域 $F$ 及同一个实际域扩张 $D/F$，$[D:F]=8$。本节的窗口与竞争窗口始终都是四维 $F$-子空间 $W,Y\le_F D$，并定义
+
+$$
+\begin{aligned}
+Q_W&=\{u/v:u,v\in W,\ v\ne0\},\\
+d_W(r)&=\dim_F(W\cap rW)\qquad(r\in D^\times),\\
+E_W&=\{c\in D:cW\subseteq W\},\\
+W^\perp&=\{z\in D:\operatorname{Tr}_{D/F}(zw)=0\text{ 对每个 }w\in W\}.
+\end{aligned}
+\tag{43.1}
+$$
+
+$Q_W$ 包含零，$d_W$ 仅在非零原标签上使用。乘除、标签与整体标量均属于这个原 $D$；不允许域自同构重标标签。可分性使迹配对非退化，故 $W^\perp$ 也是四平面。
+
+**定理 43.2（一般八次域的支持、交维与至多两个标量轨道）。** 对定义 43.1 中任意 $F,D,W,Y$，有
+
+$$
+\boxed{\quad
+Q_Y=Q_W
+\quad\Longleftrightarrow\quad
+\bigl[\ \forall r\in D^\times,\ d_Y(r)=d_W(r)\ \bigr]
+\quad\Longleftrightarrow\quad
+\bigl[\ Y=\gamma W\ \text{或}\ Y=\gamma W^\perp
+\text{，某个 }\gamma\in D^\times\ \bigr].
+\quad}
+\tag{43.2}
+$$
+
+因而在四平面类内，完整原商支持纤维与完整原交维函数纤维相同，均至多包含两个原标量轨道；两轨道允许重合。进一步，若 $E_W\ne F$，则有更强的单侧结论
+
+$$
+Q_Y\subseteq Q_W\quad\Longrightarrow\quad
+Y=\gamma W\quad\text{对某个 }\gamma\in D^\times.
+\tag{43.3}
+$$
+
+这里没有预设竞争窗口 $Y$ 对 $E_W$ 线性。因此非平凡乘子域分支的相等支持纤维恰有一个标量轨道。
+
+证明。使用定理 26.2 的实际域结论：$E_W$ 是中间域，$[E_W:F]\mid4$，最小正交维等于 $[E_W:F]$；在 $E_W=F$ 时，其证明中的分裂行拟阵连通性及严格秩界 (26.16) 也直接适用。迹对偶的交维恒等式直接使用 (34.7)、引理 40.2。以下补足一般八次域的支持与表示桥梁。
+
+（一）非平凡乘子域，以及竞争窗口的自动线性性。设 $E=E_W$，$e=[E:F]>1$，则 $e=2$ 或 $4$。对两个窗口各自整体缩放不会改变各自的商支持或乘子域。
+
+若 $e=4$，可将 $W$ 归一化为 $E$，并独立将 $Y$ 归一化为包含 $1$。于是 $Y\subseteq Q_Y\subseteq Q_W=E$；两边的 $F$-维数都是四，所以 $Y=E$，还原缩放即得 (43.3)。
+
+若 $e=2$，将 $W$ 归一化为 $E+Ez$，并仍将 $Y$ 归一化为包含 $1$。由 $[D:E]=4$，$z$ 在 $E$ 上的次数只能为二或四；若为二，则 $W=E(z)$，其乘子域为这个四次于 $F$ 的域，与 $E_W=E$ 矛盾。因此 $D=E(z)$，且 $1,z,z^2,z^3$ 是 $E$-基。写成
+
+$$
+z^4=b_0+b_1z+b_2z^2+b_3z^3,\qquad
+ t=t_0+t_1z+t_2z^2+t_3z^3,\qquad b_i,t_i\in E.
+$$
+
+在 $W$ 的基 $1,z$ 及 $D/W$ 的基 $z^2,z^3$ 下，乘以 $t$ 再投影到 $D/W$ 的矩阵为
+
+$$
+\begin{pmatrix}
+t_2&t_1+b_2t_3\\
+t_3&t_2+b_3t_3
+\end{pmatrix}.
+$$
+
+所以对非零原 $t$，
+
+$$
+t\in Q_W\quad\Longleftrightarrow\quad q(t)=0,
+\qquad
+q(t)=t_2^2+b_3t_2t_3-t_1t_3-b_2t_3^2.
+\tag{43.4}
+$$
+
+这是 $D$ 上的 $E$-值二次型，其根基恰为 $E\cdot1$：在 $t_1,t_2,t_3$ 上的对称矩阵是
+
+$$
+\begin{pmatrix}
+0&0&-1/2\\
+0&1&b_3/2\\
+-1/2&b_3/2&-b_2
+\end{pmatrix},\qquad \det=-1/4.
+$$
+
+模去根基后得到三维非退化二次空间。若其中一个子空间全迷向，则它包含于自己的正交补，故维数至多一；因此原二次空间的全迷向 $E$-子空间维数至多二。
+
+由 $1\in Y$ 及支持包含，对每个 $y\in Y$ 有 $q(y)=0$，其中 $y=0$ 时直接使用二次型的零值。令 $B_q(x,y)=(q(x+y)-q(x)-q(y))/2$；又因 $y+y'\in Y$，极化给出 $B_q(y,y')=0$。二次型的 $E$-齐次性及极化型的 $E$-双线性表明 $EY=\operatorname{span}_E Y$ 仍全迷向。因此
+
+$$
+4=\dim_F Y\le\dim_F(EY)=2\dim_E(EY)\le4,
+\qquad Y=EY.
+\tag{43.5}
+$$
+
+这证明了所需的自动 $E$-线性性，而不是将它加入前件。现在写 $Y=E+Ey$，$y\notin E$。因 $y\in Q_W$，存在 $a,b,c,d\in E$，使
+
+$$
+y=\frac{a+bz}{c+dz},\qquad c+dz\ne0.
+$$
+
+$y\notin E$ 迫使 $ad-bc\ne0$，故
+
+$$
+(c+dz)Y=\operatorname{span}_E\{c+dz,a+bz\}=E+Ez=W.
+$$
+
+还原归一化便得 (43.3)，没有用到 $Y$ 的任何额外乘子假设。
+
+（二）平凡乘子域的归一化矩阵。以下设 $E_W=F$。先找原 $a\in D^\times\setminus Q_W$。将 $D$ 看成八维仿射 $F$-空间，商映射
+
+$$
+\phi:W\times W\dashrightarrow D,\qquad (u,v)\longmapsto u/v
+\tag{43.6}
+$$
+
+在分母范数非零处为有理映射。分母的每个非零基坐标片上，可以同时缩放分子、分母，将该坐标置为一，故其几何像闭包维数至多 $4+3=7$。这给出一个在 $F$ 上定义的真闭子集，包含全部原商；无限域 $F$ 的原坐标点在八维仿射空间中 Zariski 稠密。因此可取上述原 $a$。这一论证也说明并非先假定行列式非零。
+
+记 $i_W:W\hookrightarrow D$、$\pi_W:D\to D/W$，并令 $M_t$ 为原乘法算子。取两端的 $F$-基，置
+
+$$
+A_W(t)=\pi_W M_t i_W,\qquad f_W(t)=\det A_W(t).
+\tag{43.7}
+$$
+
+$f_W$ 是原八个线性坐标上的齐次四次多项式。对非零原 $t$，乘以 $t$ 把 $\ker A_W(t)=W\cap t^{-1}W$ 同构到 $W\cap tW$，从而
+
+$$
+\dim_F\ker A_W(t)=d_W(t),\qquad
+f_W(t)=0\ \Longleftrightarrow\ t\in Q_W.
+\tag{43.8}
+$$
+
+$t=0$ 时 $A_W(0)=0$ 的核维数为四，而 $W\cap0W=\{0\}$；不将这个核维数当作零标签的交维。由所选 $a$，$A_W(a)$ 可逆。定义原 $F$-线性算子
+
+$$
+N_W=i_W A_W(a)^{-1}\pi_W.
+$$
+
+因为 $\pi_W i_W=0$，且两端的嵌入、商映射分别单射、满射，有
+
+$$
+N_W^2=0,\qquad
+\operatorname{im}N_W=\ker N_W=W,\qquad
+\operatorname{rank}N_W=4.
+\tag{43.9}
+$$
+
+取有限 Galois 正规闭包 $K/F$，固定分裂同构 $D\otimes_F K\simeq K^\Omega$，其中 $\Omega=\operatorname{Hom}_F(D,K)$、$|\Omega|=8$。以下两窗口使用同一套嵌入标签。以 $V$ 表示 $W_K$ 的 $8\times4$ 列基矩阵，以 $U$ 表示商映射的 $4\times8$ 矩阵；于是
+
+$$
+UV=0,\qquad A_0=U\operatorname{diag}(\sigma(a))V,\qquad
+N=VA_0^{-1}U.
+\tag{43.10}
+$$
+
+这里 $N$ 就是 $N_W$ 的分裂坐标矩阵。Sylvester 行列式恒等式给出
+
+$$
+\frac{f_W(a+x)}{f_W(a)}
+=\det\bigl(I_4+A_0^{-1}U\operatorname{diag}(x)V\bigr)
+=\det\bigl(I_8+N\operatorname{diag}(x)\bigr).
+\tag{43.11}
+$$
+
+$x$ 在右边是八个独立的分裂坐标，左边经同一个可逆线性坐标变换理解。$G=\operatorname{Gal}(K/F)$ 在 $\Omega$ 上传递，这是原 $D$ 为域且 $D/F$ 可分的结果。$N_W$ 在原 $F$ 上定义，故
+
+$$
+N_{g\sigma,g\tau}=g(N_{\sigma,\tau})\qquad(g\in G).
+\tag{43.12}
+$$
+
+因此其有向零模式与全部带标签子矩阵的秩均被该半线性作用保持。
+
+（三）原支持到不可约四次方程。令 $M$ 为 $V$ 的行拟阵，秩函数为
+
+$$
+\rho(S)=\dim_K\operatorname{pr}_S W_K.
+$$
+
+$E_W=F$ 时，直接由 §26 的 (26.12)–(26.16)，$M$ 连通且
+
+$$
+2\rho(S)\ge |S|+1\qquad
+(\varnothing\ne S\subsetneq\Omega).
+\tag{43.13}
+$$
+
+这些结论控制整个分裂稳定子，不只控制原来逐个列出的乘数。这里使用的是同一原八次域的实际窗口，不另加拟阵一般位置假设。
+
+先证 $N$ 为不可约矩阵，即其非零条目有向图强连通。由 (43.12)，$G$ 传递地置换其强连通分量。分量缩并图是有限有向无环图；它有汇点，而顶点传递性使每个顶点都是汇点，故没有边。若存在多个分量，$N$ 就在这些坐标块上分块对角，由 $\operatorname{im}N=W_K$ 可知 $W_K$ 也按这些块直和分解；于是 $M$ 不连通，矛盾。
+
+现使用 Al Ahmadieh，[*The Fiber of the principal minor map*，arXiv:2309.00806v2，Lemma 5.1](https://arxiv.org/html/2309.00806v2)：在任意域上，矩阵 $N$ 不可约当且仅当
+
+$$
+g(y)=\det\bigl(\operatorname{diag}(y)+N\bigr)
+$$
+
+不可约。非零条目图在扩域后不变，故将该引理应用于代数闭包可知 $g$ 绝对不可约。置 $h(x)=\det(I_8+N\operatorname{diag}(x))$。有
+
+$$
+g(y)=\Bigl(\prod_{\sigma\in\Omega}y_\sigma\Bigr)
+ h\bigl((y_\sigma^{-1})_\sigma\bigr).
+\tag{43.14}
+$$
+
+变量取逆是 Laurent 多项式环的自同构，$g$ 也不是坐标因子；因此 $h$ 在 Laurent 环中不可约。又 $h(0)=1$，排除了将多项式因子在该环中变成单位的非平凡单项式因子。故 $h$ 绝对不可约，(43.11) 遂给出 $f_W$ 的几何不可约性。
+
+还必须证明原商足够稠密，而非将原标签上的零集直接等同于全部几何零集。由定理 26.2 及 $E_W=F$，存在原 $u,v\in W\setminus\{0\}$，使 $r=u/v$ 满足 $d_W(r)=1$。在该原点对处，(43.6) 的微分为
+
+$$
+(h,k)\longmapsto v^{-1}(h-rk),\qquad
+\operatorname{rank}d\phi_{(u,v)}=\dim_F(W+rW)=7.
+\tag{43.15}
+$$
+
+特征零下的 Jacobian 像维数判据及前述七维上界说明商映射的几何像闭包恰为七维。它包含于不可约七维超曲面 $V(f_W)$，所以两者相等。这是 §41 的像维数论证，在这里以定理 26.2 提供原域中的秩七点。原 $F$-坐标点在映射定义域中 Zariski 稠密，理由是无限域上的非零多项式不能在全部原坐标上消失；分母非零的原 $D$ 元素在每个嵌入下均非零。因此即使在代数闭包中取闭包，也有
+
+$$
+\overline{\sigma(Q_W)}^{\mathrm{Zar}}=V(f_W).
+\tag{43.16}
+$$
+
+现在设 $Q_Y=Q_W$。同一原 $a$ 也在 $Q_Y$ 外，所以 $f_Y(a)\ne0$。$f_Y$ 在 (43.16) 的稠密原商上消失，零点定理及 $f_W$ 的几何不可约性给出 $f_W\mid f_Y$。二者同为四次，从而
+
+$$
+f_Y=c f_W,\qquad
+c=f_Y(a)/f_W(a)\in F^\times.
+\tag{43.17}
+$$
+
+分别对 $W,Y$ 在这个同一原 $a$ 处归一化，由 (43.11)、(43.17) 得
+
+$$
+\det(I_8+N_Y\operatorname{diag}(x))
+=\det(I_8+N_W\operatorname{diag}(x)).
+\tag{43.18}
+$$
+
+$\prod_{\sigma\in S}x_\sigma$ 的系数恰为 $S$ 对应的主子式，故两矩阵的全部对应主子式相等。至此只得到了行列式与主子式信息，没有从支持预先推断各点的精确核维数。
+
+（四）Galois 传递性排除八阶矩阵的切口。称 $S\sqcup T=\Omega$ 为 $N$ 的切口，若
+
+$$
+2\le |S|\le6,\qquad
+\operatorname{rank}N[S,T]\le1,\qquad
+\operatorname{rank}N[T,S]\le1.
+\tag{43.19}
+$$
+
+这正是下述主子式重建文献使用的 cut。设存在这样的切口。由 $\ker N=W_K$，
+
+$$
+\dim N(K^T)=|T|-\dim(W_K\cap K^T)
+=|T|-4+\rho(S).
+$$
+
+$N(K^T)$ 在 $K^S$ 上的投影秩至多一；该投影的核包含于 $\operatorname{im}N\cap K^T=W_K\cap K^T$，维数至多 $4-\rho(S)$。因此
+
+$$
+|T|-4+\rho(S)\le1+4-\rho(S),\qquad
+2\rho(S)\le |S|+1.
+$$
+
+交换 $S,T$ 得相同的另一条上界。结合已有的严格下界 (43.13)，两边必须分别取等：
+
+$$
+2\rho(S)=|S|+1,\qquad 2\rho(T)=|T|+1.
+\tag{43.20}
+$$
+
+所以两边大小均为奇数，只能为三和五。设三元侧为 $C$，则
+
+$$
+\rho(C)=2,\qquad \rho(C^c)=3,\qquad
+\rho^*(C)=|C|-4+\rho(C^c)=2,
+\tag{43.21}
+$$
+
+其中 $\rho^*$ 是对偶拟阵的标准秩函数。
+
+由 (43.13)，每个二元集 $H$ 都满足 $\rho(H)=2$，其六元补集满足 $\rho(H^c)=4$，故 $\rho^*(H)=2-4+4=2$。所以 $M$ 及其对偶都简单。式 (43.21) 表明 $C$ 同时是三元回路和三元余回路。
+
+考察两个不同的 Galois 共轭 $C,C'$。它们不可能只交一个元素，因为回路与余回路不能恰交一个元素：在线性表示中，两者分别给出相互正交的依赖向量与行空间向量，若支持只交一点，点积就只有一个非零项。它们也不可能交两个元素：此时二元交集秩二，秩的次模性给出
+
+$$
+\rho(C\cup C')\le\rho(C)+\rho(C')-\rho(C\cap C')=2,
+$$
+
+而四元并集由 (43.13) 必须秩至少三，矛盾。故不同共轭只能互不相交。全部共轭之并是非空的 $G$-不变集合，$G$ 在八个嵌入上传递，所以这些三元组必须分拆全部八个标签，与 $3\nmid8$ 矛盾。这证明 $N_W$ 无切口。
+
+（五）成熟主子式重建与原域乘数下降。现在应用 Loewy 的无切口重建结论，精确采用 Al Ahmadieh 上引文 Theorem 4.1 的无切口方向；相同充分条件也见 Chatterjee–Ghosh–Gurjar–Raj，[*Characterizing and Testing Principal Minor Equivalence of Matrices*，arXiv:2410.01961v1，Lemma 2.8(2)](https://arxiv.org/html/2410.01961v1)。其陈述是：不可约且无切口的矩阵，其全部对应主子式确定矩阵至可逆对角共轭或转置后的可逆对角共轭。这里的 diagonal equivalence 包含转置，不能删去这一支。
+
+由（三）（四），该定理的前件已满足；(43.18) 给出其主子式相等前件。因此存在分裂域上的可逆对角矩阵 $\Lambda$，使
+
+$$
+N_Y=\Lambda N_W\Lambda^{-1}
+\quad\text{或}\quad
+N_Y=\Lambda N_W^{\mathsf T}\Lambda^{-1}.
+\tag{43.22}
+$$
+
+取像空间，使用 (43.9)，得到
+
+$$
+Y_K=\Lambda W_K
+\quad\text{或}\quad
+Y_K=\Lambda\operatorname{im}N_W^{\mathsf T}
+=\Lambda(W^\perp)_K.
+\tag{43.23}
+$$
+
+最后一个等式来自 $\operatorname{im}N_W^{\mathsf T}=(\ker N_W)^\perp$，以及分裂坐标中原迹配对恰为标准点积 $\sum_\sigma x_\sigma y_\sigma$。因此转置分支准确对应原迹对偶，没有引入新的标签置换。
+
+为将分裂对角乘数收回原域，直接使用 §26、§42 的有限线性核扩底事实。对 $A=W$ 或 $W^\perp$，在原 $F$ 上置
+
+$$
+T(A,Y)=\ker\bigl(D\longrightarrow\operatorname{Hom}_F(A,D/Y)\bigr),
+\qquad c\longmapsto(z\longmapsto cz+Y).
+$$
+
+式 (42.8) 的同一扩底保核事实对任意当前 $F$ 给出
+
+$$
+T(A,Y)\otimes_F K
+=\{c\in D\otimes_F K:cA_K\subseteq Y_K\}.
+\tag{43.24}
+$$
+
+(43.23) 的对角向量是右边的一个非零元素，故原 $T(A,Y)$ 非零。取原 $0\ne\gamma\in T(A,Y)$，原 $D$ 为域使乘 $\gamma$ 单射；$\gamma A\subseteq Y$ 及两边同为四维便给出 $Y=\gamma A$。这里并未断言任意分裂对角向量本身是某个原元素的嵌入像，只利用非零线性核下降取得一个原乘数。
+
+这完成了 $E_W=F$ 时从支持相等到第三项的证明；$E_W\ne F$ 时已由（一）给出更强结论。反向，整体原标量不变性与引理 40.2 在 $n=8,k=4$ 时直接给出
+
+$$
+d_{\gamma W}(r)=d_W(r),\qquad
+d_{\gamma W^\perp}(r)=d_{W^\perp}(r)=d_W(r)
+\qquad(r\in D^\times).
+\tag{43.25}
+$$
+
+因此标量或迹对偶关系推出全部精确交维相等；交维相等再由 $Q_W=\{0\}\cup\{r\in D^\times:d_W(r)>0\}$ 推出支持相等。若 $E_W\ne F$，将 $Y=W^\perp$ 代入（一）还说明两种轨道必然重合。这证明全部结论。$\square$
+
+本定理区分三层信息：支持只记录哪些非零原标签的交维为正；四次行列式还记录一份代数方程；精确交维是各原标签处的核维数。一般行列式相等并不直接给出核维数相等。这里先以原商稠密性取得方程，再由实际域的 Galois 约束排除矩阵切口，应用既有主子式重建并下降到原标量或迹对偶，最后才用 (43.25) 恢复精确交维。
+
+八点分裂几何本身也有精确先例。Howard–Millson–Snowden–Vakil，[*The geometry of eight points in projective space: Representation theory, Lie theory, dualities*，arXiv:1103.5255v1，§8、Propositions 8.1–8.2](https://arxiv.org/html/1103.5255v1)，证明八个带标签的 $\mathbb P^3$ 点配置的不变量环中，由一次不变量生成的子环给出 Gale 对偶的商。这些一次不变量由互补括号积 $p_Ip_{I^c}$ 张成，正是 (41.6) 的系数；行基变换与逐行缩放对应配置的射影等价，取正交补对应 Gale 对偶。式 (43.13) 是等权配置的严格稳定条件，因此稳定分裂配置中“至多原配置与 Gale 对偶”已有该不变量论表述。本节不将这个几何二重性列作新发现；上述原文也不替代从完整原商到几何方程的稠密桥、原乘数下降及非平凡乘子域分支的自动线性性。
+
+所用的矩阵不可约性判据、无切口主子式重建、Sylvester 恒等式、拟阵对偶及回路与余回路正交性都是既有工具。本节的综合推导将它们接到 §26 的实际域严格秩界与最小正交维、§§34、40 的迹对偶和 §42 的原线性核下降，取得同一原八次域中全部四平面的字面支持与交维纤维结论，不依赖特定 $P_8$ 表示。本条只量化固定八次域中的四平面，不将 §42 特定例子中对全部竞争维数的结论扩张到这里。
+
+白话说，完整的原商表在任意特征零八次域中至多留下两种整体形状：窗口本身与它的迹正交补。若窗口有较大的乘子域，同支持的竞争四平面会被迫继承该域的线性结构，两种形状合成一个标量轨道；否则，可能产生额外歧义的矩阵切口会要求把八个共轭标签分成三元组，因而被排除。这个结论保留每一个原标签，且只比较四维窗口。
+
+## 追加锚（本行以下为增补区）
+
+## 44. 互补基单交换条件下的一般次数原商纤维
+
+**定义 44.1（同一原域与互补基单交换条件）。** 固定特征零域 $F$、同一个实际域扩张 $D/F$ 及整数 $m\ge4$，满足 $[D:F]=2m$。对每个非零 $F$-子空间 $U\le_F D$，沿用
+
+$$
+Q_U=\{u/v:u,v\in U,\ v\ne0\},\qquad
+d_U(r)=\dim_F(U\cap rU)\quad(r\in D^\times).
+\tag{44.1}
+$$
+
+原商集包含零。所有商、标签与整体乘数均使用这个原 $D$ 的乘法，不作标签自同构重排。$U^\perp$ 表示原迹配对 $\operatorname{Tr}_{D/F}(uv)$ 的正交补。
+
+取有限正规闭包 $K/F$，以 $\Omega=\operatorname{Hom}_F(D,K)$ 标记分裂同构 $D\otimes_F K\simeq K^\Omega$，并将 $W_K=W\otimes_F K$ 视为其中的 $m$-平面。选择原 $W$ 的一个 $F$-基 $w_1,\ldots,w_m$，令 $B_W=(\sigma(w_j))_{\sigma,j}$。称 $W$ 满足条件 $\mathrm H$，若存在分拆 $\Omega=E\sqcup E^c$，使 $E,E^c$ 都是 $B_W$ 的行基，且
+
+$$
+E-\{e\}+\{f\},\qquad E^c-\{f\}+\{e\}
+\quad\text{均为行基}\qquad(e\in E,\ f\in E^c).
+\tag{44.2}
+$$
+
+这只涉及带标签行拟阵，不依赖所选列基或进一步扩域。将 $E$ 的行排在前面并归一化列基，等价地写成
+
+$$
+W_K=\operatorname{colspan}\begin{pmatrix}I_m\\ A\end{pmatrix},
+\qquad A\in\operatorname{GL}_m(K),\qquad
+a_{ji}\ne0,\quad (A^{-1})_{ij}\ne0\quad(1\le i,j\le m).
+\tag{44.3}
+$$
+
+确实，以 $E$ 为基时的单交换子式是 $A$ 的条目；以 $E^c$ 为基时的单交换子式是 $A^{-1}$ 的条目，均只差非零基子式及符号。统一行拟阵，即每个 $m$ 元行集都是基，蕴含 $\mathrm H$；$\mathrm H$ 只要求这两组互补基及其单交换。
+
+**定理 44.2（单交换条件下的完整原支持与交维纤维）。** 在定义 44.1 的同一原 $F,D$ 中，设 $W$ 为满足 $\mathrm H$ 的 $m$-平面。则对每个非零 $F$-子空间 $Y\le_F D$，不预设其维数，有
+
+$$
+\boxed{\quad
+Q_Y=Q_W
+\ \Longleftrightarrow\
+\bigl[\ \forall r\in D^\times,\ d_Y(r)=d_W(r)\ \bigr]
+\ \Longleftrightarrow\
+\bigl[\ Y=\gamma W\ \text{或}\ Y=\gamma W^\perp,\
+             \gamma\in D^\times\ \bigr].
+\quad}
+\tag{44.4}
+$$
+
+支持相等因而强制 $\dim_FY=m$。其纤维至多有两个原非零标量轨道，允许重合。此外，$W$ 的原商行列式绝对不可约，原 $Q_W$ 在它的超曲面中 Zariski 稠密，闭包维数为 $2m-1$，且 $Q_W\ne D$。存在原 $r_0\in D^\times$ 满足 $d_W(r_0)=1$。
+
+证明。（一）原行列式与单交换系数。固定原 $D$ 的一个 $F$-基。对任意 $m$-平面 $U$，令 $B_U^F$ 为其包含矩阵，$M_q$ 为原乘法算子，并置
+
+$$
+\Delta_U(q)=\det[\,B_U^F\mid M_qB_U^F\,].
+\tag{44.5}
+$$
+
+这是原 $2m$ 个坐标上的齐次 $m$ 次多项式，暂允许它恒为零。对每个原 $q\in D$，包括零，都有
+
+$$
+\Delta_U(q)=0\quad\Longleftrightarrow\quad q\in Q_U.
+\tag{44.6}
+$$
+
+左边等价于存在不全为零的 $a,b\in U$ 满足 $a+qb=0$；因包含映射单射，必有 $b\ne0$，故 $q=-a/b$。反向由商表示给出。这里实际使用了原 $D$ 为域。
+
+在同一分裂坐标中，$\Delta_U$ 只差非零常数便成为
+
+$$
+P_U(q)=\det[\,B_U\mid\operatorname{diag}(q)B_U\,].
+$$
+
+按右侧 $m$ 列作 Laplace 展开，$q_I=\prod_{\sigma\in I}q_\sigma$ 的系数为带固定符号的互补 Plücker 积 $p_I(U)p_{I^c}(U)$。这是 (41.6) 的同一行列式展开。对 (44.3) 记分裂变量为 $(x_1,\ldots,x_m,y_1,\ldots,y_m)$，$D_x=\operatorname{diag}(x_i)$、$D_y=\operatorname{diag}(y_j)$，消去左下块得到
+
+$$
+\begin{aligned}
+P_W(x,y)&=\det(D_yA-AD_x)=\det(A)\,g_A(x,y),\\
+g_A(x,y)&=\det(D_y-AD_xA^{-1}).
+\end{aligned}
+\tag{44.7}
+$$
+
+$g_A$ 齐次且对每个变量次数至多一。其下列系数均非零：
+
+$$
+[y_1\cdots y_m]g_A=1,\qquad
+\left[x_i\prod_{\ell\ne j}y_\ell\right]g_A
+=-a_{ji}(A^{-1})_{ij}\ne0.
+\tag{44.8}
+$$
+
+这些系数已足以证明绝对不可约。若在任意扩域中 $g_A=fg$ 非平凡分解，因乘积齐次，可取 $f,g$ 齐次；逐变量次数相加又使每个变量只属于其中一个因子。令 $S$ 为属于 $f$ 的变量集，则每个支撑单项式的 $S$-次数均为 $\deg f$。比较 (44.8) 中的 $y_1\cdots y_m$ 与将 $y_j$ 换成 $x_i$ 的单项式，得到
+
+$$
+\boldsymbol1_{\{x_i\in S\}}=\boldsymbol1_{\{y_j\in S\}}
+\qquad\text{对所有 }i,j.
+$$
+
+于是所有变量都在同一因子中，另一因子为常数，矛盾。因此 $g_A$、$P_W$ 及原坐标中的 $\Delta_W$ 都绝对不可约。无限域上非零多项式有原坐标非零值，故 (44.6) 还给出 $Q_W\ne D$。
+
+（二）分裂秩见证与实际原域返回。置 $V=W_K$，取
+
+$$
+u_0=\begin{pmatrix}e_1\\ Ae_1\end{pmatrix}\in V,
+\qquad v_0\in V\cap(K^\times)^{2m},\qquad
+q_0=(u_{0,\sigma}/v_{0,\sigma})_\sigma.
+\tag{44.9}
+$$
+
+$v_0$ 存在，因为各坐标在 $V$ 上均非零，有限个真坐标超平面不能覆盖无限域上的 $V$。$u_0$ 的后 $m$ 个坐标均非零，前 $m$ 个坐标仅第一个非零。
+
+若 $b\in V$ 且 $a=\operatorname{diag}(q_0)b\in V$，则 $a$ 的前块第 $2,\ldots,m$ 个坐标为零，由前块投影同构可知 $a=\lambda u_0$。后块中 $q_0$ 的坐标均非零，故 $b$ 的后块与 $\lambda v_0$ 相同；后块投影也是同构，所以 $b=\lambda v_0$。反向显然成立。因而
+
+$$
+\{b\in V:\operatorname{diag}(q_0)b\in V\}=Kv_0,\qquad
+\operatorname{rank}[\,B_W\mid\operatorname{diag}(q_0)B_W\,]=2m-1.
+\tag{44.10}
+$$
+
+这里 $q_0$ 有零分裂坐标，绝非原 $D^\times$ 元素的嵌入像；它只证明一个原系数秩条件不是恒等零。
+
+具体地，取原点对参数 $(u,v)\in W\times W$，在范数 $N_{D/F}(v)\ne0$ 的开集 $\mathcal X$ 上，$\rho(u,v)=uv^{-1}$ 是原 $F$ 上的正则映射。原矩阵
+
+$$
+\mathcal M(u,v)=[\,B_W^F\mid M_{uv^{-1}}B_W^F\,]
+\tag{44.11}
+$$
+
+的条目是原 $F$ 系数有理函数，分母为 $N_{D/F}(v)$ 的幂。对原坐标矩阵扩底并换成分裂坐标后，(44.10) 说明它的某个 $(2m-1)$ 阶子式不是零有理函数。清除范数分母，得到非零 $h\in F[W\times W]$。由于 $F$ 无限，可取原 $u,v\in W$ 使
+
+$$
+h(u,v)N_{D/F}(v)\ne0.
+\tag{44.12}
+$$
+
+对这个实际点对，$r_0=u/v\in D$，(44.11) 的秩至少为 $2m-1$；由 (44.6) 其行列式为零，故秩恰为 $2m-1$。$r_0$ 不为零，因为零标签处 (44.11) 的秩只有 $m$。原 $r_0$ 可逆，两组列各有秩 $m$，所以
+
+$$
+d_W(r_0)=2m-\operatorname{rank}\mathcal M(u,v)=1.
+\tag{44.13}
+$$
+
+这一步返回的是原 $F$ 参数及原 $W$ 元素，并未将 (44.9) 的零坐标向量当作域元素。按 §26 的乘子域结论，$W\cap r_0W$ 对 $E_W$ 线性，故 (44.13) 也给出 $E_W=F$。
+
+（三）原支持稠密、竞争维数及方程相等。沿用 (43.15) 的商映射微分，在 (44.12) 的原点对处有
+
+$$
+d\rho_{(u,v)}(h,k)=v^{-1}(h-r_0k),\qquad
+\operatorname{rank}d\rho_{(u,v)}=\dim_F(W+r_0W)=2m-1.
+\tag{44.14}
+$$
+
+特征零下的像维数判据使几何像闭包维数至少为 $2m-1$。另一方面，像包含于绝对不可约超曲面 $V(\Delta_W)$，后者维数恰为 $2m-1$，故闭包就是该超曲面。
+
+还须核对原点的稠密性。$\mathcal X$ 是原 $F$ 仿射空间中的非空开集，其原 $F$ 点在代数闭包上仍 Zariski 稠密：在无限子域上，任意扩域系数的非零多项式都不能在全部原坐标上消失，逐变量归纳即可；再乘开集的非零范数多项式可得开集版本。因此任何在 $\rho(\mathcal X(F))=Q_W$ 上消失的多项式，其拉回在整个 $\mathcal X$ 上消失。由此，在任一含 $K$ 的代数闭包中，
+
+$$
+\overline{Q_W}^{\,\mathrm{Zar}}=V(\Delta_W),\qquad
+\dim\overline{Q_W}^{\,\mathrm{Zar}}=2m-1.
+\tag{44.15}
+$$
+
+这里用固定原坐标理解左边，换成分裂坐标则得到同一等式的可逆线性像。
+
+设 $Q_Y=Q_W$，记 $r=\dim_FY$。若 $r<m$，在商映射的分母各非零基坐标片上，可将分子、分母同时缩放，使该坐标为一；每片至多有 $2r-1$ 个参数。因此
+
+$$
+\dim\overline{Q_Y}^{\,\mathrm{Zar}}\le2r-1<2m-1,
+$$
+
+与 (44.15) 矛盾。若 $r>m$，则对每个原 $q\in D^\times$，
+
+$$
+\dim_F(Y\cap qY)\ge2r-2m>0,
+$$
+
+于是 $Q_Y=D$，也与 $Q_W\ne D$ 矛盾。因此 $r=m$，可使用 (44.5)。
+
+$\Delta_Y$ 非零，否则 (44.6) 给出 $Q_Y=D$。它在稠密的 $Q_W$ 上消失，由绝对不可约性及零点定理，$\Delta_W\mid\Delta_Y$。二者次数同为 $m$，所以
+
+$$
+\Delta_Y=c\Delta_W,\qquad c\in F^\times.
+\tag{44.16}
+$$
+
+常数属于 $F$，可比较任一非零原系数得到。分裂后便有 $P_Y\propto P_W$。$y_1\cdots y_m$ 的系数是带符号的 $p_Ep_{E^c}$，在 $W$ 上非零，故在 $Y$ 上也非零。于是同一 $E,E^c$ 也都是 $Y_K$ 的行基，可以写
+
+$$
+Y_K=\operatorname{colspan}\begin{pmatrix}I_m\\ A'\end{pmatrix},
+\qquad A'\in\operatorname{GL}_m(K).
+$$
+
+将两边的 $y_1\cdots y_m$ 系数归一化为一，(44.7)、(44.16) 给出
+
+$$
+g_{A'}(x,y)=g_A(x,y).
+\tag{44.17}
+$$
+
+（四）常数矩阵的全部主子式与既有重建定理。对 $I,J\subseteq\{1,\ldots,m\}$、$|I|=|J|=k$，用 Cauchy–Binet 展开 (44.7) 得
+
+$$
+[x_Iy_{J^c}]g_A
+=(-1)^k\det A[J,I]\det A^{-1}[I,J].
+\tag{44.18}
+$$
+
+令
+
+$$
+C_A=\begin{pmatrix}0&A^{-1}\\ A&0\end{pmatrix}.
+\tag{44.19}
+$$
+
+其第一块取 $I$、第二块取 $J$ 的主子式，在 $|I|\ne|J|$ 时为零，在 $|I|=|J|=k$ 时恰为 (44.18)。这是交换两组 $k$ 列后所得两个方块行列式的乘积。因此 (44.17) 等价于 $C_A,C_{A'}$ 的全部带原坐标标签的对应主子式相等。
+
+条件 $\mathrm H$ 使 $C_A$ 的有向非零条目图包含两块之间所有双向边，故 $C_A$ 不可约。还须排除切口。取其任一指标子集 $X$，满足 $2\le|X|\le2m-2$，并以 $I,J$ 表示它在两块中的部分。按两块排列行列后，
+
+$$
+\operatorname{rank}C_A[X,X^c]
+=\operatorname{rank}A^{-1}[I,J^c]
+ +\operatorname{rank}A[J,I^c].
+\tag{44.20}
+$$
+
+若 $I,J,I^c,J^c$ 都非空，则由条目非零，两项各至少为一。否则 $X$ 或 $X^c$ 完全位于一个坐标块中，(44.20) 中相应部分是可逆矩阵 $A$ 或 $A^{-1}$ 的一组完整行或完整列，其秩等于该侧指标数，至少为二。因此每个这样的 $X$ 都满足 $\operatorname{rank}C_A[X,X^c]\ge2$，尤其不存在双向跨块秩都至多一的切口。
+
+现在消费经典主子式重建：一个不可约且无切口的矩阵，由全部对应主子式确定至可逆对角共轭或转置后的可逆对角共轭。精确引用是 Al Ahmadieh，[*The Fiber of the principal minor map*，arXiv:2309.00806v2，Theorem 4.1 的无切口充分方向](https://arxiv.org/html/2309.00806v2)，该方向归于 Loewy，*Principal minors and diagonal similarity of matrices*，Linear Algebra and its Applications 78，23–64，Theorem 1；同一充分条件见 Chatterjee–Ghosh–Gurjar–Raj，[*Characterizing and Testing Principal Minor Equivalence of Matrices*，arXiv:2410.01961v1，Lemma 2.8(2)](https://arxiv.org/html/2410.01961v1)。这里的 diagonal equivalence 包含转置分支。
+
+该已知定理应用于 (44.19)，给出可逆对角 $R,S$，使
+
+$$
+A'=SAR^{-1}\quad\text{或}\quad A'=SA^{-\mathsf T}R^{-1}.
+\tag{44.21}
+$$
+
+第一支给出 $Y_K=\operatorname{diag}(R,S)W_K$。分裂迹配对为标准点积，且
+
+$$
+(W^\perp)_K
+=\operatorname{colspan}\begin{pmatrix}I_m\\-A^{-\mathsf T}\end{pmatrix},
+$$
+
+故第二支给出 $Y_K=\operatorname{diag}(R,-S)(W^\perp)_K$。所有指标保持同一嵌入标签，没有坐标置换。
+
+（五）原乘数与完整交维。直接复用 (43.24) 的有限线性核扩底桥。对原 $U=W$ 或 $W^\perp$，置
+
+$$
+\begin{aligned}
+T(U,Y)&=\ker\bigl(D\longrightarrow\operatorname{Hom}_F(U,D/Y)\bigr),\\
+c&\longmapsto(z\longmapsto cz+Y).
+\end{aligned}
+$$
+
+则
+
+$$
+T(U,Y)\otimes_FK
+=\{c\in D\otimes_FK:cU_K\subseteq Y_K\}.
+\tag{44.22}
+$$
+
+上一段相应的分裂对角向量使右边非零，故原 $T(U,Y)$ 非零。取原 $0\ne\gamma\in T(U,Y)$；原 $D$ 为域使 $\gamma$ 可逆，$\gamma U\subseteq Y$ 及两边维数同为 $m$ 给出 $Y=\gamma U$。下降的是“存在非零乘数”这个线性核条件，不是断言选中的分裂对角向量逐项来自同一个原域元素。
+
+反向使用 §34 的 (34.7)、引理 40.2 的半维迹对偶恒等式。对任意原 $r\in D^\times$，
+
+$$
+\begin{aligned}
+d_W(r)
+&=2m-\dim_F(W+rW)\\
+&=\dim_F(W^\perp\cap r^{-1}W^\perp)
+=\dim_F(rW^\perp\cap W^\perp)
+=d_{W^\perp}(r).
+\end{aligned}
+\tag{44.23}
+$$
+
+第三项的等维来自乘以原 $r$。整体乘以原 $\gamma\ne0$ 也保持每个标签的交维。故 (44.4) 的第三项推出第二项；第二项由
+
+$$
+Q_U=\{0\}\cup\{r\in D^\times:d_U(r)>0\}
+$$
+
+推出第一项，完成全部等价。$\square$
+
+本定理的来源边界。互补 Plücker 积到 (44.18) 的对应是行列式恒等式，(44.19) 的重建是上述经典主子式定理的直接应用，均不作为新的矩阵重建结论。八点情形中互补括号积给出 Gale 对偶商的精确先例，已由 §43 对应到 Howard–Millson–Snowden–Vakil，[*The geometry of eight points in projective space: Representation theory, Lie theory, dualities*，arXiv:1103.5255v1，§8、Propositions 8.1–8.2](https://arxiv.org/html/1103.5255v1)；该先例的范围是八点配置及其不变量商。
+
+这里的仓内综合推导（repo-derived）是把单交换系数的不可约性、实际原商稠密性、竞争维数排除与既有线性核下降接到常数矩阵重建，得到 (44.4) 的一般次数、同一原域、全部竞争子空间结论。它不以统一行拟阵为前件，也不把这些指定文献未陈述的组合解释为全球首次性。$\mathrm H$ 是本定理的充分条件；本条不分类其外的全部半维窗口。
+
+**命题 44.3（每个半维次数的非统一实际域族与单轨道纤维）。** 对每个 $m\ge4$，令 $\zeta$ 为本原 $2m$ 次单位根、$t$ 为超越元，并在实际域中置
+
+$$
+F=\mathbb Q(\zeta)(t),\qquad
+D=F(\alpha),\qquad \alpha^{2m}=t,\qquad
+W=\operatorname{span}_F\{1,\alpha,\ldots,\alpha^{m-2},\alpha^m\}.
+\tag{44.24}
+$$
+
+则 $[D:F]=2m$，$W$ 满足 $\mathrm H$，其嵌入行拟阵却不统一，并且
+
+$$
+W^\perp=\alpha W,\qquad
+\{0\ne Y\le_FD:Q_Y=Q_W\}
+=\{\gamma W:\gamma\in D^\times\}.
+\tag{44.25}
+$$
+
+证明。$X^{2m}-t$ 在 $\mathbb Q(\zeta)[t][X]$ 中对素元 $t$ 满足 Eisenstein 判据，故在 $F[X]$ 中不可约，给出所述次数及幂基。因 $F$ 已含全部 $2m$ 次单位根，全部嵌入在 $D$ 中为
+
+$$
+\sigma_j(\alpha)=\alpha\zeta^j,\qquad 0\le j<2m.
+$$
+
+对任意 $m$ 个不同的根 $z_1,\ldots,z_m\in\mu_{2m}$，相应的行子式除去公共非零列因子后为
+
+$$
+\det
+\begin{pmatrix}
+1&z_1&\cdots&z_1^{m-2}&z_1^m\\
+\vdots&\vdots&&\vdots&\vdots\\
+1&z_m&\cdots&z_m^{m-2}&z_m^m
+\end{pmatrix}
+=\prod_{i<j}(z_j-z_i)\sum_{i=1}^m z_i.
+\tag{44.26}
+$$
+
+这是经典 alternant 恒等式在一阶对称因子上的情形，也可直接核对：在各 $z_i$ 处，$\prod_{\ell=1}^m(T-z_\ell)=0$ 将最后一列 $z_i^m$ 写成 $(\sum_\ell z_\ell)z_i^{m-1}$ 加上前 $m-1$ 列的线性组合，行列式即为右边。因此该行集为基当且仅当所选根之和非零。
+
+取互补半圆根集
+
+$$
+E=\{1,\zeta,\ldots,\zeta^{m-1}\},\qquad E^c=-E,\qquad
+s=\sum_{z\in E}z=\frac{2}{1-\zeta}.
+\tag{44.27}
+$$
+
+在复嵌入 $\zeta\mapsto e^{\pi i/m}$ 下，
+
+$$
+|s|=\frac1{\sin(\pi/(2m))}>2,
+\tag{44.28}
+$$
+
+因为 $m\ge4$ 使 $0<\pi/(2m)\le\pi/8<\pi/6$。两组根之和为 $s,-s$，故它们都是行基。任取 $a\in E,b\in E^c$，交换后的根和为 $s-a+b$；由
+
+$$
+|s-a+b|\ge|s|-|a-b|\ge|s|-2>0
+$$
+
+知该行集仍为基。全部 $2m$ 个根之和为零，其互补交换行集的根和就是 $-(s-a+b)$，也非零。这证明 $\mathrm H$，无须对其他高阶子式加条件。
+
+但 $m$ 元根集
+
+$$
+\{1,\zeta^2,\zeta^4,\ldots,\zeta^{2m-2}\}
+$$
+
+恰为全部 $m$ 次单位根，根和为零。由 (44.26)，其行子式为零，故该实际域族不统一。这也证明 $\mathrm H$ 在实际原域窗口中严格弱于统一性，而非仅有抽象分裂矩阵的区别。
+
+最后，对任意非负整数 $k$，
+
+$$
+\operatorname{Tr}_{D/F}(\alpha^k)
+=\alpha^k\sum_{j=0}^{2m-1}\zeta^{jk}
+=\begin{cases}
+2m\,\alpha^k,&2m\mid k,\\
+0,&2m\nmid k.
+\end{cases}
+\tag{44.29}
+$$
+
+对指数集 $S=\{0,1,\ldots,m-2,m\}$，在模 $2m$ 意义下，$-S$ 的补集恰为
+
+$$
+T=\{1,2,\ldots,m-1,m+1\}.
+$$
+
+因此幂基迹配对使 $\operatorname{span}_F\{\alpha^j:j\in T\}$ 与 $W$ 正交；两者各为 $m$ 维，迹配对非退化，故
+
+$$
+W^\perp
+=\operatorname{span}_F\{\alpha,\alpha^2,\ldots,\alpha^{m-1},\alpha^{m+1}\}
+=\alpha W.
+\tag{44.30}
+$$
+
+将所证 $\mathrm H$ 与 (44.30) 代入定理 44.2，两种原标量轨道重合，得到 (44.25)。$\square$
+
+白话说，不必要求任取一半嵌入都独立：只要先找到两组互补的基，任意交换它们之间的一个成员后，两边仍然是基，就足以锁住整个原商纤维。支撑表先确定一张不可约方程并强制候选维数，再由经典主子式重建留下窗口及其迹对偶两种形状；原域线性核保证这些形状之间的整体乘数确实属于原 $D$。分裂证明中出现的零坐标向量只负责证明某个多项式非零，不能充当原域元素。
+
+命题 44.3 给出每个 $m\ge4$ 的实际例子：某些一半根集确实线性相关，然而所选两组互补半圆及全部单交换都独立。这些窗口的迹对偶又恰是整体乘以 $\alpha$，所以完整原商表只对应一个原标量轨道。结论始终使用全部精确原标签与原标量等价；根和公式、迹计算和所引重建各自只承担上述明确步骤。
+
+## 追加锚（本行以下为增补区）
+
+## 45. 相对二维传递与固定三十次域中的四个同交维轨道
+
+**定义 45.1（中心、相对窗口与原标签）。** 固定特征零域塔
+
+$$
+F\subset E\subset D,\qquad [E:F]=6,\qquad [D:E]=5.
+\tag{45.1}
+$$
+
+所有窗口都是这个原 $D$ 的 $F$-子空间；原标量等价只指乘以 $D^\times$ 的元素。取 $C\le_F E$、$\dim_F C=3$，以及 $V\le_E E\oplus D$、$\dim_E V=3$。分别使用非退化对称配对
+
+$$
+\langle a,b\rangle_E=\operatorname{Tr}_{E/F}(ab),\qquad
+\beta((a,x),(b,y))=ab+\operatorname{Tr}_{D/E}(xy)
+\tag{45.2}
+$$
+
+定义 $C^\perp$ 和 $V^\perp$；两者仍分别为三维 $F$-空间和三维 $E$-空间。记 $C^0=C,C^1=C^\perp$，$V^0=V,V^1=V^\perp$。称 $V$ 可用，若对 $U=V,V^\perp$，投影 $p_D:U\to D$ 都单射，投影 $p_E:U\to E$ 都满射。置
+
+$$
+W_{ef}=W(C^e,V^f)
+=\{x\in D:\ \exists a\in C^e,\ (a,x)\in V^f\},
+\qquad e,f\in\{0,1\}.
+\tag{45.3}
+$$
+
+仍在逐字相同的原标签上定义 $d_W(r)=\dim_F(W\cap rW)$，$r\in D^\times$；中心的 $d_C(t)$ 同样使用原 $t\in E^\times$。若另容许标签零，则约定 $d_W(0)=d_C(0)=0$。
+
+**定理 45.2（相对 $E^2$ 像公式与两次对偶传递）。** 在定义 45.1 中若 $V$ 可用，则四个 $W_{ef}$ 都为十五维。对任意 $f$、任意原 $r\in D^\times$，令 $U=V^f$，并在 $U\times U$ 中定义 $E$-线性关系及其像
+
+$$
+\begin{aligned}
+T_r(U)&=\{((a,x),(b,y))\in U\times U:x=ry\},\\
+\rho_r:T_r(U)&\longrightarrow E^2,\qquad
+((a,x),(b,y))\longmapsto(a,b),\\
+R_r(U)&=\operatorname{im}\rho_r,\qquad
+\kappa_r(U)=\dim_E\ker\rho_r.
+\end{aligned}
+\tag{45.4}
+$$
+
+则完整交维由下式给出，而非仅给出其正支持：
+
+$$
+\boxed{\ d_{W_{ef}}(r)=6\kappa_r(U)
+ +\dim_F\bigl(R_r(U)\cap(C^e\times C^e)\bigr).\ }
+\tag{45.5}
+$$
+
+写 $A=C^e$、$R=R_r(U)$，第二项的所有秩层及零坐标边界恰为
+
+$$
+\dim_F(R\cap A^2)=
+\begin{cases}
+0,&R=0,\\
+6,&R=E^2,\\
+3,&R=E(1,0)\ \text{或}\ R=E(0,1),\\
+d_A(u/v),&R=E(u,v),\quad uv\ne0.
+\end{cases}
+\tag{45.6}
+$$
+
+因此在同一个原 $D$ 中，对每个原 $r\in D^\times$ 都有
+
+$$
+\boxed{\ d_{W_{00}}(r)=d_{W_{10}}(r)
+=d_{W_{01}}(r)=d_{W_{11}}(r).\ }
+\tag{45.7}
+$$
+
+此外，限制到实际中间域标签时有
+
+$$
+d_{W_{ef}}(s)=12+d_{C^e}(s)\qquad(s\in E^\times).
+\tag{45.8}
+$$
+
+证明。对 $U=V^f$，$p_E$ 的核为二维 $E$-空间。$p_E^{-1}(C^e)$ 因而为 $12+3=15$ 维 $F$-空间，而 $p_D$ 将它单射到 $W_{ef}$，证明维数断言。
+
+固定 $r\ne0$。映射 $((a,x),(b,y))\mapsto x$ 给出 $F$-线性同构
+
+$$
+\rho_r^{-1}(C^e\times C^e)\ \simeq\ W_{ef}\cap rW_{ef}.
+\tag{45.9}
+$$
+
+确实，交叠元素 $x$ 唯一确定 $y=r^{-1}x$；$p_D$ 的单射性又唯一确定两个提升中的 $a,b$。反向由 (45.3) 立即给出。因此限制后的正合列
+
+$$
+0\longrightarrow\ker\rho_r
+\longrightarrow\rho_r^{-1}(C^e\times C^e)
+\overset{\rho_r}{\longrightarrow}
+R_r(U)\cap(C^e\times C^e)\longrightarrow0
+\tag{45.10}
+$$
+
+给出 (45.5)。像的 $E$-维数只能是零、一、二。零空间、全平面和两条坐标轴分别给 (45.6) 的前三行。剩下的直线以 $t\mapsto(tu,tv)$ 参数化，其所需参数为 $u^{-1}A\cap v^{-1}A$；乘以 $u$ 将它同构到 $A\cap(u/v)A$，得到最后一行。即使这个交叠为零，等式也仍成立。于是 $\kappa=0$、$R=0$、轴线、非轴线零交叠等边界均未被删去。
+
+这里的直线交维是线性集的带点标签权重接口：一般地，对 $A\times A\subset E^2$，点 $E(u,v)$ 的权重就是 $\dim_F((A\times A)\cap E(u,v))$。Zullo，[*Multi-orbit cyclic subspace codes and linear sets*，arXiv:2112.08781v2，§2.2、Theorem 3.5](https://arxiv.org/html/2112.08781v2)，在有限域中以乘积子空间的点权联系商与标量交叠。本证明使用上面的直接同构，不把该有限域定理当作特征零传递定理。
+
+中心对偶直接消费 §34 式 (34.7)、引理 40.2 的半维迹恒等式。具体地，对每个原 $t\in E^\times$，
+
+$$
+\begin{aligned}
+\dim_F(C^\perp\cap t^{-1}C^\perp)
+&=6-\dim_F(C+tC)=d_C(t),\\
+d_{C^\perp}(t^{-1})&=d_{C^\perp}(t).
+\end{aligned}
+\tag{45.11}
+$$
+
+第二个等式由乘以 $t$ 的同构给出，故所得是同一标签 $t$ 下的 $d_C(t)=d_{C^\perp}(t)$。结合配对及其非退化性是既有 Frobenius 工具，见 Bachoc–Serra–Zémor，[*Revisiting Kneser's theorem for field extensions*，arXiv:1510.01354v2，§2.2，式 (2)](https://arxiv.org/html/1510.01354v2)。Csajbók–Marino–Polverino，[*Classes and equivalence of linear sets in PG(1,q^n)*，arXiv:1607.06962v1，Result 2.1](https://arxiv.org/html/1607.06962v1)，已有有限域迹辛对偶逐点保权的先例；这里的对称迹计算由 (45.11) 自身承担。由于 (45.4) 的 $R,\kappa$ 只依赖 $U,r$，(45.6) 给出 $d_{W_{0f}}=d_{W_{1f}}$，包含全部零值。
+
+再对原 $D/F$ 使用迹传递。若 $(a,x)\in V$、$(b,z)\in V^\perp$，则
+
+$$
+\operatorname{Tr}_{D/F}(xz)
+=\operatorname{Tr}_{E/F}\bigl(\operatorname{Tr}_{D/E}(xz)\bigr)
+=-\operatorname{Tr}_{E/F}(ab).
+\tag{45.12}
+$$
+
+当 $a\in C,b\in C^\perp$ 时右边为零。因此 $W_{11}\subseteq W_{00}^\perp$；两边均为十五维，故
+
+$$
+W_{11}=W_{00}^\perp,\qquad W_{01}=W_{10}^\perp,
+\tag{45.13}
+$$
+
+其中正交补使用原 $\operatorname{Tr}_{D/F}(xz)$。引理 40.2 在 $[D:F]=30$、半维十五时给 $d_{W_{00}}=d_{W_{11}}$。与两组中心等式拼接即得 (45.7)，没有对 $r$ 作域自同构或其他重标记。
+
+最后，$U$ 的 $E$-线性性及唯一提升给 $sW(A,U)=W(sA,U)$，并使 $W(A,U)\cap W(sA,U)=W(A\cap sA,U)$。其维数为 $12+\dim_F(A\cap sA)$，证明 (45.8)。所以原 $E^\times$ 上的限制还可由减去十二恢复中心的完整 $d$ 函数；(45.5) 则控制 $E$ 外的全部原标签。标签零单独满足 $W\cap0W=0$，不能将 $r=0$ 代入 (45.9)，因为此时 $x$ 不再决定 $y$；也不能将 $s=0$ 代入 (45.8)。若将函数延至零，四者在零处仍共同为零。$\square$
+
+**定理 45.3（每个固定 $6\times5$ 域塔中的四个实际轨道）。** 对满足 (45.1) 的每一个固定域塔，都存在实际参数 $C\le_F E$、$V\le_E E\oplus D$，使 $V$ 可用，且 (45.3) 的四个十五维窗口两两不属于同一原 $D^\times$ 轨道，并满足 (45.7)。更强地，取 $D/F$ 的有限正规分裂域 $K$，以原嵌入集合 $\Omega=\operatorname{Hom}_F(D,K)$ 标记 $D\otimes_F K\simeq K^\Omega$；对 $K$ 的任意扩域 $K'$，四个 $W_{ef}\otimes_F K'$ 在保持这些标签的整个对角群 $(K'^\times)^\Omega$ 下仍两两不等价。
+
+证明。先建立同时容许对偶的非空好开集，再返回原域参数，最后从窗口恢复旗标以排除等价。
+
+将 $E$ 的六个嵌入记为 $\sigma_i$，并置 $B_i=\{\tau\in\Omega:\tau|_E=\sigma_i\}$，每个 $B_i$ 有五个元素。分裂后有
+
+$$
+E\otimes_F K=K^6,\qquad
+D\otimes_F K=\bigoplus_{i=1}^6K^{B_i}.
+\tag{45.14}
+$$
+
+中心 $C_K$ 是 $K^6$ 中的三平面；相对窗口 $V$ 分裂为六个叶平面 $L_i\le_K K\oplus K^{B_i}$，各有维数三。叶平面的第一个坐标称为接合坐标，其余五个为外部坐标。迹是各嵌入值之和，故 (45.2) 在中心及每一叶上都成为普通点积，$V^\perp$ 的叶平面恰为 $L_i^\perp$。
+
+对任意三平面 $L\le K^6$，选择六行三列的帧 $H$，行向量为 $h_j$。先要求每个三阶行子式非零，并要求线性映射
+
+$$
+\Phi_L:K^6\longrightarrow\operatorname{Sym}_3(K),\qquad
+z\longmapsto H^{\mathsf T}\operatorname{diag}(z)H
+=\sum_{j=1}^6z_jh_j^{\mathsf T}h_j
+\tag{45.15}
+$$
+
+可逆。这两条是开条件；更换列基只使右边作可逆合同变换，故不依赖帧。若某可逆对角矩阵 $\delta$ 满足 $\delta L=L^\perp$，则 $H^{\mathsf T}\delta H=0$，与 (45.15) 的单射性矛盾。因此该开条件排除叶或中心的带标签对角自对偶，而非只排除原域的某些乘数。
+
+这个开集 $\mathcal U\subset\operatorname{Gr}(3,6)$ 非空的手工见证为
+
+$$
+H=\begin{pmatrix}I_3\\ A\end{pmatrix},\qquad
+A=\begin{pmatrix}1&1&1\\1&2&3\\1&4&9\end{pmatrix}.
+\tag{45.16}
+$$
+
+$A$ 的列由 $x=1,2,3$ 的 $(1,x,x^2)^{\mathsf T}$ 给出。其条目非零；任意二阶子式为 $y-x$、$y^2-x^2$ 或 $xy(y-x)$，其中 $x,y$ 是不同的上述正整数；$\det A=(2-1)(3-1)(3-2)=2$。所以 $A$ 的所有方形子式非零，这恰使 $[I_3;A]$ 的全部三阶行子式非零。前三个行平方张成对角对称矩阵，后三个行平方模去它们后，以三个非对角条目表示为
+
+$$
+\begin{pmatrix}1&1&1\\2&3&6\\4&9&36\end{pmatrix},
+\qquad
+\det= (3-2)(6-2)(6-3)=12\ne0.
+\tag{45.17}
+$$
+
+因此 (45.15) 可逆。这些非零整数在每个特征零域中都非零。
+
+为使好条件也在取对偶后保持，令 $\iota(L)=L^\perp$，取
+
+$$
+\mathcal G=\mathcal U\cap\iota(\mathcal U).
+\tag{45.18}
+$$
+
+Grassmannian 几何不可约，$\iota$ 为代数自同构，所以两个非空开集的交仍非空。$\mathcal G$ 在对偶、坐标置换和可逆对角变换下不变：后两者分别置换行平方或将它们乘以非零平方，而 $(\delta L)^\perp=\delta^{-1}L^\perp$。在 $\mathcal G$ 内，$L,L^\perp$ 都统一，即全部三阶行子式非零，并且二者不能由任何带标签对角矩阵相连。
+
+本处使用 Grassmannian 的标准仿射图及其不可约性，不将其另立为新几何定理；图的构造见 Stacks Project，[§27.22，Tag 089R，Lemma 27.22.1 的证明](https://stacks.math.columbia.edu/tag/089R)。对整个参数空间使用限制标量的标准构造，见同书 [§97.11，Tag 05Y8](https://stacks.math.columbia.edu/tag/05Y8)：
+
+$$
+\mathcal X=\operatorname{Gr}_F(3,E)\times
+\operatorname{Res}_{E/F}\operatorname{Gr}_E(3,E\oplus D),
+\qquad
+\mathcal X_K\simeq\operatorname{Gr}_K(3,6)^7.
+\tag{45.19}
+$$
+
+要求中心及六个叶均属于 $\mathcal G$，得到几何非空开集 $\mathcal O_K=\mathcal G^7$。Galois 作用只置换六个中心坐标、六个叶及各 $B_i$ 内的坐标，故 $\mathcal O_K$ 不变。它也在各因子的带标签对角作用及对偶下不变。叶及其对偶的统一性保证：投影到五个外部坐标单射，因为其中任意三行已满秩；接合投影满射，因为该行非零。投影的秩在扩域前后相同，故这些条件对实际参数也给出原 $V,V^\perp$ 的可用性。
+
+下面取得实际的 $F$-参数，而不将任意七个分裂矩阵误称为下降的窗口。选取 $E$ 的一个 $F$-基，以及 $E\oplus D$ 的一个 $E$-基，(45.19) 有定义在 $F$ 上的稠密大胞
+
+$$
+\mathcal B\simeq\mathbb A_F^9\times
+\operatorname{Res}_{E/F}\mathbb A_E^9
+\simeq\mathbb A_F^{63}.
+\tag{45.20}
+$$
+
+由于 $\mathcal X_K$ 几何不可约，$\mathcal O_K\cap\mathcal B_K$ 非空。在 $\mathcal B_K=\mathbb A_K^{63}$ 中取非零多项式 $h\in K[t_1,\ldots,t_{63}]$，使其主开集 $D(h)$ 包含于这个交；这是仿射空间中开集含主开集的标准性质，也可由各子式和 (45.15) 的行列式非消失条件取得。作系数范数
+
+$$
+P(t)=\prod_{g\in\operatorname{Gal}(K/F)}g(h)(t)
+\in F[t_1,\ldots,t_{63}]\setminus\{0\}.
+\tag{45.21}
+$$
+
+整环性使此积非零，Galois 不变性使其系数属于 $F$。无限域 $F$ 上的非零多项式不能处处为零：按变量数归纳，先使一个非零系数非零，再避开最后一个变量的有限个根。因此存在 $t\in F^{63}$ 满足 $P(t)\ne0$，尤其 $h(t)\ne0$。此 $t$ 对应实际的 $C\le_F E,V\le_E E\oplus D$，且全部七个分裂因子在 $\mathcal G$ 内。(45.16) 只证明几何开集非空，(45.20)–(45.21) 才给出原域中的存在性。
+
+固定如此取得的实际参数，以下论证在 $K$ 的任意扩域 $K'$ 中均成立，暂仍写 $K$。记 $L_i^0=L_i,L_i^1=L_i^\perp$。外部投影的单射性使每个叶可唯一写成图形
+
+$$
+L_i^f=\{(\lambda_i^f(x),x):x\in E_i^f\},\qquad
+E_i^f=\operatorname{pr}_{B_i}L_i^f,\qquad
+N_i^f=\ker\lambda_i^f,
+\tag{45.22}
+$$
+
+其中 $\dim E_i^f=3$、$\dim N_i^f=2$，$\lambda_i^f:E_i^f\to K$ 满射。域扩张保持线性核与像，故 (45.3) 分裂后恰为
+
+$$
+W_{ef,K}=\{(x_i)_i:x_i\in E_i^f,\
+(\lambda_i^f(x_i))_{i=1}^6\in C_K^e\}.
+\tag{45.23}
+$$
+
+中心及其对偶统一，故 $C_K^e\cap Ke_i=0$ 且 $\operatorname{pr}_iC_K^e=K$。前者因为其余五行包含一个满秩三行集，后者因为第 $i$ 行非零。由此可从窗口本身恢复每一已标记块内的旗标：
+
+$$
+W_{ef,K}\cap K^{B_i}=N_i^f,
+\qquad
+\operatorname{pr}_{B_i}W_{ef,K}=E_i^f.
+\tag{45.24}
+$$
+
+第一式由中心没有单坐标支撑的向量得到；反向任取 $x_i\in N_i^f$，其余块置零即可。对第二式，任取 $x_i\in E_i^f$，先选中心向量的第 $i$ 坐标为 $\lambda_i^f(x_i)$，再利用其余 $\lambda_j^f$ 的满射性逐块提升，便得到所需的窗口向量。这证明恢复的是二维核包含于三维投影的整个旗标。
+
+若外部可逆对角矩阵 $\Delta=\bigoplus_i\Delta_i$ 满足 $\Delta W_{ef,K}=W_{e'f',K}$，则 (45.24) 强制 $\Delta_iN_i^f=N_i^{f'}$、$\Delta_iE_i^f=E_i^{f'}$。两个非零泛函的核相同，故存在 $s_i\in K^\times$ 使
+
+$$
+\lambda_i^{f'}\Delta_i=s_i\lambda_i^f,
+\qquad
+\operatorname{diag}(s_i,\Delta_i)L_i^f=L_i^{f'},
+\qquad
+\operatorname{diag}(s_1,\ldots,s_6)C_K^e=C_K^{e'}.
+\tag{45.25}
+$$
+
+最后一式还使用 (45.23) 的接合像恰为整个 $C_K^e$，因为所有叶泛函均满射。若 $f\ne f'$，中间一式立即违反叶的对角非自对偶性，故必有 $f=f'$。
+
+此时中间一式是统一三平面的对角稳定式。Plücker 子式坐标是标准工具，见 Devriendt–Mulas，[*Uniform density in matroids, matrices and graphs*，arXiv:2306.15267v3，§4.3](https://arxiv.org/html/2306.15267v3)；这里只用子式定义及其对角作用，不调用该文的实域密度结论。设对角条目为 $z_1,\ldots,z_6$。全部三阶 Plücker 坐标非零，故每个三元集 $I$ 的 $\prod_{j\in I}z_j$ 都等于同一个数。对任意不同的 $a,b$，选另外两个坐标组成 $J$，比较 $J\cup\{a\}$ 与 $J\cup\{b\}$，得 $z_a=z_b$。所以稳定子只有公共标量，(45.25) 给出 $\Delta_i=s_iI_5$。若 $e\ne e'$，最后一式又违反中心的对角非自对偶性，故 $e=e'$。这证明四个窗口在整个带标签分裂对角群下两两不等价；上述子式及线性独立性在扩域后保持，故结论也对 $K'$ 成立。
+
+原 $\gamma\in D^\times$ 的乘法在 (45.14) 中是 $\operatorname{diag}(\tau(\gamma))_{\tau\in\Omega}$，其条目全部非零。因此原标量等价是刚被排除的对角等价的特例；这里不需要将任意分裂对角矩阵下降为原乘数。定理 45.2 最后给出四者的完整原标签交维相等。
+
+白话说，每个原比例的两份窗口交叠，都先压到同一个 $E^2$ 像；中心取对偶不改直线上的交维，整个窗口取迹对偶也不改交维，所以四份完整表相同。但整体形状仍记着六个块里的二维核和三维投影：任何整体等价必须先保留这些旗标，再变成七个局部三平面的对角等价，而好条件逐一排除了改变中心或叶的可能。几何坐标负责显露这些形状，原域大胞负责保证它们确实存在于最初固定的域塔。$\square$
+
+**命题 45.4（指定数域、先例与恢复边界）。** 令 $\theta>0$ 为 $T^{30}-2$ 的实根，取同一个实际数域塔
+
+$$
+F=\mathbb Q,\qquad E=\mathbb Q(\theta^5),\qquad
+D=\mathbb Q(\theta).
+\tag{45.26}
+$$
+
+此塔中存在四个十五维有理窗口，具有同一个完整带原标签交维函数，却属于四个不同的原标量轨道。它们均不满足定义 44.1 的充分条件 $\mathrm H$。对其中任意两个不同轨道，其完整共同见证三重函数 $J_W(r,s)$ 不同。
+
+证明。$T^{30}-2$ 与 $T^6-2$ 均在素数二处满足 Eisenstein 判据，故 $[D:\mathbb Q]=30$、$[E:\mathbb Q]=6$，再由域塔公式得 $[D:E]=5$。应用定理 45.3 即得所述四个实际窗口。(45.26) 明确指定环境数域；窗口参数由 (45.20)–(45.21) 存在性选取，此处没有指定四组基向量的系数。结论给出同一完整纤维内至少四个轨道，不断言纤维恰有四个轨道，也不比较其他次数的最小性。
+
+若其中任一窗口满足 $\mathrm H$，定理 44.2 会将其完整交维纤维限制为至多两个原标量轨道，与已经证明的四个轨道矛盾。因此四者都在该充分条件之外，这不改变定理 44.2 的假设或结论。另一方面，定理 26.2 的 (26.7) 保证任意两个不同轨道的完整 $J$ 函数不同。这里是逐对存在原标签 $(r,s)$ 的分离，不断言一对标签同时分离四者。三重交叠要求三份关系共享同一个非零元素，故它承载的联合条件并未由两两交维表给出。
+
+与有限域文献的对应须保持这一边界。Csajbók–Marino–Polverino 的上述 Result 2.1 已有对偶逐点保权，Proposition 3.9 在 $q>4,n>4$ 给出非简单线性集；Zullo 的上述 Theorem 3.5 已联系乘积线性集权重、商与标量交叠。Pepe，[*On subspaces defining linear sets of maximum rank*，arXiv:2403.01551v2，Theorems 8、24](https://arxiv.org/html/2403.01551v2)，进一步在有限域最大秩射影直线框架下，将相同线性集联系到 Dickson 矩阵对应主子式相等，并通过子域迹项描述提升。这些是保权、非唯一表示及子域提升的重要先例，不能把一般提升想法或迹对偶重新命名为新机制。它们的 Frobenius、Dickson 矩阵和有限域假设不直接证明 (45.26) 的特征零结论，也不能从相同零集自动推出本节的全部交维。
+
+本节的仓内综合推导将 (45.5) 的精确维数传递、两级迹对偶、七因子好开集的实际参数存在性及 (45.24) 的旗标恢复连接起来，在每个固定 $6\times5$ 特征零塔内取得四个不同原标量轨道；所引迹、线性集、Grassmannian 与 Plücker 工具各只承担证明中明确的一步。不据此作全球文献优先权判断，亦不从完整精确标签结论推出有限查询或误差下的恢复结论。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 46. 任意有限高度的实际域塔与同交维标量类倍增
+
+**定义 46.1（保持原标签的归纳条件）。** 固定特征零域 $F$ 及其代数闭包 $K$。对实际有限扩张 $B/F$，始终按同一个原嵌入集合 $\Omega_B=\operatorname{Hom}_F(B,K)$ 识别 $B\otimes_F K=K^{\Omega_B}$。原标量等价只指 $U'=\gamma U$，其中 $\gamma\in B^\times$；完整函数仍为 $d_U(r)=\dim_F(U\cap rU)$，其自变量是逐字相同的原 $r\in B^\times$。若延至零，单独规定 $d_U(0)=0$。
+
+称分裂空间 $C\le K^I$ 满足条件 $\mathcal P$，若
+
+$$
+\operatorname{pr}_i C=K,\qquad C\cap Ke_i=0\quad(i\in I),
+\qquad
+\operatorname{Stab}_{(K^\times)^I}(C)=\{tI:t\in K^\times\}.
+\tag{46.1}
+$$
+
+三项分别是满坐标投影、无坐标轴及仅有公共标量的对角稳定子。这里的对角作用保持每一个坐标标签，不容许置换。称 $m$ 维平面 $L\le K^J$ 均匀，若其 $|J|$ 行 $m$ 列帧的全部 $m$ 阶行子式非零；下文的均匀性假设只施于三维叶平面和初始中心，不作为后续中心的归纳假设。
+
+**定理 46.2（偶数中心次数的精确传递与对偶封闭族）。** 设实际域塔 $F\subset E\subset D$ 满足 $n=[E:F]$ 为偶数、$[D:E]=5$。令 $C\le_F E$ 为 $n/2$ 维，$V\le_E E\oplus D$ 为三维，并沿用定义 45.1 的配对、可用性和 $W(C,V)$，仅将中心维数三改为 $n/2$。则 $W(C,V)$ 为 $5n/2$ 维。对原 $r\in D^\times$，仍以 (45.4) 定义 $T_r(U),\rho_r,R_r(U),\kappa_r(U)$，其中 $U=V$ 或 $V^\perp$，有
+
+$$
+d_{W(C,U)}(r)=n\kappa_r(U)+\dim_F(R_r(U)\cap C^2),
+\qquad
+\dim_F(R\cap C^2)=
+\begin{cases}
+0,&R=0,\\
+n,&R=E^2,\\
+n/2,&R=E(1,0)\ \text{或}\ E(0,1),\\
+d_C(u/v),&R=E(u,v),\ uv\ne0.
+\end{cases}
+\tag{46.2}
+$$
+
+特别地，若一个半维中心族 $\mathscr C$ 的所有成员具有相同的完整原标签 $d_C$，并且在原 $\operatorname{Tr}_{E/F}$ 正交补下封闭，则
+
+$$
+\{W(C,V),W(C,V^\perp):C\in\mathscr C\}
+\quad\text{具有相同的完整原标签交维函数，}
+\qquad
+W(C,V)^\perp=W(C^\perp,V^\perp).
+\tag{46.3}
+$$
+
+最后的正交补使用原 $\operatorname{Tr}_{D/F}$ 配对。
+
+证明。投影 $p_E:U\to E$ 的核为二维 $E$-空间；$p_D$ 将 $p_E^{-1}(C)$ 单射到窗口，故维数为 $2n+n/2$。(45.9) 的唯一提升同构和 (45.10) 的正合列不使用 $n=6$，核的 $F$-维数改为 $n\kappa_r(U)$ 即得第一式。像的 $E$-秩只能为零、一、二；全像时 $C^2$ 的维数为 $n$，两条轴各给 $n/2$。非轴线的参数集仍为 $u^{-1}C\cap v^{-1}C$，乘以 $u$ 将它同构到 $C\cap(u/v)C$，给出最后一行。因此全部秩层、$\kappa=0$、零像、轴线和非轴线上的零交维都保留在 (46.2) 中；不存在仅比较正支持的步骤。
+
+可分迹的非退化性和传递性沿用 (45.11)–(45.12)，也可在分裂后由坐标点积直接得到。对任意偶数次数 $N=[B:F]$ 的实际扩张及半维空间 $H\le_F B$，有 $(rH)^\perp=r^{-1}H^\perp$，从而
+
+$$
+\begin{aligned}
+d_{H^\perp}(r)
+&=N-\dim_F(H+r^{-1}H)
+=d_H(r^{-1})=d_H(r)\qquad(r\in B^\times).
+\end{aligned}
+\tag{46.4}
+$$
+
+末步由乘以 $r$ 给出交叠的同构。这是 §34、引理 40.2 已用的半维迹恒等式在一般偶数次数上的同一计算。对 $(a,x)\in V$、$(b,y)\in V^\perp$，(45.12) 仍给 $\operatorname{Tr}_{D/F}(xy)=-\operatorname{Tr}_{E/F}(ab)$。取 $a\in C,b\in C^\perp$，再比较两个半维空间，便得 (46.3) 的正交补等式。
+
+固定 $U=V$ 时，(46.2) 使 $d_{W(C,V)}$ 与 $C\in\mathscr C$ 的选择无关。相反叶选择之间使用
+
+$$
+W(C,V^\perp)=W(C^\perp,V)^\perp.
+\tag{46.5}
+$$
+
+由于 $C^\perp\in\mathscr C$，右边由固定叶传递和 (46.4) 连接到同一个函数。这一步需要旧族的对偶封闭性，不能单凭固定 $U$ 的公式比较两种叶。若容许标签零，两边另外都为零；不把零代入含 $r^{-1}$ 的证明。$\square$
+
+**引理 46.3（实际六维 étale 参数中的好叶）。** 设 $k$ 为特征零域，$A$ 为六维有限 étale $k$-代数。存在实际 $k$-三平面 $L\le_k A$，使任一分裂下的 $L$ 与其迹正交补 $L^\perp$ 都均匀、满足 $\mathcal P$，且二者不由任何可逆对角矩阵相连。特别地，对每个实际有限塔 $F\subset E\subset D$，若 $[D:E]=5$，则可在 $A=E\times D$ 中取得一个实际 $E$-三平面 $V$，它对配对 $ab+\operatorname{Tr}_{D/E}(xy)$ 可用，且沿每个原 $F$-嵌入分裂的叶均有上述性质。
+
+证明。在 $G=\operatorname{Gr}_k(3,A)$ 上，对三平面 $L$ 内在地定义
+
+$$
+\mu_L:A\longrightarrow\operatorname{Sym}^2(L^*),\qquad
+\mu_L(z)(u,v)=\operatorname{Tr}_{A/k}(zuv).
+\tag{46.6}
+$$
+
+源与靶的维数都为六；这里将对称双线性型记为 $\operatorname{Sym}^2(L^*)$。局部帧下各系数都是正则函数，所以 $\mu_L$ 可逆给出定义在 $k$ 上的开集。取有限 Galois 分裂域 $k'/k$，有 $A\otimes_k k'=(k')^6$；若六个坐标在 $L$ 上的限制为 $\ell_i$，则
+
+$$
+\mu_L(z)=\sum_{i=1}^6z_i\ell_i^2.
+\tag{46.7}
+$$
+
+这个可逆开集几何非空：取六个行泛函为 $x_1,x_2,x_3,x_1+x_2,x_1+x_3,x_2+x_3$。六个平方的线性关系先比较三个混合项，后三个系数因 $2\ne0$ 而为零；再比较三个平方项，前三个也为零。这些行给一个秩三帧，故确为 Grassmannian 上的一点。
+
+均匀条件是另一个几何非空开集：六行取 $(1,t_i,t_i^2)$，其中 $t_i\in k'$ 两两不同，任取三行的 Vandermonde 行列式均非零。它定义在 $k$ 上，因为 Galois 作用只置换六个分裂坐标，保持“所有三阶子式非零”。具体在一个 $k$-有理图上，分裂子式的乘积及其全部 Galois 共轭的乘积给出 $k$ 系数多项式的非消失条件，故没有把分裂参数误当实际参数。
+
+Grassmannian 几何不可约：秩三的六行三列矩阵构成不可约仿射空间中的非空开集，并满射到它。故上述两个几何非空开集的交 $\mathcal O$ 非空。标准图 $\mathcal B\simeq\mathbb A_k^9$ 稠密，其构造见 Stacks Project，[§27.22，Lemma 27.22.1，Tag 089R](https://stacks.math.columbia.edu/tag/089R)。于是 $\mathcal O\cap\mathcal B$ 是非空 $k$-开集，含某个非零 $k$-多项式 $P$ 的主开集。无限域上的非零多项式不在全部 $k^9$ 上消失：按变量数归纳，先使一个非零系数取非零值，再避开末变量的有限个根。因此存在 $t\in k^9$ 满足 $P(t)\ne0$，这才取得实际 $k$-平面 $L$；前面的两个帧仅证明几何非空，未承担有理点存在性。
+
+若 $\operatorname{diag}(z_i)L=L^\perp$ 且所有 $z_i\ne0$，则 (46.7) 为零，与 $\mu_L$ 单射矛盾。反向的对角等价取逆也被排除。互补 Plücker 子式使 $L^\perp$ 同样均匀。均匀三平面有满坐标投影、无坐标轴；其对角稳定子仅为公共标量，直接复用定理 45.3 在 (45.25) 后的子式比较：全部三元集的对角条目乘积相等，比较只差一个元素的两个三元集，得任意两个条目相等。这些结论在扩域后保持。此处没有要求 $\mu_{L^\perp}$ 可逆。
+
+对 $A=E\times D$，étale 代数迹恰给 $ab+\operatorname{Tr}_{D/E}(xy)$。均匀性使接合投影满射，向五个外坐标的投影单射；对正交补也成立，所以 $V$ 可用。上述开条件与嵌入后的基变换相容，每个实际 $E$-嵌入所得叶都满足它们。它们是同一个实际 $E$-参数的共轭叶，不能独立指定。$\square$
+
+**引理 46.4（非均匀中心的五坐标块旗标恢复）。** 在 $K$ 上固定非空有限指标集 $I$，以及两两不交、各有五个带原标签坐标的块 $B_i$。设 $C,C'\le K^I$ 均有满坐标投影且无坐标轴，不要求均匀。对每个 $i$，设 $L_i\le K\oplus K^{B_i}$ 为引理 46.3 所得的好叶。写 $L_i^0=L_i,L_i^1=L_i^\perp$，以外部投影将其写成图形
+
+$$
+L_i^e=\{(\ell_i^e(x),x):x\in M_i^e\},\qquad
+N_i^e=\ker\ell_i^e,\qquad
+\dim M_i^e=3,\quad\dim N_i^e=2,
+\tag{46.8}
+$$
+
+其中 $\ell_i^e$ 满射，$e\in\{0,1\}$ 是所有块共同的新位。定义
+
+$$
+\mathcal W_e(C)=
+\{(x_i)_i\in\bigoplus_i M_i^e:(\ell_i^e(x_i))_i\in C\}.
+\tag{46.9}
+$$
+
+则从窗口本身恢复
+
+$$
+\mathcal W_e(C)\cap K^{B_i}=N_i^e,
+\qquad \operatorname{pr}_{B_i}\mathcal W_e(C)=M_i^e.
+\tag{46.10}
+$$
+
+可逆对角矩阵 $\Delta=\bigoplus_i\Delta_i$ 满足 $\Delta\mathcal W_e(C)=\mathcal W_{e'}(C')$，当且仅当 $e=e'$ 且存在 $t_i\in K^\times$ 使
+
+$$
+\Delta_i=t_iI_5\quad(i\in I),\qquad
+\operatorname{diag}(t_i)C=C'.
+\tag{46.11}
+$$
+
+若 $C$ 另有仅含公共标量的对角稳定子，则 $\mathcal W_e(C)$ 满足 $\mathcal P$。这些断言对任意这样的中心成立，包括非均匀中心。
+
+证明。(46.10) 第一式中，支撑在 $B_i$ 内的窗口向量，其接合像支撑在单个中心坐标上；中心无坐标轴迫使该接合像为零。反之，$N_i^e$ 中的向量用其余块为零即可提升。第二式中，给定任意 $x_i\in M_i^e$，利用中心满坐标投影，选一个中心向量的第 $i$ 项为 $\ell_i^e(x_i)$，再由其余叶泛函的满射性逐块提升。故恢复的正是二维核包含于三维投影的旗标。
+
+任何这样的 $\Delta$ 都保持固定标签块，因而将两个恢复的旗标相互送到。比较商 $M_i^e/N_i^e$ 上的非零泛函，得到唯一 $t_i\ne0$，满足
+
+$$
+\ell_i^{e'}\Delta_i=t_i\ell_i^e,
+\qquad
+\operatorname{diag}(t_i,\Delta_i)L_i^e=L_i^{e'},
+\qquad
+\operatorname{diag}(t_i)C=C'.
+\tag{46.12}
+$$
+
+最后一式使用 (46.9) 的接合像恰为整个中心。若 $e\ne e'$，中间一式违反叶的对角非自对偶性；故 $e=e'$。此时该式是叶的对角稳定式，其稳定子仅有公共标量，故 $\Delta_i=t_iI_5$，得到 (46.11)。反向对各块乘以 $t_i$，由 $\ell_i^e(t_ix)=t_i\ell_i^e(x)$ 立即给出窗口等式。
+
+因此新窗口的对角稳定子精确等于由中心稳定子提升的块标量群；中心稳定子仅有公共标量时，新稳定子也如此。新窗口的每个外坐标投影非零，因为 (46.10) 的块投影为 $M_i^e$，而均匀叶的每行非零。若新窗口含某外坐标轴，则由 (46.10) 该轴位于 $N_i^e$，使叶 $L_i^e$ 含一个外坐标轴，违反均匀性。三项归纳条件遂全部传播。$\square$
+
+**定理 46.5（每个固定有限塔内的逐层倍增）。** 对任意固定 $h\ge0$ 及实际特征零域塔
+
+$$
+F\subset E_0\subset E_1\subset\cdots\subset E_h,
+\qquad [E_0:F]=6,\qquad [E_j:E_{j-1}]=5\ (1\le j\le h),
+\tag{46.13}
+$$
+
+存在实际 $F$-子空间 $W_{j,\varepsilon}\le E_j$，$0\le j\le h$、$\varepsilon\in\{0,1\}^{j+1}$，使
+
+$$
+\begin{gathered}
+\dim_F W_{j,\varepsilon}=3\cdot5^j=\tfrac12[E_j:F],\\
+d_{W_{j,\varepsilon}}(r)=d_{W_{j,\varepsilon'}}(r)
+\quad\bigl(r\in E_j^\times,\ \varepsilon,\varepsilon'\in\{0,1\}^{j+1}\bigr),\\
+W_{j,\varepsilon}^{\perp_j}=W_{j,\mathbf1-\varepsilon},
+\qquad
+\langle x,y\rangle_j=\operatorname{Tr}_{E_j/F}(xy).
+\end{gathered}
+\tag{46.14}
+$$
+
+在同一个原嵌入集合 $\Omega_j=\operatorname{Hom}_F(E_j,K)$ 上，各 $W_{j,\varepsilon}\otimes_F K$ 满足 $\mathcal P$ 且两两不在同一可逆对角轨道。因此同一个完整原标签交维纤维中至少有 $2^{j+1}$ 个原 $E_j^\times$ 标量类；原迹正交补翻转全部 $j+1$ 位。
+
+证明。先把引理 46.3 用于 $k=F,A=E_0$，取实际三平面 $C\le_F E_0$，置 $W_{0,0}=C,W_{0,1}=C^\perp$。引理给出分裂后的 $\mathcal P$ 和两个不同对角类，(46.4) 给出相同完整原标签函数。非退化配对给 $C^{\perp\perp}=C$，故初始一位翻转成立。
+
+假定第 $j-1$ 层已经成立。记 $E=E_{j-1},D=E_j,n=[E:F]=6\cdot5^{j-1}$。在实际六维 $E$-代数 $E\times D$ 中用引理 46.3 选择一个 $V_j$，并对整个旧族共用此参数，定义
+
+$$
+V_j^0=V_j,\qquad V_j^1=V_j^\perp,\qquad
+W_{j,(\eta,e)}=W(W_{j-1,\eta},V_j^e).
+\tag{46.15}
+$$
+
+这里 $V_j^\perp$ 使用 $ab+\operatorname{Tr}_{D/E}(xy)$，$(\eta,e)$ 表示在旧位串后追加新位。定理 46.2 给出半维数和完整交维的相等；旧族的原迹对偶封闭正是 (46.5) 连接新位零与一所需的条件。其正交补公式还给出实际空间的精确等式
+
+$$
+W_{j,(\eta,e)}^{\perp_j}
+=W(W_{j-1,\eta}^{\perp_{j-1}},V_j^{1-e})
+=W_{j,(\mathbf1-\eta,1-e)},
+\tag{46.16}
+$$
+
+所以所有旧位和新位同时翻转，而非只在标量等价意义下翻转。
+
+为排除类碰撞，固定原标签块
+
+$$
+B_\sigma=\{\tau\in\Omega_j:\tau|_E=\sigma\},\quad
+\sigma\in\Omega_{j-1},\qquad
+D\otimes_F K=\bigoplus_\sigma K^{B_\sigma}.
+\tag{46.17}
+$$
+
+每块大小五。$V_j$ 沿各 $\sigma$ 分裂为好叶 $L_\sigma$，相对迹配对分裂为各叶的点积，故 $V_j^\perp$ 的叶恰为 $L_\sigma^\perp$。核与像在域扩张下保持，(46.15) 分裂后正是 (46.9)，中心为 $W_{j-1,\eta}\otimes_F K$，共同新位为 $e$。
+
+旧中心满足 $\mathcal P$，引理 46.4 因而适用。若两个新窗口对角等价，(46.12) 首先强制新位相同；随后 (46.11) 给出两个旧中心的对角等价，归纳假设再强制旧位串相同。故 $2\cdot2^j=2^{j+1}$ 个窗口两两对角不等价，且引理的传播结论使每个新窗口继续满足 $\mathcal P$。
+
+这些新中心确实非均匀：由 (46.10) 每个五坐标块中都有二维交叠；但若 $K^{5n}$ 中的 $5n/2$ 维平面均匀，块外的 $5n-5\ge5n/2$ 个坐标含一个满秩行集，故它与该块的交只能为零。归纳依靠的是 (46.1)，并未要求新中心保持初始均匀性。
+
+最后，原 $\gamma\in E_j^\times$ 的乘法在 (46.17) 中为 $\operatorname{diag}(\tau(\gamma))_{\tau\in\Omega_j}$，所有条目非零。分裂对角不等价遂蕴含原标量不等价，不需要将任意分裂对角元下降为原域乘数。读数相等始终由实际域中的 (46.2)–(46.5) 给出，没有对原 $r$ 作嵌入置换或域自同构。归纳完成。$\square$
+
+**命题 46.6（指定数域族与线性集先例的精确对应）。** 对每个 $h\ge0$，令 $\theta_h=2^{1/(6\cdot5^h)}>0$，所有正根均取自 $\mathbb R$，并令
+
+$$
+D_h=\mathbb Q(\theta_h),\qquad
+\theta_{h-1}=\theta_h^5\ (h\ge1).
+\tag{46.18}
+$$
+
+则 $[D_h:\mathbb Q]=6\cdot5^h$，且 $[D_h:D_{h-1}]=5$（$h\ge1$）。每个固定 $D_h$ 中存在至少 $2^{h+1}$ 个 $3\cdot5^h$ 维原标量类，具有完全相同的完整原标签交维函数，并由原迹正交补配成全部位翻转。这里明确指定的是环境数域；窗口的系数由引理 46.3 的实际有理点存在性选取。这个下界随有限高度无界，不给出固定 $D_h$ 内的精确纤维大小或次数最小性。
+
+证明。$X^{6\cdot5^h}-2$ 在素数二处满足 Eisenstein 判据，故得到所述绝对次数。兼容正根的等式给出实际包含 $D_{h-1}\subset D_h$，再用域塔公式取得相对次数五；于是对 $F=\mathbb Q,E_j=D_j$ 应用定理 46.5 即得结论。每个高度只有有限次实际参数选择，不以独立指定的分裂坐标代替这些选择。
+
+为精确比较已有线性集语言，对任意实际 $W\le_F B$ 定义 Cartesian 平方 $U_W=W\times W\subset B^2$，在射影点上的权重为 $w_{U_W}([u:v])=\dim_F(U_W\cap B(u,v))$。于是
+
+$$
+w_{U_W}([r:1])
+=\dim_F\{y\in W:ry\in W\}
+=d_W(r)\qquad(r\in B^\times).
+\tag{46.19}
+$$
+
+第二步由 $y\mapsto ry$ 给出；两坐标轴的权重均为 $\dim_F W$。因此本节的同交维族也给出同一完整逐点权重函数的 Cartesian 平方。且 $U_{W'}=\gamma U_W$ 当且仅当 $W'=\gamma W$，由任一坐标投影即可验证，故所计数的正是原标量定义类。
+
+有限域中，Csajbók–Marino–Polverino，[*Classes and equivalence of linear sets in PG(1,q^n)*，arXiv:1607.06962v1，Result 2.1、Definitions 2.3–2.4](https://arxiv.org/html/1607.06962v1)，已给出迹辛对偶在射影直线固定点上的保权，并分别定义按标量和按较大半线性群计数的定义类。这里采用前一种等价关系；本节不把原标量类下界扩张为半线性类下界。Zullo 的 [arXiv:2112.08781v2，Theorem 3.5](https://arxiv.org/html/2112.08781v2) 已联系 Cartesian 乘积的点权、商集和标量交叠，(46.19) 则直接给出当前所需对应。
+
+Van de Voorde–Zullo，[*On the weight distribution of linear sets with complementary weights and related constructions*，arXiv:2511.20057v1，§4.3、Proposition 4.7、Theorem 5.1、§5.2](https://arxiv.org/html/2511.20057v1)，明确研究 Cartesian 平方；其 Theorem 5.1 在二次有限域扩张及相应可逆性条件下给出旧、新点权的逐点传递，§5.2 迭代得到具有多种不同权重的线性集。本节的目标则是同一个完整权重函数所容许的多个标量定义类。该区别只界定这里的结论，不断言该文没有其他相关结果，也不将一般权重传递或迭代想法称为新概念。
+
+Pepe 的 [arXiv:2403.01551v2，Theorems 8、24](https://arxiv.org/html/2403.01551v2) 分别在其有限域最大秩条件下联系同线性集与 Dickson 对应主子式，并研究中间迹项的提升；这些与 §45 所引的迹对偶、Grassmannian 和 Plücker 工具都是中间先例。本节的仓内综合推导是将偶数次数的实际传递、实际 $E$-参数和非均匀中心的旗标归纳连接为 (46.14) 的任意有限高度下界；不作全球文献优先权判断。$\square$
+
+## 追加锚（本行以下为增补区）
+## 47. 定理 42.2 的有标签归一化子式更正
+
+**命题 47.1（归一化子式与消元）。** 设 $k$ 为特征零域，$x,y,z,u,v\in k^\times$，并令
+
+$$
+M=[\,I_4\mid A\,],\qquad
+A=\begin{pmatrix}
+0&1&1&x\\
+1&0&1&1\\
+y&z&0&1\\
+u&v&1&0
+\end{pmatrix}.
+\tag{47.1}
+$$
+
+$M$ 的列依次标为 $1,\ldots,8$，与原嵌入标签 $0,\ldots,7$ 的对应依次为 $1,2,8,6,4,3,5,7$，即式 (42.4)。对递增列标签 $i<j<\ell<m$，记 $\Delta_{ij\ell m}=\det M[:,\{i,j,\ell,m\}]$。若 $1458,2367,4678,1567,2568,3578$ 均为非基，则
+
+$$
+y=v=z=1,\qquad x=u=2,
+\tag{47.2}
+$$
+
+故 $M$ 就是式 (42.6) 的有标签表示。在定理 42.2 的证明中，$4678$ 在 $y=v=1$ 后直接给出的等式应为 $1+z-xz=0$；这替代该处直接写出的 $2-x=0$，后者须在消元得到 $z=1$ 后使用。
+
+证明。首先，按递增列序展开给出
+
+$$
+\Delta_{1458}=1-y,\qquad \Delta_{2367}=1-v,
+$$
+
+所以 $y=v=1$。在此代入下，四个其余子式的准确符号为
+
+$$
+\begin{aligned}
+\Delta_{4678}&=-(1+z-xz),\\
+\Delta_{1567}&=z+1-zu,\\
+\Delta_{2568}&=-\bigl(u+x(1-zu)\bigr),\\
+\Delta_{3578}&=u+x(1-u).
+\end{aligned}
+\tag{47.3}
+$$
+
+特别地，$M$ 的第 $4$ 列为第四个标准基向量，沿 $4678$ 的第一列展开便得
+
+$$
+\Delta_{4678}
+=-\det\begin{pmatrix}1&1&x\\0&1&1\\z&0&1\end{pmatrix}
+=-(1+z-xz).
+$$
+
+四个非基条件因此恰好给出
+
+$$
+1+z-xz=0,\qquad z+1-zu=0,\qquad
+u+x(1-zu)=0,\qquad u+x(1-u)=0.
+\tag{47.4}
+$$
+
+后两个左端之差为
+
+$$
+\bigl(u+x(1-zu)\bigr)-\bigl(u+x(1-u)\bigr)=xu(1-z).
+$$
+
+由 $x,u\ne0$ 得 $z=1$；第二式随即为 $2-u=0$，第一式为 $2-x=0$。这些值也满足后两式，证明了 (47.2)。$\square$
+
+归一化矩阵与所用非基条件见 Pendavingh–van Zwam，[*Confinement of matroid representations to subsets of partial fields*，arXiv:0806.4487v2，Theorem 4.18 的证明](https://arxiv.org/html/0806.4487v2#S4.Thmtheorem18)：HTML 式 (57)–(60) 对应 [PDF 第 25 页式 (44)–(47)](https://arxiv.org/pdf/0806.4487v2#page=25)，其第一式也写为 $1+(1-x)=0$，须以 (47.4) 的第一式替代。标准矩阵 $A_8$ 见 HTML 式 (81)、PDF 第 31 页式 (58)；Lemma 5.2 的唯一性陈述针对部分域 $\mathbb D$。这里所需的特征零域上归一化结论由上述消元直接给出。
+
+此更正只替代定理 42.2 证明中的该步子式计算。两份表示仍共用式 (42.4) 的标签对应；转回嵌入矩阵时仍只作列基变换与逐行非零缩放。对 $W=X$ 或 $Z$，所得分裂乘数仍经式 (42.8) 的原有理线性核扩底下降到某个原 $\gamma\in D^\times$，并由四维性得到 $Y=\gamma W$；式 (42.2)–(42.3) 的前件、原标签和结论均保持原义。
+
+## 追加锚（本行以下为增补区）

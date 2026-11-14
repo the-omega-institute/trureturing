@@ -54,7 +54,19 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPair
 
 For an edge weight c valued in the reals, finitePairingPolynomial(U,c) is the sum over all perfect pairings P of U of the product over edges e in P of c(e). The empty product equals one.
 
-**Theorem 1.5 (Expansion over a partial pairing).**
+**Theorem 1.5 (Membership in a pairing support).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.mem_pairingSupport`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.mem_pairingSupport` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A label i belongs to pairingSupport(P) exactly when some edge e in P contains i.
+
+**Theorem 1.6 (Expansion over a partial pairing).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.finitePairingPolynomial_add`
 
@@ -72,5 +84,6 @@ For every finite label type alpha, finite label set U, and real edge weights c,d
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.IsPerfectPairing`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.finitePairingPolynomial`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.finitePairingPolynomial_add`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.mem_pairingSupport`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.pairingSupport`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/QuadraticMomentDefs](QuadraticMomentDefs.md)

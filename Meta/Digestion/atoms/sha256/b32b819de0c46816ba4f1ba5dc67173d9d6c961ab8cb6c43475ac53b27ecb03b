@@ -1,0 +1,57 @@
+**命题 86.13（一个字面相同的几何纤维）。** 在完全相同的
+
+$$
+A=H_2,\quad D=H_4,\quad E=H_8,\quad
+\omega=I_4/4,\qquad L(d,c)=d\otimes c
+$$
+
+及全 PSD 锥、规范迹、全态全效应上，令 $s\in\{0,1\}$、$p_s=T_4^s\operatorname{Tr}_1$。两个原元组均为完整校准 PRE，且 $\mathcal O(z_0)=\mathcal O(z_1)$；C13、H13 只在 $s=0$ 成立。$s=1$ 是 66.11 的既有实际元组。
+
+**证明：从每个元组的同一个 $p_s$ 两次重算。** 对全部实输入，
+
+$$
+\begin{aligned}
+p_sL(d,c)&=(\operatorname{Tr}_1d)^{T^s}\otimes c^{T^s},\\
+K_s(a)&=I_2/2\otimes a^{T^s},&
+M_s(a,b)&=a\otimes b^{T^s},\\
+Q_s(a,b,c)&=a\otimes b^{T^s}\otimes c,&
+J_s(a)&=a\otimes I_2,&H_s(d)&=d\otimes I_2,\\
+B_{1,s}d&=(\operatorname{Tr}_1d)^{T^s}\otimes I_2,&
+B_{1,s}M_s(a,b)&=\operatorname{Tr}(a)b\otimes I_2.
+\end{aligned}
+\tag{86.18}
+$$
+
+偏迹与整块转置全锥正保迹；$L$ 对所有纠缠 $d\ge0$ 及 $c\ge0$ 正。可逆转置及 Hermitian 简单张量实基给两条满实张成。$\langle J_sa,J_sb\rangle=2\operatorname{Tr}(ab)$、$\langle H_sd,H_sd'\rangle=2\operatorname{Tr}(dd')$ 给完整 $D_J,D_H$，第二式包含全部纠缠 $d,d'$；末式给全实 $Z$。在三个完整矩阵载体上，纯投影 $q$ 被 $0\le f\le I$ 确认时有 $f\ge q$，而 $f=q$ 取到最小值，所以 $T_q(x)=\operatorname{Tr}(qx)$，完整 $S$ 及固定对半入口成立。$U=I_4,G=I_8$，C2、$\mathsf G_1$ 及联合校准均成立，(83.8) 也成立。这验证的是两个完整原元组，不仅是产品输入表。
+
+**证明：全部投影几何相同。** 原迹伴随为 $H_s^*z=\operatorname{Tr}_3z$、$p_s^*d=I_2\otimes d^{T^s}$，因此整个原 $E$ 上均有
+
+$$
+P_{12}z=\frac12(\operatorname{Tr}_3z)\otimes I_2,\qquad
+P_{23}z=\frac12I_2\otimes\operatorname{Tr}_1z,\qquad
+P_2z=\frac14I_2\otimes\operatorname{Tr}_{1,3}z\otimes I_2.
+\tag{86.19}
+$$
+
+两范围恰为 $H_4\otimes I_2$、$I_2\otimes H_4$，交集为 $I_2\otimes H_2\otimes I_2$。继承 Jordan 乘积、正锥、单位、限制迹逐字相同；交集元 $I_2\otimes b\otimes I_2$ 的原迹为 $4\operatorname{Tr}b$。失去的标记可直接看见：$\kappa_s(b)=I_2\otimes b^{T^s}\otimes I_2$ 的像相同，逐点源对应不同。$L,J,H$ 也相同，故确有同一 $\mathcal O$。
+
+**证明：同一个原混态的整个输出。** 两个 $T_{\rm raw}(a,c)=a\otimes I_2\otimes c$ 相同，但必须各自撤去实际 $M_s$ 的第二腿转置。因此
+
+$$
+I_s^{\rm raw}x=\operatorname{ins}_2[(\operatorname{id}\otimes T_2^s)x].
+\tag{86.20}
+$$
+
+$s=0$ 时插入在整个锥上正；$s=1$ 时 Bell 投影的端点部分转置为 $\mathrm{Swap}/2$，插中间 $I_2$ 后仍有 $-1/2$ 方向。为保留同一合格原混态，取
+
+$$
+q=|\Phi\rangle\langle\Phi|,\qquad
+|\Phi\rangle=(|00\rangle+|11\rangle)/\sqrt2,\qquad
+\rho=q/2+I_4/8.
+\tag{86.21}
+$$
+
+$\rho$ 原迹一、全秩，两边缘均为 $I_2/2$。两元组的 $\alpha\alpha^*\rho$、$\beta\beta^*\rho$ 都是 $I_4/2$，转置在伴随铺回中抵消。两个资格差在 $|\Phi\rangle$ 上均为 $-1/8$，故同一个 $\rho$ 属于两份原 $\mathcal H(F_s)$。$I_0^{\rm raw}\rho$ 正；$I_1^{\rm raw}\rho$ 的端点矩阵为 $\mathrm{Swap}/4+I_4/8$，在反对称方向及任意中间单位向量上为 $-1/8$。两整个输出的总迹仍同为二。
+
+H13 的存在量词失败不能仅由这一个失败成员推出；这里使用 72.8：既然坏元组 C13 失败，每个原合格成员的整个输出都失败。好元组则由 C13 及非空资格得到 H13。证毕。
+

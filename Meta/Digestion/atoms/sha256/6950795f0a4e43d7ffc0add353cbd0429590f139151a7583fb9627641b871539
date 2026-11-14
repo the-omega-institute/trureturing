@@ -1,0 +1,41 @@
+**定义 73.2（一般正滤波接合及正补全）。** 取有限非空标签集，记 $H_r=\operatorname{Herm}_r(\mathbb C)$，令
+
+$$
+\begin{gathered}
+B=\bigoplus_b H_{d_b},\qquad C=\bigoplus_k H_{n_k},\qquad
+J=\bigoplus_{b,k}H_{d_bn_k},\quad d_b,n_k\ge1,\\
+S_{bk}=I_{d_b}\otimes\sqrt{w_{bk}},\quad w_{bk}>0,\qquad
+(C_wZ)_{bk}=S_{bk}Z_{bk}S_{bk},\\
+m_w(x,y)_{bk}=x_b\otimes\sqrt{w_{bk}}y_k\sqrt{w_{bk}}.
+\tag{73.2}
+\end{gathered}
+$$
+
+$\tau_B,\tau_C,\tau_J$ 均为所有实际块的普通迹之和，伴随取其迹内积。$C_w$ 及其逆是整个 $J_+$ 的序同构，通常不保迹。所有映射先定义在实 Hermitian 空间；谈放大时用其唯一复线性保 Hermitian 延拓。
+
+对任一局部实线性 $\Phi:B\to B$ 或 $\Theta:C\to C$，其联合延拓必须满足全部实输入的原乘积律
+
+$$
+\widehat\Phi m_w(x,y)=m_w(\Phi x,y),\qquad
+\widehat\Theta m_w(x,y)=m_w(x,\Theta y).
+\tag{73.3}
+$$
+
+在一个位置，固定任意输出块及该块内任意密度 $\sigma$，允许秩亏，定义总迹重置
+
+$$
+R_\sigma(z)=\tau(z)\sigma,
+\tag{73.4}
+$$
+
+其余输出块为零。固定 $0<c\le1$。该位置的“正重置补全”指存在有限个局部正实线性分支 $\Gamma_s$，使
+
+$$
+T=cR_\sigma+\sum_s\Gamma_s
+\tag{73.5}
+$$
+
+在局部保总迹，且按 (73.3) 唯一确定的每个联合分支 $c\widehat R_\sigma,\widehat\Gamma_s$ 在整个 $J_+$ 上正，其总和 $\widehat T$ 在整个联合锥上保总迹。局部与联合的每支 TNI 随正性及各自总和 TP 自动成立。$c=1$ 可不列零失败分支。两位置可以固定不同的输出块、重置态、正份额和失败分支，不要求两套总过程相同或交换。
+
+这个定义没有假定局部分支 CP。它量化的是相同原对象、相同原迹、相同接合与其实际实张成上的映射存在性；任意另给一个联合正 TP 映射，如果不满足 (73.3)，不构成本定义的补全。也没有把数学存在量词改写成原装置、菜单、记录或控制的供应断言。
+

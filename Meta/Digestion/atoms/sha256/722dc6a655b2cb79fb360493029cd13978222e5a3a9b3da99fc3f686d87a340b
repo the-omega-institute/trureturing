@@ -1,0 +1,42 @@
+**命题 105.19（三把原尺如何连回完整量子候选）。** 上述结果可完整解释如下。
+仍从原来的整块状态物体、全部纯状态和所有零一有界的原尺出发。
+每个纯点背后的整个排除集合是一块实心球，线段也算；弱入口只要求本来可互相排除的
+两个纯点一起留在真正边界。这已经给每个纯点一个共同三角形和三把总和为一的原尺。
+三把尺不能各自随意变宽：第三族至少容纳前两族宽度之和，另外两次循环也一样，
+三个非负宽度只能全零。所以每个纯点背后的整球零尺唯一。
+
+证明与解释。任何别的确认尺限制到背后的球，都能沿一条直径分成两张非负尺；
+减掉它们后，剩下的尺在原纯点读一、整球读零。若它在整体别处为负，
+用真正的全域最低值归一，就会把那个负值点也判进这块读零球，矛盾。
+所以剩下的恰是唯一原尺，别的确认尺在整个原物体上都不低于它。
+这同时给共同的正线性球效应延拓与数学滤子，仍没有制造一台实际装置。
+
+现在把所有原三结果框架都拿来读同一个向量，每组得到三个实数，
+取它们欧氏长度的最大值。这个最大长度在原整个向量空间上确是范数，每个纯点长度为一。
+再明列一个全局二方向要求：任意两个有符号向量，和与差的长度平方相加，
+等于两者各自长度平方之和的两倍。这就是平行四边形律。
+它先给同一个内积；任一组三把尺的平方和都不超过这个内积长度，
+却在自己的三个纯点恰好相等。沿任意实方向微移，非负差不能出现一次斜率，
+于是每把原尺都被锁定为与对应纯点作同一个内积。
+交换任意两个纯点便得到全部数值互易，连原先不知是否共边界的纯对也包括在内。
+结合已经证明的全域最低尺，旧的完整Jordan桥立即适用，准确回到同原锥、同原单位的秩三几何。
+
+若每个完整排除球又都是三维实心球，成熟分类才唯一选出复三能级，
+全部态和全部效应分别就是密度矩阵与零到单位之间的矩阵，读数是迹，纯比较是模方。
+其余来源、实际菜单、复合、CP、仪器、更新和物理钟仍按原合同供给。
+单系统秩三不会自动变成三副本比较；全有限复C星层级仍需其原三份入口。
+
+还有一个更弱而直观的图景：每个纯点和背后球心按一比二平均，都落在同一个中心。
+它准确等于整块物体绕一个唯一中心反向缩成一半后仍放得回去，
+一半还是原三结果容量允许的临界比例。这个中心使每个状态都在某个共同三角形里，
+并使三个谱数值唯一；但每个状态各有自己的三角形，不等于任意两个方向共用同一三角形。
+所以这个中心图景尚未证明全局平行四边形律。
+弱入口自身是否已经迫出该长度律，也仍未证明；本章的完整结论是补上它之后的准确等价，
+不是宣告弱入口已自动完成全部量子公理。以上解释分别由105.2—105.17的原域推导给出。证毕。
+
+[Q105BMU]: https://arxiv.org/html/1403.4147v4 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory, Definition 13—14, Theorem 16."
+[Q105N]: https://arxiv.org/html/2312.13213v2 "Gerd Niestegge, Quantum transition probability, Theorems 2—3."
+[Q105BH]: https://arxiv.org/html/1904.03753v1 "Howard Barnum and Joachim Hilgert, Strongly symmetric spectral convex bodies are Jordan algebra state spaces, Definitions 3.4—3.5, Theorem 1.1."
+[Q105MK]: https://arxiv.org/pdf/1802.01162v3 "Keiji Matsumoto and Gen Kimura, Information-induced asymmetry of state space in view of general probabilistic theories, §III(14)—(19), Theorem 1(28), Theorem 4(44)."
+[Q105H]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+

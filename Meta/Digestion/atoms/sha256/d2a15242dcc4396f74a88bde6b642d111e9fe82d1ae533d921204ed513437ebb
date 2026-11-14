@@ -1,0 +1,57 @@
+### Q97.4 Jacobi 误差和复乘法的全部前件
+
+交换性直接消去循环和中的六项，得到
+
+$$
+[L_a,L_b]c+[L_b,L_c]a+[L_c,L_a]b=0.
+$$
+
+定义 $J_C(a,b,c)=C(C(a,b),c)+C(C(b,c),a)+C(C(c,a),b)$。循环求和 (Q97.13) 给
+
+$$
+\lambda\|J_C\|_{\rm tri}\le3G\eta.
+$$
+
+对交替 $C$，逐项展开又有
+
+$$
+[C_a,C_b]c-C_{C(a,b)}c=-J_C(a,b,c),\qquad
+\|[L_a,L_b]+\lambda[C_a,C_b]\|_{\rm op}\le4G\eta
+\tag{Q97.14}
+$$
+
+对单位 $a,b$ 成立。因此没有在取得 Jacobi 界以前用 $[C_a,C_b]=C_{C(a,b)}$。
+
+在原复化 $H=J\otimes_{\mathbb R}\mathbb C$ 上取共轭 $x\mapsto x^*$、原 Hilbert 内积（第一槽共轭线性），并定义复双线性乘法
+
+$$
+\mu(a,b)=S(a,b)-i\sqrt\lambda C(a,b).
+\tag{Q97.15}
+$$
+
+它的单位严格为 $e$，且 $\mu(x,y)^*=\mu(y^*,x^*)$。实 $a$ 的 $S_a$ 自伴、$C_a$ 斜伴随，所以 $L_a^\mu=S_a-i\sqrt\lambda C_a$ 自伴；复线性扩展即给
+
+$$
+(L_x^\mu)^\dagger=L_{x^*}^\mu.
+\tag{Q97.16}
+$$
+
+两次展开 (Q97.15)，以 $S$-结合缺陷 $-[L_a,L_c]b$ 合并实部，以 (Q97.10) 合并虚部，得到对实输入的严格恒等式
+
+$$
+\begin{aligned}
+\mathcal A_\mu(a,b,c)
+&:=\mu(\mu(a,b),c)-\mu(a,\mu(b,c))\\
+&=-E(a,c)b-\lambda J_C(a,b,c)
++i\sqrt\lambda\bigl(F_C(a;b,c)+F_C(c;a,b)\bigr).
+\end{aligned}\tag{Q97.17}
+$$
+
+实单位三元组上的范数至多 $(4G+6K^{3/2}U)\eta$。若 $x=a+ib$，则 $\|a\|+\|b\|\le\sqrt2\|x\|$；三个输入的复展开至多损失 $2\sqrt2<3$，两个输入至多损失 $2$。由此
+
+$$
+\|\mathcal A_\mu\|_{{\rm tri},H}\le V\eta,\qquad
+\|\mu\|_{{\rm bil},H}\le2\bigl(K+\sqrt K(K+1)\bigr)=M.
+\tag{Q97.18}
+$$
+

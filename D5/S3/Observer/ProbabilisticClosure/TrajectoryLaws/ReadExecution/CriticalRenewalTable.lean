@@ -175,7 +175,7 @@ private lemma finite_weight_row (a : ℕ → ℝ) (p k : ℕ) :
   simp only [mem_range, Nat.lt_succ_iff] at hu
   simp [hu]
 
-private lemma weighted_tails (a : ℕ → ℝ) (ha : ∀ k, 0 ≤ a k) (p : ℕ)
+lemma weighted_tails (a : ℕ → ℝ) (ha : ∀ k, 0 ≤ a k) (p : ℕ)
     (h : Summable fun k => (∑ u ∈ range (k+1), (u : ℝ)^p) * a k) :
     Summable (fun u : ℕ => (u : ℝ)^p * ∑' k, if u ≤ k then a k else 0) ∧
     (∑' u : ℕ, (u : ℝ)^p * ∑' k, if u ≤ k then a k else 0) =

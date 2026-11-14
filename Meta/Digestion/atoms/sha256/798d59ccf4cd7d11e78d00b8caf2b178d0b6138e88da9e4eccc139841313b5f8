@@ -1,0 +1,23 @@
+**Definition 35.1 (central-noise mesh).** On the same Brownian source
+continued for analytic estimates, define
+
+$$
+D_{s,t}=K_t-K_s-W^1_s(W^2_t-W^2_s).
+\tag{35.1}
+$$
+
+Set $t_0=0$ and let $t_{i+1}$ be the earlier of $t_i+\rho^2$ and
+the first $t>t_i$ when one of
+$|W^1_t-W^1_{t_i}|$, $|W^2_t-W^2_{t_i}|$, $|D_{t_i,t}|$
+reaches $\rho$. These are analytic stopping times, not controls.
+In particular their complete cells satisfy
+
+$$
+|W^j_v-W^j_{t_i}|\le\rho\ (j=1,2),\qquad
+|D_{t_i,v}|\le\rho,\qquad t_i\le v\le t_{i+1}.
+\tag{35.2}
+$$
+
+The identity (16.9) holds for these $D$: the added $\lambda t+\nu C_t$
+has additive increments, so introduces no extra cross term.
+

@@ -1,0 +1,33 @@
+**定义 102.1（合格目标秩与确认效应秩）。** 完整采用VII101.1的同一个有限维原 $V,C,u,K,P,[0,u]$ 及 $F_p,T_p,D_p,E_p$。整个 $P=\operatorname{ext}K$ 可无限、不闭；不预设光滑、ROG、PSD、自对偶、谱性或局部效应延拓。固定原纯 $p$，定义
+
+$$
+\begin{gathered}
+L_p=\operatorname{aff}(\{p\}\cup E_p),\qquad
+d_p=\dim L_p,\qquad h_p=\dim\operatorname{aff}F_p,\\
+b_p=\max\{1,\min\{h_p,d_p-1\}\},\qquad
+m=\dim\operatorname{aff}K.
+\end{gathered}
+\tag{VII102.1}
+$$
+
+这里 $u\in F_p$，所以 $h_p=\dim\operatorname{span}\{f-u:f\in F_p\}$，且 $0\le h_p,d_p\le m$。$h_p$ 在本章专指整数维数，区别于VII100的规范facet效应记号；$m$ 是原仿射维数，绝不与ROG矩阵环境余维 $c$ 混用。$E_p=\varnothing$ 时 $L_p=\{p\}$、$d_p=0$，仍按同一公式取 $b_p=1$。
+
+将VII101.1的全称条件拆为固定锚点的原谓词：
+
+$$
+\begin{aligned}
+\mathrm G_k(p):\quad&
+\forall\text{有限 }Q\subseteq E_p,\ |Q|\le k,
+\quad\exists f\in F_p\quad f|_Q=0,\\
+\mathrm{Z0}(p):\quad&
+\forall x,y\in D_p,\quad (x+y)/2\in D_p,\\
+\mathrm G_k&\Longleftrightarrow\forall p\in P,\ \mathrm G_k(p),\qquad
+\mathrm{Z0}\Longleftrightarrow\forall p\in P,\ \mathrm{Z0}(p).
+\end{aligned}
+\tag{VII102.2}
+$$
+
+$\mathrm G_{b_p}(p)$ 的锚点先固定，再只取原合格目标 $E_p$；不同锚点可有不同 $b_p$。$\mathrm G_1(p)$ 由资格定义自动成立，空集由 $u$ 处理，不能将它计作额外物理信息。这里的有限性只限制一次共同排除的目标集，不限制整个 $P$。
+
+原纯点零关系已经对称：若 $f(p)=1,f(q)=0$，则原补效应 $u-f$ 在 $q$ 取一、在 $p$ 取零。本章不以额外的纯数值互易 $\mathrm R:T_p(q)=T_q(p)$ 重新获得这一零对称性，也不把它计作新增结论。
+

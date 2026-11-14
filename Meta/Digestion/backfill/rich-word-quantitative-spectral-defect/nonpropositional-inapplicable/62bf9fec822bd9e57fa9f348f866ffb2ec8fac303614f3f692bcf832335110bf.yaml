@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:62bf9fec822bd9e57fa9f348f866ffb2ec8fac303614f3f692bcf832335110bf
+  normalized_sha256: sha256:62bf9fec822bd9e57fa9f348f866ffb2ec8fac303614f3f692bcf832335110bf
+cas_ref: sha256:62bf9fec822bd9e57fa9f348f866ffb2ec8fac303614f3f692bcf832335110bf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Notation and definitions of the literal dictionary, window occurrences, boundary filters and Transport; no independent proposition is discharged.
+    previous_atom_id: a087a5789a652093b0c70d40461cf016536106a47a3abce979f0670c5464f750
+    next_atom_id: 0874ce6035885c2abb0bab61621c31a13d4c6ac6b9beeaf8eec675edc072586b

@@ -1,0 +1,33 @@
+**定义 111.1（存在式三元二面可辨）。** 始终采用109.1的同一个非零有限维实
+$V$、闭尖生成锥 $C$、严格正原单位 $u$、整个原紧基
+$K=C\cap\{u=1\}$、全部原纯点 $P=\operatorname{ext}K$ 和全部原效应
+$\mathcal E=[0,u]_{C^*}$，并假设
+$\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$。
+原确认仍为对整个 $F_p=\{f\in\mathcal E:f(p)=1\}$ 取最小值，
+原完整排除集仍为整个 $D_p=\{x\in K:T_p(x)=0\}$。
+直接复用W已给的全锥序least尺 $a_p$、完整排除球
+$D_p=c_p+\{v\in L_p:g_p(v,v)\le1\}$、共同正线性延拓 $\Lambda_p$、
+原正投影 $\Pi_p$ 及原joint三框架。
+框架 $F=(p_1,p_2,p_3)$ 指三个两两原正交的原纯点；W已给
+$a_{p_1}+a_{p_2}+a_{p_3}=u$，每个原纯点均可进入这种框架。
+
+本章的附加关系只要求**存在一组**这样的框架：
+
+$$
+\begin{aligned}
+\mathrm{TFD}_{3,\exists}:\quad
+&\exists\text{原joint }F=(p_1,p_2,p_3)\quad
+ \forall x,y\in K,\ x\ne y,\\
+&\qquad\exists i\in\{1,2,3\}\ \exists f\in\mathcal E:\quad
+ f(p_i)=0,\qquad f(x)\ne f(y).
+\end{aligned}
+\tag{VIII111.1}
+$$
+
+这是一条原态—原效应二元评价的零关系与分离关系，
+只把三张完整零效应面联合起来使用。
+它不要求任一张球独自区分全态，也不只读取三个标量 $a_{p_i}(x)$。
+它不以全框架可辨、共同中心G、全Pair、全纯数值互易、滤子保纯、
+全局内积、切丛覆盖或二阶光滑度为输入。
+109章的全框架条件 $\mathrm{TFD}_3$ 保持原义；本章将它作为待推出的后果。
+

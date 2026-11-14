@@ -1,0 +1,19 @@
+**Lemma 5.2 (Eventual decision comparison without comparison absorption).** Let $h_{V_i}$ be the actual probability of ever hitting $d_1$ under $V_i$, with hitting at time zero allowed. If $p_i=\mathsf P_{i,q}(D=1)$ for the actual compliant machine, then
+
+$$
+|p_i-\nu_i h_{V_i}|
+\le\sqrt{d_L\mathbb E_iN/2}.
+\tag{5.5}
+$$
+
+Proof. For finite probability laws $P,Q$ and an event $E$, log-sum gives $D(P\Vert Q)\ge d(P(E),Q(E))$, where $d$ is binary relative entropy. For $0<v<1$, the second derivative in $u$ of $d(u,v)-2(u-v)^2$ is $1/[u(1-u)]-4\ge0$; its value and first derivative at $u=v$ vanish. Hence $d(u,v)\ge2(u-v)^2$. Endpoint cases follow by limits, including infinite divergence when appropriate. Therefore
+
+$$
+|P(E)-Q(E)|\le\sqrt{D(P\Vert Q)/2}.
+\tag{5.6}
+$$
+
+Apply (5.6) to the path event $Y_n=d_1$ in Lemma 5.1. The actual target absorbs almost surely and records its actual output, so its event probability tends to $p_i$. Under $V_i$, $d_1$ is absorbing, so the events increase to ever hitting $d_1$ and their probabilities tend to $\nu_i h_{V_i}$, whether or not any other paths absorb. Monotone convergence gives $\mathbb E_i\min(N,n)\to\mathbb E_iN<\infty$. Taking limits proves (5.5). Only finite path entropies were compared. No absorption or mean assumption is imposed on the comparison chain from arbitrary states. $\square$
+
+The common initial row in this lemma is $\nu_i$, not $\nu_{1-i}$. The initial laws are compared only after the finite-path argument. This avoids placing an uncharged stationary-wait discrepancy inside the epoch information budget.
+
