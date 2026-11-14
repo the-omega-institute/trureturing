@@ -11,6 +11,7 @@
    no record/prime wrapper or claim of a Robin/RH realization. -/
 
 import D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
+import D5.S3.Arith.Robin.ArithmeticMixedCornerResponse
 import D5.S3.Arith.Robin.ActualRobinClockCovariance
 import D5.S3.Arith.Robin.MellinWeightedVariation
 import Mathlib.Analysis.Calculus.MeanValue
@@ -26,27 +27,11 @@ namespace D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability
 
 open D5.S3.Arith.Robin.ActualRobinClockCovariance (g activationDensity g_has_deriv_at)
 open D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature (loglog_tangent_gap_quadratic)
+open D5.S3.Arith.Robin.ArithmeticMixedCornerResponse (density_antitone)
 
 private theorem density_nonneg {t : ℝ} (ht : 1 < t) :
     0 ≤ activationDensity t := by
   exact D5.S3.Arith.Robin.MellinWeightedVariation.weight_nonneg ht
-
-/- A consumed adaptation of PUBLIC scale-weight monotonicity. In particular,
-the private density_antitone in ArithmeticMixedCornerResponse is not an API.
-We neither import that module nor assume its private result is exported. -/
-private theorem density_le {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
-    activationDensity t ≤ activationDensity s := by
-  have hs0 : 0 < s := by linarith
-  have h := D5.S3.Arith.Robin.MellinWeightedVariation.scaleWeight_antitone
-    (x := s) (y := 1) hs (by norm_num) hs0 hst (by simp)
-  rw [D5.S3.Arith.Robin.MellinWeightedVariation.scaleWeight_eq,
-    D5.S3.Arith.Robin.MellinWeightedVariation.scaleWeight_eq] at h
-  simp only [mul_one] at h
-  change t * activationDensity t ≤ s * activationDensity s at h
-  have hpos := density_nonneg (hs.trans_le hst)
-  have hmul := mul_nonneg (sub_nonneg.mpr hst) hpos
-  apply (mul_le_mul_iff_right₀ hs0).mp
-  nlinarith only [h, hmul]
 
 /- The actual derivative -w is bounded on the WHOLE interval between the
 endpoints. Mathlib's mean-value inequality includes coincident endpoints and
@@ -62,7 +47,7 @@ private theorem g_sub_le {c a y : ℝ} (hc : 1 < c) (hca : c ≤ a) (hcy : c ≤
       ‖-activationDensity t‖ ≤ activationDensity c := by
     rw [norm_neg, Real.norm_eq_abs,
       abs_of_nonneg (density_nonneg (hc.trans_le (hdom t ht)))]
-    exact density_le hc (hdom t ht)
+    exact density_antitone hc (hdom t ht)
   have hm := Convex.norm_image_sub_le_of_norm_hasDerivWithin_le hd hb
     (convex_Icc (min a y) (max a y))
     (show y ∈ Icc (min a y) (max a y) from
@@ -115,7 +100,7 @@ theorem loglog_tangent_gap_stability {a x y : ℝ}
       K y x ≤ activationDensity (min y x) * (x - y) ^ 2 / 2 := hquad.2
       _ ≤ activationDensity c * (x - y) ^ 2 / 2 :=
         div_le_div_of_nonneg_right
-          (mul_le_mul_of_nonneg_right (density_le hc hcm) (sq_nonneg _))
+          (mul_le_mul_of_nonneg_right (density_antitone hc hcm) (sq_nonneg _))
           (by norm_num)
       _ = activationDensity c * M ^ 2 / 2 := by simp only [M, sq_abs]
 
@@ -186,7 +171,7 @@ theorem loglog_tangent_gap_stability_scaled {a x y : ℝ}
   have hclower : a / 2 ≤ min a (min x y) := le_min hha (le_min hx hy)
   have hcoefficient : activationDensity (min a (min x y)) ≤
       16 / (a ^ 2 * Real.log a) :=
-    (density_le hh.1 hclower).trans hh.2
+    (density_antitone hh.1 hclower).trans hh.2
   have hglobal := loglog_tangent_gap_stability ha1 hx1 hy1
   dsimp only at hglobal ⊢
   have hglobal' :

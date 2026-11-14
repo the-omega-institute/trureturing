@@ -36,4 +36,5 @@ When exp(2)<=a and a/2<=x,y, the same stability estimate is bounded by 16/(a² l
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvatureStability.loglog_tangent_gap_stability_scaled`
 - Dependency: [D5/S3/Arith/Robin/ActualRobinClockCovariance](../ActualRobinClockCovariance.md)
 - Dependency: [D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvature](LogLogGlobalCurvature.md)
+- Dependency: [D5/S3/Arith/Robin/ArithmeticMixedCornerResponse](../ArithmeticMixedCornerResponse.md)
 - Dependency: [D5/S3/Arith/Robin/MellinWeightedVariation](../MellinWeightedVariation.md)
