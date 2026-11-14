@@ -651,40 +651,6 @@ private lemma gramDenominator_ne_zero (m : ℕ) (Q : Matrix (Word 3) (Word 3) �
     simpa only [PhasePolynomial.actual, RingHom.map_det] using hm
   exact mul_ne_zero (pow_ne_zero _ (modulus_ne_zero hd.1.1.1.1)) (pow_ne_zero _ hM)
 
-/-- The refined polynomial chart is inhabited by an actual state at every complement length.
-The witness is the original fixed-density tail witness, with its original full-length gauge. -/
-theorem quotient_locus_witness (m : ℕ) :
-    let ψ := mpsState (3 + m) (OpenBoundaryMPSTwoSiteMinimality.originalCore 0)
-      (OpenBoundaryMPSTwoSiteMinimality.originalCore 1) ![1, 0] ![1, 2]
-    ψ ∈ openBoundaryMPS (3 + m) ∧
-      eval (OpenBoundaryMPSDensityGenericity.realCoordinates
-        (fun ij => rawPrefix 3 m ψ ij.1 ij.2)) (quotientLocusPolynomial m) ≠ 0 ∧
-      eval (OpenBoundaryMPSDensityGenericity.realCoordinates
-        (OpenBoundaryMPSDensityGenericity.fixedTensor (rawPrefix 3 m ψ)))
-        OpenBoundaryMPSDensityGenericity.recoveryPolynomial ≠ 0 ∧
-      boundaryGram m (rawPrefix 3 m ψ) 0 0 ≠ 0 := by
-  dsimp only
-  let θ := OpenBoundaryMPSTwoSiteMinimality.witnessParameter m
-  let ψ := OpenBoundaryMPSTwoSiteMinimality.state (3 + m) θ
-  let Q := rawPrefix 3 m ψ
-  have hw := OpenBoundaryMPSTwoSiteMinimality.witness_gauge m
-  have hg := OpenBoundaryMPSDensityGenericity.statePolynomial_witness m
-  rw [OpenBoundaryMPSDensityGenericity.statePolynomial_eval, ← hw] at hg
-  obtain ⟨_,hGram⟩ := canonical_gram m θ (OpenBoundaryMPSTwoSiteMinimality.right θ) hg
-  have hq : OpenBoundaryMPSTwoSiteMinimality.right θ 0 ≠ 0 := by
-    simp [θ, OpenBoundaryMPSTwoSiteMinimality.right,
-      OpenBoundaryMPSTwoSiteMinimality.witnessParameter]
-  change boundaryGram m Q = _ at hGram
-  have h00 : boundaryGram m Q 0 0 ≠ 0 := by
-    rw [hGram]
-    exact mul_ne_zero hq (star_ne_zero.mpr hq)
-  have hnum : gramNumerator m Q 0 0 ≠ 0 := by
-    intro hz
-    exact h00 (by change (gramDenominator m Q)⁻¹ * gramNumerator m Q 0 0 = 0; rw [hz,mul_zero])
-  refine ⟨⟨_,_,_,_,rfl⟩, ?_⟩
-  rw [← hw]
-  exact ⟨(quotientLocus_eval m Q).mpr ⟨hg,hnum⟩,hg,h00⟩
-
 /-- The positive-real-denominator version of the exact polynomial boundary numerator. -/
 def positiveGramPolynomial (m : ℕ) :
     Matrix (Fin 2) (Fin 2) (PhasePolynomial.Poly ObservationIndex) :=
@@ -1035,6 +1001,42 @@ theorem rational_quotient_inverse (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
   · fin_cases i <;> simp [quotientRatioDenominator, coreRatioDenominators,
       columnPolynomial_eval, hdv.1.1.1.1, hdv.1.1.1.2]
   · fin_cases i <;> simp [quotientRatioDenominator, heval.1, heval.2, hden, hnum]
+
+/-- The refined polynomial chart is inhabited by an actual state at every complement length.
+The witness is the original fixed-density tail witness, with its original full-length gauge. -/
+theorem quotient_locus_witness (m : ℕ) :
+    let ψ := mpsState (3 + m) (OpenBoundaryMPSTwoSiteMinimality.originalCore 0)
+      (OpenBoundaryMPSTwoSiteMinimality.originalCore 1) ![1, 0] ![1, 2]
+    ψ ∈ openBoundaryMPS (3 + m) ∧
+      eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij => rawPrefix 3 m ψ ij.1 ij.2)) (quotientLocusPolynomial m) ≠ 0 ∧
+      eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+        (OpenBoundaryMPSDensityGenericity.fixedTensor (rawPrefix 3 m ψ)))
+        OpenBoundaryMPSDensityGenericity.recoveryPolynomial ≠ 0 ∧
+      boundaryGram m (rawPrefix 3 m ψ) 0 0 ≠ 0 := by
+  dsimp only
+  let θ := OpenBoundaryMPSTwoSiteMinimality.witnessParameter m
+  let ψ := OpenBoundaryMPSTwoSiteMinimality.state (3 + m) θ
+  let Q := rawPrefix 3 m ψ
+  have hw := OpenBoundaryMPSTwoSiteMinimality.witness_gauge m
+  have hg := OpenBoundaryMPSDensityGenericity.statePolynomial_witness m
+  rw [OpenBoundaryMPSDensityGenericity.statePolynomial_eval, ← hw] at hg
+  obtain ⟨_,hGram⟩ := canonical_gram m θ (OpenBoundaryMPSTwoSiteMinimality.right θ) hg
+  have hq : OpenBoundaryMPSTwoSiteMinimality.right θ 0 ≠ 0 := by
+    simp [θ, OpenBoundaryMPSTwoSiteMinimality.right,
+      OpenBoundaryMPSTwoSiteMinimality.witnessParameter]
+  change boundaryGram m Q = _ at hGram
+  have h00 : boundaryGram m Q 0 0 ≠ 0 := by
+    rw [hGram]
+    exact mul_ne_zero hq (star_ne_zero.mpr hq)
+  have hnum : gramNumerator m Q 0 0 ≠ 0 := by
+    intro hz
+    exact h00 (by change (gramDenominator m Q)⁻¹ * gramNumerator m Q 0 0 = 0; rw [hz,mul_zero])
+  have hQ := (quotientLocus_eval m Q).mpr ⟨hg,hnum⟩
+  obtain ⟨_, hrat, _, _, _, h00'⟩ := rational_quotient_inverse m Q hQ
+  refine ⟨⟨_,_,_,_,rfl⟩, ?_⟩
+  rw [← hw]
+  exact ⟨hQ, hg, h00'⟩
 
 #print axioms actual_boundary_gram
 #print axioms actual_quotient_representative
