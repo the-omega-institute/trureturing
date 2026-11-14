@@ -27,7 +27,7 @@ private theorem legal_iff (k n : ℕ) (hk : 0 < k) (w : Fin n → Bool) :
     DBonacciAdmissible k n w ↔ ∀ s, ¬ TrueBlock w s k :=
   D5.S1.Words.AdmissibleWords.KBonacciIntegerInterval.scanner_iff_literal k n hk w
 
-private theorem legal_delete {k n : ℕ} (hk : 0 < k) (w : Fin n → Bool)
+theorem legal_delete {k n : ℕ} (hk : 0 < k) (w : Fin n → Bool)
     (hw : DBonacciAdmissible k n w) (i : Fin n) :
     DBonacciAdmissible k n (Function.update w i false) := by
   classical
@@ -56,7 +56,7 @@ def completionLaw {k n : ℕ} (fixed : Finset (Fin n)) (exterior : Fin n → Boo
     ⟨⟨h.choose, h.choose_spec⟩⟩
   exact (uniformPmf {w // w ∈ completions k n fixed exterior}).map Subtype.val
 
-private theorem completionLaw_apply {k n : ℕ} (fixed : Finset (Fin n))
+theorem completionLaw_apply {k n : ℕ} (fixed : Finset (Fin n))
     (exterior w : Fin n → Bool) (h : (completions k n fixed exterior).Nonempty) :
     completionLaw fixed exterior h w =
       if w ∈ completions k n fixed exterior then
@@ -547,7 +547,7 @@ private theorem independentCompletions_laws {k n : ℕ} (fixed : Finset (Fin n))
       (completionLaw fixed y hy).map id) = _
     rw [PMF.map_id, PMF.bind_const]
 
-private theorem completionLaw_congr {k n : ℕ} (fixed : Finset (Fin n))
+theorem completionLaw_congr {k n : ℕ} (fixed : Finset (Fin n))
     (x y : Fin n → Bool) (hx : (completions k n fixed x).Nonempty)
     (hy : (completions k n fixed y).Nonempty)
     (hxy : ∀ i ∈ fixed, x i = y i) :
