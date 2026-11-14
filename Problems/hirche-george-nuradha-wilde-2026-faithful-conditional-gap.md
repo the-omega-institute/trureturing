@@ -68,6 +68,10 @@ Their outputs are $\operatorname{diag}(3/8,1/8,0,0,3/8,1/8)$ and $\operatorname{
 
 Heterogeneous data processing follows by the positive/negative Jordan decomposition, positivity and trace preservation of the actual CPTP map, and the trace-norm triangle inequality. Faithfulness follows from vanishing trace norm. Nonnegative squaring preserves these properties.
 
+## Falsifier
+
+The proposed construction fails if squared trace distance is not faithful or violates data processing for a CPTP map between any finite source and target dimensions, or if the displayed Kraus operators do not define a CPTP channel. Its complete upper bound is falsified by a finite quantum reference and an equal-reference-marginal density-state pair with positive input divergence and output-to-input divergence ratio greater than $1/4$. The displayed conditional witness fails if its matrices are not density states, its conditional denominator is not $3/4>0$, or its conditional numerator is not $5/16$, so that the stated ratio $5/12$ is incorrect. These criteria test this construction; failure of this construction alone would not refute the source's existential question.
+
 ## Evidence
 
 The source is [FaithfulConditionalGap.lean](../D5/S3/Quantum/Divergence/FaithfulConditionalGap.lean), with its [owning Scribe](../Blueprint/D5/S3/Quantum/Divergence/FaithfulConditionalGap.scribe.cs). `FiniteDivergence` quantifies over every finite index type and over heterogeneous channels. `completeRatios` and `conditionalRatios` quantify over every finite quantum reference and actual density-state pairs. `completeCoefficient` and `conditionalCoefficient` take the indicated real suprema. The endpoint proves

@@ -79,12 +79,11 @@ internal sealed class FaithfulConditionalGapDocument : IScribeDocumentDefinition
                         + "existential in Section 9, second bullet, without specializing to "
                         + "relative entropy or determining either exact optimal coefficient.")),
                     Paragraph(Text(
-                        "The endpoint and its consumed proof helpers have proof_shape bind-only. "
-                        + "The endpoint is admitted as an external open-problem resolution; "
-                        + "no escape witness is claimed. The positive-result four-slot audit "
-                        + "is unfinished under issue 30303, comment 6874572340: exact "
-                        + "sourceSelection and whole-family observational dependence are missing. "
-                        + "This is not a declared_validated registration."))),
+                        "Thus squared trace distance and the binary channel satisfy "
+                        + "completeCoefficient <= 1/4 < 5/12 <= conditionalCoefficient. "
+                        + "The complete bound holds for every finite quantum reference, "
+                        + "while the displayed density-state pair has strictly positive "
+                        + "conditional denominator and attains the ratio 5/12."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("hirche-george-nuradha-wilde-2026-faithful-conditional-gap"),
