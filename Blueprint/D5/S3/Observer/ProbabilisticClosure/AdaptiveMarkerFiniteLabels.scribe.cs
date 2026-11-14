@@ -249,7 +249,7 @@ internal sealed class AdaptiveMarkerFiniteLabelsDocument : IScribeDocumentDefini
                                 All(F.Id("x"), F.Id("Bool"),
                                     Seq(Call("map", F.Id("noiseLaw"),
                                             Call("originalSource", F.Id("qL"), F.Id("qR"), F.Id("x"))),
-                                        Eq, Call("reference", F.Id("qL"), F.Id("qR"), F.Id("x"))))))),
+                                        Eq, Call("reference", F.Id("qL"), F.Id("qR"), F.Id("x")))))))),
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
