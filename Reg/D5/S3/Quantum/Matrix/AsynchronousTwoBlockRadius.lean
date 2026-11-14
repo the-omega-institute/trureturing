@@ -78,13 +78,57 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     ENNReal.ofReal_pos.mpr (Real.rpow_pos_of_pos (by norm_num) _)
   exact (ne_of_gt hpos) hh.symm
 
+private def halfBlock : Matrix (Fin 1) (Fin 1) ℝ := fun _ _ => 1/2
+
+private theorem half_radius : radius (zeroDiagonal halfBlock halfBlock) = ENNReal.ofReal (1/2) := by
+  let A := (zeroDiagonal halfBlock halfBlock).map (algebraMap ℝ ℂ)
+  have hentry (p q : Vtx (![1,1] : Fin 2 → ℕ)) :
+      A p q = if p.1=q.1 then 0 else (1/2:ℂ) := by
+    rcases p with ⟨i,x⟩
+    rcases q with ⟨j,y⟩
+    fin_cases i <;> fin_cases j <;> fin_cases x <;> fin_cases y
+    all_goals first
+      | change ((0:ℝ):ℂ) = 0
+      | change ((1/2:ℝ):ℂ) = (1/2:ℂ)
+    all_goals norm_num
+  have hn : ‖A‖₊ ≤ (1/2 : ℝ≥0) := by
+    rw [Matrix.linfty_opNNNorm_def,Finset.sup_le_iff]
+    rintro ⟨i,x⟩ hi
+    simp_rw [hentry]
+    fin_cases i <;>
+      norm_num [Fintype.sum_sigma,Fin.sum_univ_two,Fintype.sum_unique]
+  have he : A *ᵥ (fun _ => (1:ℂ)) = (1/2:ℂ) • (fun _ => (1:ℂ)) := by
+    funext p
+    rcases p with ⟨i,x⟩
+    simp only [Matrix.mulVec,dotProduct,hentry]
+    fin_cases i <;>
+      norm_num [Fintype.sum_sigma,Fin.sum_univ_two,Fintype.sum_unique]
+  have hne : (fun _ : Vtx (![1,1] : Fin 2 → ℕ) => (1:ℂ)) ≠ 0 := by
+    intro h
+    have hh := congrFun h ⟨0,(⟨0,by decide⟩ : Fin 1)⟩
+    norm_num at hh
+  have hs := _root_.D5.S3.Combinatorics.NonBacktracking.LaplacianGapMinDegree.eigenpair_mem_spectrum
+    A (1/2) (fun _ => 1) hne he
+  change spectralRadius ℂ A = ENNReal.ofReal (1/2)
+  apply le_antisymm
+  · calc spectralRadius ℂ A ≤ (‖A‖₊ : ℝ≥0∞) := spectralRadius_le_nnnorm A
+      _ ≤ ((1/2:ℝ≥0) : ℝ≥0∞) := ENNReal.coe_le_coe.mpr hn
+      _ = ENNReal.ofReal (1/2) := by rw [←ENNReal.ofReal_coe_nnreal]; norm_num
+  · rw [spectralRadius_eq_of_unital]
+    have h := le_iSup₂ (f:=fun z (_ : z ∈ spectrum ℂ A) => (‖z‖₊ : ℝ≥0∞)) (1/2:ℂ) hs
+    have hh : (‖(1/2:ℂ)‖₊ : ℝ≥0∞) = ENNReal.ofReal (1/2) := by
+      rw [←ENNReal.ofReal_coe_nnreal]
+      norm_num [coe_nnnorm,norm_div]
+    rwa [hh] at h
+
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   letI : Nonempty (Vtx (![1,1] : Fin 2 → ℕ)) := ⟨⟨0,(⟨0,by decide⟩ : Fin 1)⟩⟩
-  refine ⟨⟨1,1⟩,0,1,?_⟩
+  refine ⟨⟨1,1⟩,0,zeroDiagonal halfBlock halfBlock,?_⟩
   change radius (0 : Matrix (Vtx (![1,1] : Fin 2 → ℕ))
-    (Vtx (![1,1] : Fin 2 → ℕ)) ℝ) ≠ radius 1
-  simp [radius,Matrix.map_zero,Matrix.map_one,spectrum.spectralRadius_one]
+    (Vtx (![1,1] : Fin 2 → ℕ)) ℝ) ≠ radius (zeroDiagonal halfBlock halfBlock)
+  rw [half_radius]
+  norm_num [radius,Matrix.map_zero]
 
 def family : Registration arena (type_of% (@two_block_radius)) where
   actual := actual
