@@ -93,7 +93,7 @@ internal sealed class LeanCacheChunkFixture : IDisposable
 
     internal string Partition { get; }
     internal JsonObject CacheKey { get; }
-    internal byte[] ArchiveBytes { get; }
+    internal byte[] ArchiveBytes { get; private set; }
     internal string Tag => CandidateTag(4242);
     internal string CandidateTag(int run, string? partition = null) => $"lean-cache-v2-{(partition ?? Partition).Replace('/', '-')}-report-{CacheKey["report_format"]!.GetValue<string>()}-env-{CacheKey["execution_sha256"]!.GetValue<string>()[..12]}-ci-{run}-1";
     internal string? Unpacked => ReadInstalled("build/cache.olean");
@@ -117,6 +117,13 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         var assignment = Assert.Single(text.Split('\n'),
             line => line.StartsWith("CHUNK_BYTES = ", StringComparison.Ordinal));
         Write(owner, text.Replace(assignment, $"CHUNK_BYTES = {chunkBytes}", StringComparison.Ordinal));
+    }
+
+    internal void PadArchiveToMultipleOf(int multiple)
+    {
+        // Gzip permits trailing zero padding; retain a real restorable archive.
+        ArchiveBytes = [.. ArchiveBytes, .. new byte[(multiple - ArchiveBytes.Length % multiple) % multiple]];
+        FixtureFile.WriteAllBytes(Path.Combine(temporary.Path, "archive"), ArchiveBytes);
     }
 
     internal Attempt Publish(int? chunkBytes = null, string? chunkEnvironment = null, int run = 4242,
