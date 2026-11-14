@@ -202,6 +202,20 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoeffici
 
 For every original D, arbitrary IsUnit(D.G.det) witness hu, charge a, occupations alpha, betaL, gammaL, betaR and gammaR, integers eL and eR, and natural n with oscillatorEnergy(alpha) at most n, the product chargeScalar(a) chargeScalar(-a) times the left Wick corrected row at X^alpha and the right Wick corrected row at dualOscillatorMonomial(alpha) equals the product of those two charge scalars, weight(alpha), all four external weights, the original left affineLaurent row, and the alpha coefficient of substitution(T transpose, the finite sum of X^delta times the original right affineLaurent row). The right charge is -a; each row keeps its own complete support union and exact selector eL+chargeNorm(a) or eR+chargeNorm(-a). This coefficient identity includes zero occupations, empty types and n=0. It does not introduce an extra charge average or assume an affine sewing equation.
 
+**Theorem 1.15 (Coefficientwise finite source expansion).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.substitution_coeff_sum` and `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.original_two_rows_inverse_coefficient_expanded`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.substitution_coeff_sum` and `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.original_two_rows_inverse_coefficient_expanded` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For any finite occupation family, arbitrary mode matrices and target occupation alpha, the coefficient of the substituted source polynomial is the finite sum of each original coefficient times the substituted unit monomial coefficient. Applying this to the two-row source-inverse identity exposes the right affineLaurent rows term by term. It adds no analytic convergence, sewing equation, charge averaging or affine identification premise; that identification remains a separate theorem.
+
 Factorial Fock and Gaussian polynomial calculus are classical. The original carrier and charged-row suppliers retain their FLM and subsequent attributions. This composition makes no claim of literature novelty. Identifying the finite transposed right polynomial uniformly with the affine Gaussian coefficient, proving external Gaussian block factorization and transporting the exact Laurent selectors into FH sewing remain separate obligations. The original identityK, independent half-L1 transport, scalar C1 kernel, modular identification and full VOA/CFT/string or AdS/CFT goals remain unresolved.
 
 ## References
@@ -215,10 +229,12 @@ Factorial Fock and Gaussian polynomial calculus are classical. The original carr
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.inverse_occupation_interchange`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.inverse_support_energy`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.original_two_rows_inverse_coefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.original_two_rows_inverse_coefficient_expanded`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.oscillatorSublevel`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.pderiv_substitution`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.sourceTaylor`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.sourceTaylor_coeff`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.substitution_factorial_transpose`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.substitution_coeff_sum`
 - Dependency: [D5/S3/VertexAlgebra/SourceBPZ/OriginalSourceCoevaluation](../SourceBPZ/OriginalSourceCoevaluation.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalAffineRecompositionSource](OriginalAffineRecompositionSource.md)
