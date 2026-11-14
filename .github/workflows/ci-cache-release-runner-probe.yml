@@ -1,0 +1,25 @@
+name: Cache Release runner smoke test
+
+on:
+  pull_request:
+    branches: [dev]
+    types: [opened, synchronize, reopened]
+    paths:
+      - .github/workflows/ci-cache-release-runner-probe.yml
+
+permissions: {}
+
+jobs:
+  runner-smoke:
+    name: Test the cache Release runner
+    runs-on: runner-for-trureturing-cache-release-publish
+    timeout-minutes: 5
+    steps:
+      - name: Read runner identity and resources
+        shell: bash
+        run: |
+          printf 'Runner: %s\nOS: %s\nArchitecture: %s\n' "$RUNNER_NAME" "$RUNNER_OS" "$RUNNER_ARCH"
+          uname -m
+          nproc
+          free -h
+          df -h / "$RUNNER_TEMP" "$GITHUB_WORKSPACE"
