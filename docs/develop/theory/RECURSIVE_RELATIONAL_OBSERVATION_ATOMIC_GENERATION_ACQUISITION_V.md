@@ -2542,3 +2542,751 @@ no independent bilateral epoch product or source-wide storage bound
 is assigned to it.
 
 ## 追加锚（本行以下为增补区）
+
+## 20. Logical version fields and authentic component attribution
+
+**Definition 20.1 (the field interface of the comparison).** The complete
+service is the original seven-request wire of AA20.2 and Definition 7.1,
+together with the current/epoch observations, typed identities, cursor,
+latch, records and continuation of §§5–8 and 11. The alternative frontier
+and epoch representations of §§13–19 may be chosen, but the same choices
+are used on both sides of the following comparison. Every initial and
+successful-event version object, its identity, predecessor, source binding,
+and every acquisition-version occurrence in an immutable sample remains.
+An event token has logical kind and edited-operand selectors. In the direct
+representation they read stored payload. The alternative below supplies
+these same logical values by finite paid procedures.
+
+AA21.1 excludes raw fresh-name numerals, obsolete scratch identities,
+primitive ticks and arbitrary intermediate controller cuts from its semantic
+requests. Definitions 6.1–6.3 expose acquired samples and actual operations;
+they introduce no request for token-cell addresses, offsets or allocation
+sizes. Definition 11.3 uses token events to recover the authentic merged
+post-epoch history. Definition 14.1 already distinguishes a service field
+selector from an independently maintained cell. These are the interface
+boundaries used here. In particular a read of a logical token field must
+retain its admission check and return its old value and sort; a procedure
+cannot replace a separately required literal-cell read. If an actual
+retained consumer requires the physical payload cell, its raw field identity,
+or access without the source/tape authority needed below, that payload
+remains stored. This convention neither introduces a raw-memory consumer
+nor discards one supplied by a particular installation.
+
+**Definition 20.2 (component binding granularity).** Let $F$ name the same
+actual native source service throughout. In the finite entrance its sole
+original component is the known-alpha root $r$. The epoch leaves of
+Definition 1.2 are descendants of this root, not new original installations.
+Every native index in §§21–24 is relative to $r$, even for an event below
+an epoch leaf.
+
+In the selected bilateral entrance, a component is one actual original
+known-alpha installation at $r_i$ in Definition 1.3. An acquired component
+binding consists of that real root reference and its authentic association
+with $F$ and the supplying header. It is not the integer $i$, a rank-to-root
+cast, an epoch tag, or a choice of a merely equal selected word. A concrete
+root-specific token layout retains this association as its source-binding
+field: its logical source binding includes both $F$ and the original
+component root. If separate fields or a descriptor are used, all their
+references and links are retained. A shared family binding alone does not
+contain this component attribution.
+
+At a successful event, the original selected root or the paid real parent
+chain from the pending operand supplies its actual component. The binding
+is acquired before publication and is immutable thereafter. This includes
+an event selected and executed internally by Next. A family-only token
+layout may instead retain an independently acquired component selector,
+with its actual backing and work. Alternatively it keeps its operand
+payload and obtains the component through that operand's real ancestry.
+It cannot omit both means of attribution without another proved supplier.
+Root selection for an original bilateral request remains the separate paid
+header/root selection of Definition 7.1; no component field is added to its
+original wire.
+
+**Definition 20.3 (coherent decoding data).** At a returned cut write the
+actual version chain as $v_0,v_1,\ldots,v_n$, in chronological notation.
+The installation stores predecessor references, not these numerals. The
+current-token header and the reference of $v_0$ are retained. Membership,
+order and finite counts are acquired by reference tests, predecessor reads
+and backed loops. The token $v_0$ has no successful-event payload.
+
+For each needed original component $c$, let $t_c$ be its current finite
+logical native tree and let $a_c,b_c$ count its alpha and beta logical
+leaves. Reading source arity distinguishes these from material unary
+markers. By AA19.1 its full known-alpha history has length
+
+$$
+N_c=a_c+2b_c-1.
+\tag{V.22}
+$$
+
+All original ancestral tapes and the component's original birth provenance
+remain. Write $w_c$ for the full original word recovered by AA19.2 and
+$\operatorname{Hist}_c(k)$ for that theorem's literal indexed kind/address
+answer. This notation does not provide a new history oracle: its execution
+uses exactly that finite source/tape decoder, with actual read rights,
+counters, address backing and root binding. It does not print a separate
+FetchGrowth reply inside another transaction.
+
+A coherent decoding cut has no unfinished native edit or tape append and
+no unpublished successful event. No selector below is evaluated across a
+source change. In a serialized transaction the actual current token is
+acquired before decoding; an explicitly expected-token mismatch keeps its
+original RejectEntry behavior. Busy native maintenance is treated in
+Theorem 23.2, not as a coherent cut.
+
+## 21. One finite epoch cut locates every event token
+
+**Theorem 21.1 (finite native-history correspondence).** On the finite
+entrance, let $N=N_r$ and let $m$ be the length of the one actual prefix
+$w_0$ at which the epoch was chosen. At every coherent returned cut,
+
+$$
+N=m+n,\qquad
+\Phi(v_j)=\operatorname{Hist}_r(N-n+j)
+          =\operatorname{Hist}_r(m+j),\quad 1\le j\le n.
+\tag{V.23}
+$$
+
+The token $v_j$ corresponds to the $j$th actual post-epoch native event,
+including successful events inside Next. The correspondence is an
+order-preserving bijection onto the actual suffix of $w_r$ after $w_0$.
+It needs no stored copy of $m$, $j$, an address, a kind, or an independently
+chosen epoch cut at each leaf. For $n=0$ the event correspondence is empty
+and $N-n$ still designates the actual epoch prefix.
+
+**Proof.** At setup the full original history is exactly $w_0$, and the
+chain has just $v_0$. AA19.1 gives $N=|w_0|=m$. A successful original or
+additional lawful native event appends exactly one event to the original
+word and, by Definition 5.2, allocates exactly one successor token. Source
+and tapes are maintained before that token becomes current. A query,
+refusal, rejected entry or observation adds neither a native event nor a
+successful-event token. AA20.5 and Theorem 7.2 give the same single actual
+append for an in-range Next; its internal historical lookup is not another
+event. Induction gives $N=m+n$ and identifies the two occurrences in
+(V.23). AA19.2 supplies their literal kind/address equality. Reading chain
+lengths and subtracting yields $m$ from the retained source and chain.
+There is only the one $w_0$ of Definition 1.2. $\square$
+
+**Lemma 21.2 (a historical address reaches the identical operand).** Let
+$(e,p)$ be an event in the authentic original history of component $c$.
+At every subsequent returned cut, navigating the logical address $p$ from
+the actual root $r_c$ reaches the very source object edited at that event.
+It need not be a current leaf or have its old tag. Its reference compares
+equal to the direct token's acquired edited-operand reference.
+
+**Proof.** AA20.2's promotion keeps the target root and attaches its unary
+marker. Its split keeps the target root and installs its actual ordered
+logical children; it reuses the old marker as the left logical root.
+It neither replaces the target nor deletes or redirects an existing
+logical binary child edge. Before that split a unary marker is not a
+logical address step. At the split its new logical position is bound to
+that actual reused object. Later edits at this position keep that object,
+and later edits below it keep all edges on the route to it. Edits elsewhere
+do not change this route. Induct on subsequent native events, including
+ones internal to Next. The logical position and its object persist.
+Navigation tests actual arity and follows actual links, so the conclusion
+is reference identity, rather than equality of two replayed tree shapes.
+It supplies no right to edit a now-branch operand. $\square$
+
+**Theorem 21.3 (old meanings survive arbitrary subsequent growth).** The
+kind, original address and actual operand obtained for every old $v_j$ by
+(V.23) and Lemma 21.2 are unchanged by any further finite lawful native
+continuation. If the present cut extends by $d$ successful events, the
+same old token has the same position $j$ above $v_0$ and
+
+$$
+(N+d)-(n+d)+j=N-n+j.
+\tag{V.24}
+$$
+
+The prefix corresponding to an old version is the same original prefix
+before and after growth. Its mathematical reconstructed tree is an old
+view; the actual current source is never reset to it.
+
+**Proof.** AA19.2 preserves every previous indexed answer after its actual
+tape appends. Both $N$ and $n$ increase by precisely $d$, and predecessor
+fields of old tokens do not change. Equation (V.24) therefore selects the
+same old index. Lemma 21.2 identifies its unchanged operand object, even
+when that object has since become a branch. The original prefix up to
+that index is unchanged. Queries and refusals are the case $d=0$.
+This proves stability without deriving native history from epoch labels
+or from the payload being recovered. $\square$
+
+## 22. Selected bilateral histories retain a component merge
+
+**Theorem 22.1 (componentwise occurrence correspondence).** On the original
+selected bilateral entrance retain Definition 20.2's acquired attribution
+$c(v)$ for every successful-event token. For a component $c$ define
+
+$$
+\begin{aligned}
+n_c&=|\{j:1\le j\le n,\ c(v_j)=c\}|,\\
+d_c(v_j)&=|\{k:j<k\le n,\ c(v_k)=c\}|,\\
+m_c&=N_c-n_c,\\
+K(v_j)&=N_{c(v_j)}-d_{c(v_j)}(v_j).
+\end{aligned}
+\tag{V.25}
+$$
+
+Then $m_c$ is its actual preparation length, zero for an epoch alpha and
+one for an epoch beta prepared by $P_\varepsilon$. The token's logical
+payload is exactly
+
+$$
+\Phi(v_j)=
+\big(c(v_j),\operatorname{Hist}_{c(v_j)}(K(v_j))\big).
+\tag{V.26}
+$$
+
+This is a bijection between actual global post-epoch token occurrences
+and the disjoint union of the actual post-preparation component event
+occurrences, with their authentic global merge supplied by the retained
+chain. Every recovered address navigates to the actual edited operand in
+its bound component. The result preserves the selected joint promise
+(V.2), with no common preparation word and no independent seed-bit choices.
+
+**Proof.** Fix an actual component. Its full original word is its own
+preparation followed by precisely the subsequence of post-epoch events in
+that component. Each such successful event appends one original event
+and one token carrying its acquired component binding. All other components'
+events append no event to this original word. Thus $N_c=m_c+n_c$ with the
+stated actual preparation length, using the known-alpha provenance of
+Definition 1.3 rather than calling an epoch beta beta-born.
+
+If $v_j$ is the $q$th post-epoch occurrence in its component, then exactly
+$n_c-q$ later tokens belong to that component. Hence
+$K(v_j)=m_c+q$. AA19.2 on that very original root returns precisely this
+event, including its kind and its root-relative address. Lemma 21.2 supplies
+the actual operand identity. This also proves injectivity and surjectivity
+on occurrences; no repeated kind/address value is mistaken for an
+occurrence identity. The retained predecessor chain supplies the actual
+merge. No step orders the different roots' preparation events.
+
+After a further continuation with $d_c$ events in component $c$, both
+$N_c$ and the later-token count for each old token in $c$ increase by
+$d_c$. Their difference is fixed. Other components change neither term.
+Thus (V.26) is stable under arbitrary further lawful edits and genuine
+Next, with the same old operand identity. Counts and native decoding use
+birth provenance and tapes, independently of any epoch-label decoder.
+The selected roots and their labels have not been varied. $\square$
+
+**Corollary 22.2 (every old component cut and observation interval).** For
+any retained version $u$, including $v_0$, let $d_c(u)$ count component-$c$
+tokens strictly later than $u$. Its authentic local prefix length at $u$
+is $N_c-d_c(u)$. This prefix and the chain's actual order give exactly the
+version/observation recovery of Theorems 11.2–11.3, including the
+cross-component order after the epoch. Original FetchGrowth and Next
+remain rootwise after paid selection of their actual original root.
+
+**Proof.** The local events after $u$ are exactly the counted tokens;
+subtract them from the full current word length. At $v_0$ the result is
+$m_c$, its genuine local preparation cut. At a later token the prefix
+includes that token if it is in $c$, and otherwise ends at the previous
+component event. Substitution in (V.26) recovers the same authentic events
+used by Definition 11.3. Insert each retained observation at its unchanged
+acquisition token, retaining its actual ordered record position. Every old
+sample therefore has the same temporal placement and old contents.
+This construction does not replace the root-relative index supplied on
+the original seven-request wire by a global index. $\square$
+
+**Definition 22.3 (a projection forgetting all token attribution).** Fix
+the selected bilateral source with anchor $h_0$ and its actual roots.
+A diagnostic projection retains its actual final source family, original
+component bindings and rootwise tapes, authentic selected headers and
+adjacency, protected epoch values and enrollment, cursor/cut aliases and
+latch, initial/current token handles and predecessor chain, and family
+binding $F$. It retains all their typed equality patterns, read/operation
+rights and grants, the fixed code and selection rule, and the final Ready
+state with cleared pending ingress/output and retained work capacity.
+Mandatory samples taken before the two events or after both are retained
+with all their payloads, identities, acquisition versions and links.
+
+The projection omits each token's kind and operand payload and every
+association of that token with its original component, including a
+root-specific source binding, a component selector, a source/record
+backlink, component-specific grant incidence or allocation descriptor
+carrying the same association. It also omits any intervening observation,
+request/action archive, saved reply, control mark, allocation ordering,
+capacity difference or record link that reveals which component acted
+first. In the pair below none of these latter channels is retained by the
+chosen original service: original reply scratch is cleared, there is no
+intervening observation, and only equal final capacity is compared.
+Object addresses are not serialized. Equality uses the typed binding
+correspondence of Definition 14.1. This projection is a diagnostic view,
+not permission to erase mandatory records of a richer installation.
+
+**Proposition 22.4 (an authentic selected-source merge collision).** There
+are two lawful joint realizations with the same projection of Definition
+22.3 and different authentic post-epoch component merges. In both,
+$f(0)=0$, $f(1)=1$, so $r_0$ is epoch beta with actual preparation
+$P_\varepsilon$ and $r_1$ is epoch alpha with empty preparation. Compare
+
+$$
+S_{r_0};P_{r_1}
+\qquad\hbox{and}\qquad
+P_{r_1};S_{r_0}.
+\tag{V.27}
+$$
+
+The actual consumer separating them is Definition 11.3's recovery of the
+post-epoch version/observation order, for example the component of the
+event publishing $v_1$. The rootwise Next consumers have the same answers
+and source successors on the two final states.
+
+**Proof.** Since $0<s<1$, $1<2s<2$ and $1<3s<2$, formula (V.2) gives
+the asserted adjacent beta,alpha pair in one actual selected source.
+All other selected components, headers and rights are held fixed. Enroll
+both roots by their authentic pre-edit Tag reads. One may retain an actual
+ReadEpoch sample at $h_0$ before the two events, with version $v_0$, and
+another after both, with version $v_2$; both are beta in both realizations.
+Their immutable sample contents, cut/header bindings and links coincide.
+There is no sample between the events. Enrollment's source-only reads
+need no extra observation archive under Definition 11.3.
+
+The two edits have disjoint original roots and both guards are enabled
+in either order. Both final sources have
+$t_0=\langle\beta,\alpha\rangle$ and $t_1=\beta$. Their full original
+words are respectively $PS$ and $P$ in both realizations. The split root's
+tape is empty; there is no descendant event to append. All rootwise source
+and tape fields therefore coincide, and so do original history answers.
+There are exactly two successful-event tokens in either case, with the
+same predecessor shape. Match their chronological identities $v_1,v_2$;
+match source allocations by their actual component and native template.
+No raw allocation rank is an observation. Final source sizes, token and
+sample counts, auxiliary capacities, parked cuts and latch coincide.
+All original outputs have completed Print/End/ACK/Return and clearing.
+
+The event-to-component assignment differs: $v_1$ belongs to $r_0$ in the
+first execution and to $r_1$ in the second. The varying kind and operand
+would also reveal it, and are explicitly omitted. There is no hidden
+varying readable archive in the projection. Thus its retained observations
+are equal, while the stated merge consumer differs. Each selected root's
+original history and current source are equal, so AA20.4's rootwise Next
+has identical old/new pairs and successors. This pair does not assert a
+Next separation. $\square$
+
+**Corollary 22.5 (the limited attribution requirement).** On the diagnostic
+fibre containing (V.27), no deterministic recovery of the stated authentic
+merge factors through Definition 22.3 alone. Some retained distinction
+between the two actual executions is necessary. A component association,
+a token kind/operand on this pair, or a genuinely retained event record
+can provide it. This is a two-value diagnostic, not a per-token bit lower
+bound, an independent-label product or a lower bound conditional on the
+full readable version payload.
+
+**Proof.** Identical projected data cannot select two different components
+for the same first token. Any sufficient additional value must therefore
+differ on this pair. The root-specific binding retained in Theorem 22.1
+already differs, so that theorem does not meet the diagnostic's equal-data
+hypothesis. The generic fibre-label and defect-graph minima are supplied
+by `MinimalAppealLabelCount` and `DefectGraphMinimumColoring`; no new
+generic minimum follows from this native pair. $\square$
+
+## 23. Installation without eligible duplicate event payload
+
+**Definition 23.1 (eligible fields and the directly installed alternatives).**
+Fix an actual finite compared footprint and its complete service of
+Definition 20.1. The direct alternative stores logical token kind and
+operand in payload backing. The history-derived alternative keeps the
+same real version objects, predecessor/source bindings, $v_0$, current
+header, authentic original components, source/tapes and every mandatory
+immutable sample. It supplies selected token payload selectors through
+(V.23) or (V.26) and actual logical navigation. It allocates no replacement
+persistent rank, event address, operand cache or answer table for an
+omitted field. Every occupied pending kind/target needed during an actual
+edit and its original answer remains in transaction scratch until its
+ordinary clearing point.
+
+A distinct payload field is eligible only if all its retained uses admit
+the procedural field interface, the chain and authentic component
+attribution are retained and readable, and its native source/tapes and
+workspace are already available under the original current authorities in
+every phase where that use can be required. Its omission must remove no
+sample payload, acquisition version, exposed record/token identity,
+source binding or other mandatory backed datum. Every use sharing that
+physical field must pass these conditions. Mandatory literal cells and
+mandatory shared sample fields remain stored. An authority pattern that
+permits a direct payload use while denying the required native/tape read
+makes that field ineligible. A new grant cannot repair this condition.
+
+The selector rule is fixed at installation. A uniform rule needs only its
+fixed driver code. A mixed installation retains every mode bit, descriptor,
+field-sharing link and selection read it actually uses. Component selectors
+are acquired as in Definition 20.2 and charged separately, even when their
+contents are determined by some larger mathematical description. This is
+a comparison of directly installed alternatives; it supplies no physical
+reclamation operation on an already allocated direct installation.
+
+**Theorem 23.2 (complete original/current service correspondence).** Under
+the original finite reservation, serialization, quiescence where required,
+rights and progress premises, the alternatives of Definition 23.1 have
+the same complete legal/request and pending-prefix behavior on both
+original entrances. They preserve all original and additional replies,
+actual operands, ordered brackets, source/tape successors, exposed typed
+identities and equality, enrollment, immutable samples and their exact
+acquisition versions, grants/denials, cursor/latch state, and
+Print/End/ACK/Return and scratch clearing. This includes arbitrary further
+lawful edits anywhere in the native source and actual growth inside Next.
+Only finite internal paid work is refined. No equality of primitive-step
+counts, physical cell layouts or elapsed time is asserted.
+
+**Proof.** Relate the two executions by the same authentic source and
+original components, the same native preparation/tapes, the same chosen
+frontier and epoch representations, and corresponding real version and
+record identities. A derived token remains a real distinct version object;
+it is not replaced by a numerical rank or a source vertex. Predecessors
+and source bindings are preserved literally as logical fields. Old
+samples retain their actual bits, source/cut/cell/operand aliases, order,
+links and version references; none is reconstructed from today's Tag.
+
+At a coherent cut, scan actual predecessor links using reference equality,
+read authentic component bindings, count current logical leaves and invoke
+AA19.2's internal indexed decoder. Theorems 21.1 and 22.1 give the exact
+old event. Lemma 21.2 returns its identical edited object by actual source
+navigation. Different logical sorts retain their original type tags and
+cross-sort inequalities. Theorems 21.3 and 22.1 show that no later growth
+alters any old selector value. The same logical token-field reads used by
+§17's existing epoch decoder therefore return exactly its old inputs;
+that decoder still uses a separately retained enrollment fact. There is
+no circular use of a derived epoch label to decode native history.
+
+All source/tape reads are finite backed loops under the retained existing
+rights. They neither create an external FetchGrowth request nor print an
+extra history reply, End or acknowledgement. If a recording contract makes
+these internal reads visible samples, their actual records and backing
+must be retained; exact same-record correspondence requires the same
+recorded reads in both alternatives, otherwise the affected field is not
+eligible. Under Definition 11.3 the internal source-only reads may instead
+be unrecorded and are still charged. Every old sample remains immutable
+in either case.
+
+Receive copies exactly the same acquired bit before clearing its occupied
+ingress latch. The tag parser, address/index marks, pending frame prefix
+and unsupplied suffix therefore correspond. A proper prefix prints no
+answer in either execution. The extra decoder runs only in an admitted
+busy phase, with the original ingress and observation exclusions. It
+retains its actual current token, counters, path and continuation; a finite
+pause has that actual pending state. It does not invent a received answer.
+Expected-version checks use the same real token. Denials, wrong phases,
+missing authority and marker-latch refusals keep their distinct original
+rules. Eligibility ensures that no originally admitted use needs an extra
+authority grant. If it would, the direct field has been retained.
+
+Original Tag, HasPromotion, HasSplit and $P/S$ guards read the same actual
+source and original birth provenance. FetchGrowth reads the original tapes
+at the same supplied root-relative index, including finite prehistory and
+the selected roots' genuine preparations. Its handler has not been replaced
+by token order. Next retains that handler's actual result, navigates its
+historical address on the same current source, descends left to its actual
+current leaf and executes its guard-selected $P/S$. The original pending
+old/new pairs, target and maintenance cursor stay backed throughout.
+
+For every enabled edit reserve the original native/tape material, real
+new token, retained source/component binding, original output/record
+backing and finite decoder workspace before mutation. The two alternatives
+perform the identical source template and ancestor-tape appends. During
+this interval the old current token and partly updated source do not form
+a coherent decoding cut. No historical selector is called on that mixture;
+the pending actual kind/operand supplies the transaction's own needs.
+Initialize the new token's predecessor and authentic binding, and its
+payload only where retained. Publish it after all native, tape and chosen
+frontier maintenance. At that moment the new actual event is the last
+native event in its component and corresponds to precisely this new token.
+The same invariants therefore hold. Queries/refusals add no token.
+
+BuildAnswer seals the same finite original or current-observation word.
+Print can pause after exactly the same output prefix and resumes on the
+same suffix. End, local ACK, root Return and clearing have the same
+external order and effect. Extra decoder slots are cleared/reused with
+their retained capacity charged; clearing does not erase mandatory old
+records. An edit never clears a marker latch. Quiescent acquisition and
+saved-return Seek keep the same cut identities and original stopping
+premises by Theorems 6.4, 8.2–8.3 and 14.3–14.4.
+
+Induction on acquired input prefixes and completed serialized transactions,
+with these finite internal refinements at pending cuts, proves the claim.
+Every original lawful finite native continuation is still admitted. The
+bilateral proof is local to actual selected original roots and their
+retained merge; it makes no global preparation schedule.
+
+The existing AA19.2 inverse and AA20.5/21.1 serial-service distinction
+are the native suppliers in this proof. AA22.2 already omits a redundant
+kind from an acquired address journal; no such journal replaces the tapes
+here. AA24.2 concerns fixed-selection access to whole ancestral tapes.
+The token-dependent index in (V.23) or (V.26) is acquired from this actual
+chain, rather than being asserted to satisfy a new fixed-selection tape
+criterion. Corollary 22.2 supplies exactly the version/observation recovery
+of Theorems 11.2–11.3. The source-derived frontier and epoch-label choices
+of §§13–19 are common retained suppliers, not additional payload savings.
+`NativeEndpointEventIdeals.guard_enabled` and
+`NativeEndpointCausalOrder.result` concern guarded native cuts and causal
+order; neither supplies a token representation or acquisition authority.
+
+The explicit linked-access model and persistence distinction in Driscoll,
+Sarnak, Sleator and Tarjan,
+[*Making Data Structures Persistent*](https://doi.org/10.1016/0022-0000(89)90034-2),
+JCSS 38 (1989), 86–124, and the supplied edit-labelled version-tree input
+in Bille and Gørtz,
+[*Random Access in Persistent Strings*](https://doi.org/10.4230/LIPIcs.ISAAC.2020.48),
+ISAAC 2020, Article 48, are established background within this derivation.
+Their access bounds supply no native acquisition right or physical pointer
+tariff. Lamport,
+[*Time, Clocks, and the Ordering of Events in a Distributed System*](https://doi.org/10.1145/359545.359563),
+CACM 21 (1978), 558–565, distinguishes causal order from a selected total
+extension. Choosing an extension cannot substitute for the authentic merge
+in Proposition 22.4. Equations (V.23)–(V.26), actual native operand identity
+and this eligible dynamic installation are repo-derived under the stated
+entrance and maintenance assumptions. Generic replay, persistence, causal
+adequacy and generic fibre minima remain existing suppliers.
+
+These maps provide no source replacement, graft, inverse edit, reset,
+phase oracle or unacquired answer table. They neither make an old operand
+currently editable nor create an absent read or reclamation right. Physical
+realization of the bilateral entrance, observable bounded allocation and
+concurrent writers require additional hypotheses. The correspondence does
+not assert that every further common-source supplement has been eliminated.
+$\square$
+
+## 24. Backing, access work and admitted nonempty cases
+
+**Proposition 24.1 (distinct backing coordinates).** In the direct
+alternative let $F_K,F_X$ be the finite sets of distinct event-kind bit
+fields and edited-operand reference fields, respectively. They are counted
+by backing identity, rather than by occurrences of equal values. Let $M$
+be their fields also required by mandatory retained backing, including
+samples, source bindings and literal-cell obligations. Let $R_K,R_X$ be
+the fields actually eligible and omitted, with $(R_K\cup R_X)\cap M$
+empty. Then the payload-field differences, derived minus direct, are
+
+$$
+\Delta K=-|R_K|,\qquad \Delta X=-|R_X|.
+\tag{V.28}
+$$
+
+If an omitted reference field $x$ has actual encoded width $\lambda_x$,
+the reference-payload bit-coordinate difference is
+$-\sum_{x\in R_X}\lambda_x$, in addition to $-|R_K|$ kind bits.
+No reference is assumed to occupy one bit or one universal machine word.
+These are payload coordinates, not total material differences.
+
+**Proof.** Every retained field in the two finite sets is common material.
+Each omitted distinct field occurs only in the direct alternative.
+A mandatory shared field occurs once in both, even if many logical
+selectors use it. A separate equal-valued sample field is a separate
+common summand and does not prevent omission of an otherwise eligible
+event payload. Subtraction gives (V.28) and the width sum. No independent
+variation of event values or selected letters is used. $\square$
+
+**Proposition 24.2 (the remaining resource coordinates).** Besides
+(V.28), the complete comparison has the following coordinates.
+
+| Coordinate | Direct event payload | History-derived event selectors |
+| --- | --- | --- |
+| Native source and full original tapes | Every authentic root, vertex, parent/child field, tape header/cell and original preparation | Same actual material and provenance |
+| Version identity and order | $v_0$, every actual event token, predecessor fields, current header and all exposed version references | Same objects, logical bindings, reference widths and publication rule |
+| Original component attribution | Chosen source-binding granularity and any acquired selectors | Same retained attribution; an additional acquired selector for a family-only layout is an additional charge |
+| Other observer material | Chosen frontier/epoch representation, headers, enrollment, cuts, cursors, latch, grants and every immutable sample/link | Same required material and old acquisition versions |
+| Field access | Actual stored-kind/reference reads and their admission checks | Current-header read, predecessor and binding reads/tests, source traversal, arithmetic, AA19.2 decode and actual address navigation |
+| Selection and code | Fixed direct rule and any actual descriptors | Fixed decoder code, or every mixed mode/descriptor, sharing link and selection read |
+| Transaction work | Original input, reservation, edit/maintenance, record/output, Return and cleanup work | Same work plus all decoding, copying, counter, path, validation and cleanup operations actually executed |
+| Occupied and cleared workspace | Actual parser, pending/index/path, maintenance and output slots and retained cleared capacity | Same material plus all actually allocated decoder and component-count scratch and its retained cleared capacity |
+
+Common logical handles need not have identical address bytes in separately
+allocated alternatives. The common-width comparison uses actual supplied
+reference encodings of the same widths for corresponding retained fields;
+the ideal finite allocation premise permits this choice without an
+address-order observation. If a chosen layout changes a retained reference's
+width, allocation descriptor, padding or sharing link, its actual bit and
+backing change is an additional resource coordinate. It does not cancel
+under the common logical-identity correspondence. Omitting a payload field
+also does not prove a smaller allocation block if its allocator still
+reserves that block. An admitted field-backed alternative reserves no
+cell for each omitted field and pays all other actual allocated material.
+
+One direct finite implementation obtains all chain counts for a token
+selector in a single backward traversal to $v_0$. With $n$ post-epoch
+events it uses exactly $n$ predecessor-field reads if none were already
+acquired for that traversal; it also pays its terminus/membership reference
+tests and actual source/component-field reads. Bilaterally it compares
+each scanned component with the token's acquired component and counts the
+matching later occurrences. Source counting traverses the actual finite
+component, not the entire bilateral family. AA19.2 then decodes its actual
+index, and navigating the resulting path of length $d$ follows $d$ real
+logical child edges, with all arity tests and reference work charged.
+Every counter increment, subtraction, comparison and address bit has
+backed finite work; none is a free arithmetic register. Repeated selectors
+repeat work unless a real cache is retained and charged.
+
+**Proof.** A backward scan visits each successor of $v_0$ once and follows
+its one predecessor. Retaining the visited-token reference and backed
+counts records when the requested token is encountered; continuing to
+$v_0$ verifies its chain membership and supplies the full count. The
+component count needs only actual reference equality. In the finite case
+this also supplies $j=n-d_r(v_j)$ and hence (V.23); no rank field is added.
+The finite arity traversal counts logical leaves, not markers, giving
+(V.22). AA19.2's finite tape scans descend into smaller real subtrees and
+use backed counters. Lemma 21.2 gives the valid final path traversal.
+Each retained component tree is finite even in the bilateral entrance.
+All loops therefore terminate at a coherent cut under the stated progress
+premise. The table lists their actual inputs, storage and control; omitted
+payload writes do not cancel any of these charges automatically.
+
+Given this full readable backing and acquired attribution, each event
+payload has a singleton conditional value by (V.23) or (V.26). That
+conditional-information statement is different from the number of
+separately backed fields. The vector above specifies no total tariff,
+Pareto or global minimum, asymptotic physical price or elapsed-time law.
+If capacity or supply actions are made observable, AA20.1 requires them
+and their legal continuations to enter the comparison; equality is not
+inferred from payload counts. $\square$
+
+**Proposition 24.3 (a positive finite layout with immutable samples and Next).**
+There is an admitted finite layout with two omitted kind bits and two
+omitted operand-reference fields, a mandatory old ReadCurrent sample,
+a mandatory ReadEpoch sample, and a genuine successful Next. The layout
+preserves the same complete service for every further finite lawful
+continuation under its original authority/supply premises.
+
+**Proof.** Start with the actual known alpha root $z$, empty prehistory,
+one enrolled epoch seed $h$ and $v_0$. Use the source-derived frontier
+representation on both sides and keep the same protected epoch-label
+representation, so no earlier reduction is counted again. The direct
+layout has a distinct kind-bit slot and distinct operand-reference slot
+in each event token, separate from source bindings and all samples.
+Source/tape/record rights remain current as in AA20.1. The fixed uniform
+alternative has no raw-payload consumer, no independently observable
+allocation quota and no per-token representation tag.
+Choose a field-backed allocator which supplies real cells only for the
+retained token fields and the occupied transaction/decoder workspace.
+Corresponding retained handles have the same actual finite encoding
+widths in the two layouts. No deleted payload cell survives as token
+padding or unused reserved token capacity. Extra decoder capacity remains
+a separate actual charge, so the omitted token backing is a positive
+payload-coordinate difference even when total retained material increases.
+
+Acquire ReadCurrent at the left exterior cut. Its mandatory immutable
+sample $\sigma$ contains alpha, operand $z$, that cut/cell alias, its
+source binding and acquisition token $v_0$. Execute the original
+$P_\varepsilon$ request, publishing $v_1$, then original Next$(1)$.
+Its internal FetchGrowth reads the actual first event $P_\varepsilon$;
+the current root $z$ is beta, so its genuine next operation is
+$S_\varepsilon$, publishing $v_2$. The one outer Next reply prints the
+old $P_\varepsilon$ and new $S_\varepsilon$ pairs, followed by the
+original End/ACK/Return and clearing. There is no extra printed recall.
+The source now has the original four actual vertices and its empty root
+tape, as in Definition 5.3. Its full word is $PS$ and $N=n=2$.
+
+Now acquire ReadEpoch at $h$ and retain its mandatory sample $\tau$ with
+value alpha and acquisition token $v_2$. Both $\sigma$ and $\tau$ have
+their own actual backing, identities and links in each alternative.
+Neither sample shares the direct token payload slots. Equations (V.23)
+and Lemma 21.2 give $(P,z)$ for $v_1$ and $(S,z)$ for $v_2$, despite
+$z$ now being a branch. Their two pointer values agree, but the chosen
+direct layout has two distinct pointer fields. Thus $|R_K|=|R_X|=2$.
+Version objects, predecessor/source fields, enrollment, the protected
+label, all immutable samples and output/pending capacity remain charged.
+The fixed decoder's code, finite scans and scratch are the additional
+coordinates of Proposition 24.2. Under this layout the operand bit
+coordinate is reduced by the two actual reference widths, not by two
+assumed unit bits.
+
+For example a further original Next$(2)$ recalls $S_\varepsilon$,
+descends to the current left beta, and genuinely executes $S_L$,
+publishing $v_3$. Both old decoded operands still equal $z$ and the new
+one is the actual left logical root. Theorem 23.2 gives every other
+further lawful request, with $\sigma$ still alpha at $v_0$, rather than
+recomputed from today's branch. $\square$
+
+**Proposition 24.4 (a lawful bilateral positive instance).** The original
+selected source has an admitted finite execution with distinct omitted
+event payload and retained acquired component attribution. No independently
+chosen adjacent seed bits or global preparation history is needed.
+
+**Proof.** Use the actual adjacent roots $r_0,r_1$ of Proposition 22.4,
+with their genuine separate preparations. Keep the same complete source
+family and only finitely accessed header/record backing. Select and enroll
+$r_0$ by paid authentic header/root reads, and retain a mandatory ReadEpoch
+sample at its current $v_0$. Execute original Next$(1)$ on this selected
+root. Its real first event is its preparation $P_\varepsilon$; its
+epoch-beta current root enables $S_\varepsilon$. This publishes $v_1$
+with its acquired source binding $(F,r_0)$. Select $r_1$ by the real next
+header/root traversal and execute $P_\varepsilon$, publishing $v_2$ with
+binding $(F,r_1)$. Retain an actual subsequent ReadEpoch sample at $r_1$
+with alpha and acquisition token $v_2$. Every reply and sample is finished
+with its required output/acknowledgement/return and clearing.
+
+At this cut $N_0=2,n_0=1,m_0=1$ and $N_1=1,n_1=1,m_1=0$.
+The derived selectors recover $S_\varepsilon$ at native index two of
+$r_0$ and $P_\varepsilon$ at index one of $r_1$. Navigation returns
+$r_0$ and $r_1$ themselves. Store the direct kind/operand fields in
+distinct backing separate from these source bindings and samples. Their
+omission is eligible, while both real component bindings and all their
+actual reference/descriptor widths remain common charges. If one starts
+instead with family-only bindings, the extra component selector and its
+acquisition work are additional charges, so the same payload-field count
+alone is not a net resource conclusion. The selected infinite entrance
+is precisely Definition 1.3's premise, and the described execution accesses
+only two finite components. Theorem 23.2 supplies all further lawful
+rootwise and current-source continuation. $\square$
+
+**Proposition 24.5 (shared and inaccessible zero cases).** A required shared
+payload field gives zero saving in its coordinate. There are lawful finite
+layouts with mandatory acquired samples in which all event payload fields
+are shared with retained material and no event payload field is omitted.
+An inaccessible decoding input or a mandatory literal-cell obligation also
+forces zero omission for every affected field.
+
+**Proof.** For the reference coordinate, a root event's edited operand is
+the same root as its authentic source binding. A direct layout may use one
+immutable root-reference field for both logical roles. That field is
+required as the retained source binding and hence lies in $M$, not $R_X$.
+Equal-valued fields at different locations would instead be two fields.
+
+For a concrete fully shared finite layout, use $P_\varepsilon$ followed
+by Next$(1)$ as in Proposition 24.3. Encode kind $P$ by bit zero and $S$
+by bit one. Use the retained immutable root-reference backing for both
+root-event operand selectors. Immediately after $P$, acquire an actual
+ReadCurrent sample of beta at $z$, at $v_1$. Its one-bit stored tag is zero;
+let that sample and the token's kind selector use the very same zero bit
+field. Immediately after Next's actual $S$, perform a paid WalkRight from
+the left exterior cut across the new left beta and acquire ReadCurrent
+at the genuine right alpha, at $v_2$. Its stored tag is one; let that
+sample and $v_2$'s kind selector use the same one bit field. Both source
+reads actually occur and their acquired versions, operand/cut/cell fields,
+identities and links are retained. The field's sample interpretation is
+alpha/beta and its token interpretation is S/P; the fixed type-specific
+decoders preserve these distinct logical sorts. The contents are immutable.
+All backing-reference descriptors needed to realize the sharing are paid.
+No sample is inferred from the token without its actual source read.
+
+This is a directly installed sharing rule for this admitted execution,
+not a demand to share unequal values or to discard another execution's
+records. A uniform full-service layout can retain ordinary separate fields
+whenever this sharing guard fails, with its mode metadata charged. In the
+stated footprint the reference backing is required by source bindings and
+the two kind fields by actual mandatory samples. Thus $R_K=R_X=\varnothing$
+and (V.28) is zero, although the selectors' mathematical values remain
+recoverable. The sample records do not become token objects or acquire
+cross-sort identity equality merely by sharing payload bits.
+
+In this same layout a retained sample may be read under its existing
+record authority while a new source-access observation is denied. That
+denial retains its actual denial record and creates no sample or new
+native-history authority. Reading the old sample still reads its required
+stored bit; it cannot borrow a source/tape grant from the denied request.
+Thus the shared kind fields also exhibit zero omission for this actual
+record-only use with inaccessible decoding inputs. The owner's original
+native authority and seven-request premises have not been revoked or
+replaced by that observer grant.
+
+If a payload can be read in an admitted phase while its required tape,
+source or authentic attribution cannot be read, Definition 23.1 retains
+it. A marker-only grant, for example, is not native-history read authority.
+Likewise a required raw cell cannot be replaced by a procedure. In either
+case the affected field is outside the omitted sets. In the empty-event
+case $n=0$ there are no candidate event payload fields at all. These zero
+cases preserve the existing service rather than creating a new grant,
+loosening a guard or treating mathematical equality as reclamation.
+$\square$
+
+## 追加锚（本行以下为增补区）
