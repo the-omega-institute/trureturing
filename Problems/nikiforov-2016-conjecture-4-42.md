@@ -198,9 +198,9 @@ inaccessible publisher texts. Publisher/preprint textual identity has
 not been verified. Absence of a resolution in the searched metadata
 does not exclude an unindexed or inaccessible earlier resolution.
 
-Independent pre-freeze review, canonical freezing, post-freeze admission,
-the required review seats, remote required checks and the first dev-push
-verification remain publication obligations. The existing evaluator was
+Post-freeze admission, the required independent review seats, remote
+required checks and the first dev-push verification remain publication
+obligations. The existing evaluator was
 from the same reported model family and exposed to repository priors;
 neither model diversity nor sterile independence is claimed. The
 upper-bound-only successor remains mathematically unresolved here.
