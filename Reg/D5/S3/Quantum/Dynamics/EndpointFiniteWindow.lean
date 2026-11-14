@@ -60,7 +60,7 @@ def family : Registration arena (type_of% @actual_endpoint_average) where
     arena.Law actual rejected rejected_law
   dependence := dependence
 
-def registration : Contract.Registration (@actual_endpoint_average)
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@actual_endpoint_average)
     (Realization signature) (Type) Unit where
   unitName := `D5.S3.Quantum.Dynamics.EndpointFiniteWindow.actual_endpoint_average.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Dynamics.EndpointFiniteWindow.Actual.family
@@ -170,7 +170,8 @@ def family : Registration arena (type_of% @finite_window_lower_bound.{u}) where
       exact nomatch e
   dependence := dependence
 
-def registration : Contract.Registration (@finite_window_lower_bound.{u})
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@finite_window_lower_bound.{u})
     (Realization signature) (Type) Unit where
   unitName := `D5.S3.Quantum.Dynamics.EndpointFiniteWindow.finite_window_lower_bound.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Dynamics.EndpointFiniteWindow.Window.family
