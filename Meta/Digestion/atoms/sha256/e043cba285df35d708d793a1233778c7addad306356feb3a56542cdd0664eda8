@@ -1,0 +1,38 @@
+**定理 126.7（重复球的单标签积聚）。** 对每颗重复球 $F$，
+
+$$
+ \boxed{F\cap\overline{P_{\mathrm s}}^{\,S}\ne\varnothing.}
+ \tag{Q126.21}
+$$
+
+因此 $R\ne\varnothing$ 时 $P_{\mathrm s}$ 在 $S$ 中不闭；这不推出整个 $P$ 不闭。
+
+证明。反设某个重复球 $F$ 与 $\overline{P_{\mathrm s}}^{\,S}$ 不交，令
+
+$$
+ U=S\setminus\overline{P_{\mathrm s}}^{\,S},\qquad
+ W=\{x\in S:(\mathscr B_S)_x\subset U\}.
+ \tag{Q126.22}
+$$
+
+因 $\mathscr B_S$ 紧，
+
+$$
+ S\setminus W
+ =
+ \operatorname{pr}_1\bigl(\mathscr B_S\cap
+ (S\times(S\setminus U))\bigr)
+$$
+
+闭，故 $W$ 开。由(Q126.10)，$F\subset W$，所以 $W\ne\varnothing$。
+
+取 $x\in W$ 及包含 $x$ 的完整球 $H$。这样的 $H$ 总存在：混合边界点属于其非点真面，纯点
+$p$ 则取 $q\in S(D_p)$，由零对称有 $p\in D_q$。若 $H$ 单标签，则其球边纯点全在
+$P_{\mathrm s}$：若边界纯点同时属于重复球，IX116.2 的第三球孤立性将被违反。由于
+$H\subset(\mathscr B_S)_x\subset U$，这与 $U\cap P_{\mathrm s}=\varnothing$ 矛盾。因此 $H$ 重复。
+对每个 $z\in H$，(Q126.10) 给
+$(\mathscr B_S)_z=H\subset U$，所以 $H\subset W$。于是 $W$ 是非空、在 $S$ 中开且由完整重复球组成的并，违反定理126.6。证毕。
+
+若 $P_{\mathrm s}$ 在 $S$ 中闭，则
+$\overline{P_{\mathrm s}}^{\,S}=P_{\mathrm s}$ 与重复球定义矛盾，故得到上述不闭性；但是积聚点可以是重复球球边上的纯点，不能把它升级成“$P$ 不闭”。
+

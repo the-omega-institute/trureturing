@@ -1,0 +1,23 @@
+**Proposition 4.5 (the chosen Brownian height satisfies the hypotheses).**
+Let $W^1$ be a real Brownian motion with covariance
+$\mathbb E(W^1_tW^1_s)=2\min(s,t)$ and start at $k\in I$.
+For $h=k+W^1$, its exit time from $I$ is almost surely finite and
+strictly positive, has no atom at any fixed $T>0$, and satisfies (4.3)
+almost surely whenever it exits before $T$.
+
+Proof. Positivity follows from continuity and the initial interior margin.
+For any fixed positive time block, the Gaussian increment has a fixed
+positive probability of magnitude exceeding $u-l$. On survival to the
+start of that block, such an increment forces exit during the block.
+Independent increments give a geometrically decreasing survival bound,
+so exit is finite. At a finite exit the height equals $l$ or $u$.
+By the strong Markov property, its subsequent increments are a fresh
+Brownian motion. The reflection principle implies that, on every
+interval $(0,\epsilon)$, a Brownian motion started at zero has both
+positive and negative values almost surely. Applying this to rational
+$\epsilon$ proves immediate strict exterior values after either exit
+face. Finally $\{\tau=T\}\subseteq\{k+W^1_T\in\{l,u\}\}$, a
+probability-zero event because $W^1_T$ has a Gaussian density.
+These are the specific Brownian hypotheses needed for Theorem 4.2.
+$\square$
+

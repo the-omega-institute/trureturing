@@ -1,0 +1,68 @@
+**定理 126.4（整个移动确认面的统一旧球斜率约束）。** 在定义126.1及实际塌缩 (X126.3) 下，固定旧完整球
+
+$$
+G=D_p=b(\overline B^3),\qquad q=b(v),\quad \|v\|=1,\qquad
+\delta_i=d_H(D_{p_i},\{q\}).
+$$
+
+对每个 $i$、每张原 $f\in F_{p_i}$，令 $m=\min_K f$，并唯一写
+
+$$
+(f-mu)(b(z))=\alpha+t\cdot z.
+\tag{X126.11}
+$$
+
+则统一有
+
+$$
+\begin{gathered}
+0\le\|t\|\le\alpha\le1,\qquad
+\alpha+\|t\|\le1-m,\\
+0\le\alpha+t\cdot v\le M\delta_i,\qquad
+\|t+\alpha v\|^2\le2M\delta_i.
+\end{gathered}
+\tag{X126.12}
+$$
+
+因此对整个移动确认面同时有
+
+$$
+\sup_{f\in F_{p_i}}\ \sup_{\|z\|\le1}
+\left|f(b(z))-[m+\alpha(1-v\cdot z)]\right|
+\le\sqrt{2M\delta_i},
+\tag{X126.13}
+$$
+
+其中 $m,\alpha$ 随该同一 $f$ 取值；$M$ 不随 $i,f$ 变化。不需要 Inj 或 $p\in P_0$。
+
+证明。若 $f$ 在 $K$ 恒定，因 $f(p_i)=1$ 及 $K$ 张成 $V$，有 $f=u$。此时 $m=1$、$\alpha=t=0$，全部式子成立。
+
+若 $f$ 非恒定，则 $0\le m<1$，因为其全 $K$ 最大值在 $p_i$ 达到一。原效应
+
+$$
+\widehat f=\frac{f-mu}{1-m}\in F_{p_i}
+$$
+
+在某个真实 $z_i\in K$ 取零，所以 $z_i\in D_{p_i}$，且 $f(z_i)=m$。因此
+
+$$
+0\le f(q)-m=f(q)-f(z_i)
+\le\|f\|_{\ast}\|q-z_i\|\le M\delta_i.
+\tag{X126.14}
+$$
+
+在整颗旧球上，$0\le f-m\le1-m$。仿射式 (X126.11) 的球上最小、最大值分别为 $\alpha-\|t\|$、$\alpha+\|t\|$，给第一行约束；在 $q=b(v)$ 评价给第二行首式。最后
+
+$$
+\begin{aligned}
+\|t+\alpha v\|^2
+&=\|t\|^2+2\alpha\,t\cdot v+\alpha^2\\
+&\le2\alpha(\alpha+t\cdot v)\le2M\delta_i,
+\end{aligned}
+\tag{X126.15}
+$$
+
+使用 $\alpha\ge0$ 及 $\alpha\le1$。仿射式与 $m+\alpha(1-v\cdot z)$ 的差正是 $(t+\alpha v)\cdot z$，Cauchy–Schwarz 给 (X126.13)。估计对每张 $f$ 成立且右端相同，故可取整个确认面的上确界。证毕。
+
+这约束同一个移动标签的所有实际确认效应在同一旧球上的限制。若从逐面延拓取得两个确认效应列，其旧球斜率分别收敛到 $t_1,t_2$，则 (X126.12) 迫使两者都属于 $\mathbb R_{\le0}v$；两个非零极限斜率若不在同一射线上，就排除这次塌缩。只有当那些原延拓确实还满足 $f(p_i)=1$ 时才能应用此检验，正延拓本身不供应这项资格。
+

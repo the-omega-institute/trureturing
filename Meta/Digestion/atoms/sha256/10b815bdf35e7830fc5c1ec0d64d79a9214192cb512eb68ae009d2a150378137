@@ -1,0 +1,13 @@
+## 4. 层边界不等式对 ℓ 的一致性
+
+Fan–Kobayashi–Molnar 注记 5.5 指出：Robin 对其定理 5.1 的证明依赖不等式
+
+$$
+x_\ell>x^{1/\ell}\qquad(\ell\ge2),
+\tag{4.1}
+$$
+
+其中 $x_\ell=x_\ell^{[\kappa]}(\epsilon)$ 由 $F^{[\kappa]}(x_\ell,\ell)=\epsilon$ 定义，$x=x_1$。该文由其引理 4.12 得到：对固定的 $\kappa>1$ 与固定的 $\ell\ge2$，(4.1) 对充分大的 $x$ 成立。作者写道 “we have been unable to establish this inequality uniformly in ℓ”。其附录在 $\kappa=2$ 时证明了：对一切 $x\ge2$ 与一切 $\ell$，有非严格不等式 $x_\ell\ge x^{1/\ell}$，且在 $x=2$ 处等号成立；由此 $x>2$ 时 (4.1) 严格成立。本节证明：对每个 $\kappa>1$，存在只依赖 $\kappa$ 的阈值，使 (4.1) 在阈值之上对一切 $\ell\ge2$ 同时成立。
+
+沿用引理 1.1 的记号 $C(s)=(1+s)^\kappa-s^\kappa$、$B=\log C$，并令 $\varphi(s)=sB'(s)$（$s>0$）。
+

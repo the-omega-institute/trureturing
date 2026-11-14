@@ -1,0 +1,23 @@
+**定理 122.13（正规锚点的接触与影壳刻度）。** 在本节全部原前件下，
+
+$$
+\boxed{\quad W(D_p)=1
+\ \Longleftrightarrow\ \min_{v\in S^2}\rho_p(v)=1
+\ \Longleftrightarrow\ \mathbb B^3\cap\partial S\ne\varnothing.
+\quad}
+\tag{Q122.34}
+$$
+
+若 $\delta:=\min_{S^2}\rho_p>1$，则 $\delta\mathbb B^3\subset S$，原内球严格位于影壳内部，且 $\operatorname{dist}(\mathbb B^3,\partial S)\ge\delta-1>0$。
+
+证明。连续 $\rho_p$ 在紧 $S^2$ 达到最小值，且至少为一。若宽度一，达到宽度的原效应在 $D_p$ 的两个原球面对径点 $q_v,q_{-v}$ 取一、零；所以两点原正交。IX120.13的完整确认公式给 $\rho_p(v)=1$。反之 $\rho_p(v)=1$ 时，实际 $e_{q_v}$ 在该对径上读一、零，故宽度一。这只消费已有对径接口。
+
+若 $\rho_p(v)=1$，则内球点 $-v\in Z\subset S$ 在支撑超平面 $(-v)\cdot z=1$ 上，故在 $\partial S$；定理122.4还给 $z_v=-v$。反之，若 $z\in\mathbb B^3\cap\partial S$，取单位支撑法向 $n$。包含 $\mathbb B^3\subset S$ 给
+$1\le h_S(n)=n\cdot z\le\|z\|\le1$，因此全部等号，$z=n$、$\rho_p(-n)=1$。
+
+若最小值为 $\delta>1$，对每个单位 $n$ 有 $h_S(n)\ge\delta$。闭凸体是其支撑半空间之交，故半径 $\delta$ 的球包含于 $S$。每个内球点周围半径小于 $\delta-1$ 的环境球都在 $S$ 中，于是有所述边界距离下界。证毕。
+
+结合121.2，(Q122.34)的“原球碰影壳”与同一原中点像碰到 $\operatorname{relbd}K$ 完全等价。它没有从 $S$ 光滑、严格凸或 $Z$ 闭中自动取得。仅在一般三维凸几何中，$S=r\mathbb B^3$、$r>1$ 已经光滑严格凸而不与内单位球接触；这个例子只否定上述凸几何推理，没有被构造成满足全部EB3的原锥反模型。
+
+主候选若在全部原标签上成立，(Q122.3)的静态表示还会使每个正规影壳满足 $\rho_p(v)=1$ 于全部方向，因而 $Z=S=\mathbb B^3$。这是全标签条件重构的后果，不能从一个方向接触或定理122.5的光滑性提前取得。
+

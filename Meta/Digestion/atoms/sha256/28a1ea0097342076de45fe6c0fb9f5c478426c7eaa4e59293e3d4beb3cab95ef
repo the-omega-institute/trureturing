@@ -1,0 +1,30 @@
+**六、原始奇异集图覆盖给独立下界。** 首先 $d\ge4$ 已由原法向单射得到。若 $d=4$，$Q$ 的任一四维坐标开片包含映入 $A\cong\mathbb R^4$ 的连续单射；[Brouwer 区域不变性，Hatcher Theorem 2B.3，印刷页172][Q141AT]使其像在 $A$ 中开。但 $Q\subset P\subset\partial_AK$，凸体边界在 $A$ 中无内部，矛盾。所以 $d>4$，以下 $k=4$ 满足原奇异集定理的 $0<k<d$。
+
+[Alberti，Theorem 1、Definition 1.1][Q141A]给有限值凸函数的 $\Sigma_k$ 的可数可求长性与 $\dim_H\Sigma_k\le d-k$。这里还使用其 Lemma 2.7、Theorem 2.10 及 Theorem 1 证明中更直接的**覆盖整个奇异集**的图结论；不把“除零测集外”误读为全覆盖。现将准确应用写出，以避开任何度量维数比较费用。
+
+给 $A$ 选原点后令 $b(x)=a(x)+\|x\|^2$。这是整个 $\mathbb R^d$ 上的有限值凸函数，且 $b\ge\|x\|^2$；次梯度不等式给 $\partial b(x)\supseteq\partial a(x)+2x$，故 $Q\subseteq\Sigma_4(b)$。对每个四维坐标子空间 $E$，记 $\operatorname{pr}_E$ 为正交投影。维数至少四的凸集必在至少一个这样的 $E$ 上具有四维投影：取四个独立差向量，选一个非零四阶坐标子式即可。非空内部的投影又包含一个中心为有理坐标、半径为 $2/m$ 的开球，其中 $m\ge1$。因此整个 $Q$ 被以下可数集合覆盖：
+
+$$
+\left\{x:\operatorname{pr}_E(\partial b(x))
+\supset B_E(\eta,2/m)\right\},\qquad
+E\text{ 为四维坐标子空间},\quad\eta\in\mathbb Q^4,\quad m\in\mathbb N_{>0}.
+\tag{XI141.16}
+$$
+
+在分解 $A=E^\perp\oplus E$ 中，$b(t,y)\ge\|y\|^2$。故 Alberti Lemma 2.7 逐个适用：每个(XI141.16)集合包含于某个局部 Lipschitz 函数 $E^\perp\to E$ 的整个图 $\Gamma_j$。这里函数定义于全部 $E^\perp$，正是该源引理的定义域；其连续性使 $\Gamma_j$ 在 $A$ 中闭。由此得到
+
+$$
+Q\subseteq\bigcup_{j\ge1}\Gamma_j,\qquad
+\Gamma_j\text{ 是 }\mathbb R^{d-4}\to\mathbb R^4\text{ 的连续函数图，经正交坐标运输}.
+\tag{XI141.17}
+$$
+
+闭集 $Q\cap\Gamma_j$ 覆盖紧度量空间 $Q$，故某个交包含非空相对开集 $U\subset Q$。所用的紧 Baire 事实可直接说明：若每个交都无内部，从 $B_0=Q$ 开始，递归选非空相对闭球 $B_j$，半径不超过 $2^{-j}$，使 $B_j\subset\operatorname{int}_Q B_{j-1}$ 并避开第 $j$ 个闭集；闭集无内部保证每一步可选，紧性给公共点，违反覆盖。取四维坐标开片 $U'\subset U$。图到 $E^\perp$ 的投影在 $U'$ 上连续且单射，因而给从 $\mathbb R^4$ 非空开集到 $\mathbb R^{d-4}$ 的连续单射。若 $d-4<4$，再将后者线性嵌入 $\mathbb R^4$ 的真子空间，区域不变性会使该真子空间包含一个非空四维开集，矛盾。所以
+
+$$
+4\le d-4=n-5,\qquad n\ge9.
+\tag{XI141.18}
+$$
+
+这里 Q 的四维性仅按原子空间拓扑使用；没有宣称它在辅助度量下有恰好四维的 Hausdorff 维数，也没有将拓扑维数当作 Hausdorff 维数的上界。下界来自原始完整图覆盖、紧性和区域不变性，与第四步的对偶闭映射上界独立。结合(XI141.12)与(XI141.18)，得到(XI141.5)。证毕。
+

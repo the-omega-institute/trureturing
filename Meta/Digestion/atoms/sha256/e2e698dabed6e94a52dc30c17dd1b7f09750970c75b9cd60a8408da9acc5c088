@@ -1,0 +1,10 @@
+**引理 4.2（$B$ 与 $\varphi$ 的性质）。** 设 $\kappa>1$。
+- $B(0)=0$。
+- $B'(0^+)=\kappa$。
+- $B'$ 在 $(0,\infty)$ 上严格递减。
+- $0<B(h)<\kappa h$（$h>0$）。
+- $\varphi$ 在 $(0,\infty)$ 上严格递增。
+- 记 $r=s/(1+s)$，则 $\varphi(s)\ge\kappa(r-r^\kappa)$。
+
+**证明。** 前三条由引理 1.1 及 $C'(0)=\kappa$ 得到。第四条：$B(h)>0$ 因为 $C(h)>1$；$B(h)<\kappa h$ 来自严格凹函数位于其在 0 处切线之下。第五条：$\varphi(s)=\kappa\bigl(1-\frac{1-r}{1-r^\kappa}\bigr)$，而 $\frac{1-r^\kappa}{1-r}$ 是凸函数 $r\mapsto r^\kappa$ 在 $[r,1]$ 上的割线斜率，关于 $r$ 严格递增；$r$ 又关于 $s$ 严格递增。这正是定理 1.2 的 Lean 形式化中弹性单调性所证的内容。第六条：$\varphi(s)=\kappa\frac{r-r^\kappa}{1-r^\kappa}\ge\kappa(r-r^\kappa)$。证毕。
+

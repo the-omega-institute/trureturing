@@ -42,7 +42,7 @@ private theorem effects_closed (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) :
       (g := fun f => f x) (by fun_prop)).inter
       (isClosed_le (f := fun f : V →L[ℝ] ℝ => f x) (by fun_prop) continuous_const)
 
-private theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) : IsCompact (effects C u) := by
   have hint : (interior (C : Set V)).Nonempty := by
@@ -80,7 +80,7 @@ private theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     exact (div_le_iff₀ hδ).mpr (by nlinarith)
   · exact (le_div_iff₀ hδ).mpr (by nlinarith)
 
-private theorem exclusion_injective [Nontrivial V]
+theorem exclusion_injective [Nontrivial V]
     {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)

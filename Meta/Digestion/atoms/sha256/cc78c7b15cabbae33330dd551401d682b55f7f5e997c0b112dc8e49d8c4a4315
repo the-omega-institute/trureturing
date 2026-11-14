@@ -1,0 +1,35 @@
+**推论 118.13（效应与二元几何的等价）。** 在完整EB3+Inj域内，(WZ)、(O)、正直径下界及118.8的同原量子静态表示等价。
+
+证明。118.11给(WZ)$\Rightarrow$(O)，118.8给(O)$\Rightarrow$同原矩阵表示。
+反向仍在整个矩阵原域。对原边 $s\perp r$，固定 $h_s=f_s\in\mathcal A_s$；对纯 $t\to r$，记 $Q_t=I-t$，取 $g_t=f_{Q_tsQ_t}$。
+$0\preceq Q_tsQ_t\preceq I$，且 $g_t(t)=0$。更一般地，对全部 $0\preceq A\preceq I$，
+
+$$
+\begin{gathered}
+0\preceq Q_tAQ_t\preceq I,\qquad
+\|A-Q_tAQ_t\|_{\rm op}
+\le\|tA\|_{\rm op}+\|Q_tAt\|_{\rm op}
+\le2\sqrt{\operatorname{Tr}(At)},\\
+\max_{\rho\succeq0,\operatorname{Tr}\rho=1}|\operatorname{Tr}(H\rho)|
+=\|H\|_{\rm op}\qquad(H=H^*).
+\end{gathered}
+\tag{IX118.21}
+$$
+
+写 $t=vv^*$，最后一个不等式用 $\|Av\|^2\le\langle v,Av\rangle$。
+因此 $\|g_t-h_s\|_K\le2\sqrt{\operatorname{Tr}(st)}\to0$，给(WZ)的全部序列量词。
+同一个保锥保单位 $\Phi$ 同时运输全效应和全域范数。正直径等价已由118.5—118.6证明。证毕。
+
+定理118.12还独立说明：若完整球真能整体塌缩，失去的并非单个读数趋零，而是固定零测试到邻近精确零纤维之间保持正距离。
+只需每条边的一张稳定完整零确认就能阻止这一障碍；所有法向均稳定、连续选择和任何修复率均可从候选前件删除。
+相较要求全部零效应Hölder修复的版本，所删除的是量词、速率和选择要求；强版本蕴涵(WZ)，但这里没有给出全EB3域中严格分离它们的模型。
+主候选进一步用(O)表达同一缺口，效应范数只留在这一等价解释中。
+
+$$
+\boxed{\mathrm{EB3}+\mathrm{Inj}:\qquad
+\mathrm{(O)}\ \Longleftrightarrow\ \mathrm{(WZ)}
+\Longleftrightarrow\ \inf_p\operatorname{diam}D_p>0
+\Longleftrightarrow\ \text{同锥同单位 }H_3(\mathbb C).}
+\tag{IX118.22}
+$$
+

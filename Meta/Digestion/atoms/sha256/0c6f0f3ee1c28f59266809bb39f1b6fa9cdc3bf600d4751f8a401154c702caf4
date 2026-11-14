@@ -1,0 +1,10 @@
+## 3. κ-巨丰数临界值的碰撞
+
+Fan–Kobayashi–Molnar 定义 4.2 与定义 4.19 对 $\kappa>1$、$x>1$、$a\ge1$ 令
+
+$$
+F_\kappa(x,a)=\frac{1}{\kappa\log x}\log\frac{(x^{a+1}-1)^\kappa-(x^a-1)^\kappa}{(x^{a+1}-x)^\kappa-(x^a-x)^\kappa},\qquad E_p^{[\kappa]}=\{F_\kappa(p,j):j\in\mathbb Z_{>0}\}.
+$$
+
+其第 8 节提出三问：对固定素数 $p\ne q$，能否找到 $\kappa$ 使 $E_p^{[\kappa]}\cap E_q^{[\kappa]}\ne\varnothing$；对大的 $\kappa$ 是否成立；对整数 $\kappa$ 是否成立。记 $\mathcal S_{p,q}=\{\kappa>1:E_p^{[\kappa]}\cap E_q^{[\kappa]}\ne\varnothing\}$。本节证明 $\mathcal S_{p,q}$ 在 $(1,\infty)$ 中稠密、无界，且为可数零测集。对整数 $\kappa$，本节无条件地证明超越性与有限性结论，并在一个超越数论猜想下完全排除整数碰撞。
+

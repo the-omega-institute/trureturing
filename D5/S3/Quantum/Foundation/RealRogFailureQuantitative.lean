@@ -33,7 +33,7 @@ variable {A : Type*} [NormedAddCommGroup A] [NormedSpace ℝ A]
   [FiniteDimensional ℝ A]
 
 omit [FiniteDimensional ℝ A] in
-private theorem mass_cap_compact (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+theorem mass_cap_compact (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
     (hK : IsCompact (base C u))
     (hu : ∀ a ∈ C, a ≠ 0 → 0 < u a) (R : ℝ) (hR : 0 ≤ R) :
     IsCompact {a : A | a ∈ C ∧ u a ≤ R} := by
