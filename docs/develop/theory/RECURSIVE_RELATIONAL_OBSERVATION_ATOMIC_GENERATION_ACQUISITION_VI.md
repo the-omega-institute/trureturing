@@ -2735,3 +2735,650 @@ order-unit 条件，XII151 的额外 $\mathsf N_2$，XII153 的条件纯到混�
 硬件证书或无条件宇宙本体断言。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 58. Acquired targets on the continuing native source
+
+**Definition 58.1 (source, rights and actual cuts).** Write AAV for
+[Acquisition V](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_V.md)
+and AA for [Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md).
+Use exactly AAV1.2's finite known-alpha installation, with its actual
+pre-epoch word, or AAV1.3's selected bilateral joint source, with the
+actual separate empty/P preparations. Retain the ordered alpha/beta
+brackets, all lawful local P/S and genuine Next, the original tapes,
+enrollment, source/component bindings, persistent cuts, version chain,
+current authorities and the complete observation state of AAV5–7,20–24.
+The source-derived cut representation of AAV13–14 may be used; its actual
+constructors and paid resolvers retain that same service.
+
+A cut in the following statements is a coherent returned source cut,
+not a physical-time reading or an intermediate native-maintenance state.
+The observer acquires a version reference by actually reading the bound
+live header under AAV5.2's current right. A supplied retained version must
+instead be read from its actual retained record binding. Its membership
+is checked by following acquired predecessor links to the retained
+initial token. Merely naming a version does not acquire it or its rights.
+Every reference, field read, equality test, list traversal, counter,
+workspace slot and emitted bit is paid under AA20.1. Finite material,
+current rights and progress are required for every finite service used.
+Source/record access can be admitted only in its original phase.
+
+Native edits may occur between completed observer transactions, anywhere
+in the source. Within an admitted coherent decoding transaction use
+exactly AAV20.3/23.2's existing serialized exclusion of native edits and
+unfinished tape maintenance. No longer exclusion interval, new lock,
+new grant, new source opcode or arbitrary busy-cut observation is given.
+Each such transaction is finite at its own entry. An indefinitely growing
+source is considered only through its finite prefixes, unless an explicit
+continued-supply/progress assumption is stated.
+
+**Definition 58.2 (three distinct requests).** A fixed-version native
+request names an actually acquired token u and an acquired original
+component, or an actually acquired finite bilateral header interval.
+It asks for the native histories, bracket trees, material support and
+terminal boundaries at u, with their bindings to the retained actual
+objects. A bilateral answer includes each root's genuine preparation
+and the restricted actual post-epoch merge; it supplies no total order
+on preparations and no entire infinite-source output.
+
+A current interval request supplies an acquired anchor cut a and a finite
+acquired length h. Its target is the first h current logical leaves to the
+right of a, with their actual operands, paths and tags, at the certificate's
+specified actual cut r. A current tree request supplies an acquired actual
+logical subtree root x and asks for its current brackets and operand map
+at r. The cut r below is acquired after the candidate reads. It is not
+replaced by an arbitrarily earlier fixed-version cut u.
+
+A navigation requirement additionally asks that the designated observation
+cursor actually reach a, or a retained saved cut d, by the original
+one-cell movement menu. Copying an acquired cut into output or scratch
+is not arrival. Saving d really copies the present cursor binding into
+owned backing. Original native root Return and return of this extra
+observation cursor are different requirements. The marker latch keeps its
+original meaning throughout; only a separately successful Resume clears it.
+
+## 59. Finite old native views with actual object bindings
+
+**Definition 59.1 (the paid prefix calculation).** Acquire u, its source
+binding, and each requested original root by the real header/root traversal
+of AAV1.3,6.2,7.1,20.2; finite epoch leaves do not become new original roots.
+For a later coherent decoding invocation acquire its actual current token t.
+Read the predecessor chain from t to the retained initial token, testing
+membership of u and authentic component bindings. For a requested component c
+count its tokens strictly after u, obtaining d_c(u;t). Count its current
+logical alpha/beta leaves by AA's actual arity traversal, obtaining a_c,b_c.
+This traversal never counts a unary marker as a logical leaf. In backed
+scratch form
+
+$$
+K_c(u)=(a_c+2b_c-1)-d_c(u;t).
+\tag{VI.75}
+$$
+
+These are the finite source/tape/chain loops actually permitted in
+AAV20.3/23.2, run inside their admitted coherent decoding phase. The
+finite branch stack, tape cursor, counters, acquired t and continuation
+remain backed until that transaction completes. This is not an atomic
+primitive returning K, nor a count assembled across changing source cuts.
+Other coherent invocations can occur at different later versions.
+
+Acquire AA19.2's literal indexed answers 1 through K_c(u), in that actual
+component, by its paid handler or the original FetchGrowth transactions.
+There is no outer FetchGrowth reply when its handler is called internally.
+When logical event-token selectors are history-derived, every invocation
+first acquires its own coherent current token and carries out AAV20.3's
+counts and AA19.2 decode there. AAV21.3/22.1 apply only after these actual
+loops; an unchanged mathematical value alone is no read operation.
+The original expected-current-token check is not bypassed: a request with
+an obsolete expected token still has RejectEntry. The old-view calculation
+reads retained records under their own current authority.
+
+**Theorem 59.2 (earned fixed-version native recovery).** Under Definition
+58.1's rights, retained backing, serialized finite-service and progress
+premises, Definition 59.1 terminates for every acquired finite request.
+It acquires the complete native word through u in each requested original
+component, its exact ordered tree and material support/boundary, and the
+actual persistent-object bindings of all those old material vertices,
+logical operands and cuts. For a finite bilateral footprint it also
+acquires the authentic restricted post-epoch merge through u. Arbitrary
+lawful P/S/Next may occur between its completed transactions. All later
+reads retain their own actual acquisition versions.
+
+**Proof.** At the invocation's coherent cut t the root is a finite
+known-alpha native tree. AA19.1 makes its full original word length
+N_c=a_c+2b_c-1. The actual component events after u are precisely the
+counted tokens: finite entrance AAV21.1 and bilateral AAV22.1–22.2 give
+N_c-d_c(u;t) as its original prefix length at u. Both counts are obtained
+at t, after native/tape publication, so the suppliers' coherence hypothesis
+is satisfied. If later growth contributes e_c further events, it increases
+both terms by e_c. Thus K_c(u) is stable. Each prefix index is acquired in
+scratch and every later AA19.2 invocation returns that same old indexed
+event, even if the global version has changed. Empty prefixes require no
+indexed event read. At u equal to the initial token, the finite prefix is
+the actual prehistory w_0, whereas a bilateral prefix is its own empty or
+P preparation. No common preparation word or seed-product promise is used.
+
+Apply the acquired finite word to the known-alpha syntax in local output
+backing, using the supplied original grammar. AA17.2/19.2 already prove
+that this reconstructs its actual historical tree and tapes. Their shuffle
+and replay theorems are suppliers, not a new acquisition primitive. To
+bind a reconstructed logical address, actually navigate that address from
+the acquired original root in the present source. AAV21.2 proves that the
+arrived object is the identical old object. The object may now be a branch;
+the old reconstructed tag is never used as a current guard.
+
+For an old beta's material terminal marker, read its actual physical left
+field, rather than treating that marker as a logical address step. AA20.2's
+P attaches that object once; S reuses it as the left logical root. Neither
+operation redirects an existing material child edge. The marker reference
+therefore remains the very old material object, even if its present arity
+has changed. Structural induction on the old tree acquires all its old
+material vertices. Old terminal support is a labelled historical subset
+of these actual identities, not today's terminal set. Its prefix closure
+and old arities give the existing AA17.3 space/boundary correspondence.
+
+For each old logical branch acquire its actual vertex and form its existing
+AAV13 midpoint descriptor; exterior endpoints or authentic gap headers
+supply the remaining cuts. Those paid constructors are justified by the
+acquired old shape and actual fields. AAV13.2 makes them the same surviving
+cuts today. This does not manufacture a boundary-to-header inverse or a
+path-to-reference cast. Finite epoch headers, where needed, are read from
+the retained actual enumeration and checked against these old paths and
+bindings. Bilateral headers are followed through their actual previous/next
+links; selecting an integer interval alone would not supply them.
+
+Freeze the acquired u chain endpoint. Scan its immutable predecessors,
+read their authentic component bindings, and filter by acquired root
+equality. Each needed event selector is called at its own coherent cut
+as above. AAV21.3/22.1 make its returned old kind/address/operand stable,
+and the retained chain supplies precisely the actual restricted merge.
+The scan does not chase the advancing live tail. There are finitely many
+requested roots, finite prefix lengths and finite old trees. Every
+navigation reaches a persistent finite old path, so the complete procedure
+is finite under the stated service progress, even with intervening outside
+or inside growth. Output and scratch are charged. No actual source,
+quantum state, cursor, tape or old record is rewound. $\square$
+
+**Proposition 59.3 (a source token is not an observer checkpoint).** A
+version token alone does not determine an old cursor/latch state or the
+complete observation archive at an unspecified instant carrying that token.
+Theorem 59.2 does not recover these coordinates from u.
+
+**Proof.** At a genuine nonempty source, save the cut before one leaf and
+perform a granted WalkRight across it. Before and after the walk the
+source token and native source/tapes coincide, but the observation cursor
+and immutable movement record differ. Similarly a successful marker
+comparison can set the latch without publishing a native token. Recovery
+of the full old observer configuration requires its actual retained record
+endpoint and state bindings as additional acquired input, as AAV11 already
+requires. The actual complete archive is retained throughout, including
+all later reads at their true tokens; it is never rewritten into one old
+cut's archive. $\square$
+
+## 60. An earned finite region for native interference
+
+**Definition 60.1 (acquired cone envelope).** First acquire all requested
+anchor, logical-root and saved/current-cursor bindings. Then read a current
+token u. Use Theorem 59.2 to acquire a finite old footprint at u containing
+them and the requested region. In the finite entrance it is permissible
+to acquire the full old finite root. Bilaterally, acquire the actual owner
+headers: a gap descriptor already carries its real right header; a midpoint
+carries an actual vertex whose real ancestry and root association supply
+its component root. To find that root's header, scan an already acquired
+binding list or alternately follow next and previous from the supplied
+anchor, reading each visited header's root and testing actual equality,
+exactly as in AAV13.3. There is no root-to-header or naked-boundary inverse.
+Paid header excursions find each of the finitely many acquired endpoint owners.
+The finite connecting header intervals are retained in backing.
+
+Extend this footprint rightward until its tree at u contains h leaves
+from a, if needed. Each additional actual seed root contributes at least
+one old leaf, so bilaterally at most h additional headers suffice once
+the anchor owner is reached. In the finite entrance, if the old right
+endpoint is reached first, retain that endpoint and the actual shorter
+suffix. The empty h=0 case needs no region leaves. For a tree request
+include all old leaves under x. Include the old cut intervals joining
+the current cursor to a and any saved return cut d. Enlarge to the least
+old cut interval containing these finitely many pieces. It can be empty
+when every piece is empty and all required cuts coincide.
+
+Let I denote this acquired interval. Enumerate its actual u-leaf roots
+z_1,...,z_m with their acquired original component and root-relative path
+(c_i,p_i), and retain its two actual exterior cuts. These paths come from
+the old tree together with actual navigation; they are not an initial
+answer table. Define relevance of a later native event (c,q) by
+
+$$
+\operatorname{Rel}_I(c,q)
+\quad\Longleftrightarrow\quad
+\exists i\le m:\ c=c_i\ \hbox{and}\ p_i\preceq q,
+\tag{VI.76}
+$$
+
+where prefix tests compare acquired finite address words. The list, its
+bindings, endpoint order and all selection work are charged. A genuine
+Next is classified by its actually executed new operand, not by the old
+historical address that its internal FetchGrowth first returned.
+
+**Theorem 60.2 (original-source locality of the acquired envelope).** For
+every lawful native continuation after u, I remains the interval between
+its same exterior cuts. Its current leaves are exactly the descendants of
+the acquired old leaves z_i, in their same outer order. An event affects
+its native trees, internal frontier incidences or tags exactly when
+(VI.76) holds. An irrelevant event preserves these data and the relative
+order of every retained cut in I. Nevertheless it can change global
+versions, ancestor routing tapes, total history length and read costs.
+
+**Proof.** At u the z_i are consecutive actual logical leaves. No later
+operation acts at a strict ancestor of any z_i, since that ancestor is
+already a branch and remains one. Each later current leaf belongs to
+exactly one old leaf cone; within a component its path has exactly that
+old leaf path as prefix. Operations preserve these outer roots and their
+exterior cuts by AAV5.4/13.2. Induction therefore partitions the later
+frontier into the same old cones. Within I, P changes its selected leaf
+tag and S changes its subtree and adds precisely one internal cut.
+Outside I neither template changes a source edge, internal incidence or
+tag inside I. A shared exterior cut can have its outside incidence changed;
+that outside incidence is not an internal datum or the cut's identity.
+Original tapes at common ancestors can acquire new side entries, and every
+successful event publishes a new global token. Thus local independence
+does not imply constant decoding work or an unchanged global token.
+This proves the source-specific test (VI.76) using only actually acquired
+roots and paths. $\square$
+
+## 61. Current-region certificates and completion with outside growth
+
+**Definition 61.1 (a candidate and its validation).** Keep the acquired I.
+At the start of an attempt acquire a current token s extending u. Navigate
+by actual one-cell walks in the direction supplied by the acquired old
+cut order, stopping on acquired-reference equality with a or the requested
+subtree boundary. These walks stay in I. This directed procedure uses no
+overshooting Seek excursions and no cursor assignment in place of movement.
+
+For a current interval, perform the original ReadCurrent and intervening
+WalkRight transactions from a, up to h leaves or a genuine Endpoint. For
+a tree, traverse the actual subtree by AA's logical arity rules, recording
+each acquired arity, real child/operand and path; never traverse a unary
+marker as a logical child. Native growth can occur between the reads.
+Store the complete candidate records with every true acquisition token.
+Acquire the current header token r after these reads. Freeze r as the
+validation endpoint; scan predecessors from r back to s. Actually obtain
+each event's acquired component, kind/address and operand through its
+original readable logical field interface. A history-derived selector
+runs at a coherent cut of its own, as Definition 59.1 requires. Accept
+only if every event fails (VI.76). Otherwise retain the failed attempt's
+real records and start a fresh attempt. No record is re-dated or discarded.
+
+This is a finite composition of existing paid reads, selectors, list
+operations and movement, not a new atomic collect or region-lock opcode.
+The validation certificate records the acquired s,r, envelope bindings,
+candidate and the acquired finite event segment with its relevance tests.
+Its source-binding proof is this actual read/copy chain, rather than a
+self-asserted origin string. The certificate concerns the current region
+at r, a real cut after the candidate reads; the old u is only the envelope
+construction cut. Later validation reads retain their own later versions.
+
+**Theorem 61.2 (sound current-region acquisition).** Every accepted attempt
+has exactly the requested current interval with authentic current tags,
+operands and paths, or the complete requested current bracket tree, at r.
+It gives the corresponding original syntactic rho consumer, with its
+separate atom-output boundaries, at that same r. A finite Endpoint answer
+is exactly the available prefix and real endpoint at r. Acceptance remains
+sound with arbitrary relevant or irrelevant native growth after r while
+the fixed validation segment is being read and the answer is delivered.
+It asserts no current-at-Return identity after such relevant growth.
+
+**Proof.** Relevance is determined by acquired prefix/component equality.
+The frozen chain enumerates every successful native event from s through r
+and no queries or refusals. Its logical event selectors supply their actual
+old meanings by Theorem 59.2's earned invocation and AAV21.3/22.1; later
+events cannot alter that finite segment. Acceptance therefore proves that
+no event changed I between s and r. Theorem 60.2 makes the whole internal
+region constant over that interval, although arbitrary outside growth
+and global-token changes may occur. Every candidate read and every walk
+before r consequently acted on this one unchanged region. The actual
+successor cuts, arity checks and read operands prove consecutiveness and
+tree completeness by the original AAV8.2–8.3 traversal argument. There is
+no assumption that a static leaf list was already an acquired current map.
+If an Endpoint was reached, the unchanged exterior endpoint supplies that
+same finite boundary at r. Rho is then computed on the acquired actual
+tags/brackets in backed output, using its existing homomorphic definition.
+Its value does not execute rho on today's operands or rewind any source.
+
+The proof places a certificate at r, after acquisition of the candidate,
+using the actual absence of local interference. It does not move the old
+samples to r: their old tokens remain, and the certificate proves equality
+of the relevant source restriction across those actual cuts. Edits after r
+cannot change this historical statement. A later P on a sampled alpha,
+or S on a sampled beta, immediately disproves its unrestricted use as a
+current-at-Return sample. Any operational batch consumer must recheck its
+current guards and have the original rights/reservation and required
+nonconflict condition of AAV8.3; this certificate is not such a lock.
+$\square$
+
+**Theorem 61.3 (finite relevant interference suffices).** Retain Definition
+58.1's finite-service progress and supply premises, and let the observer
+continue the attempts of Definition 61.1, with each pending observer
+operation eventually completed. Suppose only finitely many successful
+native events after u satisfy (VI.76). Irrelevant native events need not
+stop. Then a current tree request completes with an accepted certificate.
+A current interval request completes with its full h leaves whenever they
+exist in the eventual I; otherwise it completes with its certified genuine
+Endpoint prefix. In particular full completion holds if those h leaves
+already existed at u. Any requested arrival at a and paid return to saved d
+also finish, using directed one-cell walks within I. This is conditional
+completion under local interference, not wait-freedom under arbitrary
+relevant growth or a uniform bound on time, history scans or resources.
+
+**Proof.** Only finitely many splits occur in I, so it has a finite maximum
+number of logical leaves and a finite maximum internal tree. No walk
+inside its fixed exterior cuts or actual subtree traversal can chase an
+unbounded number of newly inserted local cells. Each pending transaction
+is finite by the existing phase/progress hypotheses, including a derived
+selector's current finite whole-component count. Consequently each attempt,
+its fixed-endpoint validation and any finite output work finishes. Outside
+growth may make successive counts more expensive, but cannot make one
+admitted finite coherent invocation infinite.
+
+If there is a last relevant event, it occurs at a finite execution position;
+there are only finitely many earlier observer attempts. After it the
+restriction to I is constant. A fresh attempt then has no relevant event
+in (s,r] and is accepted. If there is no relevant event, the first completed
+attempt is accepted. Each rejected segment contains an actual relevant
+event; disjoint consecutive attempt intervals therefore give at most as
+many rejected attempts as relevant events, without making their costs equal.
+The argument also covers a last event occurring during an earlier attempt.
+
+The acquired envelope contains all old first-h leaves when they existed
+at u; growth only adds leaves, so the first h current leaves stay inside it.
+If a finite suffix was shorter, the full eventual suffix is still inside I,
+and its actual length decides full output versus Endpoint. For h=0 the
+empty interval is already the required value; only explicitly requested
+navigation may remain. A tree root can become a branch, but all of its
+descendants stay in its included old cones.
+
+Between two retained cuts in I the current distance is bounded by I's
+finite maximum leaf count. Directed walks toward the target reduce that
+distance by one; finitely many relevant splits can add only finitely many
+units. Finite progress thus reaches both a and saved d. Growth during the
+return does not update r or the old candidate records. A certificate can
+be current at actual Return only under the additional factual absence of
+relevant edits from r to that Return, or an independently earned later
+certificate. No acquisition-wide global quiescent episode is used.
+$\square$
+
+## 62. Local splits and actual one-cell arrival
+
+**Theorem 62.1 (the exact native distance account).** Fix an acquired target
+cut b and follow one designated observation cursor c until its first actual
+arrival at b. Let D be the number of current cells strictly traversed
+between these retained cuts. On either side of b, a P anywhere changes D
+by zero; an S changes D by one exactly when its actual operand lies between
+c and b, and otherwise by zero. A completed one-cell movement toward b
+subtracts one, one away from b adds one. Endpoint, denied/wrong-phase
+attempts and latch-only Resume contribute no movement. Thus, before arrival,
+
+$$
+D_n=D_0+B_n-M_n^{\rm toward}+M_n^{\rm away},
+\tag{VI.77}
+$$
+
+where B_n counts splits in the then-current cursor-to-target corridor,
+including actual splits inside Next. A successful marker comparison is
+counted as its actual one-cell movement. Neither physical elapsed time
+nor the number of epoch-header reads is a term of this identity.
+
+**Proof.** P preserves the frontier cell and both cuts. S replaces one
+cell by two with one fresh middle cut and retains both exterior cuts,
+by AAV5.3–5.4. A cell between c and b therefore contributes one extra
+cell exactly in the stated case. Moving across one actual cell removes
+or adds that one contribution until arrival; order cannot change sides
+without visiting b. The remaining operations do not move this cursor.
+Summing these exact local differences gives (VI.77). Native root Return
+leaves this separately parked observation cursor as specified, so it
+is not an uncounted observation movement. $\square$
+
+**Proposition 62.2 (authentic arbitrarily long finite delays).** On both
+original entrances, including each authentic empty/P preparation, for
+every M there is a lawful finite continuation in which M completed
+rightward one-cell advances toward an acquired saved target fail to arrive,
+although the target's old epoch value can be acquired. The continuation
+can use genuine Next, with its original old/new output and tape effects.
+There is no uniform finite movement bound independent of relevant growth.
+
+**Proof.** Begin with an actual alpha atom between acquired cuts a,b and
+cursor a. Before a rightward advance execute P at this atom z. Its actual
+new original index k is known from this explicitly supplied finite history.
+Execute Next(k). Its actual FetchGrowth returns P_z; the current z is beta,
+so the genuine left-descent rule stops there and executes S_z. Advance
+right once across the new left beta to the new middle cut. The cursor is
+again immediately before a right alpha whose right boundary is b. Each
+cycle is P_z, Next(k), WalkRight, with the actual new right-child z for
+the next cycle. It adds one intervening split and one toward movement,
+so (VI.77) leaves D=1. All input frames, old/new pairs, native history
+appends, version publication and returns are the original transactions.
+After M cycles b has not been reached. Stopping growth now permits arrival
+on the next right step, so the finite construction asserts delay, not
+finite-run nontermination.
+
+For a beta atom prepared by an actual P from its own known alpha, first
+execute Next(1): the historical P at that root selects its current beta
+and genuinely splits it. A right step leaves the same alpha-before-b
+configuration. Thereafter use the preceding cycles with their real indices.
+The finite entrance permits the epoch before the empty preparation or
+after this actual P. Bilaterally the selected source itself has f(0)=0,
+f(1)=1 by AAV22.4: use r_0 with its genuine P preparation or r_1 with
+its genuine empty preparation, keeping all other selected seeds and their
+joint constraint fixed. Here a,b are the actual adjacent seed boundaries.
+No independent seed product or replacement source is introduced.
+
+To make b a genuinely saved cursor target, start the cursor at b, copy
+its binding into the saved slot, and WalkLeft once across the original
+atom to a before the stalling continuation. This pays actual departure
+and does not assume a teleport. ReadEpoch at the acquired header returns
+the correct old bit in finite time, by its actual protected read or earned
+chain decoder. Following a next-header link can likewise acquire an old
+seed value without moving c. Neither operation changes D, so those value
+acquisitions do not fulfill the outstanding physical return to b.
+$\square$
+
+**Corollary 62.3 (the conditional infinite obstruction).** If an ideal
+extension supplies every cycle's actual fresh material, current authorities,
+finite input/output/ACK progress and observer advances for indefinitely
+many cycles, the construction has an infinite execution with infinitely
+many observer advances and no arrival. Without those explicit continued
+supply/progress premises only Proposition 62.2's arbitrary finite delays
+are asserted.
+
+**Proof.** Each finite cycle extends the same source with D=1 and the
+same genuine target b. The ideal extension supplies their concatenation;
+no prefix reaches b. This uses unbounded cumulative source, tape, record
+and control resources. It proves nothing about immortality of a fixed
+finite apparatus, a physical growth velocity or a quantum hold lifetime.
+$\square$
+
+## 63. Complete native service and unchanged immutable records
+
+**Theorem 63.1 (operational correspondence of the acquiring observer).**
+On Definition 58.1's original installed source, the procedures of §§59–62
+are paid observer programs over its existing admitted primitives. At every
+completed finite schedule they retain all original legal native futures,
+actual source/tape successors, enrollment, rights, immutable samples and
+record identities, true versions, current cursors/latch, and original
+pending-input/output, Print, End, local ACK and native root Return rules.
+A partial request or output has only its actual acquired/emitted prefix.
+Fixed-version and current-region conclusions have exactly their distinct
+hypotheses above; navigation is supplied only by actual completed movements.
+
+**Proof.** The new persistent operands come only from actual live-header,
+retained-record, source-parent/child and authentic header reads, or actual
+allocation. Integer counts select finite loops and original history indices;
+they never become object references. For bilateral events use the original
+acquired component attribution of AAV20.2, including events inside Next.
+Every history-derived field read begins after native/tape maintenance,
+acquires its own current token, and completes its finite count/decode before
+another edit is admitted. AAV23.2 therefore supplies exactly its serialized
+execution, and AAV21.3/22.1 supplies stability at later coherent invocations.
+No selector is invoked on an old published token and partly edited source.
+During native busy phases the original pending actual kind/target and
+maintenance cursor remain the sole operative transaction data.
+
+Each attempt's header and event endpoints are actually retained before
+scanning. Its scratch includes current scan reference, remaining stack,
+component/path prefix tests, candidate/output cursor and continuation.
+An occupied received bit is copied to backing before its ingress latch
+clears. A proper original frame prefix does not create a completed request
+or certificate. BuildAnswer seals only the acquired finite result; Print
+emits its actual prefix, End follows its last bit, the original local ACK
+enables Return, and only completed cleanup restores Ready. The observer's
+extra scratch is cleared/reused at those ordinary points; mandatory old
+samples, failed-attempt records and version fields are never cleared or
+recomputed as current samples. Where internal source-only reads are not
+observation samples under AAV11.3, they remain paid. Where the installed
+contract records them, every such actual record is retained and charged.
+No equality of different read schedules' entire archives is claimed.
+
+Absent authority and wrong phase disable the same primitives; denied
+grants do not create data. Ordinary raw marker queries retain their latch
+refusal, while the separately admitted source reads/walks keep their
+original permissions. No edit or validation silently resumes a stopped
+marker episode. Original source refusals, invalid indices and BadFrame
+preserve their exact tagged output and absence of growth. Additional
+observer results use their existing observation/output backing, not new
+payload fields on the seven original request tags.
+
+For a native event use the original Reserve, source template, ancestral
+appends, incidence maintenance and token publication, with finite material
+reserved first. AAV7.2/23.2 already give its full original service. Neither
+the acquired envelope nor a failed validation changes its guard. Next
+uses its acquired original old pair and genuine current left descent;
+only its actual new event is tested for relevance later. All arbitrary
+lawful addressed continuations remain enabled. Induction on completed
+transactions and their backed pending prefixes proves preservation of
+the complete declared service. AAV11's annotated four-view recovery then
+applies to the actually acquired native views with these retained
+annotations; it is not re-proved or inferred from a bare value.
+
+If a VI37–57 quantum attachment is also retained, it needs its own actual
+full-bank holds, gates, ingress, detector, precision and complete-output
+error premises during all this extra finite work. Their existing finite
+composition bounds apply only with those paid hypotheses. This classical
+acquisition construction supplies no new quantum operation, rewind,
+calibration, physical clock or hold certificate. $\square$
+
+## 64. Nonempty native instances and supplier subtraction
+
+**Proposition 64.1 (continuing outside growth with a real current task).**
+There are authentic nonempty instances of Theorem 61.3 on both entrances
+with indefinitely many irrelevant genuine Next events, while every finite
+observer prefix has its actual finite resources. Hence local completion
+is not an acquisition-wide global-quiescence condition in disguise.
+
+**Proof.** In the finite entrance prepare
+$T_3=\langle\langle\beta,\alpha\rangle,\beta\rangle$ by the actual word
+$P_\varepsilon S_\varepsilon S_L P_R$ of AAV7.3.
+At that returned epoch choose $x=LL$, or
+a one-leaf current interval beginning at LL's acquired left cut. Park/save
+the observation cursor at that cut and choose the envelope to be the
+single old LL cone. This is a nonempty beta subtree. Any finite number
+of lawful edits in LL, including Next(3) which recalls S_L and genuinely
+splits LL, are relevant. After them, repeat Next(4). Its old event remains
+P_R and its actual new operand is R followed by its current left descent;
+every repetition splits a beta in that R cone. These events are outside
+the acquired LL envelope. Their tapes, replies, global tokens and ancestor
+append work are real and keep growing, while the acquired LL region is
+constant. Each observer count/decode nevertheless runs on its own finite
+coherent current tree, so Theorem 61.3 completes the actual current task.
+
+Bilaterally use the actual selected r_0 beta and r_1 alpha preparations.
+Acquire the requested root/header interval and any needed cursor corridor,
+for example the r_0 cone alone when cursor and anchor coincide. A disjoint
+r_2 is beta since floor(3s)=1 and floor(4s)=2 in AAV1.1's selected word.
+Its authentic preparation is P. Repeated original Next(1) in that actual
+component splits its successive leftmost beta descendants and stays
+outside the r_0 envelope. Both examples are ideal indefinitely supplied
+extensions only in the sense of Corollary 62.3; every finite instance is
+already a lawful finite example. $\square$
+
+**Proposition 64.2 (boundary discriminators).** The construction separates
+local conflict, remote change, old branch operands and access failure on
+the same actual source.
+
+**Proof.** Read an alpha in the candidate region, then perform its lawful P
+before r. Its event has the acquired old cone prefix, so validation rejects;
+the alpha sample remains at its own old version. Instead place that P in
+a disjoint acquired old cone. Validation accepts when the local candidate
+is otherwise complete, although r differs from the read token. If an old
+beta subsequently splits, Theorem 59.2 still binds its old root to the
+same present branch; original P/S there returns the original branch
+refusal, and Next at its old event descends to a genuine current leaf.
+For example the finite word $P_\varepsilon S_\varepsilon$ gives this distinction already
+at the root. Zero event segments, zero requested leaves and finite right
+Endpoint follow the explicit empty cases in §§59–61. A denied grant,
+wrong phase or missing source/tape authority yields no successful selector,
+no movement and no certificate. If required rights later become current,
+only a fresh actually admitted execution can supply the missing reads.
+Thus old values, record existence and mathematical paths never repair an
+access failure. $\square$
+
+**Definition 64.3 (existing results and literature domains).** The new
+source-specific results are the operational acquisition in Theorem 59.2,
+the earned cone relevance/certificate/completion of Theorems 60.2–61.3,
+and the genuine-Next arrival separation of Proposition 62.2 with its exact
+native account. They are `repo-derived` under their stated original-source
+hypotheses; no literature priority or fresh kernel verification is asserted.
+Their suppliers have the following precise roles.
+
+| Supplier | Supplied content and retained domain |
+| --- | --- |
+| FARG1–5; AA17–24 | Free ordered syntax, rho, birth guards, history/tape inversion, original initialized seven-request service, all finite native words, original pending/output/return rules and counts. None is claimed new. |
+| AAV5–9,11–14,17,20–24 | Persistent incidence/cut identities, actual source reads and movement, enrollment, finite quiescent acquisition, four annotated views, paid resolvers, stable native indexed meanings, authentic component merge and admitted serialized derived selectors. These give the actual primitives here, rather than an oracle for a chosen scope. |
+| Atomic Supplier Substitution49–52 | Fixed old-journal scans, complete expression recovery and real context consumption already exist under its extra F0–F4 recorder/gate/wake/control/inventory premises. Their fixed-endpoint scan principle is reused; those premises are not inferred from local P/S/Next and no absence of that result is claimed. |
+| Concurrent Native Cut Acquisition; Adaptive Acquired Reference Frontier | Their concurrent global-rho writer/raw-read menus and own current/retained targets remain valid. They are not the local P/S/Next source/operation correspondence established in §§59–62. |
+| Native Retrospective/Reentrant acquisition | Their AIF/CAP entrances, actual acquisition and held-context admissions retain their exact domains. No such control authority is imported here. |
+| VI37–57 | Actual attached native/quantum service, whole-record finite-error and holding boundaries; no new apparatus or quantum return is supplied by classical old-tree recovery. |
+| NativeEndpointEventIdeals.guard_enabled; NativeEndpointCausalOrder.result | Exact inspected declaration statements identify actual guarded membership cuts and the transitive closure of native creating/local event order. They supply no field right, version acquisition, live cursor arrival or current-region selector. |
+
+The linked-access representation and persistence distinction are established
+background from Driscoll, Sarnak, Sleator and Tarjan,
+[Making Data Structures Persistent](https://doi.org/10.1016/0022-0000(89)90034-2),
+§§1–2, `literature-attested`. Lamport,
+[Time, Clocks, and the Ordering of Events in a Distributed System](https://doi.org/10.1145/359545.359563),
+§§2–3, supplies the causal/total-order distinction, `literature-attested`.
+Neither is an acquisition permission or a native locality/arrival theorem.
+Fixed-prefix replay, shuffle inversion, validation by a complete acquired
+change segment, and summing transition differences are mature methods;
+their generic forms are only intermediate steps above. The additional
+mathematics identifies their actual operands, scopes and legal execution
+on these two original native entrances, with genuine Next and saved return.
+
+## 65. Exact retained boundary of the acquisition result
+
+**Proposition 65.1 (what the certificates cannot supply).** The preceding
+results do not yield current-at-Return values under arbitrary later local
+edits, arrival under unrestricted relevant growth, acquisition without
+current original rights, an old observation checkpoint from a native token
+alone, or an all-domain physical common realization.
+
+**Proof.** A relevant P after r changes an accepted alpha value before
+Return without changing its truthful certificate at r. Proposition 62.2
+prevents any growth-independent movement bound, and Corollary 62.3 states
+the additional hypotheses needed for infinite nonarrival. Proposition
+59.3 separates source versions from observer checkpoints; Definition
+58.1 and Proposition 64.2 separate acquired data from missing authority.
+The finite entrance still has its two real endpoints, and the bilateral
+entrance still assumes its actual ideal selected family and preparation
+bindings. No theorem constructs that family from a finite prefix. The
+additional finite resources have no uniform total bound: outside growth
+can enlarge a later coherent history count and every true observation
+remains retained. The current-tree instrument is supplied by actual
+native arity access; static IX136's canonical rank and XII156's conditional
+mixed-gap geometry supply no such access or selector. Original-control
+M3, C5, native carrier, finite Fock/Gibbs and continuous-field/path domains
+are not identified by these classical relations. Actual apparatus,
+coherent ingress, source supplies, clocks/holds, detector readiness and
+physical error certificates remain independent premises. The outstanding
+unrestricted relevant-interference and cross-domain recovery obligations
+are therefore unchanged. $\square$
+
+## 追加锚（本行以下为增补区）
