@@ -41,7 +41,7 @@ internal sealed class SelfPowerResiduePolynomialRefutationDocument : IScribeDocu
         var k = V("k"); var n = V("n"); var r = V("r");
         var twoK = Seq(D(2), Star, k);
         var poly = Seq(Complex(), OpenBracket, V("X"), CloseBracket);
-        var familyType = Seq(Nat(), Sp, Rightarrow, Sp, poly);
+        var familyType = Seq(Nat(), Sp, To, Sp, poly);
         var degrees = All("r", Nat(), Imp(Lt(r, twoK), Eqn(Call("natDegree", Call("P", r)), k)));
         var modulus = Seq(Pow(Cast(n, Int()), k), Plus, Pow(Seq(Minus, D(1)), k));
         var evaluations = All("n", Nat(), Imp(Lt(k, n), Eqn(Call("eval", Call("P", Call("mod", n, twoK)), Cast(n, Complex())),

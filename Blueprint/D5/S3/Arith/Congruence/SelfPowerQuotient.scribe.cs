@@ -9,7 +9,7 @@ internal sealed class SelfPowerQuotientDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Arith/Congruence/SelfPowerQuotient.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Factorization/englander2020a081215");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The self-power numerator is divisible by the square of its successor at every natural index.", H("The exact self-power quotient"), Blocks(
+        "For every natural index n, the self-power numerator is divisible by (n+1)^2.", H("The exact self-power quotient"), Blocks(
             Describe.Lean(DescribeId.Create("self-power-selfpowerquotient-numerator"),
                 DeclarationHandle.Create(Prefix + "numerator"), H("The source numerator"),
                 StatementSource.FromAuthor(Disp(NumeratorFormula())), AssessedProvenance.FromLiterature(Source),
