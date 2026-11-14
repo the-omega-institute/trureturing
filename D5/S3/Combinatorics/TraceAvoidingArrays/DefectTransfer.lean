@@ -16,6 +16,8 @@ import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.List.OfFn
 import Mathlib.Tactic
 
+/-! Additive defect budgets and finite boundary transfers. -/
+
 open scoped BigOperators
 
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.DefectTransfer
@@ -36,6 +38,30 @@ def defects {q k : ℕ} (H V : Finset (Fin k × Fin k)) : List (Row q k) → ℕ
 def literalCount {q k : ℕ} (H V : Finset (Fin k × Fin k)) (D n : ℕ) : ℕ :=
   (Finset.univ.filter fun A : Fin n × Fin k → Fin q =>
     defects H V (List.ofFn fun i j => A (i, j)) = D).card
+
+private theorem tail_relabel {q k : ℕ} (H V : Finset (Fin k × Fin k))
+    (e : Equiv.Perm (Fin q)) (r : Row q k) (rs : List (Row q k)) :
+    tailDefects H V (e ∘ r) (rs.map fun t => e ∘ t) = tailDefects H V r rs := by
+  induction rs generalizing r with
+  | nil => rfl
+  | cons t ts ih => simp [tailDefects, bondDefects, e.injective.eq_iff, ih]
+
+theorem relabel_defects {q k : ℕ} (H V : Finset (Fin k × Fin k))
+    (e : Equiv.Perm (Fin q)) (rs : List (Row q k)) :
+    defects H V (rs.map fun r => e ∘ r) = defects H V rs := by
+  cases rs with
+  | nil => rfl
+  | cons r rs => simp [defects, bondDefects, e.injective.eq_iff, tail_relabel]
+
+private theorem constant_tail {q k : ℕ} (H V : Finset (Fin k × Fin k)) (c : Fin q) (n : ℕ) :
+    tailDefects H V (fun _ => c) (List.replicate n (fun _ => c)) = n * (V.card + H.card) := by
+  induction n with
+  | zero => simp [tailDefects]
+  | succ n ih => simp [List.replicate_succ, tailDefects, bondDefects, ih, Nat.succ_mul]; omega
+
+theorem constant_defects {q k : ℕ} (H V : Finset (Fin k × Fin k)) (c : Fin q) (n : ℕ) :
+    defects H V (List.replicate (n + 1) (fun _ => c)) = H.card + n * (V.card + H.card) := by
+  simp [List.replicate_succ, defects, bondDefects, constant_tail]
 
 section Transfer
 
@@ -76,19 +102,22 @@ private theorem continuation_count (n : ℕ) (p : B) (d : ℕ) :
     apply Finset.sum_congr rfl
     intro r _
     by_cases h : C p r + bondDefects H r r ≤ d
-    · rw [if_pos h, ← ih]
+    · rw [ite_eq_left h, ← ih]
       apply Finset.sum_congr rfl
       intro f _
+      change (if C p r + bondDefects H r r + projectedCost H P C (P r) (List.ofFn f) = d
+        then (1 : ℤ) else 0) = _
       congr 1
+      apply propext
       omega
-    · rw [if_neg h]
+    · rw [ite_eq_right h]
       apply Finset.sum_eq_zero
       intro f _
-      exact if_neg (by omega)
+      exact ite_eq_right (by omega)
 
-theorem counting_bridge
+private theorem counting_bridge
     (edge : ∀ r t, bondDefects V r t = C (P r) t) (D n : ℕ) :
-    (literalCount H V D (n + 1) : ℤ) =
+    (literalCount (q := q) H V D (n + 1) : ℤ) =
       ∑ r : Row q k, if bondDefects H r r ≤ D then
         continuation H P C n (P r) (D - bondDefects H r r) else 0 := by
   rw [literalCount, Finset.natCast_card_filter]
@@ -106,15 +135,18 @@ theorem counting_bridge
   apply Finset.sum_congr rfl
   intro r _
   by_cases h : bondDefects H r r ≤ D
-  · rw [if_pos h, ← continuation_count]
+  · rw [ite_eq_left h, ← continuation_count]
     apply Finset.sum_congr rfl
     intro f _
+    change (if bondDefects H r r + projectedCost H P C (P r) (List.ofFn f) = D
+      then (1 : ℤ) else 0) = _
     congr 1
+    apply propext
     omega
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     apply Finset.sum_eq_zero
     intro f _
-    exact if_neg (by omega)
+    exact ite_eq_right (by omega)
 
 variable {S : Type*} [Fintype S] [DecidableEq S]
 variable (Valid : B → ℕ → Prop) (cl : B → ℕ → S)
@@ -139,8 +171,8 @@ private theorem continuation_matrix
     apply Finset.sum_congr rfl
     intro r _
     by_cases hr : C p r + bondDefects H r r ≤ d
-    · rw [if_pos hr, ih _ _ (hnext p d hpd r hr)]
-      simp [hr]
+    · rw [ite_eq_left hr, ih _ _ (hnext p d hpd r hr)]
+      simp [hr, Matrix.mulVec, dotProduct]
     · simp [hr]
 
 theorem lumped_count
@@ -155,7 +187,7 @@ theorem lumped_count
     (hv : ∀ s, (∑ r : Row q k, if bondDefects H r r ≤ D ∧
       cl (P r) (D - bondDefects H r r) = s then (1 : ℤ) else 0) = v s)
     (n : ℕ) :
-    (literalCount H V D (n + 1) : ℤ) = dotProduct v ((T ^ n).mulVec e) := by
+    (literalCount (q := q) H V D (n + 1) : ℤ) = dotProduct v ((T ^ n).mulVec e) := by
   rw [counting_bridge H V P C edge]
   unfold dotProduct
   simp_rw [← hv, Finset.sum_mul]
@@ -163,7 +195,7 @@ theorem lumped_count
   apply Finset.sum_congr rfl
   intro r _
   by_cases hr : bondDefects H r r ≤ D
-  · rw [if_pos hr, continuation_matrix H P C Valid cl T e hzero hnext hT n _ _ (hinit r hr)]
+  · rw [ite_eq_left hr, continuation_matrix H P C Valid cl T e hzero hnext hT n _ _ (hinit r hr)]
     simp [hr]
   · simp [hr]
 
@@ -190,7 +222,7 @@ theorem forward_shift (T : Matrix S S ℤ) (v e : S → ℤ) (d b : ℕ) (c : Fi
   have hh := congrArg (fun w => dotProduct w ((T ^ n).mulVec e)) h
   simp only [sum_dotProduct, smul_dotProduct, smul_eq_mul, forward_eq,
     ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, ← pow_add] at hh
-  convert hh using 1 <;> congr 3 <;> omega
+  simpa only [Nat.add_comm, Nat.add_left_comm, Nat.add_assoc] using hh
 
 end Recurrence
 
