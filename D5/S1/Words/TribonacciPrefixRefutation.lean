@@ -24,23 +24,23 @@ abbrev Letter := Fin 3
 /-- The fourth substitution iterate, used as the renormalized substitution. -/
 def tau (a : Letter) : List Letter := image sigma 4 a
 
-theorem tau_A : tau 0 = [0,1,0,2,0,1,0,0,1,0,2,0,1] := by decide
-theorem tau_B : tau 1 = [0,1,0,2,0,1,0,0,1,0,2] := by decide
-theorem tau_C : tau 2 = [0,1,0,2,0,1,0] := by decide
+private theorem tau_A : tau 0 = [0,1,0,2,0,1,0,0,1,0,2,0,1] := by decide
+private theorem tau_B : tau 1 = [0,1,0,2,0,1,0,0,1,0,2] := by decide
+private theorem tau_C : tau 2 = [0,1,0,2,0,1,0] := by decide
 
 def weight (a : Letter) : ℤ := if a = 0 then 2 else if a = 1 then 1 else 0
 
 def signedWordSum (v : List Letter) : ℤ := (v.map weight).alternatingSum
 
-@[simp] theorem signedWordSum_nil : signedWordSum [] = 0 := by simp [signedWordSum]
+@[simp] private theorem signedWordSum_nil : signedWordSum [] = 0 := by simp [signedWordSum]
 
-theorem signedWordSum_append_odd (u v : List Letter) (hu : Odd u.length) :
+private theorem signedWordSum_append_odd (u v : List Letter) (hu : Odd u.length) :
     signedWordSum (u ++ v) = signedWordSum u - signedWordSum v := by
   simp only [signedWordSum, List.map_append, List.alternatingSum_append]
   rw [List.length_map, hu.neg_one_pow, neg_one_smul]
   simp [sub_eq_add_neg]
 
-theorem signed_subst_odd (n : ℕ) (hodd : ∀ a : Letter,
+private theorem signed_subst_odd (n : ℕ) (hodd : ∀ a : Letter,
     Odd (image sigma (4*n) a).length) (v : List Letter) :
     signedWordSum (subst (image sigma (4*n)) v) =
       (v.map (fun a => signedWordSum (image sigma (4*n) a))).alternatingSum := by
@@ -55,14 +55,14 @@ def a (n : ℕ) : ℤ := signedWordSum (image sigma (4*n) 0)
 def b (n : ℕ) : ℤ := signedWordSum (image sigma (4*n) 1)
 def c (n : ℕ) : ℤ := signedWordSum (image sigma (4*n) 2)
 
-theorem four_odd (n : ℕ) (x : Letter) : Odd (image sigma (4*n) x).length := by
+private theorem four_odd (n : ℕ) (x : Letter) : Odd (image sigma (4*n) x).length := by
   rw [Nat.odd_iff]
   exact D5.S1.Words.TribonacciAlignedWindows.four_parity n x
 
-theorem abc_zero : a 0 = 2 ∧ b 0 = 1 ∧ c 0 = 0 := by
+private theorem abc_zero : a 0 = 2 ∧ b 0 = 1 ∧ c 0 = 0 := by
   norm_num [a, b, c, signedWordSum, image, weight]
 
-theorem abc_step (n : ℕ) :
+private theorem abc_step (n : ℕ) :
     a (n+1) = a n ∧ b (n+1) = 2*a n-b n ∧ c (n+1) = 4*a n-2*b n-c n := by
   have ho : ∀ x : Letter, Odd (image sigma (4*n) x).length := four_odd n
   have hA : image sigma 4 0 = [0,1,0,2,0,1,0,0,1,0,2,0,1] := tau_A
@@ -78,7 +78,7 @@ theorem abc_step (n : ℕ) :
   norm_num
   constructor <;> ring_nf
 
-theorem abc_closed (n : ℕ) :
+private theorem abc_closed (n : ℕ) :
     a n = 2 ∧ b n = 2 - (-1 : ℤ)^n ∧ c n = 2 - (2*(n:ℤ)+2)*(-1 : ℤ)^n := by
   induction n with
   | zero => exact abc_zero
@@ -98,7 +98,7 @@ def prefixWord : ℕ → List Letter
   | 0 => []
   | n+1 => image sigma (4*(n+1)) 2 ++ prefixWord n
 
-theorem tau_A_decomposition (n : ℕ) :
+private theorem tau_A_decomposition (n : ℕ) :
     image sigma (4*(n+1)) 0 =
       image sigma (4*(n+1)) 2 ++ image sigma (4*n) 0 ++ image sigma (4*n) 1 ++
       image sigma (4*n) 0 ++ image sigma (4*n) 2 ++ image sigma (4*n) 0 ++
@@ -124,7 +124,7 @@ theorem tau_A_decomposition (n : ℕ) :
     RankOneMorphismIterationBound.subst_nil, List.append_nil]
   simp [List.append_assoc]
 
-theorem prefixWord_embed (n : ℕ) : ∃ r, image sigma (4*n) 0 = prefixWord n ++ r := by
+private theorem prefixWord_embed (n : ℕ) : ∃ r, image sigma (4*n) 0 = prefixWord n ++ r := by
   induction n with
   | zero => exact ⟨image sigma 0 0, by simp [prefixWord, image]⟩
   | succ n ih =>
@@ -136,7 +136,7 @@ theorem prefixWord_embed (n : ℕ) : ∃ r, image sigma (4*n) 0 = prefixWord n +
     rw [tau_A_decomposition n, ← List.append_assoc, hr]
     simp [List.append_assoc]
 
-theorem prefixWord_prefix (n : ℕ) : prefixWord n <+: image sigma (4*n) 0 := by
+private theorem prefixWord_prefix (n : ℕ) : prefixWord n <+: image sigma (4*n) 0 := by
   rw [List.prefix_iff_eq_append]
   obtain ⟨r, hr⟩ := prefixWord_embed n
   rw [hr]
@@ -144,10 +144,7 @@ theorem prefixWord_prefix (n : ℕ) : prefixWord n <+: image sigma (4*n) 0 := by
 
 def prefixLength (n : ℕ) : ℕ := (prefixWord n).length
 
-theorem prefixWord_length_pos (n : ℕ) : 0 < prefixLength (n+1) := by
-  simp [prefixLength, prefixWord, MBonacciSentinelDesubstitution.image_pos]
-
-theorem image_length_bound (n : ℕ) : (image sigma (4*n) 0).length ≤ 13^n := by
+private theorem image_length_bound (n : ℕ) : (image sigma (4*n) 0).length ≤ 13^n := by
   induction n with
   | zero => decide
   | succ n ih =>
@@ -169,17 +166,20 @@ theorem image_length_bound (n : ℕ) : (image sigma (4*n) 0).length ≤ 13^n := 
       _ ≤ 13 * 13^n := by omega
       _ = 13^(n+1) := by rw [pow_succ]; ring
 
-theorem prefixWord_length_bound (n : ℕ) : prefixLength (n+1) ≤ 13^(n+1) := by
-  exact (prefixWord_prefix (n+1)).length_le.trans (image_length_bound (n+1))
+private theorem prefixWord_length_bound (n : ℕ) :
+    0 < prefixLength (n+1) ∧ prefixLength (n+1) ≤ 13^(n+1) := by
+  constructor
+  · simp [prefixLength, prefixWord, MBonacciSentinelDesubstitution.image_pos]
+  · exact (prefixWord_prefix (n+1)).length_le.trans (image_length_bound (n+1))
 
 def prefixCharge (n : ℕ) : ℤ := signedWordSum (prefixWord n)
 
-theorem prefixCharge_step (n : ℕ) : prefixCharge (n+1) = c (n+1) - prefixCharge n := by
+private theorem prefixCharge_step (n : ℕ) : prefixCharge (n+1) = c (n+1) - prefixCharge n := by
   change signedWordSum (image sigma (4*(n+1)) 2 ++ prefixWord n) = _
   rw [signedWordSum_append_odd _ _ (four_odd (n+1) 2)]
   rfl
 
-theorem prefixCharge_closed (n : ℕ) :
+private theorem prefixCharge_closed (n : ℕ) :
     prefixCharge n = 1 - (-1 : ℤ)^n * ((n:ℤ)^2 + 3*(n:ℤ) + 1) := by
   induction n with
   | zero => simp [prefixCharge, prefixWord]
@@ -189,7 +189,7 @@ theorem prefixCharge_closed (n : ℕ) :
     push_cast
     ring
 
-theorem prefixWord_actual (n : ℕ) :
+private theorem prefixWord_actual (n : ℕ) :
     factor W 0 (prefixLength n) = prefixWord n := by
   obtain ⟨r, hr⟩ := prefixWord_embed n
   apply List.ext_getElem
@@ -212,7 +212,7 @@ theorem prefixWord_actual (n : ℕ) :
       simpa only [hr] using hget
     simpa [Nat.zero_add] using hw'.trans hget'
 
-theorem prefixCharge_abs_lower_succ (n : ℕ) :
+private theorem prefixCharge_abs_lower_succ (n : ℕ) :
     (n+1 : ℤ)^2 ≤ |prefixCharge (n+1)| := by
   rw [prefixCharge_closed]
   by_cases h : Even (n+1)
@@ -234,7 +234,7 @@ theorem prefixCharge_abs_lower_succ (n : ℕ) :
     rw [abs_of_nonneg hnonneg]
     nlinarith [sq_nonneg (n+1 : ℤ)]
 
-theorem prefixCharge_abs_lower (n : ℕ) :
+private theorem prefixCharge_abs_lower (n : ℕ) :
     (n : ℤ)^2 ≤ |prefixCharge n| := by
   cases n with
   | zero => simp [prefixCharge, prefixWord]
@@ -243,7 +243,7 @@ theorem prefixCharge_abs_lower (n : ℕ) :
 def claim : Prop := ∃ K : ℝ, 0 < K ∧
   ∀ s m : ℕ, |(signedWordSum (factor W s m) : ℝ)| ≤ K * Real.log (m + 2)
 
-theorem prefix_log_bound (n : ℕ) (hn : 1 ≤ n) :
+private theorem prefix_log_bound (n : ℕ) (hn : 1 ≤ n) :
     Real.log (prefixLength n + 2) ≤ (n : ℝ) * Real.log 39 := by
   have hpow : ∀ k : ℕ, 1 ≤ k → 13^k + 2 ≤ 39^k := by
     intro k hk
@@ -258,7 +258,7 @@ theorem prefix_log_bound (n : ℕ) (hn : 1 ≤ n) :
         have h13 : 0 ≤ 13^k := Nat.zero_le _
         nlinarith
   have hm : prefixLength n + 2 ≤ 39^n := by
-    have hp := prefixWord_length_bound (n-1)
+    have hp := (prefixWord_length_bound (n-1)).2
     have hn' : n - 1 + 1 = n := Nat.sub_add_cancel hn
     have hp' : prefixLength n ≤ 13^n := by simpa [hn'] using hp
     have hpow' := hpow n hn
@@ -283,7 +283,6 @@ theorem result : ¬ claim := by
   have hprefix := prefixWord_actual n
   have hbound := hclaim 0 (prefixLength n)
   rw [hprefix] at hbound
-  have hlow := prefixCharge_abs_lower (n-1)
   have hlog := prefix_log_bound n hn1
   have hnreal : (n:ℝ) > K * Real.log 39 := by exact_mod_cast hn
   have hcontra : (n:ℝ)^2 > K * Real.log (prefixLength n + 2) := by
