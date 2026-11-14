@@ -147,7 +147,7 @@ internal sealed class RelevantSpaceQuantumKacDocument : IScribeDocumentDefinitio
         Formula kraus = Seq(Call("L", z), Sp, x, Sp, Call("adjoint", Call("L", z)));
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp, h, Comma, Sp, a, Colon, Sp, F.Id("Type"), Comma),
-            Seq(OpenBracket, Call("NormedAddCommGroup", h), CloseBracket, Sp,
+            Seq(Grp(), OpenBracket, Call("NormedAddCommGroup", h), CloseBracket, Sp,
                 OpenBracket, Call("InnerProductSpace", complex, h), CloseBracket, Sp,
                 OpenBracket, Call("FiniteDimensional", complex, h), CloseBracket, Sp,
                 OpenBracket, Call("Fintype", a), CloseBracket, Comma),
@@ -187,7 +187,7 @@ internal sealed class RelevantSpaceQuantumKacDocument : IScribeDocumentDefinitio
             Sp, Eq, Sp, F.Id("I"));
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp, n, Comma, Sp, a, Colon, Sp, F.Id("Type"), Comma),
-            Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            Seq(Grp(), OpenBracket, Call("Fintype", n), CloseBracket, Sp,
                 OpenBracket, Call("DecidableEq", n), CloseBracket, Sp,
                 OpenBracket, Call("Fintype", a), CloseBracket, Comma),
             Seq(Forall, Sp, k, Colon, Sp, a, Sp, To, Sp, matrix, Comma, Sp,
@@ -217,7 +217,7 @@ internal sealed class RelevantSpaceQuantumKacDocument : IScribeDocumentDefinitio
             Call("iterate", Call("weightedCP", branches, ones), m, p));
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp, n, Comma, Sp, a, Colon, Sp, F.Id("Type"), Comma),
-            Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            Seq(Grp(), OpenBracket, Call("Fintype", n), CloseBracket, Sp,
                 OpenBracket, Call("DecidableEq", n), CloseBracket, Sp,
                 OpenBracket, Call("Fintype", a), CloseBracket, Comma),
             Seq(Forall, Sp, k, Colon, Sp, a, Sp, To, Sp, matrix, Comma, Sp,
@@ -240,7 +240,7 @@ internal sealed class RelevantSpaceQuantumKacDocument : IScribeDocumentDefinitio
             Open, F.Id("I"), Minus, p, Close, Sp, Call("K", F.Id("a")));
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp, n, Comma, Sp, a, Colon, Sp, F.Id("Type"), Comma),
-            Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            Seq(Grp(), OpenBracket, Call("Fintype", n), CloseBracket, Sp,
                 OpenBracket, Call("DecidableEq", n), CloseBracket, Comma),
             Seq(Forall, Sp, k, Colon, Sp, a, Sp, To, Sp, matrix, Comma, Sp,
                 Forall, Sp, p, Colon, Sp, matrix, Comma),
