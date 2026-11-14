@@ -15,14 +15,15 @@ internal sealed class BooleanRotationCodebookDocument : IScribeDocumentDefinitio
             + "0 < epsilon < 2 pi / 3, set d(t) to the infimum over k in the integers of |t - 2 pi k| "
             + "and Q_n to {0,1}^n. A finite C of real n-vectors is adequate when every theta has one "
             + "chosen phi in C such that every x in Q_n satisfies d(sum_i x_i (theta_i - phi_i)) <= epsilon. "
-            + "The Lean support encoding is the finite subset s = {i | x_i = 1}; its subset sum is the same "
+            + "The equivalent support encoding is the finite subset s = {i | x_i = 1}; its subset sum is the same "
             + "sum because x is Boolean. The lower-bound theorem supplies |C| binomial(2n,n) epsilon^n "
             + "at least n! (2 pi)^n. The product-grid theorem supplies one fixed C with "
             + "|C| at most ceil(pi n / epsilon)^n. In both clauses the existential phi is outside the "
             + "query quantifier, so the same phi serves every query for that theta, and C is fixed across "
             + "all theta. The decoder is the literal real matrix R(alpha) = [[cos alpha, -sin alpha], "
             + "[sin alpha, cos alpha]] applied to the stored subset sum; equality is literal matrix equality "
-            + "with period 2 pi and no global-phase quotient.")),
+            + "with period 2 pi and no global-phase quotient. No running-time, finite-hardware implementation, "
+            + "learning, self-update convergence, arbitrary-decoder lower-bound or empirical claim is asserted.")),
         Paragraph(Text(
             "The signed-body volume formula and its orthant-product proof have established precedents. Kovačević and Tan, "
             + "Lemma 2 and equation (17), give the constrained multiset-body volume and the same orthant decomposition; "
@@ -65,7 +66,7 @@ internal sealed class BooleanRotationCodebookDocument : IScribeDocumentDefinitio
             DeclarationHandle.Create("D5/S3/Geometry/BooleanRotationCodebook.signed_orthant_volume"),
             H("Exact volume of a sign chamber"), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(
-            Paragraph(Text("For every p and q and every positive epsilon, the Lebesgue volume of this closed sign chamber is epsilon to the power p plus q divided by p factorial times q factorial. The formula includes p or q equal to zero. Split the coordinates into two standard nonnegative simplices, each with total mass at most one. Multiplication by epsilon on the first summand and by minus epsilon on the second maps their product exactly onto the chamber. The absolute determinant is epsilon to the power p plus q. The two simplex volumes are supplied by ConditionalSubentropyGuessingBound.simplex_volume.")),
+            Paragraph(Text("For every p and q and every positive epsilon, the Lebesgue volume of this closed sign chamber is epsilon^(p+q) / (p! q!), with both factorials in the denominator. The formula includes p or q equal to zero. Split the coordinates into two standard nonnegative simplices, each with total mass at most one. Multiplication by epsilon on the first summand and by minus epsilon on the second maps their product exactly onto the chamber. The absolute determinant is epsilon^(p+q). The two simplex volumes are supplied by ConditionalSubentropyGuessingBound.simplex_volume.")),
             Paragraph(Text("Distinct closed chambers can overlap only where at least one coordinate is zero. Such coordinate hyperplanes have Lebesgue measure zero.")))),
         Describe.Lean(DescribeId.Create("boolean-rotation-body-volume"),
             DeclarationHandle.Create("D5/S3/Geometry/BooleanRotationCodebook.signed_body_volume"),
@@ -84,7 +85,7 @@ internal sealed class BooleanRotationCodebookDocument : IScribeDocumentDefinitio
             AssessedProvenance.FromRepo(), Blocks(
             Paragraph(Text("For every natural n, positive epsilon, period L greater than three times epsilon, and adequate finite codebook C, its cardinality times binomial(2n,n) times epsilon to the power n is at least n factorial times L to the power n. In particular L equal to 2 pi gives the stated planar-rotation capacity lower bound throughout zero less than epsilon less than 2 pi divided by three.")),
             Paragraph(Text("Equip each additive circle of period L with Haar measure of mass L. The product circle has mass L to the power n. Lift its zero-codeword error fiber to the centered period box using the measure-preserving coordinate quotient maps. Within this box the exact error fiber theorem identifies the lifted fiber with a subset of the signed body, whose volume is binomial(2n,n) times epsilon to the power n divided by n factorial. Adequacy covers the product circle by one translate of this fiber per codeword. Translation invariance and finite subadditivity give the cardinality inequality.")),
-            Paragraph(Text("The theorem constrains finite codebooks with this prescribed subset-sum error relation. The product grid upper bound supplies a fixed decoder with literal planar rotation matrices. It makes no claim about arbitrary decoders, computational time, finite hardware, learning or empirical physics. Colesanti's Rogers–Shephard inequality is a related volume precedent, not the proof of this torus-covering statement.")))),
+            Paragraph(Text("The theorem constrains finite codebooks with this prescribed subset-sum error relation. The product grid upper bound supplies a fixed decoder with literal planar rotation matrices. It makes no claim about arbitrary decoders, computational time, finite hardware, learning or empirical physics. The classical Rogers–Shephard inequality quoted by Colesanti is a related volume precedent, not the proof of this torus-covering statement.")))),
         Describe.Lean(DescribeId.Create("boolean-rotation-literal-matrix"),
             DeclarationHandle.Create("D5/S3/Geometry/BooleanRotationCodebook.rotation"),
             H("Literal planar rotation"), StatementSource.WithoutFormula(),
