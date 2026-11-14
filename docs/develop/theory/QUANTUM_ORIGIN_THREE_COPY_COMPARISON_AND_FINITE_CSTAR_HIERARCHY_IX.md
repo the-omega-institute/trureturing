@@ -507,3 +507,201 @@ $\mathsf U$。这些条件结论均不把当前任意三实际腿或混合输入
 [T132BK]: https://arxiv.org/html/1103.1884v1
 
 ## 追加锚（本行以下为增补区）
+
+## 133. 三切口与正确块核条件不能把秩二联合切片提升为正性
+
+**定义 133.1（抽象三切口与一个固定矩阵）。** 令
+$H_0=H_1=H_2=\mathbb C^2$，均取固定计算基。
+Hermitian 矩阵 $M$ 在第 $i$ 个单因子对其余因子的切口上块正，指
+
+$$
+(q\otimes w)^*M(q\otimes w)\ge0
+\quad(q\in H_i,\ w\in\bigotimes_{j\ne i}H_j),
+\tag{133.1}
+$$
+
+其中只按因子位置作酉置换，$w$ 不受可分性限制。在 $H_1\otimes H_2$ 上记
+
+$$
+\begin{aligned}
+P&=|00\rangle\langle00|+|11\rangle\langle11|,&
+Z&=|00\rangle\langle00|-|11\rangle\langle11|,\\
+\eta&=|00\rangle+|11\rangle,&
+A&=2P,\qquad B=2Z,\qquad C=I_4+2\eta\eta^*,\\
+M_\star&=\begin{pmatrix}A&B\\B^*&C\end{pmatrix}
+\quad\text{于 }H_0\otimes(H_1\otimes H_2).
+\end{aligned}
+\tag{133.2}
+$$
+
+这里 $M_\star$ 只是普通矩阵，不赋予它任何原 $E$ 或 $\mathcal K$ 成员资格。
+
+**命题 133.2（最小局部维数的秩二相干障碍）。** 矩阵 $M_\star$ 满足全部三个
+(133.1)，并有以下性质：
+
+1. $q=|0\rangle$ 的条件**联合**矩阵
+   $(q^*\otimes I_4)M_\star(q\otimes I_4)=A$ 为 PSD 且秩恰二。
+2. 两个对角块均为 PSD，且同时满足正确取向的全局核与像条件
+
+$$
+\begin{gathered}
+B^*\ker A=\{0\},\qquad B\ker C=\{0\},\\
+\operatorname{ran}B\subseteq\operatorname{ran}A,\qquad
+\operatorname{ran}B^*\subseteq\operatorname{ran}C.
+\end{gathered}
+\tag{133.3}
+$$
+
+3. 不同联合向量的相干不等式 VIII(128.28)仍严格失败，并存在
+   $0\preceq F\preceq I_8$，使 $\operatorname{Tr}(F^TM_\star)=-1/2$。
+   因此 $M_\star\not\succeq0$。
+
+故“三个单因子切口块正、存在秩二条件联合切片、满足(133.3)”不能推出 PSD。
+三因子各二维已足以反驳此蕴含；若任一因子一维，则不存在这样的反例。
+
+证明。先固定任意复向量
+$w=a|00\rangle+b|01\rangle+c|10\rangle+d|11\rangle$，令
+$s=|a|^2+|d|^2$、$r=|b|^2+|c|^2$、$\delta=|a|^2-|d|^2$。
+在 $H_1H_2$ 上用 $w$ 压缩后，留在 $H_0$ 上的矩阵为
+
+$$
+T_w=\begin{pmatrix}
+2s&2\delta\\
+2\delta&3s+r+4\operatorname{Re}(\overline a d)
+\end{pmatrix}.
+\tag{133.4}
+$$
+
+右下元至少为 $s+r\ge0$，因为
+$2|a||d|\le s$。其行列式有精确复数证书
+
+$$
+\det T_w
+=s^2+\bigl|s+4\overline a d\bigr|^2+2sr\ge0.
+\tag{133.5}
+$$
+
+确实，展开行列式得
+$2s^2+16|a|^2|d|^2+8s\operatorname{Re}(\overline a d)+2sr$，
+正是右侧。两个主对角元非负及(133.5)给 $T_w\succeq0$，
+故 $q^*T_wq\ge0$ 对所有复 $q\in H_0$ 成立，证明第一个切口。
+此证书也包含 $s=0$、$w=0$，没有除以任何读数。
+
+再固定任意复 $p=(p_0,p_1)^T\in H_1$，置
+$x=|p_0|^2$、$y=|p_1|^2$、$D=\operatorname{diag}(1,-1)$。
+在 $H_1$ 上压缩，按 $H_0\otimes H_2$ 排列所得矩阵为
+
+$$
+K_p=\begin{pmatrix}A_p&B_p\\B_p^*&C_p\end{pmatrix},\qquad
+A_p=2\begin{pmatrix}x&0\\0&y\end{pmatrix},\quad
+B_p=A_pD,\quad
+C_p=\begin{pmatrix}
+3x+y&2\overline p_0p_1\\
+2\overline p_1p_0&x+3y
+\end{pmatrix}.
+\tag{133.6}
+$$
+
+它有不需要逆矩阵的 PSD 分解
+
+$$
+\begin{aligned}
+K_p&=\begin{pmatrix}I_2\\D\end{pmatrix}A_p
+       \begin{pmatrix}I_2&D\end{pmatrix}
+       +\begin{pmatrix}0&0\\0&R_p\end{pmatrix},\\
+R_p&=C_p-A_p
+ =\begin{pmatrix}x+y&2\overline p_0p_1\\
+                   2\overline p_1p_0&x+y\end{pmatrix}\\
+ &=\begin{pmatrix}\overline p_0\\\overline p_1\end{pmatrix}
+      \begin{pmatrix}p_0&p_1\end{pmatrix}
+   +\begin{pmatrix}p_1\\p_0\end{pmatrix}
+      \begin{pmatrix}\overline p_1&\overline p_0\end{pmatrix}\succeq0.
+\end{aligned}
+\tag{133.7}
+$$
+
+因此对每个复 $p$，$K_p\succeq0$，支付第二个切口的所有联合复向量。
+$P,Z,\eta$ 均在交换 $H_1,H_2$ 下不变，故 $M_\star$ 也在该交换下不变；
+将第二切口的同一分解运输到第三切口，证明全部(133.1)。
+由有限谱分解及线性性，这还支付每个切口上的所有 PSD 产品效应及其正和，
+而不只是三个因子全可分的效应。
+
+第一条由 $A=2P$ 及 $P$ 的二维像立即得到。
+为核对第二条，记 $S=\operatorname{span}\{|00\rangle,|11\rangle\}$。
+有
+
+$$
+\ker A=\ker B=\ker B^*=S^\perp,\qquad
+\operatorname{ran}A=\operatorname{ran}B=\operatorname{ran}B^*=S,
+\qquad C\succeq I_4.
+\tag{133.8}
+$$
+
+于是 $\ker C=\{0\}$、$\operatorname{ran}C=H_1\otimes H_2$，得到(133.3)。
+这些取向来自块位置：对一般 PSD 块矩阵
+$\left(\begin{smallmatrix}A&B\\B^*&C\end{smallmatrix}\right)$，
+若 $u\in\ker A$，在 $(u,tv)$ 上对任意小复 $t$ 测试，线性项强制
+$u^*Bv=0$ 对全部 $v$ 成立，即 $B^*u=0$；交换两块则给 $B\ker C=0$。
+取正交补即为相应的像包含，而非把 $B$ 与 $B^*$ 的角色颠倒。
+
+剩余失败是强度。令
+
+$$
+e_\pm=\frac{|00\rangle\pm|11\rangle}{\sqrt2}.
+\quad
+e_+^*Ae_+=2,\qquad e_-^*Ce_-=1,\qquad e_+^*Be_-=2.
+\tag{133.9}
+$$
+
+所以 $|e_+^*Be_-|^2=4>2=(e_+^*Ae_+)(e_-^*Ce_-)$。
+这两个不同的联合向量均可纠缠，不能由(133.4)中对同一个 $w$ 的测试替代。
+用 Moore–Penrose 逆也可直接定位同一个缺口：$A^\dagger=P/2$，且
+
+$$
+B^*A^\dagger B=2P,\qquad
+(C-B^*A^\dagger B)e_-=-e_-.
+\tag{133.10}
+$$
+
+核条件已满足，却仍有负的 Schur 余项。这里仅使用成熟的块矩阵判据；
+[Gallier，定理4.3][T133Gallier]给出实对称版本，其 Hermitian 版本的核方向如上，
+余项恒等式则由在二次型中配方
+$(u+A^\dagger Bv)^*A(u+A^\dagger Bv)+v^*(C-B^*A^\dagger B)v$
+直接验证。
+
+最后取单位实向量及其联合量子投影
+
+$$
+\begin{aligned}
+h&=\frac{|0\rangle e_+-|1\rangle e_-}{\sqrt2}
+  =\frac{|000\rangle+|011\rangle-|100\rangle+|111\rangle}{2},\\
+F&=\overline h\,\overline h^*=hh^*,\qquad
+0\preceq F\preceq I_8,\qquad
+\operatorname{Tr}(F^TM_\star)=h^*M_\star h
+ =\frac{2+1-4}{2}=-\frac12.
+\end{aligned}
+\tag{133.11}
+$$
+
+这遵守原全转置测试的取向，给出一个严格负的普通联合量子效应读数。
+若三因子中任一维数为一，则在该因子对其余因子的切口上，
+每个全空间向量都是产品向量，(133.1)本身就给 PSD。
+因此二维、二维、二维是此反例的最小局部维数组合。证毕。
+
+本命题的承重应用是排除 VIII(128.28)与132.4之间的一个秩二抽象推理路线，
+归属为 repo-derived，不主张外部原创性。
+对二可分混合态非负而对某联合态负的见证思想是成熟供应，参见
+[Bourennane 等，式(1)—(2)及其前后的定义][T133Bourennane]；
+标准 Schmidt 事实、块核条件及 Schur 判据不另列为新成果。
+VIII128.2已供应原输出的三切口性质；132.4的秩至多一结论、
+全部原复帽、整个原三输入锥与任意有限无界量子尺寸均保持原陈述。
+(133.2)只证明这些抽象切口加秩二及正确核条件不足以自动支付相干强度。
+没有从它取得原 $x,y,z\in E_3$、原 $X,Y,W\in\mathcal K$、
+132.10的实际 $\Lambda$ 实现、源饱和或同源六份及 allN 补全；
+132.7的整个原三角形、R3/R4、高中间次数、所有旁观、proper 预算与
+全有限 min/max 产品律仍为原未决义务。
+
+[T133Gallier]: https://www.cis.upenn.edu/~jean/schur-comp.pdf
+[T133Bourennane]: https://arxiv.org/pdf/quant-ph/0309043v2
+
+## 追加锚（本行以下为增补区）
