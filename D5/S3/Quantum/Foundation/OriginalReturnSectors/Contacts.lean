@@ -453,21 +453,16 @@ theorem uniform_dual_bound (hc : IsClosed (C : Set V))
     ∃ A : ℝ, 0 < A ∧ ∀ (t : pure C u) (b : V →L[ℝ] ℝ),
       b ≠ 0 → (∀ x ∈ C, 0 ≤ b x) → b t = 0 →
       0 < baseMaximum C u b ∧ ‖b‖ ≤ A * baseMaximum C u b := by
-  obtain ⟨A,hA⟩ := (effects_compact hs hg).isBounded.exists_norm_le
-  refine ⟨max A 1,lt_of_lt_of_le zero_lt_one (le_max_right _ _),fun t b hb hp ht => ?_⟩
+  obtain ⟨A,hA,hdual⟩ := CommonSourceLiftObstruction.original_dual_bound hc hs hg
+  refine ⟨A,hA,fun t b hb hp ht => ?_⟩
   have hb' : b.toLinearMap ≠ 0 := by intro he; exact hb ((by ext z; exact LinearMap.congr_fun he z))
   obtain ⟨s,hsD,hbs,hmax⟩ := positive_annihilator_maximum hc hs hg t b.toLinearMap hb' hp ht
   change 0 < b s at hbs
   change ∀ x ∈ base C u, b x ≤ b s at hmax
   have hM := maximum_at hc hs s b hmax
-  have hnorm : ‖(b s)⁻¹ • b‖ ≤ A := hA _ (cone_bound (base_compact hc hs) hs (fun r => by
-    change 0 ≤ (b s)⁻¹ * b r ∧ (b s)⁻¹ * b r ≤ 1
-    exact ⟨mul_nonneg (inv_nonneg.mpr hbs.le) (hp r (pure_mem r).1),
-      (by rw [← div_eq_inv_mul,div_le_one hbs]; exact hmax r (pure_mem r))⟩))
-  rw [norm_smul, Real.norm_eq_abs,abs_of_pos (inv_pos.mpr hbs),← div_eq_inv_mul] at hnorm
   refine ⟨hM.symm ▸ hbs,?_⟩
-  rw [hM]
-  exact ((div_le_iff₀ hbs).mp hnorm).trans (mul_le_mul_of_nonneg_right (le_max_left _ _) hbs.le)
+  simpa only [CommonSourceLiftObstruction.positive_base_norm hc hs t b.toLinearMap hp]
+    using hdual b.toLinearMap
 
 private theorem contact_estimate
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
