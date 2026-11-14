@@ -1,0 +1,8 @@
+### Proposition 12.2. Full controllability does not imply short synthesis
+
+For the finite generator menu in Theorem 11.2, almost every U in SU(d) requires at least d^2-1 one-parameter pulses for exact synthesis. With arbitrary independently chosen phase and angle on each pulse, the analogous generic lower bound is ceil((d^2-1)/2). For a fixed pure input the corresponding generic bounds are 2d-2 and d-1 pulses, respectively.
+
+Proof. A fixed word of L generator labels defines a smooth map from R^L to SU(d), whose dimension is d^2-1. For L<d^2-1 its image has Haar measure zero by the smooth dimension/Sard theorem. There are finitely many label words at any fixed length, and countably many bounded parameter charts, so their union remains null. Two continuous parameters per pulse replace L by 2L. Apply the same argument to the orbit in complex projective space of dimension 2d-2 for pure-state preparation. QED.
+
+These are generic exact-synthesis statements, not worst-case approximation bounds or lower bounds for a particular structured circuit. Since d is Fibonacci-sized, a generic unitary on all legal states can require exponentially many pulses. A structured algorithm can use a small computational subspace and a structured gate list. The next section supplies such a compilation interface.
+
