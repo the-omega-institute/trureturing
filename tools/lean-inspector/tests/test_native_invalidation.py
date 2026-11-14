@@ -169,6 +169,8 @@ def main (args : List String) : IO Unit := do
         # a large build or a machine-dependent thread-count assertion.
         config = self.root / 'tools/lean-inspector/lakefile.lean'
         source = config.read_text()
+        prefix, marker, source = source.partition('def prepareNativeModuleReport')
+        self.assertTrue(marker)
         expression = 'let format ← inputBinFile (root / ".lake/build/lean-inspector" / "report-format")'
         lines = [line for line in source.splitlines() if line.strip() == expression]
         self.assertEqual(len(lines), 1)
@@ -181,7 +183,7 @@ def main (args : List String) : IO Unit := do
             '  pure value')
         callback = '      observePhase "lake-report-programs-callback" "start"'
         self.assertEqual(source.count(callback), 1)
-        config.write_text(source.replace(callback, callback + '\n'
+        config.write_text(prefix + marker + source.replace(callback, callback + '\n'
             '      observePhase s!"test-callback-{mod.name}" "start"'))
         phases = self.root / 'format-phases.jsonl'
         self.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)
