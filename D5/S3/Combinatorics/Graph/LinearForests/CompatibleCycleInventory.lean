@@ -172,7 +172,7 @@ private def compatibleTransport (e : C ≃ A) (s d : C → Bool) :
       · intro x
         simpa using hd (e x))
 
-private abbrev Side (s : C → Bool) (b : Bool) := {x : C // s x = b}
+abbrev Side (s : C → Bool) (b : Bool) := {x : C // s x = b}
 
 private def crossPermutation (s : C → Bool)
     (f : Side s false ≃ Side s true) (g : Side s true ≃ Side s false) : Perm C :=
@@ -498,7 +498,7 @@ theorem compatible_cycle_card [Finite C] (s d : C → Bool)
       letI : Nonempty C := σ.2.1
       have h := Nat.card_pos (α := C)
       omega⟩
-    exact Nat.card_eq_zero_of_isEmpty
+    simp
   · rw [if_neg hC]
     letI : Nonempty C := (Nat.card_pos_iff.mp (Nat.pos_of_ne_zero hC)).1
     by_cases hp : 0 < inventory s d false true
@@ -544,6 +544,217 @@ theorem compatible_cycle_card [Finite C] (s d : C → Bool)
           have h := preserved_color_constant s σ.1 σ.2.2.1
             (fun x => (σ.2.2.2 x).symm.trans (hd x)) x y
           exact Bool.false_ne_true (hx.1.symm.trans (h.trans hy.1))⟩
-        exact Nat.card_eq_zero_of_isEmpty
+        simp
+
+
+open DirectedForestCompletion Relation
+variable {V : Type u}
+
+/-- Actual alternating completions, with the empty carrier explicitly excluded. -/
+abbrev AlternatingCompletion (E : V → V → Prop) (k : V → Bool) :=
+  {σ : Perm V // Nonempty V ∧ σ.IsCycleOn Set.univ ∧
+    (∀ x y, E x y → σ x = y) ∧ ∀ x, k (σ x) ≠ k x}
+
+private theorem bool_opposite (a b : Bool) : (!a) = b ↔ a ≠ b := by
+  cases a <;> cases b <;> decide
+
+private theorem split_card [Finite V] (p q : V → Prop) :
+    Nat.card {x : V // p x} = Nat.card {x : V // p x ∧ q x} +
+      Nat.card {x : V // p x ∧ ¬ q x} := by
+  classical
+  letI := Fintype.ofFinite V
+  simp only [Nat.card_eq_fintype_card, Fintype.card_subtype]
+  simpa only [Finset.filter_filter] using
+    (Finset.card_filter_add_card_filter_not (s := Finset.univ.filter p) q).symm
+
+private theorem endpoint_balance [Finite V] (E : V → V → Prop) (k : V → Bool)
+    (hout : Relator.RightUnique E) (hin : Relator.LeftUnique E)
+    (hk : ∀ x y, E x y → k x ≠ k y)
+    (hb : Nat.card (Side k false) = Nat.card (Side k true)) :
+    Nat.card {x : Tail E // k x = false} = Nat.card {x : Head E // k x = true} := by
+  classical
+  let e := edgeEquiv E hout hin
+  have he (x : {x : V // ∃ y, E x y}) : k x ≠ k (e x) :=
+    hk _ _ (edgeMap_edge E x)
+  let f : {x : {x : V // ∃ y, E x y} // k x = false} ≃
+      {x : {y : V // ∃ x, E x y} // k x = true} :=
+    Equiv.subtypeEquiv e (fun x => by
+      have h := he x
+      cases hx : k x <;> cases hy : k (e x) <;> simp_all)
+  have hocc := Nat.card_congr f
+  have norm (p : V → Prop) (b : Bool) :
+      Nat.card {x : {x : V // p x} // k x = b} =
+        Nat.card {x : V // k x = b ∧ p x} :=
+    Nat.card_congr {
+      toFun := fun x => ⟨x.1.1, x.2, x.1.2⟩
+      invFun := fun x => ⟨⟨x.1, x.2.2⟩, x.2.1⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+  rw [norm, norm] at hocc
+  have hr := split_card (fun x => k x = false) (fun x => ∃ y, E x y)
+  have ht := split_card (fun x => k x = true) (fun x => ∃ y, E y x)
+  change Nat.card {x : {x : V // ¬ ∃ y, E x y} // k x = false} =
+    Nat.card {x : {y : V // ¬ ∃ x, E x y} // k x = true}
+  rw [norm, norm]
+  change Nat.card {x : V // k x = false} = Nat.card {x : V // k x = true} at hb
+  omega
+
+private theorem inventory_balanced [Finite C] (s d : C → Bool)
+    (h : Nat.card (Side s true) = Nat.card (Side d true)) :
+    inventory s d false true = inventory s d true false := by
+  have hs := side_card s d true
+  have ht := side_card d s true
+  have swap (a b : Bool) : inventory d s a b = inventory s d b a :=
+    Nat.card_congr (Equiv.subtypeEquivRight (fun _ => and_comm))
+  rw [swap true false, swap true true] at ht
+  omega
+
+private theorem raw_classification [Finite V] (E : V → V → Prop) (k : V → Bool)
+    (hout : Relator.RightUnique E) (hin : Relator.LeftUnique E)
+    (ha : ∀ x, ¬ TransGen E x x) (hk : ∀ x y, E x y → k x ≠ k y) :
+    ∃ (t : Component E ≃ Tail E) (h : Component E ≃ Head E)
+      (Φ : AlternatingCompletion E k ≃
+        Compatible (fun A => k (h A)) (fun A => !(k (t A)))),
+      (∀ A, Quotient.mk (EqvGen.setoid E) (t A).1 = A) ∧
+      (∀ A, Quotient.mk (EqvGen.setoid E) (h A).1 = A) ∧
+      ∀ σ A, σ.1 (t A) = h ((Φ σ).1 A) := by
+  obtain ⟨t, h, Ψ, ht, hh, hΨ⟩ := full_cycle_completion_equiv E hout hin ha
+  have nonempty_iff : Nonempty V ↔ Nonempty (Component E) :=
+    ⟨fun hv => hv.map (Quotient.mk _), fun hc => hc.map Quotient.out⟩
+  have alt (σ : CycleCompletion E) :
+      (∀ x, k (σ.1 x) ≠ k x) ↔
+        ∀ A, (!(k (t A))) = k (h ((Ψ σ).1 A)) := by
+    constructor
+    · intro hs A
+      apply (bool_opposite _ _).mpr
+      simpa only [hΨ σ A] using (hs (t A)).symm
+    · intro hs x
+      by_cases hx : ∃ y, E x y
+      · obtain ⟨y, he⟩ := hx
+        rw [σ.2.2 _ _ he]
+        exact (hk x y he).symm
+      · let A := t.symm ⟨x, hx⟩
+        have hx' : (t A).1 = x := congrArg Subtype.val (t.apply_symm_apply ⟨x, hx⟩)
+        have he := (bool_opposite _ _).mp (hs A)
+        rw [← hΨ σ A, hx'] at he
+        exact he.symm
+  let F : AlternatingCompletion E k ≃
+      Compatible (fun A => k (h A)) (fun A => !(k (t A))) := {
+    toFun := fun σ =>
+      ⟨(Ψ ⟨σ.1, σ.2.2.1, σ.2.2.2.1⟩).1,
+        nonempty_iff.mp σ.2.1, (Ψ ⟨σ.1, σ.2.2.1, σ.2.2.2.1⟩).2,
+        (alt ⟨σ.1, σ.2.2.1, σ.2.2.2.1⟩).mp σ.2.2.2.2⟩
+    invFun := fun ρ =>
+      ⟨(Ψ.symm ⟨ρ.1, ρ.2.2.1⟩).1, nonempty_iff.mpr ρ.2.1,
+        (Ψ.symm ⟨ρ.1, ρ.2.2.1⟩).2.1, (Ψ.symm ⟨ρ.1, ρ.2.2.1⟩).2.2,
+        (alt (Ψ.symm ⟨ρ.1, ρ.2.2.1⟩)).mpr (by
+          simpa only [Ψ.apply_symm_apply] using ρ.2.2.2)⟩
+    left_inv := by
+      intro σ
+      apply Subtype.ext
+      change (Ψ.symm (Ψ ⟨σ.1, σ.2.2.1, σ.2.2.2.1⟩)).1 = σ.1
+      exact congrArg Subtype.val (Ψ.symm_apply_apply ⟨σ.1, σ.2.2.1, σ.2.2.2.1⟩)
+    right_inv := by
+      intro ρ
+      apply Subtype.ext
+      change (Ψ (Ψ.symm ⟨ρ.1, ρ.2.2.1⟩)).1 = ρ.1
+      exact congrArg Subtype.val (Ψ.apply_symm_apply ⟨ρ.1, ρ.2.2.1⟩) }
+  exact ⟨t, h, F, ht, hh, fun σ A => hΨ ⟨σ.1, σ.2.2.1, σ.2.2.2.1⟩ A⟩
+
+
+private theorem bool_total [Finite C] (s : C → Bool) :
+    Nat.card C = Nat.card (Side s false) + Nat.card (Side s true) := by
+  simpa only [true_and, Nat.card_subtype_true, Bool.not_eq_false] using
+    split_card (fun _ : C => True) (fun x => s x = false)
+
+/-- The four counts on the actual component carrier. The colors false and true
+represent R and B. Endpoint membership and the connector identity are retained. -/
+theorem alternating_completion_classification [Finite V] (n : ℕ)
+    (E : V → V → Prop) (k : V → Bool)
+    (hout : Relator.RightUnique E) (hin : Relator.LeftUnique E)
+    (ha : ∀ x, ¬ TransGen E x x) (hk : ∀ x y, E x y → k x ≠ k y)
+    (hr : Nat.card (Side k false) = n) (hb : Nat.card (Side k true) = n) :
+    ∃ (t : Component E ≃ Tail E) (h : Component E ≃ Head E)
+      (Φ : AlternatingCompletion E k ≃
+        Compatible (fun A => k (h A)) (fun A => !(k (t A)))),
+      (∀ A, Quotient.mk (EqvGen.setoid E) (t A).1 = A) ∧
+      (∀ A, Quotient.mk (EqvGen.setoid E) (h A).1 = A) ∧
+      (∀ σ A, σ.1 (t A) = h ((Φ σ).1 A)) ∧
+      let s := fun A => k (h A)
+      let d := fun A => !(k (t A))
+      let a := inventory s d false true
+      let b := inventory s d true false
+      let p := inventory s d false false
+      let q := inventory s d true true
+      a = b ∧ Nat.card (Component E) = a + b + p + q ∧
+      (n ≠ 0 → 0 < Nat.card (Component E)) ∧
+      Nat.card (AlternatingCompletion E k) =
+        if n = 0 then 0
+        else if 0 < a then a * (a + p - 1).factorial * (a + q - 1).factorial
+        else if p * q = 0 then (p + q - 1).factorial else 0 := by
+  classical
+  obtain ⟨t, h, Φ, ht, hh, hΦ⟩ := raw_classification E k hout hin ha hk
+  refine ⟨t, h, Φ, ht, hh, hΦ, ?_⟩
+  let s := fun A => k (h A)
+  let d := fun A => !(k (t A))
+  change inventory s d false true = inventory s d true false ∧ _
+  have hep := endpoint_balance E k hout hin hk (hr.trans hb.symm)
+  have hs : Nat.card (Side s true) = Nat.card {x : Head E // k x = true} :=
+    side_transport h (fun x => k x) true
+  have hd : Nat.card (Side d true) = Nat.card {x : Tail E // k x = false} := by
+    calc
+      _ = Nat.card {x : Tail E // (!(k x)) = true} :=
+        side_transport t (fun x => !(k x)) true
+      _ = _ := Nat.card_congr (Equiv.subtypeEquivRight (fun x => by
+        cases k x <;> simp))
+  have hbal := inventory_balanced s d (hs.trans (hep.symm.trans hd.symm))
+  have hsf := side_card s d false
+  have hst := side_card s d true
+  have htot := bool_total s
+  have hsum : Nat.card (Component E) = inventory s d false true +
+      inventory s d true false + inventory s d false false + inventory s d true true := by
+    omega
+  have hne : Nonempty V ↔ Nonempty (Component E) :=
+    ⟨fun hv => hv.map (Quotient.mk _), fun hc => hc.map Quotient.out⟩
+  have hzero : Nat.card (Component E) = 0 ↔ n = 0 := by
+    constructor
+    · intro hz
+      by_contra hn
+      have hp : 0 < Nat.card (Side k false) := by omega
+      have hv := (Finite.card_pos_iff.mp hp).map Subtype.val
+      have hc := hne.mp hv
+      have : 0 < Nat.card (Component E) := Finite.card_pos_iff.mpr hc
+      omega
+    · intro hn
+      apply Nat.card_eq_zero_iff.mpr
+      refine ⟨fun A => ?_⟩
+      let x := Quotient.out A
+      have hbad (b : Bool) (hx : k x = b) (he : Nat.card (Side k b) = 0) : False := by
+        have hp : 0 < Nat.card (Side k b) :=
+          Finite.card_pos_iff.mpr ⟨⟨x, hx⟩⟩
+        omega
+      cases hx : k x with
+      | false => exact hbad false hx (hr.trans hn)
+      | true => exact hbad true hx (hb.trans hn)
+  refine ⟨hbal, hsum, (fun hn => Nat.pos_of_ne_zero (mt hzero.mp hn)), ?_⟩
+  have hcard := compatible_cycle_card s d hbal
+  rw [Nat.card_congr Φ]
+  change Nat.card (Compatible s d) = _
+  rw [hcard]
+  have hsf' : Nat.card (Side s false) = inventory s d false true +
+      inventory s d false false := by omega
+  have hst' : Nat.card (Side s true) = inventory s d false true +
+      inventory s d true true := by omega
+  rw [hsf', hst']
+  by_cases hn : n = 0
+  · simp only [hn, hzero.mpr hn, ite_true]
+  · have hc : Nat.card (Component E) ≠ 0 := mt hzero.mp hn
+    simp only [hn, hc, ite_false]
+    by_cases hm : 0 < inventory s d false true
+    · simp only [hm, ite_true]
+    · have hm0 : inventory s d false true = 0 := by omega
+      have hcount : Nat.card (Component E) =
+          inventory s d false false + inventory s d true true := by omega
+      simp only [hm, ite_false, hcount, Nat.mul_eq_zero]
 
 end D5.S3.Combinatorics.Graph.LinearForests.CompatibleCycleInventory

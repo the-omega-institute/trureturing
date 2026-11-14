@@ -35,11 +35,11 @@ abbrev Tail (E : V → V → Prop) := {x : V // ¬ ∃ y, E x y}
 abbrev Completion (E : V → V → Prop) :=
   {σ : Perm V // ∀ x y, E x y → σ x = y}
 
-private def edgeMap (E : V → V → Prop) :
+def edgeMap (E : V → V → Prop) :
     {x : V // ∃ y, E x y} → {y : V // ∃ x, E x y} := fun x =>
   ⟨Classical.choose x.2, x.1, Classical.choose_spec x.2⟩
 
-private theorem edgeMap_edge (E : V → V → Prop) (x : {x : V // ∃ y, E x y}) :
+theorem edgeMap_edge (E : V → V → Prop) (x : {x : V // ∃ y, E x y}) :
     E x (edgeMap E x) := Classical.choose_spec x.2
 
 def edgeEquiv (E : V → V → Prop)
