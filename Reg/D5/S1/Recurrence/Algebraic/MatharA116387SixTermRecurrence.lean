@@ -56,7 +56,7 @@ private theorem initial_coefficients : a 0 = 1 ∧ a 1 = 2 := by
   have hf0 : constantCoeff F = 1 := by
     have h := congrArg constantCoeff hf
     norm_num only [map_mul, map_sub, map_ofNat, hm0, hy0, map_one] at h
-    exact h
+    simpa only [one_mul] using h
   have hm1 : constantCoeff (derivative (R := ℚ) M) = 1 := by
     have h := congrArg constantCoeff (congrArg (derivative (R := ℚ)) hm)
     norm_num [Derivation.leibniz, hnum, smul_eq_mul, hm0] at h
@@ -65,7 +65,8 @@ private theorem initial_coefficients : a 0 = 1 ∧ a 1 = 2 := by
     norm_num [y, Derivation.leibniz, hnum, smul_eq_mul, hm0, hm1]
   have hf1 : constantCoeff (derivative (R := ℚ) F) = 2 := by
     have h := congrArg constantCoeff (congrArg (derivative (R := ℚ)) hf)
-    norm_num [Derivation.leibniz, hnum, smul_eq_mul, hm0, hm1, hy0, hy1, hf0] at h
+    norm_num [Derivation.leibniz, hnum, smul_eq_mul, map_ofNat,
+      hm0, hm1, hy0, hy1, hf0] at h
     linarith
   constructor
   · simpa only [a, coeff_zero_eq_constantCoeff] using hf0
@@ -121,18 +122,27 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #[] }
     coordinates := #[]
     readouts := #[
-      { path := #["arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
-        stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
-      { path := #["arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg", "arg"]
-        stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
-      { path := #["arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg", "arg"]
-        stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
+      { path := #["arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg",
+          "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
+        stateBinder := 0, functionOperand := false
+        stateOperand := some #["arg"], booleanPredicate := false },
+      { path := #["arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg",
+          "fn", "arg", "fn", "arg", "arg", "arg"]
+        stateBinder := 0, functionOperand := false
+        stateOperand := some #["arg"], booleanPredicate := false },
+      { path := #["arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg",
+          "fn", "arg", "arg", "arg"]
+        stateBinder := 0, functionOperand := false
+        stateOperand := some #["arg"], booleanPredicate := false },
       { path := #["arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "arg", "arg"]
-        stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
+        stateBinder := 0, functionOperand := false
+        stateOperand := some #["arg"], booleanPredicate := false },
       { path := #["arg", "body", "body", "fn", "arg", "fn", "arg", "arg", "arg"]
-        stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
+        stateBinder := 0, functionOperand := false
+        stateOperand := some #["arg"], booleanPredicate := false },
       { path := #["arg", "body", "body", "fn", "arg", "arg", "arg"]
-        stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
+        stateBinder := 0, functionOperand := false
+        stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
