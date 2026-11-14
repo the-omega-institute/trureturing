@@ -146,10 +146,14 @@ private theorem exponent_congruence (q p n : ℕ) (hq : 2 ≤ q) (hp : p.Prime)
           rw [Nat.cast_sub (by omega : 1 ≤ q), Nat.cast_one]; exact hqz)
         exact hpq hd
       omega
-    have hap : a < p ^ a := lt_of_lt_of_le (Nat.lt_two_pow_self (n := a)) (Nat.pow_le_pow_left hp.two_le)
+    have hap : a < p ^ a := lt_of_lt_of_le (Nat.lt_two_pow_self (n := a)) (Nat.pow_le_pow_left hp.two_le a)
     have he : a + 1 ≤ n - 1 := by
-      have hpos : 0 < p ^ a := pow_pos hp.pos _
-      nlinarith
+      have hlarge : 2 * p ^ a ≤ n := by
+        calc
+          2 * p ^ a = p ^ a * 2 := Nat.mul_comm _ _
+          _ ≤ p ^ a * t := Nat.mul_le_mul_left _ ht2
+          _ = n := ht.symm
+      omega
     have hd : p ^ (a + 1) ∣ S q n ^ (n - 1) :=
       (pow_dvd_pow_of_dvd hs _).trans (pow_dvd_pow _ he)
     have hle : n - 1 ≤ p * n - 1 := Nat.sub_le_sub_right (Nat.le_mul_of_pos_left n hp.pos) 1
@@ -216,7 +220,9 @@ private theorem logarithm_eq (q : ℕ) (hq : 2 ≤ q) :
       apply (eq_div_iff (by linarith : (q : ℚ) - 1 ≠ 0)).mpr
       exact_mod_cast geom_id q n
     rw [← hg]
-    simp only [b, Nat.cast_mul, Nat.cast_pow, Int.cast_natCast, Nat.cast_sub (by omega : 1 ≤ q), Nat.cast_one]
+    simp only [b, Nat.cast_mul, Nat.cast_pow, Int.cast_mul, Int.cast_pow,
+      Int.cast_sub, Int.cast_one, Int.cast_natCast, Nat.cast_sub (by omega : 1 ≤ q),
+      Nat.cast_one]
 
 /-- All allowed integer parameters and every ordinary formal coefficient. -/
 theorem result : claim := by
