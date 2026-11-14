@@ -1,11 +1,11 @@
 ---
-bibkey: adamson2009a156834
-authors: Gary W. Adamson; Seiichi Manyama; el Houcein el Abdalaoui; Mohamed Dahmoune; Djelloul Ziadi
-year: 2009
-title: "OEIS A156834 prime-equality conjecture and its Eratosthenes-Pascal matrix formula"
+bibkey: elabdalaouidahmouneziadi2013automata
+authors: el Houcein el Abdalaoui; Mohamed Dahmoune; Djelloul Ziadi
+year: 2013
+title: "On the transition reduction problem for finite automata"
 doi: 10.48550/arXiv.1301.3751
 url: https://arxiv.org/abs/1301.3751v1
-claim: "For n>1, the totient-weighted divisor sum a(n) equals n if and only if n is prime."
+claim: "Proposition 6 gives the divisor-supported binomial matrix formula used in OEIS A156834; Adamson’s separate weighted prime-equality conjecture is quoted below."
 strata_touched:
   - D5/S3/Arith/Divisors/AdamsonA156834PrimeEquality
 license: citation-only

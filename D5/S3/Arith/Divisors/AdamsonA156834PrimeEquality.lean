@@ -17,13 +17,12 @@
    admission_basis: open-problem-resolution (#23238; Proved).
    Direct frozen dependencies: none.
    The source's finite divisor sum defines a; claim retains the restriction 1 < n.
+   Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30277
 -/
 
 import Mathlib.Data.Nat.Totient
-import Mathlib.Data.Nat.Choose.Basic
 
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
+/-! # Adamson's totient-weighted prime-equality characterization -/
 
 namespace D5.S3.Arith.Divisors.AdamsonA156834PrimeEquality
 
@@ -86,7 +85,7 @@ private theorem composite_strict {n : ℕ} (hn : 1 < n) (hc : ¬ Nat.Prime n) : 
   have hnonneg : ∀ e ∈ n.divisors, 0 ≤
       (Nat.totient e : ℤ) * ((Nat.choose (e + n / e - 2) (e - 1) : ℤ) - 1) := by
     intro e he
-    apply mul_nonneg (by positivity)
+    apply mul_nonneg (Int.natCast_nonneg _)
     have h := (binomial_bounds he).1
     omega
   have hpositive : 0 <

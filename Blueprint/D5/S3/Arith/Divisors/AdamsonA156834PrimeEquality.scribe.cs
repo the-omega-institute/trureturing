@@ -8,7 +8,7 @@ internal sealed class AdamsonA156834PrimeEqualityDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Arith/Divisors/AdamsonA156834PrimeEquality.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/ArithUnits/adamson2009a156834");
+        LibraryNoteRef.Create("D5/L/ArithUnits/elabdalaouidahmouneziadi2013automata");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Adamson's A156834 equals its index exactly at primes greater than one.",
@@ -36,8 +36,8 @@ internal sealed class AdamsonA156834PrimeEqualityDocument : IScribeDocumentDefin
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Equality characterizes prime indices", Disp(ClaimBody()),
                 "Subtracting Nat.sum_totient from the defining sum expresses the integer "
-                + "difference a n − n as the sum of Nat.totient d times the binomial coefficient "
-                + "minus one. Nat.choose_pos and Nat.choose_eq_one_iff show that these terms "
+                + "difference a n − n as a sum of products of Nat.totient d with the binomial "
+                + "coefficient's excess over one. Nat.choose_pos and Nat.choose_eq_one_iff show that these terms "
                 + "are nonnegative, and vanish exactly at the divisor endpoints d = 1 and d = n. "
                 + "For prime n, every divisor is an endpoint. For composite n > 1, a proper "
                 + "divisor has a strictly positive contribution, so n < a n. Thus the weighted "
