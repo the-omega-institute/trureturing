@@ -4453,7 +4453,7 @@ The exact dictionary is consequently 173.6, with $d_N=n^N$, all original spectat
 | Positivity with every original finite spectator | Rectangular CP/Choi/Kraus correspondence |
 | Whole-input TNI/TP budgets and finite TP-sum families | Mathematical branches, channels and instruments |
 
-The pure geometry is $\mathbb{CP}^{n^N-1}$; every two-pure-state normalized minimal face is the real three-ball (173.22). Event availability, particular updates and continuous time retain the distinct additional premises of 173.10. This application introduces no extra Born, spectral-resolution or operation-preservation premise into (174.2). $\square$
+The pure geometry is $\mathbb{CP}^{n^N-1}$; the normalized minimal face of every pair of distinct pure rays is the real three-ball (173.22). Event availability, particular updates and continuous time retain the distinct additional premises of 173.10. This application introduces no extra Born, spectral-resolution or operation-preservation premise into (174.2). $\square$
 
 ### 174.5 A transported full hierarchy with an extreme Bell ray
 
@@ -4476,7 +4476,7 @@ R_0=\mathrm{id},\quad \widehat C_0=\mathbb R_+.
 \tag{174.13}
 $$
 
-The tensors and matrix coordinates in (174.13) are the actual original ones; the definition does not redefine the ordinary matrix rank or product.
+The tensors and matrix coordinates in (174.13) are the actual original ones; the definition does not redefine the ordinary matrix rank or product. On non-Hermitian matrix units, $R$ and $R^{-1}$ denote the unique complex-linear extensions of their real-linear Hermitian maps, obtained by writing a matrix uniquely as $A+iB$ with $A,B$ Hermitian. This convention supplies no positive operation.
 
 **Theorem 174.6 (full positive-trace countermodel to the Bell-extreme shortcut).** The whole hierarchy (174.13) satisfies Definition 174.1's weak structural domain, and additionally every cone is pointed and generating with strictly positive ordinary trace. It has
 
@@ -4619,7 +4619,7 @@ Under (174.11), mathematical instrument availability, a specified least-disturbi
 
 **命题 174.9（零重叠候选的白话表述）。** 在174.1的固定复矩阵关系空间中，候选 (174.2)–(173.5) 可表述为：贝尔配对既能作为原准备，也能测试整个原锥；一个原对象与一个完整对偶测试若读出恰为零，它们的矩阵支撑就必须真正错开，不能靠内部正负抵消装成“没有重叠”。这条二元关系加原三体种子给出174.4的全部有限量子对应。
 
-**证明与图景。** 把任意一条一维方向放在原锥旁边，取它的数学最近点。零重叠条件使这个落点只能是原方向本身或零，不能落成另一个歪斜分支。所有复射线连成一片，最近点又连续，这个“进或不进”的选择就不能跳变；贝尔已经给出一个进来的正方向，于是全部正方向一起进来，完整对偶再把多余方向排出去。二体锥由此锁成正半定锥，任意两条纯射线所张的完整归一面仍是一颗实三维球。原三体种子的正性选定奇数层朝向，满维腿和每切口非乘积性再调用已有传播定理，恢复每个有限层的密度矩阵、玻恩概率与完全正过程。反模型则说明为什么要这条零关系：即使贝尔本身不可再分、三体种子也在，整套量子锥仍能在给定矩阵坐标里转歪；所有原概率合法，零概率却可由矩阵正负项抵消。新的条件把这种伪装锁掉。这里的最近点只服务证明；装置可用性、具体测后更新、时间与能量标度仍各按174.8保留条件。$\square$
+**证明与图景。** 把任意一条一维方向放在原锥旁边，取它的数学最近点。零重叠条件使这个落点只能是原方向本身或零，不能落成另一个歪斜分支。所有复射线连成一片，最近点又连续，这个“进或不进”的选择就不能跳变；贝尔已经给出一个进来的正方向，于是全部正方向一起进来，完整对偶再把多余方向排出去。二体锥由此锁成正半定锥，任意两条不同纯射线所张的完整归一面仍是一颗实三维球。原三体种子的正性选定奇数层朝向，满维腿和每切口非乘积性再调用已有传播定理，恢复每个有限层的密度矩阵、玻恩概率与完全正过程。反模型则说明为什么要这条零关系：即使贝尔本身不可再分、三体种子也在，整套量子锥仍能在给定矩阵坐标里转歪；所有原概率合法，零概率却可由矩阵正负项抵消。新的条件把这种伪装锁掉。这里的最近点只服务证明；装置可用性、具体测后更新、时间与能量标度仍各按174.8保留条件。$\square$
 
 [Q174M]: https://www.numdam.org/item/BSMF_1965__93__273_0.pdf
 [Q174XVI]: https://github.com/the-omega-institute/trureturing/blob/32b36deda4c26d281e6c49bd805b44a1615a5740/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md
