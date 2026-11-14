@@ -13,7 +13,8 @@ motivation_gids:
 
 ## Problem
 
-Physical page 63 of Mathew Englander's *Comments on OEIS A081215* states
+[Physical page 63](https://oeis.org/A081215/a081215.pdf#page=63) of Mathew
+Englander's *Comments on OEIS A081215* states
 Conjecture XIV for every integer $n>2$. With the exact integer quotient
 $a(n)=(n^{n+1}+(-1)^n)/(n+1)^2$, let $M=n^3-1$.
 Twice the least nonnegative remainder of $a(n)$ modulo $M$ is
@@ -76,10 +77,24 @@ complete formulas and the integral representative argument.
 
 ## Triage
 
-`theorem`: the complete symbolic endpoint is implemented locally.
-Independent review, canonical freezing and publication remain outside this
-implementation's authorization. No registered resolution or new KPI is
-asserted here.
+`theorem`: `SelfPowerCubicRemainders.result` proves the complete XIV
+statement. The canonical Scribe resolution claim binds this endpoint to
+`englander-a081215-xiv-cubic-remainders` with kind `Proved`.
+
+**What the settlement shows.** Uniform six-step divisibility descent,
+exact quotient integrality and representative bounds establish all six
+least-remainder branches for every integer $n>2$. There is no parity,
+primality or eventual-domain restriction. The shared quotient helpers are
+consumed by this proof and supply no independent settlement. This result
+does not settle the source's other numbered conjectures, including XX.
+Any additional downstream consequence not established by these declarations
+remains open.
+
+The [definition on physical page 1](https://oeis.org/A081215/a081215.pdf#page=1)
+and the six branches on physical page 63 are the authoritative source
+statements. Source identity, bounded literature coverage and the unverified
+PDF redistribution permission are given in the Library entry. Citation
+and mathematical paraphrase do not assert worldwide priority.
 
 ## ASSUMED-UNVERIFIED
 
