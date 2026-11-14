@@ -6,13 +6,17 @@ The interval-closed toggle sweep on a finite poset has an explicit formula in it
 
 Let P be an arbitrary partially ordered set. An equivalence e from Fin N to P enumerates all its points once, and a reverse extension visits every strictly larger point before every strictly smaller point. Start from an order-convex set I. The toggle at a point replaces the current state by its symmetric difference with that singleton exactly when the replacement is order-convex. The trace is the literal sequence of these toggles, with initial state I.
 
+Theorem 1.1 and its proof in Lafreniere, Lewis, McNicholas, Striker and Welch, Interval-closed set rowmotion and homomesy on products of two chains, arXiv:2505.04000v1, give this finite-poset image formula. The ceiling, lower boundary and incomparable region below express the sets in that formula. The statement here uses an arbitrary universe and includes empty posets and empty boundaries.
+
+The Lean proof adapts the set-side and local-flip arguments from Columbus Labs, interval-closed-rowmotion, as identified in the Lean source. That source retains the adaptation attribution and MIT license separately from the mathematical attribution to Lafreniere, Lewis, McNicholas, Striker and Welch.
+
 **Definition 1.1 (The upper boundary).**
 
 $$\forall P \in \mathrm{Type},\; [PartialOrder(P)] \forall I \in Set(P),\; \forall x \in P,\; (x \in ceiling(I)) \Leftrightarrow (Minimal((upperClosure(I) \setminus I), x))$$
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/RowmotionGlobalFormula.ceiling` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Nadia Lafrenière, Joel Brewster Lewis, Erin McNicholas, Jessica Striker, Amanda Welch (2025). *Interval-closed set rowmotion and homomesy on products of two chains*. DOI: [10.48550/arXiv.2505.04000](https://doi.org/10.48550/arXiv.2505.04000). URL: <https://arxiv.org/abs/2505.04000v1>.
 
 *Commentary.*
 
@@ -24,7 +28,7 @@ $$\forall P \in \mathrm{Type},\; [PartialOrder(P)] \forall I \in Set(P),\; \fora
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/RowmotionGlobalFormula.lowerBoundary` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Nadia Lafrenière, Joel Brewster Lewis, Erin McNicholas, Jessica Striker, Amanda Welch (2025). *Interval-closed set rowmotion and homomesy on products of two chains*. DOI: [10.48550/arXiv.2505.04000](https://doi.org/10.48550/arXiv.2505.04000). URL: <https://arxiv.org/abs/2505.04000v1>.
 
 *Commentary.*
 
@@ -36,7 +40,7 @@ $$\forall P \in \mathrm{Type},\; [PartialOrder(P)] \forall C \in Set(P),\; \fora
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/RowmotionGlobalFormula.incomparable` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Nadia Lafrenière, Joel Brewster Lewis, Erin McNicholas, Jessica Striker, Amanda Welch (2025). *Interval-closed set rowmotion and homomesy on products of two chains*. DOI: [10.48550/arXiv.2505.04000](https://doi.org/10.48550/arXiv.2505.04000). URL: <https://arxiv.org/abs/2505.04000v1>.
 
 *Commentary.*
 
@@ -48,7 +52,7 @@ $$\forall P \in \mathrm{Type},\; [PartialOrder(P)] \forall I \in Set(P),\; formu
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/RowmotionGlobalFormula.formula` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Nadia Lafrenière, Joel Brewster Lewis, Erin McNicholas, Jessica Striker, Amanda Welch (2025). *Interval-closed set rowmotion and homomesy on products of two chains*. DOI: [10.48550/arXiv.2505.04000](https://doi.org/10.48550/arXiv.2505.04000). URL: <https://arxiv.org/abs/2505.04000v1>.
 
 *Commentary.*
 
@@ -60,7 +64,7 @@ $$\forall P \in \mathrm{Type},\; [PartialOrder(P)] \forall N \in \mathrm{Nat},\;
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/RowmotionGlobalFormula.trace_eq_formula` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Nadia Lafrenière, Joel Brewster Lewis, Erin McNicholas, Jessica Striker, Amanda Welch (2025). *Interval-closed set rowmotion and homomesy on products of two chains*. DOI: [10.48550/arXiv.2505.04000](https://doi.org/10.48550/arXiv.2505.04000). URL: <https://arxiv.org/abs/2505.04000v1>.
 
 *Commentary.*
 
