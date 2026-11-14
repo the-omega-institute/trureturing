@@ -7,21 +7,26 @@
    digest: Literal five-row source arrays and their ordered scanner fibres. -/
 
 /-
-admission_basis: escape-witness (unfrozen source correspondence)
-escape_witness: two_colour_unique (unbounded column induction and initial-column propagation)
-proof_shape: scanner_count=bind-only, consumed by symmetrized_count and source_count;
-source_count=content; chromatic_source_count=content after inlining the new source bridge.
-Private bind-only helpers are consumed by scanner_count, source_count or chromatic_source_count.
-The structural uniqueness helper is consumed by absence_count on source_count's live path.
+admission_basis: unresolved (no independent Literal escape witness established)
+escape_witness: none
+proof_shape: every theorem in this module is bind-only.
+scanner_count is consumed by symmetrized_count; source_count is consumed by
+chromatic_source_count, whose external consumer is HardinA233178Recurrence.result.
+The private helpers are consumed on these live paths. In particular, two_colour_unique
+specializes the frozen HardinA233260Literal.two_label_classification to the stronger
+literal edge predicate, then normalizes the anchor and the omitted finite label.
+It is consumed by absence_count and supplies no independent admission witness.
 utility none: these are unbounded source-cardinality correspondences, not bounded enumeration,
 checker infrastructure, numerical premises or certified positive finite instances.
-Direct reused sources are HardinA233255LiteralBridge.scanner_fibres,
+Direct reused sources are HardinA233260Literal.two_label_classification,
+HardinA233255LiteralBridge.scanner_fibres,
 HardinA233178Normalization.result and HardinA233251TriangleStrip.colour_bond_iff.
 The source is the pinned revision of OEIS A233178 cited by Library/Automata/hardin2013a233178.md.
 No corresponding theory volume was found in the source-identifier and relation search.
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Normalization
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
 
 /-! The source predicates retain every literal restriction independently of the transfer. -/
 
@@ -287,37 +292,38 @@ private theorem symmetrized_count (n : ℕ) :
   rw [ht] at hh
   linarith
 
-private theorem two_labels : ∀ a b d c : Fin 3,
-    a ≠ c → b ≠ c → d ≠ c → a ≠ d → b ≠ d → a = b := by
-  decide +kernel
-
 private theorem two_colour_unique {n : ℕ} (hn : 2 ≤ n) (c : Fin 3)
     (q q' : Array n 3) (hq : Anchored q) (hq' : Anchored q')
     (hc : ∀ p, q p ≠ c) (hc' : ∀ p, q' p ≠ c) : q = q' := by
-  obtain ⟨n,rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
-  let z : Fin (n+1) := ⟨0, by omega⟩
-  let o : Fin (n+1) := ⟨1, by omega⟩
-  have hz (f : Array (n+1) 3) (hf : Anchored f) : f (0,z) = 0 := by
-    obtain ⟨j,hj,he⟩ := hf.1
-    have : j = z := Fin.ext hj
-    simpa only [this] using he
-  have rowzero (f : Array (n+1) 3) (hf : Anchored f) (ha : ∀ p, f p ≠ c)
-      (r : Fin 5) : f (r,z) = 0 := by
-    induction r using Fin.induction with
-    | zero => exact hz f hf
-    | succ r ih =>
-      have h1 := hf.2 (r.castSucc,z) (r.castSucc,o) (by simp [Edges,z,o])
-      have h2 := hf.2 (r.succ,z) (r.castSucc,o) (by simp [Edges,z,o]; omega)
-      exact (two_labels _ _ _ c (ha _) (ha _) (ha _) h2 h1).trans ih
-  funext p
-  rcases p with ⟨r,j⟩
-  induction j using Fin.induction with
-  | zero => exact (rowzero q hq hc r).trans (rowzero q' hq' hc' r).symm
-  | succ j ih =>
-    have h1 := hq.2 (r,j.castSucc) (r,j.succ) (by simp [Edges])
-    have h2 := hq'.2 (r,j.castSucc) (r,j.succ) (by simp [Edges])
-    rw [← ih] at h2
-    exact two_labels _ _ _ c (hc _) (hc' _) (hc _) h1.symm h2.symm
+  have classify (f : Array n 3) (hf : Anchored f) (hm : ∀ p, f p ≠ c) :
+      ∃ b : Fin 3, 0 ≠ b ∧ b ≠ c ∧
+        f = (fun p => if p.2.val % 2 = 0 then 0 else b) := by
+    have hp : HardinA233260Literal.Proper f := by
+      intro j hj r s hrs
+      apply hf.2 (r, j) (s, ⟨j.val + 1, hj⟩)
+      rcases hrs with hrs | hrs
+      · subst s
+        simp [Edges]
+      · simp only [Edges, Fin.val_mk, true_and]
+        omega
+    obtain ⟨a, b, hab, he⟩ :=
+      HardinA233260Literal.two_label_classification hn f hp c hm
+    change f = (fun p => if p.2.val % 2 = 0 then a else b) at he
+    have ha : a = 0 := by
+      obtain ⟨j, hj, h0⟩ := hf.1
+      rw [he] at h0
+      simpa [hj] using h0
+    subst a
+    have hb : b ≠ c := by
+      simpa [he] using hm (0, ⟨1, by omega⟩)
+    exact ⟨b, hab, hb, he⟩
+  obtain ⟨b, hb0, hbc, he⟩ := classify q hq hc
+  obtain ⟨b', hb'0, hb'c, he'⟩ := classify q' hq' hc'
+  have hb : b = b' := by
+    have hc0 : (0 : Fin 3) ≠ c := by
+      simpa [he] using hc (0, ⟨0, by omega⟩)
+    fin_cases b <;> fin_cases b' <;> fin_cases c <;> simp_all
+  simpa only [hb] using he.trans he'.symm
 
 private def alternating (n : ℕ) (c : Fin 3) : Array n 3 :=
   fun p => if p.2.val % 2 = 0 then 0 else if c = 1 then 2 else 1

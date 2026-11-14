@@ -154,7 +154,7 @@ private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
   have hpar : (j.val + 1) % 2 = 0 ↔ ¬ j.val % 2 = 0 := by omega
   by_cases h : j.val % 2 = 0 <;> simp [h, hpar, hab, Ne.symm hab]
 
-private theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
+theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 5 × Fin n → Fin 3) (hp : Proper P)
     (d : Fin 3) (hd : ∀ i, P i ≠ d) :
     ∃ a b : Fin 3, a ≠ b ∧ P = alternating n a b := by
