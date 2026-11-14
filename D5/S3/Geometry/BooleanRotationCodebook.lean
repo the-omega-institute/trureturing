@@ -6,6 +6,7 @@
    utility: none
    digest: Boolean subset queries determine the exact signed simplex difference below the no-wrap threshold. -/
 import Mathlib.Analysis.Normed.Group.AddCircle
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Tactic
 import Mathlib.Data.Nat.Choose.Vandermonde
@@ -364,5 +365,86 @@ theorem signed_body_volume (n : ℕ) {ε : ℝ} (hε : 0 < ε) :
     chamber_coefficient]
   congr 1
   ring
+
+/-- A codeword is selected once, before all Boolean queries. -/
+def Adequate (n : ℕ) (L ε : ℝ) (C : Finset (Fin n → ℝ)) : Prop :=
+  ∀ θ : Fin n → ℝ, ∃ φ ∈ C, booleanError L ε (θ - φ)
+
+private def torusFiber (n : ℕ) (L ε : ℝ) : Set (Fin n → AddCircle L) :=
+  {a | ∀ s : Finset (Fin n), ‖∑ i ∈ s, a i‖ ≤ ε}
+
+private lemma torus_fiber_measurable (n : ℕ) (L ε : ℝ) [Fact (0 < L)] :
+    MeasurableSet (torusFiber n L ε) := by
+  simp only [torusFiber, Set.setOf_forall]
+  exact MeasurableSet.iInter fun s => measurableSet_le
+    (continuous_norm.comp (continuous_finsetSum s (fun i _ => continuous_apply i))).measurable
+    measurable_const
+
+private lemma torus_fiber_volume_le (n : ℕ) {L ε : ℝ} [Fact (0 < L)]
+    (hε : 0 < ε) (hL : 3 * ε < L) :
+    volume (torusFiber n L ε) ≤
+      ENNReal.ofReal (((2 * n).choose n : ℝ) * ε ^ n / n.factorial) := by
+  let B : Set (Fin n → ℝ) := Set.univ.pi (fun _ => Ioc (-(L / 2)) (-(L / 2) + L))
+  have hm := measurePreserving_pi
+    (fun _ : Fin n => volume.restrict (Ioc (-(L / 2)) (-(L / 2) + L)))
+    (fun _ : Fin n => (volume : Measure (AddCircle L)))
+    (fun _ => AddCircle.measurePreserving_mk L (-(L / 2)))
+  have hm' : MeasurePreserving (fun a : Fin n → ℝ => fun i => (a i : AddCircle L))
+      (volume.restrict B) volume := by
+    simpa only [B, Measure.volume_eq_pi, Measure.restrict_pi_pi] using hm
+  rw [← hm'.measure_preimage (torus_fiber_measurable n L ε).nullMeasurableSet,
+    Measure.restrict_apply (by exact hm'.measurable (torus_fiber_measurable n L ε))]
+  rw [← signed_body_volume n hε]
+  apply measure_mono
+  rintro a ⟨ha, hb⟩
+  apply (exact_error_fiber hε.le hL a ?_).mp
+  · intro s
+    have hh := ha s
+    simpa [circularError, ← QuotientAddGroup.mk_sum] using hh
+  · intro i
+    have hi := hb i (Set.mem_univ i)
+    exact abs_le.mpr ⟨by linarith [hi.1], by linarith [hi.2]⟩
+
+/-- The exact finite-codebook capacity lower bound, uniformly in the dimension. -/
+theorem finite_codebook_lower_bound (n : ℕ) {L ε : ℝ}
+    (hε : 0 < ε) (hL : 3 * ε < L) (C : Finset (Fin n → ℝ))
+    (hC : Adequate n L ε C) :
+    (n.factorial : ℝ) * L ^ n ≤ (C.card : ℝ) * (2 * n).choose n * ε ^ n := by
+  classical
+  have hLp : 0 < L := by linarith
+  letI : Fact (0 < L) := ⟨hLp⟩
+  let F := torusFiber n L ε
+  let c (φ : Fin n → ℝ) : Fin n → AddCircle L := fun i => (φ i : AddCircle L)
+  have hcover : (Set.univ : Set (Fin n → AddCircle L)) ⊆
+      ⋃ φ ∈ C, (fun a => a - c φ) ⁻¹' F := by
+    intro a _
+    have hr : ∀ i, ∃ t : ℝ, (t : AddCircle L) = a i := fun i => QuotientAddGroup.mk_surjective (a i)
+    choose θ hθ using hr
+    obtain ⟨φ, hφ, hq⟩ := hC θ
+    refine Set.mem_iUnion.mpr ⟨φ, Set.mem_iUnion.mpr ⟨hφ, ?_⟩⟩
+    intro s
+    have hh := hq s
+    simpa [circularError, ← QuotientAddGroup.mk_sum, ← hθ, c] using hh
+  have hv : ENNReal.ofReal (L ^ n) ≤
+      (C.card : ℝ≥0∞) * ENNReal.ofReal (((2 * n).choose n : ℝ) * ε ^ n / n.factorial) := by
+    calc
+      _ = volume (Set.univ : Set (Fin n → AddCircle L)) := by
+        simp [Measure.volume_eq_pi, Measure.pi_univ, ← ENNReal.ofReal_pow hLp.le]
+      _ ≤ volume (⋃ φ ∈ C, (fun a => a - c φ) ⁻¹' F) := measure_mono hcover
+      _ ≤ ∑ φ ∈ C, volume ((fun a => a - c φ) ⁻¹' F) := measure_biUnion_finset_le C _
+      _ = ∑ _φ ∈ C, volume F := by
+        apply Finset.sum_congr rfl
+        intro φ _
+        exact (measurePreserving_sub_right (c φ) volume).measure_preimage
+          (torus_fiber_measurable n L ε).nullMeasurableSet
+      _ ≤ ∑ _φ ∈ C, ENNReal.ofReal (((2 * n).choose n : ℝ) * ε ^ n / n.factorial) :=
+        Finset.sum_le_sum fun _ _ => torus_fiber_volume_le n hε hL
+      _ = _ := by simp
+  have hv' : L ^ n ≤ (C.card : ℝ) * (((2 * n).choose n : ℝ) * ε ^ n / n.factorial) := by
+    apply (ENNReal.ofReal_le_ofReal_iff (by positivity)).mp
+    simpa [ENNReal.ofReal_mul, ENNReal.ofReal_natCast] using hv
+  have hf : (0 : ℝ) < n.factorial := by positivity
+  nlinarith [ (le_div_iff₀ hf).mp (show L ^ n ≤
+    ((C.card : ℝ) * (2 * n).choose n * ε ^ n) / n.factorial by nlinarith [hv']) ]
 
 end D5.S3.Geometry.BooleanRotationCodebook
