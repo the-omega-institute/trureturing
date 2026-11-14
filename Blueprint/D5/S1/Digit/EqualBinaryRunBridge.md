@@ -16,7 +16,105 @@ Decoding word(ks) with Nat.ofDigits recovers exactly its canonical bits when all
 
 For n>=1, write W(n) for the sum of decoded words over parts(n), T(n) for the sum of decoded tails, E(n) for the sum of 2^k*4^r, where k is the first part and r is the sum of the remaining parts, and U(n)=4^n*2^(n-1). Every composition of n+1 is uniquely either 1::ks or grow(ks), for a composition ks of n; grow increments the first part. These two images are disjoint. The decoded value of k::ks is (4^k-2^k)*4^sum(ks)+value(ks), in the integers. Summing over the two images gives W(n+1)=5W(n)+2U(n)+2E(n)-3T(n), T(n+1)=W(n)+T(n), E(n+1)=2U(n)+2E(n), and U(n+1)=8U(n). The initial data W(1)=2, T(1)=0, E(1)=2 yield the invariant W(n)-T(n)+E(n)=U(n). Thus W(n+1)=2W(n)-E(n)+5U(n); eliminating E and U proves W(n+3)=12W(n+2)-36W(n+1)+32W(n). The same identities give W(2)=22 and W(3)=192. The injective sum transport identifies W(n) with the literal a(n), rather than defining a(n) by these equations.
 
-**Theorem 1.1 (Unique literal encoding).**
+**Definition 1.1 (Canonical binary digits).**
+
+$$\forall m \in Nat,\; bits\left(m\right) = \operatorname{List.reverse}\left(\operatorname{Nat.digits}\left(2, m\right)\right)$$
+
+*Formalization.* `D5/S1/Digit/EqualBinaryRunBridge.bits` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paolo Xausa (2025). *OEIS A386705: sums of even integers with equally paired maximal binary runs*. URL: <https://oeis.org/A386705>.
+
+*Commentary.*
+
+The result is a list of natural-number digits in most significant digit first order. The definition includes m=0, whose digit list is empty.
+
+**Definition 1.2 (Matching successive run pairs).**
+
+$$\begin{aligned}Matched\left([]\right) \iff True\\\forall r \in List\left(Nat\right),\; Matched\left(\operatorname{List.cons}\left(r, []\right)\right) \iff False\\\forall o \in List\left(Nat\right),\; \forall z \in List\left(Nat\right),\; \forall rest \in List\left(List\left(Nat\right)\right),\; Matched\left(\operatorname{List.cons}\left(o, \operatorname{List.cons}\left(z, rest\right)\right)\right) \iff \left(\forall d \in Nat,\; d \in o \Rightarrow d = 1\right) \land \left(\left(\forall d \in Nat,\; d \in z \Rightarrow d = 0\right) \land \left(\operatorname{List.length}\left(o\right) = \operatorname{List.length}\left(z\right) \land Matched\left(rest\right)\right)\right)\end{aligned}$$
+
+*Formalization.* `D5/S1/Digit/EqualBinaryRunBridge.Matched` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paolo Xausa (2025). *OEIS A386705: sums of even integers with equally paired maximal binary runs*. URL: <https://oeis.org/A386705>.
+
+*Commentary.*
+
+These three equations cover every list of runs. The singleton case is false. The paired case does not itself require nonempty runs: empty runs are allowed here. Nonemptiness in Literal comes from splitting the canonical word into maximal runs.
+
+**Definition 1.3 (Literal source membership).**
+
+$$\forall n \in Nat,\; \forall m \in Nat,\; Literal\left(n, m\right) \iff 0 < m \land \left(Even\left(m\right) \land \left(\operatorname{List.length}\left(bits\left(m\right)\right) = 2 \cdot n \land Matched\left(\operatorname{List.splitBy}\left(\lambda (x: Nat) (y: Nat) \mapsto (\operatorname{BEq.beq}\left(x, y\right): Bool), bits\left(m\right)\right)\right)\right)\right)$$
+
+*Formalization.* `D5/S1/Digit/EqualBinaryRunBridge.Literal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paolo Xausa (2025). *OEIS A386705: sums of even integers with equally paired maximal binary runs*. URL: <https://oeis.org/A386705>.
+
+*Commentary.*
+
+The Boolean comparator BEq.beq tests equality of natural-number digits. List.splitBy retains the word order and groups adjacent equal digits. Both n and m range over all naturals, including zero; positivity is an explicit conjunct.
+
+**Definition 1.4 (Finite set of literal integers).**
+
+$$\forall n \in Nat,\; row\left(n\right) = \operatorname{Finset.filter}\left(Literal\left(n\right), \operatorname{Finset.range}\left(2^{2 \cdot n}\right)\right)$$
+
+*Formalization.* `D5/S1/Digit/EqualBinaryRunBridge.row` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paolo Xausa (2025). *OEIS A386705: sums of even integers with equally paired maximal binary runs*. URL: <https://oeis.org/A386705>.
+
+*Commentary.*
+
+The result has type Finset Nat. Finset.range excludes its upper bound, and Finset.filter keeps exactly those members satisfying Literal. This includes row zero.
+
+**Definition 1.5 (Distinct integer sum).**
+
+$$\forall n \in Nat,\; a\left(n\right) = \sum_{(m: Nat) \in row\left(n\right)} (m: \mathbb{Z})$$
+
+*Formalization.* `D5/S1/Digit/EqualBinaryRunBridge.a` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paolo Xausa (2025). *OEIS A386705: sums of even integers with equally paired maximal binary runs*. URL: <https://oeis.org/A386705>.
+
+*Commentary.*
+
+The sum is indexed by the finite set row(n), so each natural-number member occurs once. Each summand is explicitly cast to the integers; an empty row has sum zero.
+
+**Definition 1.6 (Ordered one-zero block pairs).**
+
+$$\begin{aligned}blockRuns\left([]\right) = []\\\forall k \in Nat,\; \forall ks \in List\left(Nat\right),\; blockRuns\left(\operatorname{List.cons}\left(k, ks\right)\right) = \operatorname{List.cons}\left(\operatorname{List.replicate}\left(k, 1\right), \operatorname{List.cons}\left(\operatorname{List.replicate}\left(k, 0\right), blockRuns\left(ks\right)\right)\right)\end{aligned}$$
+
+*Formalization.* `D5/S1/Digit/EqualBinaryRunBridge.blockRuns` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paolo Xausa (2025). *OEIS A386705: sums of even integers with equally paired maximal binary runs*. URL: <https://oeis.org/A386705>.
+
+*Commentary.*
+
+List.cons prepends one whole run. Each part contributes its run of ones before its run of zeros. The equations apply to every natural k, including k=0, which contributes two empty runs; no positivity hypothesis is imposed by this definition.
+
+**Definition 1.7 (Concatenated block word).**
+
+$$\forall ks \in List\left(Nat\right),\; word\left(ks\right) = \operatorname{List.flatten}\left(blockRuns\left(ks\right)\right)$$
+
+*Formalization.* `D5/S1/Digit/EqualBinaryRunBridge.word` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paolo Xausa (2025). *OEIS A386705: sums of even integers with equally paired maximal binary runs*. URL: <https://oeis.org/A386705>.
+
+*Commentary.*
+
+The input is any list of natural part lengths. List.flatten concatenates its runs in order, including empty runs; the empty input gives the empty word.
+
+**Theorem 1.8 (Unique literal encoding).**
 
 $$\forall n \in Nat,\; \forall m \in Nat,\; m \in row\left(n\right) \iff 0 < m \land \left(Even\left(m\right) \land \left(\exists p \in List\left(Nat\right),\; \left(Positive\left(p\right) \land \left(sum\left(p\right) = n \land bits\left(m\right) = word\left(p\right)\right)\right) \land \left(\forall q \in List\left(Nat\right),\; \left(Positive\left(q\right) \land \left(sum\left(q\right) = n \land bits\left(m\right) = word\left(q\right)\right)\right) \Rightarrow q = p\right)\right)\right)$$
 
@@ -28,7 +126,7 @@ $$\forall n \in Nat,\; \forall m \in Nat,\; m \in row\left(n\right) \iff 0 < m \
 
 This is a membership characterization for the actual set of integers. It proves existence and uniqueness of positive part lengths; it assumes neither a composition count nor an identity for the sum over those lengths. Positivity and evenness of the represented integer remain explicit on both sides.
 
-**Definition 1.2 (Complete recurrence target).**
+**Definition 1.9 (Complete recurrence target).**
 
 $$FullClaim \iff a\left(1\right) = 2 \land \left(a\left(2\right) = 22 \land \left(a\left(3\right) = 192 \land \left(\forall n \in Nat,\; 4 \le n \Rightarrow a\left(n\right) = 12 \cdot a\left(n - 1\right) - 36 \cdot a\left(n - 2\right) + 32 \cdot a\left(n - 3\right)\right)\right)\right)$$
 
@@ -40,7 +138,7 @@ $$FullClaim \iff a\left(1\right) = 2 \land \left(a\left(2\right) = 22 \land \lef
 
 FullClaim names the complete conjunction. The theorem full_claim below proves it without assuming a recurrence, a composition count, or a weighted sum identity. The composition count is supplied by Mathlib and the weighted identities are derived from the finite composition split.
 
-**Theorem 1.3 (Complete literal recurrence).**
+**Theorem 1.10 (Complete literal recurrence).**
 
 $$a\left(1\right) = 2 \land \left(a\left(2\right) = 22 \land \left(a\left(3\right) = 192 \land \left(\forall n \in Nat,\; 4 \le n \Rightarrow a\left(n\right) = 12 \cdot a\left(n - 1\right) - 36 \cdot a\left(n - 2\right) + 32 \cdot a\left(n - 3\right)\right)\right)\right)$$
 
@@ -55,6 +153,13 @@ The three initial values and the recurrence hold for the actual distinct positiv
 ## References
 
 - Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.FullClaim`
+- Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.Literal`
+- Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.Matched`
+- Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.a`
+- Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.bits`
+- Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.blockRuns`
 - Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.full_claim`
 - Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.mem_row_iff`
+- Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.row`
+- Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.word`
 - Dependency: [D5/S1/Words/DoubleTailShuffleSupport](../Words/DoubleTailShuffleSupport.md)
