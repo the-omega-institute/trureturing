@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSMarginalBirationality
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality
 license: citation-only
 triage: anchor
@@ -40,6 +41,15 @@ On the unnormalized affine cone this is the raw partial trace, retaining the squ
 For every natural $m$, `goodStates m` is the nonempty open dense subset of the subtype `openBoundaryMPS(3+m)` on which this observed polynomial does not vanish. Thus for every original length $N\ge4$, every target in this intrinsic principal relative real-algebraic open locus is determined, against **every actual competitor**, by the raw prefix $Q_3$ up to $U(1)$. The density proof pulls the real polynomial back through the original twelve-complex-parameter map and uses a nonzero actual witness, real analytic uniqueness, and continuity of the MPS map. It does not infer openness from a continuous image, replace the actual image by its Zariski closure, or assume genericity of the competitor.
 
 The uniform recovery witness uses the original matrices and boundaries displayed below. Its fixed-density effective boundary is $E^m(rr^\dagger)(37,54)^T$, rather than the coherent sum-tail. Writing the real symmetric tail as $\left(\begin{smallmatrix}a&b\\b&c\end{smallmatrix}\right)$, its entries remain strictly positive under $(a,b,c)\mapsto(26a+64b+40c,38a+92b+56c,58a+136b+80c)$. The effective boundary has the positive entries $37a+54b,37b+54c$, so the original positive-boundary chart theorem applies. The original transfer is injective, and the original three-site gauge preserves transfer injectivity through invertible conjugate sandwiches and a nonzero scalar.
+
+`OpenBoundaryMPSQuotient` supplies a rational observable boundary-Gram inverse. With the same fixed column $t$, write $d=\operatorname{eval}_t(\mathrm{minorPoly})$, $v=\operatorname{eval}_t(\det\mathrm{basisNumerator})$, $b_i=\operatorname{eval}_t(\mathrm{leftNumerator}_i)$, $N_i=\operatorname{eval}_t(\mathrm{matrixNumerator}_i)$ and $M=\mathrm{transferMatrix}(N)$. The original normalized rows $lA_i=e_i$ give the contraction $L_{kw}=l_{w_0}l_{w_1}\mathbf1_{w_2=k}$, with $L\,\mathrm{prefixMap}=I$. Its cleared version is $L_0=d^2L$. For $B=L_0Q_3L_0^\dagger$ and $h(z)=z\bar z$, the exact full-length canonical boundary Gram is
+
+$$
+qq^\dagger=\frac{h(v)^m}{h(d)^{m+2}\det(M)^m}
+\operatorname{unvec}\!\left(\operatorname{adj}(M)^m\operatorname{vec}(B)\right).
+$$
+
+The denominator's exponent uses the actual complement length $m$ and adds no new selector determinant. Multiplying the numerator by $\overline{\det M}^{m}$ gives the positive real denominator $|d|^{2(m+2)}|\det M|^{2m}$. Literal polynomial expressions in arbitrary observed entries and independent conjugates, and real Cartesian numerator/denominator expressions for all thirteen quotient coordinates, accompany this identity. The five core coordinates remain the original Ma--Zhang canonical reconstruction. On the explicit refinement where the cleared 00 boundary numerator is nonzero, $\sigma=G_{00}=|q_0|^2>0$ and $\eta=G_{10}/G_{00}=q_1/q_0$. The positive representative $(\sqrt\sigma,\sqrt\sigma\eta)$ is unit-phase equivalent to the actual full state; the square-root realization is not called rational. The quotient observation uses boundary $(1,\eta)$ followed by real scale $\sigma$, and its coordinate inverse is an exact retraction. The original fixed-density witness and full-length gauge prove the refined chart nonempty for every $m$, without assuming the refinement to prove its witness. This inverse unit does not prove the subsequent generic-point rank/fiber descent or increase the solved-open-problem count.
 
 Generic-point two-site nonidentifiability in a dense intrinsic locus of the full actual state image remains unproved. The recovery-genericity theorem and the separate parameter-open collision theorem below do not together resolve Conjecture 9. No solved-open-problem credit, positive or physically implementable recovery inverse, stability, dynamics or thermodynamic consequence is asserted.
 
