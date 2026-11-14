@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ArithSums;
 internal sealed class MatharA386830Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/ArithSums/MatharA386830.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceComposition/mathar2025a386830");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/mathar2025a386830");
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
@@ -56,7 +56,7 @@ internal sealed class MatharA386830Document : IScribeDocumentDefinition
                 Seq(F.Sum, Underscore, Grp(Seq(n, Eq, D(0))), Caret, Grp(Infty), Sp, Mul(A(n), Pow(z, n)))),
                 "The coefficient at every natural index is the literal integer a(n), cast into Q. This is the entire ordinary Q[[z]] series, without an analytic convergence premise.", DescribeRole.Definition, true),
             Node("result", "Full recurrence and nonzero homogeneous operator", Seq(Open, recurrence, Close, Sp, Land, Sp, Open, dfinite, Close),
-                "The first conjunct covers every natural n>=2. The second quantifies over polynomial coefficients indexed by the naturals and requires a nonzero member between 0 and r. The expression series superscript (j) denotes j-fold formal differentiation, with the zero-fold derivative equal to series, and each polynomial is embedded in Q[[z]]. An explicit order-three witness is p0=3240, p1=-588+25110z, p2=8-1998z+21870z squared, p3=16z-648z squared+3645z cubed. The constant p0 is nonzero. This is one conjunction from one source event, not two resolution credits; minimal order is not claimed.", DescribeRole.Theorem, true,
+                "The first conjunct covers every natural n>=2. The second quantifies over polynomial coefficients indexed by the naturals and requires a nonzero member between 0 and r. The expression series superscript (j) denotes j-fold formal differentiation, with the zero-fold derivative equal to series, and each polynomial is embedded in Q[[z]]. An explicit order-three witness is p0=3240, p1=-588+25110z, p2=8-1998z+21870z squared, p3=16z-648z squared+3645z cubed. The constant p0 is nonzero. Minimal order is not claimed.", DescribeRole.Theorem, true,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("mathar-a386830-recurrence-dfinite"), ResolutionKind.Proved)),
             Paragraph(Text("Expanding 5=3+2 and interchanging finite triangular sums reduces the original NAME to the alternating sum of 5 to the j times (-2) to the (n-j) times choose(3n+1,j). Nat.choose_mul and Int.alternating_sum_range_choose_eq_choose establish the equality for all n, including zero.")),
             Paragraph(Text("Three Pascal expansions and the finite geometric-sum identity give 4a(n)-27a(n-1)=9b(n) for all n>=1, where b(n)=5 to the n times choose(3n-2,n). Cross-multiplied adjacent-binomial identities give 2n(2n-3)b(n)=15(3n-2)(3n-4)b(n-1) for all n>=2. Eliminating b yields exactly the displayed integer recurrence, including its n=2 boundary.")),
