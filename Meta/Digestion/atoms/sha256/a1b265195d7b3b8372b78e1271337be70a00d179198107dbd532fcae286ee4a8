@@ -1,0 +1,14 @@
+## 14. The five-qubit modulus-two clock circuit
+
+The circuit has three binary clock qubits and two target qubits. Its target permutation is the actual modulus-two Fibonacci map
+
+$$(x,y)\longmapsto(x+y,x)\pmod2,$$
+
+implemented by CNOT_{2->1} followed by CNOT_{1->2}. Clock-controlled powers 1,2,4 are expanded into Toffoli circuits, then an inverse eight-point Fourier transform is applied to the clock. This finite circuit uses repeated powers and proves no fast-forwarding result. All five qubits are encoded on nine native sites, whose complete legal Hilbert space has dimension 89.
+
+For initial clock 000 and target 10, the ideal clock law is obtained directly from
+
+$$p(y)=\frac1{64}\sum_{r=0}^{2}\left|\sum_{0\le a<8,\ a\equiv r\ (3)}e^{-2\pi iay/8}\right|^2. \tag{14.1}$$
+
+The eight-point clock has finite precision; a single outcome does not certify the integer period. Equation (14.1) is an ideal probability law.
+

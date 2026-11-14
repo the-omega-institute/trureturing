@@ -1775,3 +1775,1410 @@ $$
 证明的中文几何表述如下：把原二体 Bell 相关同时放在“态”和“测试”两边，它就是一把双面的共同标尺。固定的 Fourier 谱矩阵 $G$ 虽然只给一步移动，但其相位角与一的有理线性无关性使正向反复移动在闭锥意义下遍及整个 Fourier 环面，因而取得坐标循环和沿均匀向量的一条连续秩一相位流。复衰减器 $R$ 在一个坐标上同时改变相位与长度；把它移到其余坐标后相乘，先以明确的正比例支付反向正性。随后在实矩阵空间中，向外和向内的两个交叉方向分别具有不同的长度尺度，实多项式把它们分开，再用各自已经取得的虚方向及正确的交换子补齐所有酉旋转。四次原衰减又给167所需的一只实衰减器，于是直接由既有 Bell 两轨从内外夹出二体量子锥，原偏迹恢复一体，至此才把滤波和自身 Choi 接到全部原相关旁观者。至少一条腿满维且三个二分都非乘积的原三体种子，再按166.12把低层识别传播到每个有限层。这里极限只支付数学正性，有限分支的缩放与成功质量始终保留；复载体、完整效应和全部有限复合是地基，实际事件菜单、测后更新与物理时间各有自己的额外前提。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 170. 一个端点相位的固定复正交混合与全有限量子对应
+
+**定义 170.1（完整原域）。** 固定整数 $n\ge2$。完整采用[定义167.1][Q170XVI]的域，在给定实际 Kronecker 坐标中令
+
+$$
+V=\operatorname{Herm}_n(\mathbb C),\qquad
+W_N=V^{\otimes_{\mathbb R}N}=\operatorname{Herm}_{n^N}(\mathbb C).
+$$
+
+每个有限 $N\ge1$ 有闭、尖、生成凸锥 $C_N\subset W_N$；给定单位 $u_N=\operatorname{Tr}=u_1^{\otimes N}$ 在 $C_N\setminus\{0\}$ 上严格正。原对象取整个归一基 $K_N=\{x\in C_N:u_N(x)=1\}$、全部极点 $P_N=\operatorname{ext}K_N$、完整自身正对偶 $C_N^*$、整个 proper 区间 $\mathcal E_N=[0,u_N]_{C_N^*}$，以及其中全部有限单位分解 $(f_a)$，$f_a\in C_N^*$、$\sum_af_a=u_N$。凸准备与配对使用原实线性结构，以非退化迹配对表示对偶矩阵。
+
+对每个有限实际分块，要求
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+ \subseteq C_a\otimes_{\max}C_b.
+$$
+
+最小锥是正简单张量的闭凸生成锥；最大锥是全部 $f\otimes g$，$f\in C_a^*,g\in C_b^*$，的非负半空间之交。全部实际位置置换及其逆均正；不连续分块由它们运输，重括号使用同一实际空间的规范识别。原配对和单位满足
+
+$$
+(f\otimes g)(x\otimes y)=f(x)g(y),\qquad u_{a+b}=u_a\otimes u_b.
+$$
+
+空系统为 $W_0=\mathbb R,C_0=\mathbb R_+,u_0=\mathrm{id}$。这些条件不预付任何一层 PSD、自对偶、转置或复共轭不变性，以及高层矩阵操作正性。单位的迹代表为 $I$，尚不据此断言 $I\in C_N$。称实线性 $F:W_a\to W_b$ 原全旁观正，若
+
+$$
+(\mathrm{id}_{W_s}\otimes F)C_{s+a}\subseteq C_{s+b}
+\quad\text{对每个有限 }s\ge0,
+$$
+
+并由原置换运输至所有作用位置。数学不增迹预算也量化整个相关联合输入。
+
+**定义 170.2（唯一固定映射与不变的 Bell、三元入口）。** 在给定基 $e_0,\ldots,e_{n-1}$ 中置 $E_{jk}=e_je_k^*$、$P_j=E_{jj}$，并一次固定
+
+$$
+\begin{aligned}
+K&=\sum_{j=0}^{n-2}(E_{j,j+1}-E_{j+1,j}),
+&t&=\frac1{32n},&c&=(1+i)t,\\
+H&=cK,&O&=e^H,&W&=e^{\pi i\sqrt2 P_0},&M&=WO.
+\end{aligned}
+$$
+
+写 $\operatorname{Ad}_A(x)=AxA^*$，以及
+
+$$
+\Omega=\sum_{j=0}^{n-1}e_j\otimes e_j,\qquad B=\Omega\Omega^*,\qquad
+\beta(x)=\operatorname{Tr}(Bx).
+$$
+
+只提出两个二元条件：
+
+$$
+\mathsf B:\ B\in C_2\cap C_2^*,\qquad
+\mathsf M_2:\ \operatorname{Ad}_{M\otimes I}(C_2)\subseteq C_2.
+$$
+
+这里的第二个 Bell 成员关系是在完整原 $C_2$ 上的非负泛函关系；$\mathsf M_2$ 只涉及二体第一因子，没有逆、转置态映射、连续控制或额外固定映射条件。三元条件仍为[167.2][Q170XVI]、[166.2][Q170XIII]：
+
+$$
+\mathsf T:\quad \exists\,0\ne\psi\in(\mathbb C^n)^{\otimes3},\quad
+\psi\psi^*\in C_3,\quad \min_i r_i(\psi)\ge2,\quad \max_i r_i(\psi)=n.
+$$
+
+$r_i$ 是第 $i$ 腿对其余两腿的复矩阵展平秩；不要求该归一 dyad 预先为原极点。上述 $K$ 是路径的实反对称矩阵，$O^{\mathsf T}O=I$。这里的复正交与酉不同；事实上
+
+$$
+O^*O=e^{2itK}\ne I,\qquad O^*\ne O.
+$$
+
+后两式由 $K\ne0$、$\|K\|\le2$ 得到：$iK$ 为非零 Hermitian，故 $e^{2itK}\ne I$；若 $O^*=O$，则 $e^{2tK}=I$，而 $K$ 的特征值 $i\theta$ 满足 $|2t\theta|\le4t<2\pi$，迫使所有 $\theta=0$，矛盾。因此该指定 $O$ 既非酉也非 Hermitian。
+
+**引理 170.3（低层对齐之前的原 Bell 转向及预算）。** 在170.1、$\mathsf B,\mathsf M_2$ 下，$\operatorname{Ad}_{M}$ 和 $\operatorname{Ad}_{M^{\mathsf T}}$ 均原全旁观正，并各有严格正的统一全旁观不增迹缩放。这里 $M^{\mathsf T}$ 是局部矩阵的转置，不是对未知原态作转置。
+
+证明。先支付原帽。170.1使 $K_2$ 非空且紧：若归一原态列无界，除以其范数并取单位球面收敛子列，闭性会给一个范数一、迹零的原正向量，违反单位严格正性。于是
+
+$$
+b=\max_{x\in K_2}\beta(x)<\infty,\qquad b\ge\beta(B/n)=n>0,
+\qquad \beta/b\in\mathcal E_2.
+$$
+
+这里用了 $\operatorname{Tr}B=n$、$B^2=nB$ 和 $B/n\in K_2$；上下界 $0\le\beta/b\le u_2$ 来自原对偶成员关系及原基上的最大值，没有用 PSD 序 $B\preceq nI$ 测试未知原态。
+
+[引理VII102.6][Q170VII]在此可直接使用：对 $f\in C_a^*$、$z\in C_{a+b}$，任意 $g\in C_b^*$ 满足
+
+$$
+g((f\otimes\mathrm{id})z)=(f\otimes g)(z)\ge0,
+$$
+
+故闭锥双极性给 $(f\otimes\mathrm{id})z\in C_b$。其全部前件就是原最大界、完整自身对偶、闭性及正置换。若 $f$ proper，则对整个联合锥还有
+
+$$
+0\le u_b((f\otimes\mathrm{id})z)\le u_{a+b}(z),
+$$
+
+因为 $(u_a-f)\otimes u_b$ 也非负。它适用于任意相关输入和逐次收缩。
+
+固定参考在前、输出在后的向量化 $|A\rangle\!\rangle=\sum_j e_j\otimes Ae_j$。由唯一固定映射得原资源
+
+$$
+R_T=(M\otimes I)B(M^*\otimes I)
+ =|M^{\mathsf T}\rangle\!\rangle\langle\!\langle M^{\mathsf T}|\in C_2.
+$$
+
+原 SWAP 给 $R_M=\tau R_T=|M\rangle\!\rangle\langle\!\langle M|\in C_2$。对 $Q=M^{\mathsf T}$ 或 $M$，在输入腿 $X$、资源参考腿 $X'$ 上用 $\beta$ 收缩，则对任意 $z\in C_{s+1}$，
+
+$$
+\operatorname{cap}_{X,X'}[z_{SX}\otimes |Q\rangle\!\rangle\langle\!\langle Q|_{X'Y}]
+ =(\mathrm{id}_{W_s}\otimes\operatorname{Ad}_Q)z.
+$$
+
+矩阵单位检查为
+
+$$
+\beta(E_{ab}\otimes E_{ij})=\delta_{ai}\delta_{bj},\qquad
+|Q\rangle\!\rangle\langle\!\langle Q|
+ =\sum_{i,j}E_{ij}\otimes QE_{ij}Q^*.
+$$
+
+复矩阵单位仅书写实 Hermitian 张量映射的唯一复线性扩张；展开后输出为 $\sum_{a,b}z_{ab}\otimes QE_{ab}Q^*$，没有剩余转置。这个恒等式也就是VII102.7证明中的原始蛇式。该引理印本开头先用低层 PSD 支付杯帽，故本处没有直接调用整条VII102.7；本处的杯与 proper 帽已由 $\mathsf B$ 和紧基独立支付。
+
+具体原分块是 $\min(s+1,2)$ 把资源积放入 $C_{s+3}$，正置换把 $X,X'$ 移为同块，$\max(2,s+1)$ 与切片再给 $C_{s+1}$。在用于二体控制的 $s=1$ 情形，实际经过 $C_2\otimes C_2\subset C_4$ 再回 $C_2$，未使用 $C_4$ 的 PSD 形状。因而两种合同的全部原旁观正性均已取得。
+
+令
+
+$$
+r=\operatorname{Tr}(M^*M)>0,\quad
+m=\max_{x\in K_2}u_2(\operatorname{Ad}_{M\otimes I}x)>0,\quad
+\alpha=\min\{1,m^{-1}\}>0.
+$$
+
+$m$ 有限由紧性，严格正由可逆 $M$ 在 $B/n$ 上的非零原像。原二体分支 $\alpha\operatorname{Ad}_{M\otimes I}$ 不增迹；施于 $B/n$ 给 $\alpha R_T/n$，其质量为 $\alpha r/n\in(0,1]$。保留这一未归一资源，再用一只 proper 帽 $\beta/b$，准确得到
+
+$$
+\frac{\alpha}{nb}\operatorname{Ad}_{M^{\mathsf T}};
+$$
+
+交换资源则得到同系数的 $\operatorname{Ad}_M$，均有全旁观预算。若改用原归一资源 $R_T/r$ 或 $R_M/r$，系数则为
+
+$$
+\eta=\frac1{br}>0.
+$$
+
+这两个计数使用不同的资源供应，不能互换实际分支质量。归一资源属于整个原 $K_2$；把它作为数学资源不宣称原来一次制备已确定性成功。对非零正输入，两种合同的像非零，严格正迹给严格正输出质量。所有原系数只在锥成员关系中可消去，在概率和未归一输出中须保留。∎
+
+**命题 170.4（由一个圆逐边取得全部所需控制）。** 设 $\mathcal P$ 为字母 $M,M^{\mathsf T}$ 的全部有限正向矩阵字，含空字；第二个字母的原合同由170.3推导，不是第二个正性入口。则
+
+$$
+G:=\overline{\mathcal P}^{\,GL_n(\mathbb C)}
+ =\{A\in GL_n(\mathbb C):|\det A|=1\}.
+$$
+
+其证明只使用一个端点圆；没有以 $U(n)\subset G$ 为假设。在170.3的原锥前件下，任意可逆局部矩阵合同及其逆均原全旁观正。
+
+证明。由 $H^{\mathsf T}=-H$、$\det O=e^{\operatorname{Tr}H}=1$，有
+
+$$
+MM^{\mathsf T}=WOO^{\mathsf T}W=W^2
+ =D:=e^{2\pi i\sqrt2 P_0},\qquad |\det M|=1.
+$$
+
+所以 $D$ 的非负幂都是正向字。其闭包是端点圆的紧子半群，包含逆：若递增 $q_j$ 满足 $D^{q_j}\to a$，则 $D^{q_{j+1}-q_j}\to I$，而非负幂 $D^{q_{j+1}-q_j-1}\to D^{-1}$。闭包因而是群。无理性和抽屉原理使任意小的非零有符号模一角出现；其非负整数倍逼近任意目标角，于是
+
+$$
+\{e^{isP_0}:s\in\mathbb R\}\subseteq G.
+$$
+
+这正是[168.10—168.11][Q170XVI]的正向循环闭包论证，所用 $D$ 完全相同。故 $W,W^{-1},D^{-1}\in G$，且
+
+$$
+M^{-1}=M^{\mathsf T}D^{-1},\qquad
+(M^{\mathsf T})^{-1}=D^{-1}M,\qquad O=W^{-1}M\in G.
+$$
+
+这些是闭包中已支付的矩阵恒等式。乘法连续使 $G$ 为闭半群；现已包含两个字母的逆，故包含全部有限字的逆。若 $A_k\in\mathcal P$ 趋向可逆 $A\in G$，求逆连续给 $A_k^{-1}\to A^{-1}\in G$。因此 $G$ 确为相对 $GL$ 闭子群。每个字的行列式模为一，任何有限矩阵极限也如此，故这里的全矩阵闭包同样没有奇异元素。
+
+采用闭矩阵群的实 Lie 代数
+
+$$
+\mathfrak g=\{X\in M_n(\mathbb C):e^{sX}\in G\ (s\in\mathbb R)\}.
+$$
+
+它是闭实向量空间，对交换子及 $X\mapsto AXA^{-1}$、$A\in G$ 不变，且 $Z_0=iP_0\in\mathfrak g$。这些结论适用的是相对 $GL$ 闭群，见 [Hall，定义2.2、定义3.13、命题3.15、定理3.16][Q170Hall]；不要求群紧，也不使 $\mathfrak g$ 成为复向量空间。
+
+须从固定 $O$ 取得漂移交换方向。令 $\mathcal T(X)=OXO^{-1}$、$L=\operatorname{ad}_H$，作用于全部复矩阵的实向量空间，使用 Hilbert—Schmidt 范数所诱导的算子范数。注意这是相似作用；$OXO^*$ 才是合同，二者在本处不同。指数恒等式给 $\mathcal T=e^L$。把 $K$ 写成单向移位减其转置，得
+
+$$
+\|K\|_{\rm op}\le2,\qquad
+\|L\|\le2\|H\|_{\rm op}\le4\sqrt2t
+ =\frac{\sqrt2}{8n}<\frac18<\log2,
+$$
+
+故 $\|\mathcal T-I\|\le e^{\|L\|}-1<1/7<1$。在这个实算子空间上，[Hall定理3.6][Q170Hall]的绝对收敛实系数对数给
+
+$$
+\log\mathcal T
+ =\sum_{r\ge1}\frac{(-1)^{r+1}}r(\mathcal T-I)^r=L.
+$$
+
+该定理的 $\|X\|<\log2$ 条件用于 $X=L$，不是仅凭 $O\in G$ 就声称 $\log O\in\mathfrak g$。因 $\mathcal T$ 保持闭实空间 $\mathfrak g$，逐项及极限均保持它，所以
+
+$$
+[H,\mathfrak g]\subseteq\mathfrak g.
+$$
+
+下面从 $Z_0$ 感染整条路径，逐项分离实、虚方向。置
+
+$$
+K_j=E_{j,j+1}-E_{j+1,j},\quad
+S_j=E_{j,j+1}+E_{j+1,j},\quad
+\Delta_j=P_j-P_{j+1},\quad Z_j=iP_j,
+$$
+
+并约定 $K_{-1}=K_{n-1}=0$。矩阵单位乘法给
+
+$$
+[Z_j,[H,Z_j]]=c(K_{j-1}+K_j).
+$$
+
+若已有 $Z_j$ 和 $cK_{j-1}$，便取得
+
+$$
+A_j=[Z_j,[H,Z_j]]-cK_{j-1}=cK_j,\qquad
+B_j=[Z_j,A_j]=icS_j.
+$$
+
+对 $j=0$，所减项为零。随后
+
+$$
+\begin{aligned}
+[A_j,B_j]&=2ic^2\Delta_j=-4t^2\Delta_j,\\
+R_j:=[\Delta_j,A_j]/2&=cS_j,\\
+[A_j,R_j]&=2c^2\Delta_j=4t^2(i\Delta_j),\\
+Z_{j+1}&=Z_j-\frac{[A_j,R_j]}{4t^2}.
+\end{aligned}
+$$
+
+每次除数都是非零实数。因此 $\Delta_j,i\Delta_j,Z_{j+1}\in\mathfrak g$；此处的 $i\Delta_j$ 是第三式导出的矩阵，没有将任意已知元素乘以 $i$。从 $j=0$ 到 $n-2$ 的有限归纳取得全部 $Z_j$、$A_j,B_j,\Delta_j$，也覆盖只有一条边的 $n=2$。
+
+进一步置 $C_j=[\Delta_j,B_j]/2=icK_j$，则下列仍全为实线性组合：
+
+$$
+K_j=\frac{A_j-C_j}{2t},\qquad
+iK_j=\frac{A_j+C_j}{2t},\qquad
+iS_j=[Z_j,K_j],\qquad S_j=-[Z_j,iK_j].
+$$
+
+对 $p<q<r$，有 $[K_{pq},K_{qr}]=K_{pr}$，其中 $K_{pq}=E_{pq}-E_{qp}$；又 $[iP_p,K_{pq}]=i(E_{pq}+E_{qp})$。沿距离归纳得到 $\mathfrak u(n)$ 的全部实基。因此 $\mathfrak u(n)\subseteq\mathfrak g$。每个酉矩阵由有限维谱分解是一个反 Hermitian 矩阵的指数，故 $U(n)\subseteq G$；这已经是计算的结论。
+
+相邻 $\Delta_j$ 又张成全部实无迹对角空间，其指数给所有行列式一的正对角矩阵。对任意 $|\det A|=1$ 的可逆矩阵作 SVD $A=UDV^*$，$U,V\in U(n)$、$D$ 正对角且 $\det D=1$，于是 $A\in G$。SVD在这里仅是已取得控制之间的矩阵分解，所需标准条件见 [Watrous定理1.6、推论1.7][Q170W1]。反向包含已由行列式支付。因此所述闭包等式成立；相应 $\mathfrak g=\{X:\operatorname{Re}\operatorname{Tr}X=0\}$，特别是 $iI\in\mathfrak g$，实 $I$ 则被行列式条件排除。
+
+回到原锥：170.3使每个正向字的局部合同在每个固定原旁观层上正。若 $A_k\to A$，则对该层每个固定 $z$，合同像按通常矩阵乘法连续收敛；原锥闭性给 $A\in G$ 的同一正性。对任意可逆 $A$，令 $\widehat A=|\det A|^{-1/n}A\in G$，则
+
+$$
+\operatorname{Ad}_A=|\det A|^{2/n}\operatorname{Ad}_{\widehat A}.
+$$
+
+正标量齐次性给 $A$ 的正性；对 $A^{-1}$ 另用同一结论，给正逆及锥等号。没有假定逆映射正性，也没有从相似作用推出合同正性；后者始终由原正字和闭锥取得。∎
+
+**定理 170.5（单固定映射的同域两层与全有限等价）。** 在170.1的完整原域、170.2的指定固定矩阵下，
+
+$$
+\mathsf B\wedge\mathsf M_2
+\quad\Longleftrightarrow\quad
+C_1=\operatorname{PSD}_n\ \text{且}\ C_2=\operatorname{PSD}_{n^2}.
+$$
+
+同域中还有
+
+$$
+\mathsf B\wedge\mathsf M_2\wedge\mathsf T
+\quad\Longleftrightarrow\quad
+C_N=\operatorname{PSD}_{n^N}\quad\text{对每个有限 }N\ge1.
+$$
+
+证明。170.4已给所有酉的二体第一因子正性，即167.2的 U2。任取一个固定 $0<\lambda<1$，令 $S=\operatorname{diag}(\lambda,1,\ldots,1)$，则
+
+$$
+\widehat S=\lambda^{-1/n}S\in G,\qquad
+\operatorname{Ad}_S=\lambda^{2/n}\operatorname{Ad}_{\widehat S}.
+$$
+
+这给167.2的 S2；$S$ 是推论中的目标，并非另一个原正性输入。两项 Bell 成员关系和完整原域均未改变。于是直接应用[定理167.3第一项及其证明][Q170XVI]，取得低二层等式。精确消费的是167.4的连续酉字母加单衰减器的正比例可逆有限字，167.5的原预算，167.6的原态轨道与迹对偶轨道两个不同包含，以及167.7的原偏迹和最小积恢复一体。这里不重证 SVD 控制、Bell 双夹逼或一体恢复，也不把“Bell 满秩”当作这些步骤的替代。
+
+这些供应的预算仍须保留：对已恢复的 $S$，
+
+$$
+m_S=\max_{x\in K_2}u_2(\operatorname{Ad}_{S\otimes I}x)\in(0,\infty),\qquad
+\alpha_S=\min\{1,m_S^{-1}\}>0.
+$$
+
+167.4在字母表 $U(n)\cup\{S\}$ 中给出的字若为 $Q=c_AA$、含 $k$ 只衰减器，其逐步 proper 输出系数为 $\alpha_S^kc_A^2$，而非一。这个扩大字母表中的精确有限实现，与170.4中 Bell 转向后的两字母稠密性是不同结论。
+
+低二层对齐后，167.8、XIII163.2及VII102.6—102.7的低层前件才全部到位：$B/n\in K_2$、$\beta/n\in\mathcal E_2$，此时 $b=n$。它们给全部原自身 Choi 接口、奇异一体合同及全部相关旁观者预算。对于任意一体矩阵 $A$，$s_A=\max\{1,\|A\|_{\rm op}\}$ 给 $A/s_A$ 的全旁观不增迹合同。这里才可用 $A^*A/s_A^2\preceq I$ 测试全部原一体态。
+
+再加 $\mathsf T$。定义166.1的全部前件逐项是170.1的实际复 Hermitian 张量载体、全部有限闭尖生成锥、严格正乘法迹、整个基和全部极点、完整自身对偶及整个 proper 区间、全部有限单位分解、每个实际 min/max 分块、全部实际置换及其正逆、不连续分块运输、规范重括号、兼容原配对、空系统，加刚取得的两条低层 PSD 等式。$\mathsf T$ 正好是166.2的原 dyad、三秩至少二和至少一腿满维。故直接消费[166.12的条件1蕴含条件5][Q170XIII]，得到全部有限等式。该定理的强归纳、小角完整对偶延拓、实控制准备和九腿桥保持其原证明；本章的群闭包不替代全有限传播。
+
+其有限资源系数也保持原式：在166.11的局部维数 $d$，每份种子为 $h\psi\psi^*/\delta$、$\delta=\|\psi\|^2$，控制为 $t_Q QQ^*/q_Q$。两份种子、共同滤波 $L/s_L$ 及三只 proper Bell 帽给
+
+$$
+\kappa=\frac{h^2t_Q}{\delta^2q_Qs_L^2d^3}>0.
+$$
+
+最终 $C^{-1}/s_C$，$s_C=\max\{1,\|C^{-1}\|\}$，再给 $\kappa/s_C^2$；令 $N=C^{-1}D\notin\mathbb CI_d$，所得归一质量为
+
+$$
+\frac{h^2t_Q[d+\operatorname{Tr}(N^*N)]}
+ {\delta^2q_Qs_L^2d^3s_C^2}\in(0,1].
+$$
+
+166.10用三份归一 Bell 供应控制时 $t_Q=d^{-3}$；若其供应质量为 $b_1,b_2,b_3>0$，则 $t_Q=b_1b_2b_3/d^3$，总 dyad 系数含 $d^{-6}$。小角的限制副本用于支付效应，并非这两份未限制种子；不能漏掉六腿控制准备，也不能把限制副本质量重复乘入后续控制。166.12中每次控制维数严格下降，所有选片、缩放、帽及正则尾部都有限，逐个严格正的原系数仍按其供应保留，不产生统一副本数或成功率下界。
+
+反向若低二层为 PSD，则 PSD 的完整迹自对偶给 $\mathsf B$，任意矩阵合同保持 PSD，故这个指定 $M$ 满足 $\mathsf M_2$。若全部有限层标准，还可取 $g_n=\sum_j|jjj\rangle$；其 dyad 属于 $C_3$，三个展平秩均为 $n$，支付同一个 $\mathsf T$。完整标准层级的全部 min/max、迹、置换及菜单前件正是167.3反向核对的同域模型。两个等价均成立。∎
+
+**命题 170.6（原有限字、恢复资源与极限的量词）。** 在170.5左侧的二元前件下，下述预算及边界同时成立。
+
+证明。对170.4中长度 $k$ 的正向字 $Q$，170.3的归一资源逐步给 $\eta^k\operatorname{Ad}_Q$ 的全旁观不增迹预算；若使用原一次制备所给的未归一资源，每步系数为 $\alpha/(nb)$，乘积亦须逐个保留。后一有限收缩使用 $k$ 份原 $B/n$、$k$ 次仅在资源二体上的 $\alpha\operatorname{Ad}_{M\otimes I}$、所需原 SWAP，以及 $k$ 只原 proper 帽；逐步可在输入 $C_{s+1}$ 外只接入两条资源腿，再收回 $C_{s+1}$。因此两字母只是这个单映射有限资源语法的矩阵记号，不是原单字母幂 $M^k$ 已经稠密的断言。仅在二体上，另有紧基整体预算
+
+$$
+0<m_Q=\max_{x\in K_2}u_2(\operatorname{Ad}_{Q\otimes I}x)<\infty,
+\qquad \min\{1,m_Q^{-1}\}\operatorname{Ad}_{Q\otimes I}
+$$
+
+不增迹。这一整体二体公式本身不支付高层预算；高层预算来自已给的 Bell 资源切片。
+
+对每个恢复的固定可逆 $A$，其 Choi dyad $R_A=|A\rangle\!\rangle\langle\!\langle A|\in C_2$，令 $r_A=\operatorname{Tr}(A^*A)>0$。以原 $R_A/r_A$ 和原 $\beta/b$ 收缩，得到
+
+$$
+\frac1{br_A}\operatorname{Ad}_A
+$$
+
+在所有原有限旁观者上的不增迹预算，也适用于另一个固定目标 $A^{-1}$。它使用闭锥中的恢复资源，给每个目标一个有限正系数；并不宣称逼近该资源的原字列具有统一正制备概率。低二层等式后，同一公式有 $b=n$，并对任意非零奇异 $A$ 由167.8的 Choi dyad适用；$A=0$ 直接给零映射，无须归一零资源。
+
+$\mathcal P$ 可数，其闭包 $G$ 不可数；即使去掉全局相位，$n\ge2$ 时酉合同仍不可数。因此原有限字不可能精确覆盖全部恢复合同，也不能覆盖全部可逆矩阵的正比例类。170.4只给每个 $\widehat A$ 的正向字逼近及锥正性；逆可能只在闭包中，未给每个原逆的精确正向字。全部原字及其未缩放有限矩阵极限都满足 $|\det|=1$，故没有奇异矩阵。一般 $A$ 的正比例因子和相应合同平方必须单独记账；奇异滤波来自正比例合同的闭锥边界或对齐后的 Choi 接口。
+
+连续方向属于数学闭包。锥闭性没有物理事件存在、极限装置、误差成本或概率极限的量词；每个字质量严格正也不给所有字列的正下界。例如对齐后的标准层级中，固定 proper 合同 $x\mapsto (aI)x(aI)^*$，$0<a<1$，重复 $k$ 次对迹一输入的质量为 $a^{2k}\to0$。这说明一般的逐步正预算不能被换成无限协议的正成功质量，不对本章原字列另作概率普遍断言。∎
+
+**命题 170.7（纯虚路径漂移的可复用障碍）。** 设实反对称矩阵 $K$ 与 Hermitian 对合 $J$ 满足 $KJ=-JK$，且酉矩阵 $W$ 与 $J$ 可交换。对 $O_c=e^{cK}$、$M_c=WO_c$，有精确恒等式
+
+$$
+O_c^*JO_c=J e^{(c+\bar c)K}.
+$$
+
+特别地，若 $c$ 纯虚，则 $M_c$、$M_c^{\mathsf T}$ 在 $W^{\mathsf T}$ 也保持 $J$ 时均属于 $U(J)=\{A:A^*JA=J\}$；其正向字闭包也留在这个闭群。对170.2路径及端点相位，取
+
+$$
+J=\operatorname{diag}(1,-1,1,-1,\ldots).
+$$
+
+则替换漂移为 $itK$ 会产生上述障碍，不能用该控制闭包恢复 $U(n)$。混合系数 $(1+i)t$ 则不保持此 $J$。
+
+证明。$K^*=-K$ 及反交换关系给
+
+$$
+e^{-\bar cK}J e^{cK}=J e^{\bar cK}e^{cK}.
+$$
+
+$W^*JW=J$ 给 $M_c$ 的相同公式。纯虚时 $O_c\in U(J)$，且 $O_c^{\mathsf T}=O_c^{-1}$；若 $W^{\mathsf T}\in U(J)$，则 $M_c^{\mathsf T}=O_c^{-1}W^{\mathsf T}\in U(J)$。本章的对角 $W$ 满足这些条件。路径的相邻符号相反，故 $KJ=-JK$。$U(J)$ 是签名 $(\lceil n/2\rceil,\lfloor n/2\rfloor)$ 的不定酉群，普通酉旋转若混合第零、第一坐标便不保持 $J$，所以它不包含 $U(n)$。
+
+对指定混合 $c$，$M^*JM=Je^{2tK}\ne J$，不等号由170.2的小谱角论证给出。破坏这个不变量本身只排除这一障碍；完整生成由170.4的实 Lie 计算另行证明。本命题只是不变式和控制闭包的障碍，没有构造满足170.1全部有限 min/max 与 Bell 双成员关系的非量子层级，故不声称纯虚候选已有全域非量子反模型。∎
+
+**推论 170.8（完整状态、效应、复合与过程字典）。** 在170.1及 $\mathsf B,\mathsf M_2,\mathsf T$ 下，置 $d_N=n^N$、$d_0=1$。全部原对象在同一实际坐标中有如下对应。
+
+| 原对象 | 完整量子对应 |
+| --- | --- |
+| 整个 $K_N$、凸准备 | 全部 $\rho\succeq0$、$\operatorname{Tr}\rho=1$，通常凸混合 |
+| 全部 $P_N$、非零极射线 | 全部 $vv^*$、$\|v\|=1$，及其正倍数；纯态空间 $\mathbb{CP}^{d_N-1}$ |
+| 完整自身对偶、整个 proper 区间 | 完整 PSD 迹对偶、全部 $0\preceq E\preceq I_{d_N}$ |
+| 全部有限单位分解、原配对 | 全部有限 POVM；$\Pr(a\mid\rho)=\operatorname{Tr}(E_a\rho)$，包括 PVM |
+| 所有有限实际复合 | $\mathcal H_N=(\mathbb C^n)^{\otimes N}$ 上全部联合密度矩阵，包括纠缠态 |
+| 原置换、单位切片 | 通常因子置换及对全部相关输入的偏迹 |
+| 实线性原全旁观正 $F:W_a\to W_b$ | 相应全部矩形 CP 映射、完整 Choi 及有限 Kraus 表示 |
+| 原全输入不增迹、保迹 | 完整 Kraus 不等式、等式；数学分支、数学信道 |
+| 和保迹的有限分支族 | 全部有限数学 CP 仪器、有限顺序、自适应、粗粒化及张量规则 |
+
+证明。170.5已逐项支付[推论167.9、168.4][Q170XVI]的完整原域和 B、U2、S2、T，因此消费其同一矩阵字典及证明。谱分解给全部密度矩阵的有限纯态混合，秩一且仅秩一为极点；整体相位商给全部射线，给定三元种子的归一 dyad至此才识别为原极点。这些标准事实对应 [Watrous §2.1.2，式(2.12)—(2.13)][Q170W2]。完整迹对偶给全部效应和 POVM，而非选定子菜单。纯态 $p=vv^*$、$q=ww^*$ 的确认重叠为 $\operatorname{Tr}(pq)=|v^*w|^2$；穷尽确认读数满足
+
+$$
+\inf\{f(x):f\in\mathcal E_N,\ f(p)=1\}=\operatorname{Tr}(px)
+\quad(x\in C_N).
+$$
+
+这是167.9末段对全部确认效应的 least 结论。Born 形式来自原配对与完整区间；标准 POVM/Born 定义见 [Watrous定义2.34及(2.199)—(2.202)][Q170W2]。Hermitian 观测量的谱分解给 PVM，未添加特权更新。
+
+所有 $a,b,s$ 可为非负有限整数。按参考—输出次序、实线性映射的唯一复线性保 Hermitian 扩张，
+
+$$
+\begin{aligned}
+J(F)&=\sum_{i,j=0}^{d_a-1}E_{ij}\otimes F(E_{ij}),\\
+F\text{ 原全旁观正}
+&\Longleftrightarrow J(F)\in C_{a+b}
+ \Longleftrightarrow J(F)\succeq0\\
+&\Longleftrightarrow F(x)=\sum_\gamma K_\gamma xK_\gamma^*,\qquad
+K_\gamma:\mathbb C^{d_a}\to\mathbb C^{d_b}.
+\end{aligned}
+$$
+
+第一步是低层已支付后的167.8、VII102.7自身参考判据；下一步是整锥等式；矩形 Kraus 步是[Watrous定理2.22，印刷页82—84][Q170W2]，其输出—参考次序由实际 SWAP 转换。该定理陈述非零映射；零映射另用空 Kraus 和。非零映射可取 Kraus 数为 Choi 秩，不超过 $d_ad_b$。原参考只量化 $n^s$ 维自身系统；所得 Kraus 式随后才给任意矩阵辅助维数的通常完全正性。
+
+令 $Q_F=\sum_\gamma K_\gamma^*K_\gamma$，则
+
+$$
+\begin{aligned}
+\operatorname{Tr}_{\rm out}J(F)&=Q_F^{\mathsf T},\\
+u_bF\le u_a&\Longleftrightarrow Q_F\preceq I_{d_a}
+ \Longleftrightarrow\operatorname{Tr}_{\rm out}J(F)\preceq I_{d_a},\\
+u_bF=u_a&\Longleftrightarrow Q_F=I_{d_a}
+ \Longleftrightarrow\operatorname{Tr}_{\rm out}J(F)=I_{d_a}.
+\end{aligned}
+$$
+
+完整输入上的迹恒等式及 PSD 自对偶给不等式，等式对应[Watrous定理2.26，印刷页87—89][Q170W2]。不能以一个总 Choi 迹代替完整参考边缘。原最大界将 $u_a-u_bF$ 的非负性提升为每个相关旁观预算。非零 CP 映射可乘 $\min\{1,\|Q_F\|^{-1}\}>0$ 成为数学分支；零映射直接不增迹。
+
+有限数学仪器恰为
+
+$$
+F_\ell(x)=\sum_\gamma K_{\ell\gamma}xK_{\ell\gamma}^*,\qquad
+\sum_{\ell,\gamma}K_{\ell\gamma}^*K_{\ell\gamma}=I_{d_a},\qquad
+E_\ell=F_\ell^\dagger(I)=\sum_\gamma K_{\ell\gamma}^*K_{\ell\gamma}.
+$$
+
+这里 $\ell$ 为结果标签，$a,b$ 仍为输入、输出层数。零标签允许保留。每个分支有同输出型补分支；取单位输出向量 $v$ 及输入正交基 $b_j$，既有161.9的补 Kraus 为 $|v\rangle\langle b_j|\sqrt{I-Q_F}$。所有效应和 POVM 都可作为数学分支、仪器的效果，例如 $x\mapsto\operatorname{Tr}(E_\ell x)\omega$，$\omega$ 为固定归一输出态。
+
+标量输入 $a=0$ 给 $F(q)=q\sigma$，$\sigma\succeq0$，TNI/TP 分别是 $\operatorname{Tr}\sigma\le1$、$=1$；标量输出 $b=0$ 给 $F(x)=\operatorname{Tr}(Ex)$，TNI/TP 是 $0\preceq E\preceq I$、$E=I$。两端均标量时是乘 $q_0\ge0$，TNI 为 $q_0\le1$，TP 为 $q_0=1$。空参考杯是标量一，没有加入新物理系统。$K_0$ 为单点、效应为 $[0,1]$、纯态空间 $\mathbb{CP}^0$，上述零分支约定全部适用。
+
+对任意质量的相关原输入 $Z\succeq0$，令
+
+$$
+Z_\ell=(\mathrm{id}\otimes F_\ell)Z,\qquad
+m_\ell=\operatorname{Tr}Z_\ell=\operatorname{Tr}[(I\otimes E_\ell)Z],\qquad
+\sum_\ell m_\ell=\operatorname{Tr}Z.
+$$
+
+直接应用[161.9的矩阵证明、(161.27)—(161.30)][Q170XIII]，得到 $m_\ell=0$ 时 $Z_\ell=0$，仅 $m_\ell>0$ 时定义条件态 $Z_\ell/m_\ell$；输入质量一时 $m_\ell$ 为概率，一般正质量时概率为 $m_\ell/\operatorname{Tr}Z$。零输入的全部输出为零。旁观边缘及无信号和是
+
+$$
+\operatorname{Tr}_{\rm out}Z_\ell
+ =\operatorname{Tr}_{\rm in}[(I\otimes\sqrt{E_\ell})Z(I\otimes\sqrt{E_\ell})],\qquad
+\sum_\ell\operatorname{Tr}_{\rm out}Z_\ell=\operatorname{Tr}_{\rm in}Z.
+$$
+
+该同一既有证明也给全部有限顺序、自适应、粗粒化、张量和条件概率规则；标准仪器形式见 [Watrous §2.3.2，(2.255)—(2.261)][Q170W2]。余下系统的效应切片不选择被测系统自身的唯一更新。∎
+
+**推论 170.9（既有理想锐更新和指定连续实作用的消费者）。** 在170.8的前件下，理想锐中性条件和给定连续可逆实序作用，分别有已出版161的 Lüders 与 Hamiltonian 对应；这些附加数据不是170.2的结论。
+
+证明。本章取得的是实际坐标中的全有限 PSD、迹、产品和完整对象，即161的共同矩阵目标，取 $\Theta_N=\mathrm{id}_{W_N}$。对有限 $k\ge0$ 记 $d=d_k$。不据此声称161.5正向的全部几何前件 $\mathsf G_3$ 或其单锥供应已由本章重新核清。这里复用的是从该目标之后开始的矩阵级证明，正如[162.9所明示的后置应用][Q170XIII]。
+
+具体地，另给同型原正实线性分支 $L:W_k\to W_k$ 和 sharp 效应 $e_P(x)=\operatorname{Tr}(Px)$，$P=P^*=P^2$，满足
+
+$$
+u_kL=e_P,\qquad Lp=p\quad\text{对每个原 }p\in P_k\text{ 且 }e_P(p)=1.
+$$
+
+170.8使这些 $p$ 正好遍历 $\operatorname{Ran}P$ 中全部单位秩一投影。因此其矩阵作用的精确前件为正实线性、$L^\dagger(I)=P$、逐点固定全部 certain-yes 纯态。直接应用[161.7.1对既有 Atlas Proposition13.4(1)的单矩阵扇区应用][Q170XIII]，得到
+
+$$
+L(x)=PxP.
+$$
+
+不预设 CP；CP 和全部旁观提升随得到的压缩式及170.8而来。对有限正交分解 $\sum_aP_a=I$，既有(161.30c)给
+
+$$
+p_a=\operatorname{Tr}[(I\otimes P_a)Z],\qquad
+Z_{\mid a}=\frac{(I\otimes P_a)Z(I\otimes P_a)}{p_a}\quad(p_a>0),\qquad
+Z_{\rm ns}=\sum_a(I\otimes P_a)Z(I\otimes P_a).
+$$
+
+$P=0$ 给零分支、$P=I$ 给恒等；零概率无归一条件态，标量维数也包括在既有供应的端点中。逐点中性必须覆盖退化 yes 子空间的每条射线；结果可重复并不能代替它。161.7.1的 $VPxPV^*$，$V$ 在 yes 子空间内部转动，已给可重复而非逐点中性的对照；sharp 效应本身也允许不同更新。这是既有唯一性应用，没有新增一个更新重建定理。
+
+再另给实际有限层 $k$ 上的实线性族 $A_\tau$，满足
+
+$$
+A_0=I,\quad A_{\tau+\sigma}=A_\tau A_\sigma,\quad
+A_\tau(C_k)=C_k,\quad u_kA_\tau=u_k,
+$$
+
+且在有限维算子拓扑中连续。其矩阵输运就是连续、保迹的 PSD 序自同构实一参数群。直接复用[161.10证明中从这一矩阵前件开始的分类和局部提升][Q170XIII]：该证明的等维单因子秩一保持分类给酉合同或转置酉合同，连通性排除转置分支，随后从原实作用构造局部酉提升及生成元。于是存在 $\mathsf H=\mathsf H^*$，唯一到实标量，满足
+
+$$
+A_\tau(x)=e^{-i\tau\mathsf H}xe^{i\tau\mathsf H},\qquad
+\mathcal L(x)=-i[\mathsf H,x].
+$$
+
+这里没有预给酉族，也不需要先假设可微性。$d=2$ 包括在该既有分类应用中；标量 $d=1$ 的作用为恒等，生成元任意实标量。相应向量代表和密度矩阵满足 $i\dot\psi=\mathsf H\psi$、$i\dot\rho=[\mathsf H,\rho]$。物理钟、能量标定、单位和正尺度 $\hbar$ 另给后，才写 $\mathsf H_{\rm phys}=\hbar\mathsf H$ 及通常带 $\hbar$ 的方程。170.2中的固定无量纲小参数不是物理时间。
+
+数学 CP-TNI 与仪器的完整表征不等于实际可用事件的完整菜单。[VII102.14][Q170VII]的事件饱和是额外选择；某个装置被指定理想还须给其逐点中性，某个群被指定动力学还须给上述实际时间作用。恒等作用与不同 Hamiltonian 保持同一静态层级，故静态判据不选择这些数据。∎
+
+**命题 170.10（几何解释、供应归属及结论边界）。** 170.5在保持完整原域的条件下，把167的全部酉及一只衰减器的正性入口压为一个明确固定映射的正性；它不重建已给的复矩阵载体、维数和全部有限组合规则，也不推出物理实现、全球首创或独立公理最小性。
+
+证明。170.3—170.4已从唯一 $\mathsf M_2$ 取得 U2、S2，而标准低层反向使该 $\mathsf M_2$ 必要，故这里的压缩是同域逻辑等价。Bell 仍有原态与原对偶两个成员关系，全有限域与整个效应菜单也仍是输入；不能按条件标签数断言独立假设数最小。
+
+用完整的中文几何语言说，同一个贝尔关系同时放在“可准备”和“可测试”两边，像一把两面校准的尺子。把固定矩阵作用到这把尺子上，再用尺子的测试端接回输入，就得到局部矩阵转置的作用；这是接线后的合同，不是把态作转置。原基的紧性先保证这次接线有有限 proper 帽和正预算。两个正向作用相乘只露出链端的一圈无理相位；短程混合的相似作用足够接近恒等，收敛对数便把这一个圆带到第一条边。混合系数的实部和虚部共同使交换子既能分开相对伸缩，又能取得下一点的相位，沿链重复就得到全部转向和相对尺度。闭包中的反向也是由这些正向矩阵支付的。随后贝尔尺子的准备轨道填入正方向，测试轨道排除负方向，167的双夹逼把低层锥确定为量子锥；一腿满维且各腿非乘积的三元种子再接上166的有限传播。全部密度矩阵、Born 效应、纠缠复合和 CP 仪器由此成为完整原对象的矩阵表达。闭锥容纳数学极限，却不会自动供应装置、理想更新或物理钟；后几项各自保留自己的条件。
+
+若不加 $\mathsf T$，本章已给低二层及全部局部合同的原全旁观正性，但没有由此单独证明全部高层 PSD，也没有给出其余条件的全域非量子反模型。若给定 GME 的三秩都小于 $n$，例如 $n>2$ 时嵌入的 $|000\rangle+|111\rangle$，它不支付166.12的满腿入口；本章不把该供应改成任意 GME 定理。删去闭性、完整自身对偶、全部 min/max 分块或正置换，会分别失去闭包、切片、资源积和 Bell 接线的已列前件。170.7则给任意同型纯虚漂移的精确不变式障碍，未将控制不足升级为完整锥反模型。
+
+来源的数学作用如下。[已出版167—168][Q170XVI]供应原域、Bell 双夹逼、单衰减器有限字、原预算、量子字典，以及一个端点无理相位的正向闭包和相似算子对数的接口思想；[XIII166.1—166.3、166.10—166.12][Q170XIII]供应满腿全有限传播，163.2与[VII102.6—102.7][Q170VII]供应匹配前件后的原旁观与自身 Choi。[XIII161.9、161.7.1、161.10的矩阵级应用][Q170XIII]分别供应仪器与零质量规则、既有 sharp-neutral 唯一性和给定连续实序作用的 Hamiltonian 分类；不调用其前置几何重建来替代本章证明。
+
+[Hall的公开作者文本][Q170Hall]，*An Elementary Introduction to Groups and Representations*，arXiv:math-ph/0005032v1，定义2.2（印刷页9）、定理3.6（页32—33）、定义3.13（页36—37）、命题3.15及定理3.16（页40—41），只供应相对闭矩阵群、范数内对数、实 Lie 封闭和相似不变性；本章逐项满足这些条件。[Watrous第一章][Q170W1]的页20 PSD迹刻画、定理1.3/推论1.4、定理1.6/推论1.7、式(1.127)—(1.134)、(1.162)—(1.164)供应所用标准矩阵、向量化与分解事实；[第二章][Q170W2]的§2.1.2、定理2.22、2.26、定义2.34及§2.3.2供应对应的有限量子字典。这些是推导内的成熟中间成分；本章新增组合是未知原锥上的 pre-PSD Bell 转向及单端点混合路径的实方向计算与既有重建接口的接合，不把一般闭群、SVD 或 Choi 事实另列为新发现。全有限结论消费所列已出版传播供应及其具名依赖；本章没有另行重证其整个依赖链。无限维、一般非满腿 GME、时空、事件可用性与实际能量尺度不在此结论内。∎
+
+[Q170XVI]: https://github.com/the-omega-institute/trureturing/blob/d91fdb64e60124b82bcead3c5dbe4d33cd50eaf5/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md
+[Q170XIII]: https://github.com/the-omega-institute/trureturing/blob/00427ae2ba9c9e3f6c37f2e5496b9127b6fbc6c0/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md
+[Q170VII]: https://github.com/the-omega-institute/trureturing/blob/657a8ba435bf2cae463e935d957d8038b69be8a3/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+[Q170Hall]: https://arxiv.org/pdf/math-ph/0005032v1
+[Q170W1]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf
+[Q170W2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
+
+## 追加锚（本行以下为增补区）
+
+## 171. Raw Bell relations, derived cone properness, and the parity orientation
+
+The two binary relations considered here determine the ordinary two-body positive semidefinite cone even when pointedness, generation, and positivity of the trace have been removed from the model assumptions. They determine the one-body cone up to a sign. The actual finite tensor relations then force pointedness, generation, and a strictly positive, multiplicative **signed** trace at every finite level. The unchanged three-body seed has two distinct duties: its nonzero positive semidefinite dyad selects the ordinary orientation, and its flattening ranks meet the existing all-finite propagation theorem.
+
+The proof separates a raw, unnormalized cone argument from the later use of normalized resources. Its matrix-generation dependency is precisely the algebraic part of candidate §170.4 at the immutable commit [4a2c3cc8bb4620516476cd923a7334f4df59e1a9][A170]. Neither its full-domain reconstruction theorem nor its pre-normalization budget lemma is used to establish the premises removed here. All-finite propagation is supplied, after its complete domain has been established, by [XIII, Theorem 166.12][XIII]. The known operation dictionary and its additional update and dynamics conditions are consumed at the same point, rather than reconstructed again.
+
+### 171.1 The weak actual finite domain and the exact relations
+
+**Definition 171.1 (weak actual finite cone hierarchy).** Fix an integer $n\ge2$. For every finite $N\ge0$, retain the actual spaces and Kronecker coordinates
+
+$$
+V=\operatorname{Herm}_n(\mathbb C),\qquad
+W_N=V^{\otimes_{\mathbb R}N}
+ =\operatorname{Herm}_{n^N}(\mathbb C),\qquad W_0=\mathbb R.
+\tag{171.1}
+$$
+
+For $N\ge1$, let $C_N\subset W_N$ be a closed convex cone, with no initial requirement that it be nonzero, pointed, generating, or contained in a positive-trace half-space. Set $C_0=\mathbb R_+$. The fixed linear functionals are
+
+$$
+u_N=\operatorname{Tr}=u_1^{\otimes N},\qquad u_0=\mathrm{id}_{\mathbb R}.
+\tag{171.2}
+$$
+
+At this stage, the word “unit” is not used to assert that $u_N$ is positive on $C_N$. The complete trace dual is
+
+$$
+C_N^*=\{Y\in W_N:\operatorname{Tr}(YX)\ge0
+                         \text{ for every }X\in C_N\}.
+\tag{171.3}
+$$
+
+The real trace pairing is nondegenerate. All functionals in (171.3), rather than a selected testing family, are retained. For every pair of finite nonnegative integers $a,b$, require
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+             \subseteq C_a\otimes_{\max}C_b.
+\tag{171.4}
+$$
+
+Here the minimum is the closed convex cone generated by $X\otimes Y$ with $X\in C_a$, $Y\in C_b$. The maximum is
+
+$$
+\{Z\in W_{a+b}:\operatorname{Tr}[(F\otimes G)Z]\ge0
+                     \text{ for all }F\in C_a^*,\ G\in C_b^*\}.
+\tag{171.5}
+$$
+
+Every actual permutation of tensor positions and its inverse preserves the corresponding cone. Arbitrary noncontiguous partitions are transported by these actual maps. Reassociation is the canonical identification in the same actual space, with the same joint cone. The pairing and trace retain the identities
+
+$$
+\langle F\otimes G,X\otimes Y\rangle
+  =\langle F,X\rangle\langle G,Y\rangle,
+\qquad u_{a+b}=u_a\otimes u_b.
+\tag{171.6}
+$$
+
+These requirements quantify every finite level and every finite partition, including those with a scalar factor. They do not posit higher-level PSD cones, self-duality, transpose invariance, or positivity of arbitrary matrix operations. In particular, no normalized base, proper effect interval, probability menu, or resource budget is an input to this definition.
+
+A real-linear map $F:W_a\to W_b$ is called **positive with every original finite spectator** if
+
+$$
+(\mathrm{id}_{W_s}\otimes F)C_{s+a}\subseteq C_{s+b}
+                   \qquad(s\ge0\text{ finite}),
+\tag{171.7}
+$$
+
+with the analogous positions supplied by actual permutations. This definition concerns cone membership only.
+
+**Definition 171.2 (the unchanged fixed matrix, Bell relation, and ternary seed).** In the actual basis $e_0,\ldots,e_{n-1}$, put $E_{jk}=e_je_k^*$ and $P_j=E_{jj}$. Use exactly the matrices of [candidate 170.2][A170]:
+
+$$
+\begin{aligned}
+K&=\sum_{j=0}^{n-2}(E_{j,j+1}-E_{j+1,j}),
+&t&=\frac1{32n},&c&=(1+i)t,\\
+H&=cK,&O&=e^H,&W&=e^{\pi i\sqrt2 P_0},&M&=WO.
+\end{aligned}
+\tag{171.8}
+$$
+
+The symbol $W$ in (171.8) is the endpoint phase matrix; $W_N$ continues to denote the actual real carrier. Write $\operatorname{Ad}_A(X)=AXA^*$. Define
+
+$$
+\Omega=\sum_{j=0}^{n-1}e_j\otimes e_j,
+\qquad B=\Omega\Omega^*,\qquad
+\beta(Z)=\operatorname{Tr}(BZ).
+\tag{171.9}
+$$
+
+The two binary relations are exactly
+
+$$
+\mathsf B:\quad B\in C_2\cap C_2^*,
+\qquad
+\mathsf M_2:\quad \operatorname{Ad}_{M\otimes I}(C_2)\subseteq C_2.
+\tag{171.10}
+$$
+
+The second membership in $\mathsf B$ means nonnegativity of $\beta$ on the entire actual $C_2$. The map condition is imposed only on the first factor of $C_2$. It contains no inverse or transpose-map assumption.
+
+The ternary relation remains
+
+$$
+\mathsf T:\quad
+\exists\,0\ne\psi\in(\mathbb C^n)^{\otimes3},\quad
+\psi\psi^*\in C_3,\quad
+\min_i r_i(\psi)\ge2,\quad \max_i r_i(\psi)=n,
+\tag{171.11}
+$$
+
+where $r_i$ is the complex matrix rank of the flattening of leg $i$ against the other two legs. Thus every bipartition is nonproduct and at least one original leg has full support. No original extremality or normalization of this dyad is assumed.
+
+### 171.2 The isolated matrix supplier and the raw Bell bridge
+
+**Supplier 171.3 (the algebraic part of candidate 170.4).** For the matrices (171.8), let $\mathcal P$ consist of the finite positive words in the two matrices $M,M^{\mathsf T}$, including the empty word. The algebraic assertion reused from [170.4 at the fixed candidate commit][A170] is
+
+$$
+\overline{\mathcal P}^{\,GL_n(\mathbb C)}
+       =\{A\in GL_n(\mathbb C):|\det A|=1\}.
+\tag{171.12}
+$$
+
+Only this matrix assertion is imported. Its hypotheses are the integer $n\ge2$, the actual matrix units, and the exact constants and matrices (171.8). It has no cone, trace-positivity, compact-base, proper-effect, or normalization premise. The cone-dependent last assertion of candidate 170.4 is not imported; its replacement on the weak domain is proved below. Candidate 170.3 and Theorem 170.5 are not suppliers for the weak-domain argument.
+
+The distinction can be checked directly in the source proof. It obtains the endpoint circle from
+
+$$
+MM^{\mathsf T}=e^{2\pi i\sqrt2P_0},\qquad
+M^{-1}=M^{\mathsf T}e^{-2\pi i\sqrt2P_0},
+\tag{171.13}
+$$
+
+and applies real Lie algebra operations to the relative closed matrix group. Its similarity logarithm is justified by
+
+$$
+\|\operatorname{ad}_{cK}\|
+ \le4\sqrt2t=\frac{\sqrt2}{8n}<\frac18<\log2.
+\tag{171.14}
+$$
+
+The real and imaginary edge directions are separated using $c^2=2it^2$ and division by nonzero real numbers. No assumption that a Lie algebra is a complex vector space, or that $O$ is unitary, is involved. The general closed-group, real Lie algebra, and logarithm statements used there are exactly [Hall, Definition 2.2, Theorem 3.6, Definition 3.13, Proposition 3.15, and Theorem 3.16][Hall]. Their relative-closed-group and norm hypotheses agree with (171.13)–(171.14).
+
+This is exact source reuse of a candidate algebraic proof, not independent certification of that candidate. In dependency-explicit form, the forward binary conclusions below are conditional on the isolated algebraic assertion (171.12) as a paper supplier. They do not depend on a cone-dependent reconstruction theorem of candidate170. The new weak-cone bridges are supplied in full here. The later all-finite and quantum conclusions additionally use the stated published paper suppliers; none is being described as kernel-certified.
+
+**Lemma 171.4 (raw complete-dual slicing).** In Definition 171.1, for every finite $a,b$, every $f\in C_a^*$, and every $Z\in C_{a+b}$,
+
+$$
+(f\otimes\mathrm{id}_{W_b})Z\in C_b.
+\tag{171.15}
+$$
+
+This remains true after any actual permutation and under any finite sequence of such slices. No positivity of the trace is required.
+
+**Proof.** For every $g\in C_b^*$, the maximum inclusion gives
+
+$$
+g\bigl((f\otimes\mathrm{id})Z\bigr)=(f\otimes g)(Z)\ge0.
+\tag{171.16}
+$$
+
+The bipolar identity $(C_b^*)^*=C_b$ holds for every finite-dimensional closed convex cone, including a cone with lineality or a cone with deficient span. Indeed, if a vector lies outside that closed cone, separation and positive scaling of the cone give a linear functional nonnegative on the cone and negative on the vector. Thus (171.16) proves (171.15). Actual permutations give the other positions. Each slice leaves an element of the complete remaining cone, so the argument iterates. When one factor is scalar, it is the same assertion with $C_0=\mathbb R_+$. This is also the proof of [VII, Lemma 102.6][VII], with its exact closed-cone premises exposed. $\square$
+
+**Lemma 171.5 (raw Bell bending before normalization).** Under Definition 171.1 and (171.10), both $\operatorname{Ad}_M$ and $\operatorname{Ad}_{M^{\mathsf T}}$ are positive with every original finite spectator.
+
+**Proof.** Use reference–output vectorization
+
+$$
+|Q\rangle\!\rangle=\sum_j e_j\otimes Qe_j,
+\qquad R_Q=|Q\rangle\!\rangle\langle\!\langle Q|.
+\tag{171.17}
+$$
+
+The unique binary map condition applied to the Bell element gives
+
+$$
+(M\otimes I)B(M^*\otimes I)=R_{M^{\mathsf T}}\in C_2.
+\tag{171.18}
+$$
+
+The actual SWAP then gives $R_M\in C_2$. Both resources are unnormalized cone elements. The functional $\beta$ is in the complete $C_2^*$ by $\mathsf B$.
+
+Fix $s\ge0$, and label an arbitrary input $Z\in C_{s+1}$ by spectator legs $S$ and input leg $X$. For $Q=M$ or $M^{\mathsf T}$, the minimum inclusion places
+
+$$
+Z_{SX}\otimes R_{Q,X'Y}\in C_{s+3}.
+\tag{171.19}
+$$
+
+Permute the actual $X,X'$ legs into a two-leg block, and slice that block with $\beta$. Lemma 171.4, applied to the maximum split $(2,s+1)$, puts the output in $C_{s+1}$. The output is exactly
+
+$$
+\operatorname{cap}_{XX'}[Z_{SX}\otimes R_{Q,X'Y}]
+              =(\mathrm{id}_{W_s}\otimes\operatorname{Ad}_Q)Z.
+\tag{171.20}
+$$
+
+To verify the transpose and multiplication order, matrix units give
+
+$$
+\beta(E_{ab}\otimes E_{ij})=\delta_{ai}\delta_{bj},
+\qquad R_Q=\sum_{i,j}E_{ij}\otimes QE_{ij}Q^*.
+\tag{171.21}
+$$
+
+Expanding $Z=\sum_{a,b}Z_{ab}\otimes E_{ab}$ therefore leaves
+$\sum_{a,b}Z_{ab}\otimes QE_{ab}Q^*$, which is (171.20). Matrix units here express the unique complex-linear extension of the original real Hermitian tensor map. Their sum defines the stated real-linear identity on the entire original space.
+
+For $s=1$, the required passage is specifically $C_2\otimes C_2\subseteq C_4$, followed by a two-leg slice back to $C_2$. No PSD description of $C_4$ is used. The argument covers arbitrary correlated input $Z$ and every finite $s$.
+
+Nothing in this proof bounds $\beta$ by the trace, divides by an input mass, or asserts a probability. In particular, it does not import the proper-cap part of candidate 170.3 or the low-level PSD premise at the beginning of VII102.7. It proves the raw identity and its cone positivity directly. $\square$
+
+**Proposition 171.6 (closed-word transfer to the weak cones).** With Supplier 171.3 and the hypotheses of Lemma 171.5, for every $A\in GL_n(\mathbb C)$ and every finite $s\ge0$,
+
+$$
+(\mathrm{id}_{W_s}\otimes\operatorname{Ad}_A)C_{s+1}=C_{s+1}.
+\tag{171.22}
+$$
+
+The same assertion holds on any single actual leg.
+
+**Proof.** Lemma 171.5 makes the local congruence of every word $Q\in\mathcal P$ positive on each fixed original spectator level. If $Q_k\to Q$ in matrices and $Z\in C_{s+1}$ is fixed, ordinary matrix multiplication gives convergence of the congruence images. Closedness of $C_{s+1}$ then gives positivity of $\operatorname{Ad}_Q$ on that level.
+
+For an arbitrary invertible $A$, set
+
+$$
+\widehat A=|\det A|^{-1/n}A.
+\tag{171.23}
+$$
+
+Supplier 171.3 puts $\widehat A$ in the word closure. The positive scalar identity
+
+$$
+\operatorname{Ad}_A
+       =|\det A|^{2/n}\operatorname{Ad}_{\widehat A}
+\tag{171.24}
+$$
+
+gives positivity of $\operatorname{Ad}_A$. Apply the same reasoning separately to $A^{-1}$. The two positive maps are inverse, proving (171.22). The argument is valid for each finite $s$; no exchange of an infinite-level limit with a cone is involved. Actual permutations transport the conclusion to any leg. These are congruences obtained from positive words and cone closedness, rather than an inference of congruence positivity from the similarity action in the algebraic supplier. $\square$
+
+### 171.3 The double orbit and the one-body sign
+
+**Proposition 171.7 (two-body alignment on the weak domain).** Under the binary hypotheses, with the algebraic dependency specified in Supplier 171.3,
+
+$$
+C_2=C_2^*=\operatorname{PSD}_{n^2}.
+\tag{171.25}
+$$
+
+**Proof.** For reference–output vectorization,
+
+$$
+(A\otimes I)|Q\rangle\!\rangle
+                 =|QA^{\mathsf T}\rangle\!\rangle.
+\tag{171.26}
+$$
+
+Consequently $B\in C_2$ and Proposition 171.6 imply
+
+$$
+|A^{\mathsf T}\rangle\!\rangle
+ \langle\!\langle A^{\mathsf T}|\in C_2
+                        \qquad(A\in GL_n(\mathbb C)).
+\tag{171.27}
+$$
+
+Transposition is a bijection on $GL_n(\mathbb C)$. Every two-body vector is $|Q\rangle\!\rangle$ for a unique matrix $Q$. Every matrix $Q$ is a limit of invertible matrices: for a singular value decomposition $Q=U\operatorname{diag}(d_j)V^*$, replace each $d_j$ by $d_j+\delta$, $\delta>0$. Thus closedness gives every rank-one PSD dyad in $C_2$. Finite spectral sums give
+
+$$
+\operatorname{PSD}_{n^2}\subseteq C_2.
+\tag{171.28}
+$$
+
+For the other inclusion, let $\Lambda_A=\operatorname{Ad}_{A\otimes I}$. Its trace adjoint is
+
+$$
+\Lambda_A^\dagger(Y)=(A^*\otimes I)Y(A\otimes I).
+\tag{171.29}
+$$
+
+Positivity of $\Lambda_A$ on $C_2$ implies positivity of $\Lambda_A^\dagger$ on $C_2^*$ by the defining pairing, without a self-duality premise. Since $B\in C_2^*$, this yields
+
+$$
+\Lambda_A^\dagger(B)
+      =|\overline A\rangle\!\rangle
+         \langle\!\langle\overline A|\in C_2^*.
+\tag{171.30}
+$$
+
+Complex conjugation is also a bijection on invertible matrices. The complete dual is closed, so the same matrix limits and finite spectral sums prove
+
+$$
+\operatorname{PSD}_{n^2}\subseteq C_2^*.
+\tag{171.31}
+$$
+
+If $X\in C_2$, testing (171.31) with $vv^*$ gives $v^*Xv\ge0$ for every vector $v$. Hence $X\succeq0$. This proves $C_2\subseteq\operatorname{PSD}_{n^2}$ and (171.25), including its dual equality.
+
+These two orbits prove two different inclusions. Their matrix ingredients coincide with those exposed in published [167.6][P167], but the argument above proves them on the present weak domain and invokes neither 167.3 nor 170.5. Its only cone inputs are the raw bridge, closedness, and the two Bell memberships. Spectral decomposition and singular value decomposition are the standard finite-dimensional statements in [Watrous, Theorem 1.3, Corollary 1.4, Theorem 1.6, and Corollary 1.7][W1]. $\square$
+
+**Proposition 171.8 (the exact one-body orientation).** In Definition 171.1, the equality $C_2=\operatorname{PSD}_{n^2}$ already implies that there is a unique $\varepsilon\in\{+1,-1\}$ such that
+
+$$
+C_1=C_1^*=\varepsilon\operatorname{PSD}_n.
+\tag{171.32}
+$$
+
+**Proof.** First $C_1\ne\{0\}$. Otherwise its complete dual would be all of $W_1$. In the maximum split $(1,1)$ we could then test $B\in C_2$ with $I\otimes(-I)$, obtaining $-\operatorname{Tr}B=-n<0$, a contradiction.
+
+For every $X\in C_1$, the minimum inclusion gives $X\otimes X\in C_2$, hence $X\otimes X\succeq0$. If $X$ had a positive and a negative eigenvalue, their product would be a negative eigenvalue of $X\otimes X$. Therefore every nonzero $X\in C_1$ is semidefinite, with one of the two signs.
+
+Fix one such nonzero $X$. Two nonzero elements of opposite semidefinite signs cannot both belong to $C_1$: their tensor product would be a nonzero negative semidefinite element of $C_2$. It follows that one sign $\varepsilon$ satisfies
+
+$$
+C_1\subseteq\varepsilon\operatorname{PSD}_n.
+\tag{171.33}
+$$
+
+In particular, the functional $\varepsilon\operatorname{Tr}$ belongs to $C_1^*$. This positivity is now derived, and may be used in Lemma 171.4. For arbitrary $P\succeq0$ and any usual rank-one projector $q$ of trace one, the actual matrix $P\otimes q$ belongs to $C_2$ by its known PSD shape, regardless of whether $q$ has yet been identified as an original one-body element. Its signed trace slice is
+
+$$
+(\mathrm{id}\otimes\varepsilon\operatorname{Tr})(P\otimes q)
+                      =\varepsilon P\in C_1.
+\tag{171.34}
+$$
+
+Thus (171.33) is equality. The PSD trace dual is PSD; multiplying a cone by a sign multiplies its trace dual by the same sign. This proves the dual equality in (171.32). The two alternatives are distinct because their intersection is zero and $C_1$ is nonzero. $\square$
+
+The use of the signed trace in (171.34) is essential. The ordinary partial trace used in published 167.7 cannot simply be imported before its positive orientation has been earned.
+
+### 171.4 A finite projector frame pays the domain at every level
+
+**Theorem 171.9 (all-level pointedness, generation, and strict signed trace).** Suppose Definition 171.1 holds and $C_2=\operatorname{PSD}_{n^2}$. Let $\varepsilon$ be the sign in Proposition 171.8 and put
+
+$$
+D_N=\varepsilon^N C_N\qquad(N\ge0).
+\tag{171.35}
+$$
+
+Then $(D_N)$ is another hierarchy satisfying all the structural requirements (171.1)–(171.6), and
+
+$$
+D_1=\operatorname{PSD}_n,\qquad D_2=\operatorname{PSD}_{n^2}.
+\tag{171.36}
+$$
+
+For every finite $N$, both $D_N$ and $C_N$ are pointed and generating. Moreover
+
+$$
+X\in D_N\setminus\{0\}\Longrightarrow\operatorname{Tr}X>0,
+\qquad
+Y\in C_N\setminus\{0\}\Longrightarrow
+                      \varepsilon^N\operatorname{Tr}Y>0.
+\tag{171.37}
+$$
+
+The complete trace-one base of $D_N$ and the complete signed-trace-one base of $C_N$ are nonempty compact convex bases.
+
+**Proof.** For signs $s,t\in\{\pm1\}$ and closed convex cones $A,B$,
+
+$$
+(sA)^*=sA^*,\qquad
+(sA)\otimes_{\min}(tB)=st(A\otimes_{\min}B),\qquad
+(sA)\otimes_{\max}(tB)=st(A\otimes_{\max}B).
+\tag{171.38}
+$$
+
+The first equality follows by testing $\langle sF,sX\rangle=\langle F,X\rangle$. The minimum equality follows from the generators and closedness. For the maximum equality, its product tests have the form $sF\otimes tG$, and pairing them with $stZ$ gives $\langle F\otimes G,Z\rangle$. Thus (171.4) transports to $D_N$ because $\varepsilon^{a+b}=\varepsilon^a\varepsilon^b$. Closedness, convexity, the full duals, actual permutations, reassociation, and pairings transport as well. The scalar cone stays $\mathbb R_+$, and (171.36) follows.
+
+We now give a finite frame for every $n\ge2$. On one leg take the following labeled unit rank-one projectors:
+
+$$
+\begin{aligned}
+P_j&=e_je_j^* &&(0\le j<n),\\
+Q_{jk}^{\pm}&=\frac12(e_j\pm e_k)(e_j\pm e_k)^*,\\
+R_{jk}^{\pm}&=\frac12(e_j\pm i e_k)(e_j\pm i e_k)^*
+                                      &&(0\le j<k<n).
+\end{aligned}
+\tag{171.39}
+$$
+
+Let $\mathcal F$ denote this family. Every member belongs to both $D_1$ and $D_1^*$. The differences $Q_{jk}^+-Q_{jk}^-$ supply $E_{jk}+E_{kj}$, while $R_{jk}^+-R_{jk}^-$ supply $-iE_{jk}+iE_{kj}$. Together with the $P_j$, they span the entire real Hermitian space. For each pair $j<k$, the four projectors in that pair sum to $2(P_j+P_k)$. Consequently
+
+$$
+|\mathcal F|=n(2n-1),\qquad
+\sum_{F\in\mathcal F}F=(2n-1)I_n.
+\tag{171.40}
+$$
+
+For a fixed finite $N\ge1$, take all labeled products
+
+$$
+F_{\boldsymbol\alpha}=F_{\alpha_1}\otimes\cdots\otimes F_{\alpha_N},
+                    \qquad F_{\alpha_j}\in\mathcal F.
+\tag{171.41}
+$$
+
+Repeated minimum inclusions put each product in $D_N$. Repeated maximum inclusions put each product in $D_N^*$: whenever $f\in D_a^*$ and $g\in D_b^*$, (171.5) asserts precisely that $f\otimes g$ is in $D_{a+b}^*$. The products in (171.41) span $W_N$, because their one-leg factors span $V$ and the carrier is the actual full real tensor product. They also satisfy
+
+$$
+\sum_{\boldsymbol\alpha}F_{\boldsymbol\alpha}
+                  =(2n-1)^N I_{n^N}.
+\tag{171.42}
+$$
+
+Hence, for $X\in D_N$,
+
+$$
+(2n-1)^N\operatorname{Tr}X
+  =\sum_{\boldsymbol\alpha}
+       \operatorname{Tr}(F_{\boldsymbol\alpha}X)\ge0.
+\tag{171.43}
+$$
+
+Every summand is nonnegative. If the trace is zero, every summand is zero. Since the frame products span $W_N$ and the trace pairing is nondegenerate, this forces $X=0$. This proves strict trace positivity on $D_N\setminus\{0\}$.
+
+The span of $D_N$ is all of $W_N$, because it contains the spanning family (171.41). Thus $D_N-D_N=W_N$, so $D_N$ is generating. If $X$ and $-X$ are both in $D_N$, (171.43) gives trace zero and hence $X=0$. Thus $D_N$ is pointed. Multiplication by $\varepsilon^N$ is a real-linear isomorphism, so the same two properties hold for $C_N$, and (171.37) follows.
+
+Only now define the full bases
+
+$$
+\begin{aligned}
+K(D_N)&=\{X\in D_N:\operatorname{Tr}X=1\},\\
+\widehat K_N^{\varepsilon}
+  &=\{Y\in C_N:\varepsilon^N\operatorname{Tr}Y=1\}.
+\end{aligned}
+\tag{171.44}
+$$
+
+They are nonempty because the frame products have trace one after transport. Every nonzero cone element is a unique positive scalar multiple of an element of its respective base. For compactness, $K(D_N)$ is closed. If a sequence in it were unbounded in any fixed finite-dimensional norm, division by its norm and passage to a convergent subsequence on the unit sphere would produce $0\ne X\in D_N$ with trace zero, contradicting (171.37). Thus the base is bounded and compact. The sign isomorphism transports it to $\widehat K_N^{\varepsilon}$. For $N=0$, the base is the singleton $\{1\}$ and the claims follow from $C_0=D_0=\mathbb R_+$. $\square$
+
+One can express the bounds used in this proof as
+
+$$
+\operatorname{Sep}_N\subseteq D_N
+                 \subseteq\operatorname{Sep}_N^*,
+\tag{171.45}
+$$
+
+where $\operatorname{Sep}_N$ is the closed cone generated by all products of one-leg PSD elements. The left inclusion uses repeated minimum bounds; the right uses all products of one-leg PSD functionals in repeated maximum bounds. The finite family (171.39) proves the asserted strict trace statement inside this interval. Neither (171.45) nor Theorem 171.9 identifies an arbitrary higher $D_N$ with the PSD cone.
+
+**Corollary 171.10 (any nonzero odd-level PSD element selects the sign).** Under Theorem 171.9, for each fixed odd integer $m\ge1$,
+
+$$
+\varepsilon=+1
+\quad\Longleftrightarrow\quad
+C_m\cap\operatorname{PSD}_{n^m}\ne\{0\}.
+\tag{171.46}
+$$
+
+In particular, $\mathsf T$ forces $\varepsilon=+1$. Its rank conditions are unnecessary for this orientation step.
+
+**Proof.** If $0\ne X\succeq0$ belongs to $C_m$ and $m$ is odd, then $\operatorname{Tr}X>0$. Equation (171.37) gives $\varepsilon\operatorname{Tr}X>0$, so $\varepsilon=+1$. Conversely, if $\varepsilon=+1$, then $C_1=\operatorname{PSD}_n$, and the minimum inclusions put every nonzero product of $m$ one-body PSD elements in $C_m$. Such a product is a nonzero usual PSD matrix. Finally the dyad in $\mathsf T$ is one such nonzero usual PSD element at the odd level three. $\square$
+
+### 171.5 The weak-domain theorem and the exact propagation handoff
+
+**Theorem 171.11 (binary orientation theorem and ternary all-finite reconstruction).** Work throughout in Definition 171.1, with the fixed matrix (171.8) and the matrix supplier explicitly identified in 171.3.
+
+1. The following conditions are equivalent:
+
+$$
+\begin{aligned}
+&\mathsf B\ \wedge\ \mathsf M_2;\\
+&C_2=\operatorname{PSD}_{n^2};\\
+&\text{there exists }\varepsilon\in\{\pm1\}\text{ such that }
+  C_1=\varepsilon\operatorname{PSD}_n,
+  \quad C_2=\operatorname{PSD}_{n^2}.
+\end{aligned}
+\tag{171.47}
+$$
+
+The sign is unique, and every finite signed cone $\varepsilon^N C_N$ has all the properties in Theorem 171.9. Thus pointedness and generation of the original cones themselves, and strict positivity of the signed trace, are consequences of the binary relations.
+
+2. On the same weak domain,
+
+$$
+\mathsf B\wedge\mathsf M_2\wedge\mathsf T
+\quad\Longleftrightarrow\quad
+C_N=\operatorname{PSD}_{n^N}
+                    \quad\text{for every finite }N\ge0.
+\tag{171.48}
+$$
+
+In the forward direction the ternary seed first fixes $\varepsilon=+1$. The resulting ordinary positive-trace hierarchy satisfies every premise of published Definition 167.1 and of XIII Definition 166.1 before Theorem 166.12 is invoked.
+
+**Proof.** Proposition 171.7 proves the first implication in (171.47). Proposition 171.8 proves the next implication. If $C_2=\operatorname{PSD}_{n^2}$, its complete trace dual is also PSD, so $B$ belongs to both cones. Congruence by the specified matrix $M\otimes I$ preserves PSD. This proves the converse without any condition on the other levels beyond the standing weak hierarchy. The remaining binary conclusions are Theorem 171.9.
+
+Assume now all three relations in (171.48). Corollary 171.10 gives $\varepsilon=+1$. Therefore the ordinary $u_N=\operatorname{Tr}$ is strictly positive on every $C_N\setminus\{0\}$, and every $C_N$ is closed, pointed, and generating. At this earned stage put
+
+$$
+\begin{aligned}
+K_N&=\{X\in C_N:u_N(X)=1\},
+&P_N&=\operatorname{ext}K_N,\\
+\mathcal E_N&=[0,u_N]_{C_N^*}
+ =\{f\in C_N^*:u_N-f\in C_N^*\}.
+\end{aligned}
+\tag{171.49}
+$$
+
+Use the whole $K_N$, all of its extreme points, the already complete dual, the entire interval $\mathcal E_N$, and every finite family $f_a\in C_N^*$ with $\sum_a f_a=u_N$. Each such $f_a$ lies in $\mathcal E_N$ because its complement is the sum of the other nonnegative functionals. This is the full menu convention of the suppliers, with no selected subfamily substituted for it. Compactness and the cone-base interpretation were proved in Theorem 171.9.
+
+The premise correspondence for [XIII, Theorem 166.12, condition 1 implies condition 5][XIII] is now complete:
+
+| Exact premise of the supplier | Object or result here |
+| --- | --- |
+| A fixed integer $n\ge2$ and actual complex Hermitian real tensor carriers | Definition 171.1, including (171.1) |
+| Every finite cone closed, pointed, and generating | Closedness in 171.1; pointedness and generation in 171.9 |
+| Strictly positive multiplicative ordinary trace | (171.2), (171.6), 171.9, and the positive orientation from 171.10 |
+| Entire bases and extreme-point sets, complete duals, entire proper intervals, all finite unit decompositions | (171.3), (171.44), and the full convention (171.49) |
+| All actual finite min/max partitions | (171.4)–(171.5), without truncation |
+| Actual positive permutations and positive inverses; noncontiguous partitions | Definition 171.1 |
+| Canonical reassociation and compatible actual pairings | (171.1), (171.6) |
+| Scalar object, cone, and unit | $W_0=\mathbb R$, $C_0=\mathbb R_+$, $u_0=\mathrm{id}$ |
+| Both low-level PSD equalities in the same coordinates | Propositions 171.7–171.8 with $\varepsilon=+1$ |
+| A nonzero actual ternary dyad with all flattening ranks at least two and one rank $n$ | Exactly (171.11) |
+
+Consequently Theorem 166.12 applies to the original family $C_N$, and gives $C_N=\operatorname{PSD}_{n^N}$ for every finite $N$. Its inheritance by smaller actual coordinate corners, strictly decreasing control-support induction, two-copy Gram bridge, and exact finite propagation tail are reused under their published premises. They are not reproved here. In particular, neither an arbitrary GME without a full leg nor an assumed high-level PSD cone has replaced a supplier premise.
+
+For the reverse implication in (171.48), the full PSD hierarchy satisfies the weak domain. Products of PSD matrices give the minimum inclusion; testing a PSD joint matrix with any PSD product functional gives the maximum inclusion. Permutations and inverses are unitary congruences, the trace and pairing multiply, and the scalar case agrees with $\mathbb R_+$. The two binary relations then hold as above. The vector
+
+$$
+g_n=\sum_{j=0}^{n-1}e_j\otimes e_j\otimes e_j
+\tag{171.50}
+$$
+
+has dyad in $C_3$ and three flattening ranks $n$, so it supplies the unchanged $\mathsf T$. This proves both directions. $\square$
+
+Pointedness, generation, and ordinary trace positivity have therefore been removed from the input domain of (171.48), rather than renamed as a “state cone” assumption. Ordinary trace positivity is not a consequence of the two binary relations alone; the next model supplies the exact obstruction.
+
+### 171.6 A complete all-finite sign countermodel
+
+**Proposition 171.12 (the alternating PSD hierarchy).** For every fixed $n\ge2$, define at every finite level
+
+$$
+C_N^{(-)}=(-1)^N\operatorname{PSD}_{n^N},
+\qquad N\ge0,
+\tag{171.51}
+$$
+
+in the actual carriers (171.1), retaining the ordinary trace and the actual pairings. This is a whole weak-domain model satisfying $\mathsf B$ and the exact $\mathsf M_2$. It fails ordinary strict trace positivity at every odd level and fails $\mathsf T$.
+
+**Proof.** Write $s_N=(-1)^N$. Every $C_N^{(-)}$ is a closed convex cone, and its complete trace dual is exactly
+
+$$
+(C_N^{(-)})^*=s_N\operatorname{PSD}_{n^N}.
+\tag{171.52}
+$$
+
+Indeed $F\in(C_N^{(-)})^*$ means $\operatorname{Tr}(s_NFP)\ge0$ for every $P\succeq0$, which is equivalent to $s_NF\succeq0$. Thus the model has the complete dual, including all of its elements, at every level.
+
+For any finite split $a+b$, if $X=s_aP$ and $Y=s_bQ$ with $P,Q\succeq0$, then
+
+$$
+X\otimes Y=s_{a+b}(P\otimes Q)\in C_{a+b}^{(-)}.
+\tag{171.53}
+$$
+
+Closed conic sums give the full minimum inclusion. For the maximum inclusion, take an arbitrary $Z=s_{a+b}R\in C_{a+b}^{(-)}$ and arbitrary complete-dual elements $F=s_aE$, $G=s_bD$, where $R,E,D\succeq0$. Then
+
+$$
+\operatorname{Tr}[(F\otimes G)Z]
+   =s_as_bs_{a+b}\operatorname{Tr}[(E\otimes D)R]
+   =\operatorname{Tr}[(E\otimes D)R]\ge0.
+\tag{171.54}
+$$
+
+The last inequality holds for arbitrary PSD $R$, including entangled $R$. The sign product is one because $s_as_b=s_{a+b}$. These computations include zero factors and scalar factors; at level zero (171.51) gives exactly $C_0^{(-)}=\mathbb R_+$.
+
+Every actual tensor-position permutation is a unitary congruence and preserves the parity $N$, so it and its inverse preserve $C_N^{(-)}$. The same is true for transported noncontiguous partitions. Actual reassociation changes no joint matrix or joint cone. The trace pairing and ordinary trace keep (171.6) as algebraic identities. Therefore every structural clause of the weak domain holds for all finite levels simultaneously.
+
+At level two both the cone and its complete dual are the usual PSD cone, so $B$ belongs to both. The specified matrix $M$ is invertible, and its local congruence preserves $C_2^{(-)}=\operatorname{PSD}_{n^2}$, proving the exact single-map relation. In fact any same-level local matrix congruence preserves (171.51).
+
+At every odd $N$, a nonzero element has the form $X=-P$, $0\ne P\succeq0$, and
+
+$$
+u_N(X)=-\operatorname{Tr}P<0.
+\tag{171.55}
+$$
+
+Thus $u_N$ is not even a nonnegative functional on that cone. The ordinary trace-one section is empty at every odd level. The signed trace $s_Nu_N$ is strictly positive and has the usual compact base after sign transport, exactly as Theorem 171.9 predicts.
+
+Finally, $C_3^{(-)}=-\operatorname{PSD}_{n^3}$ contains no nonzero usual PSD dyad. Hence $\mathsf T$ fails independently of its rank requirements. The cones themselves remain pointed and generating; the counterexample concerns the ordinary orientation and the ordinary positive-trace/full-PSD conclusion, not the derived pointedness or generation. $\square$
+
+More generally, the parity operation $C_N\mapsto(-1)^NC_N$ preserves the weak structural domain and both binary relations, since level two is unchanged. It interchanges the two signs in (171.32). It does not preserve the odd-level positive-dyad selector. This is an exact $\mathbb Z_2$ obstruction. Model (171.51) is a countermodel in the enlarged weak domain; it is not a countermodel to the old theorem whose input already required ordinary strict trace positivity. It also does not exhibit a non-PSD higher cone after the sign has been removed: its signed cones are precisely PSD. No stronger claim about all weak higher cones is inferred from this example.
+
+### 171.7 Proper resources and exact finite coefficients after the domain is earned
+
+**Proposition 171.13 (the retained budget interfaces).** Assume the binary relations and a nonzero usual PSD element at any odd level. In particular, this applies under $\mathsf T$. The ordinary full bases and proper intervals (171.49) are then defined on a closed, pointed, generating, strictly positive-trace hierarchy. The following are the original proper-resource coefficients, used only at this stage.
+
+**Proof and supplier substitution.** Corollary 171.10 fixes the positive orientation, and Theorem 171.9 establishes the entire proper domain. Since $C_2=\operatorname{PSD}_{n^2}$, the complete Bell cap bound is now
+
+$$
+b=\max_{X\in K_2}\beta(X)=n,
+\qquad B/n\in K_2,\qquad \beta/n\in\mathcal E_2.
+\tag{171.56}
+$$
+
+The value $n$ follows because $B$ has largest eigenvalue $n$, attained on $B/n$. This bound is now being tested on the already identified whole $C_2$. It was not used in the raw proof.
+
+For every proper $f\in\mathcal E_a$ and every correlated $Z\in C_{a+b}$, complete-dual slicing and the maximum inclusion give
+
+$$
+0\le u_b((f\otimes\mathrm{id})Z)\le u_{a+b}(Z).
+\tag{171.57}
+$$
+
+Both inequalities now have their premises: $u_b\in C_b^*$ and $f,u_a-f\in C_a^*$. This is exactly the proper-budget part of [163.2][XIII] and [VII102.7][VII]. It applies at each intermediate correlated input of a finite contraction.
+
+For the specified $M$, retain the quantities
+
+$$
+\begin{aligned}
+r&=\operatorname{Tr}(M^*M)>0,\\
+m&=\max_{X\in K_2}u_2(\operatorname{Ad}_{M\otimes I}X)
+      =\|M\|_{\rm op}^2>0,\\
+\alpha&=\min\{1,m^{-1}\}>0.
+\end{aligned}
+\tag{171.58}
+$$
+
+Applying the proper two-body branch $\alpha\operatorname{Ad}_{M\otimes I}$ to $B/n$ supplies $\alpha R_{M^{\mathsf T}}/n$, of mass $\alpha r/n\in(0,1]$. Using that unnormalized resource and a proper cap $\beta/n$ produces
+
+$$
+\frac{\alpha}{n^2}\operatorname{Ad}_{M^{\mathsf T}};
+\tag{171.59}
+$$
+
+SWAP gives the same coefficient for $\operatorname{Ad}_M$. If instead the normalized mathematical resource $R_Q/r\in K_2$, $Q=M$ or $M^{\mathsf T}$, is supplied, the coefficient is
+
+$$
+\eta\operatorname{Ad}_Q,\qquad \eta=\frac1{nr}>0.
+\tag{171.60}
+$$
+
+These are the two distinct resource conventions in candidate 170.3, now independently licensed by the earned domain. They have different supply masses. A length-$k$ word $Q$ in these two letters has coefficient $\eta^k$ with normalized resources, or $(\alpha/n^2)^k$ with the once-produced unnormalized resources. For the latter convention the finite contraction uses $k$ copies of $B/n$, $k$ uses of the proper binary branch on resource pairs, the required actual permutations, and $k$ proper Bell caps. These operations successively return to the same spectator-plus-input type. For a nonzero positive input, the invertibility of the word gives a nonzero output, whose mass is strictly positive by Theorem 171.9.
+
+For an individual recovered nonzero one-body matrix $A$, the whole PSD $C_2$ contains $R_A$, including when $A$ is singular. Set $r_A=\operatorname{Tr}(A^*A)>0$. The normalized-resource coefficient is exactly
+
+$$
+\frac1{nr_A}\operatorname{Ad}_A.
+\tag{171.61}
+$$
+
+The full original Choi and budget interfaces may now be consumed from [167.8][P167], [163.2][XIII], and [VII102.6–102.7][VII]. In particular, $s_A=\max\{1,\|A\|_{\rm op}\}$ gives the all-spectator TNI congruence $\operatorname{Ad}_{A/s_A}$. For $A=0$ use the zero map, without normalizing a zero resource. On $a$ input legs, normalized identity cups and proper caps give $n^{-2a}\mathrm{id}$; using a directly supplied nonzero Choi resource $J(F)/\operatorname{Tr}J(F)$ instead gives
+
+$$
+\frac{1}{n^a\operatorname{Tr}J(F)}F.
+\tag{171.62}
+$$
+
+The two formulas involve different resources and retain their respective coefficients.
+
+The published exact finite control statement [167.4–167.5][P167] is also available after this handoff. Choose any $0<\lambda<1$ and $S=\operatorname{diag}(\lambda,1,\ldots,1)$. Proposition 171.6 supplies its positivity and all local unitary positivity. If the supplied exact finite word is $Q=c_AA$, $c_A>0$, and contains $k$ occurrences of $S$, its proper output coefficient is
+
+$$
+\alpha_S^k c_A^2,
+\qquad
+\alpha_S=\min\{1,m_S^{-1}\},\quad
+m_S=\max_{X\in K_2}u_2(\operatorname{Ad}_{S\otimes I}X).
+\tag{171.63}
+$$
+
+Here $m_S=1$ in the identified PSD cone, so $\alpha_S=1$; the factor $c_A^2$ still remains. This is an exact finite realization with an enlarged continuous unitary alphabet. Supplier 171.3 concerns a closure of a countable two-letter alphabet. These are different assertions; the latter does not make every recovered matrix an exact two-letter word.
+
+Under $\mathsf T$, the full-finite supplier carries its original coefficients as well. To state them without confusing the original fixed matrix $M$ with a later regular pencil, let $d$ be the supplier's current local dimension, let each selected but otherwise unrestricted seed be supplied as $h\psi\psi^*/\delta$, $\delta=\|\psi\|^2$, and let the actual real control be supplied as $t_Q QQ^*/q_Q$, $q_Q=\|Q\|^2$. With the supplier's common filter $L/s_L$, its three proper Bell caps and two seed copies give [166.11][XIII]
+
+$$
+\kappa\,\xi\xi^*,\qquad
+\kappa=\frac{h^2t_Q}{\delta^2q_Qs_L^2d^3}>0,
+\quad
+\xi=|C\rangle\!\rangle|0\rangle+|D\rangle\!\rangle|1\rangle.
+\tag{171.64}
+$$
+
+Here $C$ is invertible and $D\notin\mathbb CC$ by that supplier. The final filter $C^{-1}/s_C$, $s_C=\max\{1,\|C^{-1}\|\}$, gives coefficient $\kappa/s_C^2$. Writing $\mathsf N=C^{-1}D$, its mass is
+
+$$
+\frac{h^2t_Q[d+\operatorname{Tr}(\mathsf N^*\mathsf N)]}
+ {\delta^2q_Qs_L^2d^3s_C^2}\in(0,1].
+\tag{171.65}
+$$
+
+The control is itself paid for by [166.10][XIII]: three normalized Bell resources give $t_Q=d^{-3}$; if their supply masses are $b_1,b_2,b_3>0$, then $t_Q=b_1b_2b_3/d^3$. Thus the full dyad coefficient in (171.64) contains $d^{-6}$ after including this preparation. Its six preparation legs are separate from the nine-leg core consisting of the two seeds and the control. The restricted copies that establish a smaller corner and pay its effects are not the two unrestricted seed copies in the core, and their masses are not multiplied into the later control a second time.
+
+Equations (171.64)–(171.65) are explicit reuse of the existing supplier, with the complete premises paid in Theorem 171.11. Its strictly smaller control dimensions, finite choices, proper filters, and proper caps ensure finite products of strictly positive coefficients. They supply no dimension-independent copy bound or success lower bound.
+
+Finally, closed-cone membership of a recovered limit resource is a mathematical conclusion. It gives neither a limiting device nor a uniform positive production probability along its approximating words. Already in the ordinary PSD hierarchy, repeating the proper scalar filter $aI$, $0<a<1$, gives mass $a^{2k}$ on trace-one inputs. Thus positivity of every fixed finite coefficient does not establish positive mass for an infinite protocol. $\square$
+
+### 171.8 The complete original quantum correspondence
+
+**Corollary 171.14 (the existing full finite dictionary on the earned domain).** Under Theorem 171.11(2), put $d_N=n^N$ and $d_0=1$. The original objects have the following complete correspondence in the same actual coordinates.
+
+| Original object or relation | Quantum expression |
+| --- | --- |
+| Entire $K_N$ and its convex preparations | All $\rho\succeq0$ with $\operatorname{Tr}\rho=1$, with usual convex mixtures |
+| Entire $P_N$ and nonzero extreme rays | All unit rank-one projectors and their positive multiples; pure-state space $\mathbb{CP}^{d_N-1}$ |
+| Complete trace dual and entire proper interval | All PSD functionals and every $0\preceq E\preceq I_{d_N}$ |
+| All finite unit decompositions and original pairing | All finite POVMs, including PVMs; $p(a\mid\rho)=\operatorname{Tr}(E_a\rho)$ |
+| Hermitian observables | Their spectral PVMs and expectations $\operatorname{Tr}(A\rho)$ |
+| Actual finite composition and all partitions | The whole density-matrix space on $(\mathbb C^n)^{\otimes N}$, including entangled states |
+| Actual permutations and unit slices | Ordinary factor permutations and partial traces on arbitrary correlated inputs |
+| Exhaustive confirmation at a pure projector $p$ | $\inf\{f(X):f\in\mathcal E_N,\ f(p)=1\}=\operatorname{Tr}(pX)$ for $X\in C_N$ |
+| Pure-state confirmation overlap | $\operatorname{Tr}(vv^*ww^*)=|v^*w|^2$ for unit vectors |
+| Maps positive with every original finite spectator | All rectangular completely positive maps, with the Choi and Kraus expressions below |
+| Full-input TNI or TP budgets | Kraus completeness inequality or equality |
+| Finite branch families with TP sum | All finite mathematical CP instruments, with the original sequential, adaptive, coarse-graining, and tensor rules |
+
+**Proof by exact supplier reuse.** Theorem 171.11 has established the actual all-finite PSD target and the full domain of [167.9][P167] and [166.14][XIII]. Their proofs give the first nine rows, including all extreme points and the least confirmation formula, rather than a selected collection of states or effects. The supplied Hilbert carrier, actual tensor product, convex linear preparation law, and trace pairing remain standing inputs. The derived assertion is the complete allowed cone and the resulting full dictionary on that carrier. The standard matrix ingredients are also identified in [Watrous, §§1.1.2–1.1.3 and §2.1.2][W1W2].
+
+For clarity, the exact process interface being consumed from [VII102.7 and 102.13][VII], [167.8–167.9][P167], and [XIII161.9][XIII] is as follows. For finite $a,b\ge0$ and real-linear $F:W_a\to W_b$, use its unique complex-linear Hermiticity-preserving extension and reference–output order:
+
+$$
+J(F)=\sum_{i,j=0}^{d_a-1}E_{ij}\otimes F(E_{ij}).
+\tag{171.66}
+$$
+
+Then
+
+$$
+\begin{aligned}
+F\text{ positive with every original finite spectator}
+&\Longleftrightarrow J(F)\in C_{a+b}
+ \Longleftrightarrow J(F)\succeq0\\
+&\Longleftrightarrow
+F(X)=\sum_\gamma K_\gamma XK_\gamma^*,
+\qquad K_\gamma:\mathbb C^{d_a}\to\mathbb C^{d_b}.
+\end{aligned}
+\tag{171.67}
+$$
+
+The full original self-reference criterion now has its low-level and proper-domain premises. The last equivalence is the existing rectangular Choi/Kraus theorem, [Watrous, Theorem 2.22][W2], after the actual SWAP between that text's output–reference order and (171.66). For nonzero $F$ its Kraus number can equal $\operatorname{rank}J(F)\le d_ad_b$; for zero $F$ use the empty Kraus sum. Only original reference dimensions $n^s$ were initial objects. Usual CP with arbitrary finite matrix reference dimension follows from the resulting Kraus form.
+
+Writing $Q_F=\sum_\gamma K_\gamma^*K_\gamma$, the budget interface is
+
+$$
+\begin{aligned}
+\operatorname{Tr}_{\rm out}J(F)&=Q_F^{\mathsf T},\\
+u_bF\le u_a&\Longleftrightarrow Q_F\preceq I_{d_a},\\
+u_bF=u_a&\Longleftrightarrow Q_F=I_{d_a}.
+\end{aligned}
+\tag{171.68}
+$$
+
+These are whole-input conditions, including all original correlated spectator extensions. They are the exact budget conclusions of the cited suppliers and [Watrous, Theorem 2.26][W2]; a single total trace of $J(F)$ does not replace its full reference marginal.
+
+For a finite mathematical instrument of fixed input and output types,
+
+$$
+F_\ell(X)=\sum_\gamma K_{\ell\gamma}XK_{\ell\gamma}^*,
+\quad
+\sum_{\ell,\gamma}K_{\ell\gamma}^*K_{\ell\gamma}=I_{d_a},
+\quad E_\ell=F_\ell^\dagger(I)=\sum_\gamma K_{\ell\gamma}^*K_{\ell\gamma}.
+\tag{171.69}
+$$
+
+Every branch has a same-output-type complement by the existing Kraus family $|v\rangle\langle b_j|\sqrt{I-Q_F}$, for a unit output vector $v$ and an input orthonormal basis $(b_j)$. Every effect and finite POVM occurs as the effect family of a mathematical instrument, for example through $X\mapsto\operatorname{Tr}(E_\ell X)\omega$ with a fixed normalized output $\omega$.
+
+For an arbitrary correlated original input $Z\succeq0$ of mass $m=\operatorname{Tr}Z$, the complete conditioning statement consumed from [161.9, (161.27)–(161.30)][XIII] is
+
+$$
+\begin{aligned}
+Z_\ell&=(\mathrm{id}\otimes F_\ell)Z,\\
+m_\ell&=\operatorname{Tr}Z_\ell
+       =\operatorname{Tr}[(I\otimes E_\ell)Z],
+\qquad \sum_\ell m_\ell=m.
+\end{aligned}
+\tag{171.70}
+$$
+
+For $m>0$, outcome probability on the normalized input is $m_\ell/m$. Only for $m_\ell>0$ is the conditional joint state $Z_\ell/m_\ell$ defined. If $m_\ell=0$, the unnormalized positive output is zero; no normalized zero-mass state is prescribed. Zero input gives all zero outputs, and zero-labeled branches can be retained. The same supplier gives
+
+$$
+\operatorname{Tr}_{\rm out}Z_\ell
+ =\operatorname{Tr}_{\rm in}
+  [(I\otimes\sqrt{E_\ell})Z(I\otimes\sqrt{E_\ell})],
+\qquad
+\sum_\ell\operatorname{Tr}_{\rm out}Z_\ell
+                 =\operatorname{Tr}_{\rm in}Z.
+\tag{171.71}
+$$
+
+It also supplies the finite sequential and adaptive composition laws, addition of unnormalized outputs under coarse-graining, and tensor-product instrument laws. These are the previously proved matrix-level rules, not a new propagation or instrument proof. Their standard instrument form is [Watrous, §2.3.2, (2.255)–(2.261)][W2].
+
+Scalar boundaries remain part of this full correspondence. For $a=0$, $F(q)=q\sigma$ with $\sigma\succeq0$, and TNI/TP means $\operatorname{Tr}\sigma\le1$ or $=1$. For $b=0$, $F(X)=\operatorname{Tr}(EX)$, and TNI/TP means $0\preceq E\preceq I$ or $E=I$. With both types scalar, the map is multiplication by a nonnegative scalar, TNI at most one and TP equal to one. The scalar base is $\{1\}$ and its effect interval is $[0,1]$; the one-dimensional ray space is $\mathbb{CP}^0$. The empty reference cup is the scalar one. $\square$
+
+Mathematical admissibility is not event availability. Identifying this entire branch and instrument theory with an actual available device menu requires the additional **event-saturation choice** of [VII, Definition 102.14][VII]. Static effects specify probabilities and conditional spectator marginals; a whole post-measurement output requires a specified branch. The next two consumers retain their own additional data.
+
+### 171.9 Ideal sharp update and a given continuous reversible action
+
+**Corollary 171.15 (the existing ideal sharp-neutral update correspondence).** Under Theorem 171.11(2), fix any finite $k\ge0$. Let $P=P^*=P^2$ on $\mathbb C^{d_k}$, and let $L:W_k\to W_k$ be a positive real-linear map satisfying
+
+$$
+u_kL(X)=\operatorname{Tr}(PX),\qquad
+L(p)=p\quad\text{for every }p\in P_k
+                         \text{ with }\operatorname{Tr}(Pp)=1.
+\tag{171.72}
+$$
+
+Then the existing matrix sharp-neutral supplier gives
+
+$$
+L(X)=PXP.
+\tag{171.73}
+$$
+
+**Proof by supplier substitution.** The complete pure-state dictionary in Corollary 171.14 makes the second quantifier in (171.72) exactly the quantifier over every unit ray in $\operatorname{Ran}P$, including all rays in a degenerate yes subspace. The first identity is $L^\dagger(I)=P$. Thus the matrix premises in [XIII161.7.1, application of Atlas Proposition 13.4(1)][XIII] hold with the same single matrix sector and coordinate transport $\Theta_k=\mathrm{id}$. That existing positive real-linear uniqueness argument yields (171.73) on all of $W_k$. No CP assumption is needed in that supplier; CP and all spectator lifts follow from the obtained compression and the earned dictionary. The endpoints $P=0$, $P=I$, and $d_k=1$ are included.
+
+For a finite orthogonal decomposition $\sum_\ell P_\ell=I$ and a normalized correlated input $Z\succeq0$, the supplied joint-state formulas are
+
+$$
+\begin{aligned}
+p_\ell&=\operatorname{Tr}[(I\otimes P_\ell)Z],\\
+Z_{\mid\ell}&=
+ \frac{(I\otimes P_\ell)Z(I\otimes P_\ell)}{p_\ell}
+                  \quad(p_\ell>0),\\
+Z_{\rm ns}&=\sum_\ell(I\otimes P_\ell)Z(I\otimes P_\ell).
+\end{aligned}
+\tag{171.74}
+$$
+
+These are [161.30b–161.30c][XIII], now with identity coordinate transport. At zero probability only the zero unnormalized output is specified. The pointwise neutrality in (171.72) is additional data characterizing an ideal sharp branch. Outcome repeatability alone does not supply it: a map $X\mapsto VPXPV^*$ with $V$ rotating rays within $\operatorname{Ran}P$ has the same sharp effect and repeats that outcome, while disturbing some certain-yes rays. This distinction, including its degenerate-subspace requirement, is already part of the cited supplier. $\square$
+
+**Corollary 171.16 (Hamiltonian classification of a given continuous real order action).** Under Theorem 171.11(2), additionally give a real-linear family $A_\tau:W_k\to W_k$ on a fixed finite level, satisfying
+
+$$
+A_0=I,\quad A_{\tau+\sigma}=A_\tau A_\sigma,\quad
+A_\tau(C_k)=C_k,\quad u_kA_\tau=u_k,
+\tag{171.75}
+$$
+
+and continuity in the finite-dimensional operator topology for $\tau\in\mathbb R$. Then there is a Hermitian matrix $\mathsf H$, unique modulo a real scalar multiple of the identity, such that
+
+$$
+A_\tau(X)=e^{-i\tau\mathsf H}Xe^{i\tau\mathsf H},
+\qquad \mathcal L(X)=-i[\mathsf H,X].
+\tag{171.76}
+$$
+
+**Proof by supplier substitution.** The cone and trace have already become the ordinary whole matrix PSD cone and trace. Thus (171.75) is precisely a given continuous trace-preserving real order-automorphism group on that matrix space. Apply the matrix-level proof of [XIII, Theorem 161.10, starting from its transported group $B_t$][XIII], with coordinate transport the identity. Its equal-size rank-one-preserver classification, exclusion of the transpose component by connectedness, and local unitary lift have exactly these premises. It neither assumes an implementing unitary family nor requires differentiability as an extra hypothesis. It gives (171.76), including matrix size two. At size one the action is the identity and every Hermitian scalar represents the generator. This application does not invoke the earlier geometric reconstruction assumptions of Theorem 161.5. $\square$
+
+For a vector representative and density matrix, the corresponding supplied equations are $i\dot\psi=\mathsf H\psi$ and $i\dot\rho=[\mathsf H,\rho]$. They describe the **given** real action. A physical clock, identification of its parameter with physical time, energy calibration, and a positive action scale $\hbar$ are additional data; after those are given one may write $H_{\rm phys}=\hbar\mathsf H$ and the usual equations with $\hbar$. The fixed dimensionless $t=1/(32n)$ in (171.8) is not that physical time. Different Hamiltonians, the identity action, and parameter rescalings preserve the same static hierarchy. Neither the binary relations nor $\mathsf T$ selects such a dynamics or an actual ideal measuring device.
+
+### 171.10 Provenance, scope, and the remaining questions
+
+**Proposition 171.17 (the exact dependency and limitation statement).** The bridges used on the weakened domain are Lemmas 171.4–171.5, the cone-closure transfer in 171.6, the weak-domain double orbit in 171.7, the sign argument in 171.8, the finite projector-frame argument in 171.9, and the selector in 171.10. Their proofs above do not use pointedness, generation, or positive ordinary trace as an input, and do not invoke the old full-domain reconstruction to establish any of them.
+
+**Proof and source accounting.** The raw slice uses only the maximum bound and closed-cone bipolarity. The raw Bell bridge additionally uses the minimum bound, complete Bell dual membership, and actual permutations. The transfer uses only cone closedness and the isolated matrix closure assertion. The double orbit additionally uses Bell state membership and finite matrix decompositions. The one-body sign uses the actual $(1,1)$ bounds; the finite frame uses the actual tensor span and all repeated min/max bounds. The selector uses strict signed trace, established by that frame. This lists the full antecedents of every new bridge and their order of use.
+
+The exact source dependencies and their mathematical roles are as follows.
+
+| Source | Exact role in this chapter |
+| --- | --- |
+| Candidate XVI §170 at `4a2c3cc8bb4620516476cd923a7334f4df59e1a9` [A170] | The exact fixed matrices, and only the algebraic closure statement and its matrix proof in 170.4; candidate 170.3/170.5 are not antecedents of the new weak-domain bridges |
+| Published XVI §167 at `d91fdb64e60124b82bcead3c5dbe4d33cd50eaf5` [P167] | The old full-domain contract for comparison; after the domain is earned, 167.4–167.5 exact finite-word budgets and 167.8–167.9 original Choi and dictionary consumers |
+| XIII §166 at `00427ae2ba9c9e3f6c37f2e5496b9127b6fbc6c0` [XIII] | Complete 166.1–166.2 premise and seed contracts; 166.10–166.11 exact finite coefficients; 166.12 condition 1 to condition 5; 166.14 dictionary |
+| XIII §163.1–163.2 at that same pin | The earned low-two-level full-spectator filters, complete slicing, Choi interface, and proper budgets |
+| XIII Definition 161.8, Theorems 161.9–161.10, and §161.7.1 at that same pin | Only their post-reconstruction matrix instrument/zero-mass rules, ideal sharp-neutral consumer, and classification of a given continuous real order action |
+| VII102.6–102.7 and 102.13–102.15 at `657a8ba435bf2cae463e935d957d8038b69be8a3` [VII] | The exact original slicing/Choi interfaces after their premises are paid, rectangular process and complement dictionary, and separate event-saturation choice |
+| Hall, author text `math-ph/0005032v1` [Hall] | Relative closed matrix groups, real Lie algebra operations, and the norm-controlled logarithm cited by the algebraic supplier |
+| Watrous, author Chapters 1 and 2 [W1], [W2] | Spectral/SVD facts, finite PSD and density-matrix geometry, rectangular Choi/Kraus theorem 2.22, TP marginal theorem 2.26, and the standard POVM/instrument correspondence |
+
+The exact mathematical dependency on §170.4 at the fixed source [A170] is (171.12), not its stronger theorem on the original positive-trace domain. Hall supplies the general group tools, not the particular generation computation as an independently established external theorem. Theorem 171.11 consequently has the ordinary status of a paper proof with that expressly identified candidate algebraic dependency. The all-finite and dictionary conclusions similarly consume the published paper suppliers and their named dependencies; reading them is not an independent re-verification of their entire dependency chains.
+
+No gap has been used to skip a new cone bridge: they are proved above for the stated weak domain. The source reliance just identified remains visible and is not promoted into kernel certification or independent settlement of candidate170. There are also precise mathematical questions not resolved by this chapter. Without $\mathsf T$ the theorem gives $C_2=\operatorname{PSD}$, $C_1=\varepsilon\operatorname{PSD}$, and properness with signed trace at every level. It does not conclude $\varepsilon^N C_N=\operatorname{PSD}_{n^N}$ for all higher $N$. Nor does the frame argument supply a countermodel to that stronger signed higher-level claim. Even an arbitrary odd PSD selector pays only orientation; its ranks need not pay 166.12.
+
+If a given GME vector has every one-leg rank below $n$, the particular full-leg propagation interface has not been met. For example, when $n>2$, the embedded vector $e_0^{\otimes3}+e_1^{\otimes3}$ has all three ranks two. The present argument does not settle reconstruction from such a general non-full-leg seed. This is an unmet supplier premise, not a full finite nonquantum countermodel. Removing closedness, replacing complete duals by a selected family, truncating the finite hierarchy, or deleting actual positive permutations would likewise remove specifically used premises; no independence theorem for those premises is claimed.
+
+The exact counterexample proved here is (171.51). It refutes recovery of the ordinary positive orientation from the binary relations alone while satisfying the entire weak all-finite structural domain. Complex scalars, the actual Hermitian carrier, local dimension, all finite actual compositions, and pairing compatibility remain model assumptions. Nothing here reconstructs infinite-dimensional theory, a physical event menu, a clock, an energy assignment, spacetime, or a numerical value of $\hbar$. There is no claim of kernel verification, empirical confirmation, global novelty, or a globally minimal independent axiom list. $\square$
+
+### 171.11 完整中文几何说明
+
+**说明 171.18（先接线、再定方向、最后归一的完整图景）。** 这章从一开始就保留原来的复 Hermitian 矩阵空间，保留任意有限多个系统的真实张量空间、全部分块和全部位置交换，也保留对每个锥非负的所有线性测试。这里的“全部”很重要：不是只检查某几份输入，也不是只保留乘积态。先不规定锥一定尖、一定张满空间，甚至不规定普通迹在锥上为正，因此最初没有理由把迹叫作概率总量，也没有先定义归一态、合法概率效果或成功率。
+
+贝尔矩阵同时属于二体锥和它的完整对偶，意味着它既能作为一个原锥中的相关对象，也能作为一个非负线性测试。把唯一给定矩阵作用到这个对象上，再用同一个贝尔测试接回输入，就得到局部矩阵转置对应的合同。这里转置的是局部矩阵的系数，接线后的输出仍是通常的 $QXQ^*$，没有把任意输入态作转置。整条接线先只说明输出仍在锥内，不声称测试值小于一，也不把它当成已归一的实验。最小分块关系允许把输入和资源放在一起，最大分块关系保证完整对偶测试切走两条腿后，剩下的仍在整个原锥里；所以与输入相关的任意旁观者也一直保留。
+
+候选170中单独使用的代数计算说明，这两个正向矩阵的闭包先露出链端的一圈无理相位，再沿固定混合的路径取得各个方向的旋转和相对伸缩。这里准确复用的是那一段矩阵生成证明，而不是候选170已经要求正迹的整域定理。每个固定有限层的锥是闭的，所以这些矩阵极限仍保持该层的锥。贝尔对象的准备轨道因此填入全部二体 PSD 方向；贝尔测试的对偶轨道又排除全部非 PSD 方向。两面同时夹住，二体锥就成为通常量子锥。整个过程尚未借用紧归一基或 proper 帽。
+
+二体形状确定后，一个一体元素和自己相乘不能出现负特征值，这迫使每个非零一体元素要么全向普通正半边，要么全向负半边。正半边和负半边又不能同时存在，否则它们的乘积会落到二体负半边。因此一体锥只有一个共同方向，但二体关系还分不清这个共同方向究竟朝上还是朝下。把一体方向反过来时，两体的两个负号相消；更一般地，把所有奇数层同时反过来，全部有限张量分块关系仍然成立。明确模型就是偶数层取 PSD、奇数层取负 PSD。它保留全部原关系和那一个矩阵，却在每个奇数层具有负的普通迹，并且没有任何非零普通正的三体 dyad。这是完整有限层级的符号障碍，不是旧正迹域里的反例。
+
+选定这个共同符号以后，还有一项不能省略的工作：为什么任意高层锥都会尖、都会张满，而且非零元素的带符号迹一定严格为正？可以在一条腿上取基向量的投影，再取每对基向量实相加、实相减、带 $i$ 相加和带 $i$ 相减的投影。这是一个明确的有限家族，能分清整张 Hermitian 矩阵的所有实方向，它们相加又是恒等矩阵的正倍数。取任意有限条腿的所有这些投影乘积，最小关系保证它们在锥里，最大关系保证它们也都能作非负测试。它们仍张满整个真实张量空间，总和仍是恒等的正倍数。
+
+因此，一个高层锥元素如果带符号总迹为零，每个投影测试就都只能为零；完整张成又迫使这个元素本身为零。这说明任何非零元素的带符号总迹都严格为正，正反两条同一直线不能同时留在锥中，锥中的元素之差又能表达空间的所有方向。到这一步，尖性、生成性和严格正迹才全部成为推论。把带符号迹截成一得到完整归一基；它不能向无穷远跑，否则归一方向的极限会给出一个非零但迹为零的锥元素，所以这个基是紧的。这个有限投影论证对每个有限层、每个 $n\ge2$ 都适用，并没有假定高层锥已经等于 PSD。
+
+任何奇数层只要真的包含一个非零的普通 PSD 元素，它的普通迹就是正的，便能排除朝下的共同方向。原来的三体种子当然有这个作用；选择正方向根本不需要它的秩条件。但该种子的另一项工作确实需要那些秩：三条腿都不能是乘积方向，而且至少一条腿要占满原局部空间。正方向确定以后，旧定理要求的闭、尖、生成、严格正乘法迹、完整基、全部极点、完整对偶、整个 proper 区间、全部有限单位分解、每个实际分块和正逆交换，才逐项全部齐备。此时准确接入166.12，由它已有的小角控制、有限种子接合和全有限传播，得到每一层都是完整量子 PSD 锥。这一段传播没有被本章的符号论证代替，也没有把任意一个未满腿的纠缠态都擅自当成合格入口。
+
+归一和预算必须放在这个次序之后。贝尔态除以 $n$、贝尔测试除以 $n$ 才分别成为归一资源和 proper 帽，接线会留下明确的 $n$ 因子；由唯一矩阵的一次实际数学分支供应资源时，还要保留该分支的缩放和质量。两份种子、控制态、三只帽以及最后的逆矩阵滤波也各有自己的平方系数和供应质量。有限个严格正因子相乘仍严格正，但这不保证一串越来越长的协议有统一成功下界，更不保证极限装置存在。锥内正比例可以用来证明方向属于锥，不能在概率账目中把那个比例抹去。
+
+最后才读取熟悉的量子对应：完整归一基是全部密度矩阵，全部极点是单位射线，完整效果和有限单位分解是所有 POVM，原配对给 Born 读数，真实张量空间上的完整联合锥包括纠缠态；原自身参考的 Choi 判据给所有矩形 CP 映射，逐输入的迹预算给 TNI、TP 和有限数学仪器。正质量时才有条件态，零质量输出只能是零，不能除以零。一个效果没有替整台测量指定唯一更新；还给出对每条确定为 yes 的射线逐点不扰动，才能消费已有锐中性定理，得到 Lüders 压缩。静态锥也没有挑出时间演化；还给出一个连续、可逆、保迹的真实实线性序作用，才由已有分类取得 Hamiltonian。物理钟、能量单位和 $\hbar$ 仍须另外标定，数学仪器是否真的属于可用装置菜单也须另给事件选择。本章的简化是把锥的良好形状和归一结构从完整关系中推出，并准确保留一个不可避免的奇偶符号；它没有从零生成复数载体、物理设备或所有量子公理的独立最小列表。
+
+[A170]: https://github.com/the-omega-institute/trureturing/blob/4a2c3cc8bb4620516476cd923a7334f4df59e1a9/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md#170-一个端点相位的固定复正交混合与全有限量子对应
+[P167]: https://github.com/the-omega-institute/trureturing/blob/d91fdb64e60124b82bcead3c5dbe4d33cd50eaf5/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md#167-二体有限控制一腿满维种子与全部有限量子锥
+[XIII]: https://github.com/the-omega-institute/trureturing/blob/00427ae2ba9c9e3f6c37f2e5496b9127b6fbc6c0/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md
+[VII]: https://github.com/the-omega-institute/trureturing/blob/657a8ba435bf2cae463e935d957d8038b69be8a3/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+[Hall]: https://arxiv.org/pdf/math-ph/0005032v1
+[W1]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf
+[W2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
+[W1W2]: https://cs.uwaterloo.ca/~watrous/TQI/
+
+## 追加锚（本行以下为增补区）
