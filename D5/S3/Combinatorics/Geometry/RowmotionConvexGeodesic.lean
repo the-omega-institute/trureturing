@@ -11,6 +11,8 @@ import Mathlib.Order.Preorder.Finite
 import Mathlib.Data.Finset.SymmDiff
 import Mathlib.Data.Finset.Dedup
 
+/-! Guarded toggle geodesics for finite order-convex subsets of an arbitrary poset. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -44,8 +46,12 @@ private lemma exists_erase (K A : Finset P) (hK : (K : Set P).OrdConnected)
   classical
   obtain ⟨z, hzA, hzK⟩ : ∃ z ∈ A, z ∉ K := by
     by_contra h
-    exact hne (Finset.Subset.antisymm hsub (by simpa using h))
-  obtain ⟨a, hza, ha⟩ := A.exists_minimal_le hzA
+    apply hne
+    apply Finset.Subset.antisymm hsub
+    intro y hy
+    by_contra hyK
+    exact h ⟨y, hy, hyK⟩
+  obtain ⟨a, hza, ha⟩ := A.exists_le_minimal hzA
   obtain ⟨b, hzb, hb⟩ := A.exists_le_maximal hzA
   by_cases haK : a ∈ K
   · have hbK : b ∉ K := fun hbK => hzK (hK.out haK hbK ⟨hza, hzb⟩)
@@ -55,9 +61,9 @@ private lemma exists_erase (K A : Finset P) (hK : (K : Set P).OrdConnected)
 private lemma toggle_erase (A : Finset P) (x : P) (hx : x ∈ A)
     (hA : (A : Set P).OrdConnected)
     (he : by classical exact ((A.erase x : Finset P) : Set P).OrdConnected) :
-    by classical exact
+    by classical exact (
       toggle x (A : Set P) = (A.erase x : Set P) ∧
-      toggle x (A.erase x : Set P) = (A : Set P) := by
+      toggle x (A.erase x : Set P) = (A : Set P)) := by
   classical
   have hf : (A : Set P) ∆ {x} = (A.erase x : Set P) := by
     ext y
@@ -65,17 +71,17 @@ private lemma toggle_erase (A : Finset P) (x : P) (hx : x ∈ A)
   have hr : (A.erase x : Set P) ∆ {x} = (A : Set P) := by
     rw [← hf, symmDiff_assoc, symmDiff_self, symmDiff_bot]
   constructor
-  · simp only [toggle, hf, if_pos he]
-  · simp only [toggle, hr, if_pos hA]
+  · simp only [toggle, hf, ite_eq_left he]
+  · simp only [toggle, hr, ite_eq_left hA]
 
 private lemma deletion_word (K A : Finset P) (hK : (K : Set P).OrdConnected)
     (hA : (A : Set P).OrdConnected) (hsub : K ⊆ A) :
-    by classical exact ∃ w : List P, w.Nodup ∧ w.toFinset = A \ K ∧
+    by classical exact (∃ w : List P, w.Nodup ∧ w.toFinset = A \ K ∧
       w.foldl (fun S x => toggle x S) (A : Set P) = (K : Set P) ∧
-      w.reverse.foldl (fun S x => toggle x S) (K : Set P) = (A : Set P) := by
+      w.reverse.foldl (fun S x => toggle x S) (K : Set P) = (A : Set P)) := by
   classical
   induction A using Finset.strongInductionOn with
-  | H A ih =>
+  | _ A ih =>
     by_cases hKA : K = A
     · subst A
       exact ⟨[], by simp⟩
@@ -87,7 +93,7 @@ private lemma deletion_word (K A : Finset P) (hK : (K : Set P).OrdConnected)
     have hxv : x ∉ v := by
       intro h
       have hh : x ∈ (A.erase x) \ K := hvset ▸ List.mem_toFinset.mpr h
-      exact Finset.not_mem_erase x A (Finset.mem_sdiff.mp hh).1
+      exact (Finset.mem_erase.mp (Finset.mem_sdiff.mp hh).1).1 rfl
     have hstep := toggle_erase A x hxA hA he
     refine ⟨x :: v, List.nodup_cons.mpr ⟨hxv, hvn⟩, ?_, ?_, ?_⟩
     · rw [List.toFinset_cons, hvset]
@@ -101,10 +107,10 @@ private lemma deletion_word (K A : Finset P) (hK : (K : Set P).OrdConnected)
 point of their symmetric difference exactly once. -/
 theorem exists_toggle_word (P : Type u) [PartialOrder P] (s t : Finset P)
     (hs : (s : Set P).OrdConnected) (ht : (t : Set P).OrdConnected) :
-    by classical exact ∃ w : List P, w.Nodup ∧ w.toFinset = s ∆ t ∧
+    by classical exact (∃ w : List P, w.Nodup ∧ w.toFinset = s ∆ t ∧
       w.length = (s ∆ t).card ∧
       w.foldl (fun A x => RowmotionEndpointTransport.toggle x A) (s : Set P) =
-        (t : Set P) := by
+        (t : Set P)) := by
   classical
   have hk : ((s ∩ t : Finset P) : Set P).OrdConnected := by
     simpa only [Finset.coe_inter] using hs.inter ht
@@ -112,10 +118,11 @@ theorem exists_toggle_word (P : Type u) [PartialOrder P] (s t : Finset P)
   obtain ⟨w, hwn, hws, _, hwr⟩ := deletion_word (s ∩ t) t hk ht Finset.inter_subset_right
   have hn : (v ++ w.reverse).Nodup := by
     apply List.nodup_append.mpr
-    refine ⟨hvn, hwn.reverse, ?_⟩
-    intro x hxv hxw
+    refine ⟨hvn, by simpa using hwn, ?_⟩
+    intro x hxv y hyw hxy
+    subst y
     have hx1 : x ∈ s \ (s ∩ t) := hvs ▸ List.mem_toFinset.mpr hxv
-    have hx2 : x ∈ t \ (s ∩ t) := hws ▸ List.mem_toFinset.mpr (List.mem_reverse.mp hxw)
+    have hx2 : x ∈ t \ (s ∩ t) := hws ▸ List.mem_toFinset.mpr (List.mem_reverse.mp hyw)
     exact (Finset.mem_sdiff.mp hx1).2 (Finset.mem_inter.mpr
       ⟨(Finset.mem_sdiff.mp hx1).1, (Finset.mem_sdiff.mp hx2).1⟩)
   have hset : (v ++ w.reverse).toFinset = s ∆ t := by

@@ -42,9 +42,8 @@ internal sealed class RowmotionConvexGeodesicDocument : IScribeDocumentDefinitio
         var setS = Call("Finset.coe", s);
         var setT = Call("Finset.coe", t);
         var diff = Call("SymmDiff", s, t);
-        var step = new Formula.Lambda(FormulaIdentifier.Create("A"), Call("Set", p),
-            new Formula.Lambda(FormulaIdentifier.Create("x"), p,
-                Call("RowmotionEndpointTransport.toggle", F.Id("x"), F.Id("A"))));
+        var step = Seq(Open, F.Id("A"), Comma, Sp, F.Id("x"), Close, Sp, Mapsto, Sp,
+            Call("RowmotionEndpointTransport.toggle", F.Id("x"), F.Id("A")));
         var conclusion = And(Call("List.Nodup", w),
             And(Eq(Call("List.toFinset", w), diff),
                 And(Eq(Call("List.length", w), Call("Finset.card", diff)),
