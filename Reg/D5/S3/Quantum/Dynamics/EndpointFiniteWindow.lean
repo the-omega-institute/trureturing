@@ -170,21 +170,21 @@ def family : Registration arena (type_of% @finite_window_lower_bound.{u}) where
       exact nomatch e
   dependence := dependence
 
-def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@finite_window_lower_bound.{u})
-    (Realization signature) (Type) Unit where
+def registration.{audit_u} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@finite_window_lower_bound.{audit_u})
+    (Realization signature.{audit_u}) (Type) Unit where
   unitName := `D5.S3.Quantum.Dynamics.EndpointFiniteWindow.finite_window_lower_bound.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Dynamics.EndpointFiniteWindow.Window.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{audit_u}⟩
+  objectArena := .source ⟨arena.{audit_u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{audit_u} ⟨family.{audit_u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
+  readout := some (realize signature.{audit_u}
     (fun _ p T => by
       letI := p.finite
       exact T⁻¹ * ∫ t in (0 : ℝ)..T,
