@@ -1,0 +1,411 @@
+**命题 134.2（根覆盖与完整确认读数的联合控制）。** 对定义134.1的所有 $d,m,v,e$，
+$K$ 是满维紧凸体，$C$ 是闭尖生成凸锥，$u$ 在 $C\setminus\{0\}$ 上严格正。
+全部原纯点恰为
+
+$$
+P=\{(t,a,b)\in K:\|a\|=1-t,\ \|b\|^2=t(1-t)\}.
+\tag{XI134.5}
+$$
+
+根及每个根邻点的完整读数和整个排除集为
+
+$$
+\begin{aligned}
+T_o(t,a,b)&=t,& D_o&=\{(0,a,0):\|a\|\le1\},\\
+T_{p_s}(t,a,b)&=\frac{1-t+s\cdot a}{2},&
+D_{p_s}&=\{(t,-(1-t)s,b):\|b\|^2\le t(1-t)\}.
+\end{aligned}
+\tag{XI134.6}
+$$
+
+它们分别是完整 $d$ 球及完整 $(m+1)$ 球，且
+
+$$
+S_o=\{p_s:\|s\|=1\},\qquad
+P=\bigcup_{\|s\|=1}(P\cap D_{p_s}).
+\tag{XI134.7}
+$$
+
+特别地，$d=3,m=2$ 时根与全部根邻点的完整排除集同时为三球，并满足同一固定根的两步覆盖。
+对 $z=(t,a,b)\in P\setminus\{o\}$，其唯一根邻关联为
+
+$$
+\pi_o(z)=p_{-a/(1-t)}\in S_o,\qquad z\in D_{\pi_o(z)}.
+\tag{XI134.8}
+$$
+
+标签 $q$ 的完整确认域则为曲边域
+
+$$
+\begin{gathered}
+\Omega=\{(\lambda,\mu):\lambda,\mu\ge0,
+\lambda+\mu+\sqrt{\lambda^2+\mu^2}\le1\},\\
+\mathcal F_q=\{f_{\lambda,\mu}:(\lambda,\mu)\in\Omega\},\\
+f_{\lambda,\mu}(t,a,b)
+=1-\lambda-\mu+\lambda t+\lambda v\cdot a-2\mu e\cdot b.
+\end{gathered}
+\tag{XI134.9}
+$$
+
+对每个 $z=(t,a,b)\in K$，置 $A=1-t-v\cdot a\ge0$、$B=1+2e\cdot b\ge0$，则
+
+$$
+\begin{gathered}
+T_q(z)=1-\Lambda(A,B),\\
+\Lambda(A,B)=
+\begin{cases}
+A/2,& A\ge2B,\\
+B/2,& B\ge2A,\\
+A+B-\sqrt{2AB},& A<2B\ \text{且}\ B<2A.
+\end{cases}
+\end{gathered}
+\tag{XI134.10}
+$$
+
+在 $A=2B$ 或 $B=2A$ 时相邻表达式一致；在 $A=B=0$ 时两个轴分支均给 $\Lambda=0$。
+整个零集，包括全部混态，恰为
+
+$$
+\begin{gathered}
+D_q=F\cup\Gamma,\qquad
+F=\left\{\left(\frac12,a,\frac e2\right):\|a\|\le\frac12\right\},\\
+\Gamma=\left\{\gamma(t)=\bigl(t,-(1-t)v,\sqrt{t(1-t)}e\bigr):0\le t\le\frac12\right\}.
+\end{gathered}
+\tag{XI134.11}
+$$
+
+其中 $F$ 是完整 $d$ 球，$\Gamma\subset P$，两者仅交于 $(1/2,-v/2,e/2)$，并有
+
+$$
+\begin{gathered}
+F\cap D_o=\varnothing,\qquad
+S_q=\partial_{\rm rel}F\cup\Gamma,\\
+\pi_o\left(\frac12,\frac w2,\frac e2\right)=p_{-w}\quad(\|w\|=1),
+\qquad \pi_o(\gamma(t))=p_v\quad(0\le t\le1/2).
+\end{gathered}
+\tag{XI134.12}
+$$
+
+故横截球面 $\partial_{\rm rel}F$ 的关联满射到整个根球面，完整 $S_q$ 却还包含关联恒定的纯弧。
+若 $s\in\mathbb R^d$ 为任意满足 $\|s\|=1$、$s\cdot v=0$ 的向量，则
+
+$$
+T_{p_s}(q)=\frac14,\qquad T_q(p_s)=\sqrt2-1,\qquad
+T_q(p_s)-T_{p_s}(q)=\sqrt2-\frac54>0.
+\tag{XI134.13}
+$$
+
+因而此控制在所有所述维数上同时失败全域 EB3 与纯 PR。
+这些结论只比较同一 $K,P,\mathcal E$ 上的完整标量菜单及其零集。
+
+证明。先建立整个菜单的存在性，再计算两类标签的全部确认效应，最后比较几何与纯读数。
+
+由
+
+$$
+\|b\|^2\le t(1-t)
+\quad\Longleftrightarrow\quad
+\left(t-\frac12\right)^2+\|b\|^2\le\frac14
+\tag{XI134.14}
+$$
+
+可知 $(t,b)$ 的约束是完整欧氏球；$\|a\|\le1-t$ 是凸的范数约束。
+两者的交集闭、有界且凸，$(1/2,0,0)$ 满足两个严格不等式，所以 $K$ 满维紧凸。
+$K$ 的凸性使其齐次化 $C$ 为凸锥。
+若 $\rho_n(1,z_n)\in C$ 收敛，则首坐标 $\rho_n\to\rho\ge0$。
+当 $\rho>0$ 时，$z_n$ 收敛到 $K$ 中一点；当 $\rho=0$ 时，$K$ 有界使其余坐标也趋于零。
+故 $C$ 闭；首坐标非负且零截面只有零点，故 $C$ 尖，且 $u$ 在非零锥元上严格正。
+$K$ 满仿射维使 $(1,K)$ 张成 $V$，所以 $C$ 生成 $V$。
+
+每个 $V$ 上线性泛函在 $(1,K)$ 的限制唯一写成
+
+$$
+f(t,a,b)=\alpha+\beta t+c\cdot a+h\cdot b.
+\tag{XI134.15}
+$$
+
+它属于 $[0,u]_{C^\ast}$ 当且仅当在全部 $K$ 上取值于 $[0,1]$。
+从满维 $K$ 取 $\dim W+1$ 个仿射无关点；在这些点的评价给仿射函数空间到
+$\mathbb R^{\dim W+1}$ 的线性同构。所有效应的这些评价均在 $[0,1]$，故效应系数有界。
+对每个 $z\in K$ 的 $0\le f(z)\le1$ 是闭条件，因此 $\mathcal E$ 在有限维空间中紧。
+$\mathcal F_p$ 是其闭子集，且包含常数效应 $1$，所以非空紧；每个 $T_p(z)$ 的最小值都达到。
+特别地，$z\in D_p$ 当且仅当存在同一原菜单中的真实效应在 $p,z$ 分别取一、零。
+
+若 $\|a\|<1-t$，可只在 $a$ 方向作非零对称小微扰；若 $\|b\|^2<t(1-t)$，
+可只在 $b$ 方向作这种微扰。每种情形均把该点写为两个不同 $K$ 中点的中点，故极点必须同时饱和。
+反之，若两约束均饱和，任意非平凡凸分解投影到 $(t,b)$ 后给欧氏球边界点的凸分解。
+球的严格凸性迫两端的 $(t,b)$ 相同；当 $t<1$ 时，半径 $1-t$ 的 $a$ 球再次以严格凸性迫两端相同。
+当 $t=1$ 时，约束直接迫 $a=b=0$。这证明(XI134.5)，也证明 $o,p_s,q$ 均为原纯点。
+
+接着在本模型中直接求一般仿射函数的极值。令 $r=\|c\|$、$H=\|h\|$。
+固定 $t$ 后，$a,b$ 两个球上的线性极值相互独立，所以
+
+$$
+\begin{aligned}
+\min_K f&=\alpha+\frac{\beta-r}{2}
+ -\frac12\sqrt{(\beta+r)^2+H^2},\\
+\max_K f&=\alpha+\frac{\beta+r}{2}
+ +\frac12\sqrt{(\beta-r)^2+H^2}.
+\end{aligned}
+\tag{XI134.16}
+$$
+
+具体地，固定 $t$ 的两个极值是
+$\alpha+\beta t\mp r(1-t)\mp H\sqrt{t(1-t)}$。
+置 $\sigma=2t-1$、$\eta=2\sqrt{t(1-t)}$，则 $(\sigma,\eta)$ 遍历 $\eta\ge0$ 的单位半圆。
+对任意实数 $L$ 及 $H\ge0$，Cauchy–Schwarz 给
+$\max(L\sigma+H\eta)=\sqrt{L^2+H^2}$ 和
+$\min(L\sigma-H\eta)=-\sqrt{L^2+H^2}$。
+若 $(L,H)\ne(0,0)$，分别取对应的单位方向达到；若 $H=0$，所需方向为半圆端点；
+若 $L=H=0$，所有半圆点都达到。代入 $L=\beta-r$ 或 $L=\beta+r$ 即得(XI134.16)。
+这是各维欧氏球的直接计算，未从某个特定 $d,m$ 外推。
+支持函数与支撑法向的成熟凸分析背景参见
+[Boyd–Vandenberghe，Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)；
+这里的一般极值式只作为完整确认域计算的中间步骤。
+
+先求根侧菜单。若 $f(o)=1$，则 $\alpha=1-\beta$。
+若 $H>0$，取 $t=1-\varepsilon$、$a=0$、
+$b=\sqrt{\varepsilon(1-\varepsilon)}h/H$，所得值相对 $f(o)$ 增加
+$-\beta\varepsilon+H\sqrt{\varepsilon(1-\varepsilon)}$，对充分小的正 $\varepsilon$ 为正，矛盾。
+所以 $h=0$。在 $t=0$ 的完整 $a$ 球上，上下界分别给
+$r\le\beta$、$\beta+r\le1$；这两个条件反向也使两个端面及它们之间的全部读数落在 $[0,1]$。
+因而对任意 $z\in K$，
+
+$$
+f(z)-t=(1-\beta)(1-t)+c\cdot a
+\ge(1-\beta-r)(1-t)\ge0.
+\tag{XI134.17}
+$$
+
+效应 $f(z)=t$ 属于同一菜单并确认 $o$，故 $T_o(z)=t$，给出完整 $D_o$ 及 $S_o$。
+
+对任意单位 $s$，若 $f(p_s)=1$，在 $t=0$ 的完整 $a$ 球上达到最大迫
+$c=rs$、$r\ge0$ 及 $\alpha=1-r$。
+若 $H>0$，沿 $a=(1-t)s$、$b=\sqrt{t(1-t)}h/H$，读数相对 $f(p_s)$ 增加
+$ (\beta-r)t+H\sqrt{t(1-t)}$，对充分小的正 $t$ 为正，矛盾。因此 $h=0$。
+再由 $a=(1-t)s$ 上的上界，以及 $t=0,a=-s$ 和 $o$ 上的下界，分别得到
+$\beta\le r$、$r\le1/2$、$\beta\ge r-1$。
+反之，这些条件使固定 $t$ 时的最大值不超过一、最小值不小于零，因为它们都是端点值的线性插值。
+所以完整菜单恰为
+
+$$
+\mathcal F_{p_s}
+=\{1-r+\beta t+rs\cdot a:0\le r\le1/2,\ r-1\le\beta\le r\}.
+\tag{XI134.18}
+$$
+
+对任意 $z\in K$，先以 $t\ge0$ 取 $\beta=r-1$，再以
+$1-t-s\cdot a\ge0$ 取 $r=1/2$，即得
+
+$$
+\min_{\mathcal F_{p_s}}f(z)
+=\min_{0\le r\le1/2}\{1-t-r(1-t-s\cdot a)\}
+=\frac{1-t+s\cdot a}{2}.
+\tag{XI134.19}
+$$
+
+效应 $(1-t+s\cdot a)/2$ 在全部 $K$ 合法并达到该值。
+零值迫 $s\cdot a=-(1-t)$，结合范数约束等价于 $a=-(1-t)s$，包括 $t=1$。
+完整球的仿射参数为
+
+$$
+(\sigma,\eta)\longmapsto
+\left(\frac{1+\sigma}{2},-\frac{1-\sigma}{2}s,\frac\eta2\right),
+\qquad \sigma^2+\|\eta\|^2\le1.
+\tag{XI134.20}
+$$
+
+此映射单射，像恰为整个 $D_{p_s}$，故其维数为 $m+1$。
+同时 $D_o$ 的 $a$ 坐标给完整 $d$ 球。两者同时是三球恰要求 $d=3,m=2$，
+并非确认域计算对 $m$ 的限制。
+对任何 $z\in P\setminus\{o\}$，有 $t<1$、$a=(1-t)w$、$\|w\|=1$；
+它属于 $D_{p_s}$ 当且仅当 $s=-w$。而 $o$ 属于所有 $D_{p_s}$。
+这证明覆盖和唯一关联式(XI134.7)—(XI134.8)。每个 $p_s\in S_o$，
+故覆盖的同一个标签 $p_s$ 同时见证 $o\perp p_s$ 与 $z\perp p_s$，包括目标 $z=o$。
+
+现在求 $q$ 的完整菜单，必要性中不删去零法向。
+任取(XI134.15)中的 $f\in\mathcal F_q$。在 $t=1/2$ 的两个独立完整球上，
+$q$ 达到全域最大值一，迫
+$c=\lambda v$、$h=-2\mu e$，其中 $\lambda,\mu\ge0$。
+沿整个可行曲线
+
+$$
+\tau\longmapsto\bigl(\tau,(1-\tau)v,-\sqrt{\tau(1-\tau)}e\bigr)
+\tag{XI134.21}
+$$
+
+的读数为 $\alpha+\lambda+(\beta-\lambda)\tau+2\mu\sqrt{\tau(1-\tau)}$。
+$\tau=1/2$ 为内部极大点，导数给 $\beta=\lambda$，即使 $\mu=0$ 也成立。
+再由 $f(q)=1$ 得 $\alpha=1-\lambda-\mu$。代入(XI134.16)，
+
+$$
+\max_K f_{\lambda,\mu}=1,\qquad
+\min_K f_{\lambda,\mu}=1-\lambda-\mu-\sqrt{\lambda^2+\mu^2}.
+\tag{XI134.22}
+$$
+
+所以全域非负性必要地给 $(\lambda,\mu)\in\Omega$。
+反向，对每个 $\Omega$ 中的参数，(XI134.22)证明该仿射函数在全部 $K$ 上处于 $[0,1]$，
+直接代入又给 $f_{\lambda,\mu}(q)=1$，故它确是原全域确认效应。
+这证明(XI134.9)的双向完整性；$\lambda=0$ 时 $0\le\mu\le1/2$，
+$\mu=0$ 时 $0\le\lambda\le1/2$，原点给常数效应一，均未删除。
+
+对任意 $z\in K$，$v\cdot a\le1-t$ 给 $A\ge0$，
+$e\cdot b\ge-\sqrt{t(1-t)}\ge-1/2$ 给 $B\ge0$，并且
+
+$$
+f_{\lambda,\mu}(z)=1-A\lambda-B\mu,\qquad
+\Lambda(A,B)=\max_{(\lambda,\mu)\in\Omega}(A\lambda+B\mu).
+\tag{XI134.23}
+$$
+
+$\Omega$ 闭且有界，因此这个最大值也达到。
+若 $A\ge2B$，则对每个 $\Omega$ 中参数，
+
+$$
+A\lambda+B\mu
+\le A(\lambda+\mu/2)
+\le\frac A2\bigl(\lambda+\mu+\sqrt{\lambda^2+\mu^2}\bigr)
+\le\frac A2.
+\tag{XI134.24}
+$$
+
+真实效应参数 $(\lambda,\mu)=(1/2,0)$ 达到该值。
+若 $B\ge2A$，交换两坐标得 $B/2$，由 $(0,1/2)$ 达到。
+当 $A=B=0$ 时，目标恒零，所有参数均达到，特别可取 $(0,0)$，此时 $T_q(z)=1$。
+
+余下 $A<2B$、$B<2A$，于是 $A,B>0$。令 $L=A+B-\sqrt{2AB}$，
+则 $0<L<\min(A,B)$，且
+
+$$
+(A-L)^2+(B-L)^2=L^2.
+\tag{XI134.25}
+$$
+
+因而
+
+$$
+\begin{aligned}
+A\lambda+B\mu
+&=L(\lambda+\mu)+(A-L)\lambda+(B-L)\mu\\
+&\le L\bigl(\lambda+\mu+\sqrt{\lambda^2+\mu^2}\bigr)\le L.
+\end{aligned}
+\tag{XI134.26}
+$$
+
+取真正属于原菜单的参数
+
+$$
+\lambda=\frac{A-L}{A+B-L},\qquad
+\mu=\frac{B-L}{A+B-L},\qquad
+\sqrt{\lambda^2+\mu^2}=\frac L{A+B-L}.
+\tag{XI134.27}
+$$
+
+两参数严格正，三项之和为一，且(XI134.26)中的两处不等式均取等号，故达到 $L$。
+在 $A=2B$ 时 $A+B-\sqrt{2AB}=A/2$，在 $B=2A$ 时等于 $B/2$；
+这些等式也包括原点。由此得到覆盖全部非负 $A,B$ 的(XI134.10)，
+不是仅比较两个候选效应的读数。
+
+为穷尽整个 $D_q$，逐一分类所有参数对应的零面。记 $R=\sqrt{\lambda^2+\mu^2}$。
+若 $\lambda+\mu+R<1$，(XI134.22)给严格正的全域最小值，没有零点。
+边界 $\lambda+\mu+R=1$ 上，若 $\mu=0$，则 $\lambda=1/2$，且
+
+$$
+f_{1/2,0}(t,a,b)=\frac{1+t+v\cdot a}{2}\ge t.
+\tag{XI134.28}
+$$
+
+零值必须 $t=0,a=-v,b=0$，反向该点确为零，故整个零面只有 $p_{-v}$。
+若 $\lambda=0$，则 $\mu=1/2$，效应为 $1/2-e\cdot b$。
+零值迫
+
+$$
+\frac12=e\cdot b\le\|b\|\le\sqrt{t(1-t)}\le\frac12,
+\tag{XI134.29}
+$$
+
+所以 $t=1/2,b=e/2$；$a$ 的唯一限制为 $\|a\|\le1/2$。
+反向这些点全为零，故该效应的整个零面恰为 $F$。
+
+若边界上 $\lambda,\mu>0$，任何零点必须在(XI134.22)的全域最小值处取等。
+固定 $t$ 的线性极值和半圆上的严格取等条件，分别迫
+
+$$
+a=-(1-t)v,\qquad
+2t-1=-\frac\lambda R,\qquad
+2\sqrt{t(1-t)}=\frac\mu R,\qquad
+b=\frac\mu{2R}e.
+\tag{XI134.30}
+$$
+
+于是 $t=(1-\lambda/R)/2\in(0,1/2)$，整个零面只有 $\gamma(t)$ 这一个原纯点。
+这穷尽 $\Omega$ 内部、两条轴及正参数边界的所有零点，证明 $D_q\subseteq F\cup\Gamma$。
+
+反向不仅需要零点候选，还需同一全效应菜单中的见证。
+整个 $F$ 已由 $f_{0,1/2}$ 见证。任给 $0\le t\le1/2$，令
+
+$$
+U=1-2t,\qquad W=2\sqrt{t(1-t)},\qquad
+\lambda=\frac U{1+U+W},\qquad \mu=\frac W{1+U+W}.
+\tag{XI134.31}
+$$
+
+因 $U,W\ge0$、$U^2+W^2=1$，有 $\lambda+\mu+R=1$，故该效应属于 $\mathcal F_q$。
+在 $\gamma(t)$ 处，$A=1+U$、$B=1+W$，从而
+
+$$
+A\lambda+B\mu
+=\frac{U+W+U^2+W^2}{1+U+W}=1.
+\tag{XI134.32}
+$$
+
+所以 $f_{\lambda,\mu}(\gamma(t))=0$。
+两个端点分别给 $(1/2,0)$ 与 $(0,1/2)$，也由真实原效应实现。
+因所有效应非负且最小值达到，这就证明 $F\cup\Gamma\subseteq D_q$ 及(XI134.11)的完整集合等式。
+
+由(XI134.5)，$\Gamma$ 的全部点都纯，而 $P\cap F$ 恰为 $\partial_{\rm rel}F$。
+由 $t$ 坐标知 $F\cap\Gamma$ 只有 $t=1/2$ 的端点，且 $F\cap D_o=\varnothing$。
+将 $F$ 的纯点和 $\Gamma$ 分别代入同一模型的(XI134.8)，即得(XI134.12)。
+球面关联的逆映射为 $p_s\mapsto(1/2,-s/2,e/2)$，故横截球面确实映满根球面；
+但完整 $S_q$ 还含整条 $\Gamma$，关联在这条弧上恒为 $p_v$。
+
+因 $d\ge2$，可取单位 $s\perp v$；因 $m\ge1$，单位 $e$ 也存在，无须 $m\ge2$。
+完整反向菜单(XI134.18)—(XI134.19)在 $q$ 处给 $T_{p_s}(q)=1/4$。
+另一方面，$p_s$ 在(XI134.23)中的 $A=B=1$，故完整三分支式给 $T_q(p_s)=\sqrt2-1$。
+其达到参数为 $\lambda=\mu=1/(2+\sqrt2)$，不是未经最小化的候选读数。
+两点的纯性已由(XI134.5)支付；$2>25/16$ 给(XI134.13)的严格正差，故纯 PR 失败。
+
+最后，取 $p_{-v}=\gamma(0)\in\Gamma$ 和 $z_0=(1/2,0,e/2)\in F$。
+它们的中点
+
+$$
+z_*=(1/4,-v/2,e/4),\qquad
+\|{-v/2}\|=\frac12<\frac34,\qquad
+\|e/4\|^2=\frac1{16}<\frac3{16}
+\tag{XI134.33}
+$$
+
+在 $K$ 内部，既不在 $F$ 也不在 $\Gamma$，所以不在 $D_q$。
+因此 $D_q$ 非凸，不可能仿射等价于完整三球。这与
+[IX114.11，式(IX114.36)—(IX114.42)](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+中全菜单零集非凸的现象相容；那里是参数三角形及两个完整三球之并，
+这里的曲边确认域、三个最优分支和正参数边界扫出的纯弧由(XI134.9)—(XI134.32)联合刻画。
+非凸中点只说明相应全域球形前件失败。
+
+与完整球域的条件结论比较时，量词不能缩减。
+[SAME132.1](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+以每个原标签的完整 $\mathrm{EB}_{\ge1}$ 为前件，给整个 $K$ 的纯点—排除球覆盖及径向三纯项；
+它不输入 Inj，也不把三纯项自动变成两两正交谱分解或共同三结果。
+本模型的根邻覆盖不能替换该全标签前件。
+[THREE_COPY VIII130.7—130.9](QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md)
+的 $\mathsf{FA}_4$ 及纯极限紧性桥保留完整 EB3+$\mathsf{Conn}$ 域和其指定零菜单；
+本模型中显式集合的计算不支付该域的一般纯紧性或 $\mathsf{FA}_4$ 自动性。
+
+[X133.1、133.5—133.6](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md)
+传播的是全部标签完整 EB3 加一个固定根的覆盖；其中满射的源是完整 $S_q$，不是任取横截球的球面。
+在 $d=3,m=2$ 的此控制中，根覆盖、根与根邻三球、横截球面的关联满射同时成立，
+但完整 $D_q$ 非凸且完整 $S_q$ 含恒关联纯弧，所以不满足该传播定理的全域 EB3 前件。
+它也失败纯 PR，因而不是 EB3+PR 的反模型，不判定(X133.32)的固定根自动性，
+不提供同原全局分类、实际标签返回、共同三结果、物理仪器或物理实现。证毕。
+

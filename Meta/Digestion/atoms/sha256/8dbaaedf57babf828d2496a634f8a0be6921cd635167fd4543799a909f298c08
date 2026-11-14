@@ -1,0 +1,4 @@
+因此 $\kappa\to\infty$ 时 $F_\infty(x,a)-F_\kappa(x,a)\sim r_{x,a}^\kappa/(\kappa\log x)$。若 $D\equiv0$，取极限得 $F_\infty(p,i)=F_\infty(q,j)$，于是两侧余项在 $\kappa\to\infty$ 时也相等：
+- 若 $r_{p,i}\ne r_{q,j}$，两侧指数衰减率不同，不可能相等；
+- 若 $r_{p,i}=r_{q,j}$，比较系数得 $1/\log p=1/\log q$，与 $p\ne q$ 矛盾。
+
