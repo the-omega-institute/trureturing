@@ -9,7 +9,18 @@
 /-
 admission_basis: open-problem-resolution (#30196; #30197; Proved)
 escape_witness: none
-proof_shape: result4 and result5 are bind-only applications of the consumed private content proofs prove4 and prove5; the native bridges and ratio lemmas are consumed on those live paths.
+proof_shape: every theorem below is bind-only after inlining all same-delivery helpers.
+  h_mono: bind-only; consumer: ordered_reciprocal_bound.
+  ordered_reciprocal_bound: bind-only; consumers: prove4, prove5.
+  psi_ge: bind-only; consumers: prove4, prove5.
+  sigma_ge_psi: bind-only; consumers: prove4, prove5.
+  mixed_bound: bind-only; consumers: prove4, prove5.
+  prove4: bind-only; consumer: result4.
+  prove5: bind-only; consumer: result5.
+  result4: bind-only; consumer: none; external endpoint: #30196.
+  result5: bind-only; consumer: none; external endpoint: #30197.
+claim4 and claim5 are source definitions consumed by result4 and result5 respectively.
+The private auxiliaries are retained only as consumed proof organization, not as escape witnesses.
 The source definitions and both claims preserve the complete original quantifier range and pointwise-power convention.
 -/
 import D5.S3.Arith.Divisors.OeisA344695GcdSigmaPsiPrimes

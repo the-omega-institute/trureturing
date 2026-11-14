@@ -39,3 +39,7 @@ The D5 module proves both complete statements. Its native bridge establishes
 $0<\varphi(n)\le n-1<n+1\le\psi(n)\le\sigma(n)$; the remaining argument is an ordered
 reciprocal-product inequality applied first to the mixed terms and then to their
 pointwise-power specialization. The denominator facts use $n\ge2$ and $k\ge1$ directly.
+
+## Verified locator
+
+https://arxiv.org/abs/2606.12484v1, §2, PDF page 4, Conjectures 4 and 5.
