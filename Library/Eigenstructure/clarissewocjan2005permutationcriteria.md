@@ -14,7 +14,7 @@ triage: anchor
 
 # Permutation separability criteria
 
-## Source locator
+## Locator
 
 L. Clarisse and P. Wocjan, *On independent permutation separability criteria*,
 arXiv:quant-ph/0504160v2, Quantum Information and Computation 6(3), 277–288.
