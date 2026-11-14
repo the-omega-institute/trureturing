@@ -125,6 +125,25 @@ theorem inverse_substitution_coeff_transpose_free (D : LatticeData)
     exact inverse_substitution_matrix_transpose D k
   exact congrArg (fun A => (substitution A q).coeff alpha) hfun
 
+/-! Coefficient extraction commutes with the finite source polynomial used by
+the inverse readout.  Keeping the scalar on the monomial explicit is useful
+for the next affine-row identification: the remaining work is then entirely
+the coefficient of one inverse-substituted monomial. -/
+
+theorem substitution_finset_coeff (D : LatticeData)
+    (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (S : Finset (Exponent D)) (r : Exponent D → ℂ) (alpha : Exponent D) :
+    (substitution A (∑ delta ∈ S, monomial delta (r delta))).coeff alpha =
+      ∑ delta ∈ S, r delta *
+        (substitution A (monomial delta 1)).coeff alpha := by
+  classical
+  simp only [map_sum, coeff_sum]
+  apply Finset.sum_congr rfl
+  intro delta hdelta
+  rw [show monomial delta (r delta) = r delta • monomial delta 1 by
+    simp only [smul_monomial, smul_eq_mul, mul_one],
+    map_smul, coeff_smul, smul_eq_mul]
+
 /-- Ordinary transpose, with no conjugation, for the original factorial form. -/
 theorem substitution_factorial_transpose
     (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
