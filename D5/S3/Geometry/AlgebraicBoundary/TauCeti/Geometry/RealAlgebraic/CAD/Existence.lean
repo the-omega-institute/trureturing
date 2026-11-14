@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Geometry/RealAlgebraic/CAD/Existence.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; retained declarations keep their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -52,8 +52,6 @@ Nullified members, repeated roots, the empty family and stacks without sections 
   of an adapted CAD, and its projection is a union of cells of the projected CAD. With this
   instance the results of `TauCeti.Geometry.RealAlgebraic.Semialgebraic.QuantifierElimination` and
   `TauCeti.Geometry.RealAlgebraic.Semialgebraic.Image` apply to `ℝ`.
-* `TauCeti.exists_finite_image_sign_eval_eq`: finitely many sample points realize every sign
-  vector of a finite family of polynomials.
 
 ## References
 
@@ -115,20 +113,5 @@ instance : HasSemialgebraicProjections ℝ where
     obtain ⟨𝒞, h𝒞, hp⟩ := exists_isCAD_signInvariant (Finset.univ.image p)
     exact h𝒞.isSemialgebraic_image_tail_setOf_sign_eval
       (fun i ↦ hp _ (Finset.mem_image_of_mem _ (Finset.mem_univ i))) Φ
-
-/-- **Sample points.** For finitely many real polynomials `p i` in `n` variables there is a
-finite set of points of `ℝ ^ n` at which the `p i` take every sign vector that they take on
-`ℝ ^ n`. -/
-theorem exists_finite_image_sign_eval_eq {ι : Type*} [Finite ι]
-    (p : ι → MvPolynomial (Fin n) ℝ) :
-    ∃ T : Set (Fin n → ℝ), T.Finite ∧
-      (fun x i ↦ SignType.sign (eval x (p i))) '' T =
-        range fun x i ↦ SignType.sign (eval x (p i)) := by
-  classical
-  have := Fintype.ofFinite ι
-  obtain ⟨𝒞, h𝒞, hp⟩ := exists_isCAD_signInvariant (Finset.univ.image p)
-  obtain ⟨T, hT, -, hTp⟩ := h𝒞.exists_finite_image_sign_eval_eq
-    fun i ↦ hp _ (Finset.mem_image_of_mem _ (Finset.mem_univ i))
-  exact ⟨T, hT, hTp⟩
 
 end TauCeti

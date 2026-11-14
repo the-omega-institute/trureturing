@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Data/Nat/Choose/Basic.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; retained declarations keep their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -33,7 +33,7 @@ import Mathlib.Tactic.Ring
 
 This file records arithmetic identities involving natural-number binomial coefficients.
 
-Besides three identities for the second binomial coefficient, it develops Vandermonde's convolution
+Besides the second binomial coefficient of a sum, it develops Vandermonde's convolution
 `∑ i, C(A, i) * C(B, r - i) = C(A + B, r)` in the shape taken by factorial moments of a law
 supported on such a convolution: each summand is weighted by the falling factorial `(i)ₘ` of the
 summation index. The weighted sum is again a single binomial coefficient,
@@ -41,10 +41,7 @@ summation index. The weighted sum is again a single binomial coefficient,
 
 ## Main results
 
-* `Nat.choose_two_add_mul_succ_div_two`: the sum of the second binomial coefficient and
-  the triangular number is the corresponding square.
 * `Nat.add_choose_two`: the second binomial coefficient of a sum, with its cross term.
-* `Nat.pow_three_sub_self_eq_mul_choose_two`: `g³ - g = (2g + 2) · C(g, 2)`.
 * `Nat.descFactorial_mul_choose`: a falling factorial of the lower index lowers both indices,
   `(i)ₘ * C(A, i) = (A)ₘ * C(A - m, i - m)`.
 * `Nat.sum_range_descFactorial_mul_choose_mul_choose`: Vandermonde's convolution weighted by a
@@ -62,20 +59,6 @@ open Finset
 
 namespace Nat
 
-/-- The sum of `N.choose 2` and the `N`th triangular number is `N ^ 2`. -/
-theorem choose_two_add_mul_succ_div_two (N : ℕ) :
-    N.choose 2 + N * (N + 1) / 2 = N * N := by
-  rw [Nat.choose_two_right]
-  apply Nat.mul_right_cancel (by norm_num : 0 < 2)
-  rw [Nat.add_mul, Nat.div_mul_cancel (Nat.even_mul_pred_self N).two_dvd,
-    Nat.div_mul_cancel (Nat.even_mul_succ_self N).two_dvd]
-  by_cases hN : N = 0
-  · simp [hN]
-  · rw [← Nat.mul_add]
-    have hsum : N - 1 + (N + 1) = 2 * N := by omega
-    rw [hsum]
-    ring
-
 /-- The second binomial coefficient of a sum: `C(m + n, 2) = C(m, 2) + C(n, 2) + mn`. -/
 theorem add_choose_two (m n : ℕ) : (m + n).choose 2 = m.choose 2 + n.choose 2 + m * n := by
   induction n with
@@ -87,20 +70,6 @@ theorem add_choose_two (m n : ℕ) : (m + n).choose 2 = m.choose 2 + n.choose 2 
       have h2 : (n + 1).choose 2 = n.choose 1 + n.choose 2 := Nat.choose_succ_succ n 1
       rw [h1, h2, ih, Nat.choose_one_right, Nat.choose_one_right]
       ring
-
-/-- `g³ - g = (2g + 2) · C(g, 2)`. -/
-theorem pow_three_sub_self_eq_mul_choose_two (g : ℕ) :
-    g ^ 3 - g = (2 * g + 2) * g.choose 2 := by
-  have h2 : g.choose 2 * 2 = g * (g - 1) := by
-    rw [Nat.choose_two_right, Nat.div_mul_cancel g.even_mul_pred_self.two_dvd]
-  rcases g with _ | g
-  · simp
-  · rw [Nat.add_sub_cancel] at h2
-    have h : (2 * (g + 1) + 2) * (g + 1).choose 2 = (g + 2) * ((g + 1) * g) := by
-      rw [← h2]
-      ring
-    rw [h]
-    exact Nat.sub_eq_of_eq_add (by ring)
 
 /-- **A falling factorial of the lower index lowers both indices of a binomial coefficient:**
 `(i)ₘ * C(A, i) = (A)ₘ * C(A - m, i - m)` for `m ≤ i`.
