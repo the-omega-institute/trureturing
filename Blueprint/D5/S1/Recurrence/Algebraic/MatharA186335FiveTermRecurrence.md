@@ -40,7 +40,7 @@ $$\forall n \in \mathbb{N},\; 4 \le n \Rightarrow (n:\mathbb{Z}) \cdot \operator
 
 *Commentary.*
 
-Reindex by m=n-k-j and j, with inverse k=n-m-j and support 2m+2j ≤ n. Binomial multiplication and formal coefficient substitution identify the source series with B*C(X²*B), where B=(1-X-X²)^(-1) and C is the central-binomial series. The source-to-series identity is proved from the finite sum. The identity (1-4X)*C'=2*C, inverse differentiation and the chain rule then give P*A'+Q*A=0 with P=1-2X-5X²+6X³+5X⁴ and Q=-1-5X+9X²+10X³. The existing frozen A308815DFiniteRecurrence.euler_coeff and four coefficient shifts yield exactly the displayed integer recurrence. No assumed generating function, finite-prefix check or recurrence-defined substitute is used. The supplied complete proof is retained with consumed private helpers; this unit makes no claim about another Mathar sequence, global novelty or sibling conjectures.
+Reindex by m=n-k-j and j, with inverse k=n-m-j and support 2m+2j ≤ n. Binomial multiplication and formal coefficient substitution identify the source series with B*C(X²*B), where B=(1-X-X²)^(-1) and C is the central-binomial series. The source-to-series identity is proved from the finite sum. The identity (1-4X)*C'=2*C, inverse differentiation and the chain rule then give P*A'+Q*A=0 with P=1-2X-5X²+6X³+5X⁴ and Q=-1-5X+9X²+10X³. The existing frozen A308815DFiniteRecurrence.euler_coeff and four coefficient shifts yield exactly the displayed integer recurrence. No assumed generating function, finite-prefix check or recurrence-defined substitute is used. This unit makes no claim about another Mathar sequence, global novelty or sibling conjectures.
 
 ## References
 
