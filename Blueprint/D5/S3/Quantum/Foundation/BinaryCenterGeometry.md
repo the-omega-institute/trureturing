@@ -20,7 +20,19 @@ $$\forall V \in Types,\; [NormedAddCommGroup\left(V\right)] [NormedSpace\left(Re
 
 The two weights are independently quantified in the closed unit interval. The law compares two decompositions of the same actual original vector. No MC, global injectivity, pure closedness or common-center premise is included.
 
-**Theorem 1.2 (Both original fibers and disjointness).**
+**Theorem 1.2 (Centers of equal whole original balls).**
+
+Lean statement: `D5/S3/Quantum/Foundation/BinaryCenterGeometry.center_eq_of_exclusion_eq`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/BinaryCenterGeometry.center_eq_of_exclusion_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any finite dimensional real normed carrier V, original pointed cone C and linear unit u, a proof B of exclusionBalls, and any two original pure labels p and q, equality of their entire exclusions implies center(B,p)=center(B,q). No closedness, strict positivity, generating-span, BC or injectivity premise is required. The existing affine-ball center uniqueness theorem applies to the two complete chosen chart images, allowing different chart dimensions. This implication does not identify arbitrary balls from equality of their centers.
+
+**Theorem 1.3 (Both original fibers and disjointness).**
 
 $$\forall V \in Types,\; [NormedAddCommGroup\left(V\right)] [NormedSpace\left(Real, V\right)] [FiniteDimensional\left(Real, V\right)] \forall C \in PointedCone\left(Real, V\right),\; \forall u \in LinearMaps\left(Real, V, Real\right),\; \left(IsClosed\left(C\right) \land \left(\left(\forall x \in V,\; \left(x \in C \land x \ne 0\right) \Rightarrow 0 < u\left(x\right)\right) \land span\left(Real, C\right) = top\right)\right) \Rightarrow \left(exclusionBalls\left(C, u\right) \Rightarrow \left(\forall p \in pure\left(C, u\right),\; \forall s \in pure\left(C, u\right),\; \forall q \in pure\left(C, u\right),\; \left(p \ne s \land \left(exclusion\left(C, u, s\right) = exclusion\left(C, u, p\right) \land q \in exclusion\left(C, u, p\right)\right)\right) \Rightarrow \left(\left(\forall r \in pure\left(C, u\right),\; exclusion\left(C, u, r\right) = exclusion\left(C, u, q\right) \Leftrightarrow r \in exclusion\left(C, u, p\right)\right) \land \left(\left(\forall r \in pure\left(C, u\right),\; exclusion\left(C, u, r\right) = exclusion\left(C, u, p\right) \Leftrightarrow r \in exclusion\left(C, u, q\right)\right) \land Disjoint\left(exclusion\left(C, u, p\right), exclusion\left(C, u, q\right)\right)\right)\right)\right)\right)$$
 
@@ -32,7 +44,7 @@ $$\forall V \in Types,\; [NormedAddCommGroup\left(V\right)] [NormedSpace\left(Re
 
 Assume p and s are distinct original pure labels with the same whole exclusion F, and q is any original pure point of F. For every original r in F, zero symmetry places p and s in D(r), so the two-point whole-ball rigidity gives D(r)=D(q). Conversely equality with D(q) and zero symmetry give r in F. Two distinct original pure points of F give the reciprocal identity I(F)=P intersect D(q). The original repeated_ball_isolated theorem gives disjointness; the equality alternative would put p in its own exclusion. These identities identify the two whole faces used by the common separating effect and the repeated-block relations.
 
-**Theorem 1.3 (One original effect on the entire paired balls).**
+**Theorem 1.4 (One original effect on the entire paired balls).**
 
 $$\forall V \in Types,\; [NormedAddCommGroup\left(V\right)] [NormedSpace\left(Real, V\right)] [FiniteDimensional\left(Real, V\right)] \forall C \in PointedCone\left(Real, V\right),\; \forall u \in LinearMaps\left(Real, V, Real\right),\; \left(IsClosed\left(C\right) \land \left(\left(\forall x \in V,\; \left(x \in C \land x \ne 0\right) \Rightarrow 0 < u\left(x\right)\right) \land span\left(Real, C\right) = top\right)\right) \Rightarrow \left(exclusionBalls\left(C, u\right) \Rightarrow \left(\forall p \in pure\left(C, u\right),\; \forall s \in pure\left(C, u\right),\; \forall q \in pure\left(C, u\right),\; \left(p \ne s \land \left(exclusion\left(C, u, s\right) = exclusion\left(C, u, p\right) \land q \in exclusion\left(C, u, p\right)\right)\right) \Rightarrow \left(\exists e \in LinearMaps\left(Real, V, Real\right),\; proper\left(C, u, e\right) \land \left(\left\{x \mid x \in x \in base\left(C, u\right) \land e\left(x\right) = 0\right\} = exclusion\left(C, u, p\right) \land \left\{x \mid x \in x \in base\left(C, u\right) \land e\left(x\right) = 1\right\} = exclusion\left(C, u, q\right)\right)\right)\right)\right)$$
 
@@ -44,7 +56,7 @@ $$\forall V \in Types,\; [NormedAddCommGroup\left(V\right)] [NormedSpace\left(Re
 
 Choose antipodal original pure points on the partner ball. Their original whole-face exposing confirmers vanish on F. On the partner ball the two restrictions are 1-alpha+alpha inner(n,z) and 1-beta-beta inner(n,z), with alpha and beta between zero and one half. If either coefficient is zero, that confirmer is already constant one on the partner. Otherwise beta times the first effect plus alpha times the second is constant k=alpha+beta-2 alpha beta>0 there and zero on F. positive_annihilator_maximum puts an actual global maximizer on the partner, so division by k yields a proper effect on the entire original cone. A fixed original pure point of each ball and the same effect or its complement prove both full face equalities. No full-Inj contact theorem is used.
 
-**Theorem 1.4 (Every finite relation within the repeated block).**
+**Theorem 1.5 (Every finite relation within the repeated block).**
 
 $$\forall V \in Types,\; [NormedAddCommGroup\left(V\right)] [NormedSpace\left(Real, V\right)] [FiniteDimensional\left(Real, V\right)] \forall C \in PointedCone\left(Real, V\right),\; \forall u \in LinearMaps\left(Real, V, Real\right),\; \left(IsClosed\left(C\right) \land \left(\left(\forall x \in V,\; \left(x \in C \land x \ne 0\right) \Rightarrow 0 < u\left(x\right)\right) \land span\left(Real, C\right) = top\right)\right) \Rightarrow \left(\forall B \in exclusionBalls\left(C, u\right),\; \forall p \in pure\left(C, u\right),\; \forall s \in pure\left(C, u\right),\; \forall q \in pure\left(C, u\right),\; \left(p \ne s \land \left(exclusion\left(C, u, s\right) = exclusion\left(C, u, p\right) \land q \in exclusion\left(C, u, p\right)\right)\right) \Rightarrow \left(\forall n \in Nat,\; \forall m \in Nat,\; \forall a \in Functions\left(Fin\left(n\right), pure\left(C, u\right)\right),\; \forall b \in Functions\left(Fin\left(m\right), pure\left(C, u\right)\right),\; \forall w \in Functions\left(Fin\left(n\right), Real\right),\; \forall v \in Functions\left(Fin\left(m\right), Real\right),\; \left(\left(\forall i \in Fin\left(n\right),\; a\left(i\right) \in union\left(exclusion\left(C, u, p\right), exclusion\left(C, u, q\right)\right)\right) \land \left(\left(\forall j \in Fin\left(m\right),\; b\left(j\right) \in union\left(exclusion\left(C, u, p\right), exclusion\left(C, u, q\right)\right)\right) \land \left(sum\left(w\right) = 1 \land \left(sum\left(v\right) = 1 \land weightedSum\left(w, a\right) = weightedSum\left(v, b\right)\right)\right)\right)\right) \Rightarrow weightedCenterSum\left(B, w, a\right) = weightedCenterSum\left(B, v, b\right)\right)\right)$$
 
@@ -56,7 +68,7 @@ $$\forall V \in Types,\; [NormedAddCommGroup\left(V\right)] [NormedSpace\left(Re
 
 The same original separating effect e defines J(x)=c(q)+e(x)(c(p)-c(q)). Both reciprocal fiber identities and whole-ball center uniqueness prove that J equals the original center replacement at every pure point of F union H. Linearity of e and the normalization of the finite sums show that each replaced sum equals J of the original sum. This actual consumer uses the entire paired zero and one faces; the effect is constructed rather than assumed as a classifier field.
 
-**Theorem 1.5 (One outside and three inside endpoints cannot cross).**
+**Theorem 1.6 (One outside and three inside endpoints cannot cross).**
 
 $$\forall V \in Types,\; [NormedAddCommGroup\left(V\right)] [NormedSpace\left(Real, V\right)] [FiniteDimensional\left(Real, V\right)] \forall C \in PointedCone\left(Real, V\right),\; \forall u \in LinearMaps\left(Real, V, Real\right),\; \left(IsClosed\left(C\right) \land \left(\left(\forall x \in V,\; \left(x \in C \land x \ne 0\right) \Rightarrow 0 < u\left(x\right)\right) \land span\left(Real, C\right) = top\right)\right) \Rightarrow \left(\forall B \in exclusionBalls\left(C, u\right),\; \forall p \in pure\left(C, u\right),\; \forall s \in pure\left(C, u\right),\; \forall q \in pure\left(C, u\right),\; \left(p \ne s \land \left(exclusion\left(C, u, s\right) = exclusion\left(C, u, p\right) \land q \in exclusion\left(C, u, p\right)\right)\right) \Rightarrow \left(\forall r \in pure\left(C, u\right),\; \forall a \in pure\left(C, u\right),\; \forall b \in pure\left(C, u\right),\; \forall d \in pure\left(C, u\right),\; \forall t \in Real,\; \forall v \in Real,\; \left(binaryCompatible\left(B\right) \land \left(Not\left(r \in union\left(exclusion\left(C, u, p\right), exclusion\left(C, u, q\right)\right)\right) \land \left(a \in union\left(exclusion\left(C, u, p\right), exclusion\left(C, u, q\right)\right) \land \left(b \in union\left(exclusion\left(C, u, p\right), exclusion\left(C, u, q\right)\right) \land \left(d \in union\left(exclusion\left(C, u, p\right), exclusion\left(C, u, q\right)\right) \land \left(\left(0 < t \land t < 1\right) \land \left(0 < v \land v < 1\right)\right)\right)\right)\right)\right)\right) \Rightarrow binaryMixture\left(t, r, a\right) \ne binaryMixture\left(v, b, d\right)\right)\right)$$
 
@@ -73,6 +85,7 @@ These are original repeated-block results and prerequisites for the XI138 local 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/BinaryCenterGeometry.binaryCompatible`
+- Truth anchor: `D5/S3/Quantum/Foundation/BinaryCenterGeometry.center_eq_of_exclusion_eq`
 - Truth anchor: `D5/S3/Quantum/Foundation/BinaryCenterGeometry.repeated_block_finite_compatibility`
 - Truth anchor: `D5/S3/Quantum/Foundation/BinaryCenterGeometry.repeated_block_one_outside`
 - Truth anchor: `D5/S3/Quantum/Foundation/BinaryCenterGeometry.repeated_pair_separating_effect`
