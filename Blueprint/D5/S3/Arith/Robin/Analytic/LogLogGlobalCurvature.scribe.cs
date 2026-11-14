@@ -21,9 +21,9 @@ internal sealed class LogLogGlobalCurvatureDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The proof differentiates the log-log kernel twice, proves strict decrease of "
-                        + "the activation density on (1,∞), and applies convexity to the two "
-                        + "quadratic-corrected gaps. No displacement bound, integer specialization, "
-                        + "prime estimate or Robin/RH conclusion is assumed."))),
+                    "The proof reuses ArithmeticMixedCornerResponse.density_antitone for the "
+                        + "endpoint density bounds and applies the second-derivative convexity "
+                        + "criterion to the two quadratic-corrected gaps. No displacement bound, "
+                        + "integer specialization, prime estimate or Robin/RH conclusion is assumed."))),
                 DescribeRole.Theorem))));
 }

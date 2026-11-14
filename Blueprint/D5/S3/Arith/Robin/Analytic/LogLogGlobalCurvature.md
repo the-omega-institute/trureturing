@@ -16,9 +16,10 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvature.loglog_tangent
 
 *Commentary.*
 
-The proof differentiates the log-log kernel twice, proves strict decrease of the activation density on (1,∞), and applies convexity to the two quadratic-corrected gaps. No displacement bound, integer specialization, prime estimate or Robin/RH conclusion is assumed.
+The proof reuses ArithmeticMixedCornerResponse.density_antitone for the endpoint density bounds and applies the second-derivative convexity criterion to the two quadratic-corrected gaps. No displacement bound, integer specialization, prime estimate or Robin/RH conclusion is assumed.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvature.loglog_tangent_gap_quadratic`
 - Dependency: [D5/S3/Arith/Robin/ActualRobinClockCovariance](../ActualRobinClockCovariance.md)
+- Dependency: [D5/S3/Arith/Robin/ArithmeticMixedCornerResponse](../ArithmeticMixedCornerResponse.md)

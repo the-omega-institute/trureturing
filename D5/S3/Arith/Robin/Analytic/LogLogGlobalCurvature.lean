@@ -11,6 +11,7 @@
    it does not assume an integral representation or a curvature envelope. -/
 
 import D5.S3.Arith.Robin.ActualRobinClockCovariance
+import D5.S3.Arith.Robin.ArithmeticMixedCornerResponse
 import Mathlib.Analysis.SpecialFunctions.Log.InvLog
 import Mathlib.Analysis.Convex.Deriv
 
@@ -24,38 +25,7 @@ open Set
 namespace D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
 
 open D5.S3.Arith.Robin.ActualRobinClockCovariance (g activationDensity g_has_deriv_at)
-
-/- This explicit derivative is consumed by the strict density monotonicity below. -/
-private theorem activationDensity_hasDerivAt {t : ℝ} (ht : 1 < t) :
-    HasDerivAt activationDensity
-      (-(2 * (Real.log t) ^ 2 + 3 * Real.log t + 2) /
-        (t ^ 3 * (Real.log t) ^ 3)) t := by
-  have ht0 : t ≠ 0 := ne_of_gt (by linarith : 0 < t)
-  have hl0 : Real.log t ≠ 0 := (Real.log_pos ht).ne'
-  have hlog := Real.hasDerivAt_log ht0
-  have hd := (hlog.add_const 1).div
-    (((hasDerivAt_id t).pow 2).mul (hlog.pow 2))
-    (mul_ne_zero (pow_ne_zero 2 ht0) (pow_ne_zero 2 hl0))
-  apply hd.congr_deriv
-  dsimp [activationDensity]
-  field_simp [ht0, hl0]
-  <;> ring
-
-/- Only its antitone consequence is needed for the endpoint envelopes. -/
-private theorem activationDensity_strictAntiOn :
-    StrictAntiOn activationDensity (Ioi (1 : ℝ)) := by
-  have hd : ∀ t ∈ Ioi (1 : ℝ), HasDerivAt activationDensity
-      (-(2 * (Real.log t) ^ 2 + 3 * Real.log t + 2) /
-        (t ^ 3 * (Real.log t) ^ 3)) t :=
-    fun t ht => activationDensity_hasDerivAt ht
-  refine strictAntiOn_of_hasDerivWithinAt_neg (convex_Ioi (1 : ℝ))
-    (HasDerivAt.continuousOn hd)
-    (fun t ht => (hd t (interior_subset ht)).hasDerivWithinAt) ?_
-  intro t ht
-  have ht1 : 1 < t := interior_subset ht
-  have ht0 : 0 < t := by linarith
-  have hl : 0 < Real.log t := Real.log_pos ht1
-  exact div_neg_of_neg_of_pos (neg_lt_zero.mpr (by positivity)) (by positivity)
+open D5.S3.Arith.Robin.ArithmeticMixedCornerResponse (density_antitone)
 
 /-- The full-domain quadratic tangent-gap sandwich for log-log.
 The endpoints can coincide, or occur in either order; there is no displacement
@@ -77,15 +47,13 @@ theorem loglog_tangent_gap_quadratic {a b : ℝ} (ha : 1 < a) (hb : 1 < b) :
   have hbI : b ∈ Icc l u := ⟨min_le_right a b, le_max_right a b⟩
   have hlu : l ≤ u := (min_le_left a b).trans (le_max_left a b)
   have hlI : l ∈ Icc l u := left_mem_Icc.mpr hlu
-  have huI : u ∈ Icc l u := right_mem_Icc.mpr hlu
   have hdomain : ∀ t ∈ Icc l u, 1 < t := by
     intro t ht
     exact (lt_min ha hb).trans_le ht.1
-  have hw := activationDensity_strictAntiOn.antitoneOn
   have hlowDensity : ∀ t ∈ Icc l u, activationDensity u ≤ activationDensity t :=
-    fun t ht => hw (hdomain t ht) (hdomain u huI) ht.2
+    fun t ht => density_antitone (hdomain t ht) ht.2
   have huppDensity : ∀ t ∈ Icc l u, activationDensity t ≤ activationDensity l :=
-    fun t ht => hw (hdomain l hlI) (hdomain t ht) ht.1
+    fun t ht => density_antitone (hdomain l hlI) ht.1
 
   /- Taylor comparison bridge, including a stationary point at an endpoint.
   The actual Mathlib second-derivative criterion supplies convexity; the two
