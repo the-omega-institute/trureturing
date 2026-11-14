@@ -8,7 +8,7 @@ internal sealed class KrausWordStrictPositivityDocument : IScribeDocumentDefinit
 {
     private const string Prefix = "D5/S3/Quantum/QuantumChannels/KrausWordStrictPositivity.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumBounds/ekblad2025quantumwielandt");
+        LibraryNoteRef.Create("D5/L/Eigenstructure/ekblad2025quantumwielandt");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Full exact-length Kraus-word span forces strict positivity of the same actual iterate.",
