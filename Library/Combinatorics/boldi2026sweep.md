@@ -18,6 +18,10 @@ triage: anchor
 
 ## Verified locator
 
+https://doi.org/10.48550/arXiv.2610.41385
+
+https://arxiv.org/abs/2610.41385v1
+
 https://arxiv.org/html/2610.41385v1
 
 Section 2 defines an interval as every order-convex subset, not only a principal
