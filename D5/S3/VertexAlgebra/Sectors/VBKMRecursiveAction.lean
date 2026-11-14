@@ -89,6 +89,7 @@ qraising_negative: proof_shape: bind-only; frozen: none; escape_witness: none; c
 -/
 
 import D5.S3.VertexAlgebra.Sectors.VBKMVirasoroBootstrap
+import D5.S1.Words.WeakShuffleNormalization
 
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 1000000
@@ -140,11 +141,11 @@ noncomputable def wordWeight (a : ℂ × ℂ) (w : (List (Bool ⊕ ℕ+))) : ℂ
   (w.map (tokenWeight a)).sum
 
 noncomputable def cartan (a : ℂ × ℂ) : ((List (Bool ⊕ ℕ+)) →₀ ℂ) →ₗ[ℂ] ((List (Bool ⊕ ℕ+)) →₀ ℂ) :=
-  Finsupp.linearCombination ℂ (fun w => wordWeight a w • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w)
+  D5.S1.Words.WeakShuffleNormalization.diagonal (wordWeight a)
 
 private theorem cartan_basis (a : ℂ × ℂ) (w : (List (Bool ⊕ ℕ+))) :
     cartan a ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w) = wordWeight a w • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by
-  simp [cartan]
+  simp [cartan, D5.S1.Words.WeakShuffleNormalization.diagonal, Finsupp.smul_single]
 
 noncomputable def raisingWord (i : Bool) : (List (Bool ⊕ ℕ+)) → ((List (Bool ⊕ ℕ+)) →₀ ℂ)
   | [] => 0
@@ -312,7 +313,8 @@ private theorem mode_negative (m : ℤ) (hm : m < 0) :
 private theorem mode_zero : mode 0 = cartan degree := by
   apply Finsupp.lhom_ext
   intro w c
-  cases w <;> simp [mode,modeWord,cartan,wordWeight]
+  cases w <;> simp [mode, modeWord, cartan, wordWeight,
+    D5.S1.Words.WeakShuffleNormalization.diagonal, mul_add, Finsupp.single_add]
 
 private theorem mode_positive_left (m : ℤ) (hm : 0 < m) (g : (Bool ⊕ ℕ+)) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
     mode m ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g x) = (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g (mode m x) +

@@ -84,6 +84,22 @@ internal sealed class WeakShuffleNormalizationDocument : IScribeDocumentDefiniti
                     + "first normalized coefficient, exactly as in the source's bullets."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("word-diagonal-linear-combination"),
+                DeclarationHandle.Create(Prefix + "diagonal"),
+                H("Diagonal word rescaling"),
+                StatementSource.FromAuthor(Disp(
+                    Forall("X", F.Id("Type"), Forall("K", F.Id("Type"),
+                        Seq(OpenBracket, Call("Field", F.Id("K")), CloseBracket, Sp,
+                            Forall("r", Arrow(Call("List", F.Id("X")), F.Id("K")),
+                                Eq(Call("diagonal", F.Id("r")),
+                                    QCall("Finsupp.linearCombination", F.Id("K"),
+                                        Fun("w", Call("List", F.Id("X")),
+                                            QCall("Finsupp.single", F.Id("w"), Call("r", F.Id("w"))))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The linear map multiplies each word coefficient by the prescribed scalar r w."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("mammez-conjecture-claim"),
                 DeclarationHandle.Create(Prefix + "claim"),
                 H("Mammez Conjecture 3.10"),

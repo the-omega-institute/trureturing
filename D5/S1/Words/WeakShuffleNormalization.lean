@@ -931,7 +931,7 @@ private lemma Run.q_identity [CharZero K] (f1 f2 : X → X → K) (hws : IsWeakS
 end D5.S1.Words.WeakShuffleNormalization
 namespace D5.S1.Words.WeakShuffleNormalization
 variable {X K : Type*} [Field K] [DecidableEq X]
-private noncomputable def diagonal (r : List X → K) : KX X K →ₗ[K] KX X K :=
+noncomputable def diagonal (r : List X → K) : KX X K →ₗ[K] KX X K :=
   Finsupp.linearCombination K (fun w => Finsupp.single w (r w))
 omit [DecidableEq X] in
 @[simp] private lemma diagonal_single (r : List X → K) (w : List X) (c : K) :
