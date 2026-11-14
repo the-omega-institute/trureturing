@@ -229,7 +229,7 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
             DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.repeated_ball_isolated"),
             H("Isolation of an individual original repeated ball"),
             StatementSource.FromAuthor(F.Disp(IsolationStatement())), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("OriginalEBDomain has the same closedness, strict positivity, generating span and whole exclusion-ball assumptions as above. Only the displayed ball is assumed to have distinct original labels p and s. For every original q its whole ball is either equal to D(p) or disjoint from it. This is the original isolation declaration, exposed for the live reciprocal-fiber and common-effect consumers in BinaryCenterGeometry; its proof and original hypotheses are unchanged."))),
+            Blocks(Paragraph(Text("OriginalEBDomain has the same closedness, strict positivity, generating span and whole exclusion-ball assumptions as above. Only the displayed ball is assumed to have distinct original labels p and s. For every original q its whole ball is either equal to D(p) or disjoint from it. This isolation supplies the reciprocal-fiber identities and common-effect construction in BinaryCenterGeometry."))),
             DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("original-all-repeated-boundary-quotient"),
             DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.original_all_repeated_boundary_quotient"),
