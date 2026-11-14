@@ -15,7 +15,6 @@ The normalized square root and the inverse defining A116387 are units. -/
 
 set_option autoImplicit false
 set_option maxRecDepth 4096
-set_option maxHeartbeats 4000000
 
 namespace D5.S1.Recurrence.Algebraic.MatharA116387SixTermRecurrence
 
@@ -65,9 +64,9 @@ private theorem motzkin_spec :
   have ht0 : constantCoeff t = 0 := by simp [t]
   have ht : HasSubst t := HasSubst.of_constantCoeff_zero' ht0
   have hc0 : constantCoeff c = 1 := by
-    change constantCoeff (subst t (catalanSeries.map (Nat.castRingHom ℚ))) = 1
-    rw [constantCoeff_subst_of_constantCoeff_zero ht0]
-    simp
+    have h : constantCoeff c = constantCoeff (catalanSeries.map (Nat.castRingHom ℚ)) :=
+      constantCoeff_subst_of_constantCoeff_zero ht0 _
+    simpa using h
   have hu0 : constantCoeff u = 1 := by simp [u]
   have hcat : (catalanSeries.map (Nat.castRingHom ℚ)) ^ 2 * X + 1 =
       catalanSeries.map (Nat.castRingHom ℚ) := by
@@ -99,7 +98,7 @@ private theorem native_certificate : native_spec := by
     have hn : (1 - X - X ^ 2 * (m + M) : PowerSeries ℚ) ≠ 0 := by
       intro hz
       have hc := congrArg constantCoeff hz
-      norm_num at hc
+      norm_num [map_ofNat] at hc
     have he : (1 - X - X ^ 2 * (m + M)) * (m - M) = 0 := by
       linear_combination h - hm.2
     exact sub_eq_zero.mp ((mul_eq_zero.mp he).resolve_left hn)
@@ -111,7 +110,7 @@ private theorem native_certificate : native_spec := by
       norm_num at hc
     have he : (z + y) * (z - y) = 0 := by linear_combination hz - hy
     exact sub_eq_zero.mp ((mul_eq_zero.mp he).resolve_left hn)
-  · exact PowerSeries.mul_inv_cancel _ (by simp [y, hm.1])
+  · exact PowerSeries.mul_inv_cancel _ (by norm_num [y, hm.1, map_ofNat])
 
 private noncomputable def p : PowerSeries ℚ := 1 - X - 4 * X ^ 2
 private noncomputable def q : PowerSeries ℚ := 1 - 2 * X - 4 * X ^ 2
@@ -127,38 +126,37 @@ private theorem source_bridge : 2 * q * y * F = y + p := by
   have hn : y * (2 - M) ≠ 0 := by
     intro hz
     have hc := congrArg constantCoeff hz
-    norm_num [y, motzkin_spec.1] at hc
+    norm_num [y, motzkin_spec.1, map_ofNat] at hc
   apply (mul_left_inj' hn).mp
   calc
-    y * (2 - M) * (2 * q * y * F) = 2 * q * y * (y * (2 - M) * F) := by ring
+    (2 * q * y * F) * (y * (2 - M)) = 2 * q * y * (y * (2 - M) * F) := by ring
     _ = 2 * q * y := by rw [hf, mul_one]
-    _ = y * (2 - M) * (y + p) := by
+    _ = (y + p) * (y * (2 - M)) := by
       dsimp only [y, p, q]
       linear_combination -2 * (2 * M * X ^ 2 + X - 1) * hm
 
+set_option maxHeartbeats 4000000 in
 private theorem differential_equation : D * derivative F - e * F = f := by
   have hnum (n : ℕ) [Nat.AtLeastTwo n] : derivative (ofNat(n) : PowerSeries ℚ) = 0 :=
     (derivative (R := ℚ)).map_natCast n
   have hr : y ^ 2 = d := native_certificate.2.2.1.2
   have hd := congrArg (derivative (R := ℚ)) hr
   simp only [d, map_sub, derivative_pow, Derivation.leibniz, derivative_one,
-    derivative_X, Derivation.map_natCast, hnum, smul_eq_mul] at hd
+    derivative_X, hnum, smul_eq_mul] at hd
   have hyr : y * derivative y = -1 - 3 * X := by
     apply (mul_left_inj' (show (2 : PowerSeries ℚ) ≠ 0 by
-      intro hz; have hc := congrArg constantCoeff hz; norm_num at hc)).mp
+      intro hz; have hc := congrArg constantCoeff hz; norm_num [map_ofNat] at hc)).mp
     linear_combination hd
   have hb := source_bridge
   have h1 := congrArg (derivative (R := ℚ)) hb
-  simp only [map_add, Derivation.leibniz, Derivation.map_natCast, hnum, derivative_one,
-    zero_mul, zero_add, smul_eq_mul] at h1
+  simp only [map_add, Derivation.leibniz, hnum, smul_eq_mul] at h1
   apply (mul_left_inj' (show (2 : PowerSeries ℚ) ≠ 0 by
-    intro hz; have hc := congrArg constantCoeff hz; norm_num at hc)).mp
+    intro hz; have hc := congrArg constantCoeff hz; norm_num [map_ofNat] at hc)).mp
   have hc :
       2 * (D * derivative F - e * F - f) = 0 := by
     dsimp only [D, e, f, p, q, d] at hr hb h1 ⊢
-    simp only [map_sub, map_add, Derivation.leibniz, derivative_pow,
-      derivative_one, derivative_X, Derivation.map_natCast, hnum,
-      smul_eq_mul, zero_mul, mul_zero, zero_add, add_zero] at h1
+    simp only [map_sub, Derivation.leibniz, derivative_pow,
+      derivative_one, derivative_X, hnum, smul_eq_mul, mul_zero, add_zero] at h1
     linear_combination
       (1 - X - 4 * X ^ 2) * y * h1 -
       (-1 - 8 * X) * y * hb -
@@ -177,6 +175,7 @@ private noncomputable def W : PowerSeries ℚ :=
   250 * X + 504 * X ^ 2 - 70 * X ^ 3 + 2280 * X ^ 5
 private noncomputable def H : PowerSeries ℚ := 6 * X ^ 2 * (5 * X - 36)
 
+set_option maxHeartbeats 4000000 in
 private theorem operator_equation :
     U * (X * derivative (X * derivative F)) + V * (X * derivative F) + W * F = H := by
   have hnum (n : ℕ) [Nat.AtLeastTwo n] : derivative (ofNat(n) : PowerSeries ℚ) = 0 :=
@@ -192,23 +191,28 @@ private theorem operator_equation :
       (U * (X * derivative (X * derivative F)) + V * (X * derivative F) + W * F - H) = 0 := by
     dsimp only [D, e, f, p, q, d, U, V, W, H] at h0 h1 ⊢
     simp only [map_sub, map_add, Derivation.leibniz, derivative_pow,
-      derivative_one, derivative_X, Derivation.map_natCast, hnum,
-      smul_eq_mul, zero_mul, mul_zero, zero_add, add_zero, mul_one, one_mul] at h1 ⊢
+      derivative_one, derivative_X, hnum,
+      smul_eq_mul, mul_zero, add_zero, mul_one] at h1 ⊢
     linear_combination 17 * X ^ 2 * (5 * X + 1) * h1 - 5 * X * (47 * X + 25) * h0
   exact sub_eq_zero.mp ((mul_eq_zero.mp hc).resolve_left hn)
 
 /-- The complete six-term assertion and the native source specification. -/
+set_option maxHeartbeats 4000000 in
 theorem result : claim := by
   refine ⟨native_certificate, ?_⟩
   intro n hn
   have hop := operator_equation
   have hexp : U * (X * derivative (X * derivative F)) + V * (X * derivative F) + W * F =
       (17 * (X * derivative (X * derivative F)) - 142 * (X * derivative F)) +
-      X ^ 1 * (17 * (X * derivative (X * derivative F)) + 129 * (X * derivative F) + 250 * F) +
-      X ^ 2 * (-391 * (X * derivative (X * derivative F)) + 924 * (X * derivative F) + 504 * F) +
-      X ^ 3 * (-17 * (X * derivative (X * derivative F)) - 705 * (X * derivative F) - 70 * F) +
+      X ^ 1 * (17 * (X * derivative (X * derivative F)) +
+        129 * (X * derivative F) + 250 * F) +
+      X ^ 2 * (-391 * (X * derivative (X * derivative F)) +
+        924 * (X * derivative F) + 504 * F) +
+      X ^ 3 * (-17 * (X * derivative (X * derivative F)) -
+        705 * (X * derivative F) - 70 * F) +
       X ^ 4 * (1394 * (X * derivative (X * derivative F)) + 1534 * (X * derivative F)) +
-      X ^ 5 * (1020 * (X * derivative (X * derivative F)) + 3300 * (X * derivative F) + 2280 * F) := by
+      X ^ 5 * (1020 * (X * derivative (X * derivative F)) +
+        3300 * (X * derivative F) + 2280 * F) := by
     dsimp only [U, V, W]
     ring
   have hh : coeff n H = 0 := by
