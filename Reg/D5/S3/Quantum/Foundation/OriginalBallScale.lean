@@ -187,4 +187,27 @@ theorem source_bridge_4 : source4.{v} ↔ arena4.{v}.Law actual.{v} := by
 theorem actual_positive_4 : arena4.{v}.Law actual.{v} :=
   source_bridge_4.mp (@original_noncollapse_bounded_budget.{v})
 
+abbrev continuityArena : Arena where
+  signature := signature.{v}
+  Law O := ∀ P : Inputs.{v},
+    (∀ x ∈ P.cone, x ≠ 0 → 0 < P.unit x) →
+    Submodule.span ℝ (P.cone : Set P.V) = ⊤ →
+    (∀ p q : pure P.cone P.unit, O.readout () P (p,q) = O.readout () P (q,p)) →
+    Continuous (fun z : pure P.cone P.unit × pure P.cone P.unit => O.readout () P z)
+
+abbrev continuitySource : Prop := type_of% (@pure_comparison_continuous.{v})
+
+theorem source_bridge_continuity : continuitySource.{v} ↔ continuityArena.{v}.Law actual.{v} := by
+  constructor
+  · intro h P
+    exact @h P.V P.add P.space P.finite P.cone P.unit
+  · intro h V add space finite C u
+    exact h (@Inputs.mk V add space finite C u)
+
+theorem actual_positive_continuity : continuityArena.{v}.Law actual.{v} :=
+  source_bridge_continuity.mp (@pure_comparison_continuous.{v})
+
+/- These exact source bridges do not supply a lawful enrolled readout,
+sourceSelection, Variation, Sensitivity or ObservationalDependence. -/
+
 end Reg.D5.S3.Quantum.Foundation.OriginalComparisonTopology

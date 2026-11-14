@@ -641,7 +641,8 @@ private theorem chart_diameter_axis {p : pure C u} (a : ExclusionChart C u p) :
   rw [dist_eq_norm, he]
   exact (norm_sub_le _ _).trans (by linarith [hbound z hz1, hbound w hw1])
 
-private theorem pure_comparison_continuous
+/-- Pure reciprocity combines the uniform original row bound on the full product of pure labels. -/
+theorem pure_comparison_continuous
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤)
     (hPR : ∀ p q : pure C u, comparison C u p q = comparison C u q p) :
