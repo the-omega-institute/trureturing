@@ -1,0 +1,46 @@
+**Definition 40.3 (one actual source and its original marker menu).**
+An unknown fixed origin $e\in\mathbb Z$ selects
+
+$$
+S_e=\big(f(e),(L_e,R_e)\big),\qquad
+L_e(k)=f(e-k-1),\quad R_e(k)=f(e+k+1)\quad(k\in\mathbb N).
+\tag{IV.124}
+$$
+
+Both rays belong to the one sequence (IV.119), at the same origin.
+Use exactly `Source`, `Policy`, `sideCount`, `markerResponse` and
+`actualRun` in
+[AdaptiveMarkerStoppingTails](../../../D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.lean).
+Write $L$ for `false` and $R$ for `true`. A policy chooses the next side
+from its fixed seed and the actually retained action/reply history. It
+has no other source input. With $c$ previous queries on that side, the
+new query compares the pair
+
+$$
+\begin{cases}
+\big(f(e-c),f(e-c-1)\big)&L,\\
+\big(f(e+c),f(e+c+1)\big)&R.
+\end{cases}
+\tag{IV.125}
+$$
+
+The reply is $1$ precisely when both entries are $0$. Thus the marker
+tests two adjacent **long** selected gaps. Each actual query advances
+just its chosen side count. Histories are stored newest first. The
+state $h_n=(\text{actions},\text{replies},\text{stopped})$ at public
+attempt horizon $n$ starts at $([],[],0)$. While active it prepends the
+chosen side and reply and sets `stopped` to that reply. Once stopped,
+$h_{n+1}=h_n$; no policy or source is read at later horizons.
+
+The corresponding `nativeStep` in
+[FiniteAtomLinearRealization](../../../D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.lean)
+emits `zero` on an unmarked query and, under `Task.raw`, `rawMark` on
+the marker. A later native query emits `reject` and leaves the same
+state. Such a rejection is not a new source sample. Under
+`Task.retained`, the terminal mode is `root(recoveredRoot h)`; under
+`Task.raw`, it is merely `stopped`. A residual `Test` introduced afresh
+at $h_n$ receives only the current mode and subsequent outputs, with
+no earlier trace. A `Test` initialized at $h_0$ can instead retain its
+own choices and outputs through its `Test.query` continuation branches;
+it need not read the stored `State` lists directly.
+

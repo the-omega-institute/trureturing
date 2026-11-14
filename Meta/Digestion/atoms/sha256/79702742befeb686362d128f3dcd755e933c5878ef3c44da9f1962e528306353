@@ -1,0 +1,29 @@
+**Theorem 48.2 (no tenth-atom decoder for this two-marker protocol).**
+For the fixed canonical always-right protocol of Theorem 48.1, there
+is no decoder of its complete record that returns $\mathcal R_{10}(e)$
+uniformly over even the nonnegative origins. Source-independent
+auxiliary computation or independent decoder coins do not remove this
+obstruction. This is a bound for that specified protocol, without an
+assertion of optimality among all possible one-Resume policies.
+
+**Proof.** At $e=2$ and $e=10$ the initial count is $K=1$ and the
+next return is $D_1=5$. Both records are the first right `rawMark`,
+the same successful Ack and five right replies $00001$, with identical
+stop flags and counts. The fixed grants and waiting supply no extra
+source channel. Nevertheless their first ten bits are respectively
+
+$$
+f[2,12)=0010100100,\qquad f[10,20)=0010100101.
+\tag{IV.151}
+$$
+
+These blocks occur in (IV.144). Directly, the decisive floors are
+$\lfloor12s\rfloor=7$, $\lfloor13s\rfloor=8$,
+$\lfloor20s\rfloor=\lfloor21s\rfloor=12$, giving
+$f(11)=0$, $f(19)=1$; (IV.131) certifies each floor with integer
+square inequalities. Identical available records cannot choose between
+these different tenth atoms. Their atomic $\rho$ outputs are distinct,
+so their output tuples differ as well. Coupling independent decoder
+coins gives the same output law on the two inputs and hence average
+error at least $1/2$ under their equal prior. $\square$
+

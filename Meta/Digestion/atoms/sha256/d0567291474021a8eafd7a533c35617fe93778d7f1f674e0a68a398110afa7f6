@@ -1,0 +1,39 @@
+**Definition 45.1 (the unchanged source and the extended raw domain).**
+Fix precisely (IV.119)–(IV.125), with $e\in\mathbb Z$ unknown,
+beta $=0$, alpha $=1$, the lower floors, increasing right orientation
+and selected-chain calibration. The consumer remains $\mathcal R_H(e)$
+of (IV.122). Acquire the first marker by the original always-right
+`Task.raw` run under Assumption 40.4. Retain its actual first-stop
+subrecord, its count $K\in\{1,\ldots,5\}$ and its root certificate.
+The first marked edge starts at $p_0=e+K-1$; the actual cursor rests
+at its outer site $p_0+1=e+K$. A bound handle and immutable source
+version identify this same pointed chain throughout the following domain.
+
+An extended configuration retains that handle/version, original anchor,
+orientation, calibration, both cumulative side counts, actual cursors,
+the acquisition latch and the whole chronological record $J$.
+The left count stays zero in the construction below. At a stopped
+configuration a separately supplied, paid operation $\mathsf{Resume}$
+may succeed. Its only acquisition-state change is to clear the latch;
+it appends a fixed acknowledgement $\mathsf{Ack}$ to $J$. In particular
+it preserves $e$, the source/version, original anchor, both counts,
+cursors and every old record entry. It returns no source letter,
+index, phase, new anchor or refreshed source. With cumulative right
+count $c$, an enabled active right query has exactly the transition
+
+$$
+b=\mathbf1_{\{f(e+c)=f(e+c+1)=0\}},\qquad
+c'=c+1,\qquad \mathrm{latch}'=b.
+\tag{IV.145}
+$$
+
+It records $R$ and emits `zero` for $b=0$, `rawMark` for $b=1$.
+The new cursor is $e+c+1$. A stopped ordinary raw query still emits
+`reject`, samples nothing and leaves counts, cursor and latch unchanged.
+A Resume while active returns $\mathsf{RefuseActive}$ unchanged;
+an invalid or mismatched binding returns $\mathsf{RejectEntry}$ without
+a source sample. A supplied grant denial is recorded as $\mathsf{Denied}$
+and preserves the stopped configuration. Missing primitive authority
+or an unlawful phase disables the call rather than licensing success.
+No extra left-query continuation or two-arm anchor transport is assumed.
+

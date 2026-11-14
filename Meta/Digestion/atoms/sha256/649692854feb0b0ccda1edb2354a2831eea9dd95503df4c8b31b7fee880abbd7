@@ -1,0 +1,15 @@
+**Definition 43.4 (which notions of time and memory are recovered).**
+The memory in Theorem 43.2 is the obtained marker transcript. Its time
+is query order on the fixed selected chain; its space is the relative
+tile chart; its boundary is that chart's two endpoints. The mutual
+inverse concerns the **supplemented** chart carrying its event spine,
+on the actual terminal image. It neither identifies this query order
+with the successful $P/S$ generation histories of Definition 1.1 nor
+recovers those histories from (IV.123). The four-atom summary $K$ in
+Theorem 42.1 is sufficient for its specified consumer under its fixed
+policy; it is not a sufficient description for every original native
+operation. Reference bindings, orientation, calibration, controller,
+clock, retention and postprocessing remain the premises in Assumption
+40.4, with their own resources. The chart has no claim of a universal
+space/time/memory/boundary inverse or a total-resource minimum.
+

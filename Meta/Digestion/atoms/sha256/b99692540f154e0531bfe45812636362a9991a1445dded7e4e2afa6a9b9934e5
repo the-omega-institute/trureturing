@@ -1,0 +1,23 @@
+**Theorem 50.1 (two exact displacements with distinct quantity weights).**
+For a completed return from marked start $p$ to $p+D$,
+
+$$
+P(p+D)-P(p)=P(p+D+1)-P(p+1)
+=\begin{cases}2\varphi^2+\varphi=\varphi^4&D=3,\\
+3\varphi^2+2\varphi=\varphi^5&D=5.\end{cases}
+\tag{IV.153}
+$$
+
+Thus the marker-start and actual outer-cursor displacements agree.
+The original quantities of $B_3,B_5$ are respectively $8,13$, and
+their original-$\rho$ quantities are $13,21$. None is a physical
+duration or an identification of quantity with selected metric length.
+
+**Proof.** Sum (IV.120) over $B_3$ or $B_5$: they have respectively
+$(2,1)$ and $(3,2)$ beta/alpha counts. Shifting the interval by one
+deletes $f(p)=0$ and adds $f(p+D)=0$, leaving the same length sum.
+The two polynomial identities follow from $\varphi^2=\varphi+1$.
+Quantity instead weights alpha by two and beta by three. Its original
+substitution weights are three at alpha and five at beta, giving the
+four stated integer quantities. $\square$
+

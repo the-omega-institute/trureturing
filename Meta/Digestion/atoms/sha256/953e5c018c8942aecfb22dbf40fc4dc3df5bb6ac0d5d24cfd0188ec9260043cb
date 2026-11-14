@@ -1,0 +1,35 @@
+**Definition 40.1 (selected points, gap sites and atomic names).** Put
+$\varphi=(1+\sqrt5)/2$ and $s=\varphi^{-1}=\varphi-1$. For every
+$i\in\mathbb Z$ define
+
+$$
+\begin{aligned}
+A(i)&=\lfloor(i+1)s\rfloor,& P(i)&=A(i)+i\varphi,\\
+d(i)&=A(i+1)-A(i),& f(i)&=1-d(i),\\
+a_i&=\begin{cases}\beta&f(i)=0,\\\alpha&f(i)=1.\end{cases}
+\end{aligned}
+\tag{IV.119}
+$$
+
+All floors have the displayed lower-floor convention, also at negative
+indices. A site $i$ of the binary source names the selected **gap**
+$[P(i),P(i+1)]$, rather than the point $P(i)$ alone. The orientation and
+length unit are fixed. The integral coefficient $i$ is a mathematical
+index; it is not an observed origin or a free source address.
+
+The selected lift $(A(i),i)$ is exactly `goldenWindowFiberLift i` in
+[GoldenModelSetFibreBridge](../../../D5/S3/Fourier/GoldenModelSetFibreBridge.lean).
+Its definition simplifies to (IV.119) for all integer $i$. Its natural
+step theorem gives $d(i)=\texttt{goldenMechanicalLetter}(i+1)$ for
+$i\ge0$. These are existing suppliers. In particular
+
+$$
+P(i+1)-P(i)=\varphi+d(i)=\varphi^2-f(i)
+=\begin{cases}\varphi^2&a_i=\beta,\\\varphi&a_i=\alpha.\end{cases}
+\tag{IV.120}
+$$
+
+Thus $P$ is strictly increasing. The selected set is
+$\Lambda_{\rm sel}=\{P(i):i\in\mathbb Z\}$. It has its own adjacency;
+the closed-window set is specified separately in Proposition 44.1.
+
