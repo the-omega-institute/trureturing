@@ -74,7 +74,10 @@ internal sealed class NikiforovConjecture442RefutationDocument : IScribeDocument
                     + "No claim is made about a p = 3 obstruction, dimension minimality or a Hadamard family. "
                     + "The source provides the conjecture; the counterexample and formal derivation are "
                     + "repository results. The bounded literature screen does not establish global novelty."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nikiforov-2016-conjecture-4-42"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimBody()
     {
