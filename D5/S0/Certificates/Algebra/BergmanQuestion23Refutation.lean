@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/Algebra/BergmanQuestion23Refutation
    mirror-E: none(waiver:noncomputational)
-   anchors: [D5/S0/Certificates/Algebra/BergmanQuestion15Refutation, mathlib/module/Mathlib.Data.Sym.Card, mathlib/module/Mathlib.Data.Finsupp.Multiset]
+   anchors: [mathlib/module/Mathlib.Data.Sym.Card, mathlib/module/Mathlib.Data.Finsupp.Multiset]
    utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.claim; result=D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.result; claim=D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.claim
    digest: A generic truncated idealization refutes Bergman's Question 23. -/
 
