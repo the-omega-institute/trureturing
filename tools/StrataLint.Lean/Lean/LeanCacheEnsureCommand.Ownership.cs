@@ -66,6 +66,13 @@ internal static partial class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
+        var lake = Path.Combine(root, ".lake");
+        if (IsSymlink(lake))
+            return RefusedSymlink(root, pins.Sha256);
+        if (File.Exists(lake))
+            return FailureReceipt("failed", root, donor: null, method: "none", pins.Sha256,
+                ".lake exists but is not a directory", stampMiss: "corrupt");
+
         // Explicit target builds and scoped reports use Lake's content-addressed
         // artifact cache directly.  They still validate pins, acquire the local
         // writer reservation, and run the requested command under the canonical
