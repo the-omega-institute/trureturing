@@ -4252,3 +4252,199 @@ $$
 [Q147ROG]: ../../../Blueprint/D5/S3/Quantum/Foundation/SectionROGFrame.md "Whole-section positive lift applications：整个原unital截面的PSD正代表；原前件与数学归属保持。"
 
 ## 追加锚（本行以下为增补区）
+
+## 148. 最高纯秩的塌球排除与跨秩零边连续性
+
+### 148.1 同一原域与最高纯秩
+
+**定义 148.1（忠实截面中的纯秩与整球支撑）。** 保留147.1的整个原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p$，以及 EB3、$\mathsf{Conn}$ 的全部量词。仍不预设 least、$T_p=e_p$、全 Pair 或全纯域闭性。取147.1的忠实有限阶实或复 PSD 截面，删去共同零空间后有
+
+$$
+A:V\hookrightarrow\operatorname{Herm}_m(\mathbb F),\qquad
+C=A^{-1}(\operatorname{PSD}_m(\mathbb F)),\qquad A(z)\succ0
+\quad(z\in\operatorname{ri}K),\qquad \mathbb F\in\{\mathbb R,\mathbb C\}.
+\tag{XI148.1}
+$$
+
+原单位仍是 $u$，不要求 $u=\operatorname{Tr}\circ A$。定义
+
+$$
+r(p)=\operatorname{rank}_{\mathbb F}A(p),\quad
+R=\max_{p\in P}r(p),\quad P_{\max}=\{p\in P:r(p)=R\},\quad
+J_p=\ker A(p),\quad W_p=\operatorname{ran}A(c_p),\quad d_p=\dim_{\mathbb F}W_p.
+\tag{XI148.2}
+$$
+
+$R$ 的存在只使用非空 $P$ 上有限个整数秩，不使用 $P$ 紧性。以下定理148.2—148.4不要求 ZC。准确复用145.3的 $\dim L_p=4$、$g_p=u-e_p\in\operatorname{ri}N_p$、全部非零相对边界射线 $\mathbb R_{>0}e_s$（$s\in S_p$），以及整个法向基
+
+$$
+B_p^*=\{h\in N_p:h(z)=1\}
+=\operatorname{conv}\{\widehat e_s:s\in S_p\},\qquad
+\widehat h=h/h(z).
+\tag{XI148.3}
+$$
+
+复用147.2的同秩整球连续及正代表公式
+
+$$
+C^*=A^*(\operatorname{PSD}_m),\qquad
+N_p=A^*(\operatorname{PSD}(J_p)).
+\tag{XI148.4}
+$$
+
+### 148.2 同秩法向边界排除最高秩塌球
+
+**定理 148.2（最高纯秩点不能是整球的单点极限）。** 在定义148.1的完整 EB3+$\mathsf{Conn}$ 和忠实截面下，不存在 $a_j\in P$、$s\in P_{\max}$ 使 $D_{a_j}\to\{s\}$ 于 Hausdorff 距离；不要求 $a_j$ 有纯极限。
+
+证明。先建立该证明所需的同秩法向边界稳定性。设 $p_j\to p\in P$ 且 $r(p_j)=r(p)$，并有 $h_j\in\partial_{L_{p_j}}N_{p_j}$、$h_j\to h$。核投影收敛允许选等距同构 $U_j:J_p\to J_{p_j}$ 趋于 $J_p$ 的包含映射。在固定实空间 $\operatorname{Herm}(J_p)$ 上置
+
+$$
+\Psi_j(B)=A^*(U_jBU_j^*),\qquad \Psi(B)=A^*B.
+\tag{XI148.5}
+$$
+
+由(XI148.4)，$\Psi_j(\operatorname{PSD}(J_p))=N_{p_j}$、$\operatorname{im}\Psi_j=L_{p_j}$，且像维数始终为四。评价闭性给 $h\in N_p$。若 $h\in\operatorname{ri}N_p$，取足够小 $\varepsilon>0$，使 $h-\varepsilon\Psi(I_{J_p})\in N_p$；选该差的正代表 $B_0$，得到
+
+$$
+G=B_0+\varepsilon I_{J_p}\succ0,\qquad \Psi(G)=h.
+\tag{XI148.6}
+$$
+
+选 $B_1,\ldots,B_4\in\operatorname{Herm}(J_p)$，使 $\Psi(B_\ell)$ 是 $L_p$ 的基。充分大 $j$ 时，$\Psi_j(B_\ell)$ 仍是 $L_{p_j}$ 的基；四个极限基向量独立给相应坐标逆统一有界。因此存在 $b_{\ell j}\to0$ 使
+
+$$
+h_j-\Psi_j(G)=\sum_{\ell=1}^4 b_{\ell j}\Psi_j(B_\ell),\qquad
+G_j=G+\sum_{\ell=1}^4 b_{\ell j}B_\ell\succ0,\qquad \Psi_j(G_j)=h_j.
+\tag{XI148.7}
+$$
+
+满射线性图把正定矩阵的开邻域送到像空间的开邻域，迫 $h_j\in\operatorname{ri}N_{p_j}$，矛盾。所以
+
+$$
+p_j\to p,\ r(p_j)=r(p),\ h_j\in\partial_{L_{p_j}}N_{p_j},\ h_j\to h
+\quad\Longrightarrow\quad h\in\partial_{L_p}N_p.
+\tag{XI148.8}
+$$
+
+对 $s\in P_{\max}$，一个非零 $R$ 阶子式在其附近仍非零，而全部原纯秩不超过 $R$，故所有充分靠近 $s$ 的原纯点均秩 $R$。147.2给该处对任意原纯趋近的整球连续；任何效应聚点在 $s$ 读一、在整个 $D_s$ 读零，由唯一整球零确认即为 $e_s$。故 $e$ 也在 $s$ 对全部原纯趋近连续。
+
+反设 $D_{a_j}\to\{s\}$。整个 $S_{a_j}$ 的点趋于 $s$，刚得的连续性给
+
+$$
+\sup_{t\in S_{a_j}}\|\widehat e_t-\widehat e_s\|\to0.
+\tag{XI148.9}
+$$
+
+若一致性失败，选违反它的 $t_j\in S_{a_j}$ 就与 $t_j\to s$ 的效应连续矛盾。归一化合法：$z\in\operatorname{int}C$ 给所有正 $h$ 的 $h(z)\ge\delta\|h\|$，且 $e_t(t)=1$ 使这些效应的范数统一远离零。完整法向基(XI148.3)于是使 $\widehat g_{a_j}\to\widehat e_s$。
+
+任选 $t_j\in S_{a_j}$。$g_{a_j}(t_j)=1$、$t_j\to s$，且 $g_{a_j}\in\mathcal E$。任取聚点 $g$，则 $g(s)=1$；归一化极限使 $g$ 与 $e_s$ 正比例，两者在 $s$ 都读一，故 $g=e_s$。因此
+
+$$
+g_{a_j}\to e_s,\qquad e_{a_j}\to g_s.
+\tag{XI148.10}
+$$
+
+原零对称给 $a_j\in S_{t_j}$，全部边界射线公式给 $e_{a_j}\in\partial_{L_{t_j}}N_{t_j}$。由于 $t_j\to s$ 最终同为最高秩，(XI148.8)迫 $g_s\in\partial_{L_s}N_s$，违反 $g_s\in\operatorname{ri}N_s$。证毕。
+
+### 148.3 整球内部的秩屏障与真正跨秩连续
+
+**定理 148.3（最高秩邻球的支撑屏障）。** 在同一完整原域与忠实截面下，若 $S_p\cap P_{\max}\ne\varnothing$，则 $d_p>R$，每个 $x\in\operatorname{ri}D_p$ 均有 $\operatorname{rank}A(x)=d_p$，并且 $\overline P^{\,K}\cap D_p=S_p$。若更有 $S_p\subseteq P_{\max}$，则对任意原纯序列 $p_j\to p$ 均有 $D_{p_j}\to D_p$、$e_{p_j}\to e_p$。
+
+证明。对每个 $x\in D_p$，对径点 $2c_p-x\in D_p$ 给 $A(c_p)=(A(x)+A(2c_p-x))/2$，所以 $\operatorname{ran}A(x)\subseteq W_p$。取 $s\in S_p\cap P_{\max}$，有 $d_p\ge R$。若等号成立，$A(s)$ 在 $W_p$ 上正定。对任意 $x\in D_p\setminus\{s\}$ 取充分小 $0<\varepsilon<1$，则 $A(s)-\varepsilon A(x)\succeq0$。忠实截面等式给
+
+$$
+y=\frac{s-\varepsilon x}{1-\varepsilon}\in K,\qquad
+s=\varepsilon x+(1-\varepsilon)y,
+\tag{XI148.11}
+$$
+
+这违反原 $s$ 的纯性，故 $d_p>R$。$x,c_p$ 同在 $D_p$ 的相对内部时，各能减去对方的一个小正倍数而仍在 $C$；正矩阵的互相正支配使两者的核相同，故内点秩恒为 $d_p$。原纯像均秩不超过 $R$，而矩阵秩不超过 $R$ 是闭条件。因此任何原纯极限都不能在 $\operatorname{ri}D_p$，得到所述闭包交式。
+
+再设 $S_p\subseteq P_{\max}$。对任意 $p_j\to p$ 及其任意子列，取有界正交半轴及效应的共同再收敛子列，写
+
+$$
+D_{p_j}=c_j+B_j\overline{\mathbb B}^3\to E=c+B\overline{\mathbb B}^3,\qquad
+e_{p_j}\to f\in\mathcal E.
+\tag{XI148.12}
+$$
+
+$f(p)=1$、$f|_E=0$ 按原 minimum 定义给 $E\subseteq D_p$。对每个单位 $v$，原纯球缘 $c_j+B_jv$ 的极限在 $\overline P^{\,K}\cap D_p=S_p$，故 $c+BS^2\subseteq S_p$。若 $\operatorname{rank}B<3$，单位核方向补长度给 $BS^2=B\overline{\mathbb B}^3$；于是凸 $E$ 全包含于严格凸球面 $S_p$，只能是 $\{s\}$、$s\in S_p\subseteq P_{\max}$。148.2排除此分支。
+
+若 $\operatorname{rank}B=3$，$E,D_p$ 的仿射包相同，且 $\partial_{\rm rel}E\subseteq\partial_{\rm rel}D_p$。若 $E\ne D_p$，可取 $\operatorname{ri}E$ 内一点及 $\operatorname{ri}D_p\setminus E$ 内一点；连线第一次离开 $E$ 的点属于 $\partial E\cap\operatorname{ri}D_p$，矛盾。因此所有再子列均给 $E=D_p$，整列球连续。效应聚点在 $p$ 读一并在整个 $D_p$ 读零，唯一性给 $f=e_p$。这里没有把固定母球连续或同秩连续当作跨秩连续。证毕。
+
+### 148.4 零边的最高秩覆盖与有限阶排除
+
+**定理 148.4（每条零边触及最高纯秩足以重构）。** 在定义148.1的完整 EB3+$\mathsf{Conn}$ 及忠实有限 PSD 截面下，若
+
+$$
+\forall p,q\in P:\quad p\perp q\ \Longrightarrow\ p\in P_{\max}\ \text{或}\ q\in P_{\max},
+\tag{XI148.13}
+$$
+
+则同一原锥、同一原单位有复三能级表示；不另要求 ZC、全域连续性或原维数上界。
+
+证明。最高秩点处的任意原纯趋近最终同秩，由147.2给整球连续。若 $p\notin P_{\max}$，(XI148.13)给 $S_p\subseteq P_{\max}$，由148.3取得该处的任意跨秩连续。故整个 $P$ 上 $D$ 连续。Conn 已给 Inj，准确调用[IX118.3、118.5、118.8][Q148IX]的同原分类，得到
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,\qquad
+\Phi(\operatorname{PSD}_3)=C,\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XI148.14}
+$$
+
+整球连续是以上推导的中间结论。证毕。
+
+**定理 148.5（复五阶、实七阶迫出真实三角）。** 在完整 EB3+$\mathsf{Conn}$ 及忠实有效 PSD 截面下，若 $\mathbb F=\mathbb C,m\le5$ 或 $\mathbb F=\mathbb R,m\le7$，则原零图存在三个不同、两两零比较的原纯标签。再加146.1的原义 ZC，即有(XI148.14)。
+
+证明。令 $k_p=\dim_{\mathbb F}J_p$。由 $\dim L_p=4$ 及(XI148.4)，复情形 $4\le k_p^2$，实情形 $4\le k_p(k_p+1)/2$，故
+
+$$
+R\le m-2\quad(\mathbb F=\mathbb C),\qquad
+R\le m-3\quad(\mathbb F=\mathbb R).
+\tag{XI148.15}
+$$
+
+反设没有实际三角 Seed。复用147.5的共同核机制：对实际零边 $p\perp q$，非零共同核向量 $v$ 会给非零原正 $h_v(x)=v^*A(x)v$ 在两端同零；其整个非点真面按原面分类为某个 $D_a$，从而产生实际第三纯标签 $a$。因此无 Seed 时每条零边满足
+
+$$
+J_p\cap J_q=\{0\},\qquad r(p)+r(q)\ge m.
+\tag{XI148.16}
+$$
+
+若该边两端均非最高秩，则 $r(p)+r(q)\le2(R-1)$。复 $m\le5$ 时由(XI148.15)有 $2(R-1)\le2m-6<m$；实 $m\le7$ 时有 $2(R-1)\le2m-8<m$。均矛盾。所以每条零边至少一端最高秩，148.4给同原 qutrit。标准 qutrit 的三个正交秩一投影运输回整个原域又给 Seed，违反反设。因此这些阶数必有实际 Seed。
+
+最后才在原义 ZC 下调用140.4的 Seed 传播，得到(XI148.14)。阶数迫出 Seed 不使用 ZC；一般已有 Seed 之后的全域传播仍保留该额外前件。证毕。
+
+### 148.5 剩余谱规格与完整静态后果
+
+**定理 148.6（非量子有限截面的中间秩零边）。** 在完整 EB3+$\mathsf{Conn}$+原义 ZC及忠实有限截面下，若不存在(XI148.14)，则存在实际零边 $p\perp q$，满足
+
+$$
+r(p)<R,\qquad r(q)<R,\qquad
+m\le r(p)+r(q)\le2(R-1),\qquad
+R\ge\left\lceil\frac m2\right\rceil+1.
+\tag{XI148.17}
+$$
+
+其有效阶数至少复六、实八。在复 $m=6$ 时必有 $R=4$ 及一条 $3$—$3$ 零边，两端复三维核互补；在实 $m=8$ 时必有 $R=5$ 及一条 $4$—$4$ 零边，两端实四维核互补。复六阶若 $p_j\to p\in P$ 而 $D_{p_j}\not\to D_p$，可选坏子列始终有 $r(p_j)=4,r(p)=3$；实八阶相应仅可为 $5\to4$。
+
+证明。148.4的逆否给两端均非最高秩的零边；若有 Seed，140.4在当前完整前件下已给(XI148.14)，故这里无 Seed，(XI148.16)遂给(XI148.17)。148.5给最低阶数。在复六阶，(XI148.15)、(XI148.17)合给 $R=4$，所选边两端秩至多三且和至少六，故均三；共同核为零及维数和为六给互补。任取纯点，其零邻点非空且秩至多四，(XI148.16)又给其秩至少二。因此纯秩仅为二、三、四；秩二点的全部零邻点均秩四，148.3给其连续，秩四点本已连续。坏纯极限仅能在秩三点；147.4的恒定秩严格下降子列遂只能 $4\to3$。实八阶同理：$R=5$、纯秩为三至五、秩三点的全部邻点秩五，所选非最高零边为四—四，坏子列仅 $5\to4$。证毕。
+
+**定理 148.7（同一菜单的全部混态读数及归属边界）。** 在148.4或148.5已得到(XI148.14)的各自完整前件下，145.9的整个静态字典通过同一个 $\Phi$ 适用。具体地，对全部 $\rho\succeq0,\operatorname{Tr}\rho=1$ 和全部单位 $v\in\mathbb C^3$，置 $p_v=\Phi(vv^*)$、$Q_v=I-vv^*$，则整个原确认菜单及原最低值为
+
+$$
+\mathcal F_{p_v}=\{f_{vv^*+B}:B=Q_vBQ_v,\ 0\preceq B\preceq Q_v\},\qquad
+T_{p_v}(\Phi\rho)=v^*\rho v,
+\tag{XI148.18}
+$$
+
+其中 $f_H(\Phi X)=\operatorname{Tr}(HX)$，最低值由原菜单中的 $B=0$ 达到；$D_{p_v}$ 是 $v^\perp$ 上全部迹一正矩阵的完整三球。原实维数为九。实际仪器、任意有限联合及纠缠、全旁观 CP、记录与未来、物理钟、Hamiltonian和能量仍取145.9的各自原合同。
+
+证明。完整字典直接复用145.9及其来源，不将确认菜单缩成唯一 $e_{p_v}$。上述 minimum 在所有原混输入和全部确认者上量化，不只在纯标签或部分效应上核对。148.6给必要谱约束，没有构造所述更高阶非量子模型。一般原锥的自动有限 PSD 表示、一般自动九维上界，以及复六／实八及更高阶的中间秩边排除均仍未证明；纯端点互易也未被解释成实际测量次序可交换。
+
+归属采用 `repo-derived` 综合推导。正代表及同秩邻点运输准确复用147.2；完整法向基、全部边界射线与相对内部准确复用145.3及所引来源。新增承重连接是同秩法向边界稳定与完整法向基共同排除最高纯秩单点塌缩，再以整球支撑的严格秩增长处理所有邻点最高秩的真正跨秩极限。由此得到148.4的全域重构入口及148.5—148.6的下一阶排除与中间秩规格。相对内部的正代表、固定有限基的小扰动、正矩阵共同支撑及闭秩条件只作这些连接的中间工具。核面描述的经典背景是[Ramana—Goldman，Theorem 1、Corollary 1][Q148RG]及[Netzer—Plaumann—Schweighofer，Theorem 2.3][Q148NPS]；这些文献不被用作一般原锥具有矩阵表示、全域纯点紧性或原面格模性的证明。证毕。
+
+[Q148IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "118.3、118.5、118.8：整球连续到同原锥、同原单位分类。"
+[Q148RG]: https://doi.org/10.1007/BF01100204 "M. V. Ramana and A. J. Goldman, Some geometric results in semidefinite programming, Journal of Global Optimization 7 (1995), 33—50，Theorem 1及Corollary 1。"
+[Q148NPS]: https://arxiv.org/abs/0902.3345 "Tim Netzer, Daniel Plaumann and Markus Schweighofer, Exposed Faces of Semidefinitely Representable Sets, SIAM Journal on Optimization 20 (2010), 1944—1955，Theorem 2.3。"
+
+## 追加锚（本行以下为增补区）
