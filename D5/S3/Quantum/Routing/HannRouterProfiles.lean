@@ -632,11 +632,265 @@ private theorem all_minimizers (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v
     rw [hp]
     exact hx _
 
+private theorem tree_record_overlap (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, 0 ≤ q v) (hq' : ∀ v, q v ≤ 1) (t u : Tree n) :
+    (∑ e, treeRecord n q t e * conj (treeRecord n q u e)) =
+      ∏ v, if routerLabel n t v = routerLabel n u v then 1 else (q v : ℂ) := by
+  classical
+  calc
+    _ = ∑ e : Environment n, ∏ v,
+        (HannRouterDephasing.localRecord (q v) (routerLabel n t v) (e v) *
+          conj (HannRouterDephasing.localRecord (q v) (routerLabel n u v) (e v))) := by
+      simp only [treeRecord, map_prod, Finset.prod_mul_distrib]
+    _ = ∏ v, ∑ s : Option Qutrit,
+        HannRouterDephasing.localRecord (q v) (routerLabel n t v) s *
+          conj (HannRouterDephasing.localRecord (q v) (routerLabel n u v) s) :=
+      (Fintype.prod_sum (fun (v : Router n) (s : Option Qutrit) =>
+        HannRouterDephasing.localRecord (q v) (routerLabel n t v) s *
+          conj (HannRouterDephasing.localRecord (q v) (routerLabel n u v) s))).symm
+    _ = _ := by
+      apply Finset.prod_congr rfl
+      intro v _
+      have he := (HannRouterDephasing.result 0 (q v) (hq v) (hq' v) (fun _ => false)).1
+        (fun _ _ => 1) (routerLabel n t v) (routerLabel n u v)
+      by_cases h : routerLabel n t v = routerLabel n u v <;> simpa [h] using he
+
+/-- Actual heterogeneous hold followed by exactly the existing ideal continuation. -/
+def jointOutput (n : ℕ) (q : Router n → ℝ) (D : Address n → Bool)
+    (ψ : Address n × Bool → ℂ) (s : State n) (e : Environment n) : ℂ :=
+  initialized n ψ ((load n n).symm ((HannRouterDephasing.postLoad n D).symm s)) *
+    treeRecord n q ((HannRouterDephasing.postLoad n D).symm s).2.2 e
+
+/-- The complete system density matrix, tracing precisely the independent router environments. -/
+def noisyOutput (n : ℕ) (q : Router n → ℝ) (D : Address n → Bool)
+    (ψ : Address n × Bool → ℂ) : Matrix (State n) (State n) ℂ :=
+  fun s t => ∑ e, jointOutput n q D ψ s e * conj (jointOutput n q D ψ t e)
+
+/-- Pure-state fidelity with the unchanged ideal output, over the whole physical system. -/
+def squaredFidelity (n : ℕ) (q : Router n → ℝ) (D : Address n → Bool)
+    (ψ : Address n × Bool → ℂ) : ℂ :=
+  ∑ s, ∑ t, conj (HannRouterDephasing.idealOutput n D ψ s) *
+    noisyOutput n q D ψ s t * HannRouterDephasing.idealOutput n D ψ t
+
+private theorem joint_output_basis (n : ℕ) (q : Router n → ℝ) (D : Address n → Bool)
+    (ψ : Address n × Bool → ℂ) (a : Address n) (b : Bool) (e : Environment n) :
+    jointOutput n q D ψ (HannRouterDephasing.outputBasis n D (a, b)) e =
+      ψ (a, b) * record n q a e := by
+  have hpre : (HannRouterDephasing.postLoad n D).symm
+      (HannRouterDephasing.outputBasis n D (a, b)) = load n n (clean n a b) := by
+    apply (HannRouterDephasing.postLoad n D).injective
+    rw [Equiv.apply_symm_apply]
+    exact (correctness.2.2.1 n D a b).symm
+  simp only [jointOutput, hpre, Equiv.symm_apply_apply, HannRouterDephasing.initialized_clean]
+  change ψ (a, b) * treeRecord n q ((load n n) (loading n a (encode b) 0)).2.2 e = _
+  rw [record_loaded n q a (encode b)]
+
+private theorem noisy_output_basis (n : ℕ) (q : Router n → ℝ) (D : Address n → Bool)
+    (ψ : Address n × Bool → ℂ) (a a' : Address n) (b b' : Bool) :
+    noisyOutput n q D ψ (HannRouterDephasing.outputBasis n D (a, b))
+      (HannRouterDephasing.outputBasis n D (a', b')) =
+        ψ (a, b) * conj (ψ (a', b')) * gram n q a a' := by
+  simp only [noisyOutput, joint_output_basis, map_mul, gram, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro e _
+  ring
+
+private theorem fidelity_formula (n : ℕ) (q : Router n → ℝ) (D : Address n → Bool)
+    (ψ : Address n × Bool → ℂ) :
+    squaredFidelity n q D ψ =
+      (addressEnergy n q (HannRouterDephasing.addressProbability n ψ) : ℂ) := by
+  unfold squaredFidelity HannRouterDephasing.idealOutput
+  simp_rw [mul_assoc, ← Finset.mul_sum]
+  rw [HannRouterDephasing.sum_ket_conj]
+  simp_rw [mul_comm (noisyOutput n q D ψ _ _), HannRouterDephasing.sum_ket, Finset.mul_sum]
+  have he (ab cd : Address n × Bool) :
+      noisyOutput n q D ψ (HannRouterDephasing.outputBasis n D ab)
+        (HannRouterDephasing.outputBasis n D cd) =
+          ψ ab * conj (ψ cd) * gram n q ab.1 cd.1 :=
+    noisy_output_basis n q D ψ ab.1 cd.1 ab.2 cd.2
+  simp_rw [he]
+  have hm (x y z : ℂ) : conj x * (y * (x * conj y * z)) =
+      (Complex.normSq x : ℂ) * (Complex.normSq y : ℂ) * z := by
+    rw [Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_conj_mul_self]
+    ring
+  simp_rw [hm]
+  simp only [addressEnergy, HannRouterDephasing.addressProbability, Fintype.sum_prod_type,
+    Complex.ofReal_sum, Complex.ofReal_mul]
+  simp only [gram_real, Finset.mul_sum, Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro a _
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro a' _
+  rw [Finset.sum_comm]
+
+/-- The address law of any normalized, jointly entangled address/bus input. -/
+def inputDistribution (n : ℕ) (ψ : Address n × Bool → ℂ)
+    (hψ : HannRouterDephasing.Normalized n ψ) : AddressDistribution n where
+  weights := Finsupp.equivFunOnFinite.symm (HannRouterDephasing.addressProbability n ψ)
+  nonneg a := by
+    simp only [Finsupp.equivFunOnFinite_symm_apply_apply, HannRouterDephasing.addressProbability]
+    exact Finset.sum_nonneg (fun b _ => Complex.normSq_nonneg _)
+  total := by
+    rw [Finsupp.sum_fintype _ _ (by simp)]
+    change (∑ ab, Complex.normSq (ψ ab)) = 1 at hψ
+    simpa only [Finsupp.equivFunOnFinite_symm_apply_apply,
+      HannRouterDephasing.addressProbability, Fintype.sum_prod_type] using hψ
+
+private theorem input_weights (n : ℕ) (ψ : Address n × Bool → ℂ)
+    (hψ : HannRouterDephasing.Normalized n ψ) :
+    ((inputDistribution n ψ hψ).weights : Address n → ℝ) =
+      HannRouterDephasing.addressProbability n ψ := by
+  simp [inputDistribution]
+
+/-- Every address distribution is physically realizable, with a fixed clean bus. -/
+def distributionInput (n : ℕ) (p : AddressDistribution n) (ab : Address n × Bool) : ℂ :=
+  if ab.2 then 0 else (Real.sqrt (p.weights ab.1) : ℂ)
+
+private theorem distribution_probability (n : ℕ) (p : AddressDistribution n) (a : Address n) :
+    HannRouterDephasing.addressProbability n (distributionInput n p) a = p.weights a := by
+  simp [HannRouterDephasing.addressProbability, distributionInput, Complex.normSq_ofReal,
+    Real.mul_self_sqrt (p.weights_nonneg a)]
+
+private theorem distribution_normalized (n : ℕ) (p : AddressDistribution n) :
+    HannRouterDephasing.Normalized n (distributionInput n p) := by
+  change (∑ ab, Complex.normSq (distributionInput n p ab)) = 1
+  rw [Fintype.sum_prod_type]
+  change (∑ a, HannRouterDephasing.addressProbability n (distributionInput n p) a) = 1
+  simp_rw [distribution_probability]
+  exact p.total_of_fintype
+
+private theorem distribution_realizes (n : ℕ) (p : AddressDistribution n) :
+    inputDistribution n (distributionInput n p) (distribution_normalized n p) = p := by
+  ext a
+  simp [inputDistribution, distribution_probability]
+
+private theorem ideal_pullback (n : ℕ) (D : Address n → Bool)
+    (ψ : Address n × Bool → ℂ) (s : State n) :
+    HannRouterDephasing.idealOutput n D ψ s =
+      initialized n ψ ((load n n).symm ((HannRouterDephasing.postLoad n D).symm s)) := by
+  unfold HannRouterDephasing.idealOutput initialized
+  rw [Fintype.sum_prod_type]
+  apply Finset.sum_congr rfl
+  intro a _
+  apply Finset.sum_congr rfl
+  intro b _
+  have hc : HannRouterDephasing.postLoad n D (load n n (clean n a b)) =
+      HannRouterDephasing.outputBasis n D (a, b) := correctness.2.2.1 n D a b
+  simp only [Equiv.symm_apply_eq, hc]
+
+private theorem tree_record_norm (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, 0 ≤ q v) (hq' : ∀ v, q v ≤ 1) (t : Tree n) :
+    (∑ e, Complex.normSq (treeRecord n q t e)) = 1 := by
+  apply Complex.ofReal_injective
+  simp only [Complex.ofReal_sum, ← Complex.mul_conj, Complex.ofReal_one]
+  simpa only [ite_true, Finset.prod_const_one] using tree_record_overlap n q hq hq' t t
+
+private theorem ideal_norm (n : ℕ) (D : Address n → Bool) (ψ : Address n × Bool → ℂ)
+    (hψ : HannRouterDephasing.Normalized n ψ) :
+    (∑ s, Complex.normSq (HannRouterDephasing.idealOutput n D ψ s)) = 1 := by
+  have he := HannRouterDephasing.result n 0 (by norm_num) (by norm_num) D
+  rcases he with ⟨_, _, _, _, _, _, hi, _⟩
+  exact (hi ψ hψ).1
+
+private theorem joint_norm (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, 0 ≤ q v) (hq' : ∀ v, q v ≤ 1) (D : Address n → Bool)
+    (ψ : Address n × Bool → ℂ) (hψ : HannRouterDephasing.Normalized n ψ) :
+    (∑ s, ∑ e, Complex.normSq (jointOutput n q D ψ s e)) = 1 := by
+  simp only [jointOutput, Complex.normSq_mul, ← Finset.mul_sum,
+    tree_record_norm n q hq hq', mul_one, ← ideal_pullback]
+  exact ideal_norm n D ψ hψ
+
+/-- At zero depth there is no deepest router constraint. -/
+def DeepestActive : (n : ℕ) → (Router n → ℝ) → Prop
+  | 0, _ => True
+  | n + 1, q => ∀ u : Address n, q (deepest n u) < 1
+
+private theorem rank_deepest (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v ≤ 1) :
+    (gram n q).rank = 2 ^ n ↔ DeepestActive n q := by
+  cases n with
+  | zero => rw [zero_rank q]; simp [DeepestActive]
+  | succ n => exact full_rank_iff n q hq
+
+/-- Complete heterogeneous physical profile event, including every ideal-output fidelity minimizer.
+The optimizing class law can have zero coordinates. No common router rate is assumed. -/
+theorem physical_profile_event (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, 0 ≤ q v) (hq' : ∀ v, q v ≤ 1) (D : Address n → Bool) :
+    (∀ (a : Address n) (bus : Qutrit),
+      treeRecord n q ((load n n) (loading n a bus 0)).2.2 = record n q a) ∧
+    (∀ t : Tree n, (∑ e, Complex.normSq (treeRecord n q t e)) = 1) ∧
+    (∀ (a b : Address n) (bus bus' : Qutrit),
+      profile n q a = profile n q b ↔
+        ∀ v, q v < 1 → loadedLabel n a bus v = loadedLabel n b bus' v) ∧
+    LinearIndependent ℂ (classRecord n q) ∧
+    (gram n q).rank = Fintype.card (Profile n q) ∧
+    (∀ x : Address n → ℂ, (gram n q).mulVec x = 0 ↔ ∀ c, classSum n q x c = 0) ∧
+    ((gram n q).rank = 2 ^ n ↔ DeepestActive n q) ∧
+    (n = 0 → (gram n q).rank = 1) ∧
+    (∀ p : AddressDistribution n,
+      addressEnergy n q p.weights = classEnergy n q (classMass n q p).weights) ∧
+    (∀ (ψ : Address n × Bool → ℂ) (s : State n),
+      HannRouterDephasing.idealOutput n D ψ s =
+        initialized n ψ ((load n n).symm ((HannRouterDephasing.postLoad n D).symm s))) ∧
+    (∀ (ψ : Address n × Bool → ℂ) (a a' : Address n) (b b' : Bool),
+      noisyOutput n q D ψ (HannRouterDephasing.outputBasis n D (a, b))
+        (HannRouterDephasing.outputBasis n D (a', b')) =
+          ψ (a, b) * conj (ψ (a', b')) * gram n q a a') ∧
+    (∀ ψ : Address n × Bool → ℂ, squaredFidelity n q D ψ =
+      (addressEnergy n q (HannRouterDephasing.addressProbability n ψ) : ℂ)) ∧
+    (∀ (ψ : Address n × Bool → ℂ), HannRouterDephasing.Normalized n ψ →
+      (∑ s, ∑ e, Complex.normSq (jointOutput n q D ψ s e)) = 1 ∧
+      (∑ s, Complex.normSq (HannRouterDephasing.idealOutput n D ψ s)) = 1) ∧
+    (∀ p : AddressDistribution n,
+      ∃ h : HannRouterDephasing.Normalized n (distributionInput n p),
+        inputDistribution n (distributionInput n p) h = p) ∧
+    ∃ x : ClassDistribution n q,
+      (∀ y : ClassDistribution n q, classEnergy n q x.weights ≤ classEnergy n q y.weights) ∧
+      (∀ y : ClassDistribution n q,
+        (∀ z : ClassDistribution n q, classEnergy n q y.weights ≤ classEnergy n q z.weights) →
+          y = x) ∧
+      Function.Surjective (classMass n q) ∧
+      (∀ p : AddressDistribution n,
+        (∀ r : AddressDistribution n, addressEnergy n q p.weights ≤ addressEnergy n q r.weights) ↔
+          classMass n q p = x) ∧
+      (∀ (ψ : Address n × Bool → ℂ) (hψ : HannRouterDephasing.Normalized n ψ),
+        (∀ (φ : Address n × Bool → ℂ), HannRouterDephasing.Normalized n φ →
+          (squaredFidelity n q D ψ).re ≤ (squaredFidelity n q D φ).re) ↔
+            classMass n q (inputDistribution n ψ hψ) = x) := by
+  refine ⟨record_loaded n q, tree_record_norm n q hq hq', profile_eq_iff n q,
+    class_records_independent n q hq', gram_rank n q hq', gram_kernel n q hq',
+    rank_deepest n q hq', ?_, distribution_energy n q hq', ideal_pullback n D,
+    noisy_output_basis n q D, fidelity_formula n q D, ?_, ?_, ?_⟩
+  · intro h
+    subst n
+    exact zero_rank q
+  · intro ψ hψ
+    exact ⟨joint_norm n q hq hq' D ψ hψ, ideal_norm n D ψ hψ⟩
+  · intro p
+    exact ⟨distribution_normalized n p, distribution_realizes n p⟩
+  · obtain ⟨x, hx, hu, hm, hs⟩ := all_minimizers n q hq'
+    refine ⟨x, hx, hu, hs, hm, ?_⟩
+    have hf (ψ : Address n × Bool → ℂ) (hψ : HannRouterDephasing.Normalized n ψ) :
+        (squaredFidelity n q D ψ).re = addressEnergy n q (inputDistribution n ψ hψ).weights := by
+      rw [fidelity_formula, Complex.ofReal_re, input_weights]
+    intro ψ hψ
+    constructor
+    · intro hmin
+      apply (hm (inputDistribution n ψ hψ)).mp
+      intro p
+      have hh := hmin (distributionInput n p) (distribution_normalized n p)
+      rw [hf ψ hψ, hf _ (distribution_normalized n p), distribution_realizes] at hh
+      exact hh
+    · intro hmass φ hφ
+      rw [hf ψ hψ, hf φ hφ]
+      exact (hm (inputDistribution n ψ hψ)).mpr hmass (inputDistribution n φ hφ)
+
 #print axioms gram_rank
 #print axioms gram_kernel
 #print axioms full_rank_iff
 #print axioms zero_rank
 
 #print axioms profile_separation_iff
+#print axioms physical_profile_event
 
 end D5.S3.Quantum.Routing.HannRouterProfiles
