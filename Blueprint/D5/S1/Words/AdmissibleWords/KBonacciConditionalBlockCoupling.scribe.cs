@@ -293,7 +293,8 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                         + "A' is a subset of A in F_eta. This is also the direct application of the pinned "
                         + "Finset.antitone_iff_forall_insert_le and isLowerSet_setOfPred criteria. Since the fiber "
                         + "is inhabited, its empty true-bit subset belongs to F_eta, even when eta contains true "
-                        + "bits outside B. Moreover m_eta<=2^card(B)<=2^ell whenever card(B)<=ell.")),
+                        + "bits outside B. For every nonnegative integer ell with card(B)<=ell, "
+                        + "m_eta<=2^card(B)<=2^ell.")),
                     Paragraph(Text(
                         "Apply HereditaryFlip.Metric.flipGraph to F_eta: its vertices are these supported "
                         + "assignments and A is adjacent to R exactly when card(A symmetric-difference R)=1. "
