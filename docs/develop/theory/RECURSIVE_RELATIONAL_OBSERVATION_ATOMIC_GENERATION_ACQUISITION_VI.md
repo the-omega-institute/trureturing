@@ -2823,8 +2823,11 @@ primitive returning K, nor a count assembled across changing source cuts.
 Other coherent invocations can occur at different later versions.
 
 Acquire AA19.2's literal indexed answers 1 through K_c(u), in that actual
-component, by its paid handler or the original FetchGrowth transactions.
-There is no outer FetchGrowth reply when its handler is called internally.
+component, by its paid original handler inside an admitted transaction.
+Read that invocation's header token in the same coherent phase and retain
+it with the actual read record where such records are required. There is
+no extra version payload on the original FetchGrowth wire and no outer
+FetchGrowth reply when its handler is called internally.
 When logical event-token selectors are history-derived, every invocation
 first acquires its own coherent current token and carries out AAV20.3's
 counts and AA19.2 decode there. AAV21.3/22.1 apply only after these actual
@@ -2999,7 +3002,11 @@ For a current interval, perform the original ReadCurrent and intervening
 WalkRight transactions from a, up to h leaves or a genuine Endpoint. For
 a tree, traverse the actual subtree by AA's logical arity rules, recording
 each acquired arity, real child/operand and path; never traverse a unary
-marker as a logical child. Native growth can occur between the reads.
+marker as a logical child. Each arity read acquires the header token inside
+that same admitted coherent source-access transaction, before its source
+test; a header read separated from the test by growth would not supply its
+version. This adds no field to an original Tag reply. Native growth can
+occur between the reads.
 Store the complete candidate records with every true acquisition token.
 Acquire the current header token r after these reads. Freeze r as the
 validation endpoint; scan predecessors from r back to s. Actually obtain
