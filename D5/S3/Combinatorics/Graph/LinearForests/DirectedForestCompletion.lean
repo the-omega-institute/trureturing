@@ -511,9 +511,9 @@ private theorem full_cycle_marginal {W : Type*} [Fintype W] [Nontrivial W]
     rw [ite_eq_right hab]
     exact hv
 
-/-- Uniform actual full cycles conditioned on extension give the uniform completion law,
-which the component equivalence pushes to the uniform full-cycle law. -/
 open Classical in
+/-- Uniform actual full cycles conditioned on extension give the uniform completion law,
+which the component equivalence pushes to the uniform full-cycle law, including raw endpoint marginals. -/
 def UniformCompletionLaw {V : Type*} (E : V → V → Prop)
     (q : Component E ≃ Tail E) (h : Component E ≃ Head E)
     (Φ : CycleCompletion E ≃ FullCycle (Component E)) : Prop :=
