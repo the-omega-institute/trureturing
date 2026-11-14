@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors/Contacts.baseMax
 
 *Commentary.*
 
-M(b) is the supremum of b on the entire original K. For every nonzero original positive annihilator of an actual pure label, M(b)>0 and one fixed A>0 gives norm(b)<=A M(b). Normalize by the positive global maximum, apply the old full-cone bound to obtain an original effect, then use compactness of the entire effect interval in the original dual. M(b) has no imposed upper budget.
+M(b) is the supremum of b on the entire original K. For every nonzero original positive annihilator of an actual pure label, M(b)>0 and one fixed A>0 gives norm(b)<=A M(b). CommonSourceLiftObstruction.original_dual_bound supplies the original dual estimate for every signed functional, and its positive_base_norm identifies the whole-K state norm with M(b) for positive b. The original positive_annihilator_maximum gives strict positivity. M(b) has no imposed upper budget.
 
 **Definition 1.3 (Additional common-sector condition).**
 
