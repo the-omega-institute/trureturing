@@ -1265,3 +1265,170 @@ $D_{\max,r}\subseteq\mathrm{PSD}_{9r}$；此处没有假定未知的集体实际
 [T135KPTT]: https://arxiv.org/html/0910.2210v3
 
 ## 追加锚（本行以下为增补区）
+
+## 136. 原混合输入的收缩秩二源证书与 IX132 负见证约束
+
+### 136.A 固定原源、收缩秩与可用的产品测试
+
+**定义 136.1（两实际腿的原混合收缩）。** 固定 VIII123.1—123.2、125.1
+及本卷132.1的同一个 $\mathcal D,S,\mathcal K,E$、同一实际标签和同一计算基。
+取其中的实际 qutrit 扇区 $A_s$，并对每个有限正整数 $n$ 写
+
+$$
+ B_n=B_{\mathcal D}(Q_nA_sA_s),\qquad
+ C_n=E(Q_nA_sA_s),\qquad
+ A_n=A_{\mathcal D}(Q_nA_sA_s).
+\tag{136.1}
+$$
+
+对 $H\in\operatorname{Herm}_n\otimes_{\mathbb R}\operatorname{Herm}_9$ 定义实线性
+收缩映射 $R_H:\operatorname{Herm}_n\to\operatorname{Herm}_9$ 为
+
+$$
+ \operatorname{Tr}(G R_H(F))=\operatorname{Tr}((F\otimes G)H)
+ \qquad(F\in\operatorname{Herm}_n,\ G\in\operatorname{Herm}_9),
+\tag{136.2}
+$$
+
+并令 $r(H)=\dim_{\mathbb R}\operatorname{im}R_H$。这个秩是量子参考腿与
+两个实际腿的 Hermitian 张量收缩秩；它不是普通矩阵秩，也不是向量的 Schmidt 秩。
+
+VIII123.2 的源态条款逐个给出每个 $F\in\operatorname{PSD}_n$ 的量子源态，
+以及每个 $G\in\operatorname{PSD}_9$ 的原实际两腿源态。将这两个从单位出发的
+源箭头作原有的张量、规范重括号和位置线，得到同一原源上的箭头，因此
+
+$$
+ \operatorname{PSD}_n\otimes\operatorname{PSD}_9\subseteq B_n.
+\tag{136.3}
+$$
+
+这里分别使用两条已支付的一体源箭头；(136.3) 不把两个任意 $E$ 元素相乘，
+也不加入两实际腿的集体 CP 映射。特别地，实际因子是原来的两个位置，
+而不是把 $A_sA_s$ 改名为一个免费实际对象。
+
+### 136.B 秩至多二的完整源分解
+
+**定理 136.2（原上包络中的收缩秩二证书）。** 对每个有限正整数 $n$ 和每个
+$H\in A_n$，若 $r(H)\le2$，则存在 $0\le r(H)$ 个（零项时为空和）矩阵
+
+$$
+ U_j\in\operatorname{PSD}_n,\qquad V_j\in\operatorname{PSD}_9,\qquad
+ H=\sum_{j=1}^{r(H)}U_j\otimes V_j .
+\tag{136.4}
+$$
+
+因而 $H\in B_n$。这条结论在 $H$ 进入时不假定普通 PSD。
+
+**证明。** 先把原配对的转置方向写清。任取
+$F\in\operatorname{PSD}_n$、$G\in\operatorname{PSD}_9$，则
+$F^{T}\otimes G^{T}\in B_n$，由(136.3)和 $H\in A_n$ 得
+
+$$
+ 0\le b(H,F^T\otimes G^T)
+   =\operatorname{Tr}\!\left(H^T(F^T\otimes G^T)\right)
+   =\operatorname{Tr}\!\left((F\otimes G)H\right).
+\tag{136.5}
+$$
+
+于是对每个 $F\ge0$ 和全部 $G\ge0$，(136.2)给出
+$\operatorname{Tr}(G R_H(F))\ge0$。普通 PSD 锥在 Hermitian 实空间中的迹对偶
+仍是自身，所以
+
+$$
+ R_H(\operatorname{PSD}_n)\subseteq\operatorname{PSD}_9.
+\tag{136.6}
+$$
+
+这一步才从原全转置极性取得普通正性；没有把 $H$ 预先当作普通 PSD。
+
+置 $V=\operatorname{im}R_H$、$C=R_H(\operatorname{PSD}_n)$。谱分解说明
+$\operatorname{PSD}_n$ 在 $\operatorname{Herm}_n$ 中实张成整个空间，故
+$\operatorname{span}_{\mathbb R}C=V$ 且 $\dim V=r(H)$。
+
+若 $r(H)=0$，则 $R_H=0$。由(136.2)的非退化性，$H=0$，得到空和。
+若 $r(H)=1$，取 $0\ne V_1\in C$；(136.6)给 $V_1\ge0$，并写
+$R_H(F)=f_1(F)V_1$。系数泛函 $f_1$ 在 $\operatorname{PSD}_n$ 上非负，
+故 PSD 锥的自对偶性给唯一 $U_1\ge0$ 使
+$f_1(F)=\operatorname{Tr}(U_1F)$。
+
+设 $r(H)=2$。闭包 $\overline C$ 是二维 $V$ 中的闭、凸、尖锥；它仍包含于
+$\operatorname{PSD}_9$，且张成 $V$。二维尖锥的两个边界射线可取非零生成元
+$V_1,V_2\in\operatorname{PSD}_9$。因此每个 $c\in C$ 唯一写成
+$c=\alpha_1V_1+\alpha_2V_2$，其中 $\alpha_1,\alpha_2\ge0$。
+令 $f_j$ 为这两个坐标泛函与 $R_H$ 的复合。它们是实线性泛函且在
+$\operatorname{PSD}_n$ 上非负，故存在 $U_j\in\operatorname{PSD}_n$ 使
+
+$$
+ R_H(F)=\operatorname{Tr}(U_1F)V_1+\operatorname{Tr}(U_2F)V_2
+ \qquad(F\in\operatorname{Herm}_n).
+\tag{136.7}
+$$
+
+由(136.2)、(136.7)及简单张量的实张成性，迹配对的非退化性给出
+
+$$
+ H=U_1\otimes V_1+U_2\otimes V_2.
+\tag{136.8}
+$$
+
+这同时证明了 $r=1$ 的式(136.4)，并说明 $r\le2$ 时 $H$ 实际是普通 PSD。
+式(136.3)逐项把(136.4)的每个乘积送入 $B_n$，再用其凸锥闭合，得到
+$H\in B_n$。∎
+
+若 $H\ne0$，还可在原 proper 预算内归一化。乘积 PSD 锥含有
+$I_n\otimes I_9$ 的内点，故非零 $H\in A_n$ 满足
+$\operatorname{Tr}H=b(H,I_n\otimes I_9)>0$。删去(136.4)中的零项，置
+
+$$
+ \widehat U_j=\frac{U_j}{\operatorname{Tr}U_j},\qquad
+ \widehat V_j=\frac{V_j}{\operatorname{Tr}V_j},\qquad
+ \lambda_j=\frac{\operatorname{Tr}U_j\,\operatorname{Tr}V_j}{\operatorname{Tr}H}.
+\tag{136.9}
+$$
+
+则 $\lambda_j\ge0$、$\sum_j\lambda_j=1$，且
+$H/\operatorname{Tr}H=\sum_j\lambda_j\widehat U_j\otimes\widehat V_j$。
+这只是原源锥中的有限凸组合：每个有非零迹的因子按原迹一 proper 约定归一，
+零矩阵不作条件化，也不由此声称一个确定性物理制备或成功率为一。
+当 $n=1$ 时 $\dim_{\mathbb R}\operatorname{Herm}_1=1$，只有上述零或秩一情形；
+当 $n=2$ 时参考空间实维为四，秩的全部可能值为 $0,1,2,3,4$，本定理正好
+覆盖前两种非平凡值。
+
+De las Cuevas--Drescher--Netzer，[*Separability for mixed states with operator
+Schmidt rank two*, arXiv:1903.05373v4][T136CDN] 定理1的前件明确是普通
+$\rho\succeq0$，结论是其二项算子 Schmidt 分解可改写为两个局部 PSD 因子。
+本证明不把该普通 PSD 前件从 $H\in A_n$ 偷换得到；真正的原源增量是
+(136.3)、原 $b(H,L)=\operatorname{Tr}(H^TL)$ 极性和(136.5)--(136.8)先行给出
+普通 PSD 及其源成员。上述秩是收缩秩，允许 $H$ 在进入时为混合锥元素；
+它也不同于134.3已经处理的普通矩阵秩一 dyad。
+
+### 136.C 原 IX132.3 负见证的精确限制
+
+**推论 136.3（原规范负见证只剩秩三或四）。** 固定132.1的任意合法
+$y,z,Y,W$，其中量子尺寸 $\ell,m$ 任意有限且所有原旁观、源中间次数、相位、
+码、真零扩张和 proper 预算均按132.1保留，令 $q$ 为132.3的原压缩，
+$H=qx\in C_2$。若存在普通效应 $F\succeq0$ 使
+
+$$
+ \operatorname{Tr}\!\left(F^T M^0_{Y,W}(x,y,z)\right)<0,
+\tag{136.10}
+$$
+
+则
+
+$$
+ r(qx)\in\{3,4\}.
+\tag{136.11}
+$$
+
+**证明。** 132.3 的源完全正性和规范恒等式说明，若 $H\in B_2$，则规范
+输出为 PSD，不能满足(136.10)。所以 $H\notin B_2$。另一方面
+$C_2\subseteq A_2$，定理136.2排除 $r(H)\le2$，得到 $r(H)\ge3$。
+因为 $\operatorname{Herm}_2$ 的实维为四，$r(H)\le4$，即得(136.11)。
+这只是一条必要的秩限制；它不断言秩三或秩四见证存在、输出符号、$R3/R4$、
+任何全有限 $N$ 结论或 Fusion3/$t=1$ 结论。∎
+
+[T136CDN]: https://arxiv.org/html/1903.05373v4
+
+
+## 追加锚（本行以下为增补区）
