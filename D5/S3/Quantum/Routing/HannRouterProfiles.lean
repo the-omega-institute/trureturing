@@ -886,20 +886,6 @@ theorem physical_profile_event (n : ℕ) (q : Router n → ℝ)
       exact (hm (inputDistribution n ψ hψ)).mpr hmass (inputDistribution n φ hφ)
 
 
--- Transient exact endpoint application check.
-example : (gram 1 (fun _ => 0)).rank = 2 ∧ (gram 1 (fun _ => 1)).rank ≠ 2 := by
-  have hz := physical_profile_event 1 (fun _ => 0) (by intro v; norm_num)
-    (by intro v; norm_num) (fun _ => false)
-  have ho := physical_profile_event 1 (fun _ => 1) (by intro v; norm_num)
-    (by intro v; norm_num) (fun _ => false)
-  rcases hz with ⟨_, _, _, _, _, _, hz, _⟩
-  rcases ho with ⟨_, _, _, _, _, _, ho, _⟩
-  constructor
-  · exact hz.mpr (by intro u; norm_num)
-  · intro hr
-    have hh := ho.mp hr ()
-    norm_num at hh
--- End transient exact endpoint application check.
 
 #print axioms gram_rank
 #print axioms gram_kernel
