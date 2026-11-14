@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Foundation.SingleLabelNormalBody
 import D5.S3.Quantum.Foundation.MixedExclusionGeometry
 import D5.S3.Quantum.Foundation.UniqueConfirmationDensity
+import D5.S3.Quantum.Foundation.CommonSourceLiftObstruction
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Topology.Sequences
 import Mathlib.Analysis.InnerProductSpace.SingularValues
@@ -387,11 +388,8 @@ end SimplexStability
 omit [FiniteDimensional ℝ V] in
 private theorem chart_direction {p : V} (a : ExclusionChart C u p) :
     (affineSpan ℝ (exclusion C u p)).direction = LinearMap.range a.param.linear := by
-  have hspan : affineSpan ℝ (Metric.closedBall (0 : EuclideanSpace ℝ (Fin a.dim)) 1) = ⊤ :=
-    (convex_closedBall _ _).interior_nonempty_iff_affineSpan_eq_top.mp
-      ⟨0,mem_interior_iff_mem_nhds.mpr (Metric.closedBall_mem_nhds _ zero_lt_one)⟩
-  rw [← a.whole,← AffineSubspace.map_span,hspan,AffineSubspace.map_direction,
-    AffineSubspace.direction_top,Submodule.map_top]
+  rw [← a.whole]
+  exact CommonSourceLiftObstruction.ball_affine_span a.param
 omit [FiniteDimensional ℝ V] in
 theorem chart_dimension {p : V} (a : ExclusionChart C u p) :
     Module.finrank ℝ (affineSpan ℝ (exclusion C u p)).direction = a.dim := by
@@ -447,10 +445,8 @@ def baseMaximum (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (b : V →L[ℝ]
 private theorem maximum_at (hc : IsClosed (C : Set V))
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x) (t : pure C u)
     (b : V →L[ℝ] ℝ) (hm : ∀ x ∈ base C u, b x ≤ b t) : baseMaximum C u b = b t := by
-  apply le_antisymm
-  · exact csSup_le ⟨b t,mem_image_of_mem b (pure_mem t)⟩ (by rintro _ ⟨x,hx,rfl⟩; exact hm x hx)
-  · exact le_csSup ((base_compact hc hs).bddAbove_image b.continuous.continuousOn)
-      (mem_image_of_mem b (pure_mem t))
+  exact (show IsGreatest (b '' base C u) (b t) from
+    ⟨mem_image_of_mem b (pure_mem t), by rintro _ ⟨x,hx,rfl⟩; exact hm x hx⟩).csSup_eq
 theorem uniform_dual_bound (hc : IsClosed (C : Set V))
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) :

@@ -744,7 +744,7 @@ private theorem finite_source_tests
     exact ⟨ε, hε, fun r hr t ht i => hnear r hr t ht i⟩
 
 omit [FiniteDimensional ℝ V] in
-private theorem ball_affine_span {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+theorem ball_affine_span {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     (a : E →ᵃ[ℝ] V) :
     (affineSpan ℝ (a '' Metric.closedBall (0 : E) 1)).direction = a.linear.range := by
   have hs : affineSpan ℝ (Metric.closedBall (0 : E) 1) = ⊤ := by
