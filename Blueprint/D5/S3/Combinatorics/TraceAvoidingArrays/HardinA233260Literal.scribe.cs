@@ -26,6 +26,17 @@ internal sealed class HardinA233260LiteralDocument : IScribeDocumentDefinition
             Node("L", "Labelled three-colour count", LabelCountFormula(), false, false),
             Node("columns_constant", "Omitting a label forces constant columns",
                 ColumnsConstantFormula(), true, false),
+            Describe.Lean(DescribeId.Create("two-label-classification"),
+                DeclarationHandle.Create(Prefix + "two_label_classification"),
+                H("Two remaining labels alternate with column parity"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every width n at least two and every proper "
+                    + "Fin 5 by Fin n array P into Fin 3 omitting a label d, there are "
+                    + "distinct labels a and b such that P(r,j) is a at even j and b "
+                    + "at odd j. Properness uses exactly the horizontal and "
+                    + "antidiagonal bonds defined here. The classification applies "
+                    + "to any stronger edge predicate containing those bonds."))),
+                DescribeRole.Theorem),
             Node("counting_bridge", "Exact complementary-pair count", BridgeFormula(), true, false),
             Paragraph(Text("The pair labels identify {0,5}, {1,4}, and {2,3}. "
                 + "Canonical first occurrences fix the pair names and the first side "
