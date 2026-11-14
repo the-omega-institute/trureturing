@@ -1,0 +1,18 @@
+### 121.6 八维法向层的紧投影覆盖排除全部确认歧义
+
+直接复用128.2及其证明中更明确的投影结论。对有非空内部的紧凸体 $L\subset\mathbb R^n$，记
+
+$$
+\mathcal N_L(x)=\{v:\langle v,z-x\rangle\le0\ (z\in L)\},\qquad
+\Sigma_k(L)=\{x\in\partial L:\dim\operatorname{span}\mathcal N_L(x)\ge k\}.
+$$
+
+128.2给可数紧集 $X_j\subset\partial L$ 覆盖 $\Sigma_k(L)$；每个 $X_j$ 有一个到 $(n-k)$ 维线性空间的正交投影 $\pi_j$，在 $X_j$ 上单射，逆满足
+
+$$
+\|x-y\|\le\frac2{\sqrt3}\|\pi_jx-\pi_jy\|\qquad(x,y\in X_j).
+\tag{121.15}
+$$
+
+本章直接使用这一已证全点紧覆盖，不重建普遍法向奇异层定理，也不用“几乎处处可求长”替代全点覆盖。
+

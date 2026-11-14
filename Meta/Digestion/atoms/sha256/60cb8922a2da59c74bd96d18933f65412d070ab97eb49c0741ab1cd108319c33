@@ -1,0 +1,15 @@
+**定理 125.7（整个低次边界的复量子候选）。** 在125.1的原闭尖满维有限维锥与严格正原单位上，下列条件等价：
+
+$$
+\boxed{\begin{aligned}
+&\mathsf{AB}_{\le3}+\mathrm{EB3};\\
+&\exists\text{实线性双射 }\Psi:V\to\operatorname{Herm}_3(\mathbb C):
+\quad\Psi(C)=\operatorname{PSD}_3,\quad\operatorname{Tr}\Psi=u.
+\end{aligned}}
+\tag{MC125.25}
+$$
+
+这里EB3始终量化每个实际原纯点的**整个**最低零集。此等价不另输入Inj、固定种子、三线性参数族、九维、PR、least或全Pair；它们中适用的静态结论由同原表示供应。$\delta(C)=3$ 也是后果。
+
+证明。第一项由定理125.6给全部秩三EJA。可约支路有球源的完整线段排除集，违反全部 $d_p=3$，故被排除。四个简单支路的完整球维数分别为 $2,3,5,9$，仅 $H_3(\mathbb C)$ 留下。这里复用VII103.7的准确类型选择，不重作Jordan或射影平面分类。所得同单位表示就是第二项。反向，$\det\circ\Psi$ 覆盖原整个边界，故最低次数至多三；同一个锥同构及其对偶运输全确认族，124.8和VII103.8的完整反向给全部原 $D_p$ 为三球。证毕。
+

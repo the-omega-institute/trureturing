@@ -1,0 +1,98 @@
+**定理 122.7（同族几何约化及端点的准确静态字典）。** 在整个(122.1)族中，以实际种子尺度定义
+
+$$
+\begin{gathered}
+B(x,y)=\sum_i a_i b_i+2\operatorname{Re}\sum_i z_i\overline{\zeta_i}
+\quad\bigl(y=(b_1,b_2,b_3;\zeta_1,\zeta_2,\zeta_3)\bigr),\\
+c=w/3,\qquad I=\{c+v:u(v)=0,\ B(v,v)\le1/6\}.
+\end{gathered}
+\tag{122.23}
+$$
+
+则它正是127.2的同种子 $B$，并且对全部参数有
+
+$$
+I\subseteq K_\lambda\subseteq
+\{c+v:u(v)=0,\ B(v,v)\le2/3\}.
+\tag{122.24}
+$$
+
+在这一个显式族内，下列七项等价：$|\lambda|=1$；EB$_{\ge1}$；EB3；全原PC1；全部 $p\in P_\lambda$ 满足 $B(p,p)=1$；以(122.2)、(122.23)定义的接触谓词 $\forall p\in P_0:D_p\cap I\ne\varnothing$；存在实线性双射 $\Phi:\operatorname{Herm}_3(\mathbb C)\to V$，满足 $\Phi(\mathrm{PSD}_3)=C_\lambda$、$u\Phi=\operatorname{Tr}$。在两个端点，127.1及129.1的全部单体入口 $\mathsf E_0$ 也满足；在内参数，该入口已因EB3失败而不满足。
+
+对 $\lambda=1$ 定义实线性双射
+
+$$
+J_+(x)=\begin{pmatrix}
+a_1&z_3&\overline z_2\\
+\overline z_3&a_2&z_1\\
+z_2&\overline z_1&a_3
+\end{pmatrix},\qquad J_-=J_+R.
+\tag{122.25}
+$$
+
+则 $J_+(C_1)=\mathrm{PSD}_3$、$J_-(C_{-1})=\mathrm{PSD}_3$，两者均保持原单位为迹。对任一端点，记 $\Phi=J_\pm^{-1}$，完整静态对应恰为127.9及129.6的下列字典，不含操作、复合或时间的自动结论。
+
+证明。种子球(122.10)的单位球型在横向 $z_i$ 上为 $4|z_i|^2$，故其一半恰为 $2|z_i|^2$；在对角纯射线上 $B(p_i,p_j)=\delta_{ij}$，六个直和块相互正交。这与127.2的规范定义逐项相同，且
+
+$$
+B(w,x)=u(x),\quad B(w,w)=3,\qquad
+B(x,x)=u(x)^2-2\sum_i\Delta_i(x).
+\tag{122.26}
+$$
+
+因此对 $x\in K_\lambda$，$B(x,x)\le1$，而 $B(x-c,x-c)=B(x,x)-1/3$，给(122.24)的外包含。
+
+为证明内包含，任取非零 $h\in C_\lambda^*$，唯一写为 $h=B(\widehat h,\cdot)$，令 $r=h(w)=u(\widehat h)>0$。将 $h$ 限制到三个实际种子锥，二阶迹配对的PSD判据给 $\widehat h$ 的每个对角坐标非负及每个 $\Delta_i(\widehat h)\ge0$。这里只取得三个二阶正性，并未认定 $\widehat h\in C_\lambda$。由(122.26)，
+
+$$
+B(\widehat h,\widehat h)\le r^2,\qquad
+B(\widehat h-rw/3,\widehat h-rw/3)\le2r^2/3.
+\tag{122.27}
+$$
+
+对 $u(v)=0,B(v,v)\le1/6$，Cauchy—Schwarz遂给
+
+$$
+h(c+v)=\frac r3+B(\widehat h-rw/3,v)
+\ge\frac r3-\sqrt{\frac{2r^2}{3}}\sqrt{\frac16}=0.
+\tag{122.28}
+$$
+
+零泛函当然也满足。闭凸锥的分离定理使 $c+v\in C_\lambda$，而其质量为一，完成内包含。这是固定内球论证在本显式族中的直接应用，不使用全锥自对偶。
+
+当 $\lambda=1$ 时，$d_1=\det J_+$，且显式条件正是 $J_+$ 的全部主子式非负，故整个锥等于PSD像。由(122.3)，$\lambda=-1$ 时用 $J_-$ 得相同结论。两者 $u\Phi=\operatorname{Tr}$、$\Phi(I_3)=w$，并满足 $B(\Phi A,\Phi B)=\operatorname{Tr}(AB)$。以下矩阵事实是成熟谱理论及PSD对偶性的直接复用，用以明确这两个端点，而非另立一般量子分类定理。
+
+| 原对象 | 端点同一 $\Phi$ 下的全部静态对应 |
+| --- | --- |
+| 锥、质量、全部混态 | $C_\lambda=\Phi(\mathrm{PSD}_3)$，含零及全部非负质量；$K_\lambda=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$，保持全部有限凸组合 |
+| 全部纯态 | $p_v=\Phi(vv^*/(v^*v))$，$v\ne0$，恰覆盖 $P_\lambda\cong\mathbb{CP}^2$；复射线表示同一纯点 |
+| 整个效应区间与Born评价 | 每个原效应唯一对应 $0\preceq A\preceq I_3$，且反向全部这样的 $A$ 都是原效应；$f_A(\Phi\rho)=\operatorname{Tr}(A\rho)$，保持零、单位和补 |
+| 全确认、least、完整排除 | 对 $v^*v=1$，全部确认矩阵是 $vv^*\oplus A_\perp$，$0\preceq A_\perp\preceq I_{v^\perp}$；least为 $vv^*$，$\mathcal T_{p_v}(\Phi\rho)=v^*\rho v$；整个 $D_{p_v}$ 为支撑在 $v^\perp$ 上的全部密度矩阵 |
+| 原二元关系与三元框架 | $\mathcal T_{p_v}(p_z)=|v^*z|^2/((v^*v)(z^*z))$；原正交恰为复正交；每条原正交纯边有唯一第三纯点；三秩一确认效应和为 $u$，容量为三 |
+| 数学POVM、谱和可观测量 | 任意有限 $f_j\ge0,\sum_jf_j=u$ 恰为全部有限PSD矩阵 $A_j$ 之和等于 $I_3$；全部原态有三项正交谱分解，含零权和重复谱；全部实线性可观测量对应Hermitian矩阵 |
+| 共同尺、Jordan及压缩 | $B$ 为迹配对，运输 $(AB+BA)/2$ 得Jordan结构；$\Phi^{-1}T_i\Phi(A)=Q_iAQ_i$，$Q_i=I_3-E_{ii}$；全锥在 $B$ 下自对偶 |
+
+具体地，迹一PSD矩阵若秩至少为二，可以在两个正本征值之间作非零小量的相反扰动，保持迹和PSD，故不是极点；秩一投影的任何凸分解都因其正交补上读数为零而被迫支撑在同一条射线，所以它是极点。这给全部纯态的覆盖。每个实线性效应由迹配对唯一表示；在所有秩一投影上检查非负及上界恰等价于 $0\preceq A\preceq I_3$，故上述字典使用的是整个原区间。
+
+对 $v^*v=1$，若 $v^*Av=1$ 且 $0\preceq A\preceq I_3$，PSD矩阵 $I_3-A$ 在 $v$ 上的二次型为零，故 $(I_3-A)v=0$。于是 $A$ 在 $\mathbb Cv\oplus v^\perp$ 上正是表中块形，最低矩阵为 $vv^*$。对 $\rho\succeq0$，$v^*\rho v=0$ 同样等价于 $\rho v=0$，得到整个二能级密度球；再要求确认效应在这整个球上全零，迫使 $A_\perp=0$，所以完整确认唯一。反之该球的支撑正交补唯一决定 $\mathbb Cv$，所以端点也满足Inj。规范压缩公式由它保留的全部补块法向读数及定理122.3的唯一性得到。因此种子、联合分离、正性、EB3及Inj共同给两个端点的全部单体 $\mathsf E_0$ 入口。
+
+在任一端点，所有纯态 $p$ 有 $B(p,p)=1$；所有角压缩为秩一PSD或零，故全原PC1成立；每个 $D_p$ 是完整三球，且
+
+$$
+\frac{w-p}{2}\in D_p,\qquad
+B\left(\frac{w-p}{2}-c,\frac{w-p}{2}-c\right)=\frac16.
+\tag{122.29}
+$$
+
+其完整确认效应唯一，所以 $P_0=P_\lambda$，接触谓词成立。连同(122.25)，这证明 $|\lambda|=1$ 推出所列其余六项。
+
+对于任一内参数，推论122.6已否定两种EB及PC1；而
+
+$$
+B(X,X)=\frac{1+2s^2}{3}<1,\qquad
+B(Y-c,Y-c)=\frac{2t^2}{3}>\frac16.
+\tag{122.30}
+$$
+
+因为 $X\in P_0$ 且 $D_X=\{Y\}$，接触谓词也失败；全纯单位球面同样由 $X$ 失败。最后，任一保单位序同构通过对偶拉回双射整个效应区间，也双射所有确认效应、保留最低值并仿射双射完整排除集合。若存在所列PSD表示，成熟矩阵字典因而强迫EB3，内参数已被排除。因此其余六项均迫使参数位于端点，等价闭合。这些接触计算仍在本族原域内完成，没有在内参数上套用要求EB3的129条件链。两个端点的静态字典由同一原锥、同一 $u$ 和全部效应给出，数学角压缩与数学POVM尚不因此成为实际仪器。证毕。
+

@@ -1,0 +1,1 @@
+{"statement_id":"sha256:468a5a05a284c857b3d5356e39e71b6f2b4d94654fb49b683d161ef60d446103","declarations":[{"declaration_name_key":"ns(ns(n0,10:IsSemireal),18:exists_linearOrder)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,15:RingPreordering),5:sumSq)","kind":"def"}]}

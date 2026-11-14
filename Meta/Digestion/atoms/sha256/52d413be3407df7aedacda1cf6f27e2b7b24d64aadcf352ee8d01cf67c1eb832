@@ -1,0 +1,59 @@
+**约定 121.1（原对象与假设范围）。** $V\ne0$ 是有限维实空间，$C\subset V$ 是闭、尖、生成凸锥，$u\in V^*$ 在 $C\setminus\{0\}$ 上严格正。始终使用整个
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad \mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+\mathcal T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:\mathcal T_p(x)=0\},\\
+\mathcal A_p=\{f\in\mathcal E:f(p)=1,\ f|_{D_p}=0\},\qquad
+P_0=\{p\in P:\mathcal A_p\text{ 为单点}\},\\
+N_p=\{h\in C^*:h(p)=0\},\qquad
+N_{D_p}=\{h\in C^*:h|_{D_p}=0\},\qquad
+\nu_p=\dim_{\rm aff}\mathcal A_p.
+\end{gathered}
+\tag{121.1}
+$$
+
+这里 $K$、$\mathcal E$ 紧，$\operatorname{aff}K=\{u=1\}$，其方向空间记为 $H=\ker u$。原二元关系为
+
+$$
+p\perp q\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0
+\quad\Longleftrightarrow\quad q\in D_p\qquad(p,q\in P).
+\tag{121.2}
+$$
+
+补效应使它对称。EB3要求每个完整 $D_p$ 仿射同构于整个闭三球；Inj要求 $D_p=D_q\Rightarrow p=q$。121.2—121.5只使用EB3+Inj；121.6另用 $\dim V=9$。全部辅助内积只供有限维紧性、Gram行列式和坐标使用，不替换原效应或概率。
+
+直接复用VII103.2、VII104.1及IX119.1、IX120.2的完整面接口：每个 $D_p$ 为非点紧暴露极大真面；全部非空真面只有原纯单点或完整排除球；$S_p:=P\cap D_p=\partial_{\rm rel}D_p$；不同完整球至多交于一个原纯点。$\mathcal A_p$ 非空紧凸，其中任一效应的整个零面恰为 $D_p$，整个一值面恰为 $\{p\}$。这里的面是整个原面，不是选定截面。
+
+确认冗余就是IX119.10的 $a(p)$，采用128的记号 $\nu_p$ 以免与别处球内斜率混淆。该定理的完整结论直接复用：
+
+$$
+\begin{gathered}
+\dim\operatorname{span}N_p=\nu_p+4,\qquad
+N_{D_p}=\operatorname{cone}\mathcal A_p,\qquad
+\dim\operatorname{span}N_{D_p}=\nu_p+1,\\
+p\perp q\ \Longrightarrow\ \nu_p=\nu_q.
+\end{gathered}
+\tag{121.3}
+$$
+
+至少一个 $P_0$ 标签的存在也属既有结果。IX120.9的 $P_0$ 标签稠密、THREE_COPY VII121.6的稠密 $G_\delta$ 及非塌缩层完整确认闭图、原宽度上半连续和原宽度紧层均保持原结论，不重新证明。整个 $P$ 中的残余集不能直接限制为每张指定 $S_p$ 上的残余集；本章在一张固定实际球面的闭二盘上另作闭覆盖。
+
+在E0应用中，入口仍逐项取127.1、128.1：EB3、Inj、一组含 $P_0$ 顶点的实际原正交三角 $\triangle=(p_1,p_2,p_3)$、同一三角的全部原零效应联合分离 $\mathsf J_\triangle$，以及三个规范 $T_i$ 的全原锥正性。准确地，
+
+$$
+\begin{gathered}
+\forall x,y\in K:\quad
+[\forall i\ \forall b\in\mathcal E,\ b(p_i)=0\Rightarrow b(x)=b(y)]\Rightarrow x=y,\\
+T_i:V\to M_i=\operatorname{span}D_{p_i},\qquad
+h(T_ix)=h(x)\quad(h\in\operatorname{span}N_{p_i},\ x\in V),\qquad
+T_i(C)\subseteq C.
+\end{gathered}
+\tag{121.4}
+$$
+
+125.3—125.6已在这些前件下给出 $\dim V=9$。本章不重证九维张成或分类，也不把种子、联合分离、规范压缩正性或PC1归给裸EB3。
+

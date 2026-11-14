@@ -1,0 +1,25 @@
+**Proposition 112.1 (Both sign ranks are at least three).** Every
+nonzero $A\in N$ satisfies
+
+$$
+n_+(A)\ge3,\qquad n_-(A)\ge3,
+\tag{112.1}
+$$
+
+where $n_+$ and $n_-$ count strictly positive and strictly negative
+eigenvalues with multiplicity.
+
+Proof. The traceless Hermitian $A\ne0$ has both signs. Write its
+positive and negative spectral parts as $A=A_+-A_-$ and put
+
+$$
+s=\operatorname{Tr}A_+=\operatorname{Tr}A_->0,\qquad
+\rho_+=A_+/s,\quad\rho_-=A_-/s.
+\tag{112.2}
+$$
+
+These are distinct density matrices, with orthogonal supports, and
+$\pi(\rho_+)=\pi(\rho_-)$ because $A\in N$. If either sign rank
+were one or two, Corollary 111.2 would force $\rho_+=\rho_-$.
+Thus each sign rank is at least three. ∎
+

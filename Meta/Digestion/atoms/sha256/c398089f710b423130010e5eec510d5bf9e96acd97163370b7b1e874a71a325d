@@ -1,0 +1,75 @@
+**Proposition 120.1 (Scope of the obstruction).** Under the stated
+suppliers, a lossy whole-PSD projection with the stated trace,
+pure-label and symmetry properties is impossible. This conclusion
+does not establish rigidity for arbitrary L3 cones without that
+cover, and does not supply an original equalizer from L3 alone.
+
+Proof. Under supplied $G$ this is Theorem 109.2; under original $H$
+it is Theorem 119.1. Both begin with (109.3), so neither can remove
+it from its own hypotheses. In particular a general generic-$k=1$
+or complex-projective entry-locus assertion has not replaced the
+positive preimage proof of §111. The geometry continuation in VII
+has its own scope and is not a proof dependency here. ∎
+
+The control in [VI, Proposition 92.1][VI] has $\pi=\mathrm{id}$ and
+an available equalizing form $Q_0$, although a supplied invariant
+$Q_\varepsilon$ has unequal pair radii. It is compatible with these
+rigidity results. It must not be described as an L3 example with
+no equalizer, and no conclusion that every invariant metric
+equalizes pair radii follows here.
+
+The separate existing [complex projection Gleason owner][Gleason]
+starts, for $N\ge3$, from a full complex projection labeling and a
+`ProjectionPackage`: a total matrix function nonnegative on all
+star projections, normalized at $I$, and additive on orthogonal
+binary sums. Its existing `gleason_representation` gives the unique
+PSD trace-one representative of that supplied assignment on every
+star projection. These full labeling, noncontextuality and
+orthogonal-sum premises are substantial. That theorem supplies
+neither (109.3), nor all original pure labels, nor original frames.
+It is a downstream interface comparison, not a new Born or Gleason
+theorem in this volume. The $n=2$ result here uses the whole cover
+and the intrinsic all-pair overlap; it makes no qubit Gleason claim.
+
+The full $H$ in (117.3) can contain antiunitary implementers.
+Eliminating a transpose component of an original generator requires
+its separately supplied original path/action interface, as retained
+in [VI, Theorem 96.2][VI]. The central extension over $H^0$ does not
+establish identity-component membership of every original word.
+Neither scalar phases nor a quotient identification provide a
+global unitary phase section, a splitting, or original-word unitarity.
+
+Compact closure elements, Haar averages, convex mixtures, source
+spectral decompositions, the whole effect interval, and the auxiliary
+groups are mathematical constructions. None is by itself a native
+control, preparation, measurement, inverse, filter or Return. The
+original whole-future laws, true branch masses, archives and returned
+rows retain the interfaces of [VI §§94–96][VI]. A matched marginal
+or invertible matrix does not provide those interfaces.
+
+Joint laws, process descent, instruments, complete positivity,
+composites, tensor products, time, clocks and physical correspondence
+retain their separate original contracts. The static cone and
+symmetry identifications here do not establish those contracts or
+derive quantum foundations from the single-$\Omega$ word model.
+The full quantum-origin problem therefore retains these concrete
+unsupplied bridges.
+
+The reused ingredients are PSD support geometry, positive and negative
+spectral parts, the mature sign-rank criterion, compact unitary
+sphere-transitive classification, Haar integration, all-ray Wigner
+theory, phase extensions and trace duality. The conditional synthesis
+connects actual faces to entire positive fibers and then to a
+stabilizer obstruction; its intrinsic overlap and closed graph supply
+the compatible lift needed for the original compact action. No
+global priority, new classification or physical-origin claim is made.
+
+[V]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md
+[VI]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VI.md
+[Compact]: ../../../Blueprint/D5/S3/Quantum/Algebra/OriginalProbabilityCompactAction.md
+[Gleason]: ../../../Blueprint/D5/S3/Quantum/GleasonComplexRepresentation.md
+[AD]: ../../../Library/LieTheory/albertinidalessandro2001transitivity.md
+[CHST]: ../../../Library/HilbertOperators/carmeliheinosaarischultztoigo2014tasks.md
+[Geher]: ../../../Library/HilbertOperators/geher2014wigner.md
+[DNG]: ../../../Library/LieTheory/denittisgomi2018twisted.md
+

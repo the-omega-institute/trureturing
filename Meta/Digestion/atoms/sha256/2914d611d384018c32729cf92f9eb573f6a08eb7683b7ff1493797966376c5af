@@ -1,0 +1,42 @@
+### 125.1 整个边界理想，而非所选窗口的零方程
+
+设 $V\ne0$ 为有限维实向量空间，$C\subset V$ 为非零、闭、尖、满维凸锥。先不假定半代数、双曲、齐性、光滑性或任何矩阵表示。记 $\mathbb R[V]$ 为实系数多项式环，$\partial C$ 为相对于整个 $V$ 的欧氏边界，定义
+
+$$
+I_\partial(C)=\{q\in\mathbb R[V]:q(x)=0\ \text{对全部 }x\in\partial C\},
+\qquad
+\partial_aC=\overline{\partial C}^{\,\mathrm{Zar}}.
+\tag{MC125.1}
+$$
+
+Zariski闭包取实系数方程；也可把同一理想的零集放入复化仿射空间。这里的理想由**整个欧氏边界**确定，不由某个光滑片、某组种子面、纯态轨道或选出的有限测试确定。当 $I_\partial(C)\ne\{0\}$ 时，定义
+
+$$
+\delta(C)=\min\{\deg q:0\ne q\in I_\partial(C)\}.
+\tag{MC125.2}
+$$
+
+次数是总次数，不是不可约分量次数的最大值。没有非零边界方程时记 $\delta(C)=\infty$。本章的附加几何条件为
+
+$$
+\mathsf{AB}_{\le3}:\qquad \delta(C)\le3.
+\tag{MC125.3}
+$$
+
+下文证明有限次数时整个边界理想确为主理想，并把其约化生成元记作 $p_C$。因此(MC125.2)与“整个代数边界的约化方程之次数”一致；不是先假设存在一个具有所需性质的最小双曲多项式。
+
+对量子消费者，另外给定在 $C\setminus\{0\}$ 上严格正的原 $u\in V^*$，始终使用
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+\mathcal T_p(x)=\min_{f\in\mathcal F_p}f(x)\quad(x\in C),\\
+D_p=\{x\in K:\mathcal T_p(x)=0\}.
+\end{gathered}
+\tag{MC125.4}
+$$
+
+$K,P,\mathcal E$ 与确认族全部保留原全域；$\mathcal T_p$ 的第二变量包括全部混态及全部非负质量输入。有限维闭尖满维性与严格正单位使 $K,\mathcal E,\mathcal F_p$ 紧，且最小值达到，直接沿用124.1及VII103.2的接口。双曲方向 $e\in V$ 是向量，与归一泛函 $u$ 不同型。
+

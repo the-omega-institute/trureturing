@@ -1,0 +1,1 @@
+{"statement_id":"sha256:d6ddb3029437be4da99f046e8e84208d04807822ebd58bc8f65b282746511f9d","declarations":[{"declaration_name_key":"ns(ns(n0,7:TauCeti),36:mem_sectionSet_iff_mem_image_card_lt)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,7:TauCeti),38:mem_sectorSet_iff_notMem_image_card_lt)","kind":"theorem"}]}

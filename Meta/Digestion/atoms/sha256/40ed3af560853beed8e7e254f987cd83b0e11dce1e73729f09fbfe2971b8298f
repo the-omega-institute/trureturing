@@ -1,0 +1,30 @@
+**Lemma 110.1 (Whole base and injective two-support restrictions).**
+Under Definition 109.1,
+
+$$
+K=\pi(\mathcal D_n),\qquad
+N\subset\{X:\operatorname{Tr}X=0\}.
+\tag{110.1}
+$$
+
+For every complex two-plane $S$, $\pi$ is injective on all
+$\operatorname{Herm}(S)$. Consequently $L_S=\pi(\mathcal D(S))$ is
+a solid affine three-dimensional ellipsoid, and every point of its
+relative boundary is globally pure in $K$.
+
+Proof. A positive preimage of $x\in K$ has trace $u(x)=1$, and every
+$\rho\in\mathcal D_n$ maps into $K$. Applying the trace identity to
+a kernel matrix proves the second claim in (110.1).
+
+If $0\ne A\in N\cap\operatorname{Herm}(S)$, its two eigenvalues on
+$S$ sum to zero, so $A=\lambda(Q-R)$ for some $\lambda>0$ and
+orthogonal rank-one projectors $Q,R$ supported on $S$. Then
+$b(Q)=b(R)$, contrary to injectivity of $b$. This proves injectivity
+on the whole supported Hermitian space, including its trace direction.
+
+The two-dimensional complex density body is a solid three-ball in
+its trace-one affine hyperplane. Its boundary consists exactly of
+rank-one projectors. The injective affine restriction of $\pi$ gives
+the stated ellipsoid, and (109.3) sends each of those boundary
+projectors to a global extreme point of $K$. ∎
+

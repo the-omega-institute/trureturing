@@ -1,0 +1,24 @@
+**Theorem 109.3 (Rigidity from the original compact pure action).** Assume
+Definition 109.1. In place of (109.5) and its supplied $G$, suppose an
+actual compact matrix subgroup
+
+$$
+H\le\operatorname{Aut}(C,u)
+=\{h\in GL(V):hC=C,\ u\circ h=u\}
+\tag{109.7}
+$$
+
+is transitive on the entire original $P$. Then (109.6) holds.
+The proof constructs the compact unitary group needed by Theorem 109.2
+over $H^0$, without choosing phases for individual symmetries.
+The full $H$ has unitary or antiunitary implementers and need not have
+only unitary ones. Sections 115–119 prove this statement and the exact
+extension assertions.
+
+Connectedness of $H$, Hilbert or Born structure on $V$, spectrality of
+$C$, least confirmation, the full S bridge, $\mathrm{Pair}_{\perp}$,
+and bit, frame or strong symmetry are not additional hypotheses of
+Theorem 109.3. The whole PSD source in (109.3) is an explicit supplied
+representation hypothesis; this theorem does not derive it from bare
+AURIC, EB3, L3 or original word readouts.
+

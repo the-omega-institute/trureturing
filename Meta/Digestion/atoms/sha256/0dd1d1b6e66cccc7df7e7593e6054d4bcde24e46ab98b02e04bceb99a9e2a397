@@ -1,0 +1,40 @@
+**引理 125.2（基的边界、齐次化与径向连续性）。** 在 $\dim V\ge2$ 时，可选严格正线性泛函 $\ell$，使
+
+$$
+B=C\cap H,\qquad H=\{\ell=1\}
+\tag{MC125.6}
+$$
+
+为 $H$ 中有非空内部的紧凸体，且
+
+$$
+\partial C\setminus\{0\}
+=\{rb:r>0,\ b\in\partial_H B\}.
+\tag{MC125.7}
+$$
+
+$p_C|_H$ 非零，其仿射总次数恰为 $\delta(C)$，也是覆盖 $\partial_HB$ 的非零仿射多项式的最低次数。对每个 $a\in\operatorname{int}_H B$，从 $a$ 发出的径向投影给单位球面与 $\partial_HB$ 的同胚；不要求边界可微。
+
+证明。严格正 $\ell$ 的存在可由有限维强分离得到：$C$ 与辅助单位球的交紧，且其凸包不含零，否则一个正权非零锥元会同时属于 $C$ 和 $-C$。分离零点与该紧凸包，便得在全部单位锥元上有统一正下界的 $\ell$。这也使截面 $B$ 有界；闭性给紧性，满维给其仿射内部非空。若原单位 $u$ 已给，可直接取 $\ell=u$。
+
+映射 $(r,b)\mapsto rb$ 把 $(0,\infty)\times H$ 同胚到 $\{\ell>0\}$，并把 $(0,\infty)\times B$ 对应到 $C\setminus\{0\}$；比较内部与边界得到(MC125.7)。$\dim H\ge1$，故紧凸体的边界非空。齐次 $p_C$ 若在整个 $H$ 恒零，就在开集 $\{\ell>0\}$ 恒零，因而不可能。
+
+在 $H$ 选原点 $b_0$，写 $x=sb_0+v$、$v\in\ker\ell$。任意次数 $d\ge1$ 的非零仿射多项式 $g(b_0+v)$，其齐次化
+
+$$
+G(sb_0+v)=s^d g(b_0+v/s)
+\tag{MC125.8}
+$$
+
+按单项式展开为真正的次数 $d$ 齐次多项式，不在 $s=0$ 使用除法。若 $g$ 覆盖整个 $\partial_HB$，则(MC125.7)使 $G$ 在全部非零 $\partial C$ 为零，并由齐次正次数在原点为零。因此 $\delta(C)\le d$。把此结论用于 $g=p_C|_H$，结合 $\deg g\le\delta(C)$，得到次数相等及最低性。此处不存在无穷远因子或漏掉锥顶的步骤；Sinn Remark 2.10、Corollary 2.11给出相同齐次化接口的代数几何表述。
+
+最后令 $A=B-a\subset\ker\ell$，选 $0<r<R$ 使 $r\overline B_{\rm Eucl}\subseteq A\subseteq R\overline B_{\rm Eucl}$。其Minkowski泛函 $\mu$ 次可加且正齐次，并满足
+
+$$
+\frac{\|v\|}{R}\le\mu(v)\le\frac{\|v\|}{r},\qquad
+|\mu(v)-\mu(w)|\le\frac{\|v-w\|}{r}.
+\tag{MC125.9}
+$$
+
+后一式分别用 $\mu(v)\le\mu(w)+\mu(v-w)$ 及交换 $v,w$ 得到，不要求 $A$ 对称。单位方向上的唯一径向端点为 $a+v/\mu(v)$，由(MC125.9)连续。凸性及 $a$ 为内点使每条射线仅有这个边界端点；紧性和Hausdorff性使该连续双射为同胚。仿射维一时单位球面是两个离散方向，结论同样成立。证毕。
+

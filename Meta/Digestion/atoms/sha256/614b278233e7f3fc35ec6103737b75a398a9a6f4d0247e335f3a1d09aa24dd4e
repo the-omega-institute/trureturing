@@ -1,0 +1,27 @@
+**引理 121.4（每个闭层上的整球连续）。** 映射 $q\mapsto D_q$ 在每个 $Q_m$ 上按环境Hausdorff距离连续。
+
+证明。设 $q_n\to q$ 且各点在同一个 $Q_m$。把实际球写成
+
+$$
+D_{q_n}=b_n+L_n\overline B^3,\qquad
+L_n:\mathbb R^3\to H\text{ 单射}.
+\tag{121.10}
+$$
+
+球心 $b_n\in K$；因 $b_n\pm L_nt\in K$ 对全部单位 $t$ 成立，$\|L_n\|\le\operatorname{diam}K/2$。任意子列因而还有子列使 $b_n\to b$、$L_n\to L$，其中 $L$ 的秩暂时只知不超过三。统一参数球上的一致收敛给
+
+$$
+D_{q_n}\longrightarrow D_\infty:=b+L\overline B^3
+\quad\text{于Hausdorff距离}.
+$$
+
+同时取 $e_n\in\mathcal A_{q_n}$ 的收敛子列。极限 $e\in\mathcal E$ 满足 $e(q)=1$，并在每个 $b+Lt$ 上取零。因此 $D_\infty\subset D_q$。这正是原效应紧性给出的上包含，并不先声称 $e\in\mathcal A_q$ 或整球已收敛到 $D_q$。
+
+再沿共同子列取(121.8)的全部见证极限。引理121.3的证明保证九点 $x_j$ 仍属于 $S_q$，且 $\Gamma\ge1/m$。各 $x_{jn}\in D_{q_n}$，故 $x_j\in D_\infty$。若 $\operatorname{rank}L\le2$，这些点位于仿射维数至多二的空间，其二次评估秩至多六，与 $\Gamma>0$ 矛盾。所以 $D_\infty$ 是非退化三维椭球，与 $D_q$ 有同一仿射三平面。
+
+每个 $x_j$ 是 $D_q$ 的极点，而 $D_\infty\subset D_q$ 且包含它，所以也是 $D_\infty$ 的极点，位于两颗椭球的相对边界。两边界二次形式于是都在同一个四维线性 $M=\operatorname{span}D_q$ 的九点评估核中。该核由引理121.2及 $\Gamma>0$ 恰为一维，两二次形式必成非零比例。其边界相同，取边界凸包得到 $D_\infty=D_q$。
+
+以上对任意子列都成立：若整列不趋于 $D_q$，存在Hausdorff距离有固定正下界的子列；该子列又有刚证明必趋于 $D_q$ 的子列，矛盾。因此整列收敛，得到连续性。证毕。
+
+$Q$ 是非空紧二盘，故为Baire空间。引理121.3给可数闭覆盖，某个 $Q_m$ 在 $Q$ 中有非空相对内部。$Q$ 的边界在 $Q$ 中无处稠密，所以可在这个内部中选取更小的闭二盘 $Q'$，其内部仍是 $S_p$ 中的非空开集。引理121.4遂在 $Q'$ 上给真正的整球连续族。这里的Baire作用域始终是指定实际球面内的一张闭二盘。
+

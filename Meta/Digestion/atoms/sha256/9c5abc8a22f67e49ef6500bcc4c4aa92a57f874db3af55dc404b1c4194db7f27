@@ -1,0 +1,48 @@
+**Proposition 110.2 (Equality with the entire actual pair face).**
+For any distinct $Q,R\in\mathcal R_n$, put
+$S=\operatorname{ran}Q+\operatorname{ran}R$. Then
+
+$$
+F_K(b(Q),b(R))=\pi(\mathcal D(S))=L_S.
+\tag{110.2}
+$$
+
+In particular this actual minimal face has affine dimension exactly
+three and is affinely isomorphic to the whole closed real three-ball.
+
+Proof. The state $m=(Q+R)/2$ is positive definite on the two-plane
+$S$. Every $\sigma\in\mathcal D(S)$ occurs in a convex decomposition
+
+$$
+m=t\sigma+(1-t)\tau,\qquad
+0<t<1,\quad\tau\in\mathcal D(S).
+\tag{110.3}
+$$
+
+Indeed choose $t>0$ small enough that $m-t\sigma\ge0$ on $S$ and set
+$\tau=(m-t\sigma)/(1-t)$. Its trace is one. The actual face
+$F=F_K(b(Q),b(R))$ contains $\pi(m)$. Applying its face property to
+the image of (110.3) gives $L_S\subset F$.
+
+Lemma 110.1 gives $\dim_{\mathrm{aff}}L_S=3$; (109.4) therefore gives
+$\operatorname{aff}F=\operatorname{aff}L_S$. If $z\in F\setminus L_S$,
+the segment from the center $c$ of the solid ellipsoid $L_S$ to $z$
+crosses its boundary at
+
+$$
+y=(1-t)c+tz,\qquad0<t<1.
+\tag{110.4}
+$$
+
+Both $c,z$ belong to $K$ and are distinct. But $y$ is globally pure
+by Lemma 110.1, contradicting (110.4). Thus $F=L_S$. This uses
+neither exposedness nor closedness of $F$, nor preservation of faces
+by arbitrary projections. It also applies when $n=2$, in which case
+$S$ is the whole source space. ∎
+
+The use of actual minimal faces for every pair is essential to this
+argument. A generic complex secant, a selected family of pair sections,
+or an image described only as lying in some larger face does not give
+the equality in (110.2). The distinct whole-pair/common-support route
+of [V, §88][V] is not a premise of this proof.
+

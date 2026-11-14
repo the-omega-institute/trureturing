@@ -1,0 +1,71 @@
+**定理 122.3（三扇二元窗口在整个族中不变）。** 对任意 $|\lambda|\le1$，三个 $p_i$ 都是原纯点。设 $\{i,j,k\}=\{1,2,3\}$，令
+
+$$
+\begin{gathered}
+\pi_i x=(a_j,a_k,z_i),\qquad
+\mathscr L_i=\{(b,c,z):b,c\ge0,\ bc\ge|z|^2\},\qquad
+\upsilon_i(b,c,z)=b+c,\\
+M_i=\{x:a_i=0,\ z_j=z_k=0\},\qquad e_i(x)=a_i.
+\end{gathered}
+\tag{122.6}
+$$
+
+其中 $\pi_i$ 的逆嵌入只在 $M_i$ 上使用；定义 $T_i$ 为将 $a_i,z_j,z_k$ 置零并保留 $a_j,a_k,z_i$ 的实线性映射。则
+
+$$
+\begin{gathered}
+N_{p_i}=\pi_i^*(\mathscr L_i^*),\qquad
+\operatorname{span}N_{p_i}
+=\operatorname{span}_{\mathbb R}\{a_j,a_k,\operatorname{Re}z_i,\operatorname{Im}z_i\},\\
+\mathcal F_{p_i}
+=\{e_i+q\circ\pi_i:q\in[0,\upsilon_i]_{\mathscr L_i^*}\},\qquad
+\mathcal T_{p_i}(x)=a_i(x)\quad(x\in C_\lambda),\\
+D_{p_i}=\{x\in K_\lambda:a_i=0\}
+=\{a_i=0,\ z_j=z_k=0,\ a_j+a_k=1,\ a_j,a_k\ge0,\ |z_i|^2\le a_ja_k\},\\
+\mathcal A_{p_i}=\{e_i\},\qquad N_{D_{p_i}}=\mathbb R_+e_i.
+\end{gathered}
+\tag{122.7}
+$$
+
+每个完整 $D_{p_i}$ 是实三维闭球，$\dim M_i=4$，$\dim\operatorname{span}N_{p_i}=4$，$\dim\operatorname{span}N_{D_{p_i}}=1$。三个规范压缩唯一满足
+
+$$
+\begin{gathered}
+T_i:V\longrightarrow M_i,\qquad h(T_ix)=h(x)
+\quad(h\in\operatorname{span}N_{p_i},\ x\in V),\qquad
+T_i(C_\lambda)\subseteq C_\lambda,\\
+T_i^2=T_i,\quad \operatorname{im}T_i=M_i,\quad T_ip_i=0,\quad
+uT_i=u-e_i,\qquad T_iT_j=T_jT_i=e_k(\cdot)p_k\quad(i\ne j).
+\end{gathered}
+\tag{122.8}
+$$
+
+三种子的全部原零效应联合分离整个 $V$，特别满足125.5的 $\mathsf J_\triangle$；$e_i(p_j)=\delta_{ij}$、$\sum_i e_i=u$，所以这三个原纯点构成实际原二元关系下的三角。
+
+证明。若 $p_1$ 是两张归一态的非平凡凸组合，非负的 $a_2,a_3$ 在两张态上都须为零。二阶条件迫使三个 $z_i$ 全零，再由归一得两张态都等于 $p_1$。循环置换给全部种子纯性。
+
+先算整个 $N_{p_1}$。任意实线性泛函可写成 $h=\sum_i b_i a_i+2\operatorname{Re}\sum_i\overline{\eta_i}z_i$。若 $h\in N_{p_1}$，则 $b_1=0$。对任意 $\varepsilon>0$、相位 $\phi$，点
+
+$$
+(1,\varepsilon^2,0;0,0,\varepsilon e^{\mathrm i\phi})\in C_\lambda
+\tag{122.9}
+$$
+
+满足全部显式条件，其三次式为零。把 $h\ge0$ 除以 $\varepsilon$ 再令其趋零，得 $\operatorname{Re}(\overline{\eta_3}e^{\mathrm i\phi})\ge0$ 对所有相位成立，故 $\eta_3=0$。以 $(1,0,\varepsilon^2;0,\varepsilon e^{\mathrm i\phi},0)$ 同理得 $\eta_2=0$。所以 $h$ 只读取 $(a_2,a_3,z_1)$。
+
+每个 $C_\lambda$ 元的这一块属于 $\mathscr L_1$，而 $\mathscr L_1$ 的每个元零延拓后本来就在 $C_\lambda$。因此正性恰是此块上的正性，给出第一行的法向锥等式。具体地，块对偶由
+$b_2,b_3\ge0$、$b_2b_3\ge|\eta_1|^2$ 刻画；这是二阶Hermitian迹配对的PSD判据，故它的线性张成是全部四维块对偶。其余指标循环成立。
+
+对 $f\in\mathcal F_{p_i}$，$g=u-f\in N_{p_i}$，故 $g=\widetilde g\circ\pi_i$。将 $f\ge0$ 限制到整个嵌入的 $\mathscr L_i$，得 $\upsilon_i-\widetilde g\ge0$；而 $g\ge0$ 给 $\widetilde g\ge0$。置 $q=\upsilon_i-\widetilde g$ 即得(122.7)的完整 $\mathcal F_{p_i}$。反向，对区间中的任意 $q$，$e_i+q\pi_i\ge0$ 且其补为 $(\upsilon_i-q)\pi_i\ge0$ 于整个 $C_\lambda$，并在 $p_i$ 读一，故没有漏效应。全部这类 $f$ 都逐点大于等于 $e_i$，而 $q=0$ 已给 $e_i$，所以最低函数恰为 $a_i$。
+
+在 $a_i=0$ 时，另两条二阶不等式迫使 $z_j=z_k=0$，三次式自动为零。归一后余下条件恰为(122.7)。坐标
+
+$$
+(a_j-a_k,\ 2\operatorname{Re}z_i,\ 2\operatorname{Im}z_i)
+\tag{122.10}
+$$
+
+将它仿射双射到整个实单位三球，因为平方范数不超过 $(a_j+a_k)^2=1$。该球是 $e_i$ 的整个零面，故其球面极点也都是 $K_\lambda$ 的原纯点。若一个完整确认效应还在该球上全零，其 $q$ 必在整个 $\mathscr L_i$ 上全零，故 $q=0$，得到 $\mathcal A_{p_i}=\{e_i\}$。若 $h\in N_{D_{p_i}}$，它尤其同时在 $p_j,p_k$ 取零；刚算出的 $N_{p_j}$ 和 $N_{p_k}$ 的交恰为 $\mathbb R_+e_i$，得其余法向断言。
+
+$T_i$ 保留的块属于 $\mathscr L_i$，其零延拓属于 $C_\lambda$，所以它在整个原锥上正。该块的全部四维线性读数正是 $\operatorname{span}N_{p_i}$，在 $M_i$ 上分离向量，故读数保持既证明规范性也证明唯一性。投影、质量及相乘公式逐坐标成立。三个法向张成之和覆盖全部三个实对角坐标和三个复边坐标，恰为 $V^*$。任一非零 $h\in N_{p_i}$ 可除以 $\max_{K_\lambda}h>0$ 而成为原零效应，所以真正的全部原零效应也联合分离，而非只有任意线性泛函分离。最后 $e_i\in\mathcal E_\lambda$ 且上述种子读数成立，给实际原边及全域单位和。证毕。
+

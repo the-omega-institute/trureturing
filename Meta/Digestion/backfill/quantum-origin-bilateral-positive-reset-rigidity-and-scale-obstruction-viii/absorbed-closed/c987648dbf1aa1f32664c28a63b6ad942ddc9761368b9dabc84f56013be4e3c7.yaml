@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c987648dbf1aa1f32664c28a63b6ad942ddc9761368b9dabc84f56013be4e3c7
+  normalized_sha256: sha256:c987648dbf1aa1f32664c28a63b6ad942ddc9761368b9dabc84f56013be4e3c7
+cas_ref: sha256:c987648dbf1aa1f32664c28a63b6ad942ddc9761368b9dabc84f56013be4e3c7
+coverage_gids:
+  - gid: D5/S3/Geometry/AlgebraicBoundary/OriginalBoundaryHost.original_entire_boundary_host
+    target_statement_id: sha256:3d55456c9b57a9ef3efd271480f0ad51183fe3698b4f91ebd57c7e987e3870ba
+receipts:
+  unresolved_subitems: []

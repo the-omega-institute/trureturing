@@ -1,0 +1,14 @@
+### 124.12 完整中文图景
+
+把原状态体想成一块包含全部纯态与混态的实体，把原效应想成能在这整块实体上合法读取零到一的全部尺。对一个纯态，把所有能被某张“肯定它”的尺完全排除的状态收齐，才是它的完整排除集合；不能只挑一张好看的切片。本章只要求这些完整集合都是非退化实心球，允许有的只是一条线段，有的维数更高。关键不是先规定它们都是量子三球，而是利用立方双曲边界只有三个秩层：纯态若落在秩二的光滑边界，只能有一个支撑方向；但它既能被一张尺单独指出，又必须处在另一颗完整排除球上，已经给出两个不同支撑方向，所以它只能落在秩一层。两个秩一纯态加在一起至多到秩二，离整个秩三实体的内部还差一层，于是任意两纯态都留在一个真实的原真面里，准确补上旧分类需要的Pair。一般立方实体因此可以是实、复、四元、八元或带旗标的秩三Jordan模型，不能一概叫作复量子系统；而在这里指定的实九维三线性族，三个种子的完整三球排除了旗标加七球支路，维数又排除了其余简单类型，最终只剩完整复三能级。得到的同一映射同时覆盖全部密度态、全部纯射线、全部效应、Born读数、确认最小值和每个完整排除三球。它完成的是这一个完整家族内的静态几何分类；共同物理来源、任意有限复合、事件和仪器、记录与合法未来，以及钟、能量和 $\hbar$ 仍须逐项履行124.10继承的原合同。
+
+[Q124CubicRenegar]: https://doi.org/10.1007/s10208-004-0136-z "James Renegar, Hyperbolic Programs, and Their Derivative Relaxations；§2、§3及§6。"
+[Q124CubicIL]: https://arxiv.org/pdf/2207.11986v3 "Masaru Ito and Bruno F. Lourenço, Automorphisms of rank-one generated hyperbolicity cones and their derivative relaxations；DOI 10.1137/22M1513964；Proposition 2.4、Definition 3.1、Remark 3.2、Lemma 3.3。"
+[Q124CubicVII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.1—103.8：全Pair的准确原义、完整面分类、完整S桥、任意原单位反向及全部秩三支路。"
+[Q124CubicX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X124.1—124.2：PE与每个原纯点的两条不同正法向。"
+[Q124CubicS]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge "原全效应域中完整S到谱性、自对偶、projectivity及滤子保纯的既有桥；所引Barnum—Müller—Ududec Theorem 16。"
+[Q124CubicEVIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.7—113.9：成熟秩三分类与完整静态字典；命题113.11及112.9的全部原联合、操作和时间合同。"
+[Q124CubicSR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "第127.10节及完整传递引用：来源、全部有限复合、资源、CP、实际事件仪器、记录、全部合法未来及时间；125.11、124.9、123.13、127.1、129.1与PC1／IC0的原范围。"
+[Q124CubicIX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX120.11：同一原静态字典及其完整物理合同和引用链。"
+[Q124CubicTCVII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "THREE_COPY VII121.12、122.14：共同来源、全有限层级、事件仪器、记录及连续时间的完整合同。"
+

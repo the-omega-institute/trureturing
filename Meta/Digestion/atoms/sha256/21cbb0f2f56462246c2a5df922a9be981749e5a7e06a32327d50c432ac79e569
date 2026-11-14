@@ -1,0 +1,35 @@
+**定义 124.1（正则立方双曲原域）。** 设 $V\ne0$ 为有限维实空间，$h:V\to\mathbb R$ 为次数恰为三的齐次多项式，$e\in V$，且 $h(e)>0$。要求对每个 $x\in V$，多项式 $t\mapsto h(te-x)$ 的三个根均为实数，记为 $\lambda_1(x)\le\lambda_2(x)\le\lambda_3(x)$，按重数计。原锥必须恰为指定分支的整个闭包
+
+$$
+C=\Lambda_+(h,e)=\{x:\lambda_i(x)\ge0\ (i=1,2,3)\},
+\qquad C\cap(-C)=\{0\},\qquad \operatorname{span}C=V.
+\tag{124.1}
+$$
+
+这里“正则”指尖且满维，不指多项式不可约、锥齐性或边界处处光滑。$e$ 是向量双曲方向；另外给定的原单位 $u\in V^*$ 在 $C\setminus\{0\}$ 上严格正，二者不混同。始终取
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+\mathcal T_p(x)=\min_{f\in\mathcal F_p}f(x)\quad(x\in C),\\
+D_p=\{x\in K:\mathcal T_p(x)=0\},\qquad
+N_x=\{g\in C^*:g(x)=0\}.
+\end{gathered}
+\tag{124.2}
+$$
+
+所有正性和效应上界均在整个原锥上成立，最小化遍历全部原确认效应，第二变量包括全部混态。有限维闭尖锥与严格正单位使 $K$ 紧；它张成 $V$，故 $\mathcal E$ 紧，非空闭切片 $\mathcal F_p$ 紧，最小值达到。这些全效应基本事实直接沿用[VII103.1—103.2][Q124CubicVII]。
+
+本章在这一立方类别中采用的几何候选是
+
+$$
+\boxed{\mathrm{EB}_{\ge1}:\quad
+\forall p\in P\ \exists d_p\in\mathbb N,\ d_p\ge1:
+D_p\simeq_{\rm aff}\overline B^{d_p}.}
+\tag{124.3}
+$$
+
+球是整个闭实球，允许线段，允许球维数随标签改变；仿射球图不预给原空间的共同内积、中心或长度。这里没有输入Inj、Pair、纯值互易、least、Jordan、自对偶、齐性、连续纯标签或共同矩阵表示。定义双曲秩 $r_h(x)=\#\{i:\lambda_i(x)\ne0\}$；它始终相对于指定的 $(h,e)$，不预先解释成矩阵秩。ROG也取Ito—Lourenço Definition 3.1的相对意义。
+
