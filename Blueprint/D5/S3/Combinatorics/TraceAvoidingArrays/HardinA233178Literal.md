@@ -6,7 +6,43 @@ The exact five-row six-colour source count and a division-free chromatic corresp
 
 The domain is Fin 5 times Fin n. Every cell has one of six colours, the top left cell is zero, and first appearances are ordered by the strict rank i*n+j. Colours may be absent. Every horizontal, diagonal and antidiagonal pair across consecutive columns has distinct colours whose sum is not five. Vertical and wraparound pairs have no restriction. All recurrence arithmetic is in the integers.
 
-**Definition 1.1 (The literal function domain).**
+**Definition 1.1 (Exchange of the two noninitial labels).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.swap`
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.swap` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The involution exchanges one and two and fixes zero.
+
+**Definition 1.2 (A whole-word absence indicator).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.absent`
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.absent` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The integer indicator is one exactly when the specified label never occurs, including for the empty word.
+
+**Theorem 1.3 (Exact scanner symmetrization).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.normalization_result`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.normalization_result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural k and every word q from Fin k into Fin 3, write W(q)=rowWeight((false,false),q) and A(q,c)=absent(q,c). Then 4*(W(q)+W(swap composed with q))=2^k*(1+A(q,1)+A(q,2)+5*A(q,1)*A(q,2)). The product term retains the all-zero case. The induction first establishes 2*rowWeight((true,false),q)=2^k*(1+A(q,2)), then splits on the first label. No colour-occurrence or surjectivity assumption is imposed. This pointwise identity does not by itself identify a graph count or settle A233178.
+
+**Definition 1.4 (The literal function domain).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Array`
 
@@ -18,7 +54,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Ar
 
 Arrays are arbitrary functions on the five rows and n columns into a finite colour set.
 
-**Definition 1.2 (Strict row-major rank).**
+**Definition 1.5 (Strict row-major rank).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.rank`
 
@@ -30,7 +66,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.ra
 
 The rank of cell (i,j) is i*n+j.
 
-**Definition 1.3 (Exactly the constrained pairs).**
+**Definition 1.6 (Exactly the constrained pairs).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Edges`
 
@@ -42,7 +78,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Ed
 
 An edge goes one column to the right and changes the row by at most one. There is no modular indexing.
 
-**Definition 1.4 (Literal first appearances).**
+**Definition 1.7 (Literal first appearances).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Normal`
 
@@ -54,7 +90,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.No
 
 Every occurrence of two, three or four has an earlier one, and every occurrence of three has an earlier two. Earlier means strictly smaller literal row-major rank.
 
-**Definition 1.5 (The full source predicate).**
+**Definition 1.8 (The full source predicate).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Legal`
 
@@ -66,7 +102,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Le
 
 The predicate conjoins the pinned initial cell, every edge restriction and the first-appearance conditions. It imposes no surjectivity or orbit divisor.
 
-**Definition 1.6 (Literal cardinality).**
+**Definition 1.9 (Literal cardinality).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.a`
 
@@ -78,7 +114,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.a`
 
 The count is the cardinality of the legal function subtype, expressed as a finite filtered set. Only positive widths enter FullE.
 
-**Definition 1.7 (The unchanged event).**
+**Definition 1.10 (The unchanged event).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.FullE`
 
@@ -90,7 +126,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Fu
 
 For every natural n greater than eleven, the literal count satisfies the ten-term integer recurrence, with coefficients in lag order 192, 31744, -3178496, -170917888, 13992198144, 99857989632, -17660905521152, 211106232532992, 2533274790395904, -40532396646334464. There is no upper cutoff, additional onset, generating-function assertion or minimal-order assertion.
 
-**Definition 1.8 (Exact row-major reindexing).**
+**Definition 1.11 (Exact row-major reindexing).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.word`
 
@@ -102,7 +138,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.wo
 
 The product-to-Fin equivalence enumerates the cells at their actual rank. It is a bijection and preserves the strict earlier relation used in Normal.
 
-**Definition 1.9 (Proper pair-label arrays).**
+**Definition 1.12 (Proper pair-label arrays).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Proper`
 
@@ -114,7 +150,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Pr
 
 Complementary pairs become the three labels. Properness requires different labels at exactly the literal edges.
 
-**Definition 1.10 (Anchored proper pair labels).**
+**Definition 1.13 (Anchored proper pair labels).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Anchored`
 
@@ -126,7 +162,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.An
 
 The initial pair label is zero and the array is proper. There is no occurrence requirement on the other labels.
 
-**Theorem 1.11 (Exact scanner pushforward).**
+**Theorem 1.14 (Exact scanner pushforward).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.scanner_count`
 
@@ -138,7 +174,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.sc
 
 Twice the literal source count is the sum of the existing scanner weights over the anchored proper three-label arrays. The factor two comes from exchanging colours zero and five, which leaves the pair labels, scanner permission and scanner state unchanged. The existing scanner_fibres theorem counts the exact individual-colour fibres after the row-major bijection. The scanner starts in (false,false) and reads word(q) in that same row-major order. This statement includes every width.
 
-**Definition 1.12 (Anchored chromatic count).**
+**Definition 1.15 (Anchored chromatic count).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.pairCount`
 
@@ -150,7 +186,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.pa
 
 This integer finite sum counts every proper three-label array with its initial label zero, including arrays missing one label.
 
-**Theorem 1.13 (Exact missing-label correction).**
+**Theorem 1.16 (Exact missing-label correction).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.source_count`
 
@@ -160,9 +196,9 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.so
 
 *Commentary.*
 
-For n at least two, sixteen times a(n) equals 32^n times (pairCount(n)+2). Exchanging labels one and two preserves anchored properness. Summing the existing pointwise normalization identity therefore counts both scanner orders. Each missing-label fibre has exactly one member: the alternating column-parity colouring. Its uniqueness follows first down the initial column using a common neighbour, then across every row by induction on the column. An anchored proper array cannot miss both nonzero labels. These facts supply the correction two without a source surjectivity condition or an imposed orbit divisor.
+For n at least two, sixteen times a(n) equals 32^n times (pairCount(n)+2). Exchanging labels one and two preserves anchored properness. Summing the existing pointwise normalization identity therefore counts both scanner orders. Each missing-label fibre has exactly one member: the alternating column-parity colouring. Its uniqueness is a specialization of HardinA233260Literal.two_label_classification: the literal graph contains every horizontal and antidiagonal edge required there, the anchor fixes the first label to zero, and the omitted label fixes the other label. This uniqueness specialization and the scanner pushforward use the existing classification and scanner-fibre identities. The pointwise normalization_result is proved above by induction on the word length. An anchored proper array cannot miss both nonzero labels. These facts supply the correction two without a source surjectivity condition or an imposed orbit divisor.
 
-**Definition 1.14 (Unrestricted chromatic cardinality).**
+**Definition 1.17 (Unrestricted chromatic cardinality).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.chromaticCount`
 
@@ -174,7 +210,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.ch
 
 This counts all proper three-label arrays on the literal graph, with every initial label allowed.
 
-**Theorem 1.15 (Division-free literal source bridge).**
+**Theorem 1.18 (Division-free literal source bridge).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.chromatic_source_count`
 
@@ -196,11 +232,15 @@ For every n at least two, 48*a(n) equals 32^n*(chromaticCount(n)+6). Permuting z
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Normal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Proper`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.a`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.absent`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.chromaticCount`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.chromatic_source_count`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.normalization_result`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.pairCount`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.rank`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.scanner_count`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.source_count`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.swap`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.word`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Normalization](HardinA233178Normalization.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry](HardinA233255ShapeSymmetry.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal](HardinA233260Literal.md)
