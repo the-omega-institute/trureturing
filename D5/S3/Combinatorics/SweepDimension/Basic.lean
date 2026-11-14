@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/SweepDimension/Basic
    generality: G
-   mirror-B: D5/B/S0/Certificates/Combinatorics/SweepDimension
+   mirror-B: D5/B/S3/Combinatorics/SweepDimension/Basic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Order.Antichain, mathlib/module/Mathlib.Order.Defs.Unbundled]
    utility: none
@@ -99,7 +99,8 @@ lemma theta_witness :
 /-- Every sweep system needs at least `theta` orders.
 
 This is the lower-bound half of the Boldi--Vigna sweep-dimension problem. The
-matching upper construction and endpoint classifications remain separate goals.
+matching upper construction and endpoint classifications are proved in the
+Upper and Endpoints modules.
 -/
 theorem theta_le_of_sweep {k : ℕ} (orders : Fin k → LinearOrderRel (α := α))
     (hsweep : IsSweepSystem k orders) : theta (α := α) ≤ k := by

@@ -44,12 +44,18 @@ internal sealed class SweepBasicDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("A family of k carried linear orders is a sweep system when every order-convex interval and every outside point admit one family order in which the outside point precedes every point of the interval."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("theta-witness"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/SweepDimension/Basic.theta_witness"),
+                H("A maximum three-chain-free subset exists"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Some three-chain-free finite subset has cardinality exactly theta."))),
+                DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("theta-le-of-sweep"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/SweepDimension/Basic.theta_le_of_sweep"),
                 H("The lower bound for sweep systems"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every finite poset and every k-order sweep system, theta is at most k. For a maximum three-chain-free set S and each y in S, the convex hull of S minus y omits y. The sweep condition therefore assigns an order putting y before all other members of S. One order cannot serve two distinct y, so the assignments inject S into the k orders.")),
-                    Paragraph(Text("The matching upper construction and the endpoint classifications require additional finite chain-cover arguments and are outside this declaration."))),
+                    Paragraph(Text("The matching upper construction uses finite chain covers of the product with the two-element chain."))),
                 DescribeRole.Theorem)
         )));
 }

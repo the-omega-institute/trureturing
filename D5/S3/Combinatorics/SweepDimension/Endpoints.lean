@@ -56,10 +56,10 @@ private theorem free_split {S : Finset α} (hS : ThreeChainFree S) :
     have hnmin : ¬∀ c ∈ S, ¬c < a := by
       intro h
       exact (Finset.mem_sdiff.mp ha).2 (Finset.mem_filter.mpr ⟨haS, h⟩)
-    push_neg at hnmin
+    push Not at hnmin
     obtain ⟨c, hc, hca⟩ := hnmin
     exact hS hc haS hbS ⟨hca, lt_of_le_of_ne hab hne⟩
-  · exact Finset.disjoint_sdiff_right
+  · exact Finset.disjoint_left.mpr (fun x hxA hxB => (Finset.mem_sdiff.mp hxB).2 hxA)
   · exact Finset.union_sdiff_of_subset hAsub
 
 private theorem theta_le_twice_width :
@@ -100,7 +100,8 @@ private theorem theta_upper_endpoint :
 private theorem two_le_theta (hn : 2 ≤ Fintype.card α) : 2 ≤ theta (α := α) := by
   classical
   have hnt : (Finset.univ : Finset α).Nontrivial :=
-    Finset.one_lt_card_iff_nontrivial.mp (by simpa using hn)
+    Finset.one_lt_card_iff_nontrivial.mp
+      (by simpa only [Finset.card_univ] using (show 1 < Fintype.card α by omega))
   obtain ⟨a, _, b, _, hab⟩ := hnt
   have ha : IsAntichain (· ≤ ·) (({a} : Finset α) : Set α) := by simp
   have hb : IsAntichain (· ≤ ·) (({b} : Finset α) : Set α) := by simp
@@ -149,7 +150,7 @@ private theorem theta_lower_endpoint (hn : 2 ≤ Fintype.card α) :
         by_contra hne
         have hx : ∃ x : α, x ∉ A := by
           by_contra h
-          push_neg at h
+          push Not at h
           exact hne (Finset.eq_univ_iff_forall.mpr h)
         obtain ⟨x, hx⟩ := hx
         have hs : IsAntichain (· ≤ ·) (({x} : Finset α) : Set α) := by simp
