@@ -100,3 +100,11 @@ supplier is prior work, not a new external problem resolution.
 **Open**: equality classification over the full arithmetic domain, Conjecture 6,
 and the separate Part 4 conjectures. None is asserted settled or counted by this
 endpoint. No earlier C4/C5 resolution is repeated here.
+
+## ASSUMED-UNVERIFIED
+
+The literature screen is bounded to the original arXiv v1, the pinned public
+Lean supplier, related Sándor–Gryszka results, Dimitrov–Lazarova Part 4, and the
+repository searches recorded in #30459. It does not establish exhaustive absence
+of another settlement or publication priority. The equality classification and
+the neighbouring conjectures listed above remain open.
