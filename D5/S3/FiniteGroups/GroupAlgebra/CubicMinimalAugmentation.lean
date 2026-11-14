@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/CubicMinimalAugmentation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/FiniteGroups/GroupAlgebra/PrimeFieldUniformCyclicDimension, D5/S3/FiniteGroups/GroupAlgebra/PGroupAugmentation, mathlib/module/Mathlib.RingTheory.Nakayama]
+   anchors: [mathlib/module/Mathlib.Algebra.Module.Projective, mathlib/module/Mathlib.RepresentationTheory.Coinvariants, mathlib/module/Mathlib.RingTheory.Nakayama]
    utility: none
    digest: Six-dimensional actual rank-two characteristic-three representations with projective cyclic restrictions have two coinvariants and vanishing ordered cubic augmentation products. -/
 
