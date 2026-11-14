@@ -33,20 +33,14 @@ internal sealed class DimitrovLowerBoundsC4C5Document : IScribeDocumentDefinitio
                 + "the latter two are local proofs inside ordered_reciprocal_bound. Michael Mazur is the upstream author/maintainer, "
                 + "with substantive OpenAI Codex generation disclosed under his direction. Local names/visibility, proof packaging "
                 + "and reciprocal notation are adapted; the source note supplies immutable URLs, hashes, the complete license location "
-                + "and the receiver-pin retirement condition. No new mathematical content is claimed for this port. "
-                + "Every theorem in this derivation is bind-only; admission_basis is open-problem-resolution for the complete preregistered Conjecture 4 (#30196), with escape_witness none. "
-                + "The faithful Reg escape audit is unfinished under issue #30221; no declared_validated mirror is claimed.",
+                + "and the receiver-pin retirement condition. No new mathematical content is claimed for this port.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("dimitrov-2606-12484-conjecture-4"), ResolutionKind.Proved)),
             Node("result5", "The complete Conjecture 5 inequality", Claim5Body(),
                 "Apply the same ordered bound to φ(n)^k, ψ(n)^k and σ(n)^k. With q=((n+1)/(n−1))^k, "
                 + "the bound becomes (q²+7q+10)/(q+1); clearing the positive denominator and using (n²−1)^k "
                 + "is exactly the displayed source right-hand side. The analytic step uses the same modified Apache-2.0 "
-                + "add_inv_mono_on_one → normalized_three_variable_inequality → three_term_ratio_inequality source port described above. "
-                + "Every theorem in this derivation is bind-only; "
-                + "admission_basis is open-problem-resolution for the complete preregistered Conjecture 5 (#30197), with escape_witness none. "
-                + "The faithful Reg escape audit is unfinished "
-                + "under issue #30221; no declared_validated mirror is claimed.",
+                + "add_inv_mono_on_one → normalized_three_variable_inequality → three_term_ratio_inequality source port described above.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("dimitrov-2606-12484-conjecture-5"), ResolutionKind.Proved))
         )));
