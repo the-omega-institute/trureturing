@@ -1,0 +1,35 @@
+**定义 145.2（根合同、局部带与关联的合法域）。** 显式根合同 $R_o$ 包含以下条件：
+对每个 $s\in S$ 有原纯点 $a_s$，使 $(o,s,a_s)$ 是真实零三角；
+$I(A)=\{o\}$ 且 $I(D_s)=\{s\}$ 对每个 $s\in S$ 成立；
+$B$ 紧，$o\in B$ 且 $S\subseteq B$。三角的每条边均由同一完整原菜单内的效应见证。
+这些是根与根邻点的条件，不包含 $P\subseteq B$、全 Pair 或全局 Inj。
+
+在 $R_o$ 下，真实共同邻点只在已知覆盖的域上定义：
+
+$$
+\begin{gathered}
+\pi_o:(P\cap B)\setminus\{o\}\longrightarrow S,\\
+\{\pi_o(x)\}=A\cap D_x
+=\{s\in S:o\perp s,\ x\perp s\}.
+\end{gathered}
+\tag{XII145.4}
+$$
+
+确实，$x\in B$ 给共同邻点存在；$x\ne o$ 与 $I(A)=\{o\}$ 给 $D_x\ne A$，
+故点交接口给唯一性及纯性。根三角还迫 $a_s=2c_o-s$。
+这个定义没有给尚未知属于 $B$ 的目标预取 $\pi_o(q)$。
+
+局部条件 $L_\varepsilon(o)$ 是 X132.3 在这个固定根、同一个阈值上的原条件：
+
+$$
+\begin{gathered}
+0<\varepsilon<1,\qquad
+\forall z\in P:\quad 0<T_o(z)<\varepsilon\ \Longrightarrow\\
+\exists s\in P:\ T_o(s)=T_z(s)=0.
+\end{gathered}
+\tag{XII145.5}
+$$
+
+它经零对称恰给该小正带的纯目标进入 $B$，不预付其余目标。
+$L_\varepsilon(o)$ 单列供根合同的来源与高段消费者使用；下面的返回计算只用 $R_o$。
+
