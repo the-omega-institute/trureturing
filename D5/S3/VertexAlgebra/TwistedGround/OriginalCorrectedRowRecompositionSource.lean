@@ -810,5 +810,3 @@ def correctedMean (D : LatticeData) (a : Charge D) (label : I ↪ Index D) :
 
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectedRowRecompositionSource
-
-
