@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Polynomial/Sturm/Infinity.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected original declarations and their proof bodies are retained.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -245,28 +245,10 @@ theorem sum_sign_sturmSeq_univ (p f : R[X]) :
   rw [sturmSeq_cons hp] at hsigned hseed ⊢
   exact sum_sign_univ hsigned hseed
 
-/-- Sturm counting of distinct roots in `(a, ∞)`, with no restriction on the endpoint. -/
-theorem card_roots_toFinset_Ioi {p : R[X]} (hp : p ≠ 0) (a : R) :
-    (signVariationsRight (sturmSeq p p.derivative) a : ℤ) -
-        signVariationsAtTop (sturmSeq p p.derivative) =
-      (p.roots.toFinset.filter (a < ·)).card := by
-  classical
-  simpa using sum_sign_sturmSeq_Ioi hp 1 a
 
-/-- Sturm counting of distinct roots in `(-∞, b)`, with no restriction on the endpoint. -/
-theorem card_roots_toFinset_Iio {p : R[X]} (hp : p ≠ 0) (b : R) :
-    (signVariationsAtBot (sturmSeq p p.derivative) : ℤ) -
-        signVariationsLeft (sturmSeq p p.derivative) b =
-      (p.roots.toFinset.filter (· < b)).card := by
-  classical
-  simpa using sum_sign_sturmSeq_Iio hp 1 b
 
-/-- Classical Sturm counting of all distinct roots of a nonzero polynomial. For `p = 0` both
-sides are zero: `sturmSeq 0 _ = []` and `Polynomial.roots 0 = 0` by convention. -/
-theorem card_roots_toFinset_univ (p : R[X]) :
-    (signVariationsAtBot (sturmSeq p p.derivative) : ℤ) -
-        signVariationsAtTop (sturmSeq p p.derivative) =
-      p.roots.toFinset.card := by
-  simpa using sum_sign_sturmSeq_univ p 1
+
+
+
 
 end TauCeti.Sturm

@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Polynomial/Sturm/OneSided.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected original declarations and their proof bodies are retained.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -324,36 +324,13 @@ theorem sum_sign_sturmSeq_Icc {p : R[X]} (hp : p ≠ 0) (f : R[X]) (hab : a ≤ 
   rw [sturmSeq_cons hp] at hsigned hseed ⊢
   exact sum_sign_Icc hsigned hseed hab
 
-/-- Sturm's count of the distinct roots in `(a, b)`, with no condition on the endpoints. -/
-theorem card_roots_toFinset_Ioo (p : R[X]) (hab : a < b) :
-    (signVariationsRight (sturmSeq p p.derivative) a : ℤ) -
-        signVariationsLeft (sturmSeq p p.derivative) b =
-      (p.roots.toFinset.filter fun r => a < r ∧ r < b).card := by
-  simpa using sum_sign_sturmSeq_Ioo p 1 hab
 
-/-- Sturm's count of the distinct roots in `(a, b]`. -/
-theorem card_roots_toFinset_Ioc {p : R[X]} (hp : p ≠ 0) (hab : a ≤ b) :
-    (signVariationsRight (sturmSeq p p.derivative) a : ℤ) -
-        signVariationsLeft (sturmSeq p p.derivative) b +
-        (if p.eval b = 0 then 1 else 0) =
-      (p.roots.toFinset.filter fun r => a < r ∧ r ≤ b).card := by
-  simpa using sum_sign_sturmSeq_Ioc hp 1 hab
 
-/-- Sturm's count of the distinct roots in `[a, b)`. -/
-theorem card_roots_toFinset_Ico {p : R[X]} (hp : p ≠ 0) (hab : a ≤ b) :
-    (signVariationsRight (sturmSeq p p.derivative) a : ℤ) -
-        signVariationsLeft (sturmSeq p p.derivative) b +
-        (if p.eval a = 0 then 1 else 0) =
-      (p.roots.toFinset.filter fun r => a ≤ r ∧ r < b).card := by
-  simpa using sum_sign_sturmSeq_Ico hp 1 hab
 
-/-- Sturm's count of the distinct roots in `[a, b]`. -/
-theorem card_roots_toFinset_Icc {p : R[X]} (hp : p ≠ 0) (hab : a ≤ b) :
-    (signVariationsRight (sturmSeq p p.derivative) a : ℤ) -
-        signVariationsLeft (sturmSeq p p.derivative) b +
-        (if p.eval a = 0 then 1 else 0) + (if p.eval b = 0 then 1 else 0) =
-      (p.roots.toFinset.filter fun r => a ≤ r ∧ r ≤ b).card := by
-  simpa using sum_sign_sturmSeq_Icc hp 1 hab
+
+
+
+
 
 end SturmSeq
 

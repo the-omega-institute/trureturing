@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/FieldTheory/RealClosure/AbstractRolle.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected original declarations and their proof bodies are retained.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -32,13 +32,6 @@ import Mathlib.Tactic.Positivity
 /-! # Polynomial Rolle over an abstract real closed field
 
 `polynomialRolle_of_isRealClosed` supplies `TauCeti.PolynomialRolle R` from `IsRealClosed R`.
-The direct `Polynomial.exists_derivative_root` and
-`Polynomial.exists_eval_sub_eq_derivative_eval_mul` give Rolle and mean value without a separate
-Rolle premise. The four `Polynomial.*On_of_derivative_*` theorems give monotonicity,
-antitonicity, and their strict variants on closed intervals. Under `IsRealClosed`, use these
-direct statements; `TauCeti.Algebra.Polynomial.Rolle` instead derives the same consequences
-from an explicit polynomial Rolle hypothesis over a general ordered field.
-
 Between consecutive roots, removing their multiplicities leaves a polynomial
 of constant nonzero sign. A factor of the derivative has opposite signs at
 the endpoints, so polynomial IVT supplies the required critical point.
@@ -135,35 +128,16 @@ theorem polynomialRolle_of_isRealClosed : PolynomialRolle R := by
     (by simp) (by simp [heq])
   exact ⟨c, hc, by simpa using hd⟩
 
-/-- Equal endpoint values give an interior derivative root over a real closed field. -/
-theorem _root_.Polynomial.exists_derivative_root (p : R[X]) {a b : R}
-    (hab : a < b) (h : p.eval a = p.eval b) : ∃ c ∈ Ioo a b, p.derivative.eval c = 0 :=
-  polynomialRolle_of_isRealClosed.exists_derivative_root p hab h
 
-/-- Polynomial mean value over an ordered real closed field. -/
-theorem _root_.Polynomial.exists_eval_sub_eq_derivative_eval_mul (p : R[X]) {a b : R}
-    (hab : a < b) :
-    ∃ c ∈ Ioo a b, p.eval b - p.eval a = p.derivative.eval c * (b - a) :=
-  polynomialRolle_of_isRealClosed.exists_eval_sub_eq_derivative_eval_mul p hab
 
-/-- A nonnegative formal derivative makes polynomial evaluation monotone on an interval. -/
-theorem _root_.Polynomial.monotoneOn_of_derivative_nonneg (p : R[X]) {a b : R}
-    (hd : ∀ x ∈ Ioo a b, 0 ≤ p.derivative.eval x) : MonotoneOn p.eval (Icc a b) :=
-  polynomialRolle_of_isRealClosed.monotoneOn p hd
 
-/-- A nonpositive formal derivative makes polynomial evaluation antitone on an interval. -/
-theorem _root_.Polynomial.antitoneOn_of_derivative_nonpos (p : R[X]) {a b : R}
-    (hd : ∀ x ∈ Ioo a b, p.derivative.eval x ≤ 0) : AntitoneOn p.eval (Icc a b) :=
-  polynomialRolle_of_isRealClosed.antitoneOn p hd
 
-/-- A positive formal derivative makes polynomial evaluation strictly monotone on an interval. -/
-theorem _root_.Polynomial.strictMonoOn_of_derivative_pos (p : R[X]) {a b : R}
-    (hd : ∀ x ∈ Ioo a b, 0 < p.derivative.eval x) : StrictMonoOn p.eval (Icc a b) :=
-  polynomialRolle_of_isRealClosed.strictMonoOn p hd
 
-/-- A negative formal derivative makes polynomial evaluation strictly antitone on an interval. -/
-theorem _root_.Polynomial.strictAntiOn_of_derivative_neg (p : R[X]) {a b : R}
-    (hd : ∀ x ∈ Ioo a b, p.derivative.eval x < 0) : StrictAntiOn p.eval (Icc a b) :=
-  polynomialRolle_of_isRealClosed.strictAntiOn p hd
+
+
+
+
+
+
 
 end TauCeti.RealClosure

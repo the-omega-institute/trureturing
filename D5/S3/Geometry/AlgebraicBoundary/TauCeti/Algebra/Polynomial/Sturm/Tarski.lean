@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Polynomial/Sturm/Tarski.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected original declarations and their proof bodies are retained.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -311,13 +311,6 @@ theorem sum_sign_sturmSeq (p f : R[X]) {a b : R} (hab : a < b) (ha : p.eval a �
   rw [sturmSeq_cons hp] at hsigned hseed ⊢
   exact sum_sign hsigned hseed hab ha hb
 
-/-- Classical Sturm counting of distinct roots in `(a, b)`, counted without
-multiplicity. Neither endpoint may be a root. -/
-theorem card_roots_toFinset (p : R[X]) {a b : R} (hab : a < b) (ha : p.eval a ≠ 0)
-    (hb : p.eval b ≠ 0) :
-    (signVariationsAt (sturmSeq p p.derivative) a : ℤ) -
-        signVariationsAt (sturmSeq p p.derivative) b =
-      (p.roots.toFinset.filter (fun r => a < r ∧ r < b)).card := by
-  simpa using sum_sign_sturmSeq p 1 hab ha hb
+
 
 end TauCeti.Sturm

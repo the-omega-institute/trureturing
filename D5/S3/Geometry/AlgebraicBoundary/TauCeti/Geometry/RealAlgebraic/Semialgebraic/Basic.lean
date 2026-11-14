@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Geometry/RealAlgebraic/Semialgebraic/Basic.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected original declarations and their proof bodies are retained.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -356,11 +356,7 @@ theorem isSemialgebraic_preimage_comp_equiv {s : Set (τ → R)} (e : τ ≃ σ)
   ext x
   simp [Function.comp_def]
 
-/-- The product of semialgebraic sets, as a subset of `σ ⊕ τ → R`, is semialgebraic. -/
-theorem IsSemialgebraic.preimage_sumArrowEquivProdArrow_prod {s : Set (σ → R)}
-    {t : Set (τ → R)} (hs : IsSemialgebraic s) (ht : IsSemialgebraic t) :
-    IsSemialgebraic (Equiv.sumArrowEquivProdArrow σ τ R ⁻¹' s ×ˢ t) :=
-  (hs.preimage_comp Sum.inl).inter (ht.preimage_comp Sum.inr)
+
 
 /-- The product of semialgebraic sets, as a subset of `Fin (m + n) → R`, is semialgebraic. -/
 theorem IsSemialgebraic.image_appendEquiv_prod {m n : ℕ} {s : Set (Fin m → R)}

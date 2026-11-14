@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Geometry/RealAlgebraic/Semialgebraic/Image.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected original declarations and their proof bodies are retained.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -170,12 +170,7 @@ theorem IsSemialgebraicMap.isSemialgebraic_image [Finite σ] {f : (σ → R) →
     IsSemialgebraic (f '' s) :=
   (hf.isSemialgebraicOn hs).isSemialgebraic_image
 
-/-- Given projection closure, the image of a semialgebraic set under a polynomial map with finitely
-many input coordinates and finitely many output coordinates is semialgebraic. -/
-theorem IsSemialgebraic.image_eval [Finite σ] [Finite τ] {s : Set (σ → R)}
-    (hs : IsSemialgebraic s) (p : τ → MvPolynomial σ R) :
-    IsSemialgebraic ((fun x i => eval x (p i)) '' s) :=
-  (isSemialgebraicOn_eval p hs).isSemialgebraic_image
+
 
 /-- Given projection closure, the points of the domain of a semialgebraic function with finitely
 many output coordinates at which it takes values in a semialgebraic set form a semialgebraic
@@ -192,12 +187,7 @@ theorem IsSemialgebraicOn.isSemialgebraic_inter_preimage [Finite τ] {f : (σ �
   · rintro ⟨z, ⟨⟨hz, hfz⟩, hzt⟩, rfl⟩
     exact ⟨hz, by rw [mem_preimage, hfz]; exact hzt⟩
 
-/-- Given projection closure, the inverse image of a semialgebraic set under a semialgebraic map
-with finitely many output coordinates is semialgebraic. -/
-theorem IsSemialgebraicMap.isSemialgebraic_preimage [Finite τ] {f : (σ → R) → (τ → R)}
-    (hf : IsSemialgebraicMap f) {t : Set (τ → R)} (ht : IsSemialgebraic t) :
-    IsSemialgebraic (f ⁻¹' t) := by
-  simpa using (isSemialgebraicOn_univ.2 hf).isSemialgebraic_inter_preimage ht
+
 
 /-- Given projection closure, a function with finitely many output coordinates is semialgebraic on
 `s` if and only if its graph over `s` is semialgebraic: the domain `s` is the projection of the
