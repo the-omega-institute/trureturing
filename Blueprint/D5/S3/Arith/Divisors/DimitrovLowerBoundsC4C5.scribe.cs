@@ -66,7 +66,7 @@ internal sealed class DimitrovLowerBoundsC4C5Document : IScribeDocumentDefinitio
         Formula psi = Psi(n);
         Formula sigma = Sigma(n);
         Formula a = Mul(Pow(phi, k), Add(psi, sigma));
-        Formula b = Mul(Pow(Phi(n), k), Add(Psi(n), Sigma(n)));
+        Formula b = Mul(Pow(psi, k), Add(Phi(n), Sigma(n)));
         Formula c = Mul(Pow(Sigma(n), k), Add(Phi(n), Psi(n)));
         Formula lhs = Mul(Add(Add(a, b), c), Add(Add(Div(D(1), a), Div(D(1), b)), Div(D(1), c)));
         Formula nm1 = Sub(CastNat(n), D(1));
@@ -84,7 +84,7 @@ internal sealed class DimitrovLowerBoundsC4C5Document : IScribeDocumentDefinitio
         Formula psi = Psi(n);
         Formula sigma = Sigma(n);
         Formula a = Mul(Pow(phi, k), Add(Pow(psi, k), Pow(sigma, k)));
-        Formula b = Mul(Pow(Phi(n), k), Add(Pow(Psi(n), k), Pow(Sigma(n), k)));
+        Formula b = Mul(Pow(psi, k), Add(Pow(Phi(n), k), Pow(Sigma(n), k)));
         Formula c = Mul(Pow(Sigma(n), k), Add(Pow(Phi(n), k), Pow(Psi(n), k)));
         Formula lhs = Mul(Add(Add(a, b), c), Add(Add(Div(D(1), a), Div(D(1), b)), Div(D(1), c)));
         Formula nm1 = Sub(CastNat(n), D(1));
