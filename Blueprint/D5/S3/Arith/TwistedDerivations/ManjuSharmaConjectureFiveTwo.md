@@ -62,6 +62,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFiveTwo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/manju-sharma-2024-conjecture-5-2-refutation` (refuted) by `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFiveTwo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"manju-sharma-2024-conjecture-5-2-refutation","declaration_gid":"D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFiveTwo.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Praveen Manju and Rajendra Kumar Sharma (2024). *Twisted Derivations in Algebraic Number Fields*. URL: <https://arxiv.org/abs/2412.03507v2>.
