@@ -66,7 +66,7 @@ private theorem outer_nonzero_iff {O : Type*} [CommRing O]
     (σ τ : O →ₐ[ℤ] O) (D : derivations σ τ) :
     outerClass σ τ D ≠ 0 ↔ ¬ ManjuSharmaConjectureFourFour.IsInner σ τ D.val := by
   change ¬ (Submodule.Quotient.mk D : (derivations σ τ) ⧸ inner σ τ) = 0 ↔ _
-  exact not_congr Submodule.Quotient.mk_eq_zero
+  exact not_congr (Submodule.Quotient.mk_eq_zero (inner σ τ))
 
 /-- The full source conjunction, with both orientations of each distinct twist pair.
 The positive source factorization is applied in increasing exponent order; the actual
@@ -123,7 +123,7 @@ theorem result : ¬ claim := by
       simpa [derivations, σ] using ManjuSharmaConjectureFourFour.derivation_twisted⟩
   have hout : outerClass σ ManjuSharmaConjectureFourFour.tau d ≠ 0 :=
     (outer_nonzero_iff _ _ d).2 ManjuSharmaConjectureFourFour.derivation_not_inner
-  exact (hc.1 d).mp hout (by simpa only [σ, d, AlgHom.id_apply] using ManjuSharmaConjectureFourFour.printed_test)
+  exact (hc.1 d).mp hout (by simpa only [σ, d, AlgHom.id_apply, ManjuSharmaConjectureFourFour.z] using ManjuSharmaConjectureFourFour.printed_test)
 
 #print axioms claim
 #print axioms result
