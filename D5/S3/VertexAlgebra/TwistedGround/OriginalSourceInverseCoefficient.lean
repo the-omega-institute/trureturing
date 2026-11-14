@@ -96,6 +96,74 @@ theorem pderiv_substitution
         simp [pderiv_X, Pi.single_apply, Prod.mk.injEq]
       · simp [pderiv_X, Prod.mk.injEq, h, Ne.symm h]
 
+/-! The lattice Gram matrix is symmetric, so the modewise inverse used by the
+source transpose is symmetric as well.  This removes a purely notational
+transpose before the finite coefficient is matched with the right affine row. -/
+
+private theorem gramComplex_inverse_transpose (D : LatticeData) :
+    ((gramComplex D)⁻¹)ᵀ = (gramComplex D)⁻¹ := by
+  rw [Matrix.transpose_nonsing_inv]
+  congr 1
+  ext i j
+  simp [gramComplex, D.symmetric]
+
+theorem inverse_substitution_matrix_transpose (D : LatticeData) (k : ℕ) :
+    (((-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹))ᵀ =
+      (-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹ := by
+  rw [Matrix.transpose_smul, gramComplex_inverse_transpose]
+
+theorem inverse_substitution_coeff_transpose_free (D : LatticeData)
+    (q : Oscillator D) (alpha : Exponent D) :
+    (substitution (fun k =>
+      (((-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹))ᵀ) q).coeff alpha =
+      (substitution (fun k =>
+        (-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹) q).coeff alpha := by
+  have hfun : (fun k : ℕ =>
+      (((-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹))ᵀ) =
+      (fun k : ℕ => (-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹) := by
+    funext k
+    exact inverse_substitution_matrix_transpose D k
+  exact congrArg (fun A => (substitution A q).coeff alpha) hfun
+
+/-! Coefficient extraction commutes with the finite source polynomial used by
+the inverse readout.  Keeping the scalar on the monomial explicit is useful
+for the next affine-row identification: the remaining work is then entirely
+the coefficient of one inverse-substituted monomial. -/
+
+theorem substitution_finset_coeff (D : LatticeData)
+    (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (S : Finset (Exponent D)) (r : Exponent D → ℂ) (alpha : Exponent D) :
+    (substitution A (∑ delta ∈ S, monomial delta (r delta))).coeff alpha =
+      ∑ delta ∈ S, r delta *
+        (substitution A (monomial delta 1)).coeff alpha := by
+  classical
+  simp only [map_sum, coeff_sum]
+  apply Finset.sum_congr rfl
+  intro delta hdelta
+  rw [show monomial delta (r delta) = r delta • monomial delta 1 by
+    simp only [smul_monomial, smul_eq_mul, mul_one],
+    map_smul, coeff_smul, smul_eq_mul]
+
+/-! The finite affine row has the same occupation recursion as the source
+coefficient after factorial normalization.  This exposes the recurrence in
+the `affineCoefficient` normalization used by the corrected rows, rather
+than forcing the next source-inverse step to reopen `affineMoment`. -/
+
+theorem affineCoefficient_step {I : Type*} [Fintype I] [DecidableEq I]
+    (A : Matrix I I ℂ) (mu : I → ℂ)
+    (hs : ∀ i j, A i j = A j i) (d : I →₀ ℕ) (i : I) :
+    (weight (d + Finsupp.single i 1) : ℂ) *
+        OriginalChargedRowSource.affineCoefficient A mu
+          (d + Finsupp.single i 1) =
+      mu i * (weight d : ℂ) *
+          OriginalChargedRowSource.affineCoefficient A mu d +
+      ∑ j, (d j : ℂ) * A i j *
+        ((weight (d - Finsupp.single j 1) : ℂ) *
+          OriginalChargedRowSource.affineCoefficient A mu
+            (d - Finsupp.single j 1)) := by
+  simpa only [OriginalChargedRowSource.affineMoment_coefficient, mul_assoc] using
+    (OriginalChargedRowSource.affineMoment_step A mu hs d i)
+
 /-- Ordinary transpose, with no conjugation, for the original factorial form. -/
 theorem substitution_factorial_transpose
     (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -413,5 +481,38 @@ theorem original_two_rows_inverse_coefficient
   rw [hr, original_corrected_gaussian_row]
   dsimp only
   ring
+
+/-! The finite source polynomial can also be exposed coefficientwise.  This
+bridge keeps the remaining inverse-substitution problem at one monomial and
+does not introduce an analytic or sewing premise. -/
+
+theorem original_two_rows_inverse_coefficient_expanded
+    (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D)
+    (alpha betaL gammaL betaR gammaR : Exponent D) (eL eR : ℤ)
+    (n : ℕ) (ha : oscillatorEnergy alpha ≤ n) :
+    chargeScalar D a * chargeScalar D (-a) *
+      wick D (monomial gammaL 1)
+        (oscillatorCorrected D hu a eL (monomial alpha 1) (monomial betaL 1)) *
+      wick D (monomial gammaR 1)
+        (oscillatorCorrected D hu (-a) eR
+          (dualOscillatorMonomial D alpha) (monomial betaR 1)) =
+    let row := fun (b : Charge D) (beta gamma delta : Exponent D) (e : ℤ) =>
+      let K := rowSupport D delta beta gamma
+      let label := supportLabel D K
+      affineLaurent (correctedMatrix D label) (correctedMean D b label)
+        (normalWeight D label)
+        (threeOccupation (restricted D K delta) (restricted D K beta)
+          (restricted D K gamma)) (e+chargeNorm D b)
+    chargeScalar D a * chargeScalar D (-a) *
+      (weight alpha : ℂ) * (weight betaL : ℂ) * (weight gammaL : ℂ) *
+      (weight betaR : ℂ) * (weight gammaR : ℂ) * row a betaL gammaL alpha eL *
+      ∑ delta ∈ oscillatorSublevel D n,
+        row (-a) betaR gammaR delta eR *
+          (substitution (fun k =>
+            (((-((k : ℂ)+1))⁻¹ • (gramComplex D)⁻¹))ᵀ)
+            (monomial delta 1)).coeff alpha := by
+  rw [original_two_rows_inverse_coefficient D hu a alpha betaL gammaL betaR gammaR eL eR n ha]
+  dsimp only
+  rw [substitution_finset_coeff]
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalSourceInverseCoefficient
