@@ -41,6 +41,13 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
                     "Two complex square matrices are equal when their trace pairings agree on a family whose complex linear span is the full matrix space."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("sic-mub-scaled-isometry-trace-norm"),
+                DeclarationHandle.Create(Prefix + "scaled_isometry_traceNorm"),
+                H("Independent scaled isometries"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For finite index types a,b,m,n, with decidable equality on a and b, let U be an m by a complex matrix, V an n by b complex matrix and X an a by b complex matrix. For positive real alpha and beta, if U adjoint times U is alpha squared times the identity and V adjoint times V is beta squared times the identity, then traceNorm(U X V adjoint) equals alpha times beta times traceNorm(X)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("sic-mub-correlation-trace-norm-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The equality follows from two frames and an isometry"),
