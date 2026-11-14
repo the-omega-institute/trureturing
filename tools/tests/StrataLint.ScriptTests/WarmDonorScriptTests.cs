@@ -133,7 +133,7 @@ public sealed class WarmDonorScriptTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" WARM_CALLS=\"$2\" WARM_BRANCH=\"$3\" WARM_STATUS=\"$4\" WARM_PULL_EXIT=\"$5\" WARM_LEAN_EXIT=\"$6\" WARM_REFRESH_EXIT=\"$7\" exec /bin/bash \"$8\"",
+                "FULL_BUILD=1 PATH=\"$1:$PATH\" WARM_CALLS=\"$2\" WARM_BRANCH=\"$3\" WARM_STATUS=\"$4\" WARM_PULL_EXIT=\"$5\" WARM_LEAN_EXIT=\"$6\" WARM_REFRESH_EXIT=\"$7\" exec /bin/bash \"$8\"",
                 "warm-donor-test",
                 bin,
                 calls,

@@ -215,6 +215,7 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         var arguments = new List<string>
         {
             "-u", "STRATALINT_CACHE_TEST_CHUNK_BYTES",
+            "FULL_BUILD=1",
             $"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}",
             $"HOME={temporary.Path}", $"PYTHONPATH={bin}", $"CHUNK_FIXTURE={temporary.Path}",
             "STRATALINT_CACHE_REPO=fixture/cache", "STRATALINT_ACTIONS_CACHE_SEEDED=",

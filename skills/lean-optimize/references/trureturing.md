@@ -19,11 +19,11 @@ make lean LEAN_TARGETS="D5.Subject.Module"
 make lean-report-scoped LEAN_TARGETS="D5.Subject.Module"
 ```
 
-实际交付包含 Reg 源码时，把对应真实 `Reg.*` 目标加入列表；不要虚构镜像目标或只跑根包的裸 Lake 命令。常规迭代不需要整库 `make lean-report` 或 `make test`，最终所需检查仍按累计改动与 required checks 决定。
+实际交付包含 Reg 源码时，把对应真实 `Reg.*` 目标加入列表；不要虚构镜像目标或只跑根包的裸 Lake 命令。常规迭代不需要整库 `make lean-report FULL_BUILD=1` 或 `make test FULL_BUILD=1`，最终所需检查仍按累计改动与 required checks 决定。
 
 `make lean` 不带目标会走全项目及后续包；不要用它做单个证明的性能探针。缓存准备使用现有 `make lean-cache-ensure`，读取 `LEAN_CACHE` 中的 project/mathlib 状态、恢复方式和原因。warm 不保证 trace 当前，报告种子不相符也不自动证明正在全量重编。不要删除共享 `.lake`、伪造缓存状态或启动另一个 `warm-donor` 来代替诊断。
 
-需要预热主检出 donor 时，先辨认已有作业。`make warm-donor` 会同步干净的主 `dev` 并触发完整 `make lean`，它是维护动作，不能当作免费的测量前置。缓存恢复与生产使用现有规范入口，不另造搬运器。
+需要预热主检出 donor 时，先辨认已有作业。`make warm-donor FULL_BUILD=1` 会同步干净的主 `dev` 并触发完整 `make lean FULL_BUILD=1`，它是维护动作，不能当作免费的测量前置。缓存恢复与生产使用现有规范入口，不另造搬运器。
 
 ## 数学身份与冻结
 
@@ -34,3 +34,5 @@ make lean-report-scoped LEAN_TARGETS="D5.Subject.Module"
 性能实验程序、必要数据和结果按 CLAUDE.md §2.10 归实验仓库；主仓库不新增 benchmark 日记、命令流水、重复快照或回执副本。规范与技能正文写当前通用规则，不复制某次构建的耗时、日期或事故叙述。
 
 完成可恢复修改后按项目规则 checkpoint；提交、独立评审、PR、required checks 与交付范围仍由原任务和仓库规范决定。本技能不自动授权合并、发布缓存或改变远端配置。
+
+仅在明确要求整库核验或具体集成义务无法由定向检查覆盖时调用全量入口，先说明原因，每条全量命令显式传入 `FULL_BUILD=1`；间接入口也适用。直接脚本调用使用该条命令的 `FULL_BUILD=1` 环境赋值。`make gate` / `ci-unit` 先读 `make gate-plan`，选中全量构建时同样显式确认。Make 全量入口及其直接脚本入口在缺少 `FULL_BUILD=1` 时拒绝执行；缓存失败、重试、最终检查和单纯文档修改均不构成全量理由。

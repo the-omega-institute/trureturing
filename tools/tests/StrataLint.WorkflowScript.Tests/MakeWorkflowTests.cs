@@ -89,6 +89,7 @@ public sealed partial class MakeWorkflowTests
         "ci-unit",
         "compiled-judge-test",
         "compiled-fib-test",
+        "require-full-build",
     ];
 
     private static readonly string[] ToolsTargets =
@@ -158,7 +159,7 @@ public sealed partial class MakeWorkflowTests
     public void IngestWrapperKeepsReportFreeDigestionIndependent()
     {
         var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
-        Assert.Contains("make test  Run lean-report and check-current", makefile, StringComparison.Ordinal);
+        Assert.Contains("make test FULL_BUILD=1  Run lean-report and check-current", makefile, StringComparison.Ordinal);
         var script = File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/ingest.sh"));
 

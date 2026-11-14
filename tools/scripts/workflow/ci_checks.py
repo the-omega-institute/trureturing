@@ -129,6 +129,10 @@ def current_phase(phase, data, plan, base, paths):
         if not plan["report"]:
             result(phase, "not-applicable")
             return 0
+        if os.environ.get("FULL_BUILD") != "1":
+            print("full report requires explicit FULL_BUILD=1", file=sys.stderr)
+            result(phase, "failure", 2, 2)
+            return 2
         producer = subprocess.run(["bash", "tools/scripts/workflow/judge-lean-producer.sh",
                                    str(Path(CLI).parent.resolve())], stdout=subprocess.PIPE, text=True)
         if producer.returncode:
