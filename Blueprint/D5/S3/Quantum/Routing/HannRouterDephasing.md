@@ -78,7 +78,7 @@ For every depth and arbitrary complex joint address/bus amplitudes, initialized 
 
 **Theorem 1.7 (Finite ket evaluation under a sum).**
 
-$$\forall iota \in Type,\; \forall sigma \in Type,\; \forall indices \in \operatorname{Fintype}\left(iota\right),\; \forall bases \in \operatorname{Fintype}\left(sigma\right),\; \forall decidable \in \operatorname{DecidableEq}\left(sigma\right),\; \forall v \in iota \to sigma,\; \forall psi \in iota \to Complex,\; \forall g \in sigma \to Complex,\; \sum_{s\in sigma}{\sum_{i\in iota}{\operatorname{ite}\left(s = v\left(i\right), psi\left(i\right), 0\right)} \cdot g\left(s\right)} = \sum_{i\in iota}{psi\left(i\right) \cdot g\left(v\left(i\right)\right)}$$
+$$\forall iota \in Type,\; \forall sigma \in Type,\; [\operatorname{Fintype}\left(iota\right)] [\operatorname{Fintype}\left(sigma\right)] [\operatorname{DecidableEq}\left(sigma\right)] \forall v \in iota \to sigma,\; \forall psi \in iota \to Complex,\; \forall g \in sigma \to Complex,\; \sum_{s\in sigma}{\sum_{i\in iota}{\operatorname{ite}\left(s = v\left(i\right), psi\left(i\right), 0\right)} \cdot g\left(s\right)} = \sum_{i\in iota}{psi\left(i\right) \cdot g\left(v\left(i\right)\right)}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Routing/HannRouterDephasing.sum_ket` (`✓ std3`). ∎
 
@@ -90,7 +90,7 @@ Both index types are arbitrary finite types. The basis type has decidable equali
 
 **Theorem 1.8 (Conjugate finite ket evaluation).**
 
-$$\forall iota \in Type,\; \forall sigma \in Type,\; \forall indices \in \operatorname{Fintype}\left(iota\right),\; \forall bases \in \operatorname{Fintype}\left(sigma\right),\; \forall decidable \in \operatorname{DecidableEq}\left(sigma\right),\; \forall v \in iota \to sigma,\; \forall psi \in iota \to Complex,\; \forall g \in sigma \to Complex,\; \sum_{s\in sigma}{\operatorname{conj}\left(\sum_{i\in iota}{\operatorname{ite}\left(s = v\left(i\right), psi\left(i\right), 0\right)}\right) \cdot g\left(s\right)} = \sum_{i\in iota}{\operatorname{conj}\left(psi\left(i\right)\right) \cdot g\left(v\left(i\right)\right)}$$
+$$\forall iota \in Type,\; \forall sigma \in Type,\; [\operatorname{Fintype}\left(iota\right)] [\operatorname{Fintype}\left(sigma\right)] [\operatorname{DecidableEq}\left(sigma\right)] \forall v \in iota \to sigma,\; \forall psi \in iota \to Complex,\; \forall g \in sigma \to Complex,\; \sum_{s\in sigma}{\operatorname{conj}\left(\sum_{i\in iota}{\operatorname{ite}\left(s = v\left(i\right), psi\left(i\right), 0\right)}\right) \cdot g\left(s\right)} = \sum_{i\in iota}{\operatorname{conj}\left(psi\left(i\right)\right) \cdot g\left(v\left(i\right)\right)}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Routing/HannRouterDephasing.sum_ket_conj` (`✓ std3`). ∎
 
@@ -100,8 +100,21 @@ $$\forall iota \in Type,\; \forall sigma \in Type,\; \forall indices \in \operat
 
 The conjugate ket identity has the same complete finite-type scope. These two summation identities are consumed in the full-State fidelity calculation for arbitrary joint amplitudes.
 
+**Theorem 1.9 (Number of binary addresses).**
+
+$$\forall n \in Nat,\; \operatorname{card}\left(\operatorname{Address}\left(n\right)\right) = 2^{n}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Routing/HannRouterDephasing.address_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At every natural depth n, the finite type Address n has cardinality 2^n. At depth zero its unique address is the empty address. This count identifies the maximal rank in the active-profile Gram criterion.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Routing/HannRouterDephasing.address_card`
 - Truth anchor: `D5/S3/Quantum/Routing/HannRouterDephasing.environmentRecord`
 - Truth anchor: `D5/S3/Quantum/Routing/HannRouterDephasing.initialized_clean`
 - Truth anchor: `D5/S3/Quantum/Routing/HannRouterDephasing.minimumFidelity`
