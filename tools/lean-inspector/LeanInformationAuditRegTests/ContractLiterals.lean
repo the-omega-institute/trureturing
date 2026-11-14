@@ -8,7 +8,6 @@ def selection : SourceSelection := {
   owner := `D5.Test
   definition := some { owner := `D5.Test, name := `D5.Test.claim, path := #["arg"] }
   coordinates := #[0, 2]
-  fixedContext := #[1, 3]
   readouts := #[{
     path := #["body", "arg"]
     stateBinder := 2
@@ -43,8 +42,7 @@ run_meta do
     | throwError "[FAIL] literal.selection"
   assertTest "literal.selection_all_fields"
     (s.owner == `D5.Test && s.definition.any (fun d => d.name == `D5.Test.claim && d.path == #["arg"]) &&
-      s.coordinates == #[0, 2] && s.fixedContext == #[1, 3] &&
-      s.readouts.any (fun r => r.stateBinder == 2 &&
+      s.coordinates == #[0, 2] && s.readouts.any (fun r => r.stateBinder == 2 &&
         r.functionOperand && r.booleanPredicate && r.stateOperand == some #["arg"]))
   let .ok values := Literal.options (← getConstInfo ``settingValues).value!
     | throwError "[FAIL] literal.options"

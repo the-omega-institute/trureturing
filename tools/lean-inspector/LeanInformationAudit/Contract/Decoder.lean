@@ -89,7 +89,6 @@ private def sourceSelection (find : Name → Option ConstantInfo) (e : Expr) : I
   return { owner := s.owner
            definition := s.definition.map fun d => { owner := d.owner, name := d.name, path := d.path }
            coordinates := s.coordinates
-           fixedContext := s.fixedContext
            readouts := s.readouts.map fun r => {
              path := r.path, stateBinder := r.stateBinder, functionOperand := r.functionOperand
              stateOperand := r.stateOperand, booleanPredicate := r.booleanPredicate } }

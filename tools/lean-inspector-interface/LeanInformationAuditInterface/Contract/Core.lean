@@ -52,8 +52,6 @@ structure SourceSelection where
   owner : Name
   definition : Option DefinitionSelection
   coordinates : Array Nat
-  /-- Original data-class instances held fixed within each parameter fiber. -/
-  fixedContext : Array Nat := #[]
   readouts : Array ReadoutSelection
 
 inductive Continuation (T : Sort u) : Type u where

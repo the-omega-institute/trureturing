@@ -205,7 +205,8 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       (if input.finiteBridge.isSome then some objectArena else none)).run (← read)
     debit work
     emit s!"source phase=operands work={limit - (← get)}"
-    unless ← sameShape descriptor rawActual do fail "unclassified_form:source.descriptor_actual"
+    unless ← sameShape descriptor rawActual do
+      fail s!"unclassified_form:source.descriptor_actual DESCRIPTOR={reprStr descriptor} RAWACTUAL={reprStr rawActual}"
     let actualIdentity ← fingerprint scope.levels rawActual
     let descriptorIdentity ← fingerprint scope.levels descriptor
     let registrationIdentity ← fingerprint scope.levels record
@@ -262,9 +263,7 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       ("source_type_identity", toJson sourceTypeIdentity),
       ("telescope_size", toJson scope.telescope.size),
       ("level_count", toJson scope.levels.length),
-      ("coordinates", toJson ((selection.coordinates ++ selection.fixedContext).qsort (· < ·))),
-      ("fixed_context", toJson selection.fixedContext),
-      ("fixed_context", toJson selection.fixedContext),
+      ("coordinates", toJson scope.parameterSlots),
       ("coordinate_paths", toJson (scope.coordinates.map (·.path))),
       ("readouts", Json.arr readouts), ("registration_identity", toJson registrationIdentity)] ++
       definitionEntry ++ projection)

@@ -188,20 +188,19 @@ def strings (field : String) (e : Expr) : Except String (Array String) := do
   (← array field e).mapM (string field)
 
 def sourceSelection (e : Expr) : Except String Contract.SourceSelection := do
-  let fs ← constructor ``Contract.SourceSelection.mk 5 "source_selection" e
+  let fs ← constructor ``Contract.SourceSelection.mk 4 "source_selection" e
   let definition ← (← optional "source_definition" fs[1]!).mapM fun value => do
     let ds ← constructor ``Contract.DefinitionSelection.mk 3 "source_definition" value
     return { owner := ← name "definition.owner" ds[0]!, name := ← name "definition.name" ds[1]!
              path := ← strings "definition.path" ds[2]! : Contract.DefinitionSelection }
-  let readouts ← (← array "readouts" fs[4]!).mapM fun value => do
+  let readouts ← (← array "readouts" fs[3]!).mapM fun value => do
     let rs ← constructor ``Contract.ReadoutSelection.mk 5 "readout_selection" value
     return { path := ← strings "readout.path" rs[0]!, stateBinder := ← nat "state_binder" rs[1]!
              functionOperand := ← bool "function_operand" rs[2]!
              stateOperand := ← (← optional "state_operand" rs[3]!).mapM (strings "state_operand")
              booleanPredicate := ← bool "boolean_predicate" rs[4]! : Contract.ReadoutSelection }
   return { owner := ← name "source.owner" fs[0]!, definition
-           coordinates := ← (← array "coordinates" fs[2]!).mapM (nat "coordinate"),
-           fixedContext := ← (← array "fixed_context" fs[3]!).mapM (nat "fixed_context"), readouts }
+           coordinates := ← (← array "coordinates" fs[2]!).mapM (nat "coordinate"), readouts }
 
 /-- Decode only fixed core numeral and negation instances, without reduction. -/
 partial def int (field : String) (e : Expr) : Except String Int := do
