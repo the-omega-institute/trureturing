@@ -105,8 +105,10 @@ internal sealed class ManjuSharmaConjectureFourFourDocument : IScribeDocumentDef
                 Call("IsPrimitiveRoot", V("root"), F.D(4)),
                 "The existing primitive-root theorem gives exact order four in the actual fourth cyclotomic field."),
             Node("orderedPb", "The ordered integral basis of length two",
-                Eq(V("orderedPb"), Call("PowerBasisMk", V("z"), F.D(2),
-                    Call("reindex", Call("basis", V("pb")), Call("finCongr", Call("pbDim"))))),
+                Both(Eq(Call("gen", V("orderedPb")), V("z")),
+                    Eq(Call("dim", V("orderedPb")), F.D(2)),
+                    All("i", Call("Fin", F.D(2)),
+                        Eq(App(Call("basis", V("orderedPb")), V("i")), Pow(V("z"), Call("val", V("i")))))),
                 "The generator is z, the dimension is two, and its basis is pb.basis reindexed along pb_dim. "
                 + "The existing b_apply proof identifies its terms with z^i for i in Fin 2."),
             ProvenNode("derivation_twisted", "The full twisted product law",
