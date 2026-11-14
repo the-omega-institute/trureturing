@@ -59,7 +59,6 @@ internal sealed class LyudogovskiyTransfersDocument : IScribeDocumentDefinition
     }
     private static Formula OnPartitions(Formula b) => All("n", V("Nat"),
         All("p", C("Partition", V("n")), All("q", C("Partition", V("n")), b)));
-    private static Formula OnVertex(Formula b) => All("n", V("Nat"), All("p", C("Partition", V("n")), b));
     private static DocumentBlock Node(string name, string title, Formula formula, string prose = "") =>
         Describe.Lean(DescribeId.Create("lyudogovskiy-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
@@ -72,11 +71,9 @@ internal sealed class LyudogovskiyTransfersDocument : IScribeDocumentDefinition
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula In(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
 }
