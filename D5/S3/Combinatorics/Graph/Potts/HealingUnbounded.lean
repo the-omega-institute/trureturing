@@ -11,7 +11,6 @@ import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 
@@ -20,6 +19,52 @@ admission_basis: open-problem-resolution (#30587; Refuted)
 escape_witness: independent transversals of the triangle tree omit a root-to-leaf
 chain of apices, whose length is arbitrarily large.
 All auxiliary theorems are private and consumed by the designated refutation.
+Per-declaration shape against origin/dev; same-delivery prerequisites are expanded.
+mono: proof_shape=bind-only; consumers=mem_mono,frustration,frustration_le,le_frustration,frustration_lower,frustration_exact,triangle_frustration,residual_exact
+mem_mono: proof_shape=bind-only; consumers=frustration_lower,frustration_exact,triangle_frustration,residual_exact
+frustration: proof_shape=bind-only; consumers=phi,Tight,claim,frustration_le,le_frustration,frustration_lower,frustration_exact,triangle_frustration,residual_exact
+phi: proof_shape=bind-only; consumers=Tight,apices_tight
+Tight: proof_shape=bind-only; consumers=Augmentable,Stuck,apices_tight
+Augmentable: proof_shape=bind-only; consumers=Stuck,claim,displacement_bound
+Stuck: proof_shape=bind-only; consumers=claim,apices_stuck
+claim: proof_shape=bind-only; consumers=result
+frustration_le: proof_shape=bind-only; consumers=frustration_exact,residual_exact
+le_frustration: proof_shape=bind-only; consumers=frustration_lower,triangle_frustration
+Vertex: proof_shape=bind-only; consumers=bridge,graph,bridge_increases,bridge_out_unique,bridge_in_unique,external_unique,degree_le,frustration_lower,coloring,bridge_color,frustration_exact,connected,apices,mem_apices,apices_independent,rootVertex,no_remaining_bridge,residual_exact,apices_dominating,independent_transversal,apex_excluded,descent,displacement_bound,result
+bridge: proof_shape=bind-only; consumers=graph,graphDecidable,bridge_increases,bridge_out_unique,bridge_in_unique,bridge_color,no_remaining_bridge
+graph: proof_shape=bind-only; consumers=graphDecidable,triangle_adj,external_unique,degree_le,frustration_lower,frustration_exact,triangle_reachable,connected,apices_independent,residual_exact,apices_tight,apices_dominating,apices_stuck,independent_transversal,apex_excluded,descent,displacement_bound,result
+graphDecidable: proof_shape=bind-only; consumers=frustration_lower,frustration_exact,residual_exact,apices_tight,result
+triangle_adj: proof_shape=bind-only; consumers=frustration_lower,frustration_exact,triangle_reachable,residual_exact,apices_dominating,apex_excluded
+bridge_increases: proof_shape=bind-only; consumers=external_unique,no_remaining_bridge
+bridge_out_unique: proof_shape=bind-only; consumers=external_unique
+bridge_in_unique: proof_shape=bind-only; consumers=external_unique
+external_unique: proof_shape=bind-only; consumers=degree_le
+degree_le: proof_shape=content; consumers=result
+exists_mono_pair: proof_shape=bind-only; consumers=frustration_lower,triangle_frustration
+frustration_lower: proof_shape=content; consumers=frustration_exact
+shade: proof_shape=bind-only; consumers=coloring,shade_child,bridge_color,frustration_exact
+coloring: proof_shape=bind-only; consumers=bridge_color,frustration_exact
+shade_child: proof_shape=bind-only; consumers=bridge_color
+bridge_color: proof_shape=bind-only; consumers=frustration_exact
+frustration_exact: proof_shape=content; consumers=apices_tight
+triangle_reachable: proof_shape=bind-only; consumers=connected
+connected: proof_shape=content; consumers=result
+apices: proof_shape=bind-only; consumers=mem_apices,apices_card,apices_independent,rootVertex,no_remaining_bridge,residual_exact,apices_tight,apices_dominating,apices_stuck,descent,displacement_bound,result
+mem_apices: proof_shape=bind-only; consumers=apices_independent,rootVertex,no_remaining_bridge,residual_exact,apices_dominating,descent
+apices_card: proof_shape=bind-only; consumers=apices_tight,displacement_bound
+apices_independent: proof_shape=bind-only; consumers=apices_tight
+triangle_frustration: proof_shape=bind-only; consumers=residual_exact
+rootVertex: proof_shape=bind-only; consumers=residual_exact
+no_remaining_bridge: proof_shape=bind-only; consumers=residual_exact
+residual_exact: proof_shape=content; consumers=apices_tight,result
+apices_tight: proof_shape=content; consumers=apices_stuck
+apices_dominating: proof_shape=bind-only; consumers=apices_stuck
+apices_stuck: proof_shape=content; consumers=result
+independent_transversal: proof_shape=bind-only; consumers=displacement_bound
+apex_excluded: proof_shape=bind-only; consumers=descent
+descent: proof_shape=content; consumers=displacement_bound
+displacement_bound: proof_shape=content; consumers=result
+result: proof_shape=content; consumers=refutes=claim
 Direct frozen D5 dependencies: none.
 -/
 
@@ -304,7 +349,7 @@ private lemma connected (B : ℕ) (hB : 4 ≤ B) : (graph B).Connected := by
         · dsimp [p, i]; omega
   have hall (x : Vertex B) : (graph B).Reachable (r, 0) x :=
     (hr x.1.val x.1.isLt).trans (triangle_reachable x.1 0 x.2)
-  letI : Nonempty (Vertex B) := ⟨(r, 0)⟩
+  haveI : Nonempty (Vertex B) := ⟨(r, 0)⟩
   exact ⟨fun x y => (hall x).symm.trans (hall y)⟩
 
 private def apices (B : ℕ) [NeZero B] : Finset (Vertex B) :=
@@ -313,7 +358,7 @@ private def apices (B : ℕ) [NeZero B] : Finset (Vertex B) :=
 private lemma mem_apices {B : ℕ} [NeZero B] (x : Vertex B) :
     x ∈ apices B ↔ x.1 ≠ 0 ∧ x.2 = 0 := by
   rcases x with ⟨u, i⟩
-  by_cases hi : i = 0 <;> simp [apices, hi]
+  by_cases hi : i = 0 <;> simp [apices, hi, eq_comm]
 
 private lemma apices_card (B : ℕ) [NeZero B] : (apices B).card = B - 1 := by
   simp [apices]
@@ -474,7 +519,8 @@ private lemma descent {B : ℕ} [NeZero B] (R : Finset (Vertex B))
     refine ⟨{(u, 0)}, ?_, ?_, by simp⟩
     · apply singleton_subset_iff.mpr
       exact mem_sdiff.mpr ⟨(mem_apices _).mpr
-        ⟨Fin.ne_of_val_ne (by omega), rfl⟩, apex_excluded R hR r hr u hi⟩
+        ⟨Fin.ne_of_val_ne (by simpa only [Fin.val_zero] using Nat.ne_of_gt hu), rfl⟩,
+        apex_excluded R hR r hr u hi⟩
     · intro x hx
       simp only [mem_singleton] at hx
       subst x
@@ -509,12 +555,13 @@ private lemma descent {B : ℕ} [NeZero B] (R : Finset (Vertex B))
     refine ⟨insert (u, 0) F, ?_, ?_, ?_⟩
     · apply insert_subset_iff.mpr
       exact ⟨mem_sdiff.mpr ⟨(mem_apices _).mpr
-        ⟨Fin.ne_of_val_ne (by omega), rfl⟩, apex_excluded R hR r hr u hi⟩, hF⟩
+        ⟨Fin.ne_of_val_ne (by simpa only [Fin.val_zero] using Nat.ne_of_gt hu), rfl⟩,
+        apex_excluded R hR r hr u hi⟩, hF⟩
     · intro x hx
       rcases mem_insert.mp hx with rfl | hx
       · exact le_rfl
       · exact huc.le.trans (hmin x hx)
-    · rw [card_insert_of_not_mem hnot]
+    · rw [card_insert_of_notMem hnot]
       omega
 
 private lemma displacement_bound (n B : ℕ) [NeZero B] (hB : 4 ≤ B)
@@ -527,7 +574,7 @@ private lemma displacement_bound (n B : ℕ) [NeZero B] (hB : 4 ≤ B)
   have hR : (graph B).IsIndepSet (R : Set (Vertex B)) := hRv.1
   have hRc : R.card = B := by
     dsimp [R]
-    rw [card_insert_of_not_mem hv, hcard, apices_card]
+    rw [card_insert_of_notMem hv, hcard, apices_card]
     omega
   obtain ⟨r, hr⟩ := independent_transversal R hR hRc
   let u : Fin B := ⟨(r 0).val + 1, by have := (r 0).isLt; omega⟩
@@ -541,7 +588,9 @@ private lemma displacement_bound (n B : ℕ) [NeZero B] (hB : 4 ≤ B)
     have hp := (r 0).isLt
     rw [hsize, pow_succ]
     dsimp [u]
-    nlinarith
+    calc
+      _ ≤ 2 ^ n * 6 := Nat.mul_le_mul_left _ (by omega)
+      _ = 3 * (2 ^ n * 2) := by ring
   obtain ⟨F, hF, _, hfcard⟩ := descent R hR r hr n u (by dsimp [u]; omega) hu hbound
   have hsub : apices B \ R ⊆ apices B \ T := by
     intro x hx
@@ -559,7 +608,7 @@ theorem result : ¬ claim := by
     rw [pow_succ]
     omega
   have hB : 4 ≤ B := by rw [pow_succ] at hsize; omega
-  letI : NeZero B := ⟨by omega⟩
+  haveI : NeZero B := ⟨by omega⟩
   have hnK : ¬ Nonempty (graph B ≃g SimpleGraph.completeGraph (Fin 4)) := by
     rintro ⟨e⟩
     have hc := Fintype.card_congr e.toEquiv
