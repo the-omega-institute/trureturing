@@ -1,0 +1,18 @@
+**定义 150.1（全纯整球零确认互易）。** 保留149.1的整个原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p$，以及完整 EB3+$\mathsf{Conn}$。特别是每个 $T_p$ 仍在全部原混输入上对整个原确认菜单取已达 minimum。由(XI149.2)，$e_p$ 是其中唯一在整个 $D_p$ 上归零的确认尺，$c_p$ 是该完整三球的中心。定义
+
+$$
+\boxed{\qquad
+\mathsf{ER}:\quad e_p(q)=e_q(p)\qquad(p,q\in P).
+\qquad}
+\tag{XI150.1}
+$$
+
+其白话含义是：用两端各自唯一的整球零确认尺读取对方，交换两端不改变读数。$e_p$ 的选择由原域锁定；互易是这些内生对象之间新增的约束。这里既不输入 $e_p\le f$ 对所有 $f\in\mathcal F_p$，也不定义 $T_p=e_p$。最低确认互易
+
+$$
+\mathsf{PR}:\quad T_p(q)=T_q(p)\qquad(p,q\in P)
+\tag{XI150.2}
+$$
+
+保留原来的独立含义，不能在证明前与 $\mathsf{ER}$ 互换。
+

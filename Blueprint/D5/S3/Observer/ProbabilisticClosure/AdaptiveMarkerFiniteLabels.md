@@ -48,9 +48,37 @@ For a legal finite canonical replay, terminalFirstTrue is precisely its nonempty
 
 This establishes the positivity and original-source realizability sentence for these finite inputs. It does not prove that every source produces a finite replay, nor the sibling opportunity or totality clause, full CPI7.2, inverse normal form, actual-rise counts, opportunity ranks, likelihood-density identification or prior integration.
 
+**Theorem 1.3 (Measurable recursive paths).**
+
+$$\operatorname{Measurable}\left(g\right)\land\operatorname{Measurable}\left(\operatorname{uncurry}\left(f\right)\right)\Rightarrow\operatorname{Measurable}\left(\operatorname{randomizedChain}\left(g, f\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.measurable_randomizedChain` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary measurable spaces xi and alpha, g maps xi to alpha and f maps alpha times xi to alpha. randomizedChain starts at g(u(0)) and updates by f(previous,u(n+1)). The displayed hypotheses are precisely measurability of g and of the uncurried f. The conclusion is measurability into the whole countable product of states, so each finite coordinate is measurable.
+
+For the CPI.2 threshold recursion use xi = unitInterval times Bool times unitInterval, alpha = Bool, g(q,x,t)=x and f(b,(q,x,t))=step(q,b,t). The first map is a projection. The second is a Boolean measurable split and the measurable strict comparison t<q. For p=(q,x,v), let U(p)(j)=(q,x,v(kappa(j))), where kappa(0)=1 and kappa(n+1)=n+1 as positive naturals. Each coordinate of U is a product of projections and a fixed evaluation; measurable_pi_iff gives Measurable U. Composition with the displayed theorem yields joint path measurability. Unfolding randomizedChain and Z identifies their zero and successor branches; g ignores the dummy noise coordinate at zero. Applying the two literal arm projections and shifting each path by one gives joint measurability of originalSource in both parameters, the common root and all noise. Precomposition with a seed projection preserves this conclusion for an arbitrary measurable seed space. This is an application of the existing recursive-path theorem and introduces no new mathematical declaration.
+
+**Theorem 1.4 (The original uniform noise realizes the two-arm law).**
+
+$$\forall qL:unitInterval, \forall qR:unitInterval, \forall x:Bool, \operatorname{map}\left(noiseLaw, \operatorname{originalSource}\left(qL, qR, x\right)\right)=\operatorname{reference}\left(qL, qR, x\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.originalSource_law` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every fixed pair of closed-unit-interval parameters and every common Boolean root, noiseLaw pushed forward by originalSource is reference. reference is the product of armLaw(qL,x) and armLaw(qR,x), with both zero coordinates identified with the same fixed root and their outward tails placed on the two arms. Thus the equality supplies the full joint law, including independence at these fixed parameters and root; its finite restrictions follow by measurable pushforward. armLaw uses the transition sending true deterministically to false and false to true with probability q, exactly the CPI.1 matrix. Each parameter is held fixed throughout its arm. The theorem does not assert prior integration, a random-root mixture, seed independence or an integrated stopping law.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.finite_label_original_realization`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.finite_label_realization`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.measurable_randomizedChain`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.originalSource_law`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails](AdaptiveMarkerStoppingTails.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelCEvent](TrajectoryLaws/NativeBorelCEvent.md)
