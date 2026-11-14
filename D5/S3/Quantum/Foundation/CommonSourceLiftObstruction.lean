@@ -624,7 +624,7 @@ private theorem finite_readouts_vanishing {ι : Type*} [Finite ι]
   exact (hball (by simpa [Metric.mem_ball, dist_eq_norm] using hnear r hr t ht) i).le
 
 omit [FiniteDimensional ℝ V] in
-private theorem intrinsic_interior_image
+theorem intrinsic_interior_image
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
     (a : E →ᵃ[ℝ] V) (ha : Function.Injective a) (s : Set E) :
     intrinsicInterior ℝ (a '' s) = a '' intrinsicInterior ℝ s := by
@@ -744,7 +744,7 @@ private theorem finite_source_tests
     exact ⟨ε, hε, fun r hr t ht i => hnear r hr t ht i⟩
 
 omit [FiniteDimensional ℝ V] in
-private theorem ball_affine_span {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+theorem ball_affine_span {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     (a : E →ᵃ[ℝ] V) :
     (affineSpan ℝ (a '' Metric.closedBall (0 : E) 1)).direction = a.linear.range := by
   have hs : affineSpan ℝ (Metric.closedBall (0 : E) 1) = ⊤ := by

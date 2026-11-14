@@ -32,7 +32,7 @@ def UniqueConfirmer (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p : pure C 
     ∀ f : V →ₗ[ℝ] ℝ, confirms C u p f →
       (∀ z ∈ exclusion C u p, f z = 0) → f = e
 
-private theorem affine_zero_inside_ball {E : Type*} [NormedAddCommGroup E]
+theorem affine_zero_inside_ball {E : Type*} [NormedAddCommGroup E]
     [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
     (f : E →ᵃ[ℝ] ℝ) (hpos : ∀ z, ‖z‖ ≤ 1 → 0 ≤ f z)
     {z : E} (hz : ‖z‖ < 1) (hfz : f z = 0) : ∀ w, f w = 0 := by
