@@ -1,0 +1,26 @@
+### 147.10 同一表示的条件 QM 字典与独立物理入口
+
+仅在式(XII147.21)的完整条件另外成立以后，采用其同一个 $\Phi$，直接复用 EXCLUSION XI 的**条件应用145.9**，其所在节是 XI 第145.8节；XI **命题145.8**是证明迁移，不是静态字典。此时 $\Phi$ 送回全部原对象：$K$ 为全部迹一 PSD 像，$P\cong\mathbb{CP}^2$ 为全部复纯射线，全部原效应恰为
+
+$$
+f_M(\Phi X)=\operatorname{Tr}(MX),\qquad 0\preceq M\preceq I_3.
+$$
+
+若 $v^*v=1$、$P_v=vv^*$、$Q_v=I_3-P_v$，则整个确认菜单是
+
+$$
+F_{\Phi P_v}=\{f_{P_v+B}:B=Q_vBQ_v,\ 0\preceq B\preceq Q_v\}.
+$$
+
+它非单点；$B=0$ 给全锥序 least，并对每个原混输入 $\rho\succeq0$、$\operatorname{Tr}\rho=1$ 达到
+
+$$
+T_{\Phi P_v}(\Phi\rho)=\operatorname{Tr}(P_v\rho)=v^*\rho v.
+$$
+
+完整 $D_{\Phi P_v}$ 是 $v^\perp\cong\mathbb C^2$ 上的全部密度矩阵，即整颗 Bloch 三球，含全部混态，纯球缘为 $\mathbb{CP}^1\cong S^2$。
+
+这些等式的菜单核对也完全在同一原域中进行：$0\preceq M\preceq I_3$ 且 $v^*Mv=1$ 给 $(I_3-M)v=0$，Hermitian 性消去交叉块，故全部且仅有 $M=P_v+B$ 如上。对每个 $X\succeq0$，$\operatorname{Tr}(BX)\ge0$，所以 $B=0$ 同时给 least 和每个混输入上的已达 minimum。正矩阵满足 $v^*\rho v=0\Longleftrightarrow\rho v=0$，故零集是整个二阶密度球。这些是 XI 条件应用145.9的同一表示计算，不是式(XII147.19)单独导出的全局 Born 规则。
+
+实际未知入口、共同来源及其完整装饰／读回合同不由静态几何供应。全部原质量、共同来源域及全部合法实现、每个有限复合体与全部纠缠联合域、各自全效应和严格张量单位，所有旁观系统上的 CP 测试，实际事件／仪器及逐输入和同族预算、记录／权限／全部合法未来及每个中间切口，仍按 SAME_READBACK **第127.10节（SECTION127.10）**及其完整引用链各自承担；它不是该卷关于共同圆球的同号定理。完整继承亦见 XI 第145.9节的物理合同。物理钟、连续时间来源、Hamiltonian、能量标定和数值 $\hbar$ 仍保留各自独立合同。本章没有将任何这些入口付给局部法向唯一性。
+
