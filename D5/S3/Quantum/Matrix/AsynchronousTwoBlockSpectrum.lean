@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Matrix/AsynchronousTwoBlockSpectrum
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Nonzero spectral values of the actual two-block delay matrix are roots of the rectangular product spectrum. -/
 
 import D5.S3.Quantum.Matrix.AsynchronousIterationSpectralRadiusRefutation

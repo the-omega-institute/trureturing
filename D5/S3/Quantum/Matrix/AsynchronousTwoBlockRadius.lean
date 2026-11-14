@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Matrix/AsynchronousTwoBlockRadius
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Exact two-block delay radius with arbitrary independent history length. -/
 
 import D5.S3.Quantum.Matrix.AsynchronousTwoBlockSpectrum
