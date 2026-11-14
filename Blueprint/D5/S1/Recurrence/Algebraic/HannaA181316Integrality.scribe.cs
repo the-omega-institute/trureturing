@@ -46,11 +46,9 @@ internal sealed class HannaA181316IntegralityDocument : IScribeDocumentDefinitio
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
     private static Formula Q() => Seq(Mathbb, Grp(V("Q")));
-    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
     private static Formula Eqn(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
-    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Iffn(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Iff, Sp, Parenthesized(b));
     private static Formula Cast(Formula a, Formula type) => Parenthesized(Seq(a, Colon, Sp, type));
     private static Formula All(string name, Formula type, Formula body) =>
@@ -61,8 +59,6 @@ internal sealed class HannaA181316IntegralityDocument : IScribeDocumentDefinitio
         Parenthesized(Seq(V("fun"), Sp, V(name), Colon, Sp, type, Sp, Mapsto, Sp, body));
     private static Formula Coeff(Formula n, Formula a) => Qualified("PowerSeries", "coeff", n, a);
     private static Formula ExpOf(Formula f) => Qualified("PowerSeries", "subst", f, Qualified("PowerSeries", "exp", Q()));
-    private static Formula RangeSum(string index, Formula bound, Formula body) =>
-        Qualified("Finset", "sum", Qualified("Finset", "range", bound), Lam(index, N(), body));
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
@@ -70,7 +66,7 @@ internal sealed class HannaA181316IntegralityDocument : IScribeDocumentDefinitio
     {
         var q = Cast(V("q"), Q()); var n = V("n");
         var value = new Formula.Fraction(Mul(Sub(q, D(1)),
-            Pow(new Formula.Fraction(Sub(Pow(q, n), D(1)), Sub(q, D(1))), Sub(n, D(1)))), Cast(n, Q()));
+            Pow(Parenthesized(new Formula.Fraction(Sub(Pow(q, n), D(1)), Sub(q, D(1)))), Sub(n, D(1)))), Cast(n, Q()));
         return Seq(V("if"), Sp, Eqn(n, D(0)), Sp, V("then"), Sp, D(0), Sp, V("else"), Sp, value);
     }
     private static Formula ClaimBody() => All("q", Z(), Imp(Lt(D(1), V("q")),

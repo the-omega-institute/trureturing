@@ -52,13 +52,7 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
                     + "times exponentialSum a. The entry a(0) contributes no constant term.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("fermat_lift", "Fermat congruence at every prime power",
-                Disp(Seq(Bound("p", Nat()), Bound("s", Nat()), Bound("z", Integer()),
-                    App(Q("Nat", "Prime"), V("p")), Sp, Implies, Sp,
-                    new Formula.Relation(
-                        new Formula.Power(Parenthesized(Seq(V("p"), Colon, Sp, Integer())), Add(V("s"), D(1))),
-                        FormulaRelationOperator.Divides,
-                        Sub(new Formula.Power(V("z"), new Formula.Power(V("p"), Add(V("s"), D(1)))),
-                            new Formula.Power(V("z"), new Formula.Power(V("p"), V("s"))))))),
+                FermatLiftFormula(),
                 "For every prime p, natural s and integer z, p^(s+1) divides z^(p^(s+1))-z^(p^s). The original SModEq lifting proof is consumed by diagonal_congruence and the all-parameter A181316 base congruence.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("divisorGhost", "The integer divisor-sum ghost",
@@ -145,6 +139,13 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role, claim);
+
+    private static Formula FermatLiftFormula() => Disp(Seq(
+        Bound("p", Nat()), Bound("s", Nat()),
+        Implies(App(Q("Nat", "Prime"), V("p")), Seq(Bound("z", Integer()),
+            Divides(new Formula.Power(Parenthesized(Seq(V("p"), Colon, Sp, Integer())), Add(V("s"), D(1))),
+                Sub(new Formula.Power(V("z"), new Formula.Power(V("p"), Add(V("s"), D(1)))),
+                    new Formula.Power(V("z"), new Formula.Power(V("p"), V("s")))))))));
 
     private static Formula LogarithmicInputFormula()
     {
