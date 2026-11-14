@@ -107,6 +107,43 @@ theorem polarCoeff_add (N n k : ℕ) (hk : k ≤ N) (x y c : A) :
   rw [generating_add N k hk]
   simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul]
 
+/-- Expanding the auxiliary variable keeps the condition i≤n explicit. -/
+theorem polarCoeff_sum (N n k : ℕ) (x y : A) :
+    polarCoeff N n k x y = ∑ i ∈ range (k + 1),
+      if i ≤ n then
+        ((N - k).choose (n - i) : A) * (k.choose i : A) * x ^ i * y ^ (k - i)
+      else 0 := by
+  unfold polarCoeff generating
+  rw [add_pow (X * C x) (C y) k, Finset.mul_sum, Polynomial.finsetSum_coeff]
+  apply Finset.sum_congr rfl
+  intro i hi
+  have ht : (X + 1) ^ (N - k) *
+        ((X * C x) ^ i * C y ^ (k - i) * (k.choose i : A[X])) =
+      ((X + 1) ^ (N - k) * X ^ i) *
+        C ((k.choose i : A) * x ^ i * y ^ (k - i)) := by
+    simp only [mul_pow, ← Polynomial.C_pow, map_mul, Polynomial.C_eq_natCast]
+    ring
+  rw [ht, Polynomial.coeff_mul_C, Polynomial.coeff_mul_X_pow']
+  split_ifs <;> simp [Polynomial.coeff_X_add_one_pow, mul_assoc]
+
+/-- Out-of-box terms vanish before truncated subtraction can create fake terms. -/
+theorem polarCoeff_box (n m k : ℕ) (hk : k ≤ n + m) (x y : A) :
+    polarCoeff (n + m) n k x y = ∑ i ∈ range (k + 1),
+      if i ≤ n ∧ k - i ≤ m then
+        ((n + m - k).choose (n - i) : A) * (k.choose i : A) * x ^ i * y ^ (k - i)
+      else 0 := by
+  rw [polarCoeff_sum]
+  apply Finset.sum_congr rfl
+  intro i hi
+  have hik : i ≤ k := Nat.le_of_lt_succ (Finset.mem_range.mp hi)
+  by_cases hin : i ≤ n
+  · by_cases hjm : k - i ≤ m
+    · simp [hin, hjm]
+    · have hz : (n + m - k).choose (n - i) = 0 :=
+        Nat.choose_eq_zero_of_lt (by omega)
+      simp [hin, hjm, hz]
+  · simp [hin]
+
 end CoefficientPolarization
 
 section AmbientKernel
@@ -196,6 +233,27 @@ theorem diagonal_translate (a : R) (F : Bi R) :
       (Polynomial.taylorAlgHom a).toRingHom.comp (diagonal (R := R)) := by
     ext <;> simp [diagonal, translate, z₁, scalar, Polynomial.coe_eval₂RingHom]
   exact congrArg (fun f : Bi R →+* R[X] => f F) hh
+
+/-- Simultaneous substitution also preserves the original R-module structure. -/
+def translateLinear (a : R) : Bi R →ₗ[R] Bi R where
+  toFun := translate a
+  map_add' := (translate a).map_add
+  map_smul' r F := by
+    simp only [Algebra.smul_def, map_mul]
+    change translate a (scalar r) * translate a F = scalar r * translate a F
+    rw [translate_scalar]
+
+theorem translate_map_C (a : R) (f : R[X]) :
+    translate a (f.map C) = (Polynomial.taylor a f).map C := by
+  have h : (translate a).comp (Polynomial.mapRingHom (C : R →+* R[X])) =
+      (Polynomial.mapRingHom (C : R →+* R[X])).comp
+        (Polynomial.taylorAlgHom a).toRingHom := by
+    ext <;> simp [translate, z₁, scalar, Polynomial.coe_eval₂RingHom]
+  exact congrArg (fun g : R[X] →+* Bi R => g f) h
+
+theorem translate_C (a : R) (f : R[X]) :
+    translate a (C f) = C (Polynomial.taylor a f) := by
+  simp [translate, Polynomial.coe_eval₂RingHom]
 
 end AmbientKernel
 

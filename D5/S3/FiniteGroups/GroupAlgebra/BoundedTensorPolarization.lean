@@ -264,6 +264,109 @@ theorem differenceTensor_range {K : Type u} [Field K] (n m : ℕ) :
     rw [LinearMap.finrank_range_of_inj
       (differenceTensor_injective (R := K) n m), hsource, hker]
 
+/-- The first factor uses the outer variable; the second uses the inner one. -/
+theorem tensorPolynomial_tmul (n m : ℕ) (f : Trunc R n) (g : Trunc R m) :
+    tensorPolynomial n m (f ⊗ₜ[R] g) = (f.val.map C) * C g.val := by
+  let L : Trunc R n →ₗ[R] Bi R :=
+    (Polynomial.mapAlgHom (Polynomial.CAlgHom R R)).toLinearMap.comp
+      (Polynomial.degreeLT R (n + 1)).subtype
+  let Q : Trunc R m →ₗ[R] Bi R :=
+    (Polynomial.CAlgHom R R[X]).toLinearMap.comp
+      (Polynomial.degreeLT R (m + 1)).subtype
+  have h : tensorPolynomial (R := R) n m =
+      (LinearMap.mul' R (Bi R)).comp (TensorProduct.map L Q) := by
+    apply (tensorBasis (R := R) n m).ext
+    rintro ⟨i, j⟩
+    simp [tensorBasis, tensorPolynomial_basis, L, Q, z₁, z₂]
+  rw [h]
+  rfl
+
+/-- Bounded tensor translation realizes actual simultaneous polynomial substitution. -/
+theorem tensorPolynomial_translate (a : R) (n m : ℕ)
+    (F : Trunc R n ⊗[R] Trunc R m) :
+    tensorPolynomial n m (tensorTranslate a n m F) =
+      translate a (tensorPolynomial n m F) := by
+  have h : (tensorPolynomial (R := R) n m).comp (tensorTranslate a n m) =
+      (translateLinear a).comp (tensorPolynomial n m) := by
+    apply (tensorBasis (R := R) n m).ext
+    rintro ⟨i, j⟩
+    simp only [LinearMap.comp_apply, tensorBasis, Module.Basis.tensorProduct_apply,
+      tensorTranslate, TensorProduct.map_tmul, LinearEquiv.coe_coe, tensorPolynomial_tmul]
+    change ((Polynomial.taylor a _).map C) * C (Polynomial.taylor a _) =
+      translate a ((_ : R[X]).map C * C (_ : R[X]))
+    rw [map_mul, translate_map_C, translate_C]
+  exact LinearMap.congr_fun h F
+
+theorem tensorTranslate_differenceTensor (a : R) (n m : ℕ) :
+    (tensorTranslate a (n + 1) (m + 1)).comp (differenceTensor (R := R) n m) =
+      (differenceTensor n m).comp (tensorTranslate a n m) := by
+  apply LinearMap.ext
+  intro F
+  apply tensorPolynomial_injective (R := R) (n + 1) (m + 1)
+  simp only [LinearMap.comp_apply, tensorPolynomial_translate,
+    tensorPolynomial_difference, translate_difference_mul]
+
+/-- Every term carries both rectangular inequalities in its tensor indices. -/
+def boundedPolarMonomial (n m : ℕ) (k : Fin (n + m + 1)) :
+    Trunc R n ⊗[R] Trunc R m :=
+  ∑ i : Fin (k.val + 1),
+    if h : i.val ≤ n ∧ k.val - i.val ≤ m then
+      (((n + m - k.val).choose (n - i.val) : R) * (k.val.choose i.val : R)) •
+        (Polynomial.degreeLT.basis R (n + 1) ⟨i.val, by omega⟩ ⊗ₜ[R]
+          Polynomial.degreeLT.basis R (m + 1) ⟨k.val - i.val, by omega⟩)
+    else 0
+
+theorem tensorPolynomial_boundedPolarMonomial (n m : ℕ) (k : Fin (n + m + 1)) :
+    tensorPolynomial n m (boundedPolarMonomial (R := R) n m k) =
+      polarMonomial (n + m) n k.val := by
+  rw [boundedPolarMonomial, map_sum, polarMonomial,
+    polarCoeff_box n m k.val (Nat.le_of_lt_succ k.is_lt), ← Fin.sum_univ_eq_sum_range]
+  apply Finset.sum_congr rfl
+  intro i hi
+  split_ifs with h
+  · rw [map_smul, tensorPolynomial_basis]
+    simp only [Algebra.smul_def, Polynomial.algebraMap_apply,
+      Algebra.algebraMap_self, map_mul, ← Polynomial.C_eq_natCast]
+    ring
+  · exact map_zero _
+
+theorem polarMonomial_in_tensor_range (n m k : ℕ) (hk : k ≤ n + m) :
+    polarMonomial (R := R) (n + m) n k ∈ LinearMap.range (tensorPolynomial n m) :=
+  ⟨boundedPolarMonomial n m ⟨k, by omega⟩,
+    tensorPolynomial_boundedPolarMonomial n m ⟨k, by omega⟩⟩
+
+/-- Denominator-free polarization into the actual bounded tensor factors. -/
+def boundedPolarization (n m : ℕ) :
+    Trunc R (n + m) →ₗ[R] Trunc R n ⊗[R] Trunc R m :=
+  (Polynomial.degreeLT.basis R (n + m + 1)).constr R (boundedPolarMonomial n m)
+
+theorem tensorPolynomial_boundedPolarization (n m : ℕ) :
+    (tensorPolynomial (R := R) n m).comp (boundedPolarization n m) =
+      polarization (n + m) n := by
+  apply (Polynomial.degreeLT.basis R (n + m + 1)).ext
+  intro k
+  simp only [LinearMap.comp_apply, boundedPolarization, Module.Basis.constr_basis,
+    polarization_basis, tensorPolynomial_boundedPolarMonomial]
+
+theorem multiplication_boundedPolarization (n m : ℕ) :
+    (multiplication (R := R) n m).comp (boundedPolarization n m) =
+      ((n + m).choose n : R) • LinearMap.id := by
+  apply LinearMap.ext
+  intro f
+  apply Subtype.ext
+  have h := LinearMap.congr_fun (diagonal_polarization (R := R) (n + m) n) f
+  have hr := LinearMap.congr_fun (tensorPolynomial_boundedPolarization (R := R) n m) f
+  have hd := LinearMap.congr_fun (diagonal_tensorPolynomial (R := R) n m)
+    (boundedPolarization n m f)
+  change diagonal (tensorPolynomial n m (boundedPolarization n m f)) =
+    ((multiplication n m (boundedPolarization n m f)) : R[X]) at hd
+  change ((multiplication n m (boundedPolarization n m f)) : R[X]) =
+    ((n + m).choose n : R) • f.val
+  rw [← hd]
+  change tensorPolynomial n m (boundedPolarization n m f) = _ at hr
+  rw [hr]
+  exact h
+
 /-
 EXACT UNFINISHED TYPES AND ROUTE (not accepted declarations).
 
