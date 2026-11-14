@@ -3099,10 +3099,13 @@ continue the attempts of Definition 61.1, with each pending observer
 operation eventually completed. Suppose only finitely many successful
 native events after u satisfy (VI.76). Irrelevant native events need not
 stop. Then a current tree request completes with an accepted certificate.
-A current interval request completes with its full h leaves whenever they
-exist in the eventual I; otherwise it completes with its certified genuine
-Endpoint prefix. In particular full completion holds if those h leaves
-already existed at u. Any requested arrival at a and paid return to saved d
+A current interval request completes with an accepted certificate at its
+actual cut r. Let $\ell_r$ be the number of current leaves in I to the right
+of a at r. Its output has exactly $\min(h,\ell_r)$ leaves, with a certified
+genuine Endpoint when $\ell_r<h$. Thus it supplies all h leaves exactly when
+they exist there at that accepted r; their presence already at u is
+sufficient. Availability reached only after r does not enlarge this
+completed output. Any requested arrival at a and paid return to saved d
 also finish, using directed one-cell walks within I. This is conditional
 completion under local interference, not wait-freedom under arbitrary
 relevant growth or a uniform bound on time, history scans or resources.
@@ -3117,22 +3120,31 @@ its fixed-endpoint validation and any finite output work finishes. Outside
 growth may make successive counts more expensive, but cannot make one
 admitted finite coherent invocation infinite.
 
-If there is a last relevant event, it occurs at a finite execution position;
-there are only finitely many earlier observer attempts. After it the
-restriction to I is constant. A fresh attempt then has no relevant event
-in (s,r] and is accepted. If there is no relevant event, the first completed
-attempt is accepted. Each rejected segment contains an actual relevant
-event; disjoint consecutive attempt intervals therefore give at most as
-many rejected attempts as relevant events, without making their costs equal.
-The argument also covers a last event occurring during an earlier attempt.
+If an attempt has already accepted, Theorem 61.2 gives its correct value
+at its own r, even when the last relevant event occurs later; no further
+attempt is required. Otherwise, if there is a last relevant event, finish
+any pending attempt after it. If that attempt accepts, acquisition is done.
+If it rejects, continued attempts start a fresh one after that last event;
+the restriction to I is now constant, so this attempt accepts. If no
+attempt was pending, the next one is already interference-free. With no
+relevant event the first completed attempt accepts. Equivalently, every
+rejected segment contains an actual relevant event, and consecutive attempt
+intervals are disjoint, so there are at most as many rejections as relevant
+events. Finite progress after each rejection supplies the next attempt;
+it does not supply or require a retry after acceptance. This covers a last
+event during an attempt, between attempts, or after an accepted attempt.
 
 The acquired envelope contains all old first-h leaves when they existed
 at u; growth only adds leaves, so the first h current leaves stay inside it.
-If a finite suffix was shorter, the full eventual suffix is still inside I,
-and its actual length decides full output versus Endpoint. For h=0 the
-empty interval is already the required value; only explicitly requested
-navigation may remain. A tree root can become a branch, but all of its
-descendants stay in its included old cones.
+If the finite suffix at u was shorter, I reaches its genuine right endpoint
+and contains every descendant of that whole suffix. Thus at any accepted r,
+either I contains at least h leaves after a, or it contains the entire
+shorter suffix to the real endpoint. Theorem 61.2 and the stopping rule
+therefore give exactly $\min(h,\ell_r)$ leaves, with Endpoint in the shorter
+case. Later growth changes neither that accepted length nor its records.
+For h=0 the empty interval is already the required value; only explicitly
+requested navigation may remain. A tree root can become a branch, but all
+of its descendants stay in its included old cones.
 
 Between two retained cuts in I the current distance is bounded by I's
 finite maximum leaf count. Directed walks toward the target reduce that
@@ -3402,9 +3414,10 @@ on these two original native entrances, with genuine Next and saved return.
 
 **Proposition 65.1 (what the certificates cannot supply).** The preceding
 results do not yield current-at-Return values under arbitrary later local
-edits, arrival under unrestricted relevant growth, acquisition without
-current original rights, an old observation checkpoint from a native token
-alone, or an all-domain physical common realization.
+edits, full-h output from availability reached only after the accepted r,
+arrival under unrestricted relevant growth, acquisition without current
+original rights, an old observation checkpoint from a native token alone,
+or an all-domain physical common realization.
 
 **Proof.** A relevant P after r changes an accepted alpha value before
 Return without changing its truthful certificate at r. Proposition 62.2
@@ -3412,6 +3425,20 @@ prevents any growth-independent movement bound, and Corollary 62.3 states
 the additional hypotheses needed for infinite nonarrival. Proposition
 59.3 separates source versions from observer checkpoints; Definition
 58.1 and Proposition 64.2 separate acquired data from missing authority.
+
+For the availability boundary take AAV1.2's actual finite known-alpha root,
+with empty prehistory, its two acquired exterior cuts a,b and h=2. With no
+growth during acquisition, the request accepts one alpha and Endpoint at
+s=r=u. After that request returns, lawful P at the root followed by S
+produces two leaves inside the same I. Alternatively choose the epoch
+after that root's genuine P preparation. The same request accepts one
+beta and Endpoint at s=r=u. A later genuine Next(1) fetches that actual
+P event and executes S at its still-beta root, by AA20.4–20.5, producing
+two leaves. Both continuations have finitely many relevant events and
+eventual length two, but the completed output has length one at its own r.
+They use actual empty/P histories, original outputs and native returns;
+no future-availability test is part of the acquisition stopping rule.
+
 The finite entrance still has its two real endpoints, and the bilateral
 entrance still assumes its actual ideal selected family and preparation
 bindings. No theorem constructs that family from a finite prefix. The
