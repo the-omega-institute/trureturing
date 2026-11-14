@@ -58,7 +58,7 @@ private theorem sum_shift (n : ℕ) (f : ℤ → ℚ) :
   · intro k hk
     rfl
 
-private theorem W_shift (β n : ℕ) :
+private theorem w_shift (β n : ℕ) :
     W β n = ∑ k ∈ range (2 * n + 1), ∑ l ∈ range (2 * n + 1),
       ((2 * n).choose k : ℚ) * ((2 * n).choose l : ℚ) *
         |((k : ℚ) - n) ^ 2 - ((l : ℚ) - n) ^ 2| ^ β := by
@@ -109,14 +109,13 @@ private theorem source_sum (β n : ℕ) :
     W β n = ∑ s : Fin (2 * n) → Bool × Bool,
       |((((sampleEquiv (2 * n)) s).1.card : ℚ) - n) ^ 2 -
         ((((sampleEquiv (2 * n)) s).2.card : ℚ) - n) ^ 2| ^ β := by
-  rw [W_shift]
+  rw [w_shift]
   let f : Finset (Fin (2 * n)) × Finset (Fin (2 * n)) → ℚ := fun p =>
     |((p.1.card : ℚ) - n) ^ 2 - ((p.2.card : ℚ) - n) ^ 2| ^ β
   change _ = ∑ s, f ((sampleEquiv (2 * n)) s)
   rw [(sampleEquiv (2 * n)).sum_comp f]
   dsimp only [f]
   rw [Fintype.sum_prod_type]
-  simp only [Prod.fst, Prod.snd]
   symm
   rw [sum_by_card (fun k => ∑ y : Finset (Fin (2 * n)),
     |((k : ℚ) - n) ^ 2 - ((y.card : ℚ) - n) ^ 2| ^ β)]
@@ -161,7 +160,7 @@ private def halfFalling : ℕ → ℤ[X]
   | m + 1 => halfFalling m *
       if m % 2 = 0 then X - C ((m / 2 : ℕ) : ℤ) else 2 * X - C (m : ℤ)
 
-private theorem halfFalling_eval (m : ℕ) (x : ℚ) :
+private theorem half_falling_eval (m : ℕ) (x : ℚ) :
     (2 : ℚ) ^ ((m + 1) / 2) * (halfFalling m).eval₂ (Int.castRingHom ℚ) x =
       (descPochhammer ℚ m).eval (2 * x) := by
   induction m with
@@ -169,19 +168,19 @@ private theorem halfFalling_eval (m : ℕ) (x : ℚ) :
   | succ m ih =>
     rw [halfFalling, eval₂_mul, descPochhammer_succ_eval]
     by_cases hm : m % 2 = 0
-    · rw [if_pos hm]
+    · rw [ite_eq_left hm]
       have he : (m + 1 + 1) / 2 = (m + 1) / 2 + 1 := by omega
       have hc : (m : ℚ) = 2 * (m / 2 : ℕ) := by
         have h : m = 2 * (m / 2) := by omega
         exact_mod_cast h
       rw [he, pow_succ]
-      simp only [eval₂_sub, eval₂_X, eval₂_C, map_natCast, eval₂_natCast]
+      simp only [eval₂_sub, eval₂_X, map_natCast, eval₂_natCast]
       rw [← ih, hc]
       ring
-    · rw [if_neg hm]
+    · rw [ite_eq_right hm]
       have he : (m + 1 + 1) / 2 = (m + 1) / 2 := by omega
       rw [he]
-      simp only [eval₂_sub, eval₂_mul, eval₂_X, eval₂_C, map_natCast, eval₂_natCast, eval₂_ofNat]
+      simp only [eval₂_sub, eval₂_mul, eval₂_X, map_natCast, eval₂_natCast, eval₂_ofNat]
       rw [← ih]
       ring
 
@@ -189,12 +188,12 @@ private theorem halfFalling_eval (m : ℕ) (x : ℚ) :
 private def integralBasis (r m : ℕ) : ℤ[X] :=
   C ((2 : ℤ) ^ (r - m / 2)) * halfFalling m
 
-private theorem integralBasis_eval (r m n : ℕ) (hm : m ≤ 2 * r) :
+private theorem integral_basis_eval (r m n : ℕ) (hm : m ≤ 2 * r) :
     (2 : ℚ) ^ m * (integralBasis r m).eval₂ (Int.castRingHom ℚ) n =
       (2 : ℚ) ^ r * ((2 * n).descFactorial m : ℚ) := by
-  have hb := halfFalling_eval m (n : ℚ)
+  have hb := half_falling_eval m (n : ℚ)
   have he : m + (r - m / 2) = r + (m + 1) / 2 := by omega
-  simp only [integralBasis, eval₂_mul, eval₂_C, map_pow, map_ofNat, eval₂_pow, eval₂_ofNat]
+  simp only [integralBasis, eval₂_mul, map_pow, map_ofNat, eval₂_pow, eval₂_ofNat]
   rw [← mul_assoc, ← pow_add, he, pow_add, mul_assoc, hb]
   have hn : (2 : ℚ) * n = ((2 * n : ℕ) : ℚ) := by push_cast; ring
   rw [hn, descPochhammer_eval_eq_descFactorial]
@@ -229,7 +228,7 @@ private theorem mean_injective_product {α β : Type*} [Fintype α] [Fintype β]
     · next h => exact (h ⟨a, rfl⟩).elim
   have hnone (b : β) (hb : b ∉ Set.range φ) : g b = fun _ => 1 := by
     dsimp only [g]
-    rw [dif_neg (by simpa only [Set.mem_range] using hb)]
+    rw [dite_eq_right (by simpa only [Set.mem_range] using hb)]
   have hp (s : β → Bool × Bool) : (∏ a, f a (s (φ a))) = ∏ b, g b (s b) := by
     apply Fintype.prod_of_injective φ hφ
     · intro b hb
@@ -251,7 +250,7 @@ private theorem product_expansion (r N : ℕ) (s : Fin N → Bool × Bool) :
   rw [← Fintype.prod_sum (fun i t => coord r i (s t))]
   rw [Fin.prod_univ_add]
   congr 1
-  · simp [coord, Fin.castAdd, Fin.isLt]
+  · simp [coord, Fin.castAdd]
   · simp [coord, Fin.natAdd, Nat.not_lt.mpr (Nat.le_add_right _ _)]
 
 private instance partitionFintype (k : ℕ) : Fintype (Setoid (Fin k)) :=
@@ -278,14 +277,14 @@ private def Pure (r : ℕ) (S : Finset (Fin (2 * r + 2 * r))) : Prop :=
 private def Good (r : ℕ) (σ : Setoid (Fin (2 * r + 2 * r))) : Prop :=
   ∀ B : Quotient σ, Even (block σ B).card ∧ Pure r (block σ B)
 
-private theorem local_U (k : ℕ) (hk : 0 < k) :
+private theorem local_u (k : ℕ) (hk : 0 < k) :
     mean (fun z : Bool × Bool => U z ^ k) = if Even k then (1 / 2 : ℚ) else 0 := by
   simp only [mean, Fintype.card_prod, Fintype.card_bool, Fintype.sum_prod_type,
     Fintype.sum_bool]
   norm_num [U, sign, zero_pow (by omega : k ≠ 0), neg_one_pow_eq_ite]
   split_ifs <;> norm_num
 
-private theorem local_V (k : ℕ) (hk : 0 < k) :
+private theorem local_v (k : ℕ) (hk : 0 < k) :
     mean (fun z : Bool × Bool => V z ^ k) = if Even k then (1 / 2 : ℚ) else 0 := by
   simp only [mean, Fintype.card_prod, Fintype.card_bool, Fintype.sum_prod_type,
     Fintype.sum_bool]
@@ -303,7 +302,7 @@ private theorem local_block (r : ℕ) (σ : Setoid (Fin (2 * r + 2 * r))) (B : Q
       intro i hi
       simp [coord, hL i hi]
     rw [show blockWeight r σ B = (fun z => U z ^ (block σ B).card) from funext hw]
-    rw [local_U _ hpos]
+    rw [local_u _ hpos]
     simp only [show Pure r (block σ B) from Or.inl hL, and_true]
   · by_cases hR : ∀ i ∈ block σ B, ¬i.val < 2 * r
     · have hw (z : Bool × Bool) : blockWeight r σ B z = V z ^ (block σ B).card := by
@@ -312,10 +311,10 @@ private theorem local_block (r : ℕ) (σ : Setoid (Fin (2 * r + 2 * r))) (B : Q
         intro i hi
         simp [coord, hR i hi]
       rw [show blockWeight r σ B = (fun z => V z ^ (block σ B).card) from funext hw]
-      rw [local_V _ hpos]
+      rw [local_v _ hpos]
       simp only [show Pure r (block σ B) from Or.inr hR, and_true]
     · have hnp : ¬Pure r (block σ B) := by simpa only [Pure, not_or] using And.intro hL hR
-      push_neg at hL hR
+      push Not at hL hR
       obtain ⟨i, hi, hir⟩ := hL
       obtain ⟨j, hj, hjl⟩ := hR
       have hw (z : Bool × Bool) : blockWeight r σ B z = 0 := by
@@ -377,7 +376,7 @@ private theorem kernel_assignments {k N : ℕ} (σ : Setoid (Fin k)) (f : Fin k 
     prod_empty, LinearMap.id_apply, mul_one] at h
   apply (Rat.cast_injective (α := ℝ))
   push_cast
-  exact h
+  convert h using 1 <;> congr 1 <;> ext φ <;> simp
 
 private theorem kernel_group {k N : ℕ} (F : (Fin k → Fin N) → ℚ) :
     (∑ d, F d) = ∑ σ : Setoid (Fin k), ∑ d : Fin k → Fin N with Setoid.ker d = σ, F d := by
@@ -409,9 +408,12 @@ private theorem kernel_mean (r N : ℕ) (σ : Setoid (Fin (2 * r + 2 * r))) :
       mean (fun s : Fin N → Bool × Bool => ∏ i, coord r i (s (φ (Quotient.mk σ i)))) =
         ∏ B : Quotient σ, mean (blockWeight r σ B) := by
     simp_rw [block_product]
-    exact mean_injective_product φ hφ (blockWeight r σ)
+    convert mean_injective_product φ hφ (blockWeight r σ) using 1 <;> congr 1 <;>
+      exact Subsingleton.elim _ _
   rw [sum_congr rfl (fun φ hφ => he φ (mem_filter.mp hφ).2)]
-  simp only [sum_const, nsmul_eq_mul, injective_count]
+  simp only [sum_const, nsmul_eq_mul]
+  congr 2
+  convert injective_count (α := Quotient σ) N using 1 <;> congr 1 <;> ext φ <;> simp
 
 private theorem good_product (r : ℕ) (σ : Setoid (Fin (2 * r + 2 * r))) :
     (∏ B : Quotient σ, mean (blockWeight r σ B)) =
@@ -419,11 +421,11 @@ private theorem good_product (r : ℕ) (σ : Setoid (Fin (2 * r + 2 * r))) :
   simp_rw [local_block]
   by_cases hσ : Good r σ
   · simp [hσ, show ∀ B, Even (block σ B).card ∧ Pure r (block σ B) from hσ]
-  · rw [if_neg hσ]
+  · rw [ite_eq_right hσ]
     unfold Good at hσ
-    push_neg at hσ
+    push Not at hσ
     obtain ⟨B, hB⟩ := hσ
-    exact prod_eq_zero (mem_univ B) (if_neg hB)
+    exact prod_eq_zero (mem_univ B) (ite_eq_right (not_and.mpr hB))
 
 private theorem finite_expansion (r N : ℕ) :
     mean (fun s : Fin N → Bool × Bool =>
@@ -449,12 +451,12 @@ private theorem polynomial_mean (r n : ℕ) :
       (2 : ℚ) ^ r * mean (fun s : Fin (2 * n) → Bool × Bool =>
         (∑ t, U (s t)) ^ (2 * r) * (∑ t, V (s t)) ^ (2 * r)) := by
   rw [finite_expansion]
-  simp only [polynomial, eval₂_finset_sum, mul_sum]
+  simp only [polynomial, eval₂_finsetSum, mul_sum]
   apply sum_congr rfl
   intro σ hσ
   by_cases hg : Good r σ
-  · rw [if_pos hg, if_pos hg]
-    have h := integralBasis_eval r (Fintype.card (Quotient σ)) n (good_bound r σ hg)
+  · rw [ite_eq_left hg, ite_eq_left hg]
+    have h := integral_basis_eval r (Fintype.card (Quotient σ)) n (good_bound r σ hg)
     have hp : (2 : ℚ) ^ Fintype.card (Quotient σ) ≠ 0 := pow_ne_zero _ (by norm_num)
     apply (mul_left_cancel₀ hp)
     rw [h]
@@ -470,7 +472,7 @@ theorem result : claim := by
   rw [polynomial_mean]
   have hs := source_moment r n
   simp only [mean, Fintype.card_fun, Fintype.card_prod, Fintype.card_bool,
-    Nat.cast_pow, Nat.cast_mul, Nat.cast_ofNat] at *
+    Nat.cast_pow, Nat.cast_mul, Nat.cast_ofNat, Fintype.card_fin] at *
   have hfour : ((2 : ℚ) * 2) ^ (2 * n) = (2 : ℚ) ^ (4 * n) := by
     rw [← pow_two, ← pow_mul]
     congr 1

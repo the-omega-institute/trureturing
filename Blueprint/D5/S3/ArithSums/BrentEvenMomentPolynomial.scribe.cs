@@ -52,7 +52,7 @@ internal sealed class BrentEvenMomentPolynomialDocument : IScribeDocumentDefinit
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
-            DescribeId.Create("brent-even-moment-" + name), DeclarationHandle.Create(Prefix + name),
+            DescribeId.Create("brent-even-moment-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
 
     private static Formula BinomialFormula()
@@ -77,7 +77,7 @@ internal sealed class BrentEvenMomentPolynomialDocument : IScribeDocumentDefinit
     private static Formula ClaimBody()
     {
         var r = F.Id("r"); var n = F.Id("n"); var p = F.Id("P");
-        var evaluation = App(Qualified("Polynomial", "eval₂"),
+        var evaluation = App(new Formula.Subscript(Qualified("Polynomial", "eval"), D(2)),
             App(Qualified("Int", "castRingHom"), Rats()), n, p);
         return All("r", Nat(), new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("P"),
             Call("Polynomial", Ints()), All("n", Nat(), Equal(Mul(Pow(D(2), Mul(D(4), n)), evaluation),
