@@ -7,7 +7,6 @@
    digest: Faithful finite monitored orbits give contraction on the actual relevant space. -/
 
 import D5.S3.Quantum.Measurement.PositiveBranchReachableResponse
-import D5.S3.Quantum.PureState.PureStateHandshake
 import Mathlib.Topology.Algebra.InfiniteSum.Real
 
 /-! Kraus words and projection monitoring on their actual reachable space. -/
@@ -344,8 +343,13 @@ private theorem survival_difference_moments (s : ℕ → ℝ) (a : ℝ)
     have hh := hasSum_sum_of_ne_finset_zero (s := Finset.range (j + 1))
       (f := fun i => if i ∈ Finset.range (j + 1) then p j else 0)
       (fun i hi => by simp only [if_neg hi])
-    simpa only [Finset.sum_ite_of_true (fun i hi => hi), Finset.sum_const,
-      Finset.card_range, nsmul_eq_mul, Nat.cast_add, Nat.cast_one] using hh
+    have hval : (∑ i ∈ Finset.range (j + 1),
+        if i ∈ Finset.range (j + 1) then p j else 0) = (j + 1 : ℝ) * p j := by
+      calc
+        _ = ∑ _i ∈ Finset.range (j + 1), p j :=
+          Finset.sum_congr rfl (fun i hi => if_pos hi)
+        _ = _ := by simp
+    exact hval ▸ hh
   refine ⟨by simpa only [Nat.add_zero] using htail 0, ?_⟩
   have hswap : HasSum (fun z : ℕ × ℕ => f (z.2, z.1)) a :=
     (Equiv.prodComm ℕ ℕ).hasSum_iff.mpr htotal
@@ -399,7 +403,7 @@ theorem relevant_space_quantum_kac (K : α → Matrix n n ℂ) [Fintype α]
   have hloss (k : ℕ) : (P * E (F^[k] P)).trace.re = s k - s (k + 1) := by
     have ht : (F (F^[k] P)).trace = (E (F^[k] P)).trace -
         (P * E (F^[k] P)).trace := by
-      rw [hmon, Matrix.trace_mul_cycle, ← Matrix.mul_assoc, hQ,
+      rw [hmon, Matrix.trace_mul_cycle, hQ,
         Matrix.sub_mul, Matrix.one_mul, Matrix.trace_sub]
     rw [htp] at ht
     dsimp [s]
@@ -416,7 +420,7 @@ theorem relevant_space_quantum_kac (K : α → Matrix n n ℂ) [Fintype α]
       (hpos k)).mul_mul_conjTranspose_same P
     have ht := hh.trace_nonneg
     have heq : (P * E (F^[k] P) * Pᴴ).trace = (P * E (F^[k] P)).trace := by
-      rw [hP.isHermitian.eq, Matrix.trace_mul_cycle, ← Matrix.mul_assoc, hPP]
+      rw [hP.isHermitian.eq, Matrix.trace_mul_cycle, hPP]
     rw [heq] at ht
     exact (Complex.nonneg_iff.mp ht).1
   have hs : HasSum s PiC.trace.re :=

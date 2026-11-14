@@ -65,7 +65,69 @@ internal sealed class RelevantSpaceQuantumKacDocument : IScribeDocumentDefinitio
                         + "as the actual first-return probability. Physical time n+1 corresponds "
                         + "to Tr(P E(F^n(P))); the operator series alone does not state the "
                         + "normalization, weighted first moment or transport to a general Hilbert carrier."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("quantum-kac-actual-return-moments"),
+                DeclarationHandle.Create("D5/S3/Quantum/Measurements/RelevantSpaceQuantumKac."
+                    + "relevant_space_quantum_kac"),
+                H("Normalization and the first moment of actual return times"),
+                StatementSource.FromAuthor(ReturnFormula()),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Quantum/sinkovicz2014quantizedrecurrence")),
+                Blocks(
+                    Paragraph(Text("Let n be any finite coordinate carrier, A any finite Kraus "
+                        + "index set, and P a positive idempotent matrix with trace one. "
+                        + "A unit vector v gives exactly such a matrix P=|v><v|. "
+                        + "The completeness equation sum K_a adjoint K_a=I makes E trace preserving. "
+                        + "C is the actual original Kraus reachable space from the support of P, "
+                        + "and J is its orthogonal projection. Only E(J)=J is assumed.")),
+                    Paragraph(Text("Write E(X)=sum K_a X K_a adjoint, F(X)=(I-P)E(X)(I-P), "
+                        + "and p(k)=Re Tr(P E(F^k(P))). Thus p(k) is the actual first-return "
+                        + "probability at physical time k+1, including every preceding no-return "
+                        + "measurement. The theorem asserts the operator sum J, nonnegativity "
+                        + "of all p(k), total return probability one, and weighted first moment "
+                        + "equal to complex finrank C.")),
+                    Paragraph(Text("Kraus completeness and cyclicity of trace give "
+                        + "p(k)=s(k)-s(k+1), where s(k)=Re Tr(F^k(P)). Positivity gives "
+                        + "p(k)>=0. Applying trace to the operator series makes s summable. "
+                        + "For the nonnegative double family with value p(j) when i<=j and "
+                        + "zero otherwise, row sums are s(i), while column sums are "
+                        + "(j+1)p(j). Interchanging its two sums gives the first moment. "
+                        + "The trace of the actual orthogonal projection is finrank C; "
+                        + "no ambient dimension or unmonitored overlap enters this calculation."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ReturnFormula()
+    {
+        Formula n = F.Id("n"), a = F.Id("A"), k = F.Id("K"), p = F.Id("P"),
+            j = F.Id("J"), m = F.Id("m"), c = Call("reachableSpace", k, p);
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula matrix = Call("Matrix", n, n, complex);
+        Formula orbit = Seq(m, Sp, Mapsto, Sp, Call("iterate", F.Id("F"), m, p));
+        Formula prob = Call("Re", Call("Tr", Seq(p, Sp,
+            Call("E", Call("iterate", F.Id("F"), m, p)))));
+        Formula probabilities = Seq(m, Sp, Mapsto, Sp, prob);
+        Formula weighted = Seq(m, Sp, Mapsto, Sp, Open, m, Plus, D(1), Close, Sp, prob);
+        Formula normalization = Seq(Sum, Sub(F.Id("a")), Sp,
+            Sup(Call("K", F.Id("a")), F.Id("H")), Sp, Call("K", F.Id("a")), Sp, Eq, Sp, F.Id("I"));
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, n, Comma, Sp, a, Colon, Sp, F.Id("Type"), Comma),
+            Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+                OpenBracket, Call("DecidableEq", n), CloseBracket, Sp,
+                OpenBracket, Call("Fintype", a), CloseBracket, Comma),
+            Seq(Forall, Sp, k, Colon, Sp, a, Sp, To, Sp, matrix, Comma, Sp,
+                Forall, Sp, p, Comma, Sp, j, Colon, Sp, matrix, Comma),
+            Seq(Call("PosSemidef", p), Sp, Rightarrow, Sp, p, Sp, p, Sp, Eq, Sp, p,
+                Sp, Rightarrow, Sp, Call("Tr", p), Sp, Eq, Sp, D(1), Sp, Rightarrow),
+            Seq(normalization, Sp, Rightarrow, Sp,
+                Call("toEuclideanLin", j), Sp, Eq, Sp, Call("starProjection", c), Sp, Rightarrow),
+            Seq(Call("E", j), Sp, Eq, Sp, j, Sp, Rightarrow),
+            Seq(Call("HasSum", orbit, j), Sp, Land, Sp,
+                Open, Forall, Sp, m, Comma, Sp, D(0), Sp, Leq, Sp, prob, Close, Sp, Land),
+            Seq(Call("HasSum", probabilities, D(1)), Sp, Land, Sp,
+                Call("HasSum", weighted, Call("finrank", complex, c)))
+        ]));
+    }
 
     private static Formula SeriesFormula()
     {
