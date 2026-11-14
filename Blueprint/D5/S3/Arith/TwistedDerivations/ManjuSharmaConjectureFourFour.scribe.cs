@@ -101,6 +101,32 @@ internal sealed class ManjuSharmaConjectureFourFourDocument : IScribeDocumentDef
                 + "gives D(a+bz)=b as an O4-valued integer-linear map. The all-input Gaussian product identity "
                 + "D(xy)=D(x)conjugate(y)+xD(y) is proved by coordinate multiplication and transported. "
                 + "Thus no generator-only check replaces the full twisted Leibniz law."),
+            ProvenNode("root_primitive", "Exact order of the cyclotomic root",
+                Call("IsPrimitiveRoot", V("root"), F.D(4)),
+                "The existing primitive-root theorem gives exact order four in the actual fourth cyclotomic field."),
+            Node("orderedPb", "The ordered integral basis of length two",
+                Eq(V("orderedPb"), Call("PowerBasisMk", V("z"), F.D(2),
+                    Call("reindex", Call("basis", V("pb")), Call("finCongr", Call("pbDim"))))),
+                "The generator is z, the dimension is two, and its basis is pb.basis reindexed along pb_dim. "
+                + "The existing b_apply proof identifies its terms with z^i for i in Fin 2."),
+            ProvenNode("derivation_twisted", "The full twisted product law",
+                Binds(V("O4"), Eq(App(V("derivation"), Mul(V("x"), V("y"))),
+                    Add(Mul(App(V("derivation"), V("x")), App(V("tau"), V("y"))),
+                        Mul(V("x"), App(V("derivation"), V("y"))))), "x", "y"),
+                "The transported imaginary-coordinate map satisfies the law for every pair of actual algebraic integers."),
+            ProvenNode("counterinstance_root_values", "The actual generator images",
+                Both(Eq(App(V("derivation"), V("z")), F.D(1)),
+                    Eq(App(V("tau"), V("z")), Pow(V("z"), F.D(3)))),
+                "The derivation takes z to one and conjugation takes z to its third power."),
+            ProvenNode("derivation_not_inner", "Non-innerness over the integer ring",
+                new Formula.Not(Call("IsInner", Call("identity", Z, V("O4")), V("tau"), V("derivation"))),
+                "No integral multiplier works on every input; evaluation at z forces an odd integer to equal an even integer."),
+            ProvenNode("printed_test", "The actual adjugate test is integral",
+                Call("PrintedIntegralTest", F.D(2), F.D(1),
+                    Call("leftMulMatrix", Call("basis", V("orderedPb")), Sub(App(V("tau"), V("z")), V("z"))),
+                    Call("repr", Call("basis", V("orderedPb")), App(V("derivation"), V("z")))),
+                "The matrix and column are those of the actual multiplication operator and derivation in orderedPb. "
+                + "The literal half-adjugate column is the integer vector (0,1)."),
             ResultNode())));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) => Describe.Lean(
@@ -109,6 +135,11 @@ internal sealed class ManjuSharmaConjectureFourFourDocument : IScribeDocumentDef
         name is "IsInner" or "PrintedIntegralTest" or "claim"
             ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
         Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static DocumentBlock ProvenNode(string name, string title, Formula formula, string prose) => Describe.Lean(
+        DescribeId.Create("manjusharma" + name.Replace("_", "").ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
+        StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+        Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static DocumentBlock ResultNode() => Describe.Lean(
         DescribeId.Create("manjusharmaresult"), DeclarationHandle.Create(Prefix + "result"),

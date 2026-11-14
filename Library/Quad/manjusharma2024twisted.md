@@ -5,9 +5,10 @@ year: 2024
 title: Twisted Derivations in Algebraic Number Fields
 doi: null
 url: https://arxiv.org/abs/2412.03507v2
-claim: "Conjecture 4.4 gives an innerness iff with denominator p^e and two further sufficient divisibility assertions on prime-power cyclotomic integer rings."
+claim: "Conjectures 4.4 and 5.2 give printed adjugate innerness and outer-class criteria with denominator p^e on prime-power cyclotomic integer rings."
 strata_touched:
   - D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour
+  - D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFiveTwo
 license: arXiv-nonexclusive-distrib-1.0
 triage: anchor
 ---
@@ -69,6 +70,33 @@ The quadratic classification is prior literature; the formal delivery
 claims the application to this full printed named problem, not a new
 classification of quadratic derivations. A bounded literature screen is
 not an exhaustive novelty certificate.
+
+## Conjecture 5.2
+
+Conjecture 5.2 is at TeX lines 2240–2242, Section 5.2:
+https://arxiv.org/html/2412.03507v2#S5.SS2.
+The primary TeX SHA-256 is
+`61eac8e439f53269a30a61579d0c822058c9752410a3f65fb5c4e67309b9ce18`.
+Its complete assertion is that D is outer if and only if
+(1/p^e)Adj(A)C is not integral, and that Inn is a strict submodule of Der
+for every admissible pair, equivalently there is a nonzero outer class.
+All prime-power, field, integer-ring, basis, twist and factorization
+hypotheses are those described above. The determinant conclusion of
+Conjecture 4.3 is not assumed.
+
+Definition 2.1 and the Remark at TeX lines 156–158 identify a non-inner
+representative with a nonzero class in the actual quotient Der/Inn.
+For a reversed exponent pair, the positive source factorization is used
+after exchanging the twists. Commutativity preserves the twisted law,
+negating the integral multiplier preserves the inner submodule, and
+A changes to -A. The classical adjugate identity
+Adj(-A)=(-1)^(N-1)Adj(A) preserves the integrality test. Thus the two-order
+formulation includes every distinct pair without changing the denominator.
+
+The same actual fourth-root derivation described above is non-inner,
+so its quotient class is nonzero, while the printed vector is integral.
+This contradicts the criterion in the complete conjunction. It does not
+separately refute the universal strict inclusion or a corrected criterion.
 
 ## License
 
