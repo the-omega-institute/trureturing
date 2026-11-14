@@ -7,9 +7,12 @@
    digest: Literal five-row source arrays and their ordered scanner fibres. -/
 
 /-
-admission_basis: unresolved (no independent Literal escape witness established)
+admission_basis: none (independent Literal-host admission unresolved)
 escape_witness: none
-proof_shape: every theorem in this module is bind-only.
+proof_shape: two_colour_unique and scanner_count are bind-only.
+symmetrized_count, source_count and chromatic_source_count retain content only through
+the same delivery's genuine HardinA233178Normalization.result word induction.
+Their Literal-local steps are binding and normalization, not an independent witness.
 scanner_count is consumed by symmetrized_count; source_count is consumed by
 chromatic_source_count, whose external consumer is HardinA233178Recurrence.result.
 The private helpers are consumed on these live paths. In particular, two_colour_unique
@@ -304,7 +307,7 @@ private theorem two_colour_unique {n : ℕ} (hn : 2 ≤ n) (c : Fin 3)
       rcases hrs with hrs | hrs
       · subst s
         simp [Edges]
-      · simp only [Edges, Fin.val_mk, true_and]
+      · simp only [Edges, true_and]
         omega
     obtain ⟨a, b, hab, he⟩ :=
       HardinA233260Literal.two_label_classification hn f hp c hm
@@ -323,7 +326,8 @@ private theorem two_colour_unique {n : ℕ} (hn : 2 ≤ n) (c : Fin 3)
     have hc0 : (0 : Fin 3) ≠ c := by
       simpa [he] using hc (0, ⟨0, by omega⟩)
     fin_cases b <;> fin_cases b' <;> fin_cases c <;> simp_all
-  simpa only [hb] using he.trans he'.symm
+  rw [hb] at he
+  exact he.trans he'.symm
 
 private def alternating (n : ℕ) (c : Fin 3) : Array n 3 :=
   fun p => if p.2.val % 2 = 0 then 0 else if c = 1 then 2 else 1

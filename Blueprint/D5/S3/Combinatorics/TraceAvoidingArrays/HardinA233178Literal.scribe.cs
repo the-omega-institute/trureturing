@@ -58,9 +58,10 @@ internal sealed class HardinA233178LiteralDocument : IScribeDocumentDefinition
                 + "is a specialization of HardinA233260Literal.two_label_classification: "
                 + "the literal graph contains every horizontal and antidiagonal edge required "
                 + "there, the anchor fixes the first label to zero, and the omitted label fixes "
-                + "the other label. This reuse and finite normalization are bind-only, as are "
-                + "the scanner pushforward and the two source-count correspondences. They "
-                + "provide no independent escape witness for the Literal module. "
+                + "the other label. This uniqueness specialization and the scanner pushforward "
+                + "are bind-only. The source-count correspondences retain content through the "
+                + "same delivery's separate Normalization word induction; their Literal-local "
+                + "steps provide no independent escape witness for the Literal module. "
                 + "An anchored proper array cannot miss "
                 + "both nonzero labels. These facts supply the correction two without a source "
                 + "surjectivity condition or an imposed orbit divisor.", DescribeRole.Theorem),
