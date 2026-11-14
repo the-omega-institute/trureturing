@@ -1241,7 +1241,7 @@ $$
 
 The minimum is attained on this finite-dimensional compact effect set, as in the existing Chapter 77
 carrier. No closedness of $P$, continuity of $q\mapsto T_q(p)$, or measure on an infinite pure set is used.
-Fix one reference $m\in\operatorname{relint}K$. Define $D_m$ by requiring that, for every target $p\in P,
+Fix one reference $m\in\operatorname{relint}K$. Define $D_m$ by requiring that, for every target $p\in P$,
 
 $$
 \sum_{i=1}^r a_iT_{q_i}(p)
@@ -1350,14 +1350,14 @@ $V(a)=\theta V(a+t_+\lambda)+(1-\theta)V(a-t_-\lambda)$. Induction on the suppor
 convex combination of recipes with at most $d$ distinct positive labels. Hence $D_m^{\le d}$ makes all
 recipes have one common value and gives $D_m$.
 
-The number $d$ is the ambient $\dim_{\mathbb R}A$, not an affine dimension silently reusing the same symbol.
-If $\operatorname{affdim}K=r<d-1$, the sharper Carathéodory bound $r+1$ is available, but (21) uses the
-uniform ambient cap. The quantifier is still infinite in general: all pure labels, targets and recipes of
-the allowed support are tested, not a finite test list. For $d\ge3$, a statement that $d$ is sharp must also
-state the vacuity limitation. In the square homogenization ($d=3$), a generic interior point not on either
-diagonal needs three vertex labels, while an edge midpoint has only its two edge vertices in any decomposition.
-In a classical direct-sum cone with $d$ rays, the barycentre needs all $d$ rays. These are exact convex controls, not
-countermodels for a quantum hierarchy.
+The number $d$ is the ambient $\dim_{\mathbb R}A$. Since $C$ is generating and each nonzero $c\in C$
+equals $u(c)(c/u(c))$ with $c/u(c)\in K$, we have $\operatorname{span}_{\mathbb R}K=A$. Together with
+$K\subseteq\{u=1\}$ this gives $\operatorname{aff}K=\{u=1\}$ and $\operatorname{affdim}K=d-1$.
+Thus the cap is exactly the affine dimension plus one on this full carrier. It is a sufficient bound;
+universal minimality of the test cap is not asserted. In a classical direct-sum cone with $d$ rays, the
+barycentre needs all $d$ pure labels, but that simplex already satisfies $S$: this controls representation
+size only and does not show that a smaller cap fails to imply $S$. The quantifier is still infinite in
+general: all pure labels, targets and recipes of the allowed support are tested, not a finite test list.
 
 ### Boundary control and the geometric picture
 
@@ -1386,13 +1386,13 @@ pure sets, the complete proper intervals, min/max composite bounds, product pair
 rebracketing are retained. At three copies, replace the $S_3$ premise by the single capped condition
 
 $$
-D_{m_3}^{\le d_3}\quad\text{for one }m_3\in\operatorname{relint}K_3,qquad
+D_{m_3}^{\le d_3}\quad\text{for one }m_3\in\operatorname{relint}K_3,\qquad
 d_3=\dim_{\mathbb R}W_3.
 \tag{30}
 $$
 
 By (21), (30) is exactly $S_3$ on the unchanged $P_3/\mathcal E_3$ carrier. Only after this replacement is
-made do we invoke the existing [B1--B3 interfaces of VII Definition 102.4](../../docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md): B1 applies $S_q$ to the whole
+made do we invoke the existing [B1--B3 interfaces of VII Convention 102.4](../../docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md): B1 applies $S_q$ to the whole
 $q=1,2,3$ carriers and supplies the reciprocal-least, self-dual EJA geometry; B2 supplies the actual
 $(W_1,W_1,W_2)$, $(W_2,W_1,W_3)$ and $(W_1,W_2,W_3)$ products, units, pairings and local tomography; B3
 requires one common $W_2$, the identity rebracketing on $W_3$, positivity of the original $\tau_{12}$ on all
@@ -1415,9 +1415,10 @@ m_3=I_{n^3}/n^3\in\operatorname{relint}K_3.
 \tag{32}
 $$
 
-The interiority in (32) is the supplied [VIII local rank-one projector result](../../docs/develop/theory/QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md) on local rank-one projectors spanning
-$\operatorname{Herm}_n$ and summing to $(2n-1)I$, together with its tensorized identity-interiority under
-iterated minimum inclusion; no higher-copy PSD assertion is being added here. Thus the exact aligned test
+The interiority in (32) follows from the finite-projector argument in [VIII §124.6, proof of Theorem 124.6](../../docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md#1246-归一匹配锥的闭性原极性与严格夹逼):
+local rank-one projectors span $\operatorname{Herm}_n$ and sum to $(2n-1)I$. Their tensorized positive
+identity decomposition, together with iterated minimum inclusion, gives (32) without assuming higher-copy
+PSD. Thus the exact aligned test
 uses at most $n^6$ distinct positive pure labels. The criterion itself selects neither the complex field nor
 the dimension, and it does not supply actual instruments, Lüders updates, a physical clock, a Hamiltonian,
 $\hbar$, or commutativity of successive updates; endpoint reciprocity is a static exchange of arguments.
