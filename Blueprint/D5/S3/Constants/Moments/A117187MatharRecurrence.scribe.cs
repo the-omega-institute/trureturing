@@ -9,7 +9,7 @@ internal sealed class A117187MatharRecurrenceDocument : IScribeDocumentDefinitio
     private const string Prefix = "D5/S3/Constants/Moments/A117187MatharRecurrence.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/mathar2011a117187");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The literal Catalan generating function in A117187 satisfies the printed order-three recurrence at every nonnegative-index onset.",
+        "The literal Catalan generating function in A117187 satisfies the printed order-three recurrence for every natural index at least three.",
         H("Mathar's recurrence for the literal A117187 generating function"),
         Blocks(
             Paragraph(Text("All series are formal power series over the integers; no analytic convergence is assumed. C is the standard Catalan series, Cprime is its formal derivative, and T(f) substitutes X squared for X. Thus T(f)=f(X²). The map U selects the inverse of a series whose constant coefficient is the unit 1. All sequence indices are natural numbers, while recurrence coefficients and values are integers.")),
@@ -31,7 +31,9 @@ internal sealed class A117187MatharRecurrenceDocument : IScribeDocumentDefinitio
         Describe.Lean(DescribeId.Create("a117187-" + name.Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             name == "result" ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            more is null ? Blocks(Paragraph(Text(text))) : Blocks(Paragraph(Text(text)), Paragraph(Text(more))), role);
+            more is null ? Blocks(Paragraph(Text(text))) : Blocks(Paragraph(Text(text)), Paragraph(Text(more))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("mathar-2011-a117187-recurrence"), ResolutionKind.Proved) : null);
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Series() => Call("PowerSeries", Seq(Mathbb, Grp(F.Id("Z"))));
     private static Formula Call(string n, params Formula[] a) => new Formula.FunctionCall(FormulaIdentifier.Create(n), [.. a]);
