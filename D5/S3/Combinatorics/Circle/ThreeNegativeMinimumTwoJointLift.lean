@@ -40,7 +40,7 @@ open private a_two_far c_two_far_s c_two_far_r b_two_diagonal b_two_tall b_two_n
   a_two_ordered_small a_two_ordered
   from D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoFloors
 
-private theorem paired_chains (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) :
+theorem paired_chains (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) :
     let r : ℤ := 2 ^ a
     let s : ℤ := 2 ^ b
     let t : ℤ := 2 ^ c
