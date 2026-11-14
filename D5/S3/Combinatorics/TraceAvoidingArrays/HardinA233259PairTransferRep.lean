@@ -6,10 +6,10 @@
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRep.quotient_rows; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRep.representative_rows
    digest: Four-row representative orbit continuation certificate. -/
 /-
-admission_basis: escape-witness
-escape_witness: representative_rows (kernel checks every entry for the one-sided graph; used by quotient_rows)
-representative_rows: proof_shape=content; consumers=quotient_rows
-quotient_rows: proof_shape=content; consumers=HardinA233259PairTransferCount.count_transfer
+admission_basis: open-problem-resolution (#28807; Proved)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA233259Strip.result)
+representative_rows: proof_shape=bind-only; consumers=quotient_rows
+quotient_rows: proof_shape=bind-only; consumers=HardinA233259PairTransferCount.count_transfer
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore

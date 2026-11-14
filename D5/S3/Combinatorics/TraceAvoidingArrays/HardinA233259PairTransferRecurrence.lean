@@ -7,7 +7,7 @@
    digest: Four-row scalar transfer recurrence for A233259. -/
 /-
 admission_basis: escape-witness
-escape_witness: Powers.power_polynomial on the successor path; Base.initial_values and its certified one-sided table inputs on the zero path
+escape_witness: TransferMatrix.cont_matrix (unfrozen continuation induction, live through Count.count_transfer)
 shifted: proof_shape=content; consumers=recurrence
 recurrence: proof_shape=content; consumers=HardinA233259Strip.finite_certificate, HardinA233259Strip.result
 -/

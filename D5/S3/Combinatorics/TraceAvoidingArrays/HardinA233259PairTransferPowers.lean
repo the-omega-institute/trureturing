@@ -6,14 +6,14 @@
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferPowers.power_polynomial; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferPowers.powers_table
    digest: Four-row transfer-power and scalar-polynomial certificate. -/
 /-
-admission_basis: escape-witness
-escape_witness: table_steps certifies the eight concrete power steps; power_polynomial certifies the concrete annihilation used by Recurrence.shifted
+admission_basis: open-problem-resolution (#28807; Proved)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA233259Strip.result)
 W: proof_shape=bind-only; consumers=table_zero, table_steps, powers_table, power_polynomial
 coefficients: proof_shape=bind-only; consumers=power_polynomial, HardinA233259PairTransferRecurrence.shifted
 table_zero: proof_shape=bind-only; consumers=powers_table
-table_steps: proof_shape=content; consumers=powers_table
-powers_table: proof_shape=content; consumers=power_polynomial, HardinA233259PairTransferBase.initial_values
-power_polynomial: proof_shape=content; consumers=HardinA233259PairTransferRecurrence.shifted
+table_steps: proof_shape=bind-only; consumers=powers_table
+powers_table: proof_shape=bind-only; consumers=power_polynomial, HardinA233259PairTransferBase.initial_values
+power_polynomial: proof_shape=bind-only; consumers=HardinA233259PairTransferRecurrence.shifted
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix

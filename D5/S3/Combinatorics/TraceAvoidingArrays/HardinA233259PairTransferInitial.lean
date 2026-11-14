@@ -6,9 +6,9 @@
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCount.count_transfer; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferInitial.initial_weights
    digest: Four-row initial pair-class weight certificate. -/
 /-
-admission_basis: escape-witness
-escape_witness: initial_weights (kernel checks every initial class weight; used by Count.count_transfer)
-initial_weights: proof_shape=content; consumers=HardinA233259PairTransferCount.count_transfer
+admission_basis: open-problem-resolution (#28807; Proved)
+escape_witness: none (consumed bind-only helper of the settlement on the live path of HardinA233259Strip.result)
+initial_weights: proof_shape=bind-only; consumers=HardinA233259PairTransferCount.count_transfer
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore

@@ -7,7 +7,7 @@
    digest: Four-row transfer initial scalar values. -/
 /-
 admission_basis: escape-witness
-escape_witness: Rep.representative_rows, Initial.initial_weights and Powers.table_steps (via count_transfer and powers_table)
+escape_witness: TransferMatrix.cont_matrix (unfrozen continuation induction, live through Count.count_transfer)
 initial_values: proof_shape=content; consumers=HardinA233259PairTransferRecurrence.recurrence, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip.Bridge.actual_dependence
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore

@@ -7,7 +7,7 @@
    digest: Hardin's order-four recurrence for the literal four-row pair-exclusion arrays. -/
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
-escape_witness: result (finite_certificate and result inherit numerical transfer content from HardinA233259PairTransferRecurrence.recurrence after same-delivery inlining)
+escape_witness: TransferMatrix.cont_matrix (unfrozen continuation induction, live through HardinA233259PairTransferRecurrence.recurrence)
 Legal: proof_shape=bind-only; consumers=instDecidableLegal, a, legal_iff
 instDecidableLegal: proof_shape=bind-only; consumers=a
 a: proof_shape=bind-only; consumers=literal_card, a_sum, counting_bridge, finite_certificate, result

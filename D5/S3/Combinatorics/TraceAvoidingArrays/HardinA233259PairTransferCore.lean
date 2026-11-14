@@ -11,13 +11,13 @@ admission_consumers: HardinA233259PairTransferCount.count_transfer, HardinA23325
 The matrix and weights are definitions; the predicate transports certify no numeric inputs.
 All declarations are structural setup, with no bounded enumeration, checker, numeric reduction
 or certified instance; utility kind=none.
-escape_witness: none (consumed setup; grid_good and compatible_relabel transport the literal one-sided predicate)
+escape_witness: TransferMatrix.good_iff_local (unfrozen list-locality induction, live in grid_good)
 compatible: proof_shape=bind-only; consumers=instDecidableCompatible, grid_good, compatible_relabel, HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferCount.count_transfer
 instDecidableCompatible: proof_shape=bind-only; consumers=HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferRep.quotient_rows, HardinA233259PairTransferCount.count_transfer
 Proper: proof_shape=bind-only; consumers=instDecidableProper, L, grid_good, HardinA233259Strip.legal_iff
 instDecidableProper: proof_shape=bind-only; consumers=L
 L: proof_shape=bind-only; consumers=HardinA233259PairTransferCount.count_transfer, HardinA233259Strip.L_card
-grid_good: proof_shape=bind-only; consumers=HardinA233259PairTransferCount.count_transfer
+grid_good: proof_shape=content; consumers=HardinA233259PairTransferCount.count_transfer
 Q: proof_shape=bind-only; consumers=HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferCount.count_transfer, HardinA233259PairTransferPowers.table_steps, HardinA233259PairTransferPowers.power_polynomial
 weights: proof_shape=bind-only; consumers=HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferCount.count_transfer
 compatible_relabel: proof_shape=bind-only; consumers=HardinA233259PairTransferRep.quotient_rows

@@ -7,7 +7,7 @@
    digest: Four-row local-to-transfer counting bridge. -/
 /-
 admission_basis: escape-witness
-escape_witness: Rep.representative_rows and Initial.initial_weights (via quotient_rows and the two inputs to cardMatrix)
+escape_witness: TransferMatrix.cont_matrix (unfrozen continuation induction, live through TransferMatrix.cardMatrix)
 count_transfer: proof_shape=content; consumers=HardinA233259PairTransferBase.initial_values, HardinA233259PairTransferRecurrence.shifted
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
