@@ -9,6 +9,7 @@
 /-
 admission_basis: open-problem-resolution (#15553; Refuted).
 escape_witness: none.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23694.
 proof_shape: cHaarChannel: bind-only; consumers: momentOp, cHaarSingle, twoCopyIntegrand, momentOp2HaarEntries.
 proof_shape: momentOp: bind-only; consumers: claim, momentOp2HaarEntries, momentOp2Formula, moment22Reindex, instanceN4, instanceN5, result.
 proof_shape: hsNormSq: bind-only; consumers: claim, result.
@@ -173,7 +174,7 @@ def claim : Prop := ∀ (d e t : ℕ) [NeZero e],
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private theorem haarAverageEntry {n : Type*} [Fintype n] [DecidableEq n]
+theorem haarAverageEntry {n : Type*} [Fintype n] [DecidableEq n]
     (r c : ((n×n)×(n×n))) (hN : 2 ≤ Fintype.card n) :
     haarAverage n r c =
       (((if c.2=c.1 then 1 else 0 : ℂ) - (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) c.1 c.2 / (Fintype.card n : ℂ)) /
