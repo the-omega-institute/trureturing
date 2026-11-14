@@ -1,0 +1,28 @@
+**引理 147.5（单标签区域的两步四维块）。** 对每个 $p\in P_{\rm s}$ 及非空相对开 $U\subset S_p$，集合
+
+$$
+\{r\in P_{\rm s}\setminus\{p\}:\exists q\in U,\ p\perp q\perp r\}
+\tag{XII147.12}
+$$
+
+含一个与 $[0,1]^4$ 同胚的原环境紧集。块上每点满足 $a(r)=a(p)$。
+
+证明。在引理147.4的连续盘 $Q'$ 上，整球确定连续中心 $c(q)$ 及连续秩三形状算子 $A(q)$。具体地，在 $\{u=1\}$ 固定参考点 $o$，支撑函数 $h_q(v)=\max_{D_q}\langle v,x-o\rangle$ 给
+
+$$
+\langle v,c(q)-o\rangle=\tfrac12(h_q(v)-h_q(-v)),\qquad
+\langle v,A(q)v\rangle=(h_q(v)-\langle v,c(q)-o\rangle)^2.
+$$
+
+Hausdorff 连续性给支撑函数在单位方向上一致连续，第二式经极化确定连续的 $A(q)$。在一个内点 $q_0$ 附近，取三个固定向量，使其 $A(q_0)$ 像独立；连续性及 Gram—Schmidt 给 $\operatorname{im}A(q)$ 的局部连续正交标架 $W(q):\mathbb R^3\to\ker u$。令 $B(q)=A(q)^{1/2}W(q)$，则
+
+$$
+D_q=c(q)+B(q)\overline{\mathbb B}^3,\qquad S_q=c(q)+B(q)S^2
+$$
+
+连续，且 $B(q)$ 单射。每个 $S_q$ 含共同原纯点 $p$。在 $q_0$ 的参数球上取紧二帽 $T$，像避开 $p$；联合连续及紧性允许缩小底盘 $Q''\subset Q'$，使全部像仍避开 $p$。底盘和帽各取闭方盘。
+
+映射 $\Psi(q,t)=c(q)+B(q)t$ 在 $Q''\times T$ 上连续。固定 $q$ 时单射。不同 $q,q'$ 都在 $P_{\rm s}$，故 $D_q\ne D_{q'}$；二球都含 $p$，点交规则使交恰为 $\{p\}$，而两帽避开此点。故跨标签亦单射。紧源至 Hausdorff 原环境的连续单射是到像的同胚，给紧四立方体。像点是实际球缘原纯点；单标签邻点闭包给它们均在 $P_{\rm s}$。引理147.2沿两条实际边给 $a(r)=a(q)=a(p)$。证毕。
+
+这不是声称该块内部相对于 $P_{\rm s}$ 开，更不是相对于全部 $P$ 开。
+
