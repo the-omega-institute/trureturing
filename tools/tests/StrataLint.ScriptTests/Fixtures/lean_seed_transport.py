@@ -840,9 +840,10 @@ subprocess.run = transfer_run
         self.assertFalse((self.root / ".lake/build").exists())
 
     def preparation_deadline_probe(self, phase):
-        # Small incompressible material reaches multipart output and final close
-        # without allocating a production-sized Release asset.
-        (self.root / ".lake/build/lib/lean/D5/A.olean").write_bytes(random.Random(31).randbytes(3 * 1024 * 1024))
+        # Small inputs exercise compressed buffering, multipart output and final
+        # close without allocating a production-sized Release asset.
+        payload = bytes(3 * 1024 * 1024) if phase == "archive-compressible" else random.Random(31).randbytes(3 * 1024 * 1024)
+        (self.root / ".lake/build/lib/lean/D5/A.olean").write_bytes(payload)
         owner = self.publisher.with_name("lean_cache_release.py")
         owner.write_text(owner.read_text().replace("CHUNK_BYTES = 1610612736", "CHUNK_BYTES = 2097152"))
         self.commit_fixture()
@@ -890,7 +891,7 @@ def copy(source, target, *args, **kwargs):
 pathlib.Path.open, tarfile.copyfileobj = open_path, copy
 ''')
         (self.root / "preparation-reads").unlink(missing_ok=True)
-        return {**environment, "FAKE_PREPARATION_PHASE": phase}
+        return {**environment, "FAKE_PREPARATION_PHASE": phase.split("-")[0]}
 
     def assert_preparation_stopped(self, result, status):
         self.assertEqual(status, result.returncode, result.stdout + result.stderr)
@@ -905,6 +906,10 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         for phase in ("archive", "write", "rollover", "close"):
             with self.subTest(phase=phase):
                 self.assert_preparation_stopped(self.transport("publish", **self.preparation_deadline_probe(phase)), 2)
+
+    def test_compressible_archive_deadline_stops_reads_before_next_output(self):
+        self.assert_preparation_stopped(
+            self.transport("publish", **self.preparation_deadline_probe("archive-compressible")), 2)
 
     def test_hanging_direct_fetch_is_bounded_and_fallback_preserves_build_exit(self):
         self.assertEqual(0, self.transport("publish").returncode)
