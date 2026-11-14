@@ -79,6 +79,5 @@ internal sealed class MatharA176605FiveTermRecurrenceDocument : IScribeDocumentD
                 + "for n ≥ 4. No analytic convergence, assumed generating function or finite-prefix "
                 + "replacement is used. The proof is classified bind-only under the external named-problem "
                 + "resolution basis of issue #30568. No worldwide openness, priority or sibling resolution is asserted.",
-                DescribeRole.Theorem, new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("mathar-a176605-five-term-identity"), ResolutionKind.Proved)))));
+                DescribeRole.Theorem))));
 }

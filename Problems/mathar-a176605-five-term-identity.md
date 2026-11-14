@@ -5,12 +5,12 @@ doi: null
 url: https://oeis.org/A176605
 triage: theorem
 motivation_gids:
-  - D5/S1/Recurrence/Algebraic/MatharA176605FiveTermRecurrence.result
+  - D5/S1/Recurrence/A308815DFiniteRecurrence.euler_coeff
 ---
 
 # Mathar's A176605 five-term identity
 
-## Full source question
+## Problem
 
 OEIS A176605 revision 19, NAME, defines a natural sequence by a(0)=a(1)=1
 and, for every m ≥ 1,
@@ -37,7 +37,18 @@ explicit nonnegative-backshift interpretation, not OFFSET 0,3. The nonlinear
 recurrence is not imposed at m=0. The sum includes p=0 and p=m; +1 is
 outside the sum.
 
-## Mechanism and complete bridge
+## Motivation
+
+The existing frozen `D5/S1/Recurrence/A308815DFiniteRecurrence.euler_coeff`
+identity supplies the Euler coefficient extraction consumed by this proof.
+
+## Gap
+
+The source question requires the convolution-to-series bridge and algebraic
+differential elimination before that existing coefficient identity yields
+the complete five-term relation.
+
+## Route
 
 The original source conditions imply the formal-series equation
 
@@ -62,7 +73,15 @@ finite-sum expression, and uses no analytic convergence or finite-prefix
 surrogate. A well-founded natural recursion constructs an actual source;
 the Reg mirror proves its full source conditions and uses it in variation.
 
-## Evidence and boundaries
+## Falsifier
+
+A falsifier of the unchanged event would be an actual natural-valued source
+satisfying all original conditions and a violating index n ≥ 4. A failed
+attempt to derive the generating function would not itself be a refutation.
+The Reg audit and pre-freeze review are separate from the mathematical
+identity and must not be inferred from this narrative.
+
+## Evidence
 
 The Lean mathematical source and matching Blueprint share the subject
 address `D5/S1/Recurrence/Algebraic/MatharA176605FiveTermRecurrence`.
@@ -74,14 +93,7 @@ for independent pre-freeze fidelity and form review only after the current
 scoped Lean and native binding consumers succeed; no frozen status or
 publication is asserted here.
 
-The original source locator, attribution, confirmed CC BY-SA 4.0 license
-and bounded literature search are in
-`Library/RecurrenceAlgebraic/mathar2016a176605.md`.
-[Issue #30568](https://github.com/the-omega-institute/trureturing/issues/30568#issuecomment-6884652919)
-is the unchanged preregistration. Worldwide openness, priority and reliable
-general web coverage remain ASSUMED-UNVERIFIED.
-
-## Triage and continuation
+## Triage
 
 The exact named question is the sole proposed problem resolution, with
 proof_shape: bind-only, admission_basis: open-problem-resolution and
@@ -102,8 +114,11 @@ result is claimed.
 - **Open here:** minimal homogeneous recurrence order, analytic asymptotics,
   and a verified equivalence to the entry's alternate finite sum.
 
-A falsifier of the unchanged event would be an actual natural-valued source
-satisfying all original conditions and a violating index n ≥ 4. A failed
-attempt to derive the generating function would not itself be a refutation.
-The Reg audit and pre-freeze review are separate from the mathematical
-identity and must not be inferred from this narrative.
+## ASSUMED-UNVERIFIED
+
+The original source locator, attribution, confirmed CC BY-SA 4.0 license
+and bounded literature search are in
+`Library/RecurrenceAlgebraic/mathar2016a176605.md`.
+[Issue #30568](https://github.com/the-omega-institute/trureturing/issues/30568#issuecomment-6884652919)
+is the unchanged preregistration. Worldwide openness, priority and reliable
+general web coverage remain ASSUMED-UNVERIFIED.

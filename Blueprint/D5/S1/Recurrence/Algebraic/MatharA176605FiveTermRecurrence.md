@@ -34,10 +34,6 @@ $$\forall a \in \mathbb{N} \to \mathbb{N},\; \left(\operatorname{a}\left(0\right
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/MatharA176605FiveTermRecurrence.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/mathar-a176605-five-term-identity` (proved) by `D5/S1/Recurrence/Algebraic/MatharA176605FiveTermRecurrence.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-a176605-five-term-identity","declaration_gid":"D5/S1/Recurrence/Algebraic/MatharA176605FiveTermRecurrence.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Richard Choulet; R. J. Mathar; Michael Somos; OEIS Foundation Inc. (2016). *OEIS A176605 — Mathar five-term identity for a nonlinear convolution sequence*. URL: <https://oeis.org/A176605>.
