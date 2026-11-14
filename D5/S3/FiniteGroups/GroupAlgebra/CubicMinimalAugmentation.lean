@@ -23,6 +23,12 @@ import Mathlib.RepresentationTheory.Intertwining
 import Mathlib.RingTheory.Nakayama
 import Mathlib.Tactic
 
+/-!
+The augmentation quotient is forced to have dimension two by a regular-module
+surjection and the strict kernel-dimension obstruction 3 < 6. Every nonidentity
+augmentation then has the same range, forcing every ordered cubic word to vanish.
+-/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency.instanceSearchTypes false
 set_option backward.isDefEq.respectTransparency false
@@ -48,7 +54,8 @@ variable {V : Type uV} [AddCommGroup V] [Module (ZMod 3) V]
 
 private theorem elementary_card : Fintype.card E = 9 := by
   rw [Fintype.card_multiplicative, Fintype.card_pi_const, ZMod.card,
-    Fintype.card_fin]
+    ]
+  norm_num
 
 private theorem elementary_pow_three (g : E) : g ^ 3 = 1 := by
   apply Multiplicative.ext
@@ -61,12 +68,10 @@ private theorem actual_order_three {g : E} (hg : g ≠ 1) : orderOf g = 3 :=
 
 private theorem augmentation_ideal_pow_nine : augmentationIdeal ^ 9 = ⊥ := by
   have hE : IsPGroup 3 E :=
-    D5.S3.FiniteGroups.GroupAlgebra.FiniteFieldCyclicDimension
-      .elementary_isPGroup 3 2
+    D5.S3.FiniteGroups.GroupAlgebra.FiniteFieldCyclicDimension.elementary_isPGroup 3 2
   have h :=
-    D5.S3.FiniteGroups.GroupAlgebra.PGroupAugmentation
-      .augmentation_ideal_pow_card (R := ZMod 3) 3 hE
-  simpa only [Nat.card_eq_fintype_card, elementary_card] using h
+    D5.S3.FiniteGroups.GroupAlgebra.PGroupAugmentation.augmentation_ideal_pow_card (R := ZMod 3) 3 hE
+  simpa only [Nat.card_eq_fintype_card, elementary_card, augmentationIdeal, augmentation] using h
 
 private theorem augmentation_ideal_le_jacobson :
     augmentationIdeal ≤ (⊥ : Ideal A).jacobson := by
@@ -87,9 +92,13 @@ private theorem coinvariant_mk_asModule_smul
   | zero => simp only [zero_smul, map_zero]
   | add a b ha hb => simp only [add_smul, map_add, ha, hb]
   | single g r =>
-    simp [Representation.asModuleEquiv_map_smul,
-      Representation.asAlgebraHom_single, augmentation,
-      MonoidAlgebra.lift_single, Representation.Coinvariants.mk_self_apply]
+    rw [Representation.asModuleEquiv_map_smul, Representation.asAlgebraHom_single]
+    change Representation.Coinvariants.mk rho (r • rho g (rho.asModuleEquiv x)) =
+      augmentation (MonoidAlgebra.single g r) •
+        Representation.Coinvariants.mk rho (rho.asModuleEquiv x)
+    simp only [map_smul, Representation.Coinvariants.mk_self_apply]
+    congr 1
+    simp [augmentation, MonoidAlgebra.lift_single]
 
 private theorem coinvariant_ideal_action
     (rho : Representation (ZMod 3) E V) :
@@ -102,8 +111,9 @@ private theorem coinvariant_ideal_action
     change x ∈ augmentationIdeal • (⊤ : Submodule A rho.asModule) at hx
     refine Submodule.smul_induction_on hx ?_ ?_
     · intro a ha y _
-      rw [coinvariant_mk_asModule_smul,
-        show augmentation a = 0 from ha, zero_smul]
+      change Representation.Coinvariants.mk rho (rho.asModuleEquiv (a • y)) = 0
+      exact (coinvariant_mk_asModule_smul rho a y).trans (by
+        rw [show augmentation a = 0 from ha, zero_smul])
     · intro x y hx hy
       simp only [map_add, hx, hy, add_zero]
   · apply Submodule.span_le.mpr
@@ -114,10 +124,15 @@ private theorem coinvariant_ideal_action
       simp [a, augmentation, MonoidAlgebra.lift_single]
     have hact : rho.asModuleEquiv (a • rho.asModuleEquiv.symm v) =
         rho g v - v := by
-      rw [Representation.asModuleEquiv_map_smul]
-      simp [a, Representation.asAlgebraHom_single]
-    exact ⟨a • rho.asModuleEquiv.symm v,
-      Submodule.smul_mem_smul ha (Submodule.mem_top), hact⟩
+      change (rho.asAlgebraHom a) v = rho g v - v
+      simp only [a, map_sub, Representation.asAlgebraHom_single, one_smul,
+        map_one, LinearMap.sub_apply, Module.End.one_apply]
+    refine ⟨a • rho.asModuleEquiv.symm v, ?_, hact⟩
+    change a • rho.asModuleEquiv.symm v ∈
+      augmentationIdeal • (⊤ : Submodule A rho.asModule)
+    exact Submodule.smul_mem_smul ha
+      (show rho.asModuleEquiv.symm v ∈ (⊤ : Submodule A rho.asModule) from
+        Submodule.mem_top)
 
 /- This is only transport of the existing quotient by the equality just
    proved. The quotient required by Nakayama is exactly the actual V/IV. -/
@@ -174,8 +189,8 @@ private theorem operator_cube_zero
     (rho g - 1) ^ 3 = 0 := by
   have hpow : (rho g) ^ 3 = 1 := by
     rw [← map_pow, elementary_pow_three, map_one]
-  have hpoly : ((Polynomial.X - 1 : (ZMod 3)[X]) ^ 3) = Polynomial.X ^ 3 - 1 := by
-    simpa only [one_pow] using sub_pow_char (Polynomial.X : (ZMod 3)[X]) 1
+  have hpoly : ((Polynomial.X - 1 : Polynomial (ZMod 3)) ^ 3) = Polynomial.X ^ 3 - 1 := by
+    simpa only [one_pow] using sub_pow_char (Polynomial.X : Polynomial (ZMod 3)) 1
   have h := congrArg (Polynomial.aeval (rho g)) hpoly
   simpa only [map_pow, map_sub, map_one, Polynomial.aeval_X, hpow, one_pow,
     sub_self] using h
@@ -219,8 +234,7 @@ private theorem cyclic_ker_finrank_two
   have ho : orderOf g = 3 := actual_order_three hg
   have hcard : Fintype.card H = 3 := Fintype.card_zpowers.trans ho
   have hdim :=
-    D5.S3.FiniteGroups.GroupAlgebra.FiniteFieldCyclicDimension
-      .finrank_eq_card_mul_invariants 3
+    D5.S3.FiniteGroups.GroupAlgebra.FiniteFieldCyclicDimension.finrank_eq_card_mul_invariants 3
       (IsPGroup.of_card (n := 1) (by
         rw [Nat.card_eq_fintype_card, hcard, pow_one]))
       (rho.comp H.subtype) (hproj H inferInstance)
@@ -283,8 +297,7 @@ private theorem regular_restriction_projective (H : Subgroup E) :
   let r := Representation.leftRegular (ZMod 3) E
   let e : r.asModule ≃ₗ[A] A := Representation.ofMulActionSelfAsModuleEquiv
   letI : Module.Projective A r.asModule := Module.Projective.of_equiv' e.symm
-  exact D5.S3.FiniteGroups.GroupAlgebra.FiniteIndexProjectivity
-    .projective_restrict r H inferInstance
+  exact D5.S3.FiniteGroups.GroupAlgebra.FiniteIndexProjectivity.projective_restrict r H inferInstance
 
 private theorem intertwining_kernel_restriction_projective
     (rho : Representation (ZMod 3) E V)
@@ -297,13 +310,14 @@ private theorem intertwining_kernel_restriction_projective
     ∀ H : Subgroup E, IsCyclic H →
       Module.Projective (ZMod 3)[H]
         (Representation.asModule
-          ((Representation.IntertwiningMap.ker f).toRepresentation.comp H.subtype)) := by
+          ((Representation.IntertwiningMap.ker (Representation.leftRegular (ZMod 3) E) rho f).toRepresentation.comp H.subtype)) := by
   intro H hH
   let r := Representation.leftRegular (ZMod 3) E
-  let rH := r.comp H.subtype
-  let rhoH := rho.comp H.subtype
-  let K := (Representation.IntertwiningMap.ker f).toSubmodule
-  let kH := (Representation.IntertwiningMap.ker f).toRepresentation.comp H.subtype
+  let rH : Representation (ZMod 3) H A := r.comp H.subtype
+  let rhoH : Representation (ZMod 3) H V := rho.comp H.subtype
+  let K := (Representation.IntertwiningMap.ker (Representation.leftRegular (ZMod 3) E) rho f).toSubmodule
+  let kH : Representation (ZMod 3) H K :=
+    (Representation.IntertwiningMap.ker (Representation.leftRegular (ZMod 3) E) rho f).toRepresentation.comp H.subtype
   let fR : rH.IntertwiningMap rhoH :=
     { toLinearMap := f.toLinearMap, isIntertwining' := fun h => f.isIntertwining' h }
   let fH : rH.asModule →ₗ[(ZMod 3)[H]] rhoH.asModule :=
@@ -370,19 +384,19 @@ private theorem no_coinvariant_finrank_one
     MonoidAlgebra.coeffLinearEquiv (ZMod 3)
   letI : Module.Finite (ZMod 3) A :=
     Module.Finite.equiv eCoeff.symm
-  let K : Representation (ZMod 3) E (Representation.IntertwiningMap.ker f).toSubmodule :=
-    (Representation.IntertwiningMap.ker f).toRepresentation
+  let K : Representation (ZMod 3) E (Representation.IntertwiningMap.ker (Representation.leftRegular (ZMod 3) E) rho f).toSubmodule :=
+    (Representation.IntertwiningMap.ker (Representation.leftRegular (ZMod 3) E) rho f).toRepresentation
   have hregdim : Module.finrank (ZMod 3) A = 9 := by
     rw [eCoeff.finrank_eq, Module.finrank_finsupp_self, elementary_card]
   have hKdim : Module.finrank (ZMod 3)
-      (Representation.IntertwiningMap.ker f).toSubmodule = 3 := by
+      (Representation.IntertwiningMap.ker (Representation.leftRegular (ZMod 3) E) rho f).toSubmodule = 3 := by
     have hrange : LinearMap.range f.toLinearMap = ⊤ :=
       LinearMap.range_eq_top.mpr hf
     have hdim := f.toLinearMap.finrank_range_add_finrank_ker
-    rw [hrange, Submodule.finrank_top, hV, hregdim] at hdim
+    rw [hrange, finrank_top, hV, hregdim] at hdim
     change Module.finrank (ZMod 3) (LinearMap.ker f.toLinearMap) = 3
     omega
-  letI : Nontrivial (Representation.IntertwiningMap.ker f).toSubmodule :=
+  letI : Nontrivial (Representation.IntertwiningMap.ker (Representation.leftRegular (ZMod 3) E) rho f).toSubmodule :=
     Module.nontrivial_of_finrank_pos (by rw [hKdim]; decide)
   -- The rank-two product-group endpoint has a different group carrier.
   -- This existing uniform endpoint specializes directly to the exact E,
