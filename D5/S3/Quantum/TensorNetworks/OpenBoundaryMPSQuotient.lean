@@ -269,13 +269,10 @@ theorem actual_boundary_gram (m : ℕ) (ψ : Word (3 + m) → ℂ)
     (transfer (canonicalCore t))^[m] (vecMulVec q (star q)) *
     (prefixMap (canonicalCore t) (reconstructedLeft t) 3)ᴴ
   rw [hψq, density_factor]
-
 /-- Observed entries, including entries away from the selected column. -/
 abbrev ObservationIndex := Word 3 × Word 3
-
 private def polynomialConjugate {ι : Type*} (p : PhasePolynomial.Poly ι) :
     PhasePolynomial.Poly ι := rename Sum.swap (map (starRingEnd ℂ) p)
-
 private lemma polynomialConjugate_eval {ι : Type*} (p : PhasePolynomial.Poly ι)
     (z : ι → ℂ) :
     PhasePolynomial.actual (polynomialConjugate p) z = star (PhasePolynomial.actual p z) := by
@@ -286,46 +283,37 @@ private lemma polynomialConjugate_eval {ι : Type*} (p : PhasePolynomial.Poly ι
     cases i <;> simp
   rw [hv, ← MvPolynomial.map_eval]
   rfl
-
 private def columnPolynomial (p : MvPolynomial (Word 3) ℂ) :
     PhasePolynomial.Poly ObservationIndex := rename (fun w => Sum.inl (w, fun _ => 0)) p
-
 private lemma columnPolynomial_eval (p : MvPolynomial (Word 3) ℂ)
     (Q : Matrix (Word 3) (Word 3) ℂ) :
     PhasePolynomial.actual (columnPolynomial p) (fun ij => Q ij.1 ij.2) =
       eval (OpenBoundaryMPSDensityGenericity.fixedTensor Q) p := by
   rw [columnPolynomial, PhasePolynomial.actual, eval_rename]
   rfl
-
 private def contractionPolynomial : Matrix (Fin 2) (Word 3)
     (PhasePolynomial.Poly ObservationIndex) := fun k w =>
   if w 2 = k then columnPolynomial (leftNumerator (w 0)) *
     columnPolynomial (leftNumerator (w 1)) else 0
-
 private def contractedPolynomial : Matrix (Fin 2) (Fin 2) (PhasePolynomial.Poly ObservationIndex) :=
   contractionPolynomial * (Matrix.of fun u v : Word 3 => (X (Sum.inl (u, v)) : PhasePolynomial.Poly ObservationIndex)) *
     (Matrix.of fun w k => polynomialConjugate (contractionPolynomial k w))
-
 private def observedTransferPolynomial : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2)
     (PhasePolynomial.Poly ObservationIndex) :=
   fun ij kl => rename (Sum.map (fun w => (w, fun _ => 0)) (fun w => (w, fun _ => 0)))
     (OpenBoundaryMPSDensityGenericity.numeratorTransfer ij kl)
-
 private def modulusPolynomial (p : MvPolynomial (Word 3) ℂ) :
     PhasePolynomial.Poly ObservationIndex := columnPolynomial p *
       polynomialConjugate (columnPolynomial p)
-
 /-- A literal polynomial numerator in independent observed entries and conjugates. -/
 def boundaryGramPolynomial (m : ℕ) :
     Matrix (Fin 2) (Fin 2) (PhasePolynomial.Poly ObservationIndex) :=
   modulusPolynomial basisNumerator.det ^ m •
     (fun i j => (observedTransferPolynomial.adjugate ^ m *ᵥ
       (fun kl => contractedPolynomial kl.1 kl.2)) (i, j))
-
 /-- A literal polynomial denominator in the same observed coordinates. -/
 def boundaryDenominatorPolynomial (m : ℕ) : PhasePolynomial.Poly ObservationIndex :=
   modulusPolynomial minorPoly ^ (m + 2) * observedTransferPolynomial.det ^ m
-
 private lemma polynomial_evaluations (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ) :
     (∀ i j, PhasePolynomial.actual (boundaryGramPolynomial m i j) (fun ij => Q ij.1 ij.2) =
       gramNumerator m Q i j) ∧
@@ -395,19 +383,15 @@ private lemma polynomial_evaluations (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ
   · change ε _ = _
     rw [boundaryDenominatorPolynomial, map_mul, map_pow, map_pow, hmod, RingHom.map_det, hT]
     rfl
-
 /-- Thirteen real quotient coordinates: five complex core entries, sigma and eta.
 Here sigma is the boundary Gram's 00 entry, not the older positive boundary amplitude. -/
 abbrev Quotient := OpenBoundaryMPSTwoSiteMinimality.Parameter
-
 def quotientCoordinates (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ) : Quotient :=
   (coreCoordinates (OpenBoundaryMPSDensityGenericity.fixedTensor Q),
     (boundaryGram m Q 0 0).re, boundaryGram m Q 1 0 / boundaryGram m Q 0 0)
-
 /-- Only the positive phase representative uses a square root. -/
 def positiveBoundary (p : Quotient) : Fin 2 → ℂ :=
   ![((Real.sqrt p.2.1 : ℝ) : ℂ), (Real.sqrt p.2.1 : ℂ) * p.2.2]
-
 private lemma positiveBoundary_gram (q : Fin 2 → ℂ) (hq : q 0 ≠ 0) :
     let p : Quotient := (0, Complex.normSq (q 0), q 1 / q 0)
     vecMulVec (positiveBoundary p) (star (positiveBoundary p)) = vecMulVec q (star q) := by
@@ -428,7 +412,6 @@ private lemma positiveBoundary_gram (q : Fin 2 → ℂ) (hq : q 0 ≠ 0) :
     linear_combination q 1 * hs
   · field_simp [hq, hstar]
     linear_combination q 1 * (starRingEnd ℂ) (q 1) * hs
-
 /-- The actual boundary Gram gives sigma=|q0|² and the correctly oriented eta=q1/q0.
 The square-root representative has exactly the original state's unit-phase class. -/
 theorem actual_quotient_representative (m : ℕ) (ψ : Word (3 + m) → ℂ)
@@ -494,7 +477,6 @@ theorem actual_quotient_representative (m : ℕ) (ψ : Word (3 + m) → ℂ)
     funext w
     simp only [state_formula, mulVec_smul, dotProduct_smul, Pi.smul_apply, smul_eq_mul]
     rfl
-
 private lemma canonical_self (θ : OpenBoundaryMPSTwoSiteMinimality.Parameter)
     (g : Fin 2 → ℂ) (t : Word 3 → ℂ)
     (ht : mpsState 3 (OpenBoundaryMPSTwoSiteMinimality.core θ 0)
@@ -520,7 +502,6 @@ private lemma canonical_self (θ : OpenBoundaryMPSTwoSiteMinimality.Parameter)
     simp only [OpenBoundaryMPSTwoSiteMinimality.left, hc]
   · rw [← hA]
     simp only [OpenBoundaryMPSTwoSiteMinimality.core, hc]
-
 private lemma canonical_gram (m : ℕ) (θ : OpenBoundaryMPSTwoSiteMinimality.Parameter)
     (q : Fin 2 → ℂ)
     (hg : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
@@ -558,19 +539,16 @@ private lemma canonical_gram (m : ℕ) (θ : OpenBoundaryMPSTwoSiteMinimality.Pa
     (prefixMap (canonicalCore t) (reconstructedLeft t) 3)ᴴ
   rw [hl,hA]
   exact density_factor 3 m _ _ _
-
 /-- The raw polynomial observation uses boundary (1,eta), followed by the real scale sigma. -/
 def quotientObservation (k m : ℕ) (p : Quotient) : Matrix (Word k) (Word k) ℂ :=
   (p.2.1 : ℂ) • rawPrefix k m
     (OpenBoundaryMPSTwoSiteMinimality.state (k + m) (p.1, 1, p.2.2))
-
 private lemma rawPrefix_scale (k m : ℕ) (z : ℂ) (ψ : Word (k + m) → ℂ) :
     rawPrefix k m (z • ψ) = modulus z • rawPrefix k m ψ := by
   have hC : amplitudeColumns k m (z • ψ) = z • amplitudeColumns k m ψ := rfl
   rw [rawPrefix, hC, conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
     smul_smul]
   rfl
-
 private lemma positive_observation (k m : ℕ) (p : Quotient) (hp : 0 ≤ p.2.1) :
     rawPrefix k m (mpsState (k + m) (OpenBoundaryMPSTwoSiteMinimality.core p 0)
       (OpenBoundaryMPSTwoSiteMinimality.core p 1) (OpenBoundaryMPSTwoSiteMinimality.left p)
@@ -594,7 +572,6 @@ private lemma positive_observation (k m : ℕ) (p : Quotient) (hp : 0 ≤ p.2.1)
       ← Complex.ofReal_pow, Real.sq_sqrt hp]
   rw [hz]
   rfl
-
 /-- Exact observable retraction to all thirteen quotient coordinates.
 The hypothesis is the fixed observed recovery condition, with sigma strictly positive. -/
 theorem quotient_retraction (m : ℕ) (p : Quotient) (hp : 0 < p.2.1)
@@ -618,12 +595,10 @@ theorem quotient_retraction (m : ℕ) (p : Quotient) (hp : 0 < p.2.1)
       boundaryGram m (quotientObservation 3 m p) 0 0 = p.2.2
     rw [hGram]
     simp [positiveBoundary, vecMulVec, hs, mul_div_mul_right]
-
 /-- A fixed real polynomial refinement: recovery and a nonzero boundary numerator at 00. -/
 def quotientLocusPolynomial (m : ℕ) : MvPolynomial (ObservationIndex ⊕ ObservationIndex) ℝ :=
   OpenBoundaryMPSDensityGenericity.observedPolynomial *
     OpenBoundaryMPSDensityGenericity.normPolynomial (boundaryGramPolynomial m 0 0)
-
 private lemma quotientLocus_eval (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ) :
     eval (OpenBoundaryMPSDensityGenericity.realCoordinates (fun ij => Q ij.1 ij.2))
       (quotientLocusPolynomial m) ≠ 0 ↔
@@ -635,7 +610,6 @@ private lemma quotientLocus_eval (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ) :
     OpenBoundaryMPSDensityGenericity.normPolynomial_eval,
     (polynomial_evaluations m Q).1 0 0]
   simp only [ne_eq, Complex.normSq_eq_zero]
-
 private lemma gramDenominator_ne_zero (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
     (hg : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
       (OpenBoundaryMPSDensityGenericity.fixedTensor Q))
@@ -650,17 +624,14 @@ private lemma gramDenominator_ne_zero (m : ℕ) (Q : Matrix (Word 3) (Word 3) �
     have hm := (OpenBoundaryMPSDensityGenericity.canonical_transfer_det t hc).mpr hE
     simpa only [PhasePolynomial.actual, RingHom.map_det] using hm
   exact mul_ne_zero (pow_ne_zero _ (modulus_ne_zero hd.1.1.1.1)) (pow_ne_zero _ hM)
-
 /-- The positive-real-denominator version of the exact polynomial boundary numerator. -/
 def positiveGramPolynomial (m : ℕ) :
     Matrix (Fin 2) (Fin 2) (PhasePolynomial.Poly ObservationIndex) :=
   polynomialConjugate observedTransferPolynomial.det ^ m • boundaryGramPolynomial m
-
 /-- The real positive denominator is h(d)^(m+2) times normSq(det M)^m. -/
 def positiveGramDenominator (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ) : ℝ :=
   Complex.normSq (eval (OpenBoundaryMPSDensityGenericity.fixedTensor Q) minorPoly) ^ (m + 2) *
     Complex.normSq (transferNumerator (OpenBoundaryMPSDensityGenericity.fixedTensor Q)).det ^ m
-
 private lemma positive_gram_formula (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
     (hg : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
       (OpenBoundaryMPSDensityGenericity.fixedTensor Q))
@@ -714,41 +685,33 @@ private lemma positive_gram_formula (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
   simp only [Complex.star_def]
   field_simp [hT, hstar]
   <;> ring
-
 /-- Five real core parts, five imaginary core parts, sigma, Re eta and Im eta. -/
 abbrev QuotientRealIndex := Fin 5 ⊕ (Fin 5 ⊕ Fin 3)
-
 def quotientRealCoordinates (p : Quotient) : QuotientRealIndex → ℝ :=
   Sum.elim (fun i => (p.1 i).re)
     (Sum.elim (fun i => (p.1 i).im) (fun i => ![p.2.1, p.2.2.re, p.2.2.im] i))
-
 private def coreRatioNumerators : Fin 5 → PhasePolynomial.Poly ObservationIndex :=
   ![columnPolynomial (leftNumerator 0),
     columnPolynomial (minorPoly * matrixNumerator 0 0 0),
     columnPolynomial (minorPoly * matrixNumerator 0 0 1),
     columnPolynomial (minorPoly * matrixNumerator 1 0 0),
     columnPolynomial (minorPoly * matrixNumerator 1 0 1)]
-
 private def coreRatioDenominators : Fin 5 → PhasePolynomial.Poly ObservationIndex :=
   ![columnPolynomial minorPoly, columnPolynomial basisNumerator.det,
     columnPolynomial basisNumerator.det, columnPolynomial basisNumerator.det,
     columnPolynomial basisNumerator.det]
-
 private def quotientRatioNumerator (m : ℕ) : QuotientRealIndex →
     PhasePolynomial.Poly ObservationIndex :=
   Sum.elim coreRatioNumerators (Sum.elim coreRatioNumerators
     (fun i => ![boundaryGramPolynomial m 0 0, boundaryGramPolynomial m 1 0,
       boundaryGramPolynomial m 1 0] i))
-
 private def quotientRatioDenominator (m : ℕ) : QuotientRealIndex →
     PhasePolynomial.Poly ObservationIndex :=
   Sum.elim coreRatioDenominators (Sum.elim coreRatioDenominators
     (fun i => ![boundaryDenominatorPolynomial m, boundaryGramPolynomial m 0 0,
       boundaryGramPolynomial m 0 0] i))
-
 private def imaginaryCoordinate : QuotientRealIndex → Bool :=
   Sum.elim (fun _ => false) (Sum.elim (fun _ => true) (fun i => i == 2))
-
 /-- Explicit real polynomial numerators for every one of the thirteen coordinates. -/
 def quotientRealNumerator (m : ℕ) (i : QuotientRealIndex) :
     MvPolynomial (ObservationIndex ⊕ ObservationIndex) ℝ :=
@@ -756,12 +719,10 @@ def quotientRealNumerator (m : ℕ) (i : QuotientRealIndex) :
     (quotientRatioNumerator m i * polynomialConjugate (quotientRatioDenominator m i))
   if imaginaryCoordinate i then OpenBoundaryMPSDensityGenericity.imagCoeff p
     else OpenBoundaryMPSDensityGenericity.realCoeff p
-
 /-- The corresponding real denominators are sums of squares of real polynomials. -/
 def quotientRealDenominator (m : ℕ) (i : QuotientRealIndex) :
     MvPolynomial (ObservationIndex ⊕ ObservationIndex) ℝ :=
   OpenBoundaryMPSDensityGenericity.normPolynomial (quotientRatioDenominator m i)
-
 private lemma coefficient_actual {ι : Type*} (p : PhasePolynomial.Poly ι) (z : ι → ℂ) :
     eval (OpenBoundaryMPSDensityGenericity.realCoordinates z)
       (OpenBoundaryMPSDensityGenericity.realCoeff (PhasePolynomial.toCartesian p)) =
@@ -776,7 +737,6 @@ private lemma coefficient_actual {ι : Type*} (p : PhasePolynomial.Poly ι) (z :
     funext i; cases i <;> rfl
   rw [hv, PhasePolynomial.actual_cartesian] at h
   exact h
-
 private lemma real_ratio_eval (m : ℕ) (i : QuotientRealIndex)
     (Q : Matrix (Word 3) (Word 3) ℂ) :
     let z := fun ij : ObservationIndex => Q ij.1 ij.2
@@ -810,7 +770,6 @@ private lemma real_ratio_eval (m : ℕ) (i : QuotientRealIndex)
   · rw [h.1]
     simp [Complex.div_re, Complex.mul_re, Complex.star_def]
     <;> ring
-
 private lemma quotient_ratios (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
     (hc : eval (OpenBoundaryMPSDensityGenericity.fixedTensor Q) chartPoly ≠ 0)
     (i : Fin 5) :
@@ -824,36 +783,29 @@ private lemma quotient_ratios (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
     columnPolynomial_eval, coreCoordinates, canonicalCore, hA, reconstructedLeft,
     Matrix.smul_apply, map_mul]
   all_goals ring
-
 /-- Each quotient coordinate is an exact ratio of real polynomials on the refined observed chart.
 This includes the positive real denominator formula for the whole boundary Gram. -/
 private def coreVariable (i : Fin 5) : MvPolynomial QuotientRealIndex ℂ :=
   X (.inl i) + C Complex.I * X (.inr (.inl i))
-
 private def etaVariable : MvPolynomial QuotientRealIndex ℂ :=
   X (.inr (.inr 1)) + C Complex.I * X (.inr (.inr 2))
-
 private def quotientCorePolynomials : Fin 2 →
     Matrix (Fin 2) (Fin 2) (MvPolynomial QuotientRealIndex ℂ) :=
   ![!![coreVariable 1, coreVariable 2;
       1 - coreVariable 0 * coreVariable 1, -coreVariable 0 * coreVariable 2],
     !![coreVariable 3, coreVariable 4;
       -coreVariable 0 * coreVariable 3, 1 - coreVariable 0 * coreVariable 4]]
-
 private def quotientParameterPolynomials : parameterIndex → MvPolynomial QuotientRealIndex ℂ :=
   Sum.elim (fun ijk => quotientCorePolynomials ijk.1 ijk.2.1 ijk.2.2)
     (Sum.elim (fun i => ![coreVariable 0, 1] i) (fun i => ![1, etaVariable] i))
-
 private def quotientStatePolynomial (n : ℕ) (w : Word n) :
     MvPolynomial QuotientRealIndex ℂ :=
   eval₂Hom C quotientParameterPolynomials (parameterPolys n w)
-
 private def quotientObservationComplexPolynomial (k m : ℕ) (u v : Word k) :
     MvPolynomial QuotientRealIndex ℂ :=
   X (.inr (.inr 0)) * ∑ b : Word m,
     quotientStatePolynomial (k + m) (Fin.append u b) *
       map (starRingEnd ℂ) (quotientStatePolynomial (k + m) (Fin.append v b))
-
 /-- Real coefficient polynomials for either component of every raw quotient observation entry. -/
 def quotientObservationPolynomial (k m : ℕ) (u v : Word k) (imaginary : Bool) :
     MvPolynomial QuotientRealIndex ℝ :=
@@ -861,7 +813,6 @@ def quotientObservationPolynomial (k m : ℕ) (u v : Word k) (imaginary : Bool) 
     (quotientObservationComplexPolynomial k m u v)
   else OpenBoundaryMPSDensityGenericity.realCoeff
     (quotientObservationComplexPolynomial k m u v)
-
 private lemma quotientObservation_eval (k m : ℕ) (u v : Word k) (imaginary : Bool)
     (p : Quotient) :
     eval (quotientRealCoordinates p) (quotientObservationPolynomial k m u v imaginary) =
@@ -919,7 +870,6 @@ private lemma quotientObservation_eval (k m : ℕ) (u v : Word k) (imaginary : B
   rw [hobs] at hr
   cases imaginary <;> simp only [quotientObservationPolynomial, Bool.false_eq_true,
     ite_false, ite_true] <;> first | exact hr.1 | exact hr.2
-
 theorem rational_quotient_inverse (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
     (hQ : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
       (fun ij => Q ij.1 ij.2)) (quotientLocusPolynomial m) ≠ 0) :
@@ -991,7 +941,6 @@ theorem rational_quotient_inverse (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
             (boundaryGram m Q 1 0 / boundaryGram m Q 0 0).im
         rw [heval.1,heval.1]
         exact congrArg Complex.im heta
-
   refine ⟨?_, (real_ratio_eval m i Q).trans hratio⟩
   rw [quotientRealDenominator, OpenBoundaryMPSDensityGenericity.normPolynomial_eval]
   apply Complex.normSq_pos.mpr
@@ -1001,7 +950,6 @@ theorem rational_quotient_inverse (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
   · fin_cases i <;> simp [quotientRatioDenominator, coreRatioDenominators,
       columnPolynomial_eval, hdv.1.1.1.1, hdv.1.1.1.2]
   · fin_cases i <;> simp [quotientRatioDenominator, heval.1, heval.2, hden, hnum]
-
 /-- The refined polynomial chart is inhabited by an actual state at every complement length.
 The witness is the original fixed-density tail witness, with its original full-length gauge. -/
 theorem quotient_locus_witness (m : ℕ) :
@@ -1037,11 +985,9 @@ theorem quotient_locus_witness (m : ℕ) :
   refine ⟨⟨_,_,_,_,rfl⟩, ?_⟩
   rw [← hw]
   exact ⟨hQ, hg, h00'⟩
-
 #print axioms actual_boundary_gram
 #print axioms actual_quotient_representative
 #print axioms quotient_retraction
 #print axioms quotient_locus_witness
 #print axioms rational_quotient_inverse
-
 end D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSQuotient
