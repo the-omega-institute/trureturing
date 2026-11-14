@@ -868,3 +868,712 @@ preparation, action, composite and physical interfaces is still an open
 part of the enduring common-recovery goal. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 43. Actual terminal effects and a quantitative unresolved-control bound
+
+**Definition 43.1 (the original service and its declared return cut).**
+In §§43–46, retain AAV32.1–32.2's original one-excitation catalogue,
+without XII146.1's additional actual-control-resolution condition.
+Here XII146 denotes [the full-record capacity theorem](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XII.md#146-完整记录下的粗测量误差与保相干容量).
+The code, its actual embedding and target are precisely
+
+$$
+\begin{gathered}
+H=\operatorname{span}\{|r\rangle,|o\rangle,|m\rangle,|y\rangle\},
+\quad Q_0=|r\rangle\langle r|+|o\rangle\langle o|,
+\quad Q_1=|m\rangle\langle m|+|y\rangle\langle y|,\\
+\mathcal L(X)=\sum_{b=0}^1|b\rangle\langle b|_A\otimes Q_bXQ_b.
+\end{gathered}
+\tag{VI.24}
+$$
+
+Every unknown $\rho_{HR}$ is admitted, with arbitrary untouched $R$ and
+the same input-independent initial backing $C$. Its internal classical
+correlations, authentic preparation labels, records and external command
+sources remain. All coherently accessible systems, including controllers
+and delivery ports, are counted in the bank; initially only $EH$ carries
+an excitation and every other accessible quantum factor is vacuum.
+The allowed actions are the original number-preserving bank unitaries,
+identity holds, independent vacuum growth and actual single-site
+occupation instruments. The lower bound permits all number-preserving
+unitaries, as AAV33 does. It grants no uncounted quantum interaction,
+extra excitation, compound detector, reset, discard or postselection.
+Hidden classical choices may be summed inside an actual record; every
+field which the actual interface retains is still retained.
+
+Both AAV1.2's finite epoch cut from an actual known-alpha history and
+AAV1.3's selected bilateral fixed-slope joint source remain. The latter
+keeps its real root/header bindings and separate empty or
+$P_\varepsilon$ preparations. The free ordered grammar (VI.1), arbitrary
+lawful addressed edits and genuine Next are unchanged. The seven requests
+Tag, HasPromotion, HasSplit, $P$, $S$, FetchGrowth and Next keep their
+actual guards, replies, refusals and successors. Actual roots, acquired
+references, immutable samples, tapes, enrollment, rights, versions,
+controls, pending input/output, parser/phase/latch state and
+Print/End/ACK/Return remain part of the original service. No fixed source
+size, restricted observer or replacement preparation is imposed.
+
+The comparison is at a declared completed return of a protocol $\Pi$.
+Use AAV32.2's finite-tree output space, or exactly XII146.2's normalized
+total-return extension: standard Borel finite histories, measurable
+classical control kernels, measurable finite-dimensional bank fibres,
+and a CP returning instrument whose finite returning histories have
+total probability one for every input. Each actual history uses finite
+resources, without a common depth, bank-size or expected-cost bound.
+A pointwise zero probability for individual infinite histories does not
+replace normalized total return. No normalized state is assigned to an
+impossible record. Each fibre identifies the same original source-bank
+tensor factors by their acquired identities; all additional systems and
+leakage remain in that fibre. This is XII146.2's classical–quantum direct
+sum or predual direct integral, not an infinite physical allocation.
+
+A full ideal lift is one linear normalized CP channel on this complete
+interface, chosen for the whole unknown family. Its $A$, original
+source-bank and $R$ physical tensor-factor marginal is exactly the
+embedded $(\mathcal L\otimes\operatorname{id}_R)(\rho)$, with the
+other original vacuum factors specified by AAV32. Other source-interface
+obligations also remain. It can assign arbitrary compatible ideal masses
+to the retained records. Write $\Delta$ for AAV(V.41), equivalently
+XII146.3's supremum of full-output half trace distance over all inputs
+and references. Projection onto the code followed by renormalization is
+not this comparison.
+
+**Definition 43.2 (effect defect at actual terminal records).**
+Let $h$ be the complete actual terminal record, with returned bit $A(h)$
+and all its occupation outcomes. Write $\mathsf C_b$ for records which
+contain a click and return $b$. Let $\mathcal J_h$ be the actual CP
+density from $H$ to the entire retained quantum laboratory fibre.
+All hidden Kraus indices and unresolved classical choices have already
+been summed in $\mathcal J_h$; $h$ is not enlarged to label them. Put
+
+$$
+\begin{gathered}
+F_h=\mathcal J_h^*(I),\qquad
+B_{hb}=\left.Q_bF_hQ_b\right|_{Q_bH},\qquad
+p_{hb}=\tfrac12\operatorname{Tr}B_{hb},\qquad
+e_{hb}=\tfrac12\bigl(\operatorname{Tr}B_{hb}
+                         -\lambda_{\max}(B_{hb})\bigr),\\
+p_b=\int_{\mathsf C_b}p_{hb}\,d\nu(h),\qquad
+\epsilon_b=\int_{\mathsf C_b}e_{hb}\,d\nu(h).
+\end{gathered}
+\tag{VI.25}
+$$
+
+The eigenvalues are on the specified rank-two block. Thus
+$e_{hb}=\lambda_{\min}(B_{hb})/2$ and
+$0\le\epsilon_b\le p_b/2\le1/2$.
+The defect is homogeneous in the density: changing dominating measure
+rescales $B_{hb}$, its trace and its largest eigenvalue by the same
+nonnegative Radon–Nikodym factor, leaving the integral unchanged.
+
+For each comparison, a common dominating record measure exists as in
+XII146.2: add the actual and ideal record laws on $I_H/4$. Positivity and
+$\rho_H\preceq4(I_H/4)$ dominate every other input law. Ideal-only
+records have $\mathcal J_h=0$ and zero defect. The stated measurable
+finite-bank domain supplies the operator densities and their measurable
+spectral selections. This definition does not give experimental access
+to those densities.
+
+On clicked histories AAV33's first-click argument gives rank-one
+resolved chains. In any such hidden representation write
+$K_{h\kappa}=|u_{h\kappa}\rangle\langle v_{h\kappa}|$, with summation
+also denoting integration when required. Then
+
+$$
+2e_{hb}=\min_{\substack{P=P^2=P^\dagger\text{ on }Q_bH\\
+                         \operatorname{rank}P=1}}
+ \sum_\kappa\|u_{h\kappa}\|^2
+                  \|(I-P)Q_bv_{h\kappa}\|^2.
+\tag{VI.26}
+$$
+
+Indeed $B_{hb}=\sum_\kappa\|u_{h\kappa}\|^2
+|Q_bv_{h\kappa}\rangle\langle Q_bv_{h\kappa}|$ and maximizing
+$\operatorname{Tr}(PB_{hb})$ gives $\lambda_{\max}$. Equation (VI.25),
+not a choice of hidden representation, defines the defect. It measures
+the residual input-direction mass within this actual record and block;
+variation of the laboratory output vectors alone need not increase it.
+
+**Theorem 43.3 (quantitative actual-effect obstruction).**
+For every protocol of Definition 43.1 there are common
+input-independent weights $w_0,w_1\ge0$,
+$w_0+w_1\le1$, determined by the protocol's formal no-click paths,
+such that every full ideal lift satisfies
+
+$$
+\Delta\ge\max\left\{\frac14,
+ \frac{1-w_0}{\sqrt2}-\sqrt{\epsilon_0},
+ \frac{1-w_1}{\sqrt2}-\sqrt{\epsilon_1}\right\}.
+\tag{VI.27}
+$$
+
+Consequently
+
+$$
+\Delta\ge\max\left\{\frac14,
+ \frac1{2\sqrt2}
+       -\frac{\sqrt{\epsilon_0}+\sqrt{\epsilon_1}}2\right\}.
+\tag{VI.28}
+$$
+
+More precisely, on
+$\Phi_0=(|r\rangle|0\rangle+|o\rangle|1\rangle)/\sqrt2$ and
+$\Phi_1=(|m\rangle|0\rangle+|y\rangle|1\rangle)/\sqrt2$, let $z_b$
+be the actual probability of returning $b$ with no click and let $D_b$
+be this input's complete-output half trace distance. Then
+
+$$
+D_b\ge\max\left\{\frac{1-z_b}{2},
+ \frac{1-z_b}{\sqrt2}-\sqrt{p_b\epsilon_b}\right\},
+\qquad z_b\le w_b.
+\tag{VI.29}
+$$
+
+The bounds do not assume pure outputs at actual clicked records, equal
+actual/ideal record masses, a fixed retained bank, or a recorded copy of
+private control choices. No positive-defect sharpness is asserted.
+
+**Proof.** The following mixed-output estimate is the additional step
+needed beyond XII146's resolved-record argument. For input $\Phi_b$ set
+$\sigma_h=(\mathcal J_h\otimes\operatorname{id}_R)(\Phi_b)$, where
+the same symbol for a vector denotes its rank-one density when it is
+an argument of a channel. A matrix-unit expansion gives
+
+$$
+\operatorname{Tr}_{\rm lab}\sigma_h=\tfrac12B_{hb}^{\mathsf T},
+\qquad \operatorname{Tr}\sigma_h=p_{hb}.
+\tag{VI.30}
+$$
+
+The transpose is in the displayed within-block basis. Choose a
+measurable unit principal-eigenvalue ray $\eta_h$ of this reference
+marginal; at a tied eigenvalue choose any fixed measurable selector.
+For $p=p_{hb}>0$, $e=e_{hb}$ and
+$T_h=I_{\rm lab}\otimes|\eta_h\rangle\langle\eta_h|$, define the
+equal-mass positive comparison operator
+
+$$
+\widetilde\sigma_h=\frac{p}{p-e}\,T_h\sigma_hT_h
+       =\tau_h\otimes|\eta_h\rangle\langle\eta_h|,
+\qquad \operatorname{Tr}\tau_h=p.
+\tag{VI.31}
+$$
+
+Here $p-e\ge p/2>0$. For $p=0$ take
+$\widetilde\sigma_h=0$, without choosing a normalized conditional
+state. Purify $\sigma_h/p$ mathematically and apply $T_h$ to that
+purification. The normalized projected vector has squared overlap
+$(p-e)/p$ with the original. The two pure states have half trace
+distance $\sqrt{e/p}$; taking their marginal and multiplying by $p$
+gives
+
+$$
+\tfrac12\|\sigma_h-\widetilde\sigma_h\|_1\le\sqrt{pe}.
+\tag{VI.32}
+$$
+
+This is the normalized projection/fidelity estimate, consistent with
+Fuchs–van de Graaf, [Theorem 1, equation (46)](https://arxiv.org/html/quant-ph/9712042v2).
+The purification and projection are only comparison operations. No
+laboratory operation on $R$, hidden-label output, physical
+postselection or replacement of an actual record is used.
+
+For completeness, the support estimate required for the mixed
+$\tau_h$ can be obtained with arbitrary ideal mass. Suppose an ideal
+positive output $\omega_h$ has trace $q$ and is supported on the
+embedded $\Phi_b$ on original source-bank/$R$, tensored with identity
+on extras. Trace out extras only in this norm proof. The ideal becomes
+$q\Phi_b$, and (VI.31) becomes
+$T\otimes|\eta_h\rangle\langle\eta_h|$ with
+$\operatorname{Tr}T=p$. Choose orthonormal laboratory vectors $f,g$
+and a unit $\eta_h^\perp$ such that
+
+$$
+|\Phi_b\rangle=
+  (|f\rangle|\eta_h\rangle+
+   |g\rangle|\eta_h^\perp\rangle)/\sqrt2.
+$$
+
+These vectors include the prescribed original vacuum factors.
+Pinching onto the span of the two displayed product vectors and its
+orthogonal complement leaves $q\Phi_b$ fixed. The actual first block
+is $x|f\eta_h\rangle\langle f\eta_h|$, where
+$x=\langle f,Tf\rangle\in[0,p]$, and its complementary positive
+block has trace $p-x$. The two-dimensional difference has trace norm
+$\sqrt{x^2+q^2}$. Hence, also when $p=0$ or $q=0$,
+
+$$
+\|\widetilde\sigma_h-\omega_h\|_1
+ \ge\sqrt{x^2+q^2}+p-x
+ \ge\sqrt{p^2+q^2}=:F_2(p,q).
+\tag{VI.33}
+$$
+
+The last inequality is the triangle inequality for the Euclidean norm
+applied to $(p,q)=(x,q)+(p-x,0)$. Laboratory mixedness, internal
+entanglement with retained extras and leakage did not require a pure
+actual branch. Equivalently, fixing one reference ray and the Bell
+support leaves a principal angle $\pi/4$ on their common two-vector
+part; the preceding calculation supplies the needed bound directly.
+This use of two-projection geometry is consistent with Loring,
+[*Principal angles and approximation for quaternionic projections*](https://arxiv.org/html/1306.1923v1),
+Definition 1.2 and its two-projection blocks, without importing an
+apparatus or a subspace-calibration algorithm.
+
+For this input, every ideal lift has correct bit $b$ and pure
+original-bank/$R$ marginal $\Phi_b$. Positivity therefore puts each
+ideal record density inside that support: zero trace on its orthogonal
+complement also kills the cross terms. Extras may be mixed and
+correlated with records. If the comparison interface allows coherence
+between classical record labels, restriction to the same actual record
+algebra contracts the norm and preserves this support. Thus
+(VI.32)–(VI.33) give on each actual clicked record returning $b$
+
+$$
+\|\sigma_h-\omega_h\|_1
+ \ge F_2(p_{hb},q_h)-2\sqrt{p_{hb}e_{hb}}.
+\tag{VI.34}
+$$
+
+In particular, it is not legitimate to apply a pure-product distance
+formula separately to hidden summands of $\sigma_h$ and add their
+norms. Equation (VI.34) instead compares the already summed density.
+
+Partition actual record space into $G$ (bit $b$, no click), $B=\mathsf C_b$
+and $W$ (wrong bit). Write their actual masses as $z,p_b,s$ and their
+ideal masses as $g,q,0$. Include ideal-only records in the appropriate
+sets with actual density zero. Normalized total return gives
+$z+p_b+s=g+q=1$. On $G$ use only the trace difference $|z-g|$; on
+$W$ the norm contribution is $s$. The vector triangle inequality and
+Cauchy–Schwarz on the actual record space give
+
+$$
+\int_BF_2(p_{hb},q_h)\,d\nu\ge F_2(p_b,q),\qquad
+\int_B\sqrt{p_{hb}e_{hb}}\,d\nu
+       \le\sqrt{p_b\epsilon_b}.
+\tag{VI.35}
+$$
+
+Set $m=1-z=p_b+s$. The same Euclidean norm gives
+$F_2(p_b,q)+s\ge F_2(m,q)$ and
+$F_2(m,q)+|m-q|\ge F_2(m,m)=\sqrt2m$. Consequently
+
+$$
+\begin{aligned}
+2D_b&\ge |z-g|+F_2(p_b,q)+s-2\sqrt{p_b\epsilon_b}\\
+&\ge |q-m|+F_2(m,q)-2\sqrt{p_b\epsilon_b}\\
+&\ge\sqrt2(1-z)-2\sqrt{p_b\epsilon_b}.
+\end{aligned}
+\tag{VI.36}
+$$
+
+This proves the second term of (VI.29) with arbitrary, unequal ideal
+record masses, including mass zero on either side. Only linear
+probability computations below use a mathematical random tape.
+
+Realize the common initial classical law and the successive
+input-independent randomized control kernels by a common tape $t$,
+as in XII146's lower proof. Occupation outcomes are not pre-sampled.
+At fixed $t$ there is one formal all-zero occupation path. Let $a(t)$
+be its returned bit if it returns in finitely many steps, and $\bot$
+otherwise; choose measurable program continuations on impossible
+histories only to define this formal path. Set
+
+$$
+w_b=\Pr\{a(t)=b\},\qquad w_0+w_1\le1.
+\tag{VI.37}
+$$
+
+The no-click chain is a contraction from $H$, including any finite
+vacuum extensions. Its unnormalized probability on $\Phi_b$ is at most
+one for each $t$, and it returns $b$ only when $a(t)=b$. Integration
+gives $z_b\le w_b$. No tape is copied into the output and no norm is
+summed over an unrecorded tape partition. In the total-return domain,
+the finite return-time events are measurable and the unreturned mass
+after $N$ steps tends to zero. Thus an infinite formal zero path adds
+no unaccounted returned state, exactly as in XII146.2's argument.
+
+Finally reuse AAV33's rank-one first-click mechanism. Every resolved
+clicked chain has rank at most one from $H$; its output on $\Phi_b$
+is product across laboratory/$R$. Summing hidden chains leaves a
+separable positive density. The Bell-support test has probability at
+most half its trace, even with laboratory leakage and extras. This is
+the subnormalized instance of Horodecki–Shor–Ruskai,
+[Theorem 4(B),(D)](https://arxiv.org/html/quant-ph/0302031v2).
+The actual correct-bit Bell test has probability at most
+$z_b+p_b/2\le(1+z_b)/2$, whereas every ideal lift gives one.
+Therefore $D_b\ge(1-z_b)/2$. This also extends the quarter obstruction
+to the explicitly normalized total-return domain, without a common
+finite-depth assumption. Since $p_b\le1$, (VI.29), $z_b\le w_b$ and
+$w_0+w_1\le1$ imply (VI.27). Averaging its two effect terms gives
+(VI.28). The two Bell inputs belong to the original whole unknown
+family; taking its complete input/reference supremum preserves all
+these lower bounds. $\square$
+
+## 44. First-click prefixes and later actual refinements
+
+**Theorem 44.1 (a sufficient prefix defect budget).**
+In Definition 43.1, let $g$ range over the actual finite prefixes ending
+at their first click. Each terminal clicked history retains its own
+unique such prefix. Let $D_g$ be the effect of this prefix event on
+$H$, with hidden indices already summed, and put
+
+$$
+\widehat\epsilon_b=\frac12\int
+ \left(\operatorname{Tr}A_{gb}-\lambda_{\max}(A_{gb})\right)
+ \,d\xi(g),\qquad
+A_{gb}=\left.Q_bD_gQ_b\right|_{Q_bH}.
+\tag{VI.38}
+$$
+
+Any subsequent actual refinement, classical control, number-preserving
+operation, lawful native service and growth, followed by normalized
+total return, satisfies
+
+$$
+\epsilon_b\le\widehat\epsilon_b.
+\tag{VI.39}
+$$
+
+Thus (VI.27)–(VI.28) remain valid with the certified upper budgets
+$\widehat\epsilon_b$ in place of $\epsilon_b$. In particular,
+rank at most one of $Q_bD_gQ_b$ for almost every actual first-click
+prefix is sufficient for terminal zero defect in that block. No
+terminal-control-resolution premise is needed.
+
+The effect comparison (VI.39) itself only needs actual record
+refinement, positive effects and total return; arbitrary later
+normalized actual CP instruments also satisfy it. Substitution into
+Theorem 43.3 still requires the whole protocol's original catalogue
+and complete-output premises.
+
+**Proof.** Retention of actual records gives a genuine refinement map
+from complete clicked histories to their first-click prefixes.
+Disintegrate the positive effect measure over this map. Normalized
+total return implies, almost everywhere in $g$,
+
+$$
+\int_{h\succ g}F_{h\mid g}\,d\nu_g(h)=D_g.
+\tag{VI.40}
+$$
+
+One can dominate the prefix effect measure using the full-rank input
+$I_H/4$. Any lost returning effect would be positive and have positive
+trace on that input, contradicting total return. This also justifies
+(VI.40) for unbounded finite returning histories. The identity concerns
+event probabilities and their effects; it does not require that
+unobserved controller memory be reconstructed from $g$ or that a future
+control kernel be a function only of the visible prefix.
+
+For a positive two-dimensional matrix define
+$f(B)=\operatorname{Tr}B-\lambda_{\max}(B)=\lambda_{\min}(B)$.
+The variational formula
+$f(B)=\min_{\|v\|=1}\langle v,Bv\rangle$ gives
+
+$$
+\int f(B_h)\,d\nu_g(h)\le
+ f\left(\int B_h\,d\nu_g(h)\right),\qquad
+0\preceq B\preceq A\Longrightarrow f(B)\le f(A).
+\tag{VI.41}
+$$
+
+Apply these inequalities to only the descendants which return $b$,
+compressing (VI.40) by $Q_b$. Their summed effect is at most $A_{gb}$.
+Integrate over $g$ and divide by two to obtain (VI.39). Everything
+being integrated is a positive finite-dimensional effect with
+integrable trace. In particular $\widehat\epsilon_b\le1/2$ because
+the total first-click effect is at most $I_H$.
+
+This is grouping within a proof inequality. Actual different prefixes,
+terminal records, bank fibres and source successors remain different
+outputs; no retained record is erased, and no hidden choice is exposed.
+$\square$
+
+**Proposition 44.2 (terminal rank one has no converse prefix implication).**
+Positive-effect refinement can turn a rank-two prefix effect into
+rank-one terminal effects. Hence terminal zero defect does not, by
+itself, establish first-click zero defect when controls or other actual
+distinguishing fields can be recorded later.
+
+**Proof.** On either original block choose its two displayed basis
+projections $P_1,P_2$. For $0<\gamma\le1$, the effect refinement
+
+$$
+D_g=\gamma Q_b,\qquad
+F_{h_1}=\gamma P_1,\quad F_{h_2}=\gamma P_2,
+\qquad F_{h_1}+F_{h_2}=D_g
+\tag{VI.42}
+$$
+
+has prefix contribution $\gamma/2$ to (VI.38), while the two
+terminal contributions vanish. An actual interface which reveals the
+distinguishing field only after the prefix has exactly this direction
+of refinement. Equation (VI.42) is the algebraic obstruction to the
+converse, not an assertion that this effect family has been acquired
+as an authenticated native protocol. Neither the prefix theorem nor
+its converse discussion supplies a new detector or permission to
+publish a private label. $\square$
+
+## 45. The zero-defect endpoint and the unresolved quarter question
+
+**Theorem 45.1 (the effect-level endpoint).**
+Suppose the actual terminal instrument of Definition 43.1 obeys
+
+$$
+\operatorname{rank}B_{hb}\le1
+\quad\text{for almost every }h\in\mathsf C_b,
+\qquad b=0,1.
+\tag{VI.43}
+$$
+
+Then every full ideal lift satisfies $\Delta\ge1/(2\sqrt2)$.
+The same conclusion follows from the sufficient prefix condition of
+Theorem 44.1. If the paid fair-bit, detector, hold, return and original
+source-service permissions of XII146.7 are supplied, the original
+$2+2$ protected-block scan attains this value with zero defect.
+Thus any catalogue contained in Definition 43.1's zero-defect class
+and containing that paid scan has this exact minimax value. This does
+not assign it to the entire unresolved-control catalogue.
+
+**Proof.** Positivity on a rank-two block makes (VI.43) equivalent to
+$\epsilon_0=\epsilon_1=0$. Equation (VI.28) gives the lower bound.
+The prefix implication is (VI.39).
+
+For the upper behaviour directly reuse XII146's original-coordinate
+conditional application: keep the source unchanged, retain one supplied
+fair classical bit, protect $Q_0$ or $Q_1$ with probability $1/2$, and
+scan the other block's two actual sites, stopping at the first click.
+The no-click operator is the protected $Q_a$; clicked operators are the
+other block's individual site projections. Every click effect is rank
+one. XII146's one fixed linear ideal lift retains the same choice,
+fine occupation, control and output records, assigning uniform ideal
+site mass within an unprotected block. Its full input/reference
+supremum is (XII146.18)'s $1/(2\sqrt2)$, with $U=I$, so no irrational
+frame rotation or additional excitation is needed. AAV's minimal
+original bank still has five qubits including dormant $z$. The supplied
+bit, all sampled-bit backing, up to two occupation reads, actual endpoint
+authority, detector records, complete holds and output service are paid
+resources. This reuse neither invents a scan permission nor imports
+VI37–42's two-excitation meter. $\square$
+
+**Proposition 45.2 (strictness at the actual CP interface).**
+XII146.1's weaker clicked-record resolution condition implies (VI.43).
+The latter permits unresolved mixed laboratory outputs, and does not
+imply that condition even on the consumed input block. It imposes no
+rank-one requirement on a record's effect compressed to the opposite
+block, nor on no-click records.
+
+**Proof.** A resolved clicked chain has one rank-at-most-one operator
+$K_h$ from $H$, up to scalar hidden weights. Therefore every
+$Q_bK_h^\dagger K_hQ_b$ has rank at most one. Conversely choose a
+unit $v\in Q_bH$ and two orthogonal retained one-excitation laboratory
+vectors $u_1,u_2$. The trace-nonincreasing CP map
+
+$$
+\mathcal J(X)=\langle v,Xv\rangle\,
+ \frac{|u_1\rangle\langle u_1|+|u_2\rangle\langle u_2|}{2}
+\tag{VI.44}
+$$
+
+has effect $|v\rangle\langle v|$ and zero defect. Its two Kraus
+operators $|u_j\rangle\langle v|/\sqrt2$ are not proportional; a
+nonzero pure input in this ray has a rank-two output. No single
+operator, even up to scalar hidden weights, represents this CP map.
+On $\Phi_b$ its reference output is nevertheless one pure ray,
+precisely the property used in (VI.31)–(VI.33).
+
+This is the mature rank-one-effect/mixed-prepared-output distinction
+of Pellonpää, [*Complete quantum measurements break entanglement*,
+equations (1)–(2)](https://arxiv.org/html/1206.6310v1): the prepared
+$\sigma_i$ or $\sigma(x)$ need not be pure. It is an intermediate
+fact about CP maps, not a new rank-one POVM theorem. Equation (VI.44)
+exhibits strictness of the assumptions at the CP interface only. It is
+not a completed instrument or an acquired native-source protocol;
+eligible hidden-control operations and all their actual records would
+still have to be supplied to realize it. The endpoint theorem applies
+conditionally to actual protocols satisfying (VI.43), without claiming
+that this algebraic example supplies one. $\square$
+
+**Corollary 45.3 (a necessary actual-effect budget for quarter attainment).**
+If an eligible protocol and full ideal lift in Definition 43.1 attain
+$\Delta=1/4$, they necessarily obey
+
+$$
+\begin{gathered}
+\sqrt{\epsilon_b}\ge
+ \max\left\{0,\frac{1-w_b}{\sqrt2}-\frac14\right\},\\
+\sqrt{\epsilon_0}+\sqrt{\epsilon_1}
+       \ge\frac{\sqrt2-1}{2},\qquad
+\epsilon_0+\epsilon_1\ge\frac{3-2\sqrt2}{8}.
+\end{gathered}
+\tag{VI.45}
+$$
+
+The prefix budgets must satisfy the same last two necessary
+inequalities. These conditions exclude quarter attainment when the
+corresponding certified budgets are smaller; they are not sufficient
+conditions or positive-defect attaining constructions.
+
+**Proof.** Rearrange (VI.27) separately for each $b$. Summing and
+using $w_0+w_1\le1$ gives
+$\sqrt{\epsilon_0}+\sqrt{\epsilon_1}\ge1/\sqrt2-1/2$.
+Square and use $(x+y)^2\le2(x^2+y^2)$ to obtain the last inequality.
+Equation (VI.39) transfers these necessary lower budgets to prefixes.
+More generally, if $\Delta\le d$, (VI.28) forces the square-root
+defect sum to be at least $\max(0,1/\sqrt2-2d)$. This statement also
+applies along any sequence approaching the quarter floor: its
+square-root defect sums cannot tend to zero. $\square$
+
+**Proposition 45.4 (the remaining sharp-value problem and later cuts).**
+Under the actual permissions which include the paid scan, the sharp
+value of the original unresolved-control one-excitation service remains
+within
+
+$$
+\frac14\le\delta_{\rm unres}\le\frac1{2\sqrt2}.
+\tag{VI.46}
+$$
+
+Equations (VI.27)–(VI.45) do not determine that value. In particular,
+a mixed separable density at one clicked record does not by itself
+specify an eligible quarter attainer, and a lower bound at the declared
+return cut is not automatically preserved after an arbitrary contracting
+future channel.
+
+**Proof.** The lower side is AAV33 and Theorem 43.3; the upper side
+uses only the scan under its actual permissions. XII146.5's Bell
+mixture has half trace distance $1/2$ from the Bell ray, rather than
+$1/\sqrt2$. Its reference marginal has rank two, explaining why
+separability alone cannot give the zero-defect bound. That mixture is
+an algebraic density, not a complete source protocol with normalized
+no-click paths, full actual records and a single whole-family ideal
+lift. Neither it nor (VI.44) supplies a quarter attainer. No such
+eligible attaining protocol is asserted here, and the effect penalty
+has not been optimized for positive defect.
+
+Every lawful finite native future remains available through AAV27.2's
+all-phase correspondence and full-bank hold/vacuum-growth actions,
+with actual finite resources supplied for that future. This keeps
+arbitrary local edits, genuine Next, rights, refusals, pending phases,
+records and actual successors; it does not turn an inequality's grouping
+into a source operation. On the complete enlarged bank these actions
+are full-space channels, as verified in AAV36.1 and VI40.2. A common
+normalized future channel contracts a pre-existing upper error
+estimate. Contractivity has the opposite direction from preserving a
+positive lower bound. A later lower bound requires an appropriate new
+target/comparison at that cut or an additional recovery condition; it
+cannot be inferred from contractivity alone. $\square$
+
+## 46. Calibration premises and source-specific ownership
+
+**Definition 46.1 (suppliers and the additional relation).**
+The ownership of (VI.27)–(VI.45) is the following parameter correspondence.
+
+| Supplier | Contribution and retained domain |
+| --- | --- |
+| AAV11.2–11.4 | Annotated four-view recovery on one attained authentic source, its actual tapes, epoch/cut/version, observation backing and current rights; bare geometry is not an inverse history. |
+| AAV25–31, 32.1–32.2 | Actual source acquisition, marker activation, complete seven-request service and both entrances; the same unknown $r,o,m,y$ family, common backing and complete physical output factors used in Definition 43.1. |
+| AAV33; XII146.2 and the no-click calculation in its lower proof | Rank-one resolved first-click chains and the quarter obstruction; the explicit measurable normalized-total-return domain and common-tape probability bound $z_b\le w_b$. Neither source resolves hidden actual controls in the original catalogue. |
+| XII146.4 and its lower/scan proofs | Arbitrary ideal record-mass accounting, Bell-support comparison and the paid protected-block scan. The new step (VI.30)–(VI.36) handles actual mixed densities via their block effects, replacing its pure actual-record requirement. |
+| Pellonpää (1)–(2); Horodecki–Shor–Ruskai Theorem 4 | Mature rank-one-effect instruments with possibly mixed prepared outputs, and the rank-one-Kraus/entanglement-breaking mechanism. These are intermediate suppliers, not the quantitative original-service conclusion. |
+| Fuchs–van de Graaf Theorem 1 (46); Loring Definition 1.2 | Fidelity/trace-distance comparison and two-projection angle geometry; neither provides actual instrument acquisition or the source/tape weights. |
+| Process Geometry39–43 and 44 | Same actual joint histories, complete responses, lawful successor/rights fields, task sufficiency versus no redundancy, and the distinction between paid acquisition and an abstract or externally supplied control interface. No numerical tree port or external quaternion instrument is transferred to this quantum code. |
+| AURIC optimal quantum recovery6–7 | Full-input/full-reference Kraus correction with actual flags; equal scalar effects alone do not correct an arbitrary fixed implementation. Here a rank-one compressed effect is used as an obstruction to preserving a whole Bell block, not as a correction certificate. |
+| FiniteCausalScheduleProtocol; FiniteKrausInstrumentBornMarginal | Existing finite-program normalized composition and effect/Born marginal suppliers. Their finite declarations do not certify the new quantitative proof or the measurable unbounded-history extension. |
+
+The existing controlled product/pure-environment application in
+[Repeated Record Exponential Decay](../../../Blueprint/D5/S3/Quantum/Decoherence/RepeatedRecordExponentialDecay.md)
+already bounds squared coherence loss using the actual environment's
+purity, and distinguishes finite accumulated defects from a uniform
+future claim. Its coefficient-one assertion has that specified pure
+environment/product coupling domain. Its separate near-pure-reference
+joint-defect comparison also has its stated fixed-reference domain.
+Those are supplied results. They do not bound the actual terminal
+input effects or first-click prefix capacity in Definition 43.1.
+Likewise [XI149.4–149.5](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md#149-零边球心互易全方向高度刚性与同原量子几何)
+gives center-reciprocity/UC/same-cone-and-order-unit qutrit equivalence
+on its full EB3+Conn domain, with reciprocity additional. Its full
+static dictionary supplies no actual native occupation instrument or
+control-record calibration.
+
+The source-specific quantitative relation (VI.27)–(VI.29), its
+first-click refinement budget and the quarter necessary condition are
+`repo-derived` mathematical synthesis. The general rank-one,
+fidelity and angle facts are `literature-attested` at the primary
+statements cited above. No priority, exhaustive novelty, apparatus
+existence or fresh Lean verification is asserted by these ordinary
+mathematical arguments.
+
+**Proposition 46.2 (what an acquired effect budget does and does not buy).**
+A certified upper bound on (VI.25) or (VI.38), obtained for this actual
+whole-family interface, can be substituted into Theorem 43.3.
+The mathematical definition of the effect does not supply its
+calibration, a finite calibration algorithm or a uniform history depth.
+The effect criterion removes actual clicked-chain resolution from the
+zero-defect lower bound, while retaining the original preparation,
+catalogue, complete-output and return premises. It neither supersedes
+VI37–42 nor identifies the full cross-model relational-recovery goal.
+
+**Proof.** The right sides of (VI.27)–(VI.28) decrease with each defect,
+so certified upper budgets give valid necessary bounds. For example,
+on an actually calibrated finite prefix family, Hermitian enclosures
+$\widetilde A_{gb}$ with
+$\|A_{gb}-\widetilde A_{gb}\|\le\eta_{gb}$ give
+
+$$
+\lambda_{\min}(A_{gb})
+ \le\lambda_{\min}(\widetilde A_{gb})+\eta_{gb}.
+\tag{VI.47}
+$$
+
+The variational formula in (VI.41) proves this directly. Integrating
+nonnegative certified upper bounds and a separately bounded omitted
+tail can certify (VI.38). Total return alone supplies neither these
+enclosures nor an effective tail certificate, a uniform finite stopping
+depth or a finite effect-reconstruction scheme.
+An exact theoretical effect is a model fact; an estimate from physical
+trials additionally needs actual known preparations, repeated
+calibration access, detector/control identification, statistical and
+systematic error bounds and all their resources. Unknown inputs or
+inaccessible $R$ cannot be consumed as free calibration probes, and
+the native grammar supplies no reset for repeated trials.
+
+All claimed uses retain paid coherent ingress of the whole family,
+real descriptors/endpoints and current authority, physical gates and
+occupation detector, clocks, precision, source locks, immutable
+records, supplies and progress. Full-bank holding covers calibration
+or compilation intervals when the unknown input is already present,
+all native/pending service, detector work and output clearing. Prices
+include acquired quantum and classical backing, complete control
+records when actually acquired, finite arithmetic, traversal, output,
+ACK/Return and duration-weighted retention. No native Read tariff,
+formal matrix dimension or number of defect parameters pays these
+costs. Hidden choices remain hidden unless actual authority and paid
+recording expose them; existing visible fields are never suppressed.
+
+For an ideal-catalogue comparison with complete half-diamond/model
+error at most $\eta$, triangle inequality gives a physical lower bound
+$\Delta_{\rm physical}\ge L-\eta$ whenever the ideal-catalogue
+quantity has lower bound $L$ against the same ideal lift and complete
+interface. This requires a full-output certificate covering all retained
+systems, records and leakage; code-marginal calibration alone is
+insufficient. Physical noise or an extra excitation cannot silently be
+treated as an ideal catalogue action.
+
+The independent premises remaining are precisely the actual ingress,
+apparatus/control, effect-budget evidence, same-source rights and
+normalized return just enumerated. No first-click-rank conclusion is
+inferred from terminal rank one, and no general finite calibration
+procedure is inferred from measurable histories. VI37–42's positive
+instrument instead supplies an additional known meter excitation and
+paid material/link capabilities after actual native growth; its
+source-specific two-excitation construction and native-growth resource
+tradeoffs remain intact. Other original-control $M_3$, C5, finite
+Fock/Gibbs and field/path models keep their own actual preparation,
+action, record and composite domains. A static identification or a
+shared label supplies none of their missing operational bridges.
+Thus the criterion constrains how actual boundary records can support
+the original future instrument task. It introduces no new apparatus
+and makes no universal physical-ontology claim. $\square$
+
+## 追加锚（本行以下为增补区）

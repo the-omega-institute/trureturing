@@ -458,7 +458,7 @@ def rotation (α : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
 def row0Decoder {n : ℕ} (φ : Fin n → ℝ) (s : Finset (Fin n)) :=
   rotation (∑ i ∈ s, φ i)
 
-private lemma rotation_eq_iff (α β : ℝ) :
+lemma rotation_eq_iff (α β : ℝ) :
     rotation α = rotation β ↔ (α : Real.Angle) = (β : Real.Angle) := by
   constructor
   · intro h
@@ -470,7 +470,7 @@ private lemma rotation_eq_iff (α β : ℝ) :
     have hs : Real.sin α = Real.sin β := congrArg Real.Angle.sin h
     simp [rotation, hc, hs]
 
-private lemma literal_error_iff (α β ε : ℝ) :
+lemma literal_error_iff (α β ε : ℝ) :
     circularError (2 * Real.pi) (α - β) ≤ ε ↔
       ∃ δ : ℝ, |δ| ≤ ε ∧ rotation α = rotation (β + δ) := by
   constructor
