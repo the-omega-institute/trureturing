@@ -193,7 +193,8 @@ abbrev continuityArena : Arena where
     (∀ x ∈ P.cone, x ≠ 0 → 0 < P.unit x) →
     Submodule.span ℝ (P.cone : Set P.V) = ⊤ →
     (∀ p q : pure P.cone P.unit, O.readout () P (p,q) = O.readout () P (q,p)) →
-    Continuous (fun z : pure P.cone P.unit × pure P.cone P.unit => O.readout () P z)
+    Continuous (fun z : pure P.cone P.unit × pure P.cone P.unit =>
+      O.readout () P (z.1, z.2))
 
 abbrev continuitySource : Prop := type_of% (@pure_comparison_continuous.{v})
 
