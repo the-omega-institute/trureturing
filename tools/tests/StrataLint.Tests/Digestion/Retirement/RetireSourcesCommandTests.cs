@@ -57,6 +57,8 @@ public sealed class RetireSourcesCommandTests
     [InlineData("incoming-link")]
     [InlineData("encoded-incoming-link")]
     [InlineData("root-incoming-link")]
+    [InlineData("ledger-incoming-link")]
+    [InlineData("encoded-ledger-incoming-link")]
     [InlineData("utility-atom")]
     public void IncompleteOrReferencedInputRejectsWithoutChangingAnyByte(string defect)
     {
@@ -92,6 +94,8 @@ public sealed class RetireSourcesCommandTests
             case "incoming-link": raw = Add(raw, "docs/consumer.md", "[theory](develop/theory/RetirementFixture.md#note)"); break;
             case "encoded-incoming-link": raw = Add(raw, "docs/consumer.md", "[theory](develop/theory/Retirement%46ixture.md#note)"); break;
             case "root-incoming-link": raw = Add(raw, "CURRENT.md", "[theory](docs/develop/theory/Retirement%46ixture.md#note)"); break;
+            case "ledger-incoming-link": raw = Add(raw, "docs/consumer.md", "[source](../Meta/Digestion/backfill/source/source.toml)"); break;
+            case "encoded-ledger-incoming-link": raw = Add(raw, "docs/consumer.md", "[source](../Meta/Digestion/backfill/source/%73ource.toml)"); break;
             case "utility-atom": raw = Add(raw, "D5/Consumer.lean", "-- Utility: checker; basis=refutes=atom:" + id + "\n"); break;
         }
         WriteFiles(directory.Path, raw);

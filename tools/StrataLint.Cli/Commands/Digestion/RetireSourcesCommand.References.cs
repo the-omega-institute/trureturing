@@ -11,6 +11,8 @@ internal static partial class RetireSourcesCommand
     private static RawRepositorySnapshot RequireNoReferences(IRepositoryGateway repository, RepositorySnapshot snapshot,
         string[] removedPrefixes, HashSet<string> removedIds, string[] sourcePaths, string[] archivePaths)
     {
+        var sourceTargets = sourcePaths.Select(Path.GetFullPath).ToHashSet(StringComparer.Ordinal);
+        var ledgerTargets = removedPrefixes.Select(prefix => Path.GetFullPath(prefix.TrimEnd('/'))).ToArray();
         foreach (var link in FileMapLoader.LoadSnapshot(snapshot).Entries.Select(entry => entry.Symlink).OfType<FileMapSymlink>())
             if ((sourcePaths.Any(source => source == link.ResolvedTarget
                     || link.Kind == "directory" && source.StartsWith(link.ResolvedTarget + "/", StringComparison.Ordinal))
@@ -54,12 +56,17 @@ internal static partial class RetireSourcesCommand
                         if (string.IsNullOrEmpty(url) || url.StartsWith('#')) continue;
                         var end = url.IndexOfAny(['?', '#']);
                         var path = Uri.UnescapeDataString(end < 0 ? url : url[..end]);
-                        if (path.Length == 0 || !sourcePaths.Any(source => Path.GetFileName(source) == Path.GetFileName(path))) continue;
+                        if (path.Length == 0) continue;
                         string target;
-                        if (path.StartsWith('/')) target = Path.GetFullPath(path.TrimStart('/'));
-                        else if (Uri.TryCreate(url, UriKind.Absolute, out _)) continue;
-                        else target = Path.GetFullPath(path, Path.GetDirectoryName(Path.GetFullPath(entry.Path))!);
-                        if (sourcePaths.Any(source => Path.GetFullPath(source) == target))
+                        try
+                        {
+                            if (path.StartsWith('/')) target = Path.GetFullPath(path.TrimStart('/'));
+                            else if (Uri.TryCreate(url, UriKind.Absolute, out _)) continue;
+                            else target = Path.GetFullPath(path, Path.GetDirectoryName(Path.GetFullPath(entry.Path))!);
+                        }
+                        catch (Exception error) when (error is ArgumentException or NotSupportedException or PathTooLongException) { continue; }
+                        if (sourceTargets.Contains(target) || ledgerTargets.Any(root => target == root
+                                || target.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.Ordinal)))
                             throw new FormatException($"SOURCE_REFERENCED target={url} path={entry.Path}");
                     }
                 foreach (var source in sourcePaths)
