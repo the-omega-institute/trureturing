@@ -8,7 +8,9 @@
 
 ### 132.A 完整原域及一个固定的规范族
 
-**定义 132.1（同一个原三角形与规范门户）。** 固定 [VIII123.1—123.2、125.1、128.1][T132VIII]
+**定义 132.1（同一个原三角形与规范门户）。** 原来源版本固定为提交
+`76227a176b079ca94637adca93f6010bb0962a79`。
+固定其中 [VIII123.1—123.2、125.1、128.1][T132PinnedVIII]
 的同一个 $\mathcal D,S,\mathcal K,E$、原实际标签与计算相位基，始终取
 
 $$
@@ -125,7 +127,10 @@ $$
 其 dyad 的紧凸包由有限维凸包定理给有限表示；正迹归一后再乘回原迹。
 零元素取空和。每个和项本身都在同一原 $\mathcal K$ 中。
 所以(132.8)证明命题2蕴含第一个门户属于 $\mathrm{SN}_2$ 的全部命题3；
-其它门户位置由原输入、实际腿与量子输出的置换运输。未使用任意两个 $E$ 元素的乘积成员关系。
+其它门户位置由原输入、实际腿与量子输出的置换运输。
+若恢复字面位置需要恢复不同的 qutrit 扇区标签，使用其间以恒等矩阵实现的一体实际 CP
+及其逆；它们都是同一源中的保迹箭头，保持固定基，不另选补全。
+未使用任意两个 $E$ 元素的乘积成员关系。
 
 当 $k=2$ 时，整个原资源锥恰为 $\mathrm{PSD}_6$。
 任意有限谱分解 $X=\sum_r\xi_r\xi_r^*$ 可在每项取 $A_r=I_2$，
@@ -166,13 +171,14 @@ $$
 $$
 
 $\Lambda:M_9(\mathbb C)\to M_{\ell m}(\mathbb C)$ 由此复线性延拓，保持伴随。
+它是原收缩的数值线性映射，不据其定义新增源箭头。
 矩阵载体 $M_n(M_9)$ 的识别不把 $A_1A_2$ 变为免费量子对象。
 有下列三个结论。
 
 1. 对每个 $n\ge1$，
    $(\mathrm{id}_n\otimes\Lambda)(\mathscr B_n)\subseteq\mathrm{PSD}_{n\ell m}$。
    特别地，$\mathscr B_1=\mathscr C_1=\mathrm{PSD}_9$，所以 $\Lambda$ 普通正。
-2. 全部规范输出 PSD，恰等价于对每个这样的原收缩族都有
+2. 对固定的 $y,z,Y,W$，全部 $x$ 的规范输出 PSD，恰等价于
 
 $$
 (\mathrm{id}_2\otimes\Lambda)(\mathscr C_2)
@@ -180,7 +186,8 @@ $$
 \tag{132.11}
 $$
 
-   规范负见证与一个 $H\in\mathscr C_2\setminus\mathscr B_2$ 的
+   再对剩余数据取全称即得到整个规范族。规范负见证与一个
+   $H\in\mathscr C_2\setminus\mathscr B_2$ 的
    $(\mathrm{id}_2\otimes\Lambda)(H)$ 负见证双向传递。
 3. $\mathscr B_2=\mathscr C_2$ 是(132.11)的充分条件。
    如果把此处特定的 $\Lambda$ 族扩大到所有从 $\{\mathscr B_n\}$ 完全正的线性映射，
@@ -261,9 +268,8 @@ $$
 $$
 
 这证明锥等式的必要性；充分性由源完全正性立即得到。
-此分离是常用矩阵锥对偶的直接应用，作用是限定本题剩余义务：
-要用一般完全正性支付(132.11)，就必须补出上述更强锥等式；
-而研究特定 $\Lambda$ 族只需(132.11)。
+此分离是常用矩阵锥对偶的直接应用：要求所有源完全正映射自动通过
+第二层扩张，准确等价于上述更强锥等式；特定 $\Lambda$ 族只需(132.11)。
 这里既未证明 $\mathscr B_2\ne\mathscr C_2$，也未把分离映射 $\phi$ 实现成一个合法三角形。∎
 
 ### 132.D 秩一条件联合输出的完整相干排除
@@ -421,6 +427,11 @@ $$
 **证明。** 每个 $L/a_L$ 是收缩 Kraus 矩阵，其迹亏损效应
 $I-(L/a_L)^*(L/a_L)\succeq0$，按 VIII123.2(v)在所有原旁观下正。
 因而原滤波不增迹；等式(132.25)仅将所有被除的正平方乘回。
+对量子合同 $\widehat A_r$，普通 CP-TNI 预算来自
+$I_2-\widehat A_r^*\widehat A_r\succeq0$。
+即使尚未证明规范 $M^0$ 为 PSD，其迹亏损
+$\operatorname{Tr}\bigl[((I_2-\widehat A_r^*\widehat A_r)\otimes I_{\ell m})M^0\bigr]$
+仍由 VIII128.2 第一量子切口的块正性非负：将 $I_{\ell m}$ 展成正交 dyad 后逐项测试即可。
 $q=\operatorname{Ad}_{J^*}$ 也是不增迹的原压缩，$j=\operatorname{Ad}_J$ 保迹，
 像外的第三坐标被真正送零。$X_0$ 的迹为二，恒等 qutrit 帽的原 proper 系数为三，
 所以(132.26)的因子为 $2\cdot3^3=54$；其余因子来自各输入与量子效应的正缩放。
@@ -489,6 +500,7 @@ $\mathsf U$。这些条件结论均不把当前任意三实际腿或混合输入
 
 [T132VII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
 [T132VIII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md
+[T132PinnedVIII]: https://github.com/the-omega-institute/trureturing/blob/76227a176b079ca94637adca93f6010bb0962a79/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md
 [T132XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md
 [T132PTT]: https://arxiv.org/html/0904.3783v2
 [T132Kye]: https://arxiv.org/html/2204.02516v2
