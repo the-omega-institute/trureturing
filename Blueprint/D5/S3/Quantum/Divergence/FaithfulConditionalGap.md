@@ -80,6 +80,10 @@ $$\exists (D: \operatorname{FiniteDivergence}), \exists (N: \operatorname{Quantu
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/FaithfulConditionalGap.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hirche-george-nuradha-wilde-2026-faithful-conditional-gap` (proved) by `D5/S3/Quantum/Divergence/FaithfulConditionalGap.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hirche-george-nuradha-wilde-2026-faithful-conditional-gap","declaration_gid":"D5/S3/Quantum/Divergence/FaithfulConditionalGap.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Christoph Hirche; Ian George; Theshani Nuradha; Mark M. Wilde (2026). *Conditional contraction coefficients and their applications to quantum networks*. URL: <https://arxiv.org/abs/2608.27171v1>.
@@ -92,7 +96,9 @@ For every finite quantum reference R, an equal-marginal difference X has X((r,0)
 
 In the ordered basis (0,0),(0,1),(1,0),(1,1),(2,0),(2,1), use the actual density states with diagonals (1/2,0,0,0,1/2,0) and (0,0,1/2,0,0,1/2). Their channel outputs have diagonals (3/8,1/8,0,0,3/8,1/8) and (0,0,3/8,1/8,1/8,3/8). Their reference marginals are (1/2,0,1/2) and (0,1/2,1/2), and are preserved by the channel. The input, output and reference trace distances are 1, 3/4 and 1/2. The conditional denominator is 3/4, its numerator is 5/16, and the ratio is 5/12.
 
-For heterogeneous CPTP data processing, decompose a Hermitian matrix into positive and negative Jordan parts. Positivity, trace preservation and the trace-norm triangle inequality give contraction without identifying the source and target dimensions. Trace norm vanishes only at zero; nonnegative squaring preserves data processing and faithfulness. The conditional ratios are bounded above by one. The conclusion answers the faithful-divergence existential in Section 9, second bullet, without specializing to relative entropy or determining the exact conditional optimum.
+For heterogeneous CPTP data processing, decompose a Hermitian matrix into positive and negative Jordan parts. Positivity, trace preservation and the trace-norm triangle inequality give contraction without identifying the source and target dimensions. Trace norm vanishes only at zero; nonnegative squaring preserves data processing and faithfulness. The conditional ratios are bounded above by one. The conclusion answers the faithful-divergence existential in Section 9, second bullet, without specializing to relative entropy or determining either exact optimal coefficient.
+
+The endpoint and its consumed proof helpers have proof_shape bind-only. The endpoint is admitted as an external open-problem resolution; no escape witness is claimed. The positive-result four-slot audit is unfinished under issue 30303, comment 6874572340: exact sourceSelection and whole-family observational dependence are missing. This is not a declared_validated registration.
 
 ## References
 

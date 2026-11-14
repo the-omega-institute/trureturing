@@ -87,6 +87,32 @@ The positive-result four-slot audit is **unfinished** under [#30303, comment 687
 
 Tier 1 external open problem; positive `proved` mathematical resolution. The endpoint has `proof_shape: bind-only`, `admission_basis: open-problem-resolution`, and no escape witness. All 21 private proof helpers are also bind-only and have actual consumers on the endpoint's proof path; their status is proof organization, not additional mathematical content. The six public typed handles are the divergence structure, two ratio sets, two coefficients and `result`. Definitions are consumed by the public result. This classification follows the independent full pre-freeze approval and supplies no manufactured escape witness.
 
+Each private theorem below has `proof_shape: bind-only` and is admitted only as a consumed helper. Consumer chains terminate in `result`:
+
+| Private theorem | Actual consumers |
+| --- | --- |
+| `positive_trace_contraction` | `traceDistance_heterogeneous`, `reference_contract` |
+| `traceNorm_zero` | `traceDistance_faithful` |
+| `state_hermitian` | `traceDistance_heterogeneous`, `reference_contract` |
+| `traceDistance_faithful` | `squareTrace` |
+| `traceDistance_heterogeneous` | `squareTrace` |
+| `amplitude_square` | `kraus_complete`, `binary_action` |
+| `kraus_complete` | `binaryChannel`, `binary_action` |
+| `binary_action` | `equal_marginal_action`, `reference_diagonal` |
+| `phase_isometry` | `pinch_contract` |
+| `pinch_entry` | `equal_marginal_action` |
+| `pinch_contract` | `complete_pair_bound` |
+| `equal_marginal_action` | `complete_pair_bound` |
+| `reference_contract` | `conditional_bounded` |
+| `complete_pair_bound` | `complete_upper` |
+| `complete_upper` | `result` |
+| `conditional_bounded` | `conditional_lower` |
+| `diagonal_distance` | `witness_distances` |
+| `reference_diagonal` | `witness_distances` |
+| `marginal_diagonal` | `witness_distances` |
+| `witness_distances` | `conditional_lower` |
+| `conditional_lower` | `result` |
+
 **Proved:** a faithful finite real-valued divergence and actual finite CPTP channel satisfy $\eta^c_D(N)\le1/4<5/12\le\eta^\Delta_D(N)$ with unrestricted finite quantum references and heterogeneous data processing. The mechanism is equal-marginal block cancellation plus contractive pinching, together with a conditional witness whose marginal subtraction produces the larger ratio.
 
 **Unresolved:** neither exact optimal coefficient is asserted. The relative-entropy case remains unresolved. The positive-result audit remains unfinished as specified above. Source novelty beyond the bounded search is unverified.
