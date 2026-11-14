@@ -22,6 +22,16 @@ internal sealed class ArithmeticMixedCornerResponseDocument : IScribeDocumentDef
                     + "For n>=3 every logarithm argument used here is positive. In particular "
                     + "G(n)<0 is the strict Robin sign on this domain."))), DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("density-antitone"),
+                DeclarationHandle.Create(Prefix + "density_antitone"),
+                H("Activation density decreases on the full real domain"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary real s,t with 1<s and s<=t, "
+                    + "activationDensity(t)<=activationDensity(s). Equality of the endpoints is included. "
+                    + "The proof uses MellinWeightedVariation.scaleWeight_antitone. "
+                    + "The mixed-response area bounds and LogLogGlobalCurvatureStability "
+                    + "directly reuse this same declaration."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("arithmetic-mixed-response"),
                 DeclarationHandle.Create(Prefix + "arithmetic_mixed_response"),
                 H("Exact transport and quantitative curvature"),

@@ -1,0 +1,53 @@
+### 137.6 完整球的射影像与椭球拼接
+
+保留上一节的 $a,W$，记 $M_a=\operatorname{span}D_a$，其维数为四。先证明
+
+$$
+J_a:=J|_{M_a}:M_a\longrightarrow L^*\quad\text{是线性同构}.
+\tag{XI137.20}
+$$
+
+若其秩至多三，则 $j(D_a)$ 落在仿射维数至多二的平面 $\operatorname{ran}J_a\cap H$ 中。但 $j|_W=b\circ\pi|_W$ 连续单射，且 $j(W)=b(\pi(W))$ 是 $\partial_H\Omega$ 的非空开片。把上述平面嵌入 $\mathbb R^2$，对 $W$ 的一个坐标开片应用区域不变性：维数小于二时开像不可能包含于该平面；维数为二时像含一个平面开圆盘，故 $\partial_H\Omega$ 含非退化线段，违反严格凸性。因此秩为四，得到(XI137.20)。
+
+令 $E_a=j(D_a)$。这是完整三球在严格正分母下的非退化射影像，且 $E_a\subseteq\Omega$。为明确其形状，在 $M_a$ 取齐次球坐标 $(t,z)\in\mathbb R\oplus\mathbb R^3$，使
+
+$$
+\operatorname{cone}(D_a)=\{(t,z):t\ge\|z\|\},\qquad
+D_a=\{(1,z):\|z\|\le1\}.
+\tag{XI137.21}
+$$
+
+写 $g(t,z)=\alpha t+\beta\cdot z$。$g$ 在 $D_a$ 上严格正，准确给 $\alpha>\|\beta\|$。$J_a$ 将该锥的 $g=1$ 截面线性送到 $E_a$；消去 $t$ 后，截面为
+
+$$
+z^{\mathsf T}(\alpha^2I-\beta\beta^{\mathsf T})z+2\beta\cdot z\le1.
+\tag{XI137.22}
+$$
+
+二次项正定，配方给非退化椭球。这个椭球含 $z=0$ 的内点，且其上 $1-\beta\cdot z$ 不会为零，否则原不等式迫 $z=0$ 而又有 $1=0$；连通性使它始终为正，故没有混入 $t<0$ 的另一支。这证明整个截面、因而整个 $E_a$ 确为三维闭椭球。$j|_{D_a}$ 是射影同胚，逆由 $J_a^{-1}$ 后按原 $u$ 归一给出，故把 $S_a$ 送到 $\partial_HE_a$，并有
+
+$$
+O_a:=j(W)\subseteq\partial_HE_a\cap\partial_H\Omega,
+\tag{XI137.23}
+$$
+
+且 $O_a$ 在两个边界中都开。
+
+上述论证适用于每个满足 $a\notin S$、$S_a\cap U_0\ne\varnothing$ 的原标签：取非空 $W\subseteq S_a\cap U_0$ 即可。上一节又为每个 $s\in S$ 构造了这样的开片，使 $b_s\in O_a$。所以这些片覆盖整个 $\partial_H\Omega$。
+
+这里需要的二次曲面唯一性是初等工具。若两个非退化三维椭球的边界共享一个非空二维开片，把第一个化成单位球，将第二个的二次方程记为 $F$。固定开片内一点 $y$；每个经过 $y$ 的大圆在开片中含一段开弧。$F$ 在该圆上的限制是次数至多二的三角多项式，在开弧为零便在整圆为零。所有经过 $y$ 的大圆覆盖单位球面，故 $F$ 在整个球面为零。写 $F(z)=c+\ell\cdot z+z^{\mathsf T}Az$，$A$ 对称；比较正反点给 $\ell=0$，代入坐标轴端点和 $(e_i+e_j)/\sqrt2$，给 $A=-cI$。所以两边界方程成非零比例，椭球相同。
+
+若 $O_a,O_{a'}$ 相交，其交在 $\partial_HE_a$ 中是非空开片：它先在 $\partial_H\Omega$ 中开，再限制于 $O_a$。于是上段工具给 $E_a=E_{a'}$。按相同椭球归组的开片并，构成 $\partial_H\Omega$ 的不交开覆盖；边界连通迫使只有一组。记共同椭球为 $E$。全部 $O_a$ 又在 $\partial_HE$ 中开，故其并 $\partial_H\Omega$ 在 $\partial_HE$ 中开；它紧而闭，$\partial_HE$ 连通，遂得两边界相等。取边界凸包即得
+
+$$
+\Omega=E,\qquad
+a\notin S,\ S_a\cap U_0\ne\varnothing
+\ \Longrightarrow\
+J_a\text{ 为同构},\quad j(D_a)=\Omega,\quad S_a\subseteq Q.
+\tag{XI137.24}
+$$
+
+最后一个包含使用已证全态式(XI137.8)：$j(S_a)=\partial_H\Omega$ 且 $o\notin D_a$。因此它是由完整原球的二次刚性取得的整球延拓，没有延续移动效应见证。
+
+$N^\vee=\operatorname{cone}\Omega$；一个椭球基的齐次化线性同构于四维 Lorentz 锥。Lorentz 锥对通常配对自对偶：Cauchy–Schwarz 给一向包含，若 $t<\|z\|$，用 $(1,-z/\|z\|)$ 即分离，负时间轴另用 $(1,0)$。对偶化线性同构便给 $N$ 同样为 Lorentz 锥。此结论只属于 $N_o\subset L_o$，不把整个原 $C$ 认作自对偶锥。
+

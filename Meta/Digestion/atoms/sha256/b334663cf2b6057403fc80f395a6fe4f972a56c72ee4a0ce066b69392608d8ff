@@ -1,0 +1,24 @@
+**定理 123.12（完整原正性的真实点检验）。** 对每个 $p\in P_0$ 和每个 $h=\alpha g+b\cdot H\in S_p$，
+
+$$
+\begin{split}
+h\in C^*
+&\Longleftrightarrow\forall w\in S^2:\ h(a_w)\ge0\\
+&\Longleftrightarrow\alpha\ge\rho_p(b).
+\end{split}
+\tag{Q123.35}
+$$
+
+更准确地，若 $b\ne0$，
+
+$$
+\inf_{x\in K\setminus\{p\}}\frac{h(x)}{g(x)}
+=\alpha-\rho_p(b)
+=\frac{h(a_{b/\|b\|})}{g(a_{b/\|b\|})}.
+\tag{Q123.36}
+$$
+
+证明。$h(p)=0$，且其余全部原态的 $g$ 严格正，故原全域正性可通过比值检验。方向函数定义给下确界 $\alpha-\rho_p(b)$；(Q123.8)给真实端点达到该值，正齐次性包括任意 $b\ne0$ 的尺度。若 $b=0$，所有端点的 $g>0$，所以检验准确地要求 $\alpha\ge0=\rho_p(0)$。最后由 $C=\mathbb R_+K$，全原态检验也就是全原锥检验。证毕。
+
+定理不要求 $a_w$ 随 $w$ 连续，不要求影像闭，也没有把任意抽象支撑点替换成物理准备。
+

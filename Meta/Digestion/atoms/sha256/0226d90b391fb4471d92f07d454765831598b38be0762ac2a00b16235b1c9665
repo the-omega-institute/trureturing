@@ -1,0 +1,36 @@
+**定义 140.1（完整原域与单尺中点相容）。** 保留135.1的同一非零有限维实空间 $V$、闭尖生成凸锥 $C$、严格正原单位 $u$，整个 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$ 和整个 $\mathcal E=[0,u]_{C^*}$。仍以全部原确认效应定义 $T_p$ 和完整 $D_p$，并假定 EB3。记
+
+$$
+\begin{gathered}
+\mathcal A_a=\{e\in\mathcal E:e(a)=1,\ e|_{D_a}=0\},\qquad
+S(D_a)=P\cap D_a,\qquad \bar x^{\,a}=2c_a-x\quad(x\in S(D_a)),\\
+p\perp q\quad\Longleftrightarrow\quad T_p(q)=0.
+\end{gathered}
+\tag{XI140.1}
+$$
+
+原面接口 [VII103.2、IX120.1][XI140IX] 给 $\mathcal A_a\ne\varnothing$，每个 $e\in\mathcal A_a$ 的整个零面恰为 $D_a$；球缘恰为原纯点，故 $\bar x^{\,a}$ 也是原纯点。补效应使 $\perp$ 对称。只以三条这样的真实原边定义正交三角，不预付共同三结果仪器。
+
+本章考察如下单尺中点相容条件：
+
+$$
+\mathsf{ZC}:\quad
+\forall a\in P\ \exists e_a\in\mathcal A_a\ \exists\kappa_a\in\mathbb R\ \forall x\in S(D_a):\quad
+e_a(c_x)+e_a(c_{\bar x^{\,a}})=\kappa_a.
+\tag{XI140.2}
+$$
+
+同一个球心 $c_a=(x+\bar x^{\,a})/2$ 有全部对径分解。将两个纯端点各换成它自己的完整排除球球心后，(XI140.2)只要求一把在原球上恒零的确认尺读到的平均值与直径方向无关。该尺在整原 $K$ 上合法，量词只要求存在一把；不要求其唯一，也不要求球心替换为实际操作。
+
+138.1的 $\mathsf{BC}$ 蕴含更强的向量关系
+
+$$
+c_x+c_{\bar x^{\,a}}=c_y+c_{\bar y^{\,a}}
+\quad(x,y\in S(D_a)),
+\tag{XI140.3}
+$$
+
+因为两份对径混合的原态都等于 $c_a$。再施加任意 $e_a\in\mathcal A_a$ 就得到 $\mathsf{ZC}$。这里没有反向宣称 $\mathsf{ZC}$ 单独给出 $\mathsf{BC}$；(XI140.3)是 X128中心关系空间被向量球心赋值消灭，(XI140.2)只取该球自身的一条原效应读数，亦不同于 X128.13对全部外部纯比较行的要求。[X128][XI140X]
+
+令 $\mathcal T$ 为全部真实正交三角顶点。$\mathsf{Seed}$ 指 $\mathcal T\ne\varnothing$；$\mathsf{Conn}$ 指原图 $(P,\perp)$ 的任意两点可由有限条原边连接，允许起终点相同时的零长路。它不是 $P$ 的拓扑连通性。
+

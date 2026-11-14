@@ -304,12 +304,12 @@ private instance : CharP (PowerSeries (ZMod 2)) 2 :=
 private theorem quadratic_unit : IsUnit (coeff 1 quadratic) := by
   simp [quadratic, coeff_X_pow]
 
-private noncomputable def H : PowerSeries (ZMod 2) :=
+noncomputable def H : PowerSeries (ZMod 2) :=
   quadratic.substInvOfIsUnit quadratic_unit
 
-private theorem H_zero : constantCoeff H = 0 := constantCoeff_substInvOfIsUnit _ _
+theorem H_zero : constantCoeff H = 0 := constantCoeff_substInvOfIsUnit _ _
 
-private theorem H_quadratic : H + H ^ 2 = X := by
+theorem H_quadratic : H + H ^ 2 = X := by
   have he := subst_substInvOfIsUnit_right quadratic (by simp [quadratic]) quadratic_unit
   change quadratic.subst H = X at he
   simpa only [quadratic, subst_add (.of_constantCoeff_zero H_zero),
@@ -458,7 +458,7 @@ private theorem map_iterate {S : Type*} [CommRing S] (hom : R →+* S)
     rw [map_subst (.of_constantCoeff_zero hf), ih]
     rfl
 
-private theorem mod_two_identity : generatingSeries.map (Int.castRingHom (ZMod 2)) = H := by
+theorem mod_two_identity : generatingSeries.map (Int.castRingHom (ZMod 2)) = H := by
   let hom := Int.castRingHom (ZMod 2)
   have hg := generating_equation
   have hz : constantCoeff (generatingSeries.map hom) = 0 := by

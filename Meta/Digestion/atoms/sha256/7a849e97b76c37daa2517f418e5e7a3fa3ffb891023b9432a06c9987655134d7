@@ -1,0 +1,31 @@
+**定理 147.5（有效阶数的排除范围）。** 在完整 EB3+$\mathsf{Conn}$+ZC 原域，若有忠实 PSD 截面表示，且有效阶数满足
+
+$$
+m\le4\quad(\mathbb F=\mathbb C),\qquad
+m\le6\quad(\mathbb F=\mathbb R),
+\tag{XI147.10}
+$$
+
+则同一原锥和原单位具有复三能级表示
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,\qquad
+\Phi(\operatorname{PSD}_3)=C,\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XI147.11}
+$$
+
+任意有效阶数上，只要有一个实际纯标签的矩阵秩在复域等于一，或在实域不大于二，也得到同一结论。
+
+证明。记 $k(p)=\dim_{\mathbb F}\ker A_p$。由四维 $L_p$ 及(XI147.4)，
+
+$$
+4\le\begin{cases}k(p)^2,&\mathbb F=\mathbb C,\\k(p)(k(p)+1)/2,&\mathbb F=\mathbb R,\end{cases}
+\qquad k(p)\ge k_0:=\begin{cases}2,&\mathbb F=\mathbb C,\\3,&\mathbb F=\mathbb R,\end{cases}
+\qquad r(p)\le m-k_0.
+\tag{XI147.12}
+$$
+
+若原零边 $p\perp q$ 有非零共同核向量 $v$，原正泛函 $h_v(x)=v^*A_xv$ 在 $p,q$ 均为零；$A_{x_0}\succ0$ 保证 $h_v\ne0$。因此 $K\cap\ker h_v$ 是含不同纯点 $p,q$ 的真面，原面分类迫其等于某个完整 $D_a$。于是 $a,p,q$ 是三个不同原纯标签，且三条实际零边全成立。此时才使用140.4的 EB3+$\mathsf{Conn}$+ZC+Seed 分类。特别地，$r(p)+r(q)<m$ 足以产生这个非零共同核。
+
+若 $m<2k_0$，任取实际零边，(XI147.12)给 $r(p)+r(q)\le2(m-k_0)<m$，遂得三角。若 $m=2k_0$ 且有 $r(p)<k_0$，其任一零邻点 $q$ 同样满足秩和严格小于 $m$。余下只有 $r(p)=k_0$ 对全部原纯点成立，147.2遂给整个 $P$ 上的整球连续，此时直接使用[IX118.3、118.5、118.8][Q147IX]的既有分类。以上穷尽(XI147.10)。任意阶数的低秩标签断言也由 $r(p)<k_0$ 及其邻点的 $r(q)\le m-k_0$ 得到。未输入整个原 $\dim V\le9$；九维是(XI147.11)的后果。证毕。
+

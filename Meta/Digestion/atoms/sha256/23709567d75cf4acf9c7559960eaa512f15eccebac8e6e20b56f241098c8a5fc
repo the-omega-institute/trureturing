@@ -1,0 +1,31 @@
+**定理 137.3（单根纯芽的支持结论）。** 在定义137.1的完整 EB3+$\mathsf{Conn}$ 域，若同一个 $o$ 满足 $\mathsf G(o)$，则：
+
+1. $\Omega$ 仿射等价于完整闭三球，因而 $N_o$ 线性同构于四维 Lorentz 锥。
+2. 存在同胚 $b:S_o\to\partial_H\Omega$，使
+
+$$
+j(x)=b(s)\quad(s\in S_o,\ x\in D_s\setminus\{o\}),\qquad
+B_2(o)\setminus\{o\}
+=\{x\in K\setminus\{o\}:j(x)\in\partial_H\Omega\}.
+\tag{XI137.8}
+$$
+
+3. 存在同一个环境开集 $U_0\ni o$，使
+
+$$
+\forall q\in U_0\cap P,\qquad Q(q)=Q(o).
+\tag{XI137.9}
+$$
+
+4. $Q(o)$ 在原 $V$ 中紧，其全部点仍为原纯点。
+
+另有准确的根三角定位：记 $\mathsf{Tri}(o)$ 为 $o$ 属于一个真实原零三角，则
+
+$$
+\mathsf{Tri}(o)\quad\Longleftrightarrow\quad
+\iota(D_o)\cap\partial_H\Omega\ne\varnothing.
+\tag{XI137.10}
+$$
+
+本定理的证明依次如下。紧 $B_2$ 与实际定义域上的部分关联连续性为既有方法的复用；实质连接是固定球面片的椭球拼接、局部完整二步集合相等及三点排除混态极限。
+

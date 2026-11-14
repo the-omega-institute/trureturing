@@ -1,0 +1,10 @@
+### 126.5 每颗重复球都遭遇单标签纯点积聚
+
+令
+
+$$
+ R=\bigcup_{F\in\mathfrak B_{\mathrm r}}F,\qquad
+ P_{\mathrm s}=P\setminus R.
+ \tag{Q126.20}
+$$
+

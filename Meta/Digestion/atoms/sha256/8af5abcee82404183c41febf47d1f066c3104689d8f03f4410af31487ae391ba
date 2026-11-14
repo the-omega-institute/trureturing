@@ -1,0 +1,55 @@
+**定理 143.3（闭的二分之一读数界给逐标签严格小于二的预算）。** 在 EB3+$\mathsf{Conn}$+$\mathsf H$ 下，每个原纯标签分别满足
+
+$$
+L_p^*:=\sup_{q\in P\cap D_p}\ell_p(q)<2,
+\qquad 0\le\gamma_p\le L_p^*<2.
+\tag{XI143.11}
+$$
+
+不要求 $p\mapsto c_p$ 全局连续、$P$ 紧或跨全部 $p$ 的统一严格上隙。
+
+证明。对固定 $p$ 的任意单位方向，(XI143.4)同时适用于原边 $(p,q)$、$(q,p)$、$(s,q)$，故 $0\le a,b,c\le1/2$。先增加 $b,c$ 至 $1/2$；对 $c$ 的单调性来自 $c/(1-ac)$ 严格递增，得到
+
+$$
+0\le\ell_p(q)\le\frac{2(1-a)}{1-a/2}\le2.
+\tag{XI143.12}
+$$
+
+关键是排除上确界等于二，不能用每个方向严格小于二替代它。反设有 $q_n\in P\cap D_p$，使 $\ell_p(q_n)\to2$。标量盒 $[0,1/2]^3$ 紧；(XI143.12)及(XI143.8)的连续有理式迫使
+
+$$
+a_n\to0,\qquad b_n\to\frac12,\qquad c_n\to\frac12.
+\tag{XI143.13}
+$$
+
+固定原球的完整纯球缘紧，所以取共同子列
+
+$$
+q_n\to q\in P\cap D_p,\qquad
+s_n=2c_{q_n}-p\to s\in K,\qquad e_{q_n}\to f\in\mathcal E.
+\tag{XI143.14}
+$$
+
+这里 $s$ 尚不预设纯；使用的是整个 $K$ 和整个 $\mathcal E$ 的紧性。原读数保留为
+
+$$
+e_p(p)=1,\qquad e_p(s)=0,\qquad
+f(q)=1,\qquad f(p)=f(s)=0.
+\tag{XI143.15}
+$$
+
+因此 $p,s\in D_q$，而 $e_p$ 在同一个完整球 $D_q$ 上取一、零，迫使 $s$ 是与 $p$ 对径的原纯球缘点。另一方面，$e_p(s)=0$ 的准确零面是 $D_p$，故 $s\in D_p$。在固定完整 $D_p$ 上，$f(q)=1,f(s)=0$ 又迫使
+
+$$
+s=2c_p-q.
+\tag{XI143.16}
+$$
+
+于是对同一条收敛子列，
+
+$$
+b_n=e_{q_n}(2c_p-q_n)\longrightarrow f(2c_p-q)=f(s)=0,
+$$
+
+与(XI143.13)矛盾。这是原状态、原效应及两张完整球共同实现的约束；抽象赋值 $a_n\to0,b_n\to1/2$ 不满足它。故 $L_p^*<2$。将 $t=L_p^*$ 代入143.2的全方向正分解，即得 $\gamma_p\le L_p^*$。证毕。
+

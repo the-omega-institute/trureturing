@@ -1,0 +1,34 @@
+**引理 149.9（相对于 $M$ 的四维开图）。** 存在非空 $M$-开集 $A\subset Q$，同胚于 $\mathbb R^4$ 的开集。
+
+证明。令 $O=M\cap P_{\rm s}$。它是紧度量 $M$ 的非空开子空间，因而局部紧、具有 Baire 性。XII147 给 $\dim L_p=4$ 于每个 $p\in O$。在原八维仿射空间 $\{u=1\}$，
+
+$$
+N_p\overset\sim\longrightarrow\mathcal N_K(p),\qquad
+h\longmapsto-h|_{\ker u}
+\tag{149.18}
+$$
+
+是正法向与通常外法向的锥同构；反向是对 $v\in(\ker u)^*$ 取 $h(x)=-v(x-u(x)p)$。故不发生维数平移。
+
+对原八维凸体应用 [SAME_READBACK 引理128.2及证明][S149SR128]，取 $k=4$。得到覆盖全部 $\Sigma_4(K)$ 的可数紧层 $X_j$，每层有到四维空间的正交投影 $\pi_j$，满足
+$\|x-y\|\le(2/\sqrt3)\|\pi_jx-\pi_jy\|$。这是全点覆盖。相对闭集 $O\cap X_j$ 覆盖 $O$，Baire 给一个非空 $M$-开集 $O_1\subset O\cap X_j$。
+
+$Q$ 在 $M$ 中稠密，故可取 $a\in Q\cap O_1$。在实际球面 $S_a$ 的一点 $q_0$ 附近，连续秩三球族 $D_q$ 可写成 $c(q)+B(q)\overline B^3$，其中 $B(q)$ 连续单射。这由引理149.7及上述局部标架工具支付。所有这些球都含同一实际点 $a$。取 $S_{q_0}\setminus\{a\}$ 中充分靠近 $a$ 的一点，再取其小紧二维球帽；缩小 $q_0$ 周围的二维底盘，使整个乘积像位于 $O_1$ 且避开 $a$。这里 $O_1=M\cap W$，$W$ 环境开，联合连续性和帽的紧性支付同时缩小。两盘各取闭方盘，得到
+
+$$
+\Psi:[0,1]^4\longrightarrow O_1\cap Q,
+\qquad \Psi(q,t)=c(q)+B(q)t.
+\tag{149.19}
+$$
+
+其像在 $Q$ 中是因 $a\perp q\perp\Psi(q,t)$ 及(149.3)。固定 $q$ 时单射；不同 $q,q'\in S_a\subset P_{\rm s}$ 的球不同且只交于 $a$，两帽避开此点，故跨标签亦单射。紧源使 $\Psi$ 为到像的同胚。
+
+现在 $\pi_j\Psi:(0,1)^4\to\mathbb R^4$ 连续单射。[Hatcher Theorem 2B.3][S149Ha]给其像 $\Omega$ 开。由同一个 $X_j$ 上投影单射，
+
+$$
+A:=\Psi((0,1)^4)=O_1\cap\pi_j^{-1}(\Omega).
+\tag{149.20}
+$$
+
+故 $A$ 相对于 $M$ 开，且是实际四维图。此处没有把紧四立方体本身认作原纯开图，也没有声称 $A$ 已相对于整个 $P$ 开。证毕。
+

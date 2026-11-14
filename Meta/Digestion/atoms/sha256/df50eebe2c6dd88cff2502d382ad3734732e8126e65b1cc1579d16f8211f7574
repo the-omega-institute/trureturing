@@ -1,0 +1,4 @@
+## 5. 推论 6.5 的参数门槛不能降到 3/2
+
+Fan–Kobayashi–Molnar 推论 6.5 表明：若 RH 成立，则对一切 $\kappa\ge2$，(1.1) 对一切 $n>2162160$ 成立。其第 8 节问：“can we reduce the threshold for κ in Corollary 6.5 to 3/2?”。本节说明：若要求 $n$ 的阈值是一个对参数一致的有限数 $N$，则参数门槛不能降到 $3/2$；在 RH 下，依赖参数的最终成立阈值在 $\kappa\to3/2^+$ 时必须发散。
+
