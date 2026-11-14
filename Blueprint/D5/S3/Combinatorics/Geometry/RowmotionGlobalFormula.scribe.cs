@@ -7,12 +7,16 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Geometry;
 internal sealed class RowmotionGlobalFormulaDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Geometry/RowmotionGlobalFormula.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Combinatorics/lafreniere2025intervalclosed");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The interval-closed toggle sweep on a finite poset has an explicit formula in its initial ceiling and lower boundary.",
         H("The global formula for interval-closed rowmotion"),
         Blocks(
             Paragraph(Text("Let P be an arbitrary partially ordered set. An equivalence e from Fin N to P enumerates all its points once, and a reverse extension visits every strictly larger point before every strictly smaller point. Start from an order-convex set I. The toggle at a point replaces the current state by its symmetric difference with that singleton exactly when the replacement is order-convex. The trace is the literal sequence of these toggles, with initial state I.")),
+            Paragraph(Text("Theorem 1.1 and its proof in Lafreniere, Lewis, McNicholas, Striker and Welch, Interval-closed set rowmotion and homomesy on products of two chains, arXiv:2505.04000v1, give this finite-poset image formula. The ceiling, lower boundary and incomparable region below express the sets in that formula. The statement here uses an arbitrary universe and includes empty posets and empty boundaries.")),
+            Paragraph(Text("The Lean proof adapts the set-side and local-flip arguments from Columbus Labs, interval-closed-rowmotion, as identified in the Lean source. That source retains the adaptation attribution and MIT license separately from the mathematical attribution to Lafreniere, Lewis, McNicholas, Striker and Welch.")),
             Node("ceiling", "The upper boundary", DescribeRole.Definition,
                 "The ceiling C consists of the minimal elements of the upper closure of I outside I. All closures and minimality statements use the given partial order. The upper closure is non-strict, so it includes I itself."),
             Node("lowerBoundary", "The eligible initial minima", DescribeRole.Definition,
@@ -33,7 +37,7 @@ internal sealed class RowmotionGlobalFormulaDocument : IScribeDocumentDefinition
         Describe.Lean(
             DescribeId.Create("rowmotion-global-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Statement(name)),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Call(string name, params Formula[] arguments) =>
         Seq(F.Id(name), Open, Seq(arguments.SelectMany((value, index) =>
