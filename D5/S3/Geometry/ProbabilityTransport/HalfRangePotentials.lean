@@ -20,6 +20,8 @@ arXiv:1803.00567v4, section 5.1; no novelty claim is made here.
 
 namespace HalfRangePotentials
 
+open scoped NNReal
+
 universe u v w
 
 /-- Uniform comparison passes to real infima without an attained minimum. -/
@@ -37,7 +39,7 @@ private lemma lipschitz_infimum {A : Type u} {I : Type w}
     (hb : ∀ x, BddBelow (Set.range (f x)))
     (hf : ∀ i, LipschitzWith L (fun x => f x i)) :
     LipschitzWith L (fun x => ⨅ i, f x i) := by
-  apply LipschitzWith.of_le_add_mul
+  apply LipschitzWith.of_le_add_mul L
   intro x z
   exact infimum_le_add (f x) (f z) (hb x) _ (fun i => (hf i).le_add_mul x z)
 
@@ -62,8 +64,8 @@ theorem exists_half_range_majorants
   obtain ⟨y₀, hy₀⟩ := hH
   let k₀ : K := ⟨x₀, hx₀⟩
   let h₀ : H := ⟨y₀, hy₀⟩
-  letI : Nonempty X := ⟨x₀⟩
-  letI : Nonempty H := ⟨h₀⟩
+  have : Nonempty X := ⟨x₀⟩
+  have : Nonempty H := ⟨h₀⟩
   have hM : 0 ≤ M := (hc (x₀, y₀)).1.trans (hc (x₀, y₀)).2
   let r : X → H → ℝ := fun x h => c (x, h.val) - ψ h
   have rb (x : X) : BddBelow (Set.range (r x)) := by
@@ -91,7 +93,7 @@ theorem exists_half_range_majorants
   have fL : LipschitzWith L f := by
     apply lipschitz_infimum L r rb
     intro h
-    apply LipschitzWith.of_le_add_mul
+    apply LipschitzWith.of_le_add_mul L
     intro x z
     have hh := hcL.le_add_mul (x, h.val) (z, h.val)
     rw [dist_prod_same_right] at hh
@@ -116,7 +118,7 @@ theorem exists_half_range_majorants
     dsimp [F, a]
     constructor <;> linarith [f_upper x, f_lower x]
   have FL : LipschitzWith L F := by
-    apply LipschitzWith.of_le_add_mul
+    apply LipschitzWith.of_le_add_mul L
     intro x z
     dsimp [F]
     linarith [fL.le_add_mul x z]
@@ -130,7 +132,7 @@ theorem exists_half_range_majorants
   have gL : LipschitzWith L g := by
     apply lipschitz_infimum L s sb
     intro x
-    apply LipschitzWith.of_le_add_mul
+    apply LipschitzWith.of_le_add_mul L
     intro y z
     have hh := hcL.le_add_mul (x, y) (x, z)
     rw [dist_prod_same_left] at hh
