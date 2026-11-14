@@ -47,7 +47,7 @@ def psiRegistration : Registration psiArena (∀ {n : ℕ}, 2 ≤ n → n + 1 �
   dependence := by
     intro i
     refine ⟨(), 0, 1, ?_⟩
-    norm_num [psiActual, realize, psi, Nat.primeFactors]
+    simp [psiActual, realize, psi, Nat.primeFactors_zero, Nat.primeFactors_one]
 
 def psiAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@psi_ge) (type_of% (realize.{0,0,0,0,0} psiSignature (fun _ _ n => psi n) (fun e => nomatch e))) Unit Unit where
@@ -69,8 +69,9 @@ def psiAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.Divisors.DimitrovLowerBoundsC4C5
+    definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "arg"], stateBinder := 0 }] }
+    readouts := #[{ path := #["body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -109,7 +110,7 @@ def sigmaRegistration : Registration sigmaArena (∀ {n : ℕ}, 2 ≤ n → psi 
   dependence := by
     intro i
     refine ⟨(), 0, 1, ?_⟩
-    norm_num [sigmaActual, realize, psi, Nat.primeFactors]
+    simp [sigmaActual, realize]
 
 def sigmaAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@sigma_ge_psi) (type_of% (realize.{0,0,0,0,0} sigmaSignature (fun _ _ n => ArithmeticFunction.sigma 1 n) (fun e => nomatch e))) Unit Unit where
@@ -131,8 +132,9 @@ def sigmaAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.Divisors.DimitrovLowerBoundsC4C5
+    definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "arg"], stateBinder := 0 }] }
+    readouts := #[{ path := #["body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -208,8 +210,9 @@ def mixedAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.Divisors.DimitrovLowerBoundsC4C5
+    definition := none
     coordinates := #[4]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value", "fn", "arg"], stateBinder := 1 }] }
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

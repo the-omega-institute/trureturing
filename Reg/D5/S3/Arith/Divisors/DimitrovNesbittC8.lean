@@ -84,9 +84,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Arith.Divisors.DimitrovNesbittC8
     definition := some {
       owner := `D5.S3.Arith.Divisors.DimitrovNesbittC8
-      name := `D5.S3.Arith.Divisors.DimitrovNesbittC8.claim }
+      name := `D5.S3.Arith.Divisors.DimitrovNesbittC8.claim
+      path := #[] }
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn", "arg", "arg", "fn", "arg"], stateBinder := 0 }] }
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn", "arg", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
