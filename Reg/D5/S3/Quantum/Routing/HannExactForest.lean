@@ -114,6 +114,6 @@ end ForestObservation
 
 #print axioms family
 #print axioms relation_iff_matrix_kernel
-#print axioms support_isAcyclic
+#print axioms support_is_acyclic
 
 end Reg.D5.S3.Quantum.Routing.HannExactForest

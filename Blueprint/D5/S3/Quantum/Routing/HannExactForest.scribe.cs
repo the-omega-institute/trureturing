@@ -62,7 +62,7 @@ internal sealed class HannExactForestDocument : IScribeDocumentDefinition
                     + "is chosen independently. At height zero the source record and vacuum are one, "
                     + "and the one row equates the distinct x and c coordinates.")))),
             Describe.Lean(DescribeId.Create("literal-matrix-support-forest"),
-                DeclarationHandle.Create(Module + "support_isAcyclic"),
+                DeclarationHandle.Create(Module + "support_is_acyclic"),
                 H("Exact row-variable support is a forest"),
                 StatementSource.FromAuthor(ForestStatement()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(

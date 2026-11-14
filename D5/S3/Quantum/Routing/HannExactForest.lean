@@ -527,7 +527,7 @@ def support (n : ℕ) (q : Router n → ℝ) : SimpleGraph (Row n q ⊕ Variable
   loopless := ⟨by intro u; cases u <;> simp⟩
 
 /-- B2: the support of this very matrix has no undirected simple cycle. -/
-theorem support_isAcyclic (n : ℕ) (q : Router n → ℝ) : (support n q).IsAcyclic := by
+theorem support_is_acyclic (n : ℕ) (q : Router n → ℝ) : (support n q).IsAcyclic := by
   apply D5.S3.Combinatorics.Graph.Jacobi.Pruning.acyclic_of_unique_later
     (support n q) (Sum.elim (rowRank n q) (variableRank n))
   intro v a b ha hb hra hrb

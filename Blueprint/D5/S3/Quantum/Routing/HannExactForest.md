@@ -80,7 +80,7 @@ Both directions hold for every height including zero, every q in the closed sign
 
 $$\forall n \in Nat,\; \forall q \in \operatorname{Router}\left(n\right) \to Real,\; \operatorname{IsAcyclic}\left(\operatorname{support}\left(n, q\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Routing/HannExactForest.support_isAcyclic` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Routing/HannExactForest.support_is_acyclic` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -98,6 +98,6 @@ This is a repository-derived exact relation and support theorem. It asserts no e
 - Truth anchor: `D5/S3/Quantum/Routing/HannExactForest.Row`
 - Truth anchor: `D5/S3/Quantum/Routing/HannExactForest.matrix`
 - Truth anchor: `D5/S3/Quantum/Routing/HannExactForest.relation_iff_matrix_kernel`
-- Truth anchor: `D5/S3/Quantum/Routing/HannExactForest.support_isAcyclic`
+- Truth anchor: `D5/S3/Quantum/Routing/HannExactForest.support_is_acyclic`
 - Dependency: [D5/S3/Combinatorics/Graph/Jacobi/LeafPruningRanks](../../Combinatorics/Graph/Jacobi/LeafPruningRanks.md)
 - Dependency: [D5/S3/Quantum/Routing/HannSignedCertificate](HannSignedCertificate.md)
