@@ -72,8 +72,9 @@ internal sealed class EndpointFiniteWindowDocument : IScribeDocumentDefinition
                 + "no mathematical novelty is claimed.", DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("endpoint-finite-window-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("endpoint-finite-window-"
+                + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Module + "." + name), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(text))), role);
 }

@@ -54,7 +54,7 @@ $1-D$, where $D=\sum_i w_i^2$ and $\sum_i w_i=1$. The finite-window
 lower bound is $D-2(1-D)/(T\delta_n)$. With $d=2n$, its difference
 from $(1-\epsilon)/d$ is at least $\epsilon/d^2>0$, including equality
 at the time threshold. Positivity of the actual minimum follows from
-the spectral theorem above; the explicit inverse-cubic estimate is not
+the spectral separation bound above; the explicit inverse-cubic estimate is not
 substituted into the time hypothesis. Matrix reversal, its endpoint
 weight relation, the negative imaginary phase and the real uniform
 interval integral are retained. This finite matrix statement supplies
