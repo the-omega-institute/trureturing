@@ -172,6 +172,23 @@ publication or a delivered KPI increment. The mathematical result is an
 application of existing spectral identities and finite normalization,
 not a new abstract spectral theorem or an originality certification.
 
+- **Computed:** At $p=6$ and $n=r=3$, the witness in Route has
+  $|A|=B=T_3(3)$ but $S_6(A)^6=54$ and $S_6(B)^6=66$.
+- **Proved:** Entrywise modulus forgets signs and phases, whereas the
+  Schatten norm retains column-Gram spectral information. The displayed
+  pair has the same modulus and unequal norms, so Turán modulus is not
+  sufficient for equality. This refutes the full universal conjunction
+  through its equality-sufficiency direction.
+- **Unresolved:** The upper bound alone remains unresolved by this
+  refutation. Removing the equality criterion gives a separate question;
+  Hermitian and graph-only variants are not settled here. No
+  dimension-minimality or general-family result is claimed.
+- **Unresolved impact:** Dependencies of published claims on Conjecture
+  4.42 have not been verified, so no such claims are reclassified. The
+  established consequence is limited to the full assertion and its failed
+  equality-sufficiency direction; the adjacent questions retain the
+  boundaries stated above and in Gap and Falsifier.
+
 ## ASSUMED-UNVERIFIED
 
 Exhaustive literature coverage, priority and global novelty are

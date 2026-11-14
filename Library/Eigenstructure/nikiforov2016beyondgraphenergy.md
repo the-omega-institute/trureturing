@@ -17,7 +17,8 @@ triage: anchor
 ## Locator
 
 V. Nikiforov, *Beyond graph energy: norms of graphs and matrices*,
-arXiv:1510.02850v2, §2.2 (multipartite matrices), §4.5.1,
+arXiv:1510.02850v2, https://arxiv.org/abs/1510.02850v2,
+§2.2 (multipartite matrices), §4.5.1,
 Conjecture 4.42, printed p. 48; Linear Algebra and its Applications 506,
 82–138, DOI 10.1016/j.laa.2016.05.011.
 The versioned preprint is the statement source. No identity assertion
