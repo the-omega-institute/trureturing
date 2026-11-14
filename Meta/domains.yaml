@@ -62,6 +62,9 @@ domains:
   Conventions:
     stratum: S0
     definition: Canonical W-digit and notation conventions used by later strata.
+  Convexity:
+    stratum: S3
+    definition: Convex geometry, barycenters, and exact finite representations of measurable moments.
   Deficit:
     stratum: S1
     definition: Normalized beta deficits and signed carry accounting of golden addition.
