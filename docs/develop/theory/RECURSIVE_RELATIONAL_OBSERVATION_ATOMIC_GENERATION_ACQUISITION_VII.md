@@ -1683,3 +1683,517 @@ its stated finite payload certificate; it does not settle that enduring
 problem. These are prose proofs, without a fresh Lean/kernel check.
 
 ## 追加锚（本行以下为增补区）
+
+## 100. Three native chains with their complete preparation histories
+
+**Definition 100.1 (the original recorder on three-chain endpoints).**
+Retain the full known-alpha LAB, all finite legal addressed P/S histories,
+and exactly the IV18–19 recorder $J$ fixed in Definition 86.1, including
+its original labelled tie convention. Write $\ell_t=L(t)$, $B_t$, $z_t$,
+$F(t)$, $G(t)=\lceil\log_2F(t)\rceil$ and $C(t)$ as in §§86–88 and
+IV19.4–19.5. Reuse AAII Proposition 100.2's ordered terms
+
+$$
+C_0=\beta,\qquad C_{k+1}=\langle C_k,\alpha\rangle,\qquad
+D_0=\alpha,\qquad D_c=C_{c-1}\quad(c\ge1),
+$$
+
+and put, for all integers $a,b,c\ge0$,
+
+$$
+t(a,b,c)=\langle C_a,\langle C_b,D_c\rangle\rangle,
+\qquad t_m=t(m,m,m)\quad(m\ge1).
+\tag{VII.48}
+$$
+
+These are endpoint descriptions in the original free ordered grammar.
+The brackets supply no graft, independently supplied seed, association
+quotient or new operation. All recorder tables remain those computed on
+the entire native domain, including legal futures outside this family.
+
+**Proposition 100.2 (full fibres and exact labelled incoming edges).**
+Every $t(a,b,c)$ is reachable from the actual known alpha, and
+
+$$
+\begin{aligned}
+N(t(a,b,c))&=a+b+c+4,\\
+F(t(a,b,c))
+ &=\binom{a+b+c+2}{a}\binom{b+c}{b}\\
+ &=\frac{(a+b+c+2)!}{a!b!c!(b+c+1)(b+c+2)}.
+\end{aligned}
+\tag{VII.49}
+$$
+
+Its full labelled incoming set consists of the following edges whenever
+their stated condition holds:
+
+| Condition | Actual predecessor | Actual last event |
+| --- | --- | --- |
+| $a>0$ | $t(a-1,b,c)$ | $S_{L^a}$ |
+| $b>0$ | $t(a,b-1,c)$ | $S_{RL^b}$ |
+| $c=1$ | $t(a,b,0)$ | $P_{RR}$ |
+| $c>1$ | $t(a,b,c-1)$ | $S_{RRL^{c-2}}$ |
+| $b=c=0$ | $\langle C_a,\beta\rangle$ | $S_R$ |
+
+Thus each positive coordinate supplies a distinct actual incoming edge
+obtained by decrementing that coordinate. The last row is an additional
+native predecessor, outside the displayed three-chain family; it is
+retained by the original recorder.
+
+**Proof.** The final outer branch forces the first two events
+$P_\varepsilon,S_\varepsilon$. After them the complete event set is
+the left chain
+
+$$
+A_i=S_{L^i}\quad(1\le i\le a),
+$$
+
+and the right stem $U=P_R<V=S_R$, followed by the two chains
+
+$$
+\begin{aligned}
+B_j=S_{RL^j} &&(1\le j\le b),\\
+Q_1=P_{RR} &&(c\ge1),\\
+Q_j=S_{RRL^{j-2}} &&(2\le j\le c).
+\end{aligned}
+\tag{VII.50}
+$$
+
+The $Q$ chain is empty at $c=0$; the $B$ chain is empty at $b=0$.
+Both chains require $V$, and within each chain the displayed order is
+forced. There is no further causal relation: in particular $U,V$ can
+be delayed past any available initial part of the $A$ chain. This is
+the direct substitution of (VII.48) into AA17.1's birth-typed event
+roster, so AA17.2 supplies every linear extension as an actual history,
+with every prefix legal. Conversely that roster is reconstructed from
+the final term. An extra promotion or split could not disappear under
+the native rules, so no additional event or history ends there.
+
+Within the right subsequence, $U,V$ come first, and its remaining $b+c$
+positions form any shuffle of $B$ and $Q$. Choose these positions in
+$\binom{b+c}{b}$ ways, and then interleave the entire right subsequence
+of length $b+c+2$ with the $a$-event $A$ chain in
+$\binom{a+b+c+2}{a}$ ways. This is exactly AA19.2's supplied local
+shuffle bijection, used at the two actual branches. The two initial
+root events give the stated $N$; factorial cancellation gives the last
+line of (VII.49). In particular neither preparation at $R$ is required
+to occur before the left chain begins or finishes.
+
+For the incoming set use AAII99.1's exhaustive native predecessor rule.
+Inside a nonempty $C$ chain, only its deepest branch is exactly
+$\langle\beta,\alpha\rangle$. Undoing that split decrements $a$ or $b$
+at the addresses in the table. Their deepest beta leaves are left-born
+and cannot be promotion predecessors. In $D_c$, the case $c=1$ is
+the right-born beta at $RR$, and the cases $c>1$ instead have the sole
+terminal split at $RRL^{c-2}$. Every other right leaf in these chains
+is still alpha. The right stem itself is exactly
+$\langle\beta,\alpha\rangle$ if and only if $b=c=0$, producing the
+last row. The outer root is not such a terminal split, because its
+right child is a branch. There are no other right-born beta leaves or
+terminal splits. All listed replacements are reachable by AA17.2,
+and their forward edits are enabled after every history of that
+predecessor by AAII99.2. The coordinate edges occur respectively in
+the disjoint regions $L$, $RL$ and $RR$, so their labels remain
+distinct even when coordinate values agree. This proves the entire
+incoming list, not just a chosen schedule's parents. $\square$
+
+## 101. A uniform profile induction without source-permutation symmetry
+
+**Theorem 101.1 (five patterns on every ordered placement).** For a
+nonnegative integer triple $v=(a,b,c)$ abbreviate $\ell(v)=\ell_{t(a,b,c)}$ and
+$z_v(d)=z_{t(a,b,c)}(d)$. For every integer $m\ge1$, every ordered
+placement of the entries in each row below has width at least the
+displayed $w$. Where a tail is specified, it additionally satisfies
+$z_v(w-j)\ge q_j$ for $j=0,1,2$.
+
+| Pattern | Multiset of coordinate values | $w$ | $(q_0,q_1,q_2)$ |
+| --- | --- | --- | --- |
+| $\mathsf A_m$ | $(m,m,m)$ | $5m-2$ | $(1,2,3)$ |
+| $\mathsf B_m$ | $(m,m,m+1)$ | $5m-1$ | $(1,2,4)$ |
+| $\mathsf C_m$ | $(m,m+1,m+1)$ | $5m+1$ | $(1,2,3)$ |
+| $\mathsf D_m$ | $(m,m+1,m+2)$ | $5m+1$ | not required |
+| $\mathsf E_m$ | $(m,m+2,m+2)$ | $5m+2$ | not required |
+
+An ordered placement means any triple with that multiset; it does not
+mean an automorphism of the labelled source or of its recorder table.
+In particular
+
+$$
+L(t_m)\ge5m-2\qquad(m\ge1).
+\tag{VII.51}
+$$
+
+**Proof.** Use the actual occupied profiles of Theorem 88.1 throughout.
+For an actual endpoint $u$ and integer $d\ge0$ write
+
+$$
+\bar z_u(d)=
+\begin{cases}
+z_u(d),&d\le\ell_u,\\
+1,&d>\ell_u.
+\end{cases}
+\tag{VII.52}
+$$
+
+This notation only combines the two occupancy contributions in
+(VII.19)–(VII.20). In that supplied recursion, for $d\le\ell_t$,
+
+$$
+z_t(d)=\min\left\{2^{\ell_t-d},
+                   \sum_{e:u\to t}\bar z_u(d)\right\}.
+\tag{VII.53}
+$$
+
+Every term $\bar z_u(d)$ is at least one: a nonempty Boolean ideal
+contains its all-zero word. A short parent $\ell_u<d$ contributes
+the one allowed by $b_t(d)$ to (VII.53), but contributes nothing to
+$A_t(d)$. In contrast, when selected parents really have
+$\ell_u\ge d$, their actual $z_u(d)$ may be summed to bound
+$A_t(d)$ from below, and the width line of (VII.20) gives
+
+$$
+A_t(d)\ge r\ge1\quad\Longrightarrow\quad
+\ell_t\ge d+\lceil\log_2r\rceil.
+\tag{VII.54}
+$$
+
+Here $d$ lies in that line's range because such a parent exists.
+The same line gives $\ell_t\ge\ell_u$ along every incoming edge.
+All sums in these formulas still range over the full actual incoming
+set. Selected edges below give lower estimates; additional edges are
+nonnegative and are never removed from the recorder's definition.
+
+For the induction base, every placement of $(0,1,1)$ has two positive
+coordinates and therefore two distinct incoming edges. At depth zero
+each parent's actual profile is nonempty, so $A_t(0)\ge2$ and
+$\ell_t\ge1$. Every placement of $(0,1,2)$ has a parent obtained by
+decrementing its coordinate of value two, hence a parent of type
+$(0,1,1)$ and width at least one. Every placement of $(0,2,2)$ has
+two parents of type $(0,1,2)$. Both have width at least one and
+$z_u(1)\ge1$, so (VII.54) at depth one gives width at least two.
+Call these three base assertions $\mathsf C_0$, $\mathsf D_0$ and
+$\mathsf E_0$, respectively. No negative-depth tail is asserted or
+used for them.
+
+We now prove all five rows at $m$ from the preceding rows in the order
+$\mathsf A_m,\mathsf B_m,\mathsf C_m,\mathsf D_m,\mathsf E_m$.
+Only $\mathsf C_{m-1},\mathsf D_{m-1},\mathsf E_{m-1}$ are needed
+from the preceding value of $m$. Fix an arbitrary ordered target
+placement in each step. Proposition 100.2 supplies the following
+selected labelled parents by decrementing the indicated entries:
+
+| Target | Entries decremented | Selected parent patterns |
+| --- | --- | --- |
+| $\mathsf A_m$ | each of its three entries | three $\mathsf C_{m-1}$ |
+| $\mathsf B_m$ | the $m+1$ entry; each of its two $m$ entries | one $\mathsf A_m$; two $\mathsf D_{m-1}$ |
+| $\mathsf C_m$ | each of its two $m+1$ entries; the $m$ entry | two $\mathsf B_m$; one $\mathsf E_{m-1}$ |
+| $\mathsf D_m$ | its $m+2$ entry | one $\mathsf C_m$ |
+| $\mathsf E_m$ | each of its two $m+2$ entries | two $\mathsf D_m$ |
+
+All decremented entries are positive, including when $m=1$.
+Different entry positions give distinct edges. Each resulting ordered
+parent is covered by its own induction assertion, since those
+assertions quantify over every placement. No equality of profiles
+between different placements is needed.
+
+For $\mathsf A_m$, set $d=5m-4$. Its three selected
+$\mathsf C_{m-1}$ parents have width at least $d$, including the
+$\mathsf C_0$ base at $m=1$, so their actual profiles give
+$A_t(d)\ge3$. As $2<3\le4$, (VII.54) gives
+$\ell_t\ge d+2=5m-2=w$. At depths $w-j$, $j=0,1,2$, the capacity
+in (VII.53) is at least $2^j$, and the sum of extended profiles is
+at least three. Therefore
+
+$$
+z_t(w-j)\ge\min\{2^j,3\}=(1,2,3)_j.
+\tag{VII.55}
+$$
+
+This minimum explicitly allows either saturation of the cylinder or
+an unsaturated sum; it does not assume $\ell_t=w$. If a selected
+parent is shorter than $w-j$, its contribution here is the short-parent
+term of (VII.53), not a fictitious long word in $A_t(w-j)$.
+
+For $\mathsf B_m$, again set $d=5m-4$. The $\mathsf A_m$ parent's
+new tail at depth $d=(5m-2)-2$ is at least three. Its width is at
+least $d$, as are the widths of both $\mathsf D_{m-1}$ parents.
+The latter supply at least one each, including the base case, so
+$A_t(d)\ge3+1+1=5$. Since $4<5\le8$, the width is at least
+$d+3=5m-1=w$. The three selected parents give the tail bounds one
+and two at $w,w-1$ by (VII.53), just as in (VII.55).
+At $w-2=5m-3$, the $\mathsf A_m$ parent has width at least
+$5m-2$ and actual profile at least two. Each other selected parent
+contributes at least one to the extended-profile sum, whether shorter
+than this depth or not. That sum is therefore at least four and the
+capacity is at least four. Equation (VII.53) gives
+$z_t(w-2)\ge\min\{4,4\}=4$. This proves its full $(1,2,4)$ tail
+without using short parents in the width estimate.
+
+For $\mathsf C_m$, take $d=5m-3$. Both $\mathsf B_m$ parents have
+width at least $5m-1$ and actual profile at least four at this depth.
+The $\mathsf E_{m-1}$ parent has width at least $5m-3=d$, including
+$\mathsf E_0$ when $m=1$, and actual profile at least one. Thus
+$A_t(d)\ge4+4+1=9$. Since $8<9\le16$, its width is at least
+$d+4=5m+1=w$. Its three selected parents and (VII.53) give the same
+$(1,2,3)$ tail calculation (VII.55), with both capacity cases and
+short parents treated identically.
+
+For $\mathsf D_m$, the selected $\mathsf C_m$ parent already has
+width at least $5m+1$, which the child inherits. For $\mathsf E_m$,
+both selected $\mathsf D_m$ parents have width at least
+$d=5m+1$, with actual profiles at least one there. Hence
+$A_t(d)\ge2$, and its width is at least $d+1=5m+2$.
+This completes the symbolic induction for every integer $m\ge1$.
+All queried depths are nonnegative: the smallest width-estimate depth
+is $5\cdot1-4=1$, and the smallest three-entry-tail depth is also one.
+The argument proves separate inequalities on every ordered placement;
+it assumes neither semantic symmetry of labelled sources nor symmetry
+of their full counts or codeword assignments. $\square$
+
+## 102. Exponential congestion and a linear excess for the fixed IV19 code
+
+**Theorem 102.1 (strict full-domain obstruction to polynomial congestion).**
+For exactly the fixed recorder of Definition 100.1 and every integer
+$m\ge1$,
+
+$$
+\begin{aligned}
+N(t_m)&=3m+4,\\
+F(t_m)
+ &=\frac{(3m)!}{m!^3}
+       \frac{(3m+1)(3m+2)}{(2m+1)(2m+2)}
+   <\frac94\,27^m,\\
+L(t_m)&\ge5m-2,\\
+C(t_m)&>\frac1{18}\left(\frac{32}{27}\right)^m,\\
+L(t_m)-G(t_m)
+ &>m\log_2(32/27)-3-\log_2(9/4).
+\end{aligned}
+\tag{VII.56}
+$$
+
+Consequently, for every finite real $K\ge1$ and $a\ge0$, there is
+an integer $m\ge1$ with
+
+$$
+C(t_m)>K\bigl(N(t_m)+2\bigr)^a.
+\tag{VII.57}
+$$
+
+Thus IV.46c, equivalently (VII.30), is false for this $J$. This $J$
+does not have uniform logarithmic redundancy. Its excess along the
+native family has the positive linear lower rate
+
+$$
+\liminf_{m\to\infty}
+ \frac{L(t_m)-G(t_m)}{N(t_m)}
+ \ge\frac{\log_2(32/27)}3>0.
+\tag{VII.58}
+$$
+
+**Proof.** Proposition 100.2 at $a=b=c=m$ gives the first two exact
+expressions. The multinomial coefficient $(3m)!/m!^3$ is one term
+in $(1+1+1)^{3m}=27^m$. Other terms are positive, so it is strictly
+smaller than $27^m$ for $m\ge1$. Moreover
+
+$$
+9(2m+1)(2m+2)-4(3m+1)(3m+2)=18m+10>0,
+$$
+
+which proves the strict $9/4$ bound on the other factor. The width
+bound is (VII.51). The supplied exact identity IV.46b, with its strict
+upper power-of-two inequality, gives
+
+$$
+F(t_m)C(t_m)>2^{L(t_m)-1}\ge2^{5m-3}=\frac{32^m}{8}.
+$$
+
+Dividing by the strict full-fibre bound in (VII.56) proves the
+stated strict congestion lower bound, including its constant $1/18$.
+Also $\lceil x\rceil<x+1$ for every real $x$, so
+
+$$
+G(t_m)<m\log_2 27+\log_2(9/4)+1.
+$$
+
+Subtract this from $L(t_m)\ge5m-2$ and use
+$5-\log_2 27=\log_2(32/27)>0$. This proves the excess inequality;
+division by $3m+4$ gives (VII.58).
+
+For an explicit uniform polynomial comparison, fix $K,a$ and choose
+an integer $r>a$. For every integer $m\ge2r$, the binomial theorem
+and $m-i\ge m/2$ for $0\le i<r$ give
+
+$$
+\left(\frac{32}{27}\right)^m
+ =\left(1+\frac5{27}\right)^m
+ \ge\binom mr\left(\frac5{27}\right)^r
+ \ge\frac{m^r}{r!}\left(\frac5{54}\right)^r.
+\tag{VII.59}
+$$
+
+Since $N(t_m)+2=3m+6\le9m$ for $m\ge1$, (VII.56) implies
+
+$$
+\frac{C(t_m)}{K(N(t_m)+2)^a}
+ >\frac{(5/54)^r}{18K9^a r!}\,m^{r-a}.
+$$
+
+The exponent $r-a$ is positive. Choose an integer $m\ge2r$ with
+$m^{r-a}>18K9^a r!(54/5)^r$ to obtain (VII.57). This is an
+all-integer proof of the unbounded consequence, with no inference from
+finite samples. By IV19.5's equivalence for this one recorder,
+logarithmic redundancy would imply a polynomial congestion bound,
+contradicting (VII.57). The linear estimate (VII.58) gives the more
+direct rate of failure along these actual endpoints. $\square$
+
+## 103. Payload consequence for the original full-history consumer
+
+**Theorem 103.1 (the obstruction is read by the unchanged acquired service).**
+Under exactly IV Assumption 5.1, Correspondence 19.3 and Theorem 91.1's
+known-alpha installation, every maintained actual pair $(t_m,J(h))$
+with $h\in\mathcal H(t_m)$ has payload width at least $5m-2$ and
+the excess (VII.56) over its full-fibre width $G(t_m)$. Its original
+fixed-head decoder reads exactly $L(t_m)$ data bits and recovers that
+entire addressed history for FetchGrowth and genuine same-current-source
+Next. The exponential obstruction concerns the $J$ actually installed
+in that service.
+
+All seven original requests and complete original replies, outcomes
+and refusals retain their original domains. Actual known-alpha
+preparation, acquired source/root/record/input/output bindings, current
+exclusive rights, required enrollment, immutable samples and completed
+records with their versions and bindings, finite paid scratch/backing
+and supplied progress remain hypotheses. Pending/full request and
+output records, partial parsing, phase/latch, maintenance subphases,
+Print, End, supplied ACK, actual root Return and cleanup are retained.
+No statement here installs this recorder at the separate selected
+bilateral entrance or recovers every unfinished observer state.
+
+**Proof.** IV19.1 assigns every history of one endpoint a word of the
+same width $L(t)$. The profile in §101 is that very occupied code set,
+and Proposition 100.2 counts that same complete fibre. Hence the
+inequalities apply to every actual maintained $h$ at $t_m$, rather
+than only to a worst selected schedule or a different record layout.
+Theorem 91.1 applies the supplied acquired decoder to these same
+tables and establishes its exact bit count and full-history inverse.
+No profile value is substituted for the varying actual record, and
+no end, tail, independent length or extra stopping observation is
+introduced.
+
+For FetchGrowth$(j)$ in range, this inverse returns the actual old kind
+and full logical address. Next$(j)$ retains that pair, navigates on the
+same current live source, follows actual left logical children through
+branches and performs the uniquely enabled real P/S edit at its reached
+leaf. Its complete reply retains both the old pair and the actual new
+pair. OutOfRange, BadFrame and each original growth refusal still use
+their supplied conditions; missing rights or a wrong phase do not
+become new refusal replies. These are the exact consumer transitions
+of IV19.3/11 and VII91.1, with the quantitative bound now supplied by
+(VII.56).
+
+The proof imposes no requirement that future edits remain in the
+three-chain family. Every enabled original continuation keeps the same
+literal-prefix law and original service mechanism. The family merely
+exhibits maintained cuts at which this fixed full-domain mechanism has
+large payload. No history is required to pass through a common prepared
+checkpoint at $R$, and the outside-family parent in Proposition 100.2
+is still included wherever applicable.
+
+During an actual edit and suffix append, the original pending event,
+suffix, cursor, bindings and subphase carry any temporary source/record
+discrepancy. A partial input or output remains its original acquired
+prefix and work; it is not replaced by a maintained pair. Complete
+answers still require building and sealing, Print and End, the supplied
+ACK, Return to the same actual root and the original clearing of work.
+Source traversal, exact arithmetic and table generation, reference/link
+storage, simultaneous old/new work and backing, reservation and every
+input/output/return action remain separately paid. Neither a payload
+lower bound nor the finite table recursion proves a total-resource,
+runtime, physical-clock or unconditional apparatus theorem. $\square$
+
+## 104. Suppliers and the exact settled and open recorder questions
+
+**Definition 104.1 (mathematical attribution and scope).** The
+three-chain congestion obstruction is repo-derived prose mathematics,
+without a new Lean/kernel verification or a worldwide novelty claim.
+Its mathematical suppliers and their distinct roles are:
+
+| Supplier | Content reused within its stated domain |
+| --- | --- |
+| AA17.1–17.2 and AA19.2 | Actual birth-typed P/S events, all native finite histories as labelled linear extensions, and the exact local shuffle bijection/count |
+| AAII100.2 and AAII99.1–99.2 | Existing $C_k,D_c$ terms, full labelled predecessor rule and last-event partition |
+| IV18.2–19.5 and VII86–88 | The original inherited-prefix optimum, fixed labelled recorder, exact width/congestion identity, Boolean ideality and full profile recurrence |
+| VII101–102 | Simultaneous inequalities on all ordered three-chain placements, exponential congestion and linear payload excess for that fixed recorder |
+| IV5.1/11/19.3 and VII91.1 | Actual acquired full-history service, complete/pending records, fixed-head decoding and genuine same-current-source Next |
+
+The repository's
+[ImmutableExtension](../../../D5/S0/Computability/Coding/ImmutableExtension.lean),
+including `freeAt_shadow_identity`, `extension_iff_depth_capacity` and
+its private cylinder/extension support, and
+[KraftConverse](../../../D5/S0/Computability/Coding/KraftConverse.lean),
+including `exists_isPrefixFree_code_of_kraft`, its private
+`prefixSuffixEmbedding`, `card_prefix_vectors_le` and sorted
+construction, supply mature finite capacity mathematics. Those generic
+extension problems are not the particular recursive allocation of
+labelled native histories. They are reused background, not new
+congestion theorems here. Likewise
+[NativeEndpointEventIdeals](../../../D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.lean),
+with `events`, `guard_enabled`, `cut_events`, `execution_adequacy`,
+`linear_extension_histories`, `all_histories` and its private
+guard/ancestor/cut support, already supplies native finite event
+adequacy. Its operations are the actual guarded `Call`/`run` of
+[NativeGuardedLeafRepair](../../../D5/S3/Arith/FibonacciAtomic/Geometry/NativeGuardedLeafRepair.lean).
+No generic capacity or event-ideal theorem is reproved as a new result.
+
+Kaspi and Merhav, *Zero-Delay and Causal Single-User and Multi-User
+Lossy Source Coding with Decoder Side Information*,
+[arXiv:1301.0079v1](https://arxiv.org/html/1301.0079v1), §2, gives the
+literature-attested restricted-input instantaneous-code condition:
+confusable supported inputs cannot receive equal or prefix-related
+words. It explains the side-information distinction underlying the
+head contract, but gives no native inherited-profile estimate.
+Khare, Mathieu and Young, *First Come First Served for Online Slot
+Allocation and Huffman Coding*,
+[arXiv:1307.5296v2](https://arxiv.org/html/1307.5296v2), §5,
+Theorem 5.1 and Lemma 5.1, gives an online prefix-code construction
+with expected cost at most $H+2\log_2(1+H)+2$ for iid requests.
+Irreversible allocation and ordinary Kraft capacity are
+literature-attested mechanisms there. Its fixed symbol instance and
+expected objective do not identify the present reconverging native
+history fibres, inherited words or worst-endpoint congestion.
+The repository's
+[DepthBudgetIidGreedyOptimality](../../../D5/S0/Computability/Coding/DepthBudgetIidGreedyOptimality.lean)
+likewise uses positive iid word masses and prescribed budgets, not the
+premises needed for this $J$. None of these results is asserted to
+settle existence of a different native logarithmic recorder.
+
+**Definition 104.2 (settled fixed construction and unresolved full goal).**
+The all-source polynomial-congestion assertion IV.46c/(VII.30) has
+the negative answer (VII.57) for exactly IV19's fixed $J$. The
+associated logarithmic-overhead assertion for that same $J$ is false.
+Its deterministic computability, horizon independence, literal
+extension, full-history inverse and existing linear additive upper
+bound remain intact; large congestion does not contradict them.
+
+Existence of another admissible recorder with uniform logarithmic
+redundancy on the whole original native domain remains unresolved.
+So does a recorder-independent impossibility at that scale. The
+specific induction uses IV19's occupied-profile rule; neither
+prefix preservation alone nor IV14–15/20's existing logarithmic
+lower bounds force that rule on every recorder. Static ranks,
+the separate tail-read journal and iid expected-cost codes retain
+their distinct contracts.
+
+The older known-alpha service and the separate bilateral fixed-slope
+entrance with genuine empty/P preparations retain their exact original
+domains. Actual rights/references, complete history, pending/full
+request and output records, controls, outcomes/refusals and genuine
+Next are not derived from the numerical bound. The persistent
+common-recovery objective for space, time, boundary and memory, with
+the real internal observer, both original entrances and all declared
+lawful futures, remains unresolved. Physical apparatus, actual
+acquisition, clocks/holds, paid material/scratch/backing and progress
+are separate obligations. The fixed-recorder obstruction settles no
+completion or unconditional physical-realization claim for that goal.
+
+## 追加锚（本行以下为增补区）
