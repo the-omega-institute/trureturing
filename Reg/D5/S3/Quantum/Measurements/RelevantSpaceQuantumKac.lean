@@ -329,4 +329,131 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_
 
 end ReturnMoments
 
+namespace OriginalCarrier
+universe u
+structure Carrier where
+  Space : Type u
+  [group : NormedAddCommGroup Space]
+  [inner : InnerProductSpace ℂ Space]
+  [finite : FiniteDimensional ℂ Space]
+attribute [instance] Carrier.group Carrier.inner Carrier.finite
+@[reducible] def sig : Signature where
+  Params := Carrier.{u}
+  State c := c.Space
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ c := c.Space
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization sig.{u} := realize sig (fun _ _ x => x) (fun e => nomatch e)
+def rejected : Realization sig.{u} := realize sig (fun _ _ _ => 0) (fun e => nomatch e)
+def arena : Arena where
+  signature := sig.{u}
+  Law R := ∀ {H : Type u} [g : NormedAddCommGroup H] [i : InnerProductSpace ℂ H]
+    [d : FiniteDimensional ℂ H] {α : Type} [Fintype α]
+    (L : α → H →L[ℂ] H) (v : H) (_hv : ‖v‖ = 1)
+    (_hTP : ∑ a, (L a).adjoint * L a = 1)
+    (_hunital :
+      let C := Submodule.span ℂ (Set.range (fun w : List α => w.foldr (fun a x => L a x) v))
+      (∑ a, L a * C.starProjection * (L a).adjoint) = C.starProjection),
+    let y := R.readout () ({ Space := H, group := g, inner := i, finite := d } : Carrier.{u}) v
+    let P := InnerProductSpace.rankOne ℂ y y
+    let C := Submodule.span ℂ (Set.range (fun w : List α => w.foldr (fun a x => L a x) v))
+    let E := fun X : H →L[ℂ] H => ∑ a, L a * X * (L a).adjoint
+    let F := fun X : H →L[ℂ] H => (1 - P) * E X * (1 - P)
+    let p := fun k => (LinearMap.trace ℂ H (P * E (F^[k] P)).toLinearMap).re
+    HasSum (fun k => F^[k] P) C.starProjection ∧ (∀ k, 0 ≤ p k) ∧
+      HasSum p 1 ∧ HasSum (fun k : ℕ => (k + 1 : ℝ) * p k)
+        (Module.finrank ℂ C : ℝ)
+private theorem actual_law : arena.{u}.Law actual := by
+  exact @pure_vector_quantum_kac.{u}
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  let H := EuclideanSpace ℂ (ULift.{u} (Fin 1))
+  let b := EuclideanSpace.basisFun (ULift.{u} (Fin 1)) ℂ
+  let v : H := b ⟨0⟩
+  let L : Unit → H →L[ℂ] H := fun _ => 1
+  let C := Submodule.span ℂ (Set.range
+    (fun w : List Unit => w.foldr (fun a x => L a x) v))
+  have hv : ‖v‖ = 1 := b.norm_eq_one _
+  have htp : ∑ a, (L a).adjoint * L a = 1 := by simp [L, ← ContinuousLinearMap.star_eq_adjoint]
+  have hu : (∑ a, L a * C.starProjection * (L a).adjoint) = C.starProjection := by
+    simp [L, ← ContinuousLinearMap.star_eq_adjoint]
+  have hh := h L v hv htp hu
+  have hs : HasSum (fun _ : ℕ => (0 : H →L[ℂ] H)) C.starProjection := by
+    simpa [C, L, rejected, actual, realize, sig, ← ContinuousLinearMap.star_eq_adjoint,
+      show (fun X : H →L[ℂ] H => X) = id from rfl] using hh.1
+  have hz : C.starProjection = 0 := hs.unique hasSum_zero
+  have hvC : v ∈ C := Submodule.subset_span ⟨[], rfl⟩
+  have hp := C.starProjection_eq_self_iff.mpr hvC
+  rw [hz] at hp
+  have hnorm := congrArg norm hp
+  simp [hv] at hnorm
+private theorem sensitivity : Sensitivity arena.{u} actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, rfl, rejected_law⟩
+    intro j hji
+    cases i
+    cases j
+    exact (hji rfl).elim
+  · intro i
+    exact nomatch i
+private theorem dependence : ObservationalDependence sig.{u} actual := by
+  intro i
+  cases i
+  let H := EuclideanSpace ℂ (ULift.{u} (Fin 1))
+  let b := EuclideanSpace.basisFun (ULift.{u} (Fin 1)) ℂ
+  let v : H := b ⟨0⟩
+  refine ⟨({ Space := H, group := inferInstance, inner := inferInstance, finite := inferInstance } : Carrier.{u}), 0, v, ?_⟩
+  change (0 : H) ≠ v
+  intro h
+  have hv : ‖v‖ = 1 := b.norm_eq_one ⟨0⟩
+  rw [← h] at hv
+  simp at hv
+def reconstruction : Registration arena.{u} (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := dependence
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.pure_vector_quantum_kac.{u})
+    (Realization sig.{u}) Unit Unit := {
+  unitName := `quantumKacOriginalCarrier,
+  realizationName := `Reg.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.OriginalCarrier.reconstruction,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨reconstruction⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize sig (fun _ _ x => x) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac,
+    definition := none,
+    coordinates := #[0, 1, 2, 3],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "value", "fn", "arg"],
+      stateBinder := 7, functionOperand := false, stateOperand := none,
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "value", "arg"],
+      stateBinder := 7, functionOperand := false, stateOperand := none,
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+#print axioms registration
+end OriginalCarrier
+
 end Reg.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac
