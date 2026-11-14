@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.Graph.LinearForests.DirectedForestCompletion
 import D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch
 import Mathlib.GroupTheory.Perm.Option
 import Mathlib.Data.Fintype.Perm
+import Mathlib.SetTheory.Cardinal.NatCard
 import Mathlib.Tactic
 
 /-! Label-preserving insertion on the actual permutation carrier. -/
@@ -229,5 +230,320 @@ private theorem cross_cycle_iff [Finite C] (s : C → Bool)
     obtain ⟨a, ha⟩ := every x
     obtain ⟨b, hb⟩ := every y
     exact ha.trans (((marked a b).mpr (h.2 (Set.mem_univ _) (Set.mem_univ _))).trans hb.symm)
+
+private def crossInventoryEquiv [Finite C] (s : C → Bool) [Nonempty (Side s false)] :
+    ((Side s false ≃ Side s true) ×
+      DirectedForestCompletion.FullCycle (Side s false)) ≃
+        Compatible s (fun x => !(s x)) := by
+  let F : ((Side s false ≃ Side s true) ×
+      DirectedForestCompletion.FullCycle (Side s false)) →
+      Compatible s (fun x => !(s x)) := fun z =>
+    ⟨crossPermutation s z.1 (z.1.symm.trans z.2.1),
+      (inferInstance : Nonempty (Side s false)).map Subtype.val,
+      (cross_cycle_iff s _ _).mpr (by
+        have hr : z.1.trans (z.1.symm.trans z.2.1) = z.2.1 := by
+          ext x
+          simp only [Equiv.trans_apply, Equiv.symm_apply_apply]
+        rw [hr]
+        exact z.2.2), by
+        intro x
+        cases hx : s x with
+        | false =>
+          rw [show crossPermutation s z.1 (z.1.symm.trans z.2.1) x = z.1 ⟨x, hx⟩ from
+            cross_false s _ _ ⟨x, hx⟩]
+          simp [hx, (z.1 ⟨x, hx⟩).2]
+        | true =>
+          rw [show crossPermutation s z.1 (z.1.symm.trans z.2.1) x =
+            (z.1.symm.trans z.2.1) ⟨x, hx⟩ from cross_true s _ _ ⟨x, hx⟩]
+          change (!(s x)) = s (z.2.1 (z.1.symm ⟨x, hx⟩))
+          rw [hx]
+          exact (z.2.1 (z.1.symm ⟨x, hx⟩)).2.symm⟩
+  apply Equiv.ofBijective F
+  constructor
+  · rintro ⟨f, ρ⟩ ⟨g, η⟩ h
+    have hs : crossPermutation s f (f.symm.trans ρ.1) =
+        crossPermutation s g (g.symm.trans η.1) := congrArg Subtype.val h
+    have hfg : f = g := by
+      ext x
+      simpa only [cross_false] using congrArg (fun σ : Perm C => σ x) hs
+    subst g
+    refine Prod.ext rfl (Subtype.ext ?_)
+    ext x
+    have he := congrArg (fun σ : Perm C => σ (f x)) hs
+    simpa only [cross_true, Equiv.trans_apply, Equiv.symm_apply_apply] using he
+  · intro σ
+    have hf (x : C) : s x = false ↔ s (σ.1 x) = true := by
+      have h := σ.2.2.2 x
+      cases hx : s x <;> cases hy : s (σ.1 x) <;> simp only [hx, hy, Bool.not_false, Bool.not_true, Bool.false_eq_true, Bool.true_eq_false] at h ⊢
+    have hg (x : C) : s x = true ↔ s (σ.1 x) = false := by
+      have h := σ.2.2.2 x
+      cases hx : s x <;> cases hy : s (σ.1 x) <;> simp only [hx, hy, Bool.not_false, Bool.not_true, Bool.false_eq_true, Bool.true_eq_false] at h ⊢
+    let f : Side s false ≃ Side s true := Equiv.subtypeEquiv σ.1 hf
+    let g : Side s true ≃ Side s false := Equiv.subtypeEquiv σ.1 hg
+    have he : crossPermutation s f g = σ.1 := by
+      ext x
+      cases hx : s x with
+      | false => exact cross_false s f g ⟨x, hx⟩
+      | true => exact cross_true s f g ⟨x, hx⟩
+    let ρ : Perm (Side s false) := f.trans g
+    have hc : ρ.IsCycleOn Set.univ := (cross_cycle_iff s f g).mp (he ▸ σ.2.2.1)
+    refine ⟨(f, ⟨ρ, hc⟩), Subtype.ext ?_⟩
+    change crossPermutation s f (f.symm.trans ρ) = σ.1
+    have hr : f.symm.trans ρ = g := by ext x; simp [ρ]
+    rw [hr, he]
+
+private theorem fullCycle_card_nonempty [Finite C] [Nonempty C] :
+    Nat.card (DirectedForestCompletion.FullCycle C) = (Nat.card C - 1).factorial := by
+  by_cases h : 2 ≤ Nat.card C
+  · exact DirectedForestCompletion.full_cycle_card h
+  · have hc : Nat.card C = 1 := by have := Nat.card_pos (α := C); omega
+    letI := Fintype.ofFinite C
+    letI : Subsingleton C := Fintype.card_le_one_iff_subsingleton.mp (by
+      simpa only [Nat.card_eq_fintype_card] using (show Nat.card C ≤ 1 by omega))
+    have hi : (1 : Perm C).IsCycleOn Set.univ := Perm.isCycleOn_of_subsingleton _ _
+    letI : Nonempty (DirectedForestCompletion.FullCycle C) := ⟨⟨1, hi⟩⟩
+    letI : Unique (DirectedForestCompletion.FullCycle C) := uniqueOfSubsingleton ⟨1, hi⟩
+    rw [Nat.card_unique, hc]
+    rfl
+
+/-- Cardinality of the inventory retaining both endpoint states of every label. -/
+def inventory (s d : C → Bool) (a b : Bool) : ℕ :=
+  Nat.card {x : C // s x = a ∧ d x = b}
+
+private theorem side_card [Finite C] (s d : C → Bool) (a : Bool) :
+    Nat.card (Side s a) = inventory s d a false + inventory s d a true := by
+  letI := Fintype.ofFinite C
+  classical
+  simp only [inventory, Nat.card_eq_fintype_card, Fintype.card_subtype]
+  have h := Finset.card_filter_add_card_filter_not
+    (s := Finset.univ.filter (fun x => s x = a)) (fun x => d x = false)
+  simpa only [Finset.filter_filter, Bool.not_eq_false] using h.symm
+
+private theorem option_inventory [Finite A] (s d : A → Bool) (c a b : Bool) :
+    inventory (Option.elim' c s) (Option.elim' c d) a b =
+      inventory s d a b + if c = a ∧ c = b then 1 else 0 := by
+  letI := Fintype.ofFinite A
+  classical
+  simp only [inventory, Nat.card_eq_fintype_card, Fintype.card_subtype,
+    Finset.card_filter, Fintype.sum_option, Option.elim'_none, Option.elim'_some]
+  exact Nat.add_comm _ _
+
+private theorem option_side [Finite A] (s : A → Bool) (c a : Bool) :
+    Nat.card (Side (Option.elim' c s) a) = Nat.card (Side s a) + if c = a then 1 else 0 := by
+  letI := Fintype.ofFinite A
+  classical
+  simp only [Nat.card_eq_fintype_card, Fintype.card_subtype, Finset.card_filter,
+    Fintype.sum_option, Option.elim'_none, Option.elim'_some]
+  exact Nat.add_comm _ _
+
+private theorem inventory_transport (e : C ≃ A) (s d : A → Bool) (a b : Bool) :
+    inventory (s ∘ e) (d ∘ e) a b = inventory s d a b :=
+  Nat.card_congr (Equiv.subtypeEquivOfSubtype (p := fun x : A => s x = a ∧ d x = b) e)
+
+private theorem side_transport (e : C ≃ A) (s : A → Bool) (a : Bool) :
+    Nat.card (Side (s ∘ e) a) = Nat.card (Side s a) :=
+  Nat.card_congr (Equiv.subtypeEquivOfSubtype (p := fun x : A => s x = a) e)
+
+private theorem inventory_le_side [Finite C] (s d : C → Bool) (a b : Bool) :
+    inventory s d a b ≤ Nat.card (Side s a) :=
+  Nat.card_le_card_of_injective (fun x : {x : C // s x = a ∧ d x = b} =>
+      (⟨x.1, x.2.1⟩ : Side s a))
+    (fun x y h => Subtype.ext (congrArg (fun z : Side s a => (z : C)) h))
+
+private theorem cross_inventory [Finite C] (s : C → Bool) (b : Bool) :
+    inventory s (fun x => !(s x)) b (!b) = Nat.card (Side s b) := by
+  apply Nat.card_congr
+  exact Equiv.subtypeEquivRight (fun x => by cases hs : s x <;> cases b <;> simp [hs])
+
+private theorem no_loop_card [Finite C] (s d : C → Bool)
+    (hd : ∀ x, s x ≠ d x)
+    (hb : inventory s d false true = inventory s d true false)
+    (hp : 0 < inventory s d false true) :
+    Nat.card (Compatible s d) = inventory s d false true *
+      (Nat.card (Side s false) - 1).factorial * (Nat.card (Side s true) - 1).factorial := by
+  have he : d = fun x => !(s x) := by
+    funext x
+    have h := hd x
+    cases hs : s x <;> cases ht : d x <;> simp_all
+  subst d
+  have hr := cross_inventory s false
+  have ht := cross_inventory s true
+  simp only [Bool.not_false, Bool.not_true] at hr ht
+  have hside : Nat.card (Side s false) = Nat.card (Side s true) := by omega
+  have hpos : 0 < Nat.card (Side s false) := by omega
+  letI : Nonempty (Side s false) := (Nat.card_pos_iff.mp hpos).1
+  letI := Fintype.ofFinite C
+  let e : Side s false ≃ Side s true := Fintype.equivOfCardEq (by
+    simpa only [Nat.card_eq_fintype_card] using hside)
+  have hcard : Nat.card (Side s false ≃ Side s true) = (Nat.card (Side s false)).factorial := by
+    simpa only [Nat.card_eq_fintype_card] using Fintype.card_equiv e
+  rw [← Nat.card_congr (crossInventoryEquiv s), Nat.card_prod, hcard,
+    fullCycle_card_nonempty, hr, ← hside]
+  have hfac : (Nat.card (Side s false)).factorial =
+      Nat.card (Side s false) * (Nat.card (Side s false) - 1).factorial := by
+    simpa only [Nat.sub_add_cancel hpos] using Nat.factorial_succ (Nat.card (Side s false) - 1)
+  rw [hfac]
+
+private theorem positive_inventory_card [Finite C] (s d : C → Bool)
+    (hb : inventory s d false true = inventory s d true false)
+    (hp : 0 < inventory s d false true) :
+    Nat.card (Compatible s d) = inventory s d false true *
+      (Nat.card (Side s false) - 1).factorial * (Nat.card (Side s true) - 1).factorial := by
+  suffices aux : ∀ n : ℕ, ∀ (T : Type u) [Finite T], Nat.card T = n →
+      ∀ s d : T → Bool,
+      inventory s d false true = inventory s d true false →
+      0 < inventory s d false true →
+      Nat.card (Compatible s d) = inventory s d false true *
+        (Nat.card (Side s false) - 1).factorial *
+        (Nat.card (Side s true) - 1).factorial by
+    exact aux (Nat.card C) C rfl s d hb hp
+  intro n
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    intro T _ hn s d hb hp
+    classical
+    by_cases hl : ∃ x, s x = d x
+    · obtain ⟨c, hc⟩ := hl
+      let A := {x : T // x ≠ c}
+      let e : Option A ≃ T := Equiv.optionSubtypeNe c
+      let s' : A → Bool := fun x => s x
+      let d' : A → Bool := fun x => d x
+      have hs : s ∘ e = Option.elim' (s c) s' := by funext x; cases x <;> rfl
+      have hd : d ∘ e = Option.elim' (s c) d' := by
+        funext x
+        cases x with
+        | none => exact hc.symm
+        | some x => rfl
+      have cross (a b : Bool) (hab : a ≠ b) : inventory s' d' a b = inventory s d a b := by
+        have h := inventory_transport e s d a b
+        rw [hs, hd, option_inventory] at h
+        have hz : ¬ (s c = a ∧ s c = b) := fun h => hab (h.1.symm.trans h.2)
+        simpa only [if_neg hz, Nat.add_zero] using h
+      have hft := cross false true Bool.false_ne_true
+      have htf := cross true false (by decide : true ≠ false)
+      have hb' : inventory s' d' false true = inventory s' d' true false := by omega
+      have hp' : 0 < inventory s' d' false true := by omega
+      letI : Nonempty A := (Nat.card_pos_iff.mp hp').1.map Subtype.val
+      have hlt : Nat.card A < n := by
+        have h := Finite.card_subtype_lt (p := fun x : T => x ≠ c) (x := c) (by simp)
+        exact h.trans_eq hn
+      have hi := ih (Nat.card A) hlt A rfl s' d' hb' hp'
+      have sides (a : Bool) : Nat.card (Side s a) =
+          Nat.card (Side s' a) + if s c = a then 1 else 0 := by
+        have h := side_transport e s a
+        rw [hs, option_side] at h
+        exact h.symm
+      have hrec : Nat.card (Compatible s d) =
+          Nat.card (Side s' (s c)) * Nat.card (Compatible s' d') := by
+        have h := Nat.card_congr (compatibleTransport e.symm s d)
+        simp only [Equiv.symm_symm] at h
+        rw [hs, hd] at h
+        rw [h, ← Nat.card_congr (loopInsertionEquiv s' d' (s c)), Nat.card_prod]
+      have hr : 0 < Nat.card (Side s' false) :=
+        lt_of_lt_of_le hp' (inventory_le_side s' d' false true)
+      have ht : 0 < Nat.card (Side s' true) :=
+        lt_of_lt_of_le (by omega : 0 < inventory s' d' true false)
+          (inventory_le_side s' d' true false)
+      have hfac (r : ℕ) (hr : 0 < r) : r * (r - 1).factorial = r.factorial := by
+        simpa only [Nat.sub_add_cancel hr] using (Nat.factorial_succ (r - 1)).symm
+      rw [hrec, hi, ← hft, sides false, sides true]
+      cases he : s c with
+      | false =>
+        simp only [he, Bool.false_eq_true, ite_true, ite_false, Nat.add_zero,
+          Nat.add_sub_cancel]
+        calc
+          _ = inventory s' d' false true *
+              (Nat.card (Side s' false) * (Nat.card (Side s' false) - 1).factorial) *
+              (Nat.card (Side s' true) - 1).factorial := by ring
+          _ = _ := by rw [hfac _ hr]
+      | true =>
+        simp only [he, Bool.true_eq_false, ite_true, ite_false, Nat.add_zero,
+          Nat.add_sub_cancel]
+        calc
+          _ = inventory s' d' false true * (Nat.card (Side s' false) - 1).factorial *
+              (Nat.card (Side s' true) * (Nat.card (Side s' true) - 1).factorial) := by ring
+          _ = _ := by rw [hfac _ ht]
+    · exact no_loop_card s d (not_exists.mp hl) hb hp
+
+private theorem inventory_zero [Finite C] (s d : C → Bool) (a b : Bool)
+    (hz : inventory s d a b = 0) (x : C) (hs : s x = a) (hd : d x = b) : False := by
+  letI : Nonempty {x : C // s x = a ∧ d x = b} := ⟨⟨x, hs, hd⟩⟩
+  have hp : 0 < inventory s d a b := Nat.card_pos
+  omega
+
+private theorem preserved_color_constant [Finite C] (s : C → Bool) (ρ : Perm C)
+    (hc : ρ.IsCycleOn Set.univ) (hs : ∀ x, s (ρ x) = s x) (x y : C) : s x = s y := by
+  obtain ⟨n, hn⟩ := (hc.2 (Set.mem_univ x) (Set.mem_univ y)).exists_nat_pow_eq
+  have hpow (n : ℕ) : s ((ρ ^ n) x) = s x := by
+    induction n with
+    | zero => rfl
+    | succ n ih => simpa only [pow_succ', Perm.mul_apply, hs] using ih
+  exact (hpow n).symm.trans (congrArg s hn)
+
+/-- Exhaustive labelled two-state cycle count, including the empty carrier and
+the disconnected zero-crossing inventory. No extension or connectivity premise is supplied. -/
+theorem compatible_cycle_card [Finite C] (s d : C → Bool)
+    (hb : inventory s d false true = inventory s d true false) :
+    Nat.card (Compatible s d) =
+      if Nat.card C = 0 then 0
+      else if 0 < inventory s d false true then
+        inventory s d false true * (Nat.card (Side s false) - 1).factorial *
+          (Nat.card (Side s true) - 1).factorial
+      else if inventory s d false false = 0 ∨ inventory s d true true = 0 then
+        (Nat.card C - 1).factorial else 0 := by
+  classical
+  by_cases hC : Nat.card C = 0
+  · rw [if_pos hC]
+    letI : IsEmpty (Compatible s d) := ⟨fun σ => by
+      letI : Nonempty C := σ.2.1
+      have h := Nat.card_pos (α := C)
+      omega⟩
+    exact Nat.card_eq_zero_of_isEmpty
+  · rw [if_neg hC]
+    letI : Nonempty C := (Nat.card_pos_iff.mp (Nat.pos_of_ne_zero hC)).1
+    by_cases hp : 0 < inventory s d false true
+    · rw [if_pos hp]
+      exact positive_inventory_card s d hb hp
+    · rw [if_neg hp]
+      have hm : inventory s d false true = 0 := by omega
+      have hm' : inventory s d true false = 0 := by omega
+      have hd (x : C) : d x = s x := by
+        cases hs : s x <;> cases ht : d x
+        · rfl
+        · exact (inventory_zero s d false true hm x hs ht).elim
+        · exact (inventory_zero s d true false hm' x hs ht).elim
+        · rfl
+      by_cases hz : inventory s d false false = 0 ∨ inventory s d true true = 0
+      · rw [if_pos hz]
+        have hconst : ∃ b, ∀ x, s x = b := by
+          rcases hz with hz | hz
+          · refine ⟨true, fun x => ?_⟩
+            cases hs : s x with
+            | false => exact (inventory_zero s d false false hz x hs ((hd x).trans hs)).elim
+            | true => rfl
+          · refine ⟨false, fun x => ?_⟩
+            cases hs : s x with
+            | false => rfl
+            | true => exact (inventory_zero s d true true hz x hs ((hd x).trans hs)).elim
+        obtain ⟨b, hs⟩ := hconst
+        let e : Compatible s d ≃ DirectedForestCompletion.FullCycle C := {
+          toFun := fun σ => ⟨σ.1, σ.2.2.1⟩
+          invFun := fun ρ => ⟨ρ.1, inferInstance, ρ.2,
+            fun x => (hd x).trans ((hs x).trans (hs (ρ.1 x)).symm)⟩
+          left_inv := fun _ => rfl
+          right_inv := fun _ => rfl }
+        rw [Nat.card_congr e, fullCycle_card_nonempty]
+      · rw [if_neg hz]
+        have hx : Nonempty {x : C // s x = false ∧ d x = false} :=
+          (Nat.card_pos_iff.mp (Nat.pos_of_ne_zero (not_or.mp hz).1)).1
+        have hy : Nonempty {x : C // s x = true ∧ d x = true} :=
+          (Nat.card_pos_iff.mp (Nat.pos_of_ne_zero (not_or.mp hz).2)).1
+        obtain ⟨x, hx⟩ := hx
+        obtain ⟨y, hy⟩ := hy
+        letI : IsEmpty (Compatible s d) := ⟨fun σ => by
+          have h := preserved_color_constant s σ.1 σ.2.2.1
+            (fun x => (σ.2.2.2 x).symm.trans (hd x)) x y
+          exact Bool.false_ne_true (hx.1.symm.trans (h.trans hy.1))⟩
+        exact Nat.card_eq_zero_of_isEmpty
 
 end D5.S3.Combinatorics.Graph.LinearForests.CompatibleCycleInventory
