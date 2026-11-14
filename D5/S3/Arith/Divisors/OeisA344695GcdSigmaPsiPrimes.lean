@@ -12,7 +12,7 @@ escape_witness: none
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19807
 Declaration classification (same-delivery helpers expanded to upstream facts):
   psi, a, claim: proof_shape: bind-only (source definitions); consumers: result and its helpers.
-  psi_prod: proof_shape: bind-only; consumer: not_two; Direct frozen dependencies: none.
+  psi_prod: proof_shape: bind-only; consumers: not_two, DimitrovLowerBoundsC4C5.sigma_ge_psi; Direct frozen dependencies: none.
   geom_mod_one: proof_shape: bind-only; consumer: witness_value; Direct frozen dependencies: none.
   geom_mod_self: proof_shape: bind-only; consumer: witness_value; Direct frozen dependencies: none.
   geom_mod_succ: proof_shape: bind-only; consumers: odd_exp_dvd_sigma, witness_value;
