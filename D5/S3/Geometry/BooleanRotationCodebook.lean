@@ -375,7 +375,7 @@ private def torusFiber (n : ℕ) (L ε : ℝ) : Set (Fin n → AddCircle L) :=
 
 private lemma torus_fiber_measurable (n : ℕ) (L ε : ℝ) [Fact (0 < L)] :
     MeasurableSet (torusFiber n L ε) := by
-  simp only [torusFiber, Set.setOf_forall]
+  simp only [torusFiber, Set.ofPred_forall]
   exact MeasurableSet.iInter fun s => measurableSet_le
     (continuous_norm.comp (continuous_finsetSum s (fun i _ => continuous_apply i))).measurable
     measurable_const
@@ -391,7 +391,7 @@ private lemma torus_fiber_volume_le (n : ℕ) {L ε : ℝ} [Fact (0 < L)]
     (fun _ => AddCircle.measurePreserving_mk L (-(L / 2)))
   have hm' : MeasurePreserving (fun a : Fin n → ℝ => fun i => (a i : AddCircle L))
       (volume.restrict B) volume := by
-    simpa only [B, Measure.volume_eq_pi, Measure.restrict_pi_pi] using hm
+    simpa only [B, volume_pi, Measure.restrict_pi_pi] using hm
   rw [← hm'.measure_preimage (torus_fiber_measurable n L ε).nullMeasurableSet,
     Measure.restrict_apply (by exact hm'.measurable (torus_fiber_measurable n L ε))]
   rw [← signed_body_volume n hε]
@@ -429,13 +429,13 @@ theorem finite_codebook_lower_bound (n : ℕ) {L ε : ℝ}
       (C.card : ℝ≥0∞) * ENNReal.ofReal (((2 * n).choose n : ℝ) * ε ^ n / n.factorial) := by
     calc
       _ = volume (Set.univ : Set (Fin n → AddCircle L)) := by
-        simp [Measure.volume_eq_pi, Measure.pi_univ, ← ENNReal.ofReal_pow hLp.le]
+        simp [volume_pi, Measure.pi_univ, ← ENNReal.ofReal_pow hLp.le]
       _ ≤ volume (⋃ φ ∈ C, (fun a => a - c φ) ⁻¹' F) := measure_mono hcover
       _ ≤ ∑ φ ∈ C, volume ((fun a => a - c φ) ⁻¹' F) := measure_biUnion_finset_le C _
       _ = ∑ _φ ∈ C, volume F := by
         apply Finset.sum_congr rfl
         intro φ _
-        exact (measurePreserving_sub_right (c φ) volume).measure_preimage
+        exact (measurePreserving_sub_right volume (c φ)).measure_preimage
           (torus_fiber_measurable n L ε).nullMeasurableSet
       _ ≤ ∑ _φ ∈ C, ENNReal.ofReal (((2 * n).choose n : ℝ) * ε ^ n / n.factorial) :=
         Finset.sum_le_sum fun _ _ => torus_fiber_volume_le n hε hL
@@ -444,7 +444,9 @@ theorem finite_codebook_lower_bound (n : ℕ) {L ε : ℝ}
     apply (ENNReal.ofReal_le_ofReal_iff (by positivity)).mp
     simpa [ENNReal.ofReal_mul, ENNReal.ofReal_natCast] using hv
   have hf : (0 : ℝ) < n.factorial := by positivity
-  nlinarith [ (le_div_iff₀ hf).mp (show L ^ n ≤
-    ((C.card : ℝ) * (2 * n).choose n * ε ^ n) / n.factorial by nlinarith [hv']) ]
+  have hh := (le_div_iff₀ hf).mp (show L ^ n ≤
+    ((C.card : ℝ) * (2 * n).choose n * ε ^ n) / n.factorial by
+      simpa only [mul_div_assoc, mul_assoc] using hv')
+  nlinarith [hh]
 
 end D5.S3.Geometry.BooleanRotationCodebook

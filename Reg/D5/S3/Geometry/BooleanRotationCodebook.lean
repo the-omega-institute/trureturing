@@ -115,4 +115,29 @@ theorem bodyBridge : (type_of% (@signed_body_volume)) ↔
 theorem bodyPositive : bodyArena.Law bodyActual :=
   bodyBridge.mp (@signed_body_volume)
 
+abbrev capacitySignature : Signature where
+  Params := ℕ
+  State n := Finset (Fin n → ℝ)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def capacityActual : Realization capacitySignature :=
+  realize capacitySignature (fun _ _ C => (C.card : ℝ)) (fun e => nomatch e)
+
+abbrev capacityArena : Arena where
+  signature := capacitySignature
+  Law R := ∀ n : ℕ, ∀ {L ε : ℝ}, 0 < ε → 3 * ε < L →
+    ∀ C : Finset (Fin n → ℝ), Adequate n L ε C →
+      (n.factorial : ℝ) * L ^ n ≤ R.readout () n C * (2 * n).choose n * ε ^ n
+
+theorem capacityBridge : (type_of% (@finite_codebook_lower_bound)) ↔
+    capacityArena.Law capacityActual := Iff.rfl
+
+theorem capacityPositive : capacityArena.Law capacityActual :=
+  capacityBridge.mp (@finite_codebook_lower_bound)
+
 end Reg.D5.S3.Geometry.BooleanRotationCodebook
