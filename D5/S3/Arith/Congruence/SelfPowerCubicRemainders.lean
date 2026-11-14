@@ -106,10 +106,6 @@ private theorem representative_bounds (h c : ℕ) (hc : c < 6) (hn : 2 < 6*h+c) 
   interval_cases c <;> norm_num [representative] at hn ⊢
   all_goals push_cast
   all_goals try (constructor <;> nlinarith)
-  have h1 : (1 : ℤ) ≤ h := by exact_mod_cast (show 1 ≤ h by omega)
-  have hprod := mul_nonneg (show (0 : ℤ) ≤ h-1 by omega) h0
-  have hprod2 := mul_nonneg (show (0 : ℤ) ≤ h-1 by omega) hsq
-  constructor <;> nlinarith
 
 /-- The complete XIV claim, including exact quotient integrality. -/
 def claim : Prop := ∀ n : ℕ, 2 < n →
@@ -130,7 +126,7 @@ theorem result : claim := by
     have hmod : a (6*h+c) % (((6*h+c : ℕ) : ℤ)^3-1) =
         representative h c % (((6*h+c : ℕ) : ℤ)^3-1) := by
       apply Int.modEq_iff_dvd.mpr
-      exact dvd_neg.mpr hd
+      simpa only [neg_sub] using dvd_neg.mpr hd
     rw [Int.emod_eq_of_lt hb.1 hb.2] at hmod
     simpa only [← he] using hmod
   rw [hm]
