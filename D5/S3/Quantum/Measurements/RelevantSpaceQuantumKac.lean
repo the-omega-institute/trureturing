@@ -340,7 +340,9 @@ private theorem survival_difference_moments (s : ℕ → ℝ) (a : ℝ)
       funext i
       simp only [f, Finset.mem_range, Nat.lt_succ_iff]
     rw [heq]
-    have hh := hasSum_sum_of_ne_finset_zero (s := Finset.range (j + 1))
+    have hh : HasSum (fun i : ℕ => if i ∈ Finset.range (j + 1) then p j else 0)
+        (∑ i ∈ Finset.range (j + 1), if i ∈ Finset.range (j + 1) then p j else 0) :=
+      hasSum_sum_of_ne_finset_zero (s := Finset.range (j + 1))
       (f := fun i => if i ∈ Finset.range (j + 1) then p j else 0)
       (fun i hi => by simp only [if_neg hi])
     have hval : (∑ i ∈ Finset.range (j + 1),
@@ -440,8 +442,11 @@ theorem relevant_space_quantum_kac (K : α → Matrix n n ℂ) [Fintype α]
     rw [projection_trace _ PiC hPiC]
     simp
   refine ⟨hseries, hp, ?_, ?_⟩
-  · simpa only [hloss, hs0] using hm.1
-  · simpa only [hloss, hdim] using hm.2
+  · change HasSum (fun k => (P * E (F^[k] P)).trace.re) 1
+    simpa only [hloss, hs0] using hm.1
+  · change HasSum (fun k : ℕ => (k + 1 : ℝ) * (P * E (F^[k] P)).trace.re)
+      (Module.finrank ℂ (reachableSpace K P) : ℝ)
+    simpa only [hloss, hdim] using hm.2
 
 #print axioms monitored_reachable_space_eq
 #print axioms relevant_projection_hasSum
