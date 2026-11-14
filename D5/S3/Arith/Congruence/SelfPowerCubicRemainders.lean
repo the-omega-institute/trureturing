@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/Congruence/SelfPowerCubicRemainders
    generality: I
    mirror-B: D5/B/S3/Arith/Congruence/SelfPowerCubicRemainders
-   mirror-E: none
+   mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: []
    utility: none
    digest: Six cubic branches for the least remainder of the exact self-power quotient. -/

@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/Congruence/SelfPowerQuotient
    generality: I
    mirror-B: D5/B/S3/Arith/Congruence/SelfPowerQuotient
-   mirror-E: none
+   mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: []
    utility: none
    digest: Exact integrality of the self-power quotient in OEIS A081215. -/
