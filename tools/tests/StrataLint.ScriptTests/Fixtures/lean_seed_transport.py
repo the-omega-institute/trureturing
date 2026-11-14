@@ -79,7 +79,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
                     ["git", "-C", str(self.root), "status", "--porcelain"], text=True),
                 FAKE_NATIVE_TRACKED_STATUS=subprocess.check_output(
                     ["git", "-C", str(self.root), "status", "--porcelain", "--untracked-files=no"], text=True))
-        return {**os.environ, "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
+        return {**os.environ, "FULL_BUILD": "1", "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
             "HOME": str(self.root), "FAKE_BUILD_LOG": str(self.root / "build-runs"),
             "FAKE_REMOTE": str(self.remote), "GITHUB_SHA": head, "GITHUB_RUN_ID": run,
             "GITHUB_ACTIONS": "true", "FAKE_DEV_BRANCH": json.dumps(dev),
