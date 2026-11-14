@@ -39,8 +39,6 @@ open private
   from D5.S3.Geometry.FiniteComponentClosure.SelectedWedge
 
 open private
-  basedTrans
-  basedHomeomorphism
   nativeConeRebasedCollapse
   unionConeCollapseBased
   auxiliaryBasedQuotientSplit
