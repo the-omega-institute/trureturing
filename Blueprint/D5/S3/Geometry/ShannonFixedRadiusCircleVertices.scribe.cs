@@ -25,13 +25,13 @@ internal sealed class ShannonFixedRadiusCircleVerticesDocument : IScribeDocument
             Entry("hexshapecounts-shape-card", "HexShapeCounts.shape_card", Formula10(), "This identity describes HexShapeCounts.shape_card. Integer division on natural and integer coordinates is written Nat.div and Int.ediv, respectively.", DescribeRole.Theorem, false),
             Entry("hexshapecounts-grown-coe", "HexShapeCounts.grown_coe", Formula11(), "This identity describes HexShapeCounts.grown_coe. Integer division on natural and integer coordinates is written Nat.div and Int.ediv, respectively.", DescribeRole.Theorem, false),
             Entry("hexshapecounts-count-difference", "HexShapeCounts.count_difference", Formula12(), "This identity describes HexShapeCounts.count_difference. Integer division on natural and integer coordinates is written Nat.div and Int.ediv, respectively.", DescribeRole.Theorem, false),
-            Entry("shannona374338-result", "ShannonA374338.result", Formula13(), "The three residue classes count all vertices for every pair of distinct Euclidean starting points.", DescribeRole.Theorem, false))));
+            Entry("shannona374338-result", "ShannonA374338.result", Formula13(), "The three residue classes count all vertices for every pair of distinct Euclidean starting points.", DescribeRole.Theorem, false, new OpenProblemResolutionClaim(ProblemSlugRef.Create("a400701-hexgrowth"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Entry(string id, string name, Formula formula, string prose, DescribeRole role, bool literature) =>
+    private static DocumentBlock Entry(string id, string name, Formula formula, string prose, DescribeRole role, bool literature, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hexgrowth-" + id), DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]),
             H(name), StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Named(string value) => Seq(Operatorname, Grp(F.Id(value)));
     private static Formula Qualified(params string[] names) => Seq(names.Select((name, i) =>
