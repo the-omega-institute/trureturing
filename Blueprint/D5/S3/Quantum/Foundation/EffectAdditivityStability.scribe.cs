@@ -128,8 +128,6 @@ internal sealed class EffectAdditivityStabilityDocument : IScribeDocumentDefinit
     }
     private static Formula All(Formula variable, Formula type, Formula body) =>
         Seq(Forall, Sp, P(Seq(variable, Colon, Sp, type)), Comma, Sp, P(body));
-    private static Formula Some(Formula variable, Formula type, Formula body) =>
-        Seq(Exists, Sp, P(Seq(variable, Colon, Sp, type)), Comma, Sp, P(body));
     private static Formula And(params Formula[] clauses)
     {
         var items = new List<Formula>();
@@ -143,8 +141,6 @@ internal sealed class EffectAdditivityStabilityDocument : IScribeDocumentDefinit
     private static Formula Imp(Formula premise, Formula result) => Seq(P(premise), Sp, Implies, Sp, P(result));
     private static Formula EqTo(Formula left, Formula right) => Seq(left, Sp, Eq, Sp, right);
     private static Formula Le(Formula left, Formula right) => Seq(left, Sp, Leq, Sp, right);
-    private static Formula LtTo(Formula left, Formula right) => Seq(left, Sp, Lt, Sp, right);
-    private static Formula Ne(Formula left, Formula right) => Seq(left, Sp, Neq, Sp, right);
     private static Formula Add(Formula left, Formula right) => P(Seq(left, Plus, right));
     private static Formula Sub(Formula left, Formula right) => P(Seq(left, Minus, right));
     private static Formula Mul(Formula left, Formula right) => P(Seq(left, Sp, Cdot, Sp, right));
@@ -166,10 +162,6 @@ internal sealed class EffectAdditivityStabilityDocument : IScribeDocumentDefinit
     private static Formula SumOver(Formula variable, Formula type, Formula body) =>
         Seq(Sum, Underscore, Grp(Seq(variable, Colon, Sp, type)), Sp, P(body));
     private static Formula Arrow(Formula from, Formula to) => Seq(from, Sp, To, Sp, to);
-    private static Formula Pair(Formula left, Formula right) => P(Seq(left, Comma, Sp, right));
-    private static Formula Product(Formula left, Formula right) => Seq(left, Sp, Times, Sp, right);
-    private static Formula Lambda(Formula variable, Formula type, Formula body) =>
-        P(Seq(P(Seq(variable, Colon, Sp, type)), Sp, Mapsto, Sp, body));
     private static Formula Inst(string name, Formula type, Formula body) =>
         Seq(OpenBracket, Call(name, type), CloseBracket, Sp, P(body));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
@@ -179,13 +171,7 @@ internal sealed class EffectAdditivityStabilityDocument : IScribeDocumentDefinit
     private static Formula Mat(Formula dimension) => Call("Mat", dimension);
     private static Formula Identity(Formula dimension) => Call("Id", dimension);
     private static Formula Psd(Formula value) => Call("PosSemidef", value);
-    private static Formula Hermitian(Formula value) => Call("IsHermitian", value);
     private static Formula Effect(Formula value, Formula dimension) => And(Psd(value), Psd(Sub(Identity(dimension), value)));
-    private static Formula Trace(Formula value) => Call("Tr", value);
-    private static Formula RealPart(Formula value) => Seq(Re, Sp, P(value));
-    private static Formula Born(Formula density, Formula value) => RealPart(Trace(Mul(density, value)));
-    private static Formula Density(Formula value) => And(Psd(value), EqTo(Trace(value), D(1)));
-
     private static Formula Statement(string name)
     {
         Formula d = V("d"), n = V("n"), p = V("p"), e = V("E"), f = V("F"),

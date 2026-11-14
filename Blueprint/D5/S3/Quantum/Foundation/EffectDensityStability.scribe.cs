@@ -546,7 +546,7 @@ internal sealed class EffectDensityStabilityDocument : IScribeDocumentDefinition
             Inst("Fintype", index, ordered
                 ? Inst("LinearOrder", index, Inst("AddCommMonoid", target, body))
                 : Inst("AddCommMonoid", target,
-                    Seq(OpenBracket, Call("Module", Real, target), CloseBracket, Sp, P(body)))));
+                    Seq(OpenBracket, Call("Module", Real, target), CloseBracket, Sp, P(body))))));
         Formula TraceInput(Formula body) => Dims(All(c, matrix, All(i, fin, All(j, fin, Imp(Ne(i, j), body)))));
         Formula DimensionBound() => Sub(Mul(D(2), Call("real", d)), D(1));
         Formula ErrorConstant() => Mul(Mul(Pow(DimensionBound(), D(2)),
@@ -614,7 +614,7 @@ internal sealed class EffectDensityStabilityDocument : IScribeDocumentDefinition
             "offdiag_identity" => InputE(All(i, fin, All(j, fin, Imp(Ne(i, j), EqTo(Off(i, j),
                 Add(Single(i, j, Entry(i, j)), Single(j, i, Call("star", Entry(i, j))))))))),
             "upperCorrection" => InputE(All(i, fin, All(j, fin, EqTo(Correction(i, j),
-                Call("ite", LtTo(i, j), Sub(ReEntry(i, j), ImEntry(i, j)), D(0))))))),
+                Call("ite", LtTo(i, j), Sub(ReEntry(i, j), ImEntry(i, j)), D(0)))))),
             "coordinate_diagonal" => InputE(All(i, fin, EqTo(Coord(Pair(i, i)),
                 Sub(ReEntry(i, i), SumOver(j, fin, Add(Correction(i, j), Correction(j, i))))))),
             "coordinate_pair" => InputE(All(i, fin, All(j, fin, EqTo(

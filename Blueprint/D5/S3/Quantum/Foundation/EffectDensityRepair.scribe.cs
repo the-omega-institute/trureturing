@@ -99,38 +99,13 @@ internal sealed class EffectDensityRepairDocument : IScribeDocumentDefinition
     private static Formula EqTo(Formula left, Formula right) => Seq(left, Sp, Eq, Sp, right);
     private static Formula Le(Formula left, Formula right) => Seq(left, Sp, Leq, Sp, right);
     private static Formula LtTo(Formula left, Formula right) => Seq(left, Sp, Lt, Sp, right);
-    private static Formula Ne(Formula left, Formula right) => Seq(left, Sp, Neq, Sp, right);
-    private static Formula Add(Formula left, Formula right) => P(Seq(left, Plus, right));
     private static Formula Sub(Formula left, Formula right) => P(Seq(left, Minus, right));
     private static Formula Mul(Formula left, Formula right) => P(Seq(left, Sp, Cdot, Sp, right));
-    private static Formula Scale(Formula scalar, Formula value) => P(Seq(scalar, Sp, Cdot, Sp, value));
-    private static Formula Pow(Formula value, Formula exponent) => Seq(P(value), Caret, Grp(exponent));
     private static Formula Abs(Formula value) => Seq(Lvert, Sp, value, Sp, Rvert, Sp);
-    private static Formula At(Formula function, params Formula[] arguments) =>
-        Seq(function, P(Seq(JoinArguments(arguments))));
-    private static Formula[] JoinArguments(Formula[] arguments)
-    {
-        var items = new List<Formula>();
-        for (var index = 0; index < arguments.Length; index++)
-        {
-            if (index > 0) items.AddRange([Comma, Sp]);
-            items.Add(arguments[index]);
-        }
-        return [.. items];
-    }
-    private static Formula SumOver(Formula variable, Formula type, Formula body) =>
-        Seq(Sum, Underscore, Grp(Seq(variable, Colon, Sp, type)), Sp, P(body));
-    private static Formula Arrow(Formula from, Formula to) => Seq(from, Sp, To, Sp, to);
-    private static Formula Pair(Formula left, Formula right) => P(Seq(left, Comma, Sp, right));
-    private static Formula Product(Formula left, Formula right) => Seq(left, Sp, Times, Sp, right);
     private static Formula Lambda(Formula variable, Formula type, Formula body) =>
         P(Seq(P(Seq(variable, Colon, Sp, type)), Sp, Mapsto, Sp, body));
-    private static Formula Inst(string name, Formula type, Formula body) =>
-        Seq(OpenBracket, Call(name, type), CloseBracket, Sp, P(body));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
-    private static Formula Complex => Seq(Mathbb, Grp(V("C")));
-    private static Formula Fin(Formula dimension) => Call("Fin", dimension);
     private static Formula Mat(Formula dimension) => Call("Mat", dimension);
     private static Formula Identity(Formula dimension) => Call("Id", dimension);
     private static Formula Psd(Formula value) => Call("PosSemidef", value);
@@ -161,7 +136,7 @@ internal sealed class EffectDensityRepairDocument : IScribeDocumentDefinition
                 All(a, matrix, Imp(And(Hermitian(a), Le(Abs(Sub(RealPart(Trace(a)), D(1))), eta),
                     All(e, matrix, Imp(Effect(e, d), Le(Seq(Minus, eta), Born(a, e))))),
                     Some(rho, matrix, And(Density(rho), All(e, matrix, Imp(Effect(e, d),
-                        Le(Abs(Sub(Born(rho, e), Born(a, e))), Mul(D(3), eta))))))))))),
+                        Le(Abs(Sub(Born(rho, e), Born(a, e))), Mul(D(3), eta)))))))))))),
             _ => throw new ArgumentOutOfRangeException(nameof(name))
         };
         return Disp(body);
