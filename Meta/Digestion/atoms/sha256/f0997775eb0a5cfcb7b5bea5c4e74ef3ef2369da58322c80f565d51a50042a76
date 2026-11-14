@@ -1,0 +1,9 @@
+**完整中文图景。** 把所有原状态想成同一块凸实体，每个纯态背后完全排除的全部对象收成一颗实心三球。比较同一对纯态，交换两端最低结果不变，这已让全部纯标签组成紧集。若把纯标签分成彼此分离的两堆，每颗完整球皮只能整张落在其中一堆；球皮包着实心球，最终两堆会把同一凸实体的整个边界也切成不相接的两块，产生矛盾。所以纯标签本来就连成一片。新候选只补一条近处关系：两种纯态已经足够相像时，总能找到同一个被它们完全排除的纯态。这个共同零点把近处两标签接成两步排除接力，局部线路便沿整片纯域传通，已有定理随后恢复同一实体的全部复三能级静态结构与 Born 读数。尚未证明的是，这条近处接线能否也由比较对称和完整三球自动产生；实际仪器、纠缠复合和物理时间仍保留各自合同。
+
+[Q151IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.2—114.4：完整真面、PR下严格暴露与全纯域紧性；IX116.1—116.2：原完整面与重复球孤立块。"
+[Q151X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X124.7、124.9：全局单点零射线的实际整球塌缩及原纯极限定位；X132.3—132.5：小正带共同零点与既有静态分类。"
+[Q151XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md "XI150.5：完整EB3+PR+Conn的满刻度、全原确认菜单least及同锥同单位qutrit；XI149.5、XI145.9：完整静态字典与独立物理合同。"
+[Q151L]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability，§1.3式(1.4)、Definition 6。"
+[Q151E]: https://arxiv.org/html/2103.13764v1 "T. Emir, D. Kruml, J. Paseka, T. Vetterlein，Linear orthogonality spaces as a new approach to quantum logic，Definition 4、Proposition 32。"
+[Q151F]: https://arxiv.org/html/0903.0643v1 "D. Labardini-Fragoso, R. Neumann-Coto, M. G. Takane，Cones and convex bodies with modular face lattices，Lemma 2、4。"
+

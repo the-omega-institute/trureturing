@@ -1,0 +1,34 @@
+**定理 149.4（球心互易的完整静态重构）。** 在(XI149.1)全部原量词及完整 EB3+$\mathsf{Conn}$ 下，以下三项等价：球心互易 $\mathsf{CR}_c$；144.1的全域同值 $\mathsf{UC}$；存在实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,\qquad
+\Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{XI149.19}
+$$
+
+成立时每条真实零边必有 $e_p(c_q)=1/2$；每个原球图的 $\rho_p(v)=\|v\|$。不另外输入 ZC、Seed、有限矩阵表示、九维上界或任一全域连续性。
+
+证明。假设 $\mathsf{CR}_c$，对每个原根用149.2—149.3，记
+$h_p=R_p/(1+R_p)\in[1/2,1)$。对任一真实零边 $p\perp q$，
+
+$$
+h_p=e_p(c_q)=e_q(c_p)=h_q .
+\tag{XI149.20}
+$$
+
+$\mathsf{Conn}$ 使全部 $h_p$ 等于同一 $h<1$，即先固定一个根并沿每条有限零路传递其数值。因而对任意 $a\in P$、任意 $x\in S_a$，完整球内对径 $\bar x=2c_a-x$ 仍在 $S_a$，有
+
+$$
+e_a(c_x)+e_a(c_{\bar x})=2h=:\kappa<2 .
+\tag{XI149.21}
+$$
+
+这正是原义 UC，其全标签量词及同一严格余量 $2-\kappa>0$ 已付清。直接消费144.5给(XI149.19)，不再证明已有分类链。
+
+反向在整个标准三能级域，$e_p(\rho)=\operatorname{Tr}(p\rho)$、
+$c_q=(I_3-q)/2$；若 $p\perp q$，则
+$e_p(c_q)=(1-\operatorname{Tr}(pq))/2=1/2=e_q(c_p)$。
+完整 EB3及全部原纯域的 Conn由142.2的标准反向给出。144.5同时给 UC与(XI149.19)的双向对应。于是 $\kappa=1$、$h=1/2$、$R_p=1$；由正齐次性得全部非零方向的 $\rho_p(v)=\|v\|$，零方向也成立。证毕。
+
+这把先逐根连续、再给全域预算的旧入口替换为真实零边上的一个对称读数条件；所得静态模型与 UC相同，不声称逻辑上严格更弱或公理个数最少。若在 EB3+$\mathsf{Conn}$ 下没有(XI149.19)，本定理的逆否给出至少一条实际零边上的可读不对称 $e_p(c_q)\ne e_q(c_p)$。
+
