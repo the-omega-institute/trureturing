@@ -26,7 +26,13 @@ internal static partial class RetireSourcesCommand
                 });
             }
             IngestCommand.ApplyLedgerUpdatesAtomically(root, current,
-                updates.Where(update => update.Bytes is null).ToImmutableArray());
+                updates.Where(update => update.Bytes is null).ToImmutableArray(), requireInputsUnchanged: () =>
+                {
+                    requireInputsUnchanged();
+                    foreach (var (path, bytes) in published)
+                        if (!File.ReadAllBytes(path).AsSpan().SequenceEqual(bytes.AsSpan()))
+                            throw new IOException($"ARCHIVE_CHANGED_DURING_PUBLICATION path={path}");
+                });
         }
         catch (Exception failure) when (failure is not OutOfMemoryException)
         {

@@ -55,6 +55,7 @@ public sealed class RetireSourcesCommandTests
     [InlineData("shared-atom")]
     [InlineData("foreign-context")]
     [InlineData("incoming-link")]
+    [InlineData("encoded-incoming-link")]
     [InlineData("utility-atom")]
     public void IncompleteOrReferencedInputRejectsWithoutChangingAnyByte(string defect)
     {
@@ -88,6 +89,7 @@ public sealed class RetireSourcesCommandTests
                 raw = Add(raw, BackfillInventoryLoader.RootPath + "foreign/context/neighbor.toml", "neighbor = '" + id + "'\n");
                 break;
             case "incoming-link": raw = Add(raw, "docs/consumer.md", "[theory](develop/theory/RetirementFixture.md#note)"); break;
+            case "encoded-incoming-link": raw = Add(raw, "docs/consumer.md", "[theory](develop/theory/Retirement%46ixture.md#note)"); break;
             case "utility-atom": raw = Add(raw, "D5/Consumer.lean", "-- Utility: checker; basis=refutes=atom:" + id + "\n"); break;
         }
         WriteFiles(directory.Path, raw);
@@ -138,6 +140,29 @@ public sealed class RetireSourcesCommandTests
         foreach (var original in raw.Entries)
             Assert.Equal(original.Bytes.ToArray(), after.Entries.Single(entry => entry.Path == original.Path).Bytes.ToArray());
         Assert.Equal(raw.Entries.Length + 1, after.Entries.Length);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void InputsAndReferencesAreRevalidatedAfterArchivePublication(bool newReference)
+    {
+        using var directory = new TemporaryDirectory();
+        var raw = Fixture();
+        WriteFiles(directory.Path, raw);
+        var result = RetireSourcesCommand.Run(directory.Path, Gateway(directory), new FakeLeanReportSource(null), Args("archive", true),
+            beforeArchivePublication: _ =>
+            {
+                if (newReference) File.WriteAllText(Path.Combine(directory.Path, "docs/consumer.md"), "[theory](develop/theory/RetirementFixture.md)");
+                else File.AppendAllText(Path.Combine(directory.Path, Source), "\nNew claim.\n");
+            });
+        Assert.False(result.Success);
+        Assert.DoesNotContain(ReadFiles(directory).Entries, entry => entry.Path == Archive);
+        foreach (var original in raw.Entries)
+            Assert.Equal(original.Path == Source && !newReference
+                    ? original.Bytes.ToArray().Concat(Encoding.UTF8.GetBytes("\nNew claim.\n")).ToArray() : original.Bytes.ToArray(),
+                ReadFiles(directory).Entries.Single(entry => entry.Path == original.Path).Bytes.ToArray());
+        if (newReference) Assert.True(File.Exists(Path.Combine(directory.Path, "docs/consumer.md")));
     }
 
     [Theory]
@@ -232,7 +257,7 @@ public sealed class RetireSourcesCommandTests
     {
         using var directory = new TemporaryDirectory();
         WriteFiles(directory.Path, Fixture(text: AtomContextFixture.ThreeClaims.Replace("Before.",
-            "Before $[p](t)$ [spec](../spec/guide.md#bound), ![image](../images/a.png) and [ref][target].\n\n[target]: ../spec/ref.md#part", StringComparison.Ordinal)));
+            "Before $[p](t)$ [spec](../spec/guide.md#bound), ![image](../images/a.png) and [ref][target].\n\n[target]: ../spec/ref.md#part\n\n[\n[p](t)\n]\n", StringComparison.Ordinal)));
         var result = RetireSourcesCommand.Run(directory.Path, Gateway(directory), new FakeLeanReportSource(null), Args("archive", true));
         Assert.True(result.Success, result.Error);
         var archived = Encoding.UTF8.GetString(ReadFiles(directory).Entries.Single(entry => entry.Path == Archive).Bytes.AsSpan());
@@ -240,6 +265,7 @@ public sealed class RetireSourcesCommandTests
         Assert.Contains("../../images/a.png", archived, StringComparison.Ordinal);
         Assert.Contains("[target]: ../../spec/ref.md#part", archived, StringComparison.Ordinal);
         Assert.Contains("$[p](t)$", archived, StringComparison.Ordinal);
+        Assert.Contains("[\n[p](t)\n]", archived, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -284,10 +310,12 @@ public sealed class RetireSourcesCommandTests
     [Theory]
     [InlineData("docs/latest.txt", "develop/theory/RetirementFixture.md")]
     [InlineData("CURRENT.md", "docs/develop/theory/RetirementFixture.md")]
+    [InlineData("docs/z-atom.txt", "ledger")]
     public void DeclaredAliasesOutsideDocumentFiltersBlockRetirement(string linkPath, string target)
     {
         using var directory = new TemporaryDirectory();
         var raw = Fixture();
+        if (target == "ledger") target = "../" + raw.Entries.First(entry => entry.Path.EndsWith(".yaml", StringComparison.Ordinal)).Path;
         var policy = Encoding.UTF8.GetString(raw.Entries.Single(entry => entry.Path == FileMapLoader.RelativePath).Bytes.AsSpan());
         var linkPolicy = "{ pattern = \"" + linkPath + "\", kind = \"data\", admission_plane = \"content\", produced_by = \"none\", consumed_by = [\"reader\"], verified_by = [\"SnapshotDecoder\"], artifact_id = \"none\", runtime_disposition = \"committed-source\", symlink = { target = \"" + target + "\", kind = \"file\" } }";
         raw = Replace(raw, FileMapLoader.RelativePath, linkPath.StartsWith("docs/", StringComparison.Ordinal)

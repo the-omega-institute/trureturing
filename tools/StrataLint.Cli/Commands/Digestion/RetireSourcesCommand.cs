@@ -72,7 +72,9 @@ internal static partial class RetireSourcesCommand
             var removedIds = sources.SelectMany(source => loaded.Document.RequireDigestionSources()
                     .Single(current => current.SourceId == source.SourceId).Entries)
                 .Select(entry => entry.AtomId).ToHashSet(StringComparer.Ordinal);
-            var captured = RequireNoReferences(repository, loaded.Snapshot, prefixes, removedIds, sources.Select(source => source.SourcePath).ToArray());
+            var archivePaths = options.Mode == "archive"
+                ? sources.Select(source => ArchiveRoot + source.SourcePath[TheoryRoot.Length..]).ToArray() : [];
+            var captured = RequireNoReferences(repository, loaded.Snapshot, prefixes, removedIds, sources.Select(source => source.SourcePath).ToArray(), archivePaths);
             var updates = ImmutableArray.CreateBuilder<IngestCommand.LedgerUpdate>();
             foreach (var source in sources)
             {
@@ -100,13 +102,10 @@ internal static partial class RetireSourcesCommand
             {
                 var reread = repository.ReadCurrent(current.Entries.Select(entry => DigestionQuerySelection.Literal(entry.Path)).ToArray());
                 RequireSame(current, reread);
-                var fresh = RequireNoReferences(repository, loaded.Snapshot, prefixes, removedIds, sources.Select(source => source.SourcePath).ToArray());
+                var fresh = RequireNoReferences(repository, loaded.Snapshot, prefixes, removedIds, sources.Select(source => source.SourcePath).ToArray(), archivePaths);
                 RequireSame(captured, fresh);
                 var freshSelected = repository.ReadCurrent(prefixes.Select(prefix => DigestionQuerySelection.Literal(prefix.TrimEnd('/'))).ToArray());
                 RequireSame(selectedRaw, freshSelected);
-                foreach (var update in updates.Where(update => update.Bytes is not null))
-                    if (File.Exists(Path.Combine(root, update.Path)) || Directory.Exists(Path.Combine(root, update.Path)))
-                        throw new IOException($"ARCHIVE_EXISTS path={update.Path}");
                 foreach (var update in updates) RequireRegularPath(root, update.Path);
             });
             return new(true, "RETIRE_WRITTEN\n" + output, string.Empty);

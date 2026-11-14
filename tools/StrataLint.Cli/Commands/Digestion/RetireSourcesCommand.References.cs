@@ -9,16 +9,20 @@ internal static partial class RetireSourcesCommand
 {
     // Read raw reverse references without interpreting unrelated settlement records.
     private static RawRepositorySnapshot RequireNoReferences(IRepositoryGateway repository, RepositorySnapshot snapshot,
-        string[] removedPrefixes, HashSet<string> removedIds, string[] sourcePaths)
+        string[] removedPrefixes, HashSet<string> removedIds, string[] sourcePaths, string[] archivePaths)
     {
         foreach (var link in FileMapLoader.LoadSnapshot(snapshot).Entries.Select(entry => entry.Symlink).OfType<FileMapSymlink>())
-            if (sourcePaths.Any(source => source == link.ResolvedTarget
+            if ((sourcePaths.Any(source => source == link.ResolvedTarget
                     || link.Kind == "directory" && source.StartsWith(link.ResolvedTarget + "/", StringComparison.Ordinal))
+                    || removedPrefixes.Any(prefix => link.ResolvedTarget.StartsWith(prefix, StringComparison.Ordinal)
+                        || link.Kind == "directory" && (prefix.TrimEnd('/') == link.ResolvedTarget
+                            || prefix.StartsWith(link.ResolvedTarget + "/", StringComparison.Ordinal))))
                 && repository.SearchCurrentPaths([DigestionQuerySelection.Literal(link.Path)]).Count > 0)
                 throw new FormatException($"SOURCE_SYMLINK_REFERENCED path={link.Path} target={link.ResolvedTarget}");
         var paths = repository.SearchCurrentPaths([BackfillInventoryLoader.RootPath.TrimEnd('/'), "docs", "Blueprint", "Library", "Papers", "Problems", "README.md", "CLAUDE.md", "D5", "Reg", "skills", "agents", ":(glob)**/*.lean"])
             .Where(path => !removedPrefixes.Any(prefix => path.StartsWith(prefix, StringComparison.Ordinal))
                 && !sourcePaths.Contains(path, StringComparer.Ordinal)
+                && !archivePaths.Contains(path, StringComparer.Ordinal)
                 && (path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
                     || path.EndsWith(".md", StringComparison.Ordinal) || path.EndsWith(".lean", StringComparison.Ordinal)))
             .Order(StringComparer.Ordinal).ToArray();
@@ -44,6 +48,20 @@ internal static partial class RetireSourcesCommand
                 foreach (Match match in Regex.Matches(text, "atom:(?<id>[0-9a-f]{64})", RegexOptions.CultureInvariant))
                     if (removedIds.Contains(match.Groups["id"].Value))
                         throw new FormatException($"ATOM_REFERENCED atom_id={match.Groups["id"].Value} path={entry.Path}");
+                if (entry.Path.EndsWith(".md", StringComparison.Ordinal))
+                    foreach (var (url, _, _) in MarkdownLinkSpans.Read(text))
+                    {
+                        if (string.IsNullOrEmpty(url) || url.StartsWith('#')) continue;
+                        var end = url.IndexOfAny(['?', '#']);
+                        var path = Uri.UnescapeDataString(end < 0 ? url : url[..end]);
+                        if (path.Length == 0 || !sourcePaths.Any(source => Path.GetFileName(source) == Path.GetFileName(path))) continue;
+                        string target;
+                        if (path.StartsWith('/')) target = Path.GetFullPath(path.TrimStart('/'));
+                        else if (Uri.TryCreate(url, UriKind.Absolute, out _)) continue;
+                        else target = Path.GetFullPath(path, Path.GetDirectoryName(Path.GetFullPath(entry.Path))!);
+                        if (sourcePaths.Any(source => Path.GetFullPath(source) == target))
+                            throw new FormatException($"SOURCE_REFERENCED target={url} path={entry.Path}");
+                    }
                 foreach (var source in sourcePaths)
                     if (text.Contains(source, StringComparison.Ordinal) || text.Contains(Path.GetFileName(source), StringComparison.Ordinal))
                         throw new FormatException($"SOURCE_REFERENCED source={source} path={entry.Path}");
