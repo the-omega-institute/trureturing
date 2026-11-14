@@ -34,7 +34,11 @@ private theorem dependence : ObservationalDependence signature actual := by
   let c : Parameters := ⟨3, by decide, 2, by decide, 2, by decide⟩
   refine ⟨(c, 4), ⟨0, by decide⟩, ⟨8, by decide⟩, ?_⟩
   change candidates 0 16 3 ≠ candidates 8 16 3
-  norm_num [candidates, convergents, Int.fract]
+  have hd : (1 / 2 : ℚ).den = 2 := by
+    change (reduced 1 2).den = 2
+    rw [reduced_den _ _ (by decide)]
+    norm_num
+  norm_num [candidates, convergents, Int.fract, hd]
 
 def source_registration : Registration arena (type_of% @QuantumShorContinuedFractions.shor_nearest_candidate) where
   actual := actual
@@ -111,7 +115,11 @@ private theorem dependence : ObservationalDependence signature actual := by
   let c : Parameters := ⟨3, by decide, 2, by decide, 2, by decide⟩
   refine ⟨(c, 4), ⟨0, by decide⟩, ⟨8, by decide⟩, ?_⟩
   change (candidates 0 16 3).map Rat.den ≠ (candidates 8 16 3).map Rat.den
-  norm_num [candidates, convergents, Int.fract]
+  have hd : (1 / 2 : ℚ).den = 2 := by
+    change (reduced 1 2).den = 2
+    rw [reduced_den _ _ (by decide)]
+    norm_num
+  norm_num [candidates, convergents, Int.fract, hd]
 
 def source_registration : Registration arena (type_of% @QuantumShorContinuedFractions.shor_coprime_candidate) where
   actual := actual

@@ -90,7 +90,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨2, 0, 1, ?_⟩
   change (reduced 0 2).den ≠ (reduced 1 2).den
-  norm_num [convergents, reduced, Int.fract]
+  rw [reduced_den _ _ (by decide), reduced_den _ _ (by decide)]
+  norm_num
 
 def source_registration : Registration arena (type_of% @QuantumShorContinuedFractions.reduced_den) where
   actual := actual

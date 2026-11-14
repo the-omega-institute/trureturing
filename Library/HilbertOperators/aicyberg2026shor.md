@@ -27,8 +27,9 @@ The published source tree has no NOTICE file.
 The supplier fixes Lean 4.33.1 and Mathlib revision
 `0df444a360eaa60ab8c11dca51a86af692955474`; the receiving dependency pins
 are the repository's `lean-toolchain` and `lake-manifest.json`. The transplant
-preserves the supplied statements and proofs and adjusts only imports and
-source grouping. Fixed two-qubit interfaces, unused corollaries, and suite
+preserves the supplied statements and proofs, with receiving imports,
+source grouping and helper visibility adapted. The Legendre consumer explicitly
+uses the exact finite-list equivalence. Fixed two-qubit interfaces, unused corollaries, and suite
 packaging are outside this proof slice.
 
 For modulus at least two, coprime base and an independently chosen target
