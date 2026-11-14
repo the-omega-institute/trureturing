@@ -3844,3 +3844,224 @@ Baire性使这样一张受控层含一个真正的原纯开片。再在一颗实
 [Q145Ha]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology，印刷页172 Theorem 2B.3与Corollary 2B.4；区域不变性要求同维欧氏开源与连续单射，流形版本逐坐标应用。"
 
 ## 追加锚（本行以下为增补区）
+
+## 146. 原零邻域的有限层推进与最小载体候选的边界
+
+### 146.1 原域、邻域与逐层量词
+
+**定义 146.1（完整原域中的零邻域）。** 保留144.1的全部原域：$V$ 为非零有限维实空间，$C\subset V$ 为闭尖生成凸锥，$u$ 在 $C\setminus\{0\}$ 上严格正，且
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad \mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\quad
+T_p(z)=\min_{f\in\mathcal F_p}f(z),\quad
+D_p=\{z\in K:T_p(z)=0\},\quad S_p=P\cap D_p.
+\end{gathered}
+\tag{XI146.1}
+$$
+
+$T_p$ 在全部原混态上取整个紧确认菜单的已达到最小值。EB3 要求每个完整 $D_p$ 是非退化仿射实心三球，中心为 $c_p$；$\mathsf{Conn}$ 要求任意原纯对有有限原零边路。以下保留 EB3+$\mathsf{Conn}$+$\mathsf{ZC}$，其中
+
+$$
+\forall a\in P\ \exists\kappa_a\ \forall x\in S_a:\quad
+e_a(c_x)+e_a(c_{2c_a-x})=\kappa_a.
+\tag{XI146.2}
+$$
+
+这里 $e_p$ 是144.1式(XI144.2)所引既有结果供应的唯一整球零确认：$e_p(p)=1$、$e_p|_{D_p}=0$。其完整零面为 $D_p$，唯一一值点为 $p$；不把整个 $\mathcal F_p$ 缩成单点，不预设 least、$T_p=e_p$ 或正限制逆。全部非空真面只有纯单点或完整排除球，球标签单射，不同完整球至多交于一个原纯点。这些接口均沿用144.1的准确来源。
+
+定义实际原邻域、有限层及二步载体为
+
+$$
+\mathcal N(A)=\bigcup_{x\in A}S_x,\qquad
+H_0(a)=\{a\},\quad H_{m+1}(a)=H_m(a)\cup\mathcal N(H_m(a)),\qquad
+Q(a)=\mathcal N(S_a).
+\tag{XI146.3}
+$$
+
+固定辅助欧氏尺。由144.2，$1\le\kappa_a<2$，每张固定 $S_a$ 上中心连续；由144.3，$Q(a)$ 环境紧且全纯，整球在每张固定 $S_a$ 上连续。下文新增的是从一整层到下一整层的连续性推进，不将逐层常数预先统一于全部 $P$。
+
+### 146.2 移动邻球的极限二分
+
+**定理 146.2（连续母球上的移动邻球只有整球或母标签点极限）。** 若
+
+$$
+x_j\to x\in P,\quad D_{x_j}\to D_x,\quad
+y_j\in S_{x_j},\quad y_j\to y\in S_x,\quad
+D_{y_j}\to F
+\tag{XI146.4}
+$$
+
+均在同一原域发生，球收敛取 Hausdorff 意义，则
+
+$$
+F=D_y\quad\text{或}\quad F=\{x\}.
+\tag{XI146.5}
+$$
+
+证明。先给所需的椭球内点事实。设非点、允许降秩的椭球 $G=b+B\overline B^3$ 包含于非退化三球 $D$，且 $G\ne D$。存在 $v\in S^2$ 使 $b\pm Bv$ 均在 $\operatorname{ri}D$。确实，严格凸性使非退化中心弦的中点 $b$ 在 $\operatorname{ri}D$。若 $\operatorname{rank}B<3$，取单位核向量即可，两极限点允许相同。若满秩，将 $D$ 仿射化为单位球；若没有所求方向，闭接触集
+
+$$
+Z=\{v\in S^2:\|b+Bv\|=1\}
+\tag{XI146.6}
+$$
+
+及 $-Z$ 覆盖 $S^2$。Baire 定理使 $Z$ 含球面开片。沿用142.2证明第三步的球面二次唯一性，$\|b+Bv\|^2-1$ 在整个 $S^2$ 为零。比较 $v,-v$ 得 $B^{\mathsf T}b=0$，满秩给 $b=0$；再得 $B^{\mathsf T}B=I$，所以 $G=D$，矛盾。
+
+回到(XI146.4)。零对称给 $x_j\in D_{y_j}$，故 $x\in F$；纯标签处的原上关联给 $F\subseteq D_y$。点极限只能是 $\{x\}$。
+
+设 $F$ 非点。任选原效应子列极限 $e_{y_j}\to f\in\mathcal E$，有 $f(y)=1$、$f|_F=0$。$f$ 的整个零面是非点真面，因而是某个完整极大球；又因 $f\in\mathcal F_y$，这个零面包含于 $D_y$，极大性迫其等于 $D_y$。此时才可由唯一整球零确认识别 $f=e_y$。全部聚点如此，故 $e_{y_j}\to e_y$。把 $x_j\in S_{y_j}$ 代入 ZC，有
+
+$$
+\kappa_{y_j}\le1+e_{y_j}(c_{x_j}),\qquad
+\limsup_j\kappa_{y_j}\le1+e_y(c_x)<2.
+\tag{XI146.7}
+$$
+
+中心 $c_{x_j}\to c_x$ 来自母球连续；严格性来自 $c_x$ 混、$e_y$ 仅在纯点 $y$ 取一。
+
+反设 $F\subsetneq D_y$。对原球取有界正交半轴参数，再取共同子列
+
+$$
+D_{y_j}=b_j+B_j\overline B^3,\quad b_j\to b,\quad B_j\to B,\quad F=b+B\overline B^3.
+\tag{XI146.8}
+$$
+
+用刚证内点事实选 $v$，实际对径纯点 $r_j=b_j+B_jv$、$r'_j=b_j-B_jv$ 的极限都在 $\operatorname{ri}D_y$。对其反向球的每个聚点应用[IX118.4][Q146IX]：聚点只能为纯单点 $\{q\}$，而相应混极限属于 $\operatorname{ri}D_q$。不同完整球不能共享混点，标签单射遂迫 $q=y$。因此
+
+$$
+D_{r_j},D_{r'_j}\to\{y\},\qquad
+\kappa_{y_j}=e_{y_j}(c_{r_j})+e_{y_j}(c_{r'_j})\to2,
+\tag{XI146.9}
+$$
+
+违反(XI146.7)。非点极限只能是 $D_y$。本证明没有在点极限分支中识别效应，也没有预付 $P$ 闭性。证毕。
+
+### 146.3 紧连续层的原邻域推进
+
+**定理 146.3（原邻域保持紧纯、连续与严格预算余量）。** 设非空 $A\subseteq P$ 环境紧，$x\mapsto D_x$ 在 $A$ 上连续，并且存在事先对整个 $A$ 选定的 $\varepsilon>0$，使 $\kappa_x\le2-\varepsilon$ 对全部 $x\in A$ 成立。则 $\mathcal N(A)$ 环境紧且全纯，$D,c,e$ 在其上连续，而且存在 $\varepsilon',\delta'>0$，使
+
+$$
+\kappa_y\le2-\varepsilon',\qquad
+\text{$D_y$ 的全部三根半轴均不小于 }\delta'
+\quad(y\in\mathcal N(A)).
+\tag{XI146.10}
+$$
+
+证明。连续非退化三球的相对球缘连续，使用[IX118.2][Q146IX]。故实际关联集
+
+$$
+I_A=\{(x,y):x\in A,\ y\in S_x\}
+\tag{XI146.11}
+$$
+
+在紧 $A\times K$ 中闭而紧，第二坐标投影恰为 $\mathcal N(A)$。投影中的点按定义全部原纯；没有把未知闭性的 $P$ 与紧集取交后宣称紧。
+
+取 $y_j\to y$ 于该邻域，选择母标签 $x_j\in A$ 使 $y_j\in S_{x_j}$，再取 $x_j\to x\in A$。母球连续给 $y\in S_x$。146.2将任何球聚点限制为 $D_y$ 或 $\{x\}$。反设有子列 $D_{y_j}\to\{x\}$。
+
+每个 $z\in S_x$ 满足 $x\in S_z$，故 $c_z\ne x$。144.2供应固定 $S_x$ 上中心连续，所以
+
+$$
+m_x:=\min_{z\in S_x}\|c_z-x\|>0.
+\tag{XI146.12}
+$$
+
+令 $M_E=\max_{f\in\mathcal E}\|f\|_*>0$。母层的统一余量和 ZC 使每张 $S_{x_j}$ 都至少有一点 $z_j$ 满足
+
+$$
+e_{x_j}(c_{z_j})\le1-\varepsilon/2,\qquad
+\|c_{z_j}-x_j\|\ge\frac{\varepsilon}{2M_E}.
+\tag{XI146.13}
+$$
+
+充分大 $j$ 时，其中心到 $x$ 的距离至少为 $\varepsilon/(4M_E)$；但 $c_{y_j}\to x$。取
+
+$$
+0<r<\min\left(m_x,\frac{\varepsilon}{4M_E}\right).
+\tag{XI146.14}
+$$
+
+每张固定 $S_{x_j}$ 连通，且144.2使该张球面上的中心像连续。因此可取 $w_j\in S_{x_j}$，使 $\|c_{w_j}-x\|=r$。紧 $I_A$ 允许再取 $w_j\to w\in S_x$。146.2使 $D_{w_j}$ 的任一聚点只能为 $D_w$ 或 $\{x\}$，中心极限到 $x$ 的距离遂分别至少为 $m_x$ 或等于零，都不可能为 $r$。点塌缩被排除。
+
+于是所有球聚点均为 $D_y$，子列判据给邻域上的整球连续。中心、形状算子及恒秩三的像投影连续，复用139.4的支持函数式(XI139.14)。效应任一聚点在极限标签读一、在整个极限球读零，唯一性给邻域上的 $e_y$ 连续。
+
+现在才在紧 $I_A$ 上取
+
+$$
+\mu_A=\max_{(x,y)\in I_A}e_y(c_x)<1.
+\tag{XI146.15}
+$$
+
+函数连续，且混点 $c_x$ 处读数严格小于一，故最大值仍严格小于一。ZC 给 $\kappa_y\le1+e_y(c_x)\le1+\mu_A$，可取 $\varepsilon'=1-\mu_A$。紧基上连续的秩三形状算子的最小正特征值有正下界，给 $\delta'$。没有假定 $\kappa$ 连续，也没有把母层常数直接延用到下一层。证毕。
+
+**定理 146.4（全部有限层正规性及退化的图距离逃逸）。** 对任意固定原根 $a$ 及每个整数 $m\ge0$，$H_m(a)$ 环境紧且全纯，$D,c,e$ 在其上连续，且
+
+$$
+\forall m\ \exists\varepsilon_m,\delta_m>0\ \forall p\in H_m(a):\quad
+\kappa_p\le2-\varepsilon_m,\quad
+\text{$D_p$ 的全部三根半轴均不小于 }\delta_m.
+\tag{XI146.16}
+$$
+
+整个 $Q(a)$ 上 $D,c,e$ 也连续。它的根外部分同胚于 $S_a$ 上一个实际实秩二向量丛 $\xi_a$ 的总空间，而 $Q(a)$ 同胚于其 Thom 一点紧化；不预设根处为流形点或指定 Euler 数。若纯标签列 $p_j$ 满足下列任一完整趋向条件：$\operatorname{diam}D_{p_j}\to0$、$\kappa_{p_j}\to2$、或 $p_j$ 趋于混态，则其原零图距离 $d_\perp(a,p_j)\to\infty$。若 $p_j\to p\in P$ 并已选定 $d_H(D_{p_j},D_p)\ge\eta>0$ 的坏子列，则该选定子列亦逃出全部有限层。
+
+证明。单点层满足146.3的前件，因为 $\kappa_a<2$。逐层推进，再在 $H_m$ 与 $\mathcal N(H_m)$ 两个紧闭子集上粘合连续映射，两层余量和半轴下界分别取较小者，即得(XI146.16)。$Q(a)$ 的紧纯性直接取144.3；连续性由 $Q(a)\subseteq H_2(a)$ 限制得到，未以该包含本身证明紧性。根外丛直接复用139.5的单根构造：在 $S_a$ 上写连续秩三形状 $A_s$，令 $w_s=A_s^{\dagger/2}(a-c_s)$、$(\xi_a)_s=\operatorname{im}A_s\cap w_s^\perp$，逐纤维采用该证明式(XI139.16)—(XI139.17)的球极投影。逆的母标签坐标连续，因为紧 $S_a$ 的任何标签聚点都由原上关联及根外唯一共同邻点确定；未使用第二根补图。紧 $Q(a)$ 是该非紧总空间的一点紧化，紧基的 Thom 空间识别见[Hatcher，印刷页112][Q146VB]。若前三类退化列有无限多项落在一个固定 $H_m$，该层的紧纯性或统一下界立即矛盾。对坏子列，紧闭层使极限 $p$ 也在层内，该层连续性与固定 $\eta$ 矛盾。仅说整列存在一条不收敛子列，不足以让整列逃逸，因为可以交错插入固定 $p$。这里的量词是 $\forall m\exists\varepsilon_m,\delta_m$，没有取得 $\exists\varepsilon,\delta\forall m$。证毕。
+
+### 146.4 复用最小载体候选与完整静态字典
+
+**定义 146.5（最小载体候选及其静态字典）。** 对式(XI146.1)的完整锥模型，另取只含 EB3、$\mathsf{Conn}$ 和整个原空间 $\dim_{\mathbb R}V\le9$ 的候选，不将 ZC 列为该候选的独立前提。Conn 给 Inj 后，[THREE_COPY VII121.9][Q146TVII]的既有下界使维数恰为九；此时直接消费145.2，得到同一个实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,\qquad
+\Phi(\operatorname{PSD}_3)=C,\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XI146.17}
+$$
+
+145.2的整个标准反向给该候选的反向。该分类及下界均为既有结果的应用，不计为本章新增定理。ZC 在这一最小载体候选中为分类后的后果，且 $\kappa_p=1$；对未限制原维数的 EB3+$\mathsf{Conn}$ 域，本章146.2—146.4的有限层推进仍明确保留 ZC 前件。未证明自动的九维上界，也不将逐层余量统一到全部原纯域。
+
+在同一个 $\Phi$ 下，全部原态、效应、确认菜单、已达到的 minimum、POVM及谱字典直接复用145.8及142.3。特别地，对单位 $v$、$p_v=\Phi(vv^*)$，
+
+$$
+\begin{gathered}
+f_M(\Phi\rho)=\operatorname{Tr}(M\rho),\quad 0\preceq M\preceq I,\\
+\mathcal F_{p_v}=\{f_{vv^*+B}:B=P_{v^\perp}BP_{v^\perp},\ 0\preceq B\preceq P_{v^\perp}\},\\
+T_{p_v}(\Phi\rho)=v^*\rho v,\qquad
+D_{p_v}\text{ 是 }v^\perp\cong\mathbb C^2\text{ 上的整个态球}.
+\end{gathered}
+\tag{XI146.18}
+$$
+
+矩阵偏序下 $vv^*$ 是菜单的 least 为分类后的后果。全部纯域为 $\mathbb{CP}^2$、每个排除纯球缘为 $\mathbb{CP}^1\cong S^2$。纯比较数值互易不定义连续测量次序交换；实际仪器、更新、复合、物理时间及能量标定仍分别取145.9及142.3所列独立条件。
+
+### 146.5 稠密正规域与尚未排除的逃逸
+
+**定理 146.6（根无关稠密正规域及零边传播的剩余条件）。** 在完整 EB3+$\mathsf{Conn}$+$\mathsf{ZC}$ 域，定义
+
+$$
+U=\bigcup_{m\ge0}\operatorname{int}_P H_m(a).
+\tag{XI146.19}
+$$
+
+则 $U$ 是根无关的非空稠密开集；$P$ 在 $U$ 上局部紧，$D,c,e$ 局部连续，并有局部统一的半轴下界和 $\kappa<2$ 余量。若另能证明 $U$ 沿每条原零边不变，则得到同原 qutrit。若同原表示不存在，则必有 $\dim V\ge10$、$\sup_P\kappa=2$，且从任意固定根出发的原图距离无界。
+
+证明。非极点集正好是下列紧集的可数并：
+
+$$
+K\setminus P=
+\bigcup_{j\ge1}
+\left\{\frac{x+y}{2}:x,y\in K,\ \|x-y\|\ge1/j\right\}.
+\tag{XI146.20}
+$$
+
+任一非极点可取一条以它为中点的非退化子弦，反向显然。故 $P$ 是紧度量 $K$ 中的 $G_\delta$，完全可度量且为 Baire 空间。Conn 给 $P=\bigcup_mH_m(a)$，各层在 $P$ 中闭。任意非空 $P$ 开集自身为 Baire，其闭层覆盖中至少一层有非空相对内部，所以 $U$ 稠密。两根间原图距离有限，只让各层包含关系偏移一个固定整数，故 $U$ 根无关。其余局部结论直接来自146.4；若点位于一紧层的 $P$ 内部，该层就是其紧邻域。
+
+若 $U$ 沿零边不变，非空性与 Conn 使 $U=P$，从而整个 $P$ 上整球连续。[IX118.3、118.5、118.8][Q146IX]即给同原表示，不须先另假定 $P$ 闭。不存在该表示时，145.2及已引九维下界排除 $\dim V\le9$，144.4迫 $\sup_P\kappa=2$。若某根到全部原纯点的距离有有限上界，则 $P=H_m(a)$ 对某 $m$ 成立，146.4又给全域不塌缩而重构，矛盾。
+
+更具体地，设 $p\in U$、$q\perp p$，且 $q_j\to q$ 是逃出全部有限层的纯标签列。它不可能满足 $D_{q_j}\to D_q$：否则球缘连续给实际 $p_j\in S_{q_j}$、$p_j\to p$；$p$ 的某个 $P$ 邻域包含于固定 $H_m(a)$，零对称遂把所有充分大的 $q_j$ 捕获到 $H_{m+1}(a)$。因此这种失败的球聚点只能是 $D_q$ 的真子椭球或点。尚未由现有条件排除这些极限，也未证明 $U$ 沿边不变或自动的九维上界。146.2的移动邻球二分要求连续母球及实际邻点列，不能应用到这里只给定的任意 $q_j\to q$ 来省去这个缺口。证毕。
+
+[Q146IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "118.2：非退化相对球缘极限；118.3—118.5：原上关联、混极限和开放边不塌缩；118.8：同原量子锥分类。"
+[Q146TVII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "VII121.9：EB3+Inj的既有独立九维下界。"
+[Q146VB]: https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf "Allen Hatcher, Vector Bundles and K-Theory，Thom Spaces，印刷页112：紧基向量丛总空间的一点紧化。"
+
+## 追加锚（本行以下为增补区）
