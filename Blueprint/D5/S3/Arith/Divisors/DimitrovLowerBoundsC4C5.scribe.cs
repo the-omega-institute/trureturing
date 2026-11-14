@@ -14,6 +14,16 @@ internal sealed class DimitrovLowerBoundsC4C5Document : IScribeDocumentDefinitio
         "Dimitrov's reciprocal-product Conjectures 4 and 5 hold for every n ≥ 2 and k ≥ 1.",
         H("Dimitrov's full reciprocal-product lower bounds"),
         Blocks(
+            Node("psi_ge", "Dedekind psi exceeds n", PsiLowerBody(),
+                "For every n ≥ 2, the prime-factor product gives n+1 ≤ psi(n).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("sigma_ge_psi", "The divisor sum dominates Dedekind psi", SigmaLowerBody(),
+                "Each prime-power divisor sum dominates the corresponding Dedekind factor.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("mixed_bound", "Mixed-power ordering and ratio bound", MixedBody(),
+                "For positive ordered a ≤ b ≤ c, exponent m ≥ 1 and 1 ≤ q ≤ b/a, the three mixed-power terms are ordered. "
+                + "The second-to-first ratio is at least q^(m−1)(1+q)/2. This same estimate applies to the reciprocal-product and Nesbitt expressions.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("claim4", "Dimitrov Conjecture 4", Claim4Body(),
                 "The source is arXiv:2606.12484v1, §2, PDF page 4. The variables are integers n ≥ 2 and k ≥ 1. "
                 + "Nat.totient is Euler's φ, psi is the local Dedekind ψ definition, and ArithmeticFunction.sigma 1 is the positive-divisor sum. "
@@ -47,10 +57,37 @@ internal sealed class DimitrovLowerBoundsC4C5Document : IScribeDocumentDefinitio
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("dimitrov-c4-c5-" + name),
+        Describe.Lean(DescribeId.Create("dimitrov-c4-c5-" + name.Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             provenance, Blocks(Paragraph(Text(prose))), role,
             openProblemResolutionClaim: resolution);
+
+    private static Formula PsiLowerBody()
+    {
+        Formula n = F.Id("n");
+        return All("n", Naturals(), Imp(Le(D(2), n), Le(Add(n, D(1)), Call(Named("psi"), n))));
+    }
+
+    private static Formula SigmaLowerBody()
+    {
+        Formula n = F.Id("n");
+        return All("n", Naturals(), Imp(Le(D(2), n),
+            Le(Call(Named("psi"), n), Call(Q("ArithmeticFunction", "sigma"), D(1), n))));
+    }
+
+    private static Formula MixedBody()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), c = F.Id("c"), q = F.Id("q"), m = F.Id("m");
+        Formula A = Mul(Pow(a, m), Add(b, c));
+        Formula B = Mul(Pow(b, m), Add(a, c));
+        Formula C = Mul(Pow(c, m), Add(a, b));
+        Formula conclusion = And(Le(A, B), And(Le(B, C), Le(Div(Mul(Pow(q, Sub(m, D(1))), Add(D(1), q)), D(2)), Div(B, A))));
+        Formula body = Imp(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, a),
+            Imp(Le(a, b), Imp(Le(b, c), Imp(Le(D(1), m), Imp(Le(D(1), q), Imp(Le(q, Div(b, a)), conclusion))))));
+        return All("a", Reals(), All("b", Reals(), All("c", Reals(), All("q", Reals(), All("m", Naturals(), body)))));
+    }
+
+    private static Formula And(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
 
     private static Formula Claim4Body()
     {
