@@ -124,7 +124,7 @@ private theorem iterate_factor (k : ℕ) :
     rw [factor_get _ _ _ _ (by simpa [factor_len] using hi)]
     simpa using word_eq_iterate hm k i hj
 
-private theorem factor_of_prefix {s : List (Fin m)} {k : ℕ}
+theorem factor_of_prefix {s : List (Fin m)} {k : ℕ}
     (h : s <+: image (phi hm) k (zero hm)) : factor (word hm) 0 s.length = s := by
   have hlen := h.length_le
   rw [← iterate_factor hm k] at h

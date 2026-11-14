@@ -1,0 +1,6 @@
+## 15. Consequences for state machines
+
+The all-n Lie-algebra argument uses the published open-path toggle-group theorem [NY22], followed by the explicit diagonal-orbit and matching-edge commutators of Theorem 11.2. It does not infer Lie rank from a few tested values. The native compiler and its register-cleaning claims use the exact gate identities of Section 13. The general control/observability and universal-gate principles remain attributed to their existing sources.
+
+The state-machine consequence is precise: gates act on amplitudes and coherences, and their composition changes which effects can be measured. In the native ideal model, a single extra local phase quadrature removes an exact symmetry obstruction, while a clean separator encoding compiles known quantum circuits with explicit overhead. Computational advantage still requires an efficient task-specific circuit, meaningful output statistics, state preparation and error control. Full controllability, state identifiability and computational speed are separate properties.
+
