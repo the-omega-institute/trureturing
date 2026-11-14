@@ -1731,3 +1731,167 @@ $o$ 满足 $L_{1/2}(o)$。本章仍将它作为未付命题；
 [Q148L]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability，§1.3、式(1.4)—(1.9)：全仿射效应比较、零对称及另列的纯数值互惠。"
 
 ## 追加锚
+
+## 151. 原纯域的自动拓扑连通与近一比较的共同零邻点
+
+**定义 151.1（完整原域与局部二元候选）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C$ 和在 $C\setminus\{0\}$ 上严格正的原单位 $u$。整个原归一基、全部原纯点和全部原效应始终是
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^\ast},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+\tag{XII151.1}
+$$
+
+$K$ 紧并张成 $V$；完整 $\mathcal E$ 及每个非空 $\mathcal F_p$ 紧，故最低值在每个原混输入 $x\in K$ 达到。记 $S_p=P\cap D_p$，以及 $p\perp q\Longleftrightarrow T_p(q)=0$。补效应使零关系对称且反自反。完整 EB3 指每个整个 $D_p$ 都是非退化仿射实心三球；PR 指全部原纯对满足 $T_p(q)=T_q(p)$，不表示先后测量对易。
+
+局部共同零条件定义为
+
+$$
+\begin{aligned}
+\mathsf N_2:\quad
+&\forall p\in P\ \exists\varepsilon_p\in(0,1)\ \forall q\in P:\\
+&T_p(q)>1-\varepsilon_p
+\quad\Longrightarrow\quad
+\exists r\in P:\ T_p(r)=T_q(r)=0.
+\end{aligned}
+\tag{XII151.2}
+$$
+
+阈值逐点选定，同一个实际原纯点 $r$ 同时承担两条原零边；不要求连续选择或统一阈值。完整候选是同一式(XII151.1)原域中的 EB3、PR 与 $\mathsf N_2$，没有输入全域球标签单射、唯一整球零确认、least、谱性、自对偶或矩阵坐标。
+
+**定理 151.2（原纯域与零关联的自动拓扑连通）。** 完整 EB3 加 PR 已使整个 $P$ 和实际纯零关联
+
+$$
+\mathcal I=\{(p,q)\in P^2:p\perp q\}
+\tag{XII151.3}
+$$
+
+均为紧连通空间。这里的连通取原 $V$ 的拓扑，不是有限零路连通。
+
+证明。直接复用 [IX114.3—114.4][Q151IX]：PR 使每个原纯点严格暴露、整个 $P$ 紧，且由原效应的统一范数界，存在有限 $L>0$，使固定 $T_p$ 在全部 $K$ 上为 $L$-Lipschitz。PR 交换两个纯端点，遂给
+
+$$
+|T_p(q)-T_{p'}(q')|
+\le L\bigl(\|p-p'\|+\|q-q'\|\bigr)
+\quad(p,p',q,q'\in P).
+\tag{XII151.4}
+$$
+
+同一严格暴露确认还给 $T_p(q)=1\Longleftrightarrow p=q$。这些是既有结果的直接消费，没有预设整球确认等于整个菜单的最低确认。
+
+反设 $P=A\sqcup B$ 为非平凡拓扑分离。$A,B$ 均紧，有限维凸包 $H_A=\operatorname{conv}A$、$H_B=\operatorname{conv}B$ 也紧。直接使用 [IX114.2、IX116.1][Q151IX] 的完整原面接口：全部非空真面只有纯单点或整个 $D_s$；每张 $D_s$ 暴露且为极大真面，其全部原纯点恰为连通球面 $S_s\simeq S^2$，且 $D_s=\operatorname{conv}S_s$。因此每个真面的全部纯点都只在 $A$ 或只在 $B$，每个边界点所在的真支撑面也整个包含于 $H_A$ 或 $H_B$。故
+
+$$
+\partial_{\rm rel}K\subset H_A\cup H_B.
+\tag{XII151.5}
+$$
+
+此覆盖在边界上不重叠。若 $x\in\partial_{\rm rel}K\cap H_A\cap H_B$，取过 $x$ 的同一个真支撑面 $F$；分别将 $x$ 写成 $A$、$B$ 中纯点的有限正权混合。支撑泛函的非负余量迫使两种分解的所有纯分量均在 $F$，与 $P\cap F$ 只在一侧矛盾。于是原边界被分成两个不交非空紧集。完整三球是真面，故 $\dim\operatorname{aff}K\ge4$；从原内点径向参数化，边界同胚于连通球面，不容此分离。因此 $P$ 连通。
+
+由(XII151.4)，$\mathcal I$ 闭于紧 $P^2$。投影 $\pi_1:\mathcal I\to P$ 满射，每根纤维 $\{p\}\times S_p$ 连通。若 $\mathcal I$ 分成两个非空紧集，每根纤维只能在一侧；两侧投影便是分离 $P$ 的两个非空不交紧集，矛盾。故 $\mathcal I$ 也连通。证毕。
+
+此证明中，取得 $P$ 紧以后只消费全部原非点真面的连通纯边界。因此同一论证也适用于完整 EB$_{\ge2}$ 加 $P$ 紧，不需要所有球同维。球形所给的是完整原面及其全部纯边界；任意抽取的球面子族不能代替它们。
+
+**定理 151.3（近一共同零点接到有限原零路）。** 在完整 EB3+PR 域，$\mathsf N_2$ 蕴含原零图有限路径连通 $\mathsf{Conn}$，甚至存在一个不预先指定的有限全域路径上界。
+
+证明。对每个原 $p$ 取(XII151.2)的阈值。集合
+
+$$
+U_p=\{q\in P:T_p(q)>1-\varepsilon_p\}
+\tag{XII151.6}
+$$
+
+是包含 $p$ 的原纯域开邻域，且每个 $q\in U_p$ 都经同一个实际共同零邻点在至多两步内到达 $p$。故每个零图分量是开集：其每个点 $p$ 都有仍在该分量内的 $U_p$。补集是其他开分量之并；定理151.2的 $P$ 连通性迫使全图只有一个分量。
+
+若需先于分类取得有限路径上界，紧 $P$ 给有限覆盖 $U_{p_1},\ldots,U_{p_m}$。覆盖的交叠图连通，否则两组互不相交的开集之并分离 $P$。相交的两邻域中心经交点至多四步相连。任意两纯点各先用至多两步到其覆盖中心，再沿至多 $m-1$ 条交叠边到达另一中心，合计不超过 $4m$ 条实际原零边。这里没有把近似零边换成精确零边。证毕。
+
+式(XII151.6)确实只检查同一纯标签附近的比较。对任意包含 $p$ 的原纯域开集 $O$，紧 $P\setminus O$ 上连续 $T_p$ 的最大值严格小于一，故存在 $\delta>0$，使 $\{q:T_p(q)>1-\delta\}\subset O$。这些近一集合是 $p$ 的邻域基，无需声称 $1-T_p(q)$ 是度量。它也不是只由 $q=p$ 满足的空条件：任取 $s\in S_p$，由零对称有 $p\in S_s$；完整球面 $S_s$ 内存在不同纯点 $q_i\to p$，从而 $T_p(q_i)<1$ 且趋于一。
+
+**推论 151.4（完整局部候选的同原复三能级表示）。** 在定义151.1的完整原域内，下列条件等价：
+
+$$
+\begin{gathered}
+\mathrm{EB3}+\mathrm{PR}+\mathsf N_2,\qquad
+\mathrm{EB3}+\mathrm{PR}+\mathsf{Conn},\\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V
+\text{ 实线性双射},\qquad
+\Phi(\mathrm{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\end{gathered}
+\tag{XII151.7}
+$$
+
+证明。定理151.3给第一个到第二个的桥。第二个到第三个准确复用 [XI150.5][Q151XI]：有限原零路首先给全域球标签单射和全部唯一整球零确认；已有非单位预算塌缩与唯一标签处的塌缩饱和相接，再沿零路传播，排除非单位预算。此时才支付整个原确认菜单的 least，消费 IX114.9 的同锥同单位分类。本章不另作一次量子分类，也不从 PR 单独跳到整球确认互易。
+
+反向在同一个完整表示中核对。对原纯点 $p=\Phi(vv^\ast)$，$\|v\|=1$，整个原确认菜单、全部混输入最低值和完整排除球分别为
+
+$$
+\begin{gathered}
+f_{vv^\ast\oplus B}(\Phi\rho)
+=\operatorname{Tr}\bigl((vv^\ast\oplus B)\rho\bigr),\qquad
+0\preceq B\preceq I_{v^\perp},\\
+T_p(\Phi\rho)=v^\ast\rho v,\qquad
+\rho\succeq0,\quad\operatorname{Tr}\rho=1,\\
+D_p=\Phi\{\rho\succeq0:\operatorname{Tr}\rho=1,\quad
+\operatorname{ran}\rho\subset v^\perp\}.
+\end{gathered}
+\tag{XII151.8}
+$$
+
+这里 $vv^\ast\oplus B$ 指 $\mathbb Cv\oplus v^\perp$ 上的块分解。最低值由原菜单中的 $B=0$ 达到，未缩小菜单或混态域。故 EB3 与 PR 成立。对任意原纯 $p=\Phi(vv^\ast)$、$q=\Phi(ww^\ast)$，取单位 $z\in\operatorname{span}_{\mathbb C}\{v,w\}^{\perp}$，则同一个 $r=\Phi(zz^\ast)$ 满足 $T_p(r)=T_q(r)=0$；每个根可取 $\varepsilon_p=1/2$，得到 $\mathsf N_2$。证毕。
+
+完整静态字典直接复用 XI149.5、XI145.9：整个 $K$ 是全部三能级密度矩阵，整个 $P$ 是 $\mathbb{CP}^2$，每张完整排除三球的纯边界是 $\mathbb{CP}^1\simeq S^2$；所有原效应恰为 $0\preceq E\preceq I_3$，读数是 $\operatorname{Tr}(E\rho)$。全部有限数学效应单位分解恰为全部数学 POVM，谱及 Jordan 字典均在同一个 $\Phi$ 下成立。它们是既有静态结论的应用；实际制备、复合与纠缠来源、事件仪器、全旁观 CP、物理时间、Hamiltonian、能量与数值 $\hbar$ 仍各保留所引章节的独立合同。
+
+**定理 151.5（原零图分量的有限层与整个边界）。** 只保留完整 EB3+PR。令 $d_G$ 为实际零图距离，$\Gamma(p)$ 为有限零路分量，并置
+
+$$
+A_n(p)=\{q\in P:d_G(p,q)\le n\},\qquad
+B_\Gamma=\bigcup_{s\in\Gamma}D_s.
+\tag{XII151.9}
+$$
+
+则每个 $A_n(p)$ 紧，$\Gamma(p)=\bigcup_{n\ge0}A_n(p)$ 为 $F_\sigma$；若 $q_i\in\Gamma(p)$、$q_i\to q\notin\Gamma(p)$，必有 $d_G(p,q_i)\to\infty$。此外每个分量的凸包包含原 $K$ 的一个相对内点，且
+
+$$
+B_\Gamma=\partial_{\rm rel}K\cap\operatorname{conv}\Gamma.
+\tag{XII151.10}
+$$
+
+各 $B_\Gamma$ 两两不交并覆盖整个原边界。
+
+证明。长度不超过 $n$ 的路径分别是紧 $P^{k+1}$ 中闭零边条件的投影，$0\le k\le n$；有限并仍紧。若一个不可达极限有图距离有界的子列，该子列落在某个紧 $A_N(p)$ 中，极限仍可达，矛盾。
+
+固定 $p\in\Gamma$，以 $c_p$ 为完整 $D_p$ 的球心。$D_p=\operatorname{conv}S_p\subset\operatorname{conv}\Gamma$，故 $x=(p+c_p)/2$ 在该凸包。若 $x$ 在原边界，过 $x$ 的真支撑面同时含 $p,c_p$；因 $c_p\in\operatorname{ri}D_p$，此面含整个 $D_p$。极大真面性迫它等于 $D_p$，却又含 $p\notin D_p$，矛盾。因此 $x\in\operatorname{ri}K$。
+
+式(XII151.10)的从左到右包含由每个 $D_s=\operatorname{conv}S_s$ 直接给出。反向令边界点 $x$ 为 $\Gamma$ 中纯点的有限正权混合，取过 $x$ 的真支撑面 $F$。所有纯分量均在 $F$。若 $F=D_s$，任一纯分量与 $s$ 有零边，故 $s\in\Gamma$、$x\in B_\Gamma$。若 $F=\{x\}$，则 $x\in\Gamma$；取 $s\in S_x$，零对称给 $x\in D_s$ 且 $s\in\Gamma$。同样，任意两分量若贡献同一边界点，过该点的真支撑面中的纯分量就会经其标签至多两步互达，故它们原是同一分量。全部原边界点所在真面为纯单点或完整球，所以这些集合还覆盖整个边界。证毕。
+
+若 $W_\Gamma=\operatorname{span}_{\mathbb R}\Gamma$，上面的内点给 $W_\Gamma\cap\operatorname{int}C\ne\varnothing$，因而 $W_\Gamma^\perp\cap C^\ast=\{0\}$：非零正泛函不能在原锥内点消失。这没有给 $W_\Gamma=V$，原内点可以位于真线性子空间中。也没有给 $\Gamma$ 或 $B_\Gamma$ 闭；无限个紧可达层的并不能代替紧集。
+
+**命题 151.6（重复球块的图孤立与拓扑积聚）。** 在完整 EB3+PR 域，若实际有不同标签共用同一个完整球，则其 [IX116.2][Q151IX] 配对球 $F,G$ 给紧闭零图分量 $\Gamma=S(F)\sqcup S(G)$，但 $\Gamma$ 在整个 $P$ 中不是开集。
+
+证明。既有重复块定理给 $F\cap G=\varnothing$、$I(F)=S(G)$、$I(G)=S(F)$，两张完整球均不与第三张不同完整球相交，故其纯边界构成封闭于零边的完全二部块，且是一个零图分量。每侧球面紧，故 $\Gamma$ 紧闭。
+
+固定 $q\in S(F)$。PR 已给全部原纯点严格暴露，[X124.7、X124.9][Q151X] 遂给实际完整原球列 $D_{p_i}\to\{q\}$，并在紧 $P$ 中取子列 $p_i\to p\in S(G)$。若 $p_i\in\Gamma$，它的完整排除球只能是固定的 $F$ 或 $G$，直径不小于 $\min\{\operatorname{diam}F,\operatorname{diam}G\}>0$。所以最终 $p_i\notin\Gamma$，块外标签却趋到块内标签，$\Gamma$ 不是开集。此处的塌球供应和纯极限定位均为所引结果的组合，不是重复块存在性的反模型。证毕。
+
+**范围 151.7（局部候选的简化尺度与待证桥）。** 定理151.2新增的是在完整原面关系上取得全纯域及关联空间的拓扑连通；定理151.3把只在比较值接近一时要求的二元共同零关系接成全域有限零路，定理151.5刻画同一原分量如何铺在整个凸边界上。这些采用 `repo-derived` 综合推导归属，不主张全球新颖或最小公理。
+
+$\mathsf N_2$ 只检查近一比较带，Conn 检查所有纯对却允许任意有限步；在 EB3+PR 域内，它们经推论151.4选出同一个模型类。因此本候选使输入关系局部化，没有证明独立假设数严格减少。它也不同于 [X132.3—132.5][Q151X] 的小正比较带条件 $0<T_p(q)<\varepsilon_p$，后者不需要 PR，其证明利用原确认水平切片与无三角条件下的正间隔。
+
+[Landsman，Definition 6][Q151L] 的 two-sphere property 量化同 sector 任意两点的双正交闭包并规定球面比较公式，不由单标签 EB3 自动支付；其按跨部分跃迁全零定义的 sector 也不是本章零图分量。[Emir—Kruml—Paseka—Vetterlein，Definition 4、Proposition 32][Q151E] 在全域 L1 和秩至少三的前件下给零图直径至多二；这些前件没有在本章由 PR 推出。[Labardini-Fragoso—Neumann-Coto—Takane，Lemma 2、4][Q151F] 分别在模面格前件下给固定秩面族紧性、在极点集紧且面列已收敛到面的前件下比较面与极点列；它们不把原 $P$ 紧性升级为完整球族闭性。这些文献仅供应比较和适用边界，不代付本章未证的局部桥。
+
+原目标 $\mathrm{EB3}+\mathrm{PR}\Rightarrow\mathsf N_2/\mathsf{Conn}$ 仍未证明，也未给出完整 EB3+PR 反模型来证明其独立。定理151.2不是这道桥：空间连成一片并不制造有限条精确零边；命题151.6还说明图上孤立的块可以受到块外标签积聚。若要删除最后的接线条件，仍须从同一原全效应关系推出局部有限可达，或排除原分量间的整球并合与塌缩。全局 Inj、全部唯一整球零确认、分量闭性和全空间张成均未在此免费取得。
+
+**完整中文图景。** 把所有原状态想成同一块凸实体，每个纯态背后完全排除的全部对象收成一颗实心三球。比较同一对纯态，交换两端最低结果不变，这已让全部纯标签组成紧集。若把纯标签分成彼此分离的两堆，每颗完整球皮只能整张落在其中一堆；球皮包着实心球，最终两堆会把同一凸实体的整个边界也切成不相接的两块，产生矛盾。所以纯标签本来就连成一片。新候选只补一条近处关系：两种纯态已经足够相像时，总能找到同一个被它们完全排除的纯态。这个共同零点把近处两标签接成两步排除接力，局部线路便沿整片纯域传通，已有定理随后恢复同一实体的全部复三能级静态结构与 Born 读数。尚未证明的是，这条近处接线能否也由比较对称和完整三球自动产生；实际仪器、纠缠复合和物理时间仍保留各自合同。
+
+[Q151IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.2—114.4：完整真面、PR下严格暴露与全纯域紧性；IX116.1—116.2：原完整面与重复球孤立块。"
+[Q151X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X124.7、124.9：全局单点零射线的实际整球塌缩及原纯极限定位；X132.3—132.5：小正带共同零点与既有静态分类。"
+[Q151XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md "XI150.5：完整EB3+PR+Conn的满刻度、全原确认菜单least及同锥同单位qutrit；XI149.5、XI145.9：完整静态字典与独立物理合同。"
+[Q151L]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability，§1.3式(1.4)、Definition 6。"
+[Q151E]: https://arxiv.org/html/2103.13764v1 "T. Emir, D. Kruml, J. Paseka, T. Vetterlein，Linear orthogonality spaces as a new approach to quantum logic，Definition 4、Proposition 32。"
+[Q151F]: https://arxiv.org/html/0903.0643v1 "D. Labardini-Fragoso, R. Neumann-Coto, M. G. Takane，Cones and convex bodies with modular face lattices，Lemma 2、4。"
+
+## 追加锚（本行以下为增补区）
