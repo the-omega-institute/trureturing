@@ -66,9 +66,8 @@ internal sealed class RotationFacesDocument : IScribeDocumentDefinition
                         + "The actual complement matching restricts through the proved no-cross-edge result, so the existing perfect-matching parity theorem makes that side cardinality even. "
                         + "Reversal preserves the epsilon sum because p has even length. Interior parity, side separation and regional Euler are conclusions of this chain."))),
                 DescribeRole.Theorem),
-            H("Actual cycle orientation fibers and edge restriction"),
             Paragraph(Text(
-                "The cycle_boundary_walk conclusion also applies without the signed Euler equation or a connectedness assumption on the ambient rotation. "
+                "Actual cycle orientation fibers and edge restriction also follow from cycle_boundary_walk. This conclusion applies without the signed Euler equation or a connectedness assumption on the ambient rotation. "
                 + "It takes an actual Rotation R, a simple closed walk p, a binary face function x, and the equality of its boundary with the edge indicator of p. "
                 + "It identifies both shores for every actual dart with p or p.reverse. The following application derives its rotation and face function internally from a permutation; neither is an input assumption.")),
             Paragraph(Text(
