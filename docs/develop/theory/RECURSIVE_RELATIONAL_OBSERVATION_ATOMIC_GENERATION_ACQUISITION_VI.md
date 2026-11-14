@@ -2996,10 +2996,37 @@ roots and paths. $\square$
 **Definition 61.1 (a candidate and its validation).** Keep the acquired I.
 At the start of an attempt acquire a current token s extending u. For an
 interval or a requested tree arrival, navigate by actual one-cell walks
-in the direction supplied by the acquired old
-cut order, stopping on acquired-reference equality with a or the requested
+in the direction acquired by the comparison below, stopping on
+acquired-reference equality with a or the requested
 subtree boundary. These walks stay in I. This directed procedure uses no
 overshooting Seek excursions and no cursor assignment in place of movement.
+
+For every requested movement leg, including the saved return, actually
+obtain the current cursor's cut descriptor. In AAV13–14's installed
+representation it is already the acquired value in that owned slot. In
+the direct incidence representation, read its incident cells and actual
+operand/component bindings in one admitted source-access transaction.
+Finite null sides give the known root endpoints. Two neighbors in the
+same component give their actual least common ancestor by backed parent
+scans and equality; its vertex supplies the midpoint. At a bilateral
+component boundary the right incident cell's real seed header supplies
+the gap descriptor. This procedure uses existing incidence/source rights
+and retains the direct cut object's identity; no naked boundary inverse
+or replacement of that object is used.
+
+For a midpoint acquire its actual original-root path by AAV6.2/13.3's
+parent/child reads. Compare same-component midpoint paths by inorder:
+at a first differing side L precedes R; if p is a strict prefix of q,
+mid(q) precedes mid(p) exactly when q's next side is L. Equal paths give
+equal cuts. The finite exterior cuts are extreme. Bilateral gap/component
+order comes from the actually acquired connecting header list, with each
+gap before its right component's internal midpoints. These finite tests
+are exactly the actual ordered tree's cut order, by its left/right subtree
+separation. Native edits preserve that order. A return cursor may be a
+new cut created after u: its actual path is acquired now, not looked up
+in the old tree or inferred from an old rank. These paid field reads and
+comparisons do not themselves move the observation cursor. Once the
+direction is acquired, persistence keeps it correct until arrival.
 
 For a current interval, perform the original ReadCurrent and intervening
 WalkRight transactions from a, up to h leaves or a genuine Endpoint. For
