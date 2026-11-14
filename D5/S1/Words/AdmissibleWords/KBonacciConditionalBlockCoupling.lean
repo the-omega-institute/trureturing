@@ -7,6 +7,7 @@
    digest: Exterior-conditioned legal-word completions and their zero-reset coupling. -/
 
 import D5.S1.Words.ClosedRunStarts
+import D5.S1.Words.AdmissibleWords.KBonacciIntegerInterval
 import D5.S0.Tower.DBonacci.TerminalSampling
 import Mathlib.Tactic
 
@@ -23,12 +24,8 @@ open D5.S1.Words.ClosedRunStarts
 open scoped BigOperators ENNReal NNReal Classical
 
 private theorem legal_iff (k n : ℕ) (hk : 0 < k) (w : Fin n → Bool) :
-    DBonacciAdmissible k n w ↔ ∀ s, ¬ TrueBlock w s k := by
-  by_cases hkn : k ≤ n
-  · exact (closed_word_run_start_equivalence n k hk hkn w).1
-  · obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : k ≠ 0)
-    have hw := runAdmissible_eq_true_of_length_le r r n w (by omega) le_rfl
-    exact ⟨fun _ s h => by have := h.1; omega, fun _ => hw⟩
+    DBonacciAdmissible k n w ↔ ∀ s, ¬ TrueBlock w s k :=
+  D5.S1.Words.AdmissibleWords.KBonacciIntegerInterval.scanner_iff_literal k n hk w
 
 private theorem legal_delete {k n : ℕ} (hk : 0 < k) (w : Fin n → Bool)
     (hw : DBonacciAdmissible k n w) (i : Fin n) :
