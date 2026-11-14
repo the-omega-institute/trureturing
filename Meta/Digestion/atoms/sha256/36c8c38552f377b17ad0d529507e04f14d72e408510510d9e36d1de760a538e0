@@ -1,0 +1,6 @@
+**定理 145.2（九维原域的根芽与静态表示）。** 在定义145.1的完整原域中，以下三项等价：
+
+1. $\mathrm{EB3}+\mathsf{Conn}+\dim_{\mathbb R}V=9$；
+2. $\mathrm{EB3}+\mathsf{Inj}+\dim_{\mathbb R}V=9$；
+3. 存在同一个实线性双射
+
