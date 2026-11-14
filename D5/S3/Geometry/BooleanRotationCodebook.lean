@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Analysis.Normed.Group.AddCircle]
    utility: none
    digest: Boolean subset queries determine the exact signed simplex difference below the no-wrap threshold. -/
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Angle
 import Mathlib.Analysis.Normed.Group.AddCircle
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
@@ -449,6 +450,52 @@ theorem finite_codebook_lower_bound (n : ℕ) {L ε : ℝ}
       simpa only [mul_div_assoc, mul_assoc] using hv')
   nlinarith [hh]
 
+/-- The literal real planar rotation matrix. -/
+def rotation (α : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+  !![Real.cos α, -Real.sin α; Real.sin α, Real.cos α]
+
+/-- The prescribed decoder is fixed by the stored parameter vector. -/
+def row0Decoder {n : ℕ} (φ : Fin n → ℝ) (s : Finset (Fin n)) :=
+  rotation (∑ i ∈ s, φ i)
+
+private lemma rotation_eq_iff (α β : ℝ) :
+    rotation α = rotation β ↔ (α : Real.Angle) = (β : Real.Angle) := by
+  constructor
+  · intro h
+    apply Real.Angle.cos_sin_inj
+    · exact congrArg (fun A : Matrix (Fin 2) (Fin 2) ℝ => A 0 0) h
+    · exact congrArg (fun A : Matrix (Fin 2) (Fin 2) ℝ => A 1 0) h
+  · intro h
+    have hc : Real.cos α = Real.cos β := congrArg Real.Angle.cos h
+    have hs : Real.sin α = Real.sin β := congrArg Real.Angle.sin h
+    simp [rotation, hc, hs]
+
+private lemma literal_error_iff (α β ε : ℝ) :
+    circularError (2 * Real.pi) (α - β) ≤ ε ↔
+      ∃ δ : ℝ, |δ| ≤ ε ∧ rotation α = rotation (β + δ) := by
+  constructor
+  · intro h
+    let k : ℤ := round ((2 * Real.pi)⁻¹ * (α - β))
+    let δ := α - β - (k : ℝ) * (2 * Real.pi)
+    refine ⟨δ, ?_, (rotation_eq_iff _ _).mpr ?_⟩
+    · simpa only [circularError, AddCircle.norm_eq] using h
+    · have he : β + δ = α - (k : ℝ) * (2 * Real.pi) := by dsimp [δ]; ring
+      rw [he, Real.Angle.coe_sub, ← zsmul_eq_mul, Real.Angle.coe_zsmul,
+        Real.Angle.coe_two_pi, smul_zero, sub_zero]
+  · rintro ⟨δ, hδ, he⟩
+    have hangle := (rotation_eq_iff _ _).mp he
+    have hd : ((α - β : ℝ) : Real.Angle) = (δ : Real.Angle) := by
+      rw [Real.Angle.coe_sub, hangle, Real.Angle.coe_add, add_sub_cancel_left]
+    change ‖((α - β : ℝ) : Real.Angle)‖ ≤ ε
+    rw [hd]
+    exact (show ‖(δ : Real.Angle)‖ ≤ |δ| from QuotientAddGroup.norm_mk_le_norm).trans hδ
+
+/-- Matrix decoder accuracy uses literal equality with a bounded angular residual. -/
+def FixedDecoderAdequate (n : ℕ) (ε : ℝ) (C : Finset (Fin n → ℝ)) : Prop :=
+  Function.Periodic rotation (2 * Real.pi) ∧
+    ∀ θ : Fin n → ℝ, ∃ φ ∈ C, ∀ s : Finset (Fin n),
+      ∃ δ : ℝ, |δ| ≤ ε ∧ row0Decoder θ s = rotation ((∑ i ∈ s, φ i) + δ)
+
 private lemma grid_coordinate {L : ℝ} (hL : 0 < L) (m : ℕ) (hm : 0 < m)
     (t : ℝ) : ∃ j : Fin m,
       circularError L (t - (j.val : ℝ) / m * L) ≤ L / (2 * m) := by
@@ -470,7 +517,7 @@ private lemma grid_coordinate {L : ℝ} (hL : 0 < L) (m : ℕ) (hm : 0 < m)
     |t - (k : ℝ) / m * L| from QuotientAddGroup.norm_mk_le_norm).trans
   have ha := abs_sub_round (t * m / L)
   have hid : t - (k : ℝ) / m * L = (t * m / L - (k : ℝ)) * (L / m) := by
-    dsimp [k]; field_simp; ring
+    dsimp [k]; field_simp <;> ring
   rw [hid, abs_mul, abs_of_pos (div_pos hL hmR)]
   calc
     _ ≤ (1 / 2 : ℝ) * (L / m) := mul_le_mul_of_nonneg_right ha (by positivity)
@@ -480,7 +527,8 @@ private lemma grid_coordinate {L : ℝ} (hL : 0 < L) (m : ℕ) (hm : 0 < m)
 theorem finite_codebook_upper_bound (n : ℕ) (hn : 0 < n) {L ε : ℝ}
     (hL : 0 < L) (hε : 0 < ε) :
     ∃ C : Finset (Fin n → ℝ), Adequate n L ε C ∧
-      C.card ≤ (⌈L * n / (2 * ε)⌉₊) ^ n := by
+      C.card ≤ (⌈L * n / (2 * ε)⌉₊) ^ n ∧
+      (L = 2 * Real.pi → FixedDecoderAdequate n ε C) := by
   classical
   let m : ℕ := ⌈L * n / (2 * ε)⌉₊
   have hnR : (0 : ℝ) < n := by exact_mod_cast hn
@@ -488,8 +536,8 @@ theorem finite_codebook_upper_bound (n : ℕ) (hn : 0 < n) {L ε : ℝ}
   have hmR : (0 : ℝ) < m := by exact_mod_cast hm
   let f : (Fin n → Fin m) → (Fin n → ℝ) := fun a i => (a i).val / (m : ℝ) * L
   let C := Finset.univ.image f
-  refine ⟨C, ?_, ?_⟩
-  · intro θ
+  have hadequate : Adequate n L ε C := by
+    intro θ
     choose j hj using fun i => grid_coordinate hL m hm (θ i)
     refine ⟨f j, Finset.mem_image.mpr ⟨j, Finset.mem_univ _, rfl⟩, ?_⟩
     intro s
@@ -510,8 +558,20 @@ theorem finite_codebook_upper_bound (n : ℕ) (hn : 0 < n) {L ε : ℝ}
         gcongr
         exact_mod_cast (show s.card ≤ n by simpa using Finset.card_le_univ s)
       _ ≤ ε := hbudget
+  refine ⟨C, hadequate, ?_, ?_⟩
   · calc
       C.card ≤ (Finset.univ : Finset (Fin n → Fin m)).card := Finset.card_image_le
       _ = m ^ n := by simp
+  · intro hperiod
+    refine ⟨?_, ?_⟩
+    · intro α
+      apply (rotation_eq_iff _ _).mpr
+      simp [Real.Angle.coe_add, Real.Angle.coe_two_pi]
+    · intro θ
+      obtain ⟨φ, hφ, hq⟩ := hadequate θ
+      refine ⟨φ, hφ, fun s => ?_⟩
+      apply (literal_error_iff _ _ _).mp
+      have hh := hq s
+      simpa [hperiod, row0Decoder, Finset.sum_sub_distrib] using hh
 
 end D5.S3.Geometry.BooleanRotationCodebook

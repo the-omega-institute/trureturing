@@ -140,4 +140,18 @@ theorem capacityBridge : (type_of% (@finite_codebook_lower_bound)) ↔
 theorem capacityPositive : capacityArena.Law capacityActual :=
   capacityBridge.mp (@finite_codebook_lower_bound)
 
+abbrev upperArena : Arena where
+  signature := capacitySignature
+  Law R := ∀ n : ℕ, 0 < n → ∀ {L ε : ℝ}, 0 < L → 0 < ε →
+    ∃ C : Finset (Fin n → ℝ), Adequate n L ε C ∧
+      R.readout () n C ≤ ((⌈L * n / (2 * ε)⌉₊) ^ n : ℕ) ∧
+      (L = 2 * Real.pi → FixedDecoderAdequate n ε C)
+
+theorem upperBridge : (type_of% (@finite_codebook_upper_bound)) ↔
+    upperArena.Law capacityActual := by
+  simp only [upperArena, capacityActual, realize, Nat.cast_le]
+
+theorem upperPositive : upperArena.Law capacityActual :=
+  upperBridge.mp (@finite_codebook_upper_bound)
+
 end Reg.D5.S3.Geometry.BooleanRotationCodebook
