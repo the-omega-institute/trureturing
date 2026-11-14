@@ -28,8 +28,7 @@ namespace D5.S3.VertexAlgebra.SourceBPZ.SourcePairingLaws
 open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration
 open LatticeSugawaraCurrents LatticeActualAnnihilation LatticeInvolution
 open LatticePositiveEnergy MvPolynomial OriginalSourcePairing
-open private wick_constant_left from
-  D5.S3.VertexAlgebra.TwistedGround.SignedOscillatorWick
+open D5.S3.VertexAlgebra.SignedOscillatorWick (wick_constant_left)
 open SignedOscillatorWick
 open private FactorialBilinear.symmetric from
   D5.S3.VertexAlgebra.TwistedGround.SignedOscillatorWick

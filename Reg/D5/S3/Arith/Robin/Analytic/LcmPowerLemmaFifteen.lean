@@ -1,13 +1,14 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen
-import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
 /-! Both sides of each original real inequality are retained as observations. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-open LeanInformationAudit
+open Set LeanInformationAudit
+open _root_.D5.S3.Arith.Robin.Analytic.LcmPowerLogConcavity
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen
 
@@ -313,4 +314,350 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end FullLemma
+namespace FirstLayer
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ κ x => lcmPowerF κ x 1) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ κ x => lcmPowerF κ x 1 + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {κ x : ℝ}, 0 < κ → 1 < x →
+    R.readout () κ x = Real.log (((x + 1) ^ κ - 1) / x ^ κ) / (κ * Real.log x)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (κ := 2) (x := 2) (by norm_num) (by norm_num)
+  have he := F_one (κ := 2) (x := 2) (by norm_num) (by norm_num)
+  change lcmPowerF 2 2 1 + 1 = _ at hb
+  linarith
+
+def family : Registration arena (type_of% @F_one) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@F_one, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro role
+    refine ⟨2, 1, 2, ?_⟩
+    have hp : 0 < lcmPowerF 2 2 1 := by
+      norm_num [lcmPowerF, Real.rpow_ofNat]
+      exact div_pos (Real.log_pos (by norm_num)) (by positivity)
+    have hz : lcmPowerF 2 1 1 = 0 := by simp [lcmPowerF]
+    change lcmPowerF 2 1 1 ≠ lcmPowerF 2 2 1
+    rw [hz]
+    exact hp.ne
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@F_one) (Realization signature) Type Unit where
+  unitName := `LcmPowerLemmaFifteen.F_one.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen.FirstLayer.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ κ x => lcmPowerF κ x 1) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end FirstLayer
+namespace Elasticity
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ κ t => t * deriv (logPowerDifference κ) t) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {κ : ℝ}, 1 < κ → StrictMonoOn (R.readout () κ) (Ioi 0)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (κ := 2) (by norm_num) (show (1 : ℝ) ∈ Ioi 0 by norm_num)
+    (show (2 : ℝ) ∈ Ioi 0 by norm_num) (by norm_num : (1 : ℝ) < 2)
+  exact (lt_irrefl (0 : ℝ)) hb
+
+def family : Registration arena (type_of% @elasticity_strictMono) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@elasticity_strictMono, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro role
+    refine ⟨2, 1, 2, ?_⟩
+    exact (elasticity_strictMono (κ := 2) (by norm_num)
+      (show (1 : ℝ) ∈ Ioi 0 by norm_num) (show (2 : ℝ) ∈ Ioi 0 by norm_num)
+      (by norm_num : (1 : ℝ) < 2)).ne
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@elasticity_strictMono) (Realization signature) Type Unit where
+  unitName := `LcmPowerLemmaFifteen.elasticity_strictMono.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen.Elasticity.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ κ t => t * deriv (logPowerDifference κ) t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Elasticity
+namespace DerivativePositive
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ κ t => logPowerDifference κ t) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ κ t => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {κ t : ℝ}, 1 < κ → 0 < t → 0 < deriv (R.readout () κ) t
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (κ := 2) (t := 1) (by norm_num) (by norm_num)
+  simpa [rejected, realize] using hb
+
+def family : Registration arena (type_of% @log_deriv_pos) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@log_deriv_pos, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro role
+    refine ⟨2, 1, 2, ?_⟩
+    exact (log_strictMono (κ := 2) (by norm_num)
+      (show (1 : ℝ) ∈ Ioi 0 by norm_num) (show (2 : ℝ) ∈ Ioi 0 by norm_num)
+      (by norm_num : (1 : ℝ) < 2)).ne
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@log_deriv_pos) (Realization signature) Type Unit where
+  unitName := `LcmPowerLemmaFifteen.log_deriv_pos.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen.DerivativePositive.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ κ t => logPowerDifference κ t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end DerivativePositive
+namespace LogMonotone
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ κ t => logPowerDifference κ t) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ κ t => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {κ : ℝ}, 1 < κ → StrictMonoOn (R.readout () κ) (Ioi 0)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (κ := 2) (by norm_num) (show (1 : ℝ) ∈ Ioi 0 by norm_num)
+    (show (2 : ℝ) ∈ Ioi 0 by norm_num) (by norm_num : (1 : ℝ) < 2)
+  exact (lt_irrefl (0 : ℝ)) hb
+
+def family : Registration arena (type_of% @log_strictMono) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@log_strictMono, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro role
+    refine ⟨2, 1, 2, ?_⟩
+    exact (log_strictMono (κ := 2) (by norm_num)
+      (show (1 : ℝ) ∈ Ioi 0 by norm_num) (show (2 : ℝ) ∈ Ioi 0 by norm_num)
+      (by norm_num : (1 : ℝ) < 2)).ne
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@log_strictMono) (Realization signature) Type Unit where
+  unitName := `LcmPowerLemmaFifteen.log_strictMono.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen.LogMonotone.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ κ t => logPowerDifference κ t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end LogMonotone
+namespace ElasticityFormula
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ κ t => t * deriv (logPowerDifference κ) t) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ κ t => t * deriv (logPowerDifference κ) t + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {κ t : ℝ}, 1 < κ → 0 < t → R.readout () κ t =
+    κ * (1 - 1 / ((1 - (t / (1 + t)) ^ κ) / (1 - t / (1 + t))))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (κ := 2) (t := 1) (by norm_num) (by norm_num)
+  have he := elasticity_formula (κ := 2) (t := 1) (by norm_num) (by norm_num)
+  change 1 * deriv (logPowerDifference 2) 1 + 1 = _ at hb
+  linarith
+
+def family : Registration arena (type_of% @elasticity_formula) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@elasticity_formula, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro role
+    refine ⟨2, 1, 2, ?_⟩
+    exact (elasticity_strictMono (κ := 2) (by norm_num)
+      (show (1 : ℝ) ∈ Ioi 0 by norm_num) (show (2 : ℝ) ∈ Ioi 0 by norm_num)
+      (by norm_num : (1 : ℝ) < 2)).ne
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@elasticity_formula) (Realization signature) Type Unit where
+  unitName := `LcmPowerLemmaFifteen.elasticity_formula.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen.ElasticityFormula.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ κ t => t * deriv (logPowerDifference κ) t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ElasticityFormula
 end Reg.D5.S3.Arith.Robin.Analytic.LcmPowerLemmaFifteen

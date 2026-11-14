@@ -43,7 +43,7 @@ private theorem prod_shift (a : ℂ) (order : ℕ) :
   ring
 
 
-private theorem jetScalar_contraction (q : ℤ) (order : ℕ) :
+theorem jetScalar_contraction (q : ℤ) (order : ℕ) :
     LatticeHalfFock.frequency q * jetScalar order (-q - 1) =
       (order + 1 : ℂ) * Ring.choose (LatticeHalfFock.frequency q) (order + 1) := by
   rw [jetScalar, Ring.choose_eq_smul, ← Polynomial.aeval_eq_smeval,

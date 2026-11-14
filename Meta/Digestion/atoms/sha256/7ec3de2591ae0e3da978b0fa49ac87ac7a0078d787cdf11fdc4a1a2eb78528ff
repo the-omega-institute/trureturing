@@ -1,0 +1,31 @@
+**引理 139.3（完整横截球面）。** 对任意原根 $r$，只在 $Q(r)\setminus\{r\}$ 上定义
+
+$$
+\pi_r:Q(r)\setminus\{r\}\longrightarrow S_r,\qquad
+x\in S_{\pi_r(x)}.
+\tag{XI139.7}
+$$
+
+该映射单值且连续。若 $S_a\subseteq Q(r)$ 且 $r\notin S_a$，则 $\pi_r|_{S_a}$ 是到整个 $S_r$ 的同胚。存在 $q\in U_0\cap P$、$q\ne o$，以及原标签 $a_0,b_0$，使 $S_{a_0}$ 是根 $o$ 的这种横截球面，$S_{b_0}$ 是根 $q$ 的这种横截球面，且 $Q(q)=Q$。
+
+证明。不同 $s,t\in S_r$ 的完整球都含 $r$，所以点交接口给 $D_s\cap D_t=\{r\}$。这支付(XI139.7)的唯一性。若 $x_n\to x\ne r$，紧 $S_r$ 与紧 $\mathcal E$ 使任意子列可再取
+
+$$
+\pi_r(x_n)\to s\in S_r,\qquad
+f_n\to f\in\mathcal E,\qquad
+f_n(\pi_r(x_n))=1,\quad f_n(x_n)=0.
+$$
+
+极限满足 $f(s)=1,f(x)=0$，故 $s=\pi_r(x)$。所有聚点相同，给连续性；不需预用紧 $P$。这也是137.4已用的原紧见证方法。
+
+若 $S_a\subseteq Q(r)$ 且 $r\notin S_a$，零对称给 $a\notin S_r$。若 $x,y\in S_a$ 同映到 $s\in S_r$，二者都在 $D_a\cap D_s$；$a\ne s$，故 $x=y$。因此 $\pi_r|_{S_a}$ 是整个紧二维球面到整个连通二维球面的连续单射。两者均为从原 $V$ 继承拓扑的无边界 Hausdorff 流形，[Hatcher，Theorem 2B.3、Corollary 2B.4][Q139AT]给满射及同胚。
+
+固定 $t\in S_o$，在完整球面 $S_t$ 上取 $q\in U_0\setminus\{o\}$；存在性来自 $o\in S_t$ 且球面无孤立点。于是 $q\notin D_o$、$Q(q)=Q$，而 $S_q\cap S_o=\{t\}$。取
+
+$$
+a_0\in S_q\setminus S_o,\qquad b_0\in S_o\setminus S_q.
+\tag{XI139.8}
+$$
+
+按二步集合的定义，$S_{a_0}\subseteq Q(q)=Q$、$S_{b_0}\subseteq Q(o)=Q$；零对称给 $o\notin S_{a_0}$、$q\notin S_{b_0}$。上一段分别适用于根 $o,q$。这没有从 $S_{a_0}\subseteq Q$ 推断标签 $a_0\in Q$。证毕。
+
