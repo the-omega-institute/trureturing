@@ -735,3 +735,162 @@ $$
 完整静态候选仍是 $\mathrm{EB3}+\mathsf{MC}$，本章缩短其推导，不声称删去了独立假设。其关系图景是：同一个态可有不同纯混合配方，取每个纯分量的排除球心后仍须得到同一态；若一张原尺能把替换前后完全分开，所有配方分量就必须指向同一颗排除球，标签单射迫使它们本来就是同一纯点。纯态因而由这项闭的二元分离关系完整刻画，球心与纯点之间出现统一正间隙，任何排除球的细轴也不能趋于零。只检验两项混合是否足以替代全部有限混合、裸 EB3 或 EB3加纯比较互易是否推出 $\mathsf{MC}$，仍不由本章解决。实际操作、复合系统、测量更新与时间演化继续保留135.7的原合同；交换比较端点不等于交换连续测量的次序。
 
 ## 追加锚（本行以下为增补区）
+
+## 137. 二元混合相容的内部截面、反射纯球与跨块障碍
+
+**定义 137.1（同原二元相容与球内图）。** 保留135.1的完整原 $V,C,u,K,P,\mathcal E,T_p,D_p$ 及 EB3。记完整球族、球缘和标签纤维为
+
+$$
+\mathscr B=\{D_p:p\in P\},\qquad
+S(F)=P\cap F=\partial_{\rm rel}F,\qquad I(F)=\{p:D_p=F\}.
+$$
+
+$c_F$ 是完整球 $F$ 的唯一仿射中心，$c_p=c_{D_p}$。只在本章另加二元混合相容
+
+$$
+\begin{aligned}
+\mathsf{BC}:\quad&
+tp+(1-t)q=vr+(1-v)s\\
+&\Longrightarrow\quad
+tc_p+(1-t)c_q=vc_r+(1-v)c_s
+\end{aligned}
+\quad
+\left(\begin{gathered}p,q,r,s\in P,\\t,v\in[0,1]\end{gathered}\right).
+\tag{XI137.1}
+$$
+
+全部端点与权重都来自同一个原模型，允许重复端点及零权。$\mathsf{MC}$ 蕴含 $\mathsf{BC}$；本章不把反向蕴含作为前件。单纯重排同一份混合不改变任何仿射和，(XI137.1)还比较端点不同但实际原态相同的两条弦。
+
+复用 IX116.1—116.6 的原面接口：每个非点真面都是完整球；不同完整球至多交于一个原纯点；每个 $F$ 或单标签，或与唯一不交的 $H$ 构成重复对，满足 $I(F)=S(H),I(H)=S(F)$，且两球均不交第三球；至少有一张单标签球，单标签球的全部球缘标签在全域均无重复。所有内部、边界及支撑均相对于 $\operatorname{aff}K$，球内相对内部另记 $\operatorname{ri}F$。
+
+**定理 137.2（局部球心图的零秩或满秩二分）。** 每个 $F\in\mathscr B$ 存在唯一仿射图 $G_F:F\to K$，满足 $G_F(q)=c_q$ 对全部 $q\in S(F)$ 成立。准确地，
+
+$$
+\begin{cases}
+G_F\text{ 为常值图},& I(F)\text{ 非单点},\\
+G_F\text{ 单射且秩为三},& I(F)\text{ 为单点}.
+\end{cases}
+\tag{XI137.2}
+$$
+
+证明。先用成熟的弦延拓论证构造图。每个 $x\in F$ 都可写成一条球缘弦的凸组合，定义 $G_F(x)$ 为相同权重的端点球心组合。$\mathsf{BC}$ 使不同弦给出相同值，且值在 $K$。若 $x,y\in F$ 不同，通过它们的直线与球相交为一条以球缘为端点的闭弦，$x,y$ 及其全部凸组合均在这条共同弦上，故 $G_F$ 保全部实凸组合。因此它仿射，球缘凸生成给唯一性；有限维仿射图连续。
+
+若 $G_F$ 非单射，其线性部分有非零核方向。沿该方向取球的两个对径 $r,s\in S(F)$，得 $c_r=c_s$。这个共同球心非纯，故 $D_r,D_s$ 的交含非纯点，原面接口迫使 $D_r=D_s=:H$。$r\ne s$ 使 $H$ 重复；IX116.2给其唯一配对球 $J$，且 $r,s\in I(H)=S(J)$。$J$ 与 $F$ 共享两个不同点，故 $J=F$。于是 $F$ 重复，而且每个 $q\in S(F)$ 都满足 $D_q=H$，所以整个 $G_F$ 恒为 $c_H$。
+
+反之，$F$ 重复时 IX116.2直接给 $G_F$ 在球缘恒值，故在整个球恒值。单标签情形因而单射，且 $F$ 为完整三球，线性秩恰为三。证毕。
+
+**定理 137.3（球心像的精确内部截面及横截）。** 设 $F$ 单标签，置
+
+$$
+E_F=G_F(F),\qquad o_F=G_F(c_F),\qquad
+L_E=\operatorname{lin}(E_F-o_F).
+$$
+
+则 $E_F$ 是嵌入的仿射三球，且
+
+$$
+\begin{gathered}
+G_F(\operatorname{ri}F)\subseteq\operatorname{ri}K,\qquad
+\partial_{\rm rel}E_F=\{c_q:q\in S(F)\}\subseteq\partial K,\\
+E_F=K\cap\operatorname{aff}E_F,\qquad
+L_E\cap\operatorname{lin}(D_q-c_q)=\{0\}\quad(q\in S(F)).
+\end{gathered}
+\tag{XI137.3}
+$$
+
+特别地，$\dim\operatorname{aff}K\ge6$，至少存在一张这样的内部截面。
+
+证明。137.2给嵌入三球及其边界公式。每个 $c_q$ 是真面 $D_q$ 的非纯球心，因此位于 $\partial K$。设某个 $x\in\operatorname{ri}F$ 的像在 $\partial K$。取 $K$ 上非负、非恒定且在 $G_F(x)$ 为零的支撑仿射泛函 $h$。$h\circ G_F$ 非负仿射且在球内点为零，所以在整个 $F$ 恒零。于是支撑真面 $Z=K\cap\{h=0\}$ 含所有 $c_q$。
+
+对任意 $y\in D_q$，中心反射 $2c_q-y\in D_q$ 与非负性给 $h(y)+h(2c_q-y)=2h(c_q)=0$，从而 $D_q\subseteq Z$。极大真面性给 $D_q=Z$ 对全部 $q\in S(F)$ 成立。这迫使 $G_F$ 恒值，与单射矛盾。因此球内全部像均为 $K$ 内点，特别是 $o_F\in\operatorname{ri}K$。
+
+若存在 $y\in K\cap\operatorname{aff}E_F$ 不在 $E_F$，从 $o_F$ 向 $y$ 的射线首次离开 $E_F$ 的点 $z$ 位于 $\partial_{\rm rel}E_F$ 且位于开线段 $(o_F,y)$。凸体内点与任意凸体点之间的开线段仍在内部，所以 $z\in\operatorname{ri}K$，与上述边界包含矛盾，取得精确截面。
+
+若非零 $w$ 同时属于 $L_E$ 及 $\operatorname{lin}(D_q-c_q)$，因 $c_q\in\operatorname{ri}D_q$，充分小的 $\varepsilon>0$ 使 $c_q\pm\varepsilon w\in D_q\subset K$。它们又属于 $\operatorname{aff}E_F$，故都在 $E_F$，违反 $c_q$ 是三球 $E_F$ 的极点。两方向空间均为三维，零交给维数下界；IX116.6给至少一张单标签球。证毕。
+
+**定理 137.4（反射纯球的面或内部截面二分）。** 设 $I(F)=\{a\}$。定义
+
+$$
+\sigma_F(q)=2c_q-a\quad(q\in S(F)),\qquad
+A_F=2G_F(F)-a,\qquad b_F=2o_F-a.
+\tag{XI137.4}
+$$
+
+则 $A_F\subset K$ 为非退化仿射三球，$b_F$ 是其中心，整个相对球面满足
+
+$$
+\partial_{\rm rel}A_F=\sigma_F(S(F))\subset P.
+\tag{XI137.5}
+$$
+
+恰有以下两种情形：若 $b_F\in\partial K$，则 $A_F$ 本身是一张完整原排除球；若 $b_F\in\operatorname{ri}K$，则
+
+$$
+A_F=K\cap\operatorname{aff}A_F,
+\tag{XI137.6}
+$$
+
+且 $A_F$ 不是真面。此外，
+
+$$
+A_F=F
+\quad\Longleftrightarrow\quad
+c_q=\frac{a+2c_F-q}{2}\quad(q\in S(F)).
+\tag{XI137.7}
+$$
+
+证明。对每个 $q\in S(F)$，$q\in D_a$，零对称给 $a\in D_q$。$a$ 是 $D_q$ 的球缘点，故其中心反射 $2c_q-a$ 也是该球的球缘点，因而属于原 $P$。137.2使 $2G_F-a$ 单射，故它将 $F$ 映为非退化三球，球面恰为上述纯点；球缘凸生成和 $K$ 凸给 $A_F\subset K$。
+
+若 $b_F\in\partial K$，取非负非恒定支撑 $h$ 在 $b_F$ 为零。$A_F$ 关于 $b_F$ 中心对称，故 $h$ 在整个 $A_F$ 为零，$A_F$ 包含于支撑真面 $H$。该面非点，原面分类使它为三球。两球同维，故仿射包相等，且 $b_F\in\operatorname{ri}H$。若 $H$ 中某点在 $A_F$ 外，从 $b_F$ 向该点的开线段跨过 $A_F$ 的球面；交点属于 $\operatorname{ri}H$，却由(XI137.5)为原纯点，矛盾。故 $A_F=H\in\mathscr B$。
+
+若 $b_F\in\operatorname{ri}K$，(XI137.5)使球面在 $\partial K$，137.3的射线论证原样给(XI137.6)。包含 $K$ 内点的非空面只能为整个 $K$；137.3给 $\dim\operatorname{aff}K\ge6$，而 $A_F$ 仅三维，所以它不是真面。
+
+最后假设 $A_F=F$。对 $q\in S(F)$，上述反射点 $\sigma_F(q)$ 与 $q$ 均在 $F$，又满足 $q\perp\sigma_F(q)$。取实现这一原零一读数的同一原效应，其在球 $F$ 的限制非恒定，最大、最小点只能是一对唯一球内对径。因此 $\sigma_F(q)=2c_F-q$，重排即得(XI137.7)右侧。反之，该公式使 $\sigma_F$ 将球缘映为同一球缘的对径，取凸包即得 $A_F=F$。证毕。
+
+**定理 137.5（固定原球缘上的非塌缩）。** 任取 $D_p=F$，不要求 $F$ 单标签。固定辅助欧氏范数，令
+
+$$
+\delta_F=2\min_{q\in S(F)}\|p-G_F(q)\|.
+$$
+
+则 $\delta_F>0$ 且
+
+$$
+\operatorname{diam}D_q\ge\delta_F\quad(q\in S(F)).
+\tag{XI137.8}
+$$
+
+因此若 $\operatorname{diam}D_{p_n}\to0$，该序列最终避开每一张预先固定的 $S(F)$。
+
+证明。固定球的球缘紧，$G_F$ 连续，且每个 $G_F(q)=c_q$ 非纯，与纯点 $p$ 不同，故连续正距离取得严格正的最小值。零对称给 $p\in D_q$，中心反射给 $2c_q-p\in D_q$；两点距离为 $2\|p-c_q\|$，取得(XI137.8)。每张固定球缘的正下界直接给序列断言。不同 $F$ 的下界尚未统一，本结论不供应 IX118.8 的全域正下界，也不供应136.3的全轴内球。证毕。
+
+**定理 137.6（重复块的内部相容及单外端点禁交）。** 设 $F,H$ 是 IX116.2的重复球对，令 $B=S(F)\cup S(H)$。则球心替换在全部端点属于 $B$ 的任意有限纯混合等式上相容。另一方面，在 $\mathsf{BC}$ 下不可能有
+
+$$
+tr+(1-t)a=vb+(1-v)d,
+\qquad
+0<t,v<1,\quad a,b,d\in B,\quad r\in P\setminus B.
+\tag{XI137.9}
+$$
+
+证明。IX116.3给同一原效应 $e$，满足 $K\cap\{e=0\}=F$ 及 $K\cap\{e=1\}=H$。仿射图
+
+$$
+J(x)=(1-e(x))c_H+e(x)c_F
+$$
+
+在 $S(F)$ 恒为 $c_H=c_q$，在 $S(H)$ 恒为 $c_F=c_q$。故任意有限 $B$ 混合的球心替换都等于对原混合施加同一仿射 $J$，取得内部相容。
+
+若(XI137.9)成立，分别应用 $\mathsf{BC}$ 及 $J$，相减得 $t(c_r-J(r))=0$，故 $c_r=J(r)$。$r$ 在两球缘之外且为原纯点，因此 $0<e(r)<1$，使 $J(r)\in(c_F,c_H)$。这个整个开球心段在 $\operatorname{ri}K$：否则某非负非恒定支撑同时在两球心为零，中心反射迫其零面同时包含 $F,H$，极大性迫 $F=H$，矛盾。于是 $c_r\in\operatorname{ri}K$，违反 $c_r\in D_r\subset\partial K$。证毕。
+
+**定义 137.7（简化候选及尚缺的整体约束）。** 待证候选为 $\mathrm{EB3}+\mathsf{BC}$。137.2—137.6没有证明它推出 $\mathsf{MC}$、全标签单射或全域非塌缩，也没有给出其反模型。反射构造尚缺 $A_F=F$；137.4的“完整原球”分支仍允许另一张完整球，“内部截面”分支也未被排除。即使逐球得到(XI137.7)，将各球的 $a+2c_F$ 拼成全域同一个向量，仍须另证整体连接条件。
+
+重复块内部的全部混合关系已经相容，故不能只在块内寻找矛盾。137.6仅排除一外三内的活跃二元等式；两个外端点与两个块内端点的弦相交仍可能在内部发生，未被该论证排除。局部下界亦仅逐球成立，不能以逐点正值代替统一正值。
+
+已取得完整静态分类的候选仍为135.1的 $\mathrm{EB3}+\mathsf{MC}$。它的同原表示与 Born、谱分解、全效应和有限数学测量字典直接复用135.5—135.6；本章只压缩二元候选所缺桥梁的几何形状，不新增 Hilbert 或物理实现断言。其白话关系图景是：同一混态若能由两对纯态调出来，换成各自排除球的球心后也应相同。这使每颗单标签球的球心族拉成一张穿过总态空间内部的完整三维切片；再隔着球心反射纯点，会得到另一整张纯球面。要把“两两相容”升级为量子结构，还须说明这张反射球为何回到原球，并把各球的关系接成全域同一关系。
+
+**约定 137.8（数学来源及迁移条件）。** 本章新增承重连接采用 `repo-derived` 归属：原全效应产生的排除面与二元球心图共同给出局部秩二分、精确内部截面及横截、反射纯球二分、逐球非塌缩及重复块禁交。弦上的仿射延拓、支撑面、凸体内点射线、有限维维数公式及紧集最小距离是成熟中间工具；IX116的面与重复纤维分类、XI135—136的全域分类桥均按原前件复用，不另计新结果。
+
+[Schillewaert—Van Maldeghem，On the varieties of the second row of the split Freudenthal–Tits Magic Square，§2.1](https://arxiv.org/abs/1308.0745) 的 Mazzocca–Melone 公理 MM1要求每对点位于一张指定二次空间，MM2约束射影张成空间的交，另有分裂二次曲面及切空间条件；本章的凸面交叠不供应这些前件，尤其不能用其分类倒付未证的全 Pair。[Barnum—Müller—Ududec，Higher-order interference and single-system postulates characterizing quantum theory，Theorem 16](https://arxiv.org/abs/1403.4147) 则显式要求 projectivity、对称跃迁概率及保纯滤子；二元混合相容未供应这些结构。两项文献只界定可迁移的条件，不替代上述原域证明，也不据有限检索宣称全球原创。
+
+## 追加锚（本行以下为增补区）
