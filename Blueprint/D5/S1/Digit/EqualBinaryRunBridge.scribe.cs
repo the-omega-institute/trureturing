@@ -11,7 +11,7 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/Digit/oeis2025a386705");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Unique positive-part encodings of literal maximal binary run pairs; the A386705 recurrence remains a target.",
+        "Literal maximal binary run pairs have unique positive-part encodings, and their distinct integer sums satisfy the A386705 recurrence.",
         H("Equal Binary Run Pairs"),
         Blocks(
             Paragraph(Text("The source is the full OEIS A386705 record at "
@@ -49,6 +49,19 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
                 + "For n>0, row(n) is the image of parts(n) under decoding, and decoding is injective "
                 + "on that set. Consequently a(n) equals the integer sum of decoded composition words "
                 + "with no repeated integer counted twice.")),
+            Paragraph(Text("For n>=1, write W(n) for the sum of decoded words over parts(n), "
+                + "T(n) for the sum of decoded tails, E(n) for the sum of 2^k*4^r, where k is "
+                + "the first part and r is the sum of the remaining parts, and U(n)=4^n*2^(n-1). "
+                + "Every composition of n+1 is uniquely either 1::ks or grow(ks), for a composition "
+                + "ks of n; grow increments the first part. These two images are disjoint. "
+                + "The decoded value of k::ks is (4^k-2^k)*4^sum(ks)+value(ks), in the integers. "
+                + "Summing over the two images gives W(n+1)=5W(n)+2U(n)+2E(n)-3T(n), "
+                + "T(n+1)=W(n)+T(n), E(n+1)=2U(n)+2E(n), and U(n+1)=8U(n). "
+                + "The initial data W(1)=2, T(1)=0, E(1)=2 yield the invariant W(n)-T(n)+E(n)=U(n). "
+                + "Thus W(n+1)=2W(n)-E(n)+5U(n); eliminating E and U proves "
+                + "W(n+3)=12W(n+2)-36W(n+1)+32W(n). "
+                + "The same identities give W(2)=22 and W(3)=192. The injective sum transport "
+                + "identifies W(n) with the literal a(n), rather than defining a(n) by these equations.")),
             Describe.Lean(DescribeId.Create("equal-binary-run-membership"),
                 DeclarationHandle.Create(Prefix + "mem_row_iff"), H("Unique literal encoding"),
                 StatementSource.FromAuthor(MembershipFormula()), AssessedProvenance.FromLiterature(Source),
@@ -60,11 +73,20 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("equal-binary-run-full-target"),
                 DeclarationHandle.Create(Prefix + "FullClaim"), H("Complete recurrence target"),
                 StatementSource.FromAuthor(ClaimFormula()), AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("FullClaim is a proposition definition, not a proved theorem. "
-                    + "The three initial values and the recurrence for every n>=4 remain unproved here. "
-                    + "Further work must transport the distinct integer sum through the unique encoding, "
-                    + "derive its weighted first-part identity, and prove the integer recurrence. "
-                    + "No finite-prefix result substitutes for this target."))), DescribeRole.Definition))));
+                Blocks(Paragraph(Text("FullClaim names the complete conjunction. The theorem full_claim "
+                    + "below proves it without assuming a recurrence, a composition count, or a weighted "
+                    + "sum identity. The composition count is supplied by Mathlib and the weighted "
+                    + "identities are derived from the finite composition split."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("equal-binary-run-full-claim"),
+                DeclarationHandle.Create(Prefix + "full_claim"), H("Complete literal recurrence"),
+                StatementSource.FromAuthor(Disp(ClaimBody())), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("The three initial values and the recurrence hold for the actual "
+                    + "distinct positive even integers with canonical bit length 2*n and equally paired "
+                    + "maximal runs. Natural indices express every integer index n>=1 exactly; the "
+                    + "recurrence guard n>=4 makes each shifted index positive. Every subtraction of "
+                    + "sequence values is in the integers. This is a universal theorem, not finite-prefix "
+                    + "verification. The source's empirical formula and the known composition relation "
+                    + "are distinguished from the kernel-checked derivation."))), DescribeRole.Theorem))));
 
     private static Formula N() => F.Id("Nat");
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(F.Id(name), [.. args]);
@@ -89,7 +111,8 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
             new Formula.Relation(m, FormulaRelationOperator.MemberOf, Call("row", n)),
             And(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, m), And(Call("Even", m), unique))))));
     }
-    private static Formula ClaimFormula()
+    private static Formula ClaimFormula() => Disp(Iffn(F.Id("FullClaim"), ClaimBody()));
+    private static Formula ClaimBody()
     {
         var n = F.Id("n");
         var rhs = Bin(Bin(D(1, 2), FormulaBinaryOperator.Multiply, Call("a", Pred(n, 1))),
@@ -97,7 +120,7 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
         rhs = Bin(rhs, FormulaBinaryOperator.Add, Bin(D(3, 2), FormulaBinaryOperator.Multiply, Call("a", Pred(n, 3))));
         var recurrence = All("n", N(), Imp(new Formula.Relation(D(4), FormulaRelationOperator.LessThanOrEqual, n),
             Eqn(Call("a", n), rhs)));
-        return Disp(Iffn(F.Id("FullClaim"), And(Eqn(Call("a", D(1)), D(2)),
-            And(Eqn(Call("a", D(2)), D(2, 2)), And(Eqn(Call("a", D(3)), D(1, 9, 2)), recurrence)))));
+        return And(Eqn(Call("a", D(1)), D(2)),
+            And(Eqn(Call("a", D(2)), D(2, 2)), And(Eqn(Call("a", D(3)), D(1, 9, 2)), recurrence)));
     }
 }

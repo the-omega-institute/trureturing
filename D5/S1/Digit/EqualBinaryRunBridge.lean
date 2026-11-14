@@ -13,7 +13,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 
 /-! The source is OEIS A386705, with the literal integer set used for its sum.
 Binary words here are most significant digit first. No recurrence defines a.
-The recurrence claim is a target proposition, not an established theorem.
+The theorem full_claim proves the three initial values and the integer recurrence.
 -/
 
 set_option autoImplicit false
@@ -45,7 +45,7 @@ noncomputable def row (n : ℕ) : Finset ℕ :=
 /-- The source sum is evaluated in the integers. -/
 noncomputable def a (n : ℕ) : ℤ := ∑ m ∈ row n, (m : ℤ)
 
-/-- The complete source endpoint. This definition asserts no proof. -/
+/-- The complete source endpoint for the literal distinct-integer sum. -/
 def FullClaim : Prop :=
   a 1 = 2 ∧ a 2 = 22 ∧ a 3 = 192 ∧
     ∀ n : ℕ, 4 ≤ n → a n = 12 * a (n - 1) - 36 * a (n - 2) + 32 * a (n - 3)
@@ -258,7 +258,7 @@ private theorem word_ends (ks : List ℕ) (hk : ∀ k ∈ ks, 0 < k) (hne : ks �
       · subst ks
         obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (hk k (by simp)).ne'
         exact ⟨List.replicate (j+1) 1 ++ List.replicate j 0, by
-          simp [word_cons, word, blockRuns, List.replicate_succ', List.append_assoc]⟩
+          simp [word, blockRuns, List.replicate_succ', List.append_assoc]⟩
       · obtain ⟨ws, hw⟩ := ih (fun j hj => hk j (by simp [hj])) he
         exact ⟨List.replicate k 1 ++ List.replicate k 0 ++ ws, by
           simp [word_cons, hw, List.append_assoc]⟩
@@ -477,7 +477,7 @@ private theorem edge_grow (ks : List ℕ) (hne : ks ≠ []) : edge (grow ks) = 2
 private theorem sum_constant (n : ℕ) (c : ℤ) :
     (∑ _ks ∈ parts n, c) = 2 ^ (n-1) * c := by
   classical
-  simp [parts_card, nsmul_eq_mul]
+  simp [parts_card]
 
 private theorem total_succ (n : ℕ) (hn : 0 < n) :
     total (n+1) = 5 * total n + 2 * capacity n + 2 * edgeTotal n - 3 * tailTotal n := by
@@ -528,5 +528,81 @@ private theorem edgeTotal_succ (n : ℕ) (hn : 0 < n) :
         exact edge_grow ks (parts_nonempty_list n hn ks hk)
       _ = _ := by rw [← Finset.mul_sum]; rfl
   rw [edgeTotal, sum_parts_succ n hn, hpre, hgrow]
+
+private theorem parts_one : parts 1 = {[1]} := by
+  classical
+  obtain ⟨ks, hks⟩ := Finset.card_eq_one.mp (show (parts 1).card = 1 by
+    simpa using parts_card 1)
+  have hm : [1] ∈ parts 1 := (mem_parts 1 [1]).mpr ⟨by simp, by simp⟩
+  rw [hks, Finset.mem_singleton] at hm
+  simpa [← hm] using hks
+
+private theorem totals_one : total 1 = 2 ∧ tailTotal 1 = 0 ∧ edgeTotal 1 = 2 := by
+  classical
+  norm_num [total, tailTotal, edgeTotal, parts_one, tailValue, edge, value,
+    decode, word, blockRuns, Nat.ofDigits]
+
+private theorem weighted_balance (n : ℕ) (hn : 0 < n) :
+    total n - tailTotal n + edgeTotal n = capacity n := by
+  induction n with
+  | zero => omega
+  | succ n ih =>
+      by_cases he : n = 0
+      · subst n
+        norm_num [totals_one.1, totals_one.2.1, totals_one.2.2, capacity]
+      · have hp : 0 < n := by omega
+        have hi := ih hp
+        rw [total_succ n hp, tailTotal_succ n hp, edgeTotal_succ n hp,
+          capacity_succ n hp]
+        linarith
+
+private theorem total_step (n : ℕ) (hn : 0 < n) :
+    total (n+1) = 2 * total n - edgeTotal n + 5 * capacity n := by
+  have hw := weighted_balance n hn
+  rw [total_succ n hn]
+  linarith
+
+private theorem total_recurrence (n : ℕ) (hn : 0 < n) :
+    total (n+3) = 12 * total (n+2) - 36 * total (n+1) + 32 * total n := by
+  have hn1 : 0 < n+1 := by omega
+  have hn2 : 0 < n+2 := by omega
+  have h0 := total_step n hn
+  have h1 := total_step (n+1) hn1
+  have h2 := total_step (n+2) hn2
+  have e0 := edgeTotal_succ n hn
+  have e1 := edgeTotal_succ (n+1) hn1
+  have c0 := capacity_succ n hn
+  have c1 := capacity_succ (n+1) hn1
+  convert h2 using 1 <;> try omega
+  linarith
+
+/-- The complete literal distinct-integer sum recurrence of OEIS A386705. -/
+theorem full_claim : FullClaim := by
+  have ha (n : ℕ) (hn : 0 < n) : a n = total n := sum_transport n hn
+  have h2 : total 2 = 22 := by
+    have ht := total_step 1 (by decide)
+    norm_num [totals_one.1, totals_one.2.2, capacity] at ht
+    exact ht
+  have h3 : total 3 = 192 := by
+    have ht := total_step 2 (by decide)
+    have he := edgeTotal_succ 1 (by decide)
+    norm_num [totals_one.2.2, capacity] at he
+    norm_num [h2, he, capacity] at ht
+    exact ht
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · rw [ha 1 (by decide)]; exact totals_one.1
+  · rw [ha 2 (by decide)]; exact h2
+  · rw [ha 3 (by decide)]; exact h3
+  · intro n hn
+    have h0 : 0 < n := by omega
+    have h1 : 0 < n-1 := by omega
+    have h2 : 0 < n-2 := by omega
+    have h3 : 0 < n-3 := by omega
+    rw [ha n h0, ha (n-1) h1, ha (n-2) h2, ha (n-3) h3]
+    have hr := total_recurrence (n-3) h3
+    have he0 : n-3+3 = n := by omega
+    have he1 : n-3+2 = n-1 := by omega
+    have he2 : n-3+1 = n-2 := by omega
+    simpa only [he0, he1, he2] using hr
 
 end D5.S1.Digit.EqualBinaryRunBridge
