@@ -9,6 +9,8 @@
 import D5.S3.Arith.TwistedDerivations.ManjuSharmaConjectureFourFour
 import Mathlib.LinearAlgebra.Quotient.Basic
 
+/-! The outer quotient and both assertions of the printed prime-power conjecture. -/
+
 namespace D5.S3.Arith.TwistedDerivations.ManjuSharmaConjectureFiveTwo
 
 noncomputable section
@@ -26,7 +28,9 @@ def derivations {O : Type*} [CommRing O] (σ τ : O →ₐ[ℤ] O) :
     ring
   smul_mem' := by
     intro a D hD x y
-    simp only [LinearMap.smul_apply, hD x y, zsmul_eq_mul]
+    change a • D (x * y) = (a • D x) * τ y + σ x * (a • D y)
+    rw [hD x y]
+    simp only [zsmul_eq_mul]
     ring
 
 /-- Inner derivations have a single integral multiplier valid on the entire ring. -/
@@ -61,7 +65,8 @@ def outerClass {O : Type*} [CommRing O] (σ τ : O →ₐ[ℤ] O)
 private theorem outer_nonzero_iff {O : Type*} [CommRing O]
     (σ τ : O →ₐ[ℤ] O) (D : derivations σ τ) :
     outerClass σ τ D ≠ 0 ↔ ¬ ManjuSharmaConjectureFourFour.IsInner σ τ D.val := by
-  simp [outerClass, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero, inner]
+  change ¬ (Submodule.Quotient.mk D : (derivations σ τ) ⧸ inner σ τ) = 0 ↔ _
+  exact not_congr Submodule.Quotient.mk_eq_zero
 
 /-- The full source conjunction, with both orientations of each distinct twist pair.
 The positive source factorization is applied in increasing exponent order; the actual
@@ -118,7 +123,7 @@ theorem result : ¬ claim := by
       simpa [derivations, σ] using ManjuSharmaConjectureFourFour.derivation_twisted⟩
   have hout : outerClass σ ManjuSharmaConjectureFourFour.tau d ≠ 0 :=
     (outer_nonzero_iff _ _ d).2 ManjuSharmaConjectureFourFour.derivation_not_inner
-  exact (hc.1 d).mp hout (by simpa [σ] using ManjuSharmaConjectureFourFour.printed_test)
+  exact (hc.1 d).mp hout (by simpa only [σ, d, AlgHom.id_apply] using ManjuSharmaConjectureFourFour.printed_test)
 
 #print axioms claim
 #print axioms result
