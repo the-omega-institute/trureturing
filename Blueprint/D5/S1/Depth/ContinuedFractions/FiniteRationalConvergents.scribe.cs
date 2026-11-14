@@ -15,23 +15,21 @@ internal sealed class FiniteRationalConvergentsDocument : IScribeDocumentDefinit
                 StatementSource.FromAuthor(Disp(All(new Formula.Logic(
                     Rel(X("z"), FormulaRelationOperator.MemberOf, C("convergents", X("x"))), FormulaLogicOperator.Iff,
                     new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("k"), X("Nat"),
-                        Eq(C("Real.convergent", C("toReal", X("x")), X("k")), X("z")))),
+                        Eq(C("realConvergent", C("toReal", X("x")), X("k")), X("z")))),
                     ("x", X("Rat")), ("z", X("Rat"))))),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/HilbertOperators/aicyberg2026shor")),
-                Blocks(Paragraph(Text("Both directions follow the Euclidean denominator descent. At an integer, all totalized real convergents repeat that integer. At a noninteger, the head is the zeroth convergent, and the reciprocal-tail recurrence transports each tail index to its successor. Thus repeated terminal real convergents are represented by a single finite-list entry. The consuming recovery proof uses this equivalence to turn the index supplied by Mathlib's Legendre theorem into actual list membership."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("In the display, realConvergent denotes Mathlib's Real.convergent and natDiv denotes natural-number division. Both directions follow the Euclidean denominator descent. At an integer, all totalized real convergents repeat that integer. At a noninteger, the head is the zeroth convergent, and the reciprocal-tail recurrence transports each tail index to its successor. Thus repeated terminal real convergents are represented by a single finite-list entry. The consuming recovery proof uses this equivalence to turn the index supplied by Mathlib's Legendre theorem into actual list membership."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("reduced-denominator"),
                 DeclarationHandle.Create("D5/S1/Depth/ContinuedFractions/FiniteRationalConvergents.reduced_den"), H("Reduced denominator"),
                 StatementSource.FromAuthor(Disp(All(Imp(Rel(Num(0), FormulaRelationOperator.LessThan, X("r")),
-                    Eq(C("Rat.den", C("reduced", X("s"), X("r"))), C("Nat.div", X("r"), C("Nat.gcd", X("s"), X("r"))))),
+                    Eq(C("den", C("reduced", X("s"), X("r"))), C("natDiv", X("r"), C("gcd", X("s"), X("r"))))),
                     ("s", X("Nat")), ("r", X("Nat"))))),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/HilbertOperators/aicyberg2026shor")),
                 Blocks(Paragraph(Text("The positive-denominator formula directly uses the pinned rational normalization laws. It remains valid at s equal to zero and r equal to one. The denominator divides r, is at most r, and equals r when s and r are coprime. These consequences are used inside the conditional Shor recovery proof."))), DescribeRole.Theorem),
-            Paragraph(Text("This is a general recursion and correspondence theorem for all rational inputs. It is neither a census of bounded instances nor a numerical certificate or checker. The source slice is attributed to the immutable Apache-licensed supplier; Mathlib remains the source of the real convergent recurrence and Legendre approximation theorem.")))));
+            Paragraph(Text("Mathlib supplies the real convergent recurrence and Legendre approximation theorem. The finite-list correspondence connects that recurrence with executable rational Euclidean descent.")))));
     private static Formula X(string s) => DefinitionDsl.Id(s);
     private static Formula C(string s, params Formula[] xs) => DefinitionDsl.Call(s, xs);
     private static Formula Eq(Formula x, Formula y) => DefinitionDsl.Equal(x, y);
-    private static Formula Div(Formula x, Formula y) => new Formula.Fraction(x, y);
-    private static Formula Pow(Formula x, Formula y) => new Formula.Power(x, y);
     private static Formula Rel(Formula x, FormulaRelationOperator op, Formula y) => new Formula.Relation(x, op, y);
     private static Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
     private static Formula All(Formula f, params (string Name, Formula Type)[] xs)

@@ -8,7 +8,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 noncomputable section
 open QuantumShorOrderFindingCore QuantumPhaseEstimationGeneral
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (Parameters × ℕ)
+  Reg.Support.SingleDependentReadout.signature (Σ _ : Parameters, ℕ)
     (fun p => Fin (2 ^ p.2)) (fun _ => List ℚ)
 def actual : Realization signature :=
   realize signature (fun _ p y => candidates y.val (2 ^ p.2) p.1.modulus) (fun e => nomatch e)
@@ -19,7 +19,7 @@ def arena : Arena where
   Law R := ∀ (c : Parameters) (n : ℕ), c.modulus ^ 2 ≤ 2 ^ n →
     ∀ (s : Fin c.period) (y : Fin (2 ^ n)),
     Nearest (2 ^ n) (s.val / (c.period : ℝ)) y →
-    reduced s.val c.period ∈ R.readout () (c,n) y ∧ (reduced s.val c.period).den ∣ c.period
+    reduced s.val c.period ∈ R.readout () ⟨c,n⟩ y ∧ (reduced s.val c.period).den ∣ c.period
 private def sample : Parameters := ⟨2, by norm_num, 1, by norm_num, 1, by norm_num⟩
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -32,7 +32,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   let c : Parameters := ⟨3, by decide, 2, by decide, 2, by decide⟩
-  refine ⟨(c, 4), ⟨0, by decide⟩, ⟨8, by decide⟩, ?_⟩
+  refine ⟨⟨c, 4⟩, ⟨0, by decide⟩, ⟨8, by decide⟩, ?_⟩
   change candidates 0 16 3 ≠ candidates 8 16 3
   have hd : (1 / 2 : ℚ).den = 2 := by
     change (reduced 1 2).den = 2
@@ -74,7 +74,7 @@ def registration :
       path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 4
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -88,7 +88,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 noncomputable section
 open QuantumShorOrderFindingCore QuantumPhaseEstimationGeneral
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (Parameters × ℕ)
+  Reg.Support.SingleDependentReadout.signature (Σ _ : Parameters, ℕ)
     (fun p => Fin (2 ^ p.2)) (fun _ => List ℕ)
 def actual : Realization signature :=
   realize signature (fun _ p y => (candidates y.val (2 ^ p.2) p.1.modulus).map Rat.den)
@@ -100,7 +100,7 @@ def arena : Arena where
   Law R := ∀ (c : Parameters) (n : ℕ), c.modulus ^ 2 ≤ 2 ^ n →
     ∀ (s : Fin c.period) (y : Fin (2 ^ n)),
     Nearest (2 ^ n) (s.val / (c.period : ℝ)) y → Nat.Coprime s.val c.period →
-    c.period ∈ R.readout () (c,n) y
+    c.period ∈ R.readout () ⟨c,n⟩ y
 private def sample : Parameters := ⟨2, by norm_num, 1, by norm_num, 1, by norm_num⟩
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -113,7 +113,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   let c : Parameters := ⟨3, by decide, 2, by decide, 2, by decide⟩
-  refine ⟨(c, 4), ⟨0, by decide⟩, ⟨8, by decide⟩, ?_⟩
+  refine ⟨⟨c, 4⟩, ⟨0, by decide⟩, ⟨8, by decide⟩, ?_⟩
   change (candidates 0 16 3).map Rat.den ≠ (candidates 8 16 3).map Rat.den
   have hd : (1 / 2 : ℚ).den = 2 := by
     change (reduced 1 2).den = 2
@@ -155,7 +155,7 @@ def registration :
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 4
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
