@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Matrix.AsynchronousTwoBlockSpectrum
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.FieldTheory.IsAlgClosed.Spectrum
+import Mathlib.Analysis.Complex.Polynomial.Basic
 
 /-! The radius follows from the actual history spectrum, including the zero-delay specialization. -/
 
@@ -37,10 +38,12 @@ private theorem synchronous_spectrum_iff {m n : ℕ}
   have hmatrix : (asyncMatrix (zeroDiagonal U V) !![0,0; 0,0] 0).map (algebraMap ℝ ℂ) =
       Matrix.reindexAlgEquiv ℂ ℂ e ((zeroDiagonal U V).map (algebraMap ℝ ℂ)) := by
     ext ⟨r,p⟩ ⟨s,q⟩
-    have hr : r=0 := Subsingleton.elim _ _
-    have hs : s=0 := Subsingleton.elim _ _
+    have hr : r=0 := by apply Fin.ext; have := r.isLt; simp only [Nat.zero_add] at this; omega
+    have hs : s=0 := by apply Fin.ext; have := s.isLt; simp only [Nat.zero_add] at this; omega
     subst r; subst s
-    simp [asyncMatrix, Matrix.map_apply, Matrix.reindex_apply, e]
+    have hd (i j : Fin 2) : (!![0,0; 0,0] : Matrix (Fin 2) (Fin 2) ℕ) i j = 0 := by
+      fin_cases i <;> fin_cases j <;> rfl
+    simp [asyncMatrix, Matrix.map_apply, Matrix.reindex_apply, e,hd]
   have h := nonzero_spectrum_iff (a:=0) (b:=0) (K:=0) U V (by omega) (by omega) z hz
   rw [hmatrix, AlgEquiv.spectrum_eq] at h
   simpa using h
@@ -61,7 +64,7 @@ theorem two_block_radius {m n a b k K : ℕ}
   classical
   letI : Nonempty (Fin m) := ⟨⟨0,hm⟩⟩
   letI : Nonempty (Fin n) := ⟨⟨0,hn⟩⟩
-  letI : Nonempty (Vtx (![m,n] : Fin 2 → ℕ)) := ⟨⟨0,Classical.choice inferInstance⟩⟩
+  letI : Nonempty (Vtx (![m,n] : Fin 2 → ℕ)) := ⟨⟨0,(⟨0,hm⟩ : Fin m)⟩⟩
   let M := (zeroDiagonal U V).map (algebraMap ℝ ℂ)
   let B := (asyncMatrix (zeroDiagonal U V) !![0,b; a,0] K).map (algebraMap ℝ ℂ)
   let L : ℕ := a+b+2
