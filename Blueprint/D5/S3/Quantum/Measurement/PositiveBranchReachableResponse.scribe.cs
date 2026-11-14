@@ -27,6 +27,26 @@ internal sealed class PositiveBranchReachableResponseDocument : IScribeDocumentD
                 + "W_l(K,rho) is the complex span of K_w v for words of length at most l and v in supp(rho); "
                 + "S(K,rho) is the union, equivalently the supremum, of these increasing subspaces. "
                 + "Quadratic forms use the Euclidean inner product and their real parts.")),
+            Theorem("cp-positive", "weightedCP_psd", "Positive weighted Kraus maps", CpPositiveFormula(),
+                "For nonnegative weights, every Kraus sandwich of a positive semidefinite matrix is positive "
+                + "semidefinite, as is their weighted sum. Strict positivity and trace preservation are unnecessary."),
+            Theorem("support-range", "matrixSupport_eq_range", "Hermitian support is the range", SupportRangeFormula(),
+                "For a Hermitian matrix, the orthogonal complement of its kernel is the range of the same operator."),
+            Theorem("kraus-invariant", "reachable_kraus_invariant", "The original reachable space is Kraus invariant", KrausInvariantFormula(),
+                "Prepending one original Kraus letter to a finite word preserves membership in the span of all words. "
+                + "The branch index type need not be finite for this statement."),
+            Theorem("cp-monotone", "weightedCP_mono", "Positive weighted Kraus maps preserve order", CpMonotoneFormula(),
+                "Apply positivity to the difference of two ordered Hermitian matrices. The order is the positive "
+                + "semidefinite matrix order, and only nonnegative branch weights are required."),
+            Theorem("trace-decay", "geometric_trace_tendsto", "A geometric block bound forces trace decay", GeometricTraceFormula(),
+                "If a positive orbit has trace bounded by q to the power floor(k/N) times its initial trace, "
+                + "where N is positive and 0 <= q < 1, the nonnegative trace tends to zero."),
+            Theorem("norm-trace", "psd_norm_le_trace", "Positive matrix norm is bounded by trace", NormTraceFormula(),
+                "The matrix norm here is the elementwise maximum norm. Positivity bounds each entry norm by "
+                + "the real trace, including the zero-dimensional case."),
+            Theorem("orbit-summable", "geometric_orbit_summable", "A geometric block bound gives an operator series", GeometricSummableFormula(),
+                "The elementwise norm of each positive iterate is bounded by its trace. Each geometric block "
+                + "has N terms, so the same trace bound gives absolute summability of the complete operator orbit."),
             Theorem("support", "finite_orbit_support_eq_word_span", "Finite orbits and original words", SupportFormula(),
                 "A positive weighted sum has zero quadratic form exactly when every summand has zero quadratic form. "
                 + "Applying this to rho + T(R_l) identifies its kernel with the vectors killed by rho after every "
@@ -100,6 +120,44 @@ internal sealed class PositiveBranchReachableResponseDocument : IScribeDocumentD
         Describe.Lean(DescribeId.Create("positive-branch-" + id), DeclarationHandle.Create(Owner + declaration),
             H(title), StatementSource.FromAuthor(statement), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(proof))), DescribeRole.Theorem);
+
+    private static Formula MatrixFamily(Formula body, bool finiteBranches = true) =>
+        All(Index, Kind, All(A, Kind, Seq(Call("Finite", Index), Sp,
+            finiteBranches ? Seq(Land, Sp, Call("Finite", A), Sp) : Seq(),
+            Rightarrow, Sp, All(K, Arrow(A, Mat(Index)), body))));
+    private static Formula NonnegativeWeights => All(F.Id("a"), A,
+        Seq(D(0), Sp, Leq, Sp, Call("c", F.Id("a"))));
+    private static Formula CpPositiveFormula() => Disp(MatrixFamily(All(C, Arrow(A, Real),
+        All(F.Id("X"), Mat(Index), Seq(Scope(NonnegativeWeights), Sp, Land, Sp, Psd(F.Id("X")),
+            Sp, Rightarrow, Sp, Psd(Call("weightedCP", K, C, F.Id("X"))))))));
+    private static Formula SupportRangeFormula() => Disp(All(Index, Kind,
+        Seq(Call("Finite", Index), Sp, Rightarrow, Sp, All(F.Id("X"), Mat(Index),
+            Seq(Call("IsHermitian", F.Id("X")), Sp, Rightarrow, Sp,
+                Eqn(Supp(F.Id("X")), Call("range", Call("toEuclideanLin", F.Id("X")))))))));
+    private static Formula KrausInvariantFormula() => Disp(MatrixFamily(All(Rho, Mat(Index),
+        All(F.Id("a"), A, All(V, Call("EuclideanSpace", Complex, Index),
+            Seq(V, Sp, InMacro, Sp, Space(K, Rho), Sp, Rightarrow, Sp,
+                Call("toEuclideanLin", Call("K", F.Id("a")), V), Sp, InMacro, Sp, Space(K, Rho))))),
+        finiteBranches: false));
+    private static Formula CpMonotoneFormula() => Disp(MatrixFamily(All(C, Arrow(A, Real),
+        Seq(Scope(NonnegativeWeights), Sp, Rightarrow, Sp,
+            Call("Monotone", Call("weightedCP", K, C))))));
+    private static Formula GeometricPremises => Seq(
+        Scope(NonnegativeWeights), Sp, Land, Sp, Psd(Q), Sp, Land, Sp,
+        D(1), Sp, Leq, Sp, N, Sp, Land, Sp, D(0), Sp, Leq, Sp, F.Id("q"), Sp, Lt, Sp, D(1),
+        Sp, Land, Sp, All(F.Id("k"), Nat, Seq(ReTr(Orbit(K, C, Q, F.Id("k"))), Sp, Leq, Sp,
+            Pow(F.Id("q"), Seq(Lfloor, Frac, Grp(F.Id("k")), Grp(N), Rfloor)), Sp, ReTr(Q))));
+    private static Formula GeometricFamily(Formula conclusion) => Disp(MatrixFamily(All(C, Arrow(A, Real),
+        All(Q, Mat(Index), All(N, Nat, All(F.Id("q"), Real,
+            Seq(Scope(GeometricPremises), Sp, Rightarrow, Sp, conclusion)))))));
+    private static Formula GeometricTraceFormula() => GeometricFamily(Seq(
+        ReTr(Orbit(K, C, Q, F.Id("k"))), Sp, To, Sp, D(0), Sp,
+        Open, F.Id("k"), Sp, To, Sp, Infty, Close));
+    private static Formula NormTraceFormula() => Disp(All(Index, Kind,
+        Seq(Call("Finite", Index), Sp, Rightarrow, Sp, All(F.Id("X"), Mat(Index),
+            Seq(Psd(F.Id("X")), Sp, Rightarrow, Sp, Vert, F.Id("X"), Vert, Sp, Leq, Sp, ReTr(F.Id("X")))))));
+    private static Formula GeometricSummableFormula() => GeometricFamily(Call("Summable",
+        Seq(F.Id("k"), Sp, Mapsto, Sp, Orbit(K, C, Q, F.Id("k")))));
 
     private static Formula Generic(Formula body) => All(Index, Kind, All(A, Kind,
         Seq(Call("Finite", Index), Sp, Land, Sp, Call("Finite", A), Sp, Rightarrow, Sp,
