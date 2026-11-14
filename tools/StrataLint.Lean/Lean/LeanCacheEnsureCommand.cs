@@ -248,7 +248,8 @@ internal static partial class LeanCacheEnsureCommand
                             location,
                             replaceExisting: true,
                             stampMiss,
-                            out cacheState);
+                            out cacheState,
+                            donorRepository);
                     }
                     RemoveProjection(lake);
                     projectWarmth = new OleanWarmthInspection(OleanWarmth.Cold, null);
@@ -271,7 +272,8 @@ internal static partial class LeanCacheEnsureCommand
                                 stateProbe,
                                 location,
                                 stampMiss,
-                                out cacheState);
+                                out cacheState,
+                                donorRepository);
                         }
 
                         return ProvisionLinkedFromMain(
@@ -285,7 +287,8 @@ internal static partial class LeanCacheEnsureCommand
                             location,
                             replaceExisting: true,
                             stampMiss,
-                            out cacheState);
+                            out cacheState,
+                            donorRepository);
                     }
 
                     if (stamp.State == LeanCacheStampState.Missing
@@ -459,7 +462,8 @@ internal static partial class LeanCacheEnsureCommand
                     worktreeLocation,
                     replaceExisting: false,
                     stampMiss,
-                    out cacheState);
+                    out cacheState,
+                    donorRepository);
             }
 
             using var selection = GitWorktreeInventory.SelectDonor(root, pins, runner, donorRepository);
@@ -589,6 +593,34 @@ internal static partial class LeanCacheEnsureCommand
         }
     }
 
+    private static LeanCacheDonorSelection SelectLinkedDonor(
+        string root,
+        LeanWorktreeLocation location,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        ILeanCacheStateProbe stateProbe,
+        string? donorRepository)
+    {
+        var main = GitWorktreeInventory.SelectMainDonor(location, pins, runner, stateProbe);
+        if (main.Donor is not null || main.ProbeFailed) return main;
+
+        var mainNotice = main.Notice;
+        main.Dispose();
+        var local = GitWorktreeInventory.SelectDonor(
+            root,
+            pins,
+            runner,
+            stateProbe,
+            requireProjectWarm: true,
+            donorRepository: donorRepository);
+        if (local.Donor is not null || local.ProbeFailed) return local;
+        local.Dispose();
+        // Preserve the established main-checkout remediation when no compatible
+        // local donor is usable; a sibling donor changes the route only when it
+        // passes the same pin, stamp, quiescence and live warmth checks.
+        return new LeanCacheDonorSelection(null, mainNotice);
+    }
+
     private static CommandResult ProvisionLinkedFromMain(
         string root,
         LeanPinSet pins,
@@ -600,14 +632,12 @@ internal static partial class LeanCacheEnsureCommand
         LeanWorktreeLocation location,
         bool replaceExisting,
         string? stampMiss,
-        out CacheState? cacheState)
+        out CacheState? cacheState,
+        string? donorRepository = null)
     {
         cacheState = null;
-        using var selection = GitWorktreeInventory.SelectMainDonor(
-            location,
-            pins,
-            runner,
-            stateProbe);
+        using var selection = SelectLinkedDonor(
+            root, location, pins, runner, stateProbe, donorRepository);
         if (selection.Donor is null)
             return LinkedFailure(root, pins, location, selection.Notice, stampMiss);
 
@@ -666,14 +696,12 @@ internal static partial class LeanCacheEnsureCommand
         ILeanCacheStateProbe stateProbe,
         LeanWorktreeLocation location,
         string? stampMiss,
-        out CacheState? cacheState)
+        out CacheState? cacheState,
+        string? donorRepository = null)
     {
         cacheState = null;
-        using var selection = GitWorktreeInventory.SelectMainDonor(
-            location,
-            pins,
-            runner,
-            stateProbe);
+        using var selection = SelectLinkedDonor(
+            root, location, pins, runner, stateProbe, donorRepository);
         if (selection.Donor is null)
             return LinkedFailure(root, pins, location, selection.Notice, stampMiss);
 

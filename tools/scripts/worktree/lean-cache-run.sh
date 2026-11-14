@@ -64,6 +64,7 @@ if [[ "$1" == --build ]]; then
   # producer is invoked so the wrapper can skip whole-cache preparation while
   # retaining its pin and writer-lock checks.  Empty --build is the existing
   # whole-project route.
+  unset STRATALINT_LEAN_CACHE_SCOPE
   if [[ $# -gt 0 && -z "${STRATALINT_LEAN_CACHE_SCOPE:-}" ]]; then
     export STRATALINT_LEAN_CACHE_SCOPE=targeted
   fi

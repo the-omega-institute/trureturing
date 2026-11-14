@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 export LC_ALL=C
+# Full aggregate/report production owns its preparation policy.  A selected
+# scope marker inherited from an outer shell must not bypass whole ensure here.
+unset STRATALINT_LEAN_CACHE_SCOPE
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY="" OUTPUT="" LOG_DIR=""

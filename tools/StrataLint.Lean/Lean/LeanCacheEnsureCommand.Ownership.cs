@@ -11,6 +11,10 @@ internal static partial class LeanCacheEnsureCommand
     private const string ScopedCacheScopeVariable = "STRATALINT_LEAN_CACHE_SCOPE";
     private const string LakeArtifactCacheVariable = "LAKE_ARTIFACT_CACHE";
     private const string LakeRestoreArtifactsVariable = "LAKE_RESTORE_ARTIFACTS";
+    private const string LakeNoCacheVariable = "LAKE_NO_CACHE";
+    private const string MathlibNoCacheOnUpdateVariable = "MATHLIB_NO_CACHE_ON_UPDATE";
+
+    private sealed record LocalHeatInspection(bool Usable, string? Failure);
 
     internal static CommandResult RunWithWriter(
         string repositoryRoot,
@@ -73,22 +77,32 @@ internal static partial class LeanCacheEnsureCommand
             return FailureReceipt("failed", root, donor: null, method: "none", pins.Sha256,
                 ".lake exists but is not a directory", stampMiss: "corrupt");
 
-        // Explicit target builds and scoped reports use Lake's content-addressed
-        // artifact cache directly.  They still validate pins, acquire the local
-        // writer reservation, and run the requested command under the canonical
-        // process runner, but must not promote a target miss into whole-cache
-        // ensure/donor/archive preparation.
         var location = GitWorktreeInventory.Locate(root, runner);
-        var routedRunner = RouteArtifactCache(runner, location.IsLinked);
+        var routedRunner = RouteArtifactCache(runner, location.IsLinked, coldSelected: false);
         if (IsScopedCacheRequest())
-            return RunScopedCommand(root, command, routedRunner, guard, location.IsLinked,
-                standardOutput, standardError);
+        {
+            var heat = InspectUsableLocalHeat(root, pins, runner, stateProbe, donorRepository);
+            if (heat.Failure is not null)
+                return FailureReceipt("failed", root, donor: null, method: "none", pins.Sha256,
+                    "cache warmth inspection failed: " + heat.Failure);
+            if (!heat.Usable)
+            {
+                return RunScopedCommand(
+                    root,
+                    command,
+                    RouteArtifactCache(runner, location.IsLinked, coldSelected: true),
+                    guard,
+                    location.IsLinked,
+                    standardOutput,
+                    standardError);
+            }
+        }
 
         var ensured = EnsureLocked(
             root,
             pins,
             command[0],
-            runner,
+            routedRunner,
             cloner,
             guard,
             removePartial: null,
@@ -166,7 +180,7 @@ internal static partial class LeanCacheEnsureCommand
                 && Environment.GetEnvironmentVariable("STRATALINT_CI_COMPUTE_ACTIVE") != "1")
                 invocation = ["python3", Path.Combine(root, "tools/scripts/workflow/ci_compute.py"),
                     "run", "--", .. command];
-            var invoked = runner.Run(
+            var invoked = routedRunner.Run(
                 invocation[0],
                 invocation.Skip(1).ToArray(),
                 root,
@@ -187,8 +201,65 @@ internal static partial class LeanCacheEnsureCommand
         string.Equals(Environment.GetEnvironmentVariable(ScopedCacheScopeVariable), "targeted", StringComparison.Ordinal)
         || string.Equals(Environment.GetEnvironmentVariable(ScopedCacheScopeVariable), "scoped", StringComparison.Ordinal);
 
+    private static LocalHeatInspection InspectUsableLocalHeat(
+        string root,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        ILeanCacheStateProbe stateProbe,
+        string? donorRepository)
+    {
+        var lake = Path.Combine(root, ".lake");
+        if (Directory.Exists(lake))
+        {
+            var stamp = LeanCacheStamp.Inspect(lake, pins);
+            if (stamp.State == LeanCacheStampState.Match)
+            {
+                var project = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
+                var mathlib = stateProbe.ProbeOleans(MathlibOleanRoot(lake));
+                var failure = ProbeFailure("current project", project)
+                    ?? ProbeFailure("current mathlib", mathlib);
+                if (failure is not null) return new(false, failure);
+                if (project.IsWarm && mathlib.IsWarm) return new(true, null);
+            }
+        }
+
+        LeanCacheDonorSelection selection;
+        try
+        {
+            selection = GitWorktreeInventory.SelectDonor(
+                root,
+                pins,
+                runner,
+                stateProbe,
+                requireProjectWarm: true,
+                donorRepository: donorRepository);
+        }
+        catch (Exception exception)
+        {
+            return new(false, exception.Message);
+        }
+
+        using (selection)
+        {
+            if (selection.ProbeFailed)
+                return new(false, selection.Notice ?? "local donor project warmth probe failed");
+            if (selection.Donor is null) return new(false, null);
+
+            var mathlib = stateProbe.ProbeOleans(
+                MathlibOleanRoot(Path.Combine(selection.Donor, ".lake")));
+            var failure = ProbeFailure("local donor mathlib", mathlib);
+            if (failure is not null) return new(false, failure);
+            return new(mathlib.IsWarm, null);
+        }
+    }
+
+    private static string? ProbeFailure(string layer, OleanWarmthInspection inspection) =>
+        inspection.State == OleanWarmth.ProbeFailed
+            ? $"{layer}: {inspection.Error ?? "enumeration failed"}"
+            : null;
+
     private static IWorktreeProcessRunner RouteArtifactCache(
-        IWorktreeProcessRunner runner, bool linked)
+        IWorktreeProcessRunner runner, bool linked, bool coldSelected)
     {
         if (runner is not ProductionWorktreeProcessRunner production)
             return runner;
@@ -196,13 +267,22 @@ internal static partial class LeanCacheEnsureCommand
         // An empty value is intentional: Lake treats it as an unset boolean,
         // retaining its package default (readable, non-writable).  `false`
         // would disable artifact reads as well.
-        return production.WithEnvironment(new Dictionary<string, string>
+        var variables = new Dictionary<string, string>
         {
             [LakeArtifactCacheVariable] = linked ? string.Empty : "1",
             // Keep module outputs in the private build tree for consumers such
             // as judgeInputs/mod.oleanFile while still sharing the cache bytes.
             [LakeRestoreArtifactsVariable] = "1",
-        });
+        };
+        if (coldSelected)
+        {
+            // A cold selected delivery may fetch pinned source/configuration and
+            // build native misses, but it must not restore bulk package archives
+            // or trigger Mathlib's full post-update cache population.
+            variables[LakeNoCacheVariable] = "1";
+            variables[MathlibNoCacheOnUpdateVariable] = "1";
+        }
+        return production.WithEnvironment(variables);
     }
 
     private static CommandResult RunScopedCommand(

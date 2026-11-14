@@ -453,12 +453,14 @@ internal sealed class LeanCacheDonorSelection : IDisposable
         string? donor,
         string? notice,
         LeanCacheGuard? guard = null,
-        OleanWarmthInspection? projectWarmth = null)
+        OleanWarmthInspection? projectWarmth = null,
+        bool probeFailed = false)
     {
         Donor = donor;
         Notice = notice;
         this.guard = guard;
         ProjectWarmth = projectWarmth;
+        ProbeFailed = probeFailed;
     }
 
     internal string? Donor { get; }
@@ -466,6 +468,8 @@ internal sealed class LeanCacheDonorSelection : IDisposable
     internal string? Notice { get; }
 
     internal OleanWarmthInspection? ProjectWarmth { get; }
+
+    internal bool ProbeFailed { get; }
 
     internal LeanCacheGuard? TakeGuard()
     {
@@ -622,7 +626,7 @@ internal static class GitWorktreeInventory
                     : sawCache
                         ? "existing .lake donor has no readable pin files"
                         : "no existing worktree contains .lake";
-        return new LeanCacheDonorSelection(null, notice);
+        return new LeanCacheDonorSelection(null, notice, probeFailed: sawProjectProbeFailure);
     }
 
     internal static LeanWorktreeLocation Locate(
