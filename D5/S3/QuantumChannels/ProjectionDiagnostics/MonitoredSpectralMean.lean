@@ -12,6 +12,7 @@ import Mathlib.Analysis.InnerProductSpace.Trace
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Topology.Order.MonotoneConvergence
 import Mathlib.Data.Set.Card
+import Mathlib.Algebra.BigOperators.Module
 
 /-! Monitored finite sums and their cyclic operator representation. -/
 
@@ -121,16 +122,26 @@ private theorem weighted_finite (U : E ≃ₗᵢ[ℂ] E) (v : E) (hv : ‖v‖ =
       (∑ n ∈ Finset.range H, survivalProbability U v n) -
         H * survivalProbability U v H := by
   have hp := (monitored_return_conservation U v hv).2.1
-  induction H with
-  | zero => simp
-  | succ H ih =>
-    rw [Finset.sum_range_succ, Finset.sum_range_succ, ih, hp H]
-    push_cast
+  have hb := Finset.sum_range_by_parts' (fun _ : ℕ => (1 : ℝ))
+    (survivalProbability U v) (H + 1)
+  simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one,
+    smul_eq_mul, one_mul, Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one,
+    Finset.sum_range_succ] at hb
+  have hd : (∑ i ∈ Finset.range H,
+      ((i : ℝ) + 1) * (survivalProbability U v (i + 1) - survivalProbability U v i)) =
+      -(∑ i ∈ Finset.range H, (i + 1 : ℝ) * returnProbability U v (i + 1)) := by
+    rw [← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [hp i]
     ring
+  rw [hd] at hb
+  linarith
 
 private theorem mean_cyclic_dimension (U : E ≃ₗᵢ[ℂ] E) (v : E) (hv : ‖v‖ = 1) :
     HasSum (fun n : ℕ => (n + 1 : ℝ) * returnProbability U v (n + 1))
-      (Module.finrank ℂ (cyclicSpace U v) : ℝ) := by
+      (Module.finrank ℂ (cyclicSpace U v) : ℝ) ∧
+      HasSum (fun n : ℕ => returnProbability U v (n + 1)) 1 := by
   let C := cyclicSpace U v
   let A := cyclicStep U v
   have he_ne : initial U v ≠ 0 := by
@@ -182,30 +193,54 @@ private theorem mean_cyclic_dimension (U : E ≃ₗᵢ[ℂ] E) (v : E) (hv : ‖
     have ht' := ht.comp (show Tendsto
       (fun k : ℕ => A ^ (k * N) * star (A ^ (k * N))) atTop (𝓝 0) by simpa using hm)
     simpa [tr, Function.comp_def] using Complex.continuous_re.continuousAt.tendsto.comp ht'
-  have hp (n : ℕ) : 0 ≤ (n + 1 : ℝ) * returnProbability U v (n + 1) :=
-    mul_nonneg (by positivity) (sq_nonneg _)
-  apply (hasSum_iff_tendsto_nat_of_nonneg hp _).mpr
-  have hmono : Monotone (fun H : ℕ => ∑ n ∈ Finset.range H,
-      (n + 1 : ℝ) * returnProbability U v (n + 1)) := by
-    apply monotone_nat_of_le_succ
-    intro H
-    rw [Finset.sum_range_succ]
-    exact le_add_of_nonneg_right (hp H)
-  have hcofinal : Tendsto (fun k : ℕ => k * N) atTop atTop :=
-    tendsto_id.atTop_mul_const' (by omega)
-  apply (tendsto_iff_tendsto_subseq_of_monotone hmono hcofinal).mpr
-  have ht : Tendsto (fun k : ℕ =>
-      (Module.finrank ℂ C : ℝ) -
-        (LinearMap.trace ℂ C ((A ^ (k * N) * star (A ^ (k * N))).toLinearMap)).re -
-        (k * N : ℕ) * survivalProbability U v (k * N))
-      atTop (𝓝 (Module.finrank ℂ C : ℝ)) := by
-    simpa only [sub_zero] using
-      ((tendsto_const_nhds (x := (Module.finrank ℂ C : ℝ))).sub htrace).sub htail
-  convert ht using 1
-  funext k
-  exact (weighted_finite U v hv (k * N)).trans
-    (congrArg (fun x : ℝ => x - (k * N : ℕ) * survivalProbability U v (k * N))
-      (trace_survival U v hv (k * N)))
+  have hw : HasSum (fun n : ℕ => (n + 1 : ℝ) * returnProbability U v (n + 1))
+      (Module.finrank ℂ C : ℝ) := by
+    have hp (n : ℕ) : 0 ≤ (n + 1 : ℝ) * returnProbability U v (n + 1) :=
+      mul_nonneg (by positivity) (sq_nonneg _)
+    apply (hasSum_iff_tendsto_nat_of_nonneg hp _).mpr
+    have hmono : Monotone (fun H : ℕ => ∑ n ∈ Finset.range H,
+        (n + 1 : ℝ) * returnProbability U v (n + 1)) := by
+      apply monotone_nat_of_le_succ
+      intro H
+      rw [Finset.sum_range_succ]
+      exact le_add_of_nonneg_right (hp H)
+    have hcofinal : Tendsto (fun k : ℕ => k * N) atTop atTop :=
+      tendsto_id.atTop_mul_const' (by omega)
+    apply (tendsto_iff_tendsto_subseq_of_monotone hmono hcofinal).mpr
+    have ht : Tendsto (fun k : ℕ =>
+        (Module.finrank ℂ C : ℝ) -
+          (LinearMap.trace ℂ C ((A ^ (k * N) * star (A ^ (k * N))).toLinearMap)).re -
+          (k * N : ℕ) * survivalProbability U v (k * N))
+        atTop (𝓝 (Module.finrank ℂ C : ℝ)) := by
+      simpa only [sub_zero] using
+        ((tendsto_const_nhds (x := (Module.finrank ℂ C : ℝ))).sub htrace).sub htail
+    convert ht using 1
+    funext k
+    exact (weighted_finite U v hv (k * N)).trans
+      (congrArg (fun x : ℝ => x - (k * N : ℕ) * survivalProbability U v (k * N))
+        (trace_survival U v hv (k * N)))
+  have hr : HasSum (fun n : ℕ => returnProbability U v (n + 1)) 1 := by
+    have hp (n : ℕ) : 0 ≤ returnProbability U v (n + 1) := sq_nonneg _
+    apply (hasSum_iff_tendsto_nat_of_nonneg hp _).mpr
+    have hm : Monotone (fun H : ℕ => ∑ n ∈ Finset.range H,
+        returnProbability U v (n + 1)) := by
+      apply monotone_nat_of_le_succ
+      intro H
+      rw [Finset.sum_range_succ]
+      exact le_add_of_nonneg_right (hp H)
+    have hc : Tendsto (fun k : ℕ => k * N) atTop atTop :=
+      tendsto_id.atTop_mul_const' (by omega)
+    apply (tendsto_iff_tendsto_subseq_of_monotone hm hc).mpr
+    have hs : Tendsto (fun k : ℕ => survivalProbability U v (k * N))
+        atTop (𝓝 (0 : ℝ)) :=
+      squeeze_zero (fun _ => sq_nonneg _) hsurv
+        (tendsto_pow_atTop_nhds_zero_of_lt_one (sq_nonneg q) hq2)
+    have ht : Tendsto (fun k : ℕ => 1 - survivalProbability U v (k * N))
+        atTop (𝓝 (1 : ℝ)) := by simpa using tendsto_const_nhds.sub hs
+    convert ht using 1
+    funext k
+    exact eq_sub_of_add_eq ((monitored_return_conservation U v hv).2.2 (k * N))
+  exact ⟨hw, hr⟩
 
 /-- Distinct eigenvalues with a nonzero component of the actual initial state. -/
 def occupiedSpectrum (U : E ≃ₗᵢ[ℂ] E) (v : E) : Set ℂ :=
@@ -328,9 +363,11 @@ theorem monitored_spectral_mean (U : E ≃ₗᵢ[ℂ] E) (v : E) (hv : ‖v‖ =
     (occupiedSpectrum U v).Finite ∧
       (occupiedSpectrum U v).ncard = Module.finrank ℂ (cyclicSpace U v) ∧
       HasSum (fun n : ℕ => (n + 1 : ℝ) * returnProbability U v (n + 1))
-        ((occupiedSpectrum U v).ncard : ℝ) := by
+        ((occupiedSpectrum U v).ncard : ℝ) ∧
+      HasSum (fun n : ℕ => returnProbability U v (n + 1)) 1 := by
   obtain ⟨hfinite, hcard⟩ := cyclic_spectrum U v
-  exact ⟨hfinite, hcard, by simpa only [hcard] using mean_cyclic_dimension U v hv⟩
+  obtain ⟨hmean, hreturn⟩ := mean_cyclic_dimension U v hv
+  exact ⟨hfinite, hcard, by simpa only [hcard] using hmean, hreturn⟩
 
 #print axioms monitored_spectral_mean
 

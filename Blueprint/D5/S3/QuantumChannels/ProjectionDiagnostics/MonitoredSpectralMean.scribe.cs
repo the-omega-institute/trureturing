@@ -32,7 +32,7 @@ internal sealed class MonitoredSpectralMeanDocument : IScribeDocumentDefinition
                 + "Finite summation by parts subtracts the further term H times the survival probability at H. "
                 + "A strictly contracting positive power bounds both remainders on cofinal horizons H=kN; "
                 + "the bound for the second remainder uses k times a geometric sequence. "
-                + "Nonnegative partial sums then give the stated HasSum, including convergence.")),
+                + "Nonnegative partial sums then give the stated HasSum, including convergence. The same contraction and finite conservation give total return probability one.")),
                 Paragraph(Text(
                 "An orthonormal eigenbasis of the same cyclic unitary has nonzero initial overlaps. "
                 + "Two equal eigenvalues would give a nonzero eigenvector with zero initial overlap, contradicting the zero future kernel. "
@@ -59,7 +59,9 @@ internal sealed class MonitoredSpectralMeanDocument : IScribeDocumentDefinition
             Call("returnProbability", u, v, Seq(n, Plus, D(1))));
         Formula sum = Call("HasSum", Seq(Paren(n, Colon, natural), Mapsto, Sp, term), Call("cast", card, real));
         Formula result = And(Call("Finite", support), And(
-            Seq(card, Eq, Call("finrank", complex, Call("cyclicSpace", u, v))), sum));
+            Seq(card, Eq, Call("finrank", complex, Call("cyclicSpace", u, v))), And(sum,
+            Call("HasSum", Seq(Paren(n, Colon, natural), Mapsto, Sp,
+                Call("returnProbability", u, v, Seq(n, Plus, D(1)))), D(1)))));
         Formula law = new Formula.Logic(Seq(new Formula.Norm(v), Eq, D(1)),
             FormulaLogicOperator.Implies, result);
         return Disp(Bind("E", F.Id("Type"), Seq(
