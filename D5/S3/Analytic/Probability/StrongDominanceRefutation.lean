@@ -12,7 +12,7 @@ escape_witness: none
 proof_shape: distinctCountPMF: bind-only; consumer: claim, result; escape_witness: none.
 proof_shape: StronglyDominates: bind-only; consumer: claim, result; escape_witness: none.
 proof_shape: claim: bind-only; consumer: result; escape_witness: none.
-proof_shape: result: bind-only; consumer: external settlement; escape_witness: none.
+proof_shape: result: bind-only; consumer: none; escape_witness: none.
 proof_shape: pVec: bind-only; consumer: p, p_moreMixed; escape_witness: none.
 proof_shape: qVec: bind-only; consumer: q, p_moreMixed; escape_witness: none.
 proof_shape: p: bind-only; consumer: result; escape_witness: none.
