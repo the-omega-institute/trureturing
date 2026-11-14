@@ -1,0 +1,31 @@
+**定义 145.1（完整原域）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。始终使用
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+C^*=\{h\in V^*:h(C)\subseteq\mathbb R_+\},\qquad \mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\},\qquad S_p=P\cap D_p,\\
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\},\qquad
+N_p=\{h\in C^*:h(p)=0\},\qquad L_p=\operatorname{span}_{\mathbb R}N_p,\qquad
+\mathcal B(p)=\mathcal E\cap N_p,\qquad
+P_0=\{p\in P:\mathcal A_p\text{ 为单点}\}.
+\end{gathered}
+\tag{XI145.1}
+$$
+
+$K$ 是整个紧基且张成 $V$，$P$ 是全部原纯标签。完整效应区间紧，$\mathcal F_p$ 非空紧，故 minimum 对**每个**原混输入 $x\in K$ 都达到。$\mathcal A_p$ 是整球暴露确认族，$\mathcal B(p)$ 是完整零效应菜单；两者都不替代 $\mathcal F_p$。不预设 $T_p$ 仿射、least 或确认菜单单点。
+
+EB3 指每个原 $p\in P$ 的**整个** $D_p$ 都仿射等价于非退化闭三球。纯关系 $p\perp q\Longleftrightarrow q\in S_p$ 由原补效应对称，且反自反。$\mathsf{Inj}$ 指 $D_p=D_q\Rightarrow p=q$。$\mathsf{Conn}$ 准确指任意两个原纯点之间存在有限条原零边组成的路径，允许相同端点的零长路，长度可依端点改变。
+
+对原根 $r\in P$ 定义
+
+$$
+Q(r)=\bigcup_{s\in S_r}S_s,\qquad
+\mathsf G(r):\quad \exists W\subset V\text{ 开},\quad r\in W,\quad W\cap P\subseteq Q(r).
+\tag{XI145.2}
+$$
+
+二步见证同时承担 $r\perp s\perp x$，允许回走。$\mathsf G(r)$ 要求邻域以这个**同一根**为中心。
+

@@ -96,7 +96,7 @@ theorem elementary_isPGroup (p r : ℕ) [Fact p.Prime] :
 /-- A projective representation of an actual finite p-group over a field has
 dimension equal to the group order times its invariant dimension. The section
 is obtained from the public criterion and ordinary field-module lifting. -/
-private theorem finrank_eq_card_mul_invariants
+theorem finrank_eq_card_mul_invariants
     (p : ℕ) [Fact p.Prime]
     {K : Type uK} [Field K] [CharP K p]
     {P : Type uP} [Group P] [Fintype P]

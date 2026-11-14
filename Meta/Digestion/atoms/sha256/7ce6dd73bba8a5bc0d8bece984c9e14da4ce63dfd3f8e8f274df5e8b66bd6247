@@ -1,0 +1,4 @@
+把 $Z_{L,n}$ 放在顶点 $-n$、$Z_{R,n}$ 放在顶点 $n$，共同的 $Z_{L,0}=Z_{R,0}=X_0$ 放在根。每个固定参数及根下，两个独立均匀坐标族确实产生式（CPI.1）的两条条件独立臂。参数不在换臂、新边或新测试时重抽。
+
+这是明确另定义的比较源。原共同参数源仍是 [Process Geometry 定义27.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 的源；本卷定理2.2、3.1及命题4.1–4.2为此比较源上的 `repo-derived` 推导。紧区间矩唯一性与多项式逼近仅在定理3.1内部作为既有中间步骤使用，亦见 [Terminal Event Experiment 定理3.1(d)](RECURSIVE_RELATIONAL_OBSERVATION_TERMINAL_EVENT_EXPERIMENT.md) 中对原源的应用。
+

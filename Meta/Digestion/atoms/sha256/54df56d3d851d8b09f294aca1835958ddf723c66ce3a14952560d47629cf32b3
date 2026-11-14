@@ -1,0 +1,9 @@
+**定义 153.1（原域、仿射纯帽与局部差距）。** 保留定义151.1、152.1的全部原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p,S_p,\mathcal A_p,B_p,M_p,\Delta_p,\mathscr L(p)$，假设完整 EB3 与字面纯 PR。每个 minimum 仍遍历其原菜单，并在全部原混输入上达到。对原仿射函数 $a$ 与 $c\in\mathbb R$，记
+
+$$
+U(a,c)=\{p\in P:a(p)>c\}.
+\tag{XII153.1}
+$$
+
+固定一个辅助欧氏范数，其开球记作 $B_\eta(x)$。下文不输入 Conn、全域 Inj、$P_0$、least、局部流形或群齐性。$T_p$ 是原仿射效应的凹下包络，不预设仿射。
+

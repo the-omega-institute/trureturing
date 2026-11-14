@@ -1,0 +1,94 @@
+**引理 145.5（先有全纯域开图，再固定最终根）。** 在接口145.3及 $\dim V=9$ 下，存在非空 $P$-开集 $A$，以原子空间拓扑同胚于 $\mathbb R^4$ 的开集；$p\mapsto e_p$ 在一个包含 $A$ 的 $P$-开集 $O$ 上连续。可固定 $o\in A$ 及一个紧四维坐标闭球 $T\subset A$，使 $o\in\operatorname{int}_P T$，并有环境开集 $W_0\ni o$ 满足
+
+$$
+W_0\cap P\subseteq T\subset P,\qquad \overline{W_0\cap P}^{\,V}\subseteq T.
+\tag{XI145.14}
+$$
+
+证明。原仿射空间 $A_K=\{u=1\}$ 的方向空间 $H_0$ 为八维。按 [SAME_READBACK128.3][Q145SR]的准确识别，
+
+$$
+N_p\overset\sim\longrightarrow\widehat N_K(p),\quad h\longmapsto-h|_{H_0},\qquad
+h_{x,v}(y)=-\langle v,y-u(y)x\rangle
+\tag{XI145.15}
+$$
+
+分别是原正法向到外法向的锥同构和反向补常数公式。故每个原纯点的外法向张成恰四维。
+
+对同一原八维凸体应用 [SAME_READBACK128.2，证明式(Q128.6)—(Q128.8)][Q145SR]，取 $k=4$。复用其可数紧层 $X_j\subset\partial_{A_K}K$，覆盖全部 $P$；每层有到四维空间的连续正交投影 $\pi_j$，在整个 $X_j$ 上单射。保留源构造中的同一有限配置：有固定 $b_0,b_1,\ldots,b_4$、正 $\varepsilon$ 和 $E_j=\operatorname{span}\{b_1,\ldots,b_4\}$，使每个 $x\in X_j$ 有八个共同有界见证
+
+$$
+v_x^{\ell\pm}\in\widehat N_K(x)\cap
+\overline B(b_0\pm b_\ell,\varepsilon),\quad 1\le\ell\le4,
+\qquad \frac{2\varepsilon}{\sigma}<\frac12.
+\tag{XI145.16}
+$$
+
+这里 $\sigma$ 正是源构造中 $E_j\to\mathbb R^4$、$v\mapsto(\langle b_\ell,v\rangle)_\ell$ 的最小奇异值；因此也有 $\|\sum_\ell t_\ell b_\ell\|\ge\sigma\|t\|$。它们是互为伴随的满秩矩阵的相同非零奇异值。
+
+现令 $p_i\to p$ 于 $P\cap X_j$。把八个见证一起放进八个固定紧球，任意子列可共同再取 $v_i^{\ell\pm}\to v^{\ell\pm}\in\widehat N_K(p)$。令 $d_\ell=(v^{\ell+}-v^{\ell-})/2$。则 $\|d_\ell-b_\ell\|\le\varepsilon$，且
+
+$$
+\left\|\sum_\ell t_\ell d_\ell\right\|
+\ge(\sigma-2\varepsilon)\|t\|>0\quad(t\ne0).
+\tag{XI145.17}
+$$
+
+四个差仍独立，故八个极限法向张满四维 $\operatorname{span}\widehat N_K(p)$。用(XI145.15)对同一 $p_i$ 补回原法向，得到八个 $h_i^{\ell\pm}\in N_{p_i}$ 及收敛极限；同构使其极限张满 $L_p$。引理145.4正好适用。再以任意子列的再子列论证，得
+
+$$
+p\longmapsto(D_p,e_p)\quad\text{在每个 }P\cap X_j\text{ 上连续}.
+\tag{XI145.18}
+$$
+
+这里不宣称整层都纯，也没有把几乎处处覆盖代替八个实际见证。
+
+[THREE_COPY VII121.5][Q145TVII]给原纯域的准确 $G_\delta$ 描述：
+
+$$
+K\setminus P=\bigcup_{m\ge1}M_m,\qquad
+M_m=\{(x+y)/2:x,y\in K,\ \|x-y\|\ge1/m\},
+\tag{XI145.19}
+$$
+
+每个 $M_m$ 是紧中点像。因此 $P$ 是紧度量 $K$ 的 $G_\delta$ 子空间，为 Polish 空间并具有 Baire 性；这不等于 $P$ 闭。$P\cap X_j$ 是可数个相对闭覆盖，故某个
+
+$$
+O=\operatorname{int}_P(P\cap X_j)\ne\varnothing.
+\tag{XI145.20}
+$$
+
+由(XI145.18)，整球及效应在 $O$ 上连续。
+
+取 $a\in O$。按 [BILATERAL VIII121.2—121.5][Q145B]，在同一实际 $S_a$ 中有一张闭二盘 $B_0$，其内部非空，$q\mapsto D_q$ 在该盘上连续。其源证明只需 EB3+Inj，九点秩、第二层见证和 Baire 的作用域均是这张实际球面盘。取 $q_0\in\operatorname{int}B_0$；源121.5给其附近连续局部参数
+
+$$
+D_q=b(q)+L(q)\overline{\mathbb B}^3,\qquad
+S_q=b(q)+L(q)S^2,\qquad \operatorname{rank}L(q)=3.
+\tag{XI145.21}
+$$
+
+所有这些 $S_q$ 都含**同一** $a$。以下将已有四维块精化到 $O$：写 $O=P\cap W_O$，其中 $W_O$ 环境开且含 $a$。在 $S_{q_0}\setminus\{a\}$ 取任意充分靠近 $a$ 的 $r_0\in W_O$；在其参数附近取小紧二帽，使整个 $q_0$ 像在 $W_O$ 且避开 $a$。联合连续性和帽的紧性允许同时缩小同一底盘到 $B_1\ni q_0$，使整张乘积像都在 $W_O$ 且避开 $a$。底盘与帽各取闭方盘，便有
+
+$$
+\Psi:[0,1]^4\longrightarrow O,\qquad
+\Psi(q,t)=b(q)+L(q)t,\qquad a\perp q\perp\Psi(q,t).
+\tag{XI145.22}
+$$
+
+固定 $q$ 时单射来自 $L(q)$；不同底标签的完整球都含 $a$，Inj及点交规则使其交恰为 $\{a\}$，而全部帽避开它，故跨标签也单射。紧源使 $\Psi$ 为到像的同胚。
+
+现在才使用八维环境减四维法向所得的**四维**投影。$\pi_j\Psi$ 在 $(0,1)^4$ 上是到 $\mathbb R^4$ 的连续单射；[Hatcher Theorem 2B.3][Q145Ha]的区域不变性使
+
+$$
+\Omega=\pi_j\Psi((0,1)^4)\text{ 在 }\mathbb R^4\text{ 中开},\qquad
+A:=\Psi((0,1)^4)=O\cap\pi_j^{-1}(\Omega).
+\tag{XI145.23}
+$$
+
+第二个等式用**同一** $X_j$ 上投影的单射性。因此 $A$ 相对于**全部原 $P$** 开，是真实四维流形图，非仅嵌入原空间的四维块。
+
+固定最终根 $o=\Psi(1/2,1/2,1/2,1/2)$。选包含它于坐标内部的紧四维闭球 $T\subset A$。因 $\operatorname{int}_P T$ 含 $o$，可取环境开 $W_0\ni o$ 使 $W_0\cap P\subset T$。$T$ 紧而在 $V$ 中闭，遂得(XI145.14)。尤其落在 $W_0$ 内的纯点极限仍纯。由于 $O$ 是 $P$-开集，(XI145.18)同时给：任何原纯点趋向这个 $o$ 时，其 $e_p$ 趋向 $e_o$。
+
+最初立方体的像在 $Q(a)$ 中；本证明没有据此声称 $\mathsf G(a)$，也没有据 $o\in\operatorname{int}_P Q(a)$ 声称 $\mathsf G(o)$。对最终根的整族论证如下。证毕。
+

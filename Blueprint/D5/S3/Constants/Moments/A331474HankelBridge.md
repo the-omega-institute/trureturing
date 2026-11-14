@@ -6,7 +6,49 @@ The literal A331473 moments and their A331474 Hankel determinants are connected 
 
 All indices below are natural numbers. Integer-valued sequences are written with subscripts. The symbol X is the polynomial indeterminate, coeff selects a polynomial coefficient, and det is the determinant of the displayed finite matrix. These definitions use the literal offset-zero OEIS source, not a recurrence-defined replacement for its Hankel transform.
 
-**Definition 1.1 (Unsigned Catalan-derivative moments).**
+**Definition 1.1 (The integral Catalan series).**
+
+$$C = \operatorname{map}\left(\operatorname{NatCast}\left(\mathbb{Z}\right), CatalanSeries\right)$$
+
+*Formalization.* `D5/S3/Constants/Moments/A331474HankelBridge.catalanInt` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul Barry (2020). *OEIS A331474, Hankel transform of A331473*. URL: <https://oeis.org/A331474>.
+
+*Commentary.*
+
+C is the standard Catalan power series with its natural coefficients cast to the integers.
+
+**Definition 1.2 (The derivative of the Catalan series).**
+
+$$F = \operatorname{derivative}\left(C\right)$$
+
+*Formalization.* `D5/S3/Constants/Moments/A331474HankelBridge.F0` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul Barry (2020). *OEIS A331474, Hankel transform of A331473*. URL: <https://oeis.org/A331474>.
+
+*Commentary.*
+
+F is the formal derivative of C. Its coefficients are the unsigned moments b.
+
+**Theorem 1.3 (Catalan derivative coefficients and the alternating transform).**
+
+$$\begin{aligned}(\forall n \in \mathbb{N}, \operatorname{coeff}\left(F, n\right) = b_{n}) \land\\\forall n \in \mathbb{N}, b_{n + 1} = s_{n + 1} + s_{n}\end{aligned}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Constants/Moments/A331474HankelBridge.source_moments` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul Barry (2020). *OEIS A331474, Hankel transform of A331473*. URL: <https://oeis.org/A331474>.
+
+*Commentary.*
+
+Differentiation multiplies Catalan coefficient n+1 by n+1. The standard adjacent-binomial identities identify it with binomial(2n+2,n). The alternating source transform telescopes to b(n+1)=s(n+1)+s(n).
+
+**Definition 1.4 (Unsigned Catalan-derivative moments).**
 
 $$\forall n \in \mathbb{N}, b_{n} = \operatorname{binom}\left(2 \cdot n + 2, n\right)$$
 
@@ -18,7 +60,7 @@ $$\forall n \in \mathbb{N}, b_{n} = \operatorname{binom}\left(2 \cdot n + 2, n\r
 
 The moment b(n) is exactly binomial(2n+2,n), equivalently (n+1) times the Catalan number of index n+1. It is the coefficient sequence obtained by differentiating the Catalan power series.
 
-**Definition 1.2 (Literal alternating source sequence).**
+**Definition 1.5 (Literal alternating source sequence).**
 
 $$\forall n \in \mathbb{N}, s_{n} = \sum_{k = 0}^{n} (-1)^{n - k} \cdot \operatorname{binom}\left(2 \cdot k + 2, k\right)$$
 
@@ -30,7 +72,7 @@ $$\forall n \in \mathbb{N}, s_{n} = \sum_{k = 0}^{n} (-1)^{n - k} \cdot \operato
 
 This is the full alternating binomial transform printed in A331473, with k ranging from zero through n and with no recurrence substituted for it.
 
-**Definition 1.3 (Literal Hankel determinant).**
+**Definition 1.6 (Literal Hankel determinant).**
 
 $$\forall n \in \mathbb{N}, H_{n} = \operatorname{det}\left((s_{i + j})_{0 \leq i,j \leq n}\right)$$
 
@@ -42,7 +84,7 @@ $$\forall n \in \mathbb{N}, H_{n} = \operatorname{det}\left((s_{i + j})_{0 \leq 
 
 H(n) is the determinant of the actual (n+1)-square Hankel matrix of s. Consequently the final generating function is about PowerSeries.mk H, rather than a sequence introduced later by its recurrence.
 
-**Definition 1.4 (Period-two diagonal coefficient).**
+**Definition 1.7 (Period-two diagonal coefficient).**
 
 $$\forall n \in \mathbb{N}, a_{n} = \operatorname{ite}\left(\operatorname{Even}\left(n\right), 4, 0\right)$$
 
@@ -58,7 +100,7 @@ $$\forall n \in \mathbb{N}, a_{n} = \operatorname{ite}\left(\operatorname{Even}\
 
 The source-specific monic continuant uses diagonal coefficient 4 at even indices and 0 at odd indices. This period-two tail is derived from the Catalan derivative equation.
 
-**Definition 1.5 (Signed monic continuants).**
+**Definition 1.8 (Signed monic continuants).**
 
 $$\begin{aligned}P_{0} = 1\\P_{1} = X - 4\\\forall m \in \mathbb{N}, P_{m + 2} = (X - a_{m + 1}) \cdot P_{m + 1} + P_{m}\end{aligned}$$
 
@@ -74,7 +116,7 @@ $$\begin{aligned}P_{0} = 1\\P_{1} = X - 4\\\forall m \in \mathbb{N}, P_{m + 2} =
 
 The polynomials are monic: P(0)=1, P(1)=X-4, and P(m+2)=(X-a(m+1))P(m+1)+P(m). The plus sign gives signed squared norms (-1)^k; positivity is neither assumed nor true here.
 
-**Definition 1.6 (Unsigned moment functional).**
+**Definition 1.9 (Unsigned moment functional).**
 
 $$\forall f \in \mathbb{Z}[X], \operatorname{B}\left(f\right) = \sum_{n \in \mathbb{N}} \operatorname{coeff}\left(f, n\right) \cdot b_{n}$$
 
@@ -90,7 +132,7 @@ $$\forall f \in \mathbb{Z}[X], \operatorname{B}\left(f\right) = \sum_{n \in \mat
 
 B evaluates an integer polynomial by weighting every coefficient with b. The Catalan derivative equation supplies the two alternating tails used to prove orthogonality of the monic continuants.
 
-**Definition 1.7 (Literal alternating moment functional).**
+**Definition 1.10 (Literal alternating moment functional).**
 
 $$\forall f \in \mathbb{Z}[X], \operatorname{S}\left(f\right) = \sum_{n \in \mathbb{N}} \operatorname{coeff}\left(f, n\right) \cdot s_{n}$$
 
@@ -106,7 +148,7 @@ $$\forall f \in \mathbb{Z}[X], \operatorname{S}\left(f\right) = \sum_{n \in \mat
 
 S evaluates a polynomial against the literal sequence s. The source relation b(n+1)=s(n+1)+s(n) transfers the unsigned Catalan identities to this signed functional.
 
-**Definition 1.8 (Continuant constant terms).**
+**Definition 1.11 (Continuant constant terms).**
 
 $$\forall n \in \mathbb{N}, p_{n} = \operatorname{coeff}\left(P_{n}, 0\right)$$
 
@@ -122,7 +164,7 @@ $$\forall n \in \mathbb{N}, p_{n} = \operatorname{coeff}\left(P_{n}, 0\right)$$
 
 The scalar p(n) is the constant coefficient of P(n). Its exact initial values and recurrence are included in the bridge theorem below.
 
-**Definition 1.9 (Literal functional values).**
+**Definition 1.12 (Literal functional values).**
 
 $$\forall n \in \mathbb{N}, u_{n} = \operatorname{S}\left(P_{n}\right)$$
 
@@ -138,7 +180,7 @@ $$\forall n \in \mathbb{N}, u_{n} = \operatorname{S}\left(P_{n}\right)$$
 
 The scalar u(n) is S(P(n)). Its exact initial values and source-specific recurrence are included in the bridge theorem below.
 
-**Theorem 1.10 (Literal determinant equals the signed kernel).**
+**Theorem 1.13 (Literal determinant equals the signed kernel).**
 
 $$\begin{aligned}\forall n \in \mathbb{N},\\H_{n} = \prod_{k = 0}^{n} (-1)^{k} \cdot \sum_{k = 0}^{n} (-1)^{k} p_{k} u_{k} \land\\p_{0} = 1 \land p_{1} = -4 \land\\(\forall m \in \mathbb{N}, p_{m + 2} = -a_{m + 1} \cdot p_{m + 1} + p_{m}) \land\\u_{0} = 1 \land u_{1} = -1 \land u_{2} = 1 \land\\\forall m \in \mathbb{N}, 2 \leq m \Rightarrow u_{m + 1} = -(a_{m} + 1) \cdot u_{m} + u_{m - 1}.\end{aligned}$$
 
@@ -159,12 +201,15 @@ A division-free adjugate identity then replaces matrix inversion. For the actual
 ## References
 
 - Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.B`
+- Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.F0`
 - Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.H`
 - Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.P`
 - Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.S`
 - Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.a`
 - Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.b`
+- Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.catalanInt`
 - Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.literal_hankel_eq_signed_kernel`
 - Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.p`
 - Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.s`
+- Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.source_moments`
 - Truth anchor: `D5/S3/Constants/Moments/A331474HankelBridge.u`
