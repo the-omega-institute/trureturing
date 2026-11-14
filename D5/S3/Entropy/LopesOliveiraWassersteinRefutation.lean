@@ -1,12 +1,22 @@
 /- GID: D5/S3/Entropy/LopesOliveiraWassersteinRefutation
    generality: G
    mirror-B: D5/B/S3/Entropy/LopesOliveiraWassersteinRefutation
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: The all-Borel-law inequality fails at the actual classical equilibrium. -/
 
 /- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30545. -/
+
+/-
+admission_basis: open-problem-resolution (#30524; Refuted)
+proof_shape: IsClassicalEquilibrium = definition; escape_witness: none
+proof_shape: IsUniqueClassicalEquilibrium = definition; escape_witness: none
+proof_shape: claim = definition; escape_witness: none
+proof_shape: binary_classical_equilibrium = bind-only; escape_witness: none; consumer: result
+proof_shape: result = bind-only; escape_witness: none; consumer: none (designated refutation result)
+Direct frozen dependencies: none; all named suppliers on the live path are in the delivered Lopes–Oliveira dependency modules or pinned upstream.
+-/
 
 import D5.S3.Entropy.KolmogorovSinai.FairEquilibrium
 
