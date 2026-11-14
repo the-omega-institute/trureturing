@@ -11,7 +11,7 @@ permissions: {}
 jobs:
   cache:
     name: verify cache publication and restore
-    runs-on: ubuntu-24.04-arm
+    runs-on: runner-for-trureturing-cache-release-publish
     timeout-minutes: 120
     permissions:
       contents: write
