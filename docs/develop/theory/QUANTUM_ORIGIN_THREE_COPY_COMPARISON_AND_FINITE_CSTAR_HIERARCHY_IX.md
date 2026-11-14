@@ -774,8 +774,10 @@ $\operatorname{Ad}_L$ 将此 dyad 送成 $\Omega_3$，
 这只是将既有单腿论证的每个前件对应到固定源，不调用 allN 的高阶角结论。
 
 现设 $\psi\psi^*\in\mathscr A_n$ 且 $r_A(\psi)=3$。
-对每个复两行矩阵 $L:B\to\mathbb C^2$，VIII123.2(v)分别支付的
-实际压缩、qubit 重型及量子重括号给源箭头
+对每个复两行矩阵 $L:B\to\mathbb C^2$，取二维等距嵌入
+$J:\mathbb C^2\to B$，使 $\operatorname{ran}L^*\subseteq\operatorname{ran}J$，
+则 $L=(LJ)J^*$。VIII123.2(v)分别支付 $\operatorname{Ad}_{J^*}:B\to Q_2$
+和后接的量子合同 $\operatorname{Ad}_{LJ}$；连同旁观、重括号及置换，给源箭头
 
 $$
 Q_nAB\longrightarrow Q_nA Q_2\simeq Q_{2n}A,
