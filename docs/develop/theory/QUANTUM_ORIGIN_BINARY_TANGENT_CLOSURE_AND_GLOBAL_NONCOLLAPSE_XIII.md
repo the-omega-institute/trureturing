@@ -1842,7 +1842,7 @@ Thus this is one fixed $V$ at every level, with its original tensor
 products, dual products, units, evaluation, brackets and position
 permutations. The cones are the whole displayed images, including the
 images of every correlated density matrix. Each own effect menu is
-$\mathcal E_N=[0,u_N]_{C_N^\ast}$; $P_N$, $\mathcal F_{N,p}$,
+$\mathcal E_N=[0,u_N]_{C_N^{\ast}}$; $P_N$, $\mathcal F_{N,p}$,
 $T_{N,p}$, $p_N^\perp$ and $F_N$ have exactly the original meanings
 in (161.4)–(161.6). No subset of effects is substituted for this menu.
 
@@ -1854,7 +1854,7 @@ minimum on every original mixed input are exactly
 
 $$
 \begin{gathered}
-W_N^\ast\simeq R_N,\qquad C_N^\ast\simeq R_N\cap\operatorname{PSD}_{D_N},
+W_N^{\ast}\simeq R_N,\qquad C_N^{\ast}\simeq R_N\cap\operatorname{PSD}_{D_N},
 \qquad
 \mathcal E_N\simeq R_N\cap[0,I_{D_N}],\\
 f_E(\pi_NX)=\operatorname{Tr}(EX),\\
@@ -1901,13 +1901,13 @@ generating. This verifies the complete single-level background at each
 $N$.
 
 A real functional descends exactly when its trace matrix annihilates
-$\mathcal N_N$, giving $W_N^\ast\simeq R_N$. It is positive on the
+$\mathcal N_N$, giving $W_N^{\ast}\simeq R_N$. It is positive on the
 whole image cone exactly when $\operatorname{Tr}(EX)\ge0$ for every
 $X\succeq0$, equivalently $E\succeq0$ by testing rank-one $X$.
 The matrix of $u_N$ is $I_{D_N}\in R_N$, since $I_d\in R$.
 Applying positivity also to $u_N-f_E$ gives the effect interval in
-(162.4). For a positive contraction, $v^\astEv=1$ is equivalent to
-$Ev=v$, because $v^\ast(I-E)v=0$ forces $(I-E)^{1/2}v=0$.
+(162.4). For a positive contraction, $v^{\ast}Ev=1$ is equivalent to
+$Ev=v$, because $v^{\ast}(I-E)v=0$ forces $(I-E)^{1/2}v=0$.
 This proves the confirmer and minimum formulas. All evaluations are
 independent of the positive lift by (162.5). The matrix interval is
 compact and the confirmer set contains $I_{D_N}$, so every minimum
@@ -1939,7 +1939,7 @@ the factors of $W_N$. Equality on simple tensors, followed by spanning,
 gives
 
 $$
-S_s\pi_N(X)=\pi_N(U_sXU_s^\ast).
+S_s\pi_N(X)=\pi_N(U_sXU_s^{\ast}).
 \tag{162.7}
 $$
 
@@ -1975,15 +1975,15 @@ where $n_\pm$ count strictly positive and strictly negative eigenvalues
 with multiplicity. Both bounds are attained at every level.
 
 Proof. First the real span of the projectors $P_v$ with
-$\|v\|=1$ and $v^\astHv=0$ is exactly $R$. For a direct proof of the
+$\|v\|=1$ and $v^{\ast}Hv=0$ is exactly $R$. For a direct proof of the
 nontrivial inclusion, let $B\in A$ annihilate all such projectors.
 Write it in $m$-by-$m$ blocks for the two eigenspaces of $H$.
 For arbitrary unit vectors $a,b\in\mathbb C^m$, the vectors
 $(a,e^{it}b)/\sqrt2$ are isotropic. Their expectations give
 
 $$
-a^\astB_{++}a+b^\astB_{--}b
-       +2\operatorname{Re}(e^{it}a^\astB_{+-}b)=0
+a^{\ast}B_{++}a+b^{\ast}B_{--}b
+       +2\operatorname{Re}(e^{it}a^{\ast}B_{+-}b)=0
              \qquad(t\in\mathbb R).
 \tag{162.10}
 $$
@@ -2001,7 +2001,7 @@ isometry
 $$
 J_{S,\mathbf v}:\bigotimes_{i\in S}\mathbb C^d
    \longrightarrow (\mathbb C^d)^{\otimes N},\qquad
-X_{S,\mathbf v}=J_{S,\mathbf v}^\astXJ_{S,\mathbf v},
+X_{S,\mathbf v}=J_{S,\mathbf v}^{\ast}XJ_{S,\mathbf v},
 \tag{162.11}
 $$
 
@@ -2119,7 +2119,7 @@ $\pi_N\sigma=tx+(1-t)y$, $0<t<1$, choose density lifts
 $\alpha,\beta$ of $x,y$. Their mixture is a positive lift of
 $\pi_N\sigma$, so uniqueness gives
 $\sigma=t\alpha+(1-t)\beta$. For $z\in S^\perp$, positivity and
-$z^\ast\sigma z=0$ force $\alpha z=\beta z=0$; hence both lifts are
+$z^{\ast}\sigma z=0$ force $\alpha z=\beta z=0$; hence both lifts are
 supported on $S$. This proves the actual face property and (162.16).
 
 The image of $\operatorname{PSD}(S)$ is exactly the cone of this
@@ -2184,8 +2184,8 @@ $z_\beta=Q_v\beta$. For $z\perp v$, the normalized rank-one curve
 and its derivative are
 
 $$
-\gamma_z(t)=\frac{(v+tz)(v+tz)^\ast}{1+t^2\|z\|^2},\qquad
-\gamma_z'(0)=\Theta_v(z)=vz^\ast+zv^\ast.
+\gamma_z(t)=\frac{(v+tz)(v+tz)^{\ast}}{1+t^2\|z\|^2},\qquad
+\gamma_z'(0)=\Theta_v(z)=vz^{\ast}+zv^{\ast}.
 \tag{162.20}
 $$
 
