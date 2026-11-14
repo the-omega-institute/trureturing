@@ -230,4 +230,3 @@ the existing full-mixture/circuit theorem supplies its least-confirmation conclu
 检查与原来所有有限混合检查完全等价。把它放到完整三份量子载体时，$m_3=I/n^3$ 的内点性和
 $d_3=n^6$ 来自已有几何，再在 B1--B3 的全部复合条件下调用既有全有限层级定理；它保留经典中心、
 直和、Born/POVM/CP 字典及实际来源合同，也没有把静态端点互换变成测量次序、仪器或动力学的公理。
-
