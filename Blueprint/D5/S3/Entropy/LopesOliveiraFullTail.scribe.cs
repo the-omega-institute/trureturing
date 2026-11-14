@@ -91,20 +91,15 @@ internal sealed class LopesOliveiraFullTailDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The definitions and conventions in the introduction apply."))), DescribeRole.Theorem))));
 
-        private static Formula Presentation0() => Disp(Seq(
-        F.Id("Symbol"), Eq, OpenBrace, F.Id("j"), Colon,
-        Mathbb, Grp(F.Id("N")), Bar, D(1), Le, Sp, F.Id("j"), Land, Sp,
-        F.Id("j"), Le, D(2), CloseBrace));
-    private static Formula Presentation1() => Disp(Seq(
-            F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"),
+        private static Formula Presentation0() => Disp(Seq(F.Id("Symbol"), Eq, OpenBrace, Sp, F.Id("j"), Colon, Mathbb, Grp(F.Id("N")), Bar, D(1),
+            Le, Sp, F.Id("j"), Land, Sp, F.Id("j"), Le, D(2), CloseBrace));
+    private static Formula Presentation1() => Disp(Seq(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"),
             Sp, Eq, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
             F.Id("LopesOliveiraSource"), Dot, F.Id("Omega"), Sp, new Formula.Number(2)));
-    private static Formula Presentation2() => Disp(Seq(
-            F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("tailSigma"),
+    private static Formula Presentation2() => Disp(Seq(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("tailSigma"),
             Sp, Eq, Sp, F.Id("MeasurableSpace"), Dot, F.Id("comap"), Sp, F.Id("D5"), Dot,
             F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("shift"), Sp, F.Id("inferInstance")));
-    private static Formula Presentation3() => Disp(Seq(
-            Forall, Sp, Open, F.Id("j"), Sp, Colon, Sp, F.Id("D5"), Dot,
+    private static Formula Presentation3() => Disp(Seq(Forall, Sp, Open, F.Id("j"), Sp, Colon, Sp, F.Id("D5"), Dot,
             F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Symbol"), Close, Sp,
             Open, F.Id("x"), Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot,
             F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"), Close, Comma, Sp, F.Id("D5"),
@@ -112,8 +107,7 @@ internal sealed class LopesOliveiraFullTailDocument : IScribeDocumentDefinition
             F.Id("j"), Sp, F.Id("x"), Sp, Eq, Sp, F.Id("if"), Sp, F.Id("x"),
             Sp, new Formula.Number(1), Sp, Eq, Sp, F.Id("j"), Sp, F.Id("then"), Sp,
             new Formula.Number(1), Sp, F.Id("else"), Sp, new Formula.Number(0)));
-    private static Formula Presentation4() => Disp(Seq(
-            Forall, Sp, Open, F.Id("rho"), Sp, Colon, Sp, F.Id("MeasureTheory"), Dot,
+    private static Formula Presentation4() => Disp(Seq(Forall, Sp, Open, F.Id("rho"), Sp, Colon, Sp, F.Id("MeasureTheory"), Dot,
             F.Id("Measure"), Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"),
             Dot, F.Id("Omega"), Close, Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot,
             F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("niEntropy"), Sp, F.Id("rho"), Sp, Eq,
@@ -124,23 +118,21 @@ internal sealed class LopesOliveiraFullTailDocument : IScribeDocumentDefinition
             F.Id("sourceIndicator"), Sp, F.Id("j"), Sp, Bar, Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("tailSigma"), CloseBracket, Sp, F.Id("x"),
             Close, Dot, F.Id("negMulLog"), Sp, Seq(Mathrm, Grp(F.Id("d"))), F.Id("rho")));
-    private static Formula Presentation5() => Disp(Seq(
-            Forall, Sp, Open, F.Id("eta"), Sp, F.Id("xi"), Sp, Colon, Sp,
+    private static Formula Presentation5() => Disp(Seq(Forall, Sp, Open, F.Id("eta"), Sp, F.Id("xi"), Sp, Colon, Sp,
             F.Id("MeasureTheory"), Dot, F.Id("Measure"), Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"),
             Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"), Close, Comma, Sp, F.Id("D5"), Dot,
             F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("couplings"), Sp, F.Id("eta"),
-            Sp, F.Id("xi"), Sp, Eq, Sp, OpenBrace, F.Id("pi"), Sp, Bar,
+            Sp, F.Id("xi"), Sp, Eq, Sp, OpenBrace, Sp, F.Id("pi"), Sp, Bar,
             Sp, F.Id("MeasureTheory"), Dot, F.Id("IsProbabilityMeasure"), Sp, F.Id("pi"), Sp, Land, Sp,
             F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("map"), Sp, F.Id("Prod"), Dot, F.Id("fst"),
             Sp, F.Id("pi"), Sp, Eq, Sp, F.Id("eta"), Sp, Land, Sp,
             F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("map"), Sp, F.Id("Prod"), Dot, F.Id("snd"),
             Sp, F.Id("pi"), Sp, Eq, Sp, F.Id("xi"), CloseBrace));
-    private static Formula Presentation6() => Disp(Seq(
-            Forall, Sp, Open, F.Id("eta"), Sp, F.Id("xi"), Sp, Colon, Sp,
+    private static Formula Presentation6() => Disp(Seq(Forall, Sp, Open, F.Id("eta"), Sp, F.Id("xi"), Sp, Colon, Sp,
             F.Id("MeasureTheory"), Dot, F.Id("Measure"), Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"),
             Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"), Close, Comma, Sp, F.Id("D5"), Dot,
             F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("wassersteinOne"), Sp, F.Id("eta"),
-            Sp, F.Id("xi"), Sp, Eq, Sp, F.Id("sInf"), Sp, OpenBrace, F.Id("v"),
+            Sp, F.Id("xi"), Sp, Eq, Sp, F.Id("sInf"), Sp, OpenBrace, Sp, F.Id("v"),
             Sp, Bar, Sp, Exists, Sp, F.Id("pi"), Sp, InMacro, Sp,
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("couplings"),
             Sp, F.Id("eta"), Sp, F.Id("xi"), Comma, Sp, F.Id("v"), Sp, Eq,
@@ -150,44 +142,39 @@ internal sealed class LopesOliveiraFullTailDocument : IScribeDocumentDefinition
             Dot, F.Id("Omega"), Close, Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot,
             F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("sourceDistance"), Sp, F.Id("p"), Dot, new Formula.Number(1),
             Sp, F.Id("p"), Dot, new Formula.Number(2), Sp, Seq(Mathrm, Grp(F.Id("d"))), F.Id("pi"), CloseBrace));
-    private static Formula Presentation7() => Disp(Seq(
-            Forall, Sp, Open, F.Id("x"), Sp, F.Id("y"), Sp, Colon, Sp,
+    private static Formula Presentation7() => Disp(Seq(Forall, Sp, Open, F.Id("x"), Sp, F.Id("y"), Sp, Colon, Sp,
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"),
             Close, Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
             F.Id("LopesOliveiraSource"), Dot, F.Id("distance"), Sp, F.Id("x"), Sp, F.Id("y"), Sp, Eq,
             Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot,
             F.Id("sourceDistance"), Sp, F.Id("x"), Sp, F.Id("y")));
-    private static Formula CompletedPresentation13() => Disp(Seq(
-            Forall, Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp,
+    private static Formula CompletedPresentation13() => Disp(Seq(Forall, Sp, Open, F.Id("x"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp,
             To, Sp, F.Id("Bool"), Close, Sp, Open, F.Id("i"), Sp, Colon,
             Sp, Seq(Mathbb, Grp(F.Id("N")), Caret, Grp(Plus)), Close, Comma, Sp, Open, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("coordinateEquiv"), Sp, F.Id("x"), Sp,
             F.Id("i"), Close, Dot, F.Id("val"), Sp, Eq, Sp, F.Id("if"), Sp,
             F.Id("x"), Sp, F.Id("i"), Dot, F.Id("natPred"), Sp, F.Id("then"), Sp, new Formula.Number(2),
             Sp, F.Id("else"), Sp, new Formula.Number(1)));
-    private static Formula CompletedPresentation14() => Disp(Seq(
-            Forall, Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("D5"), Dot,
+    private static Formula CompletedPresentation14() => Disp(Seq(Forall, Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("D5"), Dot,
             F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"), Close, Comma,
             Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot,
             F.Id("shift"), Sp, F.Id("x"), Sp, Eq, Sp, LambdaLower, Sp, F.Id("i"),
             Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N")), Caret, Grp(Plus)), Sp, Mapsto, Sp, F.Id("x"), Sp,
             Open, F.Id("i"), Sp, Plus, Sp, new Formula.Number(1), Close));
-    private static Formula CompletedPresentation15() => Disp(Seq(
-            F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("law"),
+    private static Formula CompletedPresentation15() => Disp(Seq(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("law"),
             Sp, Eq, Sp, Open, new Formula.Number(2), Sp, Colon, Sp, F.Id("ENNReal"),
-            Close, Seq(Caret, Grp(Minus, D(1))), Sp, Cdot, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot,
-            F.Id("dirac"), Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
-            F.Id("LopesOliveiraFullTail"), Dot, F.Id("coordinateEquiv"), Sp, Open, LambdaLower, Sp, F.Id("n"), Sp,
-            Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, Mapsto, Sp, F.Id("false"), Close, Close,
-            Sp, Plus, Sp, Open, new Formula.Number(2), Sp, Colon, Sp, F.Id("ENNReal"),
-            Close, Seq(Caret, Grp(Minus, D(1))), Sp, Cdot, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot,
-            F.Id("dirac"), Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
-            F.Id("LopesOliveiraFullTail"), Dot, F.Id("coordinateEquiv"), Sp, Open, LambdaLower, Sp, F.Id("n"), Sp,
-            Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, Mapsto, Sp, F.Id("if"), Sp, F.Id("n"),
-            Sp, Eq, Sp, new Formula.Number(0), Sp, F.Id("then"), Sp, F.Id("true"), Sp,
-            F.Id("else"), Sp, F.Id("false"), Close, Close));
-    private static Formula CompletedPresentation16() => Disp(Seq(
-            Forall, Sp, Open, F.Id("b"), Sp, Colon, Sp, F.Id("Bool"), Close,
+            Grp(Close, Seq(Caret, Grp(Minus, D(1)))), Sp, Cdot, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("dirac"),
+            Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"),
+            Dot, F.Id("coordinateEquiv"), Sp, Open, LambdaLower, Sp, F.Id("n"), Sp, Colon,
+            Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, Mapsto, Sp, F.Id("false"), Close, Close, Sp,
+            Plus, Sp, Open, new Formula.Number(2), Sp, Colon, Sp, F.Id("ENNReal"), Grp(Close, Seq(Caret, Grp(Minus, D(1)))),
+            Sp, Cdot, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("dirac"), Sp,
+            Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot,
+            F.Id("coordinateEquiv"), Sp, Open, LambdaLower, Sp, F.Id("n"), Sp, Colon, Sp,
+            Seq(Mathbb, Grp(F.Id("N"))), Sp, Mapsto, Sp, F.Id("if"), Sp, F.Id("n"), Sp, Eq,
+            Sp, new Formula.Number(0), Sp, F.Id("then"), Sp, F.Id("true"), Sp, F.Id("else"), Sp,
+            F.Id("false"), Close, Close));
+    private static Formula CompletedPresentation16() => Disp(Seq(Forall, Sp, Open, F.Id("b"), Sp, Colon, Sp, F.Id("Bool"), Close,
             Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"), Close, Comma, Sp,
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("firstIndicator"),
@@ -195,15 +182,13 @@ internal sealed class LopesOliveiraFullTailDocument : IScribeDocumentDefinition
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("coordinateEquiv"),
             Dot, F.Id("symm"), Sp, F.Id("x"), Sp, new Formula.Number(0), Sp, Eq, Sp,
             F.Id("b"), Sp, F.Id("then"), Sp, new Formula.Number(1), Sp, F.Id("else"), Sp, new Formula.Number(0)));
-    private static Formula CompletedPresentation17() => Disp(Seq(
-            Forall, Sp, F.Id("phi"), Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"),
+    private static Formula CompletedPresentation17() => Disp(Seq(Forall, Sp, F.Id("phi"), Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"), Sp, To, Sp,
             Seq(Mathbb, Grp(F.Id("R"))), Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
             F.Id("LopesOliveiraFullTail"), Dot, F.Id("niPressure"), Sp, F.Id("phi"), Sp, Eq, Sp, F.Id("D5"),
             Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("niPressure"), Sp,
             F.Id("phi")));
-    private static Formula CompletedPresentation18() => Disp(Seq(
-            Forall, Sp, Open, F.Id("x"), Sp, F.Id("y"), Sp, Colon, Sp,
+    private static Formula CompletedPresentation18() => Disp(Seq(Forall, Sp, Open, F.Id("x"), Sp, F.Id("y"), Sp, Colon, Sp,
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"),
             Close, Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
             F.Id("LopesOliveiraFullTail"), Dot, F.Id("sourceDistance"), Sp, F.Id("x"), Sp, F.Id("y"), Sp, Eq,
@@ -212,15 +197,13 @@ internal sealed class LopesOliveiraFullTailDocument : IScribeDocumentDefinition
             Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"),
             Dot, F.Id("coordinateEquiv"), Dot, F.Id("symm"), Sp, F.Id("y"), Close, Sp, Slash,
             Sp, new Formula.Number(2)));
-    private static Formula CompletedPresentation19() => Disp(Seq(
-            Forall, Sp, Open, F.Id("x"), Sp, F.Id("y"), Sp, Colon, Sp,
+    private static Formula CompletedPresentation19() => Disp(Seq(Forall, Sp, Open, F.Id("x"), Sp, F.Id("y"), Sp, Colon, Sp,
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"),
             Close, Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
             F.Id("LopesOliveiraFullTail"), Dot, F.Id("sourceMetric"), Dot, F.Id("toDist"), Dot, F.Id("dist"), Sp, F.Id("x"),
             Sp, F.Id("y"), Sp, Eq, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot,
             F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("sourceDistance"), Sp, F.Id("x"), Sp, F.Id("y")));
-    private static Formula CompletedPresentation20() => Disp(Seq(
-            Forall, Sp, Open, F.Id("rho"), Sp, Colon, Sp, F.Id("MeasureTheory"), Dot,
+    private static Formula CompletedPresentation20() => Disp(Seq(Forall, Sp, Open, F.Id("rho"), Sp, Colon, Sp, F.Id("MeasureTheory"), Dot,
             F.Id("Measure"), Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"),
             Dot, F.Id("Omega"), Close, Sp, OpenBracket, F.Id("MeasureTheory"), Dot, F.Id("IsProbabilityMeasure"), Sp,
             F.Id("rho"), CloseBracket, Comma, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("map"),
@@ -233,36 +216,36 @@ internal sealed class LopesOliveiraFullTailDocument : IScribeDocumentDefinition
             Dot, F.Id("Omega"), Close, Comma, Sp, F.Id("x"), Sp, Neq, Sp,
             F.Id("y"), Sp, To, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"),
             Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("sourceDistance"), Sp, F.Id("x"), Sp, F.Id("y"), Sp,
-            Eq, Sp, Open, new Formula.Number(1), Sp, Slash, Sp, new Formula.Number(2), Close,
-            Sp, Seq(Caret, Grp(F.Id("PiNat"), Dot, F.Id("firstDiff"), Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("coordinateEquiv"), Dot, F.Id("symm"), Sp, F.Id("x"), Close, Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("coordinateEquiv"), Dot, F.Id("symm"), Sp, F.Id("y"), Close, Sp, Plus, Sp, new Formula.Number(1))), Close, Sp, Land, Sp, Open, Forall, Sp,
-            Open, F.Id("eta"), Sp, Colon, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Sp,
-            F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"),
-            Close, Comma, Sp, F.Id("MeasureTheory"), Dot, F.Id("IsProbabilityMeasure"), Sp, F.Id("eta"), Sp,
-            To, Sp, F.Id("MeasureTheory"), Dot, F.Id("Integrable"), Sp, Open, LambdaLower, Sp,
-            F.Id("x"), Sp, Mapsto, Sp, Sum, Sp, F.Id("j"), Comma, Sp,
-            Open, F.Id("eta"), OpenBracket, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
-            F.Id("LopesOliveiraFullTail"), Dot, F.Id("sourceIndicator"), Sp, F.Id("j"), Sp, Bar, Sp, F.Id("D5"),
-            Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("tailSigma"), CloseBracket,
-            Sp, F.Id("x"), Close, Dot, F.Id("negMulLog"), Close, Sp, F.Id("eta"), Close,
-            Sp, Land, Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"),
-            Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("niPressure"), Sp, LambdaLower, Sp, F.Id("x"), Sp,
-            Mapsto, Sp, Minus, F.Id("Real"), Dot, F.Id("log"), Sp, new Formula.Number(2), Close,
-            Sp, Eq, Sp, new Formula.Number(0), Sp, Land, Sp, F.Id("D5"), Dot,
-            F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("niEntropy"), Sp, F.Id("D5"),
-            Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("law"), Sp,
-            Eq, Sp, F.Id("Real"), Dot, F.Id("log"), Sp, new Formula.Number(2), Sp, Land,
+            Eq, Sp, Open, new Formula.Number(1), Sp, Slash, Sp, new Formula.Number(2), Grp(Close, Seq(Caret, Grp(F.Id("PiNat"), Dot, F.Id("firstDiff"), Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("coordinateEquiv"), Dot, F.Id("symm"), Sp, F.Id("x"), Close, Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("coordinateEquiv"), Dot, F.Id("symm"), Sp, F.Id("y"), Close, Sp, Plus, Sp, new Formula.Number(1)))),
+            Close, Sp, Land, Sp, Open, Forall, Sp, Open, F.Id("eta"),
+            Sp, Colon, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Sp, F.Id("D5"), Dot,
+            F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"), Close, Comma,
+            Sp, F.Id("MeasureTheory"), Dot, F.Id("IsProbabilityMeasure"), Sp, F.Id("eta"), Sp, To, Sp,
+            F.Id("MeasureTheory"), Dot, F.Id("Integrable"), Sp, Open, LambdaLower, Sp, F.Id("x"), Sp,
+            Mapsto, Sp, Sum, Sp, F.Id("j"), Comma, Sp, Open, F.Id("eta"),
+            OpenBracket, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot,
+            F.Id("sourceIndicator"), Sp, F.Id("j"), Sp, Bar, Sp, F.Id("D5"), Dot, F.Id("S3"),
+            Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("tailSigma"), CloseBracket, Sp, F.Id("x"),
+            Close, Dot, F.Id("negMulLog"), Close, Sp, F.Id("eta"), Close, Sp, Land,
             Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"),
             Dot, F.Id("niPressure"), Sp, LambdaLower, Sp, F.Id("x"), Sp, Mapsto, Sp,
-            Minus, F.Id("Real"), Dot, F.Id("log"), Sp, new Formula.Number(2), Close, Sp, Minus,
+            Minus, F.Id("Real"), Dot, F.Id("log"), Sp, new Formula.Number(2), Close, Sp, Eq,
+            Sp, new Formula.Number(0), Sp, Land, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot,
+            F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("niEntropy"), Sp, F.Id("D5"), Dot, F.Id("S3"),
+            Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("law"), Sp, Eq, Sp,
+            F.Id("Real"), Dot, F.Id("log"), Sp, new Formula.Number(2), Sp, Land, Sp, Open,
+            F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("niPressure"),
+            Sp, LambdaLower, Sp, F.Id("x"), Sp, Mapsto, Sp, Minus, F.Id("Real"),
+            Dot, F.Id("log"), Sp, new Formula.Number(2), Close, Sp, Minus, Sp, F.Id("D5"),
+            Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("niEntropy"), Sp,
+            F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("law"),
+            Sp, Minus, Sp, Int, Sp, Open, F.Id("x"), Sp, Colon,
             Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot,
-            F.Id("niEntropy"), Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"),
-            Dot, F.Id("law"), Sp, Minus, Sp, Int, Sp, Open, F.Id("x"),
-            Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
-            F.Id("LopesOliveiraFullTail"), Dot, F.Id("Omega"), Close, Comma, Sp, Minus, F.Id("Real"), Dot,
-            F.Id("log"), Sp, new Formula.Number(2), Sp, Seq(Mathrm, Grp(F.Id("d"))), F.Id("D5"), Dot, F.Id("S3"), Dot,
-            F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("law"), Sp, Eq, Sp, new Formula.Number(0),
-            Sp, Land, Sp, new Formula.Number(1), Sp, Slash, Sp, new Formula.Number(8), Sp,
-            Le, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"),
-            Dot, F.Id("wassersteinOne"), Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
-            F.Id("LopesOliveiraFullTail"), Dot, F.Id("law"), Sp, F.Id("rho")));
+            F.Id("Omega"), Close, Comma, Sp, Minus, F.Id("Real"), Dot, F.Id("log"), Sp,
+            new Formula.Number(2), Sp, Seq(Mathrm, Grp(F.Id("d"))), F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
+            F.Id("LopesOliveiraFullTail"), Dot, F.Id("law"), Sp, Eq, Sp, new Formula.Number(0), Sp, Land,
+            Sp, new Formula.Number(1), Sp, Slash, Sp, new Formula.Number(8), Sp, Le, Sp,
+            F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("wassersteinOne"),
+            Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot,
+            F.Id("law"), Sp, F.Id("rho")));
 }

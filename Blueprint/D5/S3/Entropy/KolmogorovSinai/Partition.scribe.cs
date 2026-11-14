@@ -131,8 +131,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The definitions and conventions in the introduction apply."))), DescribeRole.Theorem))));
 
-    private static Formula Presentation0() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation0() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBracket, F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket, Sp, OpenBracket, F.Id("Fintype"), Sp,
             Iota, CloseBracket, Sp, Open, Mu, Sp, Colon, Sp, F.Id("MeasureTheory"),
@@ -143,8 +142,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Sp, Sum, Sp, F.Id("i"), Comma, Sp, Open, Mu, Sp,
             Open, F.Id("s"), Sp, F.Id("i"), Close, Close, Dot, F.Id("toReal"), Dot,
             F.Id("negMulLog")));
-    private static Formula Presentation1() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation1() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBracket, F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket, Sp, OpenBracket, F.Id("Fintype"), Sp,
             Iota, CloseBracket, Sp, Open, Mu, Sp, Colon, Sp, F.Id("MeasureTheory"),
@@ -155,8 +153,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Sp, Sum, Sp, F.Id("i"), Comma, Sp, Open, Mu, Sp,
             Open, F.Id("s"), Sp, F.Id("i"), Close, Close, Dot, F.Id("toReal"), Dot,
             F.Id("negMulLog")));
-    private static Formula Presentation2() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation2() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBracket, F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket, Sp, OpenBracket, F.Id("Fintype"), Sp,
             Iota, CloseBracket, Sp, Open, Mu, Sp, Colon, Sp, F.Id("MeasureTheory"),
@@ -166,8 +163,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Comma, Sp, new Formula.Number(0), Sp, Le, Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("entropy"), Sp, Mu, Sp,
             F.Id("s")));
-    private static Formula Presentation3() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation3() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBracket, F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket, Sp, OpenBracket, F.Id("Fintype"), Sp,
             Iota, CloseBracket, Sp, OpenBracket, F.Id("Nonempty"), Sp, Iota, CloseBracket, Sp,
@@ -180,8 +176,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("entropy"), Sp, Mu, Sp, F.Id("s"),
             Sp, Le, Sp, F.Id("Real"), Dot, F.Id("log"), Sp, Open, F.Id("Fintype"),
             Dot, F.Id("card"), Sp, Iota, Close));
-    private static Formula Presentation4() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation4() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBracket, F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket, Sp, OpenBracket, F.Id("Fintype"), Sp,
             Iota, CloseBracket, Sp, OpenBrace, Mu, Sp, Colon, Sp, F.Id("MeasureTheory"),
@@ -192,8 +187,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Sp, F.Id("i"), Comma, Sp, Open, Mu, Sp, Open, F.Id("P"),
             Dot, F.Id("cells"), Sp, F.Id("i"), Close, Close, Dot, F.Id("toReal"), Sp,
             Eq, Sp, new Formula.Number(1)));
-    private static Formula Presentation5() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation5() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBracket, F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket, Sp, OpenBracket, F.Id("Fintype"), Sp,
             Iota, CloseBracket, Sp, OpenBracket, F.Id("Nonempty"), Sp, Iota, CloseBracket, Sp,
@@ -205,8 +199,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("entropy"), Sp, Mu, Sp, F.Id("P"),
             Dot, F.Id("cells"), Sp, Le, Sp, F.Id("Real"), Dot, F.Id("log"), Sp,
             Open, F.Id("Fintype"), Dot, F.Id("card"), Sp, Iota, Close));
-    private static Formula Presentation6() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation6() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Kappa, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp, Open,
             F.Id("s"), Sp, Colon, Sp, Iota, Sp, To, Sp, F.Id("Set"),
@@ -217,8 +210,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Dot, F.Id("KolmogorovSinai"), Dot, F.Id("joinCells"), Sp, F.Id("s"), Sp, F.Id("t"), Sp,
             F.Id("a"), Sp, Eq, Sp, F.Id("s"), Sp, F.Id("a"), Dot, new Formula.Number(1),
             Sp, Seq(Operatorname, Grp(F.Id("inter"))), Sp, F.Id("t"), Sp, F.Id("a"), Dot, new Formula.Number(2)));
-    private static Formula Presentation7() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation7() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Kappa, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp, Open,
             F.Id("s"), Sp, Colon, Sp, Iota, Sp, To, Sp, F.Id("Set"),
@@ -229,21 +221,18 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Dot, F.Id("KolmogorovSinai"), Dot, F.Id("joinCells"), Sp, F.Id("s"), Sp, F.Id("t"), Sp,
             F.Id("p"), Sp, Eq, Sp, F.Id("s"), Sp, F.Id("p"), Dot, new Formula.Number(1),
             Sp, Seq(Operatorname, Grp(F.Id("inter"))), Sp, F.Id("t"), Sp, F.Id("p"), Dot, new Formula.Number(2)));
-    private static Formula Presentation8() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation8() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Kappa, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBracket, F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket, Sp, OpenBracket, F.Id("Fintype"), Sp,
             Kappa, CloseBracket, Sp, OpenBrace, Mu, Sp, Colon, Sp, F.Id("MeasureTheory"),
             Dot, F.Id("Measure"), Sp, Alpha, CloseBrace, Sp, Open, F.Id("Q"), Sp,
             Colon, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"),
-            Dot, F.Id("MeasurePartition"), Sp, Mu, Sp, Kappa, Close, Sp, OpenBrace,
-            F.Id("A"), Sp, Colon, Sp, F.Id("Set"), Sp, Alpha, CloseBrace, Comma,
+            Dot, F.Id("MeasurePartition"), Sp, Mu, Sp, Kappa, Close, Sp, OpenBrace, Sp, F.Id("A"), Sp, Colon, Sp, F.Id("Set"), Sp, Alpha, CloseBrace, Comma,
             Sp, F.Id("MeasurableSet"), Sp, F.Id("A"), Sp, To, Sp, Mu, Sp,
             F.Id("A"), Sp, Eq, Sp, Sum, Sp, F.Id("j"), Comma, Sp,
             Mu, Sp, Open, F.Id("A"), Sp, Seq(Operatorname, Grp(F.Id("inter"))), Sp, F.Id("Q"), Dot,
             F.Id("cells"), Sp, F.Id("j"), Close));
-    private static Formula Presentation9() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation9() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Kappa, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp, OpenBracket,
             F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket, Sp, OpenBracket, F.Id("Fintype"), Sp, Iota,
@@ -263,10 +252,9 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             F.Id("cells"), Sp, Plus, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"),
             Dot, F.Id("KolmogorovSinai"), Dot, F.Id("entropy"), Sp, Mu, Sp, F.Id("Q"), Dot,
             F.Id("cells")));
-    private static Formula Presentation10() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation10() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
-            OpenBrace, F.Id("m"), Omega, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha,
+            OpenBrace, Sp, F.Id("m"), Omega, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha,
             CloseBrace, Sp, OpenBracket, F.Id("Fintype"), Sp, Iota, CloseBracket, Sp, OpenBracket,
             F.Id("StandardBorelSpace"), Sp, Alpha, CloseBracket, Sp, Open, Mu, Sp, Colon,
             Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Sp, Alpha, Close, Sp, OpenBracket,
@@ -281,10 +269,9 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Sp, Mu, Sp, Seq(Mathcal, Grp(F.Id("A"))), Close, Sp, F.Id("omega"), Close, Sp,
             Open, F.Id("s"), Sp, F.Id("i"), Close, Close, Dot, F.Id("toReal"), Dot,
             F.Id("negMulLog"), Sp, Seq(Mathrm, Grp(F.Id("d"))), Mu));
-    private static Formula Presentation11() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation11() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
-            OpenBrace, F.Id("m"), Omega, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha,
+            OpenBrace, Sp, F.Id("m"), Omega, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha,
             CloseBrace, Sp, OpenBracket, F.Id("Fintype"), Sp, Iota, CloseBracket, Sp, OpenBracket,
             F.Id("StandardBorelSpace"), Sp, Alpha, CloseBracket, Sp, Open, Mu, Sp, Colon,
             Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Sp, Alpha, Close, Sp, OpenBracket,
@@ -299,8 +286,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Sp, Mu, Sp, Seq(Mathcal, Grp(F.Id("A"))), Close, Sp, F.Id("omega"), Close, Sp,
             Open, F.Id("s"), Sp, F.Id("i"), Close, Close, Dot, F.Id("toReal"), Dot,
             F.Id("negMulLog"), Sp, Seq(Mathrm, Grp(F.Id("d"))), Mu));
-    private static Formula Presentation12() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation12() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Seq(Mathcal, Grp(F.Id("A"))), Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha, CloseBrace,
             Sp, OpenBracket, F.Id("m"), Alpha, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp,
@@ -315,36 +301,32 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             F.Id("condExpKernel"), Sp, Mu, Sp, Seq(Mathcal, Grp(F.Id("A"))), Close, Sp, F.Id("omega"), Close,
             Sp, Open, F.Id("s"), Sp, F.Id("i"), Close, Close, Dot, F.Id("toReal"),
             Dot, F.Id("negMulLog")));
-    private static Formula Presentation13() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation13() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Seq(Mathcal, Grp(F.Id("A"))), Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha, CloseBrace,
             Sp, OpenBracket, F.Id("m"), Alpha, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp,
             Alpha, CloseBracket, Sp, OpenBracket, F.Id("StandardBorelSpace"), Sp, Alpha, CloseBracket, Sp,
             OpenBracket, F.Id("Fintype"), Sp, Iota, CloseBracket, Sp, OpenBrace, Mu, Sp,
             Colon, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Sp, Alpha, CloseBrace, Sp,
-            OpenBracket, F.Id("MeasureTheory"), Dot, F.Id("IsFiniteMeasure"), Sp, Mu, CloseBracket, Sp, OpenBrace,
-            F.Id("s"), Sp, Colon, Sp, Iota, Sp, To, Sp, F.Id("Set"),
+            OpenBracket, F.Id("MeasureTheory"), Dot, F.Id("IsFiniteMeasure"), Sp, Mu, CloseBracket, Sp, OpenBrace, Sp, F.Id("s"), Sp, Colon, Sp, Iota, Sp, To, Sp, F.Id("Set"),
             Sp, Alpha, CloseBrace, Comma, Sp, new Formula.Number(0), Sp, Le, Sp,
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("condEntropy"),
             Sp, Mu, Sp, Seq(Mathcal, Grp(F.Id("A"))), Sp, F.Id("s")));
-    private static Formula Presentation14() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation14() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Seq(Mathcal, Grp(F.Id("A"))), Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha,
             CloseBrace, Sp, OpenBracket, F.Id("m"), Alpha, Sp, Colon, Sp, F.Id("MeasurableSpace"),
             Sp, Alpha, CloseBracket, Sp, OpenBracket, F.Id("StandardBorelSpace"), Sp, Alpha, CloseBracket,
             Sp, OpenBrace, Mu, Sp, Colon, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"),
             Sp, Alpha, CloseBrace, Sp, OpenBracket, F.Id("MeasureTheory"), Dot, F.Id("IsFiniteMeasure"), Sp,
             Mu, CloseBracket, Comma, Sp, Seq(Mathcal, Grp(F.Id("A"))), Sp, Le, Sp, F.Id("m"),
-            Alpha, Sp, To, Sp, Forall, Sp, OpenBrace, F.Id("A"), Sp,
+            Alpha, Sp, To, Sp, Forall, Sp, OpenBrace, Sp, F.Id("A"), Sp,
             Colon, Sp, F.Id("Set"), Sp, Alpha, CloseBrace, Comma, Sp, F.Id("MeasurableSet"),
             Sp, F.Id("A"), Sp, To, Sp, F.Id("MeasureTheory"), Dot, F.Id("Integrable"), Sp,
             Open, LambdaLower, Sp, F.Id("omega"), Sp, Mapsto, Sp, Open, Open,
             Open, F.Id("ProbabilityTheory"), Dot, F.Id("condExpKernel"), Sp, Mu, Sp, Seq(Mathcal, Grp(F.Id("A"))), Close,
             Sp, F.Id("omega"), Close, Sp, F.Id("A"), Close, Dot, F.Id("toReal"), Dot,
             F.Id("negMulLog"), Close, Sp, Mu));
-    private static Formula Presentation15() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation15() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Seq(Mathcal, Grp(F.Id("A"))), Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha, CloseBrace,
             Sp, OpenBracket, F.Id("m"), Alpha, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp,
@@ -363,8 +345,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Mu, Sp, Seq(Mathcal, Grp(F.Id("A"))), Close, Sp, F.Id("omega"), Close, Sp, Open,
             F.Id("s"), Sp, F.Id("i"), Close, Close, Dot, F.Id("toReal"), Dot, F.Id("negMulLog"),
             Close, Sp, Mu));
-    private static Formula Presentation16() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation16() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Seq(Mathcal, Grp(F.Id("A"))), Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha, CloseBrace,
             Sp, OpenBracket, F.Id("m"), Alpha, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp,
@@ -375,14 +356,13 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Seq(Mathcal, Grp(F.Id("A"))), Sp, Le, Sp, F.Id("m"), Alpha, Sp, To, Sp,
             Forall, Sp, Open, F.Id("P"), Sp, Colon, Sp, F.Id("D5"), Dot,
             F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("MeasurePartition"), Sp, Mu,
-            Sp, Iota, Close, Comma, Sp, Forall, Seq(Caret, Grp(F.Id("m"))), Sp, Open,
-            F.Id("omega"), Sp, Colon, Sp, Alpha, Close, Sp, Seq(Mathrm, Grp(F.Id("d"))), Mu,
-            Comma, Sp, Sum, Sp, F.Id("i"), Comma, Sp, Open, Open,
-            Open, F.Id("ProbabilityTheory"), Dot, F.Id("condExpKernel"), Sp, Mu, Sp, Seq(Mathcal, Grp(F.Id("A"))), Close,
-            Sp, F.Id("omega"), Close, Sp, Open, F.Id("P"), Dot, F.Id("cells"), Sp,
-            F.Id("i"), Close, Close, Dot, F.Id("toReal"), Sp, Eq, Sp, new Formula.Number(1)));
-    private static Formula Presentation17() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+            Sp, Iota, Close, Comma, Sp, Grp(Forall, Seq(Caret, Grp(F.Id("m")))), Sp, Open, F.Id("omega"),
+            Sp, Colon, Sp, Alpha, Close, Sp, Seq(Mathrm, Grp(F.Id("d"))), Mu, Comma,
+            Sp, Sum, Sp, F.Id("i"), Comma, Sp, Open, Open, Open,
+            F.Id("ProbabilityTheory"), Dot, F.Id("condExpKernel"), Sp, Mu, Sp, Seq(Mathcal, Grp(F.Id("A"))), Close, Sp,
+            F.Id("omega"), Close, Sp, Open, F.Id("P"), Dot, F.Id("cells"), Sp, F.Id("i"),
+            Close, Close, Dot, F.Id("toReal"), Sp, Eq, Sp, new Formula.Number(1)));
+    private static Formula Presentation17() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Seq(Mathcal, Grp(F.Id("A"))), Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha, CloseBrace,
             Sp, OpenBracket, F.Id("m"), Alpha, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp,
@@ -398,8 +378,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Dot, F.Id("condEntropy"), Sp, Mu, Sp, Seq(Mathcal, Grp(F.Id("A"))), Sp, F.Id("P"), Dot,
             F.Id("cells"), Sp, Le, Sp, F.Id("Real"), Dot, F.Id("log"), Sp, Open,
             F.Id("Fintype"), Dot, F.Id("card"), Sp, Iota, Close));
-    private static Formula Presentation18() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation18() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Kappa, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp, OpenBrace,
             Seq(Mathcal, Grp(F.Id("A"))), Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha, CloseBrace, Sp,
@@ -423,8 +402,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Dot, F.Id("cells"), Sp, Plus, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot,
             F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("condEntropy"), Sp, Mu, Sp, Seq(Mathcal, Grp(F.Id("A"))),
             Sp, F.Id("Q"), Dot, F.Id("cells")));
-    private static Formula Presentation19() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation19() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Kappa, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBracket, F.Id("m"), Alpha, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha,
             CloseBracket, Sp, OpenBracket, F.Id("Fintype"), Sp, Kappa, CloseBracket, Sp, Open,
@@ -439,8 +417,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Sp, F.Id("j"), Close, Close, Dot, F.Id("toReal"), Sp, Slash, Sp,
             Open, Mu, Sp, F.Id("s"), F.Id("i"), Close, Dot, F.Id("toReal"), Close,
             Dot, F.Id("negMulLog")));
-    private static Formula Presentation20() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation20() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Kappa, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp, OpenBracket,
             F.Id("m"), Alpha, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket,
@@ -457,8 +434,7 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot,
             F.Id("condEntropyOnCell"), Sp, Mu, Sp, Open, F.Id("s"), Sp, F.Id("i"), Close,
             Sp, F.Id("t")));
-    private static Formula Presentation21() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation21() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Kappa, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp, OpenBracket,
             F.Id("m"), Alpha, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket,
@@ -479,13 +455,12 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("condEntropyGivenPartition"),
             Sp, Mu, Sp, F.Id("P"), Dot, F.Id("cells"), Sp, F.Id("Q"), Dot,
             F.Id("cells")));
-    private static Formula Presentation22() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+    private static Formula Presentation22() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,
             OpenBrace, Seq(Mathcal, Grp(F.Id("A"))), Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp, Alpha, CloseBrace,
             Sp, OpenBracket, F.Id("m"), Alpha, Sp, Colon, Sp, F.Id("MeasurableSpace"), Sp,
             Alpha, CloseBracket, Sp, OpenBracket, F.Id("StandardBorelSpace"), Sp, Alpha, CloseBracket, Sp,
-            OpenBrace, F.Id("T"), Sp, Colon, Sp, Alpha, Sp, To, Sp,
+            OpenBrace, Sp, F.Id("T"), Sp, Colon, Sp, Alpha, Sp, To, Sp,
             Alpha, CloseBrace, Sp, OpenBracket, F.Id("Fintype"), Sp, Iota, CloseBracket, Sp,
             OpenBrace, Mu, Sp, Colon, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Sp,
             Alpha, CloseBrace, Sp, OpenBracket, F.Id("MeasureTheory"), Dot, F.Id("IsProbabilityMeasure"), Sp, Mu,
@@ -497,13 +472,12 @@ internal sealed class PartitionDocument : IScribeDocumentDefinition
             F.Id("KolmogorovSinai"), Dot, F.Id("MeasurePartition"), Sp, Mu, Sp, Iota, Close, Comma,
             Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"),
             Dot, F.Id("condEntropy"), Sp, Mu, Sp, Open, F.Id("MeasurableSpace"), Dot, F.Id("comap"),
-            Sp, F.Id("T"), Seq(Caret, Grp(OpenBracket, F.Id("n"), CloseBracket)), Sp, Seq(Mathcal, Grp(F.Id("A"))), Close, Sp, LambdaLower, Sp,
-            F.Id("i"), Sp, Mapsto, Sp, F.Id("T"), Seq(Caret, Grp(OpenBracket, F.Id("n"), CloseBracket)), Sp, Seq(Caret, Grp(Minus, D(1))), Apos,
-            Sp, F.Id("P"), Dot, F.Id("cells"), Sp, F.Id("i"), Close, Sp, Eq,
-            Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot,
-            F.Id("condEntropy"), Sp, Mu, Sp, Seq(Mathcal, Grp(F.Id("A"))), Sp, F.Id("P"), Dot, F.Id("cells")));
-    private static Formula CompletedPresentation9() => Disp(Seq(
-            Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
+            Sp, Grp(F.Id("T"), Seq(Caret, Grp(OpenBracket, F.Id("n"), CloseBracket))), Sp, Seq(Mathcal, Grp(F.Id("A"))), Close, Sp, LambdaLower, Sp, F.Id("i"),
+            Sp, Mapsto, Sp, Grp(Grp(F.Id("T"), Seq(Caret, Grp(OpenBracket, F.Id("n"), CloseBracket))), Seq(Caret, Grp(Minus, D(1)))), Apos, Sp, F.Id("P"), Dot, F.Id("cells"),
+            Sp, F.Id("i"), Close, Sp, Eq, Sp, F.Id("D5"), Dot, F.Id("S3"),
+            Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("condEntropy"), Sp, Mu, Sp,
+            Seq(Mathcal, Grp(F.Id("A"))), Sp, F.Id("P"), Dot, F.Id("cells")));
+    private static Formula CompletedPresentation9() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBracket, F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket, Sp, Open, Mu,
             Sp, Colon, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Sp, Alpha, Close,
             Sp, Open, Iota, Sp, Colon, Sp, F.Id("Type"), Close, Sp,

@@ -36,13 +36,11 @@ internal sealed class FairEquilibriumDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The definitions and conventions in the introduction apply."))), DescribeRole.Theorem))));
 
-    private static Formula Presentation0() => Disp(Seq(
-            F.Id("MeasureTheory"), Dot, F.Id("MeasurePreserving"), Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"),
+    private static Formula Presentation0() => Disp(Seq(F.Id("MeasureTheory"), Dot, F.Id("MeasurePreserving"), Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"),
             Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("shift"), Sp, F.Id("D5"), Dot, F.Id("S3"), Dot,
             F.Id("Entropy"), Dot, F.Id("SourceEquilibrium"), Dot, F.Id("fair"), Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("SourceEquilibrium"), Dot, F.Id("fair")));
-    private static Formula Presentation1() => Disp(Seq(
-            Forall, Sp, Open, F.Id("rho"), Sp, Colon, Sp, F.Id("MeasureTheory"), Dot,
+    private static Formula Presentation1() => Disp(Seq(Forall, Sp, Open, F.Id("rho"), Sp, Colon, Sp, F.Id("MeasureTheory"), Dot,
             F.Id("Measure"), Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"),
             Dot, F.Id("Omega"), Close, Sp, OpenBracket, F.Id("MeasureTheory"), Dot, F.Id("IsProbabilityMeasure"), Sp,
             F.Id("rho"), CloseBracket, Sp, Open, F.Id("hT"), Sp, Colon, Sp, F.Id("MeasureTheory"),
@@ -51,13 +49,11 @@ internal sealed class FairEquilibriumDocument : IScribeDocumentDefinition
             Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot,
             F.Id("ksEntropy"), Sp, F.Id("hT"), Sp, Le, Sp, Open, F.Id("Real"), Dot,
             F.Id("log"), Sp, new Formula.Number(2), Close));
-    private static Formula Presentation2() => Disp(Seq(
-            F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("ksEntropy"),
+    private static Formula Presentation2() => Disp(Seq(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("ksEntropy"),
             Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("SourceEquilibrium"), Dot,
-            F.Id("fair"), Seq(Underscore, Grp(F.Id("invariant"))), Sp, Eq, Sp, Open, F.Id("Real"), Dot, F.Id("log"),
-            Sp, new Formula.Number(2), Close));
-    private static Formula Presentation3() => Disp(Seq(
-            Forall, Sp, Open, F.Id("rho"), Sp, Colon, Sp, F.Id("MeasureTheory"), Dot,
+            Grp(F.Id("fair"), Seq(Underscore, Grp(F.Id("invariant")))), Sp, Eq, Sp, Open, F.Id("Real"), Dot, F.Id("log"), Sp,
+            new Formula.Number(2), Close));
+    private static Formula Presentation3() => Disp(Seq(Forall, Sp, Open, F.Id("rho"), Sp, Colon, Sp, F.Id("MeasureTheory"), Dot,
             F.Id("Measure"), Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"),
             Dot, F.Id("Omega"), Close, Sp, OpenBracket, F.Id("MeasureTheory"), Dot, F.Id("IsProbabilityMeasure"), Sp,
             F.Id("rho"), CloseBracket, Sp, Open, F.Id("hT"), Sp, Colon, Sp, F.Id("MeasureTheory"),
@@ -68,15 +64,14 @@ internal sealed class FairEquilibriumDocument : IScribeDocumentDefinition
             F.Id("log"), Sp, new Formula.Number(2), Close, Sp, To, Sp, F.Id("rho"), Sp,
             Eq, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("SourceEquilibrium"),
             Dot, F.Id("fair")));
-    private static Formula CompletedPresentation8() => Disp(Seq(
-            F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("SourceEquilibrium"), Dot, F.Id("fair"),
+    private static Formula CompletedPresentation8() => Disp(Seq(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("SourceEquilibrium"), Dot, F.Id("fair"),
             Sp, Eq, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("map"), Sp,
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraFullTail"), Dot, F.Id("coordinateEquiv"),
             Sp, Open, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("infinitePi"), Sp, Open,
             LambdaLower, Sp, F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, Mapsto,
-            Sp, Open, new Formula.Number(2), Sp, Colon, Sp, F.Id("ENNReal"), Close, Seq(Caret, Grp(Minus, D(1))),
-            Sp, Cdot, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("dirac"), Sp,
-            F.Id("false"), Sp, Plus, Sp, Open, new Formula.Number(2), Sp, Colon, Sp,
-            F.Id("ENNReal"), Close, Seq(Caret, Grp(Minus, D(1))), Sp, Cdot, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"),
-            Dot, F.Id("dirac"), Sp, F.Id("true"), Close, Close));
+            Sp, Open, new Formula.Number(2), Sp, Colon, Sp, F.Id("ENNReal"), Grp(Close, Seq(Caret, Grp(Minus, D(1)))), Sp,
+            Cdot, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("dirac"), Sp, F.Id("false"),
+            Sp, Plus, Sp, Open, new Formula.Number(2), Sp, Colon, Sp, F.Id("ENNReal"),
+            Grp(Close, Seq(Caret, Grp(Minus, D(1)))), Sp, Cdot, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("dirac"),
+            Sp, F.Id("true"), Close, Close));
 }

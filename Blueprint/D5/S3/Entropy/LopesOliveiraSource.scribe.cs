@@ -71,25 +71,21 @@ internal sealed class LopesOliveiraSourceDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The definitions and conventions in the introduction apply."))), DescribeRole.Definition))));
 
-        private static Formula Presentation0() => Disp(Seq(
-        Forall, Sp, Open, F.Id("d"), Colon, Mathbb, Grp(F.Id("N")), Close, Comma, Sp,
-        F.Id("Symbol"), Sp, F.Id("d"), Eq, OpenBrace, F.Id("j"), Colon,
-        Mathbb, Grp(F.Id("N")), Bar, D(1), Le, Sp, F.Id("j"), Land, Sp,
-        F.Id("j"), Le, Sp, F.Id("d"), CloseBrace));
-    private static Formula Presentation1() => Disp(Seq(
-            Forall, Sp, Open, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close,
+        private static Formula Presentation0() => Disp(Seq(Forall, Sp, Open, F.Id("d"), Colon, Mathbb, Grp(F.Id("N")), Close, Comma,
+            Sp, F.Id("Symbol"), Sp, F.Id("d"), Eq, OpenBrace, Sp, F.Id("j"), Colon, Mathbb,
+            Grp(F.Id("N")), Bar, D(1), Le, Sp, F.Id("j"), Land, Sp, F.Id("j"),
+            Le, Sp, F.Id("d"), CloseBrace));
+    private static Formula Presentation1() => Disp(Seq(Forall, Sp, Open, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close,
             Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"),
             Dot, F.Id("Omega"), Sp, F.Id("d"), Sp, Eq, Sp, Open, Seq(Mathbb, Grp(F.Id("N")), Caret, Grp(Plus)),
             Sp, To, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
             F.Id("LopesOliveiraSource"), Dot, F.Id("Symbol"), Sp, F.Id("d"), Close));
-    private static Formula Presentation2() => Disp(Seq(
-            Forall, Sp, OpenBrace, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
+    private static Formula Presentation2() => Disp(Seq(Forall, Sp, OpenBrace, Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
             Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"),
             Dot, F.Id("tailSigma"), Sp, Eq, Sp, F.Id("MeasurableSpace"), Dot, F.Id("comap"), Sp,
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("shift"),
             Sp, F.Id("inferInstance")));
-    private static Formula Presentation3() => Disp(Seq(
-            Forall, Sp, OpenBrace, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
+    private static Formula Presentation3() => Disp(Seq(Forall, Sp, OpenBrace, Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
             Sp, Open, F.Id("j"), Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("Symbol"), Sp, F.Id("d"), Close,
             Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"),
@@ -98,8 +94,7 @@ internal sealed class LopesOliveiraSourceDocument : IScribeDocumentDefinition
             Dot, F.Id("firstIndicator"), Sp, F.Id("j"), Sp, F.Id("x"), Sp, Eq, Sp,
             F.Id("if"), Sp, F.Id("x"), Sp, new Formula.Number(1), Sp, Eq, Sp, F.Id("j"),
             Sp, F.Id("then"), Sp, new Formula.Number(1), Sp, F.Id("else"), Sp, new Formula.Number(0)));
-    private static Formula Presentation4() => Disp(Seq(
-            Forall, Sp, OpenBrace, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
+    private static Formula Presentation4() => Disp(Seq(Forall, Sp, OpenBrace, Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
             Sp, Open, F.Id("rho"), Sp, Colon, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"),
             Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"),
             Dot, F.Id("Omega"), Sp, F.Id("d"), Close, Close, Comma, Sp, F.Id("D5"),
@@ -112,13 +107,12 @@ internal sealed class LopesOliveiraSourceDocument : IScribeDocumentDefinition
             Bar, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"),
             Dot, F.Id("tailSigma"), CloseBracket, Sp, F.Id("x"), Close, Dot, F.Id("negMulLog"), Sp,
             Seq(Mathrm, Grp(F.Id("d"))), F.Id("rho")));
-    private static Formula Presentation5() => Disp(Seq(
-            Forall, Sp, OpenBrace, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
+    private static Formula Presentation5() => Disp(Seq(Forall, Sp, OpenBrace, Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
             Sp, Open, F.Id("phi"), Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("Omega"), Sp, F.Id("d"), Sp,
             To, Sp, Seq(Mathbb, Grp(F.Id("R"))), Close, Comma, Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("niPressure"), Sp, F.Id("phi"), Sp,
-            Eq, Sp, F.Id("sSup"), Sp, OpenBrace, F.Id("v"), Sp, Bar, Sp,
+            Eq, Sp, F.Id("sSup"), Sp, OpenBrace, Sp, F.Id("v"), Sp, Bar, Sp,
             Exists, Sp, F.Id("rho"), Comma, Sp, F.Id("MeasureTheory"), Dot, F.Id("IsProbabilityMeasure"), Sp,
             F.Id("rho"), Sp, Land, Sp, F.Id("v"), Sp, Eq, Sp, Int,
             Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"),
@@ -126,27 +120,24 @@ internal sealed class LopesOliveiraSourceDocument : IScribeDocumentDefinition
             Comma, Sp, F.Id("phi"), Sp, F.Id("x"), Sp, Seq(Mathrm, Grp(F.Id("d"))), F.Id("rho"), Sp,
             Plus, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"),
             Dot, F.Id("niEntropy"), Sp, F.Id("rho"), CloseBrace));
-    private static Formula Presentation6() => Disp(Seq(
-            Forall, Sp, OpenBrace, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
+    private static Formula Presentation6() => Disp(Seq(Forall, Sp, OpenBrace, Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
             Sp, Open, F.Id("eta"), Sp, F.Id("xi"), Sp, Colon, Sp, F.Id("MeasureTheory"),
             Dot, F.Id("Measure"), Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"),
             Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("Omega"), Sp, F.Id("d"), Close, Close, Comma,
             Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot,
-            F.Id("couplings"), Sp, F.Id("eta"), Sp, F.Id("xi"), Sp, Eq, Sp, OpenBrace,
-            F.Id("pi"), Sp, Bar, Sp, F.Id("MeasureTheory"), Dot, F.Id("IsProbabilityMeasure"), Sp, F.Id("pi"),
+            F.Id("couplings"), Sp, F.Id("eta"), Sp, F.Id("xi"), Sp, Eq, Sp, OpenBrace, Sp, F.Id("pi"), Sp, Bar, Sp, F.Id("MeasureTheory"), Dot, F.Id("IsProbabilityMeasure"), Sp, F.Id("pi"),
             Sp, Land, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("map"), Sp,
             F.Id("Prod"), Dot, F.Id("fst"), Sp, F.Id("pi"), Sp, Eq, Sp, F.Id("eta"),
             Sp, Land, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Dot, F.Id("map"), Sp,
             F.Id("Prod"), Dot, F.Id("snd"), Sp, F.Id("pi"), Sp, Eq, Sp, F.Id("xi"),
             CloseBrace));
-    private static Formula Presentation7() => Disp(Seq(
-            Forall, Sp, OpenBrace, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
+    private static Formula Presentation7() => Disp(Seq(Forall, Sp, OpenBrace, Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
             Sp, Open, F.Id("eta"), Sp, F.Id("xi"), Sp, Colon, Sp, F.Id("MeasureTheory"),
             Dot, F.Id("Measure"), Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"),
             Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("Omega"), Sp, F.Id("d"), Close, Close, Comma,
             Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot,
             F.Id("wassersteinOne"), Sp, F.Id("eta"), Sp, F.Id("xi"), Sp, Eq, Sp, F.Id("sInf"),
-            Sp, OpenBrace, F.Id("v"), Sp, Bar, Sp, Exists, Sp, F.Id("pi"),
+            Sp, OpenBrace, Sp, F.Id("v"), Sp, Bar, Sp, Exists, Sp, F.Id("pi"),
             Sp, InMacro, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
             F.Id("LopesOliveiraSource"), Dot, F.Id("couplings"), Sp, F.Id("eta"), Sp, F.Id("xi"), Comma, Sp,
             F.Id("v"), Sp, Eq, Sp, Int, Sp, Open, F.Id("p"), Sp,
@@ -156,8 +147,7 @@ internal sealed class LopesOliveiraSourceDocument : IScribeDocumentDefinition
             Close, Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot,
             F.Id("LopesOliveiraSource"), Dot, F.Id("distance"), Sp, F.Id("p"), Dot, new Formula.Number(1), Sp, F.Id("p"),
             Dot, new Formula.Number(2), Sp, Seq(Mathrm, Grp(F.Id("d"))), F.Id("pi"), CloseBrace));
-    private static Formula Supplement0() => Disp(Seq(
-            Forall, Sp, OpenBrace, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
+    private static Formula Supplement0() => Disp(Seq(Forall, Sp, OpenBrace, Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
             Sp, Open, F.Id("phi"), Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("Omega"), Sp, F.Id("d"), Sp,
             To, Sp, Seq(Mathbb, Grp(F.Id("R"))), Close, Comma, Sp, F.Id("D5"), Dot, F.Id("S3"),
@@ -171,17 +161,15 @@ internal sealed class LopesOliveiraSourceDocument : IScribeDocumentDefinition
             F.Id("x"), Sp, Minus, Sp, F.Id("phi"), Sp, F.Id("y"), Bar, Sp,
             Le, Sp, F.Id("H"), Sp, Cdot, Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("distance"), Sp, F.Id("x"), Sp,
-            F.Id("y"), Sp, Seq(Caret, Grp(F.Id("alpha")))));
-    private static Formula CompletedPresentation10() => Disp(Seq(
-            Forall, Sp, OpenBrace, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
+            Grp(F.Id("y"), Seq(Caret, Grp(F.Id("alpha"))))));
+    private static Formula CompletedPresentation10() => Disp(Seq(Forall, Sp, OpenBrace, Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
             Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("Omega"), Sp, F.Id("d"), Close,
             Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"),
             Dot, F.Id("shift"), Sp, F.Id("x"), Sp, Eq, Sp, LambdaLower, Sp,
             F.Id("i"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N")), Caret, Grp(Plus)), Sp, Mapsto, Sp, F.Id("x"),
             Sp, Open, F.Id("i"), Sp, Plus, Sp, new Formula.Number(1), Close));
-    private static Formula CompletedPresentation11() => Disp(Seq(
-            Forall, Sp, OpenBrace, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
+    private static Formula CompletedPresentation11() => Disp(Seq(Forall, Sp, OpenBrace, Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
             Sp, Open, F.Id("x"), Sp, F.Id("y"), Sp, Colon, Sp, F.Id("D5"),
             Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("Omega"), Sp,
             F.Id("d"), Close, Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"),
@@ -192,8 +180,7 @@ internal sealed class LopesOliveiraSourceDocument : IScribeDocumentDefinition
             LambdaLower, Sp, F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, Mapsto,
             Sp, F.Id("y"), Sp, Open, F.Id("Nat"), Dot, F.Id("succPNat"), Sp, F.Id("n"),
             Close, Close, Sp, Slash, Sp, new Formula.Number(2)));
-    private static Formula CompletedPresentation12() => Disp(Seq(
-            Forall, Sp, Open, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close,
+    private static Formula CompletedPresentation12() => Disp(Seq(Forall, Sp, Open, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close,
             Sp, Open, F.Id("x"), Sp, F.Id("y"), Sp, Colon, Sp, F.Id("D5"),
             Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("Omega"), Sp,
             F.Id("d"), Close, Comma, Sp, Open, F.Id("D5"), Dot, F.Id("S3"), Dot,

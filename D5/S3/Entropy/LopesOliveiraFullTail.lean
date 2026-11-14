@@ -145,14 +145,6 @@ private lemma firstIndicator_measurable (b : Bool) : Measurable (firstIndicator 
   unfold firstIndicator
   exact Measurable.ite hs measurable_const measurable_const
 
-private lemma law_noninvariant : Measure.map shift law ≠ law := by
-  intro h
-  have hh := congrArg (fun rho : Measure Omega => ∫ x, firstIndicator false x ∂rho) h
-  rw [integral_map shift_measurable.aemeasurable
-    (firstIndicator_measurable false).aestronglyMeasurable] at hh
-  simp only [integral_law] at hh
-  norm_num [firstIndicator, code_shift, code_point] at hh
-
 private def gapTest (x : Omega) : ℝ :=
   (firstIndicator false (shift x) - firstIndicator false x) / 4
 private lemma law_gapTest : ∫ x, gapTest x ∂law = 1/8 := by
