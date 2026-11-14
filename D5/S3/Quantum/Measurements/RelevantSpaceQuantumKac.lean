@@ -7,6 +7,8 @@
    digest: Faithful finite monitored orbits give contraction on the actual relevant space. -/
 
 import D5.S3.Quantum.Measurement.PositiveBranchReachableResponse
+import D5.S3.Quantum.PureState.PureStateHandshake
+import Mathlib.Topology.Algebra.InfiniteSum.Real
 
 /-! Kraus words and projection monitoring on their actual reachable space. -/
 
@@ -297,7 +299,144 @@ theorem relevant_projection_hasSum (K : α → Matrix n n ℂ) [Fintype α]
     P PiC hP hPiCpos hstep (L + 1) (by omega) (1 - ν)
     (by linarith) (by linarith) hblock
 
+private theorem survival_difference_moments (s : ℕ → ℝ) (a : ℝ)
+    (hs : HasSum s a) (hanti : Antitone s) :
+    HasSum (fun k => s k - s (k + 1)) (s 0) ∧
+      HasSum (fun k => (k + 1 : ℝ) * (s k - s (k + 1))) a := by
+  classical
+  let p : ℕ → ℝ := fun k => s k - s (k + 1)
+  have hp : ∀ k, 0 ≤ p k := fun k => sub_nonneg.mpr (hanti (Nat.le_succ k))
+  have hps : Summable p := hs.summable.sub ((summable_nat_add_iff 1).mpr hs.summable)
+  have htail (i : ℕ) : HasSum (fun k => p (k + i)) (s i) := by
+    have hshift := (hasSum_nat_add_iff' i).mpr hs
+    have hshift' := (hasSum_nat_add_iff' (i + 1)).mpr hs
+    have hh := hshift.sub hshift'
+    have heq : a - ∑ k ∈ Finset.range i, s k -
+        (a - ∑ k ∈ Finset.range (i + 1), s k) = s i := by
+      rw [Finset.sum_range_succ]
+      ring
+    rw [heq] at hh
+    simpa only [p, Nat.add_assoc] using hh
+  let f : ℕ × ℕ → ℝ := fun z => if z.1 ≤ z.2 then p z.2 else 0
+  have hrow (i : ℕ) : HasSum (fun j => f (i, j)) (s i) := by
+    apply (hasSum_nat_add_iff' i).mp
+    have hzero : ∑ j ∈ Finset.range i, f (i, j) = 0 := by
+      apply Finset.sum_eq_zero
+      intro j hj
+      simp only [f, if_neg (Nat.not_le.mpr (Finset.mem_range.mp hj))]
+    rw [hzero, sub_zero]
+    simpa only [f, Nat.le_add_left, ite_true] using htail i
+  have hf : Summable f := (summable_prod_of_nonneg (fun z => by
+    dsimp [f]
+    split_ifs
+    · exact hp _
+    · exact le_rfl)).mpr ⟨fun i => (hrow i).summable, by
+      simpa only [(hrow _).tsum_eq] using hs.summable⟩
+  have htotal : HasSum f a := by
+    have hh := hf.hasSum.prod_fiberwise hrow
+    exact hh.unique hs ▸ hf.hasSum
+  have hcol (j : ℕ) : HasSum (fun i => f (i, j)) ((j + 1 : ℝ) * p j) := by
+    have heq : (fun i => f (i, j)) =
+        fun i => if i ∈ Finset.range (j + 1) then p j else 0 := by
+      funext i
+      simp only [f, Finset.mem_range, Nat.lt_succ_iff]
+    rw [heq]
+    have hh := hasSum_sum_of_ne_finset_zero (s := Finset.range (j + 1))
+      (f := fun i => if i ∈ Finset.range (j + 1) then p j else 0)
+      (fun i hi => by simp only [if_neg hi])
+    simpa only [Finset.sum_ite_of_true (fun i hi => hi), Finset.sum_const,
+      Finset.card_range, nsmul_eq_mul, Nat.cast_add, Nat.cast_one] using hh
+  refine ⟨by simpa only [Nat.add_zero] using htail 0, ?_⟩
+  have hswap : HasSum (fun z : ℕ × ℕ => f (z.2, z.1)) a :=
+    (Equiv.prodComm ℕ ℕ).hasSum_iff.mpr htotal
+  exact hswap.prod_fiberwise hcol
+
+private theorem projection_trace (C : Submodule ℂ (EuclideanSpace ℂ n))
+    (PiC : Matrix n n ℂ)
+    (hPiC : PiC.toEuclideanLin = C.starProjection.toLinearMap) :
+    PiC.trace = (Module.finrank ℂ C : ℂ) := by
+  have ht : LinearMap.trace ℂ _ PiC.toEuclideanLin = PiC.trace := by
+    rw [Matrix.toEuclideanLin_eq_toLin_orthonormal]
+    exact PiC.trace_toLin_eq _
+  rw [← ht, hPiC]
+  have hi := C.isIdempotentElem_starProjection.toLinearMap.isProj_range.trace
+  have hr : LinearMap.range C.starProjection.toLinearMap = C := C.range_starProjection
+  simpa only [hr] using hi
+
+/-- Quantum Kac for the actual monitored Kraus history. The dimension is that
+of the original reachable space, and the channel need only fix its projection. -/
+theorem relevant_space_quantum_kac (K : α → Matrix n n ℂ) [Fintype α]
+    (P PiC : Matrix n n ℂ) (hP : P.PosSemidef) (hPP : P * P = P)
+    (htrP : P.trace = 1)
+    (hTP : ∑ a, (K a)ᴴ * K a = 1)
+    (hPiC : PiC.toEuclideanLin = (reachableSpace K P).starProjection.toLinearMap)
+    (hunital : weightedCP K (fun _ => 1) PiC = PiC) :
+    let E := weightedCP K (fun _ => 1)
+    let F := weightedCP (fun a => (1 - P) * K a) (fun _ => 1)
+    let p := fun k => (P * E (F^[k] P)).trace.re
+    HasSum (fun k => F^[k] P) PiC ∧ (∀ k, 0 ≤ p k) ∧
+      HasSum p 1 ∧ HasSum (fun k => (k + 1 : ℝ) * p k)
+        (Module.finrank ℂ (reachableSpace K P) : ℝ) := by
+  classical
+  dsimp only
+  let E := weightedCP K (fun _ => 1)
+  let F := weightedCP (fun a => (1 - P) * K a) (fun _ => 1)
+  let s : ℕ → ℝ := fun k => (F^[k] P).trace.re
+  have hseries := relevant_projection_hasSum K P PiC hP hPP hPiC hunital
+  have hmon (X : Matrix n n ℂ) : F X = (1 - P) * E X * (1 - P) := by
+    simp only [F, E, weightedCP, LinearMap.coe_mk, AddHom.coe_mk,
+      Complex.ofReal_one, one_smul, Matrix.conjTranspose_mul,
+      Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hP.isHermitian.eq,
+      Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
+  have htp (X : Matrix n n ℂ) : (E X).trace = X.trace := by
+    simp only [E, weightedCP, LinearMap.coe_mk, AddHom.coe_mk,
+      Complex.ofReal_one, one_smul, Matrix.trace_sum]
+    simp_rw [Matrix.trace_mul_cycle]
+    rw [← Matrix.trace_sum, ← Matrix.sum_mul, hTP, Matrix.one_mul]
+  have hQ : (1 - P) * (1 - P) = 1 - P := by
+    rw [mul_sub, sub_mul, mul_one, one_mul, hPP]
+    abel
+  have hloss (k : ℕ) : (P * E (F^[k] P)).trace.re = s k - s (k + 1) := by
+    have ht : (F (F^[k] P)).trace = (E (F^[k] P)).trace -
+        (P * E (F^[k] P)).trace := by
+      rw [hmon, Matrix.trace_mul_cycle, ← Matrix.mul_assoc, hQ,
+        Matrix.sub_mul, Matrix.one_mul, Matrix.trace_sub]
+    rw [htp] at ht
+    dsimp [s]
+    rw [Function.iterate_succ_apply', ht, Complex.sub_re]
+    ring
+  have hpos (k : ℕ) : (F^[k] P).PosSemidef := by
+    induction k with
+    | zero => exact hP
+    | succ k ih =>
+        rw [Function.iterate_succ_apply']
+        exact weightedCP_psd _ _ (fun _ => by norm_num) ih
+  have hp (k : ℕ) : 0 ≤ (P * E (F^[k] P)).trace.re := by
+    have hh := (weightedCP_psd K (fun _ => 1) (fun _ => by norm_num)
+      (hpos k)).mul_mul_conjTranspose_same P
+    have ht := hh.trace_nonneg
+    have heq : (P * E (F^[k] P) * Pᴴ).trace = (P * E (F^[k] P)).trace := by
+      rw [hP.isHermitian.eq, Matrix.trace_mul_cycle, ← Matrix.mul_assoc, hPP]
+    rw [heq] at ht
+    exact (Complex.nonneg_iff.mp ht).1
+  have hs : HasSum s PiC.trace.re :=
+    Complex.hasSum_re (hseries.mapL
+      (LinearMap.toContinuousLinearMap (Matrix.traceLinearMap n ℂ ℂ)))
+  have hanti : Antitone s := by
+    apply antitone_nat_of_succ_le
+    intro k
+    exact sub_nonneg.mp ((hloss k) ▸ hp k)
+  have hm := survival_difference_moments s PiC.trace.re hs hanti
+  have hs0 : s 0 = 1 := by simp [s, htrP]
+  have hdim : PiC.trace.re = (Module.finrank ℂ (reachableSpace K P) : ℝ) := by
+    rw [projection_trace _ PiC hPiC]
+    simp
+  refine ⟨hseries, hp, ?_, ?_⟩
+  · simpa only [hloss, hs0] using hm.1
+  · simpa only [hloss, hdim] using hm.2
+
 #print axioms monitored_reachable_space_eq
 #print axioms relevant_projection_hasSum
+#print axioms relevant_space_quantum_kac
 
 end D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac
