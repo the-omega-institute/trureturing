@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f71712f99966b88b53378a9c6d6cff77c0189a3fa14555cf41ee0a51a7c30b27
+  normalized_sha256: sha256:f71712f99966b88b53378a9c6d6cff77c0189a3fa14555cf41ee0a51a7c30b27
+cas_ref: sha256:f71712f99966b88b53378a9c6d6cff77c0189a3fa14555cf41ee0a51a7c30b27
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Model specification and assumptions: the parameter and seed probability spaces, product law, transition matrix and threshold recursion define the comparison source; this segment asserts no derived theorem.'
+    previous_atom_id: null
+    next_atom_id: 242883a4b39b6be314e1c0e6b2228b551bcbd7bfa6cbdd10e938091fc7ca6014

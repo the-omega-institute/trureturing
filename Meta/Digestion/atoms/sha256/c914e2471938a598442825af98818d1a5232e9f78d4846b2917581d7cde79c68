@@ -1,0 +1,14 @@
+**推论 149.11（全原对象、全菜单与每混输入的 minimum）。** 在定理149.3的等价条件下，采用其同一个 $\Phi$，置 $p_v=\Phi(P_v)$、$U=\Phi(I_3)$、$f_A(\Phi X)=\operatorname{Tr}(AX)$。则 [XI 条件应用145.9][S149XI145] 的全部静态字典适用，具体为
+
+| 原对象 | 同一个表示下的全部对应 |
+| --- | --- |
+| 全空间、全锥和原单位 | $V=\Phi(\operatorname{Herm}_3)$，$C=\Phi(\mathrm{PSD}_3)$，$u(\Phi X)=\operatorname{Tr}X$，包括零、次归一和任意非负质量。 |
+| 全部原态与纯点 | $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$，$P=\{p_v:\|v\|=1\}\cong\mathbb{CP}^2$；所有有限凸混合保持。 |
+| 全部效应与评价 | $\mathcal E=\{f_A:0\preceq A\preceq I_3\}$，原评价为 $\operatorname{Tr}(A\rho)$，零、单位、补及原锥序保持。 |
+| 完整非单点确认菜单 | $\mathcal F_{p_v}=\{f_{P_v+B}:B=Q_vBQ_v,\ 0\preceq B\preceq Q_v\}$。 |
+| least与每个原混输入的已达最低值 | least为 $f_{P_v}$，$T_{p_v}(\Phi\rho)=v^*\rho v$，由完整菜单的同一 $B=0$ 达到。 |
+| 整个原零球和球缘 | $D_{p_v}=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1,\rho v=0\}$，是整个 Bloch 三球；纯球缘为 $\mathbb{CP}^1\cong S^2$。 |
+| 二元最低确认和三元完成 | $T_{p_v}(p_w)=|v^*w|^2$；每条原零边有唯一第三纯点，三个正交纯投影及其 least 效应分别和为 $U$、$u$。全部不同纯对的原最小面为完整原球，全 Pair成立。 |
+| 全部有限数学 POVM | 对任意有限结果数，$f_j\in C^*$、$\sum_jf_j=u$ 恰对应 $A_j\succeq0$、$\sum_jA_j=I_3$；含零效应、重复项和全部有限粗粒化。 |
+| 谱、共同尺与 Jordan 结构 | 每态有三项正交纯谱分解，允许零权和重谱；迹内积使 $C$ 自对偶，$\Phi X\circ\Phi Y=\Phi((XY+YX)/2)$，单位为 $U$；正定合同变换给锥内部齐次性。 |
+| 全域球心几何 | $R(x)=(u(x)U-x)/2$，$c_p=R(p)$；在 $K$ 中相对 $U/3$ 反向缩小一半。全部有限纯配方替换球心后仍给同一原态。 |

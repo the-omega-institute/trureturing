@@ -1,0 +1,18 @@
+**定理 142.2（单根纯芽的原域全局化）。** 在定义142.1的完整 EB3+$\mathsf{Conn}$ 域，若一个事先固定的原根满足 $\mathsf G(o)$，则
+
+$$
+\boxed{P=Q(o)=\Lambda,\qquad
+\bigcup_{x\in Q(o)}D_x=M,\qquad \operatorname{conv}Q(o)=K.}
+\tag{XI142.3}
+$$
+
+更具体地，整个 $Q\ni x\mapsto D_x$ Hausdorff 连续并局部组成真正的闭三球丛；对每个紧集 $T\subset P$ 都有 $\dim_{\rm cov}T\le4$。对全部 $x,y\in P$，包括相同端点，存在同一个原纯标签 $a$ 满足 $x\perp a\perp y$。特别地，原固定根满足 $\mathsf R_1$。随后复用 [X133.6—133.7][Q142X]，取得同一个实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,
+\qquad \Phi(\mathrm{PSD}_3)=C,\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XI142.4}
+$$
+
+反向，整个标准复三能级锥及迹单位，经任意这样的同锥同单位表示运输，都满足完整 EB3、Conn，以及每个事先指定原根的 $\mathsf G$。因而在这一完整原域内，“EB3、Conn及存在一个固定根芽”与(XI142.4)等价。量子分类与维数工具为既有结论；本定理新增的是从单根局部信息到整个原域覆盖的桥。
+

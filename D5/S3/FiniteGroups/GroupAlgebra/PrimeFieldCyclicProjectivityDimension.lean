@@ -52,7 +52,7 @@ private theorem elementary_pow (g : E p) : g ^ p = 1 := by
 private theorem actual_order (g : E p) (hg : g ≠ 1) : orderOf g = p :=
   orderOf_eq_prime (elementary_pow g) hg
 
-private theorem geometric_norm_polynomial :
+theorem geometric_norm_polynomial :
     (∑ i ∈ Finset.range p, (X : (ZMod p)[X]) ^ i) = (X - 1) ^ (p - 1) := by
   have hp : ¬p ∣ 1 := by
     exact fun h => (Fact.out : p.Prime).ne_one (Nat.dvd_one.mp h)

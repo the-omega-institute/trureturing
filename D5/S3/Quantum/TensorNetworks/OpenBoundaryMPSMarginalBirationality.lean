@@ -189,7 +189,7 @@ private def sumNumerator :
   matrixNumerator 0 + matrixNumerator 1
 private def boundaryNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   basisNumerator *ᵥ rightKernelNumerator
-private def chartPoly : MvPolynomial (Fin 3 → Fin 2) ℂ :=
+def chartPoly : MvPolynomial (Fin 3 → Fin 2) ℂ :=
   minorPoly * basisNumerator.det * sumNumerator.det *
     (coordinate 0 0 0 * coordinate 1 0 1 - coordinate 0 0 1 * coordinate 1 0 0) *
     (coordinate 0 0 0 * coordinate 0 1 1 - coordinate 0 0 1 * coordinate 0 1 0)
@@ -204,13 +204,13 @@ private def numerator (n a : ℕ) (w : Fin n → Fin 2) :
 private def rationalInverse (n a : ℕ) (t : (Fin 3 → Fin 2) → ℂ) :
     (Fin n → Fin 2) → ℂ :=
   fun w => MvPolynomial.eval t (numerator n a w) / MvPolynomial.eval t (denominator n)
-private def reconstructedLeft (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
+def reconstructedLeft (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
   fun i => MvPolynomial.eval t (leftNumerator i) / MvPolynomial.eval t minorPoly
 private def reconstructedKernel (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
   fun i => MvPolynomial.eval t (rightKernelNumerator i) / MvPolynomial.eval t minorPoly
 private def reconstructedBasis (t : (Fin 3 → Fin 2) → ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   fun i k => MvPolynomial.eval t (basisNumerator i k) / MvPolynomial.eval t minorPoly
-private def reconstructedMatrix (t : (Fin 3 → Fin 2) → ℂ) (j : Fin 2) :
+def reconstructedMatrix (t : (Fin 3 → Fin 2) → ℂ) (j : Fin 2) :
     Matrix (Fin 2) (Fin 2) ℂ :=
   Matrix.of (fun i k => t ![i, j, k]) * (reconstructedBasis t)⁻¹
 private def reconstructedRight (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
@@ -666,7 +666,7 @@ private lemma kernel_vector_unique (t : (Fin 3 → Fin 2) → ℂ)
     rw [heq]
     exact congrFun hxy j
 
-private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2 → ℂ)
+lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2 → ℂ)
     (hg : MvPolynomial.eval (mpsState 3 a₀ a₁ l r) chartPoly ≠ 0) :
     ∃ s : ℂ, s ≠ 0 ∧ ∃ u : Matrix (Fin 2) (Fin 2) ℂ, IsUnit u.det ∧
       reconstructedLeft (mpsState 3 a₀ a₁ l r) = s⁻¹ • (l ᵥ* u⁻¹) ∧

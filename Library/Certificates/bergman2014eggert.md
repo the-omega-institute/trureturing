@@ -5,10 +5,11 @@ year: 2014
 title: Thoughts on Eggert's Conjecture
 doi: 10.1090/conm/609/12101
 url: https://arxiv.org/abs/1206.0326v2
-claim: Questions 15 and 19 ask about powers in contracted semigroup spans and the field-condition extension of the nilpotent-algebra dimension bound from Question 16.
+claim: Questions 15 and 19 ask about powers in contracted semigroup spans and the field-condition extension of the nilpotent-algebra dimension bound from Question 16; Question 23 asks whether an annihilator quotient has dimension at most the mixed product space.
 strata_touched:
   - D5/S0/Certificates/Algebra/BergmanQuestion15Refutation
   - D5/S0/Certificates/Algebra/BergmanInfiniteFieldRefutation
+  - D5/S0/Certificates/Algebra/BergmanQuestion23Refutation
 license: citation-only
 triage: anchor
 ---
@@ -106,3 +107,25 @@ priority claim and does not assert that the quadratic construction is new.
   labels `Cv.cm_ass`, `Q.V->`, `Q.rash`, and `E.nonassoc` at the line ranges above.
 - Author TeX SHA256:
   `b8a3d395046cc8459a77b5657f6dab8fa37b11af7012ffd0c4f2dd73c9eb80cc`.
+
+## The annihilator quotient in Question 23
+
+Section 6, Question 23, equation (22), printed p.16 of the final author
+preprint, asks:
+
+> If R is a commutative algebra over a field F, V a finite-dimensional
+> subspace of R, and n a positive integer, must
+> dim(V/Ann_V V^n) ≤ dim V^n?
+
+Here `Ann_V W = {x ∈ V | xW = {0}}`, and `V^n` is the span of all mixed
+products of exactly n elements of V. Convention 2 supplies associativity,
+allows algebras without an identity, and takes all dimensions over F. The
+question imposes no ambient finite-dimensionality, nilpotence or
+characteristic restriction. Its following remark concerns only the range
+`dim V^n ≤ 4`.
+
+The formal counterpart is
+`D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.claim`; its literal
+negation is `D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.result`.
+The all-field counterfamily uses the classical shifted dual idealization
+attributed to Stanley in `Library/Certificates/stanley1978hilbert.md`.

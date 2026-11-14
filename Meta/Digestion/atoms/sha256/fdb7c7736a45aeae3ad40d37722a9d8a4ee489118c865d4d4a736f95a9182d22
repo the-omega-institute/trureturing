@@ -1,0 +1,5 @@
+**定理 137.3（单根纯芽的支持结论）。** 在定义137.1的完整 EB3+$\mathsf{Conn}$ 域，若同一个 $o$ 满足 $\mathsf G(o)$，则：
+
+1. $\Omega$ 仿射等价于完整闭三球，因而 $N_o$ 线性同构于四维 Lorentz 锥。
+2. 存在同胚 $b:S_o\to\partial_H\Omega$，使
+

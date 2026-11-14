@@ -1,0 +1,29 @@
+**Definition 1.1 (source and observation premises).** The source is the original complex native system of [III145–148][III] and [XI1.1–1.4][XI]. Its configuration space and carrier are
+
+$$
+E=\{q\subseteq\{1,\ldots,9\}:q\text{ has no adjacent occupied sites}\},
+\qquad |E|=89,\qquad \mathcal K=\mathbb C^E.
+$$
+
+Retain its original $26+63$ decomposition, fixed exterior bits, and unique actual ready
+$q_0=q_{\rm r}=\{3,7\}$. Put
+
+$$
+x=\varphi^{-1}=(\sqrt5-1)/2,\quad y=\sqrt x,\quad
+\zeta=e^{3\pi i/5},\quad
+Q_*=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix},\quad
+K_j=\zeta[I+(\zeta-1)\mathcal P_j].
+\tag{1.1}
+$$
+
+The original projections $\mathcal P_j$, all their singleton blocks, and the full positive unit pulses $K_j$ are unchanged. In particular $\mathcal P_0=n_1$, and address $1$ acts by $Q_*$ when its two neighbours are zero. The prefix menu is $\mathsf W_{11}=\{0,\ldots,10\}^{<\infty}$ and the external post-read menu is $\mathsf W_7=\{0,\ldots,6\}^{<\infty}$, both including the empty word. Concatenation is chronological, so $K_{aj}=K_jK_a$.
+
+The programme $\mathsf T(a)$ executes $a$ and then the original terminal. The programme $\mathsf R(a,f)$ executes $a$, reports $I=b_9(Q_-)$ with $Q_+=Q_-$, applies the original positive-branch pure update $M_I\psi/\|M_I\psi\|$, executes the external word $f$ independently of the report, and uses that same terminal. Its literal report is
+
+$$
+W(Q)=(b_{-1},\ldots,b_8)(Q)\in\{0,1\}^{10}.
+\tag{1.2}
+$$
+
+Assume the original ideal zero-failure process, coherent execution, Born terminal law and original read/update contracts, for example as supplied by [XI6.1–6.2][XI]. Every actual archive retains its original causal kernel and the conditional sufficiency required there. All original terminal labels, failure, refusal, stop and alarm coordinates remain in the readable law; zero ideal mass does not remove them. No arbitrary preparation, reset, fork, hidden-path reader, new archive algorithm or additional control is included in these premises.
+

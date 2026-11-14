@@ -1,0 +1,61 @@
+**命题 147.6（限制同构、完整边区间与完整法向基）。** 在定理147.1的前件下，固定任意 $p\in P_{\rm s}$，写 $D_p=c+B\overline{\mathbb B}^3$。则式(XII147.3)成立。对 $i=1,2,3$，唯一取 $H_i\in L_p$，使 $H(c+Bw)=w$，其中 $H=(H_1,H_2,H_3)$。定义
+
+$$
+\rho_p(v)=\sup_{x\in K\setminus\{p\}}
+\frac{-v\cdot H(x)}{g_p(x)}\qquad(v\in\mathbb R^3).
+\tag{XII147.14}
+$$
+
+它有限、正齐次、次可加、Lipschitz，且 $\rho_p(v)\ge\|v\|$。有准确的原锥及原最大值公式
+
+$$
+N_p=\{\alpha g_p+v\cdot H:\alpha\ge\rho_p(v)\},\qquad
+\max_K(\alpha g_p+v\cdot H)=\alpha+\|v\|\quad(\alpha\ge\rho_p(v)).
+\tag{XII147.15}
+$$
+
+对每个 $t\in S^2$、$q_t=c+Bt$，有整个 $V$ 上的等式
+
+$$
+e_{q_t}=\frac{\rho_p(t)g_p+t\cdot H}{1+\rho_p(t)},\qquad
+\{b\in\mathcal E:b(p)=0,b(q_t)=1\}=[g_p,e_{q_t}].
+\tag{XII147.16}
+$$
+
+特别地 $t\mapsto e_{q_t}$ 在固定整张原球面上 Lipschitz。
+
+$N_p$ 在四维 $L_p$ 中闭、尖、满维、严格凸，其全部非零边界射线恰为 $\mathbb R_+e_q$，$q\in S_p$，均为暴露极射线。固定任意 $z\in\operatorname{ri}K$，则全部原归一法向基满足
+
+$$
+B_p^*=\{h\in N_p:h(z)=1\}
+=\operatorname{conv}\{e_q/e_q(z):q\in S_p\}.
+\tag{XII147.17}
+$$
+
+这里是有限凸组合，无须另取闭包，每项至多四个生成元。
+
+证明。引理147.2的满射与两边维数四给 $R_p$ 同构。式(XII147.6)中的 $g_c$ 由切片等式(XII147.7)及 $\mathcal A_p=\{e_p\}$ 必为 $g_p$，故 $g_p\in\operatorname{ri}N_p$。其零集为 $\{p\}$ 已由端面唯一性证明，故式(XII147.14)分母在全部所写定义域严格正。
+
+取统一 $\delta>0$，使 $g_p\pm\delta H_i\in N_p$。于是整个 $K$ 上 $\|H(x)\|\le\sqrt3g_p(x)/\delta$。这给式(XII147.14)的有限性及 Lipschitz 界；$v\ne0$ 时代入 $c-Bv/\|v\|$ 给 $\rho_p(v)\ge\|v\|$，$v=0$ 时直接成立。正齐次与次可加由上确界定义给出。限制同构使每个 $L_p$ 元素唯一写成 $\alpha g_p+v\cdot H$，其原正性恰为式(XII147.15)的不等式；只有正性已付以后才用引理147.2的全域最大值公式，得到第二式。
+
+若 $b\in\mathcal E,b(p)=0,b(q_t)=1$，球支持等号及限制同构给
+
+$$
+b=(1-\beta)g_p+\beta t\cdot H,\qquad
+0\le\beta\le(1+\rho_p(t))^{-1}.
+$$
+
+反向每个此范围的泛函由式(XII147.15)在原 $C$ 上非负，且全域最大值为一，故属于整个 $\mathcal E$。取 $e_{q_t}\in\mathcal A_{q_t}$，这里 $q_t\in P_{\rm s}$ 已由邻点闭包支付。其参数不为零，否则它在整张 $D_p$ 为一。取 $y\in D_{q_t}\setminus\{p\}$，则 $g_p(y)>0$，而 $e_{q_t}(y)=0$ 给 $(1-\beta)/\beta\le\rho_p(t)$；正性给反向不等式，所以参数恰取上端点，证明式(XII147.16)及其 Lipschitz 性。
+
+式(XII147.15)表明非零边界为 $\alpha=\rho_p(v),v\ne0$，经正齐次化即全部所述射线。对 $q\in S_p$，取 $x_q\in\operatorname{ri}D_q$。正泛函在该相对内点零便零于整个 $D_q$，故
+
+$$
+N_p\cap\{h:h(x_q)=0\}=N_{D_q}=\mathbb R_+e_q.
+$$
+
+右侧确实在 $N_p$，因 $p\in D_q$。这用的是 $q\in P_{\rm s}$ 已付的完整零面法向射线，故每条边界射线暴露且极端。若两个不成比例的非零锥元之和在边界，其暴露评价在两项上均零，迫它们同属一条射线，矛盾。闭、尖来自原 $C^*$，满维来自 $g_p\in\operatorname{ri}N_p$。
+
+$z$ 是 $C$ 的内点，故每个非零原正泛函有 $h(z)>0$，且有统一 $d>0$ 使 $h(z)\ge d\|h\|$。所以 $B_p^*$ 是三维紧凸基。其极点恰对应上面全部极射线，有限维极点生成及 Carathéodory 给式(XII147.17)和四项界。固定球面效应连续还保证生成集合紧。以上是同一原法向锥的全部基，不是有限预选效应所张的子锥。证毕。
+
+注意，$R_p$ 是线性同构不表示 $R_p(N_p)=\operatorname{Aff}(D_p)_+$。由式(XII147.15)，后者等式恰要求全部方向 $\rho_p(v)=\|v\|$，本章未证明此饱和。唯一整球确认也未给 $T_p(x)=e_p(x)$ 对每个原混输入成立。
+

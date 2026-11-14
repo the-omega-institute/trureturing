@@ -1,0 +1,62 @@
+**定理 149.3（单根互易的全方向常值刚性）。** 在149.2的同一完整前件下，存在 $R_p\ge1$，使
+
+$$
+\boxed{\qquad
+\rho(v)=R_p,\qquad
+m(v)=\frac{2}{1+R_p},\qquad
+e_p(c_q)=\frac{R_p}{1+R_p}
+\quad(v\in S^2,\ q\in S_p).
+\qquad}
+\tag{XI149.13}
+$$
+
+证明。置 $d(v)=e_{a_v}(p)$。由于 $a_v\ne p$，(XI149.2)给 $0\le d(v)<1$。SAME_READBACK123.3是两个实际球图经限制同构在整个原空间消元的恒等式；其前件是 $P_0$ 接口，不要求 $P_{\rm reg}$。按本章参数对应，
+
+$$
+\begin{gathered}
+R_v=u-e_p-e_{q_v}=\frac{g-v\cdot H}{1+\rho(v)},\\
+e_{a_v}=d(v)e_p+
+\left(d(v)+\frac{1-d(v)}{m(v)}\right)R_v .
+\end{gathered}
+\tag{XI149.14}
+$$
+
+这里 $R_v$ 未被假设为正效应。定义同一支撑函数的余差
+
+$$
+\mathfrak B(v,w)=\rho(v)-\rho(w)-\nabla\rho(w)\cdot(v-w)\ge0.
+\tag{XI149.15}
+$$
+
+已有 $H(a_w)=m(w)z_w$、$\nabla\rho(w)=-z_w$ 及 $w\cdot z_w=-\rho(w)$，故
+
+$$
+R_v(a_w)=m(w)\left(1-\frac{\mathfrak B(v,w)}{1+\rho(v)}\right).
+\tag{XI149.16}
+$$
+
+使用合法原效应在实际原态上的上界 $e_{a_v}(a_w)\le1$，与 SAME_READBACK124.3同样的代入给
+
+$$
+\begin{aligned}
+(1-d(v))(m(w)-m(v))
+&\le\bigl(d(v)m(v)+1-d(v)\bigr)m(w)
+\frac{\mathfrak B(v,w)}{1+\rho(v)}\\
+&\le\frac{\mathfrak B(v,w)}{1+\rho(v)} .
+\end{aligned}
+\tag{XI149.17}
+$$
+
+完整消元式和原上界都在同一个实现中，且 $m(v),m(w)\le1$；没有将不同原态上的分别最优值拼接成共同实现。
+
+由149.2，$\rho$ 在非零方向 $C^1$，而 $m=2/(1+\rho)$ 在球面上也已 $C^1$。固定 $v$，沿任一光滑双向球面弧 $w(t)$、$w(0)=v$，有
+$\mathfrak B(v,w(t))=o(|t|)$。这可由(XI149.12)或沿短线段积分连续梯度得到。将(XI149.17)除以严格正的 $(1-d(v))(1+\rho(v))$：对 $t>0$、$t<0$ 分别除以 $t$ 并取极限，得到
+
+$$
+\left.\frac{d}{dt}m(w(t))\right|_{t=0}\le0,\qquad
+\left.\frac{d}{dt}m(w(t))\right|_{t=0}\ge0 .
+\tag{XI149.18}
+$$
+
+所以所有切向导数均为零；$S^2$ 连通，$m$ 在整个球面常值，(XI149.6)使 $\rho$ 常值，(XI149.9)再给全部邻球心的同值式。这里不需要 $d$ 连续、统一的反向缺口或旧124.4中另列的正规锚点前件。证毕。
+

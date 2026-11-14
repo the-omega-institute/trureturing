@@ -44,6 +44,10 @@ Lean statement: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.width`
 
 The supremum of whole-set oscillations over the entire original proper effect interval. On each entire original exclusion ball this supremum is attained by an effect and two endpoints.
 
+The complete calibration used by X126.2-X126.4 is developed in CommonOldExclusionConfirmation. On any whole original exclusion ball H, comparison_attained chooses an original confirmer at the actual pure antipode. OriginalRegularHeight.peak_formula applies with its original proper-effect and peak hypotheses. Antipodal minimality makes this same effect minimize at every mixed input of H; pure PR makes the coefficient independent of the sphere endpoint.
+
+Thus T_(b(w))(b(z))=1-a_H+a_H inner(w,z) for every unit w and every norm(z)<=1, with 0<a_H<=1/2. Strict original endpoint exposure supplies positivity, and the common center-uniqueness result identifies the coefficient across all whole charts. The detailed application keeps every original effect and mixed state and assumes no Inj, Pair, mixed PR or RegularAnchor. Its sharp positive-extension budget is a separate obligation, and no reciprocal budget is introduced by definition.
+
 **Theorem 1.4 (Full-effect attainment on compact sets).**
 
 Lean statement: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.width_attained`

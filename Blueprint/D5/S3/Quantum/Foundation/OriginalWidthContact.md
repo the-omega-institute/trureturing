@@ -66,6 +66,10 @@ E: the actual intersection is {r}={p3}, and D(r)=[p0,p1] contains p and s. Its f
 
 This is an application derivation using the existing hull/exposure, finite-dimensional affine and linear algebra, trigonometric, segment-extrema and golden-ratio results. The kernel certificate attached to original_width_contact below is the general contact theorem; it is not a separate compiled certificate of all these pentagon coordinate correspondences. Each exclusion chart here has dimension one. The calculation supplies no EB3 model, logical-independence result, physical instrument, unit-preserving positive retraction or literature-originality claim. The polygon literature supplies the carrier and effect inputs; the full-width and normal-coordinate derivation is the stated elementary application.
 
+The complete original-domain X126.4 application of normalized_effect is developed in CommonOldExclusionConfirmation together with X126.2 and X126.3. For every actual index i and every original f in the entire F_(p_i), choose this same f's actual whole-K minimizer a and m=f(a). When m<1, normalized_effect with minimum a and maximum p_i places a in the actual D_(p_i) through (f-mu)/(1-m). The estimate uses the unchanged f, giving 0<=f(q)-m<=M d_H(D_(p_i),{q}) with the common whole-effect norm maximum and no reciprocal loss.
+
+The owning exposition gives the unique coefficients of (f-mu) on the same entire old ball D_p, the complete alpha and slope inequalities, the nested supremum over every moving confirmer and every mixed old-ball input, and the full moving-face limit inclusion. It includes f=u with m=1 and alpha=t=0 at every index. Actual singleton purity comes from the unchanged EB3 plus pure-PR dichotomy; no arbitrary confirmer is presumed to have minimum zero, and every effect used in the moving-face application must actually confirm the same p_i.
+
 **Theorem 1.1 (Normalize on the whole base and the whole cone).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalWidthContact.normalized_effect`

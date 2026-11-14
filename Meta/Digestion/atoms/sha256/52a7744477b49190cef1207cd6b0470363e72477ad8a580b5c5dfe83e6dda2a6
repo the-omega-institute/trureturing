@@ -1,0 +1,56 @@
+**接口 145.3（全部原标签）。** 第1项由 [THREE_COPY VIII130.2][Q145TVIII]得到 Inj、$P=P_0$；第2项则由 [BILATERAL VIII121.6][Q145B]在 EB3+Inj+九维域得到 $P=P_0$。两条入口均对**所有** $p\in P$ 支付以下同一接口：
+
+$$
+\begin{gathered}
+\mathcal A_p=\{e_p\},\qquad g_p=u-e_p,\qquad \dim L_p=4,\\
+N_{D_p}:=\{h\in C^*:h|_{D_p}=0\}=\mathbb R_+e_p,\qquad
+K\cap\{e_p=0\}=D_p,\qquad K\cap\{e_p=1\}=\{p\},\\
+R_p:L_p\overset\sim\longrightarrow\operatorname{Aff}(D_p),\quad h\longmapsto h|_{D_p},
+\qquad g_p\in\operatorname{ri}N_p,\qquad K\cap\{g_p=0\}=\{p\}.
+\end{gathered}
+\tag{XI145.5}
+$$
+
+限制同构与相对内部事实准确取自 [IX120.7—120.8][Q145IX]；维数、暴露射线公式取自 IX119.10。没有在此给 $R_p^{-1}$ 正性。完整面接口取 [XI137.2及其 VII103.2、IX116.1—116.2 来源][Q145XI]：每个 $D_p$ 为非点紧暴露极大真面；全部非空真面只有纯单点和完整排除球；$S_p=\partial_{\rm rel}D_p\cong S^2$、$D_p=\operatorname{conv}S_p$；不同球至多交一个原纯点。特别地，混边界点有唯一最小面 $D_a$，并在其相对内部；在该点为零的全部原正法向恰为 $N_{D_a}=\mathbb R_+e_a$。这些事实不输入全 Pair。
+
+以下三个供应直接引用，不重新推导其源证明。
+
+* [IX120.2][Q145IX]在完整原域给
+
+$$
+\max_Kh=\max_{D_p}h\qquad(h\in N_p).
+\tag{XI145.6}
+$$
+
+* [IX120.11—120.12][Q145IX]给固定**整张**原球面上的 Lipschitz 效应及准确原边区间。具体地，写 $D_p=c_p+B_p\overline{\mathbb B}^3$、$s(t)=c_p+B_pt$，其中 $B_p$ 单射；取 $H_i\in L_p$ 满足 $H(c_p+B_pw)=w$。则有限 Lipschitz 方向函数及原泛函公式为
+
+$$
+\begin{gathered}
+\rho_p(v)=\sup_{x\in K\setminus\{p\}}\frac{-v\cdot H(x)}{g_p(x)},\qquad
+\rho_p(v)\ge\|v\|,\\
+e_{s(t)}=\frac{\rho_p(t)g_p+t\cdot H}{1+\rho_p(t)},\qquad
+\{b\in\mathcal E:b(p)=0,b(s(t))=1\}=[g_p,e_{s(t)}]\quad(t\in S^2).
+\end{gathered}
+\tag{XI145.7}
+$$
+
+这是整个原 $V$ 上的效应公式与完整区间；只支付固定 $S_p$ 上的连续性，不宣称此时全 $P$ 上连续。
+
+* [THREE_COPY VII122.2—122.5][Q145TVII]的前件是 EB3+Inj、一个 $p\in P_0$。由(XI145.5)，它对每个原 $p$ 适用：$N_p$ 在四维 $L_p$ 中闭、尖、满维、严格凸，其每条非零边界射线恰为某个 $\mathbb R_+e_s$、$s\in S_p$，且是暴露极射线。
+
+固定一次 $z\in\operatorname{ri}K$。它也是 $C$ 的内点，故每个非零 $h\in C^*$ 都有 $h(z)>0$。取辅助欧氏单位球，在 $z$ 周围有 $z+\delta\overline B_V\subset C$，于是 $h(z)\ge\delta\|h\|$ 对所有 $h\in C^*$ 成立。记
+
+$$
+\widehat h=h/h(z),\qquad B_p^*=\{h\in N_p:h(z)=1\}.
+\tag{XI145.8}
+$$
+
+$B_p^*$ 是非空紧凸基。其极点恰对应 $N_p$ 的极射线；上述**全部**边界射线描述给出全部极点 $\widehat e_s$。有限维紧凸集的极点生成定理因而准确给
+
+$$
+\boxed{B_p^*=\operatorname{conv}\{\widehat e_s:s\in S_p\}.}
+\tag{XI145.9}
+$$
+
+这里 conv 是有限凸组合，不需另取闭包：基的仿射维数为三，Carathéodory 定理使每项至多需四个极点；固定球面的效应连续性又使生成集合紧。此为既有完整射线描述的接口应用，不是新的球面效应连续性证明。尤其 $\widehat g_p\in B_p^*$ 也在这同一完整基中。
+
