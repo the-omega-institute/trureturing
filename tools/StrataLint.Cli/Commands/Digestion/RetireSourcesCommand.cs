@@ -1,0 +1,171 @@
+using System.Collections.Immutable;
+using StrataLint.Engine;
+
+namespace StrataLint.Cli;
+
+// Retire a complete intake unit so a subsequent ingest cannot recreate its atoms.
+internal static partial class RetireSourcesCommand
+{
+    private const string TheoryRoot = "docs/develop/theory/";
+    private const string ArchiveRoot = "docs/develop/archive/theory/";
+
+    internal static CommandResult Run(string root, IRepositoryGateway repository,
+        ILeanReportSource reportSource, IReadOnlyList<string> arguments,
+        Action? beforeCommit = null, Action<string, string>? commit = null)
+    {
+        try
+        {
+            var options = Parse(arguments);
+            var metadata = DigestionQuerySelection.ReadSourceMetadata(repository, options.Sources);
+            var sources = metadata.Document.RequireDigestionSources();
+            foreach (var source in sources)
+                if (!source.SourcePath.StartsWith(TheoryRoot, StringComparison.Ordinal)
+                    || !source.SourcePath.EndsWith(".md", StringComparison.Ordinal))
+                    throw new FormatException($"NOT_THEORY_SOURCE source_id={source.SourceId}");
+            var prefixes = sources.Select(source => BackfillInventoryLoader.RootPath + source.SourceId + "/").ToArray();
+            var selectedRaw = repository.ReadCurrent(prefixes.Select(DigestionQuerySelection.Literal).ToArray());
+            _ = DigestionQuerySelection.Merge(metadata.Raw, selectedRaw);
+            var loaded = DigestionQuerySelection.ReadChains(repository, DigestionQuerySelection.Load(selectedRaw));
+            var entries = loaded.Document.RequireDigestionEntries();
+            if (entries.IsEmpty) throw new FormatException("EMPTY_RETIREMENT");
+            if (entries.GroupBy(entry => entry.AtomId).Any(group => group.Count() != 1))
+                throw new FormatException("AMBIGUOUS_ATOM");
+            var inputs = sources.Select(source => source.SourcePath)
+                .Concat(entries.Select(DigestionQuerySelection.CasPath)).Append("Meta/FILEMAP.toml")
+                .Concat(repository.SearchCurrentPaths([":(glob)Meta/FILEMAP.*.toml"]))
+                .Concat(entries.Any(entry => !entry.Coverage.IsEmpty)
+                    ? ["D5", "Reg", "Trureturing.lean", "Golden/Frozen/state"] : Array.Empty<string>())
+                .ToArray();
+            loaded = DigestionWorkingTree.Extend(repository, loaded, Decode, inputs);
+            foreach (var source in sources) DigestionSourceEligibility.Require(loaded.Snapshot, source.SourcePath);
+            var targets = entries.SelectMany(entry => entry.CoverageGids)
+                .Select(gid => Gid.TryParse(gid, out var parsed) && parsed.ToTarget() is Target.Formal
+                    ? parsed.Path : throw new FormatException($"INVALID_COVERAGE gid={gid}"))
+                .Distinct().ToArray();
+            if (options.LeanInputs)
+                return new(true, string.Join(' ', targets.Select(path => path.Value[..^5].Replace('/', '.'))) + "\n", string.Empty);
+            RequireTerminal(loaded.Snapshot, loaded.Document, targets, reportSource);
+
+            var removedIds = sources.SelectMany(source => loaded.Document.RequireDigestionSources()
+                    .Single(current => current.SourceId == source.SourceId).Entries)
+                .Select(entry => entry.AtomId).ToHashSet(StringComparer.Ordinal);
+            var captured = RequireNoReferences(repository, prefixes, removedIds, sources.Select(source => source.SourcePath).ToArray());
+            var updates = ImmutableArray.CreateBuilder<IngestCommand.LedgerUpdate>();
+            foreach (var source in sources)
+            {
+                var original = loaded.Raw.Entries.Single(entry => entry.Path == source.SourcePath);
+                if (options.Mode == "archive")
+                {
+                    var destination = ArchiveRoot + source.SourcePath[TheoryRoot.Length..];
+                    if (repository.SearchCurrentPaths([DigestionQuerySelection.Literal(destination)]).Count > 0)
+                        throw new FormatException($"ARCHIVE_EXISTS path={destination}");
+                    if (FileMapLoader.LoadSnapshot(loaded.Snapshot).Match(destination) is not [{ DigestionSource: false, Symlink: null }])
+                        throw new FormatException($"ARCHIVE_POLICY_MISSING path={destination}");
+                    updates.Add(new(destination, ArchiveMarkdown(original.Bytes, source.SourcePath, destination), -1));
+                }
+                updates.Add(new(source.SourcePath, null));
+            }
+            foreach (var entry in selectedRaw.Entries)
+                updates.Add(new(entry.Path, null));
+            var output = string.Concat(sources.Select(source =>
+                $"RETIRE_SOURCE source_id={source.SourceId} mode={options.Mode} atoms={loaded.Document.RequireDigestionSources().Single(current => current.SourceId == source.SourceId).Entries.Length}\n"));
+            if (!options.Write) return new(true, "RETIRE_PREVIEW\n" + output, string.Empty);
+            var current = DigestionQuerySelection.Merge(loaded.Raw, captured);
+            beforeCommit?.Invoke();
+            IngestCommand.ApplyLedgerUpdatesAtomically(root, current, updates.ToImmutable(), commit, () =>
+            {
+                var reread = repository.ReadCurrent(current.Entries.Select(entry => DigestionQuerySelection.Literal(entry.Path)).ToArray());
+                RequireSame(current, reread);
+                var fresh = RequireNoReferences(repository, prefixes, removedIds, sources.Select(source => source.SourcePath).ToArray());
+                RequireSame(captured, fresh);
+                var freshSelected = repository.ReadCurrent(prefixes.Select(DigestionQuerySelection.Literal).ToArray());
+                RequireSame(selectedRaw, freshSelected);
+                foreach (var update in updates.Where(update => update.Bytes is not null))
+                    if (File.Exists(Path.Combine(root, update.Path)) || Directory.Exists(Path.Combine(root, update.Path)))
+                        throw new IOException($"ARCHIVE_EXISTS path={update.Path}");
+                foreach (var entry in current.Entries)
+                    RequireRegularPath(root, entry.Path);
+                foreach (var update in updates) RequireRegularPath(root, update.Path);
+            });
+            return new(true, "RETIRE_WRITTEN\n" + output, string.Empty);
+        }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            return new(false, string.Empty, $"RETIRE_INVALID {error.Message}\n");
+        }
+    }
+
+    private static void RequireTerminal(RepositorySnapshot snapshot, BackfillInventoryDocument document,
+        RepoPath[] targets, ILeanReportSource reportSource)
+    {
+        var entries = document.RequireDigestionEntries();
+        _ = DigestionDecomposition.ValidatedClosure(entries.Select(entry => entry.AtomId),
+            entries.ToDictionary(entry => entry.AtomId, StringComparer.Ordinal), snapshot);
+        DigestionLedgerEvaluation evaluation;
+        if (targets.Length == 0)
+            evaluation = DigestionStatusEvaluator.EvaluateUncovered(DigestionEvaluationScope.FullScan, document, snapshot);
+        else
+        {
+            var report = LeanReportSourceScope.Load(reportSource, snapshot, targets);
+            var lean = LeanClosureValidator.Validate(snapshot, report) switch
+            {
+                LeanValidationOutcome.Accepted accepted => accepted.Capability,
+                LeanValidationOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
+            };
+            evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan, document, snapshot, lean);
+        }
+        IngestCommand.RequireNoReceiptIntegrityFailure(evaluation);
+        if (evaluation.Entries.Length != entries.Length) throw new FormatException("INCOMPLETE_EVALUATION");
+        foreach (var item in evaluation.Entries)
+        {
+            var nonpropositional = item.DerivedStatus == new DigestionStatus(DigestionMigrationState.Nonpropositional, DigestionTruthState.Inapplicable)
+                && item.Entry.Receipts.Nonpropositional is { IsValid: true };
+            var closed = item.Deletable && item.DerivedStatus == new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed);
+            if ((!closed && !nonpropositional) || item.DerivedStatus != item.Entry.ProjectedStatus || !item.Gaps.IsEmpty
+                || !item.Entry.Receipts.UnresolvedSubitems.IsEmpty || item.Entry.Receipts.Quarantine is not null
+                || item.Entry.Receipts.CoverDisposition is not null || item.Entry.Receipts.TailAuthorization is not null)
+                throw new FormatException($"ATOM_NOT_TERMINAL {item.Render()}");
+            if (nonpropositional)
+            {
+                var receipt = item.Entry.Receipts.Nonpropositional!;
+                if (!DigestionAtomContextProjection.ResolveOccurrences(snapshot, document, item.Entry.AtomId).Any(context =>
+                        context.Previous?.AtomId == receipt.PreviousAtomId && context.Next?.AtomId == receipt.NextAtomId))
+                    throw new FormatException($"CONTEXT_MISMATCH atom_id={item.Entry.AtomId}");
+            }
+        }
+        // Recorded terminal entries must also account for the current source's complete claim set.
+        var alignment = DigestionLedgerAligner.Evaluate(document, snapshot, DigestionAlignmentMode.Projection);
+        if (alignment.Findings.Length > 0 || alignment.Residual.Length > 0)
+            throw new FormatException("SOURCE_HAS_RESIDUAL_OR_INVALID_CLAIMS");
+    }
+
+    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) => SnapshotDecoder.Decode(raw) switch
+    {
+        SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+        SnapshotDecodeOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
+    };
+
+    private sealed record Options(string[] Sources, string Mode, bool Write, bool LeanInputs);
+
+    private static Options Parse(IReadOnlyList<string> arguments)
+    {
+        var sources = new List<string>();
+        string? mode = null;
+        var write = false;
+        var leanInputs = false;
+        for (var i = 0; i < arguments.Count; i++)
+            switch (arguments[i])
+            {
+                case "--write" when !write: write = true; break;
+                case "--lean-inputs" when !leanInputs: leanInputs = true; break;
+                case "--source" when i + 1 < arguments.Count: sources.Add(arguments[++i]); break;
+                case "--mode" when mode is null && i + 1 < arguments.Count: mode = arguments[++i]; break;
+                default: throw Usage();
+            }
+        if (sources.Count == 0 || mode is not ("archive" or "delete") || write && leanInputs) throw Usage();
+        return new(sources.Distinct(StringComparer.Ordinal).ToArray(), mode, write, leanInputs);
+    }
+
+    private static FormatException Usage() => new(
+        "USAGE: StrataLint retire-sources --source SOURCE_ID_OR_PATH [--source ...] --mode archive|delete [--write | --lean-inputs]");
+}
