@@ -6,12 +6,14 @@ import Mathlib.Data.Nat.Choose.Dvd
 import Mathlib.Data.Nat.Choose.Factorization
 
 /-!
-# The nonzero-residue Elmer–Kadr criterion
+# The complete finite-field Elmer–Kadr residue criterion
 
-The actual finite direct sum of contragredient polynomial actions splits off
-the tensor product precisely when the high-digit binomial is nonzero.
-The remainder is the literal tensor with both dimensions reduced by the
-smaller residue. Necessity retains the original relative-factor witnesses.
+For nonzero low residues, the actual finite direct sum of contragredient
+polynomial actions splits off the tensor product precisely when the high-digit
+binomial is nonzero. If either low residue is zero, the expected direct sum is
+empty and the tensor product is unconditionally relative-projective. The
+remainder is the literal tensor with both dimensions reduced by the smaller
+residue. Necessity retains the original relative-factor witnesses.
 
 Source: Elmer–Kadr, DOI 10.1007/s13366-026-00855-9, Conjecture 3.7(a).
 The scope is the additive group of a finite field; no assertion about
@@ -110,8 +112,8 @@ section FullOneStepSplitting
 
 variable {K : Type u} [Field K]
 
-/-- The two identities missing from dual_split_maps are forced by the
-proved injection of d and the proved equation d h = id - sigma mu. -/
+/-- The kernel retraction is inverse to the proved difference injection,
+using the equation d h = id - sigma mu. -/
 theorem kernelRetraction_difference (n m : ℕ)
     (σ : Trunc K ((n + 1) + (m + 1)) →ₗ[K]
       Trunc K (n + 1) ⊗[K] Trunc K (m + 1))
@@ -137,9 +139,8 @@ theorem kernelRetraction_section (n m : ℕ)
   change multiplication (n + 1) (m + 1) (σ x) = x at hs
   rw [hs, sub_self]
 
-/-- Genuine splitting on the ORIGINAL dual polynomial representations.
-Both tensor-dual identifications are explicit; the kernel injection has a
-positive sign here, unlike the negative factor in dual_split_maps. -/
+/-- Genuine splitting on the original dual polynomial representations.
+Both tensor-dual identifications are explicit, with positive kernel injection. -/
 def dualTensor_split (n m : ℕ)
     (hbinom : (((n + 1) + (m + 1)).choose (n + 1) : K) ≠ 0) :
     ((dualAction K ((n + 1) + 1)).tprod
@@ -830,20 +831,119 @@ theorem residue_criterion_binomial (a b u v : ℕ)
     exact relativeStableIso_of_decomposition _ _ _ _ e
       (residue_remainder_relativeProjective (Fintype.card K / p) a b u v ha hb)
 
-/-- The same original-M classification, expressed by Kummer's exact
-no-carry condition. The empty interval at a=b=0 is retained. -/
+
+end Classification
+
+section AllResidues
+
+variable {K : Type u} [Field K] [Fintype K]
+  {p : ℕ} [hp : Fact p.Prime] [CharP K p]
+
+/-- All low residues, including either zero residue, for the original M,
+the actual expected direct sum S, and the original tensor action T.
+The high-binomial condition is necessary only when both low residues are
+nonzero. This includes a=0, b=0, zero spaces, p=2, u+v=p and i+j=card K.
+-/
+theorem residue_criterion_all (a b u v : ℕ)
+    (hup : u < p) (hvp : v < p) (huv : u + v ≤ p)
+    (hsize : (p * a + u) + (p * b + v) ≤ Fintype.card K) :
+    RelativeStableIso
+      (PrimeCyclicRelativeTrace.relativeAction (K := K) (p := p) (Fintype.card K / p))
+      (expectedAction (K := K) (p * a + u) (p * b + v) (min u v))
+      (tensorAction (K := K) (p * a + u) (p * b + v)) ↔
+        u = 0 ∨ v = 0 ∨ ((a + b).choose a : K) ≠ 0 := by
+  have ha : a ≤ Fintype.card K / p := by
+    apply (Nat.le_div_iff_mul_le hp.out.pos).2
+    rw [Nat.mul_comm a p]
+    omega
+  have hb : b ≤ Fintype.card K / p := by
+    apply (Nat.le_div_iff_mul_le hp.out.pos).2
+    rw [Nat.mul_comm b p]
+    omega
+  have hzero (hz : u = 0 ∨ v = 0) :
+      RelativeStableIso
+        (PrimeCyclicRelativeTrace.relativeAction (K := K) (p := p)
+          (Fintype.card K / p))
+        (expectedAction (K := K) (p * a + u) (p * b + v) (min u v))
+        (tensorAction (K := K) (p * a + u) (p * b + v)) := by
+    have hmin : min u v = 0 := by
+      rcases hz with hu0 | hv0
+      · simp only [hu0, Nat.zero_min]
+      · simp only [hv0, Nat.min_zero]
+    have hP : RelativeProjective
+        (PrimeCyclicRelativeTrace.relativeAction (K := K) (p := p)
+          (Fintype.card K / p))
+        (Rep.of (tensorAction (K := K) (p * a + u) (p * b + v))) := by
+      rcases hz with hu0 | hv0
+      · have transfer (d : ℕ) (hd : d = p * a) :
+            RelativeProjective
+              (PrimeCyclicRelativeTrace.relativeAction (K := K) (p := p)
+                (Fintype.card K / p))
+              (Rep.of (tensorAction (K := K) d (p * b + v))) := by
+          subst d
+          exact multiple_tensor_relativeProjective (K := K) (p := p)
+            (Fintype.card K / p) a (p * b + v) ha
+        exact transfer _ (by omega)
+      · have hPb := multiple_tensor_relativeProjective (K := K) (p := p)
+          (Fintype.card K / p) b (p * a + u) hb
+        have hflip := relativeProjective_transport
+          (PrimeCyclicRelativeTrace.relativeAction (K := K) (p := p)
+            (Fintype.card K / p))
+          (Representation.TensorProduct.comm (dualAction K (p * b))
+            (dualAction K (p * a + u))) hPb
+        have transfer (d : ℕ) (hd : d = p * b) :
+            RelativeProjective
+              (PrimeCyclicRelativeTrace.relativeAction (K := K) (p := p)
+                (Fintype.card K / p))
+              (Rep.of (tensorAction (K := K) (p * a + u) d)) := by
+          subst d
+          exact hflip
+        exact transfer _ (by omega)
+    have e : (tensorAction (K := K) (p * a + u) (p * b + v)).Equiv
+        ((expectedAction (K := K) (p * a + u) (p * b + v) 0).prod
+          (tensorAction (K := K) (p * a + u) (p * b + v))) := by
+      let eS := directSumCongr (K := K)
+        (fun ell : Fin 0 =>
+          (p * a + u) + (p * b + v) - (2 * (0 + ell.val) + 1))
+        (fun ell : Fin 0 =>
+          (p * a + u) + (p * b + v) - (2 * ell.val + 1))
+        (by funext ell; exact Fin.elim0 ell)
+      exact (emptyLayers (p * a + u) (p * b + v) 0
+        (tensorAction (K := K) (p * a + u) (p * b + v))).trans
+          (prodCongr eS (Representation.Equiv.refl _))
+    rw [hmin]
+    exact relativeStableIso_of_decomposition _ _ _ _ e hP
+  by_cases hu0 : u = 0
+  · exact ⟨fun _ => Or.inl hu0, fun _ => hzero (Or.inl hu0)⟩
+  by_cases hv0 : v = 0
+  · exact ⟨fun _ => Or.inr (Or.inl hv0), fun _ => hzero (Or.inr hv0)⟩
+  have hnonzero := residue_criterion_binomial (K := K) (p := p) a b u v
+    (by omega) hup (by omega) hvp huv hsize
+  constructor
+  · intro hs
+    exact Or.inr (Or.inr (hnonzero.mp hs))
+  · intro hcases
+    rcases hcases with hu | hv | hchoose
+    · exact False.elim (hu0 hu)
+    · exact False.elim (hv0 hv)
+    · exact hnonzero.mpr hchoose
+
+/-- The complete original-M classification, expressed by Kummer's exact
+no-carry condition, with both zero low residues unconditional. The empty
+interval at a=b=0 is retained. -/
 theorem residue_criterion (a b u v : ℕ)
-    (hu : 1 ≤ u) (hup : u < p) (hv : 1 ≤ v) (hvp : v < p)
+    (hup : u < p) (hvp : v < p)
     (huv : u + v ≤ p)
     (hsize : (p * a + u) + (p * b + v) ≤ Fintype.card K) :
     RelativeStableIso
       (PrimeCyclicRelativeTrace.relativeAction (K := K) (p := p) (Fintype.card K / p))
       (expectedAction (K := K) (p * a + u) (p * b + v) (min u v))
       (tensorAction (K := K) (p * a + u) (p * b + v)) ↔
-        ∀ k ∈ Finset.Ico 1 (Nat.log p (a + b) + 1),
+        u = 0 ∨ v = 0 ∨ ∀ k ∈ Finset.Ico 1 (Nat.log p (a + b) + 1),
           a % p ^ k + b % p ^ k < p ^ k := by
-  rw [residue_criterion_binomial a b u v hu hup hv hvp huv hsize,
-    ne_eq, CharP.cast_eq_zero_iff K p]
+  rw [residue_criterion_all a b u v hup hvp huv hsize]
+  refine or_congr Iff.rfl (or_congr Iff.rfl ?_)
+  rw [ne_eq, CharP.cast_eq_zero_iff K p]
   have hchoose : (a + b).choose a ≠ 0 := Nat.choose_ne_zero (by omega)
   have hval : ((a + b).choose a).factorization p = 0 ↔ ¬p ∣ (a + b).choose a := by
     simp only [Nat.factorization_eq_zero_iff, hp.out, not_true,
@@ -856,6 +956,7 @@ theorem residue_criterion (a b u v : ℕ)
   rw [hk, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
   simp only [not_le]
 
-end Classification
+
+end AllResidues
 
 end D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrResidueCriterion
