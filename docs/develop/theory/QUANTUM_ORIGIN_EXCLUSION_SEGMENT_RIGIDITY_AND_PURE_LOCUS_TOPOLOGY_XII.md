@@ -604,7 +604,7 @@ $a(0)<a(1)$ 排除全局极小性。
 对任意 $0<\varepsilon<1$，每个满足 $h(p)=\varepsilon$ 的原纯点都有实际原纯点列
 
 $$
-p_n\longrightarrow p,\qquad 0<h(p_n)<\varepsilon,qquad
+p_n\longrightarrow p,\qquad 0<h(p_n)<\varepsilon,\qquad
 h(p_n)\longrightarrow\varepsilon.
 \tag{XII146.8}
 $$
