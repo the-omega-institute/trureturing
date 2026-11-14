@@ -203,6 +203,67 @@ internal sealed class AdaptiveMarkerFiniteLabelsDocument : IScribeDocumentDefini
                             + "finite replay, nor the sibling opportunity or totality clause, full CPI7.2, "
                             + "inverse normal form, actual-rise counts, opportunity ranks, likelihood-density "
                             + "identification or prior integration."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("measurable-randomized-chain"),
+                    DeclarationHandle.Create(
+                        "D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.measurable_randomizedChain"),
+                    H("Measurable recursive paths"),
+                    StatementSource.FromAuthor(Disp(Seq(
+                        Call("Measurable", F.Id("g")), Land,
+                        Call("Measurable", Call("uncurry", F.Id("f"))), Rightarrow,
+                        Call("Measurable", Call("randomizedChain", F.Id("g"), F.Id("f")))))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(
+                        Paragraph(Text(
+                            "For arbitrary measurable spaces xi and alpha, g maps xi to alpha and f maps "
+                            + "alpha times xi to alpha. randomizedChain starts at g(u(0)) and updates "
+                            + "by f(previous,u(n+1)). The displayed hypotheses are precisely measurability "
+                            + "of g and of the uncurried f. The conclusion is measurability into the "
+                            + "whole countable product of states, so each finite coordinate is measurable.")),
+                        Paragraph(Text(
+                            "For the CPI.2 threshold recursion use xi = unitInterval times Bool times "
+                            + "unitInterval, alpha = Bool, g(q,x,t)=x and f(b,(q,x,t))=step(q,b,t). "
+                            + "The first map is a projection. The second is a Boolean measurable split "
+                            + "and the measurable strict comparison t<q. For p=(q,x,v), let "
+                            + "U(p)(j)=(q,x,v(kappa(j))), where kappa(0)=1 and kappa(n+1)=n+1 as "
+                            + "positive naturals. Each coordinate of U is a product of projections and "
+                            + "a fixed evaluation; measurable_pi_iff gives Measurable U. Composition "
+                            + "with the displayed theorem yields joint path measurability. Unfolding "
+                            + "randomizedChain and Z identifies their zero and successor branches; "
+                            + "g ignores the dummy noise coordinate at zero. Applying the two literal "
+                            + "arm projections and shifting each path by one gives joint measurability "
+                            + "of originalSource in both parameters, the common root and all noise. "
+                            + "Precomposition with a seed projection preserves this conclusion for an "
+                            + "arbitrary measurable seed space. This is an application of the existing "
+                            + "recursive-path theorem and introduces no new mathematical declaration."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("original-source-law"),
+                    DeclarationHandle.Create(
+                        "D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.originalSource_law"),
+                    H("The original uniform noise realizes the two-arm law"),
+                    StatementSource.FromAuthor(Disp(
+                        All(F.Id("qL"), F.Id("unitInterval"),
+                            All(F.Id("qR"), F.Id("unitInterval"),
+                                All(F.Id("x"), F.Id("Bool"),
+                                    Seq(Call("map", F.Id("noiseLaw"),
+                                            Call("originalSource", F.Id("qL"), F.Id("qR"), F.Id("x"))),
+                                        Eq, Call("reference", F.Id("qL"), F.Id("qR"), F.Id("x"))))))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(
+                        Paragraph(Text(
+                            "For every fixed pair of closed-unit-interval parameters and every common "
+                            + "Boolean root, noiseLaw pushed forward by originalSource is reference. "
+                            + "reference is the product of armLaw(qL,x) and armLaw(qR,x), with both "
+                            + "zero coordinates identified with the same fixed root and their outward "
+                            + "tails placed on the two arms. Thus the equality supplies the full joint "
+                            + "law, including independence at these fixed parameters and root; its "
+                            + "finite restrictions follow by measurable pushforward. armLaw uses the "
+                            + "transition sending true deterministically to false and false to true "
+                            + "with probability q, exactly the CPI.1 matrix. Each parameter is held "
+                            + "fixed throughout its arm. The theorem does not assert prior integration, "
+                            + "a random-root mixture, seed independence or an integrated stopping law."))),
                     DescribeRole.Theorem))));
     }
 
