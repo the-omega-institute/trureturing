@@ -6,7 +6,7 @@
    utility: none
    digest: The source double sum A186335 satisfies Mathar's five-term recurrence. -/
 
-/-!
+/-
 The source is OEIS A186335, FORMULA, interpreted on nonnegative legal pairs.
 The integer-valued sequence is defined by the finite source sum, independently
 of the recurrence. Natural subtraction is used only with the explicit support
