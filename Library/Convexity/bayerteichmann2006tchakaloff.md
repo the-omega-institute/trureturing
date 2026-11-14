@@ -11,7 +11,7 @@ strata_touched:
 license: "Citation only; no source text is reproduced."
 triage: anchor
 ---
-<!-- GID: D5/L/Analytic/bayerteichmann2006tchakaloff -->
+<!-- GID: D5/L/Convexity/bayerteichmann2006tchakaloff -->
 # Finite measurable moments and actual convex hulls
 
 The primary preprint is math/0502473v2, 4 May 2005, six pages,

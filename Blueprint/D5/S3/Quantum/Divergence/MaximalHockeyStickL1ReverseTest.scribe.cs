@@ -34,19 +34,10 @@ internal sealed class MaximalHockeyStickL1ReverseTestDocument : IScribeDocumentD
                 Call("closedPerspectiveCost", Id("h"), Id("mu"), Call("RealPart", Id("p")), Call("RealPart", Id("q"))),
                 Call("allLoneCosts", Id("h"), Gamma(Id("p")), Gamma(Id("q"))))),
                 "The measurable representatives in L1ReverseTest do not restrict the actual source class. For any nonnegative elements p,q of the original complex L1 space, measurable integrable real representatives have the same complex L1 classes and the same cost. Almost-everywhere equality leaves both the finite affine integral and the nonnegative curvature integral unchanged."),
-            Node("PositiveTracePreservingL1Map.norm_bound", BareMapContext(All("v", Call("ComplexLone", Id("alpha"), Id("mu")),
-                Le(Call("Norm", Gamma(Id("v"))), Mul(D(4), Call("Norm", Id("v")))))),
-                "Entrywise matrix norm is bounded by the real trace on positive matrices. Decompose a complex L1 input into the positive and negative parts of its real and imaginary coordinates. Trace preservation bounds each contribution by the original L1 norm. Thus positivity and TP imply boundedness, rather than continuity being a hidden extra source-class assumption."),
-            Node("closedPerspectiveCost_withDensity", WeightedCost(),
-                "Changing to a finite-valued nonnegative measurable density preserves the unnormalized perspective cost for arbitrary source measure and arbitrary real input functions. The real affine part uses the Bochner change-of-measure identity and the curvature part uses positive homogeneity under the extended nonnegative integral. Infinite axis values are retained."),
             Node("finite_cost_count", CountingCost(),
                 "On a finite measurable alphabet, counting-measure integrals are the actual finite sums. The pointwise affine-plus-curvature identity, with its nonnegative extended remainder, proves the equality even when individual axis costs are infinite."),
             Node("finite_density_atomization", DensityAtomization(),
                 "Apply the proved finite-moment theorem to two matrix moments and one real cost, restricting all selected points to the conull set where p,q are nonnegative and the perspective equals the finite real c. Multiply both scalar inputs at each selected point by its nonnegative cubature weight. Homogeneity proves exact preservation of this one cost. The zero measure uses the empty alphabet."),
-            Node("finite_source_density", DensityContext(false),
-                "Construct V(E) directly from the real L1 indicator action of the map. Positivity and the trace identity dominate its matrix norm by the source measure, proving countable additivity. Continuous coordinate projections give genuine complex measures. Apply the frozen positive_history_density theorem to this PositiveHistoryMeasure; Radon–Nikodym theory is reused, not rebuilt."),
-            Node("finite_source_representation", DensityContext(true),
-                "The density tau is measurable, integrable, positive semidefinite and trace one everywhere. The indicator identities extend to every integrable real L1 input by simple-function density and continuity of both the original action and the density-integral map. The chosen trace-one base handles the null exceptional set; zero source mass is allowed."),
             Paragraph(Text("For finite density moments, the norm bound on tau makes p tau and q tau Bochner integrable. A finite-cost affine-plus-curvature decomposition supplies an integrable real cost c and pointwise equality on a conull set. MeasurableFiniteMoments.finite_moments is applied to ((p tau,q tau),c), with all selected points in that conull set. Homogeneity of the closed perspective then gives exact equality of the finite sum. Infinite values on the null complement are never converted to real moments. When the output type is empty, trace preservation forces the nonnegative inputs to vanish almost everywhere; the empty finite test has exactly zero cost.")),
             Paragraph(Text("closedPerspectiveCost_withDensity uses the actual unnormalized affine integral plus nonnegative curvature remainder. It retains infinite axis costs and makes no normalization assumption. finite_cost_count identifies that same integral with the finite perspective sum. finitePreparationL1Map is the actual counting-measure preparation, L1ReverseTest records its two L1 inputs and exact output identities, finiteCosts ranges over Fin k, and allL1Costs ranges over every s-finite measurable source and actual preparation map.")),
             ProfileNode("L1ReverseTest.hockey", "The actual positive profile is the real Bochner integral of max(p-tq,0), for the actual integrable nonnegative inputs of the specified positive complex-linear TP L1 test.", false),
@@ -77,19 +68,6 @@ internal sealed class MaximalHockeyStickL1ReverseTestDocument : IScribeDocumentD
             Paragraph(Text("Matsumoto, A new quantum version of f-divergence, arXiv:1311.4722v4, p. 8, Lemma 4.1, proves one-cost finite-source compression with bound 2d^2+3. This interface asserts existence of a finite alphabet without a cardinality bound and makes no new compression claim. Its finite-moment implementation follows Bayer and Teichmann's proof of Tchakaloff's theorem through MeasurableFiniteMoments.finite_moments; the positive-history Radon-Nikodym theorem supplies the matrix density. MaximalHockeyStickAllL1Convex consumes source_class_infimum_eq to identify the actual all-L1 maximal convex value and transfer the finite equality criterion for the Hiai-Mosonyi-Tomamichel source question. The general-f bridge preserves one specified cost. The separate actual hockey bridge implements HMT Proposition V.1 by the direct min/three-component argument and preserves both orientations at one specified positive threshold; no finite test preserving all thresholds or every generator is asserted. MaximalHockeyStickAllL1Convex consumes the original sigma-finite and s-finite operational equalities in its integrated identity and final classifier."))
         )));
 
-    private static Formula WeightedCost()
-    {
-        var weighted = Call("WithDensity", Id("mu"), Id("r"));
-        var rp = Lambda("x", Mul(At(Id("r"), Id("x")), At(Id("p"), Id("x"))));
-        var rq = Lambda("x", Mul(At(Id("r"), Id("x")), At(Id("q"), Id("x"))));
-        var equation = Eq(Call("closedPerspectiveCost", Id("h"), weighted, Id("p"), Id("q")),
-            Call("closedPerspectiveCost", Id("h"), Id("mu"), rp, rq));
-        return ConvexContext(All("alpha", Call("Type"),
-            Seq(OpenBracket, Call("MeasurableSpace", Id("alpha")), CloseBracket, Sp,
-                All("mu", Call("Measure", Id("alpha")),
-                All("r", Arrow(Id("alpha"), Call("NonnegativeReal")), Imp(Call("Measurable", Id("r")),
-                All("p", Arrow(Id("alpha"), Real()), All("q", Arrow(Id("alpha"), Real()), equation))))))));
-    }
     private static Formula CountingCost()
     {
         var equation = Eq(Call("closedPerspectiveCost", Id("h"), Call("Count", Id("beta")), Id("p"), Id("q")),
@@ -136,12 +114,6 @@ internal sealed class MaximalHockeyStickL1ReverseTestDocument : IScribeDocumentD
         All("p", Call("ComplexLone", Id("alpha"), Id("mu")),
         All("q", Call("ComplexLone", Id("alpha"), Id("mu")),
             Imp(Call("AENonnegative", Id("p"), Id("mu")), Imp(Call("AENonnegative", Id("q"), Id("mu")), body)))));
-    private static Formula BareMapContext(Formula body) => All("n", Call("Type"),
-        Seq(OpenBracket, Call("Fintype", Id("n")), CloseBracket, Sp,
-            OpenBracket, Call("DecidableEq", Id("n")), CloseBracket, Sp,
-            All("alpha", Call("Type"), Seq(OpenBracket, Call("MeasurableSpace", Id("alpha")), CloseBracket, Sp,
-                All("mu", Call("Measure", Id("alpha")),
-                    All("Gamma", Call("PositiveTracePreservingLoneMap", Id("mu"), Id("n")), body))))));
     private static Formula MapContext(Formula body) => ScalarContext(
         All("alpha", Call("Type"), Seq(OpenBracket, Call("MeasurableSpace", Id("alpha")), CloseBracket, Sp,
         All("mu", Call("Measure", Id("alpha")), Imp(Call("SFinite", Id("mu")),
@@ -152,28 +124,6 @@ internal sealed class MaximalHockeyStickL1ReverseTestDocument : IScribeDocumentD
         Seq(OpenBracket, Call("Fintype", Id("n")), CloseBracket, Sp,
             OpenBracket, Call("DecidableEq", Id("n")), CloseBracket, Sp,
             All("f", Arrow(Real(), Real()), All("h", Convex, body))));
-    private static Formula DensityContext(bool allInputs)
-    {
-        var tau = Id("tau");
-        var values = And(Call("Measurable", tau), And(Call("Integrable", tau, Id("mu")),
-            All("x", Id("alpha"), And(Call("PosSemidef", At(tau, Id("x"))), Eq(Call("Trace", At(tau, Id("x"))), D(1))))));
-        Formula identity = allInputs
-            ? All("v", Call("RealLone", Id("alpha"), Id("mu")), Eq(At(Id("G"), Id("v")),
-                Call("Integral", Lambda("x", Call("SMul", At(Id("v"), Id("x")), At(tau, Id("x")))), Id("mu"))))
-            : All("E", Call("Set", Id("alpha")), Imp(Call("MeasurableSet", Id("E")),
-                All("i", Id("n"), All("j", Id("n"), Eq(
-                    Call("SetIntegral", Id("E"), Lambda("x", At(tau, Id("x"), Id("i"), Id("j"))), Id("mu")),
-                    At(Id("G"), Call("LoneIndicator", Id("E"), Id("mu")), Id("i"), Id("j")))))));
-        return All("n", Call("Type"), All("alpha", Call("Type"),
-            Seq(OpenBracket, Call("Fintype", Id("n")), CloseBracket, Sp,
-                OpenBracket, Call("DecidableEq", Id("n")), CloseBracket, Sp,
-                OpenBracket, Call("MeasurableSpace", Id("alpha")), CloseBracket, Sp,
-                All("mu", Call("Measure", Id("alpha")), Imp(Call("IsFiniteMeasure", Id("mu")),
-                All("G", Call(allInputs ? "ContinuousRealLoneLinearMap" : "RealLoneLinearMap", Id("alpha"), Id("mu"), Matrix),
-                Imp(Call("Positive", Id("G")), Imp(Call("TracePreserving", Id("G")),
-                All("base", Matrix, Imp(Call("PosSemidef", Id("base")), Imp(Eq(Call("Trace", Id("base")), D(1)),
-                    Exists("tau", Arrow(Id("alpha"), Matrix), And(values, identity)))))))))))));
-    }
     private static DocumentBlock ProfileNode(string name, string prose, bool theorem) =>
         Describe.Lean(DescribeId.Create("maximalhockeysticklone-" + name.Replace("_", "-").Replace(".", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name.Replace("PositiveTracePreservingL1Map.", "").Replace("L1ReverseTest.", "")), H(name), StatementSource.WithoutFormula(),
@@ -194,9 +144,7 @@ internal sealed class MaximalHockeyStickL1ReverseTestDocument : IScribeDocumentD
     private static Formula Lambda(string name, Formula body) => Seq(Id(name), Sp, Mapsto, Sp, body);
     private static Formula Arrow(Formula a, Formula b) => Seq(Open, a, Sp, To, Sp, b, Close);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Real() => Seq(Mathbb, Grp(Id("R")));
 }

@@ -16,7 +16,7 @@ triage: anchor
 
 Matsumoto, *A New Quantum Version of f-Divergence*, Springer Proceedings in Mathematics & Statistics, pp. 229--273 (2018), Lemma 4.1, gives the finite-source compression bound (2(\dim H)^2+3) for one cost. This is recorded as an antecedent for the finite-source quantum publication; it does not supply the repository's all-L1 source equivalence or arbitrary von Neumann algebra theorem.
 
-The repository's maximal hockey-stick classifier remains a finite-source result with its own hypotheses and proof. The compression antecedent is credited for scope and provenance only; no claim of a completed all-L1 integration is made here.
+The repository's finite-output maximal hockey-stick classifier covers the original sigma-finite complex L1 source class and the s-finite class, with source universe independent of the finite output universe. MaximalHockeyStickL1ReverseTest proves the source-infimum equivalences, and MaximalHockeyStickAllL1Convex identifies the original operational integrals and classifies equality. Commutation suffices with extended convex endpoint values; necessity retains the stated full-support curvature and real-finite-value hypotheses. Singular, zero and empty finite outputs are included, with no optimizer premise. The compression antecedent is credited for its one-cost scope; no arbitrary von Neumann algebra extension or priority claim is asserted.
 
 ## Verified locator
 
