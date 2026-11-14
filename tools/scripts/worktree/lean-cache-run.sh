@@ -3,6 +3,15 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 [[ $# -gt 0 ]] || { echo 'lean-cache-run: COMMAND is required' >&2; exit 2; }
 cd "$ROOT"
+if [[ "$1" == --build ]]; then
+  for target in "${@:2}"; do
+    [[ -n "${target//[[:space:]]/}" ]] || { echo 'lean-cache-run: empty module target is forbidden' >&2; exit 2; }
+  done
+fi
+if [[ "$1" == --build && $# == 1 && "${FULL_BUILD:-0}" != 1 ]]; then
+  echo 'full build requires explicit FULL_BUILD=1; pass nonempty module targets for a scoped build' >&2
+  exit 2
+fi
 if [[ "$1" == --build && "${LEAN_SKIP_LOCK:-0}" != 1 ]]; then
   # All linked worktrees share this Git directory. Keep the descriptor open
   # through cache preparation and every build phase; never unlink the lock file.
