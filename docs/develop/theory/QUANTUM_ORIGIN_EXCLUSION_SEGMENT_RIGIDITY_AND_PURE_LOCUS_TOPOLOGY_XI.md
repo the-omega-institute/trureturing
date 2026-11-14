@@ -1430,3 +1430,141 @@ $$
 [Schillewaert—Van Maldeghem，On the varieties of the second row of the split Freudenthal–Tits Magic Square，§2.1](https://arxiv.org/abs/1308.0745) 的 Mazzocca–Melone 公理 MM1要求每对点位于一张指定二次空间，MM2约束射影张成空间的交，另有分裂二次曲面及切空间条件；本章的凸面交叠不供应这些前件，尤其不能用其分类倒付未证的全 Pair。[Barnum—Müller—Ududec，Higher-order interference and single-system postulates characterizing quantum theory，Theorem 16](https://arxiv.org/abs/1403.4147) 则显式要求 projectivity、对称跃迁概率及保纯滤子；二元混合相容未供应这些结构。两项文献只界定可迁移的条件，不替代上述原域证明，也不据有限检索宣称全球原创。
 
 ## 追加锚（本行以下为增补区）
+
+## 139. 一把零尺的中点相容与单个正交三角的传播
+
+**定义 139.1（完整原域与单尺中点相容）。** 保留135.1的同一非零有限维实空间 $V$、闭尖生成凸锥 $C$、严格正原单位 $u$，整个 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$ 和整个 $\mathcal E=[0,u]_{C^*}$。仍以全部原确认效应定义 $T_p$ 和完整 $D_p$，并假定 EB3。记
+
+$$
+\begin{gathered}
+\mathcal A_a=\{e\in\mathcal E:e(a)=1,\ e|_{D_a}=0\},\qquad
+S(D_a)=P\cap D_a,\qquad \bar x^{\,a}=2c_a-x\quad(x\in S(D_a)),\\
+p\perp q\quad\Longleftrightarrow\quad T_p(q)=0.
+\end{gathered}
+\tag{XI139.1}
+$$
+
+原面接口 [VII103.2、IX120.1][XI139IX] 给 $\mathcal A_a\ne\varnothing$，每个 $e\in\mathcal A_a$ 的整个零面恰为 $D_a$；球缘恰为原纯点，故 $\bar x^{\,a}$ 也是原纯点。补效应使 $\perp$ 对称。只以三条这样的真实原边定义正交三角，不预付共同三结果仪器。
+
+本章考察如下单尺中点相容条件：
+
+$$
+\mathsf{ZC}:\quad
+\forall a\in P\ \exists e_a\in\mathcal A_a\ \exists\kappa_a\in\mathbb R\ \forall x\in S(D_a):\quad
+e_a(c_x)+e_a(c_{\bar x^{\,a}})=\kappa_a.
+\tag{XI139.2}
+$$
+
+同一个球心 $c_a=(x+\bar x^{\,a})/2$ 有全部对径分解。将两个纯端点各换成它自己的完整排除球球心后，(XI139.2)只要求一把在原球上恒零的确认尺读到的平均值与直径方向无关。该尺在整原 $K$ 上合法，量词只要求存在一把；不要求其唯一，也不要求球心替换为实际操作。
+
+138.1的 $\mathsf{BC}$ 蕴含更强的向量关系
+
+$$
+c_x+c_{\bar x^{\,a}}=c_y+c_{\bar y^{\,a}}
+\quad(x,y\in S(D_a)),
+\tag{XI139.3}
+$$
+
+因为两份对径混合的原态都等于 $c_a$。再施加任意 $e_a\in\mathcal A_a$ 就得到 $\mathsf{ZC}$。这里没有反向宣称 $\mathsf{ZC}$ 单独给出 $\mathsf{BC}$；(XI139.3)是 X128中心关系空间被向量球心赋值消灭，(XI139.2)只取该球自身的一条原效应读数，亦不同于 X128.13对全部外部纯比较行的要求。[X128][XI139X]
+
+令 $\mathcal T$ 为全部真实正交三角顶点。$\mathsf{Seed}$ 指 $\mathcal T\ne\varnothing$；$\mathsf{Conn}$ 指原图 $(P,\perp)$ 的任意两点可由有限条原边连接，允许起终点相同时的零长路。它不是 $P$ 的拓扑连通性。
+
+**定理 139.2（单尺中点相容的局部饱和桥）。** 在完整 EB3 域，固定 $a\in P$、$e_a\in\mathcal A_a$。不加 $\mathsf{ZC}$，已有
+
+$$
+e_a(c_x)\ge\frac12\qquad(x\in S(D_a)).
+\tag{XI139.4}
+$$
+
+若该尺满足(XI139.2)，则 $\kappa_a\ge1$，并且
+
+$$
+a\in\mathcal T\quad\Longleftrightarrow\quad\kappa_a=1.
+\tag{XI139.5}
+$$
+
+在这些等价条件下，对整颗原球的每个球缘点 $x$ 都有
+
+$$
+2c_x=a+\bar x^{\,a},\qquad
+x\perp\bar x^{\,a},\qquad
+a,x,\bar x^{\,a}\text{ 构成原正交三角},\qquad
+x+2c_x=a+2c_a.
+\tag{XI139.6}
+$$
+
+证明。任取 $x\in S(D_a)$。原零关系对称给 $a\in D_x$；因 $a$ 原纯，它在该完整球的球缘。于是对径反射
+
+$$
+y=2c_x-a
+\tag{XI139.7}
+$$
+
+也是 $D_x$ 的原纯球缘点，特别是同一个 $K$ 中的态。原效应非负性给 $0\le e_a(y)=2e_a(c_x)-1$，证明(XI139.4)。对 $\bar x^{\,a}$ 同样成立，故 $\kappa_a\ge1$。
+
+设 $a,q,r$ 为一个真实正交三角。在完整球 $D_a$ 内，原全效应对 $q,r$ 读到一、零。非恒定仿射函数在欧氏闭球上取完整振幅一的两个端点必互为对径，故 $q+r=2c_a$。在 $D_q,D_r$ 内应用同一原几何，得到
+
+$$
+2c_q=a+r,\qquad 2c_r=a+q,\qquad c_q+c_r=a+c_a.
+\tag{XI139.8}
+$$
+
+这只使用三条分别真实的边；同球一零端点必对径的论证正是 IX120.4及既有原正交球心恒等式的中间步骤。对(XI139.8)施加 $e_a$，并用 $q,r$ 是 $D_a$ 的对径，得到 $\kappa_a=e_a(a+c_a)=1$。
+
+反之设 $\kappa_a=1$。对任意对径 $x,\bar x^{\,a}$，两个(XI139.4)之和恰为一，故各项都等于 $1/2$。(XI139.7)于是满足 $e_a(y)=0$，而该尺的整个零面恰为 $D_a$，所以 $y\in D_a$。又 $y\in D_x$，故 $x\perp y$。在同一个完整球 $D_a$ 中，这对原一零端点只能是对径，故 $y=\bar x^{\,a}$。代回(XI139.7)即得(XI139.6)的中心公式；三条原边和末个向量等式随之成立。因球缘非空，$a\in\mathcal T$。证毕。
+
+该桥既不需要 $q\mapsto c_q$ 的球内仿射延拓，也不需要138.2的秩二分、原标签单射、纯集紧、数值比较互易 PR 或预先的矩阵表示。低界(XI139.4)来自原全效应对真实反射态的非负性，不能仅凭“读数与交换顺序无关”替代。
+
+**定理 139.3（一个三角覆盖其整图分支并固定中心和）。** 在完整 EB3+$\mathsf{ZC}$ 域，$\mathcal T$ 是原零图若干完整图分支之并。对任一含三角的分支 $Q$，存在一个向量 $U_Q$，使
+
+$$
+p+2c_p=U_Q\quad(p\in Q),\qquad
+c_p=\frac{U_Q-p}{2}.
+\tag{XI139.9}
+$$
+
+证明。若 $a\in\mathcal T$ 且 $a\perp x$，则 $x\in S(D_a)$。在 $a$ 处选取 $\mathsf{ZC}$ 保证的原尺，139.2给 $a,x,\bar x^{\,a}$ 是真实三角，且 $x+2c_x=a+2c_a$。因此任一三角顶点的每个邻点仍是三角顶点，且该边两端的向量和相等。沿任意有限边路归纳，就得到整个分支及同一 $U_Q$。这里不以极限替代有限可达性，也没有给不含三角的分支指定共同向量。证毕。
+
+**定理 139.4（单尺候选的完整同原静态结论）。** 在定义139.1的全部原量词下，以下两项等价：
+
+$$
+\boxed{\mathrm{EB3}+\mathsf{ZC}+\mathsf{Conn}+\mathsf{Seed}};
+\qquad
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V\text{ 实线性},\quad
+\Phi(\operatorname{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\tag{XI139.10}
+$$
+
+在左项下，$U=p+2c_p$ 与全部原纯标签无关，球心替换保持全部有限原纯混合等式，即 $\mathsf{MC}$。特别地，$\mathrm{EB3}+\mathsf{BC}+\mathsf{Conn}+\mathsf{Seed}$ 也给同一结论。
+
+证明。由 $\mathsf{Seed}$ 选一个三角顶点，再由 $\mathsf{Conn}$ 及139.3把(XI139.9)推广到整个 $P$，得到共同 $U$。对任意有限纯混合 $x=\sum_i\lambda_i p_i$，允许零权和重复端点，
+
+$$
+\sum_i\lambda_i c_{p_i}=\frac{U-x}{2},\qquad
+\lambda_i\ge0,\quad\sum_i\lambda_i=1.
+\tag{XI139.11}
+$$
+
+因此该值只由同一原态 $x$ 决定，正是135.3的 $\mathsf{MC}$。此时直接消费既有135.5，取得同原锥同原单位的 $\Phi$；139.2—139.3是新增局部到整体的桥，分类本身不重新证明。$\mathsf{BC}$ 的条件结论由139.1的蕴含即得。
+
+反向在整个标准复三能级域计算，再通过同一 $\Phi$ 运输。任意原纯点为 $p=vv^*$，$\|v\|=1$，其整个 $D_p$ 是 $v^\perp$ 上全部迹一正矩阵，故为完整三球且 $c_p=(I_3-p)/2$。取原效应 $e_a(\rho)=\operatorname{Tr}(a\rho)$；其一值为 $a$、整个零面为 $D_a$。对任意 $x\in S(D_a)$，$\operatorname{Tr}(ax)=0$，所以 $e_a(c_x)=1/2$，$\mathsf{ZC}$ 成立且 $\kappa_a=1$。正交标准基的三个秩一投影给 $\mathsf{Seed}$。任意两个不同纯射线若不正交，在复三维中其二维张成空间的正交补含一条纯射线，给连接二者的两条真实零边；正交时已有一条边，相同时取零长路。这覆盖全部 $P$，给 $\mathsf{Conn}$。证毕。
+
+**条件应用 139.5（几何、静态公理与剩余接口）。** 在139.4的等价条件下，完整静态字典直接复用135.6：$\dim_{\mathbb R}V=9$，整个归一态体仿射维数八；全部纯态为 $\mathbb{CP}^2$，每张完整排除球的球缘为 $\mathbb{CP}^1\cong S^2$。同一个 $\Phi$ 给全部效应 $f_M(\Phi\rho)=\operatorname{Tr}(M\rho)$、$0\preceq M\preceq I_3$，并给所有原混态上的最低确认 $T_{p_v}(\Phi\rho)=v^*\rho v$，故纯读数为 $|v^*w|^2$。三元正交完成、正交谱分解及全部有限数学 POVM 都在135.6的原量词下随同运输。
+
+证明。139.4精确取得135.5的同锥同单位前件，故135.6逐项适用。其球心几何为 $U=\Phi(I_3)$、总体中心 $U/3$，球心替换在整个 $K$ 上为 $x\mapsto(U-x)/2$；把它相对于 $U/3$ 写出，恰是反向缩小一半。这些都是同一已取得表示的后果，不倒用为139.2的局部前件。证毕。
+
+条件(XI139.2)的检验范围少于138.1的全部二元混合等式，但本章另明确支付有限边路连接和一个真实三角；它不证明独立假设数量减少、最弱性或严格逻辑弱化。尚未证明 EB3+$\mathsf{ZC}$ 或 EB3+$\mathsf{BC}$ 自动供应 $\mathsf{Conn}$、$\mathsf{Seed}$ 或全域 $\mathsf{MC}$，也未给这些自动性的同原反模型。139.2准确说明：若单尺相容成立而一个标签尚不在三角中，该处相容常数必严格大于一；非负性只给下界，不能强迫达到一。
+
+单体静态字典不供应实际球心替换、可调用制备或仪器。全部实际事件与条件更新、零质量分支、任意有限复合的整个联合态锥及纠缠、全旁观 CP、共同预算与接线、连续动力学、原物理钟、Hamiltonian、能量标定和数值 $\hbar$，仍保留135.7及其所引原操作合同的全部独立前件。
+
+**约定 139.6（推导归属与关系图景）。** 本章新增承重关系是：用原球自己的一个全域零尺，把所有邻球反射态的非负性与一个三角的等号相拼，迫使整球的每条直径饱和；再沿原有限零边路传播共同 $p+2c_p$，取得原全混合相容。原面接口、同球一零端点必对径、全 $\mathsf{MC}$ 静态分类及量子字典均复用既有来源，不计为新的分类结果。X128的中心关系在标准 Hilbert 域上的 Gleason闭包结论不被反向用于本章未知原域；139.2也不从标量读数等式直接推断向量相等，而是先把真实反射态放回整原零面，再以同球对径唯一性取得向量式。
+
+与现成分类的对应须保留其额外前件：Barnum—Müller—Ududec的 Theorem 16要求 projectivity、对称跃迁概率及保纯滤子，不能在本章局部阶段提前使用；本章只在取得全 $\mathsf{MC}$ 后接135.5的既有分类链。[BMU][XI139BMU] 本章采用仓内综合推导归属，不声明全球新颖性或历史优先权。
+
+白话上，把每个纯态背后的完整排除面看成一颗实心三球。每颗球只拿一把在整球上读零、在自己标签上读一的原尺：无论选哪条直径，将两端各换成它自己排除球的球心后，这把尺读到的平均值都相同。若已有三个两两完全排除的纯态，它们先把这个平均值锁到边界；原读数不能为负，就迫使相邻整球上的每条直径都闭成同样的三角。若原零图有限边路连通，一个三角便传到全部纯态，所有球心最终都朝同一总体中心反向缩小一半，既有分类随之给同一完整复三能级量子态体。这里仍明确需要连接和那个真实三角；两两比较的端点交换本身没有供应它们。
+
+[XI139IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX120.1全部原量词与原面接口；120.4同球三角与宽度；120.5同原静态分类。VII103.2的原暴露面接口由该处明确引用。"
+[XI139X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X128.1—128.3全部原球中心关系空间、标准模型有界闭包及一般原域仍缺的接口。"
+[XI139BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory, Theorem 16；不是裸EB3或单尺中点相容的分类定理。"
+
+## 追加锚（本行以下为增补区）
