@@ -5,9 +5,10 @@ year: 2014
 title: "Algebraic geometry of matrix product states"
 doi: 10.3842/SIGMA.2014.095
 url: "https://arxiv.org/abs/1210.2812v4"
-claim: "The paper studies the varieties of translation-invariant matrix product states with periodic and open boundary conditions, gives defining equations in small cases (among them the quartic hypersurface of open-boundary binary bond-dimension-two MPS on three sites), and states identifiability conjectures, including that each improper marginalization of open-boundary 2x2 binary MPS to three consecutive sites is a birational equivalence (Conjecture 8)."
+claim: "The paper studies the varieties of translation-invariant matrix product states with periodic and open boundary conditions, gives defining equations in small cases (among them the quartic hypersurface of open-boundary binary bond-dimension-two MPS on three sites), and states identifiability conjectures, including that each improper marginalization of open-boundary 2x2 binary MPS to three consecutive sites is a birational equivalence (Conjecture 8), and the corresponding three-site reduced-density phase recovery with a no-fewer clause (Conjecture 9)."
 strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSMarginalBirationality
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery
 license: citation-only
 triage: anchor
 ---
@@ -21,6 +22,16 @@ With open boundary conditions the state is $\Psi=\sum_{i_1,\dots,i_N}b_0^TA_{i_1
 > For $N\geq 4$, a~generic~$N$-qubit state can be recovered from its improper margina\-li\-zation to any three consecutive states.
 > That is, each improper marginalization map $\overline\OB(2,2,N)\to\overline\OB(2,2,3)$ is
 > a~birational equivalence of varieties.
+
+Conjecture 9 concerns an actual Hermitian reduced density operator, rather than the coherent sum above:
+
+> A generic N-qubit (D=d=2) translation invariant matrix product state Ψ with open boundary conditions is determined up to phase by a reduced density operator which traces out all but a chain of three adjacent states, but no fewer.
+
+The displayed map immediately following it uses the prefix entries
+$Q_k(\psi)_{u,v}=\sum_b\psi_{ub}\overline{\psi_{vb}}$.
+On the unnormalized affine cone this is the raw partial trace, retaining the squared-norm scale. A normalized reading must normalize both states. The prefix interpretation does not itself establish a theorem for every interior window.
+
+`OpenBoundaryMPSDensityRecovery.observable_chart_phase_recovery` supplies a conditional bridge: if some $t=Q_3(\psi)v$ lies in the existing coherent chart and the corresponding reconstructed complex linear transfer is injective, every actual free-boundary competitor with the same raw prefix density is a unit phase multiple of $\psi$. Its proof reuses the original three-site gauge reconstruction, without regularity assumptions on the competitor. Nonempty dense intrinsic real-algebraic genericity at every length and generic two-site nonidentifiability remain obligations; this conditional result does not resolve Conjecture 9. It asserts algebraic identifiability, with no positive recovery inverse, stability, dynamics or thermodynamic consequence.
 
 ## Verified locator
 
