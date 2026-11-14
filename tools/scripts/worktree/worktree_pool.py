@@ -95,11 +95,11 @@ def _allocate(source, path, options, base, expected):
 
 def claim(options):
     from worktree_maintenance import lease, notify
-    maintenance = notify(options.source)
     try:
         transaction = lease(options.source, blocking=False)
         transaction.__enter__()
     except OSError as error:
+        maintenance = notify(options.source)
         destination = options.path or getattr(options, "initializing_path", None)
         if destination is not None and destination.exists():
             raise Refused("maintenance_busy_for_existing_destination:" + str(destination))
@@ -108,9 +108,11 @@ def claim(options):
                         "worker": "busy" if isinstance(error, BlockingIOError) else "unavailable",
                         "reason": str(error)})
     try:
-        return _claim_available(options) | {"maintenance": maintenance}
+        result = _claim_available(options)
     finally:
         transaction.__exit__(None, None, None)
+        maintenance = notify(options.source)
+    return result | {"maintenance": maintenance}
 
 
 def _claim_available(options):
