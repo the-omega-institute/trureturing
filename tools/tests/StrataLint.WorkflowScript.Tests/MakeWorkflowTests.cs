@@ -71,6 +71,7 @@ public sealed partial class MakeWorkflowTests
         "decompose",
         "settle",
         "settle-clear",
+        "retire-sources",
         "worktree",
         "worktree-clean",
         "worktree-remove",
