@@ -159,7 +159,7 @@ public sealed class LeanReportSelectionTests
                     + 'test "$2" = --github-path\nprintf "%s\\n" "' + str(installed) + '" > "$3"\n')
                 installer = fixture.root / 'tools/scripts/workflow/install-lean-toolchain.sh'
                 installer.chmod(0o755)
-                environment = dict(os.environ, PATH=str(executables) + ':/usr/bin:/bin',
+                environment = dict(os.environ, FULL_BUILD="1", PATH=str(executables) + ':/usr/bin:/bin',
                     STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_BUILD_TARGETS='[]',
                     STRATALINT_LEAN_REPORT_REUSE=str(fixture.report),
                     STRATALINT_LEAN_PRODUCER_DLL=str(fixture.root / 'producer.dll'))
@@ -263,7 +263,7 @@ public sealed class LeanReportSelectionTests
         var logs = Path.Combine(fixture, "diagnostics");
         var arguments = new List<string>
         {
-            "-u", "STRATALINT_LEAN_PRODUCER_DLL",
+            "-u", "STRATALINT_LEAN_PRODUCER_DLL", "FULL_BUILD=1",
             "STRATALINT_INSPECTOR_SUPERVISED=1", "STRATALINT_LEAN_BUILD_TARGETS=[]", "LAKE_BIN=" + lake,
             "INSPECTOR_TEST_PHASES=" + phases, "INSPECTOR_TEST_FAILURE=" + failedPhase,
             "BASH_ENV=" + shellEnvironment,
@@ -377,7 +377,7 @@ public sealed class LeanReportSelectionTests
         };
         var arguments = new List<string>
         {
-            "-u", "STRATALINT_LEAN_REPORT_LOG_DIR", "LEAN_REPORT=" + output,
+            "-u", "STRATALINT_LEAN_REPORT_LOG_DIR", "FULL_BUILD=1", "LEAN_REPORT=" + output,
             "LEAN_REPORT_TEST_ARGUMENTS=" + argumentLog,
             "LEAN_REPORT_TEST_EXIT=" + nativeExit,
         };

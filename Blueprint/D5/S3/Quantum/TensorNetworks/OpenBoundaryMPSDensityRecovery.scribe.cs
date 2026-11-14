@@ -61,7 +61,12 @@ internal sealed class OpenBoundaryMPSDensityRecoveryDocument : IScribeDocumentDe
                 new Formula.Logic(Par(raw), FormulaLogicOperator.Iff, Par(phase)))))))));
     }
 
-    private static Formula X(string value) => F.Id(value);
+    private static Formula X(string value) => value switch
+    {
+        "ψ" => Psi,
+        "φ" => Phi,
+        _ => F.Id(value),
+    };
     private static Formula Q(params string[] names)
     {
         var parts = new List<Formula>();

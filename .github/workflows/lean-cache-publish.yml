@@ -227,7 +227,7 @@ jobs:
     permissions:
       contents: write
       actions: write
-    runs-on: ubuntu-24.04-arm
+    runs-on: runner-for-trureturing-cache-release-publish
     timeout-minutes: 120
     env:
       STRATALINT_CACHE_WRITES: 'false'
@@ -289,4 +289,4 @@ jobs:
       - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
-        run: make lean-cache-to-github-without-mathlib
+        run: make lean-cache-to-github-without-mathlib FULL_BUILD=1
