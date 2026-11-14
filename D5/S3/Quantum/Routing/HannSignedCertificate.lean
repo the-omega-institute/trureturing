@@ -15,7 +15,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open scoped BigOperators ComplexConjugate
+open scoped BigOperators ComplexConjugate ComplexOrder
 
 namespace D5.S3.Quantum.Routing.HannSignedCertificate
 
@@ -568,8 +568,10 @@ private theorem below_upper_relation (n : ℕ) (q : Router (n + 1) → ℝ) (bus
   obtain ⟨er, her⟩ := Function.ne_iff.mp
     (vacuum_nonzero n (restrict n q true) (fun w => hq (some (true, w))))
   have hlocal (l r : Environment n) := local_equation (q none) (hq none) hr
-    (synthesis n (restrict n q false) bus (childCoeff n x false) l * vacuumRecord n (restrict n q true) r)
-    (vacuumRecord n (restrict n q false) l * synthesis n (restrict n q true) bus (childCoeff n x true) r)
+    (synthesis n (restrict n q false) bus (childCoeff n x false) l *
+      vacuumRecord n (restrict n q true) r)
+    (vacuumRecord n (restrict n q false) l *
+      synthesis n (restrict n q true) bus (childCoeff n x true) r)
     (c * vacuumRecord n (restrict n q false) l * vacuumRecord n (restrict n q true) r)
     (by
       intro i
@@ -606,8 +608,10 @@ private theorem upper_relation (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qut
   obtain ⟨er, her⟩ := Function.ne_iff.mp
     (vacuum_nonzero n (restrict n q true) (fun w => hq (some (true, w))))
   have he (l r : Environment n) :
-      synthesis n (restrict n q false) bus (childCoeff n x false) l * vacuumRecord n (restrict n q true) r +
-      vacuumRecord n (restrict n q false) l * synthesis n (restrict n q true) bus (childCoeff n x true) r =
+      synthesis n (restrict n q false) bus (childCoeff n x false) l *
+          vacuumRecord n (restrict n q true) r +
+      vacuumRecord n (restrict n q false) l *
+          synthesis n (restrict n q true) bus (childCoeff n x true) r =
       c * vacuumRecord n (restrict n q false) l * vacuumRecord n (restrict n q true) r := by
     have hh := congrFun hx (joinEnvironment n 0 l r)
     rw [synthesis_split n q bus x (joinEnvironment n 0 l r), Pi.smul_apply, vacuum_split] at hh
@@ -719,7 +723,8 @@ private theorem step_kernel_complete (n : ℕ) (q : Router (n + 1) → ℝ) (bus
         have hc : embed n false u - embed n true v ∈ N :=
           Submodule.subset_span (by simp)
         have heq : x = embed n false (childCoeff n x false - z • u) +
-            embed n true (childCoeff n x true + z • v) + z • (embed n false u - embed n true v) := by
+            embed n true (childCoeff n x true + z • v) +
+              z • (embed n false u - embed n true v) := by
           ext a
           cases a with
           | mk b a => cases b <;> simp [embed, childCoeff]
@@ -742,7 +747,8 @@ private theorem step_vacuum_forward (n : ℕ) (q : Router (n + 1) → ℝ) (bus 
     | some u => cases hv : r.representative <;> simp [step, hroot, hu, hv, Output.flag]
     | none =>
       have hz := absent_scalar_zero n (restrict n q false) bus l cl hu _ z hz0
-      have hrange : vacuumRecord n (restrict n q true) ∈ LinearMap.range (synthesis n (restrict n q true) bus) :=
+      have hrange : vacuumRecord n (restrict n q true) ∈
+          LinearMap.range (synthesis n (restrict n q true) bus) :=
         ⟨childCoeff n x true, by simpa [hz] using hz1⟩
       have hflag := cr.vacuum_iff.mp hrange
       cases hv : r.representative <;> simp_all [Output.flag, step]
@@ -812,7 +818,7 @@ private theorem list_get_range (n : ℕ) (L : List (Coeff n)) :
 
 /-- Exact all-height certificate for the prescribed ordered signed recursion.
 Every complex kernel vector has a unique expansion in that literal list. -/
-theorem coefficient_certificate (n : ℕ) (q : Router n → ℝ)
+private theorem coefficient_certificate (n : ℕ) (q : Router n → ℝ)
     (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (hq' : ∀ v, q v ≤ 1) (bus : Qutrit) :
     Module.finrank ℂ (LinearMap.range (synthesis n q bus)) = (outputs n q).dimension ∧
     (outputs n q).kernel.length = 2 ^ n - (outputs n q).dimension ∧
@@ -857,5 +863,133 @@ theorem coefficient_certificate (n : ℕ) (q : Router n → ℝ)
     have hz (i : Fin (outputs n q).kernel.length) :=
       hs.kernel_sound ((outputs n q).kernel.get i) (List.get_mem _ i)
     simp only [hz, smul_zero, Finset.sum_const_zero]
+
+instance environmentFintype (n : ℕ) : Fintype (Environment n) := by
+  classical
+  unfold Environment
+  infer_instance
+
+/-- The actual synthesis matrix has environment rows and address columns. -/
+def recordMatrix (n : ℕ) (q : Router n → ℝ) (bus : Qutrit) :
+    Matrix (Environment n) (Address n) ℂ := fun e a => record n q bus a e
+
+def standardGram (n : ℕ) (q : Router n → ℝ) (bus : Qutrit) :
+    Matrix (Address n) (Address n) ℂ :=
+  (recordMatrix n q bus).conjTranspose * recordMatrix n q bus
+
+/-- The density orientation conjugates the second record. -/
+def densityGram (n : ℕ) (q : Router n → ℝ) (bus : Qutrit) :
+    Matrix (Address n) (Address n) ℂ :=
+  fun a b => ∑ e, record n q bus a e * conj (record n q bus b e)
+
+private theorem local_overlap (q : ℝ) (hq : -(1 / 2 : ℝ) ≤ q) (hq' : q ≤ 1)
+    (s t : Qutrit) :
+    (∑ e : Fin 3, conj (localRecord q s e) * localRecord q t e) =
+      ((if s = t then 1 else q : ℝ) : ℂ) := by
+  have hw : conj omega = omega ^ 2 := by
+    rw [← Complex.inv_eq_conj (omega_primitive.norm'_eq_one (by norm_num)), omega_inv]
+  have ha : (Real.sqrt ((1 + 2 * q) / 3) : ℂ) ^ 2 = (((1 + 2 * q) / 3 : ℝ) : ℂ) := by
+    exact_mod_cast Real.sq_sqrt (show 0 ≤ (1 + 2 * q) / 3 by linarith)
+  have hb : (Real.sqrt ((1 - q) / 3) : ℂ) ^ 2 = (((1 - q) / 3 : ℝ) : ℂ) := by
+    exact_mod_cast Real.sq_sqrt (show 0 ≤ (1 - q) / 3 by linarith)
+  have hf : omega ^ 4 = omega := by
+    calc
+      omega ^ 4 = omega ^ 3 * omega := by ring
+      _ = omega := by rw [omega_cube, one_mul]
+  have hW : localRecord q .wait = ![
+      (Real.sqrt ((1 + 2 * q) / 3) : ℂ), Real.sqrt ((1 - q) / 3),
+      Real.sqrt ((1 - q) / 3)] := by
+    funext e
+    fin_cases e <;> norm_num [localRecord, labelIndex]
+  have hL : localRecord q .zero = ![
+      (Real.sqrt ((1 + 2 * q) / 3) : ℂ), Real.sqrt ((1 - q) / 3) * omega,
+      Real.sqrt ((1 - q) / 3) * omega ^ 2] := by
+    funext e
+    fin_cases e <;> norm_num [localRecord, labelIndex, omega_inv]
+  have hR : localRecord q .one = ![
+      (Real.sqrt ((1 + 2 * q) / 3) : ℂ), Real.sqrt ((1 - q) / 3) * omega ^ 2,
+      Real.sqrt ((1 - q) / 3) * omega] := by
+    funext e
+    fin_cases e <;> norm_num [localRecord, labelIndex, omega_neg_two, omega_sq_inv]
+  cases s <;> cases t <;>
+    simp only [hW, hL, hR, Fin.sum_univ_succ, Matrix.cons_val_zero,
+      Matrix.cons_val_succ, Finset.univ_eq_empty,
+      Finset.sum_empty, add_zero, map_mul, map_pow, Complex.conj_ofReal, hw,
+      omega_sq_sq, ↓reduceIte] <;>
+    push_cast at ha hb ⊢
+  all_goals
+    generalize (Real.sqrt ((1 + 2 * q) / 3) : ℂ) = a at *
+    generalize (Real.sqrt ((1 - q) / 3) : ℂ) = b at *
+    ring_nf
+    try simp only [omega_cube, hf, mul_one]
+    first
+    | linear_combination ha + 2 * hb
+    | linear_combination ha - hb + b ^ 2 * omega_sum
+
+private theorem gram_product (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (hq' : ∀ v, q v ≤ 1) (bus : Qutrit)
+    (a b : Address n) :
+    standardGram n q bus a b =
+      ((∏ v, if loadedLabel n a bus v = loadedLabel n b bus v
+        then 1 else q v : ℝ) : ℂ) := by
+  classical
+  change (∑ e, conj (record n q bus a e) * record n q bus b e) = _
+  calc
+    _ = ∑ e : Environment n, ∏ v,
+        conj (localRecord (q v) (loadedLabel n a bus v) (e v)) *
+          localRecord (q v) (loadedLabel n b bus v) (e v) := by
+      simp only [record, map_prod, Finset.prod_mul_distrib]
+    _ = ∏ v, ∑ i : Fin 3,
+        conj (localRecord (q v) (loadedLabel n a bus v) i) *
+          localRecord (q v) (loadedLabel n b bus v) i := (Fintype.prod_sum (fun (v : Router n) (i : Fin 3) =>
+        conj (localRecord (q v) (loadedLabel n a bus v) i) *
+          localRecord (q v) (loadedLabel n b bus v) i)).symm
+    _ = _ := by
+      simp only [local_overlap _ (hq _) (hq' _), Complex.ofReal_prod]
+
+private theorem density_standard (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (hq' : ∀ v, q v ≤ 1) (bus : Qutrit) :
+    densityGram n q bus = standardGram n q bus := by
+  ext a b
+  have he : densityGram n q bus a b = conj (standardGram n q bus a b) := by
+    simp only [densityGram, standardGram, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      recordMatrix, map_sum, map_mul, starRingEnd_apply, star_star]
+  rw [he, gram_product n q hq hq' bus a b, Complex.conj_ofReal]
+
+private theorem matrix_synthesis (n : ℕ) (q : Router n → ℝ) (bus : Qutrit) :
+    (recordMatrix n q bus).mulVecLin = synthesis n q bus := by
+  apply LinearMap.ext
+  intro x
+  funext e
+  simp only [Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, recordMatrix, synthesis,
+    LinearMap.coe_mk, AddHom.coe_mk, mul_comm]
+
+/-- The complete signed coefficient certificate and its actual physical Gram consumer.
+The Gram equality follows from real local overlaps, not from reality of record entries. -/
+theorem signed_event (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (hq' : ∀ v, q v ≤ 1) (bus : Qutrit) :
+    Module.finrank ℂ (LinearMap.range (synthesis n q bus)) = (outputs n q).dimension ∧
+    (outputs n q).kernel.length = 2 ^ n - (outputs n q).dimension ∧
+    (vacuumRecord n q ∈ LinearMap.range (synthesis n q bus) ↔ (outputs n q).flag = true) ∧
+    (∀ u, (outputs n q).representative = some u → synthesis n q bus u = vacuumRecord n q) ∧
+    (∀ x, synthesis n q bus x = 0 ↔
+      ∃! α : Fin (outputs n q).kernel.length → ℂ,
+        x = ∑ i, α i • (outputs n q).kernel.get i) ∧
+    (∀ a b, standardGram n q bus a b =
+      ((∏ v, if loadedLabel n a bus v = loadedLabel n b bus v then 1 else q v : ℝ) : ℂ)) ∧
+    densityGram n q bus = standardGram n q bus ∧
+    LinearMap.ker (densityGram n q bus).mulVecLin = LinearMap.ker (synthesis n q bus) ∧
+    (densityGram n q bus).rank = (outputs n q).dimension := by
+  classical
+  obtain ⟨h1, h2, h3, h4, h5⟩ := coefficient_certificate n q hq hq' bus
+  refine ⟨h1, h2, h3, h4, h5, gram_product n q hq hq' bus,
+    density_standard n q hq hq' bus, ?_, ?_⟩
+  · rw [density_standard n q hq hq' bus, standardGram,
+      Matrix.ker_mulVecLin_conjTranspose_mul_self, matrix_synthesis]
+  · rw [density_standard n q hq hq' bus, standardGram,
+      Matrix.rank_conjTranspose_mul_self]
+    change Module.finrank ℂ (LinearMap.range (recordMatrix n q bus).mulVecLin) = _
+    rw [matrix_synthesis]
+    exact h1
 
 end D5.S3.Quantum.Routing.HannSignedCertificate
