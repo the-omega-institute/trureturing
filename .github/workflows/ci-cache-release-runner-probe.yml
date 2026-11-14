@@ -12,7 +12,9 @@ permissions: {}
 jobs:
   runner-smoke:
     name: Test the cache Release runner
-    runs-on: runner-for-trureturing-cache-release-publish
+    runs-on:
+      group: trureturing
+      labels: runner-for-trureturing-cache-release-publish
     timeout-minutes: 5
     steps:
       - name: Read runner identity and resources
