@@ -4245,3 +4245,577 @@ those mechanisms. Their generic statements are used only inside the
 actual VI37--57 source correspondence; they do not add a native operation, preparation, detector or right.
 
 ## 追加锚（本行以下为增补区）
+
+## 72. Original operands across a collected source cut
+
+**Definition 72.1 (installed domain and acquisition events).** Retain
+exactly Definition 58.1, hence AA17.1,20.1–20.5 and AAV1.2–1.3,5–8,11,
+13–14,20–24. The finite entrance has its actual known-alpha prehistory;
+the selected bilateral entrance has the actual joint selected source and
+each component's genuine separate empty/P preparation. All local lawful
+addressed P/S and genuine Next remain admitted. No global-substitution
+restriction, stationary component, replacement source or new seed product
+is imposed. A requested logical root x or anchor a is actually acquired,
+with its source/component association and current read authority. Acquire
+any requested saved-cursor cut d by copying the actual cursor binding
+before the request's first movement. Then acquire the finite old cone
+envelope I of Definition 60.1, including d and the actual navigation
+corridors when required. Its old construction cut is u.
+Theorem 59.2 may be used for this initialization, with all its history
+work. The procedures below replace only the per-attempt validator of
+Definition 61.1; they do not replace its historical consumers or the
+original tape, version and record services.
+
+Use R for an actual coherent header-read occurrence after a candidate has
+been collected and before its validating source tests. Its actually read
+current token is r. A sample event E and a later test Q have their own
+acquired tokens v and w. Order such as E<R<Q is order of these executed
+observer transactions, not comparison of token encodings. Their controller
+continuations and retained records establish this order. Every token is
+obtained from the real live header in its original admitted transaction;
+this acquisition does not require decoding its successful-event payload.
+Repeated header reads can have the same token and different observer
+states. The certificate concerns the source restriction at R, denoted
+T_r, and does not identify r with a complete observer checkpoint.
+
+**Definition 72.2 (bound source tests).** A logical-node test actually
+navigates from its acquired original component root along an acquired
+root-relative logical path, testing branch arity before each child step.
+It retains the arrived operand reference z and reads its physical arity
+by the original Tag test. It compares z by reference equality with the
+operand required by the candidate. Alternatively an already acquired z
+is tested under the same current source-field authority, retaining its
+previously acquired root/path authentication. Existing binary edges on
+that authentication path are permanent. A bitstring alone supplies no
+reference and no authority. The test reads its own current header token
+inside the same already admitted coherent source-access transaction,
+before the source test, exactly as in Definition 61.1. It observes no
+unfinished edit or tape maintenance. Each transaction has the existing
+exclusion interval; no exclusion spans two samples or the entire attempt.
+
+The test result is one of alpha, beta, branch or absent on that actual
+operand. The original Tag payload remains the original two-bit source
+tag with its original framing: no version, operand or certificate field
+is added to its wire. The observer's already admitted field reads and
+backing retain the source, operand, path and actual acquisition version.
+Where an installed contract records internal reads, those exact records
+remain; where it does not, the reads still have their actual costs.
+An explicitly expected-token mismatch retains RejectEntry. It cannot be
+reinterpreted as a successful test at the candidate's earlier token.
+
+**Definition 72.3 (tree and interval collection).** Start a fresh attempt
+by actually reading a current token s. Retain the same saved d of
+Definition 72.1 across all attempts; rejection never overwrites it
+with an intermediate cursor. For a requested tree
+arrival, use Definition 61.1's directed real walks to the subtree's
+acquired left boundary. Then traverse the actual logical subtree at x
+by the ordered arity recursion of AAV8.3.
+At a branch retain its actual two child references, ordered recursion
+frames and authenticated paths. At a logical leaf retain its exact tag,
+actual operand and acquisition token. Do not follow a unary marker as
+a logical child. Also acquire the material vertices: for a beta retain
+its actual physical left marker, and for a branch its actual two children.
+These fields are read in their admitted coherent arity transactions;
+their later copying and root/path authentication are paid work. The
+result is a finite full bracket candidate V with an actual-node map.
+An attempt that has not finished this traversal has no candidate yet.
+
+For an interval, actually reach a using Definition 61.1's paid cut-order
+comparison and directed one-cell walks. On each visited cut c_i,
+perform ReadCurrent; retain its cell, operand z_i, tag b_i, both actual
+subtree-boundary cuts c_i,c_{i+1}, authentic component/path and true token.
+The boundaries are acquired from the maintained cell fields or the paid
+Before/After procedures of AAV13.3, with the same actual cut identity.
+These procedures give a logical node's exterior cuts even if it splits
+before the boundary calculation. They never turn its old cut into a
+reference for that old operand. Between successive samples perform the
+actual WalkRight, retaining its real departure/arrival and crossed cell
+and operand bindings. Require its departure, operand and arrival to
+match the preceding sample's c_i,z_i,c_{i+1}. The next ReadCurrent must
+start at that same arrived cut. Every such equality is actually tested.
+
+For these interval samples also acquire each beta's real physical marker
+as in the tree collection. This gives the material subtrees of the
+sampled atoms, with their actual original-root paths. Their union is
+the interval's material support; their terminal vertices are its material
+boundary. This does not include unrequested ancestor sibling subtrees,
+or invent a bracket scaffold joining an arbitrary frontier interval.
+
+Stop after h successful reads or a genuine ReadCurrent Endpoint at the
+current cut, whichever comes first. If h=0, collect the empty list
+without a leaf test; this alone asserts no Endpoint. If h is reached,
+no last walk is required. If fewer than h leaves have been read, the
+walk to the next tested cut and its actual Endpoint are required.
+Reject a failed binding comparison, preserving the actual reads and
+movements, and start again from the cursor actually reached. There is
+no cursor reset. A denied grant, disabled primitive or proper pending
+frame supplies neither a sample nor such a comparison result. Pending
+service is handled by its original phase rules, not counted as a
+completed failed content test.
+
+**Definition 72.4 (post-collection operand validation).** After the whole
+candidate and its binding comparisons have completed, execute R and retain
+r. For each candidate logical leaf, execute a bound test Q_i of Definition
+72.2 on precisely its retained z_i and original component/path. Accept
+only if every test arrives at that identical operand and returns the
+same leaf tag b_i. Branch, absent or a different tag rejects. Comparing
+ReadCurrent at the old left cut with b_i is not this test. No read of
+an event-kind/address selector and no predecessor scan from r to s is
+part of this acceptance predicate. All collection reads, its Endpoint
+test and its intervening walk records precede R; all Q_i follow R.
+There may be arbitrary lawful native
+transactions between any of these completed transactions, including
+between two Q_i, and after a passed Q_i before acceptance.
+
+The retained certificate consists of the actual source/root bindings,
+s, the candidate with its true read versions, the executed binding
+comparisons, R with r, and the actual validation tests and their versions.
+Its authenticity is the executed read/copy/continuation chain, under the
+retained rights and immutable record contract. These are acquired data,
+not a self-authenticating string accepted from an unrelated sender.
+For an interval also retain its anchor, request length, actual consecutive
+cut/operand bindings, movement and any Endpoint record. Saved-cursor
+return, when requested, is a separate paid movement leg after this work.
+It neither changes R nor re-dates any sample.
+
+## 73. Complete ordered trees at the attained certification cut
+
+**Theorem 73.1 (original-source asynchronous tree correspondence).**
+For every installation of either entrance in Definition 72.1, every
+acquired logical subtree binding x, every prior finite lawful native and
+observer history, and every finite attempt of Definitions 72.2–72.4
+that accepts, its V is exactly the complete ordered logical tree under
+that same actual x at R. Its node and leaf maps are the actual operands
+at their actual original-root paths, not just matching labels. Its
+acquired material map is exactly C(V) under x at R, with its actual
+support, ordered edges, material terminal antichain and exterior cuts.
+Every candidate and validation sample retains its own acquisition token.
+There is no restriction on the number or location of lawful intervening
+P/S or genuine Next events in this safety statement. After R, later
+edits, even edits after individual successful validation tests, cannot
+invalidate this statement about R. It makes no current-at-Return claim.
+
+Proof. At a fixed actual logical vertex z, AA's original templates permit
+only the successive local statuses alpha, beta, branch, with the alpha
+stage omitted at a beta-born child. Once branch, z remains branch and
+its actual ordered children remain the same references. Other events
+leave that local status unchanged. In particular, an S at z keeps z
+as branch; it does not rename its new left beta child to z. No source
+object is deleted or reused. The original physical child edges, once
+present, are never redirected. These facts follow directly from
+AA20.2's actual P/S attachments and AAV5.3–5.4. Material persistence is
+also supplied by NativeGuardedLeafRepair's history_preserves_material,
+with its private old_children/old_edges suppliers for old edges; no
+new static material-persistence result is needed here.
+
+For each candidate leaf, let E_i be its original leaf test and Q_i its
+successful same-operand validation. The executed controller gives
+
+$$
+E_i<R<Q_i,\qquad
+\operatorname{Tag}(z_i,E_i)=b_i=\operatorname{Tag}(z_i,Q_i)
+\quad(b_i\in\{\alpha,\beta\}).
+\tag{VI.95}
+$$
+
+Monotonicity of these statuses implies that z_i has exactly that leaf
+status throughout the closed interval from E_i to Q_i, in particular
+at R. An alpha cannot be promoted and return to alpha; a beta cannot
+split and return to beta at z_i. A beta at a different child is excluded
+by the actual operand equality, independently of equality of tag bits.
+This is the usual no-return/double-collect step, used here inside the
+source correspondence rather than claimed as a new general mechanism.
+
+Every branch was read before R. Its branch status and actual two children
+therefore persist to R. Induct on the *collected* finite recursion tree.
+At a candidate leaf, (VI.95) supplies exactly its constructor at R.
+At a candidate branch, its previously acquired real ordered child edges
+are still its two child edges at R; apply induction to both recorded
+subtraversals. The result identifies the whole subtree with V, including
+every bracket. The same induction identifies its actual-node map and
+proves coverage: every branch has both children and every stopping node
+really is a leaf at R. No unvisited descendant can hide below such a
+leaf at R. Thus this is not the inference from observations against
+different sources to a static leaf-determination theorem. The common
+source cut has first been established for every stopping node.
+
+The root/path authentication uses real navigations and parent/child
+comparisons. Every strict ancestor on such a logical path was already
+binary when that edge was traversed. Its two child references persist,
+so following the same root-relative path still reaches the identical
+z_i at R and at Q_i. This applies inside an actual finite pre-epoch
+tree as well as inside a selected bilateral component. A finite epoch
+leaf is never promoted to an independent original root, and a bilateral
+component is selected by its real header/root binding, not its integer
+index. No order on the separate bilateral preparations is used.
+
+For material coverage, a candidate alpha has only its terminal vertex
+at R. A candidate beta has its unary root and the actual marker acquired
+from its physical left edge. Its passed beta test excludes S before R,
+so this marker is still terminal at R. A candidate branch has precisely
+its two actual logical child subtrees. Induction therefore gives exactly
+the material realization C(V), including unary markers, without treating
+the logical leaf list as the material boundary. Its prefix closure and
+maximal material vertices are AA17.3's support/boundary correspondence,
+reused on these actual acquired objects. The node's exterior boundaries
+and every interior branch midpoint are the same persistent cuts by
+AAV13.2; the direct incidence representation gives the identical cuts
+by AAV5.4/14.1. Boundary descriptions do not add an inverse access port.
+
+Different E_i need not see one version, and an event may occur after a
+branch read but before its descendants are collected. That event is
+included whenever those later descendant samples and validations justify
+it at R. Conversely an event after a passed Q_i can destroy today's leaf
+there while leaving (VI.95) and the source at R unchanged. The argument
+uses neither constancy of the whole tree from s nor constancy up to
+Return. It preserves all actual older records and all later native
+history, rather than projecting them onto one sample version. $\square$
+
+## 74. Exact current intervals, endpoints and actual cursor legs
+
+**Theorem 74.1 (original-source asynchronous interval correspondence).**
+For every installation, acquired retained anchor a, finite h, prior
+finite history and accepted finite interval attempt of §72, its m reads
+are exactly the first m consecutive current logical leaves to the right
+of a at R, with their actual source/component/operand/path and successive
+cut bindings. With ell_r the number of current leaves of I to the right
+of a at R,
+
+$$
+m=\min(h,\ell_r).
+\tag{VI.96}
+$$
+
+The retained union of the sampled atoms' material subtrees is exactly
+that interval's material support at R, with its actual terminal boundary;
+the two exterior logical cuts remain separately distinguished.
+If m<h, its actual Endpoint is the genuine finite right endpoint at R.
+The zero-length request yields m=0, without an inferred Endpoint.
+Actual arrival at a and any completed return to saved d are the
+recorded one-cell movements, separately from acquisition and native root
+Return. All quantifiers about arbitrary interleaved edits and later
+records in Theorem 73.1 apply. No previously retained epoch count is
+interpreted as a current cursor rank.
+
+Proof. Every sampled z_i passes (VI.95), so is that same actual leaf at
+R. Its two exterior cuts are persistent, even if its descriptor was
+computed by a later paid parent ascent. They bound precisely that one
+leaf at R. The first left cut equals the actually reached a. For each
+intervening step, the real walk and checked reference equalities bind
+the next sample's left cut to the preceding leaf's right cut. Hence the
+closed leaf intervals concatenate in their actual frontier order at R.
+There is no room between two adjacent shared cuts for an uncollected
+leaf. A split would insert a cut *inside* a sampled leaf's exterior
+interval and make its old operand branch, contrary to (VI.95) at R.
+A promotion preserves the cuts but would change alpha to beta, likewise
+detected when inconsistent with its sampled tag. This proves actual
+consecutiveness and coverage, not just correctness of individual tags.
+The alpha/beta cases of Theorem 73.1's material argument identify every
+sample's acquired material subtree at R. Distinct current logical leaves
+have disjoint such subtrees. Their union and its terminal vertices are
+therefore exactly the asserted interval material support and boundary.
+
+In the direct incidence representation the collected cells were genuine
+current cells at their reads. In AAV13–14's representation the actual
+Before/After cuts and existing-neighbor resolver give the same bindings.
+Their header excursions, parent scans, field reads and comparisons are
+paid even when they do not move the observation cursor. In particular,
+an S between a ReadCurrent and its following WalkRight makes the walk
+cross a new child, with a different operand and new interior arrival cut.
+The required binding comparison rejects; it is never called arrival
+across the sampled old leaf. If that split is later, (VI.95) still
+rejects whenever it occurred before the old leaf's Q_i.
+
+If collection stopped with m<h, it actually tested the outward side
+at its arrived cut. An authentic Endpoint can occur only at the finite
+right exterior endpoint, by AAV5.5/13.4. No lawful template extends
+past that exterior cut, so this is still that endpoint at R. The
+concatenated samples are therefore the entire suffix from a. If m=h,
+these h leaves already exist at R. Definition 60.1's acquired envelope
+contains all first-h descendants, or reaches the genuine finite right
+endpoint if its old suffix was shorter. Theorem 60.2 preserves this
+containment through arbitrary later local edits. These cases prove
+(VI.96), including a starting endpoint with m=0<h. In the bilateral
+entrance the finite h leaves exist, so no finite Endpoint is fabricated.
+For h=0, (VI.96) is immediate and R is still actually acquired.
+
+At each movement the actual cursor binding, not a scratch reference to
+the desired cut, changes by one cell. The already acquired cut-order
+comparison supplies the direction; AAV13.2 preserves that order. Thus
+the procedure's recorded arrival is an actual arrival. Saving d copies
+the original cursor binding before movement. Return toward d uses the
+same real directed walks from the then-current cut, which can be a
+new midpoint created after u. Any pending leg remains pending until its
+actual final equality test. Its eventual completion is Theorem 75.1,
+not a consequence of (VI.96) alone. Growth during that leg changes no
+old sample version, does not move R and does not silently clear the
+marker latch. $\square$
+
+## 75. Conditional completion and complete original service
+
+**Theorem 75.1 (local-interference completion without event validation).**
+Keep Definition 58.1's finite supply, current authority, admitted coherent
+finite-service and progress assumptions. Complete each pending observer
+operation and continue §72's attempts after a genuine rejection. Suppose
+only finitely many successful native events after u are relevant to I
+in the sense of (VI.76). Then every requested tree or finite interval
+completes with an accepted certificate at its own acquired R, with the
+exact content in Theorems 73.1–74.1. Required arrival and separately
+requested saved-cursor return also complete. Irrelevant growth can
+continue indefinitely under the same continued supply assumptions.
+There is no assertion of wait-freedom under unrestricted relevant
+interference, uniform resources, bounded physical time or current data
+at a later Return.
+
+Proof. By Theorem 60.2, all examined region leaves descend from I's
+finitely many old leaves. Finitely many relevant P/S imply a finite
+maximum number of its nodes and current cells. A tree traversal over
+permanent binary child edges cannot chase infinitely many local new
+nodes in this case. Each acquired node is processed once per traversal,
+with a finite stack, and all its possible descendants are in this finite
+maximum tree. Interval collection has at most h samples; each admitted
+read, real path authentication and resolver terminates at its own finite
+source cut. Validation has only finitely many retained operands and
+finite permanent paths. A finite bound is a proof parameter, not size
+advice supplied to the observer.
+
+Each relevant split in a cursor-to-target corridor can add only one
+cell to its distance, whereas a toward walk subtracts one. The exact
+account is Theorem 62.1. Finitely many such splits therefore permit
+arrival at a, re-arrival after a rejection and the saved return to d,
+under progress of the actual movements. These paths stay in the
+acquired corridors of I. A broader header search may visit components
+outside I; its authentic root/header links persist, and it takes only
+finitely many steps to each actually acquired owner. Outside growth
+does not lengthen that fixed header distance. Every coherent component
+count or history decode required by some *other* installed field service
+is finite at its own entry, as in Theorem 61.3; such work is not assigned
+zero or permitted to observe an unfinished native transaction.
+
+Thus every attempt and required movement leg is finite. If one has
+already accepted, the target is certified at its own R, regardless of
+later relevant events. Otherwise finish an attempt crossing the last
+relevant event. If it rejects, the next attempt starts with a constant
+restriction to I and no further relevant edit. Tree traversal then
+records that exact tree; every same-operand validation agrees. Interval
+reads and walks then have the required matching bindings, stop at the
+right length or real Endpoint, and all validations agree. This attempt
+accepts. The case of no relevant event has the same argument for the
+first attempt. Any actual content rejection requires an intervening
+change of a sampled leaf, or a walk crossing its replacement, inside
+I. Disjoint successive completed attempts cannot charge the same such
+event twice. The existence proof does not require the observer to find,
+enumerate or know the last event. Outside events can alter global tokens,
+ancestor tapes and later access work without changing these conclusions.
+$\square$
+
+**Theorem 75.2 (all-phase source and record preservation).** On both
+actual entrances, §72's procedures are paid compositions of the existing
+current source tests, actual reference/field/header reads, equality tests,
+movement and finite backing operations. At every finite completed or
+pending prefix they preserve the full original service in Theorem 63.1:
+all acquired versions, immutable records and true read tokens, arbitrary
+legal local P/S and genuine Next, their actual operands and successors,
+rights/enrollment, refusals, pending frames/output, latch/control and
+Print/End/ACK/native Return rules. They require no per-attempt enumeration
+of the successful-event segment between s and r for their correctness.
+Full history and original Next remain available with their original work.
+
+Proof. Each new source test is the same current arity/operand access of
+AAV6.2, with the same coherent header-read placement already admitted
+in VI61.1. This access has no inherent call to the logical event selector
+of AAV20.3/23.2. The source-dependent arguments of every test come from
+the actual root/header or retained record binding and paid navigations;
+no unacquired numeral is cast to a reference. Allocated backing holds
+the traversal stack, candidate, validation cursor, copied fields,
+remaining path, counters, output cursor and continuation. A pending
+operation retains precisely its acquired prefix and these fields.
+
+Receive copies each occupied input bit before releasing its ingress
+latch. A proper prefix of a request creates no completed request or
+certificate. A rejected comparison does not retract its reads, samples,
+tokens or movement records; only ordinary scratch may be reused.
+BuildAnswer seals an actually completed finite result; Print emits
+only its real prefix, End follows the last bit, and supplied local ACK
+enables native root Return and ordinary cleanup. Native Return neither
+teleports the parked observation cursor nor fulfills its separate return
+leg. Ordinary marker queries retain their latch refusal; only a genuine
+successful Resume clears the latch. Disabled access, denied grants,
+RejectEntry, BadFrame and native guarded refusals keep their exact
+different rules. None supplies a successful validation sample.
+
+The procedures do not mutate the native source. Each external native
+transaction retains its Reserve, actual edit, tape/incidence maintenance
+and publication, with its complete original input/output/return. Next
+still calls the original indexed handler, retains its actual old pair,
+descends left in today's historical subtree to its actual enabled leaf,
+executes the real P/S and retains the actual new pair. Its new event is
+not replaced by a guessed edit at the old event address. No native busy
+phase becomes a readable cut and no new inter-transaction lock is used.
+Induction on these transactions and their pending prefixes gives the
+same full source/service preservation as Theorem 63.1. The additional
+certificate is about the source at R, not equality of entire archives
+produced by two different observer schedules.
+
+In particular, no old token, history payload, ancestral tape, retained
+record or component-attribution field is removed. Initialization via
+§§59–60 can still decode history; original FetchGrowth, Next, record
+consumers and alternative installed selectors still pay their historical
+costs whenever used. AAV24.2's distinction between backing and access
+work remains. What disappears from this validator's dependency list is
+the acquisition and relevance test of *every* event in the s-to-r
+segment. All actual header/path/authentication/record reads, counters,
+reference bit lengths, routing, output, navigation, allocation and
+maintenance remain charged. No total-cost or measured-speed conclusion
+follows from removing this particular dependency. $\square$
+
+## 76. An original consumer and distinguishing lawful schedules
+
+**Proposition 76.1 (a current bracket consumer beyond VI61's predicate).**
+There are authentic tree and interval attempts on both entrances that
+§72 certifies, although the VI61.1 event predicate rejects the same
+candidate interval s through r. The tree answer can feed AAV8.3's exact
+syntactic rho consumer, and the interval answer can feed AAV8.2's tuple
+consumer with separate atom-output boundaries. This supplies current
+content at an acquired cut despite actual relevant edits during collection;
+it is not merely a different encoding of VI61's no-relevant-event premise.
+
+Proof. In the finite entrance prepare the actual root by $P_\varepsilon$,
+$S_\varepsilon$, yielding $\langle\beta,\alpha\rangle$ with its original tapes. Use its full
+two-leaf old envelope I at u. Acquire s, read the root as branch and
+its actual left child as beta. Now execute the lawful P at its actual
+right child R, completing all original maintenance, output and Return.
+Read that right child as beta; acquire r at R; validate both identical
+leaf operands as beta. Section 72 accepts the complete bracket
+$V=\langle\beta,\beta\rangle$, which is precisely the actual tree at R. The $P_R$ token
+lies strictly after s and through r and satisfies (VI.76), so VI61.1
+rejects on that segment even though every acquired candidate leaf is
+correct at r. No claim that VI61.1 itself is unsound is involved.
+
+For an interval version actually park the cursor at the root's left
+exterior cut, sample the left beta, WalkRight to mid(root), execute
+P_R, then sample the right beta, with h=2. The real walk/cut/operand
+bindings agree. The same validations certify exactly these two leaves,
+and an optional return to the actually saved left cut is separately
+walked and paid. For the bilateral instance choose the supplied actual
+anchor to be h_0 and read its real root binding r_0, whose selected epoch
+beta has its genuine P preparation. This is an allowed entrance instance,
+not an integer-to-header acquisition from an arbitrary unknown anchor.
+Execute its original Next(1), which really fetches that P and splits
+r_0, giving the same $\langle\beta,\alpha\rangle$ configuration. Choose I to be that
+component and repeat the collection trace there. All other selected
+seeds and their joint source remain fixed; no product preparation is
+substituted. Following h_0's actual next-header link reaches the genuine
+empty-prepared alpha component r_1. It can first perform its actual P
+and Next at that new index to reach the same case.
+
+The acquired tree consumer constructs
+$\rho(V)=\langle\langle\beta,\alpha\rangle,\langle\beta,\alpha\rangle\rangle$
+with both actual brackets, whereas the
+interval consumer constructs the two separately bounded $\rho(\beta)$
+outputs. These are computations on the acquired data. Executing these
+leaf operations on the native source still needs AAV8.3's separate
+current guards, reservation, native rights and nonconflict premises.
+One certificate does not reserve its leaves until that later execution.
+Thus both consumers retain their original exact operational boundary.
+$\square$
+
+**Proposition 76.2 (split identity and the time of certification).**
+Old-cut tag equality cannot replace §72's same-operand validation.
+Conversely the accepted meaning at R survives a relevant edit after
+a particular Q_i even if that edit makes the candidate false today.
+
+Proof. Start at an actual beta z with left cut a and right cut b,
+prepared by the original P from its own alpha when it is a component
+root. Collect z as beta, then perform S_z before R. Its former unary
+marker y is now the left logical beta child; z itself is branch.
+ReadCurrent at a now returns beta at y, so comparing only that returned
+tag with the old beta passes. Nevertheless the old operand z and path
+are wrong for today's leaf, the new right cut is mid(z), not b, and
+the complete current tree is $\langle\beta,\alpha\rangle$, not beta. Its material tree
+also contains y's new terminal marker and the new right alpha. A test
+of the retained z, or original Tag at z's authenticated path, returns
+branch and rejects. This uses precisely AA20.2's marker reuse, not
+a hypothetical delete/reallocate ABA or an added version on Tag.
+
+For the temporal assertion, take the actual $\langle\beta,\beta\rangle$ configuration
+in Proposition 76.1, acquire its candidate and R, and successfully
+validate L. Execute lawful S_L, then successfully validate the unchanged
+R child. The attempt accepts the old $\langle\beta,\beta\rangle$ at its earlier R,
+although at final validation and Return the left subtree is now
+$\langle\beta,\alpha\rangle$. Formula (VI.95) still brackets R for each candidate leaf;
+it asserts nothing after its own Q_i. A final fresh header read cannot
+simply replace r in this certificate. That later cut would require
+newly established common coverage, or the original independent premise
+of no relevant edits from R to that cut. Similarly a later P after R
+can invalidate an alpha before output without changing its historical
+truth at R. No sample or certificate is re-dated in either case.
+$\square$
+
+## 77. Reused mechanisms and the precise acquisition boundary
+
+**Definition 77.1 (mathematical provenance and scope).** The
+common-between-collects argument is literature-attested, not a new
+snapshot principle. Afek et al., *Atomic Snapshots of Shared Memory*,
+DOI [10.1145/153724.153741](https://doi.org/10.1145/153724.153741),
+[author text](https://www.cs.tau.ac.il/~afek/papers/snapshot.ps), §3
+Observation 1 and §3.1 Lemma 1, prove the unchanged-between-two-reads
+step using nonrepeating update sequence numbers. Their §3 explains
+why retrying plain double collects alone is not wait-free; embedded
+helping snapshots provide their stronger progress result. No such
+helping or wait-free theorem is imported into the present native service.
+Herlihy–Wing, *Linearizability: A Correctness Condition for Concurrent
+Objects*, DOI [10.1145/78969.78972](https://doi.org/10.1145/78969.78972),
+[author text](https://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf),
+§2.2, pp.468–469, gives the invocation/response and real-time-order
+specification. An attained source cut inside a pending acquisition is
+consistent with that boundary; linearizability does not mean currency
+at the separate response or native Return.
+
+Brown–Avni, *Range Queries in Non-blocking k-ary Search Trees*,
+[expanded arXiv:1712.05101v1](https://arxiv.org/pdf/1712.05101v1), §3,
+pp.4–7, and §4.2, pp.8,11, supplies the direct tree precedent: collect
+actual leaf pointers, validate replacement tags, and use double collect
+after failed tag validation. Its nodes have immutable keys and replaced
+leaves are irrevocably tagged; Lemma 7 separately proves common-time
+membership and coverage by the range traversal. Here a native leaf's
+tag can change in place under P, and S preserves its old root as a
+branch while reusing its marker as a *different* beta leaf. Immutable
+keys, replacement tags and that search-tree coverage theorem are not
+native premises. Sections 73–74 establish the required local status,
+actual identity, ordered bracket/material and cut coverage from the
+original templates and the actual walk records instead.
+
+The repo-derived content is this full original-source asynchronous
+correspondence, its exact interval/cursor and all-phase extension, and
+the authentic discriminator of §76. The fixed-U complete-leaf clause
+of ActualTreeReadoutAcquisition.source_foundation and its fixed-source
+acquisition_foundation are reused static suppliers, not newly proved
+content. The global-rho guards of CONCURRENT_ACQUIRED_CLOCK_BRIDGES and
+CONCURRENT_NATIVE_CUT_ACQUISITION have a different writer operation
+domain; one surviving leaf there excludes a global update, whereas a
+native leaf check here excludes changes only in that leaf's cone and
+time interval. VI58–65 supplies the old acquired envelope, locality and
+movement account; it does not already provide §72's validation without event
+enumeration. Full native history is still needed for its existing order
+and genuine Next consumers, including AA20.5's same-tree/different-Next
+pair. No reduction of that retained information is asserted.
+
+These are conditional mathematical source/service results. Actual
+apparatus, finite supplied material, current rights, progress, physical
+holds and error certificates remain separate premises. AAV11's full
+observer recovery still needs its matching acquired archive endpoint
+and state; the native view at r alone is not that input. Unrestricted
+relevant-interference completion retains VI62's obstruction. Neither
+this acquisition nor the full-finite conditional PSD reconstruction
+of [QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md](QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md),
+Theorem 165.9, supplies native
+devices or an unconditional general GME bridge. The all-N L2/TC-without-NC
+model of [QUANTUM_ORIGIN_FINITE_TENSOR_QUOTIENT_AND_GLOBAL_NONCOLLAPSE_XIV.md](QUANTUM_ORIGIN_FINITE_TENSOR_QUOTIENT_AND_GLOBAL_NONCOLLAPSE_XIV.md),
+Theorem 165.7, likewise
+does not supply actual alpha/beta access. These static suppliers keep
+their full declared positive domains; they are not replaced by a
+blanket absence claim. No historical-priority or total-speed claim is
+made for the source-specific application above.
+
+## 追加锚（本行以下为增补区）

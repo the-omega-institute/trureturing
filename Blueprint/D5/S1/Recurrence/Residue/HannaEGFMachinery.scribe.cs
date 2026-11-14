@@ -14,6 +14,16 @@ internal sealed class HannaEGFMachineryDocument : IScribeDocumentDefinition
             Paragraph(Text("All series below are rational formal power series. The existing eCoeff(F,n) is n! times coeff(n,F), "
                 + "and Integral(F) means that these coefficients are integers. The binomial convolution and its powers "
                 + "are taken from ExponentialImplicitParityPeriodThree. No analytic convergence is asserted.")),
+            Node("seqInv", "The normalized Hurwitz inverse", PublishedInverse(),
+                "The constant term is one. At a successor degree, the finite sum uses the positive coefficients of f and the earlier inverse coefficients. The sum is over Fin(n+1); its index is cast to Nat in the natural arithmetic.", DescribeRole.Definition),
+            Node("conv_map", "Ring maps preserve binomial convolution", PublishedConvolutionMap(),
+                "Every ring homomorphism commutes with binomial convolution.", DescribeRole.Theorem),
+            Node("seqInv_map", "Ring maps preserve the normalized inverse", PublishedInverseMap(),
+                "The normalized inverse recurrence commutes with every ring homomorphism.", DescribeRole.Theorem),
+            Node("seqInv_congr", "The inverse depends only on the coefficient prefix", PublishedInverseCongruence(),
+                "Agreement through n gives agreement of the normalized inverse at n.", DescribeRole.Theorem),
+            Node("eCoeff_inv", "Exponential coefficients of a unit inverse", PublishedInverseCoefficients(),
+                "For a rational series of constant coefficient one, the exponential coefficients of its inverse satisfy seqInv.", DescribeRole.Theorem),
             Node("sourceRhs", "Derivative-substitution operator", SourceDefinition(),
                 "For a rational formal series f, natural k and p, and Boolean r, the true branch uses the inverse derivative. The false branch uses its kth power. Substitution precedes the pth power.", DescribeRole.Definition),
             Node("Multiple", "Divisibility of all exponential coefficients", MultipleDefinition(),
@@ -123,6 +133,50 @@ internal sealed class HannaEGFMachineryDocument : IScribeDocumentDefinition
             Multiply(V("X"), Pow(Der(exp), k))));
         return All("k", N(), All("m", N(), Imp(h, MultipleBody(m, residual))));
     }
+
+    private static Formula PublishedRing(string name, Formula body) =>
+        All(name, V("Type"), Seq(OpenBracket, Call("CommRing", V(name)), CloseBracket, Sp, body));
+    private static Formula PublishedLambda(string name, Formula type, Formula body) =>
+        Parenthesized(Seq(V("fun"), Sp, V(name), Colon, Sp, type, Sp, Mapsto, Sp, body));
+    private static Formula PublishedInverse()
+    {
+        var r = V("R"); var f = V("f"); var n = V("n"); var i = V("i");
+        var iv = Call("val", i);
+        var sum = Seq(new Formula.Subscript(Sum, Seq(i, Colon, Sp, Call("Fin", Add(n, Num(1))))), Sp,
+            Parenthesized(Multiply(Multiply(Cast(App(Qualified("Nat", "choose"), Add(n, Num(1)), Add(iv, Num(1))), r),
+                App(f, Add(iv, Num(1)))), Call("seqInv", f, Subtract(n, iv)))));
+        return PublishedRing("R", All("f", Arr(N(), r), And(
+            Equal(Call("seqInv", f, Num(0)), Num(1)), All("n", N(),
+                Equal(Call("seqInv", f, Add(n, Num(1))), Seq(Minus, Parenthesized(sum)))))));
+    }
+    private static Formula PublishedConvolutionMap()
+    {
+        var r = V("R"); var s = V("S"); var f = V("f"); var g = V("g"); var phi = V("phi");
+        var left = App(phi, Call("egfMul", f, g, V("n")));
+        var right = Call("egfMul", PublishedLambda("j", N(), App(phi, App(f, V("j")))),
+            PublishedLambda("j", N(), App(phi, App(g, V("j")))), V("n"));
+        return PublishedRing("R", PublishedRing("S", All("phi", Call("RingHom", r, s),
+            All("f", Arr(N(), r), All("g", Arr(N(), r), All("n", N(), Equal(left, right)))))));
+    }
+    private static Formula PublishedInverseMap()
+    {
+        var r = V("R"); var s = V("S"); var f = V("f"); var phi = V("phi");
+        var left = App(phi, Call("seqInv", f, V("n")));
+        var right = Call("seqInv", PublishedLambda("j", N(), App(phi, App(f, V("j")))), V("n"));
+        var body = All("phi", Call("RingHom", r, s), All("f", Arr(N(), r), All("n", N(), Equal(left, right))));
+        return PublishedRing("R", PublishedRing("S", body));
+    }
+    private static Formula PublishedInverseCongruence()
+    {
+        var r = V("R"); var f = V("f"); var g = V("g"); var n = V("n");
+        var prefix = All("i", N(), Imp(Leq(V("i"), n), Equal(App(f, V("i")), App(g, V("i")))));
+        return PublishedRing("R", All("f", Arr(N(), r), All("g", Arr(N(), r), All("n", N(),
+            Imp(prefix, Equal(Call("seqInv", f, n), Call("seqInv", g, n)))))));
+    }
+    private static Formula PublishedInverseCoefficients() => All("f", PS(),
+        Imp(Equal(Call("constantCoeff", V("f")), Num(1)), All("n", N(),
+            Equal(Coeff(App(Qualified("Inv", "inv"), V("f")), V("n")),
+                Call("seqInv", Call("eCoeff", V("f")), V("n"))))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
