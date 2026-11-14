@@ -1,0 +1,83 @@
+**定理 150.5（全菜单最低互易到全部满刻度、least与同原量子结构）。** 在150.1的完整原 EB3+$\mathsf{Conn}$ 背景中，字面 $\mathsf{PR}$ 亦等价于150.3的各项。具体地，它先给每颗完整原球的单位预算，再在整个原锥序中给
+
+$$
+\begin{gathered}
+a_{D_p}=\tfrac12,\qquad \beta_{D_p}=1,\\
+e_p\le_{C^*}f\quad(f\in\mathcal F_p),\qquad
+T_p(x)=e_p(x)\quad(p\in P,\ x\in K).
+\end{gathered}
+\tag{XI150.13}
+$$
+
+所以本候选可直接表述为：两端各在整个原确认菜单中取最低读数，交换两个原纯端点，最低结果不变。$e_p$ 的全混态 least性是证明所得，未加入该候选。
+
+证明。首先只准确复用[IX114.5—114.8][Q150IX]：在完整 EB3+$\mathsf{PR}$ 下，每颗完整原球 $F=b_F(\overline B^3)$ 有共同系数和已达延拓预算
+
+$$
+0<a_F\le\tfrac12,\qquad
+T_{b_F(v)}(b_F(z))=1-a_F+a_Fv\cdot z,
+\qquad \beta_F=(2a_F)^{-1}\ge1.
+\tag{XI150.14}
+$$
+
+其中 $v\in S^2$、$z\in\overline B^3$；只在同一颗球使用其共同刻度，不提前同步不同球。IX114.8的原边对称等价还给
+
+$$
+p\perp q:\qquad
+\beta_{D_p}=1
+\ \Longleftrightarrow\ D_p\cap D_q\ne\varnothing
+\ \Longleftrightarrow\ \beta_{D_q}=1.
+\tag{XI150.15}
+$$
+
+这是既有的满刻度沿原零边传播，并非本章另创的局部引理。$\mathsf{Conn}$ 因而使任意一颗满刻度球足以令全部原球满刻度，所用每条路径有限，长度不要求统一。
+
+反设存在某个原 $a$ 满足 $\beta_{D_a}>1$。[X124.11][Q150X]的前件正是完整 EB3+$\mathsf{PR}$，它给一次真实整球塌缩：存在全部属于原域的 $p_i,p,q\in P$，满足
+
+$$
+p_i\longrightarrow p,\qquad q\in D_p,\qquad p\ne q,
+\qquad d_H(D_{p_i},\{q\})\longrightarrow0.
+\tag{XI150.16}
+$$
+
+其纯极限标签、实际纯塌缩点及整个原球的 Hausdorff收敛均是该既有结论的一部分，不由抽象局部球退化替代。另一方面，EB3+$\mathsf{Conn}$ 已经给全域 Inj及 $P=P_0$，特别是这个实际极限标签 $p\in P_0$。因此[X126.1、126.5、定理126.6][Q150X]的全部前件均满足；它使同一个极限标签达到 $a_{D_p}=1/2$、$\beta_{D_p}=1$。由(XI150.15)及 $\mathsf{Conn}$，全部原标签均有 $\beta_{D_s}=1$，与最初的 $\beta_{D_a}>1$ 矛盾。由于所有预算本来不小于一，故它们全部等于一。新增的全域连接正是非单位预算到实际塌缩、塌缩到满刻度极限、再沿原零路同步这一闭合；没有把126.6中单个标签的 least直接外推到其他标签。
+
+现在在原坐标中支付每个标签的全部混态 least。固定 $p$，令 $g=u-e_p$，仍用150.2的完整法向坐标。满刻度的(XI150.14)使所有 $q_v,q_{-v}$ 原正交。原完整零面和邻确认公式给
+
+$$
+0=e_{q_v}(q_{-v})=\frac{\rho_p(v)-1}{1+\rho_p(v)},
+\qquad \rho_p(v)=1\quad(v\in S^2),\qquad
+\|H(x)\|\le g(x)\quad(x\in K).
+\tag{XI150.17}
+$$
+
+最后一个不等式由 $\rho_p$ 的原全域定义逐方向得到，在 $x=p$ 两边同零。任取整个原菜单中的 $f\in\mathcal F_p$，其补效应 $n=u-f\in N_p\cap\mathcal E$ 由完整法向限制同构唯一写成
+$n=A g+b\cdot H$。在整个原 $D_p$ 上的效应上下界使 $A\ge\|b\|$ 且 $A+\|b\|\le1$。因而每个原混态满足
+
+$$
+n(x)\le A g(x)+\|b\|\|H(x)\|
+\le(A+\|b\|)g(x)\le g(x).
+\tag{XI150.18}
+$$
+
+所以 $f\ge e_p$ 于整个 $K$，齐次化给 $f-e_p\in C^*$。$e_p$ 本身仍属于整个 $\mathcal F_p$，故在每个混输入达到 minimum，得到(XI150.13)。此时才可用 $\mathsf{PR}$ 得
+$e_p(q)=T_p(q)=T_q(p)=e_q(p)$，即 $\mathsf{ER}$。150.2—150.3给同原量子结构；也可直接消费IX114.9中完整 EB3+$\mathsf{PR}$ 加全部 $\beta_F=1$ 的既有分类入口，不经过球心微分路线。反向同原表示下的全部混态 Born minimum由149.5给出，纯端交换立即给 $\mathsf{PR}$。所以
+
+$$
+\boxed{\quad
+\mathsf{PR}\ \Longleftrightarrow\ \mathsf{ER}
+\ \Longleftrightarrow\ \mathsf{CR}_c
+\ \Longleftrightarrow\ \mathsf{UC}
+\ \Longleftrightarrow\ \text{同原锥、同原单位的完整复三能级静态表示}.
+\quad}
+\tag{XI150.19}
+$$
+
+这些是完整 EB3+$\mathsf{Conn}$ 下证明出的模型类等价，不是定义换名。原物理合同和测量先后边界仍按150.4保留；没有证明去掉 $\mathsf{Conn}$、裸 EB3+$\mathsf{Conn}$ 自动给互易、有限采样认证或绝对最小性。
+
+本条新增内容归属 repo-derived 综合推导，不声明文献优先权。球内共同刻度、满刻度的边传播、非单位预算的实际塌缩供应、唯一整球零标签处的塌缩饱和及单位预算分类均为上述来源中的既有结果；本条保留它们的原前件，新增的是用全纯零路连通将非单位预算分支排除，并逐张原确认尺支付整个菜单的 least。Landsman的[原文§1.3式(1.4)][Q150L]在有限维完整有界效应域中定义相同的最低比较；其 projective-face及 two-sphere重构另保留相应前件，未作为这里省略满刻度桥的依据。证毕。
+
+[Q150IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.5—114.6完整球内的共同最低刻度与预算；114.8满刻度的原边对称等价；114.9全部单位预算后的同原静态表示。"
+[Q150X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "推论124.11式(X124.20c)在完整EB3+PR下供应实际整球塌缩；定义126.1、126.5及定理126.6在另有Inj且极限标签属于P0时取得同一标签满刻度。"
+[Q150L]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability, §1.3式(1.4)：在完整有界仿射效应域上的最低确认定义；重构的其他前件保留。"
+

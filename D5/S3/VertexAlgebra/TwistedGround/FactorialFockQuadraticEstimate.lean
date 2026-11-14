@@ -307,7 +307,7 @@ private theorem quadratic_homogeneous (A : Matrix I I ℂ) :
   rw [smul_eq_C_mul]
   exact ((isHomogeneous_X ℂ i).mul (isHomogeneous_X ℂ j)).C_mul _
 
-private theorem gaussianPiece_homogeneous (A : Matrix I I ℂ) (n : ℕ) :
+theorem gaussianPiece_homogeneous (A : Matrix I I ℂ) (n : ℕ) :
     (gaussianPiece A n).IsHomogeneous (2 * n) := by
   unfold gaussianPiece
   rw [smul_eq_C_mul]

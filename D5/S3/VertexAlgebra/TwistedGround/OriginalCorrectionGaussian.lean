@@ -76,14 +76,14 @@ private theorem eval_singleton (D : LatticeData) (z : ℂ) (a : Index D) :
   simp [singletonPolynomial, LatticeGeneratingFieldLocality.bilinear,
     evaluateCorrection]
 
-private theorem derivation_sum_apply {σ α : Type*} (s : Finset α)
+theorem derivation_sum_apply {σ α : Type*} (s : Finset α)
     (f : α → Derivation ℂ (MvPolynomial σ ℂ) (MvPolynomial σ ℂ))
     (p : MvPolynomial σ ℂ) : (∑ a ∈ s, f a) p = ∑ a ∈ s, f a p := by
   change (Derivation.coeFnAddMonoidHom (∑ a ∈ s, f a)) p = _
   rw [map_sum]
   simp only [Finset.sum_apply, Derivation.coeFnAddMonoidHom_apply]
 
-private theorem derivation_finite {σ : Type*} (f : σ → MvPolynomial σ ℂ)
+theorem derivation_finite {σ : Type*} (f : σ → MvPolynomial σ ℂ)
     (p : MvPolynomial σ ℂ) (s : Finset σ) (hs : p.vars ⊆ s) :
     mkDerivation ℂ f p = ∑ a ∈ s, f a * pderiv a p := by
   classical
@@ -96,7 +96,7 @@ private theorem derivation_finite {σ : Type*} (f : σ → MvPolynomial σ ℂ)
       mkDerivation_X, pderiv_X, Pi.single_apply, hs ha]
   simpa [δ, derivation_sum_apply, Derivation.smul_apply, smul_eq_mul] using h
 
-private def sourceContraction (D : LatticeData) (z : ℂ) (a : Index D) :
+def sourceContraction (D : LatticeData) (z : ℂ) (a : Index D) :
     Derivation ℂ (Oscillator D) (Oscillator D) :=
   mkDerivation ℂ (fun b => C (covariance D z a b))
 
@@ -160,7 +160,7 @@ def covarianceMatrix (D : LatticeData) (z : ℂ) (c : I → Index D →₀ ℂ) 
     Matrix I I ℂ := fun i j =>
   ∑ a ∈ (c i).support, ∑ b ∈ (c j).support, c i a * c j b * covariance D z a b
 
-private theorem covarianceMatrix_symm (D : LatticeData) (z : ℂ)
+theorem covarianceMatrix_symm (D : LatticeData) (z : ℂ)
     (c : I → Index D →₀ ℂ) (i j : I) :
     covarianceMatrix D z c i j = covarianceMatrix D z c j i := by
   unfold covarianceMatrix
@@ -172,7 +172,7 @@ private theorem covarianceMatrix_symm (D : LatticeData) (z : ℂ)
   rw [covariance_symm D z a b]
   ring
 
-private def formContraction (D : LatticeData) (z : ℂ) (c : Index D →₀ ℂ) :
+def formContraction (D : LatticeData) (z : ℂ) (c : Index D →₀ ℂ) :
     Derivation ℂ (Oscillator D) (Oscillator D) :=
   ∑ a ∈ c.support, c a • sourceContraction D z a
 
@@ -196,10 +196,10 @@ private theorem formContraction_linearForm (D : LatticeData) (z : ℂ)
     _ = _ := by
       simp only [covarianceMatrix, map_sum, smul_eq_C_mul, ← map_mul]
 
-private def substitution (D : LatticeData) (c : I → Index D →₀ ℂ) :
+def substitution (D : LatticeData) (c : I → Index D →₀ ℂ) :
     MvPolynomial I ℂ →ₐ[ℂ] Oscillator D := aeval (linearForm D ∘ c)
 
-private theorem contraction_substitution (D : LatticeData) (z : ℂ)
+theorem contraction_substitution (D : LatticeData) (z : ℂ)
     (c : I → Index D →₀ ℂ) (i : I) (p : MvPolynomial I ℂ) :
     formContraction D z (c i) (substitution D c p) =
       substitution D c (mkDerivation ℂ (fun j => C (covarianceMatrix D z c i j)) p) := by

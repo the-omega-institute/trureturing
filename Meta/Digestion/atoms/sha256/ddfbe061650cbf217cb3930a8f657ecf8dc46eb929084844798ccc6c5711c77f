@@ -1,0 +1,19 @@
+**注记 2.5（机理与对注记 1.6 的更正）。** 注记 1.6 的端点论断由本节取代：$\kappa=3/2$ 不再是 open。在该端点，主项 $1/(\sqrt x\log x)$ 的系数由四部分组成：
+
+| 来源 | 系数 |
+|---|---|
+| Euler 尾项 | $+2$ |
+| Mertens 乘积相对 $e^\gamma\log\theta(x)$ 的偏差（Nicolas） | $+\tfrac32(2+W)$ |
+| $\log\log n$ 因指数 2 层而产生的移位 | $-\tfrac32\sqrt2$ |
+| 指数 1 层的局部损失 | $-\tfrac32\sqrt2$ |
+
+两项代价之和 $\tfrac32 c+3/c$ 在分层位置 $y=c\sqrt x$ 取 $c=\sqrt2$ 时最小，这与该文引理 4.13 中 $\kappa$-巨丰数的分层 $x_2\sim\sqrt{2x}$ 一致。此时系数为 $5-3\sqrt2+\tfrac32W(x)$，振荡部分的幅度 $\tfrac32\beta\approx0.069$ 小于非振荡部分 $5-3\sqrt2\approx0.757$。因此结论不依赖零点的分布细节，只用到 RH 下 $|W|\le\beta$。
+
+**范围。** 外部输入如下：
+- Nicolas 2012 命题 2.1（RH 下显式）；
+- Fan–Kobayashi–Molnar 定理 1.5、5.2；
+- RH 下 $\theta(t)=t+O(\sqrt t\log^2t)$；
+- 素数定理与 Chebyshev 上界。
+
+本仓推导的是定理 2.3、推论 2.4 及注记 2.5 的分解。在所查范围（该文第 8 节把阈值问题列为 future work；Molnar arXiv:2610.12816v1；arXiv 标题检索）内未见此结论，本节不主张文献优先权。
+
