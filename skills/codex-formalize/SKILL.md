@@ -236,7 +236,7 @@ compilation. Run `make emit PATHS=<NUL-separated selected Lean/Scribe paths>` to
 canonical projections; it builds only the selected Scribe Lean inputs, their named utility inputs and imports. Never hand-write
 a mirror or placeholder. `deposit`/`deposit-uncovered`/`cover` derive their scope from the GID, and
 `cover-batch` from all batch GIDs. Coverage also selects existing targets of those atoms and their transitive chain atoms, checking current identities before writing. These local doors require no full report or full build. CI and
-explicit whole-repository verification retain `make lean-report`, `make test` and `make gate`.
+explicit whole-repository verification retain their required scope. Do not run full compilation unless an explicit whole-repository request or a concrete integration obligation cannot be met by scoped checks. State the need and pass `FULL_BUILD=1` in every full-build invocation (`make lean FULL_BUILD=1`, `make lean-report FULL_BUILD=1`, `make test FULL_BUILD=1`, `make warm-donor FULL_BUILD=1`), including indirect entries and any gate selected by `make gate-plan` that triggers a full build. Direct scripts use a command-local `FULL_BUILD=1` environment assignment. Make full-build entries and their direct scripts reject calls without `FULL_BUILD=1`; cache failure, retries and final verification do not supply permission to broaden scope. Required CI does not require a duplicate local full build.
 
 Scoped deposit retains SL-031's compiled utility checks. A target's named utility references
 (consumer, instance, premises, result and claim) add their modules and import closures to the scope.
@@ -376,11 +376,10 @@ make pr-open HEAD=<branch> MESSAGE=<message-file> AUTO_MERGE=0   # Wait for the 
 # The message file's first line is the PR title; the rest is the PR body.
 ```
 
-If running full local early feedback, start it after `git push` in a separate job, alongside CI and
-the PR door rather than waiting for either to finish:
+Do not run full local early feedback by default. Inspect `make gate-plan` first. Only when full verification is explicitly needed under the scope rule above, start it after `git push` in a separate job alongside CI and the PR door:
 
 ```sh
-make gate BASE=<explicit-existing-40-hex-commit-sha>
+make gate BASE=<explicit-existing-40-hex-commit-sha> FULL_BUILD=1
 ```
 
 Report its raw exit and rejected rules; it does not replace the configured independent workflow required checks or gate
