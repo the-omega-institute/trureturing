@@ -13,7 +13,7 @@ internal sealed class MarkeyFiveSiteGrowthDifferenceDocument : IScribeDocumentDe
         H("MarkeyFiveSiteGrowthDifference"),
         Blocks(
             Entry("markeya400701-claim", "MarkeyA400701.claim", Formula0(), "OEIS A400701 revision 30, NAME (unpaginated), verbatim: “Start with a set of five adjacent collinear points in a hexagonal lattice. Every iteration, add to the set the points in the lattice which are adjacent to at least two points already in the set. This sequence gives the number of points in the set after n iterations.” FORMULA, verbatim: “Conjectured: For n > 1: a(n) = A374338(n) + 4*n + 7.” The lattice has six unit directions. Both counts use the same natural iteration index.", DescribeRole.Definition, true),
-            Entry("markeya400701-result", "MarkeyA400701.result", Formula1(), "The five-site count exceeds the two-site circle count by 4*n+7 at every iteration n>1.", DescribeRole.Theorem, false))));
+            Entry("markeya400701-result", "MarkeyA400701.result", Formula1(), "The five-site count exceeds the two-site circle count by 4*n+7 at every iteration n>1.", DescribeRole.Theorem, false, new OpenProblemResolutionClaim(ProblemSlugRef.Create("a400701-hexgrowth"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Entry(string id, string name, Formula formula, string prose, DescribeRole role, bool literature, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hexgrowth-" + id), DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]),
