@@ -78,7 +78,7 @@ def membershipRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "arg", "arg", "arg", "body", "arg", "arg", "body", "arg", "arg"]
+      path := #["body", "body", "arg", "arg", "arg", "arg", "body", "arg", "arg", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
