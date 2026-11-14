@@ -322,4 +322,126 @@ private theorem conditional_bounded : BddAbove (insert 0 (conditionalRatios squa
     change traceDistance _ _ ^ 2 - _ ≤ traceDistance _ _ ^ 2 - _
     exact sub_le_sub_right hs _
 
+private def diagonalState {n : Type*} [Fintype n] [DecidableEq n]
+    (d : n → ℝ) (hd : ∀ i, 0 ≤ d i) (ht : ∑ i, d i = 1) : DensityState n := by
+  refine ⟨CStarMatrix.ofMatrix (Matrix.diagonal (fun i => (d i : ℂ))), ?_, ?_⟩
+  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+    apply Matrix.PosSemidef.nonneg
+    apply Matrix.posSemidef_diagonal_iff.mpr
+    intro i
+    exact_mod_cast hd i
+  · change (∑ i, (d i : ℂ)) = 1
+    exact_mod_cast ht
+
+private def rhoProbability (p : Fin 3 × Fin 2) : ℝ :=
+  ![![1 / 2, 0], ![0, 0], ![1 / 2, 0]] p.1 p.2
+
+private def sigmaProbability (p : Fin 3 × Fin 2) : ℝ :=
+  ![![0, 0], ![1 / 2, 0], ![0, 1 / 2]] p.1 p.2
+
+private def witnessRho : DensityState (Fin 3 × Fin 2) :=
+  diagonalState rhoProbability
+    (by rintro ⟨i,a⟩; fin_cases i <;> fin_cases a <;> norm_num [rhoProbability])
+    (by norm_num [Fintype.sum_prod_type, Fin.sum_univ_three, Fin.sum_univ_two, rhoProbability])
+
+private def witnessSigma : DensityState (Fin 3 × Fin 2) :=
+  diagonalState sigmaProbability
+    (by rintro ⟨i,a⟩; fin_cases i <;> fin_cases a <;> norm_num [sigmaProbability])
+    (by norm_num [Fintype.sum_prod_type, Fin.sum_univ_three, Fin.sum_univ_two, sigmaProbability])
+
+private theorem diagonal_distance {n : Type*} [Fintype n] [DecidableEq n]
+    (ρ σ : DensityState n) (p q : n → ℝ)
+    (hp : ρ.1 = CStarMatrix.ofMatrix (Matrix.diagonal fun i => (p i : ℂ)))
+    (hq : σ.1 = CStarMatrix.ofMatrix (Matrix.diagonal fun i => (q i : ℂ))) :
+    traceDistance ρ σ = (∑ i, |p i - q i|) / 2 := by
+  unfold traceDistance
+  rw [hp, hq]
+  change traceNorm (Matrix.diagonal (fun i => (p i : ℂ)) -
+    Matrix.diagonal (fun i => (q i : ℂ))) / 2 = _
+  rw [← Matrix.diagonal_sub]
+  have he : (fun i => (p i : ℂ) - (q i : ℂ)) = fun i => ((p i - q i : ℝ) : ℂ) := by
+    funext i
+    simp
+  rw [he, D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation.diagonal_norm]
+
+private theorem reference_diagonal {r : Type*} [Fintype r] [DecidableEq r]
+    (d : r × Fin 2 → ℝ) :
+    amp binaryChannel (Matrix.diagonal fun p => (d p : ℂ)) =
+      Matrix.diagonal (fun p => (weight p.2 0 : ℂ) * (d (p.1,0) : ℂ) +
+        (weight p.2 1 : ℂ) * (d (p.1,1) : ℂ)) := by
+  ext ⟨i,a⟩ ⟨j,b⟩
+  rw [amp_entry, binary_action]
+  by_cases hij : i = j
+  · subst j
+    simp [Matrix.diagonal_apply, Prod.mk.injEq]
+  · simp [Matrix.diagonal_apply, Prod.mk.injEq, hij]
+
+private theorem marginal_diagonal {r a : Type*} [Fintype r] [DecidableEq r]
+    [Fintype a] [DecidableEq a] (d : r × a → ℝ) :
+    partialTraceRight (Matrix.diagonal fun p => (d p : ℂ)) =
+      Matrix.diagonal (fun i => ∑ c, (d (i,c) : ℂ)) := by
+  ext i j
+  by_cases hij : i = j
+  · subst j
+    simp [partialTraceRight, Matrix.diagonal_apply]
+  · simp [partialTraceRight, Matrix.diagonal_apply, Prod.mk.injEq, hij]
+
+private theorem witness_distances :
+    traceDistance witnessRho witnessSigma = 1 ∧
+    traceDistance (marginalRight witnessRho) (marginalRight witnessSigma) = 1 / 2 ∧
+    traceDistance (referenceState binaryChannel witnessRho)
+      (referenceState binaryChannel witnessSigma) = 3 / 4 := by
+  have hi := diagonal_distance witnessRho witnessSigma rhoProbability sigmaProbability rfl rfl
+  have hr := diagonal_distance (marginalRight witnessRho) (marginalRight witnessSigma)
+    (fun i => ∑ c, rhoProbability (i,c)) (fun i => ∑ c, sigmaProbability (i,c))
+    (by
+      apply CStarMatrix.ofMatrix.symm.injective
+      change partialTraceRight (Matrix.diagonal fun p => (rhoProbability p : ℂ)) = _
+      simpa only [Complex.ofReal_sum] using marginal_diagonal rhoProbability)
+    (by
+      apply CStarMatrix.ofMatrix.symm.injective
+      change partialTraceRight (Matrix.diagonal fun p => (sigmaProbability p : ℂ)) = _
+      simpa only [Complex.ofReal_sum] using marginal_diagonal sigmaProbability)
+  have ho := diagonal_distance (referenceState binaryChannel witnessRho)
+    (referenceState binaryChannel witnessSigma)
+    (fun p => weight p.2 0 * rhoProbability (p.1,0) + weight p.2 1 * rhoProbability (p.1,1))
+    (fun p => weight p.2 0 * sigmaProbability (p.1,0) + weight p.2 1 * sigmaProbability (p.1,1))
+    (by
+      apply CStarMatrix.ofMatrix.symm.injective
+      change amp binaryChannel (Matrix.diagonal fun p => (rhoProbability p : ℂ)) = _
+      simpa only [Complex.ofReal_add, Complex.ofReal_mul] using reference_diagonal rhoProbability)
+    (by
+      apply CStarMatrix.ofMatrix.symm.injective
+      change amp binaryChannel (Matrix.diagonal fun p => (sigmaProbability p : ℂ)) = _
+      simpa only [Complex.ofReal_add, Complex.ofReal_mul] using reference_diagonal sigmaProbability)
+  norm_num [Fintype.sum_prod_type, Fin.sum_univ_three, Fin.sum_univ_two,
+    rhoProbability, sigmaProbability, weight] at hi hr ho
+  exact ⟨hi, hr, ho⟩
+
+private theorem conditional_lower : (5 / 12 : ℝ) ≤ conditionalCoefficient squareTrace binaryChannel := by
+  apply le_csSup conditional_bounded
+  apply Set.mem_insert_of_mem
+  refine ⟨Fin 3, inferInstance, inferInstance, witnessRho, witnessSigma, ?_, ?_⟩
+  · change 0 < traceDistance witnessRho witnessSigma ^ 2 -
+      traceDistance (marginalRight witnessRho) (marginalRight witnessSigma) ^ 2
+    rw [witness_distances.1, witness_distances.2.1]
+    norm_num
+  · change (5 / 12 : ℝ) =
+      (traceDistance (referenceState binaryChannel witnessRho)
+        (referenceState binaryChannel witnessSigma) ^ 2 -
+        traceDistance (marginalRight witnessRho) (marginalRight witnessSigma) ^ 2) /
+      (traceDistance witnessRho witnessSigma ^ 2 -
+        traceDistance (marginalRight witnessRho) (marginalRight witnessSigma) ^ 2)
+    rw [witness_distances.1, witness_distances.2.1, witness_distances.2.2]
+    norm_num
+
+/-- A faithful divergence and an actual finite CPTP channel give a strict gap,
+with both optimizations ranging over every finite quantum reference. -/
+theorem result : ∃ (D : FiniteDivergence) (N : QuantumChannel (Fin 2) (Fin 2)),
+    completeCoefficient D N ≤ 1 / 4 ∧ (1 / 4 : ℝ) < 5 / 12 ∧
+      (5 / 12 : ℝ) ≤ conditionalCoefficient D N := by
+  exact ⟨squareTrace, binaryChannel, complete_upper, by norm_num, conditional_lower⟩
+
+#print axioms result
+
 end D5.S3.Quantum.Divergence.FaithfulConditionalGap
