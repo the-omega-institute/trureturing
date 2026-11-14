@@ -57,16 +57,19 @@ The candidate declaration is `DimitrovLowerBoundC6.result : DimitrovLowerBoundC6
 It directly consumes frozen `DimitrovLowerBoundsC4C5.result5`; the complete source
 formula is retained in `claim`. The result has `proof_shape: bind-only` and
 `escape_witness: none`; its candidate admission basis is `open-problem-resolution`.
+The mirrored `Reg/D5/S3/Arith/Divisors/DimitrovLowerBoundC6.lean` supplies the
+source-equivalence bridge, whole-family variation, sensitivity and actual
+observational dependence for the totient family, with continuation unknown.
 
 ## Triage
 
 The mathematical application covers the complete original range. Independent
-evaluation, registration validation, first freeze, required CI, merge and first
-dev verification are separate unfinished delivery obligations. No KPI or novelty
-credit is asserted by this dossier.
+evaluation, first freeze, required CI, merge and first dev verification are
+separate unfinished delivery obligations. No KPI or novelty credit is asserted
+by this dossier.
 
 ## ASSUMED-UNVERIFIED
 
 The literature screen is bounded to the supplied source census. Worldwide
-priority and exhaustive literature coverage are unverified. The new registration
-audit is unfinished; #30478 owns the outstanding handoff.
+priority and exhaustive literature coverage are unverified. Independent source
+fidelity and pre-freeze evaluation remain outstanding under #30478.
