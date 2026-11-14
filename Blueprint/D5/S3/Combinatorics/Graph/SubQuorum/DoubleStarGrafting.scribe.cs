@@ -57,6 +57,16 @@ internal sealed class DoubleStarGraftingDocument : IScribeDocumentDefinition
                     + "does not limit the parameter. The empty coloring attains zero. For a "
                     + "nonempty graph a one-vertex coloring attains one; on the nonempty grafted "
                     + "graphs the explicit construction attains five times the base size."),
+            Describe.Lean(DescribeId.Create("dissociation-neighbor-uniqueness"),
+                DeclarationHandle.Create(Prefix + "independent_iff"),
+                H("The exact selected-neighbor condition"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("For every finite simple graph with decidable equality and "
+                    + "adjacency, a finite set is two-independent exactly when any two selected "
+                    + "neighbors of a selected vertex are equal. This is the original local "
+                    + "grafting proof's characterization, also used by canonical composition "
+                    + "and cover arguments. No grafting or nonempty hypothesis is needed."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("graft-dissociation"),
                 DeclarationHandle.Create(Prefix + "beta_graftGraph"),
                 H("Exact induced degree-at-most-one maximum"), StatementSource.WithoutFormula(),
