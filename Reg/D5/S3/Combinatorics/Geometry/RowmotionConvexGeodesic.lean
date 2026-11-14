@@ -50,13 +50,16 @@ def rejected : Realization signature.{u} :=
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   classical
   intro h
-  obtain ⟨w, _, hw, _, hf⟩ := h (PUnit.{u+1}) {PUnit.unit} {PUnit.unit}
+  obtain ⟨w, _, _, hl, hf⟩ := h (PUnit.{u+1}) {PUnit.unit} {PUnit.unit}
     (by simpa using (Set.ordConnected_singleton (a := (PUnit.unit : PUnit.{u+1}))))
     (by simpa using (Set.ordConnected_singleton (a := (PUnit.unit : PUnit.{u+1}))))
-  have hnil : w = [] := by simpa using hw
+  have hnil : w = [] := by
+    cases w with
+    | nil => rfl
+    | cons x w => simp [Finset.symmDiff_def] at hl
   subst w
   have he := congrArg (fun S : Set PUnit.{u+1} => PUnit.unit ∈ S) hf
-  simpa [rejected, realize] using he
+  simp [rejected, realize] at he
 
 def source_registration : Registration arena.{u} sourceScope.{u} where
   actual := actual
@@ -75,7 +78,7 @@ def source_registration : Registration arena.{u} sourceScope.{u} where
     refine ⟨PUnit.{u+1}, ∅, {PUnit.unit}, ?_⟩
     intro he
     have hh := congrArg (fun S : Set PUnit.{u+1} => PUnit.unit ∈ S) he
-    simpa [actual, realize] using hh
+    simp [actual, realize] at hh
 
 def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}

@@ -39,20 +39,20 @@ internal sealed class RowmotionConvexGeodesicDocument : IScribeDocumentDefinitio
         var s = F.Id("s");
         var t = F.Id("t");
         var w = F.Id("w");
-        var setS = Call("Finset.coe", s);
-        var setT = Call("Finset.coe", t);
+        var setS = Call("coe", s);
+        var setT = Call("coe", t);
         var diff = Call("SymmDiff", s, t);
         var step = Seq(Open, F.Id("A"), Comma, Sp, F.Id("x"), Close, Sp, Mapsto, Sp,
-            Call("RowmotionEndpointTransport.toggle", F.Id("x"), F.Id("A")));
-        var conclusion = And(Call("List.Nodup", w),
-            And(Eq(Call("List.toFinset", w), diff),
-                And(Eq(Call("List.length", w), Call("Finset.card", diff)),
-                    Eq(Call("List.foldl", step, setS, w), setT))));
-        return All("u", F.Id("UniverseLevel"), All("P", Call("Type", F.Id("u")),
-            All("order", Call("PartialOrder", p),
+            Call("toggle", F.Id("x"), F.Id("A")));
+        var conclusion = And(Call("Nodup", w),
+            And(Eq(Call("toFinset", w), diff),
+                And(Eq(Call("length", w), Call("card", diff)),
+                    Eq(Call("foldl", step, setS, w), setT))));
+        return All("P", F.Id("Type"),
+            Seq(OpenBracket, Call("PartialOrder", p), CloseBracket, Comma, Sp,
                 All("s", Call("Finset", p), All("t", Call("Finset", p),
                     Imp(Call("OrdConnected", setS), Imp(Call("OrdConnected", setT),
                         new Formula.Bind(FormulaQuantifier.Exists,
-                            FormulaIdentifier.Create("w"), Call("List", p), conclusion)))))));
+                            FormulaIdentifier.Create("w"), Call("List", p), conclusion))))));
     }
 }

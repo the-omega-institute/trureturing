@@ -134,6 +134,4 @@ theorem exists_toggle_word (P : Type u) [PartialOrder P] (s t : Finset P)
   · rw [← hset, List.toFinset_card_of_nodup hn]
   · rw [List.foldl_append, hvf, hwr]
 
-#print axioms exists_toggle_word
-
 end D5.S3.Combinatorics.Geometry.RowmotionConvexGeodesic
