@@ -206,7 +206,7 @@ private theorem clean_injective (n : ℕ) :
     cases hb₁ : ab.2 <;> cases hb₂ : cd.2 <;> simp_all [encode]
   exact Prod.ext ha hb'
 
-private theorem initialized_clean (n : ℕ) (ψ : Address n × Bool → ℂ)
+theorem initialized_clean (n : ℕ) (ψ : Address n × Bool → ℂ)
     (a : Address n) (b : Bool) : initialized n ψ (clean n a b) = ψ (a,b) := by
   have heq (i : Address n) (j : Bool) :
       clean n a b = clean n i j ↔ a = i ∧ b = j := by
@@ -377,7 +377,7 @@ def squaredFidelity (n : ℕ) (q : ℝ) (D : Address n → Bool)
 def addressProbability (n : ℕ) (ψ : Address n × Bool → ℂ) (a : Address n) : ℝ :=
   ∑ b, Complex.normSq (ψ (a,b))
 
-private theorem sum_ket {ι σ : Type} [Fintype ι] [Fintype σ] [DecidableEq σ]
+theorem sum_ket {ι σ : Type} [Fintype ι] [Fintype σ] [DecidableEq σ]
     (v : ι → σ) (ψ : ι → ℂ) (g : σ → ℂ) :
     (∑ s, (∑ i, if s = v i then ψ i else 0) * g s) = ∑ i, ψ i * g (v i) := by
   simp only [Finset.sum_mul]
@@ -386,7 +386,7 @@ private theorem sum_ket {ι σ : Type} [Fintype ι] [Fintype σ] [DecidableEq σ
   intro i _
   simp [ite_mul]
 
-private theorem sum_ket_conj {ι σ : Type} [Fintype ι] [Fintype σ] [DecidableEq σ]
+theorem sum_ket_conj {ι σ : Type} [Fintype ι] [Fintype σ] [DecidableEq σ]
     (v : ι → σ) (ψ : ι → ℂ) (g : σ → ℂ) :
     (∑ s, conj (∑ i, if s = v i then ψ i else 0) * g s) =
       ∑ i, conj (ψ i) * g (v i) := by

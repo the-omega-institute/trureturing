@@ -444,6 +444,194 @@ private theorem zero_rank (q : Router 0 → ℝ) : (gram 0 q).rank = 1 := by
   rw [he, Matrix.rank_one]
   rfl
 
+/-- The physical address quadratic form, on arbitrary real coefficients. -/
+def addressEnergy (n : ℕ) (q : Router n → ℝ) (p : Address n → ℝ) : ℝ :=
+  ∑ a, ∑ b, p a * p b * (gram n q a b).re
+
+private def classAmplitude (n : ℕ) (q : Router n → ℝ)
+    (x : Profile n q → ℝ) (e : Environment n) : ℂ :=
+  ∑ c, (x c : ℂ) * classRecord n q c e
+
+/-- The class quadratic form is the squared norm of the physical record superposition. -/
+def classEnergy (n : ℕ) (q : Router n → ℝ) (x : Profile n q → ℝ) : ℝ :=
+  ∑ e, Complex.normSq (classAmplitude n q x e)
+
+private theorem class_energy_pos (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, q v ≤ 1) (x : Profile n q → ℝ) (hx : x ≠ 0) :
+    0 < classEnergy n q x := by
+  classical
+  by_contra hn
+  have hz : classEnergy n q x = 0 := le_antisymm (le_of_not_gt hn)
+    (Finset.sum_nonneg (fun e _ => Complex.normSq_nonneg _))
+  have he : classAmplitude n q x = 0 := by
+    funext e
+    apply Complex.normSq_eq_zero.mp
+    apply le_antisymm _ (Complex.normSq_nonneg _)
+    exact (Finset.single_le_sum (fun i _ => Complex.normSq_nonneg
+      (classAmplitude n q x i)) (Finset.mem_univ e)).trans_eq hz
+  have hi := (class_records_independent n q hq).fintypeLinearCombination_injective
+  have hcomplex : Fintype.linearCombination ℂ (classRecord n q) (fun c => (x c : ℂ)) =
+      Fintype.linearCombination ℂ (classRecord n q) 0 := by
+    ext e
+    simpa only [classAmplitude, Fintype.linearCombination_apply, Finset.sum_apply, Pi.smul_apply,
+      smul_eq_mul, Pi.zero_apply, Complex.ofReal_zero, zero_mul, Finset.sum_const_zero]
+      using congrFun he e
+  apply hx
+  funext c
+  have hh : (x c : ℂ) = 0 := congrFun (hi hcomplex) c
+  exact Complex.ofReal_eq_zero.mp hh
+
+private theorem class_energy_midpoint (n : ℕ) (q : Router n → ℝ)
+    (x y : Profile n q → ℝ) :
+    classEnergy n q (fun c => (x c + y c) / 2) =
+      (classEnergy n q x + classEnergy n q y) / 2 - classEnergy n q (x - y) / 4 := by
+  have ha (e : Environment n) :
+      classAmplitude n q (fun c => (x c + y c) / 2) e =
+        (classAmplitude n q x e + classAmplitude n q y e) / 2 := by
+    simp only [classAmplitude, Complex.ofReal_div, Complex.ofReal_add, Complex.ofReal_ofNat,
+      add_div, div_mul_eq_mul_div, add_mul, Finset.sum_add_distrib, Finset.sum_div]
+  have hb (e : Environment n) : classAmplitude n q (x - y) e =
+      classAmplitude n q x e - classAmplitude n q y e := by
+    simp [classAmplitude, sub_mul, Finset.sum_sub_distrib]
+  have hm (z w : ℂ) : Complex.normSq ((z + w) / 2) =
+      (Complex.normSq z + Complex.normSq w) / 2 - Complex.normSq (z - w) / 4 := by
+    rw [Complex.normSq_div, Complex.normSq_add, Complex.normSq_sub]
+    norm_num
+    ring
+  simp only [classEnergy, ha, hb, hm, Finset.sum_sub_distrib]
+  simp only [← Finset.sum_div, Finset.sum_add_distrib]
+
+/-- Bundled probability masses on the realized profile classes. -/
+abbrev ClassDistribution (n : ℕ) (q : Router n → ℝ) :=
+  Convexity.StdSimplex ℝ (Profile n q)
+
+/-- Bundled arbitrary address probability distributions. -/
+abbrev AddressDistribution (n : ℕ) := Convexity.StdSimplex ℝ (Address n)
+
+/-- Physical class masses, including all boundary distributions. -/
+def classMass (n : ℕ) (q : Router n → ℝ) (p : AddressDistribution n) :
+    ClassDistribution n q := p.map (profile n q)
+
+private theorem class_mass_weights (n : ℕ) (q : Router n → ℝ)
+    (p : AddressDistribution n) (c : Profile n q) :
+    (classMass n q p).weights c = classSum n q p.weights c := by
+  classical
+  change p.weights.mapDomain (profile n q) c = _
+  rw [Finsupp.mapDomain_apply, Finsupp.sum_fintype _ _ (by simp)]
+  simp only [Finsupp.single_apply, classSum]
+
+private theorem class_mass_surjective (n : ℕ) (q : Router n → ℝ) :
+    Function.Surjective (classMass n q) := by
+  intro x
+  apply (Convexity.StdSimplex.mem_range_map_iff (profile n q) x).mpr
+  intro c hc
+  exact (hc (profile_surjective n q c)).elim
+
+private theorem gram_real (n : ℕ) (q : Router n → ℝ) (a b : Address n) :
+    ((gram n q a b).re : ℂ) = gram n q a b := by
+  apply Complex.conj_eq_iff_re.mp
+  simp only [gram, map_sum, map_mul, record_conj]
+
+private theorem energy_factor (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v ≤ 1)
+    (p : Address n → ℝ) :
+    addressEnergy n q p = classEnergy n q (classSum n q p) := by
+  classical
+  have hsum (e : Environment n) :
+      classAmplitude n q (classSum n q p) e = ∑ a, (p a : ℂ) * record n q a e := by
+    rw [record_combination n q hq]
+    unfold classAmplitude
+    apply Finset.sum_congr rfl
+    intro c _
+    congr 1
+    simp [classSum, Complex.ofReal_sum, apply_ite]
+  apply Complex.ofReal_injective
+  simp only [addressEnergy, classEnergy, hsum, Complex.ofReal_sum, Complex.ofReal_mul]
+  simp only [gram_real]
+  simp only [Complex.normSq_eq_conj_mul_self, map_sum, map_mul,
+    Complex.conj_ofReal, record_conj, gram, Finset.sum_mul, Finset.mul_sum]
+  conv_rhs => rw [Finset.sum_comm]; arg 2; ext a; rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro a _
+  apply Finset.sum_congr rfl
+  intro b _
+  apply Finset.sum_congr rfl
+  intro e _
+  ring
+
+private theorem distribution_energy (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, q v ≤ 1) (p : AddressDistribution n) :
+    addressEnergy n q p.weights = classEnergy n q (classMass n q p).weights := by
+  rw [energy_factor n q hq]
+  congr 1
+  funext c
+  exact (class_mass_weights n q p c).symm
+
+private theorem class_minimizer_unique (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, q v ≤ 1) :
+    ∃! x : ClassDistribution n q, ∀ y : ClassDistribution n q,
+      classEnergy n q x.weights ≤ classEnergy n q y.weights := by
+  classical
+  have hne : Nonempty (ClassDistribution n q) := by
+    have ha : Nonempty (Address n) := by
+      clear q hq
+      induction n with
+      | zero => exact ⟨()⟩
+      | succ n ih => exact ⟨(false, Classical.choice ih)⟩
+    exact ⟨.single (profile n q (Classical.choice ha))⟩
+  have hc : Continuous (fun x : ClassDistribution n q => classEnergy n q x.weights) := by
+    unfold classEnergy classAmplitude
+    fun_prop
+  obtain ⟨x, _, hx⟩ := isCompact_univ.exists_isMinOn
+    (Set.univ_nonempty : (Set.univ : Set (ClassDistribution n q)).Nonempty) hc.continuousOn
+  refine ⟨x, fun y => hx (Set.mem_univ y), ?_⟩
+  intro y hy
+  by_contra hne
+  have hw : (fun c => y.weights c - x.weights c) ≠ 0 := by
+    intro he
+    apply hne
+    ext c
+    exact sub_eq_zero.mp (congrFun he c)
+  let m : ClassDistribution n q := Convexity.convexCombPair (1 / 2 : ℝ) (1 / 2 : ℝ)
+    (by norm_num) (by norm_num) (by norm_num) y x
+  have hm : (m.weights : Profile n q → ℝ) = fun c => (y.weights c + x.weights c) / 2 := by
+    funext c
+    simp only [m, Convexity.StdSimplex.weights_convexCombPair, Finsupp.add_apply,
+      Finsupp.smul_apply, smul_eq_mul]
+    ring
+  have hmid := class_energy_midpoint n q y.weights x.weights
+  have hp := class_energy_pos n q hq (fun c => y.weights c - x.weights c) hw
+  have hxm := hx (Set.mem_univ m)
+  have hxy := hx (Set.mem_univ y)
+  have hyx := hy x
+  change classEnergy n q x.weights ≤ classEnergy n q m.weights at hxm
+  rw [hm] at hxm
+  change 0 < classEnergy n q (y.weights - x.weights) at hp
+  linarith
+
+private theorem all_minimizers (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v ≤ 1) :
+    ∃ x : ClassDistribution n q,
+      (∀ y : ClassDistribution n q, classEnergy n q x.weights ≤ classEnergy n q y.weights) ∧
+      (∀ y : ClassDistribution n q,
+        (∀ z : ClassDistribution n q, classEnergy n q y.weights ≤ classEnergy n q z.weights) →
+          y = x) ∧
+      (∀ p : AddressDistribution n,
+        (∀ r : AddressDistribution n, addressEnergy n q p.weights ≤ addressEnergy n q r.weights) ↔
+          classMass n q p = x) ∧
+      Function.Surjective (classMass n q) := by
+  obtain ⟨x, hx, hu⟩ := class_minimizer_unique n q hq
+  refine ⟨x, hx, hu, ?_, class_mass_surjective n q⟩
+  intro p
+  simp_rw [distribution_energy n q hq]
+  constructor
+  · intro hp
+    apply hu
+    intro y
+    obtain ⟨r, rfl⟩ := class_mass_surjective n q y
+    exact hp r
+  · intro hp r
+    rw [hp]
+    exact hx _
+
 #print axioms gram_rank
 #print axioms gram_kernel
 #print axioms full_rank_iff
