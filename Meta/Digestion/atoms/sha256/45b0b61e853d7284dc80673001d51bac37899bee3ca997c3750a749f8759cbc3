@@ -1,0 +1,55 @@
+**定理 152.2（严格差距定位全部最优效应的同一原零点）。** 令
+
+$$
+U_p=\{x\in K:\Delta_p(x)>0\}.
+\tag{XII152.2}
+$$
+
+对每个 $x\in U_p$，存在唯一 $r_p(x)\in S_p$，使每张 $f\in M_p(x)$ 都满足
+
+$$
+Z(f):=\{z\in K:f(z)=0\}=\{r_p(x)\}.
+\tag{XII152.3}
+$$
+
+映射 $r_p:U_p\to S_p$ 连续。若固定原纯输入 $s\in P$ 满足 $\Delta_p(s)>0$，则对每个 $\eta>0$，存在 $p$ 在 $P$ 中的邻域 $W$，使
+
+$$
+\forall a\in W\ \forall f\in M_a(s):\qquad
+\varnothing\ne Z(f)\subset
+\{z\in K:\|z-r_p(s)\|<\eta\}.
+\tag{XII152.4}
+$$
+
+证明。先在承重推导内部复用 [X125.2式(X125.8)][Q152X] 的原菜单归一化：当 $t=T_p(x)<1$ 时，每个最优 $f$ 都在整个 $K$ 上取零。否则 $m=\min_Kf>0$，则
+
+$$
+\widetilde f=\frac{f-mu}{1-m}\in\mathcal F_p,\qquad
+\widetilde f(x)=\frac{t-m}{1-m}<t,
+\tag{XII152.5}
+$$
+
+矛盾。该效应在全部 $K$ 上介于零与一，再由原 $u$ 齐次化到整个 $C$，不要求面效应延拓。
+
+取 $f_0\in\operatorname{ri}M_p(x)$。对任意 $f\in M_p(x)$，有限维凸集的相对内部性质给 $g\in M_p(x)$ 与 $0<\lambda<1$，使 $f_0=\lambda f+(1-\lambda)g$。全域非负性遂给
+
+$$
+Z(f_0)=\bigcap_{f\in M_p(x)}Z(f)\ne\varnothing.
+\tag{XII152.6}
+$$
+
+这是同一最优面的共同零集。每个最优效应的零面都包含于 $D_p$。由完整原真面分类，它只能是纯单点或整个 $D_p$。严格差距排除 $M_p(x)\cap\mathcal A_p\ne\varnothing$，故这些零面均为单点；(XII152.6)使其全部相同，得到(XII152.3)。
+
+若 $x_i\to x\in U_p$，选 $f_i\in M_p(x_i)$。$T_p$ 连续、$\mathcal E$ 与 $D_p$ 紧，使任意子列可再取
+$f_i\to f$、$r_p(x_i)\to r'$。评价连续给 $f\in M_p(x)$、$f(r')=0$，故 $r'=r_p(x)$。这给所述连续性。
+
+现在固定上述纯 $s$。仅对纯端点使用 PR 和固定 $T_s$ 的连续性：
+
+$$
+T_a(s)=T_s(a)\longrightarrow T_s(p)=T_p(s)<1
+\qquad(a\to p,\ a\in P).
+\tag{XII152.7}
+$$
+
+因此邻近标签的全部最优效应也各有非空原零面。若(XII152.4)失败，可取 $a_i\to p$、$f_i\in M_{a_i}(s)$ 及 $z_i\in Z(f_i)$，使 $\|z_i-r_p(s)\|\ge\eta$。紧性取 $f_i\to f$、$z_i\to z$；(XII152.7)使 $f\in M_p(s)$，而 $f(z)=0$。这与(XII152.3)及距离下界矛盾。证毕。
+
