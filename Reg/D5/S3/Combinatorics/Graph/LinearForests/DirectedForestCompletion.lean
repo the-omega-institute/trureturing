@@ -39,7 +39,7 @@ abbrev arena : Arena where
       (∀ σ A, R.readout () ⟨V, E⟩ σ (q A) = h ((Φ σ).1 A)) ∧
       Nonempty (CycleCompletion E) ∧
       Nat.card (CycleCompletion E) = (Nat.card (Component E) - 1).factorial ∧
-      UniformCompletionLaw E Φ
+      UniformCompletionLaw E q h Φ
 
 private theorem source_bridge :
     (type_of% @directed_forest_completion.{u}) ↔ arena.{u}.Law actual := Iff.rfl

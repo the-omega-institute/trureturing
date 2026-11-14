@@ -447,9 +447,75 @@ private theorem uniform_filter {A : Type*} [Fintype A] [Nonempty A] (p : A → P
   · have he (b : {a // p a}) : a ≠ b.1 := fun h => ha (h ▸ b.2)
     simp [PMF.map_apply, he, ha]
 
+open Classical in
+private theorem full_cycle_marginal {W : Type*} [Fintype W] [Nontrivial W]
+    [Fintype (FullCycle W)] [Nonempty (FullCycle W)] (a b : W) :
+    ((uniformPmf (FullCycle W)).map (fun σ => σ.1 a)) b =
+      if a = b then 0 else ((Fintype.card W - 1 : ℕ) : ENNReal)⁻¹ := by
+  classical
+  let μ := (uniformPmf (FullCycle W)).map (fun σ => σ.1 a)
+  have hz : μ a = 0 := by
+    simp only [μ, PMF.map_apply]
+    apply ENNReal.tsum_eq_zero.mpr
+    intro σ
+    simp [Ne.symm (σ.2.apply_ne Set.nontrivial_univ (Set.mem_univ a))]
+  have heq (b c : W) (hb : b ≠ a) (hc : c ≠ a) : μ b = μ c := by
+    let g : Perm W := Equiv.swap b c
+    let e : FullCycle W ≃ FullCycle W := {
+      toFun := fun σ => ⟨g * σ.1 * g⁻¹, by simpa using σ.2.conj (g := g)⟩
+      invFun := fun σ => ⟨g⁻¹ * σ.1 * g, by simpa using σ.2.conj (g := g⁻¹)⟩
+      left_inv := by intro σ; apply Subtype.ext; simp [mul_assoc]
+      right_inv := by intro σ; apply Subtype.ext; simp [mul_assoc] }
+    have hga : g a = a := Equiv.swap_apply_of_ne_of_ne hb.symm hc.symm
+    have hgia : g⁻¹ a = a := by simpa [g] using hga
+    have hgc : g c = b := Equiv.swap_apply_right b c
+    have hcond (σ : FullCycle W) : b = (e σ).1 a ↔ c = σ.1 a := by
+      change b = g (σ.1 (g⁻¹ a)) ↔ _
+      rw [hgia, ← hgc, g.injective.eq_iff]
+    change ((uniformPmf (FullCycle W)).map (fun σ => σ.1 a)) b =
+      ((uniformPmf (FullCycle W)).map (fun σ => σ.1 a)) c
+    simp only [PMF.map_apply, uniformPmf, PMF.ofFintype_apply, tsum_fintype]
+    rw [← e.sum_comp (fun σ => if b = σ.1 a then
+      (Fintype.card (FullCycle W) : ENNReal)⁻¹ else 0)]
+    simp only [hcond]
+  by_cases hab : a = b
+  · subst b
+    change μ a = _
+    rw [ite_eq_left rfl]
+    exact hz
+  · have hs : (Fintype.card W - 1 : ℕ) * μ b = (1 : ENNReal) := by
+      have hsum := μ.tsum_coe
+      rw [tsum_fintype, ← Finset.sum_erase_add _ _ (Finset.mem_univ a), hz, add_zero] at hsum
+      have ht : (∑ x ∈ Finset.univ.erase a, μ x) =
+          (Fintype.card W - 1 : ℕ) * μ b := by
+        calc
+          _ = ∑ x ∈ Finset.univ.erase a, μ b := by
+            apply Finset.sum_congr rfl
+            intro x hx
+            exact heq x b (Finset.mem_erase.mp hx).1 (Ne.symm hab)
+          _ = _ := by simp [nsmul_eq_mul]
+      exact ht.symm.trans hsum
+    have hn : (Fintype.card W - 1 : ℕ) ≠ 0 := by
+      have := Fintype.one_lt_card (α := W)
+      omega
+    have hn0 : ((Fintype.card W - 1 : ℕ) : ENNReal) ≠ 0 := by exact_mod_cast hn
+    have hv : μ b = ((Fintype.card W - 1 : ℕ) : ENNReal)⁻¹ := by
+      calc
+        μ b = 1 * μ b := (one_mul _).symm
+        _ = (((Fintype.card W - 1 : ℕ) : ENNReal)⁻¹ * (Fintype.card W - 1 : ℕ)) * μ b := by
+          rw [ENNReal.inv_mul_cancel hn0 (ENNReal.natCast_ne_top _)]
+        _ = ((Fintype.card W - 1 : ℕ) : ENNReal)⁻¹ *
+            ((Fintype.card W - 1 : ℕ) * μ b) := mul_assoc _ _ _
+        _ = _ := by rw [hs, mul_one]
+    change μ b = _
+    rw [ite_eq_right hab]
+    exact hv
+
 /-- Uniform actual full cycles conditioned on extension give the uniform completion law,
 which the component equivalence pushes to the uniform full-cycle law. -/
+open Classical in
 def UniformCompletionLaw {V : Type*} (E : V → V → Prop)
+    (q : Component E ≃ Tail E) (h : Component E ≃ Head E)
     (Φ : CycleCompletion E ≃ FullCycle (Component E)) : Prop :=
   ∃ (μ₀ : PMF (FullCycle V)) (μE : PMF (CycleCompletion E)),
     (∀ σ, μ₀ σ = (Nat.card (FullCycle V) : ENNReal)⁻¹) ∧
@@ -457,15 +523,23 @@ def UniformCompletionLaw {V : Type*} (E : V → V → Prop)
     (∃ hs : ∃ σ ∈ {σ : FullCycle V | ∀ x y, E x y → σ.1 x = y}, σ ∈ μ₀.support,
       μ₀.filter {σ : FullCycle V | ∀ x y, E x y → σ.1 x = y} hs =
         μE.map (fun σ => (⟨σ.1, σ.2.1⟩ : FullCycle V))) ∧
-    (∀ ρ, μE.map Φ ρ = (Nat.card (FullCycle (Component E)) : ENNReal)⁻¹)
+    (∀ ρ, μE.map Φ ρ = (Nat.card (FullCycle (Component E)) : ENNReal)⁻¹) ∧
+    (∀ A B, μE.map (fun σ => σ.1 (q A)) (h B).1 =
+      if A = B then 0 else ((Nat.card (Component E) - 1 : ℕ) : ENNReal)⁻¹)
 
 private theorem joint_law {V : Type*} [Finite V] (E : V → V → Prop)
+    (q : Component E ≃ Tail E) (h : Component E ≃ Head E)
     (Φ : CycleCompletion E ≃ FullCycle (Component E))
-    (hne : Nonempty (CycleCompletion E)) : UniformCompletionLaw E Φ := by
+    (hne : Nonempty (CycleCompletion E)) (hc : 2 ≤ Nat.card (Component E))
+    (hend : ∀ σ A, σ.1 (q A) = h ((Φ σ).1 A)) : UniformCompletionLaw E q h Φ := by
   classical
   let : Nonempty (CycleCompletion E) := hne
   let : Nonempty (FullCycle V) := hne.map (fun σ => ⟨σ.1, σ.2.1⟩)
   let : Nonempty (FullCycle (Component E)) := hne.map Φ
+  let : Fintype (Component E) := Fintype.ofFinite _
+  let : Nontrivial (Component E) := Fintype.one_lt_card_iff_nontrivial.mp (by
+    rw [← Nat.card_eq_fintype_card]
+    omega)
   let : Fintype (CycleCompletion E) := Fintype.ofFinite _
   let : Fintype (FullCycle V) := Fintype.ofFinite _
   let : Fintype (FullCycle (Component E)) := Fintype.ofFinite _
@@ -486,7 +560,7 @@ private theorem joint_law {V : Type*} [Finite V] (E : V → V → Prop)
   have he := uniform_equiv e
   rw [← he, PMF.map_comp] at hf
   have hΦ := uniform_equiv Φ
-  refine ⟨uniformPmf (FullCycle V), uniformPmf (CycleCompletion E), ?_, ?_, ⟨hs, hf⟩, ?_⟩
+  refine ⟨uniformPmf (FullCycle V), uniformPmf (CycleCompletion E), ?_, ?_, ⟨hs, hf⟩, ?_, ?_⟩
   · intro σ
     simp [uniformPmf, PMF.ofFintype_apply, Nat.card_eq_fintype_card]
   · intro σ
@@ -494,6 +568,27 @@ private theorem joint_law {V : Type*} [Finite V] (E : V → V → Prop)
   · intro ρ
     rw [hΦ]
     simp [uniformPmf, PMF.ofFintype_apply, Nat.card_eq_fintype_card]
+  · intro A B
+    have hbridge (σ : CycleCompletion E) :
+        (h B).1 = σ.1 (q A) ↔ B = (Φ σ).1 A := by
+      rw [hend σ A]
+      exact ⟨fun he => h.injective (Subtype.ext he),
+        fun he => congrArg (fun C => (h C).1) he⟩
+    calc
+      ((uniformPmf (CycleCompletion E)).map (fun σ => σ.1 (q A))) (h B).1 =
+          ((uniformPmf (CycleCompletion E)).map (fun σ => (Φ σ).1 A)) B := by
+        simp only [PMF.map_apply]
+        apply tsum_congr
+        intro σ
+        rw [hbridge σ]
+      _ = ((uniformPmf (FullCycle (Component E))).map (fun ρ => ρ.1 A)) B := by
+        change ((uniformPmf (CycleCompletion E)).map
+          ((fun ρ : FullCycle (Component E) => ρ.1 A) ∘ Φ)) B = _
+        rw [← PMF.map_comp, hΦ]
+      _ = _ := by
+        have hm := full_cycle_marginal A B
+        by_cases hab : A = B <;>
+          simpa [hab, Nat.card_eq_fintype_card] using hm
 
 /-- Actual cycle contraction with its exact conditional uniform law and count.
 All components and endpoint predicates are derived from the original relation. -/
@@ -507,11 +602,11 @@ theorem directed_forest_completion [Finite V] (E : V → V → Prop)
       (∀ σ A, σ.1 (q A) = h ((Φ σ).1 A)) ∧
       Nonempty (CycleCompletion E) ∧
       Nat.card (CycleCompletion E) = (Nat.card (Component E) - 1).factorial ∧
-      UniformCompletionLaw E Φ := by
+      UniformCompletionLaw E q h Φ := by
   obtain ⟨q, h, Φ, hq, hh, hΦ⟩ := full_cycle_completion_equiv E hout hin ha
   have hcard := (Nat.card_congr Φ).trans (full_cycle_card hc)
   have hne : Nonempty (CycleCompletion E) :=
     (Nat.card_pos_iff.mp (by rw [hcard]; exact Nat.factorial_pos _)).1
-  exact ⟨q, h, Φ, hq, hh, hΦ, hne, hcard, joint_law E Φ hne⟩
+  exact ⟨q, h, Φ, hq, hh, hΦ, hne, hcard, joint_law E q h Φ hne hc hΦ⟩
 
 end D5.S3.Combinatorics.Graph.LinearForests.DirectedForestCompletion
