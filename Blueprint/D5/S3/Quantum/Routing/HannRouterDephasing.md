@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Quantum/Routing/HannRouterDephasing.minimumFidelity`
 
 *Commentary.*
 
-squaredFidelity is the full-State double sum conjugate(idealOutput(s)) times noisyOutput(s,t) times idealOutput(t). addressProbability(a) is the sum of normSq over both bus amplitudes. addressEnergy is the double address sum p(a)p(a')kernel(a,a'). Normalized means the complete address/bus normSq sum is one. kernel is one on the diagonal and q to the power 2(n-ell)-1 otherwise. minimumFidelity is (1 + sum over j in range n of 2^j q^(2j+1))/2^n. Reindexing j to j+1 gives the registered sum from 1 through n. uniformInput has bus false and amplitude the positive inverse square root of 2^n; the theorem also identifies it with 2^(-n/2).
+squaredFidelity is the full-State double sum conjugate(idealOutput(s)) times noisyOutput(s,t) times idealOutput(t). addressProbability(a) is the sum of normSq over both bus amplitudes. addressEnergy is the double address sum p(a)p(a')kernel(a,a'). Normalized means the complete address/bus normSq sum is one. kernel is one on the diagonal and q to the power 2(n-ell)-1 otherwise. minimumFidelity is (1 + sum over j in range n of 2^j q^(2j+1))/2^n. Reindexing j to j+1 gives the sum from 1 through n. uniformInput has bus false and amplitude the positive inverse square root of 2^n; the theorem also identifies it with 2^(-n/2).
 
 **Theorem 1.5 (Physical router kernel and least ideal-output fidelity).**
 
@@ -62,7 +62,7 @@ $$\forall n \in Nat,\; \forall q \in Real,\; 0 \le q \Rightarrow \left(q \le 1 \
 
 *Commentary.*
 
-All natural depths, every classical D and every normalized complex address/bus amplitude are included. The q interval is closed. At depth zero there are no routers and minimumFidelity is one. Off-span entries vanish. The minimum proof splits address weights by the first bit; the nonnegative remainder is proportional to the squared difference of the two branch masses. Constant kernel row sums give uniform attainment. The geometry count supplies the physical kernel on the live matrix-entry proof path. These are model-conditional mathematical claims; no literature-priority claim is made.
+All natural depths, every classical D and every normalized complex address/bus amplitude are included. The q interval is closed. At depth zero there are no routers and minimumFidelity is one. Off-span entries vanish. The minimum proof splits address weights by the first bit; the nonnegative remainder is proportional to the squared difference of the two branch masses. Constant kernel row sums give uniform attainment. The router mismatch formula determines the exponent in each clean-output matrix entry. The result assumes this single router hold and ideal remaining gates.
 
 ## References
 
