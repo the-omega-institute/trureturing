@@ -22,6 +22,10 @@ $$\neg (\operatorname{claim}\left(\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/SelfPowerResiduePolynomialRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/englander-a081215-xvii-polynomial-refutation` (refuted) by `D5/S3/Arith/Congruence/SelfPowerResiduePolynomialRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"englander-a081215-xvii-polynomial-refutation","declaration_gid":"D5/S3/Arith/Congruence/SelfPowerResiduePolynomialRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mathew Englander (2020). *Comments on OEIS A081215*. URL: <https://oeis.org/A081215/a081215.pdf>.

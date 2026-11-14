@@ -48,6 +48,10 @@ $$\forall n \in \mathbb{N},\; (2 < n) \Rightarrow ((((n: \mathbb{Z})+1)^{2}*\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/SelfPowerCubicRemainders.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/englander-a081215-xiv-cubic-remainders` (proved) by `D5/S3/Arith/Congruence/SelfPowerCubicRemainders.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"englander-a081215-xiv-cubic-remainders","declaration_gid":"D5/S3/Arith/Congruence/SelfPowerCubicRemainders.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mathew Englander (2020). *Comments on OEIS A081215*. URL: <https://oeis.org/A081215/a081215.pdf>.
