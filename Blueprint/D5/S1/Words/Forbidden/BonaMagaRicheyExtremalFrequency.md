@@ -50,6 +50,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Forbidden/BonaMagaRicheyExtremalFrequency.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bonamagarichey-2026-extremal-frequency` (refuted) by `D5/S1/Words/Forbidden/BonaMagaRicheyExtremalFrequency.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bonamagarichey-2026-extremal-frequency","declaration_gid":"D5/S1/Words/Forbidden/BonaMagaRicheyExtremalFrequency.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Miklós Bóna, Balázs Maga, Jacob Richey (2026). *Letter frequency in shifts of finite type with one forbidden word*. URL: <https://arxiv.org/abs/2606.06655v2>.
