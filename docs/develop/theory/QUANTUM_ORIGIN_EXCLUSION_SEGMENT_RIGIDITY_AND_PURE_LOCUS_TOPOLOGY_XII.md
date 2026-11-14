@@ -905,12 +905,484 @@ XI145识别的是整个原状态体、完整确认菜单、全部效应和排除
 
 ## 追加锚（本行以下为增补区）
 
-## 147. 纯局部极小的全域障碍与同根同阈值闭端点
+## 147. 裸 EB3 的九维下界与单标签完整法向
 
-### 147.1 原域、完整面与端点命题
+本章在整个原锥、原单位、原状态体和全效应区间上证明：裸完整 EB3 已要求 $\dim_{\mathbb R}V\ge9$；在九维等号处，每个实际单标签纯点都有唯一整球确认和完整四维原法向接口。证明复用既有原面分类、标签二分及有限法向层覆盖，以单标签球与极限一值面的实际接触排除极限重复零球，将有限见证、两步四维紧块和法向尺寸论证接到单标签区域。全局 Inj 仍未证明；同锥同单位的复三能级分类及完整静态字典分别按 EXCLUSION XI 的定理145.2、条件应用145.9，在其完整前件下使用。
 
-**定义 147.1（同一原根的读数与二步载体）。** 本章的147.*均属本卷 XII；
-[XI145—146][Q147XI]仍指前卷的九维分类与有限层正规性结论。
+### 147.1 原对象、供应与主结论
+
+取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。始终取整个
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\qquad D_p=\{x\in K:T_p(x)=0\},\\
+S_p=P\cap D_p,\qquad
+\mathcal A_p=\{e\in\mathcal E:e(p)=1,\ e|_{D_p}=0\},\\
+N_p=\{h\in C^*:h(p)=0\},\qquad L_p=\operatorname{span}_{\mathbb R}N_p,\\
+N_F=\{h\in C^*:h|_F=0\},\qquad
+a(p)=\dim_{\rm aff}\mathcal A_p,\\
+\mathscr B=\{D_p:p\in P\},\qquad
+I(F)=\{p\in P:D_p=F\},\qquad
+P_{\rm s}=\{p\in P:I(D_p)=\{p\}\}.
+\end{gathered}
+\tag{XII147.1}
+$$
+
+EB3 指对每个 $p\in P$，**整个** $D_p$ 都仿射同构于非退化闭三球。纯关系 $p\perp q\Longleftrightarrow q\in D_p$ 表示某张原效应在两端读一、零；补效应给对称，且 $p\not\perp p$。$K,\mathcal E,F_p$ 紧，全部 minimum 达到；$K$ 张成 $V$，$\operatorname{aff}K=\{u=1\}$。辅助欧氏结构仅用于紧性和参数化。$\operatorname{Aff}(D_p)$ 表示整个原球上的实仿射函数空间。
+
+本章精确使用以下既有供应；跨卷条目以定理、引理或节区分，带 XII 前缀的编号均指本章公式。
+
+* FINITE_PURE VII 的定理103.2：每个 $D_p$ 是紧暴露极大真面，$\mathcal A_p\ne\varnothing$；每个非空真面是纯单点或整个 $D_p$，不预先要求面闭。$S_p$ 是整张球面的全部原纯点；不同球的交为空或一个原纯点。
+* EXCLUSION IX 的定理116.2、116.6：每个球或者单标签，或者与唯一不交球 $G$ 配对，$I(F)=S(G), I(G)=S(F)$，其中 $S(F)=P\cap F$；两球均不交第三张不同球。$P_{\rm s}\ne\varnothing$，且 $p\in P_{\rm s},q\perp p\Rightarrow q\in P_{\rm s}$。因此本章所有从单标签点出发的有限零边路都留在 $P_{\rm s}$；这不是 $P_{\rm s}=P$。SAME_READBACK 第126.5节的 $P_{\mathrm s}=P\setminus R$ 与此定义相同，因重复块的球缘及标签恰互为配对球缘。
+* SAME_READBACK 引理128.2及其证明：对任意有非空内部的 $m$ 维紧凸体及每个 $1\le k\le m$，法向锥张成维数至少 $k$ 的全部边界点有可数紧覆盖；每层向某个 $m-k$ 维线性空间的正交投影单射，逆满足 $2/\sqrt3$ 的 Lipschitz 界。本章在第147.6节取 $m=8,k=5$，在第147.8节取 $m=8,k=4$，在第147.12节取一般 $m$ 和 $k=4$。它是全点覆盖，不是删去零测例外的可求长性断言。
+
+EXCLUSION IX 的引理119.1、定理119.10及 BILATERAL VIII 的引理121.2—121.4、定理121.5—121.6原来使用全局 Inj。下面展开其在本域所需的局部替换，尤其不直接搬用 VIII 引理121.3的极限纯性。LOCAL_PURE_LIMIT_CONTINUATION 引理132.3、THREE_COPY VIII 引理131.2已供应单标签球混内部极限的反向整球塌缩；第147.3节给出与本有限见证直接相接的端面形式。它不另计为一般凸分析原理。
+
+**主结论总览。** 裸 EB3 给整个原空间的下界 $\dim_{\mathbb R}V\ge9$，证明见推论147.8。等号处有下述定理147.1及命题147.6—147.7的局部完整接口。仍未支付的全局箭头是 $\mathrm{EB3}+\dim_{\mathbb R}V=9\Rightarrow P_{\rm s}=P$，即全局 Inj；它不包含在本章结论内。
+
+**定理 147.1（九维单标签区域的完整原确认）。** 若 EB3 且整个 $\dim_{\mathbb R}V=9$，则对每个 $p\in P_{\rm s}$，
+
+$$
+\mathcal A_p=\{e_p\},\qquad \dim L_p=4,\qquad
+N_{D_p}=\mathbb R_+e_p.
+\tag{XII147.2}
+$$
+
+此外，$e_p$ 的整个零面为 $D_p$、整个一值面为 $\{p\}$；置 $g_p=u-e_p$，则
+
+$$
+R_p:L_p\overset\sim\longrightarrow\operatorname{Aff}(D_p),\quad h\mapsto h|_{D_p},
+\qquad g_p\in\operatorname{ri}N_p,\qquad K\cap\ker g_p=\{p\}.
+\tag{XII147.3}
+$$
+
+第147.7节还给全部原法向的边界射线、完整归一法向基、固定整张 $S_p$ 上的 Lipschitz 确认效应及原全边效应区间。这里没有把 $\mathcal A_p$ 与整个 $F_p$ 混同，没有断言 $R_p^{-1}$ 为正映射或 $e_p$ 是 $F_p$ 的 least。式(XII147.2)的证明在第147.6节完成，第147.7节证明式(XII147.3)及其全部所列接口。
+
+### 147.2 仅在实际单标签处使用端面唯一性
+
+**引理 147.2（局部端面与冗余公式）。** 在 EB3 下，对每个 $p\in P_{\rm s}$ 有
+
+$$
+\begin{gathered}
+e\in\mathcal A_p\Rightarrow
+K\cap\{e=0\}=D_p,\quad K\cap\{e=1\}=\{p\},\\
+\max_K h=\max_{D_p}h\quad(h\in N_p),\\
+\dim L_p=a(p)+4,\qquad
+N_{D_p}=\operatorname{cone}\mathcal A_p,\qquad
+\dim\operatorname{span}N_{D_p}=a(p)+1,\\
+q\in S_p\Rightarrow a(q)=a(p).
+\end{gathered}
+\tag{XII147.4}
+$$
+
+证明。零面包含极大真面 $D_p$，又不含 $p$，故恰为 $D_p$。若原纯 $s$ 在 $e$ 取一，则 $D_p\subseteq D_s$，极大性给 $D_s=D_p$，本点的单标签性给 $s=p$。紧一值面由其原极点凸生成，故是 $\{p\}$。
+
+对非零 $h\in N_p$，令 $M=\max_Kh>0$，在最大面取原纯 $s$。原效应 $h/M$ 在 $s,p$ 读一、零，故 $s\in D_p$，得到最大值公式。零函数亦满足。此公式本身不需单标签性。
+
+写 $D_p=c+B\overline{\mathbb B}^3$，$B:\mathbb R^3\to\ker u$ 单射。每个 $q_v=c+Bv\in S_p$，$\|v\|=1$，亦在 $P_{\rm s}$。任取 $b_v\in\mathcal A_{q_v}$，则 $b_v(p)=0$，且球支持等号给
+
+$$
+b_v(c+Bw)=1-\beta_v+\beta_v v\cdot w,
+\qquad 0<\beta_v\le\tfrac12.
+\tag{XII147.5}
+$$
+
+斜率为零会使 $b_v$ 在整张 $D_p$ 为一，违反已证一值面仅含 $q_v$。在六个轴端点选一次效应，再加 $u-e\in N_p$、其在 $D_p$ 恒为一，便知 $R_p:L_p\to\operatorname{Aff}(D_p)$ 满射。这只用了 $p$ 及其六个原邻点的单标签性。
+
+对 $h\in\operatorname{ri}N_p$，其零面是 $N_p$ 的公共零集：任意 $k\in N_p$ 有某个 $t>0$ 使 $h-tk\in N_p$，故 $h(x)=0\Rightarrow k(x)=0$。$u-e\in N_p$ 的零面已是 $\{p\}$，所以 $h$ 也恰在 $p$ 为零。
+
+取非零 $h_0\in\operatorname{ri}N_p$，写其球限制为 $\alpha+v\cdot w$。若 $v\ne0$，加上式(XII147.5)中方向 $-v/\|v\|$ 的一个非负倍数，消去斜率。相对内部加锥仍在相对内部；所得非零正泛函的限制为常数，正性及最大值公式保证此常数严格正。归一得
+
+$$
+g_c\in\operatorname{ri}N_p,\qquad g_c|_{D_p}=1.
+\tag{XII147.6}
+$$
+
+这里 $g_c$ 只是本证明所取的常数限制代表。准确切片等式为
+
+$$
+\mathcal A_p=u-\{g\in N_p:R_pg=1\}.
+\tag{XII147.7}
+$$
+
+其中 $g\le u$ 由原最大值公式在整个 $K$、继而整个 $C$ 上支付。切片遇相对内部，仿射维数是 $\dim L_p-4$。这证明第一维数公式。
+
+若 $0\ne h\in N_{D_p}$，令 $M=\max_Kh>0$，则 $h/M$ 的任何纯最大点 $s$ 满足 $D_s=D_p$，故 $s=p$，$M=h(p)>0$，且 $h/M\in\mathcal A_p$。于是 $N_{D_p}=\operatorname{cone}\mathcal A_p$，而 $\mathcal A_p$ 是其 $h(p)=1$ 紧切片，给后一维数公式。
+
+最后固定 $q=c+Bv\in S_p$。$\mathcal A_q\subset N_p$，其限制都属仿射族 $1-\beta+\beta v\cdot w$。允许 $\beta\in\mathbb R$，将该限制族在 $L_p$ 中的逆像记为 $J_q$；其维数为 $\dim\ker R_p+1=a(p)+1$。选 $k\in L_p$ 满足 $R_pk=v\cdot w$，则充分小 $t>0$ 时
+
+$$
+h=(g_c+tk)/(1+t)\in\operatorname{ri}N_p\cap J_q.
+$$
+
+取 $r\in D_q\setminus\{p\}$。已证 $h(r)>0$，而全部 $\mathcal A_q$ 在 $r$ 为零。因此评价 $r$ 在 $J_q$ 中切出真仿射超平面，$a(q)\le a(p)$。交换 $p,q$，二者均已在 $P_{\rm s}$，得反向不等式。没有使用别的图分支的标签唯一性。证毕。
+
+### 147.3 接触单标签球的非点零效应必确认纯点
+
+**引理 147.3（端面接触的纯性桥）。** 在 EB3 下，设 $q\in P_{\rm s}$、$x\in D_q$、$g\in\mathcal E$，且 $g(x)=1$。若 $Z=K\cap\ker g$ 非空且非点，则存在 $z\in P_{\rm s}$，使
+
+$$
+Z=D_z,\qquad K\cap\{g=1\}=\{z\},\qquad x=z,\qquad g\in\mathcal A_z.
+\tag{XII147.8}
+$$
+
+特别地，假设中的 $x$ 不必先纯。
+
+证明。$g(x)=1$ 及非空零集使 $g$ 非恒定；原面分类给 $Z\in\mathscr B$。记紧一值面为 $M$。其任一原纯点 $t$ 满足 $Z\subseteq D_t$，故由极大性 $D_t=Z$，即 $\operatorname{ext}M\subseteq I(Z)$。
+
+若 $Z$ 重复，IX 定理116.2给配对球 $G$，$I(Z)=S(G)$，从而 $M\subseteq\operatorname{conv}S(G)=G$。但 $x\in M\cap D_q$，所以 $G\cap D_q\ne\varnothing$。重复球 $G$ 不交第三球，且其配对球 $Z$ 与它不交，故只能 $D_q=G$。这使 $D_q$ 重复，与 $q\in P_{\rm s}$ 矛盾。此步明确处理了极限零球可能变成重复球的分支。
+
+因此 $I(Z)=\{z\}$。$M$ 的全部原极点只有 $z$，故 $M=\{z\}$。于是 $x=z\in P$、$D_z=Z$，$z\in P_{\rm s}$，而 $g\in\mathcal A_z$。证毕。
+
+此引理所付的是**原域有限见证极限的纯性**。它不是以“极限本来纯”重写定义，也没有把 $\bigcup_{f\in F_q}\{f=0\}$ 换成各零面的交。另一路同样有效的供应是既有 LOCAL_PURE_LIMIT_CONTINUATION 引理132.3：若上述接触极限落在 $\operatorname{ri}D_q$，对应纯采样标签的下一层整球须缩到 $q$，与保留的非退化四面体矛盾。
+
+### 147.4 固定原球面上的有限闭层
+
+以下第147.4—147.5节不使用九维。固定 $p\in P_{\rm s}$、任意非空相对开集 $U\subset S_p$，在其中取闭二盘 $Q$，其球面内部非空。所有移动 $q$ 均在这同一紧盘中，因而 $q\in P_{\rm s}$。
+
+固定辅助欧氏结构，令 $\xi(x)=x\otimes x\in\operatorname{Sym}^2V$，定义
+
+$$
+\Gamma(x_1,\ldots,x_9)=
+\det[\langle\xi(x_i),\xi(x_j)\rangle]_{i,j=1}^9,\qquad
+\tau(y_0,y_1,y_2,y_3)=
+\det[\langle y_a-y_0,y_b-y_0\rangle]_{a,b=1}^3.
+\tag{XII147.9}
+$$
+
+前者严格正表示九个二次评估泛函独立，后者严格正表示四点仿射无关。
+
+**引理 147.4（局部有限闭层及整球连续）。** 对每个整数 $m\ge1$，令 $Q_m\subset Q$ 由下列存在条件定义：
+
+$$
+\begin{gathered}
+x_1,\ldots,x_9\in S_q,\qquad \Gamma(x_1,\ldots,x_9)\ge1/m,\\
+g_j\in\mathcal A_{x_j},\qquad
+y_{j0},\ldots,y_{j3}\in D_{x_j},\qquad
+\tau(y_{j0},\ldots,y_{j3})\ge1/m\quad(1\le j\le9).
+\end{gathered}
+\tag{XII147.10}
+$$
+
+则 $Q=\bigcup_{m\ge1}Q_m$，每个 $Q_m$ 紧，且 $q\mapsto D_q$ 在每层按原环境 Hausdorff 距离连续。因此任意 $U$ 中有较小闭二盘 $Q'\subset U$，其球面内部非空，在其上整球连续。
+
+证明。每个实际三球的边界上有九个二次评估独立点：在标准 $S^2$ 取六个轴端点及
+
+$$
+(e_1+e_2)/\sqrt2,\quad(e_1+e_3)/\sqrt2,\quad(e_2+e_3)/\sqrt2.
+$$
+
+次数至多二的多项式 $c+\ell\cdot t+t^*At$，其中 $A$ 对称，若在这九点为零，六轴点给 $\ell=0,A_{ii}=-c$，后三点给全部非对角 $A_{ij}=0$。故核恰为 $c(1-\|t\|^2)$，十维多项式空间的评估秩为九。齐次化到四维 $\operatorname{span}D_q$，再延伸到 $V$，不改此秩。每个下一层实际三球 $D_{x_j}$ 又含非退化四面体。有限个严格正量可用同一 $1/m$ 下界，得到覆盖。
+
+设 $q_n\in Q_m\to q\in Q$。在紧 $K,\mathcal E$ 的有限乘积中，将全部见证及任取 $e_n\in\mathcal A_{q_n}$ 一起取共同收敛子列，极限记为 $x_j,y_{jk},g_j,e$。有
+
+$$
+e(q)=1,\quad e(x_j)=0,\quad g_j(x_j)=1,\quad
+g_j(y_{jk})=0,\quad\tau(y_{j0},\ldots,y_{j3})\ge1/m.
+\tag{XII147.11}
+$$
+
+第一对等式只先给 $x_j\in D_q$，不先给纯性。后一四面体使 $g_j$ 的零面非点。现在 $q\in P_{\rm s}$ 已由固定盘支付，引理147.3逐个给 $x_j\in S_q\cap P_{\rm s}$、$g_j\in\mathcal A_{x_j}$，且所有 $y_{jk}\in D_{x_j}$。连续评价保留 $\Gamma\ge1/m$。所以极限见证仍满足式(XII147.10)，$Q_m$ 闭于紧 $Q$。这正是全局 Inj 未被预付的闭性步骤。
+
+再设 $q_n\to q$ 于同一 $Q_m$。写
+
+$$
+D_{q_n}=c_n+B_n\overline{\mathbb B}^3,
+\qquad \|B_n\|\le\operatorname{diam}K/2.
+$$
+
+该界由全部 $c_n\pm B_nt\in K$，$\|t\|=1$，给出，不假设连续选轴。任意子列可再取 $c_n\to c,B_n\to B,e_n\to e$，故整球趋于 $E=c+B\overline{\mathbb B}^3\subseteq D_q$。同时取全部有限见证极限；已证九个极限点 $x_j\in E\cap S_q$，评估秩仍九。
+
+若 $B$ 秩至多二，九点位于仿射维数至多二的空间，次数至多二的多项式空间维数至多六，矛盾。因此 $E$ 为非退化三椭球，与 $D_q$ 有同一仿射三平面。每个 $x_j$ 是 $D_q$ 的极点，因 $x_j\in E\subseteq D_q$，亦是 $E$ 的极点。两边界二次形式均在该四维齐次空间的九点评估核中；核维数是一，故二次形式成非零比例，边界相同，取其凸包得 $E=D_q$。任意子列再极限均如此，故整列趋于 $D_q$。
+
+紧二盘 $Q$ 是 Baire 空间，可数闭覆盖中某层有非空相对内部；盘边界在盘中无处稠密，故可在这一内部中取球面内部非空的较小闭二盘 $Q'$。证毕。
+
+### 147.5 两条原边给真正四维紧块
+
+**引理 147.5（单标签区域的两步四维块）。** 对每个 $p\in P_{\rm s}$ 及非空相对开 $U\subset S_p$，集合
+
+$$
+\{r\in P_{\rm s}\setminus\{p\}:\exists q\in U,\ p\perp q\perp r\}
+\tag{XII147.12}
+$$
+
+含一个与 $[0,1]^4$ 同胚的原环境紧集。块上每点满足 $a(r)=a(p)$。
+
+证明。在引理147.4的连续盘 $Q'$ 上，整球确定连续中心 $c(q)$ 及连续秩三形状算子 $A(q)$。具体地，在 $\{u=1\}$ 固定参考点 $o$，支撑函数 $h_q(v)=\max_{D_q}\langle v,x-o\rangle$ 给
+
+$$
+\langle v,c(q)-o\rangle=\tfrac12(h_q(v)-h_q(-v)),\qquad
+\langle v,A(q)v\rangle=(h_q(v)-\langle v,c(q)-o\rangle)^2.
+$$
+
+Hausdorff 连续性给支撑函数在单位方向上一致连续，第二式经极化确定连续的 $A(q)$。在一个内点 $q_0$ 附近，取三个固定向量，使其 $A(q_0)$ 像独立；连续性及 Gram—Schmidt 给 $\operatorname{im}A(q)$ 的局部连续正交标架 $W(q):\mathbb R^3\to\ker u$。令 $B(q)=A(q)^{1/2}W(q)$，则
+
+$$
+D_q=c(q)+B(q)\overline{\mathbb B}^3,\qquad S_q=c(q)+B(q)S^2
+$$
+
+连续，且 $B(q)$ 单射。每个 $S_q$ 含共同原纯点 $p$。在 $q_0$ 的参数球上取紧二帽 $T$，像避开 $p$；联合连续及紧性允许缩小底盘 $Q''\subset Q'$，使全部像仍避开 $p$。底盘和帽各取闭方盘。
+
+映射 $\Psi(q,t)=c(q)+B(q)t$ 在 $Q''\times T$ 上连续。固定 $q$ 时单射。不同 $q,q'$ 都在 $P_{\rm s}$，故 $D_q\ne D_{q'}$；二球都含 $p$，点交规则使交恰为 $\{p\}$，而两帽避开此点。故跨标签亦单射。紧源至 Hausdorff 原环境的连续单射是到像的同胚，给紧四立方体。像点是实际球缘原纯点；单标签邻点闭包给它们均在 $P_{\rm s}$。引理147.2沿两条实际边给 $a(r)=a(q)=a(p)$。证毕。
+
+这不是声称该块内部相对于 $P_{\rm s}$ 开，更不是相对于全部 $P$ 开。
+
+### 147.6 原八维法向层排除单标签处的全部冗余
+
+**定理147.1中式(XII147.2)的证明。** 在 $H=\ker u$ 的八维仿射原状态空间中，正法向与通常外法向有准确锥同构
+
+$$
+N_r\longrightarrow\mathcal N_K(r),\qquad h\longmapsto-h|_H.
+\tag{XII147.13}
+$$
+
+这里 $\mathcal N_K(r)=\{v\in H^*:v(x-r)\le0\ \forall x\in K\}$。核为零：限制为零的 $h$ 是 $u$ 的倍数，而 $h(r)=0$ 消去该倍数。反向，对外法向 $v\in H^*$，定义 $h(x)=-v(x-u(x)r)$；其在整个 $K$、继而整个 $C$ 非负，且零于 $r$。故维数不加减一。这一识别本身与八维无关。
+
+假设某 $p\in P_{\rm s}$ 有 $a(p)\ge1$。引理147.5给原纯紧四块 $F:[0,1]^4\hookrightarrow P_{\rm s}$，块上每个 $r$ 都有 $a(r)\ge1$，引理147.2给 $\dim\operatorname{span}\mathcal N_K(r)\ge5$。因此块的整个像位于原八维凸体的 $\Sigma_5(K)$。
+
+为明确所用覆盖的强度，SAME_READBACK 引理128.2的构造如下。选有理 $b_0,b_1,\ldots,b_5\in H^*$，后五个独立，$E=\operatorname{span}\{b_1,\ldots,b_5\}$；取有理 $\varepsilon>0$，满足 $\sqrt5\varepsilon/\sigma<1/2$，其中 $\sigma$ 是 $E\to\mathbb R^5$、$v\mapsto(\langle b_j,v\rangle)_j$ 的最小奇异值。辅助内积在此识别 $H,H^*$。令 $X$ 是所有法向锥分别遇到十个闭球 $\overline B(b_0\pm b_j,\varepsilon)$ 的边界点。有限见证在固定紧球中及法向图闭给 $X$ 紧。凸法向单调性对 $x,y\in X$ 给
+
+$$
+|\langle b_j,x-y\rangle|\le\varepsilon\|x-y\|,
+\qquad \|\operatorname{proj}_E(x-y)\|\le\tfrac12\|x-y\|.
+$$
+
+故投影到三维 $E^\perp$ 单射，其逆满足 $2/\sqrt3$ 界。任何至少五维法向锥都有相对内点及五对独立短扰动；将其充分精确逼近为上述有理数据便落在某层。可数有理数据给覆盖全部 $\Sigma_5(K)$ 的紧集 $X_j$。此构造不要求层中点纯，不涉及未知球族紧性。
+
+闭集 $F^{-1}(X_j)$ 可数覆盖紧四立方体。Baire 性及立方体内部稠密性给非空欧氏开集 $O\subset(0,1)^4$，使 $F(O)\subseteq X_j$ 于某同一层。于是 $\pi_jF:O\to\mathbb R^3$ 连续单射。将靶线性嵌入 $\mathbb R^4$ 的坐标超平面，区域不变性要求复合像在 $\mathbb R^4$ 中开，与其落在三维超平面矛盾。
+
+因此每个 $p\in P_{\rm s}$ 都有 $a(p)=0$。非空紧凸 $\mathcal A_p$ 遂为单点，引理147.2给 $\dim L_p=4,N_{D_p}=\mathbb R_+e_p$。这个证明无需 $P_{\rm s}$ 闭、紧、Baire 或是流形；两次 Baire 的源分别是实际紧二盘和实际紧四立方体。证毕。
+
+### 147.7 完整原法向、原边效应区间与归一基
+
+**命题 147.6（限制同构、完整边区间与完整法向基）。** 在定理147.1的前件下，固定任意 $p\in P_{\rm s}$，写 $D_p=c+B\overline{\mathbb B}^3$。则式(XII147.3)成立。对 $i=1,2,3$，唯一取 $H_i\in L_p$，使 $H(c+Bw)=w$，其中 $H=(H_1,H_2,H_3)$。定义
+
+$$
+\rho_p(v)=\sup_{x\in K\setminus\{p\}}
+\frac{-v\cdot H(x)}{g_p(x)}\qquad(v\in\mathbb R^3).
+\tag{XII147.14}
+$$
+
+它有限、正齐次、次可加、Lipschitz，且 $\rho_p(v)\ge\|v\|$。有准确的原锥及原最大值公式
+
+$$
+N_p=\{\alpha g_p+v\cdot H:\alpha\ge\rho_p(v)\},\qquad
+\max_K(\alpha g_p+v\cdot H)=\alpha+\|v\|\quad(\alpha\ge\rho_p(v)).
+\tag{XII147.15}
+$$
+
+对每个 $t\in S^2$、$q_t=c+Bt$，有整个 $V$ 上的等式
+
+$$
+e_{q_t}=\frac{\rho_p(t)g_p+t\cdot H}{1+\rho_p(t)},\qquad
+\{b\in\mathcal E:b(p)=0,b(q_t)=1\}=[g_p,e_{q_t}].
+\tag{XII147.16}
+$$
+
+特别地 $t\mapsto e_{q_t}$ 在固定整张原球面上 Lipschitz。
+
+$N_p$ 在四维 $L_p$ 中闭、尖、满维、严格凸，其全部非零边界射线恰为 $\mathbb R_+e_q$，$q\in S_p$，均为暴露极射线。固定任意 $z\in\operatorname{ri}K$，则全部原归一法向基满足
+
+$$
+B_p^*=\{h\in N_p:h(z)=1\}
+=\operatorname{conv}\{e_q/e_q(z):q\in S_p\}.
+\tag{XII147.17}
+$$
+
+这里是有限凸组合，无须另取闭包，每项至多四个生成元。
+
+证明。引理147.2的满射与两边维数四给 $R_p$ 同构。式(XII147.6)中的 $g_c$ 由切片等式(XII147.7)及 $\mathcal A_p=\{e_p\}$ 必为 $g_p$，故 $g_p\in\operatorname{ri}N_p$。其零集为 $\{p\}$ 已由端面唯一性证明，故式(XII147.14)分母在全部所写定义域严格正。
+
+取统一 $\delta>0$，使 $g_p\pm\delta H_i\in N_p$。于是整个 $K$ 上 $\|H(x)\|\le\sqrt3g_p(x)/\delta$。这给式(XII147.14)的有限性及 Lipschitz 界；$v\ne0$ 时代入 $c-Bv/\|v\|$ 给 $\rho_p(v)\ge\|v\|$，$v=0$ 时直接成立。正齐次与次可加由上确界定义给出。限制同构使每个 $L_p$ 元素唯一写成 $\alpha g_p+v\cdot H$，其原正性恰为式(XII147.15)的不等式；只有正性已付以后才用引理147.2的全域最大值公式，得到第二式。
+
+若 $b\in\mathcal E,b(p)=0,b(q_t)=1$，球支持等号及限制同构给
+
+$$
+b=(1-\beta)g_p+\beta t\cdot H,\qquad
+0\le\beta\le(1+\rho_p(t))^{-1}.
+$$
+
+反向每个此范围的泛函由式(XII147.15)在原 $C$ 上非负，且全域最大值为一，故属于整个 $\mathcal E$。取 $e_{q_t}\in\mathcal A_{q_t}$，这里 $q_t\in P_{\rm s}$ 已由邻点闭包支付。其参数不为零，否则它在整张 $D_p$ 为一。取 $y\in D_{q_t}\setminus\{p\}$，则 $g_p(y)>0$，而 $e_{q_t}(y)=0$ 给 $(1-\beta)/\beta\le\rho_p(t)$；正性给反向不等式，所以参数恰取上端点，证明式(XII147.16)及其 Lipschitz 性。
+
+式(XII147.15)表明非零边界为 $\alpha=\rho_p(v),v\ne0$，经正齐次化即全部所述射线。对 $q\in S_p$，取 $x_q\in\operatorname{ri}D_q$。正泛函在该相对内点零便零于整个 $D_q$，故
+
+$$
+N_p\cap\{h:h(x_q)=0\}=N_{D_q}=\mathbb R_+e_q.
+$$
+
+右侧确实在 $N_p$，因 $p\in D_q$。这用的是 $q\in P_{\rm s}$ 已付的完整零面法向射线，故每条边界射线暴露且极端。若两个不成比例的非零锥元之和在边界，其暴露评价在两项上均零，迫它们同属一条射线，矛盾。闭、尖来自原 $C^*$，满维来自 $g_p\in\operatorname{ri}N_p$。
+
+$z$ 是 $C$ 的内点，故每个非零原正泛函有 $h(z)>0$，且有统一 $d>0$ 使 $h(z)\ge d\|h\|$。所以 $B_p^*$ 是三维紧凸基。其极点恰对应上面全部极射线，有限维极点生成及 Carathéodory 给式(XII147.17)和四项界。固定球面效应连续还保证生成集合紧。以上是同一原法向锥的全部基，不是有限预选效应所张的子锥。证毕。
+
+注意，$R_p$ 是线性同构不表示 $R_p(N_p)=\operatorname{Aff}(D_p)_+$。由式(XII147.15)，后者等式恰要求全部方向 $\rho_p(v)=\|v\|$，本章未证明此饱和。唯一整球确认也未给 $T_p(x)=e_p(x)$ 对每个原混输入成立。
+
+### 147.8 有限正法向转移的准确局部适用域
+
+**命题 147.7（局部有限转移与紧层连续）。** 在定理147.1的前件下，设 $p_i,p\in P_{\rm s},p_i\to p$，且存在有限整数 $M\ge1$ 和原正法向 $h_i^\ell\in N_{p_i}$，$1\le\ell\le M$，满足
+
+$$
+h_i^\ell\to h^\ell,\qquad
+\operatorname{span}\{h^\ell:1\le\ell\le M\}=L_p.
+\tag{XII147.18}
+$$
+
+则 $D_{p_i}\to D_p,e_{p_i}\to e_p$，并且 $L_{p_i}\to L_p$ 于四维子空间的 Grassmann 空间。
+
+对 SAME_READBACK 引理128.2在原八维凸体取 $k=4$ 的紧层 $X_j$，上述连续性适用于每个 $P_{\rm s}\cap X_j$ 的子空间拓扑。特别地，对每张固定 $S_p$，$p\in P_{\rm s}$，集合 $S_p\cap X_j$ 是实际可数紧覆盖，整球、完整确认效应及法向**张成空间**在各层连续。还可对任意事先指定的紧 $A\subset P_{\rm s}$ 取紧层 $A\cap X_j$。
+
+证明。在任一子列取有界椭球参数及效应极限，得 $E\subseteq D_p$。正锥和评价的闭性给 $h^\ell\in N_p$。对全部固定非负系数 $a_\ell$，原最大值公式给
+
+$$
+\max_E\sum_{\ell=1}^M a_\ell h^\ell
+=\max_K\sum_{\ell=1}^M a_\ell h^\ell
+=\max_{D_p}\sum_{\ell=1}^M a_\ell h^\ell.
+$$
+
+这里用同一个参数子列，且泛函在紧 $K$ 上一致收敛，不按系数组更换极限球。有限正锥 $\operatorname{cone}\{h^\ell\}$ 在四维 $L_p$ 中有非空内部；经限制同构再取球上线性部分，其像含三维开集，故非零斜率方向含球面开片。相同最大值迫这些方向在 $D_p$ 上的唯一最大点均在 $E$。因此 $E$ 含 $S_p$ 的球面开片，先迫其秩三。这些点也是 $E$ 的支持点，故两椭球边界二次方程在开片同时消失；二次唯一性给它们成比例，得 $E=D_p$。二次方程在球面开片消失时在整个球面消失，是标准球面参数下多项式的唯一性；也可沿穿过开片的小大圆逐圆使用一元三角多项式唯一性。效应极限于是属于 $\mathcal A_p=\{e_p\}$。任意子列论证给整列收敛。从有限极限组中取四个独立向量，其对应 $h_i^\ell$ 最终仍独立并张成四维 $L_{p_i}$，给张成空间收敛。
+
+在 $k=4$ 的每层 $X_j$，源构造给八个有界外法向见证，分别在固定球 $\overline B(b_0\pm b_\ell,\varepsilon)$ 内，$2\varepsilon/\sigma<1/2$。给定 $p_i\to p$ 于 $P_{\rm s}\cap X_j$，取八个共同极限；四个半差 $d_\ell$ 距 $b_\ell$ 至多 $\varepsilon$，满足
+
+$$
+\Big\|\sum_{\ell=1}^4 t_\ell d_\ell\Big\|
+\ge(\sigma-2\varepsilon)\|t\|>0\quad(t\ne0).
+$$
+
+八个极限因而张满外法向的四维张成空间；用式(XII147.13)补回各个原正法向，它们的极限张满 $L_p$，故式(XII147.18)成立。任意子列再取此共同极限，证明层上连续。紧性结论来自固定 $S_p,A,X_j$ 的原环境紧性。此为 XI 引理145.4—145.5中有限转移步骤的已付局部版本。证毕。
+
+这里未断言全部归一锥基 $B_{p_i}^*\to B_p^*$ 的下连续性。它们在共同紧对偶基中始终有闭图和上包含，但张成空间连续不等于整锥连续。也未断言 $P_{\rm s}\cap X_j$ 自身紧、$P_{\rm s}$ 是 Baire 空间、某个相对开四维图已存在，或层在全部 $P$ 中开。
+
+### 147.9 局部结论与仍未支付的全局箭头
+
+本章结论的准确强度是
+
+$$
+\begin{gathered}
+\mathrm{EB3}\Longrightarrow\dim_{\mathbb R}V\ge9,\\
+\mathrm{EB3}+\dim_{\mathbb R}V=9
+\Longrightarrow
+\left\{
+\begin{array}{l}
+P_{\rm s}\ne\varnothing,\quad P_{\rm s}\text{ 沿原零边封闭};\\
+\forall p\in P_{\rm s}:\ \text{式(XII147.2)—(XII147.3)、}\\
+\qquad\text{式(XII147.15)—(XII147.17)的完整原法向接口};\\
+\forall p\in P_{\rm s},\ \forall\,\varnothing\ne U\subseteq S_p
+   \text{ 相对开}:\\
+\qquad\text{式(XII147.12)含四维紧块，且有命题147.7的紧层连续性}.
+\end{array}\right.
+\end{gathered}
+\tag{XII147.19}
+$$
+
+单标签非空性和邻点闭包归 IX 定理116.6；有限层和尺寸工具归上述来源。本章的承重迁移是将第二层极限纯性接回这一单标签域，得到**每一个**单标签处的唯一完整确认和四维完整原法向，并在不使用九维等号的同一四维紧块上给出裸 EB3 的九维下界。相应法向消费者只在 $P_{\rm s}$ 上取得已付前件；全局 Inj 未隐藏在局部记号中。
+
+仍未证明的全局箭头是
+
+$$
+\mathrm{EB3}+\dim_{\mathbb R}V=9\
+\mathrel{\mathop{\Longrightarrow}^{?}}\ P_{\rm s}=P.
+\tag{XII147.20}
+$$
+
+在本域 $P_{\rm s}=P$ 准确等价于全局 Inj；若另得到它，才可直接消费 EXCLUSION XI 定理145.2的既有完整等价，其 Inj 分支的充分接口迁移见 XI 命题145.8。下面的 $\Phi$ 遍历实线性双射：
+
+$$
+\begin{gathered}
+\mathrm{EB3}+\mathrm{Inj}+\dim_{\mathbb R}V=9\\
+\Longleftrightarrow\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,\qquad
+\Phi(\operatorname{PSD}_3(\mathbb C))=C,\quad u\circ\Phi=\operatorname{Tr}.
+\end{gathered}
+\tag{XII147.21}
+$$
+
+本章复用此分类。没有推出 $P_{\rm s}$ 闭或 $P$ 紧。SAME_READBACK 定理126.7已证明：若存在重复球，它必与单标签纯点在原边界中的闭包相交；故不能未经证明把 $P_{\rm s}$ 当作闭域。
+
+相对于 $P_{\rm s}$ 的四维紧块、$P_{\rm s}$-开四维图、$P$-开四维图和原根芽均不同。本章只取得第一项及命题147.7的指定紧层连续。XI 引理145.5的 $P$-开层使用覆盖**全部原纯点**的四维法向接口和原 $P$ 的 Baire 性；本章不能将其直接移给 $P_{\rm s}$，也不能移回整个 $P$。更不能在 XI 第145.5—145.6节的后续推导中借入未付的全纯域邻域、局部纯闭性或原根芽
+
+$$
+\mathsf G(o):\quad\exists W\subset V\text{ 开},\quad o\in W,\quad
+W\cap P\subseteq\bigcup_{q\in S_o}S_q.
+$$
+
+同样，EXCLUSION X 定理127.4、推论127.5的重复球二分仍须保留：若球缘某点存在在本侧整个球上非恒定的原确认，就有实际整球塌缩；否则该点的全部确认在本侧球上恒一，法向平坦且该点非暴露。这里既没有一个满足裸 EB3 加九维的反模型，也没有消灭该二分。仅凭式(XII147.19)不能支付 Conn、全 Pair、PR、least、统一满宽、正限制逆、共同中心、种子三角或自动 PSD。
+
+**二元与三元的界线。** $P_{\rm s}$、式(XII147.10)和式(XII147.12)均由原二元零一关系、原效应和有限见证定义。四维块的见证是两条真实边 $p\perp q\perp r$，不是三角；未取得 $p\perp r$ 或三张效应之和为 $u$。若将来式(XII147.20)闭合，式(XII147.21)及既有 FINITE_PURE VII 定理104.2—104.3、EXCLUSION IX 定理116.9才给每条原零边的唯一第三纯点和实际有限三元框架提升。在这之前，完整三元素提升没有由本章取得。
+
+### 147.10 同一表示的条件 QM 字典与独立物理入口
+
+仅在式(XII147.21)的完整条件另外成立以后，采用其同一个 $\Phi$，直接复用 EXCLUSION XI 的**条件应用145.9**，其所在节是 XI 第145.8节；XI **命题145.8**是证明迁移，不是静态字典。此时 $\Phi$ 送回全部原对象：$K$ 为全部迹一 PSD 像，$P\cong\mathbb{CP}^2$ 为全部复纯射线，全部原效应恰为
+
+$$
+f_M(\Phi X)=\operatorname{Tr}(MX),\qquad 0\preceq M\preceq I_3.
+$$
+
+若 $v^*v=1$、$P_v=vv^*$、$Q_v=I_3-P_v$，则整个确认菜单是
+
+$$
+F_{\Phi P_v}=\{f_{P_v+B}:B=Q_vBQ_v,\ 0\preceq B\preceq Q_v\}.
+$$
+
+它非单点；$B=0$ 给全锥序 least，并对每个原混输入 $\rho\succeq0$、$\operatorname{Tr}\rho=1$ 达到
+
+$$
+T_{\Phi P_v}(\Phi\rho)=\operatorname{Tr}(P_v\rho)=v^*\rho v.
+$$
+
+完整 $D_{\Phi P_v}$ 是 $v^\perp\cong\mathbb C^2$ 上的全部密度矩阵，即整颗 Bloch 三球，含全部混态，纯球缘为 $\mathbb{CP}^1\cong S^2$。
+
+这些等式的菜单核对也完全在同一原域中进行：$0\preceq M\preceq I_3$ 且 $v^*Mv=1$ 给 $(I_3-M)v=0$，Hermitian 性消去交叉块，故全部且仅有 $M=P_v+B$ 如上。对每个 $X\succeq0$，$\operatorname{Tr}(BX)\ge0$，所以 $B=0$ 同时给 least 和每个混输入上的已达 minimum。正矩阵满足 $v^*\rho v=0\Longleftrightarrow\rho v=0$，故零集是整个二阶密度球。这些是 XI 条件应用145.9的同一表示计算，不是式(XII147.19)单独导出的全局 Born 规则。
+
+实际未知入口、共同来源及其完整装饰／读回合同不由静态几何供应。全部原质量、共同来源域及全部合法实现、每个有限复合体与全部纠缠联合域、各自全效应和严格张量单位，所有旁观系统上的 CP 测试，实际事件／仪器及逐输入和同族预算、记录／权限／全部合法未来及每个中间切口，仍按 SAME_READBACK **第127.10节（SECTION127.10）**及其完整引用链各自承担；它不是该卷关于共同圆球的同号定理。完整继承亦见 XI 第145.9节的物理合同。物理钟、连续时间来源、Hamiltonian、能量标定和数值 $\hbar$ 仍保留各自独立合同。本章没有将任何这些入口付给局部法向唯一性。
+
+### 147.11 归属边界与原供应文献
+
+EXCLUSION IX 引理119.1、定理119.10的局部线性代数，BILATERAL VIII 引理121.2—121.4、定理121.5—121.6的九点／四面体／两步块及尺寸矛盾，SAME_READBACK 引理128.2的紧投影覆盖，EXCLUSION IX 引理120.7、定理120.8、引理120.11、定理120.12和 THREE_COPY VII 第122.2—122.4节的完整法向消费者，均按原来源复用。THREE_COPY VII 定理121.9供应 EB3 加全局 Inj 的九维下界，其残余切扇证明不在本章重证。
+
+本章的承重迁移由引理147.2—147.5及第147.6、147.12节给出：以单标签端面和原接触排除极限重复球，使有限闭层与四维紧块不再依赖全局 Inj；继而在裸 EB3 下取得整个原空间的九维下界，并在九维等号处取得每个单标签点的完整确认唯一性。命题147.6—147.7将既有法向计算及有限转移接到这一已付局部域。有限维凸极点生成、二次多项式唯一性、Baire、连续正半定平方根、Carathéodory 及区域不变性是成熟中间工具。分类和条件静态字典分别复用 XI 定理145.2、条件应用145.9，不作为本章另证的一般分类。
+
+**原供应文献。** 以下均为仓库 docs/develop/theory 中的原正文；所列条目与节保留其原前件。
+
+* [QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md](QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md)，定理103.2、104.2—104.3：整个原真面、共同零确认及在相应 Pair 前件后的三元框架。
+* [QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)，定义116.1、定理116.2、116.6、116.9、引理119.1、定理119.10、引理120.7、定理120.8、引理120.11、定理120.12：标签孤立二分、单标签邻点闭包、局部有限方向及原法向接口。
+* [QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md](QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md)，第121.1节、引理121.2—121.4、定理121.5—121.6：原全局 Inj 版本的有限见证、整球连续、四维块及法向层矛盾。
+* [QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)，第126.5节、定理126.7、引理128.2及证明、第127.10节：单标签域、单标签积聚、全点紧投影覆盖及独立物理合同。
+* [QUANTUM_ORIGIN_LOCAL_PURE_LIMIT_AND_COMMON_POSITIVE_LIFTS_CONTINUATION.md](QUANTUM_ORIGIN_LOCAL_PURE_LIMIT_AND_COMMON_POSITIVE_LIFTS_CONTINUATION.md)，引理132.3；[QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md](QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md)，引理131.2：既有单标签混极限反向塌缩。
+* [QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md](QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md)，定理121.9、第122.2—122.4节，特别是定理122.5：全局 Inj 分支的九维下界及完整四维法锥边界射线消费者。
+* [QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md)，定理127.4、推论127.5：仍保留的重复球两分支。
+* [QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md)，定理145.2、引理145.4—145.5、第145.5—145.6节、命题145.8、条件应用145.9及第145.9节：全原域根芽、同锥同单位分类、证明迁移、静态字典及独立物理合同；本章未将其全纯域前件局部化为既成结论。
+
+### 147.12 同一纯性桥的原载体维数下界与完整中文图景
+
+**推论 147.8（裸完整 EB3 已要求整个原实空间至少九维）。** 只保留第147.1节的有限维原域和 EB3，不输入九维等号，则
+
+$$
+\dim_{\mathbb R}V\ge9.
+\tag{XII147.22}
+$$
+
+证明。令 $m=\dim\operatorname{aff}K=\dim_{\mathbb R}V-1$。完整三球是原真面，所以 $m\ge4$。IX 定理116.6给 $p\in P_{\rm s}$。引理147.2、147.4和147.5均未使用九维，故有一个原纯紧四立方体，其每点 $r\in P_{\rm s}$ 都满足 $\dim L_r=a(r)+4\ge4$。式(XII147.13)的正法向与外法向同构也与维数无关。因此该块位于原 $m$ 维凸体的 $\Sigma_4(K)$。SAME_READBACK 引理128.2在 $k=4$ 给可数紧覆盖，各层有到 $m-4$ 维空间的单射投影。若 $m\le7$，同第147.6节的紧四立方体拉回及 Baire 论证给非空四维开集连续单射到至多三维的空间；线性嵌入四维后，区域不变性矛盾。故 $m\ge8$，即 $\dim_{\mathbb R}V\ge9$。证毕。
+
+这项下界仍量化整个原空间，且不需要将 $K$ 换成 $\operatorname{conv}P_{\rm s}$。它通过本章纯性桥将已有全局 Inj 分支的九维下界迁移到裸 EB3 原域；不是自动九维上界，更不消去式(XII147.20)。若原维数另有 $\dim_{\mathbb R}V\le9$，本推论先给等号，再由定理147.1取得所有单标签处的完整四维原法向。
+
+**完整中文图景。** 把整个原状态体想成同一块凸实体，每把测试尺都必须在整块实体上读零到一。仅要求每个纯点的完整排除域是一颗三球，就已经迫使整个原实空间至少九维，因而原归一状态体至少八维；这个下界不要求全局球标签唯一，也没有另选较小状态体。其出发点是至少存在一个单标签纯点，且它的完整排除球球缘上的所有纯点也都是单标签。
+
+为了看这些球怎样移动，先在一个实际球面的小圆盘上取标签，再给每颗移动球钉九个足以确定二次边界的点；每个钉子背后的下一颗球还保留一个有体积的四面体。取极限时钉子起初可以落成混态。关键是，同一极限尺一面确认这个钉子，一面在四面体上读零：若它的零球变成重复球，确认面只能落在配对球里，而配对球又碰到了原来的单标签球，立即违反重复球不得碰第三球的规则。于是钉子仍是原纯点，九个钉子才真正固定整颗极限球。小圆盘的两个方向和下一层球帽的两个方向随后拼成原纯点中的四维紧块。
+
+这个紧块上每点至少需要四维原法向。在原状态体维数至多七时，这些点能分成可单射投到至多三维的可数紧层；Baire 先把四维块的一块真正开片放进同一层，区域不变性再禁止它被单射压进三维。因此原状态体至少八维，原实空间至少九维。若整个原空间恰为九维，再假设某个单标签起点有两把不同的整球确认尺，冗余就会沿两条原边传满四维块，使每点至少需要五维法向；此时八维原状态体的相应法向层仍只能单射投到三维，同一个矛盾排除冗余。因此九维等号处，每个实际单标签点只剩一把整球确认尺，且有完整四维原法向、完整原边效应区间和全部归一法向基。
+
+最后一道边界仍然清楚：四维紧块尚不是所有原纯点中的开邻域，法向张成空间的层上连续也不等于整个法锥连续；别的重复球块仍未被排除。裸 EB3 加九维尚未推出全局 Inj，局部唯一整球确认也尚未给整个确认菜单的 least、每个混输入的 Born 最低值或正限制逆。只有另付清全局 Inj，才由既有分类和同一表示的完整字典得到整座复三能级状态体。实际来源、纠缠联合、事件仪器、全部合法未来、物理钟和能量标定仍各有独立入口，不能由这里的静态局部结论代付。
+
+## 追加锚（本行以下为增补区）
+
+## 148. 纯局部极小的全域障碍与同根同阈值闭端点
+
+### 148.1 原域、完整面与端点命题
+
+**定义 148.1（同一原根的读数与二步载体）。** 本章的148.*均属本卷 XII；
+[XI145—146][Q148XI]仍指前卷的九维分类与有限层正规性结论。
 保留定义145.1的非零有限维实空间 $V$、闭尖生成凸锥 $C$、
 在 $C\setminus\{0\}$ 上严格正的原单位 $u$，以及全部原对象
 
@@ -922,7 +1394,7 @@ K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad
 T_p(x)=\min_{f\in\mathcal F_p}f(x),\quad
 D_p=\{x\in K:T_p(x)=0\},\quad S_p=P\cap D_p.
 \end{gathered}
-\tag{XII147.1}
+\tag{XII148.1}
 $$
 
 所有标签遍历整个原 $P$，第二变量遍历整个原 $K$，包括全部混态。
@@ -933,15 +1405,15 @@ $$
 $$
 h=T_o,\qquad A=D_o,\qquad S=S_o,\qquad
 B=\bigcup_{s\in S}D_s,\qquad Q(o)=P\cap B.
-\tag{XII147.2}
+\tag{XII148.2}
 $$
 
-复用 [IX114.1][Q147IX]的完整菜单紧性与达到性：严格正性使 $K$ 紧，生成性使
+复用 [IX114.1][Q148IX]的完整菜单紧性与达到性：严格正性使 $K$ 紧，生成性使
 $K$ 张成 $V$ 且 $\operatorname{aff}K=\{u=1\}$；在从 $K$ 选出的线性基上评价，
 闭效应区间 $\mathcal E$ 有界而紧。$\mathcal F_p$ 闭且含 $u$，所以每个 minimum 达到。
 这也把 $K$ 上全部有界仿射效应与同一个原区间 $\mathcal E$ 对应起来，未缩小菜单。
 
-复用 [VII103.2][Q147Faces]、[IX114.2及116.1][Q147IX]的完整原面结果：
+复用 [VII103.2][Q148Faces]、[IX114.2及116.1][Q148IX]的完整原面结果：
 每个 $D_p$ 是紧暴露真面，全部非空真面只有原纯单点或完整 $D_p$。
 对任何这样的面 $F$，$\operatorname{ext}F=P\cap F$；完整三球的这个集合是其整个相对边界，
 同胚于 $S^2$。特别地，每个非空真暴露面的纯缘连通。
@@ -952,9 +1424,9 @@ $K$ 张成 $V$ 且 $\operatorname{aff}K=\{u=1\}$；在从 $K$ 选出的线性基
 不以 $P$ 已闭为前提，不调用 qutrit 表示。
 这三项供应——紧 $P$、每个真暴露面的连通纯缘、维数至少二——是下面局部极小论证的全部凸几何输入。
 
-### 147.2 有实际消费者的局部极小桥梁
+### 148.2 有实际消费者的局部极小桥梁
 
-**引理 147.2（紧极点集上的仿射局部极小）。** 设 $K_0$ 是非空有限维紧凸集，
+**引理 148.2（紧极点集上的仿射局部极小）。** 设 $K_0$ 是非空有限维紧凸集，
 $P_0=\operatorname{ext}K_0$ 紧，且每个非空真暴露面 $F$ 的
 $\operatorname{ext}F=P_0\cap F$ 连通。若 $\dim\operatorname{aff}K_0\ge2$，
 则任意仿射函数 $a:\operatorname{aff}K_0\to\mathbb R$ 在 $P_0$ 上的每个局部极小点，
@@ -976,7 +1448,7 @@ $Q^{d+1}$ 与紧概率单纯形之积的连续像，所以紧。
 
 $$
 b(p)>\max_Q b.
-\tag{XII147.3}
+\tag{XII148.3}
 $$
 
 在模去常量的仿射函数空间中，保持此严格间隙的 $b$ 构成非空开集。
@@ -989,30 +1461,30 @@ $$
 $$
 g_t=b-ta,\qquad F_t=\operatorname{argmax}_{K_0}g_t,\qquad
 M_t=P_0\cap F_t=\operatorname{argmax}_{P_0}g_t.
-\tag{XII147.4}
+\tag{XII148.4}
 $$
 
 非平行性使每个 $g_t$ 在 $\operatorname{aff}K_0$ 非恒定，故 $F_t$ 总是非空紧真暴露面。
 成熟的极点—面传递给 $\operatorname{ext}F_t=P_0\cap F_t$，紧面的极点存在性又给
-$M_t\ne\varnothing$ 以及 (XII147.4) 最后的等号。
+$M_t\ne\varnothing$ 以及 (XII148.4) 最后的等号。
 假设使 $M_t$ 连通；紧 $P_0$ 与闭 $F_t$ 使 $M_t$ 紧。
 
 若 $x\in Q$ 且 $a(x)\ge\alpha$，对每个 $t\ge0$ 都有
 
 $$
 g_t(x)\le b(x)-t\alpha<b(p)-t\alpha=g_t(p).
-\tag{XII147.5}
+\tag{XII148.5}
 $$
 
 因此全部 $M_t$ 均包含于两个互不相交的相对开集
 $U$ 与 $W=\{x\in P_0:a(x)<\alpha\}$ 的并。
 这给出不能越过 $U$ 边界的具体障碍，而非假定某条极大点轨道连续。
-由 (XII147.3)，$M_0\subseteq U$。
+由 (XII148.3)，$M_0\subseteq U$。
 再选 $T>0$，使
 
 $$
 T(\alpha-a(q))>\max_{P_0}b-b(q).
-\tag{XII147.6}
+\tag{XII148.6}
 $$
 
 若 $a(x)\ge\alpha$，则
@@ -1023,7 +1495,7 @@ $g_T(x)\le\max_{P_0}b-T\alpha<b(q)-Ta(q)=g_T(q)$，
 
 $$
 G=\{(t,x)\in[0,T]\times P_0:x\in M_t\}.
-\tag{XII147.7}
+\tag{XII148.7}
 $$
 
 它由对所有 $y\in P_0$ 的闭不等式 $g_t(x)\ge g_t(y)$ 定义，故在紧积中闭而紧。
@@ -1039,7 +1511,7 @@ $$
 所以 $p$ 在 $P_0$ 上全局极小；前述紧最小面的极点传递再将结论送到整个 $K_0$。
 证明未假设 $P_0$ 连通、路径连通、极大点对应下半连续或存在连续选择。证毕。
 
-**命题 147.3（一维非恒定情形不能补入引理）。** 取
+**命题 148.3（一维非恒定情形不能补入引理）。** 取
 $K_0=[0,1]$、$P_0=\{0,1\}$、$a(x)=x$。
 所有非空真暴露面的纯缘都连通，且 $P_0$ 紧，但 $p=1$ 是非全局局部极小点。
 
@@ -1050,16 +1522,16 @@ $a(0)<a(1)$ 排除全局极小性。
 这正是引理中非平行扰动所排除的退化。零维或常量情形没有这个障碍；
 原 EB3 应用已有 $\dim\operatorname{aff}K\ge4$，不落入本反例。证毕。
 
-### 147.3 原 minimum 的局部极小转移与真正低端点
+### 148.3 原 minimum 的局部极小转移与真正低端点
 
-**定理 147.4（原比较的内部无纯局部极小与端点逼近）。** 在定义147.1的完整 EB3、纯 PR 域，
+**定理 148.4（原比较的内部无纯局部极小与端点逼近）。** 在定义148.1的完整 EB3、纯 PR 域，
 对每个事先固定的原 $o$，$h=T_o$ 在 $P$ 上没有读数处于 $(0,1)$ 的局部极小点。
 对任意 $0<\varepsilon<1$，每个满足 $h(p)=\varepsilon$ 的原纯点都有实际原纯点列
 
 $$
 p_n\longrightarrow p,\qquad 0<h(p_n)<\varepsilon,\qquad
 h(p_n)\longrightarrow\varepsilon.
-\tag{XII147.8}
+\tag{XII148.8}
 $$
 
 因此，在原纯集的相对拓扑中，
@@ -1071,16 +1543,16 @@ $$
 \overline{\{p\in P:h(p)<\varepsilon\}}^{\,P}
 =\{p\in P:h(p)\le\varepsilon\}.
 \end{gathered}
-\tag{XII147.9}
+\tag{XII148.9}
 $$
 
-证明。定义147.1逐项供应引理147.2的紧纯集、全部真暴露面连通纯缘及维数前件。
+证明。定义148.1逐项供应引理148.2的紧纯集、全部真暴露面连通纯缘及维数前件。
 选辅助范数，紧 $\mathcal E$ 给 $L=\max_{f\in\mathcal E}\|f\|_\ast<\infty$。
 每张原效应满足 $|f(x)-f(y)|\le L\|x-y\|$；分别取整个 $\mathcal F_o$ 的 minimum 得
 
 $$
 |h(x)-h(y)|\le L\|x-y\|\qquad(x,y\in K).
-\tag{XII147.10}
+\tag{XII148.10}
 $$
 
 这是固定根、第二变量的连续性，不涉及移动确认族的选择。
@@ -1091,16 +1563,16 @@ $$
 
 $$
 f(x)\ge h(x)\ge\mu=f(p).
-\tag{XII147.11}
+\tag{XII148.11}
 $$
 
 因此这张真实原仿射效应 $f$ 在 $P$ 上也于 $p$ 局部极小。
-$f(o)=1>\mu$ 使其非恒定；引理147.2给 $f\ge\mu$ 于整个 $K$。
+$f(o)=1>\mu$ 使其非恒定；引理148.2给 $f\ge\mu$ 于整个 $K$。
 现在才定义真实原线性泛函
 
 $$
 f'=\frac{f-\mu u}{1-\mu}.
-\tag{XII147.12}
+\tag{XII148.12}
 $$
 
 分母正。在整个 $K$ 上，$0\le f'\le1$，且 $f'(o)=1$、$f'(p)=0$。
@@ -1108,7 +1580,7 @@ $$
 
 $$
 0\le f'(c)=u(c)f'(k)\le u(c).
-\tag{XII147.13}
+\tag{XII148.13}
 $$
 
 在 $c=0$ 也成立，所以 $f'\in[0,u]_{C^\ast}=\mathcal E$，进而 $f'\in\mathcal F_o$。
@@ -1117,29 +1589,29 @@ $$
 
 若 $h(p)=\varepsilon\in(0,1)$，不存在局部极小意味着每个纯邻域都含 $h<\varepsilon$ 的点。
 将该邻域同时限制在 $\{h>\varepsilon/2\}$ 及半径 $1/n$ 的环境球内，选原纯 $p_n$，
-就得到 (XII147.8)；连续性给读数收敛。
-严格带内的点本身已在其闭包中，故有 (XII147.9) 第一项。
+就得到 (XII148.8)；连续性给读数收敛。
+严格带内的点本身已在其闭包中，故有 (XII148.9) 第一项。
 第二项的 $h=0$ 点本就在 $\{h<\varepsilon\}$ 中，$h=\varepsilon$ 点由刚构造的列逼近；
 反包含由连续性和 $\{h\le\varepsilon\}$ 的相对闭性成立。
 这并不由逼近本身供应零层 $S$ 在任意指定载体中的成员资格。证毕。
 
-### 147.4 消费原真实标签返回的闭高端点
+### 148.4 消费原真实标签返回的闭高端点
 
-**定理 147.5（同根、同阈值的两个闭带）。** 在定义147.1的完整原域中，另假设
+**定理 148.5（同根、同阈值的两个闭带）。** 在定义148.1的完整原域中，另假设
 对这个事先固定的同一个 $o$ 成立的原条件 $L_\varepsilon(o)$，$0<\varepsilon<1$：
 
 $$
 \forall z\in P:\quad 0<h(z)<\varepsilon
 \ \Longrightarrow\ \exists s\in P:\ T_o(s)=T_z(s)=0.
-\tag{XII147.14}
+\tag{XII148.14}
 $$
 
-则对定义147.1的同一个 $B$ 有
+则对定义148.1的同一个 $B$ 有
 
 $$
 \{p\in P:h(p)\le\varepsilon\}
 \ \cup\ \{p\in P:h(p)\ge1-\varepsilon\}\ \subseteq B.
-\tag{XII147.15}
+\tag{XII148.15}
 $$
 
 证明。先消费推论145.4的准确接口：相同的完整 EB3、纯 PR 与 $L_\varepsilon(o)$
@@ -1153,15 +1625,15 @@ $$
 $$
 \Gamma=\{(s,x,f)\in S\times K\times\mathcal E:
 f(s)=1,\ f(x)=0\},\qquad B=\operatorname{pr}_K\Gamma.
-\tag{XII147.16}
+\tag{XII148.16}
 $$
 
 完整原 $S\cong S^2$、$K$、$\mathcal E$ 均紧，评价连续，故 $\Gamma$ 紧。
 原 minimum 达到使该投影准确等于 $B$，包括每个 $D_s$ 的全部混态；所以 $B$ 在 $K$ 中闭。
 这不需要整族球的连续性或移动标签选择。
 
-由 (XII147.14) 和零对称，$0<h<\varepsilon$ 的全部纯点在 $B$。
-定理147.4的真实原纯逼近列与 $B$ 闭性补上 $h=\varepsilon$。
+由 (XII148.14) 和零对称，$0<h<\varepsilon$ 的全部纯点在 $B$。
+定理148.4的真实原纯逼近列与 $B$ 闭性补上 $h=\varepsilon$。
 零层准确为 $\{p\in P:h(p)=0\}=S$，其成员资格已由推论145.4另付。
 于是整个闭低带 $\{h\le\varepsilon\}\cap P$ 均在 $B$。
 
@@ -1174,7 +1646,7 @@ $q\in P\setminus(A\cup\{o\})$。
 $$
 h(q)+h(x)=T_q(o)+T_x(o)
 \le f(o)+(u-f)(o)=1.
-\tag{XII147.17}
+\tag{XII148.17}
 $$
 
 这正是 (XII145.27) 的原互补不等式。故每个实际 $x\in S_q$ 都满足
@@ -1184,13 +1656,13 @@ $0\le h(x)\le1-h(q)\le\varepsilon$，已由闭低带进入 $B$。
 原严格高带已含 $h=1$；同一不等式也处理这一情形，无需另证 $h=1$ 的纯点刻画。
 根与阈值从始至终未变。证毕。
 
-**推论 147.6（临界阈值与尚余的开中带）。** 在定理147.5的相同前件下，
+**推论 148.6（临界阈值与尚余的开中带）。** 在定理148.5的相同前件下，
 若 $\varepsilon=1/2$，则 $P\subseteq B$，从而同一根满足 X133.1 的 $\mathsf D_2(o)$。
-若 $0<\varepsilon<1/2$，(XII147.15) 唯一尚未支付的读数范围是
+若 $0<\varepsilon<1/2$，(XII148.15) 唯一尚未支付的读数范围是
 
 $$
 \varepsilon<h(p)<1-\varepsilon.
-\tag{XII147.18}
+\tag{XII148.18}
 $$
 
 若 $\varepsilon>1/2$，全覆盖已经由 (XII145.25) 的两条严格带及其另付零层取得，
@@ -1199,40 +1671,40 @@ $$
 证明。临界值时两个闭区间覆盖 $[0,1]$，而 $0\le h\le1$，故 $P\subseteq B$。
 每个 $q\in P\cap B$ 都有实际同一个 $s\in S$ 满足 $q\in D_s$；
 零对称给 $o\perp s\perp q$，包括 $q=o$，所以原 $\mathsf D_2(o)$ 的共同邻点支成立。
-若需要静态表示，此时才可直接消费 [X133.6][Q147X]：其原前件为完整 EB3 加一个固定根的
+若需要静态表示，此时才可直接消费 [X133.6][Q148X]：其原前件为完整 EB3 加一个固定根的
 $\mathsf D_2(o)$，结论为同原锥、同原单位的实线性双射
 
 $$
 \Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,
 \qquad \Phi(\operatorname{PSD}_3)=C,\qquad u\circ\Phi=\operatorname{Tr}.
-\tag{XII147.19}
+\tag{XII148.19}
 $$
 
 X133.6的链先由该固定覆盖根取得全部原三角，再调用 IX120.4—120.5及116.17—116.18的既有分类。
-这里未把表示预用于引理147.2、定理147.4或147.5；(XII147.19) 是该旧结果的条件应用，
+这里未把表示预用于引理148.2、定理148.4或148.5；(XII148.19) 是该旧结果的条件应用，
 其前件仍包含同根 $L_{1/2}(o)$，不是 EB3 加纯 PR 的自动分类。
 
-小于临界值时，两个闭带的补集正是 (XII147.18)。这只说明所述包含关系的剩余范围，
+小于临界值时，两个闭带的补集正是 (XII148.18)。这只说明所述包含关系的剩余范围，
 不声称中带必有点或必不在 $B$。
 大于临界值时，$h=0$ 由 $S$ 处理；$h>0$ 且不在严格低带意味着
 $h\ge\varepsilon>1-\varepsilon$，已在原严格高带，故覆盖早由145.4成立。证毕。
 
-### 147.5 数学来源与剩余条件
+### 148.5 数学来源与剩余条件
 
-**约定 147.7（归属、复用和未付命题）。** 本章的承重连接是引理147.2到
-(XII147.11)—(XII147.13) 的全原菜单归一化，再到真实低端点和整个 $S_q$ 的闭带供应。
-引理被定理147.4消费，后者被定理147.5的低端点消费；
+**约定 148.7（归属、复用和未付命题）。** 本章的承重连接是引理148.2到
+(XII148.11)—(XII148.13) 的全原菜单归一化，再到真实低端点和整个 $S_q$ 的闭带供应。
+引理被定理148.4消费，后者被定理148.5的低端点消费；
 低端点再支付145.4实际返回接口所需的整个原 $S_q\subseteq B$。
 这是 `repo-derived` 的纸面推导归属，不主张外部精确先例已穷尽或全球原创。
 
 有限维 Carathéodory、严格分离、紧凸面的极点存在与极点—面传递、
 紧映射的连通纤维论证均为成熟中间工具。
-[Feinberg、Kasyanov、Voorneveld，§1、Definition 1.1前的 Berge 最大值定理][Q147B]
+[Feinberg、Kasyanov、Voorneveld，§1、Definition 1.1前的 Berge 最大值定理][Q148B]
 给连续目标、连续非空紧值可行对应的连续最优值和上半连续紧值最优对应；
 本章可行集固定为 $P_0$，目标取 $ta-b$，其紧图性质也已由闭不等式直接证明。
 该文献结论本身不支付连通极大点纤维、连续选择或本章的仿射局部极小结论。
 原始 Berge 书第116页的独立文本与本引理的外部精确先例在此不作已核断言。
-[Landsman，§1.3、式(1.4)—(1.9)][Q147L]提供完整仿射效应的原比较背景，
+[Landsman，§1.3、式(1.4)—(1.9)][Q148L]提供完整仿射效应的原比较背景，
 其参数对应为 $p_{\rm Landsman}(x,o)=T_o(x)$；补效应给零对称，纯数值 PR 是另列条件。
 该来源不把 minimum 当作全域仿射函数，不供应返回标签或本章端点桥梁。
 
@@ -1246,16 +1718,16 @@ $\forall m\,\exists\varepsilon_m,\delta_m>0$。
 剩余的最小临界候选是：仅由完整 EB3 与完整纯 PR，能否取得一个事先固定的原根
 $o$ 满足 $L_{1/2}(o)$。本章仍将它作为未付命题；
 闭端点并不给 $L_\varepsilon(o)$ 自动性，也不给阈值任何正宽度扩张。
-在 $0<\varepsilon<1/2$ 下补付 (XII147.18) 还需额外论证。
+在 $0<\varepsilon<1/2$ 下补付 (XII148.18) 还需额外论证。
 全过程不预用 Conn、Inj、整个空间九维、MC、全 Pair、least 或静态分类；
-只在推论147.6已付覆盖之后复用旧分类。
+只在推论148.6已付覆盖之后复用旧分类。
 结论属于原有限维态—效应几何，不支付实际来源、仪器、有限复合或物理时间的实现条件。
 
-[Q147IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.1—114.2：同原紧基、完整菜单、达到性及原面；114.3—114.4：纯PR下的端点暴露与纯紧性；116.1及式(IX116.2)：完整相对纯球缘；120.4—120.5、116.17—116.18：既有条件分类。"
-[Q147Faces]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2：共同零确认、全部非空真面穷尽及其不依赖Pair的证明；全对结论另列Pair前件。"
-[Q147X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X133.1：同一固定根的D2；133.6：完整EB3加一个覆盖根的全部三角与同原静态分类。"
-[Q147XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md "XI145.2：EB3+Conn或Inj+整个原V九维；XI146.2—146.4：EB3+Conn+ZC的有限层推进；146.6：零边不变与全域统一界的剩余条件。"
-[Q147B]: https://arxiv.org/html/1309.7708v1 "E. A. Feinberg, P. O. Kasyanov, M. Voorneveld, Berge's Maximum Theorem for Noncompact Image Sets，§1中Definition 1.1前的经典紧值最大值定理。"
-[Q147L]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability，§1.3、式(1.4)—(1.9)：全仿射效应比较、零对称及另列的纯数值互惠。"
+[Q148IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.1—114.2：同原紧基、完整菜单、达到性及原面；114.3—114.4：纯PR下的端点暴露与纯紧性；116.1及式(IX116.2)：完整相对纯球缘；120.4—120.5、116.17—116.18：既有条件分类。"
+[Q148Faces]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2：共同零确认、全部非空真面穷尽及其不依赖Pair的证明；全对结论另列Pair前件。"
+[Q148X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X133.1：同一固定根的D2；133.6：完整EB3加一个覆盖根的全部三角与同原静态分类。"
+[Q148XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md "XI145.2：EB3+Conn或Inj+整个原V九维；XI146.2—146.4：EB3+Conn+ZC的有限层推进；146.6：零边不变与全域统一界的剩余条件。"
+[Q148B]: https://arxiv.org/html/1309.7708v1 "E. A. Feinberg, P. O. Kasyanov, M. Voorneveld, Berge's Maximum Theorem for Noncompact Image Sets，§1中Definition 1.1前的经典紧值最大值定理。"
+[Q148L]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability，§1.3、式(1.4)—(1.9)：全仿射效应比较、零对称及另列的纯数值互惠。"
 
 ## 追加锚
