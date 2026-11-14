@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/Coloring/IndependentPartitionExpansion
    mirror-E: none
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Proper colourings as unlabelled independent partitions with injective block names. -/
 
 /-
