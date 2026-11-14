@@ -30,7 +30,10 @@ internal sealed class BishopMaximalPlacementGrowthDocument : IScribeDocumentDefi
     private static DocumentBlock Node(string id, string title, string name, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             Presentation(name), name is "bishopGraph" or "count" or "claim" ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("oeis-a146304-maximal-bishop-growth-refutation"),
+                ResolutionKind.Refuted) : null);
 
     private static StatementSource Presentation(string name)
     {
