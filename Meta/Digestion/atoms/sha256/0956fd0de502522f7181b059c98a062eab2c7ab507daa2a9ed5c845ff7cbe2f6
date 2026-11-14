@@ -1,0 +1,13 @@
+**推论 135.3（完整球心族不损失仿射维数）。** 在同一原域，
+
+$$
+\operatorname{aff}\{c_p:p\in P\}=\operatorname{aff}K,
+\qquad
+\operatorname{span}_{\mathbb R}\{c_p:p\in P\}=V.
+\tag{XI135.5}
+$$
+
+证明。若球心仿射包是真子空间，存在在 $\operatorname{aff}K$ 上非恒定、却在全部 $c_p$ 上恒定的实仿射泛函 $h$。令 $a=\min_Kh<b=\max_Kh$，将 $(h-a)/(b-a)$ 唯一齐次延拓为 $V$ 上的线性泛函 $f$。其在整个 $K$ 上取值于 $[0,1]$；由 $C=\mathbb R_+K$，延拓属于原 $\mathcal E$，包括零元上的界。
+
+紧凸的最小面、最大面各有原纯点 $q,p$，满足 $f(q)=0,f(p)=1$。定理135.2遂给 $f(c_p)<f(c_q)$，违反球心恒值。故仿射包等于整个 $\operatorname{aff}K$。$K$ 张成 $V$，且所有球心均满足 $u(c_p)=1$，便得线性张成结论。证毕。
+

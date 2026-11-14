@@ -409,3 +409,127 @@ $$
 本仓推导的是引理 3.1、3.2，定理 3.3、3.4、3.6 与命题 3.5。在所查范围（该文第 8 节、Molnar arXiv:2610.12816v1、arXiv 检索）内未见对这三问的解答，本节不主张文献优先权。
 
 ## 追加锚（本行以下为增补区）
+
+## 4. 层边界不等式对 ℓ 的一致性
+
+Fan–Kobayashi–Molnar 注记 5.5 指出：Robin 对其定理 5.1 的证明依赖不等式
+
+$$
+x_\ell>x^{1/\ell}\qquad(\ell\ge2),
+\tag{4.1}
+$$
+
+其中 $x_\ell=x_\ell^{[\kappa]}(\epsilon)$ 由 $F^{[\kappa]}(x_\ell,\ell)=\epsilon$ 定义，$x=x_1$。该文由其引理 4.12 得到：对固定的 $\kappa>1$ 与固定的 $\ell\ge2$，(4.1) 对充分大的 $x$ 成立。作者写道 “we have been unable to establish this inequality uniformly in ℓ”。其附录在 $\kappa=2$ 时证明了：对一切 $x\ge2$ 与一切 $\ell$，有非严格不等式 $x_\ell\ge x^{1/\ell}$，且在 $x=2$ 处等号成立；由此 $x>2$ 时 (4.1) 严格成立。本节证明：对每个 $\kappa>1$，存在只依赖 $\kappa$ 的阈值，使 (4.1) 在阈值之上对一切 $\ell\ge2$ 同时成立。
+
+沿用引理 1.1 的记号 $C(s)=(1+s)^\kappa-s^\kappa$、$B=\log C$，并令 $\varphi(s)=sB'(s)$（$s>0$）。
+
+**引理 4.1（层比的增量表示）。** 设 $\kappa>1$，$y>1$，$t=1/y$，整数 $\ell\ge1$，$\sigma_m=t+t^2+\cdots+t^m$（$\sigma_0=0$），则
+
+$$
+\kappa\log y\cdot F^{[\kappa]}(y,\ell)=B(\sigma_\ell)-B(\sigma_{\ell-1}),\qquad \kappa\ell\log y\cdot F^{[\kappa]}(y^\ell,1)=B(t^\ell).
+$$
+
+**证明。** 把定义 4.2 中分子、分母的各项除以 $y^{(\ell+1)\kappa}$，得到分子 $=(1-t^{\ell+1})^\kappa-(t-t^{\ell+1})^\kappa$，分母 $=(1-t^\ell)^\kappa-(t-t^\ell)^\kappa$。两组底数之差都是 $1-t$，又 $(t-t^{m+1})/(1-t)=\sigma_m$，所以分子 $=(1-t)^\kappa C(\sigma_\ell)$，分母 $=(1-t)^\kappa C(\sigma_{\ell-1})$，第一式得证。第二式：$\bigl((y^\ell+1)^\kappa-1\bigr)/y^{\ell\kappa}=(1+t^\ell)^\kappa-t^{\ell\kappa}=C(t^\ell)$。证毕。
+
+**引理 4.2（$B$ 与 $\varphi$ 的性质）。** 设 $\kappa>1$。
+- $B(0)=0$。
+- $B'(0^+)=\kappa$。
+- $B'$ 在 $(0,\infty)$ 上严格递减。
+- $0<B(h)<\kappa h$（$h>0$）。
+- $\varphi$ 在 $(0,\infty)$ 上严格递增。
+- 记 $r=s/(1+s)$，则 $\varphi(s)\ge\kappa(r-r^\kappa)$。
+
+**证明。** 前三条由引理 1.1 及 $C'(0)=\kappa$ 得到。第四条：$B(h)>0$ 因为 $C(h)>1$；$B(h)<\kappa h$ 来自严格凹函数位于其在 0 处切线之下。第五条：$\varphi(s)=\kappa\bigl(1-\frac{1-r}{1-r^\kappa}\bigr)$，而 $\frac{1-r^\kappa}{1-r}$ 是凸函数 $r\mapsto r^\kappa$ 在 $[r,1]$ 上的割线斜率，关于 $r$ 严格递增；$r$ 又关于 $s$ 严格递增。这正是定理 1.2 的 Lean 形式化中弹性单调性所证的内容。第六条：$\varphi(s)=\kappa\frac{r-r^\kappa}{1-r^\kappa}\ge\kappa(r-r^\kappa)$。证毕。
+
+**定理 4.3（(4.1) 对 ℓ 一致）。** 设 $\kappa>1$，令
+
+$$
+u_0(\kappa)=\max\Bigl(6,\ \bigl(2^{\kappa+1.01}\bigr)^{1/(\kappa-1)}\Bigr),\qquad X(\kappa)=e^{u_0(\kappa)} .
+$$
+
+则对一切实数 $x\ge X(\kappa)$ 与一切整数 $\ell\ge2$，有 $F^{[\kappa]}(x^{1/\ell},\ell)>F^{[\kappa]}(x,1)$。因此在该文定理 4.3 的单调性下，若 $x=x_1^{[\kappa]}(\epsilon)\ge X(\kappa)$，则对一切 $\ell\ge2$ 有 $x_\ell^{[\kappa]}(\epsilon)>x^{1/\ell}$。
+
+**证明。** 记 $u=\log x$、$y=x^{1/\ell}$、$t=1/y$、$h=t^\ell=e^{-u}$。由引理 4.1，所需不等式等价于
+
+$$
+\ell\bigl(B(\sigma_\ell)-B(\sigma_{\ell-1})\bigr)>B(h).
+$$
+
+(1) **凹性。** $\sigma_\ell-\sigma_{\ell-1}=h$，且 $B'$ 递减，故左端 $\ge\ell hB'(\sigma_\ell)$。
+
+(2) **$\sigma_\ell$ 的上界。** $\sigma_\ell=\frac{t(1-t^\ell)}{1-t}=\frac{1-h}{y-1}$，而 $y-1=e^{u/\ell}-1\ge u/\ell$，故 $\sigma_\ell\le w:=\ell(1-h)/u$。
+
+(3) **化为弹性。** 由 $B'$ 递减，$\ell B'(\sigma_\ell)\ge\ell B'(w)=\ell\varphi(w)/w=\frac{u}{1-h}\varphi(w)$。
+
+(4) **消去 $\ell$。** $\ell\ge2$ 给出 $w\ge s_0:=2(1-h)/u$，由 $\varphi$ 递增，
+
+$$
+\ell\bigl(B(\sigma_\ell)-B(\sigma_{\ell-1})\bigr)\ \ge\ h\cdot\frac{u}{1-h}\,\varphi(s_0).
+$$
+
+右端与 $\ell$ 无关。
+
+(5) **右端。** 由引理 4.2，$B(h)<\kappa h$。所以只需证 $\frac{u}{1-h}\varphi(s_0)\ge\kappa$。
+
+(6) **验证 (5) 中的不等式。** 由引理 4.2，$\varphi(s_0)\ge\kappa(r_0-r_0^\kappa)$，其中 $r_0=s_0/(1+s_0)=\frac{2(1-h)}{u+2(1-h)}$。于是
+
+$$
+\frac{u}{1-h}\cdot\frac{\varphi(s_0)}{\kappa}\ \ge\ \frac{2u}{u+2(1-h)}-\frac{u\,r_0^\kappa}{1-h}\ \ge\ \frac{2u}{u+2}-\frac{2^\kappa u^{1-\kappa}}{1-e^{-u}} .
+$$
+
+这里用了 $r_0\le 2/u$。当 $u\ge6$ 时，$\frac{2u}{u+2}\ge\frac32$，$\frac{1}{1-e^{-u}}<1.003$。又 $u\ge(2^{\kappa+1.01})^{1/(\kappa-1)}$ 给出 $u^{\kappa-1}\ge2^{\kappa+1.01}$，从而 $2^\kappa u^{1-\kappa}\le2^{-1.01}<0.4967$，第二项 $<0.4982$。于是右端 $>\tfrac32-0.4982>1$，即 $\frac{u}{1-h}\varphi(s_0)>\kappa$。
+
+由 (1)–(6) 即得结论。关于 $x_\ell$ 的推论：$F^{[\kappa]}(\cdot,\ell)$ 严格递减，且 $F^{[\kappa]}(x_\ell,\ell)=\epsilon=F^{[\kappa]}(x,1)<F^{[\kappa]}(x^{1/\ell},\ell)$。证毕。
+
+**注记 4.4（阈值的形状）。**
+- **κ=2 的端点。** 该文附录证明了 $\kappa=2$ 时 $x\ge2$ 的非严格不等式与 $x>2$ 的严格不等式。在 $x=2$ 处，对每个整数 $\ell\ge2$ 有 $F^{[2]}(2^{1/\ell},\ell)=F^{[2]}(2,1)=\tfrac12$，即 $x_\ell=2^{1/\ell}$。定理 4.3 给出的 $X(2)=e^{8.06\ldots}$ 远比它粗。
+- **对 $1<\kappa<2$，严格不等式在 $x=2$ 处对某些 $\ell$ 不成立。** 取 $u=\log2$、$h=1/2$，由下一条的 $\ell\to\infty$ 极限，只需证 $L(\kappa,\log2)=(\kappa-1)\log2<B_\kappa(1/2)$。令 $g(\kappa)=B_\kappa(1/2)=\log(3^\kappa-1)-\kappa\log2$，则 $g''(\kappa)=-\dfrac{(\log3)^2\,3^\kappa}{(3^\kappa-1)^2}<0$，且 $g(1)=0$、$g(2)=\log2$。由严格凹性，$1<\kappa<2$ 时 $g(\kappa)>(\kappa-1)\log2$。所以对每个 $1<\kappa<2$，存在 $\ell$ 使 $F^{[\kappa]}(2^{1/\ell},\ell)<F^{[\kappa]}(2,1)$，也就是阈值不能取 $2$。一个具体的有限 $\ell$ 例子是 $\kappa=3/2$、$\ell=2$：两侧比值分别为 $(3\sqrt3-1)/(2\sqrt2)\approx1.4836$ 与 $\bigl((2\sqrt2-1)^{3/2}-1\bigr)/\bigl(2^{3/4}-(2-\sqrt2)^{3/2}\bigr)\approx1.1937$，而 $1.4836>1.1937^2$。
+- **κ→1⁺ 时阈值必须发散。** 固定 $u>0$，令 $h=e^{-u}$。对固定的 $\kappa>1$ 令 $\ell\to\infty$：$y=e^{u/\ell}\to1$，$\sigma_{\ell-1}\to\infty$，且 $\ell/\sigma_{\ell-1}\to u/(1-h)$。又 $\sigma B'(\sigma)\to\kappa-1$（$\sigma\to\infty$），因此
+  $$\ell\bigl(B(\sigma_\ell)-B(\sigma_{\ell-1})\bigr)\to L(\kappa,u):=(\kappa-1)\frac{uh}{1-h}.$$
+  $L$ 与 $B_\kappa(h)=\log\bigl((1+h)^\kappa-h^\kappa\bigr)$ 都关于 $\kappa$ 光滑，且在 $\kappa=1$ 处为 $0$。在 $\kappa=1$ 处二者对 $\kappa$ 的导数分别为 $\frac{uh}{1-h}$ 与 $(1+h)\log(1+h)+uh$。因为 $(1+h)\log(1+h)\ge h$ 且 $\frac{u}{e^u-1}<1$，有
+  $$\frac{uh}{1-h}-uh-(1+h)\log(1+h)\le h\Bigl(\frac{uh}{1-h}-1\Bigr)=h\Bigl(\frac{u}{e^u-1}-1\Bigr)<0 .$$
+  所以对每个 $u>0$，存在 $\kappa_u>1$，使 $1<\kappa<\kappa_u$ 时 $L(\kappa,u)<B_\kappa(h)$；于是对充分大的 $\ell$，(4.1) 在 $x=e^u$ 处不成立。由此可知任何对 $\ell$ 一致的阈值 $X(\kappa)$ 都满足 $X(\kappa)\to\infty$（$\kappa\to1^+$）。
+- **$u_0$ 的阶。** $\kappa\to1^+$ 时 $u_0(\kappa)=2^{(\kappa+1.01)/(\kappa-1)}=2\cdot2^{2.01/(\kappa-1)}$。它来自 (6) 中对 $\varphi$ 的粗略下界，没有追求最优。
+
+**范围。** 外部输入为 Fan–Kobayashi–Molnar 定义 4.2、定理 4.3（单调性）、引理 4.12 及附录。本仓推导的是：引理 4.1 的增量表示，定理 4.3（对 $\ell$ 一致的显式阈值），以及注记 4.4 中阈值不能取 $2$（$1<\kappa<2$）与 $\kappa\to1^+$ 时阈值发散的论证。在所查范围（该文、Molnar arXiv:2610.12816v1、arXiv 检索）内未见此结论，本节不主张文献优先权。
+
+## 追加锚（本行以下为增补区）
+
+## 5. 推论 6.5 的参数门槛不能降到 3/2
+
+Fan–Kobayashi–Molnar 推论 6.5 表明：若 RH 成立，则对一切 $\kappa\ge2$，(1.1) 对一切 $n>2162160$ 成立。其第 8 节问：“can we reduce the threshold for κ in Corollary 6.5 to 3/2?”。本节说明：若要求 $n$ 的阈值是一个对参数一致的有限数 $N$，则参数门槛不能降到 $3/2$；在 RH 下，依赖参数的最终成立阈值在 $\kappa\to3/2^+$ 时必须发散。
+
+**定理 5.1。** 对每个正整数 $N$，存在 $\delta=\delta(N)>0$，使得对一切 $\kappa\in[3/2,3/2+\delta)$，都有某个 $n>N$ 使 (1.1) 不成立。特别地：不存在有限的 $N$ 使“(1.1) 对一切 $\kappa>3/2$ 与一切 $n>N$ 成立”；对每个固定的 $N$（例如推论 6.5 中的 $N=2162160$），满足“(1.1) 对一切 $\kappa\ge\kappa_0$ 与一切 $n>N$ 成立”的 $\kappa_0$ 都满足 $\kappa_0\ge3/2+\delta(N)$。这里的 $\delta(N)$ 依赖于预先固定的 $N$；本定理不排除对每个 $\kappa_0>3/2$ 取依赖于 $\kappa_0$ 的阈值。本结论不依赖 RH。
+
+**证明。** 由定理 2.3，存在整数 $n_0>\max(N,2)$ 使
+
+$$
+\zeta(3/2)\,\sigma^{[3/2]}(n_0)>\bigl(e^\gamma n_0\log\log n_0\bigr)^{3/2}.
+$$
+
+固定 $n_0$。$\sigma^{[\kappa]}(n_0)=\sum_{d\mid n_0}\mu(n_0/d)\sigma(d)^\kappa$ 是有限和，关于 $\kappa$ 连续；$\zeta(\kappa)$ 在 $(1,\infty)$ 上连续；$(e^\gamma n_0\log\log n_0)^\kappa$ 关于 $\kappa$ 连续。严格不等式在 $\kappa=3/2$ 处成立，故它在 $3/2$ 的某个邻域内仍成立。取 $\delta$ 使该邻域包含 $[3/2,3/2+\delta)$ 即得结论。证毕。
+
+**定理 5.2（最终成立阈值的发散）。** 设 RH 成立，对实数 $\kappa>3/2$ 令
+
+$$
+N(\kappa)=\min\{N\in\mathbb Z_{\ge2}:\ (1.1)\ \text{对一切整数}\ n>N\ \text{成立}\}
+$$
+
+（由该文定理 6.1，$N(\kappa)<\infty$）。则 $N(\kappa)\to\infty$（$\kappa\to3/2^+$）。
+
+**证明。** 反设存在正整数 $M$ 及实数 $\kappa_k\downarrow3/2$（$\kappa_k>3/2$）使 $N(\kappa_k)\le M$。由定理 5.1（取 $N=M$），存在 $\delta>0$，使对每个 $\kappa\in[3/2,3/2+\delta)$ 都有某个 $n>M$ 违反 (1.1)。取 $k$ 足够大使 $\kappa_k\in(3/2,3/2+\delta)$，则存在 $n>M\ge N(\kappa_k)$ 违反 (1.1)，与 $N(\kappa_k)$ 的定义矛盾。证毕。
+
+**注记 5.3。** 定理 5.1 回答了第 8 节关于推论 6.5 的提问中“端点”与“对参数一致的有限阈值”这两种理解：门槛 $3/2$ 不可达；对任何固定的 $n$ 阈值 $N$，适用的参数区间都与 $3/2$ 有正距离 $\delta(N)$。若允许 $n$ 的阈值随 $\kappa$ 变化，则 RH 下由该文定理 6.1，对每个 $\kappa>3/2$ 都有有限阈值 $N(\kappa)$，定理 5.2 说明它随 $\kappa\to3/2^+$ 发散。在推论 6.5 的形式 $n>2162160$ 下，令
+
+$$
+K=\{\kappa_0>1:\ (1.1)\ \text{对一切}\ \kappa\ge\kappa_0\ \text{与一切}\ n>2162160\ \text{成立}\},\qquad \kappa^\ast=\inf K .
+$$
+
+- RH 下，推论 6.5 给出 $2\in K$，故 $K$ 非空且 $\kappa^\ast\le2$。
+- 无条件地，定理 5.1（取 $N=2162160$）给出 $K\subset[3/2+\delta(2162160),\infty)$，故在 $K$ 非空时 $\kappa^\ast\ge3/2+\delta(2162160)>3/2$。
+
+本节未确定 $\kappa^\ast$ 的确切值。
+
+**范围。** 外部输入为 Fan–Kobayashi–Molnar 推论 6.5、定理 6.1 与第 8 节问题。本仓推导的是定理 5.1 与 5.2；它们由本卷定理 2.3 与 $\kappa$ 方向的连续性得到。在所查范围（该文、Molnar arXiv:2610.12816v1、arXiv 检索）内未见此结论。本节不主张文献优先权。
+
+## 追加锚（本行以下为增补区）

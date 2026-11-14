@@ -95,7 +95,7 @@ private theorem flat_tmul (D : LatticeData) (hu : IsUnit D.G.det)
       exact ih modes _ _
 
 /-- A ground-coordinate projection on the actual tensor module. -/
-private def oscillatorCoordinate (D : LatticeData) (hu : IsUnit D.G.det) :
+def oscillatorCoordinate (D : LatticeData) (hu : IsUnit D.G.det) :
     ActualTensor D hu →ₗ[ℂ] Oscillator D :=
   TensorProduct.lift {
     toFun := fun x => {
@@ -105,7 +105,7 @@ private def oscillatorCoordinate (D : LatticeData) (hu : IsUnit D.G.det) :
     map_add' := by intro x y; ext g; simp [smul_add]
     map_smul' := by intro c x; ext g; simp [smul_smul, mul_comm] }
 
-private theorem oscillatorCoordinate_tmul (D : LatticeData) (hu : IsUnit D.G.det)
+theorem oscillatorCoordinate_tmul (D : LatticeData) (hu : IsUnit D.G.det)
     (x : Oscillator D) (g : ActualGround D hu) :
     oscillatorCoordinate D hu (x ⊗ₜ[ℂ] g) = g 0 • x := by
   rfl
@@ -145,7 +145,7 @@ def oscillatorWord (D : LatticeData) (hu : IsUnit D.G.det)
     simp only [map_smul, RingHom.id_apply]
     exact (smul_finsum' c (oscillatorFlat_finite D hu a w e x)).symm
 
-private theorem word_tmul (D : LatticeData) (hu : IsUnit D.G.det)
+theorem word_tmul (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (w : List (Index D)) (e : ℤ)
     (x : Oscillator D) (g : ActualGround D hu) :
     (wordField D hu (chargedField D hu a) w).coeff e (x ⊗ₜ[ℂ] g) =
