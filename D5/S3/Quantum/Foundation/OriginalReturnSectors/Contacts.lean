@@ -461,7 +461,9 @@ theorem uniform_dual_bound (hc : IsClosed (C : Set V))
   change ∀ x ∈ base C u, b x ≤ b s at hmax
   have hM := maximum_at hc hs s b hmax
   refine ⟨hM.symm ▸ hbs,?_⟩
-  simpa only [CommonSourceLiftObstruction.positive_base_norm hc hs t b.toLinearMap hp]
+  have hbcont : b.toLinearMap.toContinuousLinearMap = b := by ext x; rfl
+  simpa only [CommonSourceLiftObstruction.positive_base_norm hc hs t b.toLinearMap hp,
+    hbcont, CommonSourceLiftObstruction.baseMaximum, baseMaximum, ContinuousLinearMap.coe_coe]
     using hdual b.toLinearMap
 
 private theorem contact_estimate
