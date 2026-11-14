@@ -197,6 +197,18 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
                 Imp(Call("OriginalEBDomain", C, u), conclusion)))));
     }
 
+    private static Formula IsolationStatement()
+    {
+        var V=Id("V");var C=Id("C");var u=Id("u");var real=Id("Real");
+        var p=Id("p");var s=Id("s");var q=Id("q");
+        Formula D(Formula x) => Call("exclusion",C,u,x);
+        var repeated=And(new Formula.Relation(p,FormulaRelationOperator.NotEqual,s),new Formula.Relation(D(s),FormulaRelationOperator.Equal,D(p)));
+        var result=new Formula.Logic(new Formula.Relation(D(p),FormulaRelationOperator.Equal,D(q)),FormulaLogicOperator.Or,Call("Disjoint",D(p),D(q)));
+        return All("V",Id("Types"),F.Seq(Inst("NormedAddCommGroup",V),Inst("NormedSpace",real,V),Inst("FiniteDimensional",real,V),
+            All("C",Call("PointedCone",real,V),All("u",Call("LinearMaps",real,V,real),Imp(Call("OriginalEBDomain",C,u),
+                All("p",Call("pure",C,u),All("s",Call("pure",C,u),Imp(repeated,All("q",Call("pure",C,u),result)))))))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Whole original exclusions cover the actual relative boundary and detect its boundary midpoints.",
         H("The actual boundary and common whole exclusions"),
@@ -212,6 +224,12 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
                 Paragraph(Text("Each whole exclusion lies in the actual relative boundary. Its common original confirming effect vanishes there but equals one at its confirming pure point. A relative interior point could be extended slightly away from that pure point along the same affine line while remaining in K; linearity would give a negative proper-effect value, which is impossible.")),
                 Paragraph(Text("If the midpoint of two points of K is on the boundary, coverage puts that midpoint in one whole exclusion. The extreme-set property forces both endpoints into that same exclusion. Conversely, convexity keeps the midpoint in any common exclusion, hence on the actual boundary. Equal endpoints and the degenerate ambient space remain in scope.")),
                 Paragraph(Text("This is the original-boundary midpoint bridge needed for IX116.6. It uses neither Pair properness nor injectivity, orthogonality axioms, common centers or global singleton labels. The following theorem supplies repeated-block isolation, transitivity and the actual compact Hausdorff quotient in the all-repeated contradiction branch. The common rational slice, convex neighborhood controls and radial homotopy obstruction remain further obligations. Existence of a singleton-labelled ball, its propagation and continuum multiplicity are not conclusions here. No originality claim is made."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("repeated-ball-isolated"),
+            DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.repeated_ball_isolated"),
+            H("Isolation of an individual original repeated ball"),
+            StatementSource.FromAuthor(F.Disp(IsolationStatement())), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("OriginalEBDomain has the same closedness, strict positivity, generating span and whole exclusion-ball assumptions as above. Only the displayed ball is assumed to have distinct original labels p and s. For every original q its whole ball is either equal to D(p) or disjoint from it. This is the original isolation declaration, exposed for the live reciprocal-fiber and common-effect consumers in BinaryCenterGeometry; its proof and original hypotheses are unchanged."))),
             DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("original-all-repeated-boundary-quotient"),
             DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.original_all_repeated_boundary_quotient"),
