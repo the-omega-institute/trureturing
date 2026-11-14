@@ -258,6 +258,34 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 
 For q≤3 the nonempty colour classes are a StablePartition, by the existing Mathlib palette-cardinality bound. Decomposition by the actual equality relation followed by paletteFiberEquiv gives G.Coloring (Fin q) ≃ Σ S : StablePartition G, (Quotient S.relation ↪ Fin q). This includes q=1,2,3 without presupposing how many labels are used. Taking cardinalities gives L(G)=Σ_S 2^(N-j(S)) and P_G(q)=Σ_S (q)_(j(S)), with j(S) the number of actual classes. The class bound 1≤j≤min(3,N) permits the three-case elimination below.
 
+**Definition 1.19 (A connected two-colouring is fixed by one vertex).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.binaryColoringEquiv`
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.binaryColoringEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
+
+*Commentary.*
+
+For any vertex type and preconnected graph with a specified proper Fin 2 colouring, evaluation at any chosen vertex is an equivalence to Fin 2. Along each walk, the colour at one endpoint determines the other because each colour has exactly one alternative. Swapping the two palette names constructs a colouring with either prescribed root colour.
+
+**Theorem 1.20 (The exact connected bipartite reduction).**
+
+$$\forall n: \operatorname{Nat}\left(\right), \forall G: \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n + 1\right)\right), \operatorname{SimpleGraph}.\operatorname{Preconnected}\left(G\right) \implies \operatorname{SimpleGraph}.\operatorname{Colorable}\left(G, 2\right) \implies (\exists u: \operatorname{Fin}\left(n + 1\right), \exists v: \operatorname{Fin}\left(n + 1\right), \operatorname{SimpleGraph}.\operatorname{Adj}\left(G, u, v\right)) \implies \operatorname{Nat}.\operatorname{card}\left(\operatorname{SimpleGraph}.\operatorname{Coloring}\left(G, \operatorname{Fin}\left(1\right)\right)\right) = 0 \land \operatorname{Nat}.\operatorname{card}\left(\operatorname{SimpleGraph}.\operatorname{Coloring}\left(G, \operatorname{Fin}\left(2\right)\right)\right) = 2 \land 48 \cdot \operatorname{Nat}.\operatorname{card}\left(\operatorname{Legal}\left(G\right)\right) = 2^{n + 1} \cdot \left(\operatorname{Nat}.\operatorname{card}\left(\operatorname{SimpleGraph}.\operatorname{Coloring}\left(G, \operatorname{Fin}\left(3\right)\right)\right) + 6\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.connected_count` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
+
+*Commentary.*
+
+Every graph on Fin (n+1) that is preconnected, two-colourable and has an edge has P(1)=0 and P(2)=2. The edge rules out a one-colouring. The two-colouring equivalence gives exactly two choices. Substituting into the partition-fibre identity gives 48L=2^(n+1)(P(3)+6). This form covers N=2 and N=3 without natural subtraction in an exponent; the rational expression L=2^(N-4)(P(3)/3+2) uses an integer exponent.
+
 The graph identity and its boundaries
 
 For every nonempty finite ordered graph, write s_j for its partitions into j nonempty independent sets. The further partition correspondence in the revision-2 source gives L = Σ(j=1..3) 2^(N-j)s_j. Injectively assigning q palette names to the blocks gives P(q) = Σ_j (q)_j s_j, hence P(1)=s_1, P(2)=2s_1+2s_2 and P(3)=3s_1+6s_2+6s_3. Eliminating s_1,s_2,s_3 gives 48L=2^N(P(3)+3P(2)+15P(1)). Taking cardinalities of literalPartitionEquiv and paletteColoringEquiv gives these sums. The bound 1≤j≤min(3,N) permits the three-case elimination, using 2^(N-j)·2^j=2^N. Transport of palette colourings along a graph isomorphism then gives order independence of the normalized total. These are direct applications of the equivalences, rather than additional named wrappers. Order independence concerns counts, not equality of the sets of legal assignments.
@@ -280,17 +308,17 @@ For g_j=Σ_(m≥0)v_j(m)x^m, g=1+xMg. Row A plus row B is twice row C, yielding 
 
 Actual diagonal and square strips
 
-For T(n,k), horizontal and both diagonal edges are present, while vertical and wraparound edges are absent. For k≥2 every row is connected, a diagonal joins consecutive rows, and column parity gives a bipartition; for k=1 there are no edges. Square strips instead have horizontal and vertical edges. These graphs remain different. At width two, the six proper boundary words each have three successors in either graph. At width three the aba,abc classes have initial counts (6,6) and the common class-count matrix K=((3,2),(2,2)); P(3)=(6,6)K^(n-1)(1,1)ᵀ. HardinThinGraphTransport.result proves these equal three-colouring counts at every positive height by an actual graph-to-row equivalence and continuation induction. The separate six-colour row-major identification and connected-bipartite reduction are still required to transfer the normalized literal counts. Bipartiteness alone does not prove the equality.
+For T(n,k), horizontal and both diagonal edges are present, while vertical and wraparound edges are absent. For k≥2 every row is connected, a diagonal joins consecutive rows, and column parity gives a bipartition; for k=1 there are no edges. Square strips instead have horizontal and vertical edges. These graphs remain different. At width two, the six proper boundary words each have three successors in either graph. At width three the aba,abc classes have initial counts (6,6) and the common class-count matrix K=((3,2),(2,2)); P(3)=(6,6)K^(n-1)(1,1)ᵀ. HardinThinGraphTransport.result proves these equal three-colouring counts at every positive height by an actual graph-to-row equivalence and continuation induction. HardinThinGraphTransport.literalEquiv supplies the reversible six-colour row-major identification. Its normalized_result consumes connected_count and the all-height three-colouring equality to identify the diagonal counts with the existing literal square-strip owners at widths two and three. Bipartiteness alone does not prove the equality.
 
 The source width-two successor lists are diagonal 01→01,02,21 and square 01→10,12,20. At width three they are diagonal 010→010,012,020,210,212 and 012→010,012,210,212; square 010→101,102,121,201,202 and 012→101,120,121,201. Grouping each list by aba or abc gives the displayed K in both cases. Label permutations cover the other boundary words. The continuation induction in HardinThinGraphTransport gives the common all-height P(3). This argument does not identify the graphs or prove equality for every palette size.
 
 Columns one through three
 
-The source formulas, for n≥1, are T(n,1)=6^n/48+4^n/16+5·2^n/16 and T(n,2)=(12^(n-1)+4^(n-1))/2. C_2=x(1-8x)/((1-4x)(1-12x)) and C_3=x(3-64x+192x²)/((1-8x)(1-40x+128x²)). The column-one recurrence has coefficients 12,-44,48 and onset n≥4; column two has 16,-48 and onset n≥3; column three has 48,-448,1024 and onset n≥4. The square-strip series already belong to HardinA233123SquareStrip.result and HardinA233124SquareStrip.result, for their distinct literal counts. With λ±=20±4√17, the source closed form is T(n,3)=8^(n-1)+((√17-3)λ_-^n+(√17+3)λ_+^n)/(32√17), with initial values 3,80,2688. The source diagonal-to-square connection and the closed forms need their own exact applications.
+The source formulas, for n≥1, are T(n,1)=6^n/48+4^n/16+5·2^n/16 and T(n,2)=(12^(n-1)+4^(n-1))/2. C_2=x(1-8x)/((1-4x)(1-12x)) and C_3=x(3-64x+192x²)/((1-8x)(1-40x+128x²)). The column-one recurrence has coefficients 12,-44,48 and onset n≥4; column two has 16,-48 and onset n≥3; column three has 48,-448,1024 and onset n≥4. The square-strip series already belong to HardinA233123SquareStrip.result and HardinA233124SquareStrip.result, for their distinct literal counts. With λ±=20±4√17, the source closed form is T(n,3)=8^(n-1)+((√17-3)λ_-^n+(√17+3)λ_+^n)/(32√17), with initial values 3,80,2688. The diagonal-to-square connection is proved by HardinThinGraphTransport.normalized_result at every positive height. The displayed closed forms and recurrence applications remain separate exact checks.
 
 Row one and the credited A007582 shift
 
-T(1,1)=1 and T(1,k)=(4^(k-2)+2^(k-2))/2 for k≥2. The recurrence is T(1,k)=6T(1,k-1)-8T(1,k-2) for k≥4. The graph is the actual path, with P(3)=3·2^(k-1). The source identifies this count with A007582(k-2), where A007582(0)=1. Britnell–Wildon equation (9) and Proposition 8.1 supply the earlier paired-partition interpretation; the other interpretations of that sequence are outside the present scope.
+T(1,1)=1 and T(1,k)=(4^(k-2)+2^(k-2))/2 for k≥2. The recurrence is T(1,k)=6T(1,k-1)-8T(1,k-2) for k≥4. HardinThinGraphTransport.path_result proves the actual path formula for every width k≥2 through P(3)=3·2^(k-1) and literalEquiv. The source identifies this count with A007582(k-2), where A007582(0)=1. Britnell–Wildon equation (9) and Proposition 8.1 supply the earlier paired-partition interpretation; the other interpretations of that sequence are outside the present scope.
 
 Rows two and three
 
@@ -306,7 +334,7 @@ A233162 counts an actual path of m vertices with eight colours 0 through 7, comp
 
 Scope and source attribution
 
-The application scope is precisely A233174 columns 1–4 and rows 1–3, A233123, A233124, A233175, A233176, and the stated A233162 and A007582 connections. A233174 columns 5–7 and rows 4–7, A233171–A233173 and A233177–A233180 are excluded. This revision-2 source is distinct from Hardin–Barker/Stern A233126 revision 5. Its authors are Haobo Ma, ChronoAI Pte Ltd, Singapore, and Wenlin Zhang, National University of Singapore and ChronoAI Pte Ltd, Singapore. The source supplies written graph and application arguments; the graph equivalences and their cardinal applications establish the stated graph foundation, and HardinThinGraphTransport establishes the stated all-height three-colouring equality. The remaining literal strip and application bridges are separate obligations. No new solved-question, publication, coauthor or mathematical-priority claim follows.
+The application scope is precisely A233174 columns 1–4 and rows 1–3, A233123, A233124, A233175, A233176, and the stated A233162 and A007582 connections. A233174 columns 5–7 and rows 4–7, A233171–A233173 and A233177–A233180 are excluded. This revision-2 source is distinct from Hardin–Barker/Stern A233126 revision 5. Its authors are Haobo Ma, ChronoAI Pte Ltd, Singapore, and Wenlin Zhang, National University of Singapore and ChronoAI Pte Ltd, Singapore. The source supplies written graph and application arguments; the graph equivalences and their cardinal applications establish the stated graph foundation, and HardinThinGraphTransport establishes the stated all-height three-colouring equality. The rectangular literal strip bridge and the width-two/three normalized transport are proved; the remaining source-matrix interpretations, closed-form applications, prior-sequence identifications and four-pair correspondence are separate obligations. No new solved-question, publication, coauthor or mathematical-priority claim follows.
 
 The marked-partition interpretation is prior work of Britnell and Wildon, arXiv:1507.04803v1, equation (9) and Proposition 8.1, subsequently JCTA 148 (2017), 116–144, DOI 10.1016/j.jcta.2016.12.003. The graphical Stirling expansion is established in Duncan and Peele, Bell and Stirling Numbers for Graphs, JIS 12 (2009), Article 09.7.1, with attribution to Biggs, Proposition 9.2. The present finite-word characterization connects the actual scanner to its sign fibers; it makes no priority claim.
 
@@ -322,6 +350,8 @@ The marked-partition interpretation is prior work of Britnell and Wildon, arXiv:
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.OrderedColoring`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.PaletteFiber`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.StablePartition`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.binaryColoringEquiv`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.connected_count`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.fiberEquiv`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.lift`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.literalPartitionEquiv`

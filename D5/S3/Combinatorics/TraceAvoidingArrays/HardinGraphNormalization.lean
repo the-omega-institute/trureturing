@@ -34,11 +34,22 @@ literalPartitionEquiv: proof_shape=content; terminal reversible partition/sign c
 paletteFiberEquiv: proof_shape=content; consumer=paletteColoringEquiv
 paletteColoringEquiv: proof_shape=content; terminal reversible palette/class correspondence
 The constructors and their inverse laws are statements about all positive graph sizes.
-They do not assert the subsequent numerical sums or strip transports.
+binary_ext: proof_shape=content; consumer=binaryColoringEquiv
+binaryColoringEquiv: proof_shape=content; consumer=connected_count
+stableFintype: proof_shape=bind-only; consumers=literal_card, palette_card
+quotient_range_card: proof_shape=bind-only; consumer=literal_card
+literal_card: proof_shape=bind-only; consumer=total_identity
+palette_card: proof_shape=bind-only; consumer=total_identity
+class_bounds: proof_shape=bind-only; consumer=total_identity
+total_identity: proof_shape=bind-only; consumer=connected_count
+connected_count: proof_shape=content; consumers=HardinThinGraphTransport.normalized_result, HardinThinGraphTransport.path_result
+The numerical sum helpers are consumed by the connected theorem and its actual strips.
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.Linarith
 
 /-! Literal scanner normalization and exact sign fibers for ordered graph colourings. -/
 
@@ -475,5 +486,124 @@ noncomputable def paletteColoringEquiv {n : ℕ} (G : SimpleGraph (Fin (n + 1)))
       cases he
       rfl
     exact hExt _ _ h
+
+
+open scoped BigOperators
+
+private theorem binary_ext {V : Type*} (G : SimpleGraph V) (hG : G.Preconnected)
+    (r : V) (p q : G.Coloring (Fin 2)) (hr : p r = q r) : p = q := by
+  apply DFunLike.ext
+  intro v
+  obtain ⟨w⟩ := hG r v
+  have along {a b : V} (w : G.Walk a b) : p a = q a → p b = q b := by
+    induction w with
+    | nil => exact id
+    | @cons a b c hab w ih =>
+      intro he
+      apply ih
+      have hp := p.valid hab
+      have hq := q.valid hab
+      omega
+  exact along w hr
+
+/-- On a connected bipartite graph, the colour of one vertex determines the entire two-colouring. -/
+noncomputable def binaryColoringEquiv {V : Type*} (G : SimpleGraph V)
+    (hG : G.Preconnected) (r : V) (c : G.Coloring (Fin 2)) : G.Coloring (Fin 2) ≃ Fin 2 := by
+  apply Equiv.ofBijective (fun p : G.Coloring (Fin 2) => p r)
+  constructor
+  · intro p q he; exact binary_ext G hG r p q he
+  · intro b
+    let e := Equiv.swap (c r) b
+    let p : G.Coloring (Fin 2) := (SimpleGraph.Iso.completeGraph e).toHom.comp c
+    refine ⟨p, ?_⟩
+    exact Equiv.swap_apply_left (c r) b
+
+private noncomputable instance stableFintype {n : ℕ}
+    (G : SimpleGraph (Fin (n + 1))) : Fintype (StablePartition G) := by
+  classical
+  exact Fintype.ofEquiv (OrderedColoring G) (partitionEquiv G)
+
+private theorem quotient_range_card {n : ℕ} (G : SimpleGraph (Fin (n + 1)))
+    (S : StablePartition G) :
+    Nat.card (Quotient S.relation) =
+      Fintype.card (Set.range (((partitionEquiv G).symm S).val : Fin (n + 1) → Fin 3)) := by
+  let p := (partitionEquiv G).symm S
+  have hs := congrArg StablePartition.relation ((partitionEquiv G).apply_symm_apply S)
+  change Setoid.ker (p.val : Fin (n + 1) → Fin 3) = S.relation at hs
+  rw [← hs, Nat.card_congr (Setoid.quotientKerEquivRange (p.val : Fin (n + 1) → Fin 3)),
+    Nat.card_eq_fintype_card]
+
+private theorem literal_card {n : ℕ} (G : SimpleGraph (Fin (n + 1))) :
+    Nat.card (Legal G) =
+      ∑ S : StablePartition G, 2 ^ (n + 1 - Nat.card (Quotient S.relation)) := by
+  classical
+  rw [Nat.card_congr (literalPartitionEquiv G), Nat.card_sigma]
+  apply Finset.sum_congr rfl
+  intro S _
+  rw [quotient_range_card]
+  exact (Nat.card_congr (fiberEquiv _ ((partitionEquiv G).symm S).property)).symm.trans
+    (fiber_card _ ((partitionEquiv G).symm S).property)
+
+private theorem palette_card {n : ℕ} (G : SimpleGraph (Fin (n + 1)))
+    (q : ℕ) (hq : q ≤ 3) :
+    Nat.card (G.Coloring (Fin q)) =
+      ∑ S : StablePartition G, q.descFactorial (Nat.card (Quotient S.relation)) := by
+  classical
+  rw [Nat.card_congr (paletteColoringEquiv G q hq), Nat.card_sigma]
+  apply Finset.sum_congr rfl
+  intro S _
+  letI := Fintype.ofFinite (Quotient S.relation)
+  simp only [Nat.card_eq_fintype_card, Fintype.card_embedding_eq, Fintype.card_fin]
+
+private theorem class_bounds {n : ℕ} (G : SimpleGraph (Fin (n + 1)))
+    (S : StablePartition G) :
+    1 ≤ Nat.card (Quotient S.relation) ∧ Nat.card (Quotient S.relation) ≤ 3 ∧
+      Nat.card (Quotient S.relation) ≤ n + 1 := by
+  have hpos : 0 < Nat.card (Quotient S.relation) := Nat.card_pos
+  refine ⟨hpos, ?_, ?_⟩
+  · rw [Nat.card_congr (Setoid.quotientEquivClasses S.relation)]
+    exact S.atMostThree
+  · simpa using Nat.card_le_card_of_surjective
+      (Quotient.mk S.relation) (Quotient.mk_surjective)
+
+private theorem total_identity {n : ℕ} (G : SimpleGraph (Fin (n + 1))) :
+    48 * Nat.card (Legal G) = 2 ^ (n + 1) *
+      (Nat.card (G.Coloring (Fin 3)) + 3 * Nat.card (G.Coloring (Fin 2)) +
+        15 * Nat.card (G.Coloring (Fin 1))) := by
+  classical
+  rw [literal_card, palette_card G 3 (by decide), palette_card G 2 (by decide),
+    palette_card G 1 (by decide)]
+  simp only [Finset.mul_sum, ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro S _
+  obtain ⟨hpos, hthree, hN⟩ := class_bounds G S
+  generalize hj : Nat.card (Quotient S.relation) = j at *
+  have he := Nat.sub_add_cancel hN
+  have hp := congrArg (fun k : ℕ => 2 ^ k) he
+  rw [pow_add] at hp
+  interval_cases j <;> norm_num [Nat.descFactorial, pow_succ] at hp ⊢ <;> nlinarith
+
+
+/-- The edge and connected bipartition give the exact small-palette terms.
+The cross-multiplied identity includes two and three vertices without truncated exponents. -/
+theorem connected_count {n : ℕ} (G : SimpleGraph (Fin (n + 1)))
+    (hG : G.Preconnected) (hc : G.Colorable 2)
+    (he : ∃ u v, G.Adj u v) :
+    Nat.card (G.Coloring (Fin 1)) = 0 ∧ Nat.card (G.Coloring (Fin 2)) = 2 ∧
+      48 * Nat.card (Legal G) = 2 ^ (n + 1) * (Nat.card (G.Coloring (Fin 3)) + 6) := by
+  have h1 : Nat.card (G.Coloring (Fin 1)) = 0 := by
+    letI : IsEmpty (G.Coloring (Fin 1)) := ⟨by
+      intro p
+      obtain ⟨u,v,huv⟩ := he
+      exact p.valid huv (Subsingleton.elim _ _)⟩
+    exact Nat.card_of_isEmpty
+  have h2 : Nat.card (G.Coloring (Fin 2)) = 2 := by
+    rw [Nat.card_congr (binaryColoringEquiv G hG 0 hc.some)]
+    simp
+  refine ⟨h1,h2,?_⟩
+  have ht := total_identity G
+  rw [h1,h2] at ht
+  norm_num at ht ⊢
+  exact ht
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization

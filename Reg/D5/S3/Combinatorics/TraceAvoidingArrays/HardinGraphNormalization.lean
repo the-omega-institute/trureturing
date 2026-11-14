@@ -139,5 +139,81 @@ def fibersAudit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 #print axioms scannerAudit
 #print axioms fibersAudit
+namespace Connected
+abbrev Input := Σ n : ℕ, SimpleGraph (Fin (n+1))
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Input) (fun _ => ℕ × ℕ × ℕ × ℕ)
+def actual : Realization signature :=
+  realize signature (fun _ _ x =>
+    (Nat.card (x.2.Coloring (Fin 1)), Nat.card (x.2.Coloring (Fin 2)),
+      Nat.card (Legal x.2), Nat.card (x.2.Coloring (Fin 3)))) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (1,0,0,0)) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ n (G : SimpleGraph (Fin (n+1))), G.Preconnected → G.Colorable 2 →
+    (∃ u v, G.Adj u v) →
+    (R.readout () () ⟨n,G⟩).1 = 0 ∧ (R.readout () () ⟨n,G⟩).2.1 = 2 ∧
+      48 * (R.readout () () ⟨n,G⟩).2.2.1 =
+        2^(n+1) * ((R.readout () () ⟨n,G⟩).2.2.2 + 6)
+private theorem top_two_colorable : (⊤ : SimpleGraph (Fin 2)).Colorable 2 :=
+  ⟨SimpleGraph.Coloring.mk id (by intro a b hab; exact hab)⟩
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := (h 1 ⊤ SimpleGraph.preconnected_top top_two_colorable
+    ⟨0,1,by decide⟩).1
+  change (1 : ℕ) = 0 at hh
+  omega
+private theorem one_empty : Nat.card ((⊥ : SimpleGraph (Fin 1)).Coloring (Fin 1)) = 1 := by
+  let e : (⊥ : SimpleGraph (Fin 1)).Coloring (Fin 1) ≃ (Fin 1 → Fin 1) :=
+    { toFun := fun p => p
+      invFun := fun f => SimpleGraph.Coloring.mk f (by simp)
+      left_inv := fun p => DFunLike.ext _ _ (fun _ => rfl)
+      right_inv := fun _ => rfl }
+  rw [Nat.card_congr e,Nat.card_eq_fintype_card]
+  simp
+private theorem one_top : Nat.card ((⊤ : SimpleGraph (Fin 2)).Coloring (Fin 1)) = 0 :=
+  (connected_count ⊤ SimpleGraph.preconnected_top top_two_colorable ⟨0,1,by decide⟩).1
+
+def family : Registration arena (type_of% @connected_count) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨by intro n G hG hc he; exact connected_count G hG hc he, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(),⟨0,⊥⟩,⟨1,⊤⟩,?_⟩
+    intro he
+    have h := congrArg (fun x : ℕ × ℕ × ℕ × ℕ => x.1) he
+    change Nat.card ((⊥ : SimpleGraph (Fin 1)).Coloring (Fin 1)) =
+      Nat.card ((⊤ : SimpleGraph (Fin 2)).Coloring (Fin 1)) at h
+    rw [one_empty,one_top] at h
+    omega
+
+/-- Exact family evidence; the four raw count occurrences have no claimed source selection. -/
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@connected_count) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.Connected.auditUnit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.Connected.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some actual
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Connected
+
 end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization
