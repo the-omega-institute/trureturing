@@ -5,7 +5,7 @@ using Markdig.Syntax.Inlines;
 
 namespace StrataLint.Engine;
 
-public static class MarkdownLinkSpans
+internal static class MarkdownLinkSpans
 {
     // Offsets identify destination text only, preserving surrounding Markdown.
     public static ImmutableArray<(string? Url, int Start, int End)> Read(string text)
