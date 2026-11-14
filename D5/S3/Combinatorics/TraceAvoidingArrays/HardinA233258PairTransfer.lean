@@ -72,9 +72,9 @@ private instance instDecidableCompatible (a b : Col) : Decidable (compatible a b
 private def cls (c : Col) : Fin 5 :=
   if c.1 = c.2.1 then (if c.1 = c.2.2 then 0 else 1)
   else if c.1 = c.2.2 then 2 else if c.2.1 = c.2.2 then 3 else 4
-private def Q : Matrix (Fin 5) (Fin 5) ℤ :=
+def Q : Matrix (Fin 5) (Fin 5) ℤ :=
   ![![2,2,2,2,0], ![1,1,0,1,1], ![1,1,0,0,0], ![1,1,1,1,0], ![0,0,0,1,1]]
-private def weights : Fin 5 → ℤ := ![24,24,12,24,12]
+def weights : Fin 5 → ℤ := ![24,24,12,24,12]
 private def representatives : Fin 5 → Col :=
   ![(0,0,0), (0,0,1), (0,1,0), (0,1,1), (0,1,2)]
 private def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
@@ -151,7 +151,7 @@ private theorem grid_good (n : ℕ) (P : Fin 3 × Fin n → Fin 3) :
 
 section CountBridge
 attribute [local irreducible] compatible cls Q weights
-private theorem count_transfer (n : ℕ) :
+theorem count_transfer (n : ℕ) :
     (L (n+2) : ℤ) = dotProduct weights ((Q^n).mulVec (1 : Fin 5 → ℤ)) := by
   classical
   let he : {P : Fin 3 × Fin (n+2) → Fin 3 // Proper P} ≃

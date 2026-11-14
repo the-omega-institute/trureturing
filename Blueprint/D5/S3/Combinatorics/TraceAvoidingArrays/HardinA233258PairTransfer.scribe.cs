@@ -38,6 +38,12 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
                 + "from the displayed initial counts.")),
             Node("Proper", "Proper pair patterns", ProperFormula(), false),
             Node("L", "Literal pair-pattern count", CountFormula(), false),
+            Node("Q", "The five-orbit successor matrix", Eq(Own("Q"),
+                Vector(Vector(2,2,2,2,0), Vector(1,1,0,1,1), Vector(1,1,0,0,0),
+                    Vector(1,1,1,1,0), Vector(0,0,0,1,1))), false),
+            Node("weights", "Two-column orbit multiplicities",
+                Eq(Own("weights"), Vector(24,24,12,24,12)), false),
+            Node("count_transfer", "All labelled continuation counts", TransferFormula(), true),
             Node("initial_values", "Six initial transfer counts", InitialFormula(), true),
             Node("recurrence", "The constant-adjusted cubic relation", RecurrenceFormula(), true))));
 
@@ -60,6 +66,14 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
             Call("Finset.filter", Fn("P", arrays, Own("Proper", p)),
                 Typed(Q("Finset.univ"), Call("Finset", arrays)))))));
     }
+    private static Formula Vector(params int[] values) => Vector(values.Select(x => Num(x)).ToArray());
+    private static Formula Vector(params Formula[] values) => Seq(Bang, OpenBracket,
+        Seq(values.SelectMany((x,i) => i == 0 ? new[] { x } : new[] { Comma, Sp, x }).ToArray()), CloseBracket);
+    private static Formula TransferFormula() => All("n", Q("Nat"),
+        Eq(Typed(Own("L", Add(V("n"), D(2))), Q("Int")),
+            Call("dotProduct", Own("weights"), Call("Matrix.mulVec",
+                new Formula.Power(Own("Q"), V("n")),
+                Typed(D(1), Arrow(Fin(D(5)), Q("Int")))))));
     private static Formula InitialFormula()
     {
         var values = Seq(Bang, OpenBracket, Num(96), Comma, Sp, Num(432), Comma, Sp,
