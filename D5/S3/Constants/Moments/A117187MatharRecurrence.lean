@@ -89,11 +89,12 @@ private theorem source_bridge :
     ext k
     simp [M, D, CQ, D5.S3.Constants.Moments.A331474HankelBridge.F0,
       D5.S3.Constants.Moments.A331474HankelBridge.catalanInt, coeff_derivative]
+  have hMX : M X = X := by simp [M]
   have hode : X * (1 - 4 * X) * D + (1 - 2 * X) * C = 1 := by
     apply PowerSeries.map_injective (Int.castRingHom ℚ) Int.cast_injective
     change M (X * (1 - 4 * X) * D + (1 - 2 * X) * C) = M 1
     simpa only [map_add, map_mul, map_sub, map_one, map_ofNat, PowerSeries.map_X,
-      hMC, hMD] using D5.S1.Recurrence.A308815DFiniteRecurrence.cat_ode
+      hMX, hMC, hMD] using D5.S1.Recurrence.A308815DFiniteRecurrence.cat_ode
   have hx : (X * (1 - 4 * X) : PowerSeries ℤ) ≠ 0 := by
     apply mul_ne_zero X_ne_zero
     intro h
