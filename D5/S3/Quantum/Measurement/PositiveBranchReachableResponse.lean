@@ -323,7 +323,7 @@ theorem finite_reachable_faithful_sum (K : α → Matrix n n ℂ) (c : α → �
   obtain ⟨μ, hμ, hbound⟩ := psd_support_lower_bound (orbitSum K c ρ L)
     (orbitSum_psd K c (fun a => (hc a).le) hρ L)
   exact ⟨L, μ, hμ, hs, fun v hv => hbound v (hs.symm ▸ hv)⟩
-private theorem matrixSupport_eq_range {A : Matrix n n ℂ} (hA : A.IsHermitian) :
+theorem matrixSupport_eq_range {A : Matrix n n ℂ} (hA : A.IsHermitian) :
     matrixSupport A = LinearMap.range A.toEuclideanLin := by
   rw [matrixSupport, LinearMap.orthogonal_ker,
     ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint, hA.eq]
@@ -520,7 +520,7 @@ theorem initial_termination_uniform_reachable_gap {d : ℕ}
   rw [← Matrix.mul_one ((weightedCP K c)^[N] σ), weightedCP_iterate_trace]
   simpa only [survivalEffect, div_eq_mul_inv, mul_comm, one_mul] using h
 omit [Fintype α] in
-private theorem reachable_kraus_invariant (K : α → Matrix n n ℂ)
+theorem reachable_kraus_invariant (K : α → Matrix n n ℂ)
     (ρ : Matrix n n ℂ) (a : α) :
     ∀ v ∈ reachableSpace K ρ, (K a).toEuclideanLin v ∈ reachableSpace K ρ := by
   have hle : reachableSpace K ρ ≤
