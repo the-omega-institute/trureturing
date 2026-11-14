@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:437f625528a9ff57ea31ee85f162691acbabfa2b5cfaa7a5e4cc3f4cbcbaa362
+  normalized_sha256: sha256:437f625528a9ff57ea31ee85f162691acbabfa2b5cfaa7a5e4cc3f4cbcbaa362
+cas_ref: sha256:437f625528a9ff57ea31ee85f162691acbabfa2b5cfaa7a5e4cc3f4cbcbaa362
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/Analytic/LcmPowerLayerBoundary.layer_boundary_explicit
+    target_statement_id: sha256:dd2009d5357d3585321301e8bc5237e90b5b94abb106c08d4b52f778cf7922be
+  - gid: D5/S3/Arith/Robin/Analytic/LcmPowerLayerBoundary.layer_boundary_xl
+    target_statement_id: sha256:82bcfea9422415c0bd8f2cb523b150ccb31db884982c91f455fdc395cc0d5344
+receipts:
+  unresolved_subitems: []
