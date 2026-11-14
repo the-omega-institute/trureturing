@@ -63,7 +63,7 @@ private theorem parts_iff {n r : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
       obtain ⟨i, hi⟩ := hS k
       exact ⟨i, (hu i).unique (hc i) hi⟩
     · intro i j hij
-      exact hz (c i) i j (hc i) (hij ▸ hc j)
+      exact hz (c i) i j (hc i) (by simpa only [hij] using hc j)
 
 private theorem max_bound_iff {n : ℕ} [NeZero n] (A : Matrix (Fin n) (Fin n) ℂ) :
     (∀ i j, ‖A i j‖ ≤ 1) ↔ (Finset.univ.sup' (by simp : (Finset.univ : Finset (Fin n × Fin n)).Nonempty)
@@ -101,7 +101,8 @@ private theorem schatten_reindex {n : ℕ} (p : ℝ) (hp : 0 < p)
   rw [schattenPow_eq_columnGram p hp, schattenPow_eq_columnGram p hp]
   have hg : (Matrix.reindex e e A)ᴴ * Matrix.reindex e e A =
       Matrix.reindex e e (Aᴴ * A) := by
-    rw [Matrix.conjTranspose_reindex, Matrix.reindex_mul]
+    rw [Matrix.conjTranspose_reindex]
+    exact ((Matrix.reindexRingEquiv ℂ e).map_mul Aᴴ A).symm
   have he := (Matrix.isHermitian_conjTranspose_mul_self (Matrix.reindex e e A)).eigenvalues_eq_eigenvalues_iff
     (Matrix.isHermitian_conjTranspose_mul_self A)
   have hc : ((Matrix.reindex e e A)ᴴ * Matrix.reindex e e A).charpoly = (Aᴴ * A).charpoly := by
@@ -167,7 +168,7 @@ private theorem six_trace {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
   have he : (fun x : ℝ => x ^ ((6 : ℝ) / 2)) = (fun x : ℝ => x ^ (3 : ℕ)) := by
     funext x
     norm_num [Real.rpow_natCast]
-  rw [he, cfc_pow_id (Matrix.isHermitian_conjTranspose_mul_self A).isSelfAdjoint]
+  rw [he, cfc_pow_id (Aᴴ * A) 3 (Matrix.isHermitian_conjTranspose_mul_self A).isSelfAdjoint]
 
 private theorem witness_parts : rPartite 3 witness := by
   apply (parts_iff witness).mpr

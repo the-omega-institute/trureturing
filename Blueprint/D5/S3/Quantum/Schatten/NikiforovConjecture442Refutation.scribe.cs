@@ -103,14 +103,14 @@ internal sealed class NikiforovConjecture442RefutationDocument : IScribeDocument
     {
         var n = F.Id("n"); var r = F.Id("r");
         return All(n, Naturals(), All(r, Naturals(), Equal(Call("turanMatrix", n, r),
-            App(Seq(Parenthesized(Call("SimpleGraphTuranGraph", n, r)), Dot, Named("adjMatrix")), Complexes()))));
+            App(Seq(Parenthesized(App(Qualified("SimpleGraph", "turanGraph"), n, r)), Dot, Named("adjMatrix")), Complexes()))));
     }
 
     private static Formula ModulusDefinition()
     {
         var n = F.Id("n"); var r = F.Id("r"); var a = F.Id("A"); var e = F.Id("e");
         var i = F.Id("i"); var j = F.Id("j");
-        var body = Ex(e, Call("EquivPerm", Fin(n)), All(i, Fin(n), All(j, Fin(n),
+        var body = Ex(e, App(Qualified("Equiv", "Perm"), Fin(n)), All(i, Fin(n), All(j, Fin(n),
             Equal(Call("ofReal", Norm(App(a, i, j))), Call("turanMatrix", n, r, App(e, i), App(e, j))))));
         return All(n, Naturals(), All(r, Naturals(), All(a, Mat(n),
             Equal(Call("isTuranModulus", r, a), body))));
@@ -123,6 +123,7 @@ internal sealed class NikiforovConjecture442RefutationDocument : IScribeDocument
     private static Formula Complexes() => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula Norm(Formula x) => Seq(Vert, Sp, x, Vert, Sp);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
     private static Formula Call(string name, params Formula[] args) => App(Named(name), args);
     private static Formula App(Formula name, params Formula[] args) => new Formula.Apply(name, [.. args]);
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
@@ -130,10 +131,10 @@ internal sealed class NikiforovConjecture442RefutationDocument : IScribeDocument
         Seq(Forall, Sp, Parenthesized(Seq(v, Colon, Sp, type)), Comma, Sp, body);
     private static Formula Ex(Formula v, Formula type, Formula body) =>
         Seq(Exists, Sp, Parenthesized(Seq(v, Colon, Sp, type)), Comma, Sp, body);
-    private static Formula Equal(Formula x, Formula y) => new Formula.Equality(x, y);
-    private static Formula And(Formula x, Formula y) => new Formula.And(Parenthesized(x), Parenthesized(y));
-    private static Formula Imp(Formula x, Formula y) => new Formula.Implies(Parenthesized(x), Parenthesized(y));
-    private static Formula Iff(Formula x, Formula y) => Seq(Parenthesized(x), Sp, Longleftrightarrow, Sp, Parenthesized(y));
-    private static Formula LE(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessOrEqual, y);
+    private static Formula Equal(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
+    private static Formula And(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.And, Parenthesized(y));
+    private static Formula Imp(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.Implies, Parenthesized(y));
+    private static Formula Iff(Formula x, Formula y) => Seq(Parenthesized(x), Sp, Leftrightarrow, Sp, Parenthesized(y));
+    private static Formula LE(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
     private static Formula LT(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThan, y);
 }
