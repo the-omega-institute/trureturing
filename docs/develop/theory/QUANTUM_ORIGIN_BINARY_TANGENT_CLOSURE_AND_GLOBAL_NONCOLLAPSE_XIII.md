@@ -2818,593 +2818,595 @@ DOI [10.1103/PhysRevA.62.062314](https://doi.org/10.1103/PhysRevA.62.062314)，
 104.12—104.13原融合接口；102.12—102.15／103.12既有静态字典、事件及时间边界。
 ## 追加锚（本行以下为增补区）
 
-## 164. A fixed-local-space tensor quotient with all finite binary geometries and collapsing neighbor faces
+## 164. 一条正则相干矩阵线与全部有限复量子锥
 
-**Definition 164.1 (one quotient and its entire tensor hierarchy).**
-Fix an integer $m\ge3$, put $d=2m$, and equip the real space
-$A=\operatorname{Herm}_d(\mathbb C)$ with the positive-definite real
-pairing $\langle X,Y\rangle=\operatorname{Tr}(XY)$. Set
+本章在同一已对齐低二层的全有限原锥背景中，证明一个存在性等价：原三腿锥中存在
+一条相干、非标量、含满秩点的矩阵铅笔，当且仅当每个有限层都是完整复量子锥。
+承重接口是原数据腿上的串行乘法与实际 qubit 控制资源的相干收缩；不输入分组编码。
+第163章的原滤波、三体种子与完整二维压缩结果作为本卷前置。
 
-$$
-H=\operatorname{diag}(I_m,-I_m),\qquad R=H^\perp\subset A,\qquad
-V=A/\mathbb RH,\qquad \pi:A\longrightarrow V,\qquad
-u(\pi X)=\operatorname{Tr}X.
-\tag{164.1}
-$$
+### 原域、切片与允许的数学操作
 
-Trace is well defined since $\operatorname{Tr}H=0$. For every finite
-$N\ge1$, use the real tensor products and the definitions
+**定义 164.1（精确的站立背景）。** 固定任意整数 $n\ge2$，令
+$V=\operatorname{Herm}_n(\mathbb C)$、$W_N=V^{\otimes_{\mathbb R}N}$。
+对所有有限 $N\ge1$，给定闭、尖、生成凸锥 $C_N\subset W_N$，并要求
+$u_N=\operatorname{Tr}=u_1^{\otimes N}$ 在 $C_N\setminus\{0\}$ 上严格为正。
+同一个实际张量坐标给向量空间识别 $W_N\cong\operatorname{Herm}_{n^N}(\mathbb C)$，且
 
 $$
-\begin{gathered}
-D_N=d^N,\qquad A_N=\operatorname{Herm}_{D_N}(\mathbb C)
-             =A^{\otimes_{\mathbb R}N},\qquad
-W_N=V^{\otimes_{\mathbb R}N},\qquad \pi_N=\pi^{\otimes N},\\
-C_N=\pi_N(\operatorname{PSD}_{D_N}),\qquad
-u_N=u^{\otimes N},\qquad
-K_N=\pi_N(\mathcal D_{D_N}),\qquad
-\mathcal N_N=\ker\pi_N,\qquad R_N=R^{\otimes N}.
-\end{gathered}
-\tag{164.2}
+C_1=\operatorname{PSD}_n,\qquad C_2=\operatorname{PSD}_{n^2}.
 $$
 
-The tensor identification in (164.2) is the actual
-Kronecker map on Hermitian matrices. Indeed tensor products of real
-Hermitian bases are independent, and both spaces have real dimension
-$d^{2N}=D_N^2$. Its pairing is exactly
+这里及以下 $\operatorname{PSD}_d=\operatorname{Herm}_d^+(\mathbb C)$。
+使用整个原基 $K_N=\{x\in C_N:u_N(x)=1\}$、全部极点 $P_N=\operatorname{ext}K_N$、
+完整正对偶 $C_N^*$ 和完整 proper 区间 $\mathcal E_N=[0,u_N]_{C_N^*}$；
+有限效应菜单是全部有限单位分解。对每个有限实际分块 $a+b$，要求
 
 $$
-\operatorname{Tr}\bigl((X_1\otimes\cdots\otimes X_N)
- (Y_1\otimes\cdots\otimes Y_N)\bigr)
-=\prod_{i=1}^N\operatorname{Tr}(X_iY_i).
-\tag{164.3}
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+ \subseteq C_a\otimes_{\max}C_b.
 $$
 
-Thus this is one fixed $V$ at every level, with its original tensor
-products, dual products, units, evaluation, brackets and position
-permutations. The cones are the whole displayed images, including the
-images of every correlated density matrix. Each own effect menu is
-$\mathcal E_N=[0,u_N]_{C_N^{\ast}}$; $P_N$, $\mathcal F_{N,p}$,
-$T_{N,p}$, $p_N^\perp$ and $F_N$ have exactly the original meanings
-in (161.4)–(161.6). No subset of effects is substituted for this menu.
+最小锥是正简单张量的闭凸生成锥；最大锥由全部 $f\otimes g$，
+$f\in C_a^*$、$g\in C_b^*$ 的非负半空间定义。所有位置置换及其逆均原正；
+重括号是同一原实张量空间上的规范恒等识别，非连续分块由原置换运输。
+原配对满足 $(f\otimes g)(x\otimes y)=f(x)g(y)$，单位如上相乘。
+约定 $W_0=\mathbb R,C_0=\mathbb R_+,u_0=\mathrm{id}$。
+这完整保留 [VII，定义102.1][Q164VII] 的单块模型域；未预付任何 $N\ge3$ 的 PSD、
+高阶自对偶、全局矩阵映射正性或高阶纯态分类。
 
-**Theorem 164.2 (complete original background at every finite split).**
-The data of Definition 164.1 satisfy all of (161.1)–(161.3), with the
-actual original permutations and reassociation. Under dual pullback by
-$\pi_N$ and the trace pairing, the full dual, effects, confirmers and
-minimum on every original mixed input are exactly
+称 $F:W_m\to W_k$ **原全旁观正**，若对每个有限 $r\ge0$，
+$(\mathrm{id}_{W_r}\otimes F)C_{r+m}\subseteq C_{r+k}$，包括置换后的作用位置。
+下文的协议均指原准备、张量乘积、这些已支付映射及 proper 帽的有限数学复合；
+事件菜单与装置可用性不由这个用语指定。
+
+**定义 164.2（相干正则铅笔）。** 固定实际计算基 $|0\rangle,\ldots,|n-1\rangle$，始终取
 
 $$
-\begin{gathered}
-W_N^{\ast}\simeq R_N,\qquad C_N^{\ast}\simeq R_N\cap\operatorname{PSD}_{D_N},
+|A\rangle\!\rangle=\sum_i|i\rangle_{\rm ref}\otimes A|i\rangle_{\rm out},
 \qquad
-\mathcal E_N\simeq R_N\cap[0,I_{D_N}],\\
-f_E(\pi_NX)=\operatorname{Tr}(EX),\\
-\mathcal F_{N,\pi_NP_v}\simeq
- \{E\in R_N:0\preceq E\preceq I_{D_N},\ Ev=v\},\\
-T_{N,\pi_NP_v}(\pi_N\rho)
- =\min_{\substack{E\in R_N,\ 0\preceq E\preceq I_{D_N}\\Ev=v}}
-      \operatorname{Tr}(E\rho),\qquad \rho\in\mathcal D_{D_N}.
-\end{gathered}
-\tag{164.4}
+(R\otimes L)|A\rangle\!\rangle=|LAR^{\mathsf T}\rangle\!\rangle.
 $$
 
-The confirmer and minimum lines apply to any unit $v$ whose image is
-pure; Theorem 164.4 below shows that this includes every unit $v$ and
-exhausts $P_N$.
+三腿次序为参考、输出、控制。对非零 $\psi$ 写
+$\psi=\sum_k|A_k\rangle\!\rangle|k\rangle$，其控制切片像为
+$\mathcal L_\psi=\{\sum_k\alpha_kA_k:\alpha\in(\mathbb C^n)^*\}$；
+这里 $\alpha=\sum_k\alpha_k\langle k|$ 是线性 bra，系数直接是 $\alpha_k$。
+称原矩阵秩一 dyad $\psi\psi^*\in C_3$ **含二元正则铅笔**，若
+$\mathcal L_\psi$ 含二维子空间 $\mathcal L=\operatorname{span}_{\mathbb C}\{A,B\}$，
+其中 $A\in GL_n(\mathbb C)$、$B$ 与 $A$ 线性无关。
+等价地，$\det(xA+yB)$ 非恒零，且矩阵线确有两个独立方向。
+也可直接要求见证的整个切片像恰为二维；下文的单次控制滤波说明两种存在性入口等价。
+“秩一”只指实际矩阵秩，不预先断言这是未知原基的极点。
 
-Proof. The orthogonal splitting $A=R\oplus\mathbb RH$ and the
-isomorphism $\pi|_R:R\to V$ give
-
-$$
-\mathcal N_N
- =\sum_{i=1}^N A^{\otimes(i-1)}\otimes\mathbb RH
-                      \otimes A^{\otimes(N-i)},\qquad
-\mathcal N_N^\perp=R_N.
-\tag{164.5}
-$$
-
-These identities use the tensor trace pairing (164.3); in particular
-they are identities of the actual real spaces, not just of product
-positive elements. The tensor map $\pi_N$ is surjective, and equality
-of the trace and $u_N\pi_N$ on simple tensors proves
-$u_N\pi_N=\operatorname{Tr}$ on all of $A_N$.
-
-The image $K_N$ of the compact density set is compact, convex and
-contained in $u_N=1$. Moreover $C_N=\mathbb R_{\ge0}K_N$, and a
-positive lift of a nonzero element has strictly positive trace. Thus
-$u_N$ is strictly positive on $C_N\setminus\{0\}$, and
-$C_N\cap\{u_N=1\}=K_N$. For a convergent sequence $t_jk_j$ in this
-cone, $t_j=u_N(t_jk_j)$ converges. Compactness of $K_N$ proves that
-the limit is in the cone, including when $t_j\to0$. Hence $C_N$ is
-closed. Strict positivity excludes a nonzero element of both $C_N$
-and $-C_N$. Finally PSD spans $A_N$, so surjectivity makes $C_N$
-generating. This verifies the complete single-level background at each
-$N$.
-
-A real functional descends exactly when its trace matrix annihilates
-$\mathcal N_N$, giving $W_N^{\ast}\simeq R_N$. It is positive on the
-whole image cone exactly when $\operatorname{Tr}(EX)\ge0$ for every
-$X\succeq0$, equivalently $E\succeq0$ by testing rank-one $X$.
-The matrix of $u_N$ is $I_{D_N}\in R_N$, since $I_d\in R$.
-Applying positivity also to $u_N-f_E$ gives the effect interval in
-(164.4). For a positive contraction, $v^{\ast}Ev=1$ is equivalent to
-$Ev=v$, because $v^{\ast}(I-E)v=0$ forces $(I-E)^{1/2}v=0$.
-This proves the confirmer and minimum formulas. All evaluations are
-independent of the positive lift by (164.5). The matrix interval is
-compact and the confirmer set contains $I_{D_N}$, so every minimum
-exists. No affine formula for this lower envelope is assumed.
-
-Now fix any split $a+b=N$. Arbitrary $x\in C_a,y\in C_b$ have
-positive lifts $X\in A_a,Y\in A_b$. Their tensor $X\otimes Y$ is
-positive and maps to the actual $x\otimes y$, proving
-$C_a\otimes_{\min}C_b\subseteq C_N$. Conversely any positive
-functionals on the two whole block cones have matrices
-$E\in R_a\cap\operatorname{PSD}_{D_a}$ and
-$G\in R_b\cap\operatorname{PSD}_{D_b}$. For every positive lift
-$Z\in A_N$, including every correlated one,
+**引理 164.3（原自身 Choi、帽与全部预算）。** 在定义164.1下，令
 
 $$
-(f_E\otimes f_G)(\pi_N Z)=\operatorname{Tr}((E\otimes G)Z)\ge0.
-\tag{164.6}
+\Omega_n=|I_n\rangle\!\rangle\langle\!\langle I_n|,\qquad
+\beta_n(x)=\operatorname{Tr}(\Omega_nx).
 $$
 
-The last inequality follows by taking the trace of
-$Z^{1/2}(E\otimes G)Z^{1/2}\succeq0$. This proves the maximum
-bound with $C_a,C_b$ themselves at every split. It also proves the
-positivity of every product of original positive effects; product
-normalized effects and their complements have the usual unit bound.
-
-For a position permutation $s$, let $U_s$ be the quantum unitary
-which actually permutes those tensor factors, and let $S_s$ permute
-the factors of $W_N$. Equality on simple tensors, followed by spanning,
-gives
+则 $\Omega_n/n\in K_2$、$\beta_n/n\in\mathcal E_2$。
+把 $m$ 对原杯重排为全部参考在前、全部输入在后，记作 $\Omega_m$，则
 
 $$
-S_s\pi_N(X)=\pi_N(U_sXU_s^{\ast}).
-\tag{164.7}
+J(F)=(\mathrm{id}_{W_m}\otimes F)\Omega_m\in C_{m+k}
+\quad\Longleftrightarrow\quad F:W_m\to W_k\text{ 原全旁观正}.
 $$
 
-Conjugation preserves PSD, so $S_s$ and $S_s^{-1}$ are positive on
-the entire original cone. The same tensor identities show that
-reassociation is the actual canonical identity, in every grouping.
-Equation (164.3) gives exact evaluation on products; product linear
-functionals separate $W_N$ by finite-dimensional tensor duality.
-One can also use product effects for separation: every Hermitian
-$E\in R_a$ lies between $-cI$ and $cI$ for some $c>0$, so the
-own effect interval spans $R_a$, and similarly at every block.
-Discarding agrees with the quotient of the matrix partial trace,
+每个一体合同 $\Phi_A(x)=AxA^*$ 原全旁观正；$A^*A\preceq I_n$ 时所有提升不增迹。
+每个 $f\in C_a^*$ 可对整个原联合输入切片，重复切片仍在剩余原锥；若 $f$ proper，则
 
 $$
-(\operatorname{id}_{W_a}\otimes u_b)\pi_{a+b}Z
- =\pi_a(\operatorname{Tr}_{\mathbb C^{D_b}}Z),
-\tag{164.8}
+0\le u_b((f\otimes\mathrm{id})z)\le u_{a+b}(z)\quad(z\in C_{a+b}).
 $$
 
-as follows first on simple tensors and then on all $Z$. It is therefore
-positive on every correlated input. All asserted products, pairings,
-units, permutations and brackets are the original ones. ∎
+**证明。** 逐项使用 [VII，引理102.6—102.8][Q164VII]，也即163.2的已付接口。
+最大界和闭锥双极性给切片；$(u_a-f)\otimes u_b$ 对原联合锥正给上界。
+$C_2$ 的 PSD 等式给杯及 proper 帽；最小界给任意有限杯乘积。
+在任意 $z\in C_{r+m}$ 与原 $J(F)$ 的乘积上，逐对用 $\beta_n$ 接输入与参考，
+精确蛇式给 $(\mathrm{id}_{W_r}\otimes F)z$，没有转置余项。
+每一步切片面对的是整个剩余原锥，故包括任意原纠缠旁观者，不要求高阶自对偶。
+一体合同的 Choi 是原 $C_2$ 中的 $|A\rangle\!\rangle\langle\!\langle A|$。
+若 $A$ 为压缩，$u_1-u_1\Phi_A$ 在 $C_1$ 上正，与旁观单位相乘给全部提升预算。∎
 
-**Theorem 164.3 (sharp tensor-kernel inertia at every finite level).**
-For every finite $N\ge1$ and every nonzero $X\in\mathcal N_N$,
+具体地，若一个协议供应 $hJ(F)/T$，其中 $T=u_{m+k}(J(F))>0$、$h>0$，
+则用 $m$ 只 proper $\beta_n/n$ 将它接到任意原输入，实施的是
+$hF/(Tn^m)$ 及其所有旁观提升。这个公式支付有限字的资源实现。
+非零有限滤波一律除以 $s_A=\max\{1,\|A\|\}$；每次 dyad 系数乘 $s_A^{-2}>0$。
+正因子可为锥成员关系消去；这不把后选择分支放大成确定性事件。
 
-$$
-n_+(X)\ge m,\qquad n_-(X)\ge m,
-\tag{164.9}
-$$
+### 从满秩配对到完整实际控制族
 
-where $n_\pm$ count strictly positive and strictly negative eigenvalues
-with multiplicity. Both bounds are attained at every level.
-
-Proof. We first prove the scalar null-cone lemma: if $B\in A$ and
-$a^{\ast}Ba=0$ for every unit $a$ with $a^{\ast}Ha=0$, then
-$B=cH$ for some $c\in\mathbb R$. In the two $m$-by-$m$ blocks of
-$H$, use $a=(x,e^{it}y)/\sqrt2$ with arbitrary unit
-$x,y\in\mathbb C^m$. The hypothesis gives
+**命题 164.4（规范化、GME 与控制资源）。** 一个含二元正则铅笔的原种子给出
 
 $$
-x^{\ast}B_{++}x+y^{\ast}B_{--}y
-       +2\operatorname{Re}(e^{it}x^{\ast}B_{+-}y)=0
-             \qquad(t\in\mathbb R).
-\tag{164.10}
+r_M=|I_n\rangle\!\rangle|0\rangle+|M\rangle\!\rangle|1\rangle,
+\qquad r_Mr_M^*\in C_3,\quad M\notin\mathbb C I_n.
 $$
 
-Varying $t$ forces $B_{+-}=0$. The remaining equality for all $x,y$
-forces $B_{++}=cI_m$ and $B_{--}=-cI_m$, by Hermitian polarization.
-For the matrix-valued version, expand any Hermitian $Y$ on
-$\mathbb C^d\otimes\mathbb C^k$ as $Y=\sum_jB_j\otimes F_j$
-in a real Hermitian basis $(F_j)$ of the second factor. If every
-isotropic compression vanishes, each real coefficient
-$a^{\ast}B_ja$ vanishes. The scalar lemma therefore gives
+其三个展平秩是 $(n,n,2)$，故跨每种一腿分割均纠缠（GME）。
+它还支付固定实际二维角 $S=\operatorname{span}\{|0\rangle,|1\rangle\}$ 上的整个有限 qubit 族、
+全正对偶及 proper 效应延拓；特别地，任意有限控制 ket 的 dyad 均在相应原锥中。
+
+**证明。** 取切片 bra $\alpha,\gamma$ 给出 $A,B$，用同一个控制滤波
+$T=|0\rangle\alpha+|1\rangle\gamma$，再在输出腿用 $A^{-1}$，即得 $r_M$，
+$M=A^{-1}B$ 非标量。两次均是原 $n\to n$ 一体合同，不是分别准备两个分支。
+令 $d_M=\|r_M\|^2=n+\operatorname{Tr}(M^*M)$、
+$s_T=\max\{1,\|T\|\}$、$s_L=\max\{1,\|A^{-1}\|\}$。
+归一原种子 $\psi\psi^*/\|\psi\|^2$ 经这两次 proper 滤波输出
 
 $$
-\bigl[(a^{\ast}\otimes I_k)Y(a\otimes I_k)=0
-       \text{ for every unit }a\text{ with }a^{\ast}Ha=0\bigr]
-\ \Longrightarrow\ Y=H\otimes A\quad(A\in\operatorname{Herm}_k).
-\tag{164.11}
+c_M\,\frac{r_Mr_M^*}{d_M},\qquad
+c_M=\frac{d_M}{\|\psi\|^2s_T^2s_L^2}\in(0,1].
 $$
 
-Now induct on $N$. At $N=1$, the nonzero kernel elements are the
-nonzero multiples of $H$, with $m$ eigenvalues of each sign. For
-$N\ge2$ and $0\ne X\in\mathcal N_N$, each unit isotropic $a$
-defines a functional $\ell_a(B)=a^{\ast}Ba$ on $A$ that annihilates
-$H$, so it descends to $\bar\ell_a\in V^{\ast}$. Set
+$I_n$ 切片使前两腿的秩均为 $n$；$I_n,M$ 独立使控制秩为二。
+为支付 qubit 入口，可直接选坐标 $i\ne j$ 使 $M$ 的该二阶主压缩非标量：
+有非零非对角元就取其两指标；否则 $M$ 是非标量对角矩阵，取两个不同对角元。
+同一个实偏等距 $K=|0\rangle\langle i|+|1\rangle\langle j|$ 作用于前两腿，
+留下 $|I_2\rangle\!\rangle|0\rangle+|M_2\rangle\!\rangle|1\rangle\in S^{\otimes3}$，
+其中 $M_2=KMK^{\mathsf T}|_S$ 非标量。两个 $K$ 的范数为一；从归一 $r_M$ 的成功质量是
+$t_0=(2+\operatorname{Tr}(M_2^*M_2))/d_M>0$。输出三个秩均为二。
+
+现在只复用本卷第163章中 163.4、163.6—163.7 的接口：Dür–Vidal–Cirac 三 qubit GHZ/W 分类、
+GHZ 支路的局部滤波或 W 支路的三 W 三角收缩，供应实际嵌入的 GHZ$_2$ dyad。
+记 $g=|000\rangle+|111\rangle$、$w=|100\rangle+|010\rangle+|001\rangle$、
+$\Delta_2=gg^*$，均在这个实际角内。
+若分类滤波 $B_i$ 把截取后的 ket 送为代表 $v=g$ 或 $v=w$，令
+$s_i=\max\{1,\|B_i\|\}$，则
+$t_D=\|v\|^2/([2+\operatorname{Tr}(M_2^*M_2)]\prod_{i=1}^3s_i^2)>0$。
+从上述归一原种子计，GHZ 支路的质量为
+$c_Mt_0t_D$；W 支路用三份原种子，输出
+$(c_Mt_0t_D)^3\Delta_2/108$，质量 $(c_Mt_0t_D)^3/54>0$。
+这些是163.3—163.4已完成的预算，不是本章重新声称的分类或三角形结果。
+
+为写清调用的整个族，令 $P$ 投影到 $S$、$Q_N=\operatorname{Ad}_P^{\otimes N}$。
+163.6给原正幂等、不增迹和
 
 $$
-J_a=a\otimes I_{D_{N-1}},\qquad X_a=J_a^{\ast}XJ_a\in A_{N-1}.
-\tag{164.12}
+Q_N(C_N)=C_N\cap\operatorname{Herm}(S^{\otimes N}),\qquad
+g\mapsto g\circ Q_N
 $$
 
-The actual tensor maps give
+对完整内在正对偶及 proper 区间的原延拓，并支付全部分块 min/max 界。
+163.7于是给上式的锥恰为 $\operatorname{PSD}(S^{\otimes N})$，对每个有限 $N$ 成立。
+等价地，可在已付 GHZ$_2$ 后接 [VII，命题104.11][Q164VII] 的完整 retract 证明。
+参考嵌入取实际实坐标，故无额外共轭；一般复嵌入的参考腿须用共轭嵌入。
+这里供应的是多条实际二维角腿；没有把它们编码为一条原 $n$ 维输出腿。∎
+
+该控制资源也可追溯成有限种子网络，而不必仅用锥等式挑选准备。
+163.4接 VII103.7—103.8的精确 qubit 有限字，能把控制乘积纯态精确送到任意目标 ket。
+若字中第 $\ell$ 个二体门的原 Choi 资源输出为 $h_\ell J_\ell/4$，$h_\ell>0$，
+用两只原 $\beta_n/n$ 接入控制寄存器，系数乘 $h_\ell/(4n^2)$；一体角酉延为原一体酉。
+所以目标归一控制态有有限实现质量
+$t_Q=\prod_\ell [h_\ell/(4n^2)]>0$，空乘积为一。
+更具体地，令 $t_G$ 为刚才给出的归一 GHZ$_2$ 供应质量。
+VII103.7的两叉口经局部酉给归一 $\alpha,\gamma$，桥帽取原 $\beta_n/n$，
+就输出 $t_G^2J_{\rm CNOT}^0/(8n)=hJ_{\rm CNOT}^0/4$，其中 $h=t_G^2/(2n)>0$。
+$J_{\rm CNOT}^0$ 是真正角零扩张的四腿 Choi，迹为四；未把角门当成全 $n^2$ 维酉。
+故可固定这个门，在有 $L$ 次二体使用的精确控制字中取
+$t_Q=[t_G^2/(8n^3)]^L>0$。所有拷贝预先原相乘，组成同一有限协议。
+这个溯源仅用于资源与预算，不重复计入163章和既有有限字尾部的成果。
+
+### 原数据线上的相干多项式
+
+**引理 164.5（任意有限多项式的单一协议）。** 若 $r_Mr_M^*\in C_3$ 且命题164.4的
+完整控制族已经支付，则对每个有限复多项式 $f$，有
 
 $$
-\pi_{N-1}(X_a)
- =(\bar\ell_a\otimes\operatorname{id}_{W_{N-1}})(\pi_NX)=0,
-\tag{164.13}
+r_{f(M)}=|I_n\rangle\!\rangle|0\rangle+|f(M)\rangle\!\rangle|1\rangle,
+\qquad r_{f(M)}r_{f(M)}^*\in C_3.
 $$
 
-so $X_a\in\mathcal N_{N-1}$. If some $X_a\ne0$, induction gives
-$n_\pm(X_a)\ge m$. The isometry $J_a$ maps any strictly positive
-or strictly negative subspace for $X_a$ to one for $X$, hence
+此构造在所有原旁观者上正，具有有限严格正的成功预算。
+
+**证明。** 取 $p\ge1$、$\deg f\le p$，写 $f(t)=\sum_{j=0}^pf_jt^j$，允许补零。
+准备 $p$ 份 $r_M$，第 $j$ 份腿为 $(r_j,o_j,c_j)$。
+用 $\langle I_n|=\sum_i\langle i|\langle i|$ 把 $o_j$ 接到 $r_{j+1}$，$1\le j<p$。
+留下的次序规定为 $(r_1,o_p,c_1,\ldots,c_p)$，ket 恰为
 
 $$
-n_\pm(X)\ge n_\pm(X_a)\ge m.
-\tag{164.14}
+\Xi_p=\sum_{s\in\{0,1\}^p}|M^{|s|}\rangle\!\rangle|s\rangle.
 $$
 
-Otherwise every $X_a=0$, so (164.11) yields $X=H\otimes A$ with
-$0\ne A\in A_{N-1}$. Each nonzero eigenvalue of $A$ produces $m$
-positive and $m$ negative tensor eigenvalues, and therefore
+确切的串行乘积顺序是 $M^{s_p}\cdots M^{s_1}$；因各因子是同一个 $M$ 的幂，才化为
+$M^{|s|}$。参考—输出约定及实 Bell bra 保证这里没有 $M^{\mathsf T}$ 或 $\overline M$。
+最小界给初始 $C_{3p}$，$p-1$ 次原帽切片给 $C_{p+2}$。
+
+每个重量 $j$ 只选一个计算字 $s^{(j)}$，其中 $s^{(0)}=0^p$。
+命题164.4供应 $p+1$ 条实际控制腿上的同一个 ket
 
 $$
-n_+(X)=n_-(X)=m\operatorname{rank}A\ge m.
-\tag{164.15}
+Q_f=|0^p\rangle|0\rangle+
+ \sum_{j=0}^pf_j|s^{(j)}\rangle|1\rangle,
+\qquad d_f=\|Q_f\|^2=1+\sum_{j=0}^p|f_j|^2.
 $$
 
-For sharpness, at every $N$ the nonzero matrix
-$H\otimes P_e^{\otimes(N-1)}$ belongs to (164.5), for any unit
-$e\in\mathbb C^d$, and has $m$ eigenvalues of each sign; at $N=1$
-this means $H$. ∎
+在 $\Xi_p$ 的第 $j$ 条控制腿与 $Q_f$ 的第 $j$ 条腿之间，各用一只原 $n$-Bell 帽。
+它们在嵌入计算字上按相等指标配对；系数是 $f_j$，不是 $\overline{f_j}$。
+剩余三腿仍按参考、输出、最后控制排列，恰为 $r_{f(M)}$。
+$s^{(0)}$ 同时用于最后控制的 $0$、$1$ 两值没有冲突，两项在这个最后腿上正交。
 
-**Theorem 164.4 (unique positive lifts, all pure states, and actual small support faces).**
-For every $N\ge1$, any $\sigma\succeq0$ of rank at most $m-1$
-is the unique positive lift of $\pi_N\sigma$. For every complex
-subspace $S\subseteq\mathbb C^{D_N}$ of dimension at most $m-1$,
-$\pi_N\mathcal D(S)$ is an actual face of $K_N$, and
-
-$$
-\pi_N^{-1}(\pi_N\mathcal D(S))\cap\mathcal D_{D_N}=\mathcal D(S).
-\tag{164.16}
-$$
-
-The restriction of $\pi_N$ to $\operatorname{Herm}(S)$ is a
-trace-preserving linear order isomorphism onto the span of that face
-cone. Its state restriction is an affine isomorphism. All the original
-pure points are exactly the distinct images $p_v=\pi_NP_v$, and
+完整协议的资源同时位于原 $C_{4p+1}$；共 $2p-1$ 只帽，最后留下三腿。
+没有从分别优化的 $M^j$ 态相加来推断相干性，所有幂及其系数来自同一个 ket 收缩。
+若输入分别是 $c_M r_Mr_M^*/d_M$ 的 $p$ 份和 $t_Q Q_fQ_f^*/d_f$，
+每只帽均取 proper $\beta_n/n$，最终输出为
 
 $$
-\mathbb{CP}^{D_N-1}\longrightarrow P_N,\qquad [v]\longmapsto p_v
-\tag{164.17}
+\frac{c_M^pt_Q}{d_M^pd_fn^{2p-1}}\,r_{f(M)}r_{f(M)}^*,\qquad
+t_f=\frac{c_M^pt_Q\,[n+\operatorname{Tr}(f(M)^*f(M))]}
+ {d_M^pd_fn^{2p-1}}\in(0,1].
 $$
 
-is a homeomorphism. For any finite family of unit vectors with
-$S=\operatorname{span}_{\mathbb C}\{v_1,\ldots,v_k\}$ of dimension
-at most $m-1$,
+全部因子有限且严格正；非零性已有 $I_n$ 切片保证，上界来自逐次 proper 预算。
+若按完整原准备菜单直接选归一控制态，可取 $t_Q=1$；若要求种子溯源，就使用前段的
+有限正乘积。后者仍是同一批预先相乘的有限资源和同一个结果分支。
+对任意有限 $r$，把旁观者附在上述每一原乘积与切片上，引理164.3给整段的原正性及预算。∎
+
+**引理 164.6（两资源耦合及原复合）。** 对实际 $r_Ar_A^*\in C_3$，两份资源给出
+每个 $z\in\mathbb C$ 的原四腿 Choi 元素
 
 $$
-F_N(p_{v_1},\ldots,p_{v_k})=\pi_N\mathcal D(S).
-\tag{164.18}
+J(\operatorname{Ad}_{K_z})\in C_4,\qquad K_z=I_{n^2}+zA\otimes A.
 $$
 
-The empty family gives the empty face. The vectors in these statements
-are arbitrary, including vectors entangled across the original slots.
-
-Proof. If $\rho\succeq0$ is another lift of $\pi_N\sigma$, put
-$X=\rho-\sigma\in\mathcal N_N$. On $\ker\sigma$ its quadratic
-form is nonnegative. A negative spectral subspace of dimension larger
-than $\operatorname{rank}\sigma$ would intersect $\ker\sigma$
-nontrivially, which is impossible. Thus
-$n_-(X)\le\operatorname{rank}\sigma\le m-1$, and (164.9) forces
-$X=0$. This is the elementary sign-rank comparison underlying the
-mature low-rank-versus-all-state criterion [CHST164, §4.1, Lemma 1(c),
-Lemma 2(a), Theorem 1(a)]; that general criterion is background, not a
-new state-determination theorem here. Its tensor-kernel premise has
-been proved in Theorem 164.3.
-
-Let $r=\dim S\le m-1$. Every Hermitian matrix supported on $S$
-has at most $r$ positive and at most $r$ negative eigenvalues; (164.9)
-therefore makes $\pi_N$ injective on $\operatorname{Herm}(S)$.
-For $\sigma\in\mathcal D(S)$ and an original convex decomposition
-$\pi_N\sigma=tx+(1-t)y$, $0<t<1$, choose density lifts
-$\alpha,\beta$ of $x,y$. Their mixture is a positive lift of
-$\pi_N\sigma$, so uniqueness gives
-$\sigma=t\alpha+(1-t)\beta$. For $z\in S^\perp$, positivity and
-$z^{\ast}\sigma z=0$ force $\alpha z=\beta z=0$; hence both lifts are
-supported on $S$. This proves the actual face property and (164.16).
-
-The image of $\operatorname{PSD}(S)$ is exactly the cone of this
-face. To check order also on its entire real span, suppose
-$Y\in\operatorname{Herm}(S)$ and $\pi_NY=\pi_N\rho$ for some
-$\rho\succeq0$. Choose $\eta\in\mathcal D(S)$ positive definite
-on $S$ and $c>0$ large enough that $c\eta+Y\succeq0$. This matrix
-has rank at most $r$ and shares its image with $c\eta+\rho\succeq0$.
-Uniqueness gives $Y=\rho\succeq0$. Together with injectivity and
-trace preservation this proves the full order-isomorphism assertion.
-The zero subspace has zero cone span and empty normalized face, so is
-covered separately without choosing $\eta$.
-
-In particular every rank-one image is a singleton actual face and
-hence pure. Distinct rank-one projectors have distinct images by unique
-positive lifting. Conversely, a density lift of an arbitrary original
-extreme point has a finite spectral decomposition. Its image is a
-convex combination of these rank-one images, so extremality makes
-it one of them. This proves exhaustion. The continuous map (164.17)
-is therefore a bijection from compact complex projective space to the
-pure set in a finite-dimensional Hausdorff space; it is a homeomorphism.
-
-For a nonempty family in (164.18), its equally weighted lifted mixture
-is positive definite on $S$. The standard matrix support-face rule,
-recalled in §159.1, says that the lifted projectors generate exactly
-$\mathcal D(S)$. The image set is an actual face, so the minimal
-original face is contained in it. Pulling that minimal face back by the
-affine isomorphism gives a face of $\mathcal D(S)$ containing all
-these projectors, hence all of $\mathcal D(S)$. This proves equality,
-not merely containment in a convex copy. ∎
-
-**Theorem 164.5 (all-level L2 and TC, and every fixed finite geometric face budget).**
-For $m\ge3$, L2 and TC of §161.1 hold on the whole $K_N$ for
-every finite $N\ge1$. For $m\ge4$, L3 of Definition 160.2 also
-holds at every level. More generally, for any fixed integer $r\ge1$,
-choosing $m\ge\max\{3,r+1\}$ ensures that at every finite level
-every face generated by at most $r$ pure points is the full intrinsic
-complex density face on their lifted vector span. These assertions
-concern actual state-face geometry with the original unit.
-
-Proof. Fix $N$ and suppress its index on $\pi_N$ temporarily.
-Two distinct pure points have distinct lifted lines spanning a complex
-two-space $S$, so (164.18) identifies their entire actual face with
-$\mathcal D(S)$. The usual Pauli parametrization identifies this
-space with the full closed Euclidean three-ball, proving L2.
-All its extreme points are precisely the images of the unit vectors
-in $S$, by the affine isomorphism and the global pure injectivity.
-
-For TC take arbitrary $a=p_\alpha,b=p_\beta,p=p_v$ with $a\ne b$
-and $p\notin B_N(a,b)$. Put $S=\operatorname{span}_{\mathbb C}
-\{\alpha,\beta\}$. Equation (164.16) gives the exact external-point
-condition $v\notin S$. Consequently
+**证明。** 控制帽与其效应矩阵明确取
 
 $$
-Q_v=I-P_v,\qquad U=Q_vS=v^\perp\cap
-\operatorname{span}_{\mathbb C}\{v,\alpha,\beta\}
-\tag{164.19}
+b_z=\langle00|+z\langle11|,\qquad
+b_z^*=|00\rangle+\overline z|11\rangle,\qquad
+e_z(x)=\frac{b_zxb_z^*}{1+|z|^2}
+ =\operatorname{Tr}\!\left(\frac{b_z^*b_z}{1+|z|^2}x\right).
 $$
 
-has complex dimension two, with basis $z_\alpha=Q_v\alpha$,
-$z_\beta=Q_v\beta$. For $z\perp v$, the normalized rank-one curve
-and its derivative are
+$b_z^*b_z/(1+|z|^2)$ 是原 $C_2$ 中的秩一正交投影，故 $e_z\in\mathcal E_2$。
+未归一 ket 收缩为 $|I\rangle\!\rangle\otimes|I\rangle\!\rangle
++z|A\rangle\!\rangle\otimes|A\rangle\!\rangle$；
+原置换把数据腿从 $(r_1,o_1,r_2,o_2)$ 排成 $(r_1,r_2,o_1,o_2)$，即为 $|K_z\rangle\!\rangle$。
+所以 $C_6\to C_4$ 的一次 proper 切片给所述 Choi 的正倍数。
+两份归一 $r_A$ 的确切输出是 $J(\operatorname{Ad}_{K_z})/[d_A^2(1+|z|^2)]$，
+其中 $d_A=n+\operatorname{Tr}(A^*A)$；源若有成功因子，再乘其乘积。
+bra 中的 $z$ 与对应 ket 中的 $\overline z$ 不可互换。
+
+两张二体 Choi 按各自“参考两腿、输出两腿”排列；用两只原 Bell 帽把第一张的输出
+逐条接到第二张的参考，留下 $|K_2K_1\rangle\!\rangle$ 的 dyad。
+每次复合的 proper 帽系数为 $n^{-2}$。任意有限复合及所有原旁观者均由同一切片引理支付。
+特别地，所得矩阵即使非酉，其合同也由自身 Choi 判据原全旁观正；未预设全局矩阵操作。∎
+
+### 两个穷尽谱情形中的原纠缠酉
+
+**命题 164.7（至少两个特征值）。** 若 $M$ 有至少两个不同特征值，已付原资源给出
+一个原全旁观正、其逆亦原全旁观正的纠缠二体酉共轭。
+
+**证明。** 在 $\mathbb C[t]$ 中将最小多项式写为
+$\mu_M(t)=\prod_{\lambda\in\sigma(M)}(t-\lambda)^{r_\lambda}$。
+选非空真子集 $F\subset\sigma(M)$。令 $u$、$v$ 分别为 $F$ 内、外的主因子乘积；
+它们互素，Euclid／Bézout 恒等式给 $hu+kv=1$，取 $f=kv$。
+这就是此处所用的成熟多项式中国剩余定理，具体满足
 
 $$
-\gamma_z(t)=\frac{(v+tz)(v+tz)^{\ast}}{1+t^2\|z\|^2},\qquad
-\gamma_z'(0)=\Theta_v(z)=vz^{\ast}+zv^{\ast}.
-\tag{164.20}
+f\equiv1\pmod{(t-\lambda)^{r_\lambda}}\ (\lambda\in F),\qquad
+f\equiv0\pmod{(t-\lambda)^{r_\lambda}}\ (\lambda\notin F).
 $$
 
-For every unit $w\in S$, its actual binary ball with $p_v$ is
-$\pi\mathcal D(\operatorname{span}\{v,w\})$. Differentiating its
-rank-one boundary through the affine isomorphism gives its entire
-intrinsic tangent direction,
+因而 $\mu_M\mid(f^2-f)$，$P=f(M)$ 是幂等；在两类特征向量上的值分别为一、零，
+故 $0\ne P\ne I_n$。引理164.5供应的是同一个相干 $r_P$，并非只供应 $P$ 的独立分支。
+取由 $\operatorname{im}P$ 与 $\ker P$ 的基组成的 $S\in GL_n$，则
+$S^{-1}PS=P_0$ 是标准坐标正交投影，秩在 $1$ 与 $n-1$ 之间。
+参考腿用 $S^{\mathsf T}$、输出腿用 $S^{-1}$，保留 $I_n$ 并把 $P$ 送到 $P_0$。
+这两个原一体滤波各除以其 $s_A$ 后均 proper；从归一 $r_P$ 的质量为
 
 $$
-\tau_{N,p_v}(p_w)=\pi\Theta_v(\mathbb C Q_vw).
-\tag{164.21}
+\frac{n+\operatorname{rank}P_0}
+ {[n+\operatorname{Tr}(P^*P)]\,
+  \max\{1,\|S^{\mathsf T}\|\}^2\max\{1,\|S^{-1}\|\}^2}>0.
 $$
 
-The map $\Theta_v$ is real linear; complex coefficients on a line
-are carried by the two real directions $\Theta_v(z)$ and
-$\Theta_v(iz)$. Since $Q_vw\in U$, (164.21) implies
+取两份所得资源，在引理164.6中令 $z=-2$，得到
 
 $$
-\tau_{N,p_v}(p_w)\subseteq\pi\Theta_v(U)
- =\tau_{N,p_v}(a)+\tau_{N,p_v}(b),
-\tag{164.22}
+U_P=I_{n^2}-2P_0\otimes P_0,\qquad
+J(\operatorname{Ad}_{U_P})\in C_4.
 $$
 
-for every original pure point of $B_N(a,b)$. This is exactly TC with
-all its quantifiers, for arbitrary correlated lifted vectors.
-
-For completeness these are the noncollapsed tangent spaces themselves.
-If $z\ne0$ and $z\perp v$, then $\Theta_v(z)$ has eigenvalues
-$\|z\|,-\|z\|$ and zeros, by restricting to
-$\operatorname{span}\{v,z\}$. Thus it has sign ranks $(1,1)$ and
-cannot belong to $\mathcal N_N$ by (164.9). Also
-$\Theta_v(z)v=z$, so $\Theta_v$ is injective. Therefore each single
-tangent direction has real dimension two and the endpoint sum
-$\pi\Theta_v(U)$ has dimension four. On
-$\mathbb RP_v\oplus\Theta_v(U)$, taking trace first kills the
-coefficient of $P_v$ for a kernel element, and the same inertia
-argument kills the remaining direction. The homogeneous space has
-real dimension five and is injectively mapped, just as required by
-the original affine tangency convention. This is a derivative on actual
-binary faces, without assuming a global differential structure on $P_N$.
-
-If $m\ge4$, a triple outside every binary face must have three
-independent lifted lines: a dependent triple would lie in the actual
-support-two face already proved. Its support-three density face is
-actual by Theorem 164.4 and is a full qutrit, proving L3. For the general
-budget, at most $r$ lifted lines span dimension at most $r\le m-1$,
-so (164.18) proves the assertion simultaneously at every $N$. ∎
-
-The small-face assertions identify intrinsic positive cones, normalized
-state spaces and their intrinsic affine effect intervals. They do not
-assert that restriction of $R_N\cap[0,I_{D_N}]$ is onto such an
-intrinsic interval at the same unit budget. Formula (164.4), including
-the condition $E\in R_N$, remains the full original menu. In
-particular the geometric budget theorem does not cover arbitrary tests
-of restricted original effects, and it gives no formula for all-level
-pure minima or pure PR. The single-level pure-minimum calculation of
-Theorem 159.1 is not used to replace any higher-level menu.
-
-**Theorem 164.6 (a finite original-neighbor mixture collapses the actual face at every level).**
-For every $m\ge3$ and every $N\ge1$, let
-$v_0=e_1^{\otimes N}$ and $p=\pi_NP_{v_0}$. Then
+$P_0\otimes P_0$ 在整个 $n^2$ 维空间上是正交投影，故 $U_P^*=U_P=U_P^{-1}$。
+在 $\operatorname{im}P_0$、$\ker P_0$ 各取单位向量 $a,b$，则
 
 $$
-F_N(p_N^\perp)=K_N.
-\tag{164.23}
+U_P\left(\frac{b+a}{\sqrt2}\otimes\frac{b+a}{\sqrt2}\right)
+ =\frac{|bb\rangle+|ba\rangle+|ab\rangle-|aa\rangle}{2}.
 $$
 
-In particular both NC and the proper-neighbor-face condition fail at
-this pure point at every finite level, including $N=3$.
+其二阶系数矩阵行列式为 $-1/2$，故 Schmidt 秩为二，$U_P$ 是 imprimitive。
+Choi 判据给它及其同一个逆的全部原旁观正性；迹恒等式给每个提升保迹。
+若前序供应为 $c_P r_{P_0}r_{P_0}^*/(n+k)$，其中 $k=\operatorname{rank}P_0$，则输出是
+$c_P^2J(\operatorname{Ad}_{U_P})/[5(n+k)^2]$，质量 $c_P^2n^2/[5(n+k)^2]>0$。
+这里 $1/(1+|-2|^2)=1/5$；$c_P>0$ 是源滤波与多项式预算的有限乘积。∎
 
-Proof. Use the standard tensor coordinate basis of $\mathbb C^{D_N}$.
-For any coordinate vector
-$w=e_{j_1}\otimes\cdots\otimes e_{j_N}\ne v_0$, choose a slot $\ell$ with $j_\ell\ne1$. Choose an index
-$k$ of the opposite $H$ sign from $j_\ell$, with $k\ne1$.
-There is such an index: each sign block has $m\ge3$ entries, so
-excluding index 1 still leaves an opposite-sign choice when needed.
-On this local slot set
+**命题 164.8（唯一特征值与全空间剪切乘积）。** 若非标量 $M$ 只有一个特征值，
+已付原资源同样给出纠缠二体酉及其正逆。
 
-$$
-A_w=P_{e_{j_\ell}}+P_{e_k},\qquad
-E_w=I_d^{\otimes(\ell-1)}\otimes A_w
-                    \otimes I_d^{\otimes(N-\ell)}.
-\tag{164.24}
-$$
-
-The two local projectors are distinct and orthogonal, so
-$0\preceq A_w\preceq I_d$,
-$\operatorname{Tr}(HA_w)=0$, $A_we_1=0$, and
-$A_we_{j_\ell}=e_{j_\ell}$. Since $I_d\in R$, it follows that
+**证明。** 写 $M=\lambda I_n+N$。最小多项式给 $N\ne0$ 幂零，设其指数 $r\ge2$。
+引理164.5取 $f(t)=(t-\lambda)^{r-1}$，给 $A=N^{r-1}\ne0$ 且
+$A^2=0$，因为 $2r-2\ge r$。
+令 $q=\operatorname{rank}A\ge1$；$\operatorname{im}A\subset\ker A$ 给 $2q\le n$。
+取像空间基 $a_\nu$，选原像 $b_\nu$ 使 $Ab_\nu=a_\nu$，再补齐核空间基。
+这些向量合成基；与164.7完全相同的两次原滤波把 $A$ 相似到
 
 $$
-E_w\in R_N\cap[0,I_{D_N}],\qquad
-E_wv_0=0,\qquad E_ww=w.
-\tag{164.25}
+J=\sum_{\nu=1}^q|a_\nu\rangle\langle b_\nu|,
 $$
 
-Thus every $q_w=\pi_NP_w$ is an original pure zero neighbor of
-$p$: the original effect $I_{D_N}-E_w$ confirms $p$ and vanishes
-at $q_w$. Its complement confirms $q_w$ and vanishes at $p$.
-All these witnesses belong to the same full original menu (164.4) at
-this level. They are allowed to vary with $w$; no common confirmer
-or simultaneous measurement has been assumed.
-
-Write $D=D_N$. The equally weighted mixture of these $D-1$ neighbors
-has the density lift
+现在所有 $a_\nu,b_\nu$ 是互不相同的标准正交基标签。该相似变换的滤波预算也是
+$[n+q]/([n+\operatorname{Tr}(A^*A)]s_{S^{\mathsf T}}^2s_{S^{-1}}^2)>0$。
+交换每对 $a_\nu,b_\nu$ 的实置换酉 $V$ 满足 $VJV^*=J^*$；
+在 $r_J$ 的参考、输出腿同时用 $V$，保持 $I_n$，得到实际 $r_{J^*}$，预算为一。
+置 $X=J\otimes J$，取
 
 $$
-x=\frac1{D-1}\sum_{w\ne v_0}q_w=\pi_N\rho,\qquad
-\rho=\frac{I_D-P_{v_0}}{D-1}.
-\tag{164.26}
+a=i(\sqrt2-1),\qquad b=\frac{i}{\sqrt2},\qquad
+U_J=(I+aX)(I+bX^*)(I+aX).
 $$
 
-Take the actual tensor-kernel direction
+引理164.6分别用两份 $r_J$、两份 $r_{J^*}$、两份 $r_J$ 给三个剪切因子的原 Choi；
+两次复合各用两只 proper 原 Bell 帽，给 $J(\operatorname{Ad}_{U_J})\in C_4$。
+所有系数，包括虚数 $a,b$，都放在已明确的 bra $b_z$ 中。
+
+下面在整个 $n^2$ 维空间核算酉性。它有 $q^2$ 个互相正交的不变二维块
+$H_{\nu\mu}=\operatorname{span}\{|a_\nu a_\mu\rangle,|b_\nu b_\mu\rangle\}$。
+在该有序基中 $X=\begin{pmatrix}0&1\\0&0\end{pmatrix}$，故三个因子的乘积是
 
 $$
-Z=H\otimes P_{e_1}^{\otimes(N-1)}\in\mathcal N_N.
-\tag{164.27}
+\begin{pmatrix}1&a\\0&1\end{pmatrix}
+\begin{pmatrix}1&0\\b&1\end{pmatrix}
+\begin{pmatrix}1&a\\0&1\end{pmatrix}
+=\begin{pmatrix}1+ab&2a+a^2b\\b&1+ab\end{pmatrix}
+=\frac1{\sqrt2}\begin{pmatrix}1&i\\i&1\end{pmatrix}.
 $$
 
-It has trace zero. For $0<t<1/(D-1)$ the diagonal matrix $\rho+tZ$
-is positive definite: its formerly missing $v_0$ entry is $t>0$;
-all other entries in the slice with slots $2,\ldots,N$ equal to
-$e_1$ are $1/(D-1)+t$ or $1/(D-1)-t$, both positive; all
-untouched entries are $1/(D-1)>0$. At $N=1$ the slice is the
-whole coordinate basis and the same calculation applies. Its trace
-is one and $\pi_N(\rho+tZ)=x$.
+这里 $ab=-1+1/\sqrt2$，且
+$2a+a^2b=a(2+ab)=i(\sqrt2-1)(1+1/\sqrt2)=i/\sqrt2$。
+该矩阵与其伴随相乘为 $I_2$。
+所有 $H_{\nu\mu}$ 的正交补上 $X=X^*=0$，三个因子均为恒等。
+所以 $U_J$ 在全部 $n^2$ 维空间酉；没有遗漏混合 $a,b$ 标签或其余 $n-2q$ 个方向。
+它将乘积 $|b_\nu b_\mu\rangle$ 送为
+$(i|a_\nu a_\mu\rangle+|b_\nu b_\mu\rangle)/\sqrt2$，Schmidt 秩为二。
 
-The restriction of $\pi_N$ from the trace-one affine hyperplane
-onto $\{u_N=1\}$ is a surjective affine map, hence open. A positive
-definite density has a neighborhood in that hyperplane contained in
-the density set. Its image therefore belongs to $\operatorname{ri}K_N$.
-Thus $x\in\operatorname{ri}K_N$. Any actual face containing the
-neighbors contains their finite mixture $x$ and hence all of $K_N$:
-for any $y\in K_N$, relative interior lets $x$ be an open-segment
-point between $y$ and another point of $K_N$, and the face property
-then includes $y$. This proves (164.23) directly using only original
-effects and an explicit interior lift. ∎
-
-**Theorem 164.7 (NC cannot be deleted from the three-copy candidate in the full finite background).**
-In the unchanged original domain (161.1)–(161.3), the condition
-that $K_3$ satisfy L2 and TC does not imply the proper-neighbor-face
-condition or NC. Even requiring L2 and TC at every finite level does
-not imply either condition at level 3, or at every level. For every
-fixed finite geometric face budget $r$, there is one fixed-local-space
-hierarchy satisfying that budget at every level while (164.23) holds
-at every level.
-
-Proof. Take the hierarchy of Definition 164.1. Theorem 164.2 supplies
-the whole all-finite background; Theorems 164.4–164.5 supply the
-actual faces and L2/TC, and Theorem 164.6 contradicts the desired
-neighbor-face conclusion. For budget $r$, choose
-$m\ge\max\{3,r+1\}$ once, before choosing $N$, and use this same
-$V$ at all levels.
-
-There is also a direct carrier obstruction to a full complex matrix
-cone at level 3:
+逆也逐项支付，而不从“矩阵酉”直接推断未知原锥上的逆正性：
 
 $$
-\dim_{\mathbb R}V=4m^2-1,\qquad
-\dim_{\mathbb R}W_3=(4m^2-1)^3.
-\tag{164.28}
+U_J^*=(I+\overline aX^*)(I+\overline bX)(I+\overline aX^*).
 $$
 
-Since $(2m-1)^2<4m^2-1<(2m)^2$, the local dimension is not a
-square. Its cube is not a square either: if an integer cube is a
-square, parity of prime exponents makes the integer itself a square.
-A full complex Hermitian matrix cone has square real dimension. At
-$m=3$, the dimensions are exactly $35$ and $35^3=42875$.
-Consequently this whole $C_3$ is not linearly order isomorphic to
-any full complex matrix cone. The actual-neighbor-face obstruction
-(164.23) gives the explicit geometric failure in addition to this
-dimension obstruction. ∎
+用 $r_{J^*},r_J,r_{J^*}$ 和帽系数 $\overline a=-a,\overline b=-b$ 重做同一构造，
+得到它的原 Choi。于是两个方向均原全旁观正，且矩阵迹恒等式给保迹。
+若前序供应为 $c_Jr_Jr_J^*/(n+q)$，则此六副本构造明确输出
 
-The mathematical picture is that a quotient can leave every sufficiently
-small support face intact while identifying mixtures of many different
-pure points. 中文图景：把原态体看成由许多纯端点围成的整块凸体，每两端点之间的
-完整三球及其切向接合都能原样保留，甚至任意预先规定数目的端点所生成的小面都
-能保留；但固定一个端点后，全部能用原尺与它完全区分的邻点，仍可混成凸体内部的
-一点。一张实际面只要含这个内部点，就不得不吞下整块凸体，也吞下原端点。
-这里每一有限份数使用同一个局部商的张量幂，所有原尺、相关态、分组、交换和
-重括号同时存在；缺失的是全局邻点面不塌缩这一关系，而非局部小球或其切方向。
+$$
+\frac{c_J^6J(\operatorname{Ad}_{U_J})}
+ {(n+q)^6(1+|a|^2)^2(1+|b|^2)n^4},
+\qquad c_J>0.
+$$
 
-The complete candidate $\mathsf G_3$ of §161.1 remains
-L2 + TC + proper neighbor face; its existing correspondence in Theorem
-161.5 and §161.10 retains exactly its stated suppliers and hypotheses.
-The countermodel excludes the attempted deletion of its third clause;
-it does not furnish a further reconstruction or a minimum independent
-axiom set. The finite face-budget assertion is intrinsic state geometry,
-not an assertion about unrestricted face-effect extensions. No
-all-level pure PR or whole EB3 property is a conclusion here, and the
-bare whole-EB3 + pure-PR reconstruction question of §160.7 remains
-outside this countermodel. The construction supplies mathematical
-ordered cones and their complete dual menus; physical realization,
-available instruments and calibrated dynamics are additional questions.
+其质量为该正系数乘 $n^2$；逆的构造有相同预算。
+若要把某个中间剪切单独当成不增迹数学分支，可把其矩阵 $I+zX$
+除以 $\max\{1,\|I+zX\|\}$，相应合同除以该数的平方：
+其输入原 $C_2$ 已是 PSD，故单位正差及任意原旁观预算都由最大界给出。
+本构造本身直接复合 subnormalized Choi，未把未缩放剪切宣称为 proper 事件。∎
 
-Relative to Lemma 162.3 and Theorem 162.16, the intrinsic state-face
-identifications here do not establish AD or DS at every finite level;
-in particular, AD at level 3 has not been supplied. This hierarchy
-separates L2 and TC from NC in the full finite background. It does not
-remove NC from $\mathsf R_3=\mathrm{L2}_3+\mathrm{NC}_3+\mathrm{AD}_3$.
+### 精确全有限尾部与一个显式六副本见证
 
-The new mathematical assertion is the joint all-finite construction
-with its tensor-kernel bound, actual-face range and direct original
-neighbor mixtures. The one-copy balanced quotient and its one-copy
-pure minima already occur in Theorem 159.1; its TC specialization is
-Theorem 160.7. The tensor sign-rank premise is proved here rather than
-assumed from those one-copy statements. The general low-rank/inertia
-criterion is mature background, attributed to [CHST164] and the existing
-[literature note](../../../Library/HilbertOperators/carmeliheinosaarischultztoigo2014tasks.md).
-Related tensor measurement arguments use kernel decompositions, phase
-variation, compression and inertia [CHSTTensor164, §§III–V]; this is
-method context, not a citation for the all-$N$ bound (164.9).
-The construction and its geometric combination are `repo-derived`;
-this describes the derivation and asserts no historical priority for
-the tensor inertia argument or the construction. No Hermitian-cap classification,
-conditional reconstruction supplier or propagation theorem is a premise
-of Theorems 164.2–164.7.
+**引理 164.9（既有有限字及双向夹逼的准确接合）。** 在定义164.1下，若一个 imprimitive
+二体酉 $U$ 的共轭及其逆已原全旁观正，则对全部有限 $N$，$C_N=\operatorname{PSD}_{n^N}$。
 
-[CHST164]: https://arxiv.org/pdf/1308.5502v2 "C. Carmeli, T. Heinosaari, J. Schultz and A. Toigo, Tasks and premises in quantum state determination, J. Phys. A 47 (2014), 075302; §4.1, Lemmas 1–2 and Theorem 1(a), DOI 10.1088/1751-8113/47/7/075302."
-[CHSTTensor164]: https://arxiv.org/pdf/1411.0828v2 "C. Carmeli, T. Heinosaari, J. Schultz and A. Toigo, Expanding the Principle of Local Distinguishability, Phys. Rev. A 91 (2015), 042121; §§III–V, DOI 10.1103/PhysRevA.91.042121."
+**证明。** 复用 [VII，引理102.10及定理103.8证明的尾部][Q164VII]。
+这里接合的是“原全旁观可逆纠缠门”之后的证明接口；不把本章的门冒充103.8陈述中的两张指定 dyad。
+为明确所代入的量词，假定旧 $N-1$ 腿能用有限字精确给全部 $U(D)$，$D=n^{N-1}$。
+这些字的每个生成元都有任意原旁观提升，所以整字可把新原腿保持恒等。
+新腿提供 $U(e)$，$e=n$。把 $U$ 放在一个旧实际位置与新腿；固定其余旧腿为乘积向量，
+原二体的纠缠见证即为“旧整个块／新腿”切分的 Schmidt 秩大于一的见证。
+因此这个跨块门 imprimitive，旧有限字与新局域酉支付全部 $U(D)\otimes U(e)$。
 
+Harrow，[arXiv:0806.0631v1，推论2][Q164H]，允许 $D\ne e$，并给精确有限乘积覆盖
+$U(De)$。将每个旧块因子展开回已得有限字，仍是同一原 $N$ 腿上的有限字。
+归纳从一体原酉开始；所有生成元及其逆均已有原正性与保迹预算。
+这里没有新增一个任意分组矩阵映射，也没有以稠密性、极限或近似门替代精确生成。
+精确性属于 Harrow 的成熟定理；该尾部的原旁观归纳属于已存在的 VII102.10。
+
+最后照用 VII103.8 的两个包含，写出单块情形。
+原一体纯态的乘积 $p_0$ 由最小界在 $C_N$；有限字把它送到任意归一秩一 dyad。
+有限谱分解给 $\operatorname{PSD}_{n^N}\subseteq C_N$。
+反向，局部秩一效应的乘积 $e_0(x)=\operatorname{Tr}(p_0x)$ 是原 proper 效应。
+其正性由最大界给出，上界逐次使用
+
+$$
+u_{a+b}-f\otimes g=(u_a-f)\otimes u_b+f\otimes(u_b-g)\in C_{a+b}^*.
+$$
+
+对任意单位 $\psi$，选有限字 $W$ 使 $Wp_0W^*=|\psi\rangle\langle\psi|$。
+已支付的逆字给原 proper 效应 $e_0\circ\operatorname{Ad}_{W^*}$，故对每个 $x\in C_N$，
+$\langle\psi|x|\psi\rangle\ge0$。于是 $C_N\subseteq\operatorname{PSD}_{n^N}$。
+这确立全部原态与全部原效应的等式，不只是一个可生成的态子锥。
+任一有限字若按资源协议实现，其每次 Choi 接入均有引理164.3的有限正因子；
+字长有限即总预算严格正。其数学保迹自同构性质不要求该资源分支确定性成功。∎
+
+**命题 164.10（显式种子的六副本、十八腿预算）。** 取
+
+$$
+\tau_n=\sum_{i=0}^{n-1}|ii0\rangle+|011\rangle
+ =|I_n\rangle\!\rangle|0\rangle+|E_{10}\rangle\!\rangle|1\rangle.
+$$
+
+若 $\tau_n\tau_n^*\in C_3$，六份归一原种子即可给一个纠缠二体酉的原四腿 Choi，
+且成功质量明确非零；不需要先调用控制多项式网络。
+
+**证明。** 本约定下 $E_{10}=|1\rangle\langle0|$，故它的向量化确为 $|01\rangle$。
+三个局部秩是 $(n,n,2)$，$\|\tau_n\|^2=n+1$。
+令 $J=E_{10}$、$X=J\otimes J$，$a,b$ 取164.8的值。
+将六份 $\tau_n\tau_n^*/(n+1)$ 依次配为三对，初始原锥为 $C_{18}$。
+中间一对的每份资源在两条数据腿同时施加交换 $|0\rangle,|1\rangle$ 的实置换酉；
+这把 $J$ 送为 $J^*$，保留 $I_n$，范数与质量都不变。
+
+三对控制腿依次用 $e_a,e_b,e_a$，每只帽均是164.6的实际 proper 二腿效应。
+三次切片 $C_{18}\to C_{16}\to C_{14}\to C_{12}$ 后，
+剩下三张四腿 Choi，矩阵分别为 $K_a=I+aX$、$K_b=I+bX^*$、$K_a$。
+每张的腿均按“参考两腿、输出两腿”排列。
+第一张输出两腿分别接第二张参考两腿，第二张输出两腿再接第三张参考两腿。
+每个接头是 $\beta_n/n$；第一次双接头 $C_{12}\to C_8$，第二次 $C_8\to C_4$。
+因此数据帽恰有四只，连同三只控制帽共七只，消去十四腿，留下四腿。
+串行顺序给 $K_aK_bK_a=U_J$；164.8已在整个 $n^2$ 空间证明其酉性及纠缠性。
+
+最终原输出及其成功质量恰为
+
+$$
+\frac{J(\operatorname{Ad}_{U_J})}{D_n},\qquad
+D_n=(n+1)^6(1+|a|^2)^2(1+|b|^2)n^4,
+\qquad p_n=\frac{n^2}{D_n}>0.
+$$
+
+六份归一种子给 $(n+1)^{-6}$；三只 proper 控制帽给
+$(1+|a|^2)^{-2}(1+|b|^2)^{-1}$；四只 proper 数据帽给 $n^{-4}$。
+因 $U_J$ 酉，Choi 的迹是输入维数 $n^2$，所以这就是成功质量。
+$1+|a|^2=4-2\sqrt2>1$、$1+|b|^2=3/2$，故 $0<p_n<1$；
+上界也直接来自逐次 proper 预算。
+把三对类型改为 $J^*,J,J^*$，帽系数改为 $-a,-b,-a$，同一分母供应 $U_J^*$。
+一切局部置换、帽与旁观扩张均已由原 $C_2$ 及切片支付。
+若再用两只 proper 原 Bell 帽把这个四腿资源接到任意归一两腿输入，
+所得是 $\operatorname{Ad}_{U_J}/(D_nn^2)$，成功质量 $1/(D_nn^2)>0$。
+恢复未缩放 Choi 只用于锥成员关系；并未恢复该分支的事件成功率。
+
+当 $n=2$，只在输出腿交换 $0,1$，$\tau_2$ 就变为
+$|010\rangle+|100\rangle+|001\rangle$，即 W 代表。
+当 $n>2$，它的控制秩二与 GHZ$_n$ 的秩 $n$ 不同，因此不在 GHZ$_n$ 的可逆局部类中。∎
+
+**定理 164.11（正则铅笔与完整有限量子层级）。** 对每个固定 $n\ge2$，在定义164.1的
+同一个实际全有限背景内，以下条件等价：
+
+1. 某个原三腿矩阵秩一种子含定义164.2的二元正则铅笔。
+2. 存在 $M\notin\mathbb C I_n$，使 $r_Mr_M^*\in C_3$。
+3. 命题164.10的明确 dyad $\tau_n\tau_n^*$ 属于原 $C_3$。
+4. 对每个有限 $N\ge1$，$C_N=\operatorname{PSD}_{n^N}$，全部等式均在原实际坐标中。
+
+**证明。** 1到2由单次相干控制滤波和输出左乘给出，全部预算见164.4；2显然给1。
+由2先用164.4支付整个实际 qubit 控制族，再用164.5支付所需有限多项式。
+非标量复矩阵要么有至少两个特征值，要么只有一个特征值；164.7、164.8分别供应
+原可逆纠缠门及其所有旁观提升。164.9的既有精确尾部给4。
+4在 $N=3$ 包含明确 PSD dyad $\tau_n\tau_n^*$，给3；3又以 $M=E_{10}$ 给2。
+此外3直接由164.10的六副本门接164.9给4，独立展示该见证的完整有限预算。
+所证是一个合格种子的存在性；并不要求每个给定 GME 向量本身具有正则切片。∎
+
+### 原量子字典、几何与保留的缺口
+
+**推论 164.12（完整静态字典及其操作边界）。** 在定理164.11的等价条件下，
+对每个有限 $N$，同一原数据满足下列对应；这是 [VII，102.12—102.15及103.12][Q164VII]
+在本章已得整锥等式后的复用。
+
+| 原对象／量词 | 对应的有限复量子数据 | 来源与限度 |
+| --- | --- | --- |
+| $K_N$ 与凸混合 | $\rho\succeq0$、$\operatorname{Tr}\rho=1$，通常混态分解 | 凸准备为输入；全部 PSD 而非可生成子锥由164.9给出 |
+| 全部原纯态 $P_N$ | 单位秩一投影，$\mathbb{CP}^{n^N-1}$ | 只在整锥等式之后识别原极点 |
+| 全 proper 效应与有限菜单 | $0\preceq E\preceq I$；全部有限 POVM，含投影测量 | 原完整对偶及单位区间，不是选定探针 |
+| 原配对与概率 | $\Pr(a\mid\rho)=\operatorname{Tr}(E_a\rho)$ | Born 式是既定实际配对的坐标表达 |
+| 原复合、置换、丢弃 | 通常张量积、因子交换、偏迹及其所有有限复合 | 实际实张量结构为站立输入；整联合正锥现已确定 |
+| least 确认与全部高阶比较 | $T_p^{(N)}(x)=\operatorname{Tr}(px)$；纯态间 $|\langle\psi,\phi\rangle|^2$，所有 $S_N$ | 复用 VII102.12 的 least 投影证明，未以 $S_3$ 作入口 |
+| 原全旁观正 $F:W_m\to W_k$ | 通常矩形 CP 映射 $F(x)=\sum_\alpha K_\alpha xK_\alpha^*$ | 原自身 Choi 后接成熟 Choi／Kraus 表示；任意矩阵参考 CP 是结论 |
+| 原不增迹／保迹预算 | $\sum_\alpha K_\alpha^*K_\alpha\preceq I$／$=I$ | 测试整个输入锥；不是只看 Choi 总迹 |
+| 原数学可逆保迹控制 | 本文构造的所有全局酉共轭及其逆 | 每个目标有精确有限字；不指定资源协议确定性成功 |
+
+**证明。** 态锥等式使非退化迹配对下的完整原对偶等于 PSD；单位上下界就是效应行。
+PSD 的有限谱分解给纯态与混态对应；VII102.12的确认投影论证给 least 公式。
+任意 $m,k$ 的原自身 Choi 现在是完整 $\operatorname{PSD}_{n^{m+k}}$；
+VII102.13引用的 Watrous 定理2.22、2.26给有限矩形 Kraus 表达与逐输入预算。
+这些结论从锥等式读取，不再调用带不同前提的三份重构定理。∎
+
+若额外选择 VII102.14的事件饱和，全部 CP-TNI 分支和有限 CP 仪器才成为该菜单的可用事件。
+仪器条件为 $\sum_{a,\alpha}K_{a,\alpha}^*K_{a,\alpha}=I$；归一输入的分支概率为
+$p_a=\operatorname{Tr}(F_a\rho)$，且仅当 $p_a>0$ 时条件态 $F_a\rho/p_a$ 有定义。
+一个给定效应仍不指定唯一更新，Lüders 更新是额外选择；有更新的测量次序仍可不交换。
+所有酉共轭都已是数学保迹自同构，但静态数据不选物理钟、连续时间族、Hamiltonian、
+时间尺度或 $\hbar$。选定可微酉时间族后的 Hamiltonian 描述不能反过来充当本章结论的输入。
+复数矩阵载体、单块维数 $n$、已对齐低二层、凸准备、完整菜单和全有限实际复合都是输入；
+本章确定剩余全部高阶锥，未从零导出这些站立输入。
+
+**说明 164.13（简洁几何与任意 GME 缺口）。** 新种子的几何只需一条射影矩阵线
+$\mathbb P(\mathcal L)\subset\mathbb P(M_n(\mathbb C))$，它不被行列式零超曲面包含。
+选线上一个满秩点作 $I_n$，另一个独立方向作 $M$，便得到一个实际二元相干选择。
+同时可逆左、右滤波和铅笔基变换保持“二维且含满秩点”；选定 $I_n$ 后，
+保留它的两侧滤波实现相似变换。若重新选
+$A'=aA+bB$ 为满秩点、$B'=cA+dB$，$ad-bc\ne0$，则
+
+$$
+M'=(aI+bM)^{-1}(cI+dM).
+$$
+
+只有 $aI+bM$ 可逆时这张局部图才适用；不声称任意基变换都保持指定首切片可逆，
+也不声称有唯一、规范或与坐标无关的 $M$ 代表。
+多项式网络把这一条线的相干控制转为其有限函数演算：谱分开就选幂等，谱不分开就取
+最高非零幂零幂。两条路均保持原数据腿，不需要把 qubit 字串融合成一条原 $n$ 维腿。
+
+正则入口比“指定种子必须 SLOCC 等价于 GHZ$_n$”更宽：GHZ$_n$ 的对角切片像含
+$I_n$ 及一个独立投影，故满足入口；$n>2$ 的 $\tau_n$ 也满足入口，却因局部秩
+$(n,n,2)$ 不在该类中。这里没有把这种放宽误写成 GHZ$_n$ 到 $\tau_n$ 的单副本滤波转换。
+
+对 $n>2$ 的**任意** GME 矩阵秩一种子，163章只已支付完整二维压缩层级。
+例如嵌入的 $|000\rangle+|111\rangle$ 是 GME，但所有切片的秩至多二，
+所以该给定种子没有原 $n\times n$ 满秩切片。由任意这样的种子是否仍能推出存在另一正则种子，
+或直接推出全部原层级，本章保持开放。正则切片是本定理的充分入口；没有证明它对每个
+能完成重构的给定种子都必要。VII104.12—104.13及163.8的混合原编码接口仍可作为另一条
+具名充分路线，不能由 qubit 内的 CP 操作直接替代；本章在正则子类中支付的是不同接口。
+有限 ket 网络类、有限前缀或某类未能找到满秩切片的尝试，都不构成完整全有限反模型。
+
+### 供应归属与原始来源
+
+本章的项目增量是正则二元资源的上述存在性等价、串行数据线与完整实际 qubit 控制族之间的
+相干多项式接口，以及将两个谱情形逐一接回原 Choi、全部旁观者和 proper 预算。
+谱多项式、中国剩余定理、幂零与幂等的相似标准形是成熟线性代数；这里已给所需代数推导。
+GHZ/W 分类、三 W 三角供应、完整 qubit retract、Choi／Kraus 表示、精确有限普适性与
+既有原态—效应夹逼均各归原来源，不把其重复接合另算成新的文献定理。
+
+| 精确供应 | 本章消费的内容 |
+| --- | --- |
+| VII 定义102.1、引理102.6—102.8 | 原全有限模型；整锥切片；自身 Choi、重复帽预算；局域操作全部原旁观提升 |
+| VII 命题103.7、定理103.8 | 已付叉口到两 dyad 的 qubit 供应及其尾部；164.9仅复用纠缠门后的证明接口 |
+| VII 引理102.10 | 异维旧块／新腿上的精确有限字归纳；非稠密近似 |
+| VII 命题104.11、定义104.12及命题104.13 | 完整 qubit 正 retract 与全对偶；混合编码的准确边界 |
+| 本卷第163章 163.2—163.4、163.6—163.8 | 滤波与 GHZ/W 三角预算；整个压缩族；尚未支付的一般维数编码边界 |
+| VII 102.12—102.15、103.12 | 已得整锥后的量子字典、事件饱和、条件更新与时间限制 |
+
+VII 只读供应源是 `docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md`，
+来源固定为已发表提交 `657a8ba435bf2cae463e935d957d8038b69be8a3`。
+163供应来自本卷已发表的第163章，具体消费 163.2—163.4、163.6—163.8 的原滤波、三体种子、二维压缩和预算接口；这些接口构成本章的数学前置。
+
+原始文献：W. Dür、G. Vidal、J. I. Cirac，
+[*Three qubits can be entangled in two inequivalent ways*][Q164DVC]，
+Phys. Rev. A **62**, 062314 (2000)，DOI [10.1103/PhysRevA.62.062314](https://doi.org/10.1103/PhysRevA.62.062314)；
+§III.1—III.2给三 qubit 局部秩边界与 GHZ/W 分类，附录A给可逆局部算子与 SLOCC 的关系。
+本章经163的资源预算调用该分类，不将其推广成一般 $n$ 的完整 SLOCC 分类。
+Aram W. Harrow，[*Exact universality from any entangling gate without inverses*][Q164H]，
+arXiv:0806.0631v1 (2008)，推论2明确给 $U(d_A)\otimes U(d_B)$ 加一个 imprimitive 门的
+精确有限生成，且不要求 $d_A=d_B$；本章不重新证明或重新归属这一结果。
+John Watrous，*The Theory of Quantum Information* (2018)，定理2.22、2.26，
+按 VII102.13的矩形 Choi／Kraus 供应复用。
+
+[Q164VII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+[Q164DVC]: https://arxiv.org/abs/quant-ph/0005115v2
+[Q164H]: https://arxiv.org/abs/0806.0631v1
+
+Matthias Christandl、Fulvio Gesmundo、Jeroen Zuiddam，[*A Gap in the Subrank of Tensors*][Q164CGZ]，arXiv:2212.01668v2，§3 命题 3.1(i)(ii) 给出：在复数域的三因子情形，分割秩至少二（等价地，所有非平凡展平秩至少二）可作一个保持该性质的二维限制，并且一般限制也保持它。因此，163.5 所用的同时二维限制是成熟的精确特例；该结果本身不供应本章的原锥、完整对偶、旁观者继承或预算接口。
+
+Eric Chitambar、Carl A. Miller、Yaoyun Shi，[*Matrix Pencils and Entanglement Classification*][Q164CMS]，arXiv:0911.1803v1，§3 式(3)—(6)及引理 2 给出成熟的矩阵铅笔字典：$2\otimes m\otimes n$ 纯态对应 $\mu R+\lambda S$，局部数据滤波按 $BRC^{\mathsf T}$、$BSC^{\mathsf T}$ 作用，控制腿的 $GL_2$ 变量改变铅笔参数；控制因子分离当且仅当铅笔两项标量成比例。该字典说明本章的正则铅笔几何，但不供应本章的全有限原锥、旁观者或预算桥。
+
+[Q164CGZ]: https://arxiv.org/abs/2212.01668v2
+[Q164CMS]: https://arxiv.org/abs/0911.1803v1
+
+**完整中文图景。** 固定一份和两份的量子坐标后，只要原三腿里有一个真正相干的二选一：
+一支是满秩的一一配对，另一支是与它不同的配对，就能把前者当作恒等矩阵，后者记作非标量 $M$。
+先从这个种子截出二维纠缠，复用已有结果取得任意有限控制态；数据始终沿原来的 $n$ 维腿串行走，
+控制只决定这条线上用了多少次 $M$，再以一次共同收缩把它们组合成所需多项式。
+若 $M$ 的谱能分开，多项式就挑出一个非平凡投影，给出受控变号；若谱只有一点，最高非零幂留下
+平方零偏移，三个剪切便在整个空间上合成纠缠酉。每一步都由原资源、原帽、有限正成功质量和
+全部原旁观者上的正性支撑；既有精确有限字随后把任意有限份的全部态锥与效应锥锁成量子形式。
+更一般的高维 GME 种子是否也总能越过满秩接口，仍然开放；这幅几何图景没有替它预付编码，
+也没有从静态锥几何选出物理事件、更新规则或时间。
 ## 追加锚（本行以下为增补区）
