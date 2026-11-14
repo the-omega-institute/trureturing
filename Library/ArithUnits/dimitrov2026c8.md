@@ -40,6 +40,10 @@ are unpowered. The native Lean definitions are `Nat.totient`,
 `OeisA344695GcdSigmaPsiPrimes.psi`, and `ArithmeticFunction.sigma 1`.
 The natural exponent identity $2k-2=2(k-1)$ uses $k\ge1$, including $k=1$.
 
+## Verified locator
+
+https://arxiv.org/abs/2606.12484v1, §2, PDF page 5, Conjecture 8.
+
 ## Consumed Lean supplier
 
 The analytic supplier is a modified Apache-2.0 source port from
