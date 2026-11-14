@@ -4897,3 +4897,87 @@ Other classification results do not replace a missing interface. [LNT159, Theore
 本章的证明层级是纸面数学；不主张 Lean/kernel 认证、全球优先权、严格最小公理数或实际物理实现。
 
 ## 追加锚（本行以下为增补区）
+
+## 160. Dimension-free singleton redundancy or localized repeated-pair collapse
+
+**定义 160.1（The complete original domain and the two numerical quantities）。** Let $V$ be a nonzero finite-dimensional real vector space, $C\subset V$ a closed pointed generating convex cone, and $u\in V^*$ strictly positive on $C\setminus\{0\}$. Retain the entire original base, pure set, effect interval, and confirmation menus:
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad \mathcal E=[0,u]_{C^*},\quad F_p=\{f\in\mathcal E:f(p)=1\},\\
+T_p(x)=\min_{f\in F_p}f(x)\quad(p\in P,\ x\in K),\qquad D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+\tag{XII160.1}
+$$
+
+Assume complete EB3, meaning that every entire $D_p$ is affinely isomorphic to the nondegenerate closed three-ball, and literal pure PR, meaning $T_p(q)=T_q(p)$ for all $p,q\in P$. There is no uniform bound on $\dim V$. PR compares pure endpoints; it is not a sequential measurement law. Fix any auxiliary Euclidean metric on $\operatorname{aff}K$ for all relative interiors, boundary contacts, and ambient Hausdorff limits below. Write
+
+$$
+\begin{gathered}
+\mathscr B=\{D_p:p\in P\},\quad S(F)=P\cap F=\operatorname{ext}F,\quad I(F)=\{p\in P:D_p=F\},\quad P_{\rm s}=\{p\in P:I(D_p)=\{p\}\},\\
+N_p=\{h\in C^*:h(p)=0\},\quad L_p=\operatorname{span}_{\mathbb R}N_p,\quad R_p:L_p\to\operatorname{Aff}(D_p),\quad R_ph=h|_{D_p},\\
+\mathcal A_p=\{e\in F_p:e|_{D_p}=0\},\quad a(p)=\dim\ker R_p=\dim_{\rm aff}\mathcal A_p\quad(p\in P_{\rm s}),\qquad
+N_F=\{h\in C^*:h|_F=0\}.
+\end{gathered}
+\tag{XII160.2}
+$$
+
+The equality defining $a(p)$, surjectivity of $R_p$, and $\dim\operatorname{span}N_{D_p}=a(p)+1$ are exactly the dimension-free local formulas of XII147.2; the nine-dimensional premise of XII147.1 is not used. For every actual ball $F\in\mathscr B$, define its contrast and budget by
+
+$$
+\delta(F)=\max_{r,s\in S(F)}\bigl(1-T_r(s)\bigr)=2\alpha_F>0,\qquad \beta_F=\delta(F)^{-1}.
+\tag{XII160.3}
+$$
+
+Here $\alpha_F$ is the coefficient denoted $a_F$ in IX114.5: for any affine ball chart $b_F$ it gives $T_{b_F(v)}(b_F(z))=1-\alpha_F+\alpha_F v\cdot z$ for $v\in S^2,z\in B^3$. Its maximum pure-pair gap is $2\alpha_F$, attained at antipodes, and IX114.6 identifies $\beta_F$ with the finite positive-extension budget. This coefficient is distinct from the integer redundancy $a(p)$ in (XII160.2).
+
+**定理 160.2（Inclusive dichotomy with contacts at every mixed singleton-ball interior point）。** Under Definition 160.1, at least one of the following holds: there exists $q\in P_{\rm s}$ with $a(q)=0$; or, for every $p\in P_{\rm s}$ and every $y\in\operatorname{ri}D_p$, there are actual repeated paired balls $H_n,G_n\in\mathscr B$ and mixed states $x_n\in\operatorname{ri}H_n$ such that
+
+$$
+\begin{gathered}
+I(H_n)=S(G_n),\quad I(G_n)=S(H_n),\quad H_n\cap G_n=\varnothing,\quad
+\dim\operatorname{span}N_{H_n}=1,\\
+x_n\longrightarrow y,\qquad H_n\longrightarrow D_p,\qquad G_n\longrightarrow\{p\},\\
+\delta(H_n)\longrightarrow\delta(D_p)>0,\quad \delta(G_n)\longrightarrow0,\quad
+\beta_{H_n}\longrightarrow\beta_{D_p}<\infty,\quad \beta_{G_n}\longrightarrow+\infty.
+\end{gathered}
+\tag{XII160.4}
+$$
+
+Each $x_n$ is a smooth contact in the precise sense that $K$ has a unique supporting hyperplane there, relative to $\operatorname{aff}K$; no differentiability on a neighborhood is asserted. The disjunction is inclusive, with no claim that the two alternatives exclude one another. The contrast limits are consequences of the existing suppliers IX114.5–IX115.6, not additional classification assertions.
+
+证明。Assume there is no zero-kernel singleton. IX116.6 supplies $P_{\rm s}\ne\varnothing$ and closure of this set under pure zero-neighbors; XII147.2 gives $a(p)\ge1$ for every $p\in P_{\rm s}$. The original face classification recalled in IX114.2 gives that every nonempty proper face is a pure singleton or an actual complete ball, and different complete balls intersect only in a pure singleton. By IX114.4, $P$ is compact. Fix $p\in P_{\rm s}$ and $y\in\operatorname{ri}D_p$; this $y$ is mixed and has positive distance from $P$.
+
+Choose $z_n\in\operatorname{ri}K$ with $z_n\to y$, set $r_n=\operatorname{dist}(z_n,\partial_{\rm rel}K)>0$, and choose a nearest boundary point $x_n$. The closed relative Euclidean ball $\overline B(z_n,r_n)$ lies in $K$: otherwise a segment from its center to a point outside $K$ would first hit the boundary at a smaller distance. Since $y$ is a boundary point, $r_n\le\|z_n-y\|$, so $\|x_n-y\|\le2\|z_n-y\|\to0$. Every supporting hyperplane of $K$ at $x_n$ also supports this inner ball at its contact, hence is its unique tangent hyperplane. Homogenizing nonnegative affine functions on $K$ identifies the positive zero normals there with $\{h\in C^*:h(x_n)=0\}$; this is a nonzero ray. This is the inner-ball support argument used in IX120.9, independently of its global Inj premise.
+
+After deleting finitely many terms, $x_n\notin P$. A supporting face through $x_n$ is consequently nonpoint, hence an actual ball $H_n$. Its relative boundary consists of pure states, so $x_n\in\operatorname{ri}H_n$. A nonnegative affine function zero at a relative interior point is zero on the whole face: extend a short segment through that point in the direction opposite any given face point and use nonnegativity at both ends. Thus $N_{H_n}=\{h\in C^*:h(x_n)=0\}$ and its span has dimension one. If $I(H_n)=\{t\}$, XII147.2 would give $a(t)+1=1$, contradicting the assumed absence of zero-kernel singletons. IX116.2 therefore gives its unique actual repeated partner $G_n$ and the pairing identities in (XII160.4).
+
+We next prove whole-ball convergence, rather than only convergence of the contacts. Along any subsequence choose $t_n\in I(H_n)$ and extract a further subsequence with $t_n\to t\in P$ and $H_n$ Hausdorff convergent; compactness of $P$ and of the nonempty compact subsets of $K$ permits this. IX115.5 says its limit is $D_t$ or a pure singleton. The limit contains the mixed point $y$, so the singleton case is impossible. Since $y\in D_t\cap D_p$, the face-intersection rule gives $D_t=D_p$. Every subsequence thus has a further subsequence converging to $D_p$, proving $H_n\to D_p$.
+
+For the partner limit, take any sequence $s_n\in S(G_n)=I(H_n)$ and any convergent subsequence $s_n\to s\in P$. For each $v\in D_p$, Hausdorff convergence supplies $v_n\in H_n=D_{s_n}$ with $v_n\to v$; the closed original zero graph of IX115.4 gives $v\in D_s$. Maximality gives $D_s=D_p$, and the singleton label of $D_p$ gives $s=p$. Compactness of $P$ now implies $\sup_{s\in S(G_n)}\|s-p\|\to0$; otherwise points witnessing a fixed positive lower bound would have a different cluster point. Since $G_n=\operatorname{conv}S(G_n)$, the same upper bound holds throughout $G_n$, proving $G_n\to\{p\}$.
+
+For the contrast limits use D. Labardini-Fragoso, M. Neumann-Coto and M. Takane, *Cones and convex bodies with modular face lattices*, [arXiv:0903.0643v1](https://arxiv.org/pdf/0903.0643v1), Lemma 4(b): for a convex body with compact extreme set, convergence of faces to a face implies Hausdorff convergence of their extreme sets. Here the body is the entire original $K$ in $\operatorname{aff}K$, its extreme set is compact by IX114.4, and $H_n,D_p$ are actual faces, so $S(H_n)\to S(D_p)$.
+
+IX115.3 makes $(r,s)\mapsto1-T_r(s)$ jointly continuous on compact $P\times P$. Maxima on the converging compact products therefore give $\delta(H_n)\to\delta(D_p)>0$: subsequential limits of maximizing pairs bound the upper limit, and approximants to a maximizing pair on $S(D_p)$ bound the lower limit. Moreover $0\le1-T_r(s)\le L\|r-s\|$ for pure $r,s$, with $L$ from IX115.2, whence $0<\delta(G_n)\le L\operatorname{diam}G_n\to0$. Taking reciprocals proves the budget limits. This completes the second alternative under negation of the first, and hence proves the stated disjunction.证毕。
+
+**推论 160.3（Singleton labels lie in the singular locus unless some singleton has zero kernel）。** Let $\mathcal R=\operatorname{Cont}(p\mapsto D_p)$ in the ambient Hausdorff topology and $\Sigma=P\setminus\mathcal R$. If $a(q)>0$ for every $q\in P_{\rm s}$, then
+
+$$
+P_{\rm s}\subseteq\Sigma,\qquad \overline{P_{\rm s}}^{\,P}\subseteq\Sigma,
+\qquad \Sigma\text{ is closed and nowhere dense in }P.
+\tag{XII160.5}
+$$
+
+Equivalently, $P_{\rm s}\cap\mathcal R\ne\varnothing$ implies that $a(q)=0$ for some $q\in P_{\rm s}$. This conclusion does not identify $q$ with the given continuous singleton, nor does it assert zero kernel at every singleton.
+
+证明。Fix $p\in P_{\rm s}$ and choose $q\in S(D_p)$. Zero symmetry gives $p\in S(D_q)$, and IX116.6 gives $q\in P_{\rm s}$. Apply Theorem 160.2 at any $y\in\operatorname{ri}D_q$. Its repeated balls satisfy $H_n\to D_q$ and $G_n\to\{q\}$. The same compact-extreme-set face theorem yields $S(H_n)\to S(D_q)$, so choose $p_n\in S(H_n)$ with $p_n\to p$. Actual pairing gives $D_{p_n}=G_n\to\{q\}$, whereas $D_p$ is a nondegenerate three-ball. Thus $D$ is discontinuous at $p$. This proves $P_{\rm s}\subseteq\Sigma$; IX115.6 gives closedness and nowhere density of $\Sigma$, hence the closure inclusion. Contraposition gives precisely the existential zero-kernel statement.证毕。
+
+**命题 160.4（Geometric meaning and the classification boundary）。** Theorem 160.2 and Corollary 160.3 concern the same original $V,C,u$, all original effects and full menus, and every mixed input of (XII160.1). If no singleton has zero kernel, every mixed interior point of every singleton ball is a limit of smooth contacts in actual repeated pairs: the contact-side ball tends to the original nondegenerate ball with positive contrast, while its entire paired ball collapses to the original pure label with vanishing contrast. Singleton labels and their closure then lie in the closed nowhere dense discontinuity set. These conclusions do not establish global injectivity of $p\mapsto D_p$, absence of repeated pairs, or a dimension-free qutrit classification.
+
+证明。The assertions about contacts, whole faces, contrasts and the discontinuity set are exactly (XII160.4)–(XII160.5), with Definition 160.1 retaining the full domains.
+
+In ordinary geometric terms: 若每个单标签球仍有正的法向冗余，那么在它的每个混态内部点附近，都能找到只受一个支撑平面托住的真实接触；托住接触的球逐渐铺回原球，配对的另一整球却缩成原来的纯标签。一侧的比较反差保留下来，另一侧的反差消失、延拓预算发散；这些单标签只能落在球映射不连续的薄集内。
+
+The proof produces approximating repeated pairs, not their exclusion, and its other alternative supplies only one zero-kernel singleton. The unpaid classification implication is that complete EB3 and pure PR, without an ambient dimension bound, force a linear bijection $\Phi:V\to\operatorname{Herm}_3(\mathbb C)$ with $\Phi(C)=\operatorname{Herm}_3(\mathbb C)_+$ and $u=\operatorname{Tr}\circ\Phi$. In particular, exclusion of repeated pairs (equivalently, global label injectivity by IX116.2) is not proved here, and even one zero-kernel singleton does not itself supply the full reconstruction interfaces. The bounded result XII158.1 uses its independent $\dim_{\mathbb R}V\le9$ premise; the L2/L3/actual-NC entrance of chapter 159 is a different conditional route. Neither is silently supplied here. The smooth-contact and compact-face tools are mature; the localized original-domain synthesis is repo-derived, extending the global-Inj setting of IX119.10/IX120.9. It makes no claim of global priority or axiom minimality.证毕。
+
+## 追加锚（本行以下为增补区）
