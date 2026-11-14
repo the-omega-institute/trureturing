@@ -227,7 +227,7 @@ jobs:
     permissions:
       contents: write
       actions: write
-    runs-on: ubuntu-24.04-arm
+    runs-on: runner-for-trureturing-cache-release-publish
     timeout-minutes: 120
     env:
       STRATALINT_CACHE_WRITES: 'false'

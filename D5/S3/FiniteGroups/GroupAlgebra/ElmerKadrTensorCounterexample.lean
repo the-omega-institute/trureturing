@@ -2,7 +2,7 @@
    generality: E
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorCounterexample
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.RepresentationTheory.Basic, mathlib/module/Mathlib.RingTheory.Polynomial.DegreeLT, mathlib/module/Mathlib.LinearAlgebra.Trace]
+   anchors: [mathlib/module/Mathlib.RepresentationTheory.Intertwining, mathlib/module/Mathlib.RingTheory.Polynomial.DegreeLT, mathlib/module/Mathlib.LinearAlgebra.Trace]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorCounterexample.claim; result=D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorCounterexample.result; claim=D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorCounterexample.claim
    digest: Polynomial translation duals and the relative trace obstruction for the Elmer--Kadr tensor instance. -/
 
