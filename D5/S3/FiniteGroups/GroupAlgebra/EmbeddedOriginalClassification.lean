@@ -1,21 +1,10 @@
-/-
-  Source-only integration for the original Elmer--Kadr modules over an
-  arbitrary faithful finite additive embedding.  This host deliberately keeps
-  the finite-field reflection compiler independent: the coefficient operators
-  are recovered from the actual samples in E, and the relative norm is pulled
-  back along the actual embedding.
-
-  Fixed source pins: capacity-repair-6af8ad7c/final (BoundedTensorPolarization,
-  PrimeCyclicRelativeTrace, RectangularTensorObstruction, ElmerKadrResidueCriterion).
-  The finite-sampling, coordinate-scaling and embedded-cycle arguments integrate
-  the preserved subgroup-*-source drafts; their originals remain unchanged.
-  Elmer--Kadr, DOI 10.1007/s13366-026-00855-9, Section 2.2 and 3.7(a).
-
-  The companion visibility hunks expose only the pure-field declarations used
-  below.  No finite-field hypothesis, finite-dimensional hypothesis on an
-  existential P/X, or coefficient-intertwining premise is hidden in the
-  public theorem.
--/
+/- GID: D5/S3/FiniteGroups/GroupAlgebra/EmbeddedOriginalClassification
+   generality: E
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/EmbeddedOriginalClassification
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Dual.Lemmas, mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.Data.Nat.Choose.Factorization]
+   utility: none
+   digest: The original relative tensor criterion along any faithful finite additive embedding over a field of prime characteristic. -/
 
 import D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrResidueCriterion
 import Mathlib.Algebra.Group.TypeTags.Hom
