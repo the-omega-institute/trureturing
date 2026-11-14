@@ -7,6 +7,7 @@
    digest: Polynomial translation duals and the relative trace obstruction for the Elmer--Kadr tensor instance. -/
 
 import Mathlib.RepresentationTheory.Intertwining
+import Mathlib.RepresentationTheory.Rep.Basic
 import Mathlib.RingTheory.Polynomial.DegreeLT
 import Mathlib.Algebra.Polynomial.RingDivision
 import Mathlib.LinearAlgebra.Trace
@@ -29,7 +30,7 @@ noncomputable section
 
 namespace D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrTensorCounterexample
 
-open scoped TensorProduct
+open scoped TensorProduct DirectSum
 open Finset Polynomial
 
 universe uK uG uC uV uX uM
@@ -143,13 +144,6 @@ private theorem dual_action_basis_value (m : ℕ) (a : K) (i j : Fin m) :
   rw [Polynomial.degreeLT.basis_val, Polynomial.taylor_coeff,
     ← Polynomial.monomial_one_right_eq_X_pow, Polynomial.hasseDeriv_monomial]
   simp
-
-private theorem dual_action_matrix (m : ℕ) (a : K) (i j : Fin m) :
-    (dualBasis K m).repr
-      (dualAction K m (Multiplicative.ofAdd a) (dualBasis K m i)) j =
-        (j.val.choose i.val : K) * (-a) ^ (j.val - i.val) := by
-  simpa only [dualBasis, Module.Basis.dualBasis_repr]
-    using dual_action_basis_value K m a i j
 
 private def coefficient (m k : ℕ) : Module.End K (DualPower K m) :=
   Matrix.toLin (dualBasis K m) (dualBasis K m)
@@ -353,6 +347,275 @@ private theorem extracted_intertwines [Fintype K]
 
 end TensorCoefficients
 
+section CoefficientObstruction
+
+variable {K : Type uK} [Field K]
+
+private theorem coefficient_eval (m k : ℕ) (v : DualPower K m) (j : Fin m) :
+    coefficient K m k v (Polynomial.degreeLT.basis K m j) =
+      ∑ i : Fin m, (dualBasis K m).repr v i *
+        (if j.val = i.val + k then (-1 : K) ^ k * j.val.choose i.val else 0) := by
+  classical
+  conv_lhs => rw [← (dualBasis K m).sum_repr v]
+  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+    coefficient_basis_value, smul_eq_mul]
+
+private theorem coefficient_top (n : ℕ) (v : DualPower K (n + 1)) :
+    coefficient K (n + 1) n v =
+      ((-1 : K) ^ n * v (Polynomial.degreeLT.basis K (n + 1) 0)) •
+        dualBasis K (n + 1) ⟨n, by omega⟩ := by
+  classical
+  have hb (i : Fin (n + 1)) : coefficient K (n + 1) n (dualBasis K (n + 1) i) =
+      if i = 0 then (-1 : K) ^ n • dualBasis K (n + 1) ⟨n, by omega⟩ else 0 := by
+    by_cases hi : i = 0
+    · subst i
+      rw [coefficient_basis_of_lt K (n + 1) n 0 (by simp)]
+      simp
+    · rw [coefficient_basis_of_ge K (n + 1) n i (by
+        have := Fin.pos_iff_ne_zero.mpr hi
+        omega)]
+      simp [hi]
+  conv_lhs => rw [← (dualBasis K (n + 1)).sum_repr v]
+  simp only [map_sum, map_smul, hb]
+  simp [dualBasis, Module.Basis.dualBasis_repr, smul_smul, mul_comm]
+
+private theorem coefficient_cyclic (m : ℕ) (hm : 0 < m) (i : Fin m) :
+    coefficient K m i.val (dualBasis K m ⟨0, hm⟩) =
+      (-1 : K) ^ i.val • dualBasis K m i := by
+  rw [coefficient_basis_of_lt K m i.val ⟨0, hm⟩ (by simpa using i.isLt)]
+  simp
+
+private theorem coefficient_diagonal (m : ℕ) (hm : 0 < m)
+    (v : DualPower K m) (i : Fin m) :
+    coefficient K m i.val v (Polynomial.degreeLT.basis K m i) =
+      (-1 : K) ^ i.val * v (Polynomial.degreeLT.basis K m ⟨0, hm⟩) := by
+  classical
+  rw [coefficient_eval, Finset.sum_eq_single ⟨0, hm⟩]
+  · simp [dualBasis, Module.Basis.dualBasis_repr, mul_comm]
+  · intro j _ hj
+    have hne : i.val ≠ j.val + i.val := by
+      intro he
+      apply hj
+      apply Fin.ext
+      change j.val = 0
+      omega
+    rw [if_neg hne, mul_zero]
+  · simp
+
+private theorem coefficient_six_top [CharP K 3] (v : DualPower K 13) :
+    coefficient K 13 6 v (Polynomial.degreeLT.basis K 13 12) = 0 := by
+  classical
+  rw [coefficient_eval]
+  apply Finset.sum_eq_zero
+  intro i _
+  by_cases hi : i = 6
+  · subst i
+    have hc : (924 : K) = 0 := (CharP.cast_eq_zero_iff K 3 924).mpr (by decide)
+    norm_num [show (12 : ℕ).choose 6 = 924 by decide, hc]
+    exact Or.inr hc
+  · have hne : 12 ≠ i.val + 6 := by
+      intro he
+      apply hi
+      apply Fin.ext
+      omega
+    simp [hne]
+
+private theorem tensor_coefficient_top :
+    tensorCoefficient K 12 = TensorProduct.map (coefficient K 7 6) (coefficient K 7 6) := by
+  classical
+  rw [tensorCoefficient, Finset.sum_eq_single (6, 6)]
+  · simp [tensorDegree]
+  · rintro ⟨u, v⟩ _ hne
+    have hd : tensorDegree (u, v) ≠ (12 : Fin 13) := by
+      intro h
+      have hs : u.val + v.val = 12 := congrArg Fin.val h
+      change u.val + v.val = 12 at hs
+      have hu := u.isLt
+      have hv := v.isLt
+      apply hne
+      apply Prod.ext
+      · apply Fin.ext
+        change u.val = 6
+        omega
+      · apply Fin.ext
+        change v.val = 6
+        omega
+    simp [hd]
+  · simp
+
+private theorem tensor_coefficient_top_range (z : TensorSpace K) :
+    ∃ c : K, tensorCoefficient K 12 z =
+      c • (dualBasis K 7 6 ⊗ₜ[K] dualBasis K 7 6) := by
+  rw [tensor_coefficient_top]
+  induction z using TensorProduct.induction_on with
+  | zero => exact ⟨0, by simp⟩
+  | tmul x y =>
+    refine ⟨x (Polynomial.degreeLT.basis K 7 0) *
+      y (Polynomial.degreeLT.basis K 7 0), ?_⟩
+    simp [TensorProduct.map_tmul, coefficient_top 6, TensorProduct.smul_tmul,
+      TensorProduct.tmul_smul, smul_smul, mul_comm]
+    norm_num
+  | add x y hx hy =>
+    obtain ⟨c, hc⟩ := hx
+    obtain ⟨d, hd⟩ := hy
+    exact ⟨c + d, by rw [map_add, hc, hd, add_smul]⟩
+
+private theorem tensor_coefficient_twelve_generator :
+    tensorCoefficient K 12 (dualBasis K 7 0 ⊗ₜ[K] dualBasis K 7 0) =
+      dualBasis K 7 6 ⊗ₜ[K] dualBasis K 7 6 := by
+  have hc : coefficient K 7 6 (dualBasis K 7 0) = dualBasis K 7 6 := by
+    have h := coefficient_cyclic (K := K) 7 (by decide) (⟨6, by decide⟩ : Fin 7)
+    simpa only [show (⟨0, by decide⟩ : Fin 7) = 0 by decide,
+      show (⟨6, by decide⟩ : Fin 7) = 6 by decide,
+      show (-1 : K) ^ 6 = 1 by norm_num, one_smul]
+      using h
+  rw [tensor_coefficient_top, TensorProduct.map_tmul, hc]
+
+private theorem tensor_coefficient_six_generator [CharP K 3] :
+    tensorCoefficient K 6 (dualBasis K 7 3 ⊗ₜ[K] dualBasis K 7 3) =
+      dualBasis K 7 6 ⊗ₜ[K] dualBasis K 7 6 := by
+  classical
+  have hc : coefficient K 7 3 (dualBasis K 7 3) = dualBasis K 7 6 := by
+    rw [coefficient_basis_of_lt K 7 3 3 (by decide)]
+    have hs : (-1 : K) ^ 3 * (6 : ℕ).choose 3 = 1 := by
+      rw [show (6 : ℕ).choose 3 = 20 by decide]
+      norm_num
+      linear_combination -7 * (CharP.cast_eq_zero K 3)
+    change ((-1 : K) ^ 3 * (6 : ℕ).choose 3) • dualBasis K 7 6 = _
+    rw [hs, one_smul]
+  rw [tensorCoefficient, LinearMap.sum_apply, Finset.sum_eq_single (3, 3)]
+  · rw [if_pos (by decide), TensorProduct.map_tmul]
+    change coefficient K 7 3 (dualBasis K 7 3) ⊗ₜ[K]
+      coefficient K 7 3 (dualBasis K 7 3) = _
+    rw [hc]
+  · rintro ⟨u, v⟩ _ hne
+    by_cases hd : tensorDegree (u, v) = (6 : Fin 13)
+    · rw [if_pos hd, TensorProduct.map_tmul]
+      by_cases hu : 7 ≤ 3 + u.val
+      · rw [coefficient_basis_of_ge K 7 u.val 3 hu, TensorProduct.zero_tmul]
+      · have hv : 7 ≤ 3 + v.val := by
+          have hs : u.val + v.val = 6 := congrArg Fin.val hd
+          change u.val + v.val = 6 at hs
+          by_contra hv
+          apply hne
+          apply Prod.ext
+          · apply Fin.ext
+            change u.val = 3
+            omega
+          · apply Fin.ext
+            change v.val = 3
+            omega
+        rw [coefficient_basis_of_ge K 7 v.val 3 hv, TensorProduct.tmul_zero]
+    · rw [if_neg hd, LinearMap.zero_apply]
+  · simp
+
+private theorem composition_top_zero [Fintype K] [CharP K 3]
+    (hK : Fintype.card K = 27)
+    (f : (dualAction K 13).IntertwiningMap (tensorAction K))
+    (g : (tensorAction K).IntertwiningMap (dualAction K 13)) :
+    g (f (dualBasis K 13 12)) = 0 := by
+  have hf (k : Fin 13) : f.toLinearMap.comp (coefficient K 13 k.val) =
+      (tensorCoefficient K k).comp f.toLinearMap := by
+    rw [extract_dual_coefficient hK, extract_tensor_coefficient K hK]
+    exact extracted_intertwines K _ _ f k
+  have hg (k : Fin 13) : g.toLinearMap.comp (tensorCoefficient K k) =
+      (coefficient K 13 k.val).comp g.toLinearMap := by
+    rw [extract_dual_coefficient hK, extract_tensor_coefficient K hK]
+    exact extracted_intertwines K _ _ g k
+  let w := dualBasis K 7 6 ⊗ₜ[K] dualBasis K 7 6
+  have h12 : g w =
+      g (dualBasis K 7 0 ⊗ₜ[K] dualBasis K 7 0)
+        (Polynomial.degreeLT.basis K 13 0) • dualBasis K 13 12 := by
+    have h := LinearMap.congr_fun (hg 12) (dualBasis K 7 0 ⊗ₜ[K] dualBasis K 7 0)
+    simp only [LinearMap.comp_apply, Representation.IntertwiningMap.toLinearMap_apply]
+      at h
+    rw [tensor_coefficient_twelve_generator] at h
+    change g w = coefficient K 13 12
+      (g (dualBasis K 7 0 ⊗ₜ[K] dualBasis K 7 0)) at h
+    simpa only [coefficient_top 12,
+      show (⟨12, by decide⟩ : Fin 13) = 12 by decide,
+      show (-1 : K) ^ 12 = 1 by norm_num, one_mul] using h
+  have hz : g w (Polynomial.degreeLT.basis K 13 12) = 0 := by
+    have h := LinearMap.congr_fun (hg 6) (dualBasis K 7 3 ⊗ₜ[K] dualBasis K 7 3)
+    simp only [LinearMap.comp_apply, Representation.IntertwiningMap.toLinearMap_apply]
+      at h
+    rw [tensor_coefficient_six_generator] at h
+    change g w = coefficient K 13 6 (g (dualBasis K 7 3 ⊗ₜ[K] dualBasis K 7 3)) at h
+    rw [h]
+    exact coefficient_six_top _
+  have hw : g w = 0 := by
+    rw [h12, LinearMap.smul_apply] at hz
+    simp only [dualBasis, Module.Basis.dualBasis_apply_self, ite_true,
+      smul_eq_mul, mul_one] at hz
+    change g (dualBasis K 7 0 ⊗ₜ[K] dualBasis K 7 0)
+      (Polynomial.degreeLT.basis K 13 0) = 0 at hz
+    rw [h12, hz, zero_smul]
+  have hf12 : f (dualBasis K 13 12) =
+      tensorCoefficient K 12 (f (dualBasis K 13 0)) := by
+    have h := LinearMap.congr_fun (hf 12) (dualBasis K 13 0)
+    simp only [LinearMap.comp_apply, Representation.IntertwiningMap.toLinearMap_apply]
+      at h
+    have hc : coefficient K 13 12 (dualBasis K 13 0) = dualBasis K 13 12 := by
+      have hh := coefficient_cyclic (K := K) 13 (by decide) (⟨12, by decide⟩ : Fin 13)
+      simpa only [show (⟨0, by decide⟩ : Fin 13) = 0 by decide,
+        show (⟨12, by decide⟩ : Fin 13) = 12 by decide,
+        show (-1 : K) ^ 12 = 1 by norm_num, one_smul]
+        using hh
+    change f (coefficient K 13 12 (dualBasis K 13 0)) =
+      tensorCoefficient K 12 (f (dualBasis K 13 0)) at h
+    rwa [hc] at h
+  obtain ⟨c, hc⟩ := tensor_coefficient_top_range (f (dualBasis K 13 0))
+  rw [hf12, hc, map_smul, hw, smul_zero]
+
+private theorem endomorphism_trace [Fintype K] [CharP K 3]
+    (hK : Fintype.card K = 27)
+    (h : (dualAction K 13).IntertwiningMap (dualAction K 13)) :
+    LinearMap.trace K (DualPower K 13) h.toLinearMap =
+      h (dualBasis K 13 12) (Polynomial.degreeLT.basis K 13 12) := by
+  classical
+  let c := h (dualBasis K 13 0) (Polynomial.degreeLT.basis K 13 0)
+  have hd (i : Fin 13) : h (dualBasis K 13 i) (Polynomial.degreeLT.basis K 13 i) = c := by
+    have hcomm : h.toLinearMap.comp (coefficient K 13 i.val) =
+        (coefficient K 13 i.val).comp h.toLinearMap := by
+      rw [extract_dual_coefficient hK]
+      exact extracted_intertwines K _ _ h i
+    have hi := congrArg (fun v : DualPower K 13 =>
+      v (Polynomial.degreeLT.basis K 13 i))
+        (LinearMap.congr_fun hcomm (dualBasis K 13 0))
+    simp only [LinearMap.comp_apply, Representation.IntertwiningMap.toLinearMap_apply]
+      at hi
+    have hcyc := coefficient_cyclic (K := K) 13 (by decide) i
+    rw [show (⟨0, by decide⟩ : Fin 13) = 0 by decide] at hcyc
+    rw [hcyc] at hi
+    simp only [map_smul, LinearMap.smul_apply, smul_eq_mul,
+      coefficient_diagonal 13 (by decide)] at hi
+    exact mul_left_cancel₀ (pow_ne_zero i.val (neg_ne_zero.mpr one_ne_zero)) hi
+  calc
+    LinearMap.trace K (DualPower K 13) h.toLinearMap =
+        ∑ i : Fin 13, h (dualBasis K 13 i) (Polynomial.degreeLT.basis K 13 i) := by
+      rw [LinearMap.trace_eq_matrix_trace K (dualBasis K 13)]
+      simp only [Matrix.trace, Matrix.diag_apply, LinearMap.toMatrix_apply, dualBasis,
+        Module.Basis.dualBasis_repr, Representation.IntertwiningMap.toLinearMap_apply]
+    _ = ∑ _i : Fin 13, c := sum_congr rfl (fun i _ => hd i)
+    _ = c := by
+      have hc : (13 : K) = 1 := by
+        simpa using (CharP.natCast_eq_natCast K 3 (a := 13) (b := 1)).mpr (by decide)
+      simp [nsmul_eq_mul, hc]
+    _ = _ := (hd 12).symm
+
+private theorem composition_trace_zero [Fintype K] [CharP K 3]
+    (hK : Fintype.card K = 27)
+    (f : (dualAction K 13).IntertwiningMap (tensorAction K))
+    (g : (tensorAction K).IntertwiningMap (dualAction K 13)) :
+    LinearMap.trace K (DualPower K 13) (g.toLinearMap.comp f.toLinearMap) = 0 := by
+  have ht := endomorphism_trace hK (g.comp f)
+  change LinearMap.trace K (DualPower K 13) (g.toLinearMap.comp f.toLinearMap) = _ at ht
+  rw [ht]
+  change (g (f (dualBasis K 13 12))) (Polynomial.degreeLT.basis K 13 12) = 0
+  rw [composition_top_zero hK f g, LinearMap.zero_apply]
+
+end CoefficientObstruction
+
 section CyclicNormWitness
 
 variable {K : Type uK} [Field K] [CharP K 3]
@@ -539,5 +802,87 @@ private theorem relative_norm :
     using LinearMap.congr_fun (dual_norm (K := K) (i.val + 1)) (m i)
 
 end CyclicNormWitness
+
+section RelativeStableCategory
+
+variable {K : Type uK} [Field K] {G : Type uG} [Group G]
+  {M : Type uM} [AddCommGroup M] [Module K M]
+  {U Z : Type uK} [AddCommGroup U] [Module K U] [AddCommGroup Z] [Module K Z]
+
+/-- Lemma 2.1(iii): an actual equivariant retract of some X tensor M.
+No restriction on X, no chosen basis and no cyclic-coefficient ideal is assumed. -/
+def RelativeProjective (τ : Representation K G M) (P : Rep.{uK} K G) : Prop :=
+  ∃ (X : Rep.{uK} K G) (i : P.ρ.IntertwiningMap (X.ρ.tprod τ))
+    (r : (X.ρ.tprod τ).IntertwiningMap P.ρ), r.comp i = .id P.ρ
+
+/-- The PHom ideal in Section 2.2, with its original relative-projective factors. -/
+def RelativeFactors (τ : Representation K G M)
+    {ρ : Representation K G U} {σ : Representation K G Z}
+    (h : ρ.IntertwiningMap σ) : Prop :=
+  ∃ P : Rep.{uK} K G, RelativeProjective τ P ∧
+    ∃ (a : ρ.IntertwiningMap P.ρ) (b : P.ρ.IntertwiningMap σ), b.comp a = h
+
+/-- Inverse morphisms in Hom_G/PHom_G,M, exactly the original relative stable relation. -/
+def RelativeStableIso (τ : Representation K G M)
+    (ρ : Representation K G U) (σ : Representation K G Z) : Prop :=
+  ∃ (f : ρ.IntertwiningMap σ) (g : σ.IntertwiningMap ρ),
+    RelativeFactors τ (g.comp f - .id ρ) ∧ RelativeFactors τ (f.comp g - .id σ)
+
+private theorem trace_relative_factor
+    {C : Type uC} [Group C] [Fintype C] (ι : C →* G)
+    (τ : Representation K G M) (t : Module.End K M)
+    (ht : (∑ c : C, (τ (ι c)).comp (t.comp (τ (ι c⁻¹)))) = LinearMap.id)
+    (hcard : (Fintype.card C : K) = 0)
+    (ρ : Representation K G U) (h : ρ.IntertwiningMap ρ) (hh : RelativeFactors τ h) :
+    LinearMap.trace K U h.toLinearMap = 0 := by
+  obtain ⟨P, ⟨X, i, r, hri⟩, a, b, hab⟩ := hh
+  have hz := trace_tensor_factorization ι ρ X.ρ τ t ht hcard (i.comp a) (b.comp r)
+  have he : (b.comp r).toLinearMap.comp (i.comp a).toLinearMap = h.toLinearMap := by
+    apply LinearMap.ext
+    intro v
+    change b (r (i (a v))) = h v
+    have hs := congrArg (fun q : P.ρ.IntertwiningMap P.ρ => q (a v)) hri
+    change r (i (a v)) = a v at hs
+    rw [hs]
+    exact congrArg (fun q : ρ.IntertwiningMap ρ => q v) hab
+  rwa [he] at hz
+
+end RelativeStableCategory
+
+/-- The concrete field of order 3^3, with its actual characteristic-three instance. -/
+abbrev F27 := GaloisField 3 3
+
+/-- The i=j=7, p=3, q=27 instance of Elmer--Kadr Conjecture 3.7(a).
+Here the sole predicted non-relative summand is V_(7+7-1) = V_13. -/
+def claim : Prop :=
+  RelativeStableIso (relativeAction (K := F27)) (dualAction F27 13) (tensorAction F27)
+
+private theorem no_relative_stable {K : Type uK} [Field K] [Fintype K] [CharP K 3]
+    (hK : Fintype.card K = 27) :
+    ¬ RelativeStableIso (relativeAction (K := K)) (dualAction K 13) (tensorAction K) := by
+  rintro ⟨f, g, hgf, _⟩
+  have hcard : (Fintype.card (Multiplicative (ZMod 3)) : K) = 0 := by
+    simpa using CharP.cast_eq_zero K 3
+  have herr := trace_relative_factor (primeSubgroup (K := K))
+    (relativeAction (K := K)) relativeNormWitness relative_norm hcard
+      (dualAction K 13) (g.comp f - .id (dualAction K 13)) hgf
+  have hzero := composition_trace_zero hK f g
+  have hid : LinearMap.trace K (DualPower K 13) LinearMap.id = 1 := by
+    have hc : (13 : K) = 1 := by
+      simpa using (CharP.natCast_eq_natCast K 3 (a := 13) (b := 1)).mpr (by decide)
+    rw [LinearMap.trace_eq_matrix_trace K (dualBasis K 13), LinearMap.toMatrix_id]
+    simpa using hc
+  change LinearMap.trace K (DualPower K 13)
+    (g.toLinearMap.comp f.toLinearMap - LinearMap.id) = 0 at herr
+  rw [map_sub, hzero, hid, zero_sub] at herr
+  exact one_ne_zero (neg_eq_zero.mp herr)
+
+/-- The original relative stable isomorphism fails for p=3, q=27 and i=j=7. -/
+theorem result : ¬ claim := by
+  letI : Fintype F27 := Fintype.ofFinite F27
+  have hK : Fintype.card F27 = 27 := by
+    rw [Fintype.card_eq_nat_card, GaloisField.card 3 3 (by decide)]
+    norm_num
+  exact no_relative_stable hK
 
 end D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrTensorCounterexample
