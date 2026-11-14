@@ -8,7 +8,7 @@ internal sealed class BoundedTensorPolarizationDocument : IScribeDocumentDefinit
         "Denominator-free polarization gives the exact bounded polynomial tensor sequence and its equivariant section.",
         H("Exactness inside the polynomial rectangle"),
         Blocks(
-            Paragraph(Text("The polynomial model comes from Elmer and Kadr, Some formulae relating modular representations of elementary abelian p-groups, DOI 10.1007/s13366-026-00855-9, arXiv:2510.07939v1, formulas (11)--(12). Simultaneous translation on two polynomial variables is the primal form of the diagonal tensor action. The identities here concern formal polynomials over a commutative ring R; they require neither a field nor a characteristic assumption.")),
+            Paragraph(Text("The polynomial model comes from Elmer and Kadr, Some formulae relating modular representations of elementary abelian p-groups, DOI 10.1007/s13366-026-00855-9, arXiv:2510.07939v1, formulas (11)--(12). Simultaneous translation on two polynomial variables is the primal form of the diagonal tensor action. The denominator-free coefficient identities concern formal polynomials over a commutative ring R; they require neither a field nor a characteristic assumption.")),
             Describe.Lean(
                 DescribeId.Create("polynomial-kernel-polarization-diagonal"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/GroupAlgebra/BoundedTensorPolarization.diagonal_polarization"),
@@ -50,5 +50,26 @@ internal sealed class BoundedTensorPolarizationDocument : IScribeDocumentDefinit
                 Blocks(
                     Paragraph(Text("For a field K and any natural n,m, suppose c=choose(n+m,n), regarded in K, is nonzero. There is a K-linear sigma:P_(n+m) -> P_n tensor P_m with mu sigma=id, and sigma intertwines translation by every a in K. No finiteness or positive-characteristic assumption on K is needed, and n=0 or m=0 is allowed.")),
                     Paragraph(Text("The coefficient polarization for N=n+m lies in this bounded tensor rectangle. It obeys mu Delta=c*id and intertwines simultaneous translation. Set sigma=c^(-1)*Delta. Thus a nonzero binomial gives a section of the actual polynomial multiplication map. If c=0, this construction still has mu Delta=0 and supplies no right inverse; the converse obstruction for the relative stable relation comes from traces, rather than from the failure of this construction alone."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("elmer-kadr-dual-tensor-equivalence"),
+                DeclarationHandle.Create("D5/S3/FiniteGroups/GroupAlgebra/BoundedTensorPolarization.dualTensorEquiv"),
+                H("The tensor of duals with its actual action"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let G be any group and rho,tau representations over K on finite-dimensional spaces A,B. There is an equivariant linear equivalence A^* tensor B^* -> (A tensor B)^*, sending lambda tensor eta to the functional x tensor y -> eta(y)*lambda(x). The source has the tensor of the two contragredient actions; the target has the contragredient of the tensor action. Both sides evaluate the group element through its inverse, so the equivalence requires no change of the polynomial action. Zero-dimensional A or B is included.")),
+                    Paragraph(Text("Transposing a G-map F:A->B reverses its direction: F^*:B^*->A^* remains equivariant because the intertwining relation holds at g^(-1) as well as at g. This lets polynomial multiplication, its equivariant section and the difference map pass to the original V_d spaces."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("elmer-kadr-kernel-retraction"),
+                DeclarationHandle.Create("D5/S3/FiniteGroups/GroupAlgebra/BoundedTensorPolarization.difference_kernelRetraction"),
+                H("Recover the kernel component from an actual section"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For any natural n,m put B=P_(n+1) tensor P_(m+1), A=P_(n+m+2), C=P_n tensor P_m. Let mu:B->A be multiplication and d:C->B multiplication by z1-z2 in the polynomial realization. Given any K-linear section sigma:A->B with mu sigma=id, define h:B->C by inverting d on its image and applying it to id_B-sigma mu. Exactness makes this definition meaningful, and the identity is d h=id_B-sigma mu. Only a linear section is assumed in this statement.")),
+                    Paragraph(Text("If sigma intertwines translations, the injectivity and equivariance of d force h to intertwine them as well. Injectivity also gives h d=id_C and h sigma=0. Transposition therefore supplies an actual direct complement on the duals. Under the tensor-dual equivalences, the complement inclusion is the positive map h^*, and mu^* sigma^*+h^* d^*=id. For maps f=mu^* and g=sigma^*, the relative inverse error is f g-id=-h^* d^*. The negative sign belongs to that error, rather than to the complement inclusion.")),
+                    Paragraph(Text("The equivariant section used here is choose(n+m+2,n+1)^(-1) times bounded polarization, under the hypothesis that this scalar is nonzero in K. The formulas work over arbitrary fields. Tensor factors V_0 are zero, and V_1 is the trivial one-dimensional tensor unit; when a one-step tensor splitting reaches dimension one, these actual zero and unit modules give its boundary case."))),
                 DescribeRole.Theorem))));
 }

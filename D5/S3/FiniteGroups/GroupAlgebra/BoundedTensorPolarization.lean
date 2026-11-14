@@ -1,5 +1,5 @@
 /- GID: D5/S3/FiniteGroups/GroupAlgebra/BoundedTensorPolarization
-   generality: G
+   generality: E
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/BoundedTensorPolarization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.DegreeLT, mathlib/module/Mathlib.LinearAlgebra.TensorProduct.Basis]
@@ -7,6 +7,10 @@
    digest: Bounded polynomial tensor multiplication, difference injection and polarization. -/
 
 
+import D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrTensorCounterexample
+import Mathlib.LinearAlgebra.Contraction
+import Mathlib.LinearAlgebra.Pi
+import Mathlib.Algebra.Module.Submodule.Equiv
 import Mathlib.Algebra.Polynomial.Div
 import Mathlib.Algebra.Polynomial.Monic
 import Mathlib.RingTheory.Polynomial.DegreeLT
@@ -719,3 +723,160 @@ theorem equivariant_section {K : Type u} [Field K] (n m : ℕ)
     rw [LinearMap.comp_smul, LinearMap.smul_comp, boundedPolarization_translate]
 
 end D5.S3.FiniteGroups.GroupAlgebra.PolynomialKernelPolarization
+
+namespace D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrPositiveCriterion
+
+open D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrTensorCounterexample
+open D5.S3.FiniteGroups.GroupAlgebra.PolynomialKernelPolarization
+open Polynomial
+open scoped TensorProduct DirectSum
+
+universe uK uG
+
+section DualMaps
+
+variable {K : Type uK} [Field K] {G : Type uG} [Group G]
+  {A B : Type uK} [AddCommGroup A] [Module K A]
+  [AddCommGroup B] [Module K B]
+  {ρ : Representation K G A} {τ : Representation K G B}
+
+/-- Transpose reverses an actual intertwiner; the inverse group element is
+the one in the definition of the contragredient representation. -/
+def dualIntertwiner (f : ρ.IntertwiningMap τ) :
+    τ.dual.IntertwiningMap ρ.dual where
+  toLinearMap := f.toLinearMap.dualMap
+  isIntertwining' c := by
+    apply LinearMap.ext
+    intro l
+    apply LinearMap.ext
+    intro x
+    change l (τ c⁻¹ (f x)) = l (f (ρ c⁻¹ x))
+    rw [f.isIntertwining]
+
+/-- The canonical finite-dimensional dual tensor identification is equivariant
+for the actual contragredient actions. Its evaluation uses Mathlib's order
+`g y * f x`; no matrix model or basis change defines the action. -/
+def dualTensorEquiv [Module.Finite K A] [Module.Finite K B]
+    [Module.Projective K A] [Module.Projective K B]
+    (ρ : Representation K G A) (τ : Representation K G B) :
+    (ρ.dual.tprod τ.dual).Equiv (ρ.tprod τ).dual :=
+  Representation.Equiv.mk (TensorProduct.dualDistribEquiv K A B) fun c => by
+    apply TensorProduct.ext'
+    intro f g
+    apply TensorProduct.ext'
+    intro x y
+    change TensorProduct.dualDistribEquiv K A B
+        (ρ.dual c f ⊗ₜ[K] τ.dual c g) (x ⊗ₜ[K] y) =
+      TensorProduct.dualDistribEquiv K A B (f ⊗ₜ[K] g)
+        (ρ c⁻¹ x ⊗ₜ[K] τ c⁻¹ y)
+    simp only [TensorProduct.dualDistribEquiv_tmul_tmul,
+      Representation.dual_apply, Module.Dual.transpose_apply, LinearMap.comp_apply]
+
+end DualMaps
+
+section ExactSplitting
+
+variable {K : Type uK} [Field K]
+
+/-- Multiplication intertwines actual translations, by the already proved
+diagonal realization of the bounded polynomial tensor map. -/
+theorem multiplication_translate (a : K) (n m : ℕ) :
+    (multiplication (R := K) n m).comp (tensorTranslate a n m) =
+      (Polynomial.taylorLinearEquiv a (n + m + 1)).toLinearMap.comp
+        (multiplication n m) := by
+  apply LinearMap.ext
+  intro F
+  apply Subtype.ext
+  have hd (z : Trunc K n ⊗[K] Trunc K m) :
+      diagonal (tensorPolynomial n m z) = (multiplication n m z : K[X]) :=
+    LinearMap.congr_fun (diagonal_tensorPolynomial (R := K) n m) z
+  change (multiplication n m (tensorTranslate a n m F) : K[X]) =
+    Polynomial.taylor a (multiplication n m F : K[X])
+  calc
+    _ = diagonal (tensorPolynomial n m (tensorTranslate a n m F)) := (hd _).symm
+    _ = Polynomial.taylor a (multiplication n m F : K[X]) := by
+      rw [tensorPolynomial_translate, diagonal_translate, hd]
+
+def multiplicationIntertwiner (n m : ℕ) :
+    ((primalAction K (n + 1)).tprod (primalAction K (m + 1))).IntertwiningMap
+      (primalAction K (n + m + 1)) where
+  toLinearMap := multiplication n m
+  isIntertwining' c := multiplication_translate (Multiplicative.toAdd c) n m
+
+def differenceIntertwiner (n m : ℕ) :
+    ((primalAction K (n + 1)).tprod (primalAction K (m + 1))).IntertwiningMap
+      ((primalAction K ((n + 1) + 1)).tprod (primalAction K ((m + 1) + 1))) where
+  toLinearMap := differenceTensor n m
+  isIntertwining' c :=
+    (tensorTranslate_differenceTensor (Multiplicative.toAdd c) n m).symm
+
+/-- The residual lands in range(d), by exactness and μσ = id. -/
+def kernelResidual (n m : ℕ)
+    (σ : Trunc K ((n + 1) + (m + 1)) →ₗ[K]
+      Trunc K (n + 1) ⊗[K] Trunc K (m + 1))
+    (hσ : (multiplication (n + 1) (m + 1)).comp σ = LinearMap.id) :
+    (Trunc K (n + 1) ⊗[K] Trunc K (m + 1)) →ₗ[K]
+      LinearMap.range (differenceTensor (R := K) n m) :=
+  (LinearMap.id - σ.comp (multiplication (n + 1) (m + 1))).codRestrict _ fun F => by
+    rw [differenceTensor_range]
+    change multiplication (n + 1) (m + 1)
+      (F - σ (multiplication (n + 1) (m + 1) F)) = 0
+    have hs := LinearMap.congr_fun hσ (multiplication (n + 1) (m + 1) F)
+    change multiplication (n + 1) (m + 1)
+      (σ (multiplication (n + 1) (m + 1) F)) = multiplication (n + 1) (m + 1) F at hs
+    rw [map_sub, hs, sub_self]
+
+/-- h is obtained from the inverse of d onto its PROVED range, applied to
+id - σμ. No equivariant-complement choice is made. -/
+def kernelRetraction (n m : ℕ)
+    (σ : Trunc K ((n + 1) + (m + 1)) →ₗ[K]
+      Trunc K (n + 1) ⊗[K] Trunc K (m + 1))
+    (hσ : (multiplication (n + 1) (m + 1)).comp σ = LinearMap.id) :
+    (Trunc K (n + 1) ⊗[K] Trunc K (m + 1)) →ₗ[K]
+      (Trunc K n ⊗[K] Trunc K m) :=
+  (LinearEquiv.ofInjective (differenceTensor n m)
+    (differenceTensor_injective n m)).symm.toLinearMap.comp (kernelResidual n m σ hσ)
+
+theorem difference_kernelRetraction (n m : ℕ)
+    (σ : Trunc K ((n + 1) + (m + 1)) →ₗ[K]
+      Trunc K (n + 1) ⊗[K] Trunc K (m + 1))
+    (hσ : (multiplication (n + 1) (m + 1)).comp σ = LinearMap.id)
+    (F : Trunc K (n + 1) ⊗[K] Trunc K (m + 1)) :
+    differenceTensor n m (kernelRetraction n m σ hσ F) =
+      F - σ (multiplication (n + 1) (m + 1) F) := by
+  exact LinearEquiv.ofInjective_symm_apply (differenceTensor (R := K) n m)
+    (h := differenceTensor_injective n m) (kernelResidual n m σ hσ F)
+
+/-- Injectivity of the actual d forces h to intertwine translations. -/
+def kernelRetractionIntertwiner (n m : ℕ)
+    (σ : (primalAction K ((n + 1) + (m + 1) + 1)).IntertwiningMap
+      ((primalAction K ((n + 1) + 1)).tprod (primalAction K ((m + 1) + 1))))
+    (hσ : (multiplication (n + 1) (m + 1)).comp σ.toLinearMap = LinearMap.id) :
+    ((primalAction K ((n + 1) + 1)).tprod (primalAction K ((m + 1) + 1))).IntertwiningMap
+      ((primalAction K (n + 1)).tprod (primalAction K (m + 1))) where
+  toLinearMap := kernelRetraction n m σ.toLinearMap hσ
+  isIntertwining' c := by
+    apply LinearMap.ext
+    intro F
+    apply differenceTensor_injective (R := K) n m
+    change differenceTensor n m (kernelRetraction n m σ.toLinearMap hσ
+        (((primalAction K ((n + 1) + 1)).tprod
+          (primalAction K ((m + 1) + 1))) c F)) =
+      differenceIntertwiner n m
+        (((primalAction K (n + 1)).tprod (primalAction K (m + 1))) c
+          (kernelRetraction n m σ.toLinearMap hσ F))
+    rw [difference_kernelRetraction, (differenceIntertwiner n m).isIntertwining]
+    change _ = (((primalAction K ((n + 1) + 1)).tprod
+      (primalAction K ((m + 1) + 1))) c)
+        (differenceTensor n m (kernelRetraction n m σ.toLinearMap hσ F))
+    rw [difference_kernelRetraction, map_sub]
+    change _ - σ (multiplicationIntertwiner (n + 1) (m + 1)
+      (((primalAction K ((n + 1) + 1)).tprod
+        (primalAction K ((m + 1) + 1))) c F)) = _
+    rw [(multiplicationIntertwiner (n + 1) (m + 1)).isIntertwining, σ.isIntertwining]
+    simp [multiplicationIntertwiner]
+    congr 1
+
+end ExactSplitting
+
+end D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrPositiveCriterion

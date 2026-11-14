@@ -9,37 +9,6 @@ internal sealed class ElmerKadrResidueCriterionDocument : IScribeDocumentDefinit
         H("Residues, tensor splitting and base-p carries"),
         Blocks(
             Paragraph(Text("For a field K, write P_n=K[z]_(degree<=n) and V_d=(K[z]_(degree<d))^*. Translations act on primal polynomials by f(z)->f(z+a); on V_d they act by lambda->(f->lambda(f(z-a))). These are the symmetric-power and contragredient models of Elmer and Kadr, DOI 10.1007/s13366-026-00855-9, arXiv:2510.07939v1, formulas (11)--(12). The relative-projectivity convention is Section 2.2 and Lemma 2.1(iii).")),
-            Describe.Lean(
-                DescribeId.Create("elmer-kadr-dual-tensor-equivalence"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrResidueCriterion.dualTensorEquiv"),
-                H("The tensor of duals with its actual action"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("Let G be any group and rho,tau representations over K on finite-dimensional spaces A,B. There is an equivariant linear equivalence A^* tensor B^* -> (A tensor B)^*, sending lambda tensor eta to the functional x tensor y -> eta(y)*lambda(x). The source has the tensor of the two contragredient actions; the target has the contragredient of the tensor action. Both sides evaluate the group element through its inverse, so the equivalence requires no change of the polynomial action. Zero-dimensional A or B is included.")),
-                    Paragraph(Text("Transposing a G-map F:A->B reverses its direction: F^*:B^*->A^* remains equivariant because the intertwining relation holds at g^(-1) as well as at g. This lets polynomial multiplication, its equivariant section and the difference map pass to the original V_d spaces."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("elmer-kadr-kernel-retraction"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrResidueCriterion.difference_kernelRetraction"),
-                H("Recover the kernel component from an actual section"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("For any natural n,m put B=P_(n+1) tensor P_(m+1), A=P_(n+m+2), C=P_n tensor P_m. Let mu:B->A be multiplication and d:C->B multiplication by z1-z2 in the polynomial realization. Given any K-linear section sigma:A->B with mu sigma=id, define h:B->C by inverting d on its image and applying it to id_B-sigma mu. Exactness makes this definition meaningful, and the identity is d h=id_B-sigma mu. Only a linear section is assumed in this statement.")),
-                    Paragraph(Text("If sigma intertwines translations, the injectivity and equivariance of d force h to intertwine them as well. Injectivity also gives h d=id_C and h sigma=0. Transposition therefore supplies an actual direct complement on the duals. Under the tensor-dual equivalences, the complement inclusion is the positive map h^*, and mu^* sigma^*+h^* d^*=id. For maps f=mu^* and g=sigma^*, the relative inverse error is f g-id=-h^* d^*. The negative sign belongs to that error, rather than to the complement inclusion.")),
-                    Paragraph(Text("The equivariant section used here is choose(n+m+2,n+1)^(-1) times bounded polarization, under the hypothesis that this scalar is nonzero in K. The formulas work over arbitrary fields. Tensor factors V_0 are zero, and V_1 is the trivial one-dimensional tensor unit; when a one-step tensor splitting reaches dimension one, these actual zero and unit modules give its boundary case."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("elmer-kadr-literal-relative-summand"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrResidueCriterion.dualTensor_relativeProjective"),
-                H("A specified p-multiple factor is relatively projective"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("Now let p be prime and char K=p. For a natural s, choose an index c in Fin s and put r=c+1, so 1<=r<=s. For every natural m, the dual of K[z]_(degree<pr) tensor K[z]_(degree<m) is relatively projective with respect to M_(p,s)=the direct sum of V_p,...,V_(ps). There is no finiteness assumption on K, no positivity assumption on m and no restriction excluding p=2. Choosing c requires a nonempty summand set; it does not assert the existence of an index when s=0.")),
-                    Paragraph(Text("The tensor-dual equivalence identifies this module with V_(pr) tensor V_m. Flip the tensor factors to obtain V_m tensor V_(pr), then tensor the literal inclusion V_(pr)->M_(p,s) and its matching projection with id_(V_m). Their composite is the identity. This is an actual equivariant retract of X tensor M with X=V_m, so it satisfies the original definition of relative projectivity. The general definition continues to allow arbitrary X and arbitrary retract modules P, without finite-dimensional restrictions on either."))),
-                DescribeRole.Theorem),
 
             Paragraph(Text("Elmer and Kadr, Some formulae relating modular representations of elementary abelian p-groups, DOI 10.1007/s13366-026-00855-9, arXiv:2510.07939v1, Conjecture 3.7(a), propose a relative tensor formula. The objects here use their polynomial models in formulas (11)--(12) and their relative category in Section 2.2 and Lemma 2.1(iii). The group is the additive group of a finite field K; its multiplicative type notation does not mean K's multiplicative group.")),
             Paragraph(Text("Let K be a finite field, p prime, char K=p and q=card K. For every natural d, V_d=(K[z]_(degree<d))^*, with action rho_d(alpha)(lambda)(f)=lambda(f(z-alpha)); V_0 is the zero module. Take natural a,b,u,v with u<p, v<p, u+v<=p, and put i=pa+u, j=pb+v. Assume i+j<=q. Let M be the literal direct sum over c in Fin(q/p) of V_(p(c+1)), namely V_p,V_(2p),...,V_q. Put t=min(u,v), S=the direct sum over ell in Fin t of V_(i+j-(2ell+1)), and T=V_i tensor V_j, all with their actual direct-sum or diagonal tensor actions. The Fin t indices start at zero; equivalently S has summands V_(i+j-(2r-1)) for r=1,...,t. In particular S is an empty direct sum when t=0.")),
