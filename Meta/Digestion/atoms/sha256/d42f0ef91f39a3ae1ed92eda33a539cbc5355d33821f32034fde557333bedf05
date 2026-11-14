@@ -1,0 +1,15 @@
+Write $\langle u\rangle=N^{-1}\sum_{n=m}^{m+N-1}u_n$, for $N\ge1$. For a nonzero integer $j$, the finite geometric identity and (2.7) imply
+
+$$
+\left|\left\langle q_n z^{jn}\right\rangle\right|
+ \le\frac{16S}{N\min_{1\le r\le S}|1-z^{jr}|^2}.
+\tag{2.10}
+$$
+
+Indeed the sum before division by $N$ is
+
+$$
+z^{jm}\alpha P^m[I-(z^jP)^N](I-z^jP)^{-1}b.
+$$
+
+The probability row $\alpha P^m$ has norm one as a functional on the maximum norm, $\|b\|_\infty\le1$, and the square bracket has norm at most two. Negative $j$ have the same gap by complex conjugation. 

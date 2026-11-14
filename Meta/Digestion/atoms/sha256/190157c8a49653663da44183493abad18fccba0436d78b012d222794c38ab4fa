@@ -1,0 +1,8 @@
+Write $\langle u\rangle=N^{-1}\sum_{n=m}^{m+N-1}u_n$, for $N\ge1$. For a nonzero integer $j$, the finite geometric identity and (2.7) imply
+
+$$
+\left|\left\langle q_n z^{jn}\right\rangle\right|
+ \le\frac{16S}{N\min_{1\le r\le S}|1-z^{jr}|^2}.
+\tag{2.10}
+$$
+
