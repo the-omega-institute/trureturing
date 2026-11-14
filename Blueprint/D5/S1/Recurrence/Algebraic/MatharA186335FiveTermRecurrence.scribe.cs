@@ -71,6 +71,6 @@ internal sealed class MatharA186335FiveTermRecurrenceDocument : IScribeDocumentD
                 + "P=1-2X-5X²+6X³+5X⁴ and Q=-1-5X+9X²+10X³. The existing frozen "
                 + "A308815DFiniteRecurrence.euler_coeff and four coefficient shifts yield exactly the displayed "
                 + "integer recurrence. No assumed generating function, finite-prefix check or recurrence-defined "
-                + "substitute is used. The supplied complete proof is retained with consumed private helpers; "
-                + "this unit makes no claim about another Mathar sequence, global novelty or sibling conjectures.", DescribeRole.Theorem))));
+                + "substitute is used. This unit makes no claim about another Mathar sequence, global novelty "
+                + "or sibling conjectures.", DescribeRole.Theorem))));
 }
