@@ -34,6 +34,10 @@ $$\forall n \in \mathbb{N},\; 4 \le n \Rightarrow (n:\mathbb{Z}) \cdot \operator
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/MatharA186335FiveTermRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-a186335-five-term-recurrence` (proved) by `D5/S1/Recurrence/Algebraic/MatharA186335FiveTermRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-a186335-five-term-recurrence","declaration_gid":"D5/S1/Recurrence/Algebraic/MatharA186335FiveTermRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul Barry; R. J. Mathar; OEIS Foundation Inc. (2015). *OEIS A186335 — five-term recurrence for a central-binomial transform*. URL: <https://oeis.org/A186335>.
