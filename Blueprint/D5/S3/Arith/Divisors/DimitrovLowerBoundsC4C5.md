@@ -44,7 +44,7 @@ $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\forall k \in \mathbb{N},\;
 
 *Commentary.*
 
-The native ordering 0 < φ(n) ≤ n−1 < n+1 ≤ ψ(n) ≤ σ(n) and the ordered reciprocal-product ratio lemma give the exact ratio n(n+1)^(k−1)/(n−1)^k. Mixed-power ordering supplies the required lower ratio, and exact field normalization produces every source numerator and denominator term. The faithful Reg escape audit is unfinished under issue #30221; no declared_validated mirror is claimed.
+The native ordering 0 < φ(n) ≤ n−1 < n+1 ≤ ψ(n) ≤ σ(n) and the ordered reciprocal-product ratio lemma give the exact ratio n(n+1)^(k−1)/(n−1)^k. Mixed-power ordering supplies the required lower ratio, and exact field normalization produces every source numerator and denominator term. Every theorem in this derivation is bind-only; admission_basis is open-problem-resolution for the complete preregistered Conjecture 4 (#30196), with escape_witness none. The faithful Reg escape audit is unfinished under issue #30221; no declared_validated mirror is claimed.
 
 **Theorem 1.4 (The complete Conjecture 5 inequality).**
 
@@ -62,7 +62,7 @@ $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\forall k \in \mathbb{N},\;
 
 *Commentary.*
 
-Apply the same ordered bound to φ(n)^k, ψ(n)^k and σ(n)^k. With q=((n+1)/(n−1))^k, the bound becomes (q²+7q+10)/(q+1); clearing the positive denominator and using (n²−1)^k is exactly the displayed source right-hand side. The faithful Reg escape audit is unfinished under issue #30221; no declared_validated mirror is claimed.
+Apply the same ordered bound to φ(n)^k, ψ(n)^k and σ(n)^k. With q=((n+1)/(n−1))^k, the bound becomes (q²+7q+10)/(q+1); clearing the positive denominator and using (n²−1)^k is exactly the displayed source right-hand side. Every theorem in this derivation is bind-only; admission_basis is open-problem-resolution for the complete preregistered Conjecture 5 (#30197), with escape_witness none. The faithful Reg escape audit is unfinished under issue #30221; no declared_validated mirror is claimed.
 
 ## References
 
