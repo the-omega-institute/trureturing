@@ -3290,3 +3290,1070 @@ loosening a guard or treating mathematical equality as reclamation.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 25. Acquisition of material occurrences for a native quantum carrier
+
+**Definition 25.1 (source domain and separately supplied apparatus).**
+Retain both entrances of Definitions 1.2–1.3, including the actual finite
+prehistory, the selected bilateral joint binding, and each selected root's
+own empty or $P_\varepsilon$ preparation. All source edits are the original
+addressed $P/S$, including those executed by Next. All seven original
+requests, current observations, tapes, grants, cuts and immutable samples
+of §§5–7 and 20–24 remain. The source is classical in this construction;
+no coherent superposition of different native sources is assumed.
+
+For a selected original component $c$ with current term $t_c$, let $M_c$
+be the actual vertices of $C(t_c)$, $D_c$ its logical vertices and $Z_c$
+its unary terminal markers. These are disjoint typed subsets
+$M_c=D_c\sqcup Z_c$. Logical branches belong to $D_c$. A marker has a
+material parent but is not an addressable logical alpha. The symbols
+$(c,p)$ below denote positions reached from an acquired real component
+root; they provide no integer-to-reference conversion.
+
+Supply the following independent ideal apparatus permissions to the source
+owner. Their physical implementation and prices are additional premises.
+The owner can hold all installed quantum systems by the identity channel,
+including their joint state with every retained external reference, while
+performing serialized classical service. A fresh operation QNew returns a
+new actual qubit reference, exclusive control/retention rights and the
+state $|0\rangle$, independent of every old system. Distinct calls return
+distinct systems. Supply actual classical descriptor allocation, bit
+storage, equality, field access and finite control, together with the
+right to read the original source's material fields while it is locked.
+These are source-owner reads, beyond any marker-only observer right.
+
+Supply construction of a controllable wire between two acquired qubit
+references. Its allowed rotations are precisely $P_q(v,\xi)$ and
+$B_{qu}(v,\xi)$ of FARG continuation (60.2), on their literal full qubit
+spaces. In particular $B$ fixes $00$ and $11$. Every signed dyadic digit
+rotation required by a finite commission has its own supplied catalog
+entry, instruction description, enable latch, execution and calibration.
+No rotation, coupling or coherent reference is inferred from a source Tag.
+The identity hold includes inactive modes, the reference and port systems;
+it is charged for the whole actual service duration.
+
+One separately constructed qubit $r$ is the coherent phase reference.
+Its generator is zero during occurrence interactions. Optional initial
+quantum ingress is a supplied coherent SWAP port on an explicitly acquired
+finite list of carrier qubits, including $r$ when the input uses it. It
+moves an unknown joint input into the initially vacuum carrier and leaves
+the old input port in vacuum; it does not leave a second copy. The source
+owner obtains both endpoint references and the SWAP authority by actual
+port acquisition. An input density matrix may have arbitrary correlations
+with external systems. Its support must be certified by its supplied
+preparation contract, not by tomography here. Alternatively a known
+preparation supplies an excitation and finite preparation gates. QNew,
+excitation creation, coherent ingress, preparation gates, phase stability,
+wire control, clocks and calibration are separately paid permissions.
+
+Finally supply, if quantum observations are requested, the actual binary
+instrument $\rho\mapsto n_q\rho n_q$ or
+$\rho\mapsto(1-n_q)\rho(1-n_q)$ at an acquired qubit $q$, recording
+which outcome occurred. This is an additional measurement apparatus, with
+its own coupling, outcome delivery and retention. It grants neither a
+native source read nor a hidden Kraus-label observation. Any further
+observable apparatus channel must be declared as another retained output;
+the ideal model has no unlisted observable channel. Fault or calibration
+certificates are distinguished from these exact ideal permissions in §29.
+
+A commissioning footprint $J$ is a finite roster of actual original
+component roots, reached by the original finite entrance or by paid
+bilateral header traversal. It initially contains the selected anchor
+component. It need not remain fixed. Every first service of an uncommissioned
+component, including a service which will refuse, first commissions that
+whole current finite component by the procedure below. Further roots can
+also be commissioned by actual traversal. Every later edit of a commissioned
+component maintains its attachment. Source owner and apparatus remain
+serialized; there is no unmediated second writer. Finite material and
+progress are supplied for each claimed finite continuation, with no
+observable fixed-capacity failure added to a native guard.
+
+**Theorem 25.2 (actual commissioning, without an attachment oracle).**
+From the actual root bindings and permissions in Definition 25.1 there
+is a finite source traversal which constructs an injective binding of
+every vertex in $\bigsqcup_{c\in J}M_c$ to an actual distinct qubit. It
+acquires the logical/marker distinction, ordered logical parent–child
+seams and their depths from this very source. It preserves the source,
+all native tapes, original preparations, samples and old quantum systems.
+No source-to-carrier correspondence is an input to the traversal.
+
+**Proof.** Acquire the current source token and exclusive lock, saving
+all borrowed source cursors in real slots. For the finite entrance start
+at its original root, not at a newly initialized epoch leaf. Bilaterally
+follow actual previous/next seed-header links to each selected root,
+checking its retained source/component association as in Definition 20.2.
+Keep that association in the traversal stack. Neither a numerical seed
+rank nor equality of flat seed words supplies this step.
+
+At a logical root read its actual left/right fields. Zero children means
+alpha. One terminal left child and no right child means beta: visit that
+left object once with role marker, without putting it on the logical
+recursion stack. Two children means branch: visit the actual left and
+right logical subtrees in order. These are exactly AA Definition 17.3's
+material templates. In particular a terminal's role is determined by
+this traversal context, not by interpreting every terminal as alpha.
+Store parent/side and the acquired finite root-relative path in backed
+scratch; paths are accumulated by real traversal, not cast to references.
+
+On visiting a vertex $x$, scan the previously acquired component/vertex
+roster by reference equality. Reuse its descriptor if it exists. Otherwise
+call QNew and construct a descriptor containing the actual tuple
+$(F,c,x,q_x)$ and its retention authority, where $F$ is the authentic
+family/source binding. Freshness of QNew and the roster test establish
+injectivity. An actual source reference supplies the key; a local rank is
+only an enumeration index for paid loops. Traverse each actual material
+edge and construct its wire using the two descriptors' returned qubit
+references. Keep marker wires disabled. The resulting ordered logical
+edges and depths are those just read from the source.
+
+Each component tree is finite. The recursion visits each material vertex
+once; the roster scans, path copies, QNew calls and wire constructions
+are finite. Re-read the live token under the same lock, complete the
+configuration described in Definition 25.3, restore borrowed cursors and
+release the lock. No native field, tape or preparation word was changed.
+Fresh qubits are vacuum independent of the held old state. Thus extension
+by these qubits preserves every old quantum/reference correlation.
+Every scan and acquisition is additional apparatus work and an actual
+entry in the declared apparatus record. $\square$
+
+**Definition 25.3 (attachment identity and acquisition versions).** A
+vertex descriptor's identity tuple $(F,c,x,q_x)$ is immutable. It also
+retains its first-acquisition token. A live attachment configuration
+contains the real descriptor roster, logical/marker roles, actual edge
+endpoints and gate controls, together with an acquisition-version object
+$\mathfrak a$. The live publication is a pair $(v,\mathfrak a)$: $v$ is the actual current
+source token, and $\mathfrak a$ binds the completed configuration at that token.
+Adding a previously uncommissioned component changes $\mathfrak a$ without creating
+a native event or changing $v$. A successful edit changes both as needed.
+Acquisition versions are real retained objects, not implicit integers.
+
+Before publishing a configuration, all its native source/tape/incidence
+maintenance, descriptor construction and wire/control installation must
+be complete under the lock. A partly edited source plus the old header
+is a busy pending state, not a coherent published pair. No interaction or
+quantum observation is admitted there. Old acquisition records and samples
+retain their old $(v,\mathfrak a)$, descriptor identities, roles, outcomes and
+successors. A later activation never rewrites an old marker observation
+into a logical-node observation. Mutable live controls and immutable old
+records are distinct backing.
+
+**Proposition 25.4 (finite footprint and continuing full-source duty).**
+This commissioning rule admits every finite original continuation on
+either entrance under its finite supply premises. On the bilateral
+entrance it gives no finite commissioning of the entire source, and it
+does not acquire a quantum state of infinite unsupported extent.
+
+**Proof.** A finite continuation names finitely many selected roots,
+traverses finite header distances and makes finitely many edits. Each
+selected current tree is finite. Commission the finite union of newly
+encountered roots before their service; Theorem 25.2 terminates on each.
+The local maintenance in §26 requires only finitely many additional
+objects per edit. An arbitrarily remote root or arbitrarily deep lawful
+edit therefore incurs acquisition, rather than a new refusal. No fixed
+roster or height is a semantic eligibility test.
+
+The original bilateral source has infinitely many distinct roots. Each
+finite footprint omits some, so its finite bank cannot already bind them
+all. Any subsequent use of an omitted component creates the stated new
+obligation. The supported input in Definition 26.1 has finite commissioned
+support; arbitrary infinite-support ingress requires a different apparatus
+and is not obtained by taking a mathematical union. This quantifier keeps
+all finite original futures while retaining the physical distinction
+between an endlessly extensible rule and an infinitely supplied device.
+$\square$
+
+## 26. The material split creates the growing attachment
+
+**Definition 26.1 (the supported quantum sector).** For a coherent
+footprint configuration write $M=\bigsqcup_{c\in J}M_c$ and
+$D=\bigsqcup_{c\in J}D_c$. The actual carrier is
+
+$$
+\mathcal Q_M=\bigotimes_{x\in M\sqcup\{r\}}\mathbb C^2,
+\qquad
+\mathcal U_D=\operatorname{span}\{|r\rangle,|x\rangle:x\in D\}.
+\tag{V.27}
+$$
+
+Here $|x\rangle$ is the bit vector with the sole excitation at the
+qubit actually bound to $x$. Every marker mode is zero on this sector.
+Let $E_D:\mathbb C r\oplus\ell^2(D)\to\mathcal Q_M$ be this
+isometry. Density matrices on $\mathcal U_D$ may be mixed and entangled
+with any retained external reference/archive $R$. The classical actual
+source, version, preparation and records remain alongside this state.
+
+This is a one-excitation sector with a coherent reference, of dimension
+$1+|D|$. It is not the entire $2^{1+|M|}$-dimensional carrier, the
+original-control $M_3$ realization, the C5 port, or the complete EB3/PSD3
+state/effect domain. No multi-excitation Green interaction is commissioned
+here. Joint superpositions across acquired components are allowed; the
+classical bilateral source is still its original joint source, not an
+independently chosen product of seeds.
+
+**Theorem 26.2 (attachment through the literal $P$ and $S$ templates).**
+The following maintenance preserves the injective source/carrier binding
+for every arbitrary lawful local edit and every growth selected by Next.
+All old qubits keep their identities and their unknown joint state. On
+$\mathbb C r\oplus\ell^2(D)$ the growth map is exactly the injection
+which fixes every old occurrence and the reference. This injection is a
+consequence of the material construction, not a supplied conformance law.
+
+**Proof.** For a guarded $P$ at the actual alpha root $x$, reserve the
+original fresh marker $m$, its descriptor/qubit and the wire $(x,m)$.
+Execute AA's attachment of that terminal left marker. QNew supplies the
+new qubit in vacuum; obtain $m$'s actual reference from the source
+allocation and verify the resulting parent/left binding. The old $x$
+descriptor stays logical, $m$ is marker, and the wire stays disabled.
+Thus $M'=M\sqcup\{m\}$ and $D'=D$. The role change of $x$ from
+alpha to beta is retained classically. No quantum coordinate is replaced.
+
+For a guarded $S$ at the actual beta root $x$, let $m$ be its actual
+old unary marker, acquired by the guarded source read. The old descriptor
+already binds $m$ to a vacuum qubit. Reserve the original new terminal
+marker $z$ and right root $y$, their two QNew qubits, descriptors and the
+new wires. Execute precisely AA's source template: $m$ becomes the left
+logical beta root, $z$ is its terminal left marker, and $y$ is the right
+logical alpha root attached to $x$. Read the resulting actual fields
+$x.L=m$, $x.R=y$, $m.L=z$ and the initialized parent fields. These
+are actual reference tests, not equations assumed from a numerical path.
+Keep every old descriptor, change $m$'s live role to logical, attach
+$z,y$ by their acquired references, enable $(x,m),(x,y)$ and leave
+$(m,z)$ disabled. Other controls and bindings are unchanged. Hence
+
+$$
+M'=M\sqcup\{z,y\},\qquad D'=D\sqcup\{m,y\}.
+\tag{V.28}
+$$
+
+The old marker qubit is zero even when the old active quantum state is
+unknown and entangled. The two fresh qubits are independent vacuum by
+QNew, and the whole old bank is held during the edit. If $W$ appends
+these fresh vacuum factors and $J$ fixes $r$ and every old logical
+basis vector, the actual bit-vector definitions therefore give
+
+$$
+W E_D=E_{D'}J,\qquad
+(W\otimes I_R)\rho(W^\dagger\otimes I_R)
+=(E_{D'}J\otimes I_R)\rho_0(J^\dagger E_{D'}^\dagger\otimes I_R),
+\tag{V.29}
+$$
+
+where $\rho=(E_D\otimes I_R)\rho_0(E_D^\dagger\otimes I_R)$.
+The same formula holds for $P$ with $J=I$. Partial trace over all carrier
+systems leaves the old $R$ marginal unchanged. More strongly the complete
+old carrier/$R$ density is recovered by tracing only the fresh vacuum
+factors. No old system was measured, reset, copied or discarded.
+
+The logical paths acquired from the edited parent chain are the old
+path $p$ at $x$, $pL$ at $m$, $pR$ at $y$, and marker path $pLL$
+at $z$. An old material marker is thus activated exactly when the source
+makes it logical. All other local edits leave a descriptor's identity
+alone. AA's no-deletion rule preserves all other source vertices. This
+proves maintenance by induction on any actual successful event sequence.
+For Next, the target is its actual recalled-path/left-descent result;
+the argument uses that guarded reference exactly as for an explicit
+addressed event. No assumption about a synchronous whole-$\rho$ schedule
+entered the proof. $\square$
+
+**Proposition 26.3 (why marker activation is not a change of source).**
+The construction's active logical domain, full material carrier and
+current native labels are separately recoverable from its acquired
+configuration and source reads. Its generator alone does not recover
+those labels or the actual serial history.
+
+**Proof.** The roster binds every material vertex and its current role;
+its logical subset and enabled ordered seams are precisely the traversal
+and update invariants of Theorems 25.2 and 26.2. The original arity/birth
+read supplies labels and the original source/tapes supply serial history.
+For a one-node logical tree, alpha and promoted beta have the same
+logical domain and the same generator of §28. The latter has a distinct
+dormant marker and HasPromotion is true, while for initial alpha it is
+false. Thus the logical generator cannot supply the tag or promotion fact.
+For a branch with grown opposite subtrees, AA Theorem 18.3 supplies two
+actual orders with the same endpoint but different FetchGrowth answers;
+the generator also agrees there. Retaining the source, actual preparations
+and tapes is consequently essential to the claimed full service. $\square$
+
+## 27. Every native phase retains its actual transaction
+
+**Definition 27.1 (serialized joint transactions and observations).**
+The original wire and its parsing are exactly Definition 7.1. Root
+selection bilaterally is still a separate real header traversal. Extra
+commissioning, quantum interaction and quantum observation use a disjoint
+apparatus namespace. No original opcode or reply acquires a new field.
+Additional operations start only from native Ready with the relevant
+current grants and an acquired $(v,\mathfrak a)$. The original root, request and
+output connections are retained while its owner locks service. A quantum
+operation borrows only its declared qubit/wire rights and returns before
+native ingress resumes. An attempted operation in a disabled phase is
+unexecuted; an expressly available grant-request denial has its denial
+record and executes no protected read, gate or measurement.
+
+Before an original operation first uses a new component, keep its actually
+acquired frame/parser continuation, hold the old bank and perform
+Theorem 25.2's commissioning in a busy subphase. For an enabled edit,
+reserve all native/tape/incidence/version/output material and all new
+qubits, descriptors, wires and control backing before changing source
+fields. Keep the actual pending kind, target, recalled old pair if any,
+new references, ancestor cursor, attachment cursor and unfinished writes.
+Original source editing and tape/incidence maintenance are unchanged;
+Theorem 26.2 supplies the additional binding maintenance. Publish the
+coherent pair only after both are finished. A query, wrong-type refusal,
+OutOfRange or BadFrame has no successful-event token. Commissioning may
+have acquired a new attachment version at the unchanged actual source.
+
+The apparatus has its own retained chronological record. It includes
+source/component/descriptor acquisitions and their actual field readings,
+version reads, role/wire changes, requested and executed gate slots,
+commanded angle strings, observable enable/control labels, locks, holds,
+quantum outcome bits, grant denials and delivered output prefixes. Record
+its actual finite allocation, work, duration and fee readouts wherever
+these are observable. Source-dependent roster sizes or gate schedules
+are exposed additional observations in this model. Original samples,
+versions, rights and equality tests are retained literally. No privacy or
+source-independent schedule theorem is asserted for these extra channels.
+A separately specified physical side channel must join this record and
+its instrument before the observational claims below apply to it.
+
+Every extra finite output has real backing, sealing, Print, End, local
+ACK, root Return and charged scratch clearing, in its own namespace.
+An unfinished extra transaction retains its pending fields and bank hold;
+it does not publish a coherent state or pretend to be Ready. During any
+original output the bank remains held through the actual final clearing.
+Clearing includes only released work slots; immutable source, sample,
+acquisition and quantum-observation records remain retained.
+
+**Theorem 27.2 (derived all-phase original-projection correspondence).**
+The constructed joint process has a concrete phase relation to AA/AAV's
+actual source process on both entrances. Under the declared rights,
+finite supply, serialization and progress premises it preserves every
+original request/input prefix, output prefix, actual source/tape
+microstate and original semantic successor, including genuine Next.
+Every finite original admitted continuation has such a joint extension.
+Extra apparatus steps have their own records and finite costs. Projection
+is neither equality of elapsed time/fees nor equality of all enriched
+observations, and it is not conditioned on an assumed transaction relation.
+
+**Proof.** Relate states by identical actual original root/source fields,
+tapes, preparations, grants, original parser marks, received/pending input,
+original output backing/cursor, original native continuation and all
+mandatory old samples. The attachment invariant is imposed at coherent
+cuts by the already proved construction. At a busy cut retain its actual
+partly maintained binding and the pending list of obligations; do not
+replace these by their eventual values. Extra acquisition/hold/wire steps
+project to the native phase in which the owner paused. An extra standalone
+transaction projects to its saved native Ready until return. This defines
+the relation from actual fields, rather than a black-box conformance premise.
+
+The cases are as follows; each entry refers to the actual acquired state,
+not to an expected future source.
+
+| Native phase or outcome | Joint execution and preserved pending data |
+| --- | --- |
+| Ready and Receive | Preserve the root and original current grants. Receive copies each actual bit into backed request storage before clearing its occupied latch. Retain the original tag, unary length/index marks and unsupplied suffix. A proper prefix has no original reply. |
+| Navigate and Guard | Follow the same real logical links and original birth provenance. Never traverse a beta marker as a logical child. First-component acquisition holds the bank and preserves this pending traversal. Guard tests the same actual operand. |
+| Tag, HasPromotion, HasSplit | Read the same source/birth facts, including finite prehistory and the bilateral beta root's real $P_\varepsilon$ preparation. Extra role bits do not replace native tests. |
+| Explicit $P/S$ refusal | Preserve absent, branch and wrong-type reasons and the unchanged source/tapes. No successful event or event version is made. Any preceding new-component acquisition concerns the actual unchanged source. |
+| Missing authority, wrong phase, grant denial | A disabled primitive stays unexecuted; it is not a completed wrong-type refusal. A supplied grant-denial transition keeps its denial record without protected acquisition. Quantum authority is never reconstructed from an old source/sample bit. |
+| Reserve and source edit | Keep the original kind/target and every reserved reference. Execute exactly AA's one-marker $P$ or two-new-vertex $S$ template. Fresh bank factors and pending descriptors exist before use; hold every old qubit. |
+| Maintain | Traverse the same actual ancestors, append the same side at each original tape, and retain partial append/head/tail subphases. Finish AAV's incidence update and the new binding obligations before publication. No query or interaction reads this mixture as a coherent version. |
+| FetchGrowth | Run AA19.2 on the original tapes and current original root at the original one-based index. Retain its real counters, path and pending result. Invalid indices are checked OutOfRange and do not mutate source. |
+| Next | Retain its acquired old kind/address, navigate that historical address, descend actual current logical left children, and execute the guard-selected event at the actual leaf. Its new pair is that event, not an actuator choice. Internal recall prints no separate Recall reply or ACK. |
+| BuildAnswer and Print | Seal the unchanged original finite tagged word. Each Print step consumes the same backed bit; a pause retains precisely its emitted prefix and unprinted suffix. The attachment pair was published from the actual committed source, not a candidate. |
+| End, ACK, Return, clearing | Preserve their original order, real local acknowledgement and return to the same root. Hold the bank while actual scratch is cleared/reused. Reenter Ready only after original and additional pending work has finished. |
+
+The first row follows by induction on received bits. The guard/query rows
+use the actual source reached by those bits, and the original arity/birth
+rules. Theorem 26.2 establishes the edit/attachment row on these very
+references; AA19.2 and AAV5.4 establish the tape and incidence row. None
+changes which native leaf satisfies a guard. At publication the newly
+acquired source token is the one actual successful event's successor;
+its attachment version binds the completed actual configuration. Failed
+or merely reserved candidates supply neither an installed generator nor
+a current sample. An extra commissioning scan publishes only the coherent
+unchanged source. The pending old pair, target and original answer remain
+backed until their ordinary clearing points even if optional duplicate
+payloads are omitted under §23's separate eligibility rule.
+
+For Next, AA20.4–20.5's literal recalled position still exists because no
+native edit deletes a logical position. Its current left descent is
+finite and reaches exactly the native guard's operand. Apply the edit
+case to that operand; the old/new pairs, tapes and actual successor agree.
+This proves the in-range case. The checked invalid-index case has neither
+source growth nor a new event token. There is no quantum-derived shortcut
+to the historical path and no retiming of a historical sample.
+
+The finite source trees, actual parent chains, roster scans, reserved
+lists and output words give finite completion of the added busy loops.
+For a temporary pause the lists and cursors just described remain part
+of the related state; progress is claimed only after the supplied finite
+suffix, allocation and local ACK premises hold. Original Print/End/ACK
+are not fabricated from an eventual reply. Extra reads and measurements
+add the records of Definition 27.1 and leave the original source/tapes
+alone. They can change the quantum successor, which the relation retains
+in addition to its identical original fields.
+
+Induction on these phase cases and completed transactions proves the
+projection assertion. Conversely choose any finite admitted original
+continuation, supply its original actual frames and the finite extra
+resources, and apply the same cases successively. Commission each new
+root and extend each new material binding as required. No finite bank
+height, component roster, measurement outcome or alpha/beta scheduling
+restriction was added to the native guards. Thus every such continuation
+has a joint extension. Genuine selected preparations and all immutable
+sample/acquisition versions persist throughout this induction. $\square$
+
+**Proposition 27.3 (adaptive meaning of the projection).** A requester
+which ignores the extra observations can execute its original strategy
+with the same original transcript and successors. A requester using an
+extra quantum result, source scan, duration or allocation record can
+choose a different later original request; Theorem 27.2 then compares
+the actual chosen original request sequence, not the same old-only
+strategy or an equal elapsed-time trace.
+
+**Proof.** Ignoring extra records leaves the same original acquired prefix
+at each request decision, so the request choices agree inductively. If
+an extra result is used, that equality of inputs to the requester no
+longer holds. Nevertheless each chosen native frame is processed by
+the same all-phase cases, and the actual resulting word is an admitted
+native word. This is precisely the per-execution projection assertion;
+it implies no equality between strategies given different information.
+$\square$
+
+## 28. The acquired logical generator and its finite circuits
+
+**Definition 28.1 (the source-indexed interaction).** For each commissioned
+original component use its acquired root-relative logical domain
+$D_c=\operatorname{Pos}(t_c)$, counting measure and inherited parent–child
+operator of FARG continuation §§55, 60. Put
+
+$$
+\begin{aligned}
+H_{D_c}&=aL_{D_c}-gM_\phi,\qquad a,g>0,\qquad \phi(p)=2^{-|p|},\\
+(L_{D_c}f)(p)&=d_pf(p)-\sum_{q\sim p,\ q\in D_c}f(q),\qquad
+ d_\varepsilon=2,\quad d_p=3\ (p\ne\varepsilon),\\
+\widehat H_{v,\mathfrak a}&=0_{\mathbb C r}\oplus\bigoplus_{c\in J}H_{D_c}
+ \oplus0_{\operatorname{span}\{|z\rangle:z\in Z\}}.
+\end{aligned}
+\tag{V.30}
+$$
+
+In the last line transport by the actual vertex/qubit bindings is
+understood, and the operator is on the full one-excitation sector of the
+material bank. It leaves the supported sector invariant. Root/child
+distances here are logical occurrence depths, not lengths of selected
+bilateral gaps, material vertex counts, archive indices or physical time.
+There is no hopping between different original components in (V.30).
+Their authentic common order and selected gap bindings remain source data;
+additional cross-component couplings would require an additional paid law.
+The direct sum does not replace their joint classical source by independent
+seed preparations.
+
+**Theorem 28.2 (source-generated gate correspondence and local defect).**
+On the acquired bank, install one phase block
+$P_{q_x}(1,\delta(ad_p-g2^{-|p|}))$ for each logical $x=(c,p)$,
+and one hopping block $B_{q_xq_y}(1,\delta a)$ for each actual logical
+parent–child seam. The generator sum on the supported sector is exactly
+(V.30), with reference phase retained. This statement concerns the
+supplied gates, not an unprovided native Hamiltonian primitive.
+
+At a local promotion the supported generator is unchanged. At a split
+of the actual leaf $x=(c,p)$, write $m,y$ for its actual new logical
+children from Theorem 26.2. For the old-sector injection $J$,
+
+$$
+J^\dagger\widehat H'J=\widehat H,\qquad
+\widehat H'J-J\widehat H
+=-a\bigl(|m\rangle+|y\rangle\bigr)\langle x|.
+\tag{V.31}
+$$
+
+Here the operators on the right fix neither an invented label nor a
+moving-root graft; they use the acquired material reuse $m$ and fresh
+right child $y$. Compression equality is not dynamical intertwining.
+
+**Proof.** Theorem 25.2 acquires every actual logical seam and its depth;
+Theorem 26.2 proves exactly which seams become logical on the native
+source. The phase generator on a sole excitation is the indicated
+one-site diagonal. The literal $B$ generator of (60.2) gives the
+negative off-diagonal $-a$ in $e^{-i\delta H}$. No gate on a disabled
+marker seam is enabled, and no enabled seam leaves the current logical
+domain. Thus the phase and hopping sum is exactly (V.30).
+
+This instantiates FARG continuation Theorem 60.2's Hamiltonian identity
+at the actually acquired $D_c$, $a,g$, root $\varepsilon$ and common
+potential $2^{-|p|}$; its PR57 packet compiler and fixed-cap source are
+not used. The inherited diagonal stays $2$ at the root and $3$ elsewhere,
+including leaves with missing children. It is not the degree within the
+current finite graph, nor the material graph Laplacian. In particular no
+marker terminal is an extra Hamiltonian site. The reference is fixed,
+so this is an equality of full operators with their relative phase,
+not a projective equality up to a scalar.
+
+A promotion changes only the classical label and dormant material set,
+not $D_c$ or any logical seam. A split adds exactly the two logical
+sites in (V.28), retains every old diagonal and adds their two seams
+at $x$. All other component blocks are unchanged. Reading the old
+principal block and its two new off-block entries gives (V.31).
+This is the local $S$ specialization of the existing occurrence
+Hamiltonian calculation, now joined to its actual AA material operands.
+It does not use accepted Left/Right graft transport or assume that a
+whole-$\rho$ renewal occurred. $\square$
+
+**Proposition 28.3 (true finite parameters for simulation).** Let
+$n=|D|$, $c=|J|$, $F=2n-c$, and supply effective rational enclosures
+for $a,g$, with public upper bounds $\bar a,\bar g$, approximants
+$\widetilde a,\widetilde g$ and errors $\delta_a,\delta_g$ as in
+FARG continuation Theorem 60.4. At a coherent pair $(v,\mathfrak a)$ lock the
+source and configuration, choose a nonnegative rational comparison
+interval $\theta$, $m\ge1$ slices and dyadic angle error $2^{-b}$.
+The acquired sparse circuit has exactly $Fm$ angle blocks, and
+
+$$
+\left\|\widetilde U_{v,\mathfrak a}(\theta)-e^{-i\theta\widehat H_{v,\mathfrak a}}\right\|
+\le \frac{(6\bar a+\bar g)^2\theta^2}{2m}
+ +Fm2^{-b}+\theta(6\delta_a+\delta_g).
+\tag{V.32}
+$$
+
+The norm includes the reference and all dormant one-excitation directions.
+Zero comparison intervals use no interaction blocks. Every digit fetch,
+rotation and idle hold is still an actual paid occurrence.
+
+**Proof.** The logical forest has $n-c$ actual seams and $n$ phase
+sites. Its degree is at most three. A deterministic three-edge-colouring
+is acquired by traversal: at a root give its two child seams colours zero
+and one; at a nonroot give its two child seams the two colours different
+from its parent seam, in left/right order. The three seam groups are
+matchings. The diagonal and each matching are the four Hermitian groups
+of Theorem 60.4. Their same-sector norm estimates give
+$\|L_D\|\le6$ and $\|M_\phi\|\le1$, uniformly over the forest.
+Taking a direct sum over components does not multiply these norms by $c$.
+
+For comparison with that theorem's exact finite parameters, each current
+component with $h_c$ logical leaves is a valid finite ordered source
+in its cover $\mathcal A_{h_c}$; this is a temporary mathematical cover,
+not a new bank allocation or a bound on its future. The packet/cover
+formula restricts to the acquired logical sites and is identity on
+missing sites. Remove its disabled identity blocks. The remaining list
+has exactly $n+(n-c)=F$ blocks per slice, with the same matrices.
+The first-order product-formula and angle-perturbation argument of
+Theorem 60.4 therefore applies to this sparse list, with $F$ in place
+of the full cover's slot count. The coefficient Duhamel term is unchanged.
+This proves (V.32) by reuse of that existing estimate. Its standard
+first-order commutator inequality is the bounded finite-Hermitian case
+of Childs, Su, Tran, Wiebe and Zhu, *Theory of Trotter Error with
+Commutator Scaling*, Physical Review X 11, 011020,
+[arXiv:1912.08854](https://arxiv.org/abs/1912.08854), Appendix A.
+No new product-formula theorem is asserted here.
+
+Angles are finite signed dyadics. If a block has $J_i$ magnitude digits,
+its actual rotation count is $J_i$ including disabled digits, with
+exactly the catalog matrices of Definition 25.1. Thus the rotation count
+is $\sum_{i=1}^{Fm}J_i$, or $FmJ_*$ with deliberately padded common
+width $J_*$. Producing depth denominators, rounding angles, storing and
+reading their digits, acquiring wire controls and installing the catalog
+all require backed finite arithmetic and work. None is a native Read fee.
+$\square$
+
+## 29. Joint quantum records and finite adaptive precision
+
+**Definition 29.1 (concrete finite observation programs).** Quantum
+interactions use §28's compiled angle blocks at coherent locked pairs.
+An occupation observation names an acquired active descriptor or the
+actual reference $r$. It uses the binary instrument of Definition 25.1,
+with both outcomes retained. On the supported sector its two Kraus
+operators are the orthogonal projections
+
+$$
+K_1=|x\rangle\langle x|,\qquad K_0=I-K_1,
+\qquad K_0^\dagger K_0+K_1^\dagger K_1=I.
+\tag{V.33}
+$$
+
+For a dormant marker, an expressly commissioned marker occupation test
+has outcome zero on the declared sector; no marker test is silently
+substituted for native Tag. Its descriptor and role are recorded too.
+An occupied input latch, measurement result latch, partial outcome/output
+and the continuation selected after the outcome all have real backing.
+Only the delivered actual outcome may select a next request. An event of
+probability zero is not assigned a normalized successor. On a positive
+branch the successor is $K_j\rho K_j^\dagger/\operatorname{tr}(K_j\rho
+K_j^\dagger)$; retaining subnormalized matrices avoids conditioning
+ambiguities. External references are acted on by identity.
+
+A finite adaptive program is a finite tree of these actual instructions,
+QNew/isometric acquisitions, original transactions and finite classical
+control, with the complete record of Definition 27.1. All branches have
+supplied finite resources and total local control. This is a finite
+observation horizon, not a bound on the legal future of the native source.
+The reference comparison uses the same command/catalog labels and other
+classical apparatus records, but replaces each completed circuit's quantum
+action by $e^{-i\theta\widehat H}$ at its actually acquired configuration.
+It is a mathematical comparison channel on this declared record interface,
+not a physical run falsely recording gates that were not executed.
+
+**Theorem 29.2 (actual finite instruments and complete joint comparison).**
+The acquired construction realizes such finite adaptive programs by
+normalized finite quantum instruments, retaining the full joint record,
+terminal quantum successor, authentic source successor and every admitted
+reference. For ideal gates and holds, the circuit/interaction error of
+Proposition 28.3 gives the following bound. If every branch has a
+preassigned sum of its interaction error budgets at most $E$, then
+
+$$
+\frac12\|\Omega_{\mathrm{circuit}}-\Omega_{\mathrm{interaction}}\|_1\le E,
+\qquad
+\Omega=\sum_h |h\rangle\langle h|\otimes\rho_h.
+\tag{V.34}
+$$
+
+The record $h$ contains all declared observable channels and the actual
+classical source/configuration successor. The matrix $\rho_h$ is the
+subnormalized terminal carrier/reference state. Its trace is the full
+branch probability. This is a joint-law/state error estimate, not
+pathwise equality or equality of individually conditioned poststates.
+
+**Proof.** At a coherent configuration the unitary gate maps preserve
+$\mathcal U_D$; Theorem 26.2 supplies the actual growth isometry including
+all references. At a newly acquired component its fresh vacuum gives
+the same kind of isometry. The two matrices (V.33) have the displayed
+normalization and preserve the supported sector. Native and apparatus
+classical records are copied only as classical output labels. Their
+deterministic conditional quantum action is hold/isometry or the stated
+interaction. The actual measurement apparatus supplies (V.33), not an
+inferred Born port on an unrelated source. Thus each node is a normalized
+finite instrument on its actual finite input/output carrier.
+
+For a finite tree take the finite union of all branch resources to obtain
+finite interfaces for this proof; unused allocated coordinates are vacuum.
+This does not impose a capacity guard on any continuation beyond that
+tree. At every node use the concrete descriptors and dimension extension
+just constructed. The existing
+[FiniteCausalScheduleProtocol.program_graph_correspondence](../../../D5/S3/Quantum/Dynamics/FiniteCausalScheduleProtocol.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/FiniteCausalScheduleProtocol.scribe.cs)
+then supply the finite adaptive composition and complete terminal-matrix
+normalization. Its `Program.node` branches on an observed instrument
+outcome; hidden Kraus indices are summed. The finite marginal identity in
+[FiniteKrausInstrumentBornMarginal](../../../D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean)
+supplies the trace/Born pairing for (V.33). These source-level suppliers
+are applied here as ordinary mathematics, without a new compiled client.
+They supply no source acquisition or measurement apparatus; those premises
+have just been separately discharged or declared in this construction.
+
+For unitaries $U,V$ with $\|U-V\|\le e$, multiplication and the trace
+norm ideal property give, with every external reference retained,
+$\frac12\|(U\otimes I)\rho(U^\dagger\otimes I)
+-(V\otimes I)\rho(V^\dagger\otimes I)\|_1\le e$ for normalized
+$\rho$. The same estimate scales by trace on a positive subnormalized
+branch. Apply (V.32) only at the common configuration of the same record
+prefix; it does not compare different actual sources by one generator.
+All subsequent normalized instruments, including feedback which chooses
+later native requests, contract trace distance on their full record/output
+space. Induction down the finite program tree, or successive replacement
+of one controlled channel at a time, gives the maximum branch sum $E$.
+Equivalently the induction bounds each child by its remaining branch
+budget and uses that the branch traces sum to their parent's trace.
+This is the standard hybrid argument after its concrete channel and
+record premises have been met.
+
+Different outcomes can choose different later native requests, different
+components and different quantum dimensions. Those alternatives occupy
+different record blocks in (V.34); their actual successors are retained,
+not identified. The bound therefore controls the distribution of all
+recorded decisions and their quantum outputs simultaneously. It supplies
+no coupling on which the two trajectories always agree, and no uniform
+postselection bound after dividing by an arbitrarily small branch weight.
+$\square$
+
+**Proposition 29.3 (executed errors and record eligibility).** Suppose
+an actual implementation has an initial joint ingress/preparation
+half-trace-distance error at most $e_0$, calibrated sector-preserving
+unitary gate deviations at most $\zeta_j$ in operator norm, identity-hold
+channel half-diamond errors at most $h_i$, and complete measurement/output
+instrument half-diamond errors at most $\kappa_i$. Suppose its comparison
+interval discrepancies have sum at most $\eta_\tau$. On each branch,
+(V.34) remains valid after adding
+
+$$
+e_0+\sum_j\zeta_j+\sum_i h_i+\sum_i\kappa_i
+ +(6a+g)\eta_\tau
+\tag{V.35}
+$$
+
+to its budget. A certificate on an unrecorded marginal is insufficient.
+
+**Proof.** Use the same hybrid argument on the complete input/output
+instruments. The unitary deviations include the reference; the Duhamel
+bound uses $\|\widehat H\|\le6a+g$. Preparation error is assessed jointly
+with the admitted references, not merely on the carrier marginal. The
+hold and observation bounds already include every declared observable
+side channel and returning environment. A change in an observed timing,
+leaked control or output field must therefore be bounded as part of that
+instrument, or is outside this certificate. Sector leakage likewise needs
+a complete channel certificate on a specified common output space; a
+restricted ideal-sector norm does not measure it. No independence of
+errors is used. This reuses FARG continuation (60.11)–(60.12)'s unitary
+error terms together with standard instrument contractivity. $\square$
+
+## 30. A genuine $P/S/\operatorname{Next}$ instance and its backing
+
+**Proposition 30.1 (positive finite native and quantum execution).**
+Start at the actual known-alpha root $o$ with its empty tapes. Commission
+it and the reference. Execute the original complete requests
+$P_\varepsilon$, $S_\varepsilon$, Next$(1)$. At their returned cuts the
+native word and final source are
+
+$$
+w=P_\varepsilon S_\varepsilon S_L,\qquad
+ t=\langle\langle\beta,\alpha\rangle,\alpha\rangle.
+\tag{V.36}
+$$
+
+This is an attained positive instance of the growing attachment and full
+service, with nontrivial finite quantum interaction available afterward.
+
+**Proof.** After $P$, the original root is beta and its newly constructed
+marker $m$ has an acquired dormant qubit. After $S$, that same $m$ is
+the actual logical left beta root; the source has actual right alpha
+$y$ and $m$'s terminal marker $z$. The old marker's qubit has become
+logical without any operation on its unknown old active neighbours.
+Next$(1)$ internally recalls the original first event $P_\varepsilon$,
+navigates the actual current root, descends its left edge to $m$, reads
+beta and executes $S_L$. Its original outer reply is exactly the old
+pair $P_\varepsilon$ and new pair $S_L$. The new left child is the
+same $z$ that was previously $m$'s marker. Its qubit is activated; a
+new marker below $z$ and a new right alpha child of $m$ receive fresh
+vacuum qubits. This proves (V.36) with real marker reuse at both splits.
+
+The source has six material vertices, five logical vertices and one
+marker. The bank has seven qubits including $r$; its supported sector
+has dimension six, its whole one-excitation sector dimension seven, and
+its full tensor product dimension $128$. There are five acquired material
+edge wires, four enabled logical seams and one disabled marker seam.
+QNew was called twice initially, once at $P$ and twice at each split.
+These are actual counts, not counts of an exponentially prebuilt address
+cover. A separately supplied unknown initial ingress
+$c_r|r\rangle+c_o|o\rangle$, or any joint mixed/reference state on that
+sector, stays at the same old modes during all three native transactions.
+No growth step prepares another copy of $c_r,c_o$.
+
+For $a=g=1$, order the final logical coordinates as
+$(\varepsilon,L,R,LL,LR)$. The actual supported logical matrix is
+
+$$
+H_D=\begin{pmatrix}
+1&-1&-1&0&0\\
+-1&5/2&0&-1&-1\\
+-1&0&5/2&0&0\\
+0&-1&0&11/4&0\\
+0&-1&0&0&11/4
+\end{pmatrix}.
+\tag{V.37}
+$$
+
+The reference and dormant marker blocks are zero. Here $n=5,c=1,F=9$.
+At $\theta=1/100$, $m=32$, $b=20$, with exact coefficients, (V.32) is
+
+$$
+E_{\mathrm{ex}}=\frac{49}{640000}+\frac{9}{32768}<\frac1{2500}.
+\tag{V.38}
+$$
+
+There are exactly $288$ angle blocks. Eleven fractional magnitude digits
+with exponents $-20,\ldots,-10$ suffice for every rounded nonnegative
+angle, since all unrounded angles are at most $3/3200<2^{-10}$.
+Executing every digit gives $3168$ elementary rotations. A literal
+endpoint-specific catalog has $99$ positive entries, one for each of the
+nine actual phase/hopping endpoints and eleven exponents. All fetches,
+including zero digits, are paid; this count excludes classical arithmetic,
+source service, record/output work and holds.
+
+For an explicit nonzero quantum observation, supply the known preparation
+$(|r\rangle+|o\rangle)/\sqrt2$ before the native requests. One allowed
+finite preparation uses a separately supplied $X_r$, a reference/root
+wire with $B_{ro}(1,\pi/4)$, and $P_o(1,\pi/2)$. These three fixed
+preparation gates and the extra reference/root wire are additional to
+the $99$ interaction-catalog entries and five material wires. They are
+supplied actual gates, not approximated by declaring $\pi$ dyadic.
+Keep this wire disabled during occurrence interactions. At the final
+configuration, $\langle R|H_D|\varepsilon\rangle=-1$. The unitary Taylor
+remainder bound gives
+
+$$
+|\langle R|e^{-i\theta H_D}|\varepsilon\rangle|
+\ge\theta-49\theta^2/2.
+\tag{V.39}
+$$
+
+It follows by the integral second-order remainder and $\|H_D\|\le7$.
+Subtracting $E_{\mathrm{ex}}$ still leaves a positive number. Thus the actual
+ideal circuit followed by the supplied occupation instrument at the real
+right child $y$ has positive outcome-one probability, at least
+$(1/100-49/20000-E_{\mathrm{ex}})^2/2$. Both outcomes, the postmeasurement
+state, actual descriptors and all native records are retained. This is
+a finite genuine source-attached observation, not a scalar eigenvalue
+substitute for source service.
+
+After (V.36), original Tag$(\varepsilon)$ returns branch,
+HasPromotion$(\varepsilon)$ and HasSplit$(\varepsilon)$ return true,
+and FetchGrowth$(3)$ returns $S_L$. Next$(0)$ is OutOfRange without
+an edit. An explicit $P_L$ is a branch refusal and $S_R$ is a wrong-type
+refusal. Their printed tags, pending output prefixes, End/ACK/Return and
+scratch clearing are all the original ones by Theorem 27.2. Further
+lawful edits, for example $P_R$ and then $S_R$, commission their actual
+new material and extend the same bank. $\square$
+
+**Proposition 30.2 (exact located backing and finite obligations).**
+For a footprint of $c$ commissioned complete original components, let
+$P,S$ count their actual successful native events from their own known
+alpha preparations, including every pre-commissioning event and those
+inside Next. Let $D_{\mathrm{hist}}$ be their sum of full event-address lengths.
+At a coherent cut the construction has
+
+$$
+|M|=c+P+2S,\quad |D|=c+2S,\quad |Z|=P,\quad
+Q=1+c+P+2S,\quad W_{\mathrm{mat}}=P+2S.
+\tag{V.40}
+$$
+
+The original literal routing tapes have $S$ headers and $D_{\mathrm{hist}}$
+side-bit cells. None of these counts bounds the complete classical backing
+or supplies a physical tariff.
+
+**Proof.** Each original alpha root contributes one material/logical
+vertex. A promotion adds one marker; a split reuses one marker as logical,
+creates a replacement marker and right alpha, adding two material and two
+logical vertices. The number of current beta leaves, hence markers, is
+$P$. This is AA22.1 rootwise, retaining actual $P_\varepsilon$ preparations
+bilaterally. A material forest has $|M|-c$ edges, giving the displayed
+wire count. Optional reference/ingress/readout wires add to it. One qubit
+per material vertex and one reference give $Q$. These are counts at this
+actual finite footprint, not across the uncommissioned bilateral source.
+
+Every material descriptor stores its actual source/component/vertex/qubit
+references, identity links, acquisition token and retention authority.
+Its live role/edge/depth configuration and controls require additional
+backing. Let $w(f)$ be the actual encoded width of each retained reference
+field $f$, and $B_{\mathrm{ctl}},B_{\mathrm{data}}$ the actual finite control and
+other classical bit counts. A literal backed account contains
+$B_{\mathrm{ctl}}+B_{\mathrm{data}}+\sum_f w(f)$, with each real alias counted
+according to its actual sharing. No $w(f)=1$ convention is used. A
+binary namespace for $A$ independently selectable simultaneous objects
+needs at least $\lceil\log_2 A\rceil$ bits per standalone name; it does
+not provide an upper bound, an allocation implementation or permission
+to cast such a name to an object. Real root/header/vertex and quantum
+port descriptors must still be acquired and held.
+
+Initial commissioning reads all material fields, constructs the roster,
+paths, stack, wires and controls, and restores saved cursors. A straightforward
+roster scan can use quadratic equality work in the number of acquired
+vertices; no constant-time dictionary is assumed. Each new $P/S$ uses its
+actual reserved source allocations, QNew calls, source-field tests,
+descriptor writes, wire construction/activation and finite ancestor work.
+All gate-angle generation, rational enclosures, depth denominators,
+rounding, instruction installation, digit/enable fetches, matching-colour
+computation, primitive gate slots and scratch clearing are additional
+finite work. Original AA22.3 input/output traffic and all original
+source/tape/frontier/enrollment work remain charged.
+
+Storage includes original preparations/source/tapes, component/header and
+cut bindings, version chains, mandatory sample payloads and acquisition
+versions, the descriptor/configuration roster, every quantum/reference
+system, returning ports, code/catalog/angles, grants, input and output
+latches, reserved unattached material, unfinished appends, traversal/counter
+scratch and complete apparatus/measurement records. Retention lasts for
+the actual duration of the run, including compilation, ingress waiting,
+Print/End/ACK/Return and any partial transaction. Old quantum information
+cannot be reclaimed merely because its component is not the next selected
+root. The comparison intervals are additional calibrated numerical inputs;
+they are not event counts or the total physical time of these operations.
+
+Thus every requested finite operation has a finite backing/work description
+under the stated ideal primitives, with precision and retention obligations
+made explicit. No net saving, Pareto optimum, original PR57 core tariff,
+physical energy price or universal alpha/beta minimality follows from
+(V.40) or the gate counts. $\square$
+
+## 31. Boundary witnesses and the exact acquired result
+
+**Proposition 31.1 (a bilateral instance uses the actual separate preparations).**
+On the selected bilateral entrance, two acquired adjacent components can
+exhibit the positive $P/S/\operatorname{Next}$ attachment without an
+invented common preparation word. Quantum coherence across those two
+components, when commissioned, is an extra quantum preparation and does
+not change their native provenance.
+
+**Proof.** In (V.2), $f(0)=0$ and $f(1)=1$, so the actual selected source
+contains a beta seed followed by alpha. From any supplied authentic anchor
+there is a finite header path to this actual pair. A source-owned search
+which reads adjacent actual epoch tags and stops at the first beta-alpha
+pair therefore terminates: even without knowing the anchor's integer
+origin, the existing finite pair lies at finite header distance and the
+two-sided increasing excursions of Definition 6.3 eventually visit it.
+This proof uses existence of that fixed source occurrence, not a numerical
+cast to its header. Every excursion, Tag/enrollment read, return and
+sample is paid. The search may equally stop at any other actual pair
+which it finds first. Perform this before editing its components.
+
+Commission both actual roots. The beta root has its actual own history
+$P_\varepsilon$ and marker, whereas the adjacent alpha root has its
+own empty history. There are three material vertices and four qubits
+including the common reference, initially with two logical sites and
+one dormant marker. On the beta component Next$(1)$ really recalls its
+preparation promotion and splits its current root. On the alpha component
+execute $P_\varepsilon$, $S_\varepsilon$, Next$(1)$ as in Proposition
+30.1. All these are root-relative requests after genuine header/root
+selection. They extend the same acquired source/carrier roster by the
+proved templates, retaining the actual global post-epoch merge and
+component bindings of §§20–24. They neither combine the two preparations
+into a newly stipulated total word nor forget that the beta preparation
+precedes this component's first post-epoch service.
+
+If a joint state across these roots and $r$ is supplied through the
+coherent input port, (V.29) preserves all its correlations during the
+edits. The fresh vacuum factors are quantum apparatus construction,
+not a product replacement for the selected classical source. The original
+marker/epoch service still reads the same retained cuts, selected labels
+and old acquisition versions. A later edit makes its current frontier
+nonmechanical by Theorem 2.2; the original epoch source and its samples
+are not relabelled as a new fixed-slope source. $\square$
+
+**Proposition 31.2 (ineligible attachments and meaningful failure boundaries).**
+The following cases are outside, or contradict, the positive construction
+for the indicated explicit reasons. None proves universal impossibility
+of every other quantum realization.
+
+**Proof.** First consider a qubit at a beta marker containing an excitation
+or an unknown correlation before that marker is activated. This input is
+outside $\mathcal U_D$. For instance $|m\rangle$ is orthogonal to every
+$E_D f$, although after $S$ that same mode is logical. It is therefore
+not the extension by zero new logical amplitudes in (V.29). The full
+carrier can still retain it, but the asserted supported input/output
+correspondence cannot be claimed for it. Likewise a state with two
+excitations is outside (V.27); the literal $B$ fixes $11$ and cannot
+be silently replaced by an exterior-power or unrestricted bosonic law.
+
+Second, a fixed finite bank/address cover cannot serve all future native
+edits. Starting from actual promoted beta, repeated splits of the current
+left beta leaf are lawful at every finite depth. Each split adds two
+logical sites and requires the fresh material/qubit and wire obligations
+of (V.28). Once a fixed cover is exceeded, either it is extended with
+actual resources or its attempted positive full-future claim fails.
+Refusing that native split merely because the bank is full changes the
+original service. This is why every finite extension here carries its own
+supply premise and no fixed $H$ appears in a native guard.
+
+Third, at an initial alpha the complete original request $S_\varepsilon$
+is a wrong-type refusal. No split occurred and no new logical children
+can be published. Reserving hypothetical children, computing their gates
+or assigning them a prospective version cannot make them current source
+operands. An incomplete $P_\varepsilon$ frame likewise has only its
+actual received prefix and pending latch; it has not yet produced beta.
+A denied grant to read or actuate has no protected observation/gate event.
+These three cases have different actual records and cannot share a
+fabricated successful-acquisition entry.
+
+Fourth, two separately prepared equal-valued native trees have different
+actual root/vertex bindings. A descriptor copied from the first is not an
+attachment to the second. Its Tag word and Hamiltonian matrix may agree,
+but a later native operation uses the second tree's actual references.
+The commissioning traversal must reach those references and construct
+their own qubit association. This is an incorrect-pairing witness, not
+an indistinguishability lower bound which drops declared identity channels.
+Similarly the same word without the selected bilateral marker/root/gap
+binding is not that original joint source.
+
+Fifth, an input port without coherent ingress authority cannot be replaced
+by copying an unknown state into the new bank. A universal copy would
+send two possible pure states $u,v$ and a fixed blank to $u\otimes u$
+and $v\otimes v$. Isometry would require
+$\langle u,v\rangle=\langle u,v\rangle^2$, which fails for
+$0<|\langle u,v\rangle|<1$. The actual SWAP premise in Definition 25.1
+avoids that claim by moving the state and retaining no duplicate. If only
+known excitation preparation is supplied, the unknown-input theorem is
+not commissioned; known-state examples still have their declared domain.
+
+Sixth, a carrier-only calibration that allows an arbitrary common phase
+on the active logical block is insufficient for coherent-reference
+precision. On $(|r\rangle+|x\rangle)/\sqrt2$, replacing the active block
+by its negative gives $(|r\rangle-|x\rangle)/\sqrt2$, an orthogonal
+joint state. Site populations alone agree, but a separately supplied
+reference/site interference instrument distinguishes the states. Such
+an instrument requires its own paid coupling; the mathematical
+orthogonality already shows why a projective unitary error is not the
+full-phase bound (V.32). A phase oracle is not among the permissions.
+
+Finally, loss of holds, a leaked unmodelled channel, unsupported ingress,
+source mutation by a second writer, inaccessible current owner rights,
+missing retained preparations or deletion of original tapes violates a
+named premise. It is not repaired by a numerical generator equality,
+a stationary root observer or a bound on one postselected marginal.
+A physical realization of these permissions is a separate theorem.
+$\square$
+
+**Definition 31.3 (supplier conditions and mathematical ownership).**
+The acquired material/qubit roster, its marker-to-logical activation,
+growing configuration publication and the concrete phase relation of
+Theorems 25.2, 26.2 and 27.2 are the source-specific deductions here.
+Their use of the actual AA templates supplies the previously independent
+source/carrier relation. The following existing results retain their
+original conditions within that deduction.
+
+| Supplier | Exact use and retained boundary |
+| --- | --- |
+| AA17.3, AA19.2, AA20.2–20.5, AA22.1–22.3; AAV5.4, 7.2, 20–24 | Actual marker material, original indexed history, original all-phase service and genuine Next, original backing and dynamic source/version/component attribution. These already supply the classical continuation correspondence; no new serial-replay or generic four-view theorem is claimed. |
+| [NativeMaterialRootRecognition](../../../D5/S3/Arith/FibonacciAtomic/Geometry/NativeMaterialRootRecognition.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Geometry/NativeMaterialRootRecognition.scribe.cs) | `material`, `terminals`, `children` and the consumed `logical_mem`/`beta_marker` facts separate logical sites from beta markers. Its `original_rigidity` and `effective_inverse` concern full terminal-ordered material presentations with original birth typing and at least three logical leaves. Our root is actually supplied and traversed; no inverse at smaller leaf counts or quantum acquisition theorem is inferred. |
+| [NativeEndpointEventIdeals](../../../D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.scribe.cs) | `guard_ancestor`, `partial_insert`, `guard_enabled`, `execution_adequacy` and `all_histories` retain the actual born-alpha/beta guards and arbitrary finite event orders. They supply no qubit, coherent ingress, hold or actuator right. |
+| FARG continuation §§55, 60.2–60.5 and 62.1–62.2 | The one-excitation counting-measure $aL_D-gM_\phi$, inherited root/nonroot diagonal, common potential, literal $P/B$ matrices and full-phase finite-circuit estimate are reused at the explicit parameters of §28. The existing source-owned PR57 actuator is positive on its own source/menu. Its packet compiler, fixed source cap, whole-$\rho$ guard and tariff are not transplanted to AA. The hard-core multi-excitation sectors and pair terms are not part of this commission. |
+| [FiniteCausalScheduleProtocol](../../../D5/S3/Quantum/Dynamics/FiniteCausalScheduleProtocol.lean), its Scribe, and [FiniteKrausInstrumentBornMarginal](../../../D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean) | The actual finite normalized instruments, full branch matrices and observed-outcome control in §29 meet the supplied interfaces. Channel composition/Born marginals do not acquire native operands or permit an unlisted instrument. [OriginalControlComposition.concatenate_original](../../../D5/S3/Quantum/Fibers/OriginalControlComposition.lean) remains a composition supplier for its original-control contract, not an identification of that carrier with (V.27). |
+
+The normalization and finite adaptive-network composition are established
+quantum mathematics: Chiribella, D'Ariano and Perinotti,
+[*Theoretical framework for quantum networks*](https://arxiv.org/abs/0904.4483),
+Physical Review A 80, 022339, §II.C.1, treats finite acyclic networks and
+memory channels. Here finite actual-outcome trees use concrete permitted
+instruments and retained references. The standard unitary-isometry,
+no-cloning inner-product and trace-distance hybrid steps occur only
+inside the source-specific derivations above; they are not proposed as
+new independent results. The finite-Hermitian simulation supplier and
+its hypotheses are stated in Proposition 28.3. These primary results
+supply neither our material bindings nor an AA apparatus implementation.
+The source-specific deductions are repo-derived; this attribution makes
+no exhaustive mathematical-priority assertion.
+
+**Proposition 31.4 (scope of the acquired common expression).** On the
+supported, actually commissioned quantum sector and every finite original
+continuation, the attachment is a usable same-source interaction, with
+source space/frontier, authentic serial records, boundary/sample versions
+and retained quantum memory linked by their actual native transactions.
+It supplies neither all remaining physical interfaces nor an identification
+of the different established quantum domains.
+
+**Proof.** Material traversal and local templates give the real source
+bindings; native tapes retain actual history; AAV's incidence/sample
+invariants retain the original boundary and memory service; (V.29) gives
+retained quantum information and (V.30) its source-indexed interaction.
+Theorem 27.2 composes these at each actual original transaction, and §29
+retains their finite quantum records and conditional successors. Thus
+this is more than a tensor factor whose connection to the source is
+assumed. Changing an actual native split changes its bound enabled
+seams by (V.31), while old logical coefficients and all admitted reference
+correlations remain attached to their actual unchanged systems.
+
+The operator does not itself reconstruct alpha/beta or selected serial
+history, by Proposition 26.3. No map to the whole original-control $M_3$
+carrier, C5 port or complete EB3/PSD3 state/effect cone was constructed.
+The static pure-locus/topology results, a stationary Read source-law
+bridge, and the separate rational-path/field installations therefore
+remain in their own scopes. Calibrated physical lengths, genuine physical
+clocks/Hamiltonians, unknown-state preparation and ingress hardware,
+physical gates/holds/couplings, observable-fault models, a finite physical
+realization of the bilateral source, and coherent infinite unsupported
+inputs remain additional obligations. Each finite supported use has the
+explicit growing acquisition/supply requirements above; there is no
+assertion of a uniformly bounded or already infinitely constructed device.
+Global resource minima, net savings, universal generator minimality and
+an unconditional common physical realization remain unproved. $\square$
+
+## 追加锚（本行以下为增补区）

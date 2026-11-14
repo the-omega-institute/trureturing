@@ -1,0 +1,29 @@
+### 137.7 近根纯点的完整二步集合相等
+
+固定 $q\in U_0\cap P$。$q=o$ 时结论自明；余设 $q\ne o$，记 $s=\pi(q)$。对任意 $a\in S_q$，若 $a\in S$，唯一共同邻点给 $a=s$，于是 $S_a=S_s\subseteq Q$。若 $a\ne s$，则 $a\notin S$ 且 $q\in S_a\cap U_0$，(XI137.24)仍给 $S_a\subseteq Q$。取并得到
+
+$$
+Q(q)\subseteq Q(o).
+\tag{XI137.25}
+$$
+
+反向固定任意 $t\in S$。$t=s$ 时，由 $s\in S_q$ 直接有 $S_s\subseteq Q(q)$。设 $t\ne s$。对每个 $a\in S_q$，交集 $D_a\cap D_t$ 恰为一个原纯点。$a=s$ 时交点是 $o$。$a\ne s$ 时，(XI137.24)给射影同胚 $j|_{D_a}:D_a\to\Omega$，所以存在唯一 $x\in S_a$ 满足 $j(x)=b_t$；(XI137.8)的准确零面证明给 $x\in D_t$。两球不同，因为 $a\notin S$ 而 $t\in S$；点交规则保证交点唯一。于是定义全域映射
+
+$$
+h_t:S_q\longrightarrow S_t,\qquad \{h_t(a)\}=D_a\cap D_t.
+\tag{XI137.26}
+$$
+
+连续性无需 $a\mapsto e_a$ 连续。紧集
+
+$$
+\{(a,x,f)\in S_q\times S_t\times\mathcal E:f(a)=1,\ f(x)=0\}
+\tag{XI137.27}
+$$
+
+的前两坐标投影恰为 $h_t$ 的图；图到紧源 $S_q$ 为连续双射，目标 Hausdorff，故其逆连续，再投影得 $h_t$ 连续。
+
+若 $h_t(a)=h_t(a')=x$，则零对称给 $a,a'\in D_q\cap D_x$。若 $a\ne a'$，点交规则迫两球相同，Inj 给 $x=q$。但 $q\in S_t$ 将使 $t$ 成为 $o,q$ 的共同邻点，违反 $t\ne s$。故 $h_t$ 单射。其源是整个紧二维球面 $S_q$，目标是整个连通二维球面 $S_t$；Hatcher 的同维满射结论适用，故 $h_t$ 满射。
+
+每个 $x\in S_t$ 遂有实际 $a\in S_q$ 满足 $x\in S_a$，从而 $S_t\subseteq Q(q)$。遍历全部 $t\in S$ 并结合(XI137.25)，得到(XI137.9)。这里获得的其他根仅为 $U_0\cap P$ 中的原纯点，没有把局部量词扩大为全 $P$。
+
