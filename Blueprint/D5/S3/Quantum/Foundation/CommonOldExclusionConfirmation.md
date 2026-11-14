@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.three_i
 
 *Commentary.*
 
-For the same original C and u, threeBallExclusions supplies exclusionBalls by taking each original injective affine three-ball chart. The proof is the original owner, used by BinaryCenterNoncollapse without changing any hypothesis or choosing a competing center.
+For the same original C and u, threeBallExclusions supplies exclusionBalls by taking each original injective affine three-ball chart. BinaryCenterNoncollapse uses these complete original charts and the same intrinsic centers.
 
 **Theorem 1.7 (Whole original reflection and pure antipodes).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.old_geo
 
 *Commentary.*
 
-Under the original closedness, strict positivity, generating span and EB3 hypotheses, for every original pure p the chosen oldCenter lies in the whole D(p), reflection x mapped to twice oldCenter minus x preserves that whole ball, and every original pure q in D(p) has an original pure reflected partner r in D(p) with q+r=2 oldCenter. This is the unchanged original declaration, exposed for the actual fixed-sphere diameter consumer. That consumer identifies oldCenter with ContinuousFrameSum.center by the existing whole-ball center uniqueness theorem.
+Under the original closedness, strict positivity, generating span and EB3 hypotheses, for every original pure p the chosen oldCenter lies in the whole D(p), reflection x mapped to twice oldCenter minus x preserves that whole ball, and every original pure q in D(p) has an original pure reflected partner r in D(p) with q+r=2 oldCenter. The fixed-sphere diameter bound uses these original reflected partners and identifies oldCenter with ContinuousFrameSum.center by whole-ball center uniqueness.
 
 **Definition 1.8 (The actual full-zero confirmer family).**
 

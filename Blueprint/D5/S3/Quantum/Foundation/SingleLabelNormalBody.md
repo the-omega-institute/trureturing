@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.chartPure`
 
 *Commentary.*
 
-Given the original closed generating cone, strictly positive unit, exclusionBalls, an original pure label p, a whole chart a of D(p), and a chart vector n of norm one, chartPure is the original pure state with vector a(n). Purity is supplied by OriginalFacePolarity.chart_boundary. The definition is the original owner used by the sphere-center continuity consumer in BinaryCenterNoncollapse; it imposes neither SingleLabel nor Pair.
+Given the original closed generating cone, strictly positive unit, exclusionBalls, an original pure label p, a whole chart a of D(p), and a chart vector n of norm one, chartPure is the original pure state with vector a(n). Purity is supplied by OriginalFacePolarity.chart_boundary. The sphere-center function in BinaryCenterNoncollapse uses this original pure point; neither SingleLabel nor Pair is assumed.
 
 **Definition 1.3 (Whole normalized positive annihilator body).**
 
