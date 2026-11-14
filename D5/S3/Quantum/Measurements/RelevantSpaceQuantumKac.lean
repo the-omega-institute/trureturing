@@ -82,8 +82,7 @@ private theorem support_coercivity_order (R PiC : Matrix n n ℂ)
     (μ : ℂ) • PiC ≤ R := by
   have hPiCpos : PiC.PosSemidef := by
     rw [← Matrix.isPositive_toEuclideanLin_iff, hPiC]
-    exact LinearMap.IsSymmetricProjection.isPositive
-      ⟨C.isIdempotentElem_starProjection.toLinearMap, C.starProjection_isSymmetric⟩
+    exact C.isSymmetricProjection_starProjection.isPositive
   have horth : Cᗮ = LinearMap.ker R.toEuclideanLin := by
     rw [← hC, matrixSupport, Submodule.orthogonal_orthogonal]
   have hproject (x : EuclideanSpace ℂ n) :
@@ -119,8 +118,8 @@ private theorem support_coercivity_order (R PiC : Matrix n n ℂ)
   have h := hb y (C.starProjection_apply_mem x)
   rw [inner_re_symm]
   simp only [map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
-    inner_sub_right, inner_smul_right, Complex.sub_re, Complex.mul_re,
-    Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    inner_sub_right, inner_smul_right, RCLike.re_eq_complex_re,
+    Complex.sub_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
   rw [hqR, hqPiC]
   linarith
 
@@ -150,7 +149,9 @@ private theorem hasSum_of_positive_block (K : α → Matrix n n ℂ) [Fintype α
     exact Matrix.nonneg_iff_posSemidef.mpr hP
   have hPI : P ≤ PiC := by
     have h := Matrix.nonneg_iff_posSemidef.mpr (hpos 1 PiC hPiC)
-    simpa only [Function.iterate_one, hstep, sub_nonneg] using h
+    change 0 ≤ T PiC at h
+    rw [hstep, sub_nonneg] at h
+    exact h
   have hanti : Antitone (fun k => T^[k] PiC) := by
     apply antitone_nat_of_succ_le
     intro k
@@ -177,7 +178,8 @@ private theorem hasSum_of_positive_block (K : α → Matrix n n ℂ) [Fintype α
     simp only [Matrix.trace_sub, Complex.sub_re] at ht
     linarith
   have hbound (k : ℕ) : (T^[k] PiC).trace.re ≤ q ^ (k / N) * PiC.trace.re := by
-    simpa [Matrix.trace_smul, smul_eq_mul, Complex.mul_re] using htrace (hall k)
+    simpa only [Matrix.trace_smul, smul_eq_mul, Complex.mul_re, Complex.ofReal_re,
+      Complex.ofReal_im, zero_mul, sub_zero] using htrace (hall k)
   have htrlim := geometric_trace_tendsto K c hc PiC hPiC N hN q hq hq1 hbound
   have hnormlim : Tendsto (fun k => ‖T^[k] PiC‖) atTop (𝓝 0) :=
     squeeze_zero (fun _ => norm_nonneg _)
@@ -222,8 +224,7 @@ theorem relevant_projection_hasSum (K : α → Matrix n n ℂ) [Fintype α]
   let T := weightedCP J (fun _ => 1)
   have hPiCpos : PiC.PosSemidef := by
     rw [← Matrix.isPositive_toEuclideanLin_iff, hPiC]
-    exact LinearMap.IsSymmetricProjection.isPositive
-      ⟨C.isIdempotentElem_starProjection.toLinearMap, C.starProjection_isSymmetric⟩
+    exact C.isSymmetricProjection_starProjection.isPositive
   have hinit : matrixSupport P ≤ C := by
     apply le_iSup_of_le 0
     intro x hx
@@ -231,7 +232,8 @@ theorem relevant_projection_hasSum (K : α → Matrix n n ℂ) [Fintype α]
       by simp [krausWord, Matrix.toEuclideanLin, Matrix.toLpLin_one]⟩
   have hPiCP : PiC * P = P := by
     apply Matrix.toEuclideanLin.injective
-    ext x
+    apply LinearMap.ext
+    intro x
     simp only [Matrix.toEuclideanLin, Matrix.toLpLin_mul_same, LinearMap.comp_apply]
     change PiC.toEuclideanLin (P.toEuclideanLin x) = P.toEuclideanLin x
     rw [hPiC]
@@ -262,6 +264,8 @@ theorem relevant_projection_hasSum (K : α → Matrix n n ℂ) [Fintype α]
   have hRpos : (orbitSum J (fun _ => 1) P L).PosSemidef := by
     apply Matrix.posSemidef_sum
     intro k _
+    suffices ∀ k, ((weightedCP J (fun _ => 1))^[k] P).PosSemidef from this k
+    intro k
     induction k with
     | zero => exact hP
     | succ k ih =>
