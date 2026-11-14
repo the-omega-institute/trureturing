@@ -9,7 +9,6 @@
 import D5.S3.Combinatorics.SweepDimension.Basic
 import D5.S3.Combinatorics.SweepDimension.FiniteDilworth
 import Mathlib.Order.Extension.Linear
-import Mathlib.Order.Prod.Basic
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -41,7 +40,7 @@ private theorem product_antichain_projection {S : Finset (α × Fin 2)}
     have hab' : a.1 = b.1 := hab
     rcases le_total a.2 b.2 with h | h
     · exact hS ha hb hne ⟨hab'.le, h⟩
-    · exact hS hb ha hne.symm ⟨hab'.symm.le, h⟩
+    · exact hS hb ha (Ne.symm hne) ⟨hab'.symm.le, h⟩
   · intro a b c ha hb hc hchain
     obtain ⟨⟨a', i⟩, hai, rfl⟩ := Finset.mem_image.mp ha
     obtain ⟨⟨b', j⟩, hbj, rfl⟩ := Finset.mem_image.mp hb
@@ -75,13 +74,20 @@ private def blockRel (A B : Set α) (x y : α) : Prop :=
 private theorem block_partial (A B : Set α) : IsPartialOrder α (blockRel A B) where
   refl x := Or.inl rfl
   antisymm a b hab hba := by
-    by_cases ha : a ∈ A <;> by_cases hb : b ∈ A <;>
-      by_cases haB : a ∈ B <;> by_cases hbB : b ∈ B <;>
-      simp_all [blockRel] <;> aesop (add safe le_antisymm)
+    grind only [blockRel, le_antisymm]
   trans a b c hab hbc := by
-    by_cases ha : a ∈ A <;> by_cases hb : b ∈ A <;> by_cases hc : c ∈ A <;>
-      by_cases haB : a ∈ B <;> by_cases hbB : b ∈ B <;> by_cases hcB : c ∈ B <;>
-      simp_all [blockRel] <;> aesop (add safe le_trans)
+    rcases hab with rfl | ⟨ha, hab⟩ | ⟨ha, haB, hbA, hab⟩
+    · exact hbc
+    · rcases hbc with rfl | ⟨hb, hbc⟩ | ⟨hb, _, hcA, _⟩
+      · exact Or.inr (Or.inl ⟨ha, hab⟩)
+      · have hba : b ≤ a := hab.resolve_left (not_not.mpr hb)
+        exact Or.inr (Or.inl ⟨ha, hbc.imp id (fun h => h.trans hba)⟩)
+      · exact Or.inr (Or.inl ⟨ha, Or.inl hcA⟩)
+    · rcases hbc with rfl | ⟨hb, _⟩ | ⟨hb, hbB, hcA, hbc⟩
+      · exact Or.inr (Or.inr ⟨ha, haB, hbA, hab⟩)
+      · exact (hbA hb).elim
+      · have hab' : a ≤ b := hab.resolve_left (not_not.mpr hbB)
+        exact Or.inr (Or.inr ⟨ha, haB, hcA, hbc.imp id (fun h => hab'.trans h)⟩)
 
 private theorem chain_order (D : Finset (α × Fin 2))
     (hD : IsChain (· ≤ ·) (D : Set (α × Fin 2))) :
@@ -145,7 +151,8 @@ theorem exists_sweep_theta :
   have hcθ : C.card ≤ theta (α := α) := hcard.trans product_width_le_theta
   choose orders horders using fun d : C => chain_order d.1 (hchain d.1 d.2)
   let k := C.card
-  let e : Fin k ≃ C := (Fintype.equivFin C).symm
+  let e : Fin k ≃ C := by
+    simpa only [k, Fintype.card_coe] using (Fintype.equivFin C).symm
   let os : Fin k → LinearOrderRel (α := α) := fun i => orders (e i)
   have hsweep : IsSweepSystem k os := by
     intro I hI y hy
@@ -154,23 +161,25 @@ theorem exists_sweep_theta :
       obtain ⟨d, hd, hyd⟩ := hcover (y, 1)
       refine ⟨e.symm ⟨d, hd⟩, ?_⟩
       intro x hx
+      simp only [os, Equiv.apply_symm_apply]
       apply (horders ⟨d, hd⟩).2 y hyd x
       intro hxy
       exact hy (hI hx hz hxy.le hyz.le)
     · obtain ⟨d, hd, hyd⟩ := hcover (y, 0)
       refine ⟨e.symm ⟨d, hd⟩, ?_⟩
       intro x hx
+      simp only [os, Equiv.apply_symm_apply]
       apply (horders ⟨d, hd⟩).1 y hyd x
       intro hyx
       exact htop ⟨x, hx, hyx⟩
   have hθk : theta (α := α) ≤ k := theta_le_of_sweep os hsweep
   have heq : k = theta (α := α) := le_antisymm hcθ hθk
-  simpa only [← heq] using (show ∃ orders : Fin k → LinearOrderRel (α := α),
-    IsSweepSystem k orders from ⟨os, hsweep⟩)
+  exact heq ▸ ⟨os, hsweep⟩
 
 /-- Sweep dimension is the least number of orders satisfying the source sweep condition. -/
-noncomputable def sweepDimension : ℕ :=
-  Nat.find (show ∃ k, ∃ orders : Fin k → LinearOrderRel (α := α),
+noncomputable def sweepDimension : ℕ := by
+  classical
+  exact Nat.find (show ∃ k, ∃ orders : Fin k → LinearOrderRel (α := α),
     IsSweepSystem k orders from ⟨theta (α := α), exists_sweep_theta⟩)
 
 /-- The universal finite-poset identity, including the empty and singleton cases. -/

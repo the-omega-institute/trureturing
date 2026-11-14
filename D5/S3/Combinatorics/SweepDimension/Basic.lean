@@ -77,7 +77,7 @@ private lemma not_mem_convexHull_erase_of_threeChainFree
   have hyb' : y < b := lt_of_le_of_ne hyb hybne
   exact (hfree haS hy hbS) ⟨hay', hyb'⟩
 
-private lemma theta_witness :
+lemma theta_witness :
     ∃ S : Finset α, ThreeChainFree S ∧ S.card = theta (α := α) := by
   classical
   let candidates := (Finset.univ : Finset α).powerset.filter ThreeChainFree
