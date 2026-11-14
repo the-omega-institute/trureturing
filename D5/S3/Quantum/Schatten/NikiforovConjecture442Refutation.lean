@@ -6,10 +6,32 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Schatten/NikiforovConjecture442Refutation.claim; result=D5/S3/Quantum/Schatten/NikiforovConjecture442Refutation.result; claim=D5/S3/Quantum/Schatten/NikiforovConjecture442Refutation.claim
    digest: The modulus condition does not suffice for equality in Conjecture 4.42. -/
 
+/-
+admission_basis: open-problem-resolution (external Conjecture 4.42; issue #30394).
+proof_shape: result: bind-only; escape_witness: none.
+The source-faithful external refutation uses existing spectral identities and finite normalization.
+The designated result is exempt from four-slot registration under CLAUDE.md §3.9.
+The remaining theorem declarations are consumed private representation or arithmetic helpers.
+proof_shape: parts_iff: bind-only; consumer: witness_parts.
+proof_shape: max_bound_iff: bind-only; consumer: witness_bound.
+proof_shape: balanced_relabel: bind-only; consumers: modulus_partition_iff, balanced_norm.
+proof_shape: schatten_reindex: bind-only; consumer: balanced_norm.
+proof_shape: modulus_partition_iff: bind-only; consumers: source_equality, result.
+proof_shape: balanced_norm: bind-only; consumers: source_equality, result.
+proof_shape: source_equality: bind-only; consumer: result.
+proof_shape: six_trace: bind-only; consumer: result.
+proof_shape: witness_parts: bind-only; consumer: result.
+proof_shape: witness_modulus: bind-only; consumer: result.
+proof_shape: witness_bound: bind-only; consumer: result.
+-/
+
 import D5.S3.Quantum.NormCompression.SchattenContinuity
 import Mathlib.Combinatorics.SimpleGraph.Extremal.Turan
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 
+/-! The full complex-matrix conjecture fails at its equality-sufficiency clause. -/
+
+set_option linter.style.longLine false
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -70,7 +92,7 @@ private theorem max_bound_iff {n : ℕ} [NeZero n] (A : Matrix (Fin n) (Fin n) �
       (fun ij => ‖A ij.1 ij.2‖) ≤ 1) := by
   constructor
   · intro h
-    exact Finset.sup'_le fun ij _ => h ij.1 ij.2
+    exact (Finset.sup'_le_iff _ _).mpr (fun ij _ => h ij.1 ij.2)
   · intro h i j
     exact (Finset.le_sup' (fun ij : Fin n × Fin n => ‖A ij.1 ij.2‖) (by simp : (i,j) ∈ Finset.univ)).trans h
 
@@ -91,7 +113,11 @@ private theorem balanced_relabel {n r : ℕ}
   simp only [turanMatrix, SimpleGraph.adjMatrix_apply, SimpleGraph.turanGraph_adj]
   change (if P.part i = P.part j then (0 : ℂ) else 1) =
     if (f ⟨i, Finset.mem_univ i⟩).val % r ≠ (f ⟨j, Finset.mem_univ j⟩).val % r then 1 else 0
-  by_cases hij : P.part i = P.part j <;> simp [hij, ← h]
+  by_cases hij : P.part i = P.part j
+  · simp [hij, h.mp hij]
+  · have hn : ¬(f ⟨i, Finset.mem_univ i⟩).val % r =
+        (f ⟨j, Finset.mem_univ j⟩).val % r := fun he => hij (h.mpr he)
+    simp [hij, hn]
 
 private theorem schatten_reindex {n : ℕ} (p : ℝ) (hp : 0 < p)
     (A : Matrix (Fin n) (Fin n) ℂ) (e : Equiv.Perm (Fin n)) :
@@ -188,7 +214,7 @@ private theorem witness_modulus : isTuranModulus 3 witness := by
 
 private theorem witness_bound : ∀ i j, ‖witness i j‖ ≤ 1 := by
   apply (max_bound_iff witness).mpr
-  apply Finset.sup'_le
+  apply (Finset.sup'_le_iff _ _).mpr
   intro ij _
   rcases ij with ⟨i, j⟩
   fin_cases i <;> fin_cases j <;> norm_num [witness]
@@ -197,7 +223,7 @@ private theorem witness_bound : ∀ i j, ‖witness i j‖ ≤ 1 := by
 theorem result : ¬ claim := by
   intro h
   let P : Finpartition (Finset.univ : Finset (Fin 3)) := ⊥
-  have hcard : P.parts.card = 3 := by simp [P, Finpartition.card_bot]
+  have hcard : P.parts.card = 3 := by simp [P]
   have hmod := (modulus_partition_iff (by norm_num : 0 < 3) (by norm_num : 3 ≤ 3)
     witness).mp witness_modulus
   have he := source_equality h 6 (by norm_num) (by norm_num) (by norm_num)
