@@ -56,6 +56,9 @@ simplex. Applied to $\Delta_m$, this is the same volume formula. This citation
 is to Colesanti's statement; it does not represent a reading of the original
 Rogers–Shephard paper.
 
-These references concern Euclidean shape families and their volumes. They do
-not supply the circular no-wrap lemma, the common codeword for all Boolean
-queries, or the fixed literal rotation decoder and its codebook bounds.
+The cited equation (4) and Lemma 2 supply the signed-mass geometry and volume
+input; Colesanti's equation (5) supplies the difference-body comparison.
+These passages do not state the circular no-wrap lemma, a common codeword for
+all Boolean rotation queries, or the fixed literal rotation decoder and its
+codebook bounds. This comparison is limited to the cited passages and does
+not assert that the papers contain no other related coding results.
