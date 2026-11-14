@@ -362,7 +362,8 @@ def family : Registration arena (type_of% address_card) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨address_card, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity :=
+    Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -383,7 +384,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := some Address
   sourceSelection := some {
     owner := `D5.S3.Quantum.Routing.HannRouterDephasing
     definition := none
