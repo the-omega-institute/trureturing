@@ -11,6 +11,34 @@ Admission candidate: open-problem-resolution, preregistration #30230.
 The original quantifiers are all integers q>1 and all natural degrees.
 The Dold-exponential criterion is reused without a positivity premise.
 No global priority or exhaustive literature-search claim is made.
+Declaration | proof_shape | live consumers
+logarithm | definition | A, logarithm_eq
+A | definition | claim, result
+claim | definition | result
+S | definition | geom_id, geom_factor, geom_prime_dvd, geom_power_dvd,
+  sum_congruence, exponent_congruence, b, logarithm_eq
+b | definition | b_dold, logarithm_eq, result
+geom_id | bind-only | geom_factor, exponent_congruence, logarithm_eq
+geom_factor | bind-only | geom_power_dvd
+geom_prime_dvd | bind-only | geom_power_dvd
+geom_power_dvd | content | b_dold
+base_congruence | bind-only | sum_congruence
+sum_congruence | bind-only | b_dold
+exponent_congruence | content | b_dold
+b_dold | content | result
+logarithm_eq | bind-only | result
+result | content | external source settlement
+All bind-only helpers are consumed on the result's live derivation path.
+No escape witness is claimed; admission_basis: open-problem-resolution.
+Direct frozen owners:
+D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.integral_exp_of_dold,
+logInput and Dold: module statement_id
+sha256:2d31fedb86b5bee40c5e2a3f9556a8237f057c7fc2b4c4e007886a9d64fcb7d8.
+D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.fermat_lift:
+original private owner in module statement_id
+sha256:dc87d9e1c066581b845229f58331179ae8103aae9333d4be35d6b3aa51ffca2d.
+The original theorem is exposed for base_congruence; its new public identity
+requires canonical repinning after independent prefreeze review.
 -/
 
 import D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
@@ -51,7 +79,7 @@ private theorem geom_factor (q n t : ℕ) (hq : 2 ≤ q) :
       _ = (S (q ^ n) t : ℤ) * ((q : ℤ) ^ n - 1) := by
         simpa only [Nat.cast_pow] using (geom_id (q ^ n) t).symm
       _ = ((S q n : ℤ) * S (q ^ n) t) * ((q : ℤ) - 1) := by
-        rw [← geom_id]; ring
+        rw [← geom_id q n]; ring
   exact_mod_cast he
 
 private theorem geom_prime_dvd (q n p : ℕ) (hq : 2 ≤ q) (hpq : p ∣ q - 1) :
@@ -79,7 +107,7 @@ private theorem base_congruence (q p n : ℕ) (hp : p.Prime) (hn : n ≠ 0) :
   rw [← pow_mul, ← pow_mul] at hf
   have he : t * p ^ (padicValNat p n + 1) = p * n := by rw [ht, pow_succ]; ring
   rw [he, show t * p ^ padicValNat p n = n by rw [ht]; ring] at hf
-  exact Nat.modEq_iff_dvd.mpr (by simpa only [Nat.cast_pow] using dvd_neg.mpr hf)
+  exact Nat.modEq_iff_dvd.mpr (by simpa only [Nat.cast_pow, neg_sub] using dvd_neg.mpr hf)
 
 private theorem sum_congruence (q p n : ℕ) (hq : 2 ≤ q) (hp : p.Prime)
     (hn : n ≠ 0) (hpq : ¬ p ∣ q - 1) :
@@ -87,7 +115,8 @@ private theorem sum_congruence (q p n : ℕ) (hq : 2 ≤ q) (hp : p.Prime)
   have hc : (p ^ (padicValNat p n + 1)).Coprime (q - 1) :=
     (hp.coprime_iff_not_dvd.mpr hpq).pow_left _
   apply Nat.ModEq.cancel_right_of_coprime hc
-  have h := (base_congruence q p n hp hn).sub_right 1
+  have h := Nat.ModEq.sub_right (show 1 ≤ q ^ (p * n) by positivity)
+    (show 1 ≤ q ^ n by positivity) (base_congruence q p n hp hn)
   simpa only [S, geom_sum_mul_of_one_le (show 1 ≤ q by omega)] using h
 
 private theorem exponent_congruence (q p n : ℕ) (hq : 2 ≤ q) (hp : p.Prime)
@@ -128,8 +157,11 @@ private theorem exponent_congruence (q p n : ℕ) (hq : 2 ≤ q) (hp : p.Prime)
     have hexp : p * n - 1 = (n - 1) + (p ^ a * (p - 1)) * t := by
       have hp1 : p = (p - 1) + 1 := by omega
       have hn1 : n = (n - 1) + 1 := by omega
-      rw [hp1]; simp only [add_mul, one_mul, Nat.add_sub_assoc (by omega : 1 ≤ n)]
-      rw [ht]; ring
+      have heq : p * n = n + (p ^ a * (p - 1)) * t := by
+        calc
+          p * n = n + (p - 1) * n := by conv_lhs => lhs; rw [hp1]; ring
+          _ = n + (p ^ a * (p - 1)) * t := by rw [ht]; ring
+      omega
     rw [hexp]
     simpa only [← pow_add, mul_one] using he.mul_left (S q n ^ (n - 1))
 

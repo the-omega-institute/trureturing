@@ -51,6 +51,16 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
                     + "of exponentialSum a by X gives HannaDiagonalDerivativeParity.step a 0 "
                     + "times exponentialSum a. The entry a(0) contributes no constant term.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("fermat_lift", "Fermat congruence at every prime power",
+                Disp(Seq(Bound("p", Nat()), Bound("s", Nat()), Bound("z", Integer()),
+                    App(Q("Nat", "Prime"), V("p")), Sp, Implies, Sp,
+                    new Formula.Relation(
+                        new Formula.Power(Parenthesized(Seq(V("p"), Colon, Sp, Integer())), Add(V("s"), D(1))),
+                        FormulaRelationOperator.Divides,
+                        Sub(new Formula.Power(V("z"), new Formula.Power(V("p"), Add(V("s"), D(1)))),
+                            new Formula.Power(V("z"), new Formula.Power(V("p"), V("s"))))))),
+                "For every prime p, natural s and integer z, p^(s+1) divides z^(p^(s+1))-z^(p^s). The original SModEq lifting proof is consumed by diagonal_congruence and the all-parameter A181316 base congruence.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("divisorGhost", "The integer divisor-sum ghost",
                 DivisorGhostFormula(),
                 "For an integer sequence b, the nth ghost is the sum of d*b(d) over "
