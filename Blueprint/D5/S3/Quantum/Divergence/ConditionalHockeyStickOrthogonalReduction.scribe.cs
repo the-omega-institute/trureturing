@@ -94,6 +94,45 @@ internal sealed class ConditionalHockeyStickOrthogonalReductionDocument : IScrib
                         + "on by the same channel N."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("conditional-hockey-stick-action"),
+                DeclarationHandle.Create(Prefix + "act"),
+                H("The channel action in ordinary matrix coordinates"),
+                StatementSource.FromAuthor(Disp(ActionFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "act(N,X) converts X to CStarMatrix coordinates, applies the channel's "
+                        + "completely positive map, and converts back. It accepts every "
+                        + "complex matrix, without a positivity or normalization hypothesis. "
+                        + "FaithfulConditionalGap uses this original action directly."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("conditional-hockey-stick-amplification-entry"),
+                DeclarationHandle.Create(Prefix + "amp_entry"),
+                H("Every reference block receives the original channel action"),
+                StatementSource.FromAuthor(Disp(AmplificationEntryFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every finite A, B and R, every channel N, every matrix X, "
+                        + "all reference indices r,s and output indices b,d, the amplified "
+                        + "entry is the channel action on the corresponding A block. "
+                        + "This includes off-diagonal reference blocks. The existing "
+                        + "identity is consumed by FaithfulConditionalGap."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("conditional-hockey-stick-amplification-marginal"),
+                DeclarationHandle.Create(Prefix + "ptr_amp"),
+                H("Amplification preserves the reference partial trace"),
+                StatementSource.FromAuthor(Disp(AmplificationMarginalFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every finite A, B and R, every channel N and every complex "
+                        + "matrix X on R times A, tracing out B after amplification equals "
+                        + "tracing out A before amplification. No state hypothesis is needed. "
+                        + "The private notation ptr in the Lean statement is precisely "
+                        + "PartialTraceMutualInformation.partialTraceRight. "
+                        + "FaithfulConditionalGap consumes this existing trace-preservation identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("conditional-hockey-stick-gap"),
                 DeclarationHandle.Create(Prefix + "gap"),
                 H("Conditional hockey-stick gap"),
@@ -234,6 +273,30 @@ internal sealed class ConditionalHockeyStickOrthogonalReductionDocument : IScrib
         }
         return body;
     }
+    private static Formula ActionFormula() =>
+        FiniteTypes(["A", "B"], All("N", ChannelType(), All("X", MatrixType(X("A")),
+            Equal(Local("act", X("N"), X("X")),
+                At(Qualified("CStarMatrix", "ofMatrix", "symm"),
+                    At(Qualified("FiniteStateChannel", "QuantumChannel", "toCompletelyPositiveMap"),
+                        X("N"), At(Qualified("CStarMatrix", "ofMatrix"), X("X"))))))));
+    private static Formula AmplificationEntryFormula()
+    {
+        var block = Seq(LambdaLower, Sp, X("a"), Sp, X("aPrime"), Sp, Mapsto, Sp,
+            At(X("X"), Seq(F.Open, X("r"), Comma, X("a"), F.Close),
+                Seq(F.Open, X("s"), Comma, X("aPrime"), F.Close)));
+        var left = At(Local("amp", X("N"), X("X")),
+            Seq(F.Open, X("r"), Comma, X("b"), F.Close),
+            Seq(F.Open, X("s"), Comma, X("d"), F.Close));
+        var equation = Equal(left, At(Local("act", X("N"), block), X("b"), X("d")));
+        var entries = All("r", X("R"), All("s", X("R"),
+            All("b", X("B"), All("d", X("B"), equation))));
+        return FiniteTypes(["A", "B", "R"], All("N", ChannelType(),
+            All("X", JointMatrix(X("R"), X("A")), entries)));
+    }
+    private static Formula AmplificationMarginalFormula() =>
+        FiniteTypes(["A", "B", "R"], All("N", ChannelType(),
+            All("X", JointMatrix(X("R"), X("A")),
+                Equal(Marginal(Local("amp", X("N"), X("X"))), Marginal(X("X"))))));
     private static Formula SquareInputs(Formula body) =>
         FiniteTypes(["n"], All("X", MatrixType(X("n")), body));
     private static Formula PositivePart(Formula matrix) => new Formula.Power(matrix, Plus);
