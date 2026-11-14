@@ -1,0 +1,48 @@
+**定理 149.5（同一原模型的全混态字典与次序边界）。** 在149.4的等价前件下，145.9的整个静态字典通过同一个 $\Phi$ 适用。具体地，置 $p_v=\Phi(vv^*)$、$Q_v=I_3-vv^*$、$f_M(\Phi X)=\operatorname{Tr}(MX)$，其中 $\|v\|=1$，则
+
+$$
+\begin{gathered}
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1\},\qquad
+P=\{\Phi(vv^*):\|v\|=1\}\cong\mathbb{CP}^2,\\
+\mathcal E=\{f_M:0\preceq M\preceq I_3\},\\
+\mathcal F_{p_v}=\{f_{vv^*+B}:B=Q_vBQ_v,\ 0\preceq B\preceq Q_v\},\\
+T_{p_v}(\Phi\rho)=v^*\rho v,\qquad
+D_{p_v}=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1,\ \rho v=0\}.
+\end{gathered}
+\tag{XI149.22}
+$$
+
+原确认菜单完整且非单点，$B=0$ 在全部原混输入上达到 minimum并给 least。每颗完整 $D_{p_v}$ 是 $v^\perp$ 上的整个二阶密度球，球缘为 $\mathbb{CP}^1\cong S^2$；整个原实维数为九。令 $U=\Phi(I_3)$，则原球心图延拓为
+
+$$
+R(x)=\frac{u(x)U-x}{2},\qquad
+c_p=R(p),\qquad
+R(x)-U/3=-\frac12(x-U/3)\quad(x\in K).
+\tag{XI149.23}
+$$
+
+因此其简洁几何是同一复射影平面中的完整复射影线及其凸球，全部球心围绕同一总体中心反向缩小一半。全部数学有限 POVM、谱、自对偶和 Jordan结构由145.9原字典供给。全纯端点最低确认互易也成立，但它不等于连续测量次序可交换。
+
+证明。表示与字典的参数对应均直接复用145.9，不以选择一部分原态、效应或测量替代(XI149.1)。特别是 $B\succeq0$ 使 $\operatorname{Tr}(B\rho)\ge0$，故上述 $B=0$ 对每个原混输入实现 minimum；正性给 $v^*\rho v=0$ 当且仅当 $\rho v=0$，保留整个零球。其余几何式由 $c_{p_v}=\Phi((I_3-vv^*)/2)$ 得到。端点互易为
+$T_{p_v}(p_w)=|v^*w|^2=T_{p_w}(p_v)$。
+
+次序边界可在同一个已得模型内明确检验。取
+$P_0=|0\rangle\langle0|$、
+$Q_+=|+\rangle\langle+|$、
+$|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$ 和原输入 $\rho=P_0$。数学 Lüders 分支 $X\mapsto P_0XP_0$、
+$X\mapsto Q_+XQ_+$ 给两个先后双成功概率
+
+$$
+\operatorname{Tr}(Q_+P_0\rho P_0)=\frac12,\qquad
+\operatorname{Tr}(P_0Q_+\rho Q_+)=\frac14 .
+\tag{XI149.24}
+$$
+
+此模型满足 $\mathsf{CR}_c$ 及全端点互易，却有不同的先后概率，因此两端交换不能推出这些数学顺序仪器交换。这一例子不供应实际可调用的仪器。实际来源与读回、任意有限复合及纠缠、全旁观 CP、逐输入预算、记录、全部未来与切口、物理钟、Hamiltonian、能量与数值 $\hbar$，仍分别保留145.9及其传递来源的完整原合同。
+
+新增承重内容采用 repo-derived 综合推导归属：原整球零尺和完整法向接口生成真实零边的球心互易式；该式直接支付每根的全方向正高度，再以闭影像和原效应上界取得方向常值，最终沿有限零路支付原 UC的全标签预算。原法向图、实际接触纤维、双球消元及高度差估计分别准确复用 THREE_COPY VII122、SAME_READBACK123—124；UC分类与全部静态字典准确复用144.5和145.9。支撑函数的一阶论证只作中间工具，不作为独立新结果。成熟 Jordan分类的背景仍为 [Barnum—Müller—Ududec Theorem 16][Q149BMU]，其 projectivity、对称跃迁概率及保纯滤子的前件不由局部互易直接冒领，而只经既有完整分类链消费。这里不声明文献优先权，也未从裸 EB3+$\mathsf{Conn}$ 或纯端点 minimum互易导出 $\mathsf{CR}_c$。证毕。
+
+[Q149TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "§122.2—§122.3及定理122.4：P0锚点的完整法向图、有界凸实际影像与唯一实际接触纤维；闭包支撑面不预设单点。"
+[Q149SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "§123.2式(Q123.4)—(Q123.8)及定理123.3：P0接口下的双球全原空间消元；§123.5的闭影像与支撑微分；定理124.3的原效应上界和Bregman高度差；旧P_reg入口由149.2另付。"
+[Q149BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory，Theorem 16的全部前件。"
+

@@ -1,0 +1,29 @@
+fingerprints:
+  raw_sha256: sha256:1ff096979d1c7ba65b4b3ccd74a44d7bdc5fc2c6962930014d20335c0be28bfc
+  normalized_sha256: sha256:1ff096979d1c7ba65b4b3ccd74a44d7bdc5fc2c6962930014d20335c0be28bfc
+cas_ref: sha256:1ff096979d1c7ba65b4b3ccd74a44d7bdc5fc2c6962930014d20335c0be28bfc
+coverage_gids:
+  - gid: D5/S3/Geometry/ContinuousRangeBundle.exists_chart
+    target_statement_id: sha256:806ebe5cd4a6538989e2e5055d75ecc71d7778919fd94495871f2d0ecb93c1b2
+  - gid: D5/S3/Geometry/ContinuousRangeBundle.topology_eq_induced
+    target_statement_id: sha256:41a90d2967a3b5602eeefda605e57f32ea4af55c35511e09c449ab389281a068
+  - gid: D5/S3/Geometry/MetricRangeChart.exists_normalized_chart
+    target_statement_id: sha256:1662dc9fe80cdbcc35e57f0b7aa2180d10a314bd8be4dc2d53a4a8f874f5421c
+  - gid: D5/S3/Quantum/Foundation/ExclusionBallBundle.original_ellipsoid_unique
+    target_statement_id: sha256:8b84413754861202b93967bf1f38c1a2d733a34469ce4f9c9de3e4fa199f01d0
+  - gid: D5/S3/Quantum/Foundation/ExclusionBallBundle.original_inverse_continuous
+    target_statement_id: sha256:99d6fb2bbde3c46119bd224d9552dc9b9479a266ee114fb4c5f2b5fb7102c97c
+  - gid: D5/S3/Quantum/Foundation/ExclusionBallBundle.original_normalized_local_products
+    target_statement_id: sha256:52a9045a8a3bbcdef902a4917eaa206a8a3fdc5ac63f964d373abebdacc49ce3
+  - gid: D5/S3/Quantum/Foundation/ExclusionBallBundle.original_range_bundle
+    target_statement_id: sha256:cc982e1404f3e9da07fbc0afdcf93584ccd46871f09e8af8c4348ce2e8233faf
+  - gid: D5/S3/Quantum/Foundation/ExclusionBallBundle.original_shape_continuous
+    target_statement_id: sha256:f384818bae00020283b6ae760c485c537c0d7837b52e9d7ffc499ae328f36571
+  - gid: D5/S3/Quantum/Foundation/ExclusionBallBundle.whole_exclusion_continuous
+    target_statement_id: sha256:e73f6ec5f55105e57ec7f70a93abb7cbb2143cc3173d7f27d087ab1e5744665c
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 7ffacba6de45ad2634ab5a8c8803d9334c0bf2d7e52e2e0d677a5666750bfc62
+    - c61a8bfca0aa46ba6cbc2bfdec8e9c743f8f10bf45421f8842524e3912e3b38b
+    - f60f7aa58d4d682c51281f50bb075b1591cf3cacee6ed62f5516d0fe6cfc95e4

@@ -1,0 +1,24 @@
+**定理147.1中式(XII147.2)的证明。** 在 $H=\ker u$ 的八维仿射原状态空间中，正法向与通常外法向有准确锥同构
+
+$$
+N_r\longrightarrow\mathcal N_K(r),\qquad h\longmapsto-h|_H.
+\tag{XII147.13}
+$$
+
+这里 $\mathcal N_K(r)=\{v\in H^*:v(x-r)\le0\ \forall x\in K\}$。核为零：限制为零的 $h$ 是 $u$ 的倍数，而 $h(r)=0$ 消去该倍数。反向，对外法向 $v\in H^*$，定义 $h(x)=-v(x-u(x)r)$；其在整个 $K$、继而整个 $C$ 非负，且零于 $r$。故维数不加减一。这一识别本身与八维无关。
+
+假设某 $p\in P_{\rm s}$ 有 $a(p)\ge1$。引理147.5给原纯紧四块 $F:[0,1]^4\hookrightarrow P_{\rm s}$，块上每个 $r$ 都有 $a(r)\ge1$，引理147.2给 $\dim\operatorname{span}\mathcal N_K(r)\ge5$。因此块的整个像位于原八维凸体的 $\Sigma_5(K)$。
+
+为明确所用覆盖的强度，SAME_READBACK 引理128.2的构造如下。选有理 $b_0,b_1,\ldots,b_5\in H^*$，后五个独立，$E=\operatorname{span}\{b_1,\ldots,b_5\}$；取有理 $\varepsilon>0$，满足 $\sqrt5\varepsilon/\sigma<1/2$，其中 $\sigma$ 是 $E\to\mathbb R^5$、$v\mapsto(\langle b_j,v\rangle)_j$ 的最小奇异值。辅助内积在此识别 $H,H^*$。令 $X$ 是所有法向锥分别遇到十个闭球 $\overline B(b_0\pm b_j,\varepsilon)$ 的边界点。有限见证在固定紧球中及法向图闭给 $X$ 紧。凸法向单调性对 $x,y\in X$ 给
+
+$$
+|\langle b_j,x-y\rangle|\le\varepsilon\|x-y\|,
+\qquad \|\operatorname{proj}_E(x-y)\|\le\tfrac12\|x-y\|.
+$$
+
+故投影到三维 $E^\perp$ 单射，其逆满足 $2/\sqrt3$ 界。任何至少五维法向锥都有相对内点及五对独立短扰动；将其充分精确逼近为上述有理数据便落在某层。可数有理数据给覆盖全部 $\Sigma_5(K)$ 的紧集 $X_j$。此构造不要求层中点纯，不涉及未知球族紧性。
+
+闭集 $F^{-1}(X_j)$ 可数覆盖紧四立方体。Baire 性及立方体内部稠密性给非空欧氏开集 $O\subset(0,1)^4$，使 $F(O)\subseteq X_j$ 于某同一层。于是 $\pi_jF:O\to\mathbb R^3$ 连续单射。将靶线性嵌入 $\mathbb R^4$ 的坐标超平面，区域不变性要求复合像在 $\mathbb R^4$ 中开，与其落在三维超平面矛盾。
+
+因此每个 $p\in P_{\rm s}$ 都有 $a(p)=0$。非空紧凸 $\mathcal A_p$ 遂为单点，引理147.2给 $\dim L_p=4,N_{D_p}=\mathbb R_+e_p$。这个证明无需 $P_{\rm s}$ 闭、紧、Baire 或是流形；两次 Baire 的源分别是实际紧二盘和实际紧四立方体。证毕。
+

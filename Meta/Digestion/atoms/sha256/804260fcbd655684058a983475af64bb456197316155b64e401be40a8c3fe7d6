@@ -1,0 +1,10 @@
+**定理 3.3（碰撞参数的稠密性）。** 设 $p\ne q$ 为素数，$1<\alpha<\beta<\infty$，$M\ge1$。则存在整数 $i,j\ge M$ 与 $\kappa\in(\alpha,\beta)$，使 $F_\kappa(p,i)=F_\kappa(q,j)$。特别地，$\mathcal S_{p,q}$ 在 $(1,\infty)$ 中稠密且无界，每个非空开区间都含 $\mathcal S_{p,q}$ 的无穷多个点。
+
+**证明。** 不妨 $p<q$。令 $h=\log R$，由引理 3.2 有 $h(\alpha)<h(\beta)$。取开区间 $J$ 使 $\overline J\subset(h(\alpha),h(\beta))$。$\log p/\log q$ 为无理数（唯一分解），故 $\{i\log p\bmod\log q:i\ge M\}$ 在 $[0,\log q)$ 中稠密。于是存在任意大的 $i$ 与相应的整数 $j$，使 $d_{i,j}:=i\log p-j\log q\in J$；$i$ 充分大时 $j\ge M$。由引理 3.1，在 $[\alpha,\beta]$ 上一致地有
+
+$$
+\log\frac{F_\kappa(p,i)}{F_\kappa(q,j)}=h(\kappa)-d_{i,j}+O(p^{-i}+q^{-j}).
+$$
+
+$i,j$ 充分大时，右端在 $\kappa=\alpha$ 处为负、在 $\kappa=\beta$ 处为正。$F_\kappa$ 关于 $\kappa$ 连续，由介值定理即得交点。把 $(\alpha,\beta)$ 分成可数多个互不相交的开子区间并分别应用本结论，得到无穷多个点。证毕。
+

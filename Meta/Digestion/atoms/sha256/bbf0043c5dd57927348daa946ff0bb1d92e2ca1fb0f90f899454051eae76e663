@@ -1,0 +1,25 @@
+**定义146.7（完整实际供给与返回合同）。** 所有控制从 native Ready、真实 current grants 和已取得 $(v,\mathfrak a)$ 开始。框架模式须由实际源遍历、commission 与描述符取得，数学下标不转成引用。未知码在声明支持的 vacuum carrier 上经实际相干 SWAP ingress 移入；旧端口变真空且保留，不复制、不重置旧未知态。一般 $d$ 的逻辑模式来自实际有限 source／commission；以后逐次供应增长，不预设会拒绝更深合法编辑的容量上界。
+
+锁定当前 source 与 attachment 版本后取得计算线、控制、随机 backing、角与有限目录，保存并恢复借用游标。执行期间不写原生源、准备、历史 tape、旧 sample 或原 guard。所有结果及其后续分支实际保留。新增事务完成自己的 backing／sealing、Print、End、local ACK、root Return 和付费 scratch clearing 后返回 Ready；只清被释放工作槽，不清不可改写控制／测量记录。未完成事务保留 pending 字段和整个 bank 的保持。
+
+原生 Tag、HasPromotion、HasSplit、FetchGrowth、实际 $P/S$、genuine Next、OutOfRange、BadFrame、错误类型拒绝、权限否决、原输出前后缀和所有版本语义均按 RRO V定理27.2保留，不添 guard。计算线不是材料源线，随机选择不是来源实际 Next。全部旧 source／tape／component／preparation 身份、每个 acquisition 版本及共同经典源间相关保持；两个原入口的实际不同根和不同准备不合并，双侧来源只 commission 实际有限 footprint。
+
+收费包括原 source、所有被保留参考／端口／vacuum 系统、全部 classical control、随机来源和采样位、引用编码宽度、描述符／角色／版本、锁和游标、有效框架数据与角括号生成、全部有限算术、位串写读、线／目录安装和校准、结果 latch、记录 sealing、输出／ACK／Return、pending 与清理。未触外部参考不成为可操作资源；其允许输入关联不能缩减。保持覆盖编译、ingress 等待、原服务和输出全程的全部已安装量子系统，按实际 $\sum_t Q_{\rm installed}(t)$ 或另给时长加权账户收费。RRO native Read 的旧费率不代付这些权限。槽位数不推出净节省、最少门数、统一价格、物理时长或能量下界。
+
+**条件推论（全输出误差与有限未来）。** 在定义146.7的供给下，若输入／ingress 全联合误差为 $e_0$，各 elementary gate 的全空间酉偏差上界为 $\zeta_j$，全 bank hold 的完整 half-diamond 误差为 $h_t$，完整 detector／control-record／output instruments 的 half-diamond 误差为 $\kappa_t$，则
+
+$$
+\Delta_{\rm physical}
+\le\delta_*+2(m-1)_+2^{-s}+2G(d)2^{-b}
+ +e_0+\sum_j\zeta_j+\sum_t(h_t+\kappa_t).
+\tag{XII146.24}
+$$
+
+$m\le1$ 时随机精度项为零；$U=I$ 时角精度项为零。自适应不同分支的校准和取足以控制全部分支的预算上界。证书覆盖全部实际输出、时序／控制侧信道、返回环境与泄漏；仅码边缘校准不足。非理想混合噪声在此是有证物理误差，不是理想目录的免费操作。
+
+**证明。** RRO V命题29.3的全输出 hybrid 逐槽替换，以完整仪器收缩给误差和；无需误差独立。这里没有把逻辑 tick 认作物理时间，也没有采用来源 Hamiltonian 的额外连续演化比较，故不加入未经定义的时钟项。物理时序的差异必须由上述完整证书控制；若另比较连续时间模型，再按它的独立校准预算付费。
+
+全阶段原服务持有整个 bank。QNew／材料增长在每个分支上都是全空间等距映射 $\xi\mapsto\xi\otimes|0\cdots0\rangle$，标记激活只改经典角色，不改旧量子位身份。因此 RRO V定理27.2适用于 dyadic 误差产生的错误粗块分量及任意 bank／reference 联合态；这也是该源定理36.1核对的全空间前提，不借其双计量资源。每个后来合法的有限原 continuation 都保留同一原请求的全阶段扩展；新增材料、描述符、线、控制、记录与保持逐次供应。不存在已供应的无限物理 bank 或无界时间保持。
+
+返回切口后，给两侧全输出施加同一个已供应的归一有限未来通道，迹距离不增；未来的有证误差另加。反馈可依完整记录选择不同原请求，实际后继在各自正交记录块保留，不要求两条随机轨迹逐路径相同。每个中间切口保留原 pending、权限、实际记录与保持合同。无稀有分支除概率的误差保证，也不把返回切口的正下界称为任意未来通道下的不变量。物理协议若偏离一激发或解析条件，须通过完整比较证书另论，不能直接套用理想精确下界。证毕。
+

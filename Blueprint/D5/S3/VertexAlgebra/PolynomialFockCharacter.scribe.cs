@@ -11,20 +11,12 @@ internal sealed class PolynomialFockCharacterDocument : IScribeDocumentDefinitio
         H("Polynomial Fock Character"),
         Blocks(
             Paragraph(Text("The theorem uses the actual Sugawara L_0 eigenspaces from "
-                + "Polynomial Fock LZero Spectrum. An exponent vector of energy N is "
-                + "converted to a multiset of positive parts by replacing index i with "
-                + "part i + 1 and repeating it d i times. The resulting formal graded "
-                + "dimension is the unshifted partition Euler product.")),
-            Describe.Lean(
-                DescribeId.Create("polynomial-fock-energy-fiber-partition-equivalence"),
-                DeclarationHandle.Create(Prefix + "energyFiberEquivPartition"),
-                H("Energy fibers are equivalent to integer partitions"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every N, the finite exponent vectors whose "
-                    + "weighted energy is N are in bijection with Nat.Partition N. "
-                    + "The same construction includes the unique zero-energy object."))),
-                DescribeRole.Theorem),
+                + "Polynomial Fock LZero Spectrum. The shared PositiveEnergyPartition "
+                + "module supplies the pure energy fibre and ordinary partition "
+                + "equivalence under the original public namespace. An exponent vector "
+                + "of energy N is converted to a multiset of positive parts by replacing "
+                + "index i with part i + 1 and repeating it d i times. The resulting "
+                + "formal graded dimension is the unshifted partition Euler product.")),
             Describe.Lean(
                 DescribeId.Create("polynomial-fock-zero-mode-euler-character"),
                 DeclarationHandle.Create(Prefix + "lZero_character_euler_product"),

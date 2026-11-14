@@ -1,0 +1,10 @@
+**定理 5.2（最终成立阈值的发散）。** 设 RH 成立，对实数 $\kappa>3/2$ 令
+
+$$
+N(\kappa)=\min\{N\in\mathbb Z_{\ge2}:\ (1.1)\ \text{对一切整数}\ n>N\ \text{成立}\}
+$$
+
+（由该文定理 6.1，$N(\kappa)<\infty$）。则 $N(\kappa)\to\infty$（$\kappa\to3/2^+$）。
+
+**证明。** 反设存在正整数 $M$ 及实数 $\kappa_k\downarrow3/2$（$\kappa_k>3/2$）使 $N(\kappa_k)\le M$。由定理 5.1（取 $N=M$），存在 $\delta>0$，使对每个 $\kappa\in[3/2,3/2+\delta)$ 都有某个 $n>M$ 违反 (1.1)。取 $k$ 足够大使 $\kappa_k\in(3/2,3/2+\delta)$，则存在 $n>M\ge N(\kappa_k)$ 违反 (1.1)，与 $N(\kappa_k)$ 的定义矛盾。证毕。
+

@@ -1,0 +1,8 @@
+**引理 4.2（$B$ 与 $\varphi$ 的性质）。** 设 $\kappa>1$。
+- $B(0)=0$。
+- $B'(0^+)=\kappa$。
+- $B'$ 在 $(0,\infty)$ 上严格递减。
+- $0<B(h)<\kappa h$（$h>0$）。
+- $\varphi$ 在 $(0,\infty)$ 上严格递增。
+- 记 $r=s/(1+s)$，则 $\varphi(s)\ge\kappa(r-r^\kappa)$。
+

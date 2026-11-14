@@ -10,7 +10,7 @@ $$\operatorname{logarithm} = \operatorname{PowerSeries.mk}\left((fun m: \mathbb{
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA181070Integrality.logarithm` (`✓ std3`).
 
-*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\operatorname{A} = \operatorname{PowerSeries.subst}\left(\operatorname{logarit
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA181070Integrality.A` (`✓ std3`).
 
-*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$(\operatorname{claim}) \iff (\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \op
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA181070Integrality.claim` (`✓ std3`).
 
-*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ $$\forall U: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \forall p: \math
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -62,7 +62,7 @@ $$\forall p: \mathbb{N}, \forall n: \mathbb{N}, \forall k: \mathbb{N}, \forall b
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -76,7 +76,7 @@ $$\forall F: \mathbb{N} \to \mathbb{N} \to \mathbb{N}, \operatorname{L}\left(F\r
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -90,7 +90,7 @@ $$\forall F: \mathbb{N} \to \mathbb{N} \to \mathbb{N}, (\forall n: \mathbb{N}, \
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -104,7 +104,7 @@ $$\forall U: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \forall n: \math
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -118,7 +118,7 @@ $$\forall n: \mathbb{N}, \forall k: \mathbb{N}, n \mid k \cdot \operatorname{Nat
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -132,7 +132,7 @@ $$\forall p: \mathbb{N}, \forall n: \mathbb{N}, \forall k: \mathbb{N}, (\operato
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -146,7 +146,7 @@ $$\forall B: \mathbb{N} \to \mathbb{N} \to \mathbb{N}, \forall e: \mathbb{N} \to
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -160,7 +160,7 @@ $$\forall F: \mathbb{N} \to \mathbb{N} \to \mathbb{N}, \forall m: \mathbb{N}, \o
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -174,7 +174,7 @@ $$\forall F: \mathbb{N} \to \mathbb{N} \to \mathbb{N}, (\forall n: \mathbb{N}, \
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -192,7 +192,7 @@ $$\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{PowerSeries.coeff}
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
