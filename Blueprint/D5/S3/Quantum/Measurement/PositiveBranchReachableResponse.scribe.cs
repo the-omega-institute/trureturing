@@ -155,7 +155,7 @@ internal sealed class PositiveBranchReachableResponseDocument : IScribeDocumentD
         Open, F.Id("k"), Sp, To, Sp, Infty, Close));
     private static Formula NormTraceFormula() => Disp(All(Index, Kind,
         Seq(Call("Finite", Index), Sp, Rightarrow, Sp, All(F.Id("X"), Mat(Index),
-            Seq(Psd(F.Id("X")), Sp, Rightarrow, Sp, Vert, F.Id("X"), Vert, Sp, Leq, Sp, ReTr(F.Id("X")))))));
+            Seq(Psd(F.Id("X")), Sp, Rightarrow, Sp, Vert, Sp, F.Id("X"), Sp, Vert, Sp, Leq, Sp, ReTr(F.Id("X")))))));
     private static Formula GeometricSummableFormula() => GeometricFamily(Call("Summable",
         Seq(F.Id("k"), Sp, Mapsto, Sp, Orbit(K, C, Q, F.Id("k")))));
 
