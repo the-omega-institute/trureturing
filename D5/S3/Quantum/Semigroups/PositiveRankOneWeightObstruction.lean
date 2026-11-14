@@ -3,17 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Semigroups/PositiveRankOneWeightObstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Semigroups/PositiveRankOneWeightObstruction.claim; result=D5/S3/Quantum/Semigroups/PositiveRankOneWeightObstruction.result; claim=D5/S3/Quantum/Semigroups/PositiveRankOneWeightObstruction.claim
    digest: A positive rank-one semigroup on the unit interval has no equivalent contractive weighted essential sup norm. -/
-
-/- Source: Madou–Remizov–Vafadar (eds.), arXiv:2410.00416v2, §6,
-Problem 22 and the positivity discussion on p. 18. Preregistration: #30423.
-The unrestricted problem already has a repository counterexample; the target
-here is its positive-semigroup restriction. No priority claim is made.
-Admission basis: escape-witness. The proposed live witness constructs a
-positive-measure subinterval excluding every positive essential lower bound
-for a scalar multiple of x, and consumes it after rank-one rigidity.
--/
 
 import Mathlib.Analysis.InnerProductSpace.Projection.Basic
 import Mathlib.Analysis.InnerProductSpace.Adjoint
@@ -28,6 +19,51 @@ import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.Analysis.Calculus.FDeriv.Analytic
 import Mathlib.Tactic
 
+/-! Source: Madou–Remizov–Vafadar (eds.), arXiv:2410.00416v2, §6,
+Problem 22 and the positivity discussion on p. 18. Preregistration: #30423.
+The unrestricted problem already has a repository counterexample; the target
+here is its positive-semigroup restriction. No priority claim is made.
+admission_basis: escape-witness. The live witness constructs a
+positive-measure subinterval excluding every positive essential lower bound
+for a scalar multiple of x, and consumes it after rank-one rigidity.
+Direct frozen D5 dependencies: none. Pinned Mathlib supplies Lp representatives,
+orthogonal projections, Bochner integrals, essential sup norms, algebra-map
+exponential transport, analytic calculus and Hilbert completeness.
+
+Per-declaration classification (consumer -> prerequisite direction):
+  result: content; witness=linear_no_floor via no_weight.
+  no_weight: content; witness=linear_no_floor, consumer=result.
+  linear_no_floor: content; explicit positive-measure interval construction,
+    consumer=no_weight. Its subinterval is essential: without it the conserved
+    functional only identifies w=c*x and gives no contradiction.
+  superinvariant_eq: bind-only; consumer=no_weight.
+  ae_interval: bind-only; consumers=h_memLp, superinvariant_eq, no_weight,
+    T_positive, T_linf_bound.
+  h_memLp: bind-only; consumers=h, h_rep.
+  h_rep: bind-only; consumers=h_inner, P_rep.
+  integral_sq: bind-only; consumers=h_inner, superinvariant_eq.
+  integral_linear: bind-only; consumer=T_linf_bound.
+  h_inner: bind-only; consumer=h_norm_sq.
+  h_norm_sq: bind-only; consumer=P_formula.
+  P_formula: bind-only; consumer=P_rep.
+  P_rep: bind-only; consumer=T_rep.
+  integrable_sq: bind-only; consumer=superinvariant_eq.
+  T_rep: bind-only; consumers=no_weight, T_positive, T_linf_bound.
+  P_idem: bind-only; consumers=A_idem, PA, AP, spectralMap, T_add.
+  A_idem, PA, AP: bind-only; consumers=spectralMap, T_add.
+  spectralMap: definition; consumer=T_exp.
+  T_exp, T_add, T_zero, A_selfAdjoint, T_analytic, T_generator,
+    T_positive, T_linf_bound, form_closed: bind-only; consumer=result.
+  A_orth: bind-only; consumers=A_selfAdjoint, T_contractive, formNorm_bounds.
+  A_inner: bind-only; consumer=form_diagonal.
+  T_contractive: bind-only; consumer=result.
+  integrable_linear: bind-only; consumer=T_linf_bound.
+  form_diagonal: bind-only; consumers=formNorm_bounds, result.
+  formNorm_bounds: bind-only; consumer=form_closed.
+The instance and all definitions are consumed by the displayed result and its
+live helpers. No unconsumed normalization theorem is retained.
+-/
+
 noncomputable section
 open MeasureTheory Set Filter
 open scoped ENNReal InnerProductSpace Topology
@@ -36,7 +72,7 @@ namespace D5.S3.Quantum.Semigroups.PositiveRankOneWeightObstruction
 /-- Lebesgue measure on the open unit interval. -/
 def μ : Measure ℝ := volume.restrict (Ioo 0 1)
 
-instance : IsProbabilityMeasure μ := ⟨by simp [μ, Real.volume_Ioo]⟩
+private instance : IsProbabilityMeasure μ := ⟨by simp [μ, Real.volume_Ioo]⟩
 
 /-- The complex Hilbert space over the same measure used for the essential sup norms. -/
 abbrev H := Lp ℂ 2 μ
@@ -358,14 +394,21 @@ private lemma T_positive (t : ℝ) (ht : 0 ≤ t) (f : H)
     exact mul_nonneg hy.1.le hfy.1
   have he : 0 ≤ 1 - Real.exp (-t) :=
     sub_nonneg.mpr (Real.exp_le_one_iff.mpr (neg_nonpos.mpr ht))
+  have hexp : Complex.exp (-(t:ℂ)) = (Real.exp (-t):ℂ) := by
+    rw [← Complex.ofReal_neg, ← Complex.ofReal_exp]
   filter_upwards [T_rep (t:ℂ) f, ae_interval, hf] with x hx hxi hfx
-  rw [hx, hi]
-  simp only [← Complex.ofReal_neg, ← Complex.ofReal_exp]
+  simp only [hx, hi, hexp]
+  have hx0 := hxi.1
+  have hf0 := hfx.1
   constructor
   · simp only [Complex.add_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-      zero_mul, sub_zero, Complex.sub_re, Complex.one_re, Complex.one_im, mul_zero]
+      zero_mul, sub_zero, Complex.sub_re, Complex.one_re, mul_zero]
+    norm_num
     positivity
-  · simp [Complex.mul_im, hfx.2]
+  · simp only [Complex.add_im, Complex.mul_im, Complex.sub_im, Complex.sub_re,
+      Complex.one_im, Complex.one_re, Complex.ofReal_im, Complex.ofReal_re,
+      hfx.2, mul_zero, zero_mul, zero_add, add_zero, sub_zero, zero_sub]
+    norm_num
 
 private lemma T_linf_bound (t : ℝ) (ht : 0 ≤ t) (f : H) (hf : MemLp f ∞ μ) :
     eLpNorm (T (t:ℂ) f) ∞ μ ≤ ENNReal.ofReal (3/2 : ℝ) * eLpNorm f ∞ μ := by
@@ -383,8 +426,10 @@ private lemma T_linf_bound (t : ℝ) (ht : 0 ≤ t) (f : H) (hf : MemLp f ∞ μ
   have he1 : Real.exp (-t) ≤ 1 := Real.exp_le_one_iff.mpr (neg_nonpos.mpr ht)
   have hout : ∀ᵐ x ∂μ, ‖T (t:ℂ) f x‖ ≤ (3/2)*b := by
     filter_upwards [T_rep (t:ℂ) f, ae_interval, ae_le_lpNorm_exponent_top hf] with x hx hxi hfx
+    have hn3 : ‖(3:ℂ)‖ = 3 := by norm_num
+    have hx0 := hxi.1
     have hp : ‖3 * (x:ℂ) * ∫ y, (y:ℂ)*f y ∂μ‖ ≤ (3/2)*b := by
-      simp only [norm_mul, norm_ofNat, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hxi.1]
+      simp only [norm_mul, hn3, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hxi.1]
       have hmul := mul_le_mul_of_nonneg_left hq (by positivity : 0 ≤ 3*x)
       have hx0 := hxi.1
       have hx1 := hxi.2
@@ -406,30 +451,30 @@ private lemma T_linf_bound (t : ℝ) (ht : 0 ≤ t) (f : H) (hf : MemLp f ∞ μ
 
 /-- The source convention is linear in u, conjugate-linear in v. Lean's
 inner product is conjugate-linear in its first argument, hence this order. -/
-def form (u v : H) : ℂ := ⟪v, A u⟫_ℂ
+def form (B : H →L[ℂ] H) (u v : H) : ℂ := ⟪v, B u⟫_ℂ
 
 /-- The full-domain form norm, not a substitute for the essential sup norm. -/
-def formNorm (u : H) : ℝ := Real.sqrt (‖u‖ ^ 2 + (form u u).re)
+def formNorm (B : H →L[ℂ] H) (u : H) : ℝ := Real.sqrt (‖u‖ ^ 2 + (form B u u).re)
 
-private lemma form_diagonal (u : H) : form u u = (‖A u‖ ^ 2 : ℝ) := A_inner u
+private lemma form_diagonal (u : H) : form A u u = (‖A u‖ ^ 2 : ℝ) := A_inner u
 
 private lemma formNorm_bounds (u : H) :
-    ‖u‖ ≤ formNorm u ∧ formNorm u ≤ Real.sqrt 2 * ‖u‖ := by
+    ‖u‖ ≤ formNorm A u ∧ formNorm A u ≤ Real.sqrt 2 * ‖u‖ := by
   have ha : ‖A u‖ ≤ ‖u‖ := by
     rw [A_orth]
     exact Submodule.norm_starProjection_apply_le _ _
-  have hnorm : formNorm u ^ 2 = ‖u‖ ^ 2 + ‖A u‖ ^ 2 := by
+  have hnorm : formNorm A u ^ 2 = ‖u‖ ^ 2 + ‖A u‖ ^ 2 := by
     rw [formNorm, form_diagonal, Complex.ofReal_re, Real.sq_sqrt (by positivity)]
-  have hn : 0 ≤ formNorm u := Real.sqrt_nonneg _
+  have hn : 0 ≤ formNorm A u := Real.sqrt_nonneg _
   have hs : (Real.sqrt 2) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
   have hp : 0 ≤ Real.sqrt 2 * ‖u‖ := mul_nonneg (Real.sqrt_nonneg _) (norm_nonneg _)
   constructor <;> nlinarith [norm_nonneg u, norm_nonneg (A u)]
 
 private lemma form_closed (s : ℕ → H)
     (hs : ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ m ≥ N, ∀ n ≥ N,
-      formNorm (s m - s n) < ε) :
+      formNorm A (s m - s n) < ε) :
     ∃ u : H, ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ n ≥ N,
-      formNorm (s n - u) < ε := by
+      formNorm A (s n - u) < ε := by
   have hc : CauchySeq s := Metric.cauchySeq_iff.mpr (by
     intro ε hε
     obtain ⟨N, hN⟩ := hs ε hε
@@ -444,7 +489,76 @@ private lemma form_closed (s : ℕ → H)
   have hd := hN n hn
   rw [dist_eq_norm] at hd
   calc
-    formNorm (s n - u) ≤ Real.sqrt 2 * ‖s n - u‖ := (formNorm_bounds _).2
+    formNorm A (s n - u) ≤ Real.sqrt 2 * ‖s n - u‖ := (formNorm_bounds _).2
     _ < ε := by nlinarith [(lt_div_iff₀ hsq).mp hd]
+
+/-- The weighted-contraction assertion restricted to full-domain symmetric,
+angle-zero forms on this one complex L2 space. Every premise below is an
+actual form, semigroup, derivative, operator norm or Lp property. -/
+def claim : Prop :=
+  ∀ (B : H →L[ℂ] H) (S : ℂ → H →L[ℂ] H),
+    IsSelfAdjoint B →
+    (∀ u, 0 ≤ (form B u u).re ∧ (form B u u).im = 0) →
+    (∀ u w, (∀ v, form B u v = ⟪v, w⟫_ℂ) ↔ w = B u) →
+    (∀ u v w c, form B (u+v) w = form B u w + form B v w ∧
+      form B (c • u) v = c * form B u v ∧
+      form B u (v+w) = form B u v + form B u w ∧
+      form B u (c • v) = star c * form B u v) →
+    Continuous (fun p : H × H => form B p.1 p.2) →
+    Dense (univ : Set H) →
+    (∀ s : ℕ → H,
+      (∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ m ≥ N, ∀ n ≥ N,
+        formNorm B (s m - s n) < ε) →
+      ∃ u : H, ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ n ≥ N,
+        formNorm B (s n - u) < ε) →
+    (∀ z, S z = NormedSpace.exp ((-z) • B)) →
+    S 0 = 1 → (∀ z w, S (z+w) = S z * S w) →
+    (∀ z, AnalyticAt ℂ S z) → HasDerivAt S (-B) 0 →
+    (∀ z, 0 ≤ z.re → ‖S z‖ ≤ 1) →
+    (∀ t : ℝ, 0 ≤ t → ∀ f : H,
+      (∀ᵐ x ∂μ, 0 ≤ (f x).re ∧ (f x).im = 0) →
+      ∀ᵐ x ∂μ, 0 ≤ (S (t:ℂ) f x).re ∧ (S (t:ℂ) f x).im = 0) →
+    (∀ t : ℝ, 0 ≤ t → ∀ f : H, MemLp f ∞ μ →
+      eLpNorm (S (t:ℂ) f) ∞ μ ≤ ENNReal.ofReal (3/2 : ℝ) * eLpNorm f ∞ μ) →
+    ∃ g : ℝ → ℝ, Measurable g ∧ MemLp g ∞ μ ∧
+      MemLp (fun x => (g x)⁻¹) ∞ μ ∧ (∀ᵐ x ∂μ, 0 < g x) ∧
+      ∀ t : ℝ, 0 ≤ t → ∀ f : H, MemLp f ∞ μ →
+        eLpNorm (fun x => (g x:ℂ) * S (t:ℂ) f x) ∞ μ ≤
+          eLpNorm (fun x => (g x:ℂ) * f x) ∞ μ
+
+/-- The positive rank-one semigroup violates the actual weighted essential
+sup norm conclusion, while meeting every displayed source-form hypothesis. -/
+theorem result : ¬ claim := by
+  intro hc
+  have hdiag (u : H) : 0 ≤ (form A u u).re ∧ (form A u u).im = 0 := by
+    rw [form_diagonal]
+    simp only [Complex.ofReal_re, Complex.ofReal_im]
+    exact ⟨sq_nonneg _, trivial⟩
+  have hassoc (u w : H) : (∀ v, form A u v = ⟪v, w⟫_ℂ) ↔ w = A u := by
+    constructor
+    · intro he
+      exact (ext_inner_left ℂ he).symm
+    · rintro rfl
+      intro v
+      rfl
+  have hsesq (u v w : H) (c : ℂ) :
+      form A (u+v) w = form A u w + form A v w ∧
+      form A (c • u) v = c * form A u v ∧
+      form A u (v+w) = form A u v + form A u w ∧
+      form A u (c • v) = star c * form A u v := by
+    simp [form, inner_add_left, inner_add_right, inner_smul_left, inner_smul_right]
+  have hcont : Continuous (fun p : H × H => form A p.1 p.2) := by
+    unfold form
+    fun_prop
+  have hnorm (z : ℂ) (hz : 0 ≤ z.re) : ‖T z‖ ≤ 1 :=
+    ContinuousLinearMap.opNorm_le_bound _ zero_le_one (by
+      intro u
+      simpa using T_contractive z hz u)
+  obtain ⟨g, _hmeas, hg, hginv, hpos, hcontract⟩ :=
+    hc A T A_selfAdjoint hdiag hassoc hsesq hcont dense_univ form_closed
+      T_exp T_zero T_add T_analytic T_generator hnorm T_positive T_linf_bound
+  exact no_weight g hg hginv hpos hcontract
+
+#print axioms result
 
 end D5.S3.Quantum.Semigroups.PositiveRankOneWeightObstruction

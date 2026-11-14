@@ -83,6 +83,24 @@ The public declarations in `D5/S3/Quantum/Semigroups/LinftyWeightContraction.lea
 
 The module's axiom closure is $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$, with no `sorry` or additional axiom. On the two-point space $L^2\cap L^\infty=\mathbb C^2$, and every strictly positive weight and its inverse are bounded. The finite-dimensional correspondence described in Route places the matrix counterexample in the source's sectorial-form setting.
 
+
+The positive strengthening is implemented in `D5/S3/Quantum/Semigroups/PositiveRankOneWeightObstruction.lean`. Its measure is actual Lebesgue measure restricted to $(0,1)$, and its Hilbert space is complex `Lp` at exponent 2 over that measure. With $h(x)=x$, it uses the existing orthogonal projection onto $\mathbb C h$ and proves the actual representative formula
+
+$$
+Pf(x)=3x\int_0^1 y f(y)\,dy,\qquad
+A=I-P,\qquad T(z)=P+e^{-z}(I-P)=\exp(-zA).
+$$
+
+The scoped Lean verification proves the full-domain form's sesquilinearity, continuity, density, angle-zero sectoriality, associated-operator characterization and form-norm completeness. It also proves self-adjointness and nonnegativity of $A$, the entire operator-valued semigroup law and generator derivative, $L^2$ operator contractivity for $\operatorname{Re}z\ge0$, positivity for real $t\ge0$, and the actual uniform `eLpNorm` $L^\infty$ bound $3/2$. Its claim quantifies bounded self-adjoint generators and full-domain forms on this fixed complex $L^2$ space; the witness satisfies all of its displayed premises. All weighted norms use the same measure and actual semigroup representatives.
+
+The obstruction tests $w=1/g$ at $t=1$. Contractivity implies $Pw\le w$. Conservation of the faithful functional $f\mapsto\int_0^1xf(x)\,dx$ then gives $w=Pw=cx$ almost everywhere. Boundedness of $g$ forces a strictly positive essential lower bound for $w$. For any real $c$ and $\varepsilon>0$, the explicit positive-measure interval
+
+$$
+0<x<\min\left(\frac12,\frac{\varepsilon}{2(|c|+1)}\right)
+$$
+
+has $cx<\varepsilon$, contradicting that lower bound. The result retains complex inputs; only the test input used for the contradiction is real positive. Its verified axiom closure is $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$. Scoped compilation is distinct from independent review, freezing and merge. The positivity restriction is a suggestion in the source comments, not a separately numbered affirmative conjecture.
+
 ## Triage
 
 ### What the settlement shows
@@ -97,7 +115,7 @@ The module's axiom closure is $\{\mathrm{propext},\mathrm{Classical.choice},\mat
 
 5. **Open — Problem 24.** Construction of weights is not settled by this result.
 
-6. **Open — positive semigroups.** Problem 22 under the positivity assumption discussed in the comments is not settled by this result. The counterexample's real-time matrix has a negative off-diagonal entry for small positive times, so it does not preserve the positive cone.
+6. **Proved (scoped Lean) — a positive counterexample.** The separate positive rank-one result described in Evidence has the full source-form and analytic-semigroup bridge and admits no equivalent positive contractive weight. Its independent review, freezing and merge are not implied by scoped compilation. The original rotating witness remains nonpositive and retains its separate attribution.
 
 ## ASSUMED-UNVERIFIED
 
