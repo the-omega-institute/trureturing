@@ -108,8 +108,9 @@ internal sealed class RelevantSpaceQuantumKacDocument : IScribeDocumentDefinitio
             Call("E", Call("iterate", F.Id("F"), m, p)))));
         Formula probabilities = Seq(m, Sp, Mapsto, Sp, prob);
         Formula weighted = Seq(m, Sp, Mapsto, Sp, Open, m, Plus, D(1), Close, Sp, prob);
-        Formula normalization = Seq(Sum, Sub(F.Id("a")), Sp,
-            Sup(Call("K", F.Id("a")), F.Id("H")), Sp, Call("K", F.Id("a")), Sp, Eq, Sp, F.Id("I"));
+        Formula normalization = Seq(Call("sum", Seq(F.Id("a"), Sp, Mapsto, Sp,
+            Call("adjoint", Call("K", F.Id("a"))), Sp, Call("K", F.Id("a")))),
+            Sp, Eq, Sp, F.Id("I"));
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp, n, Comma, Sp, a, Colon, Sp, F.Id("Type"), Comma),
             Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
