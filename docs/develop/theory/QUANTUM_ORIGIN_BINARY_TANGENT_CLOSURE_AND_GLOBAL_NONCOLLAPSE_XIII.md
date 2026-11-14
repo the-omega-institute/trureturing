@@ -2326,3 +2326,494 @@ $$
 若球已是 coatom，从球外两次取支撑极标便能找回球内对径见证。complete EB3 原本就穷尽全部真非点面，另给实际 L2 便让所有二元球都是这种 coatom，于是不借 pure PR 得到 qutrit；没有这项 L2，旧文的一致预算问题仍在。全有限情形则只在整个三复制域支付 L2、NC、AD：实际纯旁观者面把较低层连同原单位及全菜单一起带下，共同二复制产品、重括号和整三复制交换校准方向，已有传播尾部再保持所有有限相关输入。由此得到全部有限态、效应、Born、数学 CP 和仪器；理想锐中性与指定连续可逆群各自带着明写条件，前者给 Lüders，后者从原群推出酉律和生成元。设备是否可用、钟与能量如何标定，仍由对应数据承担。
 
 ## 追加锚（本行以下为增补区）
+
+## 163. 一个原三体种子与全部有限 qubit 锥
+
+### 163.1 同一坐标中的完整原域
+
+**定义 163.1（已对齐低二层的全有限背景）。** 固定 $n\ge2$，取
+$V=\operatorname{Herm}_n(\mathbb C)$ 为实向量空间，
+$W_N=V^{\otimes_{\mathbb R}N}$，$N\ge1$。在同一套实际张量坐标中，
+$W_N\cong\operatorname{Herm}_{n^N}(\mathbb C)$ 先仅是向量空间识别。
+每个原 $C_N\subset W_N$ 是闭、尖、生成凸锥，
+$u_N=\operatorname{Tr}=u_1^{\otimes N}$ 在 $C_N\setminus\{0\}$ 上严格为正。始终使用
+
+$$
+K_N=\{x\in C_N:u_N(x)=1\},\qquad
+P_N=\operatorname{ext}K_N,\qquad
+\mathcal E_N=[0,u_N]_{C_N^*}.
+\tag{163.1}
+$$
+
+这些分别是整个原基、全部原极点和整个原 proper 效应区间；有限效应菜单是其中
+所有有限单位分解。对每一对有限 $a,b\ge1$，要求
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+ \subseteq C_a\otimes_{\max}C_b.
+\tag{163.2}
+$$
+
+最小锥由正简单张量闭凸生成；最大锥以全部
+$f\in C_a^*,g\in C_b^*$ 的 $f\otimes g$ 非负定义。
+实际规范重括号使用同一个 $W_{a+b}$ 和同一个联合锥；全部位置置换及其逆均正。
+非连续位置的任意分块先经这些置换运输。原配对满足
+$(f\otimes g)(x\otimes y)=f(x)g(y)$，单位保持上述乘法。
+约定 $W_0=\mathbb R,C_0=\mathbb R_+,u_0=\mathrm{id}$。
+唯一预付的矩阵锥等式为
+
+$$
+C_1=\operatorname{Herm}_n^+(\mathbb C),\qquad
+C_2=\operatorname{Herm}_{n^2}^+(\mathbb C),
+\tag{163.3}
+$$
+
+二者必须在上述同一实际坐标中成立。本文不假定更高原锥 PSD、高阶普通自对偶、
+任意全局矩阵操作的原正性或高阶原纯态分类。
+这个背景是 [VII，定义102.1][Q163VII] 的单块、已对齐低二层特例。
+
+称 $F:W_m\to W_k$ **原全旁观正**，若对每个有限 $r\ge0$，
+$(\mathrm{id}_{W_r}\otimes F)C_{r+m}\subseteq C_{r+k}$，并允许原置换后的任意作用位置。
+这是数学映射条件，不指定物理事件。
+对非零向量 $\psi\in(\mathbb C^n)^{\otimes3}$，记 $r_i(\psi)$ 为第 $i$ 个
+一腿对其余两腿的矩阵展平秩。本文的三体种子条件为
+
+$$
+|\psi\rangle\langle\psi|\in C_3,\qquad
+r_1(\psi),r_2(\psi),r_3(\psi)\ge2.
+\tag{163.4}
+$$
+
+对矩阵秩一向量态，这恰表示每个二分割均纠缠。
+“秩一”仅指实际矩阵秩；在证明锥等式之前，不把它等同于原 $P_3$ 的极点。
+这与 [VII，定义103.2][Q163VII] 对相干资源的原纯性边界相同。
+
+### 163.2 原滤波、切片与有限预算
+
+**引理 163.2（低二层支付的操作）。** 在定义163.1下，每个一体矩阵合同
+$\Phi_A(x)=AxA^*$，$A:\mathbb C^n\to\mathbb C^n$，均原全旁观正。
+若 $A^*A\preceq I_n$，则每个原旁观扩张不增迹。
+这些映射的有限复合、张量积，以及一体酉共轭及其逆，具有相应原正性。
+任意原正效应均可在全部原联合输入上切片；重复切片仍落在原剩余锥。
+
+**证明。** 逐项复用 [VII，引理102.6—102.7、102.8及103.6的证明][Q163VII]。
+为核清所消费的输入，令
+
+$$
+|I_n\rangle=\sum_{a=0}^{n-1}|aa\rangle,\qquad
+\Omega=|I_n\rangle\langle I_n|,\qquad
+\beta(z)=\operatorname{Tr}(\Omega z).
+\tag{163.5}
+$$
+
+由(163.3)，$\Omega\in C_2$，$\Omega/n\in K_2$，$\beta/n\in\mathcal E_2$。
+VII102.7 的原自身 Choi 判据只用这个低二层和(163.2)：以 $m$ 对原杯及原置换构成
+$\Omega_m\in C_{2m}$，按“参考 $m$ 腿、输出 $k$ 腿”定义
+
+$$
+J(F)=(\mathrm{id}_{W_m}\otimes F)\Omega_m,
+\qquad F\text{ 原全旁观正}\ \Longleftrightarrow\ J(F)\in C_{m+k}.
+\tag{163.6}
+$$
+
+反向是把任意 $z\in C_{r+m}$ 与 $J(F)$ 原相乘，再逐对用 $\beta$ 切片的精确蛇式。
+每一步由 VII102.6 对整个剩余原锥正，包含任意纠缠旁观者；不使用高层 PSD。
+归一杯和 proper 帽每对带 $n^{-2}$，只改变一个严格正的有限系数。
+对 $\Phi_A$，$J(\Phi_A)=|A\rangle\!\rangle\langle\!\langle A|\in C_2$，
+其中 $|A\rangle\!\rangle=\sum_a|a\rangle\otimes A|a\rangle$。
+于是取得全部原旁观者上的正性。
+当 $A^*A\preceq I_n$，$u_1-u_1\Phi_A$ 在 $C_1$ 上正；
+将它与任意旁观单位相乘并用最大界，得全部旁观预算。
+张量积可逐腿提升并复合，位置变化由原置换支付。
+一般切片则直接是 VII102.6 的闭锥双极结论。∎
+
+特别地，若 $f\in\mathcal E_a$，$z\in C_{a+b}$，则
+
+$$
+0\le u_b((f\otimes\mathrm{id})z)\le u_{a+b}(z),
+\tag{163.7}
+$$
+
+因为 $f\otimes u_b$ 与 $(u_a-f)\otimes u_b$ 都在原对偶锥中。
+故逐次 proper 帽的总迹预算成立，即使中间原态有纠缠。
+把正系数除掉用于锥成员关系，不把该除法解释成实际事件放大。
+
+### 163.3 三个 W 的原三角收缩
+
+**命题 163.3（四项三角形）。** 设 $n=2$，
+$w=|100\rangle+|010\rangle+|001\rangle$，且 $ww^*\in C_3$。
+则在同一个原层级中，
+
+$$
+\tau=|111\rangle+|001\rangle+|010\rangle+|100\rangle,
+\qquad \tau\tau^*\in C_3,
+\qquad \Delta=gg^*\in C_3,\quad g=|000\rangle+|111\rangle.
+\tag{163.8}
+$$
+
+**证明。** 三个顶点 $A,B,C$ 各放一个原 $ww^*$，腿次序依次为
+$(a,A_B,A_C)$、$(b,B_A,B_C)$、$(c,C_A,C_B)$。
+最小界先把三份资源放进原 $C_9$。
+分别在 $(A_B,B_A)$、$(A_C,C_A)$、$(B_C,C_B)$ 上施加 Bell 帽
+$\langle00|+\langle11|$ 所对应的正泛函 $\beta$。
+记三条内部边的公共位为 $x,y,z$，令 $w_{ijk}=1$ 当且仅当 $i+j+k=1$。
+剩余向量的系数恰为
+
+$$
+t_{abc}=\sum_{x,y,z\in\{0,1\}}
+ w_{axy}w_{bxz}w_{cyz}.
+\tag{163.9}
+$$
+
+非零项必须满足 $a+x+y=b+x+z=c+y+z=1$。
+两条激活内部边必在某顶点相遇，违反该顶点恰有一个 $1$ 的条件，故只有以下四项：
+
+| 内部 $(x,y,z)$ | 外部 $(a,b,c)$ | 条件 |
+| --- | --- | --- |
+| $(0,0,0)$ | $(1,1,1)$ | 无内部边激活 |
+| $(1,0,0)$ | $(0,0,1)$ | $AB$ 激活，对顶点 $C$ 的外腿为 $1$ |
+| $(0,1,0)$ | $(0,1,0)$ | $AC$ 激活，对顶点 $B$ 的外腿为 $1$ |
+| $(0,0,1)$ | $(1,0,0)$ | $BC$ 激活，对顶点 $A$ 的外腿为 $1$ |
+
+每项系数均为一，所以 $t=\tau$。
+在算子层，$\beta$ 对 dyad 的切片等于在 ket 上作用 Bell bra、在 bra 上作用其伴随；
+因此这同一个九腿协议的最终输出就是 $\tau\tau^*$。
+其原正性是先由 VII102.6 得 $C_9\to C_7$，再得 $C_7\to C_5$，最后得
+$C_5\to C_3$；每一步均包含所有原旁观者。
+同一三次切片对任意有限 $r\ge0$ 都把整个 $C_{r+9}$ 送入 $C_{r+3}$。
+这里未判定 $C_9$ 或中间锥为 PSD。
+
+预算可以全部使用原 proper 对象：输入 $(ww^*/3)^{\otimes3}$ 的迹为一，
+三个帽各取 $\beta/2$，输出
+
+$$
+\frac{\tau\tau^*}{3^3\,2^3}=\frac{\tau\tau^*}{216},
+\qquad u_3\left(\frac{\tau\tau^*}{216}\right)=\frac1{54}.
+\tag{163.10}
+$$
+
+令 $H=2^{-1/2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}$，$Z=\operatorname{diag}(1,-1)$。
+直接展开得
+
+$$
+\tau=\sqrt2\,H^{\otimes3}(|000\rangle-|111\rangle),\qquad
+[(Z\otimes I\otimes I)H^{\otimes3}]\tau=\sqrt2\,g.
+\tag{163.11}
+$$
+
+引理163.2支付这些局部酉及原旁观扩张。
+于是(163.10)成为 $\Delta/108$，迹仍为 $1/54$；锥缩放给 $\Delta\in C_3$，
+条件归一态为 $\Delta/2$。所有操作由上述同一个资源协议联合实现为原数学正映射，
+并逐项具有迹预算；没有由协议宣称物理装置存在或确定性成功。∎
+
+### 163.4 完整 qubit 种子等价
+
+**定理 163.4（一个矩阵秩一种子当且仅当全部有限量子锥）。**
+在定义163.1的 $n=2$ 背景中，以下两条件等价：
+
+1. 存在实际 $|\psi\rangle\langle\psi|\in C_3$，且 $r_1(\psi)=r_2(\psi)=r_3(\psi)=2$。
+2. 对每个有限 $N\ge1$，在同一实际坐标中 $C_N=\operatorname{Herm}_{2^N}^+(\mathbb C)$。
+
+**证明。** 对条件1的非零向量使用 Dür–Vidal–Cirac 的成熟分类
+[DVC，§III.2及附录A][Q163DVC]：三个局部秩全为二的三 qubit 向量，恰属
+GHZ 或 W 两个可逆局部算子类。该结论只应用于矩阵向量 $\psi$，无需原基极点假设。
+故存在可逆 $B_i:\mathbb C^2\to\mathbb C^2$，适当吸收一个非零标量后，使
+$(B_1\otimes B_2\otimes B_3)\psi=v$，其中 $v=g$ 或 $v=w$。
+若原文给出代表元到 $\psi$ 的方向，就取各局部算子的逆。
+
+取 $s_i=\max\{1,\|B_i\|\}$，$A_i=B_i/s_i$。
+引理163.2把这些矩阵滤波映到全部原旁观者上的正、不增迹的一体映射。
+从 $\rho_\psi=\psi\psi^*/\|\psi\|^2\in K_3$ 得
+
+$$
+(\Phi_{A_1}\otimes\Phi_{A_2}\otimes\Phi_{A_3})(\rho_\psi)
+ =t\,\frac{vv^*}{\|v\|^2},\qquad
+t=\frac{\|v\|^2}{\|\psi\|^2s_1^2s_2^2s_3^2}\in(0,1].
+\tag{163.12}
+$$
+
+因此 $vv^*\in C_3$。GHZ 支路直接给 $\Delta$；W 支路用命题163.3。
+若从原种子计预算，三份独立 $\rho_\psi$ 经九个滤波及三个 proper 帽、局部酉，
+给出 $t^3\Delta/108$，总迹 $t^3/54>0$。
+GHZ 支路的归一资源输出为 $t\Delta/2$。
+这同时支付了原种子到资源的有限非零系数，而非只讨论抽象 SLOCC 可达性。
+
+现在把 $\Delta$ 接入 [VII，命题103.7的构造及定理103.8][Q163VII]。
+本背景已经支付了103.7证明所需的一体合同；不再调用103.5之前的对齐归约。
+为明确所需资源，单一局部块的有序活跃块对只有 $(i,i)$，其三条腿仍互不相同。
+取 $P=|1\rangle\langle1|$、$X=\begin{pmatrix}0&1\\1&0\end{pmatrix}$，
+用(163.6)的参考—输出向量化，有
+
+$$
+\begin{aligned}
+\alpha&=|I-P\rangle\!\rangle|0\rangle
+          +|P\rangle\!\rangle|1\rangle=g,\\
+\gamma&=|0\rangle|I\rangle\!\rangle
+          +|1\rangle|X\rangle\!\rangle
+        =|000\rangle+|011\rangle+|101\rangle+|110\rangle
+        =\sqrt2 H^{\otimes3}g.
+\end{aligned}
+\tag{163.13}
+$$
+
+于是 VII(102.24) 的两个指定 dyad 均在原 $C_3$，迹分别为 $2,4$。
+从 $\Delta/2$ 经局部酉分别得到 $\alpha\alpha^*/2$ 和 $\gamma\gamma^*/4$，
+二者质量均为一；这是103.7在 $d=e=b=2$ 的构造与预算。
+二资源的原 $C_6$ 乘积经一个 $\beta/2$，按 VII(103.19) 给
+
+$$
+\frac{J(\operatorname{Ad}_{U})}{16}\in C_4,
+\qquad U=(I-P)\otimes I+P\otimes X,
+\qquad u_4\left(\frac{J(\operatorname{Ad}_{U})}{16}\right)=\frac14.
+\tag{163.14}
+$$
+
+它只是资源收缩的质量。原自身 Choi 判据据此给该二体门及全部原旁观提升的数学正性。
+这精确满足 VII103.8 包含重复标签 $(i,i)$ 的两 dyad 输入。
+该削弱尾部复用既有精确有限酉字及态—效应双向夹逼，从而对每个有限 $N$ 给条件2。
+调用的是103.8，而不是带 $S_3$ 入口的整条102.11；没有补入整个 $C_3$ 标准性。
+
+反向，条件2在 $N=3$ 包含 $\Delta=gg^*$；$g$ 的三个展平秩均为二，故条件1成立。∎
+
+### 163.5 一般局部维数的同时秩二截取
+
+**引理 163.5（同时保住三个展平秩）。** 若
+$\psi\in(\mathbb C^n)^{\otimes3}$ 的三个展平秩均至少为二，则存在
+$L_i:\mathbb C^n\to\mathbb C^2$，使
+$\phi=(L_1\otimes L_2\otimes L_3)\psi$ 的三个展平秩均为二。
+
+**证明。** 在复仿射空间
+$\mathcal A=\prod_{i=1}^3\operatorname{Mat}_{2\times n}(\mathbb C)$ 中，
+条件 $r_i(\phi)\ge2$ 是某个 $2\times2$ 子式非零的有限并，故为 Zariski 开集 $U_i$。
+分别证明 $U_i$ 非空：固定 $\psi$ 第 $i$ 个展平的一个非零 $2\times2$ 子式。
+它的两行只用该腿的两个不同基指标；两列是另外两腿的两个基指标对，
+在各腿至多用两个指标。对三腿各作坐标截取，保留这些指标并映到 $\mathbb C^2$。
+某一腿若只用一个指标，就任取另一个不同指标补到两个，因 $n\ge2$ 可行。
+原非零子式仍是截取后第 $i$ 个展平的子式，所以 $U_i\ne\varnothing$。
+复仿射空间不可约，三个非空 Zariski 开集的交非空。
+取交中的 $L_i$，三秩均至少二；输出每腿维数为二，故恰为二。∎
+
+固定同一个二维子空间 $S\subset\mathbb C^n$、等距嵌入
+$J:\mathbb C^2\to\mathbb C^n$，令 $P=JJ^*$。
+对(163.4)的原种子，把上引理的输出嵌回该同一个 $S$：
+
+$$
+A_i=JL_i:\mathbb C^n\to\mathbb C^n,\qquad
+\widetilde\phi=(A_1\otimes A_2\otimes A_3)\psi\in S^{\otimes3}.
+\tag{163.15}
+$$
+
+引理163.2使 $\widetilde\phi\widetilde\phi^*\in C_3$。
+将各 $A_i$ 除以 $\max\{1,\|A_i\|\}$ 即有全部原旁观者上的不增迹实现，
+输出仍非零，归一质量严格为正。
+这里调用的是原 $n\to n$ 一体映射，未把 $n\to2$ 的形式矩阵当成模型新增物种。
+
+### 163.6 固定二维压缩的完整锥族与全对偶
+
+**命题 163.6（原正幂等压缩继承整个背景）。** 对固定的 $P$ 定义
+
+$$
+Q(x)=PxP,\qquad Q_N=Q^{\otimes N},\qquad
+W_N^P=\operatorname{ran}Q_N,\qquad
+C_N^P=C_N\cap W_N^P.
+\tag{163.16}
+$$
+
+以 $J^{\otimes N}$ 识别 $W_N^P$ 与
+$\operatorname{Herm}_{2^N}(\mathbb C)$，并限制原迹单位。
+则整个族 $(C_N^P)_{N\ge1}$ 满足定义163.1的 $n=2$ 全部条件，
+包括所有有限分块的最小／最大界、所有位置置换，以及其自身完整对偶与 proper 区间。
+
+**证明。** 引理163.2先给 $Q$ 的原全旁观正性。
+故 $Q_N(C_N)\subseteq C_N$；$Q_N^2=Q_N$ 给
+
+$$
+Q_N(C_N)=C_N\cap\operatorname{ran}Q_N=C_N^P.
+\tag{163.17}
+$$
+
+右边是闭锥与闭子空间的交，所以闭；尖性与严格正迹直接继承。
+在 $S$ 上的 PSD 秩一一体矩阵实张成 $\operatorname{Herm}(S)$；
+由原最小界，它们的任意 $N$ 重乘积均在 $C_N^P$。
+这些乘积实张成 $W_N^P$，所以压缩锥生成整个内在空间。
+低二层的原 PSD 等式给 $C_1^P=\operatorname{Herm}_2^+$、
+$C_2^P=\operatorname{Herm}_4^+$，坐标统一使用 $J$。
+
+先核算原单位预算，不能把未知高层 $x\in C_N$ 当作 PSD。
+置 $R_0=P,R_1=I_n-P$，对 $\epsilon\in\{0,1\}^N$ 定义
+$M_\epsilon(x)=R_\epsilon xR_\epsilon$，
+$R_\epsilon=R_{\epsilon_1}\otimes\cdots\otimes R_{\epsilon_N}$。
+每项由局部合同原正，$\sum_\epsilon R_\epsilon^*R_\epsilon=I$，且在整个向量空间上
+
+$$
+\sum_\epsilon u_N(M_\epsilon x)=u_N(x).
+\tag{163.18}
+$$
+
+这是完备的局部 Kraus 投影族的迹恒等式，不声称其和是恒等映射。
+对原正 $x$ 各项迹均非负，全零标签项就是 $Q_N$，因此
+$0\le u_N(Q_Nx)\le u_N(x)$。
+
+任意内在正泛函 $g\in(C_a^P)^*$ 在整个原空间有正延拓
+
+$$
+\widetilde g=g\circ Q_a\in C_a^*,\qquad
+\widetilde g|_{W_a^P}=g.
+\tag{163.19}
+$$
+
+这支付全部内在正对偶，非仅矩阵效应子集。
+若 $0\le g\le u_a|_{W_a^P}$，则对全部 $x\in C_a$，
+$0\le\widetilde g(x)\le u_a(Q_ax)\le u_a(x)$，故延拓为原 proper 效应。
+其补效应的正性同时来自(163.18)与内在的 $u_a-g$。
+
+对任意 $x\in C_{a+b}^P$ 和任意内在正 $g,h$，原最大界作用于
+$\widetilde g\otimes\widetilde h$，给
+$(g\otimes h)(x)\ge0$；这里 $Q_a\otimes Q_b$ 在 $x$ 上为恒等。
+故得到完整内在最大界。
+原最小界与闭性给完整内在最小界。
+同一个 $P$ 用于所有位置，使 $Q_N$ 与全部因子置换交换，故置换及其逆限制为正；
+规范重括号、原乘法配对及单位也限制为同一套数据。
+最后取整个压缩基、全部内在极点与整个内在 proper 区间作为压缩模型数据；
+不需要它们与原 $P_N$ 有任何极点对应。∎
+
+**定理 163.7（一般 $n$ 的完整 qubit 压缩结论）。**
+在定义163.1及(163.4)下，对每个固定二维 $S$ 及每个有限 $N$，
+
+$$
+C_N\cap\operatorname{Herm}(S^{\otimes N})
+ =\operatorname{Herm}^+(S^{\otimes N}).
+\tag{163.20}
+$$
+
+**证明。** 用引理163.5和(163.15)把原种子送进这个固定 $S^{\otimes3}$，
+所得实际矩阵秩一态在 $C_3^P$ 且三展平秩均为二。
+命题163.6支付压缩族的全部有限背景和全效应菜单，故定理163.4适用于整个压缩族，
+给(163.20)。其内部使用的滤波亦可用 $JMJ^*$ 写成原 $n\to n$ 合同；
+内在 Bell proper 效应可按(163.19)延拓，再由原切片作用于任意原旁观者。
+所以没有只在选定点或选定效应上应用 qubit 定理。∎
+
+### 163.7 尚未支付的原编码与一个准确充分接口
+
+**命题 163.8（寄存器汇入一条原 $n$ 维腿）。** 在定理163.7的假设下，
+固定上述 $J$，取 $m=\lceil\log_2 n\rceil$，为 $0\le a<n$ 选各不相同的
+$m$ 位计算字 $s_a$，固定原 $\mathbb C^n$ 的正交归一基 $|a\rangle$。
+定义实际矩阵与原映射
+
+$$
+K=\sum_{a=0}^{n-1}|a\rangle\langle s_a|(J^*)^{\otimes m},
+\qquad E:W_m\to W_1,\quad E(x)=KxK^*,
+\qquad
+\eta_n=\sum_{a=0}^{n-1}\overline J^{\otimes m}|s_a\rangle\otimes|a\rangle.
+\tag{163.21}
+$$
+
+这里 $\overline J$ 是固定实际计算基中的逐项共轭；参考腿的共轭来自固定的 Choi 约定。
+若 $S$ 是计算二维角且 $J$ 为标准嵌入，则 $\overline J=J$。
+在同一个原全有限层级中，以下三个条件等价：
+
+1. $\eta_n\eta_n^*\in C_{m+1}$。
+2. $E$ 对每个原有限旁观者正。
+3. 对每个有限 $N$，$C_N=\operatorname{Herm}_{n^N}^+(\mathbb C)$。
+
+当 $n=2$ 时该接口已由 $C_2$ 支付；当 $n>2$ 时，本章尚未从种子条件推出条件1或2。
+
+**证明。** 由原杯在固定基中的向量化，$J(E)=\eta_n\eta_n^*$，
+所以条件1与2正是 VII102.7 的原自身判据。
+确切地，$|K\rangle\!\rangle=\sum_t|t\rangle\otimes K|t\rangle$
+将输入系数共轭成 $\overline J$，恰给(163.21)；没有在不同层换用参考转置方向。
+
+条件2的单位预算也能支付：$K=KP^{\otimes m}$，故 $E=EQ_m$。
+定理163.7使 $Q_mx$ 对每个 $x\in C_m$ 都是压缩 PSD，
+而 $K^*K$ 是 $S^{\otimes m}$ 中的码投影，故
+
+$$
+0\le u_1(E x)\le u_m(Q_mx)\le u_m(x).
+\tag{163.22}
+$$
+
+于是 $u_m-u_1E\in C_m^*$。在条件2下，把这个正差与任意原旁观单位相乘，
+得到每个旁观扩张的迹不增预算。
+
+由定理163.7，压缩 GHZ dyad $\Delta_S\in C_3$。
+取 $m$ 份 $\Delta_S/2$ 原相乘，按原置换重排成三组、每组 $m$ 腿，得到
+
+$$
+\frac{h_mh_m^*}{2^m}\in C_{3m},\qquad
+h_m=\sum_{s\in\{0,1\}^m}
+ (J^{\otimes m}|s\rangle)^{\otimes3}.
+\tag{163.23}
+$$
+
+条件2允许在这三个实际寄存器上依次施加 $E$，每次保留所有原旁观者。
+输出是 $\Delta_n/2^m$，其中
+$g_n=\sum_{a=0}^{n-1}|aaa\rangle$、$\Delta_n=g_ng_n^*$；其迹为 $n/2^m>0$。
+故 $\Delta_n\in C_3$。
+现在用 VII103.7 从这个完整单块资源取得两个指定 dyad，
+再用 VII103.8，得到条件3。
+反向，条件3包含所有 PSD dyad，故包含 $\eta_n\eta_n^*$，得到条件1。∎
+
+这里的编码形式及其充分性是 [VII，定义104.12、命题104.13][Q163VII]
+的单块实例；本章将其接到一般三体种子的压缩输出，不把融合原理另认作新结果。
+对 $n>2$，(163.20)只控制每条原腿都位于同一二维支撑的整个子层级。
+$E$ 的输出却是一条原 $n$ 维腿，故压缩内部的任意矩阵 CP 操作不能直接替代条件2。
+即使(163.22)已经证明单独输入上的正性和迹预算，它仍未给含任意原旁观者的正性。
+剩余义务正是混合编码 dyad 的原锥成员关系，或足以直接产生 $\Delta_n$ 的其他原资源论证。
+本章既不证明这项义务不可导出，也不由它未付而构造反例；
+没有把有限前缀或受限抽象网络称为完整全有限反模型。
+
+### 163.8 已有量子公理的对应、归属与几何图景
+
+**推论 163.9（既有静态字典的原位复用）。** 在定理163.4的等价条件下，
+全部有限原数据满足
+
+$$
+K_N=\{\rho\succeq0:\operatorname{Tr}\rho=1\},\quad
+\mathcal E_N=\{E:0\preceq E\preceq I\},\quad
+\Pr(E\mid\rho)=\operatorname{Tr}(E\rho),\quad
+P_N\cong\mathbb{CP}^{2^N-1}.
+\tag{163.24}
+$$
+
+有限菜单恰为 POVM；原全旁观正映射恰为对应矩阵 CP 映射，不增迹／保迹分别是
+有限 Kraus 算子的 $\sum_\alpha K_\alpha^*K_\alpha\preceq I$／$=I$。
+这些是 [VII，102.12—102.15及103.12][Q163VII] 的现成对应，按已证锥等式复用。
+一般 $n$ 在定理163.7下仅得到压缩族内的同一完整字典；只有另付命题163.8的接口后，
+才得到整个原 $n$ 维层级的字典。
+
+复矩阵载体、迹单位、实际张量规则、完整菜单和已对齐低二层是站立输入；
+本结果条件性地把高阶整锥几何输入压缩成一个三体矩阵秩一种子的存在性。
+它不从零导出复数域或低二层，也不比较整套独立公理的最少数目。
+数学分支成为可用物理事件仍需 VII102.14 的额外事件饱和；
+有限仪器、正概率条件更新及零质量边界直接保留 VII102.15 的合同。
+静态几何不选择物理钟、Hamiltonian、时间尺度或 $\hbar$，也不指定效应的唯一更新；
+更新后的测量次序仍可不交换，沿用 VII103.12 的边界。
+
+Dür–Vidal–Cirac 的三 qubit 分类、原自身 Choi／切片、指定 dyad 构造、精确有限字尾部、
+Born／CP 字典和既有融合接口均为复用。
+本章实际补接的是 W 三角形在未知高阶原锥中的逐次准入及预算、任意矩阵秩一种子到
+该资源的接口，以及一般 $n$ 同时秩二截取后对完整压缩族的正幂等与全对偶核算。
+所作等价限于上述明确模型域，不含物理实现或全部一般维数已闭合的断言。
+
+**完整中文图景。** 先把一份和两份系统的量子坐标固定好，同时保留所有有限份原系统及其全部效应。
+对 qubit，只需原三份锥里有一个跨每种二分割都纠缠的矩阵秩一态：若它属于 GHZ 类，局部滤波直接给相干叉口；
+若属于 W 类，就取三个副本沿三角形接上三只 Bell 帽。内部没有激活边时留下外部 $111$，
+恰有一条激活边时留下其对顶点的那个单独 $1$，四项叠加经局部 Hadamard 和相位便成为 GHZ。
+这一资源供应既有尾部所需的两张小 dyad，尾部于是锁定每一有限层的整个态锥与效应锥。
+较大局部维数也能把任意这种种子同时滤进固定二维支撑，且二维压缩保留全部正对偶和单位预算，
+所以其中每一有限层同样都是量子锥；但多条二维腿汇成一条原 $n$ 维腿还缺明确的原编码资源，
+压缩结论没有越过这道接口去替整个原层级作结论。
+
+[Q163VII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+[Q163DVC]: https://arxiv.org/abs/quant-ph/0005115
+
+**原始文献与精确供应。** [DVC][Q163DVC]：W. Dür, G. Vidal, J. I. Cirac,
+*Three qubits can be entangled in two inequivalent ways*, Phys. Rev. A **62**, 062314，
+DOI [10.1103/PhysRevA.62.062314](https://doi.org/10.1103/PhysRevA.62.062314)，
+§III.1—III.2 的局部秩与 GHZ/W 完整分类、式(15)、(26)及各自随后给出的可逆局部矩阵，
+以及附录A的可逆局部算子定理和滤波缩放论证。
+[VII][Q163VII] 的来源固定为已发表提交 `bb4f68b5d54f7b55cdf683c779a6c28e9bc46ab8`：
+102.1原域；102.6—102.7整锥切片、自身 Choi 和重复帽预算；102.8／103.6局部合同；
+103.2矩阵秩一资源及其原纯性边界；103.7和(102.24)两指定 dyad；103.8全有限削弱尾部；
+104.12—104.13原融合接口；102.12—102.15／103.12既有静态字典、事件及时间边界。
+## 追加锚（本行以下为增补区）
