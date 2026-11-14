@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/MvPolynomial/Rename.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -44,14 +44,9 @@ it kills are exactly the multiples of `X a`.
 * `TauCeti.renameRingHomInvPair`: variable renaming and its inverse form a `RingHomInvPair`.
 * `TauCeti.renameRingHomInvPairSymm`: the same inverse pair in the reverse direction.
 
-## Main results
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
-* `MvPolynomial.killCompl_X_of_notMem_range`: a variable outside the range of an injective
-  renaming is killed by `killCompl`.
-* `MvPolynomial.killCompl_eq_zero_iff_X_dvd`: when the range of the renaming is the complement of
-  a single variable `X a`, discarding that variable kills exactly the multiples of `X a`.
-* `Polynomial.map_eval_map_rename`: for a polynomial family with coefficients in `MvPolynomial`,
-  specializing after renaming the parameters along `f` is specializing at the composite point.
 -/
 
 public section
@@ -59,41 +54,6 @@ public section
 namespace MvPolynomial
 
 variable {σ τ R : Type*} [CommSemiring R] {f : σ → τ} (hf : Function.Injective f) {a : τ}
-
-/-- A variable outside the range of an injective renaming is killed by `killCompl`. -/
-@[simp]
-theorem killCompl_X_of_notMem_range (ha : a ∉ Set.range f) :
-    killCompl (R := R) hf (X a) = 0 := by
-  rw [X]
-  exact killCompl_monomial_eq_zero_of_notMem_range hf (s := Finsupp.single a 1) 1
-    (a := a) (by simp) ha
-
-/-- When the range of an injective renaming is the complement of a single variable `X a`,
-discarding the variables outside the range kills exactly the multiples of `X a`. -/
-theorem killCompl_eq_zero_iff_X_dvd (ha : Set.range f = {a}ᶜ) (p : MvPolynomial τ R) :
-    killCompl hf p = 0 ↔ X a ∣ p := by
-  have hna : a ∉ Set.range f := by simp [ha]
-  constructor
-  · intro h
-    rw [X_dvd_iff_modMonomial_eq_zero]
-    refine MvPolynomial.ext _ _ fun m => ?_
-    rcases Nat.eq_zero_or_pos (m a) with hm | hm
-    · -- A monomial avoiding `a` is renamed from a monomial in the source variables.
-      have hsub : ↑m.support ⊆ Set.range f := by
-        intro x hx
-        rw [ha]
-        simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
-        rintro rfl
-        exact (Finsupp.mem_support_iff.mp hx) hm
-      have hmd : Finsupp.mapDomain f (Finsupp.comapDomain f m hf.injOn) = m :=
-        m.mapDomain_comapDomain f hf hsub
-      rw [coeff_modMonomial_of_not_le _ (by rw [Finsupp.single_le_iff]; omega), ← hmd,
-        ← coeff_killCompl hf, h]
-      simp
-    · rw [coeff_modMonomial_of_le _ (by rw [Finsupp.single_le_iff]; omega)]
-      simp
-  · rintro ⟨q, rfl⟩
-    rw [map_mul, killCompl_X_of_notMem_range hf hna, zero_mul]
 
 end MvPolynomial
 
@@ -114,25 +74,5 @@ end Polynomial
 namespace TauCeti
 
 variable {σ τ : Type*} (R : Type*) [CommSemiring R]
-
-/-- A polynomial variable-renaming ring equivalence and its inverse form a
-`RingHomInvPair`. -/
-noncomputable instance renameRingHomInvPair (e : σ ≃ τ) :
-    RingHomInvPair
-      ((MvPolynomial.renameEquiv R e).toRingEquiv :
-        MvPolynomial σ R →+* MvPolynomial τ R)
-      ((MvPolynomial.renameEquiv R e).toRingEquiv.symm :
-        MvPolynomial τ R →+* MvPolynomial σ R) :=
-  RingHomInvPair.of_ringEquiv (MvPolynomial.renameEquiv R e).toRingEquiv
-
-/-- The inverse polynomial variable-renaming ring equivalence and the forward equivalence form a
-`RingHomInvPair`. -/
-noncomputable instance renameRingHomInvPairSymm (e : σ ≃ τ) :
-    RingHomInvPair
-      ((MvPolynomial.renameEquiv R e).toRingEquiv.symm :
-        MvPolynomial τ R →+* MvPolynomial σ R)
-      ((MvPolynomial.renameEquiv R e).toRingEquiv :
-        MvPolynomial σ R →+* MvPolynomial τ R) :=
-  RingHomInvPair.of_ringEquiv_symm (MvPolynomial.renameEquiv R e).toRingEquiv
 
 end TauCeti

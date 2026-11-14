@@ -55,10 +55,6 @@ theorem signVariationsAtTop_def (cs : List (Polynomial R)) :
 theorem signVariationsAtTop_nil : signVariationsAtTop ([] : List R[X]) = 0 := by
   simp [signVariationsAtTop_def]
 
-@[simp, grind =]
-theorem signVariationsAtTop_singleton (p : R[X]) : signVariationsAtTop [p] = 0 := by
-  simp [signVariationsAtTop_def]
-
 /-- Matching the leading-coefficient signs realizes positive-infinity variations. -/
 theorem signVariationsAt_eq_atTop {cs : List (Polynomial R)} {x : R}
     (h : ∀ p ∈ cs, SignType.sign (p.eval x) = SignType.sign p.leadingCoeff) :
@@ -87,10 +83,6 @@ theorem signVariationsAtBot_def (cs : List (Polynomial R)) :
 theorem signVariationsAtBot_nil : signVariationsAtBot ([] : List R[X]) = 0 := by
   simp [signVariationsAtBot_def]
 
-@[simp, grind =]
-theorem signVariationsAtBot_singleton (p : R[X]) : signVariationsAtBot [p] = 0 := by
-  simp [signVariationsAtBot_def]
-
 /-- Matching the parity-adjusted leading signs realizes negative-infinity variations. -/
 theorem signVariationsAt_eq_atBot {cs : List (Polynomial R)} {x : R}
     (h : ∀ p ∈ cs,
@@ -104,18 +96,6 @@ theorem signVariationsAt_eq_atBot {cs : List (Polynomial R)} {x : R}
 end Ring
 
 variable {R : Type*} [Field R] [LinearOrder R] [IsStrictOrderedRing R]
-
-/-- The variation count stabilizes at positive infinity, even for lists containing zero. -/
-theorem exists_signVariationsAtTop (cs : List (Polynomial R)) :
-    ∃ B : R, ∀ x, B < x → signVariationsAt cs x = signVariationsAtTop cs := by
-  obtain ⟨B, hB⟩ := List.exists_signs_atTop cs
-  exact ⟨B, fun x hx => signVariationsAt_eq_atTop (fun p hp => hB p hp x hx)⟩
-
-/-- The variation count stabilizes at negative infinity, even for lists containing zero. -/
-theorem exists_signVariationsAtBot (cs : List (Polynomial R)) :
-    ∃ B : R, ∀ x, x < B → signVariationsAt cs x = signVariationsAtBot cs := by
-  obtain ⟨B, hB⟩ := List.exists_signs_atBot cs
-  exact ⟨B, fun x hx => signVariationsAt_eq_atBot (fun p hp => hB p hp x hx)⟩
 
 /-- Far enough to the right, finite evaluation realizes the infinity signs and
 lies beyond every chain root. The bound belongs to the ordered field itself. -/

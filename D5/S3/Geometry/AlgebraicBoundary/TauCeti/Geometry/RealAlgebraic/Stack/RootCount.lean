@@ -54,7 +54,7 @@ theorem mem_sectionSet_iff_mem_image_card_lt
     rw [Finset.filter_image, Finset.card_image_of_injective _ hθ.injective]
     simp only [hθ.lt_iff_lt]
     simpa only [Finset.filter_gt_eq_Iio] using Fin.card_Iio l
-  simp only [mem_sectionSet]
+  simp only [sectionSet, Function.graph, Set.mem_setOf_eq]
   constructor
   · intro hi
     rw [← hi]
@@ -75,7 +75,7 @@ theorem mem_sectorSet_iff_notMem_image_card_lt
   have hcard : ((Finset.univ.image (fun l ↦ θ l z.1)).filter (· < z.2)).card =
       (Finset.univ.filter fun l ↦ θ l z.1 < z.2).card := by
     rw [Finset.filter_image, Finset.card_image_of_injective _ hθ.injective]
-  rw [hcard, mem_sectorSet]
+  rw [hcard, sectorSet]
   constructor
   · rintro ⟨hlo, hhi⟩
     have hlt (i : Fin k) : θ i z.1 < z.2 ↔ i.val < j.val := by

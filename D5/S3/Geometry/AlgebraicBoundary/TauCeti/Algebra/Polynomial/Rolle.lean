@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Polynomial/Rolle.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -45,16 +45,12 @@ namespace TauCeti
 
 /-- Polynomial Rolle: whenever a polynomial takes equal values at `a < b`, its formal
 derivative has a root in `Ioo a b`. -/
+@[expose]
 def PolynomialRolle (R : Type*) [Field R] [LinearOrder R] : Prop :=
   ∀ (p : R[X]) (a b : R), a < b → p.eval a = p.eval b →
     ∃ c ∈ Ioo a b, p.derivative.eval c = 0
 
 variable {R : Type*} [Field R] [LinearOrder R]
-
-/-- Construct the polynomial Rolle property from its quantified statement. -/
-theorem PolynomialRolle.of_forall
-    (h : ∀ (p : R[X]) (a b : R), a < b → p.eval a = p.eval b →
-      ∃ c ∈ Ioo a b, p.derivative.eval c = 0) : PolynomialRolle R := h
 
 /-- Equal polynomial values at distinct endpoints give an interior derivative root. -/
 theorem PolynomialRolle.exists_derivative_root (h : PolynomialRolle R) (p : R[X]) {a b : R}

@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Data/List/SignVariations.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -38,9 +38,6 @@ variable {R : Type*} [Zero R] [LinearOrder R]
 /-- The sign of the first nonzero entry of a list, or `0` if every entry is zero. -/
 def firstSign (l : List R) : SignType :=
   ((l.filter (fun v => decide (v ≠ 0))).head?.map SignType.sign).getD 0
-
-@[simp, grind =]
-theorem firstSign_nil : firstSign ([] : List R) = 0 := (rfl)
 
 @[simp, grind =]
 theorem firstSign_zero_cons (l : List R) : firstSign (0 :: l) = firstSign l := by

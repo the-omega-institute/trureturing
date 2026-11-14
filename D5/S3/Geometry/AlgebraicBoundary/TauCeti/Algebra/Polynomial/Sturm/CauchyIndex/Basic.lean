@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Polynomial/Sturm/CauchyIndex/Basic.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -44,18 +44,8 @@ neither `a` nor `b` is a root of `p * q`, the indices of `q / p` and `p / q` on 
 half the change of sign of `p * q` from `a` to `b`. With the reduction modulo `p` this gives the
 Euclidean recurrence for the index, under the same endpoint hypotheses.
 
-## Main declarations
-
-* `Polynomial.cauchyJump`: the jump of `q / p` at a point.
-* `Polynomial.cauchyIndex`: the sum of the jumps of `q / p` over a set.
-* `Polynomial.cauchyIndex_mul_right`: cancellation of a common factor.
-* `Polynomial.cauchyIndex_mod`: reduction of the numerator modulo the denominator.
-* `Polynomial.cauchyIndex_derivative`: the index of `p' / p` counts distinct roots.
-* `Polynomial.cauchyIndex_derivative_mul_univ`: the whole-line index of `p' * q / p` is
-  `tarskiQuery p q`.
-* `Polynomial.two_mul_cauchyIndex_add_cauchyIndex_Ioo`: the inversion formula on an interval
-  `(a, b)` with `a < b` whose endpoints are not roots of `p * q`.
-* `Polynomial.two_mul_cauchyIndex_Ioo`: the Euclidean recurrence, under the same hypotheses.
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
 ## References
 
@@ -123,14 +113,6 @@ theorem cauchyIndex_def (p q : R[X]) (s : Set R) :
     cauchyIndex p q s = ∑ᶠ x ∈ s, cauchyJump p q x := (rfl)
 
 @[simp]
-theorem cauchyIndex_empty (p q : R[X]) : cauchyIndex p q ∅ = 0 := by
-  simp [cauchyIndex_def]
-
-@[simp]
-theorem cauchyIndex_singleton (p q : R[X]) (a : R) : cauchyIndex p q {a} = cauchyJump p q a := by
-  simp [cauchyIndex_def]
-
-@[simp]
 theorem cauchyIndex_zero_left (q : R[X]) (s : Set R) : cauchyIndex 0 q s = 0 := by
   simp [cauchyIndex_def]
 
@@ -187,45 +169,6 @@ theorem cauchyIndex_eq_sum (p q : R[X]) (s : Set R) [DecidablePred (· ∈ s)] :
   exact ⟨fun h => ⟨⟨support_cauchyJump_subset p q h.2, h.1⟩, h.2⟩,
     fun h => ⟨h.1.2, h.2⟩⟩
 
-/-- The Cauchy index is additive over disjoint sets. -/
-theorem cauchyIndex_union (p q : R[X]) {s t : Set R} (h : Disjoint s t) :
-    cauchyIndex p q (s ∪ t) = cauchyIndex p q s + cauchyIndex p q t :=
-  finsum_mem_union' h ((finite_support_cauchyJump p q).inter_of_right s)
-    ((finite_support_cauchyJump p q).inter_of_right t)
-
-/-- Splitting an open interval at an interior point adds the jump at that point. -/
-theorem cauchyIndex_Ioo_eq_add {p q : R[X]} {a b c : R} (hab : a < b) (hbc : b < c) :
-    cauchyIndex p q (Ioo a c) =
-      cauchyIndex p q (Ioo a b) + cauchyJump p q b + cauchyIndex p q (Ioo b c) := by
-  have hdisj : Disjoint (Ioc a b) (Ioo b c) :=
-    disjoint_left.mpr fun _ hx hx' ↦ hx'.1.not_ge hx.2
-  rw [← Ioc_union_Ioo_eq_Ioo hab.le hbc, cauchyIndex_union _ _ hdisj,
-    ← Ioo_insert_right hab, insert_eq, union_comm,
-    cauchyIndex_union _ _ (disjoint_singleton_right.mpr (by simp)), cauchyIndex_singleton]
-
-/-- Cancelling a common nonzero factor of `p` and `q` does not change the jumps of `q / p`. -/
-theorem cauchyJump_mul_right (p q : R[X]) {r : R[X]} (hr : r ≠ 0) (a : R) :
-    cauchyJump (p * r) (q * r) a = cauchyJump p q a := by
-  by_cases hp : p = 0
-  · simp [hp]
-  by_cases hq : q = 0
-  · simp [hq]
-  have hs : p.signRight a * r.signRight a * (q.signRight a * r.signRight a) =
-      p.signRight a * q.signRight a := by
-    have h0 : r.signRight a ≠ 0 := by simpa using hr
-    generalize p.signRight a = s at *
-    generalize q.signRight a = t at *
-    generalize r.signRight a = u at *
-    cases s <;> cases t <;> cases u <;> simp_all
-  simp only [cauchyJump_def, rootMultiplicity_mul (mul_ne_zero hp hr),
-    rootMultiplicity_mul (mul_ne_zero hq hr), Nat.add_sub_add_right, Nat.add_lt_add_iff_right,
-    signRight_mul, hs]
-
-/-- Cancelling a common nonzero factor of `p` and `q` does not change the index of `q / p`. -/
-theorem cauchyIndex_mul_right (p q : R[X]) {r : R[X]} (hr : r ≠ 0) (s : Set R) :
-    cauchyIndex (p * r) (q * r) s = cauchyIndex p q s := by
-  simp only [cauchyIndex_def, cauchyJump_mul_right p q hr]
-
 /-- Adding a multiple of `p` to `q` does not change the jumps of `q / p`. -/
 theorem cauchyJump_add_mul (p q r : R[X]) (a : R) :
     cauchyJump p (q + p * r) a = cauchyJump p q a := by
@@ -250,11 +193,6 @@ theorem cauchyJump_add_mul (p q r : R[X]) (a : R) :
     refine cauchyJump_of_rootMultiplicity_le ((le_min h ?_).trans (rootMultiplicity_add a hs))
     rw [rootMultiplicity_mul (mul_ne_zero hp hr)]
     omega
-
-/-- Adding a multiple of `p` to `q` does not change the index of `q / p`. -/
-theorem cauchyIndex_add_mul (p q r : R[X]) (s : Set R) :
-    cauchyIndex p (q + p * r) s = cauchyIndex p q s := by
-  simp only [cauchyIndex_def, cauchyJump_add_mul]
 
 /-- The jumps of `q / p` and of `p / q` at a point add up to half the jump of the one-sided
 signs of `p * q` there. -/

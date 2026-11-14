@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Polynomial/Degree/Operations.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -41,14 +41,6 @@ any ring and any exponent `p > 1`.
 public section
 
 namespace Polynomial
-
-/-- The nonconstant part of an Artin–Schreier polynomial has its expected natural degree. -/
-@[simp]
-theorem natDegree_X_pow_sub_X {R : Type*} [Ring R] [Nontrivial R]
-    {p : ℕ} (hp : 1 < p) : (X ^ p - X : R[X]).natDegree = p := by
-  rw [natDegree_sub_eq_left_of_natDegree_lt] <;> rw [natDegree_X_pow]
-  rw [natDegree_X]
-  exact hp
 
 end Polynomial
 

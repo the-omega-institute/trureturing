@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Topology/Algebra/Polynomial/Basic.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -40,15 +40,9 @@ If the degrees of the family are bounded and its coefficients are continuous, th
 `(x, t) ↦ (f x).eval t` is jointly continuous, since it is a finite sum of products of
 coefficients with powers of `t`.
 
-## Main results
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
-* `Polynomial.continuousAt_eval`: evaluation along a continuous point for a family of locally
-  bounded degree.
-* `Polynomial.continuousAt_coeff_mul`: coefficients of a product of two families.
-* `Polynomial.continuousAt_coeff_prod`: coefficients of a finite product of families.
-* `Polynomial.continuous_eval_of_continuous_coeff`: joint continuity of the evaluation of a family
-  of bounded degree.
-* `Polynomial.continuous_evalEval`: joint continuity of bivariate polynomial evaluation.
 -/
 
 public section
@@ -57,19 +51,6 @@ open Filter Topology
 open scoped Polynomial.Bivariate
 
 namespace Polynomial
-
-/-- Evaluation of a bivariate polynomial is jointly continuous in its two arguments. -/
-theorem continuous_evalEval {R : Type*} [CommSemiring R] [TopologicalSpace R]
-    [IsTopologicalSemiring R] (P : R[X][Y]) :
-    Continuous fun z : R × R ↦ P.evalEval z.1 z.2 := by
-  have key (x y : R) : P.evalEval x y =
-      ∑ j ∈ P.support, (P.coeff j).eval x * y ^ j := by
-    rw [Polynomial.evalEval, Polynomial.eval_eq_sum (p := P)]
-    simp only [Polynomial.sum_def, Polynomial.eval_finsetSum, Polynomial.eval_mul,
-      Polynomial.eval_pow, Polynomial.eval_C]
-  simp only [key]
-  exact continuous_finsetSum _ fun j _ ↦
-    ((P.coeff j).continuous.comp continuous_fst).mul (continuous_snd.pow j)
 
 end Polynomial
 

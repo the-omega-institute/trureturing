@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Analysis/Polynomial/SymmetricPower.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -49,47 +49,9 @@ Both halves are elementary, but neither is formal:
   monic polynomial is bounded by its coefficients, so the coefficient map is proper, hence closed,
   and a closed continuous bijection is a homeomorphism.
 
-## Main declarations
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
-* `TauCeti.Sym.continuous_coeffEquiv_comp_ofFn`: the coefficients depend continuously on an
-  ordered tuple of roots.
-* `TauCeti.Polynomial.analyticAt_coeff_prod_X_sub_C` and
-  `TauCeti.Sym.analyticAt_coeffEquiv_ofFn`: the same forward coefficient map is analytic over any
-  nontrivially normed field.
-* `TauCeti.Sym.norm_le_norm_coeffEquiv_ofFn_add_one`: Cauchy's bound on the symmetric power, that
-  an ordered tuple is bounded by one more than the norm of its coefficient tuple.
-* `TauCeti.Sym.isProperMap_coeffEquiv_comp_ofFn`: consequently the coefficient map
-  `(Fin n → K) → (Fin n → K)` is proper.
-* `TauCeti.Sym.coeffHomeomorph`: the **elementary symmetric chart** `Sym K n ≃ₜ (Fin n → K)`.
-* `TauCeti.Sym.eventually_exists_ofFn_eq_coeffEquiv_symm`: its inverse read on ordered tuples,
-  that nearby coefficient tuples come from ordered tuples close coordinate by coordinate; this is
-  continuity of roots with multiplicity, stated for polynomials in
-  `TauCeti/Analysis/Polynomial/ContinuityOfRoots/Basic.lean`.
-* `TauCeti.Sym.isOpenEmbedding_coeffEquiv_comp_map`: the chart induced by an open coordinate
-  embedding, whose symmetric power is an open subspace of affine space.
-* `TauCeti.Sym.isOpenEmbedding_coeffEquiv_comp_ofFn_map`: the chart on a product mapped into
-  pairwise disjoint open coordinate ranges, one point in each.
-* `TauCeti.Sym.analyticOnNhd_coeffEquiv_map_eval_coeffEquiv_symm`: applying a univariate
-  polynomial to every point induces an analytic map in coefficient coordinates, including at
-  tuples where points collide.
-
-Lane F4.1 of the analytic Heegaard Floer roadmap opens with "`Sym^g(Σ)` geometry: smooth complex
-structure (elementary symmetric functions)", after Ozsváth--Szabó
-([arXiv:math/0101206](https://arxiv.org/abs/math/0101206), §2.1): a holomorphic coordinate on the
-surface identifies a neighbourhood in `Sym^g(Σ)` with an open subset of `Sym^g(ℂ)`, and the chart
-below is what makes that a chart on a topological manifold; the charted structure is assembled
-from it in `TauCeti/Geometry/Manifold/SymmetricPower.lean`. Away from the diagonal the continuity
-proved here is upgraded to analyticity in
-`TauCeti/Analysis/Polynomial/SimpleRoots/Basic.lean`, and its assembly across the blocks of an
-elementary-symmetric chart, including colliding points over `ℂ`, is in
-`TauCeti/Analysis/Polynomial/RootSum/Family.lean`. The complex atlas is
-`TauCeti.isManifold_symChartedSpace`; the tangent-space criterion for products of locally
-parametrized immersed curves is `TauCeti.isMaximalTotallyReal_range_fderiv_symChartAt_ofFn`.
-For transition maps at colliding
-tuples, this file also handles the case induced by a univariate polynomial; the general
-holomorphic case over `ℂ` is
-`TauCeti.Sym.analyticAt_coeffEquiv_map_coeffEquiv_symm_of_analyticAt` in
-`TauCeti/Analysis/Polynomial/RootSum.lean`.
 -/
 
 public section
@@ -108,56 +70,6 @@ section Analyticity
 
 variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
 
-/-- The image of the monic polynomial with lower coefficients `c` under a linear map depends
-analytically on `c`: it is affine in `c`. -/
-theorem analyticAt_linearMap_monicOfCoeff {F : Type*} [NormedAddCommGroup F] [NormedSpace 𝕜 F]
-    {n : ℕ} (Λ : 𝕜[X] →ₗ[𝕜] F) (c₀ : Fin n → 𝕜) :
-    AnalyticAt 𝕜 (fun c => Λ (monicOfCoeff c)) c₀ := by
-  have h : (fun c : Fin n → 𝕜 => Λ (monicOfCoeff c)) =
-      fun c => Λ (X ^ n) + ∑ i : Fin n, c i • Λ (monomial (i : ℕ) 1) := by
-    funext c
-    have hp : monicOfCoeff c = X ^ n + ∑ i : Fin n, c i • monomial (i : ℕ) (1 : 𝕜) :=
-      Polynomial.funext fun z => by
-        simp [eval_monicOfCoeff, eval_finsetSum, smul_monomial]
-    simp [hp, map_sum, map_smul]
-  rw [h]
-  exact analyticAt_const.add (Finset.univ.analyticAt_fun_sum fun i _ =>
-    ((ContinuousLinearMap.proj (R := 𝕜) (φ := fun _ : Fin n => 𝕜) i).analyticAt c₀).smul
-      analyticAt_const)
-
-/-- The coefficients of `∏ i ∈ s, (X - C (v i))` depend analytically on the tuple `v` of roots.
-
-This is the elementary half of the chart, and the analytic counterpart of
-`TauCeti.Sym.continuous_coeff_prod_X_sub_C`: each coefficient is, up to sign, an elementary
-symmetric function of the roots, so the analyticity of the ring operations is all that is used. -/
-theorem analyticAt_coeff_prod_X_sub_C {ι : Type*} [Fintype ι] (s : Finset ι) (k : ℕ)
-    (v₀ : ι → 𝕜) : AnalyticAt 𝕜 (fun v : ι → 𝕜 => (∏ i ∈ s, (X - C (v i))).coeff k) v₀ := by
-  classical
-  have hproj : ∀ i : ι, AnalyticAt 𝕜 (fun v : ι → 𝕜 => v i) v₀ := fun i =>
-    (ContinuousLinearMap.proj (R := 𝕜) (φ := fun _ : ι => 𝕜) i).analyticAt _
-  induction s using Finset.induction_on generalizing k with
-  | empty =>
-    simp only [Finset.prod_empty]
-    exact analyticAt_const
-  | @insert a s ha ih =>
-    cases k with
-    | zero =>
-      have hpt : (fun v : ι → 𝕜 => (∏ i ∈ insert a s, (X - C (v i))).coeff 0) =
-          fun v => -v a * (∏ i ∈ s, (X - C (v i))).coeff 0 := by
-        funext v
-        rw [Finset.prod_insert ha, mul_coeff_zero]
-        simp
-      rw [hpt]
-      exact (hproj a).neg.mul (ih 0)
-    | succ k =>
-      have hpt : (fun v : ι → 𝕜 => (∏ i ∈ insert a s, (X - C (v i))).coeff (k + 1)) =
-          fun v => (∏ i ∈ s, (X - C (v i))).coeff k
-            - v a * (∏ i ∈ s, (X - C (v i))).coeff (k + 1) := by
-        funext v
-        rw [Finset.prod_insert ha, sub_mul, coeff_sub, coeff_X_mul, coeff_C_mul]
-      rw [hpt]
-      exact (ih k).sub ((hproj a).mul (ih (k + 1)))
-
 end Analyticity
 
 end Polynomial
@@ -169,31 +81,6 @@ namespace Sym
 section Analyticity
 
 variable {𝕜 : Type*} [NontriviallyNormedField 𝕜] [IsAlgClosed 𝕜] {n : ℕ}
-
-/-- The elementary symmetric chart is analytic in an ordered presentation of the tuple: by Vieta's
-formulas its coordinates are, up to sign, the elementary symmetric polynomials of the ordered
-tuple. -/
-theorem analyticAt_coeffEquiv_ofFn (v₀ : Fin n → 𝕜) :
-    AnalyticAt 𝕜 (fun v : Fin n → 𝕜 => coeffEquiv 𝕜 n (ofFn v)) v₀ := by
-  refine AnalyticAt.pi fun i => ?_
-  simp only [coeffEquiv_ofFn_apply]
-  exact Polynomial.analyticAt_coeff_prod_X_sub_C _ _ _
-
-/-- **Applying a polynomial to a tuple is analytic in elementary symmetric coefficients.**
-The coordinate representation is analytic everywhere, including at coefficient tuples whose
-corresponding points collide. -/
-theorem analyticOnNhd_coeffEquiv_map_eval_coeffEquiv_symm (q : 𝕜[X]) :
-    AnalyticOnNhd 𝕜 (fun c => coeffEquiv 𝕜 n
-      (Sym.map (fun z => eval z q) ((coeffEquiv 𝕜 n).symm c))) Set.univ := by
-  obtain ⟨Q, hQ⟩ := exists_coeffEquiv_map_eval_coeffEquiv_symm_eq_eval
-    (K := 𝕜) (n := n) q
-  refine fun c _ => AnalyticAt.congr (f := fun c i => MvPolynomial.eval c (Q i))
-    (AnalyticAt.pi fun i => ?_) ?_
-  · have h := AnalyticOnNhd.eval_continuousLinearMap
-      (ContinuousLinearMap.id 𝕜 (Fin n → 𝕜)) (Q i) c (Set.mem_univ c)
-    simp only [ContinuousLinearMap.id_apply] at h
-    exact h
-  · filter_upwards with c using (hQ c).symm
 
 end Analyticity
 
@@ -336,34 +223,6 @@ theorem eventually_exists_ofFn_eq_coeffEquiv_symm (a : Fin n → K) {ε : ℝ} (
   refine ⟨b, by simpa using hbc, fun i => ?_⟩
   rw [norm_sub_rev, ← dist_eq_norm]
   exact (dist_pi_lt_iff hε).1 hb i
-
-/-- **The elementary symmetric chart on a coordinate patch.** An open coordinate embedding into
-`K` induces an open embedding of its `n`-th symmetric power into affine `n`-space, charted by the
-elementary symmetric functions of its points.
-
-This is the local model of the symmetric power of a Riemann surface at a tuple all of whose points
-lie in one coordinate patch; a general tuple is split into such groups by
-`TauCeti.Sym.isOpenEmbedding_sumSubtype`. -/
-theorem isOpenEmbedding_coeffEquiv_comp_map {X : Type*} [TopologicalSpace X] {f : X → K}
-    (hf : IsOpenEmbedding f) :
-    IsOpenEmbedding fun s : Sym X n => coeffEquiv K n (Sym.map f s) := by
-  have hemb := (coeffHomeomorph K n).isOpenEmbedding.comp
-    (isOpenEmbedding_map (n := n) hf)
-  simpa [Function.comp_def] using hemb
-
-/-- **The elementary symmetric chart away from the diagonal.** For open coordinate embeddings with
-pairwise disjoint ranges, one point in each, the elementary symmetric functions chart the tuple of
-points: their product is an open subspace of affine `n`-space.
-
-For `Sym^g` of a Riemann surface this is the chart in which the totally real torus of a Heegaard
-diagram, a product of `g` curves lying in disjoint pieces, is read. -/
-theorem isOpenEmbedding_coeffEquiv_comp_ofFn_map {X : Fin n → Type*}
-    [∀ i, TopologicalSpace (X i)] (f : ∀ i, X i → K)
-    (hf : ∀ i, IsOpenEmbedding (f i))
-    (h : Pairwise (Function.onFun Disjoint fun i => Set.range (f i))) :
-    IsOpenEmbedding fun x : ∀ i, X i => coeffEquiv K n (ofFn fun i => f i (x i)) := by
-  have hemb := (coeffHomeomorph K n).isOpenEmbedding.comp (isOpenEmbedding_ofFn_map f hf h)
-  simpa [Function.comp_def] using hemb
 
 end Chart
 

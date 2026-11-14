@@ -122,7 +122,6 @@ theorem _root_.Polynomial.exists_derivative_root_of_isRoot (p : R[X]) {a b : R} 
 
 /-- Polynomial Rolle follows from the abstract real-closed-field axioms. -/
 theorem polynomialRolle_of_isRealClosed : PolynomialRolle R := by
-  apply PolynomialRolle.of_forall
   intro p a b hab heq
   obtain ⟨c, hc, hd⟩ := exists_derivative_root_of_isRoot (p - C (p.eval a)) hab
     (by simp) (by simp [heq])

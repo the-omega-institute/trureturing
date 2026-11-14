@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/RingTheory/Polynomial/Subresultant/Basic.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -39,22 +39,8 @@ Keeping the bounds explicit is essential for specialization: mapping coefficient
 the construction even when the degrees of the mapped polynomials drop.  These determinants are
 the scalar data used by subresultant gcd criteria and projection operators.
 
-## Main results
-
-* `TauCeti.coefficientRow_dotProduct`: a row of shifted polynomial coefficients reads any
-  coefficient of `A * q + B * p` from the coefficient vector of `(A, B)`.
-* `Polynomial.subresultantMatrix_mulVec`: the matrix acts on a pair of coefficient vectors as
-  `(A, B) ↦ A * q + B * p`, its row `i` reading the coefficient of degree `i + j`.
-* `Polynomial.psc_zero`: the zeroth principal subresultant coefficient is the resultant.
-* `Polynomial.psc_map_map`: fixed-bound principal subresultant coefficients commute with coefficient
-  maps.
-* `Polynomial.psc_comm`: swapping the polynomials multiplies by `(-1) ^ ((m - j) * (n - j))`.
-* `Polynomial.psc_C_mul_left`, `Polynomial.psc_C_mul_right`: scaling one polynomial by a constant
-  scales the coefficient by a power of that constant.
-* `Polynomial.psc_left_bound`, `Polynomial.psc_right_bound`: at a formal degree bound, the
-  determinant is a power of the coefficient at that bound.
-* `Polynomial.psc_min`: the terminal determinant is a power of the coefficient at the smaller
-  degree bound.
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
 ## References
 
@@ -108,27 +94,6 @@ theorem _root_.Polynomial.subresultantMatrix_natAdd [Semiring R]
       if (k : ℕ) ≤ i.val + j ∧ i.val + j ≤ k.val + m then
         p.coeff (i.val + j - k.val) else 0 := by
   simp [subresultantMatrix]
-
-/-- When the formal bounds dominate the degrees, subresultant entries are simply
-coefficients of the shifted input polynomials. -/
-theorem _root_.Polynomial.subresultantMatrix_apply_eq_coeff [Semiring R]
-    {p q : R[X]} {m n : ℕ}
-    (hm : p.natDegree ≤ m) (hn : q.natDegree ≤ n) (j : ℕ)
-    (i k : Fin ((m - j) + (n - j))) :
-    subresultantMatrix p q m n j i k =
-      k.addCases (fun k => (X ^ k.val * q).coeff (i.val + j))
-        (fun k => (X ^ k.val * p).coeff (i.val + j)) := by
-  induction k using Fin.addCases <;>
-    simp [subresultantMatrix, coeff_X_pow_mul_of_natDegree_le hm,
-      coeff_X_pow_mul_of_natDegree_le hn]
-
-/-- At index zero, the principal subresultant matrix is Mathlib's Sylvester matrix. -/
-@[simp]
-theorem _root_.Polynomial.subresultantMatrix_zero [Semiring R]
-    (p q : R[X]) (m n : ℕ) :
-    subresultantMatrix p q m n 0 = p.sylvester q m n := by
-  ext i k
-  induction k using Fin.addCases <;> simp [subresultantMatrix, Polynomial.sylvester]
 
 /-- Mapping coefficients maps every entry of the fixed-bound principal subresultant matrix. -/
 @[simp]
@@ -188,12 +153,6 @@ matrix. -/
 theorem _root_.Polynomial.psc_def [CommRing R] (p q : R[X]) (m n j : ℕ) :
     psc p q m n j = (subresultantMatrix p q m n j).det := by
   rw [psc]
-
-/-- The zeroth principal subresultant coefficient is the fixed-bound resultant. -/
-@[simp]
-theorem _root_.Polynomial.psc_zero [CommRing R] (p q : R[X]) (m n : ℕ) :
-    psc p q m n 0 = Polynomial.resultant p q m n := by
-  simp [psc_def, Polynomial.resultant]
 
 /-- Principal subresultant coefficients commute with coefficient maps at fixed bounds.  No
 degree-preservation hypothesis is needed. -/
@@ -271,16 +230,5 @@ theorem _root_.Polynomial.psc_right_bound [CommRing R]
     psc p q m n n = q.coeff n ^ (m - n) := by
   rw [psc_comm, psc_left_bound]
   simp
-
-/-- The principal coefficient at the terminal subresultant index is a power of the coefficient
-at the smaller formal degree bound. -/
-@[simp]
-theorem _root_.Polynomial.psc_min [CommRing R] (p q : R[X]) (m n : ℕ) :
-    psc p q m n (min m n) =
-      if m ≤ n then p.coeff m ^ (n - m) else q.coeff n ^ (m - n) := by
-  by_cases hmn : m ≤ n
-  · simp [hmn]
-  · have hnm : n ≤ m := Nat.le_of_lt (Nat.lt_of_not_ge hmn)
-    simp [hmn, hnm]
 
 end TauCeti

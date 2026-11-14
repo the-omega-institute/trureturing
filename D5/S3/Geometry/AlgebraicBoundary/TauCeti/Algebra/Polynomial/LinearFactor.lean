@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Polynomial/LinearFactor.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -45,18 +45,8 @@ factor on the left.
 Factoring out the full multiplicity of a root of a nonzero polynomial leaves a cofactor
 that does not vanish at the root.
 
-## Main results
-
-* `Polynomial.natDegree_C_sub_X`: the reversed linear factor `C x - X` has degree `1`.
-* `Polynomial.exists_eq_C_mul_X_sub_C_of_natDegree_le_one`: a polynomial of `natDegree ≤ 1` with
-  root `x` is `C γ * (X - C x)` for some `γ`.
-* `Polynomial.eval_mul_pos_of_natDegree_le_one_of_no_roots`: constant nonzero sign on a root-free
-  closed interval for polynomials of degree at most one.
-* `Polynomial.derivative_root_factors`: factor the derivative of a polynomial with two root powers.
-* `Polynomial.IsRoot.exists_eq_pow_succ_mul`: factor out a positive power of `X - C x`, leaving a
-  cofactor nonzero at `x`.
-* `Polynomial.rootMultiplicity_add_eq_left_of_dvd`: adding a multiple of a higher power of
-  `X - C x` leaves the root multiplicity at `x` unchanged.
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
 ## Provenance
 
@@ -74,12 +64,6 @@ public section
 namespace Polynomial
 
 variable {R : Type*} [Ring R]
-
-/-- The reversed linear polynomial `C x - X` has degree `1`, like `X - C x`. -/
-@[simp]
-theorem natDegree_C_sub_X {R : Type*} [Ring R] [Nontrivial R] (x : R) :
-    (C x - X).natDegree = 1 := by
-  rw [natDegree_sub, natDegree_X_sub_C]
 
 /-- A polynomial of degree at most one with prescribed root `x` is a left scalar multiple of
 `X - C x`, over any ring. -/

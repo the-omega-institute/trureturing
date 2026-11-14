@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Geometry/RealAlgebraic/Stack/Basic.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -45,23 +45,8 @@ coordinate space of one more dimension, with the distinguished coordinate first;
 topological embedding, so connectedness of stack cells transfers to their ambient images, the
 cells `TauCeti.stackCells` of the stack in the ambient space.
 
-## Main declarations
-
-* `TauCeti.sectionSet`, `TauCeti.sectorSet`: the sections and sectors of a stack.
-* `TauCeti.mem_sectorSet_iff_of_monotone`: for ordered functions, a sector is cut out by the two
-  adjacent sections.
-* `TauCeti.iUnion_sectionSet_union_iUnion_sectorSet`, `TauCeti.pairwise_disjoint_sectionSet`,
-  `TauCeti.pairwise_disjoint_sectorSet`, `TauCeti.disjoint_sectionSet_sectorSet`: the sections and
-  sectors partition the cylinder.
-* `TauCeti.exists_continuous_forall_mem_sectorSet`: every sector of a continuous strictly ordered
-  stack contains the graph of a continuous function.
-* `TauCeti.isConnected_sectionSet`, `TauCeti.isConnected_sectorSet`: over a connected base, the
-  sections and sectors of a continuous strictly ordered real stack are connected.
-* `TauCeti.cylinder`, `TauCeti.isEmbedding_cylinder`: the ambient cylinder embedding.
-* `TauCeti.stackCells`: the ambient sections and sectors of a stack over a subset of `α ^ n`.
-* `TauCeti.sUnion_stackCells`, `TauCeti.pairwiseDisjoint_stackCells`,
-  `TauCeti.isConnected_of_mem_stackCells`: the ambient cells of a stack partition the cylinder
-  over its base, and over a connected base they are connected.
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
 ## References
 
@@ -84,24 +69,15 @@ section Order
 
 /-- The `i`-th section of the stack defined by `θ`: the graph `Function.graph (θ i)` of `θ i`
 in the cylinder `X × α`. -/
+@[expose]
 def sectionSet (θ : Fin k → X → α) (i : Fin k) : Set (X × α) :=
   (θ i).graph
-
-@[simp]
-theorem mem_sectionSet {θ : Fin k → X → α} {i : Fin k} {z : X × α} :
-    z ∈ sectionSet θ i ↔ θ i z.1 = z.2 :=
-  Iff.rfl
 
 /-- A section is the range of the graph map of its function. -/
 theorem sectionSet_eq_range (θ : Fin k → X → α) (i : Fin k) :
     sectionSet θ i = range fun x ↦ (x, θ i x) := by
   ext ⟨x, t⟩
-  simp
-
-/-- Sections pull back along a change of base. -/
-theorem sectionSet_comp (θ : Fin k → X → α) (f : Y → X) (i : Fin k) :
-    sectionSet (fun i ↦ θ i ∘ f) i = Prod.map f id ⁻¹' sectionSet θ i :=
-  (rfl)
+  simp [sectionSet]
 
 /-- Each section lies over the whole base. -/
 @[simp]
@@ -114,7 +90,7 @@ disjoint. -/
 theorem pairwise_disjoint_sectionSet {θ : Fin k → X → α}
     (hθ : ∀ x, Injective fun i ↦ θ i x) : Pairwise (Disjoint on sectionSet θ) := by
   refine fun i i' hii' ↦ disjoint_left.2 fun z hz hz' ↦ hii' (hθ z.1 ?_)
-  simp only [mem_sectionSet] at hz hz'
+  simp only [sectionSet] at hz hz'
   exact hz.trans hz'.symm
 
 variable [LinearOrder α] {θ : Fin k → X → α}
@@ -122,26 +98,16 @@ variable [LinearOrder α] {θ : Fin k → X → α}
 /-- The `j`-th sector of the stack defined by `θ`, for `j ≤ k`: the points of `X × α` lying
 strictly above the first `j` sections and strictly below the others. When there are no sections
 the only sector is the whole cylinder. -/
+@[expose]
 def sectorSet (θ : Fin k → X → α) (j : Fin (k + 1)) : Set (X × α) :=
   {z | (∀ i : Fin k, i.castSucc < j → θ i z.1 < z.2) ∧
     ∀ i : Fin k, j ≤ i.castSucc → z.2 < θ i z.1}
-
-@[simp]
-theorem mem_sectorSet {j : Fin (k + 1)} {z : X × α} :
-    z ∈ sectorSet θ j ↔ (∀ i : Fin k, i.castSucc < j → θ i z.1 < z.2) ∧
-      ∀ i : Fin k, j ≤ i.castSucc → z.2 < θ i z.1 :=
-  Iff.rfl
 
 /-- A stack with no sections has the whole cylinder as its unique sector. -/
 @[simp]
 theorem sectorSet_fin_zero (θ : Fin 0 → X → α) (j : Fin 1) : sectorSet θ j = univ := by
   ext z
-  simp
-
-/-- Sectors pull back along a change of base. -/
-theorem sectorSet_comp (θ : Fin k → X → α) (f : Y → X) (j : Fin (k + 1)) :
-    sectorSet (fun i ↦ θ i ∘ f) j = Prod.map f id ⁻¹' sectorSet θ j :=
-  (rfl)
+  simp [sectorSet]
 
 /-- Each fibre of a sector is order-connected: it is an open interval of `α`, possibly
 unbounded. -/
@@ -208,7 +174,7 @@ theorem pairwise_disjoint_sectorSet (θ : Fin k → X → α) :
 theorem disjoint_sectionSet_sectorSet (θ : Fin k → X → α) (i : Fin k) (j : Fin (k + 1)) :
     Disjoint (sectionSet θ i) (sectorSet θ j) := by
   refine disjoint_left.2 fun z hz hz' ↦ ?_
-  rw [mem_sectionSet] at hz
+  rw [sectionSet] at hz
   rcases lt_or_ge i.castSucc j with h | h
   · exact (hz'.1 i h).ne hz
   · exact (hz'.2 i h).ne' hz
@@ -269,16 +235,6 @@ end Order
 section Topology
 
 variable [TopologicalSpace X] {θ : Fin k → X → α}
-
-/-- A sector bounded by finitely many continuous functions is open in the cylinder.
-The functions need not be ordered. -/
-theorem isOpen_sectorSet [TopologicalSpace α] [LinearOrder α] [OrderClosedTopology α]
-    (hc : ∀ i, Continuous (θ i)) (j : Fin (k + 1)) : IsOpen (sectorSet θ j) := by
-  simp only [sectorSet, ofPred_and, ofPred_forall]
-  refine (isOpen_iInter_of_finite fun i ↦ isOpen_iInter_of_finite fun _ ↦ ?_).inter
-    (isOpen_iInter_of_finite fun i ↦ isOpen_iInter_of_finite fun _ ↦ ?_)
-  · exact isOpen_lt ((hc i).comp continuous_fst) continuous_snd
-  · exact isOpen_lt continuous_snd ((hc i).comp continuous_fst)
 
 /-- Over a preconnected base, the section of a continuous function is preconnected. -/
 theorem isPreconnected_sectionSet [TopologicalSpace α] [PreconnectedSpace X] {i : Fin k}
@@ -348,32 +304,18 @@ variable {n : ℕ}
 
 /-- The cylinder `S × α` over a set `S` of points of `α ^ n`, placed in `α ^ (n + 1)` with the
 distinguished coordinate first. -/
+@[expose]
 def cylinder (S : Set (Fin n → α)) (z : S × α) : Fin (n + 1) → α :=
   Fin.cons z.2 z.1.val
 
 variable {S : Set (Fin n → α)}
-
-theorem cylinder_def (z : S × α) : cylinder S z = Fin.cons z.2 z.1.val :=
-  (rfl)
-
-@[simp]
-theorem cylinder_apply_zero (z : S × α) : cylinder S z 0 = z.2 :=
-  (rfl)
-
-@[simp]
-theorem cylinder_apply_succ (z : S × α) (i : Fin n) : cylinder S z i.succ = z.1.val i :=
-  (rfl)
-
-@[simp]
-theorem tail_cylinder (z : S × α) : Fin.tail (cylinder S z) = z.1.val :=
-  (rfl)
 
 /-- Distinct points of the cylinder over `S` have distinct ambient images. -/
 theorem cylinder_injective : Injective (cylinder S) := by
   intro z z' h
   have h₀ := congr_fun h 0
   have h₁ := congrArg Fin.tail h
-  simp only [cylinder_apply_zero, tail_cylinder] at h₀ h₁
+  simp only [cylinder, Fin.cons_zero, cylinder, Fin.tail_cons] at h₀ h₁
   exact Prod.ext (Subtype.ext h₁) h₀
 
 /-- A point lies in the image of a subset `A` of the cylinder over `S` exactly when its last `n`
@@ -388,14 +330,7 @@ theorem mem_image_cylinder {A : Set (S × α)} {y : Fin (n + 1) → α} :
 gives the projection of `A` to `S`, as a subset of `α ^ n`. -/
 theorem image_tail_image_cylinder (A : Set (S × α)) :
     Fin.tail '' (cylinder S '' A) = Subtype.val '' (Prod.fst '' A) := by
-  simp only [image_image, tail_cylinder]
-
-/-- The cylinder over `S` fills exactly the points whose last `n` coordinates lie in `S`. -/
-theorem range_cylinder : range (cylinder S) = {y : Fin (n + 1) → α | Fin.tail y ∈ S} := by
-  ext y
-  refine ⟨?_, fun hy ↦ ⟨(⟨Fin.tail y, hy⟩, y 0), Fin.cons_self_tail y⟩⟩
-  rintro ⟨z, rfl⟩
-  simp
+  simp only [image_image, cylinder, Fin.tail_cons]
 
 variable [TopologicalSpace α]
 
@@ -404,11 +339,6 @@ variable [TopologicalSpace α]
 theorem continuous_cylinder : Continuous (cylinder S) := by
   unfold cylinder
   fun_prop
-
-/-- The cylinder over `S` is a topological embedding into `α ^ (n + 1)`. -/
-theorem isEmbedding_cylinder : IsEmbedding (cylinder S) := by
-  refine .of_comp continuous_cylinder (g := fun y ↦ (Fin.tail y, y 0)) (by fun_prop) ?_
-  exact IsEmbedding.subtypeVal.prodMap .id
 
 end Cylinder
 
@@ -424,14 +354,9 @@ variable [LinearOrder α] {C : Set (Fin n → α)} {θ : Fin k → C → α}
 
 /-- The cells of the stack over `C ⊆ α ^ n` defined by `θ`, as subsets of `α ^ (n + 1)`: the
 images under `TauCeti.cylinder` of its `k` sections and its `k + 1` sectors. -/
+@[expose]
 def stackCells (C : Set (Fin n → α)) (θ : Fin k → C → α) : Set (Set (Fin (n + 1) → α)) :=
   range (fun i ↦ cylinder C '' sectionSet θ i) ∪ range fun j ↦ cylinder C '' sectorSet θ j
-
-@[simp]
-theorem mem_stackCells {E : Set (Fin (n + 1) → α)} :
-    E ∈ stackCells C θ ↔
-      (∃ i, cylinder C '' sectionSet θ i = E) ∨ ∃ j, cylinder C '' sectorSet θ j = E :=
-  Iff.rfl
 
 theorem image_cylinder_sectionSet_mem_stackCells (i : Fin k) :
     cylinder C '' sectionSet θ i ∈ stackCells C θ :=

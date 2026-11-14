@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/FieldTheory/RealClosure/Sqrt.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -31,11 +31,9 @@ import D5.S3.Geometry.AlgebraicBoundary.TauCeti.Algebra.Order.Ring.Square
 Every nonnegative element of an ordered real closed field has a unique nonnegative square root.
 `nonnegSqrt` chooses this root, and on `ℝ` it agrees with `Real.sqrt`.
 
-## Main results
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
-* `nonnegSqrt` chooses the root using real closedness; `nonnegSqrt_nonneg`
-  and `sq_nonnegSqrt` characterize it.
-* `nonnegSqrt_real_eq_sqrt` identifies the chosen root on `ℝ` with `Real.sqrt`.
 -/
 
 public section
@@ -63,12 +61,6 @@ theorem sq_nonnegSqrt
     [IsRealClosed R] {a : R} (ha : 0 ≤ a) :
     (nonnegSqrt ha) ^ 2 = a :=
   (Classical.choose_spec ((IsSquare.of_nonneg ha).exists_nonneg_sq)).2
-
-/-- The chosen nonnegative square root on `ℝ` agrees with `Real.sqrt`. -/
-theorem nonnegSqrt_real_eq_sqrt
-    {a : ℝ} (ha : 0 ≤ a) : nonnegSqrt ha = Real.sqrt a := by
-  apply (sq_eq_sq₀ (nonnegSqrt_nonneg ha) (Real.sqrt_nonneg a)).mp
-  rw [sq_nonnegSqrt, Real.sq_sqrt ha]
 
 end
 

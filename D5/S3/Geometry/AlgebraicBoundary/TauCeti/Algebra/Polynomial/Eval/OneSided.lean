@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Polynomial/Eval/OneSided.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -60,6 +60,7 @@ variable {R : Type*} [CommRing R] [LinearOrder R]
 /-- The right-hand sign, computed from the derivative at the root multiplicity.
 For a nonzero polynomial over an ordered field this is its first nonzero derivative.
 The zero polynomial has sign zero. -/
+@[expose]
 noncomputable def signRight (p : R[X]) (a : R) : SignType :=
   p.derivativeSign a (p.rootMultiplicity a)
 
@@ -70,7 +71,7 @@ noncomputable def signLeft (p : R[X]) (a : R) : SignType :=
 /-- The derivative formula for the right-hand sign. -/
 theorem signRight_def (p : R[X]) (a : R) :
     p.signRight a = sign ((derivative^[p.rootMultiplicity a] p).eval a) :=
-  derivativeSign_def p a _
+  rfl
 
 /-- The parity formula for the left-hand sign. -/
 theorem signLeft_def (p : R[X]) (a : R) :
@@ -84,25 +85,9 @@ theorem signRight_zero (a : R) : (0 : R[X]).signRight a = 0 := by
 theorem signLeft_zero (a : R) : (0 : R[X]).signLeft a = 0 := by
   simp [signLeft_def]
 
-@[simp]
-theorem signRight_C (c a : R) : (C c).signRight a = sign c := by
-  simp [signRight_def]
-
-@[simp]
-theorem signLeft_C (c a : R) : (C c).signLeft a = sign c := by
-  simp [signLeft_def]
-
 section One
 
 variable [ZeroLEOneClass R] [NeZero (1 : R)]
-
-@[simp]
-theorem signRight_one (a : R) : (1 : R[X]).signRight a = 1 := by
-  simpa [sign_pos zero_lt_one] using signRight_C (1 : R) a
-
-@[simp]
-theorem signLeft_one (a : R) : (1 : R[X]).signLeft a = 1 := by
-  simpa [sign_pos zero_lt_one] using signLeft_C (1 : R) a
 
 end One
 
@@ -129,35 +114,11 @@ theorem signRight_add_eq_left_of_dvd {p q : R[X]} {a : R} (hp : p ≠ 0)
   rw [signRight_def, signRight_def, rootMultiplicity_add_eq_left_of_dvd hp hq,
     iterate_map_add derivative, eval_add, hq0, add_zero]
 
-/-- Adding a multiple of a higher power of `X - C a` leaves the left-hand sign at `a` of a
-nonzero polynomial unchanged. -/
-theorem signLeft_add_eq_left_of_dvd {p q : R[X]} {a : R} (hp : p ≠ 0)
-    (hq : (X - C a) ^ (p.rootMultiplicity a + 1) ∣ q) :
-    (p + q).signLeft a = p.signLeft a := by
-  rw [signLeft_def, signLeft_def, rootMultiplicity_add_eq_left_of_dvd hp hq,
-    signRight_add_eq_left_of_dvd hp hq]
-
 end Definitions
 
 section Transport
 
 variable {R : Type*} [CommRing R] [LinearOrder R]
-
-/-- Strictly monotone ring embeddings preserve right-hand signs. -/
-@[simp]
-theorem signRight_map {S : Type*} [CommRing S] [LinearOrder S]
-    (p : R[X]) (f : R →+* S) (hf : StrictMono f) (a : R) :
-    (p.map f).signRight (f a) = p.signRight a := by
-  rw [signRight_def, signRight_def, ← eq_rootMultiplicity_map hf.injective,
-    iterate_derivative_map]
-  exact sign_eval_map _ f hf a
-
-/-- Strictly monotone ring embeddings preserve left-hand signs. -/
-@[simp]
-theorem signLeft_map {S : Type*} [CommRing S] [LinearOrder S]
-    (p : R[X]) (f : R →+* S) (hf : StrictMono f) (a : R) :
-    (p.map f).signLeft (f a) = p.signLeft a := by
-  rw [signLeft_def, signLeft_def, ← eq_rootMultiplicity_map hf.injective, signRight_map p f hf]
 
 end Transport
 
@@ -171,13 +132,6 @@ theorem signRight_neg (p : R[X]) (a : R) :
     (-p).signRight a = -p.signRight a := by
   simp only [signRight_def, rootMultiplicity_eq_natTrailingDegree, neg_comp,
     natTrailingDegree_neg, iterate_derivative_neg, eval_neg, Left.sign_neg]
-
-/-- Negation reverses the left-hand sign. -/
-@[simp]
-theorem signLeft_neg (p : R[X]) (a : R) :
-    (-p).signLeft a = -p.signLeft a := by
-  simp only [signLeft_def, rootMultiplicity_eq_natTrailingDegree, neg_comp,
-    natTrailingDegree_neg, signRight_neg, mul_neg]
 
 end Neg
 
@@ -219,51 +173,12 @@ theorem eval_ne_zero_of_sign_eq_signLeft {p : R[X]} (hp : p ≠ 0) {a x : R}
   rw [h0, sign_zero, eq_comm, signLeft_eq_zero_iff] at h
   exact hp h
 
-omit [IsStrictOrderedRing R] in
-/-- An even root multiplicity gives equal signs on the two sides. -/
-theorem signLeft_eq_signRight_of_even (p : R[X]) (a : R)
-    (h : Even (p.rootMultiplicity a)) : p.signLeft a = p.signRight a := by
-  rw [signLeft_def, h.neg_one_pow, one_mul]
-
-omit [IsStrictOrderedRing R] in
-/-- An odd root multiplicity gives opposite signs on the two sides. -/
-theorem signLeft_eq_neg_signRight_of_odd (p : R[X]) (a : R)
-    (h : Odd (p.rootMultiplicity a)) : p.signLeft a = -p.signRight a := by
-  rw [signLeft_def, h.neg_one_pow, neg_one_mul]
-
 /-- Multiplication multiplies right-hand signs, including when a factor is zero. -/
 @[simp]
 theorem signRight_mul (p q : R[X]) (a : R) :
     (p * q).signRight a = p.signRight a * q.signRight a := by
   simp only [signRight_eq_sign_eval_divByMonic, eval_divByMonic_eq_trailingCoeff_comp,
     mul_comp, trailingCoeff_mul, sign_mul]
-
-/-- Multiplication multiplies left-hand signs, including when a factor is zero. -/
-@[simp]
-theorem signLeft_mul (p q : R[X]) (a : R) :
-    (p * q).signLeft a = p.signLeft a * q.signLeft a := by
-  by_cases hp : p = 0
-  · simp [hp]
-  by_cases hq : q = 0
-  · simp [hq]
-  simp only [signLeft_def, rootMultiplicity_mul (mul_ne_zero hp hq), pow_add, signRight_mul]
-  ac_rfl
-
-/-- Powers raise the right-hand sign to the same power, with the convention `0^0 = 1`. -/
-@[simp]
-theorem signRight_pow (p : R[X]) (a : R) (n : ℕ) :
-    (p ^ n).signRight a = p.signRight a ^ n := by
-  induction n with
-  | zero => simp
-  | succ n ih => simp [pow_succ, ih]
-
-/-- Powers raise the left-hand sign to the same power, with the convention `0^0 = 1`. -/
-@[simp]
-theorem signLeft_pow (p : R[X]) (a : R) (n : ℕ) :
-    (p ^ n).signLeft a = p.signLeft a ^ n := by
-  induction n with
-  | zero => simp
-  | succ n ih => simp [pow_succ, ih]
 
 end OrderedRing
 

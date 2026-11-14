@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Geometry/RealAlgebraic/CAD/Basic.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -54,21 +54,8 @@ each cell of an adapted CAD realizes every sign condition that the polynomials r
 Stacks of polynomial functions are semialgebraic. In particular finitely many points of `ℝ`,
 together with the open intervals they cut out, form a CAD of `ℝ ^ 1`.
 
-## Main declarations
-
-* `TauCeti.IsSemialgebraicStack`: a continuous, strictly ordered stack with semialgebraic cells.
-* `TauCeti.IsCAD`: cylindrical algebraic decompositions, defined recursively.
-* `TauCeti.IsCAD.isPartition`, `TauCeti.IsCAD.finite`, `TauCeti.IsCAD.isSemialgebraic`,
-  `TauCeti.IsCAD.isConnected`: a CAD is a finite partition into connected semialgebraic cells.
-* `TauCeti.IsCAD.image_tail`, `TauCeti.IsCAD.image_tail_eq_or_disjoint`: projecting a CAD gives
-  a CAD, and projections of cells are equal or disjoint.
-* `TauCeti.IsCAD.isSemialgebraic_image_tail`,
-  `TauCeti.IsCAD.isSemialgebraic_image_tail_setOf_sign_eval`: projections of unions of cells, in
-  particular of sign-condition sets of polynomials sign-invariant on the cells, are semialgebraic.
-* `TauCeti.IsCAD.exists_finite_image_sign_eval_eq`: sample points of an adapted CAD realize all
-  sign conditions.
-* `TauCeti.isSemialgebraicStack_eval`, `TauCeti.isCAD_stackCells_const`: polynomial stacks, and
-  the CAD of `ℝ ^ 1` cut out by finitely many points.
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
 ## References
 
@@ -108,36 +95,8 @@ structure IsSemialgebraicStack (C : Set (Fin n → ℝ)) (θ : Fin k → C → �
 /-- Every cell of a semialgebraic stack is semialgebraic. -/
 theorem IsSemialgebraicStack.isSemialgebraic (hθ : IsSemialgebraicStack C θ)
     {E : Set (Fin (n + 1) → ℝ)} (hE : E ∈ stackCells C θ) : IsSemialgebraic E := by
-  rcases mem_stackCells.1 hE with ⟨i, rfl⟩ | ⟨j, rfl⟩
+  rcases hE with ⟨i, rfl⟩ | ⟨j, rfl⟩
   exacts [hθ.isSemialgebraic_sectionSet i, hθ.isSemialgebraic_sectorSet j]
-
-/-- A stack of polynomial functions on a semialgebraic set, strictly ordered at each point, is a
-semialgebraic stack. -/
-theorem isSemialgebraicStack_eval (hC : IsSemialgebraic C) (p : Fin k → MvPolynomial (Fin n) ℝ)
-    (hp : ∀ x ∈ C, StrictMono fun i ↦ eval x (p i)) :
-    IsSemialgebraicStack C fun i x ↦ eval x.1 (p i) := by
-  -- In ambient coordinates, the value of the `i`-th function is a polynomial in the last `n`
-  -- coordinates.
-  have hq (i : Fin k) (y : Fin (n + 1) → ℝ) :
-      eval y (rename Fin.succ (p i)) = eval (Fin.tail y) (p i) := by
-    simp only [eval_rename, Fin.tail_def, comp_def]
-  refine ⟨fun i ↦ (continuous_eval (p i)).comp continuous_subtype_val,
-    fun x ↦ hp x.1 x.2, fun i ↦ ?_, fun j ↦ ?_⟩
-  · convert hC.preimage_tail.inter (isSemialgebraic_eval_eq (rename Fin.succ (p i)) (X 0))
-      using 1
-    ext y
-    rw [mem_image_cylinder]
-    simp [hq, eq_comm]
-  · have hs (i : Fin k) : IsSemialgebraic {y : Fin (n + 1) → ℝ |
-        (i.castSucc < j → eval (Fin.tail y) (p i) < y 0) ∧
-          (j ≤ i.castSucc → y 0 < eval (Fin.tail y) (p i))} := by
-      rcases lt_or_ge i.castSucc j with h | h
-      · simpa [h, h.not_ge, hq] using isSemialgebraic_eval_lt (rename Fin.succ (p i)) (X 0)
-      · simpa [h, h.not_gt, hq] using isSemialgebraic_eval_lt (X 0) (rename Fin.succ (p i))
-    convert hC.preimage_tail.inter (IsSemialgebraic.iInter hs) using 1
-    ext y
-    rw [mem_image_cylinder]
-    simp [forall_and, and_left_comm]
 
 end Real
 
@@ -278,28 +237,5 @@ theorem exists_finite_image_sign_eval_eq (h : IsCAD n 𝒞) {ι : Type*}
     exact range_sign_sample_eq h.isPartition.sUnion_eq_univ hp x hx
 
 end IsCAD
-
-/-- The trivial cylindrical algebraic decomposition of `ℝ ^ n` into a single cell. -/
-theorem isCAD_singleton_univ (n : ℕ) : IsCAD n {univ} := by
-  induction n with
-  | zero => exact .zero
-  | succ n ih =>
-    convert IsCAD.succ (fun _ ↦ 0)
-      (fun C i (x : C) ↦ eval x.1 (Fin.elim0 i : MvPolynomial (Fin n) ℝ)) ih fun C hC ↦ ?_
-    · ext E
-      simp [range_cylinder, eq_comm]
-    · rw [mem_singleton_iff.1 hC]
-      exact isSemialgebraicStack_eval isSemialgebraic_univ _ fun _ _ ↦ Subsingleton.strictMono _
-
-/-- Strictly increasing points `c₀ < c₁ < … < cₖ₋₁` of `ℝ`, together with the open intervals they
-cut out, form a cylindrical algebraic decomposition of `ℝ ^ 1`. -/
-theorem isCAD_stackCells_const {c : Fin k → ℝ} (hc : StrictMono c) :
-    IsCAD 1 (stackCells (univ : Set (Fin 0 → ℝ)) fun i _ ↦ c i) := by
-  have hθ : IsSemialgebraicStack (univ : Set (Fin 0 → ℝ)) fun i _ ↦ c i := by
-    simpa using isSemialgebraicStack_eval isSemialgebraic_univ (fun i ↦ MvPolynomial.C (c i))
-      fun _ _ ↦ by simpa using hc
-  convert IsCAD.succ (fun _ ↦ k) (fun _ ↦ fun i _ ↦ c i) .zero fun C hC ↦ by
-    rwa [mem_singleton_iff.1 hC]
-  simp
 
 end TauCeti

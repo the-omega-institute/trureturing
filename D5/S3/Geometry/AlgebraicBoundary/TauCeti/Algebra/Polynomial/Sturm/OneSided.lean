@@ -43,16 +43,8 @@ contribution is the drop `V(c⁻) - V(c⁺)` in variations across `c`. The formu
 `(a, b]`, `[a, b)` and `[a, b]` add these endpoint contributions explicitly to `V(a⁺) - V(b⁻)`.
 Specializing to `Polynomial.sturmSeq` and to the query `1` counts distinct roots.
 
-## Main declarations
-
-* `TauCeti.Sturm.signVariationsRight`, `TauCeti.Sturm.signVariationsLeft`: one-sided
-  variations.
-* `TauCeti.Sturm.sum_sign_Ioo`: Sturm–Tarski on `(a, b)` as `V(a⁺) - V(b⁻)`.
-* `TauCeti.Sturm.signVariationsLeft_sub_signVariationsRight`: the contribution of a point.
-* `TauCeti.Sturm.sum_sign_Ioc`, `TauCeti.Sturm.sum_sign_Ico`, `TauCeti.Sturm.sum_sign_Icc`:
-  Sturm–Tarski on half-open and closed intervals.
-* `TauCeti.Sturm.card_roots_toFinset_Ioo` and its half-open and closed analogues: Sturm's
-  count of distinct roots.
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
 ## References
 
@@ -95,14 +87,6 @@ theorem signVariationsRight_nil (a : R) : signVariationsRight ([] : List R[X]) a
 theorem signVariationsLeft_nil (a : R) : signVariationsLeft ([] : List R[X]) a = 0 := by
   simp [signVariationsLeft_def]
 
-@[simp, grind =]
-theorem signVariationsRight_singleton (p : R[X]) (a : R) : signVariationsRight [p] a = 0 := by
-  simp [signVariationsRight_def]
-
-@[simp, grind =]
-theorem signVariationsLeft_singleton (p : R[X]) (a : R) : signVariationsLeft [p] a = 0 := by
-  simp [signVariationsLeft_def]
-
 /-- Evaluation at a point where every entry has its right-hand sign at `a` realizes the
 right-hand variations at `a`. -/
 theorem signVariationsAt_eq_right {cs : List R[X]} {a x : R}
@@ -134,20 +118,6 @@ theorem signVariationsLeft_eq_signVariationsAt {cs : List R[X]} {a : R}
 end Basic
 
 variable {R : Type*} [Field R] [LinearOrder R] [IsStrictOrderedRing R]
-
-/-- The right-hand variations at `a` are the variations at every point of a small enough
-interval to the right of `a`. -/
-theorem exists_signVariationsRight (cs : List R[X]) (a : R) :
-    ∃ u, a < u ∧ ∀ x ∈ Ioo a u, signVariationsAt cs x = signVariationsRight cs a := by
-  obtain ⟨u, hau, hu⟩ := cs.exists_signs_right a
-  exact ⟨u, hau, fun x hx => signVariationsAt_eq_right fun p hp => hu p hp x hx⟩
-
-/-- The left-hand variations at `a` are the variations at every point of a small enough
-interval to the left of `a`. -/
-theorem exists_signVariationsLeft (cs : List R[X]) (a : R) :
-    ∃ l, l < a ∧ ∀ x ∈ Ioo l a, signVariationsAt cs x = signVariationsLeft cs a := by
-  obtain ⟨l, hla, hl⟩ := cs.exists_signs_left a
-  exact ⟨l, hla, fun x hx => signVariationsAt_eq_left fun p hp => hl p hp x hx⟩
 
 variable [IsRealClosed R]
 

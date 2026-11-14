@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Analysis/Polynomial/ContinuityOfRoots/Basic.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -41,23 +41,8 @@ of the elementary symmetric chart `TauCeti.Sym.coeffHomeomorph`, which comes fro
 `Polynomial.cauchyBound` through properness of the coefficient map. Nothing here chooses a
 continuous labelling of the roots; the matching is made separately for each nearby polynomial.
 
-## Main results
-
-* `Polynomial.Monic.exists_prod_X_sub_C_norm_sub_lt`: **continuity of roots.** For monic `f` and
-  `ε > 0` there is `δ > 0` such that every monic `g` of the same degree whose coefficients are
-  `δ`-close to those of `f` admits enumerations `a`, `b` of the roots of `f` and `g`, with
-  multiplicity, satisfying `‖a i - b i‖ < ε`.
-* `Polynomial.Monic.exists_prod_X_sub_C_norm_sub_lt_iff`: when the `ε`-discs around the distinct
-  roots of `f` are disjoint, such a matching exists exactly when every disc contains as many roots
-  of `g` as the multiplicity of its centre, and no root of `g` lies outside the discs.
-* `Polynomial.Monic.exists_countP_roots_mem_ball_eq_rootMultiplicity`: the resulting disc form of
-  continuity of roots.
-* `Polynomial.eventually_exists_C_mul_prod_X_sub_C_norm_sub_lt`: the matching for a family of
-  polynomials of fixed degree with continuous coefficients, normalized by its nonvanishing leading
-  coefficient.
-* `Polynomial.eventually_exists_bijOn_roots_toFinset`: if moreover no nearby member of the family
-  has more distinct roots than the central one, the distinct roots of nearby members correspond
-  bijectively to those of the central one, with matched roots close and of equal multiplicity.
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
 ## References
 
@@ -100,82 +85,6 @@ private theorem C_mul_prod_X_sub_C_eq_of_ofFn_eq {d : ℕ} {p : K[X]} (hp : p.de
     ← mul_assoc, ← C_mul, mul_inv_cancel₀ hlc, C_1, one_mul]
 
 section Matching
-
-open scoped Classical in
-/-- **Matching roots versus counting them in discs.** Let `f` and `g` be monic of the same degree,
-and suppose the `ε`-discs around the distinct roots of `f` are pairwise disjoint. Then the roots of
-`f` and `g`, with multiplicity, can be enumerated so that matched roots are at distance less than
-`ε` exactly when each disc around a root `z` of `f` contains `rootMultiplicity z f` roots of `g`,
-counted with multiplicity, and every root of `g` lies in one of these discs. -/
-theorem Monic.exists_prod_X_sub_C_norm_sub_lt_iff {f g : K[X]} (hf : f.Monic) (hg : g.Monic)
-    (hdeg : g.natDegree = f.natDegree) {ε : ℝ}
-    (hsep : ∀ z ∈ f.roots, ∀ w ∈ f.roots, z ≠ w → 2 * ε ≤ ‖z - w‖) :
-    (∃ a b : Fin f.natDegree → K,
-        f = ∏ i, (X - C (a i)) ∧ g = ∏ i, (X - C (b i)) ∧ ∀ i, ‖a i - b i‖ < ε) ↔
-      (∀ z ∈ f.roots, g.roots.countP (· ∈ ball z ε) = f.rootMultiplicity z) ∧
-        ∀ w ∈ g.roots, ∃ z ∈ f.roots, ‖w - z‖ < ε := by
-  -- Forward, a matched root of `g` lies in the disc of its partner and in no other disc. Backward,
-  -- send each root of `g` to the centre of its disc, compare occurrence counts with an enumeration
-  -- of the roots of `f`, and permute that enumeration to match.
-  have hroots : ∀ {p : K[X]} (a : Fin f.natDegree → K), p = ∏ i, (X - C (a i)) →
-      p.roots = Finset.univ.val.map a := fun a hp => by
-    rw [congrArg roots hp, ← Sym.toMonic_ofFn, Sym.roots_toMonic, Sym.coe_ofFn, Fin.univ_val_map]
-  have hmem : ∀ (a : Fin f.natDegree → K) i, a i ∈ Finset.univ.val.map a := fun a i =>
-    Multiset.mem_map_of_mem _ (Finset.mem_univ i)
-  -- a point of `K` is within `ε` of at most one root of `f`
-  have huniq : ∀ w, ∀ z ∈ f.roots, ∀ z' ∈ f.roots, ‖w - z‖ < ε → ‖w - z'‖ < ε → z = z' := by
-    intro w z hz z' hz' h h'
-    by_contra hne
-    have := hsep z hz z' hz' hne
-    have := norm_sub_le_norm_sub_add_norm_sub z w z'
-    have := norm_sub_rev z w
-    linarith
-  -- both sides compare `b` with `a` through the counting identity below
-  have hcard : ∀ (b u : Fin f.natDegree → K) (z : K),
-      (∀ i, u i = z ↔ ‖b i - z‖ < ε) →
-        (Finset.univ.filter fun i => u i = z).card =
-          ((Finset.univ.val.map b).countP (· ∈ ball z ε)) := fun b u z h => by
-    rw [Multiset.countP_map, Finset.card_def, Finset.filter_val]
-    exact congrArg Multiset.card (Multiset.filter_congr fun i _ => by
-      simpa [dist_eq_norm] using h i)
-  constructor
-  · rintro ⟨a, b, hfa, hgb, hab⟩
-    rw [hroots a hfa] at huniq ⊢
-    rw [hroots b hgb]
-    refine ⟨fun z hz => ?_, ?_⟩
-    · rw [← count_roots, hroots a hfa, Multiset.count_map, ← hcard b a z fun i => ?_]
-      · simp only [eq_comm (a := z), Finset.card_def, Finset.filter_val]
-      · refine ⟨fun h => h ▸ by rw [norm_sub_rev]; exact hab i, fun h => ?_⟩
-        exact huniq (b i) _ (hmem a i) z hz (by rw [norm_sub_rev]; exact hab i) h
-    · rintro w hw
-      obtain ⟨i, -, rfl⟩ := Multiset.mem_map.1 hw
-      exact ⟨a i, hmem a i, by rw [norm_sub_rev]; exact hab i⟩
-  · rintro ⟨hcount, hin⟩
-    obtain ⟨a, ha⟩ := Sym.ofFn_surjective ((Sym.coeffEquiv K _).symm fun i => f.coeff i)
-    obtain ⟨b, hb⟩ := Sym.ofFn_surjective ((Sym.coeffEquiv K _).symm fun i => g.coeff i)
-    have hfa := (prod_X_sub_C_eq_of_ofFn_eq hf rfl ha).symm
-    have hgb := (prod_X_sub_C_eq_of_ofFn_eq hg hdeg hb).symm
-    have hfr := hroots a hfa
-    have hgr := hroots b hgb
-    -- send each root of `g` to the root of `f` whose disc contains it
-    choose! φ hφ hφε using hin
-    have hb_mem : ∀ i, b i ∈ g.roots := fun i => hgr ▸ hmem b i
-    -- `φ ∘ b` takes each value as often as `a` does
-    have hocc : ∀ z, Function.occCount (φ ∘ b) z = Function.occCount a z := by
-      intro z
-      rw [Function.occCount_eq_card_filter, Function.occCount_eq_card_filter]
-      by_cases hz : z ∈ f.roots
-      · rw [hcard b (φ ∘ b) z fun i => ⟨fun h => h ▸ hφε _ (hb_mem i),
-          fun h => huniq (b i) _ (hφ _ (hb_mem i)) z hz (hφε _ (hb_mem i)) h⟩, ← hgr, hcount z hz,
-          ← count_roots, hfr, Multiset.count_map]
-        simp only [eq_comm (a := z), Finset.card_def, Finset.filter_val]
-      · rw [Finset.filter_false_of_mem fun i _ (h : (φ ∘ b) i = z) => hz (h ▸ hφ _ (hb_mem i)),
-          Finset.filter_false_of_mem fun i _ (h : a i = z) => hz (h ▸ hfr ▸ hmem a i)]
-    obtain ⟨σ, hσ⟩ := Function.exists_perm_of_occCount_eq hocc
-    refine ⟨a ∘ σ, b, hfa.trans (Equiv.prod_comp σ fun i => X - C (a i)).symm, hgb, fun i => ?_⟩
-    have hσi : a (σ i) = φ (b i) := congrFun hσ i
-    rw [Function.comp_apply, hσi, norm_sub_rev]
-    exact hφε _ (hb_mem i)
 
 omit [IsAlgClosed K] in
 /-- **Distinct roots under a matching of roots.** Let `a` and `b` enumerate the roots of `f` and
@@ -230,43 +139,6 @@ end Matching
 section Continuity
 
 variable [ProperSpace K]
-
-/-- **Continuity of roots, with multiplicities.** For a monic polynomial `f` and `ε > 0`, every
-monic polynomial `g` of the same degree with coefficients close enough to those of `f` has its roots
-matched bijectively with those of `f`, counted with multiplicity: there are enumerations `a` and `b`
-of the roots of `f` and `g` with `‖a i - b i‖ < ε` for every `i`. This includes degree zero. -/
-theorem Monic.exists_prod_X_sub_C_norm_sub_lt {f : K[X]} (hf : f.Monic) {ε : ℝ} (hε : 0 < ε) :
-    ∃ δ > 0, ∀ g : K[X], g.Monic → g.natDegree = f.natDegree →
-      (∀ i, ‖g.coeff i - f.coeff i‖ < δ) →
-      ∃ a b : Fin f.natDegree → K,
-        f = ∏ i, (X - C (a i)) ∧ g = ∏ i, (X - C (b i)) ∧ ∀ i, ‖a i - b i‖ < ε := by
-  obtain ⟨a, ha⟩ := Sym.ofFn_surjective ((Sym.coeffEquiv K f.natDegree).symm fun i => f.coeff i)
-  have hc : Sym.coeffEquiv K _ (Sym.ofFn a) = fun i : Fin f.natDegree => f.coeff i := by
-    rw [ha, Equiv.apply_symm_apply]
-  have hev := Sym.eventually_exists_ofFn_eq_coeffEquiv_symm a hε
-  rw [hc] at hev
-  obtain ⟨δ, hδ, hball⟩ := Metric.eventually_nhds_iff.1 hev
-  refine ⟨δ, hδ, fun g hg hdeg hcoeff => ?_⟩
-  obtain ⟨b, hb, hab⟩ := hball (y := fun i : Fin f.natDegree => g.coeff i) <|
-    (dist_pi_lt_iff hδ).2 fun i => by simpa [dist_eq_norm] using hcoeff i
-  exact ⟨a, b, (prod_X_sub_C_eq_of_ofFn_eq hf rfl ha).symm,
-    (prod_X_sub_C_eq_of_ofFn_eq hg hdeg hb).symm, hab⟩
-
-open scoped Classical in
-/-- **Continuity of roots in discs.** If the `ε`-discs around the distinct roots of a monic
-polynomial `f` are pairwise disjoint, then every monic polynomial `g` of the same degree with
-coefficients close enough to those of `f` has, counted with multiplicity, exactly
-`rootMultiplicity z f` roots in the disc around each root `z` of `f`, and no roots outside these
-discs. -/
-theorem Monic.exists_countP_roots_mem_ball_eq_rootMultiplicity {f : K[X]} (hf : f.Monic) {ε : ℝ}
-    (hε : 0 < ε) (hsep : ∀ z ∈ f.roots, ∀ w ∈ f.roots, z ≠ w → 2 * ε ≤ ‖z - w‖) :
-    ∃ δ > 0, ∀ g : K[X], g.Monic → g.natDegree = f.natDegree →
-      (∀ i, ‖g.coeff i - f.coeff i‖ < δ) →
-      (∀ z ∈ f.roots, g.roots.countP (· ∈ ball z ε) = f.rootMultiplicity z) ∧
-        ∀ w ∈ g.roots, ∃ z ∈ f.roots, ‖w - z‖ < ε := by
-  obtain ⟨δ, hδ, h⟩ := hf.exists_prod_X_sub_C_norm_sub_lt hε
-  exact ⟨δ, hδ, fun g hg hdeg hcoeff =>
-    (hf.exists_prod_X_sub_C_norm_sub_lt_iff hg hdeg hsep).1 (h g hg hdeg hcoeff)⟩
 
 /-- **Continuity of roots in a family.** Let `F x` be polynomials of degree `d`, near `x₀`, whose
 coefficients of index at most `d` are continuous at `x₀`. Then for `x` near `x₀` the roots of

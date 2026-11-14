@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/RingTheory/Polynomial/Subresultant/FirstNonzero.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -54,20 +54,6 @@ section Domain
 
 variable {R : Type*} [CommRing R]
 
-/-- Subresultant polynomials vanish below the degree of any common divisor, even when their
-formal degree bounds exceed the input degrees. -/
-theorem _root_.Polynomial.subresultant_eq_zero_of_lt_natDegree_commonDivisor
-    [IsDomain R] {p q g : R[X]} {m n j : ℕ} (hm : p.natDegree ≤ m) (hn : q.natDegree ≤ n)
-    (hgp : g ∣ p) (hgq : g ∣ q) (hj : j < g.natDegree) :
-    subresultant p q m n j = 0 := by
-  have hg : g ≠ 0 := by
-    intro h
-    simp [h] at hj
-  apply eq_zero_of_dvd_of_degree_lt (dvd_subresultant hm hn hgp hgq)
-  exact (degree_subresultant_le p q m n j).trans_lt (by
-    rw [degree_eq_natDegree hg]
-    exact WithBot.coe_lt_coe.mpr hj)
-
 /-- At the degree of a monic common divisor, a strict-index subresultant polynomial is exactly
 that divisor scaled by the principal subresultant coefficient. The scalar is allowed to vanish.
 No field hypothesis or actual-degree equality is required. -/
@@ -112,23 +98,6 @@ theorem _root_.Polynomial.subresultant_natDegree_gcd {p q : K[X]} {m n : ℕ}
       (normalize_dvd_iff.mpr (EuclideanDomain.gcd_dvd_left p q))
       (normalize_dvd_iff.mpr (EuclideanDomain.gcd_dvd_right p q))
       (by simpa only [natDegree_normalize] using hj)
-
-/-- With an actual left degree, the subresultant at a strict gcd index is associated to the gcd.
-Together with vanishing below that index, this identifies the first nonzero subresultant
-polynomial. A right degree bound suffices; neither squarefreeness nor monicity is assumed. -/
-theorem _root_.Polynomial.subresultant_natDegree_gcd_associated {p q : K[X]} {m n : ℕ}
-    (hm : p.natDegree = m) (hn : q.natDegree ≤ n)
-    (hj : (EuclideanDomain.gcd p q).natDegree < min m n) :
-    Associated (subresultant p q m n (EuclideanDomain.gcd p q).natDegree)
-      (EuclideanDomain.gcd p q) := by
-  have hp : p ≠ 0 := by
-    rintro rfl
-    simp only [natDegree_zero] at hm
-    omega
-  rw [subresultant_natDegree_gcd hm.le hn hj]
-  have hc : IsUnit (C (psc p q m n (EuclideanDomain.gcd p q).natDegree)) :=
-    isUnit_C.mpr (isUnit_iff_ne_zero.mpr (psc_natDegree_gcd_ne_zero hp hm hn))
-  exact (associated_unit_mul_left _ _ hc).trans (normalize_associated _)
 
 end Field
 

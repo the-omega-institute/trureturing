@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Polynomial/Eval/Sign.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -33,14 +33,5 @@ preserves the sign of the value. This applies to embeddings into ordered real cl
 public section
 
 namespace Polynomial
-
-/-- Mapping a polynomial and its evaluation point through a strictly monotone ring homomorphism
-preserves its sign. -/
-theorem sign_eval_map {R S : Type*} [Semiring R] [LinearOrder R]
-    [Semiring S] [Preorder S] [DecidableLT S] (p : R[X]) (f : R →+* S)
-    (hf : StrictMono f) (x : R) :
-    SignType.sign ((p.map f).eval (f x)) = SignType.sign (p.eval x) := by
-  rw [eval_map_apply]
-  exact hf.sign_comp _
 
 end Polynomial

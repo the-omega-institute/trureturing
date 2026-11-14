@@ -78,7 +78,9 @@ theorem signInvariant_sectionSet [TopologicalSpace α] {θ : Fin k → X → α}
   · refine (isPreconnected_sectionSet hc).signInvariant hf fun z hz h ↦ hi ?_
     -- A zero on section `i` lies on a section indexed by `I`, which must be section `i` itself.
     obtain ⟨i', hi', hz'⟩ := (hzero z).1 h
-    rwa [← hθ z.1 ((mem_sectionSet.1 hz').trans (mem_sectionSet.1 hz).symm)]
+    change θ i z.1 = z.2 at hz
+    change θ i' z.1 = z.2 at hz'
+    rwa [← hθ z.1 (hz'.trans hz.symm)]
 
 /-- Over a preconnected base, a function on the cylinder whose zeros all lie on sections is
 sign-invariant on each sector of a stack of continuous, pointwise strictly ordered real
@@ -105,7 +107,7 @@ theorem signInvariant_eval_sectionSet {K : Type*} [Semiring K] [LinearOrder K]
   rcases hnull with h | h
   · exact (signInvariant_const 0).congr fun z _ ↦ by simp [h]
   · exact signInvariant_sectionSet hP.continuousOn hc hθ fun z ↦ by
-      simpa only [mem_sectionSet] using hroots z.1 (h z.1) z.2
+      simpa only [sectionSet, Function.graph, Set.mem_setOf_eq] using hroots z.1 (h z.1) z.2
 
 /-- Let `P` be a family of real polynomials over a preconnected base, with jointly continuous
 evaluation, which is either zero everywhere or nowhere zero. If every root of each nonzero `P x`
@@ -119,6 +121,6 @@ theorem signInvariant_eval_sectorSet {θ : Fin k → X → ℝ} {P : X → ℝ[X
   rcases hnull with h | h
   · exact (signInvariant_const 0).congr fun z _ ↦ by simp [h]
   · exact signInvariant_sectorSet hP.continuousOn hc hθ fun z hz ↦ by
-      simpa only [mem_sectionSet] using hroots z.1 (h z.1) z.2 hz
+      simpa only [sectionSet, Function.graph, Set.mem_setOf_eq] using hroots z.1 (h z.1) z.2 hz
 
 end TauCeti

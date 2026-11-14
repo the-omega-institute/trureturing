@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Geometry/RealAlgebraic/Semialgebraic/Function.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -76,12 +76,6 @@ theorem isSemialgebraicOn_def {f : (σ → R) → (τ → R)} {s : Set (σ → R
       IsSemialgebraic (Equiv.sumArrowEquivProdArrow σ τ R ⁻¹' s.graphOn f) :=
   Iff.rfl
 
-/-- Characterization of a semialgebraic map by its graph. -/
-theorem isSemialgebraicMap_def {f : (σ → R) → (τ → R)} :
-    IsSemialgebraicMap f ↔
-      IsSemialgebraic (Equiv.sumArrowEquivProdArrow σ τ R ⁻¹' univ.graphOn f) := by
-  simp [IsSemialgebraicMap, IsSemialgebraicOn]
-
 omit [CommRing R] [LinearOrder R] in
 /-- A point of `σ ⊕ τ → R` lies on the encoded graph of `f` over `s` exactly when its input
 coordinates lie in `s` and `f` sends them to its output coordinates. -/
@@ -132,99 +126,7 @@ theorem IsSemialgebraicMap.isSemialgebraicOn {f : (σ → R) → (τ → R)}
     IsSemialgebraicOn f s :=
   hf.mono hs (subset_univ s)
 
-/-- Semialgebraicity on a set depends only on the values of the function on that set. -/
-theorem IsSemialgebraicOn.congr {f g : (σ → R) → (τ → R)} {s : Set (σ → R)}
-    (hf : IsSemialgebraicOn f s) (h : s.EqOn f g) : IsSemialgebraicOn g s := by
-  refine ⟨hf.isSemialgebraic, ?_⟩
-  rw [← Set.graphOn_inj.2 h]
-  exact hf.graph
-
-/-- Every function is semialgebraic on the empty set. -/
-@[simp]
-theorem isSemialgebraicOn_empty (f : (σ → R) → (τ → R)) :
-    IsSemialgebraicOn f ∅ := by
-  simp [IsSemialgebraicOn]
-
-/-- Semialgebraic functions on two semialgebraic pieces glue to a semialgebraic function. -/
-theorem IsSemialgebraicOn.glue {f g h : (σ → R) → (τ → R)} {s t : Set (σ → R)}
-    (hf : IsSemialgebraicOn f (s ∩ t)) (hg : IsSemialgebraicOn g (s \ t))
-    (hft : (s ∩ t).EqOn h f) (hgt : (s \ t).EqOn h g) : IsSemialgebraicOn h s := by
-  have hhst := hf.congr hft.symm
-  have hhst' := hg.congr hgt.symm
-  have hst : s = (s ∩ t) ∪ (s \ t) := by
-    ext x
-    simp
-  have hs : IsSemialgebraic s := by
-    rw [hst]
-    exact hf.isSemialgebraic.union hg.isSemialgebraic
-  refine ⟨hs, ?_⟩
-  rw [hst, Set.graphOn_union, preimage_union]
-  exact hhst.graph.union hhst'.graph
-
 section PolynomialMap
-
-/-- A map whose output coordinates are polynomials in the input coordinates is semialgebraic on
-every semialgebraic domain. -/
-theorem isSemialgebraicOn_eval [Finite τ] (p : τ → MvPolynomial σ R)
-    {s : Set (σ → R)} (hs : IsSemialgebraic s) :
-    IsSemialgebraicOn (fun x i => eval x (p i)) s := by
-  refine ⟨hs, ?_⟩
-  have hgraph : Equiv.sumArrowEquivProdArrow σ τ R ⁻¹'
-      s.graphOn (fun x i => eval x (p i)) =
-      ((fun z : σ ⊕ τ → R => z ∘ Sum.inl) ⁻¹' s) ∩
-        ⋂ i, {z | eval z (X (Sum.inr i) - rename Sum.inl (p i)) = 0} := by
-    ext z
-    have hfst : (Equiv.sumArrowEquivProdArrow σ τ R z).1 = z ∘ Sum.inl := by
-      funext i
-      exact Equiv.sumArrowEquivProdArrow_apply_fst z i
-    have hsnd : (Equiv.sumArrowEquivProdArrow σ τ R z).2 = z ∘ Sum.inr := by
-      funext i
-      exact Equiv.sumArrowEquivProdArrow_apply_snd z i
-    simp only [mem_preimage, mem_graphOn, mem_inter_iff, mem_iInter, mem_ofPred_eq, hfst, hsnd]
-    constructor
-    · rintro ⟨hz, hp⟩
-      refine ⟨hz, fun i => ?_⟩
-      simpa [sub_eq_zero, MvPolynomial.eval_rename] using (congrFun hp i).symm
-    · rintro ⟨hz, hp⟩
-      refine ⟨hz, funext fun i => ?_⟩
-      have hi := hp i
-      have hi' : z (Sum.inr i) = eval (z ∘ Sum.inl) (p i) := by
-        simpa [sub_eq_zero, MvPolynomial.eval_rename] using hi
-      exact hi'.symm
-  rw [hgraph]
-  exact (hs.preimage_comp Sum.inl).inter <|
-    .iInter fun i => isSemialgebraic_eval_eq_zero (X (Sum.inr i) - rename Sum.inl (p i))
-
-/-- A polynomial map between coordinate spaces is semialgebraic. -/
-theorem isSemialgebraicMap_eval [Finite τ] (p : τ → MvPolynomial σ R) :
-    IsSemialgebraicMap (fun x i => eval x (p i)) := by
-  rw [← isSemialgebraicOn_univ]
-  exact isSemialgebraicOn_eval p isSemialgebraic_univ
-
-/-- A constant map into a finite-dimensional coordinate space is semialgebraic on every
-semialgebraic domain. -/
-theorem isSemialgebraicOn_const [Finite τ] (c : τ → R) {s : Set (σ → R)}
-    (hs : IsSemialgebraic s) : IsSemialgebraicOn (fun _ => c) s := by
-  simpa using isSemialgebraicOn_eval (fun i : τ => C (c i)) hs
-
-/-- A constant map into a finite-dimensional coordinate space is semialgebraic. -/
-@[simp]
-theorem isSemialgebraicMap_const [Finite τ] (c : τ → R) :
-    IsSemialgebraicMap (fun _ : σ → R => c) := by
-  rw [← isSemialgebraicOn_univ]
-  exact isSemialgebraicOn_const c isSemialgebraic_univ
-
-/-- The identity map on a finite-dimensional coordinate space is semialgebraic. -/
-@[simp]
-theorem isSemialgebraicMap_id [Finite σ] :
-    IsSemialgebraicMap (id : (σ → R) → (σ → R)) := by
-  rw [← isSemialgebraicOn_univ]
-  apply IsSemialgebraicOn.congr <|
-    (isSemialgebraicMap_eval (R := R) (σ := σ) (τ := σ) (fun i : σ => X i)).isSemialgebraicOn
-      isSemialgebraic_univ
-  intro x _
-  funext i
-  simp
 
 end PolynomialMap
 

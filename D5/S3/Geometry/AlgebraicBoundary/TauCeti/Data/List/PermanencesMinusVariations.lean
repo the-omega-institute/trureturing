@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Data/List/PermanencesMinusVariations.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -84,9 +84,6 @@ def _root_.List.permanencesMinusVariations {R : Type*} [Zero R] [LinearOrder R]
     (l : List R) : ℤ := pmvAux 0 0 (l.map SignType.sign)
 
 variable {R S : Type*} [Zero R] [LinearOrder R] [Zero S] [LinearOrder S]
-
-@[simp] theorem _root_.List.permanencesMinusVariations_nil :
-    ([] : List R).permanencesMinusVariations = 0 := (rfl)
 
 @[simp] theorem _root_.List.permanencesMinusVariations_zero_cons (l : List R) :
     (0 :: l).permanencesMinusVariations = l.permanencesMinusVariations := by
@@ -222,10 +219,10 @@ theorem _root_.List.permanencesMinusVariations_eq_length_sub_two_mul_signVariati
     (l : List R) (h : ∀ a ∈ l, a ≠ 0) :
     l.permanencesMinusVariations = ((l.length - 1 : ℕ) : ℤ) - 2 * l.signVariations := by
   induction l with
-  | nil => simp
+  | nil => simp [List.permanencesMinusVariations, pmvAux]
   | cons a l ih =>
     cases l with
-    | nil => simp
+    | nil => simp [List.permanencesMinusVariations, pmvAux]
     | cons b l =>
       have ha := h a (by simp)
       have hb := h b (by simp)

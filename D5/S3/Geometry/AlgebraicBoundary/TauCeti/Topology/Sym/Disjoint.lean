@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Topology/Sym/Disjoint.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -63,20 +63,6 @@ namespace Sym
 variable {α : Type*} [TopologicalSpace α] {n : ℕ}
 
 /-! ### Tuples mapped into pairwise disjoint open ranges -/
-
-/-- **Away from the diagonal the symmetric power is a product.** Open embeddings with pairwise
-disjoint ranges induce an open embedding from their product into the symmetric power. Applied to
-subtype inclusions, this says conditionally that given pairwise disjoint open neighbourhoods `U i`
-of `n` distinct points, their product is an open subspace of `Sym α n`; constructing such a family
-in a Hausdorff space is a separate step. -/
-theorem isOpenEmbedding_ofFn_map {X : Fin n → Type*} [∀ i, TopologicalSpace (X i)]
-    (f : ∀ i, X i → α) (hf : ∀ i, IsOpenEmbedding (f i))
-    (h : Pairwise (Function.onFun Disjoint fun i => Set.range (f i))) :
-    IsOpenEmbedding fun x : ∀ i, X i => ofFn fun i => f i (x i) := by
-  refine .of_continuous_injective_isOpenMap ?_
-    (ofFn_map_injective f (fun i => (hf i).injective) h) ?_
-  · exact continuous_ofFn.comp (Continuous.piMap fun i => (hf i).continuous)
-  · exact isOpenMap_ofFn.comp (IsOpenEmbedding.piMap hf).isOpenMap
 
 end Sym
 

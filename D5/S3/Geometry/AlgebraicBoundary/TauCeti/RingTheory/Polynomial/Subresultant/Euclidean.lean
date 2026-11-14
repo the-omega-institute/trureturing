@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/RingTheory/Polynomial/Subresultant/Euclidean.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -135,22 +135,6 @@ theorem _root_.Polynomial.subresultantCoeff_add_mul_left {p q a : R[X]} {m n j :
   simp [subresultantCoeff_def, subresultantCoeffMatrix_add_mul hp hq ha,
     Matrix.det_mul, det_reductionShear]
 
-/-- Polynomial reduction preserves principal coefficients, including the terminal index. -/
-theorem _root_.Polynomial.psc_add_mul_left {p q a : R[X]} {m n j : ℕ}
-    (hp : p.natDegree ≤ m) (hq : q.natDegree ≤ n)
-    (ha : a.natDegree + n ≤ m) :
-    psc (p + a * q) q m n j = psc p q m n j := by
-  simpa only [subresultantCoeff_self] using
-    subresultantCoeff_add_mul_left (j := j) hp hq ha j
-
-/-- Polynomial reduction preserves the fixed-bound subresultant polynomial. -/
-theorem _root_.Polynomial.subresultant_add_mul_left {p q a : R[X]} {m n j : ℕ}
-    (hp : p.natDegree ≤ m) (hq : q.natDegree ≤ n)
-    (ha : a.natDegree + n ≤ m) :
-    subresultant (p + a * q) q m n j = subresultant p q m n j := by
-  ext k
-  simp only [coeff_subresultant, subresultantCoeff_add_mul_left hp hq ha]
-
 section Field
 
 variable {K : Type*} [Field K]
@@ -187,13 +171,6 @@ theorem _root_.Polynomial.psc_mod_left {p q : K[X]} {m j : ℕ}
     (hp : p.natDegree ≤ m) :
     psc (p % q) q m q.natDegree j = psc p q m q.natDegree j := by
   simpa only [subresultantCoeff_self] using subresultantCoeff_mod_left (j := j) hp j
-
-/-- Division with remainder preserves the subresultant polynomial at fixed bounds. -/
-theorem _root_.Polynomial.subresultant_mod_left {p q : K[X]} {m j : ℕ}
-    (hp : p.natDegree ≤ m) :
-    subresultant (p % q) q m q.natDegree j = subresultant p q m q.natDegree j := by
-  ext k
-  simp only [coeff_subresultant, subresultantCoeff_mod_left hp]
 
 /-- A Euclidean step for principal subresultant coefficients. Lowering the remainder's
 bound from `m` to `r` contributes `q.leadingCoeff ^ (m - r)`; the displayed sign

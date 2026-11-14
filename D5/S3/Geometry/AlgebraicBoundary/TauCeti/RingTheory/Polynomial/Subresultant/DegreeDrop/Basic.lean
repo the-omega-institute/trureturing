@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/RingTheory/Polynomial/Subresultant/DegreeDrop/Basic.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -150,35 +150,6 @@ theorem _root_.Polynomial.subresultantCoeff_eq_sign_mul_coeff_pow_mul_of_left_de
       rw [subresultantCoeff_comm p q m n j k, hgap, add_mul, pow_add]
       ring
 
-/-- Lowering an oversized right degree bound by one multiplies the principal
-subresultant by the coefficient at the left bound. The terminal smaller index is included. -/
-theorem _root_.Polynomial.psc_succ_right {p q : R[X]} {m n j : ℕ}
-    (hm : p.natDegree ≤ m) (hn : q.natDegree ≤ n) (hjm : j ≤ m) (hjn : j ≤ n) :
-    psc p q m (n + 1) j = p.coeff m * psc p q m n j := by
-  by_cases hjm' : j < m
-  · simpa only [subresultantCoeff_self] using
-      subresultantCoeff_succ_right hm hn hjm' hjn j
-  · have hjeq : j = m := by omega
-    subst j
-    rw [psc_left_bound, psc_left_bound]
-    have hgap : n + 1 - m = (n - m) + 1 := by omega
-    rw [hgap, pow_succ, mul_comm]
-
-/-- An arbitrary drop in the right bound contributes the corresponding power of the
-coefficient at the left bound. The lower right bound need only dominate the degree. -/
-theorem _root_.Polynomial.psc_eq_coeff_pow_mul_of_right_degree_drop {p q : R[X]}
-    {m n N j : ℕ} (hm : p.natDegree ≤ m) (hn : q.natDegree ≤ n)
-    (hN : n ≤ N) (hjm : j ≤ m) (hjn : j ≤ n) :
-    psc p q m N j = p.coeff m ^ (N - n) * psc p q m n j := by
-  by_cases hjm' : j < m
-  · simpa only [subresultantCoeff_self] using
-      subresultantCoeff_eq_coeff_pow_mul_of_right_degree_drop hm hn hN hjm' hjn j
-  · have hjeq : j = m := by omega
-    subst j
-    rw [psc_left_bound, psc_left_bound, ← pow_add]
-    congr 1
-    omega
-
 /-- Dropping the left bound also contributes the sign of moving its removed columns
 past the right block. The lower left bound need only dominate the degree. -/
 theorem _root_.Polynomial.psc_eq_sign_mul_coeff_pow_mul_of_left_degree_drop {p q : R[X]}
@@ -194,44 +165,5 @@ theorem _root_.Polynomial.psc_eq_sign_mul_coeff_pow_mul_of_left_degree_drop {p q
     simp only [psc_right_bound, Nat.sub_self, mul_zero, pow_zero, one_mul, ← pow_add]
     congr 1
     omega
-
-/-- At strict subresultant indices, simultaneous drops in both degree bounds force
-vanishing. Terminal indices are excluded: their empty determinant can still be `1`. -/
-theorem _root_.Polynomial.psc_eq_zero_of_natDegree_lt_bounds {p q : R[X]} {m n j : ℕ}
-    (hm : p.natDegree < m) (hn : q.natDegree < n) (hj : j < min m n) :
-    psc p q m n j = 0 := by
-  have hnpos : 0 < n := by omega
-  obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hnpos)
-  rw [psc_succ_right hm.le (by omega) (by omega) (by omega),
-    coeff_eq_zero_of_natDegree_lt hm, zero_mul]
-
-/-- After coefficient specialization, lowering the right bound amounts to truncating
-that input and multiplying by a power of the specialized coefficient at the left bound.
-In particular, the lower bound can be the actual degree of the specialized right input. -/
-theorem _root_.Polynomial.map_psc_of_right_degree_drop {S : Type*} [CommRing S]
-    (f : R →+* S) {p q : R[X]} {m n N j : ℕ}
-    (hm : (p.map f).natDegree ≤ m) (hn : (q.map f).natDegree ≤ n)
-    (hN : n ≤ N) (hjm : j ≤ m) (hjn : j ≤ n) :
-    f (psc p q m N j) = f (p.coeff m) ^ (N - n) *
-      psc (p.map f) ((q.reductum (n + 1)).map f) m n j := by
-  have htrunc : (q.reductum (n + 1)).map f = q.map f := by
-    rw [← reductum_map]
-    exact reductum_eq_self (by omega)
-  rw [htrunc, ← psc_map_map,
-    psc_eq_coeff_pow_mul_of_right_degree_drop hm hn hN hjm hjn, coeff_map]
-
-/-- The left-bound specialization formula retains the column-block sign as well as the
-power of the specialized coefficient at the right bound. Truncation occurs before mapping. -/
-theorem _root_.Polynomial.map_psc_of_left_degree_drop {S : Type*} [CommRing S]
-    (f : R →+* S) {p q : R[X]} {m M n j : ℕ}
-    (hm : (p.map f).natDegree ≤ m) (hn : (q.map f).natDegree ≤ n)
-    (hM : m ≤ M) (hjm : j ≤ m) (hjn : j ≤ n) :
-    f (psc p q M n j) = (-1) ^ ((M - m) * (n - j)) * f (q.coeff n) ^ (M - m) *
-      psc ((p.reductum (m + 1)).map f) (q.map f) m n j := by
-  have htrunc : (p.reductum (m + 1)).map f = p.map f := by
-    rw [← reductum_map]
-    exact reductum_eq_self (by omega)
-  rw [htrunc, ← psc_map_map,
-    psc_eq_sign_mul_coeff_pow_mul_of_left_degree_drop hm hn hM hjm hjn, coeff_map]
 
 end TauCeti

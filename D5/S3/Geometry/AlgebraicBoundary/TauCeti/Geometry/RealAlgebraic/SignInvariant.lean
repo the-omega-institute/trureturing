@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Geometry/RealAlgebraic/SignInvariant.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -42,20 +42,8 @@ A set on which each function of a family is sign-invariant lies inside or outsid
 described by a condition on their signs. If the sets of a cover each have this property, one sample
 point from each of them realizes every sign vector that the functions take.
 
-## Main declarations
-
-* `TauCeti.SignInvariant`: sign-invariance of a function on a set.
-* `TauCeti.signInvariant_iff_exists`: a sign-invariant function has a single sign on the set.
-* `TauCeti.signInvariant_image`: sign-invariance on an image is sign-invariance of the
-  composite.
-* `TauCeti.subset_or_disjoint_setOf_sign`: a set on which the functions are sign-invariant lies
-  inside or outside each sign-condition set.
-* `TauCeti.range_sign_sample_eq`: sample points of a cover by sets on which the functions are
-  sign-invariant realize all their sign vectors.
-* `IsPreconnected.signInvariant`: a continuous, nowhere-zero function on a preconnected set is
-  sign-invariant.
-* `IsPreconnected.signInvariant_of_eq_zero_iff`: a continuous function on a preconnected set that
-  vanishes everywhere or nowhere there is sign-invariant.
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
 ## References
 
@@ -87,18 +75,6 @@ theorem signInvariant_def :
     SignInvariant f s ↔ ∀ x ∈ s, ∀ y ∈ s, SignType.sign (f x) = SignType.sign (f y) :=
   Iff.rfl
 
-/-- A function is sign-invariant on `s` exactly when a single sign is taken at every point of
-`s`. -/
-theorem signInvariant_iff_exists :
-    SignInvariant f s ↔ ∃ σ : SignType, ∀ x ∈ s, SignType.sign (f x) = σ := by
-  refine ⟨fun h ↦ ?_, fun ⟨σ, hσ⟩ x hx y hy ↦ (hσ x hx).trans (hσ y hy).symm⟩
-  rcases s.eq_empty_or_nonempty with rfl | ⟨x, hx⟩
-  · exact ⟨0, by simp⟩
-  · exact ⟨SignType.sign (f x), fun y hy ↦ h y hy x hx⟩
-
-theorem SignInvariant.mono (h : SignInvariant f t) (hst : s ⊆ t) : SignInvariant f s :=
-  fun x hx y hy ↦ h x (hst hx) y (hst hy)
-
 theorem SignInvariant.congr (h : SignInvariant f s) (hfg : EqOn f g s) : SignInvariant g s :=
   fun x hx y hy ↦ by rw [← hfg hx, ← hfg hy]; exact h x hx y hy
 
@@ -110,14 +86,6 @@ theorem signInvariant_image {u : β → α} {s : Set β} :
 /-- A function is sign-invariant on a set containing at most one point. -/
 theorem _root_.Set.Subsingleton.signInvariant (hs : s.Subsingleton) : SignInvariant f s :=
   fun x hx y hy ↦ by rw [hs hx hy]
-
-@[simp]
-theorem signInvariant_empty : SignInvariant f ∅ :=
-  subsingleton_empty.signInvariant
-
-@[simp]
-theorem signInvariant_singleton (a : α) : SignInvariant f {a} :=
-  subsingleton_singleton.signInvariant
 
 /-- A constant function is sign-invariant on every set. -/
 @[simp]
@@ -164,29 +132,5 @@ theorem _root_.IsPreconnected.signInvariant [Zero R] [LinearOrder R] [Topologica
     (hf : ContinuousOn f s) (h0 : ∀ x ∈ s, f x ≠ 0) : SignInvariant f s :=
   fun _ hx _ hy ↦ hs.constant (f := fun x ↦ SignType.sign (f x))
     (fun z hz ↦ (continuousAt_sign_of_ne_zero (h0 z hz)).comp_continuousWithinAt (hf z hz)) hx hy
-
-/-- A function that is continuous on a preconnected set, and vanishes either at every point of
-the set or at none, is sign-invariant there. -/
-theorem _root_.IsPreconnected.signInvariant_of_eq_zero_iff [Zero R] [LinearOrder R]
-    [TopologicalSpace R] [OrderTopology R] [TopologicalSpace α] {f : α → R} {s : Set α}
-    (hs : IsPreconnected s) (hf : ContinuousOn f s)
-    (h0 : ∀ x ∈ s, ∀ y ∈ s, f x = 0 ↔ f y = 0) : SignInvariant f s := by
-  intro x hx y hy
-  by_cases hfx : f x = 0
-  · rw [hfx, (h0 x hx y hy).1 hfx]
-  · exact hs.signInvariant hf (fun z hz hfz ↦ hfx ((h0 x hx z hz).2 hfz)) x hx y hy
-
-/-- Local sign-invariance on relative neighborhoods implies sign-invariance on a preconnected
-set. No continuity of the function itself is required. -/
-theorem _root_.IsPreconnected.signInvariant_of_locally [Zero R] [Preorder R] [DecidableLT R]
-    [TopologicalSpace α] {f : α → R} {s : Set α} (hs : IsPreconnected s)
-    (hlocal : ∀ x ∈ s, ∃ U : Set α, IsOpen U ∧ x ∈ U ∧ SignInvariant f (s ∩ U)) :
-    SignInvariant f s := by
-  rw [signInvariant_def]
-  refine fun x hx y hy ↦ hs.apply_eq_of_eventually_eq
-    (f := fun a ↦ SignType.sign (f a)) (fun a ha ↦ ?_) hx hy
-  obtain ⟨U, hU, haU, h⟩ := hlocal a ha
-  filter_upwards [self_mem_nhdsWithin, nhdsWithin_le_nhds (hU.mem_nhds haU)] with b hb hbU
-  exact h b ⟨hb, hbU⟩ a ⟨ha, haU⟩
 
 end TauCeti

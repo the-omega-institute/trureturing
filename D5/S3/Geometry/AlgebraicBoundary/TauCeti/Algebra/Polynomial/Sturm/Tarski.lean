@@ -80,13 +80,6 @@ theorem exists_identity {p f q : Polynomial R} (h : IsTarskiSeed p f q) :
 theorem mul_derivative (p f : R[X]) : IsTarskiSeed p f (f * p.derivative) :=
   of_identity 1 1 0 zero_lt_one zero_lt_one (by simp)
 
-/-- Reducing the derivative query modulo the head gives a valid Tarski seed. -/
-theorem mod (p f : R[X]) : IsTarskiSeed p f ((f * p.derivative) % p) := by
-  classical
-  refine of_identity 1 1 ((f * p.derivative) / p) zero_lt_one zero_lt_one ?_
-  rw [map_one, one_mul, one_mul]
-  exact (EuclideanDomain.mod_add_div (f * p.derivative) p).symm.trans (by ring)
-
 /-- Clearing every factor `X - C r` of a common factor `d` from the seed identity of
 `d * p` and `d * q`. The scalar `k` is the multiplicity of `r` as a root of `d`, and `e` is the
 cofactor of `(X - C r) ^ k` in `d`. -/
@@ -166,12 +159,6 @@ theorem sign_mul_eq_of_mul {d p f q : R[X]} (h : IsTarskiSeed (d * p) f (d * q))
   have numeric : ∀ s t : SignType, s ≠ 0 → s * (s * t) = t := by decide
   rw [sign_mul, ← h.sign_eq_of_mul hd hr, sign_mul]
   exact numeric _ _ hd'
-
-/-- At every root `r` of the head `p` of a Tarski seed, the sign of `p' r * f r` is the sign
-of `q r`. The point `r` may be a multiple root of `p`. -/
-theorem sign_eq {p f q : R[X]} (h : IsTarskiSeed p f q) {r : R} (hr : p.eval r = 0) :
-    SignType.sign (p.derivative.eval r * f.eval r) = SignType.sign (q.eval r) :=
-  IsTarskiSeed.sign_eq_of_mul (d := 1) (by simpa using h) one_ne_zero hr
 
 /-- A zero query seed makes the query vanish at every root of the nonzero head. -/
 theorem eval_eq_zero {p f : R[X]} (h : IsTarskiSeed p f 0) (hp : p ≠ 0) {r : R}

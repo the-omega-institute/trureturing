@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Geometry/RealAlgebraic/Projection/Collins.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -160,24 +160,6 @@ theorem psc_mem_collinsProjection {F : Finset R[X]} {p q r s : R[X]} (hp : p ∈
     psc r s r.natDegree s.natDegree j ∈ F.collinsProjection :=
   mem_collinsProjection.2 <| Or.inr <| Or.inr ⟨p, hp, r, hr, q, hq, s, hs, j, hj, rfl⟩
 
-/-- The Collins projection of the empty family is empty. -/
-@[simp]
-theorem collinsProjection_empty : (∅ : Finset R[X]).collinsProjection = ∅ := by
-  ext a
-  simp [mem_collinsProjection]
-
-/-- Enlarging the family enlarges its Collins projection. -/
-@[gcongr]
-theorem collinsProjection_mono {F G : Finset R[X]} (h : F ⊆ G) :
-    F.collinsProjection ⊆ G.collinsProjection := by
-  intro a ha
-  rw [mem_collinsProjection] at ha ⊢
-  rcases ha with ⟨p, hp, r, hr, i, hi, rfl⟩ | ⟨p, hp, r, hr, j, hj, rfl⟩ |
-    ⟨p, hp, r, hr, q, hq, s, hs, j, hj, rfl⟩
-  · exact Or.inl ⟨p, h hp, r, hr, i, hi, rfl⟩
-  · exact Or.inr <| Or.inl ⟨p, h hp, r, hr, j, hj, rfl⟩
-  · exact Or.inr <| Or.inr ⟨p, h hp, r, hr, q, h hq, s, hs, j, hj, rfl⟩
-
 open scoped Classical in
 /-- An injective coefficient map commutes with the Collins projection. Injectivity preserves the
 degrees of all reducta and of their derivatives, so the principal subresultant coefficients are
@@ -226,43 +208,6 @@ theorem collinsProjection_image_finSuccEquiv_map {φ : R →+* S} (hφ : Functio
     collinsProjection_image_finSuccEquiv'_map hφ P 0
 
 end MvPolynomial
-
-/-- **Specialization of principal subresultant coefficients.** For members `p, q` of the family
-and any coefficient map `φ`, the principal subresultant coefficients of `p.map φ` and `q.map φ`
-at their actual degrees are images of elements of the Collins projection. The witnesses are the
-corresponding coefficients of the reducta cut off just above the specialized degrees. -/
-theorem psc_map_mem_image_collinsProjection [DecidableEq S] (φ : R →+* S) {F : Finset R[X]}
-    {p q : R[X]} (hp : p ∈ F) (hq : q ∈ F) {j : ℕ}
-    (hj : j ≤ min (p.map φ).natDegree (q.map φ).natDegree) :
-    psc (p.map φ) (q.map φ) (p.map φ).natDegree (q.map φ).natDegree j ∈
-      F.collinsProjection.image φ := by
-  have hr := natDegree_reductum_natDegree_map_add_one φ p
-  have hs := natDegree_reductum_natDegree_map_add_one φ q
-  refine mem_image.2 ⟨_, psc_mem_collinsProjection hp (p.reductum_mem_reducta _) hq
-    (q.reductum_mem_reducta _) (j := j) (by rwa [hr, hs]), ?_⟩
-  rw [← psc_map_map, map_reductum_natDegree_map_add_one, map_reductum_natDegree_map_add_one,
-    hr, hs]
-
-/-- **Specialization of derivative principal subresultant coefficients.** For a member `p` of the
-family and a coefficient map `φ` into an additively torsion-free ring, the principal subresultant
-coefficients of `p.map φ` and its derivative at their actual degrees are images of elements of the
-Collins projection. Torsion-freeness ensures that the specialized derivative has the expected
-degree; in positive characteristic the derivative of a reductum can drop further in degree under
-specialization. -/
-theorem psc_map_derivative_mem_image_collinsProjection [HasUniqueDiv S] [DecidableEq S]
-    (φ : R →+* S) {F : Finset R[X]} {p : R[X]} (hp : p ∈ F) {j : ℕ}
-    (hj : j ≤ min (p.map φ).natDegree (p.map φ).derivative.natDegree) :
-    psc (p.map φ) (p.map φ).derivative (p.map φ).natDegree (p.map φ).derivative.natDegree j ∈
-      F.collinsProjection.image φ := by
-  set r := p.reductum ((p.map φ).natDegree + 1)
-  have hmap : r.map φ = p.map φ := map_reductum_natDegree_map_add_one φ p
-  have hr : r.natDegree = (p.map φ).natDegree := natDegree_reductum_natDegree_map_add_one φ p
-  have hr' : r.derivative.natDegree = (p.map φ).derivative.natDegree := by
-    rw [← hmap, derivative_map,
-      natDegree_map_derivative_eq_of_natDegree_map_eq (by rw [hmap, hr])]
-  refine mem_image.2 ⟨_, psc_derivative_mem_collinsProjection hp (p.reductum_mem_reducta _)
-    (j := j) (by rwa [hr, hr']), ?_⟩
-  rw [← psc_map_map, ← derivative_map, hmap, hr, hr']
 
 /-! ### Invariance of the specialized family
 

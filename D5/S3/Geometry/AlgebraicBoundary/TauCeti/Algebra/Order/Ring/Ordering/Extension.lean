@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Order/Ring/Ordering/Extension.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -75,9 +75,6 @@ def adjoin (P : RingPreordering K) (a : K) (ha : -a ∉ P) : RingPreordering K :
           linear_combination heq
         rwa [← hval] at hmem)
 
-@[simp] theorem mem_adjoin (P : RingPreordering K) (a : K) (ha : -a ∉ P) {x : K} :
-    x ∈ adjoin P a ha ↔ ∃ u ∈ P, ∃ v ∈ P, x = u + a * v := (Iff.rfl)
-
 theorem le_adjoin (P : RingPreordering K) (a : K) (ha : -a ∉ P) :
     P ≤ adjoin P a ha :=
   fun x hx => ⟨x, hx, 0, zero_mem P, by simp⟩
@@ -85,17 +82,6 @@ theorem le_adjoin (P : RingPreordering K) (a : K) (ha : -a ∉ P) :
 theorem self_mem_adjoin (P : RingPreordering K) (a : K) (ha : -a ∉ P) :
     a ∈ adjoin P a ha :=
   ⟨0, zero_mem P, 1, one_mem P, by simp⟩
-
-/-- The generated preordering is contained in every preordering containing its generators. -/
-theorem adjoin_le {P Q : RingPreordering K} {a : K} {ha : -a ∉ P}
-    (hPQ : P ≤ Q) (haQ : a ∈ Q) : adjoin P a ha ≤ Q := by
-  rintro x ⟨u, hu, v, hv, rfl⟩
-  exact add_mem (hPQ hu) (mul_mem haQ (hPQ hv))
-
-@[simp] theorem adjoin_le_iff {P Q : RingPreordering K} {a : K} {ha : -a ∉ P} :
-    adjoin P a ha ≤ Q ↔ P ≤ Q ∧ a ∈ Q :=
-  ⟨fun h => ⟨(le_adjoin P a ha).trans h, h (self_mem_adjoin P a ha)⟩,
-    fun h => adjoin_le h.1 h.2⟩
 
 /-- The union of a nonempty chain of preorderings is a preordering. -/
 private def chainUnion (c : Set (RingPreordering K)) (hc : IsChain (· ≤ ·) c)
@@ -134,19 +120,10 @@ theorem exists_le_isOrdering (P : RingPreordering K) :
     · exact Or.inl ((hQ (le_adjoin Q a ha)) (self_mem_adjoin Q a ha))⟩
   exact ⟨Q, hPQ, { htotal with toIsPrime := inferInstance }⟩
 
-/-- An element whose negative is absent can be made nonnegative in an extending ordering. -/
-theorem exists_le_isOrdering_mem (P : RingPreordering K) {a : K} (ha : -a ∉ P) :
-    ∃ Q : RingPreordering K, P ≤ Q ∧ Q.IsOrdering ∧ a ∈ Q := by
-  obtain ⟨Q, hQ, horder⟩ := exists_le_isOrdering (adjoin P a ha)
-  exact ⟨Q, (le_adjoin P a ha).trans hQ, horder, hQ (self_mem_adjoin P a ha)⟩
-
 /-- A preordering on a field is a pointed ring cone. -/
 def toRingCone (P : RingPreordering K) : RingCone K where
   __ := P.toSubsemiring
   eq_zero_of_mem_of_neg_mem' := P.eq_zero_of_mem_of_neg_mem
-
-@[simp] theorem mem_toRingCone (P : RingPreordering K) {x : K} :
-    x ∈ toRingCone P ↔ x ∈ P := (Iff.rfl)
 
 instance (P : RingPreordering K) [P.IsOrdering] : HasMemOrNegMem (toRingCone P) where
   mem_or_neg_mem := mem_or_neg_mem P
@@ -164,18 +141,12 @@ theorem isStrictOrderedRing (P : RingPreordering K) [P.IsOrdering] :
   have : IsOrderedRing K := .mkOfCone (toRingCone P)
   infer_instance
 
-theorem nonneg_iff (P : RingPreordering K) [P.IsOrdering] (x : K) :
-    letI := linearOrder P
-    0 ≤ x ↔ x ∈ P := by
-  rw [PartialOrder.mkOfAddGroupCone_le_iff, sub_zero]
-  exact mem_toRingCone P
-
 /-- Order a field while respecting all signs in a specified preordering. -/
 theorem exists_linearOrder (P : RingPreordering K) :
     ∃ o : LinearOrder K, letI := o
       IsStrictOrderedRing K ∧ ∀ x ∈ P, 0 ≤ x := by
   obtain ⟨Q, hPQ, hQ⟩ := exists_le_isOrdering P
   let := hQ
-  exact ⟨linearOrder Q, isStrictOrderedRing Q, fun x hx => (nonneg_iff Q x).mpr (hPQ hx)⟩
+  exact ⟨linearOrder Q, isStrictOrderedRing Q, fun x hx => show @LE.le K (linearOrder Q).toLE 0 x from hPQ (by simpa using hx)⟩
 
 end RingPreordering

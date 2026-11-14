@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Order/Ring/Ordering/Semireal.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -47,9 +47,6 @@ def sumSq [IsSemireal K] : RingPreordering K where
   __ := Subsemiring.sumSq K
   mem_of_isSquare' hx := by simpa using hx.isSumSq
   neg_one_notMem' := by simpa using IsSemireal.not_isSumSq_neg_one K
-
-@[simp] theorem mem_sumSq [IsSemireal K] (x : K) :
-    x ∈ sumSq (K := K) ↔ IsSumSq x := Subsemiring.mem_sumSq
 
 end RingPreordering
 

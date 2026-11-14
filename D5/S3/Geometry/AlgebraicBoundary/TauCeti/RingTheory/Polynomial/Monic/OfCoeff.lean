@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/RingTheory/Polynomial/Monic/OfCoeff.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -37,25 +37,9 @@ coefficients is stated: `TauCeti/Analysis/Polynomial/SimpleRoots/Basic.lean` dif
 `(c, z) ↦ (monicOfCoeff c).eval z` in `c` and `z` jointly, so the lower coefficients must appear as
 a *free* tuple rather than as the data of a polynomial subtype.
 
-## Main declarations
+The retained source supplies the useful proof dependencies. Further exact applications,
+including their assumptions and boundary cases, are developed in the owning Blueprint.
 
-* `TauCeti.Polynomial.monicOfCoeff`: the monic polynomial `X ^ n + ∑ i, c i * X ^ i` of degree `n`
-  whose `n` lower coefficients are `c`.
-* `TauCeti.Polynomial.monic_monicOfCoeff`, `TauCeti.Polynomial.natDegree_monicOfCoeff`,
-  `TauCeti.Polynomial.eval_monicOfCoeff`: its monicity, its degree and its values.
-* `TauCeti.Polynomial.coeff_monicOfCoeff` and `TauCeti.Polynomial.monicOfCoeff_coeff`: the
-  coefficients are read back off, and every monic polynomial of degree `n` arises this way, so the
-  two constructions are mutually inverse.
-
-Mathlib writes the same polynomial in the same shape one universe up: `Polynomial.freeMonic R n`,
-in `Mathlib/RingTheory/Polynomial/UniversalFactorizationRing.lean`, is
-`X ^ n + ∑ i, monomial i (MvPolynomial.X i)` over `MvPolynomial (Fin n) R`, of which
-`monicOfCoeff c` is the specialization at `c`. Mathlib also has the same correspondence in bundled
-form, as the composite of `Polynomial.monicEquivDegreeLT` with `Polynomial.degreeLTEquiv`;
-`monicOfCoeff c` is by definition the image of `c` under the inverse of that composite, with the
-degree-`< n` and monic subtypes unbundled away and without the `Nontrivial R` that
-`monicEquivDegreeLT` carries. `TauCeti.Sym.coeffEquiv` is built from the bundled form, and
-`TauCeti.Sym.toMonic_coeffEquiv_symm` identifies its inverse with `monicOfCoeff`.
 -/
 
 public section
@@ -96,27 +80,6 @@ theorem monic_monicOfCoeff (c : Fin n → R) : (monicOfCoeff c).Monic :=
 theorem coeff_monicOfCoeff (c : Fin n → R) (i : Fin n) : (monicOfCoeff c).coeff (i : ℕ) = c i := by
   have hne : (i : ℕ) ≠ n := i.2.ne
   simp [monicOfCoeff, coeff_X_pow, coeff_monomial, hne, Fin.val_eq_val]
-
-/-- Monic polynomials with prescribed lower coefficients agree exactly when their
-coefficient tuples agree. -/
-@[simp]
-theorem monicOfCoeff_inj (c d : Fin n → R) : monicOfCoeff c = monicOfCoeff d ↔ c = d := by
-  refine ⟨fun h ↦ ?_, fun h ↦ h ▸ rfl⟩
-  exact funext fun i ↦ by
-    simpa only [coeff_monicOfCoeff] using congrArg (fun p : R[X] ↦ p.coeff i) h
-
-/-- Evaluating the monic polynomial attached to a coefficient tuple: the leading power plus the
-prescribed lower part. -/
-theorem eval_monicOfCoeff (c : Fin n → R) (z : R) :
-    (monicOfCoeff c).eval z = z ^ n + ∑ i : Fin n, c i * z ^ (i : ℕ) := by
-  simp [monicOfCoeff, eval_finsetSum]
-
-/-- Mapping coefficients commutes with forming the monic polynomial with prescribed lower
-coefficients. -/
-@[simp]
-theorem map_monicOfCoeff {S : Type*} [CommSemiring S] (φ : R →+* S) (c : Fin n → R) :
-    (monicOfCoeff c).map φ = monicOfCoeff (fun i ↦ φ (c i)) := by
-  simp [monicOfCoeff, Polynomial.map_sum]
 
 variable [Nontrivial R]
 

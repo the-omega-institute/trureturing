@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Algebra/Polynomial/Thom.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; selected declarations retain their original proofs.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -59,79 +59,25 @@ section Basic
 variable {R : Type*} [Semiring R] [LinearOrder R]
 
 /-- The sign of the `k`th formal derivative at `x`, including order zero. -/
+@[expose]
 noncomputable def derivativeSign (p : R[X]) (x : R) (k : ℕ) : SignType :=
   sign ((derivative^[k] p).eval x)
-
-/-- Derivative signs are signs of evaluations of iterated formal derivatives. -/
-theorem derivativeSign_def (p : R[X]) (x : R) (k : ℕ) :
-    derivativeSign p x k = sign ((derivative^[k] p).eval x) := (rfl)
-
-@[grind =]
-theorem derivativeSign_eq_one_iff (p : R[X]) (x : R) (k : ℕ) :
-    derivativeSign p x k = 1 ↔ 0 < (derivative^[k] p).eval x := by
-  rw [derivativeSign_def, sign_eq_one_iff]
-
-@[grind =]
-theorem derivativeSign_eq_neg_one_iff (p : R[X]) (x : R) (k : ℕ) :
-    derivativeSign p x k = -1 ↔ (derivative^[k] p).eval x < 0 := by
-  rw [derivativeSign_def, sign_eq_neg_one_iff]
-
-@[simp, grind =]
-theorem derivativeSign_eq_zero_iff (p : R[X]) (x : R) (k : ℕ) :
-    derivativeSign p x k = 0 ↔ (derivative^[k] p).eval x = 0 := by
-  rw [derivativeSign_def, sign_eq_zero_iff]
-
-theorem derivativeSign_ne_zero (p : R[X]) (x : R) (k : ℕ) :
-    derivativeSign p x k ≠ 0 ↔ (derivative^[k] p).eval x ≠ 0 :=
-  not_congr (derivativeSign_eq_zero_iff p x k)
-
-@[simp, grind =]
-theorem derivativeSign_zero (x : R) (k : ℕ) : derivativeSign (0 : R[X]) x k = 0 := by
-  simp [derivativeSign_def]
-
-@[simp, grind =]
-theorem derivativeSign_index_zero (p : R[X]) (x : R) :
-    derivativeSign p x 0 = sign (p.eval x) := by
-  simp [derivativeSign_def]
 
 @[simp, grind =]
 theorem derivativeSign_eq_zero (p : R[X]) (x : R) {k : ℕ} (hk : p.natDegree < k) :
     derivativeSign p x k = 0 := by
-  simp [derivativeSign_def, iterate_derivative_eq_zero hk]
-
-@[simp, grind =]
-theorem derivativeSign_C (a x : R) (k : ℕ) :
-    derivativeSign (C a) x k = if k = 0 then sign a else 0 := by
-  cases k with
-  | zero => simp [derivativeSign_def]
-  | succ k => simp
-
-/-- Taking one derivative advances the derivative-sign index by one. -/
-@[simp, grind =]
-theorem derivativeSign_derivative (p : R[X]) (x : R) (k : ℕ) :
-    derivativeSign p.derivative x k = derivativeSign p x (k + 1) := by
-  simp only [derivativeSign_def, Function.iterate_succ_apply]
+  simp [derivativeSign, iterate_derivative_eq_zero hk]
 
 /-- Shifting the polynomial shifts the derivative index. -/
 @[simp, grind =]
 theorem derivativeSign_iterate_derivative (p : R[X]) (x : R) (i j : ℕ) :
     derivativeSign (derivative^[i] p) x j = derivativeSign p x (j + i) := by
-  simp only [derivativeSign_def, Function.iterate_add_apply]
+  simp only [derivativeSign, Function.iterate_add_apply]
 
 /-- The usual finite Thom encoding retains derivatives 1 through the degree. -/
+@[expose]
 noncomputable def thomEncoding (p : R[X]) (x : R) : Fin p.natDegree → SignType :=
   fun i => derivativeSign p x (i.val + 1)
-
-/-- Coordinate `i` records the sign of derivative `i + 1`. -/
-@[simp, grind =]
-theorem thomEncoding_apply (p : R[X]) (x : R) (i : Fin p.natDegree) :
-    thomEncoding p x i = derivativeSign p x (i.val + 1) := (rfl)
-
-/-- A finite Thom word consists of the signs of derivatives 1 through the degree. -/
-theorem thomEncoding_def (p : R[X]) (x : R) :
-    thomEncoding p x = fun i => sign ((derivative^[i.val + 1] p).eval x) := by
-  funext i
-  rw [thomEncoding_apply, derivativeSign_def]
 
 private theorem derivativeSign_tail (p : R[X]) {a b : R} {n : ℕ}
     (h : ∀ i : Fin p.natDegree, n < i.val + 1 → thomEncoding p a i = thomEncoding p b i)
@@ -140,7 +86,7 @@ private theorem derivativeSign_tail (p : R[X]) {a b : R} {n : ℕ}
   · have hkpos : 1 ≤ k := by omega
     have he := h ⟨k - 1, by omega⟩
       (by simpa only [Fin.val_mk, Nat.sub_add_cancel hkpos] using hk)
-    simpa only [thomEncoding_apply, Nat.sub_add_cancel hkpos] using he
+    simpa only [thomEncoding, Nat.sub_add_cancel hkpos] using he
   · simp [derivativeSign_eq_zero p _ (by omega : p.natDegree < k)]
 
 /-- Finite Thom encodings agree exactly when all positive-order derivative signs agree. -/
@@ -152,7 +98,7 @@ theorem thomEncoding_eq_iff (p : R[X]) (a b : R) :
     exact derivativeSign_tail p (fun i _ => congrFun h i)
   · intro h
     funext i
-    simp only [thomEncoding_apply]
+    simp only [thomEncoding]
     exact h (i.val + 1) (Nat.succ_pos _)
 
 /-- At and above the degree the derivative is constant, so its sign is
@@ -161,7 +107,7 @@ theorem derivativeSign_const (p : R[X]) (a b : R) {k : ℕ} (hk : p.natDegree �
     derivativeSign p a k = derivativeSign p b k := by
   have hd : (derivative^[k] p).natDegree = 0 :=
     Nat.eq_zero_of_le_zero ((natDegree_iterate_derivative p k).trans (by omega))
-  simp only [derivativeSign_def]
+  simp only [derivativeSign]
   rw [eq_C_of_natDegree_eq_zero hd]
   simp
 
@@ -170,53 +116,8 @@ so a next coordinate exists. -/
 theorem thomEncoding_succ_lt_natDegree (p : R[X]) {a b : R} {i : Fin p.natDegree}
     (hne : thomEncoding p a i ≠ thomEncoding p b i) : i.val + 1 < p.natDegree := by
   by_contra! hi
-  simp only [thomEncoding_apply] at hne
+  simp only [thomEncoding] at hne
   exact hne (derivativeSign_const p a b hi)
-
-/-- Distinct Thom encodings have a last disagreement strictly below the degree.
-All larger derivative signs agree, including the highest derivative sign.
-For distinct roots, `thomEncoding_injOn` supplies the unequal encodings. -/
-theorem exists_derivativeSign_ne (p : R[X]) {a b : R}
-    (henc : thomEncoding p a ≠ thomEncoding p b) :
-    ∃ k, 0 < k ∧ k < p.natDegree ∧
-      derivativeSign p a k ≠ derivativeSign p b k ∧
-      ∀ j, k < j → derivativeSign p a j = derivativeSign p b j := by
-  obtain ⟨i, hi⟩ := Function.ne_iff.mp henc
-  let s := (Finset.range (p.natDegree + 1)).filter
-    (fun j => derivativeSign p a j ≠ derivativeSign p b j)
-  have hi_mem : i.val + 1 ∈ s := by
-    simp only [s, Finset.mem_filter, Finset.mem_range]
-    exact ⟨by omega, by simpa only [thomEncoding_apply] using hi⟩
-  have hs : s.Nonempty := ⟨i.val + 1, hi_mem⟩
-  let k := s.max' hs
-  have hk : k ∈ s := Finset.max'_mem s hs
-  have hk' := (Finset.mem_filter.mp hk).2
-  have hpos : 0 < k := (Nat.succ_pos i.val).trans_le (Finset.le_max' s _ hi_mem)
-  have hdeg : k < p.natDegree := by
-    by_contra hn
-    exact hk' (derivativeSign_const p a b (by omega))
-  refine ⟨k, hpos, hdeg, hk', ?_⟩
-  intro j hj
-  by_cases hd : p.natDegree ≤ j
-  · exact derivativeSign_const p a b hd
-  · by_contra hne
-    have hjs : j ∈ s := by
-      simp only [s, Finset.mem_filter, Finset.mem_range]
-      exact ⟨by omega, hne⟩
-    have hle : j ≤ k := Finset.le_max' s j hjs
-    omega
-
-/-- Distinct finite Thom encodings have a last differing coordinate. -/
-theorem exists_thomEncoding_ne (p : R[X]) {a b : R}
-    (henc : thomEncoding p a ≠ thomEncoding p b) :
-    ∃ i : Fin p.natDegree, thomEncoding p a i ≠ thomEncoding p b i ∧
-      ∀ j : Fin p.natDegree, i < j → thomEncoding p a j = thomEncoding p b j := by
-  obtain ⟨k, hk, hkd, hne, ht⟩ := exists_derivativeSign_ne p henc
-  refine ⟨⟨k - 1, by omega⟩, ?_, ?_⟩
-  · simpa only [thomEncoding_apply, Nat.sub_add_cancel hk] using hne
-  · intro j hj
-    simp only [Fin.lt_def] at hj
-    simpa only [thomEncoding_apply] using ht (j.val + 1) (by omega)
 
 end Basic
 
@@ -236,11 +137,11 @@ private theorem sign_between_aux (hrolle : PolynomialRolle R) (n : ℕ) (p : R[X
       simpa only [Function.iterate_succ_apply] using hn
     have hs : ∀ k, derivativeSign p.derivative a k = derivativeSign p.derivative b k := by
       intro k
-      simpa only [derivativeSign_derivative] using h (k + 1)
+      simpa only [derivativeSign, Function.iterate_succ_apply] using h (k + 1)
     have hd_sign (y : R) (hy : y ∈ Icc a b) :
         sign (p.derivative.eval y) = sign (p.derivative.eval a) := ih p.derivative hd hy hs
     have h0 : sign (p.eval a) = sign (p.eval b) := by
-      simpa only [derivativeSign_index_zero] using h 0
+      simpa only [derivativeSign, Function.iterate_zero_apply] using h 0
     rcases le_total 0 (p.derivative.eval a) with hp | hp
     · have hm : MonotoneOn p.eval (Icc a b) :=
         hrolle.monotoneOn p (by
@@ -308,7 +209,7 @@ theorem eval_ne_zero_of_derivativeSign_eq (p : R[X]) (hrolle : PolynomialRolle R
       (lt_of_le_of_ne (not_lt.1 hlt) hab.symm)
   rw [uIcc_of_le hlt.le] at hx
   have hsign {y : R} (hy : y ∈ Icc a b) : sign (p.eval y) = sign (p.eval a) := by
-    simpa using derivativeSign_eq_on_Icc p hrolle hy (k := 0) fun j _ ↦ h j
+    simpa [derivativeSign] using derivativeSign_eq_on_Icc p hrolle hy (k := 0) fun j _ ↦ h j
   intro hx0
   apply hp
   refine p.eq_zero_of_infinite_isRoot ((Icc_infinite hlt).mono fun y hy ↦ ?_)
@@ -322,7 +223,7 @@ theorem eq_of_derivativeSign_eq (p : R[X]) (hrolle : PolynomialRolle R) (hp : p 
     (hs : ∀ k, 0 < k → derivativeSign p a k = derivativeSign p b k) : a = b := by
   have h (k : ℕ) : derivativeSign p a k = derivativeSign p b k := by
     cases k with
-    | zero => simp [derivativeSign_def, ha, hb]
+    | zero => simp [derivativeSign, ha, hb]
     | succ k => exact hs _ (Nat.succ_pos _)
   by_contra hab
   exact eval_ne_zero_of_derivativeSign_eq p hrolle hp hab h left_mem_uIcc ha
@@ -341,7 +242,7 @@ private theorem sign_order_aux (p : R[X]) (hrolle : PolynomialRolle R) {a b : R}
     (sign (p.derivative.eval a) = -1 ∧ sign (p.eval b) < sign (p.eval a)) := by
   have hd (x : R) (hx : x ∈ Icc a b) :
       sign (p.derivative.eval x) = sign (p.derivative.eval a) := by
-    simpa only [derivativeSign_def, Function.iterate_one] using
+    simpa only [derivativeSign, Function.iterate_one] using
       derivativeSign_eq_on_Icc p hrolle hx (k := 1) (fun j hj => htail j hj)
   rcases lt_trichotomy (p.derivative.eval a) 0 with hn | hz | hp
   · have hm : StrictAntiOn p.eval (Icc a b) :=
@@ -380,12 +281,12 @@ theorem lt_iff_derivativeSign (p : R[X]) (hrolle : PolynomialRolle R) {a b : R} 
       (ht : ∀ j, k < j → derivativeSign p u j = derivativeSign p v j) :
       (derivativeSign p u (k + 1) = 1 ∧ derivativeSign p u k < derivativeSign p v k) ∨
       (derivativeSign p u (k + 1) = -1 ∧ derivativeSign p v k < derivativeSign p u k) := by
-    simp only [derivativeSign_def] at hne
+    simp only [derivativeSign] at hne
     have h := sign_order_aux (derivative^[k] p) hrolle huv hne (by
       intro j hj
       rw [derivativeSign_iterate_derivative, derivativeSign_iterate_derivative]
       exact ht _ (by omega))
-    simpa only [derivativeSign_def, Function.iterate_succ_apply'] using h
+    simpa only [derivativeSign, Function.iterate_succ_apply'] using h
   constructor
   · exact fun hab => forward hab hne htail
   · intro h
@@ -413,7 +314,7 @@ theorem lt_iff_thomEncoding (p : R[X]) (hrolle : PolynomialRolle R) {a b : R}
         thomEncoding p a i < thomEncoding p b i) ∨
       (thomEncoding p a ⟨i.val + 1, thomEncoding_succ_lt_natDegree p hne⟩ = -1 ∧
         thomEncoding p b i < thomEncoding p a i)) := by
-  simp only [thomEncoding_apply] at hne ⊢
+  simp only [thomEncoding] at hne ⊢
   apply lt_iff_derivativeSign p hrolle hne
   exact derivativeSign_tail p (fun j hj => htail j (Nat.lt_of_succ_lt_succ hj))
 
@@ -437,7 +338,7 @@ theorem thomEncoding_succ_ne_zero (p : R[X]) (hrolle : PolynomialRolle R) {a b :
     (hne : thomEncoding p a i ≠ thomEncoding p b i)
     (htail : ∀ j : Fin p.natDegree, i < j → thomEncoding p a j = thomEncoding p b j) :
     thomEncoding p a ⟨i.val + 1, thomEncoding_succ_lt_natDegree p hne⟩ ≠ 0 := by
-  simp only [thomEncoding_apply] at hne ⊢
+  simp only [thomEncoding] at hne ⊢
   exact derivativeSign_succ_ne_zero p hrolle hne
     (derivativeSign_tail p (fun j hj => htail j (Nat.lt_of_succ_lt_succ hj)))
 
