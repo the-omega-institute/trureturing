@@ -30,9 +30,6 @@ open LatticeSugawaraCurrents LatticeActualAnnihilation LatticeInvolution
 open LatticePositiveEnergy MvPolynomial OriginalSourcePairing
 open D5.S3.VertexAlgebra.SignedOscillatorWick (wick_constant_left)
 open SignedOscillatorWick
-open private FactorialBilinear.symmetric from
-  D5.S3.VertexAlgebra.TwistedGround.SignedOscillatorWick
-
 private theorem sigma_constant (D : LatticeData) (p : Oscillator D) :
     (sigma D p).coeff 0 = p.coeff 0 := by
   induction p using MvPolynomial.induction_on with
