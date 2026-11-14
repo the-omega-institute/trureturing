@@ -96,26 +96,32 @@ private theorem linear_inverse_left (c : Discriminant D)
     (x : Multiplicity A c) :
     r ((dualMultiplicityEquiv A hD c).dualMap.symm
       (kappa (DualMultiplicity (dualModule A)) c (bidualFamily A hD c x))) = x := by
-  have cancel {M N P Q : Type u}
-      [AddCommMonoid M] [Module ℂ M] [AddCommMonoid N] [Module ℂ N]
-      [AddCommMonoid P] [Module ℂ P] [AddCommMonoid Q] [Module ℂ Q]
-      (i : P →ₗ[ℂ] Q) (k : Q →ₗ[ℂ] P) (e : N ≃ₗ[ℂ] P)
-      (hki : ∀ p, k (i p) = p) (ev : M →ₗ[ℂ] N) (r : N →ₗ[ℂ] M)
-      (hr : ∀ x, r (ev x) = x) (x : M) :
-      r (e.symm (k ((i.comp (e.toLinearMap.comp ev)) x))) = x := by
-    as_aux_lemma =>
-      simp only [LinearMap.comp_apply, LinearEquiv.coe_toLinearMap]
-      exact (congrArg (fun p => r (e.symm p)) (hki (e (ev x)))).trans
-        ((congrArg (fun t => r t) (e.symm_apply_apply (ev x))).trans (hr x))
-  unfold bidualFamily
-  exact @cancel (Multiplicity A c)
-    (Module.Dual ℂ (Module.Dual ℂ (Multiplicity A c)))
-    (DualMultiplicity (dualModule A) c)
-    (Multiplicity (realization (DualMultiplicity (dualModule A))) c)
-    _ _ _ _ _ _ _ _ (iota (DualMultiplicity (dualModule A)) c)
-    (kappa (DualMultiplicity (dualModule A)) c) (dualMultiplicityEquiv A hD c).dualMap
-    (fun t => kappa_iota (DualMultiplicity (dualModule A)) c t)
-    (Module.Dual.eval ℂ (Multiplicity A c)) r hr x
+  have read_kappa (W : Discriminant D → Type u)
+      [∀ d, AddCommGroup (W d)] [∀ d, Module ℂ (W d)]
+      (d : Discriminant D) (z : Multiplicity (realization W) d) :
+      kappa W d z = ActualWeakModuleScalarProbes.tensorCoordinates (z.val.val d) (0,0) := by
+    as_aux_lemma => rfl
+  have read_tensor {V : Type u} [AddCommGroup V] [Module ℂ V]
+      (v : Carrier D) (z : V) (r : ActualWeakModuleScalarProbes.Coordinate D) :
+      (EquivLike.coe (ActualWeakModuleScalarProbes.tensorCoordinates (D := D) (W := V))
+        (v ⊗ₜ[ℂ] z)).toFun r = ActualWeakModuleScalarProbes.coordinate D r v • z := by
+    as_aux_lemma => exact ActualWeakModuleScalarProbes.tensorCoordinates_tmul v z r
+  have hv : ActualWeakModuleScalarProbes.coordinate D (0,0)
+      (Finsupp.single 0 (1 : Oscillator D)) = 1 := by
+    simp only [ActualWeakModuleScalarProbes.coordinate_apply,
+      Finsupp.single_eq_same, MvPolynomial.coeff_one, ite_true]
+  have hk : kappa (DualMultiplicity (dualModule A)) c (bidualFamily A hD c x) =
+      (dualMultiplicityEquiv A hD c).dualMap (Module.Dual.eval ℂ (Multiplicity A c) x) := by
+    apply LinearMap.ext
+    intro q
+    dsimp (config := { proj := false }) only [bidualFamily]
+    simp (config := { proj := false }) only [read_kappa, LinearMap.comp_apply,
+      iota_val, DirectSum.lof_apply, read_tensor, hv, one_smul,
+      LinearEquiv.coe_toLinearMap]
+  exact (congrArg (fun z => r ((dualMultiplicityEquiv A hD c).dualMap.symm z)) hk).trans
+    ((congrArg (fun z => r z)
+      ((dualMultiplicityEquiv A hD c).dualMap.symm_apply_apply
+        (Module.Dual.eval ℂ (Multiplicity A c) x))).trans (hr x))
 
 
 end Canonical
@@ -150,96 +156,69 @@ private theorem dualDualFamily_natural (f : ModuleHom A B)
     (c : Discriminant D) (x : Multiplicity A c) :
     dualDualFamily hD f c (bidualFamily A hD c x) =
       bidualFamily B hD c (restrict f c x) := by
-  have lift_natural {MA NA PA QA : Type u} {MB NB PB QB : Type v}
-      [AddCommMonoid MA] [Module ℂ MA] [AddCommMonoid NA] [Module ℂ NA]
-      [AddCommMonoid PA] [Module ℂ PA] [AddCommMonoid QA] [Module ℂ QA]
-      [AddCommMonoid MB] [Module ℂ MB] [AddCommMonoid NB] [Module ℂ NB]
-      [AddCommMonoid PB] [Module ℂ PB] [AddCommMonoid QB] [Module ℂ QB]
-      (iA : PA →ₗ[ℂ] QA) (kA : QA →ₗ[ℂ] PA) (iB : PB →ₗ[ℂ] QB)
-      (eA : NA ≃ₗ[ℂ] PA) (eB : NB ≃ₗ[ℂ] PB)
-      (evA : MA →ₗ[ℂ] NA) (evB : MB →ₗ[ℂ] NB)
-      (f : MA →ₗ[ℂ] MB) (g : PA →ₗ[ℂ] PB) (hki : ∀ p, kA (iA p) = p)
-      (x : MA) (h : g (eA (evA x)) = eB (evB (f x))) :
-      (iB.comp (g.comp kA)) ((iA.comp (eA.toLinearMap.comp evA)) x) =
-      (iB.comp (eB.toLinearMap.comp evB)) (f x) := by
-    as_aux_lemma =>
-      simp only [LinearMap.comp_apply, LinearEquiv.coe_toLinearMap]
-      exact (congrArg (fun t => iB (g t)) (hki (eA (evA x)))).trans
-        (congrArg (fun t => iB t) h)
-  have transpose_natural {M P : Type u} {N Q : Type v}
-      [AddCommMonoid M] [Module ℂ M] [AddCommMonoid P] [Module ℂ P]
-      [AddCommMonoid N] [Module ℂ N] [AddCommMonoid Q] [Module ℂ Q]
-      (e : P ≃ₗ[ℂ] Module.Dual ℂ M) (d : Q ≃ₗ[ℂ] Module.Dual ℂ N)
-      (f : M →ₗ[ℂ] N) (g : Q →ₗ[ℂ] P)
-      (h : ∀ q, e (g q) = (d q).comp f) (x : M) :
-      g.dualMap (e.dualMap (Module.Dual.eval ℂ M x)) =
-        d.dualMap (Module.Dual.eval ℂ N (f x)) := by
-    as_aux_lemma =>
-      apply LinearMap.ext
-      intro q
-      simpa only [LinearMap.dualMap_apply, LinearEquiv.dualMap_apply,
-        Module.Dual.eval_apply, LinearMap.comp_apply] using
-        congrArg (fun φ : Module.Dual ℂ M => φ x) (h q)
+  have read_kappa (W : Discriminant D → Type u)
+      [∀ d, AddCommGroup (W d)] [∀ d, Module ℂ (W d)]
+      (d : Discriminant D) (z : Multiplicity (realization W) d) :
+      kappa W d z = ActualWeakModuleScalarProbes.tensorCoordinates (z.val.val d) (0,0) := by
+    as_aux_lemma => rfl
+  have read_tensor {V : Type u} [AddCommGroup V] [Module ℂ V]
+      (v : Carrier D) (z : V) (r : ActualWeakModuleScalarProbes.Coordinate D) :
+      (EquivLike.coe (ActualWeakModuleScalarProbes.tensorCoordinates (D := D) (W := V))
+        (v ⊗ₜ[ℂ] z)).toFun r = ActualWeakModuleScalarProbes.coordinate D r v • z := by
+    as_aux_lemma => exact ActualWeakModuleScalarProbes.tensorCoordinates_tmul v z r
+  have read_kappaB (W : Discriminant D → Type v)
+      [∀ d, AddCommGroup (W d)] [∀ d, Module ℂ (W d)]
+      (d : Discriminant D) (z : Multiplicity (realization W) d) :
+      kappa W d z = ActualWeakModuleScalarProbes.tensorCoordinates (z.val.val d) (0,0) := by
+    as_aux_lemma => rfl
+  have read_tensorB {V : Type v} [AddCommGroup V] [Module ℂ V]
+      (v : Carrier D) (z : V) (r : ActualWeakModuleScalarProbes.Coordinate D) :
+      (EquivLike.coe (ActualWeakModuleScalarProbes.tensorCoordinates (D := D) (W := V))
+        (v ⊗ₜ[ℂ] z)).toFun r = ActualWeakModuleScalarProbes.coordinate D r v • z := by
+    as_aux_lemma => exact ActualWeakModuleScalarProbes.tensorCoordinates_tmul v z r
+  have hv : ActualWeakModuleScalarProbes.coordinate D (0,0)
+      (Finsupp.single 0 (1 : Oscillator D)) = 1 := by
+    simp only [ActualWeakModuleScalarProbes.coordinate_apply,
+      Finsupp.single_eq_same, MvPolynomial.coeff_one, ite_true]
   have hdn (q : Multiplicity (dualModule B) (-c)) :
       dualMultiplicityEquiv A hD c (restrict (dualHom hD f) (-c) q) =
         (dualMultiplicityEquiv B hD c q).comp (restrict f c) := by
-    let eLeft : Multiplicity (dualModule A) (-c) ≃ Module.Dual ℂ (Multiplicity A c) :=
+    let eA : Multiplicity (dualModule A) (-c) ≃ Module.Dual ℂ (Multiplicity A c) :=
       { toFun := fun z => dualMultiplicityEquiv A hD c z
-        invFun := fun φ => (dualMultiplicityEquiv A hD c).symm φ
-        left_inv := fun z => (dualMultiplicityEquiv A hD c).symm_apply_apply z
-        right_inv := fun φ => (dualMultiplicityEquiv A hD c).apply_symm_apply φ }
-    let eRight : Multiplicity (dualModule B) (-c) ≃ Module.Dual ℂ (Multiplicity B c) :=
+        invFun := fun φ => dualIota A c φ
+        left_inv := fun z => (dualMultiplicityEquiv_symm_apply A hD c _).symm.trans
+          ((dualMultiplicityEquiv A hD c).symm_apply_apply z)
+        right_inv := fun φ =>
+          (congrArg (fun z => dualMultiplicityEquiv A hD c z)
+            (dualMultiplicityEquiv_symm_apply A hD c φ).symm).trans
+              ((dualMultiplicityEquiv A hD c).apply_symm_apply φ) }
+    let eB : Multiplicity (dualModule B) (-c) ≃ Module.Dual ℂ (Multiplicity B c) :=
       { toFun := fun z => dualMultiplicityEquiv B hD c z
-        invFun := fun ψ => (dualMultiplicityEquiv B hD c).symm ψ
-        left_inv := fun z => (dualMultiplicityEquiv B hD c).symm_apply_apply z
-        right_inv := fun ψ => (dualMultiplicityEquiv B hD c).apply_symm_apply ψ }
-    have hnatural := @dualMultiplicityEquiv_natural
-      (Module.Dual ℂ (Multiplicity A c)) (Module.Dual ℂ (Multiplicity B c))
-      (Multiplicity (dualModule A) (-c)) (Multiplicity (dualModule B) (-c))
-      eLeft eRight
-      (fun φ => dualIota A c φ) (fun ψ => dualIota B c ψ)
-      (fun φ => dualMultiplicityEquiv_symm_apply A hD c φ)
-      (fun ψ => dualMultiplicityEquiv_symm_apply B hD c ψ)
+        invFun := fun φ => dualIota B c φ
+        left_inv := fun z => (dualMultiplicityEquiv_symm_apply B hD c _).symm.trans
+          ((dualMultiplicityEquiv B hD c).symm_apply_apply z)
+        right_inv := fun φ =>
+          (congrArg (fun z => dualMultiplicityEquiv B hD c z)
+            (dualMultiplicityEquiv_symm_apply B hD c φ).symm).trans
+              ((dualMultiplicityEquiv B hD c).apply_symm_apply φ) }
+    exact dualMultiplicityEquiv_natural eA eB
+      (fun φ => dualIota A c φ) (fun φ => dualIota B c φ)
+      (fun _ => rfl) (fun _ => rfl)
       (fun z => restrict (dualHom hD f) (-c) z)
-      (fun ψ : Module.Dual ℂ (Multiplicity B c) => ψ.comp (restrict f c))
-      (fun ψ => dualHom_dualIota hD f c ψ) q
-    have hleft (z : Multiplicity (dualModule A) (-c)) :
-        dualMultiplicityEquiv A hD c z = eLeft z := by
-      apply LinearMap.ext
-      intro t
-      rfl
-    have hright (z : Multiplicity (dualModule B) (-c)) :
-        eRight z = dualMultiplicityEquiv B hD c z := by
-      apply LinearMap.ext
-      intro t
-      rfl
-    exact (hleft (restrict (dualHom hD f) (-c) q)).trans
-      (hnatural.trans (congrArg (fun ψ : Module.Dual ℂ (Multiplicity B c) =>
-        ψ.comp (restrict f c)) (hright q)))
-
-  let eA := (dualMultiplicityEquiv A hD c).dualMap
-  let eB := (dualMultiplicityEquiv B hD c).dualMap
-  let y := Module.Dual.eval ℂ (Multiplicity A c) x
-  have he : (restrict (dualHom hD f) (-c)).dualMap (eA y) =
-      eB (Module.Dual.eval ℂ (Multiplicity B c) (restrict f c x)) := by
-    exact @transpose_natural (Multiplicity A c) (Multiplicity (dualModule A) (-c))
-      (Multiplicity B c) (Multiplicity (dualModule B) (-c)) _ _ _ _ _ _ _ _
-      (dualMultiplicityEquiv A hD c) (dualMultiplicityEquiv B hD c)
-      (restrict f c) (restrict (dualHom hD f) (-c)) hdn x
-  unfold dualDualFamily bidualFamily
-  exact @lift_natural (Multiplicity A c)
-    (Module.Dual ℂ (Module.Dual ℂ (Multiplicity A c)))
-    (DualMultiplicity (dualModule A) c)
-    (Multiplicity (realization (DualMultiplicity (dualModule A))) c)
-    (Multiplicity B c) (Module.Dual ℂ (Module.Dual ℂ (Multiplicity B c)))
-    (DualMultiplicity (dualModule B) c)
-    (Multiplicity (realization (DualMultiplicity (dualModule B))) c)
-    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    (iota (DualMultiplicity (dualModule A)) c) (kappa (DualMultiplicity (dualModule A)) c)
-    (iota (DualMultiplicity (dualModule B)) c) eA eB
-    (Module.Dual.eval ℂ (Multiplicity A c)) (Module.Dual.eval ℂ (Multiplicity B c))
-    (restrict f c) (restrict (dualHom hD f) (-c)).dualMap
-    (fun t => kappa_iota (DualMultiplicity (dualModule A)) c t) x he
+      (fun φ => φ.comp (restrict f c)) (fun φ => dualHom_dualIota hD f c φ) q
+  apply (multiplicityEquiv (DualMultiplicity (dualModule B)) hD c).injective
+  apply LinearMap.ext
+  intro q
+  change kappa (DualMultiplicity (dualModule B)) c
+      (dualDualFamily hD f c (bidualFamily A hD c x)) q =
+    kappa (DualMultiplicity (dualModule B)) c
+      (bidualFamily B hD c (restrict f c x)) q
+  dsimp (config := { proj := false }) only [dualDualFamily, bidualFamily]
+  simp (config := { proj := false }) only [read_kappa, read_kappaB, LinearMap.comp_apply,
+    iota_val, DirectSum.lof_apply, read_tensor, read_tensorB, hv, one_smul,
+    LinearEquiv.coe_toLinearMap, LinearMap.dualMap_apply, LinearEquiv.dualMap_apply,
+    Module.Dual.eval_apply]
+  exact LinearMap.congr_fun (hdn q) x
 
 
 theorem bidualHom_natural (f : ModuleHom A B) :
@@ -296,26 +275,21 @@ private theorem bidualInverseFamily_left (c : Discriminant D)
 private theorem bidualInverseFamily_right (c : Discriminant D)
     (z : Multiplicity (dualModule (dualModule A)) c) :
     bidualFamily A hD c (bidualInverseFamily A hD c z) = z := by
-  have cancel {M N P Q : Type u}
+  have comp_inj {M N P : Type u}
       [AddCommMonoid M] [Module ℂ M] [AddCommMonoid N] [Module ℂ N]
-      [AddCommMonoid P] [Module ℂ P] [AddCommMonoid Q] [Module ℂ Q]
-      (i : P →ₗ[ℂ] Q) (k : Q →ₗ[ℂ] P) (e : N ≃ₗ[ℂ] P) (ev : M ≃ₗ[ℂ] N)
-      (hik : ∀ q, i (k q) = q) (z : Q) :
-      (i.comp (e.toLinearMap.comp ev.toLinearMap))
-        ((ev.symm.toLinearMap.comp (e.symm.toLinearMap.comp k)) z) = z := by
-    as_aux_lemma =>
-      simp only [LinearMap.comp_apply, LinearEquiv.coe_toLinearMap,
-        LinearEquiv.apply_symm_apply]
-      exact hik z
-  unfold bidualFamily bidualInverseFamily
-  exact @cancel (Multiplicity A c)
-    (Module.Dual ℂ (Module.Dual ℂ (Multiplicity A c)))
-    (DualMultiplicity (dualModule A) c)
-    (Multiplicity (realization (DualMultiplicity (dualModule A))) c)
-    _ _ _ _ _ _ _ _ (iota (DualMultiplicity (dualModule A)) c)
-    (kappa (DualMultiplicity (dualModule A)) c) (dualMultiplicityEquiv A hD c).dualMap
-    (Module.evalEquiv ℂ (Multiplicity A c))
-    (fun t => (multiplicityEquiv (DualMultiplicity (dualModule A)) hD c).symm_apply_apply t) z
+      [AddCommMonoid P] [Module ℂ P]
+      (f : N →ₗ[ℂ] P) (g : M →ₗ[ℂ] N)
+      (hf : Function.Injective f) (hg : Function.Injective g) :
+      Function.Injective (f.comp g) := by
+    as_aux_lemma => exact hf.comp hg
+  have hi : Function.Injective (bidualInverseFamily A hD c) := by
+    unfold bidualInverseFamily
+    apply comp_inj
+    · exact (Module.evalEquiv ℂ (Multiplicity A c)).symm.injective
+    · apply comp_inj
+      · exact (dualMultiplicityEquiv A hD c).dualMap.symm.injective
+      · exact (multiplicityEquiv (DualMultiplicity (dualModule A)) hD c).injective
+  exact hi (bidualInverseFamily_left A hD c (bidualInverseFamily A hD c z))
 
 
 def bidualInverseHom : ModuleHom (dualModule (dualModule A)) A :=
