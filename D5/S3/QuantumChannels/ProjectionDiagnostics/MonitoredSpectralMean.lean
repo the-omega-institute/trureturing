@@ -7,9 +7,11 @@
    digest: Finite dimensional monitored return and the occupied cyclic spectrum. -/
 
 import D5.S3.QuantumChannels.ProjectionDiagnostics.CyclicMonitoredPowerBound
+import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
 import Mathlib.Analysis.InnerProductSpace.Trace
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Topology.Order.MonotoneConvergence
+import Mathlib.Data.Set.Card
 
 /-! Monitored finite sums and their cyclic operator representation. -/
 
@@ -33,9 +35,6 @@ private def cyclicUnitary (U : E ≃ₗᵢ[ℂ] E) (v : E) :
     { toLinearMap := U.toLinearMap.restrict (unitary_mem U v)
       norm_map' := fun x => U.norm_map (x : E) }
   LinearIsometryEquiv.ofSurjective f (LinearMap.surjective_of_injective f.injective)
-
-private theorem unitary_coe (U : E ≃ₗᵢ[ℂ] E) (v : E) (x : cyclicSpace U v) :
-    (cyclicUnitary U v x : E) = U (x : E) := rfl
 
 private theorem step_factor (U : E ≃ₗᵢ[ℂ] E) (v : E) (hv : ‖v‖ = 1) :
     cyclicStep U v =
@@ -207,5 +206,132 @@ private theorem mean_cyclic_dimension (U : E ≃ₗᵢ[ℂ] E) (v : E) (hv : ‖
   exact (weighted_finite U v hv (k * N)).trans
     (congrArg (fun x : ℝ => x - (k * N : ℕ) * survivalProbability U v (k * N))
       (trace_survival U v hv (k * N)))
+
+/-- Distinct eigenvalues with a nonzero component of the actual initial state. -/
+def occupiedSpectrum (U : E ≃ₗᵢ[ℂ] E) (v : E) : Set ℂ :=
+  {ζ | ∃ w : E, U w = ζ • w ∧ inner ℂ w v ≠ 0}
+
+private theorem eigenvector_not_dark (U : E ≃ₗᵢ[ℂ] E) (v : E)
+    {x : cyclicSpace U v} {ζ : ℂ}
+    (hx : cyclicUnitary U v x = ζ • x) (ho : inner ℂ (initial U v) x = 0) : x = 0 := by
+  have hx' : U (x : E) = ζ • (x : E) := congrArg Subtype.val hx
+  have hB : cyclicClick U v x = 0 := by
+    apply Subtype.ext
+    change (ℂ ∙ v).starProjection (U (x : E)) = 0
+    rw [hx', map_smul, Submodule.starProjection_singleton]
+    change inner ℂ v (x : E) = 0 at ho
+    simp [ho]
+  have hA : cyclicStep U v x = ζ • x := by
+    apply Subtype.ext
+    change U (x : E) - (ℂ ∙ v).starProjection (U (x : E)) = ζ • (x : E)
+    have hB' := congrArg Subtype.val hB
+    change (ℂ ∙ v).starProjection (U (x : E)) = 0 at hB'
+    rw [hB', sub_zero, hx']
+  have hpow (n : ℕ) : (cyclicStep U v ^ n) x = ζ ^ n • x := by
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      rw [pow_succ', mul_apply_eq_comp, ih, map_smul, hA, smul_smul, pow_succ]
+  have hk : x ∈ (⨅ n : ℕ, LinearMap.ker
+      ((cyclicClick U v).toLinearMap.comp ((cyclicStep U v).toLinearMap ^ n))) := by
+    apply (Submodule.mem_iInf _).mpr
+    intro n
+    rw [LinearMap.mem_ker, LinearMap.comp_apply, ← ContinuousLinearMap.toLinearMap_pow]
+    change cyclicClick U v ((cyclicStep U v ^ n) x) = 0
+    rw [hpow, map_smul, hB, smul_zero]
+  rw [cyclic_future_kernel_eq_bot U v] at hk
+  exact hk
+
+private theorem cyclic_spectrum (U : E ≃ₗᵢ[ℂ] E) (v : E) :
+    (occupiedSpectrum U v).Finite ∧
+      (occupiedSpectrum U v).ncard = Module.finrank ℂ (cyclicSpace U v) := by
+  classical
+  let C := cyclicSpace U v
+  let W := cyclicUnitary U v
+  haveI : IsStarNormal W.toLinearMap := ⟨by
+    change Commute (LinearMap.adjoint W.toLinearMap) W.toLinearMap
+    rw [W.adjoint_toLinearMap_eq_symm]
+    apply LinearMap.ext
+    intro x
+    simp⟩
+  obtain ⟨b, μ, hb⟩ := LinearMap.exists_orthonormalBasis_apply_eq_smul_of_isStarNormal
+    W.toLinearMap (ι := Fin (Module.finrank ℂ C)) (by simp only [Fintype.card_fin]; rfl)
+  change ∀ i, W (b i) = μ i • b i at hb
+  have hoverlap (i : Fin (Module.finrank ℂ C)) : inner ℂ (initial U v) (b i) ≠ 0 := by
+    intro ho
+    have hz := eigenvector_not_dark U v (hb i) ho
+    have hn := b.norm_eq_one i
+    rw [hz, norm_zero] at hn
+    exact zero_ne_one hn
+  have hinj : Function.Injective μ := by
+    intro i j hij
+    by_contra hne
+    let x := inner ℂ (initial U v) (b j) • b i - inner ℂ (initial U v) (b i) • b j
+    have hx : W x = μ i • x := by
+      simp only [x, map_sub, map_smul, show ∀ k, W (b k) = μ k • b k from hb, ← hij]
+      module
+    have ho : inner ℂ (initial U v) x = 0 := by
+      simp only [x, inner_sub_right, inner_smul_right]
+      ring
+    have hz := eigenvector_not_dark U v hx ho
+    have hc := congrArg (fun z : C => inner ℂ (b i) z) hz
+    have hcoef : inner ℂ (initial U v) (b j) = 0 := by
+      simpa [x, inner_sub_right, inner_smul_right, b.inner_eq_ite, hne] using hc
+    exact hoverlap j hcoef
+  have hmap : C.map U.toLinearMap = C := by
+    apply le_antisymm
+    · rintro _ ⟨x, hx, rfl⟩
+      exact unitary_mem U v hx
+    · intro x hx
+      obtain ⟨y, hy⟩ := W.surjective ⟨x, hx⟩
+      exact ⟨y, y.2, congrArg Subtype.val hy⟩
+  have hsupport : occupiedSpectrum U v = Set.range μ := by
+    ext ζ
+    constructor
+    · rintro ⟨w, hw, hwo⟩
+      let z : C := C.orthogonalProjectionOnto w
+      have hz : W z = ζ • z := by
+        apply Subtype.ext
+        change U (C.starProjection w) = ζ • C.starProjection w
+        have ht := U.toLinearIsometry.map_starProjection C w
+        change U (C.starProjection w) = (C.map U.toLinearMap).starProjection (U w) at ht
+        simpa only [hmap, hw, map_smul] using ht
+      have hzne : z ≠ 0 := by
+        intro hzero
+        have ht := C.inner_orthogonalProjectionOnto_eq_of_mem_right (initial U v) w
+        change inner ℂ z (initial U v) = inner ℂ w v at ht
+        rw [hzero, inner_zero_left] at ht
+        exact hwo ht.symm
+      by_contra hnot
+      have hnot' : ∀ i, μ i ≠ ζ := by simpa only [Set.mem_range, not_exists] using hnot
+      have hcoord (i : Fin (Module.finrank ℂ C)) : b.repr (W z) i = μ i * b.repr z i := by
+        nth_rw 1 [← b.sum_repr z]
+        simp [map_sum, map_smul, hb, b.repr_self, Pi.single_apply, mul_ite, ite_mul, mul_comm]
+      have hzcoord (i : Fin (Module.finrank ℂ C)) : b.repr z i = 0 := by
+        have he := hcoord i
+        rw [hz, map_smul] at he
+        change ζ * b.repr z i = μ i * b.repr z i at he
+        exact (mul_eq_mul_right_iff.mp he).resolve_left (hnot' i).symm
+      apply hzne
+      apply b.repr.injective
+      ext i
+      simp [hzcoord]
+    · rintro ⟨i, rfl⟩
+      refine ⟨(b i : E), congrArg Subtype.val (hb i), ?_⟩
+      intro ho
+      exact hoverlap i ((inner_eq_zero_symm).mp ho)
+  rw [hsupport]
+  exact ⟨Set.finite_range μ, by simpa using Set.ncard_range_of_injective hinj⟩
+
+/-- The monitored mean counts distinct occupied eigenvalues of the ambient unitary. -/
+theorem monitored_spectral_mean (U : E ≃ₗᵢ[ℂ] E) (v : E) (hv : ‖v‖ = 1) :
+    (occupiedSpectrum U v).Finite ∧
+      (occupiedSpectrum U v).ncard = Module.finrank ℂ (cyclicSpace U v) ∧
+      HasSum (fun n : ℕ => (n + 1 : ℝ) * returnProbability U v (n + 1))
+        ((occupiedSpectrum U v).ncard : ℝ) := by
+  obtain ⟨hfinite, hcard⟩ := cyclic_spectrum U v
+  exact ⟨hfinite, hcard, by simpa only [hcard] using mean_cyclic_dimension U v hv⟩
+
+#print axioms monitored_spectral_mean
 
 end D5.S3.QuantumChannels.ProjectionDiagnostics.MonitoredSpectralMean
