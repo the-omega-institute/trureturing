@@ -544,6 +544,7 @@ PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，�
 | `pull_request:opened/reopened/synchronize/labeled`，保留标签 `lean-cache-produce` | 检出事件 `M`，校验 `M^1=B,M^2=H`；只读内容、可写 actions 的 dispatch job 固定事件 PR/run/attempt | 不编译、不下载或保存种子；自动向受保护目标 ref dispatch 并输出具体 producer run ID；dispatch 成功不代表生产成功 | 5m |
 | `workflow_dispatch`，`operation=build`（默认） | `source_ref` 必须等于 dispatch ref，且为受保护 `refs/heads/dev` 或 `refs/heads/integration-*`；非零 40 位小写十六进制 `source_sha` 必须可达，检出该 SHA | 同一已校验 branch scope | 360m |
 | `workflow_dispatch`，`operation=pr` | workflow/runtime 为受保护目标 ref 的固定提交 `T`；源码检出 `source_sha=M`，`pr_source` 绑定事件 PR/H/M/B/run/attempt/target；不要求 M 已合入 | 共享核心仅构建并严格校验；原生路径打包上传 Actions artifact，不保存普通 cache key；编译 job 的 contents/actions token 只读；完成确认 immutable artifact ID | 360m |
+| `workflow_dispatch`，`operation=release` | 原始 `actor` 与当前 `triggering_actor` 均须为 `loning`；runtime 为受保护 dev/integration ref；`source_ref` 固定为 `refs/heads/dev`，非零完整 `source_sha` 须属于受保护 dev 的固定快照，检出该 SHA | 只读授权 job 先验证；独立发布 job 在任何发布操作前再次检查两个账号，单 job 重跑不复用身份授权；沿既有 Release 发布程序，不写 Actions 种子 | 授权 5m；发布 120m |
 | 自动 protected dev/integration push | current 结束后且未取消，`lean_required=true`、`project_seed_available!=true`；使用实际 push SHA | 同一 branch scope，复用长 Actions 核心 | 360m |
 | schedule `0 */6 * * *` | 仅 `refs/heads/dev`；固定事件 SHA，发布入口另校验受保护 dev 来源；可先恢复 Actions 种子 | 独立 Release 发布入口；不写 Actions 种子 | 单 job 120m |
 | 显式本地发布 / 取回 | `make lean-cache-to-github-without-mathlib` / `make lean-cache-from-github-without-mathlib`；沿既有来源、分区与锁校验 | 发布项目 buildDir / 取回本地 buildDir | 非 Actions job |
@@ -553,6 +554,8 @@ PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，�
 长 producer 的手动输入 `release_seed_tag` 与 `release_seed_producer` 共同选择一个本地候选种子。恢复核对完整 producer SHA、报告格式/执行分区、全部资产摘要与安全归档成员，支持已声明的 ARM64 平台族；失败保留原 buildDir 并退出，不改投其它 Release。只有来源已核验的长任务可以在 CI 使用该显式入口；普通 CI 的 Release 自动恢复仍关闭。恢复后继续执行当前树的 Lake 增量构建和报告核验；其成功报告可将该显式输入写入 Actions 缓存，即使本次增量计算量为零。缓存输入不签发检查结论，完整 required、冻结与 Scribe 检查仍分别执行。
 
 每 6 小时是 schedule 触发间隔，不是 120 分钟 job 的运行预算，也不是 360 分钟 Actions 核心的触发周期。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。manual 与自动 producer 按 branch concurrency 串行，`cancel-in-progress: false`；目标上下文的 PR producer 按源 PR concurrency，`cancel-in-progress: true`；标签 dispatch 本身不等待长构建，占用的短 job 只返回具体 run ID，由调用者等待该 run。
+
+手动 Release 使用 `lean-cache-publish.yml` 的 `operation=release`，与默认的 `operation=build` 分开。运行分支与发布源码分别记录；integration runtime 也只发布已校验的 dev 内容。GitHub 的触发按钮仍遵循仓库原生权限；非 `loning` 请求由入口拒绝，未获授权不运行发布。定时发布的入口与账号策略保持独立。
 
 纯理论免报告只接受真实 delta 非空、全部路径为 `docs/develop/theory/` 下理论文档且非删除输入已经读取的情况：PR base 为 `M^1`，push base 为固定 `event.before`，沿既有快照/FILEMAP 与 `ExecuteTheoryDelta` 执行 `SL-003`、`SL-015`。不恢复 Lean 缓存、不生产报告、不运行全局 current/Scribe、不触发自动 producer；其它命中单元照常运行。混合变更必须提供报告；空 delta 即使进入无报告入口也会拒绝，未读取的理论输入也拒绝，均不构成免检。无可读 before 的事件走完整报告选择，不用未知 delta 猜纯理论。
 
