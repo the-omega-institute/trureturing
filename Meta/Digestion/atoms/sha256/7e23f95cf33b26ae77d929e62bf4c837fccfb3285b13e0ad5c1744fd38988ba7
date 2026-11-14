@@ -1,0 +1,2 @@
+这是明确另定义的比较源。原共同参数源仍是 [Process Geometry 定义27.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 的源；本卷定理2.2、3.1及命题4.1–4.2为此比较源上的 `repo-derived` 推导。紧区间矩唯一性与多项式逼近仅在定理3.1内部作为既有中间步骤使用，亦见 [Terminal Event Experiment 定理3.1(d)](RECURSIVE_RELATIONAL_OBSERVATION_TERMINAL_EVENT_EXPERIMENT.md) 中对原源的应用。
+
