@@ -42,7 +42,7 @@ internal sealed class KrausWordStrictPositivityDocument : IScribeDocumentDefinit
                 DescribeRole.Theorem, false),
             Node("iterate_posDef_of_wordSpan_eq_top", "Full span implies strict positivity at the same length",
                 Family(All("m", N, All("X", Mat,
-                    Imp(Eqn(Call("wordSpan", V("K"), V("m")), Qualified("top")),
+                    Imp(Eqn(Call("wordSpan", V("K"), V("m")), Call("top", Mat)),
                         Imp(Call("PosSemidef", V("X")),
                             Imp(new Formula.Not(Eqn(V("X"), Num(0))), Call("PosDef", Iterate))))))),
                 "For every nonzero positive semidefinite X the same m-th iterate is positive definite. "
@@ -68,6 +68,10 @@ internal sealed class KrausWordStrictPositivityDocument : IScribeDocumentDefinit
             Blocks(Paragraph(Text(prose))), role);
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula Eqn(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Typed(Formula value, Formula type) => Seq(Open, value, Colon, type, Close);
     private static Formula N => Seq(Mathbb, Grp(V("N")));
     private static Formula C => Seq(Mathbb, Grp(V("C")));
     private static Formula Fin(Formula n) => Call("Fin", n);

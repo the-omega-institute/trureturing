@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.QuantumChannels.KrausWordStrictPositivity
 import Reg.Support.DependentFamily
 
+/-! Source-bound matrix-input audits with whole-family interventions. -/
+
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open D5.S3.Quantum.QuantumChannels.KrausWordStrictPositivity
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
@@ -34,9 +36,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   have h := congrFun (congrFun he 0) 0
   exact zero_ne_one h
 
-private theorem sensitivity (A : Arena) (hs : A.signature = signature)
-    (hbad : ¬ A.Law (hs ▸ rejected)) : Sensitivity A (hs ▸ actual) := by
-  subst hs
+private theorem sensitivity (Law : Realization signature → Prop)
+    (hbad : ¬ Law rejected) : Sensitivity ⟨signature, Law⟩ actual := by
   constructor
   · intro i
     refine ⟨rejected, ?_, rfl, hbad⟩
@@ -62,13 +63,13 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := h (fun _ : Fin 0 => (0 : Matrix (Fin 1) (Fin 1) ℂ)) 0 1
   have hh := congrFun (congrFun he 0) 0
-  simpa [rejected, realize, word] using hh
+  simp [rejected, realize, word] at hh
 
 def family : Registration arena (type_of% (@iterate_eq_word_sum)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
-  sensitivity := sensitivity arena rfl rejected_law
+  sensitivity := sensitivity arena.Law rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -110,8 +111,8 @@ namespace Strict
 def arena : Arena where
   signature := signature
   Law R := ∀ {d g : ℕ} (K : Fin g → Matrix (Fin d) (Fin d) ℂ)
-    (m : ℕ) (hspan : wordSpan K m = ⊤)
-    (X : Matrix (Fin d) (Fin d) ℂ) (hX : X.PosSemidef) (hne : X ≠ 0),
+    (m : ℕ) (_hspan : wordSpan K m = ⊤)
+    (X : Matrix (Fin d) (Fin d) ℂ) (_hX : X.PosSemidef) (_hne : X ≠ 0),
     ((MatrixMap.of_kraus K K)^[m] (R.readout () d X)).PosDef
 
 private theorem actual_law : arena.Law actual := by
@@ -134,14 +135,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hp := h (fun _ : Fin 0 => (0 : Matrix (Fin 1) (Fin 1) ℂ)) 0 scalar_span
     1 Matrix.PosSemidef.one (by simp)
-  have hq := hp.dotProduct_mulVec_pos (x := fun _ => 1) (by simp)
-  simpa [rejected, realize] using hq
+  have hq := hp.dotProduct_mulVec_pos (x := fun _ => 1) (by
+    intro he
+    have hh := congrFun he (0 : Fin 1)
+    simpa using hh)
+  simp [rejected, realize] at hq
 
 def family : Registration arena (type_of% (@iterate_posDef_of_wordSpan_eq_top)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
-  sensitivity := sensitivity arena rfl rejected_law
+  sensitivity := sensitivity arena.Law rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
