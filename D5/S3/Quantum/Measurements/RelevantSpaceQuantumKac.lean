@@ -73,15 +73,15 @@ theorem monitored_reachable_space_eq (K : α → Matrix n n ℂ)
       Matrix.toLpLin_mul_same, LinearMap.sub_apply, LinearMap.comp_apply,
       sub_add_cancel] using hsum
 
-private theorem support_coercivity_order (R Π : Matrix n n ℂ)
+private theorem support_coercivity_order (R PiC : Matrix n n ℂ)
     (hR : R.PosSemidef) (C : Submodule ℂ (EuclideanSpace ℂ n))
     (hC : matrixSupport R = C)
-    (hΠ : Π.toEuclideanLin = C.starProjection.toLinearMap)
+    (hPiC : PiC.toEuclideanLin = C.starProjection.toLinearMap)
     (μ : ℝ) (hμ : 0 ≤ μ)
     (hb : ∀ x ∈ C, μ * ‖x‖ ^ 2 ≤ (inner ℂ x (R.toEuclideanLin x)).re) :
-    (μ : ℂ) • Π ≤ R := by
-  have hΠpos : Π.PosSemidef := by
-    rw [← Matrix.isPositive_toEuclideanLin_iff, hΠ]
+    (μ : ℂ) • PiC ≤ R := by
+  have hPiCpos : PiC.PosSemidef := by
+    rw [← Matrix.isPositive_toEuclideanLin_iff, hPiC]
     exact LinearMap.IsSymmetricProjection.isPositive
       ⟨C.isIdempotentElem_starProjection.toLinearMap, C.starProjection_isSymmetric⟩
   have horth : Cᗮ = LinearMap.ker R.toEuclideanLin := by
@@ -98,7 +98,7 @@ private theorem support_coercivity_order (R Π : Matrix n n ℂ)
     exact ⟨x, rfl⟩
   rw [Matrix.le_iff, ← Matrix.isPositive_toEuclideanLin_iff]
   refine ⟨Matrix.isSymmetric_toEuclideanLin_iff.mpr
-    (hR.isHermitian.sub ((hΠpos.smul (Complex.zero_le_real.mpr hμ)).isHermitian)), ?_⟩
+    (hR.isHermitian.sub ((hPiCpos.smul (Complex.zero_le_real.mpr hμ)).isHermitian)), ?_⟩
   intro x
   let y := C.starProjection x
   have hRy : C.starProjection (R.toEuclideanLin y) = R.toEuclideanLin y :=
@@ -109,8 +109,8 @@ private theorem support_coercivity_order (R Π : Matrix n n ℂ)
       _ = inner ℂ x (C.starProjection (R.toEuclideanLin y)) := by rw [hRy]
       _ = inner ℂ y (R.toEuclideanLin y) :=
         (C.inner_starProjection_left_eq_right x (R.toEuclideanLin y)).symm
-  have hqΠ : (inner ℂ x (Π.toEuclideanLin x)).re = ‖y‖ ^ 2 := by
-    rw [hΠ]
+  have hqPiC : (inner ℂ x (PiC.toEuclideanLin x)).re = ‖y‖ ^ 2 := by
+    rw [hPiC]
     change (inner ℂ x (C.starProjection x)).re = ‖y‖ ^ 2
     have hh := C.inner_starProjection_left_eq_right x (C.starProjection x)
     rw [C.starProjection_eq_self_iff.mpr (C.starProjection_apply_mem x)] at hh
@@ -121,17 +121,17 @@ private theorem support_coercivity_order (R Π : Matrix n n ℂ)
   simp only [map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
     inner_sub_right, inner_smul_right, Complex.sub_re, Complex.mul_re,
     Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
-  rw [hqR, hqΠ]
+  rw [hqR, hqPiC]
   linarith
 
 open scoped Matrix.Norms.Elementwise in
 private theorem hasSum_of_positive_block (K : α → Matrix n n ℂ) [Fintype α]
-    (c : α → ℝ) (hc : ∀ a, 0 ≤ c a) (P Π : Matrix n n ℂ)
-    (hP : P.PosSemidef) (hΠ : Π.PosSemidef)
-    (hstep : weightedCP K c Π = Π - P)
+    (c : α → ℝ) (hc : ∀ a, 0 ≤ c a) (P PiC : Matrix n n ℂ)
+    (hP : P.PosSemidef) (hPiC : PiC.PosSemidef)
+    (hstep : weightedCP K c PiC = PiC - P)
     (N : ℕ) (hN : 1 ≤ N) (q : ℝ) (hq : 0 ≤ q) (hq1 : q < 1)
-    (hblock : (weightedCP K c)^[N] Π ≤ (q : ℂ) • Π) :
-    HasSum (fun k => (weightedCP K c)^[k] P) Π := by
+    (hblock : (weightedCP K c)^[N] PiC ≤ (q : ℂ) • PiC) :
+    HasSum (fun k => (weightedCP K c)^[k] P) PiC := by
   let T := weightedCP K c
   have hm : Monotone T := weightedCP_mono K c hc
   have hscale {A B : Matrix n n ℂ} (h : A ≤ B) (r : ℝ) (hr : 0 ≤ r) :
@@ -145,60 +145,60 @@ private theorem hasSum_of_positive_block (K : α → Matrix n n ℂ) [Fintype α
     | succ k ih =>
         rw [Function.iterate_succ_apply']
         exact weightedCP_psd K c hc ih
-  have hTI : T Π ≤ Π := by
+  have hTI : T PiC ≤ PiC := by
     rw [hstep, sub_le_self_iff]
     exact Matrix.nonneg_iff_posSemidef.mpr hP
-  have hPI : P ≤ Π := by
-    have h := Matrix.nonneg_iff_posSemidef.mpr (hpos 1 Π hΠ)
+  have hPI : P ≤ PiC := by
+    have h := Matrix.nonneg_iff_posSemidef.mpr (hpos 1 PiC hPiC)
     simpa only [Function.iterate_one, hstep, sub_nonneg] using h
-  have hanti : Antitone (fun k => T^[k] Π) := by
+  have hanti : Antitone (fun k => T^[k] PiC) := by
     apply antitone_nat_of_succ_le
     intro k
     rw [Function.iterate_succ_apply]
     exact (hm.iterate k) hTI
-  have hb (j : ℕ) : T^[j * N] Π ≤ ((q ^ j : ℝ) : ℂ) • Π := by
+  have hb (j : ℕ) : T^[j * N] PiC ≤ ((q ^ j : ℝ) : ℂ) • PiC := by
     induction j with
     | zero => simp
     | succ j ih =>
         rw [Nat.succ_mul, Nat.add_comm, Function.iterate_add_apply]
         calc
-          T^[N] (T^[j * N] Π) ≤ T^[N] (((q ^ j : ℝ) : ℂ) • Π) :=
+          T^[N] (T^[j * N] PiC) ≤ T^[N] (((q ^ j : ℝ) : ℂ) • PiC) :=
             (hm.iterate N) ih
-          _ = ((q ^ j : ℝ) : ℂ) • T^[N] Π := by
-            simpa only [Module.End.pow_apply] using (T ^ N).map_smul ((q ^ j : ℝ) : ℂ) Π
-          _ ≤ ((q ^ j : ℝ) : ℂ) • ((q : ℂ) • Π) :=
+          _ = ((q ^ j : ℝ) : ℂ) • T^[N] PiC := by
+            simpa only [Module.End.pow_apply] using (T ^ N).map_smul ((q ^ j : ℝ) : ℂ) PiC
+          _ ≤ ((q ^ j : ℝ) : ℂ) • ((q : ℂ) • PiC) :=
             hscale hblock (q ^ j) (pow_nonneg hq j)
-          _ = ((q ^ (j + 1) : ℝ) : ℂ) • Π := by
+          _ = ((q ^ (j + 1) : ℝ) : ℂ) • PiC := by
             rw [smul_smul, pow_succ, Complex.ofReal_mul]
-  have hall (k : ℕ) : T^[k] Π ≤ ((q ^ (k / N) : ℝ) : ℂ) • Π :=
+  have hall (k : ℕ) : T^[k] PiC ≤ ((q ^ (k / N) : ℝ) : ℂ) • PiC :=
     (hanti (Nat.div_mul_le_self k N)).trans (hb (k / N))
   have htrace {A B : Matrix n n ℂ} (h : A ≤ B) : A.trace.re ≤ B.trace.re := by
     have ht := (Complex.nonneg_iff.mp (Matrix.le_iff.mp h).trace_nonneg).1
     simp only [Matrix.trace_sub, Complex.sub_re] at ht
     linarith
-  have hbound (k : ℕ) : (T^[k] Π).trace.re ≤ q ^ (k / N) * Π.trace.re := by
+  have hbound (k : ℕ) : (T^[k] PiC).trace.re ≤ q ^ (k / N) * PiC.trace.re := by
     simpa [Matrix.trace_smul, smul_eq_mul, Complex.mul_re] using htrace (hall k)
-  have htrlim := geometric_trace_tendsto K c hc Π hΠ N hN q hq hq1 hbound
-  have hnormlim : Tendsto (fun k => ‖T^[k] Π‖) atTop (𝓝 0) :=
+  have htrlim := geometric_trace_tendsto K c hc PiC hPiC N hN q hq hq1 hbound
+  have hnormlim : Tendsto (fun k => ‖T^[k] PiC‖) atTop (𝓝 0) :=
     squeeze_zero (fun _ => norm_nonneg _)
-      (fun k => psd_norm_le_trace _ (hpos k Π hΠ)) htrlim
-  have hlim : Tendsto (fun k => T^[k] Π) atTop (𝓝 0) :=
+      (fun k => psd_norm_le_trace _ (hpos k PiC hPiC)) htrlim
+  have hlim : Tendsto (fun k => T^[k] PiC) atTop (𝓝 0) :=
     tendsto_zero_iff_norm_tendsto_zero.mpr hnormlim
-  have htel (k : ℕ) : ∑ j ∈ Finset.range k, T^[j] P = Π - T^[k] Π := by
+  have htel (k : ℕ) : ∑ j ∈ Finset.range k, T^[j] P = PiC - T^[k] PiC := by
     induction k with
     | zero => simp
     | succ k ih =>
         rw [Finset.sum_range_succ, ih, Function.iterate_succ_apply]
-        have hlin : T^[k] (Π - P) = T^[k] Π - T^[k] P := by
-          simpa only [Module.End.pow_apply] using (T ^ k).map_sub Π P
+        have hlin : T^[k] (PiC - P) = T^[k] PiC - T^[k] P := by
+          simpa only [Module.End.pow_apply] using (T ^ k).map_sub PiC P
         rw [hstep, hlin]
         abel
-  have hpart : Tendsto (fun k => ∑ j ∈ Finset.range k, T^[j] P) atTop (𝓝 Π) := by
+  have hpart : Tendsto (fun k => ∑ j ∈ Finset.range k, T^[j] P) atTop (𝓝 PiC) := by
     simp_rw [htel]
     simpa using tendsto_const_nhds.sub hlim
-  have hsI := geometric_orbit_summable K c hc Π hΠ N hN q hq hq1 hbound
+  have hsI := geometric_orbit_summable K c hc PiC hPiC N hN q hq hq1 hbound
   have hsP : Summable (fun k => T^[k] P) := by
-    have hst : Summable (fun k => (T^[k] Π).trace.re) :=
+    have hst : Summable (fun k => (T^[k] PiC).trace.re) :=
       (Complex.hasSum_re (hsI.hasSum.mapL
         (LinearMap.toContinuousLinearMap (Matrix.traceLinearMap n ℂ ℂ)))).summable
     apply hst.of_norm_bounded
@@ -213,15 +213,15 @@ Kraus reachable space. The initial matrix may be a projection of any rank.
 Unitality is required only on that reachable space; trace preservation is
 not needed for this operator identity. -/
 theorem relevant_projection_hasSum (K : α → Matrix n n ℂ) [Fintype α]
-    (P Π : Matrix n n ℂ) (hP : P.PosSemidef) (hPP : P * P = P)
-    (hΠ : Π.toEuclideanLin = (reachableSpace K P).starProjection.toLinearMap)
-    (hunital : weightedCP K (fun _ => 1) Π = Π) :
-    HasSum (fun k => (weightedCP (fun a => (1 - P) * K a) (fun _ => 1))^[k] P) Π := by
+    (P PiC : Matrix n n ℂ) (hP : P.PosSemidef) (hPP : P * P = P)
+    (hPiC : PiC.toEuclideanLin = (reachableSpace K P).starProjection.toLinearMap)
+    (hunital : weightedCP K (fun _ => 1) PiC = PiC) :
+    HasSum (fun k => (weightedCP (fun a => (1 - P) * K a) (fun _ => 1))^[k] P) PiC := by
   let C := reachableSpace K P
   let J : α → Matrix n n ℂ := fun a => (1 - P) * K a
   let T := weightedCP J (fun _ => 1)
-  have hΠpos : Π.PosSemidef := by
-    rw [← Matrix.isPositive_toEuclideanLin_iff, hΠ]
+  have hPiCpos : PiC.PosSemidef := by
+    rw [← Matrix.isPositive_toEuclideanLin_iff, hPiC]
     exact LinearMap.IsSymmetricProjection.isPositive
       ⟨C.isIdempotentElem_starProjection.toLinearMap, C.starProjection_isSymmetric⟩
   have hinit : matrixSupport P ≤ C := by
@@ -229,28 +229,28 @@ theorem relevant_projection_hasSum (K : α → Matrix n n ℂ) [Fintype α]
     intro x hx
     exact Submodule.subset_span ⟨[], by simp, x, hx,
       by simp [krausWord, Matrix.toEuclideanLin, Matrix.toLpLin_one]⟩
-  have hΠP : Π * P = P := by
+  have hPiCP : PiC * P = P := by
     apply Matrix.toEuclideanLin.injective
     ext x
     simp only [Matrix.toEuclideanLin, Matrix.toLpLin_mul_same, LinearMap.comp_apply]
-    change Π.toEuclideanLin (P.toEuclideanLin x) = P.toEuclideanLin x
-    rw [hΠ]
+    change PiC.toEuclideanLin (P.toEuclideanLin x) = P.toEuclideanLin x
+    rw [hPiC]
     apply C.starProjection_eq_self_iff.mpr
     apply hinit
     rw [matrixSupport_eq_range hP.isHermitian]
     exact ⟨x, rfl⟩
-  have hPΠ : P * Π = P := by
-    have h := congrArg Matrix.conjTranspose hΠP
-    simpa [Matrix.conjTranspose_mul, hP.isHermitian.eq, hΠpos.isHermitian.eq] using h
+  have hPPiC : P * PiC = P := by
+    have h := congrArg Matrix.conjTranspose hPiCP
+    simpa [Matrix.conjTranspose_mul, hP.isHermitian.eq, hPiCpos.isHermitian.eq] using h
   have hmon (X : Matrix n n ℂ) :
       T X = (1 - P) * weightedCP K (fun _ => 1) X * (1 - P) := by
     simp only [T, J, weightedCP, LinearMap.coe_mk, AddHom.coe_mk,
       Complex.ofReal_one, one_smul, Matrix.conjTranspose_mul,
       Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hP.isHermitian.eq,
       Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
-  have hstep : T Π = Π - P := by
-    rw [hmon, hunital, sub_mul, one_mul, hPΠ, mul_sub, mul_one,
-      sub_mul, hΠP, hPP]
+  have hstep : T PiC = PiC - P := by
+    rw [hmon, hunital, sub_mul, one_mul, hPPiC, mul_sub, mul_one,
+      sub_mul, hPiCP, hPP]
     abel
   obtain ⟨L, μ, hμ, hs, hb⟩ := finite_reachable_faithful_sum J (fun _ => 1)
     (fun _ => by norm_num) P hP
@@ -267,30 +267,30 @@ theorem relevant_projection_hasSum (K : α → Matrix n n ℂ) [Fintype α]
     | succ k ih =>
         rw [Function.iterate_succ_apply']
         exact weightedCP_psd J _ (fun _ => by norm_num) ih
-  have hcoercive : (ν : ℂ) • Π ≤ orbitSum J (fun _ => 1) P L := by
-    apply support_coercivity_order _ Π hRpos C (hs.trans hC) hΠ ν hν.le
+  have hcoercive : (ν : ℂ) • PiC ≤ orbitSum J (fun _ => 1) P L := by
+    apply support_coercivity_order _ PiC hRpos C (hs.trans hC) hPiC ν hν.le
     intro x hx
     exact (mul_le_mul_of_nonneg_right hνμ (sq_nonneg ‖x‖)).trans
       (hb x (hC.symm ▸ hx))
-  have htel (k : ℕ) : ∑ j ∈ Finset.range k, T^[j] P = Π - T^[k] Π := by
+  have htel (k : ℕ) : ∑ j ∈ Finset.range k, T^[j] P = PiC - T^[k] PiC := by
     induction k with
     | zero => simp
     | succ k ih =>
         rw [Finset.sum_range_succ, ih, Function.iterate_succ_apply, hstep]
-        have hlin : T^[k] (Π - P) = T^[k] Π - T^[k] P := by
-          simpa only [Module.End.pow_apply] using (T ^ k).map_sub Π P
+        have hlin : T^[k] (PiC - P) = T^[k] PiC - T^[k] P := by
+          simpa only [Module.End.pow_apply] using (T ^ k).map_sub PiC P
         rw [hlin]
         abel
-  have hblock : T^[L + 1] Π ≤ ((1 - ν : ℝ) : ℂ) • Π := by
-    change (ν : ℂ) • Π ≤ ∑ j ∈ Finset.range (L + 1), T^[j] P at hcoercive
+  have hblock : T^[L + 1] PiC ≤ ((1 - ν : ℝ) : ℂ) • PiC := by
+    change (ν : ℂ) • PiC ≤ ∑ j ∈ Finset.range (L + 1), T^[j] P at hcoercive
     rw [htel] at hcoercive
-    have hr : ((1 - ν : ℝ) : ℂ) • Π = Π - (ν : ℂ) • Π := by
+    have hr : ((1 - ν : ℝ) : ℂ) • PiC = PiC - (ν : ℂ) • PiC := by
       rw [Complex.ofReal_sub, Complex.ofReal_one, sub_smul, one_smul]
     rw [hr]
     exact le_sub_iff_add_le.mpr (by
       simpa [add_comm] using (le_sub_iff_add_le.mp hcoercive))
   exact hasSum_of_positive_block J (fun _ => 1) (fun _ => by norm_num)
-    P Π hP hΠpos hstep (L + 1) (by omega) (1 - ν)
+    P PiC hP hPiCpos hstep (L + 1) (by omega) (1 - ν)
     (by linarith) (by linarith) hblock
 
 #print axioms monitored_reachable_space_eq

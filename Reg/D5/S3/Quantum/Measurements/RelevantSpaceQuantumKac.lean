@@ -130,12 +130,12 @@ namespace OperatorSeries
 def arena : Arena where
   signature := signature.{u}
   Law R := ∀ {n : Type u} {α : Type} [Fintype n] [DecidableEq n]
-    (K : α → Matrix n n ℂ) [Fintype α] (P Π : Matrix n n ℂ),
+    (K : α → Matrix n n ℂ) [Fintype α] (P PiC : Matrix n n ℂ),
     P.PosSemidef → P * P = P →
-    Π.toEuclideanLin = (reachableSpace K P).starProjection.toLinearMap →
-    weightedCP K (fun _ => 1) Π = Π →
+    PiC.toEuclideanLin = (reachableSpace K P).starProjection.toLinearMap →
+    weightedCP K (fun _ => 1) PiC = PiC →
     HasSum (fun k => (weightedCP (fun a => (1 - P) * K a) (fun _ => 1))^[k] P)
-      (R.readout () n Π)
+      (R.readout () n PiC)
 
 private theorem actual_law : arena.{u}.Law actual := by
   exact @relevant_projection_hasSum.{u}
@@ -152,7 +152,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     refine ⟨[], by simp, x, ?_, ?_⟩
     · simp [matrixSupport, Matrix.toEuclideanLin, Matrix.toLpLin_one]
     · simp [krausWord, Matrix.toEuclideanLin, Matrix.toLpLin_one]
-  have hΠ : (1 : Matrix n n ℂ).toEuclideanLin =
+  have hPiC : (1 : Matrix n n ℂ).toEuclideanLin =
       (reachableSpace K 1).starProjection.toLinearMap := by
     rw [hC, Submodule.starProjection_top]
     ext x
@@ -160,8 +160,8 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hu : weightedCP K (fun _ => 1) (1 : Matrix n n ℂ) = 1 := by
     simp [K, weightedCP]
   have hgood := relevant_projection_hasSum K 1 1 Matrix.PosSemidef.one
-    (by simp) hΠ hu
-  have hbad := h K 1 1 Matrix.PosSemidef.one (by simp) hΠ hu
+    (by simp) hPiC hu
+  have hbad := h K 1 1 Matrix.PosSemidef.one (by simp) hPiC hu
   change HasSum _ (0 : Matrix n n ℂ) at hbad
   exact one_ne_zero (hgood.unique hbad)
 
