@@ -154,7 +154,91 @@ $$\forall x \in O4,\; \operatorname{apply}\left(derivation, x\right) = \operator
 
 The Gaussian imaginary coordinate is an additive map and therefore integer-linear. Transport gives D(a+bz)=b as an O4-valued integer-linear map. The all-input Gaussian product identity D(xy)=D(x)conjugate(y)+xD(y) is proved by coordinate multiplication and transported. Thus no generator-only check replaces the full twisted Leibniz law.
 
-**Theorem 1.12 (The full printed Conjecture 4.4 is false).**
+**Theorem 1.12 (Exact order of the cyclotomic root).**
+
+$$\operatorname{IsPrimitiveRoot}\left(root, 4\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.root_primitive` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Praveen Manju and Rajendra Kumar Sharma (2024). *Twisted Derivations in Algebraic Number Fields*. URL: <https://arxiv.org/abs/2412.03507v2>.
+
+*Commentary.*
+
+The existing primitive-root theorem gives exact order four in the actual fourth cyclotomic field.
+
+**Definition 1.13 (The ordered integral basis of length two).**
+
+$$(\operatorname{gen}\left(orderedPb\right) = z) \land ((\operatorname{dim}\left(orderedPb\right) = 2) \land (\forall i \in \operatorname{Fin}\left(2\right),\; \operatorname{apply}\left(\operatorname{basis}\left(orderedPb\right), i\right) = z^{\operatorname{val}\left(i\right)}))$$
+
+*Formalization.* `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.orderedPb` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Praveen Manju and Rajendra Kumar Sharma (2024). *Twisted Derivations in Algebraic Number Fields*. URL: <https://arxiv.org/abs/2412.03507v2>.
+
+*Commentary.*
+
+The generator is z, the dimension is two, and its basis is pb.basis reindexed along pb_dim. The existing b_apply proof identifies its terms with z^i for i in Fin 2.
+
+**Theorem 1.14 (The full twisted product law).**
+
+$$\forall x \in O4,\; \forall y \in O4,\; \operatorname{apply}\left(derivation, x \cdot y\right) = \operatorname{apply}\left(derivation, x\right) \cdot \operatorname{apply}\left(tau, y\right) + x \cdot \operatorname{apply}\left(derivation, y\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.derivation_twisted` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Praveen Manju and Rajendra Kumar Sharma (2024). *Twisted Derivations in Algebraic Number Fields*. URL: <https://arxiv.org/abs/2412.03507v2>.
+
+*Commentary.*
+
+The transported imaginary-coordinate map satisfies the law for every pair of actual algebraic integers.
+
+**Theorem 1.15 (The actual generator images).**
+
+$$(\operatorname{apply}\left(derivation, z\right) = 1) \land (\operatorname{apply}\left(tau, z\right) = z^{3})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.counterinstance_root_values` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Praveen Manju and Rajendra Kumar Sharma (2024). *Twisted Derivations in Algebraic Number Fields*. URL: <https://arxiv.org/abs/2412.03507v2>.
+
+*Commentary.*
+
+The derivation takes z to one and conjugation takes z to its third power.
+
+**Theorem 1.16 (Non-innerness over the integer ring).**
+
+$$\neg \operatorname{IsInner}\left(\operatorname{identity}\left(Int, O4\right), tau, derivation\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.derivation_not_inner` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Praveen Manju and Rajendra Kumar Sharma (2024). *Twisted Derivations in Algebraic Number Fields*. URL: <https://arxiv.org/abs/2412.03507v2>.
+
+*Commentary.*
+
+No integral multiplier works on every input; evaluation at z forces an odd integer to equal an even integer.
+
+**Theorem 1.17 (The actual adjugate test is integral).**
+
+$$\operatorname{PrintedIntegralTest}\left(2, 1, \operatorname{leftMulMatrix}\left(\operatorname{basis}\left(orderedPb\right), \operatorname{apply}\left(tau, z\right) - z\right), \operatorname{repr}\left(\operatorname{basis}\left(orderedPb\right), \operatorname{apply}\left(derivation, z\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.printed_test` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Praveen Manju and Rajendra Kumar Sharma (2024). *Twisted Derivations in Algebraic Number Fields*. URL: <https://arxiv.org/abs/2412.03507v2>.
+
+*Commentary.*
+
+The matrix and column are those of the actual multiplication operator and derivation in orderedPb. The literal half-adjugate column is the integer vector (0,1).
+
+**Theorem 1.18 (The full printed Conjecture 4.4 is false).**
 
 $$\neg claim$$
 
@@ -183,10 +267,16 @@ The counterexample negates the entire conjunction comprising the iff and both ad
 - Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.O4`
 - Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.PrintedIntegralTest`
 - Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.claim`
+- Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.counterinstance_root_values`
 - Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.derivation`
+- Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.derivation_not_inner`
+- Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.derivation_twisted`
 - Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.gaussianEquiv`
+- Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.orderedPb`
 - Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.pb`
+- Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.printed_test`
 - Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.result`
 - Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.root`
+- Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.root_primitive`
 - Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.tau`
 - Truth anchor: `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.z`
