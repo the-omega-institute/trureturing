@@ -1,0 +1,29 @@
+**定义 9.1（本节的来源和同一个全未来载体）。** 本节及以下的 II、III 来源分别取 [II 的源文本][II9]、[III 的源文本][III9]，尤其 II (121.7)、III144、III150；前八章的固定来源和结论各守原范围。一般比较入口直接复用 [Library 的固定半附录与完整 S／Jordan 桥][L9]，以及 [PRE 第五卷 §§77–79、82][PRE9]。以下新增内容为这些结果在原预测行上的应用与综合，记为 `repo-derived`；不将其中的紧凸工具、表示分类或 Jordan 分类作为新的一般定理。
+
+令 $d\ge3$、$Y=\mathbb {CP}^{d-1}$、$G=PU(d)$，给定连续非恒定函数 $q:Y\to[0,1]$。对 $y=[\psi]$ 记 $P_y=\psi\psi^*/\|\psi\|^2$。只用这个实际函数的全部未来，定义
+
+$$
+v_y=\bigl(1,(q(gy))_{g\in G}\bigr),\quad
+V=\operatorname{span}_{\mathbb R}\{v_y:y\in Y\},\quad
+K=\operatorname{conv}\{v_y:y\in Y\},\quad C=\operatorname{cone}K,
+\qquad u(z)=z(\star).
+\tag{9.1}
+$$
+
+假定 $\dim_{\mathbb R}V<\infty$；$\operatorname{conv}$ 指有限凸组合。在 $\{\star\}\sqcup G$ 上使用坐标上确界范数。锥始终是 (9.1) 的生成锥，不改为逐坐标非负向量的较大锥。效应始终是原锥的整个数学 proper 区间
+
+$$
+[0,u]=\{f\in V^*:f(C)\ge0,\ (u-f)(C)\ge0\},\qquad
+F_p=\{f\in[0,u]:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x).
+\tag{9.2}
+$$
+
+这里 $p\in\operatorname{ext}K$、$x\in K$；下述证明给出所需紧性，故最小值确实存在。原生群作用定义为
+
+$$
+(R_hz)(\star)=z(\star),\qquad (R_hz)(g)=z(gh),\qquad
+R_hv_y=v_{hy},\quad R_hR_k=R_{hk}.
+\tag{9.3}
+$$
+

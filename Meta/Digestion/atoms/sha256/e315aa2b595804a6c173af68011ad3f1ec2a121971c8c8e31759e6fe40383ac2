@@ -1,0 +1,18 @@
+## 21. 普通中文的几何说明与来源边界
+
+白话说，始终只有同一个 ready；先看四个真实前缀 $\epsilon,9^5,9,9^6$，要求它们以等权 $+,+,-,-$ 两两重组后，在完全相同的每个原十一地址 terminal future 上差值为零。这个小回路不抹平四个历史，只约束四个实际预测行的差。在原有限预测秩、统计十步回返、ready 统一回返及原矩阵密度已经供应时，这一条全未来关系恰好选出 Born 终端响应。第三个复方向让每个更高次数都有一个明确的非零谐波见证，故所有群平移下的关系能排除全部高次非线性；无须预设一个次数上界。若只给预选有限 future，命题 19.1 的多项式仍能全部过检而不是 Born。
+
+非恒定 Born 响应的所有旧未来读数，加上原归一化坐标，能分开全部 Hermitian 矩阵方向。因此原实际行的数学完成恰好得到整个密度基和 PSD 锥，所有数学 proper 测试就是 $0\le F\le I$。确认一个纯方向的最小测试正是该方向的投影，所以连同任意混态余项的固定半比较也随之成立，不用再支付它作为前提。这里的完成没有制备新的射线或混态，也没有取得任何实际测试菜单；数学上可以表示与物理上实际可调用始终分开。完整菜单的 POVM 结论还要该确切菜单的全部标签从一开始满足同一个联合行前件，不能从一个事件扩张出去。
+
+完整量子候选仍另外保留原静态包、同事件与参考合同、实际相关联合、完整菜单预算、记录和全部中间切口。CP 才能消费矩形 Kraus；锐效应和对全部确定接受态逐点不变才给 Lüders；真实连续齐次可逆时间群及单位对应才给 Hamiltonian 对易子方程。这些结论没有提供免费准备、彩票、复制、相干控制、额外 readout、复位或新物理资源。原 23.7 named acceptance 与 164.1 Bractive-ready 仍未构造；已有下降、参考、递归支撑和 original-D recovery 的成果保持各自已得范围。完整原 $\Omega$ 的起源目标继续未完成，不以这个终端接口的数学替换改写成功标准。
+
+本节新循环性的文献背景是 Moretti–Pastorello, arXiv:1205.4504v2, Theorem 5(a)–(c), Lemma 7, Proposition 9(8), Theorem 10 and its proof (10)–(12)；有限维表示的对照是 Galley–Masanes, arXiv:1610.04859v3, Result 2–3，以及 Masanes–Galley–Müller, arXiv:1811.11060v2, Appendix A Lemma 7 (48)–(50)。这些文献只承担所列成熟的球谐、不可约性和多项式表示工具；单锚 $H_j$、native 四词映射、(17.3) 的 row relation 和其在本原始来源上的应用是仓内推导，不作全球优先权或一般文献定理的冒领。
+
+以上定义、定理、证明和反模型均为纸面数学，不声称 Lean kernel 核验或冻结认证。
+
+[MP96]: https://arxiv.org/html/1205.4504v2
+[GM96]: https://arxiv.org/html/1610.04859v3
+[MGM96]: https://arxiv.org/html/1811.11060v2
+[III150N96]: https://github.com/the-omega-institute/trureturing/blob/f8879996e320d8495f6630a2ed6250756f89d9e6/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md
+[PRE8437]: https://github.com/the-omega-institute/trureturing/blob/f8879996e320d8495f6630a2ed6250756f89d9e6/docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md
+

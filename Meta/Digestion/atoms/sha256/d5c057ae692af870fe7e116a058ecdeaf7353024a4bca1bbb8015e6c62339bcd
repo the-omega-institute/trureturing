@@ -1,0 +1,56 @@
+**定义 1.2（原完整载体和实际字）。** 固定 II77、100、117、121 与 III138.1 的同一个复 Fibonacci 路径载体
+
+$$
+\begin{gathered}
+H=V_8^{\mathbf1},\qquad \dim_{\mathbb C}H=13,\qquad
+\mathcal K=V_{12}^{\mathbf1},\qquad \dim_{\mathbb C}\mathcal K=89,\\
+J:H\otimes\mathbb C^2\longrightarrow\mathcal K,\qquad
+\mathcal C=\operatorname{ran}J,\qquad
+\dim\mathcal C=26,\qquad \dim\mathcal C^\perp=63,\\
+v=e_{00100},\qquad e_0=R_0v=J(v,0),\qquad
+\chi_a=K_ae_0,\qquad
+a\in\mathsf W_{11}=\{0,\ldots,10\}^{<\infty}.
+\end{gathered}
+\tag{1.1}
+$$
+
+唯一 ready 为 $e_0$。字按调用先后连接，$K_{ab}=K_bK_a$。全部字有限且正向；后读始终只用原七地址
+$\mathsf W=\{0,\ldots,6\}^{<\infty}$。原程序为
+
+$$
+\begin{aligned}
+\mathsf T(a)&:\ e_0;\ K_a;\ \mathcal L_{10},\\
+\mathsf R(a,f)&:\ e_0;\ K_a;\ (b_9=i\text{ 读取并保留});\
+ K_f;\ \mathcal L_{10},
+\qquad a\in\mathsf W_{11},\ f\in\mathsf W.
+\end{aligned}
+\tag{1.2}
+$$
+
+$f$ 外生且不依赖 $i$。真实调用字、次序、设置、记录、细档案和终端结果均保留。没有新读口、反馈、第二次读取、复制、复位或新辅助载体。
+
+完整基路径的边界仍为 $b_{-1}b_0=10$、
+$b_{10}b_{11}b_{12}=010$，内部 $b_1\cdots b_9$ 无相邻占据。$M_i$ 是 $b_9=i$ 的投影；$N_w$ 是旧十位 $b_{-1},\ldots,b_8$ 等于 $w$ 的投影，$w$ 遍历全部 $\Omega_{10}=\{0,1\}^{10}$。无合法路径的标签取零投影，标签保留。原恒等式为
+
+$$
+M_0+M_1=I,\qquad \sum_{w\in\Omega_{10}}N_w=I,\qquad
+[M_i,N_w]=0.
+\tag{1.3}
+$$
+
+取原事件 $A=\{w:b_1=1\}$、$Q=N_A$，没有更换终端或终端归组。整个载体的原矩阵仍为 III138.2a：
+
+$$
+\begin{gathered}
+x=\varphi^{-1},\quad y=\sqrt{x},\quad
+\varphi=(1+\sqrt5)/2,\quad \zeta=e^{3\pi i/5},\\
+K_j=\zeta[I+(\zeta-1)\mathcal P_j],\qquad
+\mathcal P_j=n_{j-1}n_{j+1}
+ +(1-n_{j-1})(1-n_{j+1})
+ \begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}_{b_j}.
+\end{gathered}
+\tag{1.4}
+$$
+
+固定边界照字面代入，限制到全部合法路径；$K_j^{10}=I$。复结构、范数和这些相干矩阵均为来源前件。
+

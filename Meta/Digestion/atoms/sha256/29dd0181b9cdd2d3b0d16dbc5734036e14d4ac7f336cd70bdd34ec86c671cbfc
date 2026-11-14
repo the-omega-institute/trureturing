@@ -1,0 +1,52 @@
+**定理 10.2（全群完成没有另一个秩或锥前件）。** 在定义 10.1 下，III150.3 给唯一连续 $q:\mathbb P(\mathcal K)\to[0,1]$ 及连续原行映射 $\mathfrak X:\mathbb P(\mathcal K)\to V_{\mathrm w}$。以这个 $q$ 构造定义 9.1 的全 $G=PU(89)$ profiles，暂不假设其张成有限。限制到原十一地址未来的映射 $\mathcal R$ 是全群 profile 张成到 $V_{\mathrm w}$ 的线性等距同构，并识别归一化、完成的原行锥及全部 proper 效应。准确地，令
+
+$$
+K_{\mathrm w}=\overline{\operatorname{conv}\{x_a:a\in\mathsf W_{11}\}},\qquad
+C_{\mathrm w}=\operatorname{cone}K_{\mathrm w}.
+\tag{10.3}
+$$
+
+则 $\mathcal R(K)=K_{\mathrm w}$、$\mathcal R(C)=C_{\mathrm w}$、$u_{\mathrm w}\mathcal R=u$、$\dim V=r$，全 proper 区间由对偶拉回一一对应。还可将 $C_{\mathrm w}$ 写成原行有限非负组合的闭包。
+
+证明。直接消费 III150.3 的结论和证明所得坐标式：
+
+$$
+\mathfrak X([\chi_a])=x_a,\qquad
+\mathfrak X(y)=\bigl(1,(q(K_fy))_{f\in\mathsf W_{11}}\bigr).
+\tag{10.4}
+$$
+
+II (121.7)、III (144.12)、(150.12) 的矩阵供应使用全 $89$ 维路径载体，不是 $13$ 维代码或 $26$ 维嵌入。其原路径／Young 表对应为 Jones 参数 $(k,r_{\mathrm J},n)=(2,5,12)$、$\lambda=[6,6]$、全部 $89$ 个可容许表，十一原门共用标量 $c=e^{\pi i/5}$。FLW Theorem 0.1 的 $r_{\mathrm J}\ge5$、$r_{\mathrm J}\notin\{6,10\}$、$n\ge3$ 和图的行差条件均在该源对应中满足；闭像包含 $SU(89)$，整体相位在射影像消去。$K_j^{-1}=K_j^9$ 使所需字仍为有限正向字。因此
+
+$$
+D:=\{[K_f]:f\in\mathsf W_{11}\}\text{ 在 }PU(89)\text{ 中稠密},\qquad
+\overline{\{[\chi_a]\}}=\mathbb P(\mathcal K).
+\tag{10.5}
+$$
+
+这里仅复用矩阵对应和密度，不采用 II 的实际概率匹配，也不执行闭包门。连续性和紧性使 $\overline{\{x_a\}}=\mathfrak X(\mathbb P(\mathcal K))$；右侧确实在原有限维 $V_{\mathrm w}$ 内。
+
+定义 $\mathcal Rz$ 的 $\star$ 坐标不变，第 $f$ 坐标为 $z([K_f])$。对任一有限组合 $z=\sum_i b_iv_{y_i}$，函数 $g\mapsto\sum_i b_iq(gy_i)$ 连续。稠密性给
+
+$$
+\|\mathcal Rz\|_\infty
+=\max\left\{\left|\sum_i b_i\right|,
+\sup_{f\in\mathsf W_{11}}\left|\sum_i b_iq(K_fy_i)\right|\right\}
+=\max\left\{\left|\sum_i b_i\right|,
+\sup_{g\in G}\left|\sum_i b_iq(gy_i)\right|\right\}
+=\|z\|_\infty.
+\tag{10.6}
+$$
+
+故限制单射，而且 $\mathcal Rv_y=\mathfrak X(y)\in V_{\mathrm w}$。其像包含每个 $x_a$，所以恰为 $V_{\mathrm w}$。这在应用有限维比较桥以前已经证明全群有限秩，未增加另一个全群容量前件。
+
+$\mathfrak X$ 的像紧，有限维中其凸包也紧。实际行在该像中稠密，故
+
+$$
+K_{\mathrm w}=\operatorname{conv}\mathfrak X(\mathbb P(\mathcal K))
+=\mathcal R(K).
+\tag{10.7}
+$$
+
+锥和单位的结论随即成立；归一化坐标控制缩放参数，同 9.2 的闭锥论证给 $C_{\mathrm w}=\overline{\operatorname{cone}\{x_a\}}$。线性锥同构的对偶拉回保持且反映 $0\le f\le u$，所以比较、最小确认和 (9.4) 都在原载体上逐点对应。经 $\mathcal R$ 搬回的原生作用在实际字上满足 $\mathcal R R_{[K_b]}\mathcal R^{-1}x_a=x_{ab}$；对其余全群元素的作用只是数学延拓。∎
+

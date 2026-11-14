@@ -1,0 +1,22 @@
+**命题 19.1（任意预选有限 future 都不能认证循环性）。** 固定任意有限 $F\subset\mathsf W_{11}$，令
+
+$$
+ S_F=\{[K_f\psi_k]:f\in F, k\in\{0,5,1,6\}\}
+      \cup\{[\psi_0],[\psi_5]\},
+$$
+
+并在 rank-one projectors 上置
+
+$$
+ h_F(P)=\prod_{s\in S_F}\bigl(1-\operatorname {Tr}(PP_s)\bigr),
+ \qquad q_F(P)=\tfrac12+\varepsilon h_F(P),
+ \quad0<\varepsilon\le\tfrac12.
+\tag{19.1}
+$$
+
+则 $0\le h_F\le1$，$q_F\in[0,1]$，所有四个前缀在全部查询 future $f\in F$ 上的 residual 都为零，但 $q_F$ 不是任何 $d$ 维 Born effect。
+
+证明。每个因子在 $[0,1]$ 内，且在 $P=P_s$ 时为零，所以 $h_F$ 在所有查询点以及 $[\psi_0],[\psi_5]$ 为零。因而对每个 $f\in F$，四个查询值均为 $1/2$，有限 residual 全零；$F=\varnothing$ 时此检验为空，两条额外零射线仍保留。未查询的其它锚点不必为零，也不影响下面的非 Born 证明。$h_F$ 是有限个投影线性函数的乘积，所有未来 profiles 落在有限个对称幂矩阵系数的实线性像中，故有有限 predictive profile。在这个明确按射线定义的数学模型中，$K_j^{10}=I$ 给统计 $\mathrm R_{10}$，而紧射影空间上一致连续性与所有 $K_f$ 的等距性给 uniform ready-return；这不把矩阵回返当作未知实际律的统计前件。
+
+若 $h_F(P)=\operatorname {Tr}(HP)$，因 $h_F\ge0$ 对全部秩一投影成立，$H\ge0$。两个独立射线 $[\psi_0]$、$[\psi_5]$ 是 $\operatorname {span}\{e_-,e_+\}$ 内的独立向量，且均给 $h_F=0$，故该二维平面包含于 $\ker H$。但该平面上只有有限多个 $S_F$ 点，另取一个未列出的射线就有 $h_F>0$，矛盾。若 $q_F=\operatorname {Tr}(EP)$，则 $h_F=\varepsilon^{-1}\operatorname {Tr}((E-I/2)P)$，同样得到矛盾。该反模型只控制这里列出的 terminal profile 类；它没有改写完整 $\Omega$、旧校准、记录、失败或物理实现合同。证毕。
+
