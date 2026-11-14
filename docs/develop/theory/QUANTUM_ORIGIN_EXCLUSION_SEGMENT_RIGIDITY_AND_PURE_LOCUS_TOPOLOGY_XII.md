@@ -3141,7 +3141,7 @@ $$
 以下准确复用既有供应，不将它们另列为新定理。[IX114.1—114.6、IX116.1][Q155IX] 给 $K,\mathcal E,F_p$ 紧、全部 minimum 达到、$C=\mathbb R_{\ge0}K$、$K=\operatorname{conv}P$ 且 $K$ 张成 $V$。PR 给全部原纯点严格暴露及整个 $P$ 紧。置 $M=\max_{f\in\mathcal E}\|f\|_*<\infty$，有
 
 $$
-|T_p(x)-T_p(y)|\le M\|x-y\|qquad(p\in P,\ x,y\in K).
+|T_p(x)-T_p(y)|\le M\|x-y\|\qquad(p\in P,\ x,y\in K).
 \tag{XII155.5}
 $$
 
