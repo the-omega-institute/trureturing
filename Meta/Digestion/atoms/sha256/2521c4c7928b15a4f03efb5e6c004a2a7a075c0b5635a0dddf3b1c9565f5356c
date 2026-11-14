@@ -1,0 +1,16 @@
+**条件应用 145.9（全原对象运输）。** 在定理145.2任一等价条件下，采用其**同一个** $\Phi$。记 $P_v=vv^*$、$v^*v=1$、$Q_v=I_3-P_v$、$p_v=\Phi(P_v)$、$U=\Phi(I_3)$。直接消费142.3及 X133.7 的字典：
+
+| 原对象／静态量子公理 | 同原锥和同原单位中的完整对应 |
+| --- | --- |
+| 全载体、全锥与质量 | $V=\Phi(\operatorname{Herm}_3)$；整个 $C=\Phi(\operatorname{PSD}_3)$，包括零、次归一和任意非负质量；$u(\Phi X)=\operatorname{Tr}X$。$u\in V^*$ 与 Jordan 单位 $U\in V$ 不混型。 |
+| 全态与全部混合 | 整个 $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$，仿射维数八；全部有限凸组合和非负组合保持。 |
+| 全纯域与复叠加的静态含义 | 全部 $P=\{p_v\}\cong\mathbb{CP}^2$，实维四。任意非零 $w\in\mathbb C^3$ 对应 $\Phi(ww^*/(w^*w))$；非零复倍数给同一标签，每个非零复线性叠加有其原射线标签。零向量没有归一纯标签。 |
+| 全效应与 Born 评价 | $f_M(\Phi X)=\operatorname{Tr}(MX)$ 恰遍历全部 $0\preceq M\preceq I_3$，保持零、单位、补及序；任意实线性读数对应任意 Hermitian $M$。评价覆盖所有原混态和全部非负锥元。 |
+| 完整非单点确认、least及已达minimum | $\mathcal F_{p_v}=\{f_{P_v+B}:B=Q_vBQ_v,\ 0\preceq B\preceq Q_v\}$；least为 $f_{P_v}$。对每个原混态 $T_{p_v}(\Phi\rho)=\operatorname{Tr}(P_v\rho)=v^*\rho v$，由同一菜单的 $B=0$ 达到。 |
+| 全纯比较与所有端点 | $T_{p_v}(p_w)=\lvert v^*w\rvert^2$；未归一时除以 $(v^*v)(w^*w)$。相等射线给一，正交射线给零，PR成立。 |
+| 整个排除球、球缘及中心 | $D_{p_v}$ 为(XI145.34)的全部原像，含全部混态；Pauli坐标为 $(I_2+r\cdot\sigma)/2$、$\|r\|\le1$，纯球缘 $\mathbb{CP}^1\cong S^2$。$c_{p_v}=\Phi(Q_v/2)=(U-p_v)/2$；总体中心态为 $U/3$。 |
+| 原零框架与数学共同效应 | 原零三角对应三个和为 $I_3$ 的正交秩一投影，其三个 least 效应和为 $u$；每条原零边有唯一第三点，数学完美区别容量为三。全部不同纯对的原最小面是真面，全 Pair 成立。 |
+| 全部有限数学测量 | 对任意有限结果数，全部 $f_j\in C^*$、$\sum_jf_j=u$ 恰对应全部 POVM $M_j\succeq0$、$\sum_jM_j=I_3$；在每个原归一输入上概率为 $\operatorname{Tr}(M_j\rho)$。零效应、重复项和任意有限粗粒化均允许。 |
+| 谱与全部实可观测量 | 每态有三项正交纯谱分解，$\lambda_i\ge0,\sum_i\lambda_i=1$，允许零权与重谱；一般非负质量的谱权重和等于该质量，零元全为零。全部 Hermitian 可观测量有实谱及谱投影，含零本征值；重谱不指定唯一逐本征射线。 |
+| 共同尺、Jordan与齐次性 | $\langle\Phi X,\Phi Y\rangle_\Phi=\operatorname{Tr}(XY)$ 使 $C$ 自对偶；$\Phi X\circ\Phi Y=\Phi((XY+YX)/2)$，单位为 $U$。正定矩阵的可逆合同变换给原锥内部齐次性。 |
+| 全域球心图与相容性 | $R(x)=(u(x)U-x)/2$ 在全部 $V$ 上正、保质量、可逆，且 $R(p)=c_p$；同一原混态的全部有限纯配方替换球心后仍为同一态。 |
