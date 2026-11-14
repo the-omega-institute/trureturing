@@ -614,3 +614,124 @@ $\mathsf{MC}$ 是否由裸 EB3、或由 EB3 加纯比较互易 PR 自动推出�
 [XI135IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.1球面原纯及点交；118.4精确极限标签判据；118.6—118.8统一正直径到同原复三能级分类。"
 
 ## 追加锚（本行以下为增补区）
+
+## 136. 一张全效应的纯态判别与排除球全轴间隙
+
+**定义 136.1（原球心图及完全分离关系）。** 保留135.1的同一有限维原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p$。本章先允许每个完整 $D_p$ 是任意正维实心仿射欧氏闭球，维数可以随 $p$ 变化，仍记其中心为 $c_p$。另外假定实际存在连续仿射映射 $R:K\to K$，满足 $R(p)=c_p$，并满足原球标签单射
+
+$$
+D_p=D_q\ \Longrightarrow\ p=q\qquad(p,q\in P).
+\tag{XI136.1}
+$$
+
+这里仿射性遍历全部原态和实权重，不是只在某个球内的仿射性。完整 EB3 加135.1的 $\mathsf{MC}$ 已由135.2—135.4中纯点闭性论证之前的部分供应这两个条件；本章不使用135.4的纯点紧性结论或135.5的矩阵分类。
+
+定义同一原效应的完全分离关系及其最大间隙：
+
+$$
+\begin{aligned}
+\Gamma_R&=\{(x,f)\in K\times\mathcal E:f(x)=1,\ f(Rx)=0\},\\
+d_R(x)&=\max_{f\in\mathcal E}\bigl(f(x)-f(Rx)\bigr).
+\end{aligned}
+\tag{XI136.2}
+$$
+
+全效应区间在有限维中紧，故最大值达到。$R$ 在此是原几何上的静态仿射图，不预设为可执行操作。
+
+**定理 136.2（纯态是闭的全效应分离关系）。** 在定义136.1的原域，
+
+$$
+\boxed{
+P=\operatorname{pr}_K\Gamma_R=d_R^{-1}(\{1\}).
+}
+\tag{XI136.3}
+$$
+
+因此原全部纯态集合 $P$ 紧。并且 $d_R:K\to[0,1]$ 连续；对每个 $\eta>0$，存在 $\varepsilon>0$，使全部原态满足
+
+$$
+d_R(x)>1-\varepsilon
+\quad\Longrightarrow\quad
+\operatorname{dist}(x,P)<\eta.
+\tag{XI136.4}
+$$
+
+距离使用任意固定辅助欧氏范数；不声称存在与原模型无关的数值模量。
+
+证明。先记录将要实际使用的原共同零面接口。任取 $p\in P$，若 $f\in\mathcal F_p$ 且 $f(c_p)=0$，则对 $y\in D_p$，中心反射给 $y'=2c_p-y\in D_p$。原效应非负，故
+
+$$
+0=f(c_p)=\frac{f(y)+f(y')}{2}
+\quad\Longrightarrow\quad f(y)=0.
+$$
+
+反向，$y\in K$ 且 $f(y)=0$ 时，同一 $f\in\mathcal F_p$ 见证 $T_p(y)=0$。因此
+
+$$
+D_p=K\cap\ker f.
+\tag{XI136.5}
+$$
+
+$c_p\in D_p$ 以及原 minimum 达到，总能供应这样的 $f$。这是 [FINITE_PURE VII103.2][XI135FP] 已有的共同零确认步骤；此处只重述被消费的等式，不使用全部真面分类。它同时保证 $D_p$ 是原面。因为球正维，$c_p$ 不是原纯点。
+
+若 $x=p\in P$，取上述共同零确认效应就有 $f(x)=1,f(Rx)=f(c_p)=0$，所以 $P\subseteq\operatorname{pr}_K\Gamma_R$。
+
+反之，设 $(x,f)\in\Gamma_R$。有限维紧凸集的有限极点分解定理给出
+
+$$
+x=\sum_{i=1}^m\lambda_i p_i,\qquad
+p_i\in P,\quad\lambda_i>0,\quad\sum_i\lambda_i=1.
+$$
+
+仿射性、全域效应界及两端饱和给
+
+$$
+1=\sum_i\lambda_i f(p_i),\qquad
+0=\sum_i\lambda_i f(c_{p_i}),\qquad
+f(p_i)\le1,\quad f(c_{p_i})\ge0.
+$$
+
+因所有权重正，逐项必有 $f(p_i)=1$ 及 $f(c_{p_i})=0$。于是(XI136.5)使全部 $D_{p_i}$ 都等于同一个 $K\cap\ker f$；标签单射再使全部 $p_i$ 相同。因此 $x$ 纯，得到第一个等式。这里既未从“不同标签”直接推“不同效应”，也未在混合分解前假定 $P$ 闭。
+
+$\Gamma_R$ 是紧 $K\times\mathcal E$ 的闭子集，其投影紧；故 $P$ 紧。这个步骤没有选取任何排除球的 Hausdorff 极限，也未调用 IX118.4 的极限标签定理。
+
+由于 $0\le f(x),f(Rx)\le1$，间隙不超过一；零效应使最大间隙非负。最大值达到时，$f(x)-f(Rx)=1$ 恰好等价于 $f(x)=1,f(Rx)=0$，得到第二个等式。
+
+在 $\operatorname{aff}K$ 的平移空间上，令 $A$ 为 $x\mapsto x-Rx$ 的线性部分，并令 $M=\max_{f\in\mathcal E}\|f\|$。对 $x,y\in K$，
+
+$$
+|d_R(x)-d_R(y)|\le M\|A\|\,\|x-y\|.
+\tag{XI136.6}
+$$
+
+这由每张原效应的相同界取最大直接得到，故 $d_R$ 连续。对给定 $\eta>0$，集合 $H_\eta=\{x\in K:\operatorname{dist}(x,P)\ge\eta\}$ 紧且不交 $P$。若它非空，取 $\varepsilon=1-\max_{H_\eta}d_R>0$；若为空，任取 $\varepsilon>0$。由(XI136.3)即得(XI136.4)。证毕。
+
+**定理 136.3（每颗完整球的全部半轴统一非退化）。** 在定义136.1的原域，固定任意辅助欧氏范数，令 $L_p=\operatorname{lin}(D_p-c_p)$。则
+
+$$
+\delta=\operatorname{dist}(P,R(P))>0,\qquad
+c_p+\delta\,\overline B_{L_p}\subseteq D_p
+\quad(p\in P).
+\tag{XI136.7}
+$$
+
+特别地，每颗完整排除椭球在该辅助尺下的全部半轴都至少为 $\delta$，并有 $\operatorname{diam}D_p\ge2\delta$。
+
+证明。定理136.2给紧 $P$，连续性给紧 $R(P)$。每个 $R(p)=c_p$ 都是正维原面 $D_p$ 的中心，因而非纯，所以两紧集不交，得到严格正距离。仿射球的每个相对边界点 $q$ 都是该球的极点；$D_p$ 是原面，故 $q\in P$。因此
+
+$$
+\|q-c_p\|\ge\delta
+\qquad(q\in\partial_{\rm rel}D_p).
+$$
+
+对 $L_p$ 的每条单位方向 $v$，沿射线 $c_p+t v$ 首次遇到的边界点距离至少为 $\delta$；由凸性，$0\le t\le\delta$ 的整段都在 $D_p$。遍历所有方向便得内球包含式。中心反射再给直径界。本证明允许不同球在辅助环境尺下为不同椭球，未输入共同物理内积。证毕。
+
+**条件应用 136.4（完整候选的短桥及量词边界）。** 在135.1的完整 EB3 加 $\mathsf{MC}$ 下，先消费135.2—135.4中线性下降、满秩及标签单射的部分，再应用136.2—136.3，即得到 IX118.8第二项需要的原球统一正直径下界。这样，纯点紧性及非塌缩入口的证明不再选取极限球；135.5的同原锥、同原单位复三能级表示与135.6的全部静态字典仍消费 IX118.8，包括该分类已有的极限球依赖。
+
+证明。$\mathsf{MC}$ 使纯生成元的球心替换在全部原混合上良定义；135.3的中心张成使其线性延拓满秩，从而取得定义136.1的实际仿射 $R$ 和原标签单射。136.2—136.3正好供应剩余的非塌缩前件，之后直接应用既有 IX118.8，不重证其拓扑或 Jordan 分类。反向与矩阵字典直接复用135.5—135.6，不作为本章新增分类。证毕。
+
+**约定 136.5（新增连接及关系图景）。** 本章采用 `repo-derived` 归属；新增承重连接是(XI136.3)在分类前以同一全效应关系识别全部原纯点，并由此直接推出紧性及(XI136.7)的全轴间隙。紧投影、有限极点分解、最大值连续性与紧集间正距离是成熟中间工具。量子端的 $X\mapsto(\operatorname{Tr}(X)I-X)/2$ 属于既有 universal state inversion／reduction map；参见 [Rungta等，Universal state inversion and concurrence in arbitrary dimensions](https://doi.org/10.1103/PhysRevA.64.042315) 及 [Horodecki—Horodecki，Reduction criterion of separability and limits for a class of distillation protocols](https://doi.org/10.1103/PhysRevA.59.4206)。这些文献不被当作本章抽象纯域判别的证明，亦不据有限检索声称全球原创。
+
+完整静态候选仍是 $\mathrm{EB3}+\mathsf{MC}$，本章缩短其推导，不声称删去了独立假设。其关系图景是：同一个态可有不同纯混合配方，取每个纯分量的排除球心后仍须得到同一态；若一张原尺能把替换前后完全分开，所有配方分量就必须指向同一颗排除球，标签单射迫使它们本来就是同一纯点。纯态因而由这项闭的二元分离关系完整刻画，球心与纯点之间出现统一正间隙，任何排除球的细轴也不能趋于零。只检验两项混合是否足以替代全部有限混合、裸 EB3 或 EB3加纯比较互易是否推出 $\mathsf{MC}$，仍不由本章解决。实际操作、复合系统、测量更新与时间演化继续保留135.7的原合同；交换比较端点不等于交换连续测量的次序。
+
+## 追加锚（本行以下为增补区）
