@@ -6,6 +6,7 @@
    utility: none
    digest: Arbitrary-grain diagonal choice and general z>=4 rectangle-to-twelve proof. -/
 import Batteries.Tactic.OpenPrivate
+import D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.CyclicArithmetic
 
 /-! All strict/equality diagonal selections are native.
@@ -664,11 +665,6 @@ private theorem dyadic_grain (a b d : ℕ) (hdb : d<b) (hba : b<a) :
       ring
     _ = _ := by congr 1; omega
 
-private theorem dyadic_half (n : ℕ) (hn : 1≤n) :
-    (2:ℤ)^n=2*(2:ℤ)^(n-1) := by
-  conv_lhs => rw [show n=(n-1)+1 by omega,pow_succ]
-  ring
-
 private theorem dyadic_two_or_four (c d : ℕ) (hcd : c<d) :
     (2:ℤ)^d=2*(2:ℤ)^c ∨ 4*(2:ℤ)^c≤(2:ℤ)^d := by
   by_cases hd : d=c+1
@@ -725,7 +721,7 @@ private theorem parameterChoice (a b c d : ℕ) (hc : 3≤c) (hcd : c<d)
   have hzm : z=g*m := by
     rw [hgpow]; dsimp [z,m]
     rw [←pow_add]; congr 1; omega
-  have hτ : t=2*τ := dyadic_half d (by omega)
+  have hτ : t=2*τ := Descending.half_power d (by omega)
   have hz8 : 8≤z := by
     have hp := pow_le_pow_right₀ (by norm_num : (1:ℤ)≤2) hc
     norm_num at hp
@@ -817,7 +813,7 @@ private theorem parameterChoice (a b c d : ℕ) (hc : 3≤c) (hcd : c<d)
   have hq : 2*reserve K J t=x-2*g := by dsimp [reserve,g,grain]; rw [hxt]; dsimp [g,grain]; ring
   have hss : 2*(sN:ℤ)≤x := by
     have heq : (sN:ℤ)≤(2:ℤ)^(a-1) := by exact_mod_cast hsN
-    have hh := dyadic_half a (by omega)
+    have hh := Descending.half_power a (by omega)
     dsimp [x]; omega
   have hgateN : ∀ i,0≤gateMargin x y z t sN rN hN vN i := by
     apply rectangle_to_twelve x y z t g (reserve K J t) sN rN hN vN
