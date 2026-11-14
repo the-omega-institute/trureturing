@@ -70,13 +70,13 @@ private instance instDecidableProper {n : ℕ} (P : Fin 6 × Fin n → Fin 3) :
 def L (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun P : Fin 6 × Fin n → Fin 3 => Proper P)).card
 private abbrev Col := Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3
-private def column (c : Col) : Fin 6 → Fin 3 :=
+def column (c : Col) : Fin 6 → Fin 3 :=
   ![c.1,c.2.1,c.2.2.1,c.2.2.2.1,c.2.2.2.2.1,c.2.2.2.2.2]
 private def compatible (a b : Col) : Prop :=
   ∀ r s : Fin 6, (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) → column a r ≠ column b s
 private instance instDecidableCompatible (a b : Col) : Decidable (compatible a b) :=
   inferInstanceAs (Decidable (∀ _ _, _ → _))
-private def orbit (c : Col) : Fin 122 :=
+def orbit (c : Col) : Fin 122 :=
   if column c 1 = column c 0 then (if column c 2 = column c 0 then (if column c 3 = column c 0 then
     (if column c 4 = column c 0 then (if column c 5 = column c 0 then (0) else (1)) else (if column
     c 5 = column c 0 then (2) else (if column c 5 = column c 4 then (3) else (4)))) else (if column
@@ -141,7 +141,7 @@ private def liveClass : Fin 122 → Fin 51 :=
     44, 45, 0, 0, 0, 0, 46, 47, 48, 49, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0]
 private def cls (c : Col) : Fin 51 := liveClass (orbit c)
-private def representatives : Fin 122 → Col :=
+def representatives : Fin 122 → Col :=
   ![(0,0,0,0,0,0), (0,0,0,0,0,1), (0,0,0,0,1,0), (0,0,0,0,1,1), (0,0,0,0,1,2), (0,0,0,1,0,0),
     (0,0,0,1,0,1), (0,0,0,1,0,2), (0,0,0,1,1,0), (0,0,0,1,1,1), (0,0,0,1,1,2), (0,0,0,1,2,0),
     (0,0,0,1,2,1), (0,0,0,1,2,2), (0,0,1,0,0,0), (0,0,1,0,0,1), (0,0,1,0,0,2), (0,0,1,0,1,0),
@@ -313,7 +313,7 @@ private theorem compatible_relabel (e : Equiv.Perm (Fin 3)) (a b : Col) :
   simp only [compatible, column_relabel, e.injective.ne_iff]
 private theorem class_relabel : ∀ e : Equiv.Perm (Fin 3), ∀ c : Col,
     cls (relabel e c) = cls c := by decide +kernel
-private theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
+theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
     relabel e c = representatives (orbit c) := by decide +kernel
 set_option synthInstance.maxSize 10000 in
 private theorem successors_spec : ∀ i : Fin 122,
