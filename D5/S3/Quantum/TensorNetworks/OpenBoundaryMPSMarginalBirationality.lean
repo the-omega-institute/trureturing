@@ -65,10 +65,10 @@ def claim : Prop :=
   ∀ n a : ℕ, 4 ≤ n → ∀ h : a + 3 ≤ n,
     (vanishingPolys n).IsPrime ∧ (vanishingPolys 3).IsPrime ∧ IsBirationalVia n a h
 
-private abbrev parameterIndex :=
+abbrev parameterIndex :=
   (Fin 2 × Fin 2 × Fin 2) ⊕ (Fin 2 ⊕ Fin 2)
 
-private def parameterPolys (n : ℕ) (w : Fin n → Fin 2) :
+def parameterPolys (n : ℕ) (w : Fin n → Fin 2) :
     MvPolynomial parameterIndex ℂ :=
   dotProduct (fun i => MvPolynomial.X (Sum.inr (Sum.inl i)))
     ((List.ofFn fun j => Matrix.of (fun i k =>
@@ -102,7 +102,7 @@ private lemma polynomial_image_prime {ι σ : Type*}
   rw [heq]
   exact RingHom.ker_isPrime φ
 
-private lemma parameter_eval (n : ℕ) (x : parameterIndex → ℂ) :
+lemma parameter_eval (n : ℕ) (x : parameterIndex → ℂ) :
     (fun w => MvPolynomial.eval x (parameterPolys n w)) =
       mpsState n (Matrix.of fun i k => x (Sum.inl (0, i, k)))
         (Matrix.of fun i k => x (Sum.inl (1, i, k)))
@@ -136,7 +136,7 @@ private lemma parameter_eval (n : ℕ) (x : parameterIndex → ℂ) :
     simp only [Function.comp_def, MvPolynomial.eval_X]
     rw [hprod]
 
-private lemma parameter_image (n : ℕ) :
+lemma parameter_image (n : ℕ) :
     openBoundaryMPS n =
       Set.range (fun x : parameterIndex → ℂ =>
         fun w => MvPolynomial.eval x (parameterPolys n w)) := by
@@ -298,7 +298,7 @@ private lemma kernel_cramer_identity :
       kernelMatrix (Fin.castSucc j) 3 * minorPoly = 0
     ring
 
-private lemma chart_scalars (t : (Fin 3 → Fin 2) → ℂ)
+lemma chart_scalars (t : (Fin 3 → Fin 2) → ℂ)
     (hg : MvPolynomial.eval t chartPoly ≠ 0) :
     let ε := MvPolynomial.eval t
     let d := ε minorPoly
