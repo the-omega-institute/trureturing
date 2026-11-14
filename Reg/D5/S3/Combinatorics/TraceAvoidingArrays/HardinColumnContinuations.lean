@@ -57,7 +57,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ _ k =>
+    (Nat.card ((_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport.stripGraph true 1 k).Coloring (Fin 3)),
+     Nat.card ((_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport.stripGraph true 2 k).Coloring (Fin 3))))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

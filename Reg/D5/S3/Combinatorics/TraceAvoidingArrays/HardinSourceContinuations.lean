@@ -65,7 +65,15 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ _ m =>
+    (_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthV
+      (fun c => _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport.proper
+        (fun j => _root_.D5.S3.Observer.Separation.BooleanRankThreeK4.beta (c j)))
+      (fun c j => _root_.D5.S3.Observer.Separation.BooleanRankThreeK4.beta (c j))
+      (fun p c => _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport.compatible
+        true p (fun j => _root_.D5.S3.Observer.Separation.BooleanRankThreeK4.beta (c j))) m,
+     (Nat.card (_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport.literalStrip true m 3) : ℤ)))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
