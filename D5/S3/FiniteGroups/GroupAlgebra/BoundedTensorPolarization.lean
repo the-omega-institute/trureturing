@@ -540,6 +540,45 @@ theorem original_dualAction_as_dualMap (n : ℕ) (a : K) :
   rw [← ofAdd_neg a, toAdd_ofAdd]
   rfl
 
+/-- The tensor of the original contragredient actions is the dual of the
+bounded primal tensor translation.  This is the equivariance transport needed
+to move the bounded exact sequence back to the original `V_d` tensor model. -/
+theorem tensorDualEquiv_original_tensorAction (n m : ℕ) (a : K) :
+    (tensorDualEquiv (K := K) n m).toLinearMap.comp
+        (((ElmerKadrTensorCounterexample.dualAction K (n + 1)).tprod
+          (ElmerKadrTensorCounterexample.dualAction K (m + 1)))
+          (Multiplicative.ofAdd a)) =
+      (tensorTranslate (-a) n m).dualMap.comp
+        (tensorDualEquiv (K := K) n m).toLinearMap := by
+  letI : Module.Finite K (Trunc K n) :=
+    Module.Finite.of_basis (truncBasis (K := K) n)
+  letI : Module.Finite K (Trunc K m) :=
+    Module.Finite.of_basis (truncBasis (K := K) m)
+  letI : Module.Projective K (Trunc K n) :=
+    Module.Projective.of_basis (truncBasis (K := K) n)
+  letI : Module.Projective K (Trunc K m) :=
+    Module.Projective.of_basis (truncBasis (K := K) m)
+  apply LinearMap.ext
+  intro φ
+  induction φ using TensorProduct.induction_on with
+  | zero => simp
+  | tmul f g =>
+      apply LinearMap.ext
+      intro z
+      induction z using TensorProduct.induction_on with
+      | zero => simp
+      | tmul x y =>
+          simp only [LinearMap.comp_apply, Representation.tprod_apply,
+            TensorProduct.map_tmul, tensorDualEquiv_tmul_apply,
+            original_dualAction_as_dualMap, LinearMap.dualMap_apply,
+            tensorTranslate, LinearEquiv.coe_coe]
+      | add z w hz hw =>
+          simp only [map_add, LinearMap.comp_apply] at hz hw ⊢
+          rw [hz, hw]
+  | add φ ψ hφ hψ =>
+      simp only [map_add, LinearMap.comp_apply] at hφ hψ ⊢
+      rw [hφ, hψ]
+
 end OriginalModelBridge
 
 /-
