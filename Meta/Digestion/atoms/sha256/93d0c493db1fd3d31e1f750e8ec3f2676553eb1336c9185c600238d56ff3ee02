@@ -1,0 +1,68 @@
+**定理 136.2（纯态是闭的全效应分离关系）。** 在定义136.1的原域，
+
+$$
+\boxed{
+P=\operatorname{pr}_K\Gamma_R=d_R^{-1}(\{1\}).
+}
+\tag{XI136.3}
+$$
+
+因此原全部纯态集合 $P$ 紧。并且 $d_R:K\to[0,1]$ 连续；对每个 $\eta>0$，存在 $\varepsilon>0$，使全部原态满足
+
+$$
+d_R(x)>1-\varepsilon
+\quad\Longrightarrow\quad
+\operatorname{dist}(x,P)<\eta.
+\tag{XI136.4}
+$$
+
+距离使用任意固定辅助欧氏范数；不声称存在与原模型无关的数值模量。
+
+证明。先记录将要实际使用的原共同零面接口。任取 $p\in P$，若 $f\in\mathcal F_p$ 且 $f(c_p)=0$，则对 $y\in D_p$，中心反射给 $y'=2c_p-y\in D_p$。原效应非负，故
+
+$$
+0=f(c_p)=\frac{f(y)+f(y')}{2}
+\quad\Longrightarrow\quad f(y)=0.
+$$
+
+反向，$y\in K$ 且 $f(y)=0$ 时，同一 $f\in\mathcal F_p$ 见证 $T_p(y)=0$。因此
+
+$$
+D_p=K\cap\ker f.
+\tag{XI136.5}
+$$
+
+$c_p\in D_p$ 以及原 minimum 达到，总能供应这样的 $f$。这是 [FINITE_PURE VII103.2][XI135FP] 已有的共同零确认步骤；此处只重述被消费的等式，不使用全部真面分类。它同时保证 $D_p$ 是原面。因为球正维，$c_p$ 不是原纯点。
+
+若 $x=p\in P$，取上述共同零确认效应就有 $f(x)=1,f(Rx)=f(c_p)=0$，所以 $P\subseteq\operatorname{pr}_K\Gamma_R$。
+
+反之，设 $(x,f)\in\Gamma_R$。有限维紧凸集的有限极点分解定理给出
+
+$$
+x=\sum_{i=1}^m\lambda_i p_i,\qquad
+p_i\in P,\quad\lambda_i>0,\quad\sum_i\lambda_i=1.
+$$
+
+仿射性、全域效应界及两端饱和给
+
+$$
+1=\sum_i\lambda_i f(p_i),\qquad
+0=\sum_i\lambda_i f(c_{p_i}),\qquad
+f(p_i)\le1,\quad f(c_{p_i})\ge0.
+$$
+
+因所有权重正，逐项必有 $f(p_i)=1$ 及 $f(c_{p_i})=0$。于是(XI136.5)使全部 $D_{p_i}$ 都等于同一个 $K\cap\ker f$；标签单射再使全部 $p_i$ 相同。因此 $x$ 纯，得到第一个等式。这里既未从“不同标签”直接推“不同效应”，也未在混合分解前假定 $P$ 闭。
+
+$\Gamma_R$ 是紧 $K\times\mathcal E$ 的闭子集，其投影紧；故 $P$ 紧。这个步骤没有选取任何排除球的 Hausdorff 极限，也未调用 IX118.4 的极限标签定理。
+
+由于 $0\le f(x),f(Rx)\le1$，间隙不超过一；零效应使最大间隙非负。最大值达到时，$f(x)-f(Rx)=1$ 恰好等价于 $f(x)=1,f(Rx)=0$，得到第二个等式。
+
+在 $\operatorname{aff}K$ 的平移空间上，令 $A$ 为 $x\mapsto x-Rx$ 的线性部分，并令 $M=\max_{f\in\mathcal E}\|f\|$。对 $x,y\in K$，
+
+$$
+|d_R(x)-d_R(y)|\le M\|A\|\,\|x-y\|.
+\tag{XI136.6}
+$$
+
+这由每张原效应的相同界取最大直接得到，故 $d_R$ 连续。对给定 $\eta>0$，集合 $H_\eta=\{x\in K:\operatorname{dist}(x,P)\ge\eta\}$ 紧且不交 $P$。若它非空，取 $\varepsilon=1-\max_{H_\eta}d_R>0$；若为空，任取 $\varepsilon>0$。由(XI136.3)即得(XI136.4)。证毕。
+
