@@ -64,6 +64,30 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
                 + "W(n+3)=12W(n+2)-36W(n+1)+32W(n). "
                 + "The same identities give W(2)=22 and W(3)=192. The injective sum transport "
                 + "identifies W(n) with the literal a(n), rather than defining a(n) by these equations.")),
+            Definition("bits", "Canonical binary digits", BitsFormula(),
+                "The result is a list of natural-number digits in most significant digit first order. "
+                + "The definition includes m=0, whose digit list is empty."),
+            Definition("Matched", "Matching successive run pairs", MatchedFormula(),
+                "These three equations cover every list of runs. The singleton case is false. "
+                + "The paired case does not itself require nonempty runs: empty runs are allowed here. "
+                + "Nonemptiness in Literal comes from splitting the canonical word into maximal runs."),
+            Definition("Literal", "Literal source membership", LiteralFormula(),
+                "The Boolean comparator BEq.beq tests equality of natural-number digits. "
+                + "List.splitBy retains the word order and groups adjacent equal digits. "
+                + "Both n and m range over all naturals, including zero; positivity is an explicit conjunct."),
+            Definition("row", "Finite set of literal integers", RowFormula(),
+                "The result has type Finset Nat. Finset.range excludes its upper bound, and "
+                + "Finset.filter keeps exactly those members satisfying Literal. This includes row zero."),
+            Definition("a", "Distinct integer sum", SumFormula(),
+                "The sum is indexed by the finite set row(n), so each natural-number member occurs once. "
+                + "Each summand is explicitly cast to the integers; an empty row has sum zero."),
+            Definition("blockRuns", "Ordered one-zero block pairs", BlockRunsFormula(),
+                "List.cons prepends one whole run. Each part contributes its run of ones before its "
+                + "run of zeros. The equations apply to every natural k, including k=0, which contributes "
+                + "two empty runs; no positivity hypothesis is imposed by this definition."),
+            Definition("word", "Concatenated block word", WordFormula(),
+                "The input is any list of natural part lengths. List.flatten concatenates its runs "
+                + "in order, including empty runs; the empty input gives the empty word."),
             Describe.Lean(DescribeId.Create("equal-binary-run-membership"),
                 DeclarationHandle.Create(Prefix + "mem_row_iff"), H("Unique literal encoding"),
                 StatementSource.FromAuthor(MembershipFormula()), AssessedProvenance.FromLiterature(Source),
@@ -90,7 +114,82 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
                     + "verification. The source's empirical formula and the known composition relation "
                     + "are distinguished from the kernel-checked derivation."))), DescribeRole.Theorem))));
 
+    private static DocumentBlock Definition(string name, string title, Formula formula, string commentary) =>
+        Describe.Lean(DescribeId.Create("equal-binary-run-definition-" + name.ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(commentary))), DescribeRole.Definition);
+
     private static Formula N() => F.Id("Nat");
+    private static Formula Lists() => Call("List", N());
+    private static Formula EmptyList() => Seq(OpenBracket, CloseBracket);
+    private static Formula Qualified(string owner, string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id(owner), Dot, F.Id(name))), [.. args]);
+    private static Formula Cons(Formula head, Formula tail) => Qualified("List", "cons", head, tail);
+    private static Formula Typed(Formula term, Formula type) => Seq(Open, term, Colon, Sp, type, Close);
+    private static Formula BitsFormula()
+    {
+        var m = F.Id("m");
+        return Disp(All("m", N(), Eqn(Call("bits", m),
+            Qualified("List", "reverse", Qualified("Nat", "digits", D(2), m)))));
+    }
+    private static Formula MatchedFormula()
+    {
+        var r = F.Id("r"); var o = F.Id("o"); var z = F.Id("z"); var rest = F.Id("rest");
+        var d = F.Id("d");
+        Formula Entries(Formula run, Formula digit) => All("d", N(), Imp(
+            new Formula.Relation(d, FormulaRelationOperator.MemberOf, run), Eqn(d, digit)));
+        return Disp(new Formula.Aligned([
+            Iffn(Call("Matched", EmptyList()), F.Id("True")),
+            All("r", Lists(), Iffn(Call("Matched", Cons(r, EmptyList())), F.Id("False"))),
+            All("o", Lists(), All("z", Lists(), All("rest", Call("List", Lists()),
+                Iffn(Call("Matched", Cons(o, Cons(z, rest))),
+                    And(Entries(o, D(1)), And(Entries(z, D(0)),
+                        And(Eqn(Qualified("List", "length", o), Qualified("List", "length", z)),
+                            Call("Matched", rest))))))))
+        ]));
+    }
+    private static Formula LiteralFormula()
+    {
+        var n = F.Id("n"); var m = F.Id("m"); var x = F.Id("x"); var y = F.Id("y");
+        var comparator = Seq(LambdaLower, Sp, Typed(x, N()), Sp, Typed(y, N()), Sp, Mapsto, Sp,
+            Typed(Qualified("BEq", "beq", x, y), F.Id("Bool")));
+        return Disp(All("n", N(), All("m", N(), Iffn(Call("Literal", n, m),
+            And(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, m),
+                And(Call("Even", m), And(
+                    Eqn(Qualified("List", "length", Call("bits", m)),
+                        Bin(D(2), FormulaBinaryOperator.Multiply, n)),
+                    Call("Matched", Qualified("List", "splitBy", comparator, Call("bits", m))))))))));
+    }
+    private static Formula RowFormula()
+    {
+        var n = F.Id("n");
+        return Disp(All("n", N(), Eqn(Call("row", n), Qualified("Finset", "filter",
+            Call("Literal", n), Qualified("Finset", "range",
+                new Formula.Power(D(2), Bin(D(2), FormulaBinaryOperator.Multiply, n)))))));
+    }
+    private static Formula SumFormula()
+    {
+        var n = F.Id("n"); var m = F.Id("m");
+        return Disp(All("n", N(), Eqn(Call("a", n),
+            Seq(Sum, Underscore, Grp(Typed(m, N()), Sp, InMacro, Sp, Call("row", n)), Sp,
+                Typed(m, Seq(Mathbb, Grp(F.Id("Z"))))))));
+    }
+    private static Formula BlockRunsFormula()
+    {
+        var k = F.Id("k"); var ks = F.Id("ks");
+        return Disp(new Formula.Aligned([
+            Eqn(Call("blockRuns", EmptyList()), EmptyList()),
+            All("k", N(), All("ks", Lists(), Eqn(Call("blockRuns", Cons(k, ks)),
+                Cons(Qualified("List", "replicate", k, D(1)),
+                    Cons(Qualified("List", "replicate", k, D(0)), Call("blockRuns", ks))))))
+        ]));
+    }
+    private static Formula WordFormula()
+    {
+        var ks = F.Id("ks");
+        return Disp(All("ks", Lists(), Eqn(Call("word", ks),
+            Qualified("List", "flatten", Call("blockRuns", ks)))));
+    }
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(F.Id(name), [.. args]);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
