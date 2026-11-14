@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality
 import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
 /-! Source-bound audit of the SIC–complete-MUB trace-norm equality. -/
 
@@ -311,6 +312,88 @@ def registration :
 #print axioms registration
 
 end TracePairingExt
+
+namespace ScaledIsometry
+
+universe u_a u_b u_m u_n
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
+  intro he
+  have hbad : (1 : ℝ) = 0 := Eq.mp (congrFun he 0) rfl
+  norm_num at hbad
+
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {a : Type u_a} {b : Type u_b} {m : Type u_m} {n : Type u_n}
+    [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] [Fintype m] [Fintype n]
+    (U : Matrix m a ℂ) (V : Matrix n b ℂ) (X : Matrix a b ℂ)
+    (α β : ℝ) (_hα : 0 < α) (_hβ : 0 < β)
+    (_hU : Uᴴ * U = ((α : ℂ) ^ 2) • 1)
+    (_hV : Vᴴ * V = ((β : ℂ) ^ 2) • 1),
+    R.readout () () (traceNorm (U * X * Vᴴ)) (α * β * traceNorm X)
+
+private theorem rejected_law : ¬ arena.{u_a, u_b, u_m, u_n}.Law rejected := by
+  intro h
+  exact h (a := ULift.{u_a} Empty) (b := ULift.{u_b} Empty)
+    (m := ULift.{u_m} Empty) (n := ULift.{u_n} Empty) 0 0 0 1 1
+    (by norm_num) (by norm_num) (by ext i; exact i.down.elim)
+    (by ext i; exact i.down.elim)
+
+
+def source_registration : Registration arena.{u_a, u_b, u_m, u_n} (type_of% @scaled_isometry_traceNorm.{u_a, u_b, u_m, u_n}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@scaled_isometry_traceNorm, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.{u_a, u_b, u_m, u_n}.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@scaled_isometry_traceNorm.{u_a, u_b, u_m, u_n}) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality.scaled_isometry_traceNorm.__information_unit
+  realizationName := `Reg.D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality.ScaledIsometry.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u_a, u_b, u_m, u_n}⟩
+  objectArena := .source ⟨arena.{u_a, u_b, u_m, u_n}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u_a, u_b, u_m, u_n} ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end ScaledIsometry
+
 
 end
 end Reg.D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality
