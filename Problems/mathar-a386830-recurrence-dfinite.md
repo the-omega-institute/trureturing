@@ -127,12 +127,12 @@ supplier is an input; the source imports pinned Mathlib ingredients directly.
 ## Triage
 
 The admission basis for the exact complete source endpoint is
-`open-problem-resolution`, with `utility: none`. All authored theorem proofs are classified `bind-only` under the repository's
-inlining and normalization rule. Each auxiliary theorem has the live consumer
+`open-problem-resolution`, with `utility: none`. All authored theorem proofs
+are classified `bind-only` under the repository's inlining and normalization rule. Each auxiliary theorem has the live consumer
 listed above; the public `result` owns the exact external source endpoint.
 These are consumed proof steps, not additional external problems or a
-manufactured escape witness. No source-event KPI or worldwide priority follows merely
-from implementing the proof.
+manufactured escape witness. No source-event KPI or worldwide priority
+follows merely from implementing the proof.
 
 ## ASSUMED-UNVERIFIED
 
