@@ -1,0 +1,52 @@
+**定理 145.7（实际同根芽）。** 接口145.3及九维输入推出引理145.5所选同一个 $o$ 的 $\mathsf G(o)$。
+
+证明。以同一辅助内积在 $H_0$ 中写引理145.6的连续椭球族为
+
+$$
+D_s=c_s+A_s^{1/2}\overline B_{H_0},\qquad
+A_s\ge0,\quad \operatorname{rank}A_s=3,\quad Z_s=\operatorname{im}A_s,
+\qquad w_s=A_s^{\dagger/2}(o-c_s)\in Z_s,\quad\|w_s\|=1.
+\tag{XI145.29}
+$$
+
+$A_s^{\dagger/2}$ 为伪逆的非负平方根；$o$ 在每个 $S_s$，故最后一个范数为一。连续秩三像投影给 $Z_s$ 的局部正交标架，$w_s$ 为连续单位截面。于是实际关联空间
+
+$$
+\mathscr S_o=\{(s,r):s\in S_o,\ r\in S_s\},\qquad
+\mathscr S_o^\times=\mathscr S_o\setminus\{(s,o):s\in S_o\}
+\tag{XI145.30}
+$$
+
+为真实 $S^2$ 丛及删去公共根截面后的丛。具体地，$Z_s\cap w_s^\perp$ 是连续秩二平面丛；对其 $v$ 定义
+
+$$
+Y_s(v)=\frac{2v+(\|v\|^2-1)w_s}{1+\|v\|^2},\qquad
+(s,v)\longmapsto(s,c_s+A_s^{1/2}Y_s(v)).
+\tag{XI145.31}
+$$
+
+这逐纤维是整个 $\mathbb R^2$ 到 $S_s\setminus\{o\}$ 的球极投影逆。其逆由 $y=A_s^{\dagger/2}(r-c_s)$ 和
+$v=(y-\langle y,w_s\rangle w_s)/(1-\langle y,w_s\rangle)$ 给出；$r\ne o$ 保证分母正，全部项连续。此为 [XI139.5][Q145XI]中同一参数工具的应用，这里已由引理145.6独立支付其连续整球入口。因此 $\mathscr S_o^\times$ 以原关联子空间拓扑是无边界四维流形：底是 $S_o\cong S^2$，纤维是 $\mathbb R^2$。各空间 Hausdorff、第二可数。
+
+$\mathscr S_o$ 紧。事实上它在紧 $S_o\times K$ 中闭：若 $s_i\to s$、$r_i\in S_{s_i}$、$r_i\to r$，写 $r_i=c_{s_i}+A_{s_i}^{1/2}y_i$，其中 $y_i\in Z_{s_i}$、$\|y_i\|=1$；取单位向量子列极限，用像投影连续得 $y\in Z_s$、$\|y\|=1$，所以 $r\in S_s$。此处不以未知闭性的 $P$ 取交来证明紧性。故其连续像 $Q(o)$ 在 $V$ 中紧而闭。
+
+评价映射
+
+$$
+\operatorname{ev}:\mathscr S_o^\times\longrightarrow P\setminus\{o\},\qquad(s,r)\longmapsto r
+\tag{XI145.32}
+$$
+
+连续且单射：不同 $s,t\in S_o$ 的完整球都含 $o$，Inj和点交规则使 $D_s\cap D_t=\{o\}$。限制到 $\operatorname{ev}^{-1}(A\setminus\{o\})$，其源是四维流形的开子空间，目标是引理145.5已付的**全部纯域中的实际开图** $A\setminus\{o\}$。在两端坐标中用 Hatcher Theorem 2B.3，得到
+
+$$
+Q(o)\cap(A\setminus\{o\})\quad\text{在 }A\setminus\{o\}\text{ 中开}.
+\tag{XI145.33}
+$$
+
+在这个同一 $A$ 中取以同一 $o$ 为坐标中心的小四维开球 $U$。$U\setminus\{o\}$ 连通；$Q(o)\cap(U\setminus\{o\})$ 由(XI145.33)开，由紧 $Q(o)$ 闭。它非空：任取 $s\in S_o$，完整球面 $S_s$ 在 $o$ 有其他原纯点趋近 $o$，最终进入 $P$-开集 $U$。开闭性遂给 $U\setminus\{o\}\subset Q(o)$。又 $o\in Q(o)$，故 $U\subset Q(o)$。
+
+$U$ 相对于全部 $P$ 开，存在环境开 $W\ni o$ 使 $W\cap P=U$。这正是(XI145.2)的 $\mathsf G(o)$，整个论证没有再换根。相同目标 $x=o$ 由任意 $s\in S_o$ 的回走见证，亦已包括。证毕。
+
+对定理145.2第1项，130.2已供应接口145.3，145.4—145.7已取得实际根芽；现在直接应用**原前件完整满足的**142.2，得到(XI145.4)与(XI145.3)。以下给第2项所需的精确接口迁移。
+
