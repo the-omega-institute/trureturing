@@ -26,7 +26,7 @@ structure LeafRanks {V : Type} (G : SimpleGraph V) where
   later_unique : ∀ v, rank v < cut → ∀ a b, G.Adj v a → G.Adj v b →
     rank v ≤ rank a → rank v ≤ rank b → a = b
 
-private theorem acyclic_of_unique_later {V : Type} (G : SimpleGraph V) (rank : V → ℕ)
+theorem acyclic_of_unique_later {V : Type} (G : SimpleGraph V) (rank : V → ℕ)
     (hu : ∀ v a b, G.Adj v a → G.Adj v b → rank v ≤ rank a → rank v ≤ rank b → a = b) :
     G.IsAcyclic := by
   classical
