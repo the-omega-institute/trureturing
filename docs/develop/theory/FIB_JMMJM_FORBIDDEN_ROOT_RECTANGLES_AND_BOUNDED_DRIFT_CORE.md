@@ -1755,3 +1755,155 @@ The alternative $n_{\mathrm{det}}(3,0)\ge9$ versus an everywhere
 at-most-eight-reading decoder remains unresolved by these deductions.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Strict sixth-gain negativity on the closed middle-drift interval
+
+**Theorem 12.1.** Let $j>0$, $\ell>1$, $j-\ell+1>0$ and
+$24\le d\le48$. Suppose $f\in\mathbb R[T]$ has degree at most
+three and satisfies
+
+$$
+\begin{gathered}
+f(0)=-d,\qquad jf(1)=24-d,\qquad \ell f(2)=48-d,\\
+(j+\ell)f(3)=312/5-d,\qquad f(7)=0.
+\end{gathered}
+\tag{12.1}
+$$
+
+Then $f(6)<0$. No last-two-reading equation or rank-one equality
+is required for this assertion.
+
+**Proof.** Use the interpolation of Lemma 7.1, equivalently
+[Terminal-Root, Lemma 2.1](FIB_JMMJM_TERMINAL_ROOT_DECODERS_AND_SIMULTANEOUS_CORE.md).
+Put $k=j/\ell>0$ and $H_d(k)=20dk(k+1)>0$. With $N_d$ and
+$Q_{6,d}$ as in (10.5), the already established identities (10.6)
+use only (12.1) and give
+
+$$
+N_d(k)=H_d(k)\ell,\qquad
+\ell k(k+1)f(6)=Q_{6,d}(k).
+\tag{12.2}
+$$
+
+In particular these identities do not require the clock-four or
+clock-five reading. Write $q_d(k)=Q_{6,d}(k)$. It suffices to prove
+$q_d(k)<0$, since $\ell k(k+1)>0$.
+
+First the positive source inequality $j-\ell+1>0$ rules out
+$0<k\le1/3$. Indeed, set
+
+$$
+\Phi_d(k)=(k-1)N_d(k)+H_d(k)
+         =H_d(k)\bigl((k-1)\ell+1\bigr)>0.
+\tag{12.3}
+$$
+
+For fixed $k$, this polynomial is affine in $d$, and its endpoint
+values are
+
+$$
+\begin{aligned}
+\Phi_{24}(k)&=96k(21k^2-9k-2),\\
+\Phi_{48}(k)&=24(89k^2+61k-70).
+\end{aligned}
+\tag{12.4}
+$$
+
+If $0<k\le1/3$, then
+
+$$
+21k^2-9k-2\le-2k-2<0,\qquad
+89k^2+61k-70\le-358/9<0.
+$$
+
+Both endpoint values in (12.4) are therefore strictly negative.
+The exact affine identity
+
+$$
+\Phi_d(k)=\frac{48-d}{24}\Phi_{24}(k)
+                       +\frac{d-24}{24}\Phi_{48}(k)
+\tag{12.5}
+$$
+
+has nonnegative weights summing to one, including at $d=24,48$.
+It contradicts (12.3). Consequently $k>1/3$.
+
+For $1/3<k<2$, the same affine dependence in $d$ gives
+
+$$
+q_d(k)=\frac{48-d}{24}\,24k(1-3k)
+                         +\frac{d-24}{24}\,12(k-2)<0,
+\tag{12.6}
+$$
+
+because both displayed endpoint values are strictly negative.
+
+It remains to consider $k\ge2$. Here the other source inequality
+$\ell>1$ supplies the strictly positive margin
+
+$$
+S_d(k)=N_d(k)-H_d(k)=H_d(k)(\ell-1)>0.
+$$
+
+Within this proof put
+
+$$
+\begin{aligned}
+D(k)&=3k^2-k/2-1,\\
+E(k)&=104k^2-k-70,\\
+R(k)&=40k^3-33k^2-47k+26.
+\end{aligned}
+$$
+
+The definitions of $N_d$ and $q_d$ give
+
+$$
+\begin{aligned}
+q_d(k)&=dD(k)-144k^2+36k+24,\\
+S_d(k)&=4032k^2+168k-1680-dE(k),\\
+E(k)q_d(k)+D(k)S_d(k)
+ &=-2880k^4+2376k^3+3384k^2-1872k\\
+ &=-72kR(k).
+\end{aligned}
+\tag{12.7}
+$$
+
+In the third line the two terms containing $dD(k)E(k)$ cancel;
+multiplication of the remaining factors gives the four coefficients
+shown. To determine their combined sign, write $s=k-2\ge0$.
+Then
+
+$$
+\begin{aligned}
+D(k)&=10+23s/2+3s^2>0,\\
+E(k)&=344+415s+104s^2>0,\\
+R(k)&=120+301s+207s^2+40s^3>0.
+\end{aligned}
+\tag{12.8}
+$$
+
+Thus the right side of (12.7) is strictly negative, whereas
+$D(k)S_d(k)>0$. It follows that $E(k)q_d(k)<0$, and hence
+$q_d(k)<0$. This includes $k=2$ and completes the sign proof.
+
+The denominators in the reused interpolation identities are
+$j,\ell,j+\ell$, all strictly positive. Every further denominator
+above is a positive constant or $\ell$. No gain sample is divided
+out. In particular $d=24$ and $d=48$, with their respective zero
+samples at one and two, are included. The proof imposes no exact
+degree, root simplicity or additional sign hypothesis on $f$.
+
+For its direct application, keep the three fixed worlds of one
+simultaneous core in Proposition 7.3 and Theorem 7.4, with their
+same $d,y,\zeta$ and their actual action-dependent collision pairs.
+If their common sixth sign were positive, Theorem 8.1 would give
+$24<d<48$. Each actual source in (1.5) has
+$j=u+v>0$, $\ell=1+u>1$ and $j-\ell+1=v>0$, and its first four
+equations and terminal root give (12.1). The proved sign assertion
+would make every $f_h(6)$ negative, a contradiction. The common
+nonzero sixth sign in that core is therefore negative. This
+excludes the positive alternative (8.2) while retaining all joint
+constraints and the negative-sector root restrictions (8.3)–(8.5);
+it does not decide feasibility of the remaining sector. ∎
+
+## 追加锚（本行以下为增补区）

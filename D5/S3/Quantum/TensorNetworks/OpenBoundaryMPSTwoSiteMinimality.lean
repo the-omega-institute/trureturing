@@ -503,7 +503,7 @@ theorem open_subchart_collision (m : ℕ) {U : Set Parameter}
     rw [show 2 + (1 + m) = 3 + m by omega] at hphase
     exact hne (phase_rigidity m (hchart hθ) (hchart hη) ζ hζ hphase)
 
-private def originalCore : Fin 2 → Bond := ![!![1, 2; 3, 4], !![5, 6; 7, 8]]
+def originalCore : Fin 2 → Bond := ![!![1, 2; 3, 4], !![5, 6; 7, 8]]
 
 private def witnessParameter (m : ℕ) : Parameter :=
   (![(-3 : ℂ), 1, 1 / 2, -1 / 2, 2],
@@ -609,7 +609,7 @@ private lemma original_coherent_positive (m : ℕ) :
 
 set_option maxHeartbeats 800000 in
 -- Expand the exact Cramer determinants and the degree-ten chart factors.
-private lemma original_chart (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
+lemma original_chart (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     MvPolynomial.eval (mpsState 3 (originalCore 0) (originalCore 1) ![1, 0]
       ![(x : ℂ), (y : ℂ)]) chartPoly ≠ 0 := by
   let t := mpsState 3 (originalCore 0) (originalCore 1) ![1, 0] ![(x : ℂ), (y : ℂ)]

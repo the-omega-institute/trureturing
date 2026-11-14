@@ -1,0 +1,9 @@
+**Corollary 12 (Sharp multiplicity classification).**
+For every $q,m\ge1$, the quotient and full group are given by the
+following disjoint cases:
+
+| Parameters | $U$ | $G$ | Order |
+| --- | --- | --- | --- |
+| $m=1$ | $\mathbb Z^{2q}$ | $\operatorname{Sym}(3)^q\rtimes\operatorname{Sym}(q)$ | $6^q q!$ |
+| $q=1,m=2$ | $\mathbb Z^2$ | $\operatorname{Sym}(2)^3\rtimes\operatorname{Sym}(3)$ | $48$ |
+| $q\ge2,m\ge2$, or $q=1,m\ge3$ | $\mathbb Z/M$ | $\operatorname{Sym}(m)^\ell\rtimes C_\ell$ | $\ell(m!)^\ell$ |

@@ -631,3 +631,483 @@ Gurvits–Barnum 的范数界、Marciniak 的秩保持分类、166.12的传播�
 [Q175W2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
 
 ## 追加锚（本行以下为增补区）
+
+
+## 176. 一个乘积点附近的纯关系闭性与单锚比较
+
+### 176.1 原定义间的关系与精确条件
+
+**定义 176.1（整个原纯集、局部无缺口与固定锚）。** 本章完整采用定义175.1，即 [XIII166.1][Q175XIII] 的同一强域：固定 $n\ge2$、实际复 Hermitian Kronecker 载体、全部有限闭尖生成锥、严格正的乘法普通迹、同坐标 $C_1=\operatorname{PSD}_n,C_2=\operatorname{PSD}_{n^2}$、完整对偶、所有有限 min/max 分块、正置换及正逆、规范重括号、原配对和空系统。$K_N,P_N,\mathcal E_N$ 及全部有限菜单始终是(175.3)的整个原集合，$T$ 精确为(175.6)，不换成选定子集。只在176.6–176.7的条件推论中使用较弱域。
+
+固定单位向量 $a_0,b_0,c_0$，置 $q_0=P_{a_0}\otimes P_{b_0}\otimes P_{c_0}$，其中 $P_v=vv^*$。引理175.3已证明 $q_0$ 是原暴露纯点及 proper 自确认效应；这里不另假定它的原纯性。拓扑取 $W_3$ 上的有限维 Hilbert–Schmidt 范数，或任意等价范数；闭包记为 $\overline{P_3}$。也可在迹一仿射超平面中取相对拓扑，所得条件相同。定义
+
+$$
+\begin{aligned}
+\mathsf{PClose}:&\quad P_3=\overline{P_3},\\
+\mathsf{LPC}(q_0):&\quad \exists\ U\subset W_3\text{ 开},\quad q_0\in U,
+ \quad U\cap\overline{P_3}=U\cap P_3,\\
+\mathsf S(q_0):&\quad T_p(q_0)\le T_{q_0}(p)\quad\text{对每个 }p\in P_3,\\
+\mathsf Q_\infty:&\quad C_N=\operatorname{PSD}_{n^N}\quad\text{对每个有限 }N\ge0.
+\end{aligned}
+\tag{176.1}
+$$
+
+$\mathsf{LPC}(q_0)$ 说整个原纯集在这一个点附近没有非纯极限缺口；它不是单点集 $\{q_0\}$ 闭，也不是附近每个原态都纯。固定锚只限制第二端点；$\mathsf S(q_0)$ 的第一端点仍量化全部原纯态。
+
+原极端性本来就由中点关系定义：$x\in P_3$ 当且仅当 $x\in K_3$ 且 $2x=y+z$、$y,z\in K_3$ 蕴含 $y=z=x$。因此同一原定义的二元关系为
+
+$$
+\mathcal I_{K_3}:=\{(y,z)\in K_3^2:(y+z)/2\in P_3\}
+ =\{(p,p):p\in P_3\}.
+\tag{176.2}
+$$
+
+对角映射 $x\mapsto(x,x)$ 是到闭对角集的同胚，故 $\overline{\mathcal I_{K_3}}=\{(r,r):r\in\overline{P_3}\}$。于是 $\mathsf{PClose}$ 恰是这个既有中点关系的闭性，$\mathsf{LPC}(q_0)$ 恰是它在 $(q_0,q_0)$ 附近的相对闭性：把邻域沿对角映射拉回即可，反向可取 $U\times U$。$K_3$ 闭使在 $K_3^2$ 或环境空间中取闭包一致。这是定义对应，不从极端性的定义自动推出关系闭。
+
+**定理 176.2（单点附近、整个纯集与单锚的同域等价）。** 在上述完整强域中，下列条件等价：
+
+1. $\mathsf Q_\infty$。
+2. $C_3=\operatorname{PSD}_{n^3}$。
+3. $\mathsf{PClose}$。
+4. $\mathsf{LPC}(q_0)$。
+5. $\mathsf S(q_0)$。
+
+它们也各与定理175.2的原全端点互易、固定二分切口的单向互易、等参照读数和未知半径条件等价；这些条件及其数值结论直接沿用175.2，不改写其量词。以下先分别证明三个新的充分性桥梁，再给出逆向。这里的拓扑条件是显式前件，没有藏在完整强域里。
+
+### 176.2 可逆滤波把任何纯极限缺口送近同一乘积点
+
+**命题 176.3（局部闭性推出整个原纯集闭）。** 定义176.1的强域内，$\mathsf{LPC}(q_0)$ 蕴含 $\mathsf{PClose}$。
+
+证明。直接消费175.5证明中由166.3支付的一腿合同及其可逆版本。对任意可逆局部乘积矩阵 $G=G_A\otimes G_B\otimes G_C$，定义
+
+$$
+F_G(x)=\frac{GxG^*}{\operatorname{Tr}(GxG^*)}\quad(x\in K_3).
+\tag{176.3}
+$$
+
+合同及其逆均保持整个 $C_3$；严格正迹使分母在整个 $K_3$ 上正。故 $F_G$ 连续，逆为 $F_{G^{-1}}$，是整个原基的同胚。合同的线性锥同构保持极端射线，归一基的极点对应这些射线，故 $F_G(P_3)=P_3$。这里不声称 $F_G$ 仿射。引理175.3给 $K_3$ 紧，特别是 $\overline{P_3}\subset K_3$；在 $K_3$ 内取闭包与环境闭包一致。因此
+
+$$
+L:=\overline{P_3}\setminus P_3,\qquad F_G(L)=L.
+\tag{176.4}
+$$
+
+若 $L$ 非空，取 $r\in L$。对任意实际正交乘积基，最大界给全部对角测试非负，它们之和为 $\operatorname{Tr}r=1$。所以其中某个单位乘积向量 $a\otimes b\otimes c$ 满足
+
+$$
+\alpha=\langle abc|r|abc\rangle>0.
+\tag{176.5}
+$$
+
+这一步没有把可能非 PSD 的 $r$ 当成 PSD。对每个 $t>0$ 取
+
+$$
+G_t=[P_a+t(I-P_a)]\otimes[P_b+t(I-P_b)]\otimes[P_c+t(I-P_c)].
+\tag{176.6}
+$$
+
+三个因子均可逆，故 $r_t=F_{G_t}(r)\in L$。普通矩阵极限给分子趋于 $\alpha q$、分母趋于 $\alpha>0$，其中 $q=P_a\otimes P_b\otimes P_c$；于是 $r_t\to q$。选一个固定局部酉 $U=U_A\otimes U_B\otimes U_C$ 把 $q$ 送到 $q_0$。它也是上述锥同构，且保迹，所以 $Ur_tU^*\in L$ 并趋于 $q_0$。
+
+若 $\mathsf{LPC}(q_0)$ 的开邻域为 $U_0$，则充分小的正 $t$ 给 $Ur_tU^*\in U_0\cap(\overline{P_3}\setminus P_3)$，矛盾。故 $L$ 为空。每个有限滤波后的缺口仍非纯；没有用全纯态传递性、奇异滤波保纯、统一成功率下界或比较函数的连续性。反向 $\mathsf{PClose}\Rightarrow\mathsf{LPC}(q_0)$ 可取 $U_0=W_3$。$\square$
+
+### 176.3 闭纯集排除混合压缩
+
+**命题 176.4（整个原纯集闭推出全部有限 PSD）。** 在同一强域内，$\mathsf{PClose}$ 蕴含 $\mathsf Q_\infty$。
+
+证明。任取 $p\in P_3$、单位向量 $a\in A$。由 $A|BC$ 最大界及完整二体 PSD 对偶，
+
+$$
+X_a=(\langle a|\otimes I)p(|a\rangle\otimes I)\succeq0
+\quad\text{在 }B\otimes C\text{ 上}.
+\tag{176.7}
+$$
+
+若 $X_a=0$，其秩已为零。否则 $\operatorname{Tr}X_a>0$，直接使用(175.21)的有限正参数可逆滤波，得到 $p_t\in P_3$ 且
+
+$$
+p_t\longrightarrow\rho=P_a\otimes X_a/\operatorname{Tr}X_a.
+\tag{176.8}
+$$
+
+闭性使 $\rho\in P_3$。若 $\operatorname{rank}X_a=r\ge2$，通常二体 PSD 谱分解给
+
+$$
+\rho=\sum_{j=1}^r\lambda_jq_j,\qquad
+q_j=P_a\otimes P_{v_j},\quad
+\lambda_j>0,\quad\sum_j\lambda_j=1,
+\tag{176.9}
+$$
+
+其中 $v_j$ 两两正交且为单位向量。最小界及 $C_1,C_2$ 的既定 PSD 性已使每个 $q_j$ 属于整个原 $K_3$，彼此不同。取任意 $j$，则 $0<\lambda_j<1$，其余项的归一凸组合也是原态，且与 $q_j$ 不同；故(176.9)是 $\rho$ 的真正非平凡凸分解，违反原极端性。这一步只需这些谱点是原态，不需它们暴露，也不使用效应范数界或 $T$ 的最优化。
+
+因此全部 $p\in P_3$ 的全部 $A$ 腿压缩秩至多一。$a=0$ 的压缩为零，非单位向量由正比例缩放涵盖。现精确消费引理175.6：它在同一强域中把这一条件送入 Marciniak 的矩形 rank-1 non-increasing 正映射分类，保留零输出和退化支路；三个实际切分去掉非 PSD 分支，全有限 Bell 极性及完整对偶给三体整锥等式，再由明确满维 GHZ 和166.12传播到每个有限层。这里不重证分类、极性或传播，也不预付任一高层 PSD。$\square$
+
+### 176.4 固定乘积锚迫使两腿压缩秩一
+
+**命题 176.5（一个乘积锚的单向比较推出全部有限 PSD）。** 在同一强域内，$\mathsf S(q_0)$ 蕴含 $\mathsf Q_\infty$。
+
+证明。首先，局部酉 $U$ 的合同保持原锥、普通迹及其完整对偶，因而双射整个 $\mathcal E_3$ 和所有确认集合。逐项配对不变给
+
+$$
+T_{UpU^*}(UxU^*)=T_p(x)\quad(p\in P_3,\ x\in C_3).
+\tag{176.10}
+$$
+
+任意完全乘积单位 dyad $q$ 都可写成 $Uq_0U^*$。对原纯态 $U^*pU$ 使用固定锚条件并用(176.10)，得
+
+$$
+T_p(q)\le T_q(p)\qquad
+(p\in P_3,\ q=P_a\otimes P_b\otimes P_c).
+\tag{176.11}
+$$
+
+这里只移动已知的乘积锚轨道，未声称局部酉在全部原纯点上传递。
+
+任取 $p\in P_3$ 和单位 $a\in A,b\in B$。由原乘积测试非负，普通矩阵
+
+$$
+Y_{ab}=(\langle ab|\otimes I_C)p(|ab\rangle\otimes I_C)\succeq0.
+\tag{176.12}
+$$
+
+零输出无需处理。非零时用同时作用于 $A,B$ 的
+$G_t=[P_a+t(I-P_a)]\otimes[P_b+t(I-P_b)]\otimes I_C$，$t>0$，得原纯态
+
+$$
+p_t=F_{G_t}(p)\longrightarrow
+\rho=P_a\otimes P_b\otimes Y_{ab}/\operatorname{Tr}Y_{ab}.
+\tag{176.13}
+$$
+
+若 $Y_{ab}$ 秩至少二，普通谱分解把 $\rho$ 写成 $\sum_j\lambda_jq_j$，其中 $q_j=P_a\otimes P_b\otimes P_{c_j}$，$c_j$ 为正交单位向量，$0<\lambda_j<1$。它们是175.3的原纯 proper 自确认锚，而且是175.4所需的同一 $A|BC$ 切口的正交二分锚。对任意固定 $j$，直接用其缺陷估计得
+
+$$
+T_{p_t}(q_j)-T_{q_j}(p_t)
+\ge1-\lambda_j-\left(\frac D{\lambda_j}+1\right)\|p_t-\rho\|_2>0
+\tag{176.14}
+$$
+
+只须选择仍为正的有限 $t$，使 $\|p_t-\rho\|_2<\lambda_j(1-\lambda_j)/(D+\lambda_j)$。这与(176.11)矛盾，故全部 $Y_{ab}$ 秩至多一。由实际置换，同一论证适用于 $AC$、$BC$ 任意一对；零向量及非单位向量由零输出和缩放涵盖。没有对混合 $\rho$ 使用比较律，也没有对 $T$ 的第一参数取连续极限。
+
+还需从两腿恢复一腿压缩，所用普通 PSD Gram 事实在此作为中间步骤证明。设 $X\succeq0$ 在 $B\otimes C$ 上，而且其全部 $B$ 腿及全部 $C$ 腿向量压缩秩至多一。若 $X=0$，结论显然。否则取有限 Gram 分解
+
+$$
+X=\sum_{i=1}^r v_iv_i^*,\qquad
+\Psi=\sum_{i=1}^r v_i\otimes e_i\in B\otimes C\otimes E,
+\qquad E=\mathbb C^r.
+\tag{176.15}
+$$
+
+这里 $e_i$ 是 $E$ 的标准正交基。对每个 $b\in B$，切片 $\Psi_b=(\langle b|\otimes I_C\otimes I_E)\Psi$ 满足普通矩阵身份
+
+$$
+\operatorname{Tr}_E(\Psi_b\Psi_b^*)
+=\sum_i[(\langle b|\otimes I_C)v_i][(\langle b|\otimes I_C)v_i]^*=X_b.
+$$
+
+Gram 矩阵秩等于其列空间维数，所以 $\operatorname{rank}X_b\le1$ 意味着 $\Psi_b$ 在 $C|E$ 上是乘积向量或零。所有这些切片的像是复线性空间，尽管参数 $b$ 反线性进入。精确使用166.6的共同因子结论，有以下两种情形：
+
+$$
+\Psi=\psi_{BC}\otimes e
+\quad\text{或}\quad
+\Psi=\chi_{BE}\otimes c.
+\tag{176.16}
+$$
+
+第二式按 $B,C,E$ 次序作普通张量重排。第一种给 $X=\|e\|^2\psi\psi^*$，秩至多一。第二种可把 $c$ 归一，得到 $X=R_B\otimes P_c$、$R_B\succeq0$；沿这个 $c$ 的另一侧压缩正好是 $R_B$，故另一组秩条件使 $\operatorname{rank}R_B\le1$，仍得 $\operatorname{rank}X\le1$。非零 $\Psi$ 保证共同因子非零；部分零切片和一维切片空间已由166.6涵盖。$E$ 只是任意有限辅助 Gram 坐标，不是原物理系统；这里未要求它有原锥层级、可用纯化或任何物理操作。
+
+现在对每个原纯态及单位 $a$，(176.7)的 $X_a\succeq0$ 的全部 $B$ 压缩正是 $Y_{ab}$，全部 $C$ 压缩正是 $Y_{ac}$。上述事实遂给 $\operatorname{rank}X_a\le1$，含零情形。再次直接消费175.6的完全相同重建尾部，得 $\mathsf Q_\infty$。$\square$
+
+### 176.5 等价的逆向与全部原对象的量子对应
+
+证明定理176.2。命题176.3给局部闭性到整个纯集闭，命题176.4给闭性到全部有限 PSD，命题176.5给固定锚比较到全部有限 PSD。全部有限 PSD 显然给三体 PSD。若三体 PSD，则整个原纯集恰为
+
+$$
+P_3=\{vv^*:\|v\|=1\}\cong\mathbb{CP}^{D-1}.
+\tag{176.17}
+$$
+
+它是有限维单位球面的连续像，故紧而闭，进而满足局部闭性。(175.32)在整个原 proper 确认集合上给 Born 公式 $T_p(x)=\operatorname{Tr}(px)$，故固定锚不等式成为等式。至此所有条件互相推出；定理175.2把原全端点互易、等参照、球面及三体到全有限的等价一并接上。$\square$
+
+**推论 176.6（以当前二元零关系进入完整候选）。** 在 [XVI定义174.1][Q176XVI] 的弱实际全有限域中，固定同一个普通单位乘积 dyad $q_0$。令 $\mathsf Q_0$ 精确为其(174.2)：$B\in C_2\cap C_2^*$，且对整个 $C_2$ 与完整 $C_2^*$，零迹配对蕴含普通矩阵支撑正交。依次要求 $\mathsf Q_0$、普通成员关系 $q_0\in C_3$，再在由此前件获得的普通整个原基与菜单上要求 $\mathsf{LPC}(q_0)$ 或 $\mathsf S(q_0)$。则分别有
+
+$$
+\begin{aligned}
+[\mathsf Q_0]\wedge[q_0\in C_3]\wedge[\mathsf{LPC}(q_0)]
+&\Longleftrightarrow\mathsf Q_\infty,\\
+[\mathsf Q_0]\wedge[q_0\in C_3]\wedge[\mathsf S(q_0)]
+&\Longleftrightarrow\mathsf Q_\infty.
+\end{aligned}
+\tag{176.18}
+$$
+
+证明及精确域对应。只消费174.4的**第一项等价**(174.10)，即 $\mathsf Q_0\Longleftrightarrow C_2=\operatorname{PSD}_{n^2}$，不使用有三元种子的(174.11)。再消费173.5中从该二体等式出发的171.8–171.9供应，取得唯一 $\varepsilon\in\{\pm1\}$、$C_1=\varepsilon\operatorname{PSD}_n$、各层尖性生成性和非零原元上严格正的 $\varepsilon^N\operatorname{Tr}$。这一步没有三体 GME 种子，也没有先行普通概率菜单。
+
+普通 $q_0\in C_3$ 非零且 $\operatorname{Tr}q_0=1$，所以171.10的奇数层选择给 $\varepsilon=+1$。现在才取所有层的整个普通迹一基、全部极点、完整对偶区间及全部有限单位分解。弱域本已保留相同的全部实际有限 min/max、置换与正逆、重括号、配对及标量层；已获严格正普通迹和两条低层等式。因此定义175.1每个前件都到位，$q_0$ 的原纯和 proper 性由175.3成为结论，可应用定理176.2。反向普通全 PSD 层级满足二体零支撑关系、Bell 双成员、普通乘积成员关系及两种附加条件。$\mathsf{PClose}$ 也可等价替换(176.18)中的局部条件。整个应用不借用174.11的满腿种子结论。$\square$
+
+### 176.6 不选普通方向时的精确有向条件
+
+**推论 176.7（有向闭性与有向单锚）。** 在上述弱域及 $\mathsf Q_0$ 下，不加普通 $q_0\in C_3$。用已获得的唯一符号 $\varepsilon$ 和推论175.8的完整有向对象 $\widehat K_N,\widehat P_N,\widehat{\mathcal E}_N,\widehat T$，固定 $\widehat q_0=\varepsilon q_0$。则
+
+$$
+\begin{aligned}
+\widehat P_3\text{ 闭}
+&\Longleftrightarrow\widehat{\mathsf{LPC}}(\widehat q_0)
+\Longleftrightarrow
+[\widehat T_p(\widehat q_0)\le\widehat T_{\widehat q_0}(p)
+\quad\forall p\in\widehat P_3]\\
+&\Longleftrightarrow C_N=\varepsilon^N\operatorname{PSD}_{n^N}
+\quad\text{对每个有限 }N.
+\end{aligned}
+\tag{176.19}
+$$
+
+这里 $\widehat{\mathsf{LPC}}(\widehat q_0)$ 是(176.1)中以 $\widehat P_3,\widehat q_0$ 替换 $P_3,q_0$ 的同一邻域条件，闭包仍取有限维 Hilbert–Schmidt 拓扑。
+
+证明。精确复用171.9及175.8的 $D_N=\varepsilon^NC_N$ 和同胚 $S_N(x)=\varepsilon^Nx$：运输族满足整个定义175.1，$S_{a+b}=S_a\otimes S_b$，完整基及极点双射，闭包和局部闭性保持。原有向乘积点 $\widehat q_0$ 由运输族的一体 PSD 及最小积合法，并由175.3运输回原有向纯点。效应同时运输为 $f\mapsto\varepsilon^Nf$，(175.42)逐项保持完整配对、确认约束和全部最小值。故三个左侧条件分别就是 $D$ 族的定理176.2条件，运输其结论即得(176.19)。这不重证矩阵生成或原域正性供应。
+
+$\varepsilon=-1$ 时结论是交替有向 PSD。175.8已有该全有限方向模型；它的普通奇数层迹一基为空。空普通纯集虽闭，不能借此推出普通 PSD；普通 $q_0\in C_3$（或175.7的普通 $m\in C_3$）必须先选定正方向。$\square$
+
+### 176.7 拓扑机制、来源与仍未支付的桥梁
+
+**命题 176.8（几何内容与条件边界）。** 本章的闭性与固定锚条件在定义175.1下等价于整个原量子结论，但既不把额外拓扑默认为内生，也不把静态端点交换解释为时间顺序交换。
+
+证明及边界。一般紧凸体的极点集未必闭。例如在 $\mathbb R^3$ 中取
+
+$$
+K_0=\operatorname{conv}\bigl(\{(x,y,0):x^2+y^2\le1\}
+ \cup\{(1,0,1),(1,0,-1)\}\bigr).
+\tag{176.20}
+$$
+
+这是紧集的有限维凸包，因而紧。对 $\theta\notin2\pi\mathbb Z$，线性泛函 $x\cos\theta+y\sin\theta$ 在整个 $K_0$ 上唯一最大于 $(\cos\theta,\sin\theta,0)$：圆盘上最大值一且唯一，两端点的值均为 $\cos\theta<1$。这些点暴露且趋于 $(1,0,0)$；后者是两个端点的中点，故非极点。因此紧性不能代替 $\mathsf{PClose}$。这里只给普通凸几何控制，不给定义175.1的同域全有限反模型。
+
+在本章强域内，若任何地方存在非纯的原纯极限，(176.3)–(176.6)会把这个缺口沿始终可逆的局部筛选移近任一指定乘积点。闭性又使每个非零一腿条件压缩的极限仍纯，从而排除真正混合。固定锚比较走另一条路：局部酉把一锚条件运到所有乘积锚，有限缺陷排除混合两腿输出，普通辅助 Gram 结构再恢复一腿秩条件。两路随后消费同一个175.6，并保留其三个切分和全有限极性；不能以只有低层前缀的模型代替该域。
+
+新增的承重内容是这些同域桥梁及其弱域条件组合，文献表态为 repo-derived，不作穷尽文献或历史优先权声明。共同因子事实直接用166.6；Marciniak 的矩形分类、全有限 Bell 极性及166.12传播严格保留175.6的来源和前件，效应紧性及定量缺陷直接用175.3–175.4。普通谱分解、Gram 秩与对角拓扑是中间线性代数和拓扑事实，不另立为新重建原理。
+
+较局部的量词不等于在此基底上逻辑严格更弱，也不证明独立公理数更少。本章没有给出同域非 PSD 层级，所以没有证明强域单独不能推出 $\mathsf{PClose}$，也没有证明其独立性；从原 Bell 关系或当前基底内生推出这些闭性条件的桥梁仍未解决。175.10的全有限 Wigner 控制虽有有限闭纯集，却缺低层对齐；[XVI174.6][Q176XVI]的旋转层级缺 $C_2=\operatorname{PSD}$ 与零支撑关系，两者都不能裁决强域闭性问题。复数载体、固定 $n$、实际有限粘合、完整原纯集与效应集以及低层对齐仍在明确前提中。
+
+所有普通量子条件下的完整密度矩阵、POVM、Born 配对、纠缠复合、矩形 CP/Choi/Kraus 和全输入预算，按175.9的同坐标字典逐项复用；其前件是本章已经取得的整锥等式及同一普通迹和全菜单。实际事件饱和、具体条件更新、连续时间作用、物理钟、Hamiltonian 和 $\hbar$ 各保留175.11的独立条件及零质量分支规则。特别是静态 $T_p(q)=T_q(p)$ 不使两次有更新的测量交换；175.11的(175.51)已给明确反例。$\square$
+
+### 176.8 一个清楚的中文图景
+
+**命题 176.9（单个参照点与纯关系无缺口的白话表述）。** 在完整强域及其已对齐的低层结构中，只要求整个原纯集在一个固定乘积点附近没有非纯极限缺口，或者只要求每个原纯点朝这一个参照点的最小确认读数不大于反向读数，就已与全部有限量子锥等价。
+
+证明与释义。“纯”先只表示不能拆成两个不同原态的中点，并没有先说它是矩阵秩一。假如某处的一串纯点逼近了一个可拆的混合点，那么对这个缺口逐腿加强筛选，每次筛选仍可逆，它就仍是缺口，却会越来越靠近一个普通乘积点；再用固定局部旋转便靠近指定参照点。因此这个点附近不许有缺口，就等于处处不许有缺口。另一方面，对一个纯点只留某条腿的一维方向，其条件输出如果真是几个不同原态的混合，闭性就会把这个混合也判成纯，与中点定义矛盾。单锚比较则不用先假定闭性：先让固定参照沿局部旋转覆盖所有乘积参照，再同时筛选两条腿；混合输出会产生严格的双向比较差，故被单向不等式排除，Gram 论证把这种两腿限制补回一腿限制。已有分类、三切分和全有限杯帽随后锁定整个量子锥，而不只是一些选定纯点。这里新增的是明确条件下的更局部表述；闭性为何能从更少关系自动生出仍是问题，“比较端点可交换”也依然不等于“先测哪个都一样”。$\square$
+
+[Q176XVI]: https://github.com/the-omega-institute/trureturing/blob/02e623db8cc5dd8e6b413d337edbe4991f33e178/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md
+
+## 追加锚（本行以下为增补区）
+
+## 177. 一个固定混合中心附近的非平凡中点与全部有限量子锥
+
+### 177.1 只用原二元平均关系陈述的条件
+
+**定义 177.1（固定中心的非平凡中点邻域）。** 完整采用定义175.1，即 [XIII166.1][Q175XIII] 的强域：固定 $n\ge2$，同一实际复 Hermitian Kronecker 载体上的全部有限闭尖生成锥，非零原正元上严格正的乘法普通迹，同坐标的 $C_1=\operatorname{PSD}_n,C_2=\operatorname{PSD}_{n^2}$，所有有限实际 min/max 分块、正置换及正逆、规范重括号、原配对和空系统。始终取(175.3)的整个 $K_N$、全部 $P_N=\operatorname{ext}K_N$、完整迹对偶、整个 proper 区间与全部有限单位分解。没有加入高层 PSD、原纯集闭性、奇异滤波保纯或物理纯化。
+
+固定单位向量 $a_0,b_0,c_0,c_1$，其中 $c_0\perp c_1$，令
+
+$$
+x_0=P_{a_0}\otimes P_{b_0}\otimes P_{c_0},\qquad
+y_0=P_{a_0}\otimes P_{b_0}\otimes P_{c_1},\qquad
+r_0=\frac{x_0+y_0}{2}.
+\tag{177.1}
+$$
+
+最小界使两端点属于整个原 $K_3$；它们不同，所以 $r_0$ 是已知的非平凡平均。对凸集 $K$ 定义其非平凡中点集
+
+$$
+\operatorname{Split}_K
+=\{z\in K:\exists u,v\in K,\ u\ne v,\ 2z=u+v\}.
+\tag{177.2}
+$$
+
+本章唯一新增的候选条件是
+
+$$
+\boxed{\ \mathsf{Mid}(r_0):\qquad
+r_0\in\operatorname{int}_{K_3}
+\left\{\frac{u+v}{2}:u,v\in K_3,\ u\ne v\right\}.\ }
+\tag{177.3}
+$$
+
+等价地，存在包含 $r_0$ 的环境开集 $U\subset W_3$，使每个 $z\in U\cap K_3$ 都有 $u,v\in K_3$、$u\ne v$、$z=(u+v)/2$。相对邻域量化整个原 $K_3$；不限定在含 $r_0$ 的某个面内。条件本身只有原状态、二元平均、固定中心和相对邻域；不要求分解端点接近指定端点、连续选择分解，或整个凸体上的混合映射开放性。
+
+### 177.2 重建之前已经存在的原 Bloch 面
+
+**命题 177.2（整个原凸体中的三维暴露面）。** 仅在定义175.1的强域内，置 $S=\operatorname{span}_{\mathbb C}\{c_0,c_1\}$、$\Pi=P_{c_0}+P_{c_1}$，并定义
+
+$$
+\operatorname{dens}(S)=\{\tau\succeq0:\operatorname{Tr}\tau=1,\ \operatorname{ran}\tau\subseteq S\},\qquad
+F_0=P_{a_0}\otimes P_{b_0}\otimes\operatorname{dens}(S).
+\tag{177.4}
+$$
+
+则 $F_0$ 是整个原 $K_3$ 的实际暴露面，实仿射维数为三，仿射同构于闭 Bloch 三球；$r_0$ 为其相对中心，球面上的点都是原纯点。此结论不以整个 $K_3$ 已为 PSD 为前提。
+
+证明。对任意 $z\in K_3$，其普通一体边缘 $z_A,z_B,z_C$ 都是迹一 PSD：最大界用其余因子的单位切片给原一体锥成员关系。三个原 proper 边缘缺陷效应为
+
+$$
+\begin{aligned}
+D_A&=(I_A-P_{a_0})\otimes I_B\otimes I_C,\\
+D_B&=I_A\otimes(I_B-P_{b_0})\otimes I_C,\\
+D_C&=I_A\otimes I_B\otimes(I_C-\Pi).
+\end{aligned}
+\tag{177.5}
+$$
+
+每个效应及其相对于 $I$ 的补都由相应 $1|23$ 最大界在整个原锥上非负。故 $d(z)=\operatorname{Tr}[(D_A+D_B+D_C)z]\ge0$，且 $d(z)=0$ 当且仅当三个缺陷分别为零。前两项为零分别给 $z_A=P_{a_0},z_B=P_{b_0}$；这是普通 PSD 边缘的支撑结论。
+
+先只用 $z_A=P_{a_0}$。对每个普通二体效应 $0\preceq e\preceq I_{BC}$，以迹配对作 $BC$ 切片，最大界及其补给
+
+$$
+0\preceq(\mathrm{id}_A\otimes e)(z)
+\preceq(\mathrm{id}_A\otimes I_{BC})(z)=P_{a_0}.
+\tag{177.6}
+$$
+
+这里 $C_2$ 及其完整对偶已是通常 PSD，因而所有这些 $e$ 都可用。夹在零与秩一投影之间的 PSD 矩阵只能是该投影的非负倍数。普通效应实线性张成 $\operatorname{Herm}(B\otimes C)$，所以全部这些切片共同迫使 $z=P_{a_0}\otimes\sigma_{BC}$，其中 $\sigma_{BC}=\operatorname{Tr}_A z$。对全部普通正二体效应的非负配对给 $\sigma_{BC}\succeq0$，且其迹为一。此处未对 $z$ 预设 PSD。
+
+若再有 $z_B=P_{b_0}$，则 $\sigma_{BC}$ 的 $B$ 边缘是 $P_{b_0}$。对每个 $b\perp b_0$，非负数 $\langle bc|\sigma_{BC}|bc\rangle$ 沿 $C$ 的任意正交基求和为零，故对全部 $c$ 均为零；PSD 性使 $\sigma_{BC}(b\otimes c)=0$。因此它支撑在 $\mathbb Cb_0\otimes C$，即 $\sigma_{BC}=P_{b_0}\otimes\tau$，$\tau\succeq0$、$\operatorname{Tr}\tau=1$。第三个缺陷为零又使 $\tau$ 消灭 $S^\perp$，故 $z\in F_0$。反过来，最小界使每个(177.4)中的矩阵都是原态，且三个缺陷均为零。于是
+
+$$
+F_0=\{z\in K_3:d(z)=0\}.
+\tag{177.7}
+$$
+
+这正是整个原凸体上非负泛函的零面，故为实际暴露面，而非仅在某个 PSD 子锥里取面。
+
+在有序基 $c_0,c_1$ 上，令 $`\sigma_x=c_0c_1^*+c_1c_0^*`$、$`\sigma_y=-ic_0c_1^*+ic_1c_0^*`$、$\sigma_z=P_{c_0}-P_{c_1}$，在 $S^\perp$ 上均取零。每个 $\tau\in\operatorname{dens}(S)$ 唯一写成
+
+$$
+\tau=\tfrac12(\Pi+t_x\sigma_x+t_y\sigma_y+t_z\sigma_z),\qquad
+\mathbf t\in\mathbb R^3,\quad |\mathbf t|\le1.
+\tag{177.8}
+$$
+
+在 $S$ 上的两个特征值是 $(1\pm|\mathbf t|)/2$，所以这是实三维闭球；中心 $\mathbf t=0$ 正好给 $r_0$。球面对应秩一 $\tau$，是 $F_0$ 的极点；面内极点也是整个 $K_3$ 的极点。这里只说明 $r_0$ 在 $F_0$ 中居中，并不把它说成 $K_3$ 的内部点；(177.3)仍要求整个 $K_3$ 的相对邻域。$\square$
+
+### 177.3 固定中心排除全部混合双腿压缩
+
+**定理 177.3（固定非平凡中点邻域的全有限重建）。** 在定义175.1的完整强域中，
+
+$$
+\mathsf{Mid}(r_0)
+\quad\Longleftrightarrow\quad r_0\notin\overline{P_3}
+\quad\Longleftrightarrow\quad C_3=\operatorname{PSD}_{n^3}
+\quad\Longleftrightarrow\quad\mathsf Q_\infty.
+\tag{177.9}
+$$
+
+闭包取整个原纯集在 $W_3$ 中的闭包。它们也各与定理176.2的 $\mathsf{PClose},\mathsf{LPC}(x_0),\mathsf S(x_0)$ 及定理175.2的全部互易、等参照和未知半径条件等价；$x_0$ 正是该定理可选的固定乘积锚。完整量子字典和操作边界分别沿用175.9、175.11。
+
+证明。先处理定义对应。精确复用176.1的中点极端性：对任意凸集，
+
+$$
+\operatorname{Split}_K=K\setminus\operatorname{ext}K.
+\tag{177.10}
+$$
+
+若从一般比例的非平凡线段分解出发，在该线段上以待分解点为中心向两侧取相同的充分小步长，就得到两个仍在 $K$ 内的不同等权端点；反向由极端性直接排除。对本章闭的 $K_3$，$P_3$ 的相对闭包就是环境闭包，且补集的相对内部为闭包的补集。因此
+
+$$
+\operatorname{int}_{K_3}\operatorname{Split}_{K_3}
+=K_3\setminus\overline{P_3},
+\tag{177.11}
+$$
+
+得到(177.9)的第一项等价。这是对同一条件的定义改写，既未自动证明邻域存在，也未把证明中使用的纯集另加为候选输入。
+
+现在假设 $\mathsf{Mid}(r_0)$。任取原纯态 $p\in P_3$ 及单位向量 $a\in A,b\in B$，令
+
+$$
+Y_{ab}=(\langle ab|\otimes I_C)p(|ab\rangle\otimes I_C).
+\tag{177.12}
+$$
+
+全部原乘积正测试给 $\langle c|Y_{ab}|c\rangle\ge0$ 对每个 $c$ 成立，故 $Y_{ab}\succeq0$。零输出已满足秩条件。若其秩 $r\ge2$，置 $\tau=Y_{ab}/\operatorname{Tr}Y_{ab}$。对每个 $t>0$ 使用
+
+$$
+G_t=[P_a+t(I_A-P_a)]\otimes[P_b+t(I_B-P_b)]\otimes I_C,
+\qquad p_t=F_{G_t}(p).
+\tag{177.13}
+$$
+
+这里 $F_G$ 精确为(176.3)。命题176.3证明中的原域接口已支付每个可逆局部 $G$ 的正合同及正逆；归一后是整个原 $K_3$ 的同胚，保持 $P_3$ 及其闭包。因而 $p_t\in P_3$，分母对每个正 $t$ 严格正，且通常矩阵极限给
+
+$$
+p_t\longrightarrow\rho=P_a\otimes P_b\otimes\tau
+\in\overline{P_3}.
+\tag{177.14}
+$$
+
+极限分母是 $\operatorname{Tr}Y_{ab}>0$。这里只把混合的 $\rho$ 放进纯集闭包，没有称它为原纯态。
+
+取一次固定局部酉，把 $a,b$ 送到 $a_0,b_0$，并把 $\tau$ 的正谱方向送到以 $c_0,c_1$ 开头的正交组 $c_0,\ldots,c_{r-1}$。不要求随输入连续选择这些方向。酉变换后的点为 $P_{a_0}\otimes P_{b_0}\otimes\tau'$，其中 $\tau'=\sum_{j=0}^{r-1}\lambda_jP_{c_j}$、$\lambda_j>0$、$\sum_j\lambda_j=1$。在整个 $n$ 维 $C$ 空间上置
+
+$$
+\Pi_r=\sum_{j=0}^{r-1}P_{c_j},\qquad
+L=\sum_{j=0}^{r-1}\lambda_j^{-1/2}P_{c_j}+(I_C-\Pi_r).
+\tag{177.15}
+$$
+
+$L$ 在正谱方向白化，在核上为恒等，故在全空间可逆。再次用上述同胚，得
+
+$$
+\rho_r=F_{I_A\otimes I_B\otimes L}
+ (P_{a_0}\otimes P_{b_0}\otimes\tau')
+=P_{a_0}\otimes P_{b_0}\otimes\frac{\Pi_r}{r}
+\in\overline{P_3}.
+\tag{177.16}
+$$
+
+若 $r=2$，这就是 $r_0$。若 $r>2$，对每个 $s>0$ 取全空间可逆的 $J_s=\Pi+s(I_C-\Pi)$。则
+
+$$
+F_{I_A\otimes I_B\otimes J_s}(\rho_r)
+=P_{a_0}\otimes P_{b_0}\otimes
+\frac{\Pi+s^2(\Pi_r-\Pi)}{2+s^2(r-2)}
+\in\overline{P_3},\qquad
+\lim_{s\downarrow0}F_{I_A\otimes I_B\otimes J_s}(\rho_r)=r_0.
+\tag{177.17}
+$$
+
+由于 $\overline{P_3}$ 闭，两种情形均给 $r_0\in\overline{P_3}$，与(177.11)矛盾。故每个原纯态、每对 $a,b$ 的 $Y_{ab}$ 均秩至多一。对 $AC$ 或 $BC$ 任意一对，先用实际正置换及其正逆把被压缩的两腿移到前两位，再用同一论证；置换保持整个原基、极点和闭包。因此三对的全部双腿压缩都受此限制，零向量和非单位向量由零输出及缩放涵盖。论证只用闭集 $\overline{P_3}$，没有要求 $\overline{P_3}\setminus P_3$ 闭，也没有把奇异滤波当成保纯操作或假定统一成功率下界。
+
+最后任取同一个原纯态 $p$ 及任意 $a$。由原 $A|BC$ 最大界和完整二体 PSD 对偶，$X_a=(\langle a|\otimes I)p(|a\rangle\otimes I)\succeq0$。它的全部 $B$ 向量压缩正是已受限的 $Y_{ab}$，全部 $C$ 向量压缩正是 $Y_{ac}$。这逐项满足命题176.5证明中双侧普通 PSD Gram 结论的两个输入条件，故直接由(176.15)–(176.16)得 $\operatorname{rank}X_a\le1$。其辅助 $E$ 只是有限 Gram 坐标，未输入物理纯化或新的原系统。于是对全部 $p\in P_3$、全部 $a$，字面上的(175.20)已经成立，包括零输出。定义175.1的全部强域前件也始终保留，可以直接消费175.6，得到每个有限 $C_N=\operatorname{PSD}_{n^N}$；不重证其矩形分类、三切分、Bell 极性或 GHZ 传播尾部。
+
+### 177.4 量子逆向、精确距离与既有等价
+
+继续证明定理177.3。假设 $C_3=\operatorname{PSD}_{n^3}$，此时整个原纯集才识别为全部单位 dyad $P=vv^*$。$x_0,y_0$ 为正交单位 dyad，所以 $\operatorname{Tr}r_0^2=1/2$ 且 $\operatorname{Tr}(Pr_0)\le1/2$。因此
+
+$$
+\|P-r_0\|_2^2
+=1+\tfrac12-2\operatorname{Tr}(Pr_0)\ge\tfrac12,
+\qquad \operatorname{dist}_{\rm HS}(r_0,P_3)=\frac1{\sqrt2}.
+\tag{177.18}
+$$
+
+等号在 $P=x_0$ 取得。任选 $0<\delta<1/\sqrt2$，整个原相对球 $B_\delta(r_0)\cap K_3$ 内没有秩一态。对其中任意 $z$，取两个正特征值 $\mu_i,\mu_j$ 的正交单位谱向量 $v_i,v_j$，及 $0<\epsilon<\min(\mu_i,\mu_j)$，则
+
+$$
+z_\pm=z\pm\epsilon(P_{v_i}-P_{v_j})\in K_3,
+\qquad z_+\ne z_-,\qquad z=\frac{z_++z_-}{2}.
+\tag{177.19}
+$$
+
+这证明 $\mathsf{Mid}(r_0)$；每个态单独取谱方向和步长就够了，不需要分解的连续提升。全有限 PSD 给三体 PSD，而上一节已从候选得到全有限 PSD，故(177.9)全部成立。
+
+至此量子目标及完整强域都已支付，再直接使用定理176.2，得到与 $\mathsf{PClose},\mathsf{LPC}(x_0),\mathsf S(x_0)$ 的精确等价，并由175.2接上原端点互易及其余条件。这些不是新加的独立假设。175.9的前件正是这里取得的同坐标整锥等式、普通迹与完整菜单，所以全部有限密度矩阵、原纯射线、完整效应与 POVM、Born 配对、纠缠张量复合及矩形 CP/Choi/Kraus 和全输入预算逐项沿用。实际事件饱和、唯一条件更新及连续时间仍分别需要175.11所列的额外输入；零质量分支不作归一除法，静态比较端点交换不等于测量时序交换，也不决定物理钟、Hamiltonian 或 $\hbar$。$\square$
+
+### 177.5 条件的几何含义、来源与中文释义
+
+**命题 177.4（固定中心条件的作用与未决边界）。** (177.3)是原二元平均关系在一个已知混合点附近的条件；在完整强域中它与全部有限量子层级等价，但该改写不证明独立公理数减少，也不证明这一邻域条件已由强域自动推出。
+
+证明与释义。普通有限维凸集的中点极端性及可逆局部 $\mathrm{GL}$ 合同几何是成熟工具，分别按176.1、命题176.3证明中的接口使用；谱分解、两维 Bloch 坐标和(177.19)只是中间矩阵事实。本章的 repo-derived 综合是：把任意原纯态的任意混合双腿输出，经全空间可逆白化和浓缩汇到同一个固定混合中心，再接命题176.5的双侧 Gram 桥和175.6的完整重建尾部。对应来源与全部假设各按这些供应保留，不作历史优先权声明。命题176.8已经给出普通紧凸体的非闭极点集控制；它说明不能仅凭凸性、紧性或(177.10)自动宣布邻域存在，并不是定义175.1的同域反模型。
+
+在已知的小球 $F_0$ 里取两个相反端点，它们的平均是中心。只要求这个中心在整个原状态体中稍有扰动时，仍能拆成两份不同状态的平均；不规定这两份必须靠近哪两个端点。若某个原纯态的双腿条件压缩留下真正混合，始终可逆的筛选就会把纯态的极限挤到同一个中心，与这里一小片地方都可拆相冲突。于是双腿压缩都不能留下真正混合；双侧 Gram 论证补回全部一腿秩条件，既有重建尾部锁住全部有限量子锥。小球是整个原凸体中的实际暴露面，但只在小球内检查无法排除从小球外逼近中心的原纯点，所以不能替代(177.3)。
+
+全部明确底座仍保留，新增邻域关系能否从当前基底或更少关系自动生出仍未解决；本章没有给出违反它的同域全有限层级，不主张反模型或独立性。条件自身不提纯点或确认最优化，并不意味着可以删去原域的完整对象、低层对齐或全有限粘合。端点关系的这种简写也不增加175.11之外的事件、更新或时间结论。$\square$
+
+## 追加锚（本行以下为增补区）
