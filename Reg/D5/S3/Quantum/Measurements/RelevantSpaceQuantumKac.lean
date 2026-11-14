@@ -125,4 +125,101 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration
 #print axioms reconstruction
 #print axioms registration
 
+namespace OperatorSeries
+
+def arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {n : Type u} {α : Type} [Fintype n] [DecidableEq n]
+    (K : α → Matrix n n ℂ) [Fintype α] (P Π : Matrix n n ℂ),
+    P.PosSemidef → P * P = P →
+    Π.toEuclideanLin = (reachableSpace K P).starProjection.toLinearMap →
+    weightedCP K (fun _ => 1) Π = Π →
+    HasSum (fun k => (weightedCP (fun a => (1 - P) * K a) (fun _ => 1))^[k] P)
+      (R.readout () n Π)
+
+private theorem actual_law : arena.{u}.Law actual := by
+  exact @relevant_projection_hasSum.{u}
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  let n := ULift.{u} (Fin 1)
+  let K : Unit → Matrix n n ℂ := fun _ => 1
+  have hC : reachableSpace K (1 : Matrix n n ℂ) = ⊤ := by
+    apply le_antisymm le_top
+    intro x _
+    apply (le_iSup (wordSpan K (1 : Matrix n n ℂ)) 0)
+    apply Submodule.subset_span
+    refine ⟨[], by simp, x, ?_, ?_⟩
+    · simp [matrixSupport, Matrix.toEuclideanLin, Matrix.toLpLin_one]
+    · simp [krausWord, Matrix.toEuclideanLin, Matrix.toLpLin_one]
+  have hΠ : (1 : Matrix n n ℂ).toEuclideanLin =
+      (reachableSpace K 1).starProjection.toLinearMap := by
+    rw [hC, Submodule.starProjection_top]
+    ext x
+    simp [Matrix.toEuclideanLin, Matrix.toLpLin_one]
+  have hu : weightedCP K (fun _ => 1) (1 : Matrix n n ℂ) = 1 := by
+    simp [K, weightedCP]
+  have hgood := relevant_projection_hasSum K 1 1 Matrix.PosSemidef.one
+    (by simp) hΠ hu
+  have hbad := h K 1 1 Matrix.PosSemidef.one (by simp) hΠ hu
+  change HasSum _ (0 : Matrix n n ℂ) at hbad
+  exact one_ne_zero (hgood.unique hbad)
+
+private theorem sensitivity : Sensitivity arena.{u} actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, rfl, rejected_law⟩
+    intro j hji
+    cases i
+    cases j
+    exact (hji rfl).elim
+  · intro i
+    exact nomatch i
+
+def reconstruction : Registration arena.{u} (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := Reg.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.dependence
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration
+    (@_root_.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.relevant_projection_hasSum.{u})
+    (type_of% (realize signature (fun _ _ S => S) (fun e => nomatch e))) Unit Unit := {
+  unitName := `quantumKacRelevantProjectionSeries,
+  realizationName := `Reg.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.OperatorSeries.reconstruction,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨reconstruction⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ S => S) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac,
+    definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "arg"],
+      stateBinder := 7,
+      functionOperand := false,
+      stateOperand := none,
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+#print axioms reconstruction
+#print axioms registration
+
+end OperatorSeries
+
 end Reg.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac

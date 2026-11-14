@@ -104,13 +104,17 @@ private theorem support_coercivity_order (R Π : Matrix n n ℂ)
   have hRy : C.starProjection (R.toEuclideanLin y) = R.toEuclideanLin y :=
     C.starProjection_eq_self_iff.mpr (hrange y)
   have hqR : inner ℂ x (R.toEuclideanLin x) = inner ℂ y (R.toEuclideanLin y) := by
-    rw [hproject x, ← hRy, ← C.inner_starProjection_left_eq_right]
-    rfl
+    calc
+      _ = inner ℂ x (R.toEuclideanLin y) := by rw [hproject x]
+      _ = inner ℂ x (C.starProjection (R.toEuclideanLin y)) := by rw [hRy]
+      _ = inner ℂ y (R.toEuclideanLin y) :=
+        (C.inner_starProjection_left_eq_right x (R.toEuclideanLin y)).symm
   have hqΠ : (inner ℂ x (Π.toEuclideanLin x)).re = ‖y‖ ^ 2 := by
     rw [hΠ]
     change (inner ℂ x (C.starProjection x)).re = ‖y‖ ^ 2
-    rw [← C.inner_starProjection_left_eq_right,
-      C.starProjection_eq_self_iff.mpr (C.starProjection_apply_mem x)]
+    have hh := C.inner_starProjection_left_eq_right x (C.starProjection x)
+    rw [C.starProjection_eq_self_iff.mpr (C.starProjection_apply_mem x)] at hh
+    rw [← hh]
     exact inner_self_eq_norm_sq (𝕜 := ℂ) _
   have h := hb y (C.starProjection_apply_mem x)
   rw [inner_re_symm]
@@ -130,6 +134,10 @@ private theorem hasSum_of_positive_block (K : α → Matrix n n ℂ) [Fintype α
     HasSum (fun k => (weightedCP K c)^[k] P) Π := by
   let T := weightedCP K c
   have hm : Monotone T := weightedCP_mono K c hc
+  have hscale {A B : Matrix n n ℂ} (h : A ≤ B) (r : ℝ) (hr : 0 ≤ r) :
+      (r : ℂ) • A ≤ (r : ℂ) • B := by
+    rw [Matrix.le_iff, ← smul_sub]
+    exact (Matrix.le_iff.mp h).smul (Complex.zero_le_real.mpr hr)
   have hpos (k : ℕ) (X : Matrix n n ℂ) (hX : X.PosSemidef) :
       (T^[k] X).PosSemidef := by
     induction k with
@@ -159,8 +167,7 @@ private theorem hasSum_of_positive_block (K : α → Matrix n n ℂ) [Fintype α
           _ = ((q ^ j : ℝ) : ℂ) • T^[N] Π := by
             simpa only [Module.End.pow_apply] using (T ^ N).map_smul ((q ^ j : ℝ) : ℂ) Π
           _ ≤ ((q ^ j : ℝ) : ℂ) • ((q : ℂ) • Π) :=
-            smul_le_smul_of_nonneg_left hblock
-              (Complex.zero_le_real.mpr (pow_nonneg hq j))
+            hscale hblock (q ^ j) (pow_nonneg hq j)
           _ = ((q ^ (j + 1) : ℝ) : ℂ) • Π := by
             rw [smul_smul, pow_succ, Complex.ofReal_mul]
   have hall (k : ℕ) : T^[k] Π ≤ ((q ^ (k / N) : ℝ) : ℂ) • Π :=
@@ -171,8 +178,6 @@ private theorem hasSum_of_positive_block (K : α → Matrix n n ℂ) [Fintype α
     linarith
   have hbound (k : ℕ) : (T^[k] Π).trace.re ≤ q ^ (k / N) * Π.trace.re := by
     simpa [Matrix.trace_smul, smul_eq_mul, Complex.mul_re] using htrace (hall k)
-  have hboundP (k : ℕ) : (T^[k] P).trace.re ≤ q ^ (k / N) * Π.trace.re :=
-    (htrace ((hm.iterate k) hPI)).trans (hbound k)
   have htrlim := geometric_trace_tendsto K c hc Π hΠ N hN q hq hq1 hbound
   have hnormlim : Tendsto (fun k => ‖T^[k] Π‖) atTop (𝓝 0) :=
     squeeze_zero (fun _ => norm_nonneg _)
