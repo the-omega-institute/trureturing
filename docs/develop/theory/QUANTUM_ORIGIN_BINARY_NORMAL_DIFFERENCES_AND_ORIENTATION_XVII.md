@@ -234,3 +234,210 @@ The restriction to rank-one differences is logically sufficient for the full zer
 [Q175M]: https://www.numdam.org/item/BSMF_1965__93__273_0.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 176. One-sided normal differences and preparation–test inclusion
+
+### 176.1 The unchanged carrier and two binary relations
+
+**Definition 176.1 (positive differences and self-testing).** Keep the entire weak all-finite domain of Definition 175.1, including the actual complex Hermitian tensor carriers, complete trace duals, every minimum/maximum partition, scalar object, positive actual permutations and their inverses, and canonical reassociation. Keep exactly its ternary condition $\mathsf T$ in (175.2). For a closed convex cone $K\subseteq E_d=\operatorname{Herm}_d(\mathbb C)$ define
+
+$$
+\begin{aligned}
+\mathsf A_+(K):\quad
+&X\in K,\ Y\in K^*,\ \operatorname{Tr}(XY)=0,\\
+&X-Y=vv^*\text{ for some }v\ne0
+\quad\Longrightarrow\quad X=0\text{ or }Y=0,\\
+\mathsf I(K):\quad
+&\operatorname{Tr}(XZ)\ge0\quad\text{for every }X,Z\in K.
+\end{aligned}
+\tag{176.1}
+$$
+
+Thus $\mathsf I(K)$ is exactly the inclusion $K\subseteq K^*$ under the supplied Hilbert–Schmidt identification. It does not assert the reverse inclusion or positivity of a matrix operation. Each original preparation, under that identification, defines a nonnegative test on all original preparations. This is a condition on two elements of the same cone, not an assumed full state–effect equivalence.
+
+The complete candidate is
+
+$$
+\mathsf Q_+:=\mathsf A_+(C_2)\wedge\mathsf I(C_2)\wedge\mathsf T.
+\tag{176.2}
+$$
+
+Only positive ordinary rank-one differences are tested in $\mathsf A_+$. The negative differences in $\mathsf A$ are omitted, and no nonzero binary readout or Bell resource is designated. Both the ordinary complex rank-one family and the positive-definite trace identification remain supplied geometry. In particular $\mathsf I$ is not a claim that preparation and test types have already been intrinsically identified without a pairing.
+
+### 176.2 What the positive half actually controls
+
+**Theorem 176.2 (the exact one-sided classification).** For every $d\ge1$ and every closed convex cone $K\subseteq E_d$,
+
+$$
+\mathsf A_+(K)
+\quad\Longleftrightarrow\quad
+\bigl(\operatorname{PSD}_d\subseteq K\bigr)
+\ \text{or}\ 
+\bigl(K\subseteq-\operatorname{PSD}_d\bigr).
+\tag{176.3}
+$$
+
+The inclusions here need not be equalities. This is precisely the freedom lost by deleting the negative normal differences from Theorem 175.2.
+
+**Proof.** For each unit rank-one projection $P$, Moreau's decomposition, with positive-dual sign convention, is
+
+$$
+P=X-Y,\qquad X=\Pi_K(P)\in K,\quad Y\in K^*,\quad
+\operatorname{Tr}(XY)=0.
+\tag{176.4}
+$$
+
+If $\mathsf A_+$ holds, its two possible splits give $\Pi_K(P)=P$ or $0$. The nonexpansive projection and the connected family $\mathbb{CP}^{d-1}$ make $\|\Pi_K(P)\|_2^2\in\{0,1\}$ constant, exactly as in the positive-family part of Theorem 175.2. If the constant is one, every $P$ belongs to $K$ and positive spectral sums give $\operatorname{PSD}_d\subseteq K$. If it is zero, (176.4) gives $-P\in K^*$ for every $P$. Hence $-\operatorname{PSD}_d\subseteq K^*$, whose dual inclusion is $K\subseteq-\operatorname{PSD}_d$. This uses Moreau's cited decomposition and continuity, not positivity of its projection as an operation.
+
+Conversely let $X,Y$ satisfy the antecedent of $\mathsf A_+$ and put $P=X-Y=vv^*$. If $\operatorname{PSD}_d\subseteq K$, then $P\in K$, and
+
+$$
+0\le\operatorname{Tr}(PY)
+=\operatorname{Tr}((X-Y)Y)=-\|Y\|_2^2.
+\tag{176.5}
+$$
+
+Thus $Y=0$. If $K\subseteq-\operatorname{PSD}_d$, then $-P\in K^*$ and
+
+$$
+0\le\operatorname{Tr}(X(-P))
+=\operatorname{Tr}(X(Y-X))=-\|X\|_2^2,
+\tag{176.6}
+$$
+
+so $X=0$. These arguments include the zero and full-space cones where applicable. $\square$
+
+**Corollary 176.3 (one inclusion closes the positive branch).** On one closed Hermitian cone,
+
+$$
+\mathsf A_+(K)\wedge\mathsf I(K)
+\quad\Longleftrightarrow\quad
+K=\operatorname{PSD}_d\ \text{or}\ K\subseteq-\operatorname{PSD}_d.
+\tag{176.7}
+$$
+
+**Proof.** In the positive branch of (176.3), $\operatorname{PSD}_d\subseteq K\subseteq K^*$. Duality also gives $K^*\subseteq\operatorname{PSD}_d$, so all are equal. Every subcone of $-\operatorname{PSD}_d$ satisfies $\mathsf I$: the trace product of two negative semidefinite Hermitian matrices is nonnegative. Theorem 176.2 supplies its $\mathsf A_+$. The PSD case has both properties as well. $\square$
+
+### 176.3 Finite composition removes the residual branch
+
+**Lemma 176.4 (a negative binary subcone collapses the whole hierarchy).** On the weak domain of Definition 175.1, if $C_2\subseteq-\operatorname{PSD}_{n^2}$, then $C_N=\{0\}$ for every $N\ge1$.
+
+**Proof.** For $X\in C_1$, the minimum inclusion puts $X\otimes X\in C_2$. If $X\ne0$, some nonzero Hermitian eigenvalue $\lambda$ gives its tensor square the positive eigenvalue $\lambda^2$, contradicting the proposed containment. Thus $C_1=\{0\}$ and its complete dual is $W_1$.
+
+The maximum inclusion at $1+1$ then tests every $Z\in C_2$ against all $F\otimes G$ with $F,G\in W_1$. Both signs of each such test are present. Every resulting pairing is zero, and product Hermitian tests span $W_2$, so $C_2=\{0\}$. Inductively, if $C_{N-1}=\{0\}$, the maximum inclusion at $1+(N-1)$ uses the full duals $W_1,W_{N-1}$ and the same spanning argument gives $C_N=\{0\}$. Scalar partitions retain $C_0=\mathbb R_+$. $\square$
+
+**Theorem 176.5 (binary dichotomy and the full candidate).** On that same domain,
+
+$$
+\begin{aligned}
+\mathsf A_+(C_2)\wedge\mathsf I(C_2)
+\quad&\Longleftrightarrow\quad
+C_2=\operatorname{PSD}_{n^2}
+\ \text{or}\ (C_N=\{0\}\text{ for all }N\ge1),\\
+\mathsf Q_+\quad&\Longleftrightarrow\quad
+C_N=\operatorname{PSD}_{n^N}\text{ for every finite }N\ge0.
+\end{aligned}
+\tag{176.8}
+$$
+
+**Proof.** Corollary 176.3 and Lemma 176.4 give the first forward implication. Binary PSD and the all-zero nonempty hierarchy each satisfy both binary relations, giving its converse.
+
+The nonzero primal dyad in $\mathsf T$ excludes the all-zero hierarchy; no separate $\mathsf N(C_2)$ is needed. Thus $\mathsf Q_+$ gives $C_2=\operatorname{PSD}$. It now supplies $\mathsf Q_{\mathrm A}$ by Theorem 175.3, so Theorem 175.4 with precisely the unchanged $\mathsf T$ gives every finite PSD equality. Its suppliers first recover $C_1=\varepsilon\operatorname{PSD}_n$ and signed properness; the positive odd-level dyad selects $\varepsilon=+1$; its three flattening ranks then pay the full hypotheses of XIII166.12. No rank requirement is used to exclude the zero hierarchy, whereas all three remain in the propagation step. Conversely the standard PSD hierarchy satisfies both binary relations and has the full-rank GHZ seed used in Theorem 175.4. $\square$
+
+### 176.4 A complete countermodel to omitting preparation–test inclusion
+
+**Theorem 176.6 (all-finite product-block-positive control).** Deleting $\mathsf I(C_2)$ from (176.2) permits a hierarchy with pointed generating cones, strictly positive ordinary trace, complete duals and full effect menus, every finite structural bound, $\mathsf A_+(C_2)$, $\mathsf N(C_2)$ and the unchanged $\mathsf T$, yet $C_2\ne\operatorname{PSD}_{n^2}$.
+
+**Proof.** Let $\operatorname{Sep}_N$ be the cone generated by all ordinary rank-one fully single-leg product dyads. Define, on the actual carriers,
+
+$$
+\begin{aligned}
+C_N=\operatorname{BP}_N:=\bigl\{X\in W_N:
+\langle v_1\otimes\cdots\otimes v_N,
+X(v_1\otimes\cdots\otimes v_N)\rangle\ge0
+\text{ for all }v_1,\ldots,v_N\in\mathbb C^n\bigr\},\\
+C_0=\mathbb R_+.
+\end{aligned}
+\tag{176.9}
+$$
+
+The normalized product projections form a compact set of trace one. Its convex hull is compact, and its conic hull is closed because the trace fixes every conic scale. Thus $\operatorname{Sep}_N$ is closed; complete duality and the bipolar identity give
+
+$$
+\operatorname{BP}_N=\operatorname{Sep}_N^*,\qquad
+\operatorname{BP}_N^*=\operatorname{Sep}_N.
+\tag{176.10}
+$$
+
+All $\operatorname{BP}_N$ are closed convex cones and contain ordinary PSD. They are generating because PSD spans the ambient Hermitian space. Product projections span that space too, so if $X,-X\in\operatorname{BP}_N$, every product expectation is zero and $X=0$. This proves pointedness.
+
+For strict trace positivity use the following finite set of unit one-body projections: the $n$ coordinate projections, and for every $i<j$ the four projections onto
+
+$$
+\frac{e_i+e_j}{\sqrt2},\quad\frac{e_i-e_j}{\sqrt2},\quad
+\frac{e_i+\mathrm i e_j}{\sqrt2},\quad
+\frac{e_i-\mathrm i e_j}{\sqrt2}.
+\tag{176.11}
+$$
+
+They span $\operatorname{Herm}_n$ and sum to $(2n-1)I_n$. Their $N$-fold products span $W_N$ and sum to $(2n-1)^N I_{n^N}$. All pairings with $X\in\operatorname{BP}_N$ are nonnegative. If $\operatorname{Tr}X=0$, this finite sum forces each pairing to vanish, so $X=0$. Hence ordinary trace is strictly positive away from zero. In finite dimension the resulting whole trace-one base is compact. The effect interval and all finite trace-unit decompositions are taken from the complete dual (176.10), rather than a selected test list.
+
+For any partition $a+b=N$, a product $X\otimes Y$ of block-positive elements is nonnegative on every fully product vector: its expectation is the product of two nonnegative numbers. This proves the minimum inclusion. Products of elements of $\operatorname{Sep}_a$ and $\operatorname{Sep}_b$ conically generate exactly $\operatorname{Sep}_N$. Equations (176.10) therefore give the stronger maximum equality
+
+$$
+\operatorname{BP}_a\otimes_{\max}\operatorname{BP}_b
+=\operatorname{BP}_{a+b}.
+\tag{176.12}
+$$
+
+This holds for every finite split, not just $1+(N-1)$; permutations and their inverses preserve the full product family, reassociation is the actual identity, and scalar splits give the same cones.
+
+Since $\operatorname{PSD}_{n^2}\subseteq\operatorname{BP}_2$, Theorem 176.2 gives $\mathsf A_+(C_2)$. Choosing $I$ on both sides gives $\mathsf N(C_2)$, since $I\in\operatorname{Sep}_2$. The ordinary GHZ dyad is PSD and hence belongs to $C_3$; each flattening rank is $n$, so $\mathsf T$ holds.
+
+Nevertheless $C_2$ is larger than PSD. Let $B=\Omega\Omega^*$ with $\Omega=\sum_j e_j\otimes e_j$ as in XVI173.2. Cauchy–Schwarz gives
+
+$$
+|\langle\Omega,a\otimes b\rangle|^2
+\le\|a\|^2\|b\|^2,
+\qquad I-B\in\operatorname{BP}_2.
+\tag{176.13}
+$$
+
+Its eigenvalue on $\Omega$ is $1-n<0$. Both $B$ and $I-B$ belong to the native primal cone, whereas
+
+$$
+\operatorname{Tr}\bigl(B(I-B)\bigr)=n-n^2<0.
+\tag{176.14}
+$$
+
+Thus $\mathsf I(C_2)$ fails by an explicit pair, and $B\notin C_2^*$. The two preparations cannot both be interpreted as tests using the supplied trace identification. All actual native state–test probabilities still remain nonnegative by complete duality. $\square$
+
+**Proposition 176.7 (the other omissions also have full controls).** Deleting $\mathsf A_+(C_2)$ permits XVI174.6's transported hierarchy even with $\mathsf I(C_2)$ and $\mathsf T$. Deleting $\mathsf T$ permits both the all-zero nonempty hierarchy and the alternating-sign PSD hierarchy.
+
+**Proof.** The transported hierarchy has $C_2=C_2^*$ for the actual trace inner product, so $\mathsf I(C_2)$ holds. Its entire weak domain and unchanged $\mathsf T$ are proved in XVI174.6. The nonzero complementary pair $H,J$ in (175.12)–(175.13) has $H-J=P_1\otimes P_1$ positive rank one. It therefore violates the positive half itself, not merely a discarded negative test.
+
+The all-zero cones at nonempty levels have full ambient duals; their minimum bounds are zero and their maximum bounds force zero by product-test spanning. They satisfy the binary relations but have no nonzero seed. Finally $C_N=(-1)^N\operatorname{PSD}_{n^N}$ is the complete alternating-sign hierarchy of Proposition 175.6. Its binary cone is PSD, while no nonzero ordinary positive dyad belongs to its negative three-body cone. Both failures are on the original all-finite domain. $\square$
+
+### 176.5 Quantum correspondence, geometric economy and the remaining bridge
+
+**Corollary 176.8 (the inherited full finite theory).** Under $\mathsf Q_+$, every conclusion and every separate realization condition of Corollary 175.5 applies in the original coordinates.
+
+**Proof and correspondence.** Theorem 176.5 supplies its exact cone hypothesis. Whole trace-one cones give all density states and rank-one pure states; complete proper intervals and all unit decompositions give all POVMs and the Born pairing; the actual joint cones give tensor composition and partial traces; positivity with every original finite spectator gives the rectangular CP/Choi/Kraus dictionary, with the whole-input TNI/TP budgets for mathematical instruments. The corresponding Watrous suppliers and scalar and zero-branch conventions are precisely those reused in 175.5, rather than new proofs of those standard results.
+
+For two distinct pure states inside one resulting matrix block, the minimal normalized face is a real three-ball, and the full pure locus at level $N$ is $\mathbb{CP}^{n^N-1}$. The larger object containing these binary balls is the entire positive Hermitian cone with its finite tensor hierarchy. Event saturation, a specified sharp nondisturbing update for Lüders, and a supplied continuous order-automorphism group for Hamiltonian time retain the distinct assumptions of 175.5. No physical clock or value of $\hbar$ is obtained. $\square$
+
+**Proposition 176.9 (what has and has not become simpler).** Relative to $\mathsf Q_{\mathrm A}\wedge\mathsf T$, the candidate (176.2) deletes the negative rank-one difference tests and the independent nonzero-readout premise, at the cost of the preparation–test inclusion $\mathsf I(C_2)$. Neither candidate implies a claim of a globally minimal axiom set.
+
+**Proof and source scope.** Theorem 176.2 identifies exactly the extra cones admitted by the positive half. Theorem 176.6 shows that this loss survives every finite composite requirement, strict trace positivity, nonzero readout and the original ternary seed. Thus these standing structures cannot silently replace $\mathsf I$. Corollary 176.3 and Lemma 176.4 show precisely how one inclusion and self-composition repair it, and why the seed itself now pays the nonzero condition. On the fixed all-finite domain both complete candidates are equivalent to the same full PSD hierarchy, by Theorems 175.4 and 176.5. This is an alternative allocation of assumptions, not a strict weakening there or a shortest-description theorem.
+
+Moreau's decomposition and nonexpansiveness are the literature inputs at [printed pp.281–282][Q175M]. The one-family argument, hierarchy collapse, and product-block-positive control are paper deductions on the stated carriers; the separable/block-positive polar pairing follows directly from their definitions in (176.9)–(176.10). No general literature priority is claimed. The all-finite propagation and standard quantum dictionary are the explicitly credited existing suppliers above.
+
+The external complex carrier, positive rank-one family and trace identification have not been reconstructed from native zero relations. Proposition 175.7 still rules out the particular native-extreme-ray replacement that makes the constraint automatic. The already established one-interior-reference comparison criterion in the [Pinelis source-context note][Q176P] is a distinct intrinsic route, with its full VII102.4 B1–B3 hypotheses; it is not a consequence of the positive half or a newly established result here. A bridge deleting the supplied rank geometry remains unproved. These statements are paper mathematics, not Lean-kernel certification. $\square$
+
+**命题 176.10（完整白话候选）。** 在175.1给定的复矩阵关系空间里，候选可以说成：任何两份原准备，用同一把迹标尺比较都不能给负数；一份准备与一个原测试互不响应时，如果两者之差恰好是一条正向的一维线，它们就不能各留一块。再保留那颗三个切口都非乘积、至少一条腿铺满本地维数的正三体种子。这些条件恰好给出176.5的全部有限量子锥。
+
+**证明与图景。** 把任意正向一维线分成锥内最近部分和对偶法向部分，第二条关系使整片相连的一维线只能统一留下或统一落空。留下时，量子正锥已全部在里面；第一条关系又让每份准备都能充当非负测试，于是把外面多出的部分挡掉。落空时，二体锥只能朝负面；但一份对象和自己复合总会产生正的平方方向，所以这种二体选择迫使每个非空层都归零。三体种子让整体不能归零，再选定一体的正朝向，并按已有有限传播展开所有层。若删掉第一条关系，“对所有单腿乘积方向都非负”的大锥便能混进来：它装着量子态，也装着有负本征值的对象；两份准备照迹标尺甚至会读出负数。这说明缺的正是准备与测试之间的那条包含关系。所得局部画面仍是两条纯线撑起一颗三维球，整体是相容的有限量子锥层级；正向一维线和迹标尺本身仍是给定地基，具体测后更新与时间保留176.8的额外条件。$\square$
+
+[Q176P]: https://github.com/the-omega-institute/trureturing/blob/1888fc22e76ba8b59fb974ef5db8f5e1b23904f1/Library/Convexity/pinelis2012extremepoints.md
+
+## 追加锚（本行以下为增补区）
