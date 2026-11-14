@@ -69,7 +69,11 @@ private theorem traceNorm_zero {n : Type*} [Fintype n] [DecidableEq n]
     have hp := Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (Xᴴ * X))
     have hi := (Complex.nonneg_iff.mp hp.trace_nonneg).2
     have hz : (CFC.sqrt (Xᴴ * X)).trace = 0 := Complex.ext h hi.symm
-    exact CFC.abs_eq_zero_iff.mp (hp.trace_eq_zero_iff.mp hz)
+    have hs := hp.trace_eq_zero_iff.mp hz
+    have hg : Xᴴ * X = 0 := by
+      rw [← CFC.sqrt_mul_sqrt_self _ (Matrix.posSemidef_conjTranspose_mul_self X).nonneg,
+        hs, Matrix.zero_mul]
+    exact Matrix.conjTranspose_mul_self_eq_zero.mp hg
   · rintro rfl
     simp [traceNorm]
 
@@ -163,9 +167,9 @@ private def kraus (p : Fin 2 × Fin 2) : Matrix (Fin 2) (Fin 2) ℂ :=
   Matrix.single p.1 p.2 (amplitude p.1 p.2)
 
 private theorem amplitude_square (y x : Fin 2) :
-    amplitude y x * star (amplitude y x) = (weight y x : ℂ) := by
+    amplitude y x * (starRingEnd ℂ) (amplitude y x) = (weight y x : ℂ) := by
   have hw : 0 ≤ weight y x := by unfold weight; split_ifs <;> norm_num
-  simp only [amplitude, Complex.star_def, Complex.conj_ofReal, ← Complex.ofReal_mul,
+  simp only [amplitude, Complex.conj_ofReal, ← Complex.ofReal_mul,
     Real.mul_self_sqrt hw]
 
 private theorem kraus_complete : (∑ p, (kraus p)ᴴ * kraus p) = 1 := by
@@ -232,7 +236,10 @@ private theorem equal_marginal_action {r : Type*} [Fintype r] [DecidableEq r]
   have hz := congrFun (congrFun hX i) j
   change (∑ c : Fin 2, X (i, c) (j, c)) = 0 at hz
   rw [Fin.sum_univ_two] at hz
-  rw [amp_entry, binary_action]
+  rw [amp_entry]
+  have ha := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M a b)
+    (binary_action (fun c d => X (i,c) (j,d)))
+  rw [ha]
   simp only [Matrix.diagonal_apply, Matrix.smul_apply, smul_eq_mul, pinch_entry]
   fin_cases a <;> fin_cases b <;> norm_num [weight] at * <;> linear_combination hz / 4
 
@@ -287,8 +294,8 @@ private theorem complete_pair_bound {r : Type} [Fintype r] [DecidableEq r]
     have hx : CStarMatrix.ofMatrix X = ρ.1 - σ.1 := by
       change CStarMatrix.ofMatrix
         (CStarMatrix.ofMatrix.symm ρ.1 - CStarMatrix.ofMatrix.symm σ.1) = _
-      rw [map_sub]
-      simp
+      ext p q
+      rfl
     rw [hx, map_sub]
     rfl
   have hb := pinch_contract X
@@ -342,8 +349,15 @@ private def diagonalState {n : Type*} [Fintype n] [DecidableEq n]
     apply Matrix.posSemidef_diagonal_iff.mpr
     intro i
     exact_mod_cast hd i
-  · simpa [Matrix.trace, Matrix.diag, CStarMatrix.ofMatrix] using
-      (show (∑ i, (d i : ℂ)) = 1 by exact_mod_cast ht)
+  · have he : Matrix.trace
+        (CStarMatrix.ofMatrix (Matrix.diagonal fun i => (d i : ℂ))) =
+        ∑ i, (d i : ℂ) := by
+      change (∑ i, CStarMatrix.ofMatrix (Matrix.diagonal fun j => (d j : ℂ)) i i) = _
+      apply Finset.sum_congr rfl
+      intro i _
+      simp only [CStarMatrix.ofMatrix_apply, Matrix.diagonal_apply_eq]
+    rw [he]
+    exact_mod_cast ht
 
 private def rhoProbability (p : Fin 3 × Fin 2) : ℝ :=
   ![![1 / 2, 0], ![0, 0], ![1 / 2, 0]] p.1 p.2
@@ -382,7 +396,10 @@ private theorem reference_diagonal {r : Type*} [Fintype r] [DecidableEq r]
       Matrix.diagonal (fun p => (weight p.2 0 : ℂ) * (d (p.1,0) : ℂ) +
         (weight p.2 1 : ℂ) * (d (p.1,1) : ℂ)) := by
   ext ⟨i,a⟩ ⟨j,b⟩
-  rw [amp_entry, binary_action]
+  rw [amp_entry]
+  have ha := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M a b)
+    (binary_action (fun c e => Matrix.diagonal (fun p => (d p : ℂ)) (i,c) (j,e)))
+  rw [ha]
   by_cases hij : i = j
   · subst j
     simp [Matrix.diagonal_apply, Prod.mk.injEq]
