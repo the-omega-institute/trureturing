@@ -73,6 +73,50 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                     + "R(F,x,y,z) samples w from L(F,x) and returns the pair "
                     + "(w,S(y,z,w)); its two marginal pushforwards are exactly "
                     + "L(F,x) and L(F,y). Every coordinate strictly after z is preserved."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("kbonacci-prefix-coupling-marginals"),
+                DeclarationHandle.Create(
+                    "D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.prefix_coupling_marginals"),
+                H("Stopped conditional recursion has exact full-word marginals"),
+                StatementSource.FromAuthor(Disp(PrefixFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "P(s,F,x,y,h,g) denotes prefixCoupling. At each listed site, "
+                    + "the finite next-bit joint law is bound to the recursively refined "
+                    + "completion law. Its supported bit pairs have nonempty refined "
+                    + "fibers. The marginal weight of a bit times its refined uniform "
+                    + "completion mass is the original mass on that bit fiber; summing "
+                    + "over Bool proves exact disintegration. If the fixed histories "
+                    + "already contain a common screening zero and agree at all farther "
+                    + "fixed sites, the recursion instead uses resetCoupling, with legal "
+                    + "representatives chosen from the actual nonempty fibers. Uniform "
+                    + "prefix transport proves both marginals in this stopped branch."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("kbonacci-right-scan-hamming"),
+                DeclarationHandle.Create(
+                    "D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.right_scan_hamming"),
+                H("Expected internal Hamming cost for an increasing scan"),
+                StatementSource.FromAuthor(Disp(CostFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "ExpectedHamming(J,s) is the sum over full-word pairs w of J(w)H(s,w). "
+                    + "Before(s,i,j) means that i occurs strictly before j in the list s. "
+                    + "H(s,w) denotes scanHamming: the sum of the zero-one disagreement "
+                    + "indicators at the listed sites. The list is strictly increasing "
+                    + "and lists the entire complement of F without repetitions. The "
+                    + "fixed histories agree at every fixed site farther right than any "
+                    + "scanned site. A supported common-zero branch has zero remaining "
+                    + "cost, by screening and the reset law. In every other branch the "
+                    + "current indicator is at most one, and the recursive expected "
+                    + "remaining cost is at most one. Those branches have total mass "
+                    + "at most one half, derived from conditional_step_coupling. "
+                    + "Their weighted cost is therefore at most one. This estimate "
+                    + "uses the same full-word joint law as the marginal theorem. "
+                    + "The theorem covers short words and arbitrary nonempty completion "
+                    + "fibers; it does not assert reflection, the geometric survival "
+                    + "tail, or the final two-orientation contiguous-block assembly."))),
                 DescribeRole.Theorem))));
 
     private static Formula StepFormula()
@@ -136,6 +180,48 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
             All(f, Call("Finset", Call("Fin", n)), All(Seq(x, Comma, y), Word(n),
                 Imp(And(Call("A", k, n, x), Call("A", k, n, y)),
                     All(z, Call("Fin", n), Imp(assumptions, conclusion)))))));
+    }
+
+    private static Formula PrefixFormula()
+    {
+        var k = F.Id("k"); var n = F.Id("n"); var f = F.Id("F");
+        var s = F.Id("s"); var x = F.Id("x"); var y = F.Id("y");
+        var h = F.Id("h"); var g = F.Id("g"); var i = F.Id("i");
+        var joint = Call("P", s, f, x, y, h, g);
+        var free = All(i, Call("Fin", n), Imp(Seq(i, Sp, InMacro, Sp, s),
+            Seq(Neg, Sp, Par(Seq(i, Sp, InMacro, Sp, f)))));
+        var conclusion = And(Rel(Call("mapFst", joint), Eq, Call("L", f, x, h)),
+            Rel(Call("mapSnd", joint), Eq, Call("L", f, y, g)));
+        var fibers = All(Seq(x, Comma, y), Word(n),
+            All(h, Call("Nonempty", Call("C", k, n, f, x)),
+                All(g, Call("Nonempty", Call("C", k, n, f, y)), conclusion)));
+        var fixedSet = All(f, Call("Finset", Call("Fin", n)), Imp(free, fibers));
+        var lists = All(s, Call("List", Call("Fin", n)), Imp(Call("Nodup", s), fixedSet));
+        return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k), lists));
+    }
+
+    private static Formula CostFormula()
+    {
+        var k = F.Id("k"); var n = F.Id("n"); var f = F.Id("F");
+        var s = F.Id("s"); var x = F.Id("x"); var y = F.Id("y");
+        var h = F.Id("h"); var g = F.Id("g");
+        var i = F.Id("i"); var j = F.Id("j");
+        var inS = Seq(i, Sp, InMacro, Sp, s);
+        var notF = Seq(Neg, Sp, Par(Seq(i, Sp, InMacro, Sp, f)));
+        var free = All(i, Call("Fin", n), Imp(inS, notF));
+        var cover = All(i, Call("Fin", n), Imp(notF, inS));
+        var order = All(i, Call("Fin", n), All(j, Call("Fin", n),
+            Imp(Call("Before", s, i, j), Rel(Call("val", i), Lt, Call("val", j)))));
+        var far = All(i, Call("Fin", n), All(j, Call("Fin", n), Imp(
+            And(inS, Seq(j, Sp, InMacro, Sp, f), Rel(Call("val", i), Lt, Call("val", j))),
+            Rel(Call("at", x, j), Eq, Call("at", y, j)))));
+        var cost = Rel(Call("ExpectedHamming", Call("P", s, f, x, y, h, g), s), Leq, D(1));
+        var fibers = All(Seq(x, Comma, y), Word(n),
+            All(h, Call("Nonempty", Call("C", k, n, f, x)),
+                All(g, Call("Nonempty", Call("C", k, n, f, y)), Imp(far, cost))));
+        var fixedSet = All(f, Call("Finset", Call("Fin", n)), Imp(And(free, cover), fibers));
+        var lists = All(s, Call("List", Call("Fin", n)), Imp(And(Call("Nodup", s), order), fixedSet));
+        return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k), lists));
     }
 
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));

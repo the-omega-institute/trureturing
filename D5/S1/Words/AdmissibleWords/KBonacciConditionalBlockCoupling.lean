@@ -20,7 +20,7 @@ namespace D5.S1.Words.AdmissibleWords.KBonacciConditionalBlockCoupling
 open D5.S0.Tower.DBonacci.Names
 open D5.S0.Tower.DBonacci.TerminalSampling
 open D5.S1.Words.ClosedRunStarts
-open scoped BigOperators ENNReal NNReal
+open scoped BigOperators ENNReal NNReal Classical
 
 private theorem legal_iff (k n : ℕ) (hk : 0 < k) (w : Fin n → Bool) :
     DBonacciAdmissible k n w ↔ ∀ s, ¬ TrueBlock w s k := by
@@ -550,27 +550,84 @@ private theorem independentCompletions_laws {k n : ℕ} (fixed : Finset (Fin n))
       (completionLaw fixed y hy).map id) = _
     rw [PMF.map_id, PMF.bind_const]
 
-/-- Recursively reveal the listed sites using the actual conditional next-bit
-couplings. Impossible bit pairs carry zero mass and use an arbitrary fallback. -/
+private theorem completionLaw_congr {k n : ℕ} (fixed : Finset (Fin n))
+    (x y : Fin n → Bool) (hx : (completions k n fixed x).Nonempty)
+    (hy : (completions k n fixed y).Nonempty)
+    (hxy : ∀ i ∈ fixed, x i = y i) :
+    completionLaw fixed x hx = completionLaw fixed y hy := by
+  classical
+  have he : completions k n fixed x = completions k n fixed y := by
+    ext w
+    simp only [completions, Finset.mem_filter, Finset.mem_univ, true_and]
+    constructor
+    · rintro ⟨hw, hf⟩
+      exact ⟨hw, fun i hi => (hf i hi).trans (hxy i hi)⟩
+    · rintro ⟨hw, hf⟩
+      exact ⟨hw, fun i hi => (hf i hi).trans (hxy i hi).symm⟩
+  apply PMF.ext
+  intro w
+  simp only [completionLaw_apply, he]
+
+private def resetReady {n : ℕ} (fixed : Finset (Fin n)) (x y : Fin n → Bool) : Prop :=
+  ∃ z : Fin n, x z = false ∧ y z = false ∧
+    (∀ i : Fin n, i.val ≤ z.val → i ∈ fixed) ∧
+    ∀ i ∈ fixed, z.val < i.val → x i = y i
+
+private theorem reset_completion_laws {k n : ℕ} (hk : 0 < k)
+    (fixed : Finset (Fin n)) (x y : Fin n → Bool)
+    (hx : (completions k n fixed x).Nonempty)
+    (hy : (completions k n fixed y).Nonempty)
+    (z : Fin n) (hxz : x z = false) (hyz : y z = false)
+    (leftFixed : ∀ i : Fin n, i.val ≤ z.val → i ∈ fixed)
+    (farSame : ∀ i ∈ fixed, z.val < i.val → x i = y i) :
+    (resetCoupling fixed x hy.choose hx z).map Prod.fst = completionLaw fixed x hx ∧
+      (resetCoupling fixed x hy.choose hx z).map Prod.snd = completionLaw fixed y hy := by
+  classical
+  have ha := (Finset.mem_filter.mp hx.choose_spec).2
+  have hb := (Finset.mem_filter.mp hy.choose_spec).2
+  have haz : hx.choose z = false := (ha.2 z (leftFixed z le_rfl)).trans hxz
+  have hbz : hy.choose z = false := (hb.2 z (leftFixed z le_rfl)).trans hyz
+  have hs : ∀ i ∈ fixed, z.val < i.val → hx.choose i = hy.choose i := by
+    intro i hi hz
+    exact (ha.2 i hi).trans ((farSame i hi hz).trans (hb.2 i hi).symm)
+  have ht := (reset_law_transport hk fixed hx.choose hy.choose ha.1 hb.1 z
+    haz hbz leftFixed hs).1
+  have hax := completionLaw_congr fixed hx.choose x
+    (completion_nonempty fixed hx.choose ha.1) hx ha.2
+  have hby := completionLaw_congr fixed hy.choose y
+    (completion_nonempty fixed hy.choose hb.1) hy hb.2
+  rw [hax, hby] at ht
+  constructor
+  · rw [resetCoupling, PMF.map_comp]
+    exact PMF.map_id _
+  · rw [resetCoupling, PMF.map_comp]
+    exact ht
+
+/-- Reveal sites with the actual conditional next-bit couplings until a common
+zero screens the fixed prefix, then transport a single uniform suffix.
+Impossible bit pairs have zero mass and use an arbitrary fallback. -/
 def prefixCoupling {k n : ℕ} (sites : List (Fin n)) (fixed : Finset (Fin n))
     (x y : Fin n → Bool) (hx : (completions k n fixed x).Nonempty)
     (hy : (completions k n fixed y).Nonempty) :
     PMF ((Fin n → Bool) × (Fin n → Bool)) :=
-  match sites with
-  | [] => independentCompletions fixed x y hx hy
-  | i :: rest =>
-    (bitCoupling ((completionLaw fixed x hx).map (fun w => w i))
-      ((completionLaw fixed y hy).map (fun w => w i))).bind fun bits =>
-      if hx' : (completions k n (insert i fixed) (Function.update x i bits.1)).Nonempty then
-        if hy' : (completions k n (insert i fixed) (Function.update y i bits.2)).Nonempty then
-          prefixCoupling rest (insert i fixed) (Function.update x i bits.1)
-            (Function.update y i bits.2) hx' hy'
+  if hr : resetReady fixed x y then
+    resetCoupling fixed x hy.choose hx hr.choose
+  else
+    match sites with
+    | [] => independentCompletions fixed x y hx hy
+    | i :: rest =>
+      (bitCoupling ((completionLaw fixed x hx).map (fun w => w i))
+        ((completionLaw fixed y hy).map (fun w => w i))).bind fun bits =>
+        if hx' : (completions k n (insert i fixed) (Function.update x i bits.1)).Nonempty then
+          if hy' : (completions k n (insert i fixed) (Function.update y i bits.2)).Nonempty then
+            prefixCoupling rest (insert i fixed) (Function.update x i bits.1)
+              (Function.update y i bits.2) hx' hy'
+          else independentCompletions fixed x y hx hy
         else independentCompletions fixed x y hx hy
-      else independentCompletions fixed x y hx hy
 
 /-- The recursively constructed joint law has the exact full completion-law
 marginals, with the complete exterior fixed throughout every prefix refinement. -/
-theorem prefix_coupling_marginals {k n : ℕ} (sites : List (Fin n))
+theorem prefix_coupling_marginals {k n : ℕ} (hk : 0 < k) (sites : List (Fin n))
     (hn : sites.Nodup) (fixed : Finset (Fin n))
     (hfree : ∀ i ∈ sites, i ∉ fixed) (x y : Fin n → Bool)
     (hx : (completions k n fixed x).Nonempty)
@@ -579,8 +636,19 @@ theorem prefix_coupling_marginals {k n : ℕ} (sites : List (Fin n))
       (prefixCoupling sites fixed x y hx hy).map Prod.snd = completionLaw fixed y hy := by
   classical
   induction sites generalizing fixed x y with
-  | nil => exact independentCompletions_laws fixed x y hx hy
+  | nil =>
+    by_cases hr : resetReady fixed x y
+    · rw [prefixCoupling, dif_pos hr]
+      obtain ⟨hzx, hzy, hl, hs⟩ := hr.choose_spec
+      exact reset_completion_laws hk fixed x y hx hy hr.choose hzx hzy hl hs
+    · simpa only [prefixCoupling, dif_neg hr] using
+        independentCompletions_laws fixed x y hx hy
   | cons i rest ih =>
+    by_cases hr : resetReady fixed x y
+    · rw [prefixCoupling, dif_pos hr]
+      obtain ⟨hzx, hzy, hl, hs⟩ := hr.choose_spec
+      exact reset_completion_laws hk fixed x y hx hy hr.choose hzx hzy hl hs
+    rw [prefixCoupling, dif_neg hr]
     have hi := hfree i (by simp)
     have hrn := (List.nodup_cons.mp hn).2
     have hrf : ∀ j ∈ rest, j ∉ insert i fixed := by
@@ -645,6 +713,227 @@ theorem prefix_coupling_marginals {k n : ℕ} (sites : List (Fin n))
         _ = q.bind (nextCompletionLaw fixed y hy i) := by rw [hm.2.1]
         _ = completionLaw fixed y hy := completion_disintegration fixed y hy i hi
 
+private def mean {α : Type*} (p : PMF α) (f : α → ℝ≥0∞) : ℝ≥0∞ :=
+  ∑' a, p a * f a
+
+private theorem mean_bind {α β : Type*} (p : PMF α) (q : α → PMF β)
+    (f : β → ℝ≥0∞) : mean (p.bind q) f = mean p (fun a => mean (q a) f) := by
+  simp only [mean, PMF.bind_apply, ← ENNReal.tsum_mul_right]
+  rw [ENNReal.tsum_comm]
+  simp only [mul_assoc, ENNReal.tsum_mul_left]
+
+private theorem mean_map {α β : Type*} (p : PMF α) (g : α → β)
+    (f : β → ℝ≥0∞) : mean (p.map g) f = mean p (fun a => f (g a)) := by
+  rw [PMF.map, mean_bind]
+  simp [mean, PMF.pure_apply]
+
+private theorem mean_const {α : Type*} (p : PMF α) (c : ℝ≥0∞) :
+    mean p (fun _ => c) = c := by
+  rw [mean, ENNReal.tsum_mul_right, p.tsum_coe, one_mul]
+
+private theorem mean_congr_support {α : Type*} (p : PMF α) (f g : α → ℝ≥0∞)
+    (h : ∀ a, p a ≠ 0 → f a = g a) : mean p f = mean p g := by
+  apply tsum_congr
+  intro a
+  by_cases ha : p a = 0
+  · simp [ha]
+  · rw [h a ha]
+
+/-- Internal Hamming cost on the listed coordinates. -/
+def scanHamming {n : ℕ} : List (Fin n) → ((Fin n → Bool) × (Fin n → Bool)) → ℝ≥0∞
+  | [], _ => 0
+  | i :: rest, w => (if w.1 i = w.2 i then 0 else 1) + scanHamming rest w
+
+private theorem scanHamming_eq_zero {n : ℕ} (sites : List (Fin n))
+    (w : (Fin n → Bool) × (Fin n → Bool)) (h : ∀ i ∈ sites, w.1 i = w.2 i) :
+    scanHamming sites w = 0 := by
+  induction sites with
+  | nil => rfl
+  | cons i rest ih =>
+    simp only [scanHamming, if_pos (h i (by simp)), zero_add]
+    exact ih (fun j hj => h j (by simp [hj]))
+
+private theorem reset_mean_zero {k n : ℕ} (sites : List (Fin n))
+    (fixed : Finset (Fin n)) (x y : Fin n → Bool)
+    (hx : (completions k n fixed x).Nonempty) (z : Fin n)
+    (leftFixed : ∀ i : Fin n, i.val ≤ z.val → i ∈ fixed)
+    (hfree : ∀ i ∈ sites, i ∉ fixed) :
+    mean (resetCoupling fixed x y hx z) (scanHamming sites) = 0 := by
+  rw [resetCoupling, mean_map]
+  have hz : ∀ w : Fin n → Bool, scanHamming sites (w, resetMap z y w) = 0 := by
+    intro w
+    apply scanHamming_eq_zero
+    intro i hi
+    have hgt : ¬ i.val ≤ z.val := fun h => hfree i hi (leftFixed i h)
+    simp [resetMap, hgt]
+  simp only [hz]
+  exact mean_const _ 0
+
+private theorem coupled_fixed {k n : ℕ} (fixed : Finset (Fin n))
+    (x y : Fin n → Bool) (hx : (completions k n fixed x).Nonempty)
+    (hy : (completions k n fixed y).Nonempty)
+    (p : PMF ((Fin n → Bool) × (Fin n → Bool)))
+    (hm : p.map Prod.fst = completionLaw fixed x hx ∧
+      p.map Prod.snd = completionLaw fixed y hy)
+    (w : (Fin n → Bool) × (Fin n → Bool)) (hw : p w ≠ 0) :
+    ∀ i ∈ fixed, w.1 i = x i ∧ w.2 i = y i := by
+  have hf := pmf_le_map p Prod.fst w
+  have hs := pmf_le_map p Prod.snd w
+  rw [hm.1, completionLaw_apply] at hf
+  rw [hm.2, completionLaw_apply] at hs
+  have hxw : w.1 ∈ completions k n fixed x := by
+    by_contra h
+    rw [if_neg h] at hf
+    exact hw (le_antisymm hf zero_le)
+  have hyw : w.2 ∈ completions k n fixed y := by
+    by_contra h
+    rw [if_neg h] at hs
+    exact hw (le_antisymm hs zero_le)
+  exact fun i hi => ⟨(Finset.mem_filter.mp hxw).2.2 i hi,
+    (Finset.mem_filter.mp hyw).2.2 i hi⟩
+
+private theorem mean_head {n : ℕ} (p : PMF ((Fin n → Bool) × (Fin n → Bool)))
+    (i : Fin n) (rest : List (Fin n)) (a b : Bool)
+    (h : ∀ w, p w ≠ 0 → w.1 i = a ∧ w.2 i = b) :
+    mean p (scanHamming (i :: rest)) =
+      (if a = b then 0 else 1) + mean p (scanHamming rest) := by
+  calc
+    _ = mean p (fun w => (if a = b then 0 else 1) + scanHamming rest w) := by
+      apply mean_congr_support
+      intro w hw
+      simp only [scanHamming, (h w hw).1, (h w hw).2]
+    _ = _ := by
+      simp only [mean, mul_add, ENNReal.tsum_add]
+      rw [← mean, mean_const]
+
+private theorem half_failure_budget (p : PMF (Bool × Bool))
+    (hh : (1 / 2 : ℝ≥0∞) ≤ p (false, false)) :
+    mean p (fun bits => if bits = (false, false) then 0 else 2) ≤ 1 := by
+  have ht : ∑ bits : Bool × Bool, (p bits).toNNReal = 1 := by
+    rw [← ENNReal.toNNReal_sum (fun a _ => p.apply_ne_top a)]
+    have ht0 : ∑ bits : Bool × Bool, p bits = 1 := by
+      simpa only [tsum_fintype] using p.tsum_coe
+    rw [ht0]
+    rfl
+  have hh' : (1 / 2 : ℝ≥0) ≤ (p (false, false)).toNNReal := by
+    apply (ENNReal.coe_le_coe).mp
+    simpa only [ENNReal.coe_div (by norm_num : (2 : ℝ≥0) ≠ 0), ENNReal.coe_one,
+      ENNReal.coe_ofNat, ENNReal.coe_toNNReal (p.apply_ne_top _)] using hh
+  simp only [mean, tsum_fintype, Fintype.sum_prod_type, Fintype.sum_bool,
+    Prod.mk.injEq, Bool.true_eq_false, Bool.false_eq_true, false_and, and_false,
+    and_self, ite_false, ite_true, mul_zero, add_zero]
+  simp only [Fintype.sum_prod_type, Fintype.sum_bool] at ht
+  have hb : (p (true, true)).toNNReal * 2 + (p (true, false)).toNNReal * 2 +
+      (p (false, true)).toNNReal * 2 ≤ 1 := by nlinarith
+  rw [← ENNReal.coe_toNNReal (p.apply_ne_top (true, true)),
+    ← ENNReal.coe_toNNReal (p.apply_ne_top (true, false)),
+    ← ENNReal.coe_toNNReal (p.apply_ne_top (false, true))]
+  exact_mod_cast hb
+
+/-- Increasing scans of the entire unfixed region have expected internal Hamming
+cost at most one when the two fixed exteriors agree beyond every scanned site.
+The joint law is the supported conditional recursion, stopped by zero screening. -/
+theorem right_scan_hamming {k n : ℕ} (hk : 0 < k) (sites : List (Fin n))
+    (hn : sites.Nodup) (horder : sites.Pairwise (fun i j => i.val < j.val))
+    (fixed : Finset (Fin n)) (hfree : ∀ i ∈ sites, i ∉ fixed)
+    (hcover : ∀ i : Fin n, i ∉ fixed → i ∈ sites)
+    (x y : Fin n → Bool) (hx : (completions k n fixed x).Nonempty)
+    (hy : (completions k n fixed y).Nonempty)
+    (hfar : ∀ i ∈ sites, ∀ j ∈ fixed, i.val < j.val → x j = y j) :
+    (∑' w, prefixCoupling sites fixed x y hx hy w * scanHamming sites w) ≤ 1 := by
+  change mean (prefixCoupling sites fixed x y hx hy) (scanHamming sites) ≤ 1
+  induction sites generalizing fixed x y with
+  | nil => simpa only [scanHamming, mean_const] using (zero_le : (0 : ℝ≥0∞) ≤ 1)
+  | cons i rest ih =>
+    by_cases hr : resetReady fixed x y
+    · rw [prefixCoupling, dif_pos hr]
+      rw [reset_mean_zero _ _ _ _ _ _ hr.choose_spec.2.2.1 hfree]
+      exact zero_le
+    have hi := hfree i (by simp)
+    have hrn := (List.nodup_cons.mp hn).2
+    have hro := (List.pairwise_cons.mp horder).2
+    have hlt : ∀ j ∈ rest, i.val < j.val := (List.pairwise_cons.mp horder).1
+    have hrf : ∀ j ∈ rest, j ∉ insert i fixed := by
+      intro j hj hm
+      rcases Finset.mem_insert.mp hm with hji | hjf
+      · exact (List.nodup_cons.mp hn).1 (hji ▸ hj)
+      · exact hfree j (by simp [hj]) hjf
+    have hrc : ∀ j : Fin n, j ∉ insert i fixed → j ∈ rest := by
+      intro j hj
+      have hjf : j ∉ fixed := fun h => hj (Finset.mem_insert_of_mem h)
+      rcases List.mem_cons.mp (hcover j hjf) with hji | hjr
+      · exact False.elim (hj (by simp [hji]))
+      · exact hjr
+    have hl : ∀ j : Fin n, j.val ≤ i.val → j ∈ insert i fixed := by
+      intro j hji
+      by_contra hj
+      have hjr := hrc j hj
+      have := hlt j hjr
+      omega
+    have hsame (a b : Bool) : ∀ j ∈ rest, ∀ t ∈ insert i fixed, j.val < t.val →
+        Function.update x i a t = Function.update y i b t := by
+      intro j hj t ht hjt
+      have hit : t ≠ i := by intro he; subst t; have := hlt j hj; omega
+      have htf : t ∈ fixed := (Finset.mem_insert.mp ht).resolve_left hit
+      simpa [Function.update_of_ne hit] using hfar j (by simp [hj]) t htf hjt
+    let joint := bitCoupling ((completionLaw fixed x hx).map (fun w => w i))
+      ((completionLaw fixed y hy).map (fun w => w i))
+    let child := fun bits : Bool × Bool =>
+      if hx' : (completions k n (insert i fixed) (Function.update x i bits.1)).Nonempty then
+        if hy' : (completions k n (insert i fixed) (Function.update y i bits.2)).Nonempty then
+          prefixCoupling rest (insert i fixed) (Function.update x i bits.1)
+            (Function.update y i bits.2) hx' hy'
+        else independentCompletions fixed x y hx hy
+      else independentCompletions fixed x y hx hy
+    have hb : ∀ bits, joint bits ≠ 0 → mean (child bits) (scanHamming (i :: rest)) ≤
+        if bits = (false, false) then 0 else 2 := by
+      intro bits hs
+      have hf := bitCoupling_supported_fibers fixed x y hx hy i hi bits hs
+      have hm := prefix_coupling_marginals hk rest hrn (insert i fixed) hrf
+        (Function.update x i bits.1) (Function.update y i bits.2) hf.1 hf.2
+      have hc : child bits = prefixCoupling rest (insert i fixed)
+          (Function.update x i bits.1) (Function.update y i bits.2) hf.1 hf.2 := by
+        simp only [child, dif_pos hf.1, dif_pos hf.2]
+      have hbits : ∀ w, (child bits) w ≠ 0 → w.1 i = bits.1 ∧ w.2 i = bits.2 := by
+        intro w hw
+        rw [hc] at hw
+        have h := coupled_fixed _ _ _ hf.1 hf.2 _ hm w hw i (by simp)
+        simpa only [Function.update_self] using h
+      rw [mean_head _ i rest bits.1 bits.2 hbits]
+      by_cases hzero : bits = (false, false)
+      · have hz : resetReady (insert i fixed) (Function.update x i bits.1)
+            (Function.update y i bits.2) := by
+          refine ⟨i, ?_, ?_, hl, ?_⟩
+          · simp [hzero]
+          · simp [hzero]
+          · intro j hj hij
+            have hji : j ≠ i := by intro he; subst j; omega
+            have hjf : j ∈ fixed := (Finset.mem_insert.mp hj).resolve_left hji
+            simpa [Function.update_of_ne hji] using hfar i (by simp) j hjf hij
+        have hzmean : mean (child bits) (scanHamming rest) = 0 := by
+          rw [hc, prefixCoupling.eq_def, dif_pos hz]
+          exact reset_mean_zero rest _ _ _ _ _ hz.choose_spec.2.2.1 hrf
+        rw [hzmean]
+        simp [hzero]
+      · rw [if_neg hzero, hc]
+        have hrec := ih hrn hro (insert i fixed) hrf hrc
+          (Function.update x i bits.1) (Function.update y i bits.2) hf.1 hf.2
+          (hsame bits.1 bits.2)
+        calc
+          _ ≤ 1 + 1 := add_le_add (by split_ifs <;> norm_num) hrec
+          _ = 2 := by norm_num
+    rw [prefixCoupling, dif_neg hr]
+    change mean (joint.bind child) (scanHamming (i :: rest)) ≤ 1
+    rw [mean_bind]
+    apply le_trans _ (half_failure_budget joint
+      (conditional_step_coupling hk fixed x y hx hy i hi).2.2)
+    apply ENNReal.tsum_le_tsum
+    intro bits
+    by_cases hs : joint bits = 0
+    · simp [hs]
+    · exact mul_le_mul_right (hb bits hs) _
+
+#print axioms right_scan_hamming
 #print axioms prefix_coupling_marginals
 #print axioms conditional_step_coupling
 #print axioms zero_screening
