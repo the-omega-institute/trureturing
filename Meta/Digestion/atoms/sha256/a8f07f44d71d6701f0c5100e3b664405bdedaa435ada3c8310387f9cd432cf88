@@ -1,0 +1,29 @@
+**定理 138.3（球心像的精确内部截面及横截）。** 设 $F$ 单标签，置
+
+$$
+E_F=G_F(F),\qquad o_F=G_F(c_F),\qquad
+L_E=\operatorname{lin}(E_F-o_F).
+$$
+
+则 $E_F$ 是嵌入的仿射三球，且
+
+$$
+\begin{gathered}
+G_F(\operatorname{ri}F)\subseteq\operatorname{ri}K,\qquad
+\partial_{\rm rel}E_F=\{c_q:q\in S(F)\}\subseteq\partial K,\\
+E_F=K\cap\operatorname{aff}E_F,\qquad
+L_E\cap\operatorname{lin}(D_q-c_q)=\{0\}\quad(q\in S(F)).
+\end{gathered}
+\tag{XI138.3}
+$$
+
+特别地，$\dim\operatorname{aff}K\ge6$，至少存在一张这样的内部截面。
+
+证明。138.2给嵌入三球及其边界公式。每个 $c_q$ 是真面 $D_q$ 的非纯球心，因此位于 $\partial K$。设某个 $x\in\operatorname{ri}F$ 的像在 $\partial K$。取 $K$ 上非负、非恒定且在 $G_F(x)$ 为零的支撑仿射泛函 $h$。$h\circ G_F$ 非负仿射且在球内点为零，所以在整个 $F$ 恒零。于是支撑真面 $Z=K\cap\{h=0\}$ 含所有 $c_q$。
+
+对任意 $y\in D_q$，中心反射 $2c_q-y\in D_q$ 与非负性给 $h(y)+h(2c_q-y)=2h(c_q)=0$，从而 $D_q\subseteq Z$。极大真面性给 $D_q=Z$ 对全部 $q\in S(F)$ 成立。这迫使 $G_F$ 恒值，与单射矛盾。因此球内全部像均为 $K$ 内点，特别是 $o_F\in\operatorname{ri}K$。
+
+若存在 $y\in K\cap\operatorname{aff}E_F$ 不在 $E_F$，从 $o_F$ 向 $y$ 的射线首次离开 $E_F$ 的点 $z$ 位于 $\partial_{\rm rel}E_F$ 且位于开线段 $(o_F,y)$。凸体内点与任意凸体点之间的开线段仍在内部，所以 $z\in\operatorname{ri}K$，与上述边界包含矛盾，取得精确截面。
+
+若非零 $w$ 同时属于 $L_E$ 及 $\operatorname{lin}(D_q-c_q)$，因 $c_q\in\operatorname{ri}D_q$，充分小的 $\varepsilon>0$ 使 $c_q\pm\varepsilon w\in D_q\subset K$。它们又属于 $\operatorname{aff}E_F$，故都在 $E_F$，违反 $c_q$ 是三球 $E_F$ 的极点。两方向空间均为三维，零交给维数下界；IX116.6给至少一张单标签球。证毕。
+

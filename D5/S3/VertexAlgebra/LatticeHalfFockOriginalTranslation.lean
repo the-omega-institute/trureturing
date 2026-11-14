@@ -574,7 +574,7 @@ private theorem normalEvaluation_correctionLift (D : LatticeData) (hu : IsUnit D
     normalEvaluation D hu charge (correctionLift D charge polynomial) =
       correctedPolynomial D hu charge polynomial := rfl
 
-private theorem pairDerivation_source_partials (D : LatticeData) (charge : Charge D)
+theorem pairDerivation_source_partials (D : LatticeData) (charge : Charge D)
     (index : Index D) (polynomial : Oscillator D) :
     pairDerivation D index (correctionLift D charge polynomial) =
       ∑ other ∈ polynomial.vars,

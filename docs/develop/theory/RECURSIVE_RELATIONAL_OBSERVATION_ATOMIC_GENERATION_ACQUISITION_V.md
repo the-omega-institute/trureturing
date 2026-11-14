@@ -4357,3 +4357,578 @@ Global resource minima, net savings, universal generator minimality and
 an unconditional common physical realization remain unproved. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 32. An unknown coarse code on the actual native fork
+
+**Definition 32.1 (actual operands and the unknown-code contract).**
+At a coherent returned configuration of §§25–27, select the actual fork
+after $P_\varepsilon S_\varepsilon$ in §30, before its optional Next.
+Its acquired root is $o$, its activated left marker is $m=o.L$, its
+right child is $y=o.R$, and $m$ has its actual dormant marker $z$.
+Keep the separately acquired reference $r$. The same local configuration
+can be selected in a larger commissioned source on either original
+entrance; its actual prehistory and separate seed preparations remain.
+The descriptors, roles, wires and source token are those actually acquired,
+not references converted from these letters. Put
+
+$$
+\begin{gathered}
+H=\operatorname{span}\{|r\rangle,|o\rangle,|m\rangle,|y\rangle\},\qquad
+Q_0=|r\rangle\langle r|+|o\rangle\langle o|,\quad
+Q_1=|m\rangle\langle m|+|y\rangle\langle y|,\\
+\mathcal L(\rho)=\sum_{a=0}^1|a\rangle\langle a|_A\otimes
+ Q_a\rho Q_a.
+\end{gathered}
+\tag{V.40}
+$$
+
+The coarse bit distinguishes the old reference/root plane from the two
+activated child modes. It is an apparatus occupation label, not a new
+meaning of native Tag. Let $E:H\to\mathcal Q_M$ be the actual bit-vector
+embedding, with every other commissioned qubit, including $z$, in vacuum.
+The input family consists of every density matrix $\rho_{HR}$, with any
+untouched reference $R$, supplied through §25.1's supported coherent ingress.
+The laboratory has no operation on $R$. All its initial classical and
+auxiliary backing $C$ is common and independent of this unknown input:
+the full native source, source tapes, preparation labels, archives,
+samples, rights, enrollment, versions, controls and external command
+sources are included. Correlations among those classical source data are
+allowed; an independent product of bilateral seeds is not assumed.
+Any supplied randomness has a common input-independent law. The initial
+joint state is $C\otimes(E\otimes I_R)\rho(E^\dagger\otimes I_R)$,
+with the additional vacuum factors specified below. One may condition on
+any fixed actual $C$; a common input-independent mixture is also allowed.
+
+This family is a preparation premise, not a consequence of having prepared
+one known vector in §30. One admissible entrance keeps the QNew carrier
+vacuum during classical fork creation and performs its sole coherent
+ingress at that returned fork, leaving the acquired input port vacuum.
+Growth of an earlier unknown $r/o$ input alone does not supply this whole
+four-dimensional family, and no older unknown state is reset or overwritten.
+Every actually accessible preparation label stays
+in $C$. If the actual preparation service instead exposes input-dependent
+labels, it does not satisfy this common-backing premise; those labels
+must not be deleted to invoke the results below.
+
+**Definition 32.2 (complete comparison and the one-excitation catalogue).**
+A protocol returns a bit $A$ and retains its actual bank, every acquired
+system, source successor and full record. It is total on all positive
+branches and has finite depth and finite resources on every branch.
+It may execute arbitrary finite native growth, genuine Next, source reads,
+lawful refusals, output service and adaptive classical control. No bound
+on future lawful source size is imposed. Its quantum resources are all
+the coherently accessible qubits, initially with exactly one excitation
+in total, already carried by $EH$; all other accessible qubits are vacuum.
+QNew appends independent vacuum. Quantum actions are number-preserving
+bank unitaries, identity holds, these growth isometries, and the actual
+single-site occupation instrument of §25.1. For the obstruction one may
+even enlarge the allowed unitaries to *all* number-preserving unitaries.
+Every accessible ingress/delivery-port qubit and quantum controller is
+included in the counted bank; their permitted number-preserving controls
+are included too. There is no uncounted interactive quantum work system,
+extra coherent measurement primitive, compound detector, reset, discard
+or postselection. Any input-independent assistance with permitted access
+is part of this bank or $C$, rather than omitted from the account.
+An inaccessible $R$
+may itself contain excitations; it is not an addressable auxiliary.
+
+For comparison, put all branches in their finite union of bank coordinates,
+padding unused coordinates mathematically by vacuum, and use orthogonal
+blocks for their actual classical records. This is no physical allocation
+or erasure. A full ideal lift $\widehat{\mathcal L}$ may retain additional
+systems and records in this common space, but its $A$, original source-bank
+factors and $R$ marginal must be exactly $(\mathcal L\otimes I_R)(\rho)$
+with the code embedded by $E$. This is a physical tensor-factor marginal,
+not a projection onto the code followed by renormalization.
+For each such lift define
+
+$$
+\Delta(\Pi,\widehat{\mathcal L})=
+\sup_{R,\rho_{HR}}\frac12\left\|
+ \Omega_\Pi(\rho)-\Omega_{\widehat{\mathcal L}}(\rho)\right\|_1.
+\tag{V.41}
+$$
+
+The code is returned on the same acquired modes, embedded into the enlarged
+bank. Records are not physically removed by taking a marginal in a proof.
+A protocol with no specified ideal extra-record interface must still
+satisfy this necessary marginal condition to implement (V.40).
+
+## 33. A uniform adaptive obstruction with all backing retained
+
+**Theorem 33.1 (one addressable excitation has a quarter error floor).**
+Under Definitions 32.1–32.2, every finite adaptive protocol and every full
+ideal lift obey
+
+$$
+\Delta(\Pi,\widehat{\mathcal L})\ge\frac14.
+\tag{V.42}
+$$
+
+The bound is uniform in bank size, finite native growth, number of reads,
+choice of number-preserving unitaries, feedback and input-independent
+randomization. It tests the retained quantum state jointly with a reference,
+not just the two label probabilities.
+
+**Proof.** Fix all input-independent classical randomness in a tape $t$,
+including any common random source backing. Conditional on $t$ and actual
+observed occupation results, every classical guard, request, record and
+native successor is determined. There is precisely one formal path on
+which all occupation reads return zero, possibly with no reads at all.
+Let $a(t)$ be its returned bit. Impossible paths may be assigned their
+specified terminal bit too; no normalized zero-probability state is used.
+
+On the entire current one-excitation bank, a click at acquired site $q$
+has projector $|q\rangle\langle q|$, of rank one. This includes reads
+of $r$, markers and newly acquired sites. Before the first click, all
+unitaries, vacuum extensions and zero-read projectors compose linearly
+with the initial embedding. Composing with that click makes the branch
+operator from $H$ rank at most one. Later unitaries, growth and reads
+cannot increase that rank. A resolved terminal branch containing a click
+therefore has an operator $|u_h\rangle\langle v_h|$. Acting on half of
+an entangled input gives a product across laboratory and untouched $R$;
+sums over such branches give subnormalized separable outputs. All source
+records and auxiliary qubits are on the laboratory side of this cut.
+
+This is the rank-one Kraus/entanglement-breaking mechanism of Horodecki,
+Shor and Ruskai, *Entanglement Breaking Channels*,
+[arXiv:quant-ph/0302031v2, Theorem 4(B),(D)](https://arxiv.org/html/quant-ph/0302031v2).
+Here the click subinstrument need not preserve trace; the displayed
+rank-one factorization proves the required subnormalized statement directly.
+We do not claim that the whole protocol is entanglement breaking: its
+all-zero path may preserve quantum information.
+
+Take a fresh two-dimensional $R$, independent of $C$, and the two supported
+inputs
+
+$$
+|\Phi_0\rangle=\frac{|r\rangle|0\rangle+|o\rangle|1\rangle}{\sqrt2},
+\qquad
+|\Phi_1\rangle=\frac{|m\rangle|0\rangle+|y\rangle|1\rangle}{\sqrt2}.
+\tag{V.43}
+$$
+
+For input $\Phi_b$, test the output bit $b$ and the returned-code/$R$
+projector $|\Phi_b\rangle\langle\Phi_b|$, with identity on every other
+actual output. Its ideal probability is one for *every* ideal lift.
+For a separable positive output $\sigma$ its probability is at most
+$\operatorname{tr}\sigma/2$. Indeed for a positive product on the code
+and $R$ the overlap is $\operatorname{tr}(X^TY)/2\le
+\operatorname{tr}X\operatorname{tr}Y/2$; projection to the two-dimensional
+code and summation over positive products prove the claim also with
+arbitrary additional laboratory systems. This mathematical test/marginal
+does not supply an extra physical measurement or remove any actual record.
+
+If $a(t)\ne b$, every path with returned bit $b$ contains a click.
+Their combined test probability is at most half their total trace,
+hence at most $1/2$. Other tapes have test probability at most one.
+Write $w_a=\Pr_t[a(t)=a]$, so $w_0+w_1=1$. The actual test probability
+$s_b$ and the joint half-trace-distance $d_b$ on input $\Phi_b$ satisfy
+
+$$
+s_b\le1-\frac{w_{1-b}}2,\qquad
+d_b\ge1-s_b\ge\frac{w_{1-b}}2,\qquad
+\max(d_0,d_1)\ge\frac14.
+\tag{V.44}
+$$
+
+The weights are the same for the two inputs because $C$ and the random
+tape are common. Trace-distance testing on the full output proves (V.42).
+Integration over a measurable random tape changes none of these bounds.
+An arbitrarily long finite zero path remains a single path; no uniform
+depth bound across different protocols was used. $\square$
+
+**Proposition 33.2 (the family and the instrument both matter).**
+The common-backing and unknown-family requirements cannot be inferred
+from a known singleton experiment. Exact coarse probabilities obtained
+by fine occupation reads do not implement (V.40).
+
+**Proof.** If the sole promised input is a known vector in $Q_bH$, return
+the known bit $b$ and hold the bank: the desired instrument is exact with
+one excitation. The same strategy works for an unknown within-block family
+when an actually supplied classical preparation label gives its block.
+That input-dependent label violates Definition 32.1; it is an additional
+resource, not a reason to erase the preparation record. In contrast, a
+fine read distinguishing $r$ and $o$, followed by forgetting their names
+in the coarse bit, maps $\Phi_0$ to its dephased mixture. Its overlap
+with $\Phi_0$ is $1/2$, although its coarse bit is always correct.
+Keeping the fine record makes the full instrument different as well.
+The distinct C5 contract in
+[Measurement-relative quantum boundary, Definition 1.2](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#1-五模式来源实际仪器与共同端口)
+already separates these two kinds of read. Its C5 state/preparation and
+action domain is not being transferred to the present native bank.
+$\square$
+
+## 34. Two acquired meter qubits earn the coarse instrument
+
+**Definition 34.1 (paid meter installation and the literal supplier).**
+Retain the actual source, input and rights of Definition 32.1. At native
+Ready, lock the coherent $(v,\mathfrak a)$ and acquire two distinct QNew
+qubits $u,v_m$, typed as apparatus meters, with their real references,
+exclusive controls and retained acquisition records. Below write $v_m=d$
+to distinguish this meter from the native version $v$. They are not
+native occurrences. Supply one separately paid *known* excitation at
+the fresh vacuum $u$, giving $|10\rangle_{ud}$; this is §25.1's known
+excitation-preparation permission, not excitation creation by $P/B$ or
+reset of an unknown qubit. Keep its actual source, preparation labels
+and any supplied delivery apparatus/output. The construction requires
+no further quantum work qubit; a physical excitation-delivery device
+has its own additional backing and price if present.
+
+Acquire five controllable computational wires on the actual endpoint pairs
+$\{m,u\},\{m,d\},\{y,u\},\{y,d\},\{u,d\}$ and the four one-site
+phase controls at $m,y,u,d$. They are not new material seams. The exact
+canonical supplier abbreviated as FARG continuation in §§25–31 is
+[FIB atom recursive holographic boundary geometry continuation, Definition 60.1, (60.2)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md#60-a-source-owned-finite-actuator-for-the-installed-whole-rho-interaction).
+With enable one its literal full-qubit matrices are
+
+$$
+P_a(\theta)=\operatorname{diag}(1,e^{-i\theta})_a,\qquad
+B_{ab}(\theta)|_{10,01}=
+\begin{pmatrix}\cos\theta&i\sin\theta\\i\sin\theta&\cos\theta\end{pmatrix},
+\qquad B_{ab}(\theta)|_{00,11}=I.
+\tag{V.45}
+$$
+
+Only finite signed-dyadic angle blocks are executed. Real angles in the
+following proof define a mathematical reference, approximated in §35.
+No PR57 packet source, fixed cap, whole-$\rho$ guard, three-auxiliary
+density-phase actuator or PR57 tariff is imported with these matrices.
+
+**Theorem 34.2 (a full-space word and its source-faithful instrument).**
+There is a 26-angle-block reference word using precisely these acquired
+controls which, followed by one actual occupation read at $d$, has full
+output
+
+$$
+\sum_{a=0}^1 |h_a\rangle\langle h_a|\otimes
+ (E Q_a\otimes I_R)\rho(Q_a E^\dagger\otimes I_R)
+ \otimes |\mu_a\rangle\langle\mu_a|,
+\qquad \mu_0=10,\quad\mu_1=01.
+\tag{V.46}
+$$
+
+Here $h_a$ contains the delivered detector bit $a$ and *all* actual
+source, acquisition, preparation, control, hold and output records;
+the original source successor is unchanged by this extra transaction.
+Any unchanged independent delivery systems are included as retained
+factors. Thus (V.46) is a full ideal lift of (V.40), preserving every
+unknown within-block coherence and arbitrary reference correlation.
+
+**Proof.** First reuse the full fermionic-swap matrix, not its
+one-excitation restriction. On any two acquired qubits put
+
+$$
+F_{ab}=P_a(\pi/2)P_b(\pi/2)B_{ab}(\pi/2).
+\tag{V.47}
+$$
+
+A single-occupation hop has phase $i$, cancelled by its occupied site's
+phase $-i$; $00$ is fixed and $11$ gets $(-i)^2=-1$. Thus
+$F_{ab}|x_ax_b\rangle=(-1)^{x_ax_b}|x_bx_a\rangle$ on all four inputs.
+This mature matrix is Brod–Childs,
+[*The computational power of matchgates and the XY interaction on arbitrary graphs*, equation (4)](https://arxiv.org/html/1308.1463v1),
+already consumed by the canonical continuation's Theorem 62.7. Its
+universality theorem is unnecessary here and supplies no unlisted gate.
+
+For $q=m,y$ execute the chronological four-swap word
+$F_{qu},F_{ud},F_{qu},F_{qd}$, whose operator is
+
+$$
+D_q=F_{qd}F_{qu}F_{ud}F_{qu},\qquad
+D_q|x_qx_ux_d\rangle=(-1)^{x_u(x_q+x_d)}|x_qx_ux_d\rangle.
+\tag{V.48}
+$$
+
+Indeed the first three swaps permute $(x_q,x_u,x_d)$ to
+$(x_d,x_u,x_q)$ and accumulate exponent
+$x_qx_u+x_qx_d+x_ux_d$. The last swaps the outside bits back and
+adds $x_qx_d$, proving the stated sign modulo two. This checks also
+double and triple occupation. Consequently the two diagonal words obey
+
+$$
+C_*=D_yD_m=(-1)^{n_u(n_m+n_y)}
+\tag{V.49}
+$$
+
+on the *entire* four-qubit tensor product: the two unwanted $n_un_d$
+terms cancel, leaving identity action on $d$ and on all untouched qubits.
+This cancellation needs neither a clean third qubit nor a fictitious
+one-excitation interpretation of the total-two-excitation apparatus.
+
+Set $A_*=B_{ud}(\pi/4)$ and $U_*=A_*^\dagger C_*A_*$. On the
+meter basis $(10,01)$,
+
+$$
+A_*=\frac1{\sqrt2}\begin{pmatrix}1&i\\i&1\end{pmatrix},\qquad
+Z_u=\begin{pmatrix}-1&0\\0&1\end{pmatrix},\qquad
+A_*^\dagger Z_u A_*=\begin{pmatrix}0&-i\\i&0\end{pmatrix}.
+\tag{V.50}
+$$
+
+For $Q_0H$, $n_m+n_y=0$; for $Q_1H$ it is one. Hence, for every
+vector $\psi\in H$,
+
+$$
+U_*(E\psi\otimes|10\rangle)=
+ E Q_0\psi\otimes|10\rangle+iE Q_1\psi\otimes|01\rangle.
+\tag{V.51}
+$$
+
+The actual detector is exactly $I-n_d,n_d$ on the full bank, not an
+extra POVM or a purified detector. Multiplying (V.51) by these two
+projectors gives its two branch operators. The factor $i$ is common
+to all of $Q_1H$ and cancels in that branch density matrix, including
+off-diagonal $m/y$ terms. The $r/o$ terms are untouched. Linearity on
+matrix units and tensoring identity on $R$ proves (V.46) for every
+mixed/reference input. During gates the source and meter occupations
+may exchange; only their total of two is invariant. At the ideal return,
+the source has one excitation and the meter has the other.
+
+All gates are commanded in a fixed schedule, independent of unknown
+amplitudes, with no intervening occupation read. The only outcome is
+the final bit at $d$. In particular the apparatus does not record which
+of $m,y$ was occupied. Each of eight $F$ occurrences uses two $P$ and
+one $B$ blocks; $A_*$ and its inverse add two $B$ blocks. The count is
+$16$ phase plus $10$ hopping blocks, totaling $26$. $\square$
+
+## 35. Finite precision on the complete enlarged output
+
+**Theorem 35.1 (dyadic synthesis, leakage and uniform joint error).**
+Given a requested $\varepsilon>0$ and a supplied positive rational
+$\varepsilon_-\le\varepsilon$, choose an integer $b\ge2$ such that
+$e_b=26\,2^{-b}\le\varepsilon_-$. Replace each real angle of §34 by
+a signed dyadic within $2^{-b}$. The executed finite instrument then
+differs from the lift (V.46) by joint half-trace-distance at most $e_b$,
+uniformly over $\rho_{HR}$ and arbitrary $R$. The probability of output
+outside the ideal outcome/code/meter support is at most
+$\min(1,e_b^2)$. Leakage is retained in the comparison space.
+
+**Proof.** Finite rational angle computation is available without an
+exact irrational gate. For example put
+$T_N(x)=\sum_{j=0}^{N-1}(-1)^jx^{2j+1}/(2j+1)$ and use the classical
+Machin identity $\pi=16\arctan(1/5)-4\arctan(1/239)$.
+The alternating-series bound gives
+
+$$
+\left|\pi-16T_N(1/5)+4T_N(1/239)\right|
+\le\frac{16\,5^{-(2N+1)}+4\,239^{-(2N+1)}}{2N+1}.
+\tag{V.52}
+$$
+
+Taking $N=b+3$ makes this less than $2^{-(b+2)}$: the coarser bound
+$20\,5^{-(2b+7)}$ has ratio $320/5^{11}<1$ to $2^{-(b+2)}$ at $b=2$,
+and that ratio is multiplied by $2/25$ at every increment of $b$.
+Divide the rational
+approximation by two or four, round to the nearest $2^{-b}$ and negate
+when required. The rounding error plus the series error is less than
+$2^{-b}$. The magnitudes are below two, so exponents $-b,\ldots,0$
+give exactly $J=b+1$ padded magnitude-digit slots per block. Computing
+the $2N$ rational summands, rounding and storing all descriptions is
+finite paid arithmetic, not a native probability read.
+
+On their full qubit spaces the Hermitian generators of $P$ and $B$
+have norm one: they are respectively $n_a$ and the signed exchange
+matrix on $10,01$, zero on $00,11$. Integration of the derivative gives
+$\|G(\theta)-G(\widetilde\theta)\|\le
+|\theta-\widetilde\theta|$. Telescoping the 26 unitary factors yields
+
+$$
+\|\widetilde U-U_*\|_{\mathcal Q_M\otimes\mathbb C^2\otimes\mathbb C^2}
+\le e_b.
+\tag{V.53}
+$$
+
+This norm is on the full tensor product, including all its excitation
+sectors. It is not the norm in (V.32). Appending identity on any reference
+preserves it. Expanding the difference of the two unitary sandwiches
+gives half-trace-distance at most $e_b$ on any normalized input.
+The same actual full-space occupation instrument, record construction
+and output channel contract that distance. The comparison lift carries
+the *same written dyadic command labels* as the executed schedule;
+its real-angle action is a mathematical comparator, not a claim that
+those angles were executed or printed as dyadic values.
+
+For the leakage statement, the detector has the mathematical isometry
+$T=\sum_a|a\rangle_A\otimes\Pi_a$, with
+$\Pi_0=I-n_d$, $\Pi_1=n_d$. This is only a norm proof for the already
+specified instrument, not an assumed physical detector purification.
+Let $S$ be the output subspace with bit $a$, source in $EQ_aH$ and meter
+$\mu_a$, and every other bank mode vacuum. Then
+$(I-P_S)TU_*$ annihilates the supplied input subspace, whereas
+$\|(I-P_S)T\widetilde U\|$ there is at most $e_b$. Squaring and
+purifying an arbitrary mixed input bounds the leakage probability by
+$e_b^2$. Dephasing the classical bit leaves that probability unchanged.
+No conditioning on a rare outcome or deletion of leaked states is used.
+$\square$
+
+**Proposition 35.2 (actual finite supplies and calibrated deviations).**
+The dyadic construction uses exactly $26(b+1)$ elementary catalog
+rotation slots and magnitude-digit fetches, including disabled digits,
+five added wires, two QNew meters, one known-excitation preparation and one occupation
+read. A sufficient endpoint-specific catalog has $10(b+1)$ entries:
+four positive phase controls, five positive hopping controls and the
+negative $u,d$ hopping control, at each of the $b+1$ exponents.
+Gate execution occupies $26(b+1)$ logical rotation ticks, in addition
+to acquisition, arithmetic, fetch, preparation, detector and output work.
+
+**Proof.** Use the expansion counted in Theorem 34.2 and the digit
+execution rule of the actual (60.2) supplier. Phases within a block and
+hops on its one wire commute, so its digit product is exactly the written
+dyadic block. Every $F$ has positive $\pi/2$ blocks; only $A_*^\dagger$
+requires a negative hopping angle. The stated catalog covers precisely
+these types, including repeated uses of the same entries.
+
+If the commissioned native/reference bank has $q$ qubits, the retained
+application carrier after installation has $q+2$ qubits. At the displayed
+minimal fork $q=5$, including $z$, hence it has seven, not six. Preparation
+and coherent input ingress have their own source/reference backing;
+additional physical supply systems, if any, add to this count. At every
+actual tick charge holding for every then-installed bank, meter and other
+retained quantum system, including $r$, dormant modes and delivery systems.
+Equivalently retention is $\sum_t Q_{\rm installed}(t)$ in logical
+qubit-ticks, or its supplied duration-weighted version. Both meter
+occupations, their real references and the detector record remain after
+return; no free reset, disposal or repeated-use readiness is asserted.
+
+The total resource account also includes wire/control and catalog
+installation/calibration, descriptor and version storage, all rational
+arithmetic and digit descriptions/fetches, source locks and cursor saves,
+pending state, excitation delivery, detector coupling, outcome latch,
+immutable record allocation, Print/End/ACK/Return and charged scratch
+clearing. Use their actually supplied prices; no PR57 fee or native
+Read tariff pays these items. Their finiteness follows from the finite
+lists and finite progress premises, not from a claimed uniform price.
+
+If ingress/preparation has complete joint error $e_0$, each elementary
+rotation has full-space operator-norm deviation $\zeta_j$, and hold and
+detector/output instruments have complete half-diamond errors $h_i$ and
+$\kappa_i$, the same standard hybrid estimate used in AAV29 gives
+
+$$
+\frac12\|\Omega_{\rm actual}-\Omega_{\rm ideal}\|_1
+\le e_b+e_0+\sum_j\zeta_j+\sum_i(h_i+\kappa_i).
+\tag{V.54}
+$$
+
+These certificates must cover the full enlarged output and every observable
+side channel, including leakage. They need not preserve an ideal sector.
+Without such physical certificates only the conditional ideal-catalog
+approximation is established. Accuracy $\varepsilon$ with imperfections
+requires choosing finite budgets whose displayed sum is at most
+$\varepsilon$; no independence of faults is used. $\square$
+
+## 36. Complete original service and the exact capability boundary
+
+**Theorem 36.1 (full-space maintenance and every original finite future).**
+With the paid full-bank holds, rights, finite supplies and progress of
+§§25–27 and 34–35, the installed meter transaction and its approximation
+retain the complete original all-phase service on both entrances.
+This includes approximate states outside the supported code, every
+untouched reference and every subsequent finite lawful growth/Next.
+
+**Proof.** Acquire $m,y$ through the actual guarded parent fields and
+their immutable source/qubit descriptors. Acquire $u,d$ separately;
+their typed identities never become source children or replace $r,z$.
+Save borrowed cursors and retain the actual locked configuration while
+installing and executing the finite word. Its pending state contains
+acquisition/preparation progress, angle descriptions, current block/digit,
+held systems, detector latch and emitted/unprinted output. Until all
+its obligations finish it is a busy extra transaction, not native Ready.
+Its immutable record binds the actual source/acquisition versions and
+the meter/wire identities; old samples and records are not rewritten.
+
+The extra operations do not write native source, history or sample fields.
+They finish their own sealing, Print, End, local ACK, root Return and
+scratch clearing before releasing service. During original Receive,
+parser prefixes, Navigate/Guard, query, reserve/edit/maintain and output
+subphases, hold the *entire enlarged bank*, retaining the original
+pending/parser state and every meter and source record. Disabled protected
+operations remain unexecuted. An actual grant denial keeps its denial
+record and executes no gate; a completed original wrong-type refusal
+retains its different original meaning and reply. Neither creates a
+successful native event or substitutes for original OutOfRange/BadFrame.
+
+Crucially, a material acquisition or growth appends vacuum by the full
+isometry $W:\xi\mapsto\xi\otimes|0\cdots0\rangle$. For *every*
+joint enlarged-bank/reference density matrix $\sigma$, not only one
+excitation, its actual action is
+
+$$
+\sigma\longmapsto(W\otimes I_R)\sigma(W^\dagger\otimes I_R).
+\tag{V.55}
+$$
+
+Reading the literal bit strings proves this identity; it requires no
+use of $WE_D=E_{D'}J$ on a total-two-excitation input. The latter remains
+the correct restriction on the source's ideal one-excitation factor.
+Marker activation only changes its recorded role and wire enables;
+every old qubit identity and state stays. Thus the actual $P/S$ templates
+and genuine Next target/left-descent continue exactly as in §27. Quantum
+leakage can occupy dormant modes but changes no classical native guard.
+Original Tag, promotion/split tests, FetchGrowth, all original outputs,
+versions, refusals and sample equality therefore keep the same operands.
+
+This verifies the full-space quantum premise for reusing Theorem 27.2's
+already proved phase cases. Each added source component or edit incurs
+its actual commissioning and growth costs; no finite roster, height or
+stationary observer replaces the original goal. The lock is local to
+this finite extra transaction. Every later original finite continuation
+is again available with its actual resources and the held meters.
+
+Subsequent source $P/B$ circuits are their literal full-space unitaries,
+with identity on the meters; native service is hold/vacuum extension.
+They therefore act legally also on leaked states. The reference ideal
+source output has one excitation and can reuse §28's sector estimate,
+but that Hamiltonian estimate is not asserted for leaked source sectors.
+Applying the same finite adaptive continuation channel to actual and
+ideal full outputs contracts (V.53)–(V.54); additional certified errors
+add by AAV29's finite instrument composition. Record-conditioned future
+requests retain their actual source successors in their separate blocks,
+not pathwise agreement under differing outcomes. No postselection bound,
+infinite physical bank or uniformly finite unbounded-time hold follows.
+$\square$
+
+**Proposition 36.2 (what has been supplied and what remains distinct).**
+Theorems 33.1 and 34.2–35.1 establish a catalogue-relative threshold:
+one total addressable excitation cannot uniformly approximate (V.40)
+below $1/4$, while two acquired meter qubits and one additional known
+excitation, with the declared paid controls, permit every specified
+positive accuracy. This is neither a global energy/qubit minimum nor
+a universal impossibility of coarse measurement.
+
+**Proof.** The lower theorem ranges over every protocol in its stated
+one-excitation catalogue and common unknown-input family, including all
+accessible source assistance. The upper theorem supplies a particular
+finite enlarged apparatus, with no assertion that its meters or its 26
+blocks are optimal. Other detectors, coherent controls, excitation sectors,
+preparation side information and physical implementations have different
+contracts. A rank-two occupation instrument granted as a primitive would
+already change the lower theorem's catalogue.
+
+For each block the full-record correction criterion in
+[AURIC optimal measurement quantum recovery, §6](AURIC_FIB_OPTIMAL_MEASUREMENT_QUANTUM_RECOVERY.md#6-全输入与全部参考的复-kraus-判据)
+explains the target: a retained fine effect nonscalar on that block cannot
+be corrected on its entire unknown code. That criterion and the mature
+rank-one and gate facts are suppliers, not new general results here.
+The source-specific adaptive quarter bound, two-loop cancellation with
+its actual meter embedding, and full-output/native-service application
+are repo-derived mathematical synthesis; no literature priority or
+Lean verification is asserted. AAV25–31's commissioning, activation,
+growth and full original service are reused rather than claimed anew.
+
+[Acquisition III §35](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md#35-finite-dyadic-actuator-words-and-the-full-return-ready-column)
+addresses exact finite dyadic synthesis of a different
+full-return ready column; it gives no error floor for the present finite
+approximations. [XI142–143's static boundary geometry](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md)
+and [finite-time central-defect endpoint estimates](../../../Blueprint/D5/S3/Quantum/Matrix/CentralSqrtTwoDefectGap.md)
+supply no native occupation instrument
+or meter permission. Conversely this conditional native construction
+does not identify C5, original-control $M_3$, path/field interfaces or
+the whole EB3/PSD3 domain. Unknown-code preparation/ingress, real gate
+and detector hardware, calibration, clocks, holds, physical supply and
+unlisted observable channels remain their explicit physical obligations.
+Neither this increment nor its conditional instrument completes the
+full common relational-recovery objective. $\square$
+
+## 追加锚（本行以下为增补区）
