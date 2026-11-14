@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SweepDimension;
 internal sealed class SweepEndpointsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/SweepDimension/Endpoints.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/boldi2026sweep");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/boldi2026sweep");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The general finite-poset sweep identity determines exactly which posets attain either width bound.", H("Sweep dimension and its width endpoints"),

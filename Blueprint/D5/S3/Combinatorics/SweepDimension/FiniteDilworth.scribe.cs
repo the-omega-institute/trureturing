@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SweepDimension;
 internal sealed class SweepFiniteDilworthDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/SweepDimension/FiniteDilworth.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/atlas2026dilworth");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/atlas2026dilworth");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A finite poset admits a chain cover with no more chains than the size of a maximum antichain.", H("Finite Dilworth chain covers"),
