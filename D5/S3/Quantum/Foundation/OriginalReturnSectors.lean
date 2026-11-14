@@ -468,27 +468,67 @@ private theorem actual_singular_bounds
   rw [div_mul_eq_mul_div]
   exact (le_div_iff₀ hβ).mpr (by nlinarith)
 
-private theorem tail_mass_from_margin {R β e q w α : ℝ}
-    (hR : 0 < R) (hβ : 0 < β) (hβR : β < R) (he : 0 ≤ e) (heβ : e < β/2)
-    (hq : 0 ≤ q) (hw : 0 ≤ w) (_hw1 : w ≤ 1) (_hα : 0 ≤ α)
-    (hmargin : 1-(1-(β-e)/R)^2 ≤ q^2)
-    (htransfer : q ≤ w+α/β)
-    (hsmall : α/β < Real.sqrt (1-(1-β/(2*R))^2)/2) :
-    (1-(1-β/(2*R))^2)/4 ≤ w^2 := by
-  let γ := 1-(1-β/(2*R))^2
-  have hm : 0 < β/(2*R) := div_pos hβ (by positivity)
-  have hm1 : β/(2*R) < 1 := (div_lt_one (by positivity)).mpr (by linarith)
-  have hγ : 0 < γ := by dsimp [γ]; nlinarith
-  have hratio : β/(2*R) ≤ (β-e)/R := by
-    rw [le_div_iff₀ hR]
-    field_simp
+private theorem tail_mass_liminf_from_vanishing
+    {R β : ℝ} {e α q w : ℕ → ℝ}
+    (hR : 0 < R) (hβ : 0 < β) (hβR : β < R)
+    (he : Tendsto e atTop (𝓝 0)) (hα : Tendsto α atTop (𝓝 0))
+    (hq : ∀ n, 0 ≤ q n) (hw : ∀ n, 0 ≤ w n) (hw1 : ∀ n, w n ≤ 1)
+    (hmargin : ∀ᶠ n in atTop, 1-(1-(β-e n)/R)^2 ≤ q n^2)
+    (htransfer : ∀ᶠ n in atTop, q n ≤ w n+α n/β) :
+    1-(1-β/R)^2 ≤ liminf (fun n => w n^2) atTop := by
+  let A := 1-(1-β/R)^2
+  have hβR0 : 0 < β/R := div_pos hβ hR
+  have hβR1 : β/R < 1 := (div_lt_one hR).mpr hβR
+  have hA : 0 < A := by
+    dsimp [A]
     nlinarith
-  have hratio1 : (β-e)/R ≤ 1 := (div_le_one hR).mpr (by linarith)
-  have hγq : γ ≤ q^2 := by dsimp [γ]; nlinarith
-  have hs := Real.sq_sqrt hγ.le
-  have hs0 := Real.sqrt_nonneg γ
-  have hsq : Real.sqrt γ ≤ q := by nlinarith
-  have htail : Real.sqrt γ/2 ≤ w := by dsimp [γ] at hsq hs0 ⊢; linarith
+  have hupper : IsCoboundedUnder (· ≥ ·) atTop (fun n => w n^2) :=
+    isCoboundedUnder_ge_of_le atTop (x := 1) (fun n => by
+      nlinarith [hw n, hw1 n, sq_nonneg (w n)])
+  have hlower : IsBoundedUnder (· ≥ ·) atTop (fun n => w n^2) :=
+    isBoundedUnder_of_eventually_ge (Eventually.of_forall fun n => sq_nonneg (w n))
+  apply (le_liminf_iff' hupper hlower).2
+  intro b hb
+  by_cases hb0 : b ≤ 0
+  · exact Eventually.of_forall fun n => hb0.trans (sq_nonneg (w n))
+  have hsb : 0 ≤ Real.sqrt b := Real.sqrt_nonneg _
+  have hsa : 0 < Real.sqrt A := Real.sqrt_pos.mpr hA
+  have hsab : Real.sqrt b < Real.sqrt A :=
+    Real.sqrt_lt_sqrt (le_of_not_ge hb0) hb
+  have hgap : 0 < Real.sqrt A-Real.sqrt b := sub_pos.mpr hsab
+  have hsqa := Real.sq_sqrt hA.le
+  have hsqb := Real.sq_sqrt (le_of_not_ge hb0)
+  let m := (Real.sqrt A + Real.sqrt b)/2
+  have hmA : m^2 < A := by
+    dsimp [m]
+    nlinarith [sq_nonneg (Real.sqrt A - Real.sqrt b)]
+  have hmargin_lim : Tendsto
+      (fun n => 1-(1-(β-e n)/R)^2) atTop (𝓝 A) := by
+    have he_lim : Tendsto e atTop (𝓝 0) := he
+    have harg : Tendsto (fun n => (β-e n)/R) atTop (𝓝 (β/R)) := by
+      simpa using ((tendsto_const_nhds (x := β)).sub he_lim).div_const R
+    have hone : Tendsto (fun n => 1-(β-e n)/R) atTop (𝓝 (1-β/R)) :=
+      tendsto_const_nhds.sub harg
+    exact tendsto_const_nhds.sub (hone.pow 2)
+  have hmargin_event : ∀ᶠ n in atTop,
+      m^2 < 1-(1-(β-e n)/R)^2 :=
+    (tendsto_order.mp hmargin_lim).1 _ hmA
+  have hsmall_event : ∀ᶠ n in atTop,
+      α n/β < (Real.sqrt A-Real.sqrt b)/4 :=
+    (tendsto_order.mp (hα.div_const β)).2
+      ((Real.sqrt A-Real.sqrt b)/4)
+      (by simpa using (div_pos hgap (by norm_num : (0 : ℝ) < 4)))
+  filter_upwards [hmargin_event, hmargin, htransfer, hsmall_event]
+    with n hmn hmargin_n htransfer_n hsmall_n
+  by_contra hn
+  have hwlt : w n < Real.sqrt b := by
+    have hsq : w n ^ 2 < b := lt_of_not_ge hn
+    nlinarith [hsqb]
+  have hqm : q n < m := by
+    dsimp [m]
+    nlinarith [htransfer_n, hsmall_n, hsab]
+  have hq2 : q n^2 < m^2 := by
+    nlinarith [hq n, hqm, sq_nonneg (q n-m)]
   nlinarith
 
 /-- Fixed original sectors force dimension escape and an actual projected
@@ -604,6 +644,7 @@ theorem original_return_geometry
     (b : AffineBasis (Fin (a.dim+1)) ℝ (EuclideanSpace ℝ (Fin a.dim)))
     (hb : ∀ i, ‖b i‖ = 1) (hpos : ∀ i, 0 < b.coord i ξ) :
     ∃ ε θ H β η : ℝ, 0 < ε ∧ 0 < θ ∧ 0 < H ∧ 0 < β ∧ 0 < η ∧
+      η = 1-(1-β/(Metric.diam (base C₁ u₁)/2))^2 ∧
       β < Metric.diam (base C₁ u₁)/2 ∧
       (∀ r t : pure C₁ u₁, dist (r:E) y < ε → (t:E) ∈ exclusion C₁ u₁ r →
         Module.finrank ℝ (affineSpan ℝ (exclusion C₁ u₁ t)).direction ≤ a.dim →
@@ -634,12 +675,12 @@ theorem original_return_geometry
   obtain ⟨ε,θ,H,β,hε,hθ,hH,hβ,hβR,hsector,hgeometry⟩ :=
     projected_return_geometry hc hs hg hB p a hy ξ hξ b hb hpos
   let R := Metric.diam (base C₁ u₁)/2
-  let γ := 1-(1-β/(2*R))^2
   have hR : 0 < R := base_radius_positive hc hs p a
-  have hm : 0 < β/(2*R) := div_pos hβ (by positivity)
-  have hm1 : β/(2*R) < 1 := (div_lt_one (by positivity)).mpr (by dsimp [R]; linarith)
-  have hγ : 0 < γ := by dsimp [γ]; nlinarith
-  refine ⟨ε,θ,H,β,γ/4,hε,hθ,hH,hβ,by positivity,hβR,hsector,?_⟩
+  have hη : 0 < 1-(1-β/R)^2 := by
+    have hβR0 : 0 < β/R := div_pos hβ hR
+    have hβR1 : β/R < 1 := (div_lt_one hR).mpr hβR
+    nlinarith
+  refine ⟨ε,θ,H,β,1-(1-β/R)^2,hε,hθ,hH,hβ,hη,rfl,hβR,hsector,?_⟩
   intro r t hr ht hfail c z hz
   obtain ⟨hleak,hunit,hgeom⟩ := hgeometry r t hr ht hfail c z hz
   have hspec : ∀ᶠ n in atTop,
@@ -653,27 +694,29 @@ theorem original_return_geometry
       (subset_affineSpan ℝ _ (intrinsicInterior_subset hy)) hβ hn.1 hn.2.1 (hunit n).1
   have hnorm (n) : ‖(singularTail (c n).param.linear.toContinuousLinearMap a.dim).starProjection (z n)‖ ≤ 1 :=
     ((singularTail (c n).param.linear.toContinuousLinearMap a.dim).norm_starProjection_apply_le (z n)).trans_eq (hunit n).1
-  have hmass : ∀ᶠ n in atTop,
-      γ/4 ≤ ‖(singularTail (c n).param.linear.toContinuousLinearMap a.dim).starProjection (z n)‖^2 := by
-    have hsmall : ∀ᶠ n in atTop, leakage C₁ u₁ p (t n)/β < Real.sqrt γ/2 :=
-      (tendsto_order.mp (hleak.div_const β)).2 _ (by simp only [zero_div]; positivity)
-    filter_upwards [hgeom,hspec,Metric.tendsto_nhds.mp hr (β/2) (by positivity),hsmall]
-      with n hn hspectral hnear hsmall
-    have hα : 0 ≤ leakage C₁ u₁ p (t n) := by
-      obtain ⟨x,hx⟩ := ((exclusion_ball_faces hc hs hg hB).1 (t n)).1.nonempty
-      exact Metric.infDist_nonneg.trans (leakage_point_le hc hs hg hB p (t n) hx)
-    exact tail_mass_from_margin hR hβ hβR dist_nonneg hnear (norm_nonneg _) (norm_nonneg _)
-      (hnorm n) hα hn.2.2 hspectral.2.2 hsmall
+  have hmargin : ∀ᶠ n in atTop,
+      1-(1-(β-dist (r n:E) y)/R)^2 ≤
+        ‖(projectedLinear p (c n)).ker.starProjection (z n)‖^2 := by
+    filter_upwards [hgeom] with n hn
+    simpa [R] using hn.2.2
+  have htransfer : ∀ᶠ n in atTop,
+      ‖(projectedLinear p (c n)).ker.starProjection (z n)‖ ≤
+        ‖(singularTail (c n).param.linear.toContinuousLinearMap a.dim).starProjection (z n)‖+
+          leakage C₁ u₁ p (t n)/β :=
+    hspec.mono fun n hn => hn.2.2
+  have htail_liminf : 1-(1-β/R)^2 ≤
+      liminf (fun n => ‖(singularTail (c n).param.linear.toContinuousLinearMap a.dim).starProjection (z n)‖^2) atTop :=
+    tail_mass_liminf_from_vanishing hR hβ hβR
+      (tendsto_iff_dist_tendsto_zero.mp hr) hleak
+      (fun n => norm_nonneg _) (fun n => norm_nonneg _) (fun n => hnorm n)
+      hmargin htransfer
   refine ⟨hleak,hunit,?_,?_,?_⟩
   · filter_upwards [hgeom,hspec] with n hn hspectral
     exact ⟨hn.1,hn.2.1,hn.2.2,hspectral.1,hspectral.2.1⟩
   · apply le_liminf_of_le (isCoboundedUnder_ge_of_le atTop (fun n =>
       (singular_le_norm (c n).param.linear.toContinuousLinearMap (a.dim-1)).trans (hunit n).2.2.2))
     exact hspec.mono fun _ hn => hn.1
-  · apply le_liminf_of_le (isCoboundedUnder_ge_of_le atTop (fun n =>
-      show ‖(singularTail (c n).param.linear.toContinuousLinearMap a.dim).starProjection (z n)‖^2 ≤ 1 from by
-        nlinarith [hnorm n,norm_nonneg ((singularTail (c n).param.linear.toContinuousLinearMap a.dim).starProjection (z n))]))
-    exact hmass
+  · exact htail_liminf
 
 end EuclideanReturns
 

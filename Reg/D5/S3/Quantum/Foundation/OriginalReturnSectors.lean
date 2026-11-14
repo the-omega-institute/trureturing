@@ -200,6 +200,7 @@ abbrev arena : Arena where
     (b : AffineBasis (Fin (a.dim+1)) ℝ (EuclideanSpace ℝ (Fin a.dim)))
     (hb : ∀ i, ‖b i‖ = 1) (hpos : ∀ i, 0 < b.coord i ξ),
     ∃ ε θ H β η : ℝ, 0 < ε ∧ 0 < θ ∧ 0 < H ∧ 0 < β ∧ 0 < η ∧
+      η = 1-(1-β/(Metric.diam (base C₁ u₁)/2))^2 ∧
       β < Metric.diam (base C₁ u₁)/2 ∧
       (∀ r t : pure C₁ u₁, dist (r:E) y < ε → (t:E) ∈ exclusion C₁ u₁ r →
         Module.finrank ℝ (affineSpan ℝ (exclusion C₁ u₁ t)).direction ≤ a.dim →
