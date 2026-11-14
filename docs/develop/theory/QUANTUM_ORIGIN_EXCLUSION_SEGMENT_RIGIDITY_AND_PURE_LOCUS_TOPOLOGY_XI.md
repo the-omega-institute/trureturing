@@ -723,7 +723,7 @@ $$
 这是真实标签的回送：球心关系是零值与原正交推出的结论，不是输入。
 
 还须消去 $A$ 与 $D_q$ 之间的可能正间隔。写完整根球
-$A=c_o+L_A\overline{\mathbb B}^{,3}$，置
+$A=c_o+L_A\overline{\mathbb B}^{\,3}$，置
 
 $$
 m=e_q(c_o),\qquad v=\|e_q\circ L_A\|_2,\qquad
