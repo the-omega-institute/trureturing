@@ -628,7 +628,7 @@ def publish(root, partition, verification=None, *, build_report=True):
                         if not restore_snapshot(target, partition, tag, downloaded, deadline, metadata,
                                                 cache_key=cache_key):
                             raise ValueError("native verification did not install the remote build")
-                        remaining(deadline)
+                        # Restore has completed under its fresh post-transfer budget.
                         (target / ".lake/build").rename(build)
                 else:
                     # Local candidate publication also verifies, but owns no

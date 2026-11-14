@@ -36,7 +36,7 @@ variable {K G A B C D : Type u} [Field K] [Group G]
   [AddCommGroup A] [Module K A] [AddCommGroup B] [Module K B]
   [AddCommGroup C] [Module K C] [AddCommGroup D] [Module K D]
 
-private def prodCongr {ρ : Representation K G A} {σ : Representation K G B}
+def prodCongr {ρ : Representation K G A} {σ : Representation K G B}
     {τ : Representation K G C} {υ : Representation K G D}
     (e : ρ.Equiv σ) (f : τ.Equiv υ) : (ρ.prod τ).Equiv (σ.prod υ) :=
   Representation.Equiv.mk (e.toLinearEquiv.prodCongr f.toLinearEquiv) fun c => by
@@ -496,7 +496,7 @@ variable {K : Type u} [Field K] {G M A B : Type u} [Group G]
   [AddCommGroup M] [Module K M] [AddCommGroup A] [Module K A]
   [AddCommGroup B] [Module K B]
 
-private theorem relativeProjective_transport (τ : Representation K G M)
+theorem relativeProjective_transport (τ : Representation K G M)
     {ρ : Representation K G A} {σ : Representation K G B} (e : ρ.Equiv σ)
     (hρ : RelativeProjective τ (Rep.of ρ)) : RelativeProjective τ (Rep.of σ) := by
   obtain ⟨X, i, r, hri⟩ := hρ
