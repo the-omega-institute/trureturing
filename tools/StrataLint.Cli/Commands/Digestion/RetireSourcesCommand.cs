@@ -88,8 +88,12 @@ internal static partial class RetireSourcesCommand
                         [{ Kind: FileMapKind.Data, ProducedBy: "none", ConsumedBy: ["reader"],
                             RuntimeDisposition: "committed-source", DigestionSource: false, Symlink: null }])
                         throw new FormatException($"ARCHIVE_POLICY_MISSING path={destination}");
-                    updates.Add(new(destination, ArchiveMarkdown(original.Bytes, source.SourcePath, destination,
-                        sources.Select(item => item.SourcePath).ToArray()), -1));
+                    var archived = ArchiveMarkdown(original.Bytes, source.SourcePath, destination,
+                        sources.Select(item => item.SourcePath).ToArray());
+                    RequireMarkdownTargets(System.Text.Encoding.UTF8.GetString(archived.AsSpan()), destination,
+                        sources.Select(item => Path.GetFullPath(item.SourcePath)).ToHashSet(StringComparer.Ordinal),
+                        prefixes.Select(prefix => Path.GetFullPath(prefix.TrimEnd('/'))).ToArray());
+                    updates.Add(new(destination, archived, -1));
                 }
                 updates.Add(new(source.SourcePath, null));
             }

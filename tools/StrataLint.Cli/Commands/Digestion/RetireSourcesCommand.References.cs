@@ -51,30 +51,36 @@ internal static partial class RetireSourcesCommand
                     if (removedIds.Contains(match.Groups["id"].Value))
                         throw new FormatException($"ATOM_REFERENCED atom_id={match.Groups["id"].Value} path={entry.Path}");
                 if (entry.Path.EndsWith(".md", StringComparison.Ordinal))
-                    foreach (var (url, _, _) in MarkdownLinkSpans.Read(text))
-                    {
-                        if (string.IsNullOrEmpty(url) || url.StartsWith('#')) continue;
-                        var end = url.IndexOfAny(['?', '#']);
-                        var path = Uri.UnescapeDataString(end < 0 ? url : url[..end]);
-                        if (path.Length == 0) continue;
-                        string target;
-                        try
-                        {
-                            if (path.StartsWith('/')) target = Path.GetFullPath(path.TrimStart('/'));
-                            else if (Uri.TryCreate(url, UriKind.Absolute, out _)) continue;
-                            else target = Path.GetFullPath(path, Path.GetDirectoryName(Path.GetFullPath(entry.Path))!);
-                        }
-                        catch (Exception error) when (error is ArgumentException or NotSupportedException or PathTooLongException) { continue; }
-                        if (sourceTargets.Contains(target) || ledgerTargets.Any(root => target == root
-                                || target.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.Ordinal)))
-                            throw new FormatException($"SOURCE_REFERENCED target={url} path={entry.Path}");
-                    }
+                    RequireMarkdownTargets(text, entry.Path, sourceTargets, ledgerTargets);
                 foreach (var source in sourcePaths)
                     if (text.Contains(source, StringComparison.Ordinal) || text.Contains(Path.GetFileName(source), StringComparison.Ordinal))
                         throw new FormatException($"SOURCE_REFERENCED source={source} path={entry.Path}");
             }
         }
         return captured;
+    }
+
+    private static void RequireMarkdownTargets(string text, string consumerPath,
+        IReadOnlySet<string> sourceTargets, string[] ledgerTargets)
+    {
+        foreach (var (url, _, _) in MarkdownLinkSpans.Read(text))
+        {
+            if (string.IsNullOrEmpty(url) || url.StartsWith('#')) continue;
+            var end = url.IndexOfAny(['?', '#']);
+            var path = Uri.UnescapeDataString(end < 0 ? url : url[..end]);
+            if (path.Length == 0) continue;
+            string target;
+            try
+            {
+                if (path.StartsWith('/')) target = Path.GetFullPath(path.TrimStart('/'));
+                else if (Uri.TryCreate(url, UriKind.Absolute, out _)) continue;
+                else target = Path.GetFullPath(path, Path.GetDirectoryName(Path.GetFullPath(consumerPath))!);
+            }
+            catch (Exception error) when (error is ArgumentException or NotSupportedException or PathTooLongException) { continue; }
+            if (sourceTargets.Contains(target) || ledgerTargets.Any(root => target == root
+                    || target.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.Ordinal)))
+                throw new FormatException($"SOURCE_REFERENCED target={url} path={consumerPath}");
+        }
     }
 
     private static IEnumerable<string> AtomReferences(string path,

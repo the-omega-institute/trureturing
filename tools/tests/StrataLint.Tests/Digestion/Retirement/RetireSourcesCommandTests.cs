@@ -282,6 +282,30 @@ public sealed class RetireSourcesCommandTests
         Assert.Contains("[\n[p](t)\n]", archived, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("archive")]
+    [InlineData("delete")]
+    public void ArchiveCannotRetainLinksToItsRemovedLedger(string mode)
+    {
+        using var directory = new TemporaryDirectory();
+        WriteFiles(directory.Path, Fixture(text: AtomContextFixture.ThreeClaims.Replace("Before.",
+            "Before [ledger](../../../Meta/Digestion/backfill/source/source.toml).", StringComparison.Ordinal)));
+        var before = Image(directory);
+        var result = RetireSourcesCommand.Run(directory.Path, Gateway(directory), new FakeLeanReportSource(null), Args(mode, true));
+        if (mode == "archive")
+        {
+            Assert.False(result.Success);
+            Assert.Contains("SOURCE_REFERENCED", result.Error, StringComparison.Ordinal);
+            Assert.Contains(Archive, result.Error, StringComparison.Ordinal);
+            Assert.Equal(before, Image(directory));
+        }
+        else
+        {
+            Assert.True(result.Success, result.Error);
+            Assert.DoesNotContain(ReadFiles(directory).Entries, entry => entry.Path == Source);
+        }
+    }
+
     [Fact]
     public void ProductionGatewayRetainsInjectedPolicyAndArchivedInputCannotBeReingested()
     {
