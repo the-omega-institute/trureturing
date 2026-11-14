@@ -13,7 +13,7 @@ Direct frozen dependencies: none; all D5 prerequisites are in this delivery.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339
 Definitions are labelled bind-only as encodings, not as proofs of new propositions.
 Declarations (consumer names are qualified by their owning module):
-singularWord: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMSingularVector.singularWord_cartan, VBKMSingularVector.singularWord_commute, VBKMSingularVector.singularWord_eigen, VBKMSingularVector.singularWord_mode_one, VBKMSingularVector.singularWord_mode_two, ZverykIdealRigidityRefutation.presentedSingular, ZverykIdealRigidityRefutation.presented_e_singular.
+singularWord: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMSingularVector.singularWord_cartan, VBKMSingularVector.singularWord_commute, VBKMSingularVector.singularWord_mode_one, VBKMSingularVector.singularWord_mode_two, VBKMSingularVector.singularWord_eigen, ZverykIdealRigidityRefutation.presentedSingular, ZverykIdealRigidityRefutation.presented_e_singular.
 singularWord_cartan: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_e_singular.
 singularWord_commute: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_e_singular.
 singularWord_mode_one: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_positive_singular.

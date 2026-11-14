@@ -13,15 +13,15 @@ Direct frozen dependencies: none; all D5 prerequisites are in this delivery.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339
 Definitions are labelled bind-only as encodings, not as proofs of new propositions.
 Declarations (consumer names are qualified by their owning module):
-negativeSpan: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.cartan_stable, VBKMWeightIdeal.negative_linear_stable, VBKMWeightIdeal.negative_span_disjoint_cartan, VBKMWeightIdeal.negative_span_isIdeal, VBKMWeightIdeal.negative_stable, VBKMWeightIdeal.nonzero_disjoint_ideal, VBKMWeightIdeal.positive_stable.
+negativeSpan: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.seed_mem, VBKMWeightIdeal.negative_stable, VBKMWeightIdeal.negative_linear_stable, VBKMWeightIdeal.cartan_stable, VBKMWeightIdeal.positive_stable, VBKMWeightIdeal.negative_span_isIdeal, VBKMWeightIdeal.negative_span_disjoint_cartan, VBKMWeightIdeal.nonzero_disjoint_ideal.
 seed_mem: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.cartan_stable, VBKMWeightIdeal.nonzero_disjoint_ideal.
-negative_stable: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.cartan_stable, VBKMWeightIdeal.negative_linear_stable, VBKMWeightIdeal.negative_span_isIdeal, VBKMWeightIdeal.positive_stable.
+negative_stable: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.negative_linear_stable, VBKMWeightIdeal.cartan_stable, VBKMWeightIdeal.positive_stable, VBKMWeightIdeal.negative_span_isIdeal.
 negative_linear_stable: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.cartan_stable.
-cartan_stable: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.cartan_stable; consumers: VBKMWeightIdeal.negative_span_isIdeal, VBKMWeightIdeal.positive_stable.
+cartan_stable: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.cartan_stable; consumers: VBKMWeightIdeal.positive_stable, VBKMWeightIdeal.negative_span_isIdeal.
 positive_stable: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.positive_stable; consumers: VBKMWeightIdeal.negative_span_isIdeal.
 stable_of_generates: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.negative_span_isIdeal.
 negative_span_isIdeal: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.cartan_stable; consumers: VBKMWeightIdeal.nonzero_disjoint_ideal.
-spectralWeight: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.negative_span_disjoint_cartan, VBKMWeightIdeal.spectralWeight_negative, VBKMWeightIdeal.word_eigen.
+spectralWeight: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.word_eigen, VBKMWeightIdeal.spectralWeight_negative, VBKMWeightIdeal.negative_span_disjoint_cartan.
 word_eigen: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.word_eigen; consumers: VBKMWeightIdeal.negative_span_disjoint_cartan.
 spectralWeight_negative: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.negative_span_disjoint_cartan.
 negative_span_disjoint_cartan: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.word_eigen; consumers: VBKMWeightIdeal.nonzero_disjoint_ideal.
