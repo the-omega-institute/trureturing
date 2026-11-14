@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery
    mirror-E: none(waiver:static-algebraic-identifiability)
    anchors: []
