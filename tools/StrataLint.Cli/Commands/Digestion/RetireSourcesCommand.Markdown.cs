@@ -1,8 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
-using Markdig;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
+using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
@@ -13,12 +11,7 @@ internal static partial class RetireSourcesCommand
         string[] selectedSources)
     {
         var text = new UTF8Encoding(false, true).GetString(bytes.AsSpan());
-        var document = Markdown.Parse(text, new MarkdownPipelineBuilder().UsePreciseSourceLocation().Build());
-        var links = document.Descendants<LinkInline>().Where(link => link.Reference is null)
-            .Select(link => (link.Url, link.UrlSpan))
-            .Concat(document.Descendants<LinkReferenceDefinition>().Select(link => (link.Url, link.UrlSpan)))
-            .Distinct().ToArray();
-        foreach (var (url, span) in links.OrderByDescending(link => link.UrlSpan.Start))
+        foreach (var (url, start, endOffset) in MarkdownLinkSpans.Read(text).OrderByDescending(link => link.Start))
         {
             if (string.IsNullOrEmpty(url) || url.StartsWith('#') || url.StartsWith('/')
                 || Uri.TryCreate(url, UriKind.Absolute, out _)) continue;
@@ -26,15 +19,16 @@ internal static partial class RetireSourcesCommand
             var path = end < 0 ? url : url[..end];
             var suffix = end < 0 ? string.Empty : url[end..];
             if (path.Length == 0) continue;
-            var resolved = Path.GetFullPath(path, Path.GetDirectoryName(Path.GetFullPath(source))!);
+            var resolved = Path.GetFullPath(Uri.UnescapeDataString(path), Path.GetDirectoryName(Path.GetFullPath(source))!);
             var retiredTarget = selectedSources.SingleOrDefault(candidate => Path.GetFullPath(candidate) == resolved);
             if (retiredTarget is not null)
                 resolved = Path.GetFullPath(ArchiveRoot + retiredTarget[TheoryRoot.Length..]);
             var relative = Path.GetRelativePath(Path.GetDirectoryName(Path.GetFullPath(destination))!, resolved)
                 .Replace(Path.DirectorySeparatorChar, '/');
-            if (span.Start < 0 || span.End < span.Start || span.End >= text.Length)
+            relative = string.Join('/', relative.Split('/').Select(part => part is "." or ".." ? part : Uri.EscapeDataString(part)));
+            if (start < 0 || endOffset < start || endOffset >= text.Length)
                 throw new FormatException("ARCHIVE_LINK_SPAN_INVALID");
-            text = text[..span.Start] + relative + suffix + text[(span.End + 1)..];
+            text = text[..start] + relative + suffix + text[(endOffset + 1)..];
         }
         return [.. Encoding.UTF8.GetBytes(text)];
     }

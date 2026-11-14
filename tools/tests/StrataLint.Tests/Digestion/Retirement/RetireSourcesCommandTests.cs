@@ -55,6 +55,7 @@ public sealed class RetireSourcesCommandTests
     [InlineData("shared-atom")]
     [InlineData("foreign-context")]
     [InlineData("incoming-link")]
+    [InlineData("utility-atom")]
     public void IncompleteOrReferencedInputRejectsWithoutChangingAnyByte(string defect)
     {
         using var directory = new TemporaryDirectory();
@@ -87,6 +88,7 @@ public sealed class RetireSourcesCommandTests
                 raw = Add(raw, BackfillInventoryLoader.RootPath + "foreign/context/neighbor.toml", "neighbor = '" + id + "'\n");
                 break;
             case "incoming-link": raw = Add(raw, "docs/consumer.md", "[theory](develop/theory/RetirementFixture.md#note)"); break;
+            case "utility-atom": raw = Add(raw, "D5/Consumer.lean", "-- Utility: checker; basis=refutes=atom:" + id + "\n"); break;
         }
         WriteFiles(directory.Path, raw);
         var before = Image(directory);
@@ -120,6 +122,54 @@ public sealed class RetireSourcesCommandTests
         Assert.Equal(2, publications);
         Assert.Contains("injected", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, Image(directory));
+    }
+
+    [Fact]
+    public void ConcurrentArchiveCreationIsPreservedWhenPublicationFails()
+    {
+        using var directory = new TemporaryDirectory();
+        var raw = Fixture();
+        WriteFiles(directory.Path, raw);
+        var result = RetireSourcesCommand.Run(directory.Path, Gateway(directory), new FakeLeanReportSource(null), Args("archive", true),
+            beforeArchivePublication: target => File.WriteAllText(target, "concurrent archive"));
+        Assert.False(result.Success);
+        var after = ReadFiles(directory);
+        Assert.Equal("concurrent archive", Encoding.UTF8.GetString(after.Entries.Single(entry => entry.Path == Archive).Bytes.AsSpan()));
+        foreach (var original in raw.Entries)
+            Assert.Equal(original.Bytes.ToArray(), after.Entries.Single(entry => entry.Path == original.Path).Bytes.ToArray());
+        Assert.Equal(raw.Entries.Length + 1, after.Entries.Length);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DeduplicatedSourceWithoutOwnedAtomsStillRequiresCompleteCurrentClaims(bool newClaim)
+    {
+        using var directory = new TemporaryDirectory();
+        const string emptySource = "docs/develop/theory/EmptyOwnerFixture.md";
+        var raw = Fixture();
+        var owner = raw.Entries.Single(entry => entry.Path == BackfillInventoryLoader.RootPath + "source/source.toml");
+        raw = Add(raw, BackfillInventoryLoader.RootPath + "empty/source.toml", Encoding.UTF8.GetString(owner.Bytes.AsSpan())
+            .Replace("\"source\"", "\"empty\"", StringComparison.Ordinal).Replace(Source, emptySource, StringComparison.Ordinal));
+        raw = Add(raw, emptySource, AtomContextFixture.ThreeClaims + (newClaim ? "\n## New\n\nUnrecorded claim.\n" : string.Empty));
+        WriteFiles(directory.Path, WithPolicy(raw, [Source, emptySource]));
+        var before = Image(directory);
+        var result = RetireSourcesCommand.Run(directory.Path, Gateway(directory), new FakeLeanReportSource(null),
+            ["--source", "empty", "--mode", "archive", "--write"]);
+        if (newClaim)
+        {
+            Assert.False(result.Success);
+            Assert.Contains("SOURCE_HAS_RESIDUAL", result.Error, StringComparison.Ordinal);
+            Assert.Equal(before, Image(directory));
+        }
+        else
+        {
+            Assert.True(result.Success, result.Error);
+            var after = ReadFiles(directory);
+            Assert.DoesNotContain(after.Entries, entry => entry.Path == emptySource
+                || entry.Path.StartsWith(BackfillInventoryLoader.RootPath + "empty/", StringComparison.Ordinal));
+            Assert.Contains(after.Entries, entry => entry.Path == Source);
+        }
     }
 
     [Fact]
@@ -182,13 +232,14 @@ public sealed class RetireSourcesCommandTests
     {
         using var directory = new TemporaryDirectory();
         WriteFiles(directory.Path, Fixture(text: AtomContextFixture.ThreeClaims.Replace("Before.",
-            "Before [spec](../spec/guide.md#bound), ![image](../images/a.png) and [ref][target].\n\n[target]: ../spec/ref.md#part", StringComparison.Ordinal)));
+            "Before $[p](t)$ [spec](../spec/guide.md#bound), ![image](../images/a.png) and [ref][target].\n\n[target]: ../spec/ref.md#part", StringComparison.Ordinal)));
         var result = RetireSourcesCommand.Run(directory.Path, Gateway(directory), new FakeLeanReportSource(null), Args("archive", true));
         Assert.True(result.Success, result.Error);
         var archived = Encoding.UTF8.GetString(ReadFiles(directory).Entries.Single(entry => entry.Path == Archive).Bytes.AsSpan());
         Assert.Contains("../../spec/guide.md#bound", archived, StringComparison.Ordinal);
         Assert.Contains("../../images/a.png", archived, StringComparison.Ordinal);
         Assert.Contains("[target]: ../../spec/ref.md#part", archived, StringComparison.Ordinal);
+        Assert.Contains("$[p](t)$", archived, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -230,8 +281,34 @@ public sealed class RetireSourcesCommandTests
         Assert.Equal("Existing archived material.\n", TemporaryFileSystem.File.ReadAllText(Path.Combine(directory.Path, "docs/link.md")));
     }
 
-    [Fact]
-    public void TerminalForeignChildrenAreReusedWithoutRetiringTheirIncompleteOwner()
+    [Theory]
+    [InlineData("docs/latest.txt", "develop/theory/RetirementFixture.md")]
+    [InlineData("CURRENT.md", "docs/develop/theory/RetirementFixture.md")]
+    public void DeclaredAliasesOutsideDocumentFiltersBlockRetirement(string linkPath, string target)
+    {
+        using var directory = new TemporaryDirectory();
+        var raw = Fixture();
+        var policy = Encoding.UTF8.GetString(raw.Entries.Single(entry => entry.Path == FileMapLoader.RelativePath).Bytes.AsSpan());
+        var linkPolicy = "{ pattern = \"" + linkPath + "\", kind = \"data\", admission_plane = \"content\", produced_by = \"none\", consumed_by = [\"reader\"], verified_by = [\"SnapshotDecoder\"], artifact_id = \"none\", runtime_disposition = \"committed-source\", symlink = { target = \"" + target + "\", kind = \"file\" } }";
+        raw = Replace(raw, FileMapLoader.RelativePath, linkPath.StartsWith("docs/", StringComparison.Ordinal)
+            ? policy.Replace("\n]\n[evidence", ",\n" + linkPolicy + "\n]\n[evidence", StringComparison.Ordinal)
+            : policy.Replace("files = [\n", "files = [\n" + linkPolicy + ",\n", StringComparison.Ordinal));
+        WriteFiles(directory.Path, raw);
+        File.CreateSymbolicLink(Path.Combine(directory.Path, linkPath), target);
+        TestGit.Run(directory.Path, "init");
+        TestGit.Run(directory.Path, "add", ".");
+        var result = RetireSourcesCommand.Run(directory.Path, new GitRepositoryGateway(directory.Path),
+            new FakeLeanReportSource(null), Args("archive", true));
+        Assert.False(result.Success);
+        Assert.True(result.Error.Contains("SOURCE_SYMLINK_REFERENCED", StringComparison.Ordinal), result.Error);
+        Assert.True(File.Exists(Path.Combine(directory.Path, Source)));
+        Assert.Equal(target, new FileInfo(Path.Combine(directory.Path, linkPath)).LinkTarget);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void TerminalForeignChildrenAreReusedWithoutRetiringTheirIncompleteOwner(bool sharedUnrecordedClaim)
     {
         const string text = "# Bundle\n\n## theorem 1.1\n\nFirst.\n\n## theorem 1.2\n\nSecond.\n";
         using var directory = new TemporaryDirectory();
@@ -264,9 +341,20 @@ public sealed class RetireSourcesCommandTests
             var settled = SettleAtomCommandTests.Run(directory.Path, ReadFiles(directory), request);
             Assert.True(settled.Success, settled.Error);
         }
+        if (sharedUnrecordedClaim)
+            foreach (var path in new[] { Source, "docs/foreign.md" })
+                File.AppendAllText(Path.Combine(directory.Path, path), "\n## New\n\nShared unresolved addition.\n");
         var before = ReadFiles(directory);
         var result = RetireSourcesCommand.Run(directory.Path, Gateway(directory), new FakeLeanReportSource(null),
             ["--source", "probe", "--mode", "archive", "--write"]);
+        if (sharedUnrecordedClaim)
+        {
+            Assert.False(result.Success);
+            Assert.Contains("SOURCE_HAS_RESIDUAL", result.Error, StringComparison.Ordinal);
+            Assert.Equal(before.Entries.Select(entry => (entry.Path, Convert.ToHexString(entry.Bytes.AsSpan()))),
+                ReadFiles(directory).Entries.Select(entry => (entry.Path, Convert.ToHexString(entry.Bytes.AsSpan()))));
+            return;
+        }
         Assert.True(result.Success, result.Error);
         var after = ReadFiles(directory);
         foreach (var original in before.Entries.Where(entry => entry.Path == "docs/foreign.md"
@@ -362,10 +450,10 @@ public sealed class RetireSourcesCommandTests
     {
         const string secondSource = "docs/develop/theory/SecondFixture.md";
         var first = Fixture(text: AtomContextFixture.ThreeClaims
-            + (linkSources ? "\n[other](SecondFixture.md#section)\n" : string.Empty));
+            + (linkSources ? "\n[other](Second%46ixture.md#section)\n" : string.Empty));
         var second = Fixture(text: AtomContextFixture.ThreeClaims.Replace("Before", "SecondBefore", StringComparison.Ordinal)
             .Replace("Middle", "SecondMiddle", StringComparison.Ordinal).Replace("After", "SecondAfter", StringComparison.Ordinal)
-            + (linkSources ? "\n[other](RetirementFixture.md#section)\n" : string.Empty));
+            + (linkSources ? "\n[other](Retirement%46ixture.md#section)\n" : string.Empty));
         var renamed = second.Entries.Select(entry => RawRepositoryEntry.FromText(
             entry.Path.Replace(BackfillInventoryLoader.RootPath + "source/", BackfillInventoryLoader.RootPath + "second/", StringComparison.Ordinal)
                 .Replace(Source, secondSource, StringComparison.Ordinal),

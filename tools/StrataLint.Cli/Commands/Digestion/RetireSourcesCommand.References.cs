@@ -8,10 +8,15 @@ namespace StrataLint.Cli;
 internal static partial class RetireSourcesCommand
 {
     // Read raw reverse references without interpreting unrelated settlement records.
-    private static RawRepositorySnapshot RequireNoReferences(IRepositoryGateway repository,
+    private static RawRepositorySnapshot RequireNoReferences(IRepositoryGateway repository, RepositorySnapshot snapshot,
         string[] removedPrefixes, HashSet<string> removedIds, string[] sourcePaths)
     {
-        var paths = repository.SearchCurrentPaths([BackfillInventoryLoader.RootPath.TrimEnd('/'), "docs", "Blueprint", "Library", "Papers", "Problems", "README.md", "CLAUDE.md", "D5", "Reg", "skills", "agents"])
+        foreach (var link in FileMapLoader.LoadSnapshot(snapshot).Entries.Select(entry => entry.Symlink).OfType<FileMapSymlink>())
+            if (sourcePaths.Any(source => source == link.ResolvedTarget
+                    || link.Kind == "directory" && source.StartsWith(link.ResolvedTarget + "/", StringComparison.Ordinal))
+                && repository.SearchCurrentPaths([DigestionQuerySelection.Literal(link.Path)]).Count > 0)
+                throw new FormatException($"SOURCE_SYMLINK_REFERENCED path={link.Path} target={link.ResolvedTarget}");
+        var paths = repository.SearchCurrentPaths([BackfillInventoryLoader.RootPath.TrimEnd('/'), "docs", "Blueprint", "Library", "Papers", "Problems", "README.md", "CLAUDE.md", "D5", "Reg", "skills", "agents", ":(glob)**/*.lean"])
             .Where(path => !removedPrefixes.Any(prefix => path.StartsWith(prefix, StringComparison.Ordinal))
                 && !sourcePaths.Contains(path, StringComparer.Ordinal)
                 && (path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
@@ -24,6 +29,9 @@ internal static partial class RetireSourcesCommand
             var text = Encoding.UTF8.GetString(entry.Bytes.AsSpan());
             if (entry.Path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal))
             {
+                if (entry.Path.EndsWith("/source.toml", StringComparison.Ordinal)
+                    && sourcePaths.Any(source => text.Contains(source, StringComparison.Ordinal)))
+                    throw new FormatException($"SOURCE_REFERENCED path={entry.Path}");
                 if (!removedIds.Contains(Path.GetFileNameWithoutExtension(entry.Path))
                     && !Regex.Matches(text, "[0-9a-f]{64}", RegexOptions.CultureInvariant)
                         .Any(match => removedIds.Contains(match.Value))) continue;
@@ -32,9 +40,14 @@ internal static partial class RetireSourcesCommand
                         throw new FormatException($"ATOM_REFERENCED atom_id={id} path={entry.Path}");
             }
             else
+            {
+                foreach (Match match in Regex.Matches(text, "atom:(?<id>[0-9a-f]{64})", RegexOptions.CultureInvariant))
+                    if (removedIds.Contains(match.Groups["id"].Value))
+                        throw new FormatException($"ATOM_REFERENCED atom_id={match.Groups["id"].Value} path={entry.Path}");
                 foreach (var source in sourcePaths)
                     if (text.Contains(source, StringComparison.Ordinal) || text.Contains(Path.GetFileName(source), StringComparison.Ordinal))
                         throw new FormatException($"SOURCE_REFERENCED source={source} path={entry.Path}");
+            }
         }
         return captured;
     }

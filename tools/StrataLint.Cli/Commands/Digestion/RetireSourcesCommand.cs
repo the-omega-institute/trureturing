@@ -11,7 +11,8 @@ internal static partial class RetireSourcesCommand
 
     internal static CommandResult Run(string root, IRepositoryGateway repository,
         ILeanReportSource reportSource, IReadOnlyList<string> arguments,
-        Action? beforeCommit = null, Action<string, string>? commit = null)
+        Action? beforeCommit = null, Action<string, string>? commit = null,
+        Action<string>? beforeArchivePublication = null)
     {
         try
         {
@@ -24,10 +25,19 @@ internal static partial class RetireSourcesCommand
                     throw new FormatException($"NOT_THEORY_SOURCE source_id={source.SourceId}");
             var prefixes = sources.Select(source => BackfillInventoryLoader.RootPath + source.SourceId + "/").ToArray();
             var selectedRaw = repository.ReadCurrent(prefixes.Select(prefix => DigestionQuerySelection.Literal(prefix.TrimEnd('/'))).ToArray());
-            _ = DigestionQuerySelection.Merge(metadata.Raw, selectedRaw);
-            var loaded = DigestionQuerySelection.ReadChains(repository, DigestionQuerySelection.Load(selectedRaw));
+            var loaded = DigestionWorkingTree.Extend(repository,
+                DigestionQuerySelection.Load(DigestionQuerySelection.Merge(metadata.Raw, selectedRaw)), Decode,
+                sources.Select(source => source.SourcePath).Append("Meta/FILEMAP.toml")
+                    .Concat(repository.SearchCurrentPaths([":(glob)Meta/FILEMAP.*.toml"])).ToArray());
+            foreach (var source in sources) DigestionSourceEligibility.Require(loaded.Snapshot, source.SourcePath);
+            // Deduplicated sources may own no YAML. Resolve their current claims to
+            // existing global owners before deciding which evidence is required.
+            var claimIds = sources.SelectMany(source => AtomizerRegistry.Require(source.Atomizer)
+                    .Atomize(loaded.Raw.Entries.Single(entry => entry.Path == source.SourcePath).Bytes.AsSpan()).Claims)
+                .Select(atom => atom.Fingerprints.RawSha256["sha256:".Length..]).Distinct(StringComparer.Ordinal).ToArray();
+            loaded = DigestionQuerySelection.ReadChains(repository, DigestionQuerySelection.Load(
+                DigestionQuerySelection.Merge(loaded.Raw, DigestionQuerySelection.ReadAtoms(repository, claimIds).Raw)));
             var entries = loaded.Document.RequireDigestionEntries();
-            if (entries.IsEmpty) throw new FormatException("EMPTY_RETIREMENT");
             if (entries.GroupBy(entry => entry.AtomId).Any(group => group.Count() != 1))
                 throw new FormatException("AMBIGUOUS_ATOM");
             var requiredIds = entries.Select(entry => entry.AtomId).ToHashSet(StringComparer.Ordinal);
@@ -62,7 +72,7 @@ internal static partial class RetireSourcesCommand
             var removedIds = sources.SelectMany(source => loaded.Document.RequireDigestionSources()
                     .Single(current => current.SourceId == source.SourceId).Entries)
                 .Select(entry => entry.AtomId).ToHashSet(StringComparer.Ordinal);
-            var captured = RequireNoReferences(repository, prefixes, removedIds, sources.Select(source => source.SourcePath).ToArray());
+            var captured = RequireNoReferences(repository, loaded.Snapshot, prefixes, removedIds, sources.Select(source => source.SourcePath).ToArray());
             var updates = ImmutableArray.CreateBuilder<IngestCommand.LedgerUpdate>();
             foreach (var source in sources)
             {
@@ -86,11 +96,11 @@ internal static partial class RetireSourcesCommand
             if (!options.Write) return new(true, "RETIRE_PREVIEW\n" + output, string.Empty);
             var current = DigestionQuerySelection.Merge(loaded.Raw, captured);
             beforeCommit?.Invoke();
-            IngestCommand.ApplyLedgerUpdatesAtomically(root, current, updates.ToImmutable(), commit, () =>
+            ApplyRetirementAtomically(root, current, updates.ToImmutable(), commit, beforeArchivePublication, () =>
             {
                 var reread = repository.ReadCurrent(current.Entries.Select(entry => DigestionQuerySelection.Literal(entry.Path)).ToArray());
                 RequireSame(current, reread);
-                var fresh = RequireNoReferences(repository, prefixes, removedIds, sources.Select(source => source.SourcePath).ToArray());
+                var fresh = RequireNoReferences(repository, loaded.Snapshot, prefixes, removedIds, sources.Select(source => source.SourcePath).ToArray());
                 RequireSame(captured, fresh);
                 var freshSelected = repository.ReadCurrent(prefixes.Select(prefix => DigestionQuerySelection.Literal(prefix.TrimEnd('/'))).ToArray());
                 RequireSame(selectedRaw, freshSelected);
@@ -113,7 +123,7 @@ internal static partial class RetireSourcesCommand
         var contextDocument = document;
         document = document.WithDigestionSources(document.RequireDigestionSources()
             .Select(source => source with { Entries = source.Entries.Where(entry => requiredIds.Contains(entry.AtomId)).ToImmutableArray() })
-            .Where(source => !source.Entries.IsEmpty).ToImmutableArray());
+            .OrderByDescending(source => selectedSources.Contains(source.SourceId)).ToImmutableArray());
         var entries = document.RequireDigestionEntries();
         _ = DigestionDecomposition.ValidatedClosure(entries.Select(entry => entry.AtomId),
             entries.ToDictionary(entry => entry.AtomId, StringComparer.Ordinal), snapshot);
