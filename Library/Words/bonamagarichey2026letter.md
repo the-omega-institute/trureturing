@@ -13,6 +13,7 @@ strata_touched:
   - D5/S1/Words/Forbidden/BalancedBordersHalfFrequency
   - D5/S1/Words/Forbidden/ForbiddenWordRationalBoundary
   - D5/S1/Words/Forbidden/BonaMagaRicheyHalfFrequency
+  - D5/S1/Words/Forbidden/BonaMagaRicheyExtremalFrequency
 license: citation-only
 triage: anchor
 ---
@@ -55,3 +56,13 @@ Definition 3.2, p. 9: “A word $w$ has balanced borders if for all $b\in\mathca
 Conjecture 6.1, p. 20: “A word $w$ has $\rho^w = 1/2$ if and only if $w$ has balanced borders. The same holds with $\rho^w$ replaced by $q^w$.”
 
 The Lean claim encodes only the first sentence, for every nonempty `List Bool` word, with `true` representing 1 and `List.IsInfix` representing factor containment. It reads the equality of the limiting frequency as convergence of the source averages to $1/2$. Borders are nonempty prefixes that are also suffixes; the whole word is included. No unconditional limit-existence hypothesis is added. The source asserts unconditional existence; its formal proof is outside this claim. The $q$ clause remains outside the settlement.
+
+## Extremal frequency assertion
+
+Section 5.3, p. 19, of the pinned v2 PDF states: “Among all words of a fixed length $k$, forbidding the word $10^{k-1}$ or its reversal should maximize the frequency $\rho$, although we do not have a proof of this.” Section 2, p. 3, specifies throughout that a word is an element of $\{0,1\}^k$ for some integer $k\ge1$. This assertion has no exclusion of constant words or of length one. The following sentences ask a separate question with both length and number of ones fixed.
+
+`BonaMagaRicheyExtremalFrequency.claim` requires both proposed words to maximize the actual limiting avoidance frequency for every $k\ge1$, among all binary words of that same length. Each maximization includes convergence of the candidate and of every competitor to the real values being compared. It does not assume a general convergence theorem or replace the native averages by assigned constants.
+
+At $k=1$ both proposed words are $1$. Forbidding $1$ leaves only the all-zero word at each positive length, whereas forbidding $0$ leaves only the all-one word. The resulting limits are respectively zero and one. This comparison concerns the unrestricted assertion; length-at-least-two, length-at-least-three and nonconstant-word variants are not decided by this comparison. The stopped statistic $q$ of Definition 2.5 is a different observable.
+
+The exact PDF is `https://arxiv.org/pdf/2606.06655v2`, SHA-256 `138083b460b263dd0feb6686812fb513a8f6d6514d622957e14e9c002d13b9f3`.
