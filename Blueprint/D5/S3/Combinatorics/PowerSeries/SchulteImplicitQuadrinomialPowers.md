@@ -36,6 +36,6 @@ For every positive natural n there is exactly one integer formal power series sa
 
 - Truth anchor: `D5/S3/Combinatorics/PowerSeries/SchulteImplicitQuadrinomialPowers.Native`
 - Truth anchor: `D5/S3/Combinatorics/PowerSeries/SchulteImplicitQuadrinomialPowers.result`
-- Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](../Invariants/PowerSeriesNormalizedContraction.md)
-- Dependency: [D5/S1/Recurrence/SchulteQuadrinomialAlternatingBinomialExpansion](../SchulteQuadrinomialAlternatingBinomialExpansion.md)
-- Dependency: [D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo](../../../S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo.md)
+- Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](../../../S1/Recurrence/Invariants/PowerSeriesNormalizedContraction.md)
+- Dependency: [D5/S1/Recurrence/SchulteQuadrinomialAlternatingBinomialExpansion](../../../S1/Recurrence/SchulteQuadrinomialAlternatingBinomialExpansion.md)
+- Dependency: [D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo](../Nonnesting/NonnestingOneThreeTwoTwo.md)
