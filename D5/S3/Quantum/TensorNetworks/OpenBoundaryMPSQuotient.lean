@@ -980,6 +980,7 @@ theorem quotient_locus_witness (m : ℕ) :
   have hnum : gramNumerator m Q 0 0 ≠ 0 := by
     intro hz
     exact h00 (by change (gramDenominator m Q)⁻¹ * gramNumerator m Q 0 0 = 0; rw [hz,mul_zero])
+  -- Keep the actual witness on the rational inverse path used by the chart.
   have hQ := (quotientLocus_eval m Q).mpr ⟨hg,hnum⟩
   obtain ⟨_, hrat, _, _, _, h00'⟩ := rational_quotient_inverse m Q hQ
   refine ⟨⟨_,_,_,_,rfl⟩, ?_⟩
