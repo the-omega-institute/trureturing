@@ -96,6 +96,35 @@ theorem pderiv_substitution
         simp [pderiv_X, Pi.single_apply, Prod.mk.injEq]
       · simp [pderiv_X, Prod.mk.injEq, h, Ne.symm h]
 
+/-! The lattice Gram matrix is symmetric, so the modewise inverse used by the
+source transpose is symmetric as well.  This removes a purely notational
+transpose before the finite coefficient is matched with the right affine row. -/
+
+private theorem gramComplex_inverse_transpose (D : LatticeData) :
+    ((gramComplex D)⁻¹)ᵀ = (gramComplex D)⁻¹ := by
+  rw [Matrix.transpose_nonsing_inv]
+  congr 1
+  ext i j
+  simp [gramComplex, D.symmetric]
+
+theorem inverse_substitution_matrix_transpose (D : LatticeData) (k : ℕ) :
+    (((-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹))ᵀ =
+      (-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹ := by
+  rw [Matrix.transpose_smul, gramComplex_inverse_transpose]
+
+theorem inverse_substitution_coeff_transpose_free (D : LatticeData)
+    (q : Oscillator D) (alpha : Exponent D) :
+    (substitution (fun k =>
+      (((-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹))ᵀ) q).coeff alpha =
+      (substitution (fun k =>
+        (-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹) q).coeff alpha := by
+  have hfun : (fun k : ℕ =>
+      (((-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹))ᵀ) =
+      (fun k : ℕ => (-((k : ℂ) + 1))⁻¹ • (gramComplex D)⁻¹) := by
+    funext k
+    exact inverse_substitution_matrix_transpose D k
+  exact congrArg (fun A => (substitution A q).coeff alpha) hfun
+
 /-- Ordinary transpose, with no conjugation, for the original factorial form. -/
 theorem substitution_factorial_transpose
     (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
