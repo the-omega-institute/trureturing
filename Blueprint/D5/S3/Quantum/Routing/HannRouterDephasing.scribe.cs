@@ -66,7 +66,12 @@ internal sealed class HannRouterDephasingDocument : IScribeDocumentDefinition
             Supply("conjugate-ket-summation", "sum_ket_conj", "Conjugate finite ket evaluation",
                 KetStatement(true), "The conjugate ket identity has the same complete finite-type scope. "
                 + "These two summation identities are consumed in the full-State fidelity calculation "
-                + "for arbitrary joint amplitudes."))));
+                + "for arbitrary joint amplitudes."),
+            Supply("address-cardinality", "address_card", "Number of binary addresses",
+                All("n",I("Nat"),Eq(C("card",C("Address",I("n"))),new Formula.Power(D(2),I("n")))),
+                "At every natural depth n, the finite type Address n has cardinality 2^n. "
+                + "At depth zero its unique address is the empty address. This count identifies "
+                + "the maximal rank in the active-profile Gram criterion."))));
 
     private static DocumentBlock Def(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id),
@@ -115,9 +120,11 @@ internal sealed class HannRouterDephasingDocument : IScribeDocumentDefinition
         Formula left=SumOver("s",sigma,Mul(conjugate ? Conj(inner) : inner,App(g,s)));
         Formula right=SumOver("i",iota,Mul(conjugate ? Conj(App(psi,i)) : App(psi,i),App(g,App(v,i))));
         return All("iota",I("Type"),All("sigma",I("Type"),
-            All("indices",C("Fintype",iota),All("bases",C("Fintype",sigma),
-            All("decidable",C("DecidableEq",sigma),All("v",Arr(iota,sigma),
-            All("psi",Arr(iota,I("Complex")),All("g",Arr(sigma,I("Complex")),Eq(left,right)))))))));
+            Seq(OpenBracket,C("Fintype",iota),CloseBracket,Sp,
+                OpenBracket,C("Fintype",sigma),CloseBracket,Sp,
+                OpenBracket,C("DecidableEq",sigma),CloseBracket,Sp,
+                All("v",Arr(iota,sigma),All("psi",Arr(iota,I("Complex")),
+                    All("g",Arr(sigma,I("Complex")),Eq(left,right)))))));
     }
 
     private static Formula Statement()

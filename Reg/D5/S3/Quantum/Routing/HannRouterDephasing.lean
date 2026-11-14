@@ -331,4 +331,73 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end SumKetConj
 
+namespace AddressCard
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => Fintype.card (Address n)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ n : ℕ, R.readout () () n = 2 ^ n
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h 0
+  norm_num [rejected, realize] at he
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change Fintype.card (Address 0) ≠ Fintype.card (Address 1)
+  rw [address_card, address_card]
+  norm_num
+
+def family : Registration arena (type_of% address_card) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨address_card, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    address_card (Realization signature) (ℕ → Type) Unit where
+  unitName := `Reg.D5.S3.Quantum.Routing.HannRouterDephasing.AddressCard.unit
+  realizationName := `Reg.D5.S3.Quantum.Routing.HannRouterDephasing.AddressCard.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ n => Fintype.card (Address n)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some ℕ
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Routing.HannRouterDephasing
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end AddressCard
+
 end Reg.D5.S3.Quantum.Routing.HannRouterDephasing

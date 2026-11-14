@@ -410,15 +410,10 @@ private theorem gram_rank (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v ≤ 
     (gram n q).rank = Fintype.card (Profile n q) := by
   rw [gram_factor, Matrix.rank_conjTranspose_mul_self, record_rank n q hq]
 
-private theorem address_card (n : ℕ) : Fintype.card (Address n) = 2 ^ n := by
-  induction n with
-  | zero => rfl
-  | succ n ih => simp [Address, Fintype.card_prod, ih, pow_succ, Nat.mul_comm]
-
 private theorem full_rank_iff (n : ℕ) (q : Router (n + 1) → ℝ)
     (hq : ∀ v, q v ≤ 1) :
     (gram (n + 1) q).rank = 2 ^ (n + 1) ↔ ∀ u, q (deepest n u) < 1 := by
-  rw [gram_rank (n + 1) q hq, ← address_card]
+  rw [gram_rank (n + 1) q hq, ← HannRouterDephasing.address_card]
   have hc : Fintype.card (Profile (n + 1) q) = Fintype.card (Address (n + 1)) ↔
       Function.Injective (profile (n + 1) q) := by
     constructor

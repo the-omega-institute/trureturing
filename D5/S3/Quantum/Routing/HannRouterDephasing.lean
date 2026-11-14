@@ -334,7 +334,7 @@ private theorem energy_lower_bound (n : ℕ) (q : ℝ) (hq : 0 ≤ q) (hq' : q �
         (sq_nonneg ((∑ a, p (false,a)) - ∑ a, p (true,a)))
       nlinarith
 
-private theorem address_card (n : ℕ) : Fintype.card (Address n) = 2^n := by
+theorem address_card (n : ℕ) : Fintype.card (Address n) = 2^n := by
   induction n with
   | zero => simp [ReversibleQram.Address]
   | succ n ih => simp [ReversibleQram.Address, Fintype.card_prod, ih, pow_succ, Nat.mul_comm]
