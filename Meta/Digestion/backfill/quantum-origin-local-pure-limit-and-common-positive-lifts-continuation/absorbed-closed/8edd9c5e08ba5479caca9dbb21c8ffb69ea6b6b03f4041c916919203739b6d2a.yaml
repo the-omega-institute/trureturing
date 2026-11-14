@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:8edd9c5e08ba5479caca9dbb21c8ffb69ea6b6b03f4041c916919203739b6d2a
   normalized_sha256: sha256:8edd9c5e08ba5479caca9dbb21c8ffb69ea6b6b03f4041c916919203739b6d2a
 cas_ref: sha256:8edd9c5e08ba5479caca9dbb21c8ffb69ea6b6b03f4041c916919203739b6d2a
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/OriginalReturnSectors.source_contact_simplex
+    target_statement_id: sha256:242a85310efc10244f2337453a637c426150f7a2ce6e84e4f1b67e7e12ede62d
 receipts:
   unresolved_subitems: []
