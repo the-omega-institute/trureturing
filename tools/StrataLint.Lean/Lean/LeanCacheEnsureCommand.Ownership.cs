@@ -1,5 +1,6 @@
 using StrataLint.Engine;
 using System.Text;
+using System.Text.Json;
 using Tomlyn;
 using Tomlyn.Model;
 
