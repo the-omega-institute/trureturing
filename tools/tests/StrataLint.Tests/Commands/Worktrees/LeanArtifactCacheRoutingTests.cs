@@ -118,6 +118,46 @@ public sealed class LeanArtifactCacheRoutingTests
     }
 
     [Fact]
+    public void RetiredRootOwnersDoNotCountAsUsableProjectHeat()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(Path.Combine(repository.Path, "lakefile.toml"), "name = \"trureturing\"\n");
+        var lake = Path.Combine(repository.Path, ".lake");
+        Directory.CreateDirectory(lake);
+        LeanCacheStamp.Write(lake, ReadPins(repository.Path));
+        MathlibProjectionFixture.Write(lake);
+        var obsolete = ProjectOleanFixture.Write(repository.Path, "LeanInformationAudit/Obsolete");
+        var result = LeanCacheEnsureCommand.RunWithWriter(repository.Path,
+            ["--", "/usr/bin/env"], new ProductionWorktreeProcessRunner(),
+            new RecordingDirectoryCloner(), FileSystemLeanCacheStateProbe.Instance,
+            name => name == "STRATALINT_LEAN_CACHE_SCOPE" ? "targeted" : null);
+
+        Assert.True(result.Success, result.Error);
+        Assert.False(File.Exists(obsolete));
+        Assert.Contains("\"status\":\"scoped\"", result.Output, StringComparison.Ordinal);
+        Assert.False(File.Exists(LeanCacheStamp.PathFor(lake)));
+    }
+
+    [Fact]
+    public void ScopedWarmthProbeFailureCannotFallBackToColdExecution()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        Directory.CreateDirectory(Path.Combine(repository.Path, ".lake"));
+        var result = LeanCacheEnsureCommand.RunWithWriter(repository.Path,
+            ["--", "/usr/bin/env"], new ProductionWorktreeProcessRunner(),
+            new RecordingDirectoryCloner(),
+            new DelegatingLeanCacheStateProbe(_ => new(OleanWarmth.ProbeFailed, "unreadable cache")),
+            name => name == "STRATALINT_LEAN_CACHE_SCOPE" ? "targeted" : null);
+
+        Assert.False(result.Success);
+        Assert.Contains("cache warmth inspection failed", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("\"status\":\"scoped\"", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void StampedDependencyOnlyCacheDoesNotPromoteScopedRequestToEnsure()
     {
         if (OperatingSystem.IsWindows()) return;
