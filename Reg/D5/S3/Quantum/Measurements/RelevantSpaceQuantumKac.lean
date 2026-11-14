@@ -89,9 +89,9 @@ def reconstruction : Registration arena.{u} (arena.Law actual) where
   sensitivity := sensitivity
   dependence := dependence
 
-noncomputable def registration : LeanInformationAudit.Contract.Registration
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.monitored_reachable_space_eq.{u})
-    (type_of% (realize signature (fun _ _ S => S) (fun e => nomatch e))) Unit Unit := {
+    (Realization signature.{u}) Unit Unit := {
   unitName := `quantumKacMonitoredReachableSpace,
   realizationName := `Reg.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.reconstruction,
   realizationSource := none,
@@ -183,9 +183,9 @@ def reconstruction : Registration arena.{u} (arena.Law actual) where
   sensitivity := sensitivity
   dependence := Reg.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.dependence
 
-noncomputable def registration : LeanInformationAudit.Contract.Registration
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.relevant_projection_hasSum.{u})
-    (type_of% (realize signature (fun _ _ S => S) (fun e => nomatch e))) Unit Unit := {
+    (Realization signature.{u}) Unit Unit := {
   unitName := `quantumKacRelevantProjectionSeries,
   realizationName := `Reg.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.OperatorSeries.reconstruction,
   realizationSource := none,
