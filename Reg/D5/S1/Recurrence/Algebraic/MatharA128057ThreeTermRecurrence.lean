@@ -3,6 +3,8 @@ import D5.S1.Recurrence.Algebraic.MatharA128057ThreeTermRecurrence
 import Reg.Support.DependentFamily
 import Mathlib.Tactic.FinCases
 
+/-! The entire normalized-root and inverse specification accompanies three coefficient observations. -/
+
 namespace Reg.D5.S1.Recurrence.Algebraic.MatharA128057ThreeTermRecurrence
 
 open _root_.D5.S1.Recurrence.Algebraic.MatharA128057ThreeTermRecurrence
@@ -69,7 +71,7 @@ def family : Registration arena (type_of% result) where
     refine ⟨1, 0, 2, ?_⟩
     change coeff 0 ((1 + X) * (1 : PowerSeries ℚ)⁻¹) ≠
       coeff 2 ((1 + X) * (1 : PowerSeries ℚ)⁻¹)
-    norm_num
+    norm_num [coeff_X]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     result (Realization signature) Type Unit where
@@ -95,13 +97,13 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     coordinates := #[0]
     readouts := #[
       { path := #["arg", "body", "body", "body", "arg", "arg", "arg", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
-        stateBinder := 5, functionOperand := false
+        stateBinder := 0, functionOperand := false
         stateOperand := some #["arg"], booleanPredicate := false },
       { path := #["arg", "body", "body", "body", "arg", "arg", "arg", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "arg", "arg"]
-        stateBinder := 5, functionOperand := false
+        stateBinder := 0, functionOperand := false
         stateOperand := some #["arg"], booleanPredicate := false },
       { path := #["arg", "body", "body", "body", "arg", "arg", "arg", "body", "body", "body", "body", "fn", "arg", "arg", "arg"]
-        stateBinder := 5, functionOperand := false
+        stateBinder := 0, functionOperand := false
         stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
