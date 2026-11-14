@@ -2465,3 +2465,213 @@ $$
 [Q141AT]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology：印刷页172 Theorem 2B.3，Brouwer区域不变性；连续单射的源与目标同为欧氏四维时适用。"
 
 ## 追加锚（本行以下为增补区）
+
+## 142. 原二元反射读数的二分之一界迫使全部直径满刻度
+
+**定义 142.1（完整原域、原连通与二元读数界）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C$ 和在 $C\setminus\{0\}$ 上严格正的原单位 $u$，始终使用整个 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$ 和整个 $\mathcal E=[0,u]_{C^*}$。全部原确认效应定义 $T_p$ 及完整 $D_p$，完整 EB3 要求每个 $D_p$ 是非退化仿射实心三球，中心记为 $c_p$。原边 $p\perp q$ 指一张原全域效应在两端读一、零；补效应使它对称。$\mathsf{Conn}$ 仍指任意两个原纯点之间有有限原零边路，不是拓扑连通。
+
+以下在 EB3+$\mathsf{Conn}$ 下工作。直接复用[THREE_COPY VIII130.2][Q142TC]：原标签 Inj，全部 $P=P_0$，且
+
+$$
+\begin{gathered}
+\mathcal A_p=\{e\in\mathcal E:e(p)=1,\ e|_{D_p}=0\}=\{e_p\},\qquad g_p=u-e_p,\\
+\{e_p=0\}\cap K=D_p,\qquad \{e_p=1\}\cap K=\{p\}.
+\end{gathered}
+\tag{XI142.1}
+$$
+
+这不把全部确认菜单 $\mathcal F_p$ 缩成单点，也不预付 least。对每条有向原边定义实际反射态及其原读数
+
+$$
+s_{pq}=2c_q-p\in P\cap D_q,\qquad
+d_{pq}=e_p(s_{pq})=2e_p(c_q)-1.
+\tag{XI142.2}
+$$
+
+因为 $p$ 是完整球 $D_q$ 的纯球缘点，$s_{pq}$ 是同一原球中的对径纯点。原正性和(XI142.1)给 $0\le d_{pq}<1$；在整个 $D_q$ 上，$e_p$ 的唯一最大点是 $p$，最小点是 $s_{pq}$，故
+
+$$
+d_{pq}=1-\operatorname{osc}_{D_q}e_p.
+\tag{XI142.3}
+$$
+
+本章的二元条件为
+
+$$
+\mathsf H:\qquad
+\forall p,q\in P,\quad p\perp q\ \Longrightarrow\ d_{pq}\le\frac12,
+\quad\text{等价于}\quad e_p(c_q)\le\frac34.
+\tag{XI142.4}
+$$
+
+量词包括两个方向，但不要求两个有向数值相等。它不输入140.1的 $\mathsf{ZC}$、三角种子、所有直径的平均读数恒定或数值比较互易 PR。
+
+**定理 142.2（同一原边的预算乘积及完整正分解）。** 在定义142.1的 EB3+$\mathsf{Conn}$ 域，固定每个原 $p$ 的任意完整球坐标
+
+$$
+D_p=c_p+B_p\overline{\mathbb B}^3,\qquad
+H_p(c_p+B_pw)=w,\qquad H_p(p)=0.
+\tag{XI142.5}
+$$
+
+这里 $B_p$ 单射，$H_p:V\to\mathbb R^3$ 的各分量属于 $L_p=\operatorname{span}\{h\in C^*:h(p)=0\}$，由[IX120.8、120.10][Q142IX]的实际限制同构唯一给出。沿用[IX119.4][Q142IX]的有限增益阈值，另记为
+
+$$
+\gamma_p=
+\sup_{\substack{z\in K\\e_p(z)>0}}
+\frac{\|H_p(z)\|-g_p(z)}{e_p(z)}\in[0,\infty).
+\tag{XI142.6}
+$$
+
+它是指定投影 $P_{p,t}z=(g_p(z)+t e_p(z))c_p+B_pH_p(z)$ 在整个原锥上为正的准确阈值，不是140.1的相容常数。
+
+对原边 $p\perp q$，置 $a=d_{pq}$、$b=d_{qp}$、$s=s_{pq}$、$c=d_{sq}=e_s(p)$，并写 $q=c_p+B_pv$、$\|v\|=1$。则 $a=0$ 当且仅当 $b=0$。当 $a,b>0$ 时，
+
+$$
+\gamma_p\ge\frac{2b(1-a)}{a(1-b)},\qquad
+\gamma_q\ge\frac{2a(1-b)}{b(1-a)},\qquad
+\gamma_p\gamma_q\ge4.
+\tag{XI142.7}
+$$
+
+对任意实数 $t$，另有整个原 $V$ 上的恒等式
+
+$$
+\begin{aligned}
+g_p+t e_p-v\cdot H_p
+&=\bigl(t-\ell_p(q)\bigr)e_p+
+\frac{2(1-a)}{(1-b)(1-ac)}e_s,\\
+\ell_p(q)&=\frac{2c(1-a)}{(1-b)(1-ac)}.
+\end{aligned}
+\tag{XI142.8}
+$$
+
+因此若 $t\ge\sup_{q\in P\cap D_p}\ell_p(q)$，右侧由两张原非负效应构成，$P_{p,t}$ 在整个原锥上为正，且 $\gamma_p\le t$。
+
+证明。若 $a=0$，实际 $s$ 被 $e_p$ 读零，所以 $s\in D_p$；它也在 $D_q$ 中，故 $p,q,s$ 是真实三角。在同一个完整球 $D_p$ 上，原效应 $e_q$ 在 $q,s$ 读一、零，因此两点对径，$s=2c_p-q$，给 $b=e_q(s)=0$。交换两端得到反向。这里只复用[IX120.4][Q142IX]的同球满刻度几何，没有合成共同仪器。
+
+[IX120.12—120.13][Q142IX]的原邻点公式，在本章指标下准确为
+
+$$
+e_q=\frac{\rho g_p+v\cdot H_p}{1+\rho},\qquad
+\rho=\frac{1+b}{1-b}.
+\tag{XI142.9}
+$$
+
+注意 $b=d_{qp}$，不是 $a$。在真实 $s\in D_q$ 上，$e_q(s)=0$、$g_p(s)=1-a$，故 $v\cdot H_p(s)=-\rho(1-a)$，$\|H_p(s)\|\ge\rho(1-a)$。若 $a>0$，将同一个 $s$ 代入(XI142.6)，得到(XI142.7)第一式。交换两端得到第二式，两式右端之积恰为四。
+
+再复用原双球消去身份：
+
+$$
+(1-c)e_p+(1-a)e_s=(1-ac)g_q.
+\tag{XI142.10}
+$$
+
+它是原三角行走中的球上峰值公式经 $L_q\to\operatorname{Aff}(D_q)$ 的限制单射提升到全部 $V$ 的等式；参数对应于既有 `OriginalRegularHeight.two_ball_identity` 中的 $aa=s$。该恒等式的代数证明不使用该模块后续正规锚点的连续性前件。[Q142RH] 由(XI142.9)，
+
+$$
+g_p+t e_p-v\cdot H_p
+=(1+\rho)(g_q-e_p)+t e_p.
+$$
+
+将(XI142.10)代入并用 $1+\rho=2/(1-b)$，即得(XI142.8)。全部分母严格正，因为 $a,b,c<1$。若右侧对每个单位 $v$ 均非负，则对每个原 $z\in C$，
+
+$$
+\|H_p(z)\|\le g_p(z)+t e_p(z).
+$$
+
+这是指定球锥投影的整个原域正性判据；等价地在 $e_p(z)>0$ 的归一态上给(XI142.6)的上界。没有把只在一个原球上合法的泛函当作原效应。证毕。
+
+**定理 142.3（闭的二分之一读数界给逐标签严格小于二的预算）。** 在 EB3+$\mathsf{Conn}$+$\mathsf H$ 下，每个原纯标签分别满足
+
+$$
+L_p^*:=\sup_{q\in P\cap D_p}\ell_p(q)<2,
+\qquad 0\le\gamma_p\le L_p^*<2.
+\tag{XI142.11}
+$$
+
+不要求 $p\mapsto c_p$ 全局连续、$P$ 紧或跨全部 $p$ 的统一严格上隙。
+
+证明。对固定 $p$ 的任意单位方向，(XI142.4)同时适用于原边 $(p,q)$、$(q,p)$、$(s,q)$，故 $0\le a,b,c\le1/2$。先增加 $b,c$ 至 $1/2$；对 $c$ 的单调性来自 $c/(1-ac)$ 严格递增，得到
+
+$$
+0\le\ell_p(q)\le\frac{2(1-a)}{1-a/2}\le2.
+\tag{XI142.12}
+$$
+
+关键是排除上确界等于二，不能用每个方向严格小于二替代它。反设有 $q_n\in P\cap D_p$，使 $\ell_p(q_n)\to2$。标量盒 $[0,1/2]^3$ 紧；(XI142.12)及(XI142.8)的连续有理式迫使
+
+$$
+a_n\to0,\qquad b_n\to\frac12,\qquad c_n\to\frac12.
+\tag{XI142.13}
+$$
+
+固定原球的完整纯球缘紧，所以取共同子列
+
+$$
+q_n\to q\in P\cap D_p,\qquad
+s_n=2c_{q_n}-p\to s\in K,\qquad e_{q_n}\to f\in\mathcal E.
+\tag{XI142.14}
+$$
+
+这里 $s$ 尚不预设纯；使用的是整个 $K$ 和整个 $\mathcal E$ 的紧性。原读数保留为
+
+$$
+e_p(p)=1,\qquad e_p(s)=0,\qquad
+f(q)=1,\qquad f(p)=f(s)=0.
+\tag{XI142.15}
+$$
+
+因此 $p,s\in D_q$，而 $e_p$ 在同一个完整球 $D_q$ 上取一、零，迫使 $s$ 是与 $p$ 对径的原纯球缘点。另一方面，$e_p(s)=0$ 的准确零面是 $D_p$，故 $s\in D_p$。在固定完整 $D_p$ 上，$f(q)=1,f(s)=0$ 又迫使
+
+$$
+s=2c_p-q.
+\tag{XI142.16}
+$$
+
+于是对同一条收敛子列，
+
+$$
+b_n=e_{q_n}(2c_p-q_n)\longrightarrow f(2c_p-q)=f(s)=0,
+$$
+
+与(XI142.13)矛盾。这是原状态、原效应及两张完整球共同实现的约束；抽象赋值 $a_n\to0,b_n\to1/2$ 不满足它。故 $L_p^*<2$。将 $t=L_p^*$ 代入142.2的全方向正分解，即得 $\gamma_p\le L_p^*$。证毕。
+
+**定理 142.4（二元不等式候选与同原完整静态量子模型）。** 在定义142.1的全部原量词下，下列两项等价：
+
+$$
+\boxed{\mathrm{EB3}+\mathsf{Conn}+\mathsf H};
+\qquad
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V\text{ 实线性},\quad
+\Phi(\operatorname{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\tag{XI142.17}
+$$
+
+在左项下，每条有向原边实际上有 $d_{pq}=0$，每条完整排除球的每条直径均有原满刻度效应，全部 $e_p$ 才取得 least 及 $T_p=e_p$ 的整个原混态结论。
+
+证明。若存在一条边 $d_{pq}>0$，142.2使反向 $d_{qp}>0$，并给 $\gamma_p\gamma_q\ge4$。但142.3在这两个实际标签分别给 $0\le\gamma_p<2$、$0\le\gamma_q<2$，乘积严格小于四，矛盾。因此所有有向边缺陷为零。
+
+任取原 $p$，其球缘非空；对任一 $q\in P\cap D_p$，$d_{qp}=0$ 意味着原 $e_q$ 将 $q$ 和 $2c_p-q$ 读成一、零。因此整个 $D_p$ 满宽，且论证覆盖每个方向。现在才直接消费[IX120.5、IX116.17][Q142IX]的同原全满宽分类，取得(XI142.17)中的同一个 $\Phi$。不重证拓扑分类、Jordan 分类或复型选择，也不在局部预算估计前预装这些结构。
+
+反向在整个标准复三能级域计算，再沿同一个 $\Phi$ 运输。任意纯态为 $p=vv^*$、$\|v\|=1$，整个 $D_p$ 是 $v^\perp$ 上全部迹一正矩阵的完整三球，$c_p=(I_3-p)/2$，唯一整球零尺为 $e_p(\rho)=\operatorname{Tr}(p\rho)$。若 $p\perp q$，则 $s_{pq}=I_3-q-p$ 是第三个正交秩一投影，$d_{pq}=0$，故 $\mathsf H$ 成立。任意两条不同复射线在复三维中有共同正交射线，给至多两条真实零边的连接；相同射线取零长路。因此完整 $\mathsf{Conn}$ 成立。证毕。
+
+**条件应用 142.5（几何、现有静态公理与剩余原合同）。** 在142.4的等价条件下，同一个 $\Phi$ 直接复用135.6的整个静态字典：$\dim_{\mathbb R}V=9$，全部归一态是八维仿射密度态体，全部纯态为 $\mathbb{CP}^2$，每张完整排除球的纯球缘为 $\mathbb{CP}^1\cong S^2$。全部效应为 $f_M(\Phi\rho)=\operatorname{Tr}(M\rho)$、$0\preceq M\preceq I_3$，每个原混态的最低确认是 $T_{p_v}(\Phi\rho)=v^*\rho v$，纯比较为 $|v^*w|^2$。全部有限数学 POVM、三元正交完成、谱分解、自对偶与 Jordan 结构也沿同一表示取得。
+
+证明。142.4准确取得135.5的同锥同单位结论，因此135.6的全部参数对应逐项适用。特别地，$U=\Phi(I_3)$、$c_p=(U-p)/2$，球心替换相对于 $U/3$ 为反向缩小一半；故全 $\mathsf{MC}$ 及140.1的 $\mathsf{ZC}$ 都是后果。上述推导只在全原满宽已经证明后消费该字典。证毕。
+
+该候选用(XI142.4)的二元上界供应真实三角及满刻度传播，不再输入140.4的 $\mathsf{ZC}$ 和 $\mathsf{Seed}$；它没有证明 EB3+$\mathsf{Conn}$ 自动给这个上界，也不证明常数 $1/2$ 最优、独立假设数量最少或相对已等价于量子表示的完整候选严格更弱。三球是排除面的仿射维数，不指定物理空间维数；同一静态态体也不指定物理时间。
+
+全部实际事件与条件更新、零质量分支、实际球心替换、可调用制备和仪器、任意有限复合的整个联合态锥及纠缠、全旁观 CP、同族逐输入预算与接线、记录、来源和合法未来、连续动力学、原物理钟、Hamiltonian、能量标定及数值 $\hbar$，仍保留135.7及其传递引用的全部独立前件。单体静态表示没有供应这些合同。
+
+**约定 142.6（推导归属与白话关系）。** 本章采用仓内综合推导归属，不声明全球新颖性或历史优先权。原面、法向限制同构、峰值公式、双球恒等式及有限投影增益均复用上述原来源；同原全满宽分类与量子字典也不重新计为成果。新增承重桥是：反射态将同一条原边两端的增益乘积锁到至少四；全域二分之一读数界给各端至多二；若逼近等号，原紧球缘和同一极限效应又把反向读数迫到零，排除该等号。由此每端分别严格小于二，迫使每条边的缺陷全零。这不是把有限增益误当单位增益，也没有从两个不同模型的最优值拼出同一预算。
+
+现成分类的迁移仍保留其额外前件：[Barnum—Müller—Ududec，Theorem 16][Q142BMU]要求 projectivity、对称跃迁概率与保纯滤子；本章不在142.2—142.3的原域估计中提前借用该分类，也不把 PR、正投影或谱性放回前件。通用紧性与球上仿射极值只是中间工具；新结论是它们在同一原双球、原单位和有向读数中的联合约束。
+
+白话说：每个纯态背后都是一整颗实心排除三球。若两个纯态可以完全排除，就在到达点的球里穿过球心，走到出发点的对径点；出发点自己的原零尺在这个真实反射态上，最多允许读到半刻度。只要所有这种两点关系都守这条上界，且原零边能用有限步连接全部纯态，半刻度就会自动收紧到零：正反两端若都有剩余偏差，它们所需的预算乘积至少为四；整球的原正性却把两端预算各自严格压到二以下。于是每条边都闭成真实三角，每颗球的每条直径都满刻度，既有分类给同一完整复三能级量子态体及 Born 读数。这里不再先给三角，也不要求所有直径的平均读数相等；仍需完整三球、有限边路连通和这条原二元上界，实际仪器、复合与时间继续另有原合同。
+
+[Q142IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX119.2、119.4：同一原坐标的有限正投影与准确增益；120.8、120.10—120.13：全原法向限制、方向函数与邻点公式；120.4—120.5、116.17—116.18：原满宽分类及静态字典。"
+[Q142TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md "VIII130.2：完整 EB3+有限原零图 Conn 支付 Inj、全部唯一整球零尺、原四维法向和限制同构，不供应 least 或正限制逆。"
+[Q142RH]: ../../../D5/S3/Quantum/Foundation/OriginalRegularHeight.lean "OriginalRegularHeight.two_ball_identity：实际相邻球中的对径 p、aa 与三个原整球零尺，通过 Coordinates.restriction 单射得到的全 V 恒等式；本章 aa=s。"
+[Q142BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory, Theorem 16；不作为裸 EB3+Conn 的免费分类。"
+
+## 追加锚（本行以下为增补区）
