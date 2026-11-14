@@ -272,7 +272,7 @@ $$
 \mathsf A_+(K)
 \quad\Longleftrightarrow\quad
 \bigl(\operatorname{PSD}_d\subseteq K\bigr)
-\ \text{or}\ 
+\ \text{or}\
 \bigl(K\subseteq-\operatorname{PSD}_d\bigr).
 \tag{176.3}
 $$
