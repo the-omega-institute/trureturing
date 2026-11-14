@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Matrix/AsynchronousTwoBlockRadius
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Matrix/AsynchronousTwoBlockRadius
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
