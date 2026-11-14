@@ -51,11 +51,11 @@ The correspondence would fail if the source excluded length one or constant comp
 
 `D5/S1/Words/Forbidden/BonaMagaRicheyExtremalFrequency.result` has the literal type `Not claim`, with no extra mathematical hypotheses. The matching Scribe attaches exactly one typed `OpenProblemResolutionClaim` with this dossier's slug and `ResolutionKind.Refuted` to that result. The claim and all four public declaration truth anchors remain in its Blueprint.
 
-The admission basis is `open-problem-resolution (#30346; Refuted)`. The result and its consumed private limit helper have `proof_shape: bind-only`; the helper's consumer is `result`. No escape witness or new general frequency theorem is claimed. The designated refutation result is exempt from four-slot escape registration. This dossier is a pre-freeze authoring surface: it asserts no first freeze, new frozen identity, successful admission or publication. The owner exposure remains private-only in origin and its existing frozen pin requires later canonical maintenance.
+The admission basis is `open-problem-resolution (#30346; Refuted)`. The result and its consumed private limit helper have `proof_shape: bind-only`; the helper's consumer is `result`. No escape witness or new general frequency theorem is claimed. The designated refutation result is exempt from four-slot escape registration.
 
 ## Triage
 
-Tier 1: a recent externally authored assertion explicitly lacking a proof in the source; settlement kind small-case refutation of its complete universal statement. No separate problem is counted for each length or proposed optimizer. The corresponding endpoint uses the later uncovered route, since the existing related theory has no corresponding extremal statement.
+Tier 1: a recent externally authored assertion explicitly lacking a proof in the source; settlement kind small-case refutation of its complete universal statement. No separate problem is counted for each length or proposed optimizer. The corresponding endpoint uses the uncovered route, since the existing related theory has no corresponding extremal statement.
 
 ### What the settlement shows
 
