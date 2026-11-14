@@ -165,8 +165,11 @@ private theorem section_radial_geometry [FiniteDimensional ℝ E]
       (D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.base_compact C.isClosed hu)
     convert hh using 1
     ext x
-    simp only [K, mem_setOf_eq, mem_preimage,
-      D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.base, x.property, and_true]
+    change ((x : E) ∈ C) ↔ ((x : E) ∈ C ∧ u (x : E) = 1)
+    constructor
+    · intro hx
+      exact ⟨hx, x.property⟩
+    · exact And.left
   have hAcpt : IsCompact A := hpre ▸ e.isClosedEmbedding.isCompact_preimage hKc
   obtain ⟨ε, hε, hεA⟩ := Metric.mem_nhds_iff.mp (mem_interior_iff_mem_nhds.mp h0)
   let r := ε / 2
@@ -188,6 +191,6 @@ private theorem section_radial_geometry [FiniteDimensional ℝ E]
   refine ⟨r, R, hr, hrR, hin, hout, hb, hlip, H, hH, ?_⟩
   intro v w
   rw [hH, hH, dist_add_left]
-  exact hdist v w
+  simpa only [hformula, Subtype.dist_eq, Submodule.coe_smul] using hdist v w
 
 end D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry

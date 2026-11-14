@@ -7,6 +7,7 @@
    digest: The original arbitrary unit retains full compact effects and attained whole-cone confirmation. -/
 
 import D5.S3.Geometry.AlgebraicBoundary.ConeCompactBase
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Foundation.ExclusionWidthCompactness
 
 noncomputable section
@@ -37,7 +38,10 @@ private theorem original_quantum_consumer {E : Type*} [NormedAddCommGroup E]
     apply top_unique
     intro x hx
     have hx' : x ∈ affineSpan ℝ (C : Set E) := by rw [ha]; trivial
-    rw [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ _ C.toPointedCone.zero_mem)] at hx'
+    have hspan : affineSpan ℝ (C : Set E) =
+        (Submodule.span ℝ (C : Set E) : AffineSubspace ℝ E) :=
+      affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ (C : Set E) C.toPointedCone.zero_mem)
+    rw [hspan] at hx'
     exact hx'
   have he := effects_compact hu hg
   refine ⟨base_compact C.isClosed hu, he, ?_, ?_⟩

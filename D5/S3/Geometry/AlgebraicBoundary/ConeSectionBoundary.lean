@@ -30,6 +30,7 @@ private theorem original_section_boundary {E : Type*} [NormedAddCommGroup E]
     (u : E →L[ℝ] ℝ) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) :
     let K : Set {x : E | u x = 1} := {x | (x : E) ∈ C}
     IsCompact K ∧ (interior K).Nonempty ∧
+      (∃ b : E, u b = 1 ∧ b ∈ interior (C : Set E)) ∧
       (∀ x : {y : E | u y = 1}, x ∈ frontier K ↔ (x : E) ∈ frontier (C : Set E)) ∧
       (∀ x : E, x ∈ frontier (C : Set E) ∧ x ≠ 0 ↔
         ∃ (r : ℝ) (b : {y : E | u y = 1}), 0 < r ∧ b ∈ frontier K ∧ x = r • (b : E)) := by
@@ -63,9 +64,12 @@ private theorem original_section_boundary {E : Type*} [NormedAddCommGroup E]
       (D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.base_compact C.isClosed hu)
     convert hh using 1
     ext x
-    simp only [K, mem_setOf_eq, mem_preimage,
-      D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.base, x.property, and_true]
-  refine ⟨hcompact, ?_, hrel, ?_⟩
+    change ((x : E) ∈ C) ↔ ((x : E) ∈ C ∧ u (x : E) = 1)
+    constructor
+    · intro hx
+      exact ⟨hx, x.property⟩
+    · exact And.left
+  refine ⟨hcompact, ?_, ⟨b, hb, hbi⟩, hrel, ?_⟩
   · refine ⟨e 0, ?_⟩
     have hi : (0 : u.ker) ∈ interior A := (hgeo.1 0).mpr (by simpa using hbi)
     change (0 : u.ker) ∈ e ⁻¹' interior K

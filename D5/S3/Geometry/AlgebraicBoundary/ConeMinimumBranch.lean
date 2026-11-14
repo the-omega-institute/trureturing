@@ -450,7 +450,7 @@ private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGrou
           (C : Set E) →
         ∃ r : MvPolynomial ι ℝ, r ≠ 0 ∧ r.totalDegree = h.totalDegree ∧
           ∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ∧
-      (let U : Set E := {x | MvPolynomial.eval (c x) p ≠ 0}
+      (let U : Set E := {x | MvPolynomial.eval (c x) p ≠ 0};
         closure (⋃₀ {D ∈ connectedComponentIn U '' U | D ⊆ interior (C : Set E)}) =
           (C : Set E)) ∧
       ∀ e ∈ interior (C : Set E),

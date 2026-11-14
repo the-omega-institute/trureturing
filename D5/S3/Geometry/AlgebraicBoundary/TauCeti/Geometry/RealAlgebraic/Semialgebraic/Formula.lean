@@ -8,7 +8,8 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/Geometry/RealAlgebraic/Semialgebraic/Formula.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes and explicit set extensionality for the pinned
+Mathlib API; mathematical telescopes and the original proof arguments are retained.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -83,8 +84,9 @@ theorem isSemialgebraic_setOf_realize {φ : (Language.ring.sum Language.order).B
     IsSemialgebraic {x : α ⊕ Fin n → R | φ.Realize (x ∘ Sum.inl) (x ∘ Sum.inr)} := by
   induction hφ with
   | falsum =>
-    convert isSemialgebraic_empty (σ := α ⊕ Fin n) (R := R)
-    simp only [Set.mem_eq_mem, Set.notMem_empty, iff_false]
+    convert isSemialgebraic_empty (σ := α ⊕ Fin n) (R := R) using 1
+    ext x
+    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
     exact fun h ↦ realize_bot.1 h
   | of_isAtomic h =>
     cases h with

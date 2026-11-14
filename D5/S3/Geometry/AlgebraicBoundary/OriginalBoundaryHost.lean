@@ -11,6 +11,7 @@ import D5.S3.Geometry.AlgebraicBoundary.ConeMinimumBranch
 import D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry
 import D5.S3.Geometry.AlgebraicBoundary.ConeQuantumConsumer
 import D5.S3.Geometry.AlgebraicBoundary.ConeSectionBoundary
+import D5.S3.Geometry.AlgebraicBoundary.ConeSectionDegree
 
 noncomputable section
 open Set Metric
@@ -33,16 +34,21 @@ open private linePolynomial affineLinearPolynomial interior_zero_factor
 open private original_section_boundary
   from D5.S3.Geometry.AlgebraicBoundary.ConeSectionBoundary
 
-variable {ι : Type*} [Fintype ι]
+open private original_section_degree
+  from D5.S3.Geometry.AlgebraicBoundary.ConeSectionDegree
+open private affinePullback
+  from D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation
 
 /-- Original ambient and quantum domains, finite-degree ideal, and every low-degree direction. -/
 theorem original_entire_boundary_host {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [FiniteDimensional ℝ E] [Nontrivial E]
-    (c : E ≃L[ℝ] (ι → ℝ)) (C : ProperCone ℝ E)
+    (C : ProperCone ℝ E)
     (hs : (C : ConvexCone ℝ E).Salient) (hfull : (interior (C : Set E)).Nonempty)
     (u : E →L[ℝ] ℝ) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) :
+    let c : E ≃L[ℝ] (Fin (Module.finrank ℝ E) → ℝ) := (Module.finBasis ℝ E).equivFunL;
     (    let K : Set {x : E | u x = 1} := {x | (x : E) ∈ C}
     IsCompact K ∧ (interior K).Nonempty ∧
+      (∃ b : E, u b = 1 ∧ b ∈ interior (C : Set E)) ∧
       (∀ x : {y : E | u y = 1}, x ∈ frontier K ↔ (x : E) ∈ frontier (C : Set E)) ∧
       (∀ x : E, x ∈ frontier (C : Set E) ∧ x ≠ 0 ↔
         ∃ (r : ℝ) (b : {y : E | u y = 1}), 0 < r ∧ b ∈ frontier K ∧ x = r • (b : E))) ∧
@@ -70,51 +76,51 @@ theorem original_entire_boundary_host {E : Type*} [NormedAddCommGroup E]
         ∀ v w, dist ((h v : {y : E | u y = 1}) : E)
             ((h w : {y : E | u y = 1}) : E) ≤
           (R + R ^ 2 / r) * dist (v : u.ker) (w : u.ker)) ∧
-    (∀ (p : MvPolynomial ι ℝ), p ≠ 0 →
+    (∀ (p : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ), p ≠ 0 →
       (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) p = 0) →
     (C : Set E) ∈ MeasureTheory.generateSetAlgebra
-      (range (fun r : MvPolynomial ι ℝ => {x : E | MvPolynomial.eval (c x) r = 0}) ∪
-        range (fun r : MvPolynomial ι ℝ => {x : E | 0 < MvPolynomial.eval (c x) r})) ∧
-    ∃ (d : ℕ) (q : MvPolynomial ι ℝ), 0 < d ∧ d ≤ p.totalDegree ∧ q ≠ 0 ∧
+      (range (fun r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ => {x : E | MvPolynomial.eval (c x) r = 0}) ∪
+        range (fun r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ => {x : E | 0 < MvPolynomial.eval (c x) r})) ∧
+    ∃ (d : ℕ) (q : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ), 0 < d ∧ d ≤ p.totalDegree ∧ q ≠ 0 ∧
       q.IsHomogeneous d ∧ Squarefree q ∧ q.totalDegree = d ∧
       (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) q = 0) ∧
-      (∀ r : MvPolynomial ι ℝ, r ≠ 0 →
+      (∀ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, r ≠ 0 →
         (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) →
           q.totalDegree ≤ r.totalDegree) ∧
-      (∀ r : MvPolynomial ι ℝ,
+      (∀ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ,
         (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ↔ q ∣ r) ∧
-      (∀ r : MvPolynomial ι ℝ, r ≠ 0 → r.totalDegree ≤ d →
+      (∀ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, r ≠ 0 → r.totalDegree ≤ d →
         (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) →
           ∃ a : ℝ, a ≠ 0 ∧ r = MvPolynomial.C a * q)) ∧
-    (∀ (p : MvPolynomial ι ℝ), p ≠ 0 → p.totalDegree ≤ 3 →
+    (∀ (p : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ), p ≠ 0 → p.totalDegree ≤ 3 →
       (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) p = 0) →
-    ∃ (d : ℕ) (q : MvPolynomial ι ℝ), 0 < d ∧ d ≤ p.totalDegree ∧ q ≠ 0 ∧
+    ∃ (d : ℕ) (q : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ), 0 < d ∧ d ≤ p.totalDegree ∧ q ≠ 0 ∧
       q.IsHomogeneous d ∧ Squarefree q ∧
       (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) q = 0) ∧
-      (∀ r : MvPolynomial ι ℝ, r ≠ 0 →
+      (∀ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, r ≠ 0 →
         (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) →
           q.totalDegree ≤ r.totalDegree) ∧
-      (∀ r : MvPolynomial ι ℝ,
+      (∀ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ,
         (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ↔ q ∣ r) ∧
       (∀ y ∈ interior (C : Set E), 0 < MvPolynomial.eval (c y) q) ∧
-      (∀ r : MvPolynomial ι ℝ, r ≠ 0 → r.totalDegree ≤ d →
+      (∀ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, r ≠ 0 → r.totalDegree ≤ d →
         (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) →
           ∃ a : ℝ, a ≠ 0 ∧ r = MvPolynomial.C a * q) ∧
       (Module.finrank ℝ E = 1 →
-        ∃ (u : E →L[ℝ] ℝ) (b : E) (l : MvPolynomial ι ℝ),
+        ∃ (u : E →L[ℝ] ℝ) (b : E) (l : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ),
           u b = 1 ∧ b ∈ interior (C : Set E) ∧
           (∀ x, x = u x • b) ∧ (∀ x, x ∈ C ↔ 0 ≤ u x) ∧
           frontier (C : Set E) = {0} ∧ l ≠ 0 ∧ l.IsHomogeneous 1 ∧ l.totalDegree = 1 ∧
           (∀ x, MvPolynomial.eval (c x) l = u x) ∧
-          (∀ r : MvPolynomial ι ℝ,
+          (∀ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ,
             (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ↔ l ∣ r)) ∧
-      (∀ (h : MvPolynomial ι ℝ) (k : ℕ) (e : E), h.IsHomogeneous k →
+      (∀ (h : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ) (k : ℕ) (e : E), h.IsHomogeneous k →
         e ∈ interior (C : Set E) → MvPolynomial.eval (c e) h ≠ 0 →
         {x : E | ∀ t : ℝ, (linePolynomial h (-c x) (c e)).eval t = 0 → 0 ≤ t} =
           (C : Set E) →
-        ∃ r : MvPolynomial ι ℝ, r ≠ 0 ∧ r.totalDegree = h.totalDegree ∧
+        ∃ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, r ≠ 0 ∧ r.totalDegree = h.totalDegree ∧
           ∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ∧
-      (let U : Set E := {x | MvPolynomial.eval (c x) p ≠ 0}
+      (let U : Set E := {x | MvPolynomial.eval (c x) p ≠ 0};
         closure (⋃₀ {D ∈ connectedComponentIn U '' U | D ⊆ interior (C : Set E)}) =
           (C : Set E)) ∧
       ∀ e ∈ interior (C : Set E),
@@ -135,9 +141,36 @@ theorem original_entire_boundary_host {E : Type*} [NormedAddCommGroup E]
       let L := fderiv ℝ (fun x : κ → ℝ => MvPolynomial.eval x f) a
       L ≠ 0 ∧ ∃ g : MvPolynomial κ ℝ, g ≠ 0 ∧ f = affineLinearPolynomial a L * g ∧
         g.totalDegree + 1 = f.totalDegree ∧
-        ∀ x ∈ frontier B, MvPolynomial.eval x g = 0) := by
+        ∀ x ∈ frontier B, MvPolynomial.eval x g = 0) ∧
+    (2 ≤ Module.finrank ℝ E →
+    let κ := Fin (Module.finrank ℝ u.ker)
+    ∃ (b : E) (J : (κ → ℝ) →L[ℝ] E) (A : E →L[ℝ] (κ → ℝ)),
+      u b = 1 ∧ b ∈ interior (C : Set E) ∧
+      (∀ v, u (J v) = 0) ∧ A b = 0 ∧ (∀ v, A (J v) = v) ∧
+      (∀ x, J (A x) = x - u x • b) ∧
+      let B : Set (κ → ℝ) := {v | b + J v ∈ C}
+      IsCompact B ∧ Convex ℝ B ∧ (interior B).Nonempty ∧ (frontier B).Nonempty ∧
+      (∀ v, v ∈ frontier B ↔ b + J v ∈ frontier (C : Set E)) ∧
+      (∀ (p : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ) (d : ℕ), p ≠ 0 → p.IsHomogeneous d →
+        (∀ x ∈ frontier (C : Set E), MvPolynomial.eval (c x) p = 0) →
+        (∀ q : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, q ≠ 0 →
+          (∀ x ∈ frontier (C : Set E), MvPolynomial.eval (c x) q = 0) →
+            p.totalDegree ≤ q.totalDegree) →
+        let f := affinePullback p (c b) (c.toContinuousLinearMap.comp J)
+        f ≠ 0 ∧ f.totalDegree = p.totalDegree ∧
+          (∀ v ∈ frontier B, MvPolynomial.eval v f = 0) ∧
+          ∀ g : MvPolynomial κ ℝ, g ≠ 0 →
+            (∀ v ∈ frontier B, MvPolynomial.eval v g = 0) → f.totalDegree ≤ g.totalDegree) ∧
+      (∀ g : MvPolynomial κ ℝ, g ≠ 0 →
+        (∀ v ∈ frontier B, MvPolynomial.eval v g = 0) →
+        ∃ G : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, G ≠ 0 ∧ G.IsHomogeneous g.totalDegree ∧
+          G.totalDegree = g.totalDegree ∧
+          (∀ v, MvPolynomial.eval (c (b + J v)) G = MvPolynomial.eval v g) ∧
+          ∀ x ∈ frontier (C : Set E), MvPolynomial.eval (c x) G = 0)) := by
+  dsimp only
+  let c : E ≃L[ℝ] (Fin (Module.finrank ℝ E) → ℝ) := (Module.finBasis ℝ E).equivFunL
   refine ⟨original_section_boundary C hs hfull u hu,
-    original_quantum_consumer C hfull u hu, ?_, ?_, ?_, ?_⟩
+    original_quantum_consumer C hfull u hu, ?_, ?_, ?_, ?_, ?_⟩
   · intro a ha
     exact section_radial_geometry C u hu a ha
   · intro p hp hvan
@@ -146,5 +179,8 @@ theorem original_entire_boundary_host {E : Type*} [NormedAddCommGroup E]
     exact original_minimum_roots_and_branch c C hs hfull p hp hd hvan
   · intro κ _ B hB hc f hf hd hvan a ha hfa
     exact interior_zero_factor hB hc f hf hd hvan ha hfa
+
+  · intro hdim
+    exact original_section_degree c C hs hfull u hu hdim
 
 end D5.S3.Geometry.AlgebraicBoundary.OriginalBoundaryHost

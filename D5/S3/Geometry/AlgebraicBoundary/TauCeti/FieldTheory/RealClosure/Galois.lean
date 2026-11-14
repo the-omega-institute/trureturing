@@ -8,7 +8,7 @@
 
 /- Source: TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2,
 TauCeti/FieldTheory/RealClosure/Galois.lean.
-Adaptation: ordinary D5 import routes; the original declarations and proofs are retained.
+Adaptation: ordinary D5 import routes; the original declarations and proofs are retained; Sylow.isPGroup uses the host field isPGroup'.
 License: docs/reports/licenses/TauCeti-LICENSE.txt. Original copyright notices follow.
 Retire each transplanted declaration when the actual pinned mathlib supplies an equivalent
 statement, and replace its consumers by direct imports and applications of that pinned owner.
@@ -60,7 +60,7 @@ theorem isPGroup_two_algEquiv : IsPGroup 2 (E ≃ₐ[R] E) := by
     apply Subgroup.index_eq_one.mp
     rw [← hindex]
     exact finrank_eq_one_of_odd hodd
-  have hP := P.isPGroup
+  have hP := P.isPGroup'
   rw [htop] at hP
   exact hP.of_equiv Subgroup.topEquiv
 

@@ -29,6 +29,7 @@ private theorem cone_semialgebraic (C : ProperCone ℝ (ι → ℝ))
   let U : Set (ι → ℝ) := {x | MvPolynomial.eval x p ≠ 0}
   obtain ⟨D, hDf, _, hD, hDU⟩ :=
     (TauCeti.isSemialgebraic_eval_ne_zero p).exists_finite_isConnected_partition
+  change ⋃₀ D = U at hDU
   let F : Set (Set (ι → ℝ)) := {E ∈ D | E ⊆ interior (C : Set (ι → ℝ))}
   have hFf : F.Finite := hDf.subset (sep_subset _ _)
   have hEU : ∀ E ∈ D, E ⊆ U := by

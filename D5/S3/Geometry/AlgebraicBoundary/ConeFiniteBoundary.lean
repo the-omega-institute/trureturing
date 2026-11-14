@@ -89,6 +89,9 @@ private theorem original_finite_boundary_ideal {E : Type*} [NormedAddCommGroup E
     refine ⟨g.coeff 0, ?_, ?_⟩
     · intro hz
       exact hg (by rw [hgC, hz, map_zero])
-    · rw [hrg, hgC, mul_comm]
+    · calc
+        r = q * g := hrg
+        _ = g * q := mul_comm _ _
+        _ = MvPolynomial.C (g.coeff 0) * q := congrArg (fun z => z * q) hgC
 
 end D5.S3.Geometry.AlgebraicBoundary.ConeFiniteBoundary
