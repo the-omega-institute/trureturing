@@ -49,3 +49,4 @@ The source uses the entire original finite real cone, normalized base, pure locu
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalReturnSectors/Contacts.sectorViolation`
 - Dependency: [D5/S3/Quantum/Foundation/MixedExclusionGeometry](../MixedExclusionGeometry.md)
 - Dependency: [D5/S3/Quantum/Foundation/SingleLabelNormalBody](../SingleLabelNormalBody.md)
+- Dependency: [D5/S3/Quantum/Foundation/UniqueConfirmationDensity](../UniqueConfirmationDensity.md)
