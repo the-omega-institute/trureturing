@@ -32,8 +32,10 @@ def diagonalSum {n : ℕ} (p : Cell n) : ℤ := (p.1.val : ℤ) + p.2.val
 /-- Both diagonal directions on the actual fixed-coordinate board. -/
 def bishopGraph (n : ℕ) : SimpleGraph (Cell n) where
   Adj p q := p ≠ q ∧ (difference p = difference q ∨ diagonalSum p = diagonalSum q)
-  symm := by intro p q h; exact ⟨h.1.symm, h.2.elim (fun h => Or.inl h.symm) (fun h => Or.inr h.symm)⟩
-  loopless := by intro p h; exact h.1 rfl
+  symm := ⟨by
+    intro p q h
+    exact ⟨h.1.symm, h.2.elim (fun h => Or.inl h.symm) (fun h => Or.inr h.symm)⟩⟩
+  loopless := ⟨by intro p h; exact h.1 rfl⟩
 
 /-- Unordered subsets maximal under inclusion, using the frozen native supplier. -/
 abbrev Placement (n : ℕ) := MaxIndependent (bishopGraph n)
@@ -116,7 +118,12 @@ theorem source_family_card (n : ℕ) : (sourceFamily n).card = count n := by
   classical
   have hall : ∀ M : Placement n, 2 ≤ n → M.val.card ≤ 2 * n - 2 :=
     fun M hn => physical_cap hn M
-  simp [sourceFamily, count, hall]
+  have hfilter : sourceFamily n = univ := by
+    apply Finset.filter_eq_self.mpr
+    intro M _
+    exact hall M
+  rw [hfilter]
+  rfl
 
 private theorem cell_eq_of_diagonals {n : ℕ} {p q : Cell n}
     (hd : difference p = difference q) (hs : diagonalSum p = diagonalSum q) : p = q := by
@@ -131,7 +138,7 @@ def line (m : ℕ) (c : Fin 2) (j : ℕ) : Finset (Cell (4 * m + 1)) :=
   univ.filter (fun p => difference p = label m c (m + j))
 
 private theorem line_sum_injective (m : ℕ) (c : Fin 2) (j : ℕ) :
-    Set.InjOn diagonalSum (line m c j) := by
+    Set.InjOn diagonalSum (line m c j : Set (Cell (4 * m + 1))) := by
   intro p hp q hq hs
   exact cell_eq_of_diagonals ((mem_filter.mp hp).2.trans (mem_filter.mp hq).2.symm) hs
 
@@ -168,12 +175,11 @@ private theorem point_injective (m : ℕ) (c : Fin 2) (h : ℕ) (hh : h < 4 * m)
     Function.Injective (point m c h hh) := by
   intro t u he
   apply Fin.ext
-  unfold point at he
-  split_ifs at he
+  by_cases hh0 : h % 2 = 0
   · have := congrArg (fun p : Cell (4 * m + 1) => p.2.val) he
-    exact this
+    simpa [point, hh0] using this
   · have := congrArg (fun p : Cell (4 * m + 1) => p.1.val) he
-    exact this
+    simpa [point, hh0] using this
 
 private theorem line_card_lower {m : ℕ} (c : Fin 2) {j : ℕ} (hj : j < 3 * m) :
     m + j ≤ (line m c j).card := by
@@ -290,7 +296,8 @@ theorem ratio_lower_bound {m : ℕ} (hm : 50 ≤ m) :
   calc
     4 ^ m * (4 * m + 1) ^ (4 * m) ≤ 4 ^ m * (5 * m) ^ (4 * m) :=
       Nat.mul_le_mul_left _ (Nat.pow_le_pow_left hb _)
-    _ = (4 * (5 * m) ^ 4) ^ m := by rw [mul_pow, ← pow_mul]
+    _ = 4 ^ m * ((5 * m) ^ 4) ^ m := by rw [pow_mul]
+    _ = (4 * (5 * m) ^ 4) ^ m := (mul_pow _ _ _).symm
     _ ≤ (m ^ 6) ^ m := hp
     _ = m ^ (6 * m) := (pow_mul _ _ _).symm
     _ ≤ count (4 * m + 1) := count_lower_bound m
