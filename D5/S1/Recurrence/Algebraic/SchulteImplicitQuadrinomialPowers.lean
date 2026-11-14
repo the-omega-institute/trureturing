@@ -111,7 +111,7 @@ private theorem quadrinomial_coeff (N k : ℕ) (hk : k ≤ 3*N) :
       simp only [q, Polynomial.coe_pow, Polynomial.coe_add, Polynomial.coe_one,
         Polynomial.coe_X, map_pow, map_add, map_one, map_X]
     rw [← he, coeff_map]
-    simp [q, D5.S1.Recurrence.SchulteQuadrinomialAlternatingBinomialExpansion.T]
+    exact congrArg (Int.castRingHom ℚ) (Polynomial.coeff_coe q k)
   rw [hc]
   exact_mod_cast h
 
