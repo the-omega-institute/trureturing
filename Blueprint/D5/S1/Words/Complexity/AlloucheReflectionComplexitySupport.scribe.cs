@@ -14,6 +14,9 @@ internal sealed class AlloucheReflectionComplexitySupportDocument : IScribeDocum
         "Marked mirrors transfer bounded factor increments to reflection increments.",
         H("Reflection orbits and a marked bi-infinite mirror"),
         Blocks(
+            Node("fiberSurplus", "Counting the surplus in finite fibers", FiberSurplus(),
+                "Summing each nonempty fiber's cardinality minus one gives the domain cardinality minus the image cardinality. Both subtractions are natural subtraction.",
+                AssessedProvenance.FromRepo(), DescribeRole.Theorem),
             Node("ReflectivelyEquivalent", "Reflection equivalence", ReflectionRelation(),
                 "Definition 1, p. 3: “Two finite words u and v are reflectively equivalent if v = u or v = uᴿ.” The alphabet is arbitrary, and Fin.rev reverses the zero-based positions of a word of length n.",
                 AssessedProvenance.FromLiterature(Source)),
@@ -73,6 +76,21 @@ internal sealed class AlloucheReflectionComplexitySupportDocument : IScribeDocum
         Call("Finset.card", Call("intFactorSet", Call("mirrorWord", x), n));
     private static Formula Difference(Formula x, Formula n) => Call("Int.natAbs",
         Sub(Cast(Call("reflectionComplexity", x, Add(n, D(1)))), Cast(Call("reflectionComplexity", x, n))));
+
+    private static Formula FiberSurplus()
+    {
+        Formula xType = F.Id("X"), yType = F.Id("Y"), a = F.Id("a"), f = F.Id("f");
+        Formula x = F.Id("x"), y = F.Id("y");
+        Formula image = Call("Finset.image", f, a);
+        Formula fiber = Call("Finset.filter", Lam(x, xType,
+            Equal(new Formula.Apply(f, [x]), y)), a);
+        Formula sum = Seq(new Formula.Subscript(Sum, Seq(y, Sp, InMacro, Sp, image)), Sp,
+            Call("Nat.sub", Call("Finset.card", fiber), D(1)));
+        return All(xType, Named("Type"), All(yType, Named("Type"),
+            Seq(OpenBracket, Call("DecidableEq", yType), CloseBracket, Sp,
+                All(a, Call("Finset", xType), All(f, Fn(xType, yType),
+                    Equal(sum, Call("Nat.sub", Call("Finset.card", a), Call("Finset.card", image))))))));
+    }
 
     private static Formula ReflectionRelation()
     {

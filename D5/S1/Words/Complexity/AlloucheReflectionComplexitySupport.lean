@@ -8,6 +8,8 @@
 
 /-
 admission_basis: escape-witness
+fiberSurplus: proof_shape: bind-only; escape_witness: none;
+  consumers: Conjecture28.Graph.fiberWeight_sum and FixedForestSlotGraph.fiber_surplus.
 mirrorFactorLinear: proof_shape: content; escape_witness: mirror_factor_decomposition.
 reflectionBoundOfMirrorBound: proof_shape: content;
   escape_witness: mirror_factor_decomposition and walk_loop_removal_count.
@@ -26,6 +28,19 @@ import D5.S1.Words.Complexity.MorseHedlund
 namespace D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 
 open D5.S1.Words.Complexity
+
+/-- Fiber surplus counts histories beyond their first occurrence, not visits. -/
+theorem fiberSurplus {X Y : Type*} [DecidableEq Y]
+    (a : Finset X) (f : X → Y) :
+    (∑ y ∈ a.image f, ((a.filter (fun x => f x = y)).card - 1)) =
+      a.card - (a.image f).card := by
+  classical
+  rw [Finset.sum_tsub_distrib]
+  · rw [← Finset.card_eq_sum_card_image f a]
+    simp
+  · intro y hy
+    obtain ⟨x, hx, he⟩ := Finset.mem_image.mp hy
+    exact Finset.card_pos.mpr ⟨x, Finset.mem_filter.mpr ⟨hx, he⟩⟩
 
 /-- Definition 1 restricted to words of the same length: v = u or v = u^R.
 The source uses positions 1,...,n; Fin.rev implements the same reversal at positions 0,...,n-1. -/
@@ -104,9 +119,7 @@ private theorem marked_injective (x : ℕ → A) (n : ℕ) :
 omit [Fintype A] in
 private theorem lift_injective (n : ℕ) :
     Function.Injective (@liftWord A n) := by
-  intro u v h
-  funext k
-  exact Option.some.inj (congrFun h k)
+  exact (Option.some_injective A).comp_left
 
 omit [Fintype A] in
 private theorem intFactor_pos (x : ℕ → A) (n i : ℕ) :
@@ -245,32 +258,22 @@ private theorem code_eq_iff {n : ℕ} (u v : Fin n → A) :
     · rfl
     · exact (code_reverse u).symm
 
-private noncomputable def quotientCodeEquiv {n : ℕ} (s : Finset (Fin n → A)) :
-    Quot (fun u v : ↥s => ReflectivelyEquivalent u.val v.val) ≃ ↥(s.image code) := by
-  classical
-  let toCode : Quot (fun u v : ↥s => ReflectivelyEquivalent u.val v.val) → ↥(s.image code) :=
-    Quot.lift (fun u => ⟨code u.val, Finset.mem_image_of_mem code u.property⟩)
-      (by intro u v h; apply Subtype.ext; exact (code_eq_iff u.val v.val).mpr h)
-  apply Equiv.ofBijective toCode
-  constructor
-  · intro a b
-    induction a using Quot.inductionOn with
-    | h u =>
-      induction b using Quot.inductionOn with
-      | h v =>
-        intro h
-        apply Quot.sound
-        apply (code_eq_iff u.val v.val).mp
-        exact congrArg Subtype.val h
-  · intro c
-    obtain ⟨w, hw, hc⟩ := Finset.mem_image.mp c.property
-    refine ⟨Quot.mk _ ⟨w, hw⟩, ?_⟩
-    apply Subtype.ext
-    exact hc
-
 private theorem reflection_card_codes [Fintype A] (x : ℕ → A) (n : ℕ) :
     reflectionComplexity x n = ((wordFactorSet x n).image code).card := by
-  rw [reflectionComplexity, Nat.card_congr (quotientCodeEquiv (wordFactorSet x n)),
+  classical
+  let s := wordFactorSet x n
+  let f : ↥s → ↥(s.image code) :=
+    fun u => ⟨code u.val, Finset.mem_image_of_mem code u.property⟩
+  have hf : Function.Surjective f := by
+    intro c
+    obtain ⟨w, hw, hc⟩ := Finset.mem_image.mp c.property
+    exact ⟨⟨w, hw⟩, Subtype.ext hc⟩
+  let equiv := (Quot.congrRight (fun u v : ↥s => by
+    change ReflectivelyEquivalent u.val v.val ↔ f u = f v
+    rw [Subtype.ext_iff]
+    exact (code_eq_iff u.val v.val).symm)).trans
+      (Setoid.quotientKerEquivOfSurjective f hf)
+  rw [reflectionComplexity, Nat.card_congr equiv,
     Nat.card_eq_fintype_card, Fintype.card_coe]
 
 /-- Counting reflection orbits of a reversal-closed finite set. -/
@@ -298,9 +301,7 @@ private theorem twice_codes_card {n : ℕ} (s : Finset (Fin n → A))
       (s.filter p).filter (fun v => code v = code w) = (code w).filter p := by
     calc
       _ = (s.filter fun v => code v = code w).filter p := by
-        ext v
-        simp only [Finset.mem_filter]
-        tauto
+        exact Finset.filter_comm p (fun v => code v = code w) s
       _ = _ := congrArg (fun t : Finset (Fin n → A) => t.filter p) (hfiber w hw)
   have hlocal (w : Fin n → A) : (code w).card + ((code w).filter p).card = 2 := by
     by_cases h : w ∘ Fin.rev = w
@@ -343,12 +344,9 @@ private theorem walk_loop_removal_count {V E : Type*} [Fintype V] [Fintype E]
   have hfirst (a : V) : v (first a) = a := Nat.find_spec (hvisit a)
   have hmin (a : V) {i : ℕ} (hi : v i = a) : first a ≤ i := Nat.find_min' (hvisit a) hi
   have hpos (a : V) (ha : a ≠ v 0) : 0 < first a := by
-    by_contra h
-    have hz : first a = 0 := Nat.eq_zero_of_not_pos h
-    exact ha (hz ▸ (hfirst a).symm)
+    exact (Nat.find_pos (hvisit a)).mpr (Ne.symm ha)
   have hsucc (a : V) (ha : a ≠ v 0) : first a - 1 + 1 = first a := by
-    have := hpos a ha
-    omega
+    exact Nat.sub_add_cancel (hpos a ha)
   have hprev (a : V) (ha : a ≠ v 0) : v (first a - 1) ≠ a := by
     intro h
     have := hmin a h

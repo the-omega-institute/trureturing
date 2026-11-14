@@ -320,9 +320,12 @@ private theorem fiberWeight_sum {L : Type*} [Fintype L] (f : L → E)
     (hf : Function.Surjective f) (S : Finset E) :
     (∑ e ∈ S, fiberWeight f e) + S.card = (edgePreimage f S).card := by
   classical
-  have hcount : (edgePreimage f S).card =
-      ∑ e ∈ S, ((edgePreimage f S).filter fun l => f l = e).card :=
-    Finset.card_eq_sum_card_fiberwise (fun l hl => (Finset.mem_filter.mp hl).2)
+  have himage : (edgePreimage f S).image f = S := by
+    change ((Finset.univ.filter fun l : L => f l ∈ S).image f) = S
+    rw [← Finset.filter_image (s := Finset.univ) (f := f) (p := fun e => e ∈ S),
+      Finset.image_univ_of_surjective hf, Finset.filter_univ_mem]
+  have hsurplus := AlloucheReflectionComplexitySupport.fiberSurplus (edgePreimage f S) f
+  rw [himage] at hsurplus
   have hfilter (e : E) (he : e ∈ S) :
       (edgePreimage f S).filter (fun l => f l = e) = edgePreimage f {e} := by
     ext l
@@ -331,24 +334,12 @@ private theorem fiberWeight_sum {L : Type*} [Fintype L] (f : L → E)
     · exact And.right
     · intro hl
       exact ⟨hl.symm ▸ he, hl⟩
-  have hpos (e : E) : 1 ≤ (edgePreimage f {e}).card := by
-    obtain ⟨l, hl⟩ := hf e
-    apply Finset.one_le_card.mpr
-    exact ⟨l, by simp only [edgePreimage, Finset.mem_filter, Finset.mem_univ,
-      Finset.mem_singleton, true_and]; exact hl⟩
-  calc
-    _ = ∑ e ∈ S, (fiberWeight f e + 1) := by simp [Finset.sum_add_distrib]
-    _ = ∑ e ∈ S, (edgePreimage f {e}).card := by
-      apply Finset.sum_congr rfl
-      intro e he
-      dsimp [fiberWeight]
-      have := hpos e
-      omega
-    _ = _ := by
-      rw [hcount]
-      apply Finset.sum_congr rfl
-      intro e he
-      rw [hfilter e he]
+  simp_rw [Finset.sum_congr rfl (fun e he => congrArg (fun s : Finset L => s.card - 1)
+    (hfilter e he))] at hsurplus
+  simp only [fiberWeight]
+  have hle := Finset.card_image_le (s := edgePreimage f S) (f := f)
+  rw [himage] at hle
+  omega
 
 /-- A surjective morphism of finite prolongable graphs gives the cut estimate
 for the number of extra edge lifts. -/
@@ -418,9 +409,7 @@ private theorem peak_count_bound {V' E' L : Type*} [Fintype V'] [Fintype E'] [Fi
   let B : Finset E' := edgePreimage fe N
   let G : Finset E' := Finset.univ \ B
   have hd_inj : Function.Injective d := by
-    intro v w hvw
-    have h := congrArg src hvw
-    simpa only [hd] using h
+    exact Function.LeftInverse.injective hd
   have hN : N.card + Fintype.card V = Fintype.card E := by
     have hD : Finset.univ \ N = Finset.univ.image d := by
       ext e
@@ -767,7 +756,7 @@ private theorem biinfinite_bounded_differences (z : ℤ → Option A) (C : ℕ)
       _ ≤ C*9 := Nat.mul_le_mul_left C (by omega)
       _ = 9*C := Nat.mul_comm _ _
       _ ≤ D := le_max_left _ _
-      _ ≤ p n + D := by omega
+      _ ≤ p n + D := Nat.le_add_left D (p n)
   · have hm : 0 < n/2 := by omega
     obtain ⟨a, ha, han, hsa⟩ := exists_small_step p C (n/2) hm hC
     obtain ⟨b, hb, hbn, hsb⟩ := exists_small_step p C (n+1) (by omega) hC
@@ -783,8 +772,8 @@ private theorem biinfinite_bounded_differences (z : ℤ → Option A) (C : ℕ)
     change p (n+1) ≤ p n +
       (p (a+1)-p a) * (((p (a+1)-p a)+1)*(4*(6*C)+1) +
         ((p (a+1)-p a)+(p (b+1)-p b))+1) at hpeak
-    have h₁ : p (a+1)-p a ≤ 3*C := by omega
-    have h₂ : p (b+1)-p b ≤ 3*C := by omega
+    have h₁ : p (a+1)-p a ≤ 3*C := Nat.sub_le_iff_le_add'.mpr hsa
+    have h₂ : p (b+1)-p b ≤ 3*C := Nat.sub_le_iff_le_add'.mpr hsb
     have hprod : (p (a+1)-p a) * (((p (a+1)-p a)+1)*(4*(6*C)+1) +
         ((p (a+1)-p a)+(p (b+1)-p b))+1) ≤
         3*C*((3*C+1)*(24*C+1)+6*C+1) := by
