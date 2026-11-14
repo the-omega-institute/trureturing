@@ -1,0 +1,16 @@
+**条件应用 144.5（不指定数值的全域同值候选）。** 在(XI144.1)的全部原量词下，EB3+$\mathsf{Conn}$+$\mathsf{UC}$ 等价于存在实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,
+\qquad\Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{XI144.21}
+$$
+
+此时同值候选中的共同数必为 $\kappa=1$。
+
+证明。UC 给 ZC。任取一个原纯点，144.2给共同数 $\kappa<2$；所以同一个 $\varepsilon=2-\kappa>0$ 已在全部标签之前选定。144.4直接取得(XI144.21)。反向在整个标准 qutrit 域，原效应为全部 $0\preceq M\preceq I_3$，$e_p(\rho)=\operatorname{Tr}(p\rho)$，$c_p=(I_3-p)/2$。若 $x\in S_a$，则 $\operatorname{Tr}(ax)=0$，故 $e_a(c_x)=1/2$，UC 取 $\kappa=1$；完整 EB3 和 Conn 的全域反向复用142.2。通过同一 $\Phi$ 运输即得全部原对象的结论。证毕。
+
+同一个表示直接消费142.3的完整静态字典：原 $\dim_{\mathbb R}V=9$，全部态是整个迹一正三阶矩阵，全部纯域为 $\mathbb{CP}^2$，完整排除球的球缘为 $\mathbb{CP}^1\cong S^2$；原全部效应和数学有限 POVM、原完整非单点确认菜单、least 及每个混态的 Born minimum $T_{p_v}(\Phi\rho)=v^*\rho v$、谱分解、自对偶与 Jordan 结构全部沿同一个 $\Phi$ 取得。球心图为 $R(x)=(u(x)U-x)/2$，$U=\Phi(I_3)$。相对于总体中心态 $U/3$，它是反向缩小一半。
+
+实际来源与读回、全部质量、全有限复合及纠缠、实际事件和仪器、全旁观 CP、逐输入预算、记录、所有未来与切口，以及物理钟、Hamiltonian、能量标定和数值 $\hbar$，逐项保留142.4及其传递来源的完整原合同。静态表示不供应这些物理实现。比较端点互易指原最低确认的 $T_p(q)=T_q(p)$；UC 约束球心替换后的同一原尺读数，两者均不表示任意连续测量的先后次序可交换。
+
