@@ -366,18 +366,26 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
         ⟨(-d,-c),by abel⟩ (dualIota B d ψ ⊗ₜ[ℂ] dualIota A c φ)) =
       k hD c d • dualIota (targetModule A B) (c+d)
         (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ)) := by
+  let FA (q : Discriminant D) : Type u := Module.Dual ℂ (Multiplicity A q)
+  let FB (q : Discriminant D) : Type v := Module.Dual ℂ (Multiplicity B q)
+  let TC (q : Discriminant D) : Type (max u v) :=
+    Module.Dual ℂ (Multiplicity (targetModule A B) q)
+  have hc : c = - -c := (neg_neg c).symm
+  have hd : d = - -d := (neg_neg d).symm
+  have hq : c+d = - -(c+d) := (neg_neg (c+d)).symm
   let evalRaw (q : Discriminant D)
-      (f : Module.Dual ℂ (Multiplicity (targetModule A B) q))
+      (f : TC q)
       (x : Multiplicity (targetModule A B) q) : ℂ := f.toAddHom.toFun x
   have readOn (s : Discriminant D) (i : Fiber (D := D) s)
-      (ψ : DualMultiplicity B i.val.1) (φ : DualMultiplicity A i.val.2) :
+      (ψ : FB (-i.val.1))
+      (φ : FA (-i.val.2)) :
       readFunctional A B hD s i
         (iota (DualMultiplicity B) i.val.1 ψ ⊗ₜ[ℂ]
           iota (DualMultiplicity A) i.val.2 φ) =
-        Xi A B hD (-s) (reverseFiber s i) (ψ ⊗ₜ[ℂ] φ) := by
+        Xi A B hD (-s) ⟨(-i.val.2,-i.val.1),(reverseFiber s i).property⟩ (ψ ⊗ₜ[ℂ] φ) := by
     as_aux_lemma =>
       let F : DualMultiplicity B i.val.1 ⊗[ℂ] DualMultiplicity A i.val.2 →ₗ[ℂ]
-          DualMultiplicity (targetModule A B) s := Xi A B hD (-s) (reverseFiber s i)
+          DualMultiplicity (targetModule A B) s := Xi A B hD (-s) ⟨(-i.val.2,-i.val.1),(reverseFiber s i).property⟩
       change F ((TensorProduct.map (kappa (DualMultiplicity B) i.val.1)
         (kappa (DualMultiplicity A) i.val.2))
           (iota (DualMultiplicity B) i.val.1 ψ ⊗ₜ[ℂ]
@@ -404,13 +412,13 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
       cases hq
       rfl
   let i : Fiber (D := D) (-(c+d)) := ⟨(-d,-c),by abel⟩
-  let ψ' : DualMultiplicity B (-d) :=
-    cast (congrArg (fun e => Module.Dual ℂ (Multiplicity B e)) (neg_neg d).symm) ψ
-  let φ' : DualMultiplicity A (-c) :=
-    cast (congrArg (fun e => Module.Dual ℂ (Multiplicity A e)) (neg_neg c).symm) φ
+  let ψ' : FB (-i.val.1) :=
+    cast (congrArg FB hd) ψ
+  let φ' : FA (-i.val.2) :=
+    cast (congrArg FA hc) φ
   let w := dualIota B d ψ ⊗ₜ[ℂ] dualIota A c φ
   let z := jAt (dualModule B) (dualModule A) hD (-(c+d)) i w
-  have hb : dualIota B d ψ = iota (DualMultiplicity B) (-d) ψ' := by
+  have hb : dualIota B d ψ = iota (DualMultiplicity B) i.val.1 ψ' := by
     set_option maxHeartbeats 100000 in
       as_aux_lemma =>
         dsimp only [dualIota]
@@ -466,10 +474,10 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
           let goal ← Lean.Elab.Tactic.getMainGoal
           goal.assign proof
           Lean.Elab.Tactic.replaceMainGoal [next.mvarId!]
-        exact (LinearMap.comp_apply (iota (DualMultiplicity B) (-d)) (LinearEquiv.cast (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity B e))) (neg_neg d).symm).toLinearMap ψ).trans
-          (congrArg (iota (DualMultiplicity B) (-d)) (LinearEquiv.cast_apply (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity B e)))
-            (neg_neg d).symm ψ))
-  have ha : dualIota A c φ = iota (DualMultiplicity A) (-c) φ' := by
+        exact (LinearMap.comp_apply (iota (DualMultiplicity B) (-d)) (LinearEquiv.cast (R := ℂ) (M := FB) hd).toLinearMap ψ).trans
+          (congrArg (iota (DualMultiplicity B) (-d)) (LinearEquiv.cast_apply (R := ℂ) (M := FB)
+            hd ψ))
+  have ha : dualIota A c φ = iota (DualMultiplicity A) i.val.2 φ' := by
     set_option maxHeartbeats 100000 in
       as_aux_lemma =>
         dsimp only [dualIota]
@@ -525,16 +533,19 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
           let goal ← Lean.Elab.Tactic.getMainGoal
           goal.assign proof
           Lean.Elab.Tactic.replaceMainGoal [next.mvarId!]
-        exact (LinearMap.comp_apply (iota (DualMultiplicity A) (-c)) (LinearEquiv.cast (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity A e))) (neg_neg c).symm).toLinearMap φ).trans
-          (congrArg (iota (DualMultiplicity A) (-c)) (LinearEquiv.cast_apply (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity A e)))
-            (neg_neg c).symm φ))
+        exact (LinearMap.comp_apply (iota (DualMultiplicity A) (-c)) (LinearEquiv.cast (R := ℂ) (M := FA) hc).toLinearMap φ).trans
+          (congrArg (iota (DualMultiplicity A) (-c)) (LinearEquiv.cast_apply (R := ℂ) (M := FA)
+            hc φ))
   have hw := congrArg₂ (fun x y => x ⊗ₜ[ℂ] y) hb ha
   have hread : readFunctional A B hD (-(c+d)) i w =
-      cast (congrArg (fun e => Module.Dual ℂ (Multiplicity (targetModule A B) e))
-        (neg_neg (c+d)).symm)
+      cast (congrArg TC hq)
         (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ)) := by
     as_aux_lemma =>
-      apply DFunLike.ext
+      have rawExt {M : Type _} [AddCommMonoid M] [Module ℂ M]
+          (f g : Module.Dual ℂ M)
+          (h : ∀ x, f.toAddHom.toFun x = g.toAddHom.toFun x) : f = g := by
+        exact LinearMap.ext h
+      apply rawExt
       intro z0
       let ev : DualMultiplicity (targetModule A B) (-(c+d)) → ℂ :=
         fun ξ => evalRaw (- -(c+d)) ξ z0
@@ -542,14 +553,14 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
         (congrArg (readFunctional A B hD (-(c+d)) i) hw)
       have h2 := congrArg ev
         (readOn (-(c+d)) i ψ' φ')
-      have h3 := transportEvaluated
+      have h3 := transportEvaluated (F := FA) (G := FB) (H := TC)
         (fun a b q (hab : a+b=q)
-          (ψ : Module.Dual ℂ (Multiplicity B b))
-          (φ : Module.Dual ℂ (Multiplicity A a)) =>
+          (ψ : FB b)
+          (φ : FA a) =>
           Xi A B hD q ⟨(a,b),hab⟩ (ψ ⊗ₜ[ℂ] φ)) evalRaw
-        c d ψ φ (reverseFiber (-(c+d)) i).val.1
-          (reverseFiber (-(c+d)) i).val.2 (- -(c+d))
-          (neg_neg c).symm (neg_neg d).symm (neg_neg (c+d)).symm
+        c d ψ φ (-i.val.2)
+          (-i.val.1) (- -(c+d))
+          hc hd hq
           (reverseFiber (-(c+d)) i).property z0
       run_tac Lean.Elab.Tactic.withMainContext do
         let lctx ← Lean.instantiateLCtxMVars (← Lean.getLCtx)
@@ -560,8 +571,7 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
           let t ← Lean.Meta.whnf (← Lean.Meta.inferType h)
           let some (_,a,b) := t.eq? | throwError "expected equality: {t}"
           return (a,b)
-        let canonicalize (h : Lean.Expr) : Lean.MetaM (Lean.Expr × Lean.Expr × Lean.Expr × Nat) := do
-          let raw ← Lean.Meta.whnf (← Lean.Meta.inferType h)
+        let normalizeType (raw : Lean.Expr) : Lean.MetaM (Lean.Expr × Lean.Expr × Nat) := do
           let type ← Lean.Meta.zetaReduce raw (zetaDelta := true) (zetaHave := true) (beta := true)
           let mut todo := #[type]
           let mut seen : Lean.ExprSet := {}
@@ -601,7 +611,12 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
               transport ← Lean.Meta.mkEqTrans transport step
               current := current.replace fun e => if e == p then some q else none
               count := count+1
+          return (current,transport,count)
+        let canonicalize (h : Lean.Expr) : Lean.MetaM (Lean.Expr × Lean.Expr × Lean.Expr × Nat) := do
+          let raw ← Lean.Meta.whnf (← Lean.Meta.inferType h)
+          let (current,transport,count) ← normalizeType raw
           let proof ← Lean.Meta.mkEqMP transport h
+          let proof ← Lean.Meta.mkAuxTheorem current proof
           let some (_,a,b) := current.eq? | throwError "expected canonical scalar equality"
           return (proof,a,b,count)
         let (p1,a,b,n1) ← canonicalize (← proof `h1)
@@ -610,12 +625,16 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
         let trans := Lean.mkConst `Eq.trans [Lean.Level.succ Lean.Level.zero]
         let tail := Lean.mkApp6 trans (Lean.mkConst `Complex) b c d p2 p3
         let full := Lean.mkApp6 trans (Lean.mkConst `Complex) a b d p1 tail
-        Lean.Elab.Tactic.closeMainGoal `canonical_scalar_transitivity full
+        let target ← Lean.Meta.whnf (← Lean.Elab.Tactic.getMainTarget)
+        let (canonical,transport,count) ← normalizeType target
+        let result ← Lean.Meta.mkEqMPR transport full
+        Lean.Elab.Tactic.closeMainGoal `explicit_target_transport result
   have iotaCast {U : Type _} [AddCommGroup U] [Module ℂ U]
       (C : FullJacobiLatticeModule D U) (q : Discriminant D)
+      (hq : q = - -q)
       (ξ : Module.Dual ℂ (Multiplicity C q)) :
       dualIota C q ξ = iota (DualMultiplicity C) (-q)
-        (cast (congrArg (fun e => Module.Dual ℂ (Multiplicity C e)) (neg_neg q).symm) ξ) := by
+        (cast (congrArg (fun e => Module.Dual ℂ (Multiplicity C e)) hq) ξ) := by
     as_aux_lemma =>
       dsimp only [dualIota]
       run_tac Lean.Elab.Tactic.withMainContext do
@@ -672,11 +691,11 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
         Lean.Elab.Tactic.replaceMainGoal [next.mvarId!]
       exact (LinearMap.comp_apply (iota (DualMultiplicity C) (-q))
         (LinearEquiv.cast (R := ℂ) (M := fun e => Module.Dual ℂ (Multiplicity C e))
-          (neg_neg q).symm).toLinearMap ξ).trans
+          hq).toLinearMap ξ).trans
         (congrArg (iota (DualMultiplicity C) (-q))
           (LinearEquiv.cast_apply (R := ℂ) (M := fun e => Module.Dual ℂ (Multiplicity C e))
-            (neg_neg q).symm ξ))
-  have hout := iotaCast (targetModule A B) (c+d)
+            hq ξ))
+  have hout := iotaCast (targetModule A B) (c+d) hq
     (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ))
   have hvalue := (congrArg (iota (DualMultiplicity (targetModule A B)) (-(c+d))) hread).trans hout.symm
   have hk : k hD (- -c) (- -d) = k hD c d :=
