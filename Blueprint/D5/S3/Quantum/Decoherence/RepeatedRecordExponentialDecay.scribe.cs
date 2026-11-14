@@ -143,6 +143,78 @@ internal sealed class RepeatedRecordExponentialDecayDocument : IScribeDocumentDe
                         + "This is an application of the existing estimates, not an "
                         + "additional clause of the displayed frozen declaration.")),
                 Paragraph(Text(
+                    "Exact purity of the actual environment marginal has a stronger "
+                        + "consequence than stationarity of a mixed marginal. For a "
+                        + "finite positive semidefinite joint matrix X, suppose its "
+                        + "actual environment marginal Tr_S X is p=|a><a|. Every "
+                        + "environment diagonal outside a is zero. Since it is a sum "
+                        + "of nonnegative joint diagonal entries, each summand is zero. "
+                        + "The bound CartesianVariance.psd_entry_bound then forces "
+                        + "the corresponding joint rows and columns to vanish. The "
+                        + "remaining a block is exactly the actual system marginal "
+                        + "Tr_E X, giving X=(Tr_E X) tensor p. Here Tr_S and Tr_E "
+                        + "are PartialTraceMutualInformation.partialTraceLeft and "
+                        + "partialTraceRight, respectively. No global pure-state "
+                        + "premise or separately assumed product condition is needed.")),
+                Paragraph(Text(
+                    "Consequently, fix a finite horizon N and evolve the actual "
+                        + "joint states by tau_(k+1)=U tau_k U-adjoint. If tau_k is "
+                        + "positive semidefinite and Tr_S tau_k is exactly the same "
+                        + "p at every input k<N, the factorization gives "
+                        + "tau_k=rho_k tensor p at those inputs. With the reset map "
+                        + "R_p(rho)=Tr_E(U(rho tensor p)U-adjoint), induction yields "
+                        + "rho_N=R_p^N(rho_0), including N=0. Thus exact purity at "
+                        + "the required inputs removes the independent product "
+                        + "assumption. It remains an explicit physical premise at "
+                        + "each such input; stationarity alone, approximate purity "
+                        + "and a pure reference chosen for comparison do not establish it.")),
+                Paragraph(Text(
+                    "Near purity instead controls the actual defect to a specified "
+                        + "pure reference. For any finite positive semidefinite joint "
+                        + "X with Tr X=1, fix an environment basis point a and set "
+                        + "p=|a><a|, sigma=Tr_E X and "
+                        + "epsilon=1-Re((Tr_S X)[a,a]). This leakage lies between zero "
+                        + "and one. With the same half-trace-norm convention, "
+                        + "D(X,sigma tensor p) is at most "
+                        + "sqrt(epsilon)+epsilon/2, independently of both dimensions. "
+                        + "The comparison uses the actual system marginal sigma, "
+                        + "without assuming a product joint state.")),
+                Paragraph(Text(
+                    "To obtain the bound, put P=I tensor p, S=sqrt(X) and C=P S. "
+                        + "The identity GNSMatrix.gns_matrix_identity gives "
+                        + "||S||_F=1, ||C||_F<=1 and ||S-C||_F=sqrt(epsilon). "
+                        + "Expand X-PXP as (S-C)S-adjoint plus "
+                        + "C(S-adjoint-C-adjoint). The trace-norm triangle inequality "
+                        + "and TavakoliMorelliIncompleteEAM.traceNorm_mul_le_hsSq, "
+                        + "expressed in Frobenius norms through "
+                        + "HilbertSchmidtTraceStability.entryNormSq_eq_hs_sq, bound "
+                        + "its trace norm by 2 sqrt(epsilon).")),
+                Paragraph(Text(
+                    "Let A0 be the a block of X. Then PXP=A0 tensor p, while "
+                        + "sigma-A0 is the sum of the other positive semidefinite "
+                        + "diagonal environment blocks and has trace epsilon. "
+                        + "FiniteTraceDistance.traceNorm_of_posSemidef and the "
+                        + "partial-trace and tensor-trace identities therefore give "
+                        + "traceNorm((sigma-A0) tensor p)=epsilon. Applying the "
+                        + "triangle inequality to X-sigma tensor p through PXP "
+                        + "and dividing by two gives the asserted defect bound. "
+                        + "This is an application of existing positivity, trace "
+                        + "and norm results, with no additional frozen clause.")),
+                Paragraph(Text(
+                    "For an actual trajectory, define epsilon_k from Tr_S tau_k "
+                        + "using this same fixed a. The earlier defect accumulation "
+                        + "estimate then gives D(rho_N,R_p^N(rho_0)) at most the "
+                        + "sum over k<N of sqrt(epsilon_k)+epsilon_k/2. Only when "
+                        + "this R_p is the controlled-record channel identified "
+                        + "above can that sum also supply its actual-trajectory "
+                        + "pinching error budget. This bound does not identify a "
+                        + "reset map R_eta specified with a mixed reference eta "
+                        + "with R_p; replacing eta by p requires a separate comparison of "
+                        + "the reset maps and their iterates. The bound is a "
+                        + "one-step estimate whose trajectory application accumulates "
+                        + "over the finite horizon. It proves neither physical "
+                        + "smallness of epsilon_k nor accuracy uniform in time.")),
+                Paragraph(Text(
                     "Stationarity of an environment marginal is not a bound on "
                         + "the accumulated joint-state defects. For system-controlled X on two qubits, "
                         + "start the system in the plus state and take "
