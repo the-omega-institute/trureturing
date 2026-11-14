@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
+using Trureturing.Truth;
 
 namespace StrataLint.Cli;
 
@@ -10,21 +11,25 @@ internal static partial class RetireSourcesCommand
     private static RawRepositorySnapshot RequireNoReferences(IRepositoryGateway repository,
         string[] removedPrefixes, HashSet<string> removedIds, string[] sourcePaths)
     {
-        var paths = repository.SearchCurrentPaths([BackfillInventoryLoader.RootPath, "docs", "Blueprint", "Library", "Papers", "Problems", "README.md"])
+        var paths = repository.SearchCurrentPaths([BackfillInventoryLoader.RootPath.TrimEnd('/'), "docs", "Blueprint", "Library", "Papers", "Problems", "README.md", "CLAUDE.md", "D5", "Reg", "skills", "agents"])
             .Where(path => !removedPrefixes.Any(prefix => path.StartsWith(prefix, StringComparison.Ordinal))
                 && !sourcePaths.Contains(path, StringComparer.Ordinal)
                 && (path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
                     || path.EndsWith(".md", StringComparison.Ordinal) || path.EndsWith(".lean", StringComparison.Ordinal)))
             .Order(StringComparer.Ordinal).ToArray();
         var captured = repository.ReadCurrent(paths.Select(DigestionQuerySelection.Literal).ToArray());
-        foreach (var entry in captured.Entries)
+        var requested = paths.ToHashSet(StringComparer.Ordinal);
+        foreach (var entry in captured.Entries.Where(entry => requested.Contains(entry.Path)))
         {
             var text = Encoding.UTF8.GetString(entry.Bytes.AsSpan());
             if (entry.Path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal))
             {
-                foreach (Match match in Regex.Matches(text, "[0-9a-f]{64}", RegexOptions.CultureInvariant))
-                    if (removedIds.Contains(match.Value))
-                        throw new FormatException($"ATOM_REFERENCED atom_id={match.Value} path={entry.Path}");
+                if (!removedIds.Contains(Path.GetFileNameWithoutExtension(entry.Path))
+                    && !Regex.Matches(text, "[0-9a-f]{64}", RegexOptions.CultureInvariant)
+                        .Any(match => removedIds.Contains(match.Value))) continue;
+                foreach (var id in AtomReferences(entry.Path, entry.Bytes, text))
+                    if (removedIds.Contains(id))
+                        throw new FormatException($"ATOM_REFERENCED atom_id={id} path={entry.Path}");
             }
             else
                 foreach (var source in sourcePaths)
@@ -32,6 +37,35 @@ internal static partial class RetireSourcesCommand
                         throw new FormatException($"SOURCE_REFERENCED source={source} path={entry.Path}");
         }
         return captured;
+    }
+
+    private static IEnumerable<string> AtomReferences(string path,
+        System.Collections.Immutable.ImmutableArray<byte> bytes, string text)
+    {
+        if (path.EndsWith("/source.toml", StringComparison.Ordinal)) return [];
+        if (DigestionContextPointerStore.IsCanonicalPath(path))
+            return DigestionContextPointerStore.ParseVersions(bytes, DigestionQuerySelection.SourceId(path), Path.GetFileNameWithoutExtension(path))
+                .SelectMany(index => index.Entries).SelectMany(entry => entry.Occurrences
+                    .SelectMany(occurrence => new[] { occurrence.PreviousAtomId, occurrence.NextAtomId }.OfType<string>())
+                    .Append(entry.AtomId));
+        if (!DigestionQuerySelection.IsAtomPath(path))
+            return Regex.Matches(text, "[0-9a-f]{64}", RegexOptions.CultureInvariant).Select(match => match.Value);
+        var root = YamlSubsetParser.Parse(text) as Dictionary<string, object?>
+            ?? throw new FormatException($"REFERENCE_RECORD_INVALID path={path}");
+        var ids = new List<string> { Path.GetFileNameWithoutExtension(path) };
+        if (root.GetValueOrDefault("atom_id") is string id) ids.Add(id);
+        if (root.GetValueOrDefault("receipts") is Dictionary<string, object?> receipts)
+        {
+            if (receipts.GetValueOrDefault("chain_atoms") is { } chainValue)
+            {
+                if (chainValue is not IEnumerable<object?> chain || chain.Any(item => item is not string))
+                    throw new FormatException($"REFERENCE_RECORD_INVALID path={path}");
+                ids.AddRange(chain.OfType<string>());
+            }
+            if (receipts.GetValueOrDefault("nonpropositional") is Dictionary<string, object?> receipt)
+                ids.AddRange(new[] { receipt.GetValueOrDefault("previous_atom_id"), receipt.GetValueOrDefault("next_atom_id") }.OfType<string>());
+        }
+        return ids;
     }
 
     private static void RequireSame(RawRepositorySnapshot before, RawRepositorySnapshot after)

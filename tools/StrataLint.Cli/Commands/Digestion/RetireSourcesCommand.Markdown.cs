@@ -9,7 +9,8 @@ namespace StrataLint.Cli;
 internal static partial class RetireSourcesCommand
 {
     // Preserve the referent of relative Markdown links when moving the document.
-    private static ImmutableArray<byte> ArchiveMarkdown(ImmutableArray<byte> bytes, string source, string destination)
+    private static ImmutableArray<byte> ArchiveMarkdown(ImmutableArray<byte> bytes, string source, string destination,
+        string[] selectedSources)
     {
         var text = new UTF8Encoding(false, true).GetString(bytes.AsSpan());
         var document = Markdown.Parse(text, new MarkdownPipelineBuilder().UsePreciseSourceLocation().Build());
@@ -26,6 +27,9 @@ internal static partial class RetireSourcesCommand
             var suffix = end < 0 ? string.Empty : url[end..];
             if (path.Length == 0) continue;
             var resolved = Path.GetFullPath(path, Path.GetDirectoryName(Path.GetFullPath(source))!);
+            var retiredTarget = selectedSources.SingleOrDefault(candidate => Path.GetFullPath(candidate) == resolved);
+            if (retiredTarget is not null)
+                resolved = Path.GetFullPath(ArchiveRoot + retiredTarget[TheoryRoot.Length..]);
             var relative = Path.GetRelativePath(Path.GetDirectoryName(Path.GetFullPath(destination))!, resolved)
                 .Replace(Path.DirectorySeparatorChar, '/');
             if (span.Start < 0 || span.End < span.Start || span.End >= text.Length)

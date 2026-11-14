@@ -23,15 +23,27 @@ internal static partial class RetireSourcesCommand
                     || !source.SourcePath.EndsWith(".md", StringComparison.Ordinal))
                     throw new FormatException($"NOT_THEORY_SOURCE source_id={source.SourceId}");
             var prefixes = sources.Select(source => BackfillInventoryLoader.RootPath + source.SourceId + "/").ToArray();
-            var selectedRaw = repository.ReadCurrent(prefixes.Select(DigestionQuerySelection.Literal).ToArray());
+            var selectedRaw = repository.ReadCurrent(prefixes.Select(prefix => DigestionQuerySelection.Literal(prefix.TrimEnd('/'))).ToArray());
             _ = DigestionQuerySelection.Merge(metadata.Raw, selectedRaw);
             var loaded = DigestionQuerySelection.ReadChains(repository, DigestionQuerySelection.Load(selectedRaw));
             var entries = loaded.Document.RequireDigestionEntries();
             if (entries.IsEmpty) throw new FormatException("EMPTY_RETIREMENT");
             if (entries.GroupBy(entry => entry.AtomId).Any(group => group.Count() != 1))
                 throw new FormatException("AMBIGUOUS_ATOM");
-            var inputs = sources.Select(source => source.SourcePath)
+            var requiredIds = entries.Select(entry => entry.AtomId).ToHashSet(StringComparer.Ordinal);
+            foreach (var entry in entries.Where(entry => entry.Receipts.Nonpropositional is not null))
+                loaded = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(loaded.Raw,
+                    DigestionQuerySelection.ReadContext(repository, entry.AtomId).Raw));
+            var contextIds = loaded.Raw.Entries.Where(entry => DigestionContextPointerStore.IsCanonicalPath(entry.Path))
+                .SelectMany(entry => DigestionContextPointerStore.ParseVersions(entry.Bytes,
+                    DigestionQuerySelection.SourceId(entry.Path), Path.GetFileNameWithoutExtension(entry.Path)))
+                .SelectMany(index => index.Entries).SelectMany(entry => entry.Occurrences)
+                .SelectMany(occurrence => occurrence.GoverningContext.Select(scope => scope.AtomId)
+                    .Concat(new[] { occurrence.PreviousAtomId, occurrence.NextAtomId }.OfType<string>()))
+                .Distinct(StringComparer.Ordinal).ToArray();
+            var inputs = loaded.Document.RequireDigestionSources().Select(source => source.SourcePath)
                 .Concat(entries.Select(DigestionQuerySelection.CasPath)).Append("Meta/FILEMAP.toml")
+                .Concat(contextIds.Select(id => DigestionCasStore.RootPath + id))
                 .Concat(repository.SearchCurrentPaths([":(glob)Meta/FILEMAP.*.toml"]))
                 .Concat(entries.Any(entry => !entry.Coverage.IsEmpty)
                     ? ["D5", "Reg", "Trureturing.lean", "Golden/Frozen/state"] : Array.Empty<string>())
@@ -44,7 +56,8 @@ internal static partial class RetireSourcesCommand
                 .Distinct().ToArray();
             if (options.LeanInputs)
                 return new(true, string.Join(' ', targets.Select(path => path.Value[..^5].Replace('/', '.'))) + "\n", string.Empty);
-            RequireTerminal(loaded.Snapshot, loaded.Document, targets, reportSource);
+            RequireTerminal(loaded.Snapshot, loaded.Document, requiredIds,
+                sources.Select(source => source.SourceId).ToHashSet(StringComparer.Ordinal), targets, reportSource);
 
             var removedIds = sources.SelectMany(source => loaded.Document.RequireDigestionSources()
                     .Single(current => current.SourceId == source.SourceId).Entries)
@@ -61,11 +74,12 @@ internal static partial class RetireSourcesCommand
                         throw new FormatException($"ARCHIVE_EXISTS path={destination}");
                     if (FileMapLoader.LoadSnapshot(loaded.Snapshot).Match(destination) is not [{ DigestionSource: false, Symlink: null }])
                         throw new FormatException($"ARCHIVE_POLICY_MISSING path={destination}");
-                    updates.Add(new(destination, ArchiveMarkdown(original.Bytes, source.SourcePath, destination), -1));
+                    updates.Add(new(destination, ArchiveMarkdown(original.Bytes, source.SourcePath, destination,
+                        sources.Select(item => item.SourcePath).ToArray()), -1));
                 }
                 updates.Add(new(source.SourcePath, null));
             }
-            foreach (var entry in selectedRaw.Entries)
+            foreach (var entry in selectedRaw.Entries.Where(entry => prefixes.Any(prefix => entry.Path.StartsWith(prefix, StringComparison.Ordinal))))
                 updates.Add(new(entry.Path, null));
             var output = string.Concat(sources.Select(source =>
                 $"RETIRE_SOURCE source_id={source.SourceId} mode={options.Mode} atoms={loaded.Document.RequireDigestionSources().Single(current => current.SourceId == source.SourceId).Entries.Length}\n"));
@@ -78,13 +92,11 @@ internal static partial class RetireSourcesCommand
                 RequireSame(current, reread);
                 var fresh = RequireNoReferences(repository, prefixes, removedIds, sources.Select(source => source.SourcePath).ToArray());
                 RequireSame(captured, fresh);
-                var freshSelected = repository.ReadCurrent(prefixes.Select(DigestionQuerySelection.Literal).ToArray());
+                var freshSelected = repository.ReadCurrent(prefixes.Select(prefix => DigestionQuerySelection.Literal(prefix.TrimEnd('/'))).ToArray());
                 RequireSame(selectedRaw, freshSelected);
                 foreach (var update in updates.Where(update => update.Bytes is not null))
                     if (File.Exists(Path.Combine(root, update.Path)) || Directory.Exists(Path.Combine(root, update.Path)))
                         throw new IOException($"ARCHIVE_EXISTS path={update.Path}");
-                foreach (var entry in current.Entries)
-                    RequireRegularPath(root, entry.Path);
                 foreach (var update in updates) RequireRegularPath(root, update.Path);
             });
             return new(true, "RETIRE_WRITTEN\n" + output, string.Empty);
@@ -96,8 +108,12 @@ internal static partial class RetireSourcesCommand
     }
 
     private static void RequireTerminal(RepositorySnapshot snapshot, BackfillInventoryDocument document,
-        RepoPath[] targets, ILeanReportSource reportSource)
+        HashSet<string> requiredIds, HashSet<string> selectedSources, RepoPath[] targets, ILeanReportSource reportSource)
     {
+        var contextDocument = document;
+        document = document.WithDigestionSources(document.RequireDigestionSources()
+            .Select(source => source with { Entries = source.Entries.Where(entry => requiredIds.Contains(entry.AtomId)).ToImmutableArray() })
+            .Where(source => !source.Entries.IsEmpty).ToImmutableArray());
         var entries = document.RequireDigestionEntries();
         _ = DigestionDecomposition.ValidatedClosure(entries.Select(entry => entry.AtomId),
             entries.ToDictionary(entry => entry.AtomId, StringComparer.Ordinal), snapshot);
@@ -128,14 +144,14 @@ internal static partial class RetireSourcesCommand
             if (nonpropositional)
             {
                 var receipt = item.Entry.Receipts.Nonpropositional!;
-                if (!DigestionAtomContextProjection.ResolveOccurrences(snapshot, document, item.Entry.AtomId).Any(context =>
+                if (!DigestionAtomContextProjection.ResolveOccurrences(snapshot, contextDocument, item.Entry.AtomId).Any(context =>
                         context.Previous?.AtomId == receipt.PreviousAtomId && context.Next?.AtomId == receipt.NextAtomId))
                     throw new FormatException($"CONTEXT_MISMATCH atom_id={item.Entry.AtomId}");
             }
         }
         // Recorded terminal entries must also account for the current source's complete claim set.
         var alignment = DigestionLedgerAligner.Evaluate(document, snapshot, DigestionAlignmentMode.Projection);
-        if (alignment.Findings.Length > 0 || alignment.Residual.Length > 0)
+        if (alignment.Findings.Length > 0 || alignment.Residual.Any(item => selectedSources.Contains(item.SourceId)))
             throw new FormatException("SOURCE_HAS_RESIDUAL_OR_INVALID_CLAIMS");
     }
 
