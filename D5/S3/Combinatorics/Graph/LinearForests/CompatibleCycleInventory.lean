@@ -12,6 +12,8 @@ import Mathlib.GroupTheory.Perm.Option
 import Mathlib.Data.Fintype.Perm
 import Mathlib.Tactic
 
+/-! Label-preserving insertion on the actual permutation carrier. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -43,7 +45,7 @@ private theorem insert_cycle_iff [Finite A] [DecidableEq A] (ρ : Perm A) (y : A
     (insertLabel ρ y).IsCycleOn Set.univ ↔ ρ.IsCycleOn Set.univ := by
   let g := insertLabel ρ y
   let S : Set (Option A) := Set.range (some : A → Option A)
-  let e : A ≃ S := Equiv.ofInjective some Option.some_injective
+  let e : A ≃ S := Equiv.ofInjective some (Option.some_injective _)
   have he (x : A) : (e x : Option A) = some x := rfl
   have jump (z : S) : ∃ n : ℕ, FirstVisit g S z n ∧
       (g ^ n) z = (e.permCongr ρ z : S) := by
@@ -51,21 +53,22 @@ private theorem insert_cycle_iff [Finite A] [DecidableEq A] (ρ : Perm A) (y : A
     by_cases hx : ρ x = y
     · refine ⟨2, ⟨by omega, ?_, ?_⟩, ?_⟩
       · change g (g (some x)) ∈ S
-        simp only [g, insert_some, hx, if_true, insert_none]
+        simp only [g, insert_some, hx, ite_true, insert_none]
         exact ⟨y, rfl⟩
       · intro k hk hk2
         have : k = 1 := by omega
         subst k
         change g (some x) ∉ S
         simp [g, insert_some, hx, S]
-      · change g (g (some x)) = (e (ρ x) : Option A)
-        simp only [g, insert_some, hx, if_true, insert_none, he]
+      · simp only [pow_two, Perm.mul_apply, Equiv.permCongr_apply,
+          Equiv.symm_apply_apply, he]
+        simp only [g, insert_some, hx, ite_true, insert_none]
     · refine ⟨1, ⟨by omega, ?_, by intro k hk hk1; omega⟩, ?_⟩
       · change g (some x) ∈ S
-        simp only [g, insert_some, hx, if_false]
+        simp only [g, insert_some, hx, ite_false]
         exact ⟨ρ x, rfl⟩
-      · change g (some x) = (e (ρ x) : Option A)
-        simp only [g, insert_some, hx, if_false, he]
+      · simp only [pow_one, Equiv.permCongr_apply, Equiv.symm_apply_apply, he]
+        simp only [g, insert_some, hx, ite_false]
   have marked (x z : A) : g.SameCycle (some x) (some z) ↔ ρ.SameCycle x z :=
     (same_cycle_of_first_visit g S (e.permCongr ρ) jump (e x) (e z)).trans
       (same_cycle_perm_congr e ρ x z)
@@ -123,9 +126,13 @@ private def loopInsertionEquiv [Finite A] [Nonempty A] [DecidableEq A]
   · intro z w he
     have hp := congrArg (fun σ => Perm.decomposeOption σ.1) he
     have hz : Perm.decomposeOption (insertLabel z.2.1 z.1.1) =
-        (some z.1.1, z.2.1) := Perm.decomposeOption.apply_symm_apply _
+        (some z.1.1, z.2.1) := by
+      simpa [Perm.decomposeOption, Equiv.symm, insertLabel] using
+        Perm.decomposeOption.apply_symm_apply (some z.1.1, z.2.1)
     have hw : Perm.decomposeOption (insertLabel w.2.1 w.1.1) =
-        (some w.1.1, w.2.1) := Perm.decomposeOption.apply_symm_apply _
+        (some w.1.1, w.2.1) := by
+      simpa [Perm.decomposeOption, Equiv.symm, insertLabel] using
+        Perm.decomposeOption.apply_symm_apply (some w.1.1, w.2.1)
     change Perm.decomposeOption (insertLabel z.2.1 z.1.1) =
       Perm.decomposeOption (insertLabel w.2.1 w.1.1) at hp
     rw [hz, hw] at hp
@@ -135,13 +142,92 @@ private def loopInsertionEquiv [Finite A] [Nonempty A] [DecidableEq A]
     have hn : σ.1 none ≠ none :=
       σ.2.2.1.apply_ne Set.nontrivial_univ (Set.mem_univ _)
     obtain ⟨y, hy⟩ := Option.ne_none_iff_exists'.mp hn
-    let ρ := Equiv.removeNone σ.1
+    let ρ : Perm A := Equiv.removeNone σ.1
     have he : insertLabel ρ y = σ.1 := by
       have h := Perm.decomposeOption.symm_apply_apply σ.1
       change insertLabel (Equiv.removeNone σ.1) y = σ.1
-      simpa only [Perm.decomposeOption_apply, hy] using h
+      simpa [Perm.decomposeOption, hy, insertLabel] using h
     have hc : ρ.IsCycleOn Set.univ := (insert_cycle_iff ρ y).mp (he ▸ σ.2.2.1)
     have hp := (insert_compatible_iff s d c ρ y).mp (he ▸ σ.2.2.2)
     exact ⟨(⟨y, hp.1⟩, ⟨ρ, inferInstance, hc, hp.2⟩), Subtype.ext he⟩
+
+private def compatibleTransport (e : C ≃ A) (s d : C → Bool) :
+    Compatible s d ≃ Compatible (s ∘ e.symm) (d ∘ e.symm) :=
+  Equiv.subtypeEquiv e.permCongr (fun ρ => by
+    constructor
+    · rintro ⟨hne, hc, hd⟩
+      refine ⟨hne.map e, ⟨(e.permCongr ρ).bijective.bijOn_univ, ?_⟩, ?_⟩
+      · intro x _ y _
+        simpa only [Equiv.apply_symm_apply] using
+          (same_cycle_perm_congr e ρ (e.symm x) (e.symm y)).mpr
+            (hc.2 (Set.mem_univ _) (Set.mem_univ _))
+      · intro x
+        simpa using hd (e.symm x)
+    · rintro ⟨hne, hc, hd⟩
+      refine ⟨hne.map e.symm, ⟨ρ.bijective.bijOn_univ, ?_⟩, ?_⟩
+      · intro x _ y _
+        exact (same_cycle_perm_congr e ρ x y).mp
+          (hc.2 (Set.mem_univ _) (Set.mem_univ _))
+      · intro x
+        simpa using hd (e x))
+
+private abbrev Side (s : C → Bool) (b : Bool) := {x : C // s x = b}
+
+private def crossPermutation (s : C → Bool)
+    (f : Side s false ≃ Side s true) (g : Side s true ≃ Side s false) : Perm C :=
+  Equiv.subtypeCongr f
+    ((Equiv.subtypeEquivRight (fun x => by cases s x <;> simp)).trans
+      (g.trans (Equiv.subtypeEquivRight (fun x => by cases s x <;> simp))))
+
+private theorem cross_false (s : C → Bool)
+    (f : Side s false ≃ Side s true) (g : Side s true ≃ Side s false)
+    (x : Side s false) : crossPermutation s f g x = f x := by
+  simp [crossPermutation, Equiv.subtypeCongr, x.2]
+
+private theorem cross_true (s : C → Bool)
+    (f : Side s false ≃ Side s true) (g : Side s true ≃ Side s false)
+    (x : Side s true) : crossPermutation s f g x = g x := by
+  have hx : s x ≠ false := by simp [x.2]
+  simp [crossPermutation, Equiv.subtypeCongr, hx, Equiv.subtypeEquivRight, Equiv.subtypeEquiv]
+
+private theorem cross_cycle_iff [Finite C] (s : C → Bool)
+    (f : Side s false ≃ Side s true) (g : Side s true ≃ Side s false) :
+    (crossPermutation s f g).IsCycleOn Set.univ ↔
+      Perm.IsCycleOn (f.trans g) Set.univ := by
+  let σ := crossPermutation s f g
+  let S : Set C := {x | s x = false}
+  have jump (x : S) : ∃ n : ℕ, FirstVisit σ S x n ∧
+      (σ ^ n) x = (f.trans g x : S) := by
+    refine ⟨2, ⟨by omega, ?_, ?_⟩, ?_⟩
+    · change σ (σ x) ∈ S
+      rw [show σ x = f x from cross_false s f g x, cross_true s f g]
+      exact (g (f x)).2
+    · intro k hk hk2
+      have : k = 1 := by omega
+      subst k
+      change σ x ∉ S
+      rw [show σ x = f x from cross_false s f g x]
+      change s (f x) ≠ false
+      simp [(f x).2]
+    · simp only [pow_two, Perm.mul_apply, Equiv.trans_apply]
+      rw [show σ x = f x from cross_false s f g x, cross_true s f g]
+  have marked (x y : S) : σ.SameCycle x y ↔ Perm.SameCycle (f.trans g) x y :=
+    same_cycle_of_first_visit σ S (f.trans g) jump x y
+  constructor
+  · intro h
+    exact ⟨(f.trans g).bijective.bijOn_univ,
+      fun x _ y _ => (marked x y).mp (h.2 (Set.mem_univ _) (Set.mem_univ _))⟩
+  · intro h
+    have every (x : C) : ∃ z : S, σ.SameCycle x z := by
+      by_cases hx : s x = false
+      · exact ⟨⟨x, hx⟩, Perm.SameCycle.refl σ x⟩
+      · have ht : s x = true := by cases he : s x <;> simp_all
+        refine ⟨g ⟨x, ht⟩, ?_⟩
+        exact ⟨1, by simpa only [zpow_one] using cross_true s f g ⟨x, ht⟩⟩
+    refine ⟨σ.bijective.bijOn_univ, ?_⟩
+    intro x _ y _
+    obtain ⟨a, ha⟩ := every x
+    obtain ⟨b, hb⟩ := every y
+    exact ha.trans (((marked a b).mpr (h.2 (Set.mem_univ _) (Set.mem_univ _))).trans hb.symm)
 
 end D5.S3.Combinatorics.Graph.LinearForests.CompatibleCycleInventory
