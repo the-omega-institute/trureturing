@@ -3,6 +3,7 @@ import D5.S3.FiniteGroups.GroupAlgebra.PrimeCyclicRelativeTrace
 import D5.S3.FiniteGroups.GroupAlgebra.RectangularTensorObstruction
 import Mathlib.Data.Nat.Choose.Lucas
 import Mathlib.Data.Nat.Choose.Dvd
+import Mathlib.Data.Nat.Choose.Factorization
 
 /-!
 # The nonzero-residue Elmer–Kadr criterion
@@ -525,7 +526,7 @@ section ResidueComplement
 
 variable {K : Type u} [Field K] {p : ℕ} [hp : Fact p.Prime] [CharP K p]
 
-/-- Transport the SAVED actual dual-tensor retract proof to the literal
+/-- Transport the actual dual-tensor retract proof to the literal
 tensor V_(pa) tensor V_m. Its witnesses use relativeInclusion/projection of
 the named summand a-1 and the actual tensor flip, including all X/P quantifiers. -/
 theorem multiple_tensor_relativeProjective (s a m : ℕ) (ha : a ≤ s) :
@@ -793,7 +794,7 @@ sum of V_(i+j-(2*ell+1)); T and M have their original literal actions.
 The only high-digit condition is the displayed nonvanishing binomial. All
 boundary cases a=0 or b=0 remain included. No result about 3.7(b) is claimed.
 -/
-theorem residue_criterion (a b u v : ℕ)
+theorem residue_criterion_binomial (a b u v : ℕ)
     (hu : 1 ≤ u) (hup : u < p) (hv : 1 ≤ v) (hvp : v < p)
     (huv : u + v ≤ p)
     (hsize : (p * a + u) + (p * b + v) ≤ Fintype.card K) :
@@ -828,6 +829,32 @@ theorem residue_criterion (a b u v : ℕ)
     obtain ⟨e⟩ := residue_decomposition a b u v hu hv huv hchoose
     exact relativeStableIso_of_decomposition _ _ _ _ e
       (residue_remainder_relativeProjective (Fintype.card K / p) a b u v ha hb)
+
+/-- The same original-M classification, expressed by Kummer's exact
+no-carry condition. The empty interval at a=b=0 is retained. -/
+theorem residue_criterion (a b u v : ℕ)
+    (hu : 1 ≤ u) (hup : u < p) (hv : 1 ≤ v) (hvp : v < p)
+    (huv : u + v ≤ p)
+    (hsize : (p * a + u) + (p * b + v) ≤ Fintype.card K) :
+    RelativeStableIso
+      (PrimeCyclicRelativeTrace.relativeAction (K := K) (p := p) (Fintype.card K / p))
+      (expectedAction (K := K) (p * a + u) (p * b + v) (min u v))
+      (tensorAction (K := K) (p * a + u) (p * b + v)) ↔
+        ∀ k ∈ Finset.Ico 1 (Nat.log p (a + b) + 1),
+          a % p ^ k + b % p ^ k < p ^ k := by
+  rw [residue_criterion_binomial a b u v hu hup hv hvp huv hsize,
+    ne_eq, CharP.cast_eq_zero_iff K p]
+  have hchoose : (a + b).choose a ≠ 0 := Nat.choose_ne_zero (by omega)
+  have hval : ((a + b).choose a).factorization p = 0 ↔ ¬p ∣ (a + b).choose a := by
+    simp only [Nat.factorization_eq_zero_iff, hp.out, not_true,
+      hchoose, or_false, false_or]
+  rw [← hval]
+  have hk := Nat.factorization_choose' (p := p) (n := b) (k := a)
+    (b := Nat.log p (a + b) + 1) hp.out
+    (by rw [Nat.add_comm b a]; omega)
+  rw [Nat.add_comm b a] at hk
+  rw [hk, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
+  simp only [not_le]
 
 end Classification
 
