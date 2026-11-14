@@ -482,4 +482,37 @@ theorem original_two_rows_inverse_coefficient
   dsimp only
   ring
 
+/-! The finite source polynomial can also be exposed coefficientwise.  This
+bridge keeps the remaining inverse-substitution problem at one monomial and
+does not introduce an analytic or sewing premise. -/
+
+theorem original_two_rows_inverse_coefficient_expanded
+    (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D)
+    (alpha betaL gammaL betaR gammaR : Exponent D) (eL eR : ℤ)
+    (n : ℕ) (ha : oscillatorEnergy alpha ≤ n) :
+    chargeScalar D a * chargeScalar D (-a) *
+      wick D (monomial gammaL 1)
+        (oscillatorCorrected D hu a eL (monomial alpha 1) (monomial betaL 1)) *
+      wick D (monomial gammaR 1)
+        (oscillatorCorrected D hu (-a) eR
+          (dualOscillatorMonomial D alpha) (monomial betaR 1)) =
+    let row := fun (b : Charge D) (beta gamma delta : Exponent D) (e : ℤ) =>
+      let K := rowSupport D delta beta gamma
+      let label := supportLabel D K
+      affineLaurent (correctedMatrix D label) (correctedMean D b label)
+        (normalWeight D label)
+        (threeOccupation (restricted D K delta) (restricted D K beta)
+          (restricted D K gamma)) (e+chargeNorm D b)
+    chargeScalar D a * chargeScalar D (-a) *
+      (weight alpha : ℂ) * (weight betaL : ℂ) * (weight gammaL : ℂ) *
+      (weight betaR : ℂ) * (weight gammaR : ℂ) * row a betaL gammaL alpha eL *
+      ∑ delta ∈ oscillatorSublevel D n,
+        row (-a) betaR gammaR delta eR *
+          (substitution (fun k =>
+            (((-((k : ℂ)+1))⁻¹ • (gramComplex D)⁻¹))ᵀ)
+            (monomial delta 1)).coeff alpha := by
+  rw [original_two_rows_inverse_coefficient D hu a alpha betaL gammaL betaR gammaR eL eR n ha]
+  dsimp only
+  rw [substitution_finset_coeff]
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalSourceInverseCoefficient
