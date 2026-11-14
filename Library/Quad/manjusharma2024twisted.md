@@ -97,6 +97,8 @@ The same actual fourth-root derivation described above is non-inner,
 so its quotient class is nonzero, while the printed vector is integral.
 This contradicts the criterion in the complete conjunction. It does not
 separately refute the universal strict inclusion or a corrected criterion.
+The [Conjecture 5.2 dossier](../../Problems/manju-sharma-2024-conjecture-5-2-refutation.md)
+gives the full source-to-statement correspondence and the surviving boundaries.
 
 ## License
 

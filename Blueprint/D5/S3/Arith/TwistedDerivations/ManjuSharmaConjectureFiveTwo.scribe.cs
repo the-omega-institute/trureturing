@@ -109,7 +109,10 @@ internal sealed class ManjuSharmaConjectureFiveTwoDocument : IScribeDocumentDefi
                         + "class supports existence of outer derivations. Conjecture 4.3 is never assumed. "
                         + "The mathematics of the actual cyclotomic counterexample is reused from the existing "
                         + "Conjecture 4.4 result; the conclusion here concerns the distinct full printed Conjecture 5.2."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("manju-sharma-2024-conjecture-5-2-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) => Describe.Lean(
         DescribeId.Create("manjusharmafivetwo" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
