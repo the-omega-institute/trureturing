@@ -268,6 +268,125 @@ private def sourceOccurrencePaths (context : TemplateAudit.CompiledEnrollment.Co
   unless exhausted do throw <| IO.userError "compiled.source_paths:work_limit"
   IO.println "[PASS] compiled.source_paths: all raw constructors, lexical references and rejection guards"
 
+private def sourceFixedDictionaryContext
+    (context : TemplateAudit.CompiledEnrollment.Context) : IO Unit := do
+  let action : CompiledSourceScope.M Unit := do
+    let some owner := context.provenance.view.ownerOf ``Nat.add
+      | throw <| IO.userError "compiled.source_fixed_context:fixture_owner"
+    let natural := mkConst ``Nat
+    let dictionaryType := mkApp (mkConst ``ToString [0]) (.bvar 0)
+    let observation := mkAppN (mkConst ``ToString.toString [0])
+      #[.bvar 3, .bvar 2, .bvar 0]
+    let proposition := mkApp3 (mkConst ``Eq [1]) (mkConst ``String)
+      observation (mkStrLit "")
+    let quantify := fun (dictionaryDomain : Expr) (mode : BinderInfo) (body : Expr) =>
+      Expr.forallE `alpha (mkSort (.succ .zero))
+        (.forallE `dictionary dictionaryDomain
+          (.forallE `n natural (.forallE `x (.bvar 2) body .default) .default) mode) .implicit
+    let source := quantify dictionaryType .instImplicit proposition
+    let info := fun type => ConstantInfo.thmInfo {
+      name := ``Nat.add, levelParams := [], type, value := mkConst ``True.intro }
+    let selection : LeanInformationAudit.SourceSelection := {
+      owner, coordinates := #[0, 2],
+      readouts := #[{
+        path := #["body", "body", "body", "body", "fn", "arg"]
+        stateBinder := 3 }] }
+    let scope ← CompiledSourceScope.resolve (info source) selection
+    let some readout := scope.readouts[0]?
+      | throw <| IO.userError "compiled.source_fixed_context:missing_readout"
+    unless scope.source.equal source && scope.expanded.equal source &&
+        scope.parameterSlots == #[0, 1, 2] &&
+        scope.telescope.size == 4 && scope.coordinates.size == 3 &&
+        scope.coordinates[0]!.name == `alpha &&
+        scope.coordinates[1]!.name == `dictionary &&
+        scope.coordinates[1]!.info == .instImplicit &&
+        scope.coordinates[1]!.domain.equal dictionaryType &&
+        scope.coordinates[2]!.name == `n &&
+        readout.projected.equal observation do
+      throw <| IO.userError "compiled.source_fixed_context:lexical_merge_or_dictionary_identity"
+    CompiledSourceScope.reconstruct source scope.expanded
+    let reject := fun (label : String) (type : Expr) (selected : LeanInformationAudit.SourceSelection)
+        (expected : String) => do
+      let rejected ← try
+        discard <| CompiledSourceScope.resolve (info type) selected
+        pure false
+      catch error => pure (error.toString.startsWith expected)
+      unless rejected do
+        throw <| IO.userError s!"compiled.source_fixed_context:{label}"
+    reject "dictionary_is_not_an_ordinary_coordinate" source
+      { selection with coordinates := #[0, 1, 2] }
+      "unclassified_form:source.dictionary_or_proof_coordinate"
+    reject "explicit_dictionary_is_not_an_ordinary_coordinate"
+      (quantify dictionaryType .default proposition)
+      { selection with coordinates := #[0, 1, 2] }
+      "unclassified_form:source.dictionary_or_proof_coordinate"
+    reject "omitted_dictionary_type_dependency" source
+      { selection with coordinates := #[2] }
+      "unclassified_form:source.coordinate_dependency:"
+    reject "explicit_dictionary_dependency_is_not_captured"
+      (quantify dictionaryType .default proposition) selection
+      "unclassified_form:source.coordinate_dependency:"
+    reject "implicit_dictionary_dependency_is_not_captured"
+      (quantify dictionaryType .implicit proposition) selection
+      "unclassified_form:source.coordinate_dependency:"
+    let proofObservation := mkAppN (mkConst ``True.rec [1]) #[
+      .lam `h (mkConst ``True) natural .default, mkNatLit 0, .bvar 2]
+    let proofProposition := mkApp3 (mkConst ``Eq [1]) natural proofObservation (mkNatLit 0)
+    reject "proof_dependency_is_not_captured"
+      (quantify (mkConst ``True) .instImplicit proofProposition) selection
+      "unclassified_form:source.coordinate_dependency:"
+    let dataObservation := mkApp2 (mkConst ``Nat.add) (.bvar 2) (mkNatLit 0)
+    let dataProposition := mkApp3 (mkConst ``Eq [1]) natural dataObservation (mkNatLit 0)
+    reject "ordinary_data_dependency_is_not_captured"
+      (quantify natural .instImplicit dataProposition) selection
+      "unclassified_form:source.coordinate_dependency:"
+    reject "ordinary_coordinate_order" source
+      { selection with coordinates := #[2, 0] }
+      "unclassified_form:source.coordinate_order"
+    reject "ordinary_coordinate_duplicate" source
+      { selection with coordinates := #[0, 0, 2] }
+      "unclassified_form:source.coordinate_order"
+    let dependentObservation := mkAppN (mkConst ``ToString.toString [0])
+      #[mkApp (mkConst ``Fin) (.bvar 2), .bvar 1, .bvar 0]
+    let dependentSource := Expr.forallE `n natural
+      (.forallE `dictionary (mkApp (mkConst ``ToString [0]) (mkApp (mkConst ``Fin) (.bvar 0)))
+        (.forallE `x (mkApp (mkConst ``Fin) (.bvar 1))
+          (mkApp3 (mkConst ``Eq [1]) (mkConst ``String) dependentObservation (mkStrLit ""))
+          .default) .instImplicit) .default
+    reject "dictionary_depends_on_omitted_ordinary_data" dependentSource
+      { owner, coordinates := #[], readouts := #[{
+          path := #["body", "body", "body", "fn", "arg"], stateBinder := 2 }] }
+      "unclassified_form:source.coordinate_dependency:"
+    let extraObservation := mkAppN (mkConst ``ToString.toString [0])
+      #[.bvar 4, .bvar 3, .bvar 0]
+    let extraSource := Expr.forallE `alpha (mkSort (.succ .zero))
+      (.forallE `dictionary dictionaryType
+        (.forallE `n natural
+          (.forallE `unusedDictionary (mkApp (mkConst ``ToString [0]) natural)
+            (.forallE `x (.bvar 3)
+              (mkApp3 (mkConst ``Eq [1]) (mkConst ``String) extraObservation (mkStrLit ""))
+              .default) .instImplicit) .default) .instImplicit) .implicit
+    let extra ← CompiledSourceScope.resolve (info extraSource) {
+      selection with readouts := #[{
+        path := #["body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 4 }] }
+    let some extraReadout := extra.readouts[0]?
+      | throw <| IO.userError "compiled.source_fixed_context:unrelated_missing_readout"
+    unless extra.parameterSlots == #[0, 1, 2] && extra.coordinates.size == 3 &&
+        extraReadout.projected.equal observation do
+      throw <| IO.userError "compiled.source_fixed_context:unrelated_dictionary_was_captured"
+    let changed := quantify dictionaryType .implicit proposition
+    let dropped := Expr.forallE `alpha (mkSort (.succ .zero))
+      (.forallE `n natural (.forallE `x (.bvar 1) (mkConst ``True) .default) .default) .implicit
+    for (label, law) in #[("changed_instance_binder", changed),
+        ("dropped_instance_binder", dropped)] do
+      let rejected ← try
+        CompiledSourceScope.reconstruct source law
+        pure false
+      catch error => pure (error.toString.startsWith "unclassified_form:source.")
+      unless rejected do throw <| IO.userError s!"compiled.source_fixed_context:{label}"
+  discard <| (action.run 524288).run context
+  IO.println "[PASS] compiled.source_fixed_context: lexical dictionary packing and rejection guards"
+
 unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
   RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
   let store ← reader.get
@@ -372,6 +491,7 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
   let enrollment ← TemplateAudit.CompiledEnrollment.Context.fromArtifacts store
     `LeanInformationAudit.TemplateEnrollment {} {}
   sourceOccurrencePaths enrollment
+  sourceFixedDictionaryContext enrollment
   let query := fun locals =>
     (RegistrationGates.compiledQueryWork (typeShape (mkFVar id))).run
       { enrollment.provenance with locals }
