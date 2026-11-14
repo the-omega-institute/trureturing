@@ -312,11 +312,8 @@ variable {E F : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 omit [FiniteDimensional ℝ E] in
 private theorem ker_orthogonal_injective (A : E →L[ℝ] F) {x y : E}
     (hx : x ∈ A.kerᗮ) (hy : y ∈ A.kerᗮ) (he : A x = A y) : x = y := by
-  apply sub_eq_zero.mp
-  have hk : x-y ∈ A.ker := by simpa [LinearMap.mem_ker, map_sub] using sub_eq_zero.mpr he
-  have ho : x-y ∈ A.kerᗮ := A.kerᗮ.sub_mem hx hy
-  have hh := (Submodule.mem_orthogonal _ _).mp ho (x-y) hk
-  exact inner_self_eq_zero.mp hh
+  exact (LinearMap.disjoint_ker_iff_injOn (f := A.toLinearMap)).mp
+    A.ker.orthogonal_disjoint.symm hx hy he
 
 private theorem map_orthogonal_projection (A : E →L[ℝ] F) (x : E) :
     A (A.kerᗮ.starProjection x) = A x := by
