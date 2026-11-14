@@ -2574,9 +2574,9 @@ literature-attested: Jordan--Korotkov,
 [*Uncollapsing the wavefunction by undoing quantum measurements*,
 arXiv:0906.3468v1, §§II.2--II.3, equations (4)--(13)](https://arxiv.org/html/0906.3468v1#S2),
 include mixed and entangled inputs. Their SVD discussion around
-(60)--(67), and §V's sequential single-axis attenuation through
-(70)--(76), supply the generic mechanism. Here the new operational
-consumer is its implementation with the original seam controls,
+(60)--(67), and the sequential single-axis attenuation in §IV.2,
+(70)--(71), and §V, (72)--(76), supply the generic mechanism. Here the
+new operational consumer is its implementation with the original seam controls,
 same resource and complete seven-leaf native tree. This is distinct
 from deterministic represented left-inverse necessity in
 [KrausLeftInverseNecessity](../../../D5/S3/Quantum/Recovery/KrausLeftInverseNecessity.lean).
@@ -2605,17 +2605,70 @@ $$
 $$
 
 The last row concerns the actual double success of Theorem 109.1.
-The complementary read branch uses $I_H-P_+$ in the same formulas.
+For the complementary outcome put $E=P_B-P_+$, so that
+$I_H-P_+=P_r+E$. Its branch operators, outputs and masses are
+
+$$
+\begin{aligned}
+C_0&=(I_H-P_+)A_0=P_r+EK,\\
+C_{00}&=(I_H-P_+)Q=P_r+\sigma E,\\
+\omega_{0,-}&=(C_0\otimes I_R)\rho_{HR}(C_0\otimes I_R)^\dagger,\\
+\operatorname{Tr}\omega_{0,-}
+ &=\operatorname{Tr}[((P_r+K^\dagger EK)\otimes I_R)\rho_{HR}],\\
+\omega_{00,-}&=(C_{00}\otimes I_R)\rho_{HR}(C_{00}\otimes I_R)^\dagger,\\
+\operatorname{Tr}\omega_{00,-}
+ &=\operatorname{Tr}[((P_r+\sigma^2E)\otimes I_R)\rho_{HR}].
+\end{aligned}
+\tag{VII.72a}
+$$
+
 The read acts on the returned updated quantum bank at the same source;
 it does not fetch an archived input or prepare another copy.
 
 Proof. Each preceding successful leaf returns exactly the VI66 input
-domain. Compose its branch operator with $P_+$ and tensor identity on
-$R$. Since $P_+P_r=0$, $P_+A_0=P_+K$ and $P_+Q=\sigma P_+$.
-Taking the trace gives (VII.72). This proves the general actual-update
-expression, not merely a special-input probability. The previous
-failures are untouched leaves of the complete tree, while either read
-outcome refines only the selected successful leaf. $\square$
+domain. Compose its branch operator with each of VI66.3's two projectors
+and tensor identity on $R$. Since $P_+P_r=0$, $P_+A_0=P_+K$ and
+$P_+Q=\sigma P_+$, giving (VII.72). For the complement,
+$EP_r=P_rK=KP_r=0$ and $E^2=E$, so its products and effects are
+$C_0=P_r+EK$, $C_0^\dagger C_0=P_r+K^\dagger EK$ and
+$C_{00}=P_r+\sigma E$, $C_{00}^\dagger C_{00}=P_r+\sigma^2E$.
+These identities prove (VII.72a).
+
+In the $r\oplus B$ blocks of (VII.71), with every bank operator tensored
+with $I_R$, both complementary outputs can be written as
+
+$$
+((P_r+ET)\otimes I_R)\rho_{HR}((P_r+ET)\otimes I_R)^\dagger
+=\begin{pmatrix}
+\rho_{rr}&\rho_{rB}T^\dagger E\\
+ET\rho_{Br}&ET\rho_{BB}T^\dagger E
+\end{pmatrix},
+\quad T=K\ \text{or}\ T=\sigma P_B.
+\tag{VII.72b}
+$$
+
+Thus the $r$ contribution and the surviving $r/B$ coherences remain;
+the complementary double-success output is not in general
+$\sigma^2((I_H-P_+)\otimes I_R)\rho_{HR}((I_H-P_+)\otimes I_R)$.
+The block identity is linear in all sixteen original matrix units, so
+it holds with arbitrary reference blocks, without a support or
+independence restriction on $\rho_{HR}$.
+
+For the admitted boundary input $\rho=P_r$ with trivial $R$,
+$U=V=I_B$ and $s_1=s_2=s_3=3/5$, one has $A_0=Q=P_r+(3/5)P_B$.
+Both complementary outputs are exactly $P_r$, each of mass one; both
+click outputs have mass zero. Omitting $P_r$ from the first complementary
+effect would give mass zero, while multiplying the full complementary
+sandwich by $\sigma^2$ would give mass $9/25$.
+
+For either selected leaf $X=A_0$ or $Q$, the two refined effects sum to
+$X^\dagger[P_++(I_H-P_+)]X=X^\dagger X$, so their masses sum to
+the mass of that leaf. The previous failures are untouched leaves of
+the complete tree, while both read outcomes, with distinct appended
+detector/controller records, refine only the selected successful leaf.
+Each output has its same returned embedding, helpers, complete native
+record and actual successor; a zero-mass outcome has no normalized
+conditional state. $\square$
 
 **Proposition 110.2 (an illustrative subordinate family).** Put
 $K_\lambda=I_B+(\lambda-1)P_m$, $0\le\lambda\le1$, and take the
@@ -2831,7 +2884,10 @@ A $\kappa$ is not permission to omit an output: it denotes exactly the
 complete ideal interface already supplied for those primitive services.
 For the recovery commission replace the four operators by the seven
 operators and distinct prefixes of (VII.69). For the consumer commission
-refine the appropriate successful leaf by both VI66 read outcomes.
+refine the appropriate successful leaf by the pair $P_+A_0,C_0$ or
+$P_+Q,C_{00}$ of Proposition 110.1, retaining both distinct VI66 read
+records. In particular its complementary target retains the $P_r$ term
+and the full reference/coherence blocks of (VII.72a)--(VII.72b).
 
 **Theorem 112.2 (effective per-commission full-output correctness).**
 Theorem 111.2 selects finite commands with arbitrarily small mathematical
@@ -3126,8 +3182,9 @@ Install the finite programs of §§107--112 as classical quantum-apparatus
 policies inside the VI50/VI71 namespace, using only its existing acquired
 controls and occupation instrument. For both entrances of Definition
 105.1, their completed ideal calls on the declared domain implement
-(VII.66), (VII.69) and (VII.72) on the same physical source, retaining
-all complete native service fields and actual source successors. Any
+(VII.66), (VII.69) and both read outcomes of Proposition 110.1 on the
+same physical source, retaining all complete native service fields and
+actual source successors. Any
 finite lawful original native continuation remains available on its
 original full or pending domain with its own finite supplies, rights,
 holds and progress. A raw quantum action may dirty that domain and
