@@ -268,14 +268,17 @@ theorem original_reflected_alternatives [Nontrivial V]
         funext (fun x => (add_comm _ _).trans (congrFun k.decomp x).symm)
       have afun : (fun x => a.param 0 + a.param.linear.toContinuousLinearMap x) = a.param :=
         funext (fun x => (add_comm _ _).trans (congrFun a.param.decomp x).symm)
+      have hsph (x : EuclideanSpace ℝ (Fin b.dim)) (hx : ‖x‖ = 1) :
+          k 0 + k.linear.toContinuousLinearMap x ∈ (base C u).extremePoints ℝ := by
+        rw [show k 0 + k.linear.toContinuousLinearMap x = k x from congrFun kfun x]
+        exact hP ⟨x, by simpa using hx, rfl⟩
       have he := D5.S3.Geometry.AffineBallRigidity.eq_of_subset_of_extreme_sphere
         (base C u) (k 0) (a.param 0) k.linear.toContinuousLinearMap
         a.param.linear.toContinuousLinearMap (k.linear_injective_iff.mpr hi)
         (a.param.linear_injective_iff.mpr a.injective)
         (by rw [kfun, afun, a.whole]; exact hsub)
         (by rw [afun, a.whole]; exact fun x hx => hx.1)
-        (fun x hx => by rw [show k 0 + k.linear.toContinuousLinearMap x = k x from congrFun kfun x];
-                       exact hP ⟨x, by simpa using hx, rfl⟩)
+        hsph
       rw [kfun, afun, a.whole] at he
       exact ⟨hbd, r, he⟩
   exact ⟨b, rfl, g, k, hb, hk, hi, hrank, hK, affine_ball_frontier k hi,
