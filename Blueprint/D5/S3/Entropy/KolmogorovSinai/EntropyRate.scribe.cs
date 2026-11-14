@@ -428,10 +428,10 @@ internal sealed class EntropyRateDocument : IScribeDocumentDefinition
             Dot, F.Id("MeasurePreserving"), Sp, F.Id("T"), Sp, Mu, Sp, Mu, Close,
             Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"),
             Dot, F.Id("ksEntropy"), Sp, F.Id("hT"), Sp, Eq, Sp, Seq(Operatorname, Grp(F.Id("iSup"))), Sp,
-            Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp,
+            Open, F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp,
             Seq(Operatorname, Grp(F.Id("iSup"))), Sp,
-            Parenthesized(Seq(F.Id("P"), Sp, Colon, Sp, F.Id("MeasurePartition"), Sp, Mu, Sp,
-                Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n")))))), Comma, Sp, Open, Open,
+            Open, F.Id("P"), Sp, Colon, Sp, F.Id("MeasurePartition"), Sp, Mu, Sp,
+            Open, F.Id("Fin"), Sp, F.Id("n"), Close, Close, Comma, Sp, Open, Open,
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("ksEntropyPartition"),
             Sp, F.Id("hT"), Sp, F.Id("P"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Close,
             Sp, Colon, Sp, F.Id("EReal"), Close));

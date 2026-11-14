@@ -78,7 +78,8 @@ private lemma tail_membership (s : Set Omega) (hs : MeasurableSet[tailSigma] s) 
   have h : shift (point false) = shift (point true) := by
     apply coordinateEquiv.symm.injective
     funext n
-    simp [point, code, shift]
+    change code (point false) (n + 1) = code (point true) (n + 1)
+    simp
   simp only [Set.mem_preimage, h]
 def firstIndicator (b : Bool) (x : Omega) : ℝ := if code x 0 = b then 1 else 0
 private lemma conditional_first (b : Bool) :
@@ -147,7 +148,11 @@ private def gapTest (x : Omega) : ℝ :=
   (firstIndicator false (shift x) - firstIndicator false x) / 4
 private lemma law_gapTest : ∫ x, gapTest x ∂law = 1/8 := by
   rw [integral_law]
-  norm_num [gapTest, firstIndicator, shift, point]
+  change (((if code (point false) 1 = false then 1 else 0) -
+      (if code (point false) 0 = false then 1 else 0)) / 4 +
+    ((if code (point true) 1 = false then 1 else 0) -
+      (if code (point true) 0 = false then 1 else 0)) / 4) / 2 = 1/8
+  norm_num
 private lemma firstIndicator_integrable (rho : Measure Omega) [IsProbabilityMeasure rho] (b : Bool) :
     Integrable (firstIndicator b) rho := by
   apply Integrable.of_bound (firstIndicator_measurable b).aestronglyMeasurable 1
@@ -319,7 +324,7 @@ private lemma gapTest_integrable (rho : Measure Omega) [IsProbabilityMeasure rho
     Integrable gapTest rho := by
   apply Integrable.of_bound gapTest_measurable.aestronglyMeasurable 1
   exact Filter.Eventually.of_forall fun x => by
-    simp only [gapTest, firstIndicator, shift]
+    simp only [gapTest, firstIndicator]
     split_ifs <;> norm_num
 
 private lemma invariant_gapTest (rho : Measure Omega) [IsProbabilityMeasure rho]
@@ -342,7 +347,11 @@ private lemma gapTest_lipschitz (x y : Omega) :
   by_cases h0 : code x 0 = code y 0
   · by_cases h1 : code x 1 = code y 1
     · have heq : gapTest x = gapTest y := by
-        simp [gapTest, firstIndicator, shift, h0, h1]
+        change ((if code x 1 = false then 1 else 0) -
+          (if code x 0 = false then 1 else 0)) / 4 =
+          ((if code y 1 = false then 1 else 0) -
+          (if code y 0 = false then 1 else 0)) / 4
+        simp [h0, h1]
       rw [heq, sub_self, abs_zero]
       exact sourceDistance_nonneg x y
     · have hlower : (1/2 : ℝ) ^ 1 ≤ dist (code x) (code y) := by
@@ -350,18 +359,24 @@ private lemma gapTest_lipschitz (x y : Omega) :
         have he := PiNat.apply_eq_of_dist_lt (lt_of_not_ge h) (le_refl 1)
         exact h1 he
       have htest : |gapTest x - gapTest y| ≤ (1/4 : ℝ) := by
+        change |((if code x 1 = false then 1 else 0) -
+          (if code x 0 = false then 1 else 0)) / 4 - ((if code y 1 = false then 1 else 0) -
+          (if code y 0 = false then 1 else 0)) / 4| ≤ (1/4 : ℝ)
         cases hx0 : code x 0 <;> cases hx1 : code x 1 <;>
           cases hy0 : code y 0 <;> cases hy1 : code y 1 <;>
-          simp_all [gapTest, firstIndicator, shift] <;> norm_num
+          simp_all <;> norm_num
       exact htest.trans (by unfold sourceDistance; norm_num at hlower ⊢; linarith)
   · have hlower : (1/2 : ℝ) ^ 0 ≤ dist (code x) (code y) := by
       by_contra h
       have he := PiNat.apply_eq_of_dist_lt (lt_of_not_ge h) (le_refl 0)
       exact h0 he
     have htest : |gapTest x - gapTest y| ≤ (1/2 : ℝ) := by
+      change |((if code x 1 = false then 1 else 0) -
+          (if code x 0 = false then 1 else 0)) / 4 - ((if code y 1 = false then 1 else 0) -
+          (if code y 0 = false then 1 else 0)) / 4| ≤ (1/2 : ℝ)
       cases hx0 : code x 0 <;> cases hx1 : code x 1 <;>
         cases hy0 : code y 0 <;> cases hy1 : code y 1 <;>
-        norm_num [gapTest, firstIndicator, shift, hx0, hx1, hy0, hy1]
+        norm_num [hx0, hx1, hy0, hy1]
     exact htest.trans (by unfold sourceDistance; norm_num at hlower ⊢; linarith)
 
 /-- All probability couplings, with both actual marginals. -/

@@ -260,7 +260,7 @@ The definitions and conventions in the introduction apply.
 
 **Definition 1.22 (ksEntropy).**
 
-$$\forall \{\alpha : Type\} [MeasurableSpace \alpha] \{\mu : MeasureTheory.Measure \alpha\} [MeasureTheory.IsProbabilityMeasure \mu] \{ T : \alpha \to \alpha\} (hT : MeasureTheory.MeasurePreserving T \mu \mu), D5.S3.Entropy.KolmogorovSinai.ksEntropy hT = \operatorname{iSup} n, \operatorname{iSup} P, (D5.S3.Entropy.KolmogorovSinai.ksEntropyPartition hT P)$$
+$$\forall \{\alpha : Type\} [MeasurableSpace \alpha] \{\mu : MeasureTheory.Measure \alpha\} [MeasureTheory.IsProbabilityMeasure \mu] \{ T : \alpha \to \alpha\} (hT : MeasureTheory.MeasurePreserving T \mu \mu), D5.S3.Entropy.KolmogorovSinai.ksEntropy hT = \operatorname{iSup} (n : \mathbb{N}), \operatorname{iSup} (P : MeasurePartition \mu (Fin n)), ((D5.S3.Entropy.KolmogorovSinai.ksEntropyPartition hT P : \mathbb{R}) : EReal)$$
 
 *Formalization.* `D5/S3/Entropy/KolmogorovSinai/EntropyRate.ksEntropy` (`✓ std3`).
 

@@ -26,9 +26,16 @@ private abbrev X := ℕ → Bool
 local instance : MetricSpace X := PiNat.metricSpace (E := fun _ => Bool)
 private def fairSymbol : Measure Bool := (2 : ENNReal)⁻¹ • Measure.dirac false +
   (2 : ENNReal)⁻¹ • Measure.dirac true
+@[instance] private theorem fairSymbol_probability : IsProbabilityMeasure fairSymbol := by
+  constructor
+  simp only [fairSymbol, Measure.add_apply, Measure.smul_apply,
+    Measure.dirac_apply_of_mem (Set.mem_univ _), smul_eq_mul, mul_one]
+  simpa only [one_div] using ENNReal.add_halves 1
 private lemma fairSymbol_mass (b : Bool) : fairSymbol {b} = (2 : ENNReal)⁻¹ := by
   cases b <;> simp [fairSymbol]
 private def rawFair : Measure X := bern fairSymbol
+@[instance] private theorem rawFair_probability : IsProbabilityMeasure rawFair :=
+  inferInstanceAs (IsProbabilityMeasure (bern fairSymbol))
 private lemma rawFairInvariant : MeasurePreserving shiftMap rawFair rawFair :=
   measurePreserving_shiftMap_bern fairSymbol
 private lemma ks_eq_coord (rho : Measure X) [IsProbabilityMeasure rho]
@@ -166,6 +173,8 @@ private lemma semi : coordinateEquiv ∘ D5.S3.Entropy.BernoulliShift.shiftMap =
 private lemma semi_inv : coordinateEquiv.symm ∘ shift =
     D5.S3.Entropy.BernoulliShift.shiftMap ∘ coordinateEquiv.symm := rfl
 def fair : Measure Omega := Measure.map coordinateEquiv D5.S3.Entropy.FairBernoulli.rawFair
+@[instance] private theorem fair_probability : IsProbabilityMeasure fair :=
+  (Measure.isProbabilityMeasure_map_iff coordinateEquiv.measurable.aemeasurable).mpr inferInstance
 lemma fair_invariant : MeasurePreserving shift fair fair := by
   refine ⟨shift_m, ?_⟩
   unfold fair

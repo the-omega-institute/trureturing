@@ -159,9 +159,9 @@ internal sealed class LopesOliveiraSourceDocument : IScribeDocumentDefinition
             Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot,
             F.Id("Omega"), Sp, F.Id("d"), Close, Comma, Sp, Bar, F.Id("phi"), Sp,
             F.Id("x"), Sp, Minus, Sp, F.Id("phi"), Sp, F.Id("y"), Bar, Sp,
-            Le, Sp, F.Id("H"), Sp, Cdot, Sp, Parenthesized(Seq(F.Id("D5"), Dot, F.Id("S3"),
+            Le, Sp, F.Id("H"), Sp, Cdot, Sp, Grp(Open, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("distance"), Sp, F.Id("x"), Sp,
-            F.Id("y"))), Caret, Grp(F.Id("alpha"))));
+            F.Id("y"), Close), Caret, Grp(F.Id("alpha"))));
     private static Formula CompletedPresentation10() => Disp(Seq(Forall, Sp, OpenBrace, Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), CloseBrace,
             Sp, Open, F.Id("x"), Sp, Colon, Sp, F.Id("D5"), Dot, F.Id("S3"),
             Dot, F.Id("Entropy"), Dot, F.Id("LopesOliveiraSource"), Dot, F.Id("Omega"), Sp, F.Id("d"), Close,

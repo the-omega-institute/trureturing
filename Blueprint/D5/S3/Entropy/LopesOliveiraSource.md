@@ -162,7 +162,7 @@ The definitions and conventions in the introduction apply.
 
 **Definition 1.12 (IsHolder).**
 
-$$\forall \{ d : \mathbb{N}\} (phi : D5.S3.Entropy.LopesOliveiraSource.Omega d \to \mathbb{R}), D5.S3.Entropy.LopesOliveiraSource.IsHolder phi = \exists alpha, 0 < alpha \land \exists H, 0 \le H \land \forall (x y : D5.S3.Entropy.LopesOliveiraSource.Omega d), |phi x - phi y| \le H \cdot D5.S3.Entropy.LopesOliveiraSource.distance x {y^{alpha}}$$
+$$\forall \{ d : \mathbb{N}\} (phi : D5.S3.Entropy.LopesOliveiraSource.Omega d \to \mathbb{R}), D5.S3.Entropy.LopesOliveiraSource.IsHolder phi = \exists alpha, 0 < alpha \land \exists H, 0 \le H \land \forall (x y : D5.S3.Entropy.LopesOliveiraSource.Omega d), |phi x - phi y| \le H \cdot {(D5.S3.Entropy.LopesOliveiraSource.distance x y)}^{alpha}$$
 
 *Formalization.* `D5/S3/Entropy/LopesOliveiraSource.IsHolder` (`✓ std3`).
 
