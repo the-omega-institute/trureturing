@@ -144,6 +144,26 @@ theorem substitution_finset_coeff (D : LatticeData)
     simp only [smul_monomial, smul_eq_mul, mul_one],
     map_smul, coeff_smul, smul_eq_mul]
 
+/-! The finite affine row has the same occupation recursion as the source
+coefficient after factorial normalization.  This exposes the recurrence in
+the `affineCoefficient` normalization used by the corrected rows, rather
+than forcing the next source-inverse step to reopen `affineMoment`. -/
+
+theorem affineCoefficient_step {I : Type*} [Fintype I] [DecidableEq I]
+    (A : Matrix I I ℂ) (mu : I → ℂ)
+    (hs : ∀ i j, A i j = A j i) (d : I →₀ ℕ) (i : I) :
+    (weight (d + Finsupp.single i 1) : ℂ) *
+        OriginalChargedRowSource.affineCoefficient A mu
+          (d + Finsupp.single i 1) =
+      mu i * (weight d : ℂ) *
+          OriginalChargedRowSource.affineCoefficient A mu d +
+      ∑ j, (d j : ℂ) * A i j *
+        ((weight (d - Finsupp.single j 1) : ℂ) *
+          OriginalChargedRowSource.affineCoefficient A mu
+            (d - Finsupp.single j 1)) := by
+  simpa only [OriginalChargedRowSource.affineMoment_coefficient, mul_assoc] using
+    (OriginalChargedRowSource.affineMoment_step A mu hs d i)
+
 /-- Ordinary transpose, with no conjugation, for the original factorial form. -/
 theorem substitution_factorial_transpose
     (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
