@@ -14,7 +14,7 @@ triage: anchor
 
 # Constrained multiset bodies and simplex differences
 
-## Source and shape correspondence
+## Verified locator
 
 M. Kovačević and D. Tan, *Codes in the Space of Multisets—Coding for
 Permutation Channels with Impairments*, [arXiv:1612.08837v5](https://arxiv.org/html/1612.08837v5)
