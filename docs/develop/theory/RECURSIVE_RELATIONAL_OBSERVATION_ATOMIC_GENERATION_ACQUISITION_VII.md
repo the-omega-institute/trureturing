@@ -782,3 +782,516 @@ physical-universe realization, new native measurement/clock, proof of
 minimality, or completion of the enduring common-recovery problem follows.
 
 ## 追加锚（本行以下为增补区）
+
+## 86. The fixed inherited recorder and its occupied profiles
+
+**Definition 86.1 (the recorder, without changing its labels).** Write IV
+for [Acquisition IV](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_IV.md)
+and AAII for [Acquisition II](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md).
+In §§86–92, use exactly IV1.1,9.1,18.1–19.5's known-alpha native domain
+and its single recorder $J$. Thus $\mathcal H(t)$ contains every legal
+successful addressed P/S history to the finite reachable endpoint $t$,
+$F(t)=|\mathcal H(t)|$, $N(t)$ is its successful event count, and
+$G(t)=\lceil\log_2F(t)\rceil$. The labelled incoming edges and their
+complete-history partition are IV.3, equivalently AAII99.1–99.2.
+Every sum over $e:u\to t$ retains edge multiplicity.
+
+The initial word is $J(\varepsilon)=\varepsilon$. At each noninitial
+endpoint the lower tokens are exactly $(e,h)$ with inherited word $J(h)$
+and complete history $he$. The common output width is IV18.1's optimum.
+Tokens are processed by decreasing lower width, then by the complete
+history $he$: events have order $(\mathrm{kind},|p|,p)$, with $P<S$ and
+$L<R$, and histories have IV Convention 1.3's count-then-lexicographic
+order. Each token receives the lexicographically first unused word of
+that common width extending its actual lower word. No inherited word
+is replaced by a rank or a fresh codebook.
+
+Put
+
+$$
+\begin{aligned}
+\ell_t&=L(t)=M_J(t),&
+B_t&=\{J(h):h\in\mathcal H(t)\}\subseteq\{0,1\}^{\ell_t},\\
+z_t(d)&=|\{x\in B_t:0^d\preceq x\}|\qquad(0\le d\le\ell_t).
+\end{aligned}
+\tag{VII.15}
+$$
+
+Here $\preceq$ is literal prefix, $0^0=\varepsilon$, and the length-zero
+cube consists of the single empty word. The coordinate order on a
+fixed-width cube is $x\le y$ when $x_i\le y_i$ for every bit, with
+$0<1$. A Boolean order ideal is a subset closed under decreasing any
+coordinates. This order is different from both literal prefix order
+and the lexicographic order used by the allocation.
+
+The fixed-head contract and IV19.3/5.1's original service remain in
+force. Only successful generation events enter $\mathcal H(t)$;
+queries, refusals, partial ingress, maintenance, output and return retain
+their complete original records and phases. The profile in (VII.15)
+is a function of the endpoint and this fixed recorder, not an extra
+observable history field.
+
+## 87. Downward closure of the actual occupied code set
+
+**Theorem 87.1 (Boolean ideality and the maximal prefix cylinder).** For
+every finite reachable native endpoint $t$, the actual set $B_t$ is a
+nonempty Boolean order ideal of cardinality $F(t)$. For every
+$0\le d\le\ell_t$ and every $q\in\{0,1\}^d$,
+
+$$
+|\{x\in B_t:q\preceq x\}|\le z_t(d).
+\tag{VII.16}
+$$
+
+The occupied set at an endpoint is independent of permutations within
+a group of equal lower width. This assertion concerns the occupied
+set only; the assignment of its words to the labelled histories remains
+the exact assignment in Definition 86.1.
+
+**Proof.** For a fixed output width, distinct equal-length lower words
+have disjoint sets of allowed leaves. Tokens with the same lower word
+successively take the first, second and subsequent missing leaves of
+one allowed subtree. Hence changing the within-width order leaves the
+final occupied set unchanged, with every repeated lower token still
+counted. It can change which complete history receives which leaf.
+This proves exactly the stated occupied-set independence.
+
+Induct on $N(t)$. At alpha, $B_\alpha=\{\varepsilon\}$ is a nonempty
+ideal. At a noninitial endpoint fix its prescribed common width
+$L=\ell_t$. Allocation feasibility is IV Lemma 18.2, independently of
+any ideality assertion. Process the lower-width groups in their
+prescribed decreasing order. Initially the occupied subset $S$ of the
+length-$L$ cube is empty and is an ideal.
+
+Suppose $S$ is an ideal before a group of lower width $l$. For each
+$l$-bit word $b$ write
+
+$$
+S_b=\{w\in\{0,1\}^{L-l}:bw\in S\},\qquad
+ a_b=\sum_{\substack{e:u\to t\\\ell_u=l}}\mathbf1_{\{b\in B_u\}}.
+\tag{VII.17}
+$$
+
+The second expression is the exact number of this group's tokens
+whose lower word is $b$: each predecessor table is injective, while
+all labelled incoming edges remain in the sum. Each section $S_b$
+is a suffix-cube ideal. If $b'\le b$, then $S_{b'}\supseteq S_b$
+and, by predecessor ideality, $a_{b'}\ge a_b$.
+
+Two elementary facts about filling missing elements apply. In a finite
+linearly ordered universe, let $A\supseteq B$ and let $a\ge b$ be
+nonnegative integers for which both fillings are feasible. Adjoining
+the first $a$ missing elements to $A$ contains the result of adjoining
+the first $b$ missing elements to $B$. Indeed an element of the latter
+result already in $A$ is included; otherwise its rank among missing
+elements of $A$ is at most its rank among missing elements of $B$,
+which is at most $b\le a$. Also, adjoining an initial lexicographic
+segment of the missing words to a Boolean ideal preserves ideality:
+every coordinatewise smaller distinct missing word is lexicographically
+earlier, so it has already been adjoined.
+
+Apply these facts in each common suffix universe. By occupied-set
+independence, the group replaces $S_b$ by $S_b$ together with its first
+$a_b$ missing suffixes. The new sections are ideals and remain nested
+under $b'\le b$. Consequently, if $bw$ is newly occupied and
+$b'w'\le bw$, section nesting first gives $b'w$ and suffix ideality
+then gives $b'w'$. Thus the whole group preserves ideality. Every group
+is feasible, so induction through all groups proves that $B_t$ is an
+ideal. The original allocation gives exactly one distinct leaf to each
+history, proving nonemptiness and cardinality $F(t)$.
+
+Finally the map $qw\mapsto0^dw$ is an injection from the $q$ section
+of $B_t$ into its $0^d$ section: the target is coordinatewise smaller
+and hence belongs to the ideal. This proves (VII.16), including $d=0$
+and the length-zero cube. $\square$
+
+## 88. Exact scalar recursion for width and congestion
+
+**Theorem 88.1 (zero-prefix profile recursion on every native endpoint).**
+The widths and profiles of the original $J$ are determined by
+
+$$
+\ell_\alpha=0,\qquad z_\alpha(0)=1.
+\tag{VII.18}
+$$
+
+For a noninitial $t$ put $m_t=\max_{e:u\to t}\ell_u$ and, for every
+integer $d\ge0$, define
+
+$$
+\begin{aligned}
+A_t(d)&=\sum_{\substack{e:u\to t\\\ell_u\ge d}}z_u(d),\\
+b_t(d)&=|\{e:u\to t:\ell_u<d\}|.
+\end{aligned}
+\tag{VII.19}
+$$
+
+In particular $A_t(d)=0$ for $d>m_t$. For $0\le d\le m_t$ it is
+positive, and the exact recursion is
+
+$$
+\begin{aligned}
+\ell_t&=\max_{0\le d\le m_t}
+       \left(d+\left\lceil\log_2A_t(d)\right\rceil\right),\\
+z_t(d)&=\min\{2^{\ell_t-d},\ A_t(d)+b_t(d)\}
+                  &&(0\le d\le\ell_t),\\
+F(t)C(t)&=\max_{0\le d\le m_t}2^dA_t(d).
+\end{aligned}
+\tag{VII.20}
+$$
+
+Here $C(t)$ is precisely IV Definition 19.4's congestion; at alpha its
+separate convention is $C(\alpha)=1$. Every predecessor has smaller
+native grade, so (VII.18)–(VII.20) are a terminating finite recursion.
+They compute the widths and these scalar profiles without choosing
+new codebooks or discarding any history multiplicity.
+
+**Proof.** A nonempty ideal of width $w$ contains $0^w$. A predecessor
+of maximal width therefore proves $A_t(d)>0$ at every $d\le m_t$.
+For a depth-$d$ prefix $q$, predecessors of width below $d$ contribute
+nothing to IV19.4's $D_t(q)$. Apply Theorem 87.1 separately to every
+other predecessor to obtain
+
+$$
+D_t(q)\le D_t(0^d)=A_t(d)\qquad(0\le d\le m_t).
+\tag{VII.21}
+$$
+
+There are no prefixes of lower words at depths greater than $m_t$.
+Substitution into IV.40 proves the first line of (VII.20), and
+substitution into the definition of $C$ proves the third. The depth
+$m_t$ term also proves $\ell_t\ge m_t$.
+
+Fix $d\le\ell_t$. All tokens of lower width at least $d$ are processed
+before shorter ones. Exactly $A_t(d)$ of them have lower prefix $0^d$;
+each of these must and does occupy one leaf of the output cylinder
+$0^d\{0,1\}^{\ell_t-d}$. Every other such token stays outside.
+For $d>m_t$ this first group is empty, consistently with $A_t(d)=0$.
+
+For a predecessor of width $w<d$, ideality and injection imply that
+exactly one of its lower words can enter that cylinder: its word $0^w$.
+A nonzero $w$-bit lower word disagrees with the cylinder before depth
+$d$. Hence exactly $b_t(d)$ remaining tokens can enter. For each such
+zero token the cylinder is the lexicographically first block of its
+allowed leaves. It takes a leaf there if and only if the cylinder has
+not yet filled. No other remaining token changes that occupancy.
+The final count is therefore its initial count $A_t(d)$ plus one per
+eligible shorter token until the capacity $2^{\ell_t-d}$ is reached.
+This is the second line of (VII.20).
+
+At $d=0$ there are no shorter tokens, and the formula gives
+$z_t(0)=A_t(0)=\sum_eF(u)=F(t)$; IV18.2 ensures enough capacity.
+At $d=\ell_t$ it gives occupancy one, as also follows from ideality.
+Width-zero noninitial endpoints are included: they have
+$m_t=0$, $A_t(0)=1$ and $z_t(0)=1$. In particular the sole predecessor
+of beta is the forced root promotion from alpha, so beta has the same
+width-zero profile as alpha. $\square$
+
+## 89. Complete comb masks on the actual beta-left source
+
+**Definition 89.1 (native mask endpoints).** For $k\ge0$ and
+$0\le M<2^k$ let $T(k,M)$ be the endpoint with $k$ splits along the
+left spine, whose right leaf born at split $i$ is beta exactly when
+bit $i-1$ of $M$ is one. The deepest left leaf is beta. Equivalently,
+as a description of ordered terms,
+
+$$
+\begin{aligned}
+T(0,0)&=\beta,\\
+T(k,M)&=\left\langle
+ T(k-1,\lfloor M/2\rfloor),\ r(M)\right\rangle\quad(k\ge1),\\
+r(M)&=\begin{cases}\beta,&M\text{ odd},\\\alpha,&M\text{ even}.
+\end{cases}
+\end{aligned}
+\tag{VII.22}
+$$
+
+This recursive notation is not a graft operation. Its actual events are
+
+$$
+\rho=P_\varepsilon,\qquad
+A_i=S_{L^{i-1}}\ (1\le i\le k),\qquad
+Q_i=P_{L^{i-1}R}\quad\text{when bit }i-1\text{ is selected}.
+\tag{VII.23}
+$$
+
+The all-beta endpoint $T_r=T(r,2^r-1)$ is exactly AAII Theorem 50.4's
+existing $u_r$, also IV13.2's case of unit block lengths.
+
+**Theorem 89.2 (full predecessor recursion, including delayed promotions).**
+Every $T(k,M)$ is natively reachable. For $k\ge1$ its full labelled
+incoming set consists exactly of
+
+$$
+\begin{aligned}
+&T(k,M-2^{i-1})\xrightarrow{Q_i}T(k,M)
+              &&\text{for each selected }i,\\
+&T(k-1,M)\xrightarrow{A_k}T(k,M)
+              &&\text{if bit }k-1\text{ is absent}.
+\end{aligned}
+\tag{VII.24}
+$$
+
+At $k=0$ the sole incoming edge is
+$\alpha\xrightarrow{\rho}T(0,0)$. Every prefix of every history to $T_r$
+is either the initial alpha or one of these mask endpoints with
+$k\le r$. In (VII.24) no event is required to occur immediately after
+its enabling split.
+
+Consequently (VII.18)–(VII.20), with base profile $(0,(1))$ at
+$T(0,0)$ and all the parents in (VII.24), compute the original IV19
+width and zero-prefix profile for every mask. This base profile records
+the actual forced promotion; it does not identify beta with an
+independently supplied seed.
+
+**Proof.** Perform $\rho$, then the $k$ spine splits and the selected
+right promotions in any enabled order. AA17.2's event reconstruction
+gives exactly the relations
+
+$$
+\rho<A_1<\cdots<A_k,\qquad A_i<Q_i\quad(i\text{ selected}).
+\tag{VII.25}
+$$
+
+All their linear extensions are lawful histories to this endpoint.
+Conversely an extra promotion, a right split or another branch could
+not disappear under P/S, so no additional event occurs in its complete
+fibre. This is the complete native event argument supplied by AA17/19
+and IV13.2, including every delayed promotion.
+
+Each selected right beta leaf is born alpha and gives its $Q_i$
+predecessor. The deepest left beta is born beta and cannot give a
+promotion predecessor. A split can be last exactly at the deepest
+branch, and only if its right leaf is still alpha: all higher branches
+have a branch as left child. Thus its sole possible label is $A_k$
+with the condition in (VII.24). The root-promotion case occurs only
+when there is no split. This also derives the displayed list directly
+from AAII99.1's full predecessor rule. Every prefix of a linear
+extension of (VII.25) has an initial segment of the split chain and
+some promotions already enabled by it; hence it is precisely a mask
+endpoint after $\rho$. Each parent reduces $k$ plus the number of
+selected bits by one, so the profile recursion terminates. $\square$
+
+The source-supplied local shuffle product, applied to these same masks,
+gives a useful arithmetic input to that recursion:
+
+$$
+F(T(k,M))=\prod_{i\text{ selected}}
+ \left(k-i+1+|\{j>i:j\text{ selected}\}|\right),\qquad
+N(T(k,M))=1+k+|\{i:i\text{ selected}\}|.
+\tag{VII.26}
+$$
+
+Indeed at branch $i$ the left subtree has $k-i$ splits and precisely
+the selected later promotions; the right subtree has one event if
+$i$ is selected and none otherwise. AA19.2's local binomial is the
+displayed factor in the first case and one in the second. The root
+promotion is forced. Empty products give $F(T(0,0))=1$.
+For all selected bits this recovers the existing count
+$F(T_r)=\prod_{j=1}^r(2j-1)$ and $N(T_r)=2r+1$.
+The family, its full fibres and these counts are reused inputs;
+the new deduction here is their identification with the occupied
+profiles of the fixed IV19 recorder.
+
+## 90. A finite countercertificate to the rounded-odd width identity
+
+**Theorem 90.1 (the original IV19 record has width 25 at $T_8$).** For
+this fixed recorder and the full native fibre at the all-beta comb,
+
+$$
+\begin{aligned}
+F(T_8)&=2027025,&N(T_8)&=17,&G(T_8)&=21,\\
+F(T_8)C(T_8)&=22020096=21\cdot2^{20},&L(T_8)&=25,\\
+C(T_8)&=\frac{1048576}{96525},&
+\sum_{j=1}^{8}\lceil\log_2(2j-1)\rceil&=24.
+\end{aligned}
+\tag{VII.27}
+$$
+
+In particular $L(T_r)=\sum_{j=1}^{r}\lceil\log_2(2j-1)\rceil$ is
+false as an identity for IV19's $J$. The rounded-odd sum remains the
+correct width of AAII50.4's different writable local shuffle-rank
+layout; its statement is unchanged.
+
+**Proof.** The complete predecessors of $T_8=T(8,255)$ are exactly
+the eight endpoints $U_i=T(8,255-2^{i-1})$ obtained by deleting $Q_i$.
+There is no split predecessor, because the last right leaf is beta.
+The finite profile recursion (VII.18)–(VII.20), using precisely
+(VII.24) at each preceding mask, gives the following integer certificate:
+
+| Removed event | $F(U_i)=z_{U_i}(0)$ | $\ell_{U_i}$ | $z_{U_i}(20)$ |
+| --- | --- | --- | --- |
+| $Q_1$ | 135135 | 20 | 1 |
+| $Q_2$ | 145530 | 20 | 1 |
+| $Q_3$ | 158760 | 20 | 1 |
+| $Q_4$ | 176400 | 21 | 2 |
+| $Q_5$ | 201600 | 21 | 2 |
+| $Q_6$ | 241920 | 21 | 2 |
+| $Q_7$ | 322560 | 22 | 4 |
+| $Q_8$ | 645120 | 23 | 8 |
+
+All entries use integer ceilings: for a positive integer $a$,
+$\lceil\log_2a\rceil$ is the least nonnegative integer $b$ with
+$a\le2^b$. Thus the table is specified by a finite recursion with
+base $(0,(1))$, masks $0\le M<2^k$, $0\le k\le8$, and the complete
+parent list (VII.24); no real-logarithm approximation is involved.
+Its count column also follows independently from (VII.26): for each
+$i$ the product is
+
+$$
+F(U_i)=\left(\prod_{1\le j<i}2(8-j)\right)
+       \left(\prod_{i<j\le8}(2(8-j)+1)\right).
+\tag{VII.28}
+$$
+
+Summing the last column gives $A_{T_8}(20)=21$. Each predecessor's
+zero-prefix cylinder at depth 20 is full: its occupancy equals
+$2^{\ell_{U_i}-20}$. Therefore
+
+$$
+\begin{aligned}
+2^{20}D_{T_8}(0^{20})
+ &=21\cdot2^{20}\\
+ &=\sum_{i=1}^{8}2^{\ell_{U_i}}
+   =(3+6+4+8)2^{20}=22020096.
+\end{aligned}
+\tag{VII.29}
+$$
+
+IV.45 bounds $2^{|q|}D_{T_8}(q)$ by that same predecessor capacity
+for every prefix $q$. Equality at $0^{20}$ proves that (VII.29) is
+the exact congestion numerator, rather than just one lower bound.
+Since $2^{24}<22020096\le2^{25}$, IV19.5, equivalently (VII.20),
+gives $L(T_8)=25$. In particular a common depth of 24 would leave
+only $2^{24-20}=16$ leaves in the zero cylinder to accommodate its
+21 inherited tokens.
+
+The supplied full count is $15!!=2027025$, lying strictly between
+$2^{20}$ and $2^{21}$, so $G=21$. Division of (VII.29) by this count
+gives the displayed reduced fraction for $C$. The rounded-odd terms
+are $0,2,3,3,4,4,4,4$, whose sum is 24. Their disagreement concerns
+the identification of two different recorder widths, not the existing
+comb count or the correctness of the mutable local layout. $\square$
+
+## 91. Consumption by the existing acquired full-history service
+
+**Theorem 91.1 (exact payload width under the original installation).**
+Under precisely IV Assumption 5.1 and Correspondence 19.3, at every
+maintained known-alpha source $t$ the installed IV19 decoder reads
+exactly the width given by Theorem 88.1 and recovers the entire actual
+$h\in\mathcal H(t)$. In particular every actual history ending at $T_8$
+has a 25-bit IV19 record. The recovered history feeds the original
+FetchGrowth and genuine same-current-source Next, with all seven
+original requests and their full original replies preserved.
+
+This conclusion retains actual acquisition, root/source/record/input/
+output bindings, current exclusive rights, enrollment where required,
+finite paid backing and supplied progress. It preserves every declared
+completed or pending original record, latch, parser and maintenance
+subphase, together with Print, End, supplied ACK, actual root Return
+and cleanup. It supplies neither a selected bilateral installation nor
+an inverse of an arbitrary unfinished observation state.
+
+**Proof.** IV19.1 already gives one literal-extension code, injective on
+each full endpoint fibre, and its acquired fixed-head decoder. Theorems
+87.1–88.1 calculate the width and congestion of those very code tables;
+they change no labelled assignment. With the original source actually
+acquired, the decoder still computes its finite table in paid scratch
+and reads its $L(t)$ data bits in forward order. It requests neither
+a journal end nor a bit beyond the actual record. Width-zero singleton
+fibres require no bit. Theorem 90.1 specializes the same statement at
+$T_8$.
+
+For an enabled actual edit the original installation retains the old
+history, computes the prospective table and required literal suffix,
+reserves its finite backing, executes the guarded real P/S edit and
+finishes the paid append. An unfinished source edit or append keeps
+its pending event, suffix, cursor, bindings and subphase; it is not
+silently treated as a maintained $(t,J(h))$ pair. Incomplete ingress
+retains the actual acquired prefix and latch/parser work. Full answers
+are built and sealed before Print, followed by End, the supplied local
+ACK and Return to the same actual root. The pending input, traversal,
+decoder, continuation and output work is cleared only at its original
+phase. Existing immutable samples and completed records are retained
+with their original bindings and versions.
+
+For an in-range FetchGrowth$(j)$, full-history decoding supplies the
+literal $j$th kind and address. For Next$(j)$ the service retains that
+old pair, navigates on the same current live source, follows actual
+left logical children through branches and performs the uniquely enabled
+P/S at the reached current leaf. The complete outer reply retains
+both the old recalled and the actual new pair. OutOfRange, BadFrame,
+all growth refusals and the other original answers keep their exact
+meanings. These are the supplied IV19.3/11 service transitions; the
+new numerical width neither changes them nor manufactures an operand
+reference from a codeword.
+
+The profile alone is not an alternative record or operational decoder:
+all $2027025$ histories at $T_8$ have the same profile, while their
+complete addressed histories differ. The installed $J(h)$ and actual
+source acquisition remain necessary inputs to this decoder. Arithmetic,
+source traversal, table generation, scratch, links, reference widths,
+coexisting old/new work and all I/O/return work stay separately paid.
+No polynomial running-time or total-resource bound follows from the
+scalar recursion. $\square$
+
+## 92. Suppliers and the unresolved uniform memory relation
+
+**Definition 92.1 (mathematical attribution and distinct domains).**
+The Boolean-ideal deduction, the exact profiles of IV19 and their finite
+width discrepancy are repo-derived conditional mathematics. No worldwide
+priority claim or new Lean verification is attached to them. Their
+source relations are:
+
+| Supplier | Content used and domain retained |
+| --- | --- |
+| AA17/19; AAII99.1–99.2; IV1.1/1.3/9.1/18–19 | Complete labelled native histories, actual predecessor partition, fixed tie rule, inherited optimum and original full-history head service |
+| AAII50.4; IV13.2 | The existing all-beta comb, its complete count and event count, and delayed promotions; AAII's writable local ranks remain a different recorder |
+| AAII99.3–99.10 | The existing weighted tail-read journal; its event-wise rounding and reverse decoding do not identify IV19's inherited head profiles |
+| IV27–33 and IV34–39 | Their stated current-term, paid-tail or labelled-bit contracts; no replacement of IV19's full-history literal head contract |
+| NativeEndpointEventIdeals.guard_enabled, cut_events, execution_adequacy, linear_extension_histories, including the source's private supporting arguments | Native guards, endpoint event ideals and actual legal finite histories; source reuse is not a fresh kernel check |
+| ConfigurationPathTransport.configurationIdealIso | Ideal completion under compatible empty configurations and finite principal pasts; no actual infinite-run acquisition port is inferred |
+| Transport memory completion 23.10–23.14 | Existing finite birth-field stages, their inverse limit and the conditional original global-rho interface; arbitrary-local P/S acquisition is a separate operational obligation |
+
+Cover, *Enumerative Source Encoding*, IEEE Transactions on Information
+Theory 19(1), pp.73–77, [author text](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf),
+§I, Propositions 1–2 and its inverse algorithm, supplies the
+literature-attested static lexicographic indexing mechanism. It does
+not impose the literal inherited lower words of IV18–19. Kaspi and
+Merhav, *Single-User and Multi-User Lossy Source Coding with Decoder
+Side Information*, [arXiv:1301.0079v1](https://arxiv.org/html/1301.0079v1),
+§2, supplies the restricted-input condition forbidding prefix
+confusability for supported side-information pairs. That condition
+does not specify this native recursive allocation or the maximum
+congestion over every reachable endpoint. The source
+DepthBudgetIidGreedyOptimality.depth_budget_iid_greedy_optimality instead
+has iid word masses and prescribed depth budgets. These mature results
+are distinct suppliers; none is used as an asserted theorem of the
+IV19 profile recursion.
+
+**Definition 92.2 (the remaining quantitative and operational questions).**
+The uniform condition
+
+$$
+\exists K\ge1\ \exists a\ge0\ \forall t\in\mathcal D,\qquad
+ C(t)\le K(N(t)+2)^a
+\tag{VII.30}
+$$
+
+remains unresolved for this fixed $J$, including its unbounded comb
+subfamily. IV19.5 gives its equivalence to logarithmic overhead for
+this recorder; Theorem 90.1 neither proves nor refutes it. The profile
+recursion is an exact finite relation with which to study that question,
+not an asymptotic estimate. No conclusion about existence or
+impossibility of other immutable full-history recorders follows.
+
+Actual common recovery still requires the original source, real
+internal observer, its complete declared records and lawful futures.
+The known-alpha conditional payload result supplies no independent
+bilateral preparation, arbitrary Busy capture, new access grant,
+physical clock/hold, detector, resource supply or actual acquisition
+of a completed infinite source. Static ideal completion and finite
+profile arithmetic do not remove those conditions. The enduring mutual
+recovery of space, time, boundary and memory remains unresolved.
+
+## 追加锚（本行以下为增补区）
