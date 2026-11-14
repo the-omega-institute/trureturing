@@ -81,11 +81,11 @@ where $N$ is a canonical finite CPTP channel and $D$ has all the laws above. The
 
 The source reuses the original `act`, `amp_entry` and `ptr_amp` of `ConditionalHockeyStickOrthogonalReduction`; only their visibility is exposed for actual consumers. No duplicate action, reproof or wrapper is introduced.
 
-The positive-result four-slot audit is **unfinished** under [#30303, comment 6874572340](https://github.com/the-omega-institute/trureturing/issues/30303#issuecomment-6874572340). The attempted new Reg build exited 2; exact `sourceSelection` and whole-family observational dependence remain missing. The failed new source was removed. The linked-issue exception of CLAUDE.md §3.9 applies; neither the issue nor successful mathematical checks supplies a `declared_validated` registration. Historical audit #21914 is outside this result.
+The positive-result four-slot audit is **unfinished** under [#30303, comment 6874572340](https://github.com/the-omega-institute/trureturing/issues/30303#issuecomment-6874572340). The attempted new Reg build exited 2; exact `sourceSelection` and whole-family observational dependence remain missing. No valid Reg mirror for this result is retained. The linked-issue exception of CLAUDE.md §3.9 applies; neither the issue nor successful mathematical checks supplies a `declared_validated` registration. Historical audit #21914 is outside this result.
 
 ## Triage
 
-Tier 1 external open problem; positive `proved` mathematical resolution. The endpoint has `proof_shape: bind-only`, `admission_basis: open-problem-resolution`, and no escape witness. All 21 private proof helpers are also bind-only and have actual consumers on the endpoint's proof path; their status is proof organization, not additional mathematical content. The six public typed handles are the divergence structure, two ratio sets, two coefficients and `result`. Definitions are consumed by the public result. This classification follows the independent full pre-freeze approval and supplies no manufactured escape witness.
+Tier 1 external open problem; positive `proved` mathematical resolution. The endpoint has `proof_shape: bind-only`, `admission_basis: open-problem-resolution`, and no escape witness. All 21 private proof helpers are also bind-only and have actual consumers on the endpoint's proof path; their status is proof organization, not additional mathematical content. The six public typed handles are the divergence structure, two ratio sets, two coefficients and `result`. Definitions are consumed by the public result.
 
 Each private theorem below has `proof_shape: bind-only` and is admitted only as a consumed helper. Consumer chains terminate in `result`:
 
