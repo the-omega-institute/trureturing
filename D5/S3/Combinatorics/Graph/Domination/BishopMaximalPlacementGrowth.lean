@@ -329,4 +329,5 @@ theorem result : ¬ claim := by
   have hstrict := mul_lt_mul_of_pos_right hfour hpow
   linarith only [hsourceLower, hsourceUpper, hstrict]
 
+
 end D5.S3.Combinatorics.Graph.Domination.BishopMaximalPlacementGrowth

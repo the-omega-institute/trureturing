@@ -17,7 +17,7 @@ internal sealed class BishopMaximalPlacementGrowthDocument : IScribeDocumentDefi
             Node("claim", "The complete asymptotic assertion", "claim",
                 "The assertion is the existence of a positive real C and a natural N at least one such that a(n) is at most C times n^(n-1) for every natural n at least N. Both the constant and the cutoff remain unrestricted.", DescribeRole.Definition),
             Node("cap", "The physical upper bound", "physical_cap",
-                "For every n at least two, every nonattacking placement has at most 2n-2 bishops. Difference diagonals give an injective label map into 2n-1 possibilities. Both extreme diagonals are single corners with the same sum, so independence excludes at least one extreme. Removing that label gives the upper bound. The one-square board has its unique singleton maximal placement; a zero cap is not imposed there.", DescribeRole.Theorem),
+                "For every n at least two, every counted maximal placement has at most 2n-2 bishops. Difference diagonals give an injective label map into 2n-1 possibilities. Both extreme diagonals are single corners with the same sum, so independence excludes at least one extreme. Removing that label gives the upper bound. The one-square board has its unique singleton maximal placement; a zero cap is not imposed there.", DescribeRole.Theorem),
             Node("dictionary", "The source cap preserves the native count", "source_family_card",
                 "Filtering the native maximal placements by the physical cap for n at least two leaves their cardinality unchanged. The implication is vacuous at n=1, so the source boundary is preserved.", DescribeRole.Theorem),
             Node("lower", "Many distinct maximal completions", "count_lower_bound",
@@ -34,10 +34,14 @@ internal sealed class BishopMaximalPlacementGrowthDocument : IScribeDocumentDefi
 
     private static StatementSource Presentation(string name)
     {
-        Formula m = V("m"), n = V("n");
+        Formula m = V("m"), n = V("n"), c = V("C"), cutoff = V("N");
         Formula size = Add(Mul(D(4), m), D(1));
+        Formula upper = Le(Call("count", n), Mul(c, Pow(n, Sub(n, D(1)))));
+        Formula assertion = Ex("C", Real, And(Lt(D(0), c),
+            Ex("N", Nat, And(Le(D(1), cutoff), All("n", Nat, Imp(Le(cutoff, n), upper))))));
         Formula? f = name switch
         {
+            "claim" => Iff(Call("claim"), assertion),
             "count_lower_bound" => All("m", Nat, Le(Pow(m, Mul(D(6), m)), Call("count", size))),
             "ratio_lower_bound" => All("m", Nat, Imp(Le(D(5, 0), m), Le(Mul(Pow(D(4), m), Pow(size, Mul(D(4), m))), Call("count", size)))),
             "source_family_card" => All("n", Nat, Eq(Call("card", Call("sourceFamily", n)), Call("count", n))),
@@ -51,6 +55,11 @@ internal sealed class BishopMaximalPlacementGrowthDocument : IScribeDocumentDefi
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula Par(Formula a) => Seq(Open, a, Close);
     private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Par(Seq(V(name), Sp, Colon, Sp, type)), Comma, Sp, body);
+    private static Formula Ex(string name, Formula type, Formula body) => Seq(Exists, Sp, Par(Seq(V(name), Sp, Colon, Sp, type)), Comma, Sp, body);
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Iff, Par(b));
+    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
