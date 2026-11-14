@@ -33,8 +33,7 @@ internal sealed class AsynchronousTwoBlockSpectrumDocument : IScribeDocumentDefi
     {
         Formula m=X("m"), n=X("n"), a=X("a"), b=X("b"), k=X("K"), z=X("z");
         Formula u=X("U"), v=X("V");
-        Formula delay = new Formula.Matrix(new Formula[][] {
-            new Formula[] {D(0),b}, new Formula[] {a,D(0)} });
+        Formula delay = Seq(Begin, Grp(F.Id("pmatrix")), D(0), Amp, b, RowBreak, a, Amp, D(0), End, Grp(F.Id("pmatrix")));
         Formula zero = At(Qualified("D5","S3","Quantum","Matrix","AsynchronousTwoBlockSpectrum","zeroDiagonal"),u,v);
         Formula history = At(Qualified("D5","S3","Quantum","Matrix","AsynchronousIterationSpectralRadiusRefutation","asyncMatrix"),zero,delay,k);
         Formula product = new Formula.Binary(u,FormulaBinaryOperator.Multiply,v);
@@ -74,5 +73,5 @@ internal sealed class AsynchronousTwoBlockSpectrumDocument : IScribeDocumentDefi
     private static Formula Add(Formula a,Formula b)=>new Formula.Binary(a,FormulaBinaryOperator.Add,b);
     private static Formula LE(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
     private static Formula NotEqual(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.NotEqual,b);
-    private static Formula Member(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.Member,b);
+    private static Formula Member(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.MemberOf,b);
 }

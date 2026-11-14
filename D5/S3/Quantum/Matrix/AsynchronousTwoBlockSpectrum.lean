@@ -10,6 +10,11 @@ import D5.S3.Quantum.Matrix.AsynchronousIterationSpectralRadiusRefutation
 import Mathlib.LinearAlgebra.Matrix.Reindex
 import Mathlib.Data.Matrix.Block
 
+/-! Exact nonzero spectra for the literal constant-delay history operator. -/
+
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 
 open Matrix
@@ -24,13 +29,16 @@ def blockEquiv (m n : ℕ) : (Fin m ⊕ Fin n) ≃ Vtx (![m,n] : Fin 2 → ℕ) 
   toFun p := match p with
     | .inl i => ⟨0, i⟩
     | .inr j => ⟨1, j⟩
-  invFun := by
-    rintro ⟨i, x⟩
-    fin_cases i
-    · exact Sum.inl x
-    · exact Sum.inr x
+  invFun p := Fin.cases (fun x => Sum.inl x)
+    (fun i => Fin.cases (fun x => Sum.inr x) (fun j => Fin.elim0 j) i) p.1 p.2
   left_inv := by intro p; cases p <;> rfl
   right_inv := by rintro ⟨i, x⟩; fin_cases i <;> rfl
+
+@[simp] private theorem blockEquiv_symm_left (m n : ℕ) (i : Fin m) :
+    (blockEquiv m n).symm ⟨0,i⟩ = Sum.inl i := rfl
+
+@[simp] private theorem blockEquiv_symm_right (m n : ℕ) (j : Fin n) :
+    (blockEquiv m n).symm ⟨1,j⟩ = Sum.inr j := rfl
 
 /-- The zero-diagonal rectangular block matrix in the coordinates of the history operator. -/
 def zeroDiagonal {m n : ℕ} (U : Matrix (Fin m) (Fin n) ℝ)
@@ -75,8 +83,12 @@ private theorem left_row {m n a b K : ℕ}
     · intro h; subst s; rfl
   simp only [Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fintype.sum_sigma,
     Fin.sum_univ_two]
-  simp [asyncMatrix, zeroDiagonal, Matrix.reindex_apply, blockEquiv, Matrix.map_apply,
-    slot, da, Finset.sum_comm, mul_ite]
+  simp [asyncMatrix, zeroDiagonal, Matrix.reindex_apply, Matrix.map_apply,
+    slot, da]
+  rw [Fintype.sum_eq_single da]
+  · simp [da]
+  · intro s hs
+    simp [show s ≠ ⟨a,by omega⟩ from hs]
 
 private theorem right_row {m n a b K : ℕ}
     (U : Matrix (Fin m) (Fin n) ℝ) (V : Matrix (Fin n) (Fin m) ℝ)
@@ -93,8 +105,12 @@ private theorem right_row {m n a b K : ℕ}
     · intro h; subst s; rfl
   simp only [Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fintype.sum_sigma,
     Fin.sum_univ_two]
-  simp [asyncMatrix, zeroDiagonal, Matrix.reindex_apply, blockEquiv, Matrix.map_apply,
-    slot, db, Finset.sum_comm, mul_ite]
+  simp [asyncMatrix, zeroDiagonal, Matrix.reindex_apply, Matrix.map_apply,
+    slot, db]
+  rw [Fintype.sum_eq_single db]
+  · simp [db]
+  · intro s hs
+    simp [show s ≠ ⟨b,by omega⟩ from hs]
 
 private theorem history_formula {ℓ : ℕ} {sizes : Fin ℓ → ℕ}
     (M : Matrix (Vtx sizes) (Vtx sizes) ℝ) (δ : Fin ℓ → Fin ℓ → ℕ)
@@ -170,9 +186,13 @@ theorem nonzero_spectrum_iff {m n a b K : ℕ}
       rw [hist r.val r.isLt]
       fin_cases i
       · change z⁻¹^r.val * u x = 0
-        rw [huz]; simp
+        rw [huz]
+        change z⁻¹^r.val * (0 : ℂ) = 0
+        exact mul_zero _
       · change z⁻¹^r.val * v x = 0
-        rw [hvz]; simp
+        rw [hvz]
+        change z⁻¹^r.val * (0 : ℂ) = 0
+        exact mul_zero _
     apply D5.S3.Combinatorics.NonBacktracking.LaplacianGapMinDegree.eigenpair_mem_spectrum
       _ (z^(a+b+2)) u hune
     rw [Matrix.map_mul]
@@ -197,9 +217,9 @@ theorem nonzero_spectrum_iff {m n a b K : ℕ}
       apply hu.2
       funext i
       have hi := congrFun hzero (0,⟨0,i⟩)
-      simpa [H,base,blockEquiv] using hi
+      simpa [H,base] using hi
     have hc : z⁻¹^(a+b+1) * z^(a+b+2) = z := by
-      rw [show a+b+2=(a+b+1)+1 by omega,pow_succ,←mul_assoc,←mul_pow]
+      rw [show a+b+2=(a+b+1)+1 by omega,pow_succ z,←mul_assoc,←mul_pow]
       simp [hz]
     apply D5.S3.Combinatorics.NonBacktracking.LaplacianGapMinDegree.eigenpair_mem_spectrum
       CB z H hH
@@ -210,7 +230,11 @@ theorem nonzero_spectrum_iff {m n a b K : ℕ}
       subst r
       rcases p with ⟨i,x⟩
       fin_cases i
-      · rw [left_row U V haK]
+      · change ((asyncMatrix (zeroDiagonal U V) !![0,b; a,0] K).map
+            (algebraMap ℝ ℂ) *ᵥ H) (0,⟨0,x⟩) = z * H (0,⟨0,x⟩)
+        rw [left_row U V haK]
+        simp only [H,base,blockEquiv_symm_left,blockEquiv_symm_right,
+          Sum.elim_inl,Sum.elim_inr,Fin.val_zero,pow_zero,one_mul]
         change (∑ j, (U x j : ℂ) * (z⁻¹^a * v j)) = z * u x
         calc (∑ j, (U x j : ℂ) * (z⁻¹^a * v j)) = z⁻¹^a * (A *ᵥ v) x := by
               simp [A,Matrix.mulVec,dotProduct,Finset.mul_sum,mul_assoc,mul_left_comm]
@@ -221,16 +245,23 @@ theorem nonzero_spectrum_iff {m n a b K : ℕ}
           _ = z⁻¹^a * (z⁻¹^(b+1) * (z^(a+b+2) * u x)) := by rw [hPu]; rfl
           _ = z * u x := by
               rw [←mul_assoc,←mul_assoc,←pow_add,show a+(b+1)=a+b+1 by omega,hc]
-      · rw [right_row U V hbK]
+      · change ((asyncMatrix (zeroDiagonal U V) !![0,b; a,0] K).map
+            (algebraMap ℝ ℂ) *ᵥ H) (0,⟨1,x⟩) = z * H (0,⟨1,x⟩)
+        rw [right_row U V hbK]
+        simp only [H,base,blockEquiv_symm_left,blockEquiv_symm_right,
+          Sum.elim_inl,Sum.elim_inr,Fin.val_zero,pow_zero,one_mul]
         change (∑ i, (V x i : ℂ) * (z⁻¹^b * u i)) = z * v x
-        have hb : z * z⁻¹^(b+1) = z⁻¹^b := by rw [pow_succ]; field_simp; ring
+        have hb : z * z⁻¹^(b+1) = z⁻¹^b := by
+          rw [pow_succ]
+          calc z * (z⁻¹^b * z⁻¹) = (z * z⁻¹) * z⁻¹^b := by ring
+            _ = z⁻¹^b := by simp [hz]
         simpa [D,v,Matrix.mulVec,dotProduct,Finset.mul_sum,mul_assoc,mul_left_comm,hb]
           using congrArg (fun t : ℂ => t * (D *ᵥ u) x) hb.symm
     · rw [shift_row (zeroDiagonal U V) !![0,b; a,0] K H r p hr]
       change z⁻¹^(r.val-1) * base p = z * (z⁻¹^r.val * base p)
       have hs : r.val=(r.val-1)+1 := by omega
-      rw [hs,pow_succ]
-      field_simp
-      ring
+      conv_rhs => rw [hs,pow_succ]
+      calc z⁻¹^(r.val-1) * base p = (z * z⁻¹) * (z⁻¹^(r.val-1) * base p) := by simp [hz]
+        _ = z * (z⁻¹^(r.val-1) * z⁻¹ * base p) := by ring
 
 end D5.S3.Quantum.Matrix.AsynchronousTwoBlockSpectrum
