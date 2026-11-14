@@ -366,36 +366,43 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
         ⟨(-d,-c),by abel⟩ (dualIota B d ψ ⊗ₜ[ℂ] dualIota A c φ)) =
       k hD c d • dualIota (targetModule A B) (c+d)
         (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ)) := by
+  let evalRaw (q : Discriminant D)
+      (f : Module.Dual ℂ (Multiplicity (targetModule A B) q))
+      (x : Multiplicity (targetModule A B) q) : ℂ := f.toAddHom.toFun x
   have readOn (s : Discriminant D) (i : Fiber (D := D) s)
       (ψ : DualMultiplicity B i.val.1) (φ : DualMultiplicity A i.val.2) :
       readFunctional A B hD s i
         (iota (DualMultiplicity B) i.val.1 ψ ⊗ₜ[ℂ]
           iota (DualMultiplicity A) i.val.2 φ) =
         Xi A B hD (-s) (reverseFiber s i) (ψ ⊗ₜ[ℂ] φ) := by
-    let F : DualMultiplicity B i.val.1 ⊗[ℂ] DualMultiplicity A i.val.2 →ₗ[ℂ]
-        DualMultiplicity (targetModule A B) s := Xi A B hD (-s) (reverseFiber s i)
-    change F ((TensorProduct.map (kappa (DualMultiplicity B) i.val.1)
-      (kappa (DualMultiplicity A) i.val.2))
-        (iota (DualMultiplicity B) i.val.1 ψ ⊗ₜ[ℂ]
-          iota (DualMultiplicity A) i.val.2 φ)) = F (ψ ⊗ₜ[ℂ] φ)
-    have ht := TensorProduct.map_tmul (kappa (DualMultiplicity B) i.val.1)
-      (kappa (DualMultiplicity A) i.val.2)
-      (iota (DualMultiplicity B) i.val.1 ψ) (iota (DualMultiplicity A) i.val.2 φ)
-    have hc := congrArg₂ (fun x y => x ⊗ₜ[ℂ] y)
-      (kappa_iota (DualMultiplicity B) i.val.1 ψ)
-      (kappa_iota (DualMultiplicity A) i.val.2 φ)
-    exact (congrArg F ht).trans (congrArg F hc)
-  have hx (a b q : Discriminant D) (hc : c = a) (hd : d = b)
-      (hq : c+d = q) (hab : a+b = q) :
-      Xi A B hD q ⟨(a,b),hab⟩
-        ((cast (congrArg (fun e => Module.Dual ℂ (Multiplicity B e)) hd) ψ) ⊗ₜ[ℂ]
-          cast (congrArg (fun e => Module.Dual ℂ (Multiplicity A e)) hc) φ) =
-        cast (congrArg (fun e => Module.Dual ℂ (Multiplicity (targetModule A B) e)) hq)
-          (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ)) := by
-    cases hc
-    cases hd
-    cases hq
-    rfl
+    as_aux_lemma =>
+      let F : DualMultiplicity B i.val.1 ⊗[ℂ] DualMultiplicity A i.val.2 →ₗ[ℂ]
+          DualMultiplicity (targetModule A B) s := Xi A B hD (-s) (reverseFiber s i)
+      change F ((TensorProduct.map (kappa (DualMultiplicity B) i.val.1)
+        (kappa (DualMultiplicity A) i.val.2))
+          (iota (DualMultiplicity B) i.val.1 ψ ⊗ₜ[ℂ]
+            iota (DualMultiplicity A) i.val.2 φ)) = F (ψ ⊗ₜ[ℂ] φ)
+      have ht := TensorProduct.map_tmul (kappa (DualMultiplicity B) i.val.1)
+        (kappa (DualMultiplicity A) i.val.2)
+        (iota (DualMultiplicity B) i.val.1 ψ) (iota (DualMultiplicity A) i.val.2 φ)
+      have hc := congrArg₂ (fun x y => x ⊗ₜ[ℂ] y)
+        (kappa_iota (DualMultiplicity B) i.val.1 ψ)
+        (kappa_iota (DualMultiplicity A) i.val.2 φ)
+      exact (congrArg F ht).trans (congrArg F hc)
+  have transportEvaluated {I : Type _} [Add I]
+      {F : I → Type _} {G : I → Type _} {H : I → Type _} {M : I → Type _}
+      (f : ∀ a b q, a+b = q → G b → F a → H q)
+      (ev : ∀ q, H q → M q → ℂ)
+      (c d : I) (ψ : G d) (φ : F c)
+      (a b q : I) (hc : c = a) (hd : d = b)
+      (hq : c+d = q) (hab : a+b = q) (x : M q) :
+      ev q (f a b q hab (cast (congrArg G hd) ψ) (cast (congrArg F hc) φ)) x =
+        ev q (cast (congrArg H hq) (f c d (c+d) rfl ψ φ)) x := by
+    as_aux_lemma =>
+      cases hc
+      cases hd
+      cases hq
+      rfl
   let i : Fiber (D := D) (-(c+d)) := ⟨(-d,-c),by abel⟩
   let ψ' : DualMultiplicity B (-d) :=
     cast (congrArg (fun e => Module.Dual ℂ (Multiplicity B e)) (neg_neg d).symm) ψ
@@ -404,197 +411,287 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
   let w := dualIota B d ψ ⊗ₜ[ℂ] dualIota A c φ
   let z := jAt (dualModule B) (dualModule A) hD (-(c+d)) i w
   have hb : dualIota B d ψ = iota (DualMultiplicity B) (-d) ψ' := by
-    dsimp only [dualIota]
-    run_tac Lean.Elab.Tactic.withMainContext do
-      let target ← Lean.Elab.Tactic.getMainTarget
-      let normalize (e : Lean.Expr) : Lean.MetaM (Lean.Expr × Lean.Expr × Array (Lean.Expr × Lean.Expr)) := do
-        let e ← Lean.instantiateMVars e
-        let mut todo := #[e]
-        let mut seen : Lean.ExprSet := {}
-        let mut params : Array Lean.Expr := #[]
-        let mut i := 0
-        while i < todo.size do
-          let p := todo[i]!
-          i := i+1
-          if !seen.contains p then
-            seen := seen.insert p
-            let n := p.getAppFn.constName?.getD .anonymous
-            if !p.hasLooseBVars && !p.hasFVar &&
-                (n == `Algebra.to_smulCommClass || n == `IsScalarTower.to_smulCommClass ||
-                 n == `instSMulCommClassOfIsScalarTower || n == `RingHomInvPair.ids ||
-                 n == `RingHomCompTriple.ids || (n.toString.splitOn "._proof_").length > 1) then
-              if ← Lean.Meta.isProof p then
-                params := params.push p
-            match p with
-            | .app f x => todo := (todo.push f).push x
-            | .lam _ t b _ | .forallE _ t b _ => todo := (todo.push t).push b
-            | .letE _ t v b _ => todo := ((todo.push t).push v).push b
-            | .mdata _ b | .proj _ _ b => todo := todo.push b
-            | _ => pure ()
-        let mut replacements : Array (Lean.Expr × Lean.Expr) := #[]
-        let mut current := e
-        let mut transport ← Lean.Meta.mkEqRefl e
-        for p in params do
-          let tp ← Lean.Meta.inferType p
-          if !(tp.isAppOf `SMulCommClass || tp.isAppOf `RingHomCompTriple ||
-              tp.isAppOf `RingHomInvPair) then
-            continue
-          let q ← Lean.Meta.synthInstance tp
-          let q ← Lean.instantiateMVars q
-          if p != q then
-            let h ← Lean.Meta.mkAppM `Subsingleton.elim #[p,q]
-            let step ← Lean.Meta.withLocalDeclD `comm tp fun v => do
-              let body := current.replace fun x => if x == p then some v else none
-              let motive ← Lean.Meta.mkLambdaFVars #[v] body
-              Lean.Meta.mkCongrArg motive h
-            transport ← Lean.Meta.mkEqTrans transport step
-            replacements := replacements.push (p,q)
-            current := current.replace fun x => if x == p then some q else none
-        return (current,transport,replacements)
-      let (canonical,transport,_) ← normalize target
-      let next ← Lean.Meta.mkFreshExprMVar canonical
-      let proof ← Lean.Meta.mkEqMPR transport next
-      let goal ← Lean.Elab.Tactic.getMainGoal
-      goal.assign proof
-      Lean.Elab.Tactic.replaceMainGoal [next.mvarId!]
-    exact (LinearMap.comp_apply (iota (DualMultiplicity B) (-d)) (LinearEquiv.cast (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity B e))) (neg_neg d).symm).toLinearMap ψ).trans
-      (congrArg (iota (DualMultiplicity B) (-d)) (LinearEquiv.cast_apply (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity B e)))
-        (neg_neg d).symm ψ))
+    set_option maxHeartbeats 100000 in
+      as_aux_lemma =>
+        dsimp only [dualIota]
+        run_tac Lean.Elab.Tactic.withMainContext do
+          let target ← Lean.Elab.Tactic.getMainTarget
+          let normalize (e : Lean.Expr) : Lean.MetaM (Lean.Expr × Lean.Expr × Array (Lean.Expr × Lean.Expr)) := do
+            let e ← Lean.instantiateMVars e
+            let mut todo := #[e]
+            let mut seen : Lean.ExprSet := {}
+            let mut params : Array Lean.Expr := #[]
+            let mut i := 0
+            while i < todo.size do
+              let p := todo[i]!
+              i := i+1
+              if !seen.contains p then
+                seen := seen.insert p
+                let n := p.getAppFn.constName?.getD .anonymous
+                if !p.hasLooseBVars && !p.hasFVar &&
+                    (n == `Algebra.to_smulCommClass || n == `IsScalarTower.to_smulCommClass ||
+                     n == `instSMulCommClassOfIsScalarTower || n == `RingHomInvPair.ids ||
+                     n == `RingHomCompTriple.ids || (n.toString.splitOn "._proof_").length > 1) then
+                  if ← Lean.Meta.isProof p then
+                    params := params.push p
+                match p with
+                | .app f x => todo := (todo.push f).push x
+                | .lam _ t b _ | .forallE _ t b _ => todo := (todo.push t).push b
+                | .letE _ t v b _ => todo := ((todo.push t).push v).push b
+                | .mdata _ b | .proj _ _ b => todo := todo.push b
+                | _ => pure ()
+            let mut replacements : Array (Lean.Expr × Lean.Expr) := #[]
+            let mut current := e
+            let mut transport ← Lean.Meta.mkEqRefl e
+            for p in params do
+              let tp ← Lean.Meta.inferType p
+              if !(tp.isAppOf `SMulCommClass || tp.isAppOf `RingHomCompTriple ||
+                  tp.isAppOf `RingHomInvPair) then
+                continue
+              let q ← Lean.Meta.synthInstance tp
+              let q ← Lean.instantiateMVars q
+              if p != q then
+                let h ← Lean.Meta.mkAppM `Subsingleton.elim #[p,q]
+                let step ← Lean.Meta.withLocalDeclD `comm tp fun v => do
+                  let body := current.replace fun x => if x == p then some v else none
+                  let motive ← Lean.Meta.mkLambdaFVars #[v] body
+                  Lean.Meta.mkCongrArg motive h
+                transport ← Lean.Meta.mkEqTrans transport step
+                replacements := replacements.push (p,q)
+                current := current.replace fun x => if x == p then some q else none
+            return (current,transport,replacements)
+          let (canonical,transport,_) ← normalize target
+          let next ← Lean.Meta.mkFreshExprMVar canonical
+          let proof ← Lean.Meta.mkEqMPR transport next
+          let goal ← Lean.Elab.Tactic.getMainGoal
+          goal.assign proof
+          Lean.Elab.Tactic.replaceMainGoal [next.mvarId!]
+        exact (LinearMap.comp_apply (iota (DualMultiplicity B) (-d)) (LinearEquiv.cast (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity B e))) (neg_neg d).symm).toLinearMap ψ).trans
+          (congrArg (iota (DualMultiplicity B) (-d)) (LinearEquiv.cast_apply (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity B e)))
+            (neg_neg d).symm ψ))
   have ha : dualIota A c φ = iota (DualMultiplicity A) (-c) φ' := by
-    dsimp only [dualIota]
-    run_tac Lean.Elab.Tactic.withMainContext do
-      let target ← Lean.Elab.Tactic.getMainTarget
-      let normalize (e : Lean.Expr) : Lean.MetaM (Lean.Expr × Lean.Expr × Array (Lean.Expr × Lean.Expr)) := do
-        let e ← Lean.instantiateMVars e
-        let mut todo := #[e]
-        let mut seen : Lean.ExprSet := {}
-        let mut params : Array Lean.Expr := #[]
-        let mut i := 0
-        while i < todo.size do
-          let p := todo[i]!
-          i := i+1
-          if !seen.contains p then
-            seen := seen.insert p
-            let n := p.getAppFn.constName?.getD .anonymous
-            if !p.hasLooseBVars && !p.hasFVar &&
-                (n == `Algebra.to_smulCommClass || n == `IsScalarTower.to_smulCommClass ||
-                 n == `instSMulCommClassOfIsScalarTower || n == `RingHomInvPair.ids ||
-                 n == `RingHomCompTriple.ids || (n.toString.splitOn "._proof_").length > 1) then
-              if ← Lean.Meta.isProof p then
-                params := params.push p
-            match p with
-            | .app f x => todo := (todo.push f).push x
-            | .lam _ t b _ | .forallE _ t b _ => todo := (todo.push t).push b
-            | .letE _ t v b _ => todo := ((todo.push t).push v).push b
-            | .mdata _ b | .proj _ _ b => todo := todo.push b
-            | _ => pure ()
-        let mut replacements : Array (Lean.Expr × Lean.Expr) := #[]
-        let mut current := e
-        let mut transport ← Lean.Meta.mkEqRefl e
-        for p in params do
-          let tp ← Lean.Meta.inferType p
-          if !(tp.isAppOf `SMulCommClass || tp.isAppOf `RingHomCompTriple ||
-              tp.isAppOf `RingHomInvPair) then
-            continue
-          let q ← Lean.Meta.synthInstance tp
-          let q ← Lean.instantiateMVars q
-          if p != q then
-            let h ← Lean.Meta.mkAppM `Subsingleton.elim #[p,q]
-            let step ← Lean.Meta.withLocalDeclD `comm tp fun v => do
-              let body := current.replace fun x => if x == p then some v else none
-              let motive ← Lean.Meta.mkLambdaFVars #[v] body
-              Lean.Meta.mkCongrArg motive h
-            transport ← Lean.Meta.mkEqTrans transport step
-            replacements := replacements.push (p,q)
-            current := current.replace fun x => if x == p then some q else none
-        return (current,transport,replacements)
-      let (canonical,transport,_) ← normalize target
-      let next ← Lean.Meta.mkFreshExprMVar canonical
-      let proof ← Lean.Meta.mkEqMPR transport next
-      let goal ← Lean.Elab.Tactic.getMainGoal
-      goal.assign proof
-      Lean.Elab.Tactic.replaceMainGoal [next.mvarId!]
-    exact (LinearMap.comp_apply (iota (DualMultiplicity A) (-c)) (LinearEquiv.cast (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity A e))) (neg_neg c).symm).toLinearMap φ).trans
-      (congrArg (iota (DualMultiplicity A) (-c)) (LinearEquiv.cast_apply (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity A e)))
-        (neg_neg c).symm φ))
+    set_option maxHeartbeats 100000 in
+      as_aux_lemma =>
+        dsimp only [dualIota]
+        run_tac Lean.Elab.Tactic.withMainContext do
+          let target ← Lean.Elab.Tactic.getMainTarget
+          let normalize (e : Lean.Expr) : Lean.MetaM (Lean.Expr × Lean.Expr × Array (Lean.Expr × Lean.Expr)) := do
+            let e ← Lean.instantiateMVars e
+            let mut todo := #[e]
+            let mut seen : Lean.ExprSet := {}
+            let mut params : Array Lean.Expr := #[]
+            let mut i := 0
+            while i < todo.size do
+              let p := todo[i]!
+              i := i+1
+              if !seen.contains p then
+                seen := seen.insert p
+                let n := p.getAppFn.constName?.getD .anonymous
+                if !p.hasLooseBVars && !p.hasFVar &&
+                    (n == `Algebra.to_smulCommClass || n == `IsScalarTower.to_smulCommClass ||
+                     n == `instSMulCommClassOfIsScalarTower || n == `RingHomInvPair.ids ||
+                     n == `RingHomCompTriple.ids || (n.toString.splitOn "._proof_").length > 1) then
+                  if ← Lean.Meta.isProof p then
+                    params := params.push p
+                match p with
+                | .app f x => todo := (todo.push f).push x
+                | .lam _ t b _ | .forallE _ t b _ => todo := (todo.push t).push b
+                | .letE _ t v b _ => todo := ((todo.push t).push v).push b
+                | .mdata _ b | .proj _ _ b => todo := todo.push b
+                | _ => pure ()
+            let mut replacements : Array (Lean.Expr × Lean.Expr) := #[]
+            let mut current := e
+            let mut transport ← Lean.Meta.mkEqRefl e
+            for p in params do
+              let tp ← Lean.Meta.inferType p
+              if !(tp.isAppOf `SMulCommClass || tp.isAppOf `RingHomCompTriple ||
+                  tp.isAppOf `RingHomInvPair) then
+                continue
+              let q ← Lean.Meta.synthInstance tp
+              let q ← Lean.instantiateMVars q
+              if p != q then
+                let h ← Lean.Meta.mkAppM `Subsingleton.elim #[p,q]
+                let step ← Lean.Meta.withLocalDeclD `comm tp fun v => do
+                  let body := current.replace fun x => if x == p then some v else none
+                  let motive ← Lean.Meta.mkLambdaFVars #[v] body
+                  Lean.Meta.mkCongrArg motive h
+                transport ← Lean.Meta.mkEqTrans transport step
+                replacements := replacements.push (p,q)
+                current := current.replace fun x => if x == p then some q else none
+            return (current,transport,replacements)
+          let (canonical,transport,_) ← normalize target
+          let next ← Lean.Meta.mkFreshExprMVar canonical
+          let proof ← Lean.Meta.mkEqMPR transport next
+          let goal ← Lean.Elab.Tactic.getMainGoal
+          goal.assign proof
+          Lean.Elab.Tactic.replaceMainGoal [next.mvarId!]
+        exact (LinearMap.comp_apply (iota (DualMultiplicity A) (-c)) (LinearEquiv.cast (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity A e))) (neg_neg c).symm).toLinearMap φ).trans
+          (congrArg (iota (DualMultiplicity A) (-c)) (LinearEquiv.cast_apply (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity A e)))
+            (neg_neg c).symm φ))
   have hw := congrArg₂ (fun x y => x ⊗ₜ[ℂ] y) hb ha
-  have hread := (congrArg (readFunctional A B hD (-(c+d)) i) hw).trans
-    ((readOn (-(c+d)) i ψ' φ').trans
-      (hx (- -c) (- -d) (- -(c+d)) (neg_neg c).symm (neg_neg d).symm
-        (neg_neg (c+d)).symm (by simp only [neg_neg])))
-  have hout : dualIota (targetModule A B) (c+d)
-      (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ)) =
-      iota (DualMultiplicity (targetModule A B)) (-(c+d))
-        (cast (congrArg (fun e => Module.Dual ℂ (Multiplicity (targetModule A B) e))
-          (neg_neg (c+d)).symm)
-          (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ))) := by
-    dsimp only [dualIota]
-    run_tac Lean.Elab.Tactic.withMainContext do
-      let target ← Lean.Elab.Tactic.getMainTarget
-      let normalize (e : Lean.Expr) : Lean.MetaM (Lean.Expr × Lean.Expr × Array (Lean.Expr × Lean.Expr)) := do
-        let e ← Lean.instantiateMVars e
-        let mut todo := #[e]
-        let mut seen : Lean.ExprSet := {}
-        let mut params : Array Lean.Expr := #[]
-        let mut i := 0
-        while i < todo.size do
-          let p := todo[i]!
-          i := i+1
-          if !seen.contains p then
-            seen := seen.insert p
-            let n := p.getAppFn.constName?.getD .anonymous
-            if !p.hasLooseBVars && !p.hasFVar &&
-                (n == `Algebra.to_smulCommClass || n == `IsScalarTower.to_smulCommClass ||
-                 n == `instSMulCommClassOfIsScalarTower || n == `RingHomInvPair.ids ||
-                 n == `RingHomCompTriple.ids || (n.toString.splitOn "._proof_").length > 1) then
-              if ← Lean.Meta.isProof p then
-                params := params.push p
-            match p with
-            | .app f x => todo := (todo.push f).push x
-            | .lam _ t b _ | .forallE _ t b _ => todo := (todo.push t).push b
-            | .letE _ t v b _ => todo := ((todo.push t).push v).push b
-            | .mdata _ b | .proj _ _ b => todo := todo.push b
-            | _ => pure ()
-        let mut replacements : Array (Lean.Expr × Lean.Expr) := #[]
-        let mut current := e
-        let mut transport ← Lean.Meta.mkEqRefl e
-        for p in params do
-          let tp ← Lean.Meta.inferType p
-          if !(tp.isAppOf `SMulCommClass || tp.isAppOf `RingHomCompTriple ||
-              tp.isAppOf `RingHomInvPair) then
-            continue
-          let q ← Lean.Meta.synthInstance tp
-          let q ← Lean.instantiateMVars q
-          if p != q then
-            let h ← Lean.Meta.mkAppM `Subsingleton.elim #[p,q]
-            let step ← Lean.Meta.withLocalDeclD `comm tp fun v => do
-              let body := current.replace fun x => if x == p then some v else none
-              let motive ← Lean.Meta.mkLambdaFVars #[v] body
-              Lean.Meta.mkCongrArg motive h
-            transport ← Lean.Meta.mkEqTrans transport step
-            replacements := replacements.push (p,q)
-            current := current.replace fun x => if x == p then some q else none
-        return (current,transport,replacements)
-      let (canonical,transport,_) ← normalize target
-      let next ← Lean.Meta.mkFreshExprMVar canonical
-      let proof ← Lean.Meta.mkEqMPR transport next
-      let goal ← Lean.Elab.Tactic.getMainGoal
-      goal.assign proof
-      Lean.Elab.Tactic.replaceMainGoal [next.mvarId!]
-    exact (LinearMap.comp_apply (iota (DualMultiplicity (targetModule A B)) (-(c+d))) (LinearEquiv.cast (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity (targetModule A B) e))) (neg_neg (c+d)).symm).toLinearMap (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ))).trans
-      (congrArg (iota (DualMultiplicity (targetModule A B)) (-(c+d))) (LinearEquiv.cast_apply (R := ℂ) (M := (fun e => Module.Dual ℂ (Multiplicity (targetModule A B) e)))
-        (neg_neg (c+d)).symm (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ))))
+  have hread : readFunctional A B hD (-(c+d)) i w =
+      cast (congrArg (fun e => Module.Dual ℂ (Multiplicity (targetModule A B) e))
+        (neg_neg (c+d)).symm)
+        (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ)) := by
+    as_aux_lemma =>
+      apply DFunLike.ext
+      intro z0
+      let ev : DualMultiplicity (targetModule A B) (-(c+d)) → ℂ :=
+        fun ξ => evalRaw (- -(c+d)) ξ z0
+      have h1 := congrArg ev
+        (congrArg (readFunctional A B hD (-(c+d)) i) hw)
+      have h2 := congrArg ev
+        (readOn (-(c+d)) i ψ' φ')
+      have h3 := transportEvaluated
+        (fun a b q (hab : a+b=q)
+          (ψ : Module.Dual ℂ (Multiplicity B b))
+          (φ : Module.Dual ℂ (Multiplicity A a)) =>
+          Xi A B hD q ⟨(a,b),hab⟩ (ψ ⊗ₜ[ℂ] φ)) evalRaw
+        c d ψ φ (reverseFiber (-(c+d)) i).val.1
+          (reverseFiber (-(c+d)) i).val.2 (- -(c+d))
+          (neg_neg c).symm (neg_neg d).symm (neg_neg (c+d)).symm
+          (reverseFiber (-(c+d)) i).property z0
+      run_tac Lean.Elab.Tactic.withMainContext do
+        let lctx ← Lean.instantiateLCtxMVars (← Lean.getLCtx)
+        let proof (n : Lean.Name) : Lean.MetaM Lean.Expr := do
+          let some d := lctx.findFromUserName? n | throwError "missing equality"
+          return Lean.Expr.fvar d.fvarId
+        let sides (h : Lean.Expr) : Lean.MetaM (Lean.Expr × Lean.Expr) := do
+          let t ← Lean.Meta.whnf (← Lean.Meta.inferType h)
+          let some (_,a,b) := t.eq? | throwError "expected equality: {t}"
+          return (a,b)
+        let canonicalize (h : Lean.Expr) : Lean.MetaM (Lean.Expr × Lean.Expr × Lean.Expr × Nat) := do
+          let raw ← Lean.Meta.whnf (← Lean.Meta.inferType h)
+          let type ← Lean.Meta.zetaReduce raw (zetaDelta := true) (zetaHave := true) (beta := true)
+          let mut todo := #[type]
+          let mut seen : Lean.ExprSet := {}
+          let mut params : Array Lean.Expr := #[]
+          let mut j := 0
+          while j < todo.size do
+            let p := todo[j]!
+            j := j+1
+            if !seen.contains p then
+              seen := seen.insert p
+              let n := p.getAppFn.constName?.getD .anonymous
+              if !p.hasLooseBVars &&
+                  (n == `Algebra.to_smulCommClass || n == `IsScalarTower.to_smulCommClass ||
+                   n == `instSMulCommClassOfIsScalarTower || n == `RingHomInvPair.ids ||
+                   n == `RingHomCompTriple.ids || (n.toString.splitOn "._proof_").length > 1) then
+                if ← Lean.Meta.isProof p then params := params.push p
+              match p with
+              | .app f x => todo := (todo.push f).push x
+              | .lam _ t b _ | .forallE _ t b _ => todo := (todo.push t).push b
+              | .letE _ t v b _ => todo := ((todo.push t).push v).push b
+              | .mdata _ b | .proj _ _ b => todo := todo.push b
+              | _ => pure ()
+          let mut current := type
+          let mut transport ← Lean.Meta.mkEqRefl type
+          let mut count := 0
+          for p in params do
+            let tp ← Lean.Meta.inferType p
+            if !(tp.isAppOf `SMulCommClass || tp.isAppOf `RingHomCompTriple ||
+                tp.isAppOf `RingHomInvPair) then continue
+            let q ← Lean.instantiateMVars (← Lean.Meta.synthInstance tp)
+            if p != q then
+              let hpq ← Lean.Meta.mkAppM `Subsingleton.elim #[p,q]
+              let step ← Lean.Meta.withLocalDeclD `scalarProof tp fun v => do
+                let body := current.replace fun e => if e == p then some v else none
+                let motive ← Lean.Meta.mkLambdaFVars #[v] body
+                Lean.Meta.mkCongrArg motive hpq
+              transport ← Lean.Meta.mkEqTrans transport step
+              current := current.replace fun e => if e == p then some q else none
+              count := count+1
+          let proof ← Lean.Meta.mkEqMP transport h
+          let some (_,a,b) := current.eq? | throwError "expected canonical scalar equality"
+          return (proof,a,b,count)
+        let (p1,a,b,n1) ← canonicalize (← proof `h1)
+        let (p2,a2,c,n2) ← canonicalize (← proof `h2)
+        let (p3,a3,d,n3) ← canonicalize (← proof `h3)
+        let trans := Lean.mkConst `Eq.trans [Lean.Level.succ Lean.Level.zero]
+        let tail := Lean.mkApp6 trans (Lean.mkConst `Complex) b c d p2 p3
+        let full := Lean.mkApp6 trans (Lean.mkConst `Complex) a b d p1 tail
+        Lean.Elab.Tactic.closeMainGoal `canonical_scalar_transitivity full
+  have iotaCast {U : Type _} [AddCommGroup U] [Module ℂ U]
+      (C : FullJacobiLatticeModule D U) (q : Discriminant D)
+      (ξ : Module.Dual ℂ (Multiplicity C q)) :
+      dualIota C q ξ = iota (DualMultiplicity C) (-q)
+        (cast (congrArg (fun e => Module.Dual ℂ (Multiplicity C e)) (neg_neg q).symm) ξ) := by
+    as_aux_lemma =>
+      dsimp only [dualIota]
+      run_tac Lean.Elab.Tactic.withMainContext do
+        let target ← Lean.Elab.Tactic.getMainTarget
+        let normalize (e : Lean.Expr) : Lean.MetaM (Lean.Expr × Lean.Expr × Array (Lean.Expr × Lean.Expr)) := do
+          let e ← Lean.instantiateMVars e
+          let mut todo := #[e]
+          let mut seen : Lean.ExprSet := {}
+          let mut params : Array Lean.Expr := #[]
+          let mut i := 0
+          while i < todo.size do
+            let p := todo[i]!
+            i := i+1
+            if !seen.contains p then
+              seen := seen.insert p
+              let n := p.getAppFn.constName?.getD .anonymous
+              if !p.hasLooseBVars && !p.hasFVar &&
+                  (n == `Algebra.to_smulCommClass || n == `IsScalarTower.to_smulCommClass ||
+                   n == `instSMulCommClassOfIsScalarTower || n == `RingHomInvPair.ids ||
+                   n == `RingHomCompTriple.ids || (n.toString.splitOn "._proof_").length > 1) then
+                if ← Lean.Meta.isProof p then
+                  params := params.push p
+              match p with
+              | .app f x => todo := (todo.push f).push x
+              | .lam _ t b _ | .forallE _ t b _ => todo := (todo.push t).push b
+              | .letE _ t v b _ => todo := ((todo.push t).push v).push b
+              | .mdata _ b | .proj _ _ b => todo := todo.push b
+              | _ => pure ()
+          let mut replacements : Array (Lean.Expr × Lean.Expr) := #[]
+          let mut current := e
+          let mut transport ← Lean.Meta.mkEqRefl e
+          for p in params do
+            let tp ← Lean.Meta.inferType p
+            if !(tp.isAppOf `SMulCommClass || tp.isAppOf `RingHomCompTriple ||
+                tp.isAppOf `RingHomInvPair) then
+              continue
+            let q ← Lean.Meta.synthInstance tp
+            let q ← Lean.instantiateMVars q
+            if p != q then
+              let h ← Lean.Meta.mkAppM `Subsingleton.elim #[p,q]
+              let step ← Lean.Meta.withLocalDeclD `comm tp fun v => do
+                let body := current.replace fun x => if x == p then some v else none
+                let motive ← Lean.Meta.mkLambdaFVars #[v] body
+                Lean.Meta.mkCongrArg motive h
+              transport ← Lean.Meta.mkEqTrans transport step
+              replacements := replacements.push (p,q)
+              current := current.replace fun x => if x == p then some q else none
+          return (current,transport,replacements)
+        let (canonical,transport,_) ← normalize target
+        let next ← Lean.Meta.mkFreshExprMVar canonical
+        let proof ← Lean.Meta.mkEqMPR transport next
+        let goal ← Lean.Elab.Tactic.getMainGoal
+        goal.assign proof
+        Lean.Elab.Tactic.replaceMainGoal [next.mvarId!]
+      exact (LinearMap.comp_apply (iota (DualMultiplicity C) (-q))
+        (LinearEquiv.cast (R := ℂ) (M := fun e => Module.Dual ℂ (Multiplicity C e))
+          (neg_neg q).symm).toLinearMap ξ).trans
+        (congrArg (iota (DualMultiplicity C) (-q))
+          (LinearEquiv.cast_apply (R := ℂ) (M := fun e => Module.Dual ℂ (Multiplicity C e))
+            (neg_neg q).symm ξ))
+  have hout := iotaCast (targetModule A B) (c+d)
+    (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ))
   have hvalue := (congrArg (iota (DualMultiplicity (targetModule A B)) (-(c+d))) hread).trans hout.symm
-  have hk : k hD (-i.val.2) (-i.val.1) = k hD c d :=
+  have hk : k hD (- -c) (- -d) = k hD c d :=
     congrArg₂ (k hD) (neg_neg c) (neg_neg d)
   have hs := (congrArg (fun a : ℂ => a • iota (DualMultiplicity (targetModule A B)) (-(c+d))
     (readFunctional A B hD (-(c+d)) i w)) hk).trans
       (congrArg (fun v => k hD c d • v) hvalue)
   have hr := congrFun (restrict_extend hD (dualTensorFamily A B hD)) (-(c+d))
-  have he := congrArg (fun g :
-      Multiplicity (targetModule (dualModule B) (dualModule A)) (-(c+d)) →ₗ[ℂ]
-        Multiplicity (dualModule (targetModule A B)) (-(c+d)) => g z) hr
-  exact he.trans ((dualTensorFamily_jAt A B hD (-(c+d)) i w).trans hs)
+  have he := DFunLike.congr_fun hr z
+  have hj := dualTensorFamily_jAt A B hD (-(c+d)) i w
+  apply Subtype.ext
+  apply Subtype.ext
+  let readValue (t : Multiplicity (dualModule (targetModule A B)) (-(c+d))) := t.val.val
+  exact (congrArg readValue he).trans
+    ((congrArg readValue hj).trans (congrArg readValue hs))
 
 
 /-- The actual five-arrow cap composite; the associator direction is explicit. -/
@@ -699,32 +796,49 @@ theorem nestedEvaluation_matching (c d : Discriminant D) (v : Carrier D)
           jAt (dualModule A) (targetModule A B) hD d ⟨(-c,c+d),by abel⟩
             (dualIota A c φ ⊗ₜ[ℂ] j A B hD c d (x ⊗ₜ[ℂ] y))) v)
   have h2 : f2 z2 = (unitCharacter D hD (-c) * φ x) • z3 := by
-    dsimp only [f2, z2, z3]
+    let capx := jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
+      (dualIota A c φ ⊗ₜ[ℂ] x)
+    let oldx := jAt (targetModule (dualModule A) A) B hD d ⟨(0,d),zero_add d⟩
+      (capx ⊗ₜ[ℂ] y)
+    let T := restrict (productHom hD (evaluation A hD) (ModuleHom.id B)) d
+    let J := jAt (I D) B hD d ⟨(0,d),zero_add d⟩
+    let q := unitCharacter D hD (-c) * φ x
+    let N (w : PairMultiplicity (dualModule B) (targetModule (I D) B) (-d,d)) :=
+      normalizedPair (dualModule B) (targetModule (I D) B) hD (-d) d w v
     have hp := normalizedPair_input hD (ModuleHom.id (dualModule B))
       (productHom hD (evaluation A hD) (ModuleHom.id B)) (-d) d
-      (dualIota B d ψ ⊗ₜ[ℂ]
-        jAt (targetModule (dualModule A) A) B hD d ⟨(0,d),zero_add d⟩
-          (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
-            (dualIota A c φ ⊗ₜ[ℂ] x) ⊗ₜ[ℂ] y)) v
-    simp only [TensorProduct.map_tmul, restrict_identity] at hp
-    refine hp.trans ?_
+      (dualIota B d ψ ⊗ₜ[ℂ] oldx) v
+    have houtermap := TensorProduct.map_tmul
+      (restrict (ModuleHom.id (dualModule B)) (-d)) T (dualIota B d ψ) oldx
+    have houterid := congrArg₂ (fun p t => p ⊗ₜ[ℂ] t)
+      (restrict_identity (-d) (dualIota B d ψ)) (Eq.refl (T oldx))
     have he := jAt_natural hD (evaluation A hD) (ModuleHom.id B) d
-      (⟨(0,d),zero_add d⟩ : Fiber (D := D) d)
-      (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
-        (dualIota A c φ ⊗ₜ[ℂ] x) ⊗ₜ[ℂ] y)
-    rw [TensorProduct.map_tmul, evaluation_jAt, restrict_identity,
-      ← TensorProduct.smul_tmul', map_smul] at he
-    rw [he, TensorProduct.tmul_smul, normalizedPair_smul]
+      (⟨(0,d),zero_add d⟩ : Fiber (D := D) d) (capx ⊗ₜ[ℂ] y)
+    have hmap := TensorProduct.map_tmul (restrict (evaluation A hD) 0)
+      (restrict (ModuleHom.id B) d) capx y
+    have hcoords := congrArg₂ (fun p t => p ⊗ₜ[ℂ] t)
+      (evaluation_jAt A hD c φ x) (restrict_identity d y)
+    have hscalar := (congrArg J (TensorProduct.smul_tmul' (R := ℂ) q (eta0 hD) y).symm).trans
+      (J.map_smul q (eta0 hD ⊗ₜ[ℂ] y))
+    have hinner := he.trans ((congrArg J (hmap.trans hcoords)).trans hscalar)
+    have houter := (congrArg N
+      (TensorProduct.tmul_smul (R := ℂ) q (dualIota B d ψ) (J (eta0 hD ⊗ₜ[ℂ] y)))).trans
+      (normalizedPair_smul (dualModule B) (targetModule (I D) B) hD (-d) d q
+        (dualIota B d ψ ⊗ₜ[ℂ] J (eta0 hD ⊗ₜ[ℂ] y)) v)
+    exact hp.trans ((congrArg N (houtermap.trans houterid)).trans
+      ((congrArg (fun t => N (dualIota B d ψ ⊗ₜ[ℂ] t)) hinner).trans houter))
   have h3 : f3 z3 = z4 := by
-    dsimp only [f3, z3, z4]
+    let t := jAt (I D) B hD d ⟨(0,d),zero_add d⟩ (eta0 hD ⊗ₜ[ℂ] y)
+    let N (w : PairMultiplicity (dualModule B) B (-d,d)) :=
+      normalizedPair (dualModule B) B hD (-d) d w v
     have hp := normalizedPair_input hD (ModuleHom.id (dualModule B))
-      (leftUnitIso hD B).hom (-d) d
-      (dualIota B d ψ ⊗ₜ[ℂ]
-        jAt (I D) B hD d ⟨(0,d),zero_add d⟩ (eta0 hD ⊗ₜ[ℂ] y)) v
-    simp only [TensorProduct.map_tmul, restrict_identity] at hp
-    refine hp.trans ?_
-    have hu := restrict_leftUnit_jAt (hD := hD) (A := B) d y
-    rw [hu]
+      (leftUnitIso hD B).hom (-d) d (dualIota B d ψ ⊗ₜ[ℂ] t) v
+    have hm := TensorProduct.map_tmul (restrict (ModuleHom.id (dualModule B)) (-d))
+      (restrict (leftUnitIso hD B).hom d) (dualIota B d ψ) t
+    have hc := congrArg₂ (fun p q => p ⊗ₜ[ℂ] q)
+      (restrict_identity (-d) (dualIota B d ψ))
+      (restrict_leftUnit_jAt (hD := hD) (A := B) d y)
+    exact hp.trans (congrArg N (hm.trans hc))
   have h4 : f4 z4 = (unitCharacter D hD (-d) * ψ y) • z5 := by
     exact evaluation_normalized hD B d ψ y v
   have hcalc {V0 : Type*} {V1 : Type*} {V2 : Type*}
