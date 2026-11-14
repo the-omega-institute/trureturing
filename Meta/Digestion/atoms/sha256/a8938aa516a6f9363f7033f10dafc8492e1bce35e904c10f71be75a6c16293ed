@@ -1,0 +1,20 @@
+**定理146.3的来源约定。** 承重结论是实际控制解析条件下(XII146.4)的全记录秩依赖律、任意理想记录质量下的支持优化、涵盖总返回历史族的下界，以及同接口上不用第二激发的有限匹配扫描和全参考 supremum。有限精度与全原未来沿明确供应的接口消费这些结论，采用 `repo-derived` 数学归属；不作全球优先权或最弱公理断言。
+
+唯一形式零路径、点击秩一、旧 $1/4$、acquisition／activation／全阶段原服务、双计量26角字及其边界分别归 RRO V §§25—36；字面全空间门和 digit 槽归 FARG定义60.1、式(60.2)、定理60.2；实际旗标完整复 Kraus 纠错归全输入恢复§6；完整原静态字典、标准反向及所有物理合同归固定版本 `f24456b4a12` 的 XI145.2、XI145.9与 XI145 §145.9。XI146的有限层推进与本卷 XII145均不是本章操作下界或构造的前提。
+
+外部成熟供应及准确对应为：
+
+* Gerhart Lüders，*Über die Zustandsänderung durch den Meßprozeß*，Ann. Phys. (Leipzig) 8, 322–328 (1951)；K. A. Kirkpatrick译文 [quant-ph/0403007v2][XII146LUD] §2式(1)—(7)，特别式(7)的次归一 $P_kZP_k$。它供应退化投影更新与逐射线细化的标准区别，不供应本装置。
+* M. Horodecki、P. W. Shor、M. B. Ruskai，*Entanglement Breaking Channels*，[quant-ph/0302031v2][XII146HSR] Theorem4(B),(D)。rank-one Kraus 的纠缠破坏／可分性是标准机制；本章点击子仪器的次归一结论由实际算子直接给出，平方根常数还需真实记录和引理146.4。
+* W. R. Clements等，*Optimal design for universal multiport interferometers*，Optica 3, 1460–1465 (2016)，[1603.08788v2][XII146CLE] Background式(1)—(2)及图1。两模式／相位酉分解是标准数学供应；本章不给其多粒子光学或硬件额外权限。迹范数压缩与收缩、纯化、Jensen、可测概率核和有限 hybrid 同为成熟工具。
+
+未解析旧目录若要获得本章常数，还需实际解析所有会改变同一点击记录内算子链的控制，或另证混合点击分支的尖锐界。在原坐标 $2+2$ 上，旧定理33.1仍给 $1/4$；在本章公平位和记录供给亦被准许时，有限构造给不超过 $1/(2\sqrt2)$ 的上界，二者之间的未解析最优值未由本章确定。已解析目录的值则由定理146.3及其构造确定。有效框架、公平位、全输出校准、实际硬件、有限资源和每个原物理供应条件不能由该值反推。
+
+[XII146RRO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_V.md "90a0a6390171837fa6aa82254c7ad323341f0657；定义25.1、27.1、32.1—32.2，定理27.2、29.2、33.1、35.1、36.1及命题29.3。"
+[XII146FARG]: FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md "90a0a6390171837fa6aa82254c7ad323341f0657；定义60.1、式(60.2)、定理60.2与60.3的私有enable观察边界。"
+[XII146REC]: AURIC_FIB_OPTIMAL_MEASUREMENT_QUANTUM_RECOVERY.md#6-全输入与全部参考的复-kraus-判据 "90a0a6390171837fa6aa82254c7ad323341f0657；§6实际旗标复Kraus全码纠错。"
+[XII146XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md#145-有限法向转移九维同根纯芽与完整原域复三能级 "f24456b4a12；XI145.2主定理、XI145.9完整静态字典、XI145 §145.9全部物理合同及其传递引用。"
+[XII146LUD]: https://arxiv.org/pdf/quant-ph/0403007v2
+[XII146HSR]: https://arxiv.org/pdf/quant-ph/0302031v2
+[XII146CLE]: https://arxiv.org/pdf/1603.08788v2
+
