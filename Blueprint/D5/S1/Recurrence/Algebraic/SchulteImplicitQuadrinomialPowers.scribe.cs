@@ -33,14 +33,17 @@ internal sealed class SchulteImplicitQuadrinomialPowersDocument : IScribeDocumen
                 + "gives the formula. The polynomial identity's k<=3*N hypothesis follows "
                 + "from n>=1 and m>=1. The statement concerns formal coefficients; the "
                 + "source's separate lattice-path and logarithmic conjectures are outside it.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a262082-schulte-power-coefficient"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role) =>
+        DescribeRole role, OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("schultea262082-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>

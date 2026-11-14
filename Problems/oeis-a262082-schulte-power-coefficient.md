@@ -3,7 +3,7 @@ slug: oeis-a262082-schulte-power-coefficient
 bibkey: schulte2015a262082
 doi: null
 url: https://oeis.org/A262082
-triage: open
+triage: theorem
 motivation_gids:
   - D5/S1/Recurrence/Algebraic/SchulteImplicitQuadrinomialPowers
 ---
@@ -37,9 +37,8 @@ The [original entry](https://oeis.org/A262082/internal) and
 state this formula as conjectured. Bounded literature and duplicate
 readings are in [#30449](https://github.com/the-omega-institute/trureturing/issues/30449).
 Their scope does not establish global historical openness or priority.
-The existing contraction, Lagrange and A008287 results provide the
-infrastructure; their series and coefficient interfaces must be matched
-to the complete native event.
+The contraction, Lagrange and A008287 results supply the series and
+coefficient interfaces used in the complete native theorem.
 
 ## Route
 
@@ -66,7 +65,7 @@ the full event. A finite coefficient check cannot establish it.
 
 ## Evidence
 
-The candidate is
+The result is
 `D5.S1.Recurrence.Algebraic.SchulteImplicitQuadrinomialPowers.result`.
 Its two conjuncts retain unique integer-series existence and the formula
 for every native integer solution, every positive m and every natural k.
@@ -76,27 +75,41 @@ The direct suppliers are
 `SchulteQuadrinomialAlternatingBinomialExpansion.result`, at their
 existing D5 declaration addresses. Pinned Mathlib supplies `expand`,
 `coeff_expand_mul`, `coeff_map` and the polynomial-to-series map.
+The [mathematical conclusion and evidence](https://github.com/the-omega-institute/trureturing/issues/30449#issuecomment-6880604852)
+refer to this complete event.
 
 ## Triage
 
-This is an unfrozen source candidate, not a delivered external resolution.
-Independent source fidelity and proof-shape evaluation, the public-result
-escape audit and publication gates remain pending. The unfinished
-registration is tracked in
-[#30462](https://github.com/the-omega-institute/trureturing/issues/30462).
-The intended proof shape is bind-only; every auxiliary theorem is consumed
-by the final result. The proposed admission basis is the external named
-problem exception under [#30449](https://github.com/the-omega-institute/trureturing/issues/30449).
-No escape witness, new axiom or originality claim is asserted.
+Proved: the complete native event holds for every positive n, every
+positive m and every natural k. Integer existence and unrestricted
+uniqueness follow from normalized contraction and the forced constant
+coefficient one. The substitution U(y)=y*P_n(y^n) converts the equation
+to the existing Lagrange interface. Coefficient transport and the A008287
+identity then give the stated rational sum. Positivity of N=n*k+m
+justifies division and implies k≤3N, including k=0. Both sum endpoints
+are included. This is an unbounded symbolic result, with no finite-instance
+restriction.
 
-The same change of series applies to P=Q(X*P^n) when a polynomial
-coefficient supplier is available. This is an untested successor candidate,
-not another resolved problem.
+The Scribe result node carries `OpenProblemResolutionClaim` with
+`ResolutionKind.Proved`. The proof shape is bind-only; its seven private
+auxiliary theorems are consumed by the result. Admission uses the external
+named problem exception under
+[#30449](https://github.com/the-omega-institute/trureturing/issues/30449),
+with no escape witness or new axiom. The public-result escape audit remains
+unfinished under
+[#30462](https://github.com/the-omega-institute/trureturing/issues/30462);
+it is not `declared_validated`.
+
+Unresolved: the source's separate lattice-path and logarithmic conjectures
+are outside this result, so no dependent conclusion requiring them is
+settled here. The general polynomial equation P=Q(X*P^n), with a suitable
+polynomial coefficient supplier, remains an untested successor candidate.
+No wider-family resolution or originality claim follows.
 
 ## ASSUMED-UNVERIFIED
 
 The standing check is bounded by the surfaces and query limits in
 #30449; unavailable MathDB and OpenAlex readings remain unverified.
-No exhaustive absence, originality, model diversity or independent
-acceptance is asserted. The source's separate path and logarithmic
+No exhaustive absence, originality or model diversity is asserted.
+The source's separate path and logarithmic
 conjectures remain outside this event.
