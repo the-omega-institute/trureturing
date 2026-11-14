@@ -915,7 +915,7 @@ $$
 
 及纯态 minimum $T_{p_v}(p_w)=|v^*w|^2$，均直接复用 XII159.1，不重报其最早 $m$ 点面塌缩为新结果。实际支持二维面是整颗 Bloch 球；对径向量正交，纯 minimum 因而给 AD。其局部三角形条件也由177.4反向成立。
 
-先把既有谱计算用于共同消去。设 $\rho\succeq0$、$\operatorname{Tr}\rho=1$、$\rho v=0$ 且 $\operatorname{rank}\rho<m$。置 $h=v^*Hv$。XII159.1证明中的压缩 $H|_{v^\perp}$ 的谱为 $+1$、$-1$ 各 $m-1$ 次及 $-h$。若 $h>0$，不大于 $-h$ 的谱子空间复维数为 $m$，故可取单位 $b\perp v,\operatorname{ran}\rho$，满足 $\delta=b^*Hb\le-h$。于是
+先把既有谱计算用于共同消去。设 $\rho\succeq0$、$\operatorname{Tr}\rho=1$、$\rho v=0$ 且 $\operatorname{rank}\rho<m$。置 $h=v^*Hv$。XII159.1证明中的压缩 $Q_vHQ_v|_{v^\perp}$（$Q_v=I-P_v$）的谱为 $+1$、$-1$ 各 $m-1$ 次及 $-h$。若 $h>0$，不大于 $-h$ 的谱子空间复维数为 $m$，故可取单位 $b\perp v,\operatorname{ran}\rho$，满足 $\delta=b^*Hb\le-h$。于是
 
 $$
 E=P_v+\frac{h}{-\delta}P_b
