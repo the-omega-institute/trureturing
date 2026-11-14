@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The literal Catalan generating function in A117187 satisfies the printed order-three recurrence at every nonnegative-index onset.
+The literal Catalan generating function in A117187 satisfies the printed order-three recurrence for every natural index at least three.
 
 All series are formal power series over the integers; no analytic convergence is assumed. C is the standard Catalan series, Cprime is its formal derivative, and T(f) substitutes X squared for X. Thus T(f)=f(X²). The map U selects the inverse of a series whose constant coefficient is the unit 1. All sequence indices are natural numbers, while recurrence coefficients and values are integers.
 
@@ -12,7 +12,7 @@ $$B = \operatorname{T}\left(C\right)$$
 
 *Formalization.* `D5/S3/Constants/Moments/A117187MatharRecurrence.catalan_square` (`✓ std3`).
 
-*Citation.* Paul Barry and R. J. Mathar (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
+*Citation.* Paul Barry; R. J. Mathar; OEIS Foundation and contributors (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ $$S = 1 - 2 \cdot X^{2} \cdot B$$
 
 *Formalization.* `D5/S3/Constants/Moments/A117187MatharRecurrence.source_root` (`✓ std3`).
 
-*Citation.* Paul Barry and R. J. Mathar (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
+*Citation.* Paul Barry; R. J. Mathar; OEIS Foundation and contributors (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$D = (1 - X^{2} \cdot B) \cdot S$$
 
 *Formalization.* `D5/S3/Constants/Moments/A117187MatharRecurrence.denominator` (`✓ std3`).
 
-*Citation.* Paul Barry and R. J. Mathar (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
+*Citation.* Paul Barry; R. J. Mathar; OEIS Foundation and contributors (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ $$F = (1 + X) \cdot B \cdot \operatorname{U}\left(D\right)$$
 
 *Formalization.* `D5/S3/Constants/Moments/A117187MatharRecurrence.source_series` (`✓ std3`).
 
-*Citation.* Paul Barry and R. J. Mathar (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
+*Citation.* Paul Barry; R. J. Mathar; OEIS Foundation and contributors (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
 
 *Commentary.*
 
@@ -60,7 +60,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{a}\left(n\right) = \operatorname{coe
 
 *Formalization.* `D5/S3/Constants/Moments/A117187MatharRecurrence.a` (`✓ std3`).
 
-*Citation.* Paul Barry and R. J. Mathar (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
+*Citation.* Paul Barry; R. J. Mathar; OEIS Foundation and contributors (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
 
 *Commentary.*
 
@@ -72,9 +72,13 @@ $$(\operatorname{constantCoeff}\left(S\right) = 1 \land \left(S^{2} = 1 - 4 \cdo
 
 *Proof.* Machine-checked in Lean as `D5/S3/Constants/Moments/A117187MatharRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-2011-a117187-recurrence` (proved) by `D5/S3/Constants/Moments/A117187MatharRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-2011-a117187-recurrence","declaration_gid":"D5/S3/Constants/Moments/A117187MatharRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul Barry and R. J. Mathar (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
+*Acknowledgement.* Paul Barry; R. J. Mathar; OEIS Foundation and contributors (2011). *OEIS A117187: Catalan generating function and conjectural recurrence*. URL: <https://oeis.org/A117187/internal>.
 
 *Commentary.*
 
