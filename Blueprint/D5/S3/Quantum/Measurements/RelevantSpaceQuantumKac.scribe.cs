@@ -95,7 +95,81 @@ internal sealed class RelevantSpaceQuantumKacDocument : IScribeDocumentDefinitio
                         + "(j+1)p(j). Interchanging its two sums gives the first moment. "
                         + "The trace of the actual orthogonal projection is finrank C; "
                         + "no ambient dimension or unmonitored overlap enters this calculation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("quantum-kac-original-pure-vector"),
+                DeclarationHandle.Create("D5/S3/Quantum/Measurements/RelevantSpaceQuantumKac."
+                    + "pure_vector_quantum_kac"),
+                H("Quantum Kac on the original finite-dimensional complex carrier"),
+                StatementSource.FromAuthor(CarrierFormula()),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Quantum/sinkovicz2014quantizedrecurrence")),
+                Blocks(
+                    Paragraph(Text("H is any finite-dimensional complex inner product space, "
+                        + "A any finite Kraus index set, L_a the original endomorphisms, and v "
+                        + "the original unit vector. Endomorphisms are represented as continuous "
+                        + "linear maps; every linear map on H is continuous. Define L_w v by "
+                        + "folding the word from right to left, with the empty word giving v. "
+                        + "C is the complex span of all these vectors, P=|v><v|, and J is the "
+                        + "genuine orthogonal projection onto C. Assume Kraus completeness "
+                        + "sum L_a adjoint L_a=I and only relevant-space unitality E(J)=J.")),
+                    Paragraph(Text("With E(X)=sum L_a X L_a adjoint and F(X)=(I-P)E(X)(I-P), "
+                        + "the probability at physical time k+1 is Re Tr(P E(F^k(P))). "
+                        + "The theorem proves HasSum of the original operator orbit to J, "
+                        + "nonnegativity, total probability one, and weighted mean complex "
+                        + "finrank C. Neither global unitality, adjoint invariance, irreducibility, "
+                        + "primitivity nor assumed recurrence is added.")),
+                    Paragraph(Text("Choose an orthonormal basis internally. Its representation "
+                        + "sends the original rank-one operator to its outer-product matrix and "
+                        + "intertwines every original Kraus operator. The range of that matrix "
+                        + "is the image of the line through v. Induction on original words and "
+                        + "linear span proves that the matrix reachable space is exactly the "
+                        + "image of C. The isometry transports its orthogonal projection, not "
+                        + "merely its dimension. Matrix representation intertwines E and F, "
+                        + "hence each actual monitored iterate, while trace preservation under "
+                        + "coordinates identifies every return probability. Applying the inverse "
+                        + "continuous linear coordinate map to the matrix operator series and "
+                        + "using preservation of finrank yields all four conclusions on H."))),
                 DescribeRole.Theorem))));
+
+    private static Formula CarrierFormula()
+    {
+        Formula h = F.Id("H"), a = F.Id("A"), l = F.Id("L"), v = F.Id("v"),
+            c = F.Id("C"), p = F.Id("P"), j = F.Id("J"), m = F.Id("m"),
+            x = F.Id("X"), w = F.Id("w"), z = F.Id("a");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula end = Call("ContinuousEnd", complex, h);
+        Formula prob = Call("Re", Call("Tr", Seq(p, Sp,
+            Call("E", Call("iterate", F.Id("F"), m, p)))));
+        Formula orbit = Seq(m, Sp, Mapsto, Sp, Call("iterate", F.Id("F"), m, p));
+        Formula probabilities = Seq(m, Sp, Mapsto, Sp, prob);
+        Formula weighted = Seq(m, Sp, Mapsto, Sp, Open, m, Plus, D(1), Close, Sp, prob);
+        Formula kraus = Seq(Call("L", z), Sp, x, Sp, Call("adjoint", Call("L", z)));
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, h, Comma, Sp, a, Colon, Sp, F.Id("Type"), Comma),
+            Seq(OpenBracket, Call("NormedAddCommGroup", h), CloseBracket, Sp,
+                OpenBracket, Call("InnerProductSpace", complex, h), CloseBracket, Sp,
+                OpenBracket, Call("FiniteDimensional", complex, h), CloseBracket, Sp,
+                OpenBracket, Call("Fintype", a), CloseBracket, Comma),
+            Seq(Forall, Sp, l, Colon, Sp, a, Sp, To, Sp, end, Comma, Sp,
+                Forall, Sp, v, Colon, Sp, h, Comma),
+            Seq(Call("norm", v), Sp, Eq, Sp, D(1), Sp, Rightarrow, Sp,
+                Call("sum", Seq(z, Sp, Mapsto, Sp, Call("adjoint", Call("L", z)), Sp,
+                    Call("L", z))), Sp, Eq, Sp, F.Id("I"), Sp, Rightarrow),
+            Seq(p, Sp, Colon, Eq, Sp, Call("rankOne", complex, v, v), Comma, Sp,
+                c, Sp, Colon, Eq, Sp, Call("span", complex,
+                    Call("range", Seq(w, Sp, Mapsto, Sp, Call("foldr", l, v, w))))),
+            Seq(j, Sp, Colon, Eq, Sp, Call("starProjection", c), Comma, Sp,
+                F.Id("E"), Sp, Colon, Eq, Sp, x, Sp, Mapsto, Sp, Call("sum", Seq(z, Sp, Mapsto, Sp, kraus))),
+            Seq(F.Id("F"), Sp, Colon, Eq, Sp, x, Sp, Mapsto, Sp, Open, F.Id("I"), Minus, p, Close, Sp,
+                Call("E", x), Sp, Open, F.Id("I"), Minus, p, Close),
+            Seq(Call("E", j), Sp, Eq, Sp, j, Sp, Rightarrow),
+            Seq(Call("HasSum", orbit, j), Sp, Land, Sp,
+                Open, Forall, Sp, m, Comma, Sp, D(0), Sp, Leq, Sp, prob, Close, Sp, Land),
+            Seq(Call("HasSum", probabilities, D(1)), Sp, Land, Sp,
+                Call("HasSum", weighted, Call("finrank", complex, c)))
+        ]));
+    }
 
     private static Formula ReturnFormula()
     {
