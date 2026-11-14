@@ -59,7 +59,7 @@ internal sealed class BinaryCenterGeometryDocument : IScribeDocumentDefinition
     private static Formula Effect()
     {
         var e=Id("e");var x=Id("x");
-        Formula Face(Formula value) => new Formula.SetBuilder(x,x,And(Mem(x,K),Eq(Call("e",x),value)));
+        Formula Face(Formula value) => new Formula.SetBuilder(x,x,F.Seq(K,F.Sp,F.Land,F.Sp,Eq(Call("e",x),value)));
         return Pair(Ex("e",Call("LinearMaps",R,V,R),Conj(Call("proper",C,U,e),Eq(Face(F.D(0)),D(Id("p"))),Eq(Face(F.D(1)),D(Id("q"))))));
     }
     private static Formula Block => Call("union",D(Id("p")),D(Id("q")));

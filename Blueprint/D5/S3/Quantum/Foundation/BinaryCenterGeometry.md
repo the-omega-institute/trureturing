@@ -66,7 +66,7 @@ $$\forall V \in Types,\; [NormedAddCommGroup\left(V\right)] [NormedSpace\left(Re
 
 *Commentary.*
 
-The same original separating effect e defines J(x)=c(q)+e(x)(c(p)-c(q)). Both reciprocal fiber identities and whole-ball center uniqueness prove that J equals the original center replacement at every pure point of F union H. Linearity of e and the normalization of the finite sums show that each replaced sum equals J of the original sum. This actual consumer uses the entire paired zero and one faces; the effect is constructed rather than assumed as a classifier field.
+The same original separating effect e defines J(x)=c(q)+e(x)(c(p)-c(q)). Both reciprocal fiber identities and whole-ball center uniqueness prove that J equals the original center replacement at every pure point of F union H. Linearity of e and the normalization of the finite sums show that each replaced sum equals J of the original sum. The identity uses the entire paired zero and one faces of the constructed original effect.
 
 **Theorem 1.6 (One outside and three inside endpoints cannot cross).**
 
