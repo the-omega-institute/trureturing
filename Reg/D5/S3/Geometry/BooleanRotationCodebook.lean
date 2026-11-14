@@ -5,7 +5,7 @@ import D5.S3.Geometry.BooleanRotationCodebook
 /-! Complete source reconstruction and actual circular-error observations. -/
 
 noncomputable section
-open scoped BigOperators
+open scoped BigOperators ENNReal
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry.BooleanRotationCodebook
 

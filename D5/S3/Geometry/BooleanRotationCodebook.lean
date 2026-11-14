@@ -150,7 +150,7 @@ private lemma split_simplex_volume (p q : ℕ) :
     ext a
     simp [splitSimplex, e, simplexCoords, MeasurableEquiv.sumPiEquivProdPi,
       Equiv.sumPiEquivProdPi, and_assoc]
-  rw [heq, hm.measure_preimage (hs p |>.prod (hs q) |>.nullMeasurableSet), MeasureTheory.volume_eq_prod, Measure.prod_prod,
+  rw [heq, hm.measure_preimage (hs p |>.prod (hs q) |>.nullMeasurableSet), Measure.volume_eq_prod, Measure.prod_prod,
     simplex_volume, simplex_volume]
 
 private def signedScale (p q : ℕ) (ε : ℝ) :
