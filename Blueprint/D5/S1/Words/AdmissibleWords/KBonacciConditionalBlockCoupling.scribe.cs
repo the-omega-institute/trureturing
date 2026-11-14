@@ -69,8 +69,10 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                     + "words have a zero at z and agree at every fixed coordinate "
                     + "strictly after z. Prefix replacement S(y,z,w) is a bijection "
                     + "between their full completion fibers, with inverse S(x,z,w). "
-                    + "It therefore transports the uniform conditional laws exactly, "
-                    + "and every coordinate strictly after z is preserved."))),
+                    + "It therefore transports the uniform conditional laws exactly. "
+                    + "R(F,x,y,z) samples w from L(F,x) and returns the pair "
+                    + "(w,S(y,z,w)); its two marginal pushforwards are exactly "
+                    + "L(F,x) and L(F,y). Every coordinate strictly after z is preserved."))),
                 DescribeRole.Theorem))));
 
     private static Formula StepFormula()
@@ -81,17 +83,17 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
         var p = Call("evalLaw", f, x, h, i);
         var q = Call("evalLaw", f, y, g, i);
         var joint = Call("J", p, q);
+        var conclusion = And(Rel(Call("mapFst", joint), Eq, p),
+            Rel(Call("mapSnd", joint), Eq, q),
+            Rel(Seq(D(1), Slash, D(2)), Leq,
+                Call("mass", joint, Op("false"), Op("false"))));
+        var unfixed = Seq(Neg, Sp, Par(Seq(i, Sp, InMacro, Sp, f)));
+        var atSite = All(i, Call("Fin", n), Imp(unfixed, conclusion));
+        var fibers = All(h, Call("Nonempty", Call("C", k, n, f, x)),
+            All(g, Call("Nonempty", Call("C", k, n, f, y)), atSite));
         return All(Seq(k, Comma, n), Nat,
             Imp(Rel(D(0), Lt, k), All(f, Call("Finset", Call("Fin", n)),
-                All(Seq(x, Comma, y), Word(n),
-                    All(h, Call("Nonempty", Call("C", k, n, f, x)),
-                        All(g, Call("Nonempty", Call("C", k, n, f, y)),
-                            All(i, Call("Fin", n), Imp(
-                                Seq(Neg, Sp, Par(Seq(i, Sp, InMacro, Sp, f))),
-                                And(Rel(Call("mapFst", joint), Eq, p),
-                                    Rel(Call("mapSnd", joint), Eq, q),
-                                    Rel(Seq(D(1), Slash, D(2)), Leq,
-                                        Call("mass", joint, Op("false"), Op("false")))))))))));
+                All(Seq(x, Comma, y), Word(n), fibers))));
     }
 
     private static Formula ScreenFormula()
@@ -99,14 +101,14 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
         var k = F.Id("k"); var n = F.Id("n");
         var x = F.Id("x"); var y = F.Id("y");
         var z = F.Id("z"); var t = F.Id("t");
+        var condition = And(Rel(Call("at", x, z), Eq, Op("false")),
+            Rel(Call("at", y, z), Eq, Op("false")));
+        var conclusion = All(t, Word(n), Rel(Call("A", k, n, Call("S", x, z, t)),
+            Iff, Call("A", k, n, Call("S", y, z, t))));
+        var atZero = All(z, Call("Fin", n), Imp(condition, conclusion));
         return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k),
             All(Seq(x, Comma, y), Word(n), Imp(
-                And(Call("A", k, n, x), Call("A", k, n, y)),
-                All(z, Call("Fin", n), Imp(
-                    And(Rel(Call("at", x, z), Eq, Op("false")),
-                        Rel(Call("at", y, z), Eq, Op("false"))),
-                    All(t, Word(n), Rel(Call("A", k, n, Call("S", x, z, t)),
-                        Iff, Call("A", k, n, Call("S", y, z, t)))))))));
+                And(Call("A", k, n, x), Call("A", k, n, y)), atZero))));
     }
 
     private static Formula ResetFormula()
@@ -119,17 +121,21 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
         var farSame = All(i, Call("Fin", n), Imp(
             And(Seq(i, Sp, InMacro, Sp, f), Rel(Call("val", z), Lt, Call("val", i))),
             Rel(Call("at", x, i), Eq, Call("at", y, i))));
+        var unchanged = All(w, Word(n), All(i, Call("Fin", n),
+            Imp(Rel(Call("val", z), Lt, Call("val", i)),
+                Rel(Call("at", Call("S", y, z, w), i), Eq, Call("at", w, i)))));
+        var marginals = And(
+            Rel(Call("mapFst", Call("R", f, x, y, z)), Eq, Call("L", f, x)),
+            Rel(Call("mapSnd", Call("R", f, x, y, z)), Eq, Call("L", f, y)));
+        var conclusion = And(
+            Rel(Call("mapReset", Call("L", f, x), y, z), Eq, Call("L", f, y)),
+            unchanged, marginals);
+        var assumptions = And(Rel(Call("at", x, z), Eq, Op("false")),
+            Rel(Call("at", y, z), Eq, Op("false")), fixedLeft, farSame);
         return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k),
             All(f, Call("Finset", Call("Fin", n)), All(Seq(x, Comma, y), Word(n),
                 Imp(And(Call("A", k, n, x), Call("A", k, n, y)),
-                    All(z, Call("Fin", n), Imp(
-                        And(Rel(Call("at", x, z), Eq, Op("false")),
-                            Rel(Call("at", y, z), Eq, Op("false")), fixedLeft, farSame),
-                        And(Rel(Call("mapReset", Call("L", f, x), y, z), Eq, Call("L", f, y)),
-                            All(w, Word(n), All(i, Call("Fin", n),
-                                Imp(Rel(Call("val", z), Lt, Call("val", i)),
-                                    Rel(Call("at", Call("S", y, z, w), i), Eq,
-                                        Call("at", w, i))))))))))));
+                    All(z, Call("Fin", n), Imp(assumptions, conclusion)))))));
     }
 
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));

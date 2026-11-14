@@ -306,8 +306,14 @@ theorem zero_screening {k n : ℕ} (hk : 0 < k) (x y : Fin n → Bool)
   exact ⟨transfer x y hy hyz, transfer y x hx hxz⟩
 
 /-- Replace only the prefix through the reset site, retaining the whole suffix. -/
-def resetMap {n : ℕ} (z : Fin n) (prefix w : Fin n → Bool) : Fin n → Bool :=
-  fun i => if i.val ≤ z.val then prefix i else w i
+def resetMap {n : ℕ} (z : Fin n) (history w : Fin n → Bool) : Fin n → Bool :=
+  fun i => if i.val ≤ z.val then history i else w i
+
+/-- Sample one full conditional completion and retain its suffix in both outputs. -/
+def resetCoupling {k n : ℕ} (fixed : Finset (Fin n)) (x y : Fin n → Bool)
+    (h : (completions k n fixed x).Nonempty) (z : Fin n) :
+    PMF ((Fin n → Bool) × (Fin n → Bool)) :=
+  (completionLaw fixed x h).map (fun w => (w, resetMap z y w))
 
 private def resetFiberEquiv {k n : ℕ} (hk : 0 < k)
     (fixed : Finset (Fin n)) (x y : Fin n → Bool)
@@ -368,7 +374,11 @@ theorem reset_law_transport {k n : ℕ} (hk : 0 < k)
     (farSame : ∀ i ∈ fixed, z.val < i.val → x i = y i) :
     (completionLaw fixed x (completion_nonempty fixed x hx)).map (resetMap z y) =
         completionLaw fixed y (completion_nonempty fixed y hy) ∧
-      (∀ w : Fin n → Bool, ∀ i : Fin n, z.val < i.val → resetMap z y w i = w i) := by
+      (∀ w : Fin n → Bool, ∀ i : Fin n, z.val < i.val → resetMap z y w i = w i) ∧
+      ((resetCoupling fixed x y (completion_nonempty fixed x hx) z).map Prod.fst =
+        completionLaw fixed x (completion_nonempty fixed x hx) ∧
+       (resetCoupling fixed x y (completion_nonempty fixed x hx) z).map Prod.snd =
+        completionLaw fixed y (completion_nonempty fixed y hy)) := by
   classical
   let e := resetFiberEquiv hk fixed x y hx hy z hxz hyz leftFixed farSame
   letI : Nonempty {w // w ∈ completions k n fixed x} :=
@@ -381,13 +391,24 @@ theorem reset_law_transport {k n : ℕ} (hk : 0 < k)
     intro w
     simp only [PMF.map_apply, uniformPmf, PMF.ofFintype_apply, ← e.symm_apply_eq]
     simp [Fintype.card_congr e]
-  constructor
-  · change ((uniformPmf {w // w ∈ completions k n fixed x}).map Subtype.val).map
+  have ht : (completionLaw fixed x (completion_nonempty fixed x hx)).map (resetMap z y) =
+      completionLaw fixed y (completion_nonempty fixed y hy) := by
+    change ((uniformPmf {w // w ∈ completions k n fixed x}).map Subtype.val).map
       (resetMap z y) = (uniformPmf {w // w ∈ completions k n fixed y}).map Subtype.val
     rw [← hu, PMF.map_comp, PMF.map_comp]
     rfl
+  refine ⟨ht, ?_, ?_⟩
   · intro w i hi
     simp [resetMap, show ¬ i.val ≤ z.val by omega]
+  · constructor
+    · change ((completionLaw fixed x _).map (fun w => (w, resetMap z y w))).map
+        Prod.fst = _
+      rw [PMF.map_comp]
+      exact PMF.map_id _
+    · change ((completionLaw fixed x _).map (fun w => (w, resetMap z y w))).map
+        Prod.snd = _
+      rw [PMF.map_comp]
+      exact ht
 
 #print axioms conditional_step_coupling
 #print axioms zero_screening
