@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurements;
 internal sealed class RelevantSpaceQuantumKacDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite faithful monitored orbits control the operator series on the actual relevant space.",
-        H("The Monitored Operator Series on the Actual Relevant Space"),
+        "Relevant-space unital CPTP channels have actual mean return time equal to the relevant dimension.",
+        H("Quantum Kac for Actual Monitored Returns"),
         Blocks(
             Paragraph(Text("For a finite complex coordinate carrier n and an arbitrary branch index set A, "
                 + "write C(K,P) for the span of all original Kraus words applied to the support of P, "

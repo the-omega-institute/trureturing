@@ -330,7 +330,6 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_
 end ReturnMoments
 
 namespace OriginalCarrier
-universe u
 structure Carrier where
   Space : Type u
   [group : NormedAddCommGroup Space]
