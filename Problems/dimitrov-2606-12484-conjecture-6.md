@@ -63,13 +63,11 @@ observational dependence for the totient family, with continuation unknown.
 
 ## Triage
 
-The mathematical application covers the complete original range. Independent
-evaluation, first freeze, required CI, merge and first dev verification are
-separate unfinished delivery obligations. No KPI or novelty credit is asserted
-by this dossier.
+The mathematical application covers the complete original range. Post-door
+independent evaluation, required CI, merge and first dev verification remain
+delivery obligations. No KPI or novelty credit is asserted by this dossier.
 
 ## ASSUMED-UNVERIFIED
 
 The literature screen is bounded to the supplied source census. Worldwide
-priority and exhaustive literature coverage are unverified. Independent source
-fidelity and pre-freeze evaluation remain outstanding under #30478.
+priority and exhaustive literature coverage are unverified.
