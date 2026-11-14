@@ -89,4 +89,30 @@ theorem orthantBridge : (type_of% (@signed_orthant_volume)) ↔
 theorem orthantPositive : orthantArena.Law orthantActual :=
   orthantBridge.mp (@signed_orthant_volume)
 
+abbrev bodySignature : Signature where
+  Params := ℕ
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ≥0∞
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def bodyActual : Realization bodySignature :=
+  realize bodySignature
+    (fun _ n ε => MeasureTheory.volume {a : Fin n → ℝ | signedBody ε a})
+    (fun e => nomatch e)
+
+abbrev bodyArena : Arena where
+  signature := bodySignature
+  Law R := ∀ n : ℕ, ∀ {ε : ℝ}, 0 < ε →
+    R.readout () n ε = ENNReal.ofReal (((2 * n).choose n : ℝ) * ε ^ n / n.factorial)
+
+theorem bodyBridge : (type_of% (@signed_body_volume)) ↔
+    bodyArena.Law bodyActual := Iff.rfl
+
+theorem bodyPositive : bodyArena.Law bodyActual :=
+  bodyBridge.mp (@signed_body_volume)
+
 end Reg.D5.S3.Geometry.BooleanRotationCodebook

@@ -8,6 +8,8 @@
 import Mathlib.Analysis.Normed.Group.AddCircle
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Tactic
+import Mathlib.Data.Nat.Choose.Vandermonde
+import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
 import D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound
 
 noncomputable section
@@ -219,10 +221,17 @@ private lemma chamber_measurable {ι : Type*} [Fintype ι] (s : Finset ι) (ε :
     continuous_finsetSum _ (fun i _ => (continuous_apply i).max continuous_const)
   have hn : Continuous (fun a : ι → ℝ => ∑ i, max (-a i) 0) :=
     continuous_finsetSum _ (fun i _ => (continuous_apply i).neg.max continuous_const)
-  exact ((hp.isClosed_preimage _ isClosed_Iic).inter
-    ((hn.isClosed_preimage _ isClosed_Iic).inter
-      ((isClosed_biInter fun i _ => isClosed_le continuous_const (continuous_apply i)).inter
-        (isClosed_biInter fun i _ => isClosed_le (continuous_apply i) continuous_const)))).measurableSet
+  have hs : MeasurableSet {a : ι → ℝ | ∀ i ∈ s, 0 ≤ a i} := by
+    simp only [Set.ofPred_forall]
+    exact MeasurableSet.iInter fun i => MeasurableSet.iInter fun _ =>
+      measurableSet_le measurable_const (measurable_pi_apply i)
+  have ht : MeasurableSet {a : ι → ℝ | ∀ i ∉ s, a i ≤ 0} := by
+    simp only [Set.ofPred_forall]
+    exact MeasurableSet.iInter fun i => MeasurableSet.iInter fun _ =>
+      measurableSet_le (measurable_pi_apply i) measurable_const
+  exact ((measurableSet_le hp.measurable measurable_const).inter
+    (measurableSet_le hn.measurable measurable_const)).inter (hs.inter ht)
+
 
 private lemma chamber_union {ι : Type*} [Fintype ι] [DecidableEq ι] (ε : ℝ) :
     {a : ι → ℝ | signedBody ε a} = ⋃ s : Finset ι, coordinateChamber s ε := by
@@ -243,17 +252,19 @@ private lemma chamber_aedisjoint {ι : Type*} [Fintype ι] [DecidableEq ι] (ε 
     Pairwise (fun s t : Finset ι => AEDisjoint volume
       (coordinateChamber s ε) (coordinateChamber t ε)) := by
   intro s t hst
-  obtain ⟨i, hi⟩ := Finset.ext_iff.not.mp hst
+  have hh := Finset.ext_iff.not.mp hst
+  push Not at hh
+  obtain ⟨i, hi⟩ := hh
   apply measure_mono_null (t := {a : ι → ℝ | a i = 0})
   · intro a ha
     have hs := ha.1
     have ht := ha.2
     by_cases his : i ∈ s
-    · have hit : i ∉ t := fun h => hi (iff_of_true his h)
+    · have hit : i ∉ t := by tauto
       exact le_antisymm (ht.2.2 i hit) (hs.2.1 i his)
     · have hit : i ∈ t := by tauto
       exact le_antisymm (hs.2.2 i his) (ht.2.1 i hit)
-  · exact pi_hyperplane (fun _ : ι => (volume : Measure ℝ)) i 0
+  · exact Measure.pi_hyperplane (fun _ : ι => (volume : Measure ℝ)) i 0
 
 private lemma chamber_volume_sum {ι : Type*} [Fintype ι] [DecidableEq ι] (ε : ℝ) :
     volume {a : ι → ℝ | signedBody ε a} =
@@ -275,34 +286,83 @@ private lemma coordinate_chamber_volume {ι : Type*} [Fintype ι] [DecidableEq �
   let e := chamberEquiv s
   let E := MeasurableEquiv.piCongrLeft (fun _ : ι => ℝ) e
   have hm := volume_measurePreserving_piCongrLeft (fun _ : ι => ℝ) e
+  have hE (a : (Fin s.card ⊕ Fin sᶜ.card) → ℝ) (j) : E a (e j) = a j :=
+    MeasurableEquiv.piCongrLeft_apply_apply (β := fun _ : ι => ℝ) e a j
+  have hinl (j) : e (.inl j) ∈ s := (s.equivFin.symm j).property
+  have hinr (j) : e (.inr j) ∉ s :=
+    Finset.mem_compl.mp (sᶜ.equivFin.symm j).property
   have hsum (a : (Fin s.card ⊕ Fin sᶜ.card) → ℝ) (f : ℝ → ℝ) :
       (∑ i, f (E a i)) = ∑ j, f (a j) := by
     exact (e.sum_comp (fun i => f (E a i))).symm.trans
-      (Finset.sum_congr rfl (fun j _ => by simp [E]))
+      (Finset.sum_congr rfl (fun j _ => congrArg f (hE a j)))
   have heq : E ⁻¹' coordinateChamber s ε = signedOrthant s.card sᶜ.card ε := by
     ext a
     have hb : signedBody ε (E a) ↔ signedBody ε a := by
-      simp only [signedBody, hsum]
-    simp only [Set.mem_preimage, coordinateChamber, signedOrthant, Set.mem_setOf_eq, hb]
+      unfold signedBody
+      rw [hsum a (fun x => max x 0), hsum a (fun x => max (-x) 0)]
+    simp only [Set.mem_preimage, coordinateChamber, signedOrthant, Set.mem_ofPred_eq, hb]
     constructor
     · rintro ⟨ha, hp, hn⟩
       refine ⟨ha, ?_, ?_⟩
       · intro i
-        have h := hp (e (.inl i)) (by simp [e, chamberEquiv])
-        simpa [E] using h
+        have h := hp (e (.inl i)) (hinl i)
+        simpa only [hE] using h
       · intro i
-        have h := hn (e (.inr i)) (by simp [e, chamberEquiv])
-        simpa [E] using h
+        have h := hn (e (.inr i)) (hinr i)
+        simpa only [hE] using h
     · rintro ⟨ha, hp, hn⟩
       refine ⟨ha, ?_, ?_⟩
       · intro i hi
-        obtain ⟨j, rfl⟩ := s.equivFin.symm.surjective ⟨i, hi⟩
-        simpa [E, e, chamberEquiv] using hp j
+        obtain ⟨j, rfl⟩ := e.surjective i
+        cases j with
+        | inl j => simpa only [hE] using hp j
+        | inr j => exact (hinr j hi).elim
       · intro i hi
-        obtain ⟨j, hj⟩ := sᶜ.equivFin.symm.surjective ⟨i, by simpa using hi⟩
-        have h := hn j
-        simpa [E, e, chamberEquiv, hj] using h
+        obtain ⟨j, rfl⟩ := e.surjective i
+        cases j with
+        | inl j => exact (hi (hinl j)).elim
+        | inr j => simpa only [hE] using hn j
   rw [← hm.measure_preimage (chamber_measurable s ε).nullMeasurableSet, heq,
     signed_orthant_volume _ _ hε, Finset.card_add_card_compl]
+
+private lemma chamber_coefficient (n : ℕ) :
+    (∑ s : Finset (Fin n), (s.card.factorial : ℝ)⁻¹ *
+      ((n - s.card).factorial : ℝ)⁻¹) = ((2 * n).choose n : ℝ) / n.factorial := by
+  classical
+  calc
+    _ = ∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) ^ 2 / n.factorial := by
+      rw [← Finset.powerset_univ, Finset.sum_powerset]
+      apply Finset.sum_congr (by simp)
+      intro k hk
+      have h := Finset.sum_powersetCard k (Finset.univ : Finset (Fin n))
+        (fun j => (j.factorial : ℝ)⁻¹ * ((n - j).factorial : ℝ)⁻¹)
+      simp only [Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at h
+      rw [h, Nat.cast_choose ℝ (by simpa using Finset.mem_range_succ_iff.mp hk)]
+      have hf (m : ℕ) : (m.factorial : ℝ) ≠ 0 := by positivity
+      field_simp
+    _ = _ := by
+      rw [← Finset.sum_div]
+      congr 1
+      exact_mod_cast Nat.sum_range_choose_sq n
+
+/-- The exact volume of the whole signed error body in every finite dimension. -/
+theorem signed_body_volume (n : ℕ) {ε : ℝ} (hε : 0 < ε) :
+    volume {a : Fin n → ℝ | signedBody ε a} =
+      ENNReal.ofReal (((2 * n).choose n : ℝ) * ε ^ n / n.factorial) := by
+  classical
+  rw [chamber_volume_sum]
+  have hc (s : Finset (Fin n)) : volume (coordinateChamber s ε) =
+      ENNReal.ofReal (ε ^ n * ((s.card.factorial : ℝ)⁻¹ *
+        ((n - s.card).factorial : ℝ)⁻¹)) := by
+    rw [coordinate_chamber_volume s hε]
+    simp only [Fintype.card_fin, Finset.card_compl, Fintype.card_fin]
+    rw [ENNReal.ofReal_mul (by positivity), ENNReal.ofReal_mul (by positivity),
+      ENNReal.ofReal_inv_of_pos (by positivity), ENNReal.ofReal_inv_of_pos (by positivity)]
+    simp
+  simp_rw [hc]
+  rw [← ENNReal.ofReal_sum_of_nonneg (by intros; positivity), ← Finset.mul_sum,
+    chamber_coefficient]
+  congr 1
+  ring
 
 end D5.S3.Geometry.BooleanRotationCodebook
