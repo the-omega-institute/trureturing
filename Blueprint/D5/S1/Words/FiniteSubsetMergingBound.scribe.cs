@@ -15,7 +15,7 @@ internal sealed class FiniteSubsetMergingBoundDocument : IScribeDocumentDefiniti
                 "D5/S1/Words/FiniteSubsetMergingBound.exists_merging_word_length_le"),
             H("A merging word of length at most one pair budget per additional state"),
             StatementSource.FromAuthor(Statement()),
-            AssessedProvenance.FromLiterature("cerny1964homogeneous"),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Automata/cerny1964homogeneous")),
             Blocks(
                 Paragraph(Text(
                     "The state type X and letter type A range independently over arbitrary universes. The function t is any deterministic transition, L is a natural number, and S is a finite set of states. The notation run(t,w,x) means the native list left fold w.foldl t x, and length(w) is the list length. Natural subtraction is truncated at zero.")),
@@ -49,7 +49,7 @@ internal sealed class FiniteSubsetMergingBoundDocument : IScribeDocumentDefiniti
         RowBreak, Grp(),
         Forall, Sp, F.Id("t"), Colon, Sp, F.Id("X"), Sp, To, Sp,
         F.Id("A"), Sp, To, Sp, F.Id("X"), Comma, Sp,
-        F.Id("L"), Colon, Sp, Call("Nat"), Comma, Sp,
+        F.Id("L"), Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
         F.Id("S"), Colon, Sp, Call("Finset", F.Id("X")), Comma,
         RowBreak, Grp(),
         Open, Forall, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Colon, Sp, F.Id("X"), Comma, Sp,
