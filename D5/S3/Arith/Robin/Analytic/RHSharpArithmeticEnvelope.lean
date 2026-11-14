@@ -32,10 +32,10 @@ def D (x : ℝ) : ℝ := Real.sqrt x * Real.log x
 def B (x : ℝ) : ℝ := Mertens.E₃ x +
   Real.log (Real.log (Chebyshev.theta x)) - Real.log (Real.log x)
 
-private abbrev w := D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity
-private def Jpsi (x : ℝ) : ℝ := ∫ t in Ioi x, (Chebyshev.psi t - t) * w t
-private def S (x : ℝ) : ℝ := ∫ t in Ioi x, (Chebyshev.psi t - Chebyshev.theta t) * w t
-private def N (x : ℝ) : ℝ := Real.log (Real.log (Chebyshev.theta x)) -
+abbrev w := D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity
+def Jpsi (x : ℝ) : ℝ := ∫ t in Ioi x, (Chebyshev.psi t - t) * w t
+def S (x : ℝ) : ℝ := ∫ t in Ioi x, (Chebyshev.psi t - Chebyshev.theta t) * w t
+def N (x : ℝ) : ℝ := Real.log (Real.log (Chebyshev.theta x)) -
   Real.log (Real.log x) - (Chebyshev.theta x - x) / (x * Real.log x)
 
 private lemma sqrt_Q {x : ℝ} (hx : 2 ≤ x) :
@@ -59,7 +59,7 @@ private lemma sqrt_Q {x : ℝ} (hx : 2 ≤ x) :
   rw [Real.sq_sqrt hx0.le]
   ring
 
-private lemma weighted_eq (t : ℝ) :
+lemma weighted_eq (t : ℝ) :
     psiErrorKernel t * D5.S3.Weil.Mertens.WeightedTailTransport.r t =
       (Chebyshev.psi t - t) * w t := by
   dsimp [psiErrorKernel, w, D5.S3.Weil.Mertens.WeightedTailTransport.r,
@@ -572,7 +572,7 @@ private lemma q_bounds {x t : ℝ} (hx : 1 < x) (hxt : x ≤ t) :
     rw [Real.sq_sqrt ht0.le]
     nlinarith only [ht0.le, mul_nonneg ht0.le (sub_nonneg.mpr hlog)]
 
-private lemma A_data {x : ℝ} (hx : 1 < x) :
+lemma A_data {x : ℝ} (hx : 1 < x) :
     IntegrableOn a (Ioi x) ∧ H x / (1 + 1 / Real.log x) ≤ A x ∧ A x ≤ H x := by
   have hqpos : ∀ t ∈ Ioi x, 0 ≤ q t := by
     intro t ht
@@ -635,7 +635,7 @@ private lemma A_limit : Tendsto (fun x : ℝ => D x * A x) atTop (𝓝 2) := by
     rwa [hDH] at h
 
 
-private lemma tails {x : ℝ} (hx : 2 ≤ x) :
+lemma tails {x : ℝ} (hx : 2 ≤ x) :
     IntegrableOn (fun t => (Chebyshev.psi t - t) * w t) (Ioi x) ∧
     IntegrableOn (fun t => (Chebyshev.psi t - Chebyshev.theta t) * w t) (Ioi x) ∧
     B x = Jpsi x - S x + (Mertens.E₃ x + Mertens.E₂p x) + N x := by
@@ -703,7 +703,7 @@ private lemma S_limit (hRH : RiemannHypothesis) :
     _ ≤ |D x * (S x - A x)| + |D x * A x - 2| := abs_add_le _ _
     _ < epsilon := by linarith
 
-private lemma finite_cancellation {x : ℝ} (hx : 2 ≤ x) :
+lemma finite_cancellation {x : ℝ} (hx : 2 ≤ x) :
     |Mertens.E₃ x + Mertens.E₂p x| ≤ 4 / x := by
   have hid : Mertens.E₃ x + Mertens.E₂p x =
       (∑ n ∈ Finset.Ioc 0 ⌊x⌋₊, Mertens.M_eq_summand n) - (Mertens.M - Mertens.γ) := by

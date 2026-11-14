@@ -1,0 +1,61 @@
+**Theorem 10 (Two copies of three colors).**
+For $q=1,m=2$, the zero subsets are exactly the empty subset, the eight
+three-element transversals of the three color fibers, and the full subset.
+Moreover
+
+$$
+U\cong\mathbb Z^2,\qquad
+G\cong\operatorname{Sym}(2)^3\rtimes\operatorname{Sym}(3),\qquad |G|=48.
+\tag{21}
+$$
+
+*Proof.* A subset with color counts $c_j\in\{0,1,2\}$ has integer weight
+$N=c_0+2c_1+4c_2$, between $0$ and $14$. Divisibility by $7$
+requires $N=0,7,14$. The endpoints force count vectors $(0,0,0)$ and
+$(2,2,2)$. For $N=7$, $c_2=0$ is impossible because
+$c_0+2c_1\le6$; $c_2=2$ is impossible because $N\ge8$. Therefore
+$c_2=1$, and $c_0+2c_1=3$ has the sole permitted solution
+$c_0=c_1=1$. Such a subset chooses either copy of each color,
+giving $2^3=8$ transversals, all of weight $7$.
+
+Put
+
+$$
+r=e_{0,0}+e_{0,1}+e_{0,2},\qquad
+d_j=e_{1,j}-e_{0,j}\quad(0\le j<3).
+$$
+
+The baseline transversal and one-copy replacements have rows $r$ and
+$r+d_j$, so $r,d_j\in L$. Conversely, every transversal row is
+$r+\sum_{j\in J}d_j$, and the full row is exactly
+
+$$
+r_I=2r+d_0+d_1+d_2.
+\tag{22}
+$$
+
+The zero-set description therefore proves $L=\langle r,d_0,d_1,d_2\rangle$.
+The map $F\to\mathbb Z^3$ summing coordinates of the same color is
+onto and has kernel $\langle d_0,d_1,d_2\rangle$: in each two-coordinate
+fiber, a vector with sum zero is an integer multiple of the difference.
+The remaining row maps to $(1,1,1)$. The explicit two-coordinate quotient
+map from Theorem 9 gives $U\cong\mathbb Z^2$, whose three distinct
+support values are $v_0=a,v_1=b,v_2=-a-b$, each with multiplicity two.
+
+Any permutation of these three vectors respects their sole relation and
+therefore defines a homomorphism of $U$; the inverse permutation gives
+its inverse. Thus their support group is exactly
+$K=\operatorname{Sym}(3)$. Theorem 3 gives (21). Equivalently, the
+hypergraph itself recognizes each two-element fiber: two distinct
+vertices are in the same fiber exactly when no three-edge contains both,
+since any two differently colored vertices extend to a transversal.
+Thus all its label symmetries are precisely the independent fiber swaps
+and permutations of the three fibers.
+
+The comparison $U\to\mathbb Z/7$ is onto, with
+$(v_0,v_1,v_2)\mapsto(1,2,4)$, but is not injective. Indeed, the support
+swap $v_0\leftrightarrow v_1$ sends the kernel element $2v_0-v_1$ to
+$2v_1-v_0$, whose image is $3\ne0\pmod7$. It cannot descend to the
+arithmetic target. Counting only support multipliers in that target would
+give $2^3\cdot3=24$, missing half the full label group. $\square$
+

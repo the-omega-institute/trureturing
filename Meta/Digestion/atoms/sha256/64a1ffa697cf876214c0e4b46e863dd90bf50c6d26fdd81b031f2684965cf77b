@@ -1,0 +1,19 @@
+### Corollary 12.1. Full controlled observations separate every density matrix
+
+With the controls of Theorem 11.2 and final word measurement,
+
+$$\mathcal W=\operatorname{span}_{\mathbb R}\{U^\dagger P_sU:U\text{ reachable},\ s\in B_n\}
+=\operatorname{Herm}(d). \tag{12.1}$$
+
+For any two density matrices rho,sigma,
+
+$$\sup_U\operatorname{TV}\bigl((\operatorname{Tr}\rho U^\dagger P_sU)_s,
+(\operatorname{Tr}\sigma U^\dagger P_sU)_s\bigr)
+=\frac12\|\rho-\sigma\|_1. \tag{12.2}$$
+
+Proof. SU(d) acts transitively on unit vectors, so the effects include all rank-one projectors. Their real span is Herm(d): projectors on (|a>+|b>)/sqrt(2) and (|a>+i|b>)/sqrt(2), together with P_a, extract both off-diagonal quadratures. For (12.2), choose a reachable U that diagonalizes rho-sigma; multiplying a diagonalizing unitary by a global phase adjusts its determinant without changing the measurement. The output absolute differences sum to the sum of absolute eigenvalues. The reverse inequality is trace-norm contraction under measurement, or trace duality for the signed sum of these orthogonal effects. QED.
+
+This is informational completeness across a family of settings, not exact tomography from one specimen. The optimal U in (12.2) depends on the two specified hypotheses. Unitary evolution preserves trace distance; control exposes its existing distinguishability to the chosen measurement. In contrast, the clock alone for a single fixed U in Section 4 depends only on spectral weights and remains blind to coherences between its eigenvectors.
+
+For an affine-linear predictive representation that must reproduce all these probabilities for all initial density matrices, the traceless state coordinates must have rank at least d^2-1. Otherwise a nonzero traceless Hermitian kernel vector A gives valid states I/d plus or minus epsilon A, for sufficiently small epsilon, with the same representation but different output probabilities by (12.1). A representation including normalization needs d^2 real linear coordinates. This statement concerns linear state representations, not unrestricted nonlinear encodings or a claimed classical simulation lower bound in time.
+

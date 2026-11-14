@@ -122,7 +122,7 @@ theorem coefficient_cyclic (N : ℕ) (i : Fin (N + 1)) :
   rw [coefficient_basis_of_lt K (N + 1) i.val 0 (by simpa using i.isLt)]
   simp
 
-private theorem coefficient_eval (d k : ℕ) (v : DualPower K d) (j : Fin d) :
+theorem coefficient_eval (d k : ℕ) (v : DualPower K d) (j : Fin d) :
     coefficient K d k v (Polynomial.degreeLT.basis K d j) =
       ∑ i : Fin d, (dualBasis K d).repr v i *
         (if j.val = i.val + k then (j.val.choose i.val : K) else 0) := by
@@ -257,14 +257,14 @@ private def extracted {V : Type*} [AddCommGroup V] [Module K V]
   -(∑ a : K, a ^ (Fintype.card K - 1 - k.val) •
     ρ (Multiplicative.ofAdd (-a)))
 
-private theorem extract_dual_coefficient {r d : ℕ}
+theorem extract_dual_coefficient {r d : ℕ}
     (hrd : r ≤ d) (hd : d + 1 ≤ Fintype.card K) (k : Fin d) :
     coefficient K r k.val = extracted (dualAction K r) k := by
   unfold extracted
   simp_rw [action_expansion K r d hrd]
   exact (recover_coefficients hd (fun t => coefficient K r t.val) k).symm
 
-private theorem extracted_intertwines
+theorem extracted_intertwines
     {V Z : Type*} [AddCommGroup V] [Module K V] [AddCommGroup Z] [Module K Z]
     (ρ : Representation K (Multiplicative K) V)
     (σ : Representation K (Multiplicative K) Z)
