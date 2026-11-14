@@ -1,0 +1,42 @@
+**定义 149.1（完整原域与球心互易）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C$ 及在 $C\setminus\{0\}$ 上严格正的原单位 $u$，保留
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\\
+D_p=\{x\in K:T_p(x)=0\},\qquad S_p=P\cap D_p .
+\end{gathered}
+\tag{XI149.1}
+$$
+
+minimum 对每个原混态和整个原确认菜单取得。完整 EB3 指每个 $D_p$ 是非退化仿射实心三球，其中心为 $c_p$。$p\perp q$ 指 $q\in S_p$；补效应使它对称。$\mathsf{Conn}$ 指全部原纯标签之间均有有限原零边路。
+
+以下先保留 EB3+$\mathsf{Conn}$。复用144.1、145.3及其原来源：全部 $P=P_0$，存在唯一整球零确认 $e_p$，且
+
+$$
+\begin{gathered}
+\{f\in\mathcal F_p:f|_{D_p}=0\}=\{e_p\},\qquad
+e_p^{-1}(0)\cap K=D_p,\qquad e_p^{-1}(1)\cap K=\{p\},\\
+g_p=u-e_p,\qquad
+N_p=\{h\in C^*:h(p)=0\},\qquad L_p=\operatorname{span}N_p,\\
+\dim L_p=4,\qquad L_p\longrightarrow\operatorname{Aff}(D_p)
+\text{ 的限制是线性同构}.
+\end{gathered}
+\tag{XI149.2}
+$$
+
+球心互易候选只约束真实零边：
+
+$$
+\boxed{\qquad
+\mathsf{CR}_c:\quad
+\forall p,q\in P,\quad p\perp q\ \Longrightarrow\
+e_p(c_q)=e_q(c_p).
+\qquad}
+\tag{XI149.3}
+$$
+
+这里的球心及整球零尺均由同一原域定义，没有附加数值、矩阵表示或维数上界。$\mathsf{CR}_c$ 是这些内生对象间新增的模型约束，不是仅凭定义已经成立的恒等式；也没有把 $\mathcal F_p$ 缩成 $\{e_p\}$，或把最低确认互易 $T_p(q)=T_q(p)$ 作为其同义词。
+
