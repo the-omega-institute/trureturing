@@ -79,7 +79,7 @@ def evidence : Registration arena source where
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
     · intro i
       exact nomatch i
   dependence := dependence
