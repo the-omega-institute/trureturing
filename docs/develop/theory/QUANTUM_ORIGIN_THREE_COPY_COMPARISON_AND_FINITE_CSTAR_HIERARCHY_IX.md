@@ -896,3 +896,372 @@ Hamiltonian、能量与 $\hbar$ 的实现及标定仍取132.7的未决合同。
 [T134Schmidt]: https://arxiv.org/html/quant-ph/9911117v4
 
 ## 追加锚（本行以下为增补区）
+
+## 135. 同一共同源的算子系统端点与原两实际腿锚的严格分离
+
+**定义 135.1（固定源、复矩阵序与两个端点配方）。** 固定
+[VIII123.1—123.2][T132VIII]的任一个共同族 $\mathcal K$，以及由它生成的
+同一个 $\mathcal D,S$；原标签、含相位计算基和所有源箭头不变。
+取其中一个实际 qutrit 扇区 $A_s$，$n_s=3$。在复向量空间
+$\mathcal O=M_3(\mathbb C)$ 上用通常的伴随，并指定
+
+$$
+C_k=M_k(\mathcal O)^+=\mathcal K_{k,3},\qquad e=I_3,
+\qquad \delta=\operatorname{Tr}/3,\qquad k\ge1.
+\tag{135.1}
+$$
+
+这里 $e$ 是辅助算子系统的矩阵序单位；原物理归一单位始终是泛函
+$u_s=\operatorname{Tr}$。复对偶记为 $\mathcal O^d$，其矩阵序定义为
+$[f_{ij}]\ge0$ 当且仅当 $L\mapsto[f_{ij}(L)]$ 完全正，
+选定的对偶算子系统单位为 $\delta$。这些单位不相互替换。
+
+以下 $\min_{\mathrm{OS}},\max_{\mathrm{OS}}$ 专指通常的复算子系统张量积，
+与VII102中仅用标量锥定义的 $\min,\max$ 产品不同。
+核性指对每个复算子系统 $\mathcal R$，恒等识别下的
+$\mathcal R\otimes_{\min_{\rm OS}}\mathcal O$ 与
+$\mathcal R\otimes_{\max_{\rm OS}}\mathcal O$ 在所有有限矩阵层具有相同正锥。
+为固定其含义，最小张量积在第 $r$ 层的正元由所有有限矩阵值 UCP 映射
+$\phi,\psi$ 的测试 $(\phi\otimes\psi)^{(r)}(Z)\succeq0$ 定义；
+最大张量积的第 $r$ 层是下列锥的 Archimedean 化：
+
+$$
+\begin{aligned}
+\mathscr P_r
+ &=\{\alpha(X\otimes Y)\alpha^*:
+ X\in C_p,\ Y\in C_q,\ \alpha\in M_{r,pq}(\mathbb C),\ p,q\ge1\},\\
+D_{\max,r}
+ &=\{Z=Z^*:Z+\varepsilon I_r\otimes e\otimes e\in\mathscr P_r
+                   \text{ 对每个 }\varepsilon>0\},\\
+D_{\tau,r}
+ &=M_r(\mathcal O\otimes_\tau\mathcal O)^+,
+\qquad D_\tau=D_{\tau,1}.
+\end{aligned}
+\tag{135.2}
+$$
+
+此处 $X\otimes Y$ 的矩阵指标按通常次序分组。
+$D_\tau$ 的载体始终是原 $A_sA_s$ 的
+$\operatorname{Herm}_3\otimes_{\mathbb R}\operatorname{Herm}_3
+\simeq\operatorname{Herm}_9$，不把实际对象改型。
+在这个载体上，$T_{AA}$ 是原计算基全转置，
+$K^*$ 是整个普通迹对偶，$K^\vee=T_{AA}K^*$。
+取原杯帽
+
+$$
+\eta=\sum_{i=0}^2|ii\rangle,\qquad
+\Omega=\eta\eta^*=\sum_{i,j=0}^2E_{ij}\otimes E_{ij},
+\qquad \beta(Z)=\operatorname{Tr}(\Omega Z).
+\tag{135.3}
+$$
+
+**定理 135.2（原共同族的严格 OS 端点排除）。** 对定义135.1的每一个固定源，
+(135.1)在所有有限复矩阵层构成一个 Archimedean 算子系统。
+复线性映射
+
+$$
+J:\mathcal O\longrightarrow\mathcal O^d,
+\qquad J(H)(L)=\operatorname{Tr}(H^T L)
+\tag{135.4}
+$$
+
+是完全序同构，$J(e)=\operatorname{Tr}=3\delta$，
+故 $J/3$ 是所选单位下的幺完全序同构。这个算子系统不是
+$(\min_{\mathrm{OS}},\max_{\mathrm{OS}})$-核的。在原 $A_sA_s$ 坐标中有
+
+$$
+\begin{gathered}
+D_{\max}\subsetneq\mathrm{PSD}_9\subsetneq D_{\min},\\
+D_{\min}^{\vee}=D_{\max},\qquad D_{\max}^{\vee}=D_{\min},\\
+D_{\min}^{*}=T_{AA}D_{\max},\qquad
+D_{\max}^{*}=T_{AA}D_{\min},\\
+\Omega/3\notin D_{\max},\qquad
+\exists z\in D_{\min}:\quad
+\operatorname{Tr}z=1,\quad (\beta/3)(z)<0.
+\end{gathered}
+\tag{135.5}
+$$
+
+完全 min/max 对偶性在每个有限参考层成立；(135.5)中与普通 PSD 的严格夹逼
+只断言标量参考层 $r=1$。不要求任何源锥在全转置或部分转置下不变。
+
+分别固定 $\tau=\min_{\mathrm{OS}}$ 或 $\tau=\max_{\mathrm{OS}}$，令
+
+$$
+H^\tau_{a;r}=M_r(\mathcal O^{\otimes_\tau a})^+,
+\qquad \mathcal O^{\otimes_\tau0}=\mathbb C.
+\tag{135.6}
+$$
+
+这两个各自固定的张量幂配方对称、结合，且在所有有限 $r$ 保留
+$H^\tau_{0;r}=\mathrm{PSD}_r$、$H^\tau_{1;r}=\mathcal K_{r,3}$。
+两者都不满足原来必需的 $H_{2;1}=\mathrm{PSD}_9$：最大配方失去原归一杯，
+最小配方使同一个原 proper 帽 $\beta/3$ 失去正性。
+这个帽在必需的 PSD 锚上的整个互补效应预算为
+
+$$
+\beta/3\ \longleftrightarrow\ \Omega/3,\qquad
+u_{ss}-\beta/3\ \longleftrightarrow\ I_9-\Omega/3\succeq0,
+\qquad u_{ss}=\operatorname{Tr}.
+\tag{135.7}
+$$
+
+因此排除的量词只遍历这些共同族及其两个固定 OS 端点配方。
+$z$ 属于被排除的最小配方，不是合法原三角形的负概率见证；
+结论不排除中间张量积、同一源的其它补全或其它 $t<1$ 的源。
+
+**证明。** 所有用到的源性质均取VIII123.2：
+$\mathrm{SN}_2(k,3)\subseteq C_k\subseteq\mathrm{BP}_2(k,3)$、
+$C_k^\vee=C_k$、两个因子上独立复矩形合同及 CP 正性，
+以及 $B_-=(2I_9-\Omega)/5\in C_3$。
+特别地 $C_1=\mathrm{PSD}_3$、$C_2=\mathrm{PSD}_6$。
+本证明不重新选取 $\mathcal K$，也不改变其固定源的高阶部分。
+
+先验证复算子系统的前提。每个 $C_k$ 是通常伴随下自伴部分的闭尖锥。
+矩形标量矩阵压缩就是第一因子上的源合同，故
+$A^*C_kA\subseteq C_\ell$，$A\in M_{k,\ell}(\mathbb C)$。
+两个直和嵌入及加法给 $C_k\oplus C_\ell\subseteq C_{k+\ell}$，
+反向坐标压缩给直和正性所需的反向条件。
+
+每个 $I_k\otimes I_3$ 都在可分锥的内部，因而在 $C_k$ 的内部。
+这里可以直接选取有限个局部秩一投影：计算基投影，以及对每对不同基向量
+由 $|a\rangle\pm|b\rangle$、$|a\rangle\pm i|b\rangle$ 归一化所得的投影。
+它们张成整个局部 Hermitian 实空间，其和是恒等矩阵的正倍数。
+两边取乘积后仍张成整个张量空间，且恒等矩阵是这些生成元的严格正系数组合，
+所以是它们所生有限锥的内点。这同时给任意自伴 $Z$ 的
+$tI_k\otimes e\pm Z\in C_k$，只需 $t$ 足够大。
+闭性又给出 Archimedean 条件：若 $Z+\varepsilon I_k\otimes e\in C_k$
+对每个 $\varepsilon>0$ 成立，则 $Z\in C_k$。
+因此(135.1)确实满足所有有限复层的矩阵序与单位公理。
+
+再验证(135.4)，不能只用标量自对偶。通常伴随与复线性显然相容。
+对 $H=[H_{ij}]\in M_k(\mathcal O)_{\rm sa}$、
+$L=[L_{ab}]\in C_\ell$，其矩阵测试是
+
+$$
+Z_{ia,jb}=J(H_{ij})(L_{ab})
+        =\sum_{c,d=0}^2 H_{ic,jd}L_{ac,bd}.
+\tag{135.8}
+$$
+
+若 $H\in C_k$，这正是VIII(123.8)—(123.9)的共同族 Bell 收缩，
+所以 $Z\succeq0$；其中任意复测试矩阵、矩形合同及 $C_k^\vee=C_k$
+都已包含在该源恒等式中。于是 $J^{(k)}(H)$ 正。
+反之，若 $L\mapsto[J(H_{ij})(L)]$ 完全正，令 $\ell=k$，
+对(135.8)使用向量 $\sum_i|ii\rangle$，得到
+
+$$
+\sum_{i,j}J(H_{ij})(L_{ij})
+       =\operatorname{Tr}(H^T L)\ge0\qquad(L\in C_k).
+\tag{135.9}
+$$
+
+故 $H\in C_k^\vee=C_k$。非退化迹配对给复线性双射，
+从而 $J$ 及其逆在所有有限层完全正。
+由于 $\delta(e)=1$ 且 $C_1=\mathrm{PSD}_3$，$\delta$ 是忠实态。
+Kavruk，[*Nuclearity Related Properties in Operator Systems*,
+arXiv:1107.2133v4][T135Kavruk] §1.2、定理1.3的有限维忠实态单位定理
+适用于此九维复空间；所选对偶单位确为 $\delta$。
+$J(e)=3\delta$ 给所声称的全部单位常数，原物理单位仍为 $3\delta$。
+
+这个具体 $\mathcal O$ 的非核性由低层和固定 $B_-$ 一起强制。
+若它是核的，Han—Paulsen，[*An Approximation Theorem for Nuclear Operator Systems*,
+arXiv:1009.2541v4][T135HP]推论3.7给一个有限维 C* 代数 $\mathcal B$
+及幺完全序同构 $\theta:\mathcal O\to\mathcal B$。
+因为前两层就是普通 $M_3$ 的前两层，将 $\theta$ 及其逆看作
+普通 C* 代数间的映射时，二者均为幺二正映射。
+对普通 $a\in M_3$ 的正块矩阵
+$\left(\begin{smallmatrix}a^*a&a^*\\a&I_3\end{smallmatrix}\right)$
+应用二正性，Schur 补给
+
+$$
+\theta(a^*a)\succeq\theta(a)^*\theta(a),\qquad
+\theta^{-1}(\theta(a)^*\theta(a))\succeq a^*a.
+\tag{135.10}
+$$
+
+第一式再应用正映射 $\theta^{-1}$，迫使两式均取等。
+极化得 $\theta(a^*b)=\theta(a)^*\theta(b)$，故 $\theta$ 实为
+普通 $M_3$ 到 $\mathcal B$ 的幺 * 同构。
+因此其在每一矩阵层运输的正锥只能是普通 PSD。
+可是 $B_-\in M_3(\mathcal O)^+$，而
+$B_-\eta=-\eta/5$。这与完全序同构矛盾。
+这里没有由标量锥单独推断高层，也未假定源的转置不变性。
+
+接下来在标量参考层定位原锚。
+对(135.2)中 $r=1$ 的生成元，写 $X=[X_{ij}]\in C_p$、
+$Y=[Y_{ab}]\in C_q$。它在原 $A_sA_s$ 上的矩阵是
+
+$$
+W=\sum_{i,j,a,b}\alpha_{ia}\overline{\alpha_{jb}}
+                              X_{ij}\otimes Y_{ab}.
+\tag{135.11}
+$$
+
+$X,Y$ 各自是既定源的形式态生成元，故二者的张量积是源态；
+源置换将两个量子端口并置，再用量子 CP 效应
+$R\mapsto\alpha R\alpha^*$，恰得到(135.11)。
+这一步使用的是两个源生成元的张量，而非任意 $E$ 元素的制备或张量闭包。
+VIII123.2(iv)已给
+$B_{\mathcal D}(A_sA_s)=\mathrm{PSD}_9$，所以 $W\succeq0$。
+对 $Z\in D_{\max}$，每个 $Z+\varepsilon I_9$ 都在上述原始锥中，
+令 $\varepsilon\downarrow0$，由 PSD 的闭性得到
+
+$$
+D_{\max}\subseteq\mathrm{PSD}_9.
+\tag{135.12}
+$$
+
+这里 $\alpha$ 只有一个输出行；若留下 $r$ 维量子输出，
+同一源论证只落入 $B_{\mathcal D}(Q_rA_sA_s)$，并不落入
+普通 $\mathrm{PSD}_{9r}$。这准确保留VIII128.4的混合锚边界。
+
+为取完整对偶，使用[T135Kavruk]定理6.3的有限维 min/max 完全对偶性。
+它在此处给出幺完全序同构
+
+$$
+\begin{aligned}
+(\mathcal O\otimes_{\max_{\rm OS}}\mathcal O)^d
+   &\simeq\mathcal O^d\otimes_{\min_{\rm OS}}\mathcal O^d,\\
+(\mathcal O\otimes_{\min_{\rm OS}}\mathcal O)^d
+   &\simeq\mathcal O^d\otimes_{\max_{\rm OS}}\mathcal O^d.
+\end{aligned}
+\tag{135.13}
+$$
+
+因子对偶单位取 $\delta$，张量对偶单位取忠实态
+$\delta\otimes\delta=\operatorname{Tr}/9$。
+用 $J/3$ 运输两个因子时，得到的泛函是原双线性配对的 $1/9$ 倍：
+
+$$
+((J/3)\otimes(J/3))(H)(L)
+       =\tfrac19\operatorname{Tr}(H^T L).
+\tag{135.14}
+$$
+
+所以正标量不改变锥，标量层恰给
+$D_{\min}^\vee=D_{\max}$、$D_{\max}^\vee=D_{\min}$。
+(135.13)是所有有限层的完全序结论，不附带任何高参考层 PSD 等式。
+由 $K^\vee=T_{AA}K^*$ 及 $T_{AA}^2=1$，立即得到(135.5)中的两个
+整个普通迹对偶等式。对(135.12)取 $\vee$，用
+$\mathrm{PSD}_9^\vee=\mathrm{PSD}_9$，亦得
+$\mathrm{PSD}_9\subseteq D_{\min}$。
+
+还须把严格性精确放在原杯上，不能只说非核系统的某些乘积不同。
+令
+
+$$
+\mathfrak c=(J\otimes\mathrm{id})(\Omega)
+        =\sum_{i,j}J(E_{ij})\otimes E_{ij}
+        \in\mathcal O^d\otimes\mathcal O.
+\tag{135.15}
+$$
+
+由于 $J(E_{ij})(L)=L_{ij}$，这个张量所对应的映射
+$\mathcal O\to\mathcal O$ 正是恒等映射。
+[T135Kavruk]命题6.1的最小张量正元—完全正映射对应适用于有限维
+$\mathcal O^d$，并以规范双对偶识别 $\mathcal O^{dd}=\mathcal O$；
+因而 $\mathfrak c$ 是最小张量正元。
+
+若原杯 $\Omega$ 在 $D_{\max}$ 中，
+$(J/3)\otimes\mathrm{id}$ 的幺完全序同构性给
+$\mathfrak c/3$、因而 $\mathfrak c$ 在
+$(\mathcal O^d\otimes_{\max_{\rm OS}}\mathcal O)^+$ 中。
+现将[T135HP]定理3.1证明中的规范张量分解及支撑正规化用于这个具体张量。
+该定理的陈述以幺 CP 映射和任意有限维测试系统为条件；
+这里并不把单个张量的正性冒充全部测试条件，而是直接给出其所需的逼近：
+由最大锥的定义，对每个 $\varepsilon>0$ 可写
+
+$$
+\mathfrak c+\varepsilon\delta\otimes e
+   =\alpha(P\otimes Q)\alpha^*,\qquad
+P\in M_n(\mathcal O^d)^+,\quad Q\in M_m(\mathcal O)^+.
+\tag{135.16}
+$$
+
+写 $P=[f_{ij}]$。映射 $f:x\mapsto[f_{ij}(x)]$ 完全正，
+$g:M_n\to\mathcal O$、$g(A)=\alpha(A\otimes Q)\alpha^*$ 也完全正，
+后者的各层正性直接由矩阵序压缩得到。逐项求值(135.16)给
+
+$$
+gf(x)=x+\varepsilon\delta(x)e.
+\tag{135.17}
+$$
+
+令 $a=f(e)\succeq0$、$p=\operatorname{supp}a$。
+由 $-te\le x\le te$ 对每个自伴 $x$ 可取 $t$，得
+$-ta\le f(x)\le ta$，故 $f(x)=pf(x)p$；复线性给全部 $x$。
+$a$ 在 $pM_np$ 中可逆，且 $p\ne0$，因为 $gf(e)=(1+\varepsilon)e$。
+只在这个有限支撑角内取逆，定义
+
+$$
+\varphi_\varepsilon(x)=a^{-1/2}f(x)a^{-1/2},\qquad
+\psi_\varepsilon(A)=\frac{g(a^{1/2}Aa^{1/2})}{1+\varepsilon}.
+\tag{135.18}
+$$
+
+将 $pM_np$ 幺识别为 $M_{\operatorname{rank}p}$，两映射均为 UCP，且
+
+$$
+\psi_\varepsilon\varphi_\varepsilon(x)
+       =\frac{x+\varepsilon\delta(x)e}{1+\varepsilon}
+       \longrightarrow x.
+\tag{135.19}
+$$
+
+这正满足[T135HP]推论3.2的点范数 UCP 矩阵分解条件，故迫使 $\mathcal O$ 核。
+支撑压缩没有假定 $a$ 在整个 $M_n$ 可逆；因定义域已是整个有限维
+$\mathcal O$，也不需要额外的扩张映射或物理制备。
+这与已经证明的源特定非核性矛盾，故 $\Omega\notin D_{\max}$。
+锥的齐次性给 $\Omega/3\notin D_{\max}$，而它是普通 PSD 的迹一元素，
+证明(135.12)严格。
+
+由 $D_{\min}^\vee=D_{\max}$ 及 $\Omega\notin D_{\max}$，
+存在 $z_0\in D_{\min}$ 满足
+$b(z_0,\Omega)<0$。由于 $\Omega^T=\Omega$，此值就是
+$\operatorname{Tr}(\Omega z_0)$。
+所有普通局部向量态在 $C_1=\mathrm{PSD}_3$ 上正，因而是标量值 CP 映射；
+用最小张量积的乘积态测试可知 $D_{\min}\subseteq\mathrm{BP}_1(3,3)$。
+因 $I_9$ 可分，$\operatorname{Tr}z_0\ge0$。又 $z_0\ne0$；
+若 $\operatorname{Tr}z_0=0$，则这个非零块正泛函在可分锥的内点 $I_9$ 上为零，
+正负小扰动将迫使它在整个空间为零，矛盾。因此 $\operatorname{Tr}z_0>0$。
+故 $z=z_0/\operatorname{Tr}z_0$ 给(135.5)的归一负帽读数。
+普通 PSD 上 $\operatorname{Tr}(\Omega z)\ge0$，所以这个 $z$ 不在 PSD 锚中，
+第二个包含也严格。正标量归一保持最小锥成员与负帽符号。
+
+最后，$\Omega$ 的本征值为三及零，故(135.7)的两个效应矩阵都 PSD，
+且和恰为 $I_9$。这是整个普通对偶区间 $[0,u_{ss}]$ 中的互补效应对。
+VIII123.2(v)的全原帽在每个对角中心扇区取 $\Omega_i/3$，
+在非对角扇区取零；因 $n_i\le3$，其互补块分别为
+$I_{n_i^2}-\Omega_i/3\succeq0$ 及相应恒等矩阵。
+故整个原直和的 proper 预算仍完整支付，且在 $A_sA_s$ 上的限制恰为此处的 $\beta/3$。
+原杯 $\Omega/3$ 的迹为一，而同一原帽作用于最小配方的 $z$ 得到负值；
+这只说明该配方不容许保留原帽，不产生原模型内的负事件。
+
+Kavruk—Paulsen—Todorov—Tomforde，[*Tensor Products of Operator Systems*,
+arXiv:0910.2210v3][T135KPTT]定理4.6、5.5分别给两个张量积的
+对称性、结合性及函子性，故每个单独固定的配方(135.6)具有这些性质。
+矩阵代数因子的 min/max 一致与通常矩阵放大识别，亦见
+[T135HP]定理3.1证明，给所有有限参考层的一实际腿锥恰为 $C_r$。
+这些结论不把两实际腿变成矩阵代数对象。
+[T135KPTT]定理5.8的联合完全正泛性质也不供应
+$D_{\max,r}\subseteq\mathrm{PSD}_{9r}$；此处没有假定未知的集体实际 CP。
+原两实际腿锚已在 $r=1$ 失败，所以对称结合的端点幂并非所求的原全有限补全。
+
+承重结论是VIII123的同一源、原杯帽和两个 OS 端点间的上述对应与严格排除，
+为仓内综合推导（repo-derived）；所用一般 OS 对偶、逼近与张量性质
+仅作为各相应步骤的文献工具（literature-attested），不据此主张外部新颖性或优先权。
+这不是VIII124.6—124.10的匹配锥端点，也不把VIII129.2的另一源通用障碍
+移用于当前源；VII105.7的张量稳定映射捷径与IX132—134的实际 return／dyad 桥
+均未补入任何混合锥等式。
+同源六份、R3/R4、所有旁观字、任意高有限中间源次数、原扇区／相位／码、
+真零扩张、整个普通对偶及全部产品与预算条件仍须在同一个原全有限模型中满足。
+本定理既不取得源饱和、$S_3$、任意 $E$ 准备或物理供应，
+也不推出 Fusion3、$t=1$、其它统一 $t_0<1$ 的存在或不可能性，
+更不提供物理时间、钟或 $\hbar$。证毕。
+
+[T135HP]: https://arxiv.org/html/1009.2541v4
+[T135Kavruk]: https://arxiv.org/html/1107.2133v4
+[T135KPTT]: https://arxiv.org/html/0910.2210v3
+
+## 追加锚（本行以下为增补区）
