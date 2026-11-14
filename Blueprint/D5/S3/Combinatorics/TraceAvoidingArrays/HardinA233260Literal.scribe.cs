@@ -24,6 +24,13 @@ internal sealed class HardinA233260LiteralDocument : IScribeDocumentDefinition
             Node("a", "Literal finite count", CountFormula(), false, true),
             Node("Proper", "Proper pair-label pattern", ProperFormula(), false, false),
             Node("L", "Labelled three-colour count", LabelCountFormula(), false, false),
+            Describe.Lean(DescribeId.Create("alternating"),
+                DeclarationHandle.Create(Prefix + "alternating"),
+                H("Column-parity colouring"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For any width and two labels a and b, the array has "
+                    + "label a at every even column and label b at every odd column."))),
+                DescribeRole.Definition),
             Node("columns_constant", "Omitting a label forces constant columns",
                 ColumnsConstantFormula(), true, false),
             Describe.Lean(DescribeId.Create("two-label-classification"),

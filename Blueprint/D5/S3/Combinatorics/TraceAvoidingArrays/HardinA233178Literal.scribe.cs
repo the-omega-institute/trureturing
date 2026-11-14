@@ -14,6 +14,20 @@ internal sealed class HardinA233178LiteralDocument : IScribeDocumentDefinition
                 + "Colours may be absent. Every horizontal, diagonal and antidiagonal pair across "
                 + "consecutive columns has distinct colours whose sum is not five. Vertical and "
                 + "wraparound pairs have no restriction. All recurrence arithmetic is in the integers.")),
+            Node("Normalization.swap", "Exchange of the two noninitial labels", "The involution exchanges one "
+                + "and two and fixes zero.", DescribeRole.Definition),
+            Node("Normalization.absent", "A whole-word absence indicator", "The integer indicator is one "
+                + "exactly when the specified label never occurs, including for the empty word.",
+                DescribeRole.Definition),
+            Node("Normalization.result", "Exact scanner symmetrization", "For every natural k and every "
+                + "word q from Fin k into Fin 3, write W(q)=rowWeight((false,false),q) "
+                + "and A(q,c)=absent(q,c). Then "
+                + "4*(W(q)+W(swap composed with q))="
+                + "2^k*(1+A(q,1)+A(q,2)+5*A(q,1)*A(q,2)). "
+                + "The product term retains the all-zero case. The induction first establishes "
+                + "2*rowWeight((true,false),q)=2^k*(1+A(q,2)), then splits on the first label. "
+                + "No colour-occurrence or surjectivity assumption is imposed. This pointwise "
+                + "identity does not by itself identify a graph count or settle A233178.", DescribeRole.Theorem),
             Node("Array", "The literal function domain", "Arrays are arbitrary functions on the five "
                 + "rows and n columns into a finite colour set.", DescribeRole.Definition),
             Node("rank", "Strict row-major rank", "The rank of cell (i,j) is i*n+j.", DescribeRole.Definition),
@@ -59,9 +73,8 @@ internal sealed class HardinA233178LiteralDocument : IScribeDocumentDefinition
                 + "the literal graph contains every horizontal and antidiagonal edge required "
                 + "there, the anchor fixes the first label to zero, and the omitted label fixes "
                 + "the other label. This uniqueness specialization and the scanner pushforward "
-                + "are bind-only. The source-count correspondences retain content through the "
-                + "same delivery's separate Normalization word induction; their Literal-local "
-                + "steps provide no independent escape witness for the Literal module. "
+                + "use the existing classification and scanner-fibre identities. The pointwise "
+                + "Normalization.result is proved above by induction on the word length. "
                 + "An anchored proper array cannot miss "
                 + "both nonzero labels. These facts supply the correction two without a source "
                 + "surjectivity condition or an imposed orbit divisor.", DescribeRole.Theorem),
@@ -74,7 +87,7 @@ internal sealed class HardinA233178LiteralDocument : IScribeDocumentDefinition
                 + "truncated subtraction or division.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create(name.Replace("_", "-").Replace(".", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 }

@@ -7,28 +7,27 @@
    digest: Literal five-row source arrays and their ordered scanner fibres. -/
 
 /-
-admission_basis: none (independent Literal-host admission unresolved)
-escape_witness: none
-proof_shape: two_colour_unique and scanner_count are bind-only.
-symmetrized_count, source_count and chromatic_source_count retain content only through
-the same delivery's genuine HardinA233178Normalization.result word induction.
-Their Literal-local steps are binding and normalization, not an independent witness.
-scanner_count is consumed by symmetrized_count; source_count is consumed by
-chromatic_source_count, whose external consumer is HardinA233178Recurrence.result.
-The private helpers are consumed on these live paths. In particular, two_colour_unique
-specializes the frozen HardinA233260Literal.two_label_classification to the stronger
-literal edge predicate, then normalizes the anchor and the omitted finite label.
-It is consumed by absence_count and supplies no independent admission witness.
-utility none: these are unbounded source-cardinality correspondences, not bounded enumeration,
-checker infrastructure, numerical premises or certified positive finite instances.
-Direct reused sources are HardinA233260Literal.two_label_classification,
-HardinA233255LiteralBridge.scanner_fibres,
-HardinA233178Normalization.result and HardinA233251TriangleStrip.colour_bond_iff.
-The source is the pinned revision of OEIS A233178 cited by Library/Automata/hardin2013a233178.md.
+admission_basis: escape-witness
+escape_witness: Normalization.weight_one_seen and Normalization.result
+proof_shape: content: Normalization.weight_one_seen, Normalization.result.
+The unbounded scanner inductions are retained here and consumed by symmetrized_count,
+source_count, chromatic_source_count and HardinA233178Recurrence.result.
+The remaining helpers and scanner_count are consumed bind-only steps; the source-count
+conclusions retain content only through these same-delivery scanner inductions.
+two_colour_unique directly specializes HardinA233260Literal.two_label_classification;
+it is consumed by absence_count and supplies no separate escape witness.
+Normalization.absent_cons feeds Normalization.weight_one_seen and Normalization.result;
+Normalization.absent_swap and Normalization.weight_one_seen feed Normalization.result.
+Direct frozen dependencies include HardinA233255LiteralBridge.scanner_fibres and rowWeight,
+HardinA233255ShapeSymmetry.full_row, HardinA233260Literal.two_label_classification,
+and HardinA233251TriangleStrip.colour_bond_iff.
+utility none: these are unbounded scanner and source-cardinality identities, not bounded
+instances, checker infrastructure, numerical premises or finite certified instances.
+The source is the pinned OEIS A233178 revision cited by Library/Automata/hardin2013a233178.md.
 No corresponding theory volume was found in the source-identifier and relation search.
 -/
 
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Normalization
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
 
 /-! The source predicates retain every literal restriction independently of the transfer. -/
@@ -39,6 +38,75 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal
 open HardinA233175PairStrip (good good_iff allowed advance)
 open HardinA233255LiteralBridge (rowWeight scanner_fibres)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
+
+namespace Normalization
+open HardinA233255LiteralBridge (rowWeight labelWeight rowFinish labelAdvance)
+
+/-- Exchange the two complementary-pair labels other than the initial pair. -/
+def swap : Equiv.Perm (Fin 3) := Equiv.swap 1 2
+
+/-- Absence of one label from the entire word. -/
+def absent {k : ℕ} (q : Fin k → Fin 3) (c : Fin 3) : ℤ :=
+  if ∀ j, q j ≠ c then 1 else 0
+
+private theorem absent_cons {k : ℕ} (a c : Fin 3) (q : Fin k → Fin 3) :
+    absent (Fin.cons a q) c = (if a = c then 0 else absent q c) := by
+  simp only [absent, Fin.forall_fin_succ, Fin.cons_zero, Fin.cons_succ]
+  by_cases h : a = c <;> simp [h]
+
+private theorem weight_one_seen (k : ℕ) (q : Fin k → Fin 3) :
+    2 * rowWeight (true, false) q = 2^k * (1 + absent q 2) := by
+  induction k with
+  | zero => norm_num [rowWeight, absent]
+  | succ k ih =>
+    rw [← Fin.cons_self_tail q]
+    simp only [rowWeight, Fin.cons_zero, Fin.tail_cons, absent_cons]
+    have h := ih (Fin.tail q)
+    have hc := (HardinA233255ShapeSymmetry.full_row k (Fin.tail q)).2
+    generalize q 0 = a
+    fin_cases a <;> norm_num [labelWeight, labelAdvance] <;>
+      rw [pow_succ] <;> nlinarith
+
+private theorem absent_swap {k : ℕ} (q : Fin k → Fin 3) (c : Fin 3) :
+    absent (fun j => swap (q j)) c = absent q (swap c) := by
+  have he : (∀ j, swap (q j) ≠ c) ↔ ∀ j, q j ≠ swap c := by
+    apply forall_congr'
+    intro j
+    have hc : swap (swap c) = c := Equiv.swap_apply_self 1 2 c
+    constructor
+    · intro h heq
+      exact h (heq ▸ hc)
+    · intro h heq
+      apply h
+      have := congrArg swap heq
+      simpa [swap] using this
+  simp only [absent, he]
+
+/-- Exact missing-label correction for the two possible orders of first appearance. -/
+theorem result (k : ℕ) (q : Fin k → Fin 3) :
+    4 * (rowWeight (false, false) q +
+      rowWeight (false, false) (fun j => swap (q j))) =
+    2^k * (1 + absent q 1 + absent q 2 + 5 * (absent q 1 * absent q 2)) := by
+  induction k with
+  | zero => norm_num [rowWeight, absent]
+  | succ k ih =>
+    rw [← Fin.cons_self_tail q]
+    have hswap : (fun j => swap ((Fin.cons (q 0) (Fin.tail q) : Fin (k+1) → Fin 3) j)) =
+        Fin.cons (swap (q 0)) (fun j => swap (Fin.tail q j)) :=
+      Fin.comp_cons swap _ _
+    rw [hswap]
+    simp only [rowWeight, Fin.cons_zero, Fin.tail_cons, absent_cons]
+    have h0 := ih (Fin.tail q)
+    have h1 := weight_one_seen k (Fin.tail q)
+    have h2 := weight_one_seen k (fun j => swap (Fin.tail q j))
+    rw [absent_swap] at h2
+    generalize q 0 = a
+    fin_cases a <;>
+      norm_num [labelWeight, labelAdvance, swap, Equiv.swap_apply_def] at * <;>
+      rw [pow_succ] <;> nlinarith
+
+
+end Normalization
 
 abbrev Array (n : ℕ) (c : ℕ) := Fin 5 × Fin n → Fin c
 
@@ -138,11 +206,11 @@ private theorem flip_cell : ∀ (s : HardinA233175PairStrip.Seen) (c : Fin 6),
 
 private theorem good_flip {k : ℕ} (s : HardinA233175PairStrip.Seen) (x : Fin k → Fin 6) :
     good s (fun i => flip (x i)) ↔ good s x := by
-  induction k generalizing s with
-  | zero => rfl
-  | succ k ih =>
-    simp only [good, (flip_cell s (x 0)).2.1, (flip_cell s (x 0)).2.2]
-    exact and_congr_right (fun _ => ih _ _)
+  have hf (c : Fin 6) (d : Fin 6) (hd : d = 1 ∨ d = 2 ∨ d = 3 ∨ d = 4) :
+      flip c = d ↔ c = d := by
+    rcases hd with rfl | rfl | rfl | rfl <;> fin_cases c <;> decide +kernel
+  simp only [good_iff, hf _ 1 (Or.inl rfl), hf _ 2 (Or.inr (Or.inl rfl)),
+    hf _ 3 (Or.inr (Or.inr (Or.inl rfl))), hf _ 4 (Or.inr (Or.inr (Or.inr rfl)))]
 
 private theorem beta_zero (c : Fin 6) : beta c = 0 ↔ c = 0 ∨ c = 5 := by
   fin_cases c <;> decide +kernel
@@ -236,56 +304,56 @@ theorem scanner_count (n : ℕ) :
 def pairCount (n : ℕ) : ℤ := ∑ q : Array n 3, if Anchored q then 1 else 0
 
 private def absenceCount (n : ℕ) (c : Fin 3) : ℤ :=
-  ∑ q : Array n 3, if Anchored q then HardinA233178Normalization.absent (word q) c else 0
+  ∑ q : Array n 3, if Anchored q then Normalization.absent (word q) c else 0
 
 private def doubleAbsenceCount (n : ℕ) : ℤ :=
   ∑ q : Array n 3, if Anchored q then
-    HardinA233178Normalization.absent (word q) 1 *
-      HardinA233178Normalization.absent (word q) 2 else 0
+    Normalization.absent (word q) 1 *
+      Normalization.absent (word q) 2 else 0
 
 private theorem anchored_swap {n : ℕ} (q : Array n 3) :
-    Anchored (fun p => HardinA233178Normalization.swap (q p)) ↔ Anchored q := by
-  have hs : ∀ c : Fin 3, HardinA233178Normalization.swap c = 0 ↔ c = 0 := by
+    Anchored (fun p => Normalization.swap (q p)) ↔ Anchored q := by
+  have hs : ∀ c : Fin 3, Normalization.swap c = 0 ↔ c = 0 := by
     decide +kernel
-  simp only [Anchored, Proper, hs, HardinA233178Normalization.swap.injective.ne_iff]
+  simp only [Anchored, Proper, hs, Normalization.swap.injective.ne_iff]
 
 private theorem symmetrized_count (n : ℕ) :
     16 * (a n : ℤ) = (2:ℤ)^(5*n) *
       (pairCount n + absenceCount n 1 + absenceCount n 2 + 5 * doubleAbsenceCount n) := by
   classical
   let E : Array n 3 ≃ Array n 3 :=
-    Equiv.arrowCongr (Equiv.refl _) HardinA233178Normalization.swap
+    Equiv.arrowCongr (Equiv.refl _) Normalization.swap
   have hs : (∑ q : Array n 3, if Anchored q then
-      rowWeight (false,false) (fun i => HardinA233178Normalization.swap (word q i)) else 0) =
+      rowWeight (false,false) (fun i => Normalization.swap (word q i)) else 0) =
       2 * (a n : ℤ) := by
     rw [scanner_count, ← E.sum_comp]
     apply Finset.sum_congr rfl
     intro q _
-    change (if Anchored (fun p => HardinA233178Normalization.swap (q p)) then
-      rowWeight (false,false) (fun i => HardinA233178Normalization.swap
-        (HardinA233178Normalization.swap (word q i))) else 0) = _
-    have hss (c : Fin 3) : HardinA233178Normalization.swap
-        (HardinA233178Normalization.swap c) = c := Equiv.swap_apply_self 1 2 c
+    change (if Anchored (fun p => Normalization.swap (q p)) then
+      rowWeight (false,false) (fun i => Normalization.swap
+        (Normalization.swap (word q i))) else 0) = _
+    have hss (c : Fin 3) : Normalization.swap
+        (Normalization.swap c) = c := Equiv.swap_apply_self 1 2 c
     simp only [anchored_swap, hss]
   have hi (q : Array n 3) :
       4 * ((if Anchored q then rowWeight (false,false) (word q) else 0) +
         (if Anchored q then rowWeight (false,false)
-          (fun i => HardinA233178Normalization.swap (word q i)) else 0)) =
+          (fun i => Normalization.swap (word q i)) else 0)) =
       (2:ℤ)^(5*n) * (if Anchored q then
-        1 + HardinA233178Normalization.absent (word q) 1 +
-          HardinA233178Normalization.absent (word q) 2 +
-          5 * (HardinA233178Normalization.absent (word q) 1 *
-            HardinA233178Normalization.absent (word q) 2) else 0) := by
+        1 + Normalization.absent (word q) 1 +
+          Normalization.absent (word q) 2 +
+          5 * (Normalization.absent (word q) 1 *
+            Normalization.absent (word q) 2) else 0) := by
     split_ifs
-    · exact HardinA233178Normalization.result (5*n) (word q)
+    · exact Normalization.result (5*n) (word q)
     · ring
   have hh := Finset.sum_congr (s₁ := Finset.univ) rfl (fun q _ => hi q)
   rw [← Finset.mul_sum, Finset.sum_add_distrib, ← scanner_count, hs, ← Finset.mul_sum] at hh
   have ht : (∑ q : Array n 3, if Anchored q then
-      1 + HardinA233178Normalization.absent (word q) 1 +
-        HardinA233178Normalization.absent (word q) 2 +
-        5 * (HardinA233178Normalization.absent (word q) 1 *
-          HardinA233178Normalization.absent (word q) 2) else 0) =
+      1 + Normalization.absent (word q) 1 +
+        Normalization.absent (word q) 2 +
+        5 * (Normalization.absent (word q) 1 *
+          Normalization.absent (word q) 2) else 0) =
       pairCount n + absenceCount n 1 + absenceCount n 2 + 5 * doubleAbsenceCount n := by
     simp only [pairCount, absenceCount, doubleAbsenceCount, Finset.mul_sum,
       ← Finset.sum_add_distrib]
@@ -329,54 +397,51 @@ private theorem two_colour_unique {n : ℕ} (hn : 2 ≤ n) (c : Fin 3)
   rw [hb] at he
   exact he.trans he'.symm
 
-private def alternating (n : ℕ) (c : Fin 3) : Array n 3 :=
-  fun p => if p.2.val % 2 = 0 then 0 else if c = 1 then 2 else 1
-
 private theorem alternating_spec (n : ℕ) (hn : 0 < n) (c : Fin 3)
     (hc : c = 1 ∨ c = 2) :
-    Anchored (alternating n c) ∧ ∀ p, alternating n c p ≠ c := by
+    Anchored (HardinA233260Literal.alternating n 0 (if c = 1 then 2 else 1)) ∧ ∀ p, HardinA233260Literal.alternating n 0 (if c = 1 then 2 else 1) p ≠ c := by
   rcases hc with rfl | rfl <;> constructor
-  · refine ⟨⟨⟨0,hn⟩,rfl,by simp [alternating]⟩,?_⟩
+  · refine ⟨⟨⟨0,hn⟩,rfl,by simp [HardinA233260Literal.alternating]⟩,?_⟩
     intro p q he
     have hj := he.1
-    norm_num only [alternating, ite_true]
+    norm_num only [HardinA233260Literal.alternating, ite_true]
     split_ifs <;> (first | decide | omega)
   · intro p
-    norm_num only [alternating, ite_true]
+    norm_num only [HardinA233260Literal.alternating, ite_true]
     split_ifs <;> decide
-  · refine ⟨⟨⟨0,hn⟩,rfl,by simp [alternating]⟩,?_⟩
+  · refine ⟨⟨⟨0,hn⟩,rfl,by simp [HardinA233260Literal.alternating]⟩,?_⟩
     intro p q he
     have hj := he.1
-    norm_num only [alternating, show (2:Fin 3) ≠ 1 by decide, ite_false]
+    norm_num only [HardinA233260Literal.alternating, show (2:Fin 3) ≠ 1 by decide, ite_false]
     split_ifs <;> (first | decide | omega)
   · intro p
-    norm_num only [alternating, show (2:Fin 3) ≠ 1 by decide, ite_false]
+    norm_num only [HardinA233260Literal.alternating, show (2:Fin 3) ≠ 1 by decide, ite_false]
     split_ifs <;> decide
 
 private theorem absent_word {n : ℕ} (q : Array n 3) (c : Fin 3) :
-    HardinA233178Normalization.absent (word q) c = if ∀ p, q p ≠ c then 1 else 0 := by
+    Normalization.absent (word q) c = if ∀ p, q p ≠ c then 1 else 0 := by
   have he : (∀ j, word q j ≠ c) ↔ ∀ p, q p ≠ c := by
     constructor
     · intro h p
       simpa only [word, Equiv.symm_apply_apply] using h (finProdFinEquiv p)
     · intro h j
       exact h _
-  simp only [HardinA233178Normalization.absent, he]
+  simp only [Normalization.absent, he]
 
 private theorem absence_count {n : ℕ} (hn : 2 ≤ n) (c : Fin 3)
     (hc : c = 1 ∨ c = 2) : absenceCount n c = 1 := by
   classical
   have hs := alternating_spec n (by omega) c hc
   have he (q : Array n 3) :
-      (if Anchored q then HardinA233178Normalization.absent (word q) c else 0) =
-      if q = alternating n c then (1:ℤ) else 0 := by
+      (if Anchored q then Normalization.absent (word q) c else 0) =
+      if q = HardinA233260Literal.alternating n 0 (if c = 1 then 2 else 1) then (1:ℤ) else 0 := by
     rw [absent_word]
-    by_cases hq : q = alternating n c
+    by_cases hq : q = HardinA233260Literal.alternating n 0 (if c = 1 then 2 else 1)
     · subst q
       simp [hs]
     · have hnq : ¬ (Anchored q ∧ ∀ p, q p ≠ c) := by
         rintro ⟨ha,hb⟩
-        exact hq (two_colour_unique hn c q (alternating n c) ha hs.1 hb hs.2)
+        exact hq (two_colour_unique hn c q (HardinA233260Literal.alternating n 0 (if c = 1 then 2 else 1)) ha hs.1 hb hs.2)
       by_cases ha : Anchored q <;> simp_all
   unfold absenceCount
   simp_rw [he]

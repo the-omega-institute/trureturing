@@ -144,7 +144,7 @@ theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
   · exact (adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm)
   · exact (adjacent 3).symm.trans ((adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm))
 
-private def alternating (n : ℕ) (a b : Fin 3) : Fin 5 × Fin n → Fin 3 :=
+def alternating (n : ℕ) (a b : Fin 3) : Fin 5 × Fin n → Fin 3 :=
   fun p => if p.2.val % 2 = 0 then a else b
 
 private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
