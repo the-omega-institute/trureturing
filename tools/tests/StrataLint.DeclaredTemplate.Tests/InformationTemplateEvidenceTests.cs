@@ -92,6 +92,70 @@ public sealed class InformationTemplateEvidenceTests
     }
 
     [Theory]
+    [InlineData("legacy")]
+    [InlineData("empty")]
+    [InlineData("subset")]
+    [InlineData("complete")]
+    public void source_fixed_context_preserves_complete_packed_coordinates(string shape)
+    {
+        var wire = SourceWire();
+        var binding = wire["records"]![0]!["certificate"]!["source_binding"]!;
+        if (shape != "legacy")
+        {
+            var indices = shape switch
+            {
+                "empty" => System.Array.Empty<int>(),
+                "subset" => new[] { 0, 11 },
+                _ => new[] { 0, 1, 11 },
+            };
+            binding["fixed_context"] = JsonSerializer.SerializeToNode(indices);
+        }
+
+        var evidence = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire),
+            PathA, Snapshot((PathA, TextA)));
+
+        Assert.True(Assert.Single(evidence.Records).HasFourSlots);
+        Assert.Equal(new[] { 0, 1, 11 }, binding["coordinates"]!.AsArray()
+            .Select(index => index!.GetValue<int>()));
+    }
+
+    [Theory]
+    [InlineData("[1,1]")]
+    [InlineData("[11,0]")]
+    [InlineData("[2]")]
+    [InlineData("{}")]
+    [InlineData("null")]
+    [InlineData("1")]
+    [InlineData("[-1]")]
+    [InlineData("[256]")]
+    [InlineData("[1.0]")]
+    [InlineData("[\"1\"]")]
+    public void malformed_source_fixed_context_is_rejected(string indices)
+    {
+        var wire = SourceWire();
+        wire["records"]![0]!["certificate"]!["source_binding"]!["fixed_context"] =
+            JsonNode.Parse(indices);
+
+        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA))));
+
+        Assert.Contains("source", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void source_fixed_context_count_is_bounded()
+    {
+        var wire = SourceWire();
+        wire["records"]![0]!["certificate"]!["source_binding"]!["fixed_context"] =
+            JsonSerializer.SerializeToNode(Enumerable.Range(0, 65).ToArray());
+
+        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA))));
+
+        Assert.Contains("source fixed context", error.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void explicit_source_operands_preserve_strict_scope_shape(bool predicate)

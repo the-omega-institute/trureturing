@@ -34,6 +34,8 @@ structure SourceSelection where
   owner : Lean.Name
   definition : Option SourceDefinitionSelection := none
   coordinates : Array Nat
+  /-- Original data-class instances held fixed within each parameter fiber. -/
+  fixedContext : Array Nat := #[]
   readouts : Array SourceReadoutSelection
   deriving BEq, Inhabited, Repr
 

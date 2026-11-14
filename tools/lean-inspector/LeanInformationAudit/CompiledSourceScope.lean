@@ -343,7 +343,18 @@ def resolve (info : ConstantInfo) (selection : SourceSelection)
     (universeArguments : List Level := info.levelParams.map Level.param) : M Scope := do
   let scope ← resolveOriginal info selection universeArguments
   let source := scope.expanded
-  let slots := selection.coordinates
+  if selection.coordinates.size + selection.fixedContext.size > 64 then
+    fail "unclassified_form:source.selection_size"
+  for indices in #[selection.coordinates, selection.fixedContext] do
+    let mut previous : Option Nat := none
+    for i in indices do
+      debit
+      unless previous.all (· < i) do
+        fail "unclassified_form:source.coordinate_order"
+      previous := some i
+  unless selection.fixedContext.all (fun i => !selection.coordinates.contains i) do
+    fail "unclassified_form:source.context_overlap"
+  let slots := (selection.coordinates ++ selection.fixedContext).qsort (· < ·)
   if slots.size > 64 || selection.readouts.isEmpty || selection.readouts.size > 64 then
     fail "unclassified_form:source.selection_size"
   if (selection.readouts.map (·.path)).toList.eraseDups.length != selection.readouts.size then
@@ -364,9 +375,13 @@ def resolve (info : ConstantInfo) (selection : SourceSelection)
         fail "unclassified_form:source.captured_coordinate"
     inContext (coordinateContext.extract 0 i) fun locals => do
       let domain := b.domain.instantiateRev locals
-      if b.info == .instImplicit || domain == mkSort .zero ||
-          (← isProp domain) || (← dictionary domain) then
-        fail "unclassified_form:source.dictionary_or_proof_coordinate"
+      if selection.fixedContext.contains i then
+        unless b.info == .instImplicit && !(← isProp domain) && (← dictionary domain) do
+          fail "unclassified_form:source.fixed_context_dictionary"
+      else
+        if b.info == .instImplicit || domain == mkSort .zero ||
+            (← isProp domain) || (← dictionary domain) then
+          fail "unclassified_form:source.dictionary_or_proof_coordinate"
     if b.value.isSome then fail "unclassified_form:source.let_coordinate"
     let domain ← transport (coordinateContext.extract 0 i) (slots.filter (· < i)) b.domain
     coordinates := coordinates.push { b with domain }

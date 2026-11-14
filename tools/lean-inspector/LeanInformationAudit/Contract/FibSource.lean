@@ -86,6 +86,7 @@ def selection (source : Expr) : M SourceSelection := do
     owner := selected.owner
     definition := selected.definition.map fun d => { owner := d.owner, name := d.name, path := d.path }
     coordinates := selected.coordinates
+    fixedContext := selected.fixedContext
     readouts := selected.readouts.map fun r => {
       path := r.path, stateBinder := r.stateBinder, functionOperand := r.functionOperand,
       stateOperand := r.stateOperand, booleanPredicate := r.booleanPredicate } }

@@ -116,6 +116,7 @@ internal static class InformationTemplateEvidence
         string[] fields = ["source_owner", "source_name", "source_type_identity",
             "telescope_size", "level_count", "coordinates", "coordinate_paths", "readouts", "registration_identity"];
         InformationTemplateJson.Fields(value, [.. fields,
+            .. value.TryGetProperty("fixed_context", out _) ? new[] { "fixed_context" } : [],
             .. value.TryGetProperty("definition_entry", out _) ? new[] { "definition_entry" } : [],
             .. value.TryGetProperty("finite_projection", out _) ? new[] { "finite_projection" } : []]);
         if (value.TryGetProperty("finite_projection", out var projection))
@@ -163,6 +164,15 @@ internal static class InformationTemplateEvidence
             if (index <= previous)
                 throw new FormatException("DTR-Evidence: source coordinate order");
             previous = index;
+        }
+        if (value.TryGetProperty("fixed_context", out var fixedContext))
+        {
+            if (fixedContext.ValueKind != JsonValueKind.Array)
+                throw new FormatException("DTR-Evidence: source fixed context");
+            var indices = fixedContext.EnumerateArray().Select(n => Bounded(n, 255)).ToArray();
+            if (indices.Length > 64 || indices.Where((n, i) => !coordinates.Contains(n)
+                || i > 0 && indices[i - 1] >= n).Any())
+                throw new FormatException("DTR-Evidence: source fixed context");
         }
         var readouts = Array(value, "readouts").ToArray();
         if (readouts.Length is < 1 or > 64)

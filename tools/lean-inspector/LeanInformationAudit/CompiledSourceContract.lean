@@ -262,7 +262,9 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       ("source_type_identity", toJson sourceTypeIdentity),
       ("telescope_size", toJson scope.telescope.size),
       ("level_count", toJson scope.levels.length),
-      ("coordinates", toJson selection.coordinates),
+      ("coordinates", toJson ((selection.coordinates ++ selection.fixedContext).qsort (· < ·))),
+      ("fixed_context", toJson selection.fixedContext),
+      ("fixed_context", toJson selection.fixedContext),
       ("coordinate_paths", toJson (scope.coordinates.map (·.path))),
       ("readouts", Json.arr readouts), ("registration_identity", toJson registrationIdentity)] ++
       definitionEntry ++ projection)
