@@ -106,7 +106,7 @@ end D5.S1.Recurrence.Witt.HannaDiagonalGhostPowerIntegrality
 
 namespace D5.S1.Recurrence.Witt.HannaDiagonalGhostPowerIntegrality
 
-private theorem fermat_lift (p s : ℕ) (hp : p.Prime) (z : ℤ) :
+theorem fermat_lift (p s : ℕ) (hp : p.Prime) (z : ℤ) :
     (p : ℤ) ^ (s + 1) ∣ z ^ (p ^ (s + 1)) - z ^ (p ^ s) := by
   let I : Ideal ℤ := Ideal.span {(p : ℤ)}
   have hb : z ^ p ≡ z [SMOD I] := by
