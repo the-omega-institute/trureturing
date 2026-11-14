@@ -45,7 +45,7 @@ internal sealed class BonaMagaRicheyExtremalFrequencyDocument : IScribeDocumentD
                             Ex("r", R(), And(Limit(F.Id("u"), F.Id("r")),
                                 All("v", Word(), Imp(Equal(Length(F.Id("v")), F.Id("k")),
                                     Ex("s", R(), And(Limit(F.Id("v"), F.Id("s")),
-                                        LeqF(F.Id("s"), F.Id("r"))))))))))))),
+                                        LeqF(F.Id("s"), F.Id("r")))))))))))))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("For every natural k and every binary list u, "
                     + "MaximizesFrequency k u says that u has length k and there exists a real r "
@@ -87,6 +87,12 @@ internal sealed class BonaMagaRicheyExtremalFrequencyDocument : IScribeDocumentD
                     + "no general classification of maximizers follows."))), DescribeRole.Theorem))));
 
     private static Formula Word() => Call("List", F.Id("Bool"));
+    private static Formula N() => F.Id("Nat");
+    private static Formula R() => F.Id("Real");
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(Paren(a), FormulaLogicOperator.And, Paren(b));
+    private static Formula Qualified(string owner, string name, params Formula[] args) =>
+        Call(owner + "." + name, args);
     private static Formula Length(Formula w) => Qualified("List", "length", w);
     private static Formula Proposed(Formula k) => Call("proposedWord", k);
     private static Formula Limit(Formula w, Formula r) =>
