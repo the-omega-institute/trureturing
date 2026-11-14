@@ -1377,6 +1377,361 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 148. 纯局部极小的全域障碍与同根同阈值闭端点
+
+### 148.1 原域、完整面与端点命题
+
+**定义 148.1（同一原根的读数与二步载体）。** 本章的148.*均属本卷 XII；
+[XI145—146][Q148XI]仍指前卷的九维分类与有限层正规性结论。
+保留定义145.1的非零有限维实空间 $V$、闭尖生成凸锥 $C$、
+在 $C\setminus\{0\}$ 上严格正的原单位 $u$，以及全部原对象
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad
+\mathcal E=[0,u]_{C^\ast},\quad
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\\
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\quad
+D_p=\{x\in K:T_p(x)=0\},\quad S_p=P\cap D_p.
+\end{gathered}
+\tag{XII148.1}
+$$
+
+所有标签遍历整个原 $P$，第二变量遍历整个原 $K$，包括全部混态。
+以下假设完整 EB3 与完整纯 PR；前者规定每个完整 $D_p$ 仿射等价于闭三球，
+后者规定 $T_p(q)=T_q(p)$ 对全部原纯对成立。
+事先固定同一个 $o\in P$，记
+
+$$
+h=T_o,\qquad A=D_o,\qquad S=S_o,\qquad
+B=\bigcup_{s\in S}D_s,\qquad Q(o)=P\cap B.
+\tag{XII148.2}
+$$
+
+复用 [IX114.1][Q148IX]的完整菜单紧性与达到性：严格正性使 $K$ 紧，生成性使
+$K$ 张成 $V$ 且 $\operatorname{aff}K=\{u=1\}$；在从 $K$ 选出的线性基上评价，
+闭效应区间 $\mathcal E$ 有界而紧。$\mathcal F_p$ 闭且含 $u$，所以每个 minimum 达到。
+这也把 $K$ 上全部有界仿射效应与同一个原区间 $\mathcal E$ 对应起来，未缩小菜单。
+
+复用 [VII103.2][Q148Faces]、[IX114.2及116.1][Q148IX]的完整原面结果：
+每个 $D_p$ 是紧暴露真面，全部非空真面只有原纯单点或完整 $D_p$。
+对任何这样的面 $F$，$\operatorname{ext}F=P\cap F$；完整三球的这个集合是其整个相对边界，
+同胚于 $S^2$。特别地，每个非空真暴露面的纯缘连通。
+这些是原面分类的前两项，不使用另需全 Pair 的最后一项。
+三维 $D_p$ 是真面，故 $\dim\operatorname{aff}K\ge4$。
+
+纯集的紧性准确取自 IX114.4。该结论由纯 PR、IX114.3 的原端点暴露和原菜单紧性推出，
+不以 $P$ 已闭为前提，不调用 qutrit 表示。
+这三项供应——紧 $P$、每个真暴露面的连通纯缘、维数至少二——是下面局部极小论证的全部凸几何输入。
+
+### 148.2 有实际消费者的局部极小桥梁
+
+**引理 148.2（紧极点集上的仿射局部极小）。** 设 $K_0$ 是非空有限维紧凸集，
+$P_0=\operatorname{ext}K_0$ 紧，且每个非空真暴露面 $F$ 的
+$\operatorname{ext}F=P_0\cap F$ 连通。若 $\dim\operatorname{aff}K_0\ge2$，
+则任意仿射函数 $a:\operatorname{aff}K_0\to\mathbb R$ 在 $P_0$ 上的每个局部极小点，
+都是它在整个 $K_0$ 上的全局极小点。常量函数以及零维 $K_0$ 也有此结论。
+局部极小均取 $P_0$ 的相对拓扑。
+
+证明。在 $\operatorname{aff}K_0$ 中工作，记其方向空间维数为 $d$。
+常量情形直接成立。设 $a$ 非恒定，$p\in P_0$ 是局部极小点但不是全局极小点，
+置 $\alpha=a(p)$。存在 $P_0$ 中相对开邻域 $U\ni p$，使 $a\ge\alpha$ 于 $U$。
+若在 $K_0$ 有比 $\alpha$ 小的值，紧的全局最小面有极点；
+面的极点也是 $K_0$ 的极点，故可取 $q\in P_0$ 满足 $a(q)<\alpha$。
+
+令 $Q=P_0\setminus U$。它非空紧，且 $p\notin Q$。
+由成熟的有限维 Carathéodory 定理，$\operatorname{conv}Q$ 是
+$Q^{d+1}$ 与紧概率单纯形之积的连续像，所以紧。
+极端性使 $p\notin\operatorname{conv}Q$：若 $p$ 是 $Q$ 中点的有限凸组合，
+每个正权重点都须等于 $p$，与 $p\notin Q$ 矛盾。
+有限维严格分离给仿射函数 $b$，满足
+
+$$
+b(p)>\max_Q b.
+\tag{XII148.3}
+$$
+
+在模去常量的仿射函数空间中，保持此严格间隙的 $b$ 构成非空开集。
+由于 $d\ge2$ 且 $a$ 的线性部分非零，可使 $b$ 的线性部分不属于 $a$ 的线性部分所张成的直线：
+若原分离尺平行，就沿一个独立方向作足够小的扰动；紧 $Q\cup\{p\}$ 使严格间隙保留。
+这里没有要求 $p$ 本身暴露。
+
+对 $t\ge0$ 置
+
+$$
+g_t=b-ta,\qquad F_t=\operatorname{argmax}_{K_0}g_t,\qquad
+M_t=P_0\cap F_t=\operatorname{argmax}_{P_0}g_t.
+\tag{XII148.4}
+$$
+
+非平行性使每个 $g_t$ 在 $\operatorname{aff}K_0$ 非恒定，故 $F_t$ 总是非空紧真暴露面。
+成熟的极点—面传递给 $\operatorname{ext}F_t=P_0\cap F_t$，紧面的极点存在性又给
+$M_t\ne\varnothing$ 以及 (XII148.4) 最后的等号。
+假设使 $M_t$ 连通；紧 $P_0$ 与闭 $F_t$ 使 $M_t$ 紧。
+
+若 $x\in Q$ 且 $a(x)\ge\alpha$，对每个 $t\ge0$ 都有
+
+$$
+g_t(x)\le b(x)-t\alpha<b(p)-t\alpha=g_t(p).
+\tag{XII148.5}
+$$
+
+因此全部 $M_t$ 均包含于两个互不相交的相对开集
+$U$ 与 $W=\{x\in P_0:a(x)<\alpha\}$ 的并。
+这给出不能越过 $U$ 边界的具体障碍，而非假定某条极大点轨道连续。
+由 (XII148.3)，$M_0\subseteq U$。
+再选 $T>0$，使
+
+$$
+T(\alpha-a(q))>\max_{P_0}b-b(q).
+\tag{XII148.6}
+$$
+
+若 $a(x)\ge\alpha$，则
+$g_T(x)\le\max_{P_0}b-T\alpha<b(q)-Ta(q)=g_T(q)$，
+所以 $M_T\subseteq W$。
+
+考虑整个极大点图
+
+$$
+G=\{(t,x)\in[0,T]\times P_0:x\in M_t\}.
+\tag{XII148.7}
+$$
+
+它由对所有 $y\in P_0$ 的闭不等式 $g_t(x)\ge g_t(y)$ 定义，故在紧积中闭而紧。
+到 $[0,T]$ 的投影满射，各纤维为连通非空的 $M_t$。
+下面直接使用成熟的紧映射连通纤维论证。
+若 $G=C_1\sqcup C_2$ 是非空分离，则两部分在紧 $G$ 中闭，因而紧；
+它们在 $[0,T]$ 上的像是两个非空闭集且覆盖区间。
+区间连通使两像相交，于是某个纤维同时遇到 $C_1,C_2$。
+该纤维被二者分离，违反纤维连通性。所以 $G$ 连通。
+
+但 $G\cap([0,T]\times U)$ 与 $G\cap([0,T]\times W)$ 是两个互不相交的相对开集，
+覆盖 $G$；$M_0$ 和 $M_T$ 又使它们均非空，矛盾。
+所以 $p$ 在 $P_0$ 上全局极小；前述紧最小面的极点传递再将结论送到整个 $K_0$。
+证明未假设 $P_0$ 连通、路径连通、极大点对应下半连续或存在连续选择。证毕。
+
+**命题 148.3（一维非恒定情形不能补入引理）。** 取
+$K_0=[0,1]$、$P_0=\{0,1\}$、$a(x)=x$。
+所有非空真暴露面的纯缘都连通，且 $P_0$ 紧，但 $p=1$ 是非全局局部极小点。
+
+证明。真暴露面只有两个端点，纯缘为单点。$1$ 在 $P_0$ 中孤立，所以是局部极小点；
+$a(0)<a(1)$ 排除全局极小性。
+任何在 $1$ 严格大于 $0$ 的仿射分离尺都形如 $b(x)=\beta x+\gamma$，$\beta>0$。
+当 $t=\beta$ 时，$b-ta$ 恒定，极大面变成整个 $K_0$，其极点集不连通。
+这正是引理中非平行扰动所排除的退化。零维或常量情形没有这个障碍；
+原 EB3 应用已有 $\dim\operatorname{aff}K\ge4$，不落入本反例。证毕。
+
+### 148.3 原 minimum 的局部极小转移与真正低端点
+
+**定理 148.4（原比较的内部无纯局部极小与端点逼近）。** 在定义148.1的完整 EB3、纯 PR 域，
+对每个事先固定的原 $o$，$h=T_o$ 在 $P$ 上没有读数处于 $(0,1)$ 的局部极小点。
+对任意 $0<\varepsilon<1$，每个满足 $h(p)=\varepsilon$ 的原纯点都有实际原纯点列
+
+$$
+p_n\longrightarrow p,\qquad 0<h(p_n)<\varepsilon,\qquad
+h(p_n)\longrightarrow\varepsilon.
+\tag{XII148.8}
+$$
+
+因此，在原纯集的相对拓扑中，
+
+$$
+\begin{gathered}
+\{p\in P:0<h(p)\le\varepsilon\}
+\subseteq\overline{\{p\in P:0<h(p)<\varepsilon\}}^{\,P},\\
+\overline{\{p\in P:h(p)<\varepsilon\}}^{\,P}
+=\{p\in P:h(p)\le\varepsilon\}.
+\end{gathered}
+\tag{XII148.9}
+$$
+
+证明。定义148.1逐项供应引理148.2的紧纯集、全部真暴露面连通纯缘及维数前件。
+选辅助范数，紧 $\mathcal E$ 给 $L=\max_{f\in\mathcal E}\|f\|_\ast<\infty$。
+每张原效应满足 $|f(x)-f(y)|\le L\|x-y\|$；分别取整个 $\mathcal F_o$ 的 minimum 得
+
+$$
+|h(x)-h(y)|\le L\|x-y\|\qquad(x,y\in K).
+\tag{XII148.10}
+$$
+
+这是固定根、第二变量的连续性，不涉及移动确认族的选择。
+
+反设 $p\in P$ 是 $h|_P$ 的局部极小点，$\mu=h(p)\in(0,1)$。
+原 minimum 达到，故取同一完整菜单中的 $f\in\mathcal F_o$，使 $f(p)=\mu$。
+在同一纯邻域内，
+
+$$
+f(x)\ge h(x)\ge\mu=f(p).
+\tag{XII148.11}
+$$
+
+因此这张真实原仿射效应 $f$ 在 $P$ 上也于 $p$ 局部极小。
+$f(o)=1>\mu$ 使其非恒定；引理148.2给 $f\ge\mu$ 于整个 $K$。
+现在才定义真实原线性泛函
+
+$$
+f'=\frac{f-\mu u}{1-\mu}.
+\tag{XII148.12}
+$$
+
+分母正。在整个 $K$ 上，$0\le f'\le1$，且 $f'(o)=1$、$f'(p)=0$。
+对任意非零原 $c\in C$，严格正性给 $u(c)>0$，且 $k=c/u(c)\in K$，于是
+
+$$
+0\le f'(c)=u(c)f'(k)\le u(c).
+\tag{XII148.13}
+$$
+
+在 $c=0$ 也成立，所以 $f'\in[0,u]_{C^\ast}=\mathcal E$，进而 $f'\in\mathcal F_o$。
+这与 $0<\mu=h(p)\le f'(p)=0$ 矛盾。
+归一化在全部原锥上合法，未使用面效应延拓、least 或新的确认菜单。
+
+若 $h(p)=\varepsilon\in(0,1)$，不存在局部极小意味着每个纯邻域都含 $h<\varepsilon$ 的点。
+将该邻域同时限制在 $\{h>\varepsilon/2\}$ 及半径 $1/n$ 的环境球内，选原纯 $p_n$，
+就得到 (XII148.8)；连续性给读数收敛。
+严格带内的点本身已在其闭包中，故有 (XII148.9) 第一项。
+第二项的 $h=0$ 点本就在 $\{h<\varepsilon\}$ 中，$h=\varepsilon$ 点由刚构造的列逼近；
+反包含由连续性和 $\{h\le\varepsilon\}$ 的相对闭性成立。
+这并不由逼近本身供应零层 $S$ 在任意指定载体中的成员资格。证毕。
+
+### 148.4 消费原真实标签返回的闭高端点
+
+**定理 148.5（同根、同阈值的两个闭带）。** 在定义148.1的完整原域中，另假设
+对这个事先固定的同一个 $o$ 成立的原条件 $L_\varepsilon(o)$，$0<\varepsilon<1$：
+
+$$
+\forall z\in P:\quad 0<h(z)<\varepsilon
+\ \Longrightarrow\ \exists s\in P:\ T_o(s)=T_z(s)=0.
+\tag{XII148.14}
+$$
+
+则对定义148.1的同一个 $B$ 有
+
+$$
+\{p\in P:h(p)\le\varepsilon\}
+\ \cup\ \{p\in P:h(p)\ge1-\varepsilon\}\ \subseteq B.
+\tag{XII148.15}
+$$
+
+证明。先消费推论145.4的准确接口：相同的完整 EB3、纯 PR 与 $L_\varepsilon(o)$
+给根合同 $R_o$，包括 $S\subseteq B$、$o\in B$、$B$ 紧，以及根和根邻球的单标签性。
+它还给出：对任何 $q\in P\setminus(A\cup\{o\})$，若整个真实 $S_q\subseteq B$，
+则全部实际邻边完成 $C_q$ 与所需反向纯比较成立，定理145.3使 $q\in B$。
+这里未向未覆盖目标预定义 $\pi_o(q)$。
+
+紧性的原对象可明确写为
+
+$$
+\Gamma=\{(s,x,f)\in S\times K\times\mathcal E:
+f(s)=1,\ f(x)=0\},\qquad B=\operatorname{pr}_K\Gamma.
+\tag{XII148.16}
+$$
+
+完整原 $S\cong S^2$、$K$、$\mathcal E$ 均紧，评价连续，故 $\Gamma$ 紧。
+原 minimum 达到使该投影准确等于 $B$，包括每个 $D_s$ 的全部混态；所以 $B$ 在 $K$ 中闭。
+这不需要整族球的连续性或移动标签选择。
+
+由 (XII148.14) 和零对称，$0<h<\varepsilon$ 的全部纯点在 $B$。
+定理148.4的真实原纯逼近列与 $B$ 闭性补上 $h=\varepsilon$。
+零层准确为 $\{p\in P:h(p)=0\}=S$，其成员资格已由推论145.4另付。
+于是整个闭低带 $\{h\le\varepsilon\}\cap P$ 均在 $B$。
+
+再取任意原纯 $q$ 满足 $h(q)\ge1-\varepsilon$。
+若 $q=o$，已付 $o\in B$；其余因 $1-\varepsilon>0$，有
+$q\in P\setminus(A\cup\{o\})$。
+对整个实际 $S_q$ 的任意 $x$，原达到性给 $f\in\mathcal F_q$，满足 $f(x)=0$。
+原补效应 $u-f$ 属于 $\mathcal F_x$。在同一个原纯根 $o$ 上评价，仅对纯对用 PR，得到
+
+$$
+h(q)+h(x)=T_q(o)+T_x(o)
+\le f(o)+(u-f)(o)=1.
+\tag{XII148.17}
+$$
+
+这正是 (XII145.27) 的原互补不等式。故每个实际 $x\in S_q$ 都满足
+$0\le h(x)\le1-h(q)\le\varepsilon$，已由闭低带进入 $B$。
+至此才得到整个 $S_q\subseteq B$，进而消费上述推论145.4的 $C_q$、反向比较和真实标签返回，
+得到 $q\in B$。这里没有要求存在读数恰为 $1-h(q)$ 的伙伴，也没有用假想的伙伴标签合同。
+原严格高带已含 $h=1$；同一不等式也处理这一情形，无需另证 $h=1$ 的纯点刻画。
+根与阈值从始至终未变。证毕。
+
+**推论 148.6（临界阈值与尚余的开中带）。** 在定理148.5的相同前件下，
+若 $\varepsilon=1/2$，则 $P\subseteq B$，从而同一根满足 X133.1 的 $\mathsf D_2(o)$。
+若 $0<\varepsilon<1/2$，(XII148.15) 唯一尚未支付的读数范围是
+
+$$
+\varepsilon<h(p)<1-\varepsilon.
+\tag{XII148.18}
+$$
+
+若 $\varepsilon>1/2$，全覆盖已经由 (XII145.25) 的两条严格带及其另付零层取得，
+不作为新的覆盖增量。
+
+证明。临界值时两个闭区间覆盖 $[0,1]$，而 $0\le h\le1$，故 $P\subseteq B$。
+每个 $q\in P\cap B$ 都有实际同一个 $s\in S$ 满足 $q\in D_s$；
+零对称给 $o\perp s\perp q$，包括 $q=o$，所以原 $\mathsf D_2(o)$ 的共同邻点支成立。
+若需要静态表示，此时才可直接消费 [X133.6][Q148X]：其原前件为完整 EB3 加一个固定根的
+$\mathsf D_2(o)$，结论为同原锥、同原单位的实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,
+\qquad \Phi(\operatorname{PSD}_3)=C,\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XII148.19}
+$$
+
+X133.6的链先由该固定覆盖根取得全部原三角，再调用 IX120.4—120.5及116.17—116.18的既有分类。
+这里未把表示预用于引理148.2、定理148.4或148.5；(XII148.19) 是该旧结果的条件应用，
+其前件仍包含同根 $L_{1/2}(o)$，不是 EB3 加纯 PR 的自动分类。
+
+小于临界值时，两个闭带的补集正是 (XII148.18)。这只说明所述包含关系的剩余范围，
+不声称中带必有点或必不在 $B$。
+大于临界值时，$h=0$ 由 $S$ 处理；$h>0$ 且不在严格低带意味着
+$h\ge\varepsilon>1-\varepsilon$，已在原严格高带，故覆盖早由145.4成立。证毕。
+
+### 148.5 数学来源与剩余条件
+
+**约定 148.7（归属、复用和未付命题）。** 本章的承重连接是引理148.2到
+(XII148.11)—(XII148.13) 的全原菜单归一化，再到真实低端点和整个 $S_q$ 的闭带供应。
+引理被定理148.4消费，后者被定理148.5的低端点消费；
+低端点再支付145.4实际返回接口所需的整个原 $S_q\subseteq B$。
+这是 `repo-derived` 的纸面推导归属，不主张外部精确先例已穷尽或全球原创。
+
+有限维 Carathéodory、严格分离、紧凸面的极点存在与极点—面传递、
+紧映射的连通纤维论证均为成熟中间工具。
+[Feinberg、Kasyanov、Voorneveld，§1、Definition 1.1前的 Berge 最大值定理][Q148B]
+给连续目标、连续非空紧值可行对应的连续最优值和上半连续紧值最优对应；
+本章可行集固定为 $P_0$，目标取 $ta-b$，其紧图性质也已由闭不等式直接证明。
+该文献结论本身不支付连通极大点纤维、连续选择或本章的仿射局部极小结论。
+原始 Berge 书第116页的独立文本与本引理的外部精确先例在此不作已核断言。
+[Landsman，§1.3、式(1.4)—(1.9)][Q148L]提供完整仿射效应的原比较背景，
+其参数对应为 $p_{\rm Landsman}(x,o)=T_o(x)$；补效应给零对称，纯数值 PR 是另列条件。
+该来源不把 minimum 当作全域仿射函数，不供应返回标签或本章端点桥梁。
+
+原菜单达到性、PR 下 $P$ 紧、完整原面穷尽与相对 $S^2$ 纯缘、
+根合同及真实返回均按上述准确来源复用，不另计为新增结果。
+XI145.2 的表示保持完整 EB3 加整个原空间九维及 Conn 或 Inj 的前件；
+XI146.2—146.4 的有限层正规性保持 EB3、Conn、ZC，且量词为
+$\forall m\,\exists\varepsilon_m,\delta_m>0$。
+这些结论不在本章较弱前件下补付局部极小桥梁，也不把逐层常数统一到全域。
+
+剩余的最小临界候选是：仅由完整 EB3 与完整纯 PR，能否取得一个事先固定的原根
+$o$ 满足 $L_{1/2}(o)$。本章仍将它作为未付命题；
+闭端点并不给 $L_\varepsilon(o)$ 自动性，也不给阈值任何正宽度扩张。
+在 $0<\varepsilon<1/2$ 下补付 (XII148.18) 还需额外论证。
+全过程不预用 Conn、Inj、整个空间九维、MC、全 Pair、least 或静态分类；
+只在推论148.6已付覆盖之后复用旧分类。
+结论属于原有限维态—效应几何，不支付实际来源、仪器、有限复合或物理时间的实现条件。
+
+[Q148IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.1—114.2：同原紧基、完整菜单、达到性及原面；114.3—114.4：纯PR下的端点暴露与纯紧性；116.1及式(IX116.2)：完整相对纯球缘；120.4—120.5、116.17—116.18：既有条件分类。"
+[Q148Faces]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2：共同零确认、全部非空真面穷尽及其不依赖Pair的证明；全对结论另列Pair前件。"
+[Q148X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X133.1：同一固定根的D2；133.6：完整EB3加一个覆盖根的全部三角与同原静态分类。"
+[Q148XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md "XI145.2：EB3+Conn或Inj+整个原V九维；XI146.2—146.4：EB3+Conn+ZC的有限层推进；146.6：零边不变与全域统一界的剩余条件。"
+[Q148B]: https://arxiv.org/html/1309.7708v1 "E. A. Feinberg, P. O. Kasyanov, M. Voorneveld, Berge's Maximum Theorem for Noncompact Image Sets，§1中Definition 1.1前的经典紧值最大值定理。"
+[Q148L]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability，§1.3、式(1.4)—(1.9)：全仿射效应比较、零对称及另列的纯数值互惠。"
+
+## 追加锚
+
 ## 151. 原纯域的自动拓扑连通与近一比较的共同零邻点
 
 **定义 151.1（完整原域与局部二元候选）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C$ 和在 $C\setminus\{0\}$ 上严格正的原单位 $u$。整个原归一基、全部原纯点和全部原效应始终是
