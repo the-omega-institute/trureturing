@@ -6,9 +6,15 @@
    utility: none
    digest: Uniform extension counts on actual finite tuples with distinct column labels. -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Fin.Tuple.Basic
+public import Mathlib.Tactic
+
+/-! Actual finite tuples with a lower bound on every legal extension fiber. -/
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section
@@ -59,7 +65,7 @@ private theorem options_card (line : ℕ → Finset V) (column : V → W)
       ((line k).filter (fun x => column x ∉ used)).card := by
     apply Fintype.card_of_subtype
     intro x
-    simp [Options, used, Function.comp_def]
+    simp [used, Function.comp_def, eq_comm]
   rw [hc]
   dsimp [bad] at hb
   omega
@@ -107,7 +113,8 @@ theorem card_prefix_lower_bound (line : ℕ → Finset V) (column : V → W)
       intro _
       have : Nonempty (Prefix line column 0) :=
         ⟨⟨Fin.elim0, (fun i => Fin.elim0 i), (fun i => Fin.elim0 i)⟩⟩
-      simpa using (Fintype.card_pos_iff.mpr this)
+      rw [pow_zero]
+      exact Nat.succ_le_iff.mpr (Fintype.card_pos_iff.mpr this)
     | succ k ih =>
       intro hk
       calc
@@ -119,7 +126,7 @@ theorem card_prefix_lower_bound (line : ℕ → Finset V) (column : V → W)
           intro p _
           exact options_card line column hinj (hlen k (by omega)) p
         _ = Fintype.card ((p : Prefix line column k) × Options line column p) :=
-          (Fintype.card_sigma _).symm
+          Fintype.card_sigma.symm
         _ ≤ Fintype.card (Prefix line column (k + 1)) :=
           Fintype.card_le_of_injective _ (append_injective line column k)
   exact all K le_rfl

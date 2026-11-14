@@ -10,6 +10,8 @@ import D5.S3.Combinatorics.Graph.Domination.FiniteLinePrefixCount
 import D5.S3.Geometry.FiniteGraphSubgraphSuspensionConstruction
 import Mathlib.Tactic
 
+/-! Fixed-coordinate maximal bishop subsets and their asymptotic growth. -/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -318,6 +320,6 @@ theorem result : ¬ claim := by
     rw [source_family_card]
     exact hupper
   have hstrict := mul_lt_mul_of_pos_right hfour hpow
-  linarith
+  linarith only [hsourceLower, hsourceUpper, hstrict]
 
 end D5.S3.Combinatorics.Graph.Domination.BishopMaximalPlacementGrowth
