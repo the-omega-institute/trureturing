@@ -1974,92 +1974,70 @@ $$
 where $n_\pm$ count strictly positive and strictly negative eigenvalues
 with multiplicity. Both bounds are attained at every level.
 
-Proof. First the real span of the projectors $P_v$ with
-$\|v\|=1$ and $v^{\ast}Hv=0$ is exactly $R$. For a direct proof of the
-nontrivial inclusion, let $B\in A$ annihilate all such projectors.
-Write it in $m$-by-$m$ blocks for the two eigenspaces of $H$.
-For arbitrary unit vectors $a,b\in\mathbb C^m$, the vectors
-$(a,e^{it}b)/\sqrt2$ are isotropic. Their expectations give
+Proof. We first prove the scalar null-cone lemma: if $B\in A$ and
+$a^{\ast}Ba=0$ for every unit $a$ with $a^{\ast}Ha=0$, then
+$B=cH$ for some $c\in\mathbb R$. In the two $m$-by-$m$ blocks of
+$H$, use $a=(x,e^{it}y)/\sqrt2$ with arbitrary unit
+$x,y\in\mathbb C^m$. The hypothesis gives
 
 $$
-a^{\ast}B_{++}a+b^{\ast}B_{--}b
-       +2\operatorname{Re}(e^{it}a^{\ast}B_{+-}b)=0
+x^{\ast}B_{++}x+y^{\ast}B_{--}y
+       +2\operatorname{Re}(e^{it}x^{\ast}B_{+-}y)=0
              \qquad(t\in\mathbb R).
 \tag{162.10}
 $$
 
-Varying $t$ forces $B_{+-}=0$. The remaining equality for all $a,b$
+Varying $t$ forces $B_{+-}=0$. The remaining equality for all $x,y$
 forces $B_{++}=cI_m$ and $B_{--}=-cI_m$, by Hermitian polarization.
-Thus this span has annihilator exactly $\mathbb RH$, proving the
-claim. Denote the set of these unit isotropic vectors by $\mathcal I$.
-
-Suppose $X\in\mathcal N_N$ and $n_+(X)\le m-1$. For an arbitrary
-subset of slots $S\subseteq\{1,\ldots,N\}$, insert a prescribed
-$v_j\in\mathcal I$ in each slot $j\notin S$. This defines an
-isometry
+For the matrix-valued version, expand any Hermitian $Y$ on
+$\mathbb C^d\otimes\mathbb C^k$ as $Y=\sum_jB_j\otimes F_j$
+in a real Hermitian basis $(F_j)$ of the second factor. If every
+isotropic compression vanishes, each real coefficient
+$a^{\ast}B_ja$ vanishes. The scalar lemma therefore gives
 
 $$
-J_{S,\mathbf v}:\bigotimes_{i\in S}\mathbb C^d
-   \longrightarrow (\mathbb C^d)^{\otimes N},\qquad
-X_{S,\mathbf v}=J_{S,\mathbf v}^{\ast}XJ_{S,\mathbf v},
+\bigl[(a^{\ast}\otimes I_k)Y(a\otimes I_k)=0
+       \text{ for every unit }a\text{ with }a^{\ast}Ha=0\bigr]
+\ \Longrightarrow\ Y=H\otimes A\quad(A\in\operatorname{Herm}_k).
 \tag{162.11}
 $$
 
-where retained slots are in their original relative order. For
-$S=\varnothing$ this compression is a scalar; for all slots it is
-$X$. A positive subspace for a compression maps isometrically to a
-positive subspace for $X$. Consequently
+Now induct on $N$. At $N=1$, the nonzero kernel elements are the
+nonzero multiples of $H$, with $m$ eigenvalues of each sign. For
+$N\ge2$ and $0\ne X\in\mathcal N_N$, each unit isotropic $a$
+defines a functional $\ell_a(B)=a^{\ast}Ba$ on $A$ that annihilates
+$H$, so it descends to $\bar\ell_a\in V^{\ast}$. Set
 
 $$
-n_+(X_{S,\mathbf v})\le n_+(X)\le m-1.
+J_a=a\otimes I_{D_{N-1}},\qquad X_a=J_a^{\ast}XJ_a\in A_{N-1}.
 \tag{162.12}
 $$
 
-We prove by induction on $k=|S|$, simultaneously for every subset of
-that size and every complementary isotropic product, that
-$X_{S,\mathbf v}=0$. For $k=0$, (162.5) and (162.3) give
+The actual tensor maps give
 
 $$
-X_{\varnothing,\mathbf v}
- =\operatorname{Tr}\bigl(X(P_{v_1}\otimes\cdots\otimes P_{v_N})\bigr)
- =0,
+\pi_{N-1}(X_a)
+ =(\bar\ell_a\otimes\operatorname{id}_{W_{N-1}})(\pi_NX)=0,
 \tag{162.13}
 $$
 
-because the product of these isotropic projectors is in $R_N$.
-
-For the induction step take any $S$ of size $k\ge1$, fix its
-complementary vectors, and write $Y=X_{S,\mathbf v}$. Compressing
-any one retained slot $i\in S$ by any $v\in\mathcal I$ gives a
-compression with retained slots $S\setminus\{i\}$, hence the zero
-operator by induction. Pairing that zero operator with every Hermitian
-matrix on the other retained slots says
+so $X_a\in\mathcal N_{N-1}$. If some $X_a\ne0$, induction gives
+$n_\pm(X_a)\ge m$. The isometry $J_a$ maps any strictly positive
+or strictly negative subspace for $X_a$ to one for $X$, hence
 
 $$
-\operatorname{Tr}(Y(P_v\otimes B))=0
-       \qquad(v\in\mathcal I,\ B\text{ any Hermitian matrix on the other slots}),
+n_\pm(X)\ge n_\pm(X_a)\ge m.
 \tag{162.14}
 $$
 
-with factors placed in their actual slots. The spanning result above
-and the tensor trace pairing imply that $Y$ belongs to
-$\mathbb RH$ in slot $i$, tensored with arbitrary Hermitian factors
-in all other slots. This holds for every $i\in S$. Intersecting these
-subspaces, or expanding in a basis adapted to $A=R\oplus\mathbb RH$,
-gives
+Otherwise every $X_a=0$, so (162.11) yields $X=H\otimes A$ with
+$0\ne A\in A_{N-1}$. Each nonzero eigenvalue of $A$ produces $m$
+positive and $m$ negative tensor eigenvalues, and therefore
 
 $$
-Y=tH^{\otimes k}\qquad(t\in\mathbb R).
+n_+(X)=n_-(X)=m\operatorname{rank}A\ge m.
 \tag{162.15}
 $$
-
-If $t\ne0$, this matrix has exactly $d^k/2$ eigenvalues of each sign.
-Indeed each factor has $m$ signs of each kind, and changing one factor's
-sign pairs the two parity classes of tensor eigenvectors. Since
-$d^k/2\ge m$ for $k\ge1$, this contradicts (162.12). Hence $Y=0$,
-completing the induction for arbitrary subsets. Taking all slots gives
-$X=0$. Thus a nonzero kernel matrix has $n_+(X)\ge m$; applying the
-same argument to $-X$ gives the negative bound.
 
 For sharpness, at every $N$ the nonzero matrix
 $H\otimes P_e^{\otimes(N-1)}$ belongs to (162.5), for any unit
@@ -2389,6 +2367,9 @@ Theorem 160.7. The tensor sign-rank premise is proved here rather than
 assumed from those one-copy statements. The general low-rank/inertia
 criterion is mature background, attributed to [CHST162] and the existing
 [literature note](../../../Library/HilbertOperators/carmeliheinosaarischultztoigo2014tasks.md).
+Related tensor measurement arguments use kernel decompositions, phase
+variation, compression and inertia [CHSTTensor162, §§III–V]; this is
+method context, not a citation for the all-$N$ bound (162.9).
 The construction and its geometric combination are `repo-derived`;
 this describes the derivation and asserts no historical priority for
 the tensor inertia argument or the construction. No Hermitian-cap classification,
@@ -2396,5 +2377,6 @@ conditional reconstruction supplier or propagation theorem is a premise
 of Theorems 162.2–162.7.
 
 [CHST162]: https://arxiv.org/pdf/1308.5502v2 "C. Carmeli, T. Heinosaari, J. Schultz and A. Toigo, Tasks and premises in quantum state determination, J. Phys. A 47 (2014), 075302; §4.1, Lemmas 1–2 and Theorem 1(a), DOI 10.1088/1751-8113/47/7/075302."
+[CHSTTensor162]: https://arxiv.org/pdf/1411.0828v2 "C. Carmeli, T. Heinosaari, J. Schultz and A. Toigo, Expanding the Principle of Local Distinguishability, Phys. Rev. A 91 (2015), 042121; §§III–V, DOI 10.1103/PhysRevA.91.042121."
 
 ## 追加锚（本行以下为增补区）
