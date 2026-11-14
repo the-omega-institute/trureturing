@@ -72,6 +72,7 @@ class MultipartArchiveOutput:
         if self.failure is not None:
             raise self.failure
         try:
+            remaining(self.deadline)
             return self._write(block)
         except BaseException as error:
             self.failure = error
