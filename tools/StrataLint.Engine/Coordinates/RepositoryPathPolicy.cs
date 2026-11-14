@@ -181,6 +181,8 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith(ReportsRootPath, StringComparison.Ordinal)
             // Retained report licenses and the entrypoint still require FILEMAP coverage.
             || value.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
+            || value.StartsWith("docs/develop/archive/theory/", StringComparison.Ordinal)
+                && value.EndsWith(".md", StringComparison.Ordinal)
             || value.StartsWith(SpecRootPath, StringComparison.Ordinal)
             || IsGoldenProjectionData(value)
             || IsCanonicalFutureCoordinate(value)
