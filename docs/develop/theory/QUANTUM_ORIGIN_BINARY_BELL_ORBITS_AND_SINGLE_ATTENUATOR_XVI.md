@@ -3994,3 +3994,333 @@ The single identical cup/cap variant and sufficiency of Bell original extremalit
 [W2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 173. Bell reciprocity and signed rank-one resolution
+
+### 173.1 The weak domain and an operation-free binary candidate
+
+**Definition 173.1 (the retained domain).** Retain exactly Definition 172.1: a fixed integer $n\ge2$, the actual real carriers
+
+$$
+W_N=\operatorname{Herm}_{n^N}(\mathbb C),\qquad W_0=\mathbb R,
+\tag{173.1}
+$$
+
+closed convex cones $C_N$, $C_0=\mathbb R_+$, their complete trace duals, every finite minimum/maximum tensor inclusion, actual positive permutations with positive inverses, and canonical reassociation. The ordinary trace is initially only the multiplicative algebraic functional. In particular no pointedness, generation, positive trace, PSD containment, transpose preservation, or positive matrix operation is assumed. Put
+
+$$
+\Omega=\sum_{j=0}^{n-1}e_j\otimes e_j,\qquad B=\Omega\Omega^*.
+\tag{173.2}
+$$
+
+**Definition 173.2 (signed native rank-one resolution).** For a cone $K\subset\operatorname{Herm}_d(\mathbb C)$, write $\mathsf{SR}(K)$ when every $X\in K$ admits a finite expression
+
+$$
+X=\sum_{j=1}^{m}\sigma_jv_jv_j^*,\qquad
+0\ne v_j\in\mathbb C^d,\quad \sigma_j\in\{+1,-1\},\quad
+\sigma_jv_jv_j^*\in K.
+\tag{173.3}
+$$
+
+The empty sum represents zero. Positive scalar coefficients can be absorbed into the vectors. Each term must belong to the same original cone; an arbitrary spectral decomposition whose terms leave $K$ does not satisfy this definition. This is ordinary Hermitian matrix rank one. It is not tensor rank one or Schmidt rank one: an entangled vector supplies an allowed rank-one dyad. No sign is specified in advance, and an original extreme ray has not been identified with a matrix-rank-one ray.
+
+The binary candidate is the pair of structural relations
+
+$$
+\mathsf Q_{\mathrm{bin}}:\qquad
+B\in C_2\cap C_2^*,\qquad \mathsf{SR}(C_2).
+\tag{173.4}
+$$
+
+There is no specified deformation matrix or operation-preservation premise. Retain the same separate ternary condition
+
+$$
+\mathsf T:\quad
+\exists\,0\ne\psi\in(\mathbb C^n)^{\otimes3},\quad
+\psi\psi^*\in C_3,\quad
+\min_i r_i(\psi)\ge2,\quad \max_i r_i(\psi)=n.
+\tag{173.5}
+$$
+
+The three $r_i$ are the actual complex flattening ranks. Neither $B$ nor $\psi\psi^*$ is assumed original-extreme. The candidate concerns the entire two-system cone and its complete test relation, rather than only a chosen set of preparations or effects.
+
+### 173.2 Bell relations determine the complete transpose dual
+
+**Lemma 173.3 (reciprocity at every original finite block).** On Definition 173.1, the first relation of (173.4) alone implies
+
+$$
+C_k^*=\{X^{\mathsf T}:X\in C_k\}
+\qquad(k\ge0\text{ finite}).
+\tag{173.6}
+$$
+
+This is equality with the transpose image, not an assertion that transpose preserves $C_k$ or that $C_k$ is self-dual for the usual positive-definite trace inner product.
+
+**Proof.** The scalar case is immediate. Fix $k\ge1$, put $d=n^k$, and regard the same actual $2k$ legs as two $k$-leg blocks. Tensor $k$ copies of the primal Bell resource and permute their positions. The minimum inclusions and positive permutations put the resulting matrix
+
+$$
+\mathcal B_k=\Omega_k\Omega_k^*,\qquad
+\Omega_k=\sum_{\alpha\in\{0,\ldots,n-1\}^k}
+e_\alpha\otimes e_\alpha
+\tag{173.7}
+$$
+
+in $C_{2k}$. The product of the $k$ dual Bell functionals is nonnegative on all of $C_{2k}$ by successive maximum inclusions. Transporting this functional by the inverse of the same actual permutation proves $\mathcal B_k\in C_{2k}^*$. These constructions use the complete original cones, with no normalized state or proper cap.
+
+For arbitrary Hermitian $X,Y$ on the $k$-leg block, the matrix-unit identity is
+
+$$
+\operatorname{Tr}[\mathcal B_k(X\otimes Y)]
+=\operatorname{Tr}(X^{\mathsf T}Y).
+\tag{173.8}
+$$
+
+For $X,Y\in C_k$, the minimum bound and the dual membership of $\mathcal B_k$ make this quantity nonnegative. Consequently $C_k^{\mathsf T}\subseteq C_k^*$. For $F,G\in C_k^*$, the primal membership of $\mathcal B_k$ and the maximum bound instead give $\operatorname{Tr}(F^{\mathsf T}G)\ge0$. The complete bipolar identity for a closed convex cone gives
+
+$$
+(C_k^*)^{\mathsf T}\subseteq C_k^{**}=C_k.
+\tag{173.9}
+$$
+
+Transposing (173.9) gives the other containment in (173.6). Neither containment used pointedness, generation, or trace positivity. $\square$
+
+### 173.3 The signed support obstruction, including lineality
+
+**Theorem 173.4 (signed rank-one resolution under transpose reciprocity).** Let $d\ge1$. If a closed convex cone $K\subset\operatorname{Herm}_d(\mathbb C)$ satisfies
+
+$$
+K^*=K^{\mathsf T},\qquad \mathsf{SR}(K),
+\tag{173.10}
+$$
+
+then $K=\operatorname{PSD}_d$ or $K=-\operatorname{PSD}_d$. In particular pointedness, full span, and one common sign are consequences, including when none was supplied.
+
+**Proof.** Define complex support spaces using all native signed rank-one elements:
+
+$$
+\begin{aligned}
+U&=\operatorname{span}_{\mathbb C}\{v:vv^*\in K\},\\
+V&=\operatorname{span}_{\mathbb C}\{w:-ww^*\in K\},\\
+p&=\dim_{\mathbb C}U,\quad q=\dim_{\mathbb C}V,
+\quad r=\dim_{\mathbb C}(U\cap V).
+\end{aligned}
+\tag{173.11}
+$$
+
+For each displayed pair of generators, $(vv^*)^{\mathsf T}\in K^*$, hence
+
+$$
+0\le\operatorname{Tr}[(vv^*)^{\mathsf T}(-ww^*)]
+=-|v^{\mathsf T}w|^2.
+\tag{173.12}
+$$
+
+Thus $U$ and $V$ annihilate each other for the nondegenerate complex bilinear form $(v,w)\mapsto v^{\mathsf T}w$, and
+
+$$
+p+q\le d.
+\tag{173.13}
+$$
+
+This is bilinear orthogonality, not Hermitian orthogonality; $U\cap V$ may be nonzero. The proof must retain that intersection and the possible lineality of $K$.
+
+For a complex subspace $E$, let $\operatorname{Herm}(E)$ denote the real space of Hermitian matrices whose ranges lie in $E$, embedded by zero on $E^\perp$. Its real dimension is $(\dim_{\mathbb C}E)^2$, and
+$\operatorname{Herm}(U)\cap\operatorname{Herm}(V)=\operatorname{Herm}(U\cap V)$. Signed resolution gives
+
+$$
+S:=\operatorname{span}_{\mathbb R}K
+\subseteq\operatorname{Herm}(U)+\operatorname{Herm}(V),
+\qquad \dim_{\mathbb R}S\le p^2+q^2-r^2.
+\tag{173.14}
+$$
+
+Next let $L=K\cap(-K)$, its real lineality space. For $X\in L$, resolve $X$ and $-X$ separately and group terms by matrix sign:
+
+$$
+X=P_1-Q_1=-(P_2-Q_2),\qquad
+Z:=P_1+P_2=Q_1+Q_2\succeq0.
+\tag{173.15}
+$$
+
+Each $P_i$ is PSD supported on $U$ and each $Q_i$ is PSD supported on $V$. Therefore $Z$ is supported on $U\cap V$. The inequalities $0\preceq P_i,Q_i\preceq Z$ imply that all four matrices are supported on that intersection: if $z\in\ker Z$, positivity gives $P_i z=Q_i z=0$. It follows that
+
+$$
+L\subseteq\operatorname{Herm}(U\cap V),\qquad
+\dim_{\mathbb R}L\le r^2.
+\tag{173.16}
+$$
+
+Complete duality gives $\operatorname{lin}(K^*)=S^\perp$, where the perpendicular is for the real trace inner product. Equation (173.10) also gives $\operatorname{lin}(K^*)=L^{\mathsf T}$. Transpose is a real linear isomorphism, so
+
+$$
+d^2=\dim_{\mathbb R}S+\dim_{\mathbb R}L
+\le p^2+q^2\le(p+q)^2\le d^2.
+\tag{173.17}
+$$
+
+All inequalities are equalities. In particular $pq=0$ and $p+q=d$. Thus all native rank-one terms have one common matrix sign, and signed resolution puts $K$ inside $\operatorname{PSD}_d$ or $-\operatorname{PSD}_d$. Both of these usual cones are trace self-dual and transpose invariant. If, for example, $K\subseteq\operatorname{PSD}_d$, then
+
+$$
+\operatorname{PSD}_d\subseteq K^*=K^{\mathsf T}
+\subseteq\operatorname{PSD}_d.
+\tag{173.18}
+$$
+
+Therefore $K^{\mathsf T}=K=\operatorname{PSD}_d$. The negative case has the identical dual-containment argument with $-\operatorname{PSD}_d$. This also excludes zero and proper subspace cones without a separate nondegeneracy assumption. $\square$
+
+### 173.4 A complete replacement of the binary criterion
+
+**Theorem 173.5 (binary resolution and all-finite reconstruction).** On the same weak actual domain, the following binary statements are equivalent:
+
+$$
+\begin{aligned}
+&\mathsf Q_{\mathrm{bin}};\\
+&C_2=\operatorname{PSD}_{n^2};\\
+&\exists\varepsilon\in\{+1,-1\},\quad
+C_1=\varepsilon\operatorname{PSD}_n,\quad
+C_2=\operatorname{PSD}_{n^2}.
+\end{aligned}
+\tag{173.19}
+$$
+
+The sign is unique. Every $\varepsilon^N C_N$ is closed, pointed and generating, its signed trace is strictly positive away from zero, and its signed trace-one base is compact. Moreover
+
+$$
+\mathsf Q_{\mathrm{bin}}\wedge\mathsf T
+\quad\Longleftrightarrow\quad
+C_N=\operatorname{PSD}_{n^N}\quad
+\text{for every finite }N\ge0.
+\tag{173.20}
+$$
+
+Bell original extremality and the positivity of all local matrix congruences are conclusions of this criterion, rather than extra binary inputs.
+
+**Proof.** Lemma 173.3 at $k=2$ and Theorem 173.4 with $d=n^2$ give $C_2=\pm\operatorname{PSD}_{n^2}$. The nonzero positive matrix $B\in C_2$ excludes the negative choice. This proves the first implication in (173.19) without any deformation or preservation axiom.
+
+The remainder of the binary statement is precisely [171.11(1)][Q173XVI], in its already proved direction from $C_2=\operatorname{PSD}_{n^2}$. The fixed matrix in that older equivalent formulation requires no new premise: once $C_2$ is PSD, its congruence preserves $C_2$. The older result uses 171.8 for the common one-body sign and 171.9 for the finite-frame pointedness, generation, strict signed trace and compactness. This direction uses no matrix-generation supplier. These implications are reused, not assumptions that the weak domain has silently inherited. Conversely the usual PSD cone contains $B$, is its complete trace dual, and its ordinary spectral decomposition supplies (173.3) with only positive signs. This completes (173.19).
+
+Under $\mathsf T$, the nonzero ordinary positive dyad at the odd level three fixes $\varepsilon=+1$ by 171.10. The rank conditions in (173.5) are not needed for that sign selection; their separate purpose is the full-support propagation premise. Now use the entire sets
+
+$$
+\begin{aligned}
+K_N&=\{X\in C_N:\operatorname{Tr}X=1\},\qquad P_N=\operatorname{ext}K_N,\\
+\mathcal E_N&=\{F\in C_N^*:I_{n^N}-F\in C_N^*\},\\
+\mathcal M_N&=\{(F_1,\ldots,F_m):m\ge1,\ F_j\in C_N^*,\ \sum_jF_j=I_{n^N}\}.
+\end{aligned}
+\tag{173.20a}
+$$
+
+These are mathematical full-menu objects, with no physical availability claim. At this point every supplier premise of [166.12, condition 1 implies condition 5][Q173XIII] is paid, with the same correspondence as 171.11:
+
+| Supplier requirement | Its actual source here |
+| --- | --- |
+| Fixed complex Hermitian carriers, all finite tensor levels, scalar object | Definition 173.1 |
+| Closed, pointed, generating cones and strictly positive multiplicative ordinary trace | (173.19), 171.9, and the positive sign selected by (173.5) |
+| Entire bases, all extreme points, complete duals, full proper intervals and finite unit decompositions | Take those full sets after signed properness and sign selection; the duals were complete from the beginning |
+| Every finite min/max partition, positive actual permutations with positive inverses, canonical reassociation | Definition 173.1, including noncontiguous transported partitions |
+| Actual one- and two-body PSD equalities | (173.19) with $\varepsilon=+1$ |
+| A ternary dyad, nonproduct at every cut, with at least one full leg | Exactly (173.5) |
+
+The supplier therefore gives all finite PSD cones. Its smaller-corner induction, two-copy Gram bridge, three Bell contractions and exact finite propagation remain the previously proved construction; no arbitrary GME state lacking a full leg replaces its seed. Conversely the full PSD hierarchy satisfies the weak domain and (173.4), and $\sum_j e_j\otimes e_j\otimes e_j$ supplies (173.5).
+
+Finally every ordinary rank-one positive ray is extreme in a PSD cone, so the recovered Bell ray is original-extreme. Every local matrix congruence, including singular ones, preserves every PSD level, proving its positivity with all original finite spectators. $\square$
+
+### 173.5 Geometric meaning and the exact quantum dictionary
+
+**Corollary 173.6 (the candidate's finite quantum geometry and consumers).** Under (173.20), write $d_N=n^N$. The whole original state and process theory has the following correspondence, with no selected state or effect subfamily substituted:
+
+| Original definition | Resulting finite quantum structure |
+| --- | --- |
+| $K_N=\{X\in C_N:\operatorname{Tr}X=1\}$ | All density matrices on the actual $\mathbb C^{d_N}$ |
+| All extreme points of $K_N$ | Unit rank-one projections; $\mathbb{CP}^{d_N-1}$ |
+| Complete dual and proper interval | All PSD functionals and all $0\preceq E\preceq I$ |
+| All finite dual-positive unit decompositions | Every finite POVM, with $p(a\mid\rho)=\operatorname{Tr}(E_a\rho)$ |
+| Actual tensor products, permutations and unit slices | Entangled joint states, ordinary permutations and partial traces |
+| All real-linear maps positive with every original finite spectator | All rectangular complex CP maps, through their Hermiticity-preserving extensions |
+| Whole-input TNI/TP order budgets | CP branches and channels; all finite TP-sum mathematical instruments |
+
+The whole normalized minimal face containing any two distinct pure states is a three-dimensional real ball. Its pure boundary is $\mathbb{CP}^{1}\cong S^2$, not a filled projective line. This geometric three-dimensional face is distinct from the three-system tensor seed in (173.5).
+
+**Proof and parameter correspondence.** Theorem 173.5 gives exactly the original all-finite PSD domain required by [166.14][Q173XIII] and the full rectangular dictionary 172.16. Apply those results with the unchanged $W_N$, $C_N$, trace, complete duals, all original spectators and every finite unit decomposition. Their spectral and Choi ingredients are the standard results in [Watrous, Chapters 1–2][Q173W1][Q173W2]. In particular
+
+$$
+\begin{aligned}
+J(F)&=\sum_{i,j=0}^{d_a-1}E_{ij}\otimes F(E_{ij}),\\
+F\text{ is positive with all original spectators}
+&\Longleftrightarrow J(F)\succeq0
+\Longleftrightarrow F(X)=\sum_\gamma K_\gamma XK_\gamma^*,\\
+u_bF\le u_a&\Longleftrightarrow\sum_\gamma K_\gamma^*K_\gamma\preceq I_{d_a},\\
+u_bF=u_a&\Longleftrightarrow\sum_\gamma K_\gamma^*K_\gamma=I_{d_a}.
+\end{aligned}
+\tag{173.21}
+$$
+
+These are the actual rectangular interfaces, with $K_\gamma:\mathbb C^{d_a}\to\mathbb C^{d_b}$, not just square maps or a scalar Choi trace budget. The zero map uses an empty Kraus family. The original pairing, complete effect interval and all finite unit decompositions give the displayed Born probabilities; pure-state least confirmation gives $|v^*w|^2$ as in 172.16. Neither rule is supplied again as an independent probability axiom after the cones have been identified.
+
+For the geometric statement let $p=vv^*$ and $q=ww^*$ be distinct normalized pure states. Their complex span $E=\operatorname{span}_{\mathbb C}\{v,w\}$ has dimension two. The PSD matrices supported on $E$ form an exposed face, and $p+q$ is positive definite on $E$, so this is the full minimal cone face containing both. In an orthonormal basis of $E$ its trace-one section is
+
+$$
+\rho(x,y,z)=\frac12
+\begin{pmatrix}1+z&x-iy\\x+iy&1-z\end{pmatrix},
+\qquad x^2+y^2+z^2\le1.
+\tag{173.22}
+$$
+
+The eigenvalues are $(1\pm\sqrt{x^2+y^2+z^2})/2$. Rank one is exactly the sphere. This standard two-dimensional Hermitian face calculation identifies the geometry forced by the new binary criterion, including nonorthogonal pairs; it is not an extra reconstruction premise. $\square$
+
+### 173.6 Counterfactuals and the precise simplification
+
+**Proposition 173.7 (the missing relation in the Wigner model).** At every odd prime local dimension, the complete Wigner simplex hierarchy of 172.11–172.13 satisfies the Bell primal/dual relation and the unchanged $\mathsf T$, but fails $\mathsf{SR}(C_2)$. Thus ordinary matrix-rank-one Bell and GHZ resources alone do not supply the decomposition relation used here.
+
+**Proof.** That hierarchy has every finite weak-domain structure, complete duals and full menus, the two Bell memberships, and the required three flattening ranks. Its two-body cone is the finite positive-orthant cone on the product phase-point basis, so is simplicial. It cannot equal $\operatorname{PSD}_{p^2}$: the former has finitely many extreme rays, the latter has a distinct extreme ray for every point of $\mathbb{CP}^{p^2-1}$. If signed native rank-one resolution held, Lemma 173.3 and Theorem 173.4 would instead make that cone PSD; the positive Bell member would select its positive sign. This contradiction proves the exact failed condition without restricting the model's dual tests. $\square$
+
+**Proposition 173.8 (the binary orientation obstruction survives).** Binary candidate (173.4) alone does not fix ordinary positive trace on odd levels. The all-finite hierarchy
+
+$$
+C_N=(-1)^N\operatorname{PSD}_{n^N}
+\tag{173.23}
+$$
+
+satisfies that candidate and the complete weak domain, but fails (173.5) and the positive all-finite conclusion.
+
+**Proof.** This is exactly the complete countermodel 171.12, including its duals and every finite partition. At level two its cone and complete dual are PSD, so both Bell memberships and native rank-one resolution hold. Every odd-level nonzero matrix has negative ordinary trace, and $C_3$ contains no nonzero ordinary positive dyad. This proves the asserted failure. The sign part of the ternary condition therefore has a concrete job even after the deformation has been deleted. $\square$
+
+**Proposition 173.9 (what is and is not compressed).** On Definition 173.1, (173.4) and the old binary criterion $\mathsf B\wedge\mathsf M_2$ are equivalent. The new presentation supplies ordinary Bell primal membership and a cone-wide finite resolution relation, and no longer supplies the exact deformation $M$ or any operation-preservation relation. It does not establish that Bell original extremality alone suffices, or that fewer independent assumptions or smaller total description length have been attained.
+
+**Proof.** Each binary criterion is equivalent to $C_2=\operatorname{PSD}_{n^2}$ by (173.19) and 171.11(1). Their forward mechanisms differ: 172 recovers the Bell cup from a deformed cup and cap through a matrix closure argument; (173.4) supplies the Bell cup and uses signed support resolution and full duality instead. Thus neither an unsupplied operation nor the absent deformation is borrowed. Bell original extremality follows at the end of 173.5; it does not imply the quantified resolution (173.3) by any argument here. In particular changing the presentation into that extremality-only variant would reopen a different mathematical problem.
+
+The geometric compression is from a chosen matrix with specified mixing and phase parameters to the reciprocal cone and its own rank-one directions. The representation is still the fixed complex Hermitian carrier; ordinary matrix rank is still a substantive part of the new condition. The reduction does not derive the complex field or the actual tensor product from an unspecified ontology. $\square$
+
+### 173.7 Conditions on physical updates, time and sources
+
+**Proposition 173.10 (conditional physical consumers and source scope).** The reconstruction establishes the finite mathematical state/effect/process dictionary in 173.6. To identify all these mathematical instruments with available physical events requires the event-saturation condition of 172.17. The Lüders branch and a Hamiltonian evolution retain their separate premises:
+
+$$
+\mathcal I_P(X)=PXP,
+\qquad
+\rho_t=e^{-itH}\rho e^{itH}.
+\tag{173.24}
+$$
+
+The signed rank-one relation is not itself a choice of physical measurement disturbance, clock or energy unit.
+
+**Proof and mathematical attribution.** Consume 172.17 on the all-finite PSD family already proved. For the first formula the required premise is that every ray certainly passing the projection-$P$ outcome is fixed by its branch; an effect alone permits other CP updates. For the second formula the premise is a continuous one-parameter group of reversible trace-preserving real order automorphisms. Continuity connects the group to the identity component and gives the usual unitary Hamiltonian form, with $H$ defined up to an additive scalar. Physical time and energy units, the value of $\hbar$, event availability, and infinite-dimensional extensions are not supplied by (173.4)–(173.5).
+
+Rank-one generation inside an already PSD spectrahedral cone is established terminology: [Hildebrand, Property 1.1 and Lemma 3.9][Q173H] formulate finite native rank-one sums and their extreme rays; [Argue–Kılınç-Karzan–Wang][Q173AKW] study the corresponding PSD-subcone property and sufficient conditions. Those results begin with PSD containment and do not supply the signed weak-domain theorem 173.4. The earlier real/complex ROG sections 93–94 of VI likewise retain their own PSD representation hypotheses. Their classifications are not invoked to assume a sign or a PSD representation for the present unknown cones.
+
+The repository-derived addition here is the signed support/lineality obstruction (173.11)–(173.18) and its Bell-recursive application (173.19)–(173.20). The tensor Bell identity, bipolar duality, finite-dimensional support dimensions, spectral facts and Bloch ball calculation are mature intermediate tools. The positive orientation, finite-frame properness, full-leg ternary propagation, and rectangular quantum dictionary are the named existing repository suppliers, not new proofs of those results. This attribution makes no claim of an exhaustive literature classification or global originality. $\square$
+
+### 173.8 中文白话与完整关系图景
+
+**命题 173.11（有限二元分解与三元提升的白话表述）。** 在定义173.1的固定复矩阵关系空间中，候选 (173.4)–(173.5) 可表述如下：二体整体既能提供同一张贝尔配对，也能用它测试整个原锥；每个二体对象还能拆成有限条仍属于原锥的矩阵秩一细线，起初不指定这些细线朝正还是朝负。这个条件连同指定的三体种子，给出173.5–173.6的全部有限量子结构。
+
+**证明与图景。** 把贝尔配对成对接起来，任意有限块的准备与全部测试就由转置互相对应。如果正细线和负细线的双线性配对不为零，就会给出负数；要避免这一点，两类细线的支撑只能彼此躲开。即使允许原锥含有整条正反都可走的直线，把这种余地完整算进去，支撑维数仍不够支付完整对偶。因此所有细线只能共同朝一边；二体贝尔本身朝正，便把整个二体锥锁成正半定锥，贝尔在原锥里不可再分也随之成为结论。此时任意两个不同纯方向所张成的完整归一面是一颗实三维球，球面上的点是纯态，球内是混合态。三体种子再做两件不同的事：它的普通正性选定奇数层也朝正，它的满维腿和每切口非乘积性接上已有的有限传播定理。这样全部有限层的密度矩阵、玻恩概率、纠缠复合和完全正过程一起恢复。复矩阵载体、这条整体分解关系和三体种子仍是明确前提；具体装置、测后扰动与时间标度各保留173.10的条件。这里内生出来的是符号、原极端性和操作正性，而不是把这些结果预先写进“秩一”的名称。$\square$
+
+[Q173XVI]: https://github.com/the-omega-institute/trureturing/blob/ca8ae24c6a0b7a0348fe24b411bf0b09fb14d455/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md
+[Q173XIII]: https://github.com/the-omega-institute/trureturing/blob/00427ae2ba9c9e3f6c37f2e5496b9127b6fbc6c0/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md
+[Q173H]: https://arxiv.org/html/1409.4781v2#S1
+[Q173AKW]: https://arxiv.org/abs/2007.07433v2
+[Q173W1]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf
+[Q173W2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
+
+## 追加锚（本行以下为增补区）
