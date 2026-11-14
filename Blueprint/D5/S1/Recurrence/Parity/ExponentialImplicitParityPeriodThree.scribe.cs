@@ -17,6 +17,26 @@ internal sealed class ExponentialImplicitParityPeriodThreeDocument : IScribeDocu
                 + "3 divides n for n >= 1. The entry supplies context rather than the repository's "
                 + "strengthened integer recurrence, ODE uniqueness theorem, period-three proof, or theorem "
                 + "quantified over every integer sequence satisfying the equation.")),
+            Node("a392208-published-series", "Series", "The characteristic-two convolution algebra", Disp(PublishedSeriesDefinition()),
+                "Series is the convolution algebra of linear maps from the symmetric algebra on ZMod 2 to ZMod 2.", AssessedProvenance.FromRepo(), DescribeRole.Definition),
+            Node("a392208-published-x", "X", "The symmetric algebra generator", Disp(PublishedGenerator()),
+                "X is the image of one under the canonical symmetric algebra map.", AssessedProvenance.FromRepo(), DescribeRole.Definition),
+            Node("a392208-published-coeff", "coeff", "Evaluation on powers of the generator", Disp(PublishedCoefficient()),
+                "The nth coefficient evaluates the underlying linear map on X to the nth power.", AssessedProvenance.FromRepo(), DescribeRole.Definition),
+            Node("a392208-published-seriesof", "seriesOf", "The series with prescribed coefficients", Disp(PublishedSeriesOf()),
+                "The singleton basis of ZMod 2 induces the symmetric algebra basis. Its linear extension sends an exponent p to s(p()).", AssessedProvenance.FromRepo(), DescribeRole.Definition),
+            Node("a392208-published-egfone", "egfOne", "The unit coefficient sequence", Disp(PublishedUnit()),
+                "The unit sequence is one in degree zero and zero in every other degree.", AssessedProvenance.FromRepo(), DescribeRole.Definition),
+            Node("a392208-published-egfmul-congr-at", "egfMul_congr_at", "Convolution depends only on coefficient prefixes", Disp(PublishedConvolutionCongruence()),
+                "Two pairs of sequences that agree through n have the same convolution coefficient at n.", AssessedProvenance.FromRepo(), DescribeRole.Theorem),
+            Node("a392208-published-coeff-seriesof", "coeff_seriesOf", "The prescribed coefficients are recovered", Disp(PublishedSeriesCoefficients()),
+                "Evaluating seriesOf s on X to the nth power gives s(n).", AssessedProvenance.FromRepo(), DescribeRole.Theorem),
+            Node("a392208-published-coeff-mul-egf", "coeff_mul_egf", "Convolution multiplication is binomial convolution", Disp(PublishedProductCoefficients()),
+                "The coefficients of the product in Series are the binomial convolution of the coefficients.", AssessedProvenance.FromRepo(), DescribeRole.Theorem),
+            Node("a392208-published-coeff-one", "coeff_one", "The coefficients of one", Disp(PublishedOneCoefficients()),
+                "The algebra unit has the unit coefficient sequence.", AssessedProvenance.FromRepo(), DescribeRole.Theorem),
+            Node("a392208-published-square-collapse", "square_collapse", "Squares depend only on the constant coefficient", Disp(PublishedSquareCollapse()),
+                "In characteristic two, the square of a convolution series is the scalar image of the square of its constant coefficient.", AssessedProvenance.FromRepo(), DescribeRole.Theorem),
             Node("a392208-egf-mul", "egfMul", "Binomial convolution", EgfMulFormula(),
                 "OEIS A392208 (2026-01-24) uses exponential generating functions. This definition is "
                     + "the binomial convolution whose nth value is the displayed finite sum; range(n+1) "
@@ -131,7 +151,7 @@ internal sealed class ExponentialImplicitParityPeriodThreeDocument : IScribeDocu
             Node("a392208-parity-conjecture", "a392208_parity_conjecture",
                 "The A392208 parity conjecture", ParityFormula(),
                 "This is the unconditional atom clause for the repository sequence a: at every positive index, "
-                    + "a(n) is even if and only if three divides n. Its live proof specializes the general "
+                    + "a(n) is even if and only if three divides n. It specializes the general "
                     + "OEIS-defined parity theorem with the named witness a_oeisDefines.",
                 AssessedProvenance.FromRepo(), DescribeRole.Theorem))));
 
@@ -140,6 +160,57 @@ internal sealed class ExponentialImplicitParityPeriodThreeDocument : IScribeDocu
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(heading),
             StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula PublishedField() => Call("ZMod", D(2));
+    private static Formula PublishedSymmetricAlgebra() => Call("SymmetricAlgebra", PublishedField(), PublishedField());
+    private static Formula PublishedSeriesDefinition() => Equal(F.Id("Series"), Call("WithConv",
+        Call("LinearMap", PublishedQualified("RingHom", "id", PublishedField()), PublishedSymmetricAlgebra(), PublishedField())));
+    private static Formula PublishedGenerator() => Equal(F.Id("X"), new Formula.Apply(Seq(Operatorname, Grp(F.Id("SymmetricAlgebra")), Dot, Iota), [PublishedField(), PublishedField(), D(1)]));
+    private static Formula PublishedAll(string name, Formula type, Formula body) =>
+        new Formula.BindMany(FormulaQuantifier.ForAll, [new(FormulaIdentifier.Create(name), type)], body);
+    private static Formula PublishedQualified(string owner, string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name))), [.. args]);
+    private static Formula PublishedLambda(string name, Formula type, Formula body) =>
+        Parenthesized(Seq(F.Id("fun"), Sp, F.Id(name), Colon, Sp, type, Sp, Mapsto, Sp, body));
+    private static Formula PublishedCoefficient() => PublishedAll("f", F.Id("Series"), PublishedAll("n", Naturals(),
+        Equal(Call("coeff", F.Id("f"), F.Id("n")), PublishedQualified("WithConv", "ofConv", F.Id("f"), Pow(F.Id("X"), F.Id("n"))))));
+    private static Formula PublishedSeriesOf()
+    {
+        var basis = PublishedQualified("Basis", "symmetricAlgebra", PublishedQualified("Basis", "singleton", F.Id("Unit"), PublishedField()));
+        var exponent = Call("Finsupp", F.Id("Unit"), Naturals());
+        var value = Call("s", new Formula.Apply(F.Id("p"), [Parenthesized(Sp)]));
+        return PublishedAll("s", Arrow(Naturals(), PublishedField()), Equal(Call("seriesOf", F.Id("s")),
+            PublishedQualified("WithConv", "toConv", PublishedQualified("Basis", "constr", basis, PublishedField(),
+                PublishedLambda("p", exponent, value)))));
+    }
+    private static Formula PublishedRing(Formula body) => PublishedAll("R", F.Id("Type"),
+        Seq(OpenBracket, Call("CommSemiring", F.Id("R")), CloseBracket, Sp, body));
+    private static Formula PublishedUnit() => PublishedRing(PublishedAll("n", Naturals(), Equal(Parenthesized(Typed(Call("egfOne", F.Id("n")), F.Id("R"))),
+        Call("ite", Equal(F.Id("n"), D(0)), D(1), D(0)))));
+    private static Formula PublishedConvolutionCongruence()
+    {
+        var n = F.Id("n"); var k = F.Id("k"); var r = F.Id("R");
+        Formula PrefixEquality(string left, string right) => PublishedAll("k", Naturals(), new Formula.Logic(
+            new Formula.Relation(k, FormulaRelationOperator.LessThanOrEqual, n), FormulaLogicOperator.Implies,
+            Equal(Call(left, k), Call(right, k))));
+        return PublishedRing(PublishedAll("f", Arrow(Naturals(), r), PublishedAll("fp", Arrow(Naturals(), r),
+            PublishedAll("g", Arrow(Naturals(), r), PublishedAll("gp", Arrow(Naturals(), r), PublishedAll("n", Naturals(),
+                new Formula.Logic(Parenthesized(PrefixEquality("f", "fp")), FormulaLogicOperator.Implies,
+                    new Formula.Logic(Parenthesized(PrefixEquality("g", "gp")), FormulaLogicOperator.Implies,
+                        Equal(Call("egfMul", F.Id("f"), F.Id("g"), n), Call("egfMul", F.Id("fp"), F.Id("gp"), n))))))))));
+    }
+    private static Formula PublishedSeriesCoefficients() => PublishedAll("s", Arrow(Naturals(), PublishedField()),
+        PublishedAll("n", Naturals(), Equal(Call("coeff", Call("seriesOf", F.Id("s")), F.Id("n")), Call("s", F.Id("n")))));
+    private static Formula PublishedProductCoefficients() => PublishedAll("f", F.Id("Series"), PublishedAll("g", F.Id("Series"),
+        PublishedAll("n", Naturals(), Equal(Call("coeff", Mul(F.Id("f"), F.Id("g")), F.Id("n")),
+            Call("egfMul", Call("coeff", F.Id("f")), Call("coeff", F.Id("g")), F.Id("n"))))));
+    private static Formula PublishedOneCoefficients() => PublishedAll("n", Naturals(),
+        Equal(Call("coeff", Parenthesized(Typed(D(1), F.Id("Series"))), F.Id("n")), Call("egfOne", F.Id("n"))));
+    private static Formula PublishedSquareCollapse()
+    {
+        var f = F.Id("f"); var value = PublishedQualified("WithConv", "ofConv", f, D(1));
+        return PublishedAll("f", F.Id("Series"), Equal(Mul(f, f), Call("algebraMap", PublishedField(), F.Id("Series"), Mul(value, value))));
+    }
 
     private static Formula EgfMulFormula()
     {
