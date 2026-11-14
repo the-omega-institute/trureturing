@@ -1,3 +1,4 @@
+using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
 
@@ -64,6 +65,38 @@ internal sealed class HardinGraphNormalizationDocument : IScribeDocumentDefiniti
     private static DocumentBlock Node(string id, string name, string title,
         DescribeRole role, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(Disp(Statement(name))), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+    private static Formula Statement(string name)
+    {
+        var n = F.Id("n"); var f = F.Id("f"); var p = F.Id("p");
+        var i = F.Id("i"); var g = F.Id("G");
+        Formula Call(string id, params Formula[] xs) => new Formula.Apply(
+            Seq(id.Split('.').SelectMany((part, k) => k == 0
+                ? new[] { Seq(Operatorname, Grp(F.Id(part))) }
+                : new[] { Dot, Seq(Operatorname, Grp(F.Id(part))) }).ToArray()), [.. xs]);
+        Formula All(string id, Formula type, Formula body) =>
+            Seq(Forall, Sp, F.Id(id), Colon, Sp, type, Comma, Sp, body);
+        Formula Arr(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
+        Formula Fin(Formula k) => Call("Fin", k);
+        var vertices = Fin(new Formula.Binary(n, FormulaBinaryOperator.Add, D(1)));
+        var words = Arr(vertices, Fin(D(6)));
+        var betaWord = Seq(Call("beta"), Sp, Circ, Sp, f);
+        var firstSigns = All("i", vertices, Seq(Call("First", betaWord, i), Sp,
+            Implies, Sp, Call("Fin.val", new Formula.Apply(f, [i])), Sp, F.Eq, Sp,
+            Call("Fin.val", Call("beta", new Formula.Apply(f, [i])))));
+        if (name == "normal_iff")
+            return All("n", Call("Nat"), All("f", words,
+                Seq(Call("Normal", f), Sp, Iff, Sp, Open, Call("Ordered", betaWord),
+                    Sp, Land, Sp, firstSigns, Close)));
+        var pairWord = Seq(p, Colon, Sp, Arr(vertices, Fin(D(3))));
+        var exponent = new Formula.Binary(
+            new Formula.Binary(n, FormulaBinaryOperator.Add, D(1)),
+            FormulaBinaryOperator.Subtract, Call("Fintype.card", Call("Set.range", pairWord)));
+        var conclusion = Seq(Call("Ordered", pairWord), Sp, Implies, Sp,
+            Call("Nat.card", Call("GraphFiber", g, p)), Sp, F.Eq, Sp,
+            new Formula.Power(D(2), exponent));
+        return All("n", Call("Nat"), All("G", Call("SimpleGraph", vertices),
+            All("p", Call("G.Coloring", Fin(D(3))), conclusion)));
+    }
 }

@@ -230,4 +230,174 @@ theorem result {n : ℕ} (G : SimpleGraph (Fin (n + 1))) (p : G.Coloring (Fin 3)
   rw [Nat.card_congr (graphFiberEquiv G p)]
   exact fiber_card _ hp
 
+/-- The first vertex outside the initial class, or zero if there is none. -/
+private noncomputable def nextClass {n : ℕ} (p : Fin (n + 1) → Fin 3) : Fin (n + 1) :=
+  if h : ∃ i, p i ≠ p 0 then
+    (Finset.univ.filter (fun i => p i ≠ p 0)).min' (by
+      obtain ⟨i, hi⟩ := h
+      exact ⟨i, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hi⟩⟩)
+  else 0
+
+private theorem nextClass_spec {n : ℕ} (p : Fin (n + 1) → Fin 3)
+    (h : ∃ i, p i ≠ p 0) :
+    p (nextClass p) ≠ p 0 ∧ ∀ i, p i ≠ p 0 → nextClass p ≤ i := by
+  classical
+  simp only [nextClass, dite_eq_left h]
+  constructor
+  · exact (Finset.mem_filter.mp (Finset.min'_mem
+      (Finset.univ.filter (fun i => p i ≠ p 0)) _)).2
+  · intro i hi
+    exact Finset.min'_le _ _ (by simp [hi])
+
+/-- Relabel the actual classes by their first vertices. -/
+private noncomputable def canonical {n : ℕ} (p : Fin (n + 1) → Fin 3)
+    (i : Fin (n + 1)) : Fin 3 :=
+  if p i = p 0 then 0 else if p i = p (nextClass p) then 1 else 2
+
+private theorem canonical_kernel {n : ℕ} (p : Fin (n + 1) → Fin 3) (i j) :
+    canonical p i = canonical p j ↔ p i = p j := by
+  classical
+  by_cases h : ∃ k, p k ≠ p 0
+  · have hab := (nextClass_spec p h).1
+    unfold canonical
+    generalize p i = a, p j = b, p 0 = c, p (nextClass p) = d at *
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> simp_all
+  · have hp : ∀ k, p k = p 0 := by simpa using h
+    simp [canonical, hp]
+
+private theorem canonical_ordered {n : ℕ} (p : Fin (n + 1) → Fin 3) :
+    Ordered (canonical p) := by
+  classical
+  refine ⟨by simp [canonical], ?_⟩
+  intro i hi
+  have hia : p i ≠ p 0 := by intro h; simp [canonical, h] at hi
+  have h : ∃ k, p k ≠ p 0 := ⟨i, hia⟩
+  have hs := nextClass_spec p h
+  have hib : i ≠ nextClass p := by intro he; subst i; simp [canonical, hs.1] at hi
+  exact ⟨nextClass p, lt_of_le_of_ne (hs.2 i hia) (Ne.symm hib), by simp [canonical, hs.1]⟩
+
+private theorem canonical_of_ordered {n : ℕ} (p : Fin (n + 1) → Fin 3)
+    (hp : Ordered p) : canonical p = p := by
+  classical
+  by_cases h : ∃ i, p i ≠ p 0
+  · have hs := nextClass_spec p h
+    have hb : p (nextClass p) = 1 := by
+      have hn : p (nextClass p) ≠ 0 := by simpa [hp.1] using hs.1
+      by_contra hh
+      have htwo : p (nextClass p) = 2 := by omega
+      obtain ⟨j, hj, hjp⟩ := hp.2 _ htwo
+      have hle := hs.2 j (by simp [hjp, hp.1])
+      exact (not_le_of_gt hj) hle
+    funext i
+    simp only [canonical, hp.1, hb]
+    generalize p i = c
+    fin_cases c <;> decide
+  · have hc : ∀ i, p i = 0 := by simpa [hp.1] using h
+    funext i
+    simp [canonical, hc]
+
+private theorem canonical_congr {n : ℕ} (p q : Fin (n + 1) → Fin 3)
+    (h : ∀ i j, p i = p j ↔ q i = q j) : canonical p = canonical q := by
+  classical
+  have hn : nextClass p = nextClass q := by
+    have he : (fun i => p i ≠ p 0) = (fun i => q i ≠ q 0) := by
+      funext i; exact propext (not_congr (h i 0))
+    unfold nextClass
+    simp only [he]
+  funext i
+  simp only [canonical, hn, h i 0, h i (nextClass q)]
+
+/-- An unlabelled partition into at most three nonempty independent sets.
+The equivalence relation, rather than palette names, is the actual object. -/
+structure StablePartition {n : ℕ} (G : SimpleGraph (Fin (n + 1))) where
+  relation : Setoid (Fin (n + 1))
+  independent : ∀ i j, G.Adj i j → ¬ relation.r i j
+  atMostThree : Nat.card relation.classes ≤ 3
+
+/-- Proper colourings whose labels are in first-appearance order. -/
+abbrev OrderedColoring {n : ℕ} (G : SimpleGraph (Fin (n + 1))) :=
+  {p : G.Coloring (Fin 3) // Ordered (p : Fin (n + 1) → Fin 3)}
+
+private noncomputable def toPartition {n : ℕ} (G : SimpleGraph (Fin (n + 1)))
+    (p : OrderedColoring G) : StablePartition G := by
+  classical
+  letI := Fintype.ofFinite p.val.colorClasses
+  exact ⟨Setoid.ker (p.val : Fin (n + 1) → Fin 3),
+    fun _ _ h => p.val.valid h,
+    by
+      change Nat.card p.val.colorClasses ≤ 3
+      rw [Nat.card_eq_fintype_card]
+      exact p.val.card_colorClasses_le.trans (by simp)⟩
+
+private theorem toPartition_injective {n : ℕ} (G : SimpleGraph (Fin (n + 1))) :
+    Function.Injective (toPartition G) := by
+  intro p q h
+  have hr := congrArg StablePartition.relation h
+  have he : ∀ i j, p.val i = p.val j ↔ q.val i = q.val j := by
+    intro i j; exact Setoid.ext_iff.mp hr i j
+  have hc := canonical_congr (p.val : Fin (n + 1) → Fin 3) q.val he
+  rw [canonical_of_ordered _ p.property, canonical_of_ordered _ q.property] at hc
+  apply Subtype.ext
+  exact DFunLike.ext _ _ (congrFun hc)
+
+private theorem toPartition_surjective {n : ℕ} (G : SimpleGraph (Fin (n + 1))) :
+    Function.Surjective (toPartition G) := by
+  classical
+  intro S
+  letI := Fintype.ofFinite (Quotient S.relation)
+  have hcard : Fintype.card (Quotient S.relation) ≤ Fintype.card (Fin 3) := by
+    rw [Fintype.card_fin, ← Nat.card_eq_fintype_card,
+      Nat.card_congr (Setoid.quotientEquivClasses S.relation)]
+    exact S.atMostThree
+  obtain ⟨e⟩ := Function.Embedding.nonempty_of_card_le hcard
+  let p : G.Coloring (Fin 3) := SimpleGraph.Coloring.mk
+    (fun i => e (Quotient.mk S.relation i)) (by
+      intro i j hij he
+      exact S.independent i j hij (Quotient.exact (e.injective he)))
+  let q : G.Coloring (Fin 3) := SimpleGraph.Coloring.mk (canonical (p : Fin (n + 1) → Fin 3))
+    (by intro i j hij he; exact p.valid hij ((canonical_kernel _ _ _).mp he))
+  refine ⟨⟨q, canonical_ordered _⟩, ?_⟩
+  have hr : (toPartition G ⟨q, canonical_ordered _⟩).relation = S.relation := by
+    apply Setoid.ext
+    intro i j
+    change canonical (p : Fin (n + 1) → Fin 3) i = canonical (p : Fin (n + 1) → Fin 3) j ↔ _
+    rw [canonical_kernel]
+    change e (Quotient.mk S.relation i) = e (Quotient.mk S.relation j) ↔ _
+    rw [e.injective.eq_iff, Quotient.eq]
+  have hExt : ∀ A B : StablePartition G, A.relation = B.relation → A = B := by
+    rintro ⟨a, ha, hc⟩ ⟨b, hb, hd⟩ he
+    cases he
+    rfl
+  exact hExt _ _ hr
+
+/-- Every unlabelled independent-set partition has exactly one ordered pair colouring. -/
+noncomputable def partitionEquiv {n : ℕ} (G : SimpleGraph (Fin (n + 1))) :
+    OrderedColoring G ≃ StablePartition G :=
+  Equiv.ofBijective (toPartition G) ⟨toPartition_injective G, toPartition_surjective G⟩
+
+/-- The actual proper pair colouring of a literal graph assignment. -/
+private def pairColoring {n : ℕ} (G : SimpleGraph (Fin (n + 1))) (f : Legal G) :
+    G.Coloring (Fin 3) :=
+  SimpleGraph.Coloring.mk (beta ∘ f.val) (by
+    intro i j hij
+    exact (HardinA233251TriangleStrip.colour_bond_iff _ _).mp (f.property.2 i j hij))
+
+/-- All literal assignments, with both inverses, indexed by unlabelled partitions and free signs. -/
+noncomputable def literalPartitionEquiv {n : ℕ} (G : SimpleGraph (Fin (n + 1))) :
+    Legal G ≃ Σ S : StablePartition G,
+      (Free ((partitionEquiv G).symm S).val → Bool) := by
+  classical
+  let e : Legal G ≃ Σ p : OrderedColoring G, GraphFiber G p.val :=
+    (Equiv.sigmaSubtypeFiberEquiv (pairColoring G)
+      (fun p => Ordered (p : Fin (n + 1) → Fin 3))
+      (fun f => (normal_iff f.val).mp f.property.1 |>.1)).symm.trans
+      (Equiv.sigmaCongrRight fun p => Equiv.subtypeEquivRight fun f => by
+        change pairColoring G f = p.val ↔ beta ∘ f.val = (p.val : Fin (n + 1) → Fin 3)
+        constructor
+        · intro h; exact congrArg (fun c : G.Coloring (Fin 3) => (c : Fin (n + 1) → Fin 3)) h
+        · intro h; exact DFunLike.ext _ _ (congrFun h))
+  exact e.trans ((Equiv.sigmaCongrRight fun p =>
+    (graphFiberEquiv G p.val).trans (fiberEquiv _ p.property)).trans
+      (Equiv.sigmaCongrLeft' (partitionEquiv G)))
+
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization
