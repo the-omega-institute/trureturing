@@ -2,11 +2,13 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.TimeArrow.NativeMarkedCountComparison
 import Reg.Support.DependentFamily
 
+/-! Dependent-family audit of the complete native marked-count comparison. -/
+
 open _root_.D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open _root_.D5.S3.Estimation.TimeArrow.NativeMarkedCountComparison
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open scoped BigOperators Classical
+open scoped BigOperators
 
 noncomputable section
 namespace Reg.D5.S3.Estimation.TimeArrow.NativeMarkedCountComparison
@@ -27,7 +29,8 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
-def arena : Arena where
+open Classical in
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ {M q s : ℕ} {r : ℝ},
     1 ≤ q → q < M → 0 < r → r < 1 → compensation M q r < 1 →
@@ -48,7 +51,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hc : compensation 2 1 (1/4) < 1 := by norm_num [compensation]
   have hh := h (s := 0) (by norm_num : 1 ≤ 1) (by norm_num : 1 < 2)
     (by norm_num : (0:ℝ) < 1/4) (by norm_num : (1/4:ℝ) < 1) hc S m hm hms Set.univ
-  change (1:ℝ) ≤ 8*(0:ℝ)*(rho 2 1)^2 at hh
+  change (1 : ℝ) ≤ 8*(0 : ℝ)*(rho 2 1)^2 at hh
   norm_num at hh
 
 def family : Registration arena (type_of% @native_joint_count_comparison) where
