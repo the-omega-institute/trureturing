@@ -54,11 +54,6 @@ def primeSubgroup : Multiplicative (ZMod p) →* Multiplicative K where
   map_one' := by simp
   map_mul' c d := by simp
 
-private theorem primeSubgroup_injective :
-    Function.Injective (primeSubgroup (K := K) (p := p)) := by
-  intro c d h
-  exact (ZMod.castHom_injective K) h
-
 private theorem primeSubgroup_card_zero :
     (Fintype.card (Multiplicative (ZMod p)) : K) = 0 := by
   rw [Fintype.card_multiplicative, ZMod.card]
@@ -209,10 +204,6 @@ def primalNormWitness (r : ℕ) : Module.End K (Primal K (p * r)) :=
   ElmerKadrTensorCounterexample.remainderMul (m := p * r)
     (invariantModulus (p := p) r) (invariantModulus_monic r)
     (invariantModulus_degree r) (-X ^ (p - 1))
-
-private theorem primalNormWitness_apply (r : ℕ) (f : Primal K (p * r)) :
-    (primalNormWitness (p := p) r f : K[X]) =
-      (-X ^ (p - 1) * (f : K[X])) %ₘ invariantModulus (p := p) r := rfl
 
 private theorem primalNormWitness_conjugate (r : ℕ) (c : Multiplicative (ZMod p))
     (f : Primal K (p * r)) :
