@@ -10,6 +10,7 @@ internal static partial class LeanCacheEnsureCommand
 {
     private const string ScopedCacheScopeVariable = "STRATALINT_LEAN_CACHE_SCOPE";
     private const string LakeArtifactCacheVariable = "LAKE_ARTIFACT_CACHE";
+    private const string LakeRestoreArtifactsVariable = "LAKE_RESTORE_ARTIFACTS";
 
     internal static CommandResult RunWithWriter(
         string repositoryRoot,
@@ -72,7 +73,7 @@ internal static partial class LeanCacheEnsureCommand
         // ensure/donor/archive preparation.
         var location = GitWorktreeInventory.Locate(root, runner);
         var routedRunner = RouteArtifactCache(runner, location.IsLinked);
-        if (IsScopedCacheRequest(readEnvironment))
+        if (IsScopedCacheRequest())
             return RunScopedCommand(root, command, routedRunner, guard, location.IsLinked,
                 standardOutput, standardError);
 
@@ -175,9 +176,9 @@ internal static partial class LeanCacheEnsureCommand
         }
     }
 
-    private static bool IsScopedCacheRequest(Func<string, string?> readEnvironment) =>
-        string.Equals(readEnvironment(ScopedCacheScopeVariable), "targeted", StringComparison.Ordinal)
-        || string.Equals(readEnvironment(ScopedCacheScopeVariable), "scoped", StringComparison.Ordinal);
+    private static bool IsScopedCacheRequest() =>
+        string.Equals(Environment.GetEnvironmentVariable(ScopedCacheScopeVariable), "targeted", StringComparison.Ordinal)
+        || string.Equals(Environment.GetEnvironmentVariable(ScopedCacheScopeVariable), "scoped", StringComparison.Ordinal);
 
     private static IWorktreeProcessRunner RouteArtifactCache(
         IWorktreeProcessRunner runner, bool linked)
@@ -191,6 +192,9 @@ internal static partial class LeanCacheEnsureCommand
         return production.WithEnvironment(new Dictionary<string, string>
         {
             [LakeArtifactCacheVariable] = linked ? string.Empty : "1",
+            // Keep module outputs in the private build tree for consumers such
+            // as judgeInputs/mod.oleanFile while still sharing the cache bytes.
+            [LakeRestoreArtifactsVariable] = "1",
         });
     }
 
