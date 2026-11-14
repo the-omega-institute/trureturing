@@ -119,6 +119,8 @@ Each private theorem below has `proof_shape: bind-only` and is admitted only as 
 
 **Proved:** a faithful finite real-valued divergence and actual finite CPTP channel satisfy $\eta^c_D(N)\le1/4<5/12\le\eta^\Delta_D(N)$ with unrestricted finite quantum references and heterogeneous data processing. The mechanism is equal-marginal block cancellation plus contractive pinching, together with a conditional witness whose marginal subtraction produces the larger ratio.
 
+## ASSUMED-UNVERIFIED
+
 **Unresolved:** neither exact optimal coefficient is asserted. The relative-entropy case remains unresolved. The positive-result audit remains unfinished as specified above. Source novelty beyond the bounded search is unverified.
 
 **Candidate only:** whether a faithful divergence satisfying additional source-independent structural laws, such as a specified direct-sum law, admits such a separation. This requires a new precisely quantified question, library/literature screening and preregistration; it is not proved or started by this result.
