@@ -77,16 +77,16 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         // Replace only the pack dependency in this child interpreter. Fetch uses
         // the real tar reader and installs the verified bytes into the scratch tree.
         Write(Path.Combine(bin, "sitecustomize.py"), """
-            import os, pathlib, shutil, tarfile
+            import os, pathlib, tarfile
             original = tarfile.open
             class PackedFixture:
-                def __init__(self, path): self.path = path
+                def __init__(self, output): self.output = output
                 def __enter__(self): return self
                 def add(self, *args, **kwargs): pass
                 def __exit__(self, *args):
-                    shutil.copyfile(pathlib.Path(os.environ["CHUNK_FIXTURE"]) / "archive", self.path)
+                    self.output.write((pathlib.Path(os.environ["CHUNK_FIXTURE"]) / "archive").read_bytes())
             def open_archive(name=None, mode="r", **kwargs):
-                return PackedFixture(name) if mode == "w:gz" else original(name, mode, **kwargs)
+                return PackedFixture(kwargs["fileobj"]) if mode == "w:gz" else original(name, mode, **kwargs)
             tarfile.open = open_archive
             """);
     }
