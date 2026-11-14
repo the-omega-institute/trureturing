@@ -7,6 +7,7 @@
    digest: The literal A117187 generating function satisfies Mathar's order-three recurrence. -/
 
 import D5.S3.Constants.Moments.A331474HankelBridge
+import D5.S1.Recurrence.A308815DFiniteRecurrence
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Inverse
 
@@ -79,13 +80,29 @@ private theorem source_bridge :
     have h := congrArg (PowerSeries.map (Nat.castRingHom ℤ))
       PowerSeries.catalanSeries_sq_mul_X_add_one
     simpa [C, D5.S3.Constants.Moments.A331474HankelBridge.catalanInt] using h
-  have hd := congrArg (derivative (R := ℤ)) hcat
-  simp only [map_add, Derivation.leibniz, derivative_pow,
-    derivative_X, derivative_one, smul_eq_mul] at hd
+  let M : PowerSeries ℤ →+* PowerSeries ℚ := PowerSeries.map (Int.castRingHom ℚ)
+  let CQ : PowerSeries ℚ := PowerSeries.catalanSeries.map (Nat.castRingHom ℚ)
+  have hMC : M C = CQ := by
+    ext k
+    simp [M, C, CQ, D5.S3.Constants.Moments.A331474HankelBridge.catalanInt]
+  have hMD : M D = derivative (R := ℚ) CQ := by
+    ext k
+    simp [M, D, CQ, D5.S3.Constants.Moments.A331474HankelBridge.F0,
+      D5.S3.Constants.Moments.A331474HankelBridge.catalanInt, coeff_derivative]
+  have hode : X * (1 - 4 * X) * D + (1 - 2 * X) * C = 1 := by
+    apply PowerSeries.map_injective (Int.castRingHom ℚ) Int.cast_injective
+    change M (X * (1 - 4 * X) * D + (1 - 2 * X) * C) = M 1
+    simpa only [map_add, map_mul, map_sub, map_one, map_ofNat, PowerSeries.map_X,
+      hMC, hMD] using D5.S1.Recurrence.A308815DFiniteRecurrence.cat_ode
+  have hx : (X * (1 - 4 * X) : PowerSeries ℤ) ≠ 0 := by
+    apply mul_ne_zero X_ne_zero
+    intro h
+    have hh := congrArg (constantCoeff (R := ℤ)) h
+    norm_num at hh
   have hder : D * (1 - 2 * X * C) = C ^ 2 := by
-    change C ^ 2 * 1 + X * (2 * C ^ (2 - 1) * D) + 0 = D at hd
-    norm_num at hd
-    linear_combination -hd
+    have hz : X * (1 - 4 * X) * (D * (1 - 2 * X * C) - C ^ 2) = 0 := by
+      linear_combination (1 - 2 * X * C) * hode + hcat
+    exact sub_eq_zero.mp ((mul_eq_zero.mp hz).resolve_left hx)
   have hid : D * ((1 - X * C) * (1 - 2 * X * C)) = C := by
     calc
       _ = C ^ 2 * (1 - X * C) := by rw [← hder]; ring

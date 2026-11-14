@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Constants.Moments;
 internal sealed class A117187MatharRecurrenceDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Constants/Moments/A117187MatharRecurrence.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Recurrence/mathar2011a117187");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/mathar2011a117187");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal Catalan generating function in A117187 satisfies the printed order-three recurrence at every nonnegative-index onset.",
         H("Mathar's recurrence for the literal A117187 generating function"),
@@ -24,7 +24,7 @@ internal sealed class A117187MatharRecurrenceDocument : IScribeDocumentDefinitio
             Node("a", "Offset-zero source coefficients", Disp(All("n", Naturals(), Eq(Call("a", F.Id("n")), Call("coeff", F.Id("F"), F.Id("n"))))),
                 "a(n) is the coefficient of X to the n in the complete source series F.", DescribeRole.Definition),
             Node("result", "Normalized source interpretation and the exact recurrence", ResultFormula(),
-                "The Catalan quadratic identity determines the normalized square root and shows that the denominator has constant coefficient 1. Differentiating the quadratic identity gives Cprime(1-2XC)=C², and C²(1-XC)=C. Substitution X to X² and cancellation with the unit inverse give the full identity F=(1+X)Cprime(X²). Consequently a(2m)=a(2m+1)=binomial(2m+2,m), reusing the Catalan derivative coefficient identity. This closed formula is already present in LODA and is used as prior mathematics here.", DescribeRole.Theorem,
+                "The Catalan quadratic identity determines the normalized square root and shows that the denominator has constant coefficient 1. The existing Catalan differential identity X(1-4X)Cprime+(1-2X)C=1, together with the quadratic equation, gives Cprime(1-2XC)=C² and C²(1-XC)=C. Substitution X to X² and cancellation with the unit inverse give the full identity F=(1+X)Cprime(X²). Consequently a(2m)=a(2m+1)=binomial(2m+2,m), reusing the Catalan derivative coefficient identity. This closed formula is already present in LODA and is used as prior mathematics here.", DescribeRole.Theorem,
                 "Write b(m)=binomial(2m+2,m). Adjacent-binomial identities give E(m)=m(m+2)b(m)-2(m+1)(2m+1)b(m-1)=0 for m≥1. For the printed residual R, polynomial normalization gives R(2m+1)=272E(m) for m≥1 and mR(2m)=4(31m-6)E(m)+4(37m+12)E(m-1) for m≥2. These two domains include every n≥3, including n=3. The source gives no explicit recurrence onset; n≥3 is exactly its order-three nonnegative-index domain. The conclusion concerns this literal source and printed recurrence; no priority assertion follows."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string text, DescribeRole role, string? more = null) =>
