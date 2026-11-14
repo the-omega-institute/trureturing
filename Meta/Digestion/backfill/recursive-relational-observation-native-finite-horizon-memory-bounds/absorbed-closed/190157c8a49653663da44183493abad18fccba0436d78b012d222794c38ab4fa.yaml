@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:190157c8a49653663da44183493abad18fccba0436d78b012d222794c38ab4fa
   normalized_sha256: sha256:190157c8a49653663da44183493abad18fccba0436d78b012d222794c38ab4fa
 cas_ref: sha256:190157c8a49653663da44183493abad18fccba0436d78b012d222794c38ab4fa
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FinitePhase/ResidualWindow.window_average
+    target_statement_id: sha256:9c5a5e583d41e4aef060a5e416843e05dc7fc9456ad8f5a3cd2ddee21c9de06d
 receipts:
   unresolved_subitems: []
