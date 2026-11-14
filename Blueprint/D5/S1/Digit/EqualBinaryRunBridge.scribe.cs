@@ -47,7 +47,7 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
                 + "of Mathlib's Composition(n) under its blocks projection. Its members are precisely "
                 + "the positive lists summing to n; composition_card supplies its cardinality. "
                 + "The all-ones digit identity is reused directly from ones_value in "
-                + "D5.S1.Words.DoubleTailShuffleSupport, whose statement and proof are preserved. "
+                + "D5.S1.Words.DoubleTailShuffleSupport. "
                 + "For n>0, row(n) is the image of parts(n) under decoding, and decoding is injective "
                 + "on that set. Consequently a(n) equals the integer sum of decoded composition words "
                 + "with no repeated integer counted twice.")),
