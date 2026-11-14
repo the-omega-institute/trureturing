@@ -36,7 +36,7 @@ internal sealed class TribonacciPrefixRefutationDocument : IScribeDocumentDefini
             Node("prefixLength", "prefix-length", "Prefix lengths", DescribeRole.Definition,
                 All("n", Nat(), Eq(Call("prefixLength", F.Id("n")),
                     Call("length", Call("prefixWord", F.Id("n"))))),
-                "Let m_n=length(U_n). Each letter image is nonempty, so m_n>0 for n>=1. Each of the three fourth images has length at most 13; induction bounds the length of tau^n(A) by 13^n. Prefix containment therefore gives 0<m_n<=13^n for n>=1. The finite-iterate reading theorem gives the exact identity factor W 0 m_n=U_n."),
+                "Let m_n=length(U_n). Each letter image is nonempty, so m_n>0 for n>=1. Each of the three fourth images has length at most 13; induction bounds the length of tau^n(A) by 13^n. Prefix containment therefore gives 0<m_n<=13^n for n>=1. Applying MBonacciSentinelDesubstitution.factor_of_prefix directly to that containment, at order 3 and iterate 4n, gives the exact identity factor W 0 m_n=U_n."),
             Node("prefixCharge", "prefix-charge", "Charge of the prefix family", DescribeRole.Definition,
                 All("n", Nat(), Eq(Call("prefixCharge", F.Id("n")),
                     Call("signedWordSum", Call("prefixWord", F.Id("n"))))),

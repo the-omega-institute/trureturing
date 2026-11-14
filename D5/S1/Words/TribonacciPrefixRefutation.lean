@@ -15,7 +15,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S1.Words.TribonacciPrefixRefutation
 
 open RankOneMorphismIterationBound (subst image image_add subst_append)
-open MBonacciSentinelDesubstitution (word word_eq_iterate)
+open MBonacciSentinelDesubstitution (word)
 open AbelianBorders.AbelianBorderQuestionDefs (factor)
 open TribonacciAlignedWindows
 
@@ -191,26 +191,8 @@ private theorem prefixCharge_closed (n : ℕ) :
 
 private theorem prefixWord_actual (n : ℕ) :
     factor W 0 (prefixLength n) = prefixWord n := by
-  obtain ⟨r, hr⟩ := prefixWord_embed n
-  apply List.ext_getElem
-  · simp [MBonacciSentinelDesubstitution.factor_len, prefixLength]
-  · intro i hi hj
-    have hp := (prefixWord_prefix n).length_le
-    have hi' : i < (image sigma (4*n) 0).length := lt_of_lt_of_le
-      (by simpa [MBonacciSentinelDesubstitution.factor_len, prefixLength] using hi) hp
-    rw [MBonacciSentinelDesubstitution.factor_get _ _ _ _
-      (by simpa [MBonacciSentinelDesubstitution.factor_len, prefixLength] using hi)]
-    have hw := word_eq_iterate (by omega : 2 ≤ 3) (4*n) i hi'
-    have hw' : W i = (image sigma (4*n) 0)[i] := by
-      convert hw using 1 <;> simp [W, sigma, MBonacciSentinelDesubstitution.zero]
-    have hidx : i < (prefixWord n ++ r).length := by
-      simp only [List.length_append]
-      omega
-    have hget : (prefixWord n ++ r)[i]'hidx = (prefixWord n)[i] :=
-      List.getElem_append_left hj
-    have hget' : (image sigma (4*n) 0)[i] = (prefixWord n)[i] := by
-      simpa only [hr] using hget
-    simpa [Nat.zero_add] using hw'.trans hget'
+  exact MBonacciSentinelDesubstitution.factor_of_prefix (by omega : 2 ≤ 3)
+    (k := 4*n) (s := prefixWord n) (prefixWord_prefix n)
 
 private theorem prefixCharge_abs_lower_succ (n : ℕ) :
     (n+1 : ℤ)^2 ≤ |prefixCharge (n+1)| := by
