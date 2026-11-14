@@ -134,7 +134,7 @@ B_{k,\ell}&=\frac1n+\frac1{ad}+\frac1{bd}=\frac2{ad}.
 \tag{2.7}
 $$
 
-最后一步使用 $1/n+1/(bd)=1/(ad)$。谱展开及其三角界正是上述文献 §3 的一般结果在此根列上的应用。已有特殊参数 $\ell=s(s+1)$、$k=\ell+1$ 的同一全顶点根分解、谱投影与演化公式，见[仓内两层树的根列分解](../../../D5/S3/Quantum/Dynamics/LaplacianPeakTransferTrees.lean)；式（2.2）与该处的分层常值向量作用相同，式（2.5）在这些参数下还原其根分解。
+最后一步使用 $1/n+1/(bd)=1/(ad)$。谱展开及其三角界正是上述文献 §3 的一般结果在此根列上的应用。已有特殊参数 $\ell=s(s+1)$、$k=\ell+1$ 的同一全顶点根分解、谱投影与演化公式，见[仓内两层树的根列分解](../../../../D5/S3/Quantum/Dynamics/LaplacianPeakTransferTrees.lean)；式（2.2）与该处的分层常值向量作用相同，式（2.5）在这些参数下还原其根分解。
 
 接下来优化式（2.7），并保持 $a,d$ 来自同一棵树。若 $\ell=1$，则 $d^2=(k-1)^2+4\ge5$；若 $\ell\ge2$，则 $d^2\ge4\ell\ge8$。因此总有 $d\ge\sqrt5$。更关键的是精确恒等式
 
@@ -383,7 +383,7 @@ $$
 
 由于 $D_N\to\infty$，这证明两个尾部上确界的上极限均不超过 $1$，并给出式（4.5）。
 
-为得到同一实际动力学的下界，使用上引[仓内两层树的根列分解](../../../D5/S3/Quantum/Dynamics/LaplacianPeakTransferTrees.lean)的特殊参数族
+为得到同一实际动力学的下界，使用上引[仓内两层树的根列分解](../../../../D5/S3/Quantum/Dynamics/LaplacianPeakTransferTrees.lean)的特殊参数族
 
 $$
 \ell_s=s(s+1),\qquad k_s=\ell_s+1,\qquad
