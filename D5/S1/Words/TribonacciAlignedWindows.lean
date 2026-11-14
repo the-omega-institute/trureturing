@@ -55,7 +55,7 @@ private theorem length_seven (k : ℕ) : L (k + 7) ≤ 128 * L k := by
   simp only [Nat.add_assoc, Nat.reduceAdd] at *
   omega
 
-private theorem four_parity (k : ℕ) :
+theorem four_parity (k : ℕ) :
     ∀ a : Fin 3, (image sigma (4*k) a).length % 2 = 1 := by
   induction k with
   | zero => intro a; rfl
