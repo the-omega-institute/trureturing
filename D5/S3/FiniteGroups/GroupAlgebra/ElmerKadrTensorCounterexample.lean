@@ -53,7 +53,7 @@ private theorem trace_conjugate (ρ : Representation K G V)
 
 -- Only V has a trace. X and M can be arbitrarily generated, in independent
 -- universes; no invalid cyclicity across an infinite-dimensional factor is used.
-private theorem trace_tensor_factorization
+theorem trace_tensor_factorization
     (ι : C →* G) (ρ : Representation K G V)
     (σ : Representation K G X) (τ : Representation K G M)
     (t : Module.End K M)
@@ -131,7 +131,7 @@ def dualBasis (m : ℕ) : Module.Basis (Fin m) K (DualPower K m) :=
 
 -- This is formula (12) evaluated on the primal monomial a_j. In particular
 -- the sign comes from inversion in the contragredient, not a basis rescaling.
-private theorem dual_action_basis_value (m : ℕ) (a : K) (i j : Fin m) :
+theorem dual_action_basis_value (m : ℕ) (a : K) (i j : Fin m) :
     dualAction K m (Multiplicative.ofAdd a) (dualBasis K m i)
       (Polynomial.degreeLT.basis K m j) =
         (j.val.choose i.val : K) * (-a) ^ (j.val - i.val) := by
@@ -226,7 +226,7 @@ section Interpolation
 
 variable {K : Type uK} [Field K] [Fintype K]
 
-private theorem power_sum (n : ℕ) (hn : n ≠ 0) :
+theorem power_sum (n : ℕ) (hn : n ≠ 0) :
     (∑ a : K, a ^ n) = if Fintype.card K - 1 ∣ n then -1 else 0 := by
   classical
   let φ : Kˣ ↪ K := ⟨fun x => x, Units.val_injective⟩
@@ -620,7 +620,7 @@ section CyclicNormWitness
 
 variable {K : Type uK} [Field K] [CharP K 3]
 
-private def remainderMul {m : ℕ} (q : K[X]) (hq : q.Monic)
+def remainderMul {m : ℕ} (q : K[X]) (hq : q.Monic)
     (hd : q.degree = m) (b : K[X]) : Module.End K (Primal K m) where
   toFun p := ⟨(b * (p : K[X])) %ₘ q, Polynomial.mem_degreeLT.mpr
     (hd ▸ Polynomial.degree_modByMonic_lt _ hq)⟩
@@ -828,7 +828,7 @@ def RelativeStableIso (τ : Representation K G M)
   ∃ (f : ρ.IntertwiningMap σ) (g : σ.IntertwiningMap ρ),
     RelativeFactors τ (g.comp f - .id ρ) ∧ RelativeFactors τ (f.comp g - .id σ)
 
-private theorem trace_relative_factor
+theorem trace_relative_factor
     {C : Type uC} [Group C] [Fintype C] (ι : C →* G)
     (τ : Representation K G M) (t : Module.End K M)
     (ht : (∑ c : C, (τ (ι c)).comp (t.comp (τ (ι c⁻¹)))) = LinearMap.id)
