@@ -5,10 +5,12 @@
    anchors: []
    digest: Internal first-return analysis for irrational rotations of an interval. -/
 
-import D5.S1.Words.ReturnWords.GoldenGapFirstReturn
-import D5.S1.Words.ReturnWords.GoldenRankArcs
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/26320 -/
+
+import Mathlib.Topology.Algebra.Group.SubmonoidClosure
 import Mathlib.Data.Nat.Find
 import Mathlib.Topology.Instances.AddCircle.DenseSubgroup
+import Mathlib.Topology.Instances.AddCircle.Real
 
 namespace D5.S1.Words
 
@@ -16,13 +18,13 @@ open Set
 
 namespace GoldenArcFirstReturnInternal
 
-private noncomputable def orbitPhase (alpha : Real) (i : Nat) : Real :=
+noncomputable def orbitPhase (alpha : Real) (i : Nat) : Real :=
   Int.fract (((i + 1 : Nat) : Real) * alpha)
 
 private noncomputable def localOrbitPhase (alpha a : Real) (i : Nat) : Real :=
   Int.fract (((i + 1 : Nat) : Real) * alpha - a)
 
-private theorem irrational_nat_mul_fract_ne_zero {alpha : Real} (halpha : Irrational alpha)
+theorem irrational_nat_mul_fract_ne_zero {alpha : Real} (halpha : Irrational alpha)
     {k : Nat} (hk : 0 < k) : Int.fract ((k : Real) * alpha) ≠ 0 := by
   rw [Int.fract_ne_zero_iff]
   rintro ⟨z, hz⟩
@@ -176,7 +178,7 @@ theorem fract_add_displacement_of_no_wrap {alpha x : Real} (k : Nat)
   exact Int.fract_eq_self.mpr
     ⟨add_nonneg hx0 (Int.fract_nonneg _), hnowrap⟩
 
-private theorem fract_add_displacement_of_wrap {alpha x : Real} (halpha : Irrational alpha)
+theorem fract_add_displacement_of_wrap {alpha x : Real} (halpha : Irrational alpha)
     {k : Nat} (hk : 0 < k) (hx1 : x < 1)
     (hwrap : 1 ≤ x + forwardDisplacement alpha k) :
     Int.fract (x + (k : Real) * alpha) = x - backwardDisplacement alpha k := by
@@ -470,7 +472,7 @@ private theorem right_local_first_return {alpha ell x : Real}
       linarith [hereturn.2]
     · exact (not_le_of_gt heq) (hqfirst e hepos hbackward.1)
 
-private theorem exists_orbit_phase_mem_Ioo {alpha a b : Real} (halpha : Irrational alpha)
+theorem exists_orbit_phase_mem_Ioo {alpha a b : Real} (halpha : Irrational alpha)
     (ha : 0 ≤ a) (hab : a < b) (hb : b ≤ 1) :
     ∃ i, orbitPhase alpha i ∈ Ioo a b := by
   have hz : DenseRange (fun z : Int => z • ((alpha : Real) : AddCircle (1 : Real))) := by
