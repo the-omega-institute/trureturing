@@ -77,7 +77,14 @@ internal static partial class LeanCacheEnsureCommand
             return FailureReceipt("failed", root, donor: null, method: "none", pins.Sha256,
                 ".lake exists but is not a directory", stampMiss: "corrupt");
 
-        var location = GitWorktreeInventory.Locate(root, runner);
+        LeanWorktreeLocation location;
+        try { location = GitWorktreeInventory.Locate(root, runner, requireIdentity: true); }
+        catch (OperationCanceledException) { throw; }
+        catch (Exception exception)
+        {
+            return FailureReceipt("failed", root, donor: null, method: "none", pins.Sha256,
+                "worktree identity unavailable: " + exception.Message);
+        }
         var routedRunner = RouteArtifactCache(runner, location.IsLinked, coldSelected: false);
         if (IsScopedCacheRequest(command, readEnvironment))
         {
@@ -184,24 +191,35 @@ internal static partial class LeanCacheEnsureCommand
     internal static bool IsScopedCacheRequest(
         IReadOnlyList<string> command, Func<string, string?> readEnvironment)
     {
-        var scope = readEnvironment(ScopedCacheScopeVariable);
-        if (scope is not ("targeted" or "scoped")) return false;
         // These are the canonical whole-operation demands, not a Lake argv
         // parser. An inherited scope hint cannot narrow their preparation.
         if (command.Any(static argument => argument is "update" or "clean"
                 or "cache" or "warm-donor" or "lean-cache-ensure")) return false;
         var build = command.ToList().IndexOf("build");
-        if (build < 0) return true; // selected compiled readout / scope discovery
-        var targets = command.Skip(build + 1).Where(static value => !value.StartsWith('-')).ToArray();
-        return targets.Length > 0 && !targets.Any(static target =>
-            (target.StartsWith(':') && target != ":moduleReports")
+        var targets = build < 0 ? []
+            : command.Skip(build + 1).Where(static value => !value.StartsWith('-')).ToArray();
+        if (build >= 0 && (targets.Length == 0 || targets.Any(IsWholeTarget))) return false;
+        var scope = readEnvironment(ScopedCacheScopeVariable);
+        if (scope is not ("targeted" or "scoped")) return false;
+        // A module-report facet without scoped membership selects every module.
+        return !targets.Contains(":moduleReports") || scope == "scoped"
+            && !string.IsNullOrWhiteSpace(readEnvironment("STRATALINT_INSPECTOR_SCOPE_FILE"));
+    }
+
+    private static bool IsWholeTarget(string target)
+    {
+        // Library facets and package-qualified library names still demand the
+        // whole library. Module facets retain their selected dependency closure.
+        var name = target[(target.LastIndexOf('/') + 1)..].Split(':')[0];
+        return (target.StartsWith(':') && target != ":moduleReports")
             || target.EndsWith(":report", StringComparison.Ordinal)
-            || target is "all" or "default" or "aggregate" or "report"
-            || target is "Trureturing" or "trureturing" or "Reg" or "LeanInformationAudit"
+            || name is "all" or "default" or "aggregate" or "report"
+                or "Trureturing" or "trureturing" or "Reg" or "LeanInformationAudit"
+                or "LeanInformationAuditInterface"
                 or "LeanInformationAuditAnalysis" or "LeanInformationAuditReg"
                 or "LeanInformationAuditRegAnalysis" or "LeanInformationAuditRegTests"
                 or "LeanInformationAuditFibTests"
-            || target.StartsWith('@'));
+            || target.StartsWith('@');
     }
 
     private static LocalHeatInspection InspectUsableLocalHeat(

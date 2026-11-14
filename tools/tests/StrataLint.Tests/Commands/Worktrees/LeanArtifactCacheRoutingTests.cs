@@ -50,13 +50,56 @@ public sealed class LeanArtifactCacheRoutingTests
     [InlineData("lake", "build", "default", false)]
     [InlineData("lake", "build", "aggregate", false)]
     [InlineData("lake", "build", "Trureturing", false)]
-    [InlineData("lake", "build", ":moduleReports", true)]
+    [InlineData("lake", "build", ":moduleReports", false)]
+    [InlineData("lake", "build", "Trureturing:static", false)]
+    [InlineData("lake", "build", "trureturing/Trureturing:static", false)]
+    [InlineData("lake", "build", "leanInspector/LeanInformationAudit", false)]
+    [InlineData("lake", "build", "leanInspectorInterface/LeanInformationAuditInterface:static", false)]
+    [InlineData("lake", "build", "D5.A:olean", true)]
     [InlineData("lake", "build", "D5.A", true)]
     public void ScopeMarkerCannotNarrowWholeLakeOperations(string executable, string verb, string target, bool expected)
     {
         var environment = new Dictionary<string, string?> {{ "STRATALINT_LEAN_CACHE_SCOPE", "targeted" }};
         Assert.Equal(expected, LeanCacheEnsureCommand.IsScopedCacheRequest(
             [executable, verb, target], name => environment.GetValueOrDefault(name)));
+    }
+
+    [Theory]
+    [InlineData(null, false)]
+    [InlineData("", false)]
+    [InlineData("selected-scope.json", true)]
+    public void ModuleReportFacetRequiresScopedMembership(string? path, bool expected)
+    {
+        Assert.Equal(expected, LeanCacheEnsureCommand.IsScopedCacheRequest(
+            ["lake", "build", ":moduleReports"], name => name switch
+            {
+                "STRATALINT_LEAN_CACHE_SCOPE" => "scoped",
+                "STRATALINT_INSPECTOR_SCOPE_FILE" => path,
+                _ => null,
+            }));
+    }
+
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void UnknownCheckoutIdentityCannotAdmitArtifactProducer(bool hot, bool corrupt)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        if (hot) WriteHotCache(repository.Path);
+        var marker = Path.Combine(repository.Path, ".git");
+        Directory.Move(marker, marker + "-saved");
+        if (corrupt) File.WriteAllText(marker, "gitdir: missing-administration\n");
+        var result = LeanCacheEnsureCommand.RunWithWriter(repository.Path,
+            ["--", "/usr/bin/env"], new ProductionWorktreeProcessRunner(),
+            new RecordingDirectoryCloner(), FileSystemLeanCacheStateProbe.Instance,
+            name => name == "STRATALINT_LEAN_CACHE_SCOPE" ? "targeted" : null);
+
+        Assert.False(result.Success);
+        Assert.Contains("worktree identity unavailable", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("LAKE_ARTIFACT_CACHE=1", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]

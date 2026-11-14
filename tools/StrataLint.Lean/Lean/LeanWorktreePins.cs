@@ -647,11 +647,21 @@ internal static class GitWorktreeInventory
 
     internal static LeanWorktreeLocation Locate(
         string repositoryRoot,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner,
+        bool requireIdentity = false)
     {
         var root = LeanCacheGuard.PhysicalPath(repositoryRoot);
         var gitMarker = Path.Combine(root, ".git");
-        if (Directory.Exists(gitMarker) || !File.Exists(gitMarker))
+        if (requireIdentity)
+        {
+            if (!Directory.Exists(gitMarker) && !File.Exists(gitMarker))
+                throw new InvalidOperationException("checkout .git pointer is absent");
+            var top = StrictUtf8.GetString(RunGit(root, ["rev-parse", "--show-toplevel"],
+                runner, "could not resolve checkout top level").StandardOutput).Trim();
+            if (!string.Equals(root, LeanCacheGuard.PhysicalPath(top), StringComparison.Ordinal))
+                throw new InvalidOperationException("checkout top level does not match the requested root");
+        }
+        if (!requireIdentity && (Directory.Exists(gitMarker) || !File.Exists(gitMarker)))
         {
             return new LeanWorktreeLocation(
                 IsLinked: false,
@@ -676,6 +686,7 @@ internal static class GitWorktreeInventory
             LeanCacheGuard.PhysicalPath(gitDirectory),
             LeanCacheGuard.PhysicalPath(commonDirectory),
             StringComparison.Ordinal);
+        if (!linked) return new LeanWorktreeLocation(false, root);
         var parent = Directory.GetParent(commonDirectory)
             ?? throw new InvalidOperationException(
                 $"common Git directory has no main checkout parent: {commonDirectory}");
