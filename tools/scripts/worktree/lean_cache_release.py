@@ -541,7 +541,7 @@ def fetch_staging_cleanup(root, *, now):
 
 
 def publish(root, partition, verification=None, *, build_report=True):
-    # Build/content failures remain failures. Production transport is optional;
+    # Build/content and local archive failures remain failures. Remote transport is optional;
     # explicit verification succeeds only after the uploaded bytes restore.
     # A caller's LEAN_REPORT override must not move publication outside buildDir.
     if build_report:
