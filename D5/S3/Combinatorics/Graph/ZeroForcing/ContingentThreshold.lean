@@ -59,7 +59,7 @@ theorem chronological_iff_zero_forcing (G : SimpleGraph V) (S : Finset V) :
         exact ⟨[], .nil _⟩
       · have hv : ∃ v, v ∉ B := by
           by_contra h
-          push_neg at h
+          push Not at h
           exact hB (Finset.eq_univ_of_forall h)
         obtain ⟨v, hv⟩ := hv
         obtain ⟨u, w, hu, hw, huw, hall⟩ := Black.exists_initial_force (hb v) hv
@@ -109,7 +109,7 @@ private theorem critical_subset (W : Finset V) :
   classical
   intro e he
   obtain ⟨u, hu, rfl⟩ := Finset.mem_image.mp he
-  exact SimpleGraph.mem_edgeSet.mpr (target_mem G W u).1
+  exact (SimpleGraph.mem_edgeSet G).mpr (target_mem G W u).1
 
 private theorem crossing_critical (W : Finset V) {u w : V}
     (hu : u ∉ W) (hw : w ∈ W) (huw : G.Adj u w) :
@@ -168,18 +168,17 @@ theorem critical_edges_fort_minimality (W : Finset V) (hW : W.Nonempty) :
       ext w
       constructor
       · intro hw
+        have ha : (G.deleteEdges (F : Set (Sym2 V))).Adj u.val w := by
+          simpa only [finiteNeighbors, Finset.mem_filter, Finset.mem_univ, true_and] using
+            (Finset.mem_inter.mp hw).1
         have hm : w ∈ finiteNeighbors G u.val ∩ W := by
-          simpa only [Finset.mem_inter, finiteNeighbors, Finset.mem_filter,
-            Finset.mem_univ, true_and] using
-            (show G.Adj u.val w ∧ w ∈ W from
-              ⟨(SimpleGraph.deleteEdges_adj.mp
-                (by simpa [finiteNeighbors] using (Finset.mem_inter.mp hw).1)).1,
-                (Finset.mem_inter.mp hw).2⟩)
+          exact Finset.mem_inter.mpr ⟨by simp [finiteNeighbors,
+            (SimpleGraph.deleteEdges_adj.mp ha).1], (Finset.mem_inter.mp hw).2⟩
         rwa [target_eq G W u] at hm
       · intro hw
         have hwt := Finset.mem_singleton.mp hw
         subst w
-        simpa [finiteNeighbors, SimpleGraph.deleteEdges_adj] using
+        simpa [finiteNeighbors, SimpleGraph.deleteEdges_adj, and_assoc] using
           (show G.Adj u.val (target G W u) ∧ s(u.val,target G W u) ∉ F ∧
             target G W u ∈ W from ⟨(target_mem G W u).1, hn, (target_mem G W u).2⟩)
     rw [heq]
