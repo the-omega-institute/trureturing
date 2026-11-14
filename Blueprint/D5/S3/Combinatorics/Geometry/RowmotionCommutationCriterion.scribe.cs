@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Geometry;
 internal sealed class RowmotionCommutationCriterionDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/striker2018generalizedtoggles");
+        LibraryNoteRef.Create("D5/L/FiniteGroups/striker2018generalizedtoggles");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The complete commutation relation of guarded interval-closed toggles on arbitrary partial orders.",
