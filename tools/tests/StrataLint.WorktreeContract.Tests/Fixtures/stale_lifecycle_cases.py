@@ -1040,10 +1040,13 @@ assert pool.claim(options)['status'] == 'claimed'
             cwd=self.main, env=protocol.git_environment({"PATH": str(bin_dir) + os.pathsep + os.environ["PATH"]}),
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         try:
-            deadline = time.monotonic() + 15
-            while not ready.exists() and time.monotonic() < deadline:
+            deadline = time.monotonic() + 60
+            while not ready.exists() and child.poll() is None and time.monotonic() < deadline:
                 time.sleep(0.02)
-            self.assertTrue(ready.exists())
+            if not ready.exists():
+                resume.touch()
+                output, error = child.communicate(timeout=20)
+                self.fail("checkout was not reached: " + output + error)
             result = maintenance.run(self.main)
             row = next(item for item in result["items"] if item["path"] == str(destination))
             self.assertEqual("initialization_in_progress", row["reason"])
