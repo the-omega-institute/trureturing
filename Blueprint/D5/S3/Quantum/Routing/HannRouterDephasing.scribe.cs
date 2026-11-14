@@ -54,7 +54,19 @@ internal sealed class HannRouterDephasingDocument : IScribeDocumentDefinition
                     + "difference of the two branch masses. Constant kernel row sums give uniform attainment. "
                     + "The router mismatch formula determines the exponent in each clean-output matrix entry. "
                     + "The result assumes this single router hold and ideal remaining gates."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Supply("initialized-amplitude-evaluation", "initialized_clean", "Clean input amplitude evaluation",
+                InitializedStatement(), "For every depth and arbitrary complex joint address/bus amplitudes, "
+                + "initialized evaluates to the corresponding coefficient on each clean basis state. "
+                + "This is the exact amplitude supplier used by the heterogeneous physical hold."),
+            Supply("finite-ket-summation", "sum_ket", "Finite ket evaluation under a sum",
+                KetStatement(false), "Both index types are arbitrary finite types. The basis type has "
+                + "decidable equality. Summing a finite ket against any function evaluates that function "
+                + "at each ket basis point. No injectivity of the basis map is assumed."),
+            Supply("conjugate-ket-summation", "sum_ket_conj", "Conjugate finite ket evaluation",
+                KetStatement(true), "The conjugate ket identity has the same complete finite-type scope. "
+                + "These two summation identities are consumed in the full-State fidelity calculation "
+                + "for arbitrary joint amplitudes."))));
 
     private static DocumentBlock Def(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id),
@@ -80,6 +92,34 @@ internal sealed class HannRouterDephasingDocument : IScribeDocumentDefinition
         Seq(Sum, Underscore, Grp(I(x), InMacro, t), Grp(b));
     private static Formula Conj(Formula a) => C("conj", a);
     private static Formula Both(params Formula[] a) => System.Linq.Enumerable.Aggregate(a, And);
+
+    private static DocumentBlock Supply(string id, string name, string title, Formula formula, string text) =>
+        Describe.Lean(DescribeId.Create(id),
+            DeclarationHandle.Create("D5/S3/Quantum/Routing/HannRouterDephasing." + name), H(title),
+            StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+
+    private static Formula InitializedStatement()
+    {
+        Formula n=I("n"), a=I("a"), b=I("b"), psi=I("psi"), addr=C("Address",n);
+        return All("n",I("Nat"),All("psi",Arr(C("Prod",addr,I("Bool")),I("Complex")),
+            All("a",addr,All("b",I("Bool"),Eq(C("initialized",n,psi,C("clean",n,a,b)),
+                App(psi,C("pair",a,b))))));
+    }
+
+    private static Formula KetStatement(bool conjugate)
+    {
+        Formula iota=I("iota"), sigma=I("sigma"), v=I("v"), psi=I("psi"), g=I("g"),
+            s=I("s"), i=I("i");
+        Formula inner=SumOver("i",iota,C("ite",Eq(s,App(v,i)),App(psi,i),D(0)));
+        Formula left=SumOver("s",sigma,Mul(conjugate ? Conj(inner) : inner,App(g,s)));
+        Formula right=SumOver("i",iota,Mul(conjugate ? Conj(App(psi,i)) : App(psi,i),App(g,App(v,i))));
+        return All("iota",I("Type"),All("sigma",I("Type"),
+            All("indices",C("Fintype",iota),All("bases",C("Fintype",sigma),
+            All("decidable",C("DecidableEq",sigma),All("v",Arr(iota,sigma),
+            All("psi",Arr(iota,I("Complex")),All("g",Arr(sigma,I("Complex")),Eq(left,right)))))))));
+    }
+
     private static Formula Statement()
     {
         Formula n=I("n"), q=I("q"), d=I("D"), psi=I("psi"), a=I("a"), ap=I("aPrime"),
