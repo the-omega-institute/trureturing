@@ -414,7 +414,7 @@ private theorem correlation_transition {dA dB : ℕ} (hdA : 2 ≤ dA) (hdB : 2 �
   intro i _
   ring
 
-private theorem scaled_isometry_traceNorm
+theorem scaled_isometry_traceNorm
     {a b m n : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
     [Fintype m] [Fintype n]
     (U : Matrix m a ℂ) (V : Matrix n b ℂ) (X : Matrix a b ℂ)

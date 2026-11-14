@@ -78,7 +78,7 @@ class BuildWorkContracts(unittest.TestCase):
         if recorder_failure:
             script("tools/lean-inspector/build_work.py",
                    "import sys\nprint('LEAN_BUILD_WORK_UNKNOWN recorder unavailable', file=sys.stderr)\nsys.exit(2)\n")
-        env = dict(os.environ, STRATALINT_INSPECTOR_SUPERVISED="1", LAKE_BIN=str(lake),
+        env = dict(os.environ, FULL_BUILD="1", STRATALINT_INSPECTOR_SUPERVISED="1", LAKE_BIN=str(lake),
                    LAKE_ARGUMENTS=str(root / "lake-arguments"),
                    STRATALINT_LEAN_PRODUCER_DLL=str(producer), GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2", GITHUB_JOB="current", GITHUB_SHA="event-sha",
                    STRATALINT_LEAN_BUILD_WORK_FILE=str(fact),
