@@ -22,10 +22,6 @@ $$\forall (a b : (\operatorname{EuclideanSpace} \mathbb{R} (\operatorname{Fin} 2
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Percolation/MarkeyFiveSiteGrowthDifference.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/a400701-hexgrowth` (proved) by `D5/S3/StatisticalMechanics/Percolation/MarkeyFiveSiteGrowthDifference.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"a400701-hexgrowth","declaration_gid":"D5/S3/StatisticalMechanics/Percolation/MarkeyFiveSiteGrowthDifference.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Scott R. Shannon; Aidan Markey (2024). *OEIS A374338 (2024) fixed-radius circle vertices and A400701 (2026) five-site triangular growth*. URL: <https://oeis.org/A374338>.
