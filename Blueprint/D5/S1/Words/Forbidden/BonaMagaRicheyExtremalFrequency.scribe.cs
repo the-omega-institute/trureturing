@@ -87,12 +87,14 @@ internal sealed class BonaMagaRicheyExtremalFrequencyDocument : IScribeDocumentD
                     + "no general classification of maximizers follows."))), DescribeRole.Theorem))));
 
     private static Formula Word() => Call("List", F.Id("Bool"));
-    private static Formula N() => F.Id("Nat");
-    private static Formula R() => F.Id("Real");
+    private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula R() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(Paren(a), FormulaLogicOperator.And, Paren(b));
     private static Formula Qualified(string owner, string name, params Formula[] args) =>
-        Call(owner + "." + name, args);
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)),
+            Paren(Seq(args.SelectMany((value, i) =>
+                i == 0 ? new[] { value } : new[] { Comma, Sp, value }).ToArray())));
     private static Formula Length(Formula w) => Qualified("List", "length", w);
     private static Formula Proposed(Formula k) => Call("proposedWord", k);
     private static Formula Limit(Formula w, Formula r) =>

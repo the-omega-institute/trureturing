@@ -23,7 +23,7 @@ internal sealed class BalancedBordersHalfFrequencyDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("The displayed statement uses the literal binary-word counts and border operations. All counts in real or rational arithmetic carry the displayed coercions. Nat.sub denotes truncated subtraction. All hypotheses and parameters have their displayed domains."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("rho-singleton"),
                 DeclarationHandle.Create(Prefix + "rho_singleton"), H("rho_singleton"),
-                StatementSource.FromAuthor(Disp(All("b", F.Id("Bool"), All("m", N(), Imp(LtF(Num(0), F.Id("m")), Equal(Call("rho", ListLit(F.Id("b")), F.Id("m")), Call("Bool.cond", F.Id("b"), Num(0), Num(1)))))))),
+                StatementSource.FromAuthor(Disp(All("b", F.Id("Bool"), All("m", N(), Imp(LtF(Num(0), F.Id("m")), Equal(Call("rho", ListLit(F.Id("b")), F.Id("m")), Qualified("Bool", "cond", F.Id("b"), Num(0), Num(1)))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every Boolean b and every natural m greater than zero, the native average for the singleton forbidden word [b] is zero when b is true and one when b is false. The only avoiding word is the length-m repetition of the opposite bit. Bool.cond selects the first value when b is true and the second when b is false."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("singleton-not-tendsto-half"),
