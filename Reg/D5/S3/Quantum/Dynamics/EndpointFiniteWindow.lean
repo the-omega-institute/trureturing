@@ -86,7 +86,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@actual_endp
   sourceSelection := some {
     owner := `D5.S3.Quantum.Dynamics.EndpointFiniteWindow
     definition := none
-    coordinates := #[0, 1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "arg"]
       stateBinder := 3
@@ -197,7 +197,7 @@ def registration.{audit_u} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Dynamics.EndpointFiniteWindow
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 7]
+    coordinates := #[0, 2, 3, 4, 7]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "arg"]
