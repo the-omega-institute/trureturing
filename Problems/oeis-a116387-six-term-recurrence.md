@@ -114,18 +114,32 @@ required by this result. Classical power-series identities and
 polynomial normalization are not separate open-problem resolutions.
 
 The D5 theorem and its six-role whole-law Reg mirror compile with the
-pinned Lean toolchain. The theorem supplies the native construction and
-the full recurrence without an extra hypothesis. Current scoped axiom
-and source-binding evidence and the canonical rendered projection remain
-to be extracted. The unfinished audit of `result` is associated with
-issue #30173; no validated binding is asserted.
+pinned Lean toolchain. The scoped report gives the theorem exactly the
+standard axioms `propext`, `Classical.choice` and `Quot.sound`. The theorem
+supplies the native construction and the full recurrence without an extra
+hypothesis. The Reg mirror proves whole-law equivalence, variation,
+sensitivity of all six roles and actual observational dependence. Its
+source binding is `declared_unresolved`, with no certificate: `IE-C050
+ClosedTruthReadout`, `reason=forbidden_dependency`,
+`rule=source.unsafe_or_external`,
+`site="Nat.mod; source_operand=Nat.mod"`. The missing validated source
+binding is recorded in issue #30173 under the linked-issue delivery
+boundary; no validated binding is asserted.
 
 ## Triage
+
+The mechanism is the native quadratic followed by a differential equation
+with polynomial forcing. A constant-one polynomial clears the denominator;
+the forcing has degree three, so coefficient extraction is uniform over
+the entire requested range. The proof uses no assumed initial segment.
+This settles the displayed recurrence within the formal model; it does
+not supply the entry's other representations or asymptotic estimates.
 
 | Assertion | Mechanism and boundary |
 | --- | --- |
 | Native source | Proved in Lean: construction, quadratic uniqueness, normalized-root uniqueness and unit inverse |
 | Exact six-term event | Proved in Lean by the differential certificate and all six shifts for every $n\ge5$, including $n=5$ |
+| Source-bound audit | Compiled whole-law proofs; binding remains unresolved at the reported `Nat.mod` dependency, linked to #30173 |
 | Polynomial certificate | Computed symbolically: the three ordered operator residuals and forcing residual are zero; this is not Lean evidence |
 | Finite coefficients | No finite-prefix experiment substitutes for the universal theorem |
 | General algebraic recurrences | Classical supporting method, with no separate open-problem claim |
@@ -134,9 +148,8 @@ issue #30173; no validated binding is asserted.
 
 ## ASSUMED-UNVERIFIED
 
-The standard-three axiom report, source-bound registration and canonical
-projection remain unverified pending their actual scoped producers.
-Independent source-fidelity and admission review, freezing and publication
-are separate from the compiled theorem. Universal absence of prior proofs
-is not established by the bounded literature comparison. No publication
-or external-problem credit is claimed by this dossier.
+The source-bound registration is unfinished at the concrete diagnostic
+above. Independent source-fidelity and admission review, freezing and
+publication are separate from the compiled theorem. Universal absence of
+prior proofs is not established by the bounded literature comparison.
+No publication or external-problem credit is claimed by this dossier.
