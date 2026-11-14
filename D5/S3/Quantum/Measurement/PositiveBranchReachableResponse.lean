@@ -90,7 +90,7 @@ def survivalEffect (K : α → Matrix n n ℂ) (c : α → ℝ) (N : ℕ) : Matr
   (weightedDual K c)^[N] 1
 
 omit [DecidableEq n] in
-private theorem weightedCP_psd (K : α → Matrix n n ℂ) (c : α → ℝ)
+theorem weightedCP_psd (K : α → Matrix n n ℂ) (c : α → ℝ)
     (hc : ∀ a, 0 ≤ c a) {X : Matrix n n ℂ} (hX : X.PosSemidef) :
     (weightedCP K c X).PosSemidef := by
   exact Matrix.posSemidef_sum _ fun a _ =>
@@ -555,7 +555,7 @@ private theorem weightedCP_reachable_support (K : α → Matrix n n ℂ)
   rw [matrixSupport_eq_range hσ.isHermitian]
   exact ⟨(K a)ᴴ.toEuclideanLin v, rfl⟩
 omit [DecidableEq n] in
-private theorem weightedCP_mono (K : α → Matrix n n ℂ)
+theorem weightedCP_mono (K : α → Matrix n n ℂ)
     (c : α → ℝ) (hc : ∀ a, 0 ≤ c a) :
     Monotone (weightedCP K c) := by
   exact (monotone_iff_map_nonneg (weightedCP K c)).mpr fun X hX =>
@@ -728,7 +728,7 @@ private theorem compactBranchRatio_spec {Θ : Type*} [TopologicalSpace Θ]
     exact (le_div_iff₀ (hpos θ₀ hθ₀ a)).mp
       (hxmin (Set.mem_insert_of_mem _ (Set.mem_iUnion.mpr ⟨a, θ, hθ, rfl⟩)))
 omit [DecidableEq n] in
-private theorem geometric_trace_tendsto (K : α → Matrix n n ℂ)
+theorem geometric_trace_tendsto (K : α → Matrix n n ℂ)
     (c : α → ℝ) (hc : ∀ a, 0 ≤ c a) (σ : Matrix n n ℂ)
     (hσ : σ.PosSemidef) (N : ℕ) (hN : 1 ≤ N) (q : ℝ)
     (hq : 0 ≤ q) (hq1 : q < 1)
@@ -743,7 +743,7 @@ private theorem geometric_trace_tendsto (K : α → Matrix n n ℂ)
     (Matrix.nonneg_iff_posSemidef.mp
       (positive_iterate K c hc σ (Matrix.nonneg_iff_posSemidef.mpr hσ) k)).trace_nonneg).1
 open scoped Matrix.Norms.Elementwise in
-private theorem psd_norm_le_trace (A : Matrix n n ℂ) (hA : A.PosSemidef) :
+theorem psd_norm_le_trace (A : Matrix n n ℂ) (hA : A.PosSemidef) :
     ‖A‖ ≤ A.trace.re := by
   classical
   have ht := (Complex.nonneg_iff.mp hA.trace_nonneg).1
@@ -765,7 +765,7 @@ private theorem psd_norm_le_trace (A : Matrix n n ℂ) (hA : A.PosSemidef) :
   exact (pi_norm_le_iff_of_nonneg ht).mpr fun i =>
     (pi_norm_le_iff_of_nonneg ht).mpr fun j => hentry i j
 open scoped Matrix.Norms.Elementwise in
-private theorem geometric_orbit_summable (K : α → Matrix n n ℂ)
+theorem geometric_orbit_summable (K : α → Matrix n n ℂ)
     (c : α → ℝ) (hc : ∀ a, 0 ≤ c a) (σ : Matrix n n ℂ)
     (hσ : σ.PosSemidef) (N : ℕ) (hN : 1 ≤ N) (q : ℝ)
     (hq : 0 ≤ q) (hq1 : q < 1)
