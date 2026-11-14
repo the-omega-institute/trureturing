@@ -1,0 +1,46 @@
+### 137.9 根三角恰是实际内外椭球接触，覆盖仍另有量词
+
+因 $o\notin A$、$g|_A=1$，全态式(XI137.8)直接给
+
+$$
+\iota(A)\cap\partial_H\Omega\ne\varnothing
+\quad\Longleftrightarrow\quad A\cap B_2(o)\ne\varnothing.
+\tag{XI137.30}
+$$
+
+若 $x\in A\cap D_s$、$s\in S$，则 $s\ne o$，Inj 使 $D_s\ne A$，所以该交点必为原纯点。于是 $o\perp s$、$o\perp x$、$s\perp x$，给根三角。反向，根三角的另两点立即给这样的交点。这证明(XI137.10)，也复用 X130.2、THREE_COPY VIII131.6 的原面接触含义。
+
+因此根若无三角，准确剩余形状是
+
+$$
+\iota(D_o)\Subset\operatorname{int}_H\Omega.
+\tag{XI137.31}
+$$
+
+符号表示紧包含，等价于在任一辅助环境尺下到外边界有严格正距离；两边均为实际三维椭球。定理证明了外层的椭球性，没有证明原全域凸体与全效应约束禁止这种严格嵌套。只画两颗嵌套椭球也不是合法反模型：还必须同时实现原全部纯标签、全部完整 $D_p$、整个原效应区间、Conn 和同一根芽。
+
+原固定根条件仍严格取 [X133.1][Q137X]：
+
+$$
+\begin{aligned}
+\mathsf D_2(o):&\quad
+\forall q\in P:\ o\perp q\ \lor\ \exists r\in P\ (o\perp r\land q\perp r),\\
+\mathsf R_1:&\quad\exists o\in P\ \mathsf D_2(o).
+\end{aligned}
+\tag{XI137.32}
+$$
+
+$\mathsf D_2(o)$ 准确要求 $P\subseteq S_o\cup Q(o)$；X133.3在支付此条件后才进一步证明 $Q(o)=P$。本章没有由 $\mathsf G(o)$ 取得根三角、$\mathsf D_2(o)$ 或某个根的 $\mathsf R_1$。即使另取得一次(XI137.30)接触，也只先得到这个根的三角；仍须完整全域传播，不能把一个三角改称 $\mathsf R_1$。
+
+另须与 X132定义132.3 的条件区分：
+
+$$
+\mathsf L:\quad
+\forall p\in P\ \exists\varepsilon_p\in(0,1)\ \forall q\in P:\quad
+0<T_p(q)<\varepsilon_p
+\ \Longrightarrow\ \exists r\in P:\ T_p(r)=T_q(r)=0.
+\tag{XI137.33}
+$$
+
+它量化每个 $p$，并用原最低读数的小正比较带选择目标；$\mathsf G(o)$ 只在一个根的环境纯邻域选择目标。未证明二者前件相同，也没有把该条件的静态重构结论改计为本章结论。根芽在本章是支持定理的明示前件，不是已完成的量子替代公理。
+
