@@ -1,0 +1,24 @@
+**条件应用146.8（同原对象、标准公理与操作接口）。** 采用 [XI145][XII146XI] 定理XI145.2的完整原域：$V$ 为非零有限维实空间，$C$ 闭尖生成，$u$ 在非零锥元上严格正；$K=C\cap\{u=1\}$，$P=\operatorname{ext}K$，效应为整个 $[0,u]_{C^*}$，$T_p$ 是完整确认族上的 minimum，$D_p$ 是整个零集。EB3 要求每个原 $D_p$ 都是完整非退化闭三球，Inj 要求球标签单射。完整 EB3+Inj+$\dim_{\mathbb R}V=9$，或 XI145.2已证明等价的 EB3+Conn+九维入口，供应同一个
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,
+\qquad\Phi(\operatorname{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{XII146.25}
+$$
+
+准确消费的是 XI145.9 的全部静态字典及 XI145 §145.9 的全部原物理合同，不是本卷 XII145的真实标签返回定理；后者不是本章的数学前提。以下对应始终沿同一个 $\Phi$。
+
+| 标准静态对象／量子公理 | 完整同原对应及其操作界限 |
+| --- | --- |
+| 载体、正性与质量 | 整个 $V=\Phi(\operatorname{Herm}_3)$、$C=\Phi(\operatorname{PSD}_3)$，含零、次归一和任意非负质量；$u\Phi=\operatorname{Tr}$。对偶质量函数 $u$ 与原 Jordan 单位 $U=\Phi(I_3)$ 不混型。 |
+| 态与统计混合 | 整个 $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$，仿射维八；全部有限凸组合与非负组合保持。零质量只有零锥元，不强定其归一态。 |
+| 纯态与复叠加 | 全部 $P\cong\mathbb{CP}^2$，实维四；非零 $w\in\mathbb C^3$ 对应 $\Phi(ww^*/(w^*w))$，复非零倍数同标签。任意非零复线性叠加有原射线标签，未因此取得实际相干制备。 |
+| 效应与 Born 评价 | 全部效应恰为 $f_M(\Phi X)=\operatorname{Tr}(MX)$、$0\preceq M\preceq I_3$，保零、单位、补及序，覆盖每个混输入和非负质量。任意实线性读数对应 Hermitian $M$。 |
+| 完整确认、least 与 minimum | 对单位 $v$，$P_v=vv^*$、$Q_v=I-P_v$，完整菜单为 $f_{P_v+B}$，$B=Q_vBQ_v$、$0\preceq B\preceq Q_v$；菜单非单点，least 为 $f_{P_v}$，每个 $\rho$ 上已达 minimum 是 $\operatorname{Tr}(P_v\rho)$。 |
+| 纯比较和端点 | $T_{p_v}(p_w)=\lvert v^*w\rvert^2$；非归一向量除以两范数平方之积。相同射线给一，正交给零，纯 PR 是后果，不是顺序测量交换律。 |
+| 完整排除球 | $D_{p_v}$ 是支持于 $v^\perp\cong\mathbb C^2$ 的全部二阶密度矩阵；Pauli 球 $\lVert r\rVert\le1$，纯球缘 $\mathbb{CP}^1\cong S^2$，中心 $\Phi(Q_v/2)=(U-p_v)/2$。不是只识别纯零点。 |
+| 原零框架与数学区别 | 原零三角是和为 $I_3$ 的三个正交秩一投影，least 效应和为 $u$；零边有唯一第三点，数学完美区别容量三，全部不同纯对有原真最小面。 |
+| 全部有限数学测量 | 任意有限族 $f_j\in C^*$、$\sum_jf_j=u$ 恰为全部 POVM $M_j\succeq0$、$\sum_jM_j=I_3$；零项、重复及任意有限粗粒化均保留。数学概率菜单不供应实际仪器。 |
+| 谱与可观测量 | 全态有三项正交纯谱分解，含零权、重谱及任意非负质量；全部 Hermitian 可观测量有实谱和谱投影。重谱不指定唯一逐射线细化。 |
+| Jordan、共同尺与齐次性 | $\langle\Phi X,\Phi Y\rangle_\Phi=\operatorname{Tr}(XY)$ 自对偶化原锥，$\Phi X\circ\Phi Y=\Phi((XY+YX)/2)$；正定合同给锥内部齐次性。它们不自动是可调用事件。 |
+| 全域球心相容 | $R(x)=(u(x)U-x)/2$ 正、保质量、可逆，$R(p)=c_p$；同一原态的全部有限纯配方替换后仍相同。其逆 $u(y)U-2y$ 不正，不能当作实际恢复。 |
