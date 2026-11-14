@@ -33,16 +33,14 @@ internal sealed class SchulteImplicitQuadrinomialPowersDocument : IScribeDocumen
                 + "gives the formula. The polynomial identity's k<=3*N hypothesis follows "
                 + "from n>=1 and m>=1. The statement concerns formal coefficients; the "
                 + "source's separate lattice-path and logarithmic conjectures are outside it.",
-                DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("oeis-a262082-schulte-power-coefficient"), ResolutionKind.Proved)))));
+                DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
+        DescribeRole role) =>
         Describe.Lean(DescribeId.Create("schultea262082-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role, resolution);
+            Blocks(Paragraph(Text(prose))), role);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
@@ -65,11 +63,12 @@ internal sealed class SchulteImplicitQuadrinomialPowersDocument : IScribeDocumen
     private static Formula NativeFormula()
     {
         var p = V("P"); var n = V("n"); var x = V("X");
-        return All("R", V("CommRing"), All("n", N(), All("P", Series(V("R")),
+        return All("R", V("Type"), Seq(OpenBracket, Call("CommRing", V("R")),
+            CloseBracket, Sp, All("n", N(), All("P", Series(V("R")),
             Seq(Call("Native", n, p), Sp, Iff, Sp,
                 Eq(p, Add(Add(Add(D(1), Mul(x, Pow(p, n))),
                     Mul(Pow(x, D(2)), Pow(p, Mul(D(2), n)))),
-                    Mul(Pow(x, D(3)), Pow(p, Mul(D(3), n)))))))));
+                    Mul(Pow(x, D(3)), Pow(p, Mul(D(3), n))))))))));
     }
     private static Formula ResultFormula()
     {

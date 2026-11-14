@@ -7,11 +7,17 @@
    digest: Native integer series and every power coefficient in Schulte A262082. -/
 
 /-
-All declarations have proof_shape: bind-only. Admission basis for result:
-open-problem-resolution, source-qualified issue #30449. No escape witness.
-Consumed helpers: native_iff -> native_exists_unique; native_exists_unique -> result;
-rational_native, transport -> lagrange_bridge, coefficient_formula;
-lagrange_bridge, quadrinomial_coeff -> coefficient_formula; coefficient_formula -> result.
+proof_shape: native_iff: bind-only; consumer: native_exists_unique.
+proof_shape: native_exists_unique: bind-only; consumer: result.
+proof_shape: rational_native: bind-only; consumer: coefficient_formula.
+proof_shape: transport: bind-only; consumer: lagrange_bridge.
+proof_shape: lagrange_bridge: bind-only; consumer: coefficient_formula.
+proof_shape: quadrinomial_coeff: bind-only; consumer: coefficient_formula.
+proof_shape: coefficient_formula: bind-only; consumer: result.
+proof_shape: result: bind-only.
+admission_basis: open-problem-resolution; source-qualified issue #30449.
+escape_witness: none.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30462.
 The existing normalized-contraction, Lagrange and A008287 theorems are applied directly.
 -/
 
@@ -138,8 +144,4 @@ theorem result : ∀ n : ℕ, 1 ≤ n →
           ((3*(n*k+m)-2*j).choose (k-j) : ℚ) := by
   intro n hn
   exact ⟨native_exists_unique n, fun P hP m hm k => coefficient_formula n m k hn hm P hP⟩
-
-
-#print axioms result
-
 end D5.S1.Recurrence.Algebraic.SchulteImplicitQuadrinomialPowers
