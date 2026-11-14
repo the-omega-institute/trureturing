@@ -1,0 +1,7 @@
+以下仓内来源统一取固定提交 `088113172f8caa47dd61617f69e908a7f370fab1` 的正文。所用源接口及其量词如下。
+
+* [VII103.2][Q142VII]及[IX116.1—116.2][Q142IX]给每个 $D_p$ 为非点紧暴露极大真面，$S_p=\partial_{\rm rel}D_p\cong S^2$，$D_p=\operatorname{conv}S_p$；全部非空原真面只有纯单点和完整排除球。不同完整球至多交于一个原纯点。这些结论不输入全 Pair。
+* [THREE_COPY VIII130.2][Q142TC]、[IX119.10、120.2、120.7—120.8][Q142IX]及[XI137.2][Q142XI]在完整 EB3+$\mathsf{Conn}$ 下给全部原标签的 Inj、$\mathcal A_p=\{e_p\}$、$\dim L_p=4$。特别地，这里的 $p$ 遍历整个 $P$，不是只遍历 $Q$。$g_p=u-e_p$ 只在 $p$ 为零，限制 $L_p\to\operatorname{Aff}(D_p)$ 为线性同构；此时不预付其逆的正性。
+* [XI137.3、137.7—137.8及139.2第1、2项、139.5、139.8][Q142XI]给紧纯集 $Q\subset P$，其原子空间拓扑为无边界四维拓扑流形；存在同一个环境开集 $U_0\ni o$，使 $Q(p)=Q$ 对每个 $p\in U_0\cap P$ 成立。$\Lambda$ 紧，$a\mapsto D_a$ 在整个 $\Lambda$ 上 Hausdorff 连续，且 $S_p\subseteq\Lambda$ 对这些近根 $p$ 成立。
+* [XI141.2][Q142XI]在这些相同原前件和源接口下给 $\dim_{\mathbb R}V=9$。其上界使用原对偶边界中的实际开集与 Hurewicz 紧闭映射定理，下界使用 Alberti 整个奇异集的图覆盖。这里复用该完整维数结论，不重新将九维设作前件。
+

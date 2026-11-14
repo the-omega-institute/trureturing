@@ -1,0 +1,37 @@
+**五、未覆盖会迫出不可能的紧纯分离子。** 反设 $\mathcal B\ne M$，令
+
+$$
+T=\partial_M\mathcal B.
+\tag{XI142.20}
+$$
+
+$\mathcal B$ 闭且含非空开集 $\mathcal O$，$M\setminus\mathcal B$ 也非空开。于是
+$M\setminus T=\operatorname{int}_M\mathcal B\ \sqcup\ (M\setminus\mathcal B)$
+为两个非空不交开集的并；连通的 $M$ 还保证 $T\ne\varnothing$。$T$ 为 $M$ 的紧真子集。
+
+因 $T\subseteq\mathcal B$，任取 $z\in T$ 可选 $x\in Q$ 使 $z\in D_x$。若 $z$ 非纯，$S_x=\partial_{\rm rel}D_x$ 的全部点原纯，故 $z\in\operatorname{ri}D_x\subseteq\mathcal O\subseteq\operatorname{int}_M\mathcal B$，与边界定义矛盾。因此
+
+$$
+T\subseteq P.
+\tag{XI142.21}
+$$
+
+现在使用适用于**任意紧集**的 Čech–Alexander 对偶。准确来源是 [Hatcher，Corollary 3.45及紧集扩张说明，印刷页255—257][Q142Ha]。Corollary 3.45的奇异上同调版本需要局部可缩；页256—257明确以 Čech 上同调替代，扩张至没有局部可缩性的紧集。这里 $M\cong S^7$，$T$ 非空、紧、真，没有对 $T$ 加局部可缩或流形前件。所得准确次数是
+
+$$
+\check H^6(T;\mathbb Z)
+\cong\widetilde H_0(M\setminus T;\mathbb Z)\ne0.
+\tag{XI142.22}
+$$
+
+非零性也可直接看成：补集的上述两个开闭部分不可能被一条路径连通，故约化零阶奇异同调非零。
+
+若紧度量空间 $T$ 的覆盖维数至多五，则每个有限开覆盖都有重数至多六的有限开细化，其神经的维数至多五，六阶整数上同调为零。按页256—257的覆盖神经直接极限定义，所有六阶 Čech 类在这种细化中消失，所以 $\check H^6(T;\mathbb Z)=0$。故(XI142.22)迫 $\dim_{\rm cov}T\ge6$。但紧 $T\subset P$ 已由第一步得到 $\dim_{\rm cov}T\le4$，矛盾。由此
+
+$$
+\mathcal B=M.
+\tag{XI142.23}
+$$
+
+这一矛盾实际使用的是全部原 $P$ 的紧投影覆盖界；只知道 $\dim Q=4$ 或 $\check H^6(Q)=0$，不足以处理可能落在 $P\setminus Q$ 的分离子。
+
