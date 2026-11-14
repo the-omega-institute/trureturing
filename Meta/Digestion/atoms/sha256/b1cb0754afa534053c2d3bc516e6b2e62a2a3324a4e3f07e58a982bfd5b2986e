@@ -1,0 +1,17 @@
+**推论 2.4（Fan–Kobayashi–Molnar 判据的精确参数域）。** 记 $E_\kappa$ 为“(1.1) 对所有充分大的 $n$ 成立”。对一切实数 $\kappa>1$，
+
+$$
+E_\kappa\iff\bigl(\mathrm{RH}\wedge\kappa>3/2\bigr).
+$$
+
+特别地：
+- 对 $\kappa>3/2$，$E_\kappa$ 是 RH 的等价判据；
+- 对 $1<\kappa\le3/2$，$E_\kappa$ 无条件为假，命题“$\mathrm{RH}\iff E_\kappa$”等价于 RH 不成立，因此不能用来验证 RH。
+
+**证明。**
+- $\kappa>3/2$：由 Fan–Kobayashi–Molnar 定理 1.5，$E_\kappa\iff\mathrm{RH}$。
+- $1<\kappa<3/2$：由本卷定理 1.5，$E_\kappa$ 为假。
+- $\kappa=3/2$：由定理 2.3，$E_\kappa$ 为假。
+
+三种情形合起来即为所述等价。后半句是命题逻辑：$E_\kappa$ 为假时，$(\mathrm{RH}\iff E_\kappa)\iff\neg\mathrm{RH}$。证毕。
+

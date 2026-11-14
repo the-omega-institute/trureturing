@@ -12,6 +12,10 @@ internal sealed class InducedSubcubesDocument : IScribeDocumentDefinition
         "Induced Boolean cubes are exactly coordinate down-cubes, with unique top and direction set.",
         H("Induced subcubes of the Boolean hypercube"),
         Blocks(
+            Node("toggle", "Toggle one Boolean coordinate", "toggle", ToggleFormula(),
+                "toggle u i complements the Boolean value at i and leaves every other coordinate unchanged.", DescribeRole.Definition),
+            Node("toggle-invariance", "Constancy from coordinate toggles", "invariant_of_toggles", ToggleInvariantFormula(),
+                "A function on a finite Boolean cube that is unchanged by every coordinate toggle has the same value at any two words.", DescribeRole.Theorem),
             Node("erase", "Coordinate erasure", "erase", EraseFormula(),
                 "erase v T changes v to false on the coordinates in T and leaves every other coordinate unchanged.", DescribeRole.Definition),
             Node("down-cube", "Coordinate down-cube", "downCube", DownCubeFormula(),
@@ -63,6 +67,31 @@ internal sealed class InducedSubcubesDocument : IScribeDocumentDefinition
 
     private static Formula WordType(Formula n) => Arrow(Call("Fin", n), Id("Bool"));
     private static Formula FinsetType(Formula n) => Call("Finset", Call("Fin", n));
+
+    private static Formula WithInstance(string name, Formula type, Formula body) =>
+        Seq(OpenBracket, Call(name, type), CloseBracket, Comma, Sp, body);
+
+    private static Formula ToggleFormula()
+    {
+        var iota = Id("Iota"); var u = Id("u"); var i = Id("i");
+        var word = Arrow(iota, Id("Bool"));
+        var update = Call("Function.update", u, i, Call("Bool.not", Call("u", i)));
+        var body = All("u", word, All("i", iota, Eq(Call("toggle", u, i), update)));
+        return Disp(All("Iota", Id("Type"), WithInstance("DecidableEq", iota, body)));
+    }
+
+    private static Formula ToggleInvariantFormula()
+    {
+        var iota = Id("Iota"); var alpha = Id("Alpha");
+        var u = Id("u"); var v = Id("v"); var i = Id("i");
+        var word = Arrow(iota, Id("Bool"));
+        var invariant = All("u", word, All("i", iota,
+            Eq(Call("g", Call("toggle", u, i)), Call("g", u))));
+        var conclusion = All("u", word, All("v", word, Eq(Call("g", u), Call("g", v))));
+        var body = All("g", Arrow(word, alpha), Implies(invariant, conclusion));
+        return Disp(All("Iota", Id("Type"), All("Alpha", Id("Type"),
+            WithInstance("Fintype", iota, WithInstance("DecidableEq", iota, body)))));
+    }
 
     private static Formula EraseFormula()
     {
