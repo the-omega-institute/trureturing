@@ -2,7 +2,7 @@
 bibkey: lopesoliveira2026transport
 authors: Artur O. Lopes and Elismar R. Oliveira
 year: 2026
-title: Thermodynamic Formalism for Non-Invariant Probabilities: Entropy, Divergence, Channels
+title: "Thermodynamic Formalism for Non-Invariant Probabilities: Entropy, Divergence, Channels"
 doi: null
 url: https://arxiv.org/html/2611.13904v1#S8
 claim: Section 8 asks for the fixed-classical-equilibrium square-root Wasserstein inequality with unrestricted non-invariant entropy and all-law calligraphic pressure.

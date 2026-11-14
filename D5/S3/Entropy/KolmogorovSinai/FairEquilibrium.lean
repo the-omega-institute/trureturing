@@ -33,9 +33,9 @@ instance : IsProbabilityMeasure fairSymbol := by
   simpa only [one_div] using ENNReal.add_halves 1
 private lemma fairSymbol_mass (b : Bool) : fairSymbol {b} = (2 : ENNReal)⁻¹ := by
   cases b <;> simp [fairSymbol]
-private def fair : Measure X := bern fairSymbol
-instance : IsProbabilityMeasure fair := inferInstanceAs (IsProbabilityMeasure (bern fairSymbol))
-private lemma fair_invariant : MeasurePreserving shiftMap fair fair :=
+private def rawFair : Measure X := bern fairSymbol
+instance : IsProbabilityMeasure rawFair := inferInstanceAs (IsProbabilityMeasure (bern fairSymbol))
+private lemma rawFairInvariant : MeasurePreserving shiftMap rawFair rawFair :=
   measurePreserving_shiftMap_bern fairSymbol
 private lemma ks_eq_coord (rho : Measure X) [IsProbabilityMeasure rho]
     (hT : MeasurePreserving shiftMap rho rho) :
@@ -46,14 +46,14 @@ private lemma ks_eq_coord (rho : Measure X) [IsProbabilityMeasure rho]
     exact coordPartition_isGenerating hT
   rw [ksEntropy_eq_ksEntropyPartition_of_generating hT (coordPartitionFin rho) hgen,
     ksEntropyPartition_coordPartitionFin_eq hT]
-private lemma ks_le (rho : Measure X) [IsProbabilityMeasure rho]
+private lemma rawKsLe (rho : Measure X) [IsProbabilityMeasure rho]
     (hT : MeasurePreserving shiftMap rho rho) : ksEntropy hT ≤ (Real.log 2 : ℝ) := by
   rw [ks_eq_coord rho hT, EReal.coe_le_coe_iff]
   have hu := entropy_le_log_card_partition (coordPartition rho)
   have hl := ksEntropyPartition_le_entropy hT (coordPartition rho)
   simpa using hl.trans hu
-private lemma fair_ks : ksEntropy fair_invariant = (Real.log 2 : ℝ) := by
-  rw [ks_eq_coord fair fair_invariant]
+private lemma rawFairKs : ksEntropy rawFairInvariant = (Real.log 2 : ℝ) := by
+  rw [ks_eq_coord rawFair rawFairInvariant]
   have he := ksEntropyPartition_coordPartition_bern_eq fairSymbol
   have hh : Hnu fairSymbol = Real.log 2 := by
     simp [Hnu, fairSymbol_mass, Real.negMulLog]
@@ -89,9 +89,9 @@ private lemma prefix_system : IsPiSystem {s : Set X | ∃ x n, s = PiNat.cylinde
   rcases le_total n m with h | h
   · exact ⟨z, m, Set.inter_eq_right.mpr (PiNat.cylinder_anti z h)⟩
   · exact ⟨z, n, Set.inter_eq_left.mpr (PiNat.cylinder_anti z h)⟩
-private lemma max_unique (rho : Measure X) [IsProbabilityMeasure rho]
+private lemma rawMaxUnique (rho : Measure X) [IsProbabilityMeasure rho]
     (hT : MeasurePreserving shiftMap rho rho) (hmax : ksEntropy hT = (Real.log 2 : ℝ)) :
-    rho = fair := by
+    rho = rawFair := by
   apply MeasureTheory.ext_of_generate_finite {s : Set X | ∃ x n, s = PiNat.cylinder x n}
   · exact (BorelSpace.measurable_eq : (inferInstance : MeasurableSpace X) = borel X).trans
       (PiNat.isTopologicalBasis_cylinders (fun _ => Bool)).borel_eq_generateFrom
@@ -171,14 +171,14 @@ private lemma semi : coordinateEquiv ∘ D5.S3.Entropy.BernoulliShift.shiftMap =
   rfl
 private lemma semi_inv : coordinateEquiv.symm ∘ shift =
     D5.S3.Entropy.BernoulliShift.shiftMap ∘ coordinateEquiv.symm := rfl
-def fair : Measure Omega := Measure.map coordinateEquiv D5.S3.Entropy.FairBernoulli.fair
+def fair : Measure Omega := Measure.map coordinateEquiv D5.S3.Entropy.FairBernoulli.rawFair
 instance : IsProbabilityMeasure fair := (Measure.isProbabilityMeasure_map_iff coordinateEquiv.measurable.aemeasurable).mpr inferInstance
 lemma fair_invariant : MeasurePreserving shift fair fair := by
   refine ⟨shift_m, ?_⟩
   unfold fair
   rw [Measure.map_map shift_m coordinateEquiv.measurable, ← semi,
-    ← Measure.map_map coordinateEquiv.measurable D5.S3.Entropy.FairBernoulli.fair_invariant.measurable,
-    D5.S3.Entropy.FairBernoulli.fair_invariant.map_eq]
+    ← Measure.map_map coordinateEquiv.measurable D5.S3.Entropy.FairBernoulli.rawFairInvariant.measurable,
+    D5.S3.Entropy.FairBernoulli.rawFairInvariant.map_eq]
 private lemma raw_invariant (rho : Measure Omega) [IsProbabilityMeasure rho]
     (hT : MeasurePreserving shift rho rho) :
     MeasurePreserving D5.S3.Entropy.BernoulliShift.shiftMap
@@ -193,11 +193,11 @@ lemma ks_le (rho : Measure Omega) [IsProbabilityMeasure rho]
     (Measure.isProbabilityMeasure_map_iff coordinateEquiv.symm.measurable.aemeasurable).mpr inferInstance
   rw [← D5.S3.Entropy.FairBernoulli.ks_conjugate coordinateEquiv.symm hT (raw_invariant rho hT)
     ⟨coordinateEquiv.symm.measurable, rfl⟩ semi_inv]
-  exact D5.S3.Entropy.FairBernoulli.ks_le _ _
+  exact D5.S3.Entropy.FairBernoulli.rawKsLe _ _
 lemma fair_ks : ksEntropy fair_invariant = (Real.log 2 : ℝ) := by
-  rw [D5.S3.Entropy.FairBernoulli.ks_conjugate coordinateEquiv D5.S3.Entropy.FairBernoulli.fair_invariant fair_invariant
+  rw [D5.S3.Entropy.FairBernoulli.ks_conjugate coordinateEquiv D5.S3.Entropy.FairBernoulli.rawFairInvariant fair_invariant
     ⟨coordinateEquiv.measurable, rfl⟩ semi]
-  exact D5.S3.Entropy.FairBernoulli.fair_ks
+  exact D5.S3.Entropy.FairBernoulli.rawFairKs
 lemma max_unique (rho : Measure Omega) [IsProbabilityMeasure rho]
     (hT : MeasurePreserving shift rho rho) (hm : ksEntropy hT = (Real.log 2 : ℝ)) :
     rho = fair := by
@@ -205,7 +205,7 @@ lemma max_unique (rho : Measure Omega) [IsProbabilityMeasure rho]
     (Measure.isProbabilityMeasure_map_iff coordinateEquiv.symm.measurable.aemeasurable).mpr inferInstance
   have hr := D5.S3.Entropy.FairBernoulli.ks_conjugate coordinateEquiv.symm hT (raw_invariant rho hT)
     ⟨coordinateEquiv.symm.measurable, rfl⟩ semi_inv
-  have he := D5.S3.Entropy.FairBernoulli.max_unique _ (raw_invariant rho hT) (hr.trans hm)
+  have he := D5.S3.Entropy.FairBernoulli.rawMaxUnique _ (raw_invariant rho hT) (hr.trans hm)
   apply_fun Measure.map coordinateEquiv at he
   simpa [fair] using he
 end
