@@ -2085,7 +2085,25 @@ $$
 
 **证明。** 拉回整个对偶空间，正性及补正性分别给 $A\succeq0$、$I-A\succeq0$。$v^*Av=1$ 时 $(I-A)^{1/2}v=0$，故 $Av=v$，Hermitian 性消去交叉项，得到整个确认菜单。$P_v$ 本身合法且为每个确认者的正序下界，遂同时给全部 $X\succeq0$ 的 minimum，包括零及任意非负质量。支持面规则给排除面；纯对配对值再双线性延拓给迹内积。证毕。
 
-全部面是支持面，面投影为 $\Phi X\mapsto\Phi(\Pi_SX\Pi_S)$，全部面效应可用 $A_S\oplus0$ 延拓。任意纯子集 $A$ 满足 $P\cap F(A)=A^{\perp\perp}$，因为其复线性支持已有有限子集张成，含空集与全体。完整框架长 $n$；Hermitian 观测量、PVM、POVM、非交换乘法、Jordan 积及通常矩阵不确定性关系均可运输到原域。酉数学对称及正定合同的内部齐次性是表示后的后果，未作输入；数学投影或 POVM 本身不指定实际更新。
+全部面是支持面，面投影为 $\Phi X\mapsto\Phi(\Pi_SX\Pi_S)$，全部面效应可用 $A_S\oplus0$ 延拓。任意纯子集 $A$ 满足 $P\cap F(A)=A^{\perp\perp}$，因为其复线性支持已有有限子集张成，含空集与全体。完整框架长 $n$。实空间 $V$ 上的 Hermitian 观测量为 $x=\Phi(A)$（$A\in H_n$），其在原态 $\Phi X$ 上的期望为 $\operatorname{Tr}(AX)$；PVM、POVM 分别由 $I=\sum_jP_j$ 的正交投影分解、$I=\sum_jA_j$ 的正矩阵分解经 $f_{P_j}$、$f_{A_j}$ 给出，通常矩阵不确定性关系按此原态与观测量字典运输。
+
+为承载普通非交换结合乘法，定义辅助复化 $V_{\mathbb C}=V\otimes_{\mathbb R}\mathbb C$，并将 $V$ 识别为 $V\otimes1$。利用标准 Hermitian 复化 $M_n(\mathbb C)=H_n\oplus iH_n$，将既有 $\Phi:H_n\to V$ 复线性延拓为
+
+$$
+\Phi_{\mathbb C}:M_n(\mathbb C)\overset\sim\longrightarrow V_{\mathbb C},\qquad
+\Phi_{\mathbb C}(A+iB)=\Phi(A)\otimes1+\Phi(B)\otimes i
+\quad(A,B\in H_n).
+$$
+
+对 $z,w\in V_{\mathbb C}$，结合乘法与伴随分别定义为 $z\star w=\Phi_{\mathbb C}(\Phi_{\mathbb C}^{-1}(z)\Phi_{\mathbb C}^{-1}(w))$、$z^\dagger=\Phi_{\mathbb C}((\Phi_{\mathbb C}^{-1}(z))^*)$。实空间 $V$ 上的 Jordan 积与 Hermitian Lie 积则为
+
+$$
+x\circ y=\Phi\!\left(\frac{AB+BA}{2}\right),\qquad
+[x,y]_{\mathrm H}=\Phi\!\left(\frac{AB-BA}{2i}\right)
+\quad(x,y\in V,\ A=\Phi^{-1}x,\ B=\Phi^{-1}y),
+$$
+
+两者均取值于 $V$。辅助复化不替换原 $K,C,\mathcal E,u$。酉数学对称及正定合同的内部齐次性是表示后的后果，未作输入；数学投影或 POVM 本身不指定实际更新。
 
 ### 162.7 coatom、低面高度与 pure PR 的准确缺口
 
@@ -2274,7 +2292,7 @@ $$
 \tag{162.27}
 $$
 
-本候选用直径满宽代替切方向接合入口；不证明去掉 NC 后 AD 与 TC 的严格强弱或独立性。NC 也不能由本章其余输入顺手删去：[P162] 的三对三平衡商保留全部原纯点、实际 L2、TC、pure Born minimum，故也有 AD，却失败 NC；原全效应受核正交约束，均匀提升的原 minimum 为 $1/3$，所选秩一提升的 $1/6$ 不是合法替代读数。这是已有反例的应用，不是新构造，亦不满足完整 EB3。实、四元数、Albert 模型则说明成熟投影结构本身不选复型，L2 的实际面维数才承担型别选择。
+本候选用直径满宽代替切方向接合入口；不证明去掉 NC 后 AD 与 TC 的严格强弱或独立性。NC 也不能由本章其余输入顺手删去：[P162] 的三对三平衡商保留全部原纯点、实际 L2、TC、pure Born minimum，故也有 AD，却失败 NC；原全效应受核正交约束，均匀满秩态提升 $I_6/6$ 对应的原混态 minimum 为 $1/3$；秩一测试 $P_{e_1}$ 在该提升上的读数为 $\operatorname{Tr}(P_{e_1}I_6/6)=1/6$，但 $P_{e_1}$ 不满足原核正交约束、不属于原效应菜单，故 $1/6$ 不是合法替代读数。这是已有反例的应用，不是新构造，亦不满足完整 EB3。实、四元数、Albert 模型则说明成熟投影结构本身不选复型，L2 的实际面维数才承担型别选择。
 
 | 内容 | 本章的归属和精确用途 |
 | --- | --- |
