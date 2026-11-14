@@ -53,7 +53,7 @@ private theorem trace_conjugate (ρ : Representation K G V)
 
 -- Only V has a trace. X and M can be arbitrarily generated, in independent
 -- universes; no invalid cyclicity across an infinite-dimensional factor is used.
-private theorem trace_tensor_factorization
+theorem trace_tensor_factorization
     (ι : C →* G) (ρ : Representation K G V)
     (σ : Representation K G X) (τ : Representation K G M)
     (t : Module.End K M)

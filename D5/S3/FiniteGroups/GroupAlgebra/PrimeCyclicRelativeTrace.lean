@@ -368,59 +368,6 @@ variable {K : Type uK} [Field K]
   {X : Type uX} [AddCommGroup X] [Module K X]
   {M : Type uM} [AddCommGroup M] [Module K M]
 
--- The following two arguments reproduce the frozen private RelativeTrace
--- mathematics. No dimension, basis, projectivity or trace is required on X/M.
-private theorem trace_conjugate (ρ : Representation K G V)
-    (t : Module.End K V) (g : G) :
-    LinearMap.trace K V ((ρ g).comp (t.comp (ρ g⁻¹))) =
-      LinearMap.trace K V t := by
-  change LinearMap.trace K V (ρ g * (t * ρ g⁻¹)) = _
-  rw [LinearMap.trace_mul_cycle']
-  rw [← mul_assoc, ← map_mul, inv_mul_cancel, map_one, one_mul]
-
-/-- Only V is traced; X and M are arbitrary modules in independent universes. -/
-private theorem trace_tensor_factorization
-    (ι : C →* G) (ρ : Representation K G V)
-    (σ : Representation K G X) (τ : Representation K G M)
-    (t : Module.End K M)
-    (ht : (∑ c : C, (τ (ι c)).comp (t.comp (τ (ι c⁻¹)))) = LinearMap.id)
-    (hcard : (Fintype.card C : K) = 0)
-    (f : ρ.IntertwiningMap (σ.tprod τ))
-    (g : (σ.tprod τ).IntertwiningMap ρ) :
-    LinearMap.trace K V (g.toLinearMap.comp f.toLinearMap) = 0 := by
-  classical
-  let T : Module.End K (X ⊗[K] M) := TensorProduct.map LinearMap.id t
-  have hT : (∑ c : C,
-      ((σ.tprod τ) (ι c)).comp (T.comp ((σ.tprod τ) (ι c⁻¹)))) =
-        LinearMap.id := by
-    apply TensorProduct.ext'
-    intro x m
-    simp only [LinearMap.sum_apply, LinearMap.comp_apply,
-      Representation.tprod_apply, TensorProduct.map_tmul, T, LinearMap.id_apply]
-    have hc (c : C) : σ (ι c) (σ (ι c⁻¹) x) = x := by
-      rw [← Module.End.mul_apply, ← map_mul, ← map_mul, mul_inv_cancel,
-        map_one, map_one, Module.End.one_apply]
-    simp_rw [hc]
-    rw [← TensorProduct.tmul_sum]
-    congr 1
-    simpa only [LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.id_apply]
-      using LinearMap.congr_fun ht m
-  have he : g.toLinearMap.comp f.toLinearMap =
-      ∑ c : C, (ρ (ι c)).comp
-        ((g.toLinearMap.comp (T.comp f.toLinearMap)).comp (ρ (ι c⁻¹))) := by
-    apply LinearMap.ext
-    intro v
-    simp only [LinearMap.sum_apply, LinearMap.comp_apply,
-      Representation.IntertwiningMap.toLinearMap_apply]
-    have hv := congrArg g (LinearMap.congr_fun hT (f v))
-    simp only [LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.id_apply,
-      map_sum] at hv
-    simpa only [LinearMap.sum_apply, LinearMap.comp_apply,
-      ← f.isIntertwining, g.isIntertwining] using hv.symm
-  rw [he, map_sum]
-  simp only [map_inv, trace_conjugate, sum_const, card_univ, nsmul_eq_mul,
-    hcard, zero_mul]
-
 variable {U : Type uK} [AddCommGroup U] [Module K U]
 
 /-- The ORIGINAL retract-based RelativeFactors, with all P/X quantifiers kept.
@@ -435,7 +382,7 @@ private theorem trace_original_relative_factor
     (hh : RelativeFactors τ h) :
     LinearMap.trace K U h.toLinearMap = 0 := by
   obtain ⟨P, ⟨X, i, r, hri⟩, a, b, hab⟩ := hh
-  have hz := trace_tensor_factorization ι ρ X.ρ τ t ht hcard (i.comp a) (b.comp r)
+  have hz := ElmerKadrTensorCounterexample.trace_tensor_factorization ι ρ X.ρ τ t ht hcard (i.comp a) (b.comp r)
   have he : (b.comp r).toLinearMap.comp (i.comp a).toLinearMap = h.toLinearMap := by
     apply LinearMap.ext
     intro v
