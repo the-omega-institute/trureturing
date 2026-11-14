@@ -38,5 +38,6 @@ Despite its theorem name, this conclusion is a pointwise radial-integrand inequa
 
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ThetaReflectedQuantitativeGap.physical_kernel_gap_quantitative`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ThetaReflectedQuantitativeGap.radial_integrand_gap_quantitative`
+- Dependency: [D5/S3/Analytic/Convexity/StrictConcaveSymmetricSum](../../Analytic/Convexity/StrictConcaveSymmetricSum.md)
 - Dependency: [D5/S3/Analytic/Fourier/ThetaQuantitativeCurvature](../../Analytic/Fourier/ThetaQuantitativeCurvature.md)
 - Dependency: [D5/S3/Weil/ZetaGamma/ThetaReflectedKernelComparison](ThetaReflectedKernelComparison.md)
