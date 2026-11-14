@@ -1,4 +1,4 @@
-import D5.S3.Quantum.Foundation.OriginalNormalFamily
+import D5.S3.Quantum.Foundation.OriginalComparisonTopology
 import Reg.D5.S3.Quantum.Foundation.RegularAnchorHeight
 import Reg.D5.S3.Quantum.Foundation.ReciprocalPureCompactness
 
