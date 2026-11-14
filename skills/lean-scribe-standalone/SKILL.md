@@ -9,7 +9,7 @@ description: 在新的独立 Git 仓库中编写 Lean 与 Blueprint Scribe，使
 
 交付数学 Lean、对应的 `.scribe.cs`、实际编译的 Reg 证据及程序生成的冻结状态。作者无需建立理论卷、消化账本、共享缓存、工作树池、发布服务或全库构建。已有 trureturing 检出仍遵守其原有入口；本技能不在那个检出中绕过缓存守门。
 
-独立项目复用上游原始 Scribe、Lean inspector、契约和冻结 writer，不另造审计语义。`scripts/standalone.py` 导出源码和实际 Lean import 闭包；只把宿主的缓存运输入口换成普通 Lake 调用。新仓库从空 `.lake` 编译，工具链发行包自带的 Lean 标准库仍是必需依赖。Mathlib 若在 import 闭包中则从源码构建；冷构建不是零编译成本。不得把内核通过、登记证据存在或源码哈希称为四槽审计通过。
+独立项目复用上游原始 Scribe、Lean inspector、契约和冻结 writer，不另造审计语义。`scripts/standalone.py` 导出源码和实际 Lean import 闭包；以普通 Lake 调用构建，另用薄入口接入 scoped Scribe 和原证据校验器。新仓库从空 `.lake` 编译，工具链发行包自带的 Lean 标准库仍是必需依赖。Mathlib 若在 import 闭包中则从源码构建；冷构建不是零编译成本。不得把内核通过、登记证据存在或源码哈希称为四槽审计通过。此路径支持通用四槽登记及依赖族 source-equivalence；不包含专用 AuricFib 原生分析，该分支仍需上游分析宿主，不能声称本技能已支持。
 
 ## 初始化
 
@@ -19,12 +19,14 @@ description: 在新的独立 Git 仓库中编写 Lean 与 Blueprint Scribe，使
 
 ```sh
 python3 /absolute/path/to/lean-scribe-standalone/scripts/standalone.py init \
-  --dest "$PROJECT"
+  --dest "$PROJECT" --include Reg.Support.DependentFamily
 cd "$PROJECT"
 python3 formalize.py doctor
 ```
 
 目标目录必须不存在或为空。初始化产生可单独搬移的 Git 仓库，保留原来的 D5、Blueprint 和 Reg 地址规则。`standalone-source.json` 记录源码来源与受保护的工具、支撑数学和包配置；它不是审计报告。需要复用已有模块时，初始化加可重复的 `--include <dotted.module>`，导出其完整仓内 import 闭包和可用 Scribe/文献来源；不要复制整个 D5。
+
+`Reg.Support.DependentFamily` 提供可直接 import 的合法共享 enrollment。需要完整 Lean、Scribe 与登记示例时，在另一空目录初始化时同时加 `--include D5.S3.Observer.Separation.BooleanCompanionMinimality` 和 `--include Reg.D5.S3.Observer.Separation.BooleanCompanionMinimality`，查看同路径的三个源码；该示例是已有结果复用，只用于检验交付路径。
 
 ## 编写与核验
 
@@ -39,7 +41,7 @@ python3 "$PROJECT/formalize.py" check --project "$PROJECT" \
   --module Reg.D5.S0.Observation.MyResult
 ```
 
-入口只编译所选模块及其依赖，生成并验证 scoped report，用原 Scribe 渲染器生成 Blueprint。检查内核、公理闭包、源绑定和旧冻结源码保护。读取实际报告中每个目标公开定理的登记判词；`declared_validated` 必须来自当前源码的完整编译与绑定证据。完整运行日志仅是本地构建输出，不提交回执副本。
+新写的 D5 依赖也须显式列为 `--module` 根，交付其 Scribe 和登记；初始化导出的受保护上游支撑与已冻结闭包可直接复用。入口只编译所选模块及其依赖，生成并验证 scoped report，用原 Scribe 渲染器生成 Blueprint。对所选仓内 import 范围中报告的每条声明（含 Reg 与私有声明）检查传递公理闭包，拒绝 `sorryAx`、直接 axiom 与标准允许集之外的依赖；再核对源绑定、当前范围内既有 pin 的编译陈述和旧冻结源码保护。读取实际报告中每个目标公开定理的登记判词；`declared_validated` 必须来自当前源码的完整编译与绑定证据。完整运行日志仅是本地构建输出，不提交回执副本。
 
 审计失败、缺失或模板不适用时，保留数学结果并在对应成果中如实说明具体缺口；不要硬套模板、削弱目标或更改判官。独立仓库可以继续数学开发，但不得称审计完成。冻结命令要求所选目标定理的审计全部完成；它不使用上游仓库的未完成审计 issue 例外。
 
@@ -51,7 +53,7 @@ python3 "$PROJECT/formalize.py" freeze --project "$PROJECT" \
   --module Reg.D5.S0.Observation.MyResult
 ```
 
-冻结先重用当前检查入口，再调用原 `ledger-align` writer；不手写 `Golden/Frozen/state`。生成的源闭包保护比声明冻结更严格：本路径只追加模块，不编辑已冻结源码或其依赖；需要修改时另做显式迁移，不自动重新钉住旧真值。`check` 核对已记录的冻结源闭包，删除或改动都失败。
+冻结先重用当前检查入口，再调用原 `ledger-align` writer；不手写 `Golden/Frozen/state`。生成的源闭包保护比声明冻结更严格：本路径只追加模块，不编辑已冻结源码或其依赖；需要修改时另做显式迁移，不自动重新钉住旧真值。`standalone-frozen.json` 自初始化起就是必需数据；`check` 核对其冻结源闭包和 pin 清单，删除记录、缩减已提交保护或改动受保护源码都失败。完整可达 Git 历史中的保护均继续生效，先提交删除也不能取消保护；浅克隆须先取回完整历史。此保护依赖保留项目 Git 历史，不是脱离历史的签名或外部信任服务。
 
 提交源码、Scribe、Reg 证据、许可证、依赖钉版与程序维护的冻结数据；忽略 `.lake`、构建日志和缓存。用普通 Git 提交与项目自己的 CI 交付。发布、推送和创建远程项目按用户授权执行，不以采用本技能为授权。
 

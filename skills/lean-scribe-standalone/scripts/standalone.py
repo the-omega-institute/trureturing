@@ -23,6 +23,8 @@ MODULE = re.compile(r"D5(?:\.[A-Za-z_][A-Za-z0-9_']*)+|Reg(?:\.[A-Za-z_][A-Za-z0
 ROOT_FILES = {".editorconfig", ".gitignore", "Directory.Build.props", "Directory.Packages.props",
               "Directory.Build.targets", "global.json", "lean-toolchain", "lakefile.toml",
               "lake-manifest.json", "lean-report-inputs.json", "LICENSE", "NOTICE"}
+PROJECTION_FILES = {"Golden/Projection/statement-projection-pilot-v1.json",
+                    "Golden/Projection/statement-projection-expansion-v1.json"}
 EXCLUDED = ("tools/tests/", "tools/TestSupport/", "tools/scripts/agent/",
             "tools/lean-inspector/LeanInformationAuditRegTests/",
             "tools/lean-inspector/LeanInformationAuditFibTests/",
@@ -129,6 +131,7 @@ def initialize(args):
     scribe_text = "\n".join(read(p).decode("utf-8") for p in selected if p.endswith(".scribe.cs"))
     selected |= {p for p in files if p.startswith("Library/") and p.endswith(".md")
                  and json.dumps(Path(p).stem) in scribe_text}
+    selected |= files & PROJECTION_FILES
     selected = {p for p in selected if not {".lake", "bin", "obj", "__pycache__"}.intersection(Path(p).parts)}
     dest.mkdir(parents=True, exist_ok=True)
     if getattr(args, "remote_source", False):
@@ -142,6 +145,12 @@ def initialize(args):
         if any(not (member.isfile() or member.isdir()) for member in bundle.getmembers()):
             raise ValueError("upstream source export contains a link or special file")
         bundle.extractall(dest, filter="data")
+    # These renderer inputs belong to the exported source slice. The upstream
+    # projector requires both schema files even when their inventories are empty.
+    for name in selected & PROJECTION_FILES:
+        fixture = json.loads((dest / name).read_text())
+        fixture["declarations"] = [d for d in fixture["declarations"] if d["source_path"] in closure]
+        write_json(dest / name, fixture)
     (dest / "Blueprint").mkdir(exist_ok=True)
     (dest / "Trureturing.lean").write_text("-- Independent mathematical library.\n", encoding="utf-8")
     shutil.copyfile(Path(__file__).resolve(), dest / "formalize.py")
@@ -150,7 +159,8 @@ def initialize(args):
         assets = Path(__file__).resolve().parent / "standalone"
     (dest / "standalone").mkdir(exist_ok=True)
     for name in ("ScribeHost.cs", "ScribeHost.targets"):
-        shutil.copyfile(assets / name, dest / "standalone" / name)
+        template = assets / (name + ".template")
+        shutil.copyfile(template if template.is_file() else assets / name, dest / "standalone" / name)
     # The standalone policy and runner are semantic build inputs.
     manifest_path = dest / "lean-report-inputs.json"
     manifest = json.loads(manifest_path.read_text())
@@ -192,6 +202,9 @@ def writer_lock(root):
 
 def protect(root):
     manifests = {}
+    shallow = run(["git", "rev-parse", "--is-shallow-repository"], root, capture=True).strip()
+    if shallow == "true":
+        raise ValueError("complete Git history is required for frozen source protection; fetch --unshallow first")
     for filename, field in (("standalone-source.json", "protected"), ("standalone-frozen.json", "sources")):
         path = root / filename
         if not path.is_file() or path.is_symlink():
@@ -200,12 +213,21 @@ def protect(root):
         if manifest.get("schema") != 1 or not isinstance(manifest.get(field), dict):
             raise ValueError("invalid standalone protection manifest: " + filename)
         manifests[filename] = manifest[field]
-        # Committed protection may only grow. HEAD is data, never executed code.
-        previous = subprocess.run(["git", "show", "HEAD:" + filename], cwd=root,
-                                  capture_output=True, text=True)
-        if previous.returncode == 0:
-            old = json.loads(previous.stdout)[field]
-            if any(manifest[field].get(name) != digest for name, digest in old.items()):
+        # All reachable commitments remain binding, even after a shrink was
+        # committed. Git history supplies data; no historical code is executed.
+        history = subprocess.run(["git", "log", "--full-history", "--format=%H", "--", filename], cwd=root,
+                                 capture_output=True, text=True)
+        if history.returncode and subprocess.run(["git", "rev-parse", "--verify", "HEAD"], cwd=root,
+                                                 capture_output=True).returncode == 0:
+            raise ValueError("cannot read committed protection history: " + filename)
+        for revision in history.stdout.splitlines():
+            blob = run(["git", "ls-tree", "--format=%(objectname)", revision, "--", filename],
+                       root, capture=True).strip()
+            if not blob:
+                continue  # A deletion commit cannot remove earlier commitments.
+            old = json.loads(run(["git", "show", blob], root, capture=True))[field]
+            if (filename == "standalone-source.json" and manifest[field] != old
+                    or any(manifest[field].get(name) != digest for name, digest in old.items())):
                 raise ValueError("committed source protection removed or changed: " + filename)
         for name, expected in manifest[field].items():
             if Path(name).is_absolute() or ".." in Path(name).parts:
@@ -214,6 +236,11 @@ def protect(root):
             if not file.is_file() or file.is_symlink() or sha(file) != expected:
                 raise ValueError("protected source changed or missing: " + name)
     known = manifests["standalone-source.json"] | manifests["standalone-frozen.json"]
+    for source in manifests["standalone-frozen.json"]:
+        if source.startswith("D5/") and source.endswith(".lean") and source not in manifests["standalone-source.json"]:
+            pin = "Golden/Frozen/state/" + source + ".json"
+            if pin not in manifests["standalone-frozen.json"]:
+                raise ValueError("frozen source missing canonical pin: " + source)
     for pin in (root / "Golden/Frozen/state").rglob("*.json"):
         name = pin.relative_to(root).as_posix()
         if name not in known:
@@ -259,6 +286,8 @@ def report(root, modules, name="standalone-scoped"):
         logs = output.parent / "standalone-logs"
         logs.mkdir(exist_ok=True)
         entry = ColdEntry(root, temporary, logs)
+        entry.producer = None
+        entry.lake = shutil.which("lake")
         entry.environment.update(ENVIRONMENT)
         entry.provision()
         scope, utilities = entry.discover(modules)
@@ -282,18 +311,27 @@ def assert_files(root, expected):
             raise ValueError("checked source changed or missing: " + name)
 
 
+def require_math_roots(root, modules, rows):
+    selected = {name.replace(".", "/") + ".lean" for name in modules if name.startswith("D5.")}
+    origin = json.loads((root / "standalone-source.json").read_text())["protected"]
+    frozen = json.loads((root / "standalone-frozen.json").read_text())["sources"]
+    for row in rows:
+        path = row["source_path"]
+        reused = path in frozen and "Golden/Frozen/state/" + path + ".json" in frozen
+        if path.startswith("D5/") and path not in selected and path not in origin and not reused:
+            raise ValueError("new mathematical dependency must be an explicit --module root: "
+                             + path.removesuffix(".lean").replace("/", "."))
+
+
 def check(root, modules):
     doctor(root)
     if not modules or any(not MODULE.fullmatch(name) for name in modules):
         raise ValueError("explicit D5/Reg module roots are required")
     # No lake update, cache get, donor, release or shared-cache admission occurs here.
     output = report(root, sorted(set(modules)))
+    require_math_roots(root, modules, json.loads(output.read_text())["modules"])
     scribe = root / "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
     paths = ["Blueprint/" + name.replace(".", "/") + ".scribe.cs" for name in modules if name.startswith("D5.")]
-    for path in paths:
-        if not (root / path).is_file():
-            raise ValueError("missing Scribe source: " + path)
-    scribe_inputs = {path: sha(root / path) for path in paths}
     with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", prefix="standalone-paths-", delete=False) as stream:
         path_file = Path(stream.name)
         stream.write("\n".join(paths) + "\n")
@@ -304,9 +342,13 @@ def check(root, modules):
                "SCRIBE_DOTNET": str(Path(shutil.which("dotnet")).resolve())}
         common = ["dotnet", "run", "--project", scribe, "--configuration", "Release",
                   "--property", "DirectoryBuildTargetsPath=" + str(root / "standalone/ScribeHost.targets"), "--"]
+        run([*common, "audit", output, path_file, roots_file], root, env=env)
+        for path in paths:
+            if not (root / path).is_file():
+                raise ValueError("missing Scribe source: " + path)
+        scribe_inputs = {path: sha(root / path) for path in paths}
         run([*common, "emit", output, path_file, roots_file], root, env=env)
         run([*common, "check", output, path_file, roots_file], root, env=env)
-        run([*common, "audit", output, path_file, roots_file], root, env=env)
     finally:
         path_file.unlink(missing_ok=True)
         roots_file.unlink(missing_ok=True)

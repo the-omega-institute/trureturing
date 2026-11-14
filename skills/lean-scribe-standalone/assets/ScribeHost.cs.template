@@ -18,6 +18,29 @@ internal static class StandaloneEntry
             var paths = File.ReadAllLines(pathsPath).Where(static path => path.Length > 0).ToImmutableArray();
             var targets = File.ReadAllLines(rootsPath).Where(static path => path.Length > 0).ToImmutableArray();
             var report = LeanCompiledArtifactReports.ReadScopedRepositoryFiles(root, targets, reportPath);
+            foreach (var (path, module) in report.Files)
+            {
+                if (module.Error is not null) throw new FormatException(path.Value + ": " + module.Error);
+                foreach (var declaration in module.Declarations)
+                    if (declaration.Kind == "axiom" || declaration.Axioms.Any(axiom => !LeanAxiomFacts.IsStandard(axiom)))
+                        throw new FormatException("unaccepted axiom closure: " + path.Value + "/"
+                            + declaration.Name + " [" + string.Join(",", declaration.Axioms) + "]");
+                if (path.Value.StartsWith("D5/", StringComparison.Ordinal))
+                {
+                    var pinPath = FrozenStatePath.FromModulePath(path);
+                    var pin = Path.Combine(root, pinPath.Value);
+                    if (File.Exists(pin))
+                    {
+                        var file = new RepositoryFile(pinPath, ImmutableArray.CreateRange(File.ReadAllBytes(pin)),
+                            false, null, true);
+                        var expected = FrozenStateRecordLoader.Load(file);
+                        var actual = FrozenStateRecord.FromReport(path, module);
+                        if (expected.StatementId != actual.StatementId
+                            || !expected.Declarations.SequenceEqual(actual.Declarations))
+                            throw new FormatException("frozen compiled statement mismatch: " + path.Value);
+                    }
+                }
+            }
             if (mode == "audit") return Audit(root, targets, report);
             return mode == "emit"
                 ? ScribeCli.Run(["emit", "--paths-from", pathsPath, "--scoped"],
