@@ -428,9 +428,13 @@ internal sealed class EntropyRateDocument : IScribeDocumentDefinition
             Dot, F.Id("MeasurePreserving"), Sp, F.Id("T"), Sp, Mu, Sp, Mu, Close,
             Comma, Sp, F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"),
             Dot, F.Id("ksEntropy"), Sp, F.Id("hT"), Sp, Eq, Sp, Seq(Operatorname, Grp(F.Id("iSup"))), Sp,
-            F.Id("n"), Comma, Sp, Seq(Operatorname, Grp(F.Id("iSup"))), Sp, F.Id("P"), Comma, Sp, Open,
+            Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp,
+            Seq(Operatorname, Grp(F.Id("iSup"))), Sp,
+            Parenthesized(Seq(F.Id("P"), Sp, Colon, Sp, F.Id("MeasurePartition"), Sp, Mu, Sp,
+                Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n")))))), Comma, Sp, Open, Open,
             F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Entropy"), Dot, F.Id("KolmogorovSinai"), Dot, F.Id("ksEntropyPartition"),
-            Sp, F.Id("hT"), Sp, F.Id("P"), Close));
+            Sp, F.Id("hT"), Sp, F.Id("P"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Close,
+            Sp, Colon, Sp, F.Id("EReal"), Close));
     private static Formula Presentation17() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBracket, F.Id("MeasurableSpace"), Sp, Alpha, CloseBracket, Sp, OpenBrace, Mu,
             Sp, Colon, Sp, F.Id("MeasureTheory"), Dot, F.Id("Measure"), Sp, Alpha, CloseBrace,
