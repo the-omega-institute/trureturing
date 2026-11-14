@@ -7,6 +7,7 @@
    digest: Polynomial raw two-site observations and local canonical-parameter fibers. -/
 
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityGenericity
+import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSQuotient
 import D5.S3.Geometry.PolynomialLocalFiber
 
 /-! The coordinates are five complex core entries, a real sigma and a complex
@@ -28,6 +29,8 @@ open OpenBoundaryMPSDensityRecovery
 open OpenBoundaryMPSDensityGenericity
   (realCoeff imagCoeff coefficient_eval polynomial_nonzero_dense)
 open PeriodicMPSParentIntersection (Bond Word wordMatrix)
+open OpenBoundaryMPSQuotient
+open OpenBoundaryMPSMarginalBirationality
 
 abbrev Coordinates := Fin 13 → ℝ
 abbrev Poly := MvPolynomial (Fin 13) ℂ
@@ -392,5 +395,1111 @@ theorem exists_generic_fiber (k : ℕ) :
   intro he
   apply hz0
   simpa [he] using hzq.symm
+
+
+abbrev QuotientIndex := OpenBoundaryMPSQuotient.QuotientRealIndex
+
+def quotientIndexEquiv : QuotientIndex ≃ Fin 13 :=
+  (Equiv.sumCongr (Equiv.refl (Fin 5)) (finSumFinEquiv (m := 5) (n := 3))).trans
+    (finSumFinEquiv (m := 5) (n := 8))
+
+def quotientCoordinates13 (p : OpenBoundaryMPSQuotient.Quotient) : Coordinates :=
+  fun j => OpenBoundaryMPSQuotient.quotientRealCoordinates p (quotientIndexEquiv.symm j)
+
+def leadingPolynomial (m : ℕ) : RealPoly :=
+  let d : Poly :=
+    q2Polynomial (1 + m) ![0, 0] ![0, 0] * q2Polynomial (1 + m) ![0, 1] ![0, 1] -
+      q2Polynomial (1 + m) ![0, 0] ![0, 1] * q2Polynomial (1 + m) ![0, 1] ![0, 0]
+  realCoeff d * realCoeff d + imagCoeff d * imagCoeff d
+
+private lemma leadingPolynomial_eval (m : ℕ) (x : Coordinates) (hx : 0 ≤ sigma x) :
+    eval x (leadingPolynomial m) = Complex.normSq
+      (leading (density (1 + m) (positiveRepresentative x))).det := by
+  let d : Poly :=
+    q2Polynomial (1 + m) ![0, 0] ![0, 0] * q2Polynomial (1 + m) ![0, 1] ![0, 1] -
+      q2Polynomial (1 + m) ![0, 0] ![0, 1] * q2Polynomial (1 + m) ![0, 1] ![0, 0]
+  let ceval : Poly →+* ℂ := eval (fun i => (x i : ℂ))
+  have hd := coefficient_eval d x
+  have he := q2Polynomial_eval (1 + m) x hx
+  have hdet : ceval d = (leading (density (1 + m) (positiveRepresentative x))).det := by
+    change ceval (_ * _ - _ * _) = _
+    rw [map_sub, map_mul, map_mul]
+    change _ * _ - _ * _ = _
+    rw [show ceval (q2Polynomial (1 + m) ![0, 0] ![0, 0]) = _ from congrFun (congrFun he ![0,0]) ![0,0],
+      show ceval (q2Polynomial (1 + m) ![0, 1] ![0, 1]) = _ from congrFun (congrFun he ![0,1]) ![0,1],
+      show ceval (q2Polynomial (1 + m) ![0, 0] ![0, 1]) = _ from congrFun (congrFun he ![0,0]) ![0,1],
+      show ceval (q2Polynomial (1 + m) ![0, 1] ![0, 0]) = _ from congrFun (congrFun he ![0,1]) ![0,0]]
+    simpa only [Matrix.det_fin_two, leading]
+  dsimp only [d, leadingPolynomial]
+  rw [← hdet]
+  simp only [map_add, map_mul]
+  simp only [Complex.normSq_apply]
+  rw [show eval x (realCoeff d) = (ceval d).re from hd.1,
+    show eval x (imagCoeff d) = (ceval d).im from hd.2]
+
+
+private lemma clear_polynomial {σ κ : Type*}
+    (P : MvPolynomial σ ℝ) (N D : σ → MvPolynomial κ ℝ) :
+    ∃ H B : MvPolynomial κ ℝ, ∀ a : κ → ℝ, (∀ i, eval a (D i) ≠ 0) →
+      eval a B ≠ 0 ∧
+      eval (fun i => eval a (N i) / eval a (D i)) P = eval a H / eval a B := by
+  induction P using MvPolynomial.induction_on with
+  | C c =>
+      refine ⟨C c, 1, ?_⟩
+      intro a ha
+      simp
+  | add p q hp hq =>
+      obtain ⟨Hp, Bp, hp⟩ := hp
+      obtain ⟨Hq, Bq, hq⟩ := hq
+      refine ⟨Hp * Bq + Hq * Bp, Bp * Bq, ?_⟩
+      intro a ha
+      obtain ⟨hBp, hp⟩ := hp a ha
+      obtain ⟨hBq, hq⟩ := hq a ha
+      refine ⟨(by simpa only [map_mul] using mul_ne_zero hBp hBq), ?_⟩
+      simp only [map_add, map_mul]
+      rw [hp, hq]
+      field_simp
+  | mul_X p i hp =>
+      obtain ⟨Hp, Bp, hp⟩ := hp
+      refine ⟨N i * Hp, D i * Bp, ?_⟩
+      intro a ha
+      obtain ⟨hBp, hp⟩ := hp a ha
+      refine ⟨(by simpa only [map_mul] using mul_ne_zero (ha i) hBp), ?_⟩
+      simp only [map_mul, eval_X]
+      rw [hp]
+      field_simp
+
+def quotientRecordTarget (m : ℕ) : Fin 12 → RealPoly := recordPolynomial (1 + m)
+
+def quotientLeadingTarget (m : ℕ) : RealPoly := leadingPolynomial m
+
+def quotientFiberTarget (m : ℕ) (J : RealPoly) : RealPoly :=
+  J * quotientLeadingTarget m
+
+private lemma quotientFiberTarget_eval (m : ℕ) (J : RealPoly) (x : Coordinates)
+    (hx : 0 ≤ sigma x) :
+    eval x (quotientFiberTarget m J) = eval x J *
+      Complex.normSq (leading (density (1 + m) (positiveRepresentative x))).det := by
+  rw [quotientFiberTarget]
+  simp only [map_mul]
+  change _ * eval x (leadingPolynomial m) = _
+  rw [leadingPolynomial_eval m x hx]
+
+private lemma quotientCoordinate_ratio (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
+    (hQ : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => Q ij.1 ij.2))
+      (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0)
+    (j : Fin 13) :
+    let a := OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => Q ij.1 ij.2)
+    eval a (OpenBoundaryMPSQuotient.quotientRealNumerator m (quotientIndexEquiv.symm j)) /
+      eval a (OpenBoundaryMPSQuotient.quotientRealDenominator m (quotientIndexEquiv.symm j)) =
+      quotientCoordinates13 (OpenBoundaryMPSQuotient.quotientCoordinates m Q) j := by
+  dsimp [quotientCoordinates13]
+  have hr := (OpenBoundaryMPSQuotient.rational_quotient_inverse m Q hQ).2.1
+    (quotientIndexEquiv.symm j)
+  exact hr.2
+
+private lemma quotient_denominators_nonzero (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
+    (hQ : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => Q ij.1 ij.2))
+      (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0) :
+    ∀ j : Fin 13, eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => Q ij.1 ij.2))
+      (OpenBoundaryMPSQuotient.quotientRealDenominator m (quotientIndexEquiv.symm j)) ≠ 0 := by
+  intro j
+  have hr := (OpenBoundaryMPSQuotient.rational_quotient_inverse m Q hQ).2.1
+    (quotientIndexEquiv.symm j)
+  exact ne_of_gt hr.1
+
+
+def parameterVar (i : OpenBoundaryMPSMarginalBirationality.parameterIndex) :
+    MvPolynomial (OpenBoundaryMPSMarginalBirationality.parameterIndex ⊕
+      OpenBoundaryMPSMarginalBirationality.parameterIndex) ℂ :=
+  X (.inl i) + C Complex.I * X (.inr i)
+
+def parameterConjVar (i : OpenBoundaryMPSMarginalBirationality.parameterIndex) :
+    MvPolynomial (OpenBoundaryMPSMarginalBirationality.parameterIndex ⊕
+      OpenBoundaryMPSMarginalBirationality.parameterIndex) ℂ :=
+  X (.inl i) - C Complex.I * X (.inr i)
+
+abbrev ParamRealIndex := OpenBoundaryMPSMarginalBirationality.parameterIndex ⊕
+  OpenBoundaryMPSMarginalBirationality.parameterIndex
+abbrev ObsIndex := OpenBoundaryMPSQuotient.ObservationIndex
+
+def rawParamPolynomial (m : ℕ) (ij : ObsIndex) : MvPolynomial ParamRealIndex ℂ :=
+  ∑ b : Word m,
+    eval₂Hom C parameterVar (OpenBoundaryMPSMarginalBirationality.parameterPolys
+      (3 + m) (Fin.append ij.1 b)) *
+      eval₂Hom C parameterConjVar (map (starRingEnd ℂ) (OpenBoundaryMPSMarginalBirationality.parameterPolys
+        (3 + m) (Fin.append ij.2 b)))
+
+def rawParamCoordinates (m : ℕ) : ObsIndex ⊕ ObsIndex → MvPolynomial ParamRealIndex ℝ :=
+  Sum.elim (fun ij => realCoeff (rawParamPolynomial m ij))
+    (fun ij => imagCoeff (rawParamPolynomial m ij))
+
+private lemma parameterVar_eval (x : OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ)
+    (i : OpenBoundaryMPSMarginalBirationality.parameterIndex) :
+    eval (fun i => (OpenBoundaryMPSDensityGenericity.realCoordinates x i : ℂ)) (parameterVar i) = x i := by
+  simp only [parameterVar, map_add, map_mul, eval_X, eval_C]
+  cases i with
+  | inl i => simp [OpenBoundaryMPSDensityGenericity.realCoordinates]; apply Complex.ext <;> simp [Complex.star_def]
+  | inr i => simp [OpenBoundaryMPSDensityGenericity.realCoordinates]; apply Complex.ext <;> simp [Complex.star_def]
+
+private lemma parameterConjVar_eval (x : OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ)
+    (i : OpenBoundaryMPSMarginalBirationality.parameterIndex) :
+    eval (fun i => (OpenBoundaryMPSDensityGenericity.realCoordinates x i : ℂ)) (parameterConjVar i) = star (x i) := by
+  simp only [parameterConjVar, map_sub, map_add, map_mul, eval_X, eval_C]
+  cases i with
+  | inl i => simp [OpenBoundaryMPSDensityGenericity.realCoordinates]; apply Complex.ext <;> simp [Complex.star_def]
+  | inr i => simp [OpenBoundaryMPSDensityGenericity.realCoordinates]; apply Complex.ext <;> simp [Complex.star_def]
+
+private lemma parameterPolynomial_eval_complex (x : OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ)
+    (p : MvPolynomial OpenBoundaryMPSMarginalBirationality.parameterIndex ℂ) :
+    eval (fun i => (OpenBoundaryMPSDensityGenericity.realCoordinates x i : ℂ))
+      (eval₂Hom C parameterVar p) = eval x p := by
+  induction p using MvPolynomial.induction_on with
+  | C c => simp
+  | add p q hp hq => simp only [map_add, hp, hq]
+  | mul_X p i hp =>
+      simp only [map_mul, MvPolynomial.eval₂Hom_X', hp, parameterVar_eval, eval_X]
+
+private lemma parameterConjPolynomial_eval_complex (x : OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ)
+    (p : MvPolynomial OpenBoundaryMPSMarginalBirationality.parameterIndex ℂ) :
+    eval (fun i => (OpenBoundaryMPSDensityGenericity.realCoordinates x i : ℂ))
+      (eval₂Hom C parameterConjVar p) = eval (fun i => star (x i)) p := by
+  induction p using MvPolynomial.induction_on with
+  | C c => simp
+  | add p q hp hq => simp only [map_add, hp, hq]
+  | mul_X p i hp =>
+      simp only [map_mul, MvPolynomial.eval₂Hom_X', hp, parameterConjVar_eval, eval_X]
+
+private lemma conjugate_parameter_polynomial_eval
+    (x : OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ)
+    (p : MvPolynomial OpenBoundaryMPSMarginalBirationality.parameterIndex ℂ) :
+    eval (fun i => star (x i)) (map (starRingEnd ℂ) p) = star (eval x p) := by
+  induction p using MvPolynomial.induction_on with
+  | C c => simp
+  | add p q hp hq =>
+      simp only [map_add, hp, hq]
+      exact (map_add (starRingEnd ℂ) ((eval x) p) ((eval x) q)).symm
+  | mul_X p i hp =>
+      simp only [map_mul, map_X, eval_X, hp]
+      exact (map_mul (starRingEnd ℂ) ((eval x) p) (x i)).symm
+
+private lemma rawParamPolynomial_eval (m : ℕ)
+    (x : OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ) (ij : ObsIndex) :
+    eval (fun i => (OpenBoundaryMPSDensityGenericity.realCoordinates x i : ℂ))
+      (rawParamPolynomial m ij) =
+      OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+        (fun w => eval x (OpenBoundaryMPSMarginalBirationality.parameterPolys (3 + m) w))
+        ij.1 ij.2 := by
+  simp only [rawParamPolynomial, map_sum, map_mul,
+    parameterPolynomial_eval_complex, parameterConjPolynomial_eval_complex,
+    conjugate_parameter_polynomial_eval]
+  simp [OpenBoundaryMPSDensityRecovery.rawPrefix,
+    OpenBoundaryMPSDensityRecovery.amplitudeColumns, Matrix.mul_apply, dotProduct,
+    conjTranspose_apply]
+
+private lemma rawParamCoordinates_eval (m : ℕ)
+    (x : OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ) :
+    eval (OpenBoundaryMPSDensityGenericity.realCoordinates x) ∘ rawParamCoordinates m =
+      OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij => OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+          (fun w => eval x (OpenBoundaryMPSMarginalBirationality.parameterPolys (3 + m) w))
+          ij.1 ij.2) := by
+  funext u
+  cases u with
+  | inl u =>
+    exact (coefficient_eval (rawParamPolynomial m u)
+      (OpenBoundaryMPSDensityGenericity.realCoordinates x)).1.trans
+      (congrArg Complex.re (rawParamPolynomial_eval m x u))
+  | inr u =>
+    exact (coefficient_eval (rawParamPolynomial m u)
+      (OpenBoundaryMPSDensityGenericity.realCoordinates x)).2.trans
+      (congrArg Complex.im (rawParamPolynomial_eval m x u))
+
+def parameterPullback (m : ℕ) (R : MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ) :
+    MvPolynomial ParamRealIndex ℝ :=
+  eval₂Hom C (rawParamCoordinates m) R
+
+private lemma parameterPullback_eval (m : ℕ) (R : MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ)
+    (x : OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ) :
+    eval (OpenBoundaryMPSDensityGenericity.realCoordinates x) (parameterPullback m R) =
+      eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij => OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+          (fun w => eval x (OpenBoundaryMPSMarginalBirationality.parameterPolys (3 + m) w))
+          ij.1 ij.2)) R := by
+  change eval (OpenBoundaryMPSDensityGenericity.realCoordinates x)
+    (eval₂ C (rawParamCoordinates m) R) = _
+  rw [← eval_assoc, rawParamCoordinates_eval]
+
+
+def actualPrincipalLocus (m : ℕ) (R : MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ) :
+    Set (OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m)) :=
+  {ψ | eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+        (ψ : Word (3 + m) → ℂ) ij.1 ij.2)) R ≠ 0}
+
+def complexParameters' (a : ParamRealIndex → ℝ) :
+    OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ :=
+  fun i => (a (.inl i) : ℂ) + Complex.I * (a (.inr i) : ℂ)
+
+private lemma complexParameters'_realCoordinates (a : ParamRealIndex → ℝ) :
+    OpenBoundaryMPSDensityGenericity.realCoordinates (complexParameters' a) = a := by
+  funext i
+  cases i <;> simp [complexParameters', OpenBoundaryMPSDensityGenericity.realCoordinates]
+
+private lemma complexParameters'_complexRealCoordinates
+    (x : OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ) :
+    complexParameters' (OpenBoundaryMPSDensityGenericity.realCoordinates x) = x := by
+  funext i
+  apply Complex.ext <;> simp [complexParameters', OpenBoundaryMPSDensityGenericity.realCoordinates]
+
+private lemma complexParameters'_continuous :
+    Continuous (complexParameters' : (ParamRealIndex → ℝ) →
+      OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ) := by
+  apply continuous_pi
+  intro i
+  simp only [complexParameters']
+  fun_prop
+
+theorem actual_principal_genericity (m : ℕ)
+    (R : MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ)
+    (hw : ∃ ψ : OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m),
+      eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij => OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+          (ψ : Word (3 + m) → ℂ) ij.1 ij.2)) R ≠ 0) :
+    (actualPrincipalLocus m R).Nonempty ∧ IsOpen (actualPrincipalLocus m R) ∧
+      Dense (actualPrincipalLocus m R) := by
+  let f : (ParamRealIndex → ℝ) → Word (3 + m) → ℂ :=
+    fun a w => eval (complexParameters' a)
+      (OpenBoundaryMPSMarginalBirationality.parameterPolys (3 + m) w)
+  have hf : Continuous f := by
+    apply continuous_pi
+    intro w
+    apply (MvPolynomial.continuous_eval
+      (OpenBoundaryMPSMarginalBirationality.parameterPolys (3 + m) w)).comp
+    exact complexParameters'_continuous
+  have hrange : Set.range f = OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m) := by
+    rw [OpenBoundaryMPSMarginalBirationality.parameter_image]
+    ext ψ
+    constructor
+    · rintro ⟨a, rfl⟩
+      exact ⟨complexParameters' a, rfl⟩
+    · rintro ⟨x, rfl⟩
+      refine ⟨OpenBoundaryMPSDensityGenericity.realCoordinates x, ?_⟩
+      simp only [f]
+      funext w
+      rw [complexParameters'_complexRealCoordinates]
+  obtain ⟨ψ, hψ⟩ := hw
+  have hψrange : (ψ : Word (3 + m) → ℂ) ∈ Set.range f := by
+    rw [hrange]
+    exact ψ.property
+  obtain ⟨a, ha⟩ := Set.mem_range.mp hψrange
+  have hpa : eval a (parameterPullback m R) ≠ 0 := by
+    rw [← complexParameters'_realCoordinates a]
+    rw [parameterPullback_eval m R (complexParameters' a)]
+    rw [← ha] at hψ
+    exact hψ
+  have hd := polynomial_nonzero_dense (parameterPullback m R) a hpa
+  have hset : actualPrincipalLocus m R =
+      {ψ : OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m) |
+        eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+          (fun ij => OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+            (ψ : Word (3 + m) → ℂ) ij.1 ij.2)) R ≠ 0} := rfl
+  have hraw : Continuous (fun ψ : OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m) =>
+      fun ij : ObsIndex => OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+        (ψ : Word (3 + m) → ℂ) ij.1 ij.2) := by
+    apply continuous_pi
+    intro ij
+    change Continuous (fun ψ : OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m) =>
+      ∑ b : Word m, (ψ : Word (3 + m) → ℂ) (Fin.append ij.1 b) *
+        star ((ψ : Word (3 + m) → ℂ) (Fin.append ij.2 b)))
+    apply continuous_finset_sum Finset.univ
+    intro b hb
+    exact ((continuous_apply (Fin.append ij.1 b)).comp continuous_subtype_val).mul
+      (Continuous.star ((continuous_apply (Fin.append ij.2 b)).comp continuous_subtype_val))
+
+  have hrc : Continuous (OpenBoundaryMPSDensityGenericity.realCoordinates :
+      (ObsIndex → ℂ) → (ObsIndex ⊕ ObsIndex → ℝ)) := by
+    apply continuous_pi
+    intro i
+    cases i with
+    | inl ij => exact Complex.continuous_re.comp (continuous_apply ij)
+    | inr ij => exact Complex.continuous_im.comp (continuous_apply ij)
+  have hopen : IsOpen (actualPrincipalLocus m R) := by
+    exact isOpen_ne.preimage ((MvPolynomial.continuous_eval R).comp
+      (hrc.comp hraw))
+  refine ⟨?_, hopen, ?_⟩
+  · refine ⟨⟨f a, by rw [← hrange]; exact Set.mem_range_self a⟩, ?_⟩
+    change eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+        (f a) ij.1 ij.2)) R ≠ 0
+    rw [← parameterPullback_eval m R (complexParameters' a),
+      complexParameters'_realCoordinates]
+    exact hpa
+  · apply Subtype.dense_iff.mpr
+    intro ψ hψ'
+    have hψrange : ψ ∈ Set.range f := by
+      have ht : ψ ∈ OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m) := hψ'
+      rw [← hrange] at ht
+      exact ht
+    obtain ⟨a₀, ha₀⟩ := Set.mem_range.mp hψrange
+    apply Set.mem_of_subset_of_mem (closure_mono ?_)
+      (hf.range_subset_closure_image_dense hd (by rw [hrange]; exact hψ'))
+    rintro y ⟨b, hb, rfl⟩
+    have hgood : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij => OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+          (f b) ij.1 ij.2)) R ≠ 0 := by
+      rw [← parameterPullback_eval m R (complexParameters' b),
+        complexParameters'_realCoordinates]
+      exact hb
+    exact ⟨⟨f b, by rw [← hrange]; exact Set.mem_range_self b⟩, hgood, rfl⟩
+
+
+/-- The quotient-locus polynomial is nonzero on a nonempty open dense subset of the
+literal actual MPS image. This is the intrinsic source-side density bridge used
+by the later Q2 fiber descent. -/
+theorem quotient_locus_actual_genericity (m : ℕ) :
+    (actualPrincipalLocus m (OpenBoundaryMPSQuotient.quotientLocusPolynomial m)).Nonempty ∧
+      IsOpen (actualPrincipalLocus m (OpenBoundaryMPSQuotient.quotientLocusPolynomial m)) ∧
+      Dense (actualPrincipalLocus m (OpenBoundaryMPSQuotient.quotientLocusPolynomial m)) := by
+  have hw := OpenBoundaryMPSQuotient.quotient_locus_witness m
+  dsimp only at hw
+  rcases hw with ⟨hψ, hQ, hrec, h00⟩
+  apply actual_principal_genericity m (OpenBoundaryMPSQuotient.quotientLocusPolynomial m)
+  refine ⟨⟨_, hψ⟩, ?_⟩
+  exact hQ
+
+private def quotientRawPrefix (m : ℕ) (x : Coordinates) : Matrix (Word 3) (Word 3) ℂ :=
+  OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+    (OpenBoundaryMPSTwoSiteMinimality.state (3 + m) (positiveRepresentative x))
+
+private def parameterCoordinatesParameter
+    (θ : OpenBoundaryMPSTwoSiteMinimality.Parameter) :
+    OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ :=
+  Sum.elim
+    (fun t => OpenBoundaryMPSTwoSiteMinimality.core θ t.1 t.2.1 t.2.2)
+    (Sum.elim
+      (fun i => OpenBoundaryMPSTwoSiteMinimality.left θ i)
+      (fun i => OpenBoundaryMPSTwoSiteMinimality.right θ i))
+
+private def parameterCoordinates (x : Coordinates) :
+    OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ :=
+  parameterCoordinatesParameter (positiveRepresentative x)
+
+private lemma parameterCoordinates_eval (m : ℕ) (x : Coordinates) :
+    (fun w => eval (parameterCoordinates x)
+      (OpenBoundaryMPSMarginalBirationality.parameterPolys (3 + m) w)) =
+      OpenBoundaryMPSTwoSiteMinimality.state (3 + m) (positiveRepresentative x) := by
+  have h := OpenBoundaryMPSMarginalBirationality.parameter_eval (3 + m)
+    (parameterCoordinates x)
+  change (fun w => eval (parameterCoordinates x)
+      (OpenBoundaryMPSMarginalBirationality.parameterPolys (3 + m) w)) =
+    OpenBoundaryMPSMarginalBirationality.mpsState (3 + m)
+      (OpenBoundaryMPSTwoSiteMinimality.core (positiveRepresentative x) 0)
+      (OpenBoundaryMPSTwoSiteMinimality.core (positiveRepresentative x) 1)
+      (OpenBoundaryMPSTwoSiteMinimality.left (positiveRepresentative x))
+      (OpenBoundaryMPSTwoSiteMinimality.right (positiveRepresentative x))
+  convert h using 1 <;>
+    ext <;> rfl
+
+private lemma parameterCoordinatesParameter_continuous :
+    Continuous (parameterCoordinatesParameter :
+      OpenBoundaryMPSTwoSiteMinimality.Parameter →
+        OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ) := by
+  apply continuous_pi
+  intro i
+  cases i with
+  | inl t =>
+      rcases t with ⟨s, ⟨j, k⟩⟩
+      fin_cases s <;> fin_cases j <;> fin_cases k <;>
+        simp [parameterCoordinatesParameter, OpenBoundaryMPSTwoSiteMinimality.core]
+        <;> fun_prop
+  | inr i =>
+      cases i with
+      | inl j =>
+          fin_cases j <;>
+            simp [parameterCoordinatesParameter, OpenBoundaryMPSTwoSiteMinimality.left]
+            <;> fun_prop
+      | inr j =>
+          fin_cases j
+          · exact Complex.continuous_ofReal.comp
+              (continuous_fst.comp
+                (continuous_snd : Continuous
+                  (fun θ : OpenBoundaryMPSTwoSiteMinimality.Parameter => θ.2)))
+          · exact continuous_snd.comp
+              (continuous_snd : Continuous
+                (fun θ : OpenBoundaryMPSTwoSiteMinimality.Parameter => θ.2))
+
+private lemma parameterCoordinates_continuous :
+    Continuous (parameterCoordinates : Coordinates →
+      OpenBoundaryMPSMarginalBirationality.parameterIndex → ℂ) := by
+  change Continuous (parameterCoordinatesParameter ∘ positiveRepresentative)
+  exact parameterCoordinatesParameter_continuous.comp representative_continuous
+
+private lemma quotientRawPrefix_continuous (m : ℕ) :
+    Continuous (quotientRawPrefix m) := by
+  have hc : Continuous (fun x : Coordinates =>
+      OpenBoundaryMPSTwoSiteMinimality.state (3 + m) (positiveRepresentative x)) :=
+    by
+      have hpar : Continuous (fun x : Coordinates =>
+          fun w => eval (parameterCoordinates x)
+            (OpenBoundaryMPSMarginalBirationality.parameterPolys (3 + m) w)) := by
+        apply continuous_pi
+        intro w
+        exact (MvPolynomial.continuous_eval _).comp parameterCoordinates_continuous
+      exact hpar.congr (fun x => parameterCoordinates_eval m x)
+  apply continuous_matrix
+  intro u v
+  unfold quotientRawPrefix OpenBoundaryMPSDensityRecovery.rawPrefix
+  simp only [Matrix.mul_apply, OpenBoundaryMPSDensityRecovery.amplitudeColumns,
+    Matrix.conjTranspose_apply]
+  apply continuous_finset_sum Finset.univ
+  intro b hb
+  exact ((continuous_apply (Fin.append u b)).comp hc).mul
+    (Continuous.star ((continuous_apply (Fin.append v b)).comp hc))
+
+private lemma positiveRepresentative_witness (m : ℕ) :
+    positiveRepresentative (coordinatesOf (witnessParameter m)) = witnessParameter m := by
+  apply representative_coordinatesOf
+  dsimp [witnessParameter]
+  positivity
+
+private def quotientValidityDomain (m : ℕ) : Set Coordinates :=
+  {x | 0 < sigma x ∧
+    eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => quotientRawPrefix m x ij.1 ij.2))
+      (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0 ∧
+    eval x (leadingPolynomial m) ≠ 0}
+
+private lemma quotientValidityDomain_open (m : ℕ) :
+    IsOpen (quotientValidityDomain m) := by
+  unfold quotientValidityDomain
+  have hcoords : Continuous (fun x : Coordinates =>
+      OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij : ObsIndex => quotientRawPrefix m x ij.1 ij.2)) := by
+    have hraw : Continuous (fun x : Coordinates =>
+        (fun ij : ObsIndex => quotientRawPrefix m x ij.1 ij.2)) := by
+      apply continuous_pi
+      intro ij
+      exact (continuous_apply ij.2).comp
+        ((continuous_apply ij.1).comp (quotientRawPrefix_continuous m))
+    apply continuous_pi
+    intro i
+    cases i with
+    | inl ij => exact Complex.continuous_re.comp ((continuous_apply ij).comp hraw)
+    | inr ij => exact Complex.continuous_im.comp ((continuous_apply ij).comp hraw)
+  apply (isOpen_lt continuous_const (continuous_apply 10)).inter
+  apply IsOpen.inter
+  · exact isOpen_ne.preimage ((MvPolynomial.continuous_eval _).comp
+      hcoords)
+  · exact isOpen_ne.preimage (MvPolynomial.continuous_eval _)
+
+set_option maxHeartbeats 800000 in
+private lemma quotientValidityDomain_nonempty (m : ℕ) :
+    (quotientValidityDomain m).Nonempty := by
+  let x₀ := coordinatesOf (witnessParameter m)
+  have hrep : positiveRepresentative x₀ = witnessParameter m := by
+    exact positiveRepresentative_witness m
+  have hwit := OpenBoundaryMPSQuotient.quotient_locus_witness m
+  dsimp only at hwit
+  rcases hwit with ⟨hψ, hQ, hg, h00⟩
+  have hw := OpenBoundaryMPSTwoSiteMinimality.witness_gauge m
+  have hρ : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => quotientRawPrefix m x₀ ij.1 ij.2))
+      (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0 := by
+    simpa [quotientRawPrefix, hrep, hw] using hQ
+  have hσ : 0 < sigma x₀ := by
+    dsimp [x₀, sigma, coordinatesOf]
+    dsimp [witnessParameter]
+    norm_num
+  obtain ⟨θ, hθpos, hθchart, hθcore, hθlead⟩ :=
+    OpenBoundaryMPSTwoSiteMinimality.canonicalChart_nonempty m
+  have hθrep : positiveRepresentative (coordinatesOf θ) = θ :=
+    representative_coordinatesOf θ hθpos
+  have hLθ : eval (coordinatesOf θ) (leadingPolynomial m) ≠ 0 := by
+    rw [leadingPolynomial_eval m (coordinatesOf θ) (by
+      dsimp [sigma, coordinatesOf]
+      positivity)]
+    rw [hθrep]
+    exact fun hz => hθlead ((Complex.normSq_eq_zero.mp hz))
+  have hLdense := polynomial_nonzero_dense (leadingPolynomial m)
+    (coordinatesOf θ) hLθ
+  let R : Set Coordinates := {x | 0 < sigma x ∧
+    eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => quotientRawPrefix m x ij.1 ij.2))
+      (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0}
+  have hRopen : IsOpen R := by
+    unfold R
+    have hcoords : Continuous (fun x : Coordinates =>
+        OpenBoundaryMPSDensityGenericity.realCoordinates
+          (fun ij : ObsIndex => quotientRawPrefix m x ij.1 ij.2)) := by
+      have hraw : Continuous (fun x : Coordinates =>
+          (fun ij : ObsIndex => quotientRawPrefix m x ij.1 ij.2)) := by
+        apply continuous_pi
+        intro ij
+        exact (continuous_apply ij.2).comp
+          ((continuous_apply ij.1).comp (quotientRawPrefix_continuous m))
+      apply continuous_pi
+      intro i
+      cases i with
+      | inl ij => exact Complex.continuous_re.comp ((continuous_apply ij).comp hraw)
+      | inr ij => exact Complex.continuous_im.comp ((continuous_apply ij).comp hraw)
+    apply (isOpen_lt continuous_const (continuous_apply 10)).inter
+    exact isOpen_ne.preimage ((MvPolynomial.continuous_eval _).comp hcoords)
+  have hRne : R.Nonempty := ⟨x₀, hσ, hρ⟩
+  obtain ⟨x, hxR, hxL⟩ := hLdense.inter_open_nonempty R hRopen hRne
+  exact ⟨x, hxR.1, hxR.2, hxL⟩
+
+private lemma rawPrefix_scale_local (k m : ℕ) (z : ℂ)
+    (ψ : Word (k + m) → ℂ) :
+    OpenBoundaryMPSDensityRecovery.rawPrefix k m (z • ψ) =
+      (Complex.normSq z : ℂ) • OpenBoundaryMPSDensityRecovery.rawPrefix k m ψ := by
+  unfold OpenBoundaryMPSDensityRecovery.rawPrefix
+  have hC : OpenBoundaryMPSDensityRecovery.amplitudeColumns k m (z • ψ) =
+      z • OpenBoundaryMPSDensityRecovery.amplitudeColumns k m ψ := rfl
+  rw [hC, Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
+    smul_smul]
+  change (z * (starRingEnd ℂ) z) • _ = _
+  rw [Complex.mul_conj]
+
+private lemma positiveBoundary_state_eq (m : ℕ)
+    (p : OpenBoundaryMPSQuotient.Quotient) :
+    OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+        (p.1, Real.sqrt p.2.1, (Real.sqrt p.2.1 : ℂ) * p.2.2) =
+      OpenBoundaryMPSMarginalBirationality.mpsState (3 + m)
+        (OpenBoundaryMPSTwoSiteMinimality.core p 0)
+        (OpenBoundaryMPSTwoSiteMinimality.core p 1)
+        (OpenBoundaryMPSTwoSiteMinimality.left p)
+        (OpenBoundaryMPSQuotient.positiveBoundary p) := by
+  funext w
+  rfl
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_zero : quotientIndexEquiv.symm 0 = Sum.inl 0 := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_one : quotientIndexEquiv.symm 1 = Sum.inl 1 := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_two : quotientIndexEquiv.symm 2 = Sum.inl 2 := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_three : quotientIndexEquiv.symm 3 = Sum.inl 3 := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_four : quotientIndexEquiv.symm 4 = Sum.inl 4 := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_five : quotientIndexEquiv.symm 5 = Sum.inr (Sum.inl 0) := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_six : quotientIndexEquiv.symm 6 = Sum.inr (Sum.inl 1) := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_seven : quotientIndexEquiv.symm 7 = Sum.inr (Sum.inl 2) := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_eight : quotientIndexEquiv.symm 8 = Sum.inr (Sum.inl 3) := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_nine : quotientIndexEquiv.symm 9 = Sum.inr (Sum.inl 4) := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_ten : quotientIndexEquiv.symm 10 = Sum.inr (Sum.inr 0) := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_eleven : quotientIndexEquiv.symm 11 = Sum.inr (Sum.inr 1) := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientIndexEquiv_symm_twelve : quotientIndexEquiv.symm 12 = Sum.inr (Sum.inr 2) := by decide
+
+set_option maxHeartbeats 800000 in
+private lemma quotientCoordinates_positiveRepresentative (p : OpenBoundaryMPSQuotient.Quotient)
+    (hp : 0 < p.2.1) :
+    positiveRepresentative (quotientCoordinates13 p) =
+      (p.1, Real.sqrt p.2.1, (Real.sqrt p.2.1 : ℂ) * p.2.2) := by
+  apply Prod.ext
+  · funext i
+    fin_cases i <;>
+      simp [positiveRepresentative, coreCoordinates, quotientCoordinates13,
+        OpenBoundaryMPSQuotient.quotientRealCoordinates,
+        sigma, eta, quotientRealCoordinates,
+        quotientIndexEquiv_symm_zero, quotientIndexEquiv_symm_one,
+        quotientIndexEquiv_symm_two, quotientIndexEquiv_symm_three,
+        quotientIndexEquiv_symm_four, quotientIndexEquiv_symm_five,
+        quotientIndexEquiv_symm_six, quotientIndexEquiv_symm_seven,
+        quotientIndexEquiv_symm_eight, quotientIndexEquiv_symm_nine,
+        quotientIndexEquiv_symm_ten, quotientIndexEquiv_symm_eleven,
+        quotientIndexEquiv_symm_twelve]
+  · apply Prod.ext
+    · simp [positiveRepresentative, quotientCoordinates13,
+        OpenBoundaryMPSQuotient.quotientRealCoordinates, sigma, eta,
+        quotientRealCoordinates, quotientIndexEquiv_symm_ten,
+        quotientIndexEquiv_symm_eleven, quotientIndexEquiv_symm_twelve]
+    · apply Complex.ext <;>
+        simp [positiveRepresentative, quotientCoordinates13,
+          OpenBoundaryMPSQuotient.quotientRealCoordinates, sigma, eta,
+          quotientRealCoordinates, quotientIndexEquiv_symm_ten,
+          quotientIndexEquiv_symm_eleven, quotientIndexEquiv_symm_twelve]
+
+private def quotientParameterOfCoordinates (x : Coordinates) :
+    OpenBoundaryMPSQuotient.Quotient := (coreCoordinates x, sigma x, eta x)
+
+private lemma quotientParameter_coordinates (x : Coordinates) :
+    quotientCoordinates13 (quotientParameterOfCoordinates x) = x := by
+  funext i
+  fin_cases i <;>
+    simp [quotientParameterOfCoordinates, quotientCoordinates13,
+      quotientIndexEquiv_symm_zero, quotientIndexEquiv_symm_one,
+      quotientIndexEquiv_symm_two, quotientIndexEquiv_symm_three,
+      quotientIndexEquiv_symm_four, quotientIndexEquiv_symm_five,
+      quotientIndexEquiv_symm_six, quotientIndexEquiv_symm_seven,
+      quotientIndexEquiv_symm_eight, quotientIndexEquiv_symm_nine,
+      quotientIndexEquiv_symm_ten, quotientIndexEquiv_symm_eleven,
+      quotientIndexEquiv_symm_twelve, OpenBoundaryMPSQuotient.quotientRealCoordinates,
+      quotientRealCoordinates, coreCoordinates, sigma, eta]
+
+private lemma quotientParameter_positiveBoundary (x : Coordinates) :
+    positiveRepresentative x =
+      ((quotientParameterOfCoordinates x).1,
+        Real.sqrt (quotientParameterOfCoordinates x).2.1,
+        (Real.sqrt (quotientParameterOfCoordinates x).2.1 : ℂ) *
+          (quotientParameterOfCoordinates x).2.2) := by
+  rfl
+
+private lemma positiveObservation_local (m : ℕ) (x : Coordinates) (hx : 0 ≤ sigma x) :
+    quotientRawPrefix m x =
+      OpenBoundaryMPSQuotient.quotientObservation 3 m
+        (quotientParameterOfCoordinates x) := by
+  let p := quotientParameterOfCoordinates x
+  have hs0 : OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+      (positiveRepresentative x) =
+      OpenBoundaryMPSMarginalBirationality.mpsState (3 + m)
+        (OpenBoundaryMPSTwoSiteMinimality.core p 0)
+        (OpenBoundaryMPSTwoSiteMinimality.core p 1)
+        (OpenBoundaryMPSTwoSiteMinimality.left p)
+        (OpenBoundaryMPSQuotient.positiveBoundary p) := by
+    rw [quotientParameter_positiveBoundary x]
+    exact positiveBoundary_state_eq m p
+  have hs1 : OpenBoundaryMPSMarginalBirationality.mpsState (3 + m)
+      (OpenBoundaryMPSTwoSiteMinimality.core p 0)
+      (OpenBoundaryMPSTwoSiteMinimality.core p 1)
+      (OpenBoundaryMPSTwoSiteMinimality.left p)
+      (OpenBoundaryMPSQuotient.positiveBoundary p) =
+      (Real.sqrt (sigma x) : ℂ) •
+        OpenBoundaryMPSMarginalBirationality.mpsState (3 + m)
+          (OpenBoundaryMPSTwoSiteMinimality.core p 0)
+          (OpenBoundaryMPSTwoSiteMinimality.core p 1)
+          (OpenBoundaryMPSTwoSiteMinimality.left p)
+          (OpenBoundaryMPSTwoSiteMinimality.right
+            (p.1, 1, p.2.2)) := by
+    have hr : OpenBoundaryMPSQuotient.positiveBoundary p =
+        (Real.sqrt p.2.1 : ℂ) •
+          OpenBoundaryMPSTwoSiteMinimality.right (p.1, 1, p.2.2) := by
+      ext i
+      fin_cases i <;>
+        simp [OpenBoundaryMPSQuotient.positiveBoundary,
+          OpenBoundaryMPSTwoSiteMinimality.right]
+    rw [hr]
+    funext w
+    simp only [OpenBoundaryMPSMarginalBirationality.mpsState,
+      OpenBoundaryMPSDensityRecovery.state_formula, Matrix.mulVec_smul,
+      dotProduct_smul, Pi.smul_apply, smul_eq_mul]
+    rfl
+  have hs := hs0.trans hs1
+  rw [show quotientRawPrefix m x =
+      OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+        (OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+          (positiveRepresentative x)) by rfl]
+  rw [hs, rawPrefix_scale_local]
+  have hz : Complex.normSq (Real.sqrt (sigma x) : ℂ) = (sigma x : ℂ) := by
+    rw [Complex.normSq_ofReal]
+    congr 1
+    rw [← sq, Real.sq_sqrt hx]
+  rw [hz]
+  rfl
+
+private lemma quotientCoordinates_retraction_local (m : ℕ) (x : Coordinates)
+    (hx : 0 < sigma x)
+    (hρ : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => quotientRawPrefix m x ij.1 ij.2))
+      (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0) :
+    quotientCoordinates13
+        (OpenBoundaryMPSQuotient.quotientCoordinates m (quotientRawPrefix m x)) = x := by
+  let p := quotientParameterOfCoordinates x
+  have hparts := (OpenBoundaryMPSQuotient.quotientLocus_eval m
+    (quotientRawPrefix m x)).mp hρ
+  have hobs := positiveObservation_local m x hx.le
+  rw [hobs] at hparts
+  have hp := OpenBoundaryMPSQuotient.quotient_retraction m p hx hparts.1
+  rw [← hobs] at hp
+  rw [hp, quotientParameter_coordinates]
+
+private def quotientNumeratorFamily (m : ℕ) (j : Fin 13) :
+    MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ :=
+  OpenBoundaryMPSQuotient.quotientRealNumerator m (quotientIndexEquiv.symm j)
+
+private def quotientDenominatorFamily (m : ℕ) (j : Fin 13) :
+    MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ :=
+  OpenBoundaryMPSQuotient.quotientRealDenominator m (quotientIndexEquiv.symm j)
+
+private lemma quotient_ratio_vector_local (m : ℕ) (x : Coordinates)
+    (hσ : 0 < sigma x)
+    (hρ : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => quotientRawPrefix m x ij.1 ij.2))
+      (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0) :
+    (fun j =>
+      eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij => quotientRawPrefix m x ij.1 ij.2)) (quotientNumeratorFamily m j) /
+      eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij => quotientRawPrefix m x ij.1 ij.2)) (quotientDenominatorFamily m j)) = x := by
+  funext j
+  have hr := quotientCoordinate_ratio m (quotientRawPrefix m x) (by simpa using hρ) j
+  rw [quotientCoordinates_retraction_local m x hσ hρ] at hr
+  exact hr
+
+private lemma state_continuous (m : ℕ) :
+    Continuous (fun x : Coordinates =>
+      OpenBoundaryMPSTwoSiteMinimality.state (3 + m) (positiveRepresentative x)) := by
+  have hpar : Continuous (fun x : Coordinates =>
+      fun w => eval (parameterCoordinates x)
+        (OpenBoundaryMPSMarginalBirationality.parameterPolys (3 + m) w)) := by
+    apply continuous_pi
+    intro w
+    exact (MvPolynomial.continuous_eval _).comp parameterCoordinates_continuous
+  exact hpar.congr (fun x => parameterCoordinates_eval m x)
+
+private lemma openBoundaryMPS_smul {n : ℕ} {ψ : Word n → ℂ}
+    (hψ : ψ ∈ OpenBoundaryMPSMarginalBirationality.openBoundaryMPS n) (z : ℂ) :
+    z • ψ ∈ OpenBoundaryMPSMarginalBirationality.openBoundaryMPS n := by
+  rcases hψ with ⟨a₀, a₁, l, r, hr⟩
+  refine ⟨a₀, a₁, l, z • r, ?_⟩
+  rw [hr]
+  funext w
+  simp only [OpenBoundaryMPSMarginalBirationality.mpsState,
+    Matrix.mulVec_smul, dotProduct_smul, Pi.smul_apply, smul_eq_mul]
+
+private def q2WordCast (m : ℕ) (w : Word (2 + (1 + m))) : Word (3 + m) :=
+  fun i => w (Fin.cast (by omega) i)
+
+private def actualQ2RawPrefix (m : ℕ)
+    (ψ : Word (3 + m) → ℂ) : Matrix (Word 2) (Word 2) ℂ :=
+  OpenBoundaryMPSDensityRecovery.rawPrefix 2 (1 + m)
+    (fun w => ψ (q2WordCast m w))
+
+def intrinsicActualQ2Fiber (m : ℕ) : Prop :=
+  ∃ G : MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ, G ≠ 0 ∧
+    let L := actualPrincipalLocus m G
+    L.Nonempty ∧ IsOpen L ∧ Dense L ∧
+      ∀ ψ ∈ L, ∀ V : Set (OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m)),
+        V ∈ 𝓝 ψ →
+        ∃ φ ∈ V,
+          actualQ2RawPrefix m (φ : Word (3 + m) → ℂ) =
+            actualQ2RawPrefix m (ψ : Word (3 + m) → ℂ) ∧
+          ¬ ∃ ζ : ℂ, ‖ζ‖ = 1 ∧
+            (φ : Word (3 + m) → ℂ) = ζ • (ψ : Word (3 + m) → ℂ)
+
+set_option maxHeartbeats 1000000 in
+theorem intrinsic_actual_q2_fiber (m : ℕ) : intrinsicActualQ2Fiber m := by
+  obtain ⟨J, hJ, hJw, hJfiber⟩ :=
+    D5.S3.Geometry.PolynomialLocalFiber.exists_rank_fiber_polynomial
+      (recordPolynomial (1 + m))
+  let P : RealPoly := J * leadingPolynomial m
+  obtain ⟨H, B, hclear⟩ :=
+    clear_polynomial P (quotientNumeratorFamily m) (quotientDenominatorFamily m)
+  obtain ⟨x₀, hx₀⟩ := hJw
+  have hJdense := polynomial_nonzero_dense J x₀ (by rw [hx₀]; norm_num)
+  obtain ⟨x, hxDom, hxJ⟩ := hJdense.inter_open_nonempty _
+    (quotientValidityDomain_open m) (quotientValidityDomain_nonempty m)
+  change eval x J ≠ 0 at hxJ
+  let Qx := quotientRawPrefix m x
+  let ax : ObsIndex ⊕ ObsIndex → ℝ :=
+    OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij : ObsIndex => Qx ij.1 ij.2)
+  have hρx : eval ax (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0 := by
+    exact hxDom.2.1
+  have hdenx : ∀ j, eval ax (quotientDenominatorFamily m j) ≠ 0 := by
+    intro j
+    exact quotient_denominators_nonzero m Qx hρx j
+  have hratx : (fun j => eval ax (quotientNumeratorFamily m j) /
+      eval ax (quotientDenominatorFamily m j)) = x := by
+    exact quotient_ratio_vector_local m x hxDom.1 hρx
+  have hcx := hclear ax hdenx
+  rw [hratx] at hcx
+  have hPx : eval x P ≠ 0 := by
+    simpa [P] using mul_ne_zero hxJ hxDom.2.2
+  have hHx : eval ax H ≠ 0 := by
+    intro h
+    have : eval x P = 0 := by simpa [h] using hcx.2
+    exact hPx this
+  let G : MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ :=
+    OpenBoundaryMPSQuotient.quotientLocusPolynomial m * H
+  have hGx : eval ax G ≠ 0 := by
+    simpa [G] using mul_ne_zero hρx hHx
+  have hG : G ≠ 0 := by
+    intro h
+    rw [h] at hGx
+    simpa using hGx
+  let ψ₀ : Word (3 + m) → ℂ :=
+    OpenBoundaryMPSTwoSiteMinimality.state (3 + m) (positiveRepresentative x)
+  have hψ₀ : ψ₀ ∈ OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m) := by
+    refine ⟨OpenBoundaryMPSTwoSiteMinimality.core (positiveRepresentative x) 0,
+      OpenBoundaryMPSTwoSiteMinimality.core (positiveRepresentative x) 1,
+      OpenBoundaryMPSTwoSiteMinimality.left (positiveRepresentative x),
+      OpenBoundaryMPSTwoSiteMinimality.right (positiveRepresentative x), ?_⟩
+    rfl
+  let ψ : OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m) := ⟨ψ₀, hψ₀⟩
+  have hψG : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+        (ψ : Word (3 + m) → ℂ) ij.1 ij.2)) G ≠ 0 := by
+    simpa [ψ, ψ₀, Qx, ax, quotientRawPrefix, actualPrincipalLocus] using hGx
+  obtain ⟨Lne, Lopen, Ldense⟩ :=
+    actual_principal_genericity m G ⟨ψ, hψG⟩
+  refine ⟨G, hG, Lne, Lopen, Ldense, ?_⟩
+  intro ψ' hψ' V hV
+  obtain ⟨O, hOV, hO, hψ'O⟩ := mem_nhds_iff.mp hV
+  let Qψ := OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+    (ψ' : Word (3 + m) → ℂ)
+  have hGψ := hψ'
+  change eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => Qψ ij.1 ij.2)) G ≠ 0 at hGψ
+  have hρψ : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => Qψ ij.1 ij.2))
+      (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0 := by
+    have hmul : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij => Qψ ij.1 ij.2))
+        (OpenBoundaryMPSQuotient.quotientLocusPolynomial m * H) ≠ 0 := by
+      simpa [G] using hGψ
+    simp only [map_mul] at hmul
+    exact (mul_ne_zero_iff.mp hmul).1
+  have hpartsψ := (OpenBoundaryMPSQuotient.quotientLocus_eval m Qψ).mp hρψ
+  obtain ⟨_, _, _, _, _, h00ψ⟩ :=
+    OpenBoundaryMPSQuotient.rational_quotient_inverse m Qψ hρψ
+  have hrep := OpenBoundaryMPSQuotient.actual_quotient_representative m
+      (ψ' : Word (3 + m) → ℂ) ψ'.property hpartsψ.1 h00ψ
+  dsimp only at hrep
+  let p := OpenBoundaryMPSQuotient.quotientCoordinates m Qψ
+  have hrep' : 0 < p.2.1 ∧ ∃ z : ℂ, ‖z‖ = 1 ∧
+      (ψ' : Word (3 + m) → ℂ) = z •
+        OpenBoundaryMPSMarginalBirationality.mpsState (3 + m)
+          (OpenBoundaryMPSTwoSiteMinimality.core p 0)
+          (OpenBoundaryMPSTwoSiteMinimality.core p 1)
+          (OpenBoundaryMPSTwoSiteMinimality.left p)
+          (OpenBoundaryMPSQuotient.positiveBoundary p) := by
+    simpa [p] using hrep
+  obtain ⟨hpσ, z, hz, hphase⟩ := hrep'
+  let x' := quotientCoordinates13 p
+  have hx'σ : 0 < sigma x' := by
+    simpa [x', sigma, quotientCoordinates13, quotientRealCoordinates,
+      quotientIndexEquiv_symm_ten] using hpσ
+  have hx'Q : Qψ = quotientRawPrefix m x' := by
+    have hrep := quotientCoordinates_positiveRepresentative p hpσ
+    have hstate : OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+        (positiveRepresentative x') =
+        OpenBoundaryMPSMarginalBirationality.mpsState (3 + m)
+          (OpenBoundaryMPSTwoSiteMinimality.core p 0)
+          (OpenBoundaryMPSTwoSiteMinimality.core p 1)
+          (OpenBoundaryMPSTwoSiteMinimality.left p)
+          (OpenBoundaryMPSQuotient.positiveBoundary p) := by
+      rw [hrep]
+      exact positiveBoundary_state_eq m p
+    have hzsq : Complex.normSq z = 1 := by
+      rw [← Complex.sq_norm, hz]
+      norm_num
+    change OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+        (ψ' : Word (3 + m) → ℂ) =
+      OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+        (OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+          (positiveRepresentative x'))
+    rw [hphase, rawPrefix_scale_local, hzsq, hstate]
+    simp
+  have hρx' : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => quotientRawPrefix m x' ij.1 ij.2))
+      (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0 := by
+    rw [← hx'Q]
+    exact hρψ
+  have hdenx' : ∀ j, eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => quotientRawPrefix m x' ij.1 ij.2))
+      (quotientDenominatorFamily m j) ≠ 0 := by
+    intro j
+    exact quotient_denominators_nonzero m (quotientRawPrefix m x') hρx' j
+  have hratx' := quotient_ratio_vector_local m x' hx'σ hρx'
+  have hcx' := hclear
+    (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => quotientRawPrefix m x' ij.1 ij.2)) hdenx'
+  rw [hratx'] at hcx'
+  have hHrawx' : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+      (fun ij => quotientRawPrefix m x' ij.1 ij.2)) H ≠ 0 := by
+    have hmul : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij => Qψ ij.1 ij.2))
+        (OpenBoundaryMPSQuotient.quotientLocusPolynomial m * H) ≠ 0 := by
+      simpa [G] using hGψ
+    simp only [map_mul] at hmul
+    have hHψ : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij => Qψ ij.1 ij.2)) H ≠ 0 :=
+      (mul_ne_zero_iff.mp hmul).2
+    rw [← hx'Q]
+    exact hHψ
+  have hPx' : eval x' P ≠ 0 := by
+    intro h
+    have hdiv : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+        (fun ij => quotientRawPrefix m x' ij.1 ij.2)) H /
+        eval (OpenBoundaryMPSDensityGenericity.realCoordinates
+          (fun ij => quotientRawPrefix m x' ij.1 ij.2)) B = 0 := by
+      simpa [h] using hcx'.2.symm
+    rcases (div_eq_zero_iff.mp hdiv) with hH | hB
+    · exact False.elim (hHrawx' hH)
+    · exact False.elim (hcx'.1 hB)
+  have hx'J : eval x' J ≠ 0 := by
+    exact (mul_ne_zero_iff.mp (by simpa [P] using hPx')).1
+  have hx'lead : eval x' (leadingPolynomial m) ≠ 0 := by
+    exact (mul_ne_zero_iff.mp (by simpa [P] using hPx')).2
+  let S : Coordinates → (Word (3 + m) → ℂ) := fun y =>
+    z • OpenBoundaryMPSTwoSiteMinimality.state (3 + m) (positiveRepresentative y)
+  have hScont : Continuous S := by
+    dsimp [S]
+    exact (continuous_const : Continuous (fun _ : Coordinates => z)).smul
+      (state_continuous m)
+  let Ssub : Coordinates →
+      OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m) := fun y =>
+    ⟨S y, openBoundaryMPS_smul (by
+      exact ⟨OpenBoundaryMPSTwoSiteMinimality.core (positiveRepresentative y) 0,
+        OpenBoundaryMPSTwoSiteMinimality.core (positiveRepresentative y) 1,
+        OpenBoundaryMPSTwoSiteMinimality.left (positiveRepresentative y),
+        OpenBoundaryMPSTwoSiteMinimality.right (positiveRepresentative y), rfl⟩) z⟩
+  have hSsubcont : Continuous Ssub := hScont.subtype_mk _
+  have hstate' : OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+      (positiveRepresentative x') =
+      OpenBoundaryMPSMarginalBirationality.mpsState (3 + m)
+        (OpenBoundaryMPSTwoSiteMinimality.core p 0)
+        (OpenBoundaryMPSTwoSiteMinimality.core p 1)
+        (OpenBoundaryMPSTwoSiteMinimality.left p)
+        (OpenBoundaryMPSQuotient.positiveBoundary p) := by
+    have hrep := quotientCoordinates_positiveRepresentative p hpσ
+    rw [hrep]
+    exact positiveBoundary_state_eq m p
+  have hSsubx : Ssub x' = ψ' := by
+    apply Subtype.ext
+    change z • OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+        (positiveRepresentative x') = (ψ' : Word (3 + m) → ℂ)
+    rw [hstate']
+    exact hphase.symm
+  let U : Set Coordinates := Ssub ⁻¹' O ∩ quotientValidityDomain m ∩
+    {y | eval y J ≠ 0}
+  have hUopen : IsOpen U := by
+    simpa [U, inter_assoc] using
+      (hSsubcont.isOpen_preimage O hO).inter
+        ((quotientValidityDomain_open m).inter
+          (isOpen_ne.preimage (MvPolynomial.continuous_eval J)))
+  have hx'U : x' ∈ U := by
+    refine ⟨?_, hx'J⟩
+    refine ⟨?_, ?_⟩
+    · change Ssub x' ∈ O
+      rw [hSsubx]
+      exact hψ'O
+    · exact ⟨hx'σ, hρx', hx'lead⟩
+  obtain ⟨K, q, f, ε, hε, hdim, hf0, hfc, hf, hpos⟩ :=
+    (hJfiber x' hx'J).2 U hUopen hx'U
+  obtain ⟨hKpos, y, hyU, hyx, hyrec⟩ := hpos (by decide)
+  let φ₀ : Word (3 + m) → ℂ := S y
+  have hφ₀ : φ₀ ∈ OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m) := by
+    exact openBoundaryMPS_smul (by
+      exact ⟨OpenBoundaryMPSTwoSiteMinimality.core (positiveRepresentative y) 0,
+        OpenBoundaryMPSTwoSiteMinimality.core (positiveRepresentative y) 1,
+        OpenBoundaryMPSTwoSiteMinimality.left (positiveRepresentative y),
+        OpenBoundaryMPSTwoSiteMinimality.right (positiveRepresentative y), rfl⟩) z
+  let φ : OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (3 + m) := ⟨φ₀, hφ₀⟩
+  have hφV : φ ∈ V := hOV (by
+    simpa [φ, φ₀, S, Ssub] using hyU.1.1)
+  refine ⟨φ, hφV, ?_, ?_⟩
+  · have hdens := record_equality_density (1 + m) hx'σ hyU.1.2.1
+      (by
+        intro h
+        apply hx'lead
+        rw [leadingPolynomial_eval m x' hx'σ.le]
+        simp [h])
+      hyrec
+    have hzsq : Complex.normSq z = 1 := by
+      rw [← Complex.sq_norm, hz]
+      norm_num
+    have hq2_scale (u : Coordinates) :
+        actualQ2RawPrefix m (z • OpenBoundaryMPSTwoSiteMinimality.state
+          (3 + m) (positiveRepresentative u)) =
+          Complex.normSq z • actualQ2RawPrefix m
+            (OpenBoundaryMPSTwoSiteMinimality.state
+              (3 + m) (positiveRepresentative u)) := by
+      unfold actualQ2RawPrefix
+      rw [show (fun w =>
+          (z • OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+            (positiveRepresentative u)) (q2WordCast m w)) =
+          z • (fun w => OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+            (positiveRepresentative u) (q2WordCast m w)) by rfl]
+      exact rawPrefix_scale_local 2 (1 + m) z
+        (fun w => OpenBoundaryMPSTwoSiteMinimality.state
+          (3 + m) (positiveRepresentative u) (q2WordCast m w))
+    have hcast (u : OpenBoundaryMPSTwoSiteMinimality.Parameter) :
+        (fun w : Word (2 + (1 + m)) =>
+          OpenBoundaryMPSTwoSiteMinimality.state (3 + m) u (q2WordCast m w)) =
+        OpenBoundaryMPSTwoSiteMinimality.state (2 + (1 + m)) u := by
+      funext w
+      simp [q2WordCast, OpenBoundaryMPSTwoSiteMinimality.state,
+        OpenBoundaryMPSMarginalBirationality.mpsState, Nat.add_assoc,
+        Nat.add_comm, Nat.add_left_comm]
+    have hψstate : (ψ' : Word (3 + m) → ℂ) = z •
+        OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+          (positiveRepresentative x') := by
+      simpa [hstate'] using hphase
+    rw [show (φ : Word (3 + m) → ℂ) = z •
+        OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+          (positiveRepresentative y) by rfl,
+      hψstate]
+    rw [hq2_scale, hq2_scale, hzsq]
+    simp only [one_smul]
+    change OpenBoundaryMPSDensityRecovery.rawPrefix 2 (1 + m)
+        (fun w => OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+          (positiveRepresentative y) (q2WordCast m w)) =
+      OpenBoundaryMPSDensityRecovery.rawPrefix 2 (1 + m)
+        (fun w => OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+          (positiveRepresentative x') (q2WordCast m w))
+    rw [hcast, hcast]
+    exact hdens
+  · intro hphaseφ
+    obtain ⟨lambda, hlam, hphaseEq⟩ := hphaseφ
+    have hNormSq : Complex.normSq lambda = 1 := by
+      rw [← Complex.sq_norm, hlam]
+      norm_num
+    have hzsq : Complex.normSq z = 1 := by
+      rw [← Complex.sq_norm, hz]
+      norm_num
+    have hQeq : quotientRawPrefix m y = quotientRawPrefix m x' := by
+      have hraw := congrArg (fun v : Word (3 + m) → ℂ =>
+          OpenBoundaryMPSDensityRecovery.rawPrefix 3 m v) hphaseEq
+      have hφraw : OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+          (φ : Word (3 + m) → ℂ) = quotientRawPrefix m y := by
+        change OpenBoundaryMPSDensityRecovery.rawPrefix 3 m (z •
+          OpenBoundaryMPSTwoSiteMinimality.state (3 + m)
+            (positiveRepresentative y)) = _
+        rw [rawPrefix_scale_local]
+        have hzsq : Complex.normSq z = 1 := by
+          rw [← Complex.sq_norm, hz]
+          norm_num
+        rw [hzsq]
+        simpa [quotientRawPrefix]
+      rw [hφraw] at hraw
+      rw [rawPrefix_scale_local 3 m lambda, hNormSq] at hraw
+      have hψQ : OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
+          (ψ' : Word (3 + m) → ℂ) = quotientRawPrefix m x' := by
+        simpa [Qψ] using hx'Q
+      rw [hψQ] at hraw
+      norm_num at hraw
+      exact hraw
+    have hx'y := quotientCoordinates_retraction_local m y hyU.1.2.1
+      (by exact hyU.1.2.2.1)
+    have hxx := quotientCoordinates_retraction_local m x' hx'σ hρx'
+    apply hyx
+    rw [← hxx, ← hx'y, hQeq]
 
 end D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSQ2PolynomialFiber

@@ -68,6 +68,20 @@ For every point x of that locus and every specified open neighborhood U of x con
 
 This is a principal generic locus in the canonical parameter domain. Density in the actual MPS state image modulo unit phase requires a separate observable rational inverse and denominator descent and remains open here. The theorem does not resolve full Critch–Morton Conjecture 9 or arbitrary interior windows. It adds no dynamics, time group, energy, physical clock, stability or thermodynamic law, and carries no external open-problem-solution credit. The reused canonical inverse and phase argument retain Haobo Ma and Wenlin Zhang's CC BY 4.0 attribution. The C1 supplier credits BochaoKong's Apache-2.0 LeanPool constant-rank argument at commit 2b1ec889365345f19a45fa94b6457a4d92c96295. Realification, Gram transfer, Schur completion and constant rank are mature mathematics.
 
+**Theorem 1.6 (Intrinsic actual-image Q2 nonidentifiability).**
+
+Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQ2PolynomialFiber.intrinsic_actual_q2_fiber`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQ2PolynomialFiber.intrinsic_actual_q2_fiber` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every $m$, one nonzero real polynomial in the complete raw $Q_3$ entries defines a nonempty relatively open dense locus inside the literal actual image of length $3+m$ binary bond-two free-boundary states. At every state in this locus and in every relative neighborhood, there is an actual state with equal complete raw $Q_2$ and no unit-complex phase relation. The proof descends the twelve-component polynomial record through the quotient rational retraction, clears the coordinate-specific denominators, and multiplies by the quotient-locus and leading-block factors so the rank fiber remains inside the valid retraction and Schur-completion region.
+
+This is the intrinsic endpoint for the displayed raw PREFIX reading. It does not assert arbitrary interior windows, normalized readings, dynamics, energy, clocks, thermodynamics, stability or sample complexity, and it does not claim solved-open-problem credit for the broader Critch–Morton Conjecture 9 source quantifier.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQ2PolynomialFiber.exists_generic_fiber`
@@ -75,5 +89,6 @@ This is a principal generic locus in the canonical parameter domain. Density in 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQ2PolynomialFiber.q2Polynomial`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQ2PolynomialFiber.q2Polynomial_eval`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQ2PolynomialFiber.recordPolynomial_eval`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQ2PolynomialFiber.intrinsic_actual_q2_fiber`
 - Dependency: [D5/S3/Geometry/PolynomialLocalFiber](../../Geometry/PolynomialLocalFiber.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity](OpenBoundaryMPSDensityGenericity.md)
