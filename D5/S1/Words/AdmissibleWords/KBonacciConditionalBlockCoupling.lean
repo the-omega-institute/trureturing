@@ -77,7 +77,7 @@ private theorem completionLaw_apply {k n : ℕ} (fixed : Finset (Fin n))
       exact hw (he ▸ b.property)
     simp [hz, hw]
 
-private theorem completion_nonempty {k n : ℕ} (fixed : Finset (Fin n))
+theorem completion_nonempty {k n : ℕ} (fixed : Finset (Fin n))
     (exterior : Fin n → Bool) (h : DBonacciAdmissible k n exterior) :
     (completions k n fixed exterior).Nonempty := by
   classical
@@ -713,7 +713,7 @@ theorem prefix_coupling_marginals {k n : ℕ} (hk : 0 < k) (sites : List (Fin n)
         _ = q.bind (nextCompletionLaw fixed y hy i) := by rw [hm.2.1]
         _ = completionLaw fixed y hy := completion_disintegration fixed y hy i hi
 
-private def mean {α : Type*} (p : PMF α) (f : α → ℝ≥0∞) : ℝ≥0∞ :=
+def mean {α : Type*} (p : PMF α) (f : α → ℝ≥0∞) : ℝ≥0∞ :=
   ∑' a, p a * f a
 
 private theorem mean_bind {α β : Type*} (p : PMF α) (q : α → PMF β)
@@ -722,7 +722,7 @@ private theorem mean_bind {α β : Type*} (p : PMF α) (q : α → PMF β)
   rw [ENNReal.tsum_comm]
   simp only [mul_assoc, ENNReal.tsum_mul_left]
 
-private theorem mean_map {α β : Type*} (p : PMF α) (g : α → β)
+theorem mean_map {α β : Type*} (p : PMF α) (g : α → β)
     (f : β → ℝ≥0∞) : mean (p.map g) f = mean p (fun a => f (g a)) := by
   rw [PMF.map, mean_bind]
   simp [mean, PMF.pure_apply]
