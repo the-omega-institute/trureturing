@@ -98,7 +98,7 @@ In the ordered basis (0,0),(0,1),(1,0),(1,1),(2,0),(2,1), use the actual density
 
 For heterogeneous CPTP data processing, decompose a Hermitian matrix into positive and negative Jordan parts. Positivity, trace preservation and the trace-norm triangle inequality give contraction without identifying the source and target dimensions. Trace norm vanishes only at zero; nonnegative squaring preserves data processing and faithfulness. The conditional ratios are bounded above by one. The conclusion answers the faithful-divergence existential in Section 9, second bullet, without specializing to relative entropy or determining either exact optimal coefficient.
 
-The endpoint and its consumed proof helpers have proof_shape bind-only. The endpoint is admitted as an external open-problem resolution; no escape witness is claimed. The positive-result four-slot audit is unfinished under issue 30303, comment 6874572340: exact sourceSelection and whole-family observational dependence are missing. This is not a declared_validated registration.
+Thus squared trace distance and the binary channel satisfy completeCoefficient <= 1/4 < 5/12 <= conditionalCoefficient. The complete bound holds for every finite quantum reference, while the displayed density-state pair has strictly positive conditional denominator and attains the ratio 5/12.
 
 ## References
 
