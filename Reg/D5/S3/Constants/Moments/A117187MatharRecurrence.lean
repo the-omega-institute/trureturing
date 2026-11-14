@@ -1,6 +1,9 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Constants.Moments.A117187MatharRecurrence
-import Reg.Support.SingleDependentReadout
+import Reg.Support.DependentFamily
+import Mathlib.Tactic.FinCases
+
+/-! Source-bound four-slot evidence for the exact coefficient law. -/
 
 namespace Reg.D5.S3.Constants.Moments.A117187MatharRecurrence
 open _root_.D5.S3.Constants.Moments.A117187MatharRecurrence
@@ -8,14 +11,21 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit PowerSeries
 noncomputable section
 
-abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℤ)
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Fin 4
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℤ
+  Anchor := Empty
+  finiteAnchor := inferInstance
 
 def actual : Realization signature :=
   realize signature (fun _ _ n => a n) (fun e => nomatch e)
 
-def changed : Realization signature :=
-  realize signature (fun _ _ n => a n + 1) (fun e => nomatch e)
+def changed (i : Fin 4) : Realization signature :=
+  realize signature (fun j _ n => if j = i then a n + 1 else a n) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -28,18 +38,17 @@ abbrev arena : Arena where
     source_series = (1 + X) *
       expand 2 (by decide) D5.S3.Constants.Moments.A331474HankelBridge.F0 ∧
     ∀ n : ℕ, 3 ≤ n →
-      ((n : ℤ) + 4) * (31 * n - 12) * R.readout () () n +
-      (37 * (n : ℤ) ^ 2 + 24 * n - 156) * R.readout () () (n - 1) -
-      4 * (31 * (n : ℤ) ^ 2 + 81 * n + 24) * R.readout () () (n - 2) -
-      4 * (37 * (n : ℤ) + 24) * (n - 1) * R.readout () () (n - 3) = 0
+      ((n : ℤ) + 4) * (31 * n - 12) * R.readout 0 () n +
+      (37 * (n : ℤ) ^ 2 + 24 * n - 156) * R.readout 1 () (n - 1) -
+      4 * (31 * (n : ℤ) ^ 2 + 81 * n + 24) * R.readout 2 () (n - 2) -
+      4 * (37 * (n : ℤ) + 24) * (n - 1) * R.readout 3 () (n - 3) = 0
 
-private theorem changed_law : ¬ arena.Law changed := by
+private theorem changed_law (i : Fin 4) : ¬ arena.Law (changed i) := by
   intro h
   have hh := h.2.2.2 3 (by decide)
   have ha := result.2.2.2 3 (by decide)
-  norm_num [changed, realize] at hh
   norm_num at ha
-  linear_combination hh - ha
+  fin_cases i <;> norm_num [changed, realize] at hh <;> omega
 
 private theorem initial_values : a 0 = 1 ∧ a 2 = 4 := by
   let T := expand 2 (by decide)
@@ -68,9 +77,18 @@ private theorem initial_values : a 0 = 1 ∧ a 2 = 4 := by
 def family : Registration arena (type_of% result) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨result, changed, changed_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual changed changed_law
+  variation := ⟨result, changed 0, changed_law 0⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨changed i, ?_, ?_, changed_law i⟩
+      · intro j hj
+        funext p n
+        simp [actual, changed, realize, hj]
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
   dependence := by
     intro i
     refine ⟨(), 0, 2, ?_⟩
@@ -100,12 +118,27 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.Constants.Moments.A117187MatharRecurrence
     definition := none
     coordinates := #[]
-    readouts := #[{
-      path := #["arg", "arg", "arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+    readouts := #[
+      { path := #["arg", "arg", "arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := some #["arg"]
+        booleanPredicate := false },
+      { path := #["arg", "arg", "arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := some #["arg"]
+        booleanPredicate := false },
+      { path := #["arg", "arg", "arg", "body", "body", "fn", "arg", "fn", "arg", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := some #["arg"]
+        booleanPredicate := false },
+      { path := #["arg", "arg", "arg", "body", "body", "fn", "arg", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := some #["arg"]
+        booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
