@@ -118,11 +118,11 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ m : ℕ, 50 ≤ m → 4 ^ m * (4 * m + 1) ^ (4 * m) ≤ R.readout () () m
+  Law R := ∀ {m : ℕ}, 50 ≤ m → 4 ^ m * (4 * m + 1) ^ (4 * m) ≤ R.readout () () m
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have he := h 50 (by omega)
+  have he := h (m := 50) (by omega)
   have hp : 0 < 4 ^ 50 * (4 * 50 + 1) ^ (4 * 50) := by positivity
   change 4 ^ 50 * (4 * 50 + 1) ^ (4 * 50) ≤ 0 at he
   omega
