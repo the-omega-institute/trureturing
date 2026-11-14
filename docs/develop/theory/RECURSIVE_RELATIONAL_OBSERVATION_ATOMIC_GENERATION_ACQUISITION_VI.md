@@ -2940,9 +2940,10 @@ one old leaf, so bilaterally at most h additional headers suffice once
 the anchor owner is reached. In the finite entrance, if the old right
 endpoint is reached first, retain that endpoint and the actual shorter
 suffix. The empty h=0 case needs no region leaves. For a tree request
-include all old leaves under x, and take a to be its acquired old left
-boundary if initial arrival is requested. Include the old cut intervals joining
-the current cursor to a and any saved return cut d. Enlarge to the least
+include all old leaves under x and denote its acquired old left boundary
+by a. Include the old interval from the actual current cursor to a when
+initial arrival is required, and from a to saved d when a return after
+region traversal is required. Enlarge to the least
 old cut interval containing these finitely many pieces. It can be empty
 when every piece is empty and all required cuts coincide.
 
@@ -2993,8 +2994,9 @@ roots and paths. $\square$
 ## 61. Current-region certificates and completion with outside growth
 
 **Definition 61.1 (a candidate and its validation).** Keep the acquired I.
-At the start of an attempt acquire a current token s extending u. Navigate
-by actual one-cell walks in the direction supplied by the acquired old
+At the start of an attempt acquire a current token s extending u. For an
+interval or a requested tree arrival, navigate by actual one-cell walks
+in the direction supplied by the acquired old
 cut order, stopping on acquired-reference equality with a or the requested
 subtree boundary. These walks stay in I. This directed procedure uses no
 overshooting Seek excursions and no cursor assignment in place of movement.
