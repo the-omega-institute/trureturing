@@ -79,8 +79,10 @@ internal sealed class HannExactForestDocument : IScribeDocumentDefinition
                 + "minimum, U0/U1 conclusion, physical signed continuation, Schur or Choi statement, "
                 + "resource bound, hardware claim, or claim of originality.")))));
 
-    private static DefinitionNode Def(string id, string symbol, string title, string text) =>
-        new(DefinitionId.Create(id), F.Id(symbol), H(title), Blocks(Paragraph(Text(text))));
+    private static DocumentBlock Def(string id, string symbol, string title, string text) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + symbol), H(title),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(text))), DescribeRole.Definition);
     private static Formula I(string x) => F.Id(x);
     private static Formula C(string x, params Formula[] a) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(x), [.. a]);

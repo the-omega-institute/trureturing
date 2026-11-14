@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Routing/HannExactForest
    generality: G
    mirror-B: D5/B/S3/Quantum/Routing/HannExactForest
-   mirror-E: none(waiver:stage-a-unfrozen-content)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Fixed-coordinate node lifts for actual signed loaded router records. -/
@@ -157,7 +157,6 @@ instance (t : ℝ) : Fintype (Clause t) := by
   classical
   unfold Clause
   infer_instance
-instance (t : ℝ) : DecidableEq (Clause t) := Classical.decEq _
 
 /-- Root clauses, followed by the separately identified rows of each child. -/
 abbrev Row : (n : ℕ) → (Router n → ℝ) → Type
@@ -170,7 +169,6 @@ instance rowFintype : (n : ℕ) → (q : Router n → ℝ) → Fintype (Row n q)
       letI (b : Bool) := rowFintype n (restrict n q b)
       exact inferInstanceAs (Fintype (Clause (q none) ⊕ (Σ b : Bool, Row n (restrict n q b))))
 
-instance (n : ℕ) (q : Router n → ℝ) : DecidableEq (Row n q) := Classical.decEq _
 
 /-- Distinct summands prevent identification of a leaf node and its address. -/
 abbrev Variable (n : ℕ) := Address n ⊕ Node n
@@ -515,7 +513,7 @@ private theorem variable_later_unique (n : ℕ) (q : Router n → ℝ) (v : Vari
                             simpa only [matrix, dite_true] using hj
                           have hh := ih (restrict n q b) (.inr v) i j hi' hj' hri hrj
                           exact congrArg (fun r : Row n (restrict n q b) =>
-                        (Sum.inr ⟨b, r⟩ : Row (n + 1) q)) hh
+                            (Sum.inr ⟨b, r⟩ : Row (n + 1) q)) hh
                         · simp [matrix, he] at hj
                   · simp [matrix, hd] at hi
 
