@@ -13,7 +13,14 @@ import Mathlib.Data.Fintype.Perm
 import Mathlib.SetTheory.Cardinal.NatCard
 import Mathlib.Tactic
 
-/-! Label-preserving insertion on the actual permutation carrier. -/
+/-! Label-preserving insertion on the actual permutation carrier.
+
+The positive-inventory formula is the two-state specialization of the classical
+BEST Euler-tour count for labelled directed multigraphs (Creed and Cryan,
+DOI 10.37236/2377, Theorem 1). The proof here uses exhaustive loop insertion
+and a two-fiber first-return equivalence, rather than importing general BEST.
+Ordinary raw-forest contraction is supplied by DirectedForestCompletion.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -274,10 +281,14 @@ private def crossInventoryEquiv [Finite C] (s : C → Bool) [Nonempty (Side s fa
   · intro σ
     have hf (x : C) : s x = false ↔ s (σ.1 x) = true := by
       have h := σ.2.2.2 x
-      cases hx : s x <;> cases hy : s (σ.1 x) <;> simp only [hx, hy, Bool.not_false, Bool.not_true, Bool.false_eq_true, Bool.true_eq_false] at h ⊢
+      cases hx : s x <;> cases hy : s (σ.1 x) <;>
+        simp only [hx, hy, Bool.not_false, Bool.not_true,
+          Bool.false_eq_true, Bool.true_eq_false] at h ⊢
     have hg (x : C) : s x = true ↔ s (σ.1 x) = false := by
       have h := σ.2.2.2 x
-      cases hx : s x <;> cases hy : s (σ.1 x) <;> simp only [hx, hy, Bool.not_false, Bool.not_true, Bool.false_eq_true, Bool.true_eq_false] at h ⊢
+      cases hx : s x <;> cases hy : s (σ.1 x) <;>
+        simp only [hx, hy, Bool.not_false, Bool.not_true,
+          Bool.false_eq_true, Bool.true_eq_false] at h ⊢
     let f : Side s false ≃ Side s true := Equiv.subtypeEquiv σ.1 hf
     let g : Side s true ≃ Side s false := Equiv.subtypeEquiv σ.1 hg
     have he : crossPermutation s f g = σ.1 := by
@@ -726,7 +737,7 @@ theorem alternating_completion_classification [Finite V] (n : ℕ)
       have : 0 < Nat.card (Component E) := Finite.card_pos_iff.mpr hc
       omega
     · intro hn
-      apply Nat.card_eq_zero_iff.mpr
+      apply Finite.card_eq_zero_iff.mpr
       refine ⟨fun A => ?_⟩
       let x := Quotient.out A
       have hbad (b : Bool) (hx : k x = b) (he : Nat.card (Side k b) = 0) : False := by
@@ -739,7 +750,13 @@ theorem alternating_completion_classification [Finite V] (n : ℕ)
   refine ⟨hbal, hsum, (fun hn => Nat.pos_of_ne_zero (mt hzero.mp hn)), ?_⟩
   have hcard := compatible_cycle_card s d hbal
   rw [Nat.card_congr Φ]
-  change Nat.card (Compatible s d) = _
+  change Nat.card (Compatible s d) =
+    if n = 0 then 0 else if 0 < inventory s d false true then
+      inventory s d false true *
+        (inventory s d false true + inventory s d false false - 1).factorial *
+        (inventory s d false true + inventory s d true true - 1).factorial
+    else if inventory s d false false * inventory s d true true = 0 then
+      (inventory s d false false + inventory s d true true - 1).factorial else 0
   rw [hcard]
   have hsf' : Nat.card (Side s false) = inventory s d false true +
       inventory s d false false := by omega
