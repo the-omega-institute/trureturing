@@ -56,7 +56,7 @@ $$\forall (d:\mathbb{N}), (\forall (g:\mathbb{N}), (\forall (K:\operatorname{Fin
 
 *Commentary.*
 
-For every nonzero positive semidefinite X the same m-th iterate is positive definite. Each word conjugate is positive semidefinite. If the output quadratic form at a nonzero vector v vanished, every nonnegative summand would vanish. The PSD kernel criterion then gives X L* v = 0 for each length-m word L. The matrices A satisfying X A* v = 0 form a complex submodule: scalar multiplication conjugates the scalar. Full word span puts every matrix in that submodule. Choose a nonzero coordinate v(i) and test every matrix unit E(i,b); each test forces v(i) X(a,b) = 0. Thus X = 0, a contradiction. Zero d is covered by the impossible nonzero-input premise. Zero g and zero m are retained with their actual word types and identity product. This is the known bridge underlying Wielength >= primitivity index in Ekblad Section 4. It proves no quadratic word-length bound and no quantitative bound on the gap; the global conjecture status is unverified, and the cited source explicitly notes a proposed resolution.
+For every nonzero positive semidefinite X the same m-th iterate is positive definite. Each word conjugate is positive semidefinite. If the output quadratic form at a nonzero vector v vanished, the PSD kernel criterion would put v in the output kernel. PositiveBranchReachableResponse.weightedCP_kernel with unit weights then gives X L* v = 0 for each length-m word L. The matrices A satisfying X A* v = 0 form a complex submodule: scalar multiplication conjugates the scalar. Full word span puts every matrix in that submodule. Choose a nonzero coordinate v(i) and test every matrix unit E(i,b); each test forces v(i) X(a,b) = 0. Thus X = 0, a contradiction. Zero d is covered by the impossible nonzero-input premise. Zero g and zero m are retained with their actual word types and identity product. This is the known bridge underlying Wielength >= primitivity index in Ekblad Section 4. It proves no quadratic word-length bound and no quantitative bound on the gap; the global conjecture status is unverified, and the cited source explicitly notes a proposed resolution.
 
 ## References
 
@@ -65,3 +65,4 @@ For every nonzero positive semidefinite X the same m-th iterate is positive defi
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/KrausWordStrictPositivity.word`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/KrausWordStrictPositivity.wordSpan`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
+- Dependency: [D5/S3/Quantum/Measurement/PositiveBranchReachableResponse](../Measurement/PositiveBranchReachableResponse.md)

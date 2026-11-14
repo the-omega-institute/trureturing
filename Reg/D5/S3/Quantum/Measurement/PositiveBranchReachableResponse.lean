@@ -40,7 +40,7 @@ def arena : Arena where
   signature := signature.{u}
   Law R := ∀ {n : Type u} {α : Type} [Fintype n] [Fintype α]
     (K : α → Matrix n n ℂ) (c : α → ℝ) (_hc : ∀ a, 0 < c a)
-    (X : Matrix n n ℂ) (_hX : X.PosSemidef) (x : n → ℂ),
+    {X : Matrix n n ℂ} (_hX : X.PosSemidef) (x : n → ℂ),
     (weightedCP K c (R.readout () n X)) *ᵥ x = 0 ↔
       ∀ a, X *ᵥ ((K a)ᴴ *ᵥ x) = 0
 
@@ -56,12 +56,12 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   let x : n → ℂ := fun _ => 1
   have hz : (weightedCP K c (rejected.readout () n 1)) *ᵥ x = 0 := by
     simp [rejected, General.rejected, realize, weightedCP]
-  have hh := (h K c (by intro a; norm_num [c]) 1 Matrix.PosSemidef.one x).mp hz ()
+  have hh := (h K c (by intro a; norm_num [c]) (X := 1) Matrix.PosSemidef.one x).mp hz ()
   have he := congrFun hh (ULift.up ())
   simpa [K, x] using he
 
 def family : Registration arena.{u} (type_of% (@weightedCP_kernel.{u})) where
-  actual := actual
+  actual := realize signature.{u} (fun _ _ X => X) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := by
