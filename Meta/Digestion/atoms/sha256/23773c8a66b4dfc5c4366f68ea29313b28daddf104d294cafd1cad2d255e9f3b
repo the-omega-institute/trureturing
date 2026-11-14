@@ -1,0 +1,4 @@
+**约定 136.5（新增连接及关系图景）。** 本章采用 `repo-derived` 归属；新增承重连接是(XI136.3)在分类前以同一全效应关系识别全部原纯点，并由此直接推出紧性及(XI136.7)的全轴间隙。紧投影、有限极点分解、最大值连续性与紧集间正距离是成熟中间工具。量子端的 $X\mapsto(\operatorname{Tr}(X)I-X)/2$ 属于既有 universal state inversion／reduction map；参见 [Rungta等，Universal state inversion and concurrence in arbitrary dimensions](https://doi.org/10.1103/PhysRevA.64.042315) 及 [Horodecki—Horodecki，Reduction criterion of separability and limits for a class of distillation protocols](https://doi.org/10.1103/PhysRevA.59.4206)。这些文献不被当作本章抽象纯域判别的证明，亦不据有限检索声称全球原创。
+
+完整静态候选仍是 $\mathrm{EB3}+\mathsf{MC}$，本章缩短其推导，不声称删去了独立假设。其关系图景是：同一个态可有不同纯混合配方，取每个纯分量的排除球心后仍须得到同一态；若一张原尺能把替换前后完全分开，所有配方分量就必须指向同一颗排除球，标签单射迫使它们本来就是同一纯点。纯态因而由这项闭的二元分离关系完整刻画，球心与纯点之间出现统一正间隙，任何排除球的细轴也不能趋于零。只检验两项混合是否足以替代全部有限混合、裸 EB3 或 EB3加纯比较互易是否推出 $\mathsf{MC}$，仍不由本章解决。实际操作、复合系统、测量更新与时间演化继续保留135.7的原合同；交换比较端点不等于交换连续测量的次序。
+

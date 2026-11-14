@@ -1,0 +1,25 @@
+**定义 138.1（同原二元相容与球内图）。** 保留135.1的完整原 $V,C,u,K,P,\mathcal E,T_p,D_p$ 及 EB3。记完整球族、球缘和标签纤维为
+
+$$
+\mathscr B=\{D_p:p\in P\},\qquad
+S(F)=P\cap F=\partial_{\rm rel}F,\qquad I(F)=\{p:D_p=F\}.
+$$
+
+$c_F$ 是完整球 $F$ 的唯一仿射中心，$c_p=c_{D_p}$。只在本章另加二元混合相容
+
+$$
+\begin{aligned}
+\mathsf{BC}:\quad&
+tp+(1-t)q=vr+(1-v)s\\
+&\Longrightarrow\quad
+tc_p+(1-t)c_q=vc_r+(1-v)c_s
+\end{aligned}
+\quad
+\left(\begin{gathered}p,q,r,s\in P,\\t,v\in[0,1]\end{gathered}\right).
+\tag{XI138.1}
+$$
+
+全部端点与权重都来自同一个原模型，允许重复端点及零权。$\mathsf{MC}$ 蕴含 $\mathsf{BC}$；本章不把反向蕴含作为前件。单纯重排同一份混合不改变任何仿射和，(XI138.1)还比较端点不同但实际原态相同的两条弦。
+
+复用 IX116.1—116.6 的原面接口：每个非点真面都是完整球；不同完整球至多交于一个原纯点；每个 $F$ 或单标签，或与唯一不交的 $H$ 构成重复对，满足 $I(F)=S(H),I(H)=S(F)$，且两球均不交第三球；至少有一张单标签球，单标签球的全部球缘标签在全域均无重复。所有内部、边界及支撑均相对于 $\operatorname{aff}K$，球内相对内部另记 $\operatorname{ri}F$。
+
