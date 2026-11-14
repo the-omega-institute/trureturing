@@ -63,12 +63,13 @@ internal sealed class SchulteImplicitQuadrinomialPowersDocument : IScribeDocumen
     private static Formula NativeFormula()
     {
         var p = V("P"); var n = V("n"); var x = V("X");
+        var rhs = Add(Add(Add(D(1), Mul(x, Pow(p, n))),
+            Mul(Pow(x, D(2)), Pow(p, Mul(D(2), n)))),
+            Mul(Pow(x, D(3)), Pow(p, Mul(D(3), n))));
+        var body = All("n", N(), All("P", Series(V("R")),
+            Seq(Call("Native", n, p), Sp, Iff, Sp, Eq(p, rhs))));
         return All("R", V("Type"), Seq(OpenBracket, Call("CommRing", V("R")),
-            CloseBracket, Sp, All("n", N(), All("P", Series(V("R")),
-            Seq(Call("Native", n, p), Sp, Iff, Sp,
-                Eq(p, Add(Add(Add(D(1), Mul(x, Pow(p, n))),
-                    Mul(Pow(x, D(2)), Pow(p, Mul(D(2), n)))),
-                    Mul(Pow(x, D(3)), Pow(p, Mul(D(3), n))))))))));
+            CloseBracket, Sp, body));
     }
     private static Formula ResultFormula()
     {
@@ -80,8 +81,8 @@ internal sealed class SchulteImplicitQuadrinomialPowersDocument : IScribeDocumen
         var identity = Eq(Call("ratCast", Call("coeff", k, Pow(p, m))),
             Mul(new Formula.Fraction(m, degree), sum));
         var unique = Call("ExistsUnique", Lam("P", Series(Z()), Call("Native", n, p)));
-        return All("n", N(), Imp(Le(D(1), n), And(unique,
-            All("P", Series(Z()), Imp(Call("Native", n, p),
-                All("m", N(), Imp(Le(D(1), m), All("k", N(), identity)))))));
+        var coefficients = All("P", Series(Z()), Imp(Call("Native", n, p),
+            All("m", N(), Imp(Le(D(1), m), All("k", N(), identity)))));
+        return All("n", N(), Imp(Le(D(1), n), And(unique, coefficients)));
     }
 }
