@@ -411,11 +411,11 @@ theorem phase_rigidity (m : ℕ) {θ η : Parameter}
   · exact Complex.ofReal_injective (by simpa [right] using congrFun hr 0)
   · simpa [right] using congrFun hr 1
 
-private lemma density_hermitian (m : ℕ) (θ : Parameter) :
+lemma density_hermitian (m : ℕ) (θ : Parameter) :
     (density m θ).IsHermitian :=
   Matrix.isHermitian_mul_conjTranspose_self _
 
-private lemma density_rank (m : ℕ) (θ : Parameter) : (density m θ).rank ≤ 2 := by
+lemma density_rank (m : ℕ) (θ : Parameter) : (density m θ).rank ≤ 2 := by
   unfold density state rawPrefix
   rw [columns_factor]
   exact (Matrix.rank_mul_le_left _ _).trans

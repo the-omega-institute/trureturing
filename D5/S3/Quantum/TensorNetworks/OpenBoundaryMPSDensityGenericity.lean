@@ -383,7 +383,7 @@ theorem statePolynomial_witness (m : ℕ) :
   rw [ht]
   exact ⟨original_chart x y hx hy, original_canonical_transfer x y hx hy⟩
 
-private lemma polynomial_nonzero_dense {ρ : Type*} [Finite ρ]
+lemma polynomial_nonzero_dense {ρ : Type*} [Finite ρ]
     (P : MvPolynomial ρ ℝ) (a : ρ → ℝ) (ha : eval a P ≠ 0) :
     Dense {x : ρ → ℝ | eval x P ≠ 0} := by
   letI := Fintype.ofFinite ρ
