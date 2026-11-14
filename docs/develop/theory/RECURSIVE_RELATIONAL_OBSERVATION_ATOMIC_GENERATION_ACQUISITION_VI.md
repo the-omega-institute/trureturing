@@ -3455,3 +3455,793 @@ unrestricted relevant-interference and cross-domain recovery obligations
 are therefore unchanged. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 66. An actual projective readout on the acquired bank
+
+**Definition 66.1 (the source-specific readout domain).** Retain the two
+authentic AAV entrances, their actual finite known-alpha preparation history
+and the selected bilateral fixed-slope joint source, with each entrance's
+separate empty/$P$ preparation, source/root/tape/epoch/version bindings and
+common input-independent backing. Retain the acquired configuration of
+VI37--57, the seams $m$--$o$ and $o$--$y$, the fixed links $m$--$u$ and
+$u$--$d$, the actual detector at $d$, and the clean acquired helpers $z,w$.
+The old reference $r$ is kept as a physical input port and is not a
+computation wire. Put
+
+$$
+H=\mathbb C|r\rangle\oplus B,\qquad
+B=\operatorname{span}_{\mathbb C}\{|o\rangle,|m\rangle,|y\rangle\},
+\qquad P_r=|r\rangle\langle r|,\quad P_B=I_H-P_r.
+\tag{VI.78}
+$$
+
+For a unit vector $v\in B$, let $P_v=|v\rangle\langle v|$ on $B$,
+extended by zero on $r$. The service domain is every input
+$\rho_{HR}$ on the entire original $H\otimes R$, with arbitrary untouched
+$R$, tensored with the initially independent factor
+
+$$
+|00\rangle\langle00|_{zw}\otimes\eta_{ud},
+\qquad
+\eta_{ud}=|\eta\rangle\langle\eta|,\quad
+|\eta\rangle=(|10\rangle+|01\rangle)/\sqrt2.
+\tag{VI.79}
+$$
+
+The latter preparation is the one independently supplied in VI47--48; it is
+not recreated by the readout. All native source records, controls, pending
+input/output, phase and latch fields, immutable versions, rights, and the
+conditional successor of every accepted or refused native request remain in
+the output interface.
+
+**Lemma 66.2 (finite ideal synthesis on $B$).** In the ideal real-angle
+reference model, every $U\in U(B)$ that fixes the $r$ sector has a finite
+word using the acquired hopping blocks on $m$--$o$ and $o$--$y$ and the
+returned phase blocks $D_m(\phi)$ supplied by VI48. The word acts as the
+identity on $r$ and on all non-mentioned systems. In particular, for every
+unit $v\in B$ there is such a word $U_v$ with
+
+$$
+U_vv=m,\qquad U_vP_vU_v^\dagger=P_m.
+\tag{VI.80}
+$$
+
+**Proof.** On the one-excitation bank sector write
+$X_{ab}=|a\rangle\langle b|+|b\rangle\langle a|$. The hopping
+blocks give $e^{itX_{mo}}$ and $e^{itX_{oy}}$, with both signs on these
+edges. Conjugating $D_m(\phi)$ by the quarter-turn on $m$--$o$ gives
+$D_o(\phi)$; transporting once more through $o$--$y$ gives $D_y(\phi)$.
+The conjugations use the supplied negative $m$--$o$ and $o$--$y$ blocks.
+Each phase is implemented by the returned VI48 macro, with the same
+helpers and standard. Single-coordinate phases and $e^{itX_{ab}}$ give
+all two-level $U(2)$ matrices on either edge by the usual Euler
+factorization. Conjugation by an edge quarter-turn transports a two-level
+matrix on $m,o$ to one on $m,y$, with its known phases corrected by those
+same coordinate phases. Successive two-level eliminations therefore give
+a finite factorization of every $U(3)$ matrix, including its scalar phase.
+In this existence argument a zero entry can be left uneliminated. It
+makes no claim of deciding equality of an effective real with zero.
+
+This uses the mature finite two-level decomposition of
+Reck--Zeilinger--Bernstein--Bertani,
+[*Experimental realization of any discrete unitary operator*,
+Phys. Rev. Lett. 73, 58 (1994), DOI
+10.1103/PhysRevLett.73.58](https://doi.org/10.1103/PhysRevLett.73.58),
+after matching its edges and phase resource to VI37--48. Extend $v$ to an
+orthonormal basis and factor a unitary carrying $v$ to $m$. Every factor
+fixes $r$, so (VI.80) follows. In a return word reverse the bank factors,
+negate each direct-edge angle, and replace each $D_m(\phi)$ by the returned
+macro $C_m(-\phi)$. This implements the inverse on the ideal return
+domain without requiring a negative $m$--$u$ pulse or asserting that this
+expanded return word is the inverse on dirty-helper sectors. $\square$
+
+The angles in this lemma are reference parameters of the ideal word. They
+are not declarations that an arbitrary real angle is one finite command of
+the apparatus. Actual commands are treated in §67.
+
+**Theorem 66.3 (returned binary projective instrument).** In the ideal
+real-angle reference model, for every unit $v\in B$ the same acquired
+apparatus realizes the two-branch instrument
+
+$$
+\mathcal I_{v,a}(\rho_{HR})
+= (L_{v,a}\otimes I_R)\rho_{HR}(L_{v,a}\otimes I_R)^\dagger
+\otimes |00\rangle\langle00|_{zw}\otimes\eta_{ud},
+\quad a\in\{0,1\},
+\tag{VI.81}
+$$
+
+up to the retained branch record and the actual native successor, where
+
+$$
+L_{v,1}=P_v,\qquad L_{v,0}=I_H-P_v.
+\tag{VI.82}
+$$
+
+The formula holds for arbitrary correlations with $R$ and for every input
+on the full $H$, not only on $B$. Branches are subnormalized: a zero
+probability branch is the zero operator and has no assigned normalized
+conditional state. Both branches return the same initially
+independent $\eta$ factor and the clean $z,w$ factors. In the complementary
+branch, for all $q,q'\in v^\perp$,
+
+$$
+(I_H-P_v)|q\rangle\langle q'|(I_H-P_v)=|q\rangle\langle q'|;
+\tag{VI.83}
+$$
+
+so, in particular, coherences between $r$ and every $B$ vector orthogonal
+to $v$ are retained.
+
+**Proof.** Let $T=J_{ud}J_{mu}$ be the fixed transport of VI49.3. Its
+full-bank identity $T^\dagger\Pi_{d,1}T=n_m$, together with the inverse
+transport and the complete $d$ instrument, gives the returned $m$-projective
+branches on the VI78 domain. The phase blocks used in $U_v$ are the
+VI48 words, so VI50 returns $\eta$ after every phase word; the hopping words
+on $m$--$o$ and $o$--$y$ do not touch $u,d,z,w$. Apply $U_v$, transport to
+$d$, retain both detector results, apply the inverse transport, and apply
+the returned realization of $U_v^\dagger$ from Lemma 66.2. The transport
+is chronologically $J_{mu},J_{ud}$; its return is
+$B_{ud}(-\pi/2),J_{mu},J_{mu},J_{mu}$, precisely the six legal routing
+blocks of VI49.3. No negative $m$--$u$ command is used. On $H$ the two
+branch operators are
+
+$$
+U_v^\dagger P_mU_v=P_v,\qquad
+U_v^\dagger(I_H-P_m)U_v=I_H-P_v.
+$$
+
+VI49--57 retain the whole conditional quantum output, not merely the
+outcome probability, and return the independent resource and clean helpers
+on each branch. Tensoring the operator equality with $I_R$ proves (VI.81)
+for matrix units and hence for every mixed correlated input. Equation
+(VI.83) is the defining compression identity of the second branch. A
+probability-only report or a channel that dephases/replaces the returned
+quantum state would not satisfy (VI.81), because it would erase one of the
+matrix units displayed in (VI.83). $\square$
+
+## 67. Effective commands and the complete joint-output error budget
+
+**Definition 67.1 (target selection, literal paths and reference lift).**
+An effective target is a unit $v\in B$ whose complex coordinates admit
+rational enclosures to every requested positive accuracy, with its
+unit-vector certificate. A requested positive tolerance supplies a positive
+rational sub-tolerance. A bank word $W$ consists of direct $m$--$o$ and
+$o$--$y$ hopping blocks and returned $D_m$ macros. Put
+
+$$
+w=W^\dagger m,\qquad
+\tau(W,v)=\|(I_B-P_m)Wv\|
+          =\|P_w-P_v\|.
+\tag{VI.84a}
+$$
+
+The equality follows from the rank-one projector formula and is insensitive
+to the global phase of $w$. The exact ideal choice $W=U_v$ has $\tau=0$.
+For effective approximation $W$ will instead be selected by a strict
+inequality in Proposition 67.2.
+
+For a binary read expand, in chronological order, the ENTIRE word
+
+$$
+W,\ J_{mu},\ J_{ud},\ \text{occupation instrument at }d,\
+B_{ud}(-\pi/2),\ J_{mu},\ J_{mu},\ J_{mu},\ W^{\leftarrow}.
+\tag{VI.84b}
+$$
+
+Here $W^{\leftarrow}$ is the bank-factor inverse realized as in Lemma 66.2.
+Expand each forward or return phase macro into the sixteen VI48 hops,
+including both seven-hop $K$ words. Do this before making an error index.
+Every occurrence is a separate physical command. The two forward and four
+return-routing hops are always indexed, even if $W=I$ for $v=m$.
+Thus if $h$ direct hops and $f$ phases occur in $W$, this chosen binary
+word has $2h+32f+6$ hops and one read. This count serves only to specify
+the complete budget. Repeated reads repeat these routing lists and the
+readiness/certificate obligation.
+
+On an actual finite record path $p$, let $\mathcal H(p)$ contain every
+executed hopping occurrence in every selected read, phase, consumer, coarse
+read and raw native hopping request, including every return and expansion.
+Let $\mathcal D(p)$ contain every detector use, and $\mathcal N(p)$ all
+other primitive services. A pending prefix uses its actual partial list,
+not a completed-return identity. If $\theta_\ell$ is a reference angle,
+choose an allowed signed dyadic $q_\ell$ on the SAME endpoint and put
+
+$$
+|q_\ell-\theta_\ell|\le\delta_\ell,
+\qquad \Gamma_p=\sum_{\ell\in\mathcal H(p)}\delta_\ell.
+\tag{VI.84}
+$$
+
+All $m$--$u$ occurrences in these macros and detector returns are positive;
+their inverse routing is three positive occurrences. Only already supplied
+negative edges, including $u$--$d$, $m$--$o$ and $o$--$y$, are used.
+A selected raw request must have its own supplied sign. No rounded
+quarter-turn is assumed to have exact order four. A macro is counted by
+its expanded occurrences, never again as a separate pulse.
+
+The actual finite command word fixes ALL raw labels: endpoint, sign,
+digit width, enabled/disabled slots, catalogue entries, control fields and
+their recorded bits. The reference lift carries exactly this same word
+and the same policy from finite records to subsequent requests. At a
+completed hopping-command boundary only its quantum action is changed
+from $B(q_\ell)$ to $B(\theta_\ell)$. Ideal angles are semantics of this
+comparison, not extra records or executed real-number commands.
+
+There is also a lift at every intermediate digit cut. Write a nonzero
+$q=\sum_k q_k$, where enabled $q_k$ have its supplied sign and disabled
+slots have $q_k=0$. Choose $q$ with the sign of nonzero $\theta$ and set
+$\theta_k=(\theta/q)q_k$. The slots then have the same endpoints,
+signs, enable bits and catalogue labels in both lifts, while
+$\sum_k\theta_k=\theta$ and
+$\sum_k|q_k-\theta_k|=|q-\theta|$. For $\theta=q=0$ use zero
+slots. Nonzero computable reference angles here can be rounded finely
+enough with the certified same sign. All generators in one command
+commute, so this lift has exactly the stated boundary action. It provides
+a full reference at pending digit cuts without adding an irrational raw
+label. At digit granularity replace a hopping index by its actual slots
+and use $\delta_{\ell k}=|q_{\ell k}-\theta_{\ell k}|$; a pending
+prefix sums only completed slots. The full-command sum is the same.
+Physical certificates can likewise be summed per slot, hold and control
+step, or supplied for the complete implemented command on its full
+interface. Such grouping must cover every executed primitive, and a
+primitive already included in a grouped certificate is not charged again.
+Reference and actual lifts retain the same detector outcome alphabet and
+native successor labels; their probabilities need not agree.
+
+**Proposition 67.2 (effective selection and one joint budget).** For every
+effective unit $v$ and positive tolerance there is a finite construction
+of a word $W$, its legal finite commands and a complete reference lift
+with arbitrarily small target error $\tau$ and rounding sum $\Gamma$.
+This construction needs no equality oracle for effective reals.
+
+More generally, take a finite adaptive program on the declared complete
+interfaces. Let $\mathcal C(p)$ index its completed projective calls for
+which the ideal input has the domain of Theorem 66.3; let $\tau_c$ be
+their target-selection errors. The full-word reference, without a target
+identification outside that domain, is available on every physical sector
+and every pending path. For uniform complete-interface physical
+certificates $e^{\rm phys}_n$ on all non-detector primitives and separately
+supplied detector certificates $e^{\rm det}_d$ on every read, the output
+bound is
+
+$$
+\begin{aligned}
+d_{\rm out}\le e_{\rm init}+\max_p\bigg[
+ &2\sum_{c\in\mathcal C(p)}\tau_c+2\Gamma_p
+ +\sum_{n\in\mathcal H(p)\cup\mathcal N(p)}e^{\rm phys}_n
+ +\sum_{d\in\mathcal D(p)}e^{\rm det}_d\bigg].
+\end{aligned}
+\tag{VI.85}
+$$
+
+The $\tau$ terms are omitted when comparing only with the complete
+full-word reference. They are zero for an exact ideal $U_v$ choice.
+The initial charge $e_{\rm init}$ is one uniform joint half-trace bound
+for ingress, acquisition, preparation, $\eta$, helpers, delivery/backing,
+controls and the SAME finite labels. It is not a resource-marginal bound.
+The supremum defining $d_{\rm out}$ includes every original $\rho_{HR}$
+and arbitrary untouched $R$. Outputs retain the whole growing bank,
+leakage, all source identities and conditional successors, detector and
+controller outputs, raw records, refusals, pending input/output, and
+Print/End/ACK/Return fields. The maximum includes zero-reference-mass
+record paths. For families of finite external commissions use the
+supremum of their path budgets; no uniform finiteness is inferred.
+
+**Proof (effective target selection).** Enumerate all finite bank words
+in $B_{mo}(a),B_{oy}(b),D_m(c)$ with signed-dyadic $a,b,c$.
+Their ideal bank actions form a dense subset of $U(B)$: approximate the
+finitely many real angles in Lemma 66.2, using continuity of finite
+products. Their matrix entries are computable, including the sine and
+cosine values. For a prescribed positive rational $t$, dovetail these
+words and the rational enclosures of $v$ and their matrix entries until
+a certified upper bound for $\tau(W,v)$ is strictly below $t$.
+Density and $U_vv=m$ guarantee such a word; a strict upper-bound
+certificate is eventually found. The test never asks whether an input
+coordinate or residual is exactly zero. It therefore terminates also
+when coordinates vanish or are arbitrarily small. The enumeration is a
+mathematical finite construction, not a complexity or software claim.
+
+Expand the selected finite word by (VI.84b). Every reference angle is
+now computable: the selected dyadics, their halves and signs, or fixed
+$\pi/2$ angles inside $K$ and routing. Rational enclosures of $\pi$
+and these angles give legal signed dyadics with any allocated positive
+$\delta_\ell$. There are finitely many occurrences, so choose their
+sum smaller than the remaining tolerance. This also applies to each
+node of a specified finite adaptive tree. No physical precision follows
+from density; achieving the separate physical budgets remains a premise.
+
+**Proof (complete-output estimate).** For one full physical hopping
+block, its full two-qubit generator has norm one. Consequently, on the
+ENTIRE bank and after tensoring with any reference,
+
+$$
+\|B(q)-B(\theta)\|\le |q-\theta|,
+\qquad
+\tfrac12\|\mathcal U_q-\mathcal U_\theta\|_\diamond
+\le |q-\theta|.
+\tag{VI.85a}
+$$
+
+Here the channels include the identical finite labels. The digit lift
+has the same bound with the sum of its slot differences, so even its
+intermediate quantum states are compared on the complete space. Telescoping
+all occurrences, with the complete occupation instrument between the
+forward and return lists, gives a bound $\Gamma_p$, hence the conservative
+$2\Gamma_p$ used in (VI.85). It is valid for arbitrary dirty helpers,
+resource states and leakage. Every remaining physical or detector
+replacement uses its separately supplied complete half-diamond bound,
+or an equivalent uniform reference-stable certificate on the relevant
+full interface. Readout is not replaced by a probability-only comparison.
+
+On the ideal return domain the selected reference word gives the exact
+returned $P_w,I_H-P_w$ instrument by Theorem 66.3. For either branch,
+$\|L_{w,a}-L_{v,a}\|\le\tau$. Expanding
+$L_{w,a}\rho L_{w,a}^\dagger-L_{v,a}\rho L_{v,a}^\dagger$
+in its two differences gives trace norm at most $2\tau\operatorname{Tr}\rho$.
+Summing the two orthogonal retained label blocks and dividing by two
+gives $2\tau\operatorname{Tr}\rho$, also with arbitrary $R$ and the
+same ideal returned factors. This target comparator copies the same finite
+raw command/catalogue word and all its record fields as the full-word
+reference; $v$ and its ideal action are semantics, not additional raw
+labels. Thus a target replacement has the claimed
+complete, subnormalized bound. For a busy prefix use its full-word
+reference state, without asserting the completed target instrument.
+
+For the finite adaptive estimate use induction backwards from leaves.
+At a normalized node pay its local uniform error, and bound the errors
+of its continuations by the largest child budget: child positive masses
+sum to the parent mass. This proves the maximum-path sum, including
+paths whose reference mass is zero, without normalizing any outcome.
+The complete full-word comparison is valid on perturbed intermediate
+states. Target comparisons use the ideal clean return-domain tree;
+the triangle inequality then combines the two comparisons. A finite
+native interleaving only holds old quantum systems and appends its
+specified vacuum factors; it preserves those ideal service domains.
+If extra raw pulses have made an ideal helper dirty, they still have
+the full-word estimate, but the target/return identification is used
+only where its input hypotheses hold. No path or native request is
+removed to obtain this distinction.
+
+Insert the initial joint discrepancy once, before the common normalized
+program; it subsequently contracts. A common further normalized
+continuation also contracts it, while any new approximate pulses and
+reads add their own charges. Actual approximate factors are never
+asserted pure or exactly returned. No uniform conditional-state estimate
+after division by a small outcome probability follows. $\square$
+
+## 68. The exact classical effect space and its observation kernel
+
+**Definition 68.1 (finite-catalogue classical effects and the full bank).**
+Fix the same input-independent backing, actual source identities and
+versions, preparation/delivery records, clean helpers, independently
+supplied $\eta$, controls and rights as in Definition 66.1. The mathematical
+finite catalogue consists of the literal full-qubit primitives (VI.3)
+at their actual finite signed-dyadic angles, the specified complete
+occupation instrument, and all original native services with their
+hold/vacuum-growth action. The available finite precision and catalogue
+entries are supplied per finite commission as in VI39 and VI51; the union
+below is over these finite commissions. This is not a promise of
+unbounded precision or a fixed device's indefinite lifetime.
+
+A classical event is any finite adaptive/native record event: enabled
+raw hopping requests, accepted or refused $P/S$, genuine Next, common
+external controller inputs, detector results, pending digit/parser/output
+prefixes, phases/latches, Print/End/ACK/Return and finite native growth
+are all included. Policies depend on acquired records and common
+input-independent external inputs, never unknown amplitudes or unrecorded
+phase. Classical source transitions use the authentic native source and
+retain all source material, immutable versions and actual successors.
+No event reads the untouched $R$ as an extra detector.
+
+At each classical configuration $h$ the complete quantum carrier is
+
+$$
+\mathcal K_h=\mathbb C^2_r\otimes\mathcal F_h,
+\qquad Z_h=(|0\rangle\langle0|-|1\rangle\langle1|)_r
+                    \otimes I_{\mathcal F_h}.
+\tag{VI.90a}
+$$
+
+Here $\mathcal F_h$ is the full tensor product of every other physical
+bank qubit, apparatus, retained quantum delivery/control system and
+backing, with no excitation-sector restriction. Source configurations,
+records and different bank sizes occupy orthogonal classical blocks;
+$R$ is additionally tensored with identity. Native growth may change
+$\mathcal F_h$ to a larger space. The original physical qubit $r$ is
+kept with its unchanged identity in every block. A finite event effect is
+$0\le E\le I_H$ defined by its probability on the original full input:
+$\Pr[\text{event}|\rho_H]=\operatorname{Tr}(E\rho_H)$ with the fixed
+common backing. Its joint input effect is $E\otimes I_R$.
+
+Write $\mathcal E_{\rm cl}$ for these mathematical finite-catalogue
+effects and $\mathcal V_{\rm cl}=\overline{\operatorname{span}_{\mathbb R}}
+\mathcal E_{\rm cl}$ in operator norm. Arbitrary additional physical
+deviations are compared by (VI.85); they are not added as new exactly
+symmetric catalogue primitives. An implementation has the exact invariant
+below whenever its actual complete maps also leave $r$ untouched in the
+specified sense. A nonzero error certificate alone does not establish
+that exact property.
+
+**Theorem 68.2 (classical input span and exact law kernel).** On this
+complete finite-catalogue domain, including every raw enabled native
+pulse, every pending path and all finite adaptive native continuations,
+
+$$
+\mathcal V_{\rm cl}=\mathbb R P_r\oplus\operatorname{Herm}(B),
+\qquad \dim_{\mathbb R}\mathcal V_{\rm cl}=1+3^2=10,
+\tag{VI.86}
+$$
+
+inside $\operatorname{Herm}(H)$ of real dimension $4^2=16$. Define
+
+$$
+D(X)=P_rXP_r+P_BXP_B.
+\tag{VI.87}
+$$
+
+Two signed Hermitian input operators have the same classical laws for
+all declared finite events exactly when their difference lies in
+$\ker D$. In particular,
+
+$$
+\operatorname{Tr}(EX)=\operatorname{Tr}(E D(X)),\qquad
+\ker D=\{X:P_rXP_r=P_BXP_B=0\}.
+\tag{VI.88}
+$$
+
+This kernel has real dimension six. The positive readout image is exactly
+
+$$
+\mathcal R_+=D(\operatorname{PSD}(H))
+=\mathbb R_{\ge0}P_r\oplus\operatorname{PSD}(B)
+\cong\mathbb R_{\ge0}\oplus\operatorname{PSD}_3.
+\tag{VI.89}
+$$
+
+**Proof (upper inclusion on growing physical output).** Each primitive
+branch from configuration $h$ to $h'$ has rectangular Kraus maps
+
+$$
+K_{h'h,a,\mu}=I_r\otimes A_{h'h,a,\mu}:
+\mathbb C^2_r\otimes\mathcal F_h\longrightarrow
+\mathbb C^2_r\otimes\mathcal F_{h'},\qquad
+Z_{h'}K_{h'h,a,\mu}=K_{h'h,a,\mu}Z_h.
+\tag{VI.90}
+$$
+
+There is no claim that these are square maps on $H$. This statement
+is checked on the actual primitives. Every enabled hopping or digit block
+acts on two endpoints other than $r$, at any allowed angle and on all
+occupations. Disabled slots are identity. Every expanded phase, coarse
+read, consumer and return is a composition of those maps and the fixed
+$d$ instrument; its retained outcome branches also act trivially on $r$.
+The detector's physical output systems stay in $\mathcal F_{h'}$.
+Native edits hold every old qubit and append the prescribed independent
+vacuum factors, so their quantum maps are $I_r$ tensored with a vacuum
+embedding. This includes growth at an old helper, a dormant marker or
+outside the current observation window. Source edits and genuine Next
+retain their actual classical event and successor. Their guards,
+refusals, input consumption, locks, phases/latches, waiting and
+Receive/Parse/Guard/Tag/Reserve/Maintain/FetchGrowth/Print/End/ACK/Return
+steps use the declared classical source and common inputs, with identity
+holds on old quantum systems. They therefore also have (VI.90), with
+possibly different output spaces and classical records. A pending cut
+is a composition of the primitives actually completed before it, so has
+the same property, without assuming clean helpers or return.
+
+Adaptive choices condition on these records. Composing rectangular
+maps and summing hidden Kraus indices proves (VI.90) at every finite
+record path by induction. For an event $\gamma$, the complete-output
+effect on the physical ingress carrier is
+$F_\gamma=\sum_{\gamma,\mu}K_{\gamma,\mu}^\dagger K_{\gamma,\mu}$,
+where the sum is over the event's paths, with every output identity
+included. The intertwining identity gives
+$[F_\gamma,Z_{h_0}]=0$; indeed it is $I_r\otimes G_\gamma$ before
+restriction to the correlated code embedding and fixed backing.
+
+To take that restriction, purify the fixed common backing into a retained
+spectator if necessary, and let $V:H\to\mathcal K_{h_0}$ be the full
+ingress isometry with that purification. It has the actual source
+one-excitation embedding, clean helpers and the independent standard.
+It satisfies
+
+$$
+Z_{h_0}V=VZ_H,\qquad Z_H=P_B-P_r,\qquad
+E_\gamma=V^\dagger F_\gamma V.
+\tag{VI.91a}
+$$
+
+The purification is a mathematical spectator, not an accessible readout
+or an extra preparation. Equivalently take a fixed mixed-backing
+expectation. Thus $[E_\gamma,Z_H]=0$, giving precisely the INPUT effect
+
+$$
+E_\gamma=\alpha_\gamma P_r\oplus E^B_\gamma,\qquad
+0\le\alpha_\gamma\le1,\quad 0\preceq E^B_\gamma\preceq I_B.
+\tag{VI.91}
+$$
+
+At no stage is the retained quantum output projected into $H$ or its
+leakage erased. For example the permitted single request $B_{mz}(1)$
+sends the original $m$ input to
+$\cos(1)|m\rangle+i\sin(1)|z\rangle$ with the same independent
+$\eta$. The $z$ component lies outside $H$, with squared norm
+$\sin^2(1)$. This output is retained in $\mathcal F_{h'}$ and still
+has $r$ occupation zero, exactly as (VI.90) requires. Subsequent native
+growth or pending output does not change the argument. Only the
+calculation of a classical marginal uses $K^\dagger K$; the complete
+quantum states themselves retain all their coherences. This proves the
+upper inclusion on the original input domain without reducing the future
+catalogue or treating the isolated $r$ as a disposable classical flag.
+
+**Proof (lower inclusion by finite effects and closure).** For each
+effective unit $v\in B$, choose the finite words of Proposition 67.2
+with $\tau\to0$ and $\Gamma\to0$. Give their finite commands their
+exact literal actions (VI.3) and the specified detector/native maps;
+this is the mathematical finite-catalogue model, so additional physical
+errors and initial error are zero. These finite instruments, including
+their imperfect finite returns and all records, have attainable yes
+effects $E_{v,k}\in\mathcal E_{\rm cl}$. On every full $H$ input,
+(VI.85) implies
+
+$$
+\|E_{v,k}-P_v\|
+=\sup_{\rho_H}|\operatorname{Tr}((E_{v,k}-P_v)\rho_H)|
+\le 2\tau_k+2\Gamma_k\longrightarrow0.
+\tag{VI.92a}
+$$
+
+The equality is the variational formula for a Hermitian operator.
+Thus $P_v$ belongs to the declared norm-closed real span; no
+arbitrary-real ideal projector is asserted to be an exact finite command.
+It suffices to use the three bank basis vectors and, for each unordered
+pair $i,j\in\{o,m,y\}$, the two effective vectors
+
+$$
+\frac{|i\rangle+|j\rangle}{\sqrt2},\qquad
+\frac{|i\rangle+i|j\rangle}{\sqrt2}.
+\tag{VI.92}
+$$
+
+Subtracting the corresponding diagonal projectors gives the real and
+imaginary off-diagonal Hermitian matrix units. These nine projectors
+span $\operatorname{Herm}(B)$. The sure finite event has effect $I_H$;
+hence $P_r=I_H-P_o-P_m-P_y$ is also in the closed real span. The
+right-hand side of (VI.86) is finite dimensional and closed, proving
+equality.
+
+Pinching is the trace-orthogonal projection onto this space. Vanishing
+against all finite effects is equivalent, by continuity and (VI.86),
+to vanishing against every block-diagonal Hermitian operator, hence to
+$D(X)=0$. This proves the law kernel and (VI.88). A positive block
+pinching is positive, and every element on the right of (VI.89) is itself
+positive and fixed by $D$, proving the exact positive image. The
+normalized image uses the original trace unit.
+
+This is a span-and-law statement. It does not assert that the whole
+block-diagonal effect interval is one callable finite menu, nor that a
+bounded physical device realizes the closure. Arbitrary additional
+physical errors may break (VI.90), for instance through an unintended
+$r$ interaction, however small their certified norm. Exact laws then
+require a separate exact symmetry premise; (VI.85) supplies only the
+claimed approximate comparison. $\square$
+
+## 69. The surviving same-backing pair and the complete-output floor
+
+**Proposition 69.1 (classical indistinguishability after the resource).**
+On the same-backing full-input domain, set
+
+$$
+|\psi_\pm\rangle=(|r\rangle\pm|o\rangle)/\sqrt2.
+\tag{VI.93}
+$$
+
+In the literal finite-catalogue model of Definition 68.1, after the
+independent $\eta$ preparation, the two inputs have the same classical
+law under every finite declared native continuation, including
+arbitrary actual records, refusals, controller inputs, raw enabled pulses,
+pending paths, finite growth,
+genuine Next and every returned phase or projective readout. The assertion
+concerns the classical marginal; the returned quantum states may retain the
+sign of the $r$--$o$ coherence.
+
+**Proof.** The difference of the two densities is
+$|r\rangle\langle o|+|o\rangle\langle r|$, which is in $\ker D$. Apply
+Theorem 68.2 to every finite adaptive continuation. Equivalently, each
+record effect has form (VI.91), so its trace against that difference is zero.
+The eta factor is input-independent. Every VI48--57 phase, consumer, raw
+native pulse and native continuation has the full-bank intertwining
+property (VI.90), whether or not a pending branch has returned its helpers. Induction over the
+record tree proves equality of the entire classical laws. No step replaces
+the actual quantum output by its pinched state; only the declared classical
+readout is insensitive to the coherence. $\square$
+
+**Corollary 69.2 (uniform binary distinguishing bound).** Let a binary
+instrument on this same domain be required to output different ideal labels
+on $\psi_+$ and $\psi_-$, while using the exact declared catalogue and
+continuations of Definition 68.1 (or an implementation with the same exact
+symmetry). Its uniform complete-output half-trace error is at least
+$1/2$.
+
+**Proof.** The actual probability of one selected label is the same number
+$p$ on both inputs by Proposition 69.1. The ideal label laws are the two
+point masses, so the two marginal half-trace errors are $p$ and $1-p$.
+Their maximum is at least $1/2$. Taking a classical outcome marginal is a
+trace-norm contraction, hence the complete returned quantum-and-record
+output has at least the same uniform error. This lower bound does not claim
+that the native process destroys the inaccessible coherence; it is witnessed
+already by the outcome marginal. A separately supplied $r$--$B$ coupling or
+detector would be a different source domain and is outside this proposition.
+$\square$
+
+## 70. The direct-sum readout boundary and static reconstruction
+
+**Proposition 70.1 (the cross-sector face and the supplier boundary).**
+The exact readout cone (VI.89), on its normalized trace-one base, fails
+global L2. Its scalar-sector pure point and any bank pure point generate
+a segment, although the original full quantum output still contains
+cross-sector coherences. This quotient is not a full $\operatorname{PSD}_4$
+state/effect correspondence for the acquired apparatus.
+
+**Proof.** For a unit $v\in B$, $0\le t\le1$ and any phase $\phi$,
+
+$$
+\psi_{t,\phi}=\sqrt t\,|r\rangle+e^{i\phi}\sqrt{1-t}\,|v\rangle
+\quad\Longrightarrow\quad
+D(P_{\psi_{t,\phi}})=tP_r+(1-t)P_v.
+\tag{VI.94}
+$$
+
+The scalar and rank-one bank rays are extreme in the direct-sum cone.
+Its smallest face containing them is their nonnegative span: any positive
+decomposition of a bank matrix supported on $\mathbb Cv$ has that same
+support, and any decomposition of a zero scalar component has zero scalar
+components. Its normalized base is therefore exactly the segment joining
+$P_r,P_v$. A segment has dimension one; the whole complex two-level
+face required by L2 is a closed three-ball. The bank sector alone has
+$\operatorname{PSD}_3$, but this does not repair the cross-sector L2
+failure. Equation (VI.94) is an observational image, not a channel asserted
+to have physically replaced the returned state by $D(\rho)$.
+
+For comparison, the supplied [Binary Tangent XIII, §§160--162, pinned
+source](https://github.com/the-omega-institute/trureturing/blob/657a8ba435bf2cae463e935d957d8038b69be8a3/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md)
+uses a complete original finite ordered space, strict unit and its full
+original effect interval. Theorem 162.10, relative to its stated suppliers,
+gives the conditional single-system equivalences
+L2 + NC + AD iff L2 + NC + DS iff a cone-and-unit isomorphism with complex
+PSD/trace. AD is perfect distinguishability of every intrinsic antipodal
+pair by an effect of the full original interval; DS is its equivalent
+whole difference-body section condition. Theorem 162.19 separately gives
+complete EB3 + actual L2 iff an original qutrit, with pure PR a conclusion;
+it is a single-system statement, not EB3 on a triple cone. Neither
+L2 + NC to AD nor bare EB3/pure PR to L2 is assumed solved.
+
+Theorem 161.5 uses its whole-three-copy G3 geometry and conditional
+single-cone supplier. Theorem 162.16 supplies the alternative whole-three-copy
+L2 + NC + AD (equivalently DS) entrance. Both retain the entire all-finite
+background: every original $W_N=V^{\otimes N}$, closed pointed generating
+cones, strict tensor units, all original effect intervals, the every-split
+min/max sandwich, product pairing/local tomography, positive permutations
+and actual reassociation. Their conclusion is one common $\theta$ with
+$\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N}$ for EVERY finite
+$N$, preserving all correlated inputs and finite spectators. It is not a
+three-level truncation.
+
+After that conclusion, §§161.7--161.9 and §162.9 give the complete
+spectator-positive/CP/Choi/rectangular-Kraus and mathematical-instrument
+dictionary, trace budgets, zero-mass branches and finite adaptive
+composition. The sharp-neutral conclusion additionally requires a
+positive sharp branch fixing every certain-yes pure state; repeatability
+alone does not pay that premise. A separately specified continuous
+normalized order group has its unitary lift/generator; the cone does not
+select that action, physical clocks, energy calibration or $\hbar$.
+
+These supplied mathematical conclusions remain intact on their own
+original domains. The present actual-source correspondence gives only
+the readout cone (VI.89), with the exact six-dimensional classical kernel
+and the segment face above. It therefore does not establish those
+whole-domain reconstruction premises or identify its operational quotient
+with the full original $H$. Neither supplier provides a native $r$ gate,
+device saturation, coherent source transport, acquired rights, clean
+helpers, detector readiness, hold or Return service. Those actual
+source-matched operations remain separate premises. Equality of dimensions
+or a static effect representation cannot identify this source with the
+distinct original-control double-wall preparation. $\square$
+
+## 71. Native service, record and return interface
+
+**Proposition 71.1 (finite allowed continuations).** Every finite lawful
+continuation of Theorem 66.3 or Proposition 67.2 retains the complete native
+service interface. A continuation may interleave finitely many target
+readouts, VI48 phase calls, VI49.3 consumers, and arbitrary native
+$P/S/\mathrm{Next}$ futures. It is admissible only with the following
+supplied boundaries:
+
+1. The acquired endpoint identities, fixed links, common backing, one-time
+independent $\eta$ preparation, clean-helper supply and actual detector
+readiness are present; no seed replacement, reset, rewind, graft, new edge,
+extra preparation or reference readout is introduced.
+2. Every command is a finite signed-dyadic word with its own enabled/disabled
+slots, angle enclosure and separately supplied physical accuracy certificate.
+Finite material, finite output, serialization, holds, clocks and progress
+are supplied for the selected path; arbitrary real angles and infinite
+continuations are not silently treated as finite commands.
+3. Current rights and locks authorize each read, phase, source edit and
+Return. A refusal, pending input/output, phase/latch state or unavailable
+successor is retained with its original reason and is not converted into a
+successful result. Immutable records and their acquisition versions are not
+rewritten, and preparation or detector grants are not restored by return.
+4. Receive, Parse, Guard, Tag, Reserve, edit, Maintain, FetchGrowth,
+Print, End, ACK and Return keep their original meanings. Each conditional
+quantum branch retains its actual successor, complete command/record word,
+output prefix and unprinted suffix. The returned source keeps its actual
+physical identity and all material in the growing bank; membership of its
+quantum output in $H$ is asserted only where the ideal instrument theorem
+proves it, never for arbitrary raw or pending paths.
+
+**Proof.** Theorems 48.1, 49.3, 54.1 and 55.1 give the ideal
+returned-factor identities on their stated input domains. Theorem 66.3
+adds the full-$H$ bank-projective calls. Induct on a finite interleaving
+of these ideal services and arbitrary original native requests. Native
+steps retain every old quantum identity and state, and append only their
+specified vacuum factors. Thus they preserve the ideal service return
+domains even when labels, versions and source size change. The phase or
+readout then returns its ideal helpers and standard on each
+subnormalized branch. The actual native transition and rights guard stay
+unchanged at every phase: the next request starts from its actual Ready
+or the explicitly retained pending state. This proves preservation of
+all original native services, not just a restricted record menu.
+
+An additional enabled raw hopping request or an interrupted macro is
+also lawful. Its entire output is retained by (VI.90); if its helpers
+are dirty, no exact service-domain or purity assertion is inferred.
+A later source request still has its full native state domain and reply;
+readiness, progress and resources for a new detector or quantum service
+must be supplied separately. Finite allowed interleaving therefore
+neither disables native services nor promises that arbitrary raw quantum
+work prepares a subsequent service's clean input.
+
+For finite commands use the normalized full-bank comparison of
+Proposition 67.2. Charge every call's expanded forward/return pulses,
+each read's detector certificate and every other physical service on
+its actual finite record path, exactly once per occurrence. The existing
+$174$, $16$ and $23$ hop words from VI56/51 can be included by their
+already expanded lists, without charging their internal phase twice.
+Backward induction on the finite record tree gives (VI.85), with one
+initial joint charge and no independence assumption on dirty approximate
+states. At a completed ideal return it bounds the actual complete output
+against the decoupled comparator, rather than asserting an exact actual
+return. At a pending cut it compares the corresponding full busy outputs.
+The induction stops at the selected finite End/ACK/Return, or retains
+the selected pending state when progress has not been supplied.
+$\square$
+
+**Boundary 71.2 (what this increment does not supply).** The construction
+does not give an all-instrument catalogue, an unconditional physical origin
+of the acquired source, an actual universal clock or time law, a detector
+for the $r$--$B$ coherence, or full-space recoverability of arbitrary
+quantum effects. It gives a returned projective instrument for every
+$v\in B$ in the ideal reference model, finite effective approximants with
+the explicit joint bound (VI.85), the exact classical quotient (VI.86)--
+(VI.89), and the source-specific obstruction (VI.93)--(VI.94). The actual
+apparatus, rights, holds, progress, finite supplies and physical certificates
+remain premises of every finite use. These conclusions preserve the ordered
+alpha/beta grammar, actual addressed $P/S$, genuine Next and the internal
+observer, and do not identify this native source with the separate
+original-control $M_3$ preparation.
+
+The two-level decomposition, phase kickback, finite channel-distance
+estimates, and block-invariant effect-span reasoning used above are mature
+mechanisms: the former is credited to Reck
+et al. as cited in Lemma 66.2, phase kickback to Cleve--Ekert--Macchiavello--
+Mosca, [quant-ph/9708016v1, §§1 and 7](https://arxiv.org/html/quant-ph/9708016),
+and the finite CP/instrument and trace-distance background to Watrous,
+*The Theory of Quantum Information*, Chapters 2--3
+([public text](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)). The
+source-specific synthesis, complete executed-word budget and
+growing-bank restriction in §§66--71 are repo-derived applications of
+those mechanisms. Their generic statements are used only inside the
+actual VI37--57 source correspondence; they do not add a native operation, preparation, detector or right.
+
+## 追加锚（本行以下为增补区）
