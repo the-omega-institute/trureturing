@@ -41,7 +41,7 @@ variable (K : Type uK) [Field K]
 -- These are UNSIGNED Hasse coefficients: the actual contragredient action
 -- at parameter -a has expansion sum a^k A_k. This removes sign scalars from
 -- the generators, without changing or postulating any representation.
-private def coefficient (d k : ℕ) : Module.End K (DualPower K d) :=
+def coefficient (d k : ℕ) : Module.End K (DualPower K d) :=
   Matrix.toLin (dualBasis K d) (dualBasis K d)
     (Matrix.of fun j i =>
       if j.val = i.val + k then (j.val.choose i.val : K) else 0)
@@ -116,13 +116,13 @@ private theorem coefficient_basis_of_ge (d k : ℕ) (i : Fin d)
   rw [coefficient_basis_value, LinearMap.zero_apply]
   rw [if_neg (by have := j.isLt; omega)]
 
-private theorem coefficient_cyclic (N : ℕ) (i : Fin (N + 1)) :
+theorem coefficient_cyclic (N : ℕ) (i : Fin (N + 1)) :
     coefficient K (N + 1) i.val (dualBasis K (N + 1) 0) =
       dualBasis K (N + 1) i := by
   rw [coefficient_basis_of_lt K (N + 1) i.val 0 (by simpa using i.isLt)]
   simp
 
-private theorem coefficient_eval (d k : ℕ) (v : DualPower K d) (j : Fin d) :
+theorem coefficient_eval (d k : ℕ) (v : DualPower K d) (j : Fin d) :
     coefficient K d k v (Polynomial.degreeLT.basis K d j) =
       ∑ i : Fin d, (dualBasis K d).repr v i *
         (if j.val = i.val + k then (j.val.choose i.val : K) else 0) := by
@@ -131,7 +131,7 @@ private theorem coefficient_eval (d k : ℕ) (v : DualPower K d) (j : Fin d) :
   simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
     coefficient_basis_value, smul_eq_mul]
 
-private theorem coefficient_top (N : ℕ) (v : DualPower K (N + 1)) :
+theorem coefficient_top (N : ℕ) (v : DualPower K (N + 1)) :
     coefficient K (N + 1) N v =
       v (Polynomial.degreeLT.basis K (N + 1) 0) •
         dualBasis K (N + 1) (Fin.last N) := by
@@ -257,14 +257,14 @@ private def extracted {V : Type*} [AddCommGroup V] [Module K V]
   -(∑ a : K, a ^ (Fintype.card K - 1 - k.val) •
     ρ (Multiplicative.ofAdd (-a)))
 
-private theorem extract_dual_coefficient {r d : ℕ}
+theorem extract_dual_coefficient {r d : ℕ}
     (hrd : r ≤ d) (hd : d + 1 ≤ Fintype.card K) (k : Fin d) :
     coefficient K r k.val = extracted (dualAction K r) k := by
   unfold extracted
   simp_rw [action_expansion K r d hrd]
   exact (recover_coefficients hd (fun t => coefficient K r t.val) k).symm
 
-private theorem extracted_intertwines
+theorem extracted_intertwines
     {V Z : Type*} [AddCommGroup V] [Module K V] [AddCommGroup Z] [Module K Z]
     (ρ : Representation K (Multiplicative K) V)
     (σ : Representation K (Multiplicative K) Z)

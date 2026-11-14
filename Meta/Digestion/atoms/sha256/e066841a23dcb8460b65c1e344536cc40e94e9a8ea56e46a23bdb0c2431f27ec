@@ -1,0 +1,53 @@
+**Theorem 2 (Exact zero subsets and universal descent).**
+For every $S\subseteq I$,
+
+$$
+S\in\mathcal H\quad\Longleftrightarrow\quad\sum_{i\in S}u_i=0.
+\tag{1}
+$$
+
+For an arbitrary abelian group $C$, a function $x:I\to C$ extends uniquely
+to a homomorphism $U\to C$ taking $u_i$ to $x_i$ if and only if
+$\sum_{i\in S}x_i=0$ for every $S\in\mathcal H$. Moreover, for every full
+label permutation $p\in\operatorname{Sym}(I)$, the following are equivalent:
+
+$$
+ p\in G;\qquad P_p(L)=L;\qquad
+ \exists!\,\alpha\in\operatorname{Aut}(U)\quad
+ \alpha(u_i)=u_{p(i)}\quad(i\in I),
+\tag{2}
+$$
+
+where $P_p(e_i)=e_{p(i)}$. In particular, no equality $L=\ker\Phi$ is needed.
+
+*Proof.* Each generating row of $L$ is in $\ker\Phi$, so
+
+$$
+L\subseteq\ker\Phi.
+\tag{3}
+$$
+
+If $S\in\mathcal H$, its row is a generator of $L$, hence its sum in $U$
+vanishes. Conversely, a vanishing sum in $U$ says $r_S\in L$; (3) then
+gives $\Phi(r_S)=0$. This proves (1).
+
+The unique homomorphism $F\to C$ extending $x$ is
+$\sum n_i e_i\mapsto\sum n_i x_i$. It factors through $F/L$ precisely
+when it annihilates all the rows generating $L$, which is the stated
+condition. Uniqueness follows because the $u_i$ generate $U$.
+
+If $p\in G$, then $P_p(r_S)=r_{p(S)}$ permutes the entire generating
+family of $L$. Thus $P_p(L)=L$, and $P_p,P_{p^{-1}}$ induce mutually
+inverse homomorphisms of $U$. Conversely, any indicated automorphism
+$\alpha$ gives
+
+$$
+\sum_{i\in S}u_i=0
+\Longleftrightarrow
+\alpha\left(\sum_{i\in S}u_i\right)=0
+\Longleftrightarrow
+\sum_{i\in p(S)}u_i=0.
+$$
+
+Equation (1) implies $p\in G$. Again, generation gives uniqueness. $\square$
+
