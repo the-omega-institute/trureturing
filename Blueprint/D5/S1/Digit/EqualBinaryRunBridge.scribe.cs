@@ -67,7 +67,7 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
     private static Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
     private static Formula Iffn(Formula x, Formula y) => Seq(x, Sp, Iff, Sp, y);
     private static Formula Bin(Formula x, FormulaBinaryOperator op, Formula y) => new Formula.Binary(x, op, y);
-    private static Formula Pred(Formula n, int k) => Bin(n, FormulaBinaryOperator.Subtract, D(k));
+    private static Formula Pred(Formula n, byte k) => Bin(n, FormulaBinaryOperator.Subtract, D(k));
     private static Formula MembershipFormula()
     {
         var n = F.Id("n"); var m = F.Id("m"); var p = F.Id("p"); var q = F.Id("q");
