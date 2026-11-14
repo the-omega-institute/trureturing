@@ -8,30 +8,20 @@
 
 /-
 admission_basis: escape-witness
-proof_shape: ASSUMED-UNVERIFIED until the port is compiled and classified.
-escape_witness: ASSUMED-UNVERIFIED until the port is compiled and classified.
-Direct frozen dependencies: none.
+escape_witness: D5.S3.VertexAlgebra.Sectors.VBKMVirasoroBootstrap.positive_brackets_from_mixed
+Direct frozen dependencies: none; all D5 prerequisites are in this delivery.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339
+Definitions are labelled bind-only as encodings, not as proofs of new propositions.
+Declarations (consumer names are qualified by their owning module):
+defect_bracket: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMVirasoroBootstrap.positive_brackets_from_mixed.
+cyclic_operator_zero: proof_shape: content; frozen: none; escape_witness: VBKMVirasoroBootstrap.cyclic_operator_zero; consumers: VBKMVirasoroBootstrap.positive_brackets_from_mixed.
+positive_brackets_from_mixed: proof_shape: content; frozen: none; escape_witness: VBKMVirasoroBootstrap.positive_brackets_from_mixed; consumers: VBKMRecursiveAction.qmode_positive_brackets.
+full_brackets_from_mixed: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qmode_virasoro.
 -/
 
 
-import Mathlib.Data.Finsupp.Weight
-import Mathlib.Data.Finsupp.Interval
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Common
-import Mathlib.Algebra.Lie.Free
-import Mathlib.Algebra.Lie.Quotient
 import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Data.PNat.Basic
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.Algebra.Lie.Sl2
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.Ideal
 import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.LinearAlgebra.Eigenspace.Basic
 
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 1000000
@@ -47,21 +37,17 @@ private theorem defect_bracket {A : Type*} [LieRing A] [LieAlgebra ℂ A]
 
 variable {M I : Type*} [AddCommGroup M] [Module ℂ M]
 
-noncomputable def wordVector (F : I → Module.End ℂ M) (v : M) : List I → M
-  | [] => v
-  | i::w => F i (wordVector F v w)
-
 private theorem cyclic_operator_zero (F : I → Module.End ℂ M) (v : M)
-    (hspan : Submodule.span ℂ (Set.range (wordVector F v)) = ⊤)
+    (hspan : Submodule.span ℂ (Set.range (List.foldr (fun i x => F i x) v)) = ⊤)
     (D : Module.End ℂ M) (hDv : D v = 0) (hDF : ∀ i, ⁅D,F i⁆ = 0) : D = 0 := by
-  have hw (w : List I) : D (wordVector F v w) = 0 := by
+  have hw (w : List I) : D (List.foldr (fun i x => F i x) v w) = 0 := by
     induction w with
     | nil => exact hDv
     | cons i w ih =>
-      have hh := LinearMap.congr_fun (hDF i) (wordVector F v w)
-      change D (F i (wordVector F v w)) - F i (D (wordVector F v w)) = 0 at hh
-      simpa [wordVector,ih] using hh
-  have hker : Submodule.span ℂ (Set.range (wordVector F v)) ≤ LinearMap.ker D := by
+      have hh := LinearMap.congr_fun (hDF i) (List.foldr (fun i x => F i x) v w)
+      change D (F i (List.foldr (fun i x => F i x) v w)) - F i (D (List.foldr (fun i x => F i x) v w)) = 0 at hh
+      simpa [List.foldr_cons,ih] using hh
+  have hker : Submodule.span ℂ (Set.range (List.foldr (fun i x => F i x) v)) ≤ LinearMap.ker D := by
     apply Submodule.span_le.mpr
     rintro x ⟨w,rfl⟩
     exact hw w
@@ -71,7 +57,7 @@ private theorem cyclic_operator_zero (F : I → Module.End ℂ M) (v : M)
   exact hker (Submodule.mem_top)
 
 theorem positive_brackets_from_mixed (F : (I ⊕ ℕ+) → Module.End ℂ M) (v : M)
-    (hspan : Submodule.span ℂ (Set.range (wordVector F v)) = ⊤)
+    (hspan : Submodule.span ℂ (Set.range (List.foldr (fun i x => F i x) v)) = ⊤)
     (T : ℤ → Module.End ℂ M) (C : Module.End ℂ M)
     (hnegative : ∀ r : ℕ+, T (-(r.val : ℤ)) = F (.inr r))
     (hroot : ∀ (m : ℤ), 0 < m → ∀ i : I, ⁅T m,F (.inl i)⁆ = 0)

@@ -8,30 +8,79 @@
 
 /-
 admission_basis: escape-witness
-proof_shape: ASSUMED-UNVERIFIED until the port is compiled and classified.
-escape_witness: ASSUMED-UNVERIFIED until the port is compiled and classified.
-Direct frozen dependencies: none.
+escape_witness: D5.S3.VertexAlgebra.Sectors.VBKMPresentation.datum_enhanced
+Direct frozen dependencies: none; all D5 prerequisites are in this delivery.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339
+Definitions are labelled bind-only as encodings, not as proofs of new propositions.
+Declarations (consumer names are qualified by their owning module):
+EnhancedCartanData: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.Condition43, VBKMPresentation.EnhancedCartanData.GeneralizedCartan, VBKMPresentation.EnhancedCartanData.IdealRigidity, VBKMPresentation.EnhancedCartanData.IsEnhanced, VBKMPresentation.EnhancedCartanData.Presented, VBKMPresentation.EnhancedCartanData.Symmetrizable, VBKMPresentation.EnhancedCartanData.VBKM, VBKMPresentation.EnhancedCartanData.cartanSubspace, VBKMPresentation.EnhancedCartanData.deform, VBKMPresentation.EnhancedCartanData.heisenberg, VBKMPresentation.EnhancedCartanData.localIdeal, VBKMPresentation.EnhancedCartanData.localRelations, VBKMPresentation.EnhancedCartanData.matrix, VBKMPresentation.EnhancedCartanData.pL, VBKMPresentation.EnhancedCartanData.pL_commute, VBKMPresentation.EnhancedCartanData.pL_zero, VBKMPresentation.EnhancedCartanData.pe, VBKMPresentation.EnhancedCartanData.pe_negative, VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.pf, VBKMPresentation.EnhancedCartanData.pf_positive, VBKMPresentation.EnhancedCartanData.ph, VBKMPresentation.EnhancedCartanData.ph_commute, VBKMPresentation.EnhancedCartanData.ph_pL, VBKMPresentation.EnhancedCartanData.ph_pe, VBKMPresentation.EnhancedCartanData.ph_pf, VBKMPresentation.EnhancedCartanData.presentationIdeal, VBKMPresentation.EnhancedCartanData.presentationMap, VBKMPresentation.EnhancedCartanData.presentationRelations, VBKMPresentation.EnhancedCartanData.presentation_generates, VBKMPresentation.EnhancedCartanData.rankOne, VBKMPresentation.EnhancedCartanData.relation_vanishes, VBKMPresentation.EnhancedCartanData.sideSeed, VBKMPresentation.EnhancedCartanData.simpleRoot, VBKMPresentation.EnhancedCartanData.virasoro, VBKMPresentation.claim, VBKMPresentation.datum_condition43, VBKMPresentation.datum_coroot_span, VBKMPresentation.datum_enhanced, VBKMPresentation.datum_no_positive, VBKMPresentation.datum_root_finite, VBKMPresentation.datum_simpleRoot_finite, VBKMPresentation.datum_symmetrizable, ZverykIdealRigidityRefutation.cartan_negative, ZverykIdealRigidityRefutation.cartan_singular, ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_localRelations_empty, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.datum_no_rank_highest, ZverykIdealRigidityRefutation.freeRepresentation_relations, ZverykIdealRigidityRefutation.localH, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.mode_mem_generators, ZverykIdealRigidityRefutation.presented_central_modes, ZverykIdealRigidityRefutation.presented_central_seed, ZverykIdealRigidityRefutation.presented_e_singular, ZverykIdealRigidityRefutation.presented_positive_singular, ZverykIdealRigidityRefutation.presented_seed_zero_weight, ZverykIdealRigidityRefutation.presented_separating_weight, ZverykIdealRigidityRefutation.presented_singular_eigen, ZverykIdealRigidityRefutation.rankOne_in_span, ZverykIdealRigidityRefutation.result_of_survival, ZverykIdealRigidityRefutation.separating_negative.
+matrix: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.GeneralizedCartan, VBKMPresentation.EnhancedCartanData.IsEnhanced, VBKMPresentation.datum_enhanced, VBKMPresentation.datum_no_positive, ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.datum_no_rank_highest, ZverykIdealRigidityRefutation.local_sl2_relations.
+PositiveReal: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.GeneralizedCartan, VBKMPresentation.EnhancedCartanData.IsEnhanced, VBKMPresentation.datum_enhanced, VBKMPresentation.datum_no_positive.
+NonpositiveInteger: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.GeneralizedCartan, VBKMPresentation.EnhancedCartanData.IsEnhanced, VBKMPresentation.datum_enhanced.
+FiniteDecompositions: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.GeneralizedCartan, VBKMPresentation.EnhancedCartanData.IsEnhanced, VBKMPresentation.datum_enhanced.
+simpleRoot: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.IsEnhanced, VBKMPresentation.EnhancedCartanData.heisenberg, VBKMPresentation.datum_enhanced, VBKMPresentation.datum_simpleRoot_finite.
+GeneralizedCartan: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.IsEnhanced, VBKMPresentation.datum_enhanced.
+IsEnhanced: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.claim.
+Symmetrizable: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.claim.
+Condition43: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.claim, ZverykIdealRigidityRefutation.result_of_survival.
+deform: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.claim, ZverykIdealRigidityRefutation.result_of_survival.
+heisenberg: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.claim, ZverykIdealRigidityRefutation.result_of_survival.
+h: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.pL_commute, VBKMPresentation.EnhancedCartanData.pL_zero, VBKMPresentation.EnhancedCartanData.pe_negative, VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.pf_positive, VBKMPresentation.EnhancedCartanData.ph, VBKMPresentation.EnhancedCartanData.ph_commute, VBKMPresentation.EnhancedCartanData.ph_pL, VBKMPresentation.EnhancedCartanData.ph_pe, VBKMPresentation.EnhancedCartanData.ph_pf, VBKMPresentation.EnhancedCartanData.presentationRelations, ZverykIdealRigidityRefutation.freeRepresentation_relations.
+e: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.pL_commute, VBKMPresentation.EnhancedCartanData.pL_zero, VBKMPresentation.EnhancedCartanData.pe, VBKMPresentation.EnhancedCartanData.pe_negative, VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.pf_positive, VBKMPresentation.EnhancedCartanData.ph_commute, VBKMPresentation.EnhancedCartanData.ph_pL, VBKMPresentation.EnhancedCartanData.ph_pe, VBKMPresentation.EnhancedCartanData.ph_pf, VBKMPresentation.EnhancedCartanData.presentationRelations, ZverykIdealRigidityRefutation.freeRepresentation_relations.
+f: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.pL_commute, VBKMPresentation.EnhancedCartanData.pL_zero, VBKMPresentation.EnhancedCartanData.pe_negative, VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.pf, VBKMPresentation.EnhancedCartanData.pf_positive, VBKMPresentation.EnhancedCartanData.ph_commute, VBKMPresentation.EnhancedCartanData.ph_pL, VBKMPresentation.EnhancedCartanData.ph_pe, VBKMPresentation.EnhancedCartanData.ph_pf, VBKMPresentation.EnhancedCartanData.presentationRelations, ZverykIdealRigidityRefutation.freeRepresentation_relations.
+L: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.pL, VBKMPresentation.EnhancedCartanData.pL_commute, VBKMPresentation.EnhancedCartanData.pL_zero, VBKMPresentation.EnhancedCartanData.pe_negative, VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.pf_positive, VBKMPresentation.EnhancedCartanData.ph_commute, VBKMPresentation.EnhancedCartanData.ph_pL, VBKMPresentation.EnhancedCartanData.ph_pe, VBKMPresentation.EnhancedCartanData.ph_pf, VBKMPresentation.EnhancedCartanData.presentationRelations, ZverykIdealRigidityRefutation.freeRepresentation_relations.
+presentationRelations: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.presentationIdeal, VBKMPresentation.EnhancedCartanData.relation_vanishes, ZverykIdealRigidityRefutation.freeRepresentation_relations, ZverykIdealRigidityRefutation.presentationIdeal_le_representation_kernel.
+presentationIdeal: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.IdealRigidity, VBKMPresentation.EnhancedCartanData.Presented, VBKMPresentation.EnhancedCartanData.VBKM, VBKMPresentation.EnhancedCartanData.cartanSubspace, VBKMPresentation.EnhancedCartanData.localIdeal, VBKMPresentation.EnhancedCartanData.localRelations, VBKMPresentation.EnhancedCartanData.pL, VBKMPresentation.EnhancedCartanData.pL_commute, VBKMPresentation.EnhancedCartanData.pL_zero, VBKMPresentation.EnhancedCartanData.pe, VBKMPresentation.EnhancedCartanData.pe_negative, VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.pf, VBKMPresentation.EnhancedCartanData.pf_positive, VBKMPresentation.EnhancedCartanData.ph, VBKMPresentation.EnhancedCartanData.ph_commute, VBKMPresentation.EnhancedCartanData.ph_pL, VBKMPresentation.EnhancedCartanData.ph_pe, VBKMPresentation.EnhancedCartanData.ph_pf, VBKMPresentation.EnhancedCartanData.presentationMap, VBKMPresentation.EnhancedCartanData.presentation_generates, VBKMPresentation.EnhancedCartanData.relation_vanishes, ZverykIdealRigidityRefutation.allGenerators_generate, ZverykIdealRigidityRefutation.cartan_map, ZverykIdealRigidityRefutation.cartan_negative, ZverykIdealRigidityRefutation.cartan_singular, ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_localIdeal_zero, ZverykIdealRigidityRefutation.datum_localRelations_empty, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.datum_no_rank_highest, ZverykIdealRigidityRefutation.generators_in_mixedSpan, ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives, ZverykIdealRigidityRefutation.localH, ZverykIdealRigidityRefutation.localQuotientMap, ZverykIdealRigidityRefutation.localQuotientMap_injective, ZverykIdealRigidityRefutation.localQuotientMap_surjective, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.mixedSpan, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.not_rigid_of_survival, ZverykIdealRigidityRefutation.positive_singular, ZverykIdealRigidityRefutation.presentedSingular, ZverykIdealRigidityRefutation.presentedSingular_ne_zero, ZverykIdealRigidityRefutation.presented_central_modes, ZverykIdealRigidityRefutation.presented_central_seed, ZverykIdealRigidityRefutation.presented_e_singular, ZverykIdealRigidityRefutation.presented_positive_seed, ZverykIdealRigidityRefutation.presented_positive_singular, ZverykIdealRigidityRefutation.presented_seed_zero_weight, ZverykIdealRigidityRefutation.presented_separating_weight, ZverykIdealRigidityRefutation.presented_singular_eigen, ZverykIdealRigidityRefutation.rankOne_in_span, ZverykIdealRigidityRefutation.representation, ZverykIdealRigidityRefutation.representation_singular_vacuum, ZverykIdealRigidityRefutation.result_of_survival, ZverykIdealRigidityRefutation.separating_cartan, ZverykIdealRigidityRefutation.separating_negative.
+Presented: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.IdealRigidity, VBKMPresentation.EnhancedCartanData.VBKM, VBKMPresentation.EnhancedCartanData.cartanSubspace, VBKMPresentation.EnhancedCartanData.localIdeal, VBKMPresentation.EnhancedCartanData.localRelations, VBKMPresentation.EnhancedCartanData.pL_commute, VBKMPresentation.EnhancedCartanData.pL_zero, VBKMPresentation.EnhancedCartanData.pe_negative, VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.pf_positive, VBKMPresentation.EnhancedCartanData.ph_commute, VBKMPresentation.EnhancedCartanData.ph_pL, VBKMPresentation.EnhancedCartanData.ph_pe, VBKMPresentation.EnhancedCartanData.ph_pf, VBKMPresentation.EnhancedCartanData.presentationMap, VBKMPresentation.EnhancedCartanData.presentation_generates, VBKMPresentation.EnhancedCartanData.rankOne, VBKMPresentation.EnhancedCartanData.sideSeed, VBKMPresentation.EnhancedCartanData.virasoro, ZverykIdealRigidityRefutation.allGenerators, ZverykIdealRigidityRefutation.allGenerators_generate, ZverykIdealRigidityRefutation.cartanGenerators, ZverykIdealRigidityRefutation.cartan_map, ZverykIdealRigidityRefutation.cartan_negative, ZverykIdealRigidityRefutation.cartan_singular, ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_localIdeal_zero, ZverykIdealRigidityRefutation.datum_localRelations_empty, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.datum_no_rank_highest, ZverykIdealRigidityRefutation.generators_in_mixedSpan, ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives, ZverykIdealRigidityRefutation.localH, ZverykIdealRigidityRefutation.localQuotientMap, ZverykIdealRigidityRefutation.localQuotientMap_injective, ZverykIdealRigidityRefutation.localQuotientMap_surjective, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.mixedSpan, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.mode_mem_generators, ZverykIdealRigidityRefutation.negativeGenerator, ZverykIdealRigidityRefutation.not_rigid_of_survival, ZverykIdealRigidityRefutation.positiveGenerator, ZverykIdealRigidityRefutation.positive_singular, ZverykIdealRigidityRefutation.presentedSingular, ZverykIdealRigidityRefutation.presentedSingular_ne_zero, ZverykIdealRigidityRefutation.presented_central_modes, ZverykIdealRigidityRefutation.presented_central_seed, ZverykIdealRigidityRefutation.presented_e_singular, ZverykIdealRigidityRefutation.presented_positive_seed, ZverykIdealRigidityRefutation.presented_positive_singular, ZverykIdealRigidityRefutation.presented_seed_zero_weight, ZverykIdealRigidityRefutation.presented_separating_weight, ZverykIdealRigidityRefutation.presented_singular_eigen, ZverykIdealRigidityRefutation.rankOne_in_span, ZverykIdealRigidityRefutation.representation, ZverykIdealRigidityRefutation.representation_singular_vacuum, ZverykIdealRigidityRefutation.result_of_survival, ZverykIdealRigidityRefutation.separating_cartan, ZverykIdealRigidityRefutation.separating_negative.
+ph: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.cartanSubspace, VBKMPresentation.EnhancedCartanData.localRelations, VBKMPresentation.EnhancedCartanData.pL_commute, VBKMPresentation.EnhancedCartanData.pL_zero, VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.ph_commute, VBKMPresentation.EnhancedCartanData.ph_pL, VBKMPresentation.EnhancedCartanData.ph_pe, VBKMPresentation.EnhancedCartanData.ph_pf, VBKMPresentation.EnhancedCartanData.rankOne, VBKMPresentation.EnhancedCartanData.virasoro, ZverykIdealRigidityRefutation.allGenerators_generate, ZverykIdealRigidityRefutation.cartanGenerators, ZverykIdealRigidityRefutation.cartan_map, ZverykIdealRigidityRefutation.cartan_negative, ZverykIdealRigidityRefutation.cartan_singular, ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_localRelations_empty, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.datum_no_rank_highest, ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives, ZverykIdealRigidityRefutation.localH, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.mode_mem_generators, ZverykIdealRigidityRefutation.presented_central_modes, ZverykIdealRigidityRefutation.presented_central_seed, ZverykIdealRigidityRefutation.presented_e_singular, ZverykIdealRigidityRefutation.presented_positive_singular, ZverykIdealRigidityRefutation.presented_seed_zero_weight, ZverykIdealRigidityRefutation.presented_separating_weight, ZverykIdealRigidityRefutation.presented_singular_eigen, ZverykIdealRigidityRefutation.rankOne_in_span, ZverykIdealRigidityRefutation.separating_cartan, ZverykIdealRigidityRefutation.separating_negative.
+pe: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.pe_negative, VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.ph_pe, VBKMPresentation.EnhancedCartanData.rankOne, VBKMPresentation.EnhancedCartanData.sideSeed, ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.positiveGenerator, ZverykIdealRigidityRefutation.presented_e_singular, ZverykIdealRigidityRefutation.rankOne_in_span.
+pf: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.pf_positive, VBKMPresentation.EnhancedCartanData.ph_pf, VBKMPresentation.EnhancedCartanData.rankOne, VBKMPresentation.EnhancedCartanData.sideSeed, ZverykIdealRigidityRefutation.cartan_negative, ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.negativeGenerator, ZverykIdealRigidityRefutation.presentedSingular, ZverykIdealRigidityRefutation.presented_central_seed, ZverykIdealRigidityRefutation.presented_e_singular, ZverykIdealRigidityRefutation.presented_positive_seed, ZverykIdealRigidityRefutation.presented_positive_singular, ZverykIdealRigidityRefutation.presented_seed_zero_weight, ZverykIdealRigidityRefutation.presented_singular_eigen, ZverykIdealRigidityRefutation.rankOne_in_span, ZverykIdealRigidityRefutation.representation_singular_vacuum, ZverykIdealRigidityRefutation.separating_negative.
+pL: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.localRelations, VBKMPresentation.EnhancedCartanData.pL_commute, VBKMPresentation.EnhancedCartanData.pL_zero, VBKMPresentation.EnhancedCartanData.pe_negative, VBKMPresentation.EnhancedCartanData.pf_positive, VBKMPresentation.EnhancedCartanData.ph_pL, VBKMPresentation.EnhancedCartanData.virasoro, ZverykIdealRigidityRefutation.cartan_negative, ZverykIdealRigidityRefutation.datum_localRelations_empty, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.mode_mem_generators, ZverykIdealRigidityRefutation.negativeGenerator, ZverykIdealRigidityRefutation.positiveGenerator, ZverykIdealRigidityRefutation.presentedSingular, ZverykIdealRigidityRefutation.presented_central_modes, ZverykIdealRigidityRefutation.presented_e_singular, ZverykIdealRigidityRefutation.presented_positive_seed, ZverykIdealRigidityRefutation.presented_positive_singular, ZverykIdealRigidityRefutation.presented_seed_zero_weight, ZverykIdealRigidityRefutation.presented_singular_eigen, ZverykIdealRigidityRefutation.representation_singular_vacuum, ZverykIdealRigidityRefutation.separating_negative.
+cyclic: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.HighestProper, ZverykIdealRigidityRefutation.datum_no_rank_highest.
+HighestProper: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.localRelations, ZverykIdealRigidityRefutation.datum_localRelations_empty, ZverykIdealRigidityRefutation.datum_no_rank_highest.
+rankOne: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.localRelations, ZverykIdealRigidityRefutation.datum_localRelations_empty, ZverykIdealRigidityRefutation.datum_no_rank_highest, ZverykIdealRigidityRefutation.rankOne_in_span.
+virasoro: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.localRelations, ZverykIdealRigidityRefutation.datum_localRelations_empty.
+sideSeed: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.localRelations, ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_localRelations_empty, ZverykIdealRigidityRefutation.datum_no_rank_highest, ZverykIdealRigidityRefutation.localE, ZverykIdealRigidityRefutation.localF.
+modeSign: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.localRelations, ZverykIdealRigidityRefutation.datum_localRelations_empty, ZverykIdealRigidityRefutation.datum_mode_no_highest.
+localRelations: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.localIdeal, ZverykIdealRigidityRefutation.datum_localIdeal_zero, ZverykIdealRigidityRefutation.datum_localRelations_empty.
+localIdeal: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.IdealRigidity, VBKMPresentation.EnhancedCartanData.VBKM, VBKMPresentation.EnhancedCartanData.cartanSubspace, ZverykIdealRigidityRefutation.cartan_map, ZverykIdealRigidityRefutation.datum_localIdeal_zero, ZverykIdealRigidityRefutation.localQuotientMap, ZverykIdealRigidityRefutation.localQuotientMap_injective, ZverykIdealRigidityRefutation.localQuotientMap_surjective, ZverykIdealRigidityRefutation.not_rigid_of_survival.
+VBKM: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.IdealRigidity, VBKMPresentation.EnhancedCartanData.cartanSubspace, ZverykIdealRigidityRefutation.cartan_map, ZverykIdealRigidityRefutation.localQuotientMap, ZverykIdealRigidityRefutation.localQuotientMap_injective, ZverykIdealRigidityRefutation.localQuotientMap_surjective, ZverykIdealRigidityRefutation.not_rigid_of_survival.
+cartanSubspace: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.IdealRigidity, ZverykIdealRigidityRefutation.cartan_map, ZverykIdealRigidityRefutation.not_rigid_of_survival.
+IdealRigidity: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.claim, ZverykIdealRigidityRefutation.not_rigid_of_survival, ZverykIdealRigidityRefutation.result_of_survival.
+claim: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.result_of_survival.
+finite_nat_weight_fiber: proof_shape: content; frozen: none; escape_witness: VBKMPresentation.finite_nat_weight_fiber; consumers: VBKMPresentation.finite_decompositions_of_height.
+finite_decompositions_of_height: proof_shape: content; frozen: none; escape_witness: VBKMPresentation.finite_nat_weight_fiber; consumers: VBKMPresentation.datum_root_finite, VBKMPresentation.datum_simpleRoot_finite.
+datum: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.datum_condition43, VBKMPresentation.datum_coroot_span, VBKMPresentation.datum_enhanced, VBKMPresentation.datum_no_positive, VBKMPresentation.datum_root_finite, VBKMPresentation.datum_simpleRoot_finite, VBKMPresentation.datum_symmetrizable, ZverykIdealRigidityRefutation.allGenerators, ZverykIdealRigidityRefutation.allGenerators_generate, ZverykIdealRigidityRefutation.cartanGenerators, ZverykIdealRigidityRefutation.cartan_map, ZverykIdealRigidityRefutation.cartan_negative, ZverykIdealRigidityRefutation.cartan_singular, ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_localIdeal_zero, ZverykIdealRigidityRefutation.datum_localRelations_empty, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.datum_no_rank_highest, ZverykIdealRigidityRefutation.freeRepresentation_relations, ZverykIdealRigidityRefutation.generators_in_mixedSpan, ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives, ZverykIdealRigidityRefutation.localE, ZverykIdealRigidityRefutation.localF, ZverykIdealRigidityRefutation.localH, ZverykIdealRigidityRefutation.localQuotientMap, ZverykIdealRigidityRefutation.localQuotientMap_injective, ZverykIdealRigidityRefutation.localQuotientMap_surjective, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.mixedSpan, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.mode_mem_generators, ZverykIdealRigidityRefutation.negativeGenerator, ZverykIdealRigidityRefutation.not_rigid_of_survival, ZverykIdealRigidityRefutation.positiveGenerator, ZverykIdealRigidityRefutation.positive_singular, ZverykIdealRigidityRefutation.presentationIdeal_le_representation_kernel, ZverykIdealRigidityRefutation.presentedSingular, ZverykIdealRigidityRefutation.presentedSingular_ne_zero, ZverykIdealRigidityRefutation.presented_central_modes, ZverykIdealRigidityRefutation.presented_central_seed, ZverykIdealRigidityRefutation.presented_e_singular, ZverykIdealRigidityRefutation.presented_positive_seed, ZverykIdealRigidityRefutation.presented_positive_singular, ZverykIdealRigidityRefutation.presented_seed_zero_weight, ZverykIdealRigidityRefutation.presented_separating_weight, ZverykIdealRigidityRefutation.presented_singular_eigen, ZverykIdealRigidityRefutation.rankOne_in_span, ZverykIdealRigidityRefutation.representation, ZverykIdealRigidityRefutation.representation_singular_vacuum, ZverykIdealRigidityRefutation.result_of_survival, ZverykIdealRigidityRefutation.separating_cartan, ZverykIdealRigidityRefutation.separating_negative.
+rootHeight: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.datum_root_finite, VBKMPresentation.datum_simpleRoot_finite.
+simpleWeight: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.datum_simpleRoot_finite, VBKMPresentation.simple_weight_nonzero, VBKMPresentation.simple_weight_sublevel_finite.
+simple_weight_nonzero: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.datum_simpleRoot_finite.
+simple_weight_sublevel_finite: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.datum_simpleRoot_finite.
+datum_root_finite: proof_shape: content; frozen: none; escape_witness: VBKMPresentation.finite_nat_weight_fiber; consumers: VBKMPresentation.datum_enhanced.
+datum_simpleRoot_finite: proof_shape: content; frozen: none; escape_witness: VBKMPresentation.finite_nat_weight_fiber; consumers: VBKMPresentation.datum_enhanced.
+datum_no_positive: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.datum_enhanced.
+datum_symmetrizable: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.result_of_survival.
+datum_condition43: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.result_of_survival.
+datum_coroot_span: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.datum_enhanced.
+datum_enhanced: proof_shape: content; frozen: none; escape_witness: VBKMPresentation.finite_nat_weight_fiber; consumers: ZverykIdealRigidityRefutation.result_of_survival.
+presentationMap: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.pL_commute, VBKMPresentation.EnhancedCartanData.pL_zero, VBKMPresentation.EnhancedCartanData.pe_negative, VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.pf_positive, VBKMPresentation.EnhancedCartanData.ph_commute, VBKMPresentation.EnhancedCartanData.ph_pL, VBKMPresentation.EnhancedCartanData.ph_pe, VBKMPresentation.EnhancedCartanData.ph_pf, VBKMPresentation.EnhancedCartanData.presentation_generates, ZverykIdealRigidityRefutation.allGenerators_generate.
+relation_vanishes: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMPresentation.EnhancedCartanData.pL_commute, VBKMPresentation.EnhancedCartanData.pL_zero, VBKMPresentation.EnhancedCartanData.pe_negative, VBKMPresentation.EnhancedCartanData.pe_pf, VBKMPresentation.EnhancedCartanData.pf_positive, VBKMPresentation.EnhancedCartanData.ph_commute, VBKMPresentation.EnhancedCartanData.ph_pL, VBKMPresentation.EnhancedCartanData.ph_pe, VBKMPresentation.EnhancedCartanData.ph_pf.
+ph_commute: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.separating_cartan.
+ph_pe: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.local_sl2_relations.
+ph_pf: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.cartan_negative, ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.presented_central_seed, ZverykIdealRigidityRefutation.presented_seed_zero_weight, ZverykIdealRigidityRefutation.presented_singular_eigen, ZverykIdealRigidityRefutation.separating_negative.
+pe_pf: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.presented_e_singular.
+ph_pL: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.cartan_negative, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.presented_central_modes, ZverykIdealRigidityRefutation.presented_e_singular, ZverykIdealRigidityRefutation.presented_singular_eigen, ZverykIdealRigidityRefutation.separating_negative.
+pL_commute: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.presented_e_singular, ZverykIdealRigidityRefutation.presented_positive_singular.
+pL_zero: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.mode_mem_generators, ZverykIdealRigidityRefutation.presented_seed_zero_weight.
+pe_negative: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.presented_e_singular.
+pf_positive: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.presented_positive_seed.
+presentation_generates: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.allGenerators_generate.
 -/
 
 
-import Mathlib.Data.Finsupp.Weight
 import Mathlib.Data.Finsupp.Interval
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Common
 import Mathlib.Algebra.Lie.Free
-import Mathlib.Algebra.Lie.Quotient
 import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Data.PNat.Basic
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.Algebra.Lie.Sl2
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.Ideal
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.LinearAlgebra.Eigenspace.Basic
 
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 1000000
@@ -425,34 +474,25 @@ private theorem relation_vanishes (F : EnhancedCartanData I J H V) (z : (FreeLie
     (hz : z ∈ presentationRelations F) : presentationMap F z = 0 :=
   (Submodule.Quotient.mk_eq_zero _).mpr (LieSubmodule.subset_lieSpan hz)
 
-@[simp] theorem presentationMap_h (F : EnhancedCartanData I J H V) (a : H) :
-    presentationMap F (h a) = ph F a := rfl
-@[simp] theorem presentationMap_e (F : EnhancedCartanData I J H V) (i : I) :
-    presentationMap F (e i) = pe F i := rfl
-@[simp] theorem presentationMap_f (F : EnhancedCartanData I J H V) (i : I) :
-    presentationMap F (f i) = pf F i := rfl
-@[simp] theorem presentationMap_L (F : EnhancedCartanData I J H V) (j : J) (n : ℤ) :
-    presentationMap F (L j n) = pL F j n := rfl
-
 theorem ph_commute (F : EnhancedCartanData I J H V) (a b : H) :
     ⁅ph F a,ph F b⁆ = 0 := by
   have hz := relation_vanishes F ⁅h a,h b⁆ (by
     right; right; left; exact ⟨a,b,rfl⟩)
-  simpa only [LieHom.map_lie,presentationMap_h] using hz
+  simpa only [LieHom.map_lie] using hz
 
 theorem ph_pe (F : EnhancedCartanData I J H V) (a : H) (i : I) :
     ⁅ph F a,pe F i⁆ = F.pairing a (F.root i) • pe F i := by
   apply sub_eq_zero.mp
   have hz := relation_vanishes F (⁅h a,e i⁆ - F.pairing a (F.root i) • e i) (by
     right; right; right; left; exact ⟨a,i,rfl⟩)
-  simpa only [map_sub,map_smul,LieHom.map_lie,presentationMap_h,presentationMap_e] using hz
+  simpa only [map_sub,map_smul,LieHom.map_lie] using hz
 
 theorem ph_pf (F : EnhancedCartanData I J H V) (a : H) (i : I) :
     ⁅ph F a,pf F i⁆ = -(F.pairing a (F.root i) • pf F i) := by
   apply eq_neg_iff_add_eq_zero.mpr
   have hz := relation_vanishes F (⁅h a,f i⁆ + F.pairing a (F.root i) • f i) (by
     right; right; right; right; left; exact ⟨a,i,rfl⟩)
-  simpa only [map_add,map_smul,LieHom.map_lie,presentationMap_h,presentationMap_f] using hz
+  simpa only [map_add,map_smul,LieHom.map_lie] using hz
 
 theorem pe_pf (F : EnhancedCartanData I J H V) (i k : I) :
     ⁅pe F i,pf F k⁆ = if i=k then ph F (F.coroot i) else 0 := by
@@ -461,8 +501,7 @@ theorem pe_pf (F : EnhancedCartanData I J H V) (i k : I) :
   have hz := relation_vanishes F (⁅e i,f k⁆ - if i=k then h (F.coroot i) else 0) (by
     right; right; right; right; right; left; exact ⟨i,k,rfl⟩)
   classical
-  simpa only [map_sub,apply_ite,map_zero,LieHom.map_lie,presentationMap_h,
-    presentationMap_e,presentationMap_f] using hz
+  simpa only [map_sub,apply_ite,map_zero,LieHom.map_lie] using hz
 
 theorem ph_pL (F : EnhancedCartanData I J H V) (a : H) (j : J) (n : ℤ) :
     ⁅ph F a,pL F j n⁆ = ((n : ℂ) * F.pairing a (F.virRoot j)) • pL F j n := by
@@ -470,7 +509,7 @@ theorem ph_pL (F : EnhancedCartanData I J H V) (a : H) (j : J) (n : ℤ) :
   have hz := relation_vanishes F
     (⁅h a,L j n⁆ - ((n : ℂ)*F.pairing a (F.virRoot j)) • L j n) (by
     right; right; right; right; right; right; left; exact ⟨a,j,n,rfl⟩)
-  simpa only [map_sub,map_smul,LieHom.map_lie,presentationMap_h,presentationMap_L] using hz
+  simpa only [map_sub,map_smul,LieHom.map_lie] using hz
 
 theorem pL_commute (F : EnhancedCartanData I J H V) (j : J) (n m : ℤ) :
     ⁅pL F j n,pL F j m⁆ = ((n-m : ℤ) : ℂ) • pL F j (n+m) +
@@ -481,8 +520,7 @@ theorem pL_commute (F : EnhancedCartanData I J H V) (j : J) (n m : ℤ) :
     right; right; right; right; right; right; right; left; exact ⟨j,n,m,rfl⟩)
   have hh : (⁅pL F j n,pL F j m⁆ - ((n-m : ℤ) : ℂ) • pL F j (n+m)) -
       (if n = -m then ((n^3-n : ℤ) : ℂ) • ph F (F.central j) else 0) = 0 := by
-    simpa only [map_sub,map_smul,apply_ite,map_zero,LieHom.map_lie,presentationMap_h,
-      presentationMap_L] using hz
+    simpa only [map_sub,map_smul,apply_ite,map_zero,LieHom.map_lie] using hz
   exact (sub_eq_iff_eq_add.mp (sub_eq_zero.mp hh)).trans (add_comm _ _)
 
 theorem pL_zero (F : EnhancedCartanData I J H V) (j : J) :
@@ -490,21 +528,21 @@ theorem pL_zero (F : EnhancedCartanData I J H V) (j : J) :
   apply sub_eq_zero.mp
   have hz := relation_vanishes F (L j 0 - h (F.degree j)) (by
     right; right; right; right; right; right; right; right; left; exact ⟨j,rfl⟩)
-  simpa only [map_sub,presentationMap_h,presentationMap_L] using hz
+  simpa only [map_sub] using hz
 
 theorem pe_negative (F : EnhancedCartanData I J H V) (i : I) (j : J) (n : ℤ)
     (hn : n < 0) : ⁅pe F i,pL F j n⁆ = 0 := by
   have hz := relation_vanishes F ⁅e i,L j n⁆ (by
     right; right; right; right; right; right; right; right; right; right; left
     exact ⟨i,j,n,hn,rfl⟩)
-  simpa only [LieHom.map_lie,presentationMap_e,presentationMap_L] using hz
+  simpa only [LieHom.map_lie] using hz
 
 theorem pf_positive (F : EnhancedCartanData I J H V) (i : I) (j : J) (n : ℤ)
     (hn : 0 < n) : ⁅pf F i,pL F j n⁆ = 0 := by
   have hz := relation_vanishes F ⁅f i,L j n⁆ (by
     right; right; right; right; right; right; right; right; right; right; right
     exact ⟨i,j,n,hn,rfl⟩)
-  simpa only [LieHom.map_lie,presentationMap_f,presentationMap_L] using hz
+  simpa only [LieHom.map_lie] using hz
 
 theorem presentation_generates (F : EnhancedCartanData I J H V)
     (G : Set (Presented F))

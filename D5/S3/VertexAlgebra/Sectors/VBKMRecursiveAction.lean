@@ -8,30 +8,87 @@
 
 /-
 admission_basis: escape-witness
-proof_shape: ASSUMED-UNVERIFIED until the port is compiled and classified.
-escape_witness: ASSUMED-UNVERIFIED until the port is compiled and classified.
-Direct frozen dependencies: none.
+escape_witness: D5.S3.VertexAlgebra.Sectors.VBKMRecursiveAction.modePreserves
+Direct frozen dependencies: none; all D5 prerequisites are in this delivery.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339
+Definitions are labelled bind-only as encodings, not as proofs of new propositions.
+Declarations (consumer names are qualified by their owning module):
+left_basis: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartan_left, VBKMRecursiveAction.lowering_relation_mem, VBKMRecursiveAction.mode_positive_left, VBKMRecursiveAction.mode_relation_zero, VBKMRecursiveAction.qwordVector, VBKMRecursiveAction.raising_left, ZverykIdealRigidityRefutation.representation_singular_vacuum.
+relation: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartanPreserves, VBKMRecursiveAction.cartan_relation, VBKMRecursiveAction.leftPreserves, VBKMRecursiveAction.lowering_relation_mem, VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.mode_relation_zero, VBKMRecursiveAction.raisingPreserves, VBKMRecursiveAction.raising_relation_mem, VBKMRecursiveAction.relation_mem, VBKMRecursiveAction.relations, ZverykIdealRigidityRefutation.N_le_kernel, ZverykIdealRigidityRefutation.evaluation_relation.
+relations: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.N, VBKMRecursiveAction.cartanPreserves, VBKMRecursiveAction.leftPreserves, VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.raisingPreserves, VBKMRecursiveAction.relation_mem, ZverykIdealRigidityRefutation.N_le_kernel.
+N: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartanPreserves, VBKMRecursiveAction.central_left, VBKMRecursiveAction.leftPreserves, VBKMRecursiveAction.lowering_relation_mem, VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.modeProjected, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.mode_relation_zero, VBKMRecursiveAction.qcartan, VBKMRecursiveAction.qcartan_add, VBKMRecursiveAction.qcartan_commute, VBKMRecursiveAction.qcartan_left, VBKMRecursiveAction.qcartan_mode, VBKMRecursiveAction.qcartan_project, VBKMRecursiveAction.qcartan_qleft, VBKMRecursiveAction.qcartan_qraising, VBKMRecursiveAction.qcartan_smul, VBKMRecursiveAction.qleft, VBKMRecursiveAction.qleft_bracket, VBKMRecursiveAction.qleft_project, VBKMRecursiveAction.qmode, VBKMRecursiveAction.qmode_central_bracket, VBKMRecursiveAction.qmode_mixed, VBKMRecursiveAction.qmode_negative, VBKMRecursiveAction.qmode_positive_brackets, VBKMRecursiveAction.qmode_positive_root, VBKMRecursiveAction.qmode_positive_vacuum, VBKMRecursiveAction.qmode_virasoro, VBKMRecursiveAction.qmode_zero, VBKMRecursiveAction.qmode_zero_bracket, VBKMRecursiveAction.qraising, VBKMRecursiveAction.qraising_negative, VBKMRecursiveAction.qraising_qleft, VBKMRecursiveAction.qvacuum, VBKMRecursiveAction.qwordVector, VBKMRecursiveAction.qword_span, VBKMRecursiveAction.raisingPreserves, VBKMRecursiveAction.raising_relation_mem, ZverykIdealRigidityRefutation.freeRepresentation, ZverykIdealRigidityRefutation.freeRepresentation_L, ZverykIdealRigidityRefutation.freeRepresentation_e, ZverykIdealRigidityRefutation.freeRepresentation_f, ZverykIdealRigidityRefutation.freeRepresentation_h, ZverykIdealRigidityRefutation.freeRepresentation_relations, ZverykIdealRigidityRefutation.presentationIdeal_le_representation_kernel, ZverykIdealRigidityRefutation.presentedSingular_ne_zero, ZverykIdealRigidityRefutation.representation, ZverykIdealRigidityRefutation.representationGenerator, ZverykIdealRigidityRefutation.representation_singular_vacuum, ZverykIdealRigidityRefutation.singular_not_mem.
+relation_mem: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartanPreserves, VBKMRecursiveAction.leftPreserves, VBKMRecursiveAction.lowering_relation_mem, VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.raisingPreserves.
+leftPreserves: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartanPreserves, VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.qleft, VBKMRecursiveAction.raisingPreserves.
+tokenWeight: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartanPreserves, VBKMRecursiveAction.cartan_left, VBKMRecursiveAction.cartan_raising, VBKMRecursiveAction.cartan_relation, VBKMRecursiveAction.central_left, VBKMRecursiveAction.modeWord_eigen, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.mode_zero, VBKMRecursiveAction.qcartan_left, VBKMRecursiveAction.qcartan_qleft, VBKMRecursiveAction.qcartan_qraising, VBKMRecursiveAction.raisingWord_eigen, VBKMRecursiveAction.wordWeight, VBKMRecursiveAction.wordWeight_add, VBKMRecursiveAction.wordWeight_smul, ZverykIdealRigidityRefutation.freeRepresentation_relations.
+wordWeight: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartan, VBKMRecursiveAction.cartanPreserves, VBKMRecursiveAction.cartan_add, VBKMRecursiveAction.cartan_basis, VBKMRecursiveAction.cartan_commute, VBKMRecursiveAction.cartan_left, VBKMRecursiveAction.cartan_mode, VBKMRecursiveAction.cartan_raising, VBKMRecursiveAction.cartan_relation, VBKMRecursiveAction.cartan_smul, VBKMRecursiveAction.modeWord_eigen, VBKMRecursiveAction.mode_positive_left, VBKMRecursiveAction.mode_zero, VBKMRecursiveAction.raisingWord_eigen, VBKMRecursiveAction.wordWeight_add, VBKMRecursiveAction.wordWeight_smul.
+cartan: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartanPreserves, VBKMRecursiveAction.cartan_add, VBKMRecursiveAction.cartan_basis, VBKMRecursiveAction.cartan_commute, VBKMRecursiveAction.cartan_left, VBKMRecursiveAction.cartan_mode, VBKMRecursiveAction.cartan_raising, VBKMRecursiveAction.cartan_relation, VBKMRecursiveAction.cartan_smul, VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.modeWord, VBKMRecursiveAction.modeWord_eigen, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.mode_negative, VBKMRecursiveAction.mode_positive_left, VBKMRecursiveAction.mode_zero, VBKMRecursiveAction.qcartan, VBKMRecursiveAction.qcartan_add, VBKMRecursiveAction.qcartan_commute, VBKMRecursiveAction.qcartan_left, VBKMRecursiveAction.qcartan_mode, VBKMRecursiveAction.qcartan_qleft, VBKMRecursiveAction.qcartan_qraising, VBKMRecursiveAction.qcartan_smul, VBKMRecursiveAction.qmode_mixed, VBKMRecursiveAction.qmode_positive_root, VBKMRecursiveAction.qmode_zero, VBKMRecursiveAction.qraising_qleft, VBKMRecursiveAction.raisingPreserves, VBKMRecursiveAction.raisingWord, VBKMRecursiveAction.raisingWord_eigen, VBKMRecursiveAction.raising_left.
+cartan_basis: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartan_add, VBKMRecursiveAction.cartan_commute, VBKMRecursiveAction.cartan_left, VBKMRecursiveAction.cartan_mode, VBKMRecursiveAction.cartan_raising, VBKMRecursiveAction.cartan_relation, VBKMRecursiveAction.cartan_smul, VBKMRecursiveAction.modeWord_eigen, VBKMRecursiveAction.mode_positive_left, VBKMRecursiveAction.raisingWord_eigen.
+raisingWord: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartan_raising, VBKMRecursiveAction.raising, VBKMRecursiveAction.raisingWord_eigen, VBKMRecursiveAction.raising_basis, VBKMRecursiveAction.raising_left, VBKMRecursiveAction.raising_mode_commute, VBKMRecursiveAction.raising_relation_mem.
+raising: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartan_raising, VBKMRecursiveAction.qcartan_qraising, VBKMRecursiveAction.qraising, VBKMRecursiveAction.qraising_qleft, VBKMRecursiveAction.raisingPreserves, VBKMRecursiveAction.raising_basis, VBKMRecursiveAction.raising_left, VBKMRecursiveAction.raising_mode_commute, VBKMRecursiveAction.raising_relation_mem.
+raising_basis: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartan_raising, VBKMRecursiveAction.raising_left, VBKMRecursiveAction.raising_relation_mem.
+raising_mode_commute: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.raising_left.
+cartan_left: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartanPreserves, VBKMRecursiveAction.modeWord_eigen, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.qcartan_left, VBKMRecursiveAction.qcartan_qleft, VBKMRecursiveAction.raisingWord_eigen.
+cartan_relation: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartanPreserves.
+prepend_cons: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartanPreserves, VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.raisingPreserves.
+cartanPreserves: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.qcartan, VBKMRecursiveAction.raisingPreserves.
+lowering_relation_mem: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qleft_bracket, VBKMRecursiveAction.raising_relation_mem.
+raising_left: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qraising_qleft, VBKMRecursiveAction.raisingPreserves.
+raising_relation_mem: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.raisingPreserves.
+raisingPreserves: proof_shape: content; frozen: none; escape_witness: VBKMRecursiveAction.raisingPreserves; consumers: VBKMRecursiveAction.qraising.
+negativeIndex_val: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.modeWord_eigen, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.qmode_negative, VBKMRecursiveAction.qraising_negative.
+degree: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.modeWord, VBKMRecursiveAction.modeWord_eigen, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.mode_negative, VBKMRecursiveAction.mode_positive_left, VBKMRecursiveAction.mode_zero, VBKMRecursiveAction.qmode_zero, VBKMRecursiveAction.qmode_zero_bracket, ZverykIdealRigidityRefutation.freeRepresentation_relations.
+central: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.central_left, VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.modeWord, VBKMRecursiveAction.modeWord_eigen, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.mode_negative, VBKMRecursiveAction.mode_positive_left, VBKMRecursiveAction.mode_relation_zero, VBKMRecursiveAction.mode_zero, VBKMRecursiveAction.qmode_central_bracket, VBKMRecursiveAction.qmode_mixed, VBKMRecursiveAction.qmode_positive_brackets, VBKMRecursiveAction.qmode_positive_root, VBKMRecursiveAction.qmode_virasoro, ZverykIdealRigidityRefutation.freeRepresentation_relations.
+modeWord: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartan_mode, VBKMRecursiveAction.mode, VBKMRecursiveAction.modeWord_eigen, VBKMRecursiveAction.mode_basis, VBKMRecursiveAction.mode_negative, VBKMRecursiveAction.mode_positive_left, VBKMRecursiveAction.mode_zero, VBKMRecursiveAction.qmode_positive_vacuum.
+mode: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartan_mode, VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.modeProjected, VBKMRecursiveAction.mode_basis, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.mode_negative, VBKMRecursiveAction.mode_positive_left, VBKMRecursiveAction.mode_zero, VBKMRecursiveAction.qcartan_mode, VBKMRecursiveAction.qmode, VBKMRecursiveAction.qmode_mixed, VBKMRecursiveAction.qmode_negative, VBKMRecursiveAction.qmode_positive_root, VBKMRecursiveAction.qmode_positive_vacuum, VBKMRecursiveAction.qmode_zero.
+mode_basis: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartan_mode, VBKMRecursiveAction.mode_positive_left, VBKMRecursiveAction.qmode_positive_vacuum.
+mode_negative: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.qmode_negative.
+mode_zero: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.qmode_zero.
+mode_positive_left: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.qmode_positive_root.
+qleft: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.central_left, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.mode_relation_zero, VBKMRecursiveAction.qcartan_left, VBKMRecursiveAction.qcartan_qleft, VBKMRecursiveAction.qleft_bracket, VBKMRecursiveAction.qleft_project, VBKMRecursiveAction.qmode_mixed, VBKMRecursiveAction.qmode_negative, VBKMRecursiveAction.qmode_positive_brackets, VBKMRecursiveAction.qmode_positive_root, VBKMRecursiveAction.qmode_virasoro, VBKMRecursiveAction.qraising_negative, VBKMRecursiveAction.qraising_qleft, VBKMRecursiveAction.qwordVector, VBKMRecursiveAction.qword_span, ZverykIdealRigidityRefutation.freeRepresentation_relations, ZverykIdealRigidityRefutation.representationGenerator, ZverykIdealRigidityRefutation.representation_singular_vacuum.
+qcartan: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.central_left, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.mode_relation_zero, VBKMRecursiveAction.qcartan_add, VBKMRecursiveAction.qcartan_commute, VBKMRecursiveAction.qcartan_left, VBKMRecursiveAction.qcartan_mode, VBKMRecursiveAction.qcartan_project, VBKMRecursiveAction.qcartan_qleft, VBKMRecursiveAction.qcartan_qraising, VBKMRecursiveAction.qcartan_smul, VBKMRecursiveAction.qmode_central_bracket, VBKMRecursiveAction.qmode_mixed, VBKMRecursiveAction.qmode_positive_brackets, VBKMRecursiveAction.qmode_virasoro, VBKMRecursiveAction.qmode_zero, VBKMRecursiveAction.qmode_zero_bracket, VBKMRecursiveAction.qraising_negative, VBKMRecursiveAction.qraising_qleft, ZverykIdealRigidityRefutation.freeRepresentation_relations, ZverykIdealRigidityRefutation.representationGenerator.
+modeProjected: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.modePreserves, VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.mode_relation_zero, VBKMRecursiveAction.qmode_mixed.
+qleft_project: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qwordVector.
+qcartan_project: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qcartan_left.
+qleft_bracket: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.mode_mixed, VBKMRecursiveAction.mode_relation_zero.
+qcartan_left: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.central_left.
+central_left: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.mode_relation_zero.
+mode_mixed: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.mode_relation_zero, VBKMRecursiveAction.qmode_mixed.
+mode_relation_zero: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.modePreserves.
+modePreserves: proof_shape: content; frozen: none; escape_witness: VBKMRecursiveAction.modePreserves; consumers: VBKMRecursiveAction.qmode.
+modeWord_eigen: proof_shape: content; frozen: none; escape_witness: VBKMRecursiveAction.modeWord_eigen; consumers: VBKMRecursiveAction.cartan_mode.
+raisingWord_eigen: proof_shape: content; frozen: none; escape_witness: VBKMRecursiveAction.raisingWord_eigen; consumers: VBKMRecursiveAction.cartan_raising.
+cartan_mode: proof_shape: content; frozen: none; escape_witness: VBKMRecursiveAction.modeWord_eigen; consumers: VBKMRecursiveAction.qcartan_mode.
+qmode: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qcartan_mode, VBKMRecursiveAction.qmode_central_bracket, VBKMRecursiveAction.qmode_mixed, VBKMRecursiveAction.qmode_negative, VBKMRecursiveAction.qmode_positive_brackets, VBKMRecursiveAction.qmode_positive_root, VBKMRecursiveAction.qmode_positive_vacuum, VBKMRecursiveAction.qmode_virasoro, VBKMRecursiveAction.qmode_zero, VBKMRecursiveAction.qmode_zero_bracket, VBKMRecursiveAction.qraising_negative, ZverykIdealRigidityRefutation.freeRepresentation_relations, ZverykIdealRigidityRefutation.representationGenerator, ZverykIdealRigidityRefutation.representation_singular_vacuum.
+qcartan_mode: proof_shape: content; frozen: none; escape_witness: VBKMRecursiveAction.modeWord_eigen; consumers: VBKMRecursiveAction.qmode_central_bracket, VBKMRecursiveAction.qmode_zero_bracket, ZverykIdealRigidityRefutation.freeRepresentation_relations.
+qmode_mixed: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qmode_positive_brackets, VBKMRecursiveAction.qmode_virasoro.
+qmode_negative: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qmode_positive_brackets, VBKMRecursiveAction.qmode_virasoro, VBKMRecursiveAction.qraising_negative, ZverykIdealRigidityRefutation.representation_singular_vacuum.
+qmode_zero: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qmode_zero_bracket, ZverykIdealRigidityRefutation.freeRepresentation_relations.
+qmode_zero_bracket: proof_shape: content; frozen: none; escape_witness: VBKMRecursiveAction.modeWord_eigen; consumers: VBKMRecursiveAction.qmode_positive_brackets, VBKMRecursiveAction.qmode_virasoro.
+qmode_central_bracket: proof_shape: content; frozen: none; escape_witness: VBKMRecursiveAction.modeWord_eigen; consumers: VBKMRecursiveAction.qmode_positive_brackets.
+qmode_positive_root: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qmode_positive_brackets, ZverykIdealRigidityRefutation.freeRepresentation_relations.
+qvacuum: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qmode_positive_brackets, VBKMRecursiveAction.qmode_positive_vacuum, VBKMRecursiveAction.qwordVector, VBKMRecursiveAction.qword_span, ZverykIdealRigidityRefutation.presentedSingular_ne_zero, ZverykIdealRigidityRefutation.representation_singular_vacuum.
+qmode_positive_vacuum: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qmode_positive_brackets.
+qwordVector: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qword_span.
+qword_span: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qmode_positive_brackets.
+qmode_positive_brackets: proof_shape: content; frozen: none; escape_witness: VBKMVirasoroBootstrap.positive_brackets_from_mixed; consumers: VBKMRecursiveAction.qmode_virasoro.
+qmode_virasoro: proof_shape: content; frozen: none; escape_witness: VBKMVirasoroBootstrap.positive_brackets_from_mixed; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations.
+wordWeight_add: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartan_add.
+wordWeight_smul: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.cartan_smul.
+cartan_add: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qcartan_add.
+cartan_smul: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qcartan_smul.
+cartan_commute: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qcartan_commute.
+cartan_raising: proof_shape: content; frozen: none; escape_witness: VBKMRecursiveAction.raisingWord_eigen; consumers: VBKMRecursiveAction.qcartan_qraising.
+qraising: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qcartan_qraising, VBKMRecursiveAction.qraising_negative, VBKMRecursiveAction.qraising_qleft, ZverykIdealRigidityRefutation.freeRepresentation_relations, ZverykIdealRigidityRefutation.representationGenerator.
+qcartan_add: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations.
+qcartan_smul: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations.
+qcartan_commute: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations.
+qcartan_qleft: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations.
+qcartan_qraising: proof_shape: content; frozen: none; escape_witness: VBKMRecursiveAction.raisingWord_eigen; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations.
+qraising_qleft: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMRecursiveAction.qraising_negative, ZverykIdealRigidityRefutation.freeRepresentation_relations.
+qraising_negative: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations.
 -/
 
 import D5.S3.VertexAlgebra.Sectors.VBKMVirasoroBootstrap
-import Mathlib.Data.Finsupp.Weight
-import Mathlib.Data.Finsupp.Interval
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Common
-import Mathlib.Algebra.Lie.Free
-import Mathlib.Algebra.Lie.Quotient
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Data.PNat.Basic
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.Algebra.Lie.Sl2
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.Ideal
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.LinearAlgebra.Eigenspace.Basic
 
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 1000000
@@ -41,40 +98,32 @@ universe u v
 namespace D5.S3.VertexAlgebra.Sectors.VBKMRecursiveAction
 
 
-noncomputable def basisWord (w : (List (Bool ⊕ ℕ+))) : ((List (Bool ⊕ ℕ+)) →₀ ℂ) := Finsupp.single w 1
-
-noncomputable def left (g : (Bool ⊕ ℕ+)) : ((List (Bool ⊕ ℕ+)) →₀ ℂ) →ₗ[ℂ] ((List (Bool ⊕ ℕ+)) →₀ ℂ) :=
-  Finsupp.lmapDomain ℂ ℂ (List.cons g)
-
 theorem left_basis (g : (Bool ⊕ ℕ+)) (w : (List (Bool ⊕ ℕ+))) :
-    left g (basisWord w) = basisWord (g::w) := by
-  simp [left,basisWord]
-
-noncomputable def prepend (u : (List (Bool ⊕ ℕ+))) : ((List (Bool ⊕ ℕ+)) →₀ ℂ) →ₗ[ℂ] ((List (Bool ⊕ ℕ+)) →₀ ℂ) :=
-  Finsupp.lmapDomain ℂ ℂ (u ++ ·)
+    (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w) = (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) (g::w) := by
+  simp
 
 noncomputable def relation (r s : ℕ+) (v : (List (Bool ⊕ ℕ+))) : ((List (Bool ⊕ ℕ+)) →₀ ℂ) :=
-  basisWord (.inr r :: .inr s :: v) - basisWord (.inr s :: .inr r :: v) -
-    ((s.val : ℂ) - (r.val : ℂ)) • basisWord (.inr (r+s) :: v)
+  (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) (.inr r :: .inr s :: v) - (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) (.inr s :: .inr r :: v) -
+    ((s.val : ℂ) - (r.val : ℂ)) • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) (.inr (r+s) :: v)
 
 noncomputable def relations : Set ((List (Bool ⊕ ℕ+)) →₀ ℂ) :=
-  {x | ∃ (u v : (List (Bool ⊕ ℕ+))) (r s : ℕ+), x = prepend u (relation r s v)}
+  {x | ∃ (u v : (List (Bool ⊕ ℕ+))) (r s : ℕ+), x = (fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) u (relation r s v)}
 
 noncomputable def N : Submodule ℂ ((List (Bool ⊕ ℕ+)) →₀ ℂ) := Submodule.span ℂ relations
 
 private theorem relation_mem (r s : ℕ+) (u v : (List (Bool ⊕ ℕ+))) :
-    prepend u (relation r s v) ∈ N := by
+    (fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) u (relation r s v) ∈ N := by
   exact Submodule.subset_span ⟨u,v,r,s,rfl⟩
 
-theorem leftPreserves (g : (Bool ⊕ ℕ+)) {x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)} (hx : x ∈ N) : left g x ∈ N := by
+theorem leftPreserves (g : (Bool ⊕ ℕ+)) {x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)} (hx : x ∈ N) : (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g x ∈ N := by
   induction hx using Submodule.span_induction with
   | mem y hy =>
     obtain ⟨u,v,r,s,rfl⟩ := hy
-    have hp : (left g).comp (prepend u) = prepend (g::u) := by
+    have hp : ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g).comp ((fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) u) = (fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) (g::u) := by
       apply Finsupp.lhom_ext
       intro w c
-      simp [LinearMap.comp_apply,left,prepend,Finsupp.lmapDomain_apply]
-    change ((left g).comp (prepend u)) (relation r s v) ∈ N
+      simp [LinearMap.comp_apply,Finsupp.lmapDomain_apply]
+    change (((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g).comp ((fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) u)) (relation r s v) ∈ N
     rw [hp]
     exact relation_mem r s (g::u) v
   | zero => simp
@@ -91,40 +140,40 @@ noncomputable def wordWeight (a : ℂ × ℂ) (w : (List (Bool ⊕ ℕ+))) : ℂ
   (w.map (tokenWeight a)).sum
 
 noncomputable def cartan (a : ℂ × ℂ) : ((List (Bool ⊕ ℕ+)) →₀ ℂ) →ₗ[ℂ] ((List (Bool ⊕ ℕ+)) →₀ ℂ) :=
-  Finsupp.linearCombination ℂ (fun w => wordWeight a w • basisWord w)
+  Finsupp.linearCombination ℂ (fun w => wordWeight a w • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w)
 
 private theorem cartan_basis (a : ℂ × ℂ) (w : (List (Bool ⊕ ℕ+))) :
-    cartan a (basisWord w) = wordWeight a w • basisWord w := by
-  simp [cartan,basisWord]
+    cartan a ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w) = wordWeight a w • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by
+  simp [cartan]
 
 noncomputable def raisingWord (i : Bool) : (List (Bool ⊕ ℕ+)) → ((List (Bool ⊕ ℕ+)) →₀ ℂ)
   | [] => 0
-  | .inl k :: w => left (.inl k) (raisingWord i w) +
-      if i=k then cartan (if i then (1,0) else (0,1)) (basisWord w) else 0
-  | .inr r :: w => left (.inr r) (raisingWord i w)
+  | .inl k :: w => (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inl k) (raisingWord i w) +
+      if i=k then cartan (if i then (1,0) else (0,1)) ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w) else 0
+  | .inr r :: w => (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) (raisingWord i w)
 
 noncomputable def raising (i : Bool) : ((List (Bool ⊕ ℕ+)) →₀ ℂ) →ₗ[ℂ] ((List (Bool ⊕ ℕ+)) →₀ ℂ) :=
   Finsupp.linearCombination ℂ (raisingWord i)
 
 private theorem raising_basis (i : Bool) (w : (List (Bool ⊕ ℕ+))) :
-    raising i (basisWord w) = raisingWord i w := by
-  simp [raising,basisWord]
+    raising i ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w) = raisingWord i w := by
+  simp [raising]
 
 private theorem raising_mode_commute (i : Bool) (r : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
-    raising i (left (.inr r) x) = left (.inr r) (raising i x) := by
+    raising i ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x) = (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) (raising i x) := by
   induction x using Finsupp.induction_linear with
   | zero => simp
   | single w c =>
-    simp [left, raising, basisWord, raisingWord, Finsupp.linearCombination_apply]
+    simp [ raising, raisingWord, Finsupp.linearCombination_apply]
   | add x y hx hy => simp only [map_add,hx,hy]
 
 
 private theorem cartan_left (a : ℂ × ℂ) (g : (Bool ⊕ ℕ+)) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
-    cartan a (left g x) = left g (cartan a x) + tokenWeight a g • left g x := by
-  have hh : (cartan a).comp (left g) = (left g).comp (cartan a) + tokenWeight a g • left g := by
+    cartan a ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g x) = (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g (cartan a x) + tokenWeight a g • (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g x := by
+  have hh : (cartan a).comp ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g) = ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g).comp (cartan a) + tokenWeight a g • (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g := by
     apply Finsupp.lhom_ext
     intro w c
-    have hs : Finsupp.single w c = c • basisWord w := by simp [basisWord]
+    have hs : Finsupp.single w c = c • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by simp
     simp only [LinearMap.comp_apply,LinearMap.add_apply,LinearMap.smul_apply,hs,
       map_smul,left_basis,cartan_basis]
     simp only [wordWeight,List.map_cons,List.sum_cons]
@@ -135,16 +184,16 @@ private theorem cartan_relation (a : ℂ × ℂ) (r s : ℕ+) (v : (List (Bool �
     cartan a (relation r s v) =
       (tokenWeight a (.inr r) + tokenWeight a (.inr s) + wordWeight a v) • relation r s v := by
   simp only [relation,map_sub,map_smul,cartan_basis]
-  simp [wordWeight,tokenWeight,PNat.add_coe,Nat.cast_add]
+  simp only [wordWeight,tokenWeight,List.map_cons,List.sum_cons,PNat.add_coe,Nat.cast_add]
   module
 
 private theorem prepend_cons (g : (Bool ⊕ ℕ+)) (u : (List (Bool ⊕ ℕ+))) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
-    prepend (g::u) x = left g (prepend u x) := by
-  suffices prepend (g::u) = (left g).comp (prepend u) by
+    (fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) (g::u) x = (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g ((fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) u x) := by
+  suffices (fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) (g::u) = ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g).comp ((fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) u) by
     exact congrArg (fun f : ((List (Bool ⊕ ℕ+)) →₀ ℂ) →ₗ[ℂ] ((List (Bool ⊕ ℕ+)) →₀ ℂ) => f x) this
   apply Finsupp.lhom_ext
   intro w c
-  simp [prepend,left]
+  simp
 
 theorem cartanPreserves (a : ℂ × ℂ) {x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)} (hx : x ∈ N) : cartan a x ∈ N := by
   induction hx using Submodule.span_induction with
@@ -152,12 +201,10 @@ theorem cartanPreserves (a : ℂ × ℂ) {x : ((List (Bool ⊕ ℕ+)) →₀ ℂ
     obtain ⟨u,v,r,s,rfl⟩ := hy
     induction u with
     | nil =>
-      have hp : prepend [] = LinearMap.id := by
-        apply Finsupp.lhom_ext
-        intro w c
-        simp [prepend]
+      have hp : (fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) [] = LinearMap.id := by
+        exact Finsupp.lmapDomain_id ℂ ℂ
       rw [hp,LinearMap.id_apply,cartan_relation]
-      exact Submodule.smul_mem _ _ (by simpa [prepend] using relation_mem r s [] v)
+      exact Submodule.smul_mem _ _ (by simpa  using relation_mem r s [] v)
     | cons g u ih =>
       rw [prepend_cons,cartan_left]
       exact Submodule.add_mem _ (leftPreserves g ih)
@@ -167,15 +214,15 @@ theorem cartanPreserves (a : ℂ × ℂ) {x : ((List (Bool ⊕ ℕ+)) →₀ ℂ
   | smul c y hy ih => simpa only [map_smul] using Submodule.smul_mem N c ih
 
 private theorem lowering_relation_mem (r s : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
-    left (.inr r) (left (.inr s) x) - left (.inr s) (left (.inr r) x) -
-      ((s.val : ℂ) - (r.val : ℂ)) • left (.inr (r+s)) x ∈ N := by
+    (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr s) x) - (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr s) ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x) -
+      ((s.val : ℂ) - (r.val : ℂ)) • (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr (r+s)) x ∈ N := by
   induction x using Finsupp.induction_linear with
   | zero => simp
   | single w c =>
-    have hs : Finsupp.single w c = c • basisWord w := by simp [basisWord]
+    have hs : Finsupp.single w c = c • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by simp
     rw [hs]
     simp only [map_smul,left_basis]
-    have hx : relation r s w ∈ N := by simpa [prepend] using relation_mem r s [] w
+    have hx : relation r s w ∈ N := by simpa  using relation_mem r s [] w
     convert N.smul_mem c hx using 1
     simp only [relation,smul_sub,smul_smul]
     module
@@ -184,7 +231,7 @@ private theorem lowering_relation_mem (r s : ℕ+) (x : ((List (Bool ⊕ ℕ+)) 
     convert hz using 1 <;> simp only [map_add,smul_add] <;> module
 
 private theorem raising_left (i : Bool) (g : (Bool ⊕ ℕ+)) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
-    raising i (left g x) = left g (raising i x) +
+    raising i ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g x) = (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g (raising i x) +
       match g with
       | .inl k => if i=k then cartan (if i then (1,0) else (0,1)) x else 0
       | .inr _ => 0 := by
@@ -192,11 +239,11 @@ private theorem raising_left (i : Bool) (g : (Bool ⊕ ℕ+)) (x : ((List (Bool 
   | inr r => simpa using raising_mode_commute i r x
   | inl k =>
     let H : ((List (Bool ⊕ ℕ+)) →₀ ℂ) →ₗ[ℂ] ((List (Bool ⊕ ℕ+)) →₀ ℂ) := if i=k then cartan (if i then (1,0) else (0,1)) else 0
-    have hh : (raising i).comp (left (.inl k)) =
-        (left (.inl k)).comp (raising i) + H := by
+    have hh : (raising i).comp ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inl k)) =
+        ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inl k)).comp (raising i) + H := by
       apply Finsupp.lhom_ext
       intro w c
-      have hs : Finsupp.single w c = c • basisWord w := by simp [basisWord]
+      have hs : Finsupp.single w c = c • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by simp
       simp only [LinearMap.comp_apply,LinearMap.add_apply,hs,map_smul,left_basis,raising_basis,raisingWord]
       by_cases hik : i=k <;> simp [H,hik,map_smul,smul_add]
     have hh' := LinearMap.congr_fun hh x
@@ -204,18 +251,16 @@ private theorem raising_left (i : Bool) (g : (Bool ⊕ ℕ+)) (x : ((List (Bool 
 
 private theorem raising_relation_mem (i : Bool) (r s : ℕ+) (v : (List (Bool ⊕ ℕ+))) :
     raising i (relation r s v) ∈ N := by
-  have hh := lowering_relation_mem r s (raising i (basisWord v))
+  have hh := lowering_relation_mem r s (raising i ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) v))
   convert hh using 1
-  simp only [relation,map_sub,map_smul]
-  repeat' rw [← left_basis]
-  simp only [raising_mode_commute]
+  simp only [relation,map_sub,map_smul,raising_basis,raisingWord,add_zero]
 
 theorem raisingPreserves (i : Bool) {x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)} (hx : x ∈ N) : raising i x ∈ N := by
   induction hx using Submodule.span_induction with
   | mem y hy =>
     obtain ⟨u,v,r,s,rfl⟩ := hy
     induction u with
-    | nil => simpa [prepend] using raising_relation_mem i r s v
+    | nil => simpa  using raising_relation_mem i r s v
     | cons g u ih =>
       rw [prepend_cons,raising_left]
       apply Submodule.add_mem _ (leftPreserves g ih)
@@ -234,46 +279,43 @@ theorem raisingPreserves (i : Bool) {x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)} (h
 
 end D5.S3.VertexAlgebra.Sectors.VBKMRecursiveAction
 namespace D5.S3.VertexAlgebra.Sectors.VBKMRecursiveAction
-noncomputable def negativeIndex (m : ℤ) (hm : m < 0) : ℕ+ :=
-  ⟨(-m).toNat,by omega⟩
-
 private theorem negativeIndex_val (m : ℤ) (hm : m < 0) :
-    ((negativeIndex m hm).val : ℤ) = -m := by
-  simp [negativeIndex,Int.toNat_of_nonneg (by omega : 0 ≤ -m)]
+    (((-m).toNat.toPNat').val : ℤ) = -m := by
+  rw [Nat.toPNat'_coe, if_pos (by omega), Int.toNat_of_nonneg (by omega)]
 
 noncomputable def degree : ℂ × ℂ := (-81/8,105/8)
 noncomputable def central : ℂ × ℂ := (1,-1)
 
 noncomputable def modeWord (m : ℤ) : (List (Bool ⊕ ℕ+)) → ((List (Bool ⊕ ℕ+)) →₀ ℂ)
-  | [] => if hm : m < 0 then basisWord [.inr (negativeIndex m hm)] else 0
+  | [] => if m < 0 then (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) [.inr ((-m).toNat.toPNat')] else 0
   | g::w =>
-    if hm : m < 0 then basisWord (.inr (negativeIndex m hm)::g::w)
-    else if m = 0 then cartan degree (basisWord (g::w))
+    if m < 0 then (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) (.inr ((-m).toNat.toPNat')::g::w)
+    else if m = 0 then cartan degree ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) (g::w))
     else match g with
-      | .inl i => left (.inl i) (modeWord m w)
-      | .inr r => left (.inr r) (modeWord m w) +
+      | .inl i => (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inl i) (modeWord m w)
+      | .inr r => (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) (modeWord m w) +
           ((m+(r.val : ℤ) : ℤ) : ℂ) • modeWord (m-r.val) w +
-          if m = r.val then ((m^3-m : ℤ) : ℂ) • cartan central (basisWord w) else 0
+          if m = r.val then ((m^3-m : ℤ) : ℂ) • cartan central ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w) else 0
 
 noncomputable def mode (m : ℤ) : ((List (Bool ⊕ ℕ+)) →₀ ℂ) →ₗ[ℂ] ((List (Bool ⊕ ℕ+)) →₀ ℂ) :=
   Finsupp.linearCombination ℂ (modeWord m)
 
-private theorem mode_basis (m : ℤ) (w : (List (Bool ⊕ ℕ+))) : mode m (basisWord w) = modeWord m w := by
-  simp [mode,basisWord]
+private theorem mode_basis (m : ℤ) (w : (List (Bool ⊕ ℕ+))) : mode m ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w) = modeWord m w := by
+  simp [mode]
 
 private theorem mode_negative (m : ℤ) (hm : m < 0) :
-    mode m = left (.inr (negativeIndex m hm)) := by
+    mode m = (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr ((-m).toNat.toPNat')) := by
   apply Finsupp.lhom_ext
   intro w c
-  cases w <;> simp [mode,modeWord,hm,left,basisWord]
+  cases w <;> simp [mode,modeWord,hm]
 
 private theorem mode_zero : mode 0 = cartan degree := by
   apply Finsupp.lhom_ext
   intro w c
-  cases w <;> simp [mode,modeWord,cartan,basisWord,wordWeight]
+  cases w <;> simp [mode,modeWord,cartan,wordWeight]
 
 private theorem mode_positive_left (m : ℤ) (hm : 0 < m) (g : (Bool ⊕ ℕ+)) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
-    mode m (left g x) = left g (mode m x) +
+    mode m ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g x) = (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g (mode m x) +
       match g with
       | .inl _ => 0
       | .inr r => ((m+(r.val : ℤ) : ℤ) : ℂ) • mode (m-r.val) x +
@@ -282,17 +324,17 @@ private theorem mode_positive_left (m : ℤ) (hm : 0 < m) (g : (Bool ⊕ ℕ+)) 
     | .inl _ => 0
     | .inr r => ((m+(r.val : ℤ) : ℤ) : ℂ) • mode (m-r.val) +
         if m = r.val then ((m^3-m : ℤ) : ℂ) • cartan central else 0
-  have hh : (mode m).comp (left g) = (left g).comp (mode m) + extra := by
+  have hh : (mode m).comp ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g) = ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g).comp (mode m) + extra := by
     apply Finsupp.lhom_ext
     intro w c
-    have hs : Finsupp.single w c = c • basisWord w := by simp [basisWord]
+    have hs : Finsupp.single w c = c • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by simp
     simp only [LinearMap.comp_apply,LinearMap.add_apply,hs,map_smul,left_basis,mode_basis]
     cases g with
     | inl i => simp [extra,modeWord,not_lt.mpr (le_of_lt hm),ne_of_gt hm]
     | inr r =>
-      have heq : modeWord m (.inr r::w) = left (.inr r) (modeWord m w) +
+      have heq : modeWord m (.inr r::w) = (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) (modeWord m w) +
           ((m+(r.val : ℤ) : ℤ) : ℂ) • modeWord (m-r.val) w +
-          if m=r.val then ((m^3-m : ℤ) : ℂ) • cartan central (basisWord w) else 0 := by
+          if m=r.val then ((m^3-m : ℤ) : ℂ) • cartan central ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w) else 0 := by
         simp [modeWord,not_lt.mpr (le_of_lt hm),ne_of_gt hm]
       rw [heq]
       dsimp only [extra]
@@ -308,13 +350,13 @@ private theorem mode_positive_left (m : ℤ) (hm : 0 < m) (g : (Bool ⊕ ℕ+)) 
   | inr r => by_cases hmr : m=r.val <;> simpa [extra,hmr] using hh'
 
 noncomputable def qleft (g : (Bool ⊕ ℕ+)) : (((List (Bool ⊕ ℕ+)) →₀ ℂ) ⧸ N) →ₗ[ℂ] (((List (Bool ⊕ ℕ+)) →₀ ℂ) ⧸ N) :=
-  N.mapQ N (left g) (by intro x hx; exact leftPreserves g hx)
+  N.mapQ N ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g) (by intro x hx; exact leftPreserves g hx)
 noncomputable def qcartan (a : ℂ × ℂ) : (((List (Bool ⊕ ℕ+)) →₀ ℂ) ⧸ N) →ₗ[ℂ] (((List (Bool ⊕ ℕ+)) →₀ ℂ) ⧸ N) :=
   N.mapQ N (cartan a) (by intro x hx; exact cartanPreserves a hx)
 private noncomputable def modeProjected (m : ℤ) : ((List (Bool ⊕ ℕ+)) →₀ ℂ) →ₗ[ℂ] (((List (Bool ⊕ ℕ+)) →₀ ℂ) ⧸ N) := N.mkQ.comp (mode m)
 
 theorem qleft_project (g : (Bool ⊕ ℕ+)) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
-    qleft g (N.mkQ x) = N.mkQ (left g x) := rfl
+    qleft g (N.mkQ x) = N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g x) := rfl
 
 private theorem qcartan_project (a : ℂ × ℂ) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
     qcartan a (N.mkQ x) = N.mkQ (cartan a x) := rfl
@@ -329,34 +371,34 @@ private theorem qleft_bracket (r s : ℕ+) (y : (((List (Bool ⊕ ℕ+)) →₀ 
       ((s.val : ℂ)-(r.val : ℂ)) • qleft (.inr (r+s)) (N.mkQ x)
     apply sub_eq_zero.mp
     have hx := lowering_relation_mem r s x
-    have hz : N.mkQ (left (.inr r) (left (.inr s) x) -
-        left (.inr s) (left (.inr r) x) -
-        ((s.val : ℂ)-(r.val : ℂ)) • left (.inr (r+s)) x) = 0 :=
+    have hz : N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr s) x) -
+        (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr s) ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x) -
+        ((s.val : ℂ)-(r.val : ℂ)) • (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr (r+s)) x) = 0 :=
       (Submodule.Quotient.mk_eq_zero _).mpr hx
     simpa only [map_sub,map_smul,← qleft_project] using hz
 
 private theorem qcartan_left (a : ℂ × ℂ) (r : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
-    qcartan a (N.mkQ (left (.inr r) x)) =
+    qcartan a (N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x)) =
       qleft (.inr r) (qcartan a (N.mkQ x)) + tokenWeight a (.inr r) • qleft (.inr r) (N.mkQ x) := by
   rw [qcartan_project,cartan_left,map_add,map_smul]
   rfl
 
 private theorem central_left (r : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
-    qcartan central (N.mkQ (left (.inr r) x)) = qleft (.inr r) (qcartan central (N.mkQ x)) := by
+    qcartan central (N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x)) = qleft (.inr r) (qcartan central (N.mkQ x)) := by
   rw [qcartan_left]
   simp [tokenWeight,central]
 
 private theorem mode_mixed (m : ℤ) (r : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
-    modeProjected m (left (.inr r) x) =
+    modeProjected m ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x) =
       qleft (.inr r) (modeProjected m x) +
       ((m+(r.val : ℤ) : ℤ) : ℂ) • modeProjected (m-r.val) x +
       if m = r.val then ((m^3-m : ℤ) : ℂ) • qcartan central (N.mkQ x) else 0 := by
   have hr : (0 : ℤ) < r.val := by exact_mod_cast r.pos
   by_cases hm : m < 0
   · have hmr : m-r.val < 0 := by omega
-    let q := negativeIndex m hm
+    let q := (-m).toNat.toPNat'
     have hq : (q.val : ℤ) = -m := negativeIndex_val m hm
-    have hqi : negativeIndex (m-r.val) hmr = q+r := by
+    have hqi : (-(m-r.val)).toNat.toPNat' = q+r := by
       apply PNat.coe_injective
       have hi := negativeIndex_val (m-r.val) hmr
       simp only [PNat.add_coe]
@@ -366,7 +408,7 @@ private theorem mode_mixed (m : ℤ) (r : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →
       push_cast
       rw [hqc]
       ring
-    change N.mkQ (mode m (left (.inr r) x)) = _
+    change N.mkQ (mode m ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x)) = _
     simp only [modeProjected,LinearMap.comp_apply,mode_negative m hm,mode_negative (m-r.val) hmr,
       hqi,← qleft_project]
     rw [if_neg (by omega),add_zero,hco]
@@ -375,7 +417,7 @@ private theorem mode_mixed (m : ℤ) (r : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →
   · by_cases hm0 : m = 0
     · subst m
       have hmr : (0 : ℤ)-r.val < 0 := by exact Int.sub_neg_of_lt hr
-      have hri : negativeIndex (0-r.val) hmr = r := by
+      have hri : (-(0-r.val:ℤ)).toNat.toPNat' = r := by
         apply PNat.coe_injective
         have hi := negativeIndex_val (0-r.val) hmr
         omega
@@ -385,7 +427,7 @@ private theorem mode_mixed (m : ℤ) (r : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →
       congr 1
       norm_num [tokenWeight,degree] <;> ring
     · have hp : 0 < m := by omega
-      change N.mkQ (mode m (left (.inr r) x)) =
+      change N.mkQ (mode m ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x)) =
         qleft (.inr r) (N.mkQ (mode m x)) +
         ((m+(r.val : ℤ) : ℤ) : ℂ) • N.mkQ (mode (m-r.val) x) +
         if m = r.val then ((m^3-m : ℤ) : ℂ) • qcartan central (N.mkQ x) else 0
@@ -399,10 +441,10 @@ private theorem mode_mixed (m : ℤ) (r : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →
 
 private theorem mode_relation_zero (m : ℤ) (r s : ℕ+) (v : (List (Bool ⊕ ℕ+))) :
     modeProjected m (relation r s v) = 0 := by
-  have hbr := qleft_bracket r s (modeProjected m (basisWord v))
-  have hbr' : qleft (.inr r) (qleft (.inr s) (modeProjected m (basisWord v))) =
-      qleft (.inr s) (qleft (.inr r) (modeProjected m (basisWord v))) +
-      ((s.val : ℂ)-(r.val : ℂ)) • qleft (.inr (r+s)) (modeProjected m (basisWord v)) := by
+  have hbr := qleft_bracket r s (modeProjected m ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) v))
+  have hbr' : qleft (.inr r) (qleft (.inr s) (modeProjected m ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) v))) =
+      qleft (.inr s) (qleft (.inr r) (modeProjected m ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) v))) +
+      ((s.val : ℂ)-(r.val : ℂ)) • qleft (.inr (r+s)) (modeProjected m ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) v)) := by
     exact (sub_eq_iff_eq_add.mp hbr).trans (add_comm _ _)
   have heq1 : m-(r.val : ℤ) = s.val ↔ m = r.val+s.val := by exact Int.sub_eq_iff_eq_add'
   have heq2 : m-(s.val : ℤ) = r.val ↔ m = r.val+s.val := by exact Int.sub_eq_iff_eq_add
@@ -426,14 +468,14 @@ theorem modePreserves (m : ℤ) {x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)} (hx : 
   induction hx using Submodule.span_induction with
   | mem y hy =>
     obtain ⟨u,v,r,s,rfl⟩ := hy
-    have hu (u : (List (Bool ⊕ ℕ+))) : ∀ m : ℤ, mode m (prepend u (relation r s v)) ∈ N := by
+    have hu (u : (List (Bool ⊕ ℕ+))) : ∀ m : ℤ, mode m ((fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) u (relation r s v)) ∈ N := by
       induction u with
       | nil =>
         intro m
         have hh := mode_relation_zero m r s v
         change N.mkQ (mode m (relation r s v)) = 0 at hh
         have hh' := (Submodule.Quotient.mk_eq_zero _).mp hh
-        simpa [prepend] using hh'
+        simpa  using hh'
       | cons g u ih =>
         intro m
         by_cases hm : m < 0
@@ -463,43 +505,43 @@ private theorem modeWord_eigen (a : ℂ × ℂ) (w : (List (Bool ⊕ ℕ+))) (m 
   induction w generalizing m with
   | nil =>
     by_cases hm : m < 0
-    · have heq : modeWord m [] = basisWord [.inr (negativeIndex m hm)] := by simp [modeWord,hm]
+    · have heq : modeWord m [] = (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) [.inr ((-m).toNat.toPNat')] := by simp [modeWord,hm]
       rw [heq,cartan_basis]
       have hi := negativeIndex_val m hm
-      have hic : ((negativeIndex m hm).val : ℂ) = -(m : ℂ) := by exact_mod_cast hi
-      simp [wordWeight,tokenWeight,hic]
+      have hic : (((-m).toNat.toPNat').val : ℂ) = -(m : ℂ) := by exact_mod_cast hi
+      simp only [wordWeight,tokenWeight,List.map_cons,List.map_nil,List.sum_cons,List.sum_nil,hic]
       module
     · simp [modeWord,hm]
   | cons g w ih =>
     by_cases hm : m < 0
-    · have heq : modeWord m (g::w) = basisWord (.inr (negativeIndex m hm)::g::w) := by simp [modeWord,hm]
+    · have heq : modeWord m (g::w) = (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) (.inr ((-m).toNat.toPNat')::g::w) := by simp [modeWord,hm]
       rw [heq,cartan_basis]
       have hi := negativeIndex_val m hm
-      have hic : ((negativeIndex m hm).val : ℂ) = -(m : ℂ) := by exact_mod_cast hi
-      simp [wordWeight,tokenWeight,hic]
+      have hic : (((-m).toNat.toPNat').val : ℂ) = -(m : ℂ) := by exact_mod_cast hi
+      simp only [wordWeight,tokenWeight,List.map_cons,List.map_nil,List.sum_cons,List.sum_nil,hic]
       module
     · by_cases hm0 : m = 0
       · subst m
-        simp [modeWord,cartan_basis,map_smul,wordWeight]
+        simp only [modeWord,if_neg hm,ite_true,cartan_basis,map_smul,Int.cast_zero,zero_div,zero_mul,sub_zero]
         module
       · cases g with
         | inl i =>
-          have heq : modeWord m (.inl i::w) = left (.inl i) (modeWord m w) := by simp [modeWord,hm,hm0]
+          have heq : modeWord m (.inl i::w) = (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inl i) (modeWord m w) := by simp [modeWord,hm,hm0]
           rw [heq,cartan_left,ih]
           simp only [wordWeight,List.map_cons,List.sum_cons,map_smul]
           module
         | inr r =>
-          have heq : modeWord m (.inr r::w) = left (.inr r) (modeWord m w) +
+          have heq : modeWord m (.inr r::w) = (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) (modeWord m w) +
               ((m+(r.val : ℤ) : ℤ) : ℂ) • modeWord (m-r.val) w +
-              if m=r.val then ((m^3-m : ℤ) : ℂ) • cartan central (basisWord w) else 0 := by
+              if m=r.val then ((m^3-m : ℤ) : ℂ) • cartan central ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w) else 0 := by
             simp [modeWord,hm,hm0]
           rw [heq]
           by_cases hmr : m = r.val <;>
             simp only [hmr,ite_true,ite_false,map_add,map_smul,cartan_left,ih,cartan_basis]
-          · simp [wordWeight,tokenWeight,hmr,map_smul]
+          · simp only [wordWeight,tokenWeight,List.map_cons,List.sum_cons,hmr,map_smul]
             push_cast
             module
-          · simp [wordWeight,tokenWeight,map_smul]
+          · simp only [wordWeight,tokenWeight,List.map_cons,List.sum_cons,map_smul,map_zero,add_zero]
             push_cast
             module
 
@@ -531,7 +573,7 @@ private theorem cartan_mode (a : ℂ × ℂ) (m : ℤ) (x : ((List (Bool ⊕ ℕ
   induction x using Finsupp.induction_linear with
   | zero => simp
   | single w c =>
-    have hs : Finsupp.single w c = c • basisWord w := by simp [basisWord]
+    have hs : Finsupp.single w c = c • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by simp
     rw [hs]
     simp only [map_smul,cartan_basis,mode_basis,modeWord_eigen]
     module
@@ -564,31 +606,31 @@ private theorem qmode_mixed (m : ℤ) (r : ℕ+) :
   | _ x =>
     by_cases hmr : m = r.val
     · rw [if_pos hmr]
-      change N.mkQ (mode m (left (.inr r) x)) - N.mkQ (left (.inr r) (mode m x)) =
+      change N.mkQ (mode m ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x)) - N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) (mode m x)) =
         ((m+(r.val : ℤ) : ℤ) : ℂ) • N.mkQ (mode (m-r.val) x) +
         ((m^3-m : ℤ) : ℂ) • N.mkQ (cartan central x)
       have hh := mode_mixed m r x
       rw [if_pos hmr] at hh
-      change N.mkQ (mode m (left (.inr r) x)) =
-        N.mkQ (left (.inr r) (mode m x)) +
+      change N.mkQ (mode m ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x)) =
+        N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) (mode m x)) +
         ((m+(r.val : ℤ) : ℤ) : ℂ) • N.mkQ (mode (m-r.val) x) +
         ((m^3-m : ℤ) : ℂ) • N.mkQ (cartan central x) at hh
       rw [hh]
       module
     · rw [if_neg hmr,add_zero]
-      change N.mkQ (mode m (left (.inr r) x)) - N.mkQ (left (.inr r) (mode m x)) =
+      change N.mkQ (mode m ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x)) - N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) (mode m x)) =
         ((m+(r.val : ℤ) : ℤ) : ℂ) • N.mkQ (mode (m-r.val) x)
       have hh := mode_mixed m r x
       rw [if_neg hmr,add_zero] at hh
-      change N.mkQ (mode m (left (.inr r) x)) =
-        N.mkQ (left (.inr r) (mode m x)) +
+      change N.mkQ (mode m ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x)) =
+        N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) (mode m x)) +
         ((m+(r.val : ℤ) : ℤ) : ℂ) • N.mkQ (mode (m-r.val) x) at hh
       rw [hh]
       module
 
 theorem qmode_negative (r : ℕ+) : qmode (-(r.val : ℤ)) = qleft (.inr r) := by
   have hr : -(r.val : ℤ) < 0 := by have := r.pos;omega
-  have hri : negativeIndex (-(r.val : ℤ)) hr = r := by
+  have hri : (-(-(r.val:ℤ))).toNat.toPNat' = r := by
     apply PNat.coe_injective
     have hi := negativeIndex_val (-(r.val : ℤ)) hr
     omega
@@ -596,7 +638,7 @@ theorem qmode_negative (r : ℕ+) : qmode (-(r.val : ℤ)) = qleft (.inr r) := b
   intro y
   induction y using Submodule.Quotient.induction_on with
   | _ x =>
-    change N.mkQ (mode (-(r.val : ℤ)) x) = N.mkQ (left (.inr r) x)
+    change N.mkQ (mode (-(r.val : ℤ)) x) = N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x)
     rw [mode_negative _ hr,hri]
 
 theorem qmode_zero : qmode 0 = qcartan degree := by
@@ -609,7 +651,7 @@ theorem qmode_zero : qmode 0 = qcartan degree := by
 
 private theorem qmode_zero_bracket (m : ℤ) : ⁅qmode m,qmode 0⁆ = (m : ℂ) • qmode m := by
   rw [qmode_zero,← lie_skew,qcartan_mode]
-  norm_num [degree]
+  norm_num [degree] <;> module
 
 private theorem qmode_central_bracket (m : ℤ) : ⁅qmode m,qcartan central⁆ = 0 := by
   rw [← lie_skew,qcartan_mode]
@@ -621,26 +663,26 @@ theorem qmode_positive_root (m : ℤ) (hm : 0 < m) (i : Bool) :
   intro y
   induction y using Submodule.Quotient.induction_on with
   | _ x =>
-    change N.mkQ (mode m (left (.inl i) x)) - N.mkQ (left (.inl i) (mode m x)) = 0
+    change N.mkQ (mode m ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inl i) x)) - N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inl i) (mode m x)) = 0
     rw [mode_positive_left m hm]
     simp
 
-noncomputable def qvacuum : (((List (Bool ⊕ ℕ+)) →₀ ℂ) ⧸ N) := N.mkQ (basisWord [])
+noncomputable def qvacuum : (((List (Bool ⊕ ℕ+)) →₀ ℂ) ⧸ N) := N.mkQ ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) [])
 
 private theorem qmode_positive_vacuum (m : ℤ) (hm : 0 < m) : qmode m qvacuum = 0 := by
-  change N.mkQ (mode m (basisWord [])) = 0
+  change N.mkQ (mode m ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) [])) = 0
   rw [mode_basis]
   simp [modeWord,not_lt.mpr (le_of_lt hm)]
 
 private theorem qwordVector (w : (List (Bool ⊕ ℕ+))) :
-    D5.S3.VertexAlgebra.Sectors.VBKMVirasoroBootstrap.wordVector qleft qvacuum w = N.mkQ (basisWord w) := by
+    List.foldr (fun i x => qleft i x) qvacuum w = N.mkQ ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w) := by
   induction w with
   | nil => rfl
   | cons g w ih =>
-    rw [D5.S3.VertexAlgebra.Sectors.VBKMVirasoroBootstrap.wordVector,ih,qleft_project,left_basis]
+    rw [List.foldr_cons,ih,qleft_project,left_basis]
 
 private theorem qword_span :
-    Submodule.span ℂ (Set.range (D5.S3.VertexAlgebra.Sectors.VBKMVirasoroBootstrap.wordVector qleft qvacuum)) = ⊤ := by
+    Submodule.span ℂ (Set.range (List.foldr (fun i x => qleft i x) qvacuum)) = ⊤ := by
   apply Submodule.eq_top_iff'.mpr
   intro y
   induction y using Submodule.Quotient.induction_on with
@@ -649,7 +691,7 @@ private theorem qword_span :
     induction x using Finsupp.induction_linear with
     | zero => simp
     | single w c =>
-      have hs : Finsupp.single w c = c • basisWord w := by simp [basisWord]
+      have hs : Finsupp.single w c = c • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by simp
       rw [hs,map_smul,← qwordVector]
       exact Submodule.smul_mem _ c (Submodule.subset_span ⟨w,rfl⟩)
     | add x y hx hy => simpa only [map_add] using Submodule.add_mem _ hx hy
@@ -697,20 +739,20 @@ private theorem wordWeight_smul (c : ℂ) (a : ℂ × ℂ) (w : (List (Bool ⊕ 
 private theorem cartan_add (a b : ℂ × ℂ) : cartan (a+b) = cartan a + cartan b := by
   apply Finsupp.lhom_ext
   intro w c
-  have hs : Finsupp.single w c = c • basisWord w := by simp [basisWord]
+  have hs : Finsupp.single w c = c • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by simp
   simp only [hs,map_smul,LinearMap.add_apply,cartan_basis,wordWeight_add,add_smul,smul_add]
 
 private theorem cartan_smul (c : ℂ) (a : ℂ × ℂ) : cartan (c • a) = c • cartan a := by
   apply Finsupp.lhom_ext
   intro w d
-  have hs : Finsupp.single w d = d • basisWord w := by simp [basisWord]
+  have hs : Finsupp.single w d = d • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by simp
   simp only [hs,map_smul,LinearMap.smul_apply,cartan_basis,wordWeight_smul,smul_smul] <;> module
 
 private theorem cartan_commute (a b : ℂ × ℂ) :
     (cartan a).comp (cartan b) = (cartan b).comp (cartan a) := by
   apply Finsupp.lhom_ext
   intro w c
-  have hs : Finsupp.single w c = c • basisWord w := by simp [basisWord]
+  have hs : Finsupp.single w c = c • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by simp
   simp only [hs,LinearMap.comp_apply,map_smul,cartan_basis]
   module
 
@@ -721,7 +763,7 @@ private theorem cartan_raising (a : ℂ × ℂ) (i : Bool) (x : ((List (Bool ⊕
       -tokenWeight a (.inl i) • raising i := by
     apply Finsupp.lhom_ext
     intro w c
-    have hs : Finsupp.single w c = c • basisWord w := by simp [basisWord]
+    have hs : Finsupp.single w c = c • (fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w := by simp
     simp only [hs,LinearMap.sub_apply,LinearMap.comp_apply,LinearMap.smul_apply,map_smul,
       cartan_basis,raising_basis,raisingWord_eigen]
     module
@@ -762,8 +804,8 @@ theorem qcartan_qleft (a : ℂ × ℂ) (g : (Bool ⊕ ℕ+)) :
   intro y
   induction y using Submodule.Quotient.induction_on with
   | _ x =>
-    change N.mkQ (cartan a (left g x))-N.mkQ (left g (cartan a x)) =
-      tokenWeight a g • N.mkQ (left g x)
+    change N.mkQ (cartan a ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g x))-N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g (cartan a x)) =
+      tokenWeight a g • N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g x)
     rw [cartan_left,map_add,map_smul]
     module
 
@@ -786,7 +828,7 @@ theorem qraising_qleft (i : Bool) (g : (Bool ⊕ ℕ+)) :
   intro y
   induction y using Submodule.Quotient.induction_on with
   | _ x =>
-    change N.mkQ (raising i (left g x))-N.mkQ (left g (raising i x)) = _
+    change N.mkQ (raising i ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g x))-N.mkQ ((fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) g (raising i x)) = _
     rw [raising_left,map_add]
     cases g with
     | inl k => by_cases hik : i=k <;> simp [hik,qcartan_project] <;> rfl
@@ -795,7 +837,7 @@ theorem qraising_qleft (i : Bool) (g : (Bool ⊕ ℕ+)) :
 theorem qraising_negative (i : Bool) (n : ℤ) (hn : n < 0) :
     ⁅qraising i,qmode n⁆ = 0 := by
   have hr : -(n : ℤ) > 0 := by exact Int.neg_pos_of_neg hn
-  let r := negativeIndex n hn
+  let r := (-n).toNat.toPNat'
   have hh := qmode_negative r
   have hi : -(r.val : ℤ) = n := by have := negativeIndex_val n hn;dsimp [r];omega
   rw [hi] at hh

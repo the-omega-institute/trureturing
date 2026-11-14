@@ -8,27 +8,28 @@
 
 /-
 admission_basis: escape-witness
-proof_shape: ASSUMED-UNVERIFIED until the port is compiled and classified.
-escape_witness: ASSUMED-UNVERIFIED until the port is compiled and classified.
-Direct frozen dependencies: none.
+escape_witness: D5.S3.VertexAlgebra.Sectors.VBKMWeightIdeal.nonzero_disjoint_ideal
+Direct frozen dependencies: none; all D5 prerequisites are in this delivery.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339
+Definitions are labelled bind-only as encodings, not as proofs of new propositions.
+Declarations (consumer names are qualified by their owning module):
+negativeSpan: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.cartan_stable, VBKMWeightIdeal.negative_linear_stable, VBKMWeightIdeal.negative_span_disjoint_cartan, VBKMWeightIdeal.negative_span_isIdeal, VBKMWeightIdeal.negative_stable, VBKMWeightIdeal.nonzero_disjoint_ideal, VBKMWeightIdeal.positive_stable.
+seed_mem: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.cartan_stable, VBKMWeightIdeal.nonzero_disjoint_ideal.
+negative_stable: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.cartan_stable, VBKMWeightIdeal.negative_linear_stable, VBKMWeightIdeal.negative_span_isIdeal, VBKMWeightIdeal.positive_stable.
+negative_linear_stable: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.cartan_stable.
+cartan_stable: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.cartan_stable; consumers: VBKMWeightIdeal.negative_span_isIdeal, VBKMWeightIdeal.positive_stable.
+positive_stable: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.positive_stable; consumers: VBKMWeightIdeal.negative_span_isIdeal.
+stable_of_generates: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.negative_span_isIdeal.
+negative_span_isIdeal: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.cartan_stable; consumers: VBKMWeightIdeal.nonzero_disjoint_ideal.
+spectralWeight: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.negative_span_disjoint_cartan, VBKMWeightIdeal.spectralWeight_negative, VBKMWeightIdeal.word_eigen.
+word_eigen: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.word_eigen; consumers: VBKMWeightIdeal.negative_span_disjoint_cartan.
+spectralWeight_negative: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMWeightIdeal.negative_span_disjoint_cartan.
+negative_span_disjoint_cartan: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.word_eigen; consumers: VBKMWeightIdeal.nonzero_disjoint_ideal.
+nonzero_disjoint_ideal: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.cartan_stable; consumers: ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives.
 -/
 
 
-import Mathlib.Data.Finsupp.Weight
-import Mathlib.Data.Finsupp.Interval
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Common
-import Mathlib.Algebra.Lie.Free
-import Mathlib.Algebra.Lie.Quotient
 import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Data.PNat.Basic
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.Algebra.Lie.Sl2
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Algebra.Lie.Basic
 import Mathlib.Algebra.Lie.Ideal
 import Mathlib.Algebra.Lie.OfAssociative
 import Mathlib.LinearAlgebra.Eigenspace.Basic
@@ -42,12 +43,8 @@ namespace D5.S3.VertexAlgebra.Sectors.VBKMWeightIdeal
 
 variable {A N P : Type*} [LieRing A] [LieAlgebra ℂ A]
 
-private noncomputable def wordAction (neg : N → A) (v : A) : List N → A
-  | [] => v
-  | n::ns => ⁅neg n, wordAction neg v ns⁆
-
 private noncomputable def negativeSpan (neg : N → A) (v : A) : Submodule ℂ A :=
-  Submodule.span ℂ (Set.range (wordAction neg v))
+  Submodule.span ℂ (Set.range (List.foldr (fun n z => ⁅neg n,z⁆) v))
 
 private theorem seed_mem (neg : N → A) (v : A) : v ∈ negativeSpan neg v :=
   Submodule.subset_span ⟨[],rfl⟩
@@ -76,7 +73,7 @@ private theorem cartan_stable (neg : N → A) (v : A) (C : Set A)
     (hCv : ∀ c ∈ C, ⁅c,v⁆ ∈ Submodule.span ℂ ({v} : Set A))
     (c : A) (hc : c ∈ C) (x : A) (hx : x ∈ negativeSpan neg v) :
     ⁅c,x⁆ ∈ negativeSpan neg v := by
-  have hword (ns : List N) : ⁅c,wordAction neg v ns⁆ ∈ negativeSpan neg v := by
+  have hword (ns : List N) : ⁅c,List.foldr (fun n z => ⁅neg n,z⁆) v ns⁆ ∈ negativeSpan neg v := by
     induction ns with
     | nil =>
       have hle : Submodule.span ℂ ({v} : Set A) ≤ negativeSpan neg v := by
@@ -87,7 +84,7 @@ private theorem cartan_stable (neg : N → A) (v : A) (C : Set A)
         exact seed_mem neg v
       exact hle (hCv c hc)
     | cons n ns ih =>
-      rw [wordAction,leibniz_lie]
+      rw [List.foldr_cons,leibniz_lie]
       exact Submodule.add_mem _
         (negative_linear_stable neg v _ _ (hCN c hc n) (Submodule.subset_span ⟨ns,rfl⟩))
         (negative_stable neg v n _ ih)
@@ -105,13 +102,13 @@ private theorem positive_stable (neg : N → A) (pos : P → A) (v : A) (C : Set
     (hPv : ∀ p, ⁅pos p,v⁆ = 0)
     (p : P) (x : A) (hx : x ∈ negativeSpan neg v) :
     ⁅pos p,x⁆ ∈ negativeSpan neg v := by
-  have hword (ns : List N) : ∀ p, ⁅pos p,wordAction neg v ns⁆ ∈ negativeSpan neg v := by
+  have hword (ns : List N) : ∀ p, ⁅pos p,List.foldr (fun n z => ⁅neg n,z⁆) v ns⁆ ∈ negativeSpan neg v := by
     induction ns with
-    | nil => intro p; simp [wordAction,hPv]
+    | nil => intro p; simp [List.foldr_nil,hPv]
     | cons n ns ih =>
       intro p
       let Br : A →ₗ[ℂ] A := {
-        toFun := fun z => ⁅z,wordAction neg v ns⁆
+        toFun := fun z => ⁅z,List.foldr (fun n z => ⁅neg n,z⁆) v ns⁆
         map_add' := fun z z' => add_lie z z' _
         map_smul' := fun a z => smul_lie a z _ }
       have hne : Submodule.span ℂ (Set.range neg) ≤ (negativeSpan neg v).comap Br := by
@@ -126,9 +123,9 @@ private theorem positive_stable (neg : N → A) (pos : P → A) (v : A) (C : Set
         apply Submodule.span_le.mpr
         rintro z ⟨q,rfl⟩
         exact ih q
-      have hbr : ⁅⁅pos p,neg n⁆,wordAction neg v ns⁆ ∈ negativeSpan neg v :=
+      have hbr : ⁅⁅pos p,neg n⁆,List.foldr (fun n z => ⁅neg n,z⁆) v ns⁆ ∈ negativeSpan neg v :=
         (sup_le (sup_le hne hca) hpo) (hPN p n)
-      rw [wordAction,leibniz_lie]
+      rw [List.foldr_cons,leibniz_lie]
       exact Submodule.add_mem _ hbr (negative_stable neg v n _ (ih p))
   induction hx using Submodule.span_induction with
   | mem x hx => obtain ⟨ns,rfl⟩ := hx; exact hword ns p
@@ -183,11 +180,11 @@ private noncomputable def spectralWeight (α : N → ℂ) (μ : ℂ) : List N �
 private theorem word_eigen (neg : N → A) (v H : A) (α : N → ℂ) (μ : ℂ)
     (hHN : ∀ n, ⁅H,neg n⁆ = (-α n) • neg n) (hHv : ⁅H,v⁆ = μ • v)
     (ns : List N) :
-    ⁅H,wordAction neg v ns⁆ = spectralWeight α μ ns • wordAction neg v ns := by
+    ⁅H,List.foldr (fun n z => ⁅neg n,z⁆) v ns⁆ = spectralWeight α μ ns • List.foldr (fun n z => ⁅neg n,z⁆) v ns := by
   induction ns with
   | nil => exact hHv
   | cons n ns ih =>
-    simp only [wordAction,spectralWeight,leibniz_lie,hHN,ih,smul_lie,lie_smul]
+    simp only [List.foldr_cons,spectralWeight,leibniz_lie,hHN,ih,smul_lie,lie_smul]
     module
 
 private theorem spectralWeight_negative (α : N → ℂ) (μ : ℂ)
@@ -211,7 +208,7 @@ private theorem negative_span_disjoint_cartan (neg : N → A) (v H : A) (α : N 
   have hW : negativeSpan neg v ≤ Q := by
     apply Submodule.span_le.mpr
     rintro x ⟨ns,rfl⟩
-    have heig : wordAction neg v ns ∈ E.eigenspace (spectralWeight α μ ns) :=
+    have heig : List.foldr (fun n z => ⁅neg n,z⁆) v ns ∈ E.eigenspace (spectralWeight α μ ns) :=
       Module.End.mem_eigenspace_iff.mpr (word_eigen neg v H α μ hHN hHv ns)
     have hneg : spectralWeight α μ ns ∈ S := spectralWeight_negative α μ hα hμ ns
     have hle : E.eigenspace (spectralWeight α μ ns) ≤ Q :=

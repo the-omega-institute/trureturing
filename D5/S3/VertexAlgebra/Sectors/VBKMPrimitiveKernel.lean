@@ -8,30 +8,21 @@
 
 /-
 admission_basis: escape-witness
-proof_shape: ASSUMED-UNVERIFIED until the port is compiled and classified.
-escape_witness: ASSUMED-UNVERIFIED until the port is compiled and classified.
-Direct frozen dependencies: none.
+escape_witness: D5.S3.VertexAlgebra.Sectors.VBKMPrimitiveKernel.normalized_not_proper
+Direct frozen dependencies: none; all D5 prerequisites are in this delivery.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339
+Definitions are labelled bind-only as encodings, not as proofs of new propositions.
+Declarations (consumer names are qualified by their owning module):
+raising_kernel_on_span: proof_shape: content; frozen: none; escape_witness: VBKMPrimitiveKernel.raising_kernel_on_span; consumers: VBKMPrimitiveKernel.primitive_kernel.
+primitive_kernel: proof_shape: content; frozen: none; escape_witness: VBKMPrimitiveKernel.raising_kernel_on_span; consumers: VBKMPrimitiveKernel.primitive_kernel_generated.
+primitive_kernel_generated: proof_shape: content; frozen: none; escape_witness: VBKMPrimitiveKernel.raising_kernel_on_span; consumers: VBKMPrimitiveKernel.primitive_not_proper.
+primitive_not_proper: proof_shape: content; frozen: none; escape_witness: VBKMPrimitiveKernel.raising_kernel_on_span; consumers: VBKMPrimitiveKernel.normalized_not_proper.
+normalized_not_proper: proof_shape: content; frozen: none; escape_witness: VBKMPrimitiveKernel.raising_kernel_on_span; consumers: ZverykIdealRigidityRefutation.datum_no_rank_highest.
 -/
 
 
-import Mathlib.Data.Finsupp.Weight
-import Mathlib.Data.Finsupp.Interval
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Common
-import Mathlib.Algebra.Lie.Free
-import Mathlib.Algebra.Lie.Quotient
 import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Data.PNat.Basic
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.Algebra.Lie.Sl2
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.Ideal
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.LinearAlgebra.Eigenspace.Basic
 
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 1000000

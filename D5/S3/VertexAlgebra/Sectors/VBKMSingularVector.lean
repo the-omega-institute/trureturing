@@ -8,30 +8,23 @@
 
 /-
 admission_basis: escape-witness
-proof_shape: ASSUMED-UNVERIFIED until the port is compiled and classified.
-escape_witness: ASSUMED-UNVERIFIED until the port is compiled and classified.
-Direct frozen dependencies: none.
+escape_witness: D5.S3.VertexAlgebra.Sectors.VBKMSingularVector.positive_modes_kill
+Direct frozen dependencies: none; all D5 prerequisites are in this delivery.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339
+Definitions are labelled bind-only as encodings, not as proofs of new propositions.
+Declarations (consumer names are qualified by their owning module):
+singularWord: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: VBKMSingularVector.singularWord_cartan, VBKMSingularVector.singularWord_commute, VBKMSingularVector.singularWord_eigen, VBKMSingularVector.singularWord_mode_one, VBKMSingularVector.singularWord_mode_two, ZverykIdealRigidityRefutation.presentedSingular, ZverykIdealRigidityRefutation.presented_e_singular.
+singularWord_cartan: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_e_singular.
+singularWord_commute: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_e_singular.
+singularWord_mode_one: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_positive_singular.
+singularWord_mode_two: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_positive_singular.
+positive_modes_kill: proof_shape: content; frozen: none; escape_witness: VBKMSingularVector.positive_modes_kill; consumers: ZverykIdealRigidityRefutation.presented_positive_singular.
+singularWord_eigen: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_singular_eigen.
 -/
 
 
-import Mathlib.Data.Finsupp.Weight
-import Mathlib.Data.Finsupp.Interval
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Common
-import Mathlib.Algebra.Lie.Free
-import Mathlib.Algebra.Lie.Quotient
 import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Data.PNat.Basic
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.Algebra.Lie.Sl2
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.Ideal
 import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.LinearAlgebra.Eigenspace.Basic
 
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 1000000

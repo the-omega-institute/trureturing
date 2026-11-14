@@ -8,9 +8,84 @@
 
 /-
 admission_basis: open-problem-resolution (#27461; Refuted)
-proof_shape: ASSUMED-UNVERIFIED until the port is compiled and classified.
-escape_witness: ASSUMED-UNVERIFIED until the port is compiled and classified.
-Direct frozen dependencies: none.
+escape_witness: none (settling result)
+Direct frozen dependencies: none; all D5 prerequisites are in this delivery.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339
+Definitions are labelled bind-only as encodings, not as proofs of new propositions.
+Declarations (consumer names are qualified by their owning module):
+D: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.D_bracket, ZverykIdealRigidityRefutation.D_single, ZverykIdealRigidityRefutation.evaluation_ad_vacuum, ZverykIdealRigidityRefutation.op, ZverykIdealRigidityRefutation.op_bracket, ZverykIdealRigidityRefutation.singular_detected.
+D_single: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.D_bracket, ZverykIdealRigidityRefutation.singular_detected.
+D_bracket: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.op_bracket.
+op: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.N_le_kernel, ZverykIdealRigidityRefutation.evaluation, ZverykIdealRigidityRefutation.evaluation_adMode, ZverykIdealRigidityRefutation.evaluation_ad_vacuum, ZverykIdealRigidityRefutation.evaluation_basis, ZverykIdealRigidityRefutation.evaluation_prepend, ZverykIdealRigidityRefutation.evaluation_relation, ZverykIdealRigidityRefutation.op_bracket, ZverykIdealRigidityRefutation.singular_detected.
+op_bracket: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.evaluation_relation.
+evaluation: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.N_le_kernel, ZverykIdealRigidityRefutation.evaluation_adMode, ZverykIdealRigidityRefutation.evaluation_ad_vacuum, ZverykIdealRigidityRefutation.evaluation_basis, ZverykIdealRigidityRefutation.evaluation_prepend, ZverykIdealRigidityRefutation.evaluation_relation, ZverykIdealRigidityRefutation.singular_detected, ZverykIdealRigidityRefutation.singular_not_mem.
+evaluation_basis: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.evaluation_relation, ZverykIdealRigidityRefutation.singular_detected.
+evaluation_prepend: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.N_le_kernel.
+evaluation_relation: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.N_le_kernel.
+N_le_kernel: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.singular_not_mem.
+adMode: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.evaluation_adMode, ZverykIdealRigidityRefutation.evaluation_ad_vacuum, ZverykIdealRigidityRefutation.representation_singular_vacuum, ZverykIdealRigidityRefutation.singular, ZverykIdealRigidityRefutation.singular_detected.
+evaluation_adMode: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.evaluation_ad_vacuum.
+vacuum: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.evaluation_ad_vacuum, ZverykIdealRigidityRefutation.singular_detected, ZverykIdealRigidityRefutation.singular_not_mem.
+evaluation_ad_vacuum: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.singular_detected.
+singular: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presentedSingular_ne_zero, ZverykIdealRigidityRefutation.representation_singular_vacuum, ZverykIdealRigidityRefutation.singular_detected, ZverykIdealRigidityRefutation.singular_not_mem.
+singular_detected: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.singular_not_mem.
+singular_not_mem: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presentedSingular_ne_zero.
+localH: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.datum_no_rank_highest, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.rankOne_in_span.
+localE: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_mode_no_highest, ZverykIdealRigidityRefutation.datum_no_rank_highest, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.rankOne_in_span.
+localF: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.datum_no_rank_highest, ZverykIdealRigidityRefutation.local_sl2_relations, ZverykIdealRigidityRefutation.rankOne_in_span.
+local_sl2_relations: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.datum_no_rank_highest.
+rankOne_in_span: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.datum_no_rank_highest.
+datum_no_rank_highest: proof_shape: content; frozen: none; escape_witness: VBKMPrimitiveKernel.raising_kernel_on_span; consumers: ZverykIdealRigidityRefutation.datum_cross_no_highest, ZverykIdealRigidityRefutation.datum_mode_no_highest.
+datum_cross_no_highest: proof_shape: content; frozen: none; escape_witness: VBKMPrimitiveKernel.raising_kernel_on_span; consumers: ZverykIdealRigidityRefutation.datum_localRelations_empty.
+datum_mode_no_highest: proof_shape: content; frozen: none; escape_witness: VBKMPrimitiveKernel.raising_kernel_on_span; consumers: ZverykIdealRigidityRefutation.datum_localRelations_empty.
+datum_localRelations_empty: proof_shape: content; frozen: none; escape_witness: VBKMPrimitiveKernel.raising_kernel_on_span; consumers: ZverykIdealRigidityRefutation.datum_localIdeal_zero.
+datum_localIdeal_zero: proof_shape: content; frozen: none; escape_witness: VBKMPrimitiveKernel.raising_kernel_on_span; consumers: ZverykIdealRigidityRefutation.localQuotientMap_injective.
+presentedSingular: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.cartan_singular, ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives, ZverykIdealRigidityRefutation.not_rigid_of_survival, ZverykIdealRigidityRefutation.positive_singular, ZverykIdealRigidityRefutation.presentedSingular_ne_zero, ZverykIdealRigidityRefutation.presented_e_singular, ZverykIdealRigidityRefutation.presented_positive_singular, ZverykIdealRigidityRefutation.presented_separating_weight, ZverykIdealRigidityRefutation.representation_singular_vacuum, ZverykIdealRigidityRefutation.result_of_survival.
+presented_seed_zero_weight: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_positive_singular.
+presented_positive_seed: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_positive_singular.
+presented_central_seed: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_positive_singular.
+presented_central_modes: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presented_positive_singular.
+presented_positive_singular: proof_shape: content; frozen: none; escape_witness: VBKMSingularVector.positive_modes_kill; consumers: ZverykIdealRigidityRefutation.positive_singular.
+presented_e_singular: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.positive_singular.
+presented_singular_eigen: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.cartan_singular, ZverykIdealRigidityRefutation.presented_separating_weight.
+presented_separating_weight: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives.
+negativeGenerator: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.allGenerators, ZverykIdealRigidityRefutation.allGenerators_generate, ZverykIdealRigidityRefutation.cartan_negative, ZverykIdealRigidityRefutation.generators_in_mixedSpan, ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives, ZverykIdealRigidityRefutation.mixedSpan, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.mode_mem_generators, ZverykIdealRigidityRefutation.separating_negative.
+positiveGenerator: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.allGenerators, ZverykIdealRigidityRefutation.allGenerators_generate, ZverykIdealRigidityRefutation.generators_in_mixedSpan, ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives, ZverykIdealRigidityRefutation.mixedSpan, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.mode_mem_generators, ZverykIdealRigidityRefutation.positive_singular.
+cartanGenerators: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.allGenerators, ZverykIdealRigidityRefutation.allGenerators_generate, ZverykIdealRigidityRefutation.cartan_map, ZverykIdealRigidityRefutation.cartan_negative, ZverykIdealRigidityRefutation.cartan_singular, ZverykIdealRigidityRefutation.generators_in_mixedSpan, ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives, ZverykIdealRigidityRefutation.mixedSpan, ZverykIdealRigidityRefutation.mixed_positive_negative, ZverykIdealRigidityRefutation.mode_mem_generators, ZverykIdealRigidityRefutation.not_rigid_of_survival, ZverykIdealRigidityRefutation.separating_cartan.
+allGenerators: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.allGenerators_generate, ZverykIdealRigidityRefutation.generators_in_mixedSpan, ZverykIdealRigidityRefutation.mode_mem_generators.
+mode_mem_generators: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.allGenerators_generate, ZverykIdealRigidityRefutation.mixed_positive_negative.
+allGenerators_generate: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives.
+cartan_negative: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives.
+cartan_singular: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives.
+mixedSpan: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.generators_in_mixedSpan, ZverykIdealRigidityRefutation.mixed_positive_negative.
+generators_in_mixedSpan: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.mixed_positive_negative.
+mixed_positive_negative: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives.
+positive_singular: proof_shape: content; frozen: none; escape_witness: VBKMSingularVector.positive_modes_kill; consumers: ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives.
+negativeWeight: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives, ZverykIdealRigidityRefutation.negative_weights_positive, ZverykIdealRigidityRefutation.separating_negative.
+negative_weights_positive: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives.
+separating_negative: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives.
+separating_cartan: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.ideal_exists_of_singular_survives.
+ideal_exists_of_singular_survives: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.positive_stable; consumers: ZverykIdealRigidityRefutation.not_rigid_of_survival.
+localQuotientMap: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.cartan_map, ZverykIdealRigidityRefutation.localQuotientMap_injective, ZverykIdealRigidityRefutation.localQuotientMap_surjective, ZverykIdealRigidityRefutation.not_rigid_of_survival.
+localQuotientMap_surjective: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.not_rigid_of_survival.
+localQuotientMap_injective: proof_shape: content; frozen: none; escape_witness: VBKMPrimitiveKernel.raising_kernel_on_span; consumers: ZverykIdealRigidityRefutation.not_rigid_of_survival.
+cartan_map: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.not_rigid_of_survival.
+not_rigid_of_survival: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.positive_stable; consumers: ZverykIdealRigidityRefutation.result_of_survival.
+result_of_survival: proof_shape: content; frozen: none; escape_witness: VBKMWeightIdeal.positive_stable; consumers: ZverykIdealRigidityRefutation.result.
+representationGenerator: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.freeRepresentation, ZverykIdealRigidityRefutation.freeRepresentation_L, ZverykIdealRigidityRefutation.freeRepresentation_e, ZverykIdealRigidityRefutation.freeRepresentation_f, ZverykIdealRigidityRefutation.freeRepresentation_h.
+freeRepresentation: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations, ZverykIdealRigidityRefutation.presentationIdeal_le_representation_kernel, ZverykIdealRigidityRefutation.representation.
+freeRepresentation_h: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations.
+freeRepresentation_e: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations.
+freeRepresentation_f: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations, ZverykIdealRigidityRefutation.representation_pf.
+freeRepresentation_L: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.freeRepresentation_relations, ZverykIdealRigidityRefutation.representation_pL.
+freeRepresentation_relations: proof_shape: content; frozen: none; escape_witness: VBKMVirasoroBootstrap.positive_brackets_from_mixed; consumers: ZverykIdealRigidityRefutation.presentationIdeal_le_representation_kernel.
+presentationIdeal_le_representation_kernel: proof_shape: content; frozen: none; escape_witness: VBKMVirasoroBootstrap.positive_brackets_from_mixed; consumers: ZverykIdealRigidityRefutation.representation.
+representation: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presentedSingular_ne_zero, ZverykIdealRigidityRefutation.representation_singular_vacuum.
+representation_pf: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.representation_singular_vacuum.
+representation_pL: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.representation_singular_vacuum.
+representation_singular_vacuum: proof_shape: bind-only; frozen: none; escape_witness: none; consumers: ZverykIdealRigidityRefutation.presentedSingular_ne_zero.
+presentedSingular_ne_zero: proof_shape: content; frozen: none; escape_witness: ZverykIdealRigidityRefutation.presentedSingular_ne_zero; consumers: ZverykIdealRigidityRefutation.result.
+result: proof_shape: content; frozen: none; escape_witness: ZverykIdealRigidityRefutation.presentedSingular_ne_zero; consumers: terminal result.
 -/
 
 import D5.S3.VertexAlgebra.Sectors.VBKMPresentation
@@ -18,24 +93,6 @@ import D5.S3.VertexAlgebra.Sectors.VBKMPrimitiveKernel
 import D5.S3.VertexAlgebra.Sectors.VBKMSingularVector
 import D5.S3.VertexAlgebra.Sectors.VBKMWeightIdeal
 import D5.S3.VertexAlgebra.Sectors.VBKMRecursiveAction
-import Mathlib.Data.Finsupp.Weight
-import Mathlib.Data.Finsupp.Interval
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Common
-import Mathlib.Algebra.Lie.Free
-import Mathlib.Algebra.Lie.Quotient
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Data.PNat.Basic
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.Algebra.Lie.Sl2
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.Ideal
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.LinearAlgebra.Eigenspace.Basic
 
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 1000000
@@ -84,26 +141,17 @@ private theorem op_bracket (r s : ℕ+) (x : (ℂ × (ℤ →₀ ℂ))) :
   · change D r (D s x.2) - D s (D r x.2) = _
     exact D_bracket r s x.2
 
-private noncomputable def wordOp : (List (Bool ⊕ ℕ+)) → Module.End ℂ (ℂ × (ℤ →₀ ℂ))
-  | [] => 1
-  | g::w => op g * wordOp w
-
 private noncomputable def evaluation : ((List (Bool ⊕ ℕ+)) →₀ ℂ) →ₗ[ℂ] Module.End ℂ (ℂ × (ℤ →₀ ℂ)) :=
-  Finsupp.linearCombination ℂ wordOp
+  Finsupp.linearCombination ℂ (fun (w : List (Bool ⊕ ℕ+)) => (w.map op).prod)
 
-private theorem evaluation_basis (w : (List (Bool ⊕ ℕ+))) : evaluation (basisWord w) = wordOp w := by
-  simp [evaluation,basisWord]
-
-private theorem wordOp_append (u v : (List (Bool ⊕ ℕ+))) : wordOp (u++v) = wordOp u * wordOp v := by
-  induction u with
-  | nil => simp [wordOp]
-  | cons g u ih => simp [wordOp,ih,mul_assoc]
+private theorem evaluation_basis (w : (List (Bool ⊕ ℕ+))) : evaluation ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) w) = (fun (w : List (Bool ⊕ ℕ+)) => (w.map op).prod) w := by
+  simp [evaluation]
 
 private theorem evaluation_prepend (u : (List (Bool ⊕ ℕ+))) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
-    evaluation (prepend u x) = wordOp u * evaluation x := by
+    evaluation ((fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) u x) = (fun (w : List (Bool ⊕ ℕ+)) => (w.map op).prod) u * evaluation x := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | single w c => simp [evaluation,prepend,wordOp_append,Algebra.smul_mul_assoc,
+  | single w c => simp [evaluation,Algebra.smul_mul_assoc,
       Algebra.mul_smul_comm]
   | add x y hx hy => simp only [map_add,hx,hy,mul_add]
 
@@ -111,28 +159,25 @@ private theorem evaluation_relation (r s : ℕ+) (v : (List (Bool ⊕ ℕ+))) :
     evaluation (relation r s v) = 0 := by
   apply LinearMap.ext
   intro x
-  simp only [relation,map_sub,map_smul,evaluation_basis,wordOp,
+  simp only [relation,map_sub,map_smul,evaluation_basis,List.map_cons,List.prod_cons,List.map_nil,List.prod_nil,
     LinearMap.sub_apply,LinearMap.smul_apply,Module.End.mul_apply,LinearMap.zero_apply]
-  exact sub_eq_zero.mpr (op_bracket r s (wordOp v x))
+  exact sub_eq_zero.mpr (op_bracket r s ((fun (w : List (Bool ⊕ ℕ+)) => (w.map op).prod) v x))
 
 private theorem N_le_kernel : N ≤ LinearMap.ker evaluation := by
   apply Submodule.span_le.mpr
   rintro x ⟨u,v,r,s,rfl⟩
-  change evaluation (prepend u (relation r s v)) = 0
+  change evaluation ((fun (u : List (Bool ⊕ ℕ+)) => Finsupp.lmapDomain ℂ ℂ (List.append u)) u (relation r s v)) = 0
   rw [evaluation_prepend,evaluation_relation,mul_zero]
 
-private noncomputable def appendOne (g : (Bool ⊕ ℕ+)) : ((List (Bool ⊕ ℕ+)) →₀ ℂ) →ₗ[ℂ] ((List (Bool ⊕ ℕ+)) →₀ ℂ) :=
-  Finsupp.lmapDomain ℂ ℂ (fun u => u ++ [g])
-
 private noncomputable def adMode (r : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) : ((List (Bool ⊕ ℕ+)) →₀ ℂ) :=
-  left (.inr r) x - appendOne (.inr r) x
+  (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (List.cons g)) (.inr r) x - (fun (g : Bool ⊕ ℕ+) => Finsupp.lmapDomain ℂ ℂ (fun u => u ++ [g])) (.inr r) x
 
 private theorem evaluation_adMode (r : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →₀ ℂ)) :
     evaluation (adMode r x) = op (.inr r) * evaluation x - evaluation x * op (.inr r) := by
   induction x using Finsupp.induction_linear with
-  | zero => simp [adMode]
+  | zero => simp [adMode] <;> module
   | single w c =>
-    simp [adMode,left,appendOne,evaluation,wordOp,wordOp_append,mul_one,
+    simp [adMode,evaluation,List.map_cons,List.prod_cons,List.map_nil,List.prod_nil,mul_one,
       Algebra.smul_mul_assoc,Algebra.mul_smul_comm]
   | add x y hx hy =>
     convert congrArg₂ (fun a b : Module.End ℂ (ℂ × (ℤ →₀ ℂ)) => a+b) hx hy using 1 <;>
@@ -148,17 +193,17 @@ private theorem evaluation_ad_vacuum (r : ℕ+) (x : ((List (Bool ⊕ ℕ+)) →
   exact map_zero _
 
 private noncomputable def singular : ((List (Bool ⊕ ℕ+)) →₀ ℂ) :=
-  adMode 1 (adMode 1 (adMode 1 (adMode 1 (basisWord [.inl true])))) -
-  (3 : ℂ) • adMode 2 (adMode 1 (adMode 1 (basisWord [.inl true]))) -
-  (7/4 : ℂ) • adMode 2 (adMode 2 (basisWord [.inl true])) +
-  (3 : ℂ) • adMode 3 (adMode 1 (basisWord [.inl true])) +
-  (3/2 : ℂ) • adMode 4 (basisWord [.inl true])
+  adMode 1 (adMode 1 (adMode 1 (adMode 1 ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) [.inl true])))) -
+  (3 : ℂ) • adMode 2 (adMode 1 (adMode 1 ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) [.inl true]))) -
+  (7/4 : ℂ) • adMode 2 (adMode 2 ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) [.inl true])) +
+  (3 : ℂ) • adMode 3 (adMode 1 ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) [.inl true])) +
+  (3/2 : ℂ) • adMode 4 ((fun (w : List (Bool ⊕ ℕ+)) => Finsupp.single w (1 : ℂ)) [.inl true])
 
 private theorem singular_detected : evaluation singular vacuum =
     (0,(1/4 : ℂ) • Finsupp.single (-3) 1) := by
   simp only [singular,map_add,map_sub,map_smul,LinearMap.add_apply,
     LinearMap.sub_apply,LinearMap.smul_apply,evaluation_ad_vacuum,
-    evaluation_basis,wordOp]
+    evaluation_basis,List.map_cons,List.prod_cons,List.map_nil,List.prod_nil]
   norm_num [op,vacuum,D_single,LinearMap.prodMap_apply,Prod.smul_mk,
     Prod.add_def,Prod.sub_def]
   ext n
@@ -236,7 +281,7 @@ private theorem datum_cross_no_highest (side i k : Bool) (hik : i ≠ k) (x : Pr
     · simp [localE,sideSeed,pe_pf,hik]
     · have hh : ⁅pe datum k,pf datum i⁆ = 0 := by simp [pe_pf,Ne.symm hik]
       have hh' : ⁅pf datum i,pe datum k⁆ = 0 := by rw [← lie_skew,hh,neg_zero]
-      simpa [localE,sideSeed] using hh' 
+      simpa [localE,sideSeed] using hh'
   · intro n hn
     have hh := congrArg Complex.re hn
     have hn0 : (0 : ℝ) ≤ n := Nat.cast_nonneg _
@@ -644,7 +689,7 @@ private theorem representation_singular_vacuum :
     LinearMap.add_apply,LinearMap.sub_apply,LinearMap.smul_apply,map_add,map_sub,map_smul]
   simp only [qvacuum,qleft_project,left_basis]
   simp only [singular,adMode,map_add,map_sub,map_smul]
-  simp only [left,appendOne,basisWord,Finsupp.lmapDomain_apply,Finsupp.mapDomain_single,
+  simp only [List.map_cons,List.prod_cons,List.map_nil,List.prod_nil,Finsupp.lmapDomain_apply,Finsupp.mapDomain_single,
     map_add,map_sub,map_smul,List.append_assoc,List.cons_append,List.nil_append,
     List.singleton_append]
 
