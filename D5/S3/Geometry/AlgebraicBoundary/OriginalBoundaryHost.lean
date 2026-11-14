@@ -91,7 +91,10 @@ theorem original_entire_boundary_host {E : Type*} [NormedAddCommGroup E]
         (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ↔ q ∣ r) ∧
       (∀ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, r ≠ 0 → r.totalDegree ≤ d →
         (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) →
-          ∃ a : ℝ, a ≠ 0 ∧ r = MvPolynomial.C a * q)) ∧
+          ∃ a : ℝ, a ≠ 0 ∧ r = MvPolynomial.C a * q) ∧
+      (∀ f g : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, q = f * g →
+        f ≠ 0 ∧ g ≠ 0 ∧ f.IsHomogeneous f.totalDegree ∧
+          g.IsHomogeneous g.totalDegree ∧ f.totalDegree + g.totalDegree = d)) ∧
     (∀ (p : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ), p ≠ 0 → p.totalDegree ≤ 3 →
       (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) p = 0) →
     ∃ (d : ℕ) (q : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ), 0 < d ∧ d ≤ p.totalDegree ∧ q ≠ 0 ∧
