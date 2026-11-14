@@ -1,0 +1,34 @@
+**推论 151.4（完整局部候选的同原复三能级表示）。** 在定义151.1的完整原域内，下列条件等价：
+
+$$
+\begin{gathered}
+\mathrm{EB3}+\mathrm{PR}+\mathsf N_2,\qquad
+\mathrm{EB3}+\mathrm{PR}+\mathsf{Conn},\\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V
+\text{ 实线性双射},\qquad
+\Phi(\mathrm{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\end{gathered}
+\tag{XII151.7}
+$$
+
+证明。定理151.3给第一个到第二个的桥。第二个到第三个准确复用 [XI150.5][Q151XI]：有限原零路首先给全域球标签单射和全部唯一整球零确认；已有非单位预算塌缩与唯一标签处的塌缩饱和相接，再沿零路传播，排除非单位预算。此时才支付整个原确认菜单的 least，消费 IX114.9 的同锥同单位分类。本章不另作一次量子分类，也不从 PR 单独跳到整球确认互易。
+
+反向在同一个完整表示中核对。对原纯点 $p=\Phi(vv^\ast)$，$\|v\|=1$，整个原确认菜单、全部混输入最低值和完整排除球分别为
+
+$$
+\begin{gathered}
+f_{vv^\ast\oplus B}(\Phi\rho)
+=\operatorname{Tr}\bigl((vv^\ast\oplus B)\rho\bigr),\qquad
+0\preceq B\preceq I_{v^\perp},\\
+T_p(\Phi\rho)=v^\ast\rho v,\qquad
+\rho\succeq0,\quad\operatorname{Tr}\rho=1,\\
+D_p=\Phi\{\rho\succeq0:\operatorname{Tr}\rho=1,\quad
+\operatorname{ran}\rho\subset v^\perp\}.
+\end{gathered}
+\tag{XII151.8}
+$$
+
+这里 $vv^\ast\oplus B$ 指 $\mathbb Cv\oplus v^\perp$ 上的块分解。最低值由原菜单中的 $B=0$ 达到，未缩小菜单或混态域。故 EB3 与 PR 成立。对任意原纯 $p=\Phi(vv^\ast)$、$q=\Phi(ww^\ast)$，取单位 $z\in\operatorname{span}_{\mathbb C}\{v,w\}^{\perp}$，则同一个 $r=\Phi(zz^\ast)$ 满足 $T_p(r)=T_q(r)=0$；每个根可取 $\varepsilon_p=1/2$，得到 $\mathsf N_2$。证毕。
+
+完整静态字典直接复用 XI149.5、XI145.9：整个 $K$ 是全部三能级密度矩阵，整个 $P$ 是 $\mathbb{CP}^2$，每张完整排除三球的纯边界是 $\mathbb{CP}^1\simeq S^2$；所有原效应恰为 $0\preceq E\preceq I_3$，读数是 $\operatorname{Tr}(E\rho)$。全部有限数学效应单位分解恰为全部数学 POVM，谱及 Jordan 字典均在同一个 $\Phi$ 下成立。它们是既有静态结论的应用；实际制备、复合与纠缠来源、事件仪器、全旁观 CP、物理时间、Hamiltonian、能量与数值 $\hbar$ 仍各保留所引章节的独立合同。
+

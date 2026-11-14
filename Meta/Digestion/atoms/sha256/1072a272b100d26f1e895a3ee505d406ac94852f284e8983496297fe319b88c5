@@ -1,0 +1,21 @@
+**定义 147.1（原比较及忠实矩阵载体）。** 全程保持145.1及146.1的非零有限维实空间 $V$、闭尖生成锥 $C$、严格正原单位 $u$，以及整个
+
+$$
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad
+\mathcal E=[0,u]_{C^*},\quad
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\quad
+T_p(z)=\min_{f\in\mathcal F_p}f(z),\quad D_p=\{z\in K:T_p(z)=0\}.
+\tag{XI147.1}
+$$
+
+第二变量包含所有混态，最小化遍历整个原菜单并达到；不删原态、效应或确认者。EB3及有限原零边连通 $\mathsf{Conn}$ 取146.1的完整量词。直接复用145.3：Inj、唯一整球零确认 $e_p$、$\{e_p=1\}\cap K=\{p\}$、四维 $L_p=\operatorname{span}N_p$、$N_p=\{h\in C^*:h(p)=0\}$，以及全部非空真面仅为纯单点或完整 $D_a$。不把 $e_p$ 当作整个 $\mathcal F_p$，不预设least或 $T_p=e_p$。
+
+取 $\mathbb F=\mathbb R$ 或 $\mathbb C$，$\operatorname{Herm}_m(\mathbb R)=\operatorname{Sym}_m(\mathbb R)$。忠实 PSD 截面指实线性单射 $A:V\to\operatorname{Herm}_m(\mathbb F)$ 满足
+
+$$
+C=\{x\in V:A_x\succeq0\},\qquad A_x:=A(x),\qquad r(x)=\operatorname{rank}_{\mathbb F}A_x.
+\tag{XI147.2}
+$$
+
+所有阶数均在删去 $A(C)$ 的共同零空间后计量；这称有效阶数。原 $u$ 不预设为迹。另一个较宽研究类仅要求某个实线性单射 $B:V\to\operatorname{Herm}_N(\mathbb C)$ 满足 $B(C)\subseteq\operatorname{PSD}_N$ 且每个原纯像秩一，不要求 $B(C)=B(V)\cap\operatorname{PSD}_N$。矩阵表示是各研究类的明示前件，没有从 EB3、Conn 或纯比较数值互易推得一般原锥具有这些表示。
+
