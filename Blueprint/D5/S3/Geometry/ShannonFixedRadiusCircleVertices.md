@@ -210,4 +210,5 @@ The three residue classes count all vertices for every pair of distinct Euclidea
 - Truth anchor: `D5/S3/Geometry/ShannonFixedRadiusCircleVertices.square`
 - Truth anchor: `D5/S3/Geometry/ShannonFixedRadiusCircleVertices.vertexCount`
 - Truth anchor: `D5/S3/Geometry/ShannonFixedRadiusCircleVertices.vertices`
+- Dependency: [D5/S3/Arith/ModularForms/CubicThetaLattice](../Arith/ModularForms/CubicThetaLattice.md)
 - Dependency: [D5/S3/StatisticalMechanics/Percolation/TriangularTwoNeighborGrowth](../StatisticalMechanics/Percolation/TriangularTwoNeighborGrowth.md)

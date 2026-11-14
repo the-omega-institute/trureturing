@@ -6,6 +6,9 @@
    utility: none
    digest: Finite Eisenstein norm fibres and explicit cubic theta residue bijections. -/
 
+/- Escape audit unfinished for the published coordinate maps normTripling and normThird:
+https://github.com/the-omega-institute/trureturing/issues/22020 -/
+
 import Mathlib.Data.Int.Interval
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.RingTheory.PowerSeries.Expand
@@ -203,7 +206,7 @@ theorem norm_mod_three (p : ℤ × ℤ) :
 
 def normTripling (p : ℤ × ℤ) : ℤ × ℤ := (p.1 - p.2, p.1 + 2 * p.2)
 
-private def normThird (p : ℤ × ℤ) : ℤ × ℤ :=
+def normThird (p : ℤ × ℤ) : ℤ × ℤ :=
   ((2 * p.1 + p.2) / 3, (p.2 - p.1) / 3)
 
 private theorem norm_tripling (p : ℤ × ℤ) :
