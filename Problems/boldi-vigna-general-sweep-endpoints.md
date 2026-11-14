@@ -82,7 +82,13 @@ https://github.com/the-omega-institute/trureturing/issues/30231 under CLAUDE §3
 
 ## Triage
 
-The complete general endpoint result is formalized. Products of chains and Boolean
+Proved: the complete general endpoint result is formalized. The decisive
+structure is the maximum size of a union of two disjoint antichains, equivalently
+the maximum size of a three-chain-free subset. This identifies both extremal
+width cases; the identity also handles the empty and singleton carriers, while
+the source endpoint assertion keeps its at-least-two-points hypothesis.
+
+Unresolved here: products of chains and Boolean
 lattices remain with issue 25960. Tree recurrences, the lambda second-term question,
 and staircase-region classification are outside this result. No external problem
 credit follows from a partial theorem, a supplier theorem, or this dossier alone.
