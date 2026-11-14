@@ -45,11 +45,12 @@ Direct frozen dependencies of erase_empty: none.
 Direct frozen dependencies of top_mem_downCube: none.
 Direct frozen dependencies of downCube_unique: none.
 Direct frozen dependencies of induced_cube_iff: D5/S1/Ledger/BoundedTimeSlice.TailBox declaration statement_id sha256:620077c2b062d7fe99c8f2b63a7de76d46b66b50be885158d6789d33674e0286; D5/S3/Arith/Coding/CapacityBoxOneBitRigidity.OneBitEmbedding declaration statement_id sha256:a382277d81d40c7eb5f352799d8c10bdde5b5649714064ff9e0885d7d67fdbe7; D5/S3/Arith/Coding/CapacityBoxOneBitRigidity.map_unitEdge declaration statement_id sha256:767b7fc5a4102b476eb54cecb7fe3e0a06d112370bb9a3b3394d7d150612f373; D5/S3/Arith/Coding/CapacityBoxOneBitRigidity.mk declaration statement_id sha256:e4c3d965229119470ae5f69ebb1e015ad2684edfa8fbe6d18bba0de6eb334fad; D5/S3/Arith/Coding/CapacityBoxOneBitRigidity.toFun declaration statement_id sha256:3e37a2305777f9f61aa663652629c9c460a1bdcafa91439d6f2bc062cd4ed071; D5/S3/Arith/Coding/CapacityBoxOneBitRigidity.UnitEdge declaration statement_id sha256:457db4d7949335f6c43fa28b765a322e169ba2b8122789fc1c0ea9a2007fe639; D5/S3/Arith/Coding/CapacityBoxOneBitRigidity.colour_depends_only_on_layer declaration statement_id sha256:756a195ca04f1f89025d96b4fa6b88f2e91e02baca9fc208167fffe1994b895d; D5/S3/Arith/Coding/CapacityBoxOneBitRigidity.edgeColour declaration statement_id sha256:abe4bfcc54e3a0011447fcd2c82806ae732c85e31b1a12547da2b525b09c211c; D5/S3/Arith/Coding/CapacityBoxOneBitRigidity.raise declaration statement_id sha256:6a4867e887abad6d640d288504030c6930ab4631bcd86fa3d882216fcbabed43; D5/S3/Arith/Coding/CapacityBoxOneBitRigidity._proof_1 declaration statement_id sha256:a0d1eec21077c6eec5b3e628b462854a639d42698e64694f38657df573238a25; D5/S3/Arith/Coding/CapacityBoxOneBitRigidity.unitEdgeColour declaration statement_id sha256:ea64aea534233b0857077988bfc0b75da4e3471c43ee925e69dc824648c33e9c; D5/S3/Combinatorics/Graph/Hypercube.hypercube declaration statement_id sha256:e70c1ce92111881fa6bcced6ddb8eeb908912e4c390ec989d4c1880ebc362345.
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15283; typed realization and sensitivity evidence is not supplied.
+Escape audit unfinished for the published invariant_of_toggles and toggle: https://github.com/the-omega-institute/trureturing/issues/20113; typed realization and sensitivity evidence is not supplied. Existing owner audits: https://github.com/the-omega-institute/trureturing/issues/15283.
 -/
 
 import D5.S3.Combinatorics.Graph.Hypercube
 import D5.S3.Arith.Coding.CapacityBoxOneBitRigidity
+import D5.S1.Ledger.BoundedTimeSlice
 
 namespace D5.S3.Combinatorics.Hamming.InducedSubcubes
 
@@ -59,7 +60,7 @@ noncomputable section
 open Classical
 set_option maxHeartbeats 2000000
 
-private def toggle {ι : Type*} [DecidableEq ι] (u : ι → Bool) (i : ι) : ι → Bool :=
+def toggle {ι : Type*} [DecidableEq ι] (u : ι → Bool) (i : ι) : ι → Bool :=
   Function.update u i (!u i)
 
 @[simp] private theorem toggle_same {ι : Type*} [DecidableEq ι] (u : ι → Bool) (i : ι) :
@@ -141,7 +142,7 @@ private theorem edgeDir_injective (u : Fin k → Bool) :
 
 
 /-- A function on a finite Boolean cube invariant under every coordinate toggle is constant. -/
-private theorem invariant_of_toggles {ι α : Type*} [Fintype ι] [DecidableEq ι]
+theorem invariant_of_toggles {ι α : Type*} [Fintype ι] [DecidableEq ι]
     (g : (ι → Bool) → α) (hg : ∀ u i, g (toggle u i) = g u)
     (u v : ι → Bool) : g u = g v := by
   have h : ∀ s : Finset ι, ∀ a b : ι → Bool,
