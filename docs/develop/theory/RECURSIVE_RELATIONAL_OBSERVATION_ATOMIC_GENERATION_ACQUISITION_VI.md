@@ -2940,7 +2940,8 @@ one old leaf, so bilaterally at most h additional headers suffice once
 the anchor owner is reached. In the finite entrance, if the old right
 endpoint is reached first, retain that endpoint and the actual shorter
 suffix. The empty h=0 case needs no region leaves. For a tree request
-include all old leaves under x. Include the old cut intervals joining
+include all old leaves under x, and take a to be its acquired old left
+boundary if initial arrival is requested. Include the old cut intervals joining
 the current cursor to a and any saved return cut d. Enlarge to the least
 old cut interval containing these finitely many pieces. It can be empty
 when every piece is empty and all required cuts coincide.
@@ -3176,7 +3177,10 @@ The finite entrance permits the epoch before the empty preparation or
 after this actual P. Bilaterally the selected source itself has f(0)=0,
 f(1)=1 by AAV22.4: use r_0 with its genuine P preparation or r_1 with
 its genuine empty preparation, keeping all other selected seeds and their
-joint constraint fixed. Here a,b are the actual adjacent seed boundaries.
+joint constraint fixed. On the actual h_0 entrance, read its root binding
+for r_0, or follow its actual next-header link and read that header's root
+for r_1. Perform the original enrollment before the first post-epoch edit.
+Here a,b are the acquired actual adjacent seed boundaries.
 No independent seed product or replacement source is introduced.
 
 To make b a genuinely saved cursor target, start the cursor at b, copy
@@ -3262,9 +3266,13 @@ uses its acquired original old pair and genuine current left descent;
 only its actual new event is tested for relevance later. All arbitrary
 lawful addressed continuations remain enabled. Induction on completed
 transactions and their backed pending prefixes proves preservation of
-the complete declared service. AAV11's annotated four-view recovery then
-applies to the actually acquired native views with these retained
-annotations; it is not re-proved or inferred from a bare value.
+the complete declared service. At an actual returned state its native
+backing and matching current annotations still satisfy AAV11's existing
+four-view recovery. An entire historical observer state additionally
+requires its acquired matching record endpoint and state, as Proposition
+59.3 specifies. A fixed-u or certified-r native view is retained alongside
+later real samples; it is never combined with a later archive as though
+both described one attained historical observer configuration.
 
 If a VI37–57 quantum attachment is also retained, it needs its own actual
 full-bank holds, gates, ingress, detector, precision and complete-output
@@ -3301,7 +3309,9 @@ Bilaterally use the actual selected r_0 beta and r_1 alpha preparations.
 Acquire the requested root/header interval and any needed cursor corridor,
 for example the r_0 cone alone when cursor and anchor coincide. A disjoint
 r_2 is beta since floor(3s)=1 and floor(4s)=2 in AAV1.1's selected word.
-Its authentic preparation is P. Repeated original Next(1) in that actual
+Its authentic preparation is P. Actually follow h_0's next link twice,
+read the reached header's root binding and select that very original
+component before issuing its frames. Repeated original Next(1) in that actual
 component splits its successive leftmost beta descendants and stays
 outside the r_0 envelope. Both examples are ideal indefinitely supplied
 extensions only in the sense of Corollary 62.3; every finite instance is
