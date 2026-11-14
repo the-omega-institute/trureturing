@@ -19,7 +19,7 @@ internal static partial class RetireSourcesCommand
                             || prefix.StartsWith(link.ResolvedTarget + "/", StringComparison.Ordinal))))
                 && repository.SearchCurrentPaths([DigestionQuerySelection.Literal(link.Path)]).Count > 0)
                 throw new FormatException($"SOURCE_SYMLINK_REFERENCED path={link.Path} target={link.ResolvedTarget}");
-        var paths = repository.SearchCurrentPaths([BackfillInventoryLoader.RootPath.TrimEnd('/'), "docs", "Blueprint", "Library", "Papers", "Problems", "README.md", "CLAUDE.md", "D5", "Reg", "skills", "agents", ":(glob)**/*.lean"])
+        var paths = repository.SearchCurrentPaths([BackfillInventoryLoader.RootPath.TrimEnd('/'), ":(glob)**/*.md", ":(glob)**/*.lean"])
             .Where(path => !removedPrefixes.Any(prefix => path.StartsWith(prefix, StringComparison.Ordinal))
                 && !sourcePaths.Contains(path, StringComparer.Ordinal)
                 && !archivePaths.Contains(path, StringComparer.Ordinal)

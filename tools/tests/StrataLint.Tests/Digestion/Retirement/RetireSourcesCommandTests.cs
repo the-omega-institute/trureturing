@@ -56,6 +56,7 @@ public sealed class RetireSourcesCommandTests
     [InlineData("foreign-context")]
     [InlineData("incoming-link")]
     [InlineData("encoded-incoming-link")]
+    [InlineData("root-incoming-link")]
     [InlineData("utility-atom")]
     public void IncompleteOrReferencedInputRejectsWithoutChangingAnyByte(string defect)
     {
@@ -90,6 +91,7 @@ public sealed class RetireSourcesCommandTests
                 break;
             case "incoming-link": raw = Add(raw, "docs/consumer.md", "[theory](develop/theory/RetirementFixture.md#note)"); break;
             case "encoded-incoming-link": raw = Add(raw, "docs/consumer.md", "[theory](develop/theory/Retirement%46ixture.md#note)"); break;
+            case "root-incoming-link": raw = Add(raw, "CURRENT.md", "[theory](docs/develop/theory/Retirement%46ixture.md#note)"); break;
             case "utility-atom": raw = Add(raw, "D5/Consumer.lean", "-- Utility: checker; basis=refutes=atom:" + id + "\n"); break;
         }
         WriteFiles(directory.Path, raw);
@@ -97,6 +99,7 @@ public sealed class RetireSourcesCommandTests
         var result = RetireSourcesCommand.Run(directory.Path, Gateway(directory), new FakeLeanReportSource(null), Args("archive", true));
         Assert.False(result.Success, defect);
         if (defect == "forged-terminal") Assert.Contains(id, result.Error, StringComparison.Ordinal);
+        if (defect.EndsWith("incoming-link", StringComparison.Ordinal)) Assert.Contains("SOURCE_REFERENCED", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, Image(directory));
     }
 
