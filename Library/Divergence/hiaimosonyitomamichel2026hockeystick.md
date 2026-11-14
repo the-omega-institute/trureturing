@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/MaximalHockeyStickConvex
   - D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest
   - D5/S3/Quantum/Divergence/MaximalHockeyStickAllL1Convex
+  - D5/S3/Quantum/Divergence/MaximalHockeyStickAttainment
 license: citation-only
 triage: anchor
 ---
@@ -107,6 +108,30 @@ criterion or arbitrary von Neumann output theorem is asserted.
 Operator-convex generators are included under the stated necessity
 conditions. Worldwide priority of the classification remains
 unresolved; source attribution and Lean verification are distinct.
+
+Remark VII.4 raises existence of a minimal reverse test for general convex
+generators, even in finite dimension. MaximalHockeyStickAttainment proves
+that whenever the actual original sigma-finite whole-complex-L1 maximal
+value is a real number, an actual finite ReverseTest attains that number.
+The output matrices are arbitrary finite complex PSD matrices, including
+empty dimension, zero, singular and unnormalized pairs. The generator is
+real and convex on the positive ray; both actual closed-perspective
+endpoint costs may be infinite. No operator-convexity, faithfulness,
+normalization or optimizer premise is added. This is a finite-dimensional
+attainment result, not an arbitrary von Neumann algebra theorem.
+
+The proof credits Matsumoto's finite-cardinality compression and compact
+minimization architecture (arXiv:1311.4722v4, Lemmas 4.1 and 9.2--9.3).
+It retains the general endpoints by minimizing the nonnegative curvature
+remainder on a compact fixed-alphabet carrier, with the affine cost
+contribution fixed by the two output traces. Exact Caratheodory compression
+preserves both output matrices and the real cost. Infinite-cost boundary
+points remain in the compact domain, and the zero pair uses the empty
+test. The existing original-source equivalence transfers this finite
+minimum to the original value. The alphabet bound is deliberately coarse.
+Matsumoto's printed condition f(0)=0 is not assumed here; worldwide
+priority of the full endpoint-general attainment statement remains
+unresolved.
 
 ## Verified locator
 
