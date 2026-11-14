@@ -51,7 +51,8 @@ internal sealed class LyudogovskiySimplexDocument : IScribeDocumentDefinition
                 Node("layer", "An exact level", All("r", V("Nat"), OnVertex(
                     Iff(In(p, C("layer", r, n)), Eq(C("localDimension", p), r))))),
                 Node("maxDimension", "Maximum local dimension", All("n", V("Nat"),
-                    Eq(C("maxDimension", n), C("max", C("localDimensions", n))))),
+                    Eq(C("maxDimension", n), C("max", C("localDimensions", n)))),
+                    "localDimensions(n) is the finite collection of localDimension(p) over all integer partitions p of n. Every n has a partition, so this maximum is attained."),
                 Node("threshold", "Least positive occurrence", All("r", V("Nat"),
                     Eq(tau, C("sInf", C("positiveNonemptyLevels", r)))),
                     "positiveNonemptyLevels(r) contains precisely the positive n with a nonempty exact layer(r,n). The natural-number infimum is zero when this set is empty; the full threshold claim explicitly requires existence and leastness."),
@@ -64,7 +65,7 @@ internal sealed class LyudogovskiySimplexDocument : IScribeDocumentDefinition
                 Node("firstFamily", "All addable one-cell extensions", All("r", V("Nat"),
                     OnVertex(Iff(In(p, C("firstFamily", r, n)), extension)))),
                 Node("ThresholdClaim", "The full threshold question", Iff(C("ThresholdClaim"), threshold),
-                    "triangularRanksBelow(n) is the finite set of r<=n for which triangular(r)+1<=n. This proposition specifies the entire threshold and maximum problem; its definition supplies no proof of that proposition."),
+                    "triangularRanksBelow(n) is the finite set of r<=n for which triangular(r)+1<=n. The cutoff omits no feasible natural rank: r<=triangular(r), so triangular(r)+1<=n implies r<n. This proposition specifies the entire threshold and maximum problem; its definition supplies no proof of that proposition."),
                 Node("FirstOccurrenceClaim", "The full first-family question", Iff(C("FirstOccurrenceClaim"),
                     All("r", V("Nat"), Imp(Le(D(2), r), first))),
                     "Both equalities concern full finite vertex sets. The cardinality requires r+1 distinct members. This proposition includes r=2 and has no upper bound on r; its definition supplies no proof."),

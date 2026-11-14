@@ -89,6 +89,10 @@ The source carrier, virtual zero row and multiplicities must be preserved.
 The named theorem covers the complete quoted question. Independent semantic
 admission and reviewed delivery remain separate obligations. Classical
 support lemmas and aliases receive no separate external-problem credit.
+The public mathematical theorems use only `Classical.choice`, `Quot.sound`
+and `propext`. The compiled source-owner Reg mirror is retained, but its
+source-bound escape audit remains incomplete; see
+[the concrete binding gaps](https://github.com/the-omega-institute/trureturing/issues/30191).
 
 ## Triage
 
