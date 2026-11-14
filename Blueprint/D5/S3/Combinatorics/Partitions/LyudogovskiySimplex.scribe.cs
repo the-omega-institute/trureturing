@@ -8,7 +8,7 @@ internal sealed class LyudogovskiySimplexDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/lyudogovskiy2026simplex");
+        LibraryNoteRef.Create("D5/L/FiniteGeometry/lyudogovskiy2026simplex");
 
     public DocumentDefinition Create()
     {
@@ -27,20 +27,10 @@ internal sealed class LyudogovskiySimplexDocument : IScribeDocumentDefinition
                 Eq(C("maxDimension", n), C("max", C("triangularRanksBelow", n))))));
         var extension = And(C("subset", C("cells", C("staircase", r)), C("cells", C("ofPartition", p))),
             Eq(C("card", C("sdiff", C("cells", C("ofPartition", p)), C("cells", C("staircase", r)))), D(1)));
-        var bridge = OnPartitions(Imp(Lt(D(0), n), Iff(C("UnitTransfer", p, q),
-            Eq(C("card", C("inf", C("ofPartition", p), C("ofPartition", q))), Sub(n, D(1))))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "Actual integer-partition unit transfers determine finite clique maxima and exact local layers.",
             H("Unit transfers and local simplex layers"), Blocks(
                 Paragraph(Text("Nat denotes the nonnegative integers. Partition(n) is the multiset of positive parts with sum n. Every occurrence is retained. A unit transfer removes one unit from one part occurrence and adds it to a distinct occurrence or to a virtual zero row; zero remainders disappear. The resulting partition must differ from the original. YoungDiagram.ofPartition sorts the parts and draws each row as an initial interval of cells. All cliques, maxima and layer cardinalities below use the actual finite partition carrier.")),
-                Node("part", "A row with zero omitted", All("k", V("Nat"),
-                    Eq(C("part", V("k")), C("positiveSingleton", V("k")))),
-                    "positiveSingleton(k) is empty at zero and contains one occurrence of k otherwise."),
-                Node("UnitTransfer", "Two distinct occurrences", TransferFormula(),
-                    "The a+1 donor and b recipient are two slots in the multiset decomposition. Thus equal positive sizes require two occurrences; b=0 creates a new part, and a=0 deletes the donor remainder. The residual multiset s retains every unaffected occurrence."),
-                Node("graph", "The literal partition graph", OnPartitions(
-                    Iff(C("Adj", C("graph", n), p, q), C("UnitTransfer", p, q))),
-                    "Reversing the two slots reverses a transfer. Self-results are excluded, so this is a simple graph."),
                 Node("cliques", "All finite cliques", All("n", V("Nat"),
                     All("s", C("Finset", C("Partition", n)), Iff(In(V("s"), C("cliques", n)),
                         C("IsClique", C("graph", n), V("s"))))),
@@ -69,10 +59,6 @@ internal sealed class LyudogovskiySimplexDocument : IScribeDocumentDefinition
                 Node("FirstOccurrenceClaim", "The full first-family question", Iff(C("FirstOccurrenceClaim"),
                     All("r", V("Nat"), Imp(Le(D(2), r), first))),
                     "Both equalities concern full finite vertex sets. The cardinality requires r+1 distinct members. This proposition includes r=2 and has no upper bound on r; its definition supplies no proof."),
-                Describe.Lean(DescribeId.Create("lyudogovskiy-transfer-intersection"),
-                    DeclarationHandle.Create(Prefix + "transfer_iff_intersection"), H("Transfers and diagram intersections"),
-                    StatementSource.FromAuthor(Disp(bridge)), AssessedProvenance.FromRepo(Source),
-                    Blocks(Paragraph(Text("A transfer has a common size-(n-1) predecessor: shrink the donor before increasing the recipient. Column counts show inclusion after sorting, including repeated sizes. Conversely the two singleton cell differences lie in distinct rows. Decomposing the row multisets at those indices yields the donor and recipient slots, with zero rows omitted. This bridge does not itself establish either full-question proposition."))), DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("lyudogovskiy-threshold-result"),
                     DeclarationHandle.Create(Prefix + "threshold_result"), H("The complete threshold formula"),
                     StatementSource.FromAuthor(Disp(threshold)), AssessedProvenance.FromRepo(Source),
@@ -89,14 +75,6 @@ internal sealed class LyudogovskiySimplexDocument : IScribeDocumentDefinition
 
     }
 
-    private static Formula TransferFormula()
-    {
-        var a = V("a"); var b = V("b"); var s = V("s");
-        var left = Eq(C("parts", V("p")), Add(Add(C("singleton", Add(a, D(1))), C("part", b)), s));
-        var right = Eq(C("parts", V("q")), Add(Add(C("part", a), C("singleton", Add(b, D(1)))), s));
-        var slots = Ex("s", C("Multiset", V("Nat")), Ex("a", V("Nat"), Ex("b", V("Nat"), And(left, right))));
-        return OnPartitions(Iff(C("UnitTransfer", V("p"), V("q")), And(Ne(V("p"), V("q")), slots)));
-    }
     private static Formula OnPartitions(Formula b) => All("n", V("Nat"),
         All("p", C("Partition", V("n")), All("q", C("Partition", V("n")), b)));
     private static Formula OnVertex(Formula b) => All("n", V("Nat"), All("p", C("Partition", V("n")), b));

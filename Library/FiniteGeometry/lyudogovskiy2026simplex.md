@@ -7,6 +7,7 @@ doi: null
 url: https://arxiv.org/html/2603.23228v1
 claim: "Conjectures 5.1 and 5.2, repeated as Problems 6.1 and 6.2, ask for the complete triangular threshold and staircase first-occurrence family of exact local simplex layers."
 strata_touched:
+  - D5/S3/Combinatorics/Partitions/LyudogovskiyTransfers
   - D5/S3/Combinatorics/Partitions/LyudogovskiySimplex
 license: citation-only
 triage: anchor

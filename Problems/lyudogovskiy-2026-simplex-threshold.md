@@ -69,7 +69,7 @@ triangular size bounds the clique. Enlarging the first row of a staircase
 constructs sharp actual cliques at every feasible size. At the first size,
 equality forces the predecessor to be the staircase itself. Finite extrema
 and injective addable extensions yield the exact thresholds and full families. The classical tools are attributed in the
-[source note](../Library/Combinatorics/lyudogovskiy2026simplex.md).
+[source note](../Library/FiniteGeometry/lyudogovskiy2026simplex.md).
 They supply no independent external-problem credit.
 
 ## Falsifier
