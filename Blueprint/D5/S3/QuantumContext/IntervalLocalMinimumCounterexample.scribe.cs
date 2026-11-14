@@ -87,22 +87,25 @@ internal sealed class IntervalLocalMinimumCounterexampleDocument : IScribeDocume
     private static Formula CounterexampleFormula()
     {
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
-        Formula interval = F.Id("K");
-        Formula endpoints = F.Id("P");
-        Formula face = F.Id("Face");
+        Formula interval = F.Id("intervalK");
+        Formula endpoints = F.Id("pureEndpoints");
+        Formula face = F.Id("exposedFace");
         Formula m = F.Id("m");
         Formula b = F.Id("b");
         Formula affine = Call("Affine", m, b);
-        Formula local = Call("LocalMin", F.Id("id"), endpoints, D(1));
-        Formula global = Call("GlobalMin", F.Id("id"), endpoints, D(1));
+        Formula local = Call("relativeLocalMinimum", F.Id("coordinate"), endpoints, D(1));
+        Formula global = Call("globalMinimum", F.Id("coordinate"), endpoints, D(1));
         return Disp(Seq(
             Call("IsCompact", interval), Sp, Land, Sp,
             Call("IsCompact", endpoints), Sp, Land, Sp,
-            Open, Forall, Sp, m, Comma, Sp, b, Colon, Sp, real, Comma, Esc,
-            Call("IsConnected", Call(face, affine)), Close, Sp, Land, Sp,
-            local, Sp, Land, Sp, Neg, global, Dot));
+            Forall, Sp, m, Comma, Sp, b, Colon, Sp, real, Comma, Esc,
+            Call("IsConnected", Call(face, affine)), Sp, Land, Sp,
+            local, Sp, Land, Sp, Neg, Sp, global, Dot));
     }
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(F.Id(name), [.. args]);
+
+    private static Formula Call(Formula function, params Formula[] args) =>
+        new Formula.Apply(function, [.. args]);
 }

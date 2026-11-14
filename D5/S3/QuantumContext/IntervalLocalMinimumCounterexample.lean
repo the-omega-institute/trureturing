@@ -7,9 +7,10 @@
    digest: The closed unit interval has connected affine exposed faces, while its right endpoint is a relative local but not global minimum of the coordinate.
 -/
 
-import Mathlib.Topology.Instances.Real
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Tactic
+
+/-! A concrete interval obstruction to the local-to-global minimum implication. -/
 
 namespace D5.S3.QuantumContext.IntervalLocalMinimumCounterexample
 
@@ -49,7 +50,7 @@ private lemma affine_exposed_face_eq_right (m b : ℝ) (hm : 0 < m) :
       simp [intervalK]
     have hle : m * (1 : ℝ) + b ≤ m * x + b := hmax 1 h1
     have hxle : x ≤ 1 := by simpa [intervalK] using hx.2
-    have hxeq : x = 1 := by linarith
+    have hxeq : x = 1 := by nlinarith [hle, hm]
     simpa [hxeq]
   · intro hx
     have hxeq : x = 1 := by simpa using hx
@@ -57,7 +58,7 @@ private lemma affine_exposed_face_eq_right (m b : ℝ) (hm : 0 < m) :
     refine ⟨by simp [intervalK], ?_⟩
     intro y hy
     have hyle : y ≤ 1 := by simpa [intervalK] using hy.2
-    linarith
+    nlinarith [hm, hyle]
 
 private lemma affine_exposed_face_eq_left (m b : ℝ) (hm : m < 0) :
     exposedFace (fun x : ℝ => m * x + b) = ({0} : Set ℝ) := by
@@ -68,7 +69,7 @@ private lemma affine_exposed_face_eq_left (m b : ℝ) (hm : m < 0) :
       simp [intervalK]
     have hle : m * (0 : ℝ) + b ≤ m * x + b := hmax 0 h0
     have hxge : 0 ≤ x := by simpa [intervalK] using hx.1
-    have hxeq : x = 0 := by linarith
+    have hxeq : x = 0 := by nlinarith [hle, hm]
     simpa [hxeq]
   · intro hx
     have hxeq : x = 0 := by simpa using hx
@@ -76,7 +77,7 @@ private lemma affine_exposed_face_eq_left (m b : ℝ) (hm : m < 0) :
     refine ⟨by simp [intervalK], ?_⟩
     intro y hy
     have hyge : 0 ≤ y := by simpa [intervalK] using hy.1
-    linarith
+    nlinarith [hm, hyge]
 
 /-- The interval model from the one-dimensional obstruction has connected affine exposed
 faces, but its right endpoint is a relative local minimum which is not global. -/
@@ -100,7 +101,7 @@ theorem interval_affine_faces_and_endpoint_counterexample :
     · by_cases hm : 0 < m
       · rw [affine_exposed_face_eq_right m b hm]
         exact isConnected_singleton
-      · have hmneg : m < 0 := lt_of_le_of_ne (le_of_not_gt hm) (Ne.symm hm0)
+      · have hmneg : m < 0 := lt_of_le_of_ne (le_of_not_gt hm) hm0
         rw [affine_exposed_face_eq_left m b hmneg]
         exact isConnected_singleton
   · refine ⟨by simp [pureEndpoints], (1 / 2 : ℝ), by norm_num, ?_⟩
