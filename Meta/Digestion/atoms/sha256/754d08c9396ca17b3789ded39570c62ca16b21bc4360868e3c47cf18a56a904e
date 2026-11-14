@@ -1,0 +1,60 @@
+**定理 130.2（原态的纯点—排除球覆盖）。** 在 $\mathrm{EB}_{\ge1}+\mathrm{Inj}$ 下，
+
+$$
+K=\bigcup_{p\in P}\operatorname{conv}(\{p\}\cup D_p).
+\tag{Q130.6}
+$$
+
+准确地，每个原 $x\in K$ 都有 $p\in P$、$y\in D_p$、$\lambda\in[0,1]$，满足 $x=\lambda p+(1-\lambda)y$。$x\in\operatorname{ri}K$ 时可取 $0<\lambda<1$，且存在同一原 $f\in\mathcal E$ 满足 $f(p)=1,f(y)=0$。不输入 $P$ 闭、连续的 $p(x)$、全Pair、W、共同中心或PSD。
+
+证明。先说明仿射直径的成熟中间事实及原效应对应。[Bárány—Hug—Schneider][Q130BHS] §1把仿射直径定义为连接两张不同平行支撑超平面上端点的线段；§5在证明Theorem 1.2时明确引用“每个凸体的每一点属于一条仿射直径”，来源为Soltan综述assertion 3.3。此存在事实不要求一般相对位置、光滑、严格凸或多面体；那些条件属于该论文的计数定理。本处只使用存在性，不将它计为新定理。以下把所需内点版本及全原效应归一完整展开。
+
+固定 $x\in\operatorname{ri}K$，令 $L=K-x\subset W_0=\ker u$。它是含零内点的全维紧凸体。在一个仅用于紧性的辅助欧氏范数中，取 $0<r\le R$，使 $r\overline B\subseteq L\subseteq R\overline B$。定义
+
+$$
+\tau=\max\{t\ge0:-tL\subseteq L\}.
+\tag{Q130.7}
+$$
+
+可行集包含 $[0,r/R]$，又由 $r\overline B\subseteq L\subseteq R\overline B$ 有 $t\le R/r$。对每个固定 $z\in L$，条件 $-tz\in L$ 对 $t$ 闭；交遍全部 $z$ 仍闭。因此最大值达到，$0<\tau<\infty$。
+
+存在 $z\in L$ 使 $v=-\tau z\in\partial L$。否则紧集 $-\tau L$ 全含于 $\operatorname{int}L$，与补集有正距离；利用 $\|z\|\le R$，可略增 $\tau$ 而保持包含，矛盾。在 $v$ 取非零支撑泛函 $h\in W_0^*$，使 $h(v)=\max_Lh$。因为 $0\in\operatorname{int}L$，该最大值严格正。对任意 $z'\in L$，
+
+$$
+h(-\tau z')\le h(v)=-\tau h(z)
+\quad\Longrightarrow\quad h(z')\ge h(z).
+\tag{Q130.8}
+$$
+
+所以 $v,z$ 分别达到 $M=\max_Lh>0$ 和 $m=\min_Lh=-M/\tau<0$。端点 $a=x+v,b=x+z$ 在两张不同平行支撑面上，而且
+
+$$
+x=\frac{a+\tau b}{1+\tau}.
+\tag{Q130.9}
+$$
+
+将 $h(k-x)$ 按全部原 $K$ 的最小、最大值归一，齐次延伸为
+
+$$
+e(\xi)=\frac{h(\xi-u(\xi)x)-m\,u(\xi)}{M-m}\quad(\xi\in V).
+\tag{Q130.10}
+$$
+
+这里 $\xi-u(\xi)x\in W_0$。对每个非零 $c\in C$，有 $c=u(c)k$、$k\in K$，故 $0\le e(c)\le u(c)$；零向量亦满足。因此 $e\in\mathcal E$，且 $e(a)=1,e(b)=0$。这是一张实际全域原效应，不留下从支撑弦向整个原锥延拓的义务。
+
+还需把至少一端确认为原纯单点。此步使用IX119.1的Inj接触面论证；该论证只用VII103.2的面分类，不使用三球的特定维数。具体地，$F_0=K\cap\ker e$、$F_1=\{e=1\}\cap K$ 是非空紧真面。若 $F_0$ 是单点，它就是原纯点。否则 $F_0=D_s$。对 $F_1$ 的任意原极点 $t$，同一 $e$ 给 $D_s\subseteq D_t$；极大性给相等，Inj迫 $t=s$。紧凸面由其极点凸生成，故 $F_1=\{s\}$。所以两端面至少一张是纯单点，不需要全部 $P$ 紧。
+
+若 $F_1=\{p\}$，则 $a=p$、$b\in D_p$，在(Q130.9)取 $\lambda=1/(1+\tau)$、$f=e$。若采用 $F_0=\{p\}$，则 $b=p$、$a\in D_p$，取 $\lambda=\tau/(1+\tau)$、$f=u-e$。两种权重都严格在零一之间。
+
+最后，边界上的非纯 $x$ 属于某个支撑真面，VII103.2使该面为某个 $D_p$；取 $y=x,\lambda=0$。若 $x$ 纯，取 $p=x,\lambda=1$，再任取非空 $D_p$ 中的 $y$。反向包含只用 $K$ 凸。证明并未对移动纯标签取极限。证毕。
+
+由整个球内的径向分解，还可在这一较弱域写
+
+$$
+x=\lambda p+(1-\lambda)\bigl(\theta q+(1-\theta)r\bigr),
+\quad q,r\in P\cap D_p,\quad r=2c_p-q,\quad 0\le\theta\le1.
+\tag{Q130.11}
+$$
+
+球心时任选直径，非球心时取经过 $y$ 的直径。$p\perp q,p\perp r$ 已有；此时尚未由EB+Inj取得 $q\perp r$ 或三结果共同完成。(Q130.11)在E0下成立，但不是无条件E0状态谱性。
+

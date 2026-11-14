@@ -1,0 +1,40 @@
+**定理 4.3（(4.1) 对 ℓ 一致）。** 设 $\kappa>1$，令
+
+$$
+u_0(\kappa)=\max\Bigl(6,\ \bigl(2^{\kappa+1.01}\bigr)^{1/(\kappa-1)}\Bigr),\qquad X(\kappa)=e^{u_0(\kappa)} .
+$$
+
+则对一切实数 $x\ge X(\kappa)$ 与一切整数 $\ell\ge2$，有 $F^{[\kappa]}(x^{1/\ell},\ell)>F^{[\kappa]}(x,1)$。因此在该文定理 4.3 的单调性下，若 $x=x_1^{[\kappa]}(\epsilon)\ge X(\kappa)$，则对一切 $\ell\ge2$ 有 $x_\ell^{[\kappa]}(\epsilon)>x^{1/\ell}$。
+
+**证明。** 记 $u=\log x$、$y=x^{1/\ell}$、$t=1/y$、$h=t^\ell=e^{-u}$。由引理 4.1，所需不等式等价于
+
+$$
+\ell\bigl(B(\sigma_\ell)-B(\sigma_{\ell-1})\bigr)>B(h).
+$$
+
+(1) **凹性。** $\sigma_\ell-\sigma_{\ell-1}=h$，且 $B'$ 递减，故左端 $\ge\ell hB'(\sigma_\ell)$。
+
+(2) **$\sigma_\ell$ 的上界。** $\sigma_\ell=\frac{t(1-t^\ell)}{1-t}=\frac{1-h}{y-1}$，而 $y-1=e^{u/\ell}-1\ge u/\ell$，故 $\sigma_\ell\le w:=\ell(1-h)/u$。
+
+(3) **化为弹性。** 由 $B'$ 递减，$\ell B'(\sigma_\ell)\ge\ell B'(w)=\ell\varphi(w)/w=\frac{u}{1-h}\varphi(w)$。
+
+(4) **消去 $\ell$。** $\ell\ge2$ 给出 $w\ge s_0:=2(1-h)/u$，由 $\varphi$ 递增，
+
+$$
+\ell\bigl(B(\sigma_\ell)-B(\sigma_{\ell-1})\bigr)\ \ge\ h\cdot\frac{u}{1-h}\,\varphi(s_0).
+$$
+
+右端与 $\ell$ 无关。
+
+(5) **右端。** 由引理 4.2，$B(h)<\kappa h$。所以只需证 $\frac{u}{1-h}\varphi(s_0)\ge\kappa$。
+
+(6) **验证 (5) 中的不等式。** 由引理 4.2，$\varphi(s_0)\ge\kappa(r_0-r_0^\kappa)$，其中 $r_0=s_0/(1+s_0)=\frac{2(1-h)}{u+2(1-h)}$。于是
+
+$$
+\frac{u}{1-h}\cdot\frac{\varphi(s_0)}{\kappa}\ \ge\ \frac{2u}{u+2(1-h)}-\frac{u\,r_0^\kappa}{1-h}\ \ge\ \frac{2u}{u+2}-\frac{2^\kappa u^{1-\kappa}}{1-e^{-u}} .
+$$
+
+这里用了 $r_0\le 2/u$。当 $u\ge6$ 时，$\frac{2u}{u+2}\ge\frac32$，$\frac{1}{1-e^{-u}}<1.003$。又 $u\ge(2^{\kappa+1.01})^{1/(\kappa-1)}$ 给出 $u^{\kappa-1}\ge2^{\kappa+1.01}$，从而 $2^\kappa u^{1-\kappa}\le2^{-1.01}<0.4967$，第二项 $<0.4982$。于是右端 $>\tfrac32-0.4982>1$，即 $\frac{u}{1-h}\varphi(s_0)>\kappa$。
+
+由 (1)–(6) 即得结论。关于 $x_\ell$ 的推论：$F^{[\kappa]}(\cdot,\ell)$ 严格递减，且 $F^{[\kappa]}(x_\ell,\ell)=\epsilon=F^{[\kappa]}(x,1)<F^{[\kappa]}(x^{1/\ell},\ell)$。证毕。
+

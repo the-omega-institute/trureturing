@@ -1,0 +1,31 @@
+**定理 152.4（两落点、纯行达到与单标签 least）。** 若 $\mathscr L(p)$ 至少含两个不同点，则
+
+$$
+T_p(s)=B_p(s)\qquad(s\in P).
+\tag{XII152.10}
+$$
+
+若再有 $\mathcal A_p=\{e_p\}$，则同一个原 $e_p$ 是完整菜单的 least：
+
+$$
+T_p(x)=e_p(x)\quad(x\in K),\qquad
+f-e_p\in C^\ast\quad(f\in\mathcal F_p).
+\tag{XII152.11}
+$$
+
+而且 $\beta_{D_p}=1$，满刻度沿 $p$ 的整个有限零路分量传播。这些结论不要求全域 Inj。
+
+证明。若(XII152.10)在某个原纯输入失败，定理152.3就把全部落点限制到一个点，矛盾。单点性再使 $T_p(s)=e_p(s)$ 对全部原纯 $s$ 成立。对每张固定 $f\in\mathcal F_p$，$f-e_p$ 因而在 $P$ 上非负。由有限维 $K=\operatorname{conv}P$、$C=\operatorname{cone}P$，同一线性泛函在整个 $C$ 上非负；$e_p$ 自己仍在完整菜单中，得到(XII152.11)。没有将逐输入的不同效应拼成仿射函数。
+
+还须支付从这个单标签 least 到真实三角的桥。令 $g=u-e_p$。PR 的严格纯端点暴露给 $T_p(s)<1$ 对所有 $s\ne p$ 成立；由原纯分解及 $T_p=e_p$，有 $Z(g)=\{p\}$。任取 $q\in S_p$ 以及 $h\in\mathcal A_q$。零对称给 $p\in D_q$，故 $h(p)=0$、$h(q)=1$，于是 $u-h\in\mathcal F_p$。least 使
+
+$$
+k=(u-h)-e_p=g-h\in C^\ast,\qquad
+k(p)=k(q)=0.
+\tag{XII152.12}
+$$
+
+$k$ 非零，否则 $h=g$，但 $Z(h)=D_q$ 为非退化三球，与 $Z(g)=\{p\}$ 矛盾。故 $Z(k)$ 是含不同纯点 $p,q$ 的非空真面，由原面分类等于某个 $D_r$。零对称给 $p,q,r$ 两两正交，构成真实原三角。准确消费 [IX114.8][Q152IX] 的同球刻度和双向零边传播，即得 $\beta_{D_p}=1$ 及所述分量传播。证毕。
+
+最后一段证明本身给更一般的单标签事实：只要某个 $p$ 已有真正的全菜单 least，它就进入真实三角并使该分量满刻度，不需要两落点前件。两落点与 $\mathcal A_p$ 单点性承担的是取得这个 least 的前一步。反之，若 $\mathcal A_p$ 单点且 $\beta_{D_p}>1$，必有某个原纯 $s$ 满足 $\Delta_p(s)>0$，从而 $\mathscr L(p)$ 至多一个点；否则上述纯行到 least 的推导将迫使满刻度。
+

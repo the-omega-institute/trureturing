@@ -115,6 +115,14 @@ internal sealed class AuricOcticRanksDocument : IScribeDocumentDefinition
             + "followed by n and projection to S. The literal subtype-indexed matrix block represents "
             + "that map; extension by zero in the target is injective. The actual cut-free endpoint "
             + "uses this identity to state its conclusion using the actual matrix entries.");
+        var bound = Dsc("cross_rank_bound", "Crossing rank bounds the projection dimension",
+            Context(All("n", Operators, All("S", Sets, Imp(And(
+                Equal(Call("ker", V("n")), U), Equal(Call("range", V("n")), U),
+                Equal(Call("card", O), D(8)), Equal(Call("finrank", K, U), D(4))),
+                Leq(Mul(D(2), R(S)), Add(Card(S), Call("crossRank", V("n"), S))))))),
+            "Rank-nullity for extension from the complementary coordinates, followed by n and "
+            + "projection to S, gives this bound whenever n has kernel and image U. Together with "
+            + "strict projection ranks it forces every nontrivial directed crossing block to be nonzero.");
         var cut = Dsc("cut_free_of_actual_ranks", "Transitive strict half-ranks exclude a cut on eight labels",
             Context(Action(All("n", Operators, Imp(And(Equal(Call("ker", V("n")), U),
                 Equal(Call("range", V("n")), U), Equal(Call("card", O), D(8)),
@@ -134,6 +142,6 @@ internal sealed class AuricOcticRanksDocument : IScribeDocumentDefinition
                 + "indicated row and column subtypes. These symbolic dimension and orbit arguments are "
                 + "not a finite certified instance or enumeration. The source is the rank and cut argument "
                 + "of general section 43.2, together with the strict-rank mechanism of section 26. "
-                + "No mathematical novelty is claimed.")), projected, containment, equality, orbit, strict, matrix, cut)));
+                + "No mathematical novelty is claimed.")), projected, containment, equality, orbit, strict, matrix, bound, cut)));
     }
 }

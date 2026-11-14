@@ -1,0 +1,7 @@
+**完整中文图景。** 仍在同一块原状态体中比较两种测试：一种允许使用全部原确认菜单，另一种要求把背后整颗排除球都清零。如果前一种能读得严格更低，那么所有达到最低值的测试都只能瞄准同一个真实零点；邻近标签的最优测试也把全部零点收向那里。因此所有向这个标签塌来的球只能落到同一处。若确实有两处不同落点，整行纯读数就已能交给整球清零测试；这些测试再唯一时，同一张尺才支配整个原菜单，并把该标签接进真实正交三角。尚未证明的是，剩下的单落点或多尺情形是否不可能，所以近处两态必有共同排除点这一条仍然保留。实际仪器、复合纠缠、全旁观 CP、物理时间、Hamiltonian 和能量继续各按原独立合同承担。
+
+[Q152IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.2—114.5：完整原面、严格纯暴露、原纯紧性及球内刻度；IX114.8：真实三角与满刻度传播；IX115.5：实际整球极限二择。"
+[Q152X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X125.2式(X125.8)：完整原菜单最优效应的全域取零；X125.3：非空紧凸整球零确认面及准确原零面；X126.6保留全域Inj及单标签唯一性的较强前件。"
+[Q152N]: https://arxiv.org/html/2312.13213v2 "G. Niestegge，Quantum transition probability，§3：非负仿射下确界及另列的性质(**)。"
+[Q152B]: https://arxiv.org/html/2411.18589v2 "G. Niestegge，Bit symmetry entails the symmetry of the quantum transition probability，Theorem 1。"
+
