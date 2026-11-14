@@ -1,0 +1,70 @@
+**推论 145.4（固定根小正条件下的条件返回及严格高段）。** 在定义145.1的整个原域中，假设
+完整 EB3、完整纯 PR，以及对事先固定的同一个 $o$ 成立的 $L_\varepsilon(o)$。
+则 $R_o$ 成立；对每个满足 (XII145.6) 的目标，$C_q$ 与 (XII145.8) 均成立，
+因而具有定理145.3的全部真实标签返回结论。特别地，
+
+$$
+\{q\in P:0<T_o(q)<\varepsilon\}\ \cup\ S\ \cup
+\{q\in P:T_o(q)>1-\varepsilon\}\ \subseteq B.
+\tag{XII145.25}
+$$
+
+这里高段使用的正是 $L_\varepsilon(o)$ 的阈值，不另选更有利的阈值。
+
+证明。先支付根合同，不调用 X133.6 的全覆盖结论。
+固定 $S\cong S^2$，由 X130.2、X133.3 的同一紧见证投影，
+
+$$
+B=\operatorname{pr}_K
+\{(s,z,f)\in S\times K\times\mathcal E:f(s)=1,\ f(z)=0\}
+\tag{XII145.26}
+$$
+
+紧闭。零对称给 $o\in D_s$ 对任意 $s\in S$ 成立，故 $o\in B$。
+$L_\varepsilon(o)$ 已经把全部原小正带目标送入这个固定 $B$。
+
+逐点复用 X132.4 在 $p=o$ 的证明：若 $o$ 无真实三角，则 $A\cap B=\varnothing$。
+否则从某个非空紧原面 $A\cap D_s$ 的极点取原纯点，就给 $o,s$ 的第三点。
+紧效应区间使固定 $T_o$ 为一致 Lipschitz 效应族的 minimum，所以在紧 $B$ 上有
+$\mu=\min_BT_o>0$。X132.2 供应原纯 $z$，满足
+$0<T_o(z)<\min\{\mu,\varepsilon\}$；但 $L_\varepsilon(o)$ 又给 $z\in B$，矛盾。
+因此根有一个真实三角，X133.2 的标签论证给 $I(A)=\{o\}$。
+这一固定根反证只消费 $L_\varepsilon(o)$，没有把它提升成每根条件 $\mathsf L$。
+
+该根三角在 $A$ 上给一条原效应读满一、零的直径。
+现在使用 IX114.5 的完整纯 PR 共同刻度：$A$ 中某一纯方向的系数为 $1/2$，
+故所有纯方向的共同系数都是 $1/2$。对每个 $s\in S$，原球内对径
+$a_s=2c_o-s$ 遂满足 $T_s(a_s)=0$，从而 $(o,s,a_s)$ 是实际根三角。
+X133.2 给每个 $I(D_s)=\{s\}$；同时 $s\in D_{a_s}\subseteq B$，故 $S\subseteq B$。
+连同 (XII145.26) 与 $o\in B$，这逐项支付了 $R_o$。
+关联的合法域与目标上完整球面的同胚性，已在 (XII145.4)、(XII145.10) 按这些根条件证明。
+整个论证不需要给未覆盖目标定义 $\pi_o(q)$。
+
+接着支付 $C_q$。对每个 $s\in S$，刚取得的根三角在 $D_s$ 上给 $o,a_s$ 的满刻度直径。
+再次应用 IX114.5，$D_s$ 的共同系数为 $1/2$。
+于是对每个 $x\in S_s$，其同一完整球内对径 $y=2c_s-x$ 满足 $T_x(y)=0$。
+三点 $(s,x,y)$ 因而是原纯零三角。对实际的 $x=x_s$ 使用它，就给全部 $C_q$；
+这一步并非把根三角本身改称邻边三角。
+完整纯 PR 还对任一 $q,s$ 给 $T_q(s)=T_s(q)$，故任取一个 $s$ 即满足 (XII145.8)。
+定理145.3现在给所有满足 $S_q\subseteq B$ 的上述目标返回。
+
+最后只对严格高段支付该前件。若 $q=o$，已由 $o\in B$ 处理。
+其余取 $q\in P$ 且 $T_o(q)>1-\varepsilon$，因 $\varepsilon<1$，有 $q\notin A$。
+对任意 $x\in S_q$，取真实 $f\in\mathcal F_q$ 使 $f(x)=0$；
+$u-f\in\mathcal F_x$。在同一个原纯根 $o$ 上评价，并且只对纯对使用 PR，得到
+
+$$
+T_o(q)+T_o(x)=T_q(o)+T_x(o)
+\le f(o)+(u-f)(o)=1.
+\tag{XII145.27}
+$$
+
+于是 $0\le T_o(x)<\varepsilon$。若为零，则 $x\in S\subseteq B$；若严格正，则
+$L_\varepsilon(o)$ 给 $x\in B$。这对整个真实 $S_q$ 的每一点成立，所以 $S_q\subseteq B$，
+定理145.3使 $q\in B$。小正带与 $S$ 的包含已逐项证明，得到 (XII145.25)。证毕。
+
+
+第139章的拓扑与紧性结论仍未支付 $Q=P$ 或 $\mathsf{MC}$。
+第140章在完整 EB3 之外另需 $\mathsf{ZC}$（或 $\mathsf{BC}$）、$\mathsf{Conn}$ 与 $\mathsf{Seed}$，才得到全域球心等式与 $\mathsf{MC}$。
+该条件结论不供应本章不假设 $\mathsf{ZC}$ 或 $\mathsf{BC}$ 的真实标签返回定理。
+

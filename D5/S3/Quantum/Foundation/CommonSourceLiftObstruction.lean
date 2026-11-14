@@ -58,7 +58,7 @@ private def baseRestriction : (V →L[ℝ] ℝ) →ₗ[ℝ] C(base C u, ℝ) whe
   map_add' _ _ := by ext; rfl
   map_smul' _ _ := by ext; rfl
 
-private theorem original_dual_bound
+theorem original_dual_bound
     (hc : IsClosed (C : Set V)) (hs : ∀ z ∈ C, z ≠ 0 → 0 < u z)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) :
     ∃ A : ℝ, 0 < A ∧ ∀ b : V →ₗ[ℝ] ℝ,
@@ -86,7 +86,7 @@ private theorem original_dual_bound
   simpa only [map_zero, dist_zero_right] using
     hb.le_mul_dist b.toContinuousLinearMap 0
 
-private theorem positive_base_norm
+theorem positive_base_norm
     (hc : IsClosed (C : Set V)) (hs : ∀ z ∈ C, z ≠ 0 → 0 < u z)
     (p : pure C u) (b : V →ₗ[ℝ] ℝ) (hb : ∀ z ∈ C, 0 ≤ b z) :
     FixedZeroObstruction.stateNorm hc hs b = baseMaximum (C := C) (u := u) b := by

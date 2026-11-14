@@ -16,6 +16,7 @@ ALLOW_LOW_DISK="${5-0}"
 [[ $# -le 5 ]] || { echo "WORKTREE_INIT_UNEXPECTED_ARGUMENT" >&2; exit 64; }
 
 cd "$ROOT"
+python3 -B "$ROOT/tools/scripts/worktree/worktree_maintenance.py" --source "$ROOT" notify >/dev/null || true
 disk_arguments=(check-disk --path "$ROOT" --path "$TARGET")
 if [[ "$ALLOW_LOW_DISK" == 1 ]]; then disk_arguments+=(--allow-low-disk); fi
 unset WORKTREE_REQUIRE_DISK_CHECK
