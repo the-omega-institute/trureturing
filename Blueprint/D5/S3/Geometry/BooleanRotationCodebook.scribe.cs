@@ -5,9 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 internal sealed class BooleanRotationCodebookDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef MultisetVolume =
-        LibraryNoteRef.Create("D5/L/Geometry/kovacevictan2018multisetvolume");
-    private static readonly LibraryNoteRef RogersShephard =
-        LibraryNoteRef.Create("D5/L/Geometry/colesanti2005rogersshephard");
+        LibraryNoteRef.Create("D5/L/FiniteGeometry/kovacevictan2018multisetvolume");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Uniform finite-codebook storage bounds for the chapter35 Boolean planar-rotation family under one fixed Row-0 decoder",
@@ -26,12 +24,12 @@ internal sealed class BooleanRotationCodebookDocument : IScribeDocumentDefinitio
             + "[sin alpha, cos alpha]] applied to the stored subset sum; equality is literal matrix equality "
             + "with period 2 pi and no global-phase quotient.")),
         Paragraph(Text(
-            "The volume coefficient is placed against its verified precedents. Kovačević and Tan, "
-            + "Lemma 2 and equation (17), give the corresponding constrained multiset-body volume; "
+            "The signed-body volume formula and its orthant-product proof have established precedents. Kovačević and Tan, "
+            + "Lemma 2 and equation (17), give the constrained multiset-body volume and the same orthant decomposition; "
             + "Colesanti's introduction, equation (5), records the Rogers–Shephard difference-body bound. "
-            + "The repository theorem proves the real Boolean signed-body identity and the circle-covering "
-            + "application locally; these citations are provenance and context, not claims that the full "
-            + "no-wrap, decoder, or codebook result is reproduced in either source.")),
+            + "The volume identity below formalizes this established simplex-difference calculation; the circle-covering "
+            + "application also uses the exact circular error fiber. Neither source is cited as proving the full "
+            + "no-wrap, prescribed-decoder or codebook result.")),
         Describe.Lean(DescribeId.Create("boolean-rotation-circular-error"),
             DeclarationHandle.Create("D5/S3/Geometry/BooleanRotationCodebook.circularError"),
             H("Circular error with a prescribed period"), StatementSource.WithoutFormula(),
@@ -74,7 +72,7 @@ internal sealed class BooleanRotationCodebookDocument : IScribeDocumentDefinitio
             H("Exact volume of the signed body"), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(MultisetVolume), Blocks(
             Paragraph(Text("For every natural n and positive epsilon, the Lebesgue volume of the signed body on Fin n is binomial(2n,n) times epsilon to the power n divided by n factorial. This includes dimension zero. Partition by the subset of nonnegative coordinates. The closed chambers cover the body and are pairwise disjoint outside coordinate hyperplanes. A coordinate permutation preserves volume and identifies each chamber with the signed orthant having p positive and n minus p negative coordinates. There are binomial(n,p) such choices. The sum of their reciprocal factorial coefficients equals binomial(2n,n) divided by n factorial, by the sum of squared binomial coefficients.")),
-            Paragraph(Text("The volume identity is a Euclidean statement. Kovačević and Tan's constrained-multiset volume is the cited precedent for the same binomial coefficient; this theorem is a local real-valued Boolean proof and does not claim originality for that coefficient. The capacity lower bound uses the identity together with the exact error fiber and finite covering inequality on the product circle. The Rogers–Shephard locator is contextual only; it is not silently substituted for the compiled proof.")))),
+            Paragraph(Text("The volume identity is a Euclidean statement. Kovačević and Tan's Lemma 2 gives the same volume formula and orthant-product argument for integer radius and positive dimension. Positive real radii follow by dilation of the same body. Equivalently, in dimensions at least two the formula is the simplex equality case of the classical Rogers–Shephard difference-body inequality, as stated in Colesanti's introduction, equation (5). Neither the formula nor this orthant calculation is claimed as new. The capacity lower bound uses the identity together with the exact error fiber and finite covering inequality on the product circle. These Euclidean volume precedents do not by themselves give the circular error fiber or the codebook bounds.")))),
         Describe.Lean(DescribeId.Create("boolean-rotation-adequate"),
             DeclarationHandle.Create("D5/S3/Geometry/BooleanRotationCodebook.Adequate"),
             H("A finite codebook with uniform queries"), StatementSource.WithoutFormula(),
@@ -83,10 +81,10 @@ internal sealed class BooleanRotationCodebookDocument : IScribeDocumentDefinitio
         Describe.Lean(DescribeId.Create("boolean-rotation-capacity-lower-bound"),
             DeclarationHandle.Create("D5/S3/Geometry/BooleanRotationCodebook.finite_codebook_lower_bound"),
             H("Uniform finite-codebook capacity lower bound"), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(RogersShephard), Blocks(
+            AssessedProvenance.FromRepo(), Blocks(
             Paragraph(Text("For every natural n, positive epsilon, period L greater than three times epsilon, and adequate finite codebook C, its cardinality times binomial(2n,n) times epsilon to the power n is at least n factorial times L to the power n. In particular L equal to 2 pi gives the stated planar-rotation capacity lower bound throughout zero less than epsilon less than 2 pi divided by three.")),
             Paragraph(Text("Equip each additive circle of period L with Haar measure of mass L. The product circle has mass L to the power n. Lift its zero-codeword error fiber to the centered period box using the measure-preserving coordinate quotient maps. Within this box the exact error fiber theorem identifies the lifted fiber with a subset of the signed body, whose volume is binomial(2n,n) times epsilon to the power n divided by n factorial. Adequacy covers the product circle by one translate of this fiber per codeword. Translation invariance and finite subadditivity give the cardinality inequality.")),
-            Paragraph(Text("The theorem constrains finite codebooks with this prescribed subset-sum error relation. The product grid upper bound supplies a fixed decoder with literal planar rotation matrices. It makes no claim about arbitrary decoders, computational time, finite hardware, learning or empirical physics. Colesanti's Rogers–Shephard inequality is a related volume precedent, not the proof of this torus-covering statement."))))),
+            Paragraph(Text("The theorem constrains finite codebooks with this prescribed subset-sum error relation. The product grid upper bound supplies a fixed decoder with literal planar rotation matrices. It makes no claim about arbitrary decoders, computational time, finite hardware, learning or empirical physics. Colesanti's Rogers–Shephard inequality is a related volume precedent, not the proof of this torus-covering statement.")))),
         Describe.Lean(DescribeId.Create("boolean-rotation-literal-matrix"),
             DeclarationHandle.Create("D5/S3/Geometry/BooleanRotationCodebook.rotation"),
             H("Literal planar rotation"), StatementSource.WithoutFormula(),
