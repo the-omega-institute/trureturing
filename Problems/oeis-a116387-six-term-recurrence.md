@@ -105,7 +105,7 @@ branch, recurrence or eventual onset is a different target.
 
 ## Evidence
 
-The candidate Lean address is
+The Lean address is
 `D5/S1/Recurrence/Algebraic/MatharA116387SixTermRecurrence.result`.
 Its claim includes the explicit native source specification and the
 unbounded recurrence. Its helpers provide only the source construction,
@@ -113,18 +113,19 @@ normalization, bridge, differential equation and operator equation
 required by this result. Classical power-series identities and
 polynomial normalization are not separate open-problem resolutions.
 
-The retained sources are an unverified proof candidate. Current Lean
-compilation, accepted axiom closure, source-bound Reg evidence and the
-canonical rendered projection are unavailable. The original target
-remains unsettled as a formal delivery. The unfinished audit of `result`
-is associated with issue #30173; no validated binding is asserted.
+The D5 theorem and its six-role whole-law Reg mirror compile with the
+pinned Lean toolchain. The theorem supplies the native construction and
+the full recurrence without an extra hypothesis. Current scoped axiom
+and source-binding evidence and the canonical rendered projection remain
+to be extracted. The unfinished audit of `result` is associated with
+issue #30173; no validated binding is asserted.
 
 ## Triage
 
 | Assertion | Mechanism and boundary |
 | --- | --- |
-| Native source | Open as a compiled result: the candidate gives construction, quadratic uniqueness, normalized-root uniqueness and unit inverse |
-| Exact six-term event | Open as a compiled result: the candidate differential certificate and six shifts target every $n\ge5$ |
+| Native source | Proved in Lean: construction, quadratic uniqueness, normalized-root uniqueness and unit inverse |
+| Exact six-term event | Proved in Lean by the differential certificate and all six shifts for every $n\ge5$, including $n=5$ |
 | Polynomial certificate | Computed symbolically: the three ordered operator residuals and forcing residual are zero; this is not Lean evidence |
 | Finite coefficients | No finite-prefix experiment substitutes for the universal theorem |
 | General algebraic recurrences | Classical supporting method, with no separate open-problem claim |
@@ -133,9 +134,9 @@ is associated with issue #30173; no validated binding is asserted.
 
 ## ASSUMED-UNVERIFIED
 
-The candidate's Lean elaboration, proof terms, standard-three axiom
-closure and source-bound registration have not been verified. The build
-blocker and missing evidence are recorded in issue #30173. Source
-structure and symbolic polynomial checks do not establish
-the universal recurrence. No theorem settlement or publication is
-claimed by this dossier.
+The standard-three axiom report, source-bound registration and canonical
+projection remain unverified pending their actual scoped producers.
+Independent source-fidelity and admission review, freezing and publication
+are separate from the compiled theorem. Universal absence of prior proofs
+is not established by the bounded literature comparison. No publication
+or external-problem credit is claimed by this dossier.
