@@ -22,7 +22,7 @@ namespace D5.S3.Geometry.AlgebraicBoundary.OriginalBoundaryHost
 
 open private original_finite_boundary_ideal
   from D5.S3.Geometry.AlgebraicBoundary.ConeFiniteBoundary
-open private original_minimum_roots_and_branch
+open private original_minimum_roots_and_branch whole_branch_boundary_vanishing ray_boundary_ideal
   from D5.S3.Geometry.AlgebraicBoundary.ConeMinimumBranch
 open private section_radial_geometry
   from D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry
@@ -109,20 +109,6 @@ theorem original_entire_boundary_host {E : Type*} [NormedAddCommGroup E]
       (∀ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, r ≠ 0 → r.totalDegree ≤ d →
         (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) →
           ∃ a : ℝ, a ≠ 0 ∧ r = MvPolynomial.C a * q) ∧
-      (Module.finrank ℝ E = 1 →
-        ∃ (u : E →L[ℝ] ℝ) (b : E) (l : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ),
-          u b = 1 ∧ b ∈ interior (C : Set E) ∧
-          (∀ x, x = u x • b) ∧ (∀ x, x ∈ C ↔ 0 ≤ u x) ∧
-          frontier (C : Set E) = {0} ∧ l ≠ 0 ∧ l.IsHomogeneous 1 ∧ l.totalDegree = 1 ∧
-          (∀ x, MvPolynomial.eval (c x) l = u x) ∧
-          (∀ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ,
-            (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ↔ l ∣ r)) ∧
-      (∀ (h : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ) (k : ℕ) (e : E), h.IsHomogeneous k →
-        e ∈ interior (C : Set E) → MvPolynomial.eval (c e) h ≠ 0 →
-        {x : E | ∀ t : ℝ, (linePolynomial h (-c x) (c e)).eval t = 0 → 0 ≤ t} =
-          (C : Set E) →
-        ∃ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, r ≠ 0 ∧ r.totalDegree = h.totalDegree ∧
-          ∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ∧
       (let U : Set E := {x | MvPolynomial.eval (c x) p ≠ 0};
         closure (⋃₀ {D ∈ connectedComponentIn U '' U | D ⊆ interior (C : Set E)}) =
           (C : Set E)) ∧
@@ -169,21 +155,43 @@ theorem original_entire_boundary_host {E : Type*} [NormedAddCommGroup E]
         ∃ G : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ, G ≠ 0 ∧ G.IsHomogeneous g.totalDegree ∧
           G.totalDegree = g.totalDegree ∧
           (∀ v, MvPolynomial.eval (c (b + J v)) G = MvPolynomial.eval v g) ∧
-          ∀ x ∈ frontier (C : Set E), MvPolynomial.eval (c x) G = 0)) := by
+          ∀ x ∈ frontier (C : Set E), MvPolynomial.eval (c x) G = 0)) ∧
+    (Module.finrank ℝ E = 1 →
+      ∃ (u : E →L[ℝ] ℝ) (b : E) (l : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ),
+        u b = 1 ∧ b ∈ interior (C : Set E) ∧
+        (∀ x, x = u x • b) ∧ (∀ x, x ∈ C ↔ 0 ≤ u x) ∧
+        frontier (C : Set E) = {0} ∧ l ≠ 0 ∧ l.IsHomogeneous 1 ∧ l.totalDegree = 1 ∧
+        (∀ x, MvPolynomial.eval (c x) l = u x) ∧
+        (∀ r : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ,
+          (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ↔ l ∣ r)) ∧
+    (∀ (h : MvPolynomial (Fin (Module.finrank ℝ E)) ℝ) (k : ℕ) (e : E), h.IsHomogeneous k →
+      e ∈ interior (C : Set E) → MvPolynomial.eval (c e) h ≠ 0 →
+      {x : E | ∀ t : ℝ, (linePolynomial h (-c x) (c e)).eval t = 0 → 0 ≤ t} =
+        (C : Set E) →
+      h ≠ 0 ∧ ∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) h = 0) := by
   dsimp only
   let c : E ≃L[ℝ] (Fin (Module.finrank ℝ E) → ℝ) := (Module.finBasis ℝ E).equivFunL
   refine ⟨original_section_boundary C hs hfull u hu,
-    original_quantum_consumer C hfull u hu, ?_, ?_, ?_, ?_, ?_⟩
+    original_quantum_consumer C hfull u hu, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro a ha
     exact section_radial_geometry C u hu a ha
   · intro p hp hvan
     exact original_finite_boundary_ideal c C hs hfull p hp hvan
   · intro p hp hd hvan
-    exact original_minimum_roots_and_branch c C hs hfull p hp hd hvan
+    obtain ⟨d, q, hd, hdp, hq, hh, hsq, hv, hm, hi, hpos, huq, _, _, hrec, hroots⟩ :=
+      original_minimum_roots_and_branch c C hs hfull p hp hd hvan
+    exact ⟨d, q, hd, hdp, hq, hh, hsq, hv, hm, hi, hpos, huq, hrec, hroots⟩
   · intro κ _ B hB hc f hf hd hvan a ha hfa
     exact interior_zero_factor hB hc f hf hd hvan ha hfa
 
   · intro hdim
     exact original_section_degree c C hs hfull u hu hdim
+
+  · intro hdim
+    exact ray_boundary_ideal c C hs hfull hdim
+  · intro h k e hh he hhe hbranch
+    refine ⟨?_, whole_branch_boundary_vanishing c C h hh he hhe hbranch⟩
+    intro hz
+    exact hhe (by simp [hz])
 
 end D5.S3.Geometry.AlgebraicBoundary.OriginalBoundaryHost
