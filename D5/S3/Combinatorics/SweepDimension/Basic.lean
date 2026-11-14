@@ -1,4 +1,4 @@
-/- GID: D5/S0/Certificates/Combinatorics/SweepDimension
+/- GID: D5/S3/Combinatorics/SweepDimension/Basic
    generality: G
    mirror-B: D5/B/S0/Certificates/Combinatorics/SweepDimension
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -15,7 +15,7 @@ import Mathlib.Data.Fintype.Card
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S0.Certificates.Combinatorics.SweepDimension
+namespace D5.S3.Combinatorics.SweepDimension.Basic
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [PartialOrder α]
 
@@ -135,4 +135,4 @@ theorem theta_le_of_sweep {k : ℕ} (orders : Fin k → LinearOrderRel (α := α
     Fintype.card_le_of_injective chooseOrder hinj
   simpa [Fintype.card_coe, hcard] using hcardle
 
-end D5.S0.Certificates.Combinatorics.SweepDimension
+end D5.S3.Combinatorics.SweepDimension.Basic
