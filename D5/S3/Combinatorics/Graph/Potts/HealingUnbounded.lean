@@ -7,9 +7,7 @@
    digest: Triangle trees force unbounded displacement before a tight set can augment. -/
 
 import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring

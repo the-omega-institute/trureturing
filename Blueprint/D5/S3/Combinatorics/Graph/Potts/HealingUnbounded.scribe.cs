@@ -29,7 +29,8 @@ internal sealed class HealingUnboundedDocument : IScribeDocumentDefinition
                 "X is a finite vertex set. Deletion is the actual induced simple graph on the subtype of all vertices outside X; "
                 + "it retains every edge whose two endpoints survive. The cardinality term counts removed vertices."),
             Node("Tight", "Independent tight sets", WithSet(Equal(Call("Tight", G, X),
-                    And(Call("IsIndepSet", G, X), Equal(Call("phi", G, X), Call("frustration", G))))),
+                    And(Call("IsIndepSet", G, Parenthesized(Seq(X, Colon, Sp, Call("Set", V)))),
+                        Equal(Call("phi", G, X), Call("frustration", G))))),
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source),
                 "Tightness includes independence and the equality of the deletion potential to the original frustration. "
                 + "It does not mean a maximum independent set or a tight set of maximum cardinality."),
@@ -88,8 +89,18 @@ internal sealed class HealingUnboundedDocument : IScribeDocumentDefinition
             provenance, Blocks(Paragraph(Text(prose))), role);
 
     private static Formula FrustrationFormula() => Context(Equal(Call("frustration", G),
-        Call("sInf", Seq(OpenBrace, Sp, Card(Call("mono", G, F.Id("c"))), Sp, Mid, Sp,
+        Call("sInf", Seq(OpenBrace, Sp, Card(MonochromaticEdges(F.Id("c"))), Sp, Mid, Sp,
             F.Id("c"), Colon, Sp, new Formula.TypeArrow(V, Named("Bool")), Sp, CloseBrace))));
+
+    private static Formula MonochromaticEdges(Formula c)
+    {
+        Formula e = F.Id("e"), u = F.Id("u"), v = F.Id("v");
+        Formula same = And(Equal(e, Call("Sym2.mk", u, v)),
+            Equal(new Formula.Apply(c, [u]), new Formula.Apply(c, [v])));
+        Formula predicate = Parenthesized(Seq(LambdaLower, e, Colon, Sp, Call("Sym2", V), Sp,
+            Mapsto, Sp, Some("u", V, Some("v", V, same))));
+        return Call("Finset.filter", predicate, Call("edgeFinset", G));
+    }
 
     private static Formula ClaimBody()
     {
@@ -98,7 +109,7 @@ internal sealed class HealingUnboundedDocument : IScribeDocumentDefinition
             And(Equal(Card(t), Card(s)), Le(Card(Difference(s, t)), c))));
         Formula sets = All("S", Call("Finset", V), Imp(Call("Stuck", G, s),
             Imp(Le(D(1), Call("frustration", Deleted(G, s))), conclusion)));
-        Formula notComplete = Not(Call("Nonempty", Call("GraphIso", G,
+        Formula notComplete = Not(Call("Nonempty", Call("SimpleGraph.Iso", G,
             Call("completeGraph", Call("Fin", D(4))))));
         return Some("C", Naturals(), Context(Imp(Call("Connected", G),
             Imp(All("v", V, Le(Call("degree", G, v), D(3))), Imp(notComplete, sets)))));
