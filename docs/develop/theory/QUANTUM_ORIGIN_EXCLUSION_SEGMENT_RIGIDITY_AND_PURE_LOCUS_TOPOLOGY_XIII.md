@@ -349,7 +349,8 @@ $Z$ need not be closed or compact. Compactness of $P$ therefore does not supply 
 The present results neither force every label to have zero kernel nor prove $\Sigma=\varnothing$,
 global Inj, absence of repeated pairs, or the representation from EB3+PR alone.
 The finite-rank L2/L3/actual-NC entrance of [chapter 159][XII160] is a different conditional reconstruction route;
-its extra common-realization and noncollapse premises are not supplied by this generic theorem.
+complete EB3 already supplies its actual-face NC by (XII159.38), distinct from chapter 124's uniform noncollapse.
+The actual L2 and L3 conditions for every pair and triple remain unproved here.
 Physical composites, instruments, dynamics and a value of $\hbar$ also remain outside these static conclusions.
 
 The mathematical attribution of Theorems 160.2–160.6 is `repo-derived`: the new content is their original-domain
