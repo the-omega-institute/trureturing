@@ -19,60 +19,6 @@ open FacetZeroGluing ExclusionBallFaces OriginalFacePolarity OriginalBallScale
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
 
-/-- The same bound controls every axis in every chart at every original label.
-Its scale is obtained from the actual comparison law and attained optimal budget. -/
-theorem original_scale_axis_bound
-    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x) (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
-    (hPR : ∀ p q : pure C u, comparison C u p q = comparison C u q p) :
-    ∃ L : ℝ, 0 < L ∧ ∀ (p : pure C u) (a : ExclusionChart C u p), ∃ t : ℝ, 0 < t ∧ t ≤ 1 / 2 ∧
-        (∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 → extensionBudget a v = 1 / (2*t)) ∧
-        ∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 → 2*t ≤ L * ‖a.param v - a.param (-v)‖ := by
-  obtain ⟨L, hL, hbound⟩ := original_uniform_comparison hs hg
-  refine ⟨L, hL, ?_⟩
-  intro p a
-  obtain ⟨t, ht, hth, hscale, hbudget⟩ := original_scale_and_sharp_budget hc hs hg hB hPR p a
-  refine ⟨t, ht, hth, fun v hv => (hbudget v hv).2.2, ?_⟩
-  intro v hv
-  have hvP : a.param v ∈ pure C u := ((chart_boundary hc hs hg hB p a).symm ▸
-      (show a.param v ∈ a.param '' Metric.sphere 0 1 from ⟨v, by simpa using hv, rfl⟩)).2
-  let q : pure C u := ⟨a.param v, hvP⟩
-  obtain ⟨_, _, _, hcomp⟩ := hscale v hv q rfl
-  have hh := hbound q (a.param v) (SingleLabelNormalBody.chart_mem a hv.le).1
-    (a.param (-v)) (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1
-  rw [hcomp v hv.le, hcomp (-v) (by simpa using hv.le)] at hh
-  simp only [inner_neg_right, real_inner_self_eq_norm_sq, hv, one_pow] at hh
-  have hh' := (abs_le.mp hh).2
-  linarith
-
-/-- A finite budget on any set of original labels forces a uniform positive
-diameter there. The set can be a neighborhood in the entire P and need not lie in P0. -/
-theorem original_bounded_budget_noncollapse
-    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x) (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
-    (hPR : ∀ p q : pure C u, comparison C u p q = comparison C u q p) (U : Set (pure C u)) (B : ℝ) (hBpos : 0 < B)
-    (hbudget : ∀ p ∈ U, ∀ a : ExclusionChart C u p, ∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 → extensionBudget a v ≤ B) :
-    ∃ δ : ℝ, 0 < δ ∧ ∀ p ∈ U, δ ≤ Metric.diam (exclusion C u p) := by
-  obtain ⟨L, hL, haxis⟩ := original_scale_axis_bound hc hs hg hB hPR
-  refine ⟨1 / (B*L), by positivity, ?_⟩
-  intro p hp
-  obtain ⟨a⟩ := hB p
-  obtain ⟨t, ht, _, hbud, hax⟩ := haxis p a
-  let E := EuclideanSpace ℝ (Fin a.dim)
-  letI : Nonempty (Fin a.dim) := ⟨⟨0, a.dim_pos⟩⟩
-  obtain ⟨v, hv⟩ := exists_norm_eq E (by norm_num : (0 : ℝ) ≤ 1)
-  have hbd := hbudget p hp a v hv
-  rw [hbud v hv] at hbd
-  have htB : 1 ≤ B * (2*t) := (div_le_iff₀ (by positivity : 0 < 2*t)).mp hbd
-  have hdiam : ‖a.param v - a.param (-v)‖ ≤ Metric.diam (exclusion C u p) := by
-    rw [← dist_eq_norm]
-    exact Metric.dist_le_diam_of_mem ((exclusion_ball_faces hc hs hg hB).1 p).2.1.isBounded
-      (SingleLabelNormalBody.chart_mem a hv.le) (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le))
-  apply (div_le_iff₀ (mul_pos hBpos hL)).mpr
-  have hh := mul_le_mul_of_nonneg_left ((hax v hv).trans (mul_le_mul_of_nonneg_left hdiam hL.le)) hBpos.le
-  nlinarith
-
-#print axioms original_scale_axis_bound
-#print axioms original_bounded_budget_noncollapse
-
 private theorem chart_diameter_axis {p : pure C u} (a : ExclusionChart C u p) :
     ∃ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 ∧ Metric.diam (exclusion C u p) ≤ ‖a.param v - a.param (-v)‖ := by
   let E := EuclideanSpace ℝ (Fin a.dim)
@@ -253,8 +199,13 @@ theorem original_discontinuity_collapse
       (fun n => (show (D (pn (ns n)) : Set V) ⊆ base C u from fun x hx => hx.1))
   have hpn : Tendsto (fun n => pn (ns (ms n))) atTop (𝓝 p) := (hp.comp hns).comp hms.tendsto_atTop
   rcases exclusion_limit_dichotomy hc hs hg h3 hPR hpn (fun n => D (pn (ns (ms n)))) Q (fun _ => rfl) hlim with heq | ⟨q, hq, heq⟩
-  · refine ⟨ms, ?_⟩ have hQD : Q = D p := NonemptyCompacts.ext heq simpa only [hQD, Function.comp_def] using hlim
-  · exfalso apply hno refine ⟨fun n => pn (ns (ms n)), hpn, q, hq, ?_⟩ have ht := tendsto_iff_dist_tendsto_zero.mp hlim
+  · refine ⟨ms, ?_⟩
+    have hQD : Q = D p := NonemptyCompacts.ext heq
+    simpa only [hQD, Function.comp_def] using hlim
+  · exfalso
+    apply hno
+    refine ⟨fun n => pn (ns (ms n)), hpn, q, hq, ?_⟩
+    have ht := tendsto_iff_dist_tendsto_zero.mp hlim
     simpa only [NonemptyCompacts.dist_eq, heq, Function.comp_def, D, wholeExclusion,
       NonemptyCompacts.coe_mk, Compacts.coe_mk] using ht
 
@@ -285,8 +236,11 @@ theorem compact_diameter_lipschitz :
   change |Metric.diam (S : Set V) - Metric.diam (T : Set V)| ≤ 2 * dist S T
   apply abs_le.mpr
   constructor
-  · have h := compact_diameter_control T S rw [dist_comm T S] at h linarith
-  · have h := compact_diameter_control S T linarith
+  · have h := compact_diameter_control T S
+    rw [dist_comm T S] at h
+    linarith
+  · have h := compact_diameter_control S T
+    linarith
 
 /-- The IX115 regular region; the indexing j+1 ranges over every positive integer. -/
 def regularRegion (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Set (pure C u) :=
@@ -300,7 +254,9 @@ theorem original_regular_iff_continuous
     p ∈ regularRegion C u ↔ ContinuousAt (wholeExclusion hc hs hg (ballHyp h3)) p := by
   let D := wholeExclusion hc hs hg (ballHyp h3)
   constructor
-  · intro hpreg obtain ⟨j, hj⟩ := mem_iUnion.mp hpreg by_contra hdisc
+  · intro hpreg
+    obtain ⟨j, hj⟩ := mem_iUnion.mp hpreg
+    by_contra hdisc
     obtain ⟨pn, hpn, q, _, hcollapse⟩ := original_discontinuity_collapse hc hs hg h3 hPR p hdisc
     have ht : Tendsto (fun n => D (pn n)) atTop (𝓝 ({(q : V)} : NonemptyCompacts V)) :=
       tendsto_iff_dist_tendsto_zero.mpr hcollapse
@@ -313,7 +269,8 @@ theorem original_regular_iff_continuous
     have hbad : 1 / (j + 1 : ℝ) ≤ 0 := by
       simpa using ge_of_tendsto hd hsmall
     exact (one_div_pos.mpr (by positivity : 0 < (j + 1 : ℝ))).not_ge hbad
-  · intro hcont have hgeom := (exclusion_ball_faces hc hs hg (ballHyp h3)).1 p
+  · intro hcont
+    have hgeom := (exclusion_ball_faces hc hs hg (ballHyp h3)).1 p
     have hdpos : 0 < Metric.diam (D p : Set V) := Metric.diam_pos hgeom.1 hgeom.2.1.isBounded
     obtain ⟨j, hj⟩ := exists_nat_one_div_lt hdpos
     have hdi := compact_diameter_lipschitz.continuous.continuousAt.comp hcont
@@ -347,7 +304,8 @@ theorem original_local_budget_iff
           ∀ w : EuclideanSpace ℝ (Fin a.dim), ‖w‖ = 1 → extensionBudget a w ≤ B := by
   let hB := OriginalExclusionLimits.ballHyp h3
   constructor
-  · intro hcont have hreg := (OriginalExclusionLimits.original_regular_iff_continuous hc hs hg h3 hPR p).mpr hcont
+  · intro hcont
+    have hreg := (OriginalExclusionLimits.original_regular_iff_continuous hc hs hg h3 hPR p).mpr hcont
     obtain ⟨j, hj⟩ := mem_iUnion.mp hreg
     let U : Set (pure C u) := interior {s : pure C u | 1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u s)}
     have hdiam : ∀ s ∈ U, 1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u s) := by
@@ -491,7 +449,8 @@ theorem original_common_continuity_sets (p : pure C u) :
     have hinj : Function.Injective z.2 := by
       rcases ExclusionUniformNoncollapse.sphere_extreme_injective_or_zero (base C u) z.1 z.2 hsphere with hi | hz0
       · exact hi
-      · exfalso have heq : (D₀ p : Set V) = {z.1} := by
+      · exfalso
+        have heq : (D₀ p : Set V) = {z.1} := by
           rw [← hzQ]
           change (fun x => z.1 + z.2 x) '' Metric.closedBall 0 1 = _
           simp [hz0]
@@ -561,10 +520,13 @@ theorem original_common_continuity_sets (p : pure C u) :
     rcases ReciprocalExclusionLimits.exclusion_limit_dichotomy hc hs hg h3 hPR
         (hp.comp hφ.tendsto_atTop) (fun n => D₀ (pn (φ n))) Q (fun _ => rfl) ht
         with heq | ⟨q, hq, heq⟩
-    · have heq' : Q = D₀ p := NonemptyCompacts.ext heq subst Q have ha := original_whole_limit_calibration _ p ht
+    · have heq' : Q = D₀ p := NonemptyCompacts.ext heq
+      subst Q
+      have ha := original_whole_limit_calibration _ p ht
       exact Or.inl ⟨ht, ha, tendsto_const_nhds.div (tendsto_const_nhds.mul ha)
         (by have hh := (calibration_spec hc hs hg hB₀ hPR p).1; positivity)⟩
-    · have heq' : Q = ({(q:V)} : NonemptyCompacts V) := NonemptyCompacts.ext heq subst Q
+    · have heq' : Q = ({(q:V)} : NonemptyCompacts V) := NonemptyCompacts.ext heq
+      subst Q
       exact Or.inr ⟨q, hq, ht, original_singleton_limit_scalars _ q ht⟩
 
 
@@ -585,7 +547,9 @@ theorem original_common_continuity_sets (p : pure C u) :
     intro pn p hn hp
     obtain ⟨φ, hφ, hwhole | ⟨q, hq, ht, ha, hb⟩⟩ := original_scalar_subsequence pn p hp
     · exact le_of_tendsto hwhole.2.2 (Eventually.of_forall fun n => hn (φ n))
-    · have hh := (hb.eventually (eventually_ge_atTop (t+1))).exists obtain ⟨n, hlarge⟩ := hh have hsmall := hn (φ n)
+    · have hh := (hb.eventually (eventually_ge_atTop (t+1))).exists
+      obtain ⟨n, hlarge⟩ := hh
+      have hsmall := hn (φ n)
       change β₀ (pn (φ n)) ≤ t at hsmall
       linarith
 
@@ -634,20 +598,28 @@ theorem original_common_continuity_sets (p : pure C u) :
     fun h => hwhole.mpr (hb h)⟩,
     original_calibration_upperSemicontinuous,
     original_optimalBudget_lowerSemicontinuous, ?_, ?_, ?_⟩
-  · rw [hwhole, original_local_budget_iff hc hs hg h3 hPR p] constructor
-    · rintro ⟨U, hU, hpU, B, hB, hbud⟩ refine ⟨U, hU, hpU, B, hB, ?_⟩ intro s hsU let b := Classical.choice (hB₀ s)
+  · rw [hwhole, original_local_budget_iff hc hs hg h3 hPR p]
+    constructor
+    · rintro ⟨U, hU, hpU, B, hB, hbud⟩
+      refine ⟨U, hU, hpU, B, hB, ?_⟩
+      intro s hsU
+      let b := Classical.choice (hB₀ s)
       letI : Nonempty (Fin b.dim) := ⟨⟨0, b.dim_pos⟩⟩
       obtain ⟨v, hv⟩ := exists_norm_eq (EuclideanSpace ℝ (Fin b.dim)) (by norm_num : (0:ℝ) ≤ 1)
       exact (((calibration_spec hc hs hg hB₀ hPR s).2.2 b v hv).1.2.2).symm.le.trans (hbud s hsU b v hv)
-    · rintro ⟨U, hU, hpU, B, hB, hbud⟩ refine ⟨U, hU, hpU, B, hB, ?_⟩ intro s hsU b v hv
+    · rintro ⟨U, hU, hpU, B, hB, hbud⟩
+      refine ⟨U, hU, hpU, B, hB, ?_⟩
+      intro s hsU b v hv
       exact (((calibration_spec hc hs hg hB₀ hPR s).2.2 b v hv).1.2.2).le.trans (hbud s hsU)
-  · intro S hS hSR have hcont : ContinuousOn β₀ S := by
+  · intro S hS hSR
+    have hcont : ContinuousOn β₀ S := by
       intro s hsS
       exact ((scalars_continuous_of_whole s ((OriginalExclusionLimits.original_regular_iff_continuous hc hs hg h3 hPR s).mp
           (hSR hsS))).2).continuousWithinAt
     obtain ⟨B, hB⟩ := hS.bddAbove_image hcont
     exact ⟨B, fun s hsS => hB ⟨s, hsS, rfl⟩⟩
-  · have h := calibration_spec hc hs hg hB₀ hPR p exact ⟨h.1, h.2.1, fun b v hv => (h.2.2 b v hv).1⟩
+  · have h := calibration_spec hc hs hg hB₀ hPR p
+    exact ⟨h.1, h.2.1, fun b v hv => (h.2.2 b v hv).1⟩
 
 #print axioms original_common_continuity_sets
 
@@ -693,7 +665,8 @@ theorem actual_collapse_pure_edge_row
   have hM : 0 ≤ M := hcommon.1.1
   intro s
   by_cases hsp : s = p
-  · subst s obtain ⟨e, he, heq⟩ := comparison_attained hs hg p q
+  · subst s
+    obtain ⟨e, he, heq⟩ := comparison_attained hs hg p q
     have heq0 : e q = 0 := heq.symm.trans ((comparison_zero_iff hs hg p (pure_mem q)).mpr hqD)
     obtain ⟨f, hf, hself⟩ := comparison_attained hs hg p p
     exact ⟨e.toLinearMap, he, heq0, he.2.trans (hself.trans hf.2).symm⟩
@@ -780,7 +753,8 @@ theorem original_row_saturation
   have hpD := (exclusion_symmetric p q).mp hqD
   have hcq : confirms C u p (u - eq) := by
     refine ⟨?_, ?_⟩
-    · intro x hx; have hh := heq.1.1 x hx constructor <;> simp only [LinearMap.sub_apply] <;> linarith
+    · intro x hx; have hh := heq.1.1 x hx
+      constructor <;> simp only [LinearMap.sub_apply] <;> linarith
     · simp [heq.2 _ hpD, (pure_mem p).2]
   have hrow (s : pure C u) : comparison C u p s = min (ep s) ((u - eq) s) := by
     have hle (f : V →ₗ[ℝ] ℝ) (hf : confirms C u p f) : comparison C u p s ≤ f s :=
@@ -794,8 +768,10 @@ theorem original_row_saturation
     rw [← hes]
     simp only [LinearMap.sub_apply, (pure_mem s).2]
     rcases le_total (ep s) (1-eq s) with hh | hh
-    · rw [min_eq_left hh] nlinarith [mul_nonneg ht.1 (sub_nonneg.mpr hh)]
-    · rw [min_eq_right hh] nlinarith [mul_nonneg (show 0 ≤ 1-t by linarith [ht.2]) (sub_nonneg.mpr hh)]
+    · rw [min_eq_left hh]
+      nlinarith [mul_nonneg ht.1 (sub_nonneg.mpr hh)]
+    · rw [min_eq_right hh]
+      nlinarith [mul_nonneg (show 0 ≤ 1-t by linarith [ht.2]) (sub_nonneg.mpr hh)]
   have hqr := (pure_row_positive_bridge hc hs hg p hep k q v hv hq eq heq _ hL hform hrow).2.2.2.2
   obtain ⟨t, ht, hth, hscale, hbudget⟩ := original_scale_and_sharp_budget hc hs hg hB hPR p a
   have hzero := (comparison_zero_iff hs hg q (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1).mpr hqr
@@ -866,14 +842,19 @@ theorem original_row_saturation
     intro x hx
     exact sub_nonneg.mp (nonneg_on_cone (base_compact hc hs) hs hnon x hx)
   refine ⟨hbudgeta, hbudgetq, ?_, hleast, ?_, ?_⟩
-  · intro x hx apply le_antisymm
+  · intro x hx
+    apply le_antisymm
     · exact csInf_le ⟨0, by rintro z ⟨f, hf, rfl⟩; exact (hf.1 x hx.1).1⟩ ⟨ep, hep.1, rfl⟩
-    · change ep x ≤ sInf {z : ℝ | ∃ f : V →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = z} apply le_csInf (show ({z : ℝ | ∃ f : V →ₗ[ℝ] ℝ,
-        confirms C u p f ∧ f x = z} : Set ℝ).Nonempty from ⟨ep x, ep, hep.1, rfl⟩)
+    · change ep x ≤ sInf {z : ℝ | ∃ f : V →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = z}
+      apply le_csInf (show ({z : ℝ | ∃ f : V →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = z} : Set ℝ).Nonempty from ⟨ep x, ep, hep.1, rfl⟩)
       rintro z ⟨f, hf, rfl⟩
       exact hleast f hf x hx.1
-  · intro w hw s hsw z hz obtain ⟨_, _, _, hcs⟩ := hscale w hw s hsw rw [hcs z hz, htunit] ring
-  · intro b w hw s hsw z hz obtain ⟨tb, htb, _, hsb, hbb⟩ := original_scale_and_sharp_budget hc hs hg hB hPR q b
+  · intro w hw s hsw z hz
+    obtain ⟨_, _, _, hcs⟩ := hscale w hw s hsw
+    rw [hcs z hz, htunit]
+    ring
+  · intro b w hw s hsw z hz
+    obtain ⟨tb, htb, _, hsb, hbb⟩ := original_scale_and_sharp_budget hc hs hg hB hPR q b
     have he : 1 / (2*tb) = 1 := ((hbb w hw).2.2).symm.trans (hbudgetq b w hw)
     have htbu : tb = 1 / 2 := by
       have hh := (div_eq_iff (by positivity : 2*tb ≠ 0)).mp he
@@ -940,7 +921,10 @@ theorem original_discontinuity_branches
           ∀ b : ExclusionChart C u q, ∀ w : chartSpace b, ‖w‖ = 1 → extensionBudget b w = 1) := by
   classical
   by_cases hp0 : p ∈ uniqueFullZero C u
-  · right obtain ⟨ep, hep⟩ := hp0 obtain ⟨a, ha⟩ := hEB3 p have hB : exclusionBalls C u := fun s => ⟨(hEB3 s).choose⟩
+  · right
+    obtain ⟨ep, hep⟩ := hp0
+    obtain ⟨a, ha⟩ := hEB3 p
+    have hB : exclusionBalls C u := fun s => ⟨(hEB3 s).choose⟩
     have h3 : ReciprocalExclusionLimits.threeBallExclusions C u := by
       intro s
       obtain ⟨⟨d, hd, f, hi, hw⟩, heq⟩ := hEB3 s
@@ -967,11 +951,13 @@ theorem original_discontinuity_branches
       exact ⟨hsat.1, hsat.2.1, hsat.2.2.1, hsat.2.2.2.1⟩
     have hsat := apply_collapse q pn hpn hcollapse
     refine ⟨ep, hep, ?_, hsat.2.2.1, hsat.2.2.2, ?_⟩
-    · intro b w hw obtain ⟨t, _, _, hba, hbb⟩ := original_chart_independence hc hs hg hB hPR p a b
+    · intro b w hw
+      obtain ⟨t, _, _, hba, hbb⟩ := original_chart_independence hc hs hg hB hPR p a b
       letI : Nonempty (Fin a.dim) := ⟨⟨0, a.dim_pos⟩⟩
       obtain ⟨v, hv⟩ := exists_norm_eq (EuclideanSpace ℝ (Fin a.dim)) (by norm_num : (0 : ℝ) ≤ 1)
       exact (hbb w hw).trans ((hba v hv).symm.trans (hsat.1 v hv))
-    · intro q pn hpn ht exact (apply_collapse q pn hpn ht).2.1
+    · intro q pn hpn ht
+      exact (apply_collapse q pn hpn ht).2.1
   · exact Or.inl hp0
 
 #print axioms original_discontinuity_branches

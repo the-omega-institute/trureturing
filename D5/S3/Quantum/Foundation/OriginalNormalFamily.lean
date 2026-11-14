@@ -27,7 +27,8 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
 
 private theorem span_vanishes {p : pure C u} (f : normalSpan C p) : f.val p = 0 := by
-  let Z : Submodule ℝ (V →L[ℝ] ℝ) := { carrier := {h | h p = 0} zero_mem' := by simp
+  let Z : Submodule ℝ (V →L[ℝ] ℝ) := { carrier := {h | h p = 0}
+      zero_mem' := by simp
       add_mem' := by intro f g hf hg; change f p + g p = 0; rw [hf, hg]; ring
       smul_mem' := by intro t f hf; change t * f p = 0; rw [hf]; ring }
   have hsub : normalSpan C p ≤ Z := Submodule.span_le.mpr (fun _ hf => hf.2)
@@ -78,7 +79,8 @@ private theorem ratio_bound {p : pure C u} {a : ExclusionChart C u p}
   have hg0 := (interior_subset k.g_interior).1 x hx.1.1
   by_cases hg : k.g.val x = 0
   · simp [hg, show (0 : ℝ) ≤ M by linarith]
-  · have hgpos : 0 < k.g.val x := lt_of_le_of_ne hg0 (Ne.symm hg) apply (div_le_iff₀ hgpos).mpr
+  · have hgpos : 0 < k.g.val x := lt_of_le_of_ne hg0 (Ne.symm hg)
+    apply (div_le_iff₀ hgpos).mpr
     exact (neg_le_abs _).trans (hdom v hv x hx.1.1)
 
 /-- On unit directions rho is finite, at least one, and exactly pays whole-cone positivity. -/
@@ -102,11 +104,19 @@ theorem rho_positive_iff
   refine ⟨hrho, ?_⟩
   intro α
   constructor
-  · intro hnon apply csSup_le hne rintro _ ⟨x, hx, rfl⟩ apply (div_le_iff₀ (hpos x hx.1 hx.2)).mpr have hh := hnon x hx.1.1
+  · intro hnon
+    apply csSup_le hne
+    rintro _ ⟨x, hx, rfl⟩
+    apply (div_le_iff₀ (hpos x hx.1 hx.2)).mpr
+    have hh := hnon x hx.1.1
     change 0 ≤ α * k.g.val x + (directionLift k v).val x at hh
     linarith
-  · intro hα apply nonneg_on_cone (base_compact hc hs) hs intro s by_cases hsp : (s : V) = p
-    · change 0 ≤ α * k.g.val s + (directionLift k v).val s rw [hsp, span_vanishes k.g, span_vanishes (directionLift k v)]; simp
+  · intro hα
+    apply nonneg_on_cone (base_compact hc hs) hs
+    intro s
+    by_cases hsp : (s : V) = p
+    · change 0 ≤ α * k.g.val s + (directionLift k v).val s
+      rw [hsp, span_vanishes k.g, span_vanishes (directionLift k v)]; simp
     · have hh := (le_csSup hbound (mem_image_of_mem (fun x : V => -(directionLift k v).val x / k.g.val x)
         (show (s : V) ∈ base C u \ {(p : V)} from ⟨pure_mem s, hsp⟩))).trans hα
       have hmul := (div_le_iff₀ (hpos s (pure_mem s) hsp)).mp hh
@@ -121,7 +131,8 @@ theorem normal_maximum
       ∃ x ∈ exclusion C u p, normalForm k α v x = α + ‖v‖ := by
   have hupper : ∀ x ∈ base C u, normalForm k α v x ≤ α + ‖v‖ := by
     by_cases hn : normalForm k α v = 0
-    · intro x hx have hα : 0 ≤ α := by
+    · intro x hx
+      have hα : 0 ≤ α := by
         have hh := hpos (a.param 0) (SingleLabelNormalBody.chart_mem a (by simp)).1.1
         simpa [normalForm_chart hep k] using hh
       rw [hn]; simp only [LinearMap.zero_apply]; positivity
@@ -137,10 +148,13 @@ theorem normal_maximum
       exact add_le_add le_rfl ((real_inner_le_norm v z).trans hvz)
   refine ⟨hupper, ?_⟩
   by_cases hv : v = 0
-  · refine ⟨a.param 0, SingleLabelNormalBody.chart_mem a (by simp), ?_⟩ simp [normalForm_chart hep k, hv]
-  · have hvpos : 0 < ‖v‖ := norm_pos_iff.mpr hv refine ⟨a.param (‖v‖⁻¹ • v), SingleLabelNormalBody.chart_mem a ?_, ?_⟩
+  · refine ⟨a.param 0, SingleLabelNormalBody.chart_mem a (by simp), ?_⟩
+    simp [normalForm_chart hep k, hv]
+  · have hvpos : 0 < ‖v‖ := norm_pos_iff.mpr hv
+    refine ⟨a.param (‖v‖⁻¹ • v), SingleLabelNormalBody.chart_mem a ?_, ?_⟩
     · simp [norm_smul, hvpos.ne']
-    · rw [normalForm_chart hep k, inner_smul_right, real_inner_self_eq_norm_sq] field_simp
+    · rw [normalForm_chart hep k, inner_smul_right, real_inner_self_eq_norm_sq]
+      field_simp
 
 /-- The original neighboring full confirmer, its exact support threshold and antipode.
 The neighbor is proved singleton before its normal coordinates can be reused. -/
@@ -149,7 +163,9 @@ theorem original_neighbor_support
     (hInj : Function.Injective (fun q : pure C u => exclusion C u q)) (p : pure C u) {a : ExclusionChart C u p} {ep : V →ₗ[ℝ] ℝ}
     (hep : ep ∈ fullZeroConfirmers C u p) (k : Coordinates p a ep)
     (q : pure C u) (v : chartSpace a) (hv : ‖v‖ = 1) (hq : a.param v = q) :
-    ∃ eq : V →ₗ[ℝ] ℝ, (∀ e, e ∈ fullZeroConfirmers C u q ↔ e = eq) ∧ let lam := 1 / (1 + rho k v) 0 < lam ∧ lam ≤ 1 / 2 ∧
+    ∃ eq : V →ₗ[ℝ] ℝ, (∀ e, e ∈ fullZeroConfirmers C u q ↔ e = eq) ∧
+      let lam := 1 / (1 + rho k v)
+      0 < lam ∧ lam ≤ 1 / 2 ∧
       (∀ x : V, eq x = (1 - lam) * k.g.val x + lam * (directionLift k v).val x) ∧
       eq (a.param (-v)) = (rho k v - 1) / (rho k v + 1) ∧
       ((a.param (-v) ∈ exclusion C u q) ↔ rho k v = 1) := by
@@ -189,14 +205,17 @@ theorem original_neighbor_support
     exact ⟨_, y, ⟨pure_mem y, fun h => hyp (Subtype.val_injective h)⟩, rfl⟩
   have hrho : rho k v = A := by
     apply le_antisymm
-    · apply csSup_le hneSet rintro _ ⟨x, hx, rfl⟩ have hgx : 0 < k.g.val x := by
+    · apply csSup_le hneSet
+      rintro _ ⟨x, hx, rfl⟩
+      have hgx : 0 < k.g.val x := by
         rw [k.g_value]
         exact g_positive hc hs hg hB hInj p hep hx.1 hx.2
       apply (div_le_iff₀ hgx).mpr
       have heqx := (heq.1.1 x hx.1.1).1
       rw [hform x] at heqx
       nlinarith
-    · rw [← hratio] exact le_csSup (ratio_bound k v hv) ⟨y, ⟨pure_mem y, fun h => hyp (Subtype.val_injective h)⟩, rfl⟩
+    · rw [← hratio]
+      exact le_csSup (ratio_bound k v hv) ⟨y, ⟨pure_mem y, fun h => hyp (Subtype.val_injective h)⟩, rfl⟩
   have hApos : 0 < A := div_pos (by linarith) hlam
   have hlamrho : lam = 1 / (1 + rho k v) := by
     rw [hrho]
@@ -207,12 +226,18 @@ theorem original_neighbor_support
   refine ⟨eq, hqunique, ?_⟩
   dsimp only
   refine ⟨hlamrho ▸ hlam, hlamrho ▸ hlamhalf, hlamrho ▸ hform, ?_, ?_⟩
-  · rw [hr, hlamrho] field_simp <;> ring
+  · rw [hr, hlamrho]
+    field_simp
+    <;> ring
   · constructor
-    · intro hD have hz := heq.2 _ hD rw [hr, hlamrho] at hz have hd : 0 < 1 + rho k v := by linarith
+    · intro hD
+      have hz := heq.2 _ hD
+      rw [hr, hlamrho] at hz
+      have hd : 0 < 1 + rho k v := by linarith
       have hm := (div_eq_iff hd.ne').mp (show 1 / (1 + rho k v) = 1 / 2 by linarith)
       linarith
-    · intro hrho1 refine ⟨(SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1, eq, heq.1, ?_⟩
+    · intro hrho1
+      refine ⟨(SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1, eq, heq.1, ?_⟩
       rw [hr, hlamrho, hrho1]
       norm_num
 
@@ -250,10 +275,21 @@ theorem original_coordinate_map {p : pure C u} {a : ExclusionChart C u p}
     ∀ H : V →ₗ[ℝ] chartSpace a, (∀ v : chartSpace a, ∃ f : normalSpan C p, ∀ x : V, ⟪v, H x⟫ = f.val x) →
       (∀ z : chartSpace a, H (a.param z) = z) → H = coordinateMap k := by
   refine ⟨?_, ?_, ?_, ?_⟩
-  · apply ext_inner_left ℝ intro v rw [coordinateMap_inner, span_vanishes (directionLift k v), inner_zero_right]
-  · intro z apply ext_inner_left ℝ intro v rw [coordinateMap_inner, directionLift_value]
-  · intro v exact ⟨directionLift k v, coordinateMap_inner k v⟩
-  · intro H hH hchart apply LinearMap.ext intro x apply ext_inner_left ℝ intro v obtain ⟨f, hf⟩ := hH v
+  · apply ext_inner_left ℝ
+    intro v
+    rw [coordinateMap_inner, span_vanishes (directionLift k v), inner_zero_right]
+  · intro z
+    apply ext_inner_left ℝ
+    intro v
+    rw [coordinateMap_inner, directionLift_value]
+  · intro v
+    exact ⟨directionLift k v, coordinateMap_inner k v⟩
+  · intro H hH hchart
+    apply LinearMap.ext
+    intro x
+    apply ext_inner_left ℝ
+    intro v
+    obtain ⟨f, hf⟩ := hH v
     have hfd : f = directionLift k v := by
       apply k.equivalence.injective
       ext z
@@ -291,7 +327,9 @@ theorem original_whole_edge
   refine ⟨eq, hqunique, ?_⟩
   intro b
   constructor
-  · rintro ⟨hb, hbp, hbq⟩ let μ := (1 - b (a.param (-v))) / 2 have hμ : 0 ≤ μ := by
+  · rintro ⟨hb, hbp, hbq⟩
+    let μ := (1 - b (a.param (-v))) / 2
+    have hμ : 0 ≤ μ := by
       have hh := (hb _ (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1.1).2
       rw [chart_unit a] at hh
       dsimp [μ]; linarith
@@ -315,8 +353,12 @@ theorem original_whole_edge
     change _ = (1 - μ / L) * k.g.val x + (μ / L) * ((1 - L) * k.g.val x + L * (directionLift k v).val x)
     field_simp
     <;> ring
-  · rintro ⟨s, hs', rfl⟩ refine ⟨?_, ?_, ?_⟩
-    · intro x hx have hgx := hG x hx change 0 ≤ u x - ep x ∧ u x - ep x ≤ u x at hgx have heqx := heq.1.1 x hx
+  · rintro ⟨s, hs', rfl⟩
+    refine ⟨?_, ?_, ?_⟩
+    · intro x hx
+      have hgx := hG x hx
+      change 0 ≤ u x - ep x ∧ u x - ep x ≤ u x at hgx
+      have heqx := heq.1.1 x hx
       change 0 ≤ (1 - s) * (u x - ep x) + s * eq x ∧ (1 - s) * (u x - ep x) + s * eq x ≤ u x
       constructor
       · exact add_nonneg (mul_nonneg (by linarith [hs'.2]) hgx.1) (mul_nonneg hs'.1 heqx.1)
@@ -342,12 +384,13 @@ theorem original_fixed_edge
   refine ⟨eq, huniq, ?_⟩
   intro e
   constructor
-  · rintro ⟨he, hep1, heq0⟩ obtain ⟨s, hs', hform⟩ := (hedge (u-e)).mp
-      ⟨hcompl e he, by simp [hep1, (pure_mem p).2], by simp [heq0, (pure_mem q).2]⟩
+  · rintro ⟨he, hep1, heq0⟩
+    obtain ⟨s, hs', hform⟩ := (hedge (u-e)).mp ⟨hcompl e he, by simp [hep1, (pure_mem p).2], by simp [heq0, (pure_mem q).2]⟩
     refine ⟨s, hs', ?_⟩
     have hh : u-(u-e) = (1-s) • ep + s • (u-eq) := by rw [hform]; module
     simpa using hh
-  · rintro ⟨s, hs', he⟩ have hform : u-e = (1-s) • (u-ep) + s • eq := by rw [he]; module
+  · rintro ⟨s, hs', he⟩
+    have hform : u-e = (1-s) • (u-ep) + s • eq := by rw [he]; module
     have hh := (hedge (u-e)).mpr ⟨s, hs', hform⟩
     refine ⟨?_, ?_, ?_⟩
     · simpa using hcompl (u-e) hh.1
@@ -376,8 +419,10 @@ theorem pure_row_positive_bridge
     have hgs : k.g.val s = 1 - ep s := by rw [k.g_value]; simp [(pure_mem s).2]
     simp only [LinearMap.sub_apply, (pure_mem s).2] at hcomp
     rcases le_total (ep s) (1 - eq s) with hh | hh
-    · rw [min_eq_left hh] at hcomp exact (show n s ≤ k.g.val s by linarith).trans (le_max_left _ _)
-    · rw [min_eq_right hh] at hcomp exact (show n s ≤ eq s by linarith).trans (le_max_right _ _)
+    · rw [min_eq_left hh] at hcomp
+      exact (show n s ≤ k.g.val s by linarith).trans (le_max_left _ _)
+    · rw [min_eq_right hh] at hcomp
+      exact (show n s ≤ eq s by linarith).trans (le_max_right _ _)
   obtain ⟨M, hM, hdom⟩ := direction_domination k
   let ε := 1 / (2 * M)
   have hε : 0 < ε := by dsimp [ε]; positivity
@@ -420,7 +465,8 @@ theorem pure_row_positive_bridge
       change 0 ≤ (1 + ε)⁻¹ * n r ∧ (1 + ε)⁻¹ * n r ≤ 1
       constructor
       · exact mul_nonneg (by positivity) (hn0 r (pure_mem r).1)
-      · apply (inv_mul_le_iff₀ (by positivity : 0 < 1 + ε)).mpr simpa using hr
+      · apply (inv_mul_le_iff₀ (by positivity : 0 < 1 + ε)).mpr
+        simpa using hr
     have hfp : f p = 0 := by simp [f, n, normalForm, span_vanishes]
     have hfs : k.g.val s < f s := by
       change k.g.val s < (1 + ε)⁻¹ * n s
@@ -434,7 +480,8 @@ theorem pure_row_positive_bridge
       have hh := hnrow f hf hfp s
       rcases le_total (k.g.val s) (eq s) with he | he
       · exact lt_of_lt_of_le hfs (by simpa [max_eq_right he] using hh)
-      · rw [max_eq_left he] at hh exact False.elim (not_lt_of_ge hh hfs)
+      · rw [max_eq_left he] at hh
+        exact False.elim (not_lt_of_ge hh hfs)
     rw [hform s] at hneq
     have hgap : 0 < L * (k.g.val s - (directionLift k v).val s) := mul_pos hL (by linarith [hg0 s (pure_mem s).1])
     nlinarith
@@ -493,15 +540,18 @@ private theorem directional_attainment
     rw [hh]
     ring
   refine ⟨t, e.toLinearMap, ht.1, ht.2, ⟨he.1, he.2⟩, ?_, ?_⟩
-  · intro z exact hform z
-  · intro z hz have hx := SingleLabelNormalBody.chart_mem a hz
+  · intro z
+    exact hform z
+  · intro z hz
+    have hx := SingleLabelNormalBody.chart_mem a hz
     have hb : BddBelow {r | ∃ f, confirms C u q f ∧ f (a.param z) = r} := ⟨0, by rintro r ⟨f, hf, rfl⟩; exact (hf.1 _ hx.1.1).1⟩
     have hne : ({r | ∃ f, confirms C u q f ∧ f (a.param z) = r} : Set ℝ).Nonempty :=
       ⟨e (a.param z), e.toLinearMap, ⟨he.1, he.2⟩, rfl⟩
     apply le_antisymm
     · exact (csInf_le hb ⟨e.toLinearMap, ⟨he.1, he.2⟩, rfl⟩).trans_eq (hform z)
-    · apply le_csInf hne rintro r ⟨f, hf, rfl⟩ have hr : comparison C u q (a.param (-v)) ≤ f (a.param (-v)) :=
-        csInf_le ⟨0, by rintro r ⟨g, hg, rfl⟩; exact
+    · apply le_csInf hne
+      rintro r ⟨f, hf, rfl⟩
+      have hr : comparison C u q (a.param (-v)) ≤ f (a.param (-v)) := csInf_le ⟨0, by rintro r ⟨g, hg, rfl⟩; exact
           (hg.1 _ (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1.1).1⟩
           ⟨f, hf, rfl⟩
       rw [hmin] at hr
@@ -590,11 +640,16 @@ private theorem sharp_budget {p : pure C u} (a : ExclusionChart C u p)
   have ht2 : 0 < 2 * t := by positivity
   have hupper : BudgetFeasible a v (1 / (2 * t)) := by
     refine ⟨by positivity, (2 * t)⁻¹ • (u - e), ?_, ?_⟩
-    · intro x hx change 0 ≤ (2 * t)⁻¹ * (u x - e x) ∧ (2 * t)⁻¹ * (u x - e x) ≤ (1 / (2 * t)) * u x have hh := he.1 x hx
+    · intro x hx
+      change 0 ≤ (2 * t)⁻¹ * (u x - e x) ∧ (2 * t)⁻¹ * (u x - e x) ≤ (1 / (2 * t)) * u x
+      have hh := he.1 x hx
       constructor
       · exact mul_nonneg (inv_nonneg.mpr ht2.le) (sub_nonneg.mpr hh.2)
       · simpa only [one_div] using mul_le_mul_of_nonneg_left (show u x - e x ≤ u x by linarith) (inv_nonneg.mpr ht2.le)
-    · intro z hz change (2 * t)⁻¹ * (u (a.param z) - e (a.param z)) = _ rw [chart_unit a, hform z, inner_neg_left] field_simp
+    · intro z hz
+      change (2 * t)⁻¹ * (u (a.param z) - e (a.param z)) = _
+      rw [chart_unit a, hform z, inner_neg_left]
+      field_simp
       <;> ring
   have hlower : ∀ M, BudgetFeasible a v M → 1 / (2 * t) ≤ M := by
     rintro M ⟨hM0, g, hg, hrestrict⟩
@@ -609,12 +664,16 @@ private theorem sharp_budget {p : pure C u} (a : ExclusionChart C u p)
     let f : V →ₗ[ℝ] ℝ := u - M⁻¹ • g
     have hf : confirms C u q f := by
       refine ⟨?_, ?_⟩
-      · intro x hx have hh := hg x hx have hbound : M⁻¹ * g x ≤ u x := (inv_mul_le_iff₀ hMpos).mpr (by nlinarith [hh.2])
+      · intro x hx
+        have hh := hg x hx
+        have hbound : M⁻¹ * g x ≤ u x := (inv_mul_le_iff₀ hMpos).mpr (by nlinarith [hh.2])
         change 0 ≤ u x - M⁻¹ * g x ∧ u x - M⁻¹ * g x ≤ u x
         constructor
         · linarith
         · exact sub_le_self _ (mul_nonneg (inv_nonneg.mpr hMpos.le) hh.1)
-      · rw [← hq] change u (a.param (-v)) - M⁻¹ * g (a.param (-v)) = 1 rw [chart_unit a]
+      · rw [← hq]
+        change u (a.param (-v)) - M⁻¹ * g (a.param (-v)) = 1
+        rw [chart_unit a]
         have hz : g (a.param (-v)) = 0 := by linarith [hgm]
         rw [hz]; ring
     have hle : comparison C u q (a.param v) ≤ f (a.param v) := csInf_le ⟨0, by rintro r ⟨k, hk, rfl⟩; exact
@@ -667,20 +726,30 @@ private theorem affine_positive_lift {p : pure C u} (a : ExclusionChart C u p)
     · exact (hs x hx hz).le
   by_cases hb0 : b = 0
   · refine ⟨h 0 • u, ?_, ?_, ?_⟩
-    · intro x hx exact mul_nonneg (hpos 0 (by simp)) (hu x hx)
-    · intro z hz simp [hb z, hb0, chart_unit a]
-    · intro htop x hx change h 0 * u x ≤ B * u x exact mul_le_mul_of_nonneg_right ((htop 0 (by simp)).trans hB) (hu x hx)
-  · have hbpos : 0 < ‖b‖ := norm_pos_iff.mpr hb0 let v := ‖b‖⁻¹ • b have hv : ‖v‖ = 1 := by simp [v, norm_smul, hbpos.ne']
+    · intro x hx
+      exact mul_nonneg (hpos 0 (by simp)) (hu x hx)
+    · intro z hz
+      simp [hb z, hb0, chart_unit a]
+    · intro htop x hx
+      change h 0 * u x ≤ B * u x
+      exact mul_le_mul_of_nonneg_right ((htop 0 (by simp)).trans hB) (hu x hx)
+  · have hbpos : 0 < ‖b‖ := norm_pos_iff.mpr hb0
+    let v := ‖b‖⁻¹ • b
+    have hv : ‖v‖ = 1 := by simp [v, norm_smul, hbpos.ne']
     obtain ⟨_, g, hg, hgval⟩ := hlift v hv
     let G : V →ₗ[ℝ] ℝ := (h 0 - ‖b‖) • u + (2 * ‖b‖) • g
     refine ⟨G, ?_, ?_, ?_⟩
-    · intro x hx change 0 ≤ (h 0 - ‖b‖) * u x + (2 * ‖b‖) * g x exact add_nonneg (mul_nonneg (sub_nonneg.mpr hc) (hu x hx))
-        (mul_nonneg (by positivity) (hg x hx).1)
-    · intro z hz change (h 0 - ‖b‖) * u (a.param z) + (2 * ‖b‖) * g (a.param z) = h z rw [chart_unit a, hgval z hz, hb z]
+    · intro x hx
+      change 0 ≤ (h 0 - ‖b‖) * u x + (2 * ‖b‖) * g x
+      exact add_nonneg (mul_nonneg (sub_nonneg.mpr hc) (hu x hx)) (mul_nonneg (by positivity) (hg x hx).1)
+    · intro z hz
+      change (h 0 - ‖b‖) * u (a.param z) + (2 * ‖b‖) * g (a.param z) = h z
+      rw [chart_unit a, hgval z hz, hb z]
       simp only [v, inner_smul_left, starRingEnd_apply, star_trivial]
       field_simp
       <;> ring
-    · intro htop x hx have hcn : ‖b‖ ≤ 1 - h 0 := by
+    · intro htop x hx
+      have hcn : ‖b‖ ≤ 1 - h 0 := by
         have hhbound := affine_nonneg_bound (a := 1 - h 0) (v := -b) (fun z hz => by
           have hh := htop z hz
           rw [hb z] at hh
@@ -838,5 +907,59 @@ theorem original_uniform_comparison
   have hbound : |comparison C u p x - comparison C u p y| ≤ M * ‖x-y‖ := by
     simpa only [Real.dist_eq, dist_eq_norm, Real.norm_eq_abs] using h
   exact hbound.trans (mul_le_mul_of_nonneg_right (by dsimp [M]; linarith [le_abs_self M]) (norm_nonneg _))
+
+/-- The same bound controls every axis in every chart at every original label.
+Its scale is obtained from the actual comparison law and attained optimal budget. -/
+theorem original_scale_axis_bound
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x) (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hPR : ∀ p q : pure C u, comparison C u p q = comparison C u q p) :
+    ∃ L : ℝ, 0 < L ∧ ∀ (p : pure C u) (a : ExclusionChart C u p), ∃ t : ℝ, 0 < t ∧ t ≤ 1 / 2 ∧
+        (∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 → extensionBudget a v = 1 / (2*t)) ∧
+        ∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 → 2*t ≤ L * ‖a.param v - a.param (-v)‖ := by
+  obtain ⟨L, hL, hbound⟩ := original_uniform_comparison hs hg
+  refine ⟨L, hL, ?_⟩
+  intro p a
+  obtain ⟨t, ht, hth, hscale, hbudget⟩ := original_scale_and_sharp_budget hc hs hg hB hPR p a
+  refine ⟨t, ht, hth, fun v hv => (hbudget v hv).2.2, ?_⟩
+  intro v hv
+  have hvP : a.param v ∈ pure C u := ((chart_boundary hc hs hg hB p a).symm ▸
+      (show a.param v ∈ a.param '' Metric.sphere 0 1 from ⟨v, by simpa using hv, rfl⟩)).2
+  let q : pure C u := ⟨a.param v, hvP⟩
+  obtain ⟨_, _, _, hcomp⟩ := hscale v hv q rfl
+  have hh := hbound q (a.param v) (SingleLabelNormalBody.chart_mem a hv.le).1
+    (a.param (-v)) (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1
+  rw [hcomp v hv.le, hcomp (-v) (by simpa using hv.le)] at hh
+  simp only [inner_neg_right, real_inner_self_eq_norm_sq, hv, one_pow] at hh
+  have hh' := (abs_le.mp hh).2
+  linarith
+
+/-- A finite budget on any set of original labels forces a uniform positive
+diameter there. The set can be a neighborhood in the entire P and need not lie in P0. -/
+theorem original_bounded_budget_noncollapse
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x) (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hPR : ∀ p q : pure C u, comparison C u p q = comparison C u q p) (U : Set (pure C u)) (B : ℝ) (hBpos : 0 < B)
+    (hbudget : ∀ p ∈ U, ∀ a : ExclusionChart C u p, ∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 → extensionBudget a v ≤ B) :
+    ∃ δ : ℝ, 0 < δ ∧ ∀ p ∈ U, δ ≤ Metric.diam (exclusion C u p) := by
+  obtain ⟨L, hL, haxis⟩ := original_scale_axis_bound hc hs hg hB hPR
+  refine ⟨1 / (B*L), by positivity, ?_⟩
+  intro p hp
+  obtain ⟨a⟩ := hB p
+  obtain ⟨t, ht, _, hbud, hax⟩ := haxis p a
+  let E := EuclideanSpace ℝ (Fin a.dim)
+  letI : Nonempty (Fin a.dim) := ⟨⟨0, a.dim_pos⟩⟩
+  obtain ⟨v, hv⟩ := exists_norm_eq E (by norm_num : (0 : ℝ) ≤ 1)
+  have hbd := hbudget p hp a v hv
+  rw [hbud v hv] at hbd
+  have htB : 1 ≤ B * (2*t) := (div_le_iff₀ (by positivity : 0 < 2*t)).mp hbd
+  have hdiam : ‖a.param v - a.param (-v)‖ ≤ Metric.diam (exclusion C u p) := by
+    rw [← dist_eq_norm]
+    exact Metric.dist_le_diam_of_mem ((exclusion_ball_faces hc hs hg hB).1 p).2.1.isBounded
+      (SingleLabelNormalBody.chart_mem a hv.le) (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le))
+  apply (div_le_iff₀ (mul_pos hBpos hL)).mpr
+  have hh := mul_le_mul_of_nonneg_left ((hax v hv).trans (mul_le_mul_of_nonneg_left hdiam hL.le)) hBpos.le
+  nlinarith
+
+#print axioms original_scale_axis_bound
+#print axioms original_bounded_budget_noncollapse
 
 end D5.S3.Quantum.Foundation.OriginalComparisonTopology
