@@ -25,9 +25,9 @@ on:
         type: string
 
       operation:
-        description: 'Build a protected commit or pinned PR candidate'
+        description: 'Build a protected commit, prepare a PR, or publish a dev Release (loning only)'
         type: choice
-        options: [build, pr]
+        options: [build, pr, release]
         default: build
       release_seed_tag:
         description: 'Optional exact local candidate Release for the long build'
@@ -250,6 +250,128 @@ jobs:
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
       - name: Build the scheduled Release producer
+        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
+      - id: keys
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: elan
+        if: steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: steps.keys.outputs.dependency_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: steps.keys.outputs.project_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - name: Restore optional validated seeds
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Publish the protected-dev Release snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: make lean-cache-to-github-without-mathlib
+
+  manual-release-authorize:
+    name: Authorize the manual cache Release
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'release'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      source_sha: ${{ steps.source.outputs.sha }}
+    steps:
+      - name: Authorize the caller and pin protected dev content
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_REF: ${{ inputs.source_ref }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_ACTOR" == loning && "$GITHUB_TRIGGERING_ACTOR" == loning ]] || {
+            echo '::error::Only loning may start or rerun manual cache Release publication.'
+            exit 1
+          }
+          [[ "$GITHUB_REF_PROTECTED" == true && "$GITHUB_REF" =~ ^refs/heads/(dev|integration-[A-Za-z0-9._/-]+)$ ]] || {
+            echo '::error::Manual cache Release requires a protected dev or integration workflow ref.'
+            exit 1
+          }
+          [[ "$SOURCE_REF" == refs/heads/dev && "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ && "$SOURCE_SHA" != 0000000000000000000000000000000000000000 ]] || {
+            echo '::error::Manual cache Release requires source_ref=refs/heads/dev and a nonzero full source_sha.'
+            exit 1
+          }
+          source="$(gh api "repos/$REPOSITORY/branches/dev")"
+          jq -e '.name == "dev" and .protected == true' <<< "$source" >/dev/null || {
+            echo '::error::The dev source branch must be protected.'
+            exit 1
+          }
+          tip="$(jq -er '.commit.sha' <<< "$source")"
+          merge_base="$(gh api "repos/$REPOSITORY/compare/$SOURCE_SHA...$tip" --jq '.merge_base_commit.sha')"
+          [[ "$merge_base" == "$SOURCE_SHA" ]] || {
+            echo '::error::source_sha must be on the protected dev branch snapshot.'
+            exit 1
+          }
+          echo "sha=$SOURCE_SHA" >> "$GITHUB_OUTPUT"
+
+  manual-release:
+    name: Manually publish the Lean build cache
+    needs: manual-release-authorize
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'release'
+    permissions:
+      contents: write
+      actions: write
+    runs-on: runner-for-trureturing-cache-release-publish
+    timeout-minutes: 120
+    env:
+      STRATALINT_CACHE_WRITES: 'false'
+    steps:
+      - name: Recheck the actor for this publication attempt
+        run: |
+          [[ "$GITHUB_ACTOR" == loning && "$GITHUB_TRIGGERING_ACTOR" == loning ]] || {
+            echo '::error::Only loning may start or rerun manual cache Release publication.'
+            exit 1
+          }
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.manual-release-authorize.outputs.source_sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+          RELEASE_SOURCE_SHA: ${{ needs.manual-release-authorize.outputs.source_sha }}
+        run: GITHUB_SHA="$RELEASE_SOURCE_SHA" bash tools/scripts/workflow/ci-entry.sh
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
+      - name: Build the manual Release producer
         run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - id: keys
         env:
