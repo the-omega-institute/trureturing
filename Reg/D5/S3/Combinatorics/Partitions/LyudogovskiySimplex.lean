@@ -156,9 +156,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro role
   refine ⟨(), 1, 2, ?_⟩
   change maxDimension 1 ≠ maxDimension 2
-  have h1 := threshold_result.2 1 (by decide)
-  have h2 := threshold_result.2 2 (by decide)
-  norm_num [Finset.range_add_one, triangular] at h1 h2
+  have h1 : maxDimension 1 = 0 := (threshold_result.2 1 (by decide)).trans (by decide)
+  have h2 : maxDimension 2 = 1 := (threshold_result.2 2 (by decide)).trans (by decide)
   omega
 
 def familyRegistration : Registration arena (type_of% threshold_result) where

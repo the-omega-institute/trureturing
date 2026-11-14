@@ -252,7 +252,8 @@ private theorem row_parts (d : YoungDiagram) (H : ℕ) (hH : d.colLen 0 ≤ H) :
     _ = _ := by
       rw [Finset.sum_eq_multiset_sum]
       simpa only [Multiset.map_map, Function.comp_def, Finset.range_val,
-        Multiset.range, Multiset.map_coe, List.map_map, Function.comp_def, YoungDiagram.rowLens] using
+        Multiset.range, Multiset.map_coe, List.map_map, Function.comp_def,
+        YoungDiagram.rowLens] using
         Multiset.sum_map_singleton ((Finset.range (d.colLen 0)).val.map d.rowLen)
 
 private theorem one_cell_row {A B : YoungDiagram} {c : ℕ × ℕ}
@@ -710,21 +711,12 @@ private theorem triangular_step (r : ℕ) : triangular (r + 1) = triangular r + 
   omega
 
 private theorem triangle_sum (r : ℕ) : (∑ i ∈ Finset.range r, (r - i)) = triangular r := by
-  induction r with
-  | zero => simp [triangular]
-  | succ r ih =>
-    rw [Finset.sum_range_succ]
-    have he : (∑ i ∈ Finset.range r, (r + 1 - i)) =
-        (∑ i ∈ Finset.range r, (r - i)) + r := by
-      calc
-        _ = ∑ i ∈ Finset.range r, (r - i + 1) := by
-          apply Finset.sum_congr rfl
-          intro i hi
-          have := Finset.mem_range.mp hi
-          omega
-        _ = _ := by simp [Finset.sum_add_distrib]
-    rw [he, ih]
-    simpa only [Nat.succ_eq_add_one, Nat.add_sub_cancel_left] using (triangular_step r).symm
+  have h := Finset.sum_range_reflect (fun i : ℕ => i) (r + 1)
+  simp only [Nat.add_sub_cancel] at h
+  rw [Finset.sum_range_succ] at h
+  simp only [Nat.sub_self, Nat.add_zero] at h
+  rw [Finset.sum_range_id] at h
+  simpa [triangular, Nat.mul_comm] using h
 
 private theorem staircase_card (r : ℕ) : (staircase r).card = triangular r := by
   calc
@@ -930,7 +922,8 @@ private theorem cornerPartitions_clique (r e : ℕ) :
 
 private theorem exists_clique (r e : ℕ) :
     ∃ C : Finset (Nat.Partition (triangular r + e + 1)),
-      (graph (triangular r + e + 1)).IsClique (C : Set (Nat.Partition (triangular r + e + 1))) ∧ C.card = r + 1 := by
+      (graph (triangular r + e + 1)).IsClique
+        (C : Set (Nat.Partition (triangular r + e + 1))) ∧ C.card = r + 1 := by
   classical
   refine ⟨Finset.univ.image (cornerPartition r e), cornerPartitions_clique r e, ?_⟩
   rw [Finset.card_image_of_injective _ (cornerPartition_injective r e)]
