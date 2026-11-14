@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:170790794823024e2e259fc8c5bdf970c62791c54311aa0b16fb6ab8bef938f8
+  normalized_sha256: sha256:170790794823024e2e259fc8c5bdf970c62791c54311aa0b16fb6ab8bef938f8
+cas_ref: sha256:170790794823024e2e259fc8c5bdf970c62791c54311aa0b16fb6ab8bef938f8
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.finite_label_original_realization
+    target_statement_id: sha256:e630fdf695a1bf96df0cb2b5fba2cbd48997b5914db569581f4c819eff92a0bd
+receipts:
+  unresolved_subitems: []
