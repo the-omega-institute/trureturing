@@ -35,14 +35,14 @@ abbrev Tail (E : V → V → Prop) := {x : V // ¬ ∃ y, E x y}
 abbrev Completion (E : V → V → Prop) :=
   {σ : Perm V // ∀ x y, E x y → σ x = y}
 
-private def edgeMap (E : V → V → Prop) :
+def edgeMap (E : V → V → Prop) :
     {x : V // ∃ y, E x y} → {y : V // ∃ x, E x y} := fun x =>
   ⟨Classical.choose x.2, x.1, Classical.choose_spec x.2⟩
 
-private theorem edgeMap_edge (E : V → V → Prop) (x : {x : V // ∃ y, E x y}) :
+theorem edgeMap_edge (E : V → V → Prop) (x : {x : V // ∃ y, E x y}) :
     E x (edgeMap E x) := Classical.choose_spec x.2
 
-private def edgeEquiv (E : V → V → Prop)
+def edgeEquiv (E : V → V → Prop)
     (hout : Relator.RightUnique E) (hin : Relator.LeftUnique E) :
     {x : V // ∃ y, E x y} ≃ {y : V // ∃ x, E x y} :=
   Equiv.ofBijective (edgeMap E) ⟨by
@@ -304,7 +304,7 @@ abbrev FullCycle (W : Type*) := {ρ : Perm W // ρ.IsCycleOn Set.univ}
 
 /-- Endpoint-compatible equivalence for actual single-orbit completions of a raw
 finite directed linear forest. Isolated vertices belong to their actual components. -/
-private theorem full_cycle_completion_equiv [Finite V] (E : V → V → Prop)
+theorem full_cycle_completion_equiv [Finite V] (E : V → V → Prop)
     (hout : Relator.RightUnique E) (hin : Relator.LeftUnique E)
     (ha : ∀ x, ¬ TransGen E x x) :
     ∃ (q : Component E ≃ Tail E) (h : Component E ≃ Head E)
@@ -383,7 +383,7 @@ private theorem full_cycle_support [Fintype V] [DecidableEq V]
     have hu : {i | σ i ≠ i} = Set.univ := by ext i; simp [hm]
     simpa only [hu] using hc.isCycleOn
 
-private theorem full_cycle_card [Finite V] (hV : 2 ≤ Nat.card V) :
+theorem full_cycle_card [Finite V] (hV : 2 ≤ Nat.card V) :
     Nat.card (FullCycle V) = (Nat.card V - 1).factorial := by
   classical
   letI := Fintype.ofFinite V
