@@ -94,6 +94,10 @@ $$\neg \operatorname{claim}\left(\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/BishopMaximalPlacementGrowth.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a146304-maximal-bishop-growth-refutation` (refuted) by `D5/S3/Combinatorics/Graph/Domination/BishopMaximalPlacementGrowth.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a146304-maximal-bishop-growth-refutation","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/BishopMaximalPlacementGrowth.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
