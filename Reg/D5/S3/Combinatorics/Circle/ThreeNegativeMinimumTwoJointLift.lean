@@ -190,14 +190,11 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun side p i =>
-    let r : ℤ := 2 ^ p.1
-    let s : ℤ := 2 ^ p.2.1
-    let k := p.1 + p.2.1 + p.2.2
-    let v := 1 + r + r * s
-    match side with
-    | false => centered (modulus k) ((2 : ℤ) ^ i * v)
-    | true => centered (modulus (k + 1)) ((2 : ℤ) ^ i * (2 * v)))
+  realize signature (fun side p => match side with
+    | false => fun i => centered (modulus (p.1 + p.2.1 + p.2.2))
+        ((2 : ℤ) ^ i * (1 + (2 : ℤ) ^ p.1 + (2 : ℤ) ^ p.1 * (2 : ℤ) ^ p.2.1))
+    | true => fun i => centered (modulus (p.1 + p.2.1 + p.2.2 + 1))
+        ((2 : ℤ) ^ i * (2 * (1 + (2 : ℤ) ^ p.1 + (2 : ℤ) ^ p.1 * (2 : ℤ) ^ p.2.1))))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
