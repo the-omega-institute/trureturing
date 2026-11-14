@@ -87,14 +87,7 @@ internal sealed class WeakShuffleNormalizationDocument : IScribeDocumentDefiniti
                 DescribeId.Create("word-diagonal-linear-combination"),
                 DeclarationHandle.Create(Prefix + "diagonal"),
                 H("Diagonal word rescaling"),
-                StatementSource.FromAuthor(Disp(
-                    Forall("X", F.Id("Type"), Forall("K", F.Id("Type"),
-                        Seq(OpenBracket, Call("Field", F.Id("K")), CloseBracket, Sp,
-                            Forall("r", Arrow(Call("List", F.Id("X")), F.Id("K")),
-                                Eq(Call("diagonal", F.Id("r")),
-                                    QCall("Finsupp.linearCombination", F.Id("K"),
-                                        Fun("w", Call("List", F.Id("X")),
-                                            QCall("Finsupp.single", F.Id("w"), Call("r", F.Id("w"))))))))))),
+                StatementSource.FromAuthor(Disp(DiagonalFormula())),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The linear map multiplies each word coefficient by the prescribed scalar r w."))),
@@ -126,6 +119,22 @@ internal sealed class WeakShuffleNormalizationDocument : IScribeDocumentDefiniti
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("mammez-2022-weak-shuffle-normalization"),
                     ResolutionKind.Proved)))));
+
+    private static Formula DiagonalFormula()
+    {
+        var x = F.Id("X");
+        var k = F.Id("K");
+        var body = Eq(Call("diagonal", F.Id("r")),
+            QCall("Finsupp.linearCombination", k,
+                Fun("w", Call("List", x),
+                    QCall("Finsupp.single", F.Id("w"), Call("r", F.Id("w"))))));
+        return Seq(
+            F.Forall, Sp, Parenthesized(Seq(x, Sp, Colon, Sp, F.Id("Type"))), Comma, Sp,
+            F.Forall, Sp, Parenthesized(Seq(k, Sp, Colon, Sp, F.Id("Type"))), Comma, Sp,
+            OpenBracket, Call("Field", k), CloseBracket, Comma, Sp,
+            F.Forall, Sp, Parenthesized(Seq(F.Id("r"), Sp, Colon, Sp,
+                Arrow(Call("List", x), k))), Comma, Sp, body);
+    }
 
     private static Formula KXFormula() =>
         All("X", F.Id("Type"), All("K", F.Id("Type"),

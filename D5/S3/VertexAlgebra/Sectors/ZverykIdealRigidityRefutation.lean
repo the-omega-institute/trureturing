@@ -9,7 +9,8 @@
 /-
 admission_basis: open-problem-resolution (#27461; Refuted)
 escape_witness: none (settling result)
-Direct frozen dependencies: none; all D5 prerequisites are in this delivery.
+Direct frozen dependencies: D5/S1/Words/WeakShuffleNormalization.diagonal,
+through VBKMRecursiveAction.cartan; the public owner awaits canonical re-pinning.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339
 Definitions are labelled bind-only as encodings, not as proofs of new propositions.
 Declarations (consumer names are qualified by their owning module):
