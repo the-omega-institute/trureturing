@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.EqualBinaryRunBridge
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound readouts for literal membership and the complete integer sum recurrence. -/
+
 set_option autoImplicit false
 
 namespace Reg.D5.S1.Digit.EqualBinaryRunBridge
@@ -116,7 +118,7 @@ noncomputable def sumEvidence : Registration sumArena FullClaim where
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ sum_rejected_law
   dependence := by
     intro i
-    refine ⟨(), 1, 2, ?_⟩
+    refine ⟨(), (1 : ℕ), (2 : ℕ), ?_⟩
     change a 1 ≠ a 2
     rw [full_claim.1, full_claim.2.1]
     decide
