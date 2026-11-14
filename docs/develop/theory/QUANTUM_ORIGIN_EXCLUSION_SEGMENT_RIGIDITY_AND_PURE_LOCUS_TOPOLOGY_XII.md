@@ -2323,3 +2323,148 @@ $e_{P_v}(c_{P_w})=(1-|v^*w|^2)/2=1/2=e_{P_w}(c_{P_v})$。故 $\mathsf{CR}_{\rm s
 [S149En]: https://www.maths.ed.ac.uk/~v1ranick/papers/engelking.pdf "R. Engelking, Dimension Theory：Theorems 3.1.4、3.1.8，印刷页209、212，正规空间闭子集单调性及闭子空间可数和；Theorem 1.8.2，页73，欧氏空间覆盖维数。"
 
 ## 追加锚（本行以下为增补区）
+
+## 152. 完整菜单的严格差距与入射塌球的唯一落点
+
+**定义 152.1（同原菜单、最优面与实际落点）。** 保留定义151.1的全部原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p,S_p$，假设完整 EB3 与纯 PR。第二变量始终遍历整个原混态域 $K$。沿用 [X125.3][Q152X] 的整球零确认面，并定义辅助下包络、完整最优面和实际塌缩落点集：
+
+$$
+\begin{gathered}
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\},\qquad
+B_p(x)=\min_{e\in\mathcal A_p}e(x),\\
+M_p(x)=\{f\in\mathcal F_p:f(x)=T_p(x)\},\qquad
+\Delta_p(x)=B_p(x)-T_p(x),\\
+\mathscr L(p)=
+\{r\in K:\exists(p_i)\subset P,\ p_i\to p,\
+d_H(D_{p_i},\{r\})\to0\}.
+\end{gathered}
+\tag{XII152.1}
+$$
+
+$d_H$ 使用任一固定辅助欧氏范数。$\mathcal A_p$ 非空紧凸，其每个成员的整个原零面恰为 $D_p$；$M_p(x)$ 非空紧凸。因此 $0\le T_p(x)\le B_p(x)\le1$，两种 minimum 均达到，且固定标签的两种下包络都在整个 $K$ 上连续。$B_p$ 仅比较原菜单的一个子面，没有替换原 $T_p$。按 [IX115.5][Q152IX]，$\mathscr L(p)\subseteq S_p$；它可以为空。以下不输入全域 Inj、$\mathcal A_p$ 单点性、least 或 Conn。
+
+**定理 152.2（严格差距定位全部最优效应的同一原零点）。** 令
+
+$$
+U_p=\{x\in K:\Delta_p(x)>0\}.
+\tag{XII152.2}
+$$
+
+对每个 $x\in U_p$，存在唯一 $r_p(x)\in S_p$，使每张 $f\in M_p(x)$ 都满足
+
+$$
+Z(f):=\{z\in K:f(z)=0\}=\{r_p(x)\}.
+\tag{XII152.3}
+$$
+
+映射 $r_p:U_p\to S_p$ 连续。若固定原纯输入 $s\in P$ 满足 $\Delta_p(s)>0$，则对每个 $\eta>0$，存在 $p$ 在 $P$ 中的邻域 $W$，使
+
+$$
+\forall a\in W\ \forall f\in M_a(s):\qquad
+\varnothing\ne Z(f)\subset
+\{z\in K:\|z-r_p(s)\|<\eta\}.
+\tag{XII152.4}
+$$
+
+证明。先在承重推导内部复用 [X125.2式(X125.8)][Q152X] 的原菜单归一化：当 $t=T_p(x)<1$ 时，每个最优 $f$ 都在整个 $K$ 上取零。否则 $m=\min_Kf>0$，则
+
+$$
+\widetilde f=\frac{f-mu}{1-m}\in\mathcal F_p,\qquad
+\widetilde f(x)=\frac{t-m}{1-m}<t,
+\tag{XII152.5}
+$$
+
+矛盾。该效应在全部 $K$ 上介于零与一，再由原 $u$ 齐次化到整个 $C$，不要求面效应延拓。
+
+取 $f_0\in\operatorname{ri}M_p(x)$。对任意 $f\in M_p(x)$，有限维凸集的相对内部性质给 $g\in M_p(x)$ 与 $0<\lambda<1$，使 $f_0=\lambda f+(1-\lambda)g$。全域非负性遂给
+
+$$
+Z(f_0)=\bigcap_{f\in M_p(x)}Z(f)\ne\varnothing.
+\tag{XII152.6}
+$$
+
+这是同一最优面的共同零集。每个最优效应的零面都包含于 $D_p$。由完整原真面分类，它只能是纯单点或整个 $D_p$。严格差距排除 $M_p(x)\cap\mathcal A_p\ne\varnothing$，故这些零面均为单点；(XII152.6)使其全部相同，得到(XII152.3)。
+
+若 $x_i\to x\in U_p$，选 $f_i\in M_p(x_i)$。$T_p$ 连续、$\mathcal E$ 与 $D_p$ 紧，使任意子列可再取
+$f_i\to f$、$r_p(x_i)\to r'$。评价连续给 $f\in M_p(x)$、$f(r')=0$，故 $r'=r_p(x)$。这给所述连续性。
+
+现在固定上述纯 $s$。仅对纯端点使用 PR 和固定 $T_s$ 的连续性：
+
+$$
+T_a(s)=T_s(a)\longrightarrow T_s(p)=T_p(s)<1
+\qquad(a\to p,\ a\in P).
+\tag{XII152.7}
+$$
+
+因此邻近标签的全部最优效应也各有非空原零面。若(XII152.4)失败，可取 $a_i\to p$、$f_i\in M_{a_i}(s)$ 及 $z_i\in Z(f_i)$，使 $\|z_i-r_p(s)\|\ge\eta$。紧性取 $f_i\to f$、$z_i\to z$；(XII152.7)使 $f\in M_p(s)$，而 $f(z)=0$。这与(XII152.3)及距离下界矛盾。证毕。
+
+**定理 152.3（单落点限制与整球并合时的差距保留）。** 在相同完整原域中：
+
+1. 若某个原纯 $s$ 满足 $\Delta_p(s)>0$，则
+
+$$
+\mathscr L(p)\subseteq\{r_p(s)\}.
+\tag{XII152.8}
+$$
+
+2. 若 $a_i\to p$ 且 $D_{a_i}\xrightarrow{H}D_p$，则对每个固定原纯 $s$，
+
+$$
+\liminf_i\Delta_{a_i}(s)\ge\Delta_p(s).
+\tag{XII152.9}
+$$
+
+特别地，若 $\Delta_p(s)>0$，这条整球并合序列最终满足
+$M_{a_i}(s)\cap\mathcal A_{a_i}=\varnothing$。
+
+证明。对第一项，若 $D_{a_i}\to\{r\}$，从 $M_{a_i}(s)$ 的任一效应中取真实零点 $z_i$。它属于整个 $D_{a_i}$，故 $z_i\to r$；(XII152.4)又给 $z_i\to r_p(s)$，得到(XII152.8)。发送标签可以来自不同零图分量，没有预设它们与 $p$ 有限零路可达。
+
+对第二项，取 $e_i\in\mathcal A_{a_i}$ 达到 $B_{a_i}(s)$。沿实现下极限的子列再用紧 $\mathcal E$ 取 $e_i\to e$。$e_i(a_i)=1$ 给 $e(p)=1$。对任意 $z\in D_p$，Hausdorff 收敛给 $z_i\in D_{a_i}$、$z_i\to z$，于是 $e(z)=\lim e_i(z_i)=0$。故 $e\in\mathcal A_p$，得到 $\liminf_iB_{a_i}(s)\ge B_p(s)$。减去(XII152.7)的极限即得(XII152.9)。证毕。
+
+这是同一完整菜单中两种 minimum 的差距约束，不是整球连续性的新增假设。整球并合不会自动把原最优效应改成整球零确认；正差距反而保留。
+
+**定理 152.4（两落点、纯行达到与单标签 least）。** 若 $\mathscr L(p)$ 至少含两个不同点，则
+
+$$
+T_p(s)=B_p(s)\qquad(s\in P).
+\tag{XII152.10}
+$$
+
+若再有 $\mathcal A_p=\{e_p\}$，则同一个原 $e_p$ 是完整菜单的 least：
+
+$$
+T_p(x)=e_p(x)\quad(x\in K),\qquad
+f-e_p\in C^\ast\quad(f\in\mathcal F_p).
+\tag{XII152.11}
+$$
+
+而且 $\beta_{D_p}=1$，满刻度沿 $p$ 的整个有限零路分量传播。这些结论不要求全域 Inj。
+
+证明。若(XII152.10)在某个原纯输入失败，定理152.3就把全部落点限制到一个点，矛盾。单点性再使 $T_p(s)=e_p(s)$ 对全部原纯 $s$ 成立。对每张固定 $f\in\mathcal F_p$，$f-e_p$ 因而在 $P$ 上非负。由有限维 $K=\operatorname{conv}P$、$C=\operatorname{cone}P$，同一线性泛函在整个 $C$ 上非负；$e_p$ 自己仍在完整菜单中，得到(XII152.11)。没有将逐输入的不同效应拼成仿射函数。
+
+还须支付从这个单标签 least 到真实三角的桥。令 $g=u-e_p$。PR 的严格纯端点暴露给 $T_p(s)<1$ 对所有 $s\ne p$ 成立；由原纯分解及 $T_p=e_p$，有 $Z(g)=\{p\}$。任取 $q\in S_p$ 以及 $h\in\mathcal A_q$。零对称给 $p\in D_q$，故 $h(p)=0$、$h(q)=1$，于是 $u-h\in\mathcal F_p$。least 使
+
+$$
+k=(u-h)-e_p=g-h\in C^\ast,\qquad
+k(p)=k(q)=0.
+\tag{XII152.12}
+$$
+
+$k$ 非零，否则 $h=g$，但 $Z(h)=D_q$ 为非退化三球，与 $Z(g)=\{p\}$ 矛盾。故 $Z(k)$ 是含不同纯点 $p,q$ 的非空真面，由原面分类等于某个 $D_r$。零对称给 $p,q,r$ 两两正交，构成真实原三角。准确消费 [IX114.8][Q152IX] 的同球刻度和双向零边传播，即得 $\beta_{D_p}=1$ 及所述分量传播。证毕。
+
+最后一段证明本身给更一般的单标签事实：只要某个 $p$ 已有真正的全菜单 least，它就进入真实三角并使该分量满刻度，不需要两落点前件。两落点与 $\mathcal A_p$ 单点性承担的是取得这个 least 的前一步。反之，若 $\mathcal A_p$ 单点且 $\beta_{D_p}>1$，必有某个原纯 $s$ 满足 $\Delta_p(s)>0$，从而 $\mathscr L(p)$ 至多一个点；否则上述纯行到 least 的推导将迫使满刻度。
+
+**范围 152.5（原局部候选与未消去的两种退化）。** 完整候选仍是定义151.1的 EB3、字面纯 PR 与近一共同零条件 $\mathsf N_2$。推论151.4已将该候选接到同原锥、同原单位的复三能级结构：全纯域为 $\mathbb{CP}^2$，每张完整排除球的纯缘为 $\mathbb{CP}^1$；整个原确认菜单、全部混态最低值及全部原效应分别由(XII151.8)与其静态字典给出。本章保留这些原量词，不另作量子分类。
+
+新增的承重约束是完整最优面的共同单点零集、该零点对混输入的连续定位、纯输入严格差距对全部入射塌缩的单落点限制，以及整球并合时差距的下半连续保留。两落点仅支付(XII152.10)的逐纯输入达到；当 $\mathcal A_p$ 多于一张时，未证明存在同一效应达到所有输入，更未证明整个 $T_p$ 仿射。单落点塌缩、具有多张整球零确认的接收标签，以及跨零图分量的整球并合均未排除。没有由此取得 $\mathsf N_2$、Conn、全域 Inj 或全部 $\mathcal A_p$ 单点，也没有完整 EB3+PR 坏模型；本章未减少候选的独立假设数。
+
+归属为 repo-derived 的跨接口推导，不主张全球原创或最小性。相对内部共同零集、紧性与仿射归一化是成熟中间工具；原面分类、最优效应取零及实际球极限二择按上述来源复用。[Niestegge，2312.13213v2，§3][Q152N]的 $e_\omega$ 下确界遍历所有非负仿射 $a$、$a(\omega)=1$，未加 $a\le1$；其性质 $(\ast\ast)$ 另要求该下确界本身仿射并仅在 $\omega$ 取一。[Niestegge，2411.18589v2，Theorem 1][Q152B]仍以 $(\ast\ast)$ 与 bit symmetry 为前件才给自对偶及跃迁互易。它们没有支付本章 proper 全菜单的 least 或未证的局部共同零点。
+
+**完整中文图景。** 仍在同一块原状态体中比较两种测试：一种允许使用全部原确认菜单，另一种要求把背后整颗排除球都清零。如果前一种能读得严格更低，那么所有达到最低值的测试都只能瞄准同一个真实零点；邻近标签的最优测试也把全部零点收向那里。因此所有向这个标签塌来的球只能落到同一处。若确实有两处不同落点，整行纯读数就已能交给整球清零测试；这些测试再唯一时，同一张尺才支配整个原菜单，并把该标签接进真实正交三角。尚未证明的是，剩下的单落点或多尺情形是否不可能，所以近处两态必有共同排除点这一条仍然保留。实际仪器、复合纠缠、全旁观 CP、物理时间、Hamiltonian 和能量继续各按原独立合同承担。
+
+[Q152IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.2—114.5：完整原面、严格纯暴露、原纯紧性及球内刻度；IX114.8：真实三角与满刻度传播；IX115.5：实际整球极限二择。"
+[Q152X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X125.2式(X125.8)：完整原菜单最优效应的全域取零；X125.3：非空紧凸整球零确认面及准确原零面；X126.6保留全域Inj及单标签唯一性的较强前件。"
+[Q152N]: https://arxiv.org/html/2312.13213v2 "G. Niestegge，Quantum transition probability，§3：非负仿射下确界及另列的性质(**)。"
+[Q152B]: https://arxiv.org/html/2411.18589v2 "G. Niestegge，Bit symmetry entails the symmetry of the quantum transition probability，Theorem 1。"
+
+## 追加锚（本行以下为增补区）
