@@ -27,7 +27,8 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
 
 private theorem span_vanishes {p : pure C u} (f : normalSpan C p) : f.val p = 0 := by
-  let Z : Submodule ℝ (V →L[ℝ] ℝ) := { carrier := {h | h p = 0}
+  let Z : Submodule ℝ (V →L[ℝ] ℝ) :=
+    { carrier := {h | h p = 0}
       zero_mem' := by simp
       add_mem' := by intro f g hf hg; change f p + g p = 0; rw [hf, hg]; ring
       smul_mem' := by intro t f hf; change t * f p = 0; rw [hf]; ring }
