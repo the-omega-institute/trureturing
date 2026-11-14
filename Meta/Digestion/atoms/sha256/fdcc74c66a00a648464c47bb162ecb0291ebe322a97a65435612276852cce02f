@@ -1,0 +1,10 @@
+## 5. Control, phase reference and large powers are part of the specification
+
+The same-channel equality Ad_U=Ad_{e^{i phi}U} does not identify controlled U and controlled e^{i phi}U. Their relative control phase is measurable. In particular U=I and -I are the same standalone channel, while their controlled versions act differently on a |+> control. A transition kernel or an unlabelled CPTP channel therefore does not by itself specify the phase-referenced oracle required by (4.1).
+
+The black-box control obstruction of [AFCB14] applies to its stated oracle model, not to every physical implementation. Tang-Wright [TW26], revised April 2026, further shows that many phase-invariant tasks admit efficient decontrolling with phase-averaged output and suitable forward/inverse access. The lesson here is to specify the task and access model. We do not claim every period-related task fundamentally needs direct controlled access, nor claim to have implemented their decontrolling construction. Our explicit protocol supplies controlled gates or requires a separately proved compilation of them.
+
+For an m-bit clock, the usual circuit uses controlled U^(2^j), j=0,...,m-1. If these are produced merely by repeating a one-step gate, the number of calls is 2^m-1. This accounting does not exclude specialized fast implementations; it shows that a diagram of a controlled high power is not evidence of one. A generic finite gate menu or QCA does not automatically provide a polynomial-cost large-power oracle.
+
+If implemented controlled powers have operator-norm errors epsilon_j and the inverse Fourier transform has error epsilon_F, then the final output total-variation distance from the ideal protocol is at most min(1,epsilon_F+sum_j epsilon_j). Expand the difference of the two unitary products as a telescoping sum, use norm preservation of each factor, and then pure-state trace-distance and measurement contraction. Purifying a mixed input gives the same bound. This is an error budget once concrete compiled gates are supplied, not a gate-synthesis or fault-tolerance result.
+
