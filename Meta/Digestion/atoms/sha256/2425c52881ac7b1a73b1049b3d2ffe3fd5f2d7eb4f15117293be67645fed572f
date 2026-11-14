@@ -1,0 +1,33 @@
+**既有条件应用 139.10。** 完整 EB3 加(XI139.33)的 $\mathsf R_1$，仍按[X133.6—133.7][Q139X]等价于存在同一个实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,
+\qquad \Phi(\mathrm{PSD}_3(\mathbb C))=C,\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XI139.35}
+$$
+
+另一条完整候选仍是[定义135.1、定理135.5与条件应用136.4][Q139XI]的完整 EB3+$\mathsf{MC}$。记原完整 $D_p$ 的唯一仿射球心为 $c_p$，其条件准确为：任意正整数 $m,n$，全部原纯点 $p_i,q_j\in P$，全部非负实权重 $\lambda_i,\mu_j$，若
+
+$$
+\sum_{i=1}^m\lambda_i=\sum_{j=1}^n\mu_j=1,\qquad
+\sum_{i=1}^m\lambda_i p_i=\sum_{j=1}^n\mu_j q_j,
+\quad\text{则}\quad
+\sum_{i=1}^m\lambda_i c_{p_i}=\sum_{j=1}^n\mu_j c_{q_j}.
+\tag{XI139.36}
+$$
+
+零权、重复标签及同一原态的全部有限纯分解都在量词内。135.2—135.4的球心严格反序、全张成及线性下降先取得实际可逆正保质量球心图；136.2—136.3也可供应其纯域紧性和全轴间隙。随后135.5仍消费 IX118.8的既有分类，包括其既有依赖。$\mathsf R_1$ 路线由 X133.6消费 IX120.4—120.5及 IX116.17—116.18。这里直接引用这两条同原等价及其反向，不重证分类，不把139.2的拓扑同胚替代(XI139.35)的锥／单位同构。
+
+只在另行支付任一完整候选后，取其同一个 $\Phi$，令 $P_v=vv^*$、$v^*v=1$、$Q_v=I_3-P_v$、$p_v=\Phi(P_v)$、$U=\Phi(I_3)$，已有完整字典为：
+
+| 静态对象 | 同一个原锥和原单位中的准确对应 |
+| --- | --- |
+| 全载体、质量、单位 | $\dim_{\mathbb R}V=9$；全部 $X\succeq0$，包括零与任意非负质量，由 $\Phi$ 运输到整个 $C$，且 $u(\Phi X)=\operatorname{Tr}X$。$u\in V^*$ 与 Jordan 单位 $U\in V$ 不混型。 |
+| 全态、凸混合、复射线 | $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$，保持全部凸混合；全部原 $P=\{p_v\}\cong\mathbb{CP}^2$。任意非零 $z\in\mathbb C^3$ 对应 $\Phi(zz^*/(z^*z))$，非零复倍数给同一原纯标签。 |
+| 全效应、全混态 Born 评价 | $f_M(\Phi X)=\operatorname{Tr}(MX)$ 恰遍历全部 $0\preceq M\preceq I_3$；零、单位、补及序均保持。任意实线性读数对应任意 Hermitian $M$。 |
+| 完整确认菜单、least、minimum | $\mathcal F_{p_v}=\{f_{P_v+B}:B=Q_vBQ_v,\ 0\preceq B\preceq Q_v\}$。least 为 $f_{P_v}$；对每个原混态 $T_{p_v}(\Phi\rho)=\operatorname{Tr}(P_v\rho)=v^*\rho v$。确认菜单不是单点。 |
+| 全纯比较及整个排除球 | $T_{p_v}(p_w)=|v^*w|^2$；未归一时除以 $(v^*v)(w^*w)$。$D_{p_v}=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1,\rho v=0\}$，含全部混态；纯球缘为 $\mathbb{CP}^1\cong S^2$。 |
+| 维数、中心、完整框架 | $\dim_{\rm aff}K=8$，全纯域实维四，完整排除球实维三；$c_{p_v}=\Phi(Q_v/2)=(U-p_v)/2$，总体中心为 $U/3$。原零三角对应三个和为 $I_3$ 的正交秩一投影，三个 least 效应之和为 $u$；每条原零边有唯一第三原纯点，数学完美区别容量为三。 |
+| 全部有限数学测量 | 对任意有限结果数，$f_j\in C^*$、$\sum_jf_j=u$ 恰对应全部 $M_j\succeq0$、$\sum_jM_j=I_3$ 的 POVM；每个原输入概率为 $\operatorname{Tr}(M_j\rho)$，允许零效应。 |
+| 谱与实可观测量 | 每个原态有三项正交谱分解，允许零权和重谱；全部 Hermitian 可观测量有实谱及谱效应，重谱不指定唯一的逐本征射线。 |
+| Jordan、自对偶、球心图 | $\langle\Phi X,\Phi Y\rangle_\Phi=\operatorname{Tr}(XY)$ 下 $C$ 自对偶，$\Phi X\circ\Phi Y=\Phi((XY+YX)/2)$，单位为 $U$；$R(x)=(u(x)U-x)/2$ 在全部 $V$ 上为球心图。 |
