@@ -95,8 +95,6 @@ public sealed partial class MakeWorkflowTests
         "auric-fib-analysis-build",
         "auric-fib-analysis",
         "auric-fib-analysis-test",
-        "auric-fib-report",
-        "auric-fib-universal-test",
         "research-readouts",
         "research-readouts-test",
         "compiled-dependencies",

@@ -25,8 +25,7 @@ class ScribeFullReportContracts(unittest.TestCase):
         self.root, self.report = self.fixture.root, self.fixture.report
         for name in ('Makefile', 'tools/scripts/scribe.sh',
                      'tools/scripts/report/report-consumer.sh',
-                     'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
-                     'tools/lean-inspector/fib_analysis.py'):
+                     'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py'):
             target = self.root / name
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / name, target)
