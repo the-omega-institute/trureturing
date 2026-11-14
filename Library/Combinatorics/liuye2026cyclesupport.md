@@ -1,5 +1,5 @@
 ---
-bibkey: liuYe2026CycleSupport
+bibkey: liuye2026cyclesupport
 authors: Xingchen Liu / 刘星辰; Xiangyu Ye / 叶祥宇
 year: 2026
 title: "Full-support cycle correspondence"
