@@ -2660,3 +2660,194 @@ $$
 [Q153L]: https://arxiv.org/html/2611.02575v1 "Y. Luan, T.-Y. Tam, Planar Convexity of Isotropy Orbits via Cohomology and Common Zeros，§2：two-piece property 的半平面表述及其另需光滑流形前件的消费者。"
 
 ## 追加锚（本行以下为增补区）
+
+## 154. 逐张确认的整球下界与真实零三角
+
+**定义 154.1（完整原域与确认的整球下界）。** 保留定义151.1、152.1的全部原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p,S_p,\mathcal A_p,B_p,\Delta_p,\mathscr L(p)$，假设完整 EB3 与字面纯 PR。全部混输入和确认菜单均不缩减，所有 minimum 仍在原域达到。对固定原纯标签 $p$ 定义
+
+$$
+\begin{aligned}
+\mathsf{MD}(p):\quad
+&\forall f\in\mathcal F_p\ \exists e\in\mathcal A_p:
+\quad f-e\in C^\ast,\\
+\mathsf{MD}:\quad&\forall p\in P:\mathsf{MD}(p).
+\end{aligned}
+\tag{XII154.1}
+$$
+
+下界效应允许随同一张 $f$ 改变；不要求一个 $e$ 对全部 $f$ 通用。记 $I(F)=\{a\in P:D_a=F\}$，$c_p$ 为完整 $D_p$ 的球心。$I(D_p)=\{p\}$ 表示球的原标签唯一，与 $\mathcal A_p$ 单点性是不同条件。
+
+**定理 154.2（逐张下界直接支付单标签、三角与共同预算）。** 对固定原纯 $p$，条件 $\mathsf{MD}(p)$ 等价于
+
+$$
+T_p(x)=B_p(x)\qquad(x\in K).
+\tag{XII154.2}
+$$
+
+任一成立时，有 $I(D_p)=\{p\}$；对每个 $q\in S_p$，存在唯一共同零邻点
+
+$$
+r=2c_p-q,\qquad D_p\cap D_q=\{r\}.
+\tag{XII154.3}
+$$
+
+而且对每张 $b\in\mathcal A_q$，都存在 $e\in\mathcal A_p$、$c\in\mathcal A_r$，使
+
+$$
+e+b+c=u.
+\tag{XII154.4}
+$$
+
+此外 $\beta_{D_p}=1$，满刻度沿 $p$ 的全部有限原零路传播。没有预设 $\mathcal A_p$ 单点、共同 least、全域 Inj 或 Conn。
+
+证明。由 $\mathcal A_p\subseteq\mathcal F_p$，始终有 $T_p\le B_p$。若 $\mathsf{MD}(p)$ 成立，每张 $f$ 都有一个原正序下界 $e\in\mathcal A_p$，故 $f(x)\ge e(x)\ge B_p(x)$，得到(XII154.2)。反向准确复用153.3证明最后的紧集加闭锥严格分离：该步骤仅用全部混输入的等号，不用 $\dim\operatorname{aff}\mathcal A_p\le1$。具体而言，若 $f\notin\mathcal A_p+C^\ast$，严格分离的向量必属 $C\setminus\{0\}$，以原 $u$ 归一化便给 $f(x)<B_p(x)=T_p(x)$，矛盾。
+
+先排除 $p$ 的重复标签。若 $I(D_p)$ 不止一个点，[IX116.2][Q154IX]给实际孤立配对球 $F=D_p,G$，满足
+
+$$
+I(F)=S(G),\qquad I(G)=S(F),\qquad F\cap G=\varnothing.
+\tag{XII154.5}
+$$
+
+$\mathrm{PR}$ 已支付严格纯暴露。[X124.7、124.9][Q154X]遂在指定的原纯点 $p\in S(G)$ 产生实际序列
+
+$$
+a_i\to q_0\in S(F),\qquad D_{a_i}\xrightarrow H\{p\}.
+\tag{XII154.6}
+$$
+
+将 [X126.3][Q154X] 用在这次实际塌缩的接收标签 $q_0$、落点 $p$ 上，其补效应给
+
+$$
+h\in\mathcal F_p,\qquad Z_K(h)=\{q_0\}.
+\tag{XII154.7}
+$$
+
+该来源不要求 Inj 或 $P_0$。由 $\mathsf{MD}(p)$ 取 $e\in\mathcal A_p$，使 $k=h-e\in C^\ast$。则 $k(p)=k(q_0)=0$，且 $k\ne0$；否则 $h=e$，其原零面不可能同时是单点和完整三球。完整真面分类使 $Z_K(k)=D_t$ 对某个原纯 $t$ 成立。因 $p,q_0\in D_t$，零对称给 $t\in D_p\cap D_{q_0}$；但 $D_p=F,D_{q_0}=G$ 不交，矛盾。因此 $I(D_p)=\{p\}$。
+
+现在任取 $q\in S_p$、$b\in\mathcal A_q$。零对称给 $p\in D_q$，故 $u-b\in\mathcal F_p$。再由逐张下界取 $e\in\mathcal A_p$，使
+
+$$
+k=u-b-e\in C^\ast,\qquad k(p)=k(q)=0.
+\tag{XII154.8}
+$$
+
+若 $k=0$，则 $e=u-b$ 在整个 $D_q$ 恒一。对每个 $t\in S_q$，$e(t)=1$ 且 $e|_{D_p}=0$，于是 $D_p\subseteq D_t$。完整球为极大真面，故 $D_t=D_p$。整个 $S_q$ 含多个原纯点，这与 $I(D_p)=\{p\}$ 矛盾。因此 $k\ne0$。
+
+原真面分类再次给 $Z_K(k)=D_r$，并使 $p,q,r$ 两两原零正交。准确消费 [IX114.8][Q154IX]，得到(XII154.3)、$\beta_{D_p}=1$ 及满刻度的零边传播。又 $r\in D_p\cap D_q$，故 $e(r)=b(r)=0$、$k(r)=1$；由 $0\le k=u-e-b\le u$，有 $k\in\mathcal A_r$。取 $c=k$ 得(XII154.4)。证毕。
+
+(XII154.4)是整个原效应区间内的数学单位分解，没有预付实际三结果仪器。证明的两次下界可以使用不同的 $e$；没有把 $\forall f\exists e$ 换成 $\exists e\forall f$。
+
+**推论 154.3（线段确认族进入真实三角）。** 若固定原纯 $p$ 满足
+
+$$
+\dim\operatorname{aff}\mathcal A_p\le1,
+\qquad T_p(s)=B_p(s)\quad(s\in P),
+\tag{XII154.9}
+$$
+
+则定理154.2的全部结论成立。特别地，$|\mathscr L(p)|\ge2$ 配合该仿射维数条件，已足以使 $p$ 进入真实三角并使其整个有限零路分量满刻度。反向，
+
+$$
+\beta_{D_p}>1,\quad \dim\operatorname{aff}\mathcal A_p\le1
+\quad\Longrightarrow\quad
+\exists s\in P:\Delta_p(s)>0,
+\qquad |\mathscr L(p)|\le1.
+\tag{XII154.10}
+$$
+
+证明。153.3将(XII154.9)送到全部原混输入的(XII154.2)，再用定理154.2。两落点的纯行等号由152.4供应。对(XII154.10)，若所有纯差距均零，前述推导将给单位预算；存在纯严格差距后，152.3限制全部实际塌缩落点至多一个。证毕。
+
+本条没有断言非退化线段确认族实际存在，也没有证明两端相同。153.3的反链结论仍保留：非退化线段没有共同 least；此处取得三角的路径已不要求先取得它。
+
+**定理 154.4（仅混态差距必落在不相交的完整三球内）。** 固定原纯 $p$，假设 $T_p(s)=B_p(s)$ 对全部原纯 $s$ 成立。若某个原混态的 $\Delta_p$ 严格正，则存在实际完整球 $F=D_t$、$y\in\operatorname{ri}F$ 及原 $f\in\mathcal F_p$，满足
+
+$$
+B_p(y)>f(y)\ge T_p(y),\qquad
+p\notin F,\qquad F\cap D_p=\varnothing.
+\tag{XII154.11}
+$$
+
+令 $U_F=\operatorname{span}(F-F)$。对任意 $e_0\in\mathcal A_p$，还必有
+
+$$
+\dim\operatorname{span}
+\{(e-e_0)|_{U_F}:e\in\mathcal A_p\}\ge2.
+\tag{XII154.12}
+$$
+
+证明。取原混态 $x$ 及达到 $T_p(x)$ 的原 $f\in\mathcal F_p$，使 $\delta=B_p(x)-f(x)>0$。固定任意 $e_0\in\mathcal A_p$，记 $n=\dim V$，并取线性读数空间
+
+$$
+W=\operatorname{span}\bigl(
+\{e-e_0:e\in\mathcal A_p\}\cup\{f-e_0\}\bigr).
+\tag{XII154.13}
+$$
+
+$\operatorname{span}D_p$ 四维，而 $e_0|_{D_p}=0$、$e_0(p)=1$，故 $\operatorname{span}(D_p\cup\{p\})$ 五维。全部 $e-e_0$ 都消失于此空间；添加单个 $f-e_0$ 后，得到
+
+$$
+\dim W\le n-4<n-1=\dim\operatorname{aff}K.
+\tag{XII154.14}
+$$
+
+用 $W$ 的一个基定义读数映射 $L$，令 $Q=\{z\in K:L(z)=L(x)\}$。对任意 $z\in Q$、$e\in\mathcal A_p$，有 $e(z)-f(z)=e(x)-f(x)$，故
+
+$$
+B_p(z)-f(z)=\delta>0\qquad(z\in Q).
+\tag{XII154.15}
+$$
+
+因全部纯行已相等，$Q$ 没有原纯点。取 $y\in\operatorname{ext}Q$；由(XII154.14)，原内部点存在保持全部读数的非零双向扰动，故不能为切片极点。$y$ 遂是非纯边界点，其最小原面为实际完整三球 $F$，且 $y\in\operatorname{ri}F$。若 $L|_{U_F}$ 有非零核，仍能在 $F$ 中双向扰动 $y$，矛盾。因此
+
+$$
+\operatorname{rank}(W|_{U_F})=3.
+\tag{XII154.16}
+$$
+
+单个 $f-e_0$ 至多增加一个秩，故(XII154.16)给(XII154.12)。这也说明纯行相等后的混态障碍必须在同一颗实际球上具有至少两个独立确认斜率方向。
+
+若 $p\in F$，在球图中写 $p=b_F(v)$。每张 $e\in\mathcal A_p$ 的 $1-e|_F$ 非负且零于球面点 $p$，遂有 $e(b_F(z))=1-\alpha_e(1-v\cdot z)$，$\alpha_e\ge0$。其斜率差全在同一轴上，违反(XII154.12)。故 $p\notin F$。
+
+若 $F=D_p$，全部 $e|_F=0$，同样违反该秩条件。若两个球不同且相交，完整原面分类使交集为一个原纯点 $q=b_F(v)$。每张 $e|_F$ 非负且零于 $q$，遂为 $\alpha_e(1-v\cdot z)$，斜率差仍至多一维，矛盾。故 $F\cap D_p=\varnothing$。原 $y,f$ 满足(XII154.15)，即得(XII154.11)。证毕。
+
+在这个证明内还可精确定位共同最优的缺失。记 $E_p(s)=\{e\in\mathcal A_p:e(s)=B_p(s)\}$。取经过 $y$ 的任一直径，其纯端点为 $s_+,s_-$，则
+
+$$
+E_p(s_+)\cap E_p(s_-)=\varnothing.
+\tag{XII154.17}
+$$
+
+确实，若同一个 $e$ 在两端都最低，写 $y=\lambda s_++(1-\lambda)s_-$、$0<\lambda<1$，则凹下包络与该效应共同给 $B_p(y)=\lambda B_p(s_+)+(1-\lambda)B_p(s_-)$；而纯行等号使 $f(y)$ 不低于右侧，与(XII154.11)矛盾。这里缺的是同一张原效应共同达到两端最低值，不是两端数值各自存在。
+
+**推论 154.5（完整下界候选的同原复三能级结构）。** 在定义154.1的原域内，下列条件等价：
+
+$$
+\begin{gathered}
+\mathrm{EB3}+\mathrm{PR}+\mathsf{MD},\\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V
+\text{ 实线性双射},\qquad
+\Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\end{gathered}
+\tag{XII154.18}
+$$
+
+证明。全域 $\mathsf{MD}$ 经定理154.2给全部原球单位饱和；此时准确复用 [IX114.9][Q154IX]，得到同原 $C,u$ 的完整静态复三能级表示，不先输入 Conn、维数九或共同 least。
+
+反向直接在同一表示中消费151.4式(XII151.8)：若 $p=\Phi(vv^\ast)$、$\|v\|=1$，完整原确认效应为 $vv^\ast\oplus B$、$0\preceq B\preceq I_{v^\perp}$。每张都有同一个原正序下界 $vv^\ast\oplus0\in\mathcal A_p$，故支付所要求的逐张下界；EB3与纯 PR由该字典同时给出。证毕。
+
+这是较弱量词的入口：先要求每张确认各有整球清零下界，分类后才得到同一 least；不是把 least 或仿射最低值写进前提。同一个 $\Phi$ 给全部原态为密度矩阵、全部原纯态为 $\mathbb{CP}^2$、每张排除球纯缘为 $\mathbb{CP}^1$，全部原效应为 $0\preceq E\preceq I_3$，原评价与全混态最低值分别为 $\operatorname{Tr}(E\rho)$、$v^\ast\rho v$。全部有限数学单位分解给完整 POVM 字典；实际仪器、复合纠缠、全旁观 CP、物理钟、Hamiltonian、能量及数值 $\hbar$ 仍保留各自独立合同。
+
+**范围 154.6（未消去的原关系与完整中文图景）。** 推论154.5给出完整新入口候选 EB3、字面纯 PR、$\mathsf{MD}$。它与151.4的近一共同零候选在原域内经同一既有分类相接；本章的新增承重内容是逐张下界到原标签唯一及真实三角的桥，以及仅混态差距的实际不相交球与二维斜率障碍，不把既有分类另算新结果。没有从裸 EB3+PR 推出 $\mathsf{MD}$、$\mathsf N_2$ 或 Conn，也没有减少独立假设数或构造完整反模型。
+
+若某个标签 $\beta_{D_p}>1$，定理154.2迫使某个原输入有严格差距。若差距已见于纯态，152.3限制该标签的实际塌缩落点至多一个；若全部纯差距为零，定理154.4将混态缺口定位于不碰旧球的另一颗实际完整球，并给(XII154.12)、(XII154.17)。这两支均未被排除，整球并合分支也仍保留。
+
+本章为 repo-derived 的原效应序、实际塌缩与完整面接口综合推导，不声明全球原创或最少公理数。紧集加闭锥分离、切片极点与球上非负仿射函数是成熟中间工具。更强的三读数纯匹配不能由153的两读数匹配直接取得：[Maier–Netzer，Proposition 2.1、Theorem 2.2][Q154M]的余维二截面道路与三算子联合值域凸性，使用复 Hilbert 自伴算子及复维数至少三；这些结构尚未由裸原前件支付，故不作为本章的输入。
+
+白话上，仍在同一块完整状态体里：每次拿一张确认某个纯点的尺，都能向下换成一张把它背后整颗排除球清零的原尺。各次可以换不同的尺，这个较弱要求已足以找出真实的第三个排除点，进而恢复完整复三能级静态几何。若纯点上都能换、混点上却不能，漏洞必须藏在另一颗完全不碰旧球的完整球内部，而且同一直径两端需要不同的最低尺。尚待证明的是，比较互易与完整三球能否也自动禁止这些漏洞；没有把这一缺失关系宣布为已内生。
+
+[Q154IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.8—114.9：真实三角、单位预算与既有同锥同单位分类；IX116.2：完整孤立重复球对。"
+[Q154X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X124.7：重复球对每个指定纯点的实际整球塌缩；124.9：紧纯接收标签及配对球定位；X126.3：实际塌缩的补确认及全原域单点零面，不输入Inj/P0。"
+[Q154M]: https://arxiv.org/html/2409.04444v1 "B. Maier, T. Netzer, A Note on the Carathéodory Number of the Joint Numerical Range，Proposition 2.1、Theorem 2.2。"
+
+## 追加锚（本行以下为增补区）
