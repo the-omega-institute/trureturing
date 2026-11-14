@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift/Preparation
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift/Preparation
+   mirror-B: none(waiver:private-consumed-implementation-described-at-endpoint)
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
