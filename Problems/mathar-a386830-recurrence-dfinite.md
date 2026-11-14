@@ -88,7 +88,7 @@ $$
 Eliminating b proves the exact published recurrence. The n = 1 contiguous
 boundary is included, so elimination also covers n = 2.
 
-The ordinary-series candidate certificate has order three:
+The ordinary-series certificate has order three:
 
 $$
 (16X-648X^2+3645X^3)A'''
@@ -110,16 +110,28 @@ attempt supplies neither counterexample.
 
 ## Evidence
 
-The intended mathematical source is `D5/S3/ArithSums/MatharA386830.lean`.
-Its source, canonical Blueprint and current scoped kernel/axiom evidence
-must jointly establish both clauses before a resolution is claimed.
+The mathematical source is `D5/S3/ArithSums/MatharA386830.lean`. Its public
+objects are `a`, `series` and `result`. The result proves the conjunction of
+the exact guarded integer recurrence and a nonzero homogeneous operator for
+the ordinary series defined directly from `a`. Its actual axiom closure is
+limited to `Classical.choice`, `Quot.sound` and `propext`.
+
+The private theorem `literal_eq_transform` establishes the all-index source
+bridge, using `signed_partial`. The finite coefficient identities
+`f_geometric`, `f_pascal` and `f_cubic`, together with `choose_boundary`, feed
+`contiguous`. The private steps `b_ratio` and `recurrence` eliminate the
+auxiliary sequence. The private `homogeneous_equation` supplies the entire
+ordinary-series certificate consumed by `result`. No frozen D5 mathematical
+supplier is an input; the source imports pinned Mathlib ingredients directly.
 
 ## Triage
 
 The admission basis for the exact complete source endpoint is
-`open-problem-resolution`, with `utility: none`. Auxiliary finite identities
-are consumed proof steps, not additional external problems or a manufactured
-escape witness. No source-event KPI or worldwide priority follows merely
+`open-problem-resolution`, with `utility: none`. All authored theorem proofs are classified `bind-only` under the repository's
+inlining and normalization rule. Each auxiliary theorem has the live consumer
+listed above; the public `result` owns the exact external source endpoint.
+These are consumed proof steps, not additional external problems or a
+manufactured escape witness. No source-event KPI or worldwide priority follows merely
 from implementing the proof.
 
 ## ASSUMED-UNVERIFIED
@@ -128,3 +140,12 @@ Independent review, freezing, required CI and publication remain separate
 delivery obligations. The scoped formal certificate does not establish
 minimal differential order, analytic asymptotics, all other OEIS formulas,
 or the completion of a continuing research goal.
+
+The four-slot escape audit is unfinished under
+[the concrete source-binding issue](https://github.com/the-omega-institute/trureturing/issues/30408).
+The Reg mirror supplies typed whole-family bridge, variation, sensitivity
+and observational-dependence evidence. It does not supply an outer
+`Contract.Registration` or producer-validated occurrence ties between the
+three recurrence values and the coefficients hidden in `series`. The linked
+issue exception permits mathematical delivery without calling this audit
+`declared_validated`.

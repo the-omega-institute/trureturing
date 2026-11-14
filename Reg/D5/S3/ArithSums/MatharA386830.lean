@@ -2,7 +2,7 @@ import D5.S3.ArithSums.MatharA386830
 import Reg.Support.DependentFamily
 
 /-! A typed whole-family realization for the literal sequence.
-Outer source-occurrence binding is unfinished under https://github.com/the-omega-institute/trureturing/issues/30405. -/
+Outer source-occurrence binding is unfinished under https://github.com/the-omega-institute/trureturing/issues/30408. -/
 
 namespace Reg.D5.S3.ArithSums.MatharA386830
 
