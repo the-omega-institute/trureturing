@@ -150,7 +150,55 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.hockeyValue`
 
 hockeyValue hf A B is affineMass plus the ENNReal curvature integral of maximalKernel, embedded in EReal. hockey_value_eq_operational identifies these with the actual finite operational infima. Its two nonnegative integrals are over (0,1] and (1,infinity). This is the finite-affine-support convention, so infinite endpoints or infinite total curvature do not introduce an infinite difference.
 
-**Theorem 1.10 (Sufficiency for every convex generator and extended value).**
+**Theorem 1.10 (Exact finite-cost curvature decomposition).**
+
+Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.finite_cost_decomposition`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.finite_cost_decomposition` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Fumio Hiai; Milan Mosonyi; Marco Tomamichel (2026). *Hockey stick f-divergences*. URL: <https://arxiv.org/abs/2607.08760v1>.
+
+*Acknowledgement.* Keiji Matsumoto (2018). *A New Quantum Version of f-Divergence*. DOI: [10.1007/978-981-13-2487-1_10](https://doi.org/10.1007/978-981-13-2487-1_10). URL: <https://arxiv.org/abs/1311.4722v4>.
+
+*Commentary.*
+
+For every actual finite reverse test, the original closed-perspective cost equals affineMass plus the nonnegative extended curvature integral of its actual testKernel. MaximalHockeyStickArbitrarySupport consumes this identity to equate kernel integrability with finite cost. Infinite endpoint costs and zero axis masses retain their existing conventions.
+
+**Theorem 1.11 (Finite actual cost equals hockey value plus gap integral).**
+
+Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.finite_cost_gap`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.finite_cost_gap` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Fumio Hiai; Milan Mosonyi; Marco Tomamichel (2026). *Hockey stick f-divergences*. URL: <https://arxiv.org/abs/2607.08760v1>.
+
+*Acknowledgement.* Keiji Matsumoto (2018). *A New Quantum Version of f-Divergence*. DOI: [10.1007/978-981-13-2487-1_10](https://doi.org/10.1007/978-981-13-2487-1_10). URL: <https://arxiv.org/abs/1311.4722v4>.
+
+*Commentary.*
+
+For PSD A,B and an actual finite test with finite closed-perspective cost, its nonnegative gap is curvature-integrable and finiteCost equals hockeyValue plus the real gap integral. This exact identity turns cost approximation into vanishing integral gaps in necessity, and vanishing integral gaps into cost approximation in controlled-tail sufficiency.
+
+**Theorem 1.12 (Actual finite near-minimizers).**
+
+Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.approximate_finite_tests`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.approximate_finite_tests` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Fumio Hiai; Milan Mosonyi; Marco Tomamichel (2026). *Hockey stick f-divergences*. URL: <https://arxiv.org/abs/2607.08760v1>.
+
+*Acknowledgement.* Keiji Matsumoto (2018). *A New Quantum Version of f-Divergence*. DOI: [10.1007/978-981-13-2487-1_10](https://doi.org/10.1007/978-981-13-2487-1_10). URL: <https://arxiv.org/abs/1311.4722v4>.
+
+*Commentary.*
+
+A real finite maximalValue=c supplies a sequence of actual finite tests with cost less than c+1/(j+1). Every selected test therefore has finite cost. The first test provides an integrable tail bound for the arbitrary-support criterion, while the full sequence yields the approximation used in necessity; no minimizing test is assumed.
+
+**Theorem 1.13 (Sufficiency for every convex generator and extended value).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.commute_implies_integrated_eq`
 
@@ -166,7 +214,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.commute_impli
 
 For every finite PSD pair, let S=A+B, C=normalize(S,A), and P=interiorProjection(C). If PSP commutes with PCP, then maximalValue hf A B equals hockeyValue hf A B for every real f convex on the positive ray. No full-support or finite-value hypothesis is needed in this direction. The actual canonical spectral test supplied by quadratic_reverse_test_attained_profile has exactly maximalKernel at every positive threshold. Its actual closed-perspective cost integrates that profile, and the defining infimum is sandwiched between this cost and the hockey lower bound. This proves the converse with infinite endpoint values, rather than assuming canonical optimality for general f.
 
-**Theorem 1.11 (The finite-value full-support classification).**
+**Theorem 1.14 (The finite-value full-support classification).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.integrated_eq_iff_commute`
 
@@ -187,8 +235,11 @@ Attribution: the source equality question is Hiai, Mosonyi and Tomamichel, Hocke
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.affineMass`
+- Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.approximate_finite_tests`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.commute_implies_integrated_eq`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.finiteCost`
+- Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.finite_cost_decomposition`
+- Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.finite_cost_gap`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.hinge`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.hockeyValue`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.hockey_value_eq_operational`
