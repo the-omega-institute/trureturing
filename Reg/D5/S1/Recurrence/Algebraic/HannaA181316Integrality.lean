@@ -12,7 +12,7 @@ open LeanInformationAudit PowerSeries
 noncomputable section
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℤ × ℕ)
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : ℤ, ℕ)
     (fun _ => PowerSeries ℚ) (fun _ => ℚ)
 
 def actual : Realization signature :=
@@ -23,7 +23,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ q : ℤ, 1 < q → ∀ m : ℕ, ∃ z : ℤ, R.readout () (q, m) (A q) = (z : ℚ)
+  Law R := ∀ q : ℤ, 1 < q → ∀ m : ℕ, ∃ z : ℤ, R.readout () ⟨q, m⟩ (A q) = (z : ℚ)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -40,7 +40,7 @@ def family : Registration arena (type_of% result) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(2, 0), 0, 1, ?_⟩
+    refine ⟨⟨2, 0⟩, 0, 1, ?_⟩
     change coeff 0 (0 : PowerSeries ℚ) ≠ coeff 0 (1 : PowerSeries ℚ)
     simp
 
