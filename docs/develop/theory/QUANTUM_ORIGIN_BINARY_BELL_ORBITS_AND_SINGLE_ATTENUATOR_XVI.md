@@ -4325,440 +4325,303 @@ The repository-derived addition here is the signed support/lineality obstruction
 
 ## 追加锚（本行以下为增补区）
 
-## 174. 原始 Fourier 字母的定量局部预算与同字分支质量
 
-**定义 174.1（固定字母、时序与辅助乘积集）。** 对每个整数 $n\ge2$ 和每个 $0<\lambda<1$，完整采用[169.2][Q174Native]的矩阵，即
+## 174. Zero overlap as a binary support relation
 
-$$
-\begin{aligned}
-\omega&=e^{2\pi i/n},& F_{jk}&=n^{-1/2}\omega^{jk},& a&=2^{1/(n+1)},\\
-G&=F\operatorname{diag}(e^{2\pi ia},\ldots,e^{2\pi ia^n})F^{\ast},&
-z&=i\lambda,& R&=\operatorname{diag}(z,1,\ldots,1).
-\end{aligned}
-$$
+### 174.1 The same actual domain and a two-element condition
 
-指标 $j,k$ 均在 $\{0,\ldots,n-1\}$ 中。记
+**Definition 174.1 (binary zero overlap).** Retain exactly [Definition 173.1][Q174XVI], including every finite actual complex Hermitian carrier, closed convex cone, complete trace dual, minimum/maximum partition, positive actual permutation with positive inverse, and the scalar object. Keep the Bell resource $B=\Omega\Omega^*$ of (173.2) and the unchanged ternary seed $\mathsf T$ of (173.5). Initially the ordinary trace is only an algebraic functional; neither properness nor trace positivity is supplied.
+
+For $K\subseteq\operatorname{Herm}_d(\mathbb C)$, define
 
 $$
-\begin{aligned}
-\mathbb T_F&=\{F\operatorname{diag}(e^{i\theta_0},\ldots,e^{i\theta_{n-1}})F^{\ast}:\theta_j\in\mathbb R\},\\
-P&=F\operatorname{diag}(1,\omega^{-1},\ldots,\omega^{-(n-1)})F^{\ast},\\
-s&=n^{-1/2}\sum_j e_j,\qquad Q=ss^{\ast},\qquad A=iQ,\\
-H&=e^{\pi A/2}=I+(i-1)Q,\qquad R_j=P^jRP^{-j},\\
-\mathfrak g&=\{X\in M_n(\mathbb C):\operatorname{Re}\operatorname{Tr}X=0\}.
-\end{aligned}
-$$
-
-$\mathfrak g$ 取实向量空间结构，范数为 $\|X\|_{\mathrm F}=(\operatorname{Tr}(X^{\ast}X))^{1/2}$；$\|X\|_{\mathrm{op}}$ 表示通常算子范数。对于非负整数 $k$，定义辅助乘积集
-
-$$
-\mathscr P_k=\{T_0RT_1\cdots RT_k:T_0,\ldots,T_k\in\mathbb T_F\}.
-$$
-
-其中保留所显示的 $k$ 个 $R$ 位置。原始正向时序字为有限列 $w=(B_1,\ldots,B_\ell)$，每个 $B_j\in\{G,R\}$；它先作用 $B_1$，其矩阵为 $W(w)=B_\ell\cdots B_1$，$\#_R(w)$ 按字母位置计数。辅助集合 $\mathscr P_k$ 的环面因子不属于这个原始字母表。
-
-**定义 174.2（有限相似标架与常数）。** 令
-
-$$
-\begin{aligned}
-\mathcal I&=\{(h,j,k,r,v):h\in\{0,1\},\ j\ne k,\ r\in\{0,1,2,3,4\},\ v\in\{0,1\}\},\\
-D_\eta&=R_j^rR_k^v,\qquad
-A_\eta=H^hD_\eta A D_\eta^{-1}H^{-h}
-\quad(\eta=(h,j,k,r,v)),\\
-m&=|\mathcal I|=20n(n-1),\qquad
-\Phi(t)=\prod_{\eta\in\mathcal I}^{\longrightarrow}e^{t_\eta A_\eta}
-\quad(t\in\mathbb R^{\mathcal I}).
-\end{aligned}
-$$
-
-箭头表示按五元组的字典序从左到右作矩阵乘法，重复方向仍保留各自位置。这里的相似作用始终是 $\operatorname{Int}_D(X)=DXD^{-1}$。置
-
-$$
-\begin{aligned}
-\mathsf M&=\frac{4n}{\lambda(1-\lambda^2)},&
-\mathsf C&=10n^3\mathsf M=\frac{40n^4}{\lambda(1-\lambda^2)},\\
-\mathsf N&=\lambda^{-4},&
-\mathsf S&=\mathsf N\mathsf C=\frac{40n^4}{\lambda^5(1-\lambda^2)},\\
-r_0&=\frac1{16\mathsf S^2},&
-b&=50n(n-1),\qquad k_0=nb.
-\end{aligned}
-$$
-
-**定理 174.3（带明确原衰减次数的非线性局部包含）。** 对定义174.1—174.2的每个 $n,\lambda$，有
-
-$$
-\boxed{
-z^b\exp\bigl\{Y\in\mathfrak g:\|Y\|_{\mathrm F}\le r_0/2\bigr\}
-\ \subseteq\ \mathscr P_{k_0}.
-}
-$$
-
-证明（推导归属：repo-derived；本条的有限标架系数预算、定量非线性局部包含及原 $R$ 支付估计；所用标准工具采用下列引文）。相似变换补足方向再取第二类局部乘积坐标的方法见[D’Alessandro，Lemma 1][Q174DA01]及[Method 1][Q174DA09]；以下对本组相似矩阵给出系数预算、非线性半径和原 $R$ 的支付次数。
-
-先构造实线性合成映射
-
-$$
-T:\mathbb R^{\mathcal I}\longrightarrow\mathfrak g,
-\qquad Tt=\sum_\eta t_\eta A_\eta
-$$
-
-的一个右逆。每个 $A_\eta$ 的迹都是 $i$，且
-
-$$
-\|A_\eta\|_{\mathrm F}\le
-\|D_\eta\|_{\mathrm{op}}\|D_\eta^{-1}\|_{\mathrm{op}}\|A\|_{\mathrm F}
-\le\lambda^{-4}=\mathsf N.
-$$
-
-这里 $H$ 酉，$D_\eta$ 对角，其最小对角模长至少为 $\lambda^4$、最大模长至多为一，而 $\|A\|_{\mathrm F}=1$。
-
-称一个表示具有系数预算 $d$，是指它是 $A_\eta$ 的实线性组合且系数绝对值之和不超过 $d$。记 $E_{jk}=e_je_k^{\ast}$、$P_j=E_{jj}$ 及 $\mathcal T_j=\operatorname{Int}_{R_j}$。对于 $j\ne k$，逐项相似作用给
-
-$$
-\begin{aligned}
-B_{jk}&=(\mathcal T_j-I)(\mathcal T_k-I)A
-=\alpha(E_{jk}+E_{kj}),\\
-\alpha&=\frac{i}{n}(2-z-z^{-1}),\qquad |\alpha|\ge\frac2n,\\
-\Delta&=\lambda^{-2}-\lambda^2>0,\\
-C_{jk}&=\frac{(\mathcal T_j^2+\lambda^{-2}I)B_{jk}}{\Delta}
-=\alpha E_{jk},\qquad
-\mathcal T_jC_{jk}=i\lambda\alpha E_{jk}.
-\end{aligned}
-$$
-
-确实，$\mathcal T_j^2$ 在 $E_{jk},E_{kj}$ 上的乘数分别为 $-\lambda^2,-\lambda^{-2}$。$B_{jk}$ 的四项展开给预算四；$C_{jk}$ 及 $\mathcal T_jC_{jk}$ 各自的预算不超过
-
-$$
-\frac{4(1+\lambda^{-2})}{\Delta}=\frac4{1-\lambda^2}.
-$$
-
-这些展开只用 $h=0$、$r\le4$、$v\le1$ 的位置。写 $\alpha=x+iy$，其中 $x,y$ 为实数，则
-
-$$
-\begin{aligned}
-E_{jk}&=\frac{x}{|\alpha|^2}C_{jk}
--\frac{y}{\lambda|\alpha|^2}\mathcal T_jC_{jk},\\
-iE_{jk}&=\frac{y}{|\alpha|^2}C_{jk}
-+\frac{x}{\lambda|\alpha|^2}\mathcal T_jC_{jk}.
-\end{aligned}
-$$
-
-由 $|\alpha|\ge2/n$，这两个实表示各有预算
-
-$$
-\frac4{1-\lambda^2}\frac{1+\lambda^{-1}}{|\alpha|}
-\le\frac{4n}{\lambda(1-\lambda^2)}=\mathsf M.
-$$
-
-因此 $iI=nA-\sum_{j\ne k}iE_{jk}$ 有预算 $n+n(n-1)\mathsf M$。
-
-令 $\Pi_{\mathrm{off}}$ 删除矩阵的对角部分。对 $Y_{jk}=E_{jk}-E_{kj}$，$H=I+(i-1)Q$ 的直接乘法给
-
-$$
-\operatorname{diag}(HY_{jk}H^{-1})=-\frac{2i}{n}(P_j-P_k).
-$$
-
-所以
-
-$$
-\begin{aligned}
-i(P_j-P_k)&=-\frac n2\bigl[HY_{jk}H^{-1}-\Pi_{\mathrm{off}}(HY_{jk}H^{-1})\bigr],\\
-P_j-P_k&=\frac n2\bigl[H(iY_{jk})H^{-1}-\Pi_{\mathrm{off}}(H(iY_{jk})H^{-1})\bigr].
-\end{aligned}
-$$
-
-$Y_{jk}$ 和 $iY_{jk}$ 的上述表示各有预算 $2\mathsf M$，并只用 $h=0$；以 $H$ 共轭便使用同样系数的 $h=1$ 位置。酉共轭保持 Frobenius 范数，故这两只共轭矩阵均有范数 $\sqrt2$，其非对角条目的实部和虚部绝对值总和不超过
-
-$$
-\sqrt{2n(n-1)}\sqrt2\le2n.
-$$
-
-用已得 $E_{jk},iE_{jk}$ 的表示扣除这些非对角部分，每个所显示的对角差方向遂有预算 $n(n+1)\mathsf M$。
-
-对任意 $X\in\mathfrak g$，定义
-
-$$
-\tau=\frac{\operatorname{Im}\operatorname{Tr}X}{n},\qquad
-d_j=X_{jj}-i\tau.
-$$
-
-有 $\sum_jd_j=0$，并且
-
-$$
-\operatorname{diag}X=i\tau I+
-\sum_{j=1}^{n-1}\bigl[\operatorname{Re}d_j(P_j-P_0)
-+\operatorname{Im}d_j\,i(P_j-P_0)\bigr].
-$$
-
-实 Cauchy–Schwarz 不等式给
-
-$$
-\begin{aligned}
-\sum_{j\ne k}(|\operatorname{Re}X_{jk}|+|\operatorname{Im}X_{jk}|)
-&\le2n\|X\|_{\mathrm F},\\
-\sum_{j=1}^{n-1}(|\operatorname{Re}d_j|+|\operatorname{Im}d_j|)
-&\le\sqrt{2(n-1)}\Bigl(\sum_j|d_j|^2\Bigr)^{1/2}
-\le n\|X\|_{\mathrm F},\\
-|\tau|&\le\|X\|_{\mathrm F}/\sqrt n.
-\end{aligned}
-$$
-
-第二行还用了 $\sum_j|d_j|^2=\sum_j|X_{jj}|^2-n\tau^2$。在这些式中代入已固定的矩阵单位、对角差及 $iI$ 表示，得到一个实线性映射 $J:\mathfrak g\to\mathbb R^{\mathcal I}$，满足
-
-$$
-\begin{aligned}
-TJ&=I_{\mathfrak g},\\
-\|JX\|_1&\le
-\left[2n\mathsf M+n^2(n+1)\mathsf M+
-\frac{n+n(n-1)\mathsf M}{\sqrt n}\right]\|X\|_{\mathrm F}
-\le\mathsf C\|X\|_{\mathrm F}.
-\end{aligned}
+\mathsf Z(K):\quad
+X\in K,\ Y\in K^*,\ \operatorname{Tr}(XY)=0
+\quad\Longrightarrow\quad XY=0.
 \tag{174.1}
 $$
 
-最后一个界对所有 $n\ge2$ 成立；这里 $\mathsf M\ge1$，可将中间方括号界为 $(2n+n^2(n+1)+n^{3/2})\mathsf M\le10n^3\mathsf M$。构造只要求存在 $j\ne k$，故包括 $n=2$。
-
-现在令 $E(X)=\Phi(JX)$。矩阵指数的收敛、相似变换、范数界及单参数导数直接采用[Hall，Propositions 3.1、3.3、3.4][Q174Hall]。记 $t=JX$、$B_\ell=e^{t_\ell A_\ell}$，其中 $\ell=1,\ldots,m$ 是固定顺序，并置
+The quantifiers cover the **whole** cone and its complete ambient trace dual. For Hermitian matrices, $XY=0$ is equivalent to orthogonality of their ordinary complex ranges. Thus (174.1) is a constraint on the zero relation between an object and a test. The product expresses matrix support; it is not an operation assumed to preserve any cone. The binary candidate is
 
 $$
-u=\mathsf S\|X\|_{\mathrm F},\qquad q=e^u-1.
-$$
-
-因为 $\sum_\ell|t_\ell|\|A_\ell\|_{\mathrm F}\le u$，指数级数及逐因子乘积差分解给
-
-$$
-\|E(X)-I\|_{\mathrm F}\le q.
-$$
-
-具体地，每个因子满足 $\|B_\ell\|_{\mathrm{op}}\le e^{|t_\ell|\|A_\ell\|_{\mathrm F}}$ 和 $\|B_\ell-I\|_{\mathrm F}\le e^{|t_\ell|\|A_\ell\|_{\mathrm F}}-1$；乘积差分解的上界相加正好不超过 $e^u-1$。
-
-对 $Z\in\mathfrak g$，乘积求导给
-
-$$
-DE_X[Z]=\sum_{\ell=1}^m(JZ)_\ell
-B_1\cdots B_\ell A_\ell B_{\ell+1}\cdots B_m.
-$$
-
-令 $L_\ell=B_1\cdots B_\ell$、$D_\ell=B_{\ell+1}\cdots B_m$，并记 $u_\ell=\sum_{j\le\ell}|t_j|\|A_j\|_{\mathrm F}$、$v_\ell=\sum_{j>\ell}|t_j|\|A_j\|_{\mathrm F}$。在 $A_\ell$ 左右分别作乘积差分解，所有未作差的指数因子取算子范数，得到
-
-$$
-\begin{aligned}
-\|L_\ell A_\ell D_\ell-A_\ell\|_{\mathrm F}
-&\le\bigl[(e^{u_\ell}-1)e^{v_\ell}+e^{v_\ell}-1\bigr]\|A_\ell\|_{\mathrm F}\\
-&\le q\|A_\ell\|_{\mathrm F}.
-\end{aligned}
-$$
-
-又 $DE_0[Z]=TJZ=Z$，故
-
-$$
-\|DE_X-I\|_{\mathrm F\to\mathrm F}\le\mathsf S q.
+\mathsf Q_0:\qquad B\in C_2\cap C_2^*,\qquad \mathsf Z(C_2).
 \tag{174.2}
 $$
 
-所用混合范数不等式为 $\|BCD\|_{\mathrm F}\le\|B\|_{\mathrm{op}}\|C\|_{\mathrm F}\|D\|_{\mathrm{op}}$，其中 $\|I_n\|_{\mathrm{op}}=1$，而 $\|I_n\|_{\mathrm F}=\sqrt n$。
+It supplies neither the signed decomposition of 173.2, original Bell extremality, nor a positive matrix operation. The matrix-support geometry and complex carriers remain part of its stated domain.
 
-在 $\|X\|_{\mathrm F}\le r_0$ 上，$\mathsf S\ge1$，因而
+### 174.2 A projection dichotomy without prior cone properness
 
-$$
-u\le\frac1{16\mathsf S},\qquad
-q\le2u\le\frac1{8\mathsf S}<1.
-$$
-
-采用[Hall，Theorem 3.6][Q174Hall]的近单位矩阵对数，定义 $\Psi(X)=\log E(X)$。若 $B=E(X)-I$，其导数是收敛级数
+**Theorem 174.2 (zero overlap fixes a transpose-reciprocal matrix cone).** For $d\ge1$, let $K\subseteq\operatorname{Herm}_d(\mathbb C)$ be a closed convex cone. If
 
 $$
-D\log_{I+B}[V]=
-\sum_{d=1}^{\infty}\frac{(-1)^{d+1}}d
-\sum_{v=0}^{d-1}B^vVB^{d-1-v}.
-$$
-
-级数在每个 $\|B\|_{\mathrm{op}}\le q<1$ 的较小邻域上一致可逐项求导。由上述混合范数不等式，
-
-$$
-\|D\log_{E(X)}\|_{\mathrm F\to\mathrm F}\le\frac1{1-q},\qquad
-\|D\log_{E(X)}-I\|_{\mathrm F\to\mathrm F}\le\frac q{1-q}.
-$$
-
-又 $\operatorname{Tr}A_\eta=i$，所以每个 $E(X)$ 的行列式模长是一。由[Hall，Theorem 3.10][Q174Hall]的 $\det e^Z=e^{\operatorname{Tr}Z}$ 及 $e^{\log E(X)}=E(X)$，有
-
-$$
-\operatorname{Re}\operatorname{Tr}\Psi(X)=\log|\det E(X)|=0.
-$$
-
-因此 $\Psi$ 在所用闭球及其一个开邻域内取值于 $\mathfrak g$。链式法则与(174.2)给
-
-$$
-\begin{aligned}
-\|D\Psi_X-I\|_{\mathrm F\to\mathrm F}
-&\le\frac{(\mathsf S+1)q}{1-q}\\
-&\le\frac{\mathsf S+1}{8\mathsf S-1}
-\le\frac27<\frac12
-\qquad(\|X\|_{\mathrm F}\le r_0).
-\end{aligned}
+K^*=K^{\mathsf T},\qquad \mathsf Z(K),
 \tag{174.3}
 $$
 
-$\mathfrak g$ 是有限维矩阵空间的闭实子空间，所用闭球完备且凸，$\Psi(0)=0$；沿线段积分便给
+then $K=\operatorname{PSD}_d$ or $K=-\operatorname{PSD}_d$. Any nonzero ordinary positive rank-one member selects the positive choice. No pointedness, generation, positive trace or identity membership is needed.
+
+**Proof.** Equip the real Hermitian space with $\langle X,Y\rangle=\operatorname{Tr}(XY)$. Let $P$ be any ordinary rank-one orthogonal projection in this ambient space; it is not assumed to be a native preparation. Moreau's cone decomposition gives
 
 $$
-\|\Psi(X)-\Psi(X')-(X-X')\|_{\mathrm F}
-\le\tfrac12\|X-X'\|_{\mathrm F}
-\quad(\|X\|_{\mathrm F},\|X'\|_{\mathrm F}\le r_0).
+P=A-B,\qquad A=\Pi_K(P)\in K,\qquad B\in K^*,\qquad
+\operatorname{Tr}(AB)=0.
+\tag{174.4}
 $$
 
-直接使用[定量局部满射原理][Q174IFT]，取近似线性映射为 $I_{\mathfrak g}$、右逆范数为一、误差常数为 $1/2$、定义域为半径 $r_0$ 的闭球，得到
+Here $\Pi_K$ is the mathematical nearest-point projection. Precisely, [Moreau, §4.b, printed p.281][Q174M] uses the nonpositive polar $K^\circ=-K^*$ and writes $P=\Pi_K(P)+\Pi_{K^\circ}(P)$; set $B=-\Pi_{K^\circ}(P)$. His §5.b, p.282 proves that this projection is nonexpansive, hence continuous. This mathematical minimizer is not a physical measurement or an assumed positive map.
+
+By (174.1), $AB=0$; taking adjoints also gives $BA=0$. If $v\in\ker P$, then $Av=Bv$, so
 
 $$
-\{Y\in\mathfrak g:\|Y\|_{\mathrm F}\le r_0/2\}
-\subseteq\Psi\bigl(\{X\in\mathfrak g:\|X\|_{\mathrm F}\le r_0\}\bigr).
+A^2v=ABv=0,\qquad \|Av\|^2=v^*A^2v=0.
+\tag{174.5}
 $$
 
-该原理在这里的 Banach 不动点映射是 $X\mapsto Y+X-\Psi(X)$；上式的线段估计同时支付其闭球自映射性和收缩性。于是每个所需 $Y$ 都有 $e^Y=E(X)=\Phi(JX)$，这是有限乘积等式。
-
-最后支付这个有限乘积。指数的相似恒等式给
+Consequently both $A$ and $B$ vanish on $\ker P$. Hermiticity puts their ranges in the one-dimensional range of $P$. Write $A=aP$, $B=bP$ with real scalars. Equations (174.4) and $AB=0$ give $a-b=1$, $ab=0$, whose only possibilities are
 
 $$
-e^{t_\eta A_\eta}
-=H^hD_\eta e^{t_\eta A}D_\eta^{-1}H^{-h}.
+(A,B)=(P,0)\quad\text{or}\quad(A,B)=(0,-P).
+\tag{174.6}
 $$
 
-[169.3][Q174Native]已经给出 $P,H,e^{tA}\in\mathbb T_F$ 以及精确恒等式
+The rank-one orthogonal projections form the connected space $\mathbb{CP}^{d-1}$. This includes $d=1$, where it is a point; in general it is the continuous image of the connected unit sphere. Continuity therefore makes
 
 $$
-S_0=\prod_{j=1}^{n-1}P^jRP^{-j}=zR^{-1}.
+P\longmapsto\operatorname{Tr}\Pi_K(P)\in\{0,1\}
+\tag{174.7}
 $$
 
-展开 $D_\eta=R_j^rR_k^v$ 及其逆，每个指数因子含 $q_\eta=r+v$ 个原 $R$ 和同样多的原 $R^{-1}$，其余因子全部在 $\mathbb T_F$。将每个原 $R^{-1}$ 用 $S_0$ 替换，使该因子的矩阵乘上中心标量 $z^{q_\eta}$，并留下恰好 $nq_\eta$ 个正向原 $R$。保持全部五元组位置，即使 $t_\eta=0$ 也不取消该位置的展开。于是
+constant. If its value is one, all positive rank-one projections belong to $K$. Finite spectral sums give $\operatorname{PSD}_d\subseteq K$. Dualizing and using $K^*=K^{\mathsf T}$ and transpose invariance of the usual PSD cone gives the reverse inclusion.
+
+If the value is zero, (174.6) gives every $-P\in K^*$. Spectral sums give $-\operatorname{PSD}_d\subseteq K^*$. Transposing this inclusion gives $-\operatorname{PSD}_d\subseteq K$, while dualizing it gives $K\subseteq-\operatorname{PSD}_d$. Thus equality holds. If a nonzero ordinary positive rank-one member was supplied, its normalized projection belongs to $K$ and is its own nearest point; the constant in (174.7) must be one. $\square$
+
+### 174.3 Relation to signed rank-one resolution
+
+**Proposition 174.3 (equivalent presentations under the earned duality).** On closed convex Hermitian cones satisfying $K^*=K^{\mathsf T}$,
 
 $$
-\sum_{\eta\in\mathcal I}q_\eta
-=2n(n-1)\sum_{r=0}^4\sum_{v=0}^1(r+v)
-=50n(n-1)=b.
+\mathsf{SR}(K)\quad\Longleftrightarrow\quad\mathsf Z(K)
+\quad\Longleftrightarrow\quad
+K\in\{\operatorname{PSD}_d,-\operatorname{PSD}_d\}.
+\tag{174.8}
 $$
 
-将相邻环面因子合并，便得到 $V\in\mathscr P_{nb}$ 且
+In particular the zero relation may replace the cone-wide finite resolution in the binary candidate, while no inequality in independent axiom counts follows.
+
+**Proof.** Suppose $\mathsf{SR}(K)$. Transpose transports a native signed rank-one resolution to $K^*$, so both sides have such resolutions. For $X\in K$, $Y\in K^*$ with $\operatorname{Tr}(XY)=0$, write $X=\sum_i R_i$, $Y=\sum_j S_j$, with each signed rank-one term in its respective cone. Every $\operatorname{Tr}(R_iS_j)$ is nonnegative by complete duality. Their finite sum is zero, so each is zero. For signed rank-one Hermitian matrices
 
 $$
-V=z^b\Phi(JX)=z^be^Y.
+R=\sigma vv^*,\quad S=\tau ww^*,\qquad
+\operatorname{Tr}(RS)=\sigma\tau|v^*w|^2,
+\tag{174.9}
 $$
 
-中心标量没有被实现为额外字母，也没有从矩阵 $V$ 中消去。这证明所需包含。∎
+zero trace forces $v^*w=0$, hence $RS=0$. Summing gives $XY=0$ and $\mathsf Z(K)$. Theorem 174.2 gives the next implication, and either signed PSD cone has native signed rank-one resolutions by spectral decomposition. Empty resolutions and zero matrices cause no exception. The support/lineality proof 173.4 remains an independent route from resolution to the same classification. $\square$
 
-**定理 174.4（精度无关的原 $R$ 次数与同一正向字的质量下界）。** 对每个整数 $n\ge2$、每个 $0<\lambda<1$，定义
+### 174.4 The entire finite quantum conclusion
+
+**Theorem 174.4 (binary zero relation and ternary propagation).** On Definition 174.1,
+
+$$
+\mathsf Q_0\quad\Longleftrightarrow\quad
+C_2=\operatorname{PSD}_{n^2},
+\tag{174.10}
+$$
+
+and
+
+$$
+\mathsf Q_0\wedge\mathsf T
+\quad\Longleftrightarrow\quad
+C_N=\operatorname{PSD}_{n^N}\quad\text{for every finite }N\ge0.
+\tag{174.11}
+$$
+
+**Proof and full supplier correspondence.** The Bell memberships give $C_k^*=C_k^{\mathsf T}$ at every finite block by 173.3. At $k=2$, Theorem 174.2 applies with $d=n^2$; the positive Bell member selects $C_2=\operatorname{PSD}_{n^2}$. Conversely the usual PSD cone has both Bell memberships and (174.1): for PSD $X,Y$, zero trace implies $Y^{1/2}XY^{1/2}=0$, hence $X^{1/2}Y^{1/2}=0$ and $XY=0$. These are the standard PSD support facts also underlying spectral decompositions in 173.6.
+
+Now use the already proved direction from $C_2=\operatorname{PSD}$ in 173.5, namely 171.8–171.10 followed by 166.12. The fixed carrier, all original finite partitions, permutations, reassociation, scalar object and complete duals are unchanged. The binary equality first earns $C_1=\varepsilon\operatorname{PSD}_n$ and all signed properness. The nonzero ordinary positive ternary dyad selects $\varepsilon=+1$. Take the **entire** bases, all extreme points, full proper intervals and all finite unit decompositions (173.20a) at this earned stage. The unchanged minimum flattening rank two and one full leg supply exactly 166.2; no original extremality of that seed is needed. Thus every premise of 166.12 is paid and (174.11) follows. Its converse uses the ordinary full PSD hierarchy and the GHZ vector as in 173.5.
+
+The exact dictionary is consequently 173.6, with $d_N=n^N$, all original spectators, the same trace, and those full menus:
+
+| Recovered definition or relation | Standard finite quantum statement |
+| --- | --- |
+| Whole trace-one original cones | All density matrices on the actual carriers |
+| Complete dual interval and every finite unit decomposition | All effects and POVMs |
+| Original pairing and least pure confirmation | $\operatorname{Tr}(E\rho)$ and $|v^*w|^2$ |
+| Actual finite tensor carrier, joint cone and unit slices | Entangled composition and partial traces |
+| Positivity with every original finite spectator | Rectangular CP/Choi/Kraus correspondence |
+| Whole-input TNI/TP budgets and finite TP-sum families | Mathematical branches, channels and instruments |
+
+The pure geometry is $\mathbb{CP}^{n^N-1}$; the normalized minimal face of every pair of distinct pure rays is the real three-ball (173.22). Event availability, particular updates and continuous time retain the distinct additional premises of 173.10. This application introduces no extra Born, spectral-resolution or operation-preservation premise into (174.2). $\square$
+
+### 174.5 A transported full hierarchy with an extreme Bell ray
+
+**Definition 174.5 (a fixed rational rotation of matrix coordinates).** At local dimension two use the usual Hermitian Pauli basis $I,X,Y,Z$, put $c=4/5$, $s=3/5$, and define the real linear map
 
 $$
 \begin{aligned}
-L&=\left\lceil32\pi\sqrt n\left[\frac{40n^4}{\lambda^5(1-\lambda^2)}\right]^2\right\rceil,\\
-\beta&=50n(n-1)L,\\
-K(n,\lambda)&=50n^2(n-1)L=n\beta,\\
-c(n,\lambda)&=(i\lambda)^\beta,\qquad
-p(n,\lambda)=\lambda^{2K(n,\lambda)}>0.
+R(I)&=cI+sZ,& R(Z)&=-sI+cZ,\\
+R(X)&=X,& R(Y)&=Y.
 \end{aligned}
+\tag{174.12}
 $$
 
-对每个 $U\in U(n)$ 及每个 $\varepsilon>0$，存在一个定义174.1的实际有限正向时序字 $w$，使同一个 $W=W(w)$ 同时满足
+For every finite $N$ set
 
 $$
-\boxed{
+R_N=R^{\otimes N},\qquad
+\widehat C_N=R_N(\operatorname{PSD}_{2^N}),\qquad
+R_0=\mathrm{id},\quad \widehat C_0=\mathbb R_+.
+\tag{174.13}
+$$
+
+The tensors and matrix coordinates in (174.13) are the actual original ones; the definition does not redefine the ordinary matrix rank or product. On non-Hermitian matrix units, $R$ and $R^{-1}$ denote the unique complex-linear extensions of their real-linear Hermitian maps, obtained by writing a matrix uniquely as $A+iB$ with $A,B$ Hermitian. This convention supplies no positive operation.
+
+**Theorem 174.6 (full positive-trace countermodel to the Bell-extreme shortcut).** The whole hierarchy (174.13) satisfies Definition 174.1's weak structural domain, and additionally every cone is pointed and generating with strictly positive ordinary trace. It has
+
+$$
+B\in\widehat C_2\cap\widehat C_2^*,\qquad
+\mathbb R_+B\text{ an extreme ray of }\widehat C_2,
+\qquad \mathsf T.
+\tag{174.14}
+$$
+
+Nevertheless $\widehat C_2\ne\operatorname{PSD}_4$ and $\mathsf Z(\widehat C_2)$ fails, even on a native trace-one state paired with a full proper effect. In particular original Bell extremality cannot replace the resolution or zero-support condition in the fixed actual-coordinate reconstruction.
+
+**Proof.** The four Pauli matrices are orthogonal and have equal squared Hilbert–Schmidt norm. Since $c^2+s^2=1$, $R$ is orthogonal for the real trace inner product. It commutes with ordinary transpose: only $Y$ changes sign under transpose and it is fixed by $R$. Thus $R_N$ is orthogonal and commutes with full transpose. The usual PSD self-duality gives the **complete** dual equality
+
+$$
+\widehat C_N^*=R_N(\operatorname{PSD}_{2^N})
+=\widehat C_N=\widehat C_N^{\mathsf T}.
+\tag{174.15}
+$$
+
+Invertible real linear images preserve closedness, convexity, pointedness and generation. For an arbitrary finite split $a+b$, products satisfy $R_a(P)\otimes R_b(Q)=R_{a+b}(P\otimes Q)$, proving the minimum bound after conic closure. For every $F=R_a(E)\in\widehat C_a^*$, $G=R_b(D)\in\widehat C_b^*$ and $Z=R_{a+b}(Q)\in\widehat C_{a+b}$, with $E,D,Q$ PSD, orthogonality gives
+
+$$
+\operatorname{Tr}[(F\otimes G)Z]
+=\operatorname{Tr}[(E\otimes D)Q]\ge0.
+\tag{174.16}
+$$
+
+This proves the maximum bound for the entire duals. Every actual permutation commutes with the identical local tensor powers $R_N$ and is an order isomorphism on PSD; it and its inverse therefore preserve $\widehat C_N$. Canonical reassociation changes neither the tensor map nor the joint cone. These arguments include zero blocks and the scalar case.
+
+The ordinary trace is strictly positive because
+
+$$
+D:=R^{-1}(I)=\operatorname{diag}(1/5,7/5)\succ0,
+\qquad
+\operatorname{Tr}R_N(P)=\operatorname{Tr}(D^{\otimes N}P)>0
+\quad(0\ne P\succeq0).
+\tag{174.17}
+$$
+
+All bases, complete duals and full mathematical menus are therefore available. Explicitly the entire proper interval consists of $F=R_N(E)$ with $0\preceq E\preceq D^{\otimes N}$; all finite menus correspond to PSD families with sum $D^{\otimes N}$. No selected effect set is used.
+
+The Bell dyad is
+
+$$
+B=\tfrac12(I\otimes I+X\otimes X-Y\otimes Y+Z\otimes Z).
+\tag{174.18}
+$$
+
+The rotation fixes $I\otimes I+Z\otimes Z$ and fixes the other two terms, so $R_2(B)=B$. Equations (174.13) and (174.15) give both Bell memberships. Since $B$ generates an ordinary extreme PSD ray and $R_2$ is an order isomorphism fixing $B$, that same native Bell ray is extreme.
+
+Write $P_j=|j\rangle\langle j|$. Directly,
+
+$$
+A_0:=R(P_0)=\operatorname{diag}(c,-s),\qquad
+A_1:=R(P_1)=\operatorname{diag}(s,c).
+\tag{174.19}
+$$
+
+In particular the native binary extreme generator and complete-dual test
+
+$$
 \begin{aligned}
-\#_R(w)&=K(n,\lambda),\\
-\|c(n,\lambda)^{-1}W-U\|_{\mathrm{op}}&\le\varepsilon,\\
-\inf_{\rho\succeq0,\ \operatorname{Tr}\rho=1}
-\operatorname{Tr}(W\rho W^{\ast})&\ge p(n,\lambda).
+U&=A_0\otimes A_1=\operatorname{diag}(12,16,-9,-12)/25,\\
+F&=A_1\otimes A_1=\operatorname{diag}(9,12,12,16)/25
 \end{aligned}
-}
+\tag{174.20}
 $$
 
-次数 $K$、记账标量 $c\ne0$ 和下界 $p$ 均只依赖 $n,\lambda$。
-
-证明（推导归属：repo-derived；由174.3导出的同一原始正向字的次数与质量联合估计）。通常酉谱分解由[Watrous，Theorem 1.3、Corollary 1.4][Q169W1]供应。取本征角 $\theta_j\in[-\pi,\pi]$，得到
+satisfy
 
 $$
-U=e^X,\qquad X\in\mathfrak u(n)\subseteq\mathfrak g,
-\qquad\|X\|_{\mathrm F}\le\pi\sqrt n.
+\operatorname{Tr}(UF)=0,\qquad
+UF=\operatorname{diag}(108,192,-108,-192)/625\ne0.
+\tag{174.21}
 $$
 
-因 $L=\lceil32\pi\sqrt n\,\mathsf S^2\rceil$，有 $\|X/L\|_{\mathrm F}\le r_0/2$。在酉目标上取根并重复局部乘积，是[D’Alessandro，Method 1、式(7)及(14)][Q174DA09]的步骤；这里由174.3给出的明确半径确定其重复次数。具体地，174.3给出
+The matrix $U=R_2(P_0\otimes P_1)$ is extreme in the native cone, has ordinary matrix rank four and is indefinite, so $\widehat C_2$ is not ordinary PSD. Moreover $R_2^{-1}(F)=P_1\otimes P_1\succeq0$ and
 
 $$
-V_0=z^be^{X/L}\in\mathscr P_{k_0}.
+R_2^{-1}(I-F)=\operatorname{diag}(1,7,7,24)/25\succeq0.
+\tag{174.22}
 $$
 
-重复同一有限乘积 $L$ 次，合并相邻环面因子，得到
+Thus $F$ is a proper effect in the **whole** native interval. Since $\operatorname{Tr}U=7/25$, $\rho=25U/7$ is a native state with $\operatorname{Tr}(\rho F)=0$ but $\rho F\ne0$. Its zero readout arises from cancellation in the ordinary matrix coordinates, not support orthogonality. All native proper readouts are nevertheless valid nonnegative probabilities by complete duality and (174.17).
+
+It remains to supply the precise ternary premise. Put
 
 $$
-V=V_0^L=z^{bL}e^X=cU
-=T_0RT_1\cdots RT_K\in\mathscr P_K.
+\epsilon=1/10,\qquad \psi=|000\rangle+\epsilon|111\rangle.
+\tag{174.23}
 $$
 
-仅对酉矩阵 $U$ 使用了谱对数；没有使用非紧群的全局指数满射。
-
-置
+Both coefficients are nonzero, so every flattening has rank two, the full local dimension. The inverse map gives
 
 $$
-\delta=\frac{\varepsilon\lambda^\beta}{K+1}>0.
+D_0=R^{-1}(P_0)=\operatorname{diag}(c,s),\qquad
+D_1=R^{-1}(P_1)=\operatorname{diag}(-s,c),\qquad
+R^{-1}(E_{01})=E_{01}.
+\tag{174.24}
 $$
 
-直接消费[169.3的正向幂稠密性][Q174Native]：对每个有限位置 $j=0,\ldots,K$，选取一个非负整数 $a_j$，使
+Consequently
 
 $$
-\|G^{a_j}-T_j\|_{\mathrm{op}}<\delta.
+R_3^{-1}(\psi\psi^*)
+=D_0^{\otimes3}+\epsilon^2D_1^{\otimes3}
++\epsilon(E_{01}^{\otimes3}+E_{10}^{\otimes3}).
+\tag{174.25}
 $$
 
-令
+The first term is at least $s^3I$, the second is at least $-\epsilon^2c^3I$, and the norm of the displayed Hermitian off-diagonal sum is one. Hence
 
 $$
-W=G^{a_0}RG^{a_1}\cdots RG^{a_K}.
+R_3^{-1}(\psi\psi^*)\succeq
+(s^3-\epsilon-\epsilon^2c^3)I
+=\frac{693}{6250}I\succ0.
+\tag{174.26}
 $$
 
-将显示的乘积从右到左展开为字母列，即得实际时序字 $w$；零次幂给空段，其余幂由有限个 $G$ 字母组成，全部 $K$ 个 $R$ 位置保留。
+Thus the ordinary rank-one positive dyad $\psi\psi^*$ lies in the interior of the native $\widehat C_3$ and satisfies exactly $\mathsf T$. This proves every assertion, including all finite-level and full-menu requirements. $\square$
 
-所有 $T_j,G^{a_j}$ 都酉，所有 $R$ 都为压缩矩阵。逐因子乘积差分解遂给
+### 174.6 What the countermodel decides and what the new relation fixes
 
-$$
-\|W-cU\|_{\mathrm{op}}
-\le\sum_{j=0}^K\|G^{a_j}-T_j\|_{\mathrm{op}}
-<(K+1)\delta=\varepsilon\lambda^\beta.
-$$
+**Corollary 174.7 (the earlier extremality question has a negative answer in the actual domain).** The Bell-extreme sufficiency question stated in 172.15 and left undecided in 173.9 is false on their fixed actual all-finite domain, even if ordinary strict trace positivity and cone properness are also required. The countermodel concerns actual PSD equality; it does not deny abstract order-isomorphism to a quantum theory.
 
-除以记账模长 $|c|=\lambda^\beta$，得到所述逼近。原字母表内没有加入 $c^{-1}I$。
+**Proof.** Theorem 174.6 meets the two ordinary Bell memberships, original Bell extremality, the unchanged full-leg ternary seed, every finite structural requirement and ordinary trace positivity, but fails the conclusion already at level two. It is therefore a counterexample to that precise implication. It also has an ordinary rank-one dyad in the interior of a higher native cone, and an extreme binary ray of ordinary rank four. Neither direction of identifying ordinary matrix rank with native purity is available from Bell extremality alone.
 
-现在对这个已经选定的同一个 $W$ 计算质量。对任意向量 $v$，有
+By construction $R_N^{-1}$ transports every native cone back to a usual PSD cone; it transports the ordinary native trace unit to $D^{\otimes N}$. A further congruence by $(D^{1/2})^{\otimes N}$ yields the standard trace normalization. Thus this is a transported quantum order, with a misalignment relative to the **given** matrix product, supports and rank. Condition (174.1) removes that misalignment through its two-element zero relation. It is not claimed to derive the given matrix representation from an otherwise unspecified ontology. $\square$
 
-$$
-\lambda\|v\|\le\|Rv\|\le\|v\|,\qquad \|Gv\|=\|v\|.
-$$
+**Proposition 174.8 (source scope and the conditional physical theory).** The new zero-relation route and the countermodel preserve the preceding reconstruction's explicit physical and representational limits.
 
-依时序逐步应用，得到
+**Proof and attribution.** Theorem 174.2 combines the mature Moreau projection theorem with the connected ambient complex ray space and the supplied zero relation; Moreau's original decomposition and continuity are intermediate inputs, not newly proved convex analysis. Bell transpose reciprocity is 173.3. The binary orientation and finite-frame properness are 171.8–171.10; full-leg propagation is 166.12, with the explicit correspondence in 173.5 and 174.4. Full density-state, POVM, Born, rectangular CP and budget consumers are 173.6 and its Watrous sources, not new proofs of their standard ingredients.
 
-$$
-\lambda^K\|v\|\le\|Wv\|\le\|v\|,
-\qquad\lambda^{2K}I\preceq W^{\ast}W\preceq I.
-$$
+The repository-derived additions are the zero-support presentation and its projective projection dichotomy, together with the explicit rational whole-hierarchy countermodel (174.12)–(174.26) to the stated extremality shortcut. This attribution makes no exhaustive literature or global-originality claim. The zero relation uses the fixed matrix support geometry, so neither the complex field, the ordinary matrix product nor the specified tensor carriers has been made a consequence of Bell alone. The odd-level sign still needs the positive ternary seed; the parity hierarchy 173.8 also satisfies (174.2) and fails that seed.
 
-因此对每个 $\rho\succeq0$、$\operatorname{Tr}\rho=1$，迹的循环性及 PSD 迹配对给
+Under (174.11), mathematical instrument availability, a specified least-disturbing projection update, and continuous Hamiltonian dynamics retain exactly 173.10's separate premises. The nearest-point projection in (174.4) supplies no physical operation, clock or energy calibration. Thus the new simplification replaces one cone-wide decomposition relation with a relation between two elements while leaving those conditions explicit. $\square$
 
-$$
-\operatorname{Tr}(W\rho W^{\ast})
-=\operatorname{Tr}(\rho W^{\ast}W)
-\ge\lambda^{2K}\operatorname{Tr}\rho=p(n,\lambda).
-$$
+### 174.7 中文白话与几何图景
 
-这是原矩阵 $W$ 的数学分支质量，而非 $c^{-1}W$ 的质量；其完全正性由[Watrous，Theorem 2.22][Q169W2]的单 Kraus 表示给出，不增迹性由 $W^{\ast}W\preceq I$ 给出。该下界在选取任意精度所需的有限正向幂之后仍成立。
+**命题 174.9（零重叠候选的白话表述）。** 在174.1的固定复矩阵关系空间中，候选 (174.2)–(173.5) 可表述为：贝尔配对既能作为原准备，也能测试整个原锥；一个原对象与一个完整对偶测试若读出恰为零，它们的矩阵支撑就必须真正错开，不能靠内部正负抵消装成“没有重叠”。这条二元关系加原三体种子给出174.4的全部有限量子对应。
 
-最后，$K=n\beta$ 使
+**证明与图景。** 把任意一条一维方向放在原锥旁边，取它的数学最近点。零重叠条件使这个落点只能是原方向本身或零，不能落成另一个歪斜分支。所有复射线连成一片，最近点又连续，这个“进或不进”的选择就不能跳变；贝尔已经给出一个进来的正方向，于是全部正方向一起进来，完整对偶再把多余方向排出去。二体锥由此锁成正半定锥，任意两条不同纯射线所张的完整归一面仍是一颗实三维球。原三体种子的正性选定奇数层朝向，满维腿和每切口非乘积性再调用已有传播定理，恢复每个有限层的密度矩阵、玻恩概率与完全正过程。反模型则说明为什么要这条零关系：即使贝尔本身不可再分、三体种子也在，整套量子锥仍能在给定矩阵坐标里转歪；所有原概率合法，零概率却可由矩阵正负项抵消。新的条件把这种伪装锁掉。这里的最近点只服务证明；装置可用性、具体测后更新、时间与能量标度仍各按174.8保留条件。$\square$
 
-$$
-|\det W|=\lambda^K=|c|^n=|\det(cU)|,\qquad 0<|c|<1.
-$$
-
-于是精度趋零时所逼近的是 $cU$；[169.7][Q174Native]的未缩放恒等式 $\overline{\mathcal W^+}\cap U(n)=\mathbb T_F$ 保持原义。定理没有给 $\sum_ja_j$ 的上界，也没有将辅助环面因子当作原始字母。∎
-
-[Q174Native]: https://github.com/the-omega-institute/trureturing/blob/74f0816e3a2340d063ad1a7cb5e8a93ffe2d1c9d/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md
-[Q174DA01]: https://arxiv.org/html/quant-ph/0111133v1
-[Q174DA09]: https://arxiv.org/html/0904.2793v1
-[Q174Hall]: https://arxiv.org/html/math-ph/0005032v1
-[Q174IFT]: https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ApproximatesLinearOn.lean#L143
+[Q174M]: https://www.numdam.org/item/BSMF_1965__93__273_0.pdf
+[Q174XVI]: https://github.com/the-omega-institute/trureturing/blob/32b36deda4c26d281e6c49bd805b44a1615a5740/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md
 
 ## 追加锚（本行以下为增补区）
