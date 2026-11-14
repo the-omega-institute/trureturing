@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/ZeroForcing/ContingentThreshold
    mirror-E: none
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.DeleteEdges, mathlib/module/Mathlib.Data.ENat.Lattice]
-   utility: kind=none
+   utility: none
    digest: Fixed edge faults are characterized by the minimum unique-neighbour boundary. -/
 import D5.S3.Combinatorics.GeneralizedPetersen.ZeroForcingThree
 import Mathlib.Combinatorics.SimpleGraph.DeleteEdges
