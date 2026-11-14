@@ -22,7 +22,7 @@ internal static partial class RawLeanReportArtifact
         foreach (var item in RequiredArray(root, "modules").EnumerateArray())
         {
             var fields = new List<string> { "declarations", "imports", "module", "source_path", "source_sha256" };
-            foreach (var field in new[] { "information_templates", "fib_analysis", "utility_refutation", "information_registration_errors" })
+            foreach (var field in new[] { "information_templates", "utility_refutation", "information_registration_errors" })
                 if (item.TryGetProperty(field, out _)) fields.Add(field);
             RequireProperties(item, fields, "historical Lean module");
             var module = RequiredString(item, "module");

@@ -317,13 +317,8 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     let inputs ← readJson projectionPath
     observePhase "lake-module-inputs" "finish"
     let ownInputs ← IO.ofExcept (inputs.getObjValAs? (Array Json) "inputs")
-    let fibInputs := ownInputs.filter fun entry =>
-      (entry.getObjValAs? String "type").toOption ==
-        some "LeanInformationAudit.AuricFib.Contract.Application"
-    let analyzer := if fibInputs.isEmpty then "" else
-      (root / "tools/scripts/auric-fib-analysis.sh").toString
     let mut deps := deps
-    unless ownInputs.size == fibInputs.size do
+    unless ownInputs.isEmpty do
       let some registry := (← getWorkspace).findModule? `LeanInformationAudit.TemplateEnrollment
         | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
       let enrollment ← reportState.graphFetch.atomically fun _ =>
@@ -354,8 +349,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
       observePhase "lake-report-inspector" "ready"
       observePhase "lake-report-programs" "finish"
       let args := #[root.toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
-        utility.toString, executable.toString, file.toString,
-        analyzer]
+        utility.toString, executable.toString, file.toString]
       let build := do
         prepareProduction
         proc { (← nativeCommand pkg (#["module"] ++ args)) with env }
@@ -398,47 +392,12 @@ private def buildNativeModuleReport (mod : Module) : FetchM (Job ReportArtifact)
     if let some row := request.artifact? then
       setTrace row.outputTrace
       return row
-    -- Lake removes a stale output before invoking the build callback. Retain
-    -- the existing module transaction only for FIB leaves that can reuse it.
-    -- This is a transient rename, never a second cache or a freshness key.
-    let previous := request.file.addExtension "fib-previous"
-    if !request.args[6]!.isEmpty && (← previous.pathExists) && !(← request.file.pathExists) then
-      IO.FS.rename previous request.file
-    if batch?.isSome && request.args[6]!.isEmpty then
+    if batch?.isSome then
       return ← commitPendingReport mod request
-    let preserve := !request.args[6]!.isEmpty && (← request.file.pathExists)
-    if preserve then IO.FS.rename request.file previous
-    let args := request.args.push (if preserve then previous.toString else "")
-    let build := do
-        request.prepareProduction
-        if request.args[6]!.isEmpty then
-          proc { (← nativeCommand pkg (#["module"] ++ args)) with env := request.env }
-        else IO.FS.withTempDir fun directory => do
-          let staged := args.push directory.toString
-          proc { (← nativeCommand pkg (#["module-stage"] ++ staged)) with env := request.env }
-          let work ← readJson (directory / "fib-work.json")
-          let work ← IO.ofExcept work.getArr?
-          unless work.size == 1 do error "fib.analysis_incomplete"
-          let generated ← IO.ofExcept (work[0]!.getObjValAs? Nat "generated")
-          let needed := generated > 0
-          if needed then
-            let workspace ← getWorkspace
-            let some analyzer := workspace.findModule? `LeanInformationAuditRegAnalysis.AuricFib.Main
-              | error "fib.analysis_program_missing"
-            observePhase "lake-analyzer-await" "start"
-            let analyzerJob ← reportState.graphFetch.atomically fun _ =>
-              JobM.runFetchM analyzer.exportInfo.fetch
-            discard <| analyzerJob.await
-            observePhase "lake-analyzer-await" "finish"
-          proc { (← nativeCommand pkg (#["module-finish"] ++ staged)) with env := request.env }
-        pure PUnit.unit
-    try
-      let result ← buildArtifact request.file build
-      if preserve then removeFileIfExists previous
-      return result
-    catch error =>
-      if preserve then IO.FS.rename previous request.file
-      throw error
+    buildArtifact request.file do
+      request.prepareProduction
+      proc { (← nativeCommand pkg (#["module"] ++ request.args)) with env := request.env }
+      pure PUnit.unit
 
 private def nativeModuleReport (mod : Module) : FetchM (Job ReportArtifact) := do
   let key := (mod.facet `inspectorModuleReport).key
@@ -528,7 +487,7 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
     observePhase "lake-prepare" "finish"
     try observePhase "lake-source-whitelists" "start" catch _ => pure ()
     let requests := (artifacts.filter fun request =>
-      request.artifact?.isNone && request.args[6]!.isEmpty).qsort fun a b => a.args[1]! < b.args[1]!
+      request.artifact?.isNone).qsort fun a b => a.args[1]! < b.args[1]!
     -- Keep bounded native batches, committing each successful chunk before
     -- starting the next. Compiler/projection preparation above is complete.
     let mut start := 0

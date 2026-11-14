@@ -54,7 +54,7 @@ class NativePublicationConsumerTests:
                          '[FAIL] traced_artifact_not_revalidated')
 
 
-    def test_old_fib_partition_retention_rejects_and_explicit_invalidation_recovers(self):
+    def test_extra_partition_retention_rejects_and_explicit_invalidation_recovers(self):
         from test_reuse import EXECUTION
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = EXECUTION
@@ -68,7 +68,7 @@ class NativePublicationConsumerTests:
         value = json.loads(entries[raw])
         row = value['modules'][0]
         source_sha = row['source_sha256']
-        # The former producer emitted this partition under the same raw v3.
+        # An unrecognized field cannot enter a freshly validated report.
         row['fib_analysis'] = dict(applications=[], schema_version=1)
         entries[raw] = materials.canonical_json(value)
         origin = json.loads(entries[raw + '.provenance.json'])
@@ -97,7 +97,7 @@ class NativePublicationConsumerTests:
             str(self.root / 'tools/lean-inspector/publication.py'), 'validate',
             str(self.root / 'public.json'), '--repository', str(self.root)], env=self.env)
         self.assertNotEqual(0, rejected.returncode)
-        self.assertIn('fib.invalid_partition', rejected.stdout + rejected.stderr)
+        self.assertIn('unexpected fields', rejected.stdout + rejected.stderr)
         # The existing explicit invalidation must not recompile native programs.
         programs = {path: (publication.digest(path), path.stat().st_mtime_ns)
                     for directory in ('producer', 'interface', 'reg')
@@ -106,22 +106,13 @@ class NativePublicationConsumerTests:
                         path.name in ('reportInspector', 'inputDiscovery'))}
         self.assertTrue(programs)
         self.write('activity.jsonl', '')
-        # Recover through the canonical entry while the invalid predecessor is
-        # still physically published. The real native report is rebuilt here;
-        # the suite is a counted process because these transport fixtures have
-        # no mathematical FIB library.
-        self.write('bin/make', '#!/bin/sh\n'
-            '[ "$1" = -C ] && [ "$2" = "$PWD" ] && [ "$3" = compiled-fib-test ] || exit 97\n'
-            'printf "regressions\\n" >> fib-regression-calls\n')
-        (self.root / 'bin/make').chmod(0o755)
+        # The canonical recovery entry rebuilds and publishes the strict format.
         recovered = self.guarded_command(['bash', 'tools/lean-inspector/inspect.sh',
             '--repository', str(self.root), '--output', str(self.root / 'public.json'),
             '--regenerate-report-artifacts', '1'],
-            env=dict(self.env, STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_FIB_REGRESSIONS_SELECTED='false'))
+            env=dict(self.env, STRATALINT_INSPECTOR_SUPERVISED='1'))
         self.assertEqual(recovered.returncode, 0, recovered.stdout + recovered.stderr)
-        self.assertEqual((self.root / 'fib-regression-calls').read_text(), 'regressions\n')
         self.assertTrue(publication.member(self.root / 'public.json', '.reuse.json').exists())
-        (self.root / 'bin/make').unlink()
         publication.validate_bundle(self.root / 'public.json', publication.coordinates(self.root), self.root)
         self.assertEqual(programs, {path: (publication.digest(path), path.stat().st_mtime_ns)
                                     for path in programs})
@@ -129,7 +120,7 @@ class NativePublicationConsumerTests:
             current = json.loads(archive.read(raw))['modules'][0]
         self.assertNotEqual(previous, artifact.read_bytes())
         self.assertEqual(source_sha, current['source_sha256'])
-        self.assertNotIn('schema_version', current.get('fib_analysis', {}))
+        self.assertNotIn('fib_analysis', current)
         self.assertEqual(sum(json.loads(line)['count'] for line in
             Path(str(self.root / 'public.json') + '.logs/native-work.jsonl').read_text().splitlines()
             if json.loads(line)['kind'] == 'extract'), len(self.stamps()))

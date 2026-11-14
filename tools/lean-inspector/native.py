@@ -19,7 +19,6 @@ import time
 import zipfile
 
 import materials
-import fib_analysis
 import publication as public
 
 selection = public.selection
@@ -54,15 +53,6 @@ def module_work(operation, names):
         with Path(path).open('a', encoding='utf-8') as target:
             for name in names:
                 target.write(json.dumps({'operation': operation, 'module': name}) + '\n')
-
-
-def produce_fib(row, output, analyzer, previous=""):
-    if row.get('fib_analysis') is None:
-        return
-    with phase('native-fib', module=row['module']):
-        stats = fib_analysis.produce(row, previous or output, analyzer)
-    for kind, count in (stats or {}).items():
-        activity('fib-' + kind, count)
 
 
 def diagnostic_failure(label, error):
@@ -353,77 +343,12 @@ def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
                 raise ValueError('native utility binding mismatch')
 
 
-def module_stage(root, name, source, utility_path, executable, output, analyzer, previous, directory):
-    """Detach compiler data into the existing spool before preparing arithmetic."""
-    root, source, output, directory = Path(root), Path(source), Path(output), Path(directory)
-    template_inputs = selection.Selection(root)
-    record = public.read_json(Path(utility_path).read_bytes())
-    validate_dependency_paths(root, utility_path, inputs=template_inputs)
-    utility = directory / 'utility.json'
-    utility.write_bytes(materials.canonical_json(record['utilities']))
-    spool = directory / 'spool'
-    spool.mkdir()
-    report = directory / public.RAW
-    arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
-        '--utility-input', str(utility), name, record['source_path'], 'sha256:' + public.digest(source)]
-    capture = retain_request(root, executable, arguments, record['utilities'])
-    with phase('native-inspect', request_capture=capture):
-        run_inspector(root, executable, arguments)
-    compiled = public.read_json((directory / 'spool.json').read_bytes())
-    stats = [fib_analysis.prepare(row, previous or output) for row in compiled['modules']]
-    (directory / 'spool.json').write_bytes(materials.canonical_json(compiled))
-    (directory / 'fib-work.json').write_text(json.dumps(stats))
+def module(root, name, source, utility_path, executable, output):
+    produce_batch([[root, name, source, utility_path, executable, output]])
 
 
-def module_finish(root, name, source, utility_path, executable, output, analyzer, previous, directory):
-    root, source, output, directory = Path(root), Path(source), Path(output), Path(directory)
-    template_inputs = selection.Selection(root)
-    spool = directory / 'spool'
-    report = directory / public.RAW
-    compiled = public.read_json((directory / 'spool.json').read_bytes())
-    stats = public.read_json((directory / 'fib-work.json').read_bytes())
-    if len(compiled['modules']) != len(stats):
-        raise ValueError('fib.analysis_incomplete')
-    for row, work in zip(compiled['modules'], stats):
-        if row.get('fib_analysis') is not None:
-            with phase('native-fib', module=row['module']):
-                result = fib_analysis.finish(row, analyzer, work)
-            for kind, count in result.items():
-                activity('fib-' + kind, count)
-    with phase('native-materials', module=name):
-        (directory / 'spool.json').write_bytes(materials.canonical_json(compiled))
-        materials.compact(directory / 'spool.json', spool, report)
-        public.write_origin(report, name,
-            public.production_origin(root, executable, inputs=template_inputs), input_projection(root, name))
-    # Like an olean, an artifact is validated once, when it is produced;
-    # Lake's trace alone decides later reuse.
-    with phase('native-validation', module=name):
-        rows, _ = validate_module(report, root, name, utility_path, template_inputs=template_inputs)
-    with phase('native-package', module=name):
-        artifact = directory / 'module.zip'
-        public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
-        os.replace(artifact, output)
-    if any(x['type'] != 'LeanInformationAudit.AuricFib.Contract.Application'
-           for x in input_projection(root, name)['inputs']):
-        print('LEAN_INSPECTOR_ASSESS module=' + name)
-        module_work('assess', [name])
-    module_work('extract', [name])
-    activity('extract', 1)
-    print(f'LEAN_INSPECTOR_EXTRACT module={name} declarations={len(rows[0]["declarations"])}')
-
-
-def module(root, name, source, utility_path, executable, output, analyzer="", previous=""):
-    output = Path(output)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='.module.', dir=output.parent) as directory:
-        args = (root, name, source, utility_path, executable, str(output), analyzer, previous, directory)
-        module_stage(*args)
-        module_finish(*args)
-
-
-def produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer="", previous=""):
+def produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs):
     """Keep spooled rows, compacted rows and validation certificates target-local."""
-    produce_fib(row, output, analyzer, previous)
     name = row['module']
     row_dir = directory / name
     row_dir.mkdir()
@@ -467,15 +392,13 @@ def inspect_batch_chunk(requests, *, check_constants=False, generated_index=None
         bindings = {}
         for request in requests:
             _, name, source, utility_path, _, output = request[:6]
-            analyzer = request[6] if len(request) > 6 else ""
-            previous = request[7] if len(request) > 7 else ""
             if name in bindings:
                 raise ValueError('duplicate native batch module')
             record = public.read_json(Path(utility_path).read_bytes())
             utilities.extend(record['utilities'])
             triples.extend([name, record['source_path'], 'sha256:' + public.digest(source)])
             validate_dependency_paths(root, utility_path)
-            bindings[name] = (utility_path, Path(output), analyzer, previous)
+            bindings[name] = (utility_path, Path(output))
         utility_file = directory / 'utility.json'
         utility_file.write_bytes(materials.canonical_json(utilities))
         arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
@@ -498,8 +421,8 @@ def inspect_batch_chunk(requests, *, check_constants=False, generated_index=None
                 raise ValueError('incomplete native inspection batch')
             completed.append(row['module'])
             declarations += len(row['declarations'])
-            utility_path, output, analyzer, previous = bindings[row['module']]
-            produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer, previous)
+            utility_path, output = bindings[row['module']]
+            produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs)
             del row
         if completed != sorted(bindings):
             raise ValueError('incomplete native inspection batch')
@@ -507,8 +430,7 @@ def inspect_batch_chunk(requests, *, check_constants=False, generated_index=None
             raise ValueError('unreferenced batch materials')
         for name in bindings:
             print('LEAN_INSPECTOR_EXTRACT module=' + name)
-            if any(x['type'] != 'LeanInformationAudit.AuricFib.Contract.Application'
-               for x in input_projection(root, name)['inputs']):
+            if input_projection(root, name)['inputs']:
                 print('LEAN_INSPECTOR_ASSESS module=' + name)
                 module_work('assess', [name])
         module_work('extract', list(bindings))
@@ -531,8 +453,6 @@ def produce_split_batch(requests, size):
         staged = []
         for index, request in enumerate(requests):
             copy = list(request)
-            copy.extend([""] * max(0, 8 - len(copy)))
-            copy[7] = copy[7] or copy[5]
             copy[5] = str(directory / f'{index}.zip')
             staged.append(copy)
         for offset in range(0, len(staged), size):
@@ -730,7 +650,7 @@ def main():
         print(f'LEAN_INSPECTOR_BATCH_MODULES {batch_modules()}')
         return
     actions = {'prepare': prepare, 'aggregate-inputs': aggregate_inputs,
-               'module': module, 'module-stage': module_stage, 'module-finish': module_finish,
+               'module': module,
                'aggregate': aggregate, 'publish': publish, 'batch': batch,
                'regenerate': regenerate}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:

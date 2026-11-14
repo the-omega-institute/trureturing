@@ -8,7 +8,6 @@ import Lean.Elab.Term
 import LeanInformationAudit.RawArtifacts
 import LeanInformationAudit.CompiledAxioms
 import LeanInformationAudit.ArtifactAssessment
-import LeanInformationAudit.Contract.FibApplications
 
 namespace LeanInformationAudit.InspectorProducer
 
@@ -188,7 +187,6 @@ structure ModuleReport where
   refutation : Option RefutationReport := none
   informationRegistrationErrors : Array String := #[]
   informationTemplates : Json := Json.null
-  fibApplications : Json := Json.null
 
 def includeInStatement (name : Name) : ConstantInfo → Bool
   | .thmInfo _ => !(privateToUserName name).isInternalDetail
@@ -387,8 +385,6 @@ def renderModule (report : ModuleReport) : String :=
     ++ ", \"information_registration_errors\": " ++ renderStrings report.informationRegistrationErrors
     ++ (if report.informationTemplates == Json.null then "" else
       ", \"information_templates\": " ++ report.informationTemplates.compress)
-    ++ (if report.fibApplications == Json.null then "" else
-      ", \"fib_analysis\": " ++ report.fibApplications.compress)
     ++ ", \"module\": " ++ jsonString report.moduleName
     ++ ", \"source_path\": " ++ jsonString report.sourcePath
     ++ ", \"source_sha256\": " ++ jsonString report.sourceSha256
@@ -461,9 +457,7 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
   RawArtifacts.loadModule target state
   for utility in utilities do RawArtifacts.loadModule utility.claimModule.toName state
   let targetData ← (← state.get).getModule target
-  let hasFib := !statementOnly && targetData.constants.any FibApplications.isInput
-  if !statementOnly && (RawArtifacts.hasTypedInputs targetData ||
-      hasFib) then
+  if !statementOnly && RawArtifacts.hasTypedInputs targetData then
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment state
   let store ← state.get
   RawArtifacts.checkBatchConstants base store seen
@@ -515,11 +509,7 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
     (closedNegation (fun name => current.modules.find? name.toName)
       (current.constants.find?) input)
     cache writer counter utilities generatedNames binding input
-  let fib ← if !statementOnly && data.constants.any FibApplications.isInput then
-    FibApplications.extract target data.constants current (digestBytes writer)
-    else pure Json.null
   let row := { row with
-    fibApplications := fib
     informationRegistrationErrors := sortedUnique (row.informationRegistrationErrors ++ enrollmentErrors) }
   out.putStr (renderModule row)
   out.flush

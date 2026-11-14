@@ -50,7 +50,7 @@ def transport_inspector(source):
     supplied as empty data here; real mathematical assessment runs in the Reg
     compiled-discovery and compiled-seal fixtures.
     """
-    source = source.replace('import LeanInformationAudit.ArtifactAssessment\n', '').replace('import LeanInformationAudit.Contract.FibApplications\n', '')
+    source = source.replace('import LeanInformationAudit.ArtifactAssessment\n', '')
     start = source.index('  let targetData ←')
     end = source.index('  let store ← state.get', start)
     source = source[:start] + source[end:]
@@ -62,9 +62,6 @@ def transport_inspector(source):
         '  let enrollmentErrors : Array String := #[]\n') + source[end:]
     source = source.replace('RawArtifacts.sharedModules targets statementOnly',
         'RawArtifacts.sharedModules targets true')
-    start = source.index('  let fib ←')
-    end = source.index('  let row := { row with', start)
-    source = source[:start] + '  let fib := Json.null\n' + source[end:]
     return source
 
 
@@ -200,7 +197,7 @@ defaultFacets = ["static"]
                 '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n'
                 'globs = ["LeanInformationAudit.TemplateEnrollment", "LeanInformationAudit.FixturePins", '
                 '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n')
-        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'publication.py', 'materials.py', 'fib_analysis.py', 'reuse.py', 'inspect.sh', 'build_work.py']:
+        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh', 'build_work.py']:
             self.copy('tools/lean-inspector/' + name)
         for name in ['RawArtifacts', 'CompiledMetadata', 'CompiledAxioms', 'Sha256']:
             self.copy('tools/lean-inspector/LeanInformationAudit/' + name + '.lean')
@@ -268,7 +265,7 @@ defaultFacets = ["static"]
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
                 'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean',
                 'tools/lean-inspector/lakefile.lean',
-                'tools/lean-inspector/native.py', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py', 'tools/lean-inspector/fib_analysis.py',
+                'tools/lean-inspector/native.py', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
                 'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))

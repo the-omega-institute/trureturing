@@ -12,35 +12,10 @@ import tempfile
 
 BUILT = re.compile(r'^[^\s]+ \[[0-9]+/[0-9]+\](?: \(Optional\))? Built ([^\s:]+)')
 COMPLETED = re.compile(r'^Build completed successfully \([0-9]+ jobs?\)\.$', re.MULTILINE)
-FIB_KINDS = ('extracted', 'generated', 'reused', 'unavailable',
-             'analysis-invocations', 'analysis-ns')
 
 
 def observations(logs, phases):
-    """Current direct observations, independent of Lake's replayable output.
-
-    Reused artifacts were not extracted or analyzed by this invocation. Their
-    population is deliberately not counted as invocation-local reused work.
-    """
-    counts = dict.fromkeys(FIB_KINDS, 0)
-    try:
-        if 'report' in phases:
-            if (logs / 'report.exit.log').read_text().strip() != '0':
-                raise ValueError('incomplete report activity')
-            for line in (logs / 'native-work.jsonl').read_text().splitlines():
-                row = json.loads(line)
-                if not isinstance(row, dict):
-                    raise ValueError('invalid native build activity')
-                if row.get('kind', '').startswith('fib-'):
-                    key = row['kind'][4:]
-                    if key not in counts or type(row.get('count')) is not int or row['count'] < 0:
-                        raise ValueError('invalid FIB activity')
-                    counts[key] += row['count']
-        scope = 'invocation-local'
-    except (OSError, ValueError, TypeError, AttributeError):
-        counts = dict.fromkeys(FIB_KINDS)
-        scope = 'unavailable'
-    print('LEAN_INSPECTOR_FIB_WORK ' + json.dumps(dict(scope=scope, **counts), sort_keys=True), flush=True)
+    """Current direct timings, independent of Lake's replayable output."""
     try:
         timing = {}
         path = logs / 'native-phases.jsonl'
@@ -174,12 +149,10 @@ def record(root, logs, destination, *phases):
         for line in activity.read_text().splitlines():
             row = json.loads(line)
             if (not isinstance(row, dict) or row.get('kind') not in
-                    ('extract', 'aggregate', *('fib-' + key for key in FIB_KINDS))
+                    ('extract', 'aggregate')
                     or type(row.get('count')) is not int or row['count'] < 0):
                 raise ValueError('invalid native build activity')
-            if row['kind'].startswith('fib-'):
-                continue
-            elif row['count'] > 0:
+            if row['count'] > 0:
                 value['report'] = (value['report'] or 0) + row['count']
     destination.parent.mkdir(parents=True, exist_ok=True)
     descriptor, name = tempfile.mkstemp(prefix='.build-work-', dir=destination.parent)

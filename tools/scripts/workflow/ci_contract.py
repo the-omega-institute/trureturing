@@ -72,7 +72,6 @@ def selection(data, paths, purpose):
         parse("[scope]\n" + data["current"]["delta_paths"]), paths)["scope"]))
     return {"hits": hits, "report": report, "theory": theory, "delta": delta,
             "compiled-audit": report and hits["tests-lean"],
-            "fib-regressions": report and hits.get("tests-fib", False),
             "source-evidence": report and hits["tests-declared-template"]}
 
 

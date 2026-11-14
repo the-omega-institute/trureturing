@@ -19,50 +19,15 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class CheckTests(unittest.TestCase):
-    def test_local_fib_ack_uses_actual_current_without_extra_preparation_or_suite(self):
-        for current in (0, 1):
-            with self.subTest(current=current), patch.dict(os.environ,
-                    CI_CURRENT_RESULT="success", CI_CURRENT_UNIT="current"):
-                result, calls, plan = self.local_spies(current=current,
-                    paths=("tools/scripts/compiled-fib-test.sh",))
-                self.assertEqual(result.returncode, current)
-                self.assertTrue(plan["fib-regressions"])
-                records = [json.loads(line[9:]) for line in result.stdout.splitlines() if line.startswith("CI_CHECK ")]
-                ack = [r for r in records if r["check"] == "tests-fib"]
-                self.assertEqual(len(ack), 1)
-                self.assertEqual(ack[0]["status"], "success" if current == 0 else "blocked")
-                self.assertFalse(any(call[:2] == ["make", "compiled-fib-test"] for call in calls))
-
-    def test_standalone_fib_ack_has_no_current_success_and_emits_no_identity(self):
-        with tempfile.TemporaryDirectory() as directory:
-            output = Path(directory) / "output"
-            environment = dict(os.environ, GITHUB_OUTPUT=str(output))
-            environment.update(CI_CURRENT_RESULT="success", CI_CURRENT_UNIT="current")
-            result = subprocess.run([sys.executable, "tools/scripts/workflow/ci_checks.py", "unit", "tests-fib"],
-                cwd=ROOT, env=environment, capture_output=True, text=True)
-            self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
-            self.assertFalse(output.exists())
-
-    def test_report_selection_overrides_ambient_fib_selection_in_both_directions(self):
+    def test_report_has_no_fib_selection_or_acknowledgement(self):
         data, _ = contract.load(ROOT)
-        for path, selected in (("tools/scripts/compiled-fib-test.sh", True), ("Reg/D5/Owner.lean", False)):
-            plan = contract.selection(data, [path], "pull-request")
-            with self.subTest(path=path), patch.dict(os.environ, STRATALINT_FIB_REGRESSIONS_SELECTED=str(not selected).lower()), \
-                    patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "producer")), \
-                    patch.object(checks, "execute", return_value=0) as execute:
-                self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 0)
-                self.assertEqual(execute.call_args.kwargs["env"]["STRATALINT_FIB_REGRESSIONS_SELECTED"], str(selected).lower())
-
-    def test_fib_ack_requires_successful_current_identity_and_never_launches_suite(self):
-        data, _ = contract.load(ROOT)
-        unit = data["units"]["tests-fib"]
-        for status, identity, expected in (("success", "current", 0), ("failure", "current", 1),
-                ("cancelled", "current", 1), ("skipped", "current", 1), ("", "", 1),
-                ("success", "wrong", 1)):
-            with self.subTest(status=status, identity=identity), patch.dict(os.environ,
-                    CI_CURRENT_RESULT=status, CI_CURRENT_UNIT=identity), patch.object(checks, "execute") as execute:
-                self.assertEqual(checks.unit_run("tests-fib", unit, current=(status, identity)), expected)
-                execute.assert_not_called()
+        self.assertNotIn("tests-fib", data["units"])
+        plan = contract.selection(data, ["Reg/D5/Owner.lean"], "pull-request")
+        self.assertNotIn("fib-regressions", plan)
+        with patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "producer")), \
+                patch.object(checks, "execute", return_value=0) as execute:
+            self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 0)
+        self.assertNotIn("STRATALINT_FIB_REGRESSIONS_SELECTED", execute.call_args.kwargs["env"])
 
     def test_missing_executable_is_observable_infrastructure_failure(self):
         with tempfile.TemporaryDirectory() as directory, contextlib.redirect_stdout(io.StringIO()) as output:

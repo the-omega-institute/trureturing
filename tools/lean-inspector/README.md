@@ -110,7 +110,7 @@ PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支�
 手动 `operation=build`（默认）要求 `source_ref` 等于 dispatch ref，且为受保护的 dev/integration 分支；
 `source_sha` 必须是该分支可达的非零 40 位小写十六进制提交。`operation=pr` 使用上述独立来源校验。
 两种 dispatch 与自动 push producer 共用 `lean-cache-produce` action，均为 360 分钟，
-构建报告及普通检查所需的原生程序和 fixture 产物，并完成下述报告所需的依赖范围 FIB 回归；
+构建报告及普通检查所需的原生程序和 fixture 产物；
 其它测试仍由普通 CI 命中单元执行。PR 仅准备 artifact，手动与自动分支 producer 按既有条件发布缓存。
 发布使用既有格式和 key，验证完整 bundle；正工作保存 run/attempt 快照，已恢复有效种子的
 `no-build-work` 保留实际恢复 key。手动与自动分支 producer 共用分支 concurrency；PR producer
@@ -128,15 +128,6 @@ PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支�
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
-Optional `Application.prediction` binds native operation evidence to the complete
-original theorem, separately from its initialized single-window law. The compiled
-producer projects checked closure or a natural-state separation witness into
-`continuation_target.predictive_closure`; missing evidence remains `unknown`.
-Closure covers every finite word of the declared letters, including absorbing
-rejection, by the existing dynamic closure theorem. It supplies no finite state
-count, compression claim, probability law or convergence result. Standalone JSON
-claims remain unverified. See [the prediction contract](../../docs/develop/spec/auric_fib_atom_escape_audit_spec.md#41-指定任务与操作的预测闭包).
-
 The native executables `reportInspector` and `compiledJudgeTests` have no D5,
 Reg or Mathlib modules in their transitive Lean imports. Their static contract
 dependency is the mathematical-dependency-free Core module. Mathematical
@@ -148,26 +139,10 @@ the general native tests. The library excludes the FIB fixture namespace.
 CI executes this entry only
 when the existing `tests-lean` unit is selected; its source list includes runtime
 D5/Reg inputs, fixtures, compiler, scripts and consumers. `make compiled-fib-test`
-builds the separate FIB library, source-contract executable and finite analyzer,
-then runs the production-consumer and finite-input regressions. Before publishing
-a fresh report, the canonical report entry used by ordinary, manual, PR-preparation
-and automatic producers compares complete custody-bound Application inputs with
-the previous published report, including unavailable inputs and additions/removals across supported
-owners. Changed inputs require this canonical suite after the writer returns and
-before new changed-report publication; failure prevents publication and retains
-the previous published inputs for retry. Equal inputs with no explicit selection
-run no FIB regressions. The explicit `tests-fib` whitelist in `CI_UNITS` selects
-compiler, discovery, analyzer, fixture, configuration and consumer coverage;
-`current` forwards that obligation to the same report entry, sharing one suite
-invocation with any changed-input obligation. The `tests-fib` job requires the
-successful `current` consumer and prepares no additional Lean cache. Lake owns
-incremental compilation and report artifact reuse inside selected consumers;
-unrelated owner edits do not force the FIB suite. Ordinary Registration inventory
-and source metadata remain covered by `tests-lean`, independently of Application
-equality. Preparation/adoption and report reuse validate material, not a pending
-or successful test action; valid historical reports remain reusable. The
-production-consumer regression checks unchanged, unrelated and affected source
-builds with direct invocation-local work observations.
+is an explicit manual entry for the separate FIB library, source-contract executable
+and finite analyzer. Production discovery ignores FIB Applications, reports contain
+no FIB partition, and publication and CI execute no FIB analysis or regressions.
+Ordinary Registration inventory and source metadata remain covered by `tests-lean`.
 Source-binding regression execution follows the
 `tests-declared-template` selection. The library's existing directory glob includes
 [Fixtures/CompiledInputs.lean](LeanInformationAuditRegTests/Fixtures/CompiledInputs.lean);
@@ -178,19 +153,10 @@ import closures and enumerates contract name literals in compiled implementation
 expressions to verify each against the interface artifacts. Missing input
 artifacts, unknown names and malformed structures produce named failures.
 
-Production report output includes `LEAN_INSPECTOR_TIMING` for direct internal
-phase observations and `LEAN_INSPECTOR_FIB_WORK` for the current invocation's
-extracted applications, analyzer invocations and nanoseconds, generated readings,
-reused readings and unavailable requests. Zero means no such work was observed
-in a completed invocation; missing activity is unavailable, with null counts.
-Whole-artifact reuse executes no extraction or analysis and is not counted as
-leaf reuse. Timings sum repeated calls and can overlap between phases; they are
-not CPU attribution or predicted savings. Incomplete phase durations are null.
-Lake log replay does not supply these observations. The publication work schema,
-report identity, custody and verdicts are independent of these diagnostics.
-Analyzer implementation changes compile and run through the FIB regression unit;
-under the existing report policy they do not invalidate accepted historical
-reports. Changed detached application inputs are analyzed by the current program.
+Production report output includes `LEAN_INSPECTOR_TIMING` for direct internal phase
+observations. Timings can overlap; incomplete phase durations are null. Lake log
+replay supplies no current observation. These diagnostics do not decide report
+identity, custody or admission.
 
 The filtered declared-template CI unit requests no Lean preparation. Its external
 artifact cases retain their explicit skips. Fourier production artifact tests run
@@ -296,7 +262,7 @@ fail by name and have no fallback.
 这些检查器不生成报告。离线 truth/export 与 bundle 验证工具保留,不提供
 自动选择 CI 来源或发布资格的链路。
 
-输出采用 `stratalint-raw-lean-report-v3`，同一文件名后附
+输出采用 `stratalint-raw-lean-report-v4`，同一文件名后附
 `.sha256`、`.input.attestation`、`.provenance.json`、`.materials.zip`。
 传递报告给消费者时须保留整组文件；statement materials 与报告一起校验。
 成功输出 `RAW_LEAN_REPORT path=… sha256=…`。
@@ -312,9 +278,9 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 | `inputs/`、`inputs.json`、`report-format` | 当前模块输入、成员及配置坐标、报告格式标识。 |
 
 这些是构建产物，不提交为源码。Lean-cache 发布先经同一 `make lean-report` / `inspect.sh`
-入口完成登记的程序目标、原生报告、必要的 FIB 回归及完整校验，再打包根 buildDir。
-报告与登记的程序目标共用一次原生 Lake 构建；必要的 FIB 回归在 writer 返回后由 canonical 测试入口完成。
-输入、编译、必要的 FIB 回归或报告校验失败即发布失败，即使本轮发布地址已存在也不能绕过。
+入口完成登记的程序目标、原生报告、完整校验，再打包根 buildDir。
+报告与登记的程序目标共用一次原生 Lake 构建。
+输入、编译或报告校验失败即发布失败，即使本轮发布地址已存在也不能绕过。
 归档携带原生 Inspector 可执行文件、模块与汇总工件，以及规范报告、materials、origin 和
 attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draft 上传协议；draft
 不能作为可用种子。传输失败不改变已经完成的构建与报告结论。
@@ -477,9 +443,8 @@ Utility refutations require the raw claim type `Prop` and the raw result type `N
 The implementation library contains the production artifact evaluator and its pure
 support modules. Tests and independent analyses live in the downstream host
 `tools/lean-inspector-reg`, which requires both Reg and Impl.
-Report production, including the long cache producer, completes the conditional
-FIB regression duty described above. The long producer also builds the downstream
-test library and native programs. Other test execution remains with the selected
+The long cache producer builds the ordinary downstream test library and native
+programs. Other test execution remains with the selected
 ordinary CI consumers; producer success is not required-check success.
 `make compiled-judge-test` builds and runs the native tests against the same
 artifact evaluator used by production, including constructor discovery, source

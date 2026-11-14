@@ -386,7 +386,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           # This supervisor also encloses preparation; compute phases share the file above.
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
-          STRATALINT_FIB_REGRESSIONS_SELECTED: ${{ fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
         run: |
           rc=0
           python3 tools/scripts/workflow/ci_checks.py current lean-report || rc=$?
@@ -649,29 +648,6 @@ jobs:
     with:
       unit: tests-integration-mirror
 
-  tests-fib:
-    needs: [detect, source, current]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && needs.source.outputs.continuation == 'true' && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
-    runs-on: ubuntu-24.04-arm
-    outputs:
-      unit: ${{ steps.ack.outputs.unit }}
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: 1
-          filter: blob:none
-          sparse-checkout: |
-            tools/scripts/workflow
-            Meta/ci-units.json
-          persist-credentials: false
-      - id: ack
-        name: Require the selected report consumer's FIB regressions
-        env:
-          CI_CURRENT_RESULT: ${{ needs.current.result }}
-          CI_CURRENT_UNIT: ${{ needs.current.outputs.unit }}
-        run: python3 tools/scripts/workflow/ci_checks.py unit tests-fib --current-result "$CI_CURRENT_RESULT" --current-unit "$CI_CURRENT_UNIT"
-
   tests-lean:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
@@ -830,7 +806,7 @@ jobs:
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, source, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-fib, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-source-atomizer, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, source, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-source-atomizer, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:

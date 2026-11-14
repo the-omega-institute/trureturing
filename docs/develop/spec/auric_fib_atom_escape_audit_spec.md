@@ -1,6 +1,6 @@
 # AURIC FIB ATOM 逃逸审计与分层编码规范
 
-**文档状态：** 规范性草案（Normative Draft）
+**文档状态：** 独立分析合同草案；FIB 审计不接入生产报告、发布前回归或 CI required 链路。
 **版本：** 0.1 — Typed-FIB / Two-Level-Arena / Kernel-Residual / Layered-Code / No-Scalar-Score
 **适用范围：** 任意定理 occurrence 的作者所有类型化分析合同，以及满足相应来源证据的有限信息逃逸分析和 AURIC FIB ATOM 原生应用。
 

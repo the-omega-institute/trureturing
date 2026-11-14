@@ -1,5 +1,5 @@
 name: Produce the Lean Actions cache
-description: Resume long builds separately and publish only complete validated Lean seeds, completing dependency-scoped FIB regressions required by report production.
+description: Resume long builds separately and publish only complete validated Lean seeds.
 inputs:
   release-seed-tag:
     description: Exact local candidate Release to restore before the long build
@@ -131,7 +131,7 @@ runs:
         STRATALINT_NATIVE_BATCH_MODULES: ${{ inputs.native-report-batch-modules }}
         STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         # Include ordinary audit programs in the same measured Lake invocation.
-        STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main","regInspector/LeanInformationAuditRegTests","regInspector/auricFibAnalysis","regInspector/compiledJudgeTests"]'
+        STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegTests","regInspector/compiledJudgeTests"]'
       shell: bash
       run: |
         # Reject untrusted input before Make can expand environment values.

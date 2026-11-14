@@ -115,7 +115,7 @@ public sealed partial class LeanReportInputScriptTests
         {
             // The synthetic fixture's inputs are independent of the helper's output.
             var producer = Convert.ToHexStringLower(SHA256.HashData(Encoding.ASCII.GetBytes(
-                "schema=stratalint-raw-lean-report-v3\n")));
+                "schema=stratalint-raw-lean-report-v4\n")));
             var sources = ManifestHash("Trureturing.lean", "D5/Probe.lean");
             var config = ManifestHash("lean-toolchain", "lake-manifest.json", "lakefile.toml");
             var preimage = "schema=stratalint-lean-report-repository-input-v1\n"

@@ -21,7 +21,7 @@ from typing import BinaryIO, Iterable
 
 
 SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
-REPORT_SCHEMA = "stratalint-raw-lean-report-v3"
+REPORT_SCHEMA = "stratalint-raw-lean-report-v4"
 STATEMENT_DOMAIN = b"trureturing:statement:v1\0"
 MATERIAL_FILE = re.compile(r"^[0-9]+\.statement(?:\.gz)?$")
 SUPPLEMENTARY_SCALAR = re.compile(r"[\U00010000-\U0010FFFF]")
@@ -253,8 +253,6 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 module_keys.add("information_registration_errors")
             if "information_templates" in raw_module:
                 module_keys.add("information_templates")
-            if "fib_analysis" in raw_module:
-                module_keys.add("fib_analysis")
             if "utility_refutation" in raw_module:
                 module_keys.add("utility_refutation")
             module = require_keys(
@@ -281,10 +279,6 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             information_templates = module.get("information_templates")
             if information_templates is not None:
                 validate_template_evidence(information_templates)
-            fib = module.get("fib_analysis")
-            if fib is not None:
-                import fib_analysis
-                fib_analysis.validate(fib)
             refutation = module.get("utility_refutation")
             if refutation is not None:
                 require_keys(refutation, {"claim_gid", "claim_source_path", "claim_source_sha256", "result_gid", "is_closed_negation"},
@@ -366,8 +360,6 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 report_module["information_registration_errors"] = registration_errors
             if information_templates is not None:
                 report_module["information_templates"] = information_templates
-            if fib is not None:
-                report_module["fib_analysis"] = fib
             if refutation is not None:
                 report_module["utility_refutation"] = refutation
             modules.append(report_module)
