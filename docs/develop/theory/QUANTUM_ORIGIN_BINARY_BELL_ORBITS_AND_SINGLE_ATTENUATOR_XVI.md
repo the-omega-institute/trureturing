@@ -594,3 +594,1184 @@ Aram W. Harrow，[*Exact universality from any entangling gate without inverses*
 [Q167H]: https://arxiv.org/abs/0806.0631v1
 
 ## 追加锚（本行以下为增补区）
+
+## 168. 两只固定酉、一只衰减器与未知原锥的量子重建
+
+### 完整原域与三个固定二体映射
+
+**定义 168.1（同一实际基中的固定控制入口）。** 完整采用定义167.1的原域：固定 $n\ge2$，在给定实际 Kronecker 坐标中
+
+$$
+V=\operatorname{Herm}_n(\mathbb C),\qquad
+W_N=V^{\otimes_{\mathbb R}N}
+ =\operatorname{Herm}_{n^N}(\mathbb C),\qquad N\ge1.
+\tag{168.1}
+$$
+
+每个 $C_N\subset W_N$ 为闭、尖、生成凸锥，$u_N=\operatorname{Tr}=u_1^{\otimes N}$ 在非零原锥上严格正。原对象取其全部：
+
+$$
+\begin{aligned}
+K_N&=\{x\in C_N:\operatorname{Tr}x=1\},
+&P_N&=\operatorname{ext}K_N,\\
+C_N^*&=\{Y\in W_N:\operatorname{Tr}(Yx)\ge0\ (x\in C_N)\},
+&\mathcal E_N&=[0,u_N]_{C_N^*}.
+\end{aligned}
+$$
+
+这里以迹配对表示完整自身对偶；有限菜单是所有 $f_a\in C_N^*$、$\sum_af_a=u_N$ 的有限单位分解，凸准备及其配对使用原线性结构。对所有有限实际分块，包括经原位置置换运输的不连续分块，有
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+ \subseteq C_a\otimes_{\max}C_b.
+\tag{168.2}
+$$
+
+最小锥由正简单张量闭凸生成；最大锥由所有 $f\otimes g$、$f\in C_a^*,g\in C_b^*$ 的非负半空间相交定义。全部实际位置置换及其逆均正；重括号是同一实际空间的规范识别，且 $(f\otimes g)(x\otimes y)=f(x)g(y)$、$u_{a+b}=u_a\otimes u_b$。空系统为 $W_0=\mathbb R,C_0=\mathbb R_+,u_0=\mathrm{id}$。不预付任一层 PSD、自对偶、转置或共轭不变性，也不预付高层矩阵操作正性。复 Hermitian 载体、指定维数、全部有限复合及完整效应本身均是输入。
+
+在实际给定单腿基 $e_0,\ldots,e_{n-1}$ 中，令 $E_{jk}=e_je_k^*$，并固定
+
+$$
+\begin{aligned}
+A&=A_{\rm path}
+ =\sum_{j=0}^{n-2}(E_{j,j+1}+E_{j+1,j}),
+ &G&=\exp\!\left(\frac{iA}{2n}\right),\\
+P_0&=E_{00},
+ &D&=\exp(2\pi i\sqrt2\,P_0),\\
+0&<\lambda<1,
+ &S&=\operatorname{diag}(\lambda,1,\ldots,1).
+\end{aligned}
+\tag{168.3}
+$$
+
+其中 $G,D,S$ 对每个给定 $n,\lambda$ 均一次固定，不能在每次使用时另选参数。定义
+
+$$
+\Omega=\sum_{j=0}^{n-1}e_j\otimes e_j,\qquad
+B=\Omega\Omega^*,\qquad
+\beta(x)=\operatorname{Tr}(Bx).
+\tag{168.4}
+$$
+
+二元入口仅为以下关系与三个正性条件：
+
+$$
+\begin{aligned}
+\mathsf B &: B\in C_2\cap C_2^*,\\
+\mathsf G_2 &: \operatorname{Ad}_{G\otimes I}(C_2)\subseteq C_2,\\
+\mathsf D_2 &: \operatorname{Ad}_{D\otimes I}(C_2)\subseteq C_2,\\
+\mathsf S_2 &: \operatorname{Ad}_{S\otimes I}(C_2)\subseteq C_2,
+\qquad \operatorname{Ad}_H(x)=HxH^*.
+\end{aligned}
+\tag{168.5}
+$$
+
+第二个 Bell 成员关系始终是对整个未知原 $C_2$ 的非负泛函关系。三种映射均只在 $C_2$ 的第一实际因子上提出正性，未提出逆向正性、任意酉正性或任意旁观扩张正性。原 SWAP 可运输已取得的二体第一因子映射，但不等于加入单腿基变换或高层映射。
+
+三元条件仍是167.2的同一个存在性条件：有非零实际向量 $\psi\in(\mathbb C^n)^{\otimes3}$，其 dyad 满足
+
+$$
+\mathsf T:\qquad
+\psi\psi^*\in C_3,\qquad
+\min_{j=1,2,3}r_j(\psi)\ge2,\qquad
+\max_{j=1,2,3}r_j(\psi)=n.
+\tag{168.6}
+$$
+
+$r_j$ 是该实际向量第 $j$ 腿对其余两腿的复矩阵展平秩；此时没有预设归一 dyad 是原极点。任何以已知 PSD 态或 CPTP 信道为载体的散度结论均不作为上述原域或重建入口。
+
+### 未知闭锥上的固定映射判据
+
+**定理 168.2（三固定映射的同域重建）。** 对定义168.1的每个完整原层级及每个固定 $0<\lambda<1$，有
+
+$$
+\mathsf B\wedge\mathsf G_2\wedge\mathsf D_2\wedge\mathsf S_2
+\quad\Longleftrightarrow\quad
+C_1=\operatorname{PSD}_n\ \text{且}\ C_2=\operatorname{PSD}_{n^2}.
+\tag{168.7}
+$$
+
+同一原域中进一步有
+
+$$
+\mathsf B\wedge\mathsf G_2\wedge\mathsf D_2\wedge\mathsf S_2\wedge\mathsf T
+\quad\Longleftrightarrow\quad
+C_N=\operatorname{PSD}_{n^N}\quad\text{对全部有限 }N\ge1.
+\tag{168.8}
+$$
+
+正向恢复任意一腿酉的二体正性，随后完整消费167.3的已建立证明。控制中间步骤是已知紧群及路径秩一控制数学在此固定离散对上的应用；本定理的综合内容是它们对未知原锥正性入口的作用及与167的同域接合，不主张这些控制事实的新颖性，也不主张独立公理数最小。
+
+证明。先只处理 $n\times n$ 控制矩阵及二体原锥。下面的闭包一律取通常算子范数；有限维矩阵的其他范数给相同拓扑。
+
+令 $\mathcal M$ 为字母表 $\{G,D\}$ 的所有有限正向字，含空字，并令
+
+$$
+H=\overline{\mathcal M}\subseteq U(n).
+\tag{168.9}
+$$
+
+这里没有逆字母。矩阵乘法连续，故 $H$ 是含单位的紧闭子半群。对任意 $h\in H$，由紧性可选严格递增整数 $q_j$，使 $h^{q_j}\to a\in U(n)$。置 $m_j=q_{j+1}-q_j\ge1$，在环境酉群中计算
+
+$$
+h^{m_j}=(h^{q_j})^{-1}h^{q_{j+1}}\longrightarrow I,
+\qquad
+h^{m_j-1}\longrightarrow h^{-1}.
+\tag{168.10}
+$$
+
+第二个序列的指数非负，各项属于 $H$；闭性遂给 $h^{-1}\in H$。因此 $H$ 是闭子群。环境矩阵求逆在这一论证中只用于计算极限，没有将任何逆映射正性当作前提。
+
+由于 $\sqrt2$ 无理，$D$ 的整数幂在
+
+$$
+\{\exp(itP_0):t\in\mathbb R\}
+\tag{168.11}
+$$
+
+中稠密。可直接用抽屉原理核清这一步：将 $0,\sqrt2,\ldots,N\sqrt2$ 的模一余数放入 $N$ 个等长区间，得到某个非零有符号整数 $q$，使 $q\sqrt2$ 模一为 $\delta\in(0,1/N)$。无理性排除 $\delta=0$；若差为负，可取相反差。因为 $H$ 已为群，$D^q\in H$。对任意 $s\in[0,1)$，取非负整数 $k$ 使 $|k\delta-s|<\delta$，便有 $D^{qk}$ 与 $\exp(2\pi isP_0)$ 的距离随 $N\to\infty$ 趋零。于是(168.11)整个包含于 $H$。
+
+为避免把闭子群的矩阵对数误认为自动属于其无穷小代数，明确采用
+
+$$
+\mathfrak h=\{X\in\mathfrak u(n):\exp(tX)\in H
+ \text{ 对所有 }t\in\mathbb R\}.
+\tag{168.12}
+$$
+
+这是闭实 Lie 子代数，且 $iP_0\in\mathfrak h$。所需闭群事实对应于 von Neumann 原文第二部§§1—4的实无穷小代数与第三部§§2—4的指数接合：其闭包是保留非零行列式极限的相对 $GL$ 闭包；本处 $H\subset U(n)$ 紧闭，完全满足这一条件。[该原文][Q168VN]的相关矩阵结论在这里也可由如下极限直接取得，因而不需要更强的闭子群结构定理。
+
+闭性与实数倍封闭直接来自指数连续性及参数重标。若 $X,Y\in\mathfrak h$，矩阵指数展开和酉矩阵乘积的望远镜估计给
+
+$$
+\left(e^{tX/m}e^{tY/m}\right)^m\longrightarrow e^{t(X+Y)}.
+\tag{168.13}
+$$
+
+具体地，每个小因子与 $e^{t(X+Y)/m}$ 的差为 $O(m^{-2})$；两者及其幂均为酉，$m$ 个因子的总差至多为 $O(m^{-1})$。所有左侧矩阵属于 $H$，故 $X+Y\in\mathfrak h$。同样，直接相乘二阶指数展开得到
+
+$$
+C(s):=e^{sX}e^{sY}e^{-sX}e^{-sY}
+ =I+s^2[X,Y]+O(|s|^3).
+\tag{168.14}
+$$
+
+对 $t\ge0$，取 $s=\sqrt{t/m}$，则 $C(s)^m\to e^{t[X,Y]}$：与 $e^{(t/m)[X,Y]}$ 的逐因子差为 $O(m^{-3/2})$，望远镜总差为 $O(m^{-1/2})$。负 $t$ 可交换 $X,Y$。故 $[X,Y]\in\mathfrak h$。这里的 $O$ 常数只依赖固定 $t,X,Y$，不涉及原锥或物理资源预算。
+
+下一步从固定的 $G$ 恢复对路径漂移的无穷小稳定性；不能仅由 $G\in H$ 断言其主对数在 $\mathfrak h$。设
+
+$$
+K=\frac{iA}{2n},\qquad
+L=\operatorname{ad}_K,\quad L(X)=[K,X],\qquad
+\mathcal T(X)=GXG^*.
+\tag{168.15}
+$$
+
+由 $H$ 的群性，$\mathcal T(\mathfrak h)=\mathfrak h$。对 $e^{tK}Xe^{-tK}$ 求导，或直接比较指数级数，给出在矩阵空间上的恒等式 $\mathcal T=e^L$。
+
+对任意 $z\in\mathbb C^n$，路径矩阵满足
+
+$$
+|z^*Az|
+ \le2\sum_{j=0}^{n-2}|z_j||z_{j+1}|
+ \le2\sum_{j=0}^{n-1}|z_j|^2,
+\qquad \|A\|_{\rm op}\le2.
+\tag{168.16}
+$$
+
+记 $A$ 的特征值为 $a_0,\ldots,a_{n-1}$。在相应矩阵单位的正交基中，$L$ 的复特征值为 $i\delta_{ab}$，其中
+
+$$
+\delta_{ab}=\frac{a_a-a_b}{2n},\qquad
+|\delta_{ab}|\le\frac2n\le1.
+\tag{168.17}
+$$
+
+因此在 Hilbert—Schmidt 矩阵空间上，$\mathcal T$ 为酉算子，且
+
+$$
+\|\mathcal T-I\|
+ \le 2\sin(1/n)\le2\sin(1/2)<1.
+\tag{168.18}
+$$
+
+这只是给定控制矩阵的范数估计，不是对未知原态作 PSD 范数预算。收敛的实系数算子级数于是满足
+
+$$
+\log\mathcal T
+ =\sum_{r=1}^{\infty}\frac{(-1)^{r+1}}r(\mathcal T-I)^r
+ =L.
+\tag{168.19}
+$$
+
+最后一个等号可在上述特征基逐项检查：对每个 $|\delta_{ab}|\le1$，标量级数在 $|e^{i\delta_{ab}}-1|<1$ 内取值为 $i\delta_{ab}$，没有 $2\pi$ 混叠。$\mathfrak h$ 是闭实向量空间，每个 $(\mathcal T-I)^r$ 保持它，因而
+
+$$
+[iA,\mathfrak h]\subseteq\mathfrak h.
+\tag{168.20}
+$$
+
+这并未先行假定 $iA\in\mathfrak h$。固定步长 $1/(2n)$ 的作用正是使(168.19)合法；所用的是共轭算子的对数，而不是未经说明地对群元素取对数。
+
+现在给出路径端点控制所需的完整矩阵单位计算。令
+
+$$
+Z_j=iE_{jj},\qquad
+X_j=E_{j,j+1}-E_{j+1,j},\qquad
+Y_j=i(E_{j,j+1}+E_{j+1,j}),
+\tag{168.21}
+$$
+
+并约定 $X_{-1}=X_{n-1}=0$。直接使用 $E_{ab}E_{cd}=\delta_{bc}E_{ad}$，得到
+
+$$
+\begin{aligned}
+[iA,Z_j]&=X_j-X_{j-1},\\
+[Z_j,X_j]&=Y_j,\\
+[X_j,Y_j]&=2(Z_j-Z_{j+1})\qquad(0\le j\le n-2).
+\end{aligned}
+\tag{168.22}
+$$
+
+已有 $Z_0\in\mathfrak h$。由(168.20)先得 $X_0$，再用(168.22)得到 $Y_0,Z_1$。若已得 $Z_j$ 和 $X_{j-1}$，同样先得 $X_j=[iA,Z_j]+X_{j-1}$，再得 $Y_j$ 及 $Z_{j+1}=Z_j-[X_j,Y_j]/2$。有限归纳给出全部 $Z_j$ 和相邻 $X_j,Y_j$，也在此时给 $iA=\sum_jY_j\in\mathfrak h$。
+
+对 $p<q$ 定义 $X_{pq}=E_{pq}-E_{qp}$、$Y_{pq}=i(E_{pq}+E_{qp})$。若 $p<q<r$，矩阵单位乘法另给
+
+$$
+[X_{pq},X_{qr}]=X_{pr},\qquad
+[Z_p,X_{pq}]=Y_{pq}.
+\tag{168.23}
+$$
+
+沿路径距离归纳，所有 $X_{pq},Y_{pq}$ 都在 $\mathfrak h$。这些矩阵连同 $Z_j$ 是 $\mathfrak u(n)$ 的实基，故
+
+$$
+\mathfrak h=\mathfrak u(n).
+\tag{168.24}
+$$
+
+这一计算是路径端点的零强迫控制：端点仅有一个尚未取得的邻点，交换子逐个取得其投影，再沿边传播。Godsil—Severini 的引理1及推论3给出实对称矩阵秩一控制、路径端点与连续参数酉族的先例；[Burgarth 等的推论4.2][Q168BZ]在“实对称、非零非对角元同号、连通图、零强迫集”条件下给 $\mathfrak u(n)$。本处 $A$ 是实对称路径邻接矩阵，非零边权均为一，$\{0\}$ 按 $0\to1\to\cdots\to n-1$ 零强迫全部顶点，故这些条件逐项匹配。这些文献的连续控制结论并不直接把固定 $G,D$ 变成连续字母；(168.10)—(168.20)承担这一额外接合，(168.22)—(168.23)明确给出所需 Lie 计算。没有用结合代数的 Burnside 不可约性代替 Lie 可控性。
+
+每个 $U\in U(n)$ 都是某个反 Hermitian 矩阵的指数：酉谱分解后为其有限个特征相位选择实角度即可。由(168.12)、(168.24)，$U\in H$。结合(168.9)，得到
+
+$$
+\overline{\mathcal M}=U(n).
+\tag{168.25}
+$$
+
+这个等式只说有限正向字稠密。至此得到的全部连续参数属于数学闭包，不是新加入的原字母。
+
+回到未知原 $C_2$。由 $\mathsf G_2,\mathsf D_2$，每个 $W\in\mathcal M$ 的第一因子合同保持 $C_2$。固定任意 $U\in U(n)$，取 $W_k\in\mathcal M$ 使 $W_k\to U$。对每个固定 $x\in C_2$，通常矩阵乘法连续，具体有
+
+$$
+\begin{aligned}
+&\|(W_k\otimes I)x(W_k^*\otimes I)
+ -(U\otimes I)x(U^*\otimes I)\|_{\rm op}\\
+&\hspace{2em}\le2\|W_k-U\|_{\rm op}\,\|x\|_{\rm op}
+ \longrightarrow0.
+\end{aligned}
+\tag{168.26}
+$$
+
+原锥闭性遂给
+
+$$
+\operatorname{Ad}_{U\otimes I}(C_2)\subseteq C_2
+ \qquad(U\in U(n)).
+\tag{168.27}
+$$
+
+这里没有假定 $x\succeq0$。对 $U^*$ 再用同一结论，取得逆向正性及等号。故第167章的 U2 已由两个固定映射导出。其迹伴随也保持原对偶锥，因为正映射对偶正性来自原配对，不需要原锥先自对偶。
+
+在使用任何 PSD 态范数预算之前，原 proper 与迹预算完全按167.5支付。具体地，严格正迹与闭性使 $K_2$ 紧；该结论的反证是将一个无界归一原态列除以其范数，得到非零且迹零的原锥极限。设
+
+$$
+\begin{aligned}
+M_B&=\max_{x\in K_2}\beta(x),\\
+M_S&=\max_{x\in K_2}
+ u_2\bigl(\operatorname{Ad}_{S\otimes I}x\bigr),
+ &\alpha&=\min\{1,M_S^{-1}\}.
+\end{aligned}
+\tag{168.28}
+$$
+
+由 $B/n\in K_2$ 和 Bell 双向关系，$M_B\ge n>0$，$\beta/M_B\in\mathcal E_2$；$S$ 可逆且原正，给 $0<M_S<\infty$，故 $\alpha>0$。对任一原字母表 $\{G,D,S\}$ 的有限字 $W$，若其中有 $k$ 次 $S$，则
+
+$$
+\begin{aligned}
+\alpha^k\operatorname{Ad}_{W\otimes I}&:C_2\longrightarrow C_2,\\
+u_2\alpha^k\operatorname{Ad}_{W\otimes I}&\le u_2,\\
+0<M_W&:=\max_{x\in K_2}
+ u_2\bigl(\operatorname{Ad}_{W\otimes I}x\bigr)<\infty.
+\end{aligned}
+\tag{168.29}
+$$
+
+$G,D$ 的保迹性是全矩阵空间的恒等式；$S$ 的不增迹缩放由原紧基给出。$M_W>0$ 因为原字全部可逆，$B/n$ 的像非零且仍在原锥中。每个字也可整体乘 $\min\{1,M_W^{-1}\}$。这些缩放在分支质量中必须保留。此处没有把 $M_S$ 直接设为一，也没有用 $B\preceq nI$ 推出未知原态上的 proper 上界。Bell proper 效应在相关原旁观者上的切片预算可直接由(168.2)及 VII102.6取得；这不提升任何未支付的矩阵映射。
+
+现在 $\mathsf B$、(168.27)与 $\mathsf S_2$ 正好是定理167.3第一项的 B、U2、S2，定义168.1正好保留定义167.1的所有前件。故直接消费其证明，得到(168.7)的正向。精确接口为：167.4从已恢复的整个 $U(n)$ 连续字母表和 $S$ 构造每个可逆滤波的正比例有限字；167.5保留其原预算；167.6分别用 Bell 原态轨道与原对偶轨道支付两个锥包含；167.7只用原偏迹与最小积恢复 $C_1$。这些 SVD、Bell 两包含与一体恢复论证沿用原证明，不在此重复。
+
+只有在低二层等式取得之后，才调用167.8及 XIII163.2、VII102.6—102.7：对每个 $H_0\in M_n(\mathbb C)$，包括奇异矩阵，$\operatorname{Ad}_{H_0}$ 的 Choi dyad 已属于原 $C_2$，从而该一体合同在全部有限原相关旁观者上正；其 proper 缩放用已取得的 $C_1=\operatorname{PSD}_n$ 支付。这一支付次序不对齐前的高层矩阵映射作任何正性断言。
+
+若再有 $\mathsf T$，定义166.1剩余前件正是已列的同一实际复张量载体、全部有限闭尖生成锥、严格正乘法迹、完整原基与效应、全部实际 min/max 分块、置换及正逆、重括号、原配对和空系统，加刚得到的两条低层 PSD 等式。$\mathsf T$ 又逐字满足166.2的 dyad 与三展平秩要求。因此按167.3第二项所接的166.12“条件1蕴含条件5”，直接得到(168.8)的正向。该传播的有限强归纳、两份种子接合及最终有限尾部均复用166.12，而不从本章的稠密控制重新证明；它们的严格正有限资源系数仍按167.8所引接口保留。
+
+反向若 $C_1,C_2$ 是所述 PSD 锥，则 PSD 迹自对偶性给 $\mathsf B$，通常矩阵合同正性给三个固定条件，不论这些固定字母是否具有有限字长的精确普适性。若全部有限锥均标准，则另取 $g_n=\sum_{j=0}^{n-1}|jjj\rangle$；其 dyad 属于 $C_3$，三个展平秩均为 $n$，故满足 $\mathsf T$。完整标准层级的 min/max、置换及完整菜单前件正是167.3反向已核清的同域模型。于是两个等价均成立。∎
+
+### 有限正向字、闭锥极限与奇异边界
+
+**命题 168.3（精确有限性与闭包的不同结论）。** 对168.1的固定矩阵，以下各项同时成立；其中涉及原锥的正性与预算时，另采用168.2左侧的二元条件。
+
+1. $\{G,D\}$ 的有限正向字在 $U(n)$ 中稠密；有限字集合不能等于 $U(n)$，其合同集合也不能包含所有酉合同。
+2. 对每个 $A_0\in GL_n(\mathbb C)$，存在 $c>0$ 及 $\{G,D,S\}$ 的有限正向字序列 $W_\ell$，使 $W_\ell\to cA_0$。第167章同时给出 $cA_0$ 在扩大的字母表 $U(n)\cup\{S\}$ 中的一个精确有限字。后一事实不蕴含前一原三字母表中的精确有限表达。
+3. 三个原字母均可逆，所以每个原有限字均可逆；对二体向量的一腿作用保持 Schmidt 秩，但不必保持 Schmidt 系数。奇异目标可经锥闭性进入成员关系，也可在低层对齐后经原自身 Choi 接口取得全旁观正性；两者都不是原字母的奇异有限字。
+
+证明。第一项的稠密性是(168.25)。有限字集合可数，而 $U(n)$ 不可数；对合同去掉全局相位后仍有不可数的 $PU(n)$，因 $n\ge2$，故合同也不能全部精确命中。
+
+对第二项，167.4给一个精确的有限乘积
+
+$$
+V_r\cdots V_1=cA_0,\qquad
+V_j\in U(n)\cup\{S\},\quad c>0.
+\tag{168.30}
+$$
+
+其中酉字母个数有限。分别用(168.25)的原正向酉字逼近每个酉字母，所有 $S$ 位置保持不变。有限次矩阵乘法连续，遂得 $W_\ell\to cA_0$。这里 $c$ 与(168.30)固定；不是将逼近误差吸收到一个未说明的精确等式中。另在168.2左侧的二元条件下，若(168.30)含 $k$ 次 $S$，上述每个 $W_\ell$ 仍恰含 $k$ 次 $S$，因此(168.29)的同一个 $\alpha^k$ 给其二体数学预算；极限也保持这一数学不等式。一般随目标变化的构造没有统一字长或统一概率下界。
+
+精确原字甚至不能命中任意可逆矩阵的全部正比例类：原有限字只有可数多个正比例类，而 $GL_n(\mathbb C)/\mathbb R_{>0}$ 不可数。特定目标能否恰有一个原有限字，不由稠密性决定。167.4所给 $S^{-1}$ 及其他逆滤波的正比例实现也使用扩大后的连续酉字母表；它们的锥正性已导出，不能据此声称原三字母的精确逆字已导出。
+
+第三项中，给二体向量写参考—输出向量化 $|H_0\rangle\!\rangle$。一腿可逆矩阵 $R$ 将其系数矩阵变成 $H_0R^{\mathsf T}$，另一腿可逆矩阵将其变成 $RH_0$；秩不变。对 Bell 向量，$S$ 给非零 Schmidt 系数 $\lambda,1,\ldots,1$，因此改变相对系数而保持满 Schmidt 秩。酉字母则保持全部 Schmidt 系数。
+
+所有有限字可逆，故不能等于非零奇异矩阵或把满 Schmidt 向量变为降秩向量。167.6以可逆系数趋向奇异系数，使用的是闭锥成员关系；167.8取得奇异合同的原全旁观正性，使用的是低层对齐后的自身 Choi 当且仅当。这些逻辑接口均不提供原有限字表达。∎
+
+### 全有限量子字典及其确切接口
+
+**推论 168.4（全部原静态数据与数学过程的量子对应）。** 在定义168.1及 $\mathsf B,\mathsf G_2,\mathsf D_2,\mathsf S_2,\mathsf T$ 下，置 $d_N=n^N$，包括 $d_0=1$。下述过程的 $a,b,s$ 均为非负有限整数，沿用空系统约定。每个有限层的全部原对象具有下表的同一实际坐标对应。
+
+| 原对象 | 所得到的完整量子对象 |
+| --- | --- |
+| $K_N$、凸准备 | 全部 $d_N$ 维密度矩阵及通常凸混合 |
+| $P_N$、非零极射线 | 全部单位秩一投影 $vv^*$、其正倍数；纯态空间 $\mathbb{CP}^{d_N-1}$ |
+| 完整 $C_N^*$、整个 $\mathcal E_N$ | 完整 PSD 迹对偶及全部 $0\preceq E\preceq I_{d_N}$ |
+| 全部有限单位分解 | 全部有限 POVM，包含全部投影测量 |
+| 原读数 | $\Pr(a\mid\rho)=\operatorname{Tr}(E_a\rho)$；纯态确认重叠 $|v^*w|^2$ |
+| 全部有限复合、实际分块 | 通常复 Hilbert 张量积上的全部联合密度矩阵、可分态及纠缠态 |
+| 原置换、单位及效应切片 | 通常因子置换、偏迹，以及任意相关联合态的局部效应切片 |
+| 实线性原全旁观正映射 $F:W_a\to W_b$ | 全部相应矩形 CP 映射、Choi 矩阵及有限 Kraus 表示 |
+| 不增迹、保迹数学映射 | Kraus 完备性不等式、等式；数学分支与数学信道 |
+| 有限数学分支族之和保迹 | 通常有限 CP 仪器、分支复合与结果粗粒化 |
+
+证明。由(168.27)，本推论的假设逐项蕴含167.9的 B、U2、S2、T；原域与原对象一个不变。因此直接应用推论167.9及其证明，取得表中每个结论，包括全部极点而非一个预选纯态子集、全部原效应而非有限测试子集、全部有限原参考而非可分参考。该证明的谱分解、纯态极点与 POVM 部分不需重做；其标准量子字典对应 [Watrous §2.1.2、定义2.34][Q168W2]。给定 $\mathsf T$ 的归一 dyad 此时才被认作原纯态。
+
+为固定矩形过程的方向，采用167.8的“参考在前、输出在后”。将实线性 $F$ 唯一扩张为复线性保 Hermitian 映射，原 $a$ 对 Bell 杯按实际置换排列为 $B_a$，则
+
+$$
+\begin{aligned}
+J(F)&=(\mathrm{id}_{W_a}\otimes F)B_a
+ =\sum_{i,j=0}^{d_a-1}E_{ij}\otimes F(E_{ij}),\\
+F\text{ 原全旁观正}
+&\Longleftrightarrow J(F)\in C_{a+b}
+ \Longleftrightarrow J(F)\succeq0\\
+&\Longleftrightarrow
+F(x)=\sum_{\gamma}K_\gamma xK_\gamma^*,
+\qquad K_\gamma:\mathbb C^{d_a}\to\mathbb C^{d_b}.
+\end{aligned}
+\tag{168.31}
+$$
+
+第一个当且仅当是167.8精确消费的 VII102.7，不要求先把所有高层锥认作 PSD；第二个是本定理的整锥等式；最后一个是167.9消费的有限维矩形 Choi/Kraus 结论，即 [Watrous 定理2.22][Q168W2]，其输出—参考次序以原实际置换转换。非零 $F$ 可取 Kraus 数等于 Choi 秩；零映射可用空和。任意矩阵参考维数的通常完全正性至此才成为这个已得到数学类的等价刻画。
+
+设 $Q_F=\sum_\gamma K_\gamma^*K_\gamma$，则完整迹预算为
+
+$$
+\begin{aligned}
+\operatorname{Tr}_{\rm out}J(F)&=Q_F^{\mathsf T},\\
+u_bF\le u_a
+&\Longleftrightarrow Q_F\preceq I_{d_a}
+ \Longleftrightarrow\operatorname{Tr}_{\rm out}J(F)\preceq I_{d_a},\\
+u_bF=u_a
+&\Longleftrightarrow Q_F=I_{d_a}
+ \Longleftrightarrow\operatorname{Tr}_{\rm out}J(F)=I_{d_a}.
+\end{aligned}
+\tag{168.32}
+$$
+
+这些是167.41的同一公式；保迹部分对应 [Watrous 定理2.26][Q168W2]，不等式部分由相同迹配对证明。只约束 $\operatorname{Tr}J(F)$ 不足以替代完整边缘条件。每个有限族 $(F_a)$ 是数学仪器恰要求其和保迹，即
+
+$$
+\sum_{a,\gamma}K_{a,\gamma}^*K_{a,\gamma}=I,
+\qquad
+E_a=F_a^\dagger(I)=\sum_\gamma K_{a,\gamma}^*K_{a,\gamma}.
+\tag{168.33}
+$$
+
+分支质量为 $\operatorname{Tr}F_a(\rho)=\operatorname{Tr}(E_a\rho)$。原全旁观 TNI 预算由原最大界对 $u_a-u_bF$ 与旁观单位测试，故包括所有相关联合输入。
+
+单位切片就是偏迹；局部效应 $E$ 的剩余未归一态可写为
+
+$$
+(f_E\otimes\mathrm{id})(\rho)
+ =\operatorname{Tr}_{\rm measured}
+ \bigl[(E^{1/2}\otimes I)\rho(E^{1/2}\otimes I)\bigr].
+\tag{168.34}
+$$
+
+这是对余下系统的原线性切片，不选择被测系统自身的特权更新。对原穷尽确认读数
+
+$$
+T_p(x)=\inf\{f(x):f\in\mathcal E_N,\ f(p)=1\},
+\tag{168.35}
+$$
+
+167.9末段的同一接口给 $T_p(x)=\operatorname{Tr}(px)$；故 $p=vv^*,q=ww^*$、单位 $v,w$ 时 $T_p(q)=|v^*w|^2$，并对全部有限凸准备线性延拓。这给全部有限纯态比较，而非另添 Born 入口。∎
+
+### 物理事件、更新、时间与数学极限的边界
+
+**命题 168.5（数学过程菜单不选定物理实现）。** 定理168.2与推论168.4不额外指定事件饱和、特权测量更新、物理时间群或 $\hbar$；它们的有限字稠密性也不提供极限操作的物理实现或正成功质量的极限协议。
+
+证明。定义168.1只要求原锥上的数学正性和给定静态配对，未将每个正映射列为物理事件。按167.10及 VII102.14，另加“全部 CP-TNI 分支及全部有限 CP 仪器均可用”的事件饱和选择，才把推论168.4的完整数学类变成完整可用过程菜单。原锥闭性只保证极限向量或极限映射的数学正性，没有关于装置、可执行极限、误差成本或成功事件的存在量词。
+
+若已经指定一个可用分支 $F_a$，并另采用按已发生结果归一输出的条件化约定，则只对
+
+$$
+p_a=\operatorname{Tr}F_a(\rho)>0
+\quad\text{有}\quad
+\rho\mid a=\frac{F_a(\rho)}{p_a}.
+\tag{168.36}
+$$
+
+零质量结果不定义此条件态。此式及有限仪器的串联质量复用167.10的接口，与 [Watrous §2.3.2][Q168W2]一致。一个 POVM 不唯一指定 $F_a$：取实际基投影 $P_a=e_ae_a^*$，并取交换 $e_0,e_1$ 的酉 $U$，则两族 $P_a\rho P_a$ 与 $UP_a\rho P_aU^*$ 的效果同为 $P_a$、和均保迹，但输入 $P_0$ 在结果零后的状态分别为 $P_0$ 与 $P_1$。故静态字典不选择 Lüders 更新；$E_a^{1/2}\rho E_a^{1/2}$ 是一个数学选择，物理特权须另有更新或不扰动前提。
+
+同一标准层级既容纳恒等时间群，也容纳任意选定 Hermitian $H$ 的酉时间群。若另指定具有实际时间参数的可微酉一参数群 $U_t$，其生成元 $K=\dot U_0$ 反 Hermitian，$U_t=e^{tK}$；另定时间单位和正尺度 $\hbar$ 后，定义 $H=i\hbar K$ 才有
+
+$$
+U_t=e^{-itH/\hbar}.
+\tag{168.37}
+$$
+
+(168.3)中定义矩阵指数的参数只是一组固定无量纲控制常数，没有物理钟的输入。因此不能把该控制计算读成对实际 Hamiltonian、时间标度或 $\hbar$ 的重建。
+
+对原有限字，(168.29)支付的是每个固定字的数学迹预算；对扩大连续字母表的精确有限协议，167.5、167.8及166.12支付其各自严格正的有限系数。这些结论不能互换为“任意极限协议以正成功质量实现目标”。甚至在标准模型中，$S^k$ 的每一步都可逆且不增迹，但其对输入 $P_0$ 的质量为 $\lambda^{2k}\to0$。所以逐字质量严格正并不产生关于所有字列的统一正下界；更不产生无限操作已经发生的物理事件。∎
+
+### 几何含义、前提范围与来源的组合
+
+**命题 168.6（固定控制压缩的几何表述）。** 在完整原域内，两固定酉条件对本章的闭原锥重建恰足以代替167的全部酉条件；此替代不减少完整复载体与全有限复合的输入，不把控制生成视为新发现，也不解决一般三条腿均非满维的 GME 入口。
+
+证明。$\mathsf G_2,\mathsf D_2$ 通过(168.9)—(168.27)给167的 U2；反过来 U2 包含这两个指定酉。因此在其余原条件保留时，两者作为闭锥上的正性条件等价。变化在酉正性入口的索引集合：从全部酉缩到两只明确固定矩阵。原三个门的数量对 $n$ 为常数，矩阵大小及 $G$ 本身依赖 $n$；这不是对独立结构假设数量、信息量或实验成本的最小化。
+
+用中文几何语言表述同一证明：把给定单腿基看成一条有 $n$ 个点的链，$G$ 是固定的一次短程混合，$D$ 只在链端留下一个无理相位。反复走这个相位会在闭包里扫过整圈；紧性使正向重复的闭包还包含反向运动。端点的相位方向经过固定混合后，因步长足够小，可以从共轭作用的收敛对数中取回连续的交换方向。第一个交换子抓住第一条边，再用两次交换子分离第二个点的投影，依次走到链尾；边之间的交换子又连起任意两个点，于是所有酉方向都在闭包里。这里“走到任意方向”指可以任意逼近，并由闭锥接纳极限，不是声称有限离散字能精确画出一个不可数的群。
+
+接下来才接上167的几何：酉只转方向，$S$ 压短一个坐标并改变相对 Schmidt 系数。恢复的连续酉字母与这只衰减器的精确有限组合取得任意可逆相对伸缩。Bell 标尺同时属于原可准备锥与原可测试对偶锥：准备一侧的轨道把全部 PSD 方向送入原锥，测试一侧的轨道排除所有非 PSD 方向；原闭性补进降秩边界。偏迹再把二体形状送回一体，直到这一步之后才把任意局部合同提升到所有相关旁观者。三体种子负责把低层对齐接到全部有限层：一条腿满维使其触及原空间的每个方向，另两条腿保留非乘积相干；166.12的有限递降与接合供应全层级结论，而不是用稠密门列代替那个精确传播证明。
+
+在这幅图里，矩阵锥的边界可以由极限补齐，物理装置的菜单却不会由闭性自动补齐；可准备和可测试的共同标尺决定 Born 配对，却不决定一次测量之后采用哪一种更新，也不决定链上的混合是怎样随物理时间发生的。复数 Hermitian 载体、整个效应区间和所有有限复合规则是这幅图已给的地基，事件饱和、特权更新及时间结构各有自己的额外前提。
+
+准确的未解范围也由接口给出。保留全部二元条件而不要求 $\mathsf T$ 时，已经得到低二层整锥及167.8的自身 Choi、一体全旁观操作，但本证明不从这些前件单独推出所有高层 PSD，也不据此给出一个高层非量子反模型。若给定 GME 向量的三个展平秩均小于 $n$，166.12的满腿前件未满足；本章不把它提升为一般 GME 定理。若删掉原锥闭性，(168.26)不能支付极限正性；若把固定步长或无理相位任意换掉，(168.11)、(168.19)也不再由本证明保证。上述缺失是相应证明接口的边界，不是未经反例证明的公理独立性结论。
+
+来源按每一步的数学作用区分：紧子半群的逆极限、指数与交换子极限及无混叠对数在168.2证明内完整给出；闭矩阵群的无穷小代数与指数关系是 [von Neumann 第二、三部][Q168VN]的成熟结论，原文使用的相对 $GL$ 闭包与本处紧闭酉子群兼容。路径和秩一控制的先例是 [Godsil—Severini 引理1、推论3][Q168GS]及 [Burgarth 等推论4.2][Q168BZ]；其连续参数假设与本章固定字母的区别已在(168.20)—(168.25)之间逐项承担。低二层 Bell 双轨、单衰减器与全有限接合是[第167章][Q168XVI]的原证明；进一步的原切片、自身 Choi 与满腿传播是[XIII163.2、166.12][Q168XIII]及[VII102.6—102.7][Q168VII]。完整有限字典消费167.9，其标准矩形 Choi/Kraus、POVM及仪器对应由 [Watrous 第二章][Q168W2]供应。这里新增的是这些结果在未知原 $C_2$ 的三个固定正映射入口上的综合判据；文献对应不支持全球首创或最小独立公理数主张。
+
+上述原始控制文献为 Chris Godsil、Simone Severini，*Control by quantum dynamics on graphs*，Physical Review A **81**, 052316，DOI [10.1103/PhysRevA.81.052316](https://doi.org/10.1103/PhysRevA.81.052316)，所引公开文本为 [arXiv:0910.5397v3][Q168GS]；Daniel Burgarth、Domenico D'Alessandro、Leslie Hogben、Simone Severini、Michael Young，*Zero forcing, linear and quantum controllability for systems evolving on networks*，DOI [10.1109/TAC.2013.2250075](https://doi.org/10.1109/TAC.2013.2250075)，所引公开文本为 [arXiv:1111.1475v1][Q168BZ]。后者§4的同号、连通、零强迫条件在本处均有明确实现，不以一般不可约性替代。
+
+闭矩阵群原文为 J. von Neumann，*Über die analytischen Eigenschaften von Gruppen linearer Transformationen und ihrer Darstellungen*，Mathematische Zeitschrift **30**, 3–42，DOI [10.1007/BF01187749](https://doi.org/10.1007/BF01187749)，[Göttingen 原文][Q168VN]第二部§§1—4、第三部§§2—4，印刷页15—24。量子字典的标准文献为 John Watrous，*The Theory of Quantum Information*，Cambridge University Press，DOI [10.1017/9781316848142](https://doi.org/10.1017/9781316848142)，[作者公开第二章][Q168W2]的§2.1.2、定理2.22、定理2.26、定义2.34及§2.3.2；各自仅供应已在对应公式中列出的标准结论。∎
+
+[Q168XVI]: https://github.com/the-omega-institute/trureturing/blob/649238845556f2cffa315c3a8f7baeb458154f2b/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md
+[Q168XIII]: https://github.com/the-omega-institute/trureturing/blob/00427ae2ba9c9e3f6c37f2e5496b9127b6fbc6c0/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md
+[Q168VII]: https://github.com/the-omega-institute/trureturing/blob/657a8ba435bf2cae463e935d957d8038b69be8a3/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+[Q168GS]: https://arxiv.org/abs/0910.5397v3
+[Q168BZ]: https://arxiv.org/abs/1111.1475v1
+[Q168VN]: https://gdz.sub.uni-goettingen.de/download/pdf/PPN266833020_0030/LOG_0005.pdf
+[Q168W2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
+
+## 追加锚（本行以下为增补区）
+
+## 169. 两个固定二体映射、Fourier 相位与完整有限量子重建
+
+**定义 169.1（与167.1完全相同的原结构域）。** 固定整数 $n\ge2$，以实向量空间
+
+$$
+V=\operatorname{Herm}_n(\mathbb C),\qquad
+W_N=V^{\otimes_{\mathbb R}N}
+\cong\operatorname{Herm}_{n^N}(\mathbb C),\qquad N\ge1
+$$
+
+为载体。此识别是给定的实际 Kronecker 张量坐标。对每个有限 $N$，给定闭、尖、生成凸锥 $C_N\subset W_N$；单位
+
+$$
+u_N=\operatorname{Tr}=u_1^{\otimes N}
+$$
+
+在 $C_N\setminus\{0\}$ 上严格正。配对始终为实际迹配对
+
+$$
+\langle y,x\rangle=\operatorname{Tr}(yx).
+$$
+
+用此非退化实配对表示完整自身正对偶，并始终取
+
+$$
+\begin{aligned}
+C_N^{\ast}&=\{y\in W_N:\operatorname{Tr}(yx)\ge0\ \text{对所有 }x\in C_N\},\\
+K_N&=\{x\in C_N:u_N(x)=1\},\qquad
+P_N=\operatorname{ext}K_N,\\
+\mathcal E_N&=\{y\in C_N^{\ast}:I_{n^N}-y\in C_N^{\ast}\}.
+\end{aligned}
+$$
+
+这里分别使用整个归一基、全部原极点、完整自身正对偶及整个 proper 效应区间。有限菜单是全部有限单位分解：$y_a\in C_N^{\ast}$、$\sum_a y_a=I_{n^N}$；凸准备和读数使用原线性结构及上述配对。单位的矩阵代表为 $I_{n^N}$，此时并不要求它属于 $C_N$。
+
+对所有有限正整数 $a,b$，在每个实际分块中要求
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+\subseteq C_a\otimes_{\max}C_b.
+$$
+
+最小锥是所有正简单张量的闭凸生成锥；最大锥是所有 $f\otimes g$ 的非负半空间之交，其中 $f\in C_a^{\ast}$、$g\in C_b^{\ast}$ 遍历完整原对偶。所有实际位置置换及其逆均正；不连续分块由这些置换运输；重括号使用同一实际空间和同一联合锥的规范识别。保留
+
+$$
+(f\otimes g)(x\otimes y)=f(x)g(y),\qquad
+u_{a+b}=u_a\otimes u_b,
+$$
+
+及空系统 $W_0=\mathbb R$、$C_0=\mathbb R_+$、$u_0=\mathrm{id}$。因此也保留空旁观者和标量切片。
+
+这正是[167.1][Q169167]的整个原域；没有增加任何低层 PSD 等式、原锥自对偶性、转置或复共轭正性，以及高层矩阵操作正性。复载体、指定维数与全部有限复合是输入。记 $\operatorname{PSD}_d=\operatorname{Herm}_d^+(\mathbb C)$，并区分两种作用：
+
+$$
+\operatorname{Ad}_A(x)=AxA^{\ast},\qquad
+\operatorname{Int}_A(X)=AXA^{-1}.
+$$
+
+前者是 Hermitian 载体上的合同，后者是在矩阵空间上的相似作用。以下 $\Gamma_A=\operatorname{Ad}_{A\otimes I_n}$ 只表示原二体第一因子上的合同。
+
+**定义 169.2（两个固定正性包含及不变的种子）。** 在原单腿基 $e_0,\ldots,e_{n-1}$ 中，置
+
+$$
+\omega=e^{2\pi i/n},\qquad F_{jk}=n^{-1/2}\omega^{jk},
+\qquad 0\le j,k<n,\qquad a=2^{1/(n+1)}.
+$$
+
+$F$ 是标准酉 Fourier 矩阵。固定任意一个 $0<\lambda<1$，例如 $\lambda=1/2$，并定义
+
+$$
+\begin{aligned}
+G&=F\operatorname{diag}
+\bigl(e^{2\pi ia},e^{2\pi ia^2},\ldots,e^{2\pi ia^n}\bigr)F^{\ast},\\
+R&=\operatorname{diag}(i\lambda,1,\ldots,1),\\
+\Omega&=\sum_{j=0}^{n-1}e_j\otimes e_j,\qquad B=\Omega\Omega^{\ast},
+\qquad \beta(x)=\operatorname{Tr}(Bx).
+\end{aligned}
+$$
+
+使用以下条件：
+
+- **B：** $B\in C_2\cap C_2^{\ast}$，第二个成员关系量化整个原 $C_2$。
+- **G2：** $\Gamma_G(C_2)\subseteq C_2$。
+- **R2：** $\Gamma_R(C_2)\subseteq C_2$。
+- **T：** 存在非零实际向量 $\psi\in(\mathbb C^n)^{\otimes3}$，使
+
+$$
+\psi\psi^{\ast}\in C_3,\qquad
+\min_{j=1,2,3}r_j(\psi)\ge2,\qquad
+\max_{j=1,2,3}r_j(\psi)=n.
+$$
+
+$r_j$ 是第 $j$ 腿对另外两腿的复矩阵展平秩。T 保持[167.2][Q169167]及[XIII166.2][Q169XIII]的完整实际三体 dyad 条件；不要求它预先为原极点。G2、R2 各是一个固定映射对整个未知二体锥的包含。它们不输入逆、环面、全部酉或任何 $N\ge3$ 的映射正性。
+
+**定理 169.3（两个固定映射的同域充要判据）。** 在定义169.1的完整原域，对每个固定 $n\ge2$ 及每个固定 $0<\lambda<1$：
+
+$$
+\boxed{
+\mathrm B+\mathrm{G2}+\mathrm{R2}
+\quad\Longleftrightarrow\quad
+C_1=\operatorname{PSD}_n,\quad C_2=\operatorname{PSD}_{n^2}.
+}
+$$
+
+在同一个原域中还有
+
+$$
+\boxed{
+\mathrm B+\mathrm{G2}+\mathrm{R2}+\mathrm T
+\quad\Longleftrightarrow\quad
+C_N=\operatorname{PSD}_{n^N}\quad\text{对每个有限 }N\ge1.
+}
+$$
+
+其中仅 G2、R2 是矩阵正性包含的新增入口；矩阵随 $n$ 改变。正向证明先在原 $C_2$ 上取得所需连续操作的数学正性，随后直接消费167的低层判据，低层识别后才使用167.8和166.12。
+
+**证明。** 先证明两个包含恢复167所需的全部第一腿酉正性。
+
+第一步是固定 $G$ 的正向幂闭包。多项式 $t^{n+1}-2$ 在素数二处满足 Eisenstein 判据：所有非首项系数被二整除，常数项不被四整除。因此它在 $\mathbb Q[t]$ 上不可约。这里使用[Conrad，定理4.1及例1.6][Q169E]，参数为次数 $n+1$、素数二。于是
+
+$$
+1,a,a^2,\ldots,a^n
+\quad\text{在 }\mathbb Q\text{ 上线性无关}.
+$$
+
+特别地，对 $\alpha=(a,a^2,\ldots,a^n)$ 及每个非零 $m\in\mathbb Z^n$，有 $m\cdot\alpha\notin\mathbb Z$。这只是有理线性无关性；这些数都是代数数。
+
+为明确只需正向幂，令 $\zeta_m=e^{2\pi i m\cdot\alpha}\ne1$。几何级数给
+
+$$
+\frac1L\sum_{k=0}^{L-1}e^{2\pi ikm\cdot\alpha}
+=\frac{1-\zeta_m^L}{L(1-\zeta_m)}
+\longrightarrow0.
+$$
+
+[Tao，命题1的 Weyl 判据及练习5的线性情形][Q169Tao]，取环面维数 $n$、序列 $k\alpha$，说明这条正整数序列在 $\mathbb R^n/\mathbb Z^n$ 上等分布，故稠密。后一个推论也可直接看出：任一非空开集支持一个积分严格正的非负连续函数，其沿序列的平均趋向该积分，故序列必进入此开集。因此
+
+$$
+\overline{\{G^k:k\ge0\}}
+=\mathbb T_F,\qquad
+\mathbb T_F=
+\left\{F\operatorname{diag}(e^{i\theta_0},\ldots,e^{i\theta_{n-1}})F^{\ast}:
+\theta_j\in\mathbb R\right\}.
+$$
+
+闭包在通常矩阵拓扑中取。这里没有加入负幂。
+
+第二步在调用群之前取得逆向正性。定义
+
+$$
+\mathscr M=\{A\in GL_n(\mathbb C):\Gamma_A(C_2)\subseteq C_2\}.
+$$
+
+$\mathscr M$ 含单位且对乘法封闭。它在 $GL_n(\mathbb C)$ 的相对拓扑中闭：若 $A_\ell\to A$ 且 $A$ 可逆，则对每个 $x\in C_2$，
+
+$$
+\Gamma_{A_\ell}(x)\longrightarrow\Gamma_A(x),
+$$
+
+原锥的闭性给 $\Gamma_A(x)\in C_2$。此外，对每个非零复数 $c$，
+
+$$
+\Gamma_{cA}=|c|^2\Gamma_A,\qquad
+cA\in\mathscr M\ \Longleftrightarrow\ A\in\mathscr M,
+$$
+
+因为正锥允许乘除严格正的实数。这一等价仅关于锥成员关系。
+
+G2、正向复合和上一步闭包给 $\mathbb T_F\subseteq\mathscr M$。环面自身含所有逆，故特别有 $G^{-1}\in\mathscr M$。取
+
+$$
+\begin{aligned}
+P&=F\operatorname{diag}(1,\omega^{-1},\ldots,\omega^{-(n-1)})F^{\ast},\\
+s&=n^{-1/2}\sum_{j=0}^{n-1}e_j,\qquad Q=ss^{\ast}.
+\end{aligned}
+$$
+
+Fourier 求和给 $Pe_j=e_{j+1\bmod n}$，且
+
+$$
+P,P^{-1}\in\mathbb T_F,\qquad
+e^{itQ}=F\operatorname{diag}(e^{it},1,\ldots,1)F^{\ast}
+\in\mathbb T_F\quad(t\in\mathbb R).
+$$
+
+令 $z=i\lambda$、$R_j=P^jRP^{-j}$。由已得的 $P$、$P^{-1}$ 正性和 R2，各 $R_j\in\mathscr M$。$R_j$ 仅在第 $j$ 坐标上为 $z$，故
+
+$$
+\prod_{j=0}^{n-1}R_j=zI_n,\qquad
+\prod_{j=1}^{n-1}R_j=zR^{-1}.
+$$
+
+第二式左边的每个因子已经具有原二体正性。因此
+
+$$
+\lambda^2\Gamma_{R^{-1}}(C_2)\subseteq C_2,
+$$
+
+除以 $\lambda^2>0$ 得 $R^{-1}\in\mathscr M$。此处没有把相位标量、逆操作或其概率当作输入。
+
+现在才令
+
+$$
+\mathcal H=\overline{\langle G,R\rangle}^{\,GL_n(\mathbb C)},
+$$
+
+其中尖括号表示允许正负整数幂的矩阵群。乘法与求逆在 $GL_n(\mathbb C)$ 中连续，故 $\mathcal H$ 是相对闭子群；此前取得的四个字母 $G,G^{-1},R,R^{-1}$ 的正性和 $\mathscr M$ 的相对闭性给
+
+$$
+\mathcal H\subseteq\mathscr M,\qquad
+\Gamma_A(C_2)=C_2\quad(A\in\mathcal H).
+$$
+
+等号还使用 $A^{-1}\in\mathcal H$。这一步没有在所有矩阵的闭包中把奇异极限当作群元素。
+
+第三步使用实 Lie 代数，始终保持相似作用与合同的区别。按[Hall，定义2.2、定义3.13、命题3.15及定理3.16][Q169Hall]，对上述相对闭矩阵群定义
+
+$$
+\mathfrak h=\{X\in M_n(\mathbb C):e^{tX}\in\mathcal H
+\ \text{对所有实数 }t\}.
+$$
+
+这里矩阵空间作为实向量空间使用。所需的一般性质可以直接在这个定义下核清：实数倍由参数重标定给出；[Hall，定理3.9][Q169Hall]的矩阵 Lie 乘积公式给
+
+$$
+e^{t(X+Y)}
+=\lim_{m\to\infty}
+\bigl(e^{tX/m}e^{tY/m}\bigr)^m\in\mathcal H.
+$$
+
+极限是可逆指数矩阵，所以相对闭性足够，完全不要求 $\mathcal H$ 紧。指数的连续性同样说明 $\mathfrak h$ 闭。对 $A\in\mathcal H$，
+
+$$
+e^{t\operatorname{Int}_A(X)}
+=Ae^{tX}A^{-1}\in\mathcal H,
+$$
+
+故 $\operatorname{Int}_A(\mathfrak h)=\mathfrak h$。最后，对 $X,Y\in\mathfrak h$，实线性和闭性使
+
+$$
+\lim_{t\to0}\frac{e^{tX}Ye^{-tX}-Y}{t}
+=XY-YX=[X,Y]
+$$
+
+仍在 $\mathfrak h$。这些是所用的全部一般 Lie 性质；指数属于群由 $\mathfrak h$ 的定义保证，无须额外假定非紧群的全局指数满射，也无须调用闭子群的流形定理。尤其没有假定 $\mathfrak h$ 对乘以 $i$ 封闭。
+
+由 $\mathbb T_F\subseteq\mathcal H$ 和全部实参数的 $e^{itQ}\in\mathbb T_F$，得到 $iQ\in\mathfrak h$。令
+
+$$
+u=(n-1)^{-1/2}\sum_{j=1}^{n-1}e_j,\quad
+P_0=e_0e_0^{\ast},\quad P_u=uu^{\ast},\quad
+E=e_0u^{\ast},\quad D=ue_0^{\ast},\quad c=\frac{\sqrt{n-1}}n.
+$$
+
+因为 $e_0$ 与 $u$ 正交，
+
+$$
+iQ=\frac{i}{n}P_0+c(iE+iD)+\frac{i(n-1)}nP_u.
+$$
+
+在实矩阵空间上取 $\mathcal T=\operatorname{Int}_R$。这是相似作用 $X\mapsto RXR^{-1}$，不是 $X\mapsto RXR^{\ast}$。它保持 $\mathfrak h$，且直接计算给
+
+$$
+\begin{aligned}
+\mathcal T(iP_0)&=iP_0,&
+\mathcal T(iP_u)&=iP_u,\\
+\mathcal T(E)&=\lambda\,iE,&
+\mathcal T(iE)&=-\lambda E,\\
+\mathcal T(D)&=-\lambda^{-1}iD,&
+\mathcal T(iD)&=\lambda^{-1}D.
+\end{aligned}
+$$
+
+因此以下三个互素的实多项式分别消去相应实块：
+
+$$
+f_0(t)=t-1,\qquad
+f_E(t)=t^2+\lambda^2,\qquad
+f_D(t)=t^2+\lambda^{-2}.
+$$
+
+$f_0$ 与两个二次式互素，因为二次式在 $t=1$ 处非零；两个二次式互素，因为它们的差是非零实常数。由[Conrad，实多项式中国剩余定理4.18][Q169CRT]，存在 $p_E,p_D\in\mathbb R[t]$，使
+
+$$
+\begin{array}{c|ccc}
+&\bmod f_0&\bmod f_E&\bmod f_D\\ \hline
+p_E&0&1&0\\
+p_D&0&0&1
+\end{array}
+$$
+
+成立。具体的存在理由是实 Euclidean 算法给
+$b_E f_0f_D+d_E f_E=1$，取 $p_E=b_Ef_0f_D$；交换 $E,D$ 同理。因而这里所有系数均为实数，没有进行不受约束的复值插值。
+
+将这些实多项式作用于已在 $\mathfrak h$ 中的 $iQ$，有
+
+$$
+p_E(\mathcal T)(iQ)=c\,iE,\qquad
+p_D(\mathcal T)(iQ)=c\,iD.
+$$
+
+这些等式可以逐块核对：对角块被 $f_0$ 消去，$E,iE$ 的实平面被 $f_E$ 消去，$D,iD$ 的实平面被 $f_D$ 消去。每个 $p(\mathcal T)(iQ)$ 都是 $\mathcal T^k(iQ)$ 的有限实线性组合，故属于 $\mathfrak h$。再对两式各作用一次 $\mathcal T$，分别得到 $-c\lambda E$ 和 $c\lambda^{-1}D$。因为 $c,\lambda$ 非零，实线性遂给出
+
+$$
+E,\ iE,\ D,\ iD\in\mathfrak h.
+$$
+
+这独立取得了每个所需实方向和虚方向。
+
+第四步恢复全部酉方向。普通矩阵乘法给 $ED=P_0$、$DE=P_u$，因此正确的交换子为
+
+$$
+[iE,D]=i(ED-DE)=i(P_0-P_u)=:C\in\mathfrak h.
+$$
+
+从 $iQ$ 扣除已得交叉项，置
+
+$$
+L=iQ-c(iE+iD)
+=\frac{i}{n}P_0+\frac{i(n-1)}nP_u.
+$$
+
+于是仅用实线性组合便有
+
+$$
+iP_0=L+\frac{n-1}{n}C\in\mathfrak h.
+$$
+
+令 $P_j=e_je_j^{\ast}$。相似作用的已得不变性给
+
+$$
+iP_j=\operatorname{Int}_{P^j}(iP_0)\in\mathfrak h
+\qquad(0\le j<n).
+$$
+
+对于 $j\ge1$，记 $E_{jk}=e_je_k^{\ast}$，直接计算
+
+$$
+\begin{aligned}
+[iP_j,E]&=-\frac{iE_{0j}}{\sqrt{n-1}},&
+[iP_j,iE]&=\frac{E_{0j}}{\sqrt{n-1}},\\
+[iP_j,D]&=\frac{iE_{j0}}{\sqrt{n-1}},&
+[iP_j,iD]&=-\frac{E_{j0}}{\sqrt{n-1}}.
+\end{aligned}
+$$
+
+所以这四类矩阵单位方向全部在 $\mathfrak h$ 中。对不同的 $j,k\ge1$，再用
+
+$$
+[E_{j0},E_{0k}]=E_{jk},\qquad
+[iE_{j0},E_{0k}]=iE_{jk}
+$$
+
+得到其余全部非对角方向。故斜 Hermitian 矩阵的下列实基包含于 $\mathfrak h$：
+
+$$
+\{iP_j:0\le j<n\}
+\ \cup\
+\{E_{jk}-E_{kj},\ iE_{jk}+iE_{kj}:0\le j<k<n\}.
+$$
+
+这证明 $\mathfrak u(n)\subseteq\mathfrak h$。$n=2$ 时 $u=e_1$，前面的四个交换子已经给全部非对角方向，无须使用存在不同 $j,k\ge1$ 的最后一步。
+
+任意 $U\in U(n)$ 的通常酉谱分解可写成
+
+$$
+U=V_0\operatorname{diag}(e^{i\theta_0},\ldots,e^{i\theta_{n-1}})V_0^{\ast}
+=e^X,\quad
+X=V_0\operatorname{diag}(i\theta_0,\ldots,i\theta_{n-1})V_0^{\ast}
+\in\mathfrak u(n).
+$$
+
+这里的谱分解仅是矩阵恒等式，[Watrous，定理1.3及推论1.4][Q169W1]供应该线性代数事实，并没有预设 $V_0$ 对原锥正。由 $\mathfrak h$ 的定义，$U=e^X\in\mathcal H$。于是
+
+$$
+\Gamma_U(C_2)=C_2\qquad(U\in U(n)).
+$$
+
+第五步直接回接已发表的低层定理。原正向四字给
+
+$$
+S=R^4=\operatorname{diag}(\lambda^4,1,\ldots,1),\qquad
+\Gamma_S(C_2)\subseteq C_2.
+$$
+
+取167中的衰减参数为 $\lambda_{\mathrm{167}}=\lambda^4\in(0,1)$，所得恰为该章 U2、S2。B 未变，定义169.1也正是167.1。因此[定理167.3第一项][Q169167]直接给
+
+$$
+C_1=\operatorname{PSD}_n,\qquad C_2=\operatorname{PSD}_{n^2}.
+$$
+
+这一调用消费167.4的有限相对伸缩与SVD供应、167.6的 Bell 态轨道和原对偶轨道，以及167.7的原偏迹恢复；不重复这些证明。两轨的输出分别为 $\operatorname{PSD}_{n^2}\subseteq C_2$ 与 $\operatorname{PSD}_{n^2}\subseteq C_2^{\ast}$，并非事先的原锥自对偶假设。
+
+第六步只在现在取得全原旁观接口。低二层等式使[命题167.8][Q169167]的全部前件满足：同一实际坐标、原全有限 min/max 分块、全原效应、置换及其正逆，和已经识别的一、二层 PSD 锥。它按[XIII163.2][Q169XIII]及[VII102.6—102.7][Q169VII]给出每个一体矩阵合同在任意有限原相关旁观者上的正性。若 $H$ 为任意一体矩阵，取 $s_H=\max\{1,\|H\|_{\mathrm{op}}\}$，其合同缩放 $\operatorname{Ad}_{H/s_H}$ 的所有这些提升不增迹。
+
+同一命题还给每个实线性 $\Phi:W_p\to W_q$ 的原自身 Choi 当且仅当，$p,q\ge0$ 为整数。按“参考在前、输出在后”的次序，令 $B_p$ 为 $p$ 对 $B$ 经原置换排列的乘积，$B_0=1$，则
+
+$$
+J(\Phi)=(\mathrm{id}_{W_p}\otimes\Phi)B_p,\qquad
+J(\Phi)\in C_{p+q}
+\ \Longleftrightarrow\
+(\mathrm{id}_{W_s}\otimes\Phi)C_{s+p}\subseteq C_{s+q}
+\quad\text{对所有有限 }s\ge0.
+$$
+
+空输入或空输出由标量准备或效应切片解释。此接口含整个相关联合锥，尚不使用任何 $C_N$、$N\ge3$ 的 PSD 结论。其精确原蛇式没有剩余转置；在归一杯 $B/n$ 与 proper 帽 $\beta/n$ 下，每对蛇式乘 $n^{-2}$，该系数仅在数学正性中可消去。
+
+最后加入 T，按精确的[XIII定理166.12，条件1蕴含条件5][Q169XIII]传播。前件对应如下：
+
+| 166.12的前件 | 本章已给或已得的对象 |
+| --- | --- |
+| 166.1的固定复 Hermitian 单体及全部实际张量载体 | 定义169.1，同一个 $n$ 与实际 Kronecker 坐标 |
+| 各层闭、尖、生成及严格正乘法迹 | 定义169.1的每个有限 $N$，没有截断层级 |
+| 整个基、全部极点、完整自身对偶、整个 proper 区间及全部有限菜单 | 定义169.1逐项保留 |
+| 每个实际 min/max 分块、正置换与正逆、规范重括号、配对、单位及空系统 | 定义169.1逐项保留 |
+| 同坐标中的低二层 PSD 等式 | 第五步 |
+| 原全旁观滤波、切片和自身 Choi 供应 | 第六步，167.8及其163.2、VII接口 |
+| 166.2的一腿满维 GME 实际原 dyad | 定义169.2的同一个 T |
+
+因此得到每个有限 $N$ 的 $C_N=\operatorname{PSD}_{n^N}$。166.12的严格递减支撑、控制准备、九腿收缩及其有限严格正预算按该定理消费；此处不重证其全有限尾部，也不把一般全腿非满维 GME 替代其前件。T 不需要预先是原极点。
+
+反向先看低层：若给定实际 $C_1,C_2$ 为上述 PSD 锥，则通常 PSD 的迹自对偶性给 B，任意矩阵合同保持 PSD 给 G2、R2，对每个固定 $\lambda$ 都成立。
+
+若全部有限原锥均为 PSD，前述低层反向仍适用。另取
+
+$$
+g_n=\sum_{j=0}^{n-1}e_j\otimes e_j\otimes e_j.
+$$
+
+其 dyad 属于 $C_3$；对任一腿展平，另两腿的向量 $e_j\otimes e_j$ 两两正交，故三个秩都是 $n$，满足 T。标准层级具有完整原域：PSD 闭、尖、生成，非零 PSD 的迹严格正；正简单张量给最小界，两个正对偶矩阵的张量为 PSD 给最大界；实际置换由酉合同实现，逆同样正。原配对、迹、全部基与效应菜单以及空系统均与定义169.1一致。这完成两个等价。∎
+
+**命题 169.4（原始 $G,R$ 有限字的 proper 预算）。** 在尚未识别低层 PSD 时，定义169.1及 B、G2、R2 已使 Bell 效应和每个原始正向有限字具有原二体 proper 预算。该断言使用原 $K_2$ 和原 $R$，不以事后的 $R^4$ 预算替代。
+
+**证明。** [167.5][Q169167]的原基紧性论证只用闭性、生成性与严格正单位，故适用于此处。具体地，$K_2$ 闭且非空；若其中 $x_\ell$ 范数无界，归一后的单位球面子列趋向非零 $y\in C_2$，但
+$u_2(y)=\lim1/\|x_\ell\|=0$，与严格正迹矛盾。因此 $K_2$ 紧。
+
+$B/n\in K_2$ 且 $\beta$ 在原锥上非负，所以
+
+$$
+M_B=\max_{x\in K_2}\beta(x)\ge\beta(B/n)=n>0,\qquad
+0\le\frac{\beta(z)}{M_B}\le u_2(z)\quad(z\in C_2).
+$$
+
+于是 $\beta/M_B$ 和它的补效应都属于原 proper 菜单。对任意 $z\in C_{2+b}$，[VII102.6][Q169VII]的整锥切片和原最大界还给
+
+$$
+((\beta/M_B)\otimes\mathrm{id})z\in C_b,\qquad
+0\le u_b\bigl[((\beta/M_B)\otimes\mathrm{id})z\bigr]
+\le u_{2+b}(z).
+$$
+
+这项效应切片结论本来就量化全部原相关输入，不把二体映射正性提前提升到高层。
+
+对于原始复衰减器，R2、可逆性、严格正迹及紧性给
+
+$$
+\begin{aligned}
+0<M_R&=\max_{x\in K_2}u_2(\Gamma_Rx)<\infty,\\
+M_R&\ge u_2(\Gamma_R(B/n))
+=\frac{\lambda^2+n-1}{n}>0.
+\end{aligned}
+$$
+
+令 $\alpha_R=\min\{1,M_R^{-1}\}>0$，则
+
+$$
+\alpha_R\Gamma_R:C_2\longrightarrow C_2,\qquad
+u_2\alpha_R\Gamma_R\le u_2.
+$$
+
+它是 $\operatorname{Ad}_{\sqrt{\alpha_R}R\otimes I_n}$。$G$ 酉，故 $\Gamma_G$ 在整个矩阵空间保迹；G2 给其原二体正性。因此对任何字母取自 $\{G,R\}$ 的有限字 $W$，若含 $k$ 个 $R$，逐次复合给
+
+$$
+\alpha_R^k\Gamma_W:C_2\longrightarrow C_2,\qquad
+u_2\alpha_R^k\Gamma_W\le u_2.
+$$
+
+每个字均可逆；对归一输入 $x\in K_2$，这项输出非零，质量
+
+$$
+0<\alpha_R^k u_2(\Gamma_Wx)\le1
+$$
+
+是保留全部缩放后的数学分支质量。每个字也可独立用
+
+$$
+M_W=\max_{x\in K_2}u_2(\Gamma_Wx)\in(0,\infty)
+$$
+
+取得整体预算 $\min\{1,M_W^{-1}\}\Gamma_W$。这些是逐字预算，不是字长无关的界。
+
+在定理169.3识别低层之后，才可用通常 PSD 谱范数读出 $M_B=n$、$M_R=1$；后一等式用 $R^{\ast}R$ 的最大本征值为一且 $n\ge2$。识别之前不以 $R^{\ast}R\preceq I$ 对未知 $C_2$ 预付这一结论。
+
+同理，定理证明中 $\prod_{j=1}^{n-1}R_j=i\lambda R^{-1}$ 的合同携带系数 $\lambda^2$。若再给各因子 proper 缩放，还须乘全部缩放系数。消去这些正系数只能取得锥成员关系，不能保留同一分支概率或把该分支变成确定事件。∎
+
+**推论 169.5（完整有限量子字典）。** 在 B、G2、R2、T 下，令 $D_N=n^N$。同一实际坐标中的全部原静态数据和原全旁观数学过程具有如下对应：
+
+| 完整原对象 | 确定的量子表达 |
+| --- | --- |
+| 整个 $K_N$、凸准备 | 全部 $\rho\succeq0$、$\operatorname{Tr}\rho=1$，凸随机化为密度矩阵混合 |
+| 全部 $P_N$、非零极射线 | 全部单位秩一投影 $vv^{\ast}$、其正倍数；纯态空间为 $\mathbb{CP}^{D_N-1}$ |
+| 完整自身 $C_N^{\ast}$ | 同一迹配对下的整个 $\operatorname{PSD}_{D_N}$ |
+| 整个 $\mathcal E_N$ | 全部 $0\preceq E\preceq I_{D_N}$ |
+| 全部有限单位分解 | 全部有限 POVM：$E_a\succeq0$、$\sum_aE_a=I$，含全部投影菜单 |
+| 所有原有限实际分块及复合 | 通常复 Hilbert 张量积上的全部联合密度矩阵 |
+| 原单位切片和位置置换 | 对全部相关联合态的通常偏迹与因子置换 |
+| 每个原全旁观正 $\Phi:W_p\to W_q$ | 全部矩形 CP 映射及有限 Choi/Kraus 表示 |
+| 逐输入不增迹、保迹 | 完整 Kraus 不等式、等式，分别为数学分支、数学信道 |
+
+**证明。** 定理169.3已给全部整锥等式，且其证明已经支付167.9的 B、U2、S2、T 前件。因此此表是[推论167.9][Q169167]在同一载体、同一完整菜单下的直接应用。以下写明概率及矩形过程的精确参数对应。
+
+给定原线性配对使每个归一输入及有限菜单具有
+
+$$
+p(a\mid\rho)=\operatorname{Tr}(E_a\rho),\qquad
+\sum_a p(a\mid\rho)=1.
+$$
+
+全部极点是单位秩一投影，单位向量模去相位给上述射影空间；所有密度矩阵是其有限凸混合。其通常来源是[Watrous，第一章谱分解][Q169W1]及[第二章§2.1.2、定义2.34][Q169W2]，在此只用于已识别的整锥。Born 形式由原配对和完整效应区间给出。
+
+对 $x\in C_N$，若记原穷尽确认读数为
+
+$$
+T_p(x)=\inf\{\operatorname{Tr}(Ex):0\preceq E\preceq I,\
+\operatorname{Tr}(Ep)=1\},
+$$
+
+则对单位秩一 $p=vv^{\ast}$，确认条件给 $Ev=v$，故 $E\succeq p$，而 $p$ 自身是可用 proper 确认效应。因此
+
+$$
+T_p(x)=\operatorname{Tr}(px),\qquad
+T_{vv^{\ast}}(ww^{\ast})=|v^{\ast}w|^2.
+$$
+
+这也确定任意有限凸准备的相应线性读数。原复合保留通常张量坐标，整锥等式进一步取得所有联合态，既含乘积态的凸包，也含其外的纠缠态；例如 $B/n$ 的 Schmidt 秩为 $n$。任意分块的边缘是偏迹，局部效应切片给余下未归一态，其迹为该结果的质量。
+
+对于过程，$p,q,s$ 可为任意非负有限整数。实线性 $\Phi:W_p\to W_q$ 使用唯一的复线性保 Hermitian 扩张来书写矩阵单位。定理169.3证明中的原自身参考给
+
+$$
+J(\Phi)=\sum_{j,k=0}^{D_p-1}E_{jk}\otimes\Phi(E_{jk}),
+\qquad
+\Phi\text{ 原全旁观正}\ \Longleftrightarrow\
+J(\Phi)\succeq0.
+$$
+
+[Watrous，定理2.22][Q169W2]的次序是输出—参考；交换两个实际因子后，取输入维数 $D_p$、输出维数 $D_q$，恰给
+
+$$
+J(\Phi)\succeq0
+\ \Longleftrightarrow\
+\Phi(x)=\sum_\mu K_\mu xK_\mu^{\ast},\qquad
+K_\mu:\mathbb C^{D_p}\longrightarrow\mathbb C^{D_q}.
+$$
+
+非零映射可取 Kraus 数为 $\operatorname{rank}J(\Phi)$；零映射可取空族。该表达也说明对任意有限矩阵参考维数的通常完全正性，至此与原自身层级的全旁观正性等价；任意外来参考并非初始假设。
+
+令 $Q_\Phi=\sum_\mu K_\mu^{\ast}K_\mu$。迹循环给
+
+$$
+\operatorname{Tr}\Phi(x)=\operatorname{Tr}(Q_\Phi x),\qquad
+\operatorname{Tr}_{\mathrm{out}}J(\Phi)=Q_\Phi^{\mathsf T}.
+$$
+
+逐输入测试整个 PSD 锥，遂有
+
+$$
+\begin{aligned}
+u_q\Phi\le u_p
+&\Longleftrightarrow Q_\Phi\preceq I_{D_p}
+\Longleftrightarrow
+\operatorname{Tr}_{\mathrm{out}}J(\Phi)\preceq I_{D_p},\\
+u_q\Phi=u_p
+&\Longleftrightarrow Q_\Phi=I_{D_p}
+\Longleftrightarrow
+\operatorname{Tr}_{\mathrm{out}}J(\Phi)=I_{D_p}.
+\end{aligned}
+$$
+
+等式与[Watrous，定理2.26][Q169W2]一致；不等式由同一迹恒等式得到。这里的转置只用于已识别的通常 PSD 序，不是一个原正性入口。单个总量 $\operatorname{Tr}J(\Phi)$ 不能替代这项完整边缘约束。把正泛函 $u_p-u_q\Phi$ 与旁观单位相乘，再用原最大界，给所有原相关旁观者的同一不增迹预算。
+
+一个有限族 $(\Phi_\ell)$ 是数学仪器，当且仅当各项 CP 且
+
+$$
+\sum_{\ell,\mu}K_{\ell,\mu}^{\ast}K_{\ell,\mu}=I_{D_p}.
+$$
+
+其效果为 $E_\ell=\Phi_\ell^\dagger(I_{D_q})$，即相应 Kraus 平方和。矩形 Kraus 的乘积及标签求和分别给顺序复合和粗粒化。任意非零 CP 映射还可缩放为数学 CP-TNI：
+
+$$
+t\Phi,\qquad t=\min\{1,\|Q_\Phi\|_{\mathrm{op}}^{-1}\}>0.
+$$
+
+这些范数预算均是在整锥识别后使用。∎
+
+**命题 169.6（事件、条件更新与时间的附加选择）。** 定理169.3确定完整静态层级及推论169.5的数学过程类。若另选[VII102.14][Q169VII]的事件饱和菜单，全部数学 CP-TNI 分支和全部有限数学仪器才具有该菜单中的物理事件解释。静态效果本身不唯一确定更新，定理也不选出物理钟、Hamiltonian 或 $\hbar$。
+
+**证明。** 对已给定的可用分支 $\Phi_\ell$ 及输入 $\rho$，未归一输出的质量为
+
+$$
+p_\ell=\operatorname{Tr}\Phi_\ell(\rho)
+=\operatorname{Tr}(E_\ell\rho).
+$$
+
+若另以归一输出解释已发生结果后的条件态，则仅在 $p_\ell>0$ 时定义
+
+$$
+\rho\mid\ell=\frac{\Phi_\ell(\rho)}{p_\ell}.
+$$
+
+零质量结果不定义该除法。完整仪器给 $\sum_\ell p_\ell=1$；有限序列的联合质量是相应分支复合后输出的迹。这是[Watrous，§2.3.2，式(2.255)—(2.261)][Q169W2]的仪器及条件化对应。把全部这些数学映射放入实际可用菜单，是VII102.14明列的额外选择，不由闭锥正性或一个有限预算断言推出。
+
+为区分效果与更新，在任意 $n\ge2$ 的已识别单腿取基投影 $P_j$，令 $U$ 交换 $e_0,e_1$ 并固定其余基向量。两族
+
+$$
+\Phi_j(x)=P_jxP_j,\qquad
+\Psi_j(x)=UP_jxP_jU^{\ast}
+$$
+
+都是数学仪器，效果同为 $P_j$。输入 $P_0$、结果零的条件态却分别为 $P_0$ 与 $P_1$。所以静态 POVM 不选出唯一更新。Lüders 族 $x\mapsto E_j^{1/2}xE_j^{1/2}$ 是一个数学选择；若赋予它特定物理测量的更新意义，还须另给更新选择或合适的不扰动条件。
+
+同样，固定矩阵 $G$ 的幂及证明中的实参数指数不指定实际时间。若额外给定带实际时间参数的可微酉一参数群 $U_{t+s}=U_tU_s$、$U_0=I$，则 $K=\dot U_0$ 满足 $K^{\ast}=-K$，群律给 $U_t=e^{tK}$。另选时间单位和正尺度 $\hbar$，令 $H_{\mathrm{phys}}=i\hbar K$，才有
+
+$$
+H_{\mathrm{phys}}=H_{\mathrm{phys}}^{\ast},\qquad
+U_t=e^{-itH_{\mathrm{phys}}/\hbar}.
+$$
+
+恒等时间群和不同此类生成元都保持同一静态 PSD 层级，故静态条件不能选定其中哪一个是物理演化或确定其尺度。∎
+
+**命题 169.7（群闭包、原始字及标量的精确界限）。** 令 $\mathcal W^+$ 为字母取自 $\{G,R\}$ 的全部有限正向字，含空字。它可数且每个元素可逆。定理169.3所用的 $\mathcal H$ 含 $U(n)$，但
+
+$$
+\overline{\mathcal W^+}^{\,M_n(\mathbb C)}\cap U(n)=\mathbb T_F,\qquad
+|\det\mathcal H|\subseteq\lambda^{\mathbb Z}.
+$$
+
+特别地 $\mathcal H\ne GL_n(\mathbb C)$，其 $\mathfrak h$ 含 $iI_n$ 而不含 $I_n$。所证闭包正性不是从原始两字母精确有限生成任意酉，也不附带统一预算、有效综合算法或具有非零成功质量的物理极限协议。
+
+**证明。** 长度有限的二字母串可数，且 $G,R$ 均可逆。若 $W\in\mathcal W^+$ 含 $k$ 个 $R$，则
+
+$$
+|\det W|=\lambda^k.
+$$
+
+若 $W_\ell\to U\in U(n)$，则 $\lambda^{k_\ell}\to1$。由于 $k_\ell\ge0$ 为整数，最终 $k_\ell=0$，故最终 $W_\ell$ 只是 $G$ 的非负幂。定理169.3的正向幂结论便给第一式，反向包含显然。$\mathbb T_F$ 是真子群：其中矩阵的全部对角元相同，而 $e^{itP_0}$ 在 $t\notin2\pi\mathbb Z$ 时没有此性质。因此原始正向字的闭包本身不含全部 $U(n)$。
+
+对允许逆的群字，行列式模长属于 $\lambda^{\mathbb Z}$。此集合在 $\mathbb R_{>0}$ 中闭，故取 $GL_n(\mathbb C)$ 内的相对闭包仍给第二式。对任意 $X\in\mathfrak h$，连续函数
+
+$$
+|\det e^{tX}|=e^{t\operatorname{Re}\operatorname{Tr}X}
+$$
+
+只能在该离散集合中恒等于一，所以 $\operatorname{Re}\operatorname{Tr}X=0$。这排除 $I_n\in\mathfrak h$；另一方面，定理证明已经逐个取得 $iP_j$，其实和为 $iI_n$。因而这里确实不能把实 Lie 代数当作复线性空间，也不能从相位标量推出现实伸缩生成元。
+
+有限字至多给可数多个射影矩阵方向，$U(n)$ 模去相位仍不可数；故即使允许逐字消去标量，也不能把全部酉解释为原始有限字的精确实现。167.4的精确有限字允许从整个连续 $U(n)$ 中选取字母，本章只先证明这些字母的正性；该消费没有变成原始 $\{G,R\}$ 的有限综合。奇异系数在167的 Bell 轨道中由闭性补入，也不能成为这些可逆字的精确矩阵输出。
+
+逆向支付使用环面极限、已正的共轭因子和正标量消去；Lie 步骤又使用相对闭群中的指数与极限。每个给定有限原始字的预算由命题169.4给出；对极限过程不存在由这些论证自动取得的统一成功下界或实际事件闭包。所有被消去的正数，在任何分支质量计算中均须保留。∎
+
+**命题 169.8（入口节省、适用边界与来源对应）。** 在完整原结构域内，本章以 G2、R2 这两个固定二体包含替代167中的全部第一腿酉包含及单实衰减器包含，同时保持 B 和 T。节省的对象是所列矩阵正性包含的数量；独立公理数、总描述复杂度、有效门综合及物理普适性没有由这个数量最小化。
+
+**证明。** 正向替代由定理169.3中 $U(n)\subseteq\mathcal H$ 及 $S=R^4$ 给出；反向在同一低层 PSD 等式下成立。因此这是同域条件的等价改写。每个固定包含仍量化整个原 $C_2$；Fourier 相位的次数、载体维数和矩阵条目依赖 $n$。完整原对偶、全部有限菜单、全部 min/max 复合与正置换从未被删去。
+
+若没有 T，上述证明仍给低二层等式和167.8的全原旁观接口，但没有以此单独推出全部高层 PSD，也没有据此建立全有限非量子反模型。若给定 GME dyad 的三个展平秩均小于 $n$，则没有满足本章消费的166.12入口；例如 $n>2$ 时嵌入的 $e_0^{\otimes3}+e_1^{\otimes3}$ 三秩均为二。将这类全腿非满维 GME 作为一般重建入口仍是本章未解决的开放扩展。复数域、实际复张量载体及完整有限组合也没有由两个包含导出；无限维与物理动力学须另行处理。$\lambda=0$ 时逆向支付失效，$\lambda=1$ 时两实二次因子重合，均不在定理参数范围内。这里不据这些证明边界主张原条件彼此逻辑独立或全球最小。
+
+数学供应及其实际参数对应如下；已知一般事实只在定理169.3及量子字典内部承担中间步骤。
+
+| 原始来源 | 本章消费的精确范围 |
+| --- | --- |
+| [XVI167，固定提交649238845556f2cffa315c3a8f7baeb458154f2b][Q169167] | 完整167.1；167.3第一项，以衰减参数 $\lambda^4$ 识别低层；167.5的原基预算；167.8的全旁观/Choi接口；167.9—167.10的完整字典及物理边界 |
+| [XIII，固定提交00427ae2ba9c9e3f6c37f2e5496b9127b6fbc6c0][Q169XIII] | 163.1—163.2的原合同、切片与预算；166.1—166.2的完整域和不变种子；166.12条件1到5的既有全有限传播 |
+| [VII，固定提交657a8ba435bf2cae463e935d957d8038b69be8a3][Q169VII] | 102.6整锥切片；102.7自身参考的精确蛇式/Choi；102.14—102.15额外事件饱和与条件化 |
+| [Keith Conrad，Irreducibility tests in Q[T]，定理4.1、例1.6][Q169E] | 对 $t^{n+1}-2$ 取素数二；仅供应 $1,a,\ldots,a^n$ 的有理线性无关性 |
+| [Terence Tao，254B, Notes 1，2010年3月28日，命题1、练习2及5][Q169Tao] | 标准 $n$ 维环面、正向序列 $k(a,\ldots,a^n)$；Weyl 判据加几何级数给所需 Kronecker 线性稠密性 |
+| [Brian C. Hall，An Elementary Introduction to Groups and Representations，arXiv:math-ph/0005032v1][Q169Hall] | 定义2.2的相对闭矩阵群；定理3.9、定义3.13、命题3.15、定理3.16的实指数 Lie 操作；不需要全局指数满射或群紧性 |
+| [Keith Conrad，The Chinese Remainder Theorem，定理4.18][Q169CRT] | 在 $\mathbb R[t]$ 中对 $t-1,t^2+\lambda^2,t^2+\lambda^{-2}$ 作实系数分离 |
+| [John Watrous，The Theory of Quantum Information，第一章][Q169W1] | 印刷页20的PSD迹配对、定理1.3及推论1.4、向量化式(1.127)—(1.134)；167内部的SVD/Schmidt供应不在此重证 |
+| [同书第二章][Q169W2] | §2.1.2的状态/纯态，定义2.34的POVM，定理2.22的矩形Choi/Kraus、定理2.26的边缘预算，§2.3.2的仪器/条件化；本章参考—输出次序经实际SWAP与该书对应 |
+
+本章的承重综合是把指定的两个固定包含经实系数相似分离接到167的原二体接口；全有限传播属于166.12，Eisenstein、环面等分布、矩阵实 Lie 性质、多项式余数分离及量子字典属于表列既有来源。这个归属不作全球新颖性或最少独立公理的主张。
+
+[Q169167]: https://github.com/the-omega-institute/trureturing/blob/649238845556f2cffa315c3a8f7baeb458154f2b/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md
+[Q169XIII]: https://github.com/the-omega-institute/trureturing/blob/00427ae2ba9c9e3f6c37f2e5496b9127b6fbc6c0/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md
+[Q169VII]: https://github.com/the-omega-institute/trureturing/blob/657a8ba435bf2cae463e935d957d8038b69be8a3/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+[Q169E]: https://kconrad.math.uconn.edu/blurbs/ringtheory/irredtestsoverQ.pdf
+[Q169Tao]: https://terrytao.wordpress.com/2010/03/28/254b-notes-1-equidistribution-of-polynomial-sequences-in-torii/
+[Q169Hall]: https://arxiv.org/pdf/math-ph/0005032v1
+[Q169CRT]: https://kconrad.math.uconn.edu/blurbs/ugradnumthy/crt.pdf
+[Q169W1]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf
+[Q169W2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
+
+证明的中文几何表述如下：把原二体 Bell 相关同时放在“态”和“测试”两边，它就是一把双面的共同标尺。固定的 Fourier 谱矩阵 $G$ 虽然只给一步移动，但其相位角与一的有理线性无关性使正向反复移动在闭锥意义下遍及整个 Fourier 环面，因而取得坐标循环和沿均匀向量的一条连续秩一相位流。复衰减器 $R$ 在一个坐标上同时改变相位与长度；把它移到其余坐标后相乘，先以明确的正比例支付反向正性。随后在实矩阵空间中，向外和向内的两个交叉方向分别具有不同的长度尺度，实多项式把它们分开，再用各自已经取得的虚方向及正确的交换子补齐所有酉旋转。四次原衰减又给167所需的一只实衰减器，于是直接由既有 Bell 两轨从内外夹出二体量子锥，原偏迹恢复一体，至此才把滤波和自身 Choi 接到全部原相关旁观者。至少一条腿满维且三个二分都非乘积的原三体种子，再按166.12把低层识别传播到每个有限层。这里极限只支付数学正性，有限分支的缩放与成功质量始终保留；复载体、完整效应和全部有限复合是地基，实际事件菜单、测后更新与物理时间各有自己的额外前提。∎
+
+## 追加锚（本行以下为增补区）
