@@ -9,7 +9,7 @@
 /-
 Copyright (c) 2026 aicyberg. All rights reserved.
 Released under Apache 2.0 license; the complete license is retained in
-Library/Quantum/aicyberg2026shor.md. Authors: aicyberg.
+Library/HilbertOperators/aicyberg2026shor.md. Authors: aicyberg.
 Source: solanaqubits/leanbook, commit 9b742770a2a5dbcf30cf9abc44e711194e957a00.
 The live proof slice preserves the supplier's statements and proofs, with canonical
 imports and source grouping for the receiving Lean and Mathlib pins.
