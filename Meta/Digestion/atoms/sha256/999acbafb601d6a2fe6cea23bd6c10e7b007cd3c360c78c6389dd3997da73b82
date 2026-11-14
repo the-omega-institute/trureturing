@@ -1,0 +1,31 @@
+**引理 149.10（紧四维二步流形）。** 可固定 $o\in A$，使
+
+$$
+T=\bigcup_{s\in S_o}S_s\subset Q
+\tag{149.21}
+$$
+
+以原子空间拓扑是非空紧、无边界四维流形。
+
+证明。固定引理149.9图内任一 $o$。$S_o$ 紧且包含于 $M$，引理149.7给整个 $S_o$ 上的球连续。实际关联空间
+$\mathscr S_o=\{(s,r):s\in S_o,r\in S_s\}$ 在紧 $S_o\times M$ 中闭：极限标签和极限点都在 $M\subset P$，整球上包含给 $r\in D_s\cap P=S_s$。故它及其评价像 $T$ 紧。
+
+这个关联是实际 $S^2$ 丛。具体地，写 $Z_s=\operatorname{im}A_s$、$w_s=A_s^{\dagger/2}(o-c_s)$，则 $Z_s$ 连续秩三、$w_s$ 是连续单位截面。去掉公共根截面后，按 [XI145.7证明的球极投影公式][S149XI145]，
+
+$$
+(s,v)\longmapsto
+\left(s,c_s+A_s^{1/2}
+\frac{2v+(\|v\|^2-1)w_s}{1+\|v\|^2}\right),
+\quad v\in Z_s\cap w_s^\perp
+\tag{149.22}
+$$
+
+给秩二实向量丛到 $\mathscr S_o^\times=\{(s,r)\in\mathscr S_o:r\ne o\}$ 的同胚。逆是球极投影，分母 $1-\langle A_s^{\dagger/2}(r-c_s),w_s\rangle>0$。因此 $\mathscr S_o^\times$ 是无边界四维流形。
+
+评价 $\mathscr S_o^\times\to T\setminus\{o\}$ 单射：不同 $s\in S_o$ 的实际单标签球只交于 $o$。其逆连续：对 $r_i\to r\ne o$，用紧 $S_o$ 取对应 $s_i$ 的任意聚点，整球闭图使其为 $o,r$ 的同一个共同邻标签，唯一性迫整列收敛。因此 $T\setminus\{o\}$ 也是四维流形。
+
+还须处理根，不能只用删根后的流形结论。在实际 $M$-开四维图 $A\ni o$ 内，评价限制
+$\operatorname{ev}^{-1}(A\setminus\{o\})\to A\setminus\{o\}$ 是两个四维无边界流形间的连续单射，源为开子空间。区域不变性给 $T\cap(A\setminus\{o\})$ 开；紧 $T$ 又使它相对闭。在 $A$ 中取以 $o$ 为坐标中心的小四维开球 $U$。$U\setminus\{o\}$ 连通；上述交集非空，因为任取 $s\in S_o$，其完整 $S_s$ 上有别的点趋近 $o$，最终进入 $M$-开集 $U$。故 $U\setminus\{o\}\subset T$，加上根得 $U\subset T$。$U$ 是 $T$ 中含根的四维开图，根也没有边界。
+
+整个 $T$ 的点经两条实际零边从 $o\in A\subset Q$ 到达，故 $T\subset Q$。各空间都是原有限维环境的子空间，Hausdorff、第二可数。证毕。
+

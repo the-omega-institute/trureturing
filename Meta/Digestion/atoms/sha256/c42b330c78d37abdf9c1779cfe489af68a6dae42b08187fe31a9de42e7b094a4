@@ -1,0 +1,16 @@
+### 147.4 固定原球面上的有限闭层
+
+以下第147.4—147.5节不使用九维。固定 $p\in P_{\rm s}$、任意非空相对开集 $U\subset S_p$，在其中取闭二盘 $Q$，其球面内部非空。所有移动 $q$ 均在这同一紧盘中，因而 $q\in P_{\rm s}$。
+
+固定辅助欧氏结构，令 $\xi(x)=x\otimes x\in\operatorname{Sym}^2V$，定义
+
+$$
+\Gamma(x_1,\ldots,x_9)=
+\det[\langle\xi(x_i),\xi(x_j)\rangle]_{i,j=1}^9,\qquad
+\tau(y_0,y_1,y_2,y_3)=
+\det[\langle y_a-y_0,y_b-y_0\rangle]_{a,b=1}^3.
+\tag{XII147.9}
+$$
+
+前者严格正表示九个二次评估泛函独立，后者严格正表示四点仿射无关。
+
