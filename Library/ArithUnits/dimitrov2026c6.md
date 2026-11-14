@@ -14,7 +14,13 @@ triage: anchor
 
 # Dimitrov's sixth conjecture
 
-The exact source is [arXiv:2606.12484v1, Conjecture 6](https://arxiv.org/html/2606.12484v1#Thmconjecture6).
+## Locator
+
+The exact source is [arXiv:2606.12484v1](https://arxiv.org/abs/2606.12484v1),
+[Conjecture 6](https://arxiv.org/html/2606.12484v1#Thmconjecture6).
+
+## Statement and application
+
 With $a=\varphi(n)^k$, $b=\psi(n)^k$, and $c=\sigma(n)^k$, it asks whether
 
 $$
