@@ -485,11 +485,11 @@ private theorem inventory_zero [Finite C] (s d : C → Bool) (a b : Bool)
 private theorem preserved_color_constant [Finite C] (s : C → Bool) (ρ : Perm C)
     (hc : ρ.IsCycleOn Set.univ) (hs : ∀ x, s (ρ x) = s x) (x y : C) : s x = s y := by
   obtain ⟨n, hn⟩ := (hc.2 (Set.mem_univ x) (Set.mem_univ y)).exists_nat_pow_eq
-  have hpow (n : ℕ) : s ((ρ ^ n) x) = s x := by
-    induction n with
-    | zero => rfl
-    | succ n ih => simpa only [pow_succ', Perm.mul_apply, hs] using ih
-  exact (hpow n).symm.trans (congrArg s hn)
+  have hi : s ∘ (ρ : C → C) = s := funext hs
+  have hpow : s ((ρ ^ n) x) = s x := by
+    simpa only [Function.comp_apply, Perm.coe_pow] using
+      congrFun (Function.iterate_invariant hi n) x
+  exact hpow.symm.trans (congrArg s hn)
 
 /-- Exhaustive labelled two-state cycle count, including the empty carrier and
 the disconnected zero-crossing inventory. No extension or connectivity premise is supplied. -/
