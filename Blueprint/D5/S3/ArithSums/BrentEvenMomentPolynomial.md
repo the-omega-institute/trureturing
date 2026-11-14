@@ -48,6 +48,10 @@ $$\forall r \in \mathrm{Nat},\; \exists P \in \operatorname{Polynomial}\left(\ma
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/BrentEvenMomentPolynomial.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/brent-ohtsuka-osborn-prodinger-even-moment-integrality` (proved) by `D5/S3/ArithSums/BrentEvenMomentPolynomial.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"brent-ohtsuka-osborn-prodinger-even-moment-integrality","declaration_gid":"D5/S3/ArithSums/BrentEvenMomentPolynomial.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Richard P. Brent, Hideyuki Ohtsuka, Judy-anne H. Osborn, Helmut Prodinger (2016). *Some Binomial Sums Involving Absolute Values*. URL: <https://cs.uwaterloo.ca/journals/JIS/VOL19/Brent/brent9.tex>.
