@@ -205,8 +205,7 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       (if input.finiteBridge.isSome then some objectArena else none)).run (← read)
     debit work
     emit s!"source phase=operands work={limit - (← get)}"
-    unless ← sameShape descriptor rawActual do
-      fail s!"unclassified_form:source.descriptor_actual DESCRIPTOR={reprStr descriptor} RAWACTUAL={reprStr rawActual}"
+    unless ← sameShape descriptor rawActual do fail "unclassified_form:source.descriptor_actual"
     let actualIdentity ← fingerprint scope.levels rawActual
     let descriptorIdentity ← fingerprint scope.levels descriptor
     let registrationIdentity ← fingerprint scope.levels record

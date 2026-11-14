@@ -16,6 +16,7 @@ abbrev Inputs := Σ P : Type u, Σ _ : PartialOrder P, P
 abbrev signature : Signature := Reg.Support.UniverseSingleReadout.signature Inputs
   (fun p => Set p.1) (fun p => Set p.1)
 
+/-- The original toggle readout retains its source partial-order instance. -/
 def observed : ∀ (i : signature.{u}.Role) (p : signature.{u}.Params),
     signature.{u}.State p → signature.{u}.Output i p :=
   fun _ p => letI := p.2.1; toggle p.2.2
