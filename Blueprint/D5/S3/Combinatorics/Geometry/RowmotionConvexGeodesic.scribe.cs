@@ -53,6 +53,6 @@ internal sealed class RowmotionConvexGeodesicDocument : IScribeDocumentDefinitio
                 All("s", Call("Finset", p), All("t", Call("Finset", p),
                     Imp(Call("OrdConnected", setS), Imp(Call("OrdConnected", setT),
                         new Formula.Bind(FormulaQuantifier.Exists,
-                            FormulaIdentifier.Create("w"), Call("List", p), conclusion))))));
+                            FormulaIdentifier.Create("w"), Call("List", p), conclusion)))))));
     }
 }
