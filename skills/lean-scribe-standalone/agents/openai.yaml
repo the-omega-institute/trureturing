@@ -1,0 +1,4 @@
+interface:
+  display_name: "独立 Lean 与 Scribe"
+  short_description: "在独立仓库冷构建 Lean、Scribe、逃逸审计与冻结，无需共享缓存"
+  default_prompt: "使用 $lean-scribe-standalone 为独立开源项目建立 Lean、Scribe、逃逸审计与冻结路径。"
