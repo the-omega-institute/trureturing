@@ -50,13 +50,13 @@ def deepest : (n : ℕ) → Address n → Router (n + 1)
 def loadedLabel (n : ℕ) (a : Address n) (bus : Qutrit) (v : Router n) : Qutrit :=
   routerLabel n ((load n n) (loading n a bus 0)).2.2 v
 
-private theorem loaded_label (n : ℕ) (a : Address n) (bus : Qutrit) (v : Router n) :
+theorem loaded_label (n : ℕ) (a : Address n) (bus : Qutrit) (v : Router n) :
     loadedLabel n a bus v = routerLabel n (programmed n a n) v := by
   unfold loadedLabel
   rw [correctness.1 n a bus n (le_refl n)]
   rfl
 
-private theorem vacuum_label (n : ℕ) (v : Router n) :
+theorem vacuum_label (n : ℕ) (v : Router n) :
     routerLabel n (vacuum n) v = Qutrit.wait := by
   induction n with
   | zero => exact v.elim

@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/MaximalHockeyStickConvex
   - D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest
   - D5/S3/Quantum/Divergence/MaximalHockeyStickAllL1Convex
+  - D5/S3/Quantum/Divergence/MaximalHockeyStickAttainment
   - D5/S3/Quantum/Divergence/MaximalHockeyStickLoewnerSlopes
   - D5/S3/Quantum/Divergence/MaximalHockeyStickArbitrarySupport
 license: citation-only
@@ -110,6 +111,30 @@ Operator-convex generators are included under the stated necessity
 conditions. Worldwide priority of the classification remains
 unresolved; source attribution and Lean verification are distinct.
 
+Remark VII.4 raises existence of a minimal reverse test for general convex
+generators, even in finite dimension. MaximalHockeyStickAttainment proves
+that whenever the actual original sigma-finite whole-complex-L1 maximal
+value is a real number, an actual finite ReverseTest attains that number.
+The output matrices are arbitrary finite complex PSD matrices, including
+empty dimension, zero, singular and unnormalized pairs. The generator is
+real and convex on the positive ray; both actual closed-perspective
+endpoint costs may be infinite. No operator-convexity, faithfulness,
+normalization or optimizer premise is added. This is a finite-dimensional
+attainment result, not an arbitrary von Neumann algebra theorem.
+
+The proof credits Matsumoto's finite-cardinality compression and compact
+minimization architecture (arXiv:1311.4722v4, Lemmas 4.1 and 9.2--9.3).
+It retains the general endpoints by minimizing the nonnegative curvature
+remainder on a compact fixed-alphabet carrier, with the affine cost
+contribution fixed by the two output traces. Exact Caratheodory compression
+preserves both output matrices and the real cost. Infinite-cost boundary
+points remain in the compact domain, and the zero pair uses the empty
+test. The existing original-source equivalence transfers this finite
+minimum to the original value. The alphabet bound is deliberately coarse.
+Matsumoto's printed condition f(0)=0 is not assumed here; worldwide
+priority of the full endpoint-general attainment statement remains
+unresolved.
+
 The arbitrary-support extension retains the same actual original sigma-finite
 whole-complex-L1 values and the real-finite original maximal-value premise.
 Let X(t) be the unique trace-maximizing PSD common lower bound of A and tB.
@@ -128,7 +153,7 @@ support family while retaining tail anchors from one actual finite-cost
 witness. Its integrable envelope controls both the literal test kernels
 and their gaps, including labels on either axis with infinite scalar
 endpoint costs. Dominated convergence and the existing exact cost-gap
-identity close the infimum comparison. This does not assert a common
+identity close the infimum comparison. This argument alone does not assert a common
 finite optimizer on infinite support, full-support commutation for a
 restricted support, or necessity from infinity=infinity. The one-threshold
 HMT construction, Matsumoto one-cost compression and previous source-class
