@@ -22,6 +22,10 @@ $$\forall n: \mathbb{N}, 1 \le n \Rightarrow \left(\operatorname{ExistsUnique}\l
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/SchulteImplicitQuadrinomialPowers.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a262082-schulte-power-coefficient` (proved) by `D5/S1/Recurrence/Algebraic/SchulteImplicitQuadrinomialPowers.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a262082-schulte-power-coefficient","declaration_gid":"D5/S1/Recurrence/Algebraic/SchulteImplicitQuadrinomialPowers.result","resolution_kind":"proved"} -->
+
 *Citation.* Werner Schulte (2015). *OEIS A262082: coefficients of powers of an implicit quadrinomial series*. URL: <https://oeis.org/A262082>.
 
 *Commentary.*
