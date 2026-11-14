@@ -1295,3 +1295,391 @@ profile arithmetic do not remove those conditions. The enduring mutual
 recovery of space, time, boundary and memory remains unresolved.
 
 ## 追加锚（本行以下为增补区）
+## 93. The original selected-cut ratio and its sharp exponent
+
+**Definition 93.1 (complete fibres and certificate excess).** Use IV
+Definitions 9.1,13.1,21.1 on the original known-alpha source. For a finite
+list of positive integers $s_1,\ldots,s_r$, let $T=T(s_1,\ldots,s_r)$
+be IV13.1's nested endpoint with these split counts. Set
+
+$$
+\begin{aligned}
+N&=1+\sum_{i=1}^r(s_i+1),&
+f_i&=\sum_{j=i}^rs_j+r-i,&
+F&=|\mathcal H(T)|=\prod_{i=1}^r f_i,\\
+G&=\lceil\log_2F\rceil,&
+L_{\rm cut}&=\sum_{i=1}^r\lceil\log_2s_i\rceil,&
+R&=\frac{2^{L_{\rm cut}}}{F},\\
+E&=\max\{0,L_{\rm cut}-G\},&
+h&=\sqrt{3/2},&
+\kappa&=\log_2h=\log_4(3/2),\qquad K=\frac{33h}{16}.
+\end{aligned}
+\tag{VII.31}
+$$
+
+Here $N$ is the successful native event count, including the forced
+initial promotion. $F$ is exactly IV13.2's complete fibre: promotions
+may be delayed past any selected cut. It is not the product of the
+numbers of block-completed suffixes. The numerical certificate $E$
+is IV21.1's lower bound on $M_J(T)-G$ for every recorder satisfying
+IV9.1 on the full native domain. It is distinct from IV19's actual
+inherited-prefix congestion $C(T)$ and from the actual width in
+§§86–92.
+
+For the empty list put $T=\beta$, reached from the known alpha by its
+forced promotion. Empty products and sums give $N=F=R=1$ and
+$G=L_{\rm cut}=E=0$. If every $s_i=1$, then
+$N=2r+1$, $F=\prod_{j=1}^r(2j-1)$, $L_{\rm cut}=E=0$ and $R=1/F$.
+Thus width-zero cuts and singleton fibres are included.
+
+## 94. A numerical reduction from blocks to binary digits
+
+**Theorem 94.1 (dyadic sorting and carrying bound the full ratio).**
+If a list in Definition 93.1 has a block of size at least two, there
+is an integer $1\le A\le N-1$ such that
+
+$$
+R\le P_{\rm bin}(A),\qquad
+P_{\rm bin}(A)=\prod_{\substack{0\le k\le m\\b_k=1}}
+ \frac{2\cdot2^k}{\sum_{i=0}^k b_i2^i},\qquad
+A=\sum_{k=0}^m b_k2^k,\quad b_k\in\{0,1\},\ b_m=1.
+\tag{VII.32}
+$$
+
+If no such block exists, $R\le1$.
+
+All comparisons in this theorem are inequalities between numbers.
+Sorting and carrying do not assert a lawful native edit, reordered
+history, graft, source substitution or equality of endpoint fibres.
+
+**Proof.** Read the given blocks from inner to outer, writing
+$u_j=s_{r-j+1}$. Immediately before block $j$ put
+$n_j=1+\sum_{l<j}(u_l+1)$. The exact original factors are
+
+$$
+R=\prod_{j=1}^r\frac{d(u_j)}{n_j+u_j-1},\qquad
+ d(u)=2^{\lceil\log_2u\rceil},\qquad
+ n_j+u_j-1=u_j+\sum_{l<j}(u_l+1).
+\tag{VII.33}
+$$
+
+This is IV.59 iterated, or IV13.2 reindexed, before any relaxation of
+its integer offsets. A term $u_j=1$ contributes $1/n_j\le1$ and may
+be omitted in an upper bound. For each remaining term let
+$a=d(u_j)/2$. This is a positive integral power of two. If $u_j\ge2$
+and $k=\lceil\log_2u_j\rceil$, then
+$2^{k-1}<u_j$, so integrality gives $a=2^{k-1}\le u_j-1$.
+List these retained values in their original inner-to-outer order as
+$a_1,\ldots,a_q$ and put $A_j=\sum_{l\le j}a_l$, $A=A_q$.
+For the original block associated to $a_j$, (VII.33)'s denominator
+is at least $A_j$: its current $u$ exceeds $a_j$, and each earlier
+retained block contributes $u+1\ge a$. Omitted unit blocks remain
+in that original denominator. Therefore
+
+$$
+R\le P(a_1,\ldots,a_q):=\prod_{j=1}^q\frac{2a_j}{A_j},
+\qquad
+A\le\sum_{j=1}^r(u_j-1)\le N-1.
+\tag{VII.34}
+$$
+
+If $q=0$, all original factors were at most one, giving $R\le1$.
+Assume $q>0$. Consider adjacent values $a>b$ after prefix mass
+$p\ge0$. The ratio of their local product before and after exchanging
+them is
+
+$$
+\frac{\dfrac{2a}{p+a}\dfrac{2b}{p+a+b}}
+     {\dfrac{2b}{p+b}\dfrac{2a}{p+a+b}}
+ =\frac{p+b}{p+a}\le1.
+\tag{VII.35}
+$$
+
+All later prefix masses are unchanged. Sorting increasingly therefore
+cannot decrease $P$. For adjacent equal values $a,a$, replacing them
+by $2a$ gives local ratio
+
+$$
+\frac{\dfrac{2a}{p+a}\dfrac{2a}{p+2a}}
+     {\dfrac{4a}{p+2a}}
+ =\frac{a}{p+a}\le1.
+\tag{VII.36}
+$$
+
+This preserves the total mass and every later denominator. Resort and
+repeat whenever an equal pair remains. Each carry reduces the number
+of entries by one; each sorting requires only finitely many exchanges.
+The procedure terminates in a strictly increasing list of integral
+powers of two of total mass $A$. By uniqueness of binary expansion,
+that list consists precisely of the nonzero binary digits of $A$.
+Its product is (VII.32), proving the assertion. $\square$
+
+## 95. A bounded potential on the whole digit interval
+
+**Theorem 95.1 (two global potential inequalities).** For $0\le x\le1$
+define
+
+$$
+\ell(x)=\frac1{x+2/3},\qquad
+W(x)=\max\{\ell(x),\ h^{-1}\ell(x/2),\ h^{-2}\ell(x/4)\}.
+\tag{VII.37}
+$$
+
+Then $W(0)=3/2$, $8/11\le W(x)\le3/2$, and throughout this entire
+real interval,
+
+$$
+W(x/2)\le hW(x),\qquad
+\frac2{1+x}W((x+1)/2)\le hW(x).
+\tag{VII.38}
+$$
+
+**Proof.** Each term defining $W$ is at most $3/2$, and
+$h^{-2}\ell(x/4)\ge(2/3)\ell(1/4)=8/11$.
+The value at zero follows from $h>1$. The ratio
+
+$$
+T(t)=\frac{\ell(t/2)}{\ell(t)}
+ =\frac{t+2/3}{t/2+2/3}
+\tag{VII.39}
+$$
+
+is increasing for $t\ge0$: its derivative is
+$\frac{1/3}{(t/2+2/3)^2}>0$. The exact comparisons needed below are
+
+$$
+T(1/4)=\frac{22}{19}<h,\qquad
+T(1/3)=\frac65<h,\qquad
+T(1/2)=\frac{14}{11}>h.
+\tag{VII.40}
+$$
+
+Squaring positive quantities reduces them respectively to
+$968<1083$, $72<75$ and $392>363$.
+
+For the first inequality in (VII.38), the first two terms in $W(x/2)$
+are $\ell(x/2)$ and $h^{-1}\ell(x/4)$; both are at most $hW(x)$
+by (VII.37). Its third term satisfies
+$h^{-2}\ell(x/8)\le h^{-1}\ell(x/4)$, since
+$T(x/4)\le T(1/4)<h$. This covers all three terms.
+
+For the second inequality write $y=(x+1)/2\in[1/2,1]$.
+By (VII.40), $T(y)\ge T(1/2)>h$, so
+$\ell(y)\le h^{-1}\ell(y/2)$. It suffices to bound the latter
+term and $h^{-2}\ell(y/4)$ after multiplication by $2/(1+x)$.
+The exact identity
+
+$$
+\ell(x)-\frac4{3(1+x)}\ell((x+1)/4)
+ =\frac{(3x-1)^2}{(3x+2)(x+1)(3x+11)}\ge0
+\tag{VII.41}
+$$
+
+implies
+$\frac2{1+x}h^{-1}\ell(y/2)\le h\ell(x)\le hW(x)$,
+because $h^2=3/2$.
+
+If $0\le x\le1/3$, then $y/2=(x+1)/4\le1/3$ and
+$T(y/2)\le6/5<h$. Hence
+$h^{-2}\ell(y/4)\le h^{-1}\ell(y/2)$, already bounded.
+If $1/3\le x\le1$, the other exact identity is
+
+$$
+\ell(x/2)-\frac4{3(1+x)}\ell((x+1)/8)
+ =\frac{2(3x-1)(3x+7)}{(3x+4)(x+1)(3x+19)}\ge0.
+\tag{VII.42}
+$$
+
+It gives
+$\frac2{1+x}h^{-2}\ell(y/4)\le\ell(x/2)\le hW(x)$.
+All denominators in (VII.41)–(VII.42) are positive on $[0,1]$;
+the two cases cover the entire interval, including their shared
+endpoint. Thus every term of $W(y)$ has the required bound.
+$\square$
+
+## 96. A uniform sharp-exponent ceiling for arbitrary block sizes
+
+**Theorem 96.1 (uniform selected-cut bound).** Every finite positive
+block list, including the empty list, satisfies
+
+$$
+R\le K N^\kappa,\qquad
+E\le\kappa\log_2N+\log_2K,
+\qquad K=\frac{33}{16}\sqrt{\frac32}.
+\tag{VII.43}
+$$
+
+**Proof.** For $A\ge1$ use its binary digits from (VII.32), and let
+
+$$
+x_k=\frac{\sum_{i<k}b_i2^i}{2^k}\quad(0\le k\le m+1).
+\tag{VII.44}
+$$
+
+Then $x_0=0$, $0\le x_k<1$ and
+$x_{k+1}=(x_k+b_k)/2$. A zero digit contributes multiplier one to
+$P_{\rm bin}(A)$. A one digit contributes
+$2\cdot2^k/(2^k+\sum_{i<k}b_i2^i)=2/(1+x_k)$.
+The corresponding inequality in (VII.38), for each $k=0,\ldots,m$,
+therefore multiplies to
+
+$$
+P_{\rm bin}(A)W(x_{m+1})\le h^{m+1}W(0),\qquad
+P_{\rm bin}(A)\le\frac{33}{16}h^{m+1}
+ \le\frac{33h}{16}A^\kappa.
+\tag{VII.45}
+$$
+
+The latter bound uses $W(0)/(8/11)=33/16$ and
+$2^m\le A$, so $h^m=(2^m)^\kappa\le A^\kappa$.
+Theorem 94.1 now yields $R\le K A^\kappa\le K N^\kappa$
+whenever there is a retained dyadic value. Otherwise $R\le1$;
+this includes the empty and all-unit lists, and $1\le K N^\kappa$
+since $K>1$ and $N\ge1$.
+
+Finally $L_{\rm cut}-G\le L_{\rm cut}-\log_2F=\log_2R$.
+The right side of the asserted bound for $E$ is nonnegative.
+Taking the positive part proves (VII.43). No finite maximum block
+size or bound on the number of binary digits was imposed. $\square$
+
+## 97. The supplied base-4 family attains the exponent
+
+**Theorem 97.1 (exact exponent of this certificate mechanism).** The
+infimum of real exponents $c$ admitting a finite positive constant
+$K_c$ with $R\le K_cN^c$ for every finite block list is $\kappa$.
+Likewise $\kappa$ is the infimum of coefficients $c$ admitting a
+finite additive constant $B_c$ with $E\le c\log_2N+B_c$ for all
+such lists. Both infima are attained. Along the existing IV20 family,
+
+$$
+s_i=4^{r-i+1}+1,\qquad
+\frac{\log_2R}{\log_2N}\longrightarrow\kappa,\qquad
+\frac{E}{\log_2N}\longrightarrow\kappa.
+\tag{VII.46}
+$$
+
+**Proof.** Reuse IV20.1's family, its complete fibre and its estimates
+IV.51, IV.53–IV.54. With $B_r=r(r+1)$ they give
+
+$$
+\begin{aligned}
+L_{\rm cut}&=B_r+r,&
+\log_2F&<B_r+r\log_2(4/3)+1,\\
+\log_2R&>r\log_2(3/2)-1,&
+E&>r\log_2(3/2)-2,\\
+N&=\frac{4^{r+1}-4}{3}+2r+1,&
+\frac{\log_2N}{r}&\longrightarrow2.
+\end{aligned}
+\tag{VII.47}
+$$
+
+For $E$, use $G=\lceil\log_2F\rceil<\log_2F+1$ and
+$E\ge L_{\rm cut}-G$. In particular $R>\frac12(3/2)^r$.
+If $c<\kappa$, both
+$\log_2R-c\log_2N$ and $E-c\log_2N$ tend to $+\infty$ by
+(VII.47), since $\log_2(3/2)-2c>0$. No proposed finite $K_c$ or
+$B_c$ can then suffice. Theorem 96.1 supplies constants at $c=\kappa$.
+Its upper bounds and (VII.47)'s lower bounds squeeze both ratios to
+$\kappa$, proving (VII.46). The family, its lawful native realizations
+and its lower estimate are supplied by IV20; the new conclusion is
+the matching arbitrary-block upper exponent. $\square$
+
+## 98. The unchanged full-history service consumer
+
+**Correspondence 98.1 (what the sharp certificate charges).** Under
+IV9.1's full-domain head contract, every admissible recorder obeys
+$M_J(T)\ge G(T)+E(T)$ at these original endpoints. Theorems 96.1–97.1
+identify exactly the logarithmic coefficient achievable by this
+selected-cut lower certificate, allowing an absolute additive constant.
+They do not assert an upper bound on $M_J(T)-G(T)$.
+
+**Proof.** IV14.1 gives $M_J(T)\ge L_{\rm cut}$, and IV9.1's
+fibrewise prefix freedom gives $M_J(T)\ge G(T)$. Their conjunction
+is precisely $M_J(T)\ge G(T)+E(T)$. Every member of
+$\mathcal H(T)$, including the delayed-interleaving histories in IV13.2,
+remains in these inequalities. IV16.2 already separates distinct full
+histories by original FetchGrowth replies and supplies the authentic
+same-endpoint pair whose recalled events select different genuine
+Next edits. Thus the charged distinction belongs to the original
+full-history task, rather than a selected schedule or an added output.
+
+For an installation of this contract, all hypotheses of IV16.1 and
+IV19.3 remain: the actual known-alpha preparation and acquired
+root/source/record/input/output references, current exclusive rights,
+required enrollment, immutable samples and completed records with their
+original versions and bindings, guarded controls, finite paid backing
+and supplied per-call progress. All seven requests, Tag, addressed P,
+addressed S, HasPromotion, HasSplit, FetchGrowth and Next, retain their
+original outcomes and refusals, including OutOfRange and BadFrame.
+Full-history recovery supplies the literal old kind/address; genuine
+Next uses that pair on the same current live source and retains both
+the old recalled pair and the actual new edit in its complete reply.
+
+Pending input/output, partial parsing, source edit and record maintenance,
+occupied work, phase and latch remain part of the declared state.
+An unfinished prefix is not replaced by a maintained endpoint record.
+Completed calls retain full reply construction and sealing, Print,
+End, supplied ACK, Return to the actual root and the original cleanup.
+Finite acquisition, traversal, arithmetic, scratch, source and reference
+storage, simultaneous old/new backing and all ingress/output/return
+work keep their separate charges. None of the numerical rearrangements
+in Theorem 94.1 implements a change to any of these states or actions.
+$\square$
+
+## 99. Mathematical suppliers and the remaining memory questions
+
+**Definition 99.1 (attribution and mathematical scope).** The dyadic
+reduction for arbitrary block lists, the explicit potential (VII.37) and their sharp
+certificate bound are repo-derived ordinary mathematics. The supplied
+and new parts have the following distinct roles:
+
+| Relation | Mathematical role |
+| --- | --- |
+| IV13.1–13.2 | Original nested endpoints, exact event count and complete delayed-interleaving fibre product |
+| IV9.1 and IV14.1 | Immutable forward-head contract and recorder-independent selected-cut cylinder charge |
+| IV20.1 and IV.51–IV.54 | Existing base-4 lower family, exact cut depth, full-fibre estimate and event-count asymptotics |
+| IV21.1–21.2 | Exact $R,E$ quantities and the previous uniform $\gamma$ ceiling |
+| IV16.1–16.2 and IV19.3 | Acquired full-history consumer, actual references/rights and genuine same-source Next with full service records |
+| §§86–92 | The different exact profile and finite width calculation for the fixed IV19 constructor; no asymptotic bound for it is used |
+| §§94–97 | Numerical dyadic compression, full-interval potential and matching uniform exponent $\kappa$ up to an absolute constant |
+
+The repository's
+[ImmutableExtension](../../../D5/S0/Computability/Coding/ImmutableExtension.lean)
+and [KraftConverse](../../../D5/S0/Computability/Coding/KraftConverse.lean),
+including their private cylinder and sorted-extension arguments, supply
+generic finite code-capacity results. They are not an asserted supplier
+of (VII.43). The scoped source comparison identifies IV21's weaker
+ceiling as the relevant predecessor; it makes no exhaustive library or
+worldwide-priority claim.
+
+Jenkinson, *Ergodic optimization in dynamical systems*,
+[arXiv:1712.02307v1](https://arxiv.org/html/1712.02307v1), §5,
+Definitions 5.1–5.2 and Proposition 5.3, describes the mature use of
+coboundaries and transfer functions, also called sub-actions, to control
+orbit averages. Such potential methodology is literature-attested.
+Here taking logarithms of (VII.38) gives the corresponding finite-path
+telescoping inequality; no ergodic theorem or maximizing-measure
+existence is needed. The specific rational potential and dyadic product
+estimate are proved directly above, with no external theorem as a
+load-bearing premise and no claim of exact literature priority.
+
+**Definition 99.2 (unresolved constant, recorder and acquisition domains).**
+The optimal multiplicative constant in $R\le K N^\kappa$, including
+whether $K=1$ suffices, is undetermined here. The bound on $E$ neither
+bounds IV19's actual inherited-prefix congestion nor proves a
+logarithmic redundancy estimate for that fixed recorder. The uniform
+condition (VII.30), existence of a logarithmic recorder on the whole
+native domain, and a universal-class counterexample remain unresolved.
+The exact constructor profiles and the certificate exponent answer
+different questions.
+
+The conditional known-alpha head contract supplies no independent
+selected bilateral installation, arbitrary Busy acquisition, physical
+apparatus, elapsed-time law, or free access to a completed infinite
+source. The original actual preparations, internal observer, complete
+records and all declared lawful futures remain the domain of the
+common-recovery problem. The sharp selected-cut estimate settles only
+its stated finite payload certificate; it does not settle that enduring
+problem. These are prose proofs, without a fresh Lean/kernel check.
+
+## 追加锚（本行以下为增补区）
