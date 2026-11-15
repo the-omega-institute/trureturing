@@ -92,6 +92,21 @@ internal sealed class HannUniformSectionDocument : IScribeDocumentDefinition
                     + "bound the whole section, and convexity fills their closed interval. "
                     + "This treats both signs and both endpoints together, including a singleton.")))),
             Paragraph(Text(
+                "The small-height boundaries distinguish emptiness, a singleton and two "
+                + "different endpoint values. At height zero the section is {1}. At height one, "
+                + "a strictly interior root rate gives the empty section, while rate -1/2 gives "
+                + "{-1/2}. At rate 1, the unequal leaf probabilities 2/3 and 1/3 are feasible. "
+                + "For a larger example, let q3 have height three, root rate 1, all left-subtree "
+                + "rates -1/2 and all right-subtree rates 1. Its nonnegative kernel coordinates "
+                + "satisfy mass/4 <= root <= mass, with the bounds attained by four equal left "
+                + "leaves and by one right leaf. Form q4 by placing rate -1/2 above two identical "
+                + "copies of q3, and q5 by placing rate -1/2 above two copies of q4. Their sections "
+                + "for the wait bus are exactly [-1/2,-1/8] and [1/16,1/4], respectively. "
+                + "Duplicating a normalized leaf law with half its mass in each copy sends its "
+                + "root value z to -z/2. Conversely the lower-router equations equate both child "
+                + "roots to minus the parent root; the two child mass bounds give the displayed "
+                + "parent bounds. Convexity fills the intervals between the attained endpoints.")),
+            Paragraph(Text(
                 "The conformal-decomposition method is classical; the elementary-vector source "
                 + "is Mueller and Regensburger, Elementary vectors and conformal sums in polyhedral "
                 + "geometry and their relevance for metabolic pathway analysis, Section 3.1, "
