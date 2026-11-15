@@ -21,11 +21,17 @@ proof_shape: punctured_minimum_weight: bind-only;
 proof_shape: golay_perfect_restricted_basis, golay_not_listed, golay_counterexample, result:
   bind-only; escape_witness: none; consumers: golay_counterexample, result;
   external settlement: source-faithful result refutes Conjecture 22 (#30733).
-Direct frozen dependencies: D5/S3/Arith/Lattices/Golay/GolayEncoder.encode_injective,
-  parity_extension, minimum_weight and encode;
-  statement_id sha256:fe9b3bf164c4804a4379147a33e4879e5d901c8a346300f67361b3c04c73a6cf;
+Direct frozen dependencies (declaration statement identities):
+D5/S3/Arith/Lattices/Golay/GolayEncoder.encode_injective;
+  statement_id sha256:4a8f94972a4283e38bd3ae65eafaad4e49171a8bcb68a61250c726398302bf61;
+D5/S3/Arith/Lattices/Golay/GolayEncoder.parity_extension;
+  statement_id sha256:0bc2902471caba5cba2cc2319215a0d0a6c2aa4fce021458583a788eda7fa33f;
+D5/S3/Arith/Lattices/Golay/GolayEncoder.minimum_weight;
+  statement_id sha256:4be4d101d4459429e6f4ef6602bb63818151c307097deec320e1cc438843f296;
+D5/S3/Arith/Lattices/Golay/GolayEncoder.encode;
+  statement_id sha256:07fc3ac34f41ceae787218d3feb6520115dfaefb307de8b5c5a9cec4df5435fd;
 D5/S3/FiniteGroups/BajnokBersonJustPerfectRestrictedBasis.IsPerfectRestrictedBasis;
-  statement_id sha256:df8d9b9fb1e5c6ffc6c82e0b1c6b9c6216e6a1073348b636dbf7055a8e59ce76.
+  statement_id sha256:d6d92226693d885c5361c46cd097699517cff4764304c09b541f5eb4da8c95a8.
 The public helper audits remain unfinished: #30740,
 https://github.com/the-omega-institute/trureturing/issues/30740.
 The designated result : Not claim is exempt from four-slot registration.

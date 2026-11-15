@@ -18,7 +18,7 @@ proof_shape: basis_of_minimum_weight: content;
   escape_witness: minimum-distance injectivity and full subset-preimage transfer;
   consumer: BajnokGolayRestrictedBasisRefutation.golay_perfect_restricted_basis.
 Direct frozen dependency: D5/S3/FiniteGroups/BajnokBersonJustPerfectRestrictedBasis.IsPerfectRestrictedBasis;
-  statement_id sha256:df8d9b9fb1e5c6ffc6c82e0b1c6b9c6216e6a1073348b636dbf7055a8e59ce76.
+  statement_id sha256:d6d92226693d885c5361c46cd097699517cff4764304c09b541f5eb4da8c95a8.
 Four-slot audits for the two public theorems are unfinished: #30740,
 https://github.com/the-omega-institute/trureturing/issues/30740.
 -/
