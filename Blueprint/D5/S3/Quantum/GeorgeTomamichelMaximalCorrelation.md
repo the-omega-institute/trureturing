@@ -358,7 +358,9 @@ $$\operatorname {claim} = \forall (a:\operatorname {Type}), (\forall (b:\operato
 
 *Formalization.* `D5/S3/Quantum/GeorgeTomamichelMaximalCorrelation.claim` (`✓ std3`).
 
-*Citation.* Ian George and Marco Tomamichel (2025). *A Unified Approach to Quantum Contraction and Correlation Coefficients*. DOI: [10.48550/arXiv.2505.15281](https://doi.org/10.48550/arXiv.2505.15281). URL: <https://arxiv.org/abs/2505.15281v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Ian George and Marco Tomamichel (2025). *A Unified Approach to Quantum Contraction and Correlation Coefficients*. DOI: [10.48550/arXiv.2505.15281](https://doi.org/10.48550/arXiv.2505.15281). URL: <https://arxiv.org/abs/2505.15281v3>.
 
 *Commentary.*
 
