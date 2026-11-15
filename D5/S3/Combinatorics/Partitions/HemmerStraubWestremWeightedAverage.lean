@@ -7,165 +7,171 @@
    digest: The weighted Ev character average has an even binomial closed form. -/
 
 /-
-result
-proof_shape: content
-escape_witness: weighted_constant_term_series
+proof_shape: result: bind-only
+escape_witness: none
 admission_basis: open-problem-resolution (#21960; Proved)
-Direct frozen dependencies: F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22528.
 The four public definitions retain the expressions of equation (6.1).
 Private coefficient owners ev_right, right_coefficient and triProd are reused
-unchanged through Batteries.Tactic.OpenPrivate; their source is not modified.
+through Batteries.Tactic.OpenPrivate; their source is unchanged.
 The Frobenius coefficient model is inherited from HemmerStraubWestrem;
 its identification with an internal Specht-module character is not formalized.
-The marked-part aggregation and coefficient-induction uniqueness are content.
-Their live generating-series consequences remain content after helper expansion;
-coefficient rewrites and finite algebraic normalization are bind-only.
+Normalized formal ODE uniqueness applies PowerSeriesNormalizedContraction.exists_unique_fixed
+and UnitReversionSquareParity.agree_mul to termwise integration of the common driver.
+Every proof is bind-only after expanding the consumed helpers: partition removal
+uses Nat.Partition.partitionWithPartEquiv, and the remaining steps instantiate
+coefficient identities, reindex finite sums, and normalize algebraic expressions.
+No escape witness is asserted; admission uses the named external problem.
 
 Frozen declaration identities (not module pins):
-F01: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.R3
+F01: D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction | D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction.exists_unique_fixed
+  statement_id: sha256:bd62df5aa141eaff1ceec9e8af00309b4a8e194b4354ad180a51862599cef981
+F02: D5/S1/Recurrence/Invariants/UnitReversionSquareParity | D5.S1.Recurrence.Invariants.UnitReversionSquareParity.Agree
+  statement_id: sha256:76d7ce5ef0f66968d4516f93f05e27e9125f8f29944ffacca0d95b580f786d34
+F03: D5/S1/Recurrence/Invariants/UnitReversionSquareParity | D5.S1.Recurrence.Invariants.UnitReversionSquareParity.agree_mul
+  statement_id: sha256:b4802ea85bb0964fd0f4727040613a738a00c26e68db4c758612d114939c9e3a
+F04: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem | D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.R3
   statement_id: sha256:37fbbbc487632ea4ae9e7b29262def02f95e5ee9d67dbd3b68580099edd94140
-F02: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.altCoeff
-  statement_id: sha256:472b0bf9c8f5f8d3df7a2c8e3921554c416d75063d12fb457124e62e392693b6
-F03: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.evTypes
+F05: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem | D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes
   statement_id: sha256:1a00bd6f47288dfab76824cc704475a7b6fb23c66f72e621fb7f72e005dd5063
-F04: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.ev_right
-  statement_id: sha256:de1d4aa611b320c4a8cf8d33993809f56f860fc14845a0cb47701b2c3aa53013
-F05: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.frobChar
+F06: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem | D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.frobChar
   statement_id: sha256:8d961a5d4c7fff5a6f692b41435908f395bee0d610a4ccc6770419ba64d042fb
-F06: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.plusProd
-  statement_id: sha256:9889946200238b88426feeaf834da28a1c1f399a030a2193620e4a1e1d7002b4
-F07: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.result
+F07: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem | D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.result
   statement_id: sha256:7b038a7e2d0753c287105d56ea4273b6a0fc75c3bff18c86f29f1690774d7839
-F08: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.right_coefficient
-  statement_id: sha256:60d91e1a5dcc23fc2db91f1fe83ede8df723c904bf357f1e690c900665ee41c9
-F09: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.triProd
-  statement_id: sha256:2c3f837dc70fbb85d36540f52fcbeaf5843afc2c734767137ec868ae96e7980a
-F10: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2.Exponent
+F08: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2 | D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.Exponent
   statement_id: sha256:829f9b2dcba091642c63b32849553dc0b45fba447186e767a7eccc4ffa275aea
-F11: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2.exponentParts
+F09: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2 | D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.exponentParts
   statement_id: sha256:98805f7e97c35c1822084b9363b8490b390476cf38a403d416f3979e953c6506
-F12: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2.exponentParts.eq_1
+F10: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2 | D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.exponentParts.eq_1
   statement_id: sha256:7b6e56bf48d77611e4945a7747ff89810df27a35fea01864ba5cacf8712c4162
-F13: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2.exponentParts_partitionExponent
+F11: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2 | D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.exponentParts_partitionExponent
   statement_id: sha256:c1ffb4199ba3e9504403822eb44a5ffbe291e01c3f6fe2373aeca4588b1141f6
-F14: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2.partitionExponent
+F12: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2 | D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.partitionExponent
   statement_id: sha256:e8d32bd4e8f39ae5156a46ceec34053498f8cd902840afd26049860a7ce69210
-F15: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2.zExponent
+F13: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2 | D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zExponent
   statement_id: sha256:1c780283b2158f88276cff717fa73140f61975baf715afa98481bcd1ff07dbc3
-F16: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2.zExponent_add_single
+F14: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2 | D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zExponent_add_single
   statement_id: sha256:017f94a201ebbb6daff5cfa3b0a4e569951d4498cb4c56731ba7da3824102c20
-F17: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2.zExponent_pos
+F15: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2 | D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zExponent_pos
   statement_id: sha256:48c6e4d341a82d520959d4d3678067521e196cdfb9a9806ed8bbf0db67e600ec
-F18: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2.zPartition
+F16: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2 | D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zPartition
   statement_id: sha256:950d49e7fa84025719dbbb066a9b05ec1c1395bce4c56fb0475381b8cbe4ae0f
-F19: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2.zPartition.eq_1
+F17: D5/S3/Combinatorics/PerfectMatchings/DeformedJucysMurphyC2 | D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zPartition.eq_1
   statement_id: sha256:896769bfbd00a6d307c8d28e56d2ca6527e8f4385048c4b7d6f9b37da7c3c7d3
+F18: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem | _private.D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.0.D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.altCoeff
+  statement_id: sha256:472b0bf9c8f5f8d3df7a2c8e3921554c416d75063d12fb457124e62e392693b6
+F19: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem | _private.D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.0.D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.ev_right
+  statement_id: sha256:de1d4aa611b320c4a8cf8d33993809f56f860fc14845a0cb47701b2c3aa53013
+F20: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem | _private.D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.0.D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.plusProd
+  statement_id: sha256:9889946200238b88426feeaf834da28a1c1f399a030a2193620e4a1e1d7002b4
+F21: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem | _private.D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.0.D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.right_coefficient
+  statement_id: sha256:60d91e1a5dcc23fc2db91f1fe83ede8df723c904bf357f1e690c900665ee41c9
+F22: D5/S3/Combinatorics/Partitions/HemmerStraubWestrem | _private.D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.0.D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.triProd
+  statement_id: sha256:2c3f837dc70fbb85d36540f52fcbeaf5843afc2c734767137ec868ae96e7980a
 
 Per-declaration classification after expanding same-delivery helpers.
-Definitions organize the displayed expressions; they supply no escape witness.
-proof_shape: weight: bind-only; consumers: average_equality, leftAverage, rightAverage, rightAverage_constantTerm.
-Direct frozen dependencies (weight): F18.
-proof_shape: leftAverage: bind-only; consumers: average_equality, claim, result.
-Direct frozen dependencies (leftAverage): F01, F03, F05, F18.
-proof_shape: rightAverage: bind-only; consumers: average_equality, claim, result, rightAverage_closed, rightAverage_constantTerm.
-Direct frozen dependencies (rightAverage): F03, F05, F18.
-proof_shape: claim: bind-only; consumers: result.
-Direct frozen dependencies (claim): F01, F03, F05, F18.
-proof_shape: average_equality: bind-only; consumers: result.
-Direct frozen dependencies (average_equality): F01, F03, F05, F07, F18.
-proof_shape: rectangular_sum_coefficient: bind-only; consumers: character_constantTerm.
-Direct frozen dependencies (rectangular_sum_coefficient): F02, F03, F04, F05, F06, F08, F09.
-proof_shape: partition_exponent_count: bind-only; consumers: z_partition_cons.
-Direct frozen dependencies (partition_exponent_count): F11, F12, F13, F14.
-proof_shape: z_partition_cons: bind-only; consumers: cycle_term_cons.
-Direct frozen dependencies (z_partition_cons): F10, F11, F12, F13, F14, F15, F16, F18, F19.
-proof_shape: cycleTerm: bind-only; consumers: cycleAverage, cycle_average_recursion, cycle_average_zero, cycle_term_cons, marked_cycle_sum, rightAverage_constantTerm.
-Direct frozen dependencies (cycleTerm): F18.
-proof_shape: cycleAverage: bind-only; consumers: cycle_average_derivative, cycle_average_recursion, cycle_average_zero, cycle_generating_series, marked_cycle_sum, rightAverage_closed, rightAverage_constantTerm, weighted_constant_term_series.
-Direct frozen dependencies (cycleAverage): F18.
-proof_shape: cycle_term_cons: bind-only; consumers: marked_cycle_sum.
-Direct frozen dependencies (cycle_term_cons): F10, F11, F12, F13, F14, F15, F16, F17, F18, F19.
-proof_shape: marked_cycle_sum: content; escape_witness: marked_cycle_sum; consumers: cycle_average_recursion.
-Direct frozen dependencies (marked_cycle_sum): F10, F11, F12, F13, F14, F15, F16, F17, F18, F19.
-proof_shape: cycle_average_recursion: content; escape_witness: marked_cycle_sum; consumers: cycle_average_derivative.
-Direct frozen dependencies (cycle_average_recursion): F10, F11, F12, F13, F14, F15, F16, F17, F18, F19.
-proof_shape: cycle_average_zero: bind-only; consumers: cycle_generating_series.
-Direct frozen dependencies (cycle_average_zero): F10, F14, F18.
-proof_shape: cycle_average_derivative: content; escape_witness: cycle_average_recursion; consumers: cycle_generating_series.
-Direct frozen dependencies (cycle_average_derivative): F10, F11, F12, F13, F14, F15, F16, F17, F18, F19.
-proof_shape: power_series_ode_unique: content; escape_witness: power_series_ode_unique; consumers: cycle_generating_series.
-Direct frozen dependencies (power_series_ode_unique): none.
-proof_shape: square_series: bind-only; consumers: constant_term_cancellation.
-Direct frozen dependencies (square_series): none.
-proof_shape: consecutive_series: bind-only; consumers: constant_term_cancellation.
-Direct frozen dependencies (consecutive_series): none.
-proof_shape: constant_term_cancellation: bind-only; consumers: weighted_constant_term_series.
-Direct frozen dependencies (constant_term_cancellation): none.
-proof_shape: coefficient_even_cube: bind-only; consumers: rightAverage_closed.
-Direct frozen dependencies (coefficient_even_cube): none.
-proof_shape: geometric_square: bind-only; consumers: geometricSquare_derivative.
-Direct frozen dependencies (geometric_square): none.
-proof_shape: coeff_geometric: bind-only; consumers: geometric_derivative, three_square_derivative.
-Direct frozen dependencies (coeff_geometric): none.
-proof_shape: coeff_geometricSquare: bind-only; consumers: geometric_derivative, pair_coefficient.
-Direct frozen dependencies (coeff_geometricSquare): none.
-proof_shape: geometric_derivative: bind-only; consumers: geometricSquare_derivative.
-Direct frozen dependencies (geometric_derivative): none.
-proof_shape: geometricSquare_derivative: bind-only; consumers: three_square_derivative.
-Direct frozen dependencies (geometricSquare_derivative): none.
-proof_shape: three_square_derivative: bind-only; consumers: cycle_generating_series.
-Direct frozen dependencies (three_square_derivative): none.
-proof_shape: constantTermSeries: bind-only; consumers: constantTermSeries_map_mul, constantTermSeries_sub, constantTerm_pair, constantTerm_shift_pair, rightAverage_closed, weighted_constant_term_series.
-Direct frozen dependencies (constantTermSeries): none.
-proof_shape: constantTerm_C_mul: bind-only; consumers: character_constantTerm, constantTermSeries_map_mul.
-Direct frozen dependencies (constantTerm_C_mul): none.
-proof_shape: constantTermSeries_sub: bind-only; consumers: weighted_constant_term_series.
-Direct frozen dependencies (constantTermSeries_sub): none.
-proof_shape: constantTermSeries_map_mul: bind-only; consumers: weighted_constant_term_series.
-Direct frozen dependencies (constantTermSeries_map_mul): none.
-proof_shape: constantTerm_shift: bind-only; consumers: constantTerm_shift_pair.
-Direct frozen dependencies (constantTerm_shift): none.
-proof_shape: laurent_geometric_pair_term: bind-only; consumers: pair_coefficient.
-Direct frozen dependencies (laurent_geometric_pair_term): none.
-proof_shape: pair_coefficient: bind-only; consumers: pair_coefficient_one, pair_coefficient_zero.
-Direct frozen dependencies (pair_coefficient): none.
-proof_shape: pair_coefficient_zero: bind-only; consumers: constantTerm_pair.
-Direct frozen dependencies (pair_coefficient_zero): none.
-proof_shape: pair_coefficient_one: bind-only; consumers: constantTerm_shift_pair.
-Direct frozen dependencies (pair_coefficient_one): none.
-proof_shape: constantTerm_pair: bind-only; consumers: weighted_constant_term_series.
-Direct frozen dependencies (constantTerm_pair): none.
-proof_shape: constantTerm_shift_pair: bind-only; consumers: weighted_constant_term_series.
-Direct frozen dependencies (constantTerm_shift_pair): none.
-proof_shape: cycleInput: bind-only; consumers: character_constantTerm, cycleInput_product, cycle_generating_series, rightAverage_closed, rightAverage_constantTerm, weighted_constant_term_series.
-Direct frozen dependencies (cycleInput): none.
-proof_shape: cycle_generating_series: content; escape_witness: cycle_average_recursion, power_series_ode_unique; consumers: weighted_constant_term_series.
-Direct frozen dependencies (cycle_generating_series): F10, F11, F12, F13, F14, F15, F16, F17, F18, F19.
-proof_shape: geometricSquare_one: bind-only; consumers: weighted_constant_term_series.
-Direct frozen dependencies (geometricSquare_one): none.
-proof_shape: weighted_constant_term_series: content; escape_witness: cycle_generating_series; consumers: rightAverage_closed.
-Direct frozen dependencies (weighted_constant_term_series): F10, F11, F12, F13, F14, F15, F16, F17, F18, F19.
-proof_shape: laurent_coefficient_nat: bind-only; consumers: constantTerm_polynomial_shift.
-Direct frozen dependencies (laurent_coefficient_nat): none.
-proof_shape: constantTerm_polynomial_shift: bind-only; consumers: constantTerm_polynomial_difference.
-Direct frozen dependencies (constantTerm_polynomial_shift): none.
-proof_shape: constantTerm_polynomial_difference: bind-only; consumers: character_constantTerm.
-Direct frozen dependencies (constantTerm_polynomial_difference): none.
-proof_shape: laurent_trinomial: bind-only; consumers: laurent_product.
-Direct frozen dependencies (laurent_trinomial): none.
-proof_shape: laurent_product: bind-only; consumers: cycleInput_product.
-Direct frozen dependencies (laurent_product): F09.
-proof_shape: cycleInput_product: bind-only; consumers: character_constantTerm.
-Direct frozen dependencies (cycleInput_product): F09.
-proof_shape: character_constantTerm: bind-only; consumers: rightAverage_constantTerm.
-Direct frozen dependencies (character_constantTerm): F02, F03, F04, F05, F06, F08, F09.
-proof_shape: rightAverage_constantTerm: bind-only; consumers: rightAverage_closed.
-Direct frozen dependencies (rightAverage_constantTerm): F02, F03, F04, F05, F06, F08, F09, F18.
-proof_shape: rightAverage_closed: content; escape_witness: weighted_constant_term_series; consumers: result.
-Direct frozen dependencies (rightAverage_closed): F02, F03, F04, F05, F06, F08, F09, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19.
-proof_shape: result: content; escape_witness: weighted_constant_term_series; consumers: settling result.
-Direct frozen dependencies (result): F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19.
+proof_shape: weight: bind-only; escape_witness: none; consumers: leftAverage, rightAverage, average_equality, rightAverage_constantTerm.
+Direct frozen dependencies after helper expansion (weight): F16.
+proof_shape: leftAverage: bind-only; escape_witness: none; consumers: claim, average_equality, result.
+Direct frozen dependencies after helper expansion (leftAverage): F04, F05, F06, F16.
+proof_shape: rightAverage: bind-only; escape_witness: none; consumers: claim, average_equality, rightAverage_constantTerm, rightAverage_closed, result.
+Direct frozen dependencies after helper expansion (rightAverage): F05, F06, F16.
+proof_shape: claim: bind-only; escape_witness: none; consumers: result.
+Direct frozen dependencies after helper expansion (claim): F04, F05, F06, F16.
+proof_shape: average_equality: bind-only; escape_witness: none; consumers: result.
+Direct frozen dependencies after helper expansion (average_equality): F04, F05, F06, F07, F16.
+proof_shape: rectangular_sum_coefficient: bind-only; escape_witness: none; consumers: character_constantTerm.
+Direct frozen dependencies after helper expansion (rectangular_sum_coefficient): F05, F06, F18, F19, F20, F21, F22.
+proof_shape: partition_exponent_count: bind-only; escape_witness: none; consumers: z_partition_cons.
+Direct frozen dependencies after helper expansion (partition_exponent_count): F08, F09, F10, F11, F12.
+proof_shape: z_partition_cons: bind-only; escape_witness: none; consumers: cycle_term_cons.
+Direct frozen dependencies after helper expansion (z_partition_cons): F08, F09, F10, F11, F12, F13, F14, F16, F17.
+proof_shape: cycleTerm: bind-only; escape_witness: none; consumers: cycleAverage, cycle_term_cons, marked_cycle_sum, cycle_average_recursion, cycle_average_zero, rightAverage_constantTerm.
+Direct frozen dependencies after helper expansion (cycleTerm): F16.
+proof_shape: cycleAverage: bind-only; escape_witness: none; consumers: marked_cycle_sum, cycle_average_recursion, cycle_average_zero, cycle_average_derivative, cycle_generating_series, weighted_constant_term_series, rightAverage_constantTerm, rightAverage_closed.
+Direct frozen dependencies after helper expansion (cycleAverage): F16.
+proof_shape: cycle_term_cons: bind-only; escape_witness: none; consumers: marked_cycle_sum.
+Direct frozen dependencies after helper expansion (cycle_term_cons): F08, F09, F10, F11, F12, F13, F14, F15, F16, F17.
+proof_shape: marked_cycle_sum: bind-only; escape_witness: none; consumers: cycle_average_recursion.
+Direct frozen dependencies after helper expansion (marked_cycle_sum): F08, F09, F10, F11, F12, F13, F14, F15, F16, F17.
+proof_shape: cycle_average_recursion: bind-only; escape_witness: none; consumers: cycle_average_derivative.
+Direct frozen dependencies after helper expansion (cycle_average_recursion): F08, F09, F10, F11, F12, F13, F14, F15, F16, F17.
+proof_shape: cycle_average_zero: bind-only; escape_witness: none; consumers: cycle_generating_series.
+Direct frozen dependencies after helper expansion (cycle_average_zero): F08, F12, F16.
+proof_shape: cycle_average_derivative: bind-only; escape_witness: none; consumers: cycle_generating_series.
+Direct frozen dependencies after helper expansion (cycle_average_derivative): F08, F09, F10, F11, F12, F13, F14, F15, F16, F17.
+proof_shape: power_series_ode_unique: bind-only; escape_witness: none; consumers: cycle_generating_series.
+Direct frozen dependencies after helper expansion (power_series_ode_unique): F01, F02, F03.
+proof_shape: square_series: bind-only; escape_witness: none; consumers: constant_term_cancellation.
+Direct frozen dependencies after helper expansion (square_series): none.
+proof_shape: consecutive_series: bind-only; escape_witness: none; consumers: constant_term_cancellation.
+Direct frozen dependencies after helper expansion (consecutive_series): none.
+proof_shape: constant_term_cancellation: bind-only; escape_witness: none; consumers: weighted_constant_term_series.
+Direct frozen dependencies after helper expansion (constant_term_cancellation): none.
+proof_shape: coefficient_even_cube: bind-only; escape_witness: none; consumers: rightAverage_closed.
+Direct frozen dependencies after helper expansion (coefficient_even_cube): none.
+proof_shape: geometric_square: bind-only; escape_witness: none; consumers: geometricSquare_derivative.
+Direct frozen dependencies after helper expansion (geometric_square): none.
+proof_shape: coeff_geometric: bind-only; escape_witness: none; consumers: geometric_derivative, three_square_derivative.
+Direct frozen dependencies after helper expansion (coeff_geometric): none.
+proof_shape: coeff_geometricSquare: bind-only; escape_witness: none; consumers: geometric_derivative, pair_coefficient.
+Direct frozen dependencies after helper expansion (coeff_geometricSquare): none.
+proof_shape: geometric_derivative: bind-only; escape_witness: none; consumers: geometricSquare_derivative.
+Direct frozen dependencies after helper expansion (geometric_derivative): none.
+proof_shape: geometricSquare_derivative: bind-only; escape_witness: none; consumers: three_square_derivative.
+Direct frozen dependencies after helper expansion (geometricSquare_derivative): none.
+proof_shape: three_square_derivative: bind-only; escape_witness: none; consumers: cycle_generating_series.
+Direct frozen dependencies after helper expansion (three_square_derivative): none.
+proof_shape: constantTermSeries: bind-only; escape_witness: none; consumers: constantTermSeries_sub, constantTermSeries_map_mul, constantTerm_pair, constantTerm_shift_pair, weighted_constant_term_series, rightAverage_closed.
+Direct frozen dependencies after helper expansion (constantTermSeries): none.
+proof_shape: constantTerm_C_mul: bind-only; escape_witness: none; consumers: constantTermSeries_map_mul, character_constantTerm.
+Direct frozen dependencies after helper expansion (constantTerm_C_mul): none.
+proof_shape: constantTermSeries_sub: bind-only; escape_witness: none; consumers: weighted_constant_term_series.
+Direct frozen dependencies after helper expansion (constantTermSeries_sub): none.
+proof_shape: constantTermSeries_map_mul: bind-only; escape_witness: none; consumers: weighted_constant_term_series.
+Direct frozen dependencies after helper expansion (constantTermSeries_map_mul): none.
+proof_shape: constantTerm_shift: bind-only; escape_witness: none; consumers: constantTerm_shift_pair.
+Direct frozen dependencies after helper expansion (constantTerm_shift): none.
+proof_shape: laurent_geometric_pair_term: bind-only; escape_witness: none; consumers: pair_coefficient.
+Direct frozen dependencies after helper expansion (laurent_geometric_pair_term): none.
+proof_shape: pair_coefficient: bind-only; escape_witness: none; consumers: pair_coefficient_zero, pair_coefficient_one.
+Direct frozen dependencies after helper expansion (pair_coefficient): none.
+proof_shape: pair_coefficient_zero: bind-only; escape_witness: none; consumers: constantTerm_pair.
+Direct frozen dependencies after helper expansion (pair_coefficient_zero): none.
+proof_shape: pair_coefficient_one: bind-only; escape_witness: none; consumers: constantTerm_shift_pair.
+Direct frozen dependencies after helper expansion (pair_coefficient_one): none.
+proof_shape: constantTerm_pair: bind-only; escape_witness: none; consumers: weighted_constant_term_series.
+Direct frozen dependencies after helper expansion (constantTerm_pair): none.
+proof_shape: constantTerm_shift_pair: bind-only; escape_witness: none; consumers: weighted_constant_term_series.
+Direct frozen dependencies after helper expansion (constantTerm_shift_pair): none.
+proof_shape: cycleInput: bind-only; escape_witness: none; consumers: cycle_generating_series, weighted_constant_term_series, cycleInput_product, character_constantTerm, rightAverage_constantTerm, rightAverage_closed.
+Direct frozen dependencies after helper expansion (cycleInput): none.
+proof_shape: cycle_generating_series: bind-only; escape_witness: none; consumers: weighted_constant_term_series.
+Direct frozen dependencies after helper expansion (cycle_generating_series): F01, F02, F03, F08, F09, F10, F11, F12, F13, F14, F15, F16, F17.
+proof_shape: geometricSquare_one: bind-only; escape_witness: none; consumers: weighted_constant_term_series.
+Direct frozen dependencies after helper expansion (geometricSquare_one): none.
+proof_shape: weighted_constant_term_series: bind-only; escape_witness: none; consumers: rightAverage_closed.
+Direct frozen dependencies after helper expansion (weighted_constant_term_series): F01, F02, F03, F08, F09, F10, F11, F12, F13, F14, F15, F16, F17.
+proof_shape: laurent_coefficient_nat: bind-only; escape_witness: none; consumers: constantTerm_polynomial_shift.
+Direct frozen dependencies after helper expansion (laurent_coefficient_nat): none.
+proof_shape: constantTerm_polynomial_shift: bind-only; escape_witness: none; consumers: constantTerm_polynomial_difference.
+Direct frozen dependencies after helper expansion (constantTerm_polynomial_shift): none.
+proof_shape: constantTerm_polynomial_difference: bind-only; escape_witness: none; consumers: character_constantTerm.
+Direct frozen dependencies after helper expansion (constantTerm_polynomial_difference): none.
+proof_shape: laurent_trinomial: bind-only; escape_witness: none; consumers: laurent_product.
+Direct frozen dependencies after helper expansion (laurent_trinomial): none.
+proof_shape: laurent_product: bind-only; escape_witness: none; consumers: cycleInput_product.
+Direct frozen dependencies after helper expansion (laurent_product): F22.
+proof_shape: cycleInput_product: bind-only; escape_witness: none; consumers: character_constantTerm.
+Direct frozen dependencies after helper expansion (cycleInput_product): F22.
+proof_shape: character_constantTerm: bind-only; escape_witness: none; consumers: rightAverage_constantTerm.
+Direct frozen dependencies after helper expansion (character_constantTerm): F05, F06, F18, F19, F20, F21, F22.
+proof_shape: rightAverage_constantTerm: bind-only; escape_witness: none; consumers: rightAverage_closed.
+Direct frozen dependencies after helper expansion (rightAverage_constantTerm): F05, F06, F16, F18, F19, F20, F21, F22.
+proof_shape: rightAverage_closed: bind-only; escape_witness: none; consumers: result.
+Direct frozen dependencies after helper expansion (rightAverage_closed): F01, F02, F03, F05, F06, F08, F09, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22.
+proof_shape: result: bind-only; escape_witness: none; consumers: external open-problem result.
+Direct frozen dependencies after helper expansion (result): F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22.
 -/
 
 import Batteries.Tactic.OpenPrivate
