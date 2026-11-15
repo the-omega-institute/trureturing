@@ -3002,7 +3002,7 @@ $$
 M(\Omega)=\sum_{j=0}^{N-3}Q_j(\Omega),\qquad
 \mathcal K_N=\{\Omega=\Omega^\dagger\succeq0:
   \operatorname{Tr}\Omega=1,\ \operatorname{rank}M(\Omega)\le4\}.
-\tag{VIII.77}
+\tag{VIII.88}
 $$
 
 This definition uses $N$ and the carrier basis, without a core, boundary,
@@ -3012,7 +3012,7 @@ binary bond-two vectors $\psi(w)=lB_wr$ of Definition 137.1. No regularity
 is imposed on $B,l,r$ in $\mathcal D_N$. Closure below means closure of
 these normalized densities in the finite-dimensional density space.
 The extra mixed elements of $\mathcal K_N$ are mathematical competitors,
-not an additional acquisition permission. In particular (VIII.77) is not
+not an additional acquisition permission. In particular (VIII.88) is not
 an assertion that mixtures of arbitrary different-core sources belong to
 $\mathcal K_N$, or that this set is convex. Its unobserved-window constraint
 is a model constraint, not a table of acquired window outcomes.
@@ -3022,7 +3022,7 @@ $\mathcal K_N$ is compact and rational semialgebraic, and
 
 $$
 \mathcal D_N\subseteq\overline{\mathcal D_N}\subseteq\mathcal K_N.
-\tag{VIII.78}
+\tag{VIII.89}
 $$
 
 Proof. Put $F_k(B)[u,(i,j)]=(B_u)_{j,i}$, with $(i,j)$ in row-major
@@ -3041,7 +3041,7 @@ $\operatorname{ran}F_3(B)$ of dimension at most four, proving inclusion
 of $\mathcal D_N$. Density matrices form a closed bounded subset of a
 finite-dimensional real vector space. Partial trace is linear, and rank
 at most four is closed, so $\mathcal K_N$ is compact and contains the
-closure in (VIII.78). More explicitly, represent Hermitian entries by
+closure in (VIII.89). More explicitly, represent Hermitian entries by
 real and imaginary coordinates. Positivity is given by nonnegative
 principal minors, trace one is linear, and rank at most four by vanishing
 real and imaginary parts of all $5\times5$ minors of the $8\times8$
@@ -3064,7 +3064,7 @@ E:X\longmapsto\sum_iA_iXA_i^\dagger&\text{ is injective on }M_2(\mathbb C),\\
 P_p=(E^*)^p(l^\dagger l)&\succ0,\qquad
 H_q=E^q(rr^\dagger)\succ0.
 \end{aligned}
-\tag{VIII.79}
+\tag{VIII.90}
 $$
 
 Here $E^*(X)=\sum_iA_i^\dagger XA_i$, and the left boundary $l$ remains
@@ -3072,7 +3072,7 @@ bilinear in $lA_wr$. Then
 
 $$
 \{\Omega\in\mathcal K_N:Q_p(\Omega)=Q_p(\rho)\}=\{\rho\}.
-\tag{VIII.80}
+\tag{VIII.91}
 $$
 
 The competitor $\Omega$ may be mixed or a limit of actual sources. It
@@ -3086,19 +3086,19 @@ Proof. Write $F_n=F_n(A)$ and $G_n=\operatorname{ran}F_n$. Two-site
 spanning makes $F_n$ injective for all $n\ge2$: this is precisely the
 existing trace-separation statement for
 $\Gamma_n(X)(w)=\operatorname{Tr}(XA_w)=F_n\operatorname{vec}X$.
-The exterior dictionary and (VIII.79) give
+The exterior dictionary and (VIII.90) give
 
 $$
 Q_p(\rho)=Z^{-1}F_3(H_q\otimes P_p^{\mathsf T})F_3^\dagger,
 \qquad \operatorname{rank}Q_p(\rho)=4,
 \qquad \operatorname{ran}Q_p(\rho)=G_3.
-\tag{VIII.81}
+\tag{VIII.92}
 $$
 
-For a competitor in (VIII.80), all $Q_j(\Omega)$ are positive. For a
+For a competitor in (VIII.91), all $Q_j(\Omega)$ are positive. For a
 finite sum of positive matrices the kernel is the intersection of their
 kernels, so the range is the sum of their ranges. Since one summand in
-$M(\Omega)$ already has range $G_3$ of dimension four, (VIII.77) forces
+$M(\Omega)$ already has range $G_3$ of dimension four, (VIII.88) forces
 $\operatorname{ran}Q_j(\Omega)\subseteq G_3$ for every $j$.
 Let $\Pi$ be the orthogonal projector onto $G_3$, and let
 $C_j=I^{\otimes j}\otimes(I-\Pi)\otimes I^{\otimes(N-j-3)}$. Then
@@ -3107,7 +3107,7 @@ $$
 0=\operatorname{Tr}((I-\Pi)Q_j(\Omega))
  =\operatorname{Tr}(C_j\Omega)
  =\|C_j\Omega^{1/2}\|_F^2.
-\tag{VIII.82}
+\tag{VIII.93}
 $$
 
 Consequently the global support of $\Omega$ lies in every translated
@@ -3116,13 +3116,13 @@ triple parent space. The existing parent-intersection theorem gives
 $$
 (G_n\otimes\mathbb C^2)\cap(\mathbb C^2\otimes G_n)=G_{n+1}
 \quad(n\ge3).
-\tag{VIII.83}
+\tag{VIII.94}
 $$
 
 Its $n=3$ case includes length four. Inducting from the triple constraints,
 the intersection of all their translates at length $N$ is $G_N$: the
 constraints on the first and last $n$ sites give the two spaces in
-(VIII.83), and conversely vectors in $G_{n+1}$ satisfy both families.
+(VIII.94), and conversely vectors in $G_{n+1}$ satisfy both families.
 This uses the target's parent theorem on arbitrary vectors in the support,
 without assigning a core to $\Omega$.
 
@@ -3131,7 +3131,7 @@ support inclusion now gives
 
 $$
 \Omega=F_NWF_N^\dagger,\qquad W=J_N\Omega J_N^\dagger\succeq0.
-\tag{VIII.84}
+\tag{VIII.95}
 $$
 
 The coefficient $W$ is unique. It is an unrestricted $4\times4$ positive
@@ -3149,7 +3149,7 @@ Q_p(F_NWF_N^\dagger)&=F_3\mathcal T_{p,q}(W)F_3^\dagger,\\
  (A_b\otimes A_a^{\mathsf T})W
  (A_b\otimes A_a^{\mathsf T})^\dagger.
 \end{aligned}
-\tag{VIII.85}
+\tag{VIII.96}
 $$
 
 To fix the order and transpose, the column for $\operatorname{vec}X$
@@ -3159,7 +3159,7 @@ $\operatorname{vec}(A_bXA_a)=(A_b\otimes A_a^{\mathsf T})
 \operatorname{vec}X$ in row-major order. For a matrix unit
 $W=|\operatorname{vec}X\rangle\langle\operatorname{vec}Y|$ the
 partial trace sums this column times the conjugate $Y$ column over the
-same actual $a,b$. This is (VIII.85); such units span every $W$.
+same actual $a,b$. This is (VIII.96); such units span every $W$.
 
 Define the complex-linear map
 
@@ -3169,7 +3169,7 @@ L(Y)=\sum_iA_i^{\mathsf T}Y\overline{A_i}
 $$
 
 Under $M_4(\mathbb C)=M_2(\mathbb C)\otimes M_2(\mathbb C)$,
-(VIII.85) is $\mathcal T_{p,q}=E^q\otimes L^p$. Indeed, on a simple
+(VIII.96) is $\mathcal T_{p,q}=E^q\otimes L^p$. Indeed, on a simple
 tensor the two word sums separate; iterating $L$ gives the left word
 sum after reversing its dummy word indices. Finite-dimensional
 injectivity of $E$ implies invertibility of $E$ and of its
@@ -3179,12 +3179,12 @@ coordinates. No positive or physically implementable inverse is asserted.
 
 For the target, put $v=\operatorname{vec}(rl)$ and $W_0=vv^\dagger/Z$;
 then $\rho=F_NW_0F_N^\dagger$. Apply a left inverse of $F_3$ on both
-sides of equality of the triple matrices. Equations (VIII.84)--(VIII.85)
+sides of equality of the triple matrices. Equations (VIII.95)--(VIII.96)
 give $\mathcal T_{p,q}(W)=\mathcal T_{p,q}(W_0)$, hence $W=W_0$ and
-$\Omega=\rho$. This proves (VIII.80) over the enlarged domain. $\square$
+$\Omega=\rho$. This proves (VIII.91) over the enlarged domain. $\square$
 
 **Corollary 153.2 (pointwise stability at the regular target).** Under
-(VIII.79), for every $\epsilon>0$ the set
+(VIII.90), for every $\epsilon>0$ the set
 $\{\Omega\in\mathcal K_N:T(\Omega,\rho)\ge\epsilon\}$, if nonempty,
 has a strictly positive minimum of
 $\|Q_p(\Omega)-Q_p(\rho)\|_F$. Here
@@ -3194,7 +3194,7 @@ $q_j\to Q_p(\rho)$, $r_j\to0$ with $r_j\ge0$, then all members of
 $$
 \mathcal F_j=\{\Omega\in\mathcal K_N:
                      \|Q_p(\Omega)-q_j\|_F\le r_j\}
-\tag{VIII.86}
+\tag{VIII.97}
 $$
 
 approach $\rho$ whenever these sets are nonempty. Their Frobenius and
@@ -3202,14 +3202,14 @@ trace-distance diameters tend to zero. This is pointwise in the stated
 $N,p,q,\rho$, without a uniform conditioning constant or a rate.
 
 Proof. The set at distance at least $\epsilon$ is compact by Theorem
-152.2. The continuous discrepancy has no zero there by (VIII.80), so
-its attained minimum is positive. Alternatively, members of (VIII.86)
+152.2. The continuous discrepancy has no zero there by (VIII.91), so
+its attained minimum is positive. Alternatively, members of (VIII.97)
 staying a fixed distance away would have a convergent subsequence in
 $\mathcal K_N$ whose limit has the exact target triple, contradicting
-(VIII.80). The same argument with Frobenius distance proves Frobenius
+(VIII.91). The same argument with Frobenius distance proves Frobenius
 diameter convergence, or one may use equivalence of finite-dimensional
 norms. This is the compact singleton-fiber argument; the new ingredient
-needed to apply it here is (VIII.80), not injectivity on a possibly
+needed to apply it here is (VIII.91), not injectivity on a possibly
 nonclosed actual image. $\square$
 
 ## 154. A paid full-qubit triple readout and its returned instrument
@@ -3237,7 +3237,7 @@ three disjoint pairs,
 $$
 U_b=\bigotimes_{k=1}^3
  \left[B_{t_ka_k}(1/2)(P_{t_k}(b_k)\otimes I_{a_k})\right],
-\tag{VIII.87}
+\tag{VIII.98}
 $$
 
 then read both occupations of each pair and retain all six bits.
@@ -3263,7 +3263,7 @@ E_{00}^{(b)}&=(I+Z)/4,&E_{11}^{(b)}&=(I-Z)/4,\\
 E_{10}^{(b)}&=(I-cZ+sQ_b)/4,&
 E_{01}^{(b)}&=(I+cZ-sQ_b)/4.
 \end{aligned}
-\tag{VIII.88}
+\tag{VIII.99}
 $$
 
 Select $E_0=E_{00}^{(0)}$, $E_1=E_{11}^{(0)}$,
@@ -3276,7 +3276,7 @@ D_1&=I+X-\frac{1+c}{s}Y-Z,\\
 D_2&=\frac{2c}{s^2}X+\frac2sY,\qquad
 D_3=-\frac2{s^2}X.
 \end{aligned}
-\tag{VIII.89}
+\tag{VIII.100}
 $$
 
 For $i,k,l\in\{0,1,2,3\}$, let $p_{ikl}$ be the probability of the
@@ -3287,7 +3287,7 @@ are respectively $00,11,10,10$. Then
 
 $$
 Q_p(\rho)=\sum_{i,k,l}p_{ikl}\,D_i\otimes D_k\otimes D_l.
-\tag{VIII.90}
+\tag{VIII.101}
 $$
 
 These are 64 event probabilities in eight normalized setting laws, not
@@ -3304,10 +3304,10 @@ $$
  (\Pi_oU_b\otimes I_R)
  (\varrho_{TR}\otimes|+++\rangle\langle+++|_a)
  (U_b^\dagger\Pi_o\otimes I_R).
-\tag{VIII.91}
+\tag{VIII.102}
 $$
 
-Tensor factors in (VIII.91) are placed in the fixed $T,a,R$ order.
+Tensor factors in (VIII.102) are placed in the fixed $T,a,R$ order.
 $\Pi_o$ is the product of the six actual occupation projectors.
 The record $h_{b,o}$ augments the fixed commission's actual retained
 preparation, source, endpoint, version, control, detector and native
@@ -3318,17 +3318,17 @@ outcome-dependent changes of its conditional state. The probes are
 consumed into their measured states; the input is disturbed.
 
 Proof. Insert $|+\rangle$ into the second factor of the full $4\times4$
-unitary in (VIII.87). The $00$ and $11$ rows give half their respective
+unitary in (VIII.98). The $00$ and $11$ rows give half their respective
 occupation projectors. The $10$ row on the target is
 $2^{-1/2}(i\sin(1/2),\cos(1/2)e^{-ib})$; its outer product gives
-$E_{10}^{(b)}$ in (VIII.88), using $2\sin(1/2)\cos(1/2)=s$.
+$E_{10}^{(b)}$ in (VIII.99), using $2\sin(1/2)\cos(1/2)=s$.
 The $01$ row gives the remaining effect. This computes the effects on
 the entire target qubit, not a restriction to a single-excitation code.
 The coordinate determinant of $E_0,E_1,E_2,E_3$ in the $I,X,Y,Z$ basis
-is $-s^3/128\ne0$. Substituting (VIII.89), using $s^2+c^2=1$, gives
+is $-s^3/128\ne0$. Substituting (VIII.100), using $s^2+c^2=1$, gives
 $\operatorname{Tr}(D_iE_j)=\delta_{ij}$. Tensoring this duality proves
-(VIII.90), the ordinary finite-frame inverse. The physical instrument
-is instead (VIII.91), the product occupation instrument after the
+(VIII.101), the ordinary finite-frame inverse. The physical instrument
+is instead (VIII.102), the product occupation instrument after the
 unitary with its supplied probe state; its branch sum is trace
 preserving. The inverse coefficients $D_i$ are classical reconstruction
 matrices, not new effects, gates or a physical inverse. $\square$
@@ -3338,7 +3338,7 @@ matrices, not new effects, gates or a physical inverse. $\square$
 **Definition 155.1 (rational confidence sets and the stopping predicate).**
 The public parameters are integers $p,q\ge1$, $N=p+3+q$, and rational
 $0<\epsilon,\delta<1$. The model promise is a fixed unknown target
-satisfying (VIII.79). For every requested finite prefix, supply fresh
+satisfying (VIII.90). For every requested finite prefix, supply fresh
 source-matched full $N$-site inputs whose joint marginal is the product
 of that target density. They are prepared independently by the source,
 not cloned from a sample. Probe preparations and the ideal instruments
@@ -3366,18 +3366,18 @@ $$
 \delta_j=\delta\,2^{-j-1},\qquad
 u_j=(L+j+1)2^{-\lfloor j/2\rfloor},\qquad
 C_*=2^{18},\qquad r_j=C_*u_j+2^{-j}.
-\tag{VIII.92}
+\tag{VIII.103}
 $$
 
 Compute a rational Hermitian $q_j$ with
 $\|q_j-\widetilde q_j\|_F\le2^{-j}$. For example, certified Taylor
 bounds for $\sin1,\cos1$, followed by rational interval arithmetic in
-(VIII.89)--(VIII.90), produce this approximation in finite work.
+(VIII.100)--(VIII.101), produce this approximation in finite work.
 The denominator is bounded away from zero by $s>1/2$ and $1+c>1$.
 Round conjugate entries together to retain Hermiticity. Neither $q_j$
 nor $\widetilde q_j$ is required to be positive or trace one.
 
-Form $\mathcal F_j$ from (VIII.86) with these rational $q_j,r_j$.
+Form $\mathcal F_j$ from (VIII.97) with these rational $q_j,r_j$.
 The controller first decides whether $\mathcal F_j$ is nonempty. If
 it is empty, it retains that outcome and continues; it does not declare
 an empty-set diameter certificate. If nonempty, it decides
@@ -3385,7 +3385,7 @@ an empty-set diameter certificate. If nonempty, it decides
 $$
 \forall\Omega,\Sigma\in\mathcal F_j,\qquad
  \|\Omega-\Sigma\|_F^2\le\frac{4\epsilon^2}{2^N}.
-\tag{VIII.93}
+\tag{VIII.104}
 $$
 
 It stops at the first successful nonempty test and returns an algebraic
@@ -3404,7 +3404,7 @@ $$
 \Pr\{\tau<\infty\}=1,\qquad
 \Pr\{\tau<\infty\ \text{and}\ T(\widehat\rho,\rho)\le\epsilon\}
  \ge1-\delta.
-\tag{VIII.94}
+\tag{VIII.105}
 $$
 
 More precisely, an event of probability at least $1-\delta$ has
@@ -3412,7 +3412,7 @@ $\rho\in\mathcal F_j$ at every reached epoch, finite stopping, and the
 error guarantee at that stop. Empty confidence sets at earlier epochs
 are explicitly allowed off this event. The returned algebraic matrix is
 a normalized classical density estimate and may be mixed or nonactual.
-It is not the physical returned bank of (VIII.91), a restored input,
+It is not the physical returned bank of (VIII.102), a restored input,
 raw amplitude scale, or external preparation memory.
 
 Proof. The trace-dual identity already supplies the estimator's mean.
@@ -3422,7 +3422,7 @@ setting are iid in $[0,1]$. Hoeffding's inequality and a union bound give
 $$
 \Pr\{\max_{i,k,l}|\widehat p_{ikl,j}-p_{ikl}|>u_j\}
  \le128e^{-2m_ju_j^2}\le\delta_j.
-\tag{VIII.95}
+\tag{VIII.106}
 $$
 
 No independence between different selected events in the same record
@@ -3434,7 +3434,7 @@ These coarse radii tend to zero without a logarithm or irrational
 confidence threshold being an input to the controller.
 
 For completeness, $0<c<1$ and $1/2<s<1$ bound the squared Frobenius
-norms of the four matrices in (VIII.89) by $14,38,160,128$ respectively.
+norms of the four matrices in (VIII.100) by $14,38,160,128$ respectively.
 Each norm is less than $16$. Hence
 
 $$
@@ -3442,10 +3442,10 @@ $$
  \le\left(\sum_i\|D_i\|_F\right)^3
       \max_{i,k,l}|\widehat p_{ikl,j}-p_{ikl}|
  \le C_*\max_{i,k,l}|\widehat p_{ikl,j}-p_{ikl}|.
-\tag{VIII.96}
+\tag{VIII.107}
 $$
 
-Combining (VIII.95), the rational approximation and
+Combining (VIII.106), the rational approximation and
 $\sum_{j\ge0}\delta_j=\delta$ gives the simultaneous event
 $\|q_j-Q_p(\rho)\|_F\le r_j$ for every $j$, of probability at least
 $1-\delta$. This is the standard summable confidence allocation, as in
@@ -3457,26 +3457,26 @@ using a fixed-time interval at a data-chosen stopping time.
 The constraints defining $\mathcal F_j$ are finite rational polynomial
 constraints: Theorem 152.2's density and minor constraints together
 with the squared Frobenius inequality. Real quantifier elimination
-decides nonemptiness and (VIII.93). Standard semialgebraic sampling over
+decides nonemptiness and (VIII.104). Standard semialgebraic sampling over
 the real algebraic numbers supplies a sample point if nonempty, encoded
 by finite integer polynomials, isolating data and real/imaginary entries.
 This is an effective mathematical prescription, with no implementation
 or feasible complexity assertion. For $d=2^N$,
 $T(\Omega,\Sigma)\le\sqrt d\|\Omega-\Sigma\|_F/2$; therefore
-(VIII.93) bounds trace-distance diameter by $\epsilon$. On simultaneous
+(VIII.104) bounds trace-distance diameter by $\epsilon$. On simultaneous
 coverage the target belongs to every $\mathcal F_j$, so any returned
 sample point has the asserted error, including at the random first stop.
 
 On that event $q_j\to Q_p(\rho)$ and $r_j\to0$. Corollary 153.2
 makes the nonempty sets' Frobenius diameters tend to zero, eventually
-satisfying (VIII.93). No value of its target-dependent positive minimum
+satisfying (VIII.104). No value of its target-dependent positive minimum
 is needed by the controller. To obtain almost-sure stopping, realize
 the potential infinite iid schedule for the proof. The failure bounds
-in (VIII.95) are summable, so Borel--Cantelli gives only finitely many
+in (VIII.106) are summable, so Borel--Cantelli gives only finitely many
 failed epochs almost surely. Thereafter the target belongs to
 $\mathcal F_j$, the local estimates converge, and the same diameter
 argument yields a finite successful epoch. An execution which already
-stopped earlier is also finite. This proves (VIII.94), while leaving
+stopped earlier is also finite. This proves (VIII.105), while leaving
 the error guarantee on an early off-confidence stop only at its stated
 probability level. The proof uses no independence between epochs beyond
 the per-epoch iid laws and their summable error bounds. $\square$
@@ -3488,12 +3488,12 @@ bound on their conditioning is supplied to the controller. The tolerance
 $\epsilon$ is strictly positive: the theorem does not assert finite-data
 exact recovery at $\epsilon=0$. Exact ideal instruments and calibrated
 coherent probes are separate precision/noise promises. If an apparatus
-instead has a nonvanishing unknown error, (VIII.95)--(VIII.96) do not
+instead has a nonvanishing unknown error, (VIII.106)--(VIII.107) do not
 give shrinking confidence sets about the target; arbitrary-precision
 stopping does not follow. A small conditional diameter is not a test
 that an arbitrary $N$-qubit input obeys the homogeneous model.
 
-For the operational reading of (VIII.94), every reached finite epoch,
+For the operational reading of (VIII.105), every reached finite epoch,
 finite classical computation and output is supplied its actual material,
 rights, storage, paid holds and service progress. This means arbitrary
 finite requests can be met as needed, not that a fixed finite bank,
@@ -3546,7 +3546,7 @@ versions, durations and fees. Every extra and original output finishes
 its own sealing, Print, End, local ACK and same-root Return with charged
 scratch clearing. A pending cut is the actual executed prefix with its
 dirty systems, parser/acquisition phases and owed actions; it is not the
-completed channel (VIII.91). There is no reset, rewind, new reference
+completed channel (VIII.102). There is no reset, rewind, new reference
 grant, new $r$-edge or source substitution. Every subsequent original
 finite lawful future remains available with its own actual resources
 and progress; no infinite-time finite hold is inferred. VII126.1's
@@ -3566,18 +3566,18 @@ service durations. Spent inputs and probes remain retained; the geometric
 counts give no bound on time, energy, money, total native service or
 hardware availability. $\square$
 
-The source-specific addition is (VIII.80) on the compact common-support
+The source-specific addition is (VIII.91) on the compact common-support
 mixed envelope and its finite actual-count certificate. The parent step
-(VIII.83) is the existing
+(VIII.94) is the existing
 [PeriodicMPSParentIntersection](../../../Blueprint/D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.md)
 `parent_intersection`, including its four-site base, with `trace_separates`.
 The transposed feature and positive actual-exterior dictionary in
-(VIII.81) are the existing public and private support of
+(VIII.92) are the existing public and private support of
 [OpenBoundaryMPSInteriorCommonCore](../../../Blueprint/D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.md):
 `interior_density_dictionary`, `feature_injective`, `context_gram` and
 `context_surjective`. Its `interior_phase_recovery` already supplies the
 actual-pure unknown-core endpoint. The proof above instead treats an
-arbitrary coefficient density in (VIII.84)--(VIII.85), so does not use
+arbitrary coefficient density in (VIII.95)--(VIII.96), so does not use
 that old endpoint to assert closure or mixed-competitor uniqueness.
 The existing intrinsic regular-source supplier is used only within its
 stated domain, not as an acquisition or source-validity certificate.
@@ -3590,7 +3590,7 @@ and effective real-algebraic decisions are mature tools used inside this
 source-specific argument. The generic compact observation-tower and
 fiber-diameter results of
 [RRO Transport/Memory §5.1](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
-do not themselves provide (VIII.80) or a computable modulus. For real
+do not themselves provide (VIII.91) or a computable modulus. For real
 quantifier elimination and algebraic sampling see Basu,
 [*Algorithms in Real Algebraic Geometry: A Survey*, §§2.1--2.2,
 arXiv:1409.1534v1](https://arxiv.org/html/1409.1534v1). Their finite
@@ -3619,14 +3619,14 @@ whole-chain tomography or those protocols is claimed. The statements
 here are repository-derived synthesis, without a literature-priority
 or reduced-independent-assumption claim.
 
-Finally, (VIII.94) describes normalized full density, including the
+Finally, (VIII.105) describes normalized full density, including the
 correlations between its physical interior and exteriors. Raw vectors
 $\psi$ and $a\psi$ for nonzero $a$ have identical normalized data, so
 raw positive scale and global phase are not recovered without additional
 information. Unknown external preparation memory, original history,
 reference authority and all future quantum service are not reconstructed
 from these counts. Their actual systems and native contracts are retained,
-with the disturbed return (VIII.91), rather than replaced by the estimate.
+with the disturbed return (VIII.102), rather than replaced by the estimate.
 Generic whole-fiber two-window recovery, minimal lawful extra access and
 the enduring mutual recovery of space, time, boundary and memory for
 internal observers on all declared legal futures remain open.
