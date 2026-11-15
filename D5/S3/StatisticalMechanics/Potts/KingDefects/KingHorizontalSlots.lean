@@ -80,33 +80,33 @@ theorem boundary_bottom_shared {m M : ℕ} (s : Fin M)
     Equiv.subtypeEquivRight, Equiv.subtypeEquiv, boundary_slot_equiv, boundary_extract] using h
 
 def cut_slots_equiv (a b M : ℕ) (s : Fin M) :
-    CutFields (a + 1) (b + 1) M s ≃ InteriorSlots a b M s where
-  toFun q := ⟨((boundary_bottom_slot_equiv a M s) ⟨q.val.1,q.property.1⟩,
-      (boundary_slot_equiv b M s) ⟨q.val.2,q.property.2.1⟩), by
-    intro j hj
-    rw [boundary_bottom_shared s _ j hj, boundary_top_shared s _ j hj]
-    exact q.property.2.2 j⟩
-  invFun q := ⟨(((boundary_bottom_slot_equiv a M s).symm q.val.1).val,
-      ((boundary_slot_equiv b M s).symm q.val.2).val), by
-    refine ⟨((boundary_bottom_slot_equiv a M s).symm q.val.1).property,
-      ((boundary_slot_equiv b M s).symm q.val.2).property, ?_⟩
-    intro j
-    by_cases hj : j = s
-    · subst j
-      have hu := ((boundary_bottom_slot_equiv a M s).symm q.val.1).property.2
-        (.H (Fin.last (a + 1)) s)
-      have hl := ((boundary_slot_equiv b M s).symm q.val.2).property.2 (.H 0 s)
-      exact (hu.mpr rfl).trans (hl.mpr rfl).symm
-    · have hu := boundary_bottom_shared s ((boundary_bottom_slot_equiv a M s).symm q.val.1) j hj
-      have hl := boundary_top_shared s ((boundary_slot_equiv b M s).symm q.val.2) j hj
-      rw [Equiv.apply_symm_apply] at hu hl
-      exact hu.symm.trans ((q.property j hj).trans hl)⟩
-  left_inv q := by
-    apply Subtype.ext
-    apply Prod.ext <;> simp
-  right_inv q := by
-    apply Subtype.ext
-    apply Prod.ext <;> simp
+    CutFields (a+1) (b+1) M s ≃ InteriorSlots a b M s := by
+  let A := {t : DiffField (a+1) M // RawAdmissible (.H (Fin.last (a+1)) s) t}
+  let B := {t : DiffField (b+1) M // RawAdmissible (.H 0 s) t}
+  let joinCompat (q : A × B) : Prop := ∀ j, q.1.val.h (Fin.last (a+1)) j = q.2.val.h 0 j
+  let E : CutFields (a+1) (b+1) M s ≃ {q : A × B // joinCompat q} :=
+    (Equiv.subtypeEquivRight (fun _ => and_assoc.symm)).trans ((Equiv.subtypeSubtypeEquivSubtypeInter
+      (fun q : DiffField (a+1) M × DiffField (b+1) M =>
+        RawAdmissible (.H (Fin.last (a+1)) s) q.1 ∧ RawAdmissible (.H 0 s) q.2)
+      (fun q => ∀ j, q.1.h (Fin.last (a+1)) j = q.2.h 0 j)).symm.trans
+      (Equiv.subtypeProdEquivProd.subtypeEquiv (q := joinCompat) (by intro q; rfl)))
+  exact E.trans ((Equiv.prodCongr (boundary_bottom_slot_equiv a M s)
+    (boundary_slot_equiv b M s)).subtypeEquiv (by
+      intro q
+      change joinCompat q ↔ ∀ j, j ≠ s →
+        (boundary_bottom_slot_equiv a M s q.1).val.h j =
+          (boundary_slot_equiv b M s q.2).val.h j
+      constructor
+      · intro h j hj
+        rw [boundary_bottom_shared s _ j hj, boundary_top_shared s _ j hj]
+        exact h j
+      · intro h j
+        by_cases hj : j = s
+        · subst j
+          exact (q.1.property.2 _ |>.mpr rfl).trans (q.2.property.2 _ |>.mpr rfl).symm
+        · have hh := h j hj
+          rw [boundary_bottom_shared s _ j hj, boundary_top_shared s _ j hj] at hh
+          exact hh))
 
 /-- Interior horizontal defects are exactly two compatible boundary-slot assignments. -/
 def interior_slot_equiv (a b M : ℕ) (s : Fin M) :
