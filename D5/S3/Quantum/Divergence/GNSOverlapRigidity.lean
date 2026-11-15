@@ -278,19 +278,19 @@ section ConcreteCarrier
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
 
-private abbrev concreteAlgebra (M : VonNeumannAlgebra H) : Type _ := M.toStarSubalgebra
+private def concreteAlgebra (M : VonNeumannAlgebra H) : Type _ := M.toStarSubalgebra
 
 @[instance_reducible]
 private def concreteCStar (M : VonNeumannAlgebra H) : CStarAlgebra (concreteAlgebra M) :=
-  inferInstance
+  inferInstanceAs (CStarAlgebra M.toStarSubalgebra)
 
 @[instance_reducible]
 private def concreteOrder (M : VonNeumannAlgebra H) : PartialOrder (concreteAlgebra M) :=
-  inferInstance
+  inferInstanceAs (PartialOrder M.toStarSubalgebra)
 
 @[instance_reducible]
 private def concreteStarOrdered (M : VonNeumannAlgebra H) :
-    StarOrderedRing (concreteAlgebra M) := inferInstance
+    StarOrderedRing (concreteAlgebra M) := inferInstanceAs (StarOrderedRing M.toStarSubalgebra)
 
 end ConcreteCarrier
 
