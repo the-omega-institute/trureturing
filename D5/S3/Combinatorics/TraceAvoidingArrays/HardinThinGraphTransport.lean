@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport
    generality: G
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport.transition_counts
    digest: Common boundary counts for distinct diagonal and square strips. -/

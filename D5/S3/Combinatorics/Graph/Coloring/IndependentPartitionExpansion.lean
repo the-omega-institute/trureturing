@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Graph/Coloring/IndependentPartitionExpansion
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Coloring/IndependentPartitionExpansion
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Proper colourings as unlabelled independent partitions with injective block names. -/

@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations
    generality: G
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations.column_result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations.column_certificate
    digest: Actual two-row and three-row column continuations with the isolated class. -/

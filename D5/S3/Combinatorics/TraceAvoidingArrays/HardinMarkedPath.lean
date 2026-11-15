@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinMarkedPath
    generality: G
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinMarkedPath
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinMarkedPath.markedPartitionEquiv; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinMarkedPath.contractEquiv
    digest: Reversible deletion of the previous pair in the literal eight-colour path. -/

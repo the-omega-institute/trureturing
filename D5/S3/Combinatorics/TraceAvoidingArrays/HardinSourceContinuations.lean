@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations
    generality: G
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.four_class_result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.four_class_certificate
    digest: Exact source boundary classes and universal literal continuations. -/

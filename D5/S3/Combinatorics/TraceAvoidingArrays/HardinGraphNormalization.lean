@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization
    generality: G
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.normal_iff
    digest: Literal first-appearance normalization and the free signs of independent pair classes. -/
