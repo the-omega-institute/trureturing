@@ -164,7 +164,7 @@ local instance {n k : ℕ} {C : Type} [DecidableEq C] (f : Cell n k → C) :
   unfold OneDefect
   infer_instance
 
-abbrev signature : Signature where
+abbrev signature : Signature.{1, 0, 0, 0, 0} where
   Params := Σ n : ℕ, Σ k : ℕ, Σ C : Type, DecidableEq C
   State p := Cell p.1 p.2.1 → p.2.2.1
   Role := Unit
