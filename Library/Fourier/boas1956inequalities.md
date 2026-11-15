@@ -6,7 +6,8 @@ title: Inequalities for functions of exponential type
 doi: 10.7146/math.scand.a-10453
 url: https://journals.msp.org/mscand/article/download/2866/2865
 claim: Equation (1.3), printed p.29, bounds a phase-weighted sum of conjugate-height evaluations of an entire function of exponential type bounded on the real axis; phase pi/2 gives the hyperbolic-sine difference bound.
-strata_touched: [D5/S3/Weil/BurnolGram/UnitSupportBurnolPacket]
+strata_touched:
+  - D5/S3/Weil/BurnolGram/UnitSupportBurnolPacket
 license: citation-only
 triage: anchor
 ---
