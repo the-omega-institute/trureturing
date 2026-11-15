@@ -3226,3 +3226,339 @@ The second existential in (18.12), left unresolved in Convention 24.4, is suppli
 The nonflat condition $b\ne a$ is required for Corollary 25.2's transport. Neither it nor the source and gain choices in (25.8) restrict the original decoder domain, which still includes all gain signs, degree drops, sampled and repeated roots, arbitrary constant drifts and all strictly positive rank-one trace-one sources. The conditional choice of $M$ at a reached first-$J$ history does not assert that a root policy reaches such a history, or that its $M$ continuation succeeds. The sufficient chain (18.12) is not asserted necessary for every possible root proof. Original-root completion, the full-domain exclusion of eight-total-read decoders and a nine-read upper bound remain unresolved.
 
 ## 追加锚（本行以下为增补区）
+
+## 26. Perron 时钟三根类的八读完整逆与初始 M 障碍排除
+
+**定义 26.1（Perron 时钟三根类与实际八读）。** 沿用定义 1.1 的完整世界域 $\mathcal W_3$、矩阵 $M,J$、完整目标和字面历史纤维，以及 [II，定义 51.1、56.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md) 的原时钟与含早停递归。置
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\qquad
+\psi=-\frac1\varphi=1-\varphi,\qquad
+N=1+\varphi^2,\qquad
+O=\frac1{\sqrt N}
+\begin{pmatrix}1&\varphi\\ \varphi&-1\end{pmatrix}.
+\tag{26.1}
+$$
+
+定义子类
+
+$$
+\begin{aligned}
+\mathcal R&=\{R\subseteq\{0,1,\ldots,7\}:|R|=3\},&
+p_R(t)&=\prod_{r\in R}(t-r),\\
+\mathcal C
+&=\{(P,g,d)\in\mathcal W_3:
+\operatorname{tr}(MP)=\varphi,\ 
+g=c\,p_R,\ R\in\mathcal R,\ c\in\mathbb R\setminus\{0\},\
+d\in\mathbb R\}.
+\end{aligned}
+\tag{26.2}
+$$
+
+这里 $R$ 含三个不同的原时钟，$\mathcal R$ 的全部 $\binom83=56$ 个成员均在定义内；$c$ 可取任意非零实数，$d$ 可取任意实数。每个固定世界在整条轨迹上始终使用同一个 $P$、同一个整个多项式 $g$ 和同一个 $d$。实际读数为
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1},\qquad
+y_i=d+c\,p_R(i)\operatorname{tr}(A_iP).
+\tag{26.3}
+$$
+
+初读计数；每个原子 $E_i\in\{M,J\}$ 后立即读取。原时钟为 $0,\ldots,7$，包括增益为零的时钟；不重置、不复制、不跳读、不作空动作读取，也不增加观测口。
+
+$\mathcal C$ 是明确的承诺子类，不替换 $\mathcal W_3$。完整域仍容许所有严格正秩一迹一源、任意符号的非零三次及以下增益、次数下降、重根、非采样根和任意实常漂移。
+
+**定理 26.2（两分路八读完整恢复及任意初始 M 支撑族的排除）。** 对 $\mathcal C$ 中每个完整目标，先在时钟一、二各作一次 $M$，取得 $y_0,y_1,y_2$，置
+
+$$
+a=y_1-y_0,\qquad b=y_2-y_0.
+\tag{26.4}
+$$
+
+若 $a=b=0$，实际七动作词取 $MMJJJMM$；否则取 $MMJMMMM$。每条分路都在时钟七的立即读数后返回完整目标 $(P,g,d)$。漂移由下述实际前三读唯一确定：
+
+$$
+\begin{gathered}
+a=0\ \Longrightarrow\ d=y_0,\\
+a\ne0:\qquad \rho=b/a=x+y\varphi,\quad x,y\in\mathbb Q,\\
+d=
+\begin{cases}
+y_0,&x=0,\\[2pt]
+y_0+\displaystyle\frac{a}
+ {1-\varphi(1+y-x)/x},&x\ne0.
+\end{cases}
+\end{gathered}
+\tag{26.5}
+$$
+
+其中 $(x,y)$ 可由以下固定有限代数表与 $\rho$ 的精确相等比较取得：
+
+$$
+\mathscr T=
+\left\{(x_R,y_R)\in\mathbb Q^2:
+x_R+y_R\varphi=
+\frac{\varphi^2p_R(2)-p_R(0)}
+     {\varphi p_R(1)-p_R(0)},\
+R\in\mathcal R,\
+\varphi p_R(1)-p_R(0)\ne0\right\}.
+\tag{26.6}
+$$
+
+表中同一个比值只对应一个有理坐标对，不要求从任意实数判定其是否属于 $\mathbb Q(\varphi)$。式 (26.5) 的所有实际除法、下述增益与源的逆均有非零分母。特别地，源双线的交点和任意接近严格正域边界的源都在恢复范围内；返回的是完整规范目标，不是进一步的商类。
+
+同时，对任意 $a_0,a_1\in\mathbb R$，令 $H_1=(a_0,M,a_1)$。则
+
+$$
+\forall K\subseteq\mathcal C\cap\mathcal F(H_1),\qquad
+\neg L_6(K,H_1).
+\tag{26.7}
+$$
+
+因而在 (18.12) 的原初读 $a_0=0$ 上，任何支持其初始 $M$ 六层失败断言的候选族都必须含有 $\mathcal C$ 以外的完整世界；此结论对任意基数的候选族成立。
+
+证明。$\varphi>1$、$N>0$，故式 (26.1) 的归一化分母均非零。先确定式 (26.2) 中整个源切片，而不预选其中一条直线。由 $\varphi^2=\varphi+1$、$\varphi\psi=-1$，直接相乘得
+
+$$
+O^{\mathsf T}O=I,\qquad
+O^{\mathsf T}MO=
+\begin{pmatrix}\varphi&0\\0&\psi\end{pmatrix},\qquad
+O^{\mathsf T}JO=\frac1{\sqrt5}
+\begin{pmatrix}2&1\\1&-2\end{pmatrix}.
+\tag{26.8}
+$$
+
+写 $P'=O^{\mathsf T}PO$。迹一与 $M$ 迹条件给
+
+$$
+P'_{11}+P'_{22}=1,\qquad
+\varphi P'_{11}+\psi P'_{22}=\varphi.
+$$
+
+因为 $\varphi-\psi=\sqrt5\ne0$，必有 $P'_{11}=1$、$P'_{22}=0$。于是
+
+$$
+P'=\begin{pmatrix}1&\alpha\\ \beta&0\end{pmatrix},
+\qquad
+\det P'=-\alpha\beta=0.
+\tag{26.9}
+$$
+
+秩一恰要求 $\alpha\beta=0$，因为左上项已经非零。若 $\beta=0$，变回原坐标得到
+
+$$
+P_R(s)=
+\begin{pmatrix}
+s&(1-s)/\varphi\\
+\varphi s&1-s
+\end{pmatrix},
+\qquad
+\alpha=\sqrt5\,s-\frac1\varphi.
+\tag{26.10}
+$$
+
+若 $\alpha=0$，则得到 $P_L(s)=P_R(s)^{\mathsf T}$，且
+$\beta=\sqrt5\,s-1/\varphi$。两种情形中严格逐项正都恰等价于 $0<s<1$，也恰等价于非固定谱坐标位于 $(-1/\varphi,\varphi)$。反之，这些区间中的每个矩阵均严格正、秩一、迹一且 $M$ 迹为 $\varphi$，故两条开线段穷尽整个合法源切片。两条谱坐标轴同时成立恰要求 $\alpha=\beta=0$，故两条源线段只在
+
+$$
+s_*=\frac1N=\frac{5-\sqrt5}{10},\qquad
+\alpha=\beta=0,\qquad
+P_*=\frac{uu^{\mathsf T}}N,\quad
+u=\begin{pmatrix}1\\ \varphi\end{pmatrix}
+\tag{26.11}
+$$
+
+相交。在 $s=0,1$ 有条目为零，故端点不属于严格正域。式 (26.9) 还对每个非负整数 $i$ 给出
+
+$$
+\operatorname{tr}(M^iP)=\varphi^i.
+\tag{26.12}
+$$
+
+这一恒等式适用于两条直线及其交点。
+
+接着只用实际前三读恢复漂移。暂记 $p=p_R$，并置
+$\Delta=d-y_0=-c\,p(0)$。由 (26.12)，
+
+$$
+a=c\bigl(\varphi p(1)-p(0)\bigr),\qquad
+b=c\bigl(\varphi^2p(2)-p(0)\bigr).
+\tag{26.13}
+$$
+
+若 $a=0$，因 $c\ne0$，有 $\varphi p(1)=p(0)$。两个多项式取值都是整数，$\varphi$ 无理，故 $p(0)=p(1)=0$。因此 $d=y_0$；且此时 $b=0$ 当且仅当 $p(2)=0$。由于 $R$ 恰有三个不同元素，
+
+$$
+a=b=0\quad\Longleftrightarrow\quad R=\{0,1,2\}.
+\tag{26.14}
+$$
+
+这也处理了 $a=0,b\ne0$ 的全部根集合，而未倒取 $a$。
+
+现设 $a\ne0$。式 (26.13) 使 $\rho=b/a$ 属于 (26.6) 的表。$\mathbb Q(\varphi)$ 中每个元素唯一写成 $x+y\varphi$，所以该坐标对唯一。若 $0\in R$，则 $p(0)=0$，而 $a\ne0$ 使 $p(1)\ne0$；于是
+
+$$
+\rho=\varphi\,\frac{p(2)}{p(1)},\qquad x=0,\qquad\Delta=0.
+\tag{26.15}
+$$
+
+若 $0\notin R$，定义有理数
+
+$$
+A=\frac{p(1)}{p(0)},\qquad B=\frac{p(2)}{p(0)}.
+\tag{26.16}
+$$
+
+当 $1\in R$ 时 $A=0$，而 $B\le0$：根 $1$ 对该比值贡献 $-1$，其余根属于 $\{2,\ldots,7\}$，各贡献非负因子。若 $1\notin R$，按递增顺序写 $R=\{r_1,r_2,r_3\}$，则
+$2\le r_1\le5$、$r_1<r_2\le6$、$r_2<r_3\le7$。因 $1-1/r$、$1-2/r$ 在 $r\ge2$ 上递增且非负，
+
+$$
+0<A=\prod_{r\in R}\left(1-\frac1r\right)
+ \le\frac45\frac56\frac67=\frac47,\qquad
+0\le B=\prod_{r\in R}\left(1-\frac2r\right)
+ \le\frac35\frac46\frac57=\frac27.
+\tag{26.17}
+$$
+
+两种情况均给 $A+B<1$。将
+
+$$
+(x+y\varphi)(\varphi A-1)=(\varphi+1)B-1
+$$
+
+中的常数和 $\varphi$ 系数分别比较，得到
+
+$$
+B=1-x+yA=(x+y)A-y,\qquad xA=1+y-x.
+\tag{26.18}
+$$
+
+若 $x=0$，后一式强制 $y=-1$，前一式即 $B=1-A$，与 $A+B<1$ 矛盾。因此 $0\notin R$ 时 $x\ne0$，并且
+
+$$
+A=\frac{1+y-x}{x},\qquad
+a=\Delta(1-\varphi A),\qquad
+\Delta=\frac{a}{1-\varphi A}.
+\tag{26.19}
+$$
+
+$1-\varphi A\ne0$，因为 $A$ 有理而 $1/\varphi$ 无理。式 (26.15)、(26.19) 证明 (26.5) 的完整分支和全部分母条件。任意 $d$ 已从差分中消去，任意非零实尺度 $c$ 已从比值中消去；没有正尺度或零漂移假设。
+
+表 (26.6) 是有限集合，由 $\mathcal R$ 逐项用 $\varphi^2=\varphi+1$ 的域算术确定。真实的 $a\ne0$ 历史必命中其中一个比值；重复比值的有理坐标必相同。故式 (26.5) 仅使用有限多个已指定代数实数的精确相等比较。动作分路同样只检验实际等式 $y_1=y_2=y_0$。这属于定义 1.1 和 II 定义 51.1 所容许的集合意义下的精确确定性策略，不包含由任意可计算实数表示判定相等、有限精度恢复或数值稳定性的断言；在 $\mathcal C$ 不可达的历史上可任意延拓。
+
+现在恢复根与增益。严格迹正性采用[正迹与奇异源，引理 3.1](FIB_ORIGINAL_ROOT_POSITIVE_TRACE_GUARDS_AND_SINGULAR_SOURCES.md)：每个实际 $A_i$ 均非负可逆，每行有正项，故 $A_iP$ 严格正且 $\operatorname{tr}(A_iP)>0$。因此，不论 $c$ 的符号如何，
+
+$$
+y_i=d\quad\Longleftrightarrow\quad p_R(i)=0
+\quad\Longleftrightarrow\quad i\in R.
+\tag{26.20}
+$$
+
+在漂移确定后，八个实际读数恰给
+
+$$
+R=\{i\in\{0,\ldots,7\}:y_i=d\}.
+\tag{26.21}
+$$
+
+这里没有用未选动作的响应，也没有将零增益时钟删除。
+
+先看非例外分路 $MMJMMMM$。由 (26.14)，$\{0,1,2\}$ 不全包含于 $R$，故可取其中不属于 $R$ 的最小指标 $j$。实际矩阵为 $A_j=M^j$，从而
+
+$$
+c=\frac{y_j-d}{\varphi^j p_R(j)},\qquad g(t)=c\,p_R(t).
+\tag{26.22}
+$$
+
+分母非零，因为 $\varphi>0$ 且 $j\notin R$；分子也非零，由 (26.20) 得 $c\ne0$。这恢复整个多项式，而非只恢复若干样本。
+
+为恢复源，在同一证明内写出所需的两个谱方程。对 $k\ge0$，由 (26.8)、(26.9) 直接相乘，
+
+$$
+\begin{aligned}
+T_k(P)&=\operatorname{tr}(M^kJM^2P)\\
+&=\frac{2\varphi^{k+2}}{\sqrt5}
+ +U_k\alpha+V_k\beta,\\
+U_k&=\frac{\varphi^2\psi^k}{\sqrt5},\qquad
+V_k=\frac{\psi^2\varphi^k}{\sqrt5}.
+\end{aligned}
+\tag{26.23}
+$$
+
+对不同的 $k<\ell$，两个系数行的行列式是
+
+$$
+D_{k\ell}
+=U_kV_\ell-U_\ell V_k
+=\frac{\varphi^2\psi^2}{5}
+ \bigl(\psi^k\varphi^\ell-\psi^\ell\varphi^k\bigr)\ne0.
+\tag{26.24}
+$$
+
+确实，括号等于
+$\varphi^{k+\ell}((\psi/\varphi)^k-(\psi/\varphi)^\ell)$；
+$0<|\psi/\varphi|=\varphi^{-2}<1$，所以不同非负整数次幂不相同，且其余因子均非零。
+
+非例外分路的每个 $i\ge3$ 有实际矩阵 $A_i=M^{i-3}JM^2$。五个时钟 $3,\ldots,7$ 至少有两个不在三元素集合 $R$ 内。取其中最小的两个 $i<j$，令 $k=i-3$、$\ell=j-3$，用真实非零增益取得
+
+$$
+t_k=\frac{y_i-d}{c\,p_R(i)}=T_k(P),\qquad
+t_\ell=\frac{y_j-d}{c\,p_R(j)}=T_\ell(P),\qquad
+q_h=t_h-\frac{2\varphi^{h+2}}{\sqrt5}\quad(h=k,\ell).
+\tag{26.25}
+$$
+
+所有分母已由 $c\ne0$ 和 $i,j\notin R$ 保证非零。完整源的显式逆为
+
+$$
+\alpha=\frac{q_kV_\ell-q_\ell V_k}{D_{k\ell}},\qquad
+\beta=\frac{U_kq_\ell-U_\ell q_k}{D_{k\ell}},\qquad
+P=O\begin{pmatrix}1&\alpha\\ \beta&0\end{pmatrix}O^{\mathsf T}.
+\tag{26.26}
+$$
+
+式 (26.24) 使该逆唯一。真实源的两个谱坐标满足同一方程组，故恢复者就是原源，自动满足 $\alpha\beta=0$ 和全部严格正性条件。在交点处两者均为零；无需选择源直线标签，也无遗漏交点的除法。
+
+最后看例外分路。式 (26.14) 已给
+
+$$
+R=\{0,1,2\},\qquad d=y_0,\qquad
+g(t)=c\,t(t-1)(t-2).
+\tag{26.27}
+$$
+
+在 $MMJJJMM$ 上，原时钟三至七的实际矩阵依次为
+
+$$
+A_3=JM^2,\qquad A_4=M^2,\qquad A_5=JM^2,\qquad
+A_6=MJM^2,\qquad A_7=M^2JM^2.
+\tag{26.28}
+$$
+
+时钟四的回返用的是 $J^2=I$。由 (26.12)，
+
+$$
+c=\frac{y_4-d}{24\varphi^2}\ne0,\qquad
+t_0=\frac{y_3-d}{6c}=T_0(P),\qquad
+t_1=\frac{y_6-d}{120c}=T_1(P).
+\tag{26.29}
+$$
+
+$24\varphi^2$、$6c$、$120c$ 均非零。此处 $t_0,t_1$ 的下标是式 (26.23) 的谱指数，所用实际读数仍为原时钟三、六。取 $k=0,\ell=1$，由 (26.24)–(26.26) 恢复 $\alpha,\beta,P$；(26.27)–(26.29) 同时恢复整个 $g$ 和 $d$。时钟五、七及所有零增益时钟的动作和读数均保留。至此两分路在全部 $56$ 个根集合、任意非零实 $c$、任意实 $d$ 和整个源切片上，都使实际完整记录唯一确定 $(P,g,d)$。
+
+为证明 (26.7)，固定一个字面 $H_1=(a_0,M,a_1)$ 和一个预先给定的 $K\subseteq\mathcal C\cap\mathcal F(H_1)$。从已经取得的时钟一历史开始，上述策略先在时钟二作 $M$，再依 (26.4) 选择分路，恰用原时钟二至七的六次剩余读数。假设 $L_6(K,H_1)$ 成立。递归 (1.1) 对策略实际所选的每个下一动作都给一个响应子历史，使剩余失败层数下降一。依此六次，得到同一实际完整记录 $H_7$ 和嵌套子集
+
+$$
+K=K_1\supseteq K_2\supseteq\cdots\supseteq K_7,\qquad
+K_{i+1}=K_i\cap\mathcal F(H_{i+1}),\qquad
+L_0(K_7,H_7).
+\tag{26.30}
+$$
+
+所以 $K_7$ 至少含两个不同完整目标。它们都属于最初固定的 $K$，实现同一整条实际记录，且因策略确定性而走同一条分路。这与已证的 $\mathcal C$ 上记录唯一恢复矛盾，故 (26.7) 成立。此论证不限制 $K$ 的基数，不要求不同终端词采用同一碰撞对，也不从较深失败族抽取保持原层数的一对目标。所有子集都来自同一个最初固定的世界族；没有在取得动作后改变源、增益或漂移。早停条款仍由 (1.1) 的基数守卫保留，所用反策略只选择其合法的完整六读余程。
+
+取 $a_0=0$ 即得到 (18.12) 的真实消费：若某个 $a_1$ 和某个 $K\subseteq\mathcal F((0,M,a_1))$ 满足 $L_6(K,(0,M,a_1))$，则必有 $W\in K\setminus\mathcal C$。等价地，该族必须含有一个 $M$ 迹不等于 $\varphi$ 的源，或一个不能写成 (26.2) 所给三原时钟异根形式的增益。这只是离开 $\mathcal C$ 的必要条件，不是这样的完整原域支撑族的构造；一般 Perron 源配任意三次及以下增益、少于三个不同采样根、重根或非采样根的情形并未被此排除。
+
+这里完整目标与历史的来源是定义 1.1 及 II 定义 51.1，失败族的来源是 II 定义 56.1，严格迹正性是正迹与奇异源引理 3.1；同源纯 $M$ 迹关系与该卷 §§4–5 的关系一致。谱分解、有限二次数域算术和二元线性方程求逆是证明内的标准工具。两分路的完整逆及其对 (18.12) 初始 $M$ 接口的消费是这些关系上的仓内受限综合推导（repo-derived），不含外部原创性或文献优先权断言。
+
+剩余的完整域问题包括 (18.12) 的实际 $JMJ$ 四层失败存在断言、初始 $M$ 六层失败存在断言，以及原根八读与至少九读之分。第 25 章给出的第二 $J$ 五层失败仍供应 (18.12) 的第二个存在断言。定理的八读恢复范围仅为 $\mathcal C$；完整域的八读恢复、原根 $L_7$ 和九读上界均不由此推出。∎
+
+## 追加锚（本行以下为增补区）
