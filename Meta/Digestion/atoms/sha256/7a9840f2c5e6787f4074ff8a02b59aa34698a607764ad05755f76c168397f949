@@ -1,0 +1,31 @@
+**定义 197.1（命中与纯系数条件）。** 完整保留 XIII160.1 的原域：非零有限维实空间 $V$，闭、尖、生成凸锥 $C$，在非零正元上严格正的原单位 $u$，整个紧底 $K=C\cap\{u=1\}$、全部原纯点 $P=\operatorname{ext}K$ 及整个原效应区间 $\mathcal E=[0,u]_{C^*}$。记 $d=\dim V$，$F_K(A)$ 是包含 $A$ 的最小实际面；空集生成空面。定义
+
+$$
+\begin{gathered}
+a\#b\quad\Longleftrightarrow\quad
+\exists e\in\mathcal E:\ e(a)=1,\ e(b)=0,\\
+N_a=\{b\in P:a\#b\},\qquad
+W_a=\operatorname{span}_{\mathbb R}N_a,\qquad
+S_a=\mathbb Ra+W_a,\\
+\mathrm{Hit}(a):\quad
+N_a\cap F_K(p,q)\ne\varnothing
+\quad\text{对所有不同的 }p,q\in P,\\
+\mathrm{SP}(a):\quad
+p\in P,\ \lambda\in\mathbb R,\ p-\lambda a\in W_a
+\quad\Longrightarrow\quad\lambda\ge0.
+\end{gathered}
+\tag{197.1}
+$$
+
+补效应使 $\#$ 对称，无自反性由读数一与零不同给出。Hit 只用纯点和原实际面，不预先指定球、对径、混态零凸性或共同确认者。若另给 L2，每个不同纯对的实际面就是整颗仿射三维闭球，Hit 便是 $N_a$ 命中每条纯点线；该线是球的整个纯边界。
+
+SP 只检查原纯准备的线性关系。其有限写法是：对任意 $0\le r\le d$、原 $b_1,\ldots,b_r\in N_a$、实数 $c_j,\lambda$ 和原 $p\in P$，
+
+$$
+p=\lambda a+\sum_{j=1}^r c_jb_j
+\quad\Longrightarrow\quad\lambda\ge0.
+\tag{197.2}
+$$
+
+$r=0$ 保留空和；邻点系数允许任意正负号。有限写法与(197.1)等价，因为任一 $W_a$ 向量可用至多 $\dim W_a\le d$ 个原邻点展开。它没有量化准备—效应张量、正删除或局部效应的全域延拓。
+

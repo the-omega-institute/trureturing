@@ -1,0 +1,111 @@
+**命题 123.4（C：同一接触下六球测试准确留下切向核）。**
+另设同一配置满足 $D=B_0$，即 $s\in D_y$、$\sigma_y=0$。
+存在 $\epsilon>0$，使对每个 $z\in Z_y$、$\|z\|_K<\epsilon$，
+
+$$
+h_z\in Q_4
+\quad\Longleftrightarrow\quad \Theta(z)=0
+\quad\Longleftrightarrow\quad h_z\in Q_6.
+\tag{X123.19}
+$$
+
+这是一张局部仿射切片上的充要条件。
+核具有不依赖补空间选择的描述
+
+$$
+\ker\Theta\simeq S_x\cap\operatorname{ann}(M_p+M_y),
+\qquad
+\dim\ker\Theta=2-\operatorname{rank}\Theta.
+\tag{X123.20}
+$$
+
+秩 $0,1,2$ 分别留下二维、一维、零维局部候选空间。
+若核非零，每个充分小的非零核向量都给 $Q_6\setminus N_x$ 中的 $h_z$。
+若核为零，该邻域中唯一通过测试的 $h_z$ 是 $e_y$。
+
+证明。
+由 (X123.15) 及接触前件，整个 Dp 上有
+
+$$
+e_y(c+Bw)=\frac{\Delta}{2}(1-v\cdot w).
+\tag{X123.21}
+$$
+
+而 $s\in D_y$ 使每个 $z\in Z_y$ 都满足 $z(s)=0$。
+写 $z(c+Bw)=\alpha_z+\beta_z\cdot w$，则
+$\alpha_z+\beta_z\cdot v=0$。
+因此 $h_z$ 在 Dp 的中心值为 $\Delta/2+\alpha_z$，
+其沿 v 的斜率为该数的相反数，切向斜率为 $\Theta(z)$。
+完整球上的准确最小值是
+
+$$
+\min_{D_p}h_z
+=\frac{\Delta}{2}+\alpha_z
+-\sqrt{\left(\frac{\Delta}{2}+\alpha_z\right)^2
+       +\|\Theta(z)\|^2}.
+\tag{X123.22}
+$$
+
+只要 $\Theta(z)\ne0$，根号严格大于中心值的绝对值，
+所以该最小值严格负。
+这检验的是整颗球，不只是接触点 s 与反端点 b。
+等价的球支撑表述是：一个在整球非负且在球面 s 为零的仿射函数，
+其切向斜率必须为零。
+
+若 $\Theta(z)=0$，$\beta_z$ 平行 v，且 $z(s)=0$，
+故整球限制准确为
+
+$$
+z|_{D_p}=\frac{z(b)}{\Delta}e_y|_{D_p},
+\qquad
+h_z|_{D_p}=\left(1+\frac{z(b)}{\Delta}\right)e_y|_{D_p}.
+\tag{X123.23}
+$$
+
+取 $\epsilon<\Delta/2$，即可使右侧系数严格正。
+在 Dq、Dr，(X123.16) 仍成立。
+尽管 $e_y(s)=0$，$q,r\ne s$，(X123.21) 仍给
+$e_y(q),e_y(r)>0$；再加 $e_y(p)>0$，两颗整球都有正余量。
+Dx 的余量仍是 $\Delta>0$。
+将 $\epsilon$ 再缩至小于这些正余量的一半，
+使当前 $h_z$ 在整个 Dq、Dr、Dx 严格正。
+Dy 上恒零由定义给出；Db 上沿用 (X123.18)，
+并用 $h_z(p)>0$，得到其仅在 x 为零、其余严格正。
+因此一个共同邻域内，$\Theta(z)=0$ 充分保证 $h_z\in Q_6$。
+反向 $Q_6\subseteq Q_4$，而 (X123.22) 给 $Q_4$ 的必要性，
+故 (X123.19) 的两个方向均成立。
+
+为证明 (X123.20)，对 $z\in\ker\Theta$ 定义
+
+$$
+\Phi(z)=z-\frac{z(b)}{\Delta}e_y.
+\tag{X123.24}
+$$
+
+(X123.23) 使它消去整个 Dp；$z,e_y$ 都消去整个 Dy，
+故 $\Phi(z)\in S_x\cap\operatorname{ann}(M_p+M_y)$。
+反向对该空间中任一 $k$，定义
+
+$$
+\Psi(k)=k-k(y)e_y.
+\tag{X123.25}
+$$
+
+它消去 Dy 且在 y 为零，所以属于 $Z_y$。
+在 Dp，$k=0$，而 $e_y$ 没有切向斜率，因此 $\Theta(\Psi(k))=0$。
+这两式互逆可在同一原点逐项核对：
+对 $k=\Phi(z)$，$z(y)=0$、$e_y(y)=1$ 给
+$k(y)=-z(b)/\Delta$，所以 $\Psi(\Phi(z))=z$。
+对 $z=\Psi(k)$，$k(b)=0$、$e_y(b)=\Delta$ 给
+$z(b)=-k(y)\Delta$，所以 $\Phi(\Psi(k))=k$。
+两映射均线性，故为所称同构。
+秩—零化度公式结合 $\dim Z_y=2$ 给维数式。
+
+最后，任何通过局部测试的非零 $z$ 仍受 (X123.12) 约束：
+$h_z$ 不可能原全局正，故属于 $Q_6\setminus N_x$。
+零核情形没有这种非零局部候选，$z=0$ 给原正 $e_y$。证毕。
+
+没有从 $\dim V=9$、$\mathsf J_\triangle$ 或二维轴正锥推定 $\Theta$ 的秩。
+(X123.20) 只把未付的切向核改写成原完整球张成的共同消去空间。
+零核时的局部切片唯一性也不等于 $Q_6=N_x$。
+

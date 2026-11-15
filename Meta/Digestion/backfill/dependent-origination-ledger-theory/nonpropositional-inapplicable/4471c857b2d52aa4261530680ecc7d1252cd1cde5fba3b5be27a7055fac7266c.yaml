@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4471c857b2d52aa4261530680ecc7d1252cd1cde5fba3b5be27a7055fac7266c
+  normalized_sha256: sha256:4471c857b2d52aa4261530680ecc7d1252cd1cde5fba3b5be27a7055fac7266c
+cas_ref: sha256:4471c857b2d52aa4261530680ecc7d1252cd1cde5fba3b5be27a7055fac7266c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Semantic commentary only. This clause limits the textual interpretation of 中论 24.18 and 15.2, keeps the quoted verse and commentary distinct, and treats 不待异法 as a naming reference. Generated dependence, family-relative emptiness, proof-relative emptiness, the naming interfaces and middle way retain their separate parameters and types; no universal equivalence is asserted. Proposition 4.4 is cited only for proof-system relativity, without claiming identity with every textual meaning of 空亦复空. This records an interpretive boundary, not a new mathematical theorem or upstream-only mathematical settlement; no coverage GID or new Lean is claimed.
+    previous_atom_id: d05cbb9d12853621da0cf56d2cd335bd750235e9c59910f94310c72ddb9759cd
+    next_atom_id: 3a651e3dd9cc7d3981a43152a8376268826992980149b3c852b9d6478ea76efa

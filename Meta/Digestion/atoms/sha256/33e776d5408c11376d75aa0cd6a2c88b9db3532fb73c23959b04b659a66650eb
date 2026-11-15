@@ -1,0 +1,10 @@
+**定理 12.3（Balanced comparison at the same fresh terminal contract）。** At the balanced stratum $p=q>0$, $2p+r<1$, with the same full input, fresh independent environments, unread terminal output and untouched-reference convention, the published Theorem 8.2 gives
+
+$$
+\operatorname{rank}J(\Phi^N)=\min\{N+1,4\},
+$$
+
+so the terminal rank is $4$ for every $N\ge3$. Under the same contract, the strict-unbalanced theorem above gives rank $25$ for every $N\ge12$. The change is caused by the exact-length leaf projector and the two nonzero cyclic determinants: their only interior obstruction is $\alpha=\beta$, namely $p=q$. This comparison keeps the source frame, logical factor, coherent full input, positive fresh weights and terminal convention fixed.
+
+**证明。** The balanced equality is exactly (8.3), whose proof uses the involution relation $V^2=I_5$ and the infinite-dihedral normal form. When $p\ne q$, $V$ is not an involution; the proof of (12.3) instead uses (12.8)–(12.11). Both statements concern the same terminal channel-power contract and neither is a statement about a retained environment.
+

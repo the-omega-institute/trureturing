@@ -1,0 +1,17 @@
+**定义 1.2（实际仪器与嵌入）。** 在 $H_{\mathrm{phys}}$ 的有序基 $(e_0,e_1,e_2,e_3,e_4)$ 中，置
+
+$$
+u=(e_0+e_3)/\sqrt2,\qquad v=(e_1+e_4)/\sqrt2,\qquad z=e_2,
+\qquad R=\operatorname{span}\{u,v,z\}.
+$$
+
+令 $B:\mathbb C^3\to H_{\mathrm{phys}}$ 的三列为 $u,v,z$，$P_R=BB^\dagger$，$\iota(X)=BXB^\dagger$。固定的未旋转与实际测得 Kraus 算子分别为
+
+$$
+\begin{aligned}
+K_0&=|u\rangle\langle e_0|+2^{-1/2}|v\rangle\langle e_2|+|z\rangle\langle e_4|,\\
+K_1&=|u\rangle\langle e_1|+2^{-1/2}|v\rangle\langle e_2|+|z\rangle\langle e_3|,\\
+A_0&=(\sqrt3K_0+iK_1)/2,\qquad A_1=(iK_0+\sqrt3K_1)/2.
+\end{aligned}
+$$
+

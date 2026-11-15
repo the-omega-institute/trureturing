@@ -1,0 +1,38 @@
+**定理 118.12（全EB3+Inj域的固定零测试rank0障碍）。** 在完整EB3+Inj原域，假设
+
+$$
+p_n\to x\in K,\qquad D_{p_n}\to\{q\}.
+\tag{IX118.18}
+$$
+
+允许取子列并重新编号。存在同一条原正交纯边 $(s,r)$ 及同一条 $t_n\in P,t_n\to r$，使对每一张固定 $h\in\mathcal A_s$ 都有
+
+$$
+h(t_n)\to0,\qquad
+\liminf_n\operatorname{dist}_K(h,Z_{t_n})>0.
+\tag{IX118.19}
+$$
+
+下界可依赖 $h$，但边、子列与输入序列先于全部 $h$ 选定。这里不假设(O)、$P$ 闭或球连续。
+
+证明。若 $x\in P$，引理118.4给 $q\in D_x$。在 $S(D_x)$ 取 $s\ne q$，令 $r=x,t_n=p_n$。
+原零对称给 $r\in D_s$；任意 $h\in\mathcal A_s$ 满足 $h(r)=0$，且其唯一最大点是 $s\ne q$，所以 $\delta_h=1-h(q)>0$。
+球极限给 $\max_{D_{t_n}}h\to h(q)$，引理118.10于是给
+
+$$
+\liminf_n\operatorname{dist}_K(h,Z_{t_n})\ge\delta_h/2>0.
+\tag{IX118.20}
+$$
+
+并有 $h(t_n)\to h(r)=0$。此分支无须先证 $q$ 纯。
+
+若 $x$ 混，引理118.4给 $q\in P,x\in\operatorname{ri}D_q$。
+任取 $t_n\in S(D_{p_n})$，则 $t_n\to q$，原零对称给 $p_n\in S(D_{t_n})$。
+对这些交换后的实际完整球写 $D_{t_n}=c_n+A_n\overline B^3$，取共同参数收敛子列，得 $G=c+A\overline B^3$。
+纯标签上关联给 $G\subseteq D_q$，并有 $x\in G$；极限秩允许为0、1、2、3。
+若 $G=D_q$，其维数迫 $\operatorname{rank}A=3$；将 $p_n=c_n+A_nv_n$、$|v_n|=1$ 的参数再取收敛子列，得到 $x\in S(D_q)$，矛盾。
+故 $G\subsetneq D_q$。若 $G$ 含整个 $S(D_q)$，凸性会给 $G=D_q$，所以可取 $s\in S(D_q)\setminus G$，令 $r=q$。
+这是一条原边。任意固定 $h\in\mathcal A_s$ 的唯一最大点 $s$ 不在紧 $G$ 中，故 $\delta_h=1-\max_Gh>0$。
+$\max_{D_{t_n}}h\to\max_Gh$，再次给(IX118.20)，且 $h(t_n)\to h(q)=0$。
+所取子列、$G,s$ 均与此后的 $h$ 无关，故同一序列确实阻止全部固定完整零确认。证毕。
+

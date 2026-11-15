@@ -1,0 +1,28 @@
+#### 例 3.3：正评价商确实排除了原等式未排除的方向
+
+令 $G=\mathbb Z^3\times\mathbb Z^3$，以三维叉积定义
+
+$$
+(x,z)(y,w)=(x+y,z+w+x\times y).
+$$
+
+叉积双线性直接给结合律，单位为 $(0,0)$，逆元为 $(-x,-z)$。 实值函数 $f(x,z)=x\cdot z$ 满足群二次等式： 展开 $f(gh)$ 与 $f(gh^{-1})$ 时，叉积项均因垂直于 $x,y$ 而消失。 但是 $f$ 可以为负，也不通过阿贝尔化因子化。 具体取
+
+$$
+a=(e_1,0),\quad b=(e_2,0),\quad
+ c=[a,b]=(0,2e_3),\quad g=(e_3,0).
+$$
+
+则 $f(g)=0$ 而 $f(gc)=2$。 三个基方向还给 $f(abg)=1$、$f(agb)=-1$，尽管各单项和各两项合成都读零； 第三项的换序暴露了相反符号的余量。 所以 $\langle gc\rangle-\langle g\rangle$ 在原 $\mathcal E(G)$ 中非零； 全部非负解却由表示定理给其读数为零，故它属于 $\mathcal I$。 这说明先保留原关系，再商去共同不可见方向的步骤有实际数学内容。
+
+具体地，在阿贝尔化后的有限自由窗口中，对基 $e_1,\ldots,e_m$ 和整数 $n_i$， 共同可见符号都有正常式
+
+$$
+\left\langle\sum_i n_ie_i\right\rangle
+ =\sum_i n_i^2\langle e_i\rangle
+ +\sum_{i<j}n_in_j
+ \bigl(\langle e_i+e_j\rangle-\langle e_i\rangle-\langle e_j\rangle\bigr).
+$$
+
+因此，给定这条全称关系后，不需要为三项、四项、五项历史各加一套读数法则。 它们共享同一个二次包络。但实际采用哪个正线性泛函，仍是数值来源的选择。
+

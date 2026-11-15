@@ -1,0 +1,27 @@
+**条件应用 120.5（同原静态复三能级）。** 在(IX120.1)的全部原量词下，下列条件等价：
+
+$$
+\begin{gathered}
+\mathrm{EB3}+\mathsf{DT},\\
+\mathrm{EB3}+\forall p\in P\ W(D_p)=1,\\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V
+\text{ 实线性双射},\quad
+\Phi(\mathrm{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\end{gathered}
+\tag{IX120.8}
+$$
+
+证明。前两项由120.4等价。取得全W1以后，才消费116.5得到Inj和 $P$ 紧，随后消费既有定理116.17，取得全Pair、$\mathrm{Pair}_{\perp}$ 及同原锥同原单位的 $\Phi$。全域三结果完成此时使用VII104.2—104.3；它不是三条边定义的预付款。
+
+反向必须计算整个复三能级模型。对任意单位 $v\in\mathbb C^3$，原纯点 $p=vv^*$ 的全部确认效应为 $p\oplus B$，$0\preceq B\preceq I_{v^\perp}$，所以对每个原混态 $\rho$ 有
+
+$$
+T_p(\rho)=\operatorname{Tr}(p\rho),\qquad
+D_p=\{\rho\succeq0:\operatorname{Tr}\rho=1,\ \rho v=0\}.
+\tag{IX120.9}
+$$
+
+这是 $v^\perp\cong\mathbb C^2$ 上全部密度矩阵，Pauli坐标将其识别为完整 $\mathbb B^3$。每个 $v$ 都可补成 $\mathbb C^3$ 的正交标准基 $v,w,z$；三个秩一投影的迹配对给三条真实全域零一边。因此全部原纯点都属于 $\mathcal T$，而非只有某份所选基中的点。全部混态、效应和原单位由同一个 $\Phi$ 运输。证毕。
+
+(IX120.8)只是既有条件重构的几何压缩。尚未证明裸EB3自动给出 $\mathsf{DT}$。
+

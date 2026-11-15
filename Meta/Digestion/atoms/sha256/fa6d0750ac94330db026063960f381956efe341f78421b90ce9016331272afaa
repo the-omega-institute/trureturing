@@ -1,0 +1,54 @@
+**定理 146.2（连续母球上的移动邻球只有整球或母标签点极限）。** 若
+
+$$
+x_j\to x\in P,\quad D_{x_j}\to D_x,\quad
+y_j\in S_{x_j},\quad y_j\to y\in S_x,\quad
+D_{y_j}\to F
+\tag{XI146.4}
+$$
+
+均在同一原域发生，球收敛取 Hausdorff 意义，则
+
+$$
+F=D_y\quad\text{或}\quad F=\{x\}.
+\tag{XI146.5}
+$$
+
+证明。先给所需的椭球内点事实。设非点、允许降秩的椭球 $G=b+B\overline B^3$ 包含于非退化三球 $D$，且 $G\ne D$。存在 $v\in S^2$ 使 $b\pm Bv$ 均在 $\operatorname{ri}D$。确实，严格凸性使非退化中心弦的中点 $b$ 在 $\operatorname{ri}D$。若 $\operatorname{rank}B<3$，取单位核向量即可，两极限点允许相同。若满秩，将 $D$ 仿射化为单位球；若没有所求方向，闭接触集
+
+$$
+Z=\{v\in S^2:\|b+Bv\|=1\}
+\tag{XI146.6}
+$$
+
+及 $-Z$ 覆盖 $S^2$。Baire 定理使 $Z$ 含球面开片。沿用142.2证明第三步的球面二次唯一性，$\|b+Bv\|^2-1$ 在整个 $S^2$ 为零。比较 $v,-v$ 得 $B^{\mathsf T}b=0$，满秩给 $b=0$；再得 $B^{\mathsf T}B=I$，所以 $G=D$，矛盾。
+
+回到(XI146.4)。零对称给 $x_j\in D_{y_j}$，故 $x\in F$；纯标签处的原上关联给 $F\subseteq D_y$。点极限只能是 $\{x\}$。
+
+设 $F$ 非点。任选原效应子列极限 $e_{y_j}\to f\in\mathcal E$，有 $f(y)=1$、$f|_F=0$。$f$ 的整个零面是非点真面，因而是某个完整极大球；又因 $f\in\mathcal F_y$，这个零面包含于 $D_y$，极大性迫其等于 $D_y$。此时才可由唯一整球零确认识别 $f=e_y$。全部聚点如此，故 $e_{y_j}\to e_y$。把 $x_j\in S_{y_j}$ 代入 ZC，有
+
+$$
+\kappa_{y_j}\le1+e_{y_j}(c_{x_j}),\qquad
+\limsup_j\kappa_{y_j}\le1+e_y(c_x)<2.
+\tag{XI146.7}
+$$
+
+中心 $c_{x_j}\to c_x$ 来自母球连续；严格性来自 $c_x$ 混、$e_y$ 仅在纯点 $y$ 取一。
+
+反设 $F\subsetneq D_y$。对原球取有界正交半轴参数，再取共同子列
+
+$$
+D_{y_j}=b_j+B_j\overline B^3,\quad b_j\to b,\quad B_j\to B,\quad F=b+B\overline B^3.
+\tag{XI146.8}
+$$
+
+用刚证内点事实选 $v$，实际对径纯点 $r_j=b_j+B_jv$、$r'_j=b_j-B_jv$ 的极限都在 $\operatorname{ri}D_y$。对其反向球的每个聚点应用[IX118.4][Q146IX]：聚点只能为纯单点 $\{q\}$，而相应混极限属于 $\operatorname{ri}D_q$。不同完整球不能共享混点，标签单射遂迫 $q=y$。因此
+
+$$
+D_{r_j},D_{r'_j}\to\{y\},\qquad
+\kappa_{y_j}=e_{y_j}(c_{r_j})+e_{y_j}(c_{r'_j})\to2,
+\tag{XI146.9}
+$$
+
+违反(XI146.7)。非点极限只能是 $D_y$。本证明没有在点极限分支中识别效应，也没有预付 $P$ 闭性。证毕。
+

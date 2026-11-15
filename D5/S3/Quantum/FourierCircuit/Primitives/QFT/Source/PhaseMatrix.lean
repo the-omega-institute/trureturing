@@ -1,0 +1,90 @@
+/- GID: D5/S3/Quantum/FourierCircuit/Primitives/QFT/Source/PhaseMatrix
+   generality: G
+   mirror-B: D5/B/S3/Quantum/FourierCircuit/Primitives/QFT/Source/PhaseMatrix
+   mirror-E: none(waiver:source-transfer-proof)
+   anchors: []
+   utility: none
+   digest: Licensed original QFT circuit proof support. -/
+
+/-
+Copyright (c) 2026 QudeLeap. All rights reserved.
+Released under Apache 2.0; the full license is in
+Library/Fourier/qudeleap2026qft.md.
+Modified for receiver module paths and the retained QFT proof slice.
+Source: QudeLeap/Lean-QuantumAlg@971dc8be8a153a116b6d7cd748f984d545861b00.
+Original file: QuantumAlg/Primitives/QFT/Source/PhaseMatrix.lean.
+Authors: QudeLeap Team
+-/
+
+module
+
+public import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Matrix
+public import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Mathematics
+import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Matrix
+import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source
+import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Primitive
+import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Mathematics.PhaseFactors
+import all D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Operator
+import all D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary
+
+/-!
+# The actual native QFT phase layer
+
+Each native controlled-phase token has its original diagonal operator.
+Composing those instructions gives the exact Fourier phase-factor product.
+-/
+
+namespace QuantumAlg.QuantumFourierTransform.Source
+
+noncomputable section
+
+private lemma phaseStep_binaryMatrix (oracles : OracleModel) (n : Nat) (offset : Fin n)
+    (environment : oracles.Interpretation) :
+    onBinaryLabels (phaseStep oracles n offset) environment =
+      qftControlledPhaseOperator 0 offset.succ (phaseAngle offset.val) :=
+  qftSource_primitive_binaryMatrix (environment := environment) oracles _
+
+private lemma phasePrefix_binaryMatrix (oracles : OracleModel) (n count : Nat)
+    (bounded : count ≤ n)
+    (environment : oracles.Interpretation) :
+    (onBinaryLabels (phasePrefix oracles n count bounded) environment : HilbertOperator (Qubits
+      (n + 1))) =
+      Matrix.diagonal (qftPhaseLayerFactorPrefix n count bounded) := by
+  induction count with
+  | zero =>
+      rw [phasePrefix, qftSource_binaryMatrix_identity (environment := environment)]
+      ext row column
+      simp [qftPhaseLayerFactorPrefix, Matrix.one_apply, Matrix.diagonal_apply]
+  | succ count ih =>
+      rw [phasePrefix, qftSource_binaryMatrix_seq (environment := environment)]
+      change (onBinaryLabels (phaseStep oracles n ⟨count, Nat.lt_of_succ_le bounded⟩) environment :
+        HilbertOperator (Qubits (n + 1))) *
+        (onBinaryLabels (phasePrefix oracles n count (Nat.le_of_succ_le bounded)) environment :
+          HilbertOperator (Qubits (n + 1))) = _
+      rw [phaseStep_binaryMatrix (environment := environment), ih]
+      change Matrix.diagonal _ * Matrix.diagonal _ = _
+      rw [Matrix.diagonal_mul_diagonal]
+      rfl
+
+/-- The full native source phase layer has the original exact Fourier phase on every input label. -/
+public lemma qftSource_phase_binaryMatrix_entry (oracles : OracleModel) (n : Nat)
+    (row column : (Qubits (n + 1)).Index)
+    (environment : oracles.Interpretation) :
+    onBinaryLabels (phaseLayer oracles n) environment row column =
+      if row = column then
+        (if column.val.testBit n then ω (n + 1) ^ (column.val % 2 ^ n) else 1)
+      else 0 := by
+  classical
+  have actual := phasePrefix_binaryMatrix (environment := environment) oracles n n le_rfl
+  have entry := congrArg (fun matrix : HilbertOperator (Qubits (n + 1)) =>
+    matrix row column) actual
+  change onBinaryLabels (phaseLayer oracles n) environment row column = _ at entry
+  rw [Matrix.diagonal_apply] at entry
+  by_cases same : row = column
+  · subst row
+    simpa only [if_pos rfl, qftPhaseLayerFactor_eq] using entry
+  · simpa only [if_neg same] using entry
+
+end
+
+end QuantumAlg.QuantumFourierTransform.Source

@@ -1,0 +1,11 @@
+**推论 8.2（显式对数充分阈值与固定比特）。** 以下实阈值也是定理 8.1 的充分条件：
+
+$$
+n\ge\frac9{2s_\rho}\ln(1/\varepsilon)+\frac{3\ln10}{s_\rho}+3.
+\tag{8.4}
+$$
+
+令 $C_\rho=\max\{9/(2s_\rho),\;3\ln10/s_\rho+3\}$，则更简洁的 $n\ge C_\rho\ln(1/\varepsilon)+C_\rho$ 充分。在相同范围，最小终端固定长度比特数为 $\lceil\log_2M_n(\varepsilon)\rceil=(3/2)\log_2(1/\varepsilon)+O(1)$。
+
+证明。$\lceil x\rceil\le x+1$ 给出 $n_0\le3x+3$，即 (8.4)；$C_\rho$ 同时控制两项系数。固定长度比特式来自 (8.3) 取以二为底的对数以及向上取整至多加一。自然对数只用于谱衰减与信息的 nat 表示；熵与比特均用 $\log_2$。$\square$
+

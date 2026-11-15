@@ -1,0 +1,35 @@
+**定理 93.2（同归一化的零拼合分类）。** 在定义93.1的实ROG表示域内，$\mathrm B$ 自动成立，且以下三项等价：完整 $\mathrm{Z0}$；完整 $S$；存在正整数 $n_1,\ldots,n_k$ 及实线性同构
+
+$$
+\begin{gathered}
+\Theta:V\longrightarrow\bigoplus_{\alpha=1}^k\operatorname{Sym}_{n_\alpha}(\mathbb R),\qquad
+\Theta(C)=\bigoplus_{\alpha=1}^k\operatorname{PSD}_{n_\alpha}(\mathbb R),\\
+u(X)=\sum_{\alpha=1}^k\operatorname{tr}(\Theta X)_\alpha
+\qquad(X\in V).
+\end{gathered}
+\tag{93.4}
+$$
+
+不论这些等价条件是否成立，都可以先用明示的同载体变换将原表示化为
+
+$$
+C'=L\cap\operatorname{PSD}_n(\mathbb R),\qquad
+I_n\in L,\qquad u'=\operatorname{tr},\qquad
+P'=\{vv^{\mathsf T}\in L:\|v\|=1\},
+\tag{93.5}
+$$
+
+其中 $n$ 是整个锥的共同支撑维数。等价条件成立时，(93.4)可在(93.5)后仅用正交换基取得，且 $\sum_\alpha n_\alpha=n$。全部原效应与最小值准确为
+
+$$
+\begin{gathered}
+f_E(X)=\sum_\alpha\operatorname{tr}\bigl(E_\alpha(\Theta X)_\alpha\bigr),\qquad
+f_E\in[0,u]\ \Longleftrightarrow\ 0\preceq E_\alpha\preceq I_{n_\alpha}\ \ (\forall\alpha),\\
+e_p(X)=\sum_\alpha\operatorname{tr}\bigl((\Theta p)_\alpha(\Theta X)_\alpha\bigr),\qquad
+T_p(x)=e_p(x)\quad(p\in P,\ x\in K).
+\end{gathered}
+\tag{93.6}
+$$
+
+这些条件还给同一原载体的 $\mathrm A,\mathrm H,\mathrm{Boundary},\mathrm Q$；89.4的标量商返回的正是(93.6)的唯一least确认。单点基包含在结论中。
+

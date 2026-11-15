@@ -1,0 +1,39 @@
+**约定 148.7（归属、复用和未付命题）。** 本章的承重连接是引理148.2到
+(XII148.11)—(XII148.13) 的全原菜单归一化，再到真实低端点和整个 $S_q$ 的闭带供应。
+引理被定理148.4消费，后者被定理148.5的低端点消费；
+低端点再支付145.4实际返回接口所需的整个原 $S_q\subseteq B$。
+这是 `repo-derived` 的纸面推导归属，不主张外部精确先例已穷尽或全球原创。
+
+有限维 Carathéodory、严格分离、紧凸面的极点存在与极点—面传递、
+紧映射的连通纤维论证均为成熟中间工具。
+[Feinberg、Kasyanov、Voorneveld，§1、Definition 1.1前的 Berge 最大值定理][Q148B]
+给连续目标、连续非空紧值可行对应的连续最优值和上半连续紧值最优对应；
+本章可行集固定为 $P_0$，目标取 $ta-b$，其紧图性质也已由闭不等式直接证明。
+该文献结论本身不支付连通极大点纤维、连续选择或本章的仿射局部极小结论。
+原始 Berge 书第116页的独立文本与本引理的外部精确先例在此不作已核断言。
+[Landsman，§1.3、式(1.4)—(1.9)][Q148L]提供完整仿射效应的原比较背景，
+其参数对应为 $p_{\rm Landsman}(x,o)=T_o(x)$；补效应给零对称，纯数值 PR 是另列条件。
+该来源不把 minimum 当作全域仿射函数，不供应返回标签或本章端点桥梁。
+
+原菜单达到性、PR 下 $P$ 紧、完整原面穷尽与相对 $S^2$ 纯缘、
+根合同及真实返回均按上述准确来源复用，不另计为新增结果。
+XI145.2 的表示保持完整 EB3 加整个原空间九维及 Conn 或 Inj 的前件；
+XI146.2—146.4 的有限层正规性保持 EB3、Conn、ZC，且量词为
+$\forall m\,\exists\varepsilon_m,\delta_m>0$。
+这些结论不在本章较弱前件下补付局部极小桥梁，也不把逐层常数统一到全域。
+
+剩余的最小临界候选是：仅由完整 EB3 与完整纯 PR，能否取得一个事先固定的原根
+$o$ 满足 $L_{1/2}(o)$。本章仍将它作为未付命题；
+闭端点并不给 $L_\varepsilon(o)$ 自动性，也不给阈值任何正宽度扩张。
+在 $0<\varepsilon<1/2$ 下补付 (XII148.18) 还需额外论证。
+全过程不预用 Conn、Inj、整个空间九维、MC、全 Pair、least 或静态分类；
+只在推论148.6已付覆盖之后复用旧分类。
+结论属于原有限维态—效应几何，不支付实际来源、仪器、有限复合或物理时间的实现条件。
+
+[Q148IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.1—114.2：同原紧基、完整菜单、达到性及原面；114.3—114.4：纯PR下的端点暴露与纯紧性；116.1及式(IX116.2)：完整相对纯球缘；120.4—120.5、116.17—116.18：既有条件分类。"
+[Q148Faces]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2：共同零确认、全部非空真面穷尽及其不依赖Pair的证明；全对结论另列Pair前件。"
+[Q148X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X133.1：同一固定根的D2；133.6：完整EB3加一个覆盖根的全部三角与同原静态分类。"
+[Q148XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md "XI145.2：EB3+Conn或Inj+整个原V九维；XI146.2—146.4：EB3+Conn+ZC的有限层推进；146.6：零边不变与全域统一界的剩余条件。"
+[Q148B]: https://arxiv.org/html/1309.7708v1 "E. A. Feinberg, P. O. Kasyanov, M. Voorneveld, Berge's Maximum Theorem for Noncompact Image Sets，§1中Definition 1.1前的经典紧值最大值定理。"
+[Q148L]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability，§1.3、式(1.4)—(1.9)：全仿射效应比较、零对称及另列的纯数值互惠。"
+

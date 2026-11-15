@@ -1,0 +1,58 @@
+**引理 126.1（闭关联及完整纤维）。** $\mathscr Z$ 是 $K^2$ 中的紧闭集，对称，且
+$\mathscr Z\subseteq S\times S$。对纯点 $p$，
+
+$$
+ \mathcal Z(p)=D_p.
+ \tag{Q126.4}
+$$
+
+若 $H\in\mathfrak B$ 且 $x\in\operatorname{ri}H$，则
+
+$$
+ \mathcal Z(x)=
+ \begin{cases}
+ \{p_H\},&I(H)=\{p_H\},\\
+ \tau H,&H\in\mathfrak B_{\mathrm r}.
+ \end{cases}
+ \tag{Q126.5}
+$$
+
+特别地，若 $F$ 重复，则
+
+$$
+ x\in F\quad\Longrightarrow\quad \mathcal Z(x)=\tau F.
+ \tag{Q126.6}
+$$
+
+证明。先说明 $\mathcal E$ 在原空间 $V^{\ast}$ 中紧。因为
+$u\ne0$ 且 $A=\{u=1\}$ 线性张成 $V$，限制映射
+$V^{\ast}\to\operatorname{Aff}(A)$ 是线性同构；这里
+$\operatorname{Aff}(A)$ 是 $A$ 上实值仿射函数组成的向量空间，不把仿射空间 $A$ 本身当作向量空间。
+从 $K$ 中取一组仿射基，它也是 $V$ 的线性基。所有
+$f\in\mathcal E$ 在这组基上的读数都在 $[0,1]$ 内，故 $\mathcal E$ 在有限维 $V^{\ast}$ 中有界。
+又因 $C^{\ast}$ 闭，$\mathcal E=C^{\ast}\cap(u-C^{\ast})$ 闭，因而紧；经上述限制同构，在
+$\operatorname{Aff}(A)$ 中亦紧。于是
+
+$$
+ \{(x,y,f)\in K^2\times\mathcal E:f(x)=0,\ f(y)=1\}
+$$
+
+是紧集，其在 $K^2$ 上的投影就是 $\mathscr Z$，所以 $\mathscr Z$ 紧闭。若 $f$ 见证
+$x\mathrel{\mathcal Z}y$，则 $u-f$ 见证 $y\mathrel{\mathcal Z}x$，故对称。非零的非负仿射函数不能在
+$\operatorname{ri}K$ 取零；取 $f(x)=0$ 的见证后，$x$ 与 $y$ 都在 $S$。纯点情形正是
+$D_p$ 的定义。
+
+设 $x\in\operatorname{ri}H$，且 $f(x)=0,\ f(y)=1$。因为 $f\ge0$ 且 $x$ 是 $H$ 的相对内点，$f|_H=0$。写
+$y=\sum_i\lambda_i p_i$ 为有限个原纯点的严格正凸分解。由
+$0\le f(p_i)\le1$ 及 $f(y)=1$，每个 $f(p_i)=1$。于是对 $z\in H$，
+$T_{p_i}(z)\le f(z)=0$，从而 $H\subseteq D_{p_i}$；极大性给
+$D_{p_i}=H$，即 $p_i\in I(H)$。若 $I(H)=\{p_H\}$，便有 $y=p_H$。反过来，取
+$e\in\mathcal A_{p_H}$，它在 $H$ 上为零、在 $p_H$ 上为一，所以
+$p_H\in\mathcal Z(x)$。若 $H$ 重复，则
+$I(H)=S(\tau H)$，故 $y\in\operatorname{conv}I(H)=\tau H$；反向包含由
+IX116.3 的公共效应（零于 $H$、一于 $\tau H$）给出。
+
+现在取任意 $x\in F$，其中 $F$ 重复。若 $x\in\operatorname{ri}F$，上面已经得到
+$\mathcal Z(x)=\tau F$。若 $x\in\partial_{\mathrm{rel}}F=S(F)$，则 $x$ 是纯点，且
+$D_x=\tau F$（由 $I(\tau F)=S(F)$），所以 $\mathcal Z(x)=D_x=\tau F$。证毕。
+

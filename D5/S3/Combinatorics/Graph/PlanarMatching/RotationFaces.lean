@@ -674,7 +674,7 @@ private theorem cycle_boundary_directed [Fintype V] [DecidableEq V] [DecidableRe
     _ = 1 + b := by rw [hh]
 
 
-private theorem cycle_boundary_walk [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
+theorem cycle_boundary_walk [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
     {a : V} (p : G.Walk a a) (hp : p.IsCycle)
     (x : R.Face → ZMod 2) (hx : R.boundary x = fun e : G.edgeSet => if e.val ∈ p.edges then 1 else 0) :
     ∃ q : G.Walk a a, (q = p ∨ q = p.reverse) ∧ ∀ d : G.Dart,

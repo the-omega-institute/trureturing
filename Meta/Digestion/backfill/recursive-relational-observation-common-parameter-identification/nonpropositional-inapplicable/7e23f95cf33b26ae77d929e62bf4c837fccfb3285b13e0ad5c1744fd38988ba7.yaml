@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e23f95cf33b26ae77d929e62bf4c837fccfb3285b13e0ad5c1744fd38988ba7
+  normalized_sha256: sha256:7e23f95cf33b26ae77d929e62bf4c837fccfb3285b13e0ad5c1744fd38988ba7
+cas_ref: sha256:7e23f95cf33b26ae77d929e62bf4c837fccfb3285b13e0ad5c1744fd38988ba7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Expository source distinction, provenance and cross-references; no theorem statement or independent mathematical claim is asserted in this segment.
+    previous_atom_id: dbccdb5514d2e8fff7bd8cdba31e7d70ceff1cfbeea7d76b6fce7ddc697f6a99
+    next_atom_id: 2155e569e14b34deb08e48143533ead0714e427cd78081a6f5da76ca1e6bb61a

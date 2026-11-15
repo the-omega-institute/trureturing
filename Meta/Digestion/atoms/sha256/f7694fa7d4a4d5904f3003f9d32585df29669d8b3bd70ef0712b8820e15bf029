@@ -1,0 +1,33 @@
+### 123.1 完整原域与整个纯标签域上的正规锚点
+
+取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^*$。定义
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\quad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\quad
+D_p=\{x\in K:T_p(x)=0\},\\
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\},\qquad
+\mathcal B(p)=\{h\in\mathcal E:h(p)=0\}.
+\end{gathered}
+\tag{Q123.1}
+$$
+
+$K$ 是整个紧态基，$P$ 是全部原纯点，$\mathcal E$ 是全部原效应；不先假设 $P$ 闭。EB3表示每个完整 $D_p$ 仿射等价于整个闭三球，Inj表示 $D_p=D_q\Rightarrow p=q$。原关系 $p\perp q$ 表示同一张原全域效应在两端取一、零；它由补效应对称，等价于 $q\in D_p$，且 $p\notin D_p$。真实三角只要求三条这样的边分别存在，不预装同一实际三结果仪器。
+
+复用VII103.2、104.1：各 $D_p$ 是紧暴露极大真面，$\mathcal A_p$ 非空；全部非空真面只有纯单点与完整球。对完整球 $F$，$P\cap F=\partial_{\rm rel}F$ 且 $F=\operatorname{conv}(P\cap F)$；不同完整球相交时仅交于一个原纯点。在EB3+Inj中，任意 $e\in\mathcal A_p$ 的原零面恰为 $D_p$，原一值面恰为 $\{p\}$。特别地，这个一值面结论也量化全部原混态。
+
+固定原效应范数 $\|h\|_K=\max_{x\in K}|h(x)|$ 及其Hausdorff距离。令
+
+$$
+\begin{split}
+P_0&=\{p\in P:\mathcal A_p\text{ 为单点}\},\\
+\operatorname{Cont}(\mathcal B)&=\{p\in P:\ \forall(p_n)\subset P,
+\ p_n\to p\Rightarrow d_H(\mathcal B(p_n),\mathcal B(p))\to0\},\\
+P_{\rm reg}&=P_0\cap\operatorname{Cont}(\mathcal B).
+\end{split}
+\tag{Q123.2}
+$$
+

@@ -1,0 +1,9 @@
+**定理 118.14（饱和集与近饱和极限）。** 仅在 $\mathrm{EB}_{\ge1}$ 原域，令
+
+$$
+W(F)=\max_{f\in\mathcal E}(\max_Ff-\min_Ff),\qquad
+\mathscr S=\{p\in P:W(D_p)=1\}.
+\tag{IX118.23}
+$$
+
+每个非点完整球满足 $0<W(F)\le1$。

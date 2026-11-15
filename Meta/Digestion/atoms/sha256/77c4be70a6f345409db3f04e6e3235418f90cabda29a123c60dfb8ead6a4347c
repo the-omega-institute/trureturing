@@ -1,0 +1,18 @@
+**命题 10.6（No automatic positive-moment strengthening）。** Equation (10.7) is not in general a positive-definite unitary moment sequence. A positive-moment argument is valid under the additional hypothesis $[A_-,\sigma]=0$: then, for the Hilbert--Schmidt unitary $\mathcal U:X\mapsto A_+XA_-^*$, $\sqrt\sigma$ is a moment vector with $f_n=\langle\sqrt\sigma,\mathcal U^n\sqrt\sigma\rangle_{\mathrm{HS}}$, and the Gram matrix of the first $N+1$ orbit vectors is $(\lambda^{|i-j|})$, whose determinant is $(1-\lambda^2)^N>0$ for real $|\lambda|<1$. That conditional route can yield a stronger $d\,\operatorname{rank}\sigma\ge N+1$, but the commutation/stationarity hypothesis is not part of (9.1).
+
+A source-compatible one-step counterexample at $p=q=1/4$ makes the missing hypothesis concrete. On an environment qubit take
+
+$$
+C={I-iZ\over\sqrt2},\qquad P={I+X\over2},\qquad Q={I-X\over2},\qquad
+\sigma={I+Y/2\over2},
+$$
+
+and $W=(I_H\otimes C)(U\otimes P+V\otimes Q)$. The one-step reduced channel is $\Phi$ on the full $H$ and all references, while on the two sectors $h_\pm$ the branch unitaries are $A_+=C$ and $A_-=CX$. Direct exact multiplication gives
+
+$$
+(f_0,f_1,f_2,f_3,f_4)=(1,0,0,-1/2,-1).
+\tag{10.15}
+$$
+
+Define $t_n=f_n$ for $n\ge0$ and $t_{-n}=\overline{f_n}$ for $n>0$. The Hermitian Toeplitz matrix $(t_{i-j})_{0\le i,j\le4}$ has determinant $-7/16$, so this completion is not positive semidefinite. This completion differs from extending the trace formula (10.7) to negative powers, which gives $f_{-1}=1/2$ while $f_1=0$ and is not Hermitian. The example is only a one-step source counterexample to automatic positivity; it is not claimed to satisfy a longer prefix. Thus no conclusion $d\ge N+1$ is automatic. The proved general statement is the arbitrary-complex-weight bound (10.1). $\square$
+

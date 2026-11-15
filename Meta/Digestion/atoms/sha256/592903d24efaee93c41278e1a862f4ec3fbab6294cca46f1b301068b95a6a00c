@@ -1,0 +1,45 @@
+### Q97.2 单位消去的交替三形式及其误差
+
+令 $t(x,y,z)=g(B(x,y),z)$。斜伴随性使它在末两槽反对称。定义
+
+$$
+\phi(x,y,z)=\frac{t(x,y,z)+t(y,z,x)+t(z,x,y)}3,\qquad
+P_e x=x-g(e,x)e,
+$$
+
+并用 Riesz 对应定义 $C$：
+
+$$
+g(C(x,y),z)=\phi(P_ex,P_ey,P_ez).
+\tag{Q97.8}
+$$
+
+逐槽交换表明 $\phi$ 为交替三形式。又有
+
+$$
+\begin{aligned}
+t(x,y,z)-t(y,z,x)&=g(H_B(x,y),z),\\
+t(x,y,z)-t(z,x,y)&=-g(H_B(x,z),y).
+\end{aligned}
+$$
+
+因此单位三元组上 $|t-\phi|\le2\sigma/3$。由 $B(x,e)=0$ 及斜伴随性，$\phi(e,x,y)=t(e,x,y)/3$，其范数不超过 $\sigma/3$。展开三个 $P_e$ 时，含两个 $e$ 的项都因交替性为零，至多剩三个各不超过 $\sigma/3$ 的项。所以
+
+$$
+h:=\|C-B\|_{\rm bil}\le\frac{5\sigma}3\le2\sigma=U\eta.
+\tag{Q97.9}
+$$
+
+$C$ 严格交替，$C(e,x)=C(x,e)=0$，且 $C_x:y\mapsto C(x,y)$ 斜伴随。由 $\eta\le\kappa/(8N)$，$h\le1$，故 $\|C\|_{\rm bil}\le K+1$。$S$ 此时保持原样。必须另算投影后的导子误差：令
+
+$$
+F_C(x;y,z)=C(x,S(y,z))-S(C(x,y),z)-S(y,C(x,z)).
+$$
+
+减去原来 $B$ 的严格导子恒等式，三个差项各不超过 $Kh$，从而
+
+$$
+\|F_C\|_{\rm tri}\le3Kh\le3KU\eta.
+\tag{Q97.10}
+$$
+

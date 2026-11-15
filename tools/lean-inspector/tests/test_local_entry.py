@@ -93,7 +93,7 @@ class LocalEntryFixture:
                     'printf "lake %s\\n" "$*" >> calls\nexit 23\n')
         producer = self.root / 'producer.dll'
         producer.touch()
-        self.environment = dict(os.environ, GITHUB_ACTIONS='false', LAKE_BIN=str(self.fixture.lake),
+        self.environment = dict(os.environ, FULL_BUILD="1", GITHUB_ACTIONS='false', LAKE_BIN=str(self.fixture.lake),
             PATH=str(Path(sys.executable).parent) + os.pathsep + os.environ['PATH'],
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_LEAN_REPORT_REUSE=str(self.seed), STRATALINT_LEAN_BUILD_TARGETS='[]',
@@ -445,6 +445,119 @@ class LocalEntryTests(LocalEntryFixture, SeedGenerationTests, LocalEntryReleaseC
                         'Fixture <fixture@example.invalid>|Fixture <fixture@example.invalid>',
                         '[FAIL] fixture_history_uses_fixture_author_and_committer')
 
+
+
+
+class FullBuildConfirmationTests(unittest.TestCase):
+    """Full entries fail before side effects; scoped and confirmed entries still dispatch."""
+
+    def setUp(self):
+        import tempfile
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name)
+        for name in ('Makefile', 'tools/scripts/worktree/lean-cache-run.sh',
+                     'tools/scripts/worktree/warm-donor.sh', 'tools/scripts/report/lean-report.sh',
+                     'tools/lean-inspector/inspect.sh'):
+            destination = self.root / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(ROOT / name, destination)
+        self.marker = self.root / 'calls'
+        self.env = dict(os.environ, LEAN_SKIP_LOCK='1')
+        self.env.pop('FULL_BUILD', None)
+        self.env.pop('MAKEFLAGS', None)
+        self.env.pop('MFLAGS', None)
+        self.env.pop('MAKEOVERRIDES', None)
+
+    def run_command(self, *command, confirmed=False):
+        environment = dict(self.env)
+        if confirmed:
+            environment['FULL_BUILD'] = '1'
+        return subprocess.run(command, cwd=self.root, env=environment,
+                              text=True, capture_output=True, timeout=10)
+
+    def stub(self, path):
+        destination = self.root / path
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text('#!/bin/bash\nprintf "%s\\n" "$*" >> "' + str(self.marker) + '"\n')
+        destination.chmod(0o755)
+
+    def test_make_full_entries_reject_missing_and_invalid_confirmation_before_dispatch(self):
+        for target in ('lean', 'build', 'lean-report', 'test', 'warm-donor',
+                       'lean-cache-to-github-without-mathlib'):
+            for value in (None, '0', 'yes', '2'):
+                with self.subTest(target=target, value=value):
+                    arguments = [] if value is None else ['FULL_BUILD=' + value]
+                    result = self.run_command('make', '--no-print-directory', target, *arguments)
+                    self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+                    self.assertIn('FULL_BUILD=1', result.stderr)
+                    self.assertFalse(self.marker.exists())
+                    self.assertFalse((self.root / '.lake').exists())
+
+    def test_make_confirmed_full_entries_dispatch(self):
+        for path in ('tools/scripts/worktree/lean-cache-run.sh',
+                     'tools/scripts/worktree/warm-donor.sh', 'tools/scripts/report/lean-report.sh',
+                     'tools/scripts/worktree/lean-cache-publish.sh'):
+            self.stub(path)
+        self.stub('bin/git')
+        self.stub('bin/dotnet')
+        self.env['PATH'] = str(self.root / 'bin') + os.pathsep + os.environ['PATH']
+        for target in ('lean', 'build', 'lean-report', 'test', 'warm-donor',
+                       'lean-cache-to-github-without-mathlib'):
+            with self.subTest(target=target):
+                result = self.run_command('make', '--no-print-directory', target, 'FULL_BUILD=1')
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertTrue(self.marker.exists())
+
+    def test_cache_publication_without_build_needs_no_confirmation(self):
+        self.stub('tools/scripts/worktree/lean-cache-publish.sh')
+        result = self.run_command('make', '--no-print-directory',
+                                  'lean-cache-to-github-without-mathlib', 'LEAN_CACHE_PUBLISH_ONLY=1')
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('--no-build', self.marker.read_text())
+
+    def test_make_scoped_entries_need_no_confirmation(self):
+        for path in ('tools/scripts/worktree/lean-cache-run.sh',
+                     'tools/scripts/report/lean-report-scoped.sh'):
+            self.stub(path)
+        for target in ('lean', 'lean-report-scoped'):
+            result = self.run_command('make', '--no-print-directory', target, 'LEAN_TARGETS=D5.Selected')
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('D5.Selected', self.marker.read_text())
+
+    def test_direct_full_scripts_reject_before_side_effects(self):
+        for path, arguments in (
+            ('tools/scripts/worktree/lean-cache-run.sh', ['--build']),
+            ('tools/scripts/worktree/warm-donor.sh', []),
+            ('tools/scripts/report/lean-report.sh', []),
+            ('tools/lean-inspector/inspect.sh', []),
+        ):
+            with self.subTest(path=path):
+                result = self.run_command('bash', path, *arguments)
+                self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+                self.assertIn('FULL_BUILD=1', result.stderr)
+                self.assertFalse((self.root / '.lake').exists())
+
+    def test_native_wrapper_scoped_and_confirmed_full_builds_reach_producer(self):
+        self.stub('tools/scripts/worktree/lean-git/git')
+        self.stub('bin/dotnet')
+        producer = self.root / 'producer.dll'
+        producer.touch()
+        self.env.update(PATH=str(self.root / 'bin') + os.pathsep + os.environ['PATH'],
+                        STRATALINT_LEAN_PRODUCER_DLL=str(producer))
+        for targets, confirmed in ((['D5.Selected'], False), ([], True)):
+            with self.subTest(targets=targets):
+                result = self.run_command('bash', 'tools/scripts/worktree/lean-cache-run.sh',
+                                          '--build', *targets, confirmed=confirmed)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('D5.Selected', self.marker.read_text())
+        self.assertIn('lean-inspector-reg', self.marker.read_text())
+
+    def test_native_wrapper_empty_target_cannot_select_full_build(self):
+        for target in ('', '   '):
+            result = self.run_command('bash', 'tools/scripts/worktree/lean-cache-run.sh', '--build', target)
+            self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+            self.assertIn('empty module target', result.stderr)
 
 
 if __name__ == '__main__':

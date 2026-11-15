@@ -1,0 +1,57 @@
+**定义 122.1（同一最大球、效应与接触对）。**
+本章只沿用定义 121.1 的完整原 $V,C,u,K,P,\mathcal E,D_t,\mathcal A_t,N_t,S_t$，
+并假设 EB3 和全局 Inj。
+环境维数为任意有限维；不继承 X121 的九维、实际种子、$P_0$ 或 E0 前件。
+对每个完整原球定义整个原效应区间上的宽度
+
+$$
+W(D_t)=\max_{f\in\mathcal E}\operatorname{osc}_{D_t}f,
+\qquad
+\operatorname{osc}_Af=\max_Af-\min_Af.
+\tag{X122.1}
+$$
+
+[EXCLUSION IX118.14—118.15](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+及 [ExclusionWidthCompactness](../../../Blueprint/D5/S3/Quantum/Foundation/ExclusionWidthCompactness.md)
+给出正的、实际达到的全局最大值，及达到每颗球宽度的原效应。
+固定这份实际数据，并研究其条件分支
+
+$$
+F=D_p=c+B\overline{\mathbb B}^{3}_F,\qquad
+M=W(F)=\max_{t\in P}W(D_t),\qquad 0<M<1.
+\tag{X122.2}
+$$
+
+选定达到 $M$ 的同一原效应 $b\in\mathcal E$，其全局振幅为一。
+使用 [EXCLUSION IX 定理 120.21](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+及 [OriginalWidthContact](../../../Blueprint/D5/S3/Quantum/Foundation/OriginalWidthContact.md)
+给出的同一唯一共同接触对。
+它的至少一个接触面是纯单点：若零面是单点，它是纯点；
+否则原真面分类使零面为某完整排除球，Inj 的一值面刚性使另一接触面为纯单点。
+必要时把同一 $b$ 换成 $u-b$，同时交换其两端和两接触，并反转球方向。
+此为同一对的定向，不是另选极值者。
+由此记
+
+$$
+\begin{gathered}
+q=c+Bn,\quad r=c-Bn,\quad \|n\|_F=1,\\
+b(s)=1,\quad b(y)=0,\quad s\in P,\qquad
+q-r=M(s-y).
+\end{gathered}
+\tag{X122.3}
+$$
+
+令
+
+$$
+G=D_s=c_s+A\overline{\mathbb B}^{3}_G,\qquad
+y=c_s+A\eta,\quad \|\eta\|_G\le1,\qquad m_s=W(G).
+\tag{X122.4}
+$$
+
+$y\in G$ 由原 $b$ 这个零见证给出；不假设 $b$ 在全部 $G$ 为零。
+$0<m_s\le M$。第二接触 $y$ 不被假设为纯点。
+F 图与 G 图的三维坐标、内积和范数各自独立。
+下文的 $n^\perp$ 属于 F 图，不存在默认的跨球等距识别。
+只有在实际使用 $D_r$ 时才记 $m_r=W(D_r)$。
+

@@ -1,0 +1,61 @@
+**定义 121.1（同一原锥及全部原读数）。**
+设 $V\ne0$ 为有限维实空间，$C\subset V$ 为闭、尖、生成凸锥，
+$u\in V^*$ 在 $C\setminus\{0\}$ 上严格正。
+始终取整个原归一基、所有原纯点和整个原效应区间
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\\
+C^*=\{h\in V^*:h\ge0\text{ 于全部 }C\},\qquad
+\mathcal E=[0,u]_{C^*}.
+\end{gathered}
+\tag{X121.1}
+$$
+
+对每个 $p\in P$ 定义
+
+$$
+\begin{gathered}
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+\mathcal T_p(z)=\min_{f\in\mathcal F_p}f(z),\\
+D_p=\{z\in K:\mathcal T_p(z)=0\},\\
+\mathcal A_p=\{a\in\mathcal E:a(p)=1,\ a|_{D_p}=0\},\qquad
+P_0=\{p\in P:\mathcal A_p\text{ 为单点}\},\\
+N_p=\{h\in C^*:h(p)=0\},\qquad S_p=\operatorname{span}N_p.
+\end{gathered}
+\tag{X121.2}
+$$
+
+若 $p\in P_0$，记 $\mathcal A_p=\{e_p\}$，$g_p=u-e_p$。
+$\mathcal F_p$ 是全部确认效应；$\mathcal A_p$ 是其中在整个排除面上为零的效应。
+定义 $D_p$ 时不能把 $\mathcal F_p$ 换成 $\mathcal A_p$。
+原效应区间及确认切片紧，所以这里的最小值确实达到；
+$z\in D_p$ 等价于存在某个原 $f\in\mathcal F_p$ 使 $f(z)=0$。
+这个等价包括所有混合 $z\in K$。
+
+记 $\mathrm{EB3}$ 为每个完整 $D_p$ 都有一个单射仿射闭单位三球图，
+$\mathrm{Inj}$ 为 $p\mapsto D_p$ 在全部 $P$ 上单射。
+原关系
+
+$$
+p\perp q
+\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0
+\tag{X121.3}
+$$
+
+由原补效应 $u-f$ 对称。
+它是同一原数学对象上的关系；有限边路并不指定共同仪器或实际门字。
+
+使用 [FINITE_PURE VII103.1—103.2、104.1](QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md)
+及 [EXCLUSION IX120.1—120.2](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+的完整面接口：每个 $D_p$ 是完整暴露面，非空真面为纯单点或某个完整排除球；
+不同完整球相交至多于一个原纯点。
+在 Inj 下，任何 $a\in\mathcal A_p$ 的整个零面是 $D_p$，整个一值面是 $\{p\}$。
+球图的整个球面恰是 $P\cap D_p$。
+这些接口的证明归于上述来源；本卷只在下列推导中应用它们。
+
+这里的 $N_p$ 是原双锥中的齐次正法向面。
+它不是只在某颗球上非负的仿射函数锥，也不是全部满足 $h(p)=0$ 的有符号泛函。
+所有非负、最大值和效应上界，除非明确写了限制集，均指整个原 $C$ 或整个原 $K$。
+
