@@ -9,6 +9,9 @@
 import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
 import D5.S3.QuantumStates.UnitWeightSupport
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Foundation.FiniteStateChannel
+import D5.S3.Quantum.Recovery.PurifiedLocalPath
 
 /-! Strict-majority certainty for the parallel Arunachalam–Molina–Russo qubit game.
 Escape audit for `trace_retained` unfinished: https://github.com/the-omega-institute/trureturing/issues/22403
