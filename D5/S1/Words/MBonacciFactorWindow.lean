@@ -105,7 +105,7 @@ private theorem image_common_prefix (k : ℕ) (a : Fin m) :
     exact List.prefix_append _ _
   · simp [subst]
 
-private theorem factor_eq_take_drop (L q n : ℕ)
+theorem factor_eq_take_drop (L q n : ℕ)
     (hend : q + n ≤ (image (phi hm) L (zero hm)).length) :
     factor (word hm) q n = ((image (phi hm) L (zero hm)).drop q).take n := by
   apply List.ext_getElem

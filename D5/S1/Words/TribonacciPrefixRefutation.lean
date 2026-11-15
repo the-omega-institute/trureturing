@@ -24,9 +24,9 @@ abbrev Letter := Fin 3
 /-- The fourth substitution iterate, used as the renormalized substitution. -/
 def tau (a : Letter) : List Letter := image sigma 4 a
 
-private theorem tau_A : tau 0 = [0,1,0,2,0,1,0,0,1,0,2,0,1] := by decide
-private theorem tau_B : tau 1 = [0,1,0,2,0,1,0,0,1,0,2] := by decide
-private theorem tau_C : tau 2 = [0,1,0,2,0,1,0] := by decide
+theorem tau_A : tau 0 = [0,1,0,2,0,1,0,0,1,0,2,0,1] := by decide
+theorem tau_B : tau 1 = [0,1,0,2,0,1,0,0,1,0,2] := by decide
+theorem tau_C : tau 2 = [0,1,0,2,0,1,0] := by decide
 
 def weight (a : Letter) : ℤ := if a = 0 then 2 else if a = 1 then 1 else 0
 
@@ -78,7 +78,7 @@ private theorem abc_step (n : ℕ) :
   norm_num
   constructor <;> ring_nf
 
-private theorem abc_closed (n : ℕ) :
+theorem abc_closed (n : ℕ) :
     a n = 2 ∧ b n = 2 - (-1 : ℤ)^n ∧ c n = 2 - (2*(n:ℤ)+2)*(-1 : ℤ)^n := by
   induction n with
   | zero => exact abc_zero
