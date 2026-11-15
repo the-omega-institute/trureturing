@@ -1,0 +1,19 @@
+**定义 9.1（Common-prefix contract and its two minima）。** Keep the balanced source (8.1), the full ten-dimensional $H$, and the channel $\Phi$ of §8. For a finite horizon $N$, a common autonomous realization is a finite environment $E$, one density operator $\sigma$ on $E$ independent of the input and of $n$, and one unitary $W$ on $H\otimes E$ such that, for every density operator $\rho_{HR}$ and every untouched reference $R$,
+
+$$
+\operatorname{Tr}_{E}\!\left[(W^n\otimes I_R)(\rho_{HR}\otimes\sigma)(W^{-n}\otimes I_R)\right]
+=(\Phi^n\otimes\operatorname{id}_R)(\rho_{HR}),\qquad 0\le n\le N .
+\tag{9.1}
+$$
+
+Every clock, reset supply, controller or other interacting carrier belongs to $E$. The unitary and $\sigma$ may depend on $N$ and on the source parameters, but not on the input or on the time index. Let $d_{\mathrm{pure}}(N)$ be the minimum $\dim E$ when $\sigma$ is pure, and let $d_{\mathrm{any}}(N)$ allow every density $\sigma$. The terminal problem in Theorem 8.2 asks only for one channel $\Phi^N$ and may choose a new terminal dilation for each $N$; (9.1) asks one $W$ and one initial density to realize every requested prefix power. Equality in (9.1) is an identity on the full matrix algebra and therefore includes all coherent inputs and all untouched references.
+
+Put
+
+$$
+\alpha=1-2p,\qquad \beta=2p,\qquad \alpha,\beta>0,\qquad \alpha+\beta=1,
+\tag{9.2}
+$$
+
+and work first in the fixed frame (8.5), writing again $U,V$ for $U\otimes I_K,V\otimes I_K$ and $R=UV$, $S=VU=R^{-1}$. Thus $\Phi=\alpha\,\operatorname{Ad}_U+\beta\,\operatorname{Ad}_V$ and $U^2=V^2=I$.
+

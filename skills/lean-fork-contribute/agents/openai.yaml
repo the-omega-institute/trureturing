@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lean Fork Contribute"
+  short_description: "在 trureturing fork 中定向核验 Lean、Scribe、逃逸与冻结，无需项目缓存"
+  default_prompt: "使用 $lean-fork-contribute，在本仓库的 fork 中完成无需整库项目缓存的形式化贡献。"
