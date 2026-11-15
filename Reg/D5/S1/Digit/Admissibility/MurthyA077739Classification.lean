@@ -46,7 +46,7 @@ def family : Registration arena (type_of% @result) where
     omega
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@result) (Realization signature) (ℕ → ℕ) Unit where
+    (@result) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S1.Digit.Admissibility.MurthyA077739Classification.auditUnit
   realizationName := `Reg.D5.S1.Digit.Admissibility.MurthyA077739Classification.family
   realizationSource := none
@@ -62,7 +62,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (@a)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S1.Digit.Admissibility.MurthyA077739Classification
     definition := some {

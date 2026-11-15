@@ -7,6 +7,7 @@
    digest: The complete unbounded existence and least-or-zero classification for Murthy A077739. -/
 import Mathlib.Data.Nat.Digits.Div
 import Mathlib.Order.Lattice.Nat
+import Mathlib.Algebra.Order.BigOperators.Group.List
 import Mathlib.Tactic
 
 /-! Decimal blocks and the exact unbounded source predicate. -/
@@ -183,17 +184,9 @@ private theorem from_blocks (n : ℕ) (hn : 0 < n) (bs : List ℕ)
 
 
 private theorem digit_sum_width (n : ℕ) : digitSum n ≤ 9 * width n := by
-  have h : ∀ xs : List ℕ, (∀ x ∈ xs, x < 10) → xs.sum ≤ 9 * xs.length := by
-    intro xs
-    induction xs with
-    | nil => simp
-    | cons x xs ih =>
-      intro hx
-      have hx0 := hx x (by simp)
-      have hh := ih (fun y hy => hx y (by simp [hy]))
-      simp only [List.sum_cons, List.length_cons]
-      omega
-  exact h _ (fun x hx => Nat.digits_lt_base (by norm_num) hx)
+  simpa [digitSum, width, Nat.mul_comm] using
+    List.sum_le_length_nsmul (Nat.digits 10 n) 9
+      (fun x hx => Nat.le_of_lt_succ (Nat.digits_lt_base (by norm_num) hx))
 
 private theorem polynomial_bound (k : ℕ) :
     9 * (k + 4) ^ 2 + 81 * (k + 4) ≤ 10 ^ (k + 3) := by

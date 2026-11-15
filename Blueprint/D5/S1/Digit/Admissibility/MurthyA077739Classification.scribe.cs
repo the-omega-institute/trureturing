@@ -34,7 +34,7 @@ internal sealed class MurthyA077739ClassificationDocument : IScribeDocumentDefin
                 + "from the existence construction to the actual source sequence.", DescribeRole.Definition),
             Node("result", "The complete least-or-zero classification", ResultFormula(),
                 "Concatenating multiples of n preserves divisibility and adds digit sums. Start and end "
-                + "with a literal n block. For L with n<=10^L, the positive multiple B_L=n(10^L-1) "
+                + "with a literal n block. For L with n<=10^L, the multiple B_L=n(10^L-1) "
                 + "has digit sum 9L: write it as (n-1)10^L+(10^L-n), with the lower block padded to "
                 + "L digits. Its complement identity follows by decimal recursion. For n>=1000, put "
                 + "d=w(n)>=4. Induction gives 9d^2+81d<=10^(d-1)<=n, and s(n)<=9d. Congruence "
