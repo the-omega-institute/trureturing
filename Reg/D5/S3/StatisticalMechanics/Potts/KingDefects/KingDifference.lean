@@ -13,6 +13,72 @@ open KingGrid KingDifference
 
 noncomputable section
 
+namespace add_eq_zero
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.UniverseSingleReadout.signature K (fun _ => K) (fun _ => Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ b a => a = b) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (a b : K), a + b = 0 ↔ R.readout () b a
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact (h 0 0).mp (by simp)
+
+def family : Registration arena (type_of% @KingDifference.add_eq_zero) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@KingDifference.add_eq_zero, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    cases i
+    refine ⟨0, 0, 1, ?_⟩
+    change ((0 : K) = 0) ≠ ((1 : K) = 0)
+    intro h
+    exact one_ne_zero (Eq.mp h rfl)
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@KingDifference.add_eq_zero) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingDifference.add_eq_zero.auditUnit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingDifference.add_eq_zero.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ b a => a = b) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingDifference
+    definition := none
+    coordinates := #[1]
+    readouts := #[{ path := #["body", "body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
+                    stateOperand := none }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end add_eq_zero
+
 namespace count_by_kind
 
 abbrev signature : Signature :=

@@ -8,14 +8,14 @@
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
-K: proof_shape=bind-only; consumers=KingDiagonal.SlotValid,KingDiagonal.extractSlots,KingDiagonal.extract_slotField,KingDiagonal.extract_valid,KingDiagonal.klein_alphabet,KingDiagonal.klein_zero,KingDiagonal.normalizedEquiv,KingDiagonal.normalizedSlots,KingDiagonal.normalized_recover,KingDiagonal.normalized_valid,KingDiagonal.raw_h_ordinary,KingDiagonal.raw_h_special,KingDiagonal.raw_v_ordinary,KingDiagonal.raw_v_special,KingDiagonal.slotField,KingDiagonal.slot_good,KingDiagonal.slot_raw,KingDiagonal.slot_reconstruction,KingDiagonal.slot_special,KingDiagonal.slotsWord,KingDiagonal.special_block,KingDiagonal.third_ne,KingDiagonal.word_recover,KingDifference.Cocycle,KingDifference.GoodBlock,KingDifference.NZPair,KingDifference.Rainbow,KingDifference.RawAdmissible,KingDifference.add_add_cancel,KingDifference.add_eq_zero,KingDifference.colourEquiv,KingDifference.count_fixed_edge,KingDifference.defectIntegrationEquiv,KingDifference.difference_unique,KingDifference.differentiate,KingDifference.differentiate_cocycle,KingDifference.differentiate_edgeValue,KingDifference.differentiate_integrate,KingDifference.edgeValue,KingDifference.goodBlock_of_raw,KingDifference.good_differentiate,KingDifference.horizontal_slot_eq,KingDifference.integrate,KingDifference.integrate_differentiate,KingDifference.integrate_h,KingDifference.integrate_root,KingDifference.integrate_v,KingDifference.integrationEquiv,KingDifference.neg_self,KingDifference.nz_pair_card,KingDifference.psum_add,KingDifference.rainbow_algebra,KingDifference.rainbow_block,KingDifference.rainbow_field,KingDifference.raw_differentiate_iff,KingDifference.relabelDefectEquiv,KingDifference.self_add,KingDifference.vertical_slot_eq,KingHorizontal.BoundaryValid,KingHorizontal.CutFields,KingHorizontal.InteriorAlphabet,KingHorizontal.InteriorCode,KingHorizontal.InteriorSlots,KingHorizontal.OrdinaryAlphabet,KingHorizontal.SupportAlphabet,KingHorizontal.bottom_edge_value,KingHorizontal.bottom_field,KingHorizontal.bottom_field_join,KingHorizontal.bottom_field_raw,KingHorizontal.boundary_bottom_shared,KingHorizontal.boundary_build,KingHorizontal.boundary_build_raw,KingHorizontal.boundary_extract,KingHorizontal.boundary_extract_valid,KingHorizontal.boundary_h,KingHorizontal.boundary_reconstruct,KingHorizontal.boundary_slot_equiv,KingHorizontal.boundary_top_shared,KingHorizontal.boundary_v,KingHorizontal.boundary_word_build,KingHorizontal.boundary_word_build_valid,KingHorizontal.boundary_word_map_injective,KingHorizontal.boundary_word_map_surjective,KingHorizontal.coded_boundaries_shared,KingHorizontal.coded_boundary,KingHorizontal.coded_boundary_left,KingHorizontal.coded_boundary_right,KingHorizontal.coded_boundary_valid,KingHorizontal.cut_slots_equiv,KingHorizontal.horizontal_cut_equiv,KingHorizontal.interiorCode_ext,KingHorizontal.interiorDecode,KingHorizontal.interiorDecode_encode,KingHorizontal.interiorEncode,KingHorizontal.interiorEncode_decode,KingHorizontal.interiorFirstPair,KingHorizontal.interiorFirstWord,KingHorizontal.interiorLeftWord,KingHorizontal.interiorRightWord,KingHorizontal.interiorSecondPair,KingHorizontal.interiorSecondWord,KingHorizontal.interior_count,KingHorizontal.interior_count_alphabets,KingHorizontal.interior_count_support,KingHorizontal.interior_one_column_count,KingHorizontal.join_field,KingHorizontal.join_restrict,KingHorizontal.lower_pair,KingHorizontal.lower_pair_equiv,KingHorizontal.lower_pair_valid,KingHorizontal.lower_pair_values,KingHorizontal.ordinary_equiv,KingHorizontal.ordinary_value,KingHorizontal.ordinary_value_valid,KingHorizontal.pair_count_support,KingHorizontal.pair_support_cases,KingHorizontal.pair_support_count,KingHorizontal.raw_of_halves,KingHorizontal.row_reflect,KingHorizontal.row_reflect_differentiate,KingHorizontal.row_reflect_equiv,KingHorizontal.row_reflect_raw,KingHorizontal.support_alphabet_card,KingHorizontal.support_sizes_correct,KingHorizontal.top_edge_value,KingHorizontal.top_field,KingHorizontal.top_field_join,KingHorizontal.top_field_raw
+K: proof_shape=bind-only; consumers=KingDiagonal.SlotValid,KingDiagonal.extractSlots,KingDiagonal.extract_slotField,KingDiagonal.extract_valid,KingDiagonal.klein_alphabet,KingDiagonal.normalizedEquiv,KingDiagonal.normalizedSlots,KingDiagonal.normalized_recover,KingDiagonal.normalized_valid,KingDiagonal.raw_h_ordinary,KingDiagonal.raw_h_special,KingDiagonal.raw_v_ordinary,KingDiagonal.raw_v_special,KingDiagonal.slotField,KingDiagonal.slot_good,KingDiagonal.slot_raw,KingDiagonal.slot_reconstruction,KingDiagonal.slot_special,KingDiagonal.slotsWord,KingDiagonal.special_block,KingDiagonal.third_ne,KingDiagonal.word_recover,KingDifference.Cocycle,KingDifference.GoodBlock,KingDifference.NZPair,KingDifference.Rainbow,KingDifference.RawAdmissible,KingDifference.add_add_cancel,KingDifference.add_eq_zero,KingDifference.colourEquiv,KingDifference.count_fixed_edge,KingDifference.defectIntegrationEquiv,KingDifference.difference_unique,KingDifference.differentiate,KingDifference.differentiate_cocycle,KingDifference.differentiate_edgeValue,KingDifference.differentiate_integrate,KingDifference.edgeValue,KingDifference.goodBlock_of_raw,KingDifference.good_differentiate,KingDifference.horizontal_slot_eq,KingDifference.integrate,KingDifference.integrate_differentiate,KingDifference.integrate_h,KingDifference.integrate_root,KingDifference.integrate_v,KingDifference.integrationEquiv,KingDifference.neg_self,KingDifference.nz_pair_card,KingDifference.psum_add,KingDifference.rainbow_algebra,KingDifference.rainbow_block,KingDifference.rainbow_field,KingDifference.raw_differentiate_iff,KingDifference.relabelDefectEquiv,KingDifference.self_add,KingDifference.slot_chain_eq,KingDifference.vertical_slot_eq,KingHorizontal.BoundaryValid,KingHorizontal.CutFields,KingHorizontal.InteriorAlphabet,KingHorizontal.InteriorCode,KingHorizontal.InteriorSlots,KingHorizontal.OrdinaryAlphabet,KingHorizontal.SupportAlphabet,KingHorizontal.bottom_edge_value,KingHorizontal.bottom_field,KingHorizontal.bottom_field_join,KingHorizontal.bottom_field_raw,KingHorizontal.boundary_bottom_shared,KingHorizontal.boundary_build,KingHorizontal.boundary_build_raw,KingHorizontal.boundary_extract,KingHorizontal.boundary_extract_valid,KingHorizontal.boundary_h,KingHorizontal.boundary_reconstruct,KingHorizontal.boundary_slot_equiv,KingHorizontal.boundary_top_shared,KingHorizontal.boundary_v,KingHorizontal.boundary_word_build,KingHorizontal.boundary_word_build_valid,KingHorizontal.boundary_word_map_injective,KingHorizontal.boundary_word_map_surjective,KingHorizontal.coded_boundaries_shared,KingHorizontal.coded_boundary,KingHorizontal.coded_boundary_left,KingHorizontal.coded_boundary_right,KingHorizontal.coded_boundary_valid,KingHorizontal.cut_slots_equiv,KingHorizontal.horizontal_cut_equiv,KingHorizontal.interiorCode_ext,KingHorizontal.interiorDecode,KingHorizontal.interiorDecode_encode,KingHorizontal.interiorEncode,KingHorizontal.interiorEncode_decode,KingHorizontal.interiorFirstPair,KingHorizontal.interiorFirstWord,KingHorizontal.interiorLeftWord,KingHorizontal.interiorRightWord,KingHorizontal.interiorSecondPair,KingHorizontal.interiorSecondWord,KingHorizontal.interior_count,KingHorizontal.interior_count_alphabets,KingHorizontal.interior_count_support,KingHorizontal.interior_one_column_count,KingHorizontal.join_field,KingHorizontal.join_restrict,KingHorizontal.lower_pair,KingHorizontal.lower_pair_equiv,KingHorizontal.lower_pair_valid,KingHorizontal.lower_pair_values,KingHorizontal.ordinary_equiv,KingHorizontal.ordinary_value,KingHorizontal.ordinary_value_valid,KingHorizontal.pair_count_support,KingHorizontal.pair_support_cases,KingHorizontal.pair_support_count,KingHorizontal.raw_of_halves,KingHorizontal.row_reflect,KingHorizontal.row_reflect_differentiate,KingHorizontal.row_reflect_equiv,KingHorizontal.row_reflect_raw,KingHorizontal.support_alphabet_card,KingHorizontal.support_sizes_correct,KingHorizontal.top_edge_value,KingHorizontal.top_field,KingHorizontal.top_field_join,KingHorizontal.top_field_raw
 NZPair: proof_shape=bind-only; consumers=KingDiagonal.diagonal_count,KingDiagonal.normalizedEquiv,KingDiagonal.normalizedSlots,KingDiagonal.normalized_valid,KingDiagonal.third_ne,KingDiagonal.word_recover,KingDifference.nz_pair_card,KingHorizontal.InteriorAlphabet,KingHorizontal.InteriorCode,KingHorizontal.OrdinaryAlphabet,KingHorizontal.SupportAlphabet,KingHorizontal.boundary_count_pos,KingHorizontal.boundary_count_zero,KingHorizontal.boundary_word_build,KingHorizontal.boundary_word_build_valid,KingHorizontal.boundary_word_equiv,KingHorizontal.boundary_word_map,KingHorizontal.boundary_word_map_injective,KingHorizontal.boundary_word_map_surjective,KingHorizontal.coded_boundaries_shared,KingHorizontal.coded_boundary,KingHorizontal.coded_boundary_left,KingHorizontal.coded_boundary_right,KingHorizontal.coded_boundary_valid,KingHorizontal.interiorCode_ext,KingHorizontal.interiorDecode,KingHorizontal.interiorDecode_encode,KingHorizontal.interiorEncode,KingHorizontal.interiorFirstPair,KingHorizontal.interiorFirstWord,KingHorizontal.interiorLeftWord,KingHorizontal.interiorRightWord,KingHorizontal.interiorSecondPair,KingHorizontal.interiorSecondWord,KingHorizontal.interior_count,KingHorizontal.interior_count_alphabets,KingHorizontal.interior_count_support,KingHorizontal.lower_pair,KingHorizontal.lower_pair_equiv,KingHorizontal.lower_pair_valid,KingHorizontal.lower_pair_values,KingHorizontal.ordinary_equiv,KingHorizontal.ordinary_value,KingHorizontal.ordinary_value_valid,KingHorizontal.pair_count_support,KingHorizontal.pair_support_cases,KingHorizontal.pair_support_count,KingHorizontal.support_alphabet_card,KingHorizontal.support_sizes_correct
 nz_pair_card: proof_shape=bind-only; consumers=KingDiagonal.diagonal_count,KingHorizontal.boundary_count_pos,KingHorizontal.boundary_count_zero,KingHorizontal.interior_count
 colourEquiv: proof_shape=bind-only; consumers=KingDifference.relabelDefectEquiv
 neg_self: proof_shape=bind-only; consumers=KingDifference.add_eq_zero
 self_add: proof_shape=bind-only; consumers=KingDifference.add_add_cancel,KingDifference.differentiate_cocycle,KingDifference.rainbow_algebra
 add_add_cancel: proof_shape=bind-only; consumers=KingDifference.differentiate_edgeValue,KingDifference.good_differentiate,KingDifference.integrate_h,KingDifference.integrate_v,KingDifference.rainbow_algebra
-add_eq_zero: proof_shape=bind-only; consumers=KingDifference.good_differentiate,KingDifference.rainbow_algebra,KingDifference.raw_differentiate_iff,KingHorizontal.boundary_word_build_valid,KingHorizontal.coded_boundary_valid
+add_eq_zero: proof_shape=bind-only; consumers=KingDiagonal.slot_raw,KingDiagonal.special_block,KingDifference.good_differentiate,KingDifference.rainbow_algebra,KingDifference.raw_differentiate_iff,KingHorizontal.boundary_word_build_valid,KingHorizontal.coded_boundary_valid
 DiffField: proof_shape=bind-only; consumers=KingDiagonal.diagonalSlotEquiv,KingDiagonal.diagonal_count,KingDiagonal.extractSlots,KingDiagonal.extract_slotField,KingDiagonal.extract_valid,KingDiagonal.raw_h_ordinary,KingDiagonal.raw_h_special,KingDiagonal.raw_v_ordinary,KingDiagonal.raw_v_special,KingDiagonal.slotField,KingDiagonal.slot_good,KingDiagonal.slot_raw,KingDiagonal.slot_reconstruction,KingDiagonal.slot_special,KingDiagonal.special_block,KingDifference.Cocycle,KingDifference.GoodBlock,KingDifference.N_e,KingDifference.RawAdmissible,KingDifference.count_fixed_edge,KingDifference.defectIntegrationEquiv,KingDifference.difference_unique,KingDifference.differentiate,KingDifference.differentiate_cocycle,KingDifference.differentiate_integrate,KingDifference.edgeValue,KingDifference.goodBlock_of_raw,KingDifference.good_differentiate,KingDifference.horizontal_slot_eq,KingDifference.integrate,KingDifference.integrate_h,KingDifference.integrate_root,KingDifference.integrate_v,KingDifference.integrationEquiv,KingDifference.rainbow_block,KingDifference.rainbow_field,KingDifference.vertical_slot_eq,KingHorizontal.CutFields,KingHorizontal.bottom_edge_value,KingHorizontal.bottom_field,KingHorizontal.bottom_field_join,KingHorizontal.bottom_field_raw,KingHorizontal.boundary_bottom_shared,KingHorizontal.boundary_bottom_slot_equiv,KingHorizontal.boundary_build,KingHorizontal.boundary_build_raw,KingHorizontal.boundary_count_pos,KingHorizontal.boundary_count_zero,KingHorizontal.boundary_extract,KingHorizontal.boundary_extract_valid,KingHorizontal.boundary_h,KingHorizontal.boundary_reconstruct,KingHorizontal.boundary_slot_equiv,KingHorizontal.boundary_slots_one_column,KingHorizontal.boundary_top_shared,KingHorizontal.boundary_v,KingHorizontal.boundary_word_equiv,KingHorizontal.cut_slots_equiv,KingHorizontal.horizontal_cut_equiv,KingHorizontal.interior_count_alphabets,KingHorizontal.interior_one_column_count,KingHorizontal.interior_slot_equiv,KingHorizontal.join_field,KingHorizontal.join_restrict,KingHorizontal.raw_of_halves,KingHorizontal.row_reflect,KingHorizontal.row_reflect_differentiate,KingHorizontal.row_reflect_equiv,KingHorizontal.row_reflect_raw,KingHorizontal.top_edge_value,KingHorizontal.top_field,KingHorizontal.top_field_join,KingHorizontal.top_field_raw
 Cocycle: proof_shape=bind-only; consumers=KingDiagonal.slot_raw,KingDiagonal.special_block,KingDifference.RawAdmissible,KingDifference.defectIntegrationEquiv,KingDifference.differentiate_cocycle,KingDifference.differentiate_integrate,KingDifference.goodBlock_of_raw,KingDifference.integrate_v,KingDifference.integrationEquiv,KingDifference.rainbow_field,KingDifference.raw_differentiate_iff,KingHorizontal.bottom_field_raw,KingHorizontal.boundary_build_raw,KingHorizontal.boundary_extract_valid,KingHorizontal.boundary_h,KingHorizontal.cut_slots_equiv,KingHorizontal.raw_of_halves,KingHorizontal.row_reflect_raw,KingHorizontal.top_field_raw
 differentiate: proof_shape=bind-only; consumers=KingDifference.defectIntegrationEquiv,KingDifference.difference_unique,KingDifference.differentiate_cocycle,KingDifference.differentiate_edgeValue,KingDifference.differentiate_integrate,KingDifference.good_differentiate,KingDifference.integrate_differentiate,KingDifference.integrate_h,KingDifference.integrate_v,KingDifference.integrationEquiv,KingDifference.rainbow_block,KingDifference.rainbow_field,KingDifference.raw_differentiate_iff,KingHorizontal.row_reflect_differentiate,KingHorizontal.row_reflect_raw
@@ -46,6 +46,7 @@ good_differentiate: proof_shape=bind-only; consumers=KingDifference.rainbow_fiel
 rainbow_field: proof_shape=bind-only; consumers=KingDifference.goodBlock_of_raw
 BlockAvoids: proof_shape=bind-only; consumers=KingDiagonal.diagonal_clear,KingDifference.goodBlock_of_raw,KingDifference.horizontal_slot_eq,KingDifference.vertical_slot_eq,KingHorizontal.boundary_h,KingHorizontal.boundary_v
 goodBlock_of_raw: proof_shape=bind-only; consumers=KingDiagonal.extract_valid,KingDifference.horizontal_slot_eq,KingDifference.vertical_slot_eq
+slot_chain_eq: proof_shape=bind-only; consumers=KingDifference.horizontal_slot_eq,KingDifference.vertical_slot_eq
 horizontal_slot_eq: proof_shape=bind-only; consumers=KingDiagonal.raw_h_ordinary,KingDiagonal.raw_h_special,KingHorizontal.boundary_h
 vertical_slot_eq: proof_shape=bind-only; consumers=KingDiagonal.raw_v_ordinary,KingDiagonal.raw_v_special,KingHorizontal.boundary_v
 fields_eq_six_canonical: proof_shape=bind-only; consumers=KingDifference.count_by_kind
@@ -59,6 +60,7 @@ count_by_kind: proof_shape=bind-only; consumers=KingClosedForm.closed_form,KingC
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import Mathlib.GroupTheory.SpecificGroups.KleinFour
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Order.Monotone.Basic
 
 /-! Discrete derivatives, exact integration and local rainbow rigidity. -/
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.KingDifference
@@ -87,7 +89,7 @@ private theorem neg_self (a : K) : -a = a := by
 @[simp] private theorem add_add_cancel (a b : K) : a + (a + b) = b := by
   rw [← add_assoc, self_add, zero_add]
 
-@[simp] private theorem add_eq_zero (a b : K) : a + b = 0 ↔ a = b := by
+@[simp] theorem add_eq_zero (a b : K) : a + b = 0 ↔ a = b := by
   simpa only [neg_self] using (add_eq_zero_iff_eq_neg (a := a) (b := b))
 
 /-- A rectangle with `N` vertical steps and `M` horizontal steps has `(N+1)(M+1)` cells. -/
@@ -383,63 +385,40 @@ theorem goodBlock_of_raw {N M : ℕ} (e : Edge (N + 1) (M + 1))
   exact ⟨nz (.H i.castSucc j) ht, nz (.V i j.castSucc) hl, nz (.D i j) hd,
     nz (.A i j) ha, nz (.V i j.succ) hr, nz (.H i.succ j) hb⟩
 
+private theorem slot_chain_eq {n : ℕ} (f : Fin (n+1) → K) (a b : Fin (n+1)) (hab : a ≤ b)
+    (hs : ∀ i : Fin n, a.val ≤ i.val → i.val < b.val → f i.castSucc = f i.succ) :
+    f a = f b := by
+  let u : ℕ → K := fun r => f ⟨min r b.val,
+    lt_of_le_of_lt (Nat.min_le_right _ _) b.isLt⟩
+  have step (r : ℕ) (hra : a.val ≤ r) : u r = u (r+1) := by
+    by_cases hr : r < b.val
+    · have hri : r < n := by have := b.isLt; omega
+      have h := hs ⟨r,hri⟩ hra hr
+      simpa only [u, Nat.min_eq_left (Nat.le_of_lt hr),
+        Nat.min_eq_left hr, Fin.castSucc_mk, Fin.succ_mk] using h
+    · simp [u, Nat.min_eq_right (by omega : b.val ≤ r),
+        Nat.min_eq_right (by omega : b.val ≤ r+1)]
+  have h := Nat.rel_of_forall_rel_succ_of_le_of_le Eq step (by rfl : a.val ≤ a.val)
+    (show a.val ≤ b.val from hab)
+  simpa only [u, Nat.min_eq_left (show a.val ≤ b.val from hab), Nat.min_self] using h
+
 /-- A horizontal slot is constant across any interval of unaffected blocks. -/
 theorem horizontal_slot_eq {N M : ℕ} (e : Edge (N + 1) (M + 1))
     (s : DiffField N M) (hs : RawAdmissible e s) (j : Fin M)
     (a b : Fin (N + 1)) (hab : a ≤ b)
     (hclear : ∀ i : Fin N, a.val ≤ i.val → i.val < b.val → BlockAvoids e i j) :
-    s.h a j = s.h b j := by
-  revert hab hclear
-  induction b using Fin.inductionOn with
-  | zero =>
-    intro hab _
-    have ha : a = 0 := by apply Fin.ext; simp_all
-    subst a
-    rfl
-  | succ b ih =>
-    intro hab hclear
-    by_cases heq : a = b.succ
-    · rw [heq]
-    have ha : a ≤ b.castSucc := by
-      simp only [Fin.le_iff_val_le_val, Fin.val_castSucc, Fin.val_succ] at *
-      have hne : a.val ≠ b.val + 1 := fun h => heq (Fin.ext h)
-      omega
-    calc
-      s.h a j = s.h b.castSucc j := ih ha (fun i hia hib => hclear i hia (by
-        simp only [Fin.val_castSucc] at hib
-        simp only [Fin.val_succ]
-        omega))
-      _ = s.h b.succ j := (goodBlock_of_raw e s hs b j
-        (hclear b ha (by simp))).1
+    s.h a j = s.h b j :=
+  slot_chain_eq (fun i => s.h i j) a b hab
+    (fun i ha hb => (goodBlock_of_raw e s hs i j (hclear i ha hb)).1)
 
 /-- A vertical slot is constant across any interval of unaffected blocks. -/
 theorem vertical_slot_eq {N M : ℕ} (e : Edge (N + 1) (M + 1))
     (s : DiffField N M) (hs : RawAdmissible e s) (i : Fin N)
     (a b : Fin (M + 1)) (hab : a ≤ b)
     (hclear : ∀ j : Fin M, a.val ≤ j.val → j.val < b.val → BlockAvoids e i j) :
-    s.v i a = s.v i b := by
-  revert hab hclear
-  induction b using Fin.inductionOn with
-  | zero =>
-    intro hab _
-    have ha : a = 0 := by apply Fin.ext; simp_all
-    subst a
-    rfl
-  | succ b ih =>
-    intro hab hclear
-    by_cases heq : a = b.succ
-    · rw [heq]
-    have ha : a ≤ b.castSucc := by
-      simp only [Fin.le_iff_val_le_val, Fin.val_castSucc, Fin.val_succ] at *
-      have hne : a.val ≠ b.val + 1 := fun h => heq (Fin.ext h)
-      omega
-    calc
-      s.v i a = s.v i b.castSucc := ih ha (fun j hja hjb => hclear j hja (by
-        simp only [Fin.val_castSucc] at hjb
-        simp only [Fin.val_succ]
-        omega))
-      _ = s.v i b.succ := (goodBlock_of_raw e s hs i b
-        (hclear b ha (by simp))).2.1
+    s.v i a = s.v i b :=
+  slot_chain_eq (fun j => s.v i j) a b hab
+    (fun j ha hb => (goodBlock_of_raw e s hs i j (hclear j ha hb)).2.1)
 
 /-- The canonical count is one sixth of the total root-zero field count. -/
 private theorem fields_eq_six_canonical (N M : ℕ) (hN : 1 ≤ N) (hM : 1 ≤ M) :

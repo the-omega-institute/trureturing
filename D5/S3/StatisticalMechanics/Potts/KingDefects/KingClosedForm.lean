@@ -22,7 +22,7 @@ width_three: proof_shape=bind-only; consumers=HardinA229573.result,KingClosedFor
 diagonal_closed: proof_shape=bind-only; consumers=HardinA229571.result
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingDiagonal
-import D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontal
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
 
 /-! Counts from the exact horizontal and diagonal slot decompositions. -/
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.KingClosedForm

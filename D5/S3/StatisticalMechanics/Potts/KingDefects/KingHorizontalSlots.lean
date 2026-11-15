@@ -373,16 +373,13 @@ def word_support {n : ℕ} (u : Fin n → Bool) : Finset Bool := Finset.univ.ima
 
 theorem word_support_empty {n : ℕ} (u : Fin n → Bool) :
     word_support u = ∅ ↔ n = 0 := by
+  unfold word_support
+  rw [Finset.image_eq_empty]
   constructor
   · intro h
-    by_contra hn
-    have i : Fin n := ⟨0,Nat.pos_of_ne_zero hn⟩
-    have hm : u i ∈ word_support u := Finset.mem_image_of_mem _ (Finset.mem_univ _)
-    rw [h] at hm
-    exact Finset.notMem_empty _ hm
-  · intro h
-    subst n
-    simp [word_support]
+    simpa using congrArg Finset.card h
+  · rintro rfl
+    exact Finset.univ_eq_empty
 
 theorem word_support_singleton {n : ℕ} (hn : 0 < n) (u : Fin n → Bool) (b : Bool) :
     word_support u = {b} ↔ u = (fun _ => b) := by

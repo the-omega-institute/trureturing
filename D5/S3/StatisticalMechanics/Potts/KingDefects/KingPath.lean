@@ -32,6 +32,7 @@ width_one_large: proof_shape=bind-only; consumers=HardinA229578.result
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import Mathlib.GroupTheory.GroupAction.Quotient
+import Mathlib.Logic.Equiv.Prod
 
 /-! Path extension counts and the colour-permutation orbit formula. -/
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
@@ -155,14 +156,33 @@ private noncomputable def canonical_orbits (n : ℕ) :
 
 private noncomputable def fixed_words (n : ℕ) (p : Equiv.Perm (Fin 4)) :
     MulAction.fixedBy (Words n) p ≃
-      {f : Fin n → {c : Fin 4 // p c=c} // bad f=1} where
-  toFun f := ⟨(fun i => ⟨f.val.val i,congrFun (congrArg Subtype.val f.property) i⟩), by
-    simpa [bad, Subtype.ext_iff] using f.val.property⟩
-  invFun f := ⟨⟨(fun i => (f.val i).val), by
-    simpa [bad, Subtype.ext_iff] using f.property⟩, by
-    apply Subtype.ext; funext i; exact (f.val i).property⟩
-  left_inv f := rfl
-  right_inv f := rfl
+      {f : Fin n → {c : Fin 4 // p c=c} // bad f=1} := by
+  let e : {f : Fin n → Fin 4 // ∀ i, p (f i)=f i} ≃
+      (Fin n → {c : Fin 4 // p c=c}) :=
+    Equiv.subtypePiEquivPi (α := Fin n) (β := fun _ => Fin 4)
+      (p := fun _ c => p c=c)
+  exact (Equiv.subtypeEquivRight (by
+    intro f
+    change p • f = f ↔ ∀ i, p (f.val i)=f.val i
+    constructor
+    · intro h
+      exact fun i => congrFun (congrArg Subtype.val h) i
+    · intro h
+      apply Subtype.ext
+      funext i
+      exact h i)).trans
+    ((Equiv.subtypeSubtypeEquivSubtypeInter
+      (fun f : Fin n → Fin 4 => bad f=1)
+      (fun f => ∀ i, p (f i)=f i)).trans
+      ((Equiv.subtypeEquivRight (fun f => and_comm)).trans
+        ((Equiv.subtypeSubtypeEquivSubtypeInter
+          (fun f : Fin n → Fin 4 => ∀ i, p (f i)=f i)
+          (fun f => bad f=1)).symm.trans
+            (e.subtypeEquiv (by
+              intro f
+              dsimp [e, Equiv.subtypePiEquivPi]
+              simp only [bad, Subtype.ext_iff])))))
+
 
 private theorem burnside (n : ℕ) :
     24 * Nat.card {f : Fin n → Fin 4 // bad f=1 ∧ Canonical f} =
@@ -245,18 +265,20 @@ private theorem normal_path {n : ℕ} (f : Fin n → Fin 4) :
 
 private noncomputable def literal_words (n : ℕ) :
     {f : Cell n 1 → Fin 4 // OneDefect f ∧ normal f} ≃
-      {f : Fin n → Fin 4 // bad f=1 ∧ Canonical f} where
-  toFun f := ⟨(fun i => f.val (i,0)), by
-    have he : (fun p : Cell n 1 => f.val (p.1,0)) = f.val := by
-      funext p; exact congrArg f.val (Prod.ext rfl (Subsingleton.elim _ _))
-    exact ⟨(oneDefect_path _).mp (he.symm ▸ f.property.1),
-      (normal_path _).mp (he.symm ▸ f.property.2)⟩⟩
-  invFun f := ⟨(fun p => f.val p.1),
-    (oneDefect_path _).mpr f.property.1,(normal_path _).mpr f.property.2⟩
-  left_inv f := by
-    apply Subtype.ext; funext p
-    exact congrArg f.val (Prod.ext rfl (Subsingleton.elim _ _))
-  right_inv _ := rfl
+      {f : Fin n → Fin 4 // bad f=1 ∧
+        D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical f} :=
+  (Equiv.arrowCongr (Equiv.prodUnique (Fin n) (Fin 1)) (Equiv.refl _)).subtypeEquiv
+    (by
+      intro f
+      have he : (fun p : Cell n 1 => f (p.1,0)) = f := by
+        funext p
+        exact congrArg f (Prod.ext rfl (Subsingleton.elim _ _))
+      change (OneDefect f ∧ normal f) ↔
+        (bad (fun i => f (i,0))=1 ∧
+          D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
+            (fun i => f (i,0)))
+      rw [← oneDefect_path, ← normal_path, he])
+
 
 private theorem literal_count (n : ℕ) :
     T n 1 = Nat.card {f : Fin n → Fin 4 // bad f=1 ∧ Canonical f} := by

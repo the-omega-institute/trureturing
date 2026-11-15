@@ -8,7 +8,6 @@
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
-klein_zero: proof_shape=bind-only; consumers=KingDiagonal.slot_raw,KingDiagonal.special_block
 klein_alphabet: proof_shape=bind-only; consumers=KingDiagonal.extract_valid,KingDiagonal.slot_good
 DiagonalSlots: proof_shape=bind-only; consumers=KingDiagonal.SlotValid,KingDiagonal.diagonalSlotEquiv,KingDiagonal.diagonal_count,KingDiagonal.extractSlots,KingDiagonal.extract_slotField,KingDiagonal.extract_valid,KingDiagonal.normalizedEquiv,KingDiagonal.normalizedSlots,KingDiagonal.normalized_recover,KingDiagonal.normalized_valid,KingDiagonal.slotField,KingDiagonal.slot_good,KingDiagonal.slot_raw,KingDiagonal.slot_special,KingDiagonal.slotsWord,KingDiagonal.word_recover
 SlotValid: proof_shape=bind-only; consumers=KingDiagonal.diagonalSlotEquiv,KingDiagonal.diagonal_count,KingDiagonal.extract_valid,KingDiagonal.normalizedEquiv,KingDiagonal.normalized_recover,KingDiagonal.normalized_valid,KingDiagonal.slot_good,KingDiagonal.slot_raw
@@ -85,10 +84,6 @@ open KingGrid KingDifference
 
 attribute [local instance] Classical.propDecidable
 
-private theorem klein_zero (x y : K) : x + y = 0 ↔ x = y := by
-  simpa only [IsAddKleinFour.neg_eq_self] using
-    (add_eq_zero_iff_eq_neg (a := x) (b := y))
-
 private theorem klein_alphabet (x y t : K) (hx : x ≠ 0) (hy : y ≠ 0)
     (hxy : x ≠ y) : t ≠ 0 ∧ t ≠ x ↔ t = y ∨ t = x + y := by
   have h : ∀ x y t : K, x ≠ 0 → y ≠ 0 → x ≠ y →
@@ -139,10 +134,10 @@ private theorem special_block {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M)
     s.v i₀ j₀.succ = s.h i₀.castSucc j₀ := by
   have hd := (hs.2 (.D i₀ j₀)).mpr rfl
   change s.h i₀.castSucc j₀ + s.v i₀ j₀.succ = 0 at hd
-  have hr := (klein_zero _ _).mp hd
+  have hr := (KingDifference.add_eq_zero _ _).mp hd
   have hc := hs.1 i₀ j₀
   rw [hd] at hc
-  have hl := (klein_zero _ _).mp hc.symm
+  have hl := (KingDifference.add_eq_zero _ _).mp hc.symm
   have nz (d : Edge (N + 1) (M + 1)) (hne : d ≠ .D i₀ j₀) :
       edgeValue s d ≠ 0 := mt (hs.2 d).mp hne
   have hx := nz (.H i₀.castSucc j₀) (by simp)
@@ -150,7 +145,7 @@ private theorem special_block {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M)
   have ha := nz (.A i₀ j₀) (by simp)
   change s.h i₀.castSucc j₀ + s.v i₀ j₀.castSucc ≠ 0 at ha
   rw [hl] at ha
-  exact ⟨hx,hy,fun h => ha ((klein_zero _ _).mpr h),hl,hr.symm⟩
+  exact ⟨hx,hy,fun h => ha ((KingDifference.add_eq_zero _ _).mpr h),hl,hr.symm⟩
 
 private theorem raw_h_ordinary {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M)
     (s : DiffField N M) (hs : RawAdmissible (.D i₀ j₀) s)
@@ -361,7 +356,7 @@ private theorem slot_special {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
 private theorem slot_raw {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
     (w : DiagonalSlots i₀ j₀) (hw : SlotValid w) :
     RawAdmissible (.D i₀ j₀) (slotField w) := by
-  have hz : w.x + w.y ≠ 0 := mt (klein_zero _ _).mp hw.2.2.1
+  have hz : w.x + w.y ≠ 0 := mt (KingDifference.add_eq_zero _ _).mp hw.2.2.1
   have hnU (i) : w.U i ≠ 0 := by
     rcases hw.2.2.2.1 i with h | h
     · rw [h]; exact hw.2.1
@@ -408,7 +403,7 @@ private theorem slot_raw {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
         have hn : edgeValue (slotField w) (.D i j) ≠ 0 := by
           dsimp [edgeValue]
           rw [← h.2.1]
-          exact mt (klein_zero _ _).mp h.2.2.2.2
+          exact mt (KingDifference.add_eq_zero _ _).mp h.2.2.2.2
         simp [hn, he]
     | A i j =>
       have hn : edgeValue (slotField w) (.A i j) ≠ 0 := by
@@ -416,7 +411,7 @@ private theorem slot_raw {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
         · rcases he with ⟨rfl,rfl⟩
           simpa only [edgeValue, hs.1, hs.2.2.1] using hz
         · have h := slot_good w hw i j (not_and_or.mp he)
-          exact mt (klein_zero _ _).mp h.2.2.2.2
+          exact mt (KingDifference.add_eq_zero _ _).mp h.2.2.2.2
       simp [hn]
 
 /-- Exact classification by an ordered nonzero unequal pair and four compatible words. -/

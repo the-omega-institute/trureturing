@@ -239,11 +239,8 @@ theorem interior_one_column_count (a b : ℕ) :
       Edge ((a + 1) + (b + 1) + 1) 2) = 36 * 2 ^ (a + b) := by
   let e : InteriorSlots a b 1 0 ≃
       {u : BoundaryData a 1 // BoundaryValid (0 : Fin 1) u} ×
-        {l : BoundaryData b 1 // BoundaryValid (0 : Fin 1) l} := {
-    toFun := Subtype.val
-    invFun := fun q => ⟨q, fun j hj => (hj (Subsingleton.elim j 0)).elim⟩
-    left_inv := fun _ => rfl
-    right_inv := fun _ => rfl }
+        {l : BoundaryData b 1 // BoundaryValid (0 : Fin 1) l} :=
+    Equiv.subtypeUnivEquiv (fun q j hj => (hj (Subsingleton.elim j 0)).elim)
   unfold N_e
   rw [Nat.card_congr (interior_slot_equiv a b 1 0), Nat.card_congr e, Nat.card_prod,
     boundary_slots_one_column, boundary_slots_one_column, pow_add]

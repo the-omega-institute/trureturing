@@ -315,14 +315,12 @@ def BoundaryWords (m c d : ℕ) :=
     (w.1 ≠ (fun _ => true) → w.2.2 = (fun _ => true))}
 
 def boundary_words_zero_equiv (c d : ℕ) :
-    BoundaryWords 0 c d ≃ (Fin c → Bool) × (Fin d → Bool) where
-  toFun w := w.val.2
-  invFun w := ⟨(fun i => Fin.elim0 i, w), by
-    constructor <;> intro h <;> exact (h (funext fun i => Fin.elim0 i)).elim⟩
-  left_inv w := by
-    apply Subtype.ext
-    exact Prod.ext (funext fun i => Fin.elim0 i) rfl
-  right_inv _ := rfl
+    BoundaryWords 0 c d ≃ (Fin c → Bool) × (Fin d → Bool) :=
+  (Equiv.subtypeUnivEquiv (by
+    intro w
+    constructor <;> intro h <;>
+      exact (h (funext fun i => Fin.elim0 i)).elim)).trans (Equiv.uniqueProd _ _)
+
 
 noncomputable def boundary_words_sum_equiv (m c d : ℕ) (hm : 0 < m) :
     BoundaryWords m c d ≃
