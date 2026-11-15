@@ -77,7 +77,7 @@ private theorem comparison_nonneg
   rw [ht]
   exact (he.1 x hx.1).1
 
-private theorem comparison_lipschitz
+theorem comparison_lipschitz
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (a : pure C u) :
     LipschitzWith ⟨effectNormBound C u, (effect_norm_max hs hg).1⟩
@@ -159,7 +159,7 @@ private theorem kappa_sandwich
     rw [hfc]
     exact effect_le_two_center hsub hsym hf.1 hy
 
-private theorem minimizer_has_zero
+theorem minimizer_has_zero
     (hc : IsClosed (C : Set V))
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (a : pure C u) {x : V} (hx : x ∈ base C u)

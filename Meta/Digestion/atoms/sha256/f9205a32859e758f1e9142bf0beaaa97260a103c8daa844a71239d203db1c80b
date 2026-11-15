@@ -1,0 +1,20 @@
+**定义 8.1（Balanced terminal iteration）。** Restrict the fixed source (1.2)–(1.3) to
+
+$$
+p=q>0,\qquad r>0,\qquad 2p+r<1.
+\tag{8.1}
+$$
+
+Retain the entire $H=\mathbb C^5\otimes\mathbb C^2$, the published $V_2$, its exact operators $L_0,L_1$ in (2.6), and all untouched reference extensions. Write $\Phi=\Phi_2$ for its unread reduced channel. For $N\in\mathbb N$ let
+
+$$
+\begin{aligned}
+\mathcal W_N&=\{L_{\mu_N}\cdots L_{\mu_1}:\mu_s\in\{0,1\}\},\\
+W_N&=\operatorname{span}_{\mathbb C}\mathcal W_N,\qquad
+\mathcal W_0=\{I_H\}.
+\end{aligned}
+\tag{8.2}
+$$
+
+The terminal map $\Phi^N$ composes the same reduced channel $N$ times. Its iterated dilation uses an independently supplied fresh pure environment at each step, with every outgoing environment traced or subsequently retained without further coupling to $H$. No intermediate successor measurement is inserted. Repeated application of (2.10) to one retained environment defines a different map.
+
