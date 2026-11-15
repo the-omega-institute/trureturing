@@ -1,0 +1,60 @@
+using StrataLint.Scribe;
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.FourierCircuit.Core.Base;
+
+internal sealed class UnitaryCircuitDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Addressed quantum circuit: Core Base UnitaryCircuit", H("Core Base UnitaryCircuit"), Blocks(
+            Describe.Lean(DescribeId.Create("declaration0"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.matrix"),
+                H("matrix"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Exact, metadata-free unitary semantics of the actual construction."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration1"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.eventTrace"),
+                H("eventTrace"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Ordered native occurrences, including every actual macro expansion."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration2"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.eventCost"),
+                H("eventCost"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Literal model-relative event multiplicities from the same construction."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration3"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.ofList_eventTrace_eq_eventCost"),
+                H("ofList eventTrace eq eventCost"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Forgetting order in the actual native trace yields exactly the circuit's event ledger."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration4"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.identity_matrix"),
+                H("identity matrix"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Forgetting order in the actual native trace yields exactly the circuit's event ledger."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration5"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.identity_eventCost"),
+                H("identity eventCost"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Forgetting order in the actual native trace yields exactly the circuit's event ledger."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration6"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.native_matrix"),
+                H("native matrix"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Forgetting order in the actual native trace yields exactly the circuit's event ledger."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration7"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.seq_matrix"),
+                H("seq matrix"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Forgetting order in the actual native trace yields exactly the circuit's event ledger."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration8"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.parallel_matrix_raw"),
+                H("parallel matrix raw"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Parallel syntax denotes the product of the two actual lifted operators."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration9"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.seq_eventCost"),
+                H("seq eventCost"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Parallel syntax denotes the product of the two actual lifted operators."))), DescribeRole.Lemma))));
+}
