@@ -1,7 +1,7 @@
 ---
-bibkey: dhandahaynes2024accumulation
+bibkey: dhandahaynes2025accumulation
 authors: Kavita Dhanda; Alan Haynes
-year: 2024
+year: 2025
 title: Accumulation points of normalized approximations
 doi: 10.1016/j.jnt.2024.09.002
 url: https://arxiv.org/html/2310.00173v2
