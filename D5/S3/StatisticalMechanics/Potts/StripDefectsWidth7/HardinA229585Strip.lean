@@ -70,11 +70,18 @@ private theorem edge (r t : Row) : bondDefects antidiagonal r t = cross (boundar
 
 private theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
+  have hn :
+      D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.normalize (e ∘ p) =
+      D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.normalize p := by
+    funext j
+    simp only [D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.normalize,
+      Function.comp_apply, e.injective.eq_iff]
   simp only [cl,
     D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.proper,
     D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.classOf,
-    D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.normalize,
+    hn,
     Function.comp_apply, e.injective.eq_iff, e.injective.ne_iff]
+  rfl
 
 private theorem horizontal_relabel (e : Equiv.Perm (Fin 3)) (r : Row) :
     bondDefects horizontal (e ∘ r) (e ∘ r) = bondDefects horizontal r r := by
