@@ -43,8 +43,8 @@ def family : Registration arena (type_of% @structural_certificate) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(), 0, 4, ?_⟩
-    change initial 0 ≠ initial 4
+    refine ⟨(), 0, 7, ?_⟩
+    change initial 0 ≠ initial 7
     unfold initial
     decide +kernel
 

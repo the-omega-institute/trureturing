@@ -371,19 +371,19 @@ def sample : Params.{u} where
   d := 1
   b := 0
   c _ := 2
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
-  letI := sample.finite
-  letI := sample.equality
-  have hp : forward sample.T sample.initial (sample.b + sample.d) =
-      ∑ j : Fin sample.d, sample.c j • forward sample.T sample.initial (sample.b + j.val) := by
+  letI := sample.{u}.finite
+  letI := sample.{u}.equality
+  have hp : forward sample.{u}.T sample.{u}.initial (sample.{u}.b + sample.{u}.d) =
+      ∑ j : Fin sample.{u}.d, sample.{u}.c j • forward sample.{u}.T sample.{u}.initial (sample.{u}.b + j.val) := by
     ext s
     change (∑ _ : ULift (Fin 1), (1 : ℤ) * 2) = (2 : ℤ) * 1
     norm_num
-  have hb := h sample hp 0
-  have ha := actual_law sample hp 0
+  have hb := h sample.{u} hp 0
+  have ha := actual_law sample.{u} hp 0
   simp only [rejected, readout, realize] at hb ha
-  have hc : (∑ j : Fin sample.d, sample.c j) = 2 := by decide +kernel
+  have hc : (∑ j : Fin sample.{u}.d, sample.{u}.c j) = 2 := by decide +kernel
   simp_rw [mul_add, mul_one] at hb
   rw [Finset.sum_add_distrib, hc] at hb
   linarith

@@ -184,6 +184,7 @@ theorem result (n : ℕ) :
       dotProduct (W ⟨4 + i.val, by omega⟩) terminal =
         ∑ j : Fin 4, (![-324, 540, -261, 30] j : ℤ) *
           dotProduct (W ⟨0 + i.val + j.val, by omega⟩) terminal := by
+    revert i
     decide +kernel
   cases n with
   | zero =>
