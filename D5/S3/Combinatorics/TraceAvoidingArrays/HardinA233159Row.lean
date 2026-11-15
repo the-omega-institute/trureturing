@@ -8,9 +8,10 @@
 
 /-
 admission_basis: open-problem-resolution (#29231; Proved)
-escape_witness: counting_bridge (expanded count_transfer and TransferMatrix.cardMatrix).
-TransferMatrix is unfrozen; its continuation and local-word inductions remain inside the
-judgement boundary. The fixed-index power tables and certificates are bind-only.
+escape_witness: counting_bridge -> HardinA233155ColumnTransfer.count_transfer ->
+TransferMatrix.cardMatrix -> TransferMatrix.cont_matrix (W2: induction over every
+continuation length). TransferMatrix is unfrozen on the protected baseline.
+The fixed-index power tables and certificates are bind-only.
 W: proof_shape=bind-only; consumers=powers_table, vector_relation
 powers_table: proof_shape=bind-only; consumers=vector_relation
 vector_relation: proof_shape=bind-only; consumers=finite_certificate

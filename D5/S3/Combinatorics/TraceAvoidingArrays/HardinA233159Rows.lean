@@ -23,6 +23,7 @@ equality_classes: proof_shape=bind-only; consumers=HardinA233159RowCertificate.r
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer
 import Mathlib.Tactic
 
 /-! Equality patterns classify all six-entry columns. -/
@@ -35,69 +36,13 @@ set_option maxRecDepth 100000
 def U6 (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun f : Fin 6 × Fin n → Fin 3 => Legal f)).card
 
-def classes (a b c d e f : Fin 3) : Fin 122 :=   if b = a then if c = a then if d = a then if e = a
-  then if f = a then 0 else (1) else (if f = a then 2 else (if f = e then 3 else (4))) else (if e =
-  a then if f = a then 5 else (if f = d then 6 else (7)) else (if e = d then if f = a then 8 else
-  (if f = d then 9 else (10)) else (if f = a then 11 else (if f = d then 12 else (13))))) else (if d
-  = a then if e = a then if f = a then 14 else (if f = c then 15 else (16)) else (if e = c then if f
-  = a then 17 else (if f = c then 18 else (19)) else (if f = a then 20 else (if f = c then 21 else
-  (22)))) else (if d = c then if e = a then if f = a then 23 else (if f = c then 24 else (25)) else
-  (if e = c then if f = a then 26 else (if f = c then 27 else (28)) else (if f = a then 29 else (if
-  f = c then 30 else (31)))) else (if e = a then if f = a then 32 else (if f = c then 33 else (34))
-  else (if e = c then if f = a then 35 else (if f = c then 36 else (37)) else (if f = a then 38 else
-  (if f = c then 39 else (40))))))) else (if c = a then if d = a then if e = a then if f = a then 41
-  else (if f = b then 42 else (43)) else (if e = b then if f = a then 44 else (if f = b then 45 else
-  (46)) else (if f = a then 47 else (if f = b then 48 else (49)))) else (if d = b then if e = a then
-  if f = a then 50 else (if f = b then 51 else (52)) else (if e = b then if f = a then 53 else (if f
-  = b then 54 else (55)) else (if f = a then 56 else (if f = b then 57 else (58)))) else (if e = a
-  then if f = a then 59 else (if f = b then 60 else (61)) else (if e = b then if f = a then 62 else
-  (if f = b then 63 else (64)) else (if f = a then 65 else (if f = b then 66 else (67)))))) else (if
-  c = b then if d = a then if e = a then if f = a then 68 else (if f = b then 69 else (70)) else (if
-  e = b then if f = a then 71 else (if f = b then 72 else (73)) else (if f = a then 74 else (if f =
-  b then 75 else (76)))) else (if d = b then if e = a then if f = a then 77 else (if f = b then 78
-  else (79)) else (if e = b then if f = a then 80 else (if f = b then 81 else (82)) else (if f = a
-  then 83 else (if f = b then 84 else (85)))) else (if e = a then if f = a then 86 else (if f = b
-  then 87 else (88)) else (if e = b then if f = a then 89 else (if f = b then 90 else (91)) else (if
-  f = a then 92 else (if f = b then 93 else (94)))))) else (if d = a then if e = a then if f = a
-  then 95 else (if f = b then 96 else (97)) else (if e = b then if f = a then 98 else (if f = b then
-  99 else (100)) else (if f = a then 101 else (if f = b then 102 else (103)))) else (if d = b then
-  if e = a then if f = a then 104 else (if f = b then 105 else (106)) else (if e = b then if f = a
-  then 107 else (if f = b then 108 else (109)) else (if f = a then 110 else (if f = b then 111 else
-  (112)))) else (if e = a then if f = a then 113 else (if f = b then 114 else (115)) else (if e = b
-  then if f = a then 116 else (if f = b then 117 else (118)) else (if f = a then 119 else (if f = b
-  then 120 else (121)))))))))
+def classes (a b c d e f : Fin 3) : Fin 122 :=
+  HardinA233179PairTransfer.orbit (a, b, c, d, e, f)
 
 def classify (r : Row 6) : Fin 122 := classes (r 0) (r 1) (r 2) (r 3) (r 4) (r 5)
 
-def representatives : Fin 122 → Row 6 :=
-  ![![0, 0, 0, 0, 0, 0], ![0, 0, 0, 0, 0, 1], ![0, 0, 0, 0, 1, 0], ![0, 0, 0, 0, 1, 1], ![0, 0, 0,
-    0, 1, 2], ![0, 0, 0, 1, 0, 0], ![0, 0, 0, 1, 0, 1], ![0, 0, 0, 1, 0, 2], ![0, 0, 0, 1, 1, 0],
-    ![0, 0, 0, 1, 1, 1], ![0, 0, 0, 1, 1, 2], ![0, 0, 0, 1, 2, 0], ![0, 0, 0, 1, 2, 1], ![0, 0, 0,
-    1, 2, 2], ![0, 0, 1, 0, 0, 0], ![0, 0, 1, 0, 0, 1], ![0, 0, 1, 0, 0, 2], ![0, 0, 1, 0, 1, 0],
-    ![0, 0, 1, 0, 1, 1], ![0, 0, 1, 0, 1, 2], ![0, 0, 1, 0, 2, 0], ![0, 0, 1, 0, 2, 1], ![0, 0, 1,
-    0, 2, 2], ![0, 0, 1, 1, 0, 0], ![0, 0, 1, 1, 0, 1], ![0, 0, 1, 1, 0, 2], ![0, 0, 1, 1, 1, 0],
-    ![0, 0, 1, 1, 1, 1], ![0, 0, 1, 1, 1, 2], ![0, 0, 1, 1, 2, 0], ![0, 0, 1, 1, 2, 1], ![0, 0, 1,
-    1, 2, 2], ![0, 0, 1, 2, 0, 0], ![0, 0, 1, 2, 0, 1], ![0, 0, 1, 2, 0, 2], ![0, 0, 1, 2, 1, 0],
-    ![0, 0, 1, 2, 1, 1], ![0, 0, 1, 2, 1, 2], ![0, 0, 1, 2, 2, 0], ![0, 0, 1, 2, 2, 1], ![0, 0, 1,
-    2, 2, 2], ![0, 1, 0, 0, 0, 0], ![0, 1, 0, 0, 0, 1], ![0, 1, 0, 0, 0, 2], ![0, 1, 0, 0, 1, 0],
-    ![0, 1, 0, 0, 1, 1], ![0, 1, 0, 0, 1, 2], ![0, 1, 0, 0, 2, 0], ![0, 1, 0, 0, 2, 1], ![0, 1, 0,
-    0, 2, 2], ![0, 1, 0, 1, 0, 0], ![0, 1, 0, 1, 0, 1], ![0, 1, 0, 1, 0, 2], ![0, 1, 0, 1, 1, 0],
-    ![0, 1, 0, 1, 1, 1], ![0, 1, 0, 1, 1, 2], ![0, 1, 0, 1, 2, 0], ![0, 1, 0, 1, 2, 1], ![0, 1, 0,
-    1, 2, 2], ![0, 1, 0, 2, 0, 0], ![0, 1, 0, 2, 0, 1], ![0, 1, 0, 2, 0, 2], ![0, 1, 0, 2, 1, 0],
-    ![0, 1, 0, 2, 1, 1], ![0, 1, 0, 2, 1, 2], ![0, 1, 0, 2, 2, 0], ![0, 1, 0, 2, 2, 1], ![0, 1, 0,
-    2, 2, 2], ![0, 1, 1, 0, 0, 0], ![0, 1, 1, 0, 0, 1], ![0, 1, 1, 0, 0, 2], ![0, 1, 1, 0, 1, 0],
-    ![0, 1, 1, 0, 1, 1], ![0, 1, 1, 0, 1, 2], ![0, 1, 1, 0, 2, 0], ![0, 1, 1, 0, 2, 1], ![0, 1, 1,
-    0, 2, 2], ![0, 1, 1, 1, 0, 0], ![0, 1, 1, 1, 0, 1], ![0, 1, 1, 1, 0, 2], ![0, 1, 1, 1, 1, 0],
-    ![0, 1, 1, 1, 1, 1], ![0, 1, 1, 1, 1, 2], ![0, 1, 1, 1, 2, 0], ![0, 1, 1, 1, 2, 1], ![0, 1, 1,
-    1, 2, 2], ![0, 1, 1, 2, 0, 0], ![0, 1, 1, 2, 0, 1], ![0, 1, 1, 2, 0, 2], ![0, 1, 1, 2, 1, 0],
-    ![0, 1, 1, 2, 1, 1], ![0, 1, 1, 2, 1, 2], ![0, 1, 1, 2, 2, 0], ![0, 1, 1, 2, 2, 1], ![0, 1, 1,
-    2, 2, 2], ![0, 1, 2, 0, 0, 0], ![0, 1, 2, 0, 0, 1], ![0, 1, 2, 0, 0, 2], ![0, 1, 2, 0, 1, 0],
-    ![0, 1, 2, 0, 1, 1], ![0, 1, 2, 0, 1, 2], ![0, 1, 2, 0, 2, 0], ![0, 1, 2, 0, 2, 1], ![0, 1, 2,
-    0, 2, 2], ![0, 1, 2, 1, 0, 0], ![0, 1, 2, 1, 0, 1], ![0, 1, 2, 1, 0, 2], ![0, 1, 2, 1, 1, 0],
-    ![0, 1, 2, 1, 1, 1], ![0, 1, 2, 1, 1, 2], ![0, 1, 2, 1, 2, 0], ![0, 1, 2, 1, 2, 1], ![0, 1, 2,
-    1, 2, 2], ![0, 1, 2, 2, 0, 0], ![0, 1, 2, 2, 0, 1], ![0, 1, 2, 2, 0, 2], ![0, 1, 2, 2, 1, 0],
-    ![0, 1, 2, 2, 1, 1], ![0, 1, 2, 2, 1, 2], ![0, 1, 2, 2, 2, 0], ![0, 1, 2, 2, 2, 1], ![0, 1, 2,
-    2, 2, 2]]
+def representatives (i : Fin 122) : Row 6 :=
+  HardinA233179PairTransfer.column (HardinA233179PairTransfer.representatives i)
 
 def weights : Fin 122 → ℤ := ![3, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
     6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
@@ -161,11 +106,18 @@ private theorem class_invariant : ∀ (e : Equiv.Perm (Fin 3)) (r : Row 6),
     classify (relabel e r) = classify r := by
   intro e r
   change classes (e (r 0)) (e (r 1)) (e (r 2)) (e (r 3)) (e (r 4)) (e (r 5)) = _
-  simp only [classify, classes, e.injective.eq_iff]
+  simp only [classify, classes, HardinA233179PairTransfer.orbit,
+    HardinA233179PairTransfer.column, Matrix.cons_val, e.injective.eq_iff]
+  rfl
 
 set_option maxHeartbeats 10000000 in
 private theorem class_representative : ∀ r : Row 6, ∃ e : Equiv.Perm (Fin 3),
-    relabel e r = representatives (classify r) := by decide +kernel
+    relabel e r = representatives (classify r) := by
+  intro r
+  obtain ⟨e, he⟩ := HardinA233179PairTransfer.class_rep (r 0, r 1, r 2, r 3, r 4, r 5)
+  refine ⟨e, funext fun i => ?_⟩
+  have h := congrArg (fun c => HardinA233179PairTransfer.column c i) he
+  fin_cases i <;> exact h
 
 theorem equality_classes :
     (∀ (e : Equiv.Perm (Fin 3)) (r : Row 6), classify (relabel e r) = classify r) ∧

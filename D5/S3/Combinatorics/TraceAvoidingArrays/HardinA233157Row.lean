@@ -8,9 +8,10 @@
 
 /-
 admission_basis: open-problem-resolution (#29231; Proved)
-escape_witness: counting_bridge (expanded count_transfer and TransferMatrix.cardMatrix).
-TransferMatrix is unfrozen; its continuation and local-word inductions remain inside the
-judgement boundary. The fixed-index power tables and certificates are bind-only.
+escape_witness: counting_bridge -> HardinA233155ColumnTransfer.count_transfer ->
+TransferMatrix.cardMatrix -> TransferMatrix.cont_matrix (W2: induction over every
+continuation length). TransferMatrix is unfrozen on the protected baseline.
+The fixed-index power tables and certificates are bind-only.
 U4: proof_shape=bind-only; consumers=counting_bridge, result
 classes: proof_shape=bind-only; consumers=classify
 classify: proof_shape=bind-only; consumers=class_invariant, class_representative, successor_table, initial_weights, finite_certificate
@@ -34,6 +35,7 @@ result: proof_shape=content; consumers=Reg.Recurrence.family
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import Mathlib.Tactic
 
 /-! Equality patterns give a finite quotient of the unrestricted columns. -/
@@ -47,17 +49,13 @@ set_option maxRecDepth 100000
 def U4 (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun f : Fin 4 × Fin n → Fin 3 => Legal f)).card
 
-def classes : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 14 :=
-  ![![![![0, 1, 1], ![2, 3, 4], ![2, 4, 3]], ![![5, 6, 7], ![8, 9, 10], ![11, 12, 13]], ![![5, 7,
-    6], ![11, 13, 12], ![8, 10, 9]]], ![![![9, 8, 10], ![6, 5, 7], ![12, 11, 13]], ![![3, 2, 4],
-    ![1, 0, 1], ![4, 2, 3]], ![![13, 11, 12], ![7, 5, 6], ![10, 8, 9]]], ![![![9, 10, 8], ![12, 13,
-    11], ![6, 7, 5]], ![![13, 12, 11], ![10, 9, 8], ![7, 6, 5]], ![![3, 4, 2], ![4, 3, 2], ![1, 1,
-    0]]]]
+def classes (a b c d : Fin 3) : Fin 14 :=
+  HardinA233177PairTransfer.cls (a, b, c, d)
+
 def classify (r : Row 4) : Fin 14 := classes (r 0) (r 1) (r 2) (r 3)
-def representatives : Fin 14 → Row 4 :=
-  ![![0, 0, 0, 0], ![0, 0, 0, 1], ![0, 0, 1, 0], ![0, 0, 1, 1], ![0, 0, 1, 2], ![0, 1, 0, 0], ![0,
-    1, 0, 1], ![0, 1, 0, 2], ![0, 1, 1, 0], ![0, 1, 1, 1], ![0, 1, 1, 2], ![0, 1, 2, 0], ![0, 1, 2,
-    1], ![0, 1, 2, 2]]
+def representatives (i : Fin 14) : Row 4 :=
+  HardinA233177PairTransfer.column (HardinA233177PairTransfer.representatives i)
+
 def quotient : Matrix (Fin 14) (Fin 14) ℤ :=
   ![![2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0], ![1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0], ![1,
     1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0], ![1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1], ![0, 0, 0,
@@ -74,10 +72,17 @@ private def successors : Fin 14 → List (Fin 14) :=
 
 set_option maxHeartbeats 10000000 in
 private theorem class_invariant : ∀ (e : Equiv.Perm (Fin 3)) (r : Row 4),
-    classify (relabel e r) = classify r := by decide +kernel
+    classify (relabel e r) = classify r := by
+  intro e r
+  exact HardinA233177PairTransfer.class_relabel e (r 0, r 1, r 2, r 3)
 set_option maxHeartbeats 10000000 in
 private theorem class_representative : ∀ r : Row 4, ∃ e : Equiv.Perm (Fin 3),
-    relabel e r = representatives (classify r) := by decide +kernel
+    relabel e r = representatives (classify r) := by
+  intro r
+  obtain ⟨e, he⟩ := HardinA233177PairTransfer.class_rep (r 0, r 1, r 2, r 3)
+  refine ⟨e, funext fun i => ?_⟩
+  have h := congrArg (fun c => HardinA233177PairTransfer.column c i) he
+  fin_cases i <;> exact h
 set_option maxHeartbeats 10000000 in
 private theorem successor_table : ∀ i : Fin 14,
     successorClasses classify (representatives i) = successors i := by decide +kernel

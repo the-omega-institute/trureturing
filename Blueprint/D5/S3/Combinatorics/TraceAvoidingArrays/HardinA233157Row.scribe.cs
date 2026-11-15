@@ -12,9 +12,9 @@ internal sealed class HardinA233157RowDocument : IScribeDocumentDefinition
         "The number of labelled 4-row arrays obeys the order-3 recurrence from OEIS A233157.",
         H("OEIS A233157"), Blocks(
             Node("U4",All("n",NatF(),Eq(C("U4",V("n")),FilterCard(N(4),V("n")))),"Every labelled function satisfying horizontal and antidiagonal sum exclusion is counted.",true),
-            Node("classes", Cast(C("classes"), ClassTableType(4, 14)), "The fixed lookup table assigns a class in Fin 14 to each tuple of 4 colors according to its equality pattern."),
+            Node("classes", All("a",FinF(N(3)),All("b",FinF(N(3)),All("c",FinF(N(3)),All("d",FinF(N(3)),Eq(C("classes",V("a"), V("b"), V("c"), V("d")),C("HardinA233177PairTransfer.cls",P(Seq(V("a"), Comma, Sp, P(Seq(V("b"), Comma, Sp, P(Seq(V("c"), Comma, Sp, V("d"))))))))))))), "The existing first-appearance orbit index assigns the equality pattern."),
             Node("classify",All("r",RowF(N(4)),Eq(C("classify",V("r")),A(C("classes"),A(V("r"),N(0)), A(V("r"),N(1)), A(V("r"),N(2)), A(V("r"),N(3))))),"The coordinates select one of the 14 equality classes."),
-            Node("representatives", Cast(C("representatives"), Arr(FinF(N(14)), RowF(N(4)))), "The fixed table selects one canonical 4-entry column for each of the 14 equality classes."),
+            Node("representatives", All("i",FinF(N(14)),Eq(C("representatives",V("i")),C("HardinA233177PairTransfer.column",C("HardinA233177PairTransfer.representatives",V("i"))))), "The existing representative tuple is read in row order."),
             Node("quotient", Cast(C("quotient"), C("Matrix", FinF(N(14)), FinF(N(14)), IntF())), "The fixed 14 by 14 integer table records compatible successor multiplicities between equality classes."),
             Node("weights", Cast(C("weights"), Arr(FinF(N(14)), IntF())), "The fixed 14-entry integer vector records three labelled constant columns in the constant class and six labelled columns in every other equality class."),
             Node("finite_certificate",CertificateFormula(),"The three identities specify the quotient, the initial class counts and the finite relation among matrix powers.",theorem:true),

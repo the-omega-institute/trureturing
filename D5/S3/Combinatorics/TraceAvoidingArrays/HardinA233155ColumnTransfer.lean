@@ -8,21 +8,26 @@
 
 /-
 admission_basis: open-problem-resolution (#29231; Proved)
-escape_witness: grid_good (expanded TransferMatrix.good_iff_local); count_transfer
-(expanded TransferMatrix.cardMatrix). TransferMatrix is unfrozen and its inductions remain
-inside the judgement boundary; successor_sum and quotient_rows are bind-only.
+escape_witness: grid_good -> TransferMatrix.good_iff_local (W1: arbitrary-list locality);
+count_transfer -> TransferMatrix.cardMatrix -> TransferMatrix.cont_matrix (W2: induction
+over every continuation length). TransferMatrix is unfrozen on the protected baseline;
+successor_sum, quotient_rows and properEquiv are bind-only.
 columnCompatible: proof_shape=bind-only; consumers=successorClasses, count_transfer
 instDecidableColumnCompatible: proof_shape=bind-only; consumers=successorClasses
 relabel: proof_shape=bind-only; consumers=compatible_relabel, quotient_rows
-complement: proof_shape=bind-only; consumers=twist
+complement: proof_shape=bind-only; consumers=twist, complement_bond, alternatingEquiv, alternating_legal
+complement_bond: proof_shape=bind-only; consumers=alternating_legal
+alternatingEquiv: proof_shape=bind-only; consumers=alternating_legal, properEquiv
+alternating_legal: proof_shape=bind-only; consumers=properEquiv
+properEquiv: proof_shape=bind-only; consumers=HardinA233156Row.counting_bridge, HardinA233158Row.counting_bridge
 twist: proof_shape=bind-only; consumers=compatible_relabel, quotient_rows
 bond_relabel: proof_shape=bind-only; consumers=compatible_relabel
 compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
 successorClasses: proof_shape=bind-only; consumers=successor_sum, quotient_rows
 successor_sum: proof_shape=bind-only; consumers=quotient_rows
-quotient_rows: proof_shape=bind-only; consumers=HardinA233156Row.row_counts, HardinA233157Row.row_counts, HardinA233158Row.row_counts, HardinA233159RowCertificate.row_counts
+quotient_rows: proof_shape=bind-only; consumers=HardinA233157Row.row_counts, HardinA233159RowCertificate.row_counts
 grid_good: proof_shape=content; consumers=count_transfer
-count_transfer: proof_shape=content; consumers=HardinA233156Row.counting_bridge, HardinA233157Row.counting_bridge, HardinA233158Row.counting_bridge, HardinA233159Row.counting_bridge
+count_transfer: proof_shape=content; consumers=HardinA233157Row.counting_bridge, HardinA233159Row.counting_bridge
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
@@ -48,6 +53,52 @@ private def complement : Equiv.Perm (Fin 3) where
   invFun := ![2, 1, 0]
   left_inv := by decide +kernel
   right_inv := by decide +kernel
+
+private theorem complement_bond : ∀ x y : Fin 3,
+    x ≠ complement y ↔ x.val + y.val ≠ 2 := by decide +kernel
+
+/-- Complement labels in each odd column, preserving every labelled array. -/
+private def alternatingEquiv (k n : ℕ) :
+    (Fin k × Fin n → Fin 3) ≃ (Fin k × Fin n → Fin 3) :=
+  Equiv.piCongrRight (fun p => complement ^ p.2.val)
+
+private theorem alternating_legal (k n : ℕ) (f : Fin k × Fin n → Fin 3) :
+    Legal f ↔ ∀ (j : Fin n) (h : j.val + 1 < n) (r s : Fin k),
+      (r = s ∨ r.val = s.val + 1) →
+      alternatingEquiv k n f (r, j) ≠
+        alternatingEquiv k n f (s, ⟨j.val + 1, h⟩) := by
+  have bond (j : ℕ) (x y : Fin 3) :
+      (complement ^ j) x ≠ (complement ^ (j + 1)) y ↔ x.val + y.val ≠ 2 := by
+    rw [pow_succ, Equiv.Perm.mul_apply, (complement ^ j).injective.ne_iff]
+    exact complement_bond x y
+  change Legal f ↔ ∀ (j : Fin n) (h : j.val + 1 < n) (r s : Fin k),
+    (r = s ∨ r.val = s.val + 1) →
+      (complement ^ j.val) (f (r, j)) ≠
+        (complement ^ (j.val + 1)) (f (s, ⟨j.val + 1, h⟩))
+  constructor
+  · intro hf j hj r s hrs
+    apply (bond _ _ _).2
+    rcases hrs with rfl | hrs
+    · exact hf.1 r j hj
+    · have hs : s.val + 1 < k := by omega
+      have hr : r = ⟨s.val + 1, hs⟩ := Fin.ext hrs
+      simpa only [hr, Nat.add_comm] using hf.2 s hs j hj
+  · intro hf
+    constructor
+    · intro r j hj
+      exact (bond _ _ _).1 (hf j hj r r (Or.inl rfl))
+    · intro s hs j hj
+      have hb := (bond _ _ _).1 (hf j hj ⟨s.val + 1, hs⟩ s (Or.inr rfl))
+      simpa only [Nat.add_comm] using hb
+
+/-- The alternating permutation carries sum exclusion exactly to proper colouring. -/
+def properEquiv (k n : ℕ) :
+    {f : Fin k × Fin n → Fin 3 // Legal f} ≃
+    {P : Fin k × Fin n → Fin 3 //
+      ∀ (j : Fin n) (h : j.val + 1 < n) (r s : Fin k),
+        (r = s ∨ r.val = s.val + 1) → P (r, j) ≠ P (s, ⟨j.val + 1, h⟩)} :=
+  Equiv.subtypeEquiv (alternatingEquiv k n) (alternating_legal k n)
+
 private def twist (e : Equiv.Perm (Fin 3)) : Equiv.Perm (Fin 3) :=
   complement.trans (e.trans complement)
 private theorem bond_relabel : ∀ (e : Equiv.Perm (Fin 3)) (x y : Fin 3),

@@ -12,20 +12,7 @@ internal sealed class HardinA233158RowDocument : IScribeDocumentDefinition
         "The number of labelled 5-row arrays obeys the order-7 recurrence from OEIS A233158.",
         H("OEIS A233158"), Blocks(
             Node("U5",All("n",NatF(),Eq(C("U5",V("n")),FilterCard(N(5),V("n")))),"Every labelled function satisfying horizontal and antidiagonal sum exclusion is counted.",true),
-            Node("classes", Cast(C("classes"), ClassTableType(5, 41)), "The fixed lookup table assigns a class in Fin 41 to each tuple of 5 colors according to its equality pattern."),
-            Node("classify",All("r",RowF(N(5)),Eq(C("classify",V("r")),A(C("classes"),A(V("r"),N(0)), A(V("r"),N(1)), A(V("r"),N(2)), A(V("r"),N(3)), A(V("r"),N(4))))),"The coordinates select one of the 41 equality classes."),
-            Node("representatives", Cast(C("representatives"), Arr(FinF(N(41)), RowF(N(5)))), "The fixed table selects one canonical 5-entry column for each of the 41 equality classes."),
-            Node("quotient", Cast(C("quotient"), C("Matrix", FinF(N(41)), FinF(N(41)), IntF())), "The fixed 41 by 41 integer table records compatible successor multiplicities between equality classes."),
-            Node("weights", Cast(C("weights"), Arr(FinF(N(41)), IntF())), "The fixed 41-entry integer vector records three labelled constant columns in the constant class and six labelled columns in every other equality class."),
-            Node("finite_certificate",CertificateFormula(),"The three identities specify the quotient, the initial class counts and the finite relation among matrix powers.",theorem:true),
-            Node("result",ResultFormula(),"Multiplication by every further matrix power extends the finite relation to all strip lengths in the displayed range.",theorem:true)), []));
-    private static Formula MV(Formula n) => C("Matrix.mulVec",Pow(C("quotient"),n),Cast(N(1),Arr(FinF(N(41)),IntF())));
-    private static Formula CertificateFormula() {
-        var row=All("r",RowF(N(5)),All("s",FinF(N(41)),Eq(Sum("c",RowF(N(5)),Ite(And(C("columnCompatible",V("r"),V("c")),Eq(C("classify",V("c")),V("s"))),Cast(N(1),IntF()),N(0))),A(C("quotient"),C("classify",V("r")),V("s")))));
-        var weights=All("s",FinF(N(41)),Eq(Sum("c",RowF(N(5)),Ite(Eq(C("classify",V("c")),V("s")),Cast(N(1),IntF()),N(0))),A(C("weights"),V("s"))));
-        var relation=Eq(MV(PlusF(N(4),N(7))),Sum("j",FinF(N(7)),C("HSMul.hSMul",A(Vec(N(-8), N(48), N(-84), N(17), N(76), N(-64), N(16)),V("j")),MV(PlusF(N(4),Val(V("j")))))));
-        return And(row,And(weights,relation));
-    }
+            Node("result",ResultFormula(),"The alternating permutation preserves every labelled array and identifies its count with HardinA233260Literal.L. The pair_base and pair_tail relations imply the displayed recurrence because the coefficients sum to one, cancelling the added constant six.",theorem:true)), []));
     private static Formula ResultFormula() {
         Formula U(int j) => Cast(C("U5",PlusF(V("n"),N(j))),IntF());
         return All("n",NatF(),Eq(U(12),Sub(PlusF(Sub(PlusF(PlusF(Sub(Mul(N(16),U(11)),Mul(N(64),U(10))),Mul(N(76),U(9))),Mul(N(17),U(8))),Mul(N(84),U(7))),Mul(N(48),U(6))),Mul(N(8),U(5)))));
