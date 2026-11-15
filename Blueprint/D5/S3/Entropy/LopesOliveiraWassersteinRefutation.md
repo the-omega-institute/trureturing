@@ -4,7 +4,7 @@
 
 LopesOliveiraWassersteinRefutation
 
-The claim ranges over every integer d at least 2, every real Holder potential on the original positive-index full shift, and every Borel probability law, with one finite real c depending on d and the potential. It explicitly requires the unique invariant classical KS variational equilibrium for that same potential. KS entropy is the supremum over all finite measurable partitions of the limiting normalized entropy of their iterated joins. The binary constant potential minus log 2 has the proved actual unique fair Bernoulli equilibrium. Its pressure-maximizing noninvariant comparison law has zero deficit and transport distance at least 1/8, so no real c satisfies the displayed inequality. The contradiction includes negative and zero c. There is no restriction to invariant, absolutely continuous, full-support or Markov comparison laws and no extra logarithmic-integrability hypothesis. This is the literal fixed classical target question of section 8, rather than a replacement equilibrium or a finite-tail surrogate.
+The registered claim is the preregistered fixed-classical-target extension of the authors' section 8 similar-expression question. It ranges over every integer d at least 2, every real Holder potential on the original positive-index full shift, and every Borel probability law, with one finite real c depending on d and the potential. It explicitly requires the unique invariant classical KS variational equilibrium for that same potential. KS entropy is the supremum over all finite measurable partitions of the limiting normalized entropy of their iterated joins. The binary constant potential minus log 2 has the proved actual unique fair Bernoulli equilibrium. Its pressure-maximizing noninvariant comparison law has zero deficit and transport distance at least 1/8, so no real c satisfies the displayed inequality. The contradiction includes negative and zero c. There is no restriction to invariant, absolutely continuous, full-support or Markov comparison laws and no extra logarithmic-integrability hypothesis. This settles that fixed extension only; it does not claim to settle every interpretation of the authors' broader open question, and it uses neither a replacement equilibrium nor a finite-tail surrogate.
 
 **Definition 1.1 (IsClassicalEquilibrium).**
 
@@ -68,13 +68,17 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/LopesOliveiraWassersteinRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lopes-oliveira-2026-fixed-classical-target-wasserstein` (refuted) by `D5/S3/Entropy/LopesOliveiraWassersteinRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lopes-oliveira-2026-fixed-classical-target-wasserstein","declaration_gid":"D5/S3/Entropy/LopesOliveiraWassersteinRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Artur O. Lopes and Elismar R. Oliveira (2026). *Thermodynamic Formalism for Non-Invariant Probabilities: Entropy, Divergence, Channels*. URL: <https://arxiv.org/html/2611.13904v1#S8>.
 
 *Commentary.*
 
-The definitions and conventions in the introduction apply.
+The definitions and conventions in the introduction apply. The result refutes the registered fixed-classical-target extension; the authors' broader similar-expression question remains outside this settlement.
 
 ## References
 
