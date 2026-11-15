@@ -12,6 +12,7 @@ escape_witness: none (consumed bind-only helpers of the settlement on the live p
 transition_counts: proof_shape=bind-only; consumers=HardinA229585Strip.transition_counts
 -/
 
+import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripHistogram
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
@@ -23,12 +24,19 @@ open D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical)
 
+attribute [local irreducible] T
+
 theorem transition_counts :
     ∀ p : Boundary, Valid p 1 → Canonical p →
       (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ 1 ∧
         cl (boundary r) (1 - (cross p r + bondDefects horizontal r r)) = (0 : Fin 72)
         then (1 : ℤ) else 0) = T (cl p 1) 0 := by
-  unfold Canonical
-  decide +kernel
+  intro p hp hn
+  trans HardinA229585StripHistogram.histogram (p, ⟨1, by decide⟩, ⟨0, by decide⟩)
+  · exact HardinA229585StripHistogram.sum_filtered
+      (p, ⟨1, by decide⟩, ⟨0, by decide⟩)
+  · revert p
+    unfold Canonical
+    decide +kernel
 
 end D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.Budget1.Block0.HardinA229585StripClass0
