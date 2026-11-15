@@ -14,7 +14,7 @@ $$\forall n \in \operatorname{Nat},\; U_{3}\left(n\right) = Finset.card\left(Fin
 
 *Commentary.*
 
-Every labelled function satisfying horizontal and antidiagonal sum exclusion is counted.
+HardinA233155RowTransfer.T at height three counts every labelled function satisfying horizontal and antidiagonal sum exclusion.
 
 **Theorem 1.2 (result).**
 
@@ -28,7 +28,7 @@ $$\forall n \in \operatorname{Nat},\; (U_{3}\left(n + 5\right): \operatorname{In
 
 *Commentary.*
 
-The alternating permutation preserves every labelled array and identifies its count with HardinA233258PairTransfer.L. The count_transfer formula, Q and weights give the finite base identity and the continuation relation at every larger width.
+The alternating permutation preserves every labelled array and identifies its count with HardinA233258PairTransfer.L. Its initial_values give the width-five base identity. Its powers_table identifies Q^2, Q^3 and Q^4 with the corresponding W vectors; the relation W(4) = -2 W(2) + 5 W(3), scalarRelationShift and count_transfer give every larger width.
 
 ## References
 
