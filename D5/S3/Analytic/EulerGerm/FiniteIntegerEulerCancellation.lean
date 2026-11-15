@@ -7,6 +7,7 @@
    digest: Finite integer Euler cancellation with an analytic certificate consumer. -/
 
 import D5.S3.Analytic.EulerGerm.EvaluatedEulerCertificate
+import Mathlib.Algebra.Polynomial.Taylor
 import Mathlib.RingTheory.MvPolynomial.Ideal
 import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
@@ -37,14 +38,9 @@ def residual {I : Type} [Fintype I]
 
 private theorem square_zero_powers {R : Type*} [CommRing R] (x : R)
     (hx : x * x = 0) (k : ℕ) : (1 - x) ^ k = 1 - (k : R) * x := by
-  induction k with
-  | zero => simp
-  | succ k ih =>
-    rw [pow_succ, ih, Nat.cast_add, Nat.cast_one]
-    calc
-      (1 - (k : R) * x) * (1 - x) =
-          1 - ((k : R) + 1) * x + (k : R) * (x * x) := by ring
-      _ = _ := by rw [hx]; ring
+  simpa [Polynomial.derivative_X_pow, sub_eq_add_neg] using
+    Polynomial.eval_add_of_sq_eq_zero ((Polynomial.X : Polynomial R) ^ k) 1 (-x)
+      (by simpa [pow_two] using hx)
 
 private theorem square_zero_product {R : Type*} [CommRing R] {ι : Type*}
     (s : Finset ι) (x : ι → R) (k : ι → ℕ)
