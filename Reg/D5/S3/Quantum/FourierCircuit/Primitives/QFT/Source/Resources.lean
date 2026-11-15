@@ -43,8 +43,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro _
   refine ⟨⟨.empty, .gate .hadamard⟩, 0, 1, ?_⟩
-  change ResourcePool.count (.gate FourierGate.Coordinate.hadamard) (circuit .empty 0).eventCost ≠
-    ResourcePool.count (.gate FourierGate.Coordinate.hadamard) (circuit .empty 1).eventCost
+  change ResourcePool.count (Resource.Event.gate (model := .quantum FourierGate.model OracleModel.empty) .hadamard) (circuit .empty 0).eventCost ≠
+    ResourcePool.count (Resource.Event.gate (model := .quantum FourierGate.model OracleModel.empty) .hadamard) (circuit .empty 1).eventCost
   rw [qftSource_circuit_event_count, qftSource_circuit_event_count]
   norm_num
 
