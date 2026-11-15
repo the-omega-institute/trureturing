@@ -151,5 +151,8 @@ Conversely, if alpha² = c² and alpha > 0, then alpha = |c| and sqrt(1 - alpha�
 - Truth anchor: `D5/S3/Quantum/Information/HedgingMajorityThreshold.winAtLeast`
 - Truth anchor: `D5/S3/Quantum/Information/HedgingMajorityThreshold.winVec`
 - Dependency: [D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence](../Entanglement/LocalObservationPartialTraceEquivalence.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
+- Dependency: [D5/S3/Quantum/Recovery/PurifiedLocalPath](../Recovery/PurifiedLocalPath.md)
 - Dependency: [D5/S3/QuantumBounds/NonlocalityDepthQuantumBound](../../QuantumBounds/NonlocalityDepthQuantumBound.md)
 - Dependency: [D5/S3/QuantumStates/UnitWeightSupport](../../QuantumStates/UnitWeightSupport.md)
