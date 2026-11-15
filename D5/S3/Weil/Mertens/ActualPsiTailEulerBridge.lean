@@ -1,5 +1,5 @@
 /- GID: D5/S3/Weil/Mertens/ActualPsiTailEulerBridge
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Weil/Mertens/ActualPsiTailEulerBridge
    mirror-E: none(waiver:analytic-proof-only)
    anchors: []
