@@ -13,9 +13,9 @@ internal sealed class Verkama62CountDocument : IScribeDocumentDefinition
         Blocks(
             Node("verkama62-count-inversions", "Increasing-position pair count", "inversions",
                 "For pi and S, sum over ordered pairs i,j in S the indicator of i < j and pi(j) < pi(i). Each unordered inversion edge contributes exactly once.", DescribeRole.Definition),
-            Node("verkama62-count-inversions_insert", "Singleton increment", "inversions_insert",
+            Node("verkama62-count-inversions-insert", "Singleton increment", "inversions_insert",
                 "For x outside S, the inversion count of S union {x} equals the old inversion count plus the number of old inversion neighbours of x. The two possible orientations partition those neighbours.", DescribeRole.Theorem),
-            Node("verkama62-count-double-inversion_increment", "Double-ear increment", "Double.inversion_increment",
+            Node("verkama62-count-double-inversion-increment", "Double-ear increment", "inversion_increment",
                 "A northeast double ear adds exactly three inversions: v has the unique old neighbour y, and u has neighbours x and v when added second. The total increment is three, independent of the size of S.", DescribeRole.Theorem)
         ), []));
 

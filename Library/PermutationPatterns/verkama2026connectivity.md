@@ -14,6 +14,8 @@ strata_touched:
   - D5/S3/Combinatorics/Permutation/Verkama62Representation
   - D5/S3/Combinatorics/Permutation/Verkama62Graph
   - D5/S3/Combinatorics/Permutation/Verkama62EarGeometry
+  - D5/S3/Combinatorics/Permutation/Verkama62Run
+  - D5/S3/Combinatorics/Permutation/Verkama62Result
 license: citation-only
 triage: anchor
 ---
@@ -40,9 +42,9 @@ and the new rightmost value is immediately below the old maximum.
 The local terminal-3412 obstruction and the integer-potential argument connect this
 geometry to the coefficient seven quarters. A fresh terminal 3412 survives zero or one
 singleton of old degree two. A subsequent northeast double ear then gives a classical
-351624 occurrence. The signed potential is 7|V|-4|E|. Its bound for a complete run is
-conditional on the existence of that run; the local argument alone is not a resolution
-of the conjecture.
+351624 occurrence. The signed potential is 7|V|-4|E|. The complete run theorem constructs such a run from ordinary vertex connectivity,
+using the two original extreme points as anchors. This avoids assuming a source-ear
+lemma and supplies the full rational bound under the hypotheses of Conjecture 6.2.
 
 ## Source locators
 
@@ -55,3 +57,8 @@ of the conjecture.
 The cited version is arXiv:2611.17237v1. The source HTML has SHA-256
 `b66f3c0145983d265aeadc973a1062b6f7e03a20e7805a87e096750f74d5e833`.
 This citation does not certify worldwide openness or priority.
+
+## Verified locator
+
+- DOI: 10.48550/arXiv.2611.17237
+- Version: https://arxiv.org/html/2611.17237v1

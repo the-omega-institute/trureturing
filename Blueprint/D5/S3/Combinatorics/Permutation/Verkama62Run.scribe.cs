@@ -9,7 +9,7 @@ internal sealed class Verkama62RunDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Deletion connectivity of northeast ear runs.", H("Deletion connectivity of northeast ear runs"), Blocks(
-            Node("verkama62-run-earrun-robust", "Deletion connectivity", "EarRun.robust",
+            Node("verkama62-run-earrun-robust", "Deletion connectivity", "robust",
                 "For every permutation pi, finite set S, and permitted ear run on S, deleting any ambient point w leaves the induced value graph on pi(S minus {w}) connected. A triangle and a 3412 square have this property. Inserting a singleton with at least two old neighbours leaves an attachment after any deletion. A double ear has distinct old attachments and an edge between its two new vertices; after any one deletion its surviving new vertices connect to the surviving old stage.", DescribeRole.Theorem)
         ), []));
 

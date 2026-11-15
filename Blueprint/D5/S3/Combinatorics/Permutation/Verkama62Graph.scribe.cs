@@ -13,9 +13,9 @@ internal sealed class Verkama62GraphDocument : IScribeDocumentDefinition
         Blocks(
             Node("verkama62-graph-valuegraph", "Value-labelled inversion graph", "valueGraph",
                 "The vertices are zero-based representatives u of the values u+1. Two vertices u,v are adjacent precisely when ((u+1)-(v+1)) times ((pi inverse(u)+1)-(pi inverse(v)+1)) is negative. Both differences and the product are evaluated in the integers.", DescribeRole.Definition),
-            Node("verkama62-graph-value_adj", "Order form of source adjacency", "value_adj",
+            Node("verkama62-graph-value-adj", "Order form of source adjacency", "value_adj",
                 "Adjacency is equivalent to u < v with pi inverse(v) < pi inverse(u), or the reverse inequalities. Adding one to both value labels and position labels cancels in the two integer differences.", DescribeRole.Theorem),
-            Node("verkama62-graph-anchored_start", "An initial cycle through both anchors", "anchored_start",
+            Node("verkama62-graph-anchored-start", "An initial cycle through both anchors", "anchored_start",
                 "For every n >= 3 and permutation pi, assume that the value-labelled inversion graph is connected and remains connected after every vertex deletion. Then some triangle or 3412 starts an ear run containing both the original leftmost and bottommost points. Two distinct neighbours force the first value and the position of the minimum to be at least two in zero-based coordinates. An intermediate point below the first value yields the triangle. Otherwise positions 0,1,pi inverse(0),pi inverse(1) yield the 3412.", DescribeRole.Theorem)
         ), []));
 
