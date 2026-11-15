@@ -2,13 +2,12 @@
 bibkey: qudeleap2026qft
 authors: QudeLeap Team
 year: 2026
-title: Original recursive quantum Fourier circuit and single-phase QPE circular tail
+title: Original recursive quantum Fourier circuit proof and native event counts
 doi: null
 url: https://github.com/QudeLeap/Lean-QuantumAlg/tree/971dc8be8a153a116b6d7cd748f984d545861b00
-claim: Arbitrary-width recursive positive normalized QFT circuit and native event counts; uniform circular-window tail for the existing single-phase QPE probability.
+claim: Arbitrary-width recursive positive normalized QFT circuit with actual terminal parallel reversal and counts of its native H, controlled-phase and SWAP occurrences.
 strata_touched:
   - D5/S3/Quantum/FourierCircuit
-  - D5/S3/Quantum/QPECircularTail
 license: Apache-2.0
 triage: anchor
 ---
@@ -46,39 +45,6 @@ any default-model controlled-phase or SWAP expansion. The source mapping retains
 and operator, and the original placement proof tails. Expanded gate counts
 are outside this native-event ledger.
 
-## Single-phase QPE circular-tail correspondence
-
-The additional slice is `QuantumAlg/Util/Real/ReciprocalSquareTail.lean`
-(SHA-256 `31bf1a8f5b4657ac05bb86ef71f29d272135f8982092cd443b5f4af4964b1bab`)
-and the high-confidence cyclic phase-window section of
-`QuantumAlg/Algorithms/QPE/Analysis.lean`
-(SHA-256 `6aeb46246380f76b46cdbe41bc251f6fe4bf88fbc3310525c09b6b5d21463e5f`),
-at the same immutable supplier revision. These map to
-`D5/S3/Quantum/QPECircularTail.lean` in namespace
-`QuantumPhaseEstimationGeneral`; the unused natural-tail wrapper is omitted.
-The shifted finite-tail and floor-split integer-tail proofs retain their source
-construction as private helpers. Principal-error rounding, the injective integer
-lift and the final finite-event estimate retain their source correspondence.
-The pointwise amplitude estimate uses the receiver's existing
-`qpe_geometric_sum_closed_form`, `amplitude_periodic`, `phase_sub_one_norm`
-and pinned Mathlib's sine bound. The receiver's `amplitude` and `probability`
-are unchanged; no supplier phase-register or circuit framework is included.
-
-The result is the established single-shot bound in Lin, *Lecture Notes on
-Quantum Algorithms for Scientific Computation*, arXiv:2201.08309v1, section 3.5,
-equations (3.48)–(3.50), original `phaseestimation.tex` lines 647–715.
-The periodic error uses the norm on the real circle modulo one. For every
-natural width, arbitrary real phase and positive radius, the mass at distance
-at least that radius is bounded by the reciprocal linear term plus the
-reciprocal square endpoint term. Width zero, either midpoint, an empty event
-and radii larger than one half are included. It is a single-phase statement;
-mixtures, repetition and factoring success are outside its scope.
-
-Retire this slice when the receiver's pinned Mathlib or admitted compatible
-library supplies equivalent finite-tail and QPE statements with the same
-constants and complete quantifiers. Replace equivalent parts by direct imports;
-a supplier proof at incompatible pins does not satisfy this condition.
-
 ## Receiver-pin retirement
 
 At each receiver upgrade, compare the actual pinned Mathlib and admitted library
@@ -91,10 +57,6 @@ retiring it. Supplier acceptance elsewhere is not a retirement condition.
 ## Verified locator
 
 - Source: https://github.com/QudeLeap/Lean-QuantumAlg/tree/971dc8be8a153a116b6d7cd748f984d545861b00/QuantumAlg/Primitives/QFT/Source
-
-- QPE source: https://github.com/QudeLeap/Lean-QuantumAlg/blob/971dc8be8a153a116b6d7cd748f984d545861b00/QuantumAlg/Algorithms/QPE/Analysis.lean
-- Finite-tail source: https://github.com/QudeLeap/Lean-QuantumAlg/blob/971dc8be8a153a116b6d7cd748f984d545861b00/QuantumAlg/Util/Real/ReciprocalSquareTail.lean
-- Literature: https://arxiv.org/abs/2201.08309v1
 
 ## License
 

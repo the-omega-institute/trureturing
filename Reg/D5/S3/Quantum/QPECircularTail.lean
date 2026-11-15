@@ -9,7 +9,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 noncomputable section
 
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (ℕ × ℝ)
+  Reg.Support.SingleDependentReadout.signature (Σ _ : ℕ, ℝ)
     (fun p => Fin (2 ^ p.1)) (fun _ => ℝ)
 
 def actual : Realization signature :=
@@ -23,7 +23,7 @@ abbrev arena : Arena where
   Law R := ∀ (t : ℕ) (φ ρ : ℝ), 0 < ρ →
     (∑ j ∈ Finset.univ.filter (fun j : Fin (2 ^ t) =>
         ρ ≤ ‖((φ - (j.val : ℝ) / (2 : ℝ) ^ t : ℝ) : UnitAddCircle)‖),
-      R.readout () (t, φ) j) ≤
+      R.readout () ⟨t, φ⟩ j) ≤
       1 / (2 * (2 : ℝ) ^ t * ρ) + 1 / (2 * ((2 : ℝ) ^ t * ρ) ^ 2)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -33,7 +33,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(1, 0), 0, 1, ?_⟩
+  refine ⟨⟨1, 0⟩, 0, 1, ?_⟩
   change probability 2 0 0 ≠ probability 2 0 1
   have hzero : probability 2 0 0 = 1 := by
     rw [probability, amplitude_of_integral 2 (by norm_num) 0 0]

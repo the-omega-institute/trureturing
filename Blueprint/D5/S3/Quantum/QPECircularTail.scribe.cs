@@ -11,21 +11,23 @@ internal sealed class QPECircularTailDocument : IScribeDocumentDefinition
                 H("Uniform mass outside a circular window"),
                 StatementSource.FromAuthor(Disp(All(Imp(
                     new Formula.Relation(Num(0), FormulaRelationOperator.LessThan, X("rho")),
-                    LE(C("sumFiltered", X("j"), C("Fin", Q()),
-                        LE(X("rho"), Distance(X("j"))),
-                        C("probability", Q(), X("phi"), X("j"))),
+                    LE(TailSum(),
                         Add(Div(Num(1), Mul(Mul(Num(2), Q()), X("rho"))),
                             Div(Num(1), Mul(Num(2), Pow(Mul(Q(), X("rho")), Num(2))))))),
                     ("t", X("Nat")), ("phi", X("Real")), ("rho", X("Real"))))),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qpetail")),
                 Blocks(
-                    Paragraph(Text("Q is two to the natural width t. sumFiltered(j, Fin Q, condition, term) sums term over exactly the labels satisfying condition. circularDistance(phi, j, Q) is the norm of the image of the real number phi minus j.val / Q in UnitAddCircle, the real additive circle modulo one. All divisions in the displayed bound are real. The only premise is positivity of rho; phi is any real number.")),
+                    Paragraph(Text("Q is two to the natural width t. The sum is over exactly the labels whose circular distance is at least rho. circularDistance(phi, j, Q) is the norm of the image of the real number phi minus j.val / Q in UnitAddCircle, the real additive circle modulo one. All divisions in the displayed bound are real. The only premise is positivity of rho; phi is any real number.")),
                     Paragraph(Text("The probability is exactly QuantumPhaseEstimationGeneral.probability Q phi j, the squared norm of the existing inverse-Fourier phase amplitude. That amplitude is one over Q times the finite sum of exp(2 pi i k.val (phi - j.val / Q)). The normalization and phase convention are those of ShorCountingMarginal. Comparing with a positive final Fourier transform requires reflecting the output label modulo Q.")),
                     Paragraph(Text("Subtracting the nearest integer from each raw phase error gives a representative of absolute value at most one half. Its scaled error is Q phi minus an integer lift of j; reduction modulo Q proves that distinct labels have distinct lifts. The geometric amplitude has norm at most one over twice Q times the positive circular distance. Squaring and summing reduces the event to a finite two-sided reciprocal-square tail. Splitting about the floor of the center bounds each side by its first reciprocal-square term plus a telescoping reciprocal tail.")),
                     Paragraph(Text("The bad event includes equality at rho, so the complementary good window has distance strictly less than rho. The estimate includes t equal to zero, integer-shifted and negative phases, wraparound, either midpoint representative, empty events and every positive radius, including radii larger than one half. No nearest-outcome, order or coprimality assumption is used. The bound describes one phase register at one eigenphase. Aggregate Shor success, eigenphase mixtures, repeated trials, continued-fraction recovery, factoring and hardware performance require separate results."))),
                 DescribeRole.Theorem))));
     private static Formula X(string s) => DefinitionDsl.Id(s);
     private static Formula C(string s, params Formula[] xs) => DefinitionDsl.Call(s, xs);
+    private static Formula TailSum() => Seq(
+        new Formula.Subscript(Sum, Seq(X("j"), Colon, C("Fin", Q()), Comma,
+            LE(X("rho"), Distance(X("j"))))), Sp,
+        C("probability", Q(), X("phi"), X("j")));
     private static Formula Q() => Pow(Num(2), X("t"));
     private static Formula Distance(Formula j) => C("circularDistance", X("phi"), j, Q());
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);

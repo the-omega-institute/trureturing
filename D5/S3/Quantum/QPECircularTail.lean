@@ -9,7 +9,7 @@
 /-
 Copyright (c) 2026 QudeLeap. All rights reserved.
 Released under Apache 2.0 license; the complete license is retained in
-Library/Fourier/qudeleap2026qft.md. Authors: QudeLeap Team.
+Library/Fourier/qudeleap2026qpetail.md. Authors: QudeLeap Team.
 Adapted source transplant from QudeLeap/Lean-QuantumAlg at
 971dc8be8a153a116b6d7cd748f984d545861b00:
 QuantumAlg/Util/Real/ReciprocalSquareTail.lean and
