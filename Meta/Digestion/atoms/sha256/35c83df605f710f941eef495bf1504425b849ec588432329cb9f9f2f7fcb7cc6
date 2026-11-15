@@ -1,0 +1,223 @@
+**定理 131.2（矩形方向不能满足全部标签的 EB）。** 设 $r,s,n\ge1$，$\gamma:\mathbb R^r\times\mathbb R^s\to\mathbb R^n$ 为实双线性映射，且
+
+$$
+\|\gamma(x,y)\|=\|x\|\,\|y\|,\qquad
+\gamma(x,y)=R(y)x=L(x)y.
+\tag{X131.3}
+$$
+
+不要求乘积的线性张成等于整个输出空间。取坐标 $(a,b,c,x,y,z)\in\mathbb R^3\oplus\mathbb R^r\oplus\mathbb R^s\oplus\mathbb R^n$ 及整个锥
+
+$$
+C_R=\left\{(a,b,c,x,y,z):
+\begin{pmatrix}
+aI_n&R(y)&z\\
+R(y)^{\mathsf T}&bI_r&x\\
+z^{\mathsf T}&x^{\mathsf T}&c
+\end{pmatrix}\succeq0\right\}.
+\tag{X131.4}
+$$
+
+若 $n>r$，则对这个锥的每个严格正单位，都存在一个原纯标签，其完整原排除集合非凸，故全局 $\mathrm{EB}_{\ge1}$ 失败。同一结论也适用于 $s,n\ge1$ 的零块锥
+
+$$
+C_0=\left\{(a,b,c,y,z):
+\begin{pmatrix}aI_s&y\\y^{\mathsf T}&b\end{pmatrix}\succeq0,
+\quad
+\begin{pmatrix}aI_n&z\\z^{\mathsf T}&c\end{pmatrix}\succeq0
+\right\}.
+\tag{X131.5}
+$$
+
+这些完整模型实际具有原纯点向一张完整排除球的混合内点积累；以下给出全部坐标及全效应失败的见证。它们不满足全局 EB，因而不是原 LP 的反模型。
+
+证明。先固定 $u_0=a+b+c$。由 (X131.3) 的极化，
+
+$$
+R(y)^{\mathsf T}R(y)=\|y\|^2I_r,\qquad
+L(x)^{\mathsf T}L(x)=\|x\|^2I_s.
+\tag{X131.6}
+$$
+
+矩阵表示单射，且 $(1,1,1,0,0,0)$ 给正定矩阵；所以 $C_R$ 闭、尖、生成。PSD 对角块非负，$u_0=0$ 时对角块全零，非对角块也全零，故 $u_0$ 严格正。对 $C_0$ 的两个 PSD 块作相同论证，得到同样结论。
+
+当 $a>0$，(X131.4) 的精确 Schur 条件为
+
+$$
+\begin{gathered}
+B=b-\|y\|^2/a\ge0,\qquad D=c-\|z\|^2/a\ge0,\\
+k=x-R(y)^{\mathsf T}z/a,\qquad BD\ge\|k\|^2.
+\end{gathered}
+\tag{X131.7}
+$$
+
+内部恰由 $a>0,B>0,D>0,BD>\|k\|^2$ 给出。$a=0$ 时 PSD 强制 $y=z=0$，剩余条件是 $b,c\ge0,bc\ge\|x\|^2$。在 $C_0$ 中，(X131.7) 删去 $x,k$，条件只是 $a>0,B,D\ge0$；内部要求三者严格正。$a=0$ 时仍有 $y=z=0$，而 $b,c\ge0$。
+
+两种锥在 $a>0$ 的全部极端射线分别由
+
+$$
+\begin{aligned}
+A(y,z)&=(1,\|y\|^2,\|z\|^2,R(y)^{\mathsf T}z,y,z),\\
+A_0(y,z)&=(1,\|y\|^2,\|z\|^2,y,z)
+\end{aligned}
+\tag{X131.8}
+$$
+
+生成。确实，任意 $a>0$ 点减去 $aA(y/a,z/a)$，余项正是 $(0,B,D,k,0,0)$，属于 $a=0$ 的锥；$C_0$ 的余项为 $(0,B,D,0,0)$。余项非零就给不同射线的正分解，不能极端。
+
+反向，固定 $Y,Z$。以下两个线性泛函在全锥上非负，并同时零于 $A(Y,Z)$：
+
+$$
+h_Y=b-2\langle Y,y\rangle+\|Y\|^2a,\qquad
+h_Z=c-2\langle Z,z\rangle+\|Z\|^2a.
+\tag{X131.9}
+$$
+
+在 $a>0$ 上，第一项至少为 $\|y-aY\|^2/a$，第二项至少为 $\|z-aZ\|^2/a$。在一个正分解的每个 $a_i>0$ 项上，两项为零便迫使 $y_i=a_iY,b_i=a_i\|Y\|^2,z_i=a_iZ,c_i=a_i\|Z\|^2$；(X131.7) 再迫使 $x_i=a_iR(Y)^{\mathsf T}Z$。$a_i=0$ 项的 $y_i,z_i$ 已为零，(X131.9) 为零再给 $b_i=c_i=0$，因而整项为零。故每个分解项都与 (X131.8) 成比例。$C_0$ 的证明删去 $x$ 即成。归一这些射线得到实际原纯点。
+
+记 $e_a=(1,0,0,0,0,0)$，在 $C_0$ 中删去 $x$。其完整排除集恰为
+
+$$
+F=D^{u_0}_{e_a}=\{a=0\}\cap K_{u_0}.
+\tag{X131.10}
+$$
+
+效应 $a$ 确认 $e_a$，零于全 $F$。任取另一确认 $e$，令 $g=u_0-e\ge0$。$g(e_a)=0$；将 $g$ 限制到全部 $A(ty,0)$ 与 $A(0,tz)$，所得非负二次多项式常数项为零，所以线性项全零。这使 $e$ 的 $y,z$ 系数全零，$a$ 系数为一。对 $C_R$ 的任一点，其下方主块使 $(0,b,c,x,0,0)\in C_R$；于是
+
+$$
+e(a,b,c,x,y,z)=a+e(0,b,c,x,0,0)\ge a.
+\tag{X131.11}
+$$
+
+$C_0$ 同理。所以任何确认都不能在 $a>0$ 处读零，证明 (X131.10) 对全部效应成立。$F$ 的坐标 $(b-c,2x)$ 将它仿射同构于整个 $\overline B^{r+1}$；$C_0$ 的 $F$ 是 $b+c=1$ 的整个非退化线段。
+
+取单位 $v\in\mathbb R^s$。$n>r$ 及 (X131.6) 给单位 $w\in\ker R(v)^{\mathsf T}$；在 $C_0$ 中取任意单位 $v,w$。对每个 $\varepsilon>0$，
+
+$$
+p_\varepsilon=
+\frac{(\varepsilon^2,3,1,0,\sqrt3\varepsilon v,\varepsilon w)}
+{\varepsilon^2+4}
+\ \longrightarrow
+y_*=(0,3/4,1/4,0,0,0)\in\operatorname{ri}F.
+\tag{X131.12}
+$$
+
+零块情形删去 $x$。分子是 $\varepsilon^2 A(\sqrt3v/\varepsilon,w/\varepsilon)$，所以每个 $p_\varepsilon$ 都是原纯点。$y_*$ 是 $F$ 的一对对径 $e_b,e_c$ 的 $3:1$ 混合，其中 $e_b=(0,1,0,0,0,0)$、$e_c=(0,0,1,0,0,0)$。但是原效应 $b$ 已在这两个对径上分别读一、零，故这里不是SAME_READBACK131.1的坏对径见证。
+
+现在直接证明同一完整锥中的排除失败。取任意非零 $Y,Z$ 满足 $R(Y)^{\mathsf T}Z=0$；$C_0$ 中不需此约束。记 $\alpha=\|Y\|^2>0,\beta=\|Z\|^2>0$，并取原纯点
+
+$$
+\begin{aligned}
+p&=\frac{A(Y,Z)}{1+\alpha+\beta},\\
+q_Y&=\frac{(\alpha,1,0,0,-Y,0)}{1+\alpha},\qquad
+q_Z=\frac{(\beta,0,1,0,0,-Z)}{1+\beta}.
+\end{aligned}
+\tag{X131.13}
+$$
+
+它们全由 (X131.8) 给出，$C_0$ 中仍删去 $x$。定义同一原空间上的线性泛函
+
+$$
+g_Y=\frac{\alpha a+b-2\langle Y,y\rangle}{1+\alpha},\qquad
+g_Z=\frac{\beta a+c-2\langle Z,z\rangle}{1+\beta},\qquad
+e_Y=u_0-g_Y,\quad e_Z=u_0-g_Z.
+\tag{X131.14}
+$$
+
+全锥都有 $ab\ge\|y\|^2,ac\ge\|z\|^2$。因此
+
+$$
+\alpha a+b\ge2\sqrt{\alpha ab}\ge2|\langle Y,y\rangle|,
+\qquad
+a+\alpha b\ge2\sqrt{\alpha ab}\ge2|\langle Y,y\rangle|.
+\tag{X131.15}
+$$
+
+首式给 $g_Y\ge0$，次式与 $c\ge0$ 给 $u_0-g_Y\ge0$。交换 $(b,Y,y,\alpha)$ 与 $(c,Z,z,\beta)$ 得到 $0\le g_Z\le u_0$。这在整个原锥上支付了两个效应及其补的正性。代入得到
+
+$$
+e_Y(p)=e_Z(p)=1,\qquad e_Y(q_Y)=e_Z(q_Z)=0.
+\tag{X131.16}
+$$
+
+故 $q_Y,q_Z\in D^{u_0}_p$。然而 $m=(q_Y+q_Z)/2$ 是整个锥的内点。具体地，记
+
+$$
+a_m=\frac12\left(\frac\alpha{1+\alpha}+\frac\beta{1+\beta}\right)>0.
+\tag{X131.17}
+$$
+
+此时 $x_m=0$，$y_m=-Y/(2(1+\alpha))$，$z_m=-Z/(2(1+\beta))$，所以 $R(y_m)^{\mathsf T}z_m=0$，且
+
+$$
+\begin{aligned}
+B_m&=\frac1{2(1+\alpha)}
+\left(1-\frac\alpha{2(1+\alpha)a_m}\right)>0,\\
+D_m&=\frac1{2(1+\beta)}
+\left(1-\frac\beta{2(1+\beta)a_m}\right)>0.
+\end{aligned}
+\tag{X131.18}
+$$
+
+两个严格不等式分别使用 (X131.17) 中另一个严格正的加项。故 (X131.7) 的 $k=0$ 且全部内部条件成立；$C_0$ 也同样成立。
+
+任何原 $e\in\mathcal F^{u_0}_p$ 都是非零正泛函，因而在内点 $m$ 严格正：若正泛函在内点为零，在该点的双侧小邻域上非负会迫使它在每个方向都为零。于是对**全部**原确认都有 $e(m)>0$，故 $m\notin D^{u_0}_p$。确认族紧还给 $\min_{e\in\mathcal F^{u_0}_p}e(m)>0$。这里没有把全效应域缩成 (X131.14) 的菜单。取 $Y=\sqrt3v/\varepsilon,Z=w/\varepsilon$，(X131.13) 的 $p$ 就是 (X131.12) 的 $p_\varepsilon$，所以这条混积累曲线的每个标签均具有非凸完整排除集。
+
+最后处理任意原严格正单位，而非仅 $u_0$。[Nakashima Proposition 4.3(2)—(3)][Q131N] 给 (X131.4) 的整个对偶：按配对
+
+$$
+f(a,b,c,x,y,z)=\lambda a+\mu b+\nu c
++2\langle\xi,x\rangle+2\langle\eta,y\rangle+2\langle\zeta,z\rangle,
+\tag{X131.19}
+$$
+
+有 $f\in C_R^*$ 当且仅当
+
+$$
+G_f=\begin{pmatrix}
+\lambda&\eta^{\mathsf T}&\zeta^{\mathsf T}\\
+\eta&\mu I_s&L(\xi)^{\mathsf T}\\
+\zeta&L(\xi)&\nu I_n
+\end{pmatrix}\succeq0.
+\tag{X131.20}
+$$
+
+该文给出的正定对偶锥是齐次的；加 $\epsilon I$ 后取极限给这里的整个闭对偶。$u_0$ 对应 $G_{u_0}=I$，所以整个原效应区间也恰对应 $G_f\succeq0,I-G_f\succeq0$，并非所有环境矩阵中另选一个子菜单。这些是所引成熟结果在当前坐标的应用。
+
+$C_0$ 的对偶在 (X131.19) 删去 $\xi,x$ 后，恰为
+
+$$
+G_f=\begin{pmatrix}
+\lambda&\eta^{\mathsf T}&\zeta^{\mathsf T}\\
+\eta&\mu I_s&0\\
+\zeta&0&\nu I_n
+\end{pmatrix}\succeq0.
+\tag{X131.21}
+$$
+
+这也是 [Nakashima p.11 的零块对偶][Q131N]。可直接核对其精确配对：当 $\mu,\nu>0$，在 $a>0,b\ge\|y\|^2/a,c\ge\|z\|^2/a$ 上对 $y,z$ 完成平方，正性恰要求 $\lambda\ge\|\eta\|^2/\mu+\|\zeta\|^2/\nu$，正是 (X131.21) 的 Schur 条件。$\mu=0$ 强制 $\eta=0$，$\nu=0$ 强制 $\zeta=0$，仍给相同的闭锥。
+
+其正定内部的齐次性也可显式读出。矩阵
+
+$$
+H=\begin{pmatrix}
+h&v^{\mathsf T}&w^{\mathsf T}\\
+0&kI_s&0\\
+0&0&\ell I_n
+\end{pmatrix},\qquad hk\ell\ne0,
+\tag{X131.22}
+$$
+
+的合同作用及其逆保持 (X131.21) 的线性空间和 PSD 锥。对任意正定 $G_f$，取 $k=\sqrt\mu,\ell=\sqrt\nu,v=\eta/\sqrt\mu,w=\zeta/\sqrt\nu$ 及 $h=\sqrt{\lambda-\|\eta\|^2/\mu-\|\zeta\|^2/\nu}$，便有 $HH^{\mathsf T}=G_f$。所以该对偶内部确实传递，不需额外假定对偶齐次性。
+
+在任一种模型中，严格正单位恰是 $\operatorname{int}C^*$。由上述对偶齐次性，给定任意这样的 $u$，存在对偶锥自同构 $S$ 满足 $S u_0=u$。令 $T=S^{\mathsf T}:V\to V$，即 $f(Tx)=(Sf)(x)$。双极定理给 $T(C)=C$，并且
+
+$$
+u_0(Tx)=u(x),\quad T(K_u)=K_{u_0},\quad
+S([0,u_0])=[0,u],\quad
+T(D^u_p)=D^{u_0}_{Tp}.
+\tag{X131.23}
+$$
+
+这些是全基、全部极点、整个效应区间及存在零值定义的双向运输，包含全部混态和零向量。把上述 $p,q_Y,q_Z,m$、纯点列和 $F$ 用 $T^{-1}$ 拉回，即在**同一个锥、给定的原单位**下得到全部见证。非凸性、仿射球身份和严格混合系数均保持。证毕。
+
