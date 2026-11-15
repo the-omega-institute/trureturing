@@ -54,7 +54,7 @@ Appendix B, Conjecture 1, page 32: "it is conjectured that such a hierarchy hold
 
 **Theorem 1.5 (Entries of the Haar second moment).**
 
-$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall r \in ((n \times n) \times (n \times n)),\; \forall c \in ((n \times n) \times (n \times n)),\; (2 \le \operatorname{Fintype.card}\left(n\right)) \Rightarrow (\operatorname{D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage}\left(n, r, c\right) = \frac{\operatorname{ite}\left((c).2 = (c).1, (1: \mathbb{C}), 0\right) - \frac{\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\left((c).1, (c).2\right)}{(\operatorname{Fintype.card}\left(n\right): \mathbb{C})}}{((\operatorname{Fintype.card}\left(n\right): \mathbb{C}))^{2} - 1} \cdot \operatorname{ite}\left((r).2 = (r).1, (1: \mathbb{C}), 0\right) + \frac{\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\left((c).1, (c).2\right) - \frac{\operatorname{ite}\left((c).2 = (c).1, (1: \mathbb{C}), 0\right)}{(\operatorname{Fintype.card}\left(n\right): \mathbb{C})}}{((\operatorname{Fintype.card}\left(n\right): \mathbb{C}))^{2} - 1} \cdot \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\left((r).2, (r).1\right))$$
+$$\forall n \in Type*,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall r \in ((n \times n) \times (n \times n)),\; \forall c \in ((n \times n) \times (n \times n)),\; (2 \le \operatorname{Fintype.card}\left(n\right)) \Rightarrow (\operatorname{D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage}\left(n, r, c\right) = \frac{\operatorname{ite}\left((c).2 = (c).1, (1: \mathbb{C}), 0\right) - \frac{\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\left((c).1, (c).2\right)}{(\operatorname{Fintype.card}\left(n\right): \mathbb{C})}}{((\operatorname{Fintype.card}\left(n\right): \mathbb{C}))^{2} - 1} \cdot \operatorname{ite}\left((r).2 = (r).1, (1: \mathbb{C}), 0\right) + \frac{\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\left((c).1, (c).2\right) - \frac{\operatorname{ite}\left((c).2 = (c).1, (1: \mathbb{C}), 0\right)}{(\operatorname{Fintype.card}\left(n\right): \mathbb{C})}}{((\operatorname{Fintype.card}\left(n\right): \mathbb{C}))^{2} - 1} \cdot \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\left((r).2, (r).1\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.haarAverageEntry` (`✓ std3`). ∎
 
@@ -69,10 +69,6 @@ For a finite type of cardinality at least two, every entry of the Haar second mo
 $$\neg \operatorname{claim}\left(\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.result` (`✓ std3`). ∎
-
-*Resolves.* `Problems/duschenes-garciamartin-holmes-cerezo-2026-chaar-concatenation` (refuted) by `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"duschenes-garciamartin-holmes-cerezo-2026-chaar-concatenation","declaration_gid":"D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 

@@ -43,6 +43,12 @@ proof_shape: FinalAssembly.inverse_entry: bind-only; consumers: FinalAssembly.ta
 
 import D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.States.Mixed.MState.Basic
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Basic
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.IsMaximalSelfAdjoint
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Trace
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Order
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.States.Pure.Braket
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ClassicalInfo.Prob
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
 import D5.S3.Quantum.Foundation.FiniteStateChannel
