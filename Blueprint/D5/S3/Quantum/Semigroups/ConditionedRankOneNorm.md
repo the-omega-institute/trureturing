@@ -112,7 +112,7 @@ $$\forall X: \operatorname{Type}\left(\right), [\operatorname{MeasurableSpace}\l
 
 *Commentary.*
 
-The same clipped weight attains the minimum for every a. The excess is exactly (1-a)/Q times the integral of h times absolute(c/g-max(h,H/kappa)). Integral-zero rigidity makes all minimizers for a<1 positive scalar multiples of the clipped weight modulo AE equality. For a<1 the minimum equals one exactly when h>=H/kappa almost everywhere. At a=1 every admissible weight has sharp constant one. This weighted L1 identity gives no L infinity stability estimate. The actual interval semigroup consumes the theorem in its owner. A distinct finite atomic check uses h=(1/4,1), kappa=2 and projection optimum 18/17.
+The same clipped weight attains the minimum for every a. The excess is exactly (1-a)/Q times the integral of h times absolute(c/g-max(h,H/kappa)). Integral-zero rigidity makes all minimizers for a<1 positive scalar multiples of the clipped weight modulo AE equality. For a<1 the minimum equals one exactly when h>=H/kappa almost everywhere. At a=1 every admissible weight has sharp constant one. This weighted L1 identity gives no L infinity stability estimate. The actual interval semigroup consumes the theorem in its owner. A distinct finite atomic check on a two-point space with counting measure uses a=0, h=(1/4,1), kappa=2 and projection optimum 18/17.
 
 ## References
 
