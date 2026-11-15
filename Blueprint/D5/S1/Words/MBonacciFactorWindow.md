@@ -6,7 +6,19 @@ Every factor of the actual m-bonacci word has an occurrence in an exact image-we
 
 Let m be at least two. The alphabet is Fin m. The substitution sends a to [0,a+1] when a+1<m and sends m-1 to [0]. Write P_j for the jth iterate on zero and U_m(j) for its length. The word u_m is the literal infinite word obtained from these nested, unbounded iterates. A factor at q of length n is the list u_m(q),...,u_m(q+n-1).
 
-**Theorem 1.1 (Every start is represented by the bounded window).**
+**Theorem 1.1 (The literal finite slice).**
+
+$$\forall m \in \mathbb{N},\; 2 \le m \Rightarrow \left(\forall L \in \mathbb{N},\; \forall q \in \mathbb{N},\; \forall n \in \mathbb{N},\; q + n \le length\left(image\left(phi\left(m\right), L, zero\left(m\right)\right)\right) \Rightarrow factor\left(word\left(m\right), q, n\right) = take\left(n, drop\left(q, image\left(phi\left(m\right), L, zero\left(m\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/MBonacciFactorWindow.factor_eq_take_drop` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every order m>=2, level L and natural q,n whose endpoint q+n is within image(phi(m),L,zero(m)), the actual factor of word(m) at q of length n is exactly take(n,drop(q,image(phi(m),L,zero(m)))). This includes zero length and arbitrary starts. In particular order 3 is precisely the literal Tribonacci substitution and word.
+
+**Theorem 1.2 (Every start is represented by the bounded window).**
 
 $$\forall m \in \mathbb{N},\; 2 \le m \Rightarrow \left(\forall k \in \mathbb{N},\; \forall n \in \mathbb{N},\; 1 \le n \Rightarrow \left(n \le U\left(m, k\right) \Rightarrow \left(\forall q \in \mathbb{N},\; \exists p \in \mathbb{N},\; p \le U\left(m, k + m\right) \land factor\left(word\left(m\right), q, n\right) = factor\left(word\left(m\right), p, n\right)\right)\right)\right)$$
 
@@ -30,6 +42,7 @@ With this R, Proposition 4.8 uses the factor-covering prefix P_(k+m) followed by
 
 ## References
 
+- Truth anchor: `D5/S1/Words/MBonacciFactorWindow.factor_eq_take_drop`
 - Truth anchor: `D5/S1/Words/MBonacciFactorWindow.factor_window`
 - Dependency: [D5/S1/Words/GoldenUniformRecurrence](GoldenUniformRecurrence.md)
 - Dependency: [D5/S1/Words/MBonacciMinimumGreedy](MBonacciMinimumGreedy.md)
