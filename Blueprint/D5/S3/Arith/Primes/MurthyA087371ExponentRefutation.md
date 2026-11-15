@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/MurthyA087371ExponentRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/murthy-a087371-bounded-exponent` (refuted) by `D5/S3/Arith/Primes/MurthyA087371ExponentRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"murthy-a087371-bounded-exponent","declaration_gid":"D5/S3/Arith/Primes/MurthyA087371ExponentRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Amarnath Murthy (2003). *OEIS A087371, Smallest k such that 10^k + 2n-1 is a prime >10, or 0 if no such k exists*. URL: <https://oeis.org/A087371>.

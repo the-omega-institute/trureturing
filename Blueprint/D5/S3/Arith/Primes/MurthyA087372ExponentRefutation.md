@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/MurthyA087372ExponentRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/murthy-a087372-bounded-exponent` (refuted) by `D5/S3/Arith/Primes/MurthyA087372ExponentRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"murthy-a087372-bounded-exponent","declaration_gid":"D5/S3/Arith/Primes/MurthyA087372ExponentRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Amarnath Murthy (2003). *OEIS A087372, Smallest k such that 3^k + 2n is a prime, or 0 if no such k exists*. URL: <https://oeis.org/A087372>.
