@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3982ccae55a1f11411f73817c24056bac7e22a90245beead6d15f3dd1d30ed7f
+  normalized_sha256: sha256:3982ccae55a1f11411f73817c24056bac7e22a90245beead6d15f3dd1d30ed7f
+cas_ref: sha256:3982ccae55a1f11411f73817c24056bac7e22a90245beead6d15f3dd1d30ed7f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only definitional/logical closure; no project coverage GID. With the fixed kernel, permission set and readouts, Q(pi) means K(pi,P) = acc and ax(pi) is a subset of the permission set (Convention 2.1). The definition is forall pi, Q(pi) implies (refs(pi) != empty or ax(pi) != empty). Lean v4.35.0 Init/PropLemmas.lean not_exists and Init/Classical.lean Classical.not_and_iff_not_or_not and Classical.not_not, with logical reassociation, equate this to absence of a qualified proof with both readouts empty. Set.empty_subset in Mathlib/Data/Set/Basic.lean at mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 makes every accepted proof with empty ax qualified, yielding exactly the stated absence of an accepted proof with empty ax and empty refs. If there is no qualified proof, not_exists gives forall pi, not Q(pi), so the conditional universal is vacuous and supplies no proof-existence claim. The comparison with 不待异法 is a restricted naming convention, not an additional theorem. Zero new Lean.
+    previous_atom_id: 029c18582f62e875b97995683f64cc4ec23b18c3b909078f6d8d15e687fc5f5d
+    next_atom_id: bc98f9a0480352eec7d4271cad8a27cb6d68310623fd783b041767e79cb76792

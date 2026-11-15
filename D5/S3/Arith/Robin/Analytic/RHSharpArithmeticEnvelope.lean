@@ -9,6 +9,7 @@
 import D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
 import D5.S3.Weil.Mertens.Cryptids.Schoenfeld
 import D5.S3.Arith.Robin.ThetaTailRobinWitness
+import D5.S3.Arith.Robin.EulerLayerRootCorrection
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
@@ -535,7 +536,7 @@ private def a (t : ℝ) : ℝ := Real.sqrt t * w t
 private def H (t : ℝ) : ℝ := 2 / (Real.sqrt t * Real.log t)
 private def q (t : ℝ) : ℝ := (Real.log t + 2) /
   (t * Real.sqrt t * (Real.log t) ^ 2)
-private def A (x : ℝ) : ℝ := ∫ t in Ioi x, a t
+def A (x : ℝ) : ℝ := ∫ t in Ioi x, a t
 
 private lemma neg_H_deriv {t : ℝ} (ht : 1 < t) :
     HasDerivAt (fun z => -H z) (q t) t := by
@@ -658,16 +659,15 @@ lemma tails {x : ℝ} (hx : 2 ≤ x) :
   dsimp [B, N]
   linarith [ht.2.1]
 
-private lemma S_limit (hRH : RiemannHypothesis) :
-    Tendsto (fun x : ℝ => D x * S x) atTop (𝓝 2) := by
+lemma S_sub_A_limit :
+    Tendsto (fun x : ℝ => D x * (S x - A x)) atTop (𝓝 0) := by
   rw [Metric.tendsto_nhds]
   intro epsilon he
-  have hroot := psi_theta_root_limit_of_rh hRH
+  have hroot := D5.S3.Arith.Robin.EulerLayerRootCorrection.psi_theta_root_limit
   obtain ⟨T, hT⟩ := eventually_atTop.mp ((Metric.tendsto_nhds.mp hroot)
     (epsilon / 6) (by positivity))
   filter_upwards [eventually_ge_atTop (max T 2),
-    (Metric.tendsto_nhds.mp A_limit) (epsilon / 2) (by positivity),
-    A_limit.eventually (gt_mem_nhds (by norm_num : (2 : ℝ) < 3))] with x hx hAx hA3
+    A_limit.eventually (gt_mem_nhds (by norm_num : (2 : ℝ) < 3))] with x hx hA3
   have hx2 : 2 ≤ x := (le_max_right _ _).trans hx
   have hx1 : 1 < x := by linarith
   have hi := (tails hx2).2.1
@@ -697,11 +697,12 @@ private lemma S_limit (hRH : RiemannHypothesis) :
     rw [abs_mul, abs_of_nonneg hD]
     have hh := mul_le_mul_of_nonneg_left hdiff hD
     nlinarith [hA3]
-  simp only [Real.dist_eq] at hAx ⊢
-  calc
-    _ = |D x * (S x - A x) + (D x * A x - 2)| := by congr 1; ring
-    _ ≤ |D x * (S x - A x)| + |D x * A x - 2| := abs_add_le _ _
-    _ < epsilon := by linarith
+  simp only [Real.dist_eq, sub_zero]
+  exact hscaled.trans_lt (by linarith)
+
+private lemma S_limit (hRH : RiemannHypothesis) :
+    Tendsto (fun x : ℝ => D x * S x) atTop (𝓝 2) := by
+  simpa only [mul_sub, sub_add_cancel, zero_add] using S_sub_A_limit.add A_limit
 
 lemma finite_cancellation {x : ℝ} (hx : 2 ≤ x) :
     |Mertens.E₃ x + Mertens.E₂p x| ≤ 4 / x := by
