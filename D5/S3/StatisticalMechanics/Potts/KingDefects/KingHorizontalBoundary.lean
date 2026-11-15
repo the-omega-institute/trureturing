@@ -23,7 +23,7 @@ boundary_words_zero_equiv: proof_shape=bind-only; consumers=KingHorizontal.bound
 boundary_words_sum_equiv: proof_shape=bind-only; consumers=KingHorizontal.boundary_words_pos_card
 boundary_words_zero_card: proof_shape=bind-only; consumers=KingHorizontal.boundary_count_zero
 boundary_words_pos_card: proof_shape=bind-only; consumers=KingHorizontal.boundary_count_pos
-pivot: proof_shape=bind-only; consumers=KingHorizontal.boundary_count,KingHorizontal.boundary_count_at,KingHorizontal.boundary_count_pos,KingHorizontal.boundary_count_zero,KingHorizontal.boundary_one_column,KingHorizontal.boundary_word_build_valid,KingHorizontal.boundary_word_equiv,KingHorizontal.boundary_word_map,KingHorizontal.boundary_word_map_injective,KingHorizontal.boundary_word_map_surjective,KingHorizontal.coded_boundaries_shared,KingHorizontal.coded_boundary_valid,KingHorizontal.horizontal_three_rows,KingHorizontal.interiorDecode,KingHorizontal.interiorEncode,KingHorizontal.interiorEncode_decode,KingHorizontal.interior_code_equiv,KingHorizontal.interior_count,KingHorizontal.interior_count_alphabets,KingHorizontal.interior_count_support,KingHorizontal.interior_row_sum,KingHorizontal.interior_three_rows_count
+pivot: proof_shape=bind-only; consumers=KingHorizontal.boundary_count,KingHorizontal.boundary_count_at,KingHorizontal.boundary_count_pos,KingHorizontal.boundary_count_zero,KingHorizontal.boundary_one_column,KingHorizontal.boundary_word_build_valid,KingHorizontal.boundary_word_equiv,KingHorizontal.boundary_word_map,KingHorizontal.boundary_word_map_injective,KingHorizontal.boundary_word_map_surjective,KingHorizontal.coded_boundaries_shared,KingHorizontal.coded_boundary_valid,KingHorizontal.cut_row,KingHorizontal.horizontal_three_rows,KingHorizontal.interiorDecode,KingHorizontal.interiorEncode,KingHorizontal.interiorEncode_decode,KingHorizontal.interior_code_equiv,KingHorizontal.interior_count,KingHorizontal.interior_count_alphabets,KingHorizontal.interior_count_support,KingHorizontal.interior_row_sum,KingHorizontal.interior_three_rows_count
 boundary_word_build: proof_shape=bind-only; consumers=KingHorizontal.boundary_word_build_valid,KingHorizontal.boundary_word_map,KingHorizontal.boundary_word_map_injective,KingHorizontal.boundary_word_map_surjective
 boundary_word_build_valid: proof_shape=bind-only; consumers=KingHorizontal.boundary_word_map,KingHorizontal.boundary_word_map_injective,KingHorizontal.boundary_word_map_surjective
 boundary_word_map: proof_shape=bind-only; consumers=KingHorizontal.boundary_word_equiv,KingHorizontal.boundary_word_map_injective,KingHorizontal.boundary_word_map_surjective
@@ -755,7 +755,7 @@ private theorem top_field_raw {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M
     exact ht.1 (i.castAdd B) j
   · intro e
     rw [top_edge_value, ht.2]
-    cases e <;> simp [top_edge, top_row, cut_row, Fin.ext_iff]
+    cases e <;> simp [top_edge, top_row, cut_row, pivot, Fin.ext_iff]
 
 private theorem bottom_field_raw {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
     (ht : RawAdmissible (.H (cut_row A B) s) t) :
@@ -773,7 +773,7 @@ private theorem bottom_field_raw {A B M : ℕ} (s : Fin M) (t : DiffField (A + B
         refine ⟨?_,hj⟩
         apply Fin.ext
         have h := congrArg Fin.val he
-        dsimp only [bottom_row, cut_row] at h
+        dsimp only [bottom_row, cut_row, pivot] at h
         simpa using h
       · rintro ⟨rfl,rfl⟩
         exact ⟨rfl,rfl⟩
@@ -799,12 +799,12 @@ private theorem raw_of_halves {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M
     | H i j =>
       by_cases hi : i.val ≤ A
       · have h := upper (.H ⟨i.val, by omega⟩ j)
-        simpa [top_edge, top_row, cut_row, Fin.ext_iff] using h
+        simpa [top_edge, top_row, cut_row, pivot, Fin.ext_iff] using h
       · have h := lower (.H ⟨i.val - A, by have := i.isLt; omega⟩ j)
         have hir : A + (i.val - A) = i.val := by omega
         have he : bottom_row A (⟨i.val - A, by omega⟩ : Fin (B + 1)) = i :=
           Fin.ext hir
-        simpa [bottom_edge, he, cut_row, Fin.ext_iff, hir, hi, show i.val - A ≠ 0 by omega,
+        simpa [bottom_edge, he, cut_row, pivot, Fin.ext_iff, hir, hi, show i.val - A ≠ 0 by omega,
           show i.val ≠ A by omega] using h
     | V i j =>
       refine Fin.addCases (fun i => ?_) (fun i => ?_) i
@@ -831,7 +831,7 @@ private theorem top_field_join {A B M : ℕ} (u : DiffField A M) (l : DiffField 
   apply DiffField.ext
   · funext i j
     by_cases hi : i.val < A
-    · simp only [top_field, join_field, top_row, hi, ↓reduceDIte]
+    · simp only [top_field, join_field, top_row, Fin.val_castLE, hi, ↓reduceDIte]
     · have he : i = Fin.last A := Fin.ext (by have := i.isLt; simp; omega)
       subst i
       simpa [top_field, join_field, top_row] using (hshare j).symm
