@@ -68,7 +68,9 @@ private theorem tail_counts {C : Type*} [Fintype C] [DecidableEq C]
     · rw [Nat.card_congr (tail_split n 1 p), Nat.card_sigma]
       simp_rw [ho]
       simp only [Finset.sum_ite, Finset.sum_const, hc, smul_eq_mul]
-      have hp : (Finset.univ.filter (fun c : C => p=c)).card = 1 := by simp [eq_comm]
+      have hp : (Finset.univ.filter (fun c : C => p=c)).card = 1 := by
+        rw [show Finset.univ.filter (fun c : C => p=c) = {p} by ext c; simp [eq_comm]]
+        simp
       rw [hp, one_mul]
       cases n with
       | zero => simp
@@ -82,18 +84,11 @@ private theorem errors_eq {C : Type*} [DecidableEq C] (n : ℕ)
   induction n with
   | zero => simp [bad, errors]
   | succ n ih =>
-    have ht := ih (Fin.tail f)
-    simp only [bad, Nat.add_sub_cancel, Fin.sum_univ_succ] at ht ⊢
-    simp only [errors, Fin.tail]
-    rw [← ht]
+    change (∑ i : Fin (n+1), if f i.castSucc = f i.succ then 1 else 0) = _
+    rw [Fin.sum_univ_succ]
+    change (if f 0=f (Fin.succ 0) then 1 else 0) + bad (Fin.tail f) = _
+    rw [ih]
     rfl
-
-private theorem errors_map {C D : Type*} [DecidableEq C] [DecidableEq D]
-    (e : C → D) (he : Function.Injective e) {n : ℕ} (p : C) (f : Fin n → C) :
-    errors (e p) (e ∘ f) = errors p f := by
-  induction n generalizing p with
-  | zero => rfl
-  | succ n ih => simp only [errors, Function.comp_apply, he.eq_iff]; rw [← ih]; rfl
 
 private theorem bad_map {C D : Type*} [DecidableEq C] [DecidableEq D]
     (e : C → D) (he : Function.Injective e) {n : ℕ} (f : Fin n → C) :
@@ -165,6 +160,132 @@ private theorem burnside (n : ℕ) :
   have h := MulAction.sum_card_fixedBy_eq_card_orbits_mul_card_group
     (Equiv.Perm (Fin 4)) (Words n)
   rw [Nat.card_congr (canonical_orbits n)]
+  norm_num only [Fintype.card_perm,Fintype.card_fin,Nat.factorial] at h
   simpa [Nat.card_eq_fintype_card,Fintype.card_perm,Nat.mul_comm] using h.symm
 
+private noncomputable def fixedCard (p : Equiv.Perm (Fin 4)) : Fin 5 :=
+  ⟨Fintype.card {c : Fin 4 // p c=c}, by
+    have h := Fintype.card_subtype_le (fun c : Fin 4 => p c=c)
+    simp only [Fintype.card_fin] at h
+    omega⟩
+
+private theorem permutation_sum (f : Fin 5 → ℕ) :
+    (∑ p : Equiv.Perm (Fin 4), f (fixedCard p)) =
+      9*f 0 + 8*f 1 + 6*f 2 + f 4 := by
+  classical
+  have hc (r : Fin 5) :
+      (Finset.univ.filter (fun p : Equiv.Perm (Fin 4) => fixedCard p=r)).card =
+        (![9,8,6,0,1] : Fin 5 → ℕ) r := by
+    revert r
+    decide +kernel
+  calc
+    _ = ∑ p : Equiv.Perm (Fin 4), ∑ r : Fin 5,
+        if fixedCard p=r then f r else 0 := by simp
+    _ = ∑ r : Fin 5, ∑ p : Equiv.Perm (Fin 4),
+        if fixedCard p=r then f r else 0 := Finset.sum_comm
+    _ = ∑ r : Fin 5, (![9,8,6,0,1] : Fin 5 → ℕ) r * f r := by
+      apply Finset.sum_congr rfl
+      intro r _
+      rw [← Finset.sum_filter, Finset.sum_const, hc, smul_eq_mul]
+    _ = _ := by simp [Fin.sum_univ_succ]; ring
+
+private def edge_path (n : ℕ) : Edge n 1 ≃ Fin (n-1) where
+  toFun
+    | .H _ j => Fin.elim0 j
+    | .V i _ => i
+    | .D _ j => Fin.elim0 j
+    | .A _ j => Fin.elim0 j
+  invFun i := .V i 0
+  left_inv e := by
+    cases e with
+    | H i j => exact Fin.elim0 j
+    | V i j => exact congrArg (Edge.V i) (Subsingleton.elim _ _)
+    | D i j => exact Fin.elim0 j
+    | A i j => exact Fin.elim0 j
+  right_inv _ := rfl
+
+private theorem oneDefect_path {n : ℕ} (f : Fin n → Fin 4) :
+    OneDefect (fun p : Cell n 1 => f p.1) ↔ bad f=1 := by
+  classical
+  unfold OneDefect
+  have h : (Finset.univ.filter (mono (fun p : Cell n 1 => f p.1))).card = bad f := by
+    rw [Finset.card_eq_sum_ones, Finset.sum_filter]
+    rw [← (edge_path n).symm.sum_comp]
+    rfl
+  rw [h]
+
+private theorem normal_path {n : ℕ} (f : Fin n → Fin 4) :
+    normal (fun p : Cell n 1 => f p.1) ↔ Canonical f := by
+  simp only [normal,Canonical]
+  constructor
+  · intro h i b hb
+    obtain ⟨j,hj,he⟩ := h (finProdFinEquiv (i,0)) b (by simpa using hb)
+    refine ⟨(finProdFinEquiv.symm j).1,?_,he⟩
+    change (finProdFinEquiv.symm j).1.val < i.val
+    simpa [Fin.lt_def, finProdFinEquiv, Fin.divNat] using hj
+  · intro h i b hb
+    obtain ⟨j,hj,he⟩ := h (finProdFinEquiv.symm i).1 b hb
+    refine ⟨finProdFinEquiv (j,0),?_,by simpa using he⟩
+    change (finProdFinEquiv (j,0)).val < i.val
+    simpa [Fin.lt_def, finProdFinEquiv, Fin.divNat] using hj
+
+private noncomputable def literal_words (n : ℕ) :
+    {f : Cell n 1 → Fin 4 // OneDefect f ∧ normal f} ≃
+      {f : Fin n → Fin 4 // bad f=1 ∧ Canonical f} where
+  toFun f := ⟨(fun i => f.val (i,0)), by
+    have he : (fun p : Cell n 1 => f.val (p.1,0)) = f.val := by
+      funext p; exact congrArg f.val (Prod.ext rfl (Subsingleton.elim _ _))
+    exact ⟨(oneDefect_path _).mp (he.symm ▸ f.property.1),
+      (normal_path _).mp (he.symm ▸ f.property.2)⟩⟩
+  invFun f := ⟨(fun p => f.val p.1),
+    (oneDefect_path _).mpr f.property.1,(normal_path _).mpr f.property.2⟩
+  left_inv f := by
+    apply Subtype.ext; funext p
+    exact congrArg f.val (Prod.ext rfl (Subsingleton.elim _ _))
+  right_inv _ := rfl
+
+private theorem literal_count (n : ℕ) :
+    T n 1 = Nat.card {f : Fin n → Fin 4 // bad f=1 ∧ Canonical f} := by
+  classical
+  rw [show T n 1 = Nat.card {f : Cell n 1 → Fin 4 // OneDefect f ∧ normal f} by
+    simp [T,Nat.card_eq_fintype_card,Fintype.card_subtype]]
+  exact Nat.card_congr (literal_words n)
+
+private theorem width_one_large (n : ℕ) (hn : 3 ≤ n) :
+    54*(T n 1 : ℤ) = ((n : ℤ)-1)*3^n+27*((n : ℤ)-1) := by
+  classical
+  obtain ⟨m,rfl⟩ : ∃ m, n=m+3 := ⟨n-3,by omega⟩
+  have h := burnside (m+3)
+  rw [← literal_count] at h
+  have hf (p : Equiv.Perm (Fin 4)) :
+      Nat.card (MulAction.fixedBy (Words (m+3)) p) =
+        (fixedCard p).val*(m+2)*((fixedCard p).val-1)^(m+1) := by
+    rw [Nat.card_congr (fixed_words (m+3) p)]
+    exact path_count (m+2)
+  simp_rw [hf] at h
+  rw [permutation_sum (fun r : Fin 5 => r.val*(m+2)*(r.val-1)^(m+1))] at h
+  norm_num at h
+  have h' := congrArg (fun x : ℕ => (x : ℤ)) h
+  push_cast at h' ⊢
+  simp only [pow_succ] at h' ⊢
+  nlinarith [h']
+
+private theorem one_vertex : T 1 1 = 0 := by
+  classical
+  rw [literal_count]
+  simp [bad,Nat.card_eq_fintype_card]
+
+private theorem two_vertices : T 2 1 = 1 := by
+  rw [literal_count]
+  change Nat.card {f : Fin 2 → Fin 4 // bad f=1 ∧ Canonical f} = 1
+  letI : DecidablePred (fun f : Fin 2 → Fin 4 => bad f=1 ∧ Canonical f) :=
+    fun f => by unfold bad Canonical; infer_instance
+  rw [Nat.card_eq_fintype_card]
+  decide +kernel
+
+theorem width_one : T 1 1 = 0 ∧ T 2 1 = 1 ∧ ∀ n : ℕ, 3 ≤ n →
+    54*(T n 1 : ℤ) = ((n : ℤ)-1)*3^n+27*((n : ℤ)-1) :=
+  ⟨one_vertex,two_vertices,width_one_large⟩
+
+#print axioms width_one
 end D5.S3.SpinModels.KingDefects.KingPath

@@ -24,15 +24,86 @@ import D5.S3.SpinModels.KingDefects.KingHorizontal
 namespace D5.S3.SpinModels.KingDefects.KingClosedForm
 open KingGrid KingDifference KingDiagonal KingHorizontal
 
-theorem symmetry (n k : ℕ) (hn : 2 ≤ n) (hk : 2 ≤ k) : T n k = T k n := by
-  have hL : L n k = L k n := by
-    rw [count_by_edge, count_by_edge]
-    rw [← transposeEdge.sum_comp]
-    apply Finset.sum_congr rfl
-    intro e _
-    exact (Nat.card_congr (transposeDefectEquiv e)).symm
-  rw [labelled_eq_twentyFour n k hn hk, labelled_eq_twentyFour k n hk hn] at hL
-  omega
+private theorem normal_exists_unique {n k : ℕ} (f : Cell n k → Fin 4) :
+    ∃! g, normal g ∧ ∃ p : Equiv.Perm (Fin 4), g = p ∘ f := by
+  obtain ⟨Q,⟨hQ,p,hp⟩,hu⟩ :=
+    D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.canonical_exists_unique
+      (fun i : Fin (n*k) => f (finProdFinEquiv.symm i))
+  let g : Cell n k → Fin 4 := fun c => Q (finProdFinEquiv c)
+  refine ⟨g,⟨?_,p,?_⟩,?_⟩
+  · change Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
+      (fun i => Q (finProdFinEquiv (finProdFinEquiv.symm i)))
+    simpa only [Equiv.apply_symm_apply] using hQ
+  · funext c
+    change Q (finProdFinEquiv c) = p (f c)
+    rw [hp]
+    change p (f (finProdFinEquiv.symm (finProdFinEquiv c))) = _
+    rw [Equiv.symm_apply_apply]
+  · rintro h ⟨hh,q,hq⟩
+    have he := hu (fun i : Fin (n*k) => h (finProdFinEquiv.symm i))
+      ⟨hh,q,by simp [hq,Function.comp_def]⟩
+    funext c
+    have he' := congrFun he (finProdFinEquiv c)
+    change h (finProdFinEquiv.symm (finProdFinEquiv c)) = g c at he'
+    rwa [Equiv.symm_apply_apply] at he'
+
+private noncomputable def normalize {n k : ℕ} (f : Cell n k → Fin 4) :=
+  Classical.choose (normal_exists_unique f)
+
+private theorem normalize_spec {n k : ℕ} (f : Cell n k → Fin 4) :
+    normal (normalize f) ∧ ∃ p : Equiv.Perm (Fin 4), normalize f = p ∘ f :=
+  (Classical.choose_spec (normal_exists_unique f)).1
+
+private theorem normal_unique {n k : ℕ} (f g : Cell n k → Fin 4)
+    (hf : normal f) (hg : normal g) (p : Equiv.Perm (Fin 4)) (hp : g=p ∘ f) : g=f := by
+  obtain ⟨u,hu,uniq⟩ := normal_exists_unique f
+  exact (uniq g ⟨hg,p,hp⟩).trans (uniq f ⟨hf,Equiv.refl _,rfl⟩).symm
+
+private theorem transpose_one {n k : ℕ} (f : Cell n k → Fin 4)
+    (hf : OneDefect f) : OneDefect (transpose f) := by
+  obtain ⟨e,he,hu⟩ := (oneDefect_iff f).mp hf
+  apply (oneDefect_iff _).mpr
+  refine ⟨transposeEdge e,(transpose_mono f e).mpr he,?_⟩
+  intro a ha
+  obtain ⟨d,rfl⟩ := transposeEdge.surjective a
+  exact congrArg transposeEdge (hu d ((transpose_mono f d).mp ha))
+
+private noncomputable def canonical_transpose {n k : ℕ}
+    (f : {f : Cell n k → Fin 4 // OneDefect f ∧ normal f}) :
+    {g : Cell k n → Fin 4 // OneDefect g ∧ normal g} := by
+  refine ⟨normalize (transpose f.val),?_,(normalize_spec _).1⟩
+  obtain ⟨p,hp⟩ := (normalize_spec (transpose f.val)).2
+  rw [hp]
+  simpa only [OneDefect,mono,Function.comp_apply,p.injective.eq_iff] using
+    transpose_one f.val f.property.1
+
+private theorem canonical_transpose_twice {n k : ℕ}
+    (f : {f : Cell n k → Fin 4 // OneDefect f ∧ normal f}) :
+    canonical_transpose (canonical_transpose f) = f := by
+  apply Subtype.ext
+  have hp := normalize_spec (transpose f.val)
+  have hq := normalize_spec (transpose (canonical_transpose f).val)
+  obtain ⟨p,hp⟩ := hp.2
+  obtain ⟨q,hq⟩ := hq.2
+  apply normal_unique f.val _ f.property.2
+    (canonical_transpose (canonical_transpose f)).property.2 (p.trans q)
+  change normalize (transpose (canonical_transpose f).val) = _
+  rw [hq]
+  have he : (canonical_transpose f).val = normalize (transpose f.val) := rfl
+  rw [he,hp]
+  rfl
+
+theorem symmetry (n k : ℕ) : T n k = T k n := by
+  classical
+  have h (a b : ℕ) : T a b =
+      Nat.card {f : Cell a b → Fin 4 // OneDefect f ∧ normal f} := by
+    simp [T,Nat.card_eq_fintype_card,Fintype.card_subtype]
+  rw [h,h]
+  exact Nat.card_congr {
+    toFun := canonical_transpose
+    invFun := canonical_transpose
+    left_inv := canonical_transpose_twice
+    right_inv := canonical_transpose_twice }
 
 theorem closed_form (n k : ℕ) (hn : 4 ≤ n) (hk : 4 ≤ k) :
     4 * (T n k : ℤ) =
@@ -65,7 +136,7 @@ theorem width_three (n : ℕ) (hn : 2 ≤ n) :
     4*(T n 3 : ℤ) = (3*(n : ℤ)+27)*2^n+44*n-116 := by
   by_cases h2 : n = 2
   · subst n
-    rw [symmetry 2 3 (by omega) (by omega), width_two 3 (by omega)]
+    rw [symmetry 2 3, width_two 3 (by omega)]
     norm_num
   by_cases h3 : n = 3
   · subst n
@@ -89,6 +160,17 @@ theorem width_three (n : ℕ) (hn : 2 ≤ n) :
     norm_num [pow_succ] at h' h₁' h₂' hd ⊢
     nlinarith [h', h₁', h₂', hd]
 
+theorem diagonal_closed (n : ℕ) (hn : 3 ≤ n) :
+    2*(T n n : ℤ) = ((n : ℤ)^2+5*n+12)*2^n+8*(n : ℤ)^2-64*n-16 := by
+  by_cases h3 : n=3
+  · subst n
+    have h := width_three 3 (by omega)
+    norm_num at h ⊢
+    omega
+  · have h := closed_form n n (by omega) (by omega)
+    nlinarith [h]
+
+#print axioms diagonal_closed
 #print axioms symmetry
 #print axioms closed_form
 #print axioms width_two
