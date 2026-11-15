@@ -34,8 +34,8 @@ The Lean `claim` states the displacement consequence of a uniform stage bound:
 there is C such that for every finite simple connected graph of maximum degree
 at most three that is not isomorphic to K₄, and every stuck tight S with
 fr(G − S) ≥ 1, some augmentable tight T with |T| = |S| has |S \ T| ≤ C. Every
-set the procedure tests after j stages differs from S by at most j + 1
-exchanges, so a uniform stage bound would give such a C. The settling theorem
+set the procedure tests at stage j (j = 0, 1, …) differs from S by at most
+j + 1 exchanges, so a uniform stage bound would give such a C. The settling theorem
 is `result : ¬ claim`.
 
 ## Motivation
