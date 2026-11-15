@@ -115,7 +115,7 @@ private lemma smooth_record (m : ℕ) : ContDiff ℝ (⊤ : WithTop ℕ∞) (rec
       intro j
       exact smooth_density m _ _
 
-private lemma normalized_rows (θ : Parameter) (i : Fin 2) :
+lemma normalized_rows (θ : Parameter) (i : Fin 2) :
     left θ ᵥ* core θ i = Pi.single i 1 := by
   ext j
   fin_cases i <;> fin_cases j <;>

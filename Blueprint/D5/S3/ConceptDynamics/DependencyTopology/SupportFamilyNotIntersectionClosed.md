@@ -10,7 +10,7 @@ KernelData specifies accepted proofs, finite axiom and reference readouts, permi
 
 $$\operatorname{supportFamily}\left(k\right) = \{S \mid \exists C: \operatorname{CertifiedNodes}\left(k\right), S = \operatorname{nodes}\left(C\right)\}$$
 
-*Formalization.* `D5/S3/ConceptDynamics/DependencyTopology/SupportFamilyNotIntersectionClosed.supportFamily` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/DependencyTopology/LegalLedgerFixedSet.supportFamily` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ Take six signed propositions: a, b, q and their negatives. Negation flips the si
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/DependencyTopology/LegalLedgerFixedSet.supportFamily`
 - Truth anchor: `D5/S3/ConceptDynamics/DependencyTopology/SupportFamilyNotIntersectionClosed.IntersectionClosed`
 - Truth anchor: `D5/S3/ConceptDynamics/DependencyTopology/SupportFamilyNotIntersectionClosed.claim`
 - Truth anchor: `D5/S3/ConceptDynamics/DependencyTopology/SupportFamilyNotIntersectionClosed.graphFamily`
 - Truth anchor: `D5/S3/ConceptDynamics/DependencyTopology/SupportFamilyNotIntersectionClosed.result`
-- Truth anchor: `D5/S3/ConceptDynamics/DependencyTopology/SupportFamilyNotIntersectionClosed.supportFamily`
 - Dependency: [D5/S3/ConceptDynamics/DependencyTopology/LegalLedgerFixedSet](LegalLedgerFixedSet.md)
