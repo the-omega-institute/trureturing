@@ -16,7 +16,7 @@ internal sealed class InvolutionExactLengthDocument : IScribeDocumentDefinition
             H("Even and odd reachable exponent intervals"),
             StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(
-                LibraryNoteRef.Create("D5/L/Combinatorics/raeburnsinclair1989twoprojections")),
+                LibraryNoteRef.Create("D5/L/HilbertOperators/raeburnsinclair1989twoprojections")),
             Blocks(
                 Paragraph(Text(
                     "G is any group, u and v are any elements with u*u=v*v=one, "
