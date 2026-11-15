@@ -154,7 +154,7 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                         + "prefix_coupling_emitted_tail in KBonacciEmittedTail supplies this event estimate by a completion-fiber "
                         + "count and recursive emitted-event induction. right_scan_hamming separately proves "
                         + "expected cost at most one. Supported coalescence through every recursive ancestor "
-                        + "and the complete two-orientation event/support assembly remain unverified here. The paper derivation and synchronous alternative do not replace "
+                        + "and the complete two-orientation event/support assembly remains unverified here. The paper derivation and synchronous alternative do not replace "
                         + "that native-law obligation.")),
                     Paragraph(Text("The native emitted-event estimate is "),
                         Ref("D5/S1/Words/AdmissibleWords/KBonacciEmittedTail.prefix_coupling_emitted_tail"),

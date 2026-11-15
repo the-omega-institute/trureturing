@@ -10,6 +10,7 @@ internal sealed class KBonacciRightScanHammingDocument : IScribeDocumentDefiniti
         "Right-scan Hamming estimate and common-false reset criterion.",
         H("Increasing scans of the entire free region"),
         Blocks(
+            Paragraph(Text("Write W(n) for Fin n to Bool, C(k,n,F,x) for completions, and P(s,F,x,y,h,g) for the original prefixCoupling. The histories are arbitrary; h and g witness nonempty full legal completion fibers. The reset test and independent fallback branches are those of the original law.")),
             Describe.Lean(
                 DescribeId.Create("kbonacci-reset-ready-after-false"),
                 DeclarationHandle.Create(
