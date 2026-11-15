@@ -7,6 +7,7 @@
    digest: Original whole-L1 normal reverse tests and posterior extended attainment. -/
 
 import D5.S3.Quantum.Analysis.NormalMomentFamily
+import D5.S3.Quantum.Analysis.ConcreteCoefficientSeries
 import D5.S3.Quantum.Divergence.PosteriorSourceNormalization
 import D5.S3.Quantum.Divergence.MaximalHockeyStickL1ReverseTest
 import D5.S3.Analytic.Convexity.PosteriorCurvatureCost
@@ -434,6 +435,196 @@ theorem original_reverse_test_extended_attainment
 
 end Concrete
 
+section StandardConcrete
+
+open D5.S3.Quantum.Analysis.ConcreteCoefficientPredual
+open D5.S3.Quantum.Analysis.ConcreteCoefficientSeries
+
+variable {H : Type v} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (M : VonNeumannAlgebra H)
+
+/-- The independent standard concrete source class. Outputs are actual
+square-summable coefficient series, not a renamed intrinsic-normal predicate. -/
+structure StandardL1Preparation {X : Type*} [MeasurableSpace X] (μ : Measure X) where
+  toLinearMap : (X →₁[μ] ℂ) →ₗ[ℂ] StrongDual ℂ M.toStarSubalgebra
+  positive : ∀ h, (∀ᵐ x ∂μ, 0 ≤ h x) →
+    ∀ a : M.toStarSubalgebra, 0 ≤ a → 0 ≤ toLinearMap h a
+  mass : ∀ h, toLinearMap h 1 = ∫ x, h x ∂μ
+  series : ∀ h, IsCoefficientSeries M (toLinearMap h)
+
+/-- The proved forward interface, without a converse-normality assumption. -/
+def StandardL1Preparation.toNormal {X : Type*} [MeasurableSpace X] {μ : Measure X}
+    (Γ : StandardL1Preparation M μ) : NormalL1Preparation (A := M.toStarSubalgebra) μ where
+  toLinearMap := Γ.toLinearMap
+  positive := Γ.positive
+  mass := Γ.mass
+  normal := fun h => series_order_normal M (Γ.series h)
+
+/-- All original nonnegative complex L1 inputs, all actual sigma-finite sources
+in Type u, and the literal original extended cost, with standard-series outputs. -/
+def standardAttainableCosts {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
+    (ρ σ : StrongDual ℂ M.toStarSubalgebra) : Set EReal :=
+  {z | ∃ (X : Type u) (m : MeasurableSpace X),
+    letI := m
+    ∃ μ : Measure X, SigmaFinite μ ∧ ∃ Γ : StandardL1Preparation M μ,
+      ∃ p q : X →₁[μ] ℂ,
+        (∀ᵐ x ∂μ, 0 ≤ p x) ∧ (∀ᵐ x ∂μ, 0 ≤ q x) ∧
+        Γ.toLinearMap p = ρ ∧ Γ.toLinearMap q = σ ∧
+        z = closedPerspectiveCost hf μ (fun x => (p x).re) (fun x => (q x).re)}
+
+private theorem standard_cost_of_series_reverseTest
+    {ρ σ : StrongDual ℂ M.toStarSubalgebra}
+    {X : Type u} [MeasurableSpace X] {μ : Measure X} [SigmaFinite μ]
+    (R : NormalL1ReverseTest ρ σ μ)
+    (hs : ∀ h, IsCoefficientSeries M (R.preparation.toLinearMap h))
+    {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f) :
+    closedPerspectiveCost hf μ R.p R.q ∈ standardAttainableCosts.{u} M hf ρ σ := by
+  let Γ : StandardL1Preparation M μ :=
+    { toLinearMap := R.preparation.toLinearMap
+      positive := R.preparation.positive
+      mass := R.preparation.mass
+      series := hs }
+  let P := R.p_integrable.ofReal.toL1 (fun x => (R.p x : ℂ))
+  let Q := R.q_integrable.ofReal.toL1 (fun x => (R.q x : ℂ))
+  have hP : P =ᵐ[μ] (fun x => (R.p x : ℂ)) :=
+    (R.p_integrable.ofReal : Integrable (fun x => (R.p x : ℂ)) μ).coeFn_toL1
+  have hQ : Q =ᵐ[μ] (fun x => (R.q x : ℂ)) :=
+    (R.q_integrable.ofReal : Integrable (fun x => (R.q x : ℂ)) μ).coeFn_toL1
+  have hp : ∀ᵐ x ∂μ, 0 ≤ P x := by
+    filter_upwards [hP, R.p_nonneg] with x he hn
+    rw [he]
+    exact_mod_cast hn
+  have hq : ∀ᵐ x ∂μ, 0 ≤ Q x := by
+    filter_upwards [hQ, R.q_nonneg] with x he hn
+    rw [he]
+    exact_mod_cast hn
+  have hpr : (fun x => (P x).re) =ᵐ[μ] R.p := by
+    filter_upwards [hP] with x he
+    simp only [he, Complex.ofReal_re]
+  have hqr : (fun x => (Q x).re) =ᵐ[μ] R.q := by
+    filter_upwards [hQ] with x he
+    simp only [he, Complex.ofReal_re]
+  exact ⟨X, inferInstance, μ, inferInstance, Γ, P, Q, hp, hq,
+    R.prepares_left, R.prepares_right, (cost_congr_ae hf hpr hqr).symm⟩
+
+variable (ρ σ : StrongDual ℂ M.toStarSubalgebra)
+    (hρ : ∀ a, 0 ≤ a → 0 ≤ ρ a) (hσ : ∀ a, 0 ≤ a → 0 ≤ σ a)
+    (hρs : IsCoefficientSeries M ρ) (hσs : IsCoefficientSeries M σ)
+
+include hρ hσ hρs hσs
+
+/-- The realized map itself takes values in the concrete predual. Its
+codRestriction retains every value, positivity, all masses and both moments. -/
+theorem standard_posterior_realization (F : Family ρ σ) :
+    ∃ Γ : (Interval →₁[scalarMeasure F] ℂ) →L[ℂ] StrongDual ℂ M.toStarSubalgebra,
+      (∀ g : C(Interval, ℂ), Γ (ContinuousMap.toLp 1 (scalarMeasure F) ℂ g) = linearMap F g) ∧
+      (∀ h, IsOrderNormal (Γ h)) ∧
+      (∀ h, (∀ᵐ t ∂scalarMeasure F, 0 ≤ h t) →
+        ∀ a : M.toStarSubalgebra, 0 ≤ a → 0 ≤ Γ h a) ∧
+      (∀ h, Γ h 1 = ∫ t, h t ∂scalarMeasure F) ∧ ‖Γ‖ ≤ 1 ∧
+      Γ (ContinuousMap.toLp 1 (scalarMeasure F) ℂ posterior) = ρ ∧
+      Γ (ContinuousMap.toLp 1 (scalarMeasure F) ℂ (1 - posterior)) = σ ∧
+      ∃ hΓE : ∀ h, Γ h ∈ coefficientSpace M,
+        let ΓE := Γ.codRestrict (coefficientSpace M) hΓE
+        (∀ h, (ΓE h).val = Γ h) ∧ ‖ΓE‖ ≤ 1 ∧
+        (∀ h, IsCoefficientSeries M (ΓE h).val) := by
+  have hsum : ρ + σ ∈ coefficientSpace M :=
+    (coefficientSpace M).add_mem (series_mem_coefficientSpace M hρs)
+      (series_mem_coefficientSpace M hσs)
+  have hn := coefficientSpace_le_normalDual M hsum
+  obtain ⟨_, _, _, _, hrealize⟩ := compact_normal_posterior_family M ρ σ hρ hσ hn
+  obtain ⟨Γ, hagree, hnormal, hp, hm, hb, hl, hr⟩ := (hrealize F).2.2.2
+  have hΓE := posterior_L1_range M hsum F Γ hagree
+  let ΓE := Γ.codRestrict (coefficientSpace M) hΓE
+  have hbound : ‖ΓE‖ ≤ 1 := by
+    apply ΓE.opNorm_le_bound (by norm_num)
+    intro h
+    change ‖Γ h‖ ≤ 1 * ‖h‖
+    exact (Γ.le_opNorm h).trans (mul_le_mul_of_nonneg_right hb (norm_nonneg h))
+  exact ⟨Γ, hagree, hnormal, hp, hm, hb, hl, hr, hΓE,
+    fun _ => rfl, hbound,
+    fun h => (mem_coefficientSpace_iff_series M _).mp (ΓE h).property⟩
+
+/-- The standard-original and posterior cost sets agree before taking infima. -/
+theorem standardAttainableCosts_eq_range
+    {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f) :
+    standardAttainableCosts.{u} M hf ρ σ =
+      Set.range (familyCost hf (ρ := ρ) (σ := σ)) := by
+  have hsum : ρ + σ ∈ coefficientSpace M :=
+    (coefficientSpace M).add_mem (series_mem_coefficientSpace M hρs)
+      (series_mem_coefficientSpace M hσs)
+  have hn := coefficientSpace_le_normalDual M hsum
+  ext z
+  constructor
+  · rintro ⟨X, m, μ, hμ, Γ, p, q, hp, hq, hl, hr, rfl⟩
+    letI := m
+    have hz : closedPerspectiveCost hf μ (fun x => (p x).re) (fun x => (q x).re) ∈
+        attainableCosts.{u} hf ρ σ :=
+      ⟨X, m, μ, hμ, Γ.toNormal, p, q, hp, hq, hl, hr, rfl⟩
+    rwa [attainableCosts_eq_range M ρ σ hρ hσ hn hf] at hz
+  · rintro ⟨F, rfl⟩
+    obtain ⟨Γ, _, hnormal, hp, hm, _, hl, hr, hΓE, _⟩ :=
+      standard_posterior_realization M ρ σ hρ hσ hρs hσs F
+    let R := liftedReverseTest.{u} F Γ hnormal hp hm hl hr
+    have hs (h) : IsCoefficientSeries M (R.preparation.toLinearMap h) :=
+      coefficientSpace_series M ⟨Γ (upPull _ h), hΓE _⟩
+    have hc := standard_cost_of_series_reverseTest M R hs hf
+    change closedPerspectiveCost hf (liftedMeasure (scalarMeasure F))
+      (fun x => x.down.val) (fun x => 1 - x.down.val) ∈ _ at hc
+    rwa [lifted_cost] at hc
+
+/-- Exact standard-concrete-predual whole-L1 attainment, including infinite costs.
+The attaining lifted preparation is explicitly built from this very Gamma. -/
+theorem standard_original_reverse_test_extended_attainment
+    {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f) :
+    ∃ F : Family ρ σ,
+      familyCost hf F = sInf (standardAttainableCosts.{u} M hf ρ σ) ∧
+      sInf (standardAttainableCosts.{u} M hf ρ σ) ≠ ⊥ ∧
+      (ρ = 0 → σ = 0 → sInf (standardAttainableCosts.{u} M hf ρ σ) = 0) ∧
+      (scalarMeasure F).Regular ∧
+      IsFiniteMeasure (liftedMeasure.{u} (scalarMeasure F)) ∧
+      (liftedMeasure.{u} (scalarMeasure F)).Regular ∧
+      ∃ (Γ : (Interval →₁[scalarMeasure F] ℂ) →L[ℂ] StrongDual ℂ M.toStarSubalgebra)
+        (hn : ∀ h, IsOrderNormal (Γ h))
+        (hp : ∀ h, (∀ᵐ t ∂scalarMeasure F, 0 ≤ h t) →
+          ∀ a : M.toStarSubalgebra, 0 ≤ a → 0 ≤ Γ h a)
+        (hm : ∀ h, Γ h 1 = ∫ t, h t ∂scalarMeasure F)
+        (hl : Γ (ContinuousMap.toLp 1 (scalarMeasure F) ℂ posterior) = ρ)
+        (hr : Γ (ContinuousMap.toLp 1 (scalarMeasure F) ℂ (1 - posterior)) = σ)
+        (hΓE : ∀ h, Γ h ∈ coefficientSpace M),
+        (∀ g : C(Interval, ℂ), Γ (ContinuousMap.toLp 1 (scalarMeasure F) ℂ g) = linearMap F g) ∧
+        ‖Γ‖ ≤ 1 ∧
+        (let ΓE := Γ.codRestrict (coefficientSpace M) hΓE
+         (∀ h, (ΓE h).val = Γ h) ∧ ‖ΓE‖ ≤ 1 ∧
+           ∀ h, IsCoefficientSeries M (ΓE h).val) ∧
+        (let R := liftedReverseTest.{u} F Γ hn hp hm hl hr
+         R.p = (fun x => x.down.val) ∧ R.q = (fun x => 1 - x.down.val) ∧
+         (∀ h, IsCoefficientSeries M (R.preparation.toLinearMap h)) ∧
+         closedPerspectiveCost hf (liftedMeasure (scalarMeasure F)) R.p R.q =
+           sInf (standardAttainableCosts.{u} M hf ρ σ)) := by
+  have hsum : ρ + σ ∈ coefficientSpace M :=
+    (coefficientSpace M).add_mem (series_mem_coefficientSpace M hρs)
+      (series_mem_coefficientSpace M hσs)
+  have hn := coefficientSpace_le_normalDual M hsum
+  have hcost : standardAttainableCosts.{u} M hf ρ σ = attainableCosts.{u} hf ρ σ := by
+    rw [standardAttainableCosts_eq_range M ρ σ hρ hσ hρs hσs hf,
+      attainableCosts_eq_range M ρ σ hρ hσ hn hf]
+  obtain ⟨F, heq, hbot, hzero, hreg, hfin, _, _⟩ :=
+    original_reverse_test_extended_attainment.{u} M ρ σ hρ hσ hn hf
+  obtain ⟨Γ, hagree, hnormal, hp, hm, hb, hl, hr, hΓE, hrest⟩ :=
+    standard_posterior_realization M ρ σ hρ hσ hρs hσs F
+  letI : (scalarMeasure F).Regular := hreg
+  have hreglift : (liftedMeasure.{u} (scalarMeasure F)).Regular :=
+    Measure.Regular.map (μ := scalarMeasure F)
+      (Homeomorph.ulift.symm : Interval ≃ₜ ULift.{u} Interval)
+  refine ⟨F, hcost ▸ heq, hcost ▸ hbot, hcost ▸ hzero, hreg, hfin, hreglift,
+    Γ, hnormal, hp, hm, hl, hr, hΓE, hagree, hb, hrest, rfl, rfl, ?_, ?_⟩
+  · intro h
+    exact coefficientSpace_series M ⟨Γ (upPull _ h), hΓE _⟩
+  · exact (lifted_cost hf (scalarMeasure F)).trans (hcost ▸ heq)
+
+end StandardConcrete
+
 #print axioms representativeCosts_of_positive_L1
 #print axioms attainableCosts_eq_representativeCosts
 #print axioms posteriorFamily_scalarMeasure
@@ -441,5 +632,8 @@ end Concrete
 #print axioms familyCost_eq_affine
 #print axioms attainableCosts_eq_range
 #print axioms original_reverse_test_extended_attainment
+#print axioms standard_posterior_realization
+#print axioms standardAttainableCosts_eq_range
+#print axioms standard_original_reverse_test_extended_attainment
 
 end D5.S3.Quantum.Divergence.GeneralConvexReverseTestAttainment

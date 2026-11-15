@@ -198,9 +198,69 @@ Lean statement: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.ori
 
 Under precisely those original hypotheses, there exists F in the actual Family with familyCost hf F equal to sInf(attainableCosts.{u} hf rho sigma), and that sInf is not EReal.bot. If rho=sigma=0 the same sInf is exactly zero, proved from the actual scalar measure having zero total mass. Its scalarMeasure is regular and its liftedMeasure is finite. There is an actual original NormalL1ReverseTest on liftedMeasure(scalarMeasure F), with densities exactly down(t).val and 1-down(t).val, whose literal cost equals the same original sInf. There is also an actual continuous complex-linear Gamma on the ENTIRE complex L1(scalarMeasure F), agreeing with every family continuous moment, intrinsically normal on every output, positive, preserving every complex mass, of norm at most one and having both exact posterior moments. Its existence is obtained from the proved compact-family supplier, not stored as an optimization premise.
 
+**Definition 1.17 (The independent standard concrete source).**
+
+Lean statement: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.StandardL1Preparation`
+
+*Formalization.* `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.StandardL1Preparation` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For actual M acting on an arbitrary complete complex Hilbert space H, a StandardL1Preparation is an algebraic complex-linear map from the entire original complex L1(X,mu) to StrongDual C M. It is positive on all a.e. nonnegative inputs, preserves the integral for EVERY complex input, and every output has an actual IsCoefficientSeries M representation: two square-summable sequences of vectors with phi(a)=sum_n <xi(n),a eta(n)>. Intrinsic normality, continuity and contraction are not input hypotheses. The definition is independent of E and of the intrinsic-normal source definition. Its toNormal conversion keeps the exact algebraic map, positivity and complex mass law; the proved series_order_normal theorem supplies intrinsic normality of every output. The conversion changes neither source, inputs nor values and assumes no converse equivalence.
+
+**Definition 1.18 (The literal standard-original cost class).**
+
+Lean statement: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standardAttainableCosts`
+
+*Formalization.* `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standardAttainableCosts` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every X:Type u with any measurable structure and sigma-finite mu, every StandardL1Preparation, and every pair of a.e. nonnegative ORIGINAL complex L1 elements p,q preparing rho,sigma exactly, include the literal closedPerspectiveCost hf mu Re(p) Re(q). The source universe u remains independent of the Hilbert-space universe v. No normalization, nonzero mass, faithful state, finite alphabet, finite source measure or finite cost restricts this definition.
+
+**Theorem 1.19 (CodRestrict the actual realized Gamma).**
+
+Lean statement: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standard_posterior_realization`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standard_posterior_realization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let rho,sigma be positive actual standard-series functionals and F ANY actual Family rho sigma. Apply compact_normal_posterior_family using the proved forward normality of their sum. Its actual Gamma agrees with J=linearMap F on every continuous function. Positive-coordinate domination by ||g||J1, GNS heredity, four positive parts and closed-preimage L1 density prove every Gamma(h) belongs to E. The returned predual map is LITERALLY Gamma.codRestrict E hGammaE, with (GammaE h).val=Gamma h for all h, norm at most one and actual standard-series outputs. The same Gamma remains intrinsically normal, positive, mass-preserving on every complex input, contractive, and has both exact posterior moments. No range-membership optimizer premise or surrogate source is introduced.
+
+**Theorem 1.20 (Exact standard-original and posterior cost equality).**
+
+Lean statement: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standardAttainableCosts_eq_range`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standardAttainableCosts_eq_range` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every convex f on (0,infinity), positive actual standard-series rho,sigma, the entire standardAttainableCosts.{u} M hf rho sigma equals the actual range of familyCost hf over Family rho sigma. Forward inclusion keeps every original algebraic preparation and uses its proved intrinsic-normal inclusion and the existing original cost-set theorem. For each posterior F, standard_posterior_realization supplies its actual Gamma. liftedReverseTest composes this map with the ULift L1 isometry, and the coefficient-space series theorem proves every resulting output is standard. Embed its real integrable densities into their original complex L1 classes, retain exact prepared moments, and apply the original a.e. cost congruence and literal lifted_cost identity. Equality holds before infima and includes infinite endpoint coefficients and infinite total costs.
+
+**Theorem 1.21 (Standard concrete-predual original attainment).**
+
+Lean statement: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standard_original_reverse_test_extended_attainment`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standard_original_reverse_test_extended_attainment` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under exactly those standard-series positivity hypotheses and arbitrary convexity on (0,infinity), there exists F whose literal familyCost equals sInf of the ENTIRE standard-original cost class. This sInf is not minus infinity, and is zero for the zero pair. Both scalarMeasure F and its liftedMeasure are regular, and liftedMeasure is finite. Mathlib Measure.Regular.map along the actual ULift homeomorphism proves the lifted regularity. An actual Gamma on the whole complex interval L1 has all continuous agreements, positivity, all complex masses, contraction and both exact moments. Its predual realization is precisely its codRestriction to E and has actual square-summable-series outputs. The attaining original lifted test is explicitly defined in the statement as liftedReverseTest F Gamma hn hp hm hl hr FROM THIS SAME GAMMA; every lifted output is a standard series, its densities are exactly down(t).val and 1-down(t).val, and its literal cost is the same standard-original sInf. The proof consumes the existing intrinsic attainment and exact cost equalities. It does not infer a connection between the intrinsic theorem's separately quantified R and Gamma. No finite-cost branch, nonzero division or finite-alphabet conclusion is used.
+
 The minimization uses the actual nonempty compact Family and the weakly continuous finiteMeasure map. Compose it with PosteriorCurvatureCost.posteriorCurvatureCost_lowerSemicontinuous, then apply LowerSemicontinuousOn.exists_isMinOn with codomain ENNReal. This codomain includes top, so the argument also gives a minimizer when every cost is +infinity. In that case nonemptiness alone makes every admissible test a minimizer; this branch retains scope and is not counted as an additional independent solved optimization problem. Add the same finite affine term and use the proved cost-set equality to identify the original sInf. The affine term plus a nonnegative ENNReal coercion cannot be minus infinity. No finite-cost case split, sequential compactness replacement or nonzero-mass division is needed. The zero pair remains in all quantified statements.
 
-Hiai--Mosonyi--Tomamichel, Hockey stick f-divergences, arXiv:2607.08760v1, Remark VII.4 (PDF p. 60), asks about general-convex minimal reverse-test existence; their Section V.A(III) uses actual sigma-finite L1 sources. This endpoint addresses only attainment for the intrinsic all-directed order-normal source class stated above. HMT's separate question on PDF p. 62 asks for a classification of equality between maximal hockey-stick f-divergence and maximal f-divergence; this attainment endpoint does not supply that classification.
+Hiai--Mosonyi--Tomamichel, Hockey stick f-divergences, arXiv:2607.08760v1, Remark VII.4 (PDF p. 60), asks about general-convex minimal reverse-test existence; their Section V.A(III) uses actual sigma-finite L1 sources. The standard endpoint connects the original attainment result to the independently specified concrete coefficient-series M-star source class. HMT's separate question on PDF p. 62 asks for a classification of equality between maximal hockey-stick f-divergence and maximal f-divergence; this attainment endpoint does not supply that classification.
 
 Matsumoto, arXiv:1311.4722v4, Theorem 9.4, already proves finite-dimensional finite-value attainment under FC. His Theorem 9.9 (PDF p. 35) concerns separable B(H), under FC and the finite endpoint hypotheses f(0)<infinity and hat f(0)<infinity stated throughout Section 9.3 (PDF p. 31); Lemma 4.1 already supplies the finite compression architecture. Hiai, arXiv:1807.03118v1, Section 6 and Theorem 6.3, supplies arbitrary-von-Neumann whole-L1 spectral attainment under operator convexity, including infinite endpoint conventions. The present construction retains arbitrary convexity and does not assert spectral optimality or finite-alphabet attainment. The proof reuses standard Banach--Alaoglu, Tychonoff, scalar Riesz representation, L1 completion and weak lower semicontinuity. Global literature novelty and the equivalence of intrinsic order-normality with an abstract chosen predual are not claimed.
 
@@ -208,6 +268,7 @@ Matsumoto, arXiv:1311.4722v4, Theorem 9.4, already proves finite-dimensional fin
 
 - Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.NormalL1Preparation`
 - Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.NormalL1ReverseTest`
+- Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.StandardL1Preparation`
 - Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.affineCost`
 - Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.attainableCosts`
 - Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.attainableCosts_eq_range`
@@ -222,7 +283,12 @@ Matsumoto, arXiv:1311.4722v4, Theorem 9.4, already proves finite-dimensional fin
 - Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.representativeCosts`
 - Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.representativeCosts_of_positive_L1`
 - Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.source_cost_eq_familyCost`
+- Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standardAttainableCosts`
+- Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standardAttainableCosts_eq_range`
+- Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standard_original_reverse_test_extended_attainment`
+- Truth anchor: `D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment.standard_posterior_realization`
 - Dependency: [D5/S3/Analytic/Convexity/PosteriorCurvatureCost](../../Analytic/Convexity/PosteriorCurvatureCost.md)
+- Dependency: [D5/S3/Quantum/Analysis/ConcreteCoefficientSeries](../Analysis/ConcreteCoefficientSeries.md)
 - Dependency: [D5/S3/Quantum/Analysis/NormalMomentFamily](../Analysis/NormalMomentFamily.md)
 - Dependency: [D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest](MaximalHockeyStickL1ReverseTest.md)
 - Dependency: [D5/S3/Quantum/Divergence/PosteriorSourceNormalization](PosteriorSourceNormalization.md)
