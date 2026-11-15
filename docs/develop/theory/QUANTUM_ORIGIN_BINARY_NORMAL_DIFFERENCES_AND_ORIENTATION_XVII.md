@@ -3449,3 +3449,188 @@ $$
 [Q192N]: https://arxiv.org/abs/2208.07135v1 "Niestegge, Non-symmetric transition probability，定理9.1、9.2及其后总结；光滑严格凸紧体的全互反范围。"
 
 ## 追加锚（本行以下为增补区）
+
+## 193. 商核的谱宽度、共同二元测试与最坏区分损失
+
+**定义 193.1（矩阵商中的原二元读数）。** 取 $D\ge2$、实线性子空间 $L\subset\operatorname{Herm}_D(\mathbb C)$，假定每个 $X\in L$ 均迹零。令 $\pi:\operatorname{Herm}_D\to\operatorname{Herm}_D/L$、$C=\pi(\operatorname{PSD}_D)$、$u\pi=\operatorname{Tr}$。商态为 $p_v=\pi P_v$，其中 $v$ 为单位向量、$P_v=vv^*$。完整商效应恰为
+
+$$
+\mathcal E_L=L^\perp\cap[0,I],\qquad
+T_v(p_z)=\min_{E\in\mathcal E_L,\ Ev=v}z^*Ez.
+\tag{193.1}
+$$
+
+常数效应 $I$ 保证最小化域非空。定义原向量正交对的共同区分条件
+
+$$
+\mathsf A(L):\quad
+\forall v\perp w\quad\exists E\in\mathcal E_L:
+Ev=v,\quad Ew=0.
+\tag{193.2}
+$$
+
+向量均取单位长度。此定义先于商像的纯性；只有另已证明全部 $p_v$ 恰为原纯点且原二元实际面对应二维复支持时，才将它识别为原实际面对径零关系 AD。对 $0\ne X\in L$，记
+
+$$
+a(X)=\lambda_{\max}(X)>0,\quad b(X)=-\lambda_{\min}(X)>0,
+\quad t(X)=\operatorname{Tr}X_+=\operatorname{Tr}X_-.
+\tag{193.3}
+$$
+
+$X_\pm$ 均为正半定谱部。迹零、非零保证上述严格正性。以下所有矩阵、正性和范数属于这个明确给出的矩阵模型，不以它们为任意原系统预设坐标。
+
+**定理 193.2（谱宽度恰好控制同一个合法二元测试）。** 在193.1下，下列三项等价：
+
+1. $\mathsf A(L)$；
+2. 每个 $X\in L$ 满足 $\operatorname{Tr}X_+\ge\lambda_{\max}(X)-\lambda_{\min}(X)$；
+3. 所有单位向量 $v,z$ 满足 $T_v(p_z)=|v^*z|^2$。
+
+等价的核条件是
+
+$$
+\boxed{\quad\|X\|_1\ge2\bigl(\lambda_{\max}(X)-\lambda_{\min}(X)\bigr)
+\qquad(X\in L).\quad}
+\tag{193.4}
+$$
+
+证明。固定 $v\perp w$，置 $Q=I-P_v-P_w$。满足 $0\le E\le I$、$Ev=v$、$Ew=0$ 的矩阵恰为 $E=P_v+B$、$0\le B\le Q$。对迹零 Hermitian $X$，写 $h=v^*Xv$、$a=\lambda_{\max}X$、$b=-\lambda_{\min}X$、$t=\operatorname{Tr}X_+$。成熟的余维一 Cauchy 交错界给任意压缩 $A'$：
+
+$$
+\operatorname{Tr}(A')_+\ge\operatorname{Tr}A_+-\max(\lambda_{\max}A,0),\qquad
+\operatorname{Tr}(A')_-\ge\operatorname{Tr}A_--\max(-\lambda_{\min}A,0).
+\tag{193.5}
+$$
+
+先将 $X$ 压到 $v^\perp$，得矩阵 $Y$，其迹为 $-h$，因而 $\operatorname{Tr}Y_- =\operatorname{Tr}Y_++h\ge t-a+h$。再删去 $w$，并用 $\lambda_{\min}Y\ge-b$，得
+
+$$
+\operatorname{Tr}(QXQ)_-\ge t-a-b+h,
+\qquad
+\min_{P_v\le E\le I-P_w}\operatorname{Tr}(EX)
+=h-\operatorname{Tr}(QXQ)_-\le a+b-t.
+\tag{193.6}
+$$
+
+压缩谱部只在 $\operatorname{ran}Q$ 上计；零维压缩允许。取 $v,w$ 分别为 $X$ 的最大、最小谱向量便达到等号，所以
+
+$$
+\sup_{v\perp w}\ \min_{P_v\le E\le I-P_w}\operatorname{Tr}(EX)
+=a+b-t.
+\tag{193.7}
+$$
+
+固定一对 $v,w$，将整个紧凸区间 $\{E:P_v\le E\le I-P_w\}$ 送到 $L^*$，映射为 $E\mapsto[X\mapsto\operatorname{Tr}(EX)]$。它的像包含零，当且仅当对每个 $X\in L$，该区间的最小配对不大于零；若零在像外，紧凸严格分离给一个所有配对均严格为正的 $X$。这里 $-X$ 也属于 $L$，故一个方向的条件已含另一方向。于是(193.7)证明1与2等价。这一步得到同一个 $E$ 同时消去整个 $L$，没有把各个方向分别可行拼成共同可行。
+
+任意确认 $v$ 的正收缩满足 $E\ge P_v$，故 $T_v(p_z)\ge|v^*z|^2$。若1成立，把 $z$ 写在 $\operatorname{span}\{v,w\}$ 中，取相应共同测试，达到这个下界；$z$ 平行 $v$ 时直接成立。故1推出3。3对正交 $v,w$ 给最小值零，紧性保证达到，正性使 $w^*Ew=0$ 等价于 $Ew=0$，故3推出1。$\square$
+
+**定义 193.3（最差原二元区分能力）。** 定义
+
+$$
+\kappa(L)=\min_{v\perp w}\ \max_{E\in\mathcal E_L}
+\operatorname{Tr}\bigl(E(P_v-P_w)\bigr)\in[0,1].
+\tag{193.8}
+$$
+
+最大值允许同一测试的两个结果互换，因为 $I-E\in\mathcal E_L$。若两种准备等先验且数学二结果测量为 $\{E,I-E\}$，其最优平均错误为该对比度的 $(1-\text{对比度})/2$；因此最难正交对的最优错误为 $(1-\kappa(L))/2$。这只是已给准备及测试模型中的统计量。
+
+**定理 193.4（共同菜单的精确损失公式）。** 若 $L\ne\{0\}$，则
+
+$$
+\boxed{\quad
+\kappa(L)=\min\left\{1,\ \min_{0\ne X\in L}
+\frac{t(X)-\min(a(X),b(X))}{\max(a(X),b(X))}\right\}.
+\quad}
+\tag{193.9}
+$$
+
+右侧齐次比值的最小值可在 $\max(a,b)=1$ 的紧集上取得。若 $L=\{0\}$，则 $\kappa(L)=1$。特别地，$\kappa(L)=1$ 恰为193.2；若谱条件失效，可选最优核方向，其两端谱向量给出达到全局最坏值的一对原正交向量。
+
+证明。令 $\Delta=P_v-P_w$。由于 $I\in L^\perp$、$\operatorname{Tr}\Delta=0$，置 $A=2E-I$，成熟的迹范数／算子范数商对偶给
+
+$$
+\max_{E\in\mathcal E_L}\operatorname{Tr}(E\Delta)
+=\frac12\max_{\substack{A\in L^\perp\\\|A\|_\infty\le1}}\operatorname{Tr}(A\Delta)
+=\frac12\min_{X\in L}\|\Delta+X\|_1.
+\tag{193.10}
+$$
+
+有限维 Hahn–Banach 商范数对偶亦直接给最后等式。基范数与全效应对偶归[Q193LPW]，不是新增对偶定理。
+
+对固定 $X\ne0$，Hermitian 特征值重排的迹范数下界给
+
+$$
+\min_{v\perp w}\frac12\|X+P_v-P_w\|_1
+=t+1-\min(a,1)-\min(b,1).
+\tag{193.11}
+$$
+
+具体地，把 $P_v$ 放在最小谱方向，把 $P_w$ 放在最大谱方向便达到；下界是成熟的特征值扰动不等式 $\sum_j|\lambda_j(A)-\lambda_j(B)|\le\|A-B\|_1$，取 $B=P_w-P_v$，特征值按同一顺序列出。这是谱重排工具的应用，不另申领该不等式。
+
+联合最小化中的 $v,w,X$ 可交换次序，因为它们都是最小化。沿每条核射线 $rX$，需最小化
+
+$$
+f(r)=rt+1-\min(ra,1)-\min(rb,1),\qquad r\ge0.
+\tag{193.12}
+$$
+
+设 $a\ge b$。在 $[0,1/a]$、$[1/a,1/b]$、$[1/b,\infty)$ 上斜率依次为 $t-a-b$、$t-b$、$t$。后两者非负，因为 $t\ge a\ge b$。故 $t\ge a+b$ 时最小值为1，否则在 $r=1/a$ 取 $(t-b)/a$。交换正负谱处理 $b\ge a$，即得(193.9)。非零 $L$ 的算子范数单位球面紧，且 $t\ge\max(a,b)$，所以比值连续、非负并达到最小值。若总值小于1，选最优核方向及上述极谱对，同时达到联合最小值。$\square$
+
+**定理 193.5（单核中纯互反不能与对径零分离）。** 令 $L=\mathbb RH$、$0\ne H=H^*$、$\operatorname{Tr}H=0$，并用193.1的完整菜单。则下列条件等价：全原向量对的 $T_v(p_z)=T_z(p_v)$、全原向量对 Born 公式、$\mathsf A(L)$、$t(H)\ge a(H)+b(H)$。若另已支付193.1注明的纯点及实际面对应，这也是全原纯互反、全纯 Born 与 AD 在该单核商类中的等价。此断言没有推广到任意多维核的“纯互反推出 AD”。
+
+证明。193.2给后三项等价，Born 公式给互反。反之设 $a+b>t$，取极谱单位向量 $v_+,v_-$，置
+
+$$
+z=\frac{\sqrt b\,v_++\sqrt a\,v_-}{\sqrt{a+b}},
+\qquad z^*Hz=0,\qquad s=\frac{a+b-t}{b}\in(0,1].
+\tag{193.13}
+$$
+
+$P_z$ 是合法效应，所以 $T_z(p_{v_+})=b/(a+b)$。任意确认 $v_+$ 的 $E$ 在该向量上为单位、与其余方向的交叉项为零；其余负谱方向最多补偿 $t-b$，故 $\operatorname{Tr}(EH)=0$ 迫 $v_-^*Ev_-\ge s$。等号由
+
+$$
+E=P_{v_+}+sP_{v_-}+P_{\mathcal H_-\cap v_-^\perp}
+\tag{193.14}
+$$
+
+达到。因此
+
+$$
+T_{v_+}(p_z)=\frac b{a+b}+\frac a{a+b}\frac{a+b-t}{b}
+>\frac b{a+b}=T_z(p_{v_+}),
+\tag{193.15}
+$$
+
+互反失败。这是同一原菜单中的两个达到效应。$\square$
+
+**命题 193.6（旧单体商的准确分类及张量剩余条件）。** 对 XII159.11 的 $H=\operatorname{diag}(7,1,1,1,-7,-1,-1,-1)$，有 $a=b=7,t=10$，故 $\kappa=3/7$，最难正交对的最优错误为 $2/7$。取 $v_+=e_1$、$v_-=e_5$、$z=(e_1+e_5)/\sqrt2$，(193.15)给 $T_{v_+}(p_z)=11/14$、$T_z(p_{v_+})=1/2$。该已有商不能供应全纯互反且非 AD 的反模型。
+
+对 XIV165 的固定 $H=\operatorname{diag}(I_m,-I_m)$、$m\ge3$ 及全部张量核 $\mathcal N_N$，全部有限层 AD 恰等价于
+
+$$
+\operatorname{Tr}X_+\ge\lambda_{\max}X-\lambda_{\min}X
+\quad\bigl(X\in\mathcal N_N,\ N\ge1\bigr).
+\tag{193.16}
+$$
+
+该式在 $N=1$、单个 $H$ 因子方向、以及每层全部对角核方向上成立。对每个固定 $N$，还总有 $\kappa(\mathcal N_N)>0$；本条不声称其等于1、存在统一于 $N$ 的正下界或一般非交换方向满足(193.16)。
+
+证明。单体数值代入193.4—193.5。165.4—165.5已支付各层全部原纯点、二维支持实际面和对径对应，故193.2准确给(193.16)。单个因子 $X=H\otimes A$ 满足 $t(X)=m\|A\|_1$、谱直径 $2\|A\|_\infty$，其余位置由置换处理。
+
+对对角核方向，任意两个不同坐标乘积向量在某位置 $i$ 不同。该位置存在对角 $0\le E_i\le I$，在第一个坐标取一、第二个坐标取零并满足 $\operatorname{Tr}(HE_i)=0$：选另一个相反符号坐标补偿，$m\ge2$ 保证避开要求取零的坐标。$E_i\otimes I_{\rm rest}$ 属于完整原菜单，故193.2必要性对对角矩阵的全部极谱对给谱界。
+
+固定 $N$，165.3保证每个非零 $X\in\mathcal N_N$ 正负谱均至少有 $m\ge3$ 个，所以 $t(X)>\max(a,b)$，(193.9)的比值严格为正。规范紧集上的最小值也严格为正。这只给固定有限层的非零区分能力。双侧惯性三本身不能给(193.16)：$\operatorname{diag}(1,\varepsilon,\varepsilon,-1,-\varepsilon,-\varepsilon)$ 在 $0<\varepsilon<1/2$ 时正谱迹 $1+2\varepsilon<2$。这里没有把该示例声称为 $\mathcal N_N$ 的成员。$\square$
+
+**命题 193.7（完整候选的逻辑位置与几何边界）。** 完整候选仍为192.7，量子理论仍精确由192.8—192.9给出。193.2将矩阵商类中的原二元确认关系压成核方向的一个齐次谱不等式；它既不支付192.7的有限正配对关系，也不独立生成原矩阵表示。即使所有方向满足(193.4)，混合零闭合和共同删除仍不能从中省去。
+
+证明。XII159.1的平衡单体商有 $t=m\ge2=a+b$，193.2给全部纯点 Born 和 AD；其混合零闭合失败由159.3—159.4、XVII178.4直接供应。所以在该明确单体域中，纯读数全正确仍不推出一个共同确认者消去全部零邻点。本章未供应全有限层反模型，(193.16)的一般非交换部分仍待证。完整192.7的两个局部互反目标先给三球，有限正配对再给统一正删除与原菜单延拓，192.8才给同一 $\theta$ 的全部有限复矩阵锥。193.2没有接管后半桥梁。
+
+几何上，(193.10)说明商后的二元对比度是原秩二差 $P_v-P_w$ 到核 $L$ 的迹范数距离的一半；(193.4)正好禁止任何这样的正交纯弦被商缩短。这个几何描述只消费明确矩阵模型中的迹范数，不把它称为已从裸关系内生出的新度量。$\square$
+
+**命题 193.8（工具归属与完整白话）。** 余维一交错、紧凸分离、商范数对偶和 Hermitian 谱重排均为成熟工具；基范数／全效应对偶见[Q193LPW]的§II.A Definition 2、Lemma 3，核与纯态可识别性的惯性背景及张量方法见 XIV165 引用的[Q193CHST]。后者研究由完整统计识别状态，不承担本章零错误区分的谱质量条件。本章的 repo-derived 内容为共同原菜单与谱宽度的接合(193.2)、最坏原对比度的闭式(193.9)及单核互反分类193.5，不申领历史优先权；标准工具、已有平衡商和既有重构不另计为新内容。
+
+证明。193.2—193.7给对应与边界。完整白话是：把一个更大的量子态空间压成较小空间时，有些矩阵方向被当作“看不见”。要让任意两个原来正交的纯准备仍能确定分开，不能只检查每个隐藏方向有多少正负特征值；还得检查它的正谱总量能否覆盖两端的谱宽。覆盖得住，凸分离就保证能找到同一把合法测试尺，既确认这一点又排除那一点，并同时不看见所有被删方向；覆盖不住，两端的谱向量便直接给出无法确定分开的准备，193.9量出最坏损失。单个隐藏方向里，全纯互反已足够迫使这条谱条件，不能再靠调这一方向制造互反成立而对径不零的例子。但每一对都能各找一把正确尺，仍不保证所有零邻点能共用一把尺。因此完整候选继续保留有限正配对来接合共同实现，所得复矩阵态、Born 配对及有限复合仍是192.8的条件结论；一般张量核是否保持谱条件则是单列的准确未决问题。$\square$
+
+[Q193LPW]: https://arxiv.org/pdf/1703.03392v2 "L. Lami, C. Palazuelos, A. Winter, Ultimate data hiding in quantum mechanics and beyond；§II.A Definition 2、Lemma 3，基范数与全效应对偶。"
+[Q193CHST]: https://arxiv.org/pdf/1411.0828v2 "C. Carmeli, T. Heinosaari, J. Schultz, A. Toigo, Expanding the Principle of Local Distinguishability；§§II—V，纯态统计识别、核、压缩与惯性，不作零错误区分谱条件的来源。"
+
+## 追加锚（本行以下为增补区）
