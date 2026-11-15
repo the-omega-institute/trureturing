@@ -11,24 +11,24 @@ escape_witness: defectEquiv (extracting the unique defective edge).
 The declarations describe finite families uniformly in both dimensions; no bounded
 enumeration, checker, numerical reduction or certified instance is asserted.
 -/
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 import Mathlib.Tactic.DeriveFintype
 import Mathlib.Data.Fin.Rev
 
-/-! Literal edges, restricted-growth words and their finite families. -/
+/-! Literal edges, restricted - growth words and their finite families. -/
 namespace D5.S3.SpinModels.KingDefects.KingGrid
 
 abbrev Cell (n k : ℕ) := Fin n × Fin k
 
 inductive Edge (n k : ℕ)
-  | H (i : Fin n) (j : Fin (k-1))
-  | V (i : Fin (n-1)) (j : Fin k)
-  | D (i : Fin (n-1)) (j : Fin (k-1))
-  | A (i : Fin (n-1)) (j : Fin (k-1))
+  | H (i : Fin n) (j : Fin (k - 1))
+  | V (i : Fin (n - 1)) (j : Fin k)
+  | D (i : Fin (n - 1)) (j : Fin (k - 1))
+  | A (i : Fin (n - 1)) (j : Fin (k - 1))
   deriving DecidableEq, Fintype
 
-def lo {n : ℕ} (i : Fin (n-1)) : Fin n := ⟨i.val, by omega⟩
-def hi {n : ℕ} (i : Fin (n-1)) : Fin n := ⟨i.val+1, by omega⟩
+def lo {n : ℕ} (i : Fin (n - 1)) : Fin n := ⟨i.val, by omega⟩
+def hi {n : ℕ} (i : Fin (n - 1)) : Fin n := ⟨i.val + 1, by omega⟩
 
 def end0 {n k : ℕ} : Edge n k → Cell n k
   | .H i j => (i, lo j)
@@ -54,7 +54,7 @@ def DefectAt {n k : ℕ} {C : Type*} (e : Edge n k) (f : Cell n k → C) : Prop 
 /-- The order on the flattened word is precisely row-major order. -/
 def normal {n k : ℕ} (f : Cell n k → Fin 4) : Prop :=
   D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
-    (fun i : Fin (n*k) => f (finProdFinEquiv.symm i))
+    (fun i : Fin (n * k) => f (finProdFinEquiv.symm i))
 
 noncomputable def L (n k : ℕ) : ℕ := by
   classical
@@ -103,6 +103,32 @@ theorem count_by_edge (n k : ℕ) :
   rw [labelled_count, Nat.card_congr (defectEquiv (n := n) (k := k))]
   simp [Nat.card_eq_fintype_card, Fintype.card_sigma]
 
+
+private def edgeSumEquiv (n k : ℕ) : Edge n k ≃
+    (Fin n × Fin (k - 1)) ⊕ (Fin (n - 1) × Fin k) ⊕
+      (Fin (n - 1) × Fin (k - 1)) ⊕ (Fin (n - 1) × Fin (k - 1)) where
+  toFun
+    | .H i j => .inl (i,j)
+    | .V i j => .inr (.inl (i,j))
+    | .D i j => .inr (.inr (.inl (i,j)))
+    | .A i j => .inr (.inr (.inr (i,j)))
+  invFun
+    | .inl (i,j) => .H i j
+    | .inr (.inl (i,j)) => .V i j
+    | .inr (.inr (.inl (i,j))) => .D i j
+    | .inr (.inr (.inr (i,j))) => .A i j
+  left_inv e := by cases e <;> rfl
+  right_inv e := by rcases e with _ | (_ | (_ | _)) <;> rfl
+
+theorem sum_edges {n k : ℕ} (F : Edge n k → ℕ) :
+    (∑ e, F e) =
+      (∑ i : Fin n, ∑ j : Fin (k - 1), F (.H i j)) +
+      (∑ i : Fin (n - 1), ∑ j : Fin k, F (.V i j)) +
+      (∑ i : Fin (n - 1), ∑ j : Fin (k - 1), F (.D i j)) +
+      (∑ i : Fin (n - 1), ∑ j : Fin (k - 1), F (.A i j)) := by
+  rw [← (edgeSumEquiv n k).symm.sum_comp F]
+  simp [Fintype.sum_sum_type, Fintype.sum_prod_type, edgeSumEquiv, add_assoc]
+
 /-- Transpose acts on edge types as H↔V, fixing the two diagonal types. -/
 def transposeEdge {n k : ℕ} : Edge n k ≃ Edge k n where
   toFun
@@ -146,17 +172,6 @@ def transposeDefectEquiv {n k : ℕ} {C : Type*} (e : Edge n k) :
 theorem endpoints_distinct {n k : ℕ} (e : Edge n k) : end0 e ≠ end1 e := by
   cases e <;> simp [end0, end1, lo, hi, Fin.ext_iff, Prod.mk.injEq]
 
-theorem edge_of_endpoints {n k : ℕ} (e d : Edge n k)
-    (h0 : end0 e = end0 d) (h1 : end1 e = end1 d) : e = d := by
-  cases e <;> cases d <;>
-    simp_all [end0, end1, lo, hi, Fin.ext_iff, Prod.mk.injEq] <;>
-      first | omega | (congr 1 <;> simp_all [Fin.ext_iff] <;> omega)
-
-theorem endpoints_not_reversed {n k : ℕ} (e d : Edge n k) :
-    ¬ (end0 e = end1 d ∧ end1 e = end0 d) := by
-  cases e <;> cases d <;>
-    simp [end0, end1, lo, hi, Fin.ext_iff, Prod.mk.injEq] <;> omega
-
 /-- Reflection reverses H endpoints and exchanges D with A. -/
 def reflectEdge {n k : ℕ} : Edge n k ≃ Edge n k where
   toFun
@@ -175,12 +190,12 @@ def reflectEdge {n k : ℕ} : Edge n k ≃ Edge n k where
 def reflect {n k : ℕ} {C : Type*} (f : Cell n k → C) : Cell n k → C :=
   fun p => f (p.1,p.2.rev)
 
-private theorem rev_lo {n : ℕ} (i : Fin (n-1)) : (lo i).rev = hi i.rev := by
+private theorem rev_lo {n : ℕ} (i : Fin (n - 1)) : (lo i).rev = hi i.rev := by
   apply Fin.ext
   dsimp [lo, hi, Fin.rev]
   omega
 
-private theorem rev_hi {n : ℕ} (i : Fin (n-1)) : (hi i).rev = lo i.rev := by
+private theorem rev_hi {n : ℕ} (i : Fin (n - 1)) : (hi i).rev = lo i.rev := by
   apply Fin.ext
   dsimp [lo, hi, Fin.rev]
   omega
@@ -213,7 +228,8 @@ private theorem perm_ext_three {X : Type*} (f : X → Fin 4) (hf : UsesThree f)
     (p q : Equiv.Perm (Fin 4)) (h : p ∘ f = q ∘ f) : p = q := by
   obtain ⟨a,b,c,hab,hac,hbc⟩ := hf
   have he (t : X) : p (f t) = q (f t) := congrFun h t
-  ext x
+  apply Equiv.ext
+  intro x
   by_cases ha : x = f a
   · simpa [ha] using he a
   by_cases hb : x = f b
@@ -224,12 +240,12 @@ private theorem perm_ext_three {X : Type*} (f : X → Fin 4) (hf : UsesThree f)
   have hcard : ({p (f a),p (f b),p (f c),p x,q x} : Finset (Fin 4)).card ≤ 4 := by
     simpa using (Finset.card_le_card
       (Finset.subset_univ ({p (f a),p (f b),p (f c),p x,q x} : Finset (Fin 4))))
-  have hpa : p (f a) ≠ q x := by rw [he a]; exact q.injective.ne ha.symm
-  have hpb : p (f b) ≠ q x := by rw [he b]; exact q.injective.ne hb.symm
-  have hpc : p (f c) ≠ q x := by rw [he c]; exact q.injective.ne hc.symm
+  have hpa : p (f a) ≠ q x := by rw [he a]; exact q.injective.ne (Ne.symm ha)
+  have hpb : p (f b) ≠ q x := by rw [he b]; exact q.injective.ne (Ne.symm hb)
+  have hpc : p (f c) ≠ q x := by rw [he c]; exact q.injective.ne (Ne.symm hc)
   simp [Finset.card_insert_of_notMem, p.injective.ne hab, p.injective.ne hac,
-    p.injective.ne hbc, p.injective.ne ha.symm, p.injective.ne hb.symm,
-    p.injective.ne hc.symm, hpa, hpb, hpc, hn] at hcard
+    p.injective.ne hbc, p.injective.ne (Ne.symm ha), p.injective.ne (Ne.symm hb),
+    p.injective.ne (Ne.symm hc), hpa, hpb, hpc, hn] at hcard
 
 private theorem canonical_count_three {X : Type*} [Fintype X] [LinearOrder X]
     (S : (X → Fin 4) → Prop)
@@ -268,7 +284,7 @@ private theorem canonical_count_three {X : Type*} [Fintype X] [LinearOrder X]
   rw [Nat.card_prod, Nat.card_eq_fintype_card (α := Equiv.Perm (Fin 4)),
     Fintype.card_perm, Fintype.card_fin] at hc
   norm_num at hc
-  simpa only [Nat.mul_comm] using hc.symm
+  simpa only [Nat.mul_comm, Nat.card_eq_fintype_card] using hc.symm
 
 private theorem oneDefect_usesThree {n k : ℕ} (hn : 2 ≤ n) (hk : 2 ≤ k)
     (f : Cell n k → Fin 4) (hf : OneDefect f) : UsesThree f := by
@@ -276,8 +292,8 @@ private theorem oneDefect_usesThree {n k : ℕ} (hn : 2 ≤ n) (hk : 2 ≤ k)
   let r1 : Fin n := ⟨1,by omega⟩
   let c0 : Fin k := ⟨0,by omega⟩
   let c1 : Fin k := ⟨1,by omega⟩
-  let ri : Fin (n-1) := ⟨0,by omega⟩
-  let ci : Fin (k-1) := ⟨0,by omega⟩
+  let ri : Fin (n - 1) := ⟨0,by omega⟩
+  let ci : Fin (k - 1) := ⟨0,by omega⟩
   obtain ⟨e,he,hu⟩ := (oneDefect_iff f).mp hf
   have unique {d a : Edge n k} (hd : mono f d) (ha : mono f a) : d = a :=
     (hu d hd).trans (hu a ha).symm
@@ -292,8 +308,8 @@ private theorem oneDefect_usesThree {n k : ℕ} (hn : 2 ≤ n) (hk : 2 ≤ k)
       cases heq
     · intro h
       have heq := unique htop (show mono f (.H r1 ci) from h)
-      have hrow := congrArg Fin.val (Edge.H.inj heq).1
-      norm_num [r0,r1] at hrow
+      exact endpoints_distinct (.V ri c0)
+        (congrArg (fun r => (r,c0)) (Edge.H.inj heq).1)
   by_cases hac : f (r0,c0) = f (r1,c0)
   · have hleft : mono f (.V ri c0) := hac
     refine ⟨(r0,c0),(r0,c1),(r1,c1),hab,?_,?_⟩
@@ -302,8 +318,8 @@ private theorem oneDefect_usesThree {n k : ℕ} (hn : 2 ≤ n) (hk : 2 ≤ k)
       cases heq
     · intro h
       have heq := unique hleft (show mono f (.V ri c1) from h)
-      have hcol := congrArg Fin.val (Edge.V.inj heq).2
-      norm_num [c0,c1] at hcol
+      exact endpoints_distinct (.H r0 ci)
+        (congrArg (fun c => (r0,c)) (Edge.V.inj heq).2)
   by_cases hbc : f (r0,c1) = f (r1,c0)
   · have hanti : mono f (.A ri ci) := hbc
     refine ⟨(r0,c0),(r0,c1),(r1,c1),hab,?_,?_⟩
@@ -315,12 +331,56 @@ private theorem oneDefect_usesThree {n k : ℕ} (hn : 2 ≤ n) (hk : 2 ≤ k)
       cases heq
   exact ⟨(r0,c0),(r0,c1),(r1,c0),hab,hac,hbc⟩
 
+
+private def blockEdges {n k : ℕ} (i : Fin (n - 1)) (j : Fin (k - 1)) : Finset (Edge n k) :=
+  {.H (lo i) j, .H (hi i) j, .V i (lo j), .V i (hi j), .D i j, .A i j}
+
+private def corner {n k : ℕ} (i : Fin (n - 1)) (j : Fin (k - 1)) : Fin 4 → Cell n k :=
+  ![(lo i,lo j), (lo i,hi j), (hi i,lo j), (hi i,hi j)]
+
+private theorem goodBlock_surjective {n k : ℕ} (f : Cell n k → Fin 4)
+    (i : Fin (n - 1)) (j : Fin (k - 1))
+    (hg : ∀ d ∈ blockEdges i j, ¬ mono f d) : Function.Surjective f := by
+  have hht := hg (.H (lo i) j) (by simp [blockEdges])
+  have hhb := hg (.H (hi i) j) (by simp [blockEdges])
+  have hvl := hg (.V i (lo j)) (by simp [blockEdges])
+  have hvr := hg (.V i (hi j)) (by simp [blockEdges])
+  have hd := hg (.D i j) (by simp [blockEdges])
+  have ha := hg (.A i j) (by simp [blockEdges])
+  have hinj : Function.Injective (fun a : Fin 4 => f (corner i j a)) := by
+    intro a b hab
+    fin_cases a <;> fin_cases b <;>
+      simp_all [corner, mono, end0, end1, eq_comm]
+  intro c
+  obtain ⟨a,ha⟩ := Finite.surjective_of_injective hinj c
+  exact ⟨corner i j a,ha⟩
+
+private theorem oneDefect_surjective {n k : ℕ} (hn : 3 ≤ n) (hk : 3 ≤ k)
+    (f : Cell n k → Fin 4) (hf : OneDefect f) : Function.Surjective f := by
+  let i0 : Fin (n - 1) := ⟨0,by omega⟩
+  let i1 : Fin (n - 1) := ⟨1,by omega⟩
+  let j0 : Fin (k - 1) := ⟨0,by omega⟩
+  let j1 : Fin (k - 1) := ⟨1,by omega⟩
+  have hdis : Disjoint (blockEdges i0 j0) (blockEdges i1 j1) := by
+    norm_num [blockEdges, i0, i1, j0, j1, Finset.disjoint_left,
+      lo, hi, Fin.ext_iff]
+  obtain ⟨e,he,hu⟩ := (oneDefect_iff f).mp hf
+  by_cases hm : e ∈ blockEdges i0 j0
+  · apply goodBlock_surjective f i1 j1
+    intro d hd hmono
+    have hed := hu d hmono
+    exact (Finset.disjoint_left.mp hdis hm) (hed ▸ hd)
+  · apply goodBlock_surjective f i0 j0
+    intro d hd hmono
+    have hed := hu d hmono
+    exact hm (hed ▸ hd)
+
 /-- Three occurring colours already make the four-colour permutation action free. -/
 theorem labelled_eq_twentyFour (n k : ℕ) (hn : 2 ≤ n) (hk : 2 ≤ k) :
     L n k = 24 * T n k := by
   classical
-  let word (f : Fin (n*k) → Fin 4) : Cell n k → Fin 4 := fun p => f (finProdFinEquiv p)
-  let S (f : Fin (n*k) → Fin 4) := OneDefect (word f)
+  let word (f : Fin (n * k) → Fin 4) : Cell n k → Fin 4 := fun p => f (finProdFinEquiv p)
+  let S (f : Fin (n * k) → Fin 4) := OneDefect (word f)
   have hinv : ∀ p : Equiv.Perm (Fin 4), ∀ f, S (p ∘ f) ↔ S f := by
     intro p f
     simp only [S, word, OneDefect, mono, Function.comp_apply, p.injective.eq_iff]
@@ -328,8 +388,15 @@ theorem labelled_eq_twentyFour (n k : ℕ) (hn : 2 ≤ n) (hk : 2 ≤ k) :
     intro f hf
     obtain ⟨a,b,c,hab,hac,hbc⟩ := oneDefect_usesThree hn hk (word f) hf
     exact ⟨finProdFinEquiv a,finProdFinEquiv b,finProdFinEquiv c,hab,hac,hbc⟩
-  have h := canonical_count_three S hinv huse
-  let E : (Cell n k → Fin 4) ≃ (Fin (n*k) → Fin 4) :=
+  have h : Nat.card {f // S f} = 24 * Nat.card {f // S f ∧
+      D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical f} := by
+    by_cases hbig : 3 ≤ n ∧ 3 ≤ k
+    · apply D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip.canonical_pattern_card4 S hinv
+      intro f hf c
+      obtain ⟨p,hp⟩ := oneDefect_surjective hbig.1 hbig.2 (word f) hf c
+      exact ⟨finProdFinEquiv p,hp⟩
+    · exact canonical_count_three S hinv huse
+  let E : (Cell n k → Fin 4) ≃ (Fin (n * k) → Fin 4) :=
     Equiv.arrowCongr finProdFinEquiv (Equiv.refl _)
   have hL : L n k = Nat.card {f // S f} := by
     rw [labelled_count]
@@ -338,7 +405,13 @@ theorem labelled_eq_twentyFour (n k : ℕ) (hn : 2 ≤ n) (hk : 2 ≤ k) :
       D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical f} := by
     rw [show T n k = Nat.card {f : Cell n k → Fin 4 // OneDefect f ∧ normal f} by
       simp [T,Nat.card_eq_fintype_card,Fintype.card_subtype]]
-    exact Nat.card_congr (E.subtypeEquiv (by intro f; simp [E,S,word,normal,OneDefect]))
+    exact Nat.card_congr (E.subtypeEquiv (by
+      intro f
+      have he : word (E f) = f := by
+        funext p
+        exact congrArg f (finProdFinEquiv.symm_apply_apply p)
+      change (OneDefect f ∧ normal f) ↔ (OneDefect (word (E f)) ∧ normal f)
+      rw [he]))
   rw [hL,hT]
   exact h
 

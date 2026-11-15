@@ -39,8 +39,8 @@ private theorem neg_self (a : K) : -a = a := by
   simpa only [neg_self] using (add_eq_zero_iff_eq_neg (a := a) (b := b))
 
 @[ext] structure DiffField (N M : ℕ) where
-  h : Fin (N+1) → Fin M → K
-  v : Fin N → Fin (M+1) → K
+  h : Fin (N + 1) → Fin M → K
+  v : Fin N → Fin (M + 1) → K
   deriving DecidableEq, Fintype
 
 /-- The two paths across every elementary square have equal differences. -/
@@ -48,26 +48,26 @@ def Cocycle {N M : ℕ} (s : DiffField N M) : Prop :=
   ∀ i j, s.h i.castSucc j + s.v i j.succ =
     s.v i j.castSucc + s.h i.succ j
 
-def differentiate {N M : ℕ} (f : Cell (N+1) (M+1) → K) : DiffField N M where
+def differentiate {N M : ℕ} (f : Cell (N + 1) (M + 1) → K) : DiffField N M where
   h i j := f (i,j.castSucc) + f (i,j.succ)
   v i j := f (i.castSucc,j) + f (i.succ,j)
 
-theorem differentiate_cocycle {N M : ℕ} (f : Cell (N+1) (M+1) → K) :
+theorem differentiate_cocycle {N M : ℕ} (f : Cell (N + 1) (M + 1) → K) :
     Cocycle (differentiate f) := by
   intro i j
   dsimp [differentiate]
-  have reorder (a b c d : K) : (a+b)+(b+d) = (a+c)+(c+d) := by
+  have reorder (a b c d : K) : (a + b)+(b + d) = (a + c)+(c + d) := by
     simp [add_assoc, ← add_assoc b b, ← add_assoc c c]
   exact reorder _ _ _ _
 
-def integrate {N M : ℕ} (t : K) (s : DiffField N M) : Cell (N+1) (M+1) → K :=
+def integrate {N M : ℕ} (t : K) (s : DiffField N M) : Cell (N + 1) (M + 1) → K :=
   fun p => t + Fin.partialSum (fun i => s.v i 0) p.1 + Fin.partialSum (s.h p.1) p.2
 
 theorem integrate_root {N M : ℕ} (t : K) (s : DiffField N M) :
-    integrate t s (0,0) = t := by simp [integrate]
+    integrate t s (0, 0) = t := by simp [integrate]
 
 theorem integrate_h {N M : ℕ} (t : K) (s : DiffField N M)
-    (i : Fin (N+1)) (j : Fin M) :
+    (i : Fin (N + 1)) (j : Fin M) :
     (differentiate (integrate t s)).h i j = s.h i j := by
   dsimp [differentiate, integrate]
   rw [Fin.partialSum_succ]
@@ -75,7 +75,7 @@ theorem integrate_h {N M : ℕ} (t : K) (s : DiffField N M)
     (t + Fin.partialSum (fun i => s.v i 0) i + Fin.partialSum (s.h i) j.castSucc) (s.h i j)
 
 theorem integrate_v {N M : ℕ} (t : K) (s : DiffField N M) (hs : Cocycle s)
-    (i : Fin N) (j : Fin (M+1)) :
+    (i : Fin N) (j : Fin (M + 1)) :
     (differentiate (integrate t s)).v i j = s.v i j := by
   induction j using Fin.inductionOn with
   | zero =>
@@ -102,9 +102,9 @@ theorem differentiate_integrate {N M : ℕ} (t : K) (s : DiffField N M)
   · funext i j
     exact integrate_v t s hs i j
 
-theorem difference_unique {N M : ℕ} (f g : Cell (N+1) (M+1) → K)
-    (hr : f (0,0) = g (0,0)) (hd : differentiate f = differentiate g) : f = g := by
-  have base (i : Fin (N+1)) : f (i,0) = g (i,0) := by
+theorem difference_unique {N M : ℕ} (f g : Cell (N + 1) (M + 1) → K)
+    (hr : f (0, 0) = g (0, 0)) (hd : differentiate f = differentiate g) : f = g := by
+  have base (i : Fin (N + 1)) : f (i,0) = g (i,0) := by
     induction i using Fin.inductionOn with
     | zero => exact hr
     | succ i ih =>
@@ -122,15 +122,15 @@ theorem difference_unique {N M : ℕ} (f g : Cell (N+1) (M+1) → K)
     rw [ih] at hh
     exact add_left_cancel hh
 
-theorem integrate_differentiate {N M : ℕ} (f : Cell (N+1) (M+1) → K) :
-    integrate (f (0,0)) (differentiate f) = f :=
+theorem integrate_differentiate {N M : ℕ} (f : Cell (N + 1) (M + 1) → K) :
+    integrate (f (0, 0)) (differentiate f) = f :=
   difference_unique _ _ (integrate_root _ _)
     (differentiate_integrate _ _ (differentiate_cocycle f))
 
 /-- No defect restriction is needed for discrete integration. -/
 def integrationEquiv (N M : ℕ) :
-    (Cell (N+1) (M+1) → K) ≃ K × {s : DiffField N M // Cocycle s} where
-  toFun f := (f (0,0), ⟨differentiate f, differentiate_cocycle f⟩)
+    (Cell (N + 1) (M + 1) → K) ≃ K × {s : DiffField N M // Cocycle s} where
+  toFun f := (f (0, 0), ⟨differentiate f, differentiate_cocycle f⟩)
   invFun q := integrate q.1 q.2.val
   left_inv := integrate_differentiate
   right_inv q := by
@@ -138,17 +138,17 @@ def integrationEquiv (N M : ℕ) :
     exact Subtype.ext (differentiate_integrate _ _ q.2.property)
 
 
-def edgeValue {N M : ℕ} (s : DiffField N M) : Edge (N+1) (M+1) → K
+def edgeValue {N M : ℕ} (s : DiffField N M) : Edge (N + 1) (M + 1) → K
   | .H i j => s.h i j
   | .V i j => s.v i j
   | .D i j => s.h i.castSucc j + s.v i j.succ
   | .A i j => s.h i.castSucc j + s.v i j.castSucc
 
-def RawAdmissible {N M : ℕ} (e : Edge (N+1) (M+1)) (s : DiffField N M) : Prop :=
+def RawAdmissible {N M : ℕ} (e : Edge (N + 1) (M + 1)) (s : DiffField N M) : Prop :=
   Cocycle s ∧ ∀ d, edgeValue s d = 0 ↔ d = e
 
-theorem differentiate_edgeValue {N M : ℕ} (f : Cell (N+1) (M+1) → K)
-    (e : Edge (N+1) (M+1)) :
+theorem differentiate_edgeValue {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
+    (e : Edge (N + 1) (M + 1)) :
     edgeValue (differentiate f) e = f (end0 e) + f (end1 e) := by
   cases e with
   | H i j => rfl
@@ -164,16 +164,16 @@ theorem differentiate_edgeValue {N M : ℕ} (f : Cell (N+1) (M+1) → K)
     simp [add_assoc, add_left_comm, add_comm]
     rfl
 
-theorem raw_differentiate_iff {N M : ℕ} (f : Cell (N+1) (M+1) → K)
-    (e : Edge (N+1) (M+1)) :
+theorem raw_differentiate_iff {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
+    (e : Edge (N + 1) (M + 1)) :
     RawAdmissible e (differentiate f) ↔ DefectAt e f := by
   simp only [RawAdmissible, differentiate_cocycle, true_and,
     differentiate_edgeValue, add_eq_zero, DefectAt, mono]
 
-def defectIntegrationEquiv {N M : ℕ} (e : Edge (N+1) (M+1)) :
-    {f : Cell (N+1) (M+1) → K // DefectAt e f} ≃
+def defectIntegrationEquiv {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
+    {f : Cell (N + 1) (M + 1) → K // DefectAt e f} ≃
       K × {s : DiffField N M // RawAdmissible e s} where
-  toFun f := (f.val (0,0), ⟨differentiate f.val,
+  toFun f := (f.val (0, 0), ⟨differentiate f.val,
     (raw_differentiate_iff f.val e).mpr f.property⟩)
   invFun q := ⟨integrate q.1 q.2.val, by
     apply (raw_differentiate_iff _ e).mp
@@ -185,8 +185,8 @@ def defectIntegrationEquiv {N M : ℕ} (e : Edge (N+1) (M+1)) :
     exact Subtype.ext (differentiate_integrate _ _ q.2.property.1)
 
 /-- The field alone parametrizes colourings whose root colour is zero. -/
-def rootZeroEquiv {N M : ℕ} (e : Edge (N+1) (M+1)) :
-    {f : Cell (N+1) (M+1) → K // DefectAt e f ∧ f (0,0) = 0} ≃
+def rootZeroEquiv {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
+    {f : Cell (N + 1) (M + 1) → K // DefectAt e f ∧ f (0, 0) = 0} ≃
       {s : DiffField N M // RawAdmissible e s} where
   toFun f := ⟨differentiate f.val, (raw_differentiate_iff f.val e).mpr f.property.1⟩
   invFun s := ⟨integrate 0 s.val,
@@ -196,7 +196,7 @@ def rootZeroEquiv {N M : ℕ} (e : Edge (N+1) (M+1)) :
     simpa only [f.property.2] using integrate_differentiate f.val
   right_inv s := Subtype.ext (differentiate_integrate _ _ s.property.1)
 
-noncomputable def N_e {N M : ℕ} (e : Edge (N+1) (M+1)) : ℕ :=
+noncomputable def N_e {N M : ℕ} (e : Edge (N + 1) (M + 1)) : ℕ :=
   Nat.card {s : DiffField N M // RawAdmissible e s}
 
 private noncomputable def relabelDefectEquiv {n k : ℕ} (e : Edge n k) :
@@ -211,14 +211,14 @@ private noncomputable def relabelDefectEquiv {n k : ℕ} (e : Edge n k) :
   left_inv f := by apply Subtype.ext; funext p; exact colourEquiv.symm_apply_apply _
   right_inv f := by apply Subtype.ext; funext p; exact colourEquiv.apply_symm_apply _
 
-theorem count_fixed_edge {N M : ℕ} (e : Edge (N+1) (M+1)) :
-    Nat.card {f : Cell (N+1) (M+1) → Fin 4 // DefectAt e f} = 4 * N_e e := by
+theorem count_fixed_edge {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
+    Nat.card {f : Cell (N + 1) (M + 1) → Fin 4 // DefectAt e f} = 4 * N_e e := by
   rw [Nat.card_congr (relabelDefectEquiv e),
     Nat.card_congr (defectIntegrationEquiv e), Nat.card_prod]
   simp [K, N_e, Nat.card_eq_fintype_card]
 
 theorem count_from_fields (N M : ℕ) :
-    L (N+1) (M+1) = 4 * ∑ e : Edge (N+1) (M+1), N_e e := by
+    L (N + 1) (M + 1) = 4 * ∑ e : Edge (N + 1) (M + 1), N_e e := by
   rw [count_by_edge]
   simp_rw [count_fixed_edge]
   exact (Finset.mul_sum ..).symm
@@ -229,13 +229,46 @@ def Rainbow (a b c d : K) : Prop :=
 
 private theorem rainbow_algebra (a b c d : K) :
     Rainbow a b c d ↔
-      a+b = c+d ∧ a+c = b+d ∧ a+b ≠ 0 ∧ a+c ≠ 0 ∧ a+b ≠ a+c := by
-  unfold Rainbow
-  revert a b c d
-  decide +kernel
+      a + b = c + d ∧ a + c = b + d ∧ a + b ≠ 0 ∧ a + c ≠ 0 ∧ a + b ≠ a + c := by
+  constructor
+  · rintro ⟨hab,hac,had,hbc,hbd,hcd⟩
+    have hx : a + b ≠ 0 := by simpa only [add_eq_zero] using hab
+    have hy : a + c ≠ 0 := by simpa only [add_eq_zero] using hac
+    have hz : a + d ≠ 0 := by simpa only [add_eq_zero] using had
+    have hxy : a + b ≠ a + c := by simpa only [add_left_cancel_iff] using hbc
+    have hzx : a + d ≠ a + b := by simpa only [add_left_cancel_iff] using Ne.symm hbd
+    have hzy : a + d ≠ a + c := by simpa only [add_left_cancel_iff] using Ne.symm hcd
+    have ht := IsAddKleinFour.eq_add_of_ne_all hx hy hxy hz hzx hzy
+    have hd : d = a + (b + c) := by
+      simpa [add_assoc, add_left_comm, add_comm] using congrArg (fun z => a + z) ht
+    subst d
+    refine ⟨?_,?_,hx,hy,hxy⟩ <;> simp [add_assoc, add_left_comm, add_comm]
+  · rintro ⟨hh,_,hx,hy,hxy⟩
+    have hd : d = a + (b + c) := by
+      simpa [add_assoc, add_left_comm, add_comm] using
+        (congrArg (fun z => c + z) hh).symm
+    subst d
+    have hab : a ≠ b := by simpa only [add_eq_zero] using hx
+    have hac : a ≠ c := by simpa only [add_eq_zero] using hy
+    have hbc : b ≠ c := by simpa only [add_left_cancel_iff] using hxy
+    refine ⟨hab,hac,?_,hbc,?_,?_⟩
+    · intro h
+      have hz : b + c = 0 := add_left_cancel
+        (show a + (b + c) = a + 0 by simpa only [add_zero] using h.symm)
+      exact hbc ((add_eq_zero b c).mp hz)
+    · intro h
+      have hz : a + c = 0 := by
+        simpa [add_assoc, add_left_comm, add_comm] using
+          (congrArg (fun z => b + z) h).symm
+      exact hy hz
+    · intro h
+      have hz : a + b = 0 := by
+        simpa [add_assoc, add_left_comm, add_comm] using
+          (congrArg (fun z => c + z) h).symm
+      exact hx hz
 
 /-- Rainbow squares have constant opposite slots and distinct nonzero directions. -/
-theorem rainbow_block {N M : ℕ} (f : Cell (N+1) (M+1) → K)
+theorem rainbow_block {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
     (i : Fin N) (j : Fin M) :
     Rainbow (f (i.castSucc,j.castSucc)) (f (i.castSucc,j.succ))
       (f (i.succ,j.castSucc)) (f (i.succ,j.succ)) ↔
@@ -245,6 +278,106 @@ theorem rainbow_block {N M : ℕ} (f : Cell (N+1) (M+1) → K)
       (differentiate f).v i j.castSucc ≠ 0 ∧
       (differentiate f).h i.castSucc j ≠ (differentiate f).v i j.castSucc := by
   exact rainbow_algebra _ _ _ _
+
+
+/-- All six bonds of an elementary block have nonzero difference. -/
+def GoodBlock {N M : ℕ} (s : DiffField N M) (i : Fin N) (j : Fin M) : Prop :=
+  s.h i.castSucc j ≠ 0 ∧ s.v i j.castSucc ≠ 0 ∧
+    s.h i.castSucc j + s.v i j.succ ≠ 0 ∧
+    s.h i.castSucc j + s.v i j.castSucc ≠ 0 ∧
+    s.v i j.succ ≠ 0 ∧ s.h i.succ j ≠ 0
+
+private theorem good_differentiate {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
+    (i : Fin N) (j : Fin M) :
+    GoodBlock (differentiate f) i j ↔
+      Rainbow (f (i.castSucc,j.castSucc)) (f (i.castSucc,j.succ))
+        (f (i.succ,j.castSucc)) (f (i.succ,j.succ)) := by
+  simp [GoodBlock, Rainbow, differentiate, add_assoc, add_left_comm, add_comm, ne_comm]
+
+/-- A cocycle has a good block exactly when its opposite slots agree. -/
+theorem rainbow_field {N M : ℕ} (s : DiffField N M) (hs : Cocycle s)
+    (i : Fin N) (j : Fin M) :
+    GoodBlock s i j ↔
+      s.h i.castSucc j = s.h i.succ j ∧ s.v i j.castSucc = s.v i j.succ ∧
+      s.h i.castSucc j ≠ 0 ∧ s.v i j.castSucc ≠ 0 ∧
+      s.h i.castSucc j ≠ s.v i j.castSucc := by
+  have h := (good_differentiate (integrate 0 s) i j).trans
+    (rainbow_block (integrate 0 s) i j)
+  simpa only [differentiate_integrate 0 s hs] using h
+
+/-- Every block missing the selected edge is rainbow; no global classification is assumed. -/
+theorem goodBlock_of_raw {N M : ℕ} (e : Edge (N + 1) (M + 1))
+    (s : DiffField N M) (hs : RawAdmissible e s) (i : Fin N) (j : Fin M)
+    (ht : (Edge.H i.castSucc j : Edge (N + 1) (M + 1)) ≠ e) (hl : (Edge.V i j.castSucc : Edge (N + 1) (M + 1)) ≠ e)
+    (hd : (Edge.D i j : Edge (N + 1) (M + 1)) ≠ e) (ha : (Edge.A i j : Edge (N + 1) (M + 1)) ≠ e)
+    (hr : (Edge.V i j.succ : Edge (N + 1) (M + 1)) ≠ e) (hb : (Edge.H i.succ j : Edge (N + 1) (M + 1)) ≠ e) :
+    s.h i.castSucc j = s.h i.succ j ∧ s.v i j.castSucc = s.v i j.succ ∧
+      s.h i.castSucc j ≠ 0 ∧ s.v i j.castSucc ≠ 0 ∧
+      s.h i.castSucc j ≠ s.v i j.castSucc := by
+  apply (rainbow_field s hs.1 i j).mp
+  have nz (d : Edge (N + 1) (M + 1)) (hne : d ≠ e) : edgeValue s d ≠ 0 :=
+    mt (hs.2 d).mp hne
+  exact ⟨nz (.H i.castSucc j) ht, nz (.V i j.castSucc) hl, nz (.D i j) hd,
+    nz (.A i j) ha, nz (.V i j.succ) hr, nz (.H i.succ j) hb⟩
+
+/-- The canonical count is one sixth of the total root-zero field count. -/
+theorem fields_eq_six_canonical (N M : ℕ) (hN : 1 ≤ N) (hM : 1 ≤ M) :
+    (∑ e : Edge (N + 1) (M + 1), N_e e) = 6 * T (N + 1) (M + 1) := by
+  have h := labelled_eq_twentyFour (N + 1) (M + 1) (by omega) (by omega)
+  rw [count_from_fields] at h
+  have he : 24 * T (N + 1) (M + 1) = 4 * (6 * T (N + 1) (M + 1)) := by omega
+  rw [he] at h
+  exact Nat.mul_left_cancel (by decide : 0 < 4) h
+
+
+private theorem N_transpose {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
+    N_e (transposeEdge e) = N_e e := by
+  have h := Nat.card_congr (transposeDefectEquiv (C := Fin 4) e)
+  rw [count_fixed_edge, count_fixed_edge] at h
+  exact Nat.mul_left_cancel (by decide : 0 < 4) h.symm
+
+private theorem N_reflect {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
+    N_e (reflectEdge e) = N_e e := by
+  have h := Nat.card_congr (reflectDefectEquiv (C := Fin 4) e)
+  rw [count_fixed_edge, count_fixed_edge] at h
+  exact Nat.mul_left_cancel (by decide : 0 < 4) h.symm
+
+noncomputable def N_H (N M : ℕ) : ℕ :=
+  ∑ i : Fin (N + 1), ∑ j : Fin M, N_e (.H i j : Edge (N + 1) (M + 1))
+
+noncomputable def N_D (N M : ℕ) : ℕ :=
+  ∑ i : Fin N, ∑ j : Fin M, N_e (.D i j : Edge (N + 1) (M + 1))
+
+/-- Transposition and reflection reduce the four orientations to H and D. -/
+theorem sum_fields_by_kind (N M : ℕ) :
+    (∑ e : Edge (N + 1) (M + 1), N_e e) = N_H N M + N_H M N + 2 * N_D N M := by
+  rw [sum_edges]
+  have hV : (∑ i : Fin N, ∑ j : Fin (M + 1), N_e (.V i j : Edge (N + 1) (M + 1))) =
+      N_H M N := by
+    rw [N_H, Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    exact (N_transpose (.V i j : Edge (N + 1) (M + 1))).symm
+  have hA : (∑ i : Fin N, ∑ j : Fin M, N_e (.A i j : Edge (N + 1) (M + 1))) =
+      N_D N M := by
+    unfold N_D
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [← (Fin.revPerm (n := M)).sum_comp]
+    apply Finset.sum_congr rfl
+    intro j _
+    exact N_reflect (.D i j : Edge (N + 1) (M + 1))
+  change N_H N M + _ + N_D N M + _ = _
+  rw [hV,hA]
+  omega
+
+/-- This is the orientation decomposition used in the closed-form count. -/
+theorem count_by_kind (N M : ℕ) (hN : 1 ≤ N) (hM : 1 ≤ M) :
+    N_H N M + N_H M N + 2 * N_D N M = 6 * T (N + 1) (M + 1) := by
+  rw [← sum_fields_by_kind]
+  exact fields_eq_six_canonical N M hN hM
 
 #print axioms defectIntegrationEquiv
 #print axioms count_from_fields
