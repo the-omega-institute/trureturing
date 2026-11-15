@@ -8434,65 +8434,34 @@ $$
 
 **证明。**
 
-令 $h=\mu-\nu$，$t=\operatorname{TV}(\mu,\nu)$。由于 $\mu,\nu$ 都是概率分布，$\sum_{x\in X}h(x)=0$。若 $t=0$，则
+令 $h=\mu-\nu$。由推前定义，
 
 $$
-\sum_{x\in X}|h(x)|=2t=0,
-$$
-
-故 $h=0$，从而 $\mu K=\nu K$，结论成立。
-
-以下设 $t>0$，定义
-
-$$
-a(x)=\frac{h_+(x)}{t},
-\qquad
-b(x)=\frac{h_-(x)}{t}
-\qquad(x\in X).
-$$
-
-由引理 17.2.2，$a(x),b(x)\ge0$，且
-
-$$
-\sum_{x\in X}a(x)=\sum_{x\in X}b(x)=1,
-\qquad
-h=t(a-b).
-$$
-
-对每个 $y\in Y$，由推前定义和两个权重的总和均为 $1$，有精确恒等式
-
-$$
-\begin{aligned}
 (\mu K-\nu K)(y)
-&=t\left(\sum_{x\in X}a(x)K(x,y)
--\sum_{x'\in X}b(x')K(x',y)\right)\\
-&=t\sum_{x\in X}\sum_{x'\in X}
-a(x)b(x')\bigl(K(x,y)-K(x',y)\bigr).
-\end{aligned}
+=
+\sum_xh(x)K(x,y).
 $$
 
-由于 $t,a(x),b(x')$ 非负，应用三角不等式并将 $L^1$ 范数除以 $2$，得到
+取任意固定 $x_0\in X$。由于 $\sum_xh(x)=0$，
+
+$$
+\mu K-\nu K
+=
+\sum_xh(x)\bigl(K(x,\cdot)-K(x_0,\cdot)\bigr).
+$$
+
+用三角不等式、$h=h_+-h_-$ 和 $\operatorname{TV}(K(x),K(x_0))\le\alpha(K)$，得到
 
 $$
 \begin{aligned}
 \operatorname{TV}(\mu K,\nu K)
-&=\frac12\sum_{y\in Y}|(\mu K-\nu K)(y)|\\
-&\le\frac{t}{2}\sum_{y\in Y}\sum_{x\in X}\sum_{x'\in X}
-a(x)b(x')|K(x,y)-K(x',y)|\\
-&=t\sum_{x\in X}\sum_{x'\in X}a(x)b(x')
-\operatorname{TV}\bigl(K(x,\cdot),K(x',\cdot)\bigr)\\
-&\le t\alpha(K)\sum_{x\in X}\sum_{x'\in X}a(x)b(x')\\
-&=t\alpha(K)
-=\alpha(K)\operatorname{TV}(\mu,\nu).
+&\le
+\sum_xh_+(x)\alpha(K)
++
+\sum_xh_-(x)\alpha(K)\\
+&=
+\alpha(K)\operatorname{TV}(\mu,\nu).
 \end{aligned}
-$$
-
-其中每一对行的总变差均不超过 $\alpha(K)$，而双重权重满足
-
-$$
-\sum_{x\in X}\sum_{x'\in X}a(x)b(x')
-=\left(\sum_{x\in X}a(x)\right)
-\left(\sum_{x'\in X}b(x')\right)=1.
 $$
 
 证毕。
