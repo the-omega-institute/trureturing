@@ -75,6 +75,45 @@ public sealed class FileMapGlobTests
     }
 
     [Fact]
+    public void WildcardPatternBatchUsesBoundedAllocation()
+    {
+        var batchId = Guid.NewGuid().ToString("N");
+        var prefixes = Enumerable.Range(0, 64)
+            .Select(index => $"allocation/{batchId}/Item{index:D2}[1]+(x)/")
+            .ToArray();
+        var positiveMatches = 0;
+        var negativeMatches = 0;
+
+        var before = GC.GetAllocatedBytesForCurrentThread();
+        for (var index = 0; index < prefixes.Length; index++)
+        {
+            var glob = FileMapGlob.Create(prefixes[index] + "**/*.lean");
+            if (glob.IsMatch(prefixes[index] + "Value.lean")) positiveMatches++;
+            if (glob.IsMatch(prefixes[index] + "nested/Value.lean")) positiveMatches++;
+            if (glob.IsMatch(prefixes[(index + 1) % prefixes.Length] + "Value.lean")) negativeMatches++;
+            if (glob.IsMatch(prefixes[index].ToUpperInvariant() + "Value.lean")) negativeMatches++;
+            if (glob.IsMatch(prefixes[index] + "nested/Value.cs")) negativeMatches++;
+        }
+        var allocatedBytes = GC.GetAllocatedBytesForCurrentThread() - before;
+
+        Assert.Equal(2 * prefixes.Length, positiveMatches);
+        Assert.Equal(0, negativeMatches);
+        Assert.True(allocatedBytes <= 8 * 1024 * 1024,
+            $"Wildcard pattern construction and matching allocated {allocatedBytes} bytes; limit is 8 MiB.");
+    }
+
+    [Theory]
+    [InlineData("a\n/**/*.lean", "a\n/Value.lean", true)]
+    [InlineData("a\n/**/*.lean", "a\n/nested/Value.lean", true)]
+    [InlineData("a\n/**/*.lean", "a\n/nested\n/Value.lean", false)]
+    [InlineData("a\n/**/*.lean", "a\n/Val\nue.lean", true)]
+    [InlineData("Root[1]+(x)/**/*.lean", "Root[1]+(x)/nested/Value.lean", true)]
+    [InlineData("Root[1]+(x)/**/*.lean", "Root1x/nested/Value.lean", false)]
+    public void AdmissionWildcardPrefixesRetainLiteralAndNewlineSemantics(
+        string pattern, string path, bool expected) =>
+        Assert.Equal(expected, FileMapGlob.CreateForAdmissionPlane(pattern).IsMatch(path));
+
+    [Fact]
     public void QuestionMarkIsRejectedByBothEntriesOnEveryCall()
     {
         for (var iteration = 0; iteration < 2; iteration++)
