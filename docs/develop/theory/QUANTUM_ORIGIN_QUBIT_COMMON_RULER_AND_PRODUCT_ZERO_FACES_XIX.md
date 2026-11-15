@@ -1960,3 +1960,270 @@ $Y\succ0$ 时取 $X\propto Y^{-1}$ 达等号；$Y$ 奇异时，在正特征空�
 [Q273D]: https://arxiv.org/html/2005.01136v5#S4.SS4 "Coey、Kapelevich与Vielma，Solving natural conic formulations with Hypatia.jl，§4.4 (15a–b)：实对称单侧root-determinant锥及其双锥；不包含本节的复双侧面与原关系结论。"
 
 ## 追加锚（本行以下为增补区）
+
+## 274. 双份换边与三份最小确认：从洛伦兹锥到全部有限量子层级
+
+**定义 274.1（四维局域载体上的完整候选）。** 完整保留270.1、272.1的强全有限背景 $\mathsf B_{\mathrm{fin}}$：每个有限 $N\ge0$ 的整个原实载体 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成锥 $C_N$、严格正乘积单位 $u_N=u^{\otimes N}$、整个归一紧底 $K_N$、全部原纯点 $P_N$、完整正对偶、完整 proper 区间及全部有限单位分解；标量零层、分离整个载体的张量配对、规范重括号、正位置置换及其正逆、正单位丢弃，以及每个有限分块上针对全部原相关输入的 min/max 界。另固定 $\dim_{\mathbb R}V=4$。
+
+每层 $R_{m,N}$ 仍由全部实际二纯面自己的体积重心径向种子生成，反端允许混合；不改变272.1的共同参照定义。只在整个双份要求
+
+$$
+\mathsf X_2:\quad
+\forall p\ne q\in P_2\ \exists g\in P_2:\quad
+\{p,q\}^{\perp}=\{p,g\}^{\perp},\qquad
+(pR_{m,2}q)\mathbin{\mathrm{xor}}(pR_{m,2}g).
+\tag{274.1}
+$$
+
+只在整个三份要求完整菜单的最小确认
+
+$$
+\mathsf M_3:\quad
+\forall p\in P_3\ \exists e_p\in[0,u_3]:\quad
+e_p(p)=1,\qquad
+e_p\le f\quad(f\in[0,u_3],\ f(p)=1).
+\qquad
+\boxed{\mathsf Q_{2,3}:=\mathsf X_2+\mathsf M_3.}
+\tag{274.2}
+$$
+
+效应序始终取原正对偶；leastness 同时作用于全部原混合输入。没有输入三份换边、实际二态球、共同尺或数值互易，也没有截断其余有限层级。
+
+**定理 274.2（双份换边先恢复原单份洛伦兹锥）。** 在274.1的强背景及四维局域分支中，单独 $\mathsf X_2$ 已给一个保单位实线性序同构
+
+$$
+\theta:V\longrightarrow\operatorname{Herm}_2(\mathbb C),\qquad
+\theta(C_1)=\operatorname{PSD}_2,\qquad
+u=\operatorname{Tr}\circ\theta.
+\tag{274.3}
+$$
+
+等价地，原单份锥是四维洛伦兹锥，原 $K_1$ 是仿射三维椭球。这里尚未使用 $\mathsf M_3$，也尚未分类整个 $C_2$ 或 $C_3$。
+
+证明。先精确复用272.2—272.3的单底结论：$K_2$ 有NR、唯一正交剩余、不可约覆盖格、全部实际面识别、完整RP以及非线段严格凸的实际二元面。两份的四个原二值产品字及其产品测试，按266.2的实际零面链论证给至少四级严格实际面链。故[Paseka—Vetterlein, Theorem4.5][Q266P]的秩至少四前件已满足。266.2—266.3中只依赖这个门槛的表示步骤可在 $K_2$ 执行；[Labardini-Fragoso—Neumann-Coto—Takane][Q266L]仅供应已经模、不可约的实际面格的连续射影坐标、保面同胚和维数。
+
+固定原纯旁观，XIII161.1给 $K_1$ 到整个实际面的仿射同构；其子空间格使用与 $K_2$ 相同的除环。对 $1|1$ 复用266.3的原产品秩乘法证明，得局域秩 $r\ge2$、联合秩 $r^2$，以及
+
+$$
+d_\beta(r^2)=d_\beta(r)^2,\qquad
+d_\beta(a)=a+\frac\beta2a(a-1),\qquad \beta\in\{1,2,4\}.
+$$
+
+266.4的差公式迫 $\beta=2$；$\dim V=r^2=4$ 再迫 $r=2$。于是原纯域具有连续标签 $P_1\simeq\mathbb{CP}^1$、$P_2\simeq\mathbb{CP}^3$。全部实际面对应完整复射影子空间，$K_1$ 严格凸且每颗原纯点暴露。这一步还没有把原仿射混合识别为矩阵混合。
+
+先给产品网格的准确坐标。原纯产品形成单射 $\chi:P_1\times P_1\to\mathbb{CP}^3$，每个固定纯旁观的行与列都是完整射影直线。取两条不同行；它们因纯边缘不同而不交，故其向量子空间给 $\mathbb C^4=U\oplus W$，$\dim_{\mathbb C}U=\dim_{\mathbb C}W=2$。第三行与两者不交，是可逆图 $\operatorname{graph}F$；调整 $W$ 坐标令 $F=I$。每一列连接 $[v,0]$ 与 $[0,w]$，又交 $\operatorname{graph}I$，所以 $[w]=[v]$。任一其他行是 $\operatorname{graph}A$，与每一列相交迫使 $Av\parallel v$ 对全部 $[v]\in\mathbb{CP}^1$ 成立，故 $A=\lambda I$。完整行列保证参数没有遗漏。由此有双射 $\xi,\eta:P_1\to\mathbb{CP}^1$，使
+
+$$
+\chi(a,b)=[\xi(a)\otimes\eta(b)].
+\tag{274.4}
+$$
+
+固定一条完整行或列，其原连续嵌入及逆给 $\xi,\eta$ 连续；它们是同胚。这里允许两个因子分别重标，没有将 $\xi$ 与 $\eta$ 预认作同一个局域坐标，也没有预认它们保持正交极性。
+
+对每颗原纯 $a,b$，选非零原正泛函 $F_a,G_b$，其归一零面分别恰为 $\{a\},\{b\}$。令非零复线性行 $\alpha_a,\beta_b$ 分别消去 $\xi(a),\eta(b)$。原正产品效应 $F_a\otimes G_b$ 的零面含两条ruling；二者生成复射影超平面。它非零，故零面恰为该coatom。将原双份纯点标为 $z_M$，其中 $[\operatorname{vec}M]\in\mathbb{CP}^3$，得到
+
+$$
+(F_a\otimes G_b)(z_M)=0
+\quad\Longleftrightarrow\quad
+\alpha_a M\beta_b^T=0.
+\tag{274.5}
+$$
+
+对可逆 $M$，原最大界使条件化 $T_M:g\mapsto(\operatorname{id}\otimes g)z_M$ 从 $C_1^*$ 正映入 $C_1$。(274.5)使 $T_M(G_b)$ 非零且准确落在纯射线 $\xi^{-1}[M\beta_b^T]$。这些方向遍历全部原纯射线，故 $T_M(C_1^*)=C_1$。两载体实维数均为四，$T_M$ 因而是序同构。于是
+
+$$
+A_G=T_G T_I^{-1}\in\operatorname{Aut}(C_1),\qquad
+A_G:[p]\mapsto\xi^{-1}G\xi([p]),\quad G\in GL_2(\mathbb C).
+\tag{274.6}
+$$
+
+这些是数学锥自同构，未被宣布为保原单位或可调用的物理操作。
+
+补齐标量与紧群。若两个锥自同构有相同纯射线作用，其比 $D$ 固定每条纯射线。对归一纯点 $p$ 写 $Dp=\lambda(p)p$；$\lambda(p)=u(Dp)>0$ 连续且只取有限维算子 $D$ 的有限个实特征值。$P_1\simeq\mathbb{CP}^1$ 连通，故 $D$ 为同一正标量乘恒等。由此 $A_GA_H=c(G,H)A_{GH}$，其中 $c(G,H)>0$。由于 $G\mapsto z_G$ 连续且 $A_I=I$，
+
+$$
+\rho(G)=\frac{A_G}{|\det_{\mathbb R}A_G|^{1/4}}
+\tag{274.7}
+$$
+
+是一条真正连续表示；正标量的四次行列式恰消去cocycle。复标量矩阵的像为恒等。$H=\rho(SU(2))$ 紧，且在原全部纯射线上传递。
+
+Haar平均给一个 $H$ 不变的严格正单位 $\widehat u$、其归一底内的一个 $H$ 不动内点 $c$，以及 $\ker\widehat u$ 上的一个 $H$ 不变正定内积。新底 $\widehat K=C_1\cap\{\widehat u=1\}$ 仍严格凸；其整个边界为纯点，$H$ 在边界上传递，所以边界到 $c$ 的这个内积距离恒定。每条从 $c$ 出发的射线恰交边界一次，故 $\widehat K$ 是整个三球。因此 $C_1$ 是洛伦兹锥。
+
+最后回到原单位，不能把 $\widehat u$ 当作原 $u$。在洛伦兹坐标 $C_1=\{(t,x):t\ge\|x\|\}$ 中写 $u(t,x)=at+b\cdot x$，其中 $a>\|b\|$。原截面满足
+
+$$
+x^T(a^2I-bb^T)x+2b\cdot x\le1.
+\tag{274.8}
+$$
+
+矩阵 $a^2I-bb^T$ 正定，该椭球连通且含 $x=0$；$1-b\cdot x$ 不可能在其中过零，所以平方没有引入错误支。原 $K_1$ 因而是完整椭球。将其保单位仿射同构到 Bloch 球，再作齐次实线性延拓，得到(274.3)。没有调用二维Gleason，也没有假设原单位下的 $A_G$ 已保迹。$\square$
+
+**定理 274.3（M-only共同确认包与统一秩二供应）。** 设 $m,n\ge2$，整个原实载体为 $H_m\otimes_{\mathbb R}H_n$，单位为普通迹，闭尖生成锥满足
+
+$$
+\operatorname{Sep}(m|n)\subseteq C\subseteq\operatorname{BP}(m|n).
+\tag{274.9}
+$$
+
+使用整个紧底、全部原纯点及完整 proper 菜单，只要求 $\mathsf M$。则有一个共同 $\delta\in\{0,1\}$，使
+
+$$
+T_A^\delta\mathcal S_2(m|n)\subseteq C\cap C^*,\qquad
+\mathcal S_2(m|n)=\operatorname{cone}\{P_\psi:\operatorname{SR}(\psi)\le2\}.
+\tag{274.10}
+$$
+
+若 $\min(m,n)=2$，则在原矩阵坐标中
+
+$$
+\boxed{\quad C=C^*=\operatorname{PSD}_{mn}
+\quad\text{或}\quad C=C^*=T_A\operatorname{PSD}_{mn}.\quad}
+\tag{274.11}
+$$
+
+不要求实际L2、NR、数值互易或一般面滤波。一般 $m,n>2$ 的(274.10)不分类更高Schmidt秩方向。
+
+证明。复用[XX271.5—271.12][Q274M]的M-only剥离、完整frame补全、原暴露面的least最大测试，以及[Gurvits—Barnum, Theorem1][Q274GB]供应的
+
+$$
+\|W\|_2\le\operatorname{Tr}W\quad(W\in\operatorname{BP}(m|n)).
+\tag{274.12}
+$$
+
+这些步骤适用于 $C,C^*$，不需要实际L2；特别每个单位产品投影 $P$ 是原纯态兼least确认效应。每个非空原暴露面 $E$ 有一个极端proper效应 $h_E$，满足 $\{h_E=1\}=E$，且低于每个在 $E$ 上取一的proper效应；对每个纯 $P\in E$，$h_E-e_P$ 仍是整个原proper区间的极点。
+
+关键是选择共同确认包，而不先识别二元实际面。对任意原纯 $P,Q$，令
+
+$$
+E(P,Q)=\bigcap_{\substack{f\in[0,I]_{C^*}\\f(P)=f(Q)=1}}\{x\in K:f(x)=1\}.
+\tag{274.13}
+$$
+
+这个交能由有限子族取得：从 $K$ 开始，若当前有限交 $D$ 还不等于全交，取 $x\in D\setminus E(P,Q)$，再选一个排除 $x$ 的饱和面。新交是 $D$ 的严格真面，仿射维数严格下降，故有限步终止。所选proper效应的平均在一点取一当且仅当每项都取一，所以 $E(P,Q)$ 本身暴露。因而 $h=h_{E(P,Q)}$ 存在，并满足
+
+$$
+h\le f\quad\text{对每个共同确认 }P,Q\text{ 的原proper效应 }f.
+\tag{274.14}
+$$
+
+这不是将最小实际面自动当作暴露面，也不需要预证 $E(P,Q)=F_K(P,Q)$。
+
+取一般位置产品 $P=P_{a\otimes b}$、$Q=P_{c\otimes d}$，局部重叠 $0<\alpha=|\langle a,c\rangle|<1$、$0<\beta=|\langle b,d\rangle|<1$。置 $S=\operatorname{span}\{a,c\}$、$T=\operatorname{span}\{b,d\}$，并取
+
+$$
+\begin{aligned}
+Q_A&=(I-P_S)\otimes I,&Q_B&=I\otimes(I-P_T),\\
+R_1&=P_{a_S^\perp}\otimes P_{d_T^\perp},&
+R_2&=P_{c_S^\perp}\otimes P_{b_T^\perp}.
+\end{aligned}
+\tag{274.15}
+$$
+
+所有这些矩阵和其补均可分，所以是原proper效应。它们的补共同确认 $P,Q$，(274.14)直接给
+
+$$
+h\ge_{C^*}P,Q,\qquad
+h\le_{C^*}I-Q_A,I-Q_B,I-R_1,I-R_2.
+\tag{274.16}
+$$
+
+评估 $Q_A,Q_B,R_1,R_2$，得 $\operatorname{Tr}(Q_Ah)=\operatorname{Tr}(Q_Bh)=0$ 及 $h(R_i)=0$。XX271.16的块正零边缘论证在两腿分别使用，把 $h$ 真正限制到 $S\otimes T$，包括消去所有交叉块；此处只用 $h\in C^*\subseteq\operatorname{BP}$。在可逆图 $D=[a\ c]\otimes[b\ d]$ 中，两个产品零条件给XX271.18的六实维稀疏形。它们并不需要先把共同零面判成二态球。
+
+准确消费XX271.22—271.28的四维支持计算：输入是(274.16)、$h(P)=h(Q)=1$、这两个零条件，以及原产品向量的Gram矩阵。令 $g=\alpha\beta$，稀疏系数为 $A,D_0,z,w$，得到
+
+$$
+A=D_0=\frac1{1-g^2},\qquad
+z,w\le0,\qquad z+w=-\frac g{1-g^2},\qquad
+\operatorname{Tr}h=A+D_0+2g\operatorname{Re}(z+w)=2.
+\tag{274.17}
+$$
+
+最后一项是原矩阵迹，不是变换后稀疏矩阵的迹。于是 $d=h-P$ 是迹一的非零极端proper效应。若其最大读数 $s<1$，则 $d=s(d/s)+(1-s)0$ 是非平凡proper分解，矛盾。因此它在某颗原纯 $x$ 上取一，$e_x\le d$。(274.12)与XX271.10—271.11给
+
+$$
+1\le\operatorname{Tr}e_x\le\operatorname{Tr}d=1,
+\qquad d=e_x=x\in C\cap C^*,\qquad\|x\|_2=1.
+\tag{274.18}
+$$
+
+稀疏线段的两个端点仍准确为
+
+$$
+H_0=P_{\operatorname{span}\{a\otimes b,c\otimes d\}},\qquad
+H_1=T_AP_{\operatorname{span}\{\bar a\otimes b,\bar c\otimes d\}}.
+\tag{274.19}
+$$
+
+XX271.30—271.33的HS严格凸性将(274.17)限制为 $h=H_0$ 或 $h=H_1$：两个残余 $H_i-P$ 的HS范数均为一，而非平凡中间凸混合的范数严格小于一，与(274.18)冲突。
+
+共同方向也由同一个共同确认包支付。一般位置产品对由连通域 $U(m)\times U(n)\times(0,1)^2$ 连续覆盖；令 $A_i$ 为 $H_i$ 属于原proper区间的参数集。两个闭集覆盖该域。若两者同时proper，它们都确认 $P,Q$，所以(274.14)给 $h\le H_0,H_1$。三者原迹均为二，(274.12)使正差为零，迫 $H_0=H_1$，与一般位置的两个相干通道不同矛盾。故两闭集不交，连通性选出一个全域共同方向。这里不能将“确认 $P,Q$”直接改写成“确认任意另选的大零面”；(274.13)正是需要的共同对象。
+
+最后准确复用XX271.36—271.39的显式产品残余构造。在任意选定的局域复二维Schmidt支持中，每个非最大纠缠的秩二 $P_\psi$ 都是某一般位置 $H_0-P$；另一方向给 $T_AP_\psi$。由(274.18)同时属于 $C,C^*$。最大纠缠点由两闭锥的极限补上，产品点已有，故得(274.10)。当某因子维数二，全部向量Schmidt秩至多二；谱分解及对偶夹逼给(274.11)。全部原纯点及完整proper效应因此被穷尽。$\square$
+
+**定理 274.4（双份关系加三份最小确认的完整重建）。** 在274.1的整个强背景及同一四维局域分支中，相对于[XIII161.4][Q274T]的全有限传播供应，以下三项等价：$\mathsf Q_{2,3}$；原 $\mathsf X_3$；存在一个固定保单位实线性序同构 $\theta:V\to H_2$，使
+
+$$
+\boxed{\quad
+\theta^{\otimes N}C_N=\operatorname{PSD}_{2^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}
+\quad(N\ge0).\quad}
+\tag{274.20}
+$$
+
+实际L2、全部有限层的M与数值互易均为结论。
+
+证明。由274.2先固定同一个局域 $\theta$。三份least确认沿原纯旁观面下降，准确使用XX271.46—271.47：高层least效应限制到产品面；低层任意确认者 $f$ 通过 $f\otimes u$ 成为高层proper确认者，故限制仍低于完整低层菜单。于是 $\mathsf M_1,\mathsf M_2$ 成立。以下只写各层在 $\theta^{\otimes N}$ 下的像。
+
+在 $1|1$ 上，原min/max给Sep/BP界，274.3的 $2\times2$ 分类给 $C_2=T_1^\delta\operatorname{PSD}_4$。在 $1|23$ 上，仅为第二块换保迹序坐标 $T_2^\delta$，令 $C'_3=T_2^\delta C_3$。两个局域块现为整个 $\operatorname{PSD}_2$、$\operatorname{PSD}_4$；整锥、完整逆对偶菜单、单位和min/max都随该坐标正确运输，$\mathsf M_3$ 的least性也保持。274.3的 $2\times4$ 分类遂给
+
+$$
+C'_3=T_1^\eta\operatorname{PSD}_8,\qquad
+C_3=T_1^\eta T_2^\delta\operatorname{PSD}_8,
+\qquad \delta,\eta\in\{0,1\}.
+\tag{274.21}
+$$
+
+这里 $T_2^\delta$ 是块坐标运输，不是被预设为原三份正操作。
+
+原正丢弃把三份锥满射到每条实际二份边：包含由正性给出，反向由任意二份态附加一颗归一旁观态及最小界给出。原正位置置换及其逆使三条边都是同一个 $C_2$。(274.21)在 $12,13,23$ 边的转置奇偶分别为
+
+$$
+\eta\mathbin{\oplus}\delta,\qquad\eta,\qquad\delta.
+\tag{274.22}
+$$
+
+标准二份PSD锥与其单腿部分转置锥不同：Bell投影的部分转置在反对称方向有本征值 $-1/2$。所以每条边必须与原 $C_2$ 的方向 $\delta$ 一致，迫 $\eta\oplus\delta=\delta$、$\eta=\delta$，从而 $\eta=\delta=0$。于是同一个 $\theta$ 下整个低三层都标准；不能逐边独立重选方向。
+
+现在XIII161.4的同坐标标准 $C_1,C_2,C_3$ 前件已全部支付，其余全有限min/max、原产品、正置换、重括号及单位就是未删减的 $\mathsf B_{\mathrm{fin}}$。该尾部给全部有限层的(274.20)：标准低层先供应正确Bell杯帽与三腿相干资源，独立产品及正收缩使用更高有限份数，再经精确有限普适性对原态和原效应作双向夹逼。没有把仅定义低三层的截断模型代入这个尾部。零层为标量恒等。
+
+反向，标准PSD层级在完整菜单中的least确认者为 $P_v$，故有 $\mathsf M_3$；272.5的显式正交换点给 $\mathsf X_2$。272.5另给 $\mathsf X_3\Longleftrightarrow$(274.20)，因此三项等价。$\square$
+
+**推论 274.5（简洁几何与现有量子公理的对应）。** 在274.4的完整前提下，最小局域几何为一个洛伦兹锥 $L_4$，其原归一截面为椭球、纯域为 $\mathbb{CP}^1\simeq S^2$；共同局域坐标使每个有限层为 $\operatorname{PSD}_{2^N}$，纯域为 $\mathbb{CP}^{2^N-1}$，实际二纯面为完整Bloch三球。全部层级的原混合重心关系恰为支持正交。
+
+证明与对应。保单位线性同构保留实际面及其自身体积重心，故原关系准确运输为标准支持正交。固定 $\Theta_N=\theta^{\otimes N}$，原态 $x$ 对应 $\rho=\Theta_Nx$，原效应 $f$ 对应 $E=(\Theta_N^{-1})^*f$；以下各行使用这个同一对应：
+
+| 原对象或另给的过程前件 | 得到的量子结构 |
+| --- | --- |
+| 全部归一态、纯点及原凸混合 | 全部密度矩阵、秩一投影及其凸混合；纯态的复相位商 |
+| 完整proper菜单、单位分解与原配对 | $0\preceq E\preceq I$、全部有限POVM及PVM；$f(x)=\operatorname{Tr}(E\rho)$ |
+| 纯目标最小确认与原关系 | $e_p(x)=\operatorname{Tr}(P_p\rho)$；纯点间为 $|\langle v,w\rangle|^2$，零值准确给正交关系 |
+| 所有有限联合锥、产品、置换及丢弃 | 同一复Hilbert张量积的全部纠缠态、交换及偏迹 |
+| 另给实线性分支在每个有限相关旁观输入上保正，并给整个正输入的质量预算 | 矩形CP、Kraus形式及相应TNI／TP；数学仪器另需所有分支的总单位预算 |
+| 另给正实线性锐分支、投影效应及整个yes支持逐点中性 | 唯一Lüders压缩；连续可逆保锥保单位一参数群另给酉动力学及Hamilton生成元 |
+
+静态各行由(274.20)直接给；过程各行精确保留XX271.4及XIII161.6—161.10的前件。设备、记录、物理钟、能量和 $\hbar$ 的标定，以及无限或近似极限仍各需相应实现或极限条件。共同圆尺、三球和数值互易由整锥读回，不作为(274.1)—(274.2)的隐含输入。$\square$
+
+**命题 274.6（反事实、简洁性的准确范围与白话）。** $\mathsf M_3$ 单独不够：四维局域经典全有限层级满足它，却不满足 $\mathsf X_2$。只保双份模型时，标准PSD及单腿部分转置PSD都满足完整 $\mathsf X_2$ 与M，不能据双份换边独自选择相对方向。单独 $\mathsf X_2$ 在完整 $\mathsf B_{\mathrm{fin}}$ 中是否已足够，不由274.4证明或反驳。
+
+证明。经典 $C_N=\mathbb R_+^{4^N}$ 的纯点有坐标least确认者，故M成立。两个不同纯点正交，翻转只能将第二点换成第一点，但两点的共同正交参照与单点的正交参照不同，所以换点失败。双份的两个矩阵锥由保迹线性对合 $T_1$ 互相运输；它保实际面及其自身体积重心，完整关系与换点也随之运输。二者的同一产品准备、产品效应及读数相同，Bell投影准入却不同。这里未给非标准双份备择补出满足整个强背景的有限层级，所以不是全有限反模型。
+
+274.3把已有迹二方法的实际L2前提消去：所需least测试属于全部共同确认者的最小暴露包，不要求预知整个二态面是球。274.2则用双份完整产品网格、原条件化及紧群平均，先恢复原单份洛伦兹锥；它不假设两因子初始标签一致，也不要求三份射影表示。两条接合在274.4汇合，给完整的 $\mathsf X_2+\mathsf M_3$ 候选。与三份换边相比，几何约束只查双份，三份保留全混合输入的一致最小确认；二者在这里定义同一个量子模型类，不据语句变短主张严格更弱或最少独立信息。所有结论限定在原局域实维数四分支。
+
+白话：先固定一颗珠子，换掉另一颗；两颗共同看不见的参照世界完全不变，但它们彼此必须从错开变成不完全错开，或反过来。这个动作只要求在两份联合中成立，便把单份世界的形状压成一颗椭球。再要求三份中的每颗纯准备都有一只最小确认测试，这只测试对所有混合输入同时有效。两颗准备的全部共同确认者便决定一只共同的最小测试，原先要外加的“三维球”随之出现。双份还容许一个镜像方向，但三条边必须来自同一个三份整体，镜像就无法彼此拼合；方向统一后，已有传播把全部有限量子态、Born读数和张量结构接到同一坐标。三份最小确认仍是候选的实质约束，尚未从双份换边中删除。$\square$
+
+[Q274M]: QUANTUM_ORIGIN_COMMON_RULER_AND_LEAST_CONFIRMATION_XX.md "271.5—271.12的M-only frame、暴露面least测试、极端残余和HS预算；271.16—271.39的支持、稀疏迹二计算、共同方向与显式Schmidt残余；274.2的一般矩阵支持接口。"
+[Q274GB]: https://arxiv.org/abs/quant-ph/0204159v2 "Gurvits与Barnum，Largest separable balls around the maximally mixed bipartite quantum state，Theorem1；仅供应原双体HS／迹预算。"
+[Q274T]: QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "161.1的实际纯旁观面；161.4的已对齐低三层到同一个局域坐标的全有限尾部；161.6—161.10的条件过程字典。"
+
+## 追加锚（本行以下为增补区）
