@@ -21,9 +21,6 @@ noncomputable section
 
 namespace Econlib.Probability.NoncompactStrassen
 
-open private IsCoupling.coupling_of_weak_limit IsMartingaleCoupling.condExp_snd_eq_fst
-  from D5.S3.Analytic.Probability.CompactStrassen
-
 private lemma tight_range_of_tendsto {μ : ProbabilityMeasure ℝ}
     {μn : ℕ → ProbabilityMeasure ℝ} (hμ : Tendsto μn atTop (𝓝 μ)) :
     IsTightMeasureSet (Set.range fun n => (μn n).toMeasure) := by
