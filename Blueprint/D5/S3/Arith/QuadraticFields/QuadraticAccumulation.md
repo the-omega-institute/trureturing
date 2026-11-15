@@ -183,3 +183,4 @@ After a finite shift the denominators are positive. The normalized values equal 
 - Truth anchor: `D5/S3/Arith/QuadraticFields/QuadraticAccumulation.realTraceDual`
 - Truth anchor: `D5/S3/Arith/QuadraticFields/QuadraticAccumulation.signed_norm_values_accumulate`
 - Truth anchor: `D5/S3/Arith/QuadraticFields/QuadraticAccumulation.traceDual`
+- Dependency: [D5/S3/Arith/QuadraticFields/QuadraticOrderMaximal](QuadraticOrderMaximal.md)
