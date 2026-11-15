@@ -591,7 +591,9 @@ def publish(root, partition, verification=None, *, build_report=True):
                 with MultipartArchiveOutput(stage, ASSET, CHUNK_BYTES, deadline) as output:
                     with tarfile.open(stage / ASSET, "w:gz", compresslevel=1,
                                       fileobj=output) as archive:
-                        archive.add(root / ".lake/build", arcname="build")
+                        archive.add(root / ".lake/build", arcname="build",
+                                    filter=lambda member: None if member.isfile()
+                                    and member.name.endswith(".setup.json") else member)
             metadata = {"schema": "lean-release-seed-v4", "partition": partition, "cache_key": cache_key,
                 **identity, **output.metadata()}
             (stage / MANIFEST).write_text(json.dumps(metadata, sort_keys=True) + "\n")

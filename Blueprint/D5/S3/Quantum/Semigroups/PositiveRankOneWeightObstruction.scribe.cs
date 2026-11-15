@@ -59,6 +59,20 @@ internal sealed class PositiveRankOneWeightObstructionDocument : IScribeDocument
                 "For A, the diagonal form is real and nonnegative, and ‖u‖≤formNorm A u≤√2‖u‖. Every form-norm Cauchy sequence converges "
                 + "in that form norm, by completeness of the actual L2 Hilbert norm and these two inequalities. This establishes closedness "
                 + "on the full dense domain; it is not a surrogate for the weighted essential sup norm."),
+            Entry("weighted-sharp", "WeightedSharp", "Sharp constants for the original semigroup", WeightedSharpFormula(),
+                "WeightedSharp uses the original complex L2 operator T, its actual AE representatives and the same measure mu. "
+                + "It requires the eLpNorm inequality for all bounded L2 inputs and an actual bounded L2 input of weighted norm one "
+                + "attaining the output constant. The generic raw-input theorem is transported through T_rep and MemLp.toLp; "
+                + "the integral is invariant under the representative change."),
+            Entry("conditioned-optimum", "conditioned_weight_optimum", "The exact attained condition-budget optimum", ConditionedFormula(),
+                "For every finite real kappa>=1 and t>=0 the sharp minimum over all equivalent positive weights with condition number "
+                + "at most kappa is 1+(1-exp(-t))/(2 kappa cubed). The same optimizer g(x)=1/max(1,kappa x) works at every time, "
+                + "and here its condition number equals kappa. Positive-measure intervals approaching one prove norm infinity x=1; "
+                + "the squared integral is 1/3. Splitting at 1/kappa gives integral x max(1/kappa-x,0)=1/(6 kappa cubed). "
+                + "The universal lower bound tests the actual norm-attaining L2 input after transport from the generic theorem. "
+                + "The optimum uniform-in-time bound is 1+1/(2 kappa cubed), approached as t tends to infinity. "
+                + "For every finite t the transient optimum is strictly smaller, so this is a supremum and not a finite-time maximum. "
+                + "At t=0 the sharp bound is one. This quantifies the earlier qualitative obstruction without replacing its source statement.", true),
             Entry("claim", "claim", "The source-faithful restricted weight assertion", Claim(),
                 "The displayed implications state, in order: bounded self-adjoint B; angle-zero sectoriality; association of B to its full-domain "
                 + "form; sesquilinearity; continuity; density; completeness in the actual form norm; the operator exponential formula; the identity "
@@ -134,6 +148,36 @@ internal sealed class PositiveRankOneWeightObstructionDocument : IScribeDocument
     private static Formula HalfThree => Call("divide", D(3), D(2));
     private static Formula Image(Formula t, Formula f) =>
         Apply(Apply(V("S"), Call("ofReal", t)), f);
+
+    private static Formula WeightedSharpFormula()
+    {
+        Formula weighted(Formula f) => Map("x", Real, Mul(Call("ofReal", Apply(V("g"), V("x"))), Eval(f, V("x"))));
+        Formula image = Apply(Apply(V("T"), Call("ofReal", V("t"))), V("f"));
+        Formula bound = Le(Linf(weighted(image)), Mul(Call("ofReal", V("C")), Linf(weighted(V("f")))));
+        Formula attaining = Ex("f", V("H"), And(Bounded(V("f")), And(Eqn(Linf(weighted(V("f"))), D(1)),
+            Eqn(Linf(weighted(image)), Call("ofReal", V("C"))))));
+        Formula body = And(Le(D(0), V("C")), And(All("f", V("H"), Imp(Bounded(V("f")), bound)), attaining));
+        return All("t", Real, All("g", Arrow(Real, Real), All("C", Real,
+            Iff(Call("WeightedSharp", V("t"), V("g"), V("C")), body))));
+    }
+    private static Formula ConditionedFormula()
+    {
+        Formula cube = new Formula.Power(V("kappa"), D(3));
+        Formula value = Add(D(1), Call("divide", Sub(D(1), Call("exp", MinusOf(V("t")))), Mul(D(2), cube)));
+        Formula star = Map("x", Real, Call("inv", Call("max", D(1), Mul(V("kappa"), V("x")))));
+        Formula weight(Formula w) => Call("Weight", V("mu"), w);
+        Formula condition(Formula w) => Call("condition", V("mu"), w);
+        Formula weighted(Formula f) => Map("x", Real, Mul(Call("ofReal", Apply(V("w"), V("x"))), Eval(f, V("x"))));
+        Formula image = Apply(Apply(V("T"), Call("ofReal", V("t"))), V("f"));
+        Formula bound = All("f", V("H"), Imp(Bounded(V("f")),
+            Le(Linf(weighted(image)), Mul(Call("ofReal", V("C")), Linf(weighted(V("f")))))));
+        Formula least = All("w", Arrow(Real, Real), Imp(And(weight(V("w")), Le(condition(V("w")), V("kappa"))),
+            All("C", Real, Imp(And(Le(D(0), V("C")), bound), Le(value, V("C"))))));
+        Formula result = And(weight(star), And(Eqn(condition(star), V("kappa")),
+            And(Call("WeightedSharp", V("t"), star, value), least)));
+        return All("kappa", Real, All("t", Real,
+            Imp(And(Le(D(1), V("kappa")), Le(D(0), V("t"))), result)));
+    }
 
     private static Formula Sesquilinear() => All("u", V("H"), All("v", V("H"),
         All("w", V("H"), All("c", Complex,
