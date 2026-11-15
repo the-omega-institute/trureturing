@@ -1,0 +1,19 @@
+**定理 197.6（单系统的命中—单侧候选）。** 在197.1的原域上，下列等价：
+
+$$
+\boxed{\quad
+\mathrm{L2}+\forall a\in P\,[\mathrm{Hit}(a)+\mathrm{SP}(a)]
+\quad\Longleftrightarrow\quad
+\exists n\ge1,\ \theta:V\overset\sim\longrightarrow
+\operatorname{Herm}_n(\mathbb C):
+\ \theta(C)=\operatorname{PSD}_n,\quad u=\operatorname{Tr}\circ\theta.
+\quad}
+\tag{197.12}
+$$
+
+所有对象都沿同一个原实线性同构运输。左侧没有 TC、全混态零凸性、正删除或预给的矩阵商。
+
+证明。197.4先给全标签 NC。L2+Hit 给 AD：取任何实际二元球 $B$ 和球内纯点 $a$，Hit 给 $b\in N_a\cap B$。原区分效应在整个 $B$ 上取值于 $[0,1]$，于 $a,b$ 达到一、零。三球上非恒定仿射函数的最大、最小点唯一且互为对径，故 $b$ 正是 $a$ 的几何对径。这个步骤只使用179.3证明中的球内极值部分，无需其混态零凸性前件。于是准确达到 XIII162.10 的 L2+NC+AD，直接复用其完整单系统分类。
+
+反向，在完整复矩阵底中，$a=P_v$ 的原邻点恰为 $P_w$、$w\perp v$。任意二点实际球的复二维支持 $U$ 满足 $\dim(U\cap v^\perp)\ge1$，给 Hit，包括球外的 $a$。原正泛函 $X\mapsto\operatorname{Tr}(P_vX)$ 消去全部 $N_a$ 且在 $a$ 取一，故由(197.11)给 SP；实际二点底为三球，给 L2。$n=1$ 时 $K$ 单点，Hit 与 L2 为空量词，$N_a=\varnothing$，SP 直接成立。$\square$
+
