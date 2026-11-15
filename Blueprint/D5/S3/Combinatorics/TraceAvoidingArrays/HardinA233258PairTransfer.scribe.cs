@@ -44,6 +44,11 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
             Node("weights", "Two-column orbit multiplicities",
                 Eq(Own("weights"), Vector(24,24,12,24,12)), false),
             Node("count_transfer", "All labelled continuation counts", TransferFormula(), true),
+            Node("W", "Six continuation vectors", Eq(Own("W"),
+                Vector(Vector(1,1,1,1,1), Vector(8,4,2,4,2), Vector(36,18,12,18,6),
+                    Vector(168,78,54,84,24), Vector(768,354,246,384,108),
+                    Vector(3504,1614,1122,1752,492))), false),
+            Node("powers_table", "Certified continuation vectors", PowersFormula(), true),
             Node("initial_values", "Six initial transfer counts", InitialFormula(), true),
             Node("recurrence", "The constant-adjusted cubic relation", RecurrenceFormula(), true))));
 
@@ -82,6 +87,9 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
         return All("k", Fin(D(6)), Eq(Typed(Own("L", Add(Val(V("k")), D(2))), Q("Int")),
             App(Typed(values, Arrow(Fin(D(6)), Q("Int"))), V("k"))));
     }
+    private static Formula PowersFormula() => All("k", Fin(D(6)),
+        Eq(Call("Matrix.mulVec", new Formula.Power(Own("Q"), Val(V("k"))),
+            Typed(D(1), Arrow(Fin(D(5)), Q("Int")))), Own("W", V("k"))));
     private static Formula RecurrenceFormula()
     {
         var n = V("n");

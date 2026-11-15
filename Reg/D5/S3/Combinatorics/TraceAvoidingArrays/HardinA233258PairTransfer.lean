@@ -219,5 +219,71 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 end Transfer
+
+namespace PowersTable
+abbrev signature : Signature.{0, 0, 0, 0, 0} :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => Fin 6) (fun _ => Fin 5 → ℤ)
+def actual : Realization signature :=
+  realize signature (fun _ _ k => W k) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ k => W k + (1 : Fin 5 → ℤ)) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ k : Fin 6, (Q^k.val).mulVec (1 : Fin 5 → ℤ) = R.readout () () k
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have ha := congrFun (powers_table 0) (0 : Fin 5)
+  have hb := congrFun (h 0) (0 : Fin 5)
+  change ((Q^0).mulVec (1 : Fin 5 → ℤ)) 0 = W 0 0 at ha
+  change ((Q^0).mulVec (1 : Fin 5 → ℤ)) 0 = W 0 0 + 1 at hb
+  linarith only [ha, hb]
+def family : Registration arena (type_of% @powers_table) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@powers_table, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    intro he
+    have hh := congrFun he (0 : Fin 5)
+    change (1 : ℤ) = 8 at hh
+    norm_num at hh
+def audit : Contract.Registration.{0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@powers_table) (Realization signature) Type Unit where
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer.PowersTable.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer.PowersTable.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ k => W k) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end PowersTable
 end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer

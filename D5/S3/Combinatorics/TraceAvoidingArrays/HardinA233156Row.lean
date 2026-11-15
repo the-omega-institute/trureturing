@@ -41,14 +41,24 @@ theorem result (n : ℕ) : (U3 (n + 5) : ℤ) =
   let w := HardinA233258PairTransfer.weights
   cases n with
   | zero =>
-    rw [HardinA233258PairTransfer.count_transfer 3,
-      HardinA233258PairTransfer.count_transfer 2,
-      HardinA233258PairTransfer.count_transfer 1]
-    decide +kernel
+    have h1 := HardinA233258PairTransfer.initial_values (1 : Fin 6)
+    have h2 := HardinA233258PairTransfer.initial_values (2 : Fin 6)
+    have h3 := HardinA233258PairTransfer.initial_values (3 : Fin 6)
+    change (HardinA233258PairTransfer.L 3 : ℤ) = 432 at h1
+    change (HardinA233258PairTransfer.L 4 : ℤ) = 1944 at h2
+    change (HardinA233258PairTransfer.L 5 : ℤ) = 8856 at h3
+    rw [h1, h2, h3]
+    norm_num
   | succ n =>
     have hc : (Q ^ (2 + 2)).mulVec (1 : Fin 5 → ℤ) =
         ∑ j : Fin 2, (![-2, 5] : Fin 2 → ℤ) j •
           (Q ^ (2 + j.val)).mulVec (1 : Fin 5 → ℤ) := by
+      rw [show 2 + 2 = (4 : Fin 6).val from rfl,
+        HardinA233258PairTransfer.powers_table]
+      have hh (j : Fin 2) : (Q ^ (2 + j.val)).mulVec (1 : Fin 5 → ℤ) =
+          HardinA233258PairTransfer.W ⟨2 + j.val, by omega⟩ :=
+        HardinA233258PairTransfer.powers_table ⟨2 + j.val, by omega⟩
+      simp_rw [hh]
       exact List.ofFn_inj.mp (by decide +kernel)
     have h := TransferMatrix.scalarRelationShift Q w 2 2
       (![-2, 5] : Fin 2 → ℤ) hc n

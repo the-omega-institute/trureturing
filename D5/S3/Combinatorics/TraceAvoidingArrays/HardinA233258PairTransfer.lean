@@ -36,13 +36,13 @@ gridEquiv: proof_shape=bind-only; consumers=column_grid, grid_good, count_transf
 column_grid: proof_shape=bind-only; consumers=grid_good
 grid_good: proof_shape=bind-only; consumers=count_transfer
 count_transfer: proof_shape=bind-only; consumers=initial_values, recurrence_core
-W: proof_shape=bind-only; consumers=table_zero, table_steps, powers_table, power_polynomial, initial_values
+W: proof_shape=bind-only; consumers=table_zero, table_steps, powers_table, power_polynomial, initial_values, HardinA233156Row.result
 coefficients: proof_shape=bind-only; consumers=power_polynomial, recurrence_core
 table_zero: proof_shape=bind-only; consumers=powers_table
 table_steps: proof_shape=bind-only; consumers=powers_table
-powers_table: proof_shape=bind-only; consumers=power_polynomial, initial_values
+powers_table: proof_shape=bind-only; consumers=power_polynomial, initial_values, HardinA233156Row.result
 power_polynomial: proof_shape=bind-only; consumers=recurrence_core
-initial_values: proof_shape=bind-only; consumers=recurrence, HardinA233258Strip.finite_certificate, HardinA233258Strip.initial
+initial_values: proof_shape=bind-only; consumers=recurrence, HardinA233258Strip.finite_certificate, HardinA233258Strip.initial, HardinA233156Row.result
 recurrence_core: proof_shape=bind-only; consumers=recurrence
 recurrence: proof_shape=bind-only; consumers=HardinA233258Strip.recurrence
 -/
@@ -180,7 +180,7 @@ theorem count_transfer (n : ℕ) :
 end CountBridge
 
 attribute [local irreducible] L
-private def W : Fin 6 → Fin 5 → ℤ :=
+def W : Fin 6 → Fin 5 → ℤ :=
   ![![1,1,1,1,1], ![8,4,2,4,2], ![36,18,12,18,6],
     ![168,78,54,84,24], ![768,354,246,384,108], ![3504,1614,1122,1752,492]]
 private def coefficients : Fin 3 → ℤ := ![2,-7,6]
@@ -188,7 +188,7 @@ private theorem table_zero : W 0 = (1 : Fin 5 → ℤ) := by decide +kernel
 set_option maxRecDepth 100000 in
 private theorem table_steps : ∀ k : Fin 5, W k.succ = Q.mulVec (W k.castSucc) := by
   decide +kernel
-private theorem powers_table (k : Fin 6) : (Q^k.val).mulVec (1 : Fin 5 → ℤ) = W k :=
+theorem powers_table (k : Fin 6) : (Q^k.val).mulVec (1 : Fin 5 → ℤ) = W k :=
   TransferMatrix.tabulatedPowers Q 5 W table_zero table_steps k
 private theorem power_polynomial :
     (Q^(2+3)).mulVec (1 : Fin 5 → ℤ) =

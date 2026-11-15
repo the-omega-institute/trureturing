@@ -11,8 +11,8 @@ internal sealed class HardinA233156RowDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The number of labelled 3-row arrays obeys the order-2 recurrence from OEIS A233156.",
         H("OEIS A233156"), Blocks(
-            Node("U3",All("n",NatF(),Eq(C("U3",V("n")),FilterCard(N(3),V("n")))),"Every labelled function satisfying horizontal and antidiagonal sum exclusion is counted.",true),
-            Node("result",ResultFormula(),"The alternating permutation preserves every labelled array and identifies its count with HardinA233258PairTransfer.L. The count_transfer formula, Q and weights give the finite base identity and the continuation relation at every larger width.",theorem:true)), []));
+            Node("U3",All("n",NatF(),Eq(C("U3",V("n")),FilterCard(N(3),V("n")))),"HardinA233155RowTransfer.T at height three counts every labelled function satisfying horizontal and antidiagonal sum exclusion.",true),
+            Node("result",ResultFormula(),"The alternating permutation preserves every labelled array and identifies its count with HardinA233258PairTransfer.L. Its initial_values give the width-five base identity. Its powers_table identifies Q^2, Q^3 and Q^4 with the corresponding W vectors; the relation W(4) = -2 W(2) + 5 W(3), scalarRelationShift and count_transfer give every larger width.",theorem:true)), []));
     private static Formula ResultFormula() {
         Formula U(int j) => Cast(C("U3",PlusF(V("n"),N(j))),IntF());
         return All("n",NatF(),Eq(U(5),Sub(Mul(N(5),U(4)),Mul(N(2),U(3)))));
