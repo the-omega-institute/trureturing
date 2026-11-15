@@ -3621,3 +3621,224 @@ $$
 有限秩核的自由商、非退化配对坐标、紧集凸包的极点性质、面逆像、谱分解与秩—零度是成熟中间工具。实际提升的紧性直接复用223.2，分类直接复用202.3，其成熟凸几何与Jordan背景沿用该条及XIII162的来源；固定构型与原可测性直接复用231.4。新增repo-derived接合是：不预设正性的有限二元读数给完整实际提升、由其取得原矩阵商与全核PSD、再将秩超额精确识别为原混合折叠；五点普适独立的面论证为辅助结果。TC下的矩阵商、正交谱排核及六点构造均有既有来源，不另申领；有限来源检索不支持全球优先权声明。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 240. 实际三点面的九维上界、无预置尺的切闭合与完整量子候选
+
+**定义 240.1（原域、实际球与三点维数条件）。** 沿用[XIII160.1—160.2](QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md)：有限维实 $V\ne0$，闭、尖、生成凸锥 $C$，在 $C\setminus\{0\}$ 严格正的 $u$，整个紧底 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$ 和完整原效应 $\mathcal E=[0,u]_{C^*}$。$F(A)$ 是包含 $A\subset K$ 的最小实际面，$F(\varnothing)=\varnothing$。L2 要求每对不同 $a,b\in P$ 的整个 $B(a,b)=F(a,b)$ 仿射同构于非退化闭三球；其整个球面恰为 $P\cap B(a,b)$。用 $\tau_p(y)$ 表示实际球 $B(p,y)$ 的椭球边界在 $p$ 处的二维切方向；这是逐球的内禀定义，不给整个纯域预置微分结构。定义
+
+$$
+\begin{aligned}
+\mathsf{TF9}&:\quad \dim_{\mathbb R}\operatorname{span}_{\mathbb R}F(a,b,c)\le9
+                       &&(a,b,c\in P),\\
+\mathsf{TC}&:\quad \tau_p(y)\subseteq\tau_p(a)+\tau_p(b)
+                       &&(a\ne b,\ p\notin B(a,b),\ y\in P\cap B(a,b)).
+\end{aligned}
+\tag{240.1}
+$$
+
+TF9 包括重合、共球及所有外三角情形。非空 $F\subset\{u=1\}$ 满足 $\dim\operatorname{span}F=1+\dim\operatorname{aff}F$，故它恰是整个实际三点面仿射维数至多八；它不是三个标记向量的张成维数至多九。L2 不比较不同球的半径，也不要求面内效应按原预算延拓。以下几何推导不预设共同圆尺、TC、AD、E0、NC、矩阵表示、$P$ 闭或全部面暴露。
+
+**定理 240.2（L2 的支撑锥满限制与外三角八维下界）。** 只假设240.1的原域及 L2。固定 $a\ne b$、$B=B(a,b)$、$S=P\cap B$、$p\in P\setminus B$，令
+
+$$
+\begin{gathered}
+F=F(p,a,b),\quad U=\operatorname{dir}\operatorname{aff}F,\quad d=\dim U,\quad
+D=\operatorname{span}_{\mathbb R}(B-p),\\
+E_y=\tau_p(y),\quad H=\sum_{y\in S}E_y,\quad
+N=\{\ell\in U^*: \ell(x-p)\ge0\ (x\in F)\}.
+\end{gathered}
+\tag{240.2}
+$$
+
+限制 $\rho(\ell)(x)=\ell(x-p)$ 把 $N$ 满射到 $B$ 上全部非负仿射函数 $\operatorname{Aff}(B)_+$。每个 $\ell\in N$ 消去整个 $H$，且
+
+$$
+\dim D=4,\qquad \dim H\ge4,\qquad D\cap H=0,\qquad d\ge8.
+\tag{240.3}
+$$
+
+若另有 $d\le8$，则 $H=E_a\oplus E_b$，从而该外点与该球满足 TC。
+
+证明。先记录所用的标准有限维面事实。若 $J$ 是紧凸 $K$ 的非空实际面，取 $x\in\operatorname{ri}J$；任意 $z\in K\cap\operatorname{aff}J$ 都使 $x+\varepsilon(x-z)\in J$ 对足够小 $\varepsilon>0$ 成立。$x$ 位于它与 $z$ 的开线段，面性质迫使 $z\in J$。故 $J=K\cap\operatorname{aff}J$，特别地 $J$ 闭且紧。这不把实际面改成暴露面，也不要求 $P$ 闭。又由 $K$ 的有限极点分解与面性质，$J=\operatorname{conv}(P\cap J)$，其中每次分解都是有限和。
+
+应用于 $B$，$p\notin\operatorname{aff}B$，所以 $\dim D=3+1=4$，且 $D^*$ 经 $\lambda\mapsto[x\mapsto\lambda(x-p)]$ 识别为 $\operatorname{Aff}(B)$。$F$ 包含 $B$ 及 $p$。对每个 $y\in S$，$B(p,y)$ 是 $F$ 的真面：若等于 $F$，它包含非单点面 $B$，三球严格凸便迫使 $B=F$，与 $p\notin B$ 矛盾。
+
+在 $\operatorname{ri}B(p,y)$ 取相对于 $\operatorname{aff}F$ 的支撑超平面。支撑超平面定理给非恒定仿射 $h\ge0$ 于 $F$，并在该点为零；相对内部的线段反射迫使 $h$ 在整个 $B(p,y)$ 为零。因此 $h(p)=0$，可写 $h(x)=\ell_y(x-p)$，其中 $0\ne\ell_y\in N$。这里零面只须包含该二点球，尚不要求恰等于它。
+
+$h|_B$ 不恒零，否则其零面同时包含 $p,a,b$，由最小实际面的定义包含整个 $F$，与非恒定矛盾。在任选的一颗球坐标 $z:B\to\overline{\mathbb B}^3$ 中，$h|_B\ge0$ 且在 $y$ 为零，故
+
+$$
+\rho(\ell_y)(x)=c_y\bigl(1-z(y)\cdot z(x)\bigr),\qquad c_y>0.
+\tag{240.4}
+$$
+
+这些恰给正仿射 Lorentz 锥 $\{\alpha+v\cdot z:\alpha\ge\|v\|\}$ 的全部极射线。更直接地，对 $s$ 单位、$\alpha\ge\beta\ge0$，
+
+$$
+\alpha+\beta s\cdot z
+ =\frac{\alpha+\beta}{2}(1+s\cdot z)
+  +\frac{\alpha-\beta}{2}(1-s\cdot z).
+\tag{240.5}
+$$
+
+任意非负仿射函数都如此表示，常数项用任意一对对径即可。对(240.4)重标并相加，得到 $\rho(N)=\operatorname{Aff}(B)_+$，是实际满射。
+
+任意 $\ell\in N$ 在 $p$ 取最小值；对球 $B(p,y)$ 的边界上经过 $p$ 的任意双侧光滑曲线求导，得 $\ell(E_y)=0$。这些速度张成规范二维切方向，故 $\ell(H)=0$。$\rho(N)$ 张成整个 $\operatorname{Aff}(B)=D^*$，所以 $\operatorname{span}N$ 分离 $D$，从而 $D\cap H=0$。
+
+XIII160.3的端点直和只用 L2，适用于任意不同 $y,z\in S$，因为 $B(y,z)=B$ 且 $p\notin B$。因此 $E_y\cap E_z=0$，特别地 $\dim(E_a\oplus E_b)=4$。于是 $d\ge\dim D+\dim H\ge8$。若 $d\le8$，则 $\dim H=4$，含于 $H$ 的 $E_a\oplus E_b$ 必等于 $H$；所有 $E_y$ 都在其中。$\square$
+
+**推论 240.3（全称 TF9 支付全部 TC）。** 在240.1的同一原域，L2 + TF9 蕴含 TC；每个外三角的实际面恰为仿射八维、齐次九维。
+
+证明。对每个外点与每颗实际球，TF9 给240.2的 $d\le8$，该定理同时给下界和 TC。无外点的单点底或整球底自动满足 TC。这个结论回答 XIII160.7 的特定 TF9 入口；它没有删去 TF9 后声称 L2 蕴含 TC，也没有以 A2 或某把共同圆尺代付支撑锥步骤。$\square$
+
+**定理 240.4（八维外三角的纯扇穷尽）。** 在 L2 + 全称 TF9 下，沿用240.2的外三角记号，有
+
+$$
+P\cap F=\bigcup_{y\in S}\bigl(P\cap B(p,y)\bigr).
+\tag{240.6}
+$$
+
+证明。240.2—240.3给 $d=8$、$\dim H=4$。记 $A=\operatorname{Aff}(B)$、$M=\operatorname{span}N$；$M$ 消去 $H$，而 $\rho(M)=A$ 为四维，故 $\dim M=4$，$\rho:M\to A$ 是同构，且 $\rho(N)=A_+$。定义对偶满射
+
+$$
+Q:U\longrightarrow A^*,\qquad Q(v)(f)=\rho^{-1}(f)(v).
+\tag{240.7}
+$$
+
+它的核四维，$Q(F-p)\subset A_+^*$，并且 $Q(y-p)=\operatorname{ev}_y$。球坐标中 $A_+$ 及其对偶都是四维 Lorentz 锥；非零对偶边界射线恰为 $\mathbb R_+\operatorname{ev}_y$，$y\in S$，而 $1-z(y)\cdot z$ 的对偶零面恰为这条射线。这只是单颗三球的仿射函数几何。
+
+令 $\ell_y=\rho^{-1}(1-z(y)\cdot z)\in N$，并令 $G_y=\{x\in F:\ell_y(x-p)=0\}$。其零面含 $p,y$，故含整个 $B(p,y)$；另一方面
+
+$$
+Q(G_y-p)\subseteq\mathbb R_+\operatorname{ev}_y,
+\qquad \dim\operatorname{aff}G_y\le\dim\ker Q+1=5.
+\tag{240.8}
+$$
+
+若 $G_y$ 严格大于 $B(p,y)$，其有限原纯分解给某个 $q\in P\cap G_y$ 位于该球之外。实际面 $F(q,p,y)\subset G_y$ 是真正外三角，240.2迫其仿射维数至少八，矛盾。因此 $G_y=B(p,y)$；这是推导出的特定零面结论，并非全体面预先暴露。
+
+对 $q\in P\cap F$、$q\ne p$，三维球 $B(p,q)$ 是八维 $F$ 的真面；同240.2的相对内部支撑法给 $0\ne\ell\in N$，且 $\ell(q-p)=0$。所以 $Q(q-p)$ 在对偶 Lorentz 边界。若它为零，$q$ 就属于全部 $G_y=B(p,y)$；任选不同 $y,z\in S$，XIII160.3的张成交集迫使这两个球的交只有 $p$，矛盾。因此它位于唯一非零边界射线 $\mathbb R_+\operatorname{ev}_y$，相应 $\ell_y(q-p)=0$，即 $q\in G_y=B(p,y)$。实际面的原纯点就是该球的边界；反向包含由 $B(p,y)\subset F$ 立即成立，$p$ 也在扇中。$\square$
+
+**定理 240.5（在 L2 下，TF9 恰恢复旧 L3）。** 在240.1的同一原域且假设 L2，全称 TF9 等价于 XIII160.2 的旧 L3：每个不包含于任何实际二点球的三纯点集，生成的整个实际面仿射同构于完整复 qutrit 密度体。此等价不要求 NC。
+
+证明。先假设 TF9。240.3已经在整个原域给 TC，故现在才调用 XIII160.4：有同一个迹归一化满射
+
+$$
+\Psi:\operatorname{Herm}_n(\mathbb C)\longrightarrow V,
+\qquad \Psi(\operatorname{PSD}_n)=C,\qquad u\Psi=\operatorname{Tr},
+\tag{240.9}
+$$
+
+其秩一标签穷尽且单射，每个二维复支持的整个密度球忠实对应实际二点面；暂不要求 $\Psi$ 全局单射。外三角 $p,a,b$ 的唯一纯提升射线记为 $[v],[\alpha],[\beta]$。实际二点面接口给 $v\notin\operatorname{span}_{\mathbb C}\{\alpha,\beta\}$，所以 $S_0=\operatorname{span}_{\mathbb C}\{v,\alpha,\beta\}$ 复三维。
+
+由240.4及二维支持接口，$P\cap F$ 的标签恰是所有经过 $[v]$ 并与 $\mathbb{CP}(\operatorname{span}\{\alpha,\beta\})$ 相交的复射影线之并。这就是整个 $\mathbb{CP}(S_0)$：每个非零 $cv+w\in S_0$，$w\in\operatorname{span}\{\alpha,\beta\}$，都在相应线上，$w=0$ 时为 $[v]$。有限纯生成遂给 $F=\Psi\mathcal D(S_0)$。由240.3，$\operatorname{span}_{\mathbb R}F$ 九维；$\operatorname{Herm}(S_0)$ 也九维，故 $\Psi$ 的该限制是线性双射，且把整个正锥送到 $\mathbb R_{\ge0}F$，把迹送到原单位。因此 $F$ 是完整 qutrit 面。
+
+反过来，若有旧 L3，非共球三纯点生成 qutrit，齐次维数九；共球而至少含两不同点时，最小面就是整个三球，齐次维数四；三个点全相同时为一维纯射线。穷尽全部三元组，得到 TF9。于是 XIII160.7 的 TF9 分支在不加 NC 时已经得到旧 L3；一般 L2 到 TC、一般 A2 到 TC 及其他开放入口不由这个有条件结论替代。$\square$
+
+**定义 240.6（单锥完整候选与全菜单非塌缩）。** 在240.1的整个原域定义
+
+$$
+T_p(x)=\min\{e(x):e\in[0,u]_{C^*},\ e(p)=1\},\quad
+N_p=\{q\in P:T_p(q)=0\},\quad
+\mathsf{NC}:\ p\notin F(N_p)\quad(p\in P).
+\tag{240.10}
+$$
+
+完整效应区间紧，确认集非空紧，故 minimum 实际达到。候选为 $\mathsf Q_{\rm TF9}=\mathsf{L2}+\mathsf{TF9}+\mathsf{NC}$；邻点用完整原菜单定义，不以球内菜单代替。XIII160.10还给等价表达：每个 $F(N_p)$ 是真面，或每个邻集有非零原正泛函消去。
+
+**推论 240.7（单锥完整双向对应）。** $\mathsf Q_{\rm TF9}$ 当且仅当存在整数 $n\ge1$ 及保单位序同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$，满足 $\theta(C)=\operatorname{PSD}_n$、$u=\operatorname{Tr}\circ\theta$。同一坐标识别全部原态、纯点、效应、确认菜单及所有混输入的 minimum；特别地
+
+$$
+\begin{gathered}
+\theta(K)=\mathcal D_n,\quad \theta(P)=\{P_v:\|v\|=1\},\quad
+\mathcal E\simeq\{A:0\preceq A\preceq I\},\quad e_A(x)=\operatorname{Tr}(A\theta x),\\
+T_{p_v}(x)=\operatorname{Tr}(P_v\theta x),\quad
+\theta F(N_{p_v})=\mathcal D(v^\perp),\qquad p_v=\theta^{-1}P_v.
+\end{gathered}
+\tag{240.11}
+$$
+
+证明。240.3给 L2 + TC，连同 NC 精确达到 XIII160.5，直接复用该完整分类及其确认者字典。矩阵反向中，三纯射线的复张成维数至多三，其实际支持面为 $\mathcal D_r$，齐次维数 $r^2\le9$；L2、NC及全部原菜单对应亦由160.5的反向供应。$n=1$ 是单射线端点，邻面为空；$\dim V>1$ 时 $\dim V=n^2$ 迫 $n\ge2$。$\square$
+
+**定义 240.8（整个三复制体上的全有限候选）。** 完整保留 XIII161、210.5及220.11的强实背景：同一个有限实 $V$、$\dim V>1$，每个有限 $N\ge0$ 的整个原载体 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成锥 $C_N$、严格正乘积单位 $u_N=u^{\otimes N}$，整个 $K_N=C_N\cap\{u_N=1\}$、全部 $P_N=\operatorname{ext}K_N$、完整原效应 $[0,u_N]$ 及全部有限单位分解。标量层为 $(\mathbb R,\mathbb R_+,1)$。原乘积配对分离联合空间，保留规范重括号、全部因子置换及其正逆、正的单位丢弃，并对每个有限 $a,b\ge0$ 要求
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}\subseteq C_a\otimes_{\max}C_b.
+\tag{240.12}
+$$
+
+最小锥使用全部正乘积，最大锥使用两块全部正泛函；量词包含任意有限分块和全部相关、纠缠输入。只在整个原 $K_3$ 上要求
+
+$$
+\mathsf Q_{\rm TF9}^{(3)}=\mathsf{L2}_3+\mathsf{TF9}_3+\mathsf{NC}_3.
+\tag{240.13}
+$$
+
+这里 TF9 的“三”是三个原纯标签，不是复制数；这三个标签可以各自为整个三复制系统的纠缠纯态。
+
+**定理 240.9（同一个局部坐标下的全部有限量子层级）。** 在240.8的全部强背景下，(240.13)当且仅当存在同一个整数 $n\ge2$ 和同一个实线性同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$，对每个有限 $N\ge0$ 同时满足
+
+$$
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{240.14}
+$$
+
+全部原乘积、单位、配对、有限置换、重括号及丢弃都在这同一套坐标中标准化。
+
+证明。在整个 $(W_3,C_3,u_3)$ 应用240.3和240.7，得到 L2 + TC + NC 及完整迹归一化 PSD 表示。由 XIII160.10的点态等价，这也正是 XIII161 的 $\mathsf G_3$，没有更换原邻集或实际面。随后精确消费 XIII161.3的共同低层坐标和161.4的分类后全有限传播：161.1的实际纯旁观面及161.2先供应原 $K_2,K_1$ 的整锥、原单位和全菜单；161.3用原 $1|1,2|1,1|2$ 的正态／正效应产品、完整配对和正重括号／交换接口选择同一个方向，给 $\theta,\theta^{\otimes2},\theta^{\otimes3}$。161.4再以全部有限 min/max 界与正置换传播至每个 $N$。这些正是240.8的原对象及前件，故直接得到(240.14)，无需重证产品分类或传播，也不以各层另选 $\theta_N$ 代替它。
+
+反向在标准复 PSD 层级中，实际面是复支持面；三个纯标签的支持秩 $r\le3$，故齐次维数 $r^2\le9$。两不同纯点的支持密度底是完整 Bloch 三球；纯目标的全部零邻点只生成其正交补支持面，排除目标，给 NC。全部强实背景亦成立。$\dim V=n^2>1$ 给 $n\ge2$；$N=0$ 取恒等标量坐标。$\square$
+
+**命题 240.10（即使全有限 TF9，NC 仍不可删）。** 240.8的强背景连同每个有限非标量层的 L2 与 TF9，仍不蕴含任何一层的全称 NC。
+
+证明。直接复用[XIV165.2—165.7](QUANTUM_ORIGIN_FINITE_TENSOR_QUOTIENT_AND_GLOBAL_NONCOLLAPSE_XIV.md)的一套既有平衡商，固定一次 $m\ge4$，取
+
+$$
+H=\operatorname{diag}(I_m,-I_m),\quad V=\operatorname{Herm}_{2m}(\mathbb C)/\mathbb RH,
+\quad \pi_N=\pi^{\otimes N},\quad C_N=\pi_N(\operatorname{PSD}_{(2m)^N}).
+\tag{240.15}
+$$
+
+165.2供应240.8的完整背景和整个原菜单。165.3供应每个 $N\ge1$ 的统一核惯性门槛：非零 $X\in\ker\pi_N$ 有 $n_+(X),n_-(X)\ge m$，且两界可达；门槛是固定的 $m$。165.4—165.5已经给全部原纯标签及实际小支持面，包括任意纠缠纯态。任取三个标签，其提升复张成维数 $r\le3<m$，故整个实际生成面恰为 $\pi_N\mathcal D(S)$，且限制是保迹序同构；于是 L2 与 TF9 在每层成立。
+
+NC 的失败直接取165.6的原证据：$p_N=\pi_NP_{e_1^{\otimes N}}$；其余坐标向量 $w$ 给原纯邻点 $q_w$，(165.24)—(165.25)的合法 $I-E_w\in[0,u_N]$ 确认 $p_N$ 并在 $q_w$ 为零。记 $D_N=(2m)^N$，该节的等式为
+
+$$
+\frac1{D_N-1}\sum_{w\ne e_1^{\otimes N}}q_w
+ =\pi_N\frac{I-P_{e_1^{\otimes N}}}{D_N-1}\in\operatorname{ri}K_N,
+\qquad F_N(N_{p_N})=K_N.
+\tag{240.16}
+$$
+
+因此特别在 $N=3$ 不能删 NC。这是既有全有限层级及合法邻点见证的应用；三点实际几何完整与全局混态差被合并可以同时成立。$\square$
+
+**推论 240.11（静态全字典、条件操作及物理边界）。** 在240.8及(240.13)下，令 $D_N=n^N$，同一个 $\Theta_N=\theta^{\otimes N}$ 给下列全部对应。表中涉及操作、时间或物理实现的行保留各自列明的额外前件。
+
+| 原对象或额外条件 | 同一坐标中的结论 |
+| --- | --- |
+| 整个原 $K_N$、全部原纯标签 | 全部 $\rho\succeq0,\operatorname{Tr}\rho=1$，全部秩一投影 $P_v$；纯域 $\mathbb{CP}^{D_N-1}$，含全部纠缠态 |
+| 完整原效应、配对、全部有限单位分解 | 全部 $0\preceq A\preceq I$、Born 读数 $\operatorname{Tr}(\rho A)$；数学 POVM 为 $A_j\succeq0,\sum_jA_j=I$ |
+| 全确认菜单、minimum 及零邻面 | 确认 $P_v$ 的效应恰为 $P_v+B$，$B=(I-P_v)B(I-P_v)$、$0\preceq B\preceq I-P_v$；最小确认者为 $P_v$，$T_{p_v}(\rho)=\operatorname{Tr}(P_v\rho)$，邻面为 $\mathcal D(v^\perp)$ |
+| 实际二点面与非共球三点面 | 分别为完整 $\mathcal D_2$ 与 $\mathcal D_3$：仿射维数三与八，齐次维数四与九；后者纯域为实四维 $\mathbb{CP}^2$ |
+| 原有限复合、效应乘积、置换与丢弃 | 标准复张量积、整个关联态锥、迹配对与偏迹；对任意原相关输入均成立 |
+| 给定实线性 $L:W_a\to W_b$，对全部有限 $M\ge0$ 的整个原输入满足 $L\otimes\operatorname{id}_{W_M}\ge0$ | $\Phi=\Theta_bL\Theta_a^{-1}$ 的唯一复线性延拓是 CP，当且仅当上述旁观者条件成立；等价于有限 Kraus 表示 $\Phi(X)=\sum_\alpha K_\alpha X K_\alpha^*$ |
+| 另给每个正输入的质量预算 $u_bL\le u_a$ 或等号 | 分别为 TNI 或 TP，即 $\sum_\alpha K_\alpha^*K_\alpha\preceq I$ 或等于 $I$ |
+| 有限分支 $L_j$ 均满足旁观者条件，并对总和另给 $u_b\sum_jL_j=u_a$ | 数学仪器；各支单独 TNI 不代付总预算。归一输入输出 $\rho_j=\Phi_j(\rho)$，概率 $p_j=\operatorname{Tr}\rho_j$，仅 $p_j>0$ 时条件态为 $\rho_j/p_j$ |
+| 同层给定正线性分支 $L$，其效应对应投影 $A$，且在整个 certain-yes 支持的每个纯态逐点中性 | 唯一为锐压缩 $\Phi(X)=AXA$；锐效应本身及结果可重复性不代付该中性条件 |
+| 另给同层连续、可逆、保锥保单位的实一参数群 | 数学动力学为酉共轭，$\dot\rho=-i[H_{\rm gen},\rho]$；纯态择相位后 $i\dot\psi=H_{\rm gen}\psi$。物理钟、能量和 $H_{\rm phys}=\hbar H_{\rm gen}$ 的标定另给 |
+| 将数学菜单解释为可用设备，或进入无限／近似范围 | 实际事件饱和、记录、接线和仪器实现另给；无限张量积的连接映射、相容态与拓扑完备化、normal 延拓，以及近似条件的稳定性和误差界均须另立前件 |
+
+证明。静态项由240.7、240.9及 XIII161.6直接得到。几何可在所得坐标用 Pauli 与复支持说明，此时才有 Hilbert–Schmidt 等可选尺。过程项精确复用 XIII161.7—161.9：原实线性映射先在每个有限旁观者的全部正输入上为正，才取得 CP／Choi／Kraus 等价及全输入预算。由于 $n\ge2$，辅助幂可容纳任意有限矩阵辅助维数，嵌入和压缩给通常 CP；单系统正性没有该结论。各支与总和分开取预算。零概率支输出为零，不规定归一条件态；有旁观者时同样对 $(\operatorname{id}\otimes\Phi_j)(Z)$ 取全输出及其迹。
+
+锐更新直接用 XIII161.7.1的正分支、指定效应及整个 yes 支持逐点中性唯一性；它不把 CP 或更新规则塞进静态公理。连续群结论用161.10，在群已给定后选定生成元，几何不选择实际时间群或能量刻度。静态纯端点互反 $T_p(q)=T_q(p)$ 不蕴含接续测量交换：非正交且不同的两个秩一投影已可不对易，后续概率仍取决于实际仪器和顺序。$\square$
+
+**命题 240.12（归属、所支付的条件与完整白话图景）。** 240.2的支撑锥—维数接合、240.4的纯扇穷尽及240.5的全称 TF9 到旧 L3 的综合属于 repo-derived；有限维相对内部、支撑超平面及实际面工具沿用 XIII 的 [Rockafellar160]，球的仿射 Lorentz 锥、有限极点分解和矩阵支持面是成熟中间工具。240.5与240.7精确复用 XIII160.4—160.5及其 [SV160, Theorem 2.4] 分类，240.9复用161的共同方向与全有限传播，240.10复用 XIV165。此处不申领这些既有定理、全球新颖性或相对于所有候选的严格最少独立公理数。
+
+证明及图景。保留系统原来的全部准备、混合和测试，每两个不同纯准备真正撑起的最小面是一颗完整实心三球。再拿球外一个纯准备，与整颗球一起生成实际三点面。凡从外点出发连接球面纯点的小球，都能被某张支撑平面托住；支撑平面只须含住它，无须预先恰好露出它。限制到对面球上，这些平面给足全部非负仿射函数。于是它们看得见从外点到对面球的四个方向，却把从外点沿各小球出发的全部切方向消去；后者又因两端点直和至少占四维。两部分互不重叠，所以外三角至少有八个仿射方向。
+
+TF9只说这整个实际面不能超过八个仿射方向，加回单位质量才是九个齐次方向；并非先告诉理论三能级矩阵有九维。上下界一合，每张切平面就只能落在两个端点给定的四维方向和里，TC因而成为结论。进一步，四维支撑锥的边界射线使每个相关零面至多五维；若某条连接小球外还藏着新的纯点，就会在这五维里再造一个至少八维的外三角，产生矛盾。因此整张三点面的纯准备都由这些小球的球面铺满。已有全局分类现在才把标签写成复射线；扇的全部标签恰是复射影平面，九维计数保证它的整个三能级密度面没有被压掉。
+
+然而这只守住每三个标签附近的实际几何。240.10的既有层级能在每个有限复制数保留全部这种小面，却把较大混态差合并，使一个纯目标的零邻点混合进入整个体的相对内部。NC正是禁止邻点生成面把目标也吞进去；它仍是全局条件。把这三项放在整个三复制体，并保留全部有限复合、原效应与正交换背景，既有共同方向和传播才给一套贯穿所有有限层的复矩阵坐标。得到的是全部密度矩阵、Born、数学 POVM、纠缠与偏迹；全部旁观者下的正性再刻画 CP，质量约束再刻画各支及总和，指定中性再确定锐更新。设备、物理钟、能量、$\hbar$ 和无限／近似极限各保留自己的桥梁。由此减少的是预先输入整个三点 qutrit 结构和 TC 的需要，不是宣称所有物理内容都已无前提地推出。$\square$
+
+## 追加锚（本行以下为增补区）
