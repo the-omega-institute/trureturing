@@ -321,11 +321,11 @@ private theorem spectral_data
         (vectorFunctional ψ (spectralOverlap C t)).re =
           overlapValue M ρ σ t) := by
   let ψ := pairFunctional ρ σ hρ hσ
-  have hlift := exists_lift (A := M.toStarSubalgebra) (ρ := ρ) (σ := σ) hρ hσ F
+  have hlift := exists_lift (A := concreteAlgebra M) (ρ := ρ) (σ := σ) hρ hσ F
   rcases hlift with ⟨Z, hunit, hcoeff, hfirst⟩
   have hmax (t : ℝ) (ht : 0 < t) :=
     (value_attained M ρ σ hρ hσ hρs hσs t ht).choose_spec.2
-  have hs := spectral_family_data (A := M.toStarSubalgebra) (B := commutant ψ) F
+  have hs := spectral_family_data (A := concreteAlgebra M) (B := commutant ψ) F
     (coefficientMap ψ) (fun T hT => (coefficientMap_nonneg ψ T).mpr hT)
     (fun T S hTS => (coefficientMap_order ψ T S).mpr hTS)
     Z hunit hcoeff (vectorFunctional ψ) (vectorFunctional_apply ψ)
