@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Quantum/Analysis/ContinuousCutoffCentralizer.overlap`
 
 *Commentary.*
 
-G_t is the real continuous functional calculus of x maps to min(x,t(1-x)), applied to C. For a positive contraction it is positive, at most C and at most t(1-C), and belongs to the algebra.
+G_t is the real continuous functional calculus of x maps to min(x,t(1-x)), applied to C. For t>=0 and a positive contraction it is positive, at most C and at most t(1-C), and belongs to the algebra.
 
 **Definition 1.4 (All ambient feasible operators).**
 
