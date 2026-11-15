@@ -278,21 +278,19 @@ section ConcreteCarrier
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
 
-private def concreteAlgebra (M : VonNeumannAlgebra H) : Type _ := M.toStarSubalgebra
+private abbrev concreteAlgebra (M : VonNeumannAlgebra H) : Type _ := M.toStarSubalgebra
 
 @[instance_reducible]
 private def concreteCStar (M : VonNeumannAlgebra H) : CStarAlgebra (concreteAlgebra M) :=
-  inferInstanceAs (CStarAlgebra M.toStarSubalgebra)
+  inferInstance
 
 @[instance_reducible]
 private def concreteOrder (M : VonNeumannAlgebra H) : PartialOrder (concreteAlgebra M) :=
-  inferInstanceAs (PartialOrder M.toStarSubalgebra)
-
-attribute [local instance] concreteCStar concreteOrder
+  inferInstance
 
 @[instance_reducible]
 private def concreteStarOrdered (M : VonNeumannAlgebra H) :
-    StarOrderedRing (concreteAlgebra M) := inferInstanceAs (StarOrderedRing M.toStarSubalgebra)
+    StarOrderedRing (concreteAlgebra M) := inferInstance
 
 end ConcreteCarrier
 
@@ -308,11 +306,11 @@ private theorem spectral_data
     (F : Family ρ σ)
     (hopt : ∀ t : ℝ, 0 < t → (overlap F t 1).re = overlapValue M ρ σ t) :
     let ψ := pairFunctional ρ σ hρ hσ
-    let N := commutant ψ
+    let N : Type _ := commutant ψ
     letI : CStarAlgebra N := commutant_cstar ψ
     letI : PartialOrder N := inferInstance
     letI : StarOrderedRing N := commutant_starOrderedRing ψ
-    let C := pairCoordinate ρ σ hρ hσ
+    let C : N := pairCoordinate ρ σ hρ hσ
     ∃ Φ : C(Interval, ℂ) →⋆ₐ[ℂ] N,
       Φ posterior = C ∧
       (∀ g, coefficientMap ψ (Φ g) = linearMap F g) ∧
@@ -321,11 +319,11 @@ private theorem spectral_data
         (vectorFunctional ψ (spectralOverlap C t)).re =
           overlapValue M ρ σ t) := by
   let ψ := pairFunctional ρ σ hρ hσ
-  have hlift := exists_lift (A := concreteAlgebra M) (ρ := ρ) (σ := σ) hρ hσ F
+  have hlift := exists_lift (A := M.toStarSubalgebra) (ρ := ρ) (σ := σ) hρ hσ F
   rcases hlift with ⟨Z, hunit, hcoeff, hfirst⟩
   have hmax (t : ℝ) (ht : 0 < t) :=
     (value_attained M ρ σ hρ hσ hρs hσs t ht).choose_spec.2
-  have hs := spectral_family_data (A := concreteAlgebra M) (B := commutant ψ) F
+  have hs := spectral_family_data (A := M.toStarSubalgebra) (B := commutant ψ) F
     (coefficientMap ψ) (fun T hT => (coefficientMap_nonneg ψ T).mpr hT)
     (fun T S hTS => (coefficientMap_order ψ T S).mpr hTS)
     Z hunit hcoeff (vectorFunctional ψ) (vectorFunctional_apply ψ)
@@ -353,11 +351,11 @@ theorem spectral_moments_of_all_overlap_optima
     (F : Family ρ σ)
     (hopt : ∀ t : ℝ, 0 < t → (overlap F t 1).re = overlapValue M ρ σ t) :
     let ψ := pairFunctional ρ σ hρ hσ
-    let N := commutant ψ
+    let N : Type _ := commutant ψ
     letI : CStarAlgebra N := commutant_cstar ψ
     letI : PartialOrder N := inferInstance
     letI : StarOrderedRing N := commutant_starOrderedRing ψ
-    let C := pairCoordinate ρ σ hρ hσ
+    let C : N := pairCoordinate ρ σ hρ hσ
     let μ := scalarMeasure F
     letI : IsFiniteMeasure μ := inferInstance
     let V := StrongDual ℂ (concreteAlgebra M)
