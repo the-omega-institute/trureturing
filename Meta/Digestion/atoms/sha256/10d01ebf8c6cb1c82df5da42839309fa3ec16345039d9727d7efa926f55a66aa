@@ -1,0 +1,2 @@
+**定义 265.4（固定数量的局部检查）。** 对整数 $m\ge1$，记 $\mathsf T_m(K)$ 为：对每个 $p\in P$ 及任意 $A\subseteq O_K(p)$、$|A|\le m$，都有 $p\notin F_K(A)$。记 $\mathsf B_m(K)$ 为同样量词下 $\operatorname{conv}A\cap\operatorname{ri}K=\varnothing$。二者分别是有限邻点的不兜回检查和边界检查；不将它们无条件等同。
+
