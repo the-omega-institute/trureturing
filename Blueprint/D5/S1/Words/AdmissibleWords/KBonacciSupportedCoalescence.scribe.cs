@@ -18,21 +18,6 @@ internal sealed class KBonacciSupportedCoalescenceDocument : IScribeDocumentDefi
                 + "actual completion representative for reset transport, and retains both "
                 + "independent fallback branches for impossible child fibers.")),
             Describe.Lean(
-                DescribeId.Create("kbonacci-reset-ready-after-false"),
-                DeclarationHandle.Create(
-                    "D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.reset_ready_after_false"),
-                H("A common-false head prepares the reset test"),
-                StatementSource.FromAuthor(Disp(ReadyFormula())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Let i be the head and t the remaining scan. Every site in t is "
-                    + "strictly greater than i, and every coordinate outside insert(i,F) "
-                    + "belongs to t. Thus all coordinates through i belong to insert(i,F). "
-                    + "If the original histories agree at fixed coordinates beyond i, "
-                    + "updating both head bits to false satisfies resetReady. This fact "
-                    + "also gives the zero remaining-cost branch of right_scan_hamming."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("kbonacci-supported-coalescence"),
                 DeclarationHandle.Create(
                     "D5/S1/Words/AdmissibleWords/KBonacciSupportedCoalescence.prefix_coupling_supported_coalescence"),
@@ -62,22 +47,6 @@ internal sealed class KBonacciSupportedCoalescenceDocument : IScribeDocumentDefi
                     + "Simultaneous Fin.rev transport and the final pointwise and Hamming "
                     + "assembly require additional results."))),
                 DescribeRole.Theorem))));
-
-    private static Formula ReadyFormula()
-    {
-        var n = F.Id("n"); var i = F.Id("i"); var t = F.Id("t"); var f = F.Id("F");
-        var x = F.Id("x"); var y = F.Id("y"); var j = F.Id("j");
-        var order = All(j, Call("Fin", n), Imp(Seq(j, Sp, InMacro, Sp, t), Rel(i, Lt, j)));
-        var cover = All(j, Call("Fin", n), Imp(Seq(Neg, Sp,
-            Par(Seq(j, Sp, InMacro, Sp, Call("insert", i, f)))), Seq(j, Sp, InMacro, Sp, t)));
-        var far = All(j, Call("Fin", n), Imp(Seq(j, Sp, InMacro, Sp, f),
-            Imp(Rel(i, Lt, j), Rel(Call("eval", x, j), Eq, Call("eval", y, j)))));
-        var result = Call("resetReady", Call("insert", i, f),
-            Call("update", x, i, Op("false")), Call("update", y, i, Op("false")));
-        return All(n, Nat, All(i, Call("Fin", n), All(t, Call("List", Call("Fin", n)),
-            All(f, Call("Finset", Call("Fin", n)), All(Seq(x, Comma, y), Word(n),
-                Imp(order, Imp(cover, Imp(far, result))))))));
-    }
 
     private static Formula CoalescenceFormula()
     {

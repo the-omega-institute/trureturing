@@ -93,31 +93,14 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                     + "representatives chosen from the actual nonempty fibers. Uniform "
                     + "prefix transport proves both marginals in this stopped branch."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("kbonacci-right-scan-hamming"),
-                DeclarationHandle.Create(
-                    "D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.right_scan_hamming"),
-                H("Expected internal Hamming cost for an increasing scan"),
-                StatementSource.FromAuthor(Disp(CostFormula())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "ExpectedHamming(J,s) is the sum over full-word pairs w of J(w)H(s,w). "
-                    + "Before(s,i,j) means that i occurs strictly before j in the list s. "
-                    + "H(s,w) denotes scanHamming: the sum of the zero-one disagreement "
-                    + "indicators at the listed sites. The list is strictly increasing "
-                    + "and lists the entire complement of F without repetitions. The "
-                    + "fixed histories agree at every fixed site farther right than any "
-                    + "scanned site. A supported common-zero branch has zero remaining "
-                    + "cost, by screening and the reset law. In every other branch the "
-                    + "current indicator is at most one, and the recursive expected "
-                    + "remaining cost is at most one. Those branches have total mass "
-                    + "at most one half, derived from conditional_step_coupling. "
-                    + "Their weighted cost is therefore at most one. This estimate "
-                    + "uses the same full-word joint law as the marginal theorem. "
-                    + "The theorem covers short words and arbitrary nonempty completion "
-                    + "fibers; it does not assert reflection, the geometric survival "
-                    + "tail, or the final two-orientation contiguous-block assembly."))),
-                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("kbonacci-reset-mean-zero"),
+                DeclarationHandle.Create("D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.reset_mean_zero"),
+                H("Reset transport has zero free-site Hamming mean"), StatementSource.FromAuthor(Disp(ResetMeanFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Every coordinate through z is fixed and every scanned site is free. resetMap copies the sampled word at all scanned sites, so their total disagreement has mean zero. The histories are arbitrary and only the x completion fiber is required to be nonempty."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("kbonacci-mean-head"),
+                DeclarationHandle.Create("D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.mean_head"),
+                H("A supported fixed head separates from the remaining mean"), StatementSource.FromAuthor(Disp(MeanHeadFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For any full-word-pair probability mass function with supported head bits a and b, the mean scanHamming of i followed by t equals disagreement(a,b), equal to zero when a=b and one otherwise, plus the mean scanHamming of t. No legality, order or distinctness hypothesis is required."))), DescribeRole.Theorem),
             new DocumentBlock.Section(
                 H("Paper application: first common zero and the emitted scan event"),
                 Blocks(
@@ -949,30 +932,21 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
         return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k), lists));
     }
 
-    private static Formula CostFormula()
+    private static Formula ResetMeanFormula()
     {
-        var k = F.Id("k"); var n = F.Id("n"); var f = F.Id("F");
-        var s = F.Id("s"); var x = F.Id("x"); var y = F.Id("y");
-        var h = F.Id("h"); var g = F.Id("g");
-        var i = F.Id("i"); var j = F.Id("j");
-        var inS = Seq(i, Sp, InMacro, Sp, s);
-        var notF = Seq(Neg, Sp, Par(Seq(i, Sp, InMacro, Sp, f)));
-        var free = All(i, Call("Fin", n), Imp(inS, notF));
-        var cover = All(i, Call("Fin", n), Imp(notF, inS));
-        var order = All(i, Call("Fin", n), All(j, Call("Fin", n),
-            Imp(Call("Before", s, i, j), Rel(Call("val", i), Lt, Call("val", j)))));
-        var far = All(i, Call("Fin", n), All(j, Call("Fin", n), Imp(
-            And(inS, Seq(j, Sp, InMacro, Sp, f), Rel(Call("val", i), Lt, Call("val", j))),
-            Rel(Call("at", x, j), Eq, Call("at", y, j)))));
-        var cost = Rel(Call("ExpectedHamming", Call("P", s, f, x, y, h, g), s), Leq, D(1));
-        var fibers = All(Seq(x, Comma, y), Word(n),
-            All(h, Call("Nonempty", Call("C", k, n, f, x)),
-                All(g, Call("Nonempty", Call("C", k, n, f, y)), Imp(far, cost))));
-        var fixedSet = All(f, Call("Finset", Call("Fin", n)), Imp(And(free, cover), fibers));
-        var lists = All(s, Call("List", Call("Fin", n)), Imp(And(Call("Nodup", s), order), fixedSet));
-        return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k), lists));
+        var k=F.Id("k"); var n=F.Id("n"); var s=F.Id("s"); var f=F.Id("F"); var x=F.Id("x"); var y=F.Id("y"); var h=F.Id("h"); var z=F.Id("z"); var i=F.Id("i");
+        var left=All(i,Call("Fin",n),Imp(Rel(i,Leq,z),Seq(i,Sp,InMacro,Sp,f)));
+        var free=All(i,Call("Fin",n),Imp(Seq(i,Sp,InMacro,Sp,s),Seq(Neg,Sp,Par(Seq(i,Sp,InMacro,Sp,f)))));
+        var result=Rel(Call("mean",Call("resetCoupling",f,x,y,h,z),Call("scanHamming",s)),Eq,D(0));
+        return All(Seq(k,Comma,n),Nat,All(s,Call("List",Call("Fin",n)),All(f,Call("Finset",Call("Fin",n)),All(Seq(x,Comma,y),Word(n),All(h,Call("Nonempty",Call("completions",k,n,f,x)),All(z,Call("Fin",n),Imp(left,Imp(free,result))))))));
     }
-
+    private static Formula MeanHeadFormula()
+    {
+        var n=F.Id("n"); var p=F.Id("p"); var i=F.Id("i"); var t=F.Id("t"); var a=F.Id("a"); var b=F.Id("b"); var w=F.Id("w");
+        var support=All(w,Call("Pair",Word(n),Word(n)),Imp(Rel(Call("eval",p,w),Neq,D(0)),And(Rel(Call("fst",w,i),Eq,a),Rel(Call("snd",w,i),Eq,b))));
+        var result=Rel(Call("mean",p,Call("scanHamming",Call("cons",i,t))),Eq,Seq(Call("disagreement",a,b),Sp,Plus,Sp,Call("mean",p,Call("scanHamming",t))));
+        return All(n,Nat,All(p,Call("PMF",Call("Pair",Word(n),Word(n))),All(i,Call("Fin",n),All(t,Call("List",Call("Fin",n)),All(Seq(a,Comma,b),Op("Bool"),Imp(support,result))))));
+    }
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Word(Formula n) => Seq(Open, Call("Fin", n), Sp, To, Sp, Op("Bool"), Close);
     private static Formula Op(string name) => Seq(Operatorname, Grp(F.Id(name)));

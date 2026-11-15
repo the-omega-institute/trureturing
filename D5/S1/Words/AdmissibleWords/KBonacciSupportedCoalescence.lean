@@ -6,7 +6,7 @@
    utility: none
    digest: Supported common-false coalescence of the native conditional prefix coupling. -/
 
-import D5.S1.Words.AdmissibleWords.KBonacciConditionalBlockCoupling
+import D5.S1.Words.AdmissibleWords.KBonacciRightScanHamming
 
 /-! Coalescence concerns complete outputs of the original stopped recursion. -/
 
