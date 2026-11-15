@@ -49,10 +49,17 @@ Page 2 defines the completion:
 Let now $\Chat$ be the \emph{flag completion} of $\Delta$, that is, the clique complex of its $1$-skeleton.
 ```
 
-The gap condition on page 2 is that there are no minimal nonfaces of sizes
-3,4,...,d-k. The source explicitly includes k=d-2, for which the condition is
-vacuous. Page 7 defines the dual graph by adjacent facets sharing exactly d-1
-vertices. Purity of dimension d-1 means every inclusion-maximal face has d
+Page 2 states the gap condition:
+
+> Δ has no minimal nonfaces of size 3, 4, …, d − k.
+
+The source explicitly includes k=d-2, for which the condition is vacuous. Page 7 states:
+
+> Throughout, Δ is a (finite) pure simplicial complex of dimension d − 1 on a vertex set V with |V| = n.
+
+> The dual graph 𝒢(Δ) has the facets of Δ as nodes, and its edges join facets that are adjacent, i.e. that share exactly d − 1 vertices; diam(Δ) is its diameter.
+
+Purity of dimension d-1 means every inclusion-maximal face has d
 vertices. The formal encoding uses nonempty Mathlib faces and the existing
 augmented-face predicate for the empty face; all vertices are present.
 
