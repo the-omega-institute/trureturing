@@ -462,7 +462,7 @@ private theorem affineCoefficient_enlarge {J : Type v} [Fintype J] [DecidableEq 
   rw [← Finsupp.embDomain_eq_mapDomain e, hj,
     InfiniteGaussianFock.gaussianCoefficient_enlarge _ f f.injective, hA]
 
-private theorem affineLaurent_enlarge {J : Type v} [Fintype J] [DecidableEq J]
+theorem affineLaurent_enlarge {J : Type v} [Fintype J] [DecidableEq J]
     (A : Matrix J J ℂ) (mu : J → ℂ) (w : J → ℤ) (e : I ↪ J) (d : I →₀ ℕ) :
     affineLaurent A mu w (d.embDomain e) =
       affineLaurent (fun i j => A (e i) (e j)) (fun i => mu (e i))
@@ -472,7 +472,7 @@ private theorem affineLaurent_enlarge {J : Type v} [Fintype J] [DecidableEq J]
   congr 1
   simp only [Finsupp.weight_apply, Finsupp.sum_embDomain]
 
-private theorem map_three {J : Type v} (e : I ↪ J) (d h l : I →₀ ℕ) :
+theorem map_three {J : Type v} (e : I ↪ J) (d h l : I →₀ ℕ) :
     (threeOccupation d h l).embDomain (e.sumMap (e.sumMap e)) =
       threeOccupation (d.embDomain e) (h.embDomain e) (l.embDomain e) := by
   simp only [threeOccupation, Finsupp.embDomain_eq_mapDomain,
@@ -536,7 +536,7 @@ private theorem normalLaurentRow_on_block (D : LatticeData) (a : Charge D)
   rw [hA, hmu, hw] at he
   exact he.symm
 
-private theorem normal_weight_formula (D : LatticeData) (label : I ↪ Index D)
+theorem normal_weight_formula (D : LatticeData) (label : I ↪ Index D)
     (d h l : I →₀ ℕ) :
     Finsupp.weight (normalWeight D label) (threeOccupation d h l) =
       -2 * (Finsupp.weight (fun i => sourceWeight D (label i)) d : ℤ) -

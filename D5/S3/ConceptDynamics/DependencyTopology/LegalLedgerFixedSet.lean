@@ -226,3 +226,14 @@ theorem fixed_eq_frozen_union_unprovable (laws : SourceLaws k) (L : LegalLedger 
         fun h => (hu (frozen_proved (T L) h)).elim⟩
 
 end D5.S3.ConceptDynamics.DependencyTopology.LegalLedgerFixedSet
+
+namespace D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed
+
+open LegalLedgerFixedSet
+
+/-- The exact finite node sets admitting some accepted, closed, acyclic witness selection. -/
+def supportFamily {P Proof Ax Model : Type*} (k : KernelData P Proof Ax Model) :
+    Set (Set P) :=
+  {S | ∃ C : CertifiedNodes k, (↑C.nodes : Set P) = S}
+
+end D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed

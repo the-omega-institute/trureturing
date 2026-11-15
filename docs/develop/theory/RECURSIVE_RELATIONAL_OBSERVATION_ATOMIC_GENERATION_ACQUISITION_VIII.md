@@ -1676,3 +1676,1960 @@ serial history, a clock, time, energy, or a bare $\alpha/\beta$ preparation. It
 also does not assert that the existing V37 family lies on the new locus or
 transfer V37's copy cost. The enduring common relational recovery of space,
 time, boundary and memory remains outside this bounded observation theorem.
+
+## 142. Fixed-target residuals and their two negative ends
+
+**Definition 142.1 (the actual sector residual).** Keep the literal image
+$\mathcal X_N$, raw-matrix convention and phase action of Definition 137.1.
+Use the sector of OpenBoundaryMPSInteriorRootRealization: for
+$s=(\lambda,\mu,a)\in\mathbb C^3$, put
+
+$$
+\begin{gathered}
+\delta=\mu-\lambda,\qquad \alpha_s=\lambda-a,\qquad\beta_s=\mu-a,
+\qquad B=\operatorname{diag}(\lambda,\mu),\\
+T=\begin{pmatrix}1&1\\\alpha_s&\beta_s\end{pmatrix},\qquad
+D_z=\operatorname{diag}(1,z),\qquad G_z=TD_z,\\
+C=\begin{pmatrix}a&1\\-\alpha_s\beta_s&\lambda+\mu-a\end{pmatrix},
+\qquad A(z)=(G_z,BG_z).
+\end{gathered}
+\tag{VIII.38}
+$$
+
+Regularity means $\delta\alpha_s\beta_s\ne0$ and
+$c_s=1+\overline\lambda\mu\ne0$. The offsets $\alpha_s,\beta_s$ are complex
+numbers, with no identification with the native tree atoms. The existing
+intertwining and pair-product identities are $CG_z=G_zB$ and
+$A_u(z)=K_uG_z^2$, where $K=(I,C,B,BC)$ in word order $00,01,10,11$.
+These four matrices form a complex basis of $M_2(\mathbb C)$ under regularity.
+
+Write $E_z(X)=G_zXG_z^\dagger+BG_zXG_z^\dagger B^\dagger$ and
+$J_B^*(X)=X+B^\dagger XB$. For an actual target $z_0\ne0,l,r$ and
+$p,q\ge1$, $N=p+2+q$, fix
+
+$$
+\begin{aligned}
+P&=(E_{z_0}^*)^p(l^\dagger l),&
+H&=G_{z_0}^2E_{z_0}^q(rr^\dagger)(G_{z_0}^2)^\dagger,\\
+X_p(z)&=L_z^p(P),&
+L_z(X)&=(J_B^*)^{-1}(G_z^{-\dagger}XG_z^{-1}),\\
+Y_q(z)&=E_z^{-q}(G_z^{-2}HG_z^{-2\dagger}),&
+f(z)&=\det X_p(z)+i\det Y_q(z).
+\end{aligned}
+\tag{VIII.39}
+$$
+
+Here $G_z^{-2\dagger}=(G_z^{-2})^\dagger$. The maps $E_z^{-1}$ and
+$L_z=(E_z^*)^{-1}$ are the supplied algebraic inverse transfers, defined for
+$z\ne0$. In particular, $(J_B^*)^{-1}$ divides entry $(i,j)$ by
+$1+\overline{b_i}b_j$, $b=(\lambda,\mu)$. They preserve Hermitian matrices;
+no positivity of either inverse is assumed. All derivatives in this section
+are ordinary real derivatives. Throughout trial differentiation both $P$ and
+$H$ stay fixed, including the original central square in $H$.
+The supplied raw dictionary is
+$Q_{p,2,q}(u,v)=\operatorname{tr}(PK_uHK_v^\dagger)$.
+
+**Lemma 142.2 (negative ends at every positive left length).** For every
+regular $s$, positive definite Hermitian $P$ and integer $p\ge1$, there are
+$\epsilon_0>0$ and $R_0>\epsilon_0$ such that
+$\det L_z^p(P)<0$ whenever $0<|z|\le\epsilon_0$ or $|z|\ge R_0$.
+The thresholds may depend on $s,P,p$; no uniform threshold over unbounded
+lengths is asserted.
+
+Proof. Set $d_0=1+|\lambda|^2$, $d_1=1+|\mu|^2$ and use the two rows
+
+$$
+u_\infty=(\beta_s,-1)/\delta,\qquad
+u_0=(-\alpha_s,1)/\delta,
+\qquad W_j=(J_B^*)^{-1}(u_j^\dagger u_j).
+$$
+
+Since $G_z^{-1}=D_z^{-1}T^{-1}$ and these are the rows of $T^{-1}$,
+expansion of the four entries gives the operator-norm limits on
+$\operatorname{Herm}(2)$
+
+$$
+L_z\longrightarrow[X\mapsto X_{00}W_\infty]\quad(|z|\to\infty),
+\qquad
+|z|^2L_z\longrightarrow[X\mapsto X_{11}W_0]\quad(z\to0).
+\tag{VIII.40}
+$$
+
+The respective remainders are $O(|z|^{-1})$ and $O(|z|)$, uniformly in
+$\arg z$. For example,
+$|z|^2D_z^{-\dagger}XD_z^{-1}$ has entries
+$|z|^2X_{00},\overline zX_{01},zX_{10},X_{11}$.
+The Schur-gap identity
+$d_0d_1-|c_s|^2=|\delta|^2$ gives
+
+$$
+\begin{aligned}
+\det W_\infty&=-\frac{|\beta_s|^2}{|\delta|^2d_0d_1|c_s|^2}<0,
+& (W_\infty)_{00}&=\frac{|\beta_s|^2}{|\delta|^2d_0}>0,\\
+\det W_0&=-\frac{|\alpha_s|^2}{|\delta|^2d_0d_1|c_s|^2}<0,
+& (W_0)_{11}&=\frac1{|\delta|^2d_1}>0.
+\end{aligned}
+$$
+
+For each fixed finite $p$, continuity of operator powers in (VIII.40) yields
+
+$$
+\begin{aligned}
+\lim_{|z|\to\infty}\det L_z^p(P)
+ &=P_{00}^2(W_\infty)_{00}^{2p-2}\det W_\infty<0,\\
+\lim_{z\to0}|z|^{4p}\det L_z^p(P)
+ &=P_{11}^2(W_0)_{11}^{2p-2}\det W_0<0.
+\end{aligned}
+\tag{VIII.41}
+$$
+
+Strict signs and angular uniformity prove the assertion. The positive
+multiplier $|z|^{4p}$ does not change a sign. The hypothesis $p\ge1$ is
+essential: for $p=0,P=I$ the determinant is constantly one.
+
+**Corollary 142.3 (the remaining annular premise).** For every regular
+actual target of Definition 142.1 with $P,H$ positive definite, if
+$D_{\mathbb R}f(z_0)$ is invertible, there is a nonzero actual same-length
+state with exactly the same entire raw $Q_{p,2,q}$ and a different full-state
+phase class.
+
+Proof. Lemma 142.2 supplies $0<\epsilon<|z_0|<R$ with negative first
+residual component on both complete boundary circles. The supplied inverse
+identities make $f$ real analytic on $\mathbb C\setminus\{0\}$ and
+$f(z_0)=0$. Apply
+OpenBoundaryMPSInteriorRootRealization.annular_regular_root_actual_ambiguity.
+It consumes AnnularSecondZero.annular_second_zero and constructs actual
+positive rank-one boundary seeds at a distinct nonzero simultaneous root.
+The forward-positive rank-one factorization and full-state phase separation
+are supplied by RootRealization, including its private support, and are not
+new conclusions about positivity of the inverse. Neither a complex root
+count nor regularity of the second root is required.
+
+## 143. Actual rank forces fixed-target transversality
+
+**Lemma 143.1 (rank-to-residual bridge).** Fix $p,q\ge1$, a regular sector,
+$z_0\ne0$ and actual $l,r$ with the targets $P,H$ in (VIII.39) positive
+definite. Suppose that the map from the full original real source parameters
+$(A_0,A_1,l,r)\in\mathbb R^{24}$ to $Q_{p,2,q}$ has differential rank thirteen
+at this realization. Then the real derivative of the fixed-target residual
+$f$ at $z_0$ is invertible.
+
+Proof. Let $\Phi_N(\theta)=\psi_\theta\psi_\theta^\dagger$ be the original
+polynomial density map. Theorem 139.1 supplies its integral density closure
+$Z_N$ of dimension thirteen. In characteristic zero, the generic Jacobian
+rank of a polynomial parameterization is the dimension of its image closure.
+Thus every fourteen-minor of $D\Phi_N$ vanishes identically and
+$\operatorname{rank}D\Phi_N\le13$ at every source. Since partial trace is
+linear and $DQ=D(\operatorname{tr}_{\rm ext})D\Phi_N$, the rank hypothesis
+implies
+
+$$
+\ker DQ=\ker D\Phi_N
+\tag{VIII.42}
+$$
+
+at the target. This uses the full actual source differential, not merely
+an ambient environment chart.
+
+Let $h\in\mathbb C$ be in the real kernel of $Df(z_0)$, and differentiate
+$X_p(z),Y_q(z)$ along $z=z_0+th$. Their values at $t=0$ are the nonzero
+positive rank-one matrices $l^\dagger l,rr^\dagger$, by the supplied inverse
+identities. At a matrix unitarily equivalent to $\operatorname{diag}(d,0)$,
+$d>0$, the determinant differential on Hermitian matrices is $d$ times
+the $(1,1)$ entry. Its kernel is exactly the tangent space of the nonzero
+positive rank-one Gram manifold: every Hermitian matrix
+$\left(\begin{smallmatrix}a&b\\\overline b&0\end{smallmatrix}\right)$ is
+$\dot v v^\dagger+v\dot v^\dagger$ at $v=(\sqrt d,0)^{\mathsf T}$.
+Consequently there are boundary variations $\dot l,\dot r$ with
+
+$$
+\dot X_p=\dot l^\dagger l+l^\dagger\dot l,\qquad
+\dot Y_q=\dot r r^\dagger+r\dot r^\dagger.
+$$
+
+Use these boundary variations with $z_0+th$ as an actual first-order source
+variation. Differentiating the exact forward inverse identities in
+(VIII.39) shows that both actual target derivatives are zero. This step
+retains the varying central $G_z^2$ in the forward right identity while
+holding its target $H$ fixed. Since $K$ is fixed in this sector, the full
+raw dictionary gives $\dot Q=0$. The supplied positive-Gram
+state-nonvanishing result gives $\psi\ne0$. Equation (VIII.42) then gives
+$\dot\rho=0$, hence $\dot\psi=i\tau\psi$ for some $\tau\in\mathbb R$.
+Indeed, a component of $\dot\psi$ orthogonal to nonzero $\psi$ is excluded
+by $\dot\rho=0$, and the remaining scalar has zero real part.
+
+Let $L$ have rows $lA_a(z_0)$ for all length-$p$ prefix words, and let
+$S$ have columns $G_{z_0}^2A_b(z_0)r$ for all length-$q$ suffix words.
+Their Grams are $L^\dagger L=P$ and $SS^\dagger=H$, so choose a left
+inverse $L^+$ and a right inverse $S^+$. The middle-word amplitudes are
+$LK_uS$. Their differentiated phase identity, extended using the supplied
+basis $K$, is
+
+$$
+\dot L M S+LM\dot S=i\tau LMS\qquad(M\in M_2(\mathbb C)).
+\tag{VIII.43}
+$$
+
+Put $U=L^+\dot L$ and $V=\dot S S^+$. Multiplication by the two inverses
+gives $UM+MV=i\tau M$. Its identity case gives $U+V=i\tau I$, hence
+$UM=MU$ for every matrix $M$ and $U=\gamma I$. Multiplying (VIII.43)
+on the right by $S^+$ at $M=I$ also gives
+$\dot L=L(i\tau I-V)=\gamma L$.
+
+Sample the prefix rows at $0^{p-1}j$, $j=0,1$. Write
+$v=lG_{z_0}^{p-1}$, with $\dot v$ its induced variation, and
+$w=\dot v-\gamma v$. These rows give
+$wB^jG_{z_0}+vB^j\dot G=0$. The first columns, where $\dot G$ is zero,
+force
+
+$$
+w(1,\alpha_s)^{\mathsf T}=wB(1,\alpha_s)^{\mathsf T}=0.
+$$
+
+The determinant of these two columns is $\alpha_s\delta\ne0$, so $w=0$.
+The second columns then give
+$hv(1,\beta_s)^{\mathsf T}=hvB(1,\beta_s)^{\mathsf T}=0$.
+Their determinant is $\beta_s\delta\ne0$. As $l\ne0$ and $G_{z_0}$ is
+invertible, $v\ne0$, forcing $h=0$. Thus $Df(z_0)$ has trivial real kernel
+between two-dimensional spaces and is invertible. This differentiated
+pencil argument is the new bridge; the undifferentiated prefix and phase
+rigidity remain the existing RootRealization suppliers.
+
+**Proposition 143.2 (one inhabited source for all splits at each length).**
+For every $N\ge4$, the single actual source (VIII.28), with
+$r_N=65^{-(N-2)/2}(1,2i)^{\mathsf T}$, has an actual nonzero nonphase
+competitor for every individual positive split $p+2+q=N$.
+Each split admits the complete annular hypotheses in a regular sector.
+The competitors may differ with the split; membership of this displayed
+witness itself in $\mathcal G_N$ is not asserted.
+
+Proof. The all-length actual differential rank thirteen, invertible transfer,
+spanning and positive actual environments are exactly Definition 138.1 and
+Lemmas 138.2--138.3, reused here. To place this source in the supplied sector,
+put
+
+$$
+\begin{gathered}
+k=1/\sqrt{14},\qquad c=2/15,\qquad
+R=\begin{pmatrix}1&112\sqrt{14}/15\\4k&-448/15\end{pmatrix},\\
+s=(k,-k,113k/112),\qquad z_0=-112\sqrt{14}/225.
+\end{gathered}
+\tag{VIII.44}
+$$
+
+Then $\det R=-896/15$, $\alpha_s=-k/112$, $\beta_s=-225k/112$,
+$c_s=13/14$, and direct multiplication gives
+$cR^{-1}A_0R=G_{z_0}$ and $cR^{-1}A_1R=BG_{z_0}$.
+The boundary choice
+
+$$
+\bar l=lR,\qquad \bar r=c^{-N}R^{-1}r_N
+\tag{VIII.45}
+$$
+
+preserves every full length-$N$ amplitude exactly. It is a representation
+change, not a physical operation or a separately selected exterior source.
+Writing $P_p,H_q$ for the positive matrices in (VIII.29), its actual targets
+are
+
+$$
+P=(65c^2)^pR^\dagger P_pR,\qquad
+H=(65c^2)^{-p}R^{-1}A_0^2H_q(A_0^2)^\dagger R^{-\dagger}.
+\tag{VIII.46}
+$$
+
+These are positive definite by invertible congruence; the second formula
+includes the central square through (VIII.44). The fixed invertible
+representation change (VIII.45) preserves the full-source differential rank.
+Lemma 143.1 therefore supplies an invertible fixed-target real derivative for
+every positive split. Lemma 142.2 and Corollary 142.3 finish the proof.
+No all-length derivative formula or numerical root continuation is assumed.
+
+**Lemma 143.3 (a local sector cover of ordinary source parameters).** The
+regular sector representation in Proposition 143.2 extends smoothly to a
+full open neighbourhood of that source in its original twenty-four real
+parameters, preserving all length-$N$ amplitudes. In a sufficiently small
+such neighbourhood, every positive split has positive target environments,
+full-source $Q$ differential rank thirteen and a nonphase actual competitor.
+
+Proof. For nearby cores, $A_0$ is invertible and $A_1A_0^{-1}$ has two
+simple eigenvalues near $k,-k$. Choose their local smooth branches and an
+eigenbasis $S$ through $R$. Put $B=\operatorname{diag}(\lambda,\mu)$,
+$J=S^{-1}A_0S$, and $\widetilde C=JBJ^{-1}$. Its upper off-diagonal entry
+$\gamma$ is nonzero near the witness and equals one there. Set
+$T_\theta=S\operatorname{diag}(\gamma,1)$ and
+$C_\theta=T_\theta^{-1}A_0(A_1A_0^{-1})A_0^{-1}T_\theta$.
+Then $(C_\theta)_{01}=1$. Its trace and determinant give the form of $C$
+in (VIII.38), with $a=(C_\theta)_{00}$.
+
+Let $J_\theta=T_\theta^{-1}A_0T_\theta$ and $x=(J_\theta)_{00}$, which
+is nonzero and equals $15/2$ at the witness. The intertwining
+$C_\theta J_\theta=J_\theta B$ forces the first column of $J_\theta$
+to be $x(1,\lambda-a)^{\mathsf T}$ and the second to be
+$(J_\theta)_{01}(1,\mu-a)^{\mathsf T}$. Thus
+$x^{-1}J_\theta=G_z$, where $z=(J_\theta)_{01}/x\ne0$, and the second
+core becomes $BG_z$. The boundaries
+$\bar l=lT_\theta$, $\bar r=x^NT_\theta^{-1}r$ compensate the common
+core scale $x^{-1}$ exactly. All required nonvanishings and regularity hold
+near (VIII.44). This is a local cover, with no assertion of a global atlas.
+
+Positive target environments and a selected nonzero thirteen-minor for each
+split persist by continuity. There are only $N-3$ positive splits at fixed
+$N$; intersect their finitely many neighbourhoods. Lemma 143.1, followed by
+Corollary 142.3, applies at every source in the resulting nonempty open set
+$\Omega_N$. The boundary radii can be chosen separately at each source and
+split; neither uniform radii nor a smooth branch of second roots is needed.
+
+## 144. Finite global ambiguity on an actual open family
+
+**Theorem 144.1 (all lengths, every individual positive interior split).**
+For every integer $N\ge4$ there is a nonempty relatively Euclidean-open,
+$U(1)$-saturated set $\mathcal O_N\subset\mathcal G_N$ such that, for every
+$\psi\in\mathcal O_N$ and every $p,q\ge1$ with $p+2+q=N$,
+
+$$
+2\ \le\ \#\{[\phi]_{U(1)}:\phi\in\mathcal X_N,\quad
+ Q_{p,2,q}(\phi)=Q_{p,2,q}(\psi)\}\ <\ \infty.
+\tag{VIII.47}
+$$
+
+The finite upper assertion quantifies over all actual same-length
+competitors, including singular and chart-external ones. The lower assertion
+constructs a companion within a regular sector of an actual realization of
+the target. That companion may depend on the target and the split and need
+not belong to $\mathcal G_N$. Every target retains Theorem 139.2's local
+phase identification for all positive splits. No common competitor matching
+the collection of all two-site windows is asserted.
+
+Proof. Use the full source neighbourhood $\Omega_N$ of Lemma 143.3. Every
+source there has a nonphase companion for every split. By (VIII.42) and the
+retained thirteen-rank minors, $D\Phi_N$ has rank thirteen throughout this
+neighbourhood. The exact polynomial $\Delta_N$ defining $\mathcal G_N$ in
+Theorem 139.2 has nonzero pullback to the full original parameter domain.
+A nonzero real polynomial cannot vanish on the nonempty Euclidean-open set
+$\Omega_N$. Choose $\theta_*\in\Omega_N$ with
+$\Delta_N(\Phi_N(\theta_*))\ne0$, and put $\rho_*=\Phi_N(\theta_*)$.
+This establishes overlap; it does not assume the original witness lies in
+$\mathcal G_N$.
+
+By the construction of $\Delta_N$ in Theorem 139.2, $\rho_*$ is a smooth
+real point of $Z_N$ of dimension thirteen. The rank-thirteen map $\Phi_N$
+is a submersion into this manifold at $\theta_*$. The real submersion theorem
+therefore supplies a neighbourhood $V$ of $\rho_*$ in $Z_N(\mathbb R)$
+contained in $\Phi_N(\Omega_N)$. Shrink it inside the smooth locus and
+$\Delta_N\ne0$. In particular every density in $V$ is actual and has a
+source lift still in $\Omega_N$. This is the actual-image openness step;
+parameter openness alone would not prove it.
+
+Set $\mathcal O_N=\{\psi\in\mathcal X_N:\psi\psi^\dagger\in V\}$.
+It is nonempty, relatively open, phase-saturated and contained in the precise
+$\mathcal G_N$ of Theorem 139.2. A source lift of each density in $V$ gives
+at least two phase classes for every split by Corollary 142.3. Theorem 139.1
+supplies finiteness against every actual competitor, and Theorem 139.2
+supplies local phase identification. These are different conclusions on the
+same targets, with no conflict: a distinct global companion is outside a
+sufficiently small phase neighbourhood of the target.
+
+**Corollary 144.2 (the excluded singleton claim and raw normalization).**
+At each fixed $N\ge4$ and positive split, targets with globally singleton
+phase fibers are not dense in the actual image. Every nonzero collision in
+(VIII.47) has equal raw norm on its two sides and hence yields a normalized
+collision after a common positive rescaling.
+
+Proof. A dense subset must meet the nonempty relatively open
+$\mathcal O_N$, whereas every target there has a nonsingleton fiber for
+that split. Equality of raw matrices includes equality of their traces,
+which are the squared full norms by (VIII.24). Common rescaling preserves
+actualness, nonphase separation and equality of the corresponding normalized
+matrices. This does not recover an unknown norm from normalized copies, nor
+assert membership of the rescaled targets in a particular polynomial choice
+of $\mathcal G_N$. The theorem proves a nonempty open ambiguity region,
+not density of ambiguity, an exact cardinality, degree or enumeration.
+
+## 145. An adjacent-window filter within one fixed regular sector
+
+**Theorem 145.1 (exact fixed-sector criterion).** Fix $p,q\ge1$, a regular
+$s$, $z_0\ne0$ and actual target boundaries with $P,H$ in (VIII.39) positive
+definite. Let an actual competitor of the same length have this same fixed
+sector $s$, some $z\ne0$ and arbitrary actual boundaries $l',r'$. Suppose
+its first complete raw $Q_{p,2,q}$ equals the target's. Define
+
+$$
+M=T^\dagger(P+B^\dagger PB)T,\qquad W=T^{-1}HT^{-\dagger}.
+\tag{VIII.48}
+$$
+
+Then equality of the additional complete raw window $Q_{p+1,2,q-1}$ is
+exactly the condition
+
+$$
+|z|=|z_0|\quad\text{and}\quad
+\bigl[z=z_0\ \text{or}\ (M_{01}=0\ \text{and}\ W_{01}=0)\bigr].
+\tag{VIII.49}
+$$
+
+Here $q=1$ means a boundary window with zero right exterior; $q\ge2$
+means a second positive interior window. If either cross entry is nonzero,
+equality of both windows forces full-state unit-phase equality within this
+fixed-sector family. No assertion is made that an arbitrary unknown-core
+competitor belongs to the same sector or this chart. In the zero-cross-entry
+case, (VIII.49) describes the coefficient test for competitors already actual
+and matching the first window; it does not assert actual realizability of a
+whole circle of trial parameters.
+
+Proof. The basis $K$ makes its feature matrix invertible. Applying its
+full-Gram dictionary to the first equality gives
+$H'\otimes(P')^{\mathsf T}=H\otimes P^{\mathsf T}$. Nonzero simple-tensor
+factor uniqueness and the actual positive Grams imply
+$P'=tP$, $H'=t^{-1}H$ for some $t>0$. In particular arbitrary actual
+competitor boundaries are included, rather than prescribed to equal a
+chosen inverse factorization.
+
+Moving the two-site window one factor right gives actual left environment
+$tE_z^*(P)=tD_z^\dagger MD_z$ and right transformed environment
+$t^{-1}\mathcal R_z(H)$, where
+
+$$
+\mathcal R_z(H)=G_z^2E_z^{-1}(G_z^{-2}HG_z^{-2\dagger})(G_z^2)^\dagger
+              =J_C^{-1}(G_z^{-1}HG_z^{-\dagger}),
+\quad J_C(X)=X+CXC^\dagger.
+\tag{VIII.50}
+$$
+
+These follow from the actual adjacent transfer recurrence, also when $q=1$.
+The second identity uses $CG_z=G_zB$ and
+$E_z=J_B\operatorname{Ad}_{G_z}$, where $J_B(X)=X+BXB^\dagger$.
+Regularity makes $J_B$ invertible; conjugacy makes $J_C$ invertible.
+This is an algebraic identity, not a positivity claim about either inverse.
+
+Both $M$ and $W$ are positive definite. In the second-window tensor
+proportionality, compare the $(0,0)$ entry of its left factor:
+$(D_z^\dagger MD_z)_{00}=M_{00}>0$, independent of $z$.
+After cancelling $t$, the proportionality scalar must therefore be one.
+The two factors must separately equal their target values. The left equality
+is exactly
+$|z|=|z_0|$ and $M_{01}(z-z_0)=0$, since $M_{11}>0$.
+Using (VIII.50) and its invertible $J_C$, the right equality is
+
+$$
+D_z^{-1}WD_z^{-\dagger}=D_{z_0}^{-1}WD_{z_0}^{-\dagger}.
+$$
+
+Once the moduli agree this is exactly
+$W_{01}(1/\overline z-1/\overline{z_0})=0$.
+This proves both directions of (VIII.49). If $z=z_0$, the supplied
+invertible-transfer common-core reconstruction of Proposition 137.3 makes
+the first record equality a full-state unit phase. Conversely such a phase
+preserves both raw records. Although the second right Gram can be rank one
+when $q=1$, it is nonzero, which suffices for the tensor proportionality.
+
+**Corollary 145.2 (the criterion removes the constructed companions).**
+At the common all-length witness of Proposition 143.2, in its sector
+(VIII.44)--(VIII.45), for every positive split
+
+$$
+M_{01}=(65c^2)^p\,\frac{1300}{21}\ne0.
+\tag{VIII.51}
+$$
+
+Thus the predeclared adjacent raw window $Q_{p+1,2,q-1}$ separates every
+actual distinct-root companion in that fixed sector. The neighbourhood
+$\Omega_N$ and the open family $\mathcal O_N$ can be chosen so that every
+target has a sector realization with this nonvanishing property for all
+positive splits. The same conclusion then applies to all its constructed
+same-sector companions. It is not whole-fiber two-window uniqueness.
+
+Proof. Substitute (VIII.46) into (VIII.48). With $u=2(12/13)^p$, direct
+multiplication gives
+
+$$
+T^\dagger\bigl(R^\dagger P_pR+B^\dagger R^\dagger P_pRB\bigr)T
+=\begin{pmatrix}
+4(169+16\sqrt{14}u)/105&1300/21\\
+1300/21&60(169-16\sqrt{14}u)/7
+\end{pmatrix}.
+$$
+
+This identity holds for all $u$; no sampled-length assertion is used.
+The positive factor $(65c^2)^p$ proves (VIII.51). Nonvanishing is open
+under the local sector cover of Lemma 143.3. Intersect those finitely many
+open conditions before the submersion construction of Theorem 144.1.
+Theorem 145.1 then excludes each distinct-root companion. Cross-sector and
+chart-external competitors remain within Theorem 144.1's finite upper bound
+but are not classified by this filter.
+
+## 146. Observation sufficiency and the faithful-source boundary
+
+**Proposition 146.1 (same-block obstruction and the supplied larger readout).**
+For a normalized pair obtained from Theorem 144.1 at a fixed split, identical
+complete two-site matrices imply identical accessible transcript laws for
+every finite number of independent copies and every label-independent
+adaptive instrument restricted to that block with the same independent
+complete accessible backing. For $N\ge5$, a nonempty relatively open
+subfamily of $\mathcal O_N$ also has the already supplied unrestricted
+phase recovery from a complete adjacent three-site matrix, provided that
+larger readout is explicitly in the allowed data interface. The fixed-sector
+filter of Theorem 145.1 has its smaller competitor quantifier throughout.
+
+Proof. If $\sigma$ is the common normalized two-site matrix, the complete
+accessible input is $\sigma^{\otimes m}\otimes\tau_B$ under either label.
+Applying the same controlled channel, including every retained record and
+pending prefix, gives identical output laws. With equal priors, no such
+experiment has discrimination error below $1/2$; more processing of the same
+complete matrix supplies no missing distinction.
+
+For the larger readout, intersect $\mathcal O_N$ with the open dense
+interior-three recovery locus supplied by
+OpenBoundaryMPSInteriorGenericity.intrinsic_interior_recovery. The
+intersection is nonempty and relatively open. If $q\ge2$, extend the window
+to $(p,3,q-1)$; otherwise $p\ge2$ and extend to $(p-1,3,q)$. The choice
+uses the declared split, not the unknown source. Both exteriors remain
+positive. The existing three-site theorem identifies the target up to phase
+against every actual same-length competitor; partial trace returns the
+original two-site matrix. This is an application of the supplied sufficiency,
+with no new three-site or minimal-readout claim.
+
+The source correspondence for both observation statements remains precisely
+that of Theorem 141.1 and AAV V25--27, V36.1 and V39: the finite MPS order is
+the paid ordered occurrence roster, not native parent adjacency or serial
+time. Its two actual exterior word families and supplier preparation memory
+are retained with their correlations. Each paired hypothesis uses the same
+authentic ordered native prehistory and label-independent original source
+and backing; only the separately promised quantum input differs. Conditional independent full inputs,
+coherent ingress, complete matrix access, current rights and apparatus are
+separate premises; bare ordered $\alpha/\beta$ syntax supplies none of them.
+Any added-window use requires that window's already held rights and explicit
+data promise. Destructive observations require their actual separately
+supplied copies or a specified joint instrument; an old measured input is
+not silently restored.
+
+The ordered bracket grammar, both authentic entrances, actual common source
+and component bindings, genuine addressed $P/S/\operatorname{Next}$, current
+references and rights, immutable samples, completed and pending records and
+all phases retain their original meanings. Every reached output still owes
+its own Print, End, local ACK and same-root Return. Full-bank holds and
+vacuum extensions use V36.1; there is no reset, rewind, new reference grant,
+new $r$-edge, source substitution or hidden label channel. These are the
+existing mounting hypotheses, not a construction of continuous preparations,
+effects, exact finite-sample tomography, precision, clocks or a physical
+inverse from two native atoms. The V37--40 acquisition bounds keep their
+original family and access scopes; no membership of that family in
+$\mathcal O_N$ or transfer of its $\Theta(16^p)$ copy cost is asserted.
+
+The mathematical contribution in §§142--145 is repository-derived: the
+endpoint operator limits, differentiated actual-rank bridge, inhabited
+all-length annular tuple, actual-image open overlap and the fixed-sector
+adjacent-window criterion. The original witness and all-length rank proof,
+common $\mathcal G_N$, unrestricted finite upper bounds and local recovery
+are supplied by §§137--141. RootRealization supplies algebraic inverses,
+Hermitian root realization, positive forward factorization and full-state
+phase separation, including its private declarations. Its annular theorem
+reuses AnnularSecondZero and the TauCeti sphere obstruction, revision
+5a01f5fe3621126cccf9ba22e700493cbc7b7156, with the retained Apache-2.0
+attribution and license at `docs/reports/licenses/tauceti-sphere-port-LICENSE.txt`.
+The C8 and quotient suppliers retain Haobo Ma and Wenlin Zhang's
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) attribution;
+the prefix-fiber supplier retains BochaoKong's Apache-2.0 LeanPool
+attribution at 2b1ec889365345f19a45fa94b6457a4d92c96295. These reused results
+are not new mathematics of the present statements.
+
+Critch--Morton, *Algebraic Geometry of Matrix Product States*, SIGMA 10
+(2014), 095, DOI [10.3842/SIGMA.2014.095](https://doi.org/10.3842/SIGMA.2014.095),
+[arXiv:1210.2812v4, Conjecture 9](https://arxiv.org/html/1210.2812v4),
+state three-adjacent-site recovery with a no-fewer clause; their displayed
+Hermitian map specializes to the prefix. Theorem 144.1 excludes a dense
+singleton locus for each positive interior two-site split in the literal
+actual model. It does not settle density of ambiguity, exact generic real
+multiplicity, degree, enumeration, joint recovery from all two-site windows,
+prefix/suffix two-site scope, or full C9. There is no literature-priority or
+independent-assumption-count reduction claim. The separate ordered-convex
+reconstruction domains of XVIII232 and XVIII240--242 have no asserted
+faithful bridge to these MPS sources.
+The full-source registration limitation of the reused suppliers remains the
+one disclosed at [issue 30422](https://github.com/the-omega-institute/trureturing/issues/30422).
+The present statements are prose proofs, with no new Lean-verification claim.
+Operational exact acquisition, stability and the enduring actual-source,
+internal-observer mutual recovery of space, time, boundary and memory remain
+outside these conclusions.
+
+## 追加锚（本行以下为增补区）
+
+## 147. Regular actual two-window collisions at every split
+
+Use the literal image $\mathcal X_N$ and the ordered word convention of
+Definition 137.1. Extend (VIII.24) to a zero exterior by summing over the
+single empty word. Write $Q_{p,k,q}$ for the analogous complete raw
+$2^k\times2^k$ matrix. Throughout these sections,
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+\tag{VIII.52}
+$$
+
+Complex conjugation below is in this computational basis; no word order is
+reversed.
+
+**Theorem 147.1 (an actual collision at every adjacent split).** For every
+pair of integers $p,q\ge1$, put $N=p+2+q$. There exist normalized
+$\psi,\phi\in\mathcal X_N$ such that $\phi=\overline\psi$,
+$\phi$ is not a unit-phase multiple of $\psi$, and
+
+$$
+Q_{p,2,q}(\psi)=Q_{p,2,q}(\phi),\qquad
+Q_{p+1,2,q-1}(\psi)=Q_{p+1,2,q-1}(\phi).
+\tag{VIII.53}
+$$
+
+Each realization has invertible symbol matrices, invertible complex-linear
+transfer and two-site spanning. For $q\ge2$, both displayed windows have
+positive exterior lengths, positive definite actual environments and rank
+four. For $q=1$, the second window meets the right boundary and has rank two;
+the first still has rank four. The construction is an existence statement
+at every split, with boundaries allowed to depend on that split. It asserts
+neither simultaneous equality at all windows of one pair nor ambiguity on
+an actual-open set.
+
+Proof. Set
+
+$$
+A_0=\begin{pmatrix}1&i\\1&-i\end{pmatrix},\qquad
+A_1=\tfrac12 ZA_0,\qquad \gamma=\tfrac52,\qquad t=\tfrac35.
+\tag{VIII.54}
+$$
+
+Write $p=3m+j$, $q=3n+k$, with $j,k\in\{0,1,2\}$, and choose the
+literal row and column boundaries by
+
+$$
+\begin{array}{c|c|c|c}
+j&l&l^\dagger l&a\\ \hline
+0&(1,1)/\sqrt2&(I+X)/2&t^{2m}\\
+1&(1,i)/\sqrt2&(I-Y)/2&t^{2m+1}\\
+2&(1,0)&(I+Z)/2&t^{2m+1}
+\end{array}
+\qquad
+\begin{array}{c|c|c|c}
+k&r&rr^\dagger&b\\ \hline
+0&(1,i)^{\mathsf T}/\sqrt2&(I+Y)/2&t^{2n}\\
+1&(1,-1)^{\mathsf T}/\sqrt2&(I-X)/2&t^{2n+1}\\
+2&(0,1)^{\mathsf T}&(I-Z)/2&t^{2n+2}
+\end{array}
+\tag{VIII.55}
+$$
+
+Every listed boundary has squared norm one, so the seeds are actual pure
+rank-one Grams, not freely assigned interior environments. Let
+$\Psi(w)=lA_wr$, and let $E,E^*$ have the meaning of Lemma 137.2. Exact
+multiplication, with $F=E/\gamma$, gives
+
+$$
+\begin{array}{c|rrrr}
+V&I&X&Y&Z\\ \hline
+F(V)&I&-tY&-Z&tX\\
+F^*(V)&I&tZ&-tX&-Y
+\end{array}.
+\tag{VIII.56}
+$$
+
+In particular $F^*(I)=I$, and the third power of either map multiplies
+each traceless Pauli direction by $t^2$. The residue-zero seeds in
+(VIII.55) therefore give the asserted powers after $3m$ or $3n$ steps.
+For the remaining left residues,
+$F^*(-Y)=tX$ and $(F^*)^2(Z)=tX$; for the remaining right residues,
+$F(-X)=tY$ and $F^2(-Z)=t^2Y$. This proves for all lengths, including
+all three residue classes, the actual forward identities
+
+$$
+P_p=(E^*)^p(l^\dagger l)=\frac{\gamma^p}{2}(I+aX),\qquad
+H_q=E^q(rr^\dagger)=\frac{\gamma^q}{2}(I+bY).
+\tag{VIII.57}
+$$
+
+Because $p,q\ge1$, $0<a\le t$ and $0<b\le t$; if $q\ge2$, then
+$b\le t^2$. Thus both environments in (VIII.57) are positive definite.
+The four transposed pair-product rows in Lemma 137.2 have determinant $4$.
+Also
+
+$$
+\det A_0=-2i,\qquad \det A_1=i/2,\qquad
+\det_{\mathbb C}E=\frac{225}{16}.
+\tag{VIII.58}
+$$
+
+For the last identity, (VIII.56) gives
+$\det F=t^2$ on the basis $I,X,Y,Z$, so
+$\det E=\gamma^4t^2$. These identities prove symbol invertibility,
+transfer invertibility and two-site spanning without a sampled-rank premise.
+
+For Hermitian $P,H$ define
+$\mathcal Q_k(P,H)_{u,v}=\operatorname{tr}(PA_uHA_v^\dagger)$.
+The actual-exterior dictionary (VIII.25), or its entry expansion, gives
+$Q_{p,k,q}(\Psi)=\mathcal Q_k(P_p,H_q)$. Put
+$C=\gamma^{p+q}/4$. Multiplication of the four ordered words gives the
+complete first record
+
+$$
+Q_{p,2,q}(\Psi)=C R_0(a,b),\qquad
+R_0(a,b)=\begin{pmatrix}
+8-8ab&4a-4b&0&0\\
+4a-4b&2-2ab&0&0\\
+0&0&2+2ab&-a-b\\
+0&0&-a-b&(1+ab)/2
+\end{pmatrix}.
+\tag{VIII.59}
+$$
+
+The adjacent environments follow from the actual recurrence, not from
+positivity of an inverse transfer:
+
+$$
+P_{p+1}=\frac{\gamma^{p+1}}2(I+taZ),\qquad
+H_{q-1}=\frac{\gamma^{q-1}}2\bigl(I-(b/t)X\bigr).
+\tag{VIII.60}
+$$
+
+Indeed applying $E$ to the second expression gives $H_q$ by (VIII.56),
+and $E$ is invertible; at $q=1$ it is exactly the original seed
+$(I-X)/2$. Hence the complete adjacent record is
+
+$$
+Q_{p+1,2,q-1}(\Psi)=C R_1(a,b),\qquad
+R_1(a,b)=\begin{pmatrix}
+8-8ab&0&12a/5-20b/3&0\\
+0&2+2ab&0&3a/5+5b/3\\
+12a/5-20b/3&0&2-2ab&0\\
+0&3a/5+5b/3&0&(1+ab)/2
+\end{pmatrix}.
+\tag{VIII.61}
+$$
+
+Both matrices are real in every entry. Their determinants are
+
+$$
+\det R_0=16(1-a^2)^2(1-b^2)^2,\qquad
+\det R_1=16(1-t^2a^2)^2(1-b^2/t^2)^2.
+\tag{VIII.62}
+$$
+
+For example the two diagonal blocks of $R_0$ have determinants
+$16(1-a^2)(1-b^2)$ and $(1-a^2)(1-b^2)$. Reordering $R_1$ by
+$(00,10,01,11)$ gives the same two factors with $a,b$ replaced by
+$ta,b/t$. This proves (VIII.62). For $q\ge2$ the environments in
+(VIII.60) are positive definite and the square feature matrix is
+invertible, proving positivity of both records. At $q=1$, the right
+Gram in (VIII.60) has rank one and the left has rank two; their tensor
+product, and hence the second record, has rank two.
+
+The two traces are equal:
+
+$$
+\operatorname{tr}R_0=\operatorname{tr}R_1=\frac{25-15ab}{2},\qquad
+z_N:=\|\Psi\|^2=\frac{\gamma^{N-2}}8(25-15ab)>0.
+\tag{VIII.63}
+$$
+
+The conjugate source is literally
+$(\overline A_0,\overline A_1,\overline l,\overline r)$ at the same
+length, and its complete raw matrices are the conjugates of (VIII.59)
+and (VIII.61). They are therefore equal to those of $\Psi$, and its
+squared norm is the same $z_N$. Define
+$\psi=\Psi/\sqrt{z_N}$ and $\phi=\overline\Psi/\sqrt{z_N}$;
+scaling $l$ realizes this normalization in $\mathcal X_N$. This proves
+both normalized equalities (VIII.53). The following union calculation
+proves that their full-state phase classes are different.
+
+## 148. A fixed union correlation missing from both records
+
+**Proposition 148.1 (signed union relation and recovery error).** For the
+pair of Theorem 147.1 let
+
+$$
+W=X_{p+1}\otimes Y_{p+2}\otimes X_{p+3},\qquad
+\delta=\frac{64}{25(5-3ab)},
+\tag{VIII.64}
+$$
+
+with identity on all other factors. Then
+
+$$
+\langle W\rangle_\psi=-\delta,\qquad
+\langle W\rangle_\phi=\delta,\qquad \delta>\frac{64}{125}.
+\tag{VIII.65}
+$$
+
+For $q\ge2$, $\delta\le10/17$; allowing $q=1$ gives
+$\delta\le32/49$. With $T(\rho,\sigma)=\|\rho-\sigma\|_1/2$, the
+union-three-site trace distance, and therefore the whole-state trace
+distance, is at least $\delta$. Every estimate based only on the common
+pair of complete records has worst-case trace-distance error at least
+$\delta/2>32/125$ on this actual pair.
+
+Proof. For the actual union $(p,3,q-1)$ put $c=-b/t$. Its raw matrix is
+$\gamma^{p+q-1}\mathcal Q_3(I+aX,I+cX)/4$. The trace can be checked
+without listing sixty-four entries. From (VIII.56),
+
+$$
+E^3(I+cX)=\gamma^3(I+t^2cX),\qquad
+\operatorname{tr}\mathcal Q_3(I+aX,I+cX)
+=\frac54(25+9ac).
+\tag{VIII.66}
+$$
+
+For an observable $O$ on one physical factor put
+$\mathcal E_O(V)=\sum_{i,j}O_{ji}A_iVA_j^\dagger$. In particular
+
+$$
+\begin{aligned}
+\mathcal E_X(V)&=A_0VA_1^\dagger+A_1VA_0^\dagger,\\
+\mathcal E_Y(V)&=i(A_0VA_1^\dagger-A_1VA_0^\dagger),\\
+\mathcal E_X(I+cX)&=2Z,\qquad
+\mathcal E_Y(2Z)=4Y,\qquad \mathcal E_X(4Y)=-8I.
+\end{aligned}
+\tag{VIII.67}
+$$
+
+Thus
+$\operatorname{tr}[(X\otimes Y\otimes X)\mathcal Q_3(I+aX,I+cX)]=-16$.
+Dividing the restored raw expectation by (VIII.63) gives exactly
+$-64/[25(5-3ab)]$. Since $\overline W=-W$, conjugating the source
+changes its sign. This also excludes unit-phase equality of the two states.
+The bounds follow from $0<ab\le t^3$ for $q\ge2$, and
+$0<ab\le t^2$ otherwise. Since $\|W\|_\infty=1$, the expectation
+difference $2\delta$ implies $T\ge\delta$ by trace-norm duality.
+Partial trace cannot increase trace distance, proving the full-state bound.
+If a common datum produces an estimate $\widehat\rho$, the triangle
+inequality gives
+$T(\rho_\psi,\widehat\rho)+T(\widehat\rho,\rho_\phi)\ge\delta$.
+At least one error is at least $\delta/2$. The same argument after
+averaging applies to the expected error of a randomized estimator.
+
+The two spectral effects $(I\pm W)/2$ give different probabilities on this
+pair. This is one fixed joint relation on the union, not a universal
+recovery certificate or
+a proof that it is a minimal supplement. For $q\ge2$, the union has
+positive exterior lengths and the verified target-only spanning,
+invertible-transfer and positive-environment hypotheses. Consequently the
+already supplied
+OpenBoundaryMPSInteriorCommonCore.interior_phase_recovery identifies either
+target against every actual same-length competitor if its entire raw
+$Q_{p,3,q-1}$ is supplied. This is reuse of that conditional theorem;
+no competitor regularity or common-core assumption is added. At $q=1$
+its positive-right-exterior premise fails, so this application is not made.
+For $q\ge2$ the union has rank four: its feature contains the four
+spanning products $A_iA_jA_0$, and both actual environments are positive
+definite. Thus this interior triple is mixed.
+
+**Proposition 148.2 (actual zero-cross-entry sectors).** The two sources
+of Theorem 147.1 inhabit the zero-cross-entry alternative of Theorem 145.1
+at every stated split.
+
+Proof. In (VIII.38) take the regular sector
+$\sigma=(1/2,-1/2,0)$, $z_0=2i$, and $S=\operatorname{diag}(1,1/2)$.
+With $G_{z_0}=T D_{z_0}$, direct multiplication gives
+$A_i=S^{-1}A_i(z_0)S$ for $i=0,1$. The boundaries
+$l_c=lS^{-1}$ and $r_c=Sr$ preserve every raw amplitude. The sector
+left Gram and transformed right Gram are therefore
+
+$$
+P_c=S^{-\dagger}P_pS^{-1},\qquad
+H_c=S A_0^2 H_q(A_0^2)^\dagger S^\dagger.
+$$
+
+Substitution into (VIII.48) yields
+
+$$
+\begin{aligned}
+M&=\gamma^p\operatorname{diag}(5/4+3a/4,\,5/4-3a/4),\\
+W_{\rm sec}&=\gamma^q\operatorname{diag}(1-b,\,1+b).
+\end{aligned}
+\tag{VIII.68}
+$$
+
+Here $W_{\rm sec}$ denotes the matrix called $W$ in (VIII.48), not the
+physical union observable (VIII.64). Thus both sector cross entries vanish.
+The sector data $T,B,S$ are real, so the conjugate source has $z=-2i$
+in the same fixed sector and on the same modulus circle. Actuality of both
+boundaries was established in (VIII.55)--(VIII.57), independently of the
+coefficient criterion. Common normalization merely scales a boundary and
+does not change either zero cross entry. This supplies actual companions
+for this alternative, not an actual realization of every point of its
+trial circle.
+
+## 149. An odd-central actual phase circle with changing cores
+
+**Theorem 149.1 (continuous exceptional two-window fibers).** For every
+real $s>1$ and integer $m\ge1$, put $N=2m+3$. There exists a real
+$k\in(0,\sqrt s)$, chosen once for this $s,m$, such that the literal
+homogeneous sources
+
+$$
+A_0=\operatorname{diag}(1,i\sqrt s),\qquad
+A_1(\theta)=e^{i\theta}\sqrt k X,\qquad
+l=(1,0),\qquad r=(1,0)^{\mathsf T},\qquad
+\Psi_\theta(w)=lA_w(\theta)r
+\tag{VIII.69}
+$$
+
+have both complete raw records
+$Q_{m,2,m+1}(\Psi_\theta)$ and
+$Q_{m+1,2,m}(\Psi_\theta)$ independent of every real $\theta$.
+Each core has invertible symbols, invertible complex-linear transfer and
+two-site spanning. Every positive-length left or right actual boundary
+iterate is positive definite, so both records have rank four.
+Their common raw squared norm is a positive number independent of
+$\theta$. The normalized states are unit-phase equivalent exactly when
+$\theta-\eta\in\pi\mathbb Z$. Thus the joint two-record fiber contains
+an actual circle of distinct full-state phase classes.
+
+Proof. Define, for $k\in[0,\sqrt s]$,
+
+$$
+K(k)=\begin{pmatrix}1&k\\k&s\end{pmatrix},\qquad
+\binom{x_n}{y_n}=K(k)^n\binom10,\qquad
+F_m(k)=x_mx_{m+1}-s y_my_{m+1}.
+\tag{VIII.70}
+$$
+
+The entries and $F_m$ are real polynomials in $k$. At $k=0$,
+$x_n=1$, $y_n=0$ and $F_m(0)=1$. At $k=\sqrt s$, write
+$v=(1,\sqrt s)^{\mathsf T}$. Then $K=vv^{\mathsf T}$ and
+$K^ne_0=(1+s)^{n-1}v$ for $n\ge1$, so
+
+$$
+F_m(\sqrt s)=(1-s^2)(1+s)^{2m-1}<0.
+\tag{VIII.71}
+$$
+
+The intermediate value theorem supplies a root strictly between the two
+endpoints. Fix any such root for the rest of the proof. No uniqueness or
+observer procedure for selecting it is asserted.
+
+The phase on $A_1$ cancels in its transfer summand, so $E_\theta=E$
+is independent of $\theta$. On diagonal matrices $E$ and $E^*$ both
+act by $K$ on the two diagonal entries. On the off-diagonal coordinates
+$(V_{01},V_{10})$, $E$ acts by
+
+$$
+\begin{pmatrix}-i\sqrt s&k\\k&i\sqrt s\end{pmatrix}.
+\tag{VIII.72}
+$$
+
+The determinants of the diagonal and off-diagonal blocks both equal
+$s-k^2>0$, whence $\det_{\mathbb C}E=(s-k^2)^2>0$.
+The original norm-one seeds $l^\dagger l=rr^\dagger=e_0e_0^\dagger$
+give exactly
+
+$$
+P_n=(E^*)^n(l^\dagger l)=\operatorname{diag}(x_n,y_n),\qquad
+H_n=E^n(rr^\dagger)=\operatorname{diag}(x_n,y_n).
+\tag{VIII.73}
+$$
+
+All entries of $K$ are strictly positive at the chosen $k$, so
+$x_n,y_n>0$ for every $n\ge1$. This proves simultaneous actual
+positivity from the pure seeds for all required lengths.
+Furthermore
+
+$$
+\det A_0=i\sqrt s,\qquad \det A_1(\theta)=-ke^{2i\theta},\qquad
+\det F_2(\theta)=-k^2(1+s)^2e^{4i\theta}\ne0,
+\tag{VIII.74}
+$$
+
+where $F_2$ has exactly Lemma 137.2's transposed word convention. The
+feature determinant follows by multiplying the four pair products at
+$\theta=0$, and then multiplying their rows by
+$1,e^{i\theta},e^{i\theta},e^{2i\theta}$. Together with (VIII.73),
+this proves the regularity and positive-definite record assertions.
+
+For completeness, the entire raw two-site matrix at any positive split
+has the following form. Write $x=x_p$, $y=y_p$, $h=x_q$, $j=y_q$,
+and $\zeta=e^{-2i\theta}$. Then
+
+$$
+Q_{p,2,q}(\Psi_\theta)=
+\begin{pmatrix}
+xh+s^2yj&0&0&k(xh-syj)\zeta\\
+0&k(syh+xj)&ik\sqrt s(yh-xj)&0\\
+0&-ik\sqrt s(yh-xj)&k(yh+sxj)&0\\
+k(xh-syj)\overline\zeta&0&0&k^2(xh+yj)
+\end{pmatrix}.
+\tag{VIII.75}
+$$
+
+Indeed $A_0$ preserves and $A_1$ flips the virtual index. The only
+nonzero full amplitudes have even Hamming weight, and
+$\Psi_\theta(w)=e^{i\theta|w|}\Psi_0(w)$. In the exterior sum this
+makes each matrix entry acquire
+$e^{i\theta(|u|-|v|)}$; opposite-parity entries are zero. Multiplying
+$A_{00}=\operatorname{diag}(1,-s)$,
+$A_{01}=\sqrt k\left(\begin{smallmatrix}0&1\\i\sqrt s&0\end{smallmatrix}\right)$,
+$A_{10}=\sqrt k\left(\begin{smallmatrix}0&i\sqrt s\\1&0\end{smallmatrix}\right)$,
+and $A_{11}=kI$ at phase zero, with (VIII.73), gives every entry of
+(VIII.75). Its only potentially nonzero unequal-weight entry is
+$(00,11)$ and its conjugate. At $(p,q)=(m,m+1)$ this coefficient is
+$kF_m(k)=0$; it is the same expression at $(m+1,m)$. Thus each whole
+matrix is independent of $\theta$. The assertion is not that the two
+matrices equal each other.
+
+The total raw norm is
+
+$$
+z_N=\|\Psi_\theta\|^2=lE^N(rr^\dagger)l^\dagger=x_N>0.
+\tag{VIII.76}
+$$
+
+It is independent of phase. Dividing every source by the same
+$\sqrt{x_N}$ preserves both collisions. Finally the two actual amplitudes
+
+$$
+\Psi_\theta(0^N)=1,\qquad
+\Psi_\theta(11\,0^{N-2})=k e^{2i\theta}
+\tag{VIII.77}
+$$
+
+show that a full-state unit phase between $\theta$ and $\eta$ must first
+be one, and then $e^{2i(\theta-\eta)}=1$. Conversely even-weight support
+makes that condition sufficient. This proves precisely the claimed circle
+of phase classes, without treating a change of core as a free environment.
+
+**Proposition 149.2 (nonzero conditional coherence on the actual union).**
+For the same source, write $x=x_m$, $y=y_m$. Its union record satisfies
+
+$$
+\begin{aligned}
+Q_{m,3,m}(\Psi_\theta)_{000,011}
+ &=k^2(s-1)xy\,e^{-2i\theta}\ne0,\\
+Q_{m,3,m}(\Psi_\theta)_{100,111}
+ &=-k^2(s-1)xy\,e^{-2i\theta}.
+\end{aligned}
+\tag{VIII.78}
+$$
+
+The union has rank four and varies with $\theta$. For normalized states
+the entries in (VIII.78) are divided by $x_N$.
+
+Proof. The recurrence (VIII.70) gives
+$x_{m+1}=x+ky$ and $y_{m+1}=kx+sy$. Hence the defining root identity is
+
+$$
+x^2-s^2y^2=k(s-1)xy>0.
+\tag{VIII.79}
+$$
+
+Using the same actual $P_m,H_m$ in the trace dictionary, the first entry
+of (VIII.78) is $k(x^2-s^2y^2)e^{-2i\theta}$, since
+$A_{000}=\operatorname{diag}(1,-is\sqrt s)$ and
+$A_{011}=ke^{2i\theta}A_0$. The second is
+$k^2(1-s)xy e^{-2i\theta}$, obtained from $A_{100}$ and $A_{111}$.
+This proves both identities and their nonvanishing. Their sum is the
+$(00,11)$ entry of the second two-site record, which vanishes. Thus the
+lost relation is a coherence at a specified value of the first union
+factor that is canceled by marginal summation, rather than missing diagonal
+occupations. The four length-three products $A_iA_jA_0$ span $M_2(\mathbb C)$
+because the pair products span and right multiplication by $A_0$ is
+invertible. Therefore $F_3$ has rank four. Since $P_m,H_m$ are positive
+definite, $F_3(H_m\otimes P_m^{\mathsf T})F_3^\dagger$ has rank four.
+In particular this interior three-site state is mixed.
+
+The two fixed Hermitian quadratures
+$|011\rangle\langle000|+|000\rangle\langle011|$ and
+$-i(|011\rangle\langle000|-|000\rangle\langle011|)$ determine the
+complex entry in (VIII.78). If separately supplied, they distinguish all
+phases modulo $\pi$ within this displayed family at fixed $s,m,k$.
+This does not identify arbitrary unknown-core competitors from one complex
+entry. If the whole raw union $Q_{m,3,m}$ is supplied instead, the
+verified hypotheses of
+OpenBoundaryMPSInteriorCommonCore.interior_phase_recovery hold for every
+target here and give phase recovery against every actual same-length
+competitor. That stronger conclusion is supplied mathematics, not a new
+three-site theorem.
+
+## 150. A nonzero target cross entry does not fix an unknown core
+
+**Proposition 150.1 (a regular target sector and its nonzero cross entry).**
+For every $s,m,k$ of Theorem 149.1, its phase-zero target has a regular
+sector realization of (VIII.38) with $M_{01}\ne0$ in (VIII.48), at the
+first central split $(m,2,m+1)$. Nevertheless all other phase classes in
+Theorem 149.1 have both of its two-site records. They are not thereby
+competitors in the target's fixed sector.
+
+Proof. Set
+
+$$
+\begin{gathered}
+b=i\sqrt s,\qquad d=(1+b)/2,\qquad e=(1-b)/2,\qquad
+\lambda^2=k/b,\qquad \mu=-\lambda,\\
+\gamma_0=-2\lambda de/b,\qquad
+U=\begin{pmatrix}1&1\\\sqrt k/\lambda&-\sqrt k/\lambda\end{pmatrix}
+       \operatorname{diag}(\gamma_0,1),\\
+\alpha_\sigma=\gamma_0e/d,\qquad
+\beta_\sigma=\gamma_0d/e,\qquad
+ a_\sigma=\lambda-\alpha_\sigma,\qquad
+ z=e/(\gamma_0d).
+\end{gathered}
+\tag{VIII.80}
+$$
+
+Either square root for $\lambda$ is allowed and is nonzero. All of
+$b,d,e,\gamma_0,z,\alpha_\sigma,\beta_\sigma$ are nonzero, and $U$ is
+invertible. Since $d^2-e^2=b$,
+$\beta_\sigma-\alpha_\sigma=-2\lambda=\mu-\lambda$;
+thus these offsets are exactly those of the sector
+$\sigma=(\lambda,\mu,a_\sigma)$. They are unrelated to the native
+$\alpha/\beta$ atoms. Moreover
+
+$$
+\mu-\lambda=-2\lambda\ne0,\qquad
+1+\overline\lambda\mu=1-|\lambda|^2=1-k/\sqrt s>0.
+\tag{VIII.81}
+$$
+
+This verifies all sector regularity conditions.
+
+For an explicit check of the core correspondence, the two columns of
+$U$ before its final diagonal factor are eigenvectors of
+$A_1(0)A_0^{-1}$ with eigenvalues $\lambda,-\lambda$. Computing the
+other transformed core then gives
+
+$$
+\begin{aligned}
+d^{-1}U^{-1}A_0U
+ &=\begin{pmatrix}1&e/(\gamma_0d)\\\gamma_0e/d&1\end{pmatrix}
+ =G_z,\\
+d^{-1}U^{-1}A_1(0)U&=B G_z,\qquad B=\operatorname{diag}(\lambda,-\lambda).
+\end{aligned}
+\tag{VIII.82}
+$$
+
+Here $\beta_\sigma z=1$ supplies the lower-right entry of $G_z$.
+Take the actual new boundaries
+
+$$
+l'=lU,\qquad r'=d^N U^{-1}r.
+\tag{VIII.83}
+$$
+
+For every length-$N$ word, the factor $d^{-N}$ from the transformed
+core cancels $d^N$ from $r'$, and the successive $U,U^{-1}$ cancel.
+Thus $l'A_w(z)r'=lA_w(0)r$ exactly, not merely up to normalization or
+phase. Actual forward Grams are invertible congruences of (VIII.73),
+with positive scalar factors. In particular the first left Gram is
+
+$$
+P'=|d|^{-2m}U^\dagger\operatorname{diag}(x,y)U,\qquad x=x_m,\quad y=y_m.
+\tag{VIII.84}
+$$
+
+The right Gram at length $m+1$ is
+$|d|^{2N-2(m+1)}U^{-1}\operatorname{diag}(x_{m+1},y_{m+1})U^{-\dagger}$;
+its conjugation by $G_z^2$ is the positive definite $H$ of (VIII.39).
+This checks that the sector calculation uses the same actual source and
+both actual boundaries.
+
+With $T=\left(\begin{smallmatrix}1&1\\\alpha_\sigma&\beta_\sigma\end{smallmatrix}\right)$
+and $R=d/e$, multiplication of (VIII.84) in
+$M=T^\dagger(P'+B^\dagger P'B)T$ gives
+
+$$
+M_{01}=\frac{4|d|^{-2m}|\gamma_0|^2 R}{1+s}
+ \bigl[(1-k\sqrt s)x+(k-s\sqrt s)y\bigr].
+\tag{VIII.85}
+$$
+
+One way to check the prefactor and the complex phase in this entry is to
+write $UT$ column by column as
+$\gamma_0(1+e/d,\,(\sqrt k/\lambda)(1-e/d))^{\mathsf T}$ and
+$\gamma_0(1+d/e,\,(\sqrt k/\lambda)(1-d/e))^{\mathsf T}$.
+Use $\overline d=e$, $|d|^2=(1+s)/4$ and
+$|\sqrt k/\lambda|^2=\sqrt s$, and apply the same computation to $UBT$.
+It gives (VIII.85) with the displayed $R$, rather than its conjugate.
+
+Every factor outside the bracket is nonzero. To determine the bracket,
+put $u=y/x$. By (VIII.79), $0<u<1/s$ and
+$k=(1-s^2u^2)/((s-1)u)$. Substitution yields the exact factorization
+
+$$
+(s-1)u\bigl[(1-k\sqrt s)+(k-s\sqrt s)u\bigr]
+ =(su-\sqrt s)(1-su^2)<0.
+\tag{VIII.86}
+$$
+
+The first factor is negative because $su<1<\sqrt s$; the second is
+positive because $su^2<1/s<1$. Hence (VIII.85) is nonzero for every
+chosen root, not just for a finite example. Normalizing the target scales
+$P'$ and $M$ by a positive number and preserves this fact.
+
+For the displayed phase-dependent cores, the quantity
+
+$$
+\det\bigl(A_1(\theta)A_0^{-1}\bigr)
+ =\frac{ik}{\sqrt s}e^{2i\theta}
+\tag{VIII.87}
+$$
+
+is invariant under simultaneous virtual similarity and common nonzero
+scalar rescaling of both core matrices. It changes whenever the phase
+classes of Theorem 149.1 change. Thus that change of displayed core is
+not either of these representation gauges: even the determinant of its
+pencil eigenvalues changes. This statement concerns the specified cores
+and gauges; it does not assume a classification of all representations
+of a finite-length state. Independently, if a distinct phase class had
+any actual realization in the target's same fixed regular sector, its two
+record equalities and $M_{01}\ne0$ would invoke Theorem 145.1 and force
+full-state phase equality. That contradicts (VIII.77). Thus the actual
+matching competitors cannot be put into that fixed-sector competitor
+quantifier. Target regularity and a target nonzero cross entry do not
+supply the missing common-sector hypothesis.
+
+## 151. Sources, faithful access and the unresolved generic boundary
+
+The new mathematical increments of §§147--150 are the pure-boundary
+Pauli-cycle construction at every adjacent split, its complete real record
+pair and fixed quantitative union distinction, and the odd-central phase
+circle together with its actual sector gauge and nonzero target cross
+entry. The two mechanisms are complementary: the first inhabits the
+zero-cross-entry alternative within one sector at every $p,q\ge1$; the
+second survives with a nonzero target cross entry by changing cores at
+the specified odd central splits. Neither is the singular-transfer example
+of §139.3, the one-window annular ambiguity of §§142--144, or a new proof
+of generic finiteness or three-site sufficiency. Lemma 137.2 supplies the
+actual-exterior dictionary; Theorem 145.1 supplies only its fixed-sector
+criterion. The exact target-only full-three-site supplier is
+`D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.lean`,
+`interior_phase_recovery`: positive left and right lengths, target two-site
+spanning, injective transfer and positive actual boundary iterates suffice
+against arbitrary actual same-length competitor cores and boundaries.
+The applications above check these premises on the displayed targets;
+reading or applying this supplier is not a new Lean-verification claim.
+The reused full-source registration boundary remains
+[issue 30422](https://github.com/the-omega-institute/trureturing/issues/30422),
+with no registration change.
+
+Every phase-circle target in §149 lies outside the particular
+$\mathcal G_N$ of Theorem 139.2: its first central two-site fiber already
+contains infinitely many distinct phase classes, whereas that locus has
+finite fibers at every positive split. In particular these targets are
+not in $\mathcal O_N\subset\mathcal G_N$ of Theorem 144.1. No location
+in either locus is asserted for §147's pairs. The phase circle proves
+an exceptional obstruction at every odd $N\ge5$ at splits
+$(m,2,m+1)$ and $(m+1,2,m)$; it supplies no even-length or other-split
+continuum, no actual-open ambiguity, and no classification of the entire
+joint fiber. Theorem 147.1 separately gives a pair at every adjacent split,
+including even lengths and the $N=4$ boundary case. Neither result settles
+generic two-window recovery against all actual competitors on
+$\mathcal G_N$ or $\mathcal O_N$, exact generic cardinality, degree,
+enumeration, all-window simultaneous recovery, or minimal additional access.
+
+For the source/observer interpretation, use precisely the conditional
+mounting of VIII141/146, AAV V25--27, V29.2, V36.1, V38--39 and VII126.1.
+Mount each hypothesis as its separately supplied unknown quantum input on
+the same paid ordered occurrence roster and authentic classical prehistory;
+the roster is tensor-factor order, not native parent adjacency or time.
+Retain the actual exterior factors and supplier preparation memory with all
+their correlations. Preserve both authentic entrances, actual source and
+component bindings, genuine addressed $P/S/\operatorname{Next}$, current
+references and rights, immutable samples, completed and pending records,
+all parser/acquisition phases and every owed Print, End, local ACK and
+same-root Return. Full-bank holds and vacuum extension retain V36.1's
+scope. Exact matrices and expectations are mathematical data: acquisition
+of $W$ or the quadratures needs already held rights and a separately
+promised joint instrument or complete relation readout, with actual
+separately supplied full copies where destructive observation requires
+them. Two-record processing cannot reconstruct these sources or determine
+the law of a lawfully commissioned $W$ readout on §147's pair. A restricted
+physical indistinguishability statement additionally requires an interface
+that exposes at most one of the two blocks per independent full copy and
+the same label-independent independent complete accessible backing, as in
+V38.1; readable labels or correlated side records invalidate that premise.
+Equality of the two untouched marginals does not imply equality for
+sequential overlapping instruments retaining same-copy correlations on the
+union. No such joint experiment is excluded by (VIII.53). Nothing here
+restores an old measured input, resets or rewinds a source, creates a new
+reference grant or $r$-edge, discards a failed or pending output, or uses
+a source-dependent selector. Bare ordered $\alpha/\beta$ syntax supplies
+neither these quantum preparations and effects nor precision, exact
+finite-sample tomography, a clock or a new physical inverse. The complete
+joint-output and returned-state contracts keep their original comparisons;
+no V37--40 family membership or copy-cost transfer is inferred.
+
+The bounded source comparison also separates these results from familiar
+marginal theorems. Landon-Cardinal, Liu and Poulin,
+[*Efficient Direct Tomography for Matrix Product States*,
+arXiv:1002.4632v1](https://arxiv.org/abs/1002.4632v1), use sequential local
+unitaries and changed overlapping windows, not merely the two untouched
+records here; their GHZ example is not a new construction of these sections.
+Linden, Popescu and Wootters,
+[*The power of reduced quantum states*,
+arXiv:quant-ph/0207109v1](https://arxiv.org/abs/quant-ph/0207109v1), consider
+all three pair marginals of a pure three-qubit target. In §149, and in
+§147 when $q\ge2$, the two records instead come from an actual rank-four
+mixed interior triple, with its actual exteriors retained. Diósi,
+[*Three-party pure quantum states are determined by two two-party reduced
+states*, arXiv:quant-ph/0403200v1](https://arxiv.org/abs/quant-ph/0403200v1),
+assumes a known pure tripartite state and pure competitors within its
+stated generic scope; that premise is not this mixed actual triple.
+The ordered-convex, C-star order-coordinate and common-table PSD-completion
+suppliers have different given objects and hypotheses and provide no
+source/acquisition or uniqueness bridge for the present constructions.
+These bounded subtractions make no global originality or literature-priority
+claim. The results are ordinary prose proofs, with no new Lean or
+independent-review claim. Operational accuracy and resource bounds for a
+new coherent commission, and the enduring faithful mutual recovery of
+space, time, boundary and memory on every lawful native future, remain
+unresolved.
+
+## 追加锚（本行以下为增补区）
+
+## 152. A core-independent compact envelope of the actual source image
+
+**Definition 152.1 (common triple-support density domain).** Fix the ordered
+$N$-qubit carrier of Definition 137.1, with $N\ge3$. For every density
+matrix $\Omega$ on this carrier let
+
+$$
+Q_j(\Omega)=\operatorname{Tr}_{\{1,\ldots,N\}\setminus\{j+1,j+2,j+3\}}
+                 \Omega,\qquad 0\le j\le N-3.
+$$
+
+All these matrices use the same ordered occupation basis $000,001,\ldots,111$;
+their sum is a sum in that common eight-dimensional coordinate space.
+Define
+
+$$
+M(\Omega)=\sum_{j=0}^{N-3}Q_j(\Omega),\qquad
+\mathcal K_N=\{\Omega=\Omega^\dagger\succeq0:
+  \operatorname{Tr}\Omega=1,\ \operatorname{rank}M(\Omega)\le4\}.
+\tag{VIII.88}
+$$
+
+This definition uses $N$ and the carrier basis, without a core, boundary,
+chart or preparation label. Let $\mathcal D_N$ consist of all
+$|\psi\rangle\langle\psi|/\|\psi\|^2$ for nonzero actual homogeneous
+binary bond-two vectors $\psi(w)=lB_wr$ of Definition 137.1. No regularity
+is imposed on $B,l,r$ in $\mathcal D_N$. Closure below means closure of
+these normalized densities in the finite-dimensional density space.
+The extra mixed elements of $\mathcal K_N$ are mathematical competitors,
+not an additional acquisition permission. In particular (VIII.88) is not
+an assertion that mixtures of arbitrary different-core sources belong to
+$\mathcal K_N$, or that this set is convex. Its unobserved-window constraint
+is a model constraint, not a table of acquired window outcomes.
+
+**Theorem 152.2 (actual-image and closure inclusion).** The set
+$\mathcal K_N$ is compact and rational semialgebraic, and
+
+$$
+\mathcal D_N\subseteq\overline{\mathcal D_N}\subseteq\mathcal K_N.
+\tag{VIII.89}
+$$
+
+Proof. Put $F_k(B)[u,(i,j)]=(B_u)_{j,i}$, with $(i,j)$ in row-major
+order. The actual exterior-word dictionary used in Lemma 137.2, at $k=3$,
+gives for every $j$ the factorization
+
+$$
+Q_j(|\psi\rangle\langle\psi|/\|\psi\|^2)
+ =F_3(B)W_jF_3(B)^\dagger,\qquad W_j\succeq0.
+$$
+
+It holds also for zero-length exterior words, singular cores and singular
+boundary environments: it is the direct sum of actual exterior-column
+outer products. Thus every summand has range in the same space
+$\operatorname{ran}F_3(B)$ of dimension at most four, proving inclusion
+of $\mathcal D_N$. Density matrices form a closed bounded subset of a
+finite-dimensional real vector space. Partial trace is linear, and rank
+at most four is closed, so $\mathcal K_N$ is compact and contains the
+closure in (VIII.89). More explicitly, represent Hermitian entries by
+real and imaginary coordinates. Positivity is given by nonnegative
+principal minors, trace one is linear, and rank at most four by vanishing
+real and imaginary parts of all $5\times5$ minors of the $8\times8$
+matrix $M(\Omega)$. All coefficients are rational. This also proves the
+semialgebraic assertion without using a parametrization of the actual
+image or assuming that image closed. $\square$
+
+## 153. One regular interior triple has a singleton mixed-envelope fiber
+
+**Theorem 153.1 (target-only regularity against the compact envelope).**
+Fix $p,q\ge1$, $N=p+3+q$, a nonzero actual vector
+$\psi(w)=lA_wr$, $Z=\|\psi\|^2$ and
+$\rho=|\psi\rangle\langle\psi|/Z$. Assume exactly the following target
+conditions, in the conventions of Lemma 137.2:
+
+$$
+\begin{aligned}
+\operatorname{span}_{\mathbb C}\{A_iA_j:i,j\in\{0,1\}\}&=M_2(\mathbb C),\\
+E:X\longmapsto\sum_iA_iXA_i^\dagger&\text{ is injective on }M_2(\mathbb C),\\
+P_p=(E^*)^p(l^\dagger l)&\succ0,\qquad
+H_q=E^q(rr^\dagger)\succ0.
+\end{aligned}
+\tag{VIII.90}
+$$
+
+Here $E^*(X)=\sum_iA_i^\dagger XA_i$, and the left boundary $l$ remains
+bilinear in $lA_wr$. Then
+
+$$
+\{\Omega\in\mathcal K_N:Q_p(\Omega)=Q_p(\rho)\}=\{\rho\}.
+\tag{VIII.91}
+$$
+
+The competitor $\Omega$ may be mixed or a limit of actual sources. It
+need not have a homogeneous representation, the target core, positive
+environments or injective transfer. All normalized actual same-length
+competitors with arbitrary cores and free boundaries are included by
+Theorem 152.2. The core and boundaries occur in the proof, not as inputs
+to the certificate of §155.
+
+Proof. Write $F_n=F_n(A)$ and $G_n=\operatorname{ran}F_n$. Two-site
+spanning makes $F_n$ injective for all $n\ge2$: this is precisely the
+existing trace-separation statement for
+$\Gamma_n(X)(w)=\operatorname{Tr}(XA_w)=F_n\operatorname{vec}X$.
+The exterior dictionary and (VIII.90) give
+
+$$
+Q_p(\rho)=Z^{-1}F_3(H_q\otimes P_p^{\mathsf T})F_3^\dagger,
+\qquad \operatorname{rank}Q_p(\rho)=4,
+\qquad \operatorname{ran}Q_p(\rho)=G_3.
+\tag{VIII.92}
+$$
+
+For a competitor in (VIII.91), all $Q_j(\Omega)$ are positive. For a
+finite sum of positive matrices the kernel is the intersection of their
+kernels, so the range is the sum of their ranges. Since one summand in
+$M(\Omega)$ already has range $G_3$ of dimension four, (VIII.88) forces
+$\operatorname{ran}Q_j(\Omega)\subseteq G_3$ for every $j$.
+Let $\Pi$ be the orthogonal projector onto $G_3$, and let
+$C_j=I^{\otimes j}\otimes(I-\Pi)\otimes I^{\otimes(N-j-3)}$. Then
+
+$$
+0=\operatorname{Tr}((I-\Pi)Q_j(\Omega))
+ =\operatorname{Tr}(C_j\Omega)
+ =\|C_j\Omega^{1/2}\|_F^2.
+\tag{VIII.93}
+$$
+
+Consequently the global support of $\Omega$ lies in every translated
+triple parent space. The existing parent-intersection theorem gives
+
+$$
+(G_n\otimes\mathbb C^2)\cap(\mathbb C^2\otimes G_n)=G_{n+1}
+\quad(n\ge3).
+\tag{VIII.94}
+$$
+
+Its $n=3$ case includes length four. Inducting from the triple constraints,
+the intersection of all their translates at length $N$ is $G_N$: the
+constraints on the first and last $n$ sites give the two spaces in
+(VIII.94), and conversely vectors in $G_{n+1}$ satisfy both families.
+This uses the target's parent theorem on arbitrary vectors in the support,
+without assigning a core to $\Omega$.
+
+Choose the left inverse $J_N=(F_N^\dagger F_N)^{-1}F_N^\dagger$. The
+support inclusion now gives
+
+$$
+\Omega=F_NWF_N^\dagger,\qquad W=J_N\Omega J_N^\dagger\succeq0.
+\tag{VIII.95}
+$$
+
+The coefficient $W$ is unique. It is an unrestricted $4\times4$ positive
+matrix, not an asserted rank-one boundary coefficient. The remaining
+step is therefore a mixed-coefficient cancellation, not an application
+of actual-pure phase recovery.
+
+Extend $Q_p$ by partial trace to all operators. For any $4\times4$ matrix
+$W$, including non-Hermitian matrix units, direct expansion gives
+
+$$
+\begin{aligned}
+Q_p(F_NWF_N^\dagger)&=F_3\mathcal T_{p,q}(W)F_3^\dagger,\\
+\mathcal T_{p,q}(W)&=\sum_{a\in\{0,1\}^p,\ b\in\{0,1\}^q}
+ (A_b\otimes A_a^{\mathsf T})W
+ (A_b\otimes A_a^{\mathsf T})^\dagger.
+\end{aligned}
+\tag{VIII.96}
+$$
+
+To fix the order and transpose, the column for $\operatorname{vec}X$
+at the physical word $aub$ is
+$\operatorname{Tr}(XA_aA_uA_b)=\operatorname{Tr}(A_bXA_aA_u)$, and
+$\operatorname{vec}(A_bXA_a)=(A_b\otimes A_a^{\mathsf T})
+\operatorname{vec}X$ in row-major order. For a matrix unit
+$W=|\operatorname{vec}X\rangle\langle\operatorname{vec}Y|$ the
+partial trace sums this column times the conjugate $Y$ column over the
+same actual $a,b$. This is (VIII.96); such units span every $W$.
+
+Define the complex-linear map
+
+$$
+L(Y)=\sum_iA_i^{\mathsf T}Y\overline{A_i}
+     =\bigl(E^*(Y^{\mathsf T})\bigr)^{\mathsf T}.
+$$
+
+Under $M_4(\mathbb C)=M_2(\mathbb C)\otimes M_2(\mathbb C)$,
+(VIII.96) is $\mathcal T_{p,q}=E^q\otimes L^p$. Indeed, on a simple
+tensor the two word sums separate; iterating $L$ gives the left word
+sum after reversing its dummy word indices. Finite-dimensional
+injectivity of $E$ implies invertibility of $E$ and of its
+Hilbert--Schmidt adjoint $E^*$. Transposition conjugates $E^*$ to $L$,
+so $\mathcal T_{p,q}$ is invertible on all sixteen complex coefficient
+coordinates. No positive or physically implementable inverse is asserted.
+
+For the target, put $v=\operatorname{vec}(rl)$ and $W_0=vv^\dagger/Z$;
+then $\rho=F_NW_0F_N^\dagger$. Apply a left inverse of $F_3$ on both
+sides of equality of the triple matrices. Equations (VIII.95)--(VIII.96)
+give $\mathcal T_{p,q}(W)=\mathcal T_{p,q}(W_0)$, hence $W=W_0$ and
+$\Omega=\rho$. This proves (VIII.91) over the enlarged domain. $\square$
+
+**Corollary 153.2 (pointwise stability at the regular target).** Under
+(VIII.90), for every $\epsilon>0$ the set
+$\{\Omega\in\mathcal K_N:T(\Omega,\rho)\ge\epsilon\}$, if nonempty,
+has a strictly positive minimum of
+$\|Q_p(\Omega)-Q_p(\rho)\|_F$. Here
+$T(\Omega,\Sigma)=\tfrac12\|\Omega-\Sigma\|_1$. In particular, if
+$q_j\to Q_p(\rho)$, $r_j\to0$ with $r_j\ge0$, then all members of
+
+$$
+\mathcal F_j=\{\Omega\in\mathcal K_N:
+                     \|Q_p(\Omega)-q_j\|_F\le r_j\}
+\tag{VIII.97}
+$$
+
+approach $\rho$ whenever these sets are nonempty. Their Frobenius and
+trace-distance diameters tend to zero. This is pointwise in the stated
+$N,p,q,\rho$, without a uniform conditioning constant or a rate.
+
+Proof. The set at distance at least $\epsilon$ is compact by Theorem
+152.2. The continuous discrepancy has no zero there by (VIII.91), so
+its attained minimum is positive. Alternatively, members of (VIII.97)
+staying a fixed distance away would have a convergent subsequence in
+$\mathcal K_N$ whose limit has the exact target triple, contradicting
+(VIII.91). The same argument with Frobenius distance proves Frobenius
+diameter convergence, or one may use equivalence of finite-dimensional
+norms. This is the compact singleton-fiber argument; the new ingredient
+needed to apply it here is (VIII.91), not injectivity on a possibly
+nonclosed actual image. $\square$
+
+## 154. A paid full-qubit triple readout and its returned instrument
+
+**Definition 154.1 (conditional coherent inputs and finite settings).**
+Retain the actual-source mounting of VIII141/146 and AAV V25--27, V29.2,
+V36.1 and V38--39. A full unknown $N$-qubit input occupies a separately
+paid ordered occurrence roster; its first $p$ and last $q$ physical
+factors are retained. Acquire the three selected target references
+$t_1,t_2,t_3$ and three distinct fresh apparatus references $a_1,a_2,a_3$,
+with their actual wires, current control and retention rights, ingress,
+occupation detectors and calibrated signed-dyadic $P/B$ catalog entries.
+Supply $|+\rangle_{a_1}|+\rangle_{a_2}|+\rangle_{a_3}$ as a known pure
+product, independent of the entire unknown input and retained reference,
+with $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$ in the controls' common
+calibrated frame. This is an additional paid coherent preparation through
+V25.1's preparation/ingress permission. Its preparation device, spent
+resources, records and external memory remain accounted for. It is not
+a phase state derived from vacuum by number-preserving $P/B$, or a
+catalytically returned reference.
+
+For each public setting $b=(b_1,b_2,b_3)\in\{0,1\}^3$ apply, on the
+three disjoint pairs,
+
+$$
+U_b=\bigotimes_{k=1}^3
+ \left[B_{t_ka_k}(1/2)(P_{t_k}(b_k)\otimes I_{a_k})\right],
+\tag{VIII.98}
+$$
+
+then read both occupations of each pair and retain all six bits.
+$P(0)$ is a recorded no-op. The literal full-qubit matrices are V34.1's
+$P(\theta)=\operatorname{diag}(1,e^{-i\theta})$ and $B(\theta)$ with
+block $\left(\begin{smallmatrix}\cos\theta&i\sin\theta\\
+i\sin\theta&\cos\theta\end{smallmatrix}\right)$ on $10,01$, fixing
+$00,11$. Thus the only nonzero angles in this word are the dyadics $1$
+and $1/2$. Exact ideal calibration and absence of an undeclared output
+channel are conditional apparatus premises. No physical availability or
+accuracy of these preparations and controls is inferred from the native
+bracket grammar.
+
+**Corollary 154.2 (explicit informationally complete events and full return).**
+Under Definition 154.1 the eight setting laws determine the normalized
+triple density. Put $c=\cos1$, $s=\sin1>1/2$ and
+$Q_b=\cos b\,Y-\sin b\,X$, with the usual occupation-basis Pauli matrices.
+The single-pair effects, ordered by the delivered target/probe bits, are
+
+$$
+\begin{aligned}
+E_{00}^{(b)}&=(I+Z)/4,&E_{11}^{(b)}&=(I-Z)/4,\\
+E_{10}^{(b)}&=(I-cZ+sQ_b)/4,&
+E_{01}^{(b)}&=(I+cZ-sQ_b)/4.
+\end{aligned}
+\tag{VIII.99}
+$$
+
+Select $E_0=E_{00}^{(0)}$, $E_1=E_{11}^{(0)}$,
+$E_2=E_{10}^{(0)}$, $E_3=E_{10}^{(1)}$. Their trace-dual matrices are
+
+$$
+\begin{aligned}
+D_0&=I+\frac{1-c}{1+c}X+\frac{c-1}{s}Y+Z,\\
+D_1&=I+X-\frac{1+c}{s}Y-Z,\\
+D_2&=\frac{2c}{s^2}X+\frac2sY,\qquad
+D_3=-\frac2{s^2}X.
+\end{aligned}
+\tag{VIII.100}
+$$
+
+For $i,k,l\in\{0,1,2,3\}$, let $p_{ikl}$ be the probability of the
+selected event for those three indices, in setting
+$(\beta(i),\beta(k),\beta(l))$, where
+$\beta(0)=\beta(1)=\beta(2)=0$ and $\beta(3)=1$. The selected outcomes
+are respectively $00,11,10,10$. Then
+
+$$
+Q_p(\rho)=\sum_{i,k,l}p_{ikl}\,D_i\otimes D_k\otimes D_l.
+\tag{VIII.101}
+$$
+
+These are 64 event probabilities in eight normalized setting laws, not
+64 mutually exclusive events in a single setting, and not an exactly
+returned table from finitely many copies.
+
+For arbitrary joint input $\varrho_{TR}$, where $T$ is the triple and
+$R$ contains its physical exteriors, all other bank systems and external
+preparation/reference memory, the completed ideal instrument is
+
+$$
+\varrho_{TR}\longmapsto
+ \sum_{o\in\{0,1\}^6}|h_{b,o}\rangle\langle h_{b,o}|\otimes
+ (\Pi_oU_b\otimes I_R)
+ (\varrho_{TR}\otimes|+++\rangle\langle+++|_a)
+ (U_b^\dagger\Pi_o\otimes I_R).
+\tag{VIII.102}
+$$
+
+Tensor factors in (VIII.102) are placed in the fixed $T,a,R$ order.
+$\Pi_o$ is the product of the six actual occupation projectors.
+The record $h_{b,o}$ augments the fixed commission's actual retained
+preparation, source, endpoint, version, control, detector and native
+records; all target, probe and reference systems remain outputs. Every
+outcome is retained, without postselection. Identity on $R$ in the
+Kraus operators preserves the joint reference accounting, including
+outcome-dependent changes of its conditional state. The probes are
+consumed into their measured states; the input is disturbed.
+
+Proof. Insert $|+\rangle$ into the second factor of the full $4\times4$
+unitary in (VIII.98). The $00$ and $11$ rows give half their respective
+occupation projectors. The $10$ row on the target is
+$2^{-1/2}(i\sin(1/2),\cos(1/2)e^{-ib})$; its outer product gives
+$E_{10}^{(b)}$ in (VIII.99), using $2\sin(1/2)\cos(1/2)=s$.
+The $01$ row gives the remaining effect. This computes the effects on
+the entire target qubit, not a restriction to a single-excitation code.
+The coordinate determinant of $E_0,E_1,E_2,E_3$ in the $I,X,Y,Z$ basis
+is $-s^3/128\ne0$. Substituting (VIII.100), using $s^2+c^2=1$, gives
+$\operatorname{Tr}(D_iE_j)=\delta_{ij}$. Tensoring this duality proves
+(VIII.101), the ordinary finite-frame inverse. The physical instrument
+is instead (VIII.102), the product occupation instrument after the
+unitary with its supplied probe state; its branch sum is trace
+preserving. The inverse coefficients $D_i$ are classical reconstruction
+matrices, not new effects, gates or a physical inverse. $\square$
+
+## 155. A finite-count confidence diameter and a data-only stop
+
+**Definition 155.1 (rational confidence sets and the stopping predicate).**
+The public parameters are integers $p,q\ge1$, $N=p+3+q$, and rational
+$0<\epsilon,\delta<1$. The model promise is a fixed unknown target
+satisfying (VIII.90). For every requested finite prefix, supply fresh
+source-matched full $N$-site inputs whose joint marginal is the product
+of that target density. They are prepared independently by the source,
+not cloned from a sample. Probe preparations and the ideal instruments
+are those of §154, independent of the entire unknown input/reference.
+The acquisition schedule is deterministic. All relevant preparations,
+detectors and controls obey these exact laws; arbitrary correlated or
+drifting copies and an unspecified fixed noise floor are outside this
+iid promise. The model and independence promises belong to the separately supplied
+preparation contract for that source binding; an identifier alone certifies
+neither. The controller receives no core, boundaries,
+source-dependent accuracy gap, preparation label or unexecuted response.
+
+At epoch $j=0,1,\ldots$, use $m_j=2^j$ fresh full inputs for each of the
+eight settings. Retain the $8m_j$ actual six-bit outcomes and complete
+records. Write $\widehat p_{ikl,j}$ for the selected event count divided
+by $m_j$. Define the mathematical empirical inverse
+
+$$
+\widetilde q_j=\sum_{i,k,l}\widehat p_{ikl,j}D_i\otimes D_k\otimes D_l.
+$$
+
+Choose once, from $\delta$, an integer $L\ge1$ with $2^L\ge128/\delta$,
+and use the entirely rational quantities
+
+$$
+\delta_j=\delta\,2^{-j-1},\qquad
+u_j=(L+j+1)2^{-\lfloor j/2\rfloor},\qquad
+C_*=2^{18},\qquad r_j=C_*u_j+2^{-j}.
+\tag{VIII.103}
+$$
+
+Compute a rational Hermitian $q_j$ with
+$\|q_j-\widetilde q_j\|_F\le2^{-j}$. For example, certified Taylor
+bounds for $\sin1,\cos1$, followed by rational interval arithmetic in
+(VIII.100)--(VIII.101), produce this approximation in finite work.
+The denominator is bounded away from zero by $s>1/2$ and $1+c>1$.
+Round conjugate entries together to retain Hermiticity. Neither $q_j$
+nor $\widetilde q_j$ is required to be positive or trace one.
+
+Form $\mathcal F_j$ from (VIII.97) with these rational $q_j,r_j$.
+The controller first decides whether $\mathcal F_j$ is nonempty. If
+it is empty, it retains that outcome and continues; it does not declare
+an empty-set diameter certificate. If nonempty, it decides
+
+$$
+\forall\Omega,\Sigma\in\mathcal F_j,\qquad
+ \|\Omega-\Sigma\|_F^2\le\frac{4\epsilon^2}{2^N}.
+\tag{VIII.104}
+$$
+
+It stops at the first successful nonempty test and returns an algebraic
+sample point $\widehat\rho\in\mathcal F_j$, with the counts, rational
+$q_j,r_j$, and the nonempty/diameter certificate. Otherwise it proceeds
+to the next epoch. All these are finite actual data and public-parameter
+operations.
+
+**Theorem 155.2 (effective certificate, simultaneous confidence and stopping).**
+With unlimited-on-demand finite progress and resource supply as specified
+below, each epoch's classical decisions and output are finite effective
+operations. Under the ideal iid and regular-target promises of Definition
+155.1 the stopping epoch $\tau$ satisfies
+
+$$
+\Pr\{\tau<\infty\}=1,\qquad
+\Pr\{\tau<\infty\ \text{and}\ T(\widehat\rho,\rho)\le\epsilon\}
+ \ge1-\delta.
+\tag{VIII.105}
+$$
+
+More precisely, an event of probability at least $1-\delta$ has
+$\rho\in\mathcal F_j$ at every reached epoch, finite stopping, and the
+error guarantee at that stop. Empty confidence sets at earlier epochs
+are explicitly allowed off this event. The returned algebraic matrix is
+a normalized classical density estimate and may be mixed or nonactual.
+It is not the physical returned bank of (VIII.102), a restored input,
+raw amplitude scale, or external preparation memory.
+
+Proof. The trace-dual identity already supplies the estimator's mean.
+For each of the 64 selected events, its $m_j$ indicators in its executed
+setting are iid in $[0,1]$. Hoeffding's inequality and a union bound give
+
+$$
+\Pr\{\max_{i,k,l}|\widehat p_{ikl,j}-p_{ikl}|>u_j\}
+ \le128e^{-2m_ju_j^2}\le\delta_j.
+\tag{VIII.106}
+$$
+
+No independence between different selected events in the same record
+is needed. For the last inequality put $K=L+j+1$. Then
+$2m_ju_j^2=2^{1+j-2\lfloor j/2\rfloor}K^2\ge K$ and
+$e^{-K}\le2^{-K}$, so
+$128e^{-2m_ju_j^2}\le128\,2^{-L-j-1}\le\delta_j$.
+These coarse radii tend to zero without a logarithm or irrational
+confidence threshold being an input to the controller.
+
+For completeness, $0<c<1$ and $1/2<s<1$ bound the squared Frobenius
+norms of the four matrices in (VIII.100) by $14,38,160,128$ respectively.
+Each norm is less than $16$. Hence
+
+$$
+\|\widetilde q_j-Q_p(\rho)\|_F
+ \le\left(\sum_i\|D_i\|_F\right)^3
+      \max_{i,k,l}|\widehat p_{ikl,j}-p_{ikl}|
+ \le C_*\max_{i,k,l}|\widehat p_{ikl,j}-p_{ikl}|.
+\tag{VIII.107}
+$$
+
+Combining (VIII.106), the rational approximation and
+$\sum_{j\ge0}\delta_j=\delta$ gives the simultaneous event
+$\|q_j-Q_p(\rho)\|_F\le r_j$ for every $j$, of probability at least
+$1-\delta$. This is the standard summable confidence allocation, as in
+the time-consistent Hoeffding construction of
+[RRO Wave/Particle §§219--222](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md).
+It is applied here to the actual finite setting records, rather than
+using a fixed-time interval at a data-chosen stopping time.
+
+The constraints defining $\mathcal F_j$ are finite rational polynomial
+constraints: Theorem 152.2's density and minor constraints together
+with the squared Frobenius inequality. Real quantifier elimination
+decides nonemptiness and (VIII.104). Standard semialgebraic sampling over
+the real algebraic numbers supplies a sample point if nonempty, encoded
+by finite integer polynomials, isolating data and real/imaginary entries.
+This is an effective mathematical prescription, with no implementation
+or feasible complexity assertion. For $d=2^N$,
+$T(\Omega,\Sigma)\le\sqrt d\|\Omega-\Sigma\|_F/2$; therefore
+(VIII.104) bounds trace-distance diameter by $\epsilon$. On simultaneous
+coverage the target belongs to every $\mathcal F_j$, so any returned
+sample point has the asserted error, including at the random first stop.
+
+On that event $q_j\to Q_p(\rho)$ and $r_j\to0$. Corollary 153.2
+makes the nonempty sets' Frobenius diameters tend to zero, eventually
+satisfying (VIII.104). No value of its target-dependent positive minimum
+is needed by the controller. To obtain almost-sure stopping, realize
+the potential infinite iid schedule for the proof. The failure bounds
+in (VIII.106) are summable, so Borel--Cantelli gives only finitely many
+failed epochs almost surely. Thereafter the target belongs to
+$\mathcal F_j$, the local estimates converge, and the same diameter
+argument yields a finite successful epoch. An execution which already
+stopped earlier is also finite. This proves (VIII.105), while leaving
+the error guarantee on an early off-confidence stop only at its stated
+probability level. The proof uses no independence between epochs beyond
+the per-epoch iid laws and their summable error bounds. $\square$
+
+**Definition 155.3 (precision, progress and resource scope).** Positivity
+of $P_p,H_q$, invertibility and the source formula are exact model
+promises, not conclusions certified from the triple counts. No lower
+bound on their conditioning is supplied to the controller. The tolerance
+$\epsilon$ is strictly positive: the theorem does not assert finite-data
+exact recovery at $\epsilon=0$. Exact ideal instruments and calibrated
+coherent probes are separate precision/noise promises. If an apparatus
+instead has a nonvanishing unknown error, (VIII.106)--(VIII.107) do not
+give shrinking confidence sets about the target; arbitrary-precision
+stopping does not follow. A small conditional diameter is not a test
+that an arbitrary $N$-qubit input obeys the homogeneous model.
+
+For the operational reading of (VIII.105), every reached finite epoch,
+finite classical computation and output is supplied its actual material,
+rights, storage, paid holds and service progress. This means arbitrary
+finite requests can be met as needed, not that a fixed finite bank,
+prepaid budget or fixed time suffices on every sample path. Quantifier
+elimination and sampling terminate on each finite input, but their bit
+complexity, algebraic output size and physical service costs are not
+bounded here. Almost-sure finite stopping does not imply finite expected
+cost, a deterministic all-outcome stopping bound, or an efficient or
+uniform-in-target/length rate. The existing V37--40 ill-conditioning and
+copy-cost examples keep their own scopes; this prescription removes
+none of their acquisition costs.
+
+## 156. The original source, retained futures and the scope of recovery
+
+**Proposition 156.1 (native consumer and paid expenditure).** If the
+conditional resources of §§154--155 are supplied on either authentic
+entrance, the finite realized readout and computation prefixes admit
+the existing complete/pending native-future contract. At epoch $j$ the
+explicit measurement schedule consumes $8m_j$ full source inputs,
+$24m_j$ fresh coherent probes, $24m_j$ exchange gates, $12m_j$ nontrivial
+phase gates and $48m_j$ occupation calls and delivered bits. Through a
+finite stopping epoch $J$, each total is its stated coefficient times
+$2^{J+1}-1$. These are schedule counts, not total cost or minimal counts.
+
+Proof. Use the conditional occurrence roster and ingress of V39 and
+the mounting in VIII141/146. Each source input supplies all $N$ actual
+carrier factors on a new acquired ordered roster; neither exterior word
+family is replaced by a transfer boundary. Roster order is MPS tensor
+order, not native parent adjacency or elapsed time. Real source/root and
+component bindings, references and current rights are obtained by actual
+traversal and acquisition. Both original finite/bilateral entrances,
+authentic ordered $\alpha/\beta$ brackets, real prehistories and each
+selected root's own empty or $P_\varepsilon$ preparation remain as given.
+The unknown preparation's external memory is retained with its original
+correlations; it is not inferred from the normalized density estimate.
+The prepared probes are separate typed apparatus systems, with their
+own spent preparation channel and records, not renamed occurrences or
+a grant to reuse an unknown reference.
+
+At native Ready execute each extra finite transaction in V27's disjoint
+apparatus namespace with its actual acquired endpoints. Hold the entire
+enlarged bank and all references during serialized classical computation
+and native service. Reuse V27.2 and the full-space vacuum extension and
+maintenance of V36.1, which apply to occupied, measured and entangled
+bank states. The original ordered syntax, genuine addressed
+$P/S/\operatorname{Next}$, guards, refusal/OutOfRange/BadFrame meanings,
+immutable samples and old records are unchanged. Save borrowed cursors
+and retain controls, locks, enables, angle descriptions, detector outputs,
+versions, durations and fees. Every extra and original output finishes
+its own sealing, Print, End, local ACK and same-root Return with charged
+scratch clearing. A pending cut is the actual executed prefix with its
+dirty systems, parser/acquisition phases and owed actions; it is not the
+completed channel (VIII.102). There is no reset, rewind, new reference
+grant, new $r$-edge or source substitution. Every subsequent original
+finite lawful future remains available with its own actual resources
+and progress; no infinite-time finite hold is inferred. VII126.1's
+complete joint-output comparison is the appropriate accuracy contract
+if a matched approximate apparatus is separately certified. A probe
+marginal or a final coarse estimate alone is not that premise.
+
+There are $8m_j$ experiments, each with three supplied probes, three
+$B$ gates and six occupation calls. Each target phase is nontrivial in
+half the eight settings, giving $12m_j$ such gates. Summing the fresh
+batch sizes gives $\sum_{j=0}^Jm_j=2^{J+1}-1$. In addition one pays
+for the $8m_jN$ source occurrence factors at the epoch, actual source
+traversal/growth/commissioning, ingress, coherent preparation apparatus,
+wires, clocks/calibration, records, finite algebraic computation and
+output backing, and holds of the complete enlarged bank for all actual
+service durations. Spent inputs and probes remain retained; the geometric
+counts give no bound on time, energy, money, total native service or
+hardware availability. $\square$
+
+The source-specific addition is (VIII.91) on the compact common-support
+mixed envelope and its finite actual-count certificate. The parent step
+(VIII.94) is the existing
+[PeriodicMPSParentIntersection](../../../Blueprint/D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.md)
+`parent_intersection`, including its four-site base, with `trace_separates`.
+The transposed feature and positive actual-exterior dictionary in
+(VIII.92) are the existing public and private support of
+[OpenBoundaryMPSInteriorCommonCore](../../../Blueprint/D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.md):
+`interior_density_dictionary`, `feature_injective`, `context_gram` and
+`context_surjective`. Its `interior_phase_recovery` already supplies the
+actual-pure unknown-core endpoint. The proof above instead treats an
+arbitrary coefficient density in (VIII.95)--(VIII.96), so does not use
+that old endpoint to assert closure or mixed-competitor uniqueness.
+The existing intrinsic regular-source supplier is used only within its
+stated domain, not as an acquisition or source-validity certificate.
+These are source attributions; no fresh Lean application or formal
+verification of these prose theorems is asserted.
+
+Finite-frame inversion, Kraus/Born accounting, compact singleton-fiber
+stability, Hoeffding with summable confidence allocation, Borel--Cantelli
+and effective real-algebraic decisions are mature tools used inside this
+source-specific argument. The generic compact observation-tower and
+fiber-diameter results of
+[RRO Transport/Memory §5.1](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+do not themselves provide (VIII.91) or a computable modulus. For real
+quantifier elimination and algebraic sampling see Basu,
+[*Algorithms in Real Algebraic Geometry: A Survey*, §§2.1--2.2,
+arXiv:1409.1534v1](https://arxiv.org/html/1409.1534v1). Their finite
+algorithms supply computability, not practical performance here. The
+generic formal measurement/tomography suppliers retain their scopes:
+ContinuationEffectClosure, InformationalCompletenessEquivalence,
+CompleteContextTomography and FiniteKrausInstrumentBornMarginal do not
+supply this source envelope, paid coherent preparation or native ingress.
+
+Critch--Morton,
+[*Algebraic Geometry of Matrix Product States*, Conjecture 9,
+arXiv:1210.2812v4](https://arxiv.org/html/1210.2812v4), motivate the
+three-adjacent-site actual-source question; full C9 and its no-fewer
+clause are not concluded here. Cramer--Plenio,
+[*Reconstructing quantum states efficiently*, arXiv:1002.3780v1](https://arxiv.org/html/1002.3780v1),
+use specified local data and the unique-ground-state setting;
+Landon-Cardinal--Liu--Poulin's changed-window protocol cited in §151 has
+different granted controls. Fanizza--Galke--Lumbreras--Rouze--Winter,
+[*Learning finitely correlated states: stability of the spectral reconstruction*,
+Appendix D, arXiv:2312.07516v3](https://arxiv.org/html/2312.07516v3),
+also treat finite nontranslation-invariant chains, but require their
+cutwise correlation and inserted maps; those are not supplied by this
+single acquired triple. These are alternative methods within their
+observation domains. No efficiency or total-cost superiority over
+whole-chain tomography or those protocols is claimed. The statements
+here are repository-derived synthesis, without a literature-priority
+or reduced-independent-assumption claim.
+
+Finally, (VIII.105) describes normalized full density, including the
+correlations between its physical interior and exteriors. Raw vectors
+$\psi$ and $a\psi$ for nonzero $a$ have identical normalized data, so
+raw positive scale and global phase are not recovered without additional
+information. Unknown external preparation memory, original history,
+reference authority and all future quantum service are not reconstructed
+from these counts. Their actual systems and native contracts are retained,
+with the disturbed return (VIII.102), rather than replaced by the estimate.
+Generic whole-fiber two-window recovery, minimal lawful extra access and
+the enduring mutual recovery of space, time, boundary and memory for
+internal observers on all declared legal futures remain open.
+
+## 追加锚（本行以下为增补区）
