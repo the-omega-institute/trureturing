@@ -80,7 +80,7 @@ theorem completion_nonempty {k n : ℕ} (fixed : Finset (Fin n))
   classical
   exact ⟨exterior, by simp [completions, h]⟩
 
-private theorem zero_completion_injection {k n : ℕ} (hk : 0 < k)
+theorem zero_completion_injection {k n : ℕ} (hk : 0 < k)
     (fixed : Finset (Fin n)) (exterior : Fin n → Bool) (i : Fin n) (hi : i ∉ fixed) :
     ((completions k n fixed exterior).filter fun w => w i = true).card ≤
       ((completions k n fixed exterior).filter fun w => w i = false).card := by
@@ -407,7 +407,7 @@ theorem reset_law_transport {k n : ℕ} (hk : 0 < k)
       rw [PMF.map_comp]
       exact ht
 
-private theorem refined_completions {k n : ℕ} (fixed : Finset (Fin n))
+theorem refined_completions {k n : ℕ} (fixed : Finset (Fin n))
     (x : Fin n → Bool) (i : Fin n) (hi : i ∉ fixed) (b : Bool) :
     completions k n (insert i fixed) (Function.update x i b) =
       (completions k n fixed x).filter (fun w => w i = b) := by
@@ -494,7 +494,7 @@ private theorem pmf_le_map {α β : Type*} (p : PMF α) (f : α → β) (a : α)
   rw [PMF.map_apply]
   simpa using (ENNReal.le_tsum (f := fun v => if f a = f v then p v else 0) a)
 
-private theorem bitCoupling_supported_fibers {k n : ℕ} (fixed : Finset (Fin n))
+theorem bitCoupling_supported_fibers {k n : ℕ} (fixed : Finset (Fin n))
     (x y : Fin n → Bool) (hx : (completions k n fixed x).Nonempty)
     (hy : (completions k n fixed y).Nonempty) (i : Fin n) (hi : i ∉ fixed)
     (bits : Bool × Bool)
@@ -521,7 +521,7 @@ private theorem bitCoupling_supported_fibers {k n : ℕ} (fixed : Finset (Fin n)
   exact ⟨nonempty x hx bits.1 (fun h => hs (le_antisymm (h ▸ hfirst) zero_le)),
     nonempty y hy bits.2 (fun h => hs (le_antisymm (h ▸ hsecond) zero_le))⟩
 
-private def independentCompletions {k n : ℕ} (fixed : Finset (Fin n))
+def independentCompletions {k n : ℕ} (fixed : Finset (Fin n))
     (x y : Fin n → Bool) (hx : (completions k n fixed x).Nonempty)
     (hy : (completions k n fixed y).Nonempty) :
     PMF ((Fin n → Bool) × (Fin n → Bool)) :=
@@ -565,7 +565,7 @@ theorem completionLaw_congr {k n : ℕ} (fixed : Finset (Fin n))
   intro w
   simp only [completionLaw_apply, he]
 
-private def resetReady {n : ℕ} (fixed : Finset (Fin n)) (x y : Fin n → Bool) : Prop :=
+def resetReady {n : ℕ} (fixed : Finset (Fin n)) (x y : Fin n → Bool) : Prop :=
   ∃ z : Fin n, x z = false ∧ y z = false ∧
     (∀ i : Fin n, i.val ≤ z.val → i ∈ fixed) ∧
     ∀ i ∈ fixed, z.val < i.val → x i = y i
@@ -713,7 +713,7 @@ theorem prefix_coupling_marginals {k n : ℕ} (hk : 0 < k) (sites : List (Fin n)
 def mean {α : Type*} (p : PMF α) (f : α → ℝ≥0∞) : ℝ≥0∞ :=
   ∑' a, p a * f a
 
-private theorem mean_bind {α β : Type*} (p : PMF α) (q : α → PMF β)
+theorem mean_bind {α β : Type*} (p : PMF α) (q : α → PMF β)
     (f : β → ℝ≥0∞) : mean (p.bind q) f = mean p (fun a => mean (q a) f) := by
   simp only [mean, PMF.bind_apply, ← ENNReal.tsum_mul_right]
   rw [ENNReal.tsum_comm]
@@ -724,11 +724,11 @@ theorem mean_map {α β : Type*} (p : PMF α) (g : α → β)
   rw [PMF.map, mean_bind]
   simp [mean, PMF.pure_apply]
 
-private theorem mean_const {α : Type*} (p : PMF α) (c : ℝ≥0∞) :
+theorem mean_const {α : Type*} (p : PMF α) (c : ℝ≥0∞) :
     mean p (fun _ => c) = c := by
   rw [mean, ENNReal.tsum_mul_right, p.tsum_coe, one_mul]
 
-private theorem mean_congr_support {α : Type*} (p : PMF α) (f g : α → ℝ≥0∞)
+theorem mean_congr_support {α : Type*} (p : PMF α) (f g : α → ℝ≥0∞)
     (h : ∀ a, p a ≠ 0 → f a = g a) : mean p f = mean p g := by
   apply tsum_congr
   intro a
@@ -766,7 +766,7 @@ private theorem reset_mean_zero {k n : ℕ} (sites : List (Fin n))
   simp only [hz]
   exact mean_const _ 0
 
-private theorem coupled_fixed {k n : ℕ} (fixed : Finset (Fin n))
+theorem coupled_fixed {k n : ℕ} (fixed : Finset (Fin n))
     (x y : Fin n → Bool) (hx : (completions k n fixed x).Nonempty)
     (hy : (completions k n fixed y).Nonempty)
     (p : PMF ((Fin n → Bool) × (Fin n → Bool)))
@@ -803,7 +803,7 @@ private theorem mean_head {n : ℕ} (p : PMF ((Fin n → Bool) × (Fin n → Boo
       simp only [mean, mul_add, ENNReal.tsum_add]
       rw [← mean, mean_const]
 
-private theorem half_failure_budget (p : PMF (Bool × Bool))
+theorem half_failure_budget (p : PMF (Bool × Bool))
     (hh : (1 / 2 : ℝ≥0∞) ≤ p (false, false)) :
     mean p (fun bits => if bits = (false, false) then 0 else 2) ≤ 1 := by
   have ht : ∑ bits : Bool × Bool, (p bits).toNNReal = 1 := by
