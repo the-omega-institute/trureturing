@@ -26,12 +26,11 @@ open D5.S3.Combinatorics.TraceAvoidingArrays
 open scoped BigOperators
 set_option maxRecDepth 100000
 
-def U3 (n : ℕ) : ℕ :=
-  (Finset.univ.filter (fun f : Fin 3 × Fin n → Fin 3 => Legal f)).card
+def U3 (n : ℕ) : ℕ := HardinA233155RowTransfer.T n 3
 
 private theorem counting_bridge (n : ℕ) : U3 n = HardinA233258PairTransfer.L n := by
   classical
-  rw [U3, HardinA233258PairTransfer.L, ← Fintype.card_subtype, ← Fintype.card_subtype]
+  rw [U3, T, HardinA233258PairTransfer.L, ← Fintype.card_subtype, ← Fintype.card_subtype]
   exact Fintype.card_congr (properEquiv 3 n)
 
 set_option maxHeartbeats 10000000 in

@@ -33,8 +33,7 @@ open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays
 open scoped BigOperators
 set_option maxRecDepth 100000
-def U6 (n : ℕ) : ℕ :=
-  (Finset.univ.filter (fun f : Fin 6 × Fin n → Fin 3 => Legal f)).card
+def U6 (n : ℕ) : ℕ := HardinA233155RowTransfer.T n 6
 
 def classes (a b c d e f : Fin 3) : Fin 122 :=
   HardinA233179PairTransfer.orbit (a, b, c, d, e, f)

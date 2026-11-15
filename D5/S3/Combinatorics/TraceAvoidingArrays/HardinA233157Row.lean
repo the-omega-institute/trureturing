@@ -34,8 +34,7 @@ open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferPow
 open scoped BigOperators
 set_option maxRecDepth 100000
 
-def U4 (n : ℕ) : ℕ :=
-  (Finset.univ.filter (fun f : Fin 4 × Fin n → Fin 3 => Legal f)).card
+def U4 (n : ℕ) : ℕ := HardinA233155RowTransfer.T n 4
 
 set_option maxHeartbeats 10000000 in
 theorem finite_certificate :
@@ -53,7 +52,7 @@ private theorem counting_bridge (n : ℕ) :
       ((Q ^ n).mulVec (1 : Fin 14 → ℤ)) := by
   classical
   have hc (m : ℕ) : U4 m = L m := by
-    rw [U4, L, ← Fintype.card_subtype, ← Fintype.card_subtype]
+    rw [U4, T, L, ← Fintype.card_subtype, ← Fintype.card_subtype]
     let e : {f : Fin 4 × Fin m → Fin 3 // Legal f} ≃
         {P : Fin 4 × Fin m → Fin 3 // Proper P} :=
       (properEquiv 4 m).trans (Equiv.subtypeEquiv (Equiv.refl _)
