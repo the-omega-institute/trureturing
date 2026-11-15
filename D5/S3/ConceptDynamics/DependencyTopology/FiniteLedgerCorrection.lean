@@ -4,13 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Delayed corrections on admissible legal ledgers have finite support and a two-per-proposition bound. -/
+   digest: Admissible legal ledgers admit at most two delayed corrections per proposition. -/
 
 import D5.S3.ConceptDynamics.DependencyTopology.LegalLedgerFixedSet
 import D5.S3.ConceptDynamics.Termination.FiniteDefectTermination
 import D5.S0.History.LedgerLimit
 import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Mathlib.Data.Finset.Sort
+
+/-! Exact delayed corrections, actual finite event support and append-only claim records. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -19,6 +20,9 @@ namespace D5.S3.ConceptDynamics.DependencyTopology.FiniteLedgerCorrection
 
 open LegalLedgerFixedSet
 open scoped BigOperators
+
+noncomputable section
+attribute [local instance] Classical.propDecidable
 
 universe u v w x
 
@@ -95,7 +99,7 @@ private theorem terminal_persistent (consistent : Consistent k) {p : P} {a b : �
     simp [state, hp, hn, hp', hn']
 
 private theorem interval_constant (consistent : Consistent k) {p : P} {a b : ℕ}
-    (hab : a ≤ b) (heq : state (chain.ledger a) p = state (chain.ledger b) p) :
+    (_hab : a ≤ b) (heq : state (chain.ledger a) p = state (chain.ledger b) p) :
     ∀ t, a ≤ t → t ≤ b → state (chain.ledger t) p = state (chain.ledger a) p := by
   intro t hat htb
   by_cases ha : state (chain.ledger a) p = .open
@@ -131,7 +135,7 @@ private theorem corrected_on_constant_interval {p : D} {a b : ℕ} (hab : a < b)
       state (chain.ledger t) p.val = state (chain.ledger a) p.val) :
     policy.claim b p = state (chain.ledger a) p.val := by
   have base : policy.claim (a + 1) p = state (chain.ledger a) p.val := by
-    rw [policy.update, if_pos ha]
+    rw [policy.update, ite_eq_left ha]
   have all : ∀ t, a + 1 ≤ t → t ≤ b →
       policy.claim t p = state (chain.ledger a) p.val := by
     intro t ht
@@ -207,7 +211,7 @@ private theorem mismatch_step (T : ℕ)
     mismatches policy (t + 1) = mismatches policy t \ ↑(policy.selected t) := by
   classical
   ext p
-  simp only [mismatches, Set.mem_setOf_eq, Set.mem_diff, Finset.mem_coe]
+  simp only [mismatches, Set.mem_ofPred_eq, Set.mem_sdiff, Finset.mem_coe]
   rw [policy.update, stable (t + 1) (by omega), stable t ht]
   split_ifs with hs
   · simp [hs]
@@ -221,7 +225,7 @@ private theorem quiet_after_stabilization (T : ℕ)
   have mono : ∀ n, mismatches policy (T + (n + 1)) ⊆ mismatches policy (T + n) := by
     intro n
     rw [show T + (n + 1) = (T + n) + 1 by omega, mismatch_step policy T stable (by omega)]
-    exact Set.diff_subset
+    exact Set.sdiff_subset
   have strict : ∀ n, mismatches policy (T + n) ≠ ∅ →
       mismatches policy (T + (n + 1)) ≠ mismatches policy (T + n) := by
     intro n hn he
@@ -242,6 +246,140 @@ private theorem quiet_after_stabilization (T : ℕ)
   | base => exact hempty
   | succ t ht ih =>
     rw [mismatch_step policy T stable (by omega), ih]
-    exact Set.empty_diff _
+    exact Set.empty_sdiff _
+
+private theorem ledger_stabilizes (consistent : Consistent k) :
+    ∃ T, ∀ t, T ≤ t → ∀ p : D,
+      state (chain.ledger t) p.val = state (chain.ledger T) p.val := by
+  classical
+  have each : ∀ p : D, ∃ T, ∀ t, T ≤ t →
+      state (chain.ledger t) p.val = state (chain.ledger T) p.val := by
+    intro p
+    have hf := (changes_subsingleton (chain := chain) consistent p.val).finite
+    have hf' : (D5.S0.History.LedgerLimit.revisionTimesFrom 0
+        (fun t => state (chain.ledger t) p.val)).Finite := by
+      simpa [D5.S0.History.LedgerLimit.revisionTimesFrom, changes] using hf
+    obtain ⟨s,T,_,hs⟩ := D5.S0.History.LedgerLimit.finite_revisions_have_terminal_value
+      0 (fun t => state (chain.ledger t) p.val) hf'
+    exact ⟨T, fun t ht => (hs t ht).trans (hs T le_rfl).symm⟩
+  choose cutoff hc using each
+  let T := Finset.univ.sup cutoff
+  have hT (p : D) : cutoff p ≤ T := Finset.le_sup (Finset.mem_univ p)
+  exact ⟨T, fun t ht p => (hc p t ((hT p).trans ht)).trans (hc p T (hT p)).symm⟩
+
+/-- One batch contains exactly one old-state claim for each selected proposition. -/
+def batch (t : ℕ) : List (D × Label) :=
+  (policy.selected t).toList.map fun p => (p, state (chain.ledger t) p.val)
+
+/-- Claim records have increasing sequence positions and only grow at their tail. -/
+def claimLog : ℕ → List (D × Label)
+  | 0 => (Finset.univ : Finset D).toList.map fun p => (p, policy.claim 0 p)
+  | t + 1 => claimLog t ++ batch policy t
+
+/-- The last entry for a proposition, with unverified only as the absent-entry default. -/
+def latest (U : List (D × Label)) (p : D) : Label :=
+  U.foldl (fun s e => if e.1 = p then e.2 else s) .unverified
+
+private theorem read_batch (l : List D) (f : D → Label) (p : D) (initial : Label) :
+    (l.map fun q => (q, f q)).foldl
+      (fun s e => if e.1 = p then e.2 else s) initial =
+      if p ∈ l then f p else initial := by
+  induction l generalizing initial with
+  | nil => simp
+  | cons q l ih =>
+    simp only [List.map_cons, List.foldl_cons]
+    rw [ih]
+    by_cases hq : q = p <;> by_cases hl : p ∈ l <;> simp_all [eq_comm]
+
+private theorem latest_claim_log (t : ℕ) (p : D) :
+    latest (claimLog policy t) p = policy.claim t p := by
+  induction t with
+  | zero => simp [claimLog, latest, read_batch]
+  | succ t ih =>
+    change ((claimLog policy t ++ batch policy t).foldl _ _) = _
+    rw [List.foldl_append]
+    change ((policy.selected t).toList.map _).foldl _ (latest (claimLog policy t) p) = _
+    rw [read_batch, ih, policy.update]
+    simp
+
+private theorem total_eq_event_card (finiteEvents : (events policy).Finite) :
+    (∑' t, (policy.selected t).card) = (events policy).ncard := by
+  classical
+  let E := finiteEvents.toFinset
+  have fiber (t : ℕ) : (E.filter (fun e => e.1 = t)).card =
+      (policy.selected t).card := by
+    apply Finset.card_bij (fun e _ => e.2)
+    · intro e he
+      obtain ⟨he,het⟩ := Finset.mem_filter.mp he
+      have hmem : e.2 ∈ policy.selected e.1 := finiteEvents.mem_toFinset.mp he
+      simpa [het] using hmem
+    · intro a ha b hb he
+      exact Prod.ext ((Finset.mem_filter.mp ha).2.trans
+        (Finset.mem_filter.mp hb).2.symm) he
+    · intro p hp
+      refine ⟨(t,p), Finset.mem_filter.mpr ⟨?_,rfl⟩,rfl⟩
+      exact finiteEvents.mem_toFinset.mpr hp
+  have support : ∀ t, t ∉ E.image Prod.fst → (policy.selected t).card = 0 := by
+    intro t ht
+    apply Finset.card_eq_zero.mpr
+    apply Finset.eq_empty_iff_forall_notMem.mpr
+    intro p hp
+    exact ht (Finset.mem_image.mpr ⟨(t,p), finiteEvents.mem_toFinset.mpr hp,rfl⟩)
+  rw [tsum_eq_sum support]
+  rw [Set.ncard_eq_toFinset_card _ finiteEvents]
+  change (∑ t ∈ E.image Prod.fst, (policy.selected t).card) = E.card
+  rw [Finset.card_eq_sum_card_image Prod.fst E]
+  exact Finset.sum_congr rfl (fun t _ => (fiber t).symm)
+
+/-- Finite-domain quietness, total actual correction bounds, and append-only latest claims. -/
+theorem finite_ledger_correction (consistent : Consistent k) :
+    (∀ p : D, (changes (chain := chain) p.val).Subsingleton) ∧
+    (∀ p : D, (corrections policy p).Finite ∧ (corrections policy p).ncard ≤ 2) ∧
+    (events policy).Finite ∧
+    (events policy).ncard = (∑' t, (policy.selected t).card) ∧
+    (∑' t, (policy.selected t).card) ≤ 2 * D.card ∧
+    (∃ T, ∀ t, T ≤ t → ∀ p : D,
+      state (chain.ledger t) p.val = state (chain.ledger T) p.val) ∧
+    (∀ T, (∀ t, T ≤ t → ∀ p : D,
+      state (chain.ledger t) p.val = state (chain.ledger T) p.val) →
+      ∃ stop, stop ≤ T + D.card ∧ ∀ t, stop ≤ t → mismatches policy t = ∅) ∧
+    (∀ t p, latest (claimLog policy t) p = policy.claim t p) ∧
+    (∀ t, claimLog policy (t + 1) = claimLog policy t ++ batch policy t ∧
+      (batch policy t).length = (policy.selected t).card ∧
+      ((batch policy t).map Prod.fst).Nodup ∧
+      ∀ p s, (p,s) ∈ batch policy t ↔
+        p ∈ policy.selected t ∧ s = state (chain.ledger t) p.val) := by
+  classical
+  have finiteEvents : (events policy).Finite :=
+    Set.Finite.of_injOn (t := Set.univ) (fun _ _ => Set.mem_univ _)
+      (event_injective policy consistent) (Set.toFinite _)
+  have bound : (events policy).ncard ≤ 2 * D.card := by
+    have h := Set.ncard_le_ncard_of_injOn
+      (s := events policy) (t := Set.univ)
+      (fun e : ℕ × D => (e.2, decide (state (chain.ledger e.1) e.2.val = .open)))
+      (fun _ _ => Set.mem_univ _) (event_injective policy consistent)
+    simpa [Set.ncard_univ, Nat.card_prod, Nat.card_eq_fintype_card, Nat.mul_comm] using h
+  have count := total_eq_event_card policy finiteEvents
+  refine ⟨fun p => changes_subsingleton consistent p.val, ?_, finiteEvents, count.symm,
+    count.trans_le bound, ledger_stabilizes consistent, quiet_after_stabilization policy,
+    latest_claim_log policy, ?_⟩
+  · intro p
+    refine ⟨finite_corrections policy consistent p, ?_⟩
+    have h := Set.ncard_le_ncard_of_injOn (t := (Set.univ : Set Bool))
+      (fun t => decide (state (chain.ledger t) p.val = .open))
+      (fun _ _ => Set.mem_univ _) (correction_phase_injective policy consistent p)
+    simpa using h
+  · intro t
+    refine ⟨rfl, by simp [batch], ?_, ?_⟩
+    · simpa [batch, List.map_map, Function.comp_def] using (policy.selected t).nodup_toList
+    · intro p s
+      simp only [batch, List.mem_map, Finset.mem_toList, Prod.mk.injEq]
+      constructor
+      · rintro ⟨q,hq,rfl,rfl⟩
+        exact ⟨hq,rfl⟩
+      · rintro ⟨hp,rfl⟩
+        exact ⟨p,hp,rfl,rfl⟩
+
+end
 
 end D5.S3.ConceptDynamics.DependencyTopology.FiniteLedgerCorrection
