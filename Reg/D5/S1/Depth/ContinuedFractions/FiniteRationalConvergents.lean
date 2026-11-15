@@ -158,6 +158,9 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(), 0, 2 / 3, ?_⟩
   change ((Int.fract (0 : ℚ))⁻¹).den ≠ ((Int.fract (2 / 3 : ℚ))⁻¹).den
   norm_num [Int.fract]
+  change 1 ≠ (reduced 3 2).den
+  rw [reduced_den _ _ (by decide)]
+  norm_num
 
 def source_registration : Registration arena (type_of% @QuantumShorContinuedFractions.tail_den_lt) where
   actual := actual

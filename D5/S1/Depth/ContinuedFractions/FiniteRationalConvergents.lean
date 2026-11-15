@@ -12,6 +12,7 @@ Released under Apache 2.0 license; the complete license is retained in
 Library/HilbertOperators/aicyberg2026shor.md. Authors: aicyberg.
 Source: solanaqubits/leanbook, commit 9b742770a2a5dbcf30cf9abc44e711194e957a00,
 Verification/QuantumShorContinuedFractions.lean.
+The receiving module grouping and tail_den_lt visibility are adapted.
 Retire this slice when equivalent declarations exist in the receiving pinned
 Mathlib, replacing the slice with direct imports at that repository pin.
 -/
