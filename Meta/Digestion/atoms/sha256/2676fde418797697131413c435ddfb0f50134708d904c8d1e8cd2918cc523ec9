@@ -1,0 +1,17 @@
+# LCM 幂 Robin 判据的参数门槛
+
+本卷研究 Fan–Kobayashi–Molnar [A family of analogues to the Robin criterion, Ramanujan J. 70 (2026), article 40; arXiv:2511.02106v1] 引入的函数族
+
+$$
+\sigma^{[\kappa]}(n)=\sum_{d\mid n}\mu(n/d)\,\sigma(d)^\kappa\qquad(\kappa>1)
+$$
+
+及其 κ-Robin 不等式
+
+$$
+\sigma^{[\kappa]}(n)<\frac{(e^\gamma n\log\log n)^\kappa}{\zeta(\kappa)} .
+\tag{1.1}
+$$
+
+各节按编号追加，卷末追加锚以下为增补区。
+

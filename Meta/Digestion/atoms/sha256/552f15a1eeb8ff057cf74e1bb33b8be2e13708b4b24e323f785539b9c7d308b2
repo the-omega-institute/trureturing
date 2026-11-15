@@ -1,0 +1,84 @@
+**命题 105.7（逐输出压缩检验的准确范围）。** 对每个
+$1/3<\lambda\le1/2$，通常约化映射
+$\mathcal L_\lambda(X)=\operatorname{Tr}(X)I_3-\lambda X$
+不是通常 CP，却是通常完全余正，其所有张量幂保持通常 PSD。
+对任意等距 $E:\mathbb C^2\to\mathbb C^3$，$W_\lambda$ 压缩实际输出到此二维平面后为 PSD；
+逐个压缩每条输出后的任意有限张量积，接续寄存器 CP 映射及 PSD 寄存器效应，读数仍非负。
+这个检验族不包含所有“参考｜多条实际 qutrit”全局 Schmidt 秩二向量的检验。
+
+**证明。** $J(\mathcal L_\lambda)=W_\lambda$，它在 $\eta$ 方向的本征值
+$1-3\lambda<0$，所以不是通常 CP。仅作普通矩阵计算，在一个因子上部分转置得
+
+$$
+W_\lambda^{\Gamma_2}=I-\lambda S,
+\tag{105.24}
+$$
+
+$S$ 是交换算子，本征值为 $+1,-1$；当 $0\le\lambda\le1$ 时右侧为 PSD。
+因此 $\mathcal L_\lambda=\Psi_\lambda\circ T$，其中 $\Psi_\lambda$ 通常 CP，
+$T$ 是普通矩阵转置。
+每个张量幂为 $\Psi_\lambda^{\otimes n}\circ T_{\rm all}$：
+先作整个输入的同时转置，再作 CP 张量幂，两步都保持通常 PSD，故得普通张量稳定正性。
+这复用 Terhal–Horodecki，
+[quant-ph/9911117v4](https://arxiv.org/abs/quant-ph/9911117v4)，引理2的约化族，
+以及 Müller-Hermes–Reeb–Wolf，
+[*Positivity of Linear Maps under Tensor Powers*, arXiv:1502.05630v2](https://arxiv.org/abs/1502.05630v2)，
+Example I.1 中完全正／完全余正的平凡张量稳定类。
+(105.24)没有宣称部分转置是一个合法原操作，
+也没有把普通张量幂正性等同于(102.11)对全部原旁观者的正性。
+
+在较小的压缩空间 $\mathbb C^3\otimes\mathbb C^2$ 中，写
+$\eta_E=(I_3\otimes E^*)\eta$，则
+
+$$
+(I_3\otimes E^*)W_\lambda(I_3\otimes E)
+ =I_3\otimes I_2-\lambda|\eta_E\rangle\langle\eta_E|,
+\qquad \|\eta_E\|^2=2.
+\tag{105.25}
+$$
+
+所以它当且仅当 $\lambda\le1/2$ 时为 PSD。
+若重新嵌回原输出空间，其向量为 $(I_3\otimes EE^*)\eta$，
+不可把不同空间中的 $\eta_E$ 直接当作此嵌入向量。
+任意单站秩至多二的 Kraus 算子都通过这样一个二维平面压缩分解；
+对秩一或零算子可补成二维平面。
+对每个有限次数，将(105.25)逐站张量后仍为 PSD。
+随后通常寄存器 CP 处理保持 PSD，PSD 寄存器效应给非负迹配对。
+相应寄存器处理的原正性可由104.11取得；
+这只证明先逐站压缩的这个检验族不排除上述 $\lambda$。
+
+为区分全局二维支撑，在两个实际 qutrit 上取
+
+$$
+b_0=\frac{|00\rangle+|11\rangle+|22\rangle}{\sqrt3},\qquad
+b_1=\frac{|01\rangle+|12\rangle+|20\rangle}{\sqrt3}.
+\tag{105.26}
+$$
+
+两向量正交、范数一，各自每个局部约化矩阵均为 $I_3/3$。
+故它们的二维联合支撑在每个实际站上都有完整三维局部支撑，
+不可能包含在任意 $E_1(\mathbb C^2)\otimes E_2(\mathbb C^2)$ 中。
+若 $a_0,a_1$ 是正交参考向量，则
+
+$$
+\psi=\frac{a_0\otimes b_0+a_1\otimes b_1}{\sqrt2}
+\tag{105.27}
+$$
+
+在“参考｜两个实际 qutrit”切口上 Schmidt 秩恰为二，
+却不能通过对每个实际输出先固定二维支撑来涵盖。
+通常集体 Kraus 算子
+$H=|0\rangle\langle b_0|+|1\rangle\langle b_1|$
+可读出此联合支撑，但其从两条实际 qutrit 到一条种子角腿的真正原零扩张，
+仍须证明其混合原 Choi 元素属于原 $C_3$。
+通常 CP 性和已知两实际输入腿的 PSD 性没有支付这一全原旁观条件。
+命题105.3所给秩二族的实际输出只有一条腿，不提供这个集体许可。
+
+上述区分不排除其他已合法网络、辅助实际系统的复用或其他原分块约束产生更强结论。
+Müller-Hermes–Reeb–Wolf 附录A给通常各向同性／Werner 平均，
+引理9对某些 block-positive 矩阵施加指定符号条件后才得到正平均；
+该引理不把任意原混合锥或这里的 $W_\lambda$ 自动变成 Werner 态模型。
+这里的约化映射属于该论文明确的平凡完全余正类，
+故不能用关于非平凡张量稳定正映射的结论代替剩余融合桥。
+这些计算没有建立 $\mathsf{Fusion}_3$ 与 Werner 不可蒸馏性、NPPT 问题或全局秩二检验的等价。∎
+

@@ -1,0 +1,69 @@
+**定理 153.3（一维整球零确认族的全部混输入达到）。** 固定原纯标签 $p$。若
+
+$$
+\dim\operatorname{aff}\mathcal A_p\le1,
+\qquad T_p(s)=B_p(s)\quad(s\in P),
+\tag{XII153.7}
+$$
+
+则
+
+$$
+\begin{gathered}
+T_p(x)=B_p(x)\quad(x\in K),\\
+\forall f\in\mathcal F_p\quad\exists e\in\mathcal A_p:
+\quad f-e\in C^\ast.
+\end{gathered}
+\tag{XII153.8}
+$$
+
+特别地，定理152.4的 $|\mathscr L(p)|\ge2$ 配合该仿射维数条件，已足以取得(XII153.8)，无需 $\mathcal A_p$ 单点。
+
+证明。先在推导内部使用成熟的仿射切片极点方法。对任意两个原仿射函数 $a_1,a_2$ 与非空切片
+
+$$
+K_y=\{x\in K:a_1(x)=y_1,\ a_2(x)=y_2\},
+\tag{XII153.9}
+$$
+
+有 $\operatorname{ext}K_y=P\cap K_y$。确实，若切片极点 $z$ 是原内部混点，$\dim\operatorname{aff}K\ge4$ 使两个约束的共同核仍有非零方向，可在切片中以 $z$ 为中点作非退化小线段。若 $z$ 是原混边界点，其最小原面按完整面分类为某个 $D_r$，且 $z\in\operatorname{ri}D_r$；两个约束在三维 $\operatorname{aff}D_r$ 内的共同核至少一维，又得到同样矛盾。反向包含由原极端性直接成立。紧凸切片的极点分解遂给
+
+$$
+K_y=\operatorname{conv}(P\cap K_y).
+\tag{XII153.10}
+$$
+
+因此任意原混态的两个仿射读数，总能由同一个原纯态同时匹配。这不是分别选择两个纯态，也没有假定所有混态本身纯。
+
+非空紧凸且仿射维数至多一的 $\mathcal A_p$ 可写成 $[e_-,e_+]$，允许两端相同。置 $h=e_+-e_-$，则整个 $K$ 上准确有
+
+$$
+B_p=e_-+\min(0,h).
+\tag{XII153.11}
+$$
+
+反设某张原 $f\in\mathcal F_p$、某个原混态 $x$ 满足 $f(x)<B_p(x)$。对两个仿射读数 $h,f-e_-$ 使用(XII153.10)，取得同一原纯态 $s$ 同时匹配二者。于是
+
+$$
+\begin{aligned}
+B_p(s)-f(s)
+&=\min(0,h(s))-(f-e_-)(s)\\
+&=\min(0,h(x))-(f-e_-)(x)
+=B_p(x)-f(x)>0,
+\end{aligned}
+\tag{XII153.12}
+$$
+
+与 $f(s)\ge T_p(s)=B_p(s)$ 矛盾。故所有原 $f$ 都满足 $f(x)\ge B_p(x)$；再用 $\mathcal A_p\subseteq\mathcal F_p$，得到全部混输入的等号。
+
+还须证明同一 $f$ 有一张在整个原锥上被它支配的整球零确认。$\mathcal A_p+C^\ast$ 是紧集与闭凸锥之和，故闭凸。若 $f$ 不属于它，有限维严格分离给 $v\in V$ 满足
+
+$$
+f(v)<\inf_{e\in\mathcal A_p,\ k\in C^\ast}(e+k)(v).
+\tag{XII153.13}
+$$
+
+右侧有限迫使 $v\in C$，否则沿某张负读数的正泛函之非负倍数即可将右侧降至负无穷。严格不等还迫使 $v\ne0$。以原 $u$ 归一化，令 $x=v/u(v)\in K$，得到 $f(x)<B_p(x)=T_p(x)$，矛盾。证毕。
+
+$\mathcal A_p$ 在原正序中是反链：若 $e,e'\in\mathcal A_p$ 且 $e'-e\in C^\ast$ 非零，则它的真零面同时含整个极大真面 $D_p$ 和外部点 $p$，不可能。因此 $e=e'$。故在非退化线段分支 $e_-\ne e_+$ 中，(XII153.8)不成为全菜单 least；若 least 存在，它被每张 $\mathcal A_p$ 成员支配，因而自身属于 $\mathcal A_p$，再由反链性迫全部成员相同，矛盾。该分支若实际存在，全部混输入最低值的形状只能是 $\min\{e_-,e_+\}$。本条没有证明此分支与全域纯 PR 共存，也没有排除仿射维数至少二的确认族。
+

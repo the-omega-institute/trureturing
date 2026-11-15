@@ -1,0 +1,24 @@
+**引理 104.4（单源已支付的整锥帽）。** 在假设104.1和任一 $\mathsf F_{r,q}$ 下，
+源对角掩码 $\epsilon_{rr}=0$，整个满维源杯
+$\Omega_r=|\sum_{a=1}^{n_r}aa\rangle\langle\sum_{a=1}^{n_r}aa|$ 属于原 $C_2$。
+令 $\beta_r(z)=\operatorname{Tr}(\Omega_r z_{rr})$，
+在其他二份块取零，则 $\beta_r\in C_2^*$ 且 $\beta_r/n_r\in\mathcal E_2$。
+帽对整个原锥 proper，包括未对齐的所有非源块。
+
+**证明。** 取局部正泛函
+$f(x)=\langle\eta|x_r|\eta\rangle$，$\eta=\sum_{a=1}^q|a\rangle_r$，
+其他块取零。引理102.6是原最大界与闭锥双极性的整锥切片结论，
+不消费任何高阶 PSD。切 $\Delta_{r,q}$ 的第三腿得到原 $C_2$ 中的秩 $q$ 杯
+$\Omega_{r,q}=|\sum_{a=1}^qaa\rangle\langle\sum_{a=1}^qaa|$。
+若 $\epsilon_{rr}=1$，(103.2)要求它的第一腿部分转置为 PSD；
+但在前两条基向量的反对称单位向量上，其读数为 $-1$。
+故 $\epsilon_{rr}=0$。于是低二份整块分类已给整个 $(r,r)$ 块为 PSD，
+从而满维 $\Omega_r\in C_2$。这一步是整块锥的准入，不是从秩 $q$ 资源物理制备满秩杯。
+在该块 $0\preceq\Omega_r\preceq n_r I$；其他块的帽为零，其补为单位。
+(103.2)的整锥直和与迹自对偶性给所述原正性及 proper 上界。
+
+预算也可直接区分：$f/q$ proper，从 $\Delta_{r,q}/q$ 切得
+$\Omega_{r,q}/q^2$，质量 $1/q$。
+满维杯的标准归一态是 $\Omega_r/n_r$，
+不把前一个切片结果改称后一个确定性输出。∎
+

@@ -1,0 +1,12 @@
+**命题 185.4（无暴露证书时的精确位置界）。** 在仅有实际 L2及 $\mathsf{RJ}(a)$ 的原域内，对每颗经过 $a$ 的实际球 $B$，仍有
+
+$$
+Q_a(\operatorname{cone}B)
+\subseteq\operatorname{cone}\bigl(D_a\cap\operatorname{eh}(B)\bigr).
+\tag{185.6}
+$$
+
+若 $B$ 非暴露，则有原纯点 $c\in\operatorname{eh}(B)\setminus B$：全部在 $B$ 上读零的原正测试也在这个球外纯点读零。因此这些零测试不能判定实际球成员身份；本条不声称任何这样的 $c$ 都能成为 $Q_a$ 的输出，也不声称已构造满足 L2与全纯 RJ 而违反 $\mathsf E_2$ 的模型。
+
+证明。184.6给正像包含 $\operatorname{cone}D_a$。对每个 $k\in\mathcal Z(B)$，有 $k(a)=0$，所以 $kQ_a=k$；输入在 $\operatorname{cone}B$ 时输出仍被全部这些 $k$ 消去。这给(185.6)。185.2证明内的有限正和使 $\operatorname{eh}(B)$ 本身是暴露面；若它等于 $B$，$B$ 就已暴露。严格包含时，若其全部纯点都在 $B$，紧凸生成又会迫两者相等，所以有上述球外原纯点。被合并的是“这些特定零测试全读零”的观察纤维，不是整个原菜单的全部读数。$\square$
+

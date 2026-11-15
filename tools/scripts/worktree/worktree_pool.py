@@ -4,7 +4,7 @@ import subprocess
 import time
 from types import SimpleNamespace
 
-from worktree_protocol import (GitFailure, Refused, clear_matching_stale, git, git_environment,
+from worktree_protocol import (GitFailure, Refused, clear_matching_stale, common as protocol_common, git, git_environment,
                                head_committer_time, head_oid, identity, inventory,
                                mark_stale, reuse, stale_head, value)
 from worktree_preservation import qualify, registered_committer_time, remove_registered
@@ -65,19 +65,17 @@ def _make_scaffold(path):
                          + "\n".join(missing) + "\n")
 
 
-def _allocate(source, path, options, base, expected, removed=False):
+def _allocate(source, path, options, base, expected):
     branch = options.branch
     reference = "refs/heads/" + branch
     if git(source, "show-ref", "--verify", "--quiet", reference, check=False).returncode == 0:
         raise Refused("branch_already_exists:" + branch)
     git(source, "check-ref-format", "--branch", branch)
-    if not removed:
-        _remove_registered(source, path)
-    git(source, "branch", "--", branch, base)
+    if git(path, "status", "--porcelain", "--untracked-files=normal").stdout:
+        raise Refused("reuse_requires_clean_tree:" + str(path))
     try:
-        git(source, "worktree", "add", "--no-checkout", "--", str(path), branch)
-        record(source, path, created=True, branch=reference)
-        git(path, "reset", "--hard", "--no-recurse-submodules", "HEAD", timeout=1200)
+        git(path, "switch", "--no-track", "-c", branch, base, timeout=1200)
+        record(source, path, created=False, branch=reference)
         _check_pins(path, expected)
         clear_matching_stale(source, branch, head_oid(path))
         _make_scaffold(path)
@@ -96,6 +94,29 @@ def _allocate(source, path, options, base, expected, removed=False):
 
 
 def claim(options):
+    from worktree_maintenance import lease, notify
+    try:
+        transaction = lease(options.source, blocking=False)
+        transaction.__enter__()
+    except OSError as error:
+        maintenance = notify(options.source)
+        destination = options.path or getattr(options, "initializing_path", None)
+        if destination is not None and destination.exists():
+            raise Refused("maintenance_busy_for_existing_destination:" + str(destination))
+        return dict(event="worktree_init", status="no_reusable", removed_worktrees=[],
+                    candidate_refusals=[], maintenance=maintenance | {
+                        "worker": "busy" if isinstance(error, BlockingIOError) else "unavailable",
+                        "reason": str(error)})
+    try:
+        result = _claim_available(options)
+    finally:
+        transaction.__exit__(None, None, None)
+        maintenance = notify(options.source)
+    return result | {"maintenance": maintenance}
+
+
+def _claim_available(options):
+    from worktree_maintenance import initialization
     rows = inventory(options.source)
     main = _main_path(rows)
     # The requested source may itself expire or be reassigned. Shared refs and
@@ -109,74 +130,80 @@ def claim(options):
     expected = _expected_pins(options.source, base)
     excluded = {Path(path).resolve() for path in getattr(options, "exclude_path", [])}
     now = time.time()
-    refusals, candidates, removed, expiry_failures = [], [], [], []
-    # Complete expiry for the whole inventory before returning any selection,
-    # including a same-task continuation or an explicit destination.
-    for item in rows[1:]:
+    refusals, candidates = [], []
+    # An explicit fresh destination needs no global per-tree inspection.
+    selected = [row for row in rows[1:] if options.path is None or _same(row["worktree"], options.path)]
+    snapshot = (rows, protocol_common(options.source))
+    initializing_path = getattr(options, "initializing_path", None)
+    for item in selected:
         path = Path(item["worktree"]).absolute()
         if path.resolve() in excluded or _same(path, main):
             continue
-        expired = False
         try:
-            current, _ = identity(options.source, path)
+            if options.path is None and (initializing_path is None or not _same(path, initializing_path)):
+                with initialization(options.source, path):
+                    pass
+            current, _ = identity(options.source, path, snapshot=snapshot)
             age = _age(path, now)
             head = head_oid(path)
-            expired = age > SIX_HOURS
-            if expired:
-                _remove_registered(options.source, path)
-                removed.append(str(path))
-            candidates.append((path, _branch(current), head, age, expired))
+            if age > SIX_HOURS:
+                raise Refused("expired_maintenance_pending:" + str(path))
+            candidates.append((path, _branch(current), head, age))
         except (Refused, OSError, subprocess.SubprocessError) as error:
             refusals.append(dict(path=str(path), reason=str(error)))
-            if expired:
-                expiry_failures.append(dict(path=str(path), reason=str(error)))
-            elif options.path is not None and _same(path, options.path):
+            if options.path is not None and _same(path, options.path):
                 raise (GitFailure if isinstance(error, GitFailure) else Refused)(
-                    str(error) + "; expired_worktrees_removed=" + repr(removed)) from error
+                    str(error)) from error
 
     def finish(result):
-        return result | {"removed_worktrees": removed, "candidate_refusals": refusals}
+        return result | {"removed_worktrees": [], "candidate_refusals": refusals}
 
     try:
-        if expiry_failures:
-            raise GitFailure("expired_cleanup_failed:" + repr(expiry_failures))
-        if options.path is not None:
-            candidates = [row for row in candidates if _same(row[0], options.path)]
         # An unexpired attached task resumes regardless of allocation age.
         # Base/pin/source compatibility is still checked by native recovery.
-        for path, branch, head, age, expired in candidates:
-            if not expired and branch == "refs/heads/" + options.branch:
+        for path, branch, head, age in candidates:
+            if branch == "refs/heads/" + options.branch:
                 result = reuse(SimpleNamespace(**(vars(options) | {"path": path})))
                 clear_matching_stale(options.source, branch, head)
                 return finish(result)
-        for path, branch, head, age, expired in candidates:
+        for path, branch, head, age in candidates:
             try:
-                marked = not expired and branch != "HEAD" and stale_head(options.source, branch) == head
-                if not expired:
-                    if branch == "HEAD":
-                        raise Refused("detached_head")
-                    if not marked and age <= FOUR_HOURS:
-                        raise Refused("head_recent")
-                    _check_pins(path, expected)
+                marked = branch != "HEAD" and stale_head(options.source, branch) == head
+                if branch == "HEAD":
+                    raise Refused("detached_head")
+                if not marked and age <= FOUR_HOURS:
+                    raise Refused("head_recent")
+                _check_pins(path, expected)
             except (Refused, OSError, subprocess.SubprocessError) as error:
                 refusals.append(dict(path=str(path), branch=branch, reason=str(error)))
                 if options.path is not None:
                     raise
                 continue
-            return finish(_allocate(options.source, path, options, base, expected, removed=expired) | {
+            # Failures after switching must retain the selected recovery path,
+            # never fall through to fresh creation with the now-existing branch.
+            try:
+                allocated = _allocate(options.source, path, options, base, expected)
+            except (Refused, OSError, subprocess.SubprocessError) as error:
+                if git(options.source, "show-ref", "--verify", "--quiet",
+                       "refs/heads/" + options.branch, check=False).returncode == 0:
+                    raise GitFailure("allocation_failed:" + str(path) + ":" + str(error)) from error
+                refusals.append(dict(path=str(path), branch=branch, reason=str(error)))
+                if options.path is not None:
+                    raise
+                continue
+            return finish(allocated | {
                 "previous_branch": branch.removeprefix("refs/heads/"),
                 "previous_head": head,
-                "reuse_reason": "head_older_than_6h_removed" if expired else
-                                "stale" if marked else "head_older_than_4h",
+                "reuse_reason": "stale" if marked else "head_older_than_4h",
             })
         result = dict(event="worktree_init", status="no_reusable")
+        for refusal in refusals:
+            if initializing_path is not None and _same(refusal["path"], initializing_path):
+                raise Refused(refusal["reason"])
         if refusals:
             result["candidate_refusals"] = refusals
         return finish(result)
     except (Refused, OSError, subprocess.SubprocessError) as error:
-        if removed:
-            raise (GitFailure if isinstance(error, GitFailure) else Refused)(
-                str(error) + "; expired_worktrees_removed=" + repr(removed)) from error
         raise
 
 
@@ -187,6 +214,13 @@ def return_tree(options):
 
 
 def sweep(source, dev, force=False, exclude_paths=()):
+    from worktree_maintenance import lease
+    with lease(source):
+        return _sweep_locked(source, dev, force, exclude_paths)
+
+
+def _sweep_locked(source, dev, force=False, exclude_paths=()):
+    from worktree_maintenance import initialization
     del dev
     rows = inventory(source)
     main = _main_path(rows)
@@ -200,16 +234,19 @@ def sweep(source, dev, force=False, exclude_paths=()):
         if path in excluded or _same(path, main):
             continue
         try:
-            current = qualify(source, path)
-            age = now - registered_committer_time(source, current)
-            if age > SIX_HOURS:
-                if force:
-                    _remove_registered(source, path)
-                    items.append(dict(path=str(path), outcome="removed", reason="head_older_than_6h"))
+            with initialization(source, path):
+                current = qualify(source, path)
+                age = now - registered_committer_time(source, current)
+                if age > SIX_HOURS:
+                    if force:
+                        _remove_registered(source, path)
+                        items.append(dict(path=str(path), outcome="removed", reason="head_older_than_6h"))
+                    else:
+                        items.append(dict(path=str(path), outcome="would_remove", reason="head_older_than_6h"))
                 else:
-                    items.append(dict(path=str(path), outcome="would_remove", reason="head_older_than_6h"))
-            else:
-                items.append(dict(path=str(path), outcome="retained", reason="head_not_older_than_6h"))
+                    items.append(dict(path=str(path), outcome="retained", reason="head_not_older_than_6h"))
+        except BlockingIOError:
+            items.append(dict(path=str(path), outcome="retained", reason="initialization_in_progress"))
         except Exception as error:
             status = "failed"
             items.append(dict(path=str(path), outcome="failed", reason=str(error)))

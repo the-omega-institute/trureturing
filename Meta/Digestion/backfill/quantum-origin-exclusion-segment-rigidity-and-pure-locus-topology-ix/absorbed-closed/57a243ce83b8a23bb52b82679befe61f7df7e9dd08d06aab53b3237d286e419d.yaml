@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:57a243ce83b8a23bb52b82679befe61f7df7e9dd08d06aab53b3237d286e419d
+  normalized_sha256: sha256:57a243ce83b8a23bb52b82679befe61f7df7e9dd08d06aab53b3237d286e419d
+cas_ref: sha256:57a243ce83b8a23bb52b82679befe61f7df7e9dd08d06aab53b3237d286e419d
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/ReciprocalPureCompactness.reciprocal_pure_compact
+    target_statement_id: sha256:6094ab6907012810354abfec784a7f8952aa05bad198dea6dc6adfb9ca7395e6
+receipts:
+  unresolved_subitems: []

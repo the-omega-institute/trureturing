@@ -1,0 +1,47 @@
+**定义 121.1（全部原态、效应与排除球）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^*$。始终取
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\\
+D_p=\{x\in K:T_p(x)=0\},\qquad
+\mathcal A_p=\{e\in F_p:e|_{D_p}=0\}.
+\end{gathered}
+\tag{Q121.1}
+$$
+
+$K$ 是整个原紧基，$P$ 是全部原纯点，$\mathcal E$ 是整个原效应区间。$K$ 张成 $V$；在从 $K$ 取出的一组线性基上，各效应的值均在 $[0,1]$，故 $\mathcal E$ 紧。$F_p$ 非空紧，最低确认读数的最小值达到。这里未把下包络 $T_p$ 认作单张仿射效应，也未假设 $P$ 闭。
+
+$\mathrm{EB3}$ 表示每个完整 $D_p$ 仿射等价于整个闭三球 $\mathbb B^3$；$\mathrm{Inj}$ 表示 $D_p=D_q\Rightarrow p=q$。原纯点的关系
+
+$$
+p\perp q\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0
+\tag{Q121.2}
+$$
+
+由补效应对称，且反自反。它等价于 $q\in D_p$；特别地 $p\notin D_p$。原三角指三个原纯点之间三条各自真实的全域零一边，不要求三条边见证出自同一实际仪器。
+
+只用EB3，复用VII103.2、VII104.1：$D_p$ 是紧暴露极大真面，$\mathcal A_p$ 非空紧；每个 $e\in\mathcal A_p$ 的零面恰为 $D_p$。全部非空真面只有纯单点和这些完整球。对完整球 $F$，
+
+$$
+S(F)=P\cap F=\partial_{\rm rel}F,
+\qquad F=\operatorname{conv}S(F).
+\tag{Q121.3}
+$$
+
+不同完整球若相交，只交于一个原纯点。这些是完整原面接口，未使用Pair。下文 $\operatorname{ri}K$、$\operatorname{relbd}K$ 均相对于 $\operatorname{aff}K=\{u=1\}$。
+
+定义原整球宽度及中点像
+
+$$
+W(D_p)=\max_{f\in\mathcal E}
+       \left(\max_{D_p}f-\min_{D_p}f\right),
+\qquad M_p=\frac{p+D_p}{2}\subset K.
+\tag{Q121.4}
+$$
+
+宽度达到且 $0<W(D_p)\le1$。$M_p$ 是整颗三球的仿射像；这个数学仿射映射并未供应一次实际中点准备或物理操作。
+

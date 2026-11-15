@@ -1,0 +1,214 @@
+**定理 145.3（保留邻边完成的单对真实标签返回）。** 在完整 EB3 与 $R_o$ 下，取
+
+$$
+q\in P\setminus(A\cup\{o\}),\qquad S_q\subseteq B.
+\tag{XII145.6}
+$$
+
+此时 $h_q=\pi_o|_{S_q}:S_q\to S$ 是同胚；记 $x_s=h_q^{-1}(s)$。
+另要求目标的全部真实邻边完成条件
+
+$$
+C_q:\quad \forall s\in S\ \exists y_s\in P:
+\quad (s,x_s,y_s)\text{ 是真实零三角}.
+\tag{XII145.7}
+$$
+
+若有一对满足反向纯比较
+
+$$
+\exists s_\ast\in S:\quad T_q(s_\ast)\le T_{s_\ast}(q),
+\tag{XII145.8}
+$$
+
+则对任意真实 $e_o\in\mathcal A_o$、$e_q\in\mathcal A_q$，都有
+
+$$
+e_q(w)=1,\qquad q+2c_q=w,\qquad e_q(o)=e_o(q),\qquad
+\min_{z\in A}e_q(z)=0,\qquad D_q\cap A\ne\varnothing,\qquad q\in B.
+\tag{XII145.9}
+$$
+
+仅有根边 $(o,s)$ 的完成不能删除 $C_q$；后者完成的是另一条实际边 $(s,x_s)$。
+
+证明。先说明复用 X133.5 的关联步骤在当前域内合法。
+由 $q\notin A$ 及零对称，$o\notin S_q$；(XII145.6) 因而让整个 $S_q$ 落在
+(XII145.4) 的定义域内。紧集
+
+$$
+\{(x,s,f)\in S_q\times S\times\mathcal E:f(s)=1,\ f(x)=0\}
+\tag{XII145.10}
+$$
+
+在 $S_q\times S$ 上的投影正是 $h_q$ 的单值图。该图到 $S_q$ 是紧到 Hausdorff 的连续双射，
+故 $h_q$ 连续。若两点同映到 $s$，它们都在 $D_q\cap D_s$；
+$I(D_s)=\{s\}$ 与 $q\notin A$ 排除 $D_q=D_s$，点交接口遂给单射。
+两端都是完整、紧、无边界的二维球面。区域不变性使连续单射的像开，紧性使像闭，
+目标连通使其满射，所以为同胚。这是 [Hatcher，印刷页172，Theorem 2B.3、Corollary 2B.4][Q145H]
+及 X133.5 的同一应用。它只支付完整极值范围，不直接支付两球相交。
+
+固定上述真实 $e_o,e_q$，记
+
+$$
+\alpha=e_q(w),\qquad r=e_q(o),\qquad d=e_o(q),\qquad
+t_s=e_q(s),\qquad b_s=e_o(x_s).
+\tag{XII145.11}
+$$
+
+$q\notin A$ 给 $d>0$；若 $r=0$，则 $o\in D_q$，零对称会给 $q\in A$，故 $r>0$。
+根三角中 $s,a_s$ 在 $A$ 内对径，$o,a_s$ 在 $D_s$ 内对径；因此
+$s+a_s=2c_o$、$o+a_s=2c_s$。再用 $C_q$ 中的三角，得到
+
+$$
+s+2c_s=w,\qquad x_s+y_s=2c_s,\qquad s+y_s=2c_{x_s},\qquad
+x_s+2c_{x_s}=w.
+\tag{XII145.12}
+$$
+
+最后一个等式尚未涉及 $q$ 的球心，不能以 $q+2c_q=w$ 代替它。
+
+在第一张完整球 $D_s$ 上取单位球坐标，令 $o$ 的坐标为 $v_s$、$x_s$ 的坐标为 $z_s$。
+它们均为单位向量。真实 $e_o$ 在 $o,a_s$ 取一、零，所以其整个球上限制为
+$(1+v_s\cdot z)/2$。真实 $x_s\in D_q$ 使 $e_q(x_s)=0$，而 $e_q(o)=r>0$；
+非负仿射函数在球面零点的方向唯一，结合 $e_q(2c_s)=\alpha-t_s$ 得
+
+$$
+e_q(c_s+L_s z)=\frac{\alpha-t_s}{2}(1-z_s\cdot z),\qquad
+b_s=\frac{1+v_s\cdot z_s}{2},\qquad
+r=(\alpha-t_s)(1-b_s).
+\tag{XII145.13}
+$$
+
+这里 $L_s$ 是该球图的线性部分；$\alpha-t_s>0$ 且 $1-b_s>0$，由 $r>0$ 保证。
+这一步用整个 $D_s$ 上的原效应界，未以任意横截球替代 $D_q$。
+
+真实零关系 $x_s\in D_q$ 经零对称使 $q\in D_{x_s}$，从而进入第二张完整球
+$G_s=D_{x_s}$。$s$ 也在该球内。其中心满足 (XII145.12)，故 $e_q$ 的中心值为
+$\alpha/2$；$q$ 是其取值一的球面点，因而整个球的最小值是 $\alpha-1$。
+效应界给 $1\le\alpha\le2$。令 $\widehat q,\widehat s$ 为在这张球内的单位坐标，便有
+
+$$
+\begin{aligned}
+e_q(c_{x_s}+L_{x_s}z)
+ &=\frac\alpha2+\frac{2-\alpha}{2}\widehat q\cdot z,\\
+e_o(c_{x_s}+L_{x_s}z)
+ &=\frac{1-b_s}{2}(1-\widehat s\cdot z),\\
+(2-\alpha)d&=(1-t_s)(1-b_s).
+\end{aligned}
+\tag{XII145.14}
+$$
+
+第二式使用 $e_o(s)=0$、$e_o(w)=1$ 及 $b_s<1$；第三式在同一球内分别于 $s,q$ 评价得到。
+若 $\alpha=2$，第一式使每张 $G_s$ 上 $e_q\equiv1$，于是 $t_s=1$ 对全部 $s\in S$ 成立。
+$A=\operatorname{conv}S$ 遂给 $e_q(c_o)=1$，但
+$r=\alpha-2e_q(c_o)=0$，矛盾。因此
+
+$$
+1\le\alpha<2,\qquad
+r(1-t_s)=(2-\alpha)d(\alpha-t_s)\quad(s\in S).
+\tag{XII145.15}
+$$
+
+在使用反向比较之前，可准确看出正分离障碍：若 $t_s$ 取两个不同值，比较最后一个一次等式的系数与
+常数项，得到 $r=(2-\alpha)d=\alpha(2-\alpha)d$，故 $\alpha=1$。
+若 $\alpha>1$，只能有 $e_q|_A\equiv m$。第一式 (XII145.13) 及 $h_q$ 满射还给
+$e_o|_{D_q}\equiv m/(\alpha-m)$，并有
+
+$$
+r=\alpha-2m>0,\qquad \alpha-1<m<\frac\alpha2,\qquad D_q\cap A=\varnothing.
+\tag{XII145.16}
+$$
+
+其中 $m\ge\alpha-1$ 来自 $s\in G_s$ 与 (XII145.14) 的最小值。
+若等号成立，$s$ 是 $q$ 在 $G_s$ 内的对径；$C_q$ 又使 $y_s$ 是 $s$ 在同一球的对径，
+所以 $q=y_s\perp s$，与 $e_q(s)=m=\alpha-1>0$ 矛盾。
+这些是正数分支的必要关系，不是满足整个原域的反模型。
+
+现在由 (XII145.8) 排除该障碍。对任一完整球 $G$ 与其中的原纯点 $z$，
+IX114.5 的证明中不使用 PR 的 (IX114.15)—(IX114.16) 给出
+
+$$
+T_z(c_G+L_G v)=1-\kappa_G(z)(1-\widehat z\cdot v),\qquad
+0\le\kappa_G(z)\le\frac12.
+\tag{XII145.17}
+$$
+
+原因是每张确认 $z$ 的原效应在整个球上必形如
+$1-\lambda+\lambda\widehat z\cdot v$，$0\le\lambda\le1/2$；紧确认族中的最大 $\lambda$ 达到，
+并同时实现球内所有 $v$ 的 minimum。这里并未使用 PR 才能得到的“各方向系数相同”。
+
+在 $G_{s_\ast}$ 中，$C_q$ 给 $s_\ast,y_{s_\ast}$ 的真实正交对径，
+所以 $\kappa_{G_{s_\ast}}(s_\ast)=1/2$。又 $q\ne s_\ast$，于是
+
+$$
+T_q(s_\ast)-T_{s_\ast}(q)
+=\left(\frac12-\kappa_{G_{s_\ast}}(q)\right)
+(1-\widehat q\cdot\widehat{s_\ast})\ge0.
+\tag{XII145.18}
+$$
+
+反向不等式使其为零，后一因子严格正，故 $\kappa_{G_{s_\ast}}(q)=1/2$。
+$q$ 的这张球内对径因而有原最低值零，属于真实 $D_q$；
+在它上面，(XII145.14) 的真实 $e_q$ 取值 $\alpha-1$，准确零集迫 $\alpha=1$。
+(XII145.13)—(XII145.14) 随即给 $d=r$，因为 $1-t_s>0$：若 $t_s=1$，第一式将给 $r=0$。
+
+对任意 $s\in S$，此时才取
+
+$$
+q_s^-=2c_{x_s}-q=w-x_s-q.
+\tag{XII145.19}
+$$
+
+它是 $G_s$ 的原纯对径点，且 $e_q(q_s^-)=\alpha-1=0$。
+先由准确零集得 $q_s^-\in D_q$，再注意 $x_s\in D_q$ 且 $q_s^-\in D_{x_s}$。
+二者原正交，在同一完整球 $D_q$ 内互为对径，因此
+
+$$
+2c_q=x_s+q_s^-=w-q.
+\tag{XII145.20}
+$$
+
+这是真实标签的回送：球心关系是零值与原正交推出的结论，不是输入。
+
+还须消去 $A$ 与 $D_q$ 之间的可能正间隔。写完整根球
+$A=c_o+L_A\overline{\mathbb B}^{\,3}$，置
+
+$$
+m=e_q(c_o),\qquad v=\|e_q\circ L_A\|_2,\qquad
+0\le v\le m<\frac12,\qquad r=1-2m.
+\tag{XII145.21}
+$$
+
+非负性给 $v\le m$，$r>0$ 给严格上界。由 (XII145.20)、$e_o(w)=1$ 及 $d=r$，
+$e_o(c_q)=(1-d)/2=m$。$s$ 遍历完整 $S$ 时，$t_s$ 遍历整个区间
+$[m-v,m+v]$；第一球恒等式给
+
+$$
+b_s=1-\frac r{1-t_s}.
+\tag{XII145.22}
+$$
+
+此函数随 $t_s$ 严格递减。$m+v\le2m<1$ 保证全部分母严格正；
+$s\mapsto x_s$ 遍历完整 $S_q$，所以 $e_o$ 在整个 $D_q$ 上的两个极值恰为
+
+$$
+\min_{D_q}e_o=\frac{m-v}{1-m-v},\qquad
+\max_{D_q}e_o=\frac{m+v}{1-m+v}.
+\tag{XII145.23}
+$$
+
+这里满射只用于保证真实球面的两个极值都被取遍。
+仿射函数在完整球上的极值和等于中心值的两倍，故
+
+$$
+\frac{m-v}{1-m-v}+\frac{m+v}{1-m+v}=2m,
+\qquad 2(1-m)(m^2-v^2)=0.
+\tag{XII145.24}
+$$
+
+第二式是第一式乘以正数 $(1-m)^2-v^2$ 后的结果。
+$m\ge v\ge0$、$m<1/2$ 迫 $m=v$，于是 $\min_Ae_q=m-v=0$。
+最小值在紧 $A$ 达到，真实零集给 $D_q\cap A\ne\varnothing$。
+$I(A)=\{o\}$ 与 $q\ne o$ 排除 $D_q=A$，故交恰为原纯点 $s\in S$。
+零对称将 $s\in D_q$ 送回 $q\in D_s\subseteq B$，完成 (XII145.9)。证毕。
+

@@ -37,7 +37,7 @@ F12: D5/S1/Recurrence/Invariants/HannaDiagonalDerivativeParity.nonlinear; sha256
 logarithmicInput: proof_shape: definition; escape_witness: none; consumers: exponentialSum, input_x_derivative, exponential_sum_constant, exponential_sum_equation, result; Direct frozen dependencies: none.
 exponentialSum: proof_shape: definition; escape_witness: none; consumers: claim, exponential_sum_constant, exponential_sum_equation, integral_input_ledger, gauss_exponential_integral, result; Direct frozen dependencies: none.
 claim: proof_shape: definition; escape_witness: none; consumers: result; Direct frozen dependencies: F1.
-fermat_lift: proof_shape: bind-only; escape_witness: none; consumers: diagonal_congruence; Direct frozen dependencies: none.
+fermat_lift: proof_shape: bind-only; escape_witness: none; consumers: diagonal_congruence, HannaA181316Integrality.base_congruence; Direct frozen dependencies: none.
 diagonal_congruence: proof_shape: bind-only; escape_witness: none; consumers: result; Direct frozen dependencies: none.
 binomial_series_differential: proof_shape: bind-only; escape_witness: none; consumers: euler_factor_differential; Direct frozen dependencies: none.
 euler_factor_as_subst: proof_shape: bind-only; escape_witness: none; consumers: euler_factor_differential; Direct frozen dependencies: F2, F3.
@@ -106,7 +106,7 @@ end D5.S1.Recurrence.Witt.HannaDiagonalGhostPowerIntegrality
 
 namespace D5.S1.Recurrence.Witt.HannaDiagonalGhostPowerIntegrality
 
-private theorem fermat_lift (p s : ℕ) (hp : p.Prime) (z : ℤ) :
+theorem fermat_lift (p s : ℕ) (hp : p.Prime) (z : ℤ) :
     (p : ℤ) ^ (s + 1) ∣ z ^ (p ^ (s + 1)) - z ^ (p ^ s) := by
   let I : Ideal ℤ := Ideal.span {(p : ℤ)}
   have hb : z ^ p ≡ z [SMOD I] := by

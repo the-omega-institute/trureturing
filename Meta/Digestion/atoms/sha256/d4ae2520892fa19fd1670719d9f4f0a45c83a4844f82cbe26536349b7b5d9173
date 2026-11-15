@@ -1,0 +1,18 @@
+**定义 104.12（寄存器到最大原块的 $\mathsf{Fusion}_L$）。** 在
+$\mathsf F_{r,2}$ 的上述已标准 qubit retract 中，任取最大块 $s$，
+$n_s=L\ge2$，置 $m=\lceil\log_2L\rceil$，
+在块 $s$ 选正交归一基 $|a\rangle_s$，$0\le a<L$。
+令 $|x\rangle_Q$ 表示 $m$ 个实际种子角腿中的计算基，
+其中 $x=\operatorname{bin}_m(a)$。定义
+
+$$
+\eta_L=\sum_{a=0}^{L-1}|\operatorname{bin}_m(a)\rangle_Q\otimes|a\rangle_s,
+\qquad
+\mathsf{Fusion}_L:\quad |\eta_L\rangle\langle\eta_L|\in C_{m+1}.
+\tag{104.13}
+$$
+
+它支撑于原输入参考的种子角和一个原输出块，
+不是另加一个抽象矩阵辅助系统。
+该条件只在本节作为具名充分接口；不包含在二维种子的定义中。
+

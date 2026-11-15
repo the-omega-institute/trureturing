@@ -10,7 +10,7 @@ $$\operatorname{logarithm} = \operatorname{PowerSeries.mk}\left((fun m: \mathbb{
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA181080Integrality.logarithm` (`✓ std3`).
 
-*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\operatorname{A} = \operatorname{PowerSeries.subst}\left(\operatorname{logarit
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA181080Integrality.A` (`✓ std3`).
 
-*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$(\operatorname{claim}) \iff (\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \op
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA181080Integrality.claim` (`✓ std3`).
 
-*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -52,7 +52,7 @@ $$\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{PowerSeries.coeff}
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 

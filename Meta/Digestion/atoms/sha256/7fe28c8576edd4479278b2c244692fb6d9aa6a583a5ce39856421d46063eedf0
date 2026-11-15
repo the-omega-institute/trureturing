@@ -1,0 +1,100 @@
+**命题 121.5（同一实际反向亏量的界与等号）。**
+令 $y$ 为 $b$ 在完整 $D_x$ 中的实际对径，记
+
+$$
+M_A=e_p(y)=\max_{D_x}e_p,\qquad
+D=e_b(y)=\min_{D_x}e_b.
+\tag{X121.23}
+$$
+
+则 $y\in P_0$，三个种子坐标均严格正，且
+
+$$
+\begin{gathered}
+0<M_A<1,\qquad
+D=1-(1-\lambda)M_A=\delta_x(b),\\
+M_A\le\frac{d_+}{d_++c_0\lambda}
+=\frac{R_+-1}{R_+-1+(1+R_-)\lambda}.
+\end{gathered}
+\tag{X121.24}
+$$
+
+置
+
+$$
+B_0=\frac{\lambda(R_++R_-)}{R_+-1+(1+R_-)\lambda}.
+\tag{X121.25}
+$$
+
+有
+
+$$
+\lambda<B_0\le D<1.
+\tag{X121.26}
+$$
+
+恰有如下两个互斥且穷尽的分支：
+
+$$
+\begin{aligned}
+D=B_0
+&\Longleftrightarrow e_s(y)=0
+\Longleftrightarrow D_s\cap D_x=\{y\},\\
+D>B_0
+&\Longleftrightarrow \min_{D_x}e_s>0
+\Longleftrightarrow D_s\cap D_x=\varnothing.
+\end{aligned}
+\tag{X121.27}
+$$
+
+证明。
+$e_p$ 在完整 $D_x$ 非负、非恒定且唯一零点为球面点 $b$。
+闭欧氏球上非恒定仿射函数的最小值和最大值在同一直径的唯一两端达到，
+所以最大端正是实际 $y$，且 $M_A>0$。
+如果 $M_A=1$，原一值面 $\{p\}$ 迫使 $y=p$；
+但 $p\notin D_x$，矛盾。因此 $M_A<1$。
+实际边 $x\perp y$ 由 P0 传播给 $y\in P_0$。
+$y\ne b$，命题 121.4 给其三个种子坐标严格正。
+
+(X121.18) 中 $e_b$ 是 $e_p$ 的严格递减仿射函数，
+故在同一 $y$ 达唯一最小值 $D=1-(1-\lambda)M_A$。
+[EXCLUSION IX120.13](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+把这个值识别为原边 $(x,b)$ 的反向亏量 $\delta_x(b)$，不要求这条边已完成。
+
+原 $e_s\in\mathcal E$ 在全部 $C$ 非负。
+在 (X121.18) 的唯一最小点 $y$ 评价给
+
+$$
+0\le e_s(y)=d_+-(d_++c_0\lambda)M_A.
+\tag{X121.28}
+$$
+
+$d_++c_0\lambda>0$，可合法相除，得到 (X121.24)。
+代入 $D$，有
+
+$$
+D\ge1-(1-\lambda)
+\frac{R_+-1}{R_+-1+(1+R_-)\lambda}=B_0.
+$$
+
+写 $Q=R_+-1+(1+R_-)\lambda>0$，两个端点计算分别为
+
+$$
+\begin{aligned}
+B_0-\lambda&=\frac{\lambda(1+R_-)(1-\lambda)}{Q}>0,\\
+1-B_0&=\frac{(R_+-1)(1-\lambda)}{Q}>0.
+\end{aligned}
+\tag{X121.29}
+$$
+
+另由 $M_A>0$ 和 $1-\lambda>0$ 给 $D<1$。
+从以上逐步等价可见，$D=B_0$ 恰是 (X121.28) 取等。
+$e_s|_{D_x}$ 严格随 $e_p$ 递减，唯一最小点为 $y$；
+其全 $K$ 零面是完整 $D_s$。
+因此最小值为零时整个交集恰为 $\{y\}$，最小值严格正时整个交集为空。
+混合点不产生第三种交集情形。证毕。
+
+这里 $B_0<1$ 是明确的标量结论。
+它既不实现所有球的联合配置，也不把任一接触分支排除。
+等号尚未被证明迫使种子校准。
+

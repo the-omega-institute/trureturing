@@ -1,0 +1,1 @@
+证明。在源支持上，标记前每条已获边的两端都不同，所以每条已获臂前缀从同一根开始交替。对于任意已查询长度 $(\ell,r)$，固定根零时左、右臂分别用了 $\lceil\ell/2\rceil,\lceil r/2\rceil$ 个 $0\to1$ 转移；固定根一时分别用了 $\lfloor\ell/2\rfloor,\lfloor r/2\rfloor$ 个。

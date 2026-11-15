@@ -1,0 +1,90 @@
+**定理 102.11（三份比较强制全有限原锥）。** 在定义102.1的同一全有限强分块层级上，
+使用约定102.4列明的 B1—B3 供应结果，则以下三种条件等价：
+
+1. 原三份比较满足 $S_3$，或等价地满足 $\mathsf{CB}_3$。
+2. 原比较同时满足 $S_1,S_2,S_3$。
+3. 存在非空有限 $I$、整数 $n_i\ge1$ 和一个固定实线性 $\theta$，使对全部有限 $N$，
+
+$$
+\begin{aligned}
+\theta^{\otimes N}(C_N)
+ &=\bigoplus_{s\in I^N}\operatorname{Herm}_+(\mathcal H_s),\\
+u_N(x)&=\sum_{s\in I^N}\operatorname{Tr}\bigl(\theta^{\otimes N}x\bigr)_s.
+\end{aligned}
+\tag{102.30}
+$$
+
+原状态产品、原效应产品、原配对、原全部置换和原重括号在这一套坐标中是标准有限
+$A=\bigoplus_iM_{n_i}(\mathbb C)$ 的张量幂数据。
+此结论允许经典块、多个不等大小的块和只有一个高维简单块。
+
+**证明。** 命题102.3给 $1\Leftrightarrow2$，并给可替换的三份电路入口。
+由条件2应用 B1—B3，固定(102.8)—(102.10)的同一个 $\theta$。
+以下证明对每个 $N$ 都有 $C_N=\mathsf D_N$。
+
+先证 $\mathsf D_N\subseteq C_N$。任取扇区 $s$，在每条腿的块 $s_t$ 选一个单位向量
+$v_t$，令
+
+$$
+p_s=\bigotimes_{t=1}^N|v_t\rangle\langle v_t|.
+\tag{102.31}
+$$
+
+每个局部因子是原 $C_1$ 中的纯态，重复最小界给 $p_s\in C_N$，
+且它仅支撑在扇区 $s$。
+对 $\mathcal H_s$ 中任意单位向量 $\psi$，选一个 $U_s$ 将 $\bigotimes_tv_t$ 送到 $\psi$。
+引理102.10给整个原锥的数学自同构 $g$，其在该扇区上限制为 $\operatorname{Ad}_{U_s}$。
+所以 $g(p_s)=|\psi\rangle\langle\psi|\in C_N$，其他扇区仍为零。
+有限维谱分解把任意单扇区 PSD 写成这些秩一态的非负有限和。
+对全部有限扇区求和，得第一包含。$D_s=1$ 时这只是正射线，使用空字即可。
+
+再证 $C_N\subseteq\mathsf D_N$。取任意原 $x\in C_N$。
+引理102.8已证明 $x_s=P_sx\in C_N$ 及整锥直和。
+用与(102.31)相同的局域秩一投影作为迹效应，得到乘积泛函
+
+$$
+e_s(y)=\operatorname{Tr}(p_s y_s).
+\tag{102.32}
+$$
+
+这是原 proper 效应：每个局部投影属于原 $\mathcal E_1$，
+最大界使它们的乘积正。
+若 $f\in\mathcal E_a$、$g\in\mathcal E_b$，则
+
+$$
+u_{a+b}-f\otimes g
+ =(u_a-f)\otimes u_b+f\otimes(u_b-g)\in C_{a+b}^*.
+\tag{102.33}
+$$
+
+因此乘积也满足单位上界，归纳给(102.32)的 proper 性。
+对任意单位 $\psi\in\mathcal H_s$，取前段的同一个类型的有限字 $g$。
+其实际数学逆在整个原 $C_N$ 上正且保质量，故
+$e_s\circ g^{-1}\in\mathcal E_N$。
+在原正向量 $x_s$ 上读它，得到
+
+$$
+0\le(e_s\circ g^{-1})(x_s)
+ =\operatorname{Tr}\bigl(U_s p_s U_s^*x_s\bigr)
+ =\langle\psi|x_s|\psi\rangle.
+\tag{102.34}
+$$
+
+所有单位向量二次型非负，故 $x_s\succeq0$。
+所有扇区皆如此，给出反向包含。
+这里原效应沿一个已取得正逆的映射运输；未用高阶自对偶或预设高阶纯传递。
+前段得到的酉覆盖只须在一个所测扇区上正确，其他扇区上的相伴作用不影响该读数。
+
+由此对全部 $N$ 有(102.30)。同一 $\theta^{\otimes N}$ 与简单张量张成保持乘积，
+原配对决定全部对偶识别；原单位及置换已在定义102.5中固定，所以整套数据同时标准。
+
+反过来，在标准有限 $A$ 的张量幂中，闭尖生成与严格正迹成立。
+对每个实际分块，PSD 的正乘积仍 PSD；对任意两块正迹效应 $F,G$，
+$F\otimes G\succeq0$，故其对所有联合 PSD 的读数非负。
+因此两个界成立，全部因子置换是酉运输，单位与配对为原标准形式。
+对原纯秩一投影 $p$，确认它的 proper 矩阵效应 $E$ 满足 $E\ge p$，
+而 $p$ 自身是 proper；所以 $T_p(x)=\operatorname{Tr}(px)$。
+有限准备线性及迹配对对称性给全部 $S_N$，特别是条件1。
+该 least 断言的块内论证也在推论102.12中展开。
+拉回任意固定 $\theta$ 保持所有这些关系，完成等价。∎
+

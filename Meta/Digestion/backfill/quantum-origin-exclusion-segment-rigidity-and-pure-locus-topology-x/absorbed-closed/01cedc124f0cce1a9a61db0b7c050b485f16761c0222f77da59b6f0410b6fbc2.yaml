@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:01cedc124f0cce1a9a61db0b7c050b485f16761c0222f77da59b6f0410b6fbc2
+  normalized_sha256: sha256:01cedc124f0cce1a9a61db0b7c050b485f16761c0222f77da59b6f0410b6fbc2
+cas_ref: sha256:01cedc124f0cce1a9a61db0b7c050b485f16761c0222f77da59b6f0410b6fbc2
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/ExclusionWidthCompactness.effect_difference_le_width
+    target_statement_id: sha256:56226801194c56d76a05340a1b3bfd450fe287daa0f1785166a493693ecee91d
+  - gid: D5/S3/Quantum/Foundation/OriginalNormalRestriction.original_normal_restriction
+    target_statement_id: sha256:f07fef530c68d1e6cd42b4d902865c3430031eb9147591d3360802c7a421779d
+  - gid: D5/S3/Quantum/Foundation/OriginalWidthContact.original_width_contact
+    target_statement_id: sha256:d7d7de6c7f42283ce12b05af8e08f08db1c0074682b428bdb250cfdc2dd21d79
+  - gid: D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_formula
+    target_statement_id: sha256:2217b215d01bcd7dcd1664756cfdad13dc30d68b883ae5e7a09134e72d54198d
+  - gid: D5/S3/Quantum/Foundation/WholePairBallConfirmation.affine_zero_antipode
+    target_statement_id: sha256:ac047942e12a0b6a97875a535e5a684c63f462298c829ac486298a2e836bfc82
+receipts:
+  unresolved_subitems: []

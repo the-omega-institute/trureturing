@@ -1,0 +1,48 @@
+**定义 105.2（实际 $3\times3$ 混合角）。** 固定一个实际最大块 $s$，
+$H_s=\mathbb C^3$，并在其选定基中写 $e_0,e_1,e_2$。
+令 $Q=\mathbb C^2\otimes\mathbb C^2$ 是两条实际种子角腿组成的寄存器。
+取实等距嵌入
+
+$$
+c:\mathbb C^3\longrightarrow Q,\qquad
+ce_0=|00\rangle,\quad ce_1=|01\rangle,\quad ce_2=|10\rangle,
+\qquad c^*|11\rangle=0.
+\tag{105.2}
+$$
+
+码投影为 $cc^*$；它不是 $Q$ 的恒等，余字 $11$ 被压缩为零。
+令 $j_2$ 为(104.10)在这两条原种子腿上的嵌入，$\iota_s$ 为最后一条原腿的块嵌入，定义
+
+$$
+\begin{aligned}
+i_s&=(j_2\operatorname{Ad}_c)\otimes\iota_s:
+ \operatorname{Herm}(\mathbb C^3\otimes\mathbb C^3)\longrightarrow W_3,\\
+q_s&=i_s^*,\qquad \mathsf p_s=i_sq_s,\qquad
+D_s=i_s^{-1}(C_3).
+\end{aligned}
+\tag{105.3}
+$$
+
+伴随用实迹内积，故 $i_s$ 等距、$q_si_s=\mathrm{id}$，
+$\mathsf p_s$ 为该实子空间的正交投影。$D_s$ 表示实际原锥的角交，不是另选的诊断锥。
+本章在此角内记
+
+$$
+\begin{aligned}
+\eta&=\sum_{a=0}^2e_a\otimes e_a,& R&=|\eta\rangle\langle\eta|,& P&=R/3,\\
+\tau_F&=\frac{1-F}{8}(I-P)+FP\quad(F\in\mathbb R),&
+W_\lambda&=I-\lambda R,&
+t_s&=\max_{x\in D_s,\ \operatorname{Tr}x=1}\operatorname{Tr}(Px).
+\end{aligned}
+\tag{105.4}
+$$
+
+$I$ 是这个九维 Hilbert 角的恒等，不是整个 $W_3$ 的单位矩阵；
+$R$ 是角内 dyad，原全杯总质量仍为 $\sum_i n_i$。
+$i_s(R)$ 的向量代表恰为
+$|00\rangle|0\rangle_s+|01\rangle|1\rangle_s+|10\rangle|2\rangle_s$，
+所以 $R\in D_s$ 正是定义104.12的 $\mathsf{Fusion}_3$。
+定义中的 $F$ 允许为负，此时 $\tau_F$ 不在通常 PSD 锥。
+记 $\mathsf T$ 为这两个固定计算因子的同时全转置，$\mathsf T_N$ 为全部 $N$ 条原腿的转置；
+它们不是部分转置，也不先假定它们在原锥上正。
+

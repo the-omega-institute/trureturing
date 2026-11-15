@@ -1,0 +1,19 @@
+**六、以非纯面内点返回全部原标签。** 给任意原 $a\in P$，取 $z\in\operatorname{ri}D_a$。它非纯且在 $M=\mathcal B$ 中，故属于某个 $D_x$，$x\in Q$。不同完整球只能交于纯点，迫 $D_a=D_x$；原标签单射给 $a=x\in Q$。这证明整个 $P=Q$，而非仅证明球并覆盖。
+
+于是每个原 $a$ 的整个 $S_a$ 均落在 $P=Q$，定义直接给 $\Lambda=P$。有限维紧凸基由全部极点凸生成，故 $\operatorname{conv}Q=K$。现将先前部分 join 合法推广为全域结论：对不同 $x,y\in P$，将二者视为已知相等的 $\Lambda$ 中标签，139.2第3项给唯一 $a\in Q=P$，使 $a\in S_x\cap S_y$；零对称给 $x,y\in S_a$。相同端点 $x=y$ 时，任选非空原 $S_x$ 中的 $a$，亦有同一标签承担两条边。因此
+
+$$
+\forall x,y\in P\ \exists a\in P:\quad x\perp a\ \land\ y\perp a.
+\tag{XI142.24}
+$$
+
+不同端点时见证唯一，由 Inj 与点交规则也可直接推出。两端同属原真面 $D_a$，所以全部不同纯对的原最小面为真，即原全 Pair。尤其固定的原 $o$ 对每个目标都有共同邻点，满足
+
+$$
+\forall y\in P:\quad o\perp y\ \lor\
+\exists a\in P:\ o\perp a\ \land\ y\perp a,
+\tag{XI142.25}
+$$
+
+这正是 $\mathsf R_1$ 的同一固定根；相同目标 $y=o$ 没有遗漏。也可只由 $Q(o)=P$ 立即取得这一点。
+
