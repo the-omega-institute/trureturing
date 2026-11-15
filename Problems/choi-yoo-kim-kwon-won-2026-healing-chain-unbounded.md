@@ -109,3 +109,8 @@ are consumed bind-only steps.
 - [open] Planarity is not part of the formal claim; the family is planar, so
   the answer is also negative for planar graphs, but that statement is not
   kernel-checked in this module.
+
+## ASSUMED-UNVERIFIED
+
+- Global openness of the question is `ASSUMED-UNVERIFIED`: arXiv lists only v1, MathDB was not readable and citation indices were rate-limited; the negative search results concern only the recorded scopes.
+- Planarity of the counterexample family is not kernel-checked in this module.
