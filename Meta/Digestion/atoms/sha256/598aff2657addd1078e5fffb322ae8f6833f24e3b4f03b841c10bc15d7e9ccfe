@@ -1,0 +1,47 @@
+**Theorem 175.2 (complete classification of an unsplit normal difference).** For every integer $d\ge1$ and closed convex cone $K\subseteq E_d$, the following are equivalent:
+
+$$
+\begin{aligned}
+&\mathsf A(K);\\
+&K\in\bigl\{\{0\},\ E_d,\ \operatorname{PSD}_d,\ -\operatorname{PSD}_d\bigr\};\\
+&X\in K,\ Y\in K^*,\ \operatorname{Tr}(XY)=0\Longrightarrow XY=0.
+\end{aligned}
+\tag{175.3}
+$$
+
+In particular transpose reciprocity is unnecessary for this four-cone classification. It excludes the first two cones if separately imposed, recovering XVI174.2's signed conclusion.
+
+**Proof.** Write $\mathcal P_d=\{vv^*:v^*v=1\}$. Its elements have Hilbert–Schmidt norm one, and it is the connected continuous image of the complex unit sphere, namely $\mathbb{CP}^{d-1}$. At $d=1$ it is a single point.
+
+For $P\in\mathcal P_d$ and $\sigma\in\{+1,-1\}$, apply [Moreau, §4.b, printed p.281][Q175M] to $K$ and its nonpositive polar $K^\circ=-K^*$:
+
+$$
+\sigma P=A_\sigma-B_\sigma,\qquad
+A_\sigma=\Pi_K(\sigma P)\in K,\quad B_\sigma\in K^*,\quad
+\langle A_\sigma,B_\sigma\rangle=0.
+\tag{175.4}
+$$
+
+This is the unique orthogonal cone decomposition. Since the difference has rank one, $\mathsf A(K)$ gives either $B_\sigma=0,A_\sigma=\sigma P$, or $A_\sigma=0,B_\sigma=-\sigma P$. Thus
+
+$$
+\Pi_K(P)\in\{0,P\},\qquad\Pi_K(-P)\in\{0,-P\}.
+\tag{175.5}
+$$
+
+Moreau §5.b, printed p.282, proves that $\Pi_K$ is nonexpansive. Consequently each continuous map
+
+$$
+P\longmapsto\|\Pi_K(P)\|_2^2,\qquad
+P\longmapsto\|\Pi_K(-P)\|_2^2
+\tag{175.6}
+$$
+
+has values in $\{0,1\}$ and is constant on $\mathcal P_d$. Denote these two constants by $(a,b)$. If a projection in (175.5) is zero, (175.4) places its negative in $K^*$. If it is nonzero, the input itself belongs to $K$. Positive spectral sums, the full bipolar identity and ordinary PSD self-duality therefore give the complete table:
+
+| $(a,b)$ | Containments forced by all positive and negative rays | Result |
+| --- | --- | --- |
+| $(0,0)$ | $\pm\operatorname{PSD}_d\subseteq K^*$ | $K^*=E_d$, so $K=\{0\}$ |
+| $(1,1)$ | $\pm\operatorname{PSD}_d\subseteq K$ | $K=E_d$ |
+| $(1,0)$ | $\operatorname{PSD}_d\subseteq K$ and $\operatorname{PSD}_d\subseteq K^*$ | $K=\operatorname{PSD}_d$ |
+| $(0,1)$ | $-\operatorname{PSD}_d\subseteq K$ and $-\operatorname{PSD}_d\subseteq K^*$ | $K=-\operatorname{PSD}_d$ |
