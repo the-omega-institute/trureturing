@@ -140,6 +140,7 @@ private theorem op_expansion :
     term, pow_zero, pow_one, one_mul, Function.iterate_zero_apply, Function.iterate_one, cn]
   ring
 
+set_option maxHeartbeats 2000000 in
 private theorem annihilates :
     (∑ j ∈ Finset.range 7, (op j : PowerSeries ℚ) * (D^[j]) O) = 0 := by
   rw [op_expansion]
