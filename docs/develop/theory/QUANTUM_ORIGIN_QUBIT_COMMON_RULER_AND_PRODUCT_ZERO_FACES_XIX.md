@@ -2971,3 +2971,207 @@ $$
 [Q279S]: https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-p.pdf "Maurice Sion, On general minimax theorems, Pacific Journal of Mathematics 8, 171–176, Theorem3.4；连续双仿射与两侧紧凸条件在279.3逐一满足。"
 
 ## 追加锚（本行以下为增补区）
+
+## 280. 纯端点接触与确认菜单的内在有限见证
+
+**定义 280.1（纯端点中点候选）。** 完整保留279.1的非平凡强全有限背景、同一原概率表、全部原态与完整proper菜单、真实有限复合及全部相关输入。二元最低确认读数仍是279.1的 $T_N$；它先于最小门存在而总定义。真实 $(12)|3$ 分块仍取 $B_3=P_2\otimes P_1$，块内允许纠缠，源对允许重复。只把279.2第一条的一个输入限制为原纯点，定义
+
+$$
+\begin{aligned}
+m_{p,q}&=(p+q)/2,\\
+\mathsf A_{\mathrm{pm},3}:\quad
+T_3\!\left(m_{p,q},\frac{a+y}{2}\right)
+&=\frac{T_3(m_{p,q},a)+T_3(m_{p,q},y)}2
+\quad(p,q\in B_3,\ a\in P_3,\ y\in K_3),\\
+\boxed{\qquad\mathsf Q_{\mathrm{pm}}
+&:=\mathsf A_{\mathrm{pm},3}+\mathsf X_{T,2}.\qquad}
+\end{aligned}
+\tag{280.1}
+$$
+
+这里 $P_3=\operatorname{ext}K_3$ 是整个原纯域，包括跨分块纠缠；$y$ 仍遍历整个原 $K_3$。$\mathsf X_{T,2}$ 完整沿用279.2：对不同原纯 $p,q\in P_2$，存在原纯 $g$，保住全部共同零参照 $\{p,q\}^{\perp_T}=\{p,g\}^{\perp_T}$，并翻转 $p\perp_T q$ 与 $p\perp_T g$ 的真假。两个条件作用于同一个二元比较，换点中的共同参照量词没有被省掉。
+
+**定理 280.2（一个纯端点足以恢复整个混合律）。** 在同一完整背景中，$\mathsf A_{\mathrm{pm},3}$、279.2的 $\mathsf A_{B,3}$ 与276.1的整个产品对 $\mathsf J_3^{\mathrm{prod}}$ 等价。因此，相对于279.4逐项明列的供应，$\mathsf Q_{\mathrm{pm}}$ 等价于同一 $r_0\ge2$ 及保单位实线性序同构 $\theta:V\to H_{r_0}$ 满足
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{r_0^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}\qquad(N\ge0).
+\tag{280.2}
+$$
+
+证明。固定任一产品源对，令 $F=\mathcal E_3(m_{p,q})$、$t(x)=\min_{f\in F}f(x)$。先使用下包络的标准接触等号判据。对 $0<s<1$，在 $(1-s)x+sy$ 达到最小值的 $h\in F$ 给
+
+$$
+\begin{aligned}
+t((1-s)x+sy)-(1-s)t(x)-st(y)
+=(1-s)(h(x)-t(x))+s(h(y)-t(y)).
+\end{aligned}
+\tag{280.3}
+$$
+
+右侧两项非负，所以等号成立当且仅当两端有同一个最小化者。反向也直接由同一 $h$ 和凹性得到；有共同最小化者便在整条线段的所有实概率权上取等。这一中间判据只需非空紧仿射函数族，不需先假定least、菜单凸性或补全新测试；本候选的原完整菜单背景仍保留。
+
+由(280.1)，每条原纯点 $a$ 与任意原态 $y$ 相连的线段都保持所有实概率权。有限维紧凸集的每个点有有限原纯分解，即使整个纯域不闭。对分解点数归纳，先将第一个纯点与剩余点的实际混合连接，得到
+
+$$
+t\!\left(\sum_i\lambda_i a_i\right)=\sum_i\lambda_i t(a_i)
+\quad(a_i\in P_3,\ \lambda_i\ge0,\ \sum_i\lambda_i=1).
+\tag{280.4}
+$$
+
+把任意两个原态各自的有限纯分解合并，便得 $t$ 保持它们的任意混合，故 $\mathsf A_{B,3}$ 成立。取原 $K_3$ 的相对内点 $c$，选择在 $c$ 最小的原 $h\in F$。非负仿射函数 $h-t$ 在相对内点为零，故在整个 $K_3$ 恒零。于是同一原 $h$ 实现全部最低读数，是整个原锥序中的least。proper值至多一又给 $f(m_{p,q})=1\Longleftrightarrow f(p)=f(q)=1$，所以这是整个产品对J，包括重复对。反向由least的线性立即得到(280.1)，也可直接复用279.2。
+
+现在准确复用279.4的接口：产品对角J经原纯旁观整个实际面下降给整个M2；$T_2(p,\cdot)=e_p$ 后，零换点成为278的 $\mathsf X_{e,2}$。278的M-only正对偶全部实际面、linear orthoset、连续极性、复数选择及Gleason恢复低二层；产品对J再支付XIX276.2（二）—（五）的极端残余、秩二资源、Bell边缘排转置及真实 $\tau_{r_0}$，最后由XIII164.11取得(280.2)。这里不以XX276消费整个原纯域M的任意秩分类替代产品目标的证明。反向，量子模型的 $T_N(z,x)=\operatorname{Tr}(P_z\rho_x)$ 对第二端线性，且复正交满足同一换点，故成立。$\square$
+
+**定义 280.3（确认菜单的内在维数）。** 在279.2—279.3的任意同一原有限维单层背景中，固定任意 $S\subseteq K$，令 $F=\mathcal E(S)$、$t=t_S$，并沿用279.4的 $\delta_S$ 与 $J_S$。写
+
+$$
+\begin{aligned}
+d&=\dim_{\mathbb R}V,\qquad
+r_S=\dim\operatorname{aff}F
+=\dim\operatorname{span}\{u-f:f\in F\},\\
+W_S&=\{v\in V:f(v)=u(v)\text{ 对所有 }f\in F\},\qquad
+\dim(V/W_S)=r_S,\qquad
+r_S\le d-\dim\operatorname{span}S.
+\end{aligned}
+\tag{280.5}
+$$
+
+等号使用 $u\in F$；每个 $u-f$ 在 $S$ 上消失给最后的界。空目标集允许存在。商空间只用于证明中消去所有确认者共同饱和的线性方向，不把商像另当原状态空间。VII102.1已在单纯源上引入相同的确认效应维数，VII102.2用它限制共同零目标的最小不相容组；这里沿用这个内在量，研究的是全部读数的最大Jensen缺口。
+
+**定理 280.4（最大缺口由至多菜单维数个原纯输入达到）。** 对280.3的整个共同确认纤维，存在不超过 $\max\{1,r_S\}$ 个原纯输入达到最大混合缺口，即
+
+$$
+\boxed{\quad
+\delta_S=\max_{\substack{1\le k\le\max\{1,r_S\}\\
+\lambda\in\Delta_k,\ a_i\in P}}
+\left[t\!\left(\sum_i\lambda_i a_i\right)-\sum_i\lambda_i t(a_i)\right].
+\quad}
+\tag{280.6}
+$$
+
+这里的最大值实际达到，不要求整个 $P=\operatorname{ext}K$ 紧。若 $r_S\le1$，则 $\delta_S=0$，整个 $F$ 有least；若 $r_S\ge2$，则
+
+$$
+0\le\delta_S\le1-\frac1{r_S}.
+\tag{280.7}
+$$
+
+单源有 $r_S\le d-1$，两个不同归一源有 $r_S\le d-2$。这些是有限存在界，不是高效搜索算法，也不建立小缺口到完整量子层级的稳定性。
+
+证明。279.3已给有限达到的最优混合以及最优 $h_*\in F$。其中minimax/Jensen恒等式也是[Abernethy等，Theorem1式(2)][Q280A]在 $T=1$ 的直接特化：行动集是紧凸 $F$，输入集是紧 $K$，损失为连续双线性的 $f(x)$；其紧性、有界性和对行动凸性均满足。这里复用这一成熟单轮最坏后悔值对偶，不将恒等式本身另计为新内容。
+
+先将有限最优混合的每个输入分解成有限原纯点。凹性使分解后的平均最低读数不增加，原重心不变，故缺口不减；它已是全局最大 $\delta_S$，因此仍取等。删去零权，记纯见证为 $a_i$、正权为 $\lambda_i$、重心为 $b$。由最优 $h_*$ 的整个原域上界，
+
+$$
+\begin{aligned}
+\delta_S
+&=\sum_i\lambda_i\bigl(h_*(a_i)-t(a_i)\bigr)
+-\bigl(h_*(b)-t(b)\bigr),\\
+0&\le h_*(a_i)-t(a_i)\le\delta_S,\qquad h_*(b)-t(b)\ge0.
+\end{aligned}
+\tag{280.8}
+$$
+
+所以 $h_*(b)=t(b)$，且每个正权支撑点都满足 $h_*(a_i)-t(a_i)=\delta_S$。这是同一个 $h_*$ 和同一个实际混合的接触条件，不是分别最优值的拼接。
+
+只需处理 $\delta_S>0$。若纯点数超过 $r_S$，它们在 $V/W_S$ 中的像线性相关。取非零实 $\beta_i$，置
+
+$$
+w=\sum_i\beta_i a_i\in W_S,\qquad
+c=\sum_i\beta_i=u(w),\qquad
+\sum_i\beta_i t(a_i)=(1-\delta_S)c.
+\tag{280.9}
+$$
+
+最后一式由同一 $h_*$ 的接触条件及 $h_*(w)=u(w)$ 得到。对所有分子非负且分母正的 $\varepsilon$，定义
+
+$$
+\lambda_i(\varepsilon)=\frac{\lambda_i+\varepsilon\beta_i}{1+\varepsilon c},\qquad
+b_\varepsilon=\frac{b+\varepsilon w}{1+\varepsilon c}.
+\tag{280.10}
+$$
+
+它们仍是同一原纯点的概率混合。所有原 $f\in F$ 在 $w$ 上的值同为 $c$，故
+
+$$
+\begin{aligned}
+t(b_\varepsilon)&=\frac{t(b)+\varepsilon c}{1+\varepsilon c},\\
+t(b_\varepsilon)-\sum_i\lambda_i(\varepsilon)t(a_i)
+&=\frac{\delta_S+\varepsilon\delta_S c}{1+\varepsilon c}=\delta_S.
+\end{aligned}
+\tag{280.11}
+$$
+
+若 $\beta$ 与 $\lambda$ 成比例，则 $b\in W_S$，所有确认者在 $b$ 取一；proper上界及全部正权迫每个确认者在每个 $a_i$ 都取一，因此缺口为零，矛盾。所以二者不成比例。翻转 $\beta$ 可令 $c\ge0$；它至少有一项正。沿负 $\varepsilon$ 到第一个分子为零处，所有分子仍非负且不全零，分母作为它们的和仍正。于是删去至少一个输入而保住同一最优值。有限次消去后，商像线性独立，纯点数至多 $r_S$。$\delta_S=0$ 时任一原纯点的单点混合即可达到零。这也证明不闭纯域中的实际达到。
+
+最后，对任意 $k$ 个原输入（允许混态）和任意归一权，取最大权的第 $j$ 项，并选在该点最小的原 $f\in F$，得
+
+$$
+\begin{aligned}
+J_S(\lambda;x_1,\ldots,x_k)
+&\le\sum_i\lambda_i(f(x_i)-t(x_i))\\
+&\le1-\lambda_j\le1-1/k.
+\end{aligned}
+\tag{280.12}
+$$
+
+第一项在 $j$ 处为零，其余差均在 $[0,1]$。正缺口不可能由一个点达到，所以 $r_S\le1$ 时只能零；否则(280.6)给(280.7)。两个不同归一源线性独立，故(280.5)给所述 $d-2$ 界。$\square$
+
+**命题 280.5（内在界的精确达到与纯—纯检验的失败）。** 对任意整数 $k\ge2$ 和 $0<a\le k-1$，在 $V=\mathbb R^{k+1}$ 中取
+
+$$
+\begin{gathered}
+u(x)=\sum_{i=0}^k x_i,\qquad p=e_0,\qquad q_i=e_i\ (1\le i\le k),\qquad
+v_a=\frac{\sum_{i=1}^kq_i-a p}{k-a},\\
+K=\operatorname{conv}\{p,v_a,q_1,\ldots,q_k\},\qquad C=\mathbb R_{\ge0}K,\qquad S=\{p\}.
+\end{gathered}
+\tag{280.13}
+$$
+
+这是VII102.5加权单纯形自由和的两点侧特例；全部所列点恰为原纯点。对其完整原proper菜单有
+
+$$
+r_S=k,\qquad \delta_S=a/k.
+\tag{280.14}
+$$
+
+$a=k-1$ 达到(280.7)的上界，且少于 $k$ 个输入即使允许混态也达不到最大缺口。另取 $k=3,a=1$，所有原纯—纯输入对的每条线段均保持最低确认读数，但三个纯输入的平均有缺口 $1/3$。因此280.1不能把任意态端也缩成纯端点。
+
+证明。$p,q_i$ 是线性基，全部顶点关系只有 $\sum_iq_i=a p+(k-a)v_a$。归一后，两侧正关系权分别为 $(a/k,(k-a)/k)$ 与 $k$ 个 $1/k$，两侧都至少有两个点。由VII102.5的完整回路字典，所列点全是极点且无遗漏，锥闭、尖、生成，$u$ 严格正。这里复用成熟自由和构造及仓内WeightedRelationConfirmation的全赋值延拓接口，不重报模型或单关系效应计算为发明。
+
+令 $b_i=f(q_i)$。全部原确认者准确对应
+
+$$
+0\le b_i\le1,\qquad \sum_i b_i\ge a,\qquad
+f(p)=1,\qquad f(v_a)=\frac{\sum_i b_i-a}{k-a}.
+\tag{280.15}
+$$
+
+最后的值不超过一由 $\sum_i b_i\le k$ 自动保证；反向每个这样的赋值都给整个原锥上的proper效应。这个 $k$ 维菜单有内点，故 $r_S=k$。$a\le k-1$ 使每个 $q_i$ 都能取零，$\sum_i b_i=a$ 使 $v_a$ 能取零，所以
+
+$$
+t(p)=1,\qquad t(q_i)=t(v_a)=0,\qquad
+ t\!\left(\frac1k\sum_iq_i\right)=a/k.
+\tag{280.16}
+$$
+
+取同一个原确认者 $h$，在 $p,q_i,v_a$ 的值分别为 $1,a/k,0$。凸函数 $h-t$ 在每个原顶点不超过 $a/k$，故整个 $K$ 上也不超过 $a/k$；(280.16)给反向Jensen下界，得到精确(280.14)。当 $a=k-1$，(280.12)排除任意少于 $k$ 个输入达到这个值。
+
+对 $k=3,a=1$，含 $p$ 的纯对只需选另一点的最小化者，因为所有确认者都在 $p$ 取一。对两个不同 $q_i,q_j$，把未选的第三个 $b_\ell$ 置一、其余置零，则两点同时读零；对 $q_i,v_a$，选另一个 $b_j=1$，仍同时读零。重复对自动成立，因而所有纯对都有共同最小化者，(280.3)给整条纯—纯线段的等号。然而三个 $q_i$ 的平均最低值为 $1/3$。实际纯—混中点 $q_1$ 与 $(q_2+q_3)/2$ 的两端均读零，中点最低值为 $1/4>0$，所以280.1的原量词会检出它。
+
+两个不同确认源的维数界也可达到。取 $C'=C\oplus\mathbb R_{\ge0}$、$u'=u\oplus\mathrm{id}$，增加独立经典纯点 $z=(0,1)$，目标为 $S'=\{(p,0),z\}$。完整确认菜单恰为 $F'=F\times\{1\}$；归一态 $(w x,1-w)$ 的最低读数为 $wt(x)+1-w$。因此 $r_{S'}=k=d'-2$ 且 $\delta_{S'}=\delta_S$，在 $a=k-1$ 时同样达到上界。两例均为完整单层原菜单模型；未赋予它们整个强全有限层级，也不将它们冒充280.2的全背景反模型。$\square$
+
+**推论 280.6（更小入口、几何与量子公理字典）。** 新候选只检查最低读数面上从原纯点出发的混合弦，就恢复279的全部混合平直性；确认零关系再提供同一复射影几何，真实三份接合仍统一全部有限层。在相同背景与供应下，它与279刻画同一模型类。简洁性是缩小量化检验域及用内在菜单维数取代环境维数，不是严格逻辑弱化、最少独立公理数或仅凭定义选出量子世界。
+
+证明与几何解释。定义接触关系 $x\mathrel{\mathcal M_S}f\Longleftrightarrow f\in\mathcal E(S),\ f(x)=t_S(x)$。由(280.3)，一条混合弦上的严格内点等号，等价于两端的接触纤维有交点。这把“关系的关系”落实为同一个原测试能否同时承担两个最低读数。纯—混弦的交点条件经有限纯分解长成共同least；若失败，280.4把最坏弯曲集中到 $V/W_S$ 中不超过 $r_S$ 个独立纯方向。该商只删除所有确认者共同饱和的方向，保留最低读数的可见差异；并不提前输入内积、球、投影或自对偶。
+
+280.2之后，原整个 $K_N$、纯域、proper效应及单位分解依次成为密度矩阵、复射线、$0\preceq E\preceq I$ 及POVM／PVM，原配对成为Born迹概率；真实有限产品、置换、重括号与丢弃成为同坐标复张量和偏迹。混合源最低确认仍是支持投影读数 $\operatorname{Tr}(P_z\rho_x)$，不是一般的 $\operatorname{Tr}(\rho_z\rho_x)$。CP仍消费全部有限相关旁观输入的分支保正；TNI／TP与仪器仍消费整个输入及总分支质量预算；Lüders仍消费锐效应与整个yes支持中性；酉动力学仍消费连续可逆保锥保单位的一参数群。实际设备、物理钟、能量、$\hbar$ 与无限或近似极限保留各自前件。
+
+归属与范围：单轮minimax/Jensen对偶复用[Q280A]和279.3所用Sion；有限纯分解、下包络接触等号与仿射函数的内部接触判据是成熟中间工具。确认维数与加权自由和复用VII102.1、102.5—102.6及WeightedRelationConfirmation；共同零与联合区分也保持VII101.10所辨的不同含义。本章repo-derived承重接合是纯—混端点到全部产品对J及全有限重建的完整量词桥、任意共同确认纤维的最优缺口内在纯见证界、归一消权证明及精确达到族；不申领通用minimax、自由和或既有零拼合反例的发明，也不申领全球优先性、Lean核验、近似重建稳定性或物理实现。
+
+白话：固定必须认出的准备后，先把所有原来的门都摆出来。对每颗输入，各自总能找一只让漏入最少的门；但不同输入挑中的门可能不同。现在只检查一件事：拿一颗纯准备和任意一团混合准备，先分别求最低再平均，与先混合再求最低必须相同。中点没有多漏入，就说明两端真能共用一只最低门；纯准备能拼出所有准备，所以这一小类检查最终逼出整张表共同使用的最小门。只查纯准备两两却不够：三颗准备可能每两颗都能一起挡住，三颗一起就再也挡不住。门的菜单有多少真正变化的方向，最坏的这种冲突至多需要多少颗纯准备来显露。随后，把完全挡住看成错开，要求保住共同错开的参照时还能换点翻转错开关系，这张网长成复射影几何；完整门框钉住Born概率，真实三份的边缘统一全部有限张量。图景更短，但原概率表、完整菜单与真实复合仍明确承担各自的条件。$\square$
+
+[Q280A]: https://arxiv.org/pdf/0903.5328v1 "Abernethy、Agarwal、Bartlett与Rakhlin，A Stochastic View of Optimal Regret through Minimax Duality；§1的紧凸行动集、紧输入集及连续有界凸损失，§2 Theorem1式(2)，§3.2 Definition4和§3.3式(7)；这里只使用单轮T=1的双线性特化。"
+
+## 追加锚（本行以下为增补区）
