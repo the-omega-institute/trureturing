@@ -30,7 +30,10 @@ internal sealed class PascalHadamardPositivityRefutationDocument : IScribeDocume
                     Paragraph(Text("Take n=5, k=3, alpha=(3,4,5), beta=(0,1,2) and r=1/10. The strict ordering is 0<1<2<3<4<5. The selected unpowered matrix has rows (1,3,3), (1,4,6), (1,5,10). Matrix.det_fin_three and Real.mul_rpow identify the powered determinant D with 40^(1/10)+18^(1/10)+15^(1/10)-2*30^(1/10)-12^(1/10). All roots here are real rpow on positive bases.")),
                     Paragraph(Text("Put q=1000000. Exact integer inequalities give 40*q^10<1446126^10, 18*q^10<1335142^10, 15*q^10<1311020^10, 1405115^10<30*q^10 and 1282088^10<12*q^10. Nonnegativity, the identity (a^(1/10))^10=a and strict monotonicity of tenth powers give upper bounds for the three positive terms and lower bounds for the two negative terms. Thus D<(1446126+1335142+1311020-2*1405115-1282088)/q=-30/1000000<0. The proof uses exact rational arithmetic and the standard real-power identities, with no floating-point premise.")),
                     Paragraph(Text("This one admissible negative minor disproves the full original universal assertion; no restriction on its other indices or exponents is needed. General failures of fractional Hadamard powers are known, and the bounded inspected sources did not identify a prior complete answer for this fixed Pascal-family question. Worldwide priority remains unknown. This argument gives no conclusion about the later all-size nonvanishing question for r>1."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mo515594-original-pascal-hadamard-positivity"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimBody()
     {
