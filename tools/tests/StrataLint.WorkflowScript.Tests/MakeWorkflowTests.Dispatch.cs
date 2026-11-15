@@ -28,8 +28,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(1, RecipeCount(makefile, "help"));
         Assert.Contains("\\\n\t\t", makefile, StringComparison.Ordinal);
 
-        var continuation = makefile.IndexOf("\\\n\t\t", StringComparison.Ordinal);
-        Assert.Equal(2, RecipeCount(makefile.Remove(continuation, 1), "help"));
+        Assert.Equal(2, RecipeCount(makefile.Replace("\\\n\t\t", "\n\t\t", StringComparison.Ordinal), "help"));
     }
 
     [Fact(DisplayName = "Makefile remains a thin complete dispatch table")]
