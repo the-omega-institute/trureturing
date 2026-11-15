@@ -7,7 +7,8 @@ Source-bound evidence for the pair-colour zone data. The rectangle's
 source-telescope reconstruction and the complete literal event's source selection
 remain unresolved:
 https://github.com/the-omega-institute/trureturing/issues/29434.
-This mirror does not establish a `declared_validated` audit.
+The pair_rectangle evidence does not establish a `declared_validated` audit.
+PatternCount separately observes the cardinality of a predicate on four-label patterns.
 -/
 
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
