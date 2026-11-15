@@ -85,8 +85,7 @@ public lemma controlledPhase_qubitCircuit_matrix (oracles : OracleModel) {width 
     apply Fin.ext
     rfl
   rw [first, second]
-dPhase_circuitAt_events (qubitLayout width) control target distinct rfl rfl
-    oracles angle
+
 
 end
 

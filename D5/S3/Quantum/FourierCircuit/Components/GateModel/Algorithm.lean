@@ -97,9 +97,7 @@ public def model : GateModel where
   signature := signature
   operator := operator
   coordinate := coordinate
-its 1)) :
-    model.coordinate (.singleQubit op) = Coordinate.singleQubit := rfl
-ture.qubitsIndexEquiv 1).symm op := rfl
+
 
 end
 

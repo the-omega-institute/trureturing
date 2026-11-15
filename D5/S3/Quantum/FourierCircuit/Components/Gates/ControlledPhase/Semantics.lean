@@ -132,7 +132,7 @@ public lemma controlledPhase_circuit_matrix (oracles : OracleModel) (angle : Rea
   apply Subtype.ext
   rw [word_diagonal, target_diagonal]
   exact congrArg Matrix.diagonal (funext (phase_product angle))
-dPhase_circuit_matrix oracles angle
+
 
 end
 

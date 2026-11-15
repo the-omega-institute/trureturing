@@ -37,42 +37,10 @@ section
 namespace QuantumAlg
 
 noncomputable section
-t basis labels. -/
-  encode_injective : Function.Injective encode
+
 
 namespace BinaryLabelEncoding
-imp at h <;> rfl
-:= layout.injective
-encoding.encode_injective h
-belEncoding (Fin (2 ^ n)) :=
-  ofEquiv (Equiv.refl (Fin (2 ^ n)))
-grArg E.decode h
-    simpa using hdecode
-grArg E.decode h
-    simpa using hdecode
-      (right.encode_injective (congrArg Prod.snd hpair))
-grArg Fin.val h
-    simpa using hval
-a ≃ Fin (2 ^ n)) : (ofEquiv layout).width = n := rfl
-: Data) : (ofEquiv layout).encode x = layout x := rfl
- Data) :
-    (encoding.relabel layout).width = encoding.width := rfl
-er) :
-    (encoding.relabel layout).encode x = encoding.encode (layout x) := rfl
-l
-at) (x : Fin (2 ^ n)) :
-    (finIdentity n).encode x = x := rfl
-l
-l
-l
- : Nat} (E : BinaryResidueEncoding N n) :
-    (ofResidueEncoding E).width = n := rfl
-Encoding N n)
-    (z : ZMod N) : (ofResidueEncoding E).encode z = E.encode z := rfl
-t).width = left.width + right.width := rfl
-code x = prodEquiv (left.encode x.1, right.encode x.2) := rfl
-g.encode x = encoding.encode y) : x = y :=
-  encoding.encode_injective h
+
 
 end BinaryLabelEncoding
 

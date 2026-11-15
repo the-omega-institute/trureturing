@@ -58,11 +58,7 @@ namespace OracleModel
 public structure Interpretation (model : OracleModel) where
   /-- Each available query acts unitarily on exactly its declared systems. -/
   operator : (query : model.Query) → UnitaryOperator (model.signature query).register
-  coordinate query := nomatch query
-Interpretation empty where
-  operator query := nomatch query
-es same
-        rfl
+
 
 /-- One granted query, placed on systems of exactly its declared dimensions. -/
 public structure Occurrence (model : OracleModel) where
@@ -84,12 +80,7 @@ public noncomputable def operator {model : OracleModel} (query : Occurrence mode
     (environment : Interpretation model) :
     UnitaryOperator query.placement.layout.register :=
   UnitaryOperator.reindex query.placement.indexEquiv.symm (environment.operator query.query)
-exEquiv.symm
-        (environment.operator query.query) := rfl
-odel} (query : Occurrence model) :
-    query.coordinate = model.coordinate query.query := rfl
-_oracle_occurrence (query : Occurrence empty) : False :=
-  nomatch query.query
+
 
 end Occurrence
 

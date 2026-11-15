@@ -39,22 +39,7 @@ variable {m n : ℕ}
 namespace PureState
 
 noncomputable section
-tate)
-    (ψ.system_idx ++ φ.system_idx)
- (Qubits m))
-        (φ : HilbertVector (Qubits n)) := rfl
- (Qubits n)) :
-    (ψ.tensor φ).system_idx = ψ.system_idx ++ φ.system_idx := rfl
-.tensor φ i = ψ (prodEquiv.symm i).1 * φ (prodEquiv.symm i).2 :=
-  rfl
- y := by
-  rw [tensor_apply, Equiv.symm_apply_apply]
-[NormalizedVector.tensor_ket]
-  · rfl
-s m))‖ * ‖(φ : HilbertVector (Qubits n))‖
-  rw [HilbertVector.norm_tensor]
- n)) (φ' : HilbertVector (Qubits n))
-  rw [HilbertVector.inner_tensor_tensor]
+
 
 end
 

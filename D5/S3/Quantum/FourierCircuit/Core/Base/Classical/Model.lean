@@ -67,10 +67,7 @@ public def empty : ClassicalOpModel where
   outputShape token := nomatch token
   evaluate token := nomatch token
   coordinate token := nomatch token
-PMF.pure (evaluate token input)
-  coordinate := coordinate
-_empty_classical_native_token (token : empty.Token) : False :=
-  nomatch token
+
 
 end ClassicalOpModel
 

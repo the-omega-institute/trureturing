@@ -60,20 +60,7 @@ private lemma reindex_mem_unitaryGroup (e : R.Index ≃ S.Index)
 public def reindex (e : R.Index ≃ S.Index) (U : UnitaryOperator R) : UnitaryOperator S :=
   ofMatrix (Matrix.reindex e e (U : HilbertOperator R))
     (reindex_mem_unitaryGroup e U)
-r S) =
-      Matrix.reindex e e (U : HilbertOperator R) := rfl
-rator R :=
-  if controlValue = activationValue then (U : HilbertOperator R) else 1
-agonal (controlledBlock activationValue U))
-l, hactive, controlledBlock, Matrix.one_apply]
-  · simp [hcontrol]
-w [hblocks, Matrix.blockDiagonal_one]
-rolledMatrix_mem_unitaryGroup control activationValue U)
-  exact controlledMatrix_apply control activationValue U i j
-ontrol.symm.trans hactive
-  simp [controlled_apply, hcontrol, hjactive]
-n hj => hinactive (hcontrol.trans hj)
-  simp [controlled_apply, hcontrol, hjinactive]
+
 
 end
 

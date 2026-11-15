@@ -42,10 +42,7 @@ variable {systemCount : Nat}
 /-- The original positions of the selected physical wires. -/
 public abbrev SelectedPosition (selection : Finset (Fin systemCount)) :=
   {index : Fin systemCount // index ∈ selection}
-yout.wire index.val
-t.selectedWire selection index).identity = (layout.wire index.val).identity := rfl
-selectedWire selection index).dimension = (layout.wire index.val).dimension := rfl
-.identityInjective sameIdentity)
+
 
 /-- One local finite value at each selected original position. -/
 public abbrev SelectedBasis (layout : QuantumLayout systemCount)
@@ -126,10 +123,7 @@ public def selectionBasisEquiv (layout : QuantumLayout systemCount)
       exact layout.joinSelectedBasis_selected_value selection basis.1 basis.2 index
     · funext index
       exact layout.joinSelectedBasis_complement_value selection basis.1 basis.2 index
-lement) :=
-  (layout.selectionBasisEquiv selection).apply_symm_apply (selected, complement)
-:=
-  (layout.selectionBasisEquiv selection).symm_apply_apply basis
+
 
 end QuantumAlg.QuantumLayout
 

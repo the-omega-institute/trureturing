@@ -68,8 +68,7 @@ public def prodIndexEquiv (left right : Register) :
   exact Equiv.refl _
 
 end Register
-ce
-  decEq := inferInstance
+
 
 /-- The `n`-qubit register with big-endian computational basis labels. -/
 public abbrev Qubits (n : Nat) : Register where

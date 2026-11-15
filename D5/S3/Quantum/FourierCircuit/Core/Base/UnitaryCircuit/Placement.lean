@@ -83,13 +83,7 @@ public def operatorAt (operator : UnitaryOperator source.register) :
     (UnitaryOperator.reindex
       (QuantumLayout.relabelBasis source
         (addressPermutation source target position).toEmbedding) operator)
-grArg Subtype.val (dimensions index).symm)
-    (basis (position index))
-sions basis index).val =
-      (basis (position index)).val := rfl
-mnBasis]
-ions).mergeVector selected complement
-rce target position dimensions) operator selected complement
+
 
 /-- Relocate and embed the actual native construction at the selected dimension-correct wires. -/
 public def placeAt (body : UnitaryCircuit gates oracles source) :
@@ -104,20 +98,13 @@ public lemma placeAt_matrix (body : UnitaryCircuit gates oracles source) (enviro
       operatorAt source target position dimensions (body.matrix environment) := by
   rw [placeAt, embed_matrix, relabel_matrix]
   rfl
-t position dimensions
-    (body.matrix environment) selected complement
+
 
 /-- Physical placement retains the exact native occurrence order. -/
 public lemma placeAt_eventTrace (body : UnitaryCircuit gates oracles source) :
     (placeAt source target position dimensions body).eventTrace = body.eventTrace := by
   rw [placeAt, embed_eventTrace, relabel_eventTrace]
-ost, placeAt_eventTrace,
-    ofList_eventTrace_eq_eventCost]
-.eventDepth = body.eventDepth := by
-  rw [placeAt, embed_eventDepth, relabel_eventDepth]
-pth
-  rw [placeAt_eventDepth]
-x, realized.matrix_eq]
+
 
 end
 

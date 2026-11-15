@@ -147,20 +147,12 @@ public def eventCost {count : Nat} {layout : QuantumLayout count}
       start.eventCost operations classicalOracles +
         ∑ index, (step index).eventCost operations classicalOracles
   | .macroCall _ body => body.eventCost operations classicalOracles
-acles)
-  | .macroCall _ body => body.eventDepth operations classicalOracles
-ndex).macroTrace).flatten
-  | _, _, .macroCall name body => name :: body.macroTrace
+
 
 variable {count : Nat} {layout : QuantumLayout count}
 
 variable (environment : oracles.Interpretation)
-acles := oracles) layout) = 1 := rfl
-nvironment * left.toUnitary environment := rfl
-oCall name body) = body.toUnitary environment := rfl
-tCost (.macroCall name body) = body.eventCost := rfl
-epth (.macroCall name body) = body.eventDepth := rfl
-bodyIH => simpa [eventDepth, eventCost] using bodyIH
+
 
 private lemma ofList_flatten_eventTraces {model : ExecutionModel}
     (traces : List (List (Resource.Event model))) :

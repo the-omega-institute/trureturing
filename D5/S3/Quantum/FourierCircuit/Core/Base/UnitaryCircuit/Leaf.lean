@@ -65,10 +65,7 @@ public noncomputable def operator (environment : oracles.Interpretation) :
     UnitaryOperator layout.register
   | .gate application => application.operator
   | .oracle application => application.operator environment
- | .oracle application => application.occurrence.placement.layout.identities
- | oracle application => exact application.occurrence.placement.layout.identities_nodup
-ates.coordinate application.occurrence.token) := rfl
-es.coordinate application.occurrence.query) := rfl
+
 
 end UnitaryLeaf
 

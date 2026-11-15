@@ -60,7 +60,7 @@ public noncomputable def positionEquiv (embedding : Embedding source target) :
       intro index
       obtain ⟨original, _, same⟩ := Finset.mem_map.mp index.property
       exact ⟨original, Subtype.ext same⟩⟩
-ding.position index := rfl
+
 
 /-- Dimension equality casts a local value without permuting the computational basis. -/
 @[expose]
@@ -77,16 +77,14 @@ public noncomputable def valueEquiv (embedding : Embedding source target) (index
   right_inv value := by
     apply Fin.ext
     rfl
-nsion) :
-    (embedding.valueEquiv index value).val = value.val := rfl
+
 
 /-- The selected subsystem basis in source order; every coordinate map is a dimension cast. -/
 @[expose]
 public noncomputable def selectedBasisEquiv (embedding : Embedding source target) :
     source.Basis ≃ target.SelectedBasis embedding.selection :=
   embedding.positionEquiv.piCongr embedding.valueEquiv
-[selectedBasisEquiv, Equiv.piCongr_apply_apply]
-  rfl
+
 
 /-- Split an ambient basis into the ordered subsystem and every untouched wire. -/
 @[expose]
@@ -100,8 +98,7 @@ public lemma embedding_splitBasis_selected_value (embedding : Embedding source t
     (basis : target.Basis) (index : Fin small) :
     ((embedding.splitBasis basis).1 index).val =
       (basis (embedding.position index)).val := rfl
-lectionᶜ) :
-    (embedding.splitBasis basis).2 index = basis index.val := rfl
+
 
 end Embedding
 

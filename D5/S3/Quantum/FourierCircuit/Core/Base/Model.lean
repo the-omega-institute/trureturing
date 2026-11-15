@@ -47,7 +47,6 @@ public inductive ExecutionModel where
 
 namespace ExecutionModel
 
-  | .quantum _ _ _ _ => .quantum
 
 /-- The chosen classical native language is present in pure and hybrid execution. -/
 @[expose, implicit_reducible]
@@ -60,9 +59,7 @@ public def classicalOperations : ExecutionModel → ClassicalOpModel
 public def classicalOracles : ExecutionModel → ClassicalOracleModel
   | .classical _ oracles => oracles
   | .quantum _ _ _ oracles => oracles
-ntum _ oracles _ _ => oracles
-istent classical services. -/
-  classical : model.classicalOracles.Interpretation
+
 
 /-- Model-owned native coordinates for actual classical instructions. -/
 @[expose, implicit_reducible]
@@ -73,18 +70,14 @@ public def ClassicalCoordinate (model : ExecutionModel) : Type :=
 @[expose, implicit_reducible]
 public def ClassicalOracleCoordinate (model : ExecutionModel) : Type :=
   model.classicalOracles.Coordinate
-l.classicalOracles.HiddenState
+
 
 public instance classicalCoordinateDecidableEq (model : ExecutionModel) :
     DecidableEq model.ClassicalCoordinate := model.classicalOperations.coordinateDecidableEq
 
 public instance classicalOracleCoordinateDecidableEq (model : ExecutionModel) :
     DecidableEq model.ClassicalOracleCoordinate := model.classicalOracles.coordinateDecidableEq
-odel : ExecutionModel) : Fintype model.HiddenState :=
-  model.classicalOracles.stateFintype
-acleModel) : (classical operations oracles).kind = .classical := rfl
-:
-    (quantum gates oracles operations classicalOracles).kind = .quantum := rfl
+
 
 /-- Native gate coordinates are absent from classical execution. -/
 @[expose, implicit_reducible]

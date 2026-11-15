@@ -74,9 +74,7 @@ public lemma swap_circuitAt_matrix (oracles : OracleModel) (environment :
       placedOperator ambient left right distinct leftQubit rightQubit := by
   rw [circuitAt, UnitaryCircuit.placeAt_matrix, swap_circuit_matrix]
   rfl
-taryCircuit.placeAt_eventTrace, swap_circuit_events]
-_eventDepth]
-  exact swap_circuit_unit_depth oracles
+
 
 end
 

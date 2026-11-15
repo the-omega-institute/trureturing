@@ -43,19 +43,7 @@ variable {m n : ℕ}
 namespace NormalizedVector
 
 noncomputable section
-ne_mul])
- (Qubits m))
-        (φ : HilbertVector (Qubits n)) := rfl
-.tensor φ i = ψ (prodEquiv.symm i).1 * φ (prodEquiv.symm i).2 :=
-  rfl
- y := by
-  rw [tensor_apply, Equiv.symm_apply_apply]
 
-    · rw [if_neg h2, mul_zero]
-s m))‖ * ‖(φ : HilbertVector (Qubits n))‖
-  rw [HilbertVector.norm_tensor]
- n)) (φ' : HilbertVector (Qubits n))
-  rw [HilbertVector.inner_tensor_tensor]
 
 end
 
@@ -64,12 +52,7 @@ end NormalizedVector
 namespace HilbertVector
 
 noncomputable section
-fun index => left index.1 * right index.2
-rodTensor left right index = left index.1 * right index.2 :=
-  rfl
- fun rightIndex _ => ?_
-  rw [norm_mul, mul_pow]
-    · simp [NormalizedVector.ket_apply, same, rightDifferent]
+
 
 end
 
@@ -78,9 +61,7 @@ end HilbertVector
 namespace NormalizedVector
 
 noncomputable section
-rm_prodTensor, left.norm_eq_one, right.norm_eq_one, one_mul])
-rodTensor left right index = left index.1 * right index.2 :=
-  rfl
+
 
 end
 
@@ -103,8 +84,7 @@ public def prodTensor {R S : Register} (U : UnitaryOperator R) (V : UnitaryOpera
       Matrix.conjTranspose_kronecker, Matrix.submatrix_mul_equiv,
       ← Matrix.mul_kronecker_mul, hU, hV, Matrix.one_kronecker_one,
       Matrix.submatrix_one_equiv])
-dexEquiv R S)
-        ((U : HilbertOperator R) ⊗ₖ (V : HilbertOperator S)) := rfl
+
 
 @[simp]
 lemma prodTensor_apply {R S : Register} (U : UnitaryOperator R)
@@ -121,16 +101,7 @@ public lemma unitaryOperator_prodTensor_apply {R S : Register} (U : UnitaryOpera
     (V : UnitaryOperator S) (i j : (Register.prod R S).Index) :
     prodTensor U V i j = U i.1 j.1 * V i.2 j.2 :=
   prodTensor_apply U V i j
-o sourceRight _
-  ring
-, hU, hV,
-        Matrix.one_kronecker_one, Matrix.submatrix_one_equiv])
-or (Qubits m))
-        (V : HilbertOperator (Qubits n)) := rfl
-  V (prodEquiv.symm i).2 (prodEquiv.symm j).2 := rfl
- (U : HilbertOperator (Qubits m))
-    (V : HilbertOperator (Qubits n)) ψ φ
-w [HilbertOperator.tensor_applyVec_tensor]
+
 
 end
 

@@ -62,17 +62,7 @@ public def eventCost (circuit : UnitaryCircuit gates oracles layout)
     (classicalOracles : ClassicalOracleModel := .empty) :
     ResourcePool (.quantum gates oracles operations classicalOracles) :=
   circuit.sequence.eventCost operations classicalOracles
-rations classicalOracles)) :=
-  circuit.sequence.eventDepth operations classicalOracles
-t) : Nat :=
-  DepthExpr.depthEval duration circuit.eventDepth
- : Nat :=
-  DepthExpr.queryDepthEval focus circuit.eventDepth
-ircuit : UnitaryCircuit gates oracles layout) : Nat :=
-  circuit.sequence.macroTrace.count name
-leton event)
-    (circuit.eventDepth operations classicalOracles)
-_eventCost circuit.sequence operations classicalOracles
+
 
 /-- Forgetting order in the actual native trace yields exactly the circuit's event ledger. -/
 @[simp] public lemma ofList_eventTrace_eq_eventCost
@@ -82,37 +72,18 @@ _eventCost circuit.sequence operations classicalOracles
     ResourcePool.ofList (circuit.eventTrace operations classicalOracles) =
       circuit.eventCost operations classicalOracles :=
   UnitarySequence.ofList_eventTrace_eq_eventCost circuit.sequence operations classicalOracles
- HilbertVector layout.register :=
-  (circuit.matrix environment).applyVec state
-ter) : NormalizedVector layout.register :=
-  (circuit.matrix environment).apply state
+
 
 variable (environment : oracles.Interpretation)
 
 @[simp] lemma identity_matrix : ((identity gates oracles layout).matrix environment) = 1 := by rfl
 
 @[simp] lemma identity_eventCost : (identity gates oracles layout).eventCost = 0 := by rfl
-l
-l
-identity gates oracles layout).evaluatedEventDepth duration = 0 := by
-  rfl
-ofLeaf leaf).matrix environment) = leaf.operator environment := by rfl
-    (ofLeaf leaf).eventCost = ResourcePool.singleton leaf.event := by rfl
+
 
 @[simp] public lemma native_matrix (application : GateModel.Application gates layout) :
     ((native (oracles := oracles) application).matrix environment) = application.operator := by rfl
- ResourcePool.singleton (model := .quantum gates oracles) (.gate application.coordinate) := by
-  rfl
-eventTrace =
-      [.gate application.coordinate] := by rfl
- duration (.gate application.coordinate) := by
-  rfl
-environment =
-      application.operator environment := by rfl
-   (.oracle application.coordinate) := by
-  rfl
- duration (.oracle application.coordinate) := by
-  rfl
+
 
 @[simp] lemma seq_matrix (left right : UnitaryCircuit gates oracles layout) :
     (seq left right).matrix environment =
@@ -130,43 +101,15 @@ environment =
       rightPlacement.liftOperator (right.matrix environment) *
         leftPlacement.liftOperator (left.matrix environment) := by
   rfl
-yVec ((left.matrix environment).applyVec state) index
-  rw [UnitaryOperator.mul_applyVec]
+
 
 @[simp] lemma seq_eventCost (left right : UnitaryCircuit gates oracles layout) :
     (seq left right).eventCost = left.eventCost + right.eventCost := by rfl
- :
-    (seq left right).eventTrace = left.eventTrace ++ right.eventTrace := by rfl
 
-    (seq left right).eventDepth = .seq left.eventDepth right.eventDepth := by rfl
-ation + right.evaluatedEventDepth duration := by rfl
- left.eventCost + right.eventCost := by
-  rfl
- max (left.evaluatedEventDepth duration) (right.evaluatedEventDepth duration) := by
-  rfl
-     body.matrix environment ^ repetitions := by rfl
-.eventCost = repetitions • body.eventCost := by rfl
- (List.replicate repetitions body.eventTrace).flatten := by
-  rfl
-th = .iterate repetitions body.eventDepth := by rfl
 
 @[simp] lemma macroCall_matrix (name : String) (body : UnitaryCircuit gates oracles layout) :
     ((macroCall name body).matrix environment) = (body.matrix environment) := by rfl
-aryCircuit gates oracles layout) :
-    (macroCall name body).eventCost = body.eventCost := by rfl
-ryCircuit gates oracles layout) :
-    (macroCall name body).eventTrace = body.eventTrace := by rfl
-ryCircuit gates oracles layout) :
-    (macroCall name body).eventDepth = body.eventDepth := by rfl
- body.evaluatedEventDepth duration := by
-  rfl
-dd_comm]
-  · simp [macroCount, macroCall, UnitarySequence.macroTrace, same]
-umulated next => next * accumulated) (start.matrix environment) := by rfl
-rt.eventCost + ∑ index, (step index).eventCost := by rfl
-   (fun index => (step index).eventDepth) := by rfl
-   ∑ index, (step index).evaluatedEventDepth duration := by
-  rfl
+
 
 end
 

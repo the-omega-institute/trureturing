@@ -51,26 +51,6 @@ deriving DecidableEq
 
 namespace Event
 
-  | .measurement _ => 0
-.gate coordinate : Event model) = 1 := rfl
-.oracle coordinate : Event model) = 1 := rfl
-lOperation coordinate : Event model) = 0 := rfl
-(.classicalQuery coordinate : Event model) = 0 := rfl
-ration dimension : Event model) = 0 := rfl
-rement dimension : Event model) = 0 := rfl
-ses event <;> simp [quantumDuration]
-
-  | measurement impossible => exact nomatch impossible
-
-  | .measurement impossible => nomatch impossible
-ssicalOracles)) =
-      (.classicalOperation coordinate : Event model) := rfl
-.classicalOracles)) =
-      (.classicalQuery coordinate : Event model) := rfl
- cases ‹Empty›
-  all_goals simp_all [liftClassical]
-es same
-  rfl
 
 end Event
 

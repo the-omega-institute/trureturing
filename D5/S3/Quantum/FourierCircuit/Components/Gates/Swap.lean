@@ -126,11 +126,7 @@ public lemma swap_circuit_matrix (oracles : OracleModel) (environment : oracles.
     backward.operator_ofPerm AlgorithmGate.cnotPermutation AlgorithmGate.cnot_operator_ofPerm]
   simp only [UnitaryOperator.ofPerm_mul]
   exact congrArg UnitaryOperator.ofPerm native_permutation_word
-= swap_circuit_matrix oracles
-ntTrace = [.gate .cnot, .gate .cnot, .gate .cnot] := by rfl
-circuit oracles).evaluatedEventDepth (fun _ => 1) = 3 := by rfl
-circuit oracles).macroCount "swap" = 1 := by
-  rfl
+
 
 end
 

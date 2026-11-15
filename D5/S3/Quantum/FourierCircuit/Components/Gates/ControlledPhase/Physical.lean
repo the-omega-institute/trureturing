@@ -76,9 +76,7 @@ public lemma controlledPhase_circuitAt_matrix (oracles : OracleModel) (angle : R
       placedOperator ambient control target distinct controlQubit targetQubit angle := by
   rw [circuitAt, UnitaryCircuit.placeAt_matrix, controlledPhase_circuit_matrix]
   rfl
-te .cnot] := by
-  rw [circuitAt, UnitaryCircuit.placeAt_eventTrace, controlledPhase_circuit_events]
-act controlledPhase_circuit_unit_depth oracles angle
+
 
 end
 

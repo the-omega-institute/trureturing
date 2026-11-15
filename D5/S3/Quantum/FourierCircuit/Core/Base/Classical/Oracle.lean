@@ -42,7 +42,7 @@ public inductive ClassicalOracleModel where
   | sum (left right : ClassicalOracleModel)
 
 namespace ClassicalOracleModel
-sum left right => left.Query ⊕ right.Query
+
 
 /-- Native coordinates retain the originating service. -/
 @[expose, implicit_reducible]
@@ -50,7 +50,7 @@ public def Coordinate : ClassicalOracleModel → Type
   | .empty => Empty
   | .service signature => signature.Coordinate
   | .sum left right => left.Coordinate ⊕ right.Coordinate
-ft right => left.HiddenState × right.HiddenState
+
 
 public instance coordinateDecidableEq : (model : ClassicalOracleModel) →
     DecidableEq model.Coordinate
@@ -60,20 +60,7 @@ public instance coordinateDecidableEq : (model : ClassicalOracleModel) →
       letI := coordinateDecidableEq left
       letI := coordinateDecidableEq right
       inferInstanceAs (DecidableEq (left.Coordinate ⊕ right.Coordinate))
-HiddenState × right.HiddenState))
- | .sum _ right, .inr query => right.inputShape query
- | .sum _ right, .inr query => right.outputShape query
- | .sum _ right, .inr query => .inr (right.coordinate query)
-right => left.Interpretation × right.Interpretation
-ut).map
-        (fun result => ((state.1, result.1), result.2))
- : Interpretation .empty := ()
 
-      coordinate := coordinate }
-etation where
-  transition query _ input := (sample query input).map (fun result => ((), result))
-_empty_classical_oracle_query (query : empty.Query) : False :=
-  nomatch query
 
 end ClassicalOracleModel
 

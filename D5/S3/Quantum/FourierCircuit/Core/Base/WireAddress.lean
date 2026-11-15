@@ -37,8 +37,7 @@ namespace QuantumAlg.WireAddress
 /-- Big-endian bit index for a physical wire; wire zero is most significant. -/
 @[expose] public def bitIndex {n : Nat} (wire : Fin n) : Fin n :=
   ⟨n - 1 - wire.val, by omega⟩
-) :
-    (bitIndex wire).val = n - 1 - wire.val := rfl
+
 
 public lemma bitIndex_injective {n : Nat} : Function.Injective (bitIndex (n := n)) := by
   intro left right h
@@ -57,8 +56,7 @@ public lemma bitIndex_littleEndianWire {n : Nat} (bit : Fin n) :
   apply Fin.ext
   dsimp [bitIndex, littleEndianWire]
   omega
- [bitIndex, littleEndianWire]
-  omega
+
 
 /-- Flip one addressed wire of a computational-basis label. -/
 @[expose] public def flipBit {n : Nat} (target : Fin n)
@@ -93,7 +91,7 @@ public lemma flipBit_flipBit {n : Nat} (target : Fin n) (x : Fin (2 ^ n)) :
   unfold flipBit
   ext
   simp [Nat.xor_assoc]
-ght).val) (2 ^ (bitIndex left).val)]
+
 
 /-- Addressed X action. -/
 @[expose] public def xMap {n : Nat} (target : Fin n) (x : Fin (2 ^ n)) : Fin (2 ^ n) :=
@@ -105,8 +103,7 @@ ght).val) (2 ^ (bitIndex left).val)]
   invFun := xMap target
   left_inv := flipBit_flipBit target
   right_inv := flipBit_flipBit target
-target : Fin n) (x : Fin (2 ^ n)) :
-    xPerm target x = flipBit target x := rfl
+
 
 /-- Addressed CNOT action. -/
 @[expose] public def cnotMap {n : Nat} (control target : Fin n) (x : Fin (2 ^ n)) : Fin (2 ^ n) :=
@@ -127,7 +124,7 @@ public lemma cnotMap_cnotMap {n : Nat} {control target : Fin n} (hct : control �
   invFun := cnotMap control target
   left_inv := cnotMap_cnotMap hct
   right_inv := cnotMap_cnotMap hct
-ol target hct x = cnotMap control target x := rfl
+
 
 /-- Addressed Toffoli action. -/
 @[expose] public def toffoliMap {n : Nat} (controlA controlB target : Fin n) (x : Fin (2 ^ n)) :
@@ -163,8 +160,7 @@ inequalities. -/
   invFun := toffoliMap controlA controlB target
   left_inv := toffoliMap_toffoliMap ha hb
   right_inv := toffoliMap_toffoliMap ha hb
- x =
-      toffoliMap controlA controlB target x := rfl
+
 
 end QuantumAlg.WireAddress
 

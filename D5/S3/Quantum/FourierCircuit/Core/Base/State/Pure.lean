@@ -37,8 +37,7 @@ namespace QuantumAlg
 
 set_option backward.privateInPublic true
 set_option backward.privateInPublic.warn false
-ndices occupied by the state. -/
-  system_idx : List Nat
+
 
 attribute [nolint defsWithUnderscore] PureState.system_idx
 
@@ -47,34 +46,7 @@ namespace PureState
 noncomputable section
 
 variable {R : Register}
-⟩
-instance : CoeOut (PureState R) (HilbertVector R) := ⟨fun ψ => ψ.state.vec⟩
-tate R) (fun _ => R.Index → ℂ) :=
-  ⟨fun ψ => ψ.state.vec⟩
-⟩
-bertVector R) (φ : HilbertVector R)⟩
-) :=
-  ⟨fun ψ φ => (ψ : HilbertVector R) + (φ : HilbertVector R)⟩
-) :=
-  ⟨fun ψ φ => (ψ : HilbertVector R) - (φ : HilbertVector R)⟩
-tVector R) :=
-  ⟨fun c ψ => c • (ψ : HilbertVector R)⟩
-idx := system_idx
-ofNormalized state system_idx : PureState R) : HilbertVector R) = state := rfl
-_idx : List Nat) :
-    (ofNormalized state system_idx).system_idx = system_idx := rfl
-: PureState R) : ‖(ψ : HilbertVector R)‖ = 1 :=
-  ψ.state.norm_eq_one
-es hsystem
-  rfl
-PureState R :=
-  ofNormalized (NormalizedVector.ket x) system_idx
-= x then 1 else 0 :=
-  NormalizedVector.ket_apply x i
-ve
-  exact congrArg PureState.state hxy
-Vector R)‖ = 1 :=
-  (basis x system_idx).norm_eq_one
+
 
 end
 

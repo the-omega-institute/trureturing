@@ -59,12 +59,7 @@ public def circuit (oracles : OracleModel) (angle : Real) :
   let controlled : UnitaryCircuit AlgorithmGate.model oracles layout :=
     .native (GateModel.Application.canonical AlgorithmGate.model .cnot)
   .macroCall "controlled-phase" ((((first.seq second).seq controlled).seq middle).seq controlled)
- [.gate .singleQubit, .gate .singleQubit, .gate .cnot, .gate .singleQubit, .gate .cnot] := by
-  rfl
-circuit oracles angle).evaluatedEventDepth (fun _ => 1) = 5 := by
-  rfl
-circuit oracles angle).macroCount "controlled-phase" = 1 := by
-  rfl
+
 
 end
 

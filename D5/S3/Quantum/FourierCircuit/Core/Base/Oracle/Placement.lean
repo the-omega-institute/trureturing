@@ -62,12 +62,7 @@ public noncomputable def operator (application : Application model layout)
   UnitaryOperator.reindex application.embedding.splitBasis.symm
     (UnitaryOperator.prodTensor (application.occurrence.operator environment)
       (1 : UnitaryOperator (layout.complementRegister application.embedding.selection)))
-t) :
-    application.coordinate = model.coordinate application.occurrence.query := rfl
-=
-  congrArg QuantumWire.identity (application.embedding.wire_eq index)
-[UnitaryOperator.unitaryOperator_prodTensor_apply]
-  rfl
+
 
 end Application
 

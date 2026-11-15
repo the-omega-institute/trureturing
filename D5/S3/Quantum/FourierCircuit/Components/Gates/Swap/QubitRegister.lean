@@ -153,7 +153,7 @@ public lemma swap_qubitCircuit_matrix (oracles : OracleModel) (environment :
     · have remaining := fun equal => same (matching.mpr ⟨selected, equal⟩)
       rw [if_pos selected, if_neg remaining, if_neg same, mul_zero]
     · rw [if_neg selected, if_neg same, zero_mul]
-Layout width) left right distinct rfl rfl oracles
+
 
 end
 

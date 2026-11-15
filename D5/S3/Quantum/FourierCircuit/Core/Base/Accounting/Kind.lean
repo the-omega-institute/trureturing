@@ -30,35 +30,16 @@ and query coordinates are supplied separately by an execution model.
 -/
 
 namespace QuantumAlg
- DecidableEq
+
 
 namespace Resource
-Nat := []
-deriving DecidableEq
-DecidableEq
-ing DecidableEq
-g DecidableEq
-cidableEq
-ePoint (width : Nat)
-deriving DecidableEq
-ving DecidableEq
-ving DecidableEq
-DecidableEq
-deriving DecidableEq
- : RecoveryOpcode) (width : Nat)
-deriving DecidableEq
+
 
 end Resource
-dimension : ℕ+) : SpaceAxis .quantum
-deriving DecidableEq
+
 
 namespace SpaceAxis
-ical → SpaceAxis .quantum
-  | .classicalBits => .classicalBits
-iftClassical .classicalBits = (.classicalBits : SpaceAxis .quantum) :=
-  rfl
-ro
-  rfl
+
 
 end SpaceAxis
 

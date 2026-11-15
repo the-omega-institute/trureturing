@@ -68,7 +68,7 @@ public lemma nativeApplication_operatorAt
     rfl
   rw [selected row, selected column]
   rfl
-pplication_operatorAt]
+
 
 end
 end QuantumAlg.UnitaryCircuit

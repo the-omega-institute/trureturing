@@ -52,11 +52,10 @@ public lemma embed_eventTrace (placement : QuantumLayout.Embedding source target
     (body : UnitaryCircuit gates oracles source) :
     (body.embed placement).eventTrace = body.eventTrace := by
   simp only [embed, eventTrace, UnitarySequence.eventTrace]
-by
-  simp only [embed, eventDepth, UnitarySequence.eventDepth]
+
 
 namespace ExactRealization
-x, realized.matrix_eq]
+
 
 end ExactRealization
 

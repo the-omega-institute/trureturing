@@ -50,56 +50,13 @@ namespace HilbertOperator
 noncomputable section
 
 variable {R : Register}
-n scoped Matrix.Norms.L2Operator in
-  ‖A‖
-rix.Norms.L2Operator in
-  exact norm_zero
-Norms.L2Operator in
-  exact norm_nonneg A
-.Norms.L2Operator in
-  exact norm_eq_zero
-ix.Norms.L2Operator in
-  exact norm_neg A
-rms.L2Operator in
-  exact norm_add_le A B
-rms.L2Operator in
-  exact norm_sub_le A B
-ms.L2Operator in
-  exact norm_sub_rev A B
-t norm_sub_le_norm_sub_add_norm_sub A B C
-xact (opNorm_add_le _ _).trans (add_le_add_right ih _)
-Norms.L2Operator in
-  exact norm_smul c A
-x.Norms.L2Operator in
-  exact norm_star A
-q_conjTranspose]
-  exact opNorm_star A
-trix.Norms.L2Operator in
-  exact norm_one
-rator in
-  exact Matrix.l2_opNorm_mul A B
-or in
-  exact Matrix.l2_opNorm_mulVec A ψ
+
 
 /-! ## Unitary invariance -/
 
-  exact CStarRing.norm_of_mem_unitary hU
-exact CStarRing.norm_mem_unitary_mul A hU
-exact CStarRing.norm_mul_mem_unitary A hU
-R) = 1 :=
-  opNorm_of_mem_unitaryGroup U.2
-r R) * A) = opNorm A :=
-  opNorm_unitaryGroup_mul A U.2
-rator R)) = opNorm A :=
-  opNorm_mul_unitaryGroup A U.2
-perator R) := opNorm_sub_le _ _
-    _ = 2 := by rw [opNorm_unitary, opNorm_unitary]; norm_num
 
 /-! ## Telescoping -/
-unitaryGroup _ hA₂, opNorm_unitaryGroup_mul _ hB₁]
-erator R))
-    (B₁ := (V₁ : HilbertOperator R)) (B₂ := (V₂ : HilbertOperator R)) U₂.2 V₁.2
-arith [hstep, ih]
+
 
 end
 
@@ -122,8 +79,7 @@ section
 namespace QuantumAlg.HilbertOperator
 
 variable {R : Register}
-pNorm A * ‖ψ‖ :=
-  opNorm_mulVec_le A ψ
+
 
 end QuantumAlg.HilbertOperator
 

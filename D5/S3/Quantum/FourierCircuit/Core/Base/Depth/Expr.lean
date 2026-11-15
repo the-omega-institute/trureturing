@@ -70,51 +70,12 @@ section
 namespace QuantumAlg
 
 open scoped BigOperators
-ount : Nat) (start : DepthExpr U)
-      (step : Fin count → DepthExpr U)
+
 
 namespace DepthExpr
 
 variable {U : Type} {M : Type} [AddCommMonoid M]
- start + ∑ j, costEval assign (step j)
-start + ∑ j, depthEval assign (step j)
-l
- : U) :
-    costEval assign (.atom u) = assign u := rfl
-l assign (.seq l r) = costEval assign l + costEval assign r := rfl
-l assign (.tensor l r) = costEval assign l + costEval assign r := rfl
-xpr U) :
-    costEval assign (.inverse b) = costEval assign b := rfl
-costEval assign b := rfl
-xpr U) :
-    costEval assign (.iterate count b) = count • costEval assign b := rfl
-   costEval assign start + ∑ j, costEval assign (step j) := rfl
-l
- : U) :
-    depthEval assign (.atom u) = assign u := rfl
- assign (.seq l r) = depthEval assign l + depthEval assign r := rfl
-n (.tensor l r) = max (depthEval assign l) (depthEval assign r) := rfl
-pr U) :
-    depthEval assign (.inverse b) = depthEval assign b := rfl
-epthEval assign b := rfl
-pr U) :
-    depthEval assign (.iterate count b) = count * depthEval assign b := rfl
-  depthEval assign start + ∑ j, depthEval assign (step j) := rfl
-set.sum_le_sum fun index _ => stepLe index)
-: U) : U → ℕ :=
-  fun u => if u = focus then 1 else 0
-s focus = 1 := by
-  simp [indicator]
- = 0 := by
-  simp [indicator, h]
- U] (focus : U) (e : DepthExpr U) : ℕ :=
-  depthEval (indicator focus) e
-s (.atom focus) = 1 := by
-  simp [queryDepthEval]
-0 := by
-  simp [queryDepthEval, indicator, h]
 
-      exact Nat.add_le_add ihs (Finset.sum_le_sum fun j _ => ihf j)
 
 /-- A two-layer circuit of parallel pairs.  Two `H`/`H` tensor layers composed in
 sequence have linear cost `4` (every atom counts) but max-plus depth `2` (each

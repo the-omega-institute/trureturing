@@ -38,9 +38,7 @@ namespace QuantumAlg
 namespace HilbertVector
 
 noncomputable section
-), ‖ψ (prodEquiv (b, y))‖ ^ 2
-.sum_nonneg fun _ _ => sq_nonneg _
-.smul_apply, smul_eq_mul, norm_mul, mul_pow]
+
 
 end
 
@@ -49,9 +47,7 @@ end HilbertVector
 namespace NormalizedVector
 
 noncomputable section
-ertVector (Qubits (1 + n))) b
-onneg
-      (ψ : HilbertVector (Qubits (1 + n))) b
+
 
 end
 

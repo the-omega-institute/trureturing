@@ -38,8 +38,7 @@ namespace QuantumWire
 @[expose] public def relabel (physical : Nat ↪ Nat) (wire : QuantumWire) : QuantumWire where
   identity := physical wire.identity
   dimension := wire.dimension
-es dimensions
-      rfl
+
 
 end QuantumWire
 
@@ -52,18 +51,12 @@ variable {count : Nat}
     (physical : Nat ↪ Nat) : QuantumLayout count where
   wire index := QuantumWire.relabel physical (layout.wire index)
   identityInjective := fun _ _ equal => layout.identityInjective (physical.injective equal)
-p only [wires, List.map_ofFn]
-  rfl
-p only [identities, List.map_ofFn]
-  rfl
-sical : Nat ↪ Nat) :
-    (layout.relabel physical).dimensions = layout.dimensions := rfl
-nCount dimension := rfl
+
 
 /-- Logical basis values retain the same finite dimension at every original position. -/
 @[expose] public def relabelBasis (layout : QuantumLayout count) (physical : Nat ↪ Nat) :
     layout.register.Index ≃ (layout.relabel physical).register.Index := Equiv.refl _
-ayout physical value index).val = (value index).val := rfl
+
 
 end QuantumLayout
 

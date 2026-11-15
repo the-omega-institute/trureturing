@@ -45,8 +45,7 @@ public def phaseGateOp (θ : ℝ) : UnitaryOperator (Qubits 1) :=
       fin_cases i <;> fin_cases j <;>
         simp [Matrix.mul_apply, Matrix.star_apply, conj_exp_I,
           exp_I_mul_exp_neg_I])
- Matrix.star_apply, conj_exp_I,
-          exp_I_mul_exp_neg_I])
+
 
 /-- The original one-branch phase operator is diagonal with its exact complex phase. -/
 public lemma phaseGateOp_diagonal (angle : Real) :
@@ -55,7 +54,7 @@ public lemma phaseGateOp_diagonal (angle : Real) :
         Complex.exp ((angle : Complex) * Complex.I)) := by
   ext row column
   fin_cases row <;> fin_cases column <;> rfl
-es column <;> rfl
+
 
 end
 

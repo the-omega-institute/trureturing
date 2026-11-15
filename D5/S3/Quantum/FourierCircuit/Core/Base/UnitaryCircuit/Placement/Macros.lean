@@ -35,12 +35,6 @@ namespace QuantumAlg.UnitaryCircuit
 
 variable {gates : GateModel} {oracles : OracleModel}
 variable {count : Nat} {layout : QuantumLayout count}
-nt name := by
-  simp only [macroCount, seq, UnitarySequence.macroTrace, List.count_append]
- parallel, UnitarySequence.macroTrace, List.count_append]
-t name := by
-  simp only [macroCount, embed, UnitarySequence.macroTrace]
-.macroCount name = body.macroCount name := by
-  rw [placeAt, macroCount_embed, relabel_macroCount]
+
 
 end QuantumAlg.UnitaryCircuit

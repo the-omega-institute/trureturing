@@ -56,7 +56,7 @@ attribute [instance] ClassicalOracleSignature.coordinateDecidableEq
 attribute [instance] ClassicalOracleSignature.stateFintype
 
 namespace ClassicalOracleSignature
-te × (signature.outputShape query).Value)
+
 
 end ClassicalOracleSignature
 

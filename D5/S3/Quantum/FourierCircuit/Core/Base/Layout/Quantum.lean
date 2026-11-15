@@ -46,8 +46,7 @@ public structure QuantumWire where
   /-- A system has a nonempty finite computational basis. -/
   dimension : ℕ+
 deriving DecidableEq
-ght
-  simp_all
+
 
 /-- Ordered finite quantum systems with an injective physical placement. -/
 public structure QuantumLayout (systemCount : Nat) where
@@ -57,30 +56,7 @@ public structure QuantumLayout (systemCount : Nat) where
   identityInjective : Function.Injective (fun index => (wire index).identity)
 
 namespace QuantumLayout
-st rightWire
-          rfl
 
-  List.ofFn layout.wire
- index).identity
-ndex).dimension
-QuantumLayout systemCount) : layout.wires.length = systemCount := by
-  simp [wires]
-umLayout systemCount) : layout.identities.length = systemCount := by
-  simp [identities]
-umLayout systemCount) : layout.dimensions.length = systemCount := by
-  simp [dimensions]
-Fn.mpr layout.identityInjective
-jective sameIdentity
-comp', List.ofFn_get]
-    exact distinct
-stinct).wires = wireList :=
-  List.ofFn_get wireList
-fWires wireList distinct)
-  else none
-.map QuantumWire.identity).Nodup <;>
-    simp [tryOfWires, distinct]
-entity, leftDimension⟩, ⟨identity, rightDimension⟩] = none := by
-  simp [tryOfWires]
 
 /-- Computational-basis labels record one finite value for every physical wire. -/
 public abbrev Basis {systemCount : Nat} (layout : QuantumLayout systemCount) :=
@@ -92,25 +68,7 @@ public def register {systemCount : Nat} (layout : QuantumLayout systemCount) : R
   Index := layout.Basis
   fintype := inferInstance
   decEq := inferInstance
-antumLayout systemCount) : layout.Basis :=
-  fun index => ⟨0, (layout.wire index).dimension.pos⟩
-(layout : QuantumLayout systemCount) : Nat :=
-  ∏ index, ((layout.wire index).dimension : Nat)
-i, Fintype.card_fin, basisCardinality]
-out.dimensions.count dimension
-y index, dimension⟩
-  identityInjective := distinct
-unt := by
-  simp [basisCardinality, uniform]
-.ofFn_const, List.count_replicate, equal]
-g
-      left.identities_nodup.append right.identities_nodup disjoint
-t.wires ++ right.wires := by
-  simp [wires, append, List.ofFn_fin_append]
-[List.ofFn_comp', List.ofFn_fin_append, List.map_append, List.map_ofFn, List.map_ofFn]
-  rfl
-t.dimensionCount dimension := by
-  simp [dimensionCount, dimensions_append]
+
 
 end QuantumLayout
 

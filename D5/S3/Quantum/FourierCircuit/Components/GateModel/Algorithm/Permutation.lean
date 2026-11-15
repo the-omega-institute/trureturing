@@ -58,16 +58,7 @@ public lemma cnotPermutation_pair (control target : Fin 2) :
   all_goals
     funext index
     fin_cases index <;> rfl
-on_pair (basis 0) (basis 1))
- (Equiv.swap 0 1)).trans
-    (QuantumSignature.qubitsIndexEquiv 1).symm)
-fPerm (QuantumSignature.qubitsIndexEquiv 1).symm _
-_cases index
-    rfl
-re.qubitsIndexEquiv 3).symm)
-exEquiv 3).symm _
-ses index <;> rfl
-toffoliPermutation_triple (basis 0) (basis 1) (basis 2))
+
 
 end
 

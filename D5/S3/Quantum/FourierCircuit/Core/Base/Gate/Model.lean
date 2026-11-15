@@ -79,15 +79,10 @@ certified coordinate-wise dimension equalities. -/
 public noncomputable def operator {model : GateModel} (gate : Occurrence model) :
     UnitaryOperator gate.placement.layout.register :=
   UnitaryOperator.reindex gate.placement.indexEquiv.symm (model.operator gate.token)
-r gate.token) := rfl
-Model} (gate : Occurrence model) :
-    gate.coordinate = model.coordinate gate.token := rfl
- :
-    gate.placement.layout.identities.Nodup := gate.placement.layout.identities_nodup
+
 
 end Occurrence
-del.signature token).Placement) : Occurrence model :=
-  ⟨token, placement⟩
+
 
 end GateModel
 

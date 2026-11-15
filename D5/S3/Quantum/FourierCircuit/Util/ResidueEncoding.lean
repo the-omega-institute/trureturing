@@ -38,27 +38,10 @@ modular addition, multiplication, and exponentiation [VBE95,
 section
 
 namespace QuantumAlg
-ister_fits : N ≤ 2 ^ n
+
 
 namespace BinaryResidueEncoding
- E.modulus_pos
-  x.val < N
-lid x) :=
-  inferInstanceAs (Decidable (x.val < N))
-lus_pos
-  (x.val : ZMod N)
-lt_of_lt_of_le (ZMod.val_lt z) E.register_fits⟩
-aryResidueEncoding N n) (z : ZMod N) :
-    (E.encode z).val = z.val := rfl
-:= by
-  simp [decode, ZMod.val_natCast]
-⟩
-  simpa [IsValid, encode] using ZMod.val_lt z
-ne_of_gt E.modulus_pos⟩
-  simp [decode, encode]
-code_encode right, h]
-Nat.mod_eq_of_lt hx
-  rw [encode_val, decode_val, hmod]
+
 
 end BinaryResidueEncoding
 

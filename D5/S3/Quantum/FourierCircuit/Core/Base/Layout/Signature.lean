@@ -90,7 +90,7 @@ public def indexEquiv {signature : QuantumSignature} (placement : Placement sign
     funext index
     apply Fin.ext
     rfl
-asis index).val = (basis index).val := rfl
+
 
 end Placement
 
@@ -111,10 +111,7 @@ public def canonicalPlacement (signature : QuantumSignature) : Placement signatu
 end QuantumSignature
 
 namespace QuantumLayout
-(layout.wire index).dimension
-ayout : QuantumLayout systemCount) :
-    layout.signature.register = layout.register := rfl
-_eq := fun _ => rfl
+
 
 end QuantumLayout
 

@@ -56,8 +56,7 @@ public def ofLeaf (leaf : UnitaryLeaf gates oracles layout) :
 /-- Execute a native token on its certified physical placement. -/
 public def native (application : GateModel.Application gates layout) :
     UnitaryCircuit gates oracles layout := ofLeaf (.gate application)
- :
-    UnitaryCircuit gates oracles layout := ofLeaf (.oracle application)
+
 
 /-- Sequential composition keeps the same language and actual physical systems. -/
 public def seq (left right : UnitaryCircuit gates oracles layout) :
@@ -79,10 +78,7 @@ public def parallel {leftCount rightCount count : Nat}
     (disjoint : Disjoint leftPlacement.selection rightPlacement.selection) :
     UnitaryCircuit gates oracles layout :=
   ⟨.parallel left.sequence right.sequence leftPlacement rightPlacement disjoint⟩
-out) :
-    UnitaryCircuit gates oracles layout := ⟨.iterate repetitions body.sequence⟩
-nitaryCircuit gates oracles layout := steps.foldl seq start
-uence (fun index => (step index).sequence)⟩
+
 
 /-- Record a descriptive macro occurrence containing its complete actual expansion. -/
 public def macroCall (name : String) (body : UnitaryCircuit gates oracles layout) :

@@ -61,10 +61,7 @@ public noncomputable def operator (application : Application model layout) :
   UnitaryOperator.reindex application.embedding.splitBasis.symm
     (UnitaryOperator.prodTensor application.occurrence.operator
       (1 : UnitaryOperator (layout.complementRegister application.embedding.selection)))
-ayout) :
-    application.coordinate = model.coordinate application.occurrence.token := rfl
-=
-  congrArg QuantumWire.identity (application.embedding.wire_eq index)
+
 
 /-- Each matrix entry factors through the actual gate and identity on its full complement. -/
 public lemma application_operator_entry (application : Application model layout)

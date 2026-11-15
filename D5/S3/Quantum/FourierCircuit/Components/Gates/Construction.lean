@@ -63,22 +63,14 @@ public def cnotApplication (control target : Fin count) (distinct : control ≠ 
         intro left right same
         fin_cases left <;> fin_cases right <;> simp_all }
     (by intro index; fin_cases index <;> assumption)
-all }
-    (by intro index; fin_cases index <;> assumption)
+
 
 /-- Execute one actual one-qubit gate in the default algorithm model. -/
 public def singleQubitAt (oracles : OracleModel) (operator : UnitaryOperator (Qubits 1))
     (target : Fin count) (qubit : (layout.wire target).dimension = 2) :
     UnitaryCircuit AlgorithmGate.model oracles layout :=
   .native (singleQubitApplication layout operator target qubit)
- layout control target distinct controlQubit targetQubit)
-rstDistinct secondDistinct firstQubit secondQubit targetQubit)
-   (.gate .singleQubit) := by
-  rfl
-   (.gate .cnot) := by
-  rfl
-   (.gate .toffoli) := by
-  rfl
+
 
 end
 

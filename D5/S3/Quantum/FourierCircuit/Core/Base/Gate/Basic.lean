@@ -46,23 +46,7 @@ variable {R : Register}
 /-- Matrix-vector multiplication on raw state vectors. -/
 def applyVec (A : HilbertOperator R) (ψ : HilbertVector R) : HilbertVector R :=
   WithLp.toLp 2 (A.mulVec ψ.ofLp)
- (ψ : HilbertVector R) (i : R.Index) :
-    applyVec A ψ i = ∑ j, A i j * ψ j := rfl
-lyVec_apply]
-[show (ψ + φ).ofLp = ψ.ofLp + φ.ofLp from rfl, Matrix.mulVec_add]
-  rfl
-[show (ψ - φ).ofLp = ψ.ofLp - φ.ofLp from rfl, Matrix.mulVec_sub]
-  rfl
-[show (c • ψ).ofLp = c • ψ.ofLp from rfl, Matrix.mulVec_smul]
-  rfl
-[show (-ψ).ofLp = -ψ.ofLp from rfl, Matrix.mulVec_neg]
-  rfl
-[Matrix.add_mulVec]
-  rfl
-[Matrix.sub_mulVec]
-  rfl
-[Matrix.smul_mulVec]
-  rfl
+
 
 @[simp]
 lemma one_applyVec (ψ : HilbertVector R) : applyVec (1 : HilbertOperator R) ψ = ψ := by
@@ -74,14 +58,7 @@ lemma mul_applyVec (A B : HilbertOperator R) (ψ : HilbertVector R) :
   unfold applyVec
   rw [show (WithLp.toLp 2 (B.mulVec ψ.ofLp)).ofLp = B.mulVec ψ.ofLp from rfl,
     Matrix.mulVec_mulVec]
-te, mul_one, mul_zero]
-  exact Fintype.sum_ite_eq' x (fun j => A i j)
-Vector.ket j : HilbertVector R))
-  simpa using hket
-i, applyVec_add, ih]
-i, add_applyVec, ih]
-s i) := by rw [applyVec_sum]
-    _ = applyVec B ψ := by rw [basis.sum_repr]
+
 
 end
 

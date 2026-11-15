@@ -37,21 +37,18 @@ namespace QuantumAlg
 namespace UnitaryCircuit
 noncomputable section
 variable {gates : GateModel} {oracles : OracleModel}
--/
-ter) -
-      (target environment : HilbertOperator layout.register)) ≤ ε
+variable {count : Nat} {layout : QuantumLayout count}
+
+
 namespace ExactRealization
-ronment : HilbertOperator layout.register) := by
-ion gates oracles layout target) :
-ntation).circuit = implementation.circuit := rfl
+variable {target : oracles.Interpretation → UnitaryOperator layout.register}
+
+
 end ExactRealization
 namespace ApproxRealization
-_comm]
- gates oracles layout target ε) {ε' : ℝ} (h : ε ≤ ε') :
-right.error_le environment) (left.error_le environment)
-left (r.error_le environment)
-m_star]
-ntation).circuit = implementation.circuit := rfl
+variable {target : oracles.Interpretation → UnitaryOperator layout.register} {ε : ℝ}
+
+
 end ApproxRealization
 end
 end UnitaryCircuit

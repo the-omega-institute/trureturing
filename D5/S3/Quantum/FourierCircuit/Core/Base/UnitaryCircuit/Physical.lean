@@ -167,9 +167,7 @@ variable {count : Nat} {layout : QuantumLayout count}
   | indexedProduct label steps start step startIH stepIH =>
       simp [relabel, eventTrace, startIH, stepIH]
   | macroCall name body bodyIH => simpa [relabel, eventTrace] using bodyIH
-  ofList_eventTrace_eq_eventCost sequence operations classicalOracles]
-bodyIH => simpa [relabel, eventDepth] using bodyIH
- body bodyIH => simp [relabel, macroTrace, bodyIH]
+
 
 end UnitarySequence
 
@@ -192,10 +190,7 @@ private lemma relabel_matrix_internal (circuit : UnitaryCircuit gates oracles la
     (physical : Nat ↪ Nat) (environment : oracles.Interpretation) : ((circuit.relabel
       physical).matrix environment) = (circuit.matrix environment) :=
   relabel_matrix_internal circuit physical environment
-[relabel_matrix]
-  rfl
-[relabel_matrix]
-  rfl
+
 
 private lemma relabel_eventTrace_internal
     (circuit : UnitaryCircuit gates oracles layout) (physical : Nat ↪ Nat)
@@ -211,16 +206,7 @@ private lemma relabel_eventTrace_internal
     (circuit.relabel physical).eventTrace operations classicalOracles =
       circuit.eventTrace operations classicalOracles :=
   relabel_eventTrace_internal circuit physical operations classicalOracles
-l physical circuit.sequence operations classicalOracles
-t_internal circuit physical operations classicalOracles
-el physical circuit.sequence operations classicalOracles
-th_internal circuit physical operations classicalOracles
-[relabel_eventDepth_internal]
-atedEventDepth_internal circuit physical duration
-ame := by
-  simp only [macroCount, relabel, UnitarySequence.macroTrace_relabel]
-macroCount name := by
-  exact relabel_macroCount_internal circuit physical name
+
 
 end UnitaryCircuit
 

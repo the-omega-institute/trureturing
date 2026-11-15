@@ -50,30 +50,14 @@ namespace NormalizedVector
 noncomputable section
 
 variable {R : Register}
-⟩
-instance : CoeOut (NormalizedVector R) (HilbertVector R) := ⟨NormalizedVector.vec⟩
-(NormalizedVector R) (fun _ => R.Index → ℂ) :=
-  ⟨fun ψ => ψ.vec⟩
- :=
-  ⟨fun ψ => ‖(ψ : HilbertVector R)‖⟩
-ψ : HilbertVector R) (φ : HilbertVector R)⟩
-ilbertVector R) :=
-  ⟨fun ψ φ => (ψ : HilbertVector R) + (φ : HilbertVector R)⟩
-ilbertVector R) :=
-  ⟨fun ψ φ => (ψ : HilbertVector R) - (φ : HilbertVector R)⟩
-(HilbertVector R) :=
-  ⟨fun c ψ => c • (ψ : HilbertVector R)⟩
+
 
 /-- Certify a raw vector once its norm-one proof is available. -/
 @[expose] public def ofVector (vec : HilbertVector R)
     (norm_eq_one : ‖vec‖ = 1) : NormalizedVector R where
   vec := vec
   norm_eq_one := norm_eq_one
-ofVector vec h : NormalizedVector R) : HilbertVector R) = vec := rfl
- (norm_nonneg vec),
-      inv_mul_cancel₀ (norm_ne_zero_iff.mpr hvec)])
-r hvec
-  rw [mul_inv_cancel₀ hnorm, one_smul]
+
 
 @[ext]
 lemma ext {ψ φ : NormalizedVector R} (hvec : ∀ i, ψ i = φ i) : ψ = φ := by
@@ -94,10 +78,7 @@ public def ket (x : R.Index) : NormalizedVector R :=
 public lemma ket_apply (x i : R.Index) :
     ket x i = if i = x then 1 else 0 := by
   simp [ket]
-apply, if_pos rfl, if_neg hne] at h
-  exact one_ne_zero h
-.Index) : ‖(ket x : HilbertVector R)‖ = 1 :=
-  (ket x).norm_eq_one
+
 
 end
 

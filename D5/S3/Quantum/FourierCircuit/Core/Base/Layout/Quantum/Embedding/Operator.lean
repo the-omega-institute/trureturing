@@ -57,11 +57,7 @@ public lemma liftOperator_entry (embedding : Embedding source target)
     (embedding.splitBasis row) (embedding.splitBasis column) = _
   rw [UnitaryOperator.unitaryOperator_prodTensor_apply]
   rfl
-     complement (embedding.splitBasis basis).2
-   complement (embedding.splitBasis basis).2 := by
-  rfl
-p only [mul_assoc]
-  rfl
+
 
 /-- A placement covering every target position has no complementary quantum subsystem. -/
 public lemma liftOperator_entry_of_surjective (embedding : Embedding source target)

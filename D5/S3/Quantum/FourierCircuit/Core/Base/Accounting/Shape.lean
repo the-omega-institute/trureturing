@@ -66,23 +66,7 @@ public inductive CShape where
 deriving DecidableEq
 
 namespace CShape
-ticCurvePoint fieldWidth => 1 + 2 * fieldWidth
-l
- :
- :
-th (.ellipticCurvePoint fieldWidth) = 1 + 2 * fieldWidth := rfl
-ty) :=
-  Nat.le_pow_clog (by decide : 1 < (2 : Nat)) cardinality
-_of_le value.isLt (finite_capacity cardinality)⟩
-Fin cardinality) :
-    (encodeFinite cardinality value).val = value.val := rfl
- value.val) equal
- ⟨encoding.val, valid⟩ else none
-inality value) = some value := by
-  simp [decodeFinite, encodeFinite, value.isLt]
-:= by
-  simp [decodeFinite, Nat.not_lt.mpr invalid]
-card_fin] using Fintype.card_le_of_injective encoding injective
+
 
 end CShape
 

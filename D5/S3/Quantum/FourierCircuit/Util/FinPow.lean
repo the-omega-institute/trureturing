@@ -50,10 +50,7 @@ variable {m n : ℕ}
 first (lower-qubit-index) factor carries the most significant bits. -/
 @[expose] public def prodEquiv : Fin (2 ^ m) × Fin (2 ^ n) ≃ Fin (2 ^ (m + n)) :=
   finProdFinEquiv.trans (finCongr (pow_add (2 : ℕ) m n).symm)
-(prodEquiv (m := m) (n := n)).symm raw).1.val = raw.val / 2 ^ n := by
-  rfl
-(prodEquiv (m := m) (n := n)).symm raw).2.val = raw.val % 2 ^ n := by
-  rfl
+
 
 /-! ## Bit reconstruction helpers -/
 
@@ -79,14 +76,7 @@ lemma nat_ofBits_succ_last {n : ℕ} (f : Fin (n + 1) → Bool) :
       rw [hcomp]
       simp [Fin.succ_last, Nat.pow_succ, Nat.mul_add, Nat.add_assoc,
         Nat.add_left_comm, Nat.add_comm, Nat.mul_comm, Nat.mul_left_comm]
-t.mul_add, Nat.pow_add]
-      ac_rfl
-[Nat.mod_eq_of_lt right.isLt, Nat.mod_eq_of_lt left.isLt]
-  rfl
-idx, Fin.append_left]
-  · omega
-idx, Fin.append_right]
-  · omega
+
 
 end QuantumAlg
 

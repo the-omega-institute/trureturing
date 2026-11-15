@@ -68,12 +68,6 @@ lemma perm_apply {n : Nat} (primitive : QubitPrimitive n)
     (label : Fin (2 ^ n)) : primitive.perm label = primitive.applyLabel label := by
   cases primitive <;> simp [perm, applyLabel]
 
-      [controlA.val, controlB.val, target.val]
-.val := fun h => hb (Fin.ext h)
-      simp [systemIdx, habv, hav, hbv]
-temIdx, controlA.isLt, controlB.isLt, target.isLt]
-exact WireAddress.toffoliMap_toffoliMap ha hb label
-erved ∧ controlB ≠ observed ∧ target ≠ observed
 
 /-- Canonical unitary operator of one addressed primitive declaration. -/
 public def operator {n : Nat} (primitive : QubitPrimitive n) :

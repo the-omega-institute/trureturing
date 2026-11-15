@@ -48,18 +48,12 @@ variable {R : Register}
 @[expose]
 public def ofMatrix (op : HilbertOperator R) (unitary : op ∈ Matrix.unitaryGroup R.Index ℂ) :
     UnitaryOperator R := ⟨op, unitary⟩
- R.Index ℂ) :
-    ((ofMatrix op h : UnitaryOperator R) : HilbertOperator R) = op := rfl
+
 
 /-- A unitary operator still acts linearly on arbitrary raw vectors. -/
 public def applyVec (U : UnitaryOperator R) (ψ : HilbertVector R) : HilbertVector R :=
   HilbertOperator.applyVec (U : HilbertOperator R) ψ
- (ψ : HilbertVector R) (i : R.Index) :
-    U.applyVec ψ i = ∑ j, U i j * ψ j := rfl
-HilbertOperator.applyVec_add (U : HilbertOperator R) ψ φ
-HilbertOperator.applyVec_sub (U : HilbertOperator R) ψ φ
-tor.applyVec_smul (U : HilbertOperator R) c ψ
-.applyVec_neg (U : HilbertOperator R) ψ
+
 
 @[simp]
 lemma one_applyVec (ψ : HilbertVector R) :
@@ -120,9 +114,7 @@ lemma norm_applyVec (U : UnitaryOperator R) (ψ : HilbertVector R) :
 public def apply (U : UnitaryOperator R) (ψ : NormalizedVector R) : NormalizedVector R :=
   NormalizedVector.ofVector (U.applyVec (ψ : HilbertVector R)) (by
     rw [U.norm_applyVec, ψ.norm_eq_one])
-ly ψ : NormalizedVector R) : HilbertVector R) = U.applyVec ψ := rfl
-ryOperator R).applyVec (ψ : HilbertVector R) index = ψ index
-  rw [one_applyVec]
+
 
 /-- Unitary permutation operator on computational-basis labels. -/
 @[expose]
@@ -166,9 +158,7 @@ lemma ofPerm_apply_ket (σ : Equiv.Perm R.Index) (x : R.Index) :
   intro i
   exact congrArg (fun ψ : HilbertVector R => ψ i)
     (ofPerm_applyVec_ket σ x)
- UnitaryOperator R) : UnitaryOperator R := U⁻¹
-se := by
-  rw [dagger, Matrix.UnitaryGroup.inv_val, Matrix.star_eq_conjTranspose]
+
 
 end
 

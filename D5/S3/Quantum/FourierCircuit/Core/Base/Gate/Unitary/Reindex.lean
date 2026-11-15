@@ -50,8 +50,7 @@ public lemma unitaryOperator_reindex_mul (equivalence : R.Index ≃ S.Index)
   apply Subtype.ext
   exact (Matrix.submatrix_mul_equiv (first : HilbertOperator R) (second : HilbertOperator R)
     equivalence.symm equivalence.symm equivalence.symm).symm
-ly Subtype.ext
-  rfl
+
 
 /-- Transporting back to the original basis restores the complete operator. -/
 public lemma unitaryOperator_reindex_cancel (equivalence : R.Index ≃ S.Index)
@@ -72,18 +71,7 @@ namespace QuantumAlg.HilbertVector
 noncomputable section
 
 variable {R S T : Register}
-.toLp 2 fun index => state (equivalence.symm index)
-tate index = state (equivalence.symm index) := rfl
-ate index‖ ^ 2)]
-  simp only [reindex_apply, Equiv.symm_apply_apply]
 
-    simp [NormalizedVector.ket_apply, same, pulledBack]
-ext index
-  rfl
-xt index
-  simp
-xt index
-  simp
 
 end
 
@@ -95,10 +83,7 @@ namespace QuantumAlg.NormalizedVector
 noncomputable section
 
 variable {R S : Register}
-) (by
-    rw [HilbertVector.norm_reindex, state.norm_eq_one])
-eindex equivalence state index = state (equivalence.symm index) :=
-  rfl
+
 
 end
 
@@ -109,8 +94,7 @@ namespace QuantumAlg.UnitaryOperator
 noncomputable section
 
 variable {R S : Register}
-put))]
-  simp only [Equiv.symm_apply_apply]
+
 
 end
 

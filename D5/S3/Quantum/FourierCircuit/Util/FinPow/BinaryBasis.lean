@@ -59,6 +59,6 @@ public lemma bigEndianEquiv_bit (width : Nat) (basis : Fin width → Fin 2) (ind
   rw [Nat.testBit_ofBits_lt]
   · exact congrArg (fun position => finTwoEquiv (basis position)) (Fin.rev_rev index)
   · exact index.rev.isLt
-.symm (label.val.testBit index.rev.val) := rfl
+
 
 end QuantumAlg.BinaryBasis

@@ -58,24 +58,19 @@ public def singleton {model : ExecutionModel} (event : Resource.Event model)
 public def count {model : ExecutionModel} (event : Resource.Event model)
     (pool : ResourcePool model) : Nat :=
   Multiset.count event pool
-ool model) : ResourcePool model :=
-  multiplicity • pool
+
 
 /-- Convert an actual event list into its literal multiplicity ledger. -/
 @[expose]
 public def ofList {model : ExecutionModel}
     (events : List (Resource.Event model)) : ResourcePool model :=
   events
-try.2 + ofCounts entries
-t : ResourcePool model) : ResourcePool model :=
-  left ∪ right
-source.Event.liftClassical
+
 
 @[simp] lemma count_zero {model : ExecutionModel} (event : Resource.Event model) :
     count event (0 : ResourcePool model) = 0 := by
   simp [count]
-del : ExecutionModel} (event : Resource.Event model) :
-    singleton event 0 = 0 := rfl
+
 
 /-- Count one native coordinate in an arbitrary singleton ledger. -/
 @[simp] lemma count_singleton {model : ExecutionModel}
@@ -83,28 +78,20 @@ del : ExecutionModel} (event : Resource.Event model) :
     count target (singleton event multiplicity) =
       if event = target then multiplicity else 0 := by
   simp [count, singleton, Multiset.count_replicate]
-unt event (singleton event multiplicity) = multiplicity := by
-  simp
-ngleton, Multiset.count_replicate, if_neg (Ne.symm hne)]
+
 
 @[simp] lemma count_add {model : ExecutionModel} (event : Resource.Event model)
     (left right : ResourcePool model) :
     count event (left + right) = count event left + count event right := by
   simp [count]
-rt, fresh, induction]
-  simpa using aux Finset.univ
-e multiplicity pool) = multiplicity * count event pool := by
-  simp [count, scale]
-vent pool := by
-  simpa only [scale] using count_scale event multiplicity pool
+
 
 @[simp] public lemma count_ofList {model : ExecutionModel} (event : Resource.Event model)
     (events : List (Resource.Event model)) :
     count event (ofList events) = List.count event events := by
   change Multiset.count event (Multiset.ofList events) = List.count event events
   exact Multiset.coe_count event events
-fList ([] : List (Resource.Event model)) = 0 :=
-  rfl
+
 
 @[simp] lemma ofList_cons {model : ExecutionModel} (event : Resource.Event model)
     (events : List (Resource.Event model)) :
@@ -115,54 +102,7 @@ fList ([] : List (Resource.Event model)) = 0 :=
     (first second : List (Resource.Event model)) :
     ofList (first ++ second) = ofList first + ofList second := by
   simp [ofList]
-ts ([] : List (Resource.Event model × Nat)) = 0 := rfl
- entry.2 + ofCounts entries := rfl
-unt event (ofCounts ([] : List (Resource.Event model × Nat))) = 0 := by
-  simp
-  count target (ofCounts entries) := by
-  simp
-Counts ((event, 0) :: entries) = ofCounts entries := by
-  simp
-ent + ofCounts entries
-  rw [← add_assoc, ← Multiset.replicate_add]
-      exact ihFirst.trans ihSecond
-x left right) = Nat.max (count event left) (count event right) := by
-  simp [count, max]
-ol = 0 := by
-  simp [scale]
-smul, add_comm]
-cons, countIH, scale_succ]
 
-  simpa [count] using (Multiset.le_iff_count (s := left) (t := right))
-₁ + right₂ :=
-  add_le_add first second
-o event
-  simp
-o event
-  simp
-t.mp rightBound) event⟩
- bound) event)
-model.classicalOracles)) = 0 := rfl
-ft + liftClassical right := by
-  simp [liftClassical]
-l (model := model)) multiplicity pool
-iftClassical event) multiplicity := by
-  simp [liftClassical, singleton]
-).eq_iff] using
-    (Multiset.count_eq_card_filter_eq pool event).symm
-ap_injective (Resource.Event.liftClassical_injective model)
-= by
-  exact Multiset.map_le_map_iff (Resource.Event.liftClassical_injective model)
-hip
-  cases event <;> first | (cases ‹Empty›) | (cases equality)
-hip
-  cases event <;> first | (cases ‹Empty›) | (cases equality)
-hip
-  cases event <;> first | (cases ‹Empty›) | (cases equality)
-hip
-  cases event <;> first | (cases ‹Empty›) | (cases equality)
-y] at coefficientBound
-  exact (Nat.not_le_of_lt positive) coefficientBound
 
 end ResourcePool
 end QuantumAlg

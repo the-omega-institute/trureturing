@@ -49,9 +49,6 @@ public def ofPositions (model : GateModel) (token : model.Token)
                 position.injective (layout.identityInjective same) }
           dimension_eq := dimensions } }
   embedding := { position := position, wire_eq := fun _ => rfl }
-) :
-    (ofPositions model token layout position dimensions).occurrence.token = token := rfl
- position dimensions).coordinate =
-      model.coordinate token := rfl
+
 
 end QuantumAlg.GateModel.Application

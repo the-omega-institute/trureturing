@@ -66,8 +66,7 @@ public lemma operatorAt_entry (operator : UnitaryOperator source.register)
     operator row column).trans ?_
   rw [selected row, selected column]
   rfl
-· exact complement
-   · rw [if_neg same, if_neg complementDifferent, mul_zero]
+
 
 end
 
