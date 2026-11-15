@@ -11,117 +11,117 @@ escape_witness: boundary_slot_equiv, boundary_word_equiv, boundary_rows_count,
   interior_slot_equiv, interior_code_equiv, interior_six_lower_pairs, interior_count,
   horizontal_sum, horizontal_two_rows, horizontal_three_rows, horizontal_two_columns
   (horizontal slot classifications and their exact counts).
-BoundaryData: proof_shape=bind-only; consumers=BoundaryValid
-BoundaryValid: proof_shape=bind-only; consumers=boundary_build_raw
-boundary_build: proof_shape=bind-only; consumers=boundary_build_raw
-boundary_extract: proof_shape=bind-only; consumers=boundary_extract_valid
-boundary_h: proof_shape=bind-only; consumers=boundary_extract_valid
-boundary_v: proof_shape=bind-only; consumers=boundary_extract_valid
+BoundaryData: proof_shape=bind-only; consumers=BoundaryValid,InteriorSlots,boundary_bottom_shared,boundary_bottom_slot_equiv,boundary_build,boundary_build_raw,boundary_extract,boundary_slot_equiv,boundary_slots_one_column,boundary_top_shared,boundary_word_build,boundary_word_map,boundary_word_map_injective,boundary_word_map_surjective,coded_boundary,interior_code_equiv,interior_one_column_count
+BoundaryValid: proof_shape=bind-only; consumers=InteriorSlots,boundary_bottom_slot_equiv,boundary_build_raw,boundary_extract_valid,boundary_slot_equiv,boundary_slots_one_column,boundary_word_build_valid,boundary_word_map,coded_boundary_valid,interior_one_column_count
+boundary_build: proof_shape=bind-only; consumers=boundary_build_raw,boundary_reconstruct,boundary_slot_equiv
+boundary_extract: proof_shape=bind-only; consumers=boundary_bottom_shared,boundary_extract_valid,boundary_reconstruct,boundary_slot_equiv,boundary_top_shared
+boundary_h: proof_shape=bind-only; consumers=boundary_extract_valid,boundary_reconstruct,boundary_top_shared
+boundary_v: proof_shape=bind-only; consumers=boundary_extract_valid,boundary_reconstruct
 boundary_build_raw: proof_shape=content; consumers=boundary_slot_equiv
 boundary_extract_valid: proof_shape=content; consumers=boundary_slot_equiv
 boundary_reconstruct: proof_shape=bind-only; consumers=boundary_slot_equiv
-boundary_slot_equiv: proof_shape=content; consumers=boundary_word_equiv
-BoundaryWords: proof_shape=bind-only; consumers=boundary_words_zero_equiv
+boundary_slot_equiv: proof_shape=content; consumers=boundary_bottom_shared,boundary_bottom_slot_equiv,boundary_slots_one_column,boundary_top_shared,boundary_word_equiv,cut_slots_equiv
+BoundaryWords: proof_shape=bind-only; consumers=boundary_word_build,boundary_word_build_valid,boundary_word_equiv,boundary_word_map,boundary_words_pos_card,boundary_words_sum_equiv,boundary_words_zero_card,boundary_words_zero_equiv
 boundary_words_zero_equiv: proof_shape=bind-only; consumers=boundary_words_zero_card
 boundary_words_sum_equiv: proof_shape=content; consumers=boundary_words_pos_card
 boundary_words_zero_card: proof_shape=bind-only; consumers=boundary_count_zero
 boundary_words_pos_card: proof_shape=content; consumers=boundary_count_pos
-NZPair: proof_shape=bind-only; consumers=nz_pair_card
-nz_pair_card: proof_shape=bind-only; consumers=boundary_count_zero
-pivot: proof_shape=bind-only; consumers=boundary_word_build_valid
-boundary_word_build: proof_shape=bind-only; consumers=boundary_word_build_valid
+NZPair: proof_shape=bind-only; consumers=InteriorAlphabet,InteriorCode,OrdinaryAlphabet,SupportAlphabet,boundary_word_build,boundary_word_build_valid,boundary_word_equiv,boundary_word_map,coded_boundary,coded_boundary_valid,interior_count,interior_count_alphabets,interior_count_support,interior_six_lower_pairs,lower_pair,lower_pair_equiv,lower_pair_valid,lower_pair_values,nz_pair_card,ordinary_equiv,ordinary_value,ordinary_value_valid,pair_count_support,pair_support_cases,pair_support_count,support_alphabet_card,support_sizes_correct
+nz_pair_card: proof_shape=bind-only; consumers=boundary_count_pos,boundary_count_zero,interior_count
+pivot: proof_shape=bind-only; consumers=boundary_count,boundary_count_at,boundary_count_pos,boundary_count_zero,boundary_one_column,boundary_word_build_valid,boundary_word_equiv,boundary_word_map,boundary_word_map_surjective,coded_boundary_valid,horizontal_three_rows,interior_code_equiv,interior_count,interior_count_alphabets,interior_count_support,interior_row_sum,interior_three_rows_count
+boundary_word_build: proof_shape=bind-only; consumers=boundary_word_build_valid,boundary_word_map,boundary_word_map_injective,boundary_word_map_surjective
 boundary_word_build_valid: proof_shape=content; consumers=boundary_word_map
-boundary_word_map: proof_shape=bind-only; consumers=boundary_word_map_injective
+boundary_word_map: proof_shape=bind-only; consumers=boundary_word_equiv,boundary_word_map_injective,boundary_word_map_surjective
 boundary_word_map_injective: proof_shape=bind-only; consumers=boundary_word_equiv
 boundary_word_map_surjective: proof_shape=content; consumers=boundary_word_equiv
-boundary_word_equiv: proof_shape=content; consumers=boundary_count_zero
+boundary_word_equiv: proof_shape=content; consumers=boundary_count_pos,boundary_count_zero
 boundary_count_zero: proof_shape=content; consumers=boundary_count
 boundary_count_pos: proof_shape=content; consumers=boundary_count
-horizontal_count_row_reflect: proof_shape=bind-only; consumers=boundary_rows_count
-E: proof_shape=bind-only; consumers=boundary_count
-boundary_count: proof_shape=content; consumers=boundary_count_at
-boundary_count_at: proof_shape=content; consumers=boundary_rows_count
+horizontal_count_row_reflect: proof_shape=bind-only; consumers=boundary_rows_count,horizontal_sum,horizontal_three_rows,horizontal_two_columns
+E: proof_shape=bind-only; consumers=P,boundary_count,boundary_count_at,boundary_one_column,boundary_row_sum,boundary_rows_count,horizontal_three_rows,interior_count,interior_endpoint_value,interior_middle_value,interior_row_sum,interior_three_rows_count,six_case_value,support_case_eval
+boundary_count: proof_shape=content; consumers=boundary_count_at,boundary_one_column
+boundary_count_at: proof_shape=content; consumers=boundary_row_sum,boundary_rows_count,horizontal_three_rows
 boundary_rows_count: proof_shape=content; consumers=horizontal_two_rows
-row_reflect: proof_shape=bind-only; consumers=row_reflect_differentiate
+row_reflect: proof_shape=bind-only; consumers=boundary_bottom_shared,row_reflect_differentiate,row_reflect_equiv,row_reflect_raw
 row_reflect_differentiate: proof_shape=bind-only; consumers=row_reflect_raw
-row_reflect_raw: proof_shape=bind-only; consumers=row_reflect_equiv
-row_reflect_equiv: proof_shape=bind-only; consumers=boundary_bottom_slot_equiv
-boundary_bottom_slot_equiv: proof_shape=bind-only; consumers=boundary_bottom_shared
-top_row: proof_shape=bind-only; consumers=top_field
-bottom_row: proof_shape=bind-only; consumers=bottom_field
-top_field: proof_shape=bind-only; consumers=top_edge_value
-bottom_field: proof_shape=bind-only; consumers=bottom_edge_value
-top_edge: proof_shape=bind-only; consumers=top_edge_value
-bottom_edge: proof_shape=bind-only; consumers=bottom_edge_value
-top_edge_value: proof_shape=bind-only; consumers=top_field_raw
-bottom_edge_value: proof_shape=bind-only; consumers=bottom_field_raw
-cut_row: proof_shape=bind-only; consumers=top_field_raw
+row_reflect_raw: proof_shape=bind-only; consumers=boundary_bottom_shared,row_reflect_equiv
+row_reflect_equiv: proof_shape=bind-only; consumers=boundary_bottom_shared,boundary_bottom_slot_equiv
+boundary_bottom_slot_equiv: proof_shape=bind-only; consumers=boundary_bottom_shared,cut_slots_equiv
+top_row: proof_shape=bind-only; consumers=raw_of_halves,top_edge,top_field,top_field_join,top_field_raw
+bottom_row: proof_shape=bind-only; consumers=bottom_edge,bottom_field,bottom_field_join,bottom_field_raw,join_restrict,raw_of_halves
+top_field: proof_shape=bind-only; consumers=horizontal_cut_equiv,join_restrict,raw_of_halves,top_edge_value,top_field_join,top_field_raw
+bottom_field: proof_shape=bind-only; consumers=bottom_edge_value,bottom_field_join,bottom_field_raw,horizontal_cut_equiv,join_restrict,raw_of_halves
+top_edge: proof_shape=bind-only; consumers=raw_of_halves,top_edge_value,top_field_raw
+bottom_edge: proof_shape=bind-only; consumers=bottom_edge_value,bottom_field_raw,raw_of_halves
+top_edge_value: proof_shape=bind-only; consumers=raw_of_halves,top_field_raw
+bottom_edge_value: proof_shape=bind-only; consumers=bottom_field_raw,raw_of_halves
+cut_row: proof_shape=bind-only; consumers=bottom_field_raw,horizontal_cut_equiv,horizontal_sum,horizontal_two_columns,interior_count,interior_count_alphabets,interior_count_support,interior_one_column_count,interior_row_sum,interior_slot_equiv,interior_three_rows_count,raw_of_halves,top_field_raw
 top_field_raw: proof_shape=bind-only; consumers=horizontal_cut_equiv
 bottom_field_raw: proof_shape=bind-only; consumers=horizontal_cut_equiv
 raw_of_halves: proof_shape=content; consumers=horizontal_cut_equiv
-join_field: proof_shape=bind-only; consumers=top_field_join
+join_field: proof_shape=bind-only; consumers=bottom_field_join,horizontal_cut_equiv,join_restrict,top_field_join
 top_field_join: proof_shape=bind-only; consumers=horizontal_cut_equiv
 bottom_field_join: proof_shape=bind-only; consumers=horizontal_cut_equiv
 join_restrict: proof_shape=bind-only; consumers=horizontal_cut_equiv
-CutFields: proof_shape=bind-only; consumers=horizontal_cut_equiv
+CutFields: proof_shape=bind-only; consumers=cut_slots_equiv,horizontal_cut_equiv
 horizontal_cut_equiv: proof_shape=content; consumers=interior_slot_equiv
-InteriorSlots: proof_shape=bind-only; consumers=cut_slots_equiv
-boundary_top_shared: proof_shape=bind-only; consumers=boundary_bottom_shared
+InteriorSlots: proof_shape=bind-only; consumers=cut_slots_equiv,interior_code_equiv,interior_one_column_count,interior_slot_equiv
+boundary_top_shared: proof_shape=bind-only; consumers=boundary_bottom_shared,cut_slots_equiv
 boundary_bottom_shared: proof_shape=bind-only; consumers=cut_slots_equiv
 cut_slots_equiv: proof_shape=bind-only; consumers=interior_slot_equiv
-interior_slot_equiv: proof_shape=content; consumers=interior_count_alphabets
-OrdinaryAlphabet: proof_shape=bind-only; consumers=InteriorAlphabet
-InteriorAlphabet: proof_shape=bind-only; consumers=InteriorCode
-InteriorCode: proof_shape=bind-only; consumers=interior_code_equiv
-coded_boundary: proof_shape=bind-only; consumers=coded_boundary_valid
+interior_slot_equiv: proof_shape=content; consumers=interior_count_alphabets,interior_one_column_count
+OrdinaryAlphabet: proof_shape=bind-only; consumers=InteriorAlphabet,InteriorCode,coded_boundary,coded_boundary_valid,interior_count_alphabets,interior_six_lower_pairs,ordinary_equiv,pair_count_support
+InteriorAlphabet: proof_shape=bind-only; consumers=InteriorCode,interior_count_alphabets,interior_six_lower_pairs,pair_count_support,support_alphabet_card
+InteriorCode: proof_shape=bind-only; consumers=interior_code_equiv,interior_count_alphabets
+coded_boundary: proof_shape=bind-only; consumers=coded_boundary_valid,interior_code_equiv
 coded_boundary_valid: proof_shape=content; consumers=interior_code_equiv
 interior_code_equiv: proof_shape=content; consumers=interior_count_alphabets
 interior_count_alphabets: proof_shape=bind-only; consumers=interior_count_support
-word_support: proof_shape=bind-only; consumers=word_support_empty
+word_support: proof_shape=bind-only; consumers=pair_count_support,sum_by_support,support_alphabet_card,word_support_card,word_support_empty,word_support_full,word_support_singleton
 word_support_empty: proof_shape=bind-only; consumers=word_support_card
-word_support_singleton: proof_shape=bind-only; consumers=word_support_full
+word_support_singleton: proof_shape=bind-only; consumers=word_support_card,word_support_full
 word_support_full: proof_shape=content; consumers=word_support_card
-support_weight: proof_shape=bind-only; consumers=word_support_card
+support_weight: proof_shape=bind-only; consumers=pair_count_support,pair_support_count,sum_by_support,support_case_count,support_case_eval,word_support_card
 word_support_card: proof_shape=content; consumers=sum_by_support
 sum_by_support: proof_shape=bind-only; consumers=pair_count_support
-ordinary_value: proof_shape=bind-only; consumers=ordinary_value_valid
+ordinary_value: proof_shape=bind-only; consumers=SupportAlphabet,ordinary_equiv,ordinary_value_valid
 ordinary_value_valid: proof_shape=bind-only; consumers=ordinary_equiv
-ordinary_equiv: proof_shape=bind-only; consumers=support_alphabet_card
-SupportAlphabet: proof_shape=bind-only; consumers=support_alphabet_card
+ordinary_equiv: proof_shape=bind-only; consumers=pair_count_support,support_alphabet_card
+SupportAlphabet: proof_shape=bind-only; consumers=pair_count_support,pair_support_count,support_alphabet_card,support_sizes_correct
 support_alphabet_card: proof_shape=bind-only; consumers=pair_count_support
-pair_support_count: proof_shape=bind-only; consumers=pair_count_support
-pair_count_support: proof_shape=content; consumers=interior_count_support
+pair_support_count: proof_shape=bind-only; consumers=interior_count,interior_count_support,pair_count_support,pair_support_cases
+pair_count_support: proof_shape=content; consumers=interior_count_support,interior_six_lower_pairs
 interior_count_support: proof_shape=content; consumers=interior_count
-supports: proof_shape=bind-only; consumers=supports_equiv
+supports: proof_shape=bind-only; consumers=support_case_count,support_case_eval,support_sizes_correct,supports_equiv
 supports_equiv: proof_shape=bind-only; consumers=pair_support_cases
-lower_pair_values: proof_shape=bind-only; consumers=lower_pair_valid
+lower_pair_values: proof_shape=bind-only; consumers=lower_pair,lower_pair_valid
 lower_pair_valid: proof_shape=bind-only; consumers=lower_pair
-lower_pair: proof_shape=bind-only; consumers=lower_pair_equiv
+lower_pair: proof_shape=bind-only; consumers=interior_count,interior_six_lower_pairs,lower_pair_equiv,pair_support_cases,support_sizes_correct
 lower_pair_equiv: proof_shape=bind-only; consumers=interior_count
-support_sizes: proof_shape=bind-only; consumers=support_sizes_correct
+support_sizes: proof_shape=bind-only; consumers=support_case_count,support_case_eval,support_sizes_correct
 support_sizes_correct: proof_shape=bind-only; consumers=pair_support_cases
-support_case_count: proof_shape=bind-only; consumers=pair_support_cases
-pair_support_cases: proof_shape=bind-only; consumers=interior_six_lower_pairs
-P: proof_shape=bind-only; consumers=six_case_value
-Q: proof_shape=bind-only; consumers=six_case_value
-six_case_value: proof_shape=bind-only; consumers=support_case_eval
-support_case_eval: proof_shape=bind-only; consumers=interior_six_lower_pairs
-interior_six_lower_pairs: proof_shape=content; consumers=interior_count
-interior_count: proof_shape=content; consumers=interior_three_rows_count
-horizontal_two_rows: proof_shape=content; consumers=horizontal_two_columns,KingClosedForm.width_two
-boundary_one_column: proof_shape=bind-only; consumers=boundary_slots_one_column
+support_case_count: proof_shape=bind-only; consumers=pair_support_cases,support_case_eval
+pair_support_cases: proof_shape=bind-only; consumers=interior_count,interior_six_lower_pairs
+P: proof_shape=bind-only; consumers=interior_count,interior_endpoint_value,interior_middle_value,interior_row_sum,interior_three_rows_count,six_case_value,support_case_eval
+Q: proof_shape=bind-only; consumers=interior_count,interior_endpoint_value,interior_middle_value,interior_row_sum,interior_three_rows_count,six_case_value,support_case_eval
+six_case_value: proof_shape=bind-only; consumers=interior_count,interior_six_lower_pairs,support_case_eval
+support_case_eval: proof_shape=bind-only; consumers=interior_count,interior_six_lower_pairs
+interior_six_lower_pairs: proof_shape=content; consumers=none
+interior_count: proof_shape=content; consumers=interior_row_sum,interior_three_rows_count
+horizontal_two_rows: proof_shape=content; consumers=KingClosedForm.width_two,horizontal_two_columns
+boundary_one_column: proof_shape=bind-only; consumers=boundary_slots_one_column,horizontal_two_columns
 boundary_slots_one_column: proof_shape=bind-only; consumers=interior_one_column_count
 interior_one_column_count: proof_shape=content; consumers=horizontal_two_columns
 horizontal_two_columns: proof_shape=content; consumers=KingClosedForm.width_two
 interior_three_rows_count: proof_shape=content; consumers=horizontal_three_rows
-sum_two_powers: proof_shape=bind-only; consumers=sum_two_powers_reverse
-sum_two_powers_reverse: proof_shape=bind-only; consumers=horizontal_three_rows
+sum_two_powers: proof_shape=bind-only; consumers=boundary_row_sum,horizontal_sum,horizontal_three_rows,interior_row_sum,sum_two_powers_reverse
+sum_two_powers_reverse: proof_shape=bind-only; consumers=boundary_row_sum,horizontal_sum,horizontal_three_rows,interior_row_sum
 horizontal_three_rows: proof_shape=content; consumers=KingClosedForm.width_three
 interior_endpoint_value: proof_shape=bind-only; consumers=interior_row_sum
 interior_middle_value: proof_shape=bind-only; consumers=interior_row_sum
 interior_row_sum: proof_shape=content; consumers=horizontal_sum
 boundary_row_sum: proof_shape=bind-only; consumers=horizontal_sum
-sum_left_indicator: proof_shape=bind-only; consumers=sum_right_indicator
+sum_left_indicator: proof_shape=bind-only; consumers=horizontal_sum,sum_right_indicator
 sum_right_indicator: proof_shape=bind-only; consumers=horizontal_sum
 horizontal_sum: proof_shape=content; consumers=KingClosedForm.closed_form,KingClosedForm.width_three
 -/
@@ -135,7 +135,7 @@ open KingGrid KingDifference
 open scoped IsAddKleinFour
 
 /-- The special ordered pair, horizontal slots and ordinary vertical slots. -/
-@[ext] structure BoundaryData (m M : ℕ) where
+@[ext] private structure BoundaryData (m M : ℕ) where
   p : K
   q : K
   h : Fin M → K
@@ -143,19 +143,19 @@ open scoped IsAddKleinFour
   deriving DecidableEq
 
 /-- The two half-slots exclude their vertical values; every ordinary crossing is proper. -/
-def BoundaryValid {m M : ℕ} (s : Fin M) (b : BoundaryData m M) : Prop :=
+private def BoundaryValid {m M : ℕ} (s : Fin M) (b : BoundaryData m M) : Prop :=
   b.p ≠ 0 ∧ b.q ≠ 0 ∧ b.p ≠ b.q ∧ b.h s = b.p + b.q ∧
     (∀ j, b.h j ≠ 0) ∧ (∀ i, b.v i ≠ 0) ∧
     (∀ j, j < s → b.h j ≠ b.p) ∧ (∀ j, s < j → b.h j ≠ b.q) ∧
     ∀ i j, b.h j ≠ b.v i
 
-def boundary_build {m M : ℕ} (s : Fin M) (b : BoundaryData m M) :
+private def boundary_build {m M : ℕ} (s : Fin M) (b : BoundaryData m M) :
     DiffField (m + 1) M where
   h i j := if i = 0 ∧ j = s then 0 else b.h j
   v i j := if hi : i = 0 then (if j.val ≤ s.val then b.p else b.q)
     else b.v (i.pred hi)
 
-def boundary_extract {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M) :
+private def boundary_extract {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M) :
     BoundaryData m M where
   p := t.v 0 s.castSucc
   q := t.v 0 s.succ
@@ -163,7 +163,7 @@ def boundary_extract {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M) :
   v i := t.v i.succ 0
 
 /-- All horizontal slots other than the defect extend through the full rectangle. -/
-theorem boundary_h {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
+private theorem boundary_h {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
     (ht : RawAdmissible (.H 0 s) t) (i : Fin (m + 1 + 1)) (j : Fin M) :
     t.h i j = if i = 0 ∧ j = s then 0 else t.h 1 j := by
   have clear (a : Fin (m + 1)) (ha : a.val ≠ 0 ∨ j ≠ s) :
@@ -195,7 +195,7 @@ theorem boundary_h {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
         omega)))).symm
 
 /-- The first vertical slot splits at the defect; every later slot is constant. -/
-theorem boundary_v {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
+private theorem boundary_v {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
     (ht : RawAdmissible (.H 0 s) t) (i : Fin (m + 1)) (j : Fin (M + 1)) :
     t.v i j = if i = 0 then
       (if j.val ≤ s.val then t.v 0 s.castSucc else t.v 0 s.succ)
@@ -232,7 +232,7 @@ theorem boundary_v {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
       (fun a _ _ => clear a (Or.inl hi))).symm
 
 /-- Every valid compressed boundary assignment gives exactly one horizontal defect. -/
-theorem boundary_build_raw {m M : ℕ} (s : Fin M) (b : BoundaryData m M)
+private theorem boundary_build_raw {m M : ℕ} (s : Fin M) (b : BoundaryData m M)
     (hb : BoundaryValid s b) : RawAdmissible (.H 0 s) (boundary_build s b) := by
   rcases hb with ⟨hp,hq,hpq,hs,hh,hv,hl,hr,hcross⟩
   have local_top (j : Fin M) :
@@ -294,7 +294,7 @@ theorem boundary_build_raw {m M : ℕ} (s : Fin M) (b : BoundaryData m M)
     · simpa [boundary_build, add_eq_zero_iff_eq_neg] using hcross a j
 
 /-- Admissibility supplies precisely the boundary-slot exclusions. -/
-theorem boundary_extract_valid {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
+private theorem boundary_extract_valid {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
     (ht : RawAdmissible (.H 0 s) t) : BoundaryValid s (boundary_extract s t) := by
   have nz (e : Edge (m + 1 + 1) (M + 1)) (he : e ≠ .H 0 s) :
       edgeValue t e ≠ 0 := mt (ht.2 e).mp he
@@ -342,7 +342,7 @@ theorem boundary_extract_valid {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
     simpa [boundary_extract, add_eq_zero_iff_eq_neg] using hn
 
 /-- Extracting the compressed slots loses no field values. -/
-theorem boundary_reconstruct {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
+private theorem boundary_reconstruct {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
     (ht : RawAdmissible (.H 0 s) t) : boundary_build s (boundary_extract s t) = t := by
   apply DiffField.ext
   · funext i j
@@ -356,7 +356,7 @@ theorem boundary_reconstruct {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
       exact Fin.succ_pred _ _
 
 /-- Top-boundary fields are in bijection with compressed slot assignments. -/
-def boundary_slot_equiv (m M : ℕ) (s : Fin M) :
+private def boundary_slot_equiv (m M : ℕ) (s : Fin M) :
     {t : DiffField (m + 1) M // RawAdmissible (.H 0 s) t} ≃
       {b : BoundaryData m M // BoundaryValid s b} where
   toFun t := ⟨boundary_extract s t.val, boundary_extract_valid s t.val t.property⟩
@@ -373,7 +373,7 @@ def boundary_slot_equiv (m M : ℕ) (s : Fin M) :
       simp [boundary_extract, boundary_build]
 
 /-- Binary encoding of ordinary vertical slots and the two horizontal words. -/
-def BoundaryWords (m c d : ℕ) :=
+private def BoundaryWords (m c d : ℕ) :=
   {w : (Fin m → Bool) × (Fin c → Bool) × (Fin d → Bool) //
     (w.1 ≠ (fun _ => false) → w.2.1 = (fun _ => true)) ∧
     (w.1 ≠ (fun _ => true) → w.2.2 = (fun _ => true))}
@@ -427,12 +427,12 @@ private noncomputable def boundary_words_sum_equiv (m c d : ℕ) (hm : 0 < m) :
     · simp [u.property.1, u.property.2]
 
 /-- The empty vertical word leaves two independent binary horizontal words. -/
-theorem boundary_words_zero_card (c d : ℕ) : Nat.card (BoundaryWords 0 c d) = 2 ^ (c + d) := by
+private theorem boundary_words_zero_card (c d : ℕ) : Nat.card (BoundaryWords 0 c d) = 2 ^ (c + d) := by
   rw [Nat.card_congr (boundary_words_zero_equiv c d), Nat.card_prod]
   simp [pow_add]
 
 /-- The three disjoint vertical-support cases give the subtraction-free E identity. -/
-theorem boundary_words_pos_card (m c d : ℕ) (hm : 0 < m) :
+private theorem boundary_words_pos_card (m c d : ℕ) (hm : 0 < m) :
     Nat.card (BoundaryWords m c d) + 2 = 2 ^ m + 2 ^ c + 2 ^ d := by
   classical
   have hft : (fun _ : Fin m => false) ≠ (fun _ => true) := by
@@ -456,14 +456,14 @@ theorem boundary_words_pos_card (m c d : ℕ) (hm : 0 < m) :
   omega
 
 /-- The six ordered pairs of distinct nonzero Klein values. -/
-abbrev NZPair := {pq : K × K // pq.1 ≠ 0 ∧ pq.2 ≠ 0 ∧ pq.1 ≠ pq.2}
+private abbrev NZPair := {pq : K × K // pq.1 ≠ 0 ∧ pq.2 ≠ 0 ∧ pq.1 ≠ pq.2}
 
 private theorem nz_pair_card : Nat.card NZPair = 6 := by
   rw [Nat.card_eq_fintype_card]
   decide
 
 /-- The column pair separating the words of lengths `c` and `d`. -/
-def pivot (c d : ℕ) : Fin (c + (d + 1)) := Fin.natAdd c 0
+private def pivot (c d : ℕ) : Fin (c + (d + 1)) := Fin.natAdd c 0
 
 private def boundary_word_build {m c d : ℕ} (x : NZPair) (w : BoundaryWords m c d) :
     BoundaryData m (c + (d + 1)) where
@@ -661,7 +661,7 @@ private theorem boundary_word_map_surjective (m c d : ℕ) :
     exact hu i
 
 /-- A boundary field consists of a six-way ordered-pair choice and three binary words. -/
-noncomputable def boundary_word_equiv (m c d : ℕ) :
+private noncomputable def boundary_word_equiv (m c d : ℕ) :
     {t : DiffField (m + 1) (c + (d + 1)) // RawAdmissible (.H 0 (pivot c d)) t} ≃
       NZPair × BoundaryWords m c d :=
   (boundary_slot_equiv m _ (pivot c d)).trans
@@ -669,14 +669,14 @@ noncomputable def boundary_word_equiv (m c d : ℕ) :
       ⟨boundary_word_map_injective m c d, boundary_word_map_surjective m c d⟩).symm
 
 /-- Lemma 6 for a top boundary with no ordinary vertical slots. -/
-theorem boundary_count_zero (c d : ℕ) :
+private theorem boundary_count_zero (c d : ℕ) :
     N_e (.H 0 (pivot c d) : Edge 2 (c + (d + 1) + 1)) = 6 * 2 ^ (c + d) := by
   unfold N_e
   rw [Nat.card_congr (boundary_word_equiv 0 c d), Nat.card_prod,
     nz_pair_card, boundary_words_zero_card]
 
 /-- Lemma 6 for a top boundary with a nonempty ordinary vertical word. -/
-theorem boundary_count_pos (m c d : ℕ) (hm : 0 < m) :
+private theorem boundary_count_pos (m c d : ℕ) (hm : 0 < m) :
     N_e (.H 0 (pivot c d) : Edge (m + 1 + 1) (c + (d + 1) + 1)) + 12 =
       6 * (2 ^ m + 2 ^ c + 2 ^ d) := by
   have hw := boundary_words_pos_card m c d hm
@@ -685,7 +685,7 @@ theorem boundary_count_pos (m c d : ℕ) (hm : 0 < m) :
   omega
 
 /-- Row reflection preserves the root-zero count at each horizontal edge. -/
-theorem horizontal_count_row_reflect {N M : ℕ} (i : Fin (N + 1)) (j : Fin M) :
+private theorem horizontal_count_row_reflect {N M : ℕ} (i : Fin (N + 1)) (j : Fin M) :
     N_e (.H i.rev j : Edge (N + 1) (M + 1)) = N_e (.H i j) := by
   let e : Edge (N + 1) (M + 1) := .H i j
   have hc := Nat.card_congr
@@ -700,11 +700,11 @@ theorem horizontal_count_row_reflect {N M : ℕ} (i : Fin (N + 1)) (j : Fin M) :
   omega
 
 /-- The boundary-word count, including the empty ordinary-vertical word. -/
-def E (m c d : ℕ) : ℕ :=
+private def E (m c d : ℕ) : ℕ :=
   if m = 0 then 2 ^ (c + d) else 2 ^ m + 2 ^ c + 2 ^ d - 2
 
 /-- Lemma 6 in a single formula, with the two side lengths explicit. -/
-theorem boundary_count (m c d : ℕ) :
+private theorem boundary_count (m c d : ℕ) :
     N_e (.H 0 (pivot c d) : Edge (m + 1 + 1) (c + (d + 1) + 1)) =
       6 * E m c d := by
   by_cases hm : m = 0
@@ -715,7 +715,7 @@ theorem boundary_count (m c d : ℕ) :
     omega
 
 /-- The per-position top-boundary count in the step-count API. -/
-theorem boundary_count_at {m M : ℕ} (s : Fin M) :
+private theorem boundary_count_at {m M : ℕ} (s : Fin M) :
     N_e (.H 0 s : Edge (m + 1 + 1) (M + 1)) =
       6 * E m s.val (M - 1 - s.val) := by
   have aux (c d : ℕ) {L : ℕ} (hL : L = c + (d + 1)) (j : Fin L) (hj : j.val = c) :
@@ -727,7 +727,7 @@ theorem boundary_count_at {m M : ℕ} (s : Fin M) :
   exact aux s.val (M - 1 - s.val) (by have := s.isLt; omega) s rfl
 
 /-- Both boundary rows have the same exact E count. -/
-theorem boundary_rows_count {m M : ℕ} (r : Fin (m + 1 + 1)) (s : Fin M)
+private theorem boundary_rows_count {m M : ℕ} (r : Fin (m + 1 + 1)) (s : Fin M)
     (hr : r = 0 ∨ r = Fin.last (m + 1)) :
     N_e (.H r s : Edge (m + 1 + 1) (M + 1)) =
       6 * E m s.val (M - 1 - s.val) := by
@@ -736,7 +736,7 @@ theorem boundary_rows_count {m M : ℕ} (r : Fin (m + 1 + 1)) (s : Fin M)
   · have h := horizontal_count_row_reflect (0 : Fin (m + 1 + 1)) s
     simpa using h.trans (boundary_count_at s)
 
-def row_reflect {N M : ℕ} (t : DiffField N M) : DiffField N M where
+private def row_reflect {N M : ℕ} (t : DiffField N M) : DiffField N M where
   h i j := t.h i.rev j
   v i j := t.v i.rev j
 
@@ -748,7 +748,7 @@ private theorem row_reflect_differentiate {N M : ℕ}
   · funext i j
     simp [row_reflect, differentiate, Fin.rev_castSucc, Fin.rev_succ, add_comm]
 
-theorem row_reflect_raw {N M : ℕ} (r : Fin (N + 1)) (s : Fin M)
+private theorem row_reflect_raw {N M : ℕ} (r : Fin (N + 1)) (s : Fin M)
     (t : DiffField N M) (ht : RawAdmissible (.H r s) t) :
     RawAdmissible (.H r.rev s) (row_reflect t) := by
   let e : Edge (N + 1) (M + 1) := .H r s
@@ -762,7 +762,7 @@ theorem row_reflect_raw {N M : ℕ} (r : Fin (N + 1)) (s : Fin M)
   rw [← row_reflect_differentiate, differentiate_integrate 0 t ht.1] at hraw
   exact hraw
 
-def row_reflect_equiv {N M : ℕ} (r : Fin (N + 1)) (s : Fin M) :
+private def row_reflect_equiv {N M : ℕ} (r : Fin (N + 1)) (s : Fin M) :
     {t : DiffField N M // RawAdmissible (.H r s) t} ≃
       {t : DiffField N M // RawAdmissible (.H r.rev s) t} where
   toFun t := ⟨row_reflect t.val, row_reflect_raw r s t.val t.property⟩
@@ -772,7 +772,7 @@ def row_reflect_equiv {N M : ℕ} (r : Fin (N + 1)) (s : Fin M) :
   right_inv t := by apply Subtype.ext; apply DiffField.ext <;> simp [row_reflect]
 
 /-- The bottom-boundary slot equivalence uses reflection of the complete field. -/
-def boundary_bottom_slot_equiv (m M : ℕ) (s : Fin M) :
+private def boundary_bottom_slot_equiv (m M : ℕ) (s : Fin M) :
     {t : DiffField (m + 1) M // RawAdmissible (.H (Fin.last (m + 1)) s) t} ≃
       {b : BoundaryData m M // BoundaryValid s b} := by
   let transport :
@@ -819,7 +819,7 @@ private theorem bottom_edge_value {A B M : ℕ} (t : DiffField (A + B) M)
       edgeValue t (bottom_edge A e) := by
   cases e <;> rfl
 
-def cut_row (A B : ℕ) : Fin (A + B + 1) := ⟨A, by omega⟩
+private def cut_row (A B : ℕ) : Fin (A + B + 1) := ⟨A, by omega⟩
 
 private theorem top_field_raw {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
     (ht : RawAdmissible (.H (cut_row A B) s) t) :
@@ -962,7 +962,7 @@ private def horizontal_cut_equiv (A B M : ℕ) (s : Fin M) :
     exact Prod.ext (top_field_join _ _ q.property.2.2) (bottom_field_join _ _)
 
 /-- The upper and lower boundary models share every nondefective horizontal slot. -/
-def InteriorSlots (a b M : ℕ) (s : Fin M) :=
+private def InteriorSlots (a b M : ℕ) (s : Fin M) :=
   {q : {u : BoundaryData a M // BoundaryValid s u} ×
       {l : BoundaryData b M // BoundaryValid s l} //
     ∀ j, j ≠ s → q.1.val.h j = q.2.val.h j}
@@ -1012,21 +1012,21 @@ private def cut_slots_equiv (a b M : ℕ) (s : Fin M) :
     apply Prod.ext <;> simp
 
 /-- Interior horizontal defects are exactly two compatible boundary-slot assignments. -/
-def interior_slot_equiv (a b M : ℕ) (s : Fin M) :
+private def interior_slot_equiv (a b M : ℕ) (s : Fin M) :
     {t : DiffField ((a + 1) + (b + 1)) M //
       RawAdmissible (.H (cut_row (a + 1) (b + 1)) s) t} ≃ InteriorSlots a b M s :=
   (horizontal_cut_equiv (a + 1) (b + 1) M s).trans (cut_slots_equiv a b M s)
 
 /-- The ordinary vertical alphabet excludes the broken horizontal value. -/
-abbrev OrdinaryAlphabet (x : NZPair) := {v : K // v ≠ 0 ∧ v ≠ x.val.1 + x.val.2}
+private abbrev OrdinaryAlphabet (x : NZPair) := {v : K // v ≠ 0 ∧ v ≠ x.val.1 + x.val.2}
 
 /-- A shared horizontal slot avoids both special values and both ordinary vertical words. -/
-abbrev InteriorAlphabet {a b : ℕ} (x y : NZPair)
+private abbrev InteriorAlphabet {a b : ℕ} (x y : NZPair)
     (u : Fin a → OrdinaryAlphabet x) (v : Fin b → OrdinaryAlphabet y) (p q : K) :=
   {h : K // h ≠ 0 ∧ h ≠ p ∧ h ≠ q ∧ (∀ i, h ≠ (u i).val) ∧ ∀ i, h ≠ (v i).val}
 
 /-- Independent special pairs and ordinary vertical words, followed by shared horizontal words. -/
-abbrev InteriorCode (a b c d : ℕ) :=
+private abbrev InteriorCode (a b c d : ℕ) :=
   Σ x : NZPair, Σ y : NZPair,
     Σ u : Fin a → OrdinaryAlphabet x, Σ v : Fin b → OrdinaryAlphabet y,
       (Fin c → InteriorAlphabet x y u v x.val.1 y.val.1) ×
@@ -1078,7 +1078,7 @@ private theorem coded_boundary_valid {m c d : ℕ} (x : NZPair)
       · simpa [coded_boundary] using (hr j).2.2 i
 
 /-- A direct four-word version of the interior slot classification. -/
-def interior_code_equiv (a b c d : ℕ) :
+private def interior_code_equiv (a b c d : ℕ) :
     InteriorCode a b c d ≃ InteriorSlots a b (c + (d + 1)) (pivot c d) where
   toFun w := ⟨(
     ⟨coded_boundary w.1 w.2.2.1 (fun j => (w.2.2.2.2.1 j).val)
@@ -1160,7 +1160,7 @@ def interior_code_equiv (a b c d : ℕ) :
 
 set_option synthInstance.maxSize 2048 in
 /-- An exact interior count as independent horizontal alphabet sizes over vertical words. -/
-theorem interior_count_alphabets (a b c d : ℕ) :
+private theorem interior_count_alphabets (a b c d : ℕ) :
     N_e (.H (cut_row (a + 1) (b + 1)) (pivot c d) :
       Edge ((a + 1) + (b + 1) + 1) (c + (d + 1) + 1)) =
       ∑ x : NZPair, ∑ y : NZPair,
@@ -1371,7 +1371,7 @@ private theorem pair_count_support (a b c d : ℕ) (x y : NZPair) :
       ring
 
 /-- The general interior count reduces to sixteen support pairs for each ordered pair. -/
-theorem interior_count_support (a b c d : ℕ) :
+private theorem interior_count_support (a b c d : ℕ) :
     N_e (.H (cut_row (a + 1) (b + 1)) (pivot c d) :
       Edge ((a + 1) + (b + 1) + 1) (c + (d + 1) + 1)) =
       ∑ x : NZPair, ∑ y : NZPair, pair_support_count a b c d x y := by
@@ -1399,7 +1399,7 @@ private theorem lower_pair_valid (x : NZPair) (i : Fin 6) :
         (lower_pair_values x i).1 ≠ (lower_pair_values x i).2 := by decide
   exact h x i
 
-def lower_pair (x : NZPair) (i : Fin 6) : NZPair :=
+private def lower_pair (x : NZPair) (i : Fin 6) : NZPair :=
   ⟨lower_pair_values x i,lower_pair_valid x i⟩
 
 private noncomputable def lower_pair_equiv (x : NZPair) : Fin 6 ≃ NZPair :=
@@ -1464,14 +1464,14 @@ private theorem pair_support_cases (a b c d : ℕ) (x : NZPair) (i : Fin 6) :
   rfl
 
 /-- The P term in the six lower-pair cases, including all empty-side cases. -/
-def P (a b c d : ℕ) : ℕ :=
+private def P (a b c d : ℕ) : ℕ :=
   if d = 0 then E c a b else ((if a = 0 then 1 else 0) + (if b = 0 then 1 else 0)) ^ c
 
 /-- The Q term in the six lower-pair cases. -/
-def Q (a b c d : ℕ) : ℕ :=
+private def Q (a b c d : ℕ) : ℕ :=
   (1 + if c = 0 then 1 else 0) ^ a * (1 + if d = 0 then 1 else 0) ^ b
 
-def six_case_value (a b c d : ℕ) : Fin 6 → ℕ :=
+private def six_case_value (a b c d : ℕ) : Fin 6 → ℕ :=
   ![E (a+b) c d,2^(a+b),P a b c d,P a b d c,Q a b c d,Q a b d c]
 
 set_option maxHeartbeats 800000 in
@@ -1505,7 +1505,7 @@ private theorem support_case_eval (a b c d : ℕ) (i : Fin 6) :
       pow_add,pow_succ] at ha hb hc hd hsa hsb hse ⊢ <;> simp_all <;> first | omega | nlinarith
 
 /-- The six lower ordered pairs have the E, binary, P, P', Q and Q' counts. -/
-theorem interior_six_lower_pairs (a b c d : ℕ) (x : NZPair) (i : Fin 6) :
+private theorem interior_six_lower_pairs (a b c d : ℕ) (x : NZPair) (i : Fin 6) :
     (∑ u : Fin a → OrdinaryAlphabet x,
       ∑ v : Fin b → OrdinaryAlphabet (lower_pair x i),
         Nat.card (InteriorAlphabet x (lower_pair x i) u v
@@ -1515,7 +1515,7 @@ theorem interior_six_lower_pairs (a b c d : ℕ) (x : NZPair) (i : Fin 6) :
   rw [pair_count_support, pair_support_cases, support_case_eval]
 
 /-- Lemma 7, equation (10), for all interior rows and every empty-side case. -/
-theorem interior_count (a b c d : ℕ) :
+private theorem interior_count (a b c d : ℕ) :
     N_e (.H (cut_row (a + 1) (b + 1)) (pivot c d) :
       Edge ((a + 1) + (b + 1) + 1) (c + (d + 1) + 1)) =
       6 * (E (a+b) c d + 2^(a+b) + P a b c d + P a b d c + Q a b c d + Q a b d c) := by
@@ -1564,7 +1564,7 @@ private theorem boundary_slots_one_column (m : ℕ) :
   exact boundary_one_column m
 
 /-- With one column interval the two boundary assignments have no compatibility condition. -/
-theorem interior_one_column_count (a b : ℕ) :
+private theorem interior_one_column_count (a b : ℕ) :
     N_e (.H (cut_row (a + 1) (b + 1)) (0 : Fin 1) :
       Edge ((a + 1) + (b + 1) + 1) 2) = 36 * 2 ^ (a + b) := by
   let e : InteriorSlots a b 1 0 ≃
@@ -1613,7 +1613,7 @@ theorem horizontal_two_columns (p : ℕ) : N_H (p + 1) 1 = 6 * ((3 * p + 2) * 2 
     ring
 
 /-- The middle row of a three-row rectangle, including empty left or right sides. -/
-theorem interior_three_rows_count (c d : ℕ) :
+private theorem interior_three_rows_count (c d : ℕ) :
     N_e (.H (1 : Fin 3) (pivot c d) : Edge 3 (c + (d + 1) + 1)) =
       6 * (2 ^ (c + d) + 2 ^ c + 2 ^ d + 3) := by
   have hp (c d : ℕ) : P 0 0 c d = 2^c := by
@@ -1710,7 +1710,7 @@ private theorem interior_middle_value (a b c d : ℕ) (hm : 0 < a + b)
   all_goals omega
 
 /-- A whole interior row, with two endpoint positions separated from the middle. -/
-theorem interior_row_sum (a b q : ℕ) (hm : 0 < a + b) :
+private theorem interior_row_sum (a b q : ℕ) (hm : 0 < a + b) :
     (∑ s : Fin (q+2),
       N_e (.H (cut_row (a+1) (b+1)) s : Edge ((a+1)+(b+1)+1) (q+2+1))) + 48 =
       6*((q+2)*2^(a+b+1) + 3*2^(q+2) + 2^(a+2) + 2^(b+2) +

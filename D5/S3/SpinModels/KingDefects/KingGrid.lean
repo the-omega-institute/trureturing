@@ -10,37 +10,37 @@ admission_basis: escape-witness
 escape_witness: canonical_count_three (the free four-colour action with only
   three occurring colours), oneDefect_usesThree and oneDefect_surjective
   (the local and global colour constraints imposed by a unique king-edge defect).
-Cell: proof_shape=bind-only; consumers=end0,end1,L,T
-Edge: proof_shape=bind-only; consumers=end0,end1,OneDefect
-lo: proof_shape=bind-only; consumers=end0,end1
-hi: proof_shape=bind-only; consumers=end0,end1
-end0: proof_shape=bind-only; consumers=mono
-end1: proof_shape=bind-only; consumers=mono
-mono: proof_shape=bind-only; consumers=OneDefect,DefectAt
-OneDefect: proof_shape=bind-only; consumers=L,T,oneDefect_iff
-DefectAt: proof_shape=bind-only; consumers=defectAt_iff,defectEquiv
-normal: proof_shape=bind-only; consumers=T,labelled_eq_twentyFour
-L: proof_shape=bind-only; consumers=labelled_count,count_by_edge,labelled_eq_twentyFour
-T: proof_shape=bind-only; consumers=labelled_eq_twentyFour
-oneDefect_iff: proof_shape=bind-only; consumers=defectAt_iff,oneDefect_usesThree
+Cell: proof_shape=bind-only; consumers=DefectAt,KingClosedForm.canonical_transpose,KingClosedForm.canonical_transpose_twice,KingClosedForm.normal_exists_unique,KingClosedForm.normal_unique,KingClosedForm.normalize,KingClosedForm.normalize_spec,KingClosedForm.symmetry,KingClosedForm.transpose_one,KingDifference.count_fixed_edge,KingDifference.defectIntegrationEquiv,KingDifference.difference_unique,KingDifference.differentiate,KingDifference.differentiate_cocycle,KingDifference.differentiate_edgeValue,KingDifference.good_differentiate,KingDifference.integrate,KingDifference.integrate_differentiate,KingDifference.integrationEquiv,KingDifference.rainbow_block,KingDifference.raw_differentiate_iff,KingDifference.relabelDefectEquiv,KingDifference.rootZeroEquiv,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.row_reflect_differentiate,KingPath.literal_count,KingPath.literal_words,KingPath.normal_path,KingPath.oneDefect_path,L,OneDefect,T,corner,count_by_edge,defectAt_iff,defectEquiv,end0,end1,goodBlock_surjective,labelled_count,labelled_eq_twentyFour,mono,normal,oneDefect_iff,oneDefect_surjective,oneDefect_usesThree,reflect,reflectDefectEquiv,reflect_mono,transpose,transposeDefectEquiv,transpose_mono
+Edge: proof_shape=bind-only; consumers=DefectAt,KingDiagonal.N_D_two_columns,KingDiagonal.N_D_two_rows,KingDiagonal.diagonalSlotEquiv,KingDiagonal.diagonal_clear,KingDiagonal.diagonal_count,KingDiagonal.extract_valid,KingDiagonal.raw_h_ordinary,KingDiagonal.raw_h_special,KingDiagonal.raw_v_ordinary,KingDiagonal.raw_v_special,KingDiagonal.slot_raw,KingDiagonal.slot_reconstruction,KingDiagonal.special_block,KingDifference.BlockAvoids,KingDifference.N_D,KingDifference.N_H,KingDifference.N_e,KingDifference.N_reflect,KingDifference.N_transpose,KingDifference.RawAdmissible,KingDifference.count_fixed_edge,KingDifference.count_from_fields,KingDifference.defectIntegrationEquiv,KingDifference.differentiate_edgeValue,KingDifference.edgeValue,KingDifference.fields_eq_six_canonical,KingDifference.goodBlock_of_raw,KingDifference.horizontal_slot_eq,KingDifference.raw_differentiate_iff,KingDifference.relabelDefectEquiv,KingDifference.rootZeroEquiv,KingDifference.sum_fields_by_kind,KingDifference.vertical_slot_eq,KingHorizontal.CutFields,KingHorizontal.bottom_edge,KingHorizontal.bottom_edge_value,KingHorizontal.bottom_field_raw,KingHorizontal.boundary_bottom_shared,KingHorizontal.boundary_bottom_slot_equiv,KingHorizontal.boundary_build_raw,KingHorizontal.boundary_count,KingHorizontal.boundary_count_at,KingHorizontal.boundary_count_pos,KingHorizontal.boundary_count_zero,KingHorizontal.boundary_extract_valid,KingHorizontal.boundary_h,KingHorizontal.boundary_one_column,KingHorizontal.boundary_reconstruct,KingHorizontal.boundary_row_sum,KingHorizontal.boundary_rows_count,KingHorizontal.boundary_slot_equiv,KingHorizontal.boundary_top_shared,KingHorizontal.boundary_v,KingHorizontal.boundary_word_equiv,KingHorizontal.cut_slots_equiv,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.horizontal_cut_equiv,KingHorizontal.horizontal_sum,KingHorizontal.horizontal_three_rows,KingHorizontal.horizontal_two_columns,KingHorizontal.horizontal_two_rows,KingHorizontal.interior_count,KingHorizontal.interior_count_alphabets,KingHorizontal.interior_count_support,KingHorizontal.interior_one_column_count,KingHorizontal.interior_row_sum,KingHorizontal.interior_slot_equiv,KingHorizontal.interior_three_rows_count,KingHorizontal.raw_of_halves,KingHorizontal.row_reflect_equiv,KingHorizontal.row_reflect_raw,KingHorizontal.top_edge,KingHorizontal.top_edge_value,KingHorizontal.top_field_raw,KingPath.edge_path,blockEdges,count_by_edge,defectAt_iff,defectEquiv,edgeSumEquiv,end0,end1,endpoints_distinct,goodBlock_surjective,mono,oneDefect_usesThree,reflectDefectEquiv,reflectEdge,reflect_mono,sum_edges,transposeDefectEquiv,transposeEdge,transpose_mono
+lo: proof_shape=bind-only; consumers=KingPath.bad,blockEdges,corner,end0,end1,endpoints_distinct,goodBlock_surjective,oneDefect_surjective,rev_hi,rev_lo
+hi: proof_shape=bind-only; consumers=KingPath.bad,blockEdges,corner,end0,end1,endpoints_distinct,goodBlock_surjective,oneDefect_surjective,rev_hi,rev_lo
+end0: proof_shape=bind-only; consumers=KingDifference.differentiate_edgeValue,endpoints_distinct,goodBlock_surjective,mono,reflect_mono,transpose_mono
+end1: proof_shape=bind-only; consumers=KingDifference.differentiate_edgeValue,endpoints_distinct,goodBlock_surjective,mono,reflect_mono,transpose_mono
+mono: proof_shape=bind-only; consumers=DefectAt,KingClosedForm.canonical_transpose,KingDifference.raw_differentiate_iff,KingDifference.relabelDefectEquiv,KingPath.oneDefect_path,OneDefect,defectAt_iff,goodBlock_surjective,labelled_eq_twentyFour,oneDefect_iff,oneDefect_usesThree,reflect_mono,transpose_mono
+OneDefect: proof_shape=bind-only; consumers=KingClosedForm.canonical_transpose,KingClosedForm.canonical_transpose_twice,KingClosedForm.symmetry,KingClosedForm.transpose_one,KingPath.literal_count,KingPath.literal_words,KingPath.oneDefect_path,L,T,defectAt_iff,defectEquiv,labelled_count,labelled_eq_twentyFour,oneDefect_iff,oneDefect_surjective,oneDefect_usesThree
+DefectAt: proof_shape=bind-only; consumers=KingDifference.count_fixed_edge,KingDifference.defectIntegrationEquiv,KingDifference.raw_differentiate_iff,KingDifference.relabelDefectEquiv,KingDifference.rootZeroEquiv,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.row_reflect_raw,count_by_edge,defectAt_iff,defectEquiv,reflectDefectEquiv,transposeDefectEquiv
+normal: proof_shape=bind-only; consumers=KingClosedForm.canonical_transpose,KingClosedForm.canonical_transpose_twice,KingClosedForm.normal_exists_unique,KingClosedForm.normal_unique,KingClosedForm.normalize_spec,KingClosedForm.symmetry,KingPath.literal_count,KingPath.literal_words,KingPath.normal_path,T,labelled_eq_twentyFour
+L: proof_shape=bind-only; consumers=KingDifference.count_from_fields,count_by_edge,labelled_count,labelled_eq_twentyFour
+T: proof_shape=bind-only; consumers=HardinA229571.result,HardinA229572.result,HardinA229573.result,HardinA229574.result,HardinA229575.result,HardinA229576.result,HardinA229577.result,HardinA229578.result,KingClosedForm.closed_form,KingClosedForm.diagonal_closed,KingClosedForm.symmetry,KingClosedForm.width_three,KingClosedForm.width_two,KingDifference.count_by_kind,KingDifference.fields_eq_six_canonical,KingPath.literal_count,KingPath.one_vertex,KingPath.two_vertices,KingPath.width_one,KingPath.width_one_large,labelled_eq_twentyFour
+oneDefect_iff: proof_shape=bind-only; consumers=KingClosedForm.transpose_one,defectAt_iff,defectEquiv,oneDefect_surjective,oneDefect_usesThree
 defectAt_iff: proof_shape=bind-only; consumers=defectEquiv
 defectEquiv: proof_shape=bind-only; consumers=count_by_edge
 labelled_count: proof_shape=bind-only; consumers=count_by_edge,labelled_eq_twentyFour
 count_by_edge: proof_shape=bind-only; consumers=KingDifference.count_from_fields
 edgeSumEquiv: proof_shape=bind-only; consumers=sum_edges
 sum_edges: proof_shape=bind-only; consumers=KingDifference.sum_fields_by_kind
-transposeEdge: proof_shape=bind-only; consumers=transpose_mono,transposeDefectEquiv
-transpose: proof_shape=bind-only; consumers=transpose_mono,transposeDefectEquiv
-transpose_mono: proof_shape=bind-only; consumers=transposeDefectEquiv
-transposeDefectEquiv: proof_shape=bind-only; consumers=KingDifference.N_transpose
+transposeEdge: proof_shape=bind-only; consumers=KingClosedForm.transpose_one,KingDifference.N_transpose,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.row_reflect_raw,transposeDefectEquiv,transpose_mono
+transpose: proof_shape=bind-only; consumers=KingClosedForm.canonical_transpose,KingClosedForm.canonical_transpose_twice,KingClosedForm.transpose_one,transposeDefectEquiv,transpose_mono
+transpose_mono: proof_shape=bind-only; consumers=KingClosedForm.transpose_one,transposeDefectEquiv
+transposeDefectEquiv: proof_shape=bind-only; consumers=KingDifference.N_transpose,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.row_reflect_raw
 endpoints_distinct: proof_shape=bind-only; consumers=oneDefect_usesThree
-reflectEdge: proof_shape=bind-only; consumers=reflect_mono,reflectDefectEquiv
-reflect: proof_shape=bind-only; consumers=reflect_mono,reflectDefectEquiv
+reflectEdge: proof_shape=bind-only; consumers=KingDifference.N_reflect,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.row_reflect_raw,reflectDefectEquiv,reflect_mono
+reflect: proof_shape=bind-only; consumers=reflectDefectEquiv,reflect_mono
 rev_lo: proof_shape=bind-only; consumers=reflect_mono
 rev_hi: proof_shape=bind-only; consumers=reflect_mono
 reflect_mono: proof_shape=bind-only; consumers=reflectDefectEquiv
-reflectDefectEquiv: proof_shape=bind-only; consumers=KingDifference.N_reflect
-UsesThree: proof_shape=bind-only; consumers=perm_ext_three,canonical_count_three,oneDefect_usesThree
+reflectDefectEquiv: proof_shape=bind-only; consumers=KingDifference.N_reflect,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.row_reflect_raw
+UsesThree: proof_shape=bind-only; consumers=canonical_count_three,labelled_eq_twentyFour,oneDefect_usesThree,perm_ext_three
 perm_ext_three: proof_shape=bind-only; consumers=canonical_count_three
 canonical_count_three: proof_shape=content; consumers=labelled_eq_twentyFour
 oneDefect_usesThree: proof_shape=content; consumers=labelled_eq_twentyFour
@@ -109,7 +109,7 @@ theorem oneDefect_iff {n k : ℕ} {C : Type*} [DecidableEq C] (f : Cell n k → 
     OneDefect f ↔ ∃! e, mono f e := by
   simp [OneDefect, Finset.card_eq_one_iff_existsUnique]
 
-theorem defectAt_iff {n k : ℕ} {C : Type*} [DecidableEq C]
+private theorem defectAt_iff {n k : ℕ} {C : Type*} [DecidableEq C]
     (e : Edge n k) (f : Cell n k → C) :
     DefectAt e f ↔ OneDefect f ∧ mono f e := by
   rw [oneDefect_iff]
@@ -119,7 +119,7 @@ theorem defectAt_iff {n k : ℕ} {C : Type*} [DecidableEq C]
   · rintro ⟨⟨d, hd, hu⟩, he⟩ a
     exact ⟨fun ha => (hu a ha).trans (hu e he).symm, fun ha => ha ▸ he⟩
 
-noncomputable def defectEquiv {n k : ℕ} {C : Type*} [DecidableEq C] :
+private noncomputable def defectEquiv {n k : ℕ} {C : Type*} [DecidableEq C] :
     {f : Cell n k → C // OneDefect f} ≃ Σ e : Edge n k, {f : Cell n k → C // DefectAt e f} where
   toFun f := by
     let e := Classical.choose ((oneDefect_iff f.val).mp f.property)
@@ -134,7 +134,7 @@ noncomputable def defectEquiv {n k : ℕ} {C : Type*} [DecidableEq C] :
           ((defectAt_iff q.1 q.2.val).mp q.2.property).1)).1
     · rfl
 
-theorem labelled_count {n k : ℕ} : L n k = Nat.card {f : Cell n k → Fin 4 // OneDefect f} := by
+private theorem labelled_count {n k : ℕ} : L n k = Nat.card {f : Cell n k → Fin 4 // OneDefect f} := by
   classical
   simp [L, Nat.card_eq_fintype_card, Fintype.card_subtype]
 
@@ -210,7 +210,7 @@ def transposeDefectEquiv {n k : ℕ} {C : Type*} (e : Edge n k) :
   right_inv f := Subtype.ext rfl
 
 
-theorem endpoints_distinct {n k : ℕ} (e : Edge n k) : end0 e ≠ end1 e := by
+private theorem endpoints_distinct {n k : ℕ} (e : Edge n k) : end0 e ≠ end1 e := by
   cases e <;> simp [end0, end1, lo, hi, Fin.ext_iff, Prod.mk.injEq]
 
 /-- Reflection reverses H endpoints and exchanges D with A. -/
@@ -228,7 +228,7 @@ def reflectEdge {n k : ℕ} : Edge n k ≃ Edge n k where
   left_inv e := by cases e <;> simp
   right_inv e := by cases e <;> simp
 
-def reflect {n k : ℕ} {C : Type*} (f : Cell n k → C) : Cell n k → C :=
+private def reflect {n k : ℕ} {C : Type*} (f : Cell n k → C) : Cell n k → C :=
   fun p => f (p.1,p.2.rev)
 
 private theorem rev_lo {n : ℕ} (i : Fin (n - 1)) : (lo i).rev = hi i.rev := by
@@ -241,7 +241,7 @@ private theorem rev_hi {n : ℕ} (i : Fin (n - 1)) : (hi i).rev = lo i.rev := by
   dsimp [lo, hi, Fin.rev]
   omega
 
-theorem reflect_mono {n k : ℕ} {C : Type*} (f : Cell n k → C) (e : Edge n k) :
+private theorem reflect_mono {n k : ℕ} {C : Type*} (f : Cell n k → C) (e : Edge n k) :
     mono (reflect f) (reflectEdge e) ↔ mono f e := by
   cases e <;> simp [mono, reflect, reflectEdge, end0, end1, rev_lo, rev_hi, eq_comm]
 
@@ -262,7 +262,7 @@ def reflectDefectEquiv {n k : ℕ} {C : Type*} (e : Edge n k) :
   right_inv f := by apply Subtype.ext; funext p; simp [reflect]
 
 
-def UsesThree {X : Type*} (f : X → Fin 4) : Prop :=
+private def UsesThree {X : Type*} (f : X → Fin 4) : Prop :=
   ∃ a b c, f a ≠ f b ∧ f a ≠ f c ∧ f b ≠ f c
 
 private theorem perm_ext_three {X : Type*} (f : X → Fin 4) (hf : UsesThree f)

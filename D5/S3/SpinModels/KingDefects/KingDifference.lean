@@ -10,53 +10,53 @@ admission_basis: escape-witness
 escape_witness: integrate_v (propagation of a cocycle along an arbitrary row),
   integrationEquiv (root and difference field reconstruct a unique colouring),
   horizontal_slot_eq and vertical_slot_eq (rainbow rigidity along clear intervals).
-K: proof_shape=bind-only; consumers=DiffField,integrate,colourEquiv
+K: proof_shape=bind-only; consumers=DiffField,KingDiagonal.DiagonalSlots,KingDiagonal.OrderedPair,KingDiagonal.klein_alphabet,KingDiagonal.klein_zero,KingDiagonal.normalized_recover,KingDiagonal.normalized_valid,KingDiagonal.slot_raw,KingHorizontal.BoundaryData,KingHorizontal.InteriorAlphabet,KingHorizontal.NZPair,KingHorizontal.OrdinaryAlphabet,KingHorizontal.SupportAlphabet,KingHorizontal.boundary_word_map_injective,KingHorizontal.boundary_word_map_surjective,KingHorizontal.coded_boundary,KingHorizontal.coded_boundary_valid,KingHorizontal.lower_pair_values,KingHorizontal.ordinary_value,KingHorizontal.row_reflect_differentiate,KingHorizontal.row_reflect_raw,KingHorizontal.support_alphabet_card,Rainbow,add_add_cancel,add_eq_zero,colourEquiv,count_fixed_edge,defectIntegrationEquiv,difference_unique,differentiate,differentiate_cocycle,differentiate_edgeValue,differentiate_integrate,edgeValue,good_differentiate,integrate,integrate_differentiate,integrate_h,integrate_root,integrate_v,integrationEquiv,neg_self,rainbow_algebra,rainbow_block,raw_differentiate_iff,relabelDefectEquiv,rootZeroEquiv,self_add
 colourEquiv: proof_shape=bind-only; consumers=relabelDefectEquiv
 neg_self: proof_shape=bind-only; consumers=add_eq_zero
-self_add: proof_shape=bind-only; consumers=add_add_cancel,differentiate_cocycle,integrate_v
-add_add_cancel: proof_shape=bind-only; consumers=integrate_h,integrate_v
-add_eq_zero: proof_shape=bind-only; consumers=raw_differentiate_iff,rainbow_algebra
-DiffField: proof_shape=bind-only; consumers=Cocycle,differentiate,integrate
-Cocycle: proof_shape=bind-only; consumers=differentiate_cocycle,integrate_v,integrationEquiv
-differentiate: proof_shape=bind-only; consumers=differentiate_cocycle,differentiate_integrate
-differentiate_cocycle: proof_shape=bind-only; consumers=integrationEquiv,raw_differentiate_iff
-integrate: proof_shape=bind-only; consumers=integrate_h,integrate_v,integrationEquiv
-integrate_root: proof_shape=bind-only; consumers=integrationEquiv,rootZeroEquiv
+self_add: proof_shape=bind-only; consumers=add_add_cancel
+add_add_cancel: proof_shape=bind-only; consumers=integrate_h
+add_eq_zero: proof_shape=bind-only; consumers=rainbow_algebra,raw_differentiate_iff
+DiffField: proof_shape=bind-only; consumers=Cocycle,GoodBlock,KingDiagonal.diagonalSlotEquiv,KingDiagonal.extractSlots,KingDiagonal.extract_valid,KingDiagonal.raw_h_ordinary,KingDiagonal.raw_h_special,KingDiagonal.raw_v_ordinary,KingDiagonal.raw_v_special,KingDiagonal.slotField,KingDiagonal.slot_good,KingDiagonal.slot_raw,KingDiagonal.slot_reconstruction,KingDiagonal.slot_special,KingDiagonal.special_block,KingHorizontal.CutFields,KingHorizontal.bottom_edge_value,KingHorizontal.bottom_field,KingHorizontal.bottom_field_join,KingHorizontal.bottom_field_raw,KingHorizontal.boundary_bottom_shared,KingHorizontal.boundary_bottom_slot_equiv,KingHorizontal.boundary_build,KingHorizontal.boundary_build_raw,KingHorizontal.boundary_extract,KingHorizontal.boundary_extract_valid,KingHorizontal.boundary_h,KingHorizontal.boundary_reconstruct,KingHorizontal.boundary_slot_equiv,KingHorizontal.boundary_top_shared,KingHorizontal.boundary_v,KingHorizontal.boundary_word_equiv,KingHorizontal.horizontal_cut_equiv,KingHorizontal.interior_slot_equiv,KingHorizontal.join_field,KingHorizontal.join_restrict,KingHorizontal.raw_of_halves,KingHorizontal.row_reflect,KingHorizontal.row_reflect_differentiate,KingHorizontal.row_reflect_equiv,KingHorizontal.row_reflect_raw,KingHorizontal.top_edge_value,KingHorizontal.top_field,KingHorizontal.top_field_join,KingHorizontal.top_field_raw,N_e,RawAdmissible,defectIntegrationEquiv,difference_unique,differentiate,differentiate_integrate,edgeValue,goodBlock_of_raw,horizontal_slot_eq,integrate,integrate_h,integrate_root,integrate_v,integrationEquiv,rainbow_block,rainbow_field,rootZeroEquiv,vertical_slot_eq
+Cocycle: proof_shape=bind-only; consumers=KingHorizontal.boundary_build_raw,RawAdmissible,differentiate_cocycle,differentiate_integrate,integrate_v,integrationEquiv,rainbow_field
+differentiate: proof_shape=bind-only; consumers=KingHorizontal.row_reflect_differentiate,defectIntegrationEquiv,difference_unique,differentiate_cocycle,differentiate_edgeValue,differentiate_integrate,good_differentiate,integrate_differentiate,integrate_h,integrate_v,integrationEquiv,rainbow_block,raw_differentiate_iff,rootZeroEquiv
+differentiate_cocycle: proof_shape=bind-only; consumers=integrate_differentiate,integrationEquiv,raw_differentiate_iff
+integrate: proof_shape=bind-only; consumers=KingHorizontal.row_reflect_raw,defectIntegrationEquiv,differentiate_integrate,integrate_differentiate,integrate_h,integrate_root,integrate_v,integrationEquiv,rainbow_field,rootZeroEquiv
+integrate_root: proof_shape=bind-only; consumers=defectIntegrationEquiv,integrate_differentiate,integrationEquiv,rootZeroEquiv
 integrate_h: proof_shape=bind-only; consumers=differentiate_integrate
 integrate_v: proof_shape=content; consumers=differentiate_integrate
-differentiate_integrate: proof_shape=content; consumers=defectIntegrationEquiv,rainbow_field
+differentiate_integrate: proof_shape=content; consumers=KingHorizontal.row_reflect_raw,defectIntegrationEquiv,integrate_differentiate,integrationEquiv,rainbow_field,rootZeroEquiv
 difference_unique: proof_shape=content; consumers=integrate_differentiate
 integrate_differentiate: proof_shape=bind-only; consumers=integrationEquiv,rootZeroEquiv
 integrationEquiv: proof_shape=content; consumers=defectIntegrationEquiv
-edgeValue: proof_shape=bind-only; consumers=RawAdmissible,differentiate_edgeValue
-RawAdmissible: proof_shape=bind-only; consumers=raw_differentiate_iff,defectIntegrationEquiv,N_e
+edgeValue: proof_shape=bind-only; consumers=KingDiagonal.slot_raw,KingDiagonal.special_block,KingHorizontal.bottom_edge_value,KingHorizontal.boundary_build_raw,KingHorizontal.boundary_extract_valid,KingHorizontal.boundary_h,KingHorizontal.top_edge_value,RawAdmissible,differentiate_edgeValue,goodBlock_of_raw
+RawAdmissible: proof_shape=bind-only; consumers=KingDiagonal.diagonalSlotEquiv,KingDiagonal.extract_valid,KingDiagonal.raw_h_ordinary,KingDiagonal.raw_h_special,KingDiagonal.raw_v_ordinary,KingDiagonal.raw_v_special,KingDiagonal.slot_raw,KingDiagonal.slot_reconstruction,KingDiagonal.special_block,KingHorizontal.CutFields,KingHorizontal.bottom_field_raw,KingHorizontal.boundary_bottom_shared,KingHorizontal.boundary_bottom_slot_equiv,KingHorizontal.boundary_build_raw,KingHorizontal.boundary_extract_valid,KingHorizontal.boundary_h,KingHorizontal.boundary_reconstruct,KingHorizontal.boundary_slot_equiv,KingHorizontal.boundary_top_shared,KingHorizontal.boundary_v,KingHorizontal.boundary_word_equiv,KingHorizontal.horizontal_cut_equiv,KingHorizontal.interior_slot_equiv,KingHorizontal.raw_of_halves,KingHorizontal.row_reflect_equiv,KingHorizontal.row_reflect_raw,KingHorizontal.top_field_raw,N_e,defectIntegrationEquiv,goodBlock_of_raw,horizontal_slot_eq,raw_differentiate_iff,rootZeroEquiv,vertical_slot_eq
 differentiate_edgeValue: proof_shape=bind-only; consumers=raw_differentiate_iff
-raw_differentiate_iff: proof_shape=bind-only; consumers=defectIntegrationEquiv,rootZeroEquiv
-defectIntegrationEquiv: proof_shape=content; consumers=rootZeroEquiv,count_fixed_edge
+raw_differentiate_iff: proof_shape=bind-only; consumers=KingHorizontal.row_reflect_raw,defectIntegrationEquiv,rootZeroEquiv
+defectIntegrationEquiv: proof_shape=content; consumers=KingHorizontal.row_reflect_raw,count_fixed_edge,rootZeroEquiv
 rootZeroEquiv: proof_shape=content; consumers=none
-N_e: proof_shape=bind-only; consumers=count_fixed_edge,count_from_fields,N_H,N_D
+N_e: proof_shape=bind-only; consumers=KingDiagonal.N_D_two_columns,KingDiagonal.N_D_two_rows,KingDiagonal.diagonal_count,KingHorizontal.boundary_count,KingHorizontal.boundary_count_at,KingHorizontal.boundary_count_pos,KingHorizontal.boundary_count_zero,KingHorizontal.boundary_one_column,KingHorizontal.boundary_row_sum,KingHorizontal.boundary_rows_count,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.horizontal_sum,KingHorizontal.horizontal_three_rows,KingHorizontal.horizontal_two_columns,KingHorizontal.horizontal_two_rows,KingHorizontal.interior_count,KingHorizontal.interior_count_alphabets,KingHorizontal.interior_count_support,KingHorizontal.interior_one_column_count,KingHorizontal.interior_row_sum,KingHorizontal.interior_three_rows_count,N_D,N_H,N_reflect,N_transpose,count_fixed_edge,count_from_fields,fields_eq_six_canonical,sum_fields_by_kind
 relabelDefectEquiv: proof_shape=bind-only; consumers=count_fixed_edge
-count_fixed_edge: proof_shape=content; consumers=count_from_fields,N_transpose,N_reflect
+count_fixed_edge: proof_shape=content; consumers=KingHorizontal.horizontal_count_row_reflect,N_reflect,N_transpose,count_from_fields
 count_from_fields: proof_shape=content; consumers=fields_eq_six_canonical
-Rainbow: proof_shape=bind-only; consumers=rainbow_algebra,rainbow_block,good_differentiate
+Rainbow: proof_shape=bind-only; consumers=good_differentiate,rainbow_algebra,rainbow_block
 rainbow_algebra: proof_shape=bind-only; consumers=rainbow_block
 rainbow_block: proof_shape=bind-only; consumers=rainbow_field
 GoodBlock: proof_shape=bind-only; consumers=good_differentiate,rainbow_field
 good_differentiate: proof_shape=bind-only; consumers=rainbow_field
 rainbow_field: proof_shape=bind-only; consumers=goodBlock_of_raw
-BlockAvoids: proof_shape=bind-only; consumers=goodBlock_of_raw,horizontal_slot_eq,vertical_slot_eq
-goodBlock_of_raw: proof_shape=bind-only; consumers=horizontal_slot_eq,vertical_slot_eq
-horizontal_slot_eq: proof_shape=content; consumers=KingDiagonal.raw_h_ordinary,
+BlockAvoids: proof_shape=bind-only; consumers=KingDiagonal.diagonal_clear,KingHorizontal.boundary_h,KingHorizontal.boundary_v,goodBlock_of_raw,horizontal_slot_eq,vertical_slot_eq
+goodBlock_of_raw: proof_shape=bind-only; consumers=KingDiagonal.extract_valid,horizontal_slot_eq,vertical_slot_eq
+horizontal_slot_eq: proof_shape=content; consumers=KingDiagonal.raw_h_ordinary,KingDiagonal.raw_h_special,KingHorizontal.boundary_h
   KingDiagonal.raw_h_special,KingHorizontal.boundary_h
-vertical_slot_eq: proof_shape=content; consumers=KingDiagonal.raw_v_ordinary,
+vertical_slot_eq: proof_shape=content; consumers=KingDiagonal.raw_v_ordinary,KingDiagonal.raw_v_special,KingHorizontal.boundary_v
   KingDiagonal.raw_v_special,KingHorizontal.boundary_v
 fields_eq_six_canonical: proof_shape=content; consumers=count_by_kind
 N_transpose: proof_shape=bind-only; consumers=sum_fields_by_kind
 N_reflect: proof_shape=bind-only; consumers=sum_fields_by_kind
-N_H: proof_shape=bind-only; consumers=sum_fields_by_kind,count_by_kind
-N_D: proof_shape=bind-only; consumers=sum_fields_by_kind,count_by_kind
+N_H: proof_shape=bind-only; consumers=KingHorizontal.horizontal_sum,KingHorizontal.horizontal_three_rows,KingHorizontal.horizontal_two_columns,KingHorizontal.horizontal_two_rows,count_by_kind,sum_fields_by_kind
+N_D: proof_shape=bind-only; consumers=KingDiagonal.N_D_closed,KingDiagonal.N_D_two_columns,KingDiagonal.N_D_two_rows,count_by_kind,sum_fields_by_kind
 sum_fields_by_kind: proof_shape=bind-only; consumers=count_by_kind
-count_by_kind: proof_shape=content; consumers=KingClosedForm.closed_form,
+count_by_kind: proof_shape=content; consumers=KingClosedForm.closed_form,KingClosedForm.width_three,KingClosedForm.width_two
   KingClosedForm.width_two,KingClosedForm.width_three
 The finite Klein identities support uniform structural theorems; no bounded
 colouring enumeration or numerical instance is asserted.
@@ -72,7 +72,7 @@ open KingGrid
 
 abbrev K := ZMod 2 × ZMod 2
 
-noncomputable def colourEquiv : Fin 4 ≃ K :=
+private noncomputable def colourEquiv : Fin 4 ≃ K :=
   Fintype.equivOfCardEq (by simp [K])
 
 private theorem neg_self (a : K) : -a = a := by
@@ -102,7 +102,7 @@ def differentiate {N M : ℕ} (f : Cell (N + 1) (M + 1) → K) : DiffField N M w
   h i j := f (i,j.castSucc) + f (i,j.succ)
   v i j := f (i.castSucc,j) + f (i.succ,j)
 
-theorem differentiate_cocycle {N M : ℕ} (f : Cell (N + 1) (M + 1) → K) :
+private theorem differentiate_cocycle {N M : ℕ} (f : Cell (N + 1) (M + 1) → K) :
     Cocycle (differentiate f) := by
   intro i j
   dsimp [differentiate]
@@ -113,10 +113,10 @@ theorem differentiate_cocycle {N M : ℕ} (f : Cell (N + 1) (M + 1) → K) :
 def integrate {N M : ℕ} (t : K) (s : DiffField N M) : Cell (N + 1) (M + 1) → K :=
   fun p => t + Fin.partialSum (fun i => s.v i 0) p.1 + Fin.partialSum (s.h p.1) p.2
 
-theorem integrate_root {N M : ℕ} (t : K) (s : DiffField N M) :
+private theorem integrate_root {N M : ℕ} (t : K) (s : DiffField N M) :
     integrate t s (0, 0) = t := by simp [integrate]
 
-theorem integrate_h {N M : ℕ} (t : K) (s : DiffField N M)
+private theorem integrate_h {N M : ℕ} (t : K) (s : DiffField N M)
     (i : Fin (N + 1)) (j : Fin M) :
     (differentiate (integrate t s)).h i j = s.h i j := by
   dsimp [differentiate, integrate]
@@ -124,7 +124,7 @@ theorem integrate_h {N M : ℕ} (t : K) (s : DiffField N M)
   simpa only [add_assoc] using add_add_cancel
     (t + Fin.partialSum (fun i => s.v i 0) i + Fin.partialSum (s.h i) j.castSucc) (s.h i j)
 
-theorem integrate_v {N M : ℕ} (t : K) (s : DiffField N M) (hs : Cocycle s)
+private theorem integrate_v {N M : ℕ} (t : K) (s : DiffField N M) (hs : Cocycle s)
     (i : Fin N) (j : Fin (M + 1)) :
     (differentiate (integrate t s)).v i j = s.v i j := by
   induction j using Fin.inductionOn with
@@ -152,7 +152,7 @@ theorem differentiate_integrate {N M : ℕ} (t : K) (s : DiffField N M)
   · funext i j
     exact integrate_v t s hs i j
 
-theorem difference_unique {N M : ℕ} (f g : Cell (N + 1) (M + 1) → K)
+private theorem difference_unique {N M : ℕ} (f g : Cell (N + 1) (M + 1) → K)
     (hr : f (0, 0) = g (0, 0)) (hd : differentiate f = differentiate g) : f = g := by
   have base (i : Fin (N + 1)) : f (i,0) = g (i,0) := by
     induction i using Fin.inductionOn with
@@ -172,13 +172,13 @@ theorem difference_unique {N M : ℕ} (f g : Cell (N + 1) (M + 1) → K)
     rw [ih] at hh
     exact add_left_cancel hh
 
-theorem integrate_differentiate {N M : ℕ} (f : Cell (N + 1) (M + 1) → K) :
+private theorem integrate_differentiate {N M : ℕ} (f : Cell (N + 1) (M + 1) → K) :
     integrate (f (0, 0)) (differentiate f) = f :=
   difference_unique _ _ (integrate_root _ _)
     (differentiate_integrate _ _ (differentiate_cocycle f))
 
 /-- No defect restriction is needed for discrete integration. -/
-def integrationEquiv (N M : ℕ) :
+private def integrationEquiv (N M : ℕ) :
     (Cell (N + 1) (M + 1) → K) ≃ K × {s : DiffField N M // Cocycle s} where
   toFun f := (f (0, 0), ⟨differentiate f, differentiate_cocycle f⟩)
   invFun q := integrate q.1 q.2.val
@@ -197,7 +197,7 @@ def edgeValue {N M : ℕ} (s : DiffField N M) : Edge (N + 1) (M + 1) → K
 def RawAdmissible {N M : ℕ} (e : Edge (N + 1) (M + 1)) (s : DiffField N M) : Prop :=
   Cocycle s ∧ ∀ d, edgeValue s d = 0 ↔ d = e
 
-theorem differentiate_edgeValue {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
+private theorem differentiate_edgeValue {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
     (e : Edge (N + 1) (M + 1)) :
     edgeValue (differentiate f) e = f (end0 e) + f (end1 e) := by
   cases e with
@@ -235,7 +235,7 @@ def defectIntegrationEquiv {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
     exact Subtype.ext (differentiate_integrate _ _ q.2.property.1)
 
 /-- The field alone parametrizes colourings whose root colour is zero. -/
-def rootZeroEquiv {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
+private def rootZeroEquiv {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
     {f : Cell (N + 1) (M + 1) → K // DefectAt e f ∧ f (0, 0) = 0} ≃
       {s : DiffField N M // RawAdmissible e s} where
   toFun f := ⟨differentiate f.val, (raw_differentiate_iff f.val e).mpr f.property.1⟩
@@ -268,14 +268,14 @@ theorem count_fixed_edge {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
     Nat.card_congr (defectIntegrationEquiv e), Nat.card_prod]
   simp [K, N_e, Nat.card_eq_fintype_card]
 
-theorem count_from_fields (N M : ℕ) :
+private theorem count_from_fields (N M : ℕ) :
     L (N + 1) (M + 1) = 4 * ∑ e : Edge (N + 1) (M + 1), N_e e := by
   rw [count_by_edge]
   simp_rw [count_fixed_edge]
   exact (Finset.mul_sum ..).symm
 
 /-- The six pairs of the four vertices of a square. -/
-def Rainbow (a b c d : K) : Prop :=
+private def Rainbow (a b c d : K) : Prop :=
   a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d
 
 private theorem rainbow_algebra (a b c d : K) :
@@ -319,7 +319,7 @@ private theorem rainbow_algebra (a b c d : K) :
       exact hx hz
 
 /-- Rainbow squares have constant opposite slots and distinct nonzero directions. -/
-theorem rainbow_block {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
+private theorem rainbow_block {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
     (i : Fin N) (j : Fin M) :
     Rainbow (f (i.castSucc,j.castSucc)) (f (i.castSucc,j.succ))
       (f (i.succ,j.castSucc)) (f (i.succ,j.succ)) ↔
@@ -332,7 +332,7 @@ theorem rainbow_block {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
 
 
 /-- All six bonds of an elementary block have nonzero difference. -/
-def GoodBlock {N M : ℕ} (s : DiffField N M) (i : Fin N) (j : Fin M) : Prop :=
+private def GoodBlock {N M : ℕ} (s : DiffField N M) (i : Fin N) (j : Fin M) : Prop :=
   s.h i.castSucc j ≠ 0 ∧ s.v i j.castSucc ≠ 0 ∧
     s.h i.castSucc j + s.v i j.succ ≠ 0 ∧
     s.h i.castSucc j + s.v i j.castSucc ≠ 0 ∧
@@ -346,7 +346,7 @@ private theorem good_differentiate {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
   simp [GoodBlock, Rainbow, differentiate, add_assoc, add_left_comm]
 
 /-- A cocycle has a good block exactly when its opposite slots agree. -/
-theorem rainbow_field {N M : ℕ} (s : DiffField N M) (hs : Cocycle s)
+private theorem rainbow_field {N M : ℕ} (s : DiffField N M) (hs : Cocycle s)
     (i : Fin N) (j : Fin M) :
     GoodBlock s i j ↔
       s.h i.castSucc j = s.h i.succ j ∧ s.v i j.castSucc = s.v i j.succ ∧
@@ -438,7 +438,7 @@ theorem vertical_slot_eq {N M : ℕ} (e : Edge (N + 1) (M + 1))
         (hclear b ha (by simp))).2.1
 
 /-- The canonical count is one sixth of the total root-zero field count. -/
-theorem fields_eq_six_canonical (N M : ℕ) (hN : 1 ≤ N) (hM : 1 ≤ M) :
+private theorem fields_eq_six_canonical (N M : ℕ) (hN : 1 ≤ N) (hM : 1 ≤ M) :
     (∑ e : Edge (N + 1) (M + 1), N_e e) = 6 * T (N + 1) (M + 1) := by
   have h := labelled_eq_twentyFour (N + 1) (M + 1) (by omega) (by omega)
   rw [count_from_fields] at h
@@ -468,7 +468,7 @@ noncomputable def N_D (N M : ℕ) : ℕ :=
   ∑ i : Fin N, ∑ j : Fin M, N_e (.D i j : Edge (N + 1) (M + 1))
 
 /-- Transposition and reflection reduce the four orientations to H and D. -/
-theorem sum_fields_by_kind (N M : ℕ) :
+private theorem sum_fields_by_kind (N M : ℕ) :
     (∑ e : Edge (N + 1) (M + 1), N_e e) = N_H N M + N_H M N + 2 * N_D N M := by
   rw [sum_edges]
   have hV : (∑ i : Fin N, ∑ j : Fin (M + 1), N_e (.V i j : Edge (N + 1) (M + 1))) =

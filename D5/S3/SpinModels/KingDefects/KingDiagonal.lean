@@ -9,18 +9,18 @@
 admission_basis: escape-witness
 escape_witness: diagonalSlotEquiv (the exact diagonal slot classification),
   diagonal_count (the exact count of compatible words).
-klein_zero: proof_shape=bind-only; consumers=special_block,slot_raw
+klein_zero: proof_shape=bind-only; consumers=slot_raw,special_block
 klein_alphabet: proof_shape=bind-only; consumers=extract_valid,slot_good
-DiagonalSlots: proof_shape=bind-only; consumers=SlotValid,slotField,extractSlots,normalizedSlots
-SlotValid: proof_shape=bind-only; consumers=extract_valid,slot_raw,diagonalSlotEquiv
-slotField: proof_shape=bind-only; consumers=slot_reconstruction,slot_raw,diagonalSlotEquiv
-diagonal_clear: proof_shape=bind-only; consumers=raw_h_ordinary,raw_v_ordinary,extract_valid
-special_block: proof_shape=bind-only; consumers=slot_reconstruction,extract_valid
-raw_h_ordinary: proof_shape=bind-only; consumers=slot_reconstruction,extract_valid
-raw_v_ordinary: proof_shape=bind-only; consumers=slot_reconstruction,extract_valid
-raw_h_special: proof_shape=bind-only; consumers=slot_reconstruction,extract_valid
-raw_v_special: proof_shape=bind-only; consumers=slot_reconstruction,extract_valid
-extractSlots: proof_shape=bind-only; consumers=slot_reconstruction,diagonalSlotEquiv
+DiagonalSlots: proof_shape=bind-only; consumers=SlotValid,diagonalSlotEquiv,extractSlots,extract_slotField,normalizedEquiv,normalizedSlots,normalized_recover,slotField,slot_good,slot_raw,slot_special,slotsWord
+SlotValid: proof_shape=bind-only; consumers=diagonalSlotEquiv,extract_valid,normalizedEquiv,normalized_recover,normalized_valid,slot_good,slot_raw
+slotField: proof_shape=bind-only; consumers=diagonalSlotEquiv,extract_slotField,slot_good,slot_raw,slot_reconstruction,slot_special
+diagonal_clear: proof_shape=bind-only; consumers=extract_valid,raw_h_ordinary,raw_h_special,raw_v_ordinary,raw_v_special
+special_block: proof_shape=bind-only; consumers=extract_valid,slot_reconstruction
+raw_h_ordinary: proof_shape=bind-only; consumers=extract_valid,slot_reconstruction
+raw_v_ordinary: proof_shape=bind-only; consumers=extract_valid,slot_reconstruction
+raw_h_special: proof_shape=bind-only; consumers=extract_valid,slot_reconstruction
+raw_v_special: proof_shape=bind-only; consumers=extract_valid,slot_reconstruction
+extractSlots: proof_shape=bind-only; consumers=diagonalSlotEquiv,extract_slotField,extract_valid,slot_reconstruction
 slot_reconstruction: proof_shape=content; consumers=diagonalSlotEquiv
 extract_slotField: proof_shape=bind-only; consumers=diagonalSlotEquiv
 extract_valid: proof_shape=content; consumers=diagonalSlotEquiv
@@ -28,32 +28,32 @@ slot_good: proof_shape=bind-only; consumers=slot_raw
 slot_special: proof_shape=bind-only; consumers=slot_raw
 slot_raw: proof_shape=bind-only; consumers=diagonalSlotEquiv
 diagonalSlotEquiv: proof_shape=content; consumers=diagonal_count
-WordIndex: proof_shape=bind-only; consumers=WordCompatible,leftRule,rightRule,SlotsIndex
-WordCompatible: proof_shape=bind-only; consumers=word_cover,word_card_add,normalizedEquiv
-leftRule: proof_shape=bind-only; consumers=word_cover,left_card,intersection_card
-rightRule: proof_shape=bind-only; consumers=word_cover,right_card,intersection_card
+WordIndex: proof_shape=bind-only; consumers=SlotsIndex,WordCompatible,intersection_card,leftRule,left_card,rightRule,right_card,word_card,word_card_add,word_cover
+WordCompatible: proof_shape=bind-only; consumers=normalizedEquiv,normalized_valid,word_card,word_card_add,word_cover
+leftRule: proof_shape=bind-only; consumers=intersection_card,left_card,word_card_add,word_cover
+rightRule: proof_shape=bind-only; consumers=intersection_card,right_card,word_card_add,word_cover
 word_cover: proof_shape=content; consumers=word_card_add
 unary_card: proof_shape=bind-only; consumers=left_card,right_card
 left_card: proof_shape=bind-only; consumers=word_card_add
 right_card: proof_shape=bind-only; consumers=word_card_add
 intersection_card: proof_shape=bind-only; consumers=word_card_add
 card_or_add_inter: proof_shape=bind-only; consumers=word_card_add
-emptyIndicator: proof_shape=bind-only; consumers=F,word_card_add,F_add,indicator_corners
-F: proof_shape=bind-only; consumers=diagonal_count,F_piecewise,F_add,sum_F
-word_card_add: proof_shape=content; consumers=word_card,F_add
-word_card: proof_shape=content; consumers=diagonal_count,F_add
-OrderedPair: proof_shape=bind-only; consumers=pair_card,normalizedSlots,normalizedEquiv
+emptyIndicator: proof_shape=bind-only; consumers=F,F_add,F_piecewise,indicator_corners,sum_F,word_card_add
+F: proof_shape=bind-only; consumers=F_add,F_piecewise,diagonal_count,sum_F,word_card
+word_card_add: proof_shape=content; consumers=F_add,word_card
+word_card: proof_shape=content; consumers=F_add,diagonal_count
+OrderedPair: proof_shape=bind-only; consumers=normalizedEquiv,normalizedSlots,normalized_valid,pair_card,third_ne,word_recover
 pair_card: proof_shape=bind-only; consumers=diagonal_count
-SlotsIndex: proof_shape=bind-only; consumers=normalizedSlots,slotsWord,normalizedEquiv
-normalizedSlots: proof_shape=bind-only; consumers=normalized_valid,normalized_recover
+SlotsIndex: proof_shape=bind-only; consumers=normalizedEquiv,normalizedSlots,normalized_valid,slotsWord,word_recover
+normalizedSlots: proof_shape=bind-only; consumers=normalizedEquiv,normalized_recover,normalized_valid,word_recover
 third_ne: proof_shape=bind-only; consumers=normalized_valid,word_recover
 normalized_valid: proof_shape=bind-only; consumers=normalizedEquiv
-slotsWord: proof_shape=bind-only; consumers=normalized_recover,word_recover,normalizedEquiv
+slotsWord: proof_shape=bind-only; consumers=normalizedEquiv,normalized_recover,word_recover
 normalized_recover: proof_shape=bind-only; consumers=normalizedEquiv
 word_recover: proof_shape=bind-only; consumers=normalizedEquiv
 normalizedEquiv: proof_shape=bind-only; consumers=diagonal_count
-diagonal_count: proof_shape=content; consumers=N_D_closed,N_D_two_rows,N_D_two_columns
-F_piecewise: proof_shape=bind-only; consumers=N_D_two_rows,N_D_two_columns
+diagonal_count: proof_shape=content; consumers=N_D_closed,N_D_two_columns,N_D_two_rows
+F_piecewise: proof_shape=bind-only; consumers=N_D_two_columns,N_D_two_rows
 F_add: proof_shape=content; consumers=sum_F
 geometric_two: proof_shape=bind-only; consumers=geometric_two_reverse,sum_A
 geometric_two_reverse: proof_shape=bind-only; consumers=sum_A
@@ -102,7 +102,7 @@ private theorem klein_alphabet (x y t : K) (hx : x ≠ 0) (hy : y ≠ 0)
   exact h x y t hx hy hxy
 
 /-- Four ordinary words, with the two split-slot values recorded separately. -/
-@[ext] structure DiagonalSlots {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) where
+@[ext] private structure DiagonalSlots {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) where
   x : K
   y : K
   U : {i : Fin N // i < i₀} → K
@@ -111,7 +111,7 @@ private theorem klein_alphabet (x y t : K) (hx : x ≠ 0) (hy : y ≠ 0)
   D : {j : Fin M // j₀ < j} → K
 
 /-- The four alphabets and every vertical-horizontal cross exclusion. -/
-def SlotValid {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
+private def SlotValid {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
     (w : DiagonalSlots i₀ j₀) : Prop :=
   w.x ≠ 0 ∧ w.y ≠ 0 ∧ w.x ≠ w.y ∧
     (∀ i, w.U i = w.y ∨ w.U i = w.x + w.y) ∧
@@ -122,7 +122,7 @@ def SlotValid {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
     (∀ i j, w.V i ≠ w.C j) ∧ (∀ i j, w.V i ≠ w.D j)
 
 /-- Fill each ordinary slot constantly and split the exceptional row and column. -/
-def slotField {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
+private def slotField {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
     (w : DiagonalSlots i₀ j₀) : DiffField N M where
   h i j := if h : j < j₀ then w.C ⟨j,h⟩ else
     if h : j₀ < j then w.D ⟨j,h⟩ else if i.val ≤ i₀.val then w.x else w.y
@@ -221,7 +221,7 @@ private theorem raw_v_special {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M)
     omega
 
 /-- Read ordinary slots on the coordinate axes and the split horizontal values locally. -/
-def extractSlots {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M)
+private def extractSlots {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M)
     (s : DiffField N M) : DiagonalSlots i₀ j₀ where
   x := s.h i₀.castSucc j₀
   y := s.h i₀.succ j₀
@@ -426,7 +426,7 @@ private theorem slot_raw {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
       simp [hn]
 
 /-- Exact classification by an ordered nonzero unequal pair and four compatible words. -/
-def diagonalSlotEquiv {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) :
+private def diagonalSlotEquiv {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) :
     {s : DiffField N M // RawAdmissible (.D i₀ j₀) s} ≃
       {w : DiagonalSlots i₀ j₀ // SlotValid w} where
   toFun s := ⟨extractSlots i₀ j₀ s.val, extract_valid i₀ j₀ s.val s.property⟩
@@ -437,10 +437,10 @@ def diagonalSlotEquiv {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) :
 #print axioms diagonalSlotEquiv
 
 /-- Word positions in the four ordinary slot families. -/
-abbrev WordIndex (A B C D : Type) := A ⊕ B ⊕ C ⊕ D
+private abbrev WordIndex (A B C D : Type) := A ⊕ B ⊕ C ⊕ D
 
 /-- `true` denotes the third colour; `false` denotes the family's other colour. -/
-def WordCompatible {A B C D : Type} (f : WordIndex A B C D → Bool) : Prop :=
+private def WordCompatible {A B C D : Type} (f : WordIndex A B C D → Bool) : Prop :=
   (∀ a c, f (.inl a) = false ∨ f (.inr (.inr (.inl c))) = false) ∧
   (∀ b d, f (.inr (.inl b)) = false ∨ f (.inr (.inr (.inr d))) = false) ∧
   (∀ a d, f (.inl a) ≠ f (.inr (.inr (.inr d)))) ∧
@@ -623,11 +623,11 @@ private theorem card_or_add_inter {I : Type} [Finite I] (p q : I → Prop) :
       Finset.card_union_add_card_inter (Finset.univ.filter p) (Finset.univ.filter q)
 
 /-- The zero-length indicator preserves all empty-word cases. -/
-def emptyIndicator (a b c d : ℕ) : ℕ :=
+private def emptyIndicator (a b c d : ℕ) : ℕ :=
   if (a = 0 ∨ d = 0) ∧ (b = 0 ∨ c = 0) then 1 else 0
 
 /-- Two classes according to which direction omits the third colour. -/
-def F (a b c d : ℕ) : ℕ :=
+private def F (a b c d : ℕ) : ℕ :=
   (if b = 0 then 2^c else 1) * (if a = 0 then 2^d else 1) +
     (if d = 0 then 2^a else 1) * (if c = 0 then 2^b else 1) -
     emptyIndicator a b c d
@@ -665,7 +665,7 @@ private theorem word_card (A B C D : Type) [Fintype A] [Fintype B]
   omega
 
 /-- The six ordered distinct nonzero Klein directions. -/
-abbrev OrderedPair := {p : K × K // p.1 ≠ 0 ∧ p.2 ≠ 0 ∧ p.1 ≠ p.2}
+private abbrev OrderedPair := {p : K × K // p.1 ≠ 0 ∧ p.2 ≠ 0 ∧ p.1 ≠ p.2}
 
 private theorem pair_card : Nat.card OrderedPair = 6 := by
   rw [Nat.card_eq_fintype_card]
@@ -778,7 +778,7 @@ private def normalizedEquiv {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) :
   right_inv w := Subtype.ext (normalized_recover w.val w.property)
 
 /-- The exact per-position count, including every empty side. -/
-theorem diagonal_count {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) :
+private theorem diagonal_count {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) :
     N_e (.D i₀ j₀ : Edge (N + 1) (M + 1)) =
       6 * F i₀.val (N - 1 - i₀.val) j₀.val (M - 1 - j₀.val) := by
   rw [N_e, Nat.card_congr (diagonalSlotEquiv i₀ j₀),
@@ -793,7 +793,7 @@ theorem diagonal_count {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) :
 #print axioms diagonal_count
 
 /-- The support count in the exhaustive piecewise form, with empty sides retained. -/
-theorem F_piecewise (a b c d : ℕ) :
+private theorem F_piecewise (a b c d : ℕ) :
     F a b c d =
       if a + b = 0 then 2 ^ (c + d) else
       if c + d = 0 then 2 ^ (a + b) else
@@ -914,7 +914,7 @@ theorem N_D_closed (N M : ℕ) (hN : 2 ≤ N) (hM : 2 ≤ M) :
   ring
 
 /-- A two-row rectangle has no ordinary vertical slots. -/
-theorem N_D_two_rows (M : ℕ) : N_D 1 M = 6 * (M * 2^(M-1)) := by
+private theorem N_D_two_rows (M : ℕ) : N_D 1 M = 6 * (M * 2^(M-1)) := by
   unfold N_D
   simp only [Fin.sum_univ_one]
   have point (j : Fin M) : N_e (.D (0 : Fin 1) j : Edge 2 (M+1)) = 6*2^(M-1) := by

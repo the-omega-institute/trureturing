@@ -9,18 +9,17 @@
 admission_basis: escape-witness
 escape_witness: closed_form, width_two, width_three (the diagonal and horizontal
   slot bijections expanded through this delivery give the literal colouring counts).
-normal_exists_unique: proof_shape=bind-only; consumers=normalize,normalize_spec,normal_unique
-normalize: proof_shape=bind-only; consumers=normalize_spec,canonical_transpose
+normal_exists_unique: proof_shape=bind-only; consumers=normal_unique,normalize,normalize_spec
+normalize: proof_shape=bind-only; consumers=canonical_transpose,canonical_transpose_twice,normalize_spec
 normalize_spec: proof_shape=bind-only; consumers=canonical_transpose,canonical_transpose_twice
 normal_unique: proof_shape=bind-only; consumers=canonical_transpose_twice
 transpose_one: proof_shape=bind-only; consumers=canonical_transpose
 canonical_transpose: proof_shape=bind-only; consumers=canonical_transpose_twice,symmetry
 canonical_transpose_twice: proof_shape=bind-only; consumers=symmetry
 symmetry: proof_shape=bind-only; consumers=width_three
-closed_form: proof_shape=content; consumers=diagonal_closed,HardinA229574.result,
-  HardinA229575.result,HardinA229576.result,HardinA229577.result
-width_two: proof_shape=content; consumers=width_three,HardinA229572.result
-width_three: proof_shape=content; consumers=diagonal_closed,HardinA229573.result
+closed_form: proof_shape=content; consumers=HardinA229574.result,HardinA229575.result,HardinA229576.result,HardinA229577.result,diagonal_closed
+width_two: proof_shape=content; consumers=HardinA229572.result,width_three
+width_three: proof_shape=content; consumers=HardinA229573.result,diagonal_closed
 diagonal_closed: proof_shape=bind-only; consumers=HardinA229571.result
 All dimensions are unbounded; no bounded enumeration, checker, numerical
 reduction or certified instance is asserted.
@@ -101,7 +100,7 @@ private theorem canonical_transpose_twice {n k : ℕ}
   rw [he,hp]
   rfl
 
-theorem symmetry (n k : ℕ) : T n k = T k n := by
+private theorem symmetry (n k : ℕ) : T n k = T k n := by
   classical
   have h (a b : ℕ) : T a b =
       Nat.card {f : Cell a b → Fin 4 // OneDefect f ∧ normal f} := by
