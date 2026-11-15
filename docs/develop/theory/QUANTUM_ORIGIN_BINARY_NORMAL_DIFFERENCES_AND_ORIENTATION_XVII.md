@@ -1617,3 +1617,196 @@ $$
 [Q182B]: https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf "S. Boyd、L. Vandenberghe，Convex Optimization，§2.6.1（印刷页53）及练习2.31：有限维对偶锥与双极性。"
 
 ## 追加锚（本行以下为增补区）
+
+## 183. 原 minimum 的零面斜率与影体尺寸
+
+### 183.1 只用原菜单定义一阶关系
+
+**定义 183.1（共同零面上的出射斜率）。** 先只采用178.1的完整有限维原域、实际 L2 及全混态 $\mathsf Z_2$，不加 $\mathsf{PL}$。固定实际二元球 $B$，选球坐标 $a_n=(1,n)$、$b_n=(1,-n)$，$n\in S^2$。按179.2定义 $H_B=\bigcap_{p\in P_B}D_p$，令 $J_B=\operatorname{cone}H_B$，约定 $\operatorname{cone}\varnothing=\{0\}$。把原 minimum 齐次延伸到原正锥：
+
+$$
+\begin{aligned}
+m_a(v)&=\min_{f\in\mathcal F_a}f(v),\qquad v\in C,\\
+\mathcal R_{B,a}&=\{f\in\mathcal F_a:f|_{H_B}=0\},\\
+\delta_{B,a}(x)&=\min_{f\in\mathcal R_{B,a}}f(x),\qquad x\in K,\\
+\delta_B(n)&=\delta_{B,a_n}(b_n).
+\end{aligned}
+\tag{183.1}
+$$
+
+下列 $a$ 均属于 $P_B$。这里 $m_a|_K=T_a$，$m_a(0)=0$；非零 $v\in C$ 满足 $m_a(v)=u(v)T_a(v/u(v))$，没有更换原效应菜单。取任意 $z\in\operatorname{ri}J_B$，定义出射斜率
+
+$$
+g_{B,a}(x)=\lim_{t\downarrow0}\frac{m_a(z+tx)}{t}.
+\tag{183.2}
+$$
+
+下条证明此极限存在且与所取相对内点无关。若 $H_B=\varnothing$，唯一可取的 $z$ 是零质量元 $0$，不是归一化准备；若 $H_B\ne\varnothing$，可选 $z\in\operatorname{ri}H_B$，这时 $m_a(z+tx)=(1+t)T_a((z+tx)/(1+t))$，所以(183.2)完全由原归一化读数恢复。
+
+**定理 183.2（斜率、零关系与共同菜单的精确接口）。** 在183.1的较弱背景下，$\mathcal R_{B,a}$ 非空紧凸，(183.2)对每个 $x\in K$ 成立，并且
+
+$$
+\boxed{\quad
+g_{B,a}(x)=\delta_{B,a}(x)
+=\lim_{L\to\infty}\min_{f\in\mathcal F_a}\bigl(f(x)+Lf(z)\bigr).
+\quad}
+\tag{183.3}
+$$
+
+对固定 $B,a,z$，此收敛在 $x\in K$ 上一致，且没有依赖 $z$ 的极限值。令 $\tau_a(x)=\min\{f(x):f\in\mathcal F_a,\ f|_{D_a}=0\}$，则
+
+$$
+T_a(x)\le\delta_{B,a}(x)\le\tau_a(x),\qquad
+T_a(x)=0\ \Longleftrightarrow\
+\delta_{B,a}(x)=0\ \Longleftrightarrow\ \tau_a(x)=0.
+\tag{183.4}
+$$
+
+这些零值等价不把三者的非零数值等同。特别地，$\delta_B(n)=0$ 当且仅当该原直径满足 AD；较弱背景只保证 $0\le\delta_B(n)\le1$。
+
+证明。178.2给共同确认者 $e_a\in\mathcal F_a$，其零面恰为 $D_a$。因 $H_B\subseteq D_a$，它属于 $\mathcal R_{B,a}$，给非空性；原紧区间的闭仿射截集给紧凸性。非负线性泛函在 $z\in\operatorname{ri}J_B$ 为零，当且仅当它消去整个 $J_B$，等价于消去 $H_B$；此相对内部步骤也包括 $J_B=\{0\}$。因此 $m_a(z)=0$，且
+
+$$
+\frac{m_a(z+tx)}t
+=\min_{f\in\mathcal F_a}\bigl(f(x)+t^{-1}f(z)\bigr)
+\le\delta_{B,a}(x)\le1.
+\tag{183.5}
+$$
+
+右侧最小值随 $t\downarrow0$ 单调增加。对 $t_j\downarrow0$ 选极小者 $f_j$，则 $0\le f_j(z)\le t_j$。紧性给聚点 $f\in\mathcal F_a$，它消去 $z$，所以属于 $\mathcal R_{B,a}$；同时(183.5)的左侧不小于 $f_j(x)$，极限下界因而不小于 $\delta_{B,a}(x)$。这给(183.3)。固定 $a$ 的紧效应菜单使 $\delta_{B,a}$ 在 $K$ 上 Lipschitz；若一致收敛失败，取有固定残差的 $x_j\to x$ 及上述 $f_j\to f$，同一比较给矛盾。此处使用的是成熟紧罚项机制，在本条内支付原菜单与共同零面的参数对应。
+
+消去 $D_a$ 的共同菜单包含于 $\mathcal R_{B,a}\subseteq\mathcal F_a$，给(183.4)的数值不等式。若 $T_a(x)=0$，则 $x\in D_a$，共同 $e_a$ 已同时消去整个 $D_a$，故 $\tau_a(x)=0$；反向由不等式。这里不要求在 $x$ 达到原 minimum 的每张尺都消去 $D_a$。若 $H_B=\varnothing$，$\mathcal R_{B,a}=\mathcal F_a$，(183.5)对每个 $t$ 已恰等于 $T_a(x)$；在这个较弱背景中不由此声称 $B=K$。$\square$
+
+### 183.2 原斜率精确编码商影体
+
+**定理 183.3（从原菜单到影体支持函数）。** 现在另加 $\mathsf{PL}$，即采用182.1的完整单系统前件及其 $\Gamma_B,Q_B,\widehat B$。把 $B$ 识别到单位三球；以下支持函数、范数及 Hausdorff 距离均取归一切片的三维坐标像。写该支持函数为 $h_{\widehat B}$，定义
+
+$$
+A_B=\{v\in\mathbb R^3:u_B+\langle v,\cdot\rangle\in\Gamma_B\},
+\qquad
+\kappa_B(n)=\max\{\kappa\ge0:\kappa n\in A_B\}.
+\tag{183.6}
+$$
+
+$A_B$ 是含零内点、包含于单位球的紧凸体，且
+
+$$
+\boxed{\qquad
+\kappa_B(n)=\frac{1-\delta_B(n)}{1+\delta_B(n)},\qquad
+h_{\widehat B}(-n)=\frac{1+\delta_B(n)}{1-\delta_B(n)}.
+\qquad}
+\tag{183.7}
+$$
+
+所以 $\delta_B:S^2\to[0,1)$ 完全确定 $\widehat B$，不必再指定确认效应的选择。若 $R_B=\max_{y\in\widehat B}\|y\|$，则
+
+$$
+|\delta_B(n)-\delta_B(m)|\le\frac{R_B}{2}\|n-m\|.
+\tag{183.8}
+$$
+
+它的零集对径对称；没有由此得到全部正值的对径对称性。定义 $s_B(0)=0$，非零方向上令
+
+$$
+s_B(v)=\|v\|\,
+\frac{1+\delta_B(-v/\|v\|)}{1-\delta_B(-v/\|v\|)}.
+\tag{183.9}
+$$
+
+则 $s_B$ 正齐次且 $s_B(v+w)\le s_B(v)+s_B(w)$。这使原斜率在不同方向上的读数受到同一个支持函数的联合约束。
+
+证明。182.2—182.3给 $\Gamma_B$ 闭、$u_B$ 为内点及精确极化。因此 $A_B$ 闭且含零内点；在整个原球上非负迫 $\|v\|\le1$，给紧性。共同确认者唯一最大于 $a_n$，其球内对径读数严格小于一，故 $\delta_B(n)<1$。
+
+对任意 $f\in\mathcal R_{B,a_n}$，令 $q=f(b_n)\in[0,1]$。因为它在球上最大于 $a_n$，球的仿射极值给
+
+$$
+f(1,x)=\frac{1+q}{2}+\frac{1-q}{2}\langle n,x\rangle.
+\tag{183.10}
+$$
+
+常数情形 $q=1$ 也包含在内。除以常数项给 $((1-q)/(1+q))n\in A_B$。反向，若 $\kappa n\in A_B$，取其原正提升 $g\in\Sigma_B$；182.2的预算给 $\max_Kg=\max_Bg=1+\kappa$。所以 $g/(1+\kappa)\in\mathcal R_{B,a_n}$，对径读数恰为 $(1-\kappa)/(1+\kappa)$。菜单最小值与径向最大值均达到，得(183.7)第一式。这一步需要原全域预算，不能只在球上归一化。
+
+采用极体约定 $A^\circ=\{x:\langle v,x\rangle\le1\text{ 对所有 }v\in A\}$，182.3的极化直接给 $\widehat B=-A_B^\circ$。更明确地，$u_B+\kappa\langle n,\cdot\rangle\in\Gamma_B=Q_B^*$ 当且仅当 $1-\kappa h_{\widehat B}(-n)\ge0$；$h_{\widehat B}(-n)\ge1$，故径向端点为其倒数。得(183.7)第二式。
+
+支持函数为 $R_B$-Lipschitz，而 $\delta=(h-1)/(h+1)$ 在 $h\ge1$ 上的导数不超过 $1/2$，给(183.8)。183.2与原纯零对称性给零集对径对称。最后(183.9)恰是整个支持函数 $h_{\widehat B}(v)$，所以齐次性和次可加性成立。这些成熟支持函数性质只作为原斜率接合的中间工具，参见 [Boyd—Vandenberghe，练习2.26、3.35][Q183B]。$\square$
+
+### 183.3 全方向一致极限与几何缺口
+
+**定理 183.4（影体扩张的原读数公式）。** 在183.3的完整背景下，固定 $z\in\operatorname{ri}J_B$，令
+
+$$
+D_B=\max_{n\in S^2}\delta_B(n),\qquad
+S_t=\sup_{n\in S^2}\frac{m_{a_n}(z+tb_n)}t.
+\tag{183.11}
+$$
+
+则 $D_B<1$，(183.5)对全部 $n\in S^2$ 一致收敛到 $\delta_B(n)$，且 $S_t\uparrow D_B$。按球坐标中的欧氏 Hausdorff 距离，
+
+$$
+\boxed{\quad
+d_H(\widehat B,B)=R_B-1
+=\frac{2D_B}{1-D_B}
+=\lim_{t\downarrow0}\frac{2S_t}{1-S_t}.
+\quad}
+\tag{183.12}
+$$
+
+有限 $t$ 只给扩张量下界。对两套满足183.3前件、已识别到同一单位球坐标的影体 $K_1,K_2$，若其剖面为 $\delta_1,\delta_2$，另有精确式
+
+$$
+d_H(K_1,K_2)
+=\sup_{n\in S^2}
+\frac{2|\delta_1(n)-\delta_2(n)|}
+{(1-\delta_1(n))(1-\delta_2(n))}.
+\tag{183.13}
+$$
+
+若两剖面均不超过 $\overline D<1$，此距离介于 $2\|\delta_1-\delta_2\|_\infty$ 和 $2\|\delta_1-\delta_2\|_\infty/(1-\overline D)^2$ 之间。
+
+证明。183.3给 $\delta_B$ 连续，故最大值达到且严格小于一。若方向上的一致收敛失败，取 $t_j\downarrow0,n_j\to n$，使 $\delta_B(n_j)-m_{a_{n_j}}(z+t_jb_{n_j})/t_j\ge\eta>0$。选相应极小者 $f_j$；因上界为 $D_B$，有 $0\le f_j(z)\le t_jD_B$。紧效应区间给 $f_j\to f$ 的子列，连续评价使 $f(a_n)=1$ 且 $f(z)=0$，所以 $f\in\mathcal R_{B,a_n}$。左侧读数不小于 $f_j(b_{n_j})\to f(b_n)\ge\delta_B(n)$，与 $\delta_B(n_j)\to\delta_B(n)$ 矛盾。没有要求 $\mathcal F_a$ 随目标连续，也没有把有限 $t$ 的上确界写成已达到的最大值。单调性给 $S_t\uparrow D_B$。
+
+由支持函数定义，$\max_n h_{\widehat B}(-n)=R_B$；(183.7)遂给 $R_B=(1+D_B)/(1-D_B)$。因 $B\subseteq\widehat B$，点到单位球的距离是 $\max(\|y\|-1,0)$，得(183.12)。有限 $t$ 时 $S_t\le D_B$，所以相应表达式只给下界；这里没有显式收敛模量，也没有有限 $t$ 的扩张上界。
+
+对(183.13)，成熟支持函数工具给紧凸体的 $d_H(K_1,K_2)=\sup_{\|v\|=1}|h_{K_1}(v)-h_{K_2}(v)|$：Hausdorff 距离不超过 $r$ 等价于两侧分别包含于另一侧加半径 $r$ 球；[Q183B]练习3.35的和公式与包含判据使它等价于支持函数相差不超过 $r$。将(183.7)代入并通分即得所示精确式，两侧界直接由分母估计得到。此为剖面误差与影体误差的对应，不是原罚项的有限参数误差率，也没有给一般高秩面或全量子层级的近似重建定理。$\square$
+
+### 183.4 零面的一阶约束与完整量子候选
+
+**定义 183.5（三复制零斜率候选）。** 完整保留178.5的强实全有限层级、原全部 min/max 分块、完整菜单、乘法单位、正置换及逆、规范重括号和标量层，以及逐实际面的局部中心三角形条件；它们仍先给整个原 $K_3$ 的 L2。只在整个原三复制域要求全混态 $\mathsf Z_2$，以及下述原读数约束：对每颗实际球 $B$、每个球面纯点 $a$ 及其几何对径 $b$，有
+
+$$
+\boxed{\qquad
+\lim_{t\downarrow0}\frac{m_a(z+tb)}t=0,
+\qquad z\in\operatorname{ri}(\operatorname{cone}H_B).
+\qquad}
+\tag{183.14}
+$$
+
+记完整候选为 $\mathsf Q_{\rm germ}$。183.2保证该斜率独立于所选 $z$；空共同零面用 $z=0$，不略去端点。本定义不要求 $\mathsf{PL}$、商锥闭性或确认族选择作为前件，所用 $m_a$ 仍由原菜单定义。
+
+**定理 183.6（从原一阶关系到全部有限量子结构）。** 在183.5的精确强实背景下，$\mathsf Q_{\rm germ}$ 等价于178.5的 $\mathsf Q_{\rm zero}$ 及182.6的 $\mathsf Q_{\rm quot}$，并给同一个 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$、固定 $n\ge2$，使全部有限 $N\ge0$ 满足
+
+$$
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{183.15}
+$$
+
+$\mathsf{PL}$、183.3—183.4的紧影体及其零剖面此时是后果；三两原正交纯点的共同实际面是迹一 $\operatorname{PSD}_3$，仿射维数八，三颗二元球张成它的仿射空间。
+
+证明。先在没有 $\mathsf{PL}$ 的整个原 $K_3$ 使用183.2。(183.14)使每条实际球直径的 $T_a(b)=0$，给全部 AD；全混态 $\mathsf Z_2$ 由178.2给同域 NC。于是字面满足178.5的完整入口，直接消费178.6及其 XIII162.16 供应，得到同一个张量幂坐标的(183.15)，含单位及标量层。反向标准复 PSD 已满足178.5；183.2的零值等价即给(183.14)。与182.6的等价由182.7衔接，不以尚未恢复的 PL 证明最初零斜率。重建之后，标准支持规则才支付 PL 及182.1的全部前件；183.3—183.4于是适用且 $\delta_B=0$。三点结构直接复用182.7在同一重建之后的支持计算。
+
+其余量子字典按182.9的同一原配对与有限旁观者接口消费：纯态为复射线、混态为密度矩阵；原效应配对为 Born 概率，有限正效应单位分解为数学 PVM/POVM；统一张量幂给纠缠与偏迹，全部有限旁观者正性及全输入质量预算给数学 CP、Choi/Kraus 与仪器。实际可用事件仍需事件饱和，Lüders 更新仍需指定理想锐中性更新，Hamiltonian 时间描述仍需原连续可逆时间群，钟与 $\hbar$ 的标定继续独立。这些条件不由一阶零关系吞并。$\square$
+
+### 183.5 简洁几何、反事实与完整白话
+
+**推论 183.7（球面剖面与原定义间的约束）。** 在182.1的完整单系统背景内，原 minimum 在共同零面上的出射斜率剖面 $\delta_B$，经(183.7)的分式变换精确成为影体支持函数；其齐次延伸受(183.9)的次可加关系约束。影体扩张等价于某方向有正斜率，扩张尺寸由(183.12)恢复。因剖面连续，任一严格正方向都带有严格正的开邻域，不能只出现为一个孤立漏点。裸 $\mathrm{L2}+\mathsf Z_2$ 是否已排除这些正方向，及另加 $\mathsf{PL}$ 后是否已排除，仍各为 open；本章没有同域反模型。
+
+证明与范围。前三项是183.2—183.4的直接消费；183.2还说明两种共同菜单在零值上并无额外差别，不能把 $T_a(x)=0$ 而 $\tau_a(x)>0$ 列作该背景内的另一个缺口。183.5把约束前端从环境商锥换成一张原读数的一阶剖面，去掉显式列出的 PL 中间结构；零斜率条件本身仍与 AD 等价，故没有证明独立物理前件减少。更简的几何描述是球面上一张标量剖面，它同时给正测试可延拓的径向范围及影体支持；不是把原影点解释成实际准备，也不是把单标量最大值换名当作新公理来源。
+
+183.2—183.4采用 `repo-derived` 的原菜单、共同零面斜率、全域提升预算与影体尺寸的关系接合归属；紧罚项、球上仿射极值、极体和支持函数的成熟步骤只在此接合内使用。[Q183B]供应支持函数的定义、包含判据及和公式；Hausdorff 恒等式的标准推导已在183.4内展开。183.6是既有量子重建的条件应用，不申领新分类、一般优化定理或文献优先权。
+
+白话上，仍从全部原准备、混态、测试及可任意有限复合的实概率结构出发，只在整个三份系统检查。局部中心三角形把两纯准备撑起的小面锁成球，零平均封闭给共同确认尺。现在先不用谈球外的大商空间：站在整颗球共同看不见的零面里，朝球上某点的对径加入一点准备质量，看确认这个点的最低读数最初涨得多快；共同零面为空时，就从零质量出发。这个最初斜率等于所有消去共同零面的合法确认尺所能达到的最小对径读数。若处处不涨，紧性把零斜率落实成真正的一零尺，已有重建便把小球接成同一个复射影空间与所有有限复 PSD 层级；三个正交方向撑成八维密度态底。若有方向涨起来，在已有实际线恢复的背景下，它精确告诉我们影子往反方向鼓出多少，整颗影子的最大鼓出也由这些原读数恢复。一张球面上的斜率图于是替代了环境商几何的前端描述；不同方向不能随意填数，变换后必须共同组成一个凸体的支持函数。这是原定义之间可证明的关系与明写的零约束，不是已经从更少前提得到了量子。有限步看到的小斜率只给扩张下界，没有收敛速度就不能认定影子已经是球；更新时间、实际事件与物理钟仍守各自条件。$\square$
+
+[Q183B]: https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf "S. Boyd、L. Vandenberghe，Convex Optimization，练习2.26与3.35：支持函数定义、凸和公式及闭凸集包含判据。"
+
+## 追加锚（本行以下为增补区）
