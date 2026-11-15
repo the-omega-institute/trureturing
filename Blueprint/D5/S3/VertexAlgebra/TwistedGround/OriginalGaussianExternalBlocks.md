@@ -12,7 +12,19 @@ Substitution into FiniteGaussianSewing.effectiveKernel gives equal diagonal bloc
 
 The effectiveKernel definition is used algebraically; finite_sewing is not applied outside its raw contraction hypotheses. This covariance theorem makes no claim of raw full-disk occupation summability, source energy coefficient extraction, Laurent selectors, theta averaging, identityK or C1.
 
-**Definition 1.1 (originalRow).**
+**Theorem 1.1 (root_units).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.root_units`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.root_units` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The frequency square-root diagonal matrix and its reciprocal multiply to the identity in both orders, including the empty frequency box.
+
+**Definition 1.2 (originalRow).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.originalRow`
 
@@ -24,7 +36,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The originalRow definition fixes the literal objects and conventions used in the proof.
 
-**Definition 1.2 (inverseSubstitution).**
+**Definition 1.3 (inverseSubstitution).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.inverseSubstitution`
 
@@ -36,7 +48,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The inverseSubstitution definition fixes the literal objects and conventions used in the proof.
 
-**Definition 1.3 (leftRow).**
+**Definition 1.4 (leftRow).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.leftRow`
 
@@ -48,7 +60,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The leftRow definition fixes the literal objects and conventions used in the proof.
 
-**Definition 1.4 (rightRow).**
+**Definition 1.5 (rightRow).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.rightRow`
 
@@ -60,7 +72,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The rightRow definition fixes the literal objects and conventions used in the proof.
 
-**Definition 1.5 (originalEffectiveKernel).**
+**Definition 1.6 (originalEffectiveKernel).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.originalEffectiveKernel`
 
@@ -72,7 +84,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The originalEffectiveKernel definition fixes the literal objects and conventions used in the proof.
 
-**Definition 1.6 (explicitEffectiveKernel).**
+**Definition 1.7 (explicitEffectiveKernel).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.explicitEffectiveKernel`
 
@@ -84,7 +96,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The explicitEffectiveKernel definition fixes the literal objects and conventions used in the proof.
 
-**Theorem 1.7 (original_source).**
+**Theorem 1.8 (original_source).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.original_source`
 
@@ -96,7 +108,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The original_source statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
-**Theorem 1.8 (original_inverse_source).**
+**Theorem 1.9 (original_inverse_source).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.original_inverse_source`
 
@@ -108,7 +120,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The original_inverse_source statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
-**Theorem 1.9 (original_internal_inverse_similarities).**
+**Theorem 1.10 (original_internal_inverse_similarities).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.original_internal_inverse_similarities`
 
@@ -120,7 +132,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The original_internal_inverse_similarities statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
-**Theorem 1.10 (original_mixed).**
+**Theorem 1.11 (original_mixed).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.original_mixed`
 
@@ -132,7 +144,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The original_mixed statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
-**Theorem 1.11 (original_inverse_mixed).**
+**Theorem 1.12 (original_inverse_mixed).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.original_inverse_mixed`
 
@@ -144,7 +156,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The original_inverse_mixed statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
-**Theorem 1.12 (original_mixed_transpose).**
+**Theorem 1.13 (original_mixed_transpose).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.original_mixed_transpose`
 
@@ -156,7 +168,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The original_mixed_transpose statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
-**Theorem 1.13 (cutoff_zeroExtend).**
+**Theorem 1.14 (cutoff_zeroExtend).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.cutoff_zeroExtend`
 
@@ -168,7 +180,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The cutoff_zeroExtend statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
-**Theorem 1.14 (external_pair_error).**
+**Theorem 1.15 (external_pair_error).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.external_pair_error`
 
@@ -180,7 +192,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlock
 
 The external_pair_error statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
-**Theorem 1.15 (original_effectiveKernel_blocks_tendsto_explicit).**
+**Theorem 1.16 (original_effectiveKernel_blocks_tendsto_explicit).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.original_effectiveKernel_blocks_tendsto_explicit`
 
@@ -209,4 +221,5 @@ The original_effectiveKernel_blocks_tendsto_explicit statement is verified on it
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.original_mixed_transpose`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.original_source`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.rightRow`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.root_units`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent](OriginalGaussianExternalResolvent.md)

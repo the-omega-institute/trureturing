@@ -6,7 +6,7 @@ All-index Original Gaussian Resolvents
 
 The central series A_s and its shifted derivative E_s have summable polynomial-geometric bounds. They are differentiated as genuine series, and the period is A_0. The explicit jet Q_s retains the period denominator, which is nonzero on the complex unit disk.
 
-The actual source column extends from the real radial interval to the full complex disk by holomorphic uniqueness. Public norm derivatives and the radial rank-one theorem give the differentiated column; the finite displacement limit then determines every odd resolvent entry. The branch-free central-binomial expression includes both diagonal and off-diagonal positive frequencies.
+The actual source column extends from the real radial interval to the full complex disk by holomorphic uniqueness. The original scaled radial column derivative gives the differentiated column; the finite displacement limit then determines every odd resolvent entry. The branch-free central-binomial expression includes both diagonal and off-diagonal positive frequencies.
 
 The square resolvent is reconstructed from T = I + KJ. Its diagonal retains the identity term and a norm-absolutely convergent scalar convolution with the explicit odd entry. No unknown resolvent entry occurs in this formula.
 
@@ -84,19 +84,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResol
 
 The oddResolvent definition fixes the literal objects and conventions used in the proof.
 
-**Theorem 1.7 (source_coordinate).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.source_coordinate`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.source_coordinate` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The source_coordinate statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
-
-**Theorem 1.8 (columnSeries_entry_explicit_complex).**
+**Theorem 1.7 (columnSeries_entry_explicit_complex).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.columnSeries_entry_explicit_complex`
 
@@ -108,7 +96,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResol
 
 The columnSeries_entry_explicit_complex statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
-**Theorem 1.9 (square_eq_one_add).**
+**Theorem 1.8 (square_eq_one_add).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.square_eq_one_add`
 
@@ -120,7 +108,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResol
 
 The square_eq_one_add statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
-**Theorem 1.10 (oddResolvent_entry_explicit).**
+**Theorem 1.9 (oddResolvent_entry_explicit).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.oddResolvent_entry_explicit`
 
@@ -132,7 +120,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResol
 
 The oddResolvent_entry_explicit statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
-**Theorem 1.11 (squareResolvent_entry_explicit).**
+**Theorem 1.10 (squareResolvent_entry_explicit).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.squareResolvent_entry_explicit`
 
@@ -153,7 +141,6 @@ The squareResolvent_entry_explicit statement is verified on its displayed full d
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.oddResolvent_entry_explicit`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.shiftedCentralDerivative`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.shiftedCentralSeries`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.source_coordinate`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.squareResolvent`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.squareResolvent_entry_explicit`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.square_eq_one_add`
