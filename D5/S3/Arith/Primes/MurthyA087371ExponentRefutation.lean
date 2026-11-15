@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Arith/Primes/MurthyA087371ExponentRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Nth]
+   anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/Primes/MurthyA087371ExponentRefutation.claim; result=D5/S3/Arith/Primes/MurthyA087371ExponentRefutation.result; claim=D5/S3/Arith/Primes/MurthyA087371ExponentRefutation.claim
    digest: Arbitrarily large prime gaps refute boundedness of the least positive prime-producing exponent in A087371. -/
 
