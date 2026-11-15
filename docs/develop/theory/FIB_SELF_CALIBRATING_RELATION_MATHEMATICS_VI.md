@@ -4259,3 +4259,273 @@ V 定理29.3穷尽了 $\Phi=0$ 的全部正来源，定理26.3在完整世界上
 (26.16)只处理字面父族 $H^-_{\theta,0}$。非零 $\xi$ 的共同父两臂失败或恢复、其他字面历史、整条第14章解析父曲线以及更早祖先的共同实现仍须各自证明。第25章的矩形排除与此前的合法碰撞保持各自原范围；本章不把任何单臂禁例或两世界整树刚性扩大成一般两臂排除。原根八读／九读判别、初始两动作的全部分支义务及九读上界均不由(26.16)结清。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 27. 实际 MM 的漂移符号校准与重复源签名的全局界
+
+**定义 27.1（重复 MM 源签名域）。** 保留定义1.1的整个 $\mathcal W_3$、原时钟、立即读数及含早停的任意确定性策略。父历史仍为(8.3)的同一个 $H^-_{\theta,\xi}$。以 $\mathscr S$ 表示全部严格逐项正、秩一、迹一的实二阶来源；$u=\nu_0$、$h,\ell,n,a,\Delta,\Phi,k,q,\Psi_6,\Psi_7,\mu,\eta$ 复用(8.1)、(8.5)—(8.6)。定义
+
+$$
+\begin{aligned}
+\mathscr C=\{P\in\mathscr S:\ &\Phi(P)\ne0,\quad
+ \exists Q\in\mathscr S\setminus\{P\},\ \Phi(Q)\ne0,\\
+ &\mu(Q)=\mu(P),\quad\eta(Q)=\eta(P)\}.
+\end{aligned}
+\tag{27.1}
+$$
+
+这里只要求源签名重复；没有要求这两个来源能在预定父参数上共同实现。实际同父碰撞的额外条件由定理23.2供应。置
+
+$$
+\begin{gathered}
+w_0(\theta)=120(1+2\theta),\qquad
+m_0(\theta)=210(2+3\theta),\\
+\mathfrak T(P)=2\Psi_7(P)-26\Psi_6(P)-5\Phi(P),\\
+\Lambda_{\theta,\xi}(w,m)=4m-13w-120+600\theta-300\xi.
+\end{gathered}
+\tag{27.2}
+$$
+
+**定理 27.2（整个父族的仿射漂移符号校准）。** 对任意 $\theta,\xi\in\mathbb R$、任意 $W=(P,g,d)\in\mathcal F(H^-_{\theta,\xi})$，从该父实际依次执行原时钟六、七的 $M,M$，记立即读数为 $w,m$。则
+
+$$
+\begin{gathered}
+\Lambda_{\theta,\xi}(w,m)=0\quad\Longleftrightarrow\quad d=0,\\
+d\ne0\quad\Longrightarrow\quad
+\operatorname{sgn}\Lambda_{\theta,\xi}(w,m)=\operatorname{sgn}d,
+\qquad 0<|d|<\frac{|\Lambda_{\theta,\xi}(w,m)|}{2}.
+\end{gathered}
+\tag{27.3}
+$$
+
+特别地，当 $\xi\ne0$ 时，同一父上任何两个不同完整世界若具有相同的实际 $MM$ 记录，必有 $d_1d_2>0$ 及 $\Phi_1\Phi_2>0$。对固定实际第六 $M$ 子纤维，末 $M$ 响应因此把正漂移、零漂移和负漂移三部分彼此分开；各部分内部仍可碰撞。
+
+证明。定理8.2证明中的无除数恒等式对全部 $\xi$ 成立：
+
+$$
+d\Phi=120h\xi,\qquad
+w-w_0(\theta)=\frac{d\Psi_6}{h},\qquad
+m-m_0(\theta)=\frac{d\Psi_7}{4h}.
+\tag{27.4}
+$$
+
+因 $4m_0-13w_0-120+600\theta=0$，它们给出
+
+$$
+2h\Lambda_{\theta,\xi}(w,m)=d\mathfrak T(P).
+\tag{27.5}
+$$
+
+真正所需的全源严格不等式是 $\mathfrak T(P)>4h$。使用(8.1)的唯一正坐标 $P=P(s,t)$，令 $D_0=1+st$、$U=s+t+st$，于是 $h=U(U+D_0)/D_0^2$。直接展开(8.1)、(8.6)得
+
+$$
+D_0^3(\mathfrak T-4h)=\mathscr B(s,t),
+\tag{27.6}
+$$
+
+其中
+
+$$
+\begin{aligned}
+\mathscr B(s,t)={}&152s^3t^3+60s^3t^2+61s^3t+35s^3\\
+ &+114s^2t^3+363s^2t^2+125s^2t+s^2\\
+ &+14st^3+255st^2+139st\\
+ &+10t^3+4t^2+76t+8.
+\end{aligned}
+\tag{27.7}
+$$
+
+全部系数严格正，故对每个 $s,t>0$ 有 $\mathscr B>0$。于是 $h>0$ 且 $\mathfrak T/(2h)>2$；(27.5)即给(27.3)。这个恒等式没有除以 $\xi$ 或 $\Phi$，所以包括 $\xi=0,\Phi=0,d=0$。在 $\Phi\ne0$ 的源域上，同一不等式也给
+
+$$
+\operatorname{sgn}(2\eta-26\mu-5)=\operatorname{sgn}\Phi.
+\tag{27.8}
+$$
+
+若 $\xi\ne0$ 且两个世界的实际 $w,m$ 相同，(27.3)及(27.4)先给两个非零漂移同号，再由 $d_i\Phi_i=120h_i\xi$ 给两个 $\Phi_i$ 同号。固定子纤维的三部分分离同样由(27.3)给出，无须假设另一末动作使用同一个碰撞对。此证明只读取所声明的原时钟路径；增益的低次数、符号、根和 $\Delta=0$ 层均未被删去。常数 $2$ 只作严格有效界，不主张最优。∎
+
+**定理 27.3（重复签名的全局有界性及实际必需边的线性塌缩）。** 存在与父参数和世界均无关的有限常数 $B>0$，使每个 $P\in\mathscr C$ 满足
+
+$$
+\max\left\{\frac{h(P)}{|\Phi(P)|},\ |q(P)|,
+                   |\mu(P)|,\ |\eta(P)|\right\}\le B.
+\tag{27.9}
+$$
+
+因此对任意 $\theta\in\mathbb R$、$\xi\ne0$，若两个不同完整世界 $W_i=(P_i,g_i,d_i)\in\mathcal F(H^-_{\theta,\xi})$ 有相同的实际第六 $M$ 读数 $w$ 及实际第七 $MM$ 读数 $m$，则同一个 $B$ 给
+
+$$
+\begin{gathered}
+|d_i|\le120B|\xi|,\qquad |\theta-k(P_i)|\le B|\xi|
+\quad(i=1,2),\\
+|w-w_0(\theta)|\le120B|\xi|,\qquad
+|m-m_0(\theta)|\le30B|\xi|,\\
+\operatorname{dist}(\theta,[1/2,3])\le B|\xi|.
+\end{gathered}
+\tag{27.10}
+$$
+
+对任意 $\theta\in\mathbb R$、$\xi\ne0$ 及 $K\subseteq\mathcal F(H^-_{\theta,\xi})$，若 $L_2(K,H^-_{\theta,\xi})$ 成立，则其实际第六 $M$ 子纤维中末 $M$ 条款所必需的任一碰撞对均满足(27.3)、(27.10)。因而在任意 $\xi_j\to0$、$\xi_j\ne0$ 的此类父序列上，该必需对的两个漂移都趋于零，其共同 $w_j,m_j$ 与各自父的基线之差均为 $O(|\xi_j|)$。这里没有先验的来源紧性、漂移有界性或 $\theta_j$ 有界性假设。
+
+证明。先控制全部非紧来源尾部。写
+
+$$
+P=\begin{pmatrix}p&b\\c&1-p\end{pmatrix},\qquad
+0<p<1,\quad b,c>0,\quad bc=p(1-p).
+$$
+
+四迹逆[V，(29.1)](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md)给
+
+$$
+u=b+c+1-p,\qquad n=1+b+2c,\qquad a=1+2u-c.
+\tag{27.11}
+$$
+
+因此 $n\ge u$、$a\ge u+1$、$n,a\le2u+1$。当 $u\ge3$ 时，$A=3u^2+3u-10$ 及 $B_1=8u^2+18u-30$ 均正，从而
+
+$$
+\begin{aligned}
+\Phi&=Aa+B_1n-23u(u+1)\\
+&\ge A(u+1)+B_1u-23u(u+1)\\
+&=11u^3+u^2-60u-10\ge4u^3.
+\end{aligned}
+\tag{27.12}
+$$
+
+最后一步置 $u=3+v$，差为 $7v^3+64v^2+135v+8>0$。同一范围内有
+
+$$
+\begin{gathered}
+h\le\frac43u^2,\quad 0<\ell\le2u^2,\quad
+0<V_6\le17u^2,\quad0<X_7\le32u^2,\quad n,a\le\frac73u.
+\end{gathered}
+\tag{27.13}
+$$
+
+由(8.6)和三角不等式，$|\Psi_6|$ 至多为
+$119u^3+(140/3)u^3+(116/3)u^2$，$|\Psi_7|$ 至多为
+$(4480/3)u^3+490u^3+508u^2$。又
+$\Delta/n=h+a\ell-4ah/n$，所以
+
+$$
+\begin{gathered}
+\frac h{|\Phi|}\le\frac19,\qquad
+|\mu|\le\frac{1607}{36}<45,\qquad
+|\eta|\le\frac{3229}{6}<539,\\
+|q|\le\frac5{4u^3}
+ \left(\frac43u^2+\frac{14}3u^3+\frac{112}9u^2\right)
+ \le\frac{625}{54}<12.
+\end{gathered}
+\tag{27.14}
+$$
+
+这些是整个 $u\ge3$ 尾部的界，不要求源签名重复。
+
+余下来源置于紧集
+
+$$
+\mathscr K=\left\{\begin{pmatrix}p&b\\c&1-p\end{pmatrix}:
+0\le p\le1,\ b,c\ge0,\ bc=p(1-p),\ b+c+1-p\le3\right\}.
+\tag{27.15}
+$$
+
+这里 $b+c\le3$，故此集闭且有界；它的非负边界只用于极限分析。需证明重复签名点不能逼近 $\mathscr K$ 中的 $\Phi=0$ 层。
+
+先精确识别这个闭极层。V 定理29.3证明中 $u\le3/2$ 时 $\Phi<0$ 的估计对非负来源仍成立：将 $n,a<1+2u$ 换成弱不等式，其所用两个三次上界在相应区间仍严格负；$u=0$ 时直接有 $n=a=1,\Phi=-40$。故此极层的 $u>3/2$。复用 V (29.9)、(29.14)—(29.15)，非负来源恰为两条正来源弧的闭包
+
+$$
+\begin{aligned}
+\overline{\mathcal S_+}&=\{(u,n_+(u),a_+(u)):
+                              \alpha_0\le u\le\gamma_0\},\\
+\overline{\mathcal S_-}&=\{(u,n_-(u),a_-(u)):
+                              \beta_0\le u\le\eta_0\}.
+\end{aligned}
+\tag{27.16}
+$$
+
+确实，V (29.14)穷尽 $p=0,1,b=0,c=0$ 的边界交点；(29.15)在其余开区间给严格违反非负性的坐标，端点取连续极限即得(27.16)，没有孤立的额外非负支。四端点均在 $1649/1000<u<2171/1000$ 内。
+
+由(26.6)、(26.9)，两条闭弧上 $A>0$、$F_n\ne0$、$\mathcal H\ne0$。复用(26.3)，$\Psi_6,\Psi_7$ 不可能同时为零，否则 $T=C=0$ 将使(26.7)的 $\mathcal H=0$。定理26.2的严格单调性与(26.11)的端点严格包围说明：$[\Psi_6:\Psi_7]$ 在这两条闭弧的并上单射。具体地，$\mathcal S_+$ 的极点左侧连同端点有 $\mathcal R<1$，右侧连同端点有 $\mathcal R>17$；闭 $\mathcal S_-$ 上有 $14<\mathcal R<17$。唯一 $\Psi_6=0$ 点仍是(26.4)的内点，那里 $\Psi_7\ne0$，代表唯一的射影无穷点。故端点与极点均未被删除。
+
+还需排除两个重复签名点在极层上合流；仅有极层内部单射不足以保证这一点。在(27.16)每一点附近，令 $v=\Phi$，以
+
+$$
+a=\frac{v+23h-B_1n}{A},\qquad
+\widetilde F(u,n,v)=A^2D\!\left(u,n,\frac{v+23h-B_1n}{A}\right)
+\tag{27.17}
+$$
+
+代入 V (29.1)的源方程 $D=0$。V (29.13)给
+$\widetilde F(u,n,0)=F(u,n)$，故
+$\partial_n\widetilde F(u,n,0)=F_n\ne0$。隐函数定理于是把 $(u,v)$ 作为源曲面的局部坐标。此结论在非负端点也成立：先在包含端点的完整实曲面邻域使用定理，再限制回非负来源，不把端点当作额外合法世界。
+
+沿 $v=0$ 对 $u$ 求导，定义 Wronskian
+
+$$
+\mathcal W=\Psi_6\frac{d\Psi_7}{du}
+             -\Psi_7\frac{d\Psi_6}{du}
+          =\frac{\mathcal H}{A^2F_n}\ne0.
+\tag{27.18}
+$$
+
+等式由(26.3)、(26.7)及 $dn/du=-F_u/F_n$ 得到，因而也包括四个端点和唯一极点。若 $\Psi_6\ne0$，用局部映射
+
+$$
+(u,v)\longmapsto
+ \left(\frac v{\Psi_6},\frac{\Psi_7}{\Psi_6}\right);
+\qquad
+\det D_{(u,v)}\bigg|_{v=0}=-\frac{\mathcal W}{\Psi_6^3}\ne0.
+\tag{27.19}
+$$
+
+在 $\Psi_6=0$ 的唯一点改用
+
+$$
+(u,v)\longmapsto
+ \left(\frac v{\Psi_7},\frac{\Psi_6}{\Psi_7}\right);
+\qquad
+\det D_{(u,v)}\bigg|_{v=0}=\frac{\mathcal W}{\Psi_7^3}\ne0.
+\tag{27.20}
+$$
+
+逆函数定理给这两种映射各自在相应点的某个邻域内单射。只在分母非零的邻域使用相应映射，故没有把极点误作可除点。
+
+反设有 $P_j\in\mathscr C\cap\mathscr K$ 且 $\Phi(P_j)\to0$。为每个 $P_j$ 选择定义(27.1)中的 $Q_j\ne P_j$。取子列使 $P_j\to P_*\in\mathscr K$。由(27.16)及极层上 $\Psi_6,\Psi_7$ 不同时为零，
+
+$$
+\| (\mu(P_j),\eta(P_j))\|_\infty\longrightarrow\infty.
+\tag{27.21}
+$$
+
+$Q_j$ 的签名相同，(27.14)遂迫使最终 $u(Q_j)<3$。再取子列使 $Q_j\to Q_*\in\mathscr K$。由于 $n\ge1$，若 $\Phi(Q_*)\ne0$，两个签名在该处连续而有界，与(27.21)矛盾。因此 $\Phi(Q_*)=0$。对充分大的 $j$，签名相等给
+$[\Psi_6(P_j):\Psi_7(P_j)]=[\Psi_6(Q_j):\Psi_7(Q_j)]$；在两个极限点这些射影对都有定义，取极限并使用闭极层的射影单射，得 $P_*=Q_*$。
+
+选择该共同极限点处分母非零的(27.19)或(27.20)邻域。充分大的 $j$ 使两点同在这个单射邻域内。若用(27.19)，其值为 $(1/\mu,\eta/\mu)$；若用(27.20)，其值为 $(1/\eta,\mu/\eta)$。在相应邻域内这些分母确实非零，故相同签名给相同局部映射值，强制 $P_j=Q_j$，矛盾。
+
+因此存在 $\varepsilon>0$，使 $\mathscr C\cap\mathscr K$ 上 $|\Phi|\ge\varepsilon$。在紧集 $\mathscr K\cap\{|\Phi|\ge\varepsilon\}$ 上，$h/|\Phi|,q,\mu,\eta$ 连续：这里 $n\ge1$，没有额外分母零点。它们有共同有限上界。把此上界与(27.14)合并，取 $B\ge539$ 即得(27.9)。不要求 $\mathscr C$ 本身闭或紧，也没有把极层外单射误当成全域单射。
+
+最后回到实际世界。定理23.2保证任一实际同父 $MM$ 碰撞对具有不同来源，且两来源都在 $\mathscr C$。于是(8.5)、(8.7)给
+
+$$
+d_i=\frac{120h_i\xi}{\Phi_i},\qquad
+\theta-k_i=\xi q_i,\qquad
+w-w_0=120\xi\mu_i,\qquad m-m_0=30\xi\eta_i.
+\tag{27.22}
+$$
+
+再由正坐标(8.1)，
+
+$$
+2a-n=\frac{1+3t+5st}{1+st}>0,\qquad
+3n-a=\frac{2+5s+t}{1+st}>0,
+\tag{27.23}
+$$
+
+所以 $1/2<k_i<3$。(27.9)、(27.22)—(27.23)证明(27.10)。
+
+若 $L_2(K,H^-_{\theta,\xi})$ 成立，直接使用定理23.2的必要边：在同一个实际第六 $M$ 子纤维中取末 $M$ 条款的两个不同世界，应用上述界即可。其共同第六读数 $w$ 因而也受界。这没有把该界赋给子纤维中的每个世界；定理24.6的末 $J$ 碰撞对可以不同，第六 $J$ 臂的两种末碰撞对也可各自不同。所有对仍必须分别满足各自共同实际历史和响应纤维条件。令 $\xi_j\to0$ 即得所述必需对的漂移与移动基线残差的线性塌缩；来源本身仍可逼近边界或逃向无穷。
+
+本条与定理27.2的承重内容是此指定观察映射的全源正性证书、极层附近的重复签名排除及全局实际响应界，属于仓内推导（repo-derived）。隐函数定理、逆函数定理、紧性和 Sturm 计数只作成熟中间供应；源分支、端点和射影供应分别按 V 定理29.3及本卷定理26.2的原条件使用。一般可识别性语言可参见 Li、Lee、Bresler，[*A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*](https://arxiv.org/html/1501.06120v1)，定义2.7、定理2.8；其双线性变换群条件不提供这里的加性漂移、原时钟或极层估计，不作为本证明的前提。不申领外部优先权。
+
+以上只给部分校准及必要边约束。常数 $B$ 是存在性的统一有限界，没有数值最优性或有限精度稳定性结论；(27.10)不扩展到任意父世界。相同漂移符号的共同父两臂实现、$\mathcal P_M\cap\mathcal P_J$ 的空性或非空性、整条第14章父曲线、更早祖先兼容及原根八读／九读问题仍未由本条解决；也未给九读上界。$\xi=0$ 的父排除保持定理26.4的范围，仿射校准(27.3)则仍在该层成立。全部推导保留增益次数下降、任意符号与采样根、重根、任意漂移以及 $\Delta=0$，未除以任何采样增益。∎
+
+## 追加锚（本行以下为增补区）
