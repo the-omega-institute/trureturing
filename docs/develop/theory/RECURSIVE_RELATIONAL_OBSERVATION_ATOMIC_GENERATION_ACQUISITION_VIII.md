@@ -4217,3 +4217,376 @@ including distinctions of history already retained by IV19, continue
 to carry those meanings.
 
 ## 追加锚（本行以下为增补区）
+
+## 162. A fixed product-probe bank on the original actual source
+
+**Definition 162.1 (complete fixed-bank experiment).** Fix integers
+$N\ge5$, $r\ge1$ and the two hypotheses $t=0,\pi/2$ of exactly
+Definition 157.1's full source $\rho_N(t)$. For each finite collection
+of $m$ requested inputs, the complete accessible initial state is
+
+$$
+\omega_m(t)=R_m(t)\otimes\sigma_r\otimes\tau,\qquad
+R_m(t)=\rho_N(t)^{\otimes m},\qquad
+\sigma_r=|+\rangle\langle+|^{\otimes 2r},\qquad
+|+\rangle=(|0\rangle+|1\rangle)/\sqrt2.
+\tag{VIII.122}
+$$
+
+All $mN$ source factors, including their physical exteriors, remain
+present. The copies are conditionally independent given the same $t$.
+The probe charge is $Q_A=\sum_{a=1}^{2r}|1\rangle\langle1|_a$;
+write $U(\theta)=e^{i\theta Q_A}$. The remaining accessible backing
+$\tau$ is independent of $t$, jointly invariant under its integer-charge
+representation $W(\theta)$, and independent of the displayed source
+and probe factors. Invariance is a condition on the whole $\tau$,
+not just on its individual marginals.
+
+Use the complete interacting cut and recorded-branch covariance of
+Definition 158.1, replacing its absent-even-mode promise by (VIII.122).
+Every interacting preparation device, stored reference, clock,
+controller, detector, reservoir and native record belongs to this cut.
+Each branch and its parameters are independent of $t$, and all classical
+records transform trivially. Every later non-source supply is invariant;
+any stored correlated supply is already included jointly in $\tau$.
+The original installed reference and ingress apparatus are counted
+here as well: being idle or having a zero holding generator does not
+remove an interacting system's excitation modes. No coherent
+replenishment or $t$-dependent auxiliary ingress is supplied for free.
+Collective processing, adaptive choices, arbitrary reference reuse and
+reference damage are allowed. Refusals, durations and pending records
+are retained together with successful outcomes.
+
+The original installation is precisely Assumption 161.1 on either
+authentic entrance, retaining its actual native source, history,
+bindings, references, current rights and immutable samples. Acquired
+ordered register occurrences are not identified with native ancestry.
+Retain every actual disturbed quantum output and correlation, including
+spent probes and source exteriors. Original inaccessible preparation
+memory retains its true state; the access rule of Definition 158.1
+places it inside this cut whenever an allowed interaction, read, timing
+signal or later ingress uses it. Erasure or source replacement cannot
+be used to enforce (VIII.122).
+
+A consistent on-demand supply has these product marginals for unused
+inputs before they interact; each fresh input is independent of the
+previous systems conditional on the same $t$. The states after interaction
+are not required to remain products. The experiment uses one protocol
+under both hypotheses and terminates after finitely many requests and
+elementary operations almost surely under each. There is no uniform bound
+on that finite count or assumption of finite expected expenditure. Its
+terminal record includes the entire actually executed prefix. A capped
+run keeps its unfinished prefix rather than substituting a completion.
+
+**Definition 162.2 (distances and total decisions).** For density
+operators put $D(\rho,\sigma)=\|\rho-\sigma\|_1/2$; for classical
+laws put $\operatorname{TV}(P,Q)=\sup_A|P(A)-Q(A)|$.
+A total binary rule assigns $0$ or $\pi/2$ on every terminal record,
+using independent classical randomization if desired. Its errors are
+$e_0=\Pr_0(\text{choose }\pi/2)$ and
+$e_1=\Pr_{\pi/2}(\text{choose }0)$, and its equal-prior error is
+$(e_0+e_1)/2$. A refused or inconclusive branch cannot be deleted to
+quote a conditional error for such a rule.
+
+## 163. The product-bank ceiling for every acquired classical record
+
+**Theorem 163.1 (uniform fixed-bank ceiling).** Under Definition 162.1,
+the laws of every finite acquired classical transcript satisfy
+
+$$
+\operatorname{TV}(P_0,P_{\pi/2})\le T_r,
+\qquad T_r=\frac{1+\sqrt{1-4^{1-r}}}{2}.
+\tag{VIII.123}
+$$
+
+The same bound holds for the terminal transcript of its almost surely
+terminating on-demand extension. Every total binary decision therefore
+satisfies
+
+$$
+\frac{e_0+e_1}{2}\ge E_r,
+\qquad \max(e_0,e_1)\ge E_r,
+\qquad E_r=\frac{1-\sqrt{1-4^{1-r}}}{4}
+          \ge\frac1{2\cdot4^r}>0.
+\tag{VIII.124}
+$$
+
+In particular $E_1=1/4$, regardless of how many source copies are
+supplied. These are bounds on acquired classical laws; $T_r$ is not
+asserted to be an attained optimum of the native operation menu.
+
+Proof. Fix finite $m$ and a measurable transcript event $A$. The
+invariant-effect pullback (VIII.114), applied to the actual composite
+recorded instrument, gives an effect $F_A$ on the entire input cut.
+It includes adaptive controls, native interleavings and all failed
+branches of that event. Let $V_m(\theta)=V_N(\theta)^{\otimes m}$.
+Invariance under $V_m(\theta)\otimes U(\theta)\otimes W(\theta)$,
+together with the source orbit identity and invariance of $\tau$, gives
+
+$$
+\Pr_t(A)=\operatorname{Tr}F_A
+ \bigl(R_m(0)\otimes U(-t)\sigma_rU(-t)^\dagger\otimes\tau\bigr).
+\tag{VIII.125}
+$$
+
+Every occupied full-source word has even charge by Proposition 157.2,
+so $V_m(\pi)R_m(0)V_m(\pi)^\dagger=R_m(0)$. Applying the same
+invariance at $\pi$ in (VIII.125) permits replacing the probe operator
+by its parity pinching
+
+$$
+\mathcal E(Y)=\tfrac12\bigl(Y+U(\pi)YU(\pi)^\dagger\bigr).
+\tag{VIII.126}
+$$
+
+This replacement commutes with $U(-t)$ conjugation. Partial expectation
+of $F_A$ against the fixed state $R_m(0)\otimes\tau$ defines a positive
+probe effect $M_A$; normalization and additivity of the original POVM
+give $M_{\rm all}=I$ and the same additivity for $M_A$. Thus the
+whole classical experiment is one common measurement of the two probe
+states $\bar\sigma_r=\mathcal E(\sigma_r)$ and
+$U(-\pi/2)\bar\sigma_rU(-\pi/2)^\dagger$. In particular,
+
+$$
+\operatorname{TV}(P_0,P_{\pi/2})
+\le D\bigl(\bar\sigma_r,
+ U(-\pi/2)\bar\sigma_rU(-\pi/2)^\dagger\bigr).
+\tag{VIII.127}
+$$
+
+This is a factorization of probabilities. No source is physically
+rotated, reset, dephased or replaced. In particular it neither separately
+twirls copies nor removes within-charge correlations or physical
+exteriors. The reference's intermediate conditional states may be
+arbitrarily disturbed and correlated with previous inputs.
+
+To evaluate (VIII.127), let $v_e,v_o$ be the even and odd charge
+projections of $|+\rangle^{\otimes2r}$. Each has squared norm $1/2$,
+and $\bar\sigma_r=|v_e\rangle\langle v_e|+|v_o\rangle\langle v_o|$.
+The binomial theorem at $-i$ gives their unnormalized overlaps
+
+$$
+\begin{aligned}
+\langle v_e,U(-\pi/2)v_e\rangle
+ &=2^{-r}\cos(r\pi/2),\\
+\langle v_o,U(-\pi/2)v_o\rangle
+ &=-i\,2^{-r}\sin(r\pi/2).
+\end{aligned}
+\tag{VIII.128}
+$$
+
+For two vectors of equal squared norm $w$, diagonalizing their
+rank-at-most-two density difference gives half trace norm
+$\sqrt{w^2-|\langle v,v'\rangle|^2}$. Apply this elementary identity
+within the two orthogonal parity blocks. Exactly one overlap in
+(VIII.128) has squared modulus $4^{-r}$ and the other is zero, whence
+
+$$
+D\bigl(\bar\sigma_r,U(-\pi/2)\bar\sigma_rU(-\pi/2)^\dagger\bigr)
+=\sqrt{\tfrac14-4^{-r}}+\tfrac12=T_r.
+\tag{VIII.129}
+$$
+
+For a binary rule with decision event $A$ for $\pi/2$, its average
+error is $(1+P_0(A)-P_{\pi/2}(A))/2\ge(1-T_r)/2=E_r$.
+Randomized rules obey the same bound by adjoining their invariant
+randomness. The maximum error is at least their average. Finally
+$1-\sqrt{1-x}\ge x/2$ for $0\le x\le1$, with $x=4^{1-r}$,
+proves the last inequality in (VIII.124).
+
+For the on-demand extension, cap both supplied inputs and elementary
+operations at an integer $L$, retaining the actual unfinished prefix
+when the cap is reached. The common finite supply can be analyzed with
+unused inputs present; this is not a requirement to install an infinite
+bank. The preceding bound applies uniformly to this capped experiment.
+For any measurable terminal-record event $A$, let $A_L$ be the event
+that it terminates in $A$ within the cap. Then
+$|P_0(A_L)-P_{\pi/2}(A_L)|\le T_r$. Almost sure finite termination
+under both hypotheses gives $P_t(A_L)\to P_t(A)$; take the limit and
+then the supremum over $A$. This proves (VIII.123) for the full
+terminal law without postselection. No termination or finite expected
+cost is derived from the distance bound.
+
+The joint reference method and relative-phase spectral testing used
+inside this proof are mature; see Bartlett--Rudolph--Spekkens--Turner,
+[*Degradation of a quantum reference frame*, §IV.1, §IV.3 Eq. (21),
+Appendix C](https://arxiv.org/html/quant-ph/0602069v2).
+Their single-rail reference experiment is not identified with the
+present actual source or native menu. The source-dependent application
+here uses its even-charge stabilizer and the specified product bank;
+it does not infer quality merely from presence of an even reference mode.
+$\square$
+
+## 164. The actual finite-source benchmark with one initial probe pair
+
+**Theorem 164.1 (one-pair invariant-POVM distance).** For the original
+source and $m\ge1$ full independent inputs of Definition 162.1, set
+
+$$
+\begin{aligned}
+ g_N(z)&=e_0^{\mathsf T}
+       \begin{pmatrix}1&z\\z&9\end{pmatrix}^{N}e_0,
+ & Z_N&=g_N(1),&G_N(z)&=g_N(z)/Z_N,\\
+ P_j&=[z^{2j}]G_N(z)^m \quad(j\in\mathbb Z).
+\end{aligned}
+\tag{VIII.130}
+$$
+
+Absent coefficients are zero. With $r=1$, the maximum attainable TV
+distance over the expressly enlarged class of all total-charge-invariant
+POVMs on the full source inputs and initial probe pair is exactly
+
+$$
+D_{(m,2)}=\frac12\sum_{j\in\mathbb Z}\sqrt{P_jP_{j-1}}<\frac12.
+\tag{VIII.131}
+$$
+
+Tensoring the independent invariant backing $\tau$ does not change
+this comparison optimum. This statement supplies no synthesis of its
+optimizing projectors by the literal $P/B$/occupation menu.
+
+Proof. Along a physical word each $A_1$ flips the virtual index and
+each $A_0$ preserves it, with factors $1$ or $3$. There is one such
+virtual path starting at $e_0$, and only paths returning to $e_0$
+contribute. Squaring these real amplitudes gives weights $1,9$ for
+the two preserving transitions and $z$ for a flip when $z$ marks one
+physical excitation. Matrix multiplication therefore gives $g_N(z)$.
+For example $g_5(z)=1+922z^2+21z^4$. These coefficients count the
+original complete source, not a substituted environment distribution.
+
+Let $|\Psi_m\rangle=(|\psi_N(0)\rangle/\sqrt{Z_N})^{\otimes m}$
+and let $s_j$ be its projection onto total source charge $2j$.
+The product preparation and the preceding generating polynomial give
+$\|s_j\|^2=P_j$. At $t=\pi/2$ that same component is $(-1)^js_j$.
+Keep the complete vectors $s_j$, including all physical exterior
+coordinates and degeneracies.
+
+A single joint total-charge twirl leaves invariant-POVM statistics
+unchanged, as in (VIII.114). The probe vector is
+$(|00\rangle+|01\rangle+|10\rangle+|11\rangle)/2$.
+In total charge $2j$ the two twirled states have rank-one blocks from
+
+$$
+ u_j^+=\tfrac12(s_j\otimes|00\rangle+s_{j-1}\otimes|11\rangle),
+\qquad
+ u_j^-=\tfrac12(s_j\otimes|00\rangle-s_{j-1}\otimes|11\rangle),
+\tag{VIII.132}
+$$
+
+where the second hypothesis's harmless common sign $(-1)^j$ is omitted.
+Their density difference has eigenvalues
+$\pm\sqrt{P_jP_{j-1}}/2$, with all remaining eigenvalues zero.
+In odd total charge $2j+1$, only
+$s_j\otimes(|01\rangle+|10\rangle)/2$ occurs; its hypothesis-dependent
+sign disappears in its density, so those blocks agree. Half the sum
+of the even blocks' trace norms is exactly (VIII.131).
+
+The positive spectral projector of the full difference commutes with
+total charge and attains this TV distance, while the trace-norm
+measurement bound excludes any larger value. Invariant backing factors
+out of the joint twirl unchanged, so it cannot increase this distance
+and can be ignored to attain it in the comparison class. Finally
+Cauchy--Schwarz gives $\sum_j\sqrt{P_jP_{j-1}}\le1$.
+Equality would require the normalized finite-support distribution
+$P_j$ to equal its unit translate, which is impossible. This proves
+the strict finite-copy inequality. The charge-sector spectral method
+is the mature method cited in §163; (VIII.130)--(VIII.132) perform its
+calculation for this actual source. $\square$
+
+## 165. A finite paid future that the fixed bank cannot reproduce
+
+**Theorem 165.1 (separating fresh-probe detector law).** Fix $N\ge5$,
+$r\ge1$ and any positive pair split of Proposition 157.2. Put
+
+$$
+\delta=\frac5{832},\qquad \eta_r=4^{-r-1},\qquad
+m_r=\left\lceil\frac{3\cdot832^2(r+1)}{25}\right\rceil.
+\tag{VIII.133}
+$$
+
+With its paid source, preparation, apparatus and progress premises,
+VIII160's setting-zero service supplies $m_r$ independent source inputs
+and two fresh probes per trial. Its joint four-bit detector marginal
+admits a total rational binary rule whose errors under both hypotheses
+are at most $\eta_r$. No experiment restricted to the fixed initial
+$2r$ product probes of Definition 162.1 can reproduce that marginal law
+under both hypotheses, even with additional source copies and an
+almost surely terminating adaptive protocol.
+
+Proof. The positive exponential series gives
+$e^{3/2}>1+3/2+9/8+27/48=67/16>4$, so $\log4<3/2$.
+Consequently (VIII.133) certifies
+
+$$
+m_r\ge 2\delta^{-2}(r+1)\log4
+      =2\delta^{-2}\log(1/\eta_r).
+\tag{VIII.134}
+$$
+
+Theorem 160.1, with its original signal gap and rational threshold,
+therefore gives each error at most $\eta_r$. Independence is used
+only for the four-bit detector outputs, or their selected-event
+indicators, conditional on the same $t$. Actual identifiers, native
+histories, acquired references, transaction fields, timings and the
+full quantum returns are retained with their actual joint laws; they
+are not asserted to form an iid sequence.
+
+If a fixed-bank protocol reproduced the joint detector marginal for
+both hypotheses, compose its record with that very same finite threshold
+rule. This would be a total binary decision with both errors at most
+$\eta_r$. But Theorem 163.1 gives
+
+$$
+E_r\ge\frac1{2\cdot4^r}
+     =2\eta_r>\eta_r,
+\tag{VIII.135}
+$$
+
+contradicting its equal-prior error bound. Marginalizing a purported
+simulation of the whole future service would reproduce this detector
+law, so failure of this one marginal already excludes that simulation.
+The fresh-probe service itself obeys its original paid contract: its
+$2m_r$ fresh probes are precisely resources absent from the fixed-bank
+substitution, not a failure of that service. $\square$
+
+**Proposition 165.2 (native correspondence and the retained recovery
+domain).** Under the original mounting of Assumption 161.1, the
+separating schedule uses Proposition 161.2's actual readout transactions
+and full disturbed returns, while all complete and pending native
+phases retain V27.2/V36.1's original service. This resource separation
+preserves AAII97.2/IV16's supplemented returned-image four-expression
+recovery with the complete original $Q_g$. It supplies no physical
+all-future correspondence from a bare density or geometric image.
+
+Proof. Each fresh trial uses (VIII.116) on the actual source/probe
+systems, with identity on the retained exterior and other reference
+systems. Proposition 161.2 supplies the actual acquired endpoints,
+paid full-bank holds and vacuum extensions, plus the original ordered
+$\alpha/\beta$ grammar and genuine addressed $P/S/\operatorname{Next}$
+on both authentic entrances. Occupation measurements disturb quantum
+states but do not overwrite native history, preparation memory, grants
+or immutable samples. Each completed transaction discharges its own
+sealing, Print, End, local ACK, same-root Return and scratch clearing.
+At a pending cut retain its executed prefix, held dirty bank, parser,
+binding and control fields and exact owed actions; a completed Kraus
+sum is not substituted for that cut. These are applications of the
+existing service contracts, with no hidden reset, rewind, new $r$-edge,
+restored input, replacement source or new reference grant.
+
+On AAII97.2's actual returned image, supplemented space $(S_0,J)$,
+supplemented boundary $(B_0,J)$, successful generation word and retained
+callable memory recover the same semantic state, with its driver and
+current rights, and commute with full $Q_g$. IV16 retains that result
+and its distinction from bare geometry. The detector marginal used
+above removes none of that retained supplement or callable service.
+A bare normalized density instead carries neither that supplement nor
+an authority grant; no map restoring them is constructed by the
+distance calculation. Additional future coherent ingress remains legal
+when separately supplied and paid, and changes Definition 162.1's
+resource premise. Thus (VIII.123) constrains the fixed-bank experiment,
+not the entire domain of all lawful native futures. The remaining
+physical/acquisition correspondence over that full domain, and the
+enduring mutual recovery goal, are not settled by this separation.
+$\square$
+
+## 追加锚（本行以下为增补区）
