@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Routing/HannUniformSection
    mirror-E: none(waiver:noncomputational)
-   anchors: [muellerregensburger2016elementary]
+   anchors: []
    utility: none
    digest: Binary original-leaf certificates for signed loaded-record probability sections. -/
 
