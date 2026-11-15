@@ -37,7 +37,9 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 2 (by norm_num) 1 (by norm_num)
-  norm_num [rejected, realize] at hh
+  have hp : psi 2 = 3 := by norm_num [psi]
+  have hs : ArithmeticFunction.sigma 1 2 = 3 := by decide
+  norm_num [rejected, realize, hp, hs] at hh
 
 def source_registration : Registration arena claim where
   actual := actual
@@ -79,7 +81,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn",
-        "arg", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
+        "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none

@@ -20,7 +20,7 @@ internal sealed class DimitrovPartIVC3Document : IScribeDocumentDefinition
                 + "The identity OeisA344695GcdSigmaPsiPrimes.psi_prod identifies psi with the product of "
                 + "p^(e−1)(p+1) over the exact prime-power factors of n. ArithmeticFunction.sigma_one_apply "
                 + "identifies the divisor sum. Every pair sum is powered as a whole, and every quotient "
-                + "and subtraction in the displayed inequality is real. Both natural-number quantifiers are unrestricted "
+                + "in the displayed inequality is real. Both natural-number quantifiers are unrestricted "
                 + "apart from n ≥ 2 and k ≥ 1.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The full powered pair-sum inequality", ClaimBody(),
@@ -71,7 +71,6 @@ internal sealed class DimitrovPartIVC3Document : IScribeDocumentDefinition
     private static Formula Pow(Formula value, Formula exponent) => new Formula.Power(Parenthesized(value), exponent);
     private static Formula Div(Formula numerator, Formula denominator) => new Formula.Fraction(numerator, denominator);
     private static Formula Add(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Add, right);
-    private static Formula Sub(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
     private static Formula Mul(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
     private static Formula Le(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
     private static Formula Ge(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.GreaterThanOrEqual, right);
