@@ -16,6 +16,7 @@ modulusDegree: proof_shape: bind-only; consumers: coefficientEquiv, coefficientE
 The labels i : Fin n represent the source labels i.val + 1.
 The parity expressions use the disclosed products 10 * 8^(k-1) and 3 * 8^k.
 Coefficients lie in ZMod 2; truncations use AdjoinRoot of a power of Polynomial.X.
+LinearRecurrence.eq_iff_eqOn_range_order extends the first three column equations after polynomial normalization of the order-three recurrence.
 three_column_extension: proof_shape: bind-only; consumers: columns_of_annihilator.
 columns_of_annihilator: proof_shape: bind-only; consumers: columns_iff_annihilator, unit_parameter_criterion.
 square_discrepancy: proof_shape: bind-only; consumers: columns_iff_annihilator.
