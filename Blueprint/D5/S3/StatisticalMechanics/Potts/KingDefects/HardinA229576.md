@@ -10,6 +10,10 @@ $$\forall (n: \operatorname{Nat}), ((7 < n) \Rightarrow (\operatorname{Int}.\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229576.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin229576` (proved) by `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229576.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin229576","declaration_gid":"D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229576.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2013). *Number of defective 4-colorings of an n X 6 0..3 array connected horizontally, vertically, diagonally and antidiagonally with exactly one mistake, and colors introduced in row-major 0..3 order.*. URL: <https://oeis.org/A229576>.
