@@ -38,7 +38,7 @@ internal sealed class ChordalPsdCompletionDocument : IScribeDocumentDefinition
         var agreement = All(i, v, All(j, v, Seq(
             Open, i, Sp, Eq, Sp, j, Sp, Lor, Sp, Call("Adj", g, i, j), Close,
             Sp, Rightarrow, Sp, Call("entry", b, i, j), Sp, Eq, Sp, Call("entry", a, i, j))));
-        return All(v, Call("Type"), Seq(OpenBracket, Call("Finite", v), CloseBracket, Sp,
+        return All(v, F.Id("Type"), Seq(OpenBracket, Call("Finite", v), CloseBracket, Sp,
             All(g, Call("SimpleGraph", v), All(a, matrix, Seq(
                 Open, Call("IsChordal", g), Sp, Land, Sp, cliquePositive, Close,
                 Sp, Rightarrow, Sp, Some(b, matrix, Seq(
