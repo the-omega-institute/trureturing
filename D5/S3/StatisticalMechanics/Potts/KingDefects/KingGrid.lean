@@ -117,19 +117,23 @@ private theorem defectAt_iff {n k : ℕ} {C : Type*} [DecidableEq C]
     exact ⟨fun ha => (hu a ha).trans (hu e he).symm, fun ha => ha ▸ he⟩
 
 private noncomputable def defectEquiv {n k : ℕ} {C : Type*} [DecidableEq C] :
-    {f : Cell n k → C // OneDefect f} ≃ Σ e : Edge n k, {f : Cell n k → C // DefectAt e f} where
-  toFun f := by
-    let e := Classical.choose ((oneDefect_iff f.val).mp f.property)
-    have he := Classical.choose_spec ((oneDefect_iff f.val).mp f.property)
-    exact ⟨e, f.val, (defectAt_iff e f.val).mpr ⟨f.property, he.1⟩⟩
-  invFun q := ⟨q.2.val, ((defectAt_iff q.1 q.2.val).mp q.2.property).1⟩
-  left_inv f := Subtype.ext rfl
-  right_inv q := by
-    apply Sigma.subtype_ext
-    · exact (q.2.property _).mp
-        (Classical.choose_spec ((oneDefect_iff q.2.val).mp
-          ((defectAt_iff q.1 q.2.val).mp q.2.property).1)).1
-    · rfl
+    {f : Cell n k → C // OneDefect f} ≃ Σ e : Edge n k, {f : Cell n k → C // DefectAt e f} := by
+  let pick (f : {f : Cell n k → C // OneDefect f}) :=
+    Classical.choose ((oneDefect_iff f.val).mp f.property)
+  refine (Equiv.sigmaFiberEquiv pick).symm.trans (Equiv.sigmaCongrRight fun e => ?_)
+  let E : {f : {f : Cell n k → C // OneDefect f} // pick f = e} ≃
+      {f : {f : Cell n k → C // OneDefect f} // mono f.val e} :=
+    Equiv.subtypeEquivRight (by
+      intro f
+      constructor
+      · intro h
+        rw [← h]
+        exact (Classical.choose_spec ((oneDefect_iff f.val).mp f.property)).1
+      · intro h
+        exact ((Classical.choose_spec ((oneDefect_iff f.val).mp f.property)).2 e h).symm)
+  exact E.trans ((Equiv.subtypeSubtypeEquivSubtypeInter (fun f => OneDefect f)
+    (fun f => mono f e)).trans
+      (Equiv.subtypeEquivRight (fun f => (defectAt_iff e f).symm)))
 
 private theorem labelled_count {n k : ℕ} : L n k = Nat.card {f : Cell n k → Fin 4 // OneDefect f} := by
   classical
