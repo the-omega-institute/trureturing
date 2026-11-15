@@ -26,17 +26,20 @@ private theorem qubit_kernel {A : Matrix (Fin 2) (Fin 2) ℂ} (htr : A.trace = 1
   have htrace : A 0 0 + A 1 1 = 1 := by
     simpa [Matrix.trace, Fin.sum_univ_two] using htr
   have hd : (1 + (t⁻¹ : ℝ) • A).det =
-      1 + (t⁻¹ : ℂ) + (t⁻¹ : ℂ) ^ 2 * A.det := by
+      ((1 + t⁻¹ : ℝ) : ℂ) + ((t⁻¹ ^ 2 : ℝ) : ℂ) * A.det := by
     simp only [Matrix.det_fin_two, Matrix.add_apply, Matrix.one_apply,
-      Matrix.smul_apply, Complex.real_smul, smul_eq_mul]
+      Matrix.smul_apply, Complex.real_smul]
     push_cast
     linear_combination (t⁻¹ : ℂ) * htrace
   have hdpos : 0 < t ^ 2 + t + A.det.re := by positivity
+  have hre : (1 + (t⁻¹ : ℝ) • A).det.re = (t ^ 2 + t + A.det.re) / t ^ 2 := by
+    rw [hd]
+    simp only [Complex.add_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+      zero_mul, sub_zero]
+    field_simp
+    <;> ring
   unfold subentropyKernel
-  rw [hd]
-  simp only [Complex.add_re, Complex.one_re, Complex.mul_re, Complex.pow_re,
-    Complex.inv_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero,
-    zero_pow, OfNat.ofNat_ne_zero, zero_div, Complex.inv_im, neg_zero]
+  rw [hre]
   field_simp
   <;> ring
 
@@ -49,12 +52,12 @@ private theorem remainder_kernel_bounds {δ t : ℝ} (hδ : 0 < δ) (hδ1 : δ <
   have he : δ / (1 + t) ^ 2 - δ * t / ((1 + t) * (t ^ 2 + t + δ)) =
       δ ^ 2 / ((1 + t) ^ 2 * (t ^ 2 + t + δ)) := by
     field_simp
-    <;> ring
+    ring
   have hg : (δ ^ 2 / (1 - δ)) * (1 / (t + δ) - 1 / (t + 1)) =
       δ ^ 2 / ((t + δ) * (t + 1)) := by
     have : 1 - δ ≠ 0 := by linarith
     field_simp
-    <;> ring
+    ring
   rw [he, hg]
   refine ⟨by positivity, ?_⟩
   apply div_le_div_of_nonneg_left (sq_nonneg δ) (by positivity)
@@ -98,11 +101,11 @@ theorem qubit_subentropy_near_pure (A : Matrix (Fin 2) (Fin 2) ℂ)
   · intro hδpos
     have hδ1 : A.det.re < 1 := by linarith
     have hf : IntegrableOn (fun t : ℝ => A.det.re / (1 + t) ^ 2) (Ioi 0) := by
-      simpa [div_eq_mul_inv, one_div, add_comm] using
+      simpa [IntegrableOn, div_eq_mul_inv, add_comm] using
         ((UniformIntegrals.inverse_power 1 (by norm_num) 0).1.const_mul A.det.re)
     have hv : (∫ t in Ioi (0 : ℝ), A.det.re / (1 + t) ^ 2) = A.det.re := by
       have h := (UniformIntegrals.inverse_power 1 (by norm_num) 0).2
-      simp only [div_eq_mul_inv, one_div] at h ⊢
+      simp only [div_eq_mul_inv] at h ⊢
       rw [integral_const_mul]
       simpa [add_comm] using congrArg (fun x : ℝ => A.det.re * x) h
     have hk := integrable_subentropy_kernel hA htr
@@ -114,7 +117,7 @@ theorem qubit_subentropy_near_pure (A : Matrix (Fin 2) (Fin 2) ℂ)
         (A.det.re ^ 2 / (1 - A.det.re)) * (1 / (t + A.det.re) - 1 / (t + 1))) =
         A.det.re ^ 2 * Real.log (1 / A.det.re) / (1 - A.det.re) := by
       rw [integral_const_mul, hgv]
-      simp only [Real.log_one, zero_sub, Real.log_div, Real.log_one]
+      simp only [Real.log_one, zero_sub, one_div, Real.log_inv]
       ring
     have hb : ∀ᵐ t ∂(volume.restrict (Ioi (0 : ℝ))),
         0 ≤ A.det.re / (1 + t) ^ 2 - subentropyKernel A t ∧
@@ -125,6 +128,7 @@ theorem qubit_subentropy_near_pure (A : Matrix (Fin 2) (Fin 2) ℂ)
       exact remainder_kernel_bounds hδpos hδ1 ht
     have hlo := integral_nonneg_of_ae (hb.mono fun t ht => ht.1)
     have hhi := integral_mono_ae he hgc (hb.mono fun t ht => ht.2)
+    simp only [Pi.sub_apply] at hhi
     rw [integral_sub hf hk, hv] at hlo hhi
     exact ⟨hlo, hhi.trans_eq hge⟩
 
