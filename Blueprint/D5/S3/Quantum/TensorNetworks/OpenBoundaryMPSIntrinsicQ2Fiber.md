@@ -20,7 +20,7 @@ This is the intrinsic endpoint for the displayed raw PREFIX reading. It does not
 
 The canonical core and phase argument retain Haobo Ma and Wenlin Zhang's CC BY 4.0 attribution through OpenBoundaryMPSTwoSiteMinimality. The local C1 supplier credits BochaoKong's Apache-2.0 LeanPool argument at commit 2b1ec889365345f19a45fa94b6457a4d92c96295. The foundational polynomial observations and actualPrincipalLocus/actual_principal_genericity API belong to OpenBoundaryMPSQ2PolynomialFiber.
 
-The full-telescope Reg attempt for intrinsic_actual_q2_fiber remains declared_unresolved: IE-C050 ClosedTruthReadout, unclassified_form, source.selection_size. Accepted full-source/readout reconstruction and binding evidence remain missing. The unfinished audit is disclosed in https://github.com/the-omega-institute/trureturing/issues/30422; it is not a validated registration.
+The interior-genericity consumer uses quotientRawPrefix, positiveRepresentative_witness, quotientCoordinates_retraction_local, quotientCoordinates_positiveRepresentative and rawPrefix_scale_local. These exposures retain the original telescopes and proof terms; their public helper audits remain unfinished under issue 30422. The full-telescope Reg attempt for intrinsic_actual_q2_fiber remains declared_unresolved: IE-C050 ClosedTruthReadout, unclassified_form, source.selection_size. Accepted full-source/readout reconstruction and binding evidence remain missing. The unfinished audit is disclosed in https://github.com/the-omega-institute/trureturing/issues/30422; it is not a validated registration.
 
 ## References
 
