@@ -228,7 +228,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
                     stateBinder := 0
                     functionOperand := false
                     booleanPredicate := false
-                    stateOperand := none }] }
+                    stateOperand := some #["fn", "arg"] }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
