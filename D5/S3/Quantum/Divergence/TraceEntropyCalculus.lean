@@ -166,4 +166,15 @@ theorem hasDerivAt_trace_mul_log (X : ℝ → Matrix i i ℂ) (V : Matrix i i �
   simp only [slope_def_field, Q, R, smul_mul_assoc, map_smul, smul_eq_mul]
   ring
 
+-- This unequal-trace curve detects the identity correction at the identity.
+example : HasDerivAt
+    (fun t : ℝ => ((Real.exp t • (1 : Matrix Unit Unit ℂ)) *
+      cfc Real.log (Real.exp t • (1 : Matrix Unit Unit ℂ))).trace.re) 1 0 := by
+  let X : ℝ → Matrix Unit Unit ℂ := fun t => Real.exp t • 1
+  have hd : HasDerivAt X 1 0 := by
+    simpa [X] using (Real.hasDerivAt_exp 0).smul_const (1 : Matrix Unit Unit ℂ)
+  have hp (t : ℝ) : (X t).PosDef := Matrix.PosDef.one.smul (Real.exp_pos t)
+  simpa [X] using hasDerivAt_trace_mul_log X 1 0 hd
+    (Eventually.of_forall fun t => (hp t).isHermitian) (hp 0)
+
 end D5.S3.Quantum.Divergence.TraceEntropyCalculus
