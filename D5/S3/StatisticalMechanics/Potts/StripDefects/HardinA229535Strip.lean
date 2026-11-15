@@ -120,6 +120,7 @@ theorem result (n : ℕ) :
     | succ i ih =>
       rw [forward, Fin.val_succ, Function.iterate_succ_apply']
       change Matrix.vecMul (forward T initial i.val) T = W i.succ
+      change forward T initial i.val = W i.castSucc at ih
       rw [ih]
       exact (finite_certificate.2.2.2.2.2.1.2 i).symm
   have poly : forward T initial (0 + 4) =
@@ -157,7 +158,11 @@ theorem result (n : ℕ) :
       defects horizontal between (List.ofFn fun i j => A (i, j)) = 1) (q := S) (fun _ => Iff.rfl))
     simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at orbit card
     unfold literalCount a Normal
-    simpa only [S, Normal] using card.trans orbit
+    convert card.trans orbit using 1
+    apply congrArg (fun x : ℕ => 6 * x)
+    apply congrArg Finset.card
+    ext A
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, S]
   have bridge (m : ℕ) :
       dotProduct initial ((T ^ m).mulVec terminal) = 6 * (a (m + 1) : ℤ) := by
     rw [← labelled, scale]
