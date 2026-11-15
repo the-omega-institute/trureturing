@@ -112,8 +112,12 @@ Operator-convex generators are included under the stated necessity
 conditions. Worldwide priority of the classification remains
 unresolved; source attribution and Lean verification are distinct.
 
-Remark VII.4 raises existence of a minimal reverse test for general convex
-generators, even in finite dimension. MaximalHockeyStickAttainment proves
+Remark VII.4 (PDF p. 60) raises existence of a minimal reverse test for general
+convex generators, even in finite dimension. Matsumoto's
+arXiv:1311.4722v4, Theorem 9.4 (PDF p. 30), already proves finite-dimensional
+finite-value attainment under FC: f is proper, lower semicontinuous and convex,
+its domain contains (0,infinity), and f(0)=0 (PDF p. 4). HMT's explicit
+question does not negate this earlier overlap. MaximalHockeyStickAttainment proves
 that whenever the actual original sigma-finite whole-complex-L1 maximal
 value is a real number, an actual finite ReverseTest attains that number.
 The output matrices are arbitrary finite complex PSD matrices, including
@@ -132,9 +136,15 @@ preserves both output matrices and the real cost. Infinite-cost boundary
 points remain in the compact domain, and the zero pair uses the empty
 test. The existing original-source equivalence transfers this finite
 minimum to the original value. The alphabet bound is deliberately coarse.
-Matsumoto's printed condition f(0)=0 is not assumed here; worldwide
-priority of the full endpoint-general attainment statement remains
-unresolved.
+Matsumoto's printed condition f(0)=0 alone is not a substantive novelty
+distinction. If the actual endpoint c=f(0+) is finite, taking the closed
+endpoint value and subtracting c subtracts the fixed constant c sigma(1)
+from every reverse-test cost (c Tr(B) for matrix outputs), preserving
+minimizers. Transposition, hat f(t)=t f(1/t), and swapping the two inputs
+handle a finite opposite endpoint in the same way. The statement here also
+retains the range where both endpoints are infinite; this normalization
+observation does not establish priority for that remaining range. Worldwide
+priority of the full endpoint-general attainment statement remains unresolved.
 
 The arbitrary-support extension retains the same actual original sigma-finite
 whole-complex-L1 values and the real-finite original maximal-value premise.
@@ -194,16 +204,26 @@ supremum of continuous truncated-curvature integrals and is lower
 semicontinuous in Mathlib's full weak topology of finite measures. Minimization
 in ENNReal on the actual compact nonempty family retains top as a possible
 minimum. The resulting original value is attained and cannot be minus infinity.
+If every admissible cost is +infinity, nonemptiness alone makes every admissible
+test a minimizer. This branch retains scope and is not counted as an additional
+independent solved optimization problem.
 
 The comparison with earlier literature retains its hypotheses. Matsumoto,
-[arXiv:1311.4722v4](https://arxiv.org/abs/1311.4722v4), Theorems 9.4 and 9.9,
-provides finite-value and separable B(H) attainment antecedents under his stated
-FC and endpoint conditions; Lemma 4.1 already provides the finite-compression
-architecture. Hiai, *Quantum f-divergences in von Neumann algebras II. Maximal
+[arXiv:1311.4722v4](https://arxiv.org/abs/1311.4722v4), Theorem 9.4,
+already proves finite-dimensional finite-value attainment under FC. Theorem 9.9
+(PDF p. 35) concerns separable B(H), under FC and the finite endpoint hypotheses
+f(0)<infinity and hat f(0)<infinity stated throughout Section 9.3 (PDF p. 31).
+Lemma 4.1 already provides the finite-compression architecture.
+Hiai, *Quantum f-divergences in von Neumann algebras II. Maximal
 f-divergences*, [arXiv:1807.03118v1](https://arxiv.org/abs/1807.03118v1),
 Section 6, Lemma 6.1, Definition 6.2 and Theorem 6.3, gives an arbitrary-von-Neumann
 whole-L1 spectral reverse test and attainment with infinite endpoint conventions
 under the paper's standing operator-convexity hypothesis. The posterior
 construction retains arbitrary convexity, without asserting spectral optimality
-or finite-alphabet realization. These antecedents and the question in Remark
-VII.4 delimit the contribution; they do not establish a global priority claim.
+or finite-alphabet realization. This endpoint addresses only attainment for the
+intrinsic all-directed order-normal source class stated above. HMT Remark VII.4
+(PDF p. 60) asks about minimal reverse-test existence; the separate question on
+PDF p. 62 asks for a classification of equality between maximal hockey-stick
+f-divergence and maximal f-divergence. The attainment endpoint does not supply
+that classification. These antecedents and scope distinctions do not establish
+a global priority claim.
