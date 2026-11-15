@@ -116,7 +116,8 @@ def family : Registration arena (type_of% @sum_edges) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨⟨2, 2, fun e => if e = .H 0 0 then 0 else 1⟩, .H 0 0, .V 0 0, ?_⟩
+    refine ⟨⟨2, 2, fun e => if e = .H 0 0 then 0 else 1⟩,
+      (Edge.H 0 0 : Edge 2 2), (Edge.V 0 0 : Edge 2 2), ?_⟩
     change (if (Edge.H 0 0 : Edge 2 2) = .H 0 0 then 0 else 1) ≠
       (if (Edge.V 0 0 : Edge 2 2) = .H 0 0 then 0 else 1)
     decide +kernel
@@ -155,6 +156,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 end sum_edges
 
 namespace oneDefect_iff
+
+local instance {n k : ℕ} {C : Type} [DecidableEq C] (f : Cell n k → C) :
+    Decidable (OneDefect f) := by
+  unfold OneDefect
+  infer_instance
 
 abbrev signature : Signature where
   Params := Σ n : ℕ, Σ k : ℕ, Σ C : Type, DecidableEq C

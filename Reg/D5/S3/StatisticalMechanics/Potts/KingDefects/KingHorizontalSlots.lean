@@ -429,5 +429,147 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 end word_support_card
 
+namespace ordinary_value_valid
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.UniverseSingleReadout.signature NZPair
+    (fun _ => Bool) (fun _ => K)
+
+def actual : Realization signature :=
+  realize signature (fun _ p x => ordinary_value p x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (x : NZPair) (b : Bool),
+    R.readout () x b ≠ 0 ∧ ordinary_value x b ≠ x.val.1 + x.val.2
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h ⟨((1, 0), (0, 1)), by decide +kernel⟩ false
+  exact hb.1 rfl
+
+def family : Registration arena (type_of% @ordinary_value_valid) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@ordinary_value_valid, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨⟨((1, 0), (0, 1)), by decide +kernel⟩, false, true, ?_⟩
+    decide +kernel
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@ordinary_value_valid) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalSlots.ordinary_value_valid.auditUnit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalSlots.ordinary_value_valid.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p x => ordinary_value p x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalSlots
+    definition := none
+    coordinates := #[0]
+    readouts := #[{ path := #["body", "body", "fn", "arg", "fn", "arg"]
+                    stateBinder := 1
+                    functionOperand := false
+                    booleanPredicate := false
+                    stateOperand := none }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ordinary_value_valid
+
+namespace pair_count_support
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.UniverseSingleReadout.signature
+    (Σ _ : ℕ, Σ _ : ℕ, Σ _ : ℕ, Σ _ : ℕ, NZPair)
+    (fun _ => NZPair) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ p x => pair_support_count p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ p x => pair_support_count p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 x + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (a b c d : ℕ) (x y : NZPair),
+    (∑ u : Fin a → OrdinaryAlphabet x, ∑ v : Fin b → OrdinaryAlphabet y,
+      Nat.card (InteriorAlphabet x y u v x.val.1 y.val.1) ^ c *
+      Nat.card (InteriorAlphabet x y u v x.val.2 y.val.2) ^ d) =
+        R.readout () ⟨a, b, c, d, x⟩ y
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h 1 1 1 1 ⟨((1, 0), (0, 1)), by decide +kernel⟩ ⟨((1, 0), (0, 1)), by decide +kernel⟩
+  have ha := pair_count_support 1 1 1 1 ⟨((1, 0), (0, 1)), by decide +kernel⟩ ⟨((1, 0), (0, 1)), by decide +kernel⟩
+  dsimp only [rejected, realize] at hb
+  omega
+
+def family : Registration arena (type_of% @pair_count_support) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@pair_count_support, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    let x : NZPair := ⟨((1, 0), (0, 1)), by decide +kernel⟩
+    refine ⟨⟨1, 1, 1, 1, x⟩, lower_pair x 0, lower_pair x 1, ?_⟩
+    change pair_support_count 1 1 1 1 x (lower_pair x 0) ≠
+      pair_support_count 1 1 1 1 x (lower_pair x 1)
+    rw [pair_support_cases, pair_support_cases, support_case_eval, support_case_eval]
+    decide +kernel
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@pair_count_support) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalSlots.pair_count_support.auditUnit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalSlots.pair_count_support.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p x => pair_support_count p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalSlots
+    definition := none
+    coordinates := #[0, 1, 2, 3, 4]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
+                    stateOperand := some #["arg"] }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end pair_count_support
+
 end
 end Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalSlots
