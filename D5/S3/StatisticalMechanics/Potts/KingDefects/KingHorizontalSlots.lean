@@ -64,12 +64,12 @@ def InteriorSlots (a b M : ℕ) (s : Fin M) :=
       {l : BoundaryData b M // BoundaryValid s l} //
     ∀ j, j ≠ s → q.1.val.h j = q.2.val.h j}
 
-theorem boundary_top_shared {m M : ℕ} (s : Fin M)
+private theorem boundary_top_shared {m M : ℕ} (s : Fin M)
     (t : {t : DiffField (m + 1) M // RawAdmissible (.H 0 s) t}) (j : Fin M) (hj : j ≠ s) :
     (boundary_slot_equiv m M s t).val.h j = t.val.h 0 j := by
   simpa [boundary_slot_equiv, boundary_extract, hj] using (boundary_h s t.val t.property 0 j).symm
 
-theorem boundary_bottom_shared {m M : ℕ} (s : Fin M)
+private theorem boundary_bottom_shared {m M : ℕ} (s : Fin M)
     (t : {t : DiffField (m + 1) M // RawAdmissible (.H (Fin.last (m + 1)) s) t})
     (j : Fin M) (hj : j ≠ s) :
     (boundary_bottom_slot_equiv m M s t).val.h j = t.val.h (Fin.last (m + 1)) j := by
@@ -79,7 +79,7 @@ theorem boundary_bottom_shared {m M : ℕ} (s : Fin M)
   simpa [boundary_bottom_slot_equiv, row_reflect_equiv, row_reflect,
     Equiv.subtypeEquivRight, Equiv.subtypeEquiv, boundary_slot_equiv, boundary_extract] using h
 
-def cut_slots_equiv (a b M : ℕ) (s : Fin M) :
+private def cut_slots_equiv (a b M : ℕ) (s : Fin M) :
     CutFields (a+1) (b+1) M s ≃ InteriorSlots a b M s := by
   let A := {t : DiffField (a+1) M // RawAdmissible (.H (Fin.last (a+1)) s) t}
   let B := {t : DiffField (b+1) M // RawAdmissible (.H 0 s) t}
@@ -123,13 +123,13 @@ abbrev InteriorAlphabet {a b : ℕ} (x y : NZPair)
   {h : K // h ≠ 0 ∧ h ≠ p ∧ h ≠ q ∧ (∀ i, h ≠ (u i).val) ∧ ∀ i, h ≠ (v i).val}
 
 /-- Independent special pairs and ordinary vertical words, followed by shared horizontal words. -/
-def InteriorCode (a b c d : ℕ) :=
+private def InteriorCode (a b c d : ℕ) :=
   Σ x : NZPair, Σ y : NZPair,
     Σ u : Fin a → OrdinaryAlphabet x, Σ v : Fin b → OrdinaryAlphabet y,
       (Fin c → InteriorAlphabet x y u v x.val.1 y.val.1) ×
       (Fin d → InteriorAlphabet x y u v x.val.2 y.val.2)
 
-def coded_boundary {m c d : ℕ} (x : NZPair)
+private def coded_boundary {m c d : ℕ} (x : NZPair)
     (u : Fin m → OrdinaryAlphabet x) (l : Fin c → K) (r : Fin d → K) :
     BoundaryData m (c + (d + 1)) where
   p := x.val.1
@@ -137,7 +137,7 @@ def coded_boundary {m c d : ℕ} (x : NZPair)
   h := Fin.addCases l (Fin.cases (x.val.1 + x.val.2) r)
   v i := (u i).val
 
-theorem coded_boundary_valid {m c d : ℕ} (x : NZPair)
+private theorem coded_boundary_valid {m c d : ℕ} (x : NZPair)
     (u : Fin m → OrdinaryAlphabet x) (l : Fin c → K) (r : Fin d → K)
     (hl : ∀ j, l j ≠ 0 ∧ l j ≠ x.val.1 ∧ ∀ i, l j ≠ (u i).val)
     (hr : ∀ j, r j ≠ 0 ∧ r j ≠ x.val.2 ∧ ∀ i, r j ≠ (u i).val) :
@@ -345,7 +345,7 @@ private theorem interiorEncode_decode {a b c d : ℕ}
     · rfl
 
 /-- A direct four-word version of the interior slot classification. -/
-def interior_code_equiv (a b c d : ℕ) :
+private def interior_code_equiv (a b c d : ℕ) :
     InteriorCode a b c d ≃ InteriorSlots a b (c + (d + 1)) (pivot c d) where
   toFun := interiorEncode
   invFun := interiorDecode
@@ -491,7 +491,7 @@ theorem ordinary_value_valid (x : NZPair) (b : Bool) :
       ordinary_value x b ≠ 0 ∧ ordinary_value x b ≠ x.val.1 + x.val.2 := by decide
   exact h x b
 
-noncomputable def ordinary_equiv (x : NZPair) : Bool ≃ OrdinaryAlphabet x :=
+private noncomputable def ordinary_equiv (x : NZPair) : Bool ≃ OrdinaryAlphabet x :=
   Equiv.ofBijective (fun b => ⟨ordinary_value x b,ordinary_value_valid x b⟩) (by
     constructor
     · intro b b' he
@@ -509,7 +509,7 @@ abbrev SupportAlphabet (x y : NZPair) (S T : Finset Bool) (p q : K) :=
   {h : K // h ≠ 0 ∧ h ≠ p ∧ h ≠ q ∧
     (∀ z ∈ S, h ≠ ordinary_value x z) ∧ ∀ z ∈ T, h ≠ ordinary_value y z}
 
-theorem support_alphabet_card {a b : ℕ} (x y : NZPair)
+private theorem support_alphabet_card {a b : ℕ} (x y : NZPair)
     (u : Fin a → Bool) (v : Fin b → Bool) (p q : K) :
     Nat.card (InteriorAlphabet x y (fun i => ordinary_equiv x (u i))
       (fun i => ordinary_equiv y (v i)) p q) =

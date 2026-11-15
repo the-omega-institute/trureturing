@@ -131,7 +131,7 @@ theorem boundary_h {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
         omega)))).symm
 
 /-- The first vertical slot splits at the defect; every later slot is constant. -/
-theorem boundary_v {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
+private theorem boundary_v {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
     (ht : RawAdmissible (.H 0 s) t) (i : Fin (m + 1)) (j : Fin (M + 1)) :
     t.v i j = if i = 0 then
       (if j.val ≤ s.val then t.v 0 s.castSucc else t.v 0 s.succ)
@@ -168,7 +168,7 @@ theorem boundary_v {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
       (fun a _ _ => clear a (Or.inl hi))).symm
 
 /-- Every valid compressed boundary assignment gives exactly one horizontal defect. -/
-theorem boundary_build_raw {m M : ℕ} (s : Fin M) (b : BoundaryData m M)
+private theorem boundary_build_raw {m M : ℕ} (s : Fin M) (b : BoundaryData m M)
     (hb : BoundaryValid s b) : RawAdmissible (.H 0 s) (boundary_build s b) := by
   rcases hb with ⟨hp,hq,hpq,hs,hh,hv,hl,hr,hcross⟩
   have local_top (j : Fin M) :
@@ -230,7 +230,7 @@ theorem boundary_build_raw {m M : ℕ} (s : Fin M) (b : BoundaryData m M)
     · simpa [boundary_build, add_eq_zero_iff_eq_neg] using hcross a j
 
 /-- Admissibility supplies precisely the boundary-slot exclusions. -/
-theorem boundary_extract_valid {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
+private theorem boundary_extract_valid {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
     (ht : RawAdmissible (.H 0 s) t) : BoundaryValid s (boundary_extract s t) := by
   have nz (e : Edge (m + 1 + 1) (M + 1)) (he : e ≠ .H 0 s) :
       edgeValue t e ≠ 0 := mt (ht.2 e).mp he
@@ -278,7 +278,7 @@ theorem boundary_extract_valid {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
     simpa [boundary_extract, add_eq_zero_iff_eq_neg] using hn
 
 /-- Extracting the compressed slots loses no field values. -/
-theorem boundary_reconstruct {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
+private theorem boundary_reconstruct {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M)
     (ht : RawAdmissible (.H 0 s) t) : boundary_build s (boundary_extract s t) = t := by
   apply DiffField.ext
   · funext i j
@@ -314,7 +314,7 @@ def BoundaryWords (m c d : ℕ) :=
     (w.1 ≠ (fun _ => false) → w.2.1 = (fun _ => true)) ∧
     (w.1 ≠ (fun _ => true) → w.2.2 = (fun _ => true))}
 
-def boundary_words_zero_equiv (c d : ℕ) :
+private def boundary_words_zero_equiv (c d : ℕ) :
     BoundaryWords 0 c d ≃ (Fin c → Bool) × (Fin d → Bool) :=
   (Equiv.subtypeUnivEquiv (by
     intro w
@@ -322,7 +322,7 @@ def boundary_words_zero_equiv (c d : ℕ) :
       exact (h (funext fun i => Fin.elim0 i)).elim)).trans (Equiv.uniqueProd _ _)
 
 
-noncomputable def boundary_words_sum_equiv (m c d : ℕ) (hm : 0 < m) :
+private noncomputable def boundary_words_sum_equiv (m c d : ℕ) (hm : 0 < m) :
     BoundaryWords m c d ≃
       (Fin c → Bool) ⊕ (Fin d → Bool) ⊕
         {u : Fin m → Bool // u ≠ (fun _ => false) ∧ u ≠ (fun _ => true)} := by
@@ -392,7 +392,7 @@ theorem boundary_words_pos_card (m c d : ℕ) (hm : 0 < m) :
 /-- The column pair separating the words of lengths `c` and `d`. -/
 def pivot (c d : ℕ) : Fin (c + (d + 1)) := Fin.natAdd c 0
 
-def boundary_word_build {m c d : ℕ} (x : NZPair) (w : BoundaryWords m c d) :
+private def boundary_word_build {m c d : ℕ} (x : NZPair) (w : BoundaryWords m c d) :
     BoundaryData m (c + (d + 1)) where
   p := x.val.1
   q := x.val.2
@@ -401,7 +401,7 @@ def boundary_word_build {m c d : ℕ} (x : NZPair) (w : BoundaryWords m c d) :
       (fun j => if w.val.2.2 j then x.val.1 + x.val.2 else x.val.1))
   v i := if w.val.1 i then x.val.2 else x.val.1
 
-theorem boundary_word_build_valid {m c d : ℕ} (x : NZPair)
+private theorem boundary_word_build_valid {m c d : ℕ} (x : NZPair)
     (w : BoundaryWords m c d) : BoundaryValid (pivot c d) (boundary_word_build x w) := by
   obtain ⟨hp,hq,hpq⟩ := x.property
   have hz : x.val.1 + x.val.2 ≠ 0 := by
@@ -473,11 +473,11 @@ theorem boundary_word_build_valid {m c d : ℕ} (x : NZPair)
           · exact hzq
           · exact hzp
 
-def boundary_word_map (m c d : ℕ) (w : NZPair × BoundaryWords m c d) :
+private def boundary_word_map (m c d : ℕ) (w : NZPair × BoundaryWords m c d) :
     {b : BoundaryData m (c + (d + 1)) // BoundaryValid (pivot c d) b} :=
   ⟨boundary_word_build w.1 w.2, boundary_word_build_valid w.1 w.2⟩
 
-theorem boundary_word_map_injective (m c d : ℕ) :
+private theorem boundary_word_map_injective (m c d : ℕ) :
     Function.Injective (boundary_word_map m c d) := by
   rintro ⟨x,w⟩ ⟨y,z⟩ he
   have hp := congrArg (fun b => b.val.p) he
@@ -505,7 +505,7 @@ theorem boundary_word_map_injective (m c d : ℕ) :
       have h := congrArg (fun b => b.val.h (j.succ.natAdd c)) he
       simpa [boundary_word_map, boundary_word_build] using h
 
-theorem boundary_word_map_surjective (m c d : ℕ) :
+private theorem boundary_word_map_surjective (m c d : ℕ) :
     Function.Surjective (boundary_word_map m c d) := by
   classical
   rintro ⟨b,hp,hq,hpq,hs,hh,hv,hl,hr,hcross⟩
@@ -587,7 +587,7 @@ theorem boundary_word_map_surjective (m c d : ℕ) :
     exact hu i
 
 /-- A boundary field consists of a six-way ordered-pair choice and three binary words. -/
-noncomputable def boundary_word_equiv (m c d : ℕ) :
+private noncomputable def boundary_word_equiv (m c d : ℕ) :
     {t : DiffField (m + 1) (c + (d + 1)) // RawAdmissible (.H 0 (pivot c d)) t} ≃
       NZPair × BoundaryWords m c d :=
   (boundary_slot_equiv m _ (pivot c d)).trans
@@ -666,7 +666,7 @@ def row_reflect {N M : ℕ} (t : DiffField N M) : DiffField N M where
   h i j := t.h i.rev j
   v i j := t.v i.rev j
 
-theorem row_reflect_differentiate {N M : ℕ}
+private theorem row_reflect_differentiate {N M : ℕ}
     (f : Cell (N + 1) (M + 1) → K) :
     row_reflect (differentiate f) = differentiate (fun p => f (p.1.rev,p.2)) := by
   apply DiffField.ext
@@ -708,46 +708,46 @@ def boundary_bottom_slot_equiv (m M : ℕ) (s : Fin M) :
   exact (row_reflect_equiv (Fin.last (m + 1)) s).trans
     (transport.trans (boundary_slot_equiv m M s))
 
-def top_row {A : ℕ} (B : ℕ) (i : Fin (A + 1)) : Fin (A + B + 1) :=
+private def top_row {A : ℕ} (B : ℕ) (i : Fin (A + 1)) : Fin (A + B + 1) :=
   ⟨i.val, by omega⟩
 
-def bottom_row (A : ℕ) {B : ℕ} (i : Fin (B + 1)) : Fin (A + B + 1) :=
+private def bottom_row (A : ℕ) {B : ℕ} (i : Fin (B + 1)) : Fin (A + B + 1) :=
   ⟨A + i.val, by omega⟩
 
-def top_field {A B M : ℕ} (t : DiffField (A + B) M) : DiffField A M where
+private def top_field {A B M : ℕ} (t : DiffField (A + B) M) : DiffField A M where
   h i j := t.h (top_row B i) j
   v i j := t.v (i.castAdd B) j
 
-def bottom_field {A B M : ℕ} (t : DiffField (A + B) M) : DiffField B M where
+private def bottom_field {A B M : ℕ} (t : DiffField (A + B) M) : DiffField B M where
   h i j := t.h (bottom_row A i) j
   v i j := t.v (i.natAdd A) j
 
-def top_edge {A M : ℕ} (B : ℕ) : Edge (A + 1) (M + 1) →
+private def top_edge {A M : ℕ} (B : ℕ) : Edge (A + 1) (M + 1) →
     Edge (A + B + 1) (M + 1)
   | .H i j => .H (top_row B i) j
   | .V i j => .V (i.castAdd B) j
   | .D i j => .D (i.castAdd B) j
   | .A i j => .A (i.castAdd B) j
 
-def bottom_edge (A : ℕ) {B M : ℕ} : Edge (B + 1) (M + 1) →
+private def bottom_edge (A : ℕ) {B M : ℕ} : Edge (B + 1) (M + 1) →
     Edge (A + B + 1) (M + 1)
   | .H i j => .H (bottom_row A i) j
   | .V i j => .V (i.natAdd A) j
   | .D i j => .D (i.natAdd A) j
   | .A i j => .A (i.natAdd A) j
 
-theorem top_edge_value {A B M : ℕ} (t : DiffField (A + B) M)
+private theorem top_edge_value {A B M : ℕ} (t : DiffField (A + B) M)
     (e : Edge (A + 1) (M + 1)) : edgeValue (top_field t) e = edgeValue t (top_edge B e) := by
   cases e <;> rfl
 
-theorem bottom_edge_value {A B M : ℕ} (t : DiffField (A + B) M)
+private theorem bottom_edge_value {A B M : ℕ} (t : DiffField (A + B) M)
     (e : Edge (B + 1) (M + 1)) : edgeValue (bottom_field t) e =
       edgeValue t (bottom_edge A e) := by
   cases e <;> rfl
 
 def cut_row (A B : ℕ) : Fin (A + B + 1) := ⟨A, by omega⟩
 
-theorem top_field_raw {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
+private theorem top_field_raw {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
     (ht : RawAdmissible (.H (cut_row A B) s) t) :
     RawAdmissible (.H (Fin.last A) s) (top_field t) := by
   refine ⟨?_, ?_⟩
@@ -757,7 +757,7 @@ theorem top_field_raw {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
     rw [top_edge_value, ht.2]
     cases e <;> simp [top_edge, top_row, cut_row, Fin.ext_iff]
 
-theorem bottom_field_raw {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
+private theorem bottom_field_raw {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
     (ht : RawAdmissible (.H (cut_row A B) s) t) :
     RawAdmissible (.H 0 s) (bottom_field t) := by
   refine ⟨?_, ?_⟩
@@ -781,7 +781,7 @@ theorem bottom_field_raw {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
     | D i j => simp [bottom_edge]
     | A i j => simp [bottom_edge]
 
-theorem raw_of_halves {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
+private theorem raw_of_halves {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
     (hu : RawAdmissible (.H (Fin.last A) s) (top_field t))
     (hl : RawAdmissible (.H (0 : Fin (B + 1)) s) (bottom_field t)) :
     RawAdmissible (.H (cut_row A B) s) t := by
@@ -819,14 +819,14 @@ theorem raw_of_halves {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
       · simpa [top_edge] using upper (.A i j)
       · simpa [bottom_edge] using lower (.A i j)
 
-def join_field {A B M : ℕ} (u : DiffField A M) (l : DiffField B M) :
+private def join_field {A B M : ℕ} (u : DiffField A M) (l : DiffField B M) :
     DiffField (A + B) M where
   h i j := if hi : i.val < A then u.h ⟨i.val, by omega⟩ j
     else l.h ⟨i.val - A, by have := i.isLt; omega⟩ j
   v i j := if hi : i.val < A then u.v ⟨i.val, hi⟩ j
     else l.v ⟨i.val - A, by have := i.isLt; omega⟩ j
 
-theorem top_field_join {A B M : ℕ} (u : DiffField A M) (l : DiffField B M)
+private theorem top_field_join {A B M : ℕ} (u : DiffField A M) (l : DiffField B M)
     (hshare : ∀ j, u.h (Fin.last A) j = l.h 0 j) : top_field (join_field u l) = u := by
   apply DiffField.ext
   · funext i j
@@ -838,7 +838,7 @@ theorem top_field_join {A B M : ℕ} (u : DiffField A M) (l : DiffField B M)
   · funext i j
     simp [top_field, join_field]
 
-theorem bottom_field_join {A B M : ℕ} (u : DiffField A M) (l : DiffField B M) :
+private theorem bottom_field_join {A B M : ℕ} (u : DiffField A M) (l : DiffField B M) :
     bottom_field (join_field u l) = l := by
   apply DiffField.ext
   · funext i j
@@ -846,7 +846,7 @@ theorem bottom_field_join {A B M : ℕ} (u : DiffField A M) (l : DiffField B M) 
   · funext i j
     simp [bottom_field, join_field]
 
-theorem join_restrict {A B M : ℕ} (t : DiffField (A + B) M) :
+private theorem join_restrict {A B M : ℕ} (t : DiffField (A + B) M) :
     join_field (top_field t) (bottom_field t) = t := by
   apply DiffField.ext
   · funext i j

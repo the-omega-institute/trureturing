@@ -64,7 +64,7 @@ theorem interior_count_support (a b c d : ℕ) :
 
 def supports : Fin 4 → Finset Bool := ![∅,{false},{true},Finset.univ]
 
-noncomputable def supports_equiv : Fin 4 ≃ Finset Bool :=
+private noncomputable def supports_equiv : Fin 4 ≃ Finset Bool :=
   Equiv.ofBijective supports (by decide)
 
 def lower_pair_values (x : NZPair) : Fin 6 → K × K :=
@@ -82,7 +82,7 @@ theorem lower_pair_valid (x : NZPair) (i : Fin 6) :
 def lower_pair (x : NZPair) (i : Fin 6) : NZPair :=
   ⟨lower_pair_values x i,lower_pair_valid x i⟩
 
-noncomputable def lower_pair_equiv (x : NZPair) : Fin 6 ≃ NZPair :=
+private noncomputable def lower_pair_equiv (x : NZPair) : Fin 6 ≃ NZPair :=
   Equiv.ofBijective (lower_pair x) (by
     have h : ∀ x : NZPair,
         (∀ i j, lower_pair x i = lower_pair x j → i = j) ∧
@@ -292,11 +292,11 @@ theorem interior_three_rows_count (c d : ℕ) :
   simp only [Nat.zero_add,E,ite_true,pow_zero] at h
   omega
 
-theorem sum_two_powers (q : ℕ) : (∑ i : Fin q, 2 ^ i.val) + 1 = 2 ^ q := by
+private theorem sum_two_powers (q : ℕ) : (∑ i : Fin q, 2 ^ i.val) + 1 = 2 ^ q := by
   rw [Fin.sum_univ_eq_sum_range]
   simpa using (geom_sum_mul_add (1 : ℕ) q)
 
-theorem sum_two_powers_reverse (q : ℕ) :
+private theorem sum_two_powers_reverse (q : ℕ) :
     (∑ i : Fin (q + 1), 2 ^ (q - i.val)) + 1 = 2 ^ (q + 1) := by
   have hr := Equiv.sum_comp (Fin.revPerm (n := q + 1)) (fun i : Fin (q+1) => (2 : ℕ)^i.val)
   have hv (i : Fin (q + 1)) : (Fin.revPerm i).val = q - i.val := by simp [Fin.revPerm, Fin.rev]
@@ -458,12 +458,12 @@ theorem boundary_row_sum (m q : ℕ) (hm : 0 < m) :
   simp only [pow_succ] at hg hr ⊢
   nlinarith
 
-theorem sum_left_indicator (t : ℕ) :
+private theorem sum_left_indicator (t : ℕ) :
     (∑ i : Fin (t+2), if i.val=0 then 1 else 0) = (1 : ℕ) := by
   rw [Fin.sum_univ_succ]
   simp
 
-theorem sum_right_indicator (t : ℕ) :
+private theorem sum_right_indicator (t : ℕ) :
     (∑ i : Fin (t+2), if t+1-i.val=0 then 1 else 0) = (1 : ℕ) := by
   have hr := Equiv.sum_comp (Fin.revPerm (n:=t+2))
     (fun i : Fin (t+2) => if i.val=0 then (1 : ℕ) else 0)
