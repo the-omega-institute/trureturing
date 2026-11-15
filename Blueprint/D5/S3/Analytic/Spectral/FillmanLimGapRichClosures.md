@@ -22,6 +22,10 @@ $$\neg ((\forall k: Nat, (0 < k) \Rightarrow (\forall Xone: Set\left(EuclideanSp
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Spectral/FillmanLimGapRichClosures.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-fl2609q2` (refuted) by `D5/S3/Analytic/Spectral/FillmanLimGapRichClosures.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-fl2609q2","declaration_gid":"D5/S3/Analytic/Spectral/FillmanLimGapRichClosures.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jake Fillman and Yi-Sheng Lim (2026). *On the identification of certain classes of gap-rich sets*. DOI: [10.48550/arXiv.2609.21029](https://doi.org/10.48550/arXiv.2609.21029). URL: <https://arxiv.org/abs/2609.21029v1>.

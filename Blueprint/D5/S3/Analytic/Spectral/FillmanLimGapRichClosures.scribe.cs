@@ -18,13 +18,15 @@ internal sealed class FillmanLimGapRichClosuresDocument : IScribeDocumentDefinit
                 "Page 20, Section 6, Question 2: “If X₁, X₂ ⊆ ℝᵏ and X₃ ⊆ ℝˡ are gap-rich, are any of the following sets X₁ ∪ X₂, X₁ + X₂, and X₁ × X₃ gap-rich?” Positive dimensions are natural numbers greater than zero. The union and sum clauses quantify over two subsets of the same Euclidean space. The Cartesian clause uses ordered coordinate concatenation. The three assertions are alternatives, represented by their disjunction.", DescribeRole.Definition),
             Entry("fl-fillmanlimgaprichclosures-1", "result", "All three closure assertions fail",
                 Seq(Neg, Sp, Parenthesized(ClaimBody())), AssessedProvenance.FromRepo(Source),
-                "The input alphabets have empty exceptional set. Small variations inside a vertical component yield a hyperbolic relative transfer and then a hyperbolic positive word. Locally isolated output components force transfers minus J, minus the identity, or alternating H and minus its adjugate. Their obstruction energies form a nondiscrete set. The witnesses use dimensions three for sums and five for the two union or product factors.", DescribeRole.Theorem))));
+                "The input alphabets have empty exceptional set. Small variations inside a vertical component yield a hyperbolic relative transfer and then a hyperbolic positive word. Locally isolated output components force transfers minus J, minus the identity, or alternating H and minus its adjugate. Their obstruction energies form a nondiscrete set. The witnesses use dimensions three for sums and five for the two union or product factors.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("op-fl2609q2"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
-        AssessedProvenance provenance, string prose, DescribeRole role) =>
+        AssessedProvenance provenance, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ClaimBody() =>
         Or(All("k", Nat(), Imp(Less(D(0), V("k")), All("Xone", Sets(Space(V("k"))), All("Xtwo", Sets(Space(V("k"))), Imp(Call("GapRich", V("Xone")), Imp(Call("GapRich", V("Xtwo")), Call("GapRich", Seq(V("Xone"), Sp, Cup, Sp, V("Xtwo"))))))))), Or(All("k", Nat(), Imp(Less(D(0), V("k")), All("Xone", Sets(Space(V("k"))), All("Xtwo", Sets(Space(V("k"))), Imp(Call("GapRich", V("Xone")), Imp(Call("GapRich", V("Xtwo")), Call("GapRich", PlusF(V("Xone"), V("Xtwo"))))))))), All("k", Nat(), All("ell", Nat(), Imp(Less(D(0), V("k")), Imp(Less(D(0), V("ell")), All("Xone", Sets(Space(V("k"))), All("Xthree", Sets(Space(V("ell"))), Imp(Call("GapRich", V("Xone")), Imp(Call("GapRich", V("Xthree")), Call("GapRich", Call("cartesianProduct", V("Xone"), V("Xthree")))))))))))));
