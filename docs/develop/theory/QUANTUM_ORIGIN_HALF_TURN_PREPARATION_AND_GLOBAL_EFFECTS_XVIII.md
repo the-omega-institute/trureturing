@@ -4649,300 +4649,160 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 260. 原四维局部系统的共同圆尺与乘积零面重建
+## 252. 先有中心反点，后有圆球与Born刻度
 
-**定义 260.0（矩阵记号）。** $H_d=\operatorname{Herm}_d(\mathbb C)$，$\operatorname{PSD}_d$ 是其正半定锥；$\mathcal D(S)$ 是复子空间 $S$ 上迹一 PSD 矩阵的全体，$\mathcal D_d=\mathcal D(\mathbb C^d)$。$P_v=vv^*/\|v\|^2$ 表示非零向量的归一秩一投影；跃迁公式中的 $v,w$ 均取单位向量。$\operatorname{Ad}_U(X)=UXU^*$，$T_i$ 是指定乘积基中第 $i$ 因子的转置，$\oplus$ 用于线性直和，$\mathbin{\oplus}$ 用于转置位时表示模二相加。
-
-**定义 260.1（限定原维数的全有限候选）。** 取250.1的完整强实背景，并限定原局部空间 $\dim_{\mathbb R}V=4$。具体地，对每个有限 $N\ge0$ 保留整个 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成锥 $C_N$、严格正乘积单位 $u_N=u^{\otimes N}$、紧底 $K_N=C_N\cap\{u_N=1\}$、全部 $P_N=\operatorname{ext}K_N$、完整效应 $\mathcal E_N=[0,u_N]_{C_N^*}$ 及全部有限单位分解；零层为 $(\mathbb R,\mathbb R_+,1)$。原乘积配对分离整个联合空间，重括号是规范恒等，全部位置置换及其逆为正，单位丢弃为正。对所有有限 $a,b\ge0$，在两块的全部原正输入和全部原正泛函上要求
+**定义 252.1（不预置圆球的二元实际面）。** 保留240.1的整个有限维原准备域 $V,C,u,K,P$。以 $F(p,q)$ 表示两不同原纯点生成的整个最小实际面，要求
 
 $$
-C_a\otimes_{\min}C_b\subseteq C_{a+b}\subseteq C_a\otimes_{\max}C_b.
-\tag{260.1}
+\mathsf{CSB}:\qquad
+F(p,q)\text{ 是仿射三维、严格凸、中心对称的整个凸体}
+\quad(p\ne q\in P).
+\tag{252.1}
 $$
 
-这不是只到三层的截断背景。$F_N(A)$ 表示最小实际面，$B_N(p,q)=F_N(p,q)$。候选只在**整个原 $K_3$** 要求 L2 和存在正定型 $g_3$ 满足250.1的 $\mathsf A_2(g_3)$：任意不同原纯点生成的整个实际面都是三球，且这些球在同一 $g_3$ 的限制下为圆球。量词包括全部纠缠纯点；不同球的中心和半径均可不同。除原维数四及上述强背景外，不另加 TC、TF9、NC、正面投影、物理旋转、CP 操作、标准联合锥、共同半径、自对偶齐性、Jordan 结构、谱性或任意面效应的同预算延拓。
-
-**定理 260.2（原局部维数四时的完整双向候选）。** 在260.1的强全有限背景及 $\dim_{\mathbb R}V=4$ 下，下列等价：整个原 $K_3$ 满足 L2 及某把共同圆尺 $\mathsf A_2(g_3)$；存在同一个保单位实线性同构 $\theta:V\to\operatorname{Herm}_2(\mathbb C)$，使所有有限 $N\ge0$ 同时满足
+实际面在有限维紧底中紧；严格凸使其整个边界都是该面的极点，也就是原纯点。中心 $c_{pq}$ 唯一，反点映射 $x\mapsto2c_{pq}-x$ 连续。这里不预设椭球、边界光滑、共同圆尺或任何非零重合刻度。直接由原准备定义
 
 $$
-\theta^{\otimes N}(C_N)=\operatorname{PSD}_{2^N},\qquad
-u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
-\tag{260.2}
+p\perp_c q\quad\Longleftrightarrow\quad
+p\ne q,\qquad p+q=2c_{pq}.
+\tag{252.2}
 $$
 
-结论包含全部原混态、纯态、效应和原配对；$N=0$ 取恒等。以下260.3—260.7支付正向证明，反向用 Hilbert–Schmidt 尺。所有结论均为相对于明确列出的成熟拓扑及已发表纸面供应的普通条件数学；此维数限定始终属于主张，不推出一般原维数的 $\mathsf A_2\Rightarrow\mathrm{TC}$。
-
-**引理 260.3（共同尺下仿射维数至多十的外三角）。** 在240.1的任意有限维原域中假设 L2 与 $\mathsf A_2(g)$。固定 $B=B(a,b)$、$S=P\cap B\simeq S^2$、$p\in P\setminus B$，令 $F=F(p,a,b)$。平移 $p$ 为零，沿用240.2的 $U,d,D,E_y,H,N$，并定义
+对称性、非自反性及每个固定二元面内反点伙伴的唯一性都是定义的结论。将251所用的零闭合明确重写为
 
 $$
-r=\dim\operatorname{span}N,\qquad
-L=\bigcap_{\ell\in N}\ker\ell\subset U,\qquad \dim L=d-r.
-\tag{260.3}
+\begin{aligned}
+\mathsf{ZP}_c:&\quad
+ a\perp_c p,\ a\perp_c q,\ p\ne q
+ \Longrightarrow a\perp_c x
+ \quad(x\in\operatorname{ext}F(p,q)),\\
+\mathsf{FI}_c:&\quad
+ \text{每个有限两两 }\perp_c\text{ 的不同原纯族在 }V\text{ 中仿射独立。}
+\end{aligned}
+\tag{252.3}
 $$
 
-若 $d\le10$，则 $d=8$、$r=4$、$\dim H=4$，$F$ 的原纯点恰为全部 $B(p,y)$、$y\in S$ 的纯壳之并，且 $H=E_a\oplus E_b$。特别地，该外三角满足 TC。本引理是待用的推论，不是260.1的候选输入。
+这里尚未定义非零 $\tau$；“零”只是一种二元反点关系。以下先不要求FI，证明圆球形状、非零Born核和有限矩阵满商均可恢复。
 
-证明。（一）实际面、支撑和所有纯点的切向。精确复用240.2：有限实际面 $J=K\cap\operatorname{aff}J$，因而闭且紧；$J=\operatorname{conv}(P\cap J)$，$\operatorname{ext}J=P\cap J$。后一个结论也可直接从 $K$ 的有限极点分解看出：面内点的每个正权分量都在该面，不要求 $P$ 闭。该定理给 $\dim D=4$、限制 $N\to\operatorname{Aff}(B)_+$ 满射和 $d\ge8$。其中支撑是在真面 $B(p,y)$ 的相对内部取得，限制到 $B$ 为正倍数的 $1-\widehat y\cdot z$；这些射线生成完整四维 Lorentz 锥，未假设零面已等于该球。
+**引理 252.2（严格凸反点面给完整射影线）。** 在CSB、$\mathsf{ZP}_c$ 及四个两两 $\perp_c$ 原纯点下，存在带对合除环 $D$ 上的各向异性Hermitian空间 $H$，使全部原纯标签与 $\mathbf P(H)$ 保正交双射；每条代数射影线恰为一个原 $F(p,q)$ 的整个纯边界。$H$ 暂可无限代数维。
 
-令 $M=\operatorname{span}N$。限制满射给 $r\ge4$、$D\cap L=0$。还需加强切向的量词：对任意 $q\in P\cap F\setminus\{p\}$ 及 $\ell\in N$，$\ell$ 在 $p$ 为最小；沿实际球 $B(p,q)$ 的壳经过 $p$ 的任意双侧光滑曲线求导，得
+证明。251.2的对径替换论证只消费反点伙伴、第三个边界点与零传播：对非正交点对，用同面反点替换；对正交点对，用同面第三点替换。严格凸三维体有这样的第三点，且任意两个不同边界点生成该整个实际面。于是共同正交集保持不变、替换前后恰一者与保留点正交，准确支付Paseka—Vetterlein [Q242P] Definition 4.1；非自反、对称及irredundance同样成立。直接复用Theorem 4.5及Lemmas 3.9、4.2、4.4。
 
-$$
-\tau_p(q)\subseteq L,\qquad H\subseteq L,\qquad D\cap H=0.
-\tag{260.4}
-$$
+零传播使实际纯边界包含于代数双正交线。该线上指定点的正交伙伴唯一，故额外点所生的实际体与原体共享同一反点pair；两者都等于该pair的最小实际面，遂相同。这些步骤完全不需要椭球、切方向或数值 $\tau$。$\square$
 
-这对扇外原纯点同样成立。精确复用 XII引理159.5 [B260]：不同实际二点球的齐次实张成只交于零或共同纯射线。其方向在 $\ker u$，而 $u(p)=1$，故通过 $p$ 的不同球连整个方向空间都交于零，切二维平面当然也交于零。对不同 $y,z\in S$，$B(p,y)\ne B(p,z)$，否则共同球含 $B(y,z)=B$，严格凸球的非单点面只能为自身，与 $p\notin B$ 矛盾。因此 $E_y\cap E_z=0$，$\dim H\ge4$，并有 $\dim H\le d-r$。
+**引理 252.3（实际严格凸体实现的射影平面自动紧）。** 设一个非退化抽象射影平面的点集 $X$ 单射实现于有限维紧凸 $K$ 的极点中，每条线的全部点像恰为某个仿射三维严格凸实际面 $B_L$ 的整个边界。则线体族在Hausdorff距离下紧，$X$ 在原准备拓扑中紧，不同两点连线及不同两线求交联合连续。这里不要求中心对称、椭球、全域纯点紧或 $\operatorname{conv}X$ 是 $K$ 的面。
 
-（二）离对角线的实际圆球连续性。设 $a_i\to a,b_i\to b$ 都是原纯点，$a\ne b$。实际圆三球 $B(a_i,b_i)$ 均在紧 $K$ 内，故中心、半径有界；其三维方向位于紧 Grassmann 流形。任意子列都有中心、半径、方向同时收敛的子列，极限为含于闭 $K$ 的圆三球 $B'$；半径至少 $\|a-b\|_g/2>0$，且不同 $a,b$ 在其壳上。中点 $m=(a+b)/2\in\operatorname{ri}B'$；从 $m$ 向 $B'$ 任意点反向延长线段，面性质给 $B'\subseteq F_K(m)=B(a,b)$。两球仿射维数同为三，故仿射空间相同。
+证明。置 $Q=\overline{\operatorname{conv}}X$、$A=\operatorname{aff}Q$。每个 $B_L$ 包含于 $Q$，仍是它的真面；线外点不能落在 $\operatorname{aff}B_L$，因为实际面满足 $K\cap\operatorname{aff}B_L=B_L$。证明中任选辅助范数取极限，不将它作为各二元面的共同尺。
 
-在同一 Euclidean 三空间，若半径 $r'$、中心 $c'$ 的球含于半径 $r$、中心 $c$ 的球，则 $\|c-c'\|+r'\le r$。内球某壳点也在外壳时，三角不等式须取等号；若中心不同，该点只能是中心连线的一个指定端点；若中心相同，公共壳点迫使半径相同。故不相等的嵌套圆球至多有一个公共壳点。这里有 $a,b$ 两点，迫使 $B'=B(a,b)$。所有子列极限唯一，证明中心、半径和方向连续；切平面由球方向及中心到端点的径向连续决定。因此 $y\mapsto E_y$ 在固定紧 $S$ 上连续。此论证只使用端点极限本身仍为不同原纯点，不使用整个 $P$ 的紧性。
+对任意线体列，由紧 $Q$ 的Hausdorff选择性取子列 $B_{L_i}\to E$。极限凸且 $\dim\operatorname{aff}E\le3$，否则五个仿射独立极限点可在三维 $B_{L_i}$ 中同时逼近，矛盾。在各 $\operatorname{ri}B_{L_i}$ 取 $Q$ 的支撑仿射函数 $f_i\ge0$，使它在整个 $B_{L_i}$ 为零；将其线性部分在 $\operatorname{dir}A$ 内归一为范数一。零点位于紧 $Q$，常数项有界，故可再取子列使 $f_i\to f$，其中 $f\ge0$、$f|_E=0$，且 $f$ 在 $A$ 上非恒定。不能只在更大环境空间归一，否则最后一项没有得到保证。
 
-（三）五维中的带符号饱和。先证明一个所需拓扑事实。若连续族 $E_y\subset\mathbb R^5$、$y\in S^2$ 都是二维线性平面，且 $y\ne z$ 时 $E_y\cap E_z=0$，则不存在另一个二维平面同时避开全部 $E_y$。把 Grassmann 流形的秩二实 tautological 丛拉回 $S^2$；因 $S^2$ 单连通，该丛可定向。其单位圆丛 $T$ 是紧、连通、无边界的可定向三维流形。评价
+令 $Z=\{x\in X:f(x)=0\}$。它是proper的射影线闭集合：同一实际严格凸体上两个不同零点，使非负仿射函数的零面包含两点，从而只能是整个体。另一方面，$L_i$ 与每条固定射影线 $M$ 相交；交点位于固定紧边界 $\partial B_M$，其聚点属于 $E\cap\partial B_M$，所以 $Z$ 与每条线相交。非退化射影平面中，proper线闭集合只能为空、单点或一条线；前两者不能与每条线相交。因此 $Z$ 恰是一条线 $L$。
 
-$$
-j:T\longrightarrow S^4,\qquad j(y,v)=v
-\tag{260.5}
-$$
+任取 $x\in L$，选过它而不同于 $L$ 的横截线 $M$。$L_i\cap M$ 的任一聚点都在 $Z\cap M=\{x\}$，所以 $x\in E$。取凸包给 $B_L\subseteq E$；两者仿射维数至多三，而 $B_L$ 满三维，故仿射包相同。$E\subset K$ 与实际面恒等式再给 $E=B_L$，线体族因此紧。
 
-因交为零而单射，故是到紧像 $A$ 的同胚。$A$ 非空、局部可缩，$H^3(A;\mathbb Z)=\mathbb Z$；它是 $S^4$ 的真子集，否则这与 $H^3(S^4;\mathbb Z)=0$ 矛盾。按连续定向及内积逐纤维选正 quarter-turn $J$，$(y,v)\mapsto(y,\cos t\,v+\sin t\,Jv)$、$0\le t\le\pi$ 给恒等到纤维负号的同伦。因此环境对径 $\tau(v)=-v$ 限制到 $A$ 后在 $H^3$ 上为恒等。
+若 $x_i\in X$ 收敛于原 $x$，固定三个非共线点 $b_1,b_2,b_3$。无限次命中某个 $b_j$ 时结论直接；否则同时抽取三组连线体 $B(x_i,b_j)$ 的收敛子列。极限分别包含 $x,b_j$，不可能三条线全相同。不同严格凸实际线体的非空交只能是其共同纯点，故 $x\in X$。于是 $X$ 紧，且 $Q=\operatorname{conv}X$、$\operatorname{ext}Q=X$。
 
-此处准确使用 Hatcher [A260] 推论3.45的 Alexander 对偶及定理3.44的相对 cap／直极限构造。其适用条件正是紧、局部可缩、非空真子集，不要求局部平坦或光滑嵌入。令
+点属于线体的关系对点拓扑与Hausdorff线拓扑闭；紧性使移动连线及交点都有聚点，关联闭性与射影唯一性迫聚点唯一，遂得所述连续性。量词只在两个输入不同的区域，不包含秩跳变的对角线。$\square$
 
-$$
-\mathcal D:H^3(A;\mathbb Z)\xrightarrow{\ \cong\ }
-\widetilde H_0(S^4\setminus A;\mathbb Z).
-\tag{260.6}
-$$
+**定理 252.4（复标量与正定对合先于圆球形状）。** 在252.2前件下，$D$ 可取 $\mathbb C$，原Hermitian对合为复共轭，形式整体改号后正定。
 
-开补集局部道路连通，故右端为 $\mathbb Z$ 表明恰有两个连通分支。符号不能省略：cap 自然性 $f_*(c\cap f^*\phi)=f_*c\cap\phi$ 连同自然连接映射，以及 $\tau_*[S^4]=-[S^4]$，给
+证明。取三条正交射线生成的代数射影平面，将252.3作用于其原纯点像；它已由252.2具有完整Desarguesian关联。按241.6相同左右坐标约定，用其中一条实际线作为坐标轴。严格凸三维体的边界经由其内部中心径向参数化同胚于 $S^2$，去掉无穷远点同胚于 $\mathbb R^2$。
+
+仅复用241.6的有限非退化join/meet坐标构造：加法、乘法和非零逆都由这些连续操作表达。这里的连续性由252.3新近支付，不复用241.5中依赖MC4的结论。故 $D$ 是连通局部紧Hausdorff拓扑除环，底空间为 $\mathbb R^2$。Weiss—Zierler [Q241W] 第370页的分类只留 $\mathbb R,\mathbb C,\mathbb H$；拓扑维数选择 $\mathbb C$。
+
+在同一个正交坐标轴上，原反点映射就是连续的 $x\mapsto2c-x$。对两个正交向量的非零Hermitian系数 $\alpha,\beta$，其有限chart中仍有
 
 $$
-\tau_*\mathcal D\bigl((\tau|_A)^*\alpha\bigr)=-\mathcal D(\alpha).
-\tag{260.7}
+w(z)=-\frac{\alpha/\beta}{z^*}\qquad(z\ne0).
+\tag{252.4}
 $$
 
-这是由环境基本类推出的等式，不是向书中另借一个无符号自然性断言。因 $(\tau|_A)^*=1$，$\tau$ 在补集的约化零阶同调上为 $-1$，从而交换两个分支。若另有二维平面 $E$ 与全部 $E_y$ 零交，其单位圆就在补集中，是连通且对径不变的集合；它须在一个分支内，却又被 $\tau$ 送入另一个分支，矛盾。没有使用 Euler 数的预设。
+因此 $z\mapsto z^*$ 在非零点连续，由 $(z+1)^*-1$ 补零点连续。连续复域对合只有identity与共轭；identity使二维复对称形式具有非零零向量，与各向异性矛盾，故只能共轭。异号Hermitian系数同样产生零向量，故整体改号后正定。符号检验只在有限子空间内进行，不假定无限 $H$ 已有正交Hamel基。$\square$
 
-（四）当 $d-r\le5$ 时先得纯扇穷尽。把 $L$ 线性嵌入 $\mathbb R^5$，对连续、两两零交的 $E_y$ 应用（三）。若 $q\in P\cap F$ 不在任何 $B(p,y)$ 的纯壳，$q\ne p$，且 $B(p,q)$ 与每个扇球不同；否则 $q$ 作为原纯点就在那个球壳。由（一），它的整个二维切平面在 $L$，并与全部 $E_y$ 零交，违反（三）。反向包含由扇球是 $F$ 内的实际面及其极点就是原纯点直接得到。因此
-
-$$
-P\cap F=\bigcup_{y\in S}\operatorname{ext}B(p,y).
-\tag{260.8}
-$$
-
-（五）纯扇穷尽通过两颗交叉球迫使 TC。现在只假设(260.8)。扇球方向为 $\mathbb Ry\oplus E_y$，故有限纯生成给 $U=D\oplus H$。令 $Q:D\oplus H\to D$ 为沿 $H$ 的投影，$I(x)=x/\|x\|_g^2$。扇球中心 $c_y$ 满足 $g(c_y,E_y)=0$；壳方程及 $y$ 也在壳上给
+**引理 252.5（中心对称的原向量和支付Gleason）。** 对任意有限复子空间 $U\subset H$、$\dim_{\mathbb C}U\ge3$，存在唯一保迹正实线性映射
 
 $$
-\|x\|_g^2=2g(c_y,x),\qquad
-Qx=\frac{\|x\|_g^2}{\|y\|_g^2}\,y,\qquad
-I\bigl(\operatorname{ext}B(p,y)\setminus\{0\}\bigr)=s_y+E_y,
-\quad s_y=I(y).
-\tag{260.9}
+\pi_U:\operatorname{Herm}(U)\longrightarrow V,
+\qquad \pi_U(P_x)=p_x,
+\qquad u\pi_U=\operatorname{Tr}.
+\tag{252.5}
 $$
 
-最后一个等式也直接由 $2g(c_y,Ix)=1$ 得到，反向代回 $I$ 即可。$I(S)$ 是圆二球面 $S'\subset D$：一般圆球面 $x=c+w,\ w\in W,\|w\|^2=R^2$ 的反演满足 $k\|z\|^2-2g(c,z)+1=0$、$P_{W^\perp}z=P_{W^\perp}c\,\|z\|^2$，其中 $k=\|c\|^2-R^2$；消元并完成平方给圆球面或仿射平面。原球面不含零且紧，排除平面。这里 $p\notin\operatorname{aff}B$ 已由240.2支付。
+证明。242.4中连接两正交基的pair moves只用有限Hermitian子空间格及完整实际线，现在由252.2、252.4供应。每次对径pair替换满足 $p_e+p_f=2c=p_g+p_h$；中心对称足以保持原准备向量和。因此 $S_U=\sum_{e\in E_U}p_e$ 基无关，完全不需要参照读数或椭球。
 
-取不同 $s_0,s_1\in S'$、$y_i=I(s_i)$ 及 $E_{y_1}$ 的实基 $v_1,v_2$。点 $q_j=I(s_1+v_j)$ 是扇内原纯点。实际交叉球 $B(y_0,q_j)$ 不含 $p$：若含，则它等于 $B(p,y_0)$，又与不同的 $B(p,y_1)$ 共享 $p,q_j$，违反159.5。故其反演壳 $\Sigma_j$ 为圆二球面，且由(260.8)—(260.9)，$Q\Sigma_j\subset S'$，并含不同的 $s_0,s_1$。
+每个原效应 $f\in[0,u]$ 遂给非负frame function $x\mapsto f(p_x)$，基和为 $f(S_U)$。直接应用Gleason [Q241G] Theorem 3.5及有限维矩阵表示；零权重给零函数，正权重可归一化。然后准确复用242.6的线性双对偶构造：在紧 $K$ 上平移、缩放任意原 $\ell\in V^*$ 得到原效应，唯一矩阵表示迫 $\ell\mapsto A_{\ell,U}$ 实线性，$A_{u,U}=I$；迹配对定义 $\pi_U$。秩一投影张成、原对偶分离点及非负谱分解给(252.5)、唯一性与正性。该构造的前件只有已支付的frame function和有限原 $V$，没有预付非零 $\tau$ 的下降。$\square$
 
-把源球面参数化为 $m+Mt$、$\|t\|=1$，目标中心、半径记为 $c',R'$。恒等式 $\|m-c'+Mt\|^2=R'^2$ 对全部单位 $t$ 成立，比较 $t,-t$ 及二次型给 $M^*(m-c')=0$、$M^*M=\lambda I$。非恒定性给 $\lambda>0$，故秩三；其像是目标方向三空间，于是 $m=c'$，且像遍历整个目标球面。应用于 $Q|_{\Sigma_j}$，其仿射延拓是三维方向间的同构。因此 $\Sigma_j$ 是图
-
-$$
-s\longmapsto s+h_j(s),\qquad
-h_j(s)=A_j(s-s_0)\in E_{I(s)},\quad
-h_j(s_0)=0,\quad h_j(s_1)=v_j.
-\tag{260.10}
-$$
-
-为简记写 $E_s=E_{I(s)}$。由（二）的连续性，在 $s_0$ 沿球面取差商，得 $A_j(T_{s_0}S')\subset E_{s_0}$。弦 $s_1-s_0$ 横截该切平面，故 $\operatorname{im}A_j\subset W_0=E_{s_0}\oplus E_{s_1}$。若非零实组合 $h=\alpha h_1+\beta h_2$ 在某 $s\ne s_0$ 为零，其线性部分 $A$ 消去 $n=s-s_0$。对关于通过 $c'$、法向为 $n$ 的中心超平面的球面反射，配对点 $t,t'$ 满足 $t-t'\in\mathbb Rn$，因而 $h(t)=h(t')$。离固定大圆时 $t\ne t'$，这个值同时在零交的 $E_t,E_{t'}$ 内，只能为零。由稠密性与连续性，$h$ 处处为零；但 $h(s_1)=\alpha v_1+\beta v_2\ne0$，矛盾。
-
-因此 $h_1(s),h_2(s)$ 对每个 $s\ne s_0$ 张成 $E_s$，都在 $W_0$；$E_{s_0}$ 本就在其中，故 $H=W_0$、$\dim H=4$。任意两个不同端点的切平面同样零交并张成 $H$，特别是 $H=E_a\oplus E_b$。于是 $U=D\oplus H$ 给 $d=8$；$H\subset L$ 及 $r\ge4$ 给 $r=4$。交叉壳落在扇内并非额外前件，而是(260.8)和实际面的原纯性给出的。
-
-（六）处理 $r=4,d\le10$ 的分支，不预设(260.8)。限制 $R:M\to\operatorname{Aff}(B)$ 是四维线性同构，且把 $N$ 恰送到 $\operatorname{Aff}(B)_+$。其转置定义满射 $Q_0:U\to\operatorname{Aff}(B)^*$，满足 $Q_0(F-p)$ 在对偶 Lorentz 锥内、$Q_0(y-p)=\operatorname{ev}_y$。令 $\ell_y$ 为 $f_y(z)=1-\widehat y\cdot z$ 的唯一提升，$G_y=\{x\in F:\ell_y(x-p)=0\}$。对偶 Lorentz 零面为 $\mathbb R_+\operatorname{ev}_y$，所以
+**定理 252.6（圆球形状、Born核与有限容量成为结论）。** 在CSB、$\mathsf{ZP}_c$ 及四个两两反点纯点下，存在有限 $n\ge4$ 及保迹实线性满射
 
 $$
-B(p,y)\subseteq G_y,\qquad
-\dim\operatorname{aff}G_y\le\dim\ker Q_0+1=d-3\le7.
-\tag{260.11}
+\pi:\operatorname{Herm}_n(\mathbb C)\twoheadrightarrow V,
+\qquad \pi(\operatorname{PSD}_n)=C,
+\tag{252.6}
 $$
 
-若严格包含，有限原纯分解给 $q\in P\cap G_y\setminus B(p,y)$；实际外三角 $F(p,y,q)\subseteq G_y$，却由240.2仿射维数至少八，矛盾。因此 $G_y=B(p,y)$。对任意 $q\in P\cap F\setminus\{p\}$，球 $B(p,q)$ 是 $F$ 的真面；在其相对内部支撑，给非零 $\ell\in N$ 消去 $q-p$。$R\ell$ 是非零正 Lorentz 泛函，因此 $Q_0(q-p)$ 在对偶边界。它不能为零，否则 $q$ 同时属于所有 $G_y=B(p,y)$，而任取不同 $y,z$ 的两球交仅为 $p$。非零边界向量在某唯一极射线 $\mathbb R_+\operatorname{ev}_y$，从而 $q\in G_y$。得到(260.8)，再用（五）得 $d=8,r=4$ 和 TC。
+其秩一投影双射到全部原纯点。每个原二点面都是完整Bloch三球的仿射像，原actual L2成立；由这些已得椭球定义的内禀刻度满足全域Born关系。若另有 $\mathsf{FI}_c$，则 $\pi$ 为保迹线性序同构。
 
-（七）最后，$r\ge4$。若 $r=4$ 用（六）；若 $r\ge5$ 且 $d\le10$，则 $d-r\le5$，用（四）、（五）仍得 $d=8,r=4$，排除此分支。特别地 $d=10,r=\dim H=5$ 不可能。引理证毕。$\square$
-
-**命题 260.4（分类前的实际低层面与原 qubit 坐标）。** 在260.1下，整个 $K_2,K_1$ 继承 L2 与共同圆尺，且存在保单位同构 $\theta:V\to H_2=\operatorname{Herm}_2(\mathbb C)$ 把 $C_1$ 送到 $\operatorname{PSD}_2$；这里尚未对 $C_2,C_3$ 作矩阵正性判断。
-
-证明。最大界和闭锥双极性给正条件态：对 $z\in C_{a+b}$、$f\in C_a^*$，$(f\otimes\operatorname{id})z\in C_b$。若归一 $z$ 的 $b$ 边缘是原纯点 $p$，则对 $0\le f\le u_a$，条件态在 $[0,p]$ 中，故为 $\lambda_f p$。正泛函张成局部对偶，乘积配对分离联合空间，所以 $z=x\otimes p$；丢弃给 $x\in K_a$。最小界给反向包含。于是纯边缘纤维正是整个实际纯旁观面 $K_a\otimes p$，产品纯点亦为原纯点。
-
-面内极点就是其包含的原极点，面内生成的二点面也就是原二点面，故 L2 限制到该实际面。$x\mapsto x\otimes p$ 为保单位线性单射，共同尺沿它拉回仍正定并把全部实际球变为圆球，故 $\mathsf A_2$ 同样下降。先取 $a=2,b=1$，再取 $a=b=1$，依次得到整个 $K_2,K_1$ 的条件。
-
-$K_1$ 仿射维数三，至少有两不同纯点。其实际二点三球已有整个仿射维数；有限维凸体的真面维数严格较小，所以它就是 $K_1$。取一个仿射球坐标 $x\mapsto r(x)\in\overline{\mathbb B}^3$，令 $\theta(x)=(I+r(x)\cdot\sigma)/2$ 于归一底，再沿锥作保迹线性延拓。因底仿射满维，这是 $V\to H_2$ 的同构；Pauli 特征值 $(1\pm\|r\|)/2$ 给所述序对应。此后固定这一个初始 $\theta$，全部张量坐标都来自它。$\square$
-
-**命题 260.5（完整两份重建，保留相对转置备选）。** 在 $H_2\otimes_{\mathbb R}H_2=H_4$ 的初始 $\theta\otimes\theta$ 坐标中，整个原 $C_2$ 为 $\operatorname{PSD}_4$ 或 $T_1\operatorname{PSD}_4$，其中 $T_i$ 为固定基中第 $i$ 因子的转置。证明只使用此两份域的最小／最大界、实际 L2 和共同尺。
-
-证明。（一）一个乘积零角包含实际完整 qutrit。最小／最大界给可分正锥 $\subseteq C_2\subseteq$ block-positive 锥。所有局部秩一效应乘积都是原正泛函且为正收缩：$u\otimes u-e\otimes f=(u-e)\otimes f+u\otimes(u-f)\ge0$。记 $p_{ij}=P_{|ij\rangle}$，取实际暴露零面
+证明。242.7的有限容量论证只消费(252.5)与纯标签单射，可在这些更弱前件下直接使用：固定单位 $x\in U$，$T_x=\{xy^*+yx^*:y\perp x\}$ 为 $2\dim_{\mathbb C}U-2$ 维无迹实空间；每个非零元素是两个不同正交纯投影之差的非零倍数，故 $\pi_U$ 在其上单射。它们都进入原同一个 $\ker u$，所以
 
 $$
-Z=\{X\in K_2:\langle11|X|11\rangle=0\}.
-\tag{260.12}
+2\dim_{\mathbb C}U-2\le\dim_{\mathbb R}V-1.
+\tag{252.7}
 $$
 
-对 block-positive $X$，固定任一局部向量的条件 $2\times2$ 矩阵为 PSD。其 $11$ 对角为零，迫使 $X_{11,01}=X_{11,10}=0$。连同实约束 $X_{11,11}=0$，共五个独立实线性约束，故 $\dim\operatorname{span}Z\le11$、$\operatorname{affdim}Z\le10$。三个产品点 $p_{00},p_{01},p_{10}$ 是原纯点；它们的实际面 $F$ 在 $Z$ 内。行球 $B(p_{00},p_{01})$ 恰为260.4的纯旁观面，$p_{10}$ 不在其中。任何含这三点的实际球都须含这个非单点行面，严格凸性使其等于行球，矛盾。因此是外三角，260.3给 $\operatorname{affdim}F=8$。
+对任意有限 $U$ 的统一界排除无限 $H$。取 $\pi=\pi_H$；全部原纯点来自秩一投影，$K=\operatorname{conv}P$，故其PSD像恰为 $C$，并且满射。
 
-现在只把 $F$ 当作自身齐次张成上的整个锥，给其**内禀**完整正对偶区间。它继承 L2；其任意三点实际面维数至多八，所以满足240.1的 TF9。精确应用240.5于这个原域及生成 $F$ 的外三角，得到保迹序同构 $\Phi:H_3\to\operatorname{span}F$、$\Phi(\mathcal D_3)=F$。未断言 $Z=F$，也未延拓任意 $F$ 效应到联合原菜单。
-
-（二）正乘积效应决定正确的 Schur 配对。令 $w_0,w_1,w_2$ 为三个产品纯点的 qutrit 纯提升。四个对角产品效应的拉回 $E_{ij}$ 为 PSD；$E_{11}=0$，其余三个和为 $I$，且在三个提升上的取值为 Kronecker delta。正收缩期望为一或零分别给 $E_iw_i=w_i$、$E_iw_j=0$，所以三个 $w_i$ 互相正交。以它们为基后，$E_{00}=P_0,E_{01}=P_1,E_{10}=P_2$。
-
-实际行、列面识别 $\Phi$ 在 $01$、$02$ 支持上的作用。固定两极的 Bloch 球仿射自同构在横向平面是一个相位乘以恒等或复共轭；独立调整基向量1、2的相位可消掉两个相位。记行的共轭位为 $r$，列的共轭位为 $c$。对任意局部单位向量 $x,y$，置 $X_0=x_0\overline{x_1},X_1=\overline{X_0}$、$Y_0=y_0\overline{y_1},Y_1=\overline{Y_0}$。正拉回 $M=\Phi^*(P_x\otimes P_y)$ 满足
+任取复二维支持 $S$。252.2使其所有纯点恰为一个原二点面 $B_S$ 的整个边界，于是
 
 $$
-\begin{gathered}
-(M_{00},M_{11},M_{22})=(|x_0y_0|^2,|x_0y_1|^2,|x_1y_0|^2),\\
-M_{01}=|x_0|^2Y_r,\qquad M_{02}=|y_0|^2X_c,\\
-M_{12}=\frac{M_{10}M_{02}}{M_{00}}=X_c\overline{Y_r}\quad(M_{00}>0).
-\end{gathered}
-\tag{260.13}
+\pi(\mathcal D(S))=\operatorname{conv}\{p_x:x\in\mathbf P(S)\}=B_S.
+\tag{252.8}
 $$
 
-前两个主子式为零；以 $M_{00}$ 作 Schur 补，补矩阵 PSD 且对角为零，故非对角亦为零，给最后一式。分子中的 $|x_0|^2|y_0|^2$ 完全消掉，不留下非线性分母；$x_0y_0=0$ 的情形由连续性补齐。令 $J:H_3\to H_4$ 为 $S_0=\operatorname{span}_{\mathbb C}\{|00\rangle,|01\rangle,|10\rangle\}$ 的标准支持嵌入，这些恰是 $T_1^cT_2^rJ$ 的伴随配对。秩一 PSD 矩阵实张成每个 Hermitian 因子，故其乘积效应张成整个十六维对偶，所有配对相等遂给
+$\operatorname{Herm}(S)$ 实维数四，$\operatorname{span}_{\mathbb R}B_S$ 也恰为四维；(252.8)给满映，故限制为线性双射，且准确对应两个正锥。因此 $B_S$ 是标准Bloch球的仿射像，椭球形状是结论。由该仿射球同构定义的内禀刻度满足
 
 $$
-\Phi=T_1^cT_2^rJ,\qquad
-F=T_1^{\delta}\mathcal D(S_0),\qquad\delta=c\mathbin{\oplus}r.
-\tag{260.14}
+\tau(p_x,p_y)=\operatorname{Tr}(P_xP_y),
+\qquad
+p_x\perp_c p_y\ \Longleftrightarrow\ \tau(p_x,p_y)=0.
+\tag{252.9}
 $$
 
-全转置保 $\mathcal D(S_0)$，所以集合只有两类。特别注意：行位 $r$ 作用在物理因子2，列位 $c$ 作用在物理因子1。
+任意两个纯点都处在同一二维支持内，故关系全域成立。此时才取得非零重合值，不将它们提前放回定义。
 
-（三）以闭而不交的覆盖固定所有乘积框架的方向。参数 $g=(U,V)$ 遍历连通 $U(2)\times U(2)$，定义
+最后，保迹性使每个 $A\in\ker\pi$ 的正交谱分解成为原两两 $\perp_c$ 纯族的零和仿射关系；直接复用232.3的谱排核机制，$\mathsf{FI}_c$ 迫 $A=0$。整个原锥与完整原效应菜单遂取得同一个复矩阵序坐标。$\square$
 
-$$
-D_0(g)=\operatorname{Ad}_{U\otimes V}\mathcal D(S_0),\qquad
-D_1(g)=T_1\operatorname{Ad}_{\overline U\otimes V}\mathcal D(S_0)
-=\operatorname{Ad}_{U\otimes V}T_1\mathcal D(S_0).
-\tag{260.15}
-$$
-
-这里只作数学坐标变换，未假设这些局域旋转对未知原锥为正。两候选含同一三个框架产品点及其平均 $\rho_g$；$\rho_g$ 在两者中均为相对内部点。（二）逐框架应用，给实际生成面恰为其中一个。定义 $A_i=\{g:D_i(g)\subset K_2\}$。对每个固定 $\rho\in\mathcal D_3$ 候选像连续，$K_2$ 闭，故 $A_i$ 闭；两者覆盖参数空间。
-
-若某框架同时在两集内，实际面 $F_g$ 等于一个候选，又含另一个候选的相对内部点 $\rho_g$。从该点在另一个候选内反向延长任意线段，面性质迫使另一候选全在 $F_g$。这不可能：标准框架中 $\operatorname{span}D_0$ 含 $01$—$10$ 的实、虚两个方向而不含 $00$—$11$ 两方向；$\operatorname{span}D_1$ 恰交换这两组。两张成均九维而不同，任一共同局域共轭保留此差别，不能相互包含。因此闭覆盖不交，连通性迫使一个方向处处成立。这不需要实际面映射连续。
-
-（四）全部标准纯点及实际标准二支持球。若固定方向为1，暂对整个坐标施加 $T_1$；迹、产品最大／最小界、实际面和拉回的共同尺都保留。此暂定坐标中，每个产品向量的正交补都承载实际完整标准 $\mathcal D_3$。任意 $\psi\in\mathbb C^2\otimes\mathbb C^2$ 都正交某非零产品向量：固定非零第一因子，第二因子取所得线性泛函的核。因此每个 $P_\psi$ 是这些实际 qutrit 面的极点，从而是原纯点；谱分解给整个标准 PSD 底包含于 $K_2$。
-
-还需证明标准二支持球是**实际**球。这个论证适用于任意矩阵维数：已知全部标准秩一态是原纯点且整个 PSD 底在 $K$ 内，取不同标准纯点 $p,q$，$S=\operatorname{span}_{\mathbb C}\{\psi,\phi\}$。$m=(p+q)/2$ 在 $\mathcal D(S)$ 相对内部；对其任意 $\rho$ 可取小 $\epsilon>0$ 写 $m=\epsilon\rho+(1-\epsilon)\sigma$、$\sigma\in\mathcal D(S)$。因 $m\in B(p,q)$ 且 $B(p,q)$ 为面，得到 $\mathcal D(S)\subset B(p,q)$。二者仿射维数都是三，且 $\mathcal D(S)$ 每个边界点都是原纯点。若后者严格更大，从前者内部点向多出的点作射线，就把前者某边界点放在后者相对内部，违反极性。因此 $B(p,q)=\mathcal D(S)$。未比较半径，也未要求这两个点共同正交一个产品向量。
-
-（五）排除额外原纯点的通用 $2\times b$ 论证。设 $b\ge2$，已取得全部标准秩一原纯点及上述实际标准球，并有产品效应正性。固定一个标准 Schmidt 秩二点 $p=P_\psi$，在数学 Schmidt 基中写 $\psi=\alpha|00\rangle+\beta|11\rangle$、$\alpha,\beta>0$、$\alpha^2+\beta^2=1$。对任意复 $t$ 和 $y=(y_1,\ldots,y_{b-1})$，向量
+**定理 252.7（三复制无预置尺候选及完整量子字典）。** 完整保留250.1的非平凡强实全有限背景，只在整个原三复制域要求
 
 $$
-v=(1,t)\otimes(-\beta t y_1,\alpha y_1,y_2,\ldots,y_{b-1})\perp\psi
-\tag{260.16}
+\boxed{\quad
+\mathsf Q_{\rm central}
+:=\mathsf{CSB}^{(3)}+\mathsf{ZP}_c^{(3)}+\mathsf{FI}_c^{(3)}.
+\quad}
+\tag{252.10}
 $$
 
-是产品向量。在 $\psi^\perp$ 的基 $|01\rangle,\ \beta|00\rangle-\alpha|11\rangle,\ |10\rangle,\ |0k\rangle,|1k\rangle$、$2\le k\le b-1$ 中，它的坐标为 $\alpha y_1,-ty_1,-\beta t^2y_1,y_k,ty_k$。它们是不同单项式 $m_i=t^r y_k$ 的非零倍数：$k=1$ 时 $r=0,1,2$，其余 $k$ 时 $r=0,1$。所有有序乘积 $\overline{m_i}m_j=\overline t^{\,r_i}t^{r_j}\overline y_{k_i}y_{k_j}$ 都是不同的形式单项式。独立的全纯、反全纯变量与实、虚坐标之间为可逆复线性变换；多项式在所有实坐标上为零，故各系数为零。因此若 Hermitian 形式 $A$ 对所有这些 $v$ 满足 $v^*Av=0$，则每个矩阵系数都为零。由非退化实迹配对，得到的是完整算子张成，而非仅向量张成：
+它当且仅当存在251.6的同一个完整全有限复矩阵坐标族；共同Hilbert—Schmidt尺、actual圆球、原非零Born刻度均为所得结构。
 
-$$
-\operatorname{span}_{\mathbb R}\{P_v:v\text{ 为产品向量},\ v\perp\psi\}
-=\operatorname{Herm}(\psi^\perp).
-\tag{260.17}
-$$
+证明。首先补齐不借L2的八字门槛。241.8中原proper效应、min/max下纯乘积仍纯、八个 $p/q$ 三字纯积及对每两字给1/0的原乘积效应，都只依赖强背景。把该效应限制到现在的完整严格凸中心对称二元面。严格凸使非恒仿射函数的极大、极小点各唯一；中心反射交换它们，故取1/0的两个端点互为反点。八字因此两两 $\perp_c$，无需球或非零刻度。
 
-此处非零 $v$ 可归一化，不改变张成；$b=2$ 时可令 $y_1=1$，三个单项式就是 $1,t,t^2$。
+252.6遂在整个三复制原域给保单位复矩阵序同构。此时actual L2及Born零关系已经恢复，准确复用241.10、232.6与223.5的同坐标传播，得一个 $n\ge2$、同一个 $\theta$ 及全部 $\Theta_N=\theta^{\otimes N}$。反向，标准复矩阵的二点实际面是严格凸中心对称三球，反点关系就是正交，ZP与FI均成立。
 
-若 $q$ 是额外原纯点，不假设它为 PSD，令 $E=\tau_p(q)$。每个归一产品效应 $P_v$ 在原 $K$ 非负且在 $p$ 为零，沿实际 $B(p,q)$ 的双侧壳曲线求导得 $\operatorname{Tr}(P_vX)=0$、$X\in E$。(260.17)给 $\Pi_{\psi^\perp}X\Pi_{\psi^\perp}=0$，再用 $\operatorname{Tr}X=0$ 得
-
-$$
-E\subset H_p=\{\psi z^*+z\psi^*:z\perp\psi\}.
-\tag{260.18}
-$$
-
-只需取一个非零 $X\in E$，对应 $z\ne0$。已是实际面的标准球 $\mathcal D(\operatorname{span}_{\mathbb C}\{\psi,z\})$ 的切平面 $E_z$ 含这个 $X$。故 $E\cap E_z\ne0$；159.5迫使两颗实际球相同，进而 $q$ 在标准 $\mathcal D_2$ 内。它作为原纯点是这个面的极点，只能为秩一标准态，矛盾。这里没有声称整个 $E$ 都在某一个 $E_z$ 内。
-
-对本命题取 $b=2$，排除了全部额外原纯点；紧凸底的有限极点分解遂给整个 $C_2=\operatorname{PSD}_4$。撤销（四）的暂时 $T_1$，得到原初始坐标中的两个备选，命题证毕。$\square$
-
-**命题 260.6（任意 $2\times b$ 的实际压缩和完整重建）。** 设 $C\subset H_2\otimes_{\mathbb R}H_b$ 为闭尖生成锥，单位为迹，满足两标准局部 PSD 因子的最小／最大界，整个归一底有实际 L2 与共同圆尺。对任意有限 $b\ge2$，整个 $C$ 恰为 $\operatorname{PSD}_{2b}$ 或 $T_1\operatorname{PSD}_{2b}$。$b=1$ 时最小、最大界相同，直接给 $\operatorname{PSD}_2$。
-
-证明。（一）条件支持使整个二支持压缩成为实际 $2\times2$ 域。令 $M_B=\operatorname{Tr}_A$，$S\subset\mathbb C^b$ 为复二维空间，取
-
-$$
-F_S=\{z\in K:M_Bz\in\mathcal D(S)\},\qquad
-L_S=H_2\otimes_{\mathbb R}\operatorname{Herm}(S).
-\tag{260.19}
-$$
-
-边缘为正、$\mathcal D(S)$ 是 PSD 实际面，故 $F_S$ 是实际面；它也等于正泛函 $z\mapsto\operatorname{Tr}((I\otimes P_{S^\perp})z)$ 的零面。但仅有一个零读数尚不足以消去联合交叉支持。对面锥内 $z$ 和每个 $A\succeq0$，条件态 $\sigma_A=\operatorname{Tr}_A((A\otimes I)z)$ 为 PSD。取 $A\preceq cI$，又有
-
-$$
-0\preceq\sigma_A\preceq cM_Bz.
-\tag{260.20}
-$$
-
-右端支持在 $S$，故 $\sigma_A$ 也支持在 $S$；这由正矩阵在零对角方向整行整列为零立即得到。正 $A$ 张成 $H_2$，用其条件态展开联合张量，得 $z\in L_S$，包括全部交叉支持系数消失。反向，$z\in C\cap L_S$ 的正边缘必支持于 $S$。于是该实际面锥准确为 $C\cap L_S$。
-
-支持于 $S$ 的正产品由最小界属于此锥，实张成整个十六维 $L_S$。内禀最大界通过任意 $A\succeq0$ 和 $Q\succeq0$ 于 $S$ 测试：把 $Q$ 用包含映射 $J$ 送为全局正矩阵 $JQJ^*$，即可使用原最大界。故完整压缩域有标准两因子的内禀 min/max、迹单位、实际 L2 及限制的共同尺。内禀正对偶还满足 $\left(C\cap L_S\right)^*_{L_S}=\overline{\operatorname{res}_{L_S}C^*}$，这是有限维双极性的锥恒等式，不是任意联合面效应的同预算延拓。260.5的全部证明可在此域应用，给整个 $F_S$ 为标准 $\mathcal D_4$ 或 $T_1\mathcal D_4$。
-
-（二）以复 Stiefel 空间固定方向。参数取连通的正交二框架空间 $V_2(\mathbb C^b)=U(b)/U(b-2)$；$b=2$ 时为 $U(2)$。令 $D_J$ 为 $\mathbb C^2\otimes\operatorname{ran}J$ 上的标准密度体，两个候选为 $D_J,T_1D_J$，转置始终作用在固定第一因子。候选依框架连续，故在闭 $K$ 中的包含集为闭集；（一）给二者覆盖参数空间。若同一框架同时属于两个包含集，两个候选都在实际边缘支持面 $F_J$ 内，而（一）已把整个 $F_J$ 分类为其中一个，迫使另一个包含在它内。这不可能：在此 $2\times2$ 支持中，Bell 投影 $P_\Omega$ 的部分转置有特征值 $-1/2$，所以 $T_1P_\Omega\notin D_J$；同理 $P_\Omega\notin T_1D_J$。于是闭覆盖不交，连通性给一个全局方向。
-
-（三）若必要暂施全局 $T_1$，所有实际压缩面现为标准 PSD。$2\times b$ 中每个向量的 Schmidt 秩至多二，故都在某个 $\mathbb C^2\otimes S$ 内；秩一时把支持扩为二维即可。因此全部标准秩一态均是原纯点，谱分解给整个标准 PSD 底包含于 $K$。260.5（四）给任意两标准纯点的实际标准二支持球，即使这对点不在同一个压缩面内也成立。260.5（五）的完整 Hermitian 产品零投影张成及一个非零切交点，随后排除每个额外原纯点。有限原纯生成给整个 $C=\operatorname{PSD}_{2b}$，撤销暂时转置即得第二备选。$\square$
-
-**命题 260.7（三条边的奇偶接合、固定坐标传播及反向）。** 在260.1的原维数四背景中，260.4的同一个初始 $\theta$ 已把 $C_1,C_2,C_3$ 同时送到标准 PSD；继而(260.2)对所有有限层成立。反之(260.2)给整个 $K_3$ 的实际 L2 和某把共同圆尺。
-
-证明。先在未改变的 $\theta^{\otimes2}$ 坐标写 $C_2=T_1^\delta\operatorname{PSD}_4$。选 $\beta=T^{\epsilon_1}\otimes T^{\epsilon_2}$、$\epsilon_1\oplus\epsilon_2=\delta$，把此两份锥送到 $\operatorname{PSD}_4$。现在仅为分类 $1|2$，以 $\theta\otimes(\beta\theta^{\otimes2})$ 作三份坐标。260.6取 $b=4$；原两块 min/max、整个 $K_3$ 的 L2 与共同尺恰是其前件，故三份锥为 PSD 或第一块转置的 PSD。也可写为两块转置位 $\eta,\nu$，因两块同时全转置保 PSD。
-
-撤销 $\beta$，回到始终未改的初始 $\theta^{\otimes3}$，得到
-
-$$
-C_3=(T^{e_1}\otimes T^{e_2}\otimes T^{e_3})\operatorname{PSD}_8,
-\qquad(e_1,e_2,e_3)=(\eta,\epsilon_1\oplus\nu,\epsilon_2\oplus\nu).
-\tag{260.21}
-$$
-
-这里为简记以同一坐标名 $C_3$ 表示其像。任意一条 $ij$ 边的丢弃像都是整个原 $C_2$：正丢弃给包含，任取原两份正态张量一个归一单态，再用原正置换放到指定位置，给满射。对(260.21)求偏迹，其像按 $e_i\oplus e_j$ 是标准或部分转置 PSD；这两个锥由 Bell 的负特征值区分。因此三条边同时要求
-
-$$
-e_1\oplus e_2=e_1\oplus e_3=e_2\oplus e_3=\delta.
-\tag{260.22}
-$$
-
-三式异或左端为零，右端为 $\delta$，故 $\delta=0$；三个 $e_i$ 全相等，共同全转置保 $\operatorname{PSD}_8$。这证明**同一个初始** $\theta$ 的标准 $C_1,C_2,C_3$，没有在入口假设标准 $C_2$，也没有另外假设局域旋转为原正映射。
-
-精确进入 [F260] 的 XIII命题161.4：这里固定 $n=2$、$\theta:V\to H_2$，低层结论正是其(161.14)，260.1的全部有限背景正是(161.1)—(161.3)，故得到同一个 $\theta$ 的所有有限层。所消费的是分类后尾部，不是161.5的额外几何入口，也不从三边缘本身推断高阶 PSD。
-
-为明确供应范围，161.4调用 [V260] 的 VII102.6—102.10及(102.30)后的两锥包含：102.6在全部原相关输入上以最大界和双极性切片；102.7由标准 $C_2$ 的 Bell 杯帽、蛇式、原最小界与切片得到原全旁观 Choi 判据；102.8取得局域酉及正逆；102.9把两个标准 $C_3$ 资源的乘积放进原 $C_6$，正 Bell 帽收缩给原 $C_4$ 的纠缠门 Choi 元素；102.10用 Harrow [H260] 推论2的**精确有限**普适性，容许不等分组维数。产品纯态沿所得正自同构运输给 PSD $\subseteq C_N$；产品正效应沿正逆运输测试任意向量二次型给 $C_N\subseteq$ PSD。两步都在固定乘积坐标内，含任意原相关输入。不借 S3 或 B1—B3，不用稠密性代替精确生成，也不把资源后选择过程称为确定性物理门。零层仍为给定标量锥。
-
-反向在标准层级取 $g_3(X,Y)=\operatorname{Tr}(XY)$ 于迹零实空间，再由 $\theta^{\otimes3}$ 拉回。两不同纯态的实际面为其复二维支持上的完整 $\mathcal D_2$；中心 $\Pi_S/2$，在此尺下半径 $1/\sqrt2$，因为 $\operatorname{Tr}((P-\Pi_S/2)^2)=1/2$。所以整个 $K_3$ 满足 L2 与 $\mathsf A_2$。本反向只断言存在合适尺，不要求每把正定尺都适用。定理260.2随之成立。$\square$
-
-**推论 260.8（完整静态字典与带前件的过程、时间）。** 在260.1的原维数四背景和260.2任一等价条件下，记 $\Theta_N=\theta^{\otimes N}$、$d_N=2^N$。同一坐标给下表；涉及过程、时间和设备的条目保留各行的额外前件。
-
-| 原对象或额外前件 | 同一坐标中的对应 |
+| 原结构或另需前件 | 同一个坐标中的量子公理 |
 | --- | --- |
-| 全部归一原态、原纯点、凸混合 | 全部密度矩阵 $\rho\succeq0,\operatorname{Tr}\rho=1$；全部秩一 $P_v$，纯域 $\mathbb{CP}^{d_N-1}$；原混合为矩阵凸混合，谱分解为正交纯态概率分解 |
-| 全部原效应、配对及有限单位分解 | 全部 $0\preceq E\preceq I$；$e_E(x)=\operatorname{Tr}(E\Theta_Nx)$；全部数学 POVM $E_j\succeq0,\sum_jE_j=I$，Born 概率 $p_j=\operatorname{Tr}(E_j\rho)$ |
-| 原确认菜单及零邻关系 | $e(P_v)=1$ 恰对应 $E=P_v+B$、$0\preceq B\preceq I-P_v$、$B=(I-P_v)B(I-P_v)$；最小确认者 $P_v$，$T_{p_v}(x)=\operatorname{Tr}(P_v\Theta_Nx)$，零邻点生成实际支持面 $\mathcal D(v^\perp)$ |
-| 单份和实际小面几何 | $\rho=(I+r\cdot\sigma)/2$、$\|r\|\le1$；二支持球 $\mathcal D_2$ 的纯壳 $S^2$，外三角 $\mathcal D_3$ 的纯域 $\mathbb{CP}^2$；仿射维数分别三、八，齐次维数四、九 |
-| 纯态间的量子几何 | $\operatorname{Tr}(P_vP_w)=|v^*w|^2$；HS 距离平方 $2(1-|v^*w|^2)$；取通常归一约定的 Fubini–Study 距离 $\arccos|v^*w|$ |
-| 所有有限复合、原产品、置换、重括号和丢弃 | 标准复 Hilbert 张量积上的整个联合 PSD、原迹配对及偏迹；纯纠缠是 Schmidt 秩大于一，混态可分体是产品密度体的凸包 |
-| 实线性 $L:W_a\to W_b$，另要求对每个有限 $M\ge0$ 的整个原锥 $L\otimes\operatorname{id}_{W_M}\ge0$ | $\Phi=\Theta_bL\Theta_a^{-1}$ 的唯一复线性延拓为 CP；等价于 $J(\Phi)\succeq0$ 及有限矩形 Kraus 表示 $\Phi(X)=\sum_\alpha K_\alpha X K_\alpha^*$ |
-| 上行再给全正输入的质量约束 $u_bL\le u_a$ 或等号 | 分别为 TNI、TP，即 $\sum_\alpha K_\alpha^*K_\alpha\preceq I$ 或等于 $I$；以未归一 Bell 向量定义 Choi 时等价于 $\operatorname{Tr}_{\rm out}J\preceq I$ 或等于 $I$ |
-| 有限分支 $L_j$ 各全旁观正，另给总预算 $u_b\sum_jL_j=u_a$ | 数学仪器：$\rho_j=\Phi_j(\rho)$、$p_j=\operatorname{Tr}\rho_j$；仅 $p_j>0$ 时条件态为 $\rho_j/p_j$。各支 TNI 不替代总和预算 |
-| 同层正线性分支另有投影效应 $A$，且在整个 certain-yes 支持的每个纯态逐点中性 | 唯一锐更新 $\Phi(X)=AXA$；仅有锐效应或可重复性不替代该中性前件 |
-| 另给连续可逆、保锥保单位的同层实一参数群 | 酉共轭动力学，$\dot\rho=-i[H_{\rm gen},\rho]$；纯态择相位后 $i\dot\psi=H_{\rm gen}\psi$。生成元可加标量；物理钟、能量及 $H_{\rm phys}=\hbar H_{\rm gen}$ 的标定另给 |
-| 数学菜单到实际设备，或无限／近似极限 | 事件饱和、记录、接线、可用操作及仪器实现须另给；无限系统须指定连接映射、相容态、拓扑完备化及所需 normal 延拓；近似公理须另有稳定性、范数、误差与资源界 |
+| 整个原态、纯点、完整效应及配对 | 全部迹一PSD、秩一投影、$0\preceq E\preceq I$，Born概率 $\operatorname{Tr}(E\rho)$ |
+| 原单位的有限分解及正交投影分解 | 数学POVM、PVM与归一概率 |
+| 原强全有限张量、单位、分块及边缘 | 复张量、全部纠缠态、偏迹及同一坐标族 |
+| 实线性分支对所有有限旁观者保正 | CP；TNI/TP及仪器另需各支或总和质量预算 |
+| XIII161.7.1的正实线性分支、指定投影效应与整个yes支持逐点中性；连续可逆保锥保单位的一参数群 | 分别为Lüders压缩、数学酉动力学；操作实现、物理钟、能量与 $\hbar$ 仍需对应 |
 
-证明。260.2给整个原锥和单位，逆对偶给全部原菜单与配对，不经任意面效应延拓。正收缩在 $v$ 的期望为一迫使 $Ev=v$，给确认菜单的分块式；$B=0$ 达到所有输入的 minimum，故原零邻与矩阵正交一致，NC 在这里是结论。支持面、谱分解、Pauli 和射影几何均在已取得的整个矩阵锥中计算，未倒作候选前件。
+无限维normal表示及无限张量极限保留各自前件。$\square$
 
-过程、仪器、锐中性和指定连续群精确复用 [F260] 的 XIII161.6—161.10及其161.7.1。取 $d=2^a,e=2^b$；辅助幂 $2^M$ 可容纳任何给定有限辅助维数，标准嵌入和压缩把全部原旁观正性变成通常 CP，反向由 CP 保全部 PSD 输入。只有单系统正性不能得到 CP。各支及总和分别检查预算；正输出迹为零时输出就是零，不规定归一条件态。相关旁观输入 $Z$ 的分支为 $(\operatorname{id}\otimes\Phi_j)(Z)$，概率仍取整个分支输出的迹。数学正自同构、CP 可容许性和物理设备可实现性是不同陈述，后两者各自保留表中前件。连续群是另给的时间作用，并未从静态圆尺选出 Hamiltonian、实际钟或能量标度。$\square$
+**命题 252.8（回溯的范围、反事实与完整白话）。** 本候选把椭球形状、共同正尺和所有非零重合刻度移到结论侧；输入只剩原三维二元凸面的中心反点、零线闭合及正交配方不折叠。相对251.12，它选择无预置尺、显式FI的入口，不声称独立逻辑信息严格减少或比该共同尺候选更弱。
 
-**命题 260.9（限定结论的归属与完整白话图景）。** 260.3的低维支撑—带符号饱和—交叉球反演接合、260.5—260.6的实际乘积零面完整重建，以及260.7的三边奇偶接合，是此处的 repo-derived 普通推导。成熟中间工具直接使用，不申领为新定理：有限维极点分解、相对内部与支撑、Lorentz 锥、Grassmann／圆丛、Alexander 对偶及 cap 自然性、Schur 补、Schmidt 分解和标准矩阵支持面。实际面闭性、支撑满射和八维下界精确来自240.2，qutrit 接口来自240.5，任意不同球的张成交集来自 [B260] 的159.5，全有限固定坐标尾部及过程字典来自 [F260]。没有 Lean／kernel 核验或全球优先性主张。
+证明及反事实。缺少严格凸性时，支撑函数在两个点为零不能迫整条线为零，252.3的零集论证失去依据；缺少中心对称时，正交pair替换不再由定义保证原向量和不变，252.5的frame function预算失去依据。这定位了两项形状关系的用途，不将尚未构造的删项模型伪报为反例。删FI则不同：221.8、230的真实强全有限矩阵商已经保留actual L2、反点ZP及全部原纯标签，却折叠较复杂混态；因此非折叠仍需FI或251的共同尺联合机制。固定三维使线轴的底拓扑为 $\mathbb R^2$，标量选择正是在这里支付，未证明可直接删除维数条件。
 
-证明与物理图景。把单个两态系统想成一个实心方向球：球内是混合准备，壳上是纯准备。候选先不把联合准备叫作密度矩阵，只要求在**整个三份准备体**里，任意两种纯准备生成的实际面仍是三维圆球，而且所有这种小球可用同一把正定尺测量；这包括任意纠缠准备，而非只检查产品准备。原局部维数四先使单份球就是完整 Bloch 球。一个产品结果读数为零，在两份联合体里给至多十维的实际约束；低维引理通过连续切平面、带方向符号的对偶和两颗交叉球，把其中外三角迫成八维完整 qutrit。
+白话：两颗纯珠子先只撑起一块有中心、没有平直边的三维软团，不说它圆，也不给它尺。对着中心互相反着的珠子，叫作完全错开；若一个参照与同一软团上的两颗不同珠子都错开，就要求它与整团边界都错开。这条关系把软团织成射影网。真实凸体的紧性使网线能连续连接，线的二维表面再选出复数。把一对中心反点换成另一对，总准备始终相同，所以每个原线性读数都受到Gleason约束，接成一个矩阵映射；二维支持只有四个齐次方向，原三维软团没有多余方向可折叠，它便只能是完整圆球的仿射像。于是圆、尺和Born平方都从后面出现。最后禁止互相错开的珠子在混合配方里抵消，排掉较大的混态折叠，整套有限量子结构在同一坐标中成立。
 
-产品读数的正性随后把这个 qutrit 的三个相干方向拼起来；Schur 补留下的只有标准方向或一个因子转置。方向不是假定的物理旋转，而由连通框架空间上的两个闭而不交的候选覆盖固定。每条标准纯射线都进入一个实际 qutrit 面，接着完整产品零投影张成禁止再藏入一个额外纯点。对 $2\times b$，所有条件态受边缘支持控制，使每个二支持压缩是整个实际面，再沿连通二框架把方向接合。最后同一种原 $C_2$ 同时出现在三份的三条边上；三个相对转置位绕三角相加必须为零，所以各边不能都扭转，初始单份坐标便贯穿 $C_1,C_2,C_3$。全部有限最小／最大界与精确161.4尾部才把它传到任意有限复制数。
-
-这在**原局部维数四及完整强全有限背景**中，给候选“整个 $K_3$ 的实际 L2 加一把共同圆尺”与全有限复 qubit 层级的等价，故 TC、TF9、NC 是重建后的性质，不是此限定候选的另加前件。它不把一般原维数的粘合问题判成已解或已反驳，也不声称相对于所有公理系统减少了独立公理数。已发表240与250的更一般维数结论仍按各自前件成立。静态结果给 Born、全部数学 POVM、纠缠和偏迹；所有旁观者下的正性才给 CP，预算才给仪器，逐点中性才给锐更新，另给的连续群才给数学时间演化。设备实现、物理钟、$\hbar$、无限系统及近似误差都保留自己的桥梁，不能由球的形状冒领。$\square$
-
-[B260]: https://github.com/the-omega-institute/trureturing/blob/6a50b8f5bb4f5bf8b46d270a2bca1ccc4a3e3f85/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XII.md "XII引理159.5：只以实际 L2 为前件的任意不同二点球张成交集。"
-[A260]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Hatcher, Algebraic Topology：印刷页240—241的 cap-product 自然性；定理3.44（页254—255）及推论3.45（页255—256）的紧局部可缩子集 Alexander 对偶，容许 wild embedding。"
-[F260]: https://github.com/the-omega-institute/trureturing/blob/34f5761ee1ccff84afa44f5a906002b13409b7b7/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "XIII(161.1)—(161.3)、固定同一theta的(161.14)、命题161.4及161.6—161.10和161.7.1的条件字典。"
-[V260]: https://github.com/the-omega-institute/trureturing/blob/f5a6211e591351e1a2bdeea0165c2ef29ad21b48/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "VII102.6—102.10及(102.30)后的两锥包含；只消费分类后全有限尾部。"
-[H260]: https://arxiv.org/abs/0806.0631v1 "Harrow, Exact universality from any entangling gate without inverses, Corollary 2：含不等分组维数的精确有限生成，非仅稠密。"
+来源与边界：一般正交表示复用[Q242P]，拓扑除环分类复用[Q241W]，非负frame function复用[Q241G]；pair moves、原效应双对偶、容量方向、谱排核及全有限传播分别复用242、232及241所列既有结果。仓内新增接合是严格凸实际线体实现的射影平面紧性、将椭球前件替换为中心对称所需的准确范围，以及最后在四维齐次支持中恢复原椭球与非零刻度。这里不依赖SV的elliptic ovoid前件，也不推断删去严格凸、中心对称、固定三维或FI后的分类。$\square$
 
 ## 追加锚（本行以下为增补区）
