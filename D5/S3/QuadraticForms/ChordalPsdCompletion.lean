@@ -19,6 +19,13 @@ Reference: Vandenberghe and Andersen, Chordal Graphs and Semidefinite
 Optimization, Theorem 10.1. The construction eliminates a simplicial vertex,
 aligns its neighbour Gram family with a recursively completed family using
 the existing equal-Gram contraction, and adds one residual coordinate.
+
+Admission: escape-witness. The public completion theorem is content via the
+whole recursive compatible-completion construction. The private Gram factor
+adapter is bind-only and consumed by extend_simplicial; that constructive
+extension is consumed by exists_posSemidef_completion. Neither factor
+normalization nor the exposure of the original contraction is new content.
+This is a general existential structural theorem, with utility none.
 -/
 
 universe u
