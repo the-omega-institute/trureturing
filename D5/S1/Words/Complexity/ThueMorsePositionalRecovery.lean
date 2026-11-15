@@ -8,11 +8,11 @@
 /-
 admission_basis: escape-witness
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23567.
-Root transport and framed-factor reconstruction give top-profile injectivity. The translated-coefficient divisibility helper applies pinned polynomial divisibility and composition identities. Its direct consumers are image_recovers_moments and RootTransport.rootEq_of_counts.
+Root transport and framed-factor reconstruction give top-profile injectivity. The translated-coefficient divisibility helper applies pinned polynomial divisibility and composition identities. Its direct consumers are image_recovers_moments and RootTransport.rootEq_of_counts. The bind-only helper ofCoeffList_append has direct consumers reversePolynomial_cons and RootTransport.reverse_append.
 
-Public theorem judgements (names relative to this module):
+Theorem judgements (names relative to this module):
 declaration | proof_shape | escape_witness
-ofCoeffList_append | content | D5.S1.Words.Complexity.ThueMorsePositionalRecovery.ofCoeffList_append
+ofCoeffList_append | bind-only | none
 positional_coeff_eq_of_counts | content | D5.S1.Words.Complexity.ThueMorsePositionalRecovery.reversePolynomial_coeff
 root_power_dvd_of_translated_coeff | bind-only | none
 reverse_tm | content | D5.S1.Words.Complexity.ThueMorsePositionalRecovery.reverse_tm
@@ -106,10 +106,10 @@ open D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore
 open D5.S1.Words.Complexity.PositivePairs.Coefficients.PositivePairFiltration
 private noncomputable def headDeck (r : Nat) (u : List Bool) : ℚ :=
   ((u.sublistsLen (r + 1)).map (fun w : List Bool => match w with | [] => (0 : ℚ) | a :: _ => (D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency.sign a : ℚ))).sum
-noncomputable def reversePolynomial (u : List Bool) : ℚ[X] :=
+private noncomputable def reversePolynomial (u : List Bool) : ℚ[X] :=
   Polynomial.ofCoeffList (u.reverse.map
     (fun a => (D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency.sign a : ℚ)))
-theorem ofCoeffList_append (u v : List ℚ) :
+private theorem ofCoeffList_append (u v : List ℚ) :
     Polynomial.ofCoeffList (u ++ v) = Polynomial.ofCoeffList u +
       X ^ u.length * Polynomial.ofCoeffList v := by
   induction u with
@@ -147,7 +147,7 @@ private theorem headDeck_eq_of_counts (r : Nat) (u v : List Bool) (h : ∀ p : L
     rw [hdec]
     exact h p.val p.property
   exact ((sublistsLen_perm_of_exactKDeck_eq (r + 1) u v hd).map (fun w : List Bool => match w with | [] => (0 : ℚ) | a :: _ => (D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency.sign a : ℚ))).sum_eq
-theorem positional_coeff_eq_of_counts (m : Nat) (u v : List Bool) (h : ∀ p : List Bool, p.length ≤ m → scatteredCount p u = scatteredCount p v)
+private theorem positional_coeff_eq_of_counts (m : Nat) (u v : List Bool) (h : ∀ p : List Bool, p.length ≤ m → scatteredCount p u = scatteredCount p v)
     (r : Nat) (hr : r < m) :
     ((reversePolynomial u - reversePolynomial v).comp (X + 1)).coeff r = 0 := by
   rw [sub_comp, coeff_sub, reversePolynomial_coeff, reversePolynomial_coeff,
@@ -155,7 +155,7 @@ theorem positional_coeff_eq_of_counts (m : Nat) (u v : List Bool) (h : ∀ p : L
 end D5.S1.Words.Complexity.ThueMorsePositionalRecovery
 namespace D5.S1.Words.Complexity.ThueMorsePositionalRecovery
 open Polynomial
-theorem root_power_dvd_of_translated_coeff (p : ℚ[X]) (m : Nat) (h : ∀ r < m, (p.comp (X + 1)).coeff r = 0) : (X - 1) ^ m ∣ p := by
+private theorem root_power_dvd_of_translated_coeff (p : ℚ[X]) (m : Nat) (h : ∀ r < m, (p.comp (X + 1)).coeff r = 0) : (X - 1) ^ m ∣ p := by
   have hd : X ^ m ∣ p.comp (X + 1) := X_pow_dvd_iff.mpr h
   obtain ⟨q, hq⟩ := hd
   refine ⟨q.comp (X - 1), ?_⟩
@@ -184,7 +184,7 @@ private theorem root_moments_of_transport (k q : Nat) (hq : 0 < q) (p t : ℚ[X]
 end D5.S1.Words.Complexity.ThueMorsePositionalRecovery
 namespace D5.S1.Words.Complexity.ThueMorsePositionalRecovery
 open Polynomial
-theorem reverse_tm (u : List Bool) :
+private theorem reverse_tm (u : List Bool) :
     reversePolynomial (D5.S1.Words.Complexity.UniformWordRecurrence.Counts.tm u) =
       (X - 1) * (reversePolynomial u).comp (X ^ 2) := by
   induction u with
@@ -262,7 +262,7 @@ private theorem reverse_derivative (u : List Bool) :
         simp [reversePolynomial_cons, D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency.sign, Int.cast_neg, Int.cast_one, scatteredCount, derivative_add,
           derivative_C_mul, derivative_X_pow, ih, Nat.choose_succ_succ',
           Nat.choose_one_right] <;> push_cast <;> linarith
-theorem recover_counts_of_moments (u v : List Bool) (hlen : u.length = v.length) (he : (reversePolynomial u).eval 1 = (reversePolynomial v).eval 1) (hd : (reversePolynomial u).derivative.eval 1 =
+private theorem recover_counts_of_moments (u v : List Bool) (hlen : u.length = v.length) (he : (reversePolynomial u).eval 1 = (reversePolynomial v).eval 1) (hd : (reversePolynomial u).derivative.eval 1 =
       (reversePolynomial v).derivative.eval 1) :
     scatteredCount [false] u = scatteredCount [false] v ∧
       scatteredCount [false, true] u = scatteredCount [false, true] v := by
@@ -317,7 +317,7 @@ private theorem thueWord_succ (k : Nat) (u : List Bool) :
       simpa only [thueWord, List.flatMap_cons, D5.S1.Words.Complexity.UniformWordRecurrence.Counts.tm, thueBlock_succ,
         List.flatMap_append, List.flatMap_nil, List.nil_append, List.append_assoc] using congrArg (fun w =>
           thueBlock k a ++ (thueBlock k (!a) ++ w)) ih
-theorem iterate_eq_thueWord (k : Nat) (u : List Bool) :
+private theorem iterate_eq_thueWord (k : Nat) (u : List Bool) :
     (Nat.iterate D5.S1.Words.Complexity.UniformWordRecurrence.Counts.tm) k u = thueWord k u := by
   induction k generalizing u with
   | zero => exact (thueWord_zero u).symm
@@ -357,7 +357,7 @@ open D5.S1.Words.Complexity.UniformWordRecurrence
 open D5.S1.Words.Complexity.ExactDecks.UpperBound.OverlapInfiltration
 open D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall (scatteredCount_singleton_eq_count)
 open D5.S1.Words.Complexity.UniformWordRecurrence.Core D5.S1.Words.Complexity.UniformWordRecurrence.Filtration D5.S1.Words.Complexity.LacunaryBinomialMarkers.Projection
-theorem counts_two_of_zero_pair (u v : List Bool) (hlen : u.length = v.length)
+private theorem counts_two_of_zero_pair (u v : List Bool) (hlen : u.length = v.length)
     (hz : scatteredCount [false] u = scatteredCount [false] v)
     (hp : scatteredCount [false, true] u = scatteredCount [false, true] v) :
     ∀ p : List Bool, p.length ≤ 2 → scatteredCount p u = scatteredCount p v := by
@@ -457,7 +457,7 @@ open D5.S1.Words.Complexity.VivionBinomialConverseFails
 open D5.S1.Words.Complexity.UniformWordRecurrence
 open D5.S1.Words.Complexity.LacunaryBinomialMarkers.Projection D5.S1.Words.Complexity.UniformWordRecurrence D5.S1.Words.Complexity.UniformWordRecurrence.Core D5.S1.Words.Complexity.UniformWordRecurrence.Filtration
 open D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall (scatteredCount_singleton_eq_count)
-theorem expanded_aligned_factor (w : Nat → Bool) (r n s : Nat) :
+private theorem expanded_aligned_factor (w : Nat → Bool) (r n s : Nat) :
     List.ofFn (wordFactor
       (uniformExpansion (2 ^ r) (Nat.two_pow_pos r)
         (fun a i => Bool.xor a (thueMorse i)) w)
@@ -689,7 +689,7 @@ private theorem both_boundary_eq (u v : List Bool) (a b c d : Bool)
   cases a <;> cases b <;> cases c <;> cases d <;>
     simp only [Bool.false_eq_true, Bool.true_eq_false, ite_false, ite_true,
       true_and, and_true, and_self] at hz hp ⊢ <;> omega
-def frame (l : Option Bool) (u : List Bool) (r : Option Bool) : List Bool :=
+private def frame (l : Option Bool) (u : List Bool) (r : Option Bool) : List Bool :=
   l.toList ++ tm u ++ r.toList
 private theorem left_boundary_eq (u v : List Bool) (a b : Bool)
     (hlen : (a :: tm u).length = (b :: tm v).length)
@@ -707,7 +707,7 @@ private theorem right_boundary_eq (u v : List Bool) (a b : Bool)
   simp only [List.length_append, List.length_singleton, List.length_nil, tm_length] at hlen
   rw [hu.1, hv.1] at hz
   cases a <;> cases b <;> simp at hz ⊢ <;> omega
-theorem frame_alignment (l r l' r' : Option Bool) (u v : List Bool)
+private theorem frame_alignment (l r l' r' : Option Bool) (u v : List Bool)
     (hlen : (frame l u r).length = (frame l' v r').length)
     (hz : (scatteredCount [false]) (frame l u r) = (scatteredCount [false]) (frame l' v r'))
     (hp : (scatteredCount [false, true]) (frame l u r) = (scatteredCount [false, true]) (frame l' v r')) :
@@ -746,7 +746,7 @@ theorem frame_alignment (l r l' r' : Option Bool) (u v : List Bool)
 end D5.S1.Words.Complexity.ThueMorsePositionalRecovery.Alignment
 namespace D5.S1.Words.Complexity.ThueMorsePositionalRecovery.Alignment.FactorFrames
 open D5.S1.Words.Complexity D5.S1.Words.Complexity.UniformWordRecurrence D5.S1.Words.Complexity.ThueMorsePositionalRecovery.Alignment
-def mu (w : Nat → Bool) : Nat → Bool :=
+private def mu (w : Nat → Bool) : Nat → Bool :=
   uniformExpansion 2 (by decide) (fun a i => Bool.xor a (thueMorse i.val)) w
 private theorem mu_even (w : Nat → Bool) (s : Nat) : mu w (2 * s) = w s := by
   simp [mu, uniformExpansion]
@@ -771,7 +771,7 @@ private theorem mu_aligned (w : Nat → Bool) (m s : Nat) :
   rw [← D5.S1.Words.Complexity.ThueMorsePositionalRecovery.iterate_eq_thueWord] at h
   change (List.ofFn (wordFactor (mu w) (2 * m) (2 * s))) = D5.S1.Words.Complexity.UniformWordRecurrence.Counts.tm ((List.ofFn (wordFactor w m s))) at h
   exact h
-theorem factor_frame (w : Nat → Bool) (n s : Nat) :
+private theorem factor_frame (w : Nat → Bool) (n s : Nat) :
     ∃ (l r : Option Bool) (m t : Nat),
       (List.ofFn (wordFactor (mu w) n s)) = frame l ((List.ofFn (wordFactor w m t))) r := by
   have hs := Nat.mod_lt s (by decide : 0 < 2)

@@ -9,7 +9,7 @@
 /-
 admission_basis: open-problem-resolution (#23400; Proved)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23567.
-The hierarchy uses VivionBinomialConverseFails.binomialComplexity directly, with the same scattered-count formula as the claim. The proof result has no refutation exemption from escape registration.
+The four-letter convention binomialAt applies VivionBinomialConverseFails.binomialComplexity; the hierarchy uses binomialAt and its proofs apply that owner. The proof result has no refutation exemption from escape registration.
 
 Public theorem judgements (names relative to this module):
 declaration | proof_shape | escape_witness
@@ -526,6 +526,9 @@ The binding alphabet Fin 4 records the claimed at-most-four-letter witness.
 The implication 2 ≤ ℓ is the feasible range: Remark 7.1 and the source's
 unboundedness requirement rule out ℓ = 1.
 -/
+noncomputable def binomialAt (word : Nat → Fin 4) (k n : Nat) : Nat :=
+  binomialComplexity word k n
+
 noncomputable def factorComplexity (word : Nat → Fin 4) (n : Nat) : Nat :=
   (wordFactorSet word n).card
 
@@ -536,10 +539,10 @@ def Unbounded (f : Nat → Nat) : Prop :=
   ∀ bound : Nat, ∃ n : Nat, bound < f n
 
 def Hierarchy (word : Nat → Fin 4) (ell : Nat) : Prop :=
-  Unbounded (binomialComplexity word 1) ∧
+  Unbounded (binomialAt word 1) ∧
     (∀ j : Nat, 1 ≤ j → j < ell →
-      Prec (binomialComplexity word j) (binomialComplexity word (j + 1))) ∧
-    (∀ n : Nat, binomialComplexity word ell n = factorComplexity word n)
+      Prec (binomialAt word j) (binomialAt word (j + 1))) ∧
+    (∀ n : Nat, binomialAt word ell n = factorComplexity word n)
 
 def claim : Prop :=
   ∀ ell : Nat, 2 ≤ ell → ∃ word : Nat → Fin 4, Hierarchy word ell
