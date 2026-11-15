@@ -7,8 +7,8 @@
    digest: Transition counts for width-five output classes 2 and 3. -/
 
 /-
-admission_basis: consumed-helper in HardinA229583Strip.result (#30580)
-escape_witness: none
+admission_basis: open-problem-resolution (#30580; Proved)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229583Strip.result)
 transition_counts: proof_shape=bind-only; consumers=HardinA229583Strip.finite_certificate
 -/
 

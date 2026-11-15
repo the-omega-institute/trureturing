@@ -7,9 +7,9 @@
    digest: Transition counts for width-6 output classes 12 and 13. -/
 
 /-
-admission_basis: consumed-helper in HardinA229584Strip.result (#30580)
-escape_witness: none
-transition_counts: proof_shape=bind-only; consumers=HardinA229584Strip.finite_certificate
+admission_basis: open-problem-resolution (#30580; Proved)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229584Strip.result)
+transition_counts: proof_shape=bind-only; consumers=HardinA229584Strip.transition_counts
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical

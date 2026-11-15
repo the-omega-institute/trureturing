@@ -7,8 +7,8 @@
    digest: Structural and polynomial certificate for width-6 strips. -/
 
 /-
-admission_basis: consumed-helper in HardinA229584Strip.result (#30580)
-escape_witness: none
+admission_basis: open-problem-resolution (#30580; Proved)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229584Strip.result)
 tail_bound: proof_shape=bind-only; consumers=structural_certificate
 structural_certificate: proof_shape=bind-only; consumers=HardinA229584Strip.finite_certificate
 -/

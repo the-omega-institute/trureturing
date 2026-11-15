@@ -8,29 +8,31 @@
 
 /-
 admission_basis: escape-witness
-escape_witness: lumped_count (continuation_count, counting_bridge, continuation_matrix)
+escape_witness: continuation_count for lumped_count: arbitrary-length suffixes counted at exact
+budget by structural induction; live path continuation_count -> counting_bridge -> lumped_count.
 Row: proof_shape=bind-only; consumers=bondDefects, literalCount
 bondDefects: proof_shape=bind-only; consumers=defects, lumped_count
 tailDefects: proof_shape=bind-only; consumers=defects, counting_bridge
 defects: proof_shape=bind-only; consumers=literalCount, relabel_defects
 literalCount: proof_shape=bind-only; consumers=lumped_count
-tail_relabel: proof_shape=content; consumers=relabel_defects
-relabel_defects: proof_shape=content; consumers=HardinA229580Strip.scale_count
-constant_tail: proof_shape=content; consumers=constant_defects
-constant_defects: proof_shape=content; consumers=HardinA229580Strip.scale_count
+tail_relabel: proof_shape=bind-only; consumers=relabel_defects
+relabel_defects: proof_shape=bind-only; consumers=HardinA229580Strip.scale_count, HardinA229581Strip.scale_count, HardinA229582Strip.scale_count, HardinA229583Strip.scale_count, HardinA229584Strip.scale_count
+constant_tail: proof_shape=bind-only; consumers=constant_defects
+constant_defects: proof_shape=bind-only; consumers=HardinA229580Strip.scale_count, HardinA229581Strip.scale_count, HardinA229582Strip.scale_count, HardinA229583Strip.scale_count, HardinA229584Strip.scale_count
 continuation: proof_shape=bind-only; consumers=lumped_count
 projectedCost: proof_shape=bind-only; consumers=continuation_count, counting_bridge
-cost_eq: proof_shape=content; consumers=counting_bridge
+cost_eq: proof_shape=bind-only; consumers=counting_bridge
 continuation_count: proof_shape=content; consumers=counting_bridge
 counting_bridge: proof_shape=content; consumers=lumped_count
-continuation_matrix: proof_shape=content; consumers=lumped_count
-lumped_count: proof_shape=content; consumers=HardinA229580Strip.count_transfer
-forward: proof_shape=bind-only; consumers=forward_shift
-forward_eq: proof_shape=content; consumers=forward_shift
-forward_shift: proof_shape=content; consumers=HardinA229580Strip.result
+continuation_matrix: proof_shape=bind-only; consumers=lumped_count
+lumped_count: proof_shape=content; consumers=HardinA229580Strip.count_transfer, HardinA229581Strip.count_transfer, HardinA229582Strip.count_transfer, HardinA229583Strip.count_transfer, HardinA229584Strip.count_transfer
+forward: proof_shape=bind-only; consumers=HardinA229580Strip.powers_table, HardinA229581Strip.powers_table, HardinA229582Strip.powers_table, HardinA229583Strip.powers_table, HardinA229584Strip.powers_table, forward_eq, forward_shift
+forward_eq: proof_shape=bind-only; consumers=forward_shift, HardinA229583Strip.result, HardinA229584Strip.result
+forward_shift: proof_shape=bind-only; consumers=HardinA229580Strip.result, HardinA229581Strip.result, HardinA229582Strip.result, HardinA229583Strip.result, HardinA229584Strip.result
 -/
 
-import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Action
+import Mathlib.Logic.Equiv.Prod
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.List.OfFn
 import Mathlib.Tactic
@@ -141,10 +143,7 @@ private theorem counting_bridge
         continuation H P C n (P r) (D - bondDefects H r r) else 0 := by
   rw [literalCount, Finset.natCast_card_filter]
   let e : (Fin (n + 1) × Fin k → Fin q) ≃ (Fin (n + 1) → Row q k) :=
-    { toFun := fun A i j => A (i, j)
-      invFun := fun f p => f p.1 p.2
-      left_inv := fun _ => rfl
-      right_inv := fun _ => rfl }
+    Equiv.curry (Fin (n + 1)) (Fin k) (Fin q)
   rw [← e.symm.sum_comp,
     ← (Fin.consEquiv (fun _ : Fin (n + 1) => Row q k)).sum_comp,
     Fintype.sum_prod_type]
@@ -224,15 +223,13 @@ section Recurrence
 
 variable {S : Type*} [Fintype S] [DecidableEq S]
 
-def forward (T : Matrix S S ℤ) (v : S → ℤ) : ℕ → S → ℤ
-  | 0 => v
-  | n + 1 => Matrix.vecMul (forward T v n) T
+def forward (T : Matrix S S ℤ) (v : S → ℤ) (n : ℕ) : S → ℤ :=
+  Nat.iterate (fun w => Matrix.vecMul w T) n v
 
 theorem forward_eq (T : Matrix S S ℤ) (v : S → ℤ) (n : ℕ) :
     forward T v n = Matrix.vecMul v (T ^ n) := by
-  induction n with
-  | zero => simp [forward]
-  | succ n ih => simp only [forward, ih, pow_succ, Matrix.vecMul_vecMul]
+  simpa only [forward, Matrix.op_smul_eq_vecMul, MulOpposite.unop_pow,
+    MulOpposite.unop_op] using (smul_iterate_apply (MulOpposite.op T) n v)
 
 theorem forward_shift (T : Matrix S S ℤ) (v e : S → ℤ) (d b : ℕ) (c : Fin d → ℤ)
     (h : forward T v (b + d) = ∑ j : Fin d, c j • forward T v (b + j.val)) (n : ℕ) :

@@ -31,7 +31,7 @@ finite_certificate: proof_shape=bind-only; consumers=count_transfer, powers_tabl
 count_transfer: proof_shape=content; consumers=result
 powers_table: proof_shape=bind-only; consumers=polynomial_relation
 polynomial_relation: proof_shape=bind-only; consumers=result
-scale_count: proof_shape=content; consumers=result
+scale_count: proof_shape=bind-only; consumers=result
 result: proof_shape=content; consumers=external sequence A229582
 -/
 
@@ -141,6 +141,7 @@ private theorem powers_table (i : Fin 4) : forward T initial i.val = W i := by
   induction i using Fin.induction with
   | zero => exact finite_certificate.2.2.2.2.2.1.1.symm
   | succ i ih =>
+    rw [forward, Function.iterate_succ_apply']
     change Matrix.vecMul (forward T initial i.val) T = W i.succ
     change forward T initial i.val = W i.castSucc at ih
     rw [ih]

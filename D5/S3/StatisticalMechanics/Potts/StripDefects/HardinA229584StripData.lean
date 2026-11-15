@@ -7,8 +7,8 @@
    digest: Boundary classes and transfer weights for width-6 strips. -/
 
 /-
-admission_basis: consumed-helper in HardinA229584Strip.result (#30580)
-escape_witness: none
+admission_basis: open-problem-resolution (#30580; Proved)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229584Strip.result)
 Row: proof_shape=bind-only; consumers=HardinA229584Strip.finite_certificate
 Boundary: proof_shape=bind-only; consumers=HardinA229584Strip.finite_certificate
 horizontal: proof_shape=bind-only; consumers=HardinA229584Strip.finite_certificate
