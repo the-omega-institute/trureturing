@@ -1,0 +1,37 @@
+**定理 183.4（影体扩张的原读数公式）。** 在183.3的完整背景下，固定 $z\in\operatorname{ri}J_B$，令
+
+$$
+D_B=\max_{n\in S^2}\delta_B(n),\qquad
+S_t=\sup_{n\in S^2}\frac{m_{a_n}(z+tb_n)}t.
+\tag{183.11}
+$$
+
+则 $D_B<1$，(183.5)对全部 $n\in S^2$ 一致收敛到 $\delta_B(n)$，且 $S_t\uparrow D_B$。按球坐标中的欧氏 Hausdorff 距离，
+
+$$
+\boxed{\quad
+d_H(\widehat B,B)=R_B-1
+=\frac{2D_B}{1-D_B}
+=\lim_{t\downarrow0}\frac{2S_t}{1-S_t}.
+\quad}
+\tag{183.12}
+$$
+
+有限 $t$ 只给扩张量下界。对两套满足183.3前件、已识别到同一单位球坐标的影体 $K_1,K_2$，若其剖面为 $\delta_1,\delta_2$，另有精确式
+
+$$
+d_H(K_1,K_2)
+=\sup_{n\in S^2}
+\frac{2|\delta_1(n)-\delta_2(n)|}
+{(1-\delta_1(n))(1-\delta_2(n))}.
+\tag{183.13}
+$$
+
+若两剖面均不超过 $\overline D<1$，此距离介于 $2\|\delta_1-\delta_2\|_\infty$ 和 $2\|\delta_1-\delta_2\|_\infty/(1-\overline D)^2$ 之间。
+
+证明。183.3给 $\delta_B$ 连续，故最大值达到且严格小于一。若方向上的一致收敛失败，取 $t_j\downarrow0,n_j\to n$，使 $\delta_B(n_j)-m_{a_{n_j}}(z+t_jb_{n_j})/t_j\ge\eta>0$。选相应极小者 $f_j$；因上界为 $D_B$，有 $0\le f_j(z)\le t_jD_B$。紧效应区间给 $f_j\to f$ 的子列，连续评价使 $f(a_n)=1$ 且 $f(z)=0$，所以 $f\in\mathcal R_{B,a_n}$。左侧读数不小于 $f_j(b_{n_j})\to f(b_n)\ge\delta_B(n)$，与 $\delta_B(n_j)\to\delta_B(n)$ 矛盾。没有要求 $\mathcal F_a$ 随目标连续，也没有把有限 $t$ 的上确界写成已达到的最大值。单调性给 $S_t\uparrow D_B$。
+
+由支持函数定义，$\max_n h_{\widehat B}(-n)=R_B$；(183.7)遂给 $R_B=(1+D_B)/(1-D_B)$。因 $B\subseteq\widehat B$，点到单位球的距离是 $\max(\|y\|-1,0)$，得(183.12)。有限 $t$ 时 $S_t\le D_B$，所以相应表达式只给下界；这里没有显式收敛模量，也没有有限 $t$ 的扩张上界。
+
+对(183.13)，成熟支持函数工具给紧凸体的 $d_H(K_1,K_2)=\sup_{\|v\|=1}|h_{K_1}(v)-h_{K_2}(v)|$：Hausdorff 距离不超过 $r$ 等价于两侧分别包含于另一侧加半径 $r$ 球；[Q183B]练习3.35的和公式与包含判据使它等价于支持函数相差不超过 $r$。将(183.7)代入并通分即得所示精确式，两侧界直接由分母估计得到。此为剖面误差与影体误差的对应，不是原罚项的有限参数误差率，也没有给一般高秩面或全量子层级的近似重建定理。$\square$
+
