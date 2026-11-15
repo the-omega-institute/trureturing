@@ -42,13 +42,17 @@ internal sealed class MurthyA087372ExponentRefutationDocument : IScribeDocumentD
                 + "actual first successes of every positive size; it imposes no cutoff and "
                 + "does not infer a bound from only the successful inputs. The consecutive-prime "
                 + "gap theorem is reused; the exponent construction is derived here.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("murthy-a087372-bounded-exponent"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("murthy-a087372-" + name), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);

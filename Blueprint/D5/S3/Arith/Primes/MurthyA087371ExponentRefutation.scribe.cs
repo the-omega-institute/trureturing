@@ -49,13 +49,17 @@ internal sealed class MurthyA087371ExponentRefutationDocument : IScribeDocumentD
                 + "qualifies. The consecutive-prime-gap theorem is reused directly; the offset, "
                 + "threshold and leastness are checked for this decimal sequence. No theorem "
                 + "about the separate base-three sequence is assumed.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("murthy-a087371-bounded-exponent"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("murthy-a087371-" + name), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
