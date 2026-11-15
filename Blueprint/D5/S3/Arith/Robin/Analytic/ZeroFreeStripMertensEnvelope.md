@@ -24,9 +24,22 @@ The strip bounds zeroAbscissa by 1-alpha. Apply actual_zero_abscissa_power_bound
 
 The argument uses the classical integrated explicit formula and Abel summation. The Mertens suppliers retain the PrimeNumberTheoremAnd contributors' Apache-2.0 notice, the IEANTN/Mertens.lean source at commit 6a380f0c4658c04a420a9eb00b1ed62a1e3fde01, and the attribution to Leo Goldmakher, A quick proof of Mertens' theorem; the supplying notice and license are preserved at Library/notes/pntplus2026mertens.md. No literature-priority claim is made.
 
+**Theorem 1.2 (The actual quadratic log-log remainder).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.nonlinear_quadratic`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.nonlinear_quadratic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real x with exp(2)<=x and x/2<=Chebyshev.theta(x), the original nonlinear estimate is abs(RHSharpArithmeticEnvelope.N(x)) <=8*((Chebyshev.theta(x)-x)/x)²/log(x). It applies the existing scaled log-log tangent-gap stability theorem. Its statement and proof are reused directly by the same-point theta-tail maximum argument; no zero-strip hypothesis is needed for this quadratic estimate.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_B_critical_strip_envelope`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.nonlinear_quadratic`
 - Dependency: [D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvatureStability](LogLogGlobalCurvatureStability.md)
 - Dependency: [D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope](RHSharpArithmeticEnvelope.md)
 - Dependency: [D5/S3/Arith/Robin/EulerLayerRootCorrection](../EulerLayerRootCorrection.md)

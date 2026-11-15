@@ -59,7 +59,7 @@ private theorem coefficient_basis_value (d k : ℕ) (i j : Fin d) :
   simpa only [dualBasis, Module.Basis.dualBasis_repr]
     using coefficient_matrix K d k i j
 
-private theorem action_expansion (r d : ℕ) (hrd : r ≤ d) (a : K) :
+theorem action_expansion (r d : ℕ) (hrd : r ≤ d) (a : K) :
     dualAction K r (Multiplicative.ofAdd (-a)) =
       ∑ k : Fin d, a ^ k.val • coefficient K r k.val := by
   classical
@@ -150,7 +150,7 @@ theorem coefficient_top (N : ℕ) (v : DualPower K (N + 1)) :
   simp only [map_sum, map_smul, hb]
   simp [dualBasis, Module.Basis.dualBasis_repr]
 
-private theorem coefficient_diagonal (N : ℕ)
+theorem coefficient_diagonal (N : ℕ)
     (v : DualPower K (N + 1)) (i : Fin (N + 1)) :
     coefficient K (N + 1) i.val v (Polynomial.degreeLT.basis K (N + 1) i) =
       v (Polynomial.degreeLT.basis K (N + 1) 0) := by
@@ -167,7 +167,7 @@ private theorem coefficient_diagonal (N : ℕ)
     rw [if_neg hne, mul_zero]
   · simp
 
-private theorem coefficient_top_coordinate_zero (n m : ℕ)
+theorem coefficient_top_coordinate_zero (n m : ℕ)
     (hchoose : ((n + m).choose n : K) = 0)
     (v : DualPower K (n + m + 1)) :
     coefficient K (n + m + 1) m v
@@ -294,13 +294,13 @@ private def tensorDegree (n m : ℕ) (i : Fin (n + 1) × Fin (m + 1)) :
     Fin (n + m + 1) :=
   ⟨i.1.val + i.2.val, by have := i.1.isLt; have := i.2.isLt; omega⟩
 
-private def tensorCoefficient (n m : ℕ) (k : Fin (n + m + 1)) :
+def tensorCoefficient (n m : ℕ) (k : Fin (n + m + 1)) :
     Module.End K (TensorSpace K n m) :=
   ∑ i : Fin (n + 1) × Fin (m + 1), if tensorDegree n m i = k then
     TensorProduct.map (coefficient K (n + 1) i.1.val)
       (coefficient K (m + 1) i.2.val) else 0
 
-private theorem tensor_action_expansion (n m : ℕ) (a : K) :
+theorem tensor_action_expansion (n m : ℕ) (a : K) :
     tensorAction K n m (Multiplicative.ofAdd (-a)) =
       ∑ i : Fin (n + 1) × Fin (m + 1), a ^ (tensorDegree n m i).val •
         TensorProduct.map (coefficient K (n + 1) i.1.val)
@@ -350,7 +350,7 @@ private theorem tensor_coefficient_top (n m : ℕ) :
     simp [hd]
   · simp
 
-private theorem tensor_coefficient_top_range (n m : ℕ) (z : TensorSpace K n m) :
+theorem tensor_coefficient_top_range (n m : ℕ) (z : TensorSpace K n m) :
     ∃ c : K, tensorCoefficient K n m (Fin.last (n + m)) z =
       c • (dualBasis K (n + 1) (Fin.last n) ⊗ₜ[K]
         dualBasis K (m + 1) (Fin.last m)) := by
@@ -367,7 +367,7 @@ private theorem tensor_coefficient_top_range (n m : ℕ) (z : TensorSpace K n m)
     obtain ⟨d, hd⟩ := hy
     exact ⟨c + d, by rw [map_add, hc, hd, add_smul]⟩
 
-private theorem tensor_coefficient_top_generator (n m : ℕ) :
+theorem tensor_coefficient_top_generator (n m : ℕ) :
     tensorCoefficient K n m (Fin.last (n + m))
       (dualBasis K (n + 1) 0 ⊗ₜ[K] dualBasis K (m + 1) 0) =
         dualBasis K (n + 1) (Fin.last n) ⊗ₜ[K]
@@ -379,7 +379,7 @@ private theorem tensor_coefficient_top_generator (n m : ℕ) :
 
 -- This is the essential RECTANGULAR generator B_m(e_n tensor e_0)=w.
 -- Unlike the old square proof, it needs no characteristic-specific binomial.
-private theorem tensor_coefficient_middle_generator (n m : ℕ) :
+theorem tensor_coefficient_middle_generator (n m : ℕ) :
     tensorCoefficient K n m ⟨m, by omega⟩
       (dualBasis K (n + 1) (Fin.last n) ⊗ₜ[K] dualBasis K (m + 1) 0) =
         dualBasis K (n + 1) (Fin.last n) ⊗ₜ[K]
