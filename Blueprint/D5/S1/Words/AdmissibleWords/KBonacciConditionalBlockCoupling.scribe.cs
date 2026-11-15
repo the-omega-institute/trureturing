@@ -280,20 +280,213 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                         + "refresh is the identity and every energy vanishes. This asserts no excited eigenvalue or"
                         + " excited gap for an empty chain.")),
                     Paragraph(Text(
+                        "For a realizable exterior eta, encode a completion by its true-bit subset A of B. "
+                        + "Let w_eta(A) equal true exactly on A within B and equal eta on B-complement, and set "
+                        + "F_eta={A subset of B : DBonacciAdmissible k n w_eta(A)}. Restriction to true bits and "
+                        + "reassembly w_eta are inverse bijections between the original completion support, C_eta "
+                        + "and F_eta. Thus m_eta=card(F_eta)>0 and the original conditional law becomes the uniform "
+                        + "law 1/m_eta on F_eta. The actual exterior mass remains q_B(eta)=m_eta/Z.")),
+                    Paragraph(Text(
+                        "The family F_eta is lower under inclusion. Erasing i from A changes w_eta(A) only by "
+                        + "setting its B-coordinate i to false; the original legal_delete preserves legality and "
+                        + "leaves every exterior coordinate fixed. Iterating deletions gives A' in F_eta whenever "
+                        + "A' is a subset of A in F_eta. This is also the direct application of the pinned "
+                        + "Finset.antitone_iff_forall_insert_le and isLowerSet_setOfPred criteria. Since the fiber "
+                        + "is inhabited, its empty true-bit subset belongs to F_eta, even when eta contains true "
+                        + "bits outside B. For every nonnegative integer ell with card(B)<=ell, "
+                        + "m_eta<=2^card(B)<=2^ell.")),
+                    Paragraph(Text(
+                        "Apply HereditaryFlip.Metric.flipGraph to F_eta: its vertices are these supported "
+                        + "assignments and A is adjacent to R exactly when card(A symmetric-difference R)=1. "
+                        + "The canonical exists_shortest_walk, connected and dist_eq suppliers give connectedness "
+                        + "and graph distance card(A symmetric-difference R). Reassembly preserves this distance "
+                        + "as the full-word Hamming distance because both states have exterior eta. Deleting to "
+                        + "A intersect R and reversing the deletion path from R gives a legal path of that length. "
+                        + "For general B this graph is on one fixed-exterior support; no states with a different "
+                        + "exterior are added to its vertex set.")),
+                    Paragraph(Text(
+                        "For B=Finset.univ, every legal name corresponds to its full true-bit subset, and the "
+                        + "inverse takes a supported subset to its legal Boolean word. The exterior is empty, so "
+                        + "this is a bijection from S to the full hereditary support. Transporting flipGraph along "
+                        + "this bijection gives exactly the actual legal-name graph: x and y are adjacent if and "
+                        + "only if card({i : x.val(i) differs from y.val(i)})=1. The transported graph is connected "
+                        + "and its native graph distance is this full Hamming distance. Both adjacency and distance "
+                        + "are identified on the legal states themselves, including the single empty state at n=0.")),
+                    Paragraph(Text(
+                        "For i in B, fixing eta and every other B-coordinate fixes exactly the original full "
+                        + "exterior of the singleton {i}, since B-complement together with B minus {i} is "
+                        + "{i}-complement. In a supported state x, further conditioning the uniform C_eta law on "
+                        + "those remaining coordinates therefore gives precisely mu_{ {i} }(x), by "
+                        + "completionLaw_apply and completionLaw_congr. If its singleton support has size r, the "
+                        + "conditioning event has mass r/m_eta; dividing each supported mass 1/m_eta by this event "
+                        + "mass gives 1/r. Deletion ensures that false is supported, so the bit support is either "
+                        + "{false} or {false,true}, never {true}. Every distinct legal flip has transition mass "
+                        + "1/2 under the original singleton refresh. A fixed singleton fiber contributes zero "
+                        + "variance; no independent replacement kernel is introduced.")),
+                    Paragraph(Text(
+                        "Write energy_B(f)=Re<f,(Id-E_B)f>_pi=pi[V_B(f;.)] for the original block energy, "
+                        + "and energy_i(f)=energy_{ {i} }(f) for the global rate-one singleton energy. For arbitrary "
+                        + "complex f, define the conditional site energy within C_eta by "
+                        + "Dsite_eta(f)=(1/m_eta) sum_{x in C_eta} sum_{i in B} V_{ {i} }(f;x). Each variance "
+                        + "uses the original singleton law just identified. Equivalently, its pair expression is "
+                        + "(1/(2m_eta)) sum_{x in C_eta} sum_{i in B} sum_{y in C_eta} "
+                        + "T_{ {i} }(x,y)|f(x)-f(y)|^2. Singleton updates stay in this same exterior fiber.")),
+                    Paragraph(Text(
+                        "Put g_eta(A)=f(w_eta(A)), with w_eta(A) regarded as its legal subtype element. Let "
+                        + "Q_eta=sum_{A in F_eta} sum_{R in F_eta, card(A symmetric-difference R)=1} "
+                        + "|g_eta(A)-g_eta(R)|^2 count ordered one-flip pairs, and let U_eta sum the same squared "
+                        + "differences once per unordered edge. Then Q_eta=2U_eta. The factor 1/2 in the variance "
+                        + "pair formula and the legal-flip transition mass 1/2 give exactly "
+                        + "Dsite_eta(f)=Q_eta/(4m_eta)=U_eta/(2m_eta). Diagonal refreshes have zero difference. "
+                        + "The squared differences are complex moduli, so these coefficients also hold for "
+                        + "complex-valued f.")),
+                    Paragraph(Text(
+                        "For card(B)<=ell, the lower-family comparison gives Var_eta(f)<=ell*Q_eta/4. Here "
+                        + "Var_eta(f)=(1/m_eta) sum_{A in F_eta}|g_eta(A)-gbar_eta|^2 and "
+                        + "gbar_eta=(1/m_eta) sum_{A in F_eta}g_eta(A). In terms of the reused suppliers, a "
+                        + "HereditaryFlip.Metric geodesic has length at most ell; the triangle inequality and "
+                        + "the pinned sq_sum_le_card_mul_sum_sq bound each endpoint squared difference by ell "
+                        + "times the path's edge sum. Both orientations of every path edge occur in Q_eta, so "
+                        + "this edge sum is at most Q_eta/2 and the endpoint bound is ell*Q_eta/2. Averaging over all ordered "
+                        + "endpoint pairs and using Var_eta(f)=(1/(2m_eta^2)) sum_A sum_R "
+                        + "|g_eta(A)-g_eta(R)|^2 gives the displayed comparison. Substituting the actual site "
+                        + "energy yields Var_eta(f)<=ell*m_eta*Dsite_eta(f)<=ell*2^ell*Dsite_eta(f). "
+                        + "Dsite_eta already contains its conditional average 1/m_eta; no second such factor "
+                        + "is inserted.")),
+                    Paragraph(Text(
+                        "Average once over distinct realizable exteriors with their actual weights m_eta/Z. "
+                        + "The block identity is energy_B(f)=sum_eta (m_eta/Z)Var_eta(f). Also "
+                        + "sum_eta (m_eta/Z)Dsite_eta(f)=(1/Z) sum_x sum_{i in B} V_{ {i} }(f;x) "
+                        + "=sum_{i in B} energy_i(f): the factor m_eta cancels the conditional average within "
+                        + "each partition fiber. Consequently the actual arbitrary-block comparison is "
+                        + "energy_B(f)<=ell*2^ell*sum_{i in B} energy_i(f), for k>=2, n>=0 and card(B)<=ell. "
+                        + "This uses the original uniform legal-state law and rate-one singleton clocks. It "
+                        + "requires neither independent block components nor a uniform law on exterior assignments.")),
+                    Paragraph(Text(
+                        "For n>=1, take ell=2k-1 and the original zero-based integer starts "
+                        + "a in Icc(1-ell,n-1), with B_a={i : a<=i.val<=a+ell-1}. These are the same indexed "
+                        + "clocks as the book's one-based starts above after adding one to a. Each block has "
+                        + "cardinality at most ell. A fixed site i belongs to exactly the ell indexed blocks "
+                        + "whose starts range from i.val-ell+1 through i.val. Hence summing the preceding "
+                        + "comparison gives sum_a energy_{B_a}(f)<=ell^2*2^ell*sum_i energy_i(f). For short "
+                        + "chains, repeated values of B_a, including repeated full-chain blocks, remain separate "
+                        + "clock indices in this sum. There is no factor 1/M. The coefficient depends on k; "
+                        + "this comparison makes no optimality or K-uniform claim.")),
+                    Paragraph(Text(
+                        "The comparison includes empty and disconnected B and singleton completion supports. "
+                        + "A singleton F_eta has Q_eta=U_eta=Var_eta=Dsite_eta=0. If B is empty, both sides of "
+                        + "the block comparison are zero. At n=0 every block is empty and every indexed block "
+                        + "and singleton energy sum is zero, without supplying an excited gap.")),
+                    new DocumentBlock.Section(
+                        H("Adjacent-edge eigenfunctions for the original indexed refresh"),
+                        Blocks(
+                            Paragraph(Text(
+                                "For this spectral argument assume k>=2 and n>=1, keep S=DBonacciName k n and "
+                                + "the uniform legal-state law pi, and put ell=2k-1. Let I be the integer interval "
+                                + "Icc(1-ell,n-1), with B_a={i : a<=i.val<=a+ell-1}. Its cardinality is "
+                                + "m=n+ell-1. Each a is a separate rate-one clock, even when clipping gives "
+                                + "B_a=B_b for different starts. Write T_a=T_{B_a}, with the actual transition "
+                                + "masses already identified above, and A=-L_refresh=sum_{a in I}(Id-E_{B_a}). "
+                                + "Thus (Af)(x)=sum_{a in I}(f(x)-sum_y T_a(x,y)f(y)).")),
+                            Paragraph(Text(
+                                "The graph G here has exactly the legal names as vertices and an edge exactly "
+                                + "when d_H(x,y)=card({i : x.val(i) differs from y.val(i)})=1. The full true-bit "
+                                + "subset bijection above transports HereditaryFlip.Metric.flipGraph to G; "
+                                + "legal_delete makes that support hereditary. The frozen exists_shortest_walk, "
+                                + "connected and dist_eq suppliers consequently give a legal G-walk of length "
+                                + "d_H(x,y) for every pair x,y. This is the actual full-state Hamming distance, "
+                                + "not just a distance within one refresh fiber.")),
+                            Paragraph(Text(
+                                "Take a nonconstant real function f:S to R satisfying Af=lambda*f for a real "
+                                + "lambda. The finite maximum L=max_{G.Adj(x,y)} |f(x)-f(y)| is attained and "
+                                + "positive: connectedness supplies a path between states with different values, "
+                                + "so some edge on it has nonzero difference. Orient an attaining edge (s,t) so "
+                                + "f(s)-f(t)=L>0. For any v,w, sum the edge differences along a Hamming geodesic "
+                                + "to obtain |f(v)-f(w)|<=L*d_H(v,w). This extends the edge bound on f to every "
+                                + "pair without constructing or assuming couplings for all pairs.")),
+                            Paragraph(Text(
+                                "Let u be the unique differing coordinate of s,t. For each indexed block choose "
+                                + "one joint law Q_a on S times S with first marginal mu_{B_a}(s) and second "
+                                + "marginal mu_{B_a}(t). These are the same original refresh laws used in T_a. "
+                                + "For an exterior-near block, meaning u is outside B_a and some block site is "
+                                + "at distance less than k from u, the frozen "
+                                + "KBonacciIntervalBlockCoupling.conditional_interval_block_coupling supplies an "
+                                + "actual block-assignment joint J_a with both conditionalBlockLaw marginals and "
+                                + "expected internal blockHamming at most one. Restore each sampled assignment "
+                                + "with its own unchanged full exterior, using the supported legal-state "
+                                + "conversion above. The marginal support guarantees legality, and restriction "
+                                + "and restoration are inverse there; hence the pushforward Q_a has both "
+                                + "required full-state marginals. Off-support fallback values have zero mass.")),
+                            Paragraph(Text(
+                                "On every supported pair from this restoration, the full Hamming cost is the "
+                                + "internal blockHamming plus one: the unchanged exteriors differ exactly at u. "
+                                + "Thus c_a=E_{Q_a}[d_H] is finite and at most two for an exterior-near block. "
+                                + "If u belongs to B_a, the two full exteriors agree; completionLaw_congr makes "
+                                + "their original refresh laws equal and a diagonal joint gives c_a=0. If u is "
+                                + "outside B_a and every block site is at distance at least k from u, changing "
+                                + "only u gives an inverse pair of bijections between the two completion fibers. "
+                                + "No length-k window meets both u and B_a, so legality is preserved. Choose Q_a "
+                                + "as the joint induced by this uniform fiber transport; it has both exact "
+                                + "marginals and c_a=1. These containing, near and far choices define one "
+                                + "coupling family. The scanner_iff_literal "
+                                + "and completionLaw_apply suppliers justify this far-block identification.")),
+                            Paragraph(Text(
+                                "There are exactly ell indexed blocks containing u, whose starts are "
+                                + "u.val-ell+1,...,u.val. An exterior-near block has a site at distance less than "
+                                + "k from u. Its start lies in one of the two integer intervals "
+                                + "[u.val+1,u.val+k-1] and [u.val-ell-k+2,u.val-ell], so there are at most "
+                                + "2(k-1) such clocks. The remaining clocks are far. Applying the preceding "
+                                + "costs to this same indexed family yields sum_a(c_a-1)<=-ell+2(k-1)=-1, "
+                                + "or sum_a c_a<=m-1. Repeated clipped blocks remain counted separately "
+                                + "throughout this drift estimate.")),
+                            Paragraph(Text(
+                                "Put q_a(v,w)=Q_a(v,w).toReal. Since this is a finite probability law, "
+                                + "q_a>=0, sum_w q_a(v,w)=T_a(s,v), sum_v q_a(v,w)=T_a(t,w), and "
+                                + "c_a=sum_v sum_w q_a(v,w)d_H(v,w). The exact marginals and the geodesic "
+                                + "bound give (E_{B_a}f)(s)-(E_{B_a}f)(t) "
+                                + "=sum_v sum_w q_a(v,w)(f(v)-f(w))<=L*c_a. This is weak expectation "
+                                + "comparison under the same actual joint used for the cost and drift; it "
+                                + "needs neither an optimal transport law nor the attained finite KR equality.")),
+                            Paragraph(Text(
+                                "Subtract Af(s)=lambda*f(s) and Af(t)=lambda*f(t). Since f(s)-f(t)=L and "
+                                + "each of the m clocks contributes its own identity term, "
+                                + "(m-lambda)L=sum_a((E_{B_a}f)(s)-(E_{B_a}f)(t)) "
+                                + "<=L*sum_a c_a<=L(m-1). Positivity of L gives lambda>=1. There is no "
+                                + "division by m and no change of stationary measure: this is the original "
+                                + "rate-one indexed generator on the original legal subtype.")),
+                            Paragraph(Text(
+                                "This conclusion concerns nonconstant real eigenfunctions of that actual "
+                                + "generator. CostCoupling's generic symmetric-matrix application explains the "
+                                + "separate passage through a real orthonormal eigenbasis, centering and the "
+                                + "real/imaginary split to a complex Poincare inequality. That generic spectral "
+                                + "step is distinct from the actual-state marginal, Hamming and clock "
+                                + "identifications made here; a complete native complex actual-model assembly "
+                                + "is outside this exposition's verification claim. A native full-space parent "
+                                + "Hamiltonian or a physical realization additionally needs its own operator and "
+                                + "sector or realization bridges. At n=0 every refresh is the identity, the "
+                                + "generator and energy sums vanish, and there is no nonconstant function or "
+                                + "excited-gap assertion. This derivation applies the named frozen suppliers and "
+                                + "finite-sum reasoning, without a claim of mathematical novelty."))
+                        )),
+                    Paragraph(Text(
                         "This application gives the actual-law, conditional-projection and complex-energy "
                         + "calculation in the book's Chapter 39 example, Paper derivation: a uniform gap at fixed "
                         + "forbidden-run length. Its canonical suppliers are the original completionLaw_apply and "
                         + "completionLaw_congr, completion_nonempty, DBonacciName and its counting and positivity "
-                        + "results, and the restrictBlock and conditionalBlockLaw definitions. It is an application"
-                        + " of those laws and finite-sum identities, without a claim of mathematical novelty.")),
+                        + "results, the restrictBlock and conditionalBlockLaw definitions, legal_delete, and "
+                        + "HereditaryFlip.Metric's hereditary graph and Hamming-geodesic results. The support "
+                        + "correspondence, conditional coefficients and indexed block-to-site comparison are "
+                        + "applications of these suppliers and finite-sum estimates, without a claim of "
+                        + "mathematical novelty.")),
                     Paragraph(Text(
                         "The coupled-generator application in CostCoupling supplies the generic route from actual"
                         + " adjacent-state couplings and a summed drift bound to a uniform Poincare inequality. The"
                         + " fiber calculation here supplies the specific legal-state kernel, its projection and its"
-                        + " variance normalization. It does not supply that actual model's summed drift estimate, a"
-                        + " complete uniform heat-bath gap, or the comparison from block clocks to single-site "
-                        + "clocks. Those additional steps are needed before any uniform gap conclusion can be drawn"
-                        + " from this application. It also establishes no parent-Hamiltonian or full-sector gap and"
+                        + " variance normalization, together with the actual block-to-single-site energy comparison "
+                        + "and the legal-state graph/Hamming correspondence. The complete actual block Poincare "
+                        + "inequality and the original uniform-gap assembly remain unfinished; these comparison "
+                        + "and metric identities alone supply no complete uniform heat-bath gap. The application "
+                        + "also establishes no parent-Hamiltonian or full-sector gap and"
                         + " no physical or Rauzy realization; those require their own operator identification and "
                         + "sector comparison or realization hypotheses."))
                 )))));
