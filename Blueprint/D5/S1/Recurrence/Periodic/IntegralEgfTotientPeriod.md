@@ -4,7 +4,7 @@
 
 Integral exponential substitutions have totient periods, including OEIS A305550.
 
-The notes bala2022a305550 and bala2022egfgeneral record Bala's specific and broader conjectures. The broader sentence appears on both A305550 and A004123 and is one conjecture, settled once. Every positive modulus m has period totient(m) from n at least m. Neither the onset nor the period is asserted to be minimal.
+The note bala2022a305550 records Bala's specific and broader conjectures. The broader sentence appears on both A305550 and A004123 and is one conjecture, settled once. Every positive modulus m has period totient(m) from n at least m. Neither the onset nor the period is asserted to be minimal.
 
 All indices are natural numbers. The function g maps natural numbers to integers. The functions Q, a, egfCoefficient and the imported T are integer-valued. Here T(g,n) is the factorial-weighted Stirling transform from StirlingTransformTotientPeriod: the sum of g(k) times k! times Nat.stirlingSecond(n,k) over k at most n. The notation rat denotes the cast to the rationals, integer denotes the natural-number cast to the integers, and residue(m,z) denotes the integer cast to ZMod m. The function factorial is Nat.factorial and totient is Nat.totient.
 
@@ -104,11 +104,11 @@ $$\forall g: \mathbb{N} \to \mathbb{Z}, \forall m, n: \mathbb{N}, (0 < m) \impli
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a305550-integral-egf-substitution-totient-period","declaration_gid":"D5/S1/Recurrence/Periodic/IntegralEgfTotientPeriod.bala_conjecture_egf_general","resolution_kind":"proved"} -->
 
-*Citation.* Peter Bala (2022). *Bala's general totient-period conjecture for integral G(exp(x) - 1)*. URL: <https://oeis.org/A305550>.
+*Citation.* Peter Bala (2022). *OEIS A305550, Expansion of e.g.f. Product_{k>=1} (1 + (exp(x) - 1)^k)*. URL: <https://oeis.org/A305550>.
 
 *Commentary.*
 
-The bridge identifies egfCoefficient(g,n) with the imported T(g,n). The weighted Stirling-transform totient-period theorem gives the displayed equality for every integral g and positive m from n at least m. This settles the single broader conjecture documented in bala2022egfgeneral, including its duplicate occurrence on A004123.
+The bridge identifies egfCoefficient(g,n) with the imported T(g,n). The weighted Stirling-transform totient-period theorem gives the displayed equality for every integral g and positive m from n at least m. This settles the single broader conjecture documented in bala2022a305550, including its duplicate occurrence on A004123.
 
 **Theorem 1.9 (Bala's A305550 conjecture).**
 
