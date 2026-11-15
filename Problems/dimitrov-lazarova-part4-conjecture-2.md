@@ -65,6 +65,12 @@ explicit polynomial factorizations and field normalization. No escape witness
 or first-freeze admission is claimed. The endpoint's proposed basis is
 `open-problem-resolution`, subject to independent source and form review.
 
+The mirrored `Reg/D5/S3/Arith/Divisors/DimitrovPartIVC2.lean` supplies the
+complete source-equivalence bridge, a rejected totient family witnessing
+whole-family variation and sensitivity, and actual observational dependence.
+Its continuation is explicitly unknown; it asserts no theorem about
+inexhaustibility or undecidability.
+
 The content remains unfrozen Stage A. The Scribe states the proved mathematical
 formula without an `OpenProblemResolutionClaim`: that metadata's producer
 requires an exact current frozen declaration. Attaching
