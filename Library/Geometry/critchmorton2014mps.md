@@ -334,3 +334,67 @@ claim or a full C9 solution. Real transversality, finite chart coverage,
 polynomial clearance and actual-density genericity remain separate.
 It earns zero resolved external open problems and supplies no dynamics,
 energy, clock, normalization or physical inverse.
+
+`OpenBoundaryMPSInteriorPolynomial` constructs literal real polynomials
+$F^L_{p,q},F^R_{p,q}$ in two independent trial coordinates and sixteen actual
+coordinates, ordered as the real and imaginary parts of
+$(\lambda,\mu,a,l_0,l_1,r_0,r_1,z_0)$. The native sector and core are the
+ones above; no fixed canonical thirteen-coordinate core is substituted.
+The targets are formed at $z_0$ and held fixed as the trial $z=x+iy$ varies.
+The right target retains the outer $G(z_0)^2$ congruence after the transfer
+iterate, and the inverse trial seed retains both inverse-square factors.
+
+Put $d=|\mu-\lambda|^2$, $a_0=1+|\lambda|^2$,
+$a_1=1+|\mu|^2$, $\kappa=|1+\bar\lambda\mu|^2$,
+$\Gamma=da_0a_1\kappa$ and $t=|z|^2$. The exact evaluation identities are
+
+$$
+F^L_{p,q}(x,y;\theta)=\Gamma^{2p}t^{2p}\operatorname{Re}f(z),\qquad
+F^R_{p,q}(x,y;\theta)=\Gamma^{2q}d^4t^{2q+4}\operatorname{Im}f(z).
+$$
+
+Both factors are strictly positive for a regular sector and $z\ne0$.
+Division-free adjugate and cleared Schur recurrences establish these
+identities for all natural lengths. Paired polynomial variables, actual
+Cartesian conversion and real coefficient extraction give the literal
+polynomials; polynomiality is not an additional premise.
+
+Differentiate only the independent trial coordinates and then substitute
+$(x,y)=(\operatorname{Re}z_0,\operatorname{Im}z_0)$ to define
+
+$$
+b_{p,q}(\theta)=
+\left[\partial_xF^L_{p,q}\partial_yF^R_{p,q}
+-\partial_yF^L_{p,q}\partial_xF^R_{p,q}\right]_{z=z_0}.
+$$
+
+Polynomial induction identifies these formal partials with the ordinary
+real Frechet derivative of each fixed-target slice. At the native common
+root, $b_{p,q}(\theta)=c_L(z_0)c_R(z_0)\det_{\mathbb R}Df(z_0)$.
+The real basis is $(1,i)$ with output rows real and imaginary. The diagonal
+identity with changing targets is never differentiated. Consuming the
+native all-positive-length fixed witness above proves nonzero evaluation
+and $b_{p,q}\ne0$ for every $p,q\ge1$, without an additional transversality
+or witness assumption.
+
+For every real scalar $a$, replacing $r$ by $ar$ multiplies evaluation of
+$b_{p,q}$ by exactly $a^4$. The right target scales by $a^2$ and its cleared
+$2\times2$ determinant and derivative row scale by $a^4$; the left row and
+clearing factors are unchanged. This supplies boundary amplitude transport
+for finite spectral descent. The residual derivative has real rank two;
+spectral coefficient rank four is a different notion.
+
+These results concern the native parameter locus. Finite chart dominance,
+actual full-state and actual raw-density image genericity, and official C9
+scope acceptance remain separate obligations. The external open-problem
+count remains zero.
+
+`nonzero_locus_actual_ambiguity` connects this locus to the exact native
+annular conclusion. For regular sectors and nonzero actual target, the
+polynomial formulas divided by their nonzero factors prove ordinary real
+differentiability. Nonzero evaluation of $b_{p,q}$ makes that derivative
+invertible. The endpoint signs supply enclosing radii, and the native
+annular root realization supplies an actual nonzero finite MPS with equal
+entire raw interior $Q_2$ and no unit-phase relation to the target. Positive
+definiteness of both actual target environments remains an explicit
+hypothesis. This is a parameter-locus theorem, not actual-image genericity.
