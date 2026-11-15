@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality
 license: citation-only
@@ -99,3 +100,104 @@ This parameter-open result does not establish a dense intrinsic real-algebraic o
 `OpenBoundaryMPSQ2PolynomialFiber.exists_generic_fiber` strengthens this parameter-domain result to fibers through every certified parameter. Its new coordinates are five complex core entries c, a positive real sigma and a complex eta, with old representative (c,sqrt(sigma),sqrt(sigma)*eta). The actual raw Q2 record is a literal Fin 13 to Fin 12 real polynomial: lift the canonical matrices and left row, start the two by two transfer at sigma times [[1,conjugate eta],[eta,eta times conjugate eta]], and extract the existing twelve real record components. For each k, O={sigma positive, representative in canonicalChart k} is open and nonempty; one nonzero real polynomial D gives a nonempty open locus O intersect {D nonzero}, dense relative to O. Through each point of this locus and in every specified open neighborhood contained in O, there is a positive-dimensional real C1 same-Q2 fiber with a continuous linear left inverse and the exact dimension equation. Every nonzero fiber parameter gives an actual length 3+k state not unit-phase equivalent to the original state. Q2 has complement 1+k, and the coherent Q3 complement is k. The conclusion is genericity in the canonical parameter domain only; intrinsic density in the actual MPS image still needs a separate observable rational inverse and denominator descent. This supplies no additional solved-open-problem credit and no arbitrary interior-window, normalized-state, dynamics or thermodynamic assertion.
 
 The fiber theorem's C1 supplier credits BochaoKong's Apache-2.0 LeanPool constant-rank argument at commit `2b1ec889365345f19a45fa94b6457a4d92c96295`; the canonical inverse and phase argument retain Ma and Zhang's CC BY 4.0 attribution. These reused arguments are not claimed as new CommonCore or C9 mathematics.
+
+
+`OpenBoundaryMPSInteriorRootRealization` gives a conditional root-to-actual
+ambiguity theorem for every $p,q\ge1$, with $N=(p+2)+q$. Fix a regular complex
+sector $(\lambda,\mu,a)$ and write
+$\delta=\mu-\lambda$, $\alpha=\lambda-a$, $\beta=\mu-a$,
+$c=-\alpha\beta$. Regularity is
+$\delta\alpha\beta\ne0$ and
+$|1+\overline\lambda\mu|^2>0$. Put
+
+$$
+B=\operatorname{diag}(\lambda,\mu),\quad
+G(z)=\begin{pmatrix}1&z\\\alpha&\beta z\end{pmatrix},\quad
+C=\begin{pmatrix}a&1\\c&\lambda+\mu-a\end{pmatrix},\quad
+A(z)=(G(z),BG(z)).
+$$
+
+Then $CG=GB$ and $A_iA_j=K_{ij}G^2$, with
+$(K_{00},K_{01},K_{10},K_{11})=(I,C,B,BC)$. For arbitrary original finite
+boundaries $l,r$ and nonzero $z_0$, the fixed actual environments are
+
+$$
+P=(E_{z_0}^*)^p(l^\dagger l),\qquad
+H=G(z_0)^2 E_{z_0}^q(rr^\dagger)(G(z_0)^2)^\dagger.
+$$
+
+Assume both are positive definite. Reusing the original CommonCore observation
+and Gram dictionary, with prefix rows $L_u=lA_u$ and right columns
+$S_v=G^2 A_vr$, gives $P=L^\dagger L$, $H=SS^\dagger$ and the entire raw
+interior identity
+
+$$
+Q_2(w,w')=\operatorname{tr}(P K_w H K_{w'}^\dagger).
+$$
+
+The observation is still the actual sum over both exterior words, using
+`append(append(left,block),right)`. It retains all sixteen complex entries and
+the squared-norm scale. No prefix rank-at-most-two record replaces it.
+
+For the diagonal maps $D_B(X)=X+BXB^\dagger$ and
+$D_{B^*}(X)=X+B^\dagger XB$, the algebraic inverses have the exact orders
+
+$$
+(E_z^*)^{-1}(P)=D_{B^*}^{-1}(G(z)^{-\dagger}P G(z)^{-1}),\qquad
+E_z^{-1}(H)=G(z)^{-1}D_B^{-1}(H)G(z)^{-\dagger}.
+$$
+
+The maps $D_B^{-1}$ and $D_{B^*}^{-1}$ divide each entry by the corresponding
+nonzero diagonal Schur factor. They are not claimed positive. Define the trial
+boundary matrices with fixed $P,H$ by
+
+$$
+X_p(z)=((E_z^*)^{-1})^p(P),\qquad
+Y_q(z)=(E_z^{-1})^q\bigl((G(z)^2)^{-1}H((G(z)^2)^{-1})^\dagger\bigr).
+$$
+
+`distinct_residual_root_actual_ambiguity` proves that every nonzero
+$z\ne z_0$ with $\det X_p(z)=\det Y_q(z)=0$ yields actual finite boundaries
+$l',r'$ for $A(z)$ and hence an actual nonzero competitor $\phi$ with identical
+**entire** raw interior $Q_2$, while no unit complex scalar relates the two
+full states. Hermitian preservation and both inverse-composition identities
+are proved. The existing rank-one factor supplier and Hermitian symmetry
+express each trial matrix as a real multiple of an outer Gram. Forward CP
+positivity and the positive definite target exclude a nonpositive multiplier;
+its positive square root supplies actual boundaries. This does not assume
+abstract root realizability or a positive inverse.
+
+The phase proof uses the span of $I,C,B,BC$ and explicit inverses supplied by
+the positive target Grams. A hypothetical full-state phase equality gives
+$UMV=\eta M$ for every $M\in M_2(\mathbb C)$; the scalar-center theorem forces
+$U=hI$ with $h\ne0$, hence proportional actual prefix rows. The two columns
+on prefix words $0^{p-1}j$ have coefficient matrices
+$R_\alpha=\left(\begin{smallmatrix}1&\alpha\\\lambda&\mu\alpha\end{smallmatrix}\right)$
+and
+$R_\beta=\left(\begin{smallmatrix}1&\beta\\\lambda&\mu\beta\end{smallmatrix}\right)$,
+whose determinants are $\alpha\delta$ and $\beta\delta$. They force $z=z_0$.
+No old canonical-chart condition or extra regularity on $l',r'$ is used.
+
+`annular_regular_root_actual_ambiguity` uses the explicit real map
+$f(z)=\operatorname{Re}\det X_p(z)+i\operatorname{Re}\det Y_q(z)$.
+It proves continuity on every closed annulus excluding zero and proves
+$f(z_0)=0$ from the inverse identities. Under explicit radii
+$0<\epsilon<|z_0|<R$, strict negativity of $\operatorname{Re}f$ on both
+boundary circles, and an ordinary invertible **real** Frechet derivative at
+$z_0$, `AnnularSecondZero.annular_second_zero` supplies a nonzero distinct
+common root and the deterministic theorem supplies the actual competitor.
+No holomorphicity, strict derivative, regularity or finiteness of other zeros,
+or nonzero boundary winding is assumed.
+
+This is conditional ambiguity, not genericity or a solution of C9, and it
+adds **zero** solved-open-problem credit. General endpoint operator limits and
+signs, universal all-length transversality, finite canonical-chart coverage and
+dominance, and genericity on the actual state and actual raw-density images
+remain separate obligations. The C8 attribution to Ma and Zhang, CC BY 4.0,
+is unchanged. The topology supplier reuses
+`TauCeti.not_contractibleSpace_sphere` at revision
+`5a01f5fe3621126cccf9ba22e700493cbc7b7156`, with the Apache-2.0 license retained
+at `docs/reports/licenses/tauceti-sphere-port-LICENSE.txt` and source-port
+attribution in the owning topology note. This static finite-state theorem
+adds no normalization, physical positive inverse, stability, clock, dynamics,
+energy or thermodynamic cost.
