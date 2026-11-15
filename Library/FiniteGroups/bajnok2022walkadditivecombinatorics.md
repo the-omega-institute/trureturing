@@ -40,3 +40,9 @@ H. A. Just, *On Perfect Bases in Finite Abelian Groups*, Involve 15 (2022),
 Here every group element must have a unique representing subset of size at
 most $s$, including the empty subset. The formal construction uses the
 existing literal `IsPerfectRestrictedBasis` predicate.
+
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.2211.01893.
+The checked version is https://arxiv.org/abs/2211.01893v1,
+Section 3, Conjecture 22, PDF page 10; its statement is quoted above.
