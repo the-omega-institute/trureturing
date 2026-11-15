@@ -60,17 +60,9 @@ primitiveness and coefficientwise reduction use Mathlib directly.
 -/
 
 import Mathlib.RingTheory.Polynomial.Content
-import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.Order.Interval.Finset.Nat
-
-
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Nat.Prime.Int
 import Mathlib.Data.Nat.Nth
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Positivity
 
 namespace D5.S3.Arith.Congruence.KurkovA248667CompositeFactorization
 
