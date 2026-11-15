@@ -18,6 +18,10 @@ triage: anchor
 
 # Classical measurable entropy supplier
 
+## Verified locator
+
+Source: https://github.com/marcmorningstar/lean4-ergodic-theory/tree/040fec2e0ddf4fcba49af9f76c866d295308dd7f
+
 The immutable source revision is `040fec2e0ddf4fcba49af9f76c866d295308dd7f`.
 Copyright (c) 2026 Marcel Morgenstern. The supplier has no NOTICE file.
 The complete Apache license is reproduced below.

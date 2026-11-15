@@ -16,6 +16,10 @@ triage: anchor
 
 # The all-law transport question
 
+## Verified locator
+
+Source: https://arxiv.org/html/2611.13904v1#S8
+
 Source: arXiv 2611.13904, version 1, section 8; source file
 `rucha4-11-26.tex`, lines 1327–1330. The interpretation fixes the displayed
 classical target and replaces entropy by unrestricted non-invariant entropy
