@@ -143,7 +143,7 @@ def registration : Contract.Registration.{
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.DependencyTopology.LegalLedgerFixedSet
     definition := none
-    coordinates := #[5]
+    coordinates := #[0, 1, 2, 3, 4]
     readouts := #[{
       path := #["body","body","body","body","body","body","body","domain","fn","arg"]
       stateBinder := 5

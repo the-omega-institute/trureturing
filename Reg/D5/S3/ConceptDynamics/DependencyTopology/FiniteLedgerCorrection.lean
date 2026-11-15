@@ -190,7 +190,7 @@ def registration : Contract.Registration.{
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.DependencyTopology.FiniteLedgerCorrection
     definition := none
-    coordinates := #[7]
+    coordinates := #[0, 1, 2, 3, 4, 5, 6]
     readouts := #[{
       path := #["body","body","body","body","body","body","body","body","body",
         "arg","arg","arg","arg","arg","arg","arg","fn","arg","body","body","fn","arg"]
