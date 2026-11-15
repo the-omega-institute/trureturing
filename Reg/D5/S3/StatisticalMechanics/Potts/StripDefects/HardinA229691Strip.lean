@@ -1,3 +1,4 @@
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229583StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229691Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229691StripData
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -10,6 +11,7 @@ open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229691Strip
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229691StripData
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229583StripData (Row Boundary horizontal antidiagonal boundary cross)
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section

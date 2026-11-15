@@ -109,7 +109,7 @@ theorem finite_certificate :
   · exact HardinA229691StripClasses12.transition_counts s ⟨by omega, h12⟩ p d h
   exact HardinA229691StripClasses13.transition_counts s ⟨by omega, s.isLt⟩ p d h
 
-attribute [local irreducible] a
+attribute [local irreducible] a T initial terminal W cl
 
 /-- The registered recurrence at every index at least 8. -/
 theorem result (n : ℕ) :
@@ -118,7 +118,11 @@ theorem result (n : ℕ) :
       (literalCount (q := 3) horizontal antidiagonal 2 (m + 1) : ℤ) =
         dotProduct initial ((T ^ m).mulVec terminal) := by
     apply lumped_count horizontal antidiagonal boundary cross Valid cl T initial terminal 2
-      (by decide +kernel)
+      (by
+        intro r t
+        unfold cross boundary bondDefects antidiagonal
+        rw [Finset.filter_image, Finset.filter_image]
+        simp only [Fin.cons_succ, Fin.tail])
     · intro p d h
       exact finite_certificate.1 p ⟨d, by have hd : d ≤ 2 := h.1; omega⟩ h
     · intro p d h r hr
