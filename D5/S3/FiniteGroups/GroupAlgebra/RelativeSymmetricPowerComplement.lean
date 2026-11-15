@@ -2,8 +2,7 @@
    generality: E
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/RelativeSymmetricPowerComplement
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.PiTensorProduct.Basic,
-     mathlib/module/Mathlib.LinearAlgebra.TensorPower.Symmetric]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.TensorPower.Symmetric]
    utility: none
    digest: The symmetric-power coefficient summand carries the relative stable class. -/
 
