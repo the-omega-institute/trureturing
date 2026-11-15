@@ -4,6 +4,8 @@
 
 Addressed quantum circuit: Core Base UnitaryCircuit Physical
 
+For every injective physical map from Nat to Nat, the relabel constructions for QuantumLayout.Embedding, GateModel.Application, OracleModel.Application, UnitaryLeaf, UnitarySequence and UnitaryCircuit use that same map. Embeddings keep their logical position maps. Applications keep the actual native token or oracle query. The sequence recursion preserves identity, leaf, sequential, embedded and disjoint parallel constructors, and the circuit construction wraps that relocated sequence. The matrix and event-trace lemmas below compare those literal constructions.
+
 **Lemma 1.1 (liftOperator relabel).**
 
 Lean statement: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Physical.liftOperator_relabel`

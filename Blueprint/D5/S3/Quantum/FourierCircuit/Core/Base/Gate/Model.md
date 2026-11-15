@@ -4,6 +4,8 @@
 
 Addressed quantum circuit: Core Base Gate Model
 
+For every GateModel model and Occurrence gate, QuantumAlg.GateModel.Occurrence.coordinate gate is model.coordinate gate.token. Its operator reindexes model.operator gate.token along the certified placement index equivalence; the occurrence does not supply an independently chosen matrix.
+
 **Definition 1.1 (GateModel).**
 
 Lean statement: `D5/S3/Quantum/FourierCircuit/Core/Base/Gate/Model.GateModel`

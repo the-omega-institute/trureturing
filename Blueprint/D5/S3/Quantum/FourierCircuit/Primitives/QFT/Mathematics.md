@@ -4,6 +4,8 @@
 
 Addressed quantum circuit: Primitives QFT Mathematics
 
+For every natural n, the source constant QuantumAlg.ω n is exp((2 pi / 2^n) i). Its positive sign fixes the forward-transform convention, and n equal to zero is included.
+
 **Lemma 1.1 (omega pow eq one).**
 
 Lean statement: `D5/S3/Quantum/FourierCircuit/Primitives/QFT/Mathematics.omega_pow_eq_one`
@@ -14,7 +16,7 @@ Lean statement: `D5/S3/Quantum/FourierCircuit/Primitives/QFT/Mathematics.omega_p
 
 *Commentary.*
 
-ω_n ^ (2^n) = 1: the root has exact period 2^n.
+For every natural n, ω_n ^ (2^n) = 1. This states that 2^n is a period.
 
 **Definition 1.2 (invSqrtN).**
 

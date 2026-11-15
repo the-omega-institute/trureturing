@@ -4,6 +4,8 @@
 
 Addressed quantum circuit: Core Base Oracle Model
 
+For every OracleModel model, Occurrence query and Interpretation environment, QuantumAlg.OracleModel.Occurrence.coordinate query is model.coordinate query.query. Its operator reindexes environment.operator query.query along the certified placement index equivalence.
+
 **Definition 1.1 (OracleModel).**
 
 Lean statement: `D5/S3/Quantum/FourierCircuit/Core/Base/Oracle/Model.OracleModel`
