@@ -67,7 +67,9 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   obtain ⟨_, _, _, Γ, _, _, _, _, hf, _, _⟩ := hall.2.2.2.2 F
   exact hf
 
-def family : Registration arena.{u} (type_of% (@compact_normal_posterior_family.{u})) where
+def sourceProposition : Prop := type_of% (@compact_normal_posterior_family.{u})
+
+def family : Registration arena.{u} sourceProposition.{u} where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
@@ -85,8 +87,6 @@ def family : Registration arena.{u} (type_of% (@compact_normal_posterior_family.
     intro h
     have hf : (1 : ℝ) ≤ 0 := Eq.mp (congrFun h 0) le_rfl
     norm_num at hf
-
-def sourceProposition : Prop := type_of% (@compact_normal_posterior_family.{u})
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (P := sourceProposition.{u})

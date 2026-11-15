@@ -70,8 +70,9 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
       (by simpa only [add_zero] using hn) hc
   exact hf
 
-def family : Registration arena.{u,v}
-    (type_of% (@original_reverse_test_extended_attainment.{u,v})) where
+def sourceProposition : Prop := type_of% (@original_reverse_test_extended_attainment.{u,v})
+
+def family : Registration arena.{u,v} sourceProposition.{u,v} where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
@@ -89,8 +90,6 @@ def family : Registration arena.{u,v}
     intro h
     have hf : (1 : ℝ) ≤ 0 := Eq.mp (congrFun h 0) le_rfl
     norm_num at hf
-
-def sourceProposition : Prop := type_of% (@original_reverse_test_extended_attainment.{u,v})
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (P := sourceProposition.{u,v})
