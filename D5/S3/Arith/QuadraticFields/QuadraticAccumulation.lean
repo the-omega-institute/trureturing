@@ -465,7 +465,6 @@ theorem signed_norm_values_accumulate (D : ℤ) (hD : 2 ≤ D) (hs : Squarefree 
     exact (Algebra.norm_eq_of_algEquiv e t).symm
   simpa only [hn] using coordinate_signed_norm_values_accumulate D hD hs A B hB t htL ht0
 
-
 private theorem large_denominator_near (a x : ℝ)
     (hx : x ∈ derivedSet (approximationValues a)) (n : ℕ) (ε : ℝ) (hε : 0 < ε) :
     ∃ q p : ℤ, q ≠ 0 ∧ (n : ℝ) < |(q : ℝ)| ∧
@@ -477,7 +476,8 @@ private theorem large_denominator_near (a x : ℝ)
   have hT : T.Finite := (Set.finite_Icc _ _ |>.prod (Set.finite_Icc _ _)).image _
   have hU : Metric.ball x (min ε 1) ∩ (T \ {x})ᶜ ∈ 𝓝 x :=
     inter_mem (Metric.ball_mem_nhds x (lt_min hε zero_lt_one))
-      ((show (T \ {x}).Finite from hT.subset Set.sdiff_subset).isClosed.isOpen_compl.mem_nhds (by simp))
+      ((show (T \ {x}).Finite from hT.subset Set.sdiff_subset).isClosed.isOpen_compl.mem_nhds
+        (by simp))
   obtain ⟨y, ⟨hyU, q, p, hq, rfl⟩, hyx⟩ := accPt_iff_nhds.mp hx _ hU
   have hy : abs (|(q : ℝ)| * ((q : ℝ) * a - p) - x) < min ε 1 := by
     simpa only [Metric.mem_ball, Real.dist_eq] using hyU.1
@@ -505,7 +505,6 @@ private theorem large_denominator_near (a x : ℝ)
     have : |p| ≤ M := by exact_mod_cast hpbound
     exact abs_le.mp this
   exact hyU.2 ⟨⟨(q,p), ⟨hqi,hpi⟩, rfl⟩, hyx⟩
-
 
 private def dualVector (D : ℤ) (A B : ℚ) (q p : ℤ) : K D :=
   ⟨(q : ℚ) / 2, ((p : ℚ) - A * q) / (2 * D * B)⟩
@@ -540,7 +539,7 @@ private theorem norm_grid (D : ℤ) (hD : D ≠ 0) (A B : ℚ) (hB : B ≠ 0) :
   rw [ha, hb, hc]
   have hD' : (D : ℚ) ≠ 0 := by exact_mod_cast hD
   field_simp
-  <;> ring
+  ring
 
 private theorem norm_error (D : ℤ) (hD : 0 < D) (A B : ℚ) (hB : B ≠ 0)
     (q p : ℤ) :
@@ -556,9 +555,8 @@ private theorem norm_error (D : ℤ) (hD : 0 < D) (A B : ℚ) (hB : B ≠ 0)
   push_cast
   field_simp
   ring_nf
-  <;> simp [Real.sq_sqrt (show (0 : ℝ) ≤ D by exact_mod_cast hD.le)]
-  <;> ring
-
+  simp [Real.sq_sqrt (show (0 : ℝ) ≤ D by exact_mod_cast hD.le)]
+  ring
 
 /-- The complete accumulation set is the signed norm spectrum of the actual trace dual. -/
 theorem derivedSet_eq_signed_norm_values (D : ℤ) (hD : 2 ≤ D) (hs : Squarefree D)
@@ -673,7 +671,7 @@ theorem derivedSet_eq_signed_norm_values (D : ℤ) (hD : 2 ≤ D) (hs : Squarefr
             subst v
             have h := htL (alpha D A B) (Submodule.subset_span (by simp))
             change Algebra.trace ℚ (K D) (t * alpha D A B) ∈ (1 : Submodule ℤ ℚ) at h
-            rwa [← hEα, ← map_mul, Algebra.trace_eq_of_algEquiv E] 
+            rwa [← hEα, ← map_mul, Algebra.trace_eq_of_algEquiv E]
       | zero => simp
       | add v w _ _ hv hw => simpa [mul_add] using add_mem hv hw
       | smul z v _ hv =>
@@ -702,5 +700,7 @@ theorem derivedSet_eq_signed_norm_values (D : ℤ) (hD : 2 ≤ D) (hs : Squarefr
         (by simp [hx])).2
     · exact (signed_norm_values_accumulate D hD hs A B hB s hsL hs0 x
         (by simp [hx])).2
+
+
 
 end D5.S3.Arith.QuadraticFields.QuadraticAccumulation
