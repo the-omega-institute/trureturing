@@ -94,7 +94,7 @@ def properEquiv (k n : ℕ) :
   Equiv.subtypeEquiv (alternatingEquiv k n) (alternating_legal k n)
 
 private def twist (e : Equiv.Perm (Fin 3)) : Equiv.Perm (Fin 3) :=
-  (Fin.revPerm (n := 3)).trans (e.trans (Fin.revPerm (n := 3)))
+  (Fin.revPerm (n := 3)).permCongr e
 private theorem bond_relabel : ∀ (e : Equiv.Perm (Fin 3)) (x y : Fin 3),
     (e x).val + (twist e y).val ≠ 2 ↔ x.val + y.val ≠ 2 := by decide +kernel
 private theorem compatible_relabel {k : ℕ} (e : Equiv.Perm (Fin 3)) (r s : Row k) :
@@ -115,11 +115,9 @@ private theorem successor_sum {k q : ℕ} (cls : Row k → Fin q) (r : Row k) (s
     cls (decode k c) = s then (1 : ℤ) else 0) = _
   rw [← List.sum_ofFn, List.ofFn_eq_map]
   unfold successorClasses
-  generalize List.finRange (3 ^ k) = l
-  induction l with
-  | nil => rfl
-  | cons c cs ih =>
-    by_cases h : columnCompatible r (decode k c) <;> simp [h, ih]
+  simp only [List.map_map, Function.comp_def, ite_and]
+  rw [List.sum_map_ite]
+  simp
 
 theorem quotient_rows (k q : ℕ) (cls : Row k → Fin q) (rep : Fin q → Row k)
     (Q : Matrix (Fin q) (Fin q) ℤ)

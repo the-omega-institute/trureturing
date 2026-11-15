@@ -120,13 +120,13 @@ private theorem mulVec_successors (v : Fin 122 → ℤ) (i : Fin 122) :
     rw [← representative_rows i s, successor_table]
   change (∑ s : Fin 122, quotient i s * v s) = _
   simp_rw [hq]
-  generalize successors i = l
-  induction l with
-  | nil => simp
-  | cons a l ih =>
-    simp only [List.map_cons, List.sum_cons, add_mul, Finset.sum_add_distrib]
-    rw [ih]
-    simp [ite_mul]
+  simp_rw [← List.sum_map_mul_right]
+  rw [← show (((successors i : List (Fin 122)) : Multiset (Fin 122)).map
+      (fun j => ∑ s : Fin 122, (if j = s then (1 : ℤ) else 0) * v s)).sum =
+      ∑ s : Fin 122, (((successors i : List (Fin 122)) : Multiset (Fin 122)).map
+        (fun j => (if j = s then (1 : ℤ) else 0) * v s)).sum from
+    Multiset.sum_map_sum]
+  simp [ite_mul]
 
 theorem quotient_certificate :
     (∀ r : Row 6, ∀ s : Fin 122,
