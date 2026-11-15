@@ -106,6 +106,10 @@ $$\neg (\forall (L : \mathbb{N}), (\forall (m : \mathbb{N} \to \mathbb{N}), ((1 
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/DeepLinearIntrinsicDimensionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/araya-kutyniok-li-maly-singh-intrinsic-dimension` (refuted) by `D5/S3/QuadraticForms/DeepLinearIntrinsicDimensionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"araya-kutyniok-li-maly-singh-intrinsic-dimension","declaration_gid":"D5/S3/QuadraticForms/DeepLinearIntrinsicDimensionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ernesto Araya, Gitta Kutyniok, Weilin Li, Johannes Maly and Manjot Singh (2026). *Formalizing the Intrinsic Dimension of Objective Landscapes by a Generalized Notion of Co-dimension*. DOI: [10.48550/arXiv.2610.39674](https://doi.org/10.48550/arXiv.2610.39674). URL: <https://arxiv.org/abs/2610.39674v1>.

@@ -123,6 +123,9 @@ internal sealed class DeepLinearIntrinsicDimensionRefutationDocument : IScribeDo
                     H("Negation of the complete exact-value prediction"),
                     StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                     AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
-                        "Take L = 1, every width equal to one, and target u = 1. The fiber is the hyperbola wa = 1. A sampled point with wa < 1 misses it. For a sampled line g + tv, its intersection equation has coefficients A = v₁v₂, B = g₁v₂ + v₁g₂, and C = g₁g₂ − 1. The open region A < 0 with negative discriminant contains v = (1, −1), g = 0, so Gaussian full support gives it positive measure. The quadratic equation has no real root there. Hence neither dimension zero nor dimension one has intersection probability one. The infimum is at least two, contradicting the asserted value one. This argument proves a global affine-intersection obstruction; it does not evaluate general widths or depths."))), DescribeRole.Theorem))));
+                        "Take L = 1, every width equal to one, and target u = 1. The fiber is the hyperbola wa = 1. A sampled point with wa < 1 misses it. For a sampled line g + tv, its intersection equation has coefficients A = v₁v₂, B = g₁v₂ + v₁g₂, and C = g₁g₂ − 1. The open region A < 0 with negative discriminant contains v = (1, −1), g = 0, so Gaussian full support gives it positive measure. The quadratic equation has no real root there. Hence neither dimension zero nor dimension one has intersection probability one. The infimum is at least two, contradicting the asserted value one. This argument proves a global affine-intersection obstruction; it does not evaluate general widths or depths."))), DescribeRole.Theorem,
+                    openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("araya-kutyniok-li-maly-singh-intrinsic-dimension"),
+                        ResolutionKind.Refuted)))));
     }
 }
