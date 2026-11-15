@@ -258,6 +258,7 @@ theorem result (n : ℕ) :
       dotProduct (W ⟨6 + i.val, by omega⟩) terminal =
         ∑ j : Fin 6, (![-6561, 14580, -12150, 4662, -805, 50] j : ℤ) *
           dotProduct (W ⟨0 + i.val + j.val, by omega⟩) terminal := by
+    revert i
     decide +kernel
   cases n with
   | zero =>
