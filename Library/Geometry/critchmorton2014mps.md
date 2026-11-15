@@ -12,6 +12,7 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorEndpointSigns
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality
@@ -205,8 +206,8 @@ No holomorphicity, strict derivative, regularity or finiteness of other zeros,
 or nonzero boundary winding is assumed.
 
 This is conditional ambiguity, not genericity or a solution of C9, and it
-adds **zero** solved-open-problem credit. General endpoint operator limits and
-signs, transversality beyond the fixed witness below, finite canonical-chart coverage and
+adds **zero** solved-open-problem credit. The endpoint signs and fixed-witness
+transversality are supplied below. Transversality beyond that witness, finite canonical-chart coverage and
 dominance, and genericity on the actual state and actual raw-density images
 remain separate obligations. The C8 attribution to Ma and Zhang, CC BY 4.0,
 is unchanged. The topology supplier reuses
@@ -280,3 +281,56 @@ operator limits, polynomial clearance, genericity, or full C9, and adds
 zero solved-open-problem credit. Source attribution for the original MPS
 problem and reused C8 mathematics is unchanged. There is no normalized-state,
 positive physical inverse, clock, dynamics, energy or thermodynamic claim.
+
+
+`OpenBoundaryMPSInteriorEndpointSigns` supplies the general regular-sector annular
+boundary-sign premise, using exactly the existing native `inverseDualTransfer`,
+`trialLeft` and `residual`. For a regular sector put
+$d=|\mu-\lambda|^2$, $a_0=1+|\lambda|^2$, $a_1=1+|\mu|^2$,
+$c=|1+\overline\lambda\mu|^2$, $T=D_{B^*}^{-1}$,
+$u=(\beta,-1)$ and $v=(-\alpha,1)$. Let
+$M_\infty=T(u^\dagger u)$ and $M_0=T(v^\dagger v)$. In the actual
+complex continuous-linear operator norm on $M_2(\mathbb C)\to M_2(\mathbb C)$,
+with the elementwise supremum norm on the matrices, the Lean proof establishes
+
+$$
+|z|^2(E_z^*)^{-1}\longrightarrow[X\mapsto X_{11}M_0/d]
+\quad(z\to0,\ z\ne0),\qquad
+(E_z^*)^{-1}\longrightarrow[X\mapsto X_{00}M_\infty/d]
+\quad(z\to\infty).
+$$
+
+The second filter is the cobounded filter on the entire complex plane. The
+proof constructs exact continuous extensions: with $U$ having rows
+$(\beta,-1),(0,0)$ and $V$ having rows $(0,0),(-\alpha,1)$,
+$G(z)^{-1}=\delta^{-1}(U+z^{-1}V)$ for $z\ne0$. At infinity use
+$d^{-1}T((U+wV)^\dagger X(U+wV))$ at $w=z^{-1}\to0$. At zero use
+$d^{-1}T(|z|^2U^\dagger XU+\bar z U^\dagger XV+zV^\dagger XU+V^\dagger XV)$.
+Finite-dimensional `continuous_clm_apply` promotes application continuity to
+operator-norm continuity; scalar casts are complex and the native inverse
+order is retained. Powers of these same operators converge before applying
+them to the fixed target. Thus for every fixed $p\ge1$ and every Bond $P$,
+
+$$
+|z|^{2p}X_p(z)\longrightarrow P_{11}d^{-p}a_1^{-(p-1)}M_0,\qquad
+X_p(z)\longrightarrow P_{00}d^{-p}(|\beta|^2/a_0)^{p-1}M_\infty.
+$$
+
+The exact determinants are real:
+$\det M_0=|\alpha|^2(1/(a_0a_1)-1/c)$ and
+$\det M_\infty=|\beta|^2(1/(a_0a_1)-1/c)$. Since
+$c=a_0a_1-d>0$ and regularity makes $d,|\alpha|^2,|\beta|^2$ positive,
+both determinants are strictly negative. If $P$ is positive definite,
+$P_{00},P_{11}$ are real and positive, so the two determinant limits are
+strictly negative. The positive factor $|z|^{4p}$ removes the zero-endpoint
+scale. At infinity the determinant tends to a negative constant.
+
+`annular_residual_negative` constructs for every nonzero $z_0$ radii
+$0<\epsilon<|z_0|<R$ for which $\operatorname{Re}f(z)<0$ on both whole
+circles, simultaneously for every $q$ and $H$. Uniform filter convergence,
+rather than a raywise assertion, supplies the circle-wide signs. This is a
+new endpoint proof within the Critch--Morton C9 program, not a literature
+claim or a full C9 solution. Real transversality, finite chart coverage,
+polynomial clearance and actual-density genericity remain separate.
+It earns zero resolved external open problems and supplies no dynamics,
+energy, clock, normalization or physical inverse.
