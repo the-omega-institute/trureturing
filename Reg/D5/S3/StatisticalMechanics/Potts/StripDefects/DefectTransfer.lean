@@ -48,7 +48,7 @@ def family : Registration arena (type_of% @relabel_defects) where
     decide +kernel
 
 
-def audit : Contract.Registration.{_, _, _, _, _, _, _, _, _, _, _, _}
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@relabel_defects) (Realization signature) Type Unit where
   unitName := `Reg.ADefectTransfer.Relabel.auditUnit
   realizationName := ``family
@@ -120,7 +120,7 @@ def family : Registration arena (type_of% @constant_defects) where
     decide +kernel
 
 
-def audit : Contract.Registration.{_, _, _, _, _, _, _, _, _, _, _, _}
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@constant_defects) (Realization signature) Type Unit where
   unitName := `Reg.ADefectTransfer.Constant.auditUnit
   realizationName := ``family
@@ -287,8 +287,8 @@ def family : Registration arena (type_of% @lumped_count.{u,v}) where
     change (literalCount (q := 2) ∅ ∅ 0 1 : ℤ) ≠ literalCount (q := 2) ∅ ∅ 0 2
     decide +kernel
 
-def audit : Contract.Registration.{_, _, _, _, _, _, _, _, _, _, _, _}
-    (@lumped_count) (Realization signature) Type Unit where
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@lumped_count.{u,v}) (Realization signature.{u,v}) Type Unit where
   unitName := `Reg.ADefectTransfer.Lumped.auditUnit
   realizationName := ``family
   realizationSource := none
@@ -414,8 +414,8 @@ def family : Registration arena (type_of% @forward_shift.{u}) where
     change (∑ _ : ULift.{u} (Fin 1), (1 : ℤ)) ≠ ∑ _ : ULift.{u} (Fin 1), (2 : ℤ)
     norm_num
 
-def audit : Contract.Registration.{_, _, _, _, _, _, _, _, _, _, _, _}
-    (@forward_shift) (Realization signature) Type Unit where
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@forward_shift.{u}) (Realization signature.{u}) Type Unit where
   unitName := `Reg.ADefectTransfer.Shift.auditUnit
   realizationName := ``family
   realizationSource := none
@@ -515,8 +515,8 @@ def family : Registration arena (type_of% @forward_eq.{u}) where
     change (1 : ℤ) = ∑ _ : ULift (Fin 1), (1 : ℤ) * 2 at hh
     norm_num at hh
 
-def audit : Contract.Registration.{_, _, _, _, _, _, _, _, _, _, _, _}
-    (@forward_eq) (Realization signature) Type Unit where
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@forward_eq.{u}) (Realization signature.{u}) Type Unit where
   unitName := `Reg.ADefectTransfer.ForwardEq.auditUnit
   realizationName := ``family
   realizationSource := none
