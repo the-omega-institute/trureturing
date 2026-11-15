@@ -41,7 +41,7 @@ variable (K : Type uK) [Field K]
 -- These are UNSIGNED Hasse coefficients: the actual contragredient action
 -- at parameter -a has expansion sum a^k A_k. This removes sign scalars from
 -- the generators, without changing or postulating any representation.
-private def coefficient (d k : ℕ) : Module.End K (DualPower K d) :=
+def coefficient (d k : ℕ) : Module.End K (DualPower K d) :=
   Matrix.toLin (dualBasis K d) (dualBasis K d)
     (Matrix.of fun j i =>
       if j.val = i.val + k then (j.val.choose i.val : K) else 0)
@@ -59,7 +59,7 @@ private theorem coefficient_basis_value (d k : ℕ) (i j : Fin d) :
   simpa only [dualBasis, Module.Basis.dualBasis_repr]
     using coefficient_matrix K d k i j
 
-private theorem action_expansion (r d : ℕ) (hrd : r ≤ d) (a : K) :
+theorem action_expansion (r d : ℕ) (hrd : r ≤ d) (a : K) :
     dualAction K r (Multiplicative.ofAdd (-a)) =
       ∑ k : Fin d, a ^ k.val • coefficient K r k.val := by
   classical
@@ -116,13 +116,13 @@ private theorem coefficient_basis_of_ge (d k : ℕ) (i : Fin d)
   rw [coefficient_basis_value, LinearMap.zero_apply]
   rw [if_neg (by have := j.isLt; omega)]
 
-private theorem coefficient_cyclic (N : ℕ) (i : Fin (N + 1)) :
+theorem coefficient_cyclic (N : ℕ) (i : Fin (N + 1)) :
     coefficient K (N + 1) i.val (dualBasis K (N + 1) 0) =
       dualBasis K (N + 1) i := by
   rw [coefficient_basis_of_lt K (N + 1) i.val 0 (by simpa using i.isLt)]
   simp
 
-private theorem coefficient_eval (d k : ℕ) (v : DualPower K d) (j : Fin d) :
+theorem coefficient_eval (d k : ℕ) (v : DualPower K d) (j : Fin d) :
     coefficient K d k v (Polynomial.degreeLT.basis K d j) =
       ∑ i : Fin d, (dualBasis K d).repr v i *
         (if j.val = i.val + k then (j.val.choose i.val : K) else 0) := by
@@ -131,7 +131,7 @@ private theorem coefficient_eval (d k : ℕ) (v : DualPower K d) (j : Fin d) :
   simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
     coefficient_basis_value, smul_eq_mul]
 
-private theorem coefficient_top (N : ℕ) (v : DualPower K (N + 1)) :
+theorem coefficient_top (N : ℕ) (v : DualPower K (N + 1)) :
     coefficient K (N + 1) N v =
       v (Polynomial.degreeLT.basis K (N + 1) 0) •
         dualBasis K (N + 1) (Fin.last N) := by
@@ -150,7 +150,7 @@ private theorem coefficient_top (N : ℕ) (v : DualPower K (N + 1)) :
   simp only [map_sum, map_smul, hb]
   simp [dualBasis, Module.Basis.dualBasis_repr]
 
-private theorem coefficient_diagonal (N : ℕ)
+theorem coefficient_diagonal (N : ℕ)
     (v : DualPower K (N + 1)) (i : Fin (N + 1)) :
     coefficient K (N + 1) i.val v (Polynomial.degreeLT.basis K (N + 1) i) =
       v (Polynomial.degreeLT.basis K (N + 1) 0) := by
@@ -167,7 +167,7 @@ private theorem coefficient_diagonal (N : ℕ)
     rw [if_neg hne, mul_zero]
   · simp
 
-private theorem coefficient_top_coordinate_zero (n m : ℕ)
+theorem coefficient_top_coordinate_zero (n m : ℕ)
     (hchoose : ((n + m).choose n : K) = 0)
     (v : DualPower K (n + m + 1)) :
     coefficient K (n + m + 1) m v
@@ -257,14 +257,14 @@ private def extracted {V : Type*} [AddCommGroup V] [Module K V]
   -(∑ a : K, a ^ (Fintype.card K - 1 - k.val) •
     ρ (Multiplicative.ofAdd (-a)))
 
-private theorem extract_dual_coefficient {r d : ℕ}
+theorem extract_dual_coefficient {r d : ℕ}
     (hrd : r ≤ d) (hd : d + 1 ≤ Fintype.card K) (k : Fin d) :
     coefficient K r k.val = extracted (dualAction K r) k := by
   unfold extracted
   simp_rw [action_expansion K r d hrd]
   exact (recover_coefficients hd (fun t => coefficient K r t.val) k).symm
 
-private theorem extracted_intertwines
+theorem extracted_intertwines
     {V Z : Type*} [AddCommGroup V] [Module K V] [AddCommGroup Z] [Module K Z]
     (ρ : Representation K (Multiplicative K) V)
     (σ : Representation K (Multiplicative K) Z)
@@ -294,13 +294,13 @@ private def tensorDegree (n m : ℕ) (i : Fin (n + 1) × Fin (m + 1)) :
     Fin (n + m + 1) :=
   ⟨i.1.val + i.2.val, by have := i.1.isLt; have := i.2.isLt; omega⟩
 
-private def tensorCoefficient (n m : ℕ) (k : Fin (n + m + 1)) :
+def tensorCoefficient (n m : ℕ) (k : Fin (n + m + 1)) :
     Module.End K (TensorSpace K n m) :=
   ∑ i : Fin (n + 1) × Fin (m + 1), if tensorDegree n m i = k then
     TensorProduct.map (coefficient K (n + 1) i.1.val)
       (coefficient K (m + 1) i.2.val) else 0
 
-private theorem tensor_action_expansion (n m : ℕ) (a : K) :
+theorem tensor_action_expansion (n m : ℕ) (a : K) :
     tensorAction K n m (Multiplicative.ofAdd (-a)) =
       ∑ i : Fin (n + 1) × Fin (m + 1), a ^ (tensorDegree n m i).val •
         TensorProduct.map (coefficient K (n + 1) i.1.val)
@@ -350,7 +350,7 @@ private theorem tensor_coefficient_top (n m : ℕ) :
     simp [hd]
   · simp
 
-private theorem tensor_coefficient_top_range (n m : ℕ) (z : TensorSpace K n m) :
+theorem tensor_coefficient_top_range (n m : ℕ) (z : TensorSpace K n m) :
     ∃ c : K, tensorCoefficient K n m (Fin.last (n + m)) z =
       c • (dualBasis K (n + 1) (Fin.last n) ⊗ₜ[K]
         dualBasis K (m + 1) (Fin.last m)) := by
@@ -367,7 +367,7 @@ private theorem tensor_coefficient_top_range (n m : ℕ) (z : TensorSpace K n m)
     obtain ⟨d, hd⟩ := hy
     exact ⟨c + d, by rw [map_add, hc, hd, add_smul]⟩
 
-private theorem tensor_coefficient_top_generator (n m : ℕ) :
+theorem tensor_coefficient_top_generator (n m : ℕ) :
     tensorCoefficient K n m (Fin.last (n + m))
       (dualBasis K (n + 1) 0 ⊗ₜ[K] dualBasis K (m + 1) 0) =
         dualBasis K (n + 1) (Fin.last n) ⊗ₜ[K]
@@ -379,7 +379,7 @@ private theorem tensor_coefficient_top_generator (n m : ℕ) :
 
 -- This is the essential RECTANGULAR generator B_m(e_n tensor e_0)=w.
 -- Unlike the old square proof, it needs no characteristic-specific binomial.
-private theorem tensor_coefficient_middle_generator (n m : ℕ) :
+theorem tensor_coefficient_middle_generator (n m : ℕ) :
     tensorCoefficient K n m ⟨m, by omega⟩
       (dualBasis K (n + 1) (Fin.last n) ⊗ₜ[K] dualBasis K (m + 1) 0) =
         dualBasis K (n + 1) (Fin.last n) ⊗ₜ[K]
