@@ -27,11 +27,10 @@ noncomputable section
 
 namespace Econlib.Probability.NoncompactQuantile
 
-open private bin_endpoints volume_real_bin bins_pairwise_disjoint_Ioc
-  from D5.S3.Analytic.Probability.ConditionalMeanAtoms
-open private integrable_quantile_Ioo integrable_quantile_Ioc
-  integral_quantile_Ioo_split upperIntegratedQuantile_le_stopLoss_add
-  upperIntegratedQuantile_eq_stopLoss_add
+open DiscreteLaw (bin_endpoints volume_real_bin bins_pairwise_disjoint_Ioc)
+open MeasureTheory.Measure (integrable_quantile_Ioc integral_quantile_Ioo_split
+  upperIntegratedQuantile_le_stopLoss_add upperIntegratedQuantile_eq_stopLoss_add)
+open private integrable_quantile_Ioo
   from D5.S3.Analytic.Probability.CompactConvexOrder
 
 private lemma integrable_bin {μ : ProbDist ℝ}
@@ -142,10 +141,7 @@ theorem absolute_tail_le {μ : ProbDist ℝ}
       rw [integral_indicator (measurableSet_lt measurable_const continuous_abs.measurable)]
 
 open DiscreteLaw
-open private binIndex binIndex_lt bin_of_binIndex_bounds condStepFun
-  aestronglyMeasurable_condStepFun abs_condStepFun_le integral_condStepFun_Ioo
-  integral_toProbDist_condMeanAtomize
-  from D5.S3.Analytic.Probability.ConditionalMeanApproximation
+
 
 private lemma atom_monotone {μ : ProbDist ℝ}
     (h : Integrable (fun x : ℝ => x) μ.toMeasure) {n : ℕ} (hn : 0 < n) :
