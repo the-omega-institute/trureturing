@@ -38,7 +38,7 @@ open D5.S3.Quantum.Information.PartialTraceMutualInformation open D5.S3.Quantum.
 namespace D5.S3.Quantum.GeorgeTomamichelMaximalCorrelation.Gram
 open D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
 variable {E F A : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E] [FiniteDimensional ℂ E] [NormedAddCommGroup F] [InnerProductSpace ℂ F] [CompleteSpace F] [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A] [NonnegSpectrumClass ℝ A] [Nontrivial A] [NormOneClass A]
-lemma gramContractionOfPositiveSimilarity (C : E →L[ℂ] F) (U : A →ₗ[ℂ] A) (hpos : ∀ X, 0 ≤ X → 0 ≤ U X) (σ : A) (hσ : IsStrictlyPositive σ) (hfix : U σ = σ) (e : E ≃ₗ[ℂ] A) (he : ∀ x : E, U (e x) = e (C.adjoint (C x))) : ‖C‖ ≤ 1 := by
+private lemma gramContractionOfPositiveSimilarity (C : E →L[ℂ] F) (U : A →ₗ[ℂ] A) (hpos : ∀ X, 0 ≤ X → 0 ≤ U X) (σ : A) (hσ : IsStrictlyPositive σ) (hfix : U σ = σ) (e : E ≃ₗ[ℂ] A) (he : ∀ x : E, U (e x) = e (C.adjoint (C x))) : ‖C‖ ≤ 1 := by
   let G := C.adjoint.comp C; have hG : IsSelfAdjoint G := by
     dsimp only [G]; have hI : IsSelfAdjoint (1 : F →L[ℂ] F) := IsSelfAdjoint.one _; simpa only [ContinuousLinearMap.one_def, ContinuousLinearMap.id_comp, ContinuousLinearMap.comp_id] using hI.adjoint_conj C
   have hb (z : ℂ) (hz : z ∈ spectrum ℂ G) : ‖z‖ ≤ 1 := by
@@ -83,7 +83,7 @@ open Set Complex
 noncomputable section
 namespace D5.S3.Quantum.GeorgeTomamichelMaximalCorrelation.Endpoint
 variable {E F : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E] [NormedAddCommGroup F] [InnerProductSpace ℂ F] [FiniteDimensional ℂ E] [FiniteDimensional ℂ F]
-def centeredUnit (e : E) : Set E := {x | ‖x‖ = 1 ∧ inner ℂ e x = 0}
+private def centeredUnit (e : E) : Set E := {x | ‖x‖ = 1 ∧ inner ℂ e x = 0}
 private lemma centeredUnitCompact (e : E) : IsCompact (centeredUnit e) := by
   letI : ProperSpace E := FiniteDimensional.proper ℂ E
   have hs : IsCompact {x : E | ‖x‖ = 1} := by
@@ -91,7 +91,7 @@ private lemma centeredUnitCompact (e : E) : IsCompact (centeredUnit e) := by
   have hc : IsClosed {x : E | inner ℂ e x = 0} :=
     isClosed_eq (continuous_const.inner continuous_id) continuous_const
   exact hs.inter_right hc
-def centeredCorrelationValues (C : E →L[ℂ] F) (e : E) (f : F) : Set ℝ :=
+private def centeredCorrelationValues (C : E →L[ℂ] F) (e : E) (f : F) : Set ℝ :=
   (fun p : E × F => ‖inner ℂ (C p.1) p.2‖) '' (centeredUnit e ×ˢ centeredUnit f)
 private lemma centeredCorrelationValuesLeOne (C : E →L[ℂ] F) (hC : ‖C‖ ≤ 1) (e : E) (f : F) (r : ℝ) (hr : r ∈ centeredCorrelationValues C e f) : r ≤ 1 := by
   obtain ⟨⟨x,y⟩, ⟨hx,hy⟩, rfl⟩ := hr
@@ -133,7 +133,7 @@ noncomputable section
 namespace D5.S3.Quantum.GeorgeTomamichelMaximalCorrelation.Endpoint
 variable {E F V : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E] [NormedAddCommGroup F] [InnerProductSpace ℂ F] [FiniteDimensional ℂ E] [FiniteDimensional ℂ F] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
 variable [CompleteSpace E] [CompleteSpace F]
-lemma fixedDimensionOfCenteredCorrelation (C : E →L[ℂ] F) (hC : ‖C‖ ≤ 1) (v : E) (f : F) (hv0 : v ≠ 0) (U : V →ₗ[ℂ] V) (e : E ≃ₗ[ℂ] V) (he : ∀ x : E, U (e x) = e (C.adjoint (C x))) (hv : U (e v) = e v) (S : Set ℝ) (hS : S ⊆ centeredCorrelationValues C v f) (hmu : sSup S = 1) : 1 < Module.finrank ℂ U.fixedSubmodule := by
+private lemma fixedDimensionOfCenteredCorrelation (C : E →L[ℂ] F) (hC : ‖C‖ ≤ 1) (v : E) (f : F) (hv0 : v ≠ 0) (U : V →ₗ[ℂ] V) (e : E ≃ₗ[ℂ] V) (he : ∀ x : E, U (e x) = e (C.adjoint (C x))) (hv : U (e v) = e v) (S : Set ℝ) (hS : S ⊆ centeredCorrelationValues C v f) (hmu : sSup S = 1) : 1 < Module.finrank ℂ U.fixedSubmodule := by
   have hfull := sSupCenteredEqOneOfSubvalues C hC v f S hS hmu; obtain ⟨x, hx1, horth, hfix⟩ := fixedVectorOfCorrelationSupOne C hC v f hfull; have hx0 : x ≠ 0 := by intro hz; simp [hz] at hx1
   let w : Fin 2 → E := ![v,x]; have hw0 : ∀ i, w i ≠ 0 := by
     intro i
@@ -170,7 +170,7 @@ lemma pushMul (U : Matrix a c ℂ) (hU : Uᴴ * U = 1) (X Y : Matrix c c ℂ) : 
     _ = U * (X * Y) * Uᴴ := by rw [hU, Matrix.mul_one, Matrix.mul_assoc U X Y]
 lemma pushHermitian (U : Matrix a c ℂ) (X : Matrix c c ℂ) (hX : X.IsHermitian) : (((U) * (X) * (U)ᴴ)).IsHermitian := by
   exact Matrix.isHermitian_mul_mul_conjTranspose U hX
-lemma pullHermitian (U : Matrix a c ℂ) (X : Matrix a a ℂ) (hX : X.IsHermitian) : (((U)ᴴ * (X) * (U))).IsHermitian := by
+private lemma pullHermitian (U : Matrix a c ℂ) (X : Matrix a a ℂ) (hX : X.IsHermitian) : (((U)ᴴ * (X) * (U))).IsHermitian := by
   exact Matrix.isHermitian_conjTranspose_mul_mul U hX
 lemma pushTrace (U : Matrix a c ℂ) (hU : Uᴴ * U = 1) (X : Matrix c c ℂ) : (((U) * (X) * (U)ᴴ)).trace = X.trace := by
   rw [ Matrix.trace_mul_comm, ← Matrix.mul_assoc, hU, Matrix.one_mul]
@@ -181,7 +181,7 @@ private lemma sqrtPush (U : Matrix a c ℂ) (hU : Uᴴ * U = 1) (S : Matrix c c 
   apply CFC.sqrt_unique
   · rw [pushMul U hU, CFC.sqrt_mul_sqrt_self S hS.nonneg]
   · exact ((Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg S)).mul_mul_conjTranspose_same U).nonneg
-lemma gmPairCompress (U : Matrix a c ℂ) (hU : Uᴴ * U = 1) (S : Matrix c c ℂ) (hS : S.PosSemidef) (X : Matrix a a ℂ) (hX : X.IsHermitian) : (Xᴴ * (CFC.sqrt ((((U) * (S) * (U)ᴴ))) * (X) * CFC.sqrt ((((U) * (S) * (U)ᴴ))))).trace = ((((U)ᴴ * (X) * (U)))ᴴ * (CFC.sqrt (S) * ((((U)ᴴ * (X) * (U)))) * CFC.sqrt (S))).trace := by
+private lemma gmPairCompress (U : Matrix a c ℂ) (hU : Uᴴ * U = 1) (S : Matrix c c ℂ) (hS : S.PosSemidef) (X : Matrix a a ℂ) (hX : X.IsHermitian) : (Xᴴ * (CFC.sqrt ((((U) * (S) * (U)ᴴ))) * (X) * CFC.sqrt ((((U) * (S) * (U)ᴴ))))).trace = ((((U)ᴴ * (X) * (U)))ᴴ * (CFC.sqrt (S) * ((((U)ᴴ * (X) * (U)))) * CFC.sqrt (S))).trace := by
   rw [hX.eq, (pullHermitian U X hX).eq]; rw [sqrtPush U hU S hS]; have ht := Matrix.trace_mul_comm (X * U * CFC.sqrt S) (Uᴴ * X * U * CFC.sqrt S * Uᴴ); simpa only [Matrix.mul_assoc] using ht
 end D5.S3.Quantum.GeorgeTomamichelMaximalCorrelation.Compression end end r3_isometric_compression
 section r3_faithful_frame
@@ -189,7 +189,7 @@ open Matrix MatrixOrder ComplexOrder
 noncomputable section
 namespace D5.S3.Quantum.GeorgeTomamichelMaximalCorrelation.Compression
 variable {a : Type} [Fintype a] [DecidableEq a]
-structure FaithfulFrame (S : Matrix a a ℂ) where
+private structure FaithfulFrame (S : Matrix a a ℂ) where
   ι : Type
   [finiteIndex : Fintype ι]
   [decidableIndex : DecidableEq ι]
@@ -199,7 +199,7 @@ structure FaithfulFrame (S : Matrix a a ℂ) where
   positive : small.PosDef
   reconstruct : ((U) * (small) * (U)ᴴ) = S
 attribute [instance] FaithfulFrame.finiteIndex FaithfulFrame.decidableIndex
-lemma existsFaithfulFrame (S : Matrix a a ℂ) (hS : S.PosSemidef) : Nonempty (FaithfulFrame S) := by
+private lemma existsFaithfulFrame (S : Matrix a a ℂ) (hS : S.PosSemidef) : Nonempty (FaithfulFrame S) := by
   classical
   let hH := hS.isHermitian; let c : Type := {i : a // 0 < hH.eigenvalues i}; let W : Matrix a a ℂ := hH.eigenvectorUnitary; let U : Matrix a c ℂ := fun i j => W i j.val
   let D : Matrix c c ℂ := Matrix.diagonal (fun i => (hH.eigenvalues i.val : ℂ))
@@ -262,7 +262,7 @@ private lemma psdProjectionSupport (R : Matrix n n ℂ) (hR : R.PosSemidef) (P :
   refine ⟨hr, ?_⟩; have hh := congrArg Matrix.conjTranspose hr; simpa only [Matrix.conjTranspose_mul, hR.isHermitian.eq, hP.eq] using hh
 variable {a b c d : Type} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] [Fintype c] [DecidableEq c] [Fintype d] [DecidableEq d]
 open scoped Kronecker
-lemma jointSupportFrame (ρ : Matrix (a × b) (a × b) ℂ) (hρ : ρ.PosSemidef) (U : Matrix a c ℂ) (V : Matrix b d ℂ) (hU : Uᴴ * U = 1) (hV : Vᴴ * V = 1) (S : Matrix c c ℂ) (T : Matrix d d ℂ) (hA : partialTraceRight ρ = ((U) * (S) * (U)ᴴ)) (hB : partialTraceLeft ρ = ((V) * (T) * (V)ᴴ)) : (((U ⊗ₖ V)) * (((((U ⊗ₖ V))ᴴ * (ρ) * ((U ⊗ₖ V))))) * ((U ⊗ₖ V))ᴴ) = ρ := by
+private lemma jointSupportFrame (ρ : Matrix (a × b) (a × b) ℂ) (hρ : ρ.PosSemidef) (U : Matrix a c ℂ) (V : Matrix b d ℂ) (hU : Uᴴ * U = 1) (hV : Vᴴ * V = 1) (S : Matrix c c ℂ) (T : Matrix d d ℂ) (hA : partialTraceRight ρ = ((U) * (S) * (U)ᴴ)) (hB : partialTraceLeft ρ = ((V) * (T) * (V)ᴴ)) : (((U ⊗ₖ V)) * (((((U ⊗ₖ V))ᴴ * (ρ) * ((U ⊗ₖ V))))) * ((U ⊗ₖ V))ᴴ) = ρ := by
   let P := ((U) * ((1 : Matrix c c ℂ)) * (U)ᴴ); let Q := ((V) * ((1 : Matrix d d ℂ)) * (V)ᴴ); have hP : P.IsHermitian := pushHermitian U 1 Matrix.isHermitian_one; have hQ : Q.IsHermitian := pushHermitian V 1 Matrix.isHermitian_one; have hPP : P * P = P := by rw [pushMul U hU, Matrix.one_mul]
   have hQQ : Q * Q = Q := by rw [pushMul V hV, Matrix.one_mul]
   have hAP : partialTraceRight ρ * P = partialTraceRight ρ := by
@@ -314,7 +314,7 @@ private lemma stateCauchyUnit (ρ : Matrix n n ℂ) (hρ : ρ.PosSemidef) (A B :
     nlinarith [norm_nonneg D]
   have hh := norm_inner_le_norm (𝕜 := ℂ) A B; change ‖(B * ρ * Aᴴ).trace‖ ≤ ‖A‖ * ‖B‖ at hh; simpa only [hn A hA, hn B hB, one_mul] using hh
 variable {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
-lemma amCorrelationLeOne (ρ : Matrix (a × b) (a × b) ℂ) (hρ : ρ.PosSemidef) (X : Matrix a a ℂ) (Y : Matrix b b ℂ) (hX : X.IsHermitian) (hY : Y.IsHermitian) (hx : (Xᴴ * ((1 / 2 : ℂ) • (((partialTraceRight ρ)) * (X) + (X) * ((partialTraceRight ρ))))).trace = 1) (hy : (Yᴴ * ((1 / 2 : ℂ) • (((partialTraceLeft ρ)) * (Y) + (Y) * ((partialTraceLeft ρ))))).trace = 1) : ‖(kroneckerMap (· * ·) X Yᴴ * ρ).trace‖ ≤ 1 := by
+private lemma amCorrelationLeOne (ρ : Matrix (a × b) (a × b) ℂ) (hρ : ρ.PosSemidef) (X : Matrix a a ℂ) (Y : Matrix b b ℂ) (hX : X.IsHermitian) (hY : Y.IsHermitian) (hx : (Xᴴ * ((1 / 2 : ℂ) • (((partialTraceRight ρ)) * (X) + (X) * ((partialTraceRight ρ))))).trace = 1) (hy : (Yᴴ * ((1 / 2 : ℂ) • (((partialTraceLeft ρ)) * (Y) + (Y) * ((partialTraceLeft ρ))))).trace = 1) : ‖(kroneckerMap (· * ·) X Yᴴ * ρ).trace‖ ≤ 1 := by
   let A := kroneckerMap (· * ·) X (1 : Matrix b b ℂ); let B := kroneckerMap (· * ·) (1 : Matrix a a ℂ) Y; have hA : Aᴴ = A := by
     dsimp only [A]; simpa only [hX.eq, Matrix.conjTranspose_one] using
       Matrix.conjTranspose_kronecker X (1 : Matrix b b ℂ)
@@ -341,7 +341,7 @@ section r3_am_witness
 open Matrix MatrixOrder ComplexOrder
 namespace D5.S3.Quantum.GeorgeTomamichelMaximalCorrelation.Arithmetic
 variable {n : Type*} [Fintype n] [DecidableEq n]
-lemma projectionProbability (σ P : Matrix n n ℂ) (hσ : σ.PosDef) (hσ1 : σ.trace = 1) (hP : P.IsHermitian) (hPP : P * P = P) (hP0 : P ≠ 0) (hP1 : P ≠ 1) : ∃ p : ℝ, 0 < p ∧ p < 1 ∧ (σ * P).trace = (p : ℂ) := by
+private lemma projectionProbability (σ P : Matrix n n ℂ) (hσ : σ.PosDef) (hσ1 : σ.trace = 1) (hP : P.IsHermitian) (hPP : P * P = P) (hP0 : P ≠ 0) (hP1 : P ≠ 1) : ∃ p : ℝ, 0 < p ∧ p < 1 ∧ (σ * P).trace = (p : ℂ) := by
   have hproj : IsStarProjection P := ⟨hPP, hP⟩; have htr := RHLinalg.trace_mul_nonneg_of_posSemidef hσ.posSemidef
     (Matrix.nonneg_iff_posSemidef.mp hproj.nonneg)
   have hc := RHLinalg.trace_mul_nonneg_of_posSemidef hσ.posSemidef
@@ -369,18 +369,18 @@ end D5.S3.Quantum.GeorgeTomamichelMaximalCorrelation.Arithmetic
 open Matrix MatrixOrder ComplexOrder
 namespace D5.S3.Quantum.GeorgeTomamichelMaximalCorrelation.Arithmetic
 variable {n : Type*} [Fintype n] [DecidableEq n]
-def binaryObservable (P : Matrix n n ℂ) (p : ℝ) : Matrix n n ℂ :=
+private def binaryObservable (P : Matrix n n ℂ) (p : ℝ) : Matrix n n ℂ :=
   ((Real.sqrt (p * (1 - p)) : ℂ)⁻¹) • (P - (p : ℂ) • 1)
-lemma binaryObservableHermitian (P : Matrix n n ℂ) (hP : P.IsHermitian) (p : ℝ) : (binaryObservable P p).IsHermitian := by
+private lemma binaryObservableHermitian (P : Matrix n n ℂ) (hP : P.IsHermitian) (p : ℝ) : (binaryObservable P p).IsHermitian := by
   apply (hP.sub (Matrix.isHermitian_one.smul (by simp [IsSelfAdjoint]))).smul; simp [IsSelfAdjoint]
-lemma binaryObservableCentered (σ P : Matrix n n ℂ) (p : ℝ) (hσ : σ.trace = 1) (hp : (σ * P).trace = (p : ℂ)) : (σ * binaryObservable P p).trace = 0 := by
+private lemma binaryObservableCentered (σ P : Matrix n n ℂ) (p : ℝ) (hσ : σ.trace = 1) (hp : (σ * P).trace = (p : ℂ)) : (σ * binaryObservable P p).trace = 0 := by
   simp [binaryObservable, Matrix.mul_smul, Matrix.mul_sub, Matrix.trace_smul, Matrix.trace_sub, hσ, hp]
 private lemma centeredProjectionVariance (σ P : Matrix n n ℂ) (p : ℝ) (hσ : σ.trace = 1) (hp : (σ * P).trace = (p : ℂ)) (hPP : P * P = P) : ((P - (p : ℂ) • 1) * σ * (P - (p : ℂ) • 1)).trace = ((p * (1-p) : ℝ) : ℂ) := by
   have hcycle : (P * σ * P).trace = (p : ℂ) := by
     rw [Matrix.trace_mul_cycle, hPP, Matrix.trace_mul_comm, hp]
   have hcomm : (P * σ).trace = (p : ℂ) := by rw [Matrix.trace_mul_comm, hp]
   simp only [Matrix.sub_mul, Matrix.mul_sub, Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, Matrix.mul_one, Matrix.trace_sub, Matrix.trace_smul, hcycle, hcomm, hp, hσ, smul_eq_mul]; push_cast; ring
-lemma binaryObservableAmUnit (σ P : Matrix n n ℂ) (hP : P.IsHermitian) (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) (hσ : σ.trace = 1) (hp : (σ * P).trace = (p : ℂ)) (hPP : P * P = P) : ((binaryObservable P p)ᴴ * ((1 / 2 : ℂ) • ((σ) * ((binaryObservable P p)) + ((binaryObservable P p)) * (σ)))).trace = 1 := by
+private lemma binaryObservableAmUnit (σ P : Matrix n n ℂ) (hP : P.IsHermitian) (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) (hσ : σ.trace = 1) (hp : (σ * P).trace = (p : ℂ)) (hPP : P * P = P) : ((binaryObservable P p)ᴴ * ((1 / 2 : ℂ) • ((σ) * ((binaryObservable P p)) + ((binaryObservable P p)) * (σ)))).trace = 1 := by
   rw [amTrace _ _ (binaryObservableHermitian P hP p)]; have hv := centeredProjectionVariance σ P p hσ hp hPP; have hd : 0 < p * (1-p) := mul_pos hp0 (sub_pos.mpr hp1); have hs : (Real.sqrt (p * (1-p)) : ℂ) ^ 2 = ((p * (1-p) : ℝ) : ℂ) := by
     rw [← Complex.ofReal_pow, Real.sq_sqrt (le_of_lt hd)]
   have hs0 : (Real.sqrt (p * (1-p)) : ℂ) ≠ 0 := by
@@ -391,10 +391,10 @@ end D5.S3.Quantum.GeorgeTomamichelMaximalCorrelation.Arithmetic
 open Matrix MatrixOrder ComplexOrder
 namespace D5.S3.Quantum.GeorgeTomamichelMaximalCorrelation.Arithmetic
 variable {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
-def traceCorrelation (ρ : Matrix (a × b) (a × b) ℂ) : Matrix a a ℂ →ₗ[ℂ] Matrix b b ℂ →ₗ[ℂ] ℂ :=
+private def traceCorrelation (ρ : Matrix (a × b) (a × b) ℂ) : Matrix a a ℂ →ₗ[ℂ] Matrix b b ℂ →ₗ[ℂ] ℂ :=
   (Matrix.kroneckerBilinear (R := ℂ)).compr₂
     ((Matrix.traceLinearMap (a × b) ℂ ℂ).comp (LinearMap.mulRight ℂ ρ))
-lemma sharedBinaryCorrelation (ρ : Matrix (a × b) (a × b) ℂ) (P : Matrix a a ℂ) (Q : Matrix b b ℂ) (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) (hPP : traceCorrelation ρ P Q = (p : ℂ)) (hP : traceCorrelation ρ P 1 = (p : ℂ)) (hQ : traceCorrelation ρ 1 Q = (p : ℂ)) (h1 : traceCorrelation ρ 1 1 = 1) : traceCorrelation ρ (binaryObservable P p) (binaryObservable Q p) = 1 := by
+private lemma sharedBinaryCorrelation (ρ : Matrix (a × b) (a × b) ℂ) (P : Matrix a a ℂ) (Q : Matrix b b ℂ) (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) (hPP : traceCorrelation ρ P Q = (p : ℂ)) (hP : traceCorrelation ρ P 1 = (p : ℂ)) (hQ : traceCorrelation ρ 1 Q = (p : ℂ)) (h1 : traceCorrelation ρ 1 1 = 1) : traceCorrelation ρ (binaryObservable P p) (binaryObservable Q p) = 1 := by
   have hd : 0 < p * (1-p) := mul_pos hp0 (sub_pos.mpr hp1); have hs : (Real.sqrt (p * (1-p)) : ℂ) ^ 2 = ((p * (1-p) : ℝ) : ℂ) := by
     rw [← Complex.ofReal_pow, Real.sq_sqrt (le_of_lt hd)]
   have hs0 : (Real.sqrt (p * (1-p)) : ℂ) ≠ 0 := by
