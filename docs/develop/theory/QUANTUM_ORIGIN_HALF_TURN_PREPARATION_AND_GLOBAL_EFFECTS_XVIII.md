@@ -1435,3 +1435,459 @@ $$
 [Q210GG]: https://arxiv.org/pdf/0709.0707v1 "O. Güler、F. Gürtuna，The extremal volume ellipsoids of convex bodies, their symmetry properties, and their determination in some special cases，arXiv:0709.0707v1；Theorem 2.2（印刷页5，存在）、Theorem 2.7（页8，唯一性）、Theorem 4.5（页14，自同构不变性）。"
 
 ## 追加锚（本行以下为增补区）
+## 220. 任意谱商的实际面与两复制共同圆尺障碍
+
+**定义 220.1（保留完整菜单的任意谱张量商）。** 固定非零、迹零的 $H=H^*\in\operatorname{Herm}_n(\mathbb C)$，允许零特征值，记
+
+$$
+p=n_+(H),\qquad q=n_-(H),\qquad r=\min\{p,q\}\ge1,\qquad
+A=\operatorname{Herm}_n(\mathbb C),\quad R=H^\perp,\quad
+V=A/\mathbb RH.
+\tag{220.1}
+$$
+
+正交补和投影 $P_R$ 均以实 Hilbert–Schmidt 配对 $\langle X,Y\rangle=\operatorname{Tr}(XY)$ 定义。令 $\pi:A\to V$ 为商映射，$u\pi=\operatorname{Tr}$。对每个有限 $N\ge1$，使用实际 Kronecker 同构及原实张量积，定义
+
+$$
+\begin{gathered}
+D_N=n^N,\qquad A_N=\operatorname{Herm}_{D_N}(\mathbb C)
+=A^{\otimes_{\mathbb R}N},\qquad W_N=V^{\otimes_{\mathbb R}N},\qquad
+\pi_N=\pi^{\otimes N},\qquad R_N=R^{\otimes N},\qquad Q_N=P_R^{\otimes N},\\
+\mathcal N_N=\ker\pi_N
+=\sum_{j=1}^N A^{\otimes(j-1)}\otimes\mathbb RH\otimes A^{\otimes(N-j)},
+\qquad \mathcal N_N^\perp=R_N,\\
+C_N=\pi_N(\operatorname{PSD}_{D_N}),\qquad
+K_N=\pi_N(\mathcal D_{D_N}),\qquad
+u_N=u^{\otimes N},\qquad P_N=\operatorname{ext}K_N.
+\end{gathered}
+\tag{220.2}
+$$
+
+$\mathcal D_D$ 为整个迹一 PSD 集，$P_v=vv^*$ 表示单位向量 $v$ 的秩一投影。经 $\pi_N|_{R_N}$ 可把商载体识别为 $R_N$，此时商映射由 $Q_N$ 表示。标量层为 $(W_0,C_0,u_0)=(\mathbb R,\mathbb R_+,1)$。所有原态、全部原纯点、相关及纠缠提升均保留；原效应是整个 $[0,u_N]_{C_N^*}$，不是选定的乘积子菜单。实际面指 $K_N$ 的面，$F_N(S)$ 指包含 $S$ 的最小实际面。
+
+**定理 220.2（同一商的完整强全有限背景）。** 定义220.1在每个有限层给闭、尖、生成锥和严格正单位，$K_N=C_N\cap\{u_N=1\}$ 紧。全部原对偶、效应和有限单位分解准确为
+
+$$
+\begin{gathered}
+W_N^*\simeq R_N,\qquad C_N^*\simeq R_N\cap\operatorname{PSD}_{D_N},\qquad
+\mathcal E_N\simeq R_N\cap[0,I_{D_N}],\\
+f_E(\pi_NX)=\operatorname{Tr}(EX),\qquad
+(E_1,\ldots,E_k)\text{ 为原有限测试}
+\ \Longleftrightarrow\ E_j\in R_N\cap\operatorname{PSD}_{D_N},\quad
+\sum_{j=1}^kE_j=I_{D_N}.
+\end{gathered}
+\tag{220.3}
+$$
+
+每个有限分割 $a+b=N$，包括标量因子，都满足
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_N\subseteq C_a\otimes_{\max}C_b.
+\tag{220.4}
+$$
+
+规范重括号、全部因子置换及其正逆均为原操作；原乘积配对分离联合载体，丢弃在全部相关输入上由偏迹下降。
+
+证明。直接沿用 [XIV165.2](QUANTUM_ORIGIN_FINITE_TENSOR_QUOTIENT_AND_GLOBAL_NONCOLLAPSE_XIV.md) 的机制，它只用 $\operatorname{Tr}H=0$，不用平衡谱。正交分解 $A=R\oplus\mathbb RH$ 的张量积给(220.2)的核及正交补。实 Hermitian 基的 Kronecker 乘积独立，维数同为 $n^{2N}$，故上述识别和乘积迹配对确实作用在整个 $A_N$。在简单张量上核对后线性延拓，得 $u_N\pi_N=\operatorname{Tr}$。
+
+$K_N$ 是紧密度集的连续像。任一非零正像的正提升具有正迹，因此单位严格正，且 $C_N=\mathbb R_{\ge0}K_N$。若正像收敛，其提升的迹由 $u_N$ 控制而有界；PSD 提升的迹范数等于迹，故可取收敛子列，极限仍为正提升。这证明闭性。严格正性排除正负锥的非零交，PSD 张成 $A_N$ 和 $\pi_N$ 满射给生成性。
+
+一个泛函下降当且仅当其迹矩阵正交于 $\mathcal N_N$；在所有正提升上非负当且仅当该矩阵 PSD。由于 $I_n\in R$，单位的矩阵为 $I_{D_N}$，再对补效应使用同一判据即得(220.3)。这些是全部单位分解，未将测试限为乘积形式。正提升的张量积给最小夹逼；对全部 $E\in R_a\cap\operatorname{PSD}_{D_a}$、$G\in R_b\cap\operatorname{PSD}_{D_b}$ 和任意 $Z\succeq0$，
+
+$$
+(f_E\otimes f_G)(\pi_NZ)=\operatorname{Tr}((E\otimes G)Z)\ge0,
+\tag{220.5}
+$$
+
+给最大夹逼，其中 $Z$ 不限于可分矩阵。因子置换由实际矩阵置换酉共轭实现，并保核、保 PSD，故置换及逆均下降；重括号是同一 Kronecker 恒等识别。每个 $R_a$ 中的 Hermitian 矩阵都夹在 $\pm cI$ 间，故整个原效应区间张成 $R_a$，乘积泛函遂分离 $W_N$。最后在全部 $Z\in A_N$ 上有
+
+$$
+(\operatorname{id}_{W_a}\otimes u_b)\pi_NZ
+=\pi_a(\operatorname{Tr}_{\mathbb C^{D_b}}Z).
+\tag{220.6}
+$$
+
+偏迹保正，故结论包含全部相关输入。标量分割为这些恒等式的平凡端点。$\square$
+
+**定理 220.3（任意谱的全有限核惯性）。** 对定义220.1的每个有限 $N\ge1$ 和每个非零 $X\in\mathcal N_N$，
+
+$$
+n_+(X)\ge r,\qquad n_-(X)\ge r.
+\tag{220.7}
+$$
+
+两个下界各自在每层可达；不主张不平衡时同时可达 $(r,r)$，也不主张所有核元的两个符号秩相等或总秩下界 $2r$ 必为锐界。
+
+证明。对 $N$ 归纳。$N=1$ 时 $X=cH$，$c\ne0$，符号秩为 $(p,q)$ 或 $(q,p)$，故成立。若 $N\ge2$，任一满足 $v^*Hv=0$ 的单位向量给下降泛函 $\bar\ell_v(\pi B)=v^*Bv$。压缩
+
+$$
+X_v=(v^*\otimes I)X(v\otimes I),\qquad
+\pi_{N-1}X_v=(\bar\ell_v\otimes\operatorname{id})(\pi_NX)=0
+\tag{220.8}
+$$
+
+属于 $\mathcal N_{N-1}$。若某个 $X_v\ne0$，归纳假设给其两个符号秩至少 $r$；等距嵌入 $v\otimes I$ 将严格正、负子空间分别送入 $X$ 的严格正、负子空间，故 $n_\pm(X)\ge n_\pm(X_v)\ge r$。
+
+若全部这些压缩为零，在第二块的实 Hermitian 基 $(F_j)$ 中写 $X=\sum_jB_j\otimes F_j$。线性独立性给每个 $B_j$ 在所有 $H$-零向量上二次型为零。此处直接消费 [VI96.5中的式(96.12)](QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md)：取其两个约束 $C_1=H,C_2=0$，公共 PSD 零锥中的正定矩阵取 $I_n$。$\operatorname{Tr}H=0$ 验证这个正定前提；该式明确允许两个约束相关。单位零向量的条件由齐次性扩到全部零向量，遂给 $B_j\in\mathbb RH$，从而 $X=H\otimes A'$，$0\ne A'\in A_{N-1}$。于是
+
+$$
+\begin{aligned}
+n_+(X)&=p\,n_+(A')+q\,n_-(A')\ge r\operatorname{rank}A'\ge r,\\
+n_-(X)&=q\,n_+(A')+p\,n_-(A')\ge r\operatorname{rank}A'\ge r.
+\end{aligned}
+\tag{220.9}
+$$
+
+零特征值只增加张量积的零空间，不改变这些公式。归纳完成。取任一纯辅助投影 $P_\zeta$，$H\otimes P_\zeta$ 与 $-H\otimes P_\zeta$ 的符号秩分别为 $(p,q)$、$(q,p)$，所以各下界分别可达；$N=1$ 不加辅助因子。平衡情形已由 XIV165.3供应，本推导的扩展是以 VI(96.12)替代其平衡标量步骤，不重新申领该零锥事实。$\square$
+
+**定理 220.4（低秩全正纤维与整个实际支持面）。** 在定义220.1下，任意 $\sigma\succeq0$、$\operatorname{rank}\sigma<r$ 都是其商像的唯一 PSD 提升。若复子空间 $S\subseteq\mathbb C^{D_N}$ 满足 $\dim_{\mathbb C}S<r$，则
+
+$$
+F_S=\pi_N\mathcal D(S)\text{ 是 }K_N\text{ 的实际面},\qquad
+\pi_N^{-1}(F_S)\cap\mathcal D_{D_N}=\mathcal D(S),
+\tag{220.10}
+$$
+
+且 $\pi_N|_{\operatorname{Herm}(S)}$ 是保迹线性序同构到该面锥的整个实张成。$r\ge2$ 时，全部原纯点恰为互异的 $\pi_NP_v$，其拓扑为 $\mathbb{CP}^{D_N-1}$；$r\ge3$ 时，每对不同原纯点的最小实际面恰为其两条提升射线所张成的完整 Bloch 三球。这些量词包含任意纠缠支持和全部有限 $N$。
+
+证明。若另有 $\rho\succeq0$ 且 $\pi_N\rho=\pi_N\sigma$，则 $X=\rho-\sigma\in\mathcal N_N$ 在 $\ker\sigma$ 上非负。严格负子空间与 $\ker\sigma$ 只能零交，故
+
+$$
+n_-(X)\le\operatorname{rank}\sigma<r.
+\tag{220.11}
+$$
+
+由220.3得 $X=0$。这是 XIV165.4已经使用的成熟符号秩机制；低秩态与全部态比较的判据归 [Carmeli–Heinosaari–Schultz–Toigo，§4.1](../../../Library/HilbertOperators/carmeliheinosaarischultztoigo2014tasks.md)，不是新增层析分类。
+
+支持于 $S$ 的 Hermitian 核元两个符号秩都不超过 $\dim S$，故只能为零，得到线性单射。若 $\pi_N\sigma=tx+(1-t)y$，$\sigma\in\mathcal D(S)$、$0<t<1$，取 $x,y$ 的整个原密度提升 $\alpha,\beta$。唯一性给 $\sigma=t\alpha+(1-t)\beta$；在 $S^\perp$ 上取二次型，正性迫使 $\alpha,\beta$ 均支持于 $S$。这证明实际面及完整原像恒等式。
+
+为验证整个张成上的序，设 $Y\in\operatorname{Herm}(S)$，$\pi_NY=\pi_N\rho$，$\rho\succeq0$。非零 $S$ 上选正定 $\eta\in\mathcal D(S)$，取足够大 $c>0$ 使 $c\eta+Y\succeq0$。其秩小于 $r$，与 $c\eta+\rho\succeq0$ 同像，唯一性给 $Y=\rho\succeq0$。反向保正直接成立，零支持对应零锥及空归一面。
+
+当 $r\ge2$，秩一像为单点实际面，且由全正提升唯一性互异。任一原极点的密度提升作有限谱分解，其像的极端性使它等于某个秩一像，故无遗漏。复射影空间到这些像的映射连续双射，紧性及 Hausdorff 性给所述同胚。当 $r\ge3$，两个不同秩一投影之中点在其二维支持 $S$ 内正定，属于 $\mathcal D(S)$ 的相对内部。任何包含两端的实际面都含该中点；拉回 $F_S$ 后必须包含整个 $\mathcal D(S)$。因此最小实际面正是 $F_S$，标准 Pauli 参数给完整三球。$\square$
+
+**命题 220.5（全菜单不等于全态单射）。** 上述层级保留全部原态与原效应，但商映射 $\pi_N$ 并非整个 PSD 锥上的序同构。具体地，令 $s=\operatorname{Tr}H_+=\operatorname{Tr}H_->0$，则
+
+$$
+\rho_+=H_+/s\ne H_-/s=\rho_-,\qquad
+\pi\rho_+=\pi\rho_-.
+\tag{220.12}
+$$
+
+该等式旁接任意纯辅助投影后在每层持续成立。$r=1$ 时不保证纯态忠实性；例如 $H=\operatorname{diag}(1,-1)$ 已将两个基纯投影合并。
+
+证明。$\rho_+-\rho_-=H/s$ 属于核，两个非零正负谱支持正交，故两密度不同；张量等式由(220.2)保持。完整原效应准确是(220.3)，不等于不受 $R_N$ 约束的所有矩阵效应；它们分离商载体，并不分离同一商纤维内的提升。$\square$
+
+**定义 220.6（一个环境圆尺与整体共径）。** 在 $r\ge3$ 时，以 $Q_N$ 坐标记 $L_N=(R_N)_0$，下标 $0$ 表示迹零。$L_N$ 上的正定内积 $g$ 称为共同圆尺，若对每个复二维支持 $U\subseteq\mathbb C^{D_N}$ 都有可随 $U$ 改变的 $\lambda_U>0$，使
+
+$$
+g(Q_NX,Q_NY)=\lambda_U\operatorname{Tr}(XY)
+\quad\bigl(X,Y\in\operatorname{Herm}_0(U)\bigr).
+\tag{220.13}
+$$
+
+220.4使这准确等价于所有实际二点球在同一个环境内积下分别为圆球；$\operatorname{Herm}_0(U)$ 上的 Pauli 球方向未被另选。它也就是210.8的 $\mathsf A_2(g)$。它不要求不同球的半径相同。$\mathsf D_2(g)$ 仍指210.1—210.3：对每个不同原纯标签 $a,p$，其实际球内的 $a$ 的对径点 $b_a(p)$ 满足 $\|a-b_a(p)\|_g=\Delta_g$，其中 $\Delta_g$ 是整个 $K_N$ 的直径。
+
+**命题 220.7（单份所有球圆、纯点共球面而半径不等）。** 取平衡 $H=\operatorname{diag}(I_m,-I_m)$，$m\ge3$，$n=2m$，$c=1-1/m$。对迹零 Hermitian 矩阵写
+
+$$
+X=\begin{pmatrix}A&Z\\Z^*&D\end{pmatrix},\qquad
+ t=\operatorname{Tr}A=-\operatorname{Tr}D,
+$$
+
+并定义
+
+$$
+q_m(X)=\|A-tI_m/m\|_{\rm HS}^2
++\|D+tI_m/m\|_{\rm HS}^2+2c\|Z\|_{\rm HS}^2.
+\tag{220.14}
+$$
+
+其极化在商迹零空间给正定尺 $g_m$。它使每一个实际二点球圆，且全部原纯点在以 $\pi(I_n/n)$ 为心、平方半径 $c$ 的同一球面上。但是正块内坐标二点球的平方半径为 $1/2$，跨块坐标二点球的平方半径为 $c/2$。整个 $K_1$ 的平方直径是 $2$，跨块对径的平方距离是 $2c<2$，故 $\mathsf D_2(g_m)$ 失败。
+
+证明。(220.14)非负，零值恰要求 $Z=0$、$A=tI_m/m$、$D=-tI_m/m$，即根空间恰为 $\mathbb RH$，所以确实给正定商尺。为同时处理所有二维支持，而非只看坐标球，先用任意非零迹零 $H$ 记一个计算式
+
+$$
+s_H=\operatorname{Tr}H^2,\qquad
+q_H(X)=\operatorname{Tr}X^2-\frac{(\operatorname{Tr}HX)^2}{s_H}
+-\frac{\|[H,X]\|_{\rm HS}^2}{2s_H}.
+\tag{220.15}
+$$
+
+在 $H$ 的特征基中，$H=\operatorname{diag}(h_i)$。由 $\sum_iX_{ii}=0$，直接展开给
+
+$$
+q_H(X)=\sum_{i<j}w_{ij}(|X_{ij}|^2-X_{ii}X_{jj}),\qquad
+w_{ij}=2-\frac{(h_i-h_j)^2}{s_H}.
+\tag{220.16}
+$$
+
+确实，常数 $2$ 项合为 $\operatorname{Tr}X^2$，而
+$\sum_{i<j}(h_i-h_j)^2X_{ii}X_{jj}=-(\operatorname{Tr}HX)^2$，非对角修正则由 $\|[H,X]\|_{\rm HS}^2=2\sum_{i<j}(h_i-h_j)^2|X_{ij}|^2$ 给出。这里只把一般 $q_H$ 当作恒等式，不主张其对任意谱正定或分类所有圆尺。
+
+在当前平衡谱中 $s_H=2m$，同块 $w_{ij}=2$，跨块 $w_{ij}=2c$；(220.15)直接等于(220.14)。若 $X\in\operatorname{Herm}_0(U)$ 的非零特征值为 $t_0,-t_0$，其乘法外平方满足
+
+$$
+\bigwedge\nolimits^2X=-t_0^2P_{\omega_U},\qquad
+q_m(X)=t_0^2\sum_{i<j}w_{ij}|p_{ij}(U)|^2
+=\lambda_U\operatorname{Tr}X^2,\qquad
+\lambda_U=\frac12\sum_{i<j}w_{ij}|p_{ij}(U)|^2>0.
+\tag{220.17}
+$$
+
+这里 $\omega_U$ 为 $\bigwedge^2U$ 的单位生成元，$p_{ij}(U)$ 为它在 $e_i\wedge e_j$ 基中的 Plücker 坐标，故 $\sum|p_{ij}(U)|^2=1$。式(220.17)是因为 $\bigwedge^2X$ 的这些对角元为 $X_{ii}X_{jj}-|X_{ij}|^2$；$X=0$ 时也成立。极化即得(220.13)。块迹 $t$ 与秩二谱参数 $t_0$ 不混同；这里没有使用或声称完整外平方分类。
+
+再令单位向量 $v=(x,y)$，$a=\|x\|^2,b=\|y\|^2$，$a+b=1$。对 $P_v-I_n/n$，两块的去迹部分分别为 $xx^*-aI_m/m$、$yy^*-bI_m/m$，故
+
+$$
+q_m(P_v-I_n/n)=ca^2+cb^2+2cab=c.
+\tag{220.18}
+$$
+
+220.4保证这包含全部原纯点。同块坐标支持在(220.17)中 $\lambda_U=1$，跨块坐标支持则为 $c$；标准密度二点球的 HS 平方半径为 $1/2$，得到所述不同半径。又由(220.15)有 $q_m(X)\le\operatorname{Tr}X^2$，而任意两密度的 HS 距离平方不超过 $2$。正块内两个正交纯投影达到 $2$，跨块两个坐标纯投影的差则给 $2c$。它们正是相应球的一对对径端点，遂与整体共径矛盾。
+
+此尺是外给的商尺，未识别为整个 $K_1$ 自己的 Loewner 尺。因此本例不结算210.8保留的规范 $\mathsf A_2\Rightarrow\mathsf D_2$ 或规范共同纯球面 $\Rightarrow\mathsf D_2$。$\square$
+
+**定理 220.8（两特征值商的两复制无共同圆尺）。** 设 $H$ 恰有两个特征值，正、负重数 $p,q\ge3$，不要求 $p=q$。乘以非零标量并作酉换基不改商，可取
+
+$$
+H=qI_p\oplus(-pI_q),\qquad n=p+q,\qquad
+Q=P_R\otimes P_R,\qquad L=(R\otimes R)_0.
+\tag{220.19}
+$$
+
+则 $L$ 上不存在满足(220.13)的正定内积。因220.2—220.4已给同一个完整原两复制层及其全部实际二点面，这是否定实际环境共同圆尺，不是只否定某种乘积尺或某组坐标球的相同半径。
+
+证明。若存在 $g$，对真正保持 $H,I,R,Q$ 的紧群
+
+$$
+G=(K_0\times K_0)\rtimes\langle\text{复制交换}\rangle,
+\qquad K_0=U(p)\times U(q)
+\tag{220.20}
+$$
+
+作归一 Haar 平均。每个群元将二维支持 $U$ 送到另一个二维支持，保持提升空间的迹内积。因此平均后的尺仍正定，在每个 $U$ 上仍满足(220.13)，常数为相应正 $\lambda$ 的平均。以下以 $g$ 表示平均尺。不使用复合系统的全酉群 $U(n^2)$、任意联合基相位群或正负块交换；特别是 $p\ne q$ 也无需补入块交换。
+
+在一份上有 HS 正交分解
+
+$$
+R=\mathbb RI\oplus S_+\oplus S_-\oplus T,\qquad
+S_+=\operatorname{Herm}_0(\mathbb C^p),\quad
+S_-=\operatorname{Herm}_0(\mathbb C^q),\quad
+T=\left\{\begin{pmatrix}0&B\\B^*&0\end{pmatrix}\right\}.
+\tag{220.21}
+$$
+
+这里 $S_\pm$ 各仅支持于相应块。$S_+,S_-$ 是绝对实不可约且不等价的伴随表示，即使 $p=q$ 也分别由独立块群作用。$T$ 是 $B\mapsto U_+BU_-^*$ 的实化，不可约且交换子代数为 $\mathbb C$；其复结构 $J(B)=iB$ 对 HS 配对斜自伴。因此该块上的不变对称形式只能为 HS 的实标量倍。这些是实 Schur 引理与酉伴随表示的成熟用法。
+
+在 $L$ 中，将未用的 $T\otimes T$ 暂保留，其余测试所涉及的各块及 $g$ 相对 HS 的权重记为
+
+$$
+\begin{array}{c|c}
+\text{模块（连同复制交换后的模块）}&\text{权重}\\ \hline
+S_\varepsilon\otimes\mathbb RI,\ \mathbb RI\otimes S_\varepsilon&a_\varepsilon\\
+T\otimes\mathbb RI,\ \mathbb RI\otimes T&b\\
+S_+\otimes S_+&C_+\\
+S_-\otimes S_-&C_-\\
+S_+\otimes S_-,\ S_-\otimes S_+&C_{\rm mix}\\
+S_\varepsilon\otimes T,\ T\otimes S_\varepsilon&d_\varepsilon
+\end{array}
+\tag{220.22}
+$$
+
+全部这些权重严格正。独立的两复制群使表中不同模块不等价，故无交叉配对；复制交换只识别两种取向的系数，并不使它们出现交叉项。$S\otimes S$ 为绝对实不可约，$S\otimes T$ 的交换子仍为 $\mathbb C$，其斜自伴复结构不能进入对称形式。
+
+尤其不把 $T\otimes T$ 擅自当作标量：它允许 $J\otimes J$ 类型的对称项。但两份块中心的相位独立，$T\otimes T$ 的复化中心字符为 $(1,1),(1,-1),(-1,1),(-1,-1)$；表中含 $T$ 的模块只在一份有非零字符，其余模块两份均为零字符。故 $T\otimes T$ 与表中所有模块都没有不变交叉配对。下面所有向量都没有 $T\otimes T$ 分量，其全部自由度不影响计算。这也穷尽了 $L$ 的剩余部分，因为唯一全平凡模块 $\mathbb RI\otimes\mathbb RI$ 已由迹零条件去掉。
+
+令 $\ell=I_n/n$，$\|\ell\|_{\rm HS}^2=1/n$。对任一块内坐标纯投影 $P_i$，直接正交投影得
+
+$$
+r_i=P_RP_i=\ell+S_i,\qquad
+S_i=P_i-I_{\text{所在块}}/(\text{块大小}),\qquad
+c_+=1-1/p,\quad c_-=1-1/q.
+\tag{220.23}
+$$
+
+因而 $\|S_i\|^2=c_\varepsilon$；同块不同 $i,j$ 有 $\langle S_i,S_j\rangle=-1/(\text{块大小})$，异块则为零。每个 $S_\varepsilon,T$ 中的坐标非对角 Hermitian 矩阵均已在 $R$，所以这些矩阵不受 $P_R$ 改动。
+
+在提升空间取两个不同乘积坐标向量 $v=e_i\otimes e_\alpha$、$w=e_j\otimes e_\beta$，置
+
+$$
+D=P_v-P_w,\qquad O=|v\rangle\langle w|+|w\rangle\langle v|.
+\tag{220.24}
+$$
+
+它们在同一个 $\operatorname{Herm}_0(\operatorname{span}\{v,w\})$ 内，提升空间中的 HS 平方范数均为 $2$。于是圆度迫使 $g(QD,QD)=g(QO,QO)$；这里绝不假定投影后的 HS 范数仍为 $2$。对角向量的准确分解为
+
+$$
+QD=\ell\otimes(S_\alpha-S_\beta)
+ +(S_i-S_j)\otimes\ell
+ +S_i\otimes S_\alpha-S_j\otimes S_\beta.
+\tag{220.25}
+$$
+
+以下选择的向量中至少一份的两个指标同属一块。若两份指标都不同，记 $F_{ij}=E_{ij}+E_{ji}$、$G_{ij}=-i(E_{ij}-E_{ji})$，则
+$O=(F_{ij}\otimes F_{\alpha\beta}-G_{ij}\otimes G_{\alpha\beta})/2$。每个 $F,G$ 的 HS 平方范数为 $2$，它们彼此正交，所以在所处表格模块中 $QO$ 的平方长度为该模块权重的两倍。
+
+第一组取 $i\ne j$ 同在正块、$\alpha\ne\beta$ 也同在正块。(220.23)—(220.25)给
+
+$$
+\frac{4a_+}{n}+2C_+(1-2/p)=2C_+,
+\qquad C_+=\frac{pa_+}{n}.
+\tag{220.26}
+$$
+
+负块同理给 $C_-=qa_-/n$。第一对同在正块、第二对同在负块则给
+
+$$
+\frac{2(a_++a_-)}n
++2C_{\rm mix}\left(c_+c_--\frac1{pq}\right)=2C_{\rm mix},
+\qquad C_{\rm mix}=\frac{pq(a_++a_-)}{n^2}.
+\tag{220.27}
+$$
+
+例如(220.26)中最后张量差的 HS 平方范数是
+$2c_+^2-2/p^2=2(1-2/p)$；(220.27)中为 $2c_+c_--2/(pq)$，所以每一项都在商投影后计算。
+
+为比较第二、三组，记 $A_0=a_+c_++a_-c_-$。第二组令 $i\ne j$ 同在正块而 $\alpha,\beta$ 跨块；(220.25)的三个正交部分及表格权重给
+
+$$
+2d_+=\frac{2a_+}{n}+\frac{A_0}{n}
++C_+c_+^2+C_{\rm mix}c_+c_-.
+\tag{220.28}
+$$
+
+负块版本为
+
+$$
+2d_-=\frac{2a_-}{n}+\frac{A_0}{n}
++C_-c_-^2+C_{\rm mix}c_+c_-.
+\tag{220.29}
+$$
+
+这里张量差的两项分别落在 $S_\varepsilon\otimes S_+$ 与 $S_\varepsilon\otimes S_-$，正交而无交叉项。第三组改取 $i=j$ 固定在正块，第二份仍跨块。此时必须用
+
+$$
+QO=(\ell+S_i)\otimes F_{\alpha\beta},\qquad
+\frac{A_0}{n}+C_+c_+^2+C_{\rm mix}c_+c_-
+=\frac{2b}{n}+2d_+c_+.
+\tag{220.30}
+$$
+
+右侧不是未投影的 $P_i\otimes F_{\alpha\beta}$ 的 HS 长度。固定在负块同样给
+
+$$
+\frac{A_0}{n}+C_-c_-^2+C_{\rm mix}c_+c_-
+=\frac{2b}{n}+2d_-c_-.
+\tag{220.31}
+$$
+
+第二组减第三组，并用 $1-c_+=1/p$、$1-c_-=1/q$，得到
+
+$$
+b=\frac{nd_+}{p}-a_+=\frac{nd_-}{q}-a_-.
+\tag{220.32}
+$$
+
+现在代入第一组的三个 $C$ 值。由(220.28)、(220.32)，
+
+$$
+\begin{aligned}
+b&=\frac{A_0+pa_+c_+^2+\frac{pq}{n}(a_++a_-)c_+c_--2(p-1)a_+}{2p}\\
+&=\frac{-(p-1)a_++\frac{q-1}{q}a_-
++\frac{(p-1)(q-1)}n(a_++a_-)}{2p}\\
+&=\frac{-\frac{p^2-1}{p}a_++\frac{q^2-1}{q}a_-}{2n}.
+\end{aligned}
+\tag{220.33}
+$$
+
+由(220.29)同理得到相反式
+
+$$
+b=\frac{\frac{p^2-1}{p}a_+-\frac{q^2-1}{q}a_-}{2n}.
+\tag{220.34}
+$$
+
+相加给 $b=0$，与 $T\otimes\mathbb RI$ 上正定性要求的 $b>0$ 矛盾。证明未令各球的 $\lambda_U$ 相同，只比较同一实际球内在提升空间等长的两根 Pauli 方向；也未使用块交换。$\square$
+
+**推论 220.9（障碍在全部更高有限层持续）。** 对220.8的同一固定 $V,H$ 和全部有限 $N\ge2$，没有一个 $L_N$ 上的正定内积能使全部实际二点球圆。因此这些层整个原态体的规范 Loewner 尺尤其不满足 $\mathsf A_2$，也不满足 $\mathsf D_2$。
+
+证明。$N=2$ 已证。$N>2$ 固定任一单位辅助向量 $\zeta\in\mathbb C^{n^{N-2}}$，令 $z=\pi_{N-2}P_\zeta$。220.4给 $z$ 为原纯点，220.2给全部强背景，故直接复用 [XIII Lemma 161.1](QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md) 的实际纯旁观面：$J:x\mapsto x\otimes z$ 为到实际面锥的序嵌入，丢弃是其左逆。在 $R$ 坐标中它为 $x\mapsto x\otimes Q_{N-2}P_\zeta$，因辅助迹为一而单射。
+
+若存在所述 $g_N$，将它沿 $J$ 拉回 $L_2$ 即为正定 $g_2$。对任意提升空间中的二维支持 $U\subseteq\mathbb C^{n^2}$，$U\otimes\mathbb C\zeta$ 仍为二维支持，220.4识别其实际三球，且
+
+$$
+Q_N(X\otimes P_\zeta)=Q_2X\otimes Q_{N-2}P_\zeta,\qquad
+\operatorname{Tr}((X\otimes P_\zeta)(Y\otimes P_\zeta))=\operatorname{Tr}(XY).
+\tag{220.35}
+$$
+
+所以该球的圆度给 $g_2$ 在 $U$ 上的(220.13)，对所有 $U$ 同时成立，违反220.8。这里无需假设跨层度量自然性或 $g_N$ 为某个局部尺的张量积；只是拉回一把假设存在的尺。Loewner 尺本身正定，故也被排除。$\square$
+
+**定义 220.10（保留的完整 D2 候选）。** 完整沿用210.5的强实全有限背景：同一个有限实 $V$、$\dim_{\mathbb R}V>1$；每个有限 $N\ge0$ 的整个 $W_N=V^{\otimes N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个 $K_N=C_N\cap\{u_N=1\}$、全部 $P_N=\operatorname{ext}K_N$、整个 $[0,u_N]$ 及全部有限单位分解；标量层为 $(\mathbb R,\mathbb R_+,1)$。原乘积配对分离原联合空间，对所有有限 $a,b\ge0$ 均有 $C_a\otimes_{\min}C_b\subseteq C_{a+b}\subseteq C_a\otimes_{\max}C_b$，最大锥使用两块的全部原正泛函，规范重括号、全部因子置换及其正逆均保留；这些条件作用于全部相关输入。
+
+在且仅在整个原 $K_3$ 上要求：每对不同原纯点所生成的最小实际面是非退化仿射 Bloch 三球（实际 L2）；对所有不同原纯标签 $a,p\in P_3$，在由整个 $K_3$ 唯一最小体积外接椭球确定的规范 Loewner 尺 $g_3$ 下，
+
+$$
+\|a-b_a(p)\|_{g_3}=\max_{x,y\in K_3}\|x-y\|_{g_3}.
+\tag{220.36}
+$$
+
+这就是完整的 $\mathsf Q_{\rm diam\,2}$，不是以220.8代换其中一项。没有预给等半径、共同纯球面、TC、AD、E0、投影性或局部效应的全域延拓；也不用逐面尺、局部尺张量积或只量某个有利态子集。
+
+**推论 220.11（同一全有限量子对应及其准确条件）。** 在220.10的全部强背景下，(220.36)连同实际 L2，当且仅当存在同一个整数 $d\ge2$ 和同一个实线性同构 $\theta:V\to\operatorname{Herm}_d(\mathbb C)$，使全部有限 $N\ge0$ 同时满足
+
+$$
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{d^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{220.37}
+$$
+
+共同坐标给完整原菜单的 Born 配对、全部有限复合及偏迹；操作、时间及极限结论保持下述条件。
+
+证明。直接应用210.6及其199.4、XVII190.5供应，不重证分类，也不逐层另选坐标。220.8—220.9仅说明一个明确非量子商族已经连弱圆度都不能通过；它们不是(220.37)的重建证明。210.7和200.7在同一个 $\theta$ 下给如下完整字典。
+
+| 原对象或附加条件 | 在共同量子坐标中的对应及边界 |
+| --- | --- |
+| 整个 $K_N$、全部 $P_N$、完整效应与配对 | 全部 $\rho\succeq0,\operatorname{Tr}\rho=1$，全部秩一投影 $\mathbb{CP}^{d^N-1}$，全部 $0\preceq E\preceq I$，概率 $\operatorname{Tr}(\rho E)$ |
+| 全部有限单位分解 | 全部数学 POVM：$E_j\succeq0,\sum_jE_j=I$；不授予任意仪器的物理可实现性 |
+| 每对纯点的最小实际面 | 完整 Bloch 三球；三条正交纯射线的共同支持面为八维 qutrit 密度体，不等同于三份复制 |
+| 全部有限原张量、分区、置换、丢弃 | 标准复张量、相关及纠缠态和全部输入上的偏迹 |
+| 给定实线性分支 $\Phi:W_a\to W_b$，对每个有限 $M\ge0$ 的整个原锥要求 $\Phi\otimes\operatorname{id}_{W_M}\ge0$ | 其唯一复线性延拓恰为 CP；固定 $d\ge2$ 的辅助幂覆盖任意所需有限辅助维数，嵌入及压缩给通常完全正性 |
+| 对全部正输入另要求 $u_b\Phi\le u_a$ 或等号 | 分别为 TNI、TP；每个分支各自 TNI 不替代分支总和的总质量预算，数学仪器须每支 CP 且总和满足相应预算 |
+| 数学锐压缩与接续 | $X\mapsto aXa$、$X\mapsto(I-a)X(I-a)$；作为指定实际更新需原操作和设备条件；给定具有指定锐效应的正分支后，理想锐中性更新还需对整个 yes 支持逐点中性（161.7.1），不能由结果可重复性代付 |
+| 另给连续保锥保单位的可逆实一参数群 | 有限层为连续酉共轭及 Hamiltonian 生成元；物理钟、能量解释和 $\hbar$ 标定仍另给 |
+| 全部精确有限层 | 不自动给无限张量积、热力学极限或无限维 normal 表示；连接映射、相容状态、拓扑、完备化与正常延拓须另给，近似共径的稳定性和误差界也未取得 |
+
+为明确几何字典，在非标量层置 $D=d^N$、$o_N=I_D/D$。210.7给整个态体的规范尺及直径
+
+$$
+g_N(X,Y)=\frac D{D-1}\operatorname{Tr}(XY),\qquad
+\Delta_N^2=\frac{2D}{D-1}\quad(\operatorname{Tr}X=\operatorname{Tr}Y=0).
+\tag{220.38}
+$$
+
+故对纯 $a,p$ 和任意混态 $\rho$，
+
+$$
+\begin{aligned}
+\frac{\|a-p\|_{g_N}^2}{\Delta_N^2}
+&=1-\operatorname{Tr}(ap)=\sin^2\!\left(\arccos\sqrt{\operatorname{Tr}(ap)}\right),\\
+1-\frac{\|a-\rho\|_{g_N}^2}{\Delta_N^2}
+&=\operatorname{Tr}(a\rho)+\frac{1-\operatorname{Tr}(\rho^2)}2.
+\end{aligned}
+\tag{220.39}
+$$
+
+纯距离是缩放弦长，非 Fubini–Study 测地距离本身；混态距离是缩放 HS 距离，纯公式不可直接当作混态线性效应。标量层是单点，不使用零直径的比值。端点静态互反不蕴含接续测量可交换，非正交纯投影已经可不对易；锐效应本身也不指定测后状态。若另给上述连续群，则可写 $\dot\rho=-i[H_{\rm gen},\rho]$，纯态可选相位后写 $i\dot\psi=H_{\rm gen}\psi$；只有另作物理时间与能量标定后，才令 $H_{\rm phys}=\hbar H_{\rm gen}$。这些条件全部独立于把局部球画圆。$\square$
+
+**命题 220.12（共同尺所增加的关系与完整直观解释）。** 220.3—220.4把全有限惯性及实际面供应扩到任意非零迹零 Hermitian $H$；220.7给单份外给圆尺与共同纯球面而非共同半径；220.8—220.9则在全部两特征值重数 $p,q\ge3$ 的整个原商层级中排除两份起的任何共同环境圆尺。这些合成结论归 repo-derived，不申领历史或全球优先权。VI(96.12)的复低余维 ROG 零锥供应及其 Hildebrand 归属、XIV165.2—165.5的原张量与符号秩／实际面机制、XIII161.1的实际纯旁观面均按原范围复用；紧群 Haar 平均、实 Schur 引理、酉伴随不可约性、HS／Pauli 及乘法外平方计算是成熟中间工具。完整 D2 分类和共同 $\theta$ 仍归210.6及其上游，而非本章障碍单独给出。
+
+证明。共同环境尺要求的不只是每颗小球各有一套三维坐标：不同实际球在原实空间重叠的方向必须共享同一个双线性配对。单份平衡商可将一条正负混合关系抹去，同时把这条消失方向放进尺的根空间；所有纯标签仍不同，每个真正二点面仍是完整三球，甚至全部纯点在一张球面上。但球心到共同中心的深度可不同，因而各球半径不同，局部圆度及共同纯球面没有支付整体共径。
+
+两份复合把同一条被抹去的混合关系与另一份的相干方向接起来。若同一把环境尺能量全部实际球，那么同一球内“换两端的权重”和“在两端之间作相干摆动”这两根在提升空间等长 Pauli 方向，投到原商后也必须被该尺读成等长。正块内部、负块内部和跨块的实际球一起迫使(220.26)—(220.34)：一个跨块方向的平方长度既等于某数，又等于其负数，只能为零。这个方向却真实存在，所以任何正定尺都不可能同时满足这些要求。旁接纯态不消除矛盾，因此它在所有更高有限份数保留。这里用的是同一全原层级里的真实面和真实投影，不是把投影后的长度误认作投影前的长度。
+
+回到完整候选，仍把所有混合准备、全部原测试和任意有限份相关复合留在桌面上；只在整个三份态体用整体 Loewner 尺要求每个实际二点球的每根对径都达到整块体的直径。210的已给桥才将这些局部球拼成保持全部准备关系的全域反射，接到共同确认、正删除和同一个全有限复矩阵坐标。于是 Born、混合态、POVM、纠缠和偏迹有准确条件对应；真实接续操作、所有旁观者下的正性、分支总预算、物理钟、能量、$\hbar$ 和无限／近似极限各保留自己的前提。
+
+本章没有证明一般实际 L2 域上的规范 $\mathsf A_2\Rightarrow\mathsf D_2$，没有证明规范纯球面足够，也没有把任意谱惯性推广误作任意谱共同尺禁阻。一般谱的尺障碍及完整外平方分类不在结论内。它也没有仅凭此障碍选择全部量子模型、减少独立公理数或取得全局最简性；得到的是一个具体、完整原层级中的共同尺缺口及其两复制检出方式。$\square$
+
+## 追加锚（本行以下为增补区）
