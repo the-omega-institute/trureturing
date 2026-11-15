@@ -1,9 +1,9 @@
-/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic
+/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic
+   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.result
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.result
    digest: Exact height-five three-label continuation recurrence. -/
 
 /-

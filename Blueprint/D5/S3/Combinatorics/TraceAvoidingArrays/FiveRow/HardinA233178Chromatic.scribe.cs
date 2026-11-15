@@ -1,11 +1,11 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow;
 
 internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.";
+        "D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact three-label transfer on the five-row horizontal and diagonal exclusion graph.",

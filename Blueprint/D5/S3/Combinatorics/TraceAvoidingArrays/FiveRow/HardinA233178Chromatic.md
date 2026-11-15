@@ -8,9 +8,9 @@ A column is encoded in base three, with row r stored in digit r. Bond tests prec
 
 **Definition 1.1 (The five literal row entries).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.colour`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.colour`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.colour` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.colour` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ The base-three digits of an integer below 243 give the five independent row entr
 
 **Definition 1.2 (Horizontal and diagonal exclusion).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.Bond`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.Bond`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.Bond` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.Bond` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ Every entry in one column differs from the entries in the next column at the sam
 
 **Definition 1.3 (Exact transfer matrix).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.T`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.T`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.T` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.T` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ The integer matrix has an entry one precisely for a legal pair of consecutive co
 
 **Definition 1.4 (Continuation readout).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.v`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.v`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.v` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.v` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -56,9 +56,9 @@ The nth transfer power applied to the constant one vector counts n-column contin
 
 **Theorem 1.5 (Continuation recurrence beyond the transient).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.result`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ For every integer vector w and every natural n, put b(k)=dotProduct(w,v(k)). The
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.Bond`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.T`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.colour`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.result`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.v`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.Bond`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.T`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.colour`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.result`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic.v`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](../TransferMatrix.md)

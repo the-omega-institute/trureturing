@@ -8,9 +8,9 @@ The source count and FullE are those of HardinA233178Literal. The transfer uses 
 
 **Theorem 1.1 (Exact column cardinality bridge).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.count_transfer`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.count_transfer`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.count_transfer` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.count_transfer` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ For every natural n, chromaticCount(n+1) is the sum of the continuation vector v
 
 **Theorem 1.2 (All subsequent chromatic widths).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.chromatic_recurrence`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.chromatic_recurrence`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.chromatic_recurrence` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.chromatic_recurrence` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,13 +32,13 @@ For every natural n, write C(k)=chromaticCount(k). Then C(n+12)=6*C(n+11)+31*C(n
 
 **Theorem 1.3 (The literal FullE theorem).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.result`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/hardin233178` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.result`.
+*Resolves.* `Problems/hardin233178` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233178","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.result","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233178","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -48,8 +48,8 @@ The theorem proves FullE itself. The chromatic coefficients sum to one, so addin
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.chromatic_recurrence`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.count_transfer`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.result`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic](HardinA233178Chromatic.md)
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal](HardinA233178Literal.md)
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.chromatic_recurrence`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.count_transfer`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.result`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic](HardinA233178Chromatic.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal](../HardinA233178Literal.md)

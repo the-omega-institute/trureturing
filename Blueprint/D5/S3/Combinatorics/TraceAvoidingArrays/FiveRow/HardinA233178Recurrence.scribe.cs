@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow;
 
 internal sealed class HardinA233178RecurrenceDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.";
+    private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The all-width recurrence for the literal normalized six-colour five-row array count.",
