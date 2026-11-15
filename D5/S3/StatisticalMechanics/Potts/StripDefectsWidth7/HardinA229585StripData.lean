@@ -18,6 +18,7 @@ cross: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 Valid: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 decidableValid: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 cl: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
+zeroBudgetIndex: proof_shape=bind-only; consumers=transfer_row29, transfer_row30, transfer_row33, transfer_row34, transfer_row37, transfer_row38, transfer_row39, transfer_row41, transfer_row54, transfer_row56, transfer_row57, transfer_row58, transfer_row61, transfer_row62, transfer_row65, transfer_row66
 transfer_row0: proof_shape=bind-only; consumers=T
 transfer_row1: proof_shape=bind-only; consumers=T
 transfer_row2: proof_shape=bind-only; consumers=T
@@ -123,6 +124,25 @@ private instance decidableValid (p : Boundary) (d : ℕ) : Decidable (Valid p d)
   inferInstanceAs (Decidable (_ ∧ _))
 def cl (p : Boundary) (d : ℕ) : Fin 72 :=
   if d = 1 then (if p 0 = p 2 then (if p 0 = p 4 then (if p 1 = p 3 then (if p 1 = p 5 then (0) else (1)) else (if p 1 = p 5 then (4) else (5))) else (if p 0 = p 5 then (if p 1 = p 3 then (2) else (6)) else (if p 1 = p 3 then (3) else (7)))) else (if p 0 = p 3 then (if p 0 = p 5 then (if p 1 = p 4 then (8) else (10)) else (if p 1 = p 4 then (9) else (11))) else (if p 0 = p 4 then (if p 1 = p 5 then (12) else (13)) else (if p 0 = p 5 then (14) else (15))))) else (if p 0 = p 2 then (if p 0 = p 5 then (if p 1 = p 3 then (if p 0 = p 4 then (28) else (if p 1 = p 4 then (31) else (33))) else (if p 0 = p 3 then (if p 1 = p 4 then (24) else (26)) else (if p 0 = p 4 then (36) else (if p 1 = p 4 then (39) else (42))))) else (if p 1 = p 5 then (if p 0 = p 4 then (if p 1 = p 3 then (29) else (37)) else (if p 0 = p 3 then (27) else (if p 1 = p 3 then (34) else (if p 1 = p 4 then (40) else (43))))) else (if p 1 = p 3 then (if p 0 = p 4 then (30) else (if p 1 = p 4 then (32) else (35))) else (if p 0 = p 3 then (25) else (if p 0 = p 4 then (38) else (41)))))) else (if p 0 = p 3 then (if p 2 = p 4 then (if p 0 = p 5 then (if p 0 = p 1 then (16) else (if p 1 = p 2 then (44) else (57))) else (if p 0 = p 1 then (17) else (if p 1 = p 2 then (45) else (if p 1 = p 5 then (58) else (59))))) else (if p 1 = p 5 then (if p 0 = p 1 then (18) else (if p 0 = p 4 then (52) else (if p 1 = p 2 then (47) else (55)))) else (if p 0 = p 5 then (if p 1 = p 2 then (46) else (54)) else (if p 0 = p 1 then (19) else (if p 0 = p 4 then (53) else (56)))))) else (if p 0 = p 4 then (if p 2 = p 5 then (if p 0 = p 1 then (20) else (if p 1 = p 2 then (48) else (if p 1 = p 3 then (62) else (69)))) else (if p 1 = p 3 then (if p 0 = p 5 then (60) else (61)) else (if p 0 = p 1 then (21) else (if p 1 = p 2 then (49) else (68))))) else (if p 0 = p 5 then (if p 1 = p 3 then (if p 1 = p 4 then (63) else (65)) else (if p 0 = p 1 then (22) else (if p 1 = p 2 then (50) else (70)))) else (if p 1 = p 3 then (if p 1 = p 4 then (64) else (if p 1 = p 5 then (66) else (67))) else (if p 0 = p 1 then (23) else (if p 1 = p 2 then (51) else (71))))))))
+private def zeroBudgetIndex (j : Fin 56) : Option (Fin 16) :=
+  if j.val = 13 then some 0
+  else if j.val = 14 then some 1
+  else if j.val = 17 then some 2
+  else if j.val = 18 then some 3
+  else if j.val = 21 then some 4
+  else if j.val = 22 then some 5
+  else if j.val = 23 then some 6
+  else if j.val = 25 then some 7
+  else if j.val = 38 then some 8
+  else if j.val = 40 then some 9
+  else if j.val = 41 then some 10
+  else if j.val = 42 then some 11
+  else if j.val = 45 then some 12
+  else if j.val = 46 then some 13
+  else if j.val = 49 then some 14
+  else if j.val = 50 then some 15
+  else none
+
 @[noinline]
 private def transfer_row0 : Fin 56 → ℤ :=
   ![1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 5, 2, 2, 2, 2, 4, 4, 3, 4, 2, 2, 3, 2, 3, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0, 2, 5, 5, 1, 3, 4, 4, 0, 0, 3, 3, 3, 2, 2, 0, 0]
@@ -240,12 +260,20 @@ private def transfer_row28 : Fin 72 → ℤ :=
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 4, 4, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0]
 
 @[noinline]
-private def transfer_row29 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 3, 3, 0, 0, 4, 4, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+private def transfer_row29 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 0 k
+    | none => 0
+  else 0
 
 @[noinline]
-private def transfer_row30 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 3, 3, 0, 0, 4, 4, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 2, 2, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+private def transfer_row30 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 1 k
+    | none => 0
+  else 0
 
 @[noinline]
 private def transfer_row31 : Fin 72 → ℤ :=
@@ -256,12 +284,20 @@ private def transfer_row32 : Fin 72 → ℤ :=
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 @[noinline]
-private def transfer_row33 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 1, 1, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+private def transfer_row33 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 2 k
+    | none => 0
+  else 0
 
 @[noinline]
-private def transfer_row34 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+private def transfer_row34 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 3 k
+    | none => 0
+  else 0
 
 @[noinline]
 private def transfer_row35 : Fin 72 → ℤ :=
@@ -272,24 +308,40 @@ private def transfer_row36 : Fin 72 → ℤ :=
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0]
 
 @[noinline]
-private def transfer_row37 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 2, 2, 0, 0, 4, 4, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 3, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+private def transfer_row37 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 4 k
+    | none => 0
+  else 0
 
 @[noinline]
-private def transfer_row38 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 2, 2, 0, 0, 4, 4, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+private def transfer_row38 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 5 k
+    | none => 0
+  else 0
 
 @[noinline]
-private def transfer_row39 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+private def transfer_row39 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 6 k
+    | none => 0
+  else 0
 
 @[noinline]
 private def transfer_row40 : Fin 72 → ℤ :=
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 @[noinline]
-private def transfer_row41 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 3, 3, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+private def transfer_row41 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 7 k
+    | none => 0
+  else 0
 
 @[noinline]
 private def transfer_row42 : Fin 72 → ℤ :=
@@ -340,24 +392,40 @@ private def transfer_row53 : Fin 72 → ℤ :=
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 @[noinline]
-private def transfer_row54 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 3, 3, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+private def transfer_row54 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 8 k
+    | none => 0
+  else 0
 
 @[noinline]
 private def transfer_row55 : Fin 72 → ℤ :=
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 @[noinline]
-private def transfer_row56 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+private def transfer_row56 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 9 k
+    | none => 0
+  else 0
 
 @[noinline]
-private def transfer_row57 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 1, 1, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 0, 0, 1, 1, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+private def transfer_row57 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 10 k
+    | none => 0
+  else 0
 
 @[noinline]
-private def transfer_row58 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 1, 1, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+private def transfer_row58 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 11 k
+    | none => 0
+  else 0
 
 @[noinline]
 private def transfer_row59 : Fin 72 → ℤ :=
@@ -368,12 +436,20 @@ private def transfer_row60 : Fin 72 → ℤ :=
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 1, 1, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0]
 
 @[noinline]
-private def transfer_row61 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+private def transfer_row61 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 12 k
+    | none => 0
+  else 0
 
 @[noinline]
-private def transfer_row62 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 1, 1, 0, 0, 2, 2, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 2, 2, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+private def transfer_row62 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 13 k
+    | none => 0
+  else 0
 
 @[noinline]
 private def transfer_row63 : Fin 72 → ℤ :=
@@ -384,12 +460,20 @@ private def transfer_row64 : Fin 72 → ℤ :=
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 2, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 @[noinline]
-private def transfer_row65 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+private def transfer_row65 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 14 k
+    | none => 0
+  else 0
 
 @[noinline]
-private def transfer_row66 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 3, 3, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+private def transfer_row66 (j : Fin 72) : ℤ :=
+  if h : 16 ≤ j.val then
+    match zeroBudgetIndex ⟨j.val - 16, by omega⟩ with
+    | some k => D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 15 k
+    | none => 0
+  else 0
 
 @[noinline]
 private def transfer_row67 : Fin 72 → ℤ :=
