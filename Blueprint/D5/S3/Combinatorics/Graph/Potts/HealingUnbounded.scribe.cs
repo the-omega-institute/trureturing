@@ -97,7 +97,7 @@ internal sealed class HealingUnboundedDocument : IScribeDocumentDefinition
         Formula e = F.Id("e"), u = F.Id("u"), v = F.Id("v");
         Formula same = And(Equal(e, Call("Sym2.mk", u, v)),
             Equal(new Formula.Apply(c, [u]), new Formula.Apply(c, [v])));
-        Formula predicate = Parenthesized(Seq(LambdaLower, e, Colon, Sp, Call("Sym2", V), Sp,
+        Formula predicate = Parenthesized(Seq(LambdaLower, Sp, e, Colon, Sp, Call("Sym2", V), Sp,
             Mapsto, Sp, Some("u", V, Some("v", V, same))));
         return Call("Finset.filter", predicate, Call("edgeFinset", G));
     }
