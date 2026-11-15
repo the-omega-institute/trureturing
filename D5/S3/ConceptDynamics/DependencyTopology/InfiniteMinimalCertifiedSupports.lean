@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/DependencyTopology/InfiniteMinimalCertifiedSupports
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=atom:08997d561f88fd6b00cc0ecec687696006c525466240820df645412497f4eef1; result=D5/S3/ConceptDynamics/DependencyTopology/InfiniteMinimalCertifiedSupports.result; claim=D5/S3/ConceptDynamics/DependencyTopology/InfiniteMinimalCertifiedSupports.claim
+   utility: kind=certified-instance; basis=refutes=atom:0247a4dd9defa2c79544e9e69e14005579025f60e29e9fee07c7d271a7d2c8ec; result=D5/S3/ConceptDynamics/DependencyTopology/InfiniteMinimalCertifiedSupports.result; claim=D5/S3/ConceptDynamics/DependencyTopology/InfiniteMinimalCertifiedSupports.claim
    digest: One decidable lawful propositional kernel has infinitely many globally minimal certified supports. -/
 
 import D5.S3.ConceptDynamics.DependencyTopology.FiniteSupportPatternRealization
