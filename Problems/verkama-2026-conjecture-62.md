@@ -24,7 +24,7 @@ The original preregistration is
 The target, before-probe predictions and deadline in that preregistration are
 unchanged. This dossier concerns one assertion and one complete proof.
 
-## Statement echo
+### Statement echo
 
 For every natural number n and every permutation π of n elements, assume n ≥ 3,
 classical avoidance of 351624, and ordinary vertex-2-connectivity of its inversion
