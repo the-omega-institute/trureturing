@@ -4050,3 +4050,167 @@ $$
 [Q285J]: https://njohnston.ca/2013/07/the-spectrum-of-the-partial-transpose/ "Nathaniel Johnston, The Spectrum of the Partial Transpose of a Density Matrix, Theorem 1: pure-state partial-transpose spectrum from Schmidt coefficients; used only as a mature intermediate tool."
 
 ## 追加锚（本行以下为增补区）
+
+## 286. 从两个产品点直接取正则割线：删去特制种子公式
+
+完整保留283.1的强全有限背景、固定纯旁观者 $b_*$、同一个内部参照 $c$、整个原proper菜单、全部相关准备及实际复合，以及283.4明列的低二层、双HS／迹与全有限传播供应。本章用任意合格矩阵对确定两个产品点，不再先指定 $r_M$，也不再用284.2的 $\alpha,\beta,s,t$ 配方倒造这两个点。285的条件整块读数仍作用于同一个原残余；不改判既有充分条件。
+
+**定义 286.1（两点的正则关系线与完整候选）。** 低二层坐标集合 $\mathcal R$ 沿用282.2，改用更直接的对齐截面
+
+$$
+\begin{aligned}
+\mathcal R^0_{b_*}&=\{(n,\theta,\varepsilon)\in\mathcal R:\theta b_*=P_0\},\\
+\mathcal G_n&=\{(A,B)\in M_n(\mathbb C)^2:\|A\|_{\rm HS}=\|B\|_{\rm HS}=1,\
+\rho:=\operatorname{Tr}(A^*B)\in(0,1),\
+\operatorname{span}_{\mathbb C}\{A,B\}\cap GL_n(\mathbb C)\ne\varnothing\}.
+\end{aligned}
+\tag{286.1}
+$$
+
+$\rho$ 的实正约定只固定第二条射线的相位。$\mathcal R^0_{b_*}$ 非空的证明准确复用283.3及(283.10)：在每条实际腿使用同一个保单位坐标变换，把 $\theta b_*$ 送到 $P_0$，低二层两种分支均保型；不宣称该变换是未知高层原锥的物理对称。对 $(A,B)\in\mathcal G_n$，严格采用XIII164.2的参考—输出向量化，令
+
+$$
+\begin{aligned}
+|+\rangle&=(|0\rangle+|1\rangle)/\sqrt2,\qquad
+v=|A\rangle\!\rangle|0\rangle_3,\quad
+w=|B\rangle\!\rangle|+\rangle_3,\\
+g&=\langle v,w\rangle=\rho/\sqrt2,\qquad
+\psi=\frac{w-gv}{\sqrt{1-g^2}}
+=|D_0\rangle\!\rangle|0\rangle_3+|D_1\rangle\!\rangle|1\rangle_3,\\
+D_0&=\frac{B-\rho A}{\sqrt{2-\rho^2}},\qquad
+D_1=\frac{B}{\sqrt{2-\rho^2}},\qquad
+P=P_v,\quad Q=P_w,\quad\Gamma=P_\psi,\\
+p&=(\theta^{\otimes3})^{-1}T_1^\varepsilon P,\qquad
+q=(\theta^{\otimes3})^{-1}T_1^\varepsilon Q.
+\end{aligned}
+\tag{286.2}
+$$
+
+两块 $(12)|3$ 的局域重叠分别为 $\rho,1/\sqrt2$，均严格介于零与一。两点由原min界产生；$p$ 的双份因子是原 $P_2$ 中的纯点，第三份恰为 $b_*$，所以已在付费纤维内。$q$ 只要求是原产品源，不另预给它自己的least。定义
+
+$$
+\boxed{\quad
+\mathsf Q_{\rm sec}(b_*,c)
+:=\mathsf D_{b_*}(c)+\mathsf X_{T,2}
++\exists(n,\theta,\varepsilon)\in\mathcal R^0_{b_*}\ \exists(A,B)\in\mathcal G_n:
+\mathsf S_{(p+q)/2}(c).
+\quad}
+\tag{286.3}
+$$
+
+$\mathsf S$ 与 $\mathsf D_{b_*}$ 的全原量词完全沿用283.1。先由前两项产生尺子，最后才在该尺子中检验正则线；没有预付复Hilbert高层模型、残余原态或逆矩阵控制。
+
+**定理 286.2（一条正则产品割线恢复全部有限量子层级）。** 在上述同一完整背景和明列供应下，对每个原 $b_*\in P_1$ 与 $c\in\operatorname{ri}K_3$，候选(286.3)等价于存在同一 $n\ge2$ 和同一个保单位实线性序同构 $\theta:V\to H_n$，使
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}\qquad(\forall N\ge0).
+\tag{286.4}
+$$
+
+正向对每一对满足(286.1)且具有所需共同接触的源均成立，不需要该对来自特制 $M$ 配方。
+
+证明。（一）共同门取出割线的同一正交残余。由固定纤维及低二层供应取得所选 $\theta$，令 $D_3=T_1^\varepsilon\theta^{\otimes3}C_3$。原 $(12)|3$ min/max给 $\operatorname{Sep}(n^2|n)\subseteq D_3\subseteq\operatorname{BP}(n^2|n)$。283.4（一）—（二）只消费第一点的单点least、该点产品投影及其补可分，以及共同中点的least，故直接给第一点least $P$、共同least $h$ 和极端proper残余 $d=h-P$。仍只用 $h\ge_{D_3^*}P$，没有从双确认偷得原 $h\ge Q$。
+
+对这对一般位置产品取274.15的四个可分补；283.2给 $\operatorname{Tr}h=2$ 和原局部Gram端点线段。因为第三块的 $0,+$ 都实，284.5的复端点核对原样给
+
+$$
+H_0=P_{\operatorname{span}\{v,w\}}=P+\Gamma,\qquad
+H_1=T_{12}\overline{H_0}=T_3H_0,
+\qquad H_1-P=T_3\Gamma.
+\tag{286.5}
+$$
+
+这里 $v\perp\psi$；$D_0,D_1$ 线性无关，故 $\psi$ 在 $(12)|3$ 的Schmidt秩为二，$\Gamma\ne T_3\Gamma$。276.2（三）的双HS／迹预算给 $d\in D_3\cap D_3^*$、$\operatorname{Tr}d=\|d\|_2=1$。两个残余端点的HS范数均为一，严格凸性遂迫某个 $\delta\in\{0,1\}$ 满足
+
+$$
+x=T_1^\varepsilon T_3^\delta\Gamma\in\mathcal C_3:=\theta^{\otimes3}C_3.
+\tag{286.6}
+$$
+
+不预先制备 $\psi$；它作为这一只共同门扣掉已有门后的实际残余取得。
+
+（二）正则平面已经供应两侧纠缠条件读数。由 $\rho\ne0$，(286.2)直接给
+
+$$
+\mathcal L_\psi=\operatorname{span}_{\mathbb C}\{D_0,D_1\}
+=\operatorname{span}_{\mathbb C}\{A,B\}.
+\tag{286.7}
+$$
+
+在此平面纯代数地选可逆 $F$ 和独立于它的 $G$。若对每个向量 $z$，$D_0z,D_1z$ 都相关，则 $Fz,Gz$ 也都相关；以 $t=Fz$ 遍历整个空间，得 $GF^{-1}t\in\mathbb Ct$。285.2（三）已用的保持全部射线判据迫 $GF^{-1}$ 为标量，与 $F,G$ 独立矛盾。对转置平面使用同一论证，$F^{\mathsf T}$ 仍可逆。因此分别存在单位 $y,z$，使
+
+$$
+\begin{aligned}
+\eta_y&=(I\otimes\langle y|\otimes I)\psi
+=|D_0^{\mathsf T}\bar y\rangle_1|0\rangle_3
+ +|D_1^{\mathsf T}\bar y\rangle_1|1\rangle_3,\\
+\xi_z&=(\langle z|\otimes I\otimes I)\psi
+=|D_0\bar z\rangle_2|0\rangle_3+|D_1\bar z\rangle_2|1\rangle_3
+\end{aligned}
+\tag{286.8}
+$$
+
+各自具有Schmidt秩二。[Q285J]定理1的纯态部分转置谱遂给负方向 $E_{13}=P_{e_{13}}$、$E_{23}=P_{e_{23}}$，使
+
+$$
+\operatorname{Tr}[(P_{y,2}\otimes E_{13})T_3\Gamma]<0,
+\qquad
+\operatorname{Tr}[(P_{z,1}\otimes E_{23})T_3\Gamma]<0.
+\tag{286.9}
+$$
+
+矩阵 $F^{-1}$ 只参与此反证的代数换元，没有被施加于原态；这些条件向量也只计算同一 $\Gamma$ 的乘积配对，不断言未知原锥已允许物理后选择制备。
+
+（三）用同一原态排两个位。完整双份原对偶及原max分块仍精确给285.5—285.6，即
+
+$$
+T_1^\varepsilon x\in\operatorname{BP}_{2|(13)},\qquad
+T_2^\varepsilon x\in\operatorname{BP}_{1|(23)}.
+\tag{286.10}
+$$
+
+在第一式中用(286.6)、(286.9)迫 $\delta=0$；第二式随后给 $(T_1T_2)^\varepsilon\Gamma\in\operatorname{BP}_{1|(23)}$。全转置 $\mathsf T=T_1T_2T_3$ 保持该块正锥，而 $(T_1T_2)^\varepsilon=\mathsf T^\varepsilon T_3^\varepsilon$，所以第二个负读数迫 $\varepsilon=0$。所用转置投影属于已给低二层的完整proper菜单，不将部分转置视作原正控制，不将 $D_3$ 视作置换不变。两个负读数检查的是同一个(286.6)。
+
+（四）先定向，后接整个有限理论。此时才有标准 $C_1,C_2$ 及原 $\Gamma\in\mathcal C_3$。(286.7)正是XIII164.2的二维正则切片像，故XIII164.11第1项到第4项直接给(286.4)。不必先把种子手工化成 $r_M$；原定理内部的控制滤波、左乘和有限谱分支只在标准低二层已付之后调用，完整保留164.3—164.9的全部相关旁观、实际数据腿、proper帽、有限字及成功质量预算。不将一般正则线的预算等同于明确 $\tau_n$ 的六副本十八腿数字。
+
+反向，标准复PSD模型的全部单点和共同源都有支持投影least，281.2给所需全部 $\mathsf S$；原换点及固定纤维成立。取
+
+$$
+A=I_n/\sqrt n,\qquad B=(I_n+E_{10})/\sqrt{n+1},
+\qquad\rho=\sqrt{n/(n+1)}\in(0,1).
+\tag{286.11}
+$$
+
+则 $(A,B)\in\mathcal G_n$，而同一局域坐标可将任意 $b_*$ 对齐到 $P_0$，所以(286.3)成立。$\square$
+
+**推论 286.3（同一割线接单读数入口）。** 将(286.3)的 $\mathsf X_{T,2}$ 换成XX279的单体实际L2及 $\mathsf C_\Delta$，即每个原二纯球的规范同准备双份共同门在两份球心上的读数为 $3/4$，并完整保留XX279.6具名互易Jordan及M-only整锥供应，则所得完整候选仍等价于(286.4)。
+
+证明。285.3已经核对该低二层入口只消费固定纤维支付的M1/M2；它先给非空 $\mathcal R$，286.1再作同局域对齐，286.2随后适用。反向同准备门为 $\operatorname{Sym}^2U$ 的支持投影，球心读数为 $3/4$。该数值仍是额外明示关系约束，没有从裸背景内生推出；没有新增球暴露、全旁观正回缩或未知高层自对偶。$\square$
+
+**命题 286.4（更短的几何、反事实与量子公理对应）。** 在同一完整背景内，286与285刻画同一全有限复量子模型类。简化发生在见证的指定方式：两颗一般位置产品源直接确定割线及其正交残余，只要求残余的控制切片平面是正则线；无需指定迹零矩阵、非正规性或特殊Schmidt系数配方。不据此宣称严格逻辑弱化、最少独立公理或外部优先性。
+
+证明与几何。$v,w$ 是产品射影簇上的两点；$\operatorname{span}\{v,w\}$ 是它们的割线平面，扣掉 $P_v$ 后的正交方向为 $\psi$。另一条派生的射影矩阵线 $\mathbb P(\mathcal L_\psi)\cong\mathbb{CP}^1$ 不被 $\det=0$ 超曲面包含。它的非零行列式限制为二元 $n$ 次齐次多项式，故线上至多有 $n$ 个不同奇异点；满秩点不需唯一。满秩截面使两个数据侧都能保留控制的纠缠，原交叠菜单遂把两个方向位锁死；标准低二层之后，这同一条线又是已付全有限相干传播的入口。割线与矩阵线之间由(286.2)、(286.7)连接，不将两种空间无映射地混称一条物理轨道。
+
+反事实准确分层：若 $\rho=0$，残余就是 $w$，控制切片像塌成一维，不能保留 $\operatorname{span}\{A,B\}$；若 $\rho=1$，两个内部矩阵射线已经重合。若放弃满秩截面，$n>2$ 的 $A=E_{00}$、$B=(E_{00}+E_{11})/\sqrt2$ 虽满足非零非单位重叠，但整个矩阵平面的秩至多二，无法直接应用164.11的正则入口。它们定位本证明的转接条件，不是完整强背景的反模型；未证明每个可重构模型的每一颗种子都必须正则。删除条件整块测试、第一点门或整个固定纤维造成的缺口仍分别按285.4、283.6承担。
+
+(286.4)给出的理论与常见量子公理逐项对应：
+
+| 原关系及已得结论 | 量子理论表达 | 明确保留的条件 |
+| --- | --- | --- |
+| 同一所有有限层正锥及原单位 | $\mathcal H_N=(\mathbb C^n)^{\otimes N}$，$W_N\cong\operatorname{Herm}(\mathcal H_N)$；全部密度矩阵及复射线 | 维数及低二层入口由原供应承担 |
+| 全正对偶、proper区间、全部有限单位分解 | 全部数学POVM／PVM | 装置可用事件仍须事件供应 |
+| 原同一个正配对 | Born迹概率 $\operatorname{Tr}(E\rho)$ | 不再另加高层概率公式 |
+| 原产品、正置换、重括号、丢弃 | 同一复张量积与偏迹 | 全有限实际复合为原输入 |
+| 对所有有限相关旁观输入保正 | CP及Kraus表示 | 静态least关系不指定过程集合 |
+| 整个输入锥的分支及总质量预算 | TNI／TP、数学仪器 | 预算与事件饱和各自保留 |
+| 锐效应及整个yes支持中性 | Lüders更新 | 单点重复确认不够 |
+| 指定连续可逆保锥保单位一参数群 | 数学酉动力学及相应生成元 | 物理钟、能量、$\hbar$ 另识别；无限与近似极限另给 |
+
+所有符号都是同一原概率表、派生尺子和实际复合中的对象；候选是这些定义间的相容约束，不是用定义保证least存在。它在声明的模型前提内确定完整有限数学结构，未把额外 $3/4$、全部背景或设备实现宣称为无前提的内生定理。
+
+归属：固定纤维、单点门和单边残余、一般产品Gram端点分别复用283.1—283.4、274.15—274.19及284.5；交叠完整对偶、条件负读数和全转置排位复用285.2及[Q285J]的成熟谱工具；正则线及全有限传播准确接XIII164.2、164.11第1到第4项，单读数入口保留XX279的原归属。repo-derived的承重接合是(286.7)—(286.10)：任意合格产品割线的正则平面同时支付两侧方向检测和既有全有限传播，从而删除特制产品对公式。未将成熟线性代数单列为原创量子公理；结论为条件数学纸面推导，非Lean核验。
+
+白话：先固定一颗纯旁观者，让前两份的整条纯准备纤维把共同尺子交出来。接着在这颗旁观者上放一个两份准备，再把另一份两份准备放到第三腿的“零和一一起”上；两者彼此有重叠，又确实不同。让这两个产品点共用最低门，扣掉第一个已有的门，余下的正交方向就由这两点自己决定，不必先画一颗特殊种子。只要这条关系线里有一张覆盖全部方向的满秩截面，两侧各保留一个读数，都能看到仍纠缠的另外两份；任何镜像都会让原来合法的正门读出负数。同一条线随后接上整个有限量子结构。少掉的是特制种子和系数配方；完整背景、低二层入口与过程预算仍各自明说。$\square$
+
+## 追加锚（本行以下为增补区）
