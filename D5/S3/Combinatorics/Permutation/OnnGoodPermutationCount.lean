@@ -113,8 +113,8 @@ private theorem count_transpose (m n : ℕ) : goodCount m n = goodCount n m := b
   exact {
     toFun := fun σ => ⟨transpose σ.val,(good_transpose σ.val).mpr σ.property⟩
     invFun := fun σ => ⟨transpose σ.val,(good_transpose σ.val).mpr σ.property⟩
-    left_inv := fun σ => Subtype.ext (transpose_twice σ.val)
-    right_inv := fun σ => Subtype.ext (transpose_twice σ.val) }
+    left_inv := fun σ => Subtype.ext (show transpose (transpose σ.val) = σ.val from Equiv.coe_inj.mp rfl)
+    right_inv := fun σ => Subtype.ext (show transpose (transpose σ.val) = σ.val from Equiv.coe_inj.mp rfl) }
 
 private theorem count_one (n : ℕ) : goodCount 1 n = n.factorial := by
   unfold goodCount
@@ -264,7 +264,8 @@ private noncomputable def partitionOrderEquiv {α : Type} [DecidableEq α] (N : 
         simpa only [List.pairwise_map] using h⟩
     left_inv := fun σ => by apply Subtype.ext; ext x; simp
     right_inv := fun e => by
-      have h : (chainLayout L R hd hm).trans ((chainLayout L R hd hm).symm.trans e.positions) = e.positions := by ext x; simp
+      have h : (chainLayout L R hd hm).trans ((chainLayout L R hd hm).symm.trans e.positions) = e.positions :=
+        (Equiv.trans_cancel_left (chainLayout L R hd hm) ((chainLayout L R hd hm).symm.trans e.positions) e.positions).mpr rfl
       exact shuffle_ext _ _ h }
 
 end D5.S3.Combinatorics.Permutation.OnnGoodPermutationCount
@@ -392,15 +393,23 @@ private noncomputable def rowSplitSubsetEquiv (n k : ℕ) (hk : k ≤ n) :
 
 private theorem twoChains_unique (n : ℕ) (T B : ℕ → ℕ) (k l : ℕ)
     (hk : TwoChains n T B k) (hl : TwoChains n T B l) : k=l := by
-  have hs := (chains_iff n T B k).mp hk
-  have ht := (chains_iff n T B l).mp hl
+  have hkn := hk.1
+  have hln := hl.1
   by_contra hkl
   rcases lt_or_gt_of_ne hkl with hlt | hgt
-  · have ha := hs.2.2.2.2 k k le_rfl (lt_of_lt_of_le hlt ht.1) le_rfl (lt_of_lt_of_le hlt ht.1)
-    have hb := ht.2.2.1 k k hlt hlt
+  · have ha := (List.pairwise_append.mp hk.2.2).2.2 (T k)
+      (List.mem_reverse.mpr (List.mem_ofFn.mpr ⟨⟨0, by omega⟩, by simp⟩))
+      (B k) (List.mem_ofFn.mpr ⟨⟨0, by omega⟩, by simp⟩)
+    have hb := (List.pairwise_append.mp hl.2.1).2.2 (B k)
+      (List.mem_ofFn.mpr ⟨⟨k, hlt⟩, rfl⟩)
+      (T k) (List.mem_reverse.mpr (List.mem_ofFn.mpr ⟨⟨k, hlt⟩, rfl⟩))
     omega
-  · have ha := ht.2.2.2.2 l l le_rfl (lt_of_lt_of_le hgt hs.1) le_rfl (lt_of_lt_of_le hgt hs.1)
-    have hb := hs.2.2.1 l l hgt hgt
+  · have ha := (List.pairwise_append.mp hl.2.2).2.2 (T l)
+      (List.mem_reverse.mpr (List.mem_ofFn.mpr ⟨⟨0, by omega⟩, by simp⟩))
+      (B l) (List.mem_ofFn.mpr ⟨⟨0, by omega⟩, by simp⟩)
+    have hb := (List.pairwise_append.mp hk.2.1).2.2 (B l)
+      (List.mem_ofFn.mpr ⟨⟨l, hgt⟩, rfl⟩)
+      (T l) (List.mem_reverse.mpr (List.mem_ofFn.mpr ⟨⟨l, hgt⟩, rfl⟩))
     omega
 
 private theorem good_of_twoChains {n : ℕ} (σ : ((Fin 2 × Fin n) ≃ Fin (2 * n))) (k : ℕ)
@@ -668,10 +677,10 @@ private theorem typeA_transpose (σ : ((Fin 3 × Fin 3) ≃ Fin (3 * 3))) :
 private noncomputable def typeABEquiv : {σ : ((Fin 3 × Fin 3) ≃ Fin (3 * 3)) // TypeA (entry σ)} ≃
     {σ : ((Fin 3 × Fin 3) ≃ Fin (3 * 3)) // TypeB (entry σ)} where
   toFun σ := ⟨transpose σ.val,(typeA_transpose (transpose σ.val)).mp
-    (by simpa only [transpose_twice] using σ.property)⟩
+    (by change TypeA (entry σ.val); exact σ.property)⟩
   invFun σ := ⟨transpose σ.val,(typeA_transpose σ.val).mpr σ.property⟩
-  left_inv σ := Subtype.ext (transpose_twice σ.val)
-  right_inv σ := Subtype.ext (transpose_twice σ.val)
+  left_inv σ := Subtype.ext (show transpose (transpose σ.val) = σ.val from Equiv.coe_inj.mp rfl)
+  right_inv σ := Subtype.ext (show transpose (transpose σ.val) = σ.val from Equiv.coe_inj.mp rfl)
 
 private theorem typeB_card : Nat.card {σ : ((Fin 3 × Fin 3) ≃ Fin (3 * 3)) // TypeB (entry σ)} = 36 := by
   rw [← Nat.card_congr typeABEquiv,typeA_card]

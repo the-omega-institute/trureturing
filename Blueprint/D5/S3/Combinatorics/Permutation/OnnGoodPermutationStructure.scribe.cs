@@ -29,15 +29,8 @@ internal sealed class OnnGoodPermutationStructureDocument : IScribeDocumentDefin
                 "The two increasing lists meet at the center and impose c<b<e<d<a and g<h<e<f<i.", true),
             Node("Structure", "All rectangular structural cases", StructureFormula(),
                 "One-dimensional arrays have no adjacent square. Two-row and two-column arrays have a unique chain split. The only remaining case is three by three, with TypeA or TypeB.", true),
-            Node("SplitOrder", "Pairwise inequalities along the chains", SplitFormula(),
-                "Within each side of k the top row decreases and the bottom row increases. Every bottom-prefix entry lies below every top-prefix entry, and every top-suffix entry lies below every bottom-suffix entry.", true),
-            Node("chains_iff", "Lists and indexed inequalities", AllN("n", AllRows(AllN("k",
-                IffF(Call("TwoChains", V("n"), V("T"), V("B"), V("k")), Call("SplitOrder", V("n"), V("T"), V("B"), V("k")))))),
-                "Expanding pairwise order on concatenated lists gives exactly the indexed inequalities."),
             Node("transpose", "Transposing a rank array", TransposeFormula(),
                 "Swap the two coordinates and transport the label through finCongr along m*n=n*m. The local proof h is obtained by natural-number arithmetic.", true),
-            Node("transpose_twice", "Transposition is involutive", Rect(Equal(Call("transpose", Call("transpose", V("s"))), V("s"))),
-                "Both coordinate swaps cancel, and finCongr preserves label values."),
             Node("good_transpose", "Goodness and transposition", Rect(IffF(Call("Good", Call("transpose", V("s"))), Call("Good", V("s")))),
                 "Transposition exchanges the two off-diagonal entries and preserves both extreme-position conditions."),
             Node("two_good_iff", "A unique split in every width", AllN("n", All("s", Array(D(2), V("n")),
@@ -145,17 +138,6 @@ internal sealed class OnnGoodPermutationStructureDocument : IScribeDocumentDefin
         AndF(Equal(V("m"), D(2)), UniqueSplit(V("n"), Row(D(0)), Row(D(1)))),
         AndF(Equal(V("n"), D(2)), UniqueSplit(V("m"), Lam("j", Nat, Call("entry", V("s"), V("j"), D(0))), Lam("j", Nat, Call("entry", V("s"), V("j"), D(1))))),
         AndF(Equal(V("m"), D(3)), Equal(V("n"), D(3)), OrF(Call("TypeA", Call("entry", V("s"))), Call("TypeB", Call("entry", V("s")))))))));
-    private static Formula SplitFormula()
-    {
-        var i = V("i"); var j = V("j"); var k = V("k"); var n = V("n");
-        Formula Ti(Formula x) => App(V("T"), x); Formula Bi(Formula x) => App(V("B"), x);
-        Formula IJ(Formula f) => AllN("i", AllN("j", f));
-        return AllN("n", AllRows(AllN("k", Equal(Call("SplitOrder", n, V("T"), V("B"), k), Parenthesized(AndF(
-            LeF(k, n), IJ(Imp(LtF(i, j), Imp(LtF(j, k), AndF(LtF(Bi(i), Bi(j)), LtF(Ti(j), Ti(i)))))),
-            IJ(Imp(LtF(i, k), Imp(LtF(j, k), LtF(Bi(i), Ti(j))))),
-            IJ(Imp(LeF(k, i), Imp(LtF(i, j), Imp(LtF(j, n), AndF(LtF(Ti(j), Ti(i)), LtF(Bi(i), Bi(j))))))),
-            IJ(Imp(LeF(k, i), Imp(LtF(i, n), Imp(LeF(k, j), Imp(LtF(j, n), LtF(Ti(i), Bi(j)))))))))))));
-    }
     private static Formula TransposeFormula()
     {
         var swap = App(Q("Equiv", "prodComm"), Call("Fin", V("n")), Call("Fin", V("m")));
