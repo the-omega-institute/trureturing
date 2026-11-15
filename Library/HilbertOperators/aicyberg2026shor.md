@@ -5,10 +5,11 @@ year: 2026
 title: Finite-register phase estimation and spectral Shor order finding
 doi: null
 url: https://github.com/solanaqubits/leanbook/tree/9b742770a2a5dbcf30cf9abc44e711194e957a00
-claim: Actual computational-input modular phase-estimation marginal, circular nearest-grid bound, finite rational convergent correspondence and conditional Shor candidate membership.
+claim: Actual computational-input modular phase-estimation marginal, circular nearest-grid bound, finite rational convergent correspondence, logarithmic list length and conditional Shor candidate membership.
 strata_touched:
   - D5/S3/Quantum/ShorCountingMarginal
   - D5/S1/Depth/ContinuedFractions/FiniteRationalConvergents
+  - D5/S1/Depth/ContinuedFractions/FiniteRationalConvergentsLength
   - D5/S3/Quantum/ShorContinuedFractions
 license: Apache-2.0
 triage: anchor
@@ -42,7 +43,13 @@ marginal at least one over the period times four over pi squared.
 No divisibility between period and control dimension is assumed.
 
 The rational continued-fraction slice computes a finite Euclidean list and proves
-that its entries are exactly Mathlib's totalized real convergents. The candidate
+that its entries are exactly Mathlib's totalized real convergents. For every
+rational x, including zero, negative and integral inputs, its length is at most
+2 * Nat.log 2 x.den + 1. The retained length proof and its two-step denominator
+sum estimate are the original supplier declarations second_den_sum_le and
+convergents_length_log. Their receiving module imports the existing list owner;
+the original tail_den_lt is public for this use. The bound counts list entries
+or Euclidean stages. The candidate
 list uses only the measured integer y, control dimension Q and modulus N,
 filtering by reduced denominator less than N. For Q equal to two to the control
 width and N squared at most Q, a circular nearest sample for s/r places the
@@ -52,8 +59,8 @@ observable selector. A modular exponentiation check alone certifies an order
 multiple. The transplanted slice includes neither an aggregate quantum success
 bound, random coprimality rate, factoring reduction, full bit or gate complexity,
 hardware claims, arbitrary control dimensions nor a bound for every conditioned
-posterior comb. Length bounds, checked-list machinery and suite packaging from
-the supplier are outside this slice.
+posterior comb. Other supplier length declarations, checked-list machinery and
+suite packaging are outside this slice.
 
 Retire each transplanted slice when equivalent declarations occur in the
 Mathlib revision actually pinned by this repository, replacing that slice
