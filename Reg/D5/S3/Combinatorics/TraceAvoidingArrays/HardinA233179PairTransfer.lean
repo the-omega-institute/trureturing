@@ -173,10 +173,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 end Recurrence
 namespace ClassRep
-private abbrev Col := Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3
-private def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
-  Equiv.prodCongr e (Equiv.prodCongr e (Equiv.prodCongr e
-    (Equiv.prodCongr e (Equiv.prodCongr e e))))
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer (Col relabel)
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Col) (fun _ => Col)
 def actual : Realization signature :=
