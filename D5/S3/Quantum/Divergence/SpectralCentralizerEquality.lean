@@ -178,7 +178,7 @@ theorem spectral_overlap_optimal
 
 set_option maxHeartbeats 1200000 in
 /-- Compressed centralization suffices for the literal original equality for
-every convex generator with real-finite original infimum. The displayed
+every convex generator, allowing extended-valued original divergence. The displayed
 spectral family has an actual whole-complex-L1 realization with series outputs. -/
 theorem spectral_centralizer_equality
     (C : Op ψ) (hC0 : nonnegative ψ C) (hC1 : atMostOne ψ C)
@@ -186,8 +186,7 @@ theorem spectral_centralizer_equality
     (hCr : coefficient ψ C = ρ.toLinearMap)
     (hCs : coefficient ψ (complement ψ C) = σ.toLinearMap)
     (hcentral : compressedCentralizer ψ C)
-    {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
-    (hfinite : ∃ c : ℝ, maximalValue.{u} M ρ σ hf = (c : EReal)) :
+    {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f) :
     let F := GNSSpectralMoments.spectralFamily ρ σ ψ C hC0 hC1 hc hCr hCs
     (∀ t : ℝ, 0 < t → (overlap F t 1).re = overlapValue M ρ σ t) ∧
     maximalValue.{u} M ρ σ hf = originalHockeyValue.{u} M ρ σ hf ∧
@@ -205,8 +204,11 @@ theorem spectral_centralizer_equality
       (D5.S3.Analytic.Convexity.CurvatureHingeRepresentation.curvature hf).support :=
     (finite_compatibility_iff_simultaneous M ρ σ hρ hσ hρs hσs _).mpr
       ⟨F, fun t _ => hopt t t.property⟩
-  have heq := (original_operational_equality_iff_finite_compatibility.{u}
-    M ρ σ hρ hσ hρs hσs hf hfinite).mpr hcompat
+  have heq : maximalValue.{u} M ρ σ hf = originalHockeyValue.{u} M ρ σ hf := by
+    rw [NormalOverlapOperational.originalHockeyValue_eq_overlap.{u}
+      M ρ σ hρ hσ hρs hσs hf]
+    exact (NormalOverlapCurvatureEquality.finite_compatibility_implies_original_equality.{u}
+      M ρ σ hρ hσ hρs hσs hf hcompat).1
   obtain ⟨Γ, hagree, hn, hp, hm, hb, hl, hr, hΓE, _⟩ :=
     standard_posterior_realization M ρ σ hρ hσ hρs hσs F
   exact ⟨hopt, heq, Γ, hagree, hn, hp, hm, hb, hl, hr,
