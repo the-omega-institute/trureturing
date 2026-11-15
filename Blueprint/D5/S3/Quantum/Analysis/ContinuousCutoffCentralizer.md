@@ -136,7 +136,7 @@ Lean statement: `D5/S3/Quantum/Analysis/ContinuousCutoffCentralizer.all_overlap_
 
 For any complete complex Hilbert space H, any concrete von Neumann algebra N on H, any C in N with 0<=C<=1, and any vector Omega, simultaneous optimality of every actual continuous overlap G_t for t>0 is equivalent to centralization of PCP on PNP for the original vector coefficient. All support projections are constructed in N. No separability, finite dimension, faithfulness, Borel calculus, complete positivity, Stinespring map, or GNS representation normality is assumed. This operator criterion alone does not establish the original full-curvature maximal-hockey versus maximal-f classification: the original continuous-moment supplier and whole-L1 realization bridge are separate obligations.
 
-The ingredients are standard continuous functional calculus, orthogonal range supports, positive-square inequalities, and continuity of vector coefficients. The proof uses these ingredients directly on arbitrary Hilbert spaces. Escape registration remains unfinished under the canonical template issue #29713; no declared_validated status is asserted.
+The ingredients are standard continuous functional calculus, orthogonal range supports, positive-square inequalities, and continuity of vector coefficients. The proof uses these ingredients directly on arbitrary Hilbert spaces.
 
 ## References
 
