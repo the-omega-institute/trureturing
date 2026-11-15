@@ -132,21 +132,18 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output := fun _ ⟨F, field, n, q, _⟩ => by
-    letI := field
-    exact Algebra F n q
+  Output := fun _ _ => Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 abbrev actual : Realization signature.{u} :=
   realize signature (fun _ ⟨_, field, n, _, _⟩ v => by
     letI := field
-    exact positivePower v (n - 1)) (fun e => nomatch e)
+    classical
+    exact decide (positivePower v (n - 1) ≠ 0)) (fun e => nomatch e)
 
 abbrev rejected : Realization signature.{u} :=
-  realize signature (fun _ ⟨_, field, _, _, _⟩ _ => by
-    letI := field
-    exact 0) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
@@ -154,7 +151,7 @@ abbrev arena : Arena where
     (q : Bool) (i : Fin 3) (v : Algebra F n q)
     (hv : v ∈ Submodule.span F (Set.range (fun j : {j : Fin 3 // j ≠ i} =>
       delta F (Model n q) (generator n q j.val)))) (hne : v ≠ 0),
-      r.readout () ⟨F, field, n, q, i⟩ v ≠ 0
+      r.readout () ⟨F, field, n, q, i⟩ v = true
 
 private abbrev witness (F : Type u) [Field F] : Algebra F 2 false :=
   delta F (Model 2 false) (generator 2 false 0)
@@ -173,13 +170,15 @@ private theorem witness_ne (F : Type u) [Field F] : witness F ≠ 0 := by
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   let F := ULift.{u} ℚ
-  exact h 2 (by decide) false 2 (witness F) (witness_mem F) (witness_ne F) rfl
+  have H := h 2 (by decide) false 2 (witness F) (witness_mem F) (witness_ne F)
+  cases H
 
 abbrev pairAudit : Registration arena.{u}
     (type_of% @_root_.D5.S0.Certificates.Algebra.BergmanCyclicCoefficients.pair_span_nonvanishing.{u}) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S0.Certificates.Algebra.BergmanCyclicCoefficients.pair_span_nonvanishing.{u},
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using
+    (@_root_.D5.S0.Certificates.Algebra.BergmanCyclicCoefficients.pair_span_nonvanishing.{u}),
     rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -197,8 +196,9 @@ abbrev pairAudit : Registration arena.{u}
     intro he
     have hn := pair_span_nonvanishing 2 (by decide) false 2
       (witness F) (witness_mem F) (witness_ne F)
-    apply hn
-    simpa [actual, realize, p, positivePower] using he
+    have hz : positivePower (0 : Algebra F 2 false) (2 - 1) = 0 := by
+      simp [positivePower]
+    simpa [actual, realize, p, hn, hz] using he
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S0.Certificates.Algebra.BergmanCyclicCoefficients.pair_span_nonvanishing.{u})
@@ -224,12 +224,11 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0, 2, 4, 5]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "fn", "arg"]
-      stateBinder := 6
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+      stateOperand := some #["fn", "arg", "fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
