@@ -59,11 +59,13 @@ def T : Matrix (Fin 4) (Fin 4) ℤ :=
 def initial : Fin 4 → ℤ := ![3, 6, 0, 0]
 def terminal : Fin 4 → ℤ := ![0, 0, 1, 1]
 def W : Fin 5 → Fin 4 → ℤ :=
-  ![![3, 6, 0, 0],
-    ![12, 6, 0, 24],
-    ![30, 24, 24, 24],
-    ![84, 60, 72, 144],
-    ![228, 168, 288, 384]]
+  fun k => Fin.append (fun i : Fin 2 =>
+    (if i = 0 then 3 else 6) * (HardinColumnContinuations.vB k.val i : ℤ))
+    ((![![0, 0],
+      ![0, 24],
+      ![24, 24],
+      ![72, 144],
+      ![288, 384]]) k)
 
 /-- Literal row-major canonical arrays, with columns swept only to count bonds. -/
 def a (n : ℕ) : ℕ :=
