@@ -136,9 +136,10 @@ internal sealed class UnitSupportBurnolPacketDocument : IScribeDocumentDefinitio
                 + "Shrinking a can keep an absolute L1 budget bounded, but also "
                 + "shrinks the signal and its admissible absolute error. Scaling an "
                 + "entire test by a multiplies its Weil quadratic value by |a|^2. "
-                + "The obstruction therefore concerns the packet's specified unit "
-                + "readout, or a fixed signal-to-error ratio with a specified norm "
-                + "budget. It asserts no amplitude lower bound for an arbitrarily "
+                + "For a nonzero target and e<|a|, the normalized bound is "
+                + "(L0/|a|)*S>=1-e/|a|. Thus the unit-readout bound controls norm "
+                + "relative to signal, not a signal-to-error ratio alone. It asserts "
+                + "no amplitude lower bound for an arbitrarily "
                 + "rescaled, unnormalized negative witness.")),
             Paragraph(Text(
                 "What survives is finite conditional interpolation, the existing "
