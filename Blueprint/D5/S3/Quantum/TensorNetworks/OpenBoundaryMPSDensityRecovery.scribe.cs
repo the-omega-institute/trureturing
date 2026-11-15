@@ -27,6 +27,10 @@ internal sealed class OpenBoundaryMPSDensityRecoveryDocument : IScribeDocumentDe
                 "This is exactly OpenBoundaryMPSMarginalBirationality.reconstructedMatrix evaluated at the same three-site coherent tensor t. The supplier's chartPoly, reconstructedLeft and triple_gauge are reused with their original definitions and proof. No second support-rigidity or core-reconstruction theorem is introduced."),
             Definition("ObservableChart", "An intrinsic condition on the observed density",
                 "There exists a complex vector v on three-bit words such that t = rawPrefix 3 m ψ times v has chartPoly(t) nonzero and transfer(canonicalCore t) is injective on all complex two by two matrices. Both tests depend only on the observed Q₃. The chart retains every factor of the supplier polynomial, including the reconstructed sum determinant. This definition asserts neither nonemptiness nor density."),
+            Describe.Lean(DescribeId.Create("open-density-tail-gram"),
+                DeclarationHandle.Create(Module + ".tail_gram"), H("The original right-environment Gram"),
+                StatementSource.FromAuthor(TailGramFormula()), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every core, right boundary and natural complement length m, tailMap A r m times its conjugate transpose equals transfer(A) iterated m times on rr†. The interior common-core dictionary consumes this original right-tail identity; its separate left Gram uses snoc words and the dual transfer."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("observable-chart-phase-recovery"),
                 DeclarationHandle.Create(Module + ".observable_chart_phase_recovery"),
                 H("Phase recovery against every actual competitor"),
@@ -46,6 +50,19 @@ internal sealed class OpenBoundaryMPSDensityRecoveryDocument : IScribeDocumentDe
             DeclarationHandle.Create(Module + "." + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula TailGramFormula()
+    {
+        Formula a = X("A"), r = X("r"), m = X("m");
+        Formula tail = At(Local("tailMap"), a, r, m);
+        Formula gram = At(Q("HMul", "hMul"), tail, At(Q("Matrix", "conjTranspose"), tail));
+        Formula rhs = At(Q("Function", "iterate"), At(Local("transfer"), a), m,
+            At(Q("Matrix", "vecMulVec"), r, At(Q("star"), r)));
+        Formula bond = Supplier("PeriodicMPSParentIntersection", "Bond");
+        Formula boundary = Arrow(At(Q("Fin"), D(2)), Complexes());
+        return Disp(All("A", Arrow(At(Q("Fin"), D(2)), bond), All("r", boundary,
+            All("m", Seq(Mathbb, Grp(X("N"))), Eq(gram, rhs)))));
+    }
 
     private static Formula RecoveryFormula()
     {
