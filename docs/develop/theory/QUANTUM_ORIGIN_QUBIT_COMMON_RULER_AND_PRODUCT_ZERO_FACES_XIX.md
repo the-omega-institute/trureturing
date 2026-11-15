@@ -827,3 +827,228 @@ $$
 来源与范围：有限维支撑、相对内部、谱分解和线性像是成熟工具；XIII160.10—160.11已有原效应邻域的真面／正支撑版本，不把其邻域直接认作本章中央种子。265.2在未预给效应零关系且允许薄线与平直边时，补出中央种子自身的全生成桥；265.5—265.6复用XVIII220的商层级，新增参数化的准确最少返回基数及显式内部混合。上述接合归repo-derived，不申领惯性、支持面机制、分类或全球原创；没有取得删除中心对称的新定理。全部内容为纯理论纸面推导，不宣称Lean核验。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 266. 重心伙伴、矩形条件化与中央性的内生恢复
+
+**定义 266.1（不给镜面对称的完整候选）。** 完整保留XVIII250.1的非平凡强全有限背景，记 $V_N=W_N$。对整个有限维紧底 $K$，条件SC要求每对不同原纯点生成的整个实际面 $B=F_K(p,q)$ 是非线段的严格凸体，不规定维数，也不预给中心对称。令 $b_B$ 是 $B$ 在自身仿射包中的体积重心；不同的常数倍体积给同一点。直线 $pb_B$ 与完整边界的另一交点记为 $\tau_B(p)$。定义
+
+$$
+pS_bq\ \Longleftrightarrow\ p\ne q,\ q=\tau_{F_K(p,q)}(p),
+\quad O_b(p)=\{q:pS_bq\},
+\quad
+\mathsf B_b:\ \operatorname{conv}O_b(p)\cap\operatorname{ri}K=\varnothing\ (p\in P).
+\qquad
+\boxed{\mathsf Q_b:=\mathsf{SC}_3+\mathsf B_{b,3}.}
+\tag{266.1}
+$$
+
+重心与伙伴都由原面决定，不另外输入反射、极性、测量或坐标。该候选只在整个 $K_3$ 加两项几何条件；不另假设 $K_6$ 的几何。相对265.1，它删除中央性和单份连通的输入，但重新明确保留非线段与严格凸；不把这项前件交换冒称为逐项无条件减弱。
+
+**定理 266.2（重心伙伴付清原射影面格）。** 在266.1的背景及 $\mathsf Q_b$ 下，重心伙伴关系在 $K_3$ 上给有限秩、至少八阶的各向异性Hermitian射影几何；其全部射影子空间与全部原实际面准确对应，全部非空真原面暴露。原 $K_1,K_2$ 经纯旁观嵌入继承同一除环的子空间面几何及重心伙伴关系。这些结论尚不声称原凸体是仿射PSD体。
+
+证明。严格凸体的整个边界都是纯点。以重心作原点，其径向式 $p=\rho(v)v$ 给 $\tau_B(p)=-\rho(-v)v$，故伙伴为连续无不动点对合。任一伙伴弦经过 $\operatorname{ri}B$，所以两端生成整个 $B$。265.2的全生成证明只需要这条内弦，不需要中点：含 $p$ 及全部伙伴的原面仍是整个 $K$。同一支撑论证因而给
+
+$$
+\mathsf B_b\ \Longleftrightarrow\
+p\notin G_b(p):=F_K(O_b(p))\quad(p\in P).
+\tag{266.2}
+$$
+
+若原纯点 $q\in G_b(p)$ 却不是伙伴，取 $p$ 在 $F(p,q)$ 的伙伴 $r$。有 $r\in G_b(p)$、$r\ne q$；严格凸性使 $q,r$ 生成同一整个面，迫 $p\in G_b(p)$，矛盾。故 $P\cap G_b(p)=O_b(p)$，有限纯分解给 $G_b(p)=\operatorname{conv}O_b(p)$。由行面性得到ZP：一个参照的两个伙伴生成的面内，全部纯点仍是该参照的伙伴。正负配方拆分再给FI：若有限两两伙伴纯族有非平凡仿射依赖，将系数正负两组归一得到相同凸混合。选择正组中的一个点 $p$，负组混合在行面 $G_b(p)$ 内，面性迫使正组中的 $p$ 也在该面内，与(266.2)矛盾。因此有限两两伙伴正交纯族仿射独立。
+
+三份的秩门槛由原产品效应造面链，而不把效应的0/1端点认作重心伙伴。取一张非恒定原局部效应，在其纯最大、最小点间归一为 $e_0,e_1=u-e_0$。XIII161.1给八个纯产品字 $w_s$；产品效应组成原测试且 $E_s(w_t)=\delta_{st}$。按任意顺序，尾部效应之和的零面给八级严格实际面链 $F_1\subsetneq\cdots\subsetneq F_8=K_3$。若 $F_j$ 已含两两正交的 $r_1,\ldots,r_j$，取纯 $q_0\in F_{j+1}\setminus F_j$，依次置 $q_i=\tau_{F(r_i,q_{i-1})}(r_i)$。ZP保持对先前 $r_\ell$ 的正交；若 $q_i\in F_j$，伙伴两端生成的整个面会迫 $q_{i-1}\in F_j$，矛盾。故 $q_j$ 可补为第 $j+1$ 个正交点。由此取得至少八个正交点，FI又给有限的原维数上界。
+
+对非正交的不同 $p,q$，在 $F(p,q)$ 中以 $p$ 的伙伴替换 $q$；对已正交的点对，换成同面第三纯点。ZP与唯一伙伴使共同正交集不变，替换前后恰有一者与 $p$ 正交，准确满足[Q266P] Definition4.1。直接复用Theorem4.5、Lemmas3.9与4.2，得到各向异性Hermitian空间 $H_D$ 的纯射线几何。FI及有限Gram—Schmidt使其代数维数有限。
+
+实际二元面与完整代数线的双向对应仍须补齐。ZP先给 $P\cap F(p,q)\subseteq\{p,q\}^{\perp\perp}$；该二维Hermitian子空间内，$p$ 的正交伙伴射线唯一。若 $r$ 在这条代数线，$F(p,r)$ 中的原伙伴只能是同一个点，故 $F(p,r)=F(p,q)$。反向包含成立。任意实际面的纯集因而对完整代数线闭合，即某子空间的全部射线；反过来，有限维任意子空间是有限个正交超平面的交，相应行面之交给整个原实际面。每个coatom对应原最大真面，在其相对内部取支撑便暴露它；任意非空真面是有限个这些面的交，非负支撑之和暴露该交。
+
+最后，XIII161.1的纯旁观映射是到整个实际面的保单位仿射同构。重心、伙伴及二元面在该同构下准确运输；局部伙伴集合嵌入整个伙伴集合，故不兜回也下降。因此 $K_1,K_2$ 具有上述子空间面几何。此处只用了原最小／最大张量界、完整效应、单位及层析，不预给共同测量。$\square$
+
+**定理 266.3（原张量秩乘法只留下复数）。** 266.2中的共同除环可取 $D=\mathbb C$。若 $r$ 是 $K_1$ 的射影秩，则 $r\ge2$，$K_2,K_3$ 的射影秩分别为 $r^2,r^3$，相应原锥实维数分别为 $r^2,r^4,r^6$。这些结论只识别标签、面及维数，尚未识别原仿射混合为矩阵混合。
+
+证明。至少八阶的原面格是有限维、模且不可约的。直接复用[Q266L] Lemmas2—5及Theorem1：原纯域成为紧连通的拓扑射影空间，允许连续射影坐标 $D\in\{\mathbb R,\mathbb C,\mathbb H\}$，并有保面同胚至标准Hermitian密度体。其秩 $a$ 面锥的实维数为
+
+$$
+d_\beta(a)=a+\frac\beta2a(a-1),\qquad \beta=\dim_{\mathbb R}D\in\{1,2,4\}.
+\tag{266.3}
+$$
+
+现对 $1|1$ 及 $2|1$ 原复合证明秩乘法。设因子秩为 $a,b$，联合秩为 $c$。各选一组射影坐标基，即 $a,b$ 条独立射线 $p_i,q_j$；暴露“其余基点所生成超平面”的正泛函 $f_i,g_j$，其产品在 $ab$ 个产品纯点中只对一个点正。没有一个产品点能在其余产品点生成的实际面内，故这些射影点线性独立，$c\ge ab$。
+
+取两组基点的严格正混合 $x,y$，分别为局部内部态。$x\otimes y$ 也是原联合内部态：若原正泛函 $h$ 在其上为零，正双线性型 $h(v\otimes w)$ 先用 $x$ 的内部性、再用 $y$ 的内部性，迫使它对全部局部正输入为零；局部生成性与层析给 $h=0$。因此 $ab$ 个产品点生成整个联合实际面，$c\le ab$。这也支付产品像的射影满张成，不能仅以原实张量张成替代它。
+
+非平凡 $K_1$ 给 $r>1$。由纯旁观子空间面使用同一 $\beta$，实张量维数给 $d_\beta(r^2)=d_\beta(r)^2$；而
+
+$$
+d_\beta(ab)-d_\beta(a)d_\beta(b)
+=\frac{\beta(2-\beta)}4ab(a-1)(b-1).
+\tag{266.4}
+$$
+
+故只剩 $\beta=2$，再得联合秩 $r^2,r^3$。
+
+原正交关系也可在这些连续复射影坐标中标准化。运输266.2的Hermitian形式，在一条正交坐标线上写两个对角系数 $\alpha,\beta$。标签 $(1,z)$ 的伙伴 $(1,w(z))$ 满足 $w(z)=-\beta^{-1}(z^*)^{-1}\alpha$。原伙伴在固定实际面内连续，故 $z\mapsto z^*$ 连续；加法把非零处连续延至零。连续复域对合只有恒等与共轭。恒等对合的二维复对称形式必有各向同性向量，故排除；共轭分支的各向异性迫Hermitian形式定号。缩放正交基后，原伙伴关系就是标准正定复Hermitian正交关系。这不要求把原混态或效应先识别成矩阵。$\square$
+
+**定理 266.4（保留第一因子的Segre正规形与准确产品零面）。** 置 $s=r^2$。可重选 $K_3$ 的抽象射影标签，使原 $2|1$ 纯产品为
+
+$$
+(p_a,p_b)\longmapsto[a\otimes\eta(b)],
+\qquad a\in\mathbf P(\mathbb C^s),\quad b\in\mathbf P(\mathbb C^r),
+\tag{266.5}
+$$
+
+其中第一因子的原正交标签不变；$\eta$ 只需将全部第二因子超平面双射至全部超平面，不要求保持原极性。若原正泛函 $f_a,g_b$ 分别暴露原面 $a^\perp,b^\perp$，选择非零复线性行 $\ell_b$ 满足 $\ker\ell_b=\eta(b^\perp)$，并置 $c_b=\ell_b^T$，则
+
+$$
+Z(f_a\otimes g_b)
+=F_3\bigl(\ker(a^\dagger\otimes\ell_b)\bigr),
+\qquad
+(f_a\otimes g_b)(z_M)=0\ \Longleftrightarrow\ a^\dagger Mc_b=0,
+\tag{266.6}
+$$
+
+其中 $z_M$ 是标签 $[\operatorname{vec}M]$ 的原纯点，$0\ne M:\mathbb C^r\to\mathbb C^s$，$\operatorname{vec}M=\sum_jMe_j\otimes e_j$。
+
+证明。纯产品由丢弃恢复因子，故映射单射；纯旁观实际面同构将每条产品几何的ruling line映到完整目标射影线。因此它是Zanella [Q266Z] 所定义的embedding。对标准Segre regular linear morphism应用Theorem1，$n_0=s-1\ge3$、$n_1=r-1\ge1$，准确给 $\chi=(\mathrm{id},\eta)\gamma\psi$。266.3已付产品像射影满张成；源、目标同为 $sr-1$ 维。Proposition1.5将 $\psi$ 分成投影与collineation，满秩迫投影中心为空。吸收目标collineation只是在抽象标签上换坐标，不宣称它复线性、保拓扑或保目标原极性。
+
+$r=2$ 时，[Q266Z]明确把射影直线的任意点双射也称collineation；此时超平面是单点，仍全部双射。因此不把 $\eta$ 升为半线性、Möbius或酉变换，尤其不使用 $\eta(b^\perp)=(\eta b)^\perp$。随 $b$ 变化，$[c_b]$ 遍历全部复纯射线。
+
+原正产品泛函的零面包含两族零产品点，故包含对应于
+
+$$
+a^\perp\otimes\mathbb C^r+\mathbb C^s\otimes\ker\ell_b
+=\ker(a^\dagger\otimes\ell_b)
+\tag{266.7}
+$$
+
+的原面。该子空间为超平面，即coatom；泛函在 $p_a\otimes p_b$ 上严格正，零面为真面，所以恰为该coatom。对 $\operatorname{vec}M$ 求值即得(266.6)。这里没有假设目标原polarity为张量积polarity。$\square$
+
+**定理 266.5（矩形条件化给原锥自同构，重心迫弦平衡）。** 在266.1条件下，原 $K_2$ 的全部二元实际面中心对称。
+
+证明。定义原张量的实线性条件化 $T_M(g)=(\mathrm{id}\otimes g)(z_M)$。最大张量界给 $T_M(C_1^*)\subseteq C_2$。原正向量的最小支持子空间，准确由全部coatom泛函 $f_a$ 的零值集合决定；(266.6)因而给
+
+$$
+Mc_b=0\ \Longleftrightarrow\ T_M(g_b)=0,
+\qquad
+Mc_b\ne0\ \Longrightarrow\ T_M(g_b)\in\mathbb R_{>0}p_{Mc_b}.
+\tag{266.8}
+$$
+
+若 $M$ 满列秩，令 $L=\operatorname{im}M$。这些正像命中面锥 $C_2(L)$ 的全部纯射线，所以其张成包含于 $\operatorname{im}T_M$；两者所需维数均为 $r^2=\dim V_1^*$。于是 $T_M$ 为到 $\operatorname{span}C_2(L)$ 的线性双射。原正性给 $T_M(C_1^*)\subseteq C_2\cap\operatorname{span}C_2(L)=C_2(L)$；反向包含由已命中的全部纯射线生成面锥给出。因此这是真正的序同构，正逆已付，不要求预先证明所选 $g_b$ 生成整个对偶锥。
+
+固定满列秩 $M_0$，并置 $L=\operatorname{im}M_0$。对任意 $G\in GL(L)$，
+
+$$
+A_G=T_{GM_0}T_{M_0}^{-1}
+\tag{266.9}
+$$
+
+是原面锥 $C_2(L)$ 的自同构。对同一个 $g_b$，输入射线为 $p_{M_0c_b}$，输出射线为 $p_{GM_0c_b}$；$c_b$ 遍历全部射线，故其在原第一因子的标签作用就是 $[v]\mapsto[Gv]$。同一 $c_b$ 在比较中消去，完全不需要第二因子 $\eta$ 保极性。
+
+取任意二维子空间 $S\subset\mathbb C^s$，选秩 $r$ 的 $L\supseteq S$，并取保持 $S$ 的原第一因子酉变换 $U\in U(L)$。$A_U$ 归一化成原 $B=F_2(S)$ 的自projectivity $\phi_U(x)=A_Ux/u_2(A_Ux)$。它保原第一因子的正交伙伴，也就把每条重心伙伴弦映到另一条这样的弦。两条不同弦只有一个公共交点，故 $\phi_U(b_B)=b_B$。
+
+此处所需的凸几何桥可直接证明。任一固定有界凸体体积重心的自projectivity必为仿射。平移重心至零，写 $\phi(x)=Lx/(1+c\cdot x)$，分母在体上正，$d=\dim B$。Jacobian为 $|\det L|(1+c\cdot x)^{-d-1}$；由像体重心仍为零，变量代换及 $L$ 可逆给 $\int_Bx(1+c\cdot x)^{-d-2}\,dx=0$。与 $\int_Bc\cdot x\,dx=0$ 相减，得
+
+$$
+\int_B t\bigl((1+t)^{-d-2}-1\bigr)\,dx=0,
+\qquad t=c\cdot x.
+\tag{266.10}
+$$
+
+$t\ne0$ 时被积函数严格负，故 $c=0$。于是 $\phi_U$ 仿射。对任意伙伴 $p,q$，可选保持 $S$ 的酉 $U$ 交换两条正交标签；它固定原重心并交换 $p,q$，所以原重心只能是 $(p+q)/2$。全部重心弦因此平衡，整个 $B$ 中心对称。此处的对称变换是从三复制原条件化构造出来的，不是预给物理可逆操作。$\square$
+
+**定理 266.6（先在二份取得原仿射PSD坐标）。** 存在保单位实线性序同构 $\alpha_2:V_2\to\operatorname{Herm}_s(\mathbb C)$，使 $\alpha_2(p_v)=P_v$，$s=r^2\ge4$；此处 $v$ 仍是原第一因子的同一正交标签。
+
+证明。266.5给每个正交纯点对之和等于其实际二元面的两倍中心。完整正交基可由有限次二维酉旋转连接，每步只改变同一个二维支持中的一对，所以完整frame的原和 $S=\sum_i p_i$ 与基无关。对任一原正泛函 $f$，$v\mapsto f(p_v)$ 是非负frame function，总和恒为 $f(S)$。先以子空间内的正交基和定义基无关的投影测度，再直接复用有限维Gleason定理[Q266G, Theorem3.3]；非零 $f$ 以 $f(S)>0$ 归一，零泛函单列。由于 $s\ge4$，没有二维例外，得到唯一 $A_f\succeq0$，使 $f(p_v)=\operatorname{Tr}(A_fP_v)$。
+
+原单位是有限维对偶序单位，任意实线性泛函都是两个正泛函之差；Gleason唯一性使 $f\mapsto A_f$ 线性延拓。取其转置 $\pi:\operatorname{Herm}_s\to V_2$，有 $\pi(P_v)=p_v$，因而 $\pi(\operatorname{PSD}_s)=C_2$。266.3给两载体同维 $s^2$，纯点张成再给 $\pi$ 可逆。$u_2(p_v)=1$ 使 $A_{u_2}=I_s$，所以逆映射 $\alpha_2=\pi^{-1}$ 保单位。共同测量没有作为本步前件；它在原序同构成立后才取得。$\square$
+
+**定理 266.7（纯条件化方向先给单Kraus，再给整个三份PSD）。** 原 $C_3$ 与复 $\operatorname{PSD}_{sr}$ 实线性序同构；以原单位归一后，原整个 $K_3$ 的全部二元实际面中心对称。此处的临时三份坐标不预称 $\theta^{\otimes3}$。
+
+证明。取等距满列秩 $M_0:\mathbb C^r\hookrightarrow\mathbb C^s$，由266.5—266.6定义
+
+$$
+J(g)=M_0^\dagger\alpha_2(T_{M_0}g)M_0,
+\qquad
+\Phi_z=\alpha_2T_zJ^{-1}.
+\tag{266.11}
+$$
+
+$J:C_1^*\to\operatorname{PSD}_r$ 是序同构，且 $J(g_b)$ 在 $c_bc_b^\dagger$ 的正射线上。对纯点 $z_M$，$\Phi_{z_M}$ 为正实线性映射，并对每个非零 $c$ 满足
+
+$$
+Mc=0\Rightarrow\Phi_{z_M}(cc^\dagger)=0,
+\qquad
+Mc\ne0\Rightarrow\Phi_{z_M}(cc^\dagger)
+\in\mathbb R_{>0}(Mc)(Mc)^\dagger.
+\tag{266.12}
+$$
+
+补齐纯射线方向到线性幅度的桥。一般正实线性 $R:\operatorname{Herm}_r\to\operatorname{Herm}_s$ 若满足(266.12)，令 $N=\ker M$。对 $n\in N$，有 $R(nn^\dagger)=0$。$R((x+tn)(x+tn)^\dagger)\succeq0$ 对全部实 $t$ 成立，二次项已为零，迫实交叉项的像为零；以 $x+itn$ 同理消掉虚交叉项。故 $R$ 只依赖 $N^\perp$ 上的压缩，像支持于 $\operatorname{im}M$。用 $M|_{N^\perp}$ 共轭化为同维正线性 $B$，它在每个秩一投影上满足 $B(P)=\lambda(P)P$。$\lambda(P)=\operatorname{Tr}B(P)>0$ 连续，却只能取固定有限维线性算子 $B$ 的有限个特征值。复纯射影域连通，故 $\lambda$ 恒定；秩一投影张成全部Hermitian空间，得到
+
+$$
+\Phi_{z_M}(X)=\kappa_MMXM^\dagger,
+\qquad\kappa_M>0.
+\tag{266.13}
+$$
+
+论证包含 $\operatorname{rank}M=1$，不预给完全正性。将Hermitian上的实线性映射唯一延拓为矩阵上的复线性保伴随映射，定义Choi坐标
+
+$$
+\Xi(z)=\sum_{j,k}\Phi_z^{\mathbb C}(E_{jk})\otimes E_{jk}.
+\tag{266.14}
+$$
+
+原张量—条件化对应、$\alpha_2,J$ 和Choi对应均为实线性同构，故 $\Xi:V_3\to\operatorname{Herm}_{sr}$ 为实线性同构。(266.13)先给
+
+$$
+\Xi(z_M)=\kappa_M|\operatorname{vec}M\rangle\langle\operatorname{vec}M|,
+\qquad \Xi(C_3)=\operatorname{PSD}_{sr}.
+\tag{266.15}
+$$
+
+第二个等号来自全部非零 $M$ 都有原纯点标签及纯射线锥生成，两向都包含。这里没有使用“正映射的Choi矩阵必正”，也不把 $\Xi$ 称为已实现物理操作。
+
+原严格正单位满足 $u_3\Xi^{-1}(X)=\operatorname{Tr}(hX)$、$h>0$。因此 $z\mapsto h^{1/2}\Xi(z)h^{1/2}$ 把整个原底保单位仿射同构到标准迹一复PSD底。原每个二元实际面随之成为完整Bloch三球，中央性是结论。$\square$
+
+**定理 266.8（重心边界候选发展出全部有限复量子理论）。** 在266.1的完整强全有限背景下，$\mathsf Q_b$ 当且仅当存在同一个整数 $r\ge2$ 及保单位实线性序同构 $\theta:V\to\operatorname{Herm}_r(\mathbb C)$，使对所有有限 $N\ge0$ 同时有
+
+$$
+\Theta_N=\theta^{\otimes N},\qquad
+\Theta_N(C_N)=\operatorname{PSD}_{r^N},\qquad
+u_N=\operatorname{Tr}\Theta_N.
+\tag{266.16}
+$$
+
+证明。266.7恢复原 $\mathsf{CB}_3$。体积重心此时恰为中心，故原重心伙伴就是原中央种子；(266.2)于是恢复 $\mathsf E_3$。直接应用262.3及其准确复用的XVIII253.6，取得(266.16)，不把临时 $\Xi$ 冒认成最终产品坐标。反向，标准复PSD底的全部二元支持面为三球，其重心伙伴为正交秩一投影；这些伙伴的凸包是核支持面，留在整体相对边界，故满足(266.1)。
+
+| 原定义或保留的额外前件 | 同一个 $\theta$ 下恢复的量子公理 |
+| --- | --- |
+| 全部原态、纯点、完整效应及原配对 | 全部密度矩阵、秩一投影、$0\preceq E\preceq I$，Born概率 $\operatorname{Tr}(E\rho)$；纯态间为 $|v^*w|^2$ |
+| 全部有限单位分解及正交投影分解 | 数学POVM及PVM；完整正交frame有共同测量，谱权重由读数取得 |
+| 全部有限原张量、分块、置换、重括号和丢弃 | 复Hilbert张量、全部有限纠缠态及偏迹 |
+| 原实线性分支对全部有限旁观输入保正，并按需附质量预算 | CP；TNI、TP与数学仪器各按其相应预算 |
+| 指定投影效应的原锐分支，对整个yes支持逐点中性 | Lüders压缩 |
+| 同层连续保锥保单位的可逆一参数群 | 数学酉共轭动力学 |
+
+过程尾部准确沿用263.3，不把用于证明的原锥自同构自动称作可用设备。完整frame和为 $\Theta_N^{-1}(I)$，共同效应为 $e_i(x)=\operatorname{Tr}(P_i\Theta_Nx)$，满足 $\sum_i e_i=u_N$ 与 $e_i(p_j)=\delta_{ij}$；这些结论在线性序同构以后取得。物理钟、能量与 $\hbar$ 的标定、无限维表示、无限张量极限及近似稳定性继续各保留独立前件。$\square$
+
+**命题 266.9（反事实、最简几何与完整白话）。** 本章把中央反射从原二元体的前件移为三份强复合的结论，保留SC与伙伴混合边界相容。原定义留下的是“重心弦伙伴”与“原凸混合边界”之间的一条关系约束；并未声称定义单独迫使所有可能系统满足它。
+
+证明与反事实。单锥 $\mathsf{SC}+\mathsf B_b$ 仍不迫中央性。在平面取支撑函数 $h(t)=1+\varepsilon\cos3t$、$0<|\varepsilon|<1/8$。$h+h''=1-8\varepsilon\cos3t>0$ 给光滑严格凸体，三重旋转使体积重心为零；$h(t+\pi)\ne h(t)$ 使它非中央。全部不同纯点生成整个体，每个点仅有一个重心弦伙伴，所以伙伴混合自动留在边界。该例没有250.1的强全有限层级，不冒充本章主定理的反模型。它精确说明：三份产品、全部正效应与条件化桥负责恢复弦平衡，单体轮廓不负责。
+
+另一方面，265.5的高惯性商已经有全部实际三球，重心伙伴就是中央反点；它保完整强全有限背景，却以伙伴的高阶混合进入内部而违反 $\mathsf B_b$。因此本章没有从SC及强复合删除边界相容，固定数量伙伴检查的反例仍然有效。
+
+白话：先拿两颗纯珠子，让它们撑起一团没有平直边的软体，不要求软体左右镜面对称。重心直接由这团软体自身算出来，穿过重心的弦把珠子配成伙伴；只要求一颗珠子的所有伙伴怎样混合都还留在整个世界的边上。这个要求先把伙伴网接成完整的支持面网。三份真实复合随后多给了一件单体没有的东西：一颗联合纯珠子，可以把一族遍历超平面支撑的正测试逐个变成另一边的纯射线。选一个不丢方向的矩形窗口，再拿另一个窗口与它比较，测试端的重新编号会消掉，只剩原状态端的确定对称。它保伙伴弦，因而保重心；而一个把整团有界软体变回自身、又保住体积重心的射影变换，只能是仿射变换。让它交换一对伙伴，重心便只能落在两端正中。镜面对称由真实复合自己长出来，再把完整概率、测量、复张量和过程字典接回同一套坐标。最简图景于是从“先给有中心的球网”退成“重心伙伴的混合不填进内部”；球形、等距两端与复数在后面取得，严格凸和完整复合仍明确保留。
+
+与[XX270][Q266X]的关系也可精确给出。266.8的同一产品坐标使 $g_3(x,y)=\operatorname{Tr}(\Theta_3x\,\Theta_3y)$ 在原 $\ker u_3$ 上正定，并使全部实际二元面成为该同一尺下的三球，故本候选推出270.1的 $\mathsf R_3$。反向，在270.12明列的普通条件供应下，$\mathsf R_3$ 给同一全有限PSD层级，再由266.8反向取得 $\mathsf Q_b$。因此两种定义间约束在这些明示背景与供应下等价；本章的推导未把共同尺、原圆度或270的TC拼接作为输入。
+
+来源与范围：射影正交表示直接复用[Q266P]，连续射影分类、保面同胚及维数直接复用[Q266L]，保第一因子的产品正规形准确复用[Q266Z] Theorem1与Proposition1.5，Gleason直接复用[Q266G]；不重新申领这些成熟结果。新增repo-derived接合是原重心伙伴到全部实际面、原张量秩维数选择、产品零coatom到满列秩条件化序同构、比较窗口迫原重心弦平衡，以及纯射线方向到整个三份原PSD的线性桥。没有把LNT的保面同胚升级为仿射结论，也没有要求第二因子重参数保极性；不宣称全球原创或Lean核验。$\square$
+
+[Q266X]: QUANTUM_ORIGIN_COMMON_RULER_AND_LEAST_CONFIRMATION_XX.md "XX270.1、270.12：任意有限原维数的共同圆尺候选及其明列的普通条件供应。"
+[Q266P]: https://doi.org/10.1007/s10773-023-05282-3 "J. Paseka与T. Vetterlein，Linear Orthosets and Orthogeometries；Definition4.1、Theorem4.5及Lemmas3.9、4.2。"
+[Q266L]: https://arxiv.org/pdf/0903.0643v1 "D. Labardini-Fragoso、M. Neumann-Coto与M. Takane，Cones and convex bodies with modular face lattices；Lemmas2—5与Theorem1，仅用于拓扑射影坐标、保面同胚及维数。"
+[Q266Z]: https://www.maths.tcd.ie/EMIS/journals/BBMS/Bulletin/bul961/zanella.pdf "C. Zanella，Universal Properties of the Corrado Segre Embedding，Bull. Belg. Math. Soc.3(1996),65—79；Theorem1刊物第74页、Proposition1.5第68页、射影直线collineation约定第71—72页；DOI10.36045/bbms/1105540759。"
+[Q266G]: https://arxiv.org/abs/1803.06882v2 "V. Moretti与M. Oppio，The correct formulation of Gleason’s theorem in quaternionic Hilbert spaces；Theorem3.3，含所用的有限维复Hilbert分支。"
+
+## 追加锚（本行以下为增补区）
