@@ -60,5 +60,18 @@ internal sealed class ZeroFreeStripMertensEnvelopeDocument : IScribeDocumentDefi
                         + "Leo Goldmakher, A quick proof of Mertens' theorem; the supplying notice and "
                         + "license are preserved at Library/notes/pntplus2026mertens.md. "
                         + "No literature-priority claim is made."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("nonlinear-quadratic"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.nonlinear_quadratic"),
+                H("The actual quadratic log-log remainder"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every real x with exp(2)<=x and x/2<=Chebyshev.theta(x), the original "
+                    + "nonlinear estimate is abs(RHSharpArithmeticEnvelope.N(x)) "
+                    + "<=8*((Chebyshev.theta(x)-x)/x)²/log(x). It applies the existing scaled "
+                    + "log-log tangent-gap stability theorem. Its statement and proof are reused "
+                    + "directly by the same-point theta-tail maximum argument; no zero-strip "
+                    + "hypothesis is needed for this quadratic estimate."))),
                 DescribeRole.Theorem))));
 }
