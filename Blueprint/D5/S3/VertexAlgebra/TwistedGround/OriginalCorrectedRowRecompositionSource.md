@@ -132,6 +132,48 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecomposi
 
 Complete only the source mean with the original charged singleton; both external means remain unchanged.
 
+**Theorem 1.10 (Native affine Laurent support enlargement).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.affineLaurent_enlarge`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.affineLaurent_enlarge` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+The original affine Laurent coefficient on an embedded occupation equals the coefficient of the pulled-back matrix, mean and integer weights. The source-inverse comparison uses this support transport.
+
+**Theorem 1.11 (Three occupation embedding).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.map_three`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.map_three` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+Embedding a three-slot occupation along the same label embedding in every slot equals the three-slot occupation of the embedded components. This normalization helper is consumed in source-inverse support transport.
+
+**Theorem 1.12 (Exact three-slot Laurent weight).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.normal_weight_formula`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.normal_weight_formula` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+The three-slot normal weight is minus twice source energy, minus the input odd-mode weight, plus the detector odd-mode weight. The source-inverse consumer uses this equality before extracting each exact integer Laurent selector.
+
 The correction polynomial is obtained from the actual correctionLift by specializing the shift variable to one while preserving residual indeterminates. Its insertion and partial identities give a coefficient recurrence, compared with the affine Gaussian by occupation induction. Exact bidegree selection then proves the Laurent shift relation. Support enlargement uses the existing gaussianCoefficient_enlarge theorem.
 
 Attribution: finite Gaussian/Wick calculus and factorial Fock normalization are classical. The lattice and twisted-current suppliers retain their FLM, Dong--Nagatomo and Bakalov--Kac attributions. The exact composition on the original repository carrier is repo-derived; no external novelty is asserted. The bibliographic background does not supply an uninspected theorem or replace these proofs.
@@ -141,10 +183,13 @@ The downstream original identityK and two-row sewing remain open, with all four 
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.Corr_residual_support`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.affineLaurent_enlarge`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.charged_correction_coefficients`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.charged_correction_shift_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.correctedMatrix`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.correctedMean`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.map_three`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.normal_weight_formula`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.original_corrected_row_finite_reduction`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.recompositionAmplitude`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectedRowRecompositionSource.sourceCovariance`
