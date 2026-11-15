@@ -7,7 +7,7 @@ internal sealed class NativeMarkedCountComparisonDocument : IScribeDocumentDefin
     private const string Prefix = "D5/S3/Estimation/TimeArrow/NativeMarkedCountComparison.";
 
     private static DocumentBlock Definition(string selector, string title, string text) =>
-        Describe.Lean(DescribeId.Create("native-marked-" + selector),
+        Describe.Lean(DescribeId.Create("native-marked-" + selector.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + selector), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Definition);
