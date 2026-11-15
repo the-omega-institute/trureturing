@@ -84,6 +84,13 @@ are checked by the Lean kernel inside the proof. The axiom closure is
 The pre-existing private experiment at local commit
 `7887bf79c93eab02e575b043cc59d86139819a7d` has certificate SHA-256
 `02a9cca9a1919e828557d3bd8e4d7854c5ab98a9fb1df1d6ccc97784e295f49b`.
+Its pinned [experiment directory and rerun instructions](https://github.com/the-omega-institute/trureturing-experiments/tree/7887bf79c93eab02e575b043cc59d86139819a7d/a303956-threshold0-6af9e4a8)
+are in the private `the-omega-institute/trureturing-experiments` repository,
+locally `../trureturing-experiments/a303956-threshold0-6af9e4a8`.
+At that revision, from the experiment directory with Python 3.12 or newer,
+`python3 probe.py --output certificate.json` generates the certificate and
+`python3 verify.py --certificate certificate.json --output verification.json`
+checks it independently of the generator implementation.
 Independent finite checks cover all 4096 transitions and 18724 rooted
 boards of heights one through five. These are computed evidence, rather
 than a substitute for the universal native correspondence or kernel proof.
