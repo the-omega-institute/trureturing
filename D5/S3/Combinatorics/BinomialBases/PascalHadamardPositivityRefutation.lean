@@ -1,18 +1,21 @@
 /- GID: D5/S3/Combinatorics/BinomialBases/PascalHadamardPositivityRefutation
    generality: I
-   mirror-B: none(waiver:probe-only)
-   mirror-E: none(waiver:probe-only)
+   mirror-B: D5/B/S3/Combinatorics/BinomialBases/PascalHadamardPositivityRefutation
+   mirror-E: none(waiver:kernel-checked-refutation)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Determinant.Basic, mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Real]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/BinomialBases/PascalHadamardPositivityRefutation.claim; result=D5/S3/Combinatorics/BinomialBases/PascalHadamardPositivityRefutation.result; claim=D5/S3/Combinatorics/BinomialBases/PascalHadamardPositivityRefutation.claim
-   digest: Native bounded probe for the original MO515594 strict-positivity assertion. -/
+   digest: A strictly separated Pascal minor has negative determinant at real exponent one tenth, refuting the original MO515594 positivity assertion. -/
 
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 
 /-!
-Native bounded probe for MathOverflow 515594 (VSP, CC BY-SA 4.0).
-The source's first question is the universal strict-positivity assertion in `claim`.
-The later appended question for real `r > 1` is intentionally outside this claim.
+The original question of VSP, MathOverflow 515594, revision 1
+(24043C19-8B17-4527-819F-D0DAEA1E8F86), asks the universal assertion in `claim`.
+Source: https://mathoverflow.net/questions/515594
+Adapted from VSP's question under https://creativecommons.org/licenses/by-sa/4.0/;
+the adaptation encodes its natural indices and real powers and supplies an exact refutation.
+The later appended question for real `r > 1` remains outside this claim.
 -/
 
 set_option autoImplicit false
