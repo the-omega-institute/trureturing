@@ -288,6 +288,8 @@ private def concreteCStar (M : VonNeumannAlgebra H) : CStarAlgebra (concreteAlge
 private def concreteOrder (M : VonNeumannAlgebra H) : PartialOrder (concreteAlgebra M) :=
   inferInstanceAs (PartialOrder M.toStarSubalgebra)
 
+attribute [local instance] concreteCStar concreteOrder
+
 @[instance_reducible]
 private def concreteStarOrdered (M : VonNeumannAlgebra H) :
     StarOrderedRing (concreteAlgebra M) := inferInstanceAs (StarOrderedRing M.toStarSubalgebra)
