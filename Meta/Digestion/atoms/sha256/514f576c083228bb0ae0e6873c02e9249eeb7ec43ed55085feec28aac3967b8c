@@ -1,0 +1,18 @@
+## 16. Conditional continued-fraction membership for actual modular phase estimation
+
+For a rational number $x$, write $f=\lfloor x\rfloor$ and $t=x-f$. Define the finite rational list $C(x)$ by
+
+$$
+C(x)=\begin{cases}[f],&t=0,\\
+[f]\mathbin{+\!+}[f+z^{-1}:z\in C(t^{-1})],&t\ne0.
+\end{cases}
+$$
+
+Here the bracketed expression in the second branch is a list map, $+\!+$ concatenates lists, and rational inversion is totalized by $0^{-1}=0$. The positive reduced denominator decreases at every recursive call. The list accepts zero, integers and negative rationals. For natural observable inputs $y,Q,N$, define
+
+$$
+A(y,Q,N)=[z\in C(y/Q):\operatorname{den}(z)<N],
+$$
+
+where $\operatorname{den}$ is the positive denominator in lowest terms. The list has no order or spectral-numerator input. In the modular model, choose $N\ge2$, a natural base $a$ with $\gcd(a,N)=1$, and an independent natural target width $w$ with $N\le2^w$. Multiplication by $a$ acts on the residue states and fixes the padding states; the target input is the residue state $1$. Write $r=\operatorname{ord}_N(a)$. This model has $0<r<N$.
+
