@@ -1065,7 +1065,7 @@ $$
 [G271]: https://github.com/the-omega-institute/trureturing/blob/eba96d281b55801fac95eef637e144ea56caad12/docs/develop/theory/QUANTUM_ORIGIN_HALF_TURN_PREPARATION_AND_GLOBAL_EFFECTS_XVIII.md "240.1—240.2 的实际 L2 与外三角下界；250.1 的完整强全有限背景；250.4 的整锥后字典。"
 [T271]: https://github.com/the-omega-institute/trureturing/blob/eba96d281b55801fac95eef637e144ea56caad12/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "161.1 的实际纯旁观面；Proposition 161.4 的同坐标全有限尾部；161.6—161.10 的完整条件过程字典。"
 [F271]: https://github.com/the-omega-institute/trureturing/blob/f5a6211e591351e1a2bdeea0165c2ef29ad21b48/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "XIII161.4 精确引用的版本：102.6—102.10 及(102.30)后全有限整锥夹逼。"
-[GB271]: https://arxiv.org/abs/quant-ph/0204159v2 "Gurvits–Barnum, Largest separable balls around the maximally mixed bipartite quantum state, Section II, Theorem 1；任意有限复二体的未归一 HS 半径一。"
+[GB271]: https://arxiv.org/abs/quant-ph/0204159v2 "Gurvits–Barnum, Largest separable balls around the maximally mixed bipartite quantum state, Section III, Theorem 1, p. 4；任意有限复二体的未归一 HS 半径一。"
 [AS271]: https://doi.org/10.1007/BF02392307 "Alfsen–Shultz, State spaces of Jordan algebras (1978), Main Theorem 与 Theorem 7.2；保留 projectivity 及正交正部等前件。"
 [N1-271]: https://arxiv.org/abs/2312.13213v2 "Niestegge, §3 性质(**)：全部非负仿射函数的 infimum 与唯一饱和；自对偶路线另需对称跃迁概率。"
 [N2-271]: https://arxiv.org/abs/2411.18589v2 "Niestegge, Theorem 1：性质(**)与 bit symmetry；proper 菜单域不能替换其全部非负仿射函数域。"
