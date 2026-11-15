@@ -186,7 +186,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/InteriorSpectralWitness.P_nonzero`
 
 For each p,q at least one, P(p,q) is nonzero. At canonicalPoint, Jden=1/64 and Wnorm=1; sigma is the nonzero coordinate polynomial. The norm factor is nonzero by the free-orbit proof, independently of its value at that witness. Multiply these nonzero polynomials in the real polynomial domain.
 
-The physical witness proves the nonzero free character used in the orbit product. It does not assert that normg or P is nonzero at that specialization. The completed certificate and native positive-environment proofs are consumed by InteriorSpectralAmbiguity. Observed-Q3 descent and full actual-image density remain unresolved. Full C9 remains open and solved-open-problem KPI is zero.
+The physical witness proves the nonzero free character used in the orbit product. It does not assert that normg or P is nonzero at that specialization. The completed certificate and native positive-environment proofs are consumed by InteriorSpectralAmbiguity. Downstream InteriorSpectralAmbiguity.observed_interior_ambiguity supplies observed-Q3 descent: for every fixed N at least four, one common nonempty relatively open dense principal locus in the entire actual image supports ambiguity for every individual internal two-site window, with an actual nonzero nonphase competitor that may depend on the window. This is a raw-state statement; it supplies no normalized-state or joint-marginal theorem. The N=3 boundary-only case, right reversal, one-site partial-trace adapters and full window composition remain obligations. Full C9 remains open and solved-open-problem KPI is zero.
 
 ## References
 

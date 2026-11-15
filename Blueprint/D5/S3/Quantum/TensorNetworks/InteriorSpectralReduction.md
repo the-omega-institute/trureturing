@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/InteriorSpectralReduction.coeffici
 
 For every such target, map, parameters and five multiplication-table identities, and every G in the two spectral variables, eval2(alpha,(x,y),G)=alpha(g0)+alpha(g1)x+alpha(g2)y+alpha(g3)r, where each gj is the literal finite support sum. No domain or field premise is added.
 
-This finite reduction is consumed by the nonzero lengthwise canonical exclusion certificate and its pointwise actual ambiguity theorem. Observed-Q3 descent and density on the full actual image remain later obligations. Full C9 remains open and solved-open-problem KPI remains zero. The existing Ma-Zhang C8 canonical supplier and its CC BY 4.0 attribution are retained. No dynamics, physical inverse, energy or thermodynamic assertion follows.
+This finite reduction is consumed by the nonzero lengthwise canonical exclusion certificate and its pointwise actual ambiguity theorem. Downstream InteriorSpectralAmbiguity.observed_interior_ambiguity supplies observed-Q3 descent: for every fixed N at least four, one common nonempty relatively open dense principal locus in the entire actual image supports ambiguity for every individual internal two-site window, with an actual nonzero nonphase competitor that may depend on the window. This is a raw-state statement; it supplies no normalized-state or joint-marginal theorem. The N=3 boundary-only case, right reversal, one-site partial-trace adapters and full window composition remain obligations. Full C9 remains open and solved-open-problem KPI remains zero. The existing Ma-Zhang C8 canonical supplier and its CC BY 4.0 attribution are retained. No dynamics, physical inverse, energy or thermodynamic assertion follows.
 
 ## References
 
