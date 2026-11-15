@@ -7,6 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Admissibility;
 internal sealed class MurthyA077739ClassificationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Digit/Admissibility/MurthyA077739Classification.";
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Digit/murthy2002a077739");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The complete decimal prefix, suffix, divisibility and digit-sum classification in OEIS A077739.",
@@ -59,12 +60,24 @@ internal sealed class MurthyA077739ClassificationDocument : IScribeDocumentDefin
                 + "The public OEIS source still presents this as a conjecture in the supplied revision. "
                 + "The bounded repository, pinned Mathlib and public-source search located no full "
                 + "classification in its examined scope; third-party coverage is incomplete and "
-                + "this document makes no priority or exhaustive novelty claim.", DescribeRole.Theorem))));
+                + "this document makes no priority or exhaustive novelty claim. The general certificate "
+                + "soundness theorem consumes the finite data, and the terminal classification consumes "
+                + "both that bounded branch and the symbolic tail; the table alone is not the result. "
+                + "The source-equivalence Reg registration retains exact source reconstruction, lawful "
+                + "template enrollment, whole-family variation and sensitivity, and actual observational "
+                + "dependence. Its continuation is unknown, which does not assert undecidability. "
+                + "The result does not compute least positive witnesses, classify other bases, or settle "
+                + "new external questions. A qualified successor remains pending literature screening.",
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a077739-murthy-zero-indices"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, string title, Formula statement, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, Formula statement, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("murthy-a077739-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(statement),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            name == "a" ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula DefinitionFormula(string name, string expression) =>
         Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("n"), F.Id("Nat"),
