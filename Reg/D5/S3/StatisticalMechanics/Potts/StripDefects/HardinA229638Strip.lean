@@ -5,6 +5,7 @@ import LeanInformationAuditInterface.Contract.Registration
 
 /-! Readout registrations for exact defective-strip counts and finite transfer data. -/
 namespace Reg.D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229638Strip
+open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229535Strip (between)
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229638Strip
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

@@ -11,13 +11,13 @@ admission_basis: open-problem-resolution (#30838; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229535Strip.result)
 Row: proof_shape=bind-only; consumers=finite_certificate, result
 horizontal: proof_shape=bind-only; consumers=finite_certificate, result
-between: proof_shape=bind-only; consumers=finite_certificate, result
+between: proof_shape=bind-only; consumers=finite_certificate, result, HardinA229638Strip.a
 Valid: proof_shape=bind-only; consumers=finite_certificate, result
 cl: proof_shape=bind-only; consumers=finite_certificate, result
-T: proof_shape=bind-only; consumers=finite_certificate, result
-initial: proof_shape=bind-only; consumers=finite_certificate, result
+T: proof_shape=bind-only; consumers=finite_certificate, result, HardinA229638Strip.T
+initial: proof_shape=bind-only; consumers=finite_certificate, result, HardinA229638Strip.initial
 terminal: proof_shape=bind-only; consumers=finite_certificate, result
-W: proof_shape=bind-only; consumers=finite_certificate, result
+W: proof_shape=bind-only; consumers=finite_certificate, result, HardinA229638Strip.W
 decidableValid: proof_shape=bind-only; consumers=finite_certificate
 a: proof_shape=bind-only; consumers=result
 finite_certificate: proof_shape=bind-only; consumers=result

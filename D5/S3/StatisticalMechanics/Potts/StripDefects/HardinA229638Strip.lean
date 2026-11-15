@@ -11,7 +11,6 @@ admission_basis: open-problem-resolution (#30838; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229638Strip.result)
 Row: proof_shape=bind-only; consumers=finite_certificate, result
 horizontal: proof_shape=bind-only; consumers=finite_certificate, result
-between: proof_shape=bind-only; consumers=finite_certificate, result
 Valid: proof_shape=bind-only; consumers=finite_certificate, result
 cl: proof_shape=bind-only; consumers=finite_certificate, result
 T: proof_shape=bind-only; consumers=finite_certificate, result
@@ -24,6 +23,7 @@ finite_certificate: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=none (external open-problem-resolution #30838)
 -/
 
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229535Strip
 import Mathlib.Data.Matrix.Block
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinColumnContinuations
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
@@ -34,13 +34,12 @@ import Mathlib.Logic.Equiv.Fin.Basic
 open scoped BigOperators
 open D5.S3.Combinatorics.TraceAvoidingArrays
 namespace D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229638Strip
+open HardinA229535Strip (between)
 open DefectTransfer (bondDefects defects literalCount lumped_count forward forward_shift)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical canonical_pattern_card)
 
 abbrev Row := Fin 2 → Fin 3
 def horizontal : Finset (Fin 2 × Fin 2) := ∅
-def between : Finset (Fin 2 × Fin 2) :=
-  {(0, 0), (1, 1), (1, 0), (0, 1)}
 def Valid (_ : Row) (d : ℕ) : Prop := d ≤ 2
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (d ≤ 2))
@@ -52,30 +51,24 @@ def cl (p : Row) (d : ℕ) : Fin 6 :=
 def T : Matrix (Fin 6) (Fin 6) ℤ :=
   Matrix.reindex (finSumFinEquiv : Fin 4 ⊕ Fin 2 ≃ Fin 6)
     (finSumFinEquiv : Fin 4 ⊕ Fin 2 ≃ Fin 6)
-    (Matrix.fromBlocks (Matrix.reindex (finSumFinEquiv : Fin 2 ⊕ Fin 2 ≃ Fin 4)
-    (finSumFinEquiv : Fin 2 ⊕ Fin 2 ≃ Fin 4)
-    (Matrix.fromBlocks (fun i j => (HardinColumnContinuations.B i j : ℤ))
-      (![![0, 0],
-      ![0, 4]])
-      (0)
-      (fun i j => (HardinColumnContinuations.B i j : ℤ))))
+    (Matrix.fromBlocks (HardinA229535Strip.T)
       (![![0, 4],
       ![2, 2],
       ![0, 0],
       ![0, 4]])
       (0)
       (fun i j => (HardinColumnContinuations.B i j : ℤ)))
-def initial : Fin 6 → ℤ := ![3, 6, 0, 0, 0, 0]
+def initial : Fin 6 → ℤ :=
+  Fin.append HardinA229535Strip.initial ![0, 0]
 def terminal : Fin 6 → ℤ := ![0, 0, 0, 0, 1, 1]
 def W : Fin 7 → Fin 6 → ℤ :=
-  ![![3, 6, 0, 0, 0, 0],
-    ![12, 6, 0, 24, 12, 24],
-    ![30, 24, 24, 24, 60, 180],
-    ![84, 60, 72, 144, 348, 384],
-    ![228, 168, 288, 384, 1200, 1728],
-    ![624, 456, 960, 1248, 4464, 5184],
-    ![1704, 1248, 3168, 3744, 15024, 17328]]
-
+  Fin.append (fun i => Fin.append (HardinA229535Strip.W i) ((![![0, 0],
+      ![12, 24],
+      ![60, 180],
+      ![348, 384],
+      ![1200, 1728]]) i))
+    (![![624, 456, 960, 1248, 4464, 5184],
+      ![1704, 1248, 3168, 3744, 15024, 17328]])
 /-- Literal row-major canonical arrays, with columns swept only to count bonds. -/
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter fun A : Fin 2 × Fin n → Fin 3 =>
