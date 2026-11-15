@@ -1,0 +1,22 @@
+**定义 5.3（Measured continuation and initialization）。** Supply a successor measurement after each use of $V_2$. Its branches on $H$ are
+
+$$
+\mathcal J_j(\rho)=\Pi_j\Phi_2(\rho)\Pi_j,
+\qquad \Pi_j=|j\rangle\langle j|\otimes I_K.
+\tag{5.4}
+$$
+
+Supply one fresh pure $E_2$ per step and actually retain the returned successor labels in temporal order. The measurement is a different instrument from the unmeasured evolution and from flag feedback. It dephases successor alternatives; the environment flag need not be read and no inverse feedback is applied.
+
+There are two initialization contracts, matching source Definition 130.1. One has a fixed known root $i_0$ and arbitrary internal-reference state. The other has an actually prepared block-diagonal configuration state with a declared law $\pi$, together with an actual retained orthogonal initial record $R_0$:
+
+$$
+\rho_{\mathrm{in},R_0}
+=\sum_i\pi_i|i\rangle\langle i|_{\mathcal C}
+\otimes\rho_{KR}^{(i)}\otimes|i\rangle\langle i|_{R_0},
+\qquad\pi_i\ge0,\quad\sum_i\pi_i=1.
+\tag{5.5}
+$$
+
+Each $\rho_{KR}^{(i)}$ is a density operator, and $R$ is untouched. The uniform stationary source is the special case $\pi_i=1/5$. From an arbitrary coherent configuration, producing $R_0$ requires an additional coupling $|i\rangle\psi\mapsto|i\rangle\psi\otimes|i\rangle_{R_0}$ and its acquisition contract. Reading or ignoring this record changes configuration coherence. Equation (5.5) is not obtained from arbitrary coherent input for free.
+
