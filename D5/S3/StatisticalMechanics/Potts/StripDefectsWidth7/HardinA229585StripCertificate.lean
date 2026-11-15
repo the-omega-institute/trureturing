@@ -25,6 +25,8 @@ import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.Initial.HardinA229585
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
+set_option profiler true
+
 /-! Exact finite certificates for the width-seven one-defect strip. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripCertificate
