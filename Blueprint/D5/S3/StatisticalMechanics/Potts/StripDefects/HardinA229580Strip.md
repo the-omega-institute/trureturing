@@ -231,5 +231,5 @@ All natural counts in this equality are cast to integers. Relabelling the three 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229580Strip.initial`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229580Strip.result`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229580Strip.terminal`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](DefectTransfer.md)

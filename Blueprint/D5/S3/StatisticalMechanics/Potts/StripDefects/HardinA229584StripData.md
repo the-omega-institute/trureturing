@@ -188,5 +188,5 @@ Finite vectors use Lean's ![...] notation. Matrix rows and vector entries are li
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229584StripData.horizontal`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229584StripData.initial`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229584StripData.terminal`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](DefectTransfer.md)

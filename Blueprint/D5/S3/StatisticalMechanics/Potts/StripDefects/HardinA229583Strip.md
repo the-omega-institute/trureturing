@@ -51,7 +51,7 @@ All natural counts in this equality are cast to integers. Relabelling the three 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229583Strip.a`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229583Strip.finite_certificate`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229583Strip.result`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](DefectTransfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229583StripCertificate](HardinA229583StripCertificate.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229583StripClasses0](HardinA229583StripClasses0.md)
