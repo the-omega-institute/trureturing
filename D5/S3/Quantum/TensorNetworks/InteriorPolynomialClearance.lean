@@ -9,6 +9,7 @@
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization
 import Mathlib.LinearAlgebra.Matrix.ZPow
 import Mathlib.LinearAlgebra.Matrix.Hadamard
+import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
 /-! Native, division-free adjugate recurrences; no positivity of inverse transfer is asserted. -/
 set_option autoImplicit false
