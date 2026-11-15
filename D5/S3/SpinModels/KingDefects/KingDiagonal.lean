@@ -9,13 +9,82 @@
 admission_basis: escape-witness
 escape_witness: diagonalSlotEquiv (the exact diagonal slot classification),
   diagonal_count (the exact count of compatible words).
+klein_zero: proof_shape=bind-only; consumers=special_block,slot_raw
+klein_alphabet: proof_shape=bind-only; consumers=extract_valid,slot_good
+DiagonalSlots: proof_shape=bind-only; consumers=SlotValid,slotField,extractSlots,normalizedSlots
+SlotValid: proof_shape=bind-only; consumers=extract_valid,slot_raw,diagonalSlotEquiv
+slotField: proof_shape=bind-only; consumers=slot_reconstruction,slot_raw,diagonalSlotEquiv
+diagonal_clear: proof_shape=bind-only; consumers=raw_h_ordinary,raw_v_ordinary,extract_valid
+special_block: proof_shape=bind-only; consumers=slot_reconstruction,extract_valid
+raw_h_ordinary: proof_shape=bind-only; consumers=slot_reconstruction,extract_valid
+raw_v_ordinary: proof_shape=bind-only; consumers=slot_reconstruction,extract_valid
+raw_h_special: proof_shape=bind-only; consumers=slot_reconstruction,extract_valid
+raw_v_special: proof_shape=bind-only; consumers=slot_reconstruction,extract_valid
+extractSlots: proof_shape=bind-only; consumers=slot_reconstruction,diagonalSlotEquiv
+slot_reconstruction: proof_shape=content; consumers=diagonalSlotEquiv
+extract_slotField: proof_shape=bind-only; consumers=diagonalSlotEquiv
+extract_valid: proof_shape=content; consumers=diagonalSlotEquiv
+slot_good: proof_shape=bind-only; consumers=slot_raw
+slot_special: proof_shape=bind-only; consumers=slot_raw
+slot_raw: proof_shape=bind-only; consumers=diagonalSlotEquiv
+diagonalSlotEquiv: proof_shape=content; consumers=diagonal_count
+WordIndex: proof_shape=bind-only; consumers=WordCompatible,leftRule,rightRule,SlotsIndex
+WordCompatible: proof_shape=bind-only; consumers=word_cover,word_card_add,normalizedEquiv
+leftRule: proof_shape=bind-only; consumers=word_cover,left_card,intersection_card
+rightRule: proof_shape=bind-only; consumers=word_cover,right_card,intersection_card
+word_cover: proof_shape=content; consumers=word_card_add
+unary_card: proof_shape=bind-only; consumers=left_card,right_card
+left_card: proof_shape=bind-only; consumers=word_card_add
+right_card: proof_shape=bind-only; consumers=word_card_add
+intersection_card: proof_shape=bind-only; consumers=word_card_add
+card_or_add_inter: proof_shape=bind-only; consumers=word_card_add
+emptyIndicator: proof_shape=bind-only; consumers=F,word_card_add,F_add,indicator_corners
+F: proof_shape=bind-only; consumers=diagonal_count,F_piecewise,F_add,sum_F
+word_card_add: proof_shape=content; consumers=word_card,F_add
+word_card: proof_shape=content; consumers=diagonal_count,F_add
+OrderedPair: proof_shape=bind-only; consumers=pair_card,normalizedSlots,normalizedEquiv
+pair_card: proof_shape=bind-only; consumers=diagonal_count
+SlotsIndex: proof_shape=bind-only; consumers=normalizedSlots,slotsWord,normalizedEquiv
+normalizedSlots: proof_shape=bind-only; consumers=normalized_valid,normalized_recover
+third_ne: proof_shape=bind-only; consumers=normalized_valid,word_recover
+normalized_valid: proof_shape=bind-only; consumers=normalizedEquiv
+slotsWord: proof_shape=bind-only; consumers=normalized_recover,word_recover,normalizedEquiv
+normalized_recover: proof_shape=bind-only; consumers=normalizedEquiv
+word_recover: proof_shape=bind-only; consumers=normalizedEquiv
+normalizedEquiv: proof_shape=bind-only; consumers=diagonal_count
+diagonal_count: proof_shape=content; consumers=N_D_closed,N_D_two_rows,N_D_two_columns
+F_piecewise: proof_shape=bind-only; consumers=N_D_two_rows,N_D_two_columns
+F_add: proof_shape=content; consumers=sum_F
+geometric_two: proof_shape=bind-only; consumers=geometric_two_reverse,sum_A
+geometric_two_reverse: proof_shape=bind-only; consumers=sum_A
+Aterm: proof_shape=bind-only; consumers=sum_A,sum_F
+sum_A: proof_shape=bind-only; consumers=sum_F
+indicator_corners: proof_shape=bind-only; consumers=sum_F
+sum_F: proof_shape=content; consumers=N_D_closed
+N_D_closed: proof_shape=content; consumers=KingClosedForm.diagonal_main
+N_D_two_rows: proof_shape=content; consumers=KingClosedForm.width_two
+N_D_two_columns: proof_shape=content; consumers=KingClosedForm.width_two
 The dimensions and word lengths are arbitrary. No bounded grid enumeration,
 checker, numerical reduction or certified instance is asserted.
 -/
 import D5.S3.SpinModels.KingDefects.KingDifference
 import Mathlib.Order.Interval.Finset.Fin
+import Mathlib.Algebra.Ring.GeomSum
 
-/-! Exact slot coordinates and compatible-word counts for a single diagonal defect. -/
+/-!
+A defect in block `(i₀,j₀)` splits its horizontal slot into `x,y` and its vertical
+slot into `y,x`. Every other slot is constant, with the four alphabets in `SlotValid`.
+The indices are finite intervals, so words on empty sides remain in the same model.
+
+For a fixed ordered pair, `true` records the third colour `x+y`. Cross exclusions
+force either all vertical words or all horizontal words to omit that colour.
+The two classes have independent coordinates; their intersection is the constant
+assignment, present exactly under `emptyIndicator`. Their union gives `F`.
+
+`N_D` uses step counts: its actual rectangle has `N+1` rows and `M+1` columns.
+`N_D_closed` is an integer identity and the two thin boundary identities use naturals.
+-/
+
 namespace D5.S3.SpinModels.KingDefects.KingDiagonal
 
 open KingGrid KingDifference
@@ -469,12 +538,14 @@ private theorem unary_card {I : Type} [Fintype I] (p : I → Bool → Prop) :
   rw [Nat.card_congr (Equiv.subtypePiEquivPi)]
   simp only [Nat.card_eq_fintype_card, Fintype.card_pi]
 
-private theorem left_card (A B C D : Type) [Fintype A] [Fintype B]
+private theorem left_card (A B C D : Type) [Finite A] [Finite B]
     [Fintype C] [Fintype D] :
     Nat.card {f : WordIndex A B C D → Bool // ∀ i, leftRule A B C D i (f i)} =
       (if Nonempty B then 1 else 2) ^ Fintype.card C *
       (if Nonempty A then 1 else 2) ^ Fintype.card D := by
   classical
+  let _ : Fintype A := Fintype.ofFinite A
+  let _ : Fintype B := Fintype.ofFinite B
   rw [unary_card]
   simp only [Fintype.prod_sum_type, leftRule]
   have hb (P : Prop) : Nat.card {b : Bool // P → b = true} = if P then 1 else 2 := by
@@ -483,11 +554,13 @@ private theorem left_card (A B C D : Type) [Fintype A] [Fintype B]
   simp [Nat.card_eq_fintype_card]
 
 private theorem right_card (A B C D : Type) [Fintype A] [Fintype B]
-    [Fintype C] [Fintype D] :
+    [Finite C] [Finite D] :
     Nat.card {f : WordIndex A B C D → Bool // ∀ i, rightRule A B C D i (f i)} =
       (if Nonempty D then 1 else 2) ^ Fintype.card A *
       (if Nonempty C then 1 else 2) ^ Fintype.card B := by
   classical
+  let _ : Fintype C := Fintype.ofFinite C
+  let _ : Fintype D := Fintype.ofFinite D
   rw [unary_card]
   simp only [Fintype.prod_sum_type, rightRule]
   have hb (P : Prop) : Nat.card {b : Bool // P → b = true} = if P then 1 else 2 := by
@@ -495,8 +568,7 @@ private theorem right_card (A B C D : Type) [Fintype A] [Fintype B]
   simp only [hb]
   simp [Nat.card_eq_fintype_card]
 
-private theorem intersection_card (A B C D : Type) [Fintype A] [Fintype B]
-    [Fintype C] [Fintype D] :
+private theorem intersection_card (A B C D : Type) :
     Nat.card {f : WordIndex A B C D → Bool //
       (∀ i, leftRule A B C D i (f i)) ∧ (∀ i, rightRule A B C D i (f i))} =
     if (Nonempty A → ¬ Nonempty D) ∧ (Nonempty B → ¬ Nonempty C) then 1 else 0 := by
@@ -526,7 +598,7 @@ private theorem intersection_card (A B C D : Type) [Fintype A] [Fintype B]
     · rintro ⟨rfl,hAD,hBC⟩
       constructor <;> intro i <;> rcases i with a | b | c | d
       all_goals dsimp [leftRule, rightRule]
-      all_goals first | rfl | exact fun hn => False.elim (hAD ⟨a⟩ hn) |
+      all_goals first | exact fun hn => False.elim (hAD ⟨a⟩ hn) |
         exact fun hn => False.elim (hAD hn ⟨d⟩) |
         exact fun hn => False.elim (hBC ⟨b⟩ hn) |
         exact fun hn => False.elim (hBC hn ⟨c⟩)
@@ -534,17 +606,18 @@ private theorem intersection_card (A B C D : Type) [Fintype A] [Fintype B]
   by_cases h : (Nonempty A → ¬ Nonempty D) ∧ (Nonempty B → ¬ Nonempty C)
   · have hp : ((Nonempty A → ¬ Nonempty D) ∧ (Nonempty B → ¬ Nonempty C)) = True :=
       propext (iff_true_intro h)
-    simp only [hp, and_true, and_false, ite_true, ite_false]
+    simp only [hp, and_true, ite_true]
     simp [Nat.card_eq_fintype_card]
   · have hp : ((Nonempty A → ¬ Nonempty D) ∧ (Nonempty B → ¬ Nonempty C)) = False :=
       propext (iff_false_intro h)
-    simp only [hp, and_true, and_false, ite_true, ite_false]
-    simp [Nat.card_eq_fintype_card]
+    simp only [hp, and_false, ite_false]
+    simp
 
-private theorem card_or_add_inter {I : Type} [Fintype I] (p q : I → Prop) :
+private theorem card_or_add_inter {I : Type} [Finite I] (p q : I → Prop) :
     Nat.card {i // p i ∨ q i} + Nat.card {i // p i ∧ q i} =
       Nat.card {i // p i} + Nat.card {i // q i} := by
   classical
+  let _ : Fintype I := Fintype.ofFinite I
   simpa only [Nat.card_eq_fintype_card, Fintype.card_subtype,
     ← Finset.filter_or, ← Finset.filter_and] using
       Finset.card_union_add_card_inter (Finset.univ.filter p) (Finset.univ.filter q)
@@ -755,12 +828,8 @@ private theorem F_add (a b c d : ℕ) :
 
 private theorem geometric_two (r : ℕ) :
     (∑ i : Fin r, (2 : ℤ)^i.val) = 2^r - 1 := by
-  induction r with
-  | zero => simp
-  | succ r ih =>
-    rw [Fin.sum_univ_castSucc]
-    simp only [Fin.val_castSucc, Fin.val_last, ih, pow_succ]
-    ring
+  simpa only [Fin.sum_univ_eq_sum_range, show (2 : ℤ) - 1 = 1 by norm_num, mul_one]
+    using geom_sum_mul (2 : ℤ) r
 
 private theorem geometric_two_reverse (r : ℕ) :
     (∑ i : Fin r, (2 : ℤ)^(r - 1 - i.val)) = 2^r - 1 := by
@@ -859,7 +928,24 @@ theorem N_D_two_rows (M : ℕ) : N_D 1 M = 6 * (M * 2^(M-1)) := by
     Nat.cast_id]
   ring
 
+/-- The transposed two-column boundary has the same empty-side count. -/
+theorem N_D_two_columns (N : ℕ) : N_D N 1 = 6 * (N * 2^(N-1)) := by
+  unfold N_D
+  simp only [Fin.sum_univ_one]
+  have point (i : Fin N) : N_e (.D i (0 : Fin 1) : Edge (N+1) 2) = 6*2^(N-1) := by
+    rw [diagonal_count, F_piecewise]
+    have hi := i.isLt
+    have hab : i.val + (N - 1 - i.val) = N - 1 := by omega
+    simp only [Fin.val_zero, Nat.sub_self, Nat.zero_add, hab, ite_true]
+    by_cases h : N - 1 = 0 <;> simp [h]
+  simp_rw [point]
+  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+    Nat.cast_id]
+  ring
+
+#print axioms F_piecewise
 #print axioms N_D_closed
 #print axioms N_D_two_rows
+#print axioms N_D_two_columns
 
 end D5.S3.SpinModels.KingDefects.KingDiagonal
