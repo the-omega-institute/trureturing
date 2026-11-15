@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.BinomialBases;
 internal sealed class PascalHadamardPositivityRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/BinomialBases/PascalHadamardPositivityRefutation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/vsp2026pascalhadamard");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Certificates/vsp2026pascalhadamard");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A strictly separated Pascal minor has negative determinant at real exponent one tenth, refuting the original MO515594 positivity assertion.",
