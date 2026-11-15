@@ -15,6 +15,9 @@ strata_touched:
   - D5/S3/Quantum/Divergence/MaximalHockeyStickLoewnerSlopes
   - D5/S3/Quantum/Divergence/MaximalHockeyStickArbitrarySupport
   - D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment
+  - D5/S3/Quantum/Divergence/NormalOverlapCompatibility
+  - D5/S3/Quantum/Divergence/NormalOverlapCurvatureEquality
+  - D5/S3/Quantum/Divergence/NormalOverlapOperational
 license: citation-only
 triage: anchor
 ---
@@ -281,3 +284,37 @@ maximal hockey-stick f-divergence and maximal f-divergence. The attainment
 endpoint does not supply that classification. Bounded literature searches
 have not identified an exact subsuming theorem; worldwide priority remains
 unresolved.
+
+## Concrete von Neumann arbitrary-support equality
+
+`NormalOverlapOperational.arbitrary_support_classification` treats arbitrary
+concrete von Neumann algebras and positive inputs in the independently defined
+coefficient-series predual. The source universe is independent of the concrete
+Hilbert-space universe. The maximal value is literally the infimum over all
+standard-original sigma-finite sources with algebraic positive complex-linear
+preparations on their entire complex L1 spaces. Assume this infimum is real
+finite; no optimizer or simultaneous overlap family is assumed.
+
+For t>0, let v(t) be the attained maximum of eta(1) over actual positive
+standard-predual functionals eta dominated by rho and t sigma. Equality of
+the original maximal and integrated original operational hockey values is
+equivalent to the following condition: every finite increasing tuple of
+positive knots in the actual curvature support admits optimizers eta_j whose
+functional secants D_j=(eta_j-eta_(j-1))/(t_j-t_(j-1)), with eta_0=t_0=0,
+satisfy sigma>=D_1>=...>=D_m>=0. The optimizers need not be unique.
+`NormalOverlapCompatibility` proves this finite-to-global condition using
+positive functional block interpolation and the compact moment family's finite
+intersection property. `NormalOverlapCurvatureEquality` proves the literal
+endpoint-inclusive cost comparison and necessity from real-finite equality.
+
+Under either equivalent condition, one actual whole-complex-L1 preparation on
+a finite regular Borel measure on [0,1], with p=x and q=1-x, attains every
+curvature-support overlap maximum and the common original finite cost. Its
+total source mass is rho(1)+sigma(1); all preparation outputs lie in the
+coefficient-series predual. Zero, singular and unnormalized inputs, empty or
+unbounded curvature support, and infinite scalar endpoints remain included.
+The complete atom at one uses the negative hinge branch. No finite alphabet,
+spectral optimality, necessity from infinity=infinity, or converse from
+intrinsic order-normality to the abstract predual is asserted. This is separate
+from unconditional minimal-test existence and from the full-support localized
+centralizer classification. Worldwide priority remains unresolved.
