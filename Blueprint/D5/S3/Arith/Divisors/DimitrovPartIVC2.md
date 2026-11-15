@@ -22,6 +22,10 @@ $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\forall k \in \mathbb{N},\;
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/DimitrovPartIVC2.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/dimitrov-lazarova-part4-conjecture-2` (proved) by `D5/S3/Arith/Divisors/DimitrovPartIVC2.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"dimitrov-lazarova-part4-conjecture-2","declaration_gid":"D5/S3/Arith/Divisors/DimitrovPartIVC2.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Stoyan Dimitrov and Meglena Lazarova (2026). *Lower Bounds on Expressions Depending on the Functions φ(n), ψ(n) and σ(n): Part 4*. DOI: [10.3390/math14213935](https://doi.org/10.3390/math14213935). URL: <https://mdpi-res.com/d_attachment/mathematics/mathematics-14-03935/article_deploy/mathematics-14-03935.pdf>.
