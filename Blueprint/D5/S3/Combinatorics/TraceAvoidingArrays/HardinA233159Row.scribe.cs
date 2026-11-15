@@ -7,7 +7,9 @@ internal sealed class HardinA233159RowDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233159Row.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Automata/hardin2013a233159");
     private static DocumentBlock Node(string declaration, Formula formula, string prose, bool count = false, bool theorem = false) =>
-        Describe.Lean(DescribeId.Create("a233159-hardina233159row-" + declaration.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + declaration), H(declaration), StatementSource.FromAuthor(Disp(formula)), count ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+        declaration == "result"
+            ? Describe.Lean(DescribeId.Create("a233159-hardina233159row-" + declaration.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + declaration), H(declaration), StatementSource.FromAuthor(Disp(formula)), count ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233159"), ResolutionKind.Proved))
+            : Describe.Lean(DescribeId.Create("a233159-hardina233159row-" + declaration.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + declaration), H(declaration), StatementSource.FromAuthor(Disp(formula)), count ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Equality patterns and their quotient determine labelled six-row strip counts.",
         H("OEIS A233159"), Blocks(

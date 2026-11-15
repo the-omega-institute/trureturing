@@ -22,6 +22,10 @@ $$\forall n \in \operatorname{Nat},\; (U_{5}\left(n + 12\right): \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233158Row.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233158` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233158Row.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233158","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233158Row.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233158: 5-row three-state sum exclusion*. URL: <https://oeis.org/A233158>.
