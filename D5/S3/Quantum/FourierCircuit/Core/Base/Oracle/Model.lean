@@ -59,16 +59,20 @@ public structure Interpretation (model : OracleModel) where
   /-- Each available query acts unitarily on exactly its declared systems. -/
   operator : (query : model.Query) → UnitaryOperator (model.signature query).register
 
+/-- The absence of oracle access has no query instances and no query coordinates. -/
+@[expose, implicit_reducible]
+public def empty : OracleModel where
+  Query := Empty
+  Coordinate := Empty
+  coordinateDecidableEq := inferInstance
+  signature query := nomatch query
+  coordinate query := nomatch query
 
-public instance : Subsingleton (Interpretation empty) where
-  allEq left right := by
-    cases left with
-    | mk left =>
-      cases right with
-      | mk right =>
-        have same : left = right := funext fun query => nomatch query
-        cases same
-        rfl
+/-- Empty access has one interpretation and cannot reveal any oracle information. -/
+@[expose, implicit_reducible]
+public def emptyInterpretation : Interpretation empty where
+  operator query := nomatch query
+
 
 /-- One granted query, placed on systems of exactly its declared dimensions. -/
 public structure Occurrence (model : OracleModel) where

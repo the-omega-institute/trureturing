@@ -58,20 +58,6 @@ instance : CoeOut (NormalizedVector R) (HilbertVector R) := ⟨NormalizedVector.
 instance : CoeFun (NormalizedVector R) (fun _ => R.Index → ℂ) :=
   ⟨fun ψ => ψ.vec⟩
 
-instance : Norm (NormalizedVector R) :=
-  ⟨fun ψ => ‖(ψ : HilbertVector R)‖⟩
-
-instance : Inner ℂ (NormalizedVector R) :=
-  ⟨fun ψ φ => inner ℂ (ψ : HilbertVector R) (φ : HilbertVector R)⟩
-
-instance : HAdd (NormalizedVector R) (NormalizedVector R) (HilbertVector R) :=
-  ⟨fun ψ φ => (ψ : HilbertVector R) + (φ : HilbertVector R)⟩
-
-instance : HSub (NormalizedVector R) (NormalizedVector R) (HilbertVector R) :=
-  ⟨fun ψ φ => (ψ : HilbertVector R) - (φ : HilbertVector R)⟩
-
-instance : HSMul ℂ (NormalizedVector R) (HilbertVector R) :=
-  ⟨fun c ψ => c • (ψ : HilbertVector R)⟩
 
 /-- Certify a raw vector once its norm-one proof is available. -/
 @[expose] public def ofVector (vec : HilbertVector R)

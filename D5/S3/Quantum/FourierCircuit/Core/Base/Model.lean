@@ -77,9 +77,6 @@ public instance classicalCoordinateDecidableEq (model : ExecutionModel) :
 public instance classicalOracleCoordinateDecidableEq (model : ExecutionModel) :
     DecidableEq model.ClassicalOracleCoordinate := model.classicalOracles.coordinateDecidableEq
 
-public instance hiddenStateFintype (model : ExecutionModel) : Fintype model.HiddenState :=
-  model.classicalOracles.stateFintype
-
 
 /-- Native gate coordinates are absent from classical execution. -/
 @[expose, implicit_reducible]

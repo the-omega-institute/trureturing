@@ -40,7 +40,7 @@ variable {R S : Register}
 /-- A permutation matrix compares the image of the row with the column. -/
 public lemma ofPerm_entry (permutation : Equiv.Perm R.Index) (row column : R.Index) :
     ofPerm permutation row column = if permutation row = column then 1 else 0 := by
-  simp [ofPerm, Equiv.toPEquiv_apply]
+  simp [ofPerm, ofMatrix, Equiv.toPEquiv_apply]
 
 /-- Operator multiplication reverses the row-permutation composition order. -/
 public lemma ofPerm_mul (first second : Equiv.Perm R.Index) :

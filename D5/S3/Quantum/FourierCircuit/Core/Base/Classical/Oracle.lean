@@ -62,7 +62,6 @@ public instance coordinateDecidableEq : (model : ClassicalOracleModel) →
       inferInstanceAs (DecidableEq (left.Coordinate ⊕ right.Coordinate))
 
 
-
 end ClassicalOracleModel
 
 end QuantumAlg
