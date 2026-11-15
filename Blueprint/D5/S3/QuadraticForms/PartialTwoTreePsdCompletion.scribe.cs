@@ -36,7 +36,7 @@ internal sealed class PartialTwoTreePsdCompletionDocument : IScribeDocumentDefin
     private static Formula R => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula N => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Val(Formula t, params Formula[] args) => Call("value", new[] { t }.Concat(args).ToArray());
-    private static Formula And(params Formula[] clauses) => Join(Land, clauses);
+    private static Formula And(params Formula[] clauses) => Join(Land, clauses.Select(c => Seq(Open, c, Close)).ToArray());
     private static Formula Join(Formula relation, Formula[] clauses)
     {
         var parts = new List<Formula>();
