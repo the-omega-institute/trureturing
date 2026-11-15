@@ -54,7 +54,7 @@ internal sealed class PascalHadamardPositivityRefutationDocument : IScribeDocume
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
-    private static Formula Real() => new Formula.Reals();
+    private static Formula Real() => new Formula.NamedConstant(FormulaIdentifier.Create("Real"));
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(V(owner)), Dot, Operatorname, Grp(V(name)));
