@@ -26,9 +26,9 @@ internal sealed class SchurMinimumDocument : IScribeDocumentDefinition
             Paragraph(Text(
                 "Let I and P be finite index types, A an I-by-I positive definite complex matrix, "
                 + "B an I-by-P complex matrix, and D a P-by-P Hermitian complex matrix. Write "
-                + "G = [A B; B* D], S = D − B*A⁻¹B, and E = [1 −A⁻¹B; 0 1], "
-                + "where * denotes conjugate transpose. Positive definiteness makes A invertible "
-                + "and Hermitian. Block multiplication gives E*GE = [A 0; 0 S]. The triangular "
+                + "G = [A B; B† D], S = D − B†A⁻¹B, and E = [1 −A⁻¹B; 0 1], "
+                + "where † denotes conjugate transpose. Positive definiteness makes A invertible "
+                + "and Hermitian. Block multiplication gives E†GE = [A 0; 0 S]. The triangular "
                 + "matrix E is invertible by Matrix.isUnit_fromBlocks_zero₂₁.")),
             Paragraph(Text(
                 "Matrix.PosDef.fromBlocks₁₁ gives G.PosSemidef if and only if S.PosSemidef. "
@@ -38,13 +38,13 @@ internal sealed class SchurMinimumDocument : IScribeDocumentDefinition
                 + "with the inverse used in the upstream block formulas.")),
             Paragraph(Text(
                 "For every x in C^I and y in C^P, Matrix.schur_complement_eq₁₁ gives "
-                + "[x;y]*G[x;y] = (x + A⁻¹By)*A(x + A⁻¹By) + y*Sy. "
+                + "[x;y]†G[x;y] = (x + A⁻¹By)†A(x + A⁻¹By) + y†Sy. "
                 + "The first summand is the squared norm for the positive inner product weighted "
                 + "by A: it is nonnegative and vanishes precisely when x = −A⁻¹By. "
                 + "Strict positivity away from zero follows from Matrix.PosDef.dotProduct_mulVec_pos. "
-                + "Hence for each fixed y the unique minimum over all x is y*Sy, attained at "
+                + "Hence for each fixed y the unique minimum over all x is y†Sy, attained at "
                 + "x = −A⁻¹By. The attained-minimum theorem above applies with its boundary block "
-                + "equal to D, its off-diagonal block equal to B*, and its internal block equal to A, "
+                + "equal to D, its off-diagonal block equal to B†, and its internal block equal to A, "
                 + "followed by interchange of the two sum coordinates. These assertions impose no "
                 + "rank condition on B and include empty index types.")),
             Paragraph(Text("Real quadratic energy and Gaussian free energy.")),
