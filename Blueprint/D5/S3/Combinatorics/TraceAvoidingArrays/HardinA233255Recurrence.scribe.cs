@@ -1,4 +1,3 @@
-using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays;
@@ -21,16 +20,6 @@ internal sealed class HardinA233255RecurrenceDocument : IScribeDocumentDefinitio
                 + "The six explicit vectors are checked powers of this actual seventeen-coordinate "
                 + "transfer on the all-ones vector. Their exact degree-five vector identity propagates "
                 + "to every height by multiplication with arbitrary further matrix powers.")),
-            Describe.Lean(DescribeId.Create("table"), DeclarationHandle.Create(
-                "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.table"),
-                H("The sixteen proper-boundary transfer weights"),
-                StatementSource.FromAuthor(Disp(Seq(Operatorname, Grp(V("HardinA233255Recurrence")), Dot,
-                    Operatorname, Grp(V("table")), Sp, Eq, Sp, Vector(Vector(Num("5"), Num("5"), Num("3"), Num("3"), Num("4"), Num("4"), Num("2"), Num("2"), Num("0"), Num("0"), Num("1"), Num("1"), Num("3"), Num("3"), Num("3"), Num("3")), Vector(Num("4"), Num("4"), Num("3"), Num("3"), Num("4"), Num("4"), Num("2"), Num("2"), Num("1"), Num("1"), Num("1"), Num("1"), Num("2"), Num("2"), Num("1"), Num("1")), Vector(Num("1"), Num("1"), Num("2"), Num("2"), Num("1"), Num("1"), Num("3"), Num("3"), Num("2"), Num("2"), Num("2"), Num("2"), Num("1"), Num("1"), Num("2"), Num("2")), Vector(Num("3"), Num("3"), Num("3"), Num("3"), Num("3"), Num("3"), Num("2"), Num("2"), Num("0"), Num("0"), Num("2"), Num("2"), Num("3"), Num("3"), Num("3"), Num("3")), Vector(Num("4"), Num("4"), Num("2"), Num("2"), Num("4"), Num("4"), Num("2"), Num("2"), Num("0"), Num("0"), Num("1"), Num("1"), Num("3"), Num("3"), Num("1"), Num("1")), Vector(Num("4"), Num("4"), Num("2"), Num("2"), Num("4"), Num("4"), Num("2"), Num("2"), Num("1"), Num("1"), Num("1"), Num("1"), Num("2"), Num("2"), Num("3"), Num("3")), Vector(Num("0"), Num("0"), Num("2"), Num("2"), Num("0"), Num("0"), Num("2"), Num("2"), Num("3"), Num("3"), Num("2"), Num("2"), Num("0"), Num("0"), Num("2"), Num("2")), Vector(Num("2"), Num("2"), Num("2"), Num("2"), Num("2"), Num("2"), Num("2"), Num("2"), Num("1"), Num("1"), Num("3"), Num("3"), Num("2"), Num("2"), Num("2"), Num("2")), Vector(Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("2"), Num("2"), Num("3"), Num("3"), Num("1"), Num("1"), Num("1"), Num("1")), Vector(Num("0"), Num("0"), Num("1"), Num("1"), Num("0"), Num("0"), Num("1"), Num("1"), Num("3"), Num("3"), Num("1"), Num("1"), Num("0"), Num("0"), Num("1"), Num("1")), Vector(Num("2"), Num("2"), Num("1"), Num("1"), Num("2"), Num("2"), Num("1"), Num("1"), Num("2"), Num("2"), Num("2"), Num("2"), Num("1"), Num("1"), Num("3"), Num("3")), Vector(Num("2"), Num("2"), Num("1"), Num("1"), Num("2"), Num("2"), Num("1"), Num("1"), Num("0"), Num("0"), Num("2"), Num("2"), Num("3"), Num("3"), Num("2"), Num("2")), Vector(Num("3"), Num("3"), Num("3"), Num("3"), Num("3"), Num("3"), Num("1"), Num("1"), Num("0"), Num("0"), Num("1"), Num("1"), Num("3"), Num("3"), Num("3"), Num("3")), Vector(Num("2"), Num("2"), Num("1"), Num("1"), Num("2"), Num("2"), Num("3"), Num("3"), Num("1"), Num("1"), Num("1"), Num("1"), Num("2"), Num("2"), Num("1"), Num("1")), Vector(Num("2"), Num("2"), Num("3"), Num("3"), Num("2"), Num("2"), Num("1"), Num("1"), Num("2"), Num("2"), Num("2"), Num("2"), Num("1"), Num("1"), Num("2"), Num("2")), Vector(Num("4"), Num("4"), Num("3"), Num("3"), Num("2"), Num("2"), Num("1"), Num("1"), Num("0"), Num("0"), Num("2"), Num("2"), Num("3"), Num("3"), Num("3"), Num("3")))))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Automata/hardin2013a233255")),
-                Blocks(Paragraph(Text("The 16 by 16 integer matrix lists compatible proper seven-cell row fibres, "
-                    + "in HardinA233255ShapeSymmetry.representatives order on both axes. "
-                    + "Its entries equal HardinA233255ShapeSymmetry.K, as checked by the recurrence certificate."))),
-                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(
                 "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.result"),
                 H("The all-height five-step recurrence"), StatementSource.WithoutFormula(),
@@ -58,9 +47,4 @@ internal sealed class HardinA233255RecurrenceDocument : IScribeDocumentDefinitio
                 + "https://github.com/the-omega-institute/trureturing/issues/28328#issuecomment-6732072411 "
                 + "and https://github.com/the-omega-institute/trureturing/issues/28328#issuecomment-6732792448. "
                 + "These three audits are unfinished; they are not validated registrations.")))));
-    private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
-    private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
-    private static Formula Vector(params Formula[] entries) => Seq(
-        new Formula[] { Bang, OpenBracket }.Concat(entries.SelectMany((f, i) =>
-            i == 0 ? new[] { f } : new[] { Comma, Sp, f })).Append(CloseBracket).ToArray());
 }
