@@ -105,15 +105,33 @@ internal sealed class KingDifferenceDocument : IScribeDocumentDefinition
             All(
                 "M",
                 Q("Nat"),
-                Equivalence(
-                    Call("KingDifference.DiffField", V("N"), V("M")),
-                    Product(
+                And(
+                    Typed(
+                        Q("KingDifference.DiffField.mk"),
                         Arrow(
-                            Call("Fin", Add(V("N"), Num("1"))),
-                            Arrow(Call("Fin", V("M")), Q("KingDifference.K"))),
-                        Arrow(
-                            Call("Fin", V("N")),
-                            Arrow(Call("Fin", Add(V("M"), Num("1"))), Q("KingDifference.K")))))));
+                            Arrow(
+                                Call("Fin", Add(V("N"), Num("1"))),
+                                Arrow(Call("Fin", V("M")), Q("KingDifference.K"))),
+                            Arrow(
+                                Arrow(
+                                    Call("Fin", V("N")),
+                                    Arrow(Call("Fin", Add(V("M"), Num("1"))), Q("KingDifference.K"))),
+                                Call("KingDifference.DiffField", V("N"), V("M"))))),
+                    And(
+                        Typed(
+                            Q("KingDifference.DiffField.h"),
+                            Arrow(
+                                Call("KingDifference.DiffField", V("N"), V("M")),
+                                Arrow(
+                                    Call("Fin", Add(V("N"), Num("1"))),
+                                    Arrow(Call("Fin", V("M")), Q("KingDifference.K"))))),
+                        Typed(
+                            Q("KingDifference.DiffField.v"),
+                            Arrow(
+                                Call("KingDifference.DiffField", V("N"), V("M")),
+                                Arrow(
+                                    Call("Fin", V("N")),
+                                    Arrow(Call("Fin", Add(V("M"), Num("1"))), Q("KingDifference.K")))))))));
 
     private static Formula Formula2() =>
         All(
@@ -749,7 +767,6 @@ internal sealed class KingDifferenceDocument : IScribeDocumentDefinition
                                 Mul(Num("2"), Call("KingDifference.N_D", V("N"), V("M")))),
                             Mul(Num("6"), Call("KingGrid.T", Add(V("N"), Num("1")), Add(V("M"), Num("1")))))))));
 
-
     private static Formula V(string s) => F.Id(s);
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((part, i) =>
@@ -757,8 +774,8 @@ internal sealed class KingDifferenceDocument : IScribeDocumentDefinition
     private static Formula NamePart(string s)
     {
         var parts = s.Split('_');
-        Formula Word(string p) => Seq(System.Text.RegularExpressions.Regex.Matches(p, "[A-Za-z]+|[0-9]+")
-            .Select(m => char.IsDigit(m.Value[0]) ? Num(m.Value) : V(m.Value)).ToArray());
+        Formula Word(string p) => Seq(p.Select(ch => char.IsDigit(ch)
+            ? Num(ch.ToString()) : V(ch.ToString())).ToArray());
         Formula result = Word(parts[^1]);
         for (var i = parts.Length - 2; i >= 0; --i)
             result = Seq(Word(parts[i]), Underscore, Grp(result));
@@ -774,18 +791,12 @@ internal sealed class KingDifferenceDocument : IScribeDocumentDefinition
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Val(Formula a) => Call("Fin.val", a);
     private static Formula Value(Formula a) => Call("Subtype.val", a);
-    private static Formula CastInt(Formula a) => Typed(a, Q("Int"));
-    private static Formula Instance(Formula t, Formula b) => Seq(OpenBracket, t, CloseBracket, Comma, Sp, b);
     private static Formula Subtype(string x, Formula t, Formula b) =>
         Seq(OpenBrace, V(x), Colon, Sp, t, Sp, Slash, Slash, Sp, Parenthesized(b), CloseBrace);
     private static Formula Fn(string x, Formula t, Formula b) =>
         Parenthesized(Seq(LambdaLower, Sp, Typed(V(x), t), Sp, Mapsto, Sp, b));
     private static Formula All(string x, Formula t, Formula b) =>
         Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
-    private static Formula Some(string x, Formula t, Formula b) =>
-        Seq(Exists, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
-    private static Formula Unique(string x, Formula t, Formula b) =>
-        Seq(Exists, Bang, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
     private static Formula SumOver(string x, Formula t, Formula b) =>
         Seq(Sum, Underscore, Grp(Seq(V(x), Colon, Sp, t)), Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
@@ -793,9 +804,7 @@ internal sealed class KingDifferenceDocument : IScribeDocumentDefinition
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
-    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
-    private static Formula Power(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));

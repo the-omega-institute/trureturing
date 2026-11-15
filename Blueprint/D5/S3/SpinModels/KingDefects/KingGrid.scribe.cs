@@ -745,7 +745,6 @@ internal sealed class KingGridDocument : IScribeDocumentDefinition
                             Call("KingGrid.L", V("n"), V("k")),
                             Mul(Num("24"), Call("KingGrid.T", V("n"), V("k"))))))));
 
-
     private static Formula V(string s) => F.Id(s);
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((part, i) =>
@@ -753,8 +752,8 @@ internal sealed class KingGridDocument : IScribeDocumentDefinition
     private static Formula NamePart(string s)
     {
         var parts = s.Split('_');
-        Formula Word(string p) => Seq(System.Text.RegularExpressions.Regex.Matches(p, "[A-Za-z]+|[0-9]+")
-            .Select(m => char.IsDigit(m.Value[0]) ? Num(m.Value) : V(m.Value)).ToArray());
+        Formula Word(string p) => Seq(p.Select(ch => char.IsDigit(ch)
+            ? Num(ch.ToString()) : V(ch.ToString())).ToArray());
         Formula result = Word(parts[^1]);
         for (var i = parts.Length - 2; i >= 0; --i)
             result = Seq(Word(parts[i]), Underscore, Grp(result));
@@ -770,7 +769,6 @@ internal sealed class KingGridDocument : IScribeDocumentDefinition
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Val(Formula a) => Call("Fin.val", a);
     private static Formula Value(Formula a) => Call("Subtype.val", a);
-    private static Formula CastInt(Formula a) => Typed(a, Q("Int"));
     private static Formula Instance(Formula t, Formula b) => Seq(OpenBracket, t, CloseBracket, Comma, Sp, b);
     private static Formula Subtype(string x, Formula t, Formula b) =>
         Seq(OpenBrace, V(x), Colon, Sp, t, Sp, Slash, Slash, Sp, Parenthesized(b), CloseBrace);
@@ -778,20 +776,15 @@ internal sealed class KingGridDocument : IScribeDocumentDefinition
         Parenthesized(Seq(LambdaLower, Sp, Typed(V(x), t), Sp, Mapsto, Sp, b));
     private static Formula All(string x, Formula t, Formula b) =>
         Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
-    private static Formula Some(string x, Formula t, Formula b) =>
-        Seq(Exists, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
     private static Formula Unique(string x, Formula t, Formula b) =>
         Seq(Exists, Bang, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
     private static Formula SumOver(string x, Formula t, Formula b) =>
         Seq(Sum, Underscore, Grp(Seq(V(x), Colon, Sp, t)), Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
-    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
-    private static Formula Power(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
