@@ -89,7 +89,7 @@ private lemma interior_columns_factor (A : Fin 2 → Bond) (l r : Fin 2 → ℂ)
   intro t _
   ring
 
-private lemma left_boundary_gram (A : Fin 2 → Bond) (l : Fin 2 → ℂ) (p : ℕ) :
+lemma left_boundary_gram (A : Fin 2 → Bond) (l : Fin 2 → ℂ) (p : ℕ) :
     (prefixMap A l p)ᴴ * prefixMap A l p =
       (dualTransfer A)^[p] (vecMulVec (star l) l) := by
   have hs (k : ℕ) : (prefixMap A l k)ᴴ * prefixMap A l k =
@@ -129,7 +129,7 @@ private lemma context_gram (A : Fin 2 → Bond) (l r : Fin 2 → ℂ) (p q : ℕ
   intro a _
   ring
 
-private lemma interior_density_dictionary (A : Fin 2 → Bond) (l r : Fin 2 → ℂ)
+lemma interior_density_dictionary (A : Fin 2 → Bond) (l r : Fin 2 → ℂ)
     (p k q : ℕ) :
     rawInterior p k q (mpsState ((p + k) + q) (A 0) (A 1) l r) =
       feature A k * ((transfer A)^[q] (vecMulVec r (star r)) ⊗ₖ
