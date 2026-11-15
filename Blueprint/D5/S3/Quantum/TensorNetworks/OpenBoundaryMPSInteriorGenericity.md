@@ -32,7 +32,19 @@ At every target psi in L, set Q=rawPrefix 3 m psi, ptheta=quotientCoordinates m 
 
 For every p,q satisfying p≥1, q≥1 and p+q=m, every length equality h:((p+3)+q)=3+m, and EVERY actual competitor phi of length 3+m, complete rawInterior p 3 q equality between the cast states is equivalent to phi being a unit complex phase multiple of psi. No competitor chart, rank, minimality, positivity, spanning, transfer or normalization assumption is present. The same polynomial R serves all these splits. R may vary with m.
 
-**Theorem 1.3 (Generic sufficiency for every interior three-site window).**
+**Theorem 1.3 (Original canonical positive iterate supplier).**
+
+Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.positive_iterates`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.positive_iterates` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every canonical real x with positive sigma, nonzero determinant of canonical A0 and nonzero determinant of the boundary matrix with columns Ai(1,eta), BOTH actual canonical left and right environments are positive definite at every natural iterate k at least one. The left seed is star(left) tensor left; the right seed is right tensor star(right), with the full square-root sigma right representative. This is the original helper and original complete proof, exposed for the spectral certificate's consumed environment transport.
+
+**Theorem 1.4 (Generic sufficiency for every interior three-site window).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.intrinsic_interior_recovery`
 
@@ -59,5 +71,6 @@ The full-source four-slot registration remains declared_unresolved: IE-C050 Clos
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.castState`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.intrinsicInteriorRecovery`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.intrinsic_interior_recovery`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.positive_iterates`
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore](OpenBoundaryMPSInteriorCommonCore.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSIntrinsicQ2Fiber](OpenBoundaryMPSIntrinsicQ2Fiber.md)

@@ -451,3 +451,74 @@ unchanged. This is a reusable inverse supplier, with no dimension-fourteen
 assumption, arbitrary polynomial restriction, norm-field argument, genericity
 proof, positive-environment extension or actual-image density claim.
 Full C9 remains open and this unit earns zero solved-open-problem credit.
+
+
+## Lengthwise canonical spectral exclusion with actual ambiguity
+
+For every fixed pair of positive lengths $p,q$, put $N=(p+2)+q$.
+`InteriorSpectralCoordinates.native_coordinates` supplies sixteen literal
+REAL15 numerator/denominator pairs for the actual native sector, left boundary,
+right boundary $u^NS^{-1}(1,\eta)$ and $z$. The first two variables are
+$\operatorname{Re}e,\operatorname{Im}e$; the remaining thirteen retain the
+existing canonical order. Every inverse guard follows from $e^2=D$ and
+$c_2DU(U+D)\ne0$, including in helpers at $N=0$. The existing
+`Q2PolynomialFiber.clear_polynomial`, with arbitrary independent denominators,
+gives real polynomials $H,B$ and the exact physical equality $b=H/B$, with
+$B\ne0$ there. No complex rational-function clearing statement is assumed.
+
+The division-free cross numerator is
+$C_\times=4c_2\bar c_2+(\bar h+f)(h-e)$, where $h=c_4-c_1$,
+$e=X+iY$ and $f=X-iY$. At physical points it equals
+$4\lVert c_2\rVert^2(1+\bar\lambda\mu)$.
+Reduce $H(\operatorname{ReCoeff}C_\times^2+
+\operatorname{ImCoeff}C_\times^2)$, with the squares taken after each
+coefficient projection, by the literal finite MX/MY monomial sum to
+$g_0+g_1X+g_2Y+g_3r$. `g_evaluation` proves the actual REAL15 evaluation
+identity with $r=\operatorname{normSq}(e)$.
+
+For $A=\operatorname{ReCoeff}D$, $B=\operatorname{ImCoeff}D$ and
+$Q=A^2+B^2$, define
+$K_0=g_0^2+Qg_3^2-\tfrac12 A(g_1^2-g_2^2)-Bg_1g_2$,
+$H_0=2g_0g_3-\tfrac12(g_1^2+g_2^2)$ and
+$\mathrm{normg}=K_0^2-QH_0^2$. Polynomial halves are $C(1/2)$.
+The consumed character identity pairs the simultaneous opposite signs:
+$h(E,F)h(-E,-F)=K_0+H_0EF$ and
+$h(-E,F)h(E,-F)=K_0-H_0EF$, with $E^2=A+iB$, $F^2=A-iB$.
+
+`InteriorSpectralWitness.normg_nonzero` uses the free COMPLEX13 map with
+$c_3=-c_2\lambda\mu$, $c_4=c_1+c_2(\lambda+\mu)$ and an independent
+barred copy. Swapping $\lambda,\mu$ and independently swapping the barred
+pair fixes every mapped canonical coordinate and flips the two roots
+independently. The original physical witness proves one free character
+nonzero using actual real clearing and `b_right_scale`. The polynomial-domain
+orbit product proves the norm polynomial nonzero. Neither injectivity of the
+base map nor nonvanishing of the norm at that physical witness is assumed.
+
+Set $J_{\rm den}=\lVert c_2DU(U+D)\rVert^2$ and
+$W=c_2\eta^2+(c_1-c_4)\eta-c_3$. The literal REAL13 certificate is
+$P_{p,q}=\sigma J_{\rm den}\lVert W\rVert^2\mathrm{normg}$.
+At the existing physical witness $J_{\rm den}=1/64$ and $W=-1$;
+the free orbit supplies the independent norm factor.
+`P_nonzero` proves $P_{p,q}\ne0$. `certificate_native` proves that
+$P_{p,q}(x)\ne0$ and $\sigma(x)>0$ supply Admissible, Regular and actual
+native $b\ne0$ for every root branch. The exact quartic scaling law restores
+$\sqrt\sigma$; no first-entry nonzero condition on the native right is used.
+
+`InteriorSpectralEnvironments.native_environment_transport` proves the left
+transport $a^{-p}S^\dagger L_pS$ and the bare right transport
+$(a^N/a^q)S^{-1}R_q(S^{-1})^\dagger$, where $a=\operatorname{normSq}(u)>0$.
+The actual right target is its outside $G^2$ congruence. The original
+`InteriorGenericity.positive_iterates` is exposed with its body unchanged
+and consumed to prove BOTH true native target matrices PosDef.
+`InteriorSpectralAmbiguity.canonical_exclusion_actual_ambiguity` combines the
+nonzero certificate and the genuine public `nonzero_locus_actual_ambiguity`
+consumer. At each such canonical point it produces a nonzero actual MPS with
+the same entire raw two-site interior and no unit-phase relation, retaining
+the complete $u^N$ boundary factor through `raw_amplitude`.
+
+This is a length-dependent canonical parameter exclusion and pointwise actual
+ambiguity result. Observed-Q3 descent and full actual-image density remain
+later obligations. Full C9 remains open and solved-open-problem KPI is zero.
+The existing C8 attribution and license are unchanged. New and exposed Reg
+attempts require native audit readout; compilation alone does not assert
+`declared_validated`, and unfinished evidence remains under issue #30422.

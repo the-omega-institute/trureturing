@@ -155,7 +155,7 @@ private lemma positive_steps (A : Fin 2 → Bond) (hu : IsUnit (A 0))
     exact (hX.mul_mul_conjTranspose_same (Matrix.vecMul_injective_of_isUnit hu)).add_posSemidef
       (hX.posSemidef.mul_mul_conjTranspose_same (A 1))
 
-private lemma positive_iterates (x : Coordinates) (hx : 0 < sigma x)
+lemma positive_iterates (x : Coordinates) (hx : 0 < sigma x)
     (h0 : (core (positiveRepresentative x) 0).det ≠ 0)
     (hv : (boundaryMatrix (core (positiveRepresentative x)) ![1, eta x]).det ≠ 0) :
     ∀ k : ℕ, 1 ≤ k →
