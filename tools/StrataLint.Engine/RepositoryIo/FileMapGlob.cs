@@ -30,13 +30,14 @@ internal sealed class FileMapGlob
 
     internal string Pattern { get; }
 
-    // Literals match exactly; wildcard patterns use a prefix filter before the regex.
+    // Literals match exactly; wildcard patterns share a regex for the suffix after the fixed prefix.
     internal bool IsMatch(string path)
     {
         if (path is null) throw new ArgumentNullException("input");
         return regex is null
             ? string.Equals(path, Pattern, StringComparison.Ordinal)
-            : path.StartsWith(literalPrefix, StringComparison.Ordinal) && regex.IsMatch(path);
+            : path.StartsWith(literalPrefix, StringComparison.Ordinal)
+                && regex.IsMatch(path.AsSpan(literalPrefix.Length));
     }
 
     internal static FileMapGlob Create(string pattern)
@@ -85,7 +86,9 @@ internal sealed class FileMapGlob
 
     private static FileMapGlob Compile(string pattern)
     {
-        if (!pattern.Contains('*')) return new FileMapGlob(pattern, null);
+        var wildcard = pattern.IndexOf('*');
+        if (wildcard < 0) return new FileMapGlob(pattern, null);
+        if (wildcard > 0) return new FileMapGlob(pattern, GetOrCompile(pattern[wildcard..]).regex);
 
         var expression = new StringBuilder("\\A");
         for (var index = 0; index < pattern.Length; index++)
