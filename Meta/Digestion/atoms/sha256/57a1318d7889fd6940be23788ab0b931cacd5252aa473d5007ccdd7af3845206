@@ -1,0 +1,11 @@
+**定理 197.8（共同复几何及所有有限层）。** 在197.7的精确背景下，$\mathsf Q_{\rm incidence,sign}$ 当且仅当存在同一个整数 $n\ge1$ 和同一个实线性同构 $\theta:V\overset\sim\longrightarrow\operatorname{Herm}_n(\mathbb C)$，使对每个有限 $N\ge0$，
+
+$$
+\Theta_N=\theta^{\otimes N},\qquad
+\Theta_N(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\Theta_N.
+\tag{197.14}
+$$
+
+证明。197.6只先用于整个 $(W_3,C_3,u_3)$，从三复制候选取得同域的 L2+NC+AD。此时才调用162.16的 $\mathsf R_3$ 入口；其 pure-spectator 实际面、共同复方向及全有限传播供应同一个 $\theta$ 的(197.14)。反向在每个标准复矩阵层使用197.6的矩阵反向。标量层取空张量，$n=1$ 包括所有一维层；$\dim V>1$ 时必有 $n\ge2$。没有另行分类各层后直接宣告坐标相同。$\square$
+

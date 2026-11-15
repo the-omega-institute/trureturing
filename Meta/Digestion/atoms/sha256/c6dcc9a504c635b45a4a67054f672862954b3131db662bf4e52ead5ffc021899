@@ -1,0 +1,27 @@
+**定理 182.3（商影体的精确极化与紧性）。** 在182.1的背景下，已经有
+
+$$
+\boxed{\quad
+Q_B=\Gamma_B^{*_{W_B}},\qquad
+\Gamma_B=Q_B^{*_{W_B}},\qquad
+W_B\cap M_B=\{0\}.
+\quad}
+\tag{182.4}
+$$
+
+$Q_B$ 是四维空间 $W_B$ 中的闭、尖、满维锥，$u_B$ 对其每个非零点严格正；$\widehat B$ 是包含 $B$ 的紧三维凸体。这些性质不要求 $Q_B=L_B$。
+
+证明。线性消去子的定义给 $(C+M_B)^*=\Sigma_B$。有限维双极性给 $\Sigma_B^*=\overline{C+M_B}$；限制到 $W_B$，得 $\Gamma_B^{*_{W_B}}=Q_B$。182.2已付 $\Gamma_B$ 闭，第二次双极性遂给(182.4)第二式。此处仅把 [Boyd—Vandenberghe，§2.6.1、练习2.31][Q182B] 的成熟双极性作为中间步骤，不将其另立为新结果。
+
+还需证明单位位于 $\Gamma_B$ 内部。取球坐标 $B=\{(1,z):\|z\|\le1\}$。每个球面点 $a=(1,n)$ 的共同确认者 $e_a$ 消去 $H_B\subseteq D_a$，故属于 $\Sigma_B$；其唯一最大点为 $a$，所以球上的限制形为
+
+$$
+e_a(1,z)=\alpha_a+\beta_a\langle n,z\rangle,
+\qquad \alpha_a>0,\quad\beta_a>0.
+\tag{182.5}
+$$
+
+沿三条坐标轴的正负方向各取一个这样的效应。除以各自的 $\alpha_a$ 后，$\Gamma_B$ 含 $u_B+\delta_i^+z_i$ 与 $u_B-\delta_i^-z_i$，其中六个 $\delta$ 均正。其凸包在 $u_B+\operatorname{span}\{z_1,z_2,z_3\}$ 中包围 $u_B$ 的一个相对邻域；再沿正标量缩放，得到 $u_B$ 的四维邻域。因此 $u_B\in\operatorname{int}\Gamma_B$，且 $\operatorname{span}\Gamma_B=W_B^*$。若 $w\in W_B\cap M_B$，全部 $\Gamma_B$ 均消去 $w$，所以 $w=0$。
+
+$\Gamma_B\subseteq L_B^{*_{W_B}}$，而 $L_B$ 满维，故 $\Gamma_B$ 尖；它又有内点，其闭对偶 $Q_B$ 因而满维且尖。若 $0\ne q\in Q_B$ 而 $u_B(q)=0$，从 $u_B\pm\varepsilon\ell\in\Gamma_B$ 对任意 $\ell\in W_B^*$ 评价，得 $\ell(q)=0$，矛盾。因此单位严格正。闭切片 $\widehat B$ 若无界，将无界序列除以范数并取极限，得到非零 $q\in Q_B$ 且 $u_B(q)=0$，仍矛盾。它包含 $B$，故仿射维数恰为三。$\square$
+
