@@ -2227,3 +2227,203 @@ $$
 [Q274T]: QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "161.1的实际纯旁观面；161.4的已对齐低三层到同一个局域坐标的全有限尾部；161.6—161.10的条件过程字典。"
 
 ## 追加锚（本行以下为增补区）
+
+## 275. 任意有限局域尺寸：最小确认内生连续极性与Born尺
+
+**定义 275.1（不预定局域尺寸的双份—三份候选）。** 保留274.1的整个强全有限背景 $\mathsf B_{\mathrm{fin}}$，将局域载体改为任意非平凡有限实空间，不再指定 $\dim_{\mathbb R}V=4$。具体地，每个有限 $N\ge0$ 都有整个 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、完整紧底 $K_N$、全部纯点、完整正对偶、全部 proper 效应及全部有限单位分解；零层标量、分离整个载体的原配对、规范重括号、全部正位置置换及其正逆、正单位丢弃和针对全部有限分块与全部原相关输入的 min/max 界均不删减。非平凡指 $K_1$ 至少有两个不同点。
+
+每层 $R_{m,N}$ 仍是272.1由全部实际二纯面自身重心径向种子生成的最小对称面闭关系，反端仍可混合。候选只要求274.1—274.2的同一对约束：整个双份的 $\mathsf X_2$ 与整个三份的 $\mathsf M_3$。前者保持共同正交参照而翻转给定二元关系；后者要求每颗原纯点有低于全部 proper 确认者的 least 确认效应，比较在整个原正对偶中进行。
+
+$$
+\boxed{\quad\mathsf Q_{2,3}^{\mathrm{fin}}:=\mathsf X_2+\mathsf M_3.\quad}
+\tag{275.1}
+$$
+
+这里的内生性指约束的对象、关系及量词域均由同一原模型定义，不另输入内积、圆尺或Hilbert坐标；不表示任意满足 $\mathsf B_{\mathrm{fin}}$ 的模型都自动满足(275.1)。
+
+**定理 275.2（双份自然极性给任意有限尺寸的完整重建）。** 在275.1的完整背景下，相对于266.2—266.4的射影表示与连续实际面供应、[Q275N]的精确产品正规形，以及[Q275T,164.11]的全有限尾部，下列三项等价：$\mathsf Q_{2,3}^{\mathrm{fin}}$；原 $\mathsf X_3$；存在一个整数 $r\ge2$ 和同一个保单位实线性序同构 $\theta:V\to H_r=\operatorname{Herm}_r(\mathbb C)$，使
+
+$$
+\boxed{\quad
+\theta^{\otimes N}C_N=\operatorname{PSD}_{r^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}
+\quad(N\ge0).\quad}
+\tag{275.2}
+$$
+
+局域维数 $\dim_{\mathbb R}V=r^2$、全部层的实际二态三球、最小确认、数值互易及共同圆尺都是结论。证明只在双份上使用高维Gleason供应，因而没有对二能级单份误用Gleason。
+
+证明。（一）先取得双份的完整复射影面格，尚不识别其凸混合。准确复用274.2开头在 $\dim V=4$ 被代入之前的推导：272.2—272.3把整个双份的换边约束接成不可约、覆盖且具有完整实际面识别的原子式正交格。原非平凡单份有两个可完美区分的纯最大、最小点，四个独立产品字和产品测试给双份至少四级严格实际面链。因此[Paseka—Vetterlein, Theorem4.5][Q266P]的秩至少四门槛满足。266.2—266.3和[Labardini-Fragoso—Neumann-Coto—Takane][Q266L]的连续保面表示及维数公式在这里可用；该保面同胚没有被升级为仿射同构。
+
+固定纯旁观的整个实际面来自[Q275T,161.1]，其子空间格与双份使用同一除环。266.3的原产品秩乘法给单份秩 $r\ge2$、双份秩 $r^2$。按266.4，令 $d_\beta(a)=a+\beta a(a-1)/2$，则
+
+$$
+0=d_\beta(r^2)-d_\beta(r)^2
+=\frac{\beta(2-\beta)}4r^2(r-1)^2,
+\qquad\beta\in\{1,2,4\}.
+\tag{275.3}
+$$
+
+故除环为 $\mathbb C$，$\dim_{\mathbb R}V=r^2$。置 $s=r^2\ge4$，整个双份实际面格为 $\mathcal L(\mathbb C^s)$，全部非空真实际面暴露，且有连续双射 $\mathbb{CP}^{s-1}\to P_2$。它是紧空间到Hausdorff空间的同胚。此处只固定这一保面标签，不预给Born读数、正交内积或矩阵仿射混合。
+
+（二）由原菜单构造一个新的面补运算。$\mathsf M_3$ 沿原纯旁观面下降给 $\mathsf M_2$，精确复用XX271.46—271.47的完整菜单下降：任意低层确认者通过张量单位提升，故限制后的leastness仍针对全部低层确认者。以下只在整个双份上写 $K,C,u,P,\mathcal E=[0,u]_{C^*}$。XX271.5—271.7的M-only剥离、共同完整frame及暴露面least最大测试可直接使用，不消费实际L2或非零读数互易。
+
+对每个非空实际面 $F$，取暴露它的饱和效应，得到唯一 $h_F\in\operatorname{ext}\mathcal E$，满足 $\{h_F=1\}=F$ 且低于所有在 $F$ 上取一的proper效应。补上 $h_\varnothing=0$、$h_K=u$；两者极端，因为正对偶尖且 $a\mapsto u-a$ 保极端。它们分别是空确认族约束中的最小者和整个 $K$ 的唯一确认者。
+
+这些 $h_F$ 穷尽全部极端proper效应。事实上，任意极端 $a$ 的XX271.5展开为 $a=\sum_i\lambda_i e_{p_i}$、$\sum_i e_{p_i}=u$。若某个 $0<\lambda_j<1$，只把该系数改成 $\lambda_j\pm\varepsilon$，便得两个不同proper效应以 $a$ 为平均，矛盾。故系数全部为零或一；非零时其饱和面非空，XX271.6—271.7恰给 $a=h_{\{a=1\}}$。而且
+
+$$
+F\subseteq G\quad\Longleftrightarrow\quad h_F\le h_G.
+\tag{275.4}
+$$
+
+正向由leastness，反向由 $x\in F$ 时 $1=h_F(x)\le h_G(x)\le1$；空面边界亦满足。因而效应取补给全实际面格上的反序对合
+
+$$
+h_{F^\natural}=u-h_F,\qquad
+F^\natural=\{x\in K:h_F(x)=0\},\qquad
+F\wedge F^\natural=\varnothing,\quad F\vee F^\natural=K.
+\tag{275.5}
+$$
+
+最后的join等式由对合与De Morgan律给出。已有模格还给正交模律：$F\subseteq G$ 时，$F\vee(F^\natural\wedge G)=(F\vee F^\natural)\wedge G=G$。单点实际面暴露，所以 $h_{\{p\}}=e_p$，且其饱和面恰为 $\{p\}$。因此
+
+$$
+p\perp_\natural q\quad\Longleftrightarrow\quad e_p(q)=0
+\quad\Longleftrightarrow\quad e_q(p)=0.
+\tag{275.6}
+$$
+
+零互易也可直接由 $e_q\le u-e_p$ 读出。这个自然极性由原效应序生成；在这一阶段未把它认成原重心关系 $R_m$，亦未输入数值互易。
+
+（三）自然极性连续，并必由正定Hermitian型表示。先证明(275.6)的图闭。若 $p_n\to p$、$q_n\to q$ 且 $e_{p_n}(q_n)=0$，紧proper区间中取子列 $e_{p_n}\to a$。则 $a(p)=1$、$a(q)=0$；leastness给 $e_p\le a$，故 $e_p(q)=0$。这一步没有假设 $p\mapsto e_p$ 连续。
+
+在已得复射影标签中，$p^\natural$ 是超平面 $H_p$。若 $p_n\to p$，对Grassmannian中任一收敛子列 $H_{p_n}\to H$，每颗 $H$ 内射线都可由对应子列超平面内射线逼近。闭零图给 $H\subseteq H_p$；同维数使两者相等。紧Grassmannian因而给 $H_{p_n}\to H_p$。
+
+自然补反转子空间格，取消去子空间再反转一次，得到 $\mathcal L(\mathbb C^s)\to\mathcal L((\mathbb C^s)^*)$ 的格同构。其纯点映射 $j([v])=[\ell_v]$ 满足 $\ker\ell_v=H_{p_v}$，且连续。固定目标对偶基后，射影几何基本定理[Q275P,Theorem1]适用，因为 $s\ge4$；它给可逆复矩阵 $A$ 和域自同构 $\sigma$，使
+
+$$
+\ell_v(w)=\sigma(v)^T A w
+\quad\text{在非零射影比例意义下成立。}
+\tag{275.7}
+$$
+
+在一条坐标仿射线上读连续 $j$，知 $\sigma$ 连续。它固定有理数，连续性使它固定 $\mathbb R$，而 $\sigma(i)=\pm i$，故只有恒等或复共轭。恒等分支要求复齐次二次型 $v^TAv$ 在所有非零 $v$ 上不为零；维数至少二时复二次型存在非零各向同性向量，与 $p\notin p^\natural$ 冲突。
+
+剩下的型为 $v^*Aw$。零互易给 $v^*Aw=0$ 当且仅当 $v^*A^*w=0$，所以每个非零行 $z$ 的 $zA,zA^*$ 同核。于是每条行射线都被 $A^{-1}A^*$ 保持；在一组行基及其两两和上比较，得 $A^*=\lambda A$。再取伴随给 $|\lambda|=1$，乘一个相位可令 $A$ Hermitian。无自正交 $v^*Av\ne0$ 排除零本征值及正负本征值并存，故 $A$ 定号；改符号再以正平方根换坐标后，$\perp_\natural$ 恰为标准复内积正交。这是新自然极性的坐标，不是对原重心极性的预先认同。
+
+（四）每一组正交基都支付同一个原单位，Gleason由此恢复整个双份锥。任取上述坐标的一组正交基对应的 $p_1,\ldots,p_s$。leastness归纳给 $\sum_i e_{p_i}\le u$：已有部分和时，$u-\sum_{i<k}e_{p_i}$ proper且确认 $p_k$，故支配 $e_{p_k}$。最终和在全部 $p_i$ 上取一；其饱和面包含这些点的实际join，即整个 $K$，故
+
+$$
+\sum_{i=1}^s e_{p_i}=u
+\quad\text{对每一组自然正交基成立。}
+\tag{275.8}
+$$
+
+固定任意 $x\in K$，定义 $f_x([v])=e_{p_v}(x)$。它非负，且每个正交基上和为一。为准确匹配[Q275G,Theorem3.3(a)]的投影测度前件，对每个子空间 $U$ 取其中正交基，定义 $\mu_x(U)$ 为对应 $f_x$ 之和。用同一个 $U^\perp$ 基补全到整基，(275.8)证明该和与 $U$ 内基的选择无关。正交子空间的基可并合，故有限可加；有限维中任一可数正交子空间族只有有限个非零成员，故亦可数可加，且 $\mu_x(\mathbb C^s)=1$。于是复Gleason定理给唯一
+
+$$
+\rho_x\succeq0,\quad\operatorname{Tr}\rho_x=1,\qquad
+e_{p_v}(x)=\operatorname{Tr}(P_v\rho_x),\quad
+P_v=\frac{vv^*}{v^*v}.
+\tag{275.9}
+$$
+
+所引供应在复分支用普通迹，见同文Remark3.5(a)；这里 $s\ge4$，维数前件已满足。
+
+补齐全载体线性映射，避免只识别纯点标签。取 $s^2$ 个秩一投影 $Q_\alpha$ 构成 $H_s$ 的实基，例如各 $P_{e_j}$ 及各 $P_{(e_j+e_k)/\sqrt2},P_{(e_j+i e_k)/\sqrt2}$。非退化迹配对使 $L:H_s\to\mathbb R^{s^2}$、$L(B)_\alpha=\operatorname{Tr}(Q_\alpha B)$ 可逆。对整个 $W_2$ 定义
+
+$$
+\Phi_2(z)=L^{-1}\bigl((e_{p_{Q_\alpha}}(z))_\alpha\bigr).
+\tag{275.10}
+$$
+
+它实线性，且在 $K$ 上恰为 $\rho_x$。对原纯 $p_v$，$\operatorname{Tr}(P_v\rho_{p_v})=e_{p_v}(p_v)=1$；半正定及迹一迫 $\rho_{p_v}=P_v$。因此 $\Phi_2$ 的像含全部秩一投影，张满 $H_s$；$\dim_{\mathbb R}W_2=r^4=s^2$ 再给单射。正锥正向包含由(275.9)，反向包含由每个PSD矩阵的谱分解及全部纯投影都有原像给出。$K$ 张满 $W_2$，故单位等式与(275.9)的线性配对也延至整个载体：
+
+$$
+\Phi_2(C_2)=\operatorname{PSD}_{r^2},\qquad
+u_2=\operatorname{Tr}\circ\Phi_2.
+\tag{275.11}
+$$
+
+（五）一张纯旁观实际面统一恢复单份，包括 $r=2$。固定 $q\in P_1$，由[Q275T,161.1]，$x\mapsto x\otimes q$ 是 $K_1$ 到 $K_2$ 的整个实际面 $F_q$ 的仿射同构，齐次对应是原线性嵌入。其面格秩为 $r$；$\Phi_2$ 是已得线性序同构，故把该面送到某个复 $r$ 维支持 $U\subset\mathbb C^{r^2}$ 的全部密度矩阵。取等距嵌入 $J:\mathbb C^r\to U$，则
+
+$$
+\theta(z)=J^*\Phi_2(z\otimes q)J,\qquad
+\theta(C_1)=\operatorname{PSD}_r,\qquad
+u=\operatorname{Tr}\circ\theta.
+\tag{275.12}
+$$
+
+整个 $V\otimes q$ 的像张满 $H(U)$，所以(275.12)确是整个 $V$ 上的保单位实线性序同构。单份与双份至此各自为完整矩阵类型，但尚未声称 $\Phi_2=\theta^{\otimes2}$。尤其没有在复二维单份上应用Gleason，也不需要先补单份共同球尺。
+
+（六）由同一个产品合同接好坐标，再由三份排除镜像。现在XX274.3（一）及[Q275N]的全部前件已付：单份、双份整个PSD类型，正产品准备、完整正产品效应、精确原迹配对、乘积单位及完整载体维数。直接消费该产品正规形，在已固定的同一个 $\theta$ 下写各层的像，得
+
+$$
+C_1=\operatorname{PSD}_r,\qquad
+C_2=T_1^\varepsilon\operatorname{PSD}_{r^2},\qquad\varepsilon\in\{0,1\}.
+\tag{275.13}
+$$
+
+正规形容许固定酉合同及各腿固定转置；全转置保持PSD，故只剩一个相对位。它不要求原产品线性化预先对全部纠缠PSD输入为正，也不把坐标运输宣布为原物理操作。
+
+在真实 $(12)|3$ 分块令 $C'_3=T_1^\varepsilon C_3$，其两个整个局域块现为 $\operatorname{PSD}_{r^2}$、$\operatorname{PSD}_r$。完整菜单、单位、M及Sep/BP界都随整锥和逆对偶运输。此处调用本卷274.3的M-only结论(274.10)，而非XX274.3（二）使用了实际L2的旧入口；没有输入三份实际L2。所得共同方向满足
+
+$$
+T_1^\varepsilon T_3^\delta\mathcal S_2((12)|3)\subseteq C_3,
+\qquad\delta\in\{0,1\}.
+\tag{275.14}
+$$
+
+$\mathcal S_2$ 是Schmidt秩至多二的PSD dyad生成锥；整个第一块转置 $T_{12}$ 与 $T_3$ 在这个集合上的像相同，因为两者之积为保持Schmidt秩的全转置。对原三层只需要这个供应，不先分类整个 $C_3$。
+
+准确复用XX274.3（三）的同一实现Bell边缘：在指标 $0,1$ 上令 $B_{ij}$ 为实Bell投影，空余腿附 $P_0$。若 $(\varepsilon,\delta)=(1,0)$，来源 $P_0^{(1)}\otimes B_{23}$ 给标准Bell边缘，不能属于(275.13)的转置PSD。若为 $(1,1)$，来源 $B_{13}\otimes P_0^{(2)}$ 经该对全转置仍给标准Bell，同样冲突。若为 $(0,1)$，同一来源给部分转置Bell，不能属于标准PSD。三个来源在 $(12)|3$ 上均有Schmidt秩至多二，故确由(275.14)给原三层态；原正丢弃及原正置换使输出必须属于同一个 $C_2$。Bell部分转置的反对称本征值为 $-1/2$，所以
+
+$$
+\varepsilon=\delta=0,\qquad
+C_2=\operatorname{PSD}_{r^2},\qquad
+\mathcal S_2((12)|3)\subseteq C_3.
+\tag{275.15}
+$$
+
+（七）原三腿种子接到全部有限层。取[Q275T,164.10]的同一明确向量
+
+$$
+\tau_r=\sum_{i=0}^{r-1}|ii0\rangle+|011\rangle
+=\left(\sum_i|ii\rangle\right)|0\rangle+|01\rangle|1\rangle.
+\tag{275.16}
+$$
+
+它在 $(12)|3$ 上恰有两个独立Schmidt方向，原质量为 $r+1$；(275.15)给 $\tau_r\tau_r^*\in C_3$。同坐标标准 $C_1,C_2$ 与275.1的其余全有限数据，精确匹配164.1；(275.16)恰为164.11的第3项。直接应用其 $3\Rightarrow4$ 得(275.2)，不另假定整个三份PSD。该尾部仍消费六副种子、十八条实际腿及全相关旁观输入上的有限传播；这里只在双份加换边、三份加M，不把整个背景截断成三层。
+
+反向，标准复PSD层级的proper确认者满足 $E\succeq P_v$，所以最小确认者为 $P_v$，特别有 $\mathsf M_3$；272.5的显式正交换点给 $\mathsf X_2$。同一272.5在原强背景下给 $\mathsf X_3\Longleftrightarrow$(275.2)，三项遂等价。$\square$
+
+**推论 275.3（一个内生补运算及量子公理字典）。** 在275.2的完整前提下，最小几何可写成双份复射影实际面格及由原效应取补产生的同一个 $F\mapsto F^\natural$。其有限维、模性、无自正交和连续性迫正定Hermitian极性；每个正交基的原单位分解迫Born尺。原全有限复合将这套几何固定为一个局域复空间的全部有限张量幂。
+
+证明与对应。双份的补由(275.4)—(275.7)内生，Born读数由(275.8)—(275.11)，共同局域坐标及全部有限层由(275.12)—(275.16)与精确尾部给出。固定 $\Theta_N=\theta^{\otimes N}$，原态、原效应一并运输为 $\rho=\Theta_Nx$、$E=(\Theta_N^{-1})^*f$，不逐层或逐边另选坐标：
+
+| 原对象及保留条件 | 同一坐标中的量子结构 |
+| --- | --- |
+| 全部归一态、纯点和原凸混合 | 全部密度矩阵、$\mathbb{CP}^{r^N-1}$ 的秩一投影及矩阵凸混合 |
+| 完整proper效应、全部有限单位分解、原配对 | $0\preceq E\preceq I$、全部POVM与PVM、Born迹概率 $f(x)=\operatorname{Tr}(E\rho)$ |
+| 最小确认、实际面及原自身重心关系 | $e_{p_v}(x)=\operatorname{Tr}(P_v\rho)$、复支持子空间格及支持正交；纯点间为 $|\langle v,w\rangle|^2$ |
+| 原产品、全部有限层、正置换与丢弃 | 同一复Hilbert张量积、全部有限纠缠态及偏迹 |
+| 另给实线性分支对每个有限相关旁观输入保正，并另给整个正输入的质量预算 | 矩形CP及Kraus形式，相应TNI或TP；仪器还需全部分支共同总预算 |
+| 另给锐分支的投影效应及整个yes支持逐点中性；另给连续可逆保锥保单位一参数群 | 前者给唯一Lüders压缩，后者给数学酉动力学与Hamilton生成元 |
+
+原重心关系的识别发生在整锥之后：保单位线性同构保实际面及其自身体积重心，标准复密度体中的径向伙伴为正交纯支持，行面闭包给支持正交。过程各行保留XX271.4、XIII161.6—161.10的各自前件；实际设备、记录、物理钟、能量及 $\hbar$ 标定、无限和近似极限仍各需对应条件。$\square$
+
+**命题 275.4（反事实、简洁性的范围与完整白话）。** 三份M单独不够；删去高维共同基结算的桥，也不能从二能级正交配对独自得到Born尺。275.2取消原局域实维数四限制，但不证明 $\mathsf M_3$ 可降至 $\mathsf M_2$，亦不证明裸 $\mathsf X_2$ 已充分或不充分。
+
+证明。任意至少二元的完整经典层级 $C_N=\mathbb R_+^{d^N}$ 有坐标least确认者，满足M；但274.6的共同参照计算表明双向换点失败。再取单份Bloch球面的函数 $f(n)=(1+n_z^3)/2$。它非负且 $f(n)+f(-n)=1$，满足复二维所有正交基配对归一化；若它为Born形式，必为 $(1+b\cdot n)/2$，在赤道为 $1/2$ 迫 $b_x=b_y=0$，北极迫 $b_z=1$，而 $n_z=1/2$ 时两式不同，矛盾。这只反驳二维frame函数的无条件二次型推断，不是275.1的全有限反模型。275.2在整个双份的维数 $s=r^2\ge4$ 上付清每个完整基，再从一张纯旁观面下降，因此统一绕过此障碍。
+
+本章新增的repo-derived接合，是从双份完整实际面格和原M-only菜单生成全部面的自然补，证明其连续正定极性及共同基单位，再接成熟Gleason恢复整个双份仿射锥；一张纯旁观面统一读回任意单份尺寸。射影表示、射影几何基本定理、Gleason、产品保持分类和全有限传播仍归所列来源，不申领这些成熟结果的发明或全球优先性。本章比274取消了预先指定的局域尺寸并统一其低层几何证明，未声称最少独立信息。三份M仍在(275.14)支付真实纠缠种子；只由双份PSD无法免费沿用该步。
+
+白话：先看两份世界里，所有小世界怎样包含在大世界中。对每个小世界，把所有能确认它的测试摆在一起，最小的那只测试就成了它的门；把这只门从总单位里扣掉，余下的恰是与它完全错开的世界。这样，原来要外加的“垂直方向”从测试之间的大小关系里长出来。所有完整方向组都必须把同一个单位恰好分完，于是混合态只能按密度矩阵记账，读数只能是Born概率。再固定一颗纯旁观者，双份整体中的一张完整面就是单份世界；两能级、三能级和更高能级都沿同一张图读回。最后三份最小确认造出真正的三腿相干资源，三条真实边排掉彼此不相容的镜像；全有限复合再把这同一套方向和读数延到任意有限份。没有先把珠子定成球，也没有先给它一把Hilbert尺，但最小确认与完整复合仍是候选明确保留的约束。$\square$
+
+[Q275P]: https://academicweb.nd.edu/~andyp/notes/FunThmProjGeom.pdf "Andrew Putman，The fundamental theorem of projective geometry，Theorem1，p.2，证明§2；载体维数至少三的子空间格自同构由半线性同构诱导，证明据Artin，Geometric algebra，Chapter II.10。"
+[Q275G]: https://arxiv.org/pdf/1803.06882v2 "Moretti与Oppio，The correct formulation of Gleason’s theorem in quaternionic Hilbert spaces，Definition3.1、Theorem3.3(a)与Remark3.5(a)；仅使用复有限维数大于二的投影测度表示分支。原Gleason文献另见Library/notes/gleason1957measures.md。"
+[Q275N]: ../../../Library/QuantumStates/barnumhilgert2019spectral.md "Actual two-factor products after complex-type selection，The matrix carrier and exact product contract与Conditional normal-form theorem and proof；Xu—Zheng—Fošner，DOI10.1017/S1446788714000603，Main Theorem，p.409。"
+[Q275T]: QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "161.1的整个纯旁观实际面；164.1的同坐标强全有限域、164.10的明确三腿种子及164.11第3项到第4项的精确尾部；161.6—161.10的条件过程字典。"
+
+## 追加锚（本行以下为增补区）
