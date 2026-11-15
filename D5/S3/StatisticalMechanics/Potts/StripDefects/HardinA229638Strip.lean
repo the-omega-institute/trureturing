@@ -18,9 +18,6 @@ T: proof_shape=bind-only; consumers=finite_certificate, result
 initial: proof_shape=bind-only; consumers=finite_certificate, result
 terminal: proof_shape=bind-only; consumers=finite_certificate, result
 W: proof_shape=bind-only; consumers=finite_certificate, result
-cellOrder: proof_shape=bind-only; consumers=a, result
-Normal: proof_shape=bind-only; consumers=a, result
-decidableNormal: proof_shape=bind-only; consumers=a, result
 decidableValid: proof_shape=bind-only; consumers=finite_certificate
 a: proof_shape=bind-only; consumers=result
 finite_certificate: proof_shape=bind-only; consumers=result
@@ -69,20 +66,12 @@ def W : Fin 7 → Fin 6 → ℤ :=
     ![624, 456, 960, 1248, 4464, 5184],
     ![1704, 1248, 3168, 3744, 15024, 17328]]
 
-private abbrev cellOrder (n : ℕ) : LinearOrder (Fin 2 × Fin n) :=
-  LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective
-private def Normal {n : ℕ} (A : Fin 2 × Fin n → Fin 3) : Prop :=
-  @Canonical (Fin 2 × Fin n) (cellOrder n).toLT 3 A
-private instance decidableNormal {n : ℕ} (A : Fin 2 × Fin n → Fin 3) : Decidable (Normal A) := by
-  unfold Normal Canonical
-  change Decidable (∀ (i : Fin 2 × Fin n) (b : Fin 3), b < A i →
-    ∃ j : Fin 2 × Fin n, finProdFinEquiv j < finProdFinEquiv i ∧ A j = b)
-  infer_instance
-
 /-- Literal row-major canonical arrays, with columns swept only to count bonds. -/
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter fun A : Fin 2 × Fin n → Fin 3 =>
-    defects horizontal between (List.ofFn fun j i => A (i, j)) = 2 ∧ Normal A).card
+    defects horizontal between (List.ofFn fun j i => A (i, j)) = 2 ∧
+    (∀ p (c : Fin 3), c < A p →
+      ∃ q : Fin 2 × Fin n, finProdFinEquiv q < finProdFinEquiv p ∧ A q = c)).card
 
 theorem finite_certificate :
     (∀ p (d : Fin 3), Valid p d.val →
@@ -158,12 +147,12 @@ theorem result (n : ℕ) :
       rw [cards.1, cards.2] at h
       omega
     have orbit := @canonical_pattern_card (Fin 2 × Fin (m + 1)) inferInstance
-      (cellOrder (m + 1)) S invariant nonconstant
+      (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective) S invariant nonconstant
     let e := Equiv.arrowCongr (Equiv.prodComm (Fin (m + 1)) (Fin 2)) (Equiv.refl (Fin 3))
     have card := Fintype.card_congr (e.subtypeEquiv (p := fun A =>
       defects horizontal between (List.ofFn fun i j => A (i, j)) = 2) (q := S) (fun _ => Iff.rfl))
     simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at orbit card
-    unfold literalCount a Normal
+    unfold literalCount a
     convert card.trans orbit using 1
     apply congrArg (fun x : ℕ => 6 * x)
     apply congrArg Finset.card

@@ -9,9 +9,6 @@
 /-
 admission_basis: open-problem-resolution (#30838; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229691Strip.result)
-cellOrder: proof_shape=bind-only; consumers=a, result
-Normal: proof_shape=bind-only; consumers=a, result
-decidableNormal: proof_shape=bind-only; consumers=a, result
 a: proof_shape=bind-only; consumers=result
 finite_certificate: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=external sequence A229691
@@ -46,20 +43,12 @@ open HardinA229691StripData
 open DefectTransfer (bondDefects defects literalCount lumped_count forward forward_shift)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical canonical_pattern_card)
 
-private abbrev cellOrder (n : ℕ) : LinearOrder (Fin n × Fin 5) :=
-  LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective
-private def Normal {n : ℕ} (A : Fin n × Fin 5 → Fin 3) : Prop :=
-  @Canonical (Fin n × Fin 5) (cellOrder n).toLT 3 A
-private instance decidableNormal {n : ℕ} (A : Fin n × Fin 5 → Fin 3) : Decidable (Normal A) := by
-  unfold Normal Canonical
-  change Decidable (∀ (i : Fin n × Fin 5) (b : Fin 3), b < A i →
-    ∃ j : Fin n × Fin 5, finProdFinEquiv j < finProdFinEquiv i ∧ A j = b)
-  infer_instance
-
 /-- Literal row-major canonical arrays at the exact defect budget. -/
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter fun A : Fin n × Fin 5 → Fin 3 =>
-    defects horizontal antidiagonal (List.ofFn fun i j => A (i, j)) = 2 ∧ Normal A).card
+    defects horizontal antidiagonal (List.ofFn fun i j => A (i, j)) = 2 ∧
+    (∀ p (c : Fin 3), c < A p →
+      ∃ q : Fin n × Fin 5, finProdFinEquiv q < finProdFinEquiv p ∧ A q = c)).card
 
 theorem finite_certificate :
     (∀ p (d : Fin 3), Valid p d.val →
@@ -169,9 +158,9 @@ theorem result (n : ℕ) :
       rw [cards.1, cards.2] at h
       omega
     have orbit := @canonical_pattern_card (Fin (m + 1) × Fin 5) inferInstance
-      (cellOrder (m + 1)) S invariant nonconstant
+      (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective) S invariant nonconstant
     simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at orbit
-    unfold literalCount a Normal
+    unfold literalCount a
     convert orbit using 1
     apply congrArg (fun x : ℕ => 6 * x)
     apply congrArg Finset.card
