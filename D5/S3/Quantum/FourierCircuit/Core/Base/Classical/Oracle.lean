@@ -61,13 +61,6 @@ public instance coordinateDecidableEq : (model : ClassicalOracleModel) →
       letI := coordinateDecidableEq right
       inferInstanceAs (DecidableEq (left.Coordinate ⊕ right.Coordinate))
 
-public instance stateFintype : (model : ClassicalOracleModel) → Fintype model.HiddenState
-  | .empty => inferInstanceAs (Fintype Unit)
-  | .service signature => signature.stateFintype
-  | .sum left right =>
-      letI := stateFintype left
-      letI := stateFintype right
-      inferInstanceAs (Fintype (left.HiddenState × right.HiddenState))
 
 
 end ClassicalOracleModel

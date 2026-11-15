@@ -71,7 +71,7 @@ lemma inner_applyVec_applyVec (U : UnitaryOperator R) (ψ φ : HilbertVector R) 
   have hUU : (U : HilbertOperator R).conjTranspose * (U : HilbertOperator R) = 1 := by
     rw [← Matrix.star_eq_conjTranspose]
     exact Matrix.mem_unitaryGroup_iff'.mp U.property
-  simp only [PiLp.inner_apply, RCLike.inner_apply, applyVec, HilbertOperator.applyVec_apply]
+  simp only [PiLp.inner_apply, RCLike.inner_apply, applyVec, HilbertOperator.applyVec]
   calc ∑ i, (∑ k, U i k * φ k) * starRingEnd ℂ (∑ j, U i j * ψ j)
       = ∑ i, ∑ k, ∑ j, (U i k * starRingEnd ℂ (U i j))
           * (φ k * starRingEnd ℂ (ψ j)) := by
