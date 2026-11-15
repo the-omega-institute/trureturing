@@ -408,7 +408,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.
 
 *Commentary.*
 
-For every admissible c,e, the actual native K_l equals u inverse times S. Its actual inverse gives l K_l inverse=u L; the second entry is exactly u. This follows by multiplying the proved symbol identities by the original normalized canonical rows.
+For every admissible c,e, the actual native K_l equals u inverse times S. Its actual inverse gives l K_l inverse=u L; the second entry is exactly u. This follows by multiplying the proved symbol identities by OpenBoundaryMPSTwoSiteMinimality.normalized_rows at (c,0,0), reusing the original canonical row theorem directly.
 
 **Theorem 1.30 (Two cores and both boundaries return exactly).**
 
@@ -494,21 +494,9 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.
 
 R_N=2^N times (1,1+I), for every natural N.
 
-**Theorem 1.36 (Start from the actual native matrices).**
+For every natural N, the existing native G is [[1,1],[1,-1]] and B=diag(2,0). The actual leftNormalizer is [[2,0],[2,2]], with inverse [[1/2,0],[-1/2,1/2]]. Thus l K_l inverse=(0,1/2), whose second entry is 1/2. Canonicalization at t_can=1/2 gives exactly both original canonical symbol matrices at c*, the original left row (0,1), and the full right column R_N. This is the numerical application of canonicalization_inverse to the same actual native data, with every length-dependent factor retained.
 
-Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.fixed_witness_canonicalization`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.fixed_witness_canonicalization` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Critch, Andrew; Morton, Jason (2014). *Algebraic geometry of matrix product states*. DOI: [10.3842/SIGMA.2014.095](https://doi.org/10.3842/SIGMA.2014.095). URL: <https://arxiv.org/abs/1210.2812v4>.
-
-*Commentary.*
-
-For every natural N, the existing native G is [[1,1],[1,-1]] and B=diag(2,0). The actual leftNormalizer is [[2,0],[2,2]]. The second entry of l K_l inverse is 1/2. Canonicalization at t_can=1/2 gives exactly both original canonical symbol matrices at c*, the original left row (0,1), and the full right column R_N. This proves the inverse specialization from native data, without assuming any spectral normal form.
-
-**Theorem 1.37 (Return to the very same native witness).**
+**Theorem 1.36 (Return to the very same native witness).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.fixed_witness_extraction`
 
@@ -522,7 +510,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.
 
 For every natural N, c*,e=1 is admissible, D=1, U=-1/2, U+D=1/2. T=[[1,0],[1,1]], K=[[1/2,1/2],[1/2,-1/2]], rho=1, sector=(2,0,1), z=1 and l=(1,1). With R_N extraction returns exactly r=(1,I). With raw R=(1,1+I), it returns exactly (1/2)^N times (1,I). The separate transfer cross factor 1+conjugate(lambda) mu is one.
 
-**Theorem 1.38 (Restore the canonical quotient scale).**
+**Theorem 1.37 (Restore the canonical quotient scale).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.fixed_witness_quotient_boundary`
 
@@ -549,7 +537,6 @@ This supplier preserves the original Ma--Zhang C8 canonical core and left row, w
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.T`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.U`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.canonicalization_inverse`
-- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.fixed_witness_canonicalization`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.fixed_witness_extraction`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.fixed_witness_quotient_boundary`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction.gap`

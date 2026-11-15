@@ -305,8 +305,13 @@ at this scalar returns both original cores, $L$ and $R$ exactly.
 The same supplier starts from the actual native matrices
 $G=\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$,
 $B=\operatorname{diag}(2,0)$, $l=(1,1)$, $r=(1,i)$.
-Its normalizer is $\left(\begin{smallmatrix}2&0\\2&2\end{smallmatrix}\right)$
-and its canonical scalar is $1/2$. Canonicalization gives
+Its normalizer is $\left(\begin{smallmatrix}2&0\\2&2\end{smallmatrix}\right)$,
+with inverse $\left(\begin{smallmatrix}1/2&0\\-1/2&1/2\end{smallmatrix}\right)$.
+Thus $lK_l^{-1}=(0,1/2)$ and its second entry recovers the canonical scalar
+$1/2$. This is the numerical application of `canonicalization_inverse` to
+the same witness. The general normalizer proof directly reuses the original
+`OpenBoundaryMPSTwoSiteMinimality.normalized_rows` at $(c,0,0)$.
+Canonicalization gives
 $c_*=(0,0,1/2,0,1)$, $R=2^N(1,1+i)$, $\sigma=4^N$,
 $\eta=1+i$. At $e=1$ extraction returns the same native sector
 $(2,0,1)$, $z=1$, $l=(1,1)$ and $r=(1,i)$.

@@ -156,13 +156,6 @@ theorem spectral_frame {c : Fin 5 → ℂ} {e : ℂ} (hc : Admissible c e) :
     exact eigen hc
   · simpa only [det_fin_two, u, v, w, t] using det_K hc
 
-private lemma normal_rows (c : Fin 5 → ℂ) (i : Fin 2) :
-    L c ᵥ* A c i = Pi.single i 1 := by
-  ext j
-  fin_cases i <;> fin_cases j <;>
-    norm_num [L, A, OpenBoundaryMPSTwoSiteMinimality.left,
-      OpenBoundaryMPSTwoSiteMinimality.core, vecMul, dotProduct, Fin.sum_univ_two]
-
 private lemma extraction_algebra {c : Fin 5 → ℂ} {e : ℂ} (hc : Admissible c e) :
     OpenBoundaryMPSInteriorRootRealization.delta (sector c e) = gap c e ∧
     OpenBoundaryMPSInteriorRootRealization.alpha (sector c e) = offset c e ∧
@@ -324,7 +317,8 @@ theorem normalizer_inverse {c : Fin 5 → ℂ} {e : ℂ} (hc : Admissible c e) :
       (u c e)⁻¹ • S c e := by
     ext i j
     have hh := congrArg (fun X : Bond => (L c ᵥ* X) j) (core_intertwine hc i)
-    simp only [← vecMul_vecMul, normal_rows, single_one_vecMul, vecMul_smul,
+    simp only [← vecMul_vecMul, OpenBoundaryMPSTwoSiteMinimality.normalized_rows (c, 0, 0),
+      single_one_vecMul, vecMul_smul,
       Pi.smul_apply, smul_eq_mul] at hh
     change _ = (u c e)⁻¹ * S c e i j
     change S c e i j = u c e * leftNormalizer (sector c e) (z c e) (nativeLeft c e) i j at hh
@@ -378,27 +372,6 @@ def witnessLeft : Fin 2 → ℂ := ![1, 1]
 def witnessRight : Fin 2 → ℂ := ![1, Complex.I]
 def witnessCanonicalRight (N : ℕ) : Fin 2 → ℂ := (2 : ℂ) ^ N • ![1, 1 + Complex.I]
 
-private lemma witness_matrices :
-    OpenBoundaryMPSInteriorRootRealization.G witnessSector 1 = !![1, 1; 1, -1] ∧
-    OpenBoundaryMPSInteriorRootRealization.B witnessSector = diagonal ![2, 0] ∧
-    leftNormalizer witnessSector 1 witnessLeft = !![2, 0; 2, 2] := by
-  refine ⟨?_, rfl, ?_⟩
-  · ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [OpenBoundaryMPSInteriorRootRealization.G, witnessSector,
-        OpenBoundaryMPSInteriorRootRealization.alpha, OpenBoundaryMPSInteriorRootRealization.beta]
-  · ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [leftNormalizer, OpenBoundaryMPSInteriorRootRealization.core,
-        OpenBoundaryMPSInteriorRootRealization.G, OpenBoundaryMPSInteriorRootRealization.B,
-        witnessSector, witnessLeft, OpenBoundaryMPSInteriorRootRealization.alpha,
-        OpenBoundaryMPSInteriorRootRealization.beta, vecMul, dotProduct,
-        mul_apply, Fin.sum_univ_two]
-
-private lemma witness_normalizer_inv :
-    (leftNormalizer witnessSector 1 witnessLeft)⁻¹ = !![1/2, 0; -(1/2), 1/2] := by
-  rw [witness_matrices.2.2]
-  ext i j; fin_cases i <;> fin_cases j <;>
-    norm_num [Matrix.inv_def, Ring.inverse_eq_inv, adjugate_fin_two, det_fin_two]
-
 private lemma witness_frame :
     T witnessC 1 = !![1, 0; 1, 1] ∧
     K witnessC 1 = !![1/2, 1/2; 1/2, -(1/2)] ∧
@@ -422,37 +395,6 @@ private lemma witness_S_inv : (S witnessC 1)⁻¹ = !![1, 0; -1, 1] := by
   rw [witness_frame.2.2]
   ext i j; fin_cases i <;> fin_cases j <;>
     norm_num [Matrix.inv_def, Ring.inverse_eq_inv, adjugate_fin_two, det_fin_two]
-
-/-- Starting with the actual native witness, canonicalization at t_can=1/2
-produces the original five-coordinate core and the complete length-N boundary. -/
-theorem fixed_witness_canonicalization (N : ℕ) :
-    OpenBoundaryMPSInteriorRootRealization.G witnessSector 1 = !![1, 1; 1, -1] ∧
-    OpenBoundaryMPSInteriorRootRealization.B witnessSector = diagonal ![2, 0] ∧
-    leftNormalizer witnessSector 1 witnessLeft = !![2, 0; 2, 2] ∧
-    (witnessLeft ᵥ* (leftNormalizer witnessSector 1 witnessLeft)⁻¹) 1 = 1/2 ∧
-    (∀ i, (1/2 : ℂ) • (leftNormalizer witnessSector 1 witnessLeft *
-      OpenBoundaryMPSInteriorRootRealization.core witnessSector 1 i *
-        (leftNormalizer witnessSector 1 witnessLeft)⁻¹) = A witnessC i) ∧
-    (2 : ℂ) • (witnessLeft ᵥ* (leftNormalizer witnessSector 1 witnessLeft)⁻¹) = L witnessC ∧
-    ((1/2 : ℂ) * ((1/2 : ℂ) ^ N)⁻¹) •
-      (leftNormalizer witnessSector 1 witnessLeft *ᵥ witnessRight) = witnessCanonicalRight N := by
-  refine ⟨witness_matrices.1, witness_matrices.2.1, witness_matrices.2.2, ?_, ?_, ?_, ?_⟩
-  · rw [witness_normalizer_inv]
-    norm_num [witnessLeft, vecMul, dotProduct, Fin.sum_univ_two]
-  · intro i; rw [witness_normalizer_inv, witness_matrices.2.2]
-    ext j k; fin_cases i <;> fin_cases j <;> fin_cases k <;>
-      norm_num [OpenBoundaryMPSInteriorRootRealization.core,
-        OpenBoundaryMPSInteriorRootRealization.G, OpenBoundaryMPSInteriorRootRealization.B,
-        witnessSector, OpenBoundaryMPSInteriorRootRealization.alpha,
-        OpenBoundaryMPSInteriorRootRealization.beta, A, OpenBoundaryMPSTwoSiteMinimality.core,
-        witnessC, mul_apply, Fin.sum_univ_two, vecMul, dotProduct]
-  · rw [witness_normalizer_inv]
-    ext j; fin_cases j <;>
-      norm_num [witnessLeft, L, OpenBoundaryMPSTwoSiteMinimality.left, witnessC,
-        vecMul, dotProduct, Fin.sum_univ_two]
-  · rw [witness_matrices.2.2, ← inv_pow]
-    ext j; fin_cases j <;>
-      norm_num [witnessRight, witnessCanonicalRight, mulVec, dotProduct, Fin.sum_univ_two] <;> ring
 
 /-- Extraction returns the very same native witness. With the canonical raw
 boundary (1,eta), it returns precisely 2^(-N) times the original native right. -/
@@ -521,7 +463,6 @@ theorem fixed_witness_quotient_boundary (N : ℕ) :
     rcases fixed_witness_extraction N with ⟨hc, _, _, _, _, _, _, hs, hz, hl, hr, _, _⟩
     simpa only [hs, hz, hl, hr] using raw_amplitude hc N (witnessCanonicalRight N)
 
-#print axioms fixed_witness_canonicalization
 #print axioms fixed_witness_extraction
 #print axioms fixed_witness_quotient_boundary
 
