@@ -29,14 +29,14 @@ theorem IsChordal.exists_approximate_gain_potential [Finite V] {G : SimpleGraph 
     (hG : G.IsChordal) (g : V → V → H) (ε : ℝ) (hε : 0 ≤ ε)
     (hrev : ∀ i j, G.Adj i j → g j i = (g i j)⁻¹)
     (htri : ∀ i j k, G.Adj i j → G.Adj j k → G.Adj i k →
-      _root_.dist (g i j * g j k) (g i k) ≤ ε) :
+      Dist.dist (g i j * g j k) (g i k) ≤ ε) :
     ∃ φ : V → H, ∀ i j, G.Adj i j →
-      _root_.dist (g i j) ((φ i)⁻¹ * φ j) ≤ ((Nat.card V - 2 : ℕ) : ℝ) * ε := by
+      Dist.dist (g i j) ((φ i)⁻¹ * φ j) ≤ ((Nat.card V - 2 : ℕ) : ℝ) * ε := by
   classical
   let := Fintype.ofFinite V
   have construct : ∀ s : Finset V, ∃ φ : V → H,
       ∀ i ∈ s, ∀ j ∈ s, G.Adj i j →
-        _root_.dist (g i j) ((φ i)⁻¹ * φ j) ≤ ((s.card - 2 : ℕ) : ℝ) * ε := by
+        Dist.dist (g i j) ((φ i)⁻¹ * φ j) ≤ ((s.card - 2 : ℕ) : ℝ) * ε := by
     intro s
     induction s using Finset.strongInductionOn with
     | _ s ih =>
@@ -58,7 +58,7 @@ theorem IsChordal.exists_approximate_gain_potential [Finite V] {G : SimpleGraph 
         · obtain ⟨w, hw, hxw⟩ := hn
           let φ : V → H := Function.update ψ x (ψ w * (g x w)⁻¹)
           have extend : ∀ j ∈ s.erase x, G.Adj x j →
-              _root_.dist (g x j) ((φ x)⁻¹ * φ j) ≤ ((s.card - 2 : ℕ) : ℝ) * ε := by
+              Dist.dist (g x j) ((φ x)⁻¹ * φ j) ≤ ((s.card - 2 : ℕ) : ℝ) * ε := by
             intro j hj hxj
             have hjx : j ≠ x := (Finset.mem_erase.mp hj).1
             have hwx : w ≠ x := (Finset.mem_erase.mp hw).1
@@ -78,17 +78,17 @@ theorem IsChordal.exists_approximate_gain_potential [Finite V] {G : SimpleGraph 
                   ((s.card - 2 : ℕ) : ℝ) := by
                 exact_mod_cast (show 1 + ((s.erase x).card - 2) = s.card - 2 by omega)
               calc
-                _root_.dist (g x j) ((φ x)⁻¹ * φ j) ≤
-                    _root_.dist (g x j) (g x w * g w j) +
-                      _root_.dist (g x w * g w j) ((φ x)⁻¹ * φ j) := _root_.dist_triangle _ _ _
-                _ = _root_.dist (g x w * g w j) (g x j) +
-                      _root_.dist (g w j) ((ψ w)⁻¹ * ψ j) := by
+                Dist.dist (g x j) ((φ x)⁻¹ * φ j) ≤
+                    Dist.dist (g x j) (g x w * g w j) +
+                      Dist.dist (g x w * g w j) ((φ x)⁻¹ * φ j) := _root_.dist_triangle _ _ _
+                _ = Dist.dist (g x w * g w j) (g x j) +
+                      Dist.dist (g w j) ((ψ w)⁻¹ * ψ j) := by
                     rw [_root_.dist_comm (g x j)]
                     simp only [φ, Function.update_same, Function.update_noteq hjx,
                       mul_inv_rev, inv_inv, mul_assoc, dist_mul_left]
                 _ ≤ ε + (((s.erase x).card - 2 : ℕ) : ℝ) * ε :=
                     add_le_add (htri x w j hxw hwj hxj) (hψ w hw j hj hwj)
-                _ = ((s.card - 2 : ℕ) : ℝ) * ε := by rw [← one_mul ε, ← add_mul, hsum]
+                _ = ((s.card - 2 : ℕ) : ℝ) * ε := by rw [← hsum]; ring
           refine ⟨φ, ?_⟩
           intro i hi j hj hij
           by_cases hix : i = x
@@ -97,8 +97,8 @@ theorem IsChordal.exists_approximate_gain_potential [Finite V] {G : SimpleGraph 
           · by_cases hjx : j = x
             · subst j
               calc
-                _root_.dist (g i x) ((φ i)⁻¹ * φ x) =
-                    _root_.dist (g x i) ((φ x)⁻¹ * φ i) := by
+                Dist.dist (g i x) ((φ i)⁻¹ * φ x) =
+                    Dist.dist (g x i) ((φ x)⁻¹ * φ i) := by
                   rw [hrev x i hij.symm, ← dist_inv_inv (g x i) ((φ x)⁻¹ * φ i)]
                   simp
                 _ ≤ _ := extend i (Finset.mem_erase.mpr ⟨hix, hi⟩) hij.symm
