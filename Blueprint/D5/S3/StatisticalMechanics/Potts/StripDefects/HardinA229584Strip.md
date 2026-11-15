@@ -38,6 +38,10 @@ $$\forall n: \mathit{Nat}, ((\operatorname{\mathit{HardinA229584Strip}}.\operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229584Strip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin229584` (proved) by `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229584Strip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin229584","declaration_gid":"D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229584Strip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229584: one-defect three-colour width-6 sheared strips*. URL: <https://oeis.org/A229584>.

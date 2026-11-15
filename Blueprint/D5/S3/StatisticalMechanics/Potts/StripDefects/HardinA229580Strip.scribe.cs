@@ -83,7 +83,8 @@ internal sealed class HardinA229580StripDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "result"), H("The integer recurrence"),
                 StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(CastInt(Call("HardinA229580Strip.a", Add(V("n"), Num("4")))), Sub(Mul(Num("8"), CastInt(Call("HardinA229580Strip.a", Add(V("n"), Num("3"))))), Mul(Num("16"), CastInt(Call("HardinA229580Strip.a", Add(V("n"), Num("2")))))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("All natural counts in this equality are cast to integers. Relabelling the three colours gives six labelled arrays for each canonical array once at least two colours occur. The transfer relation then yields this recurrence with the displayed index shifts."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("All natural counts in this equality are cast to integers. Relabelling the three colours gives six labelled arrays for each canonical array once at least two colours occur. The transfer relation then yields this recurrence with the displayed index shifts."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin229580"), ResolutionKind.Proved)))));
 
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
