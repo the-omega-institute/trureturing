@@ -230,14 +230,14 @@ private def reflect {n k : ℕ} {C : Type*} (f : Cell n k → C) : Cell n k → 
   fun p => f (p.1,p.2.rev)
 
 private theorem rev_lo {n : ℕ} (i : Fin (n - 1)) : (lo i).rev = hi i.rev := by
-  apply Fin.ext
-  dsimp [lo, hi, Fin.rev]
-  omega
+  cases n with
+  | zero => exact Fin.elim0 i
+  | succ n => exact Fin.rev_castSucc i
 
 private theorem rev_hi {n : ℕ} (i : Fin (n - 1)) : (hi i).rev = lo i.rev := by
-  apply Fin.ext
-  dsimp [lo, hi, Fin.rev]
-  omega
+  cases n with
+  | zero => exact Fin.elim0 i
+  | succ n => exact Fin.rev_succ i
 
 private theorem reflect_mono {n k : ℕ} {C : Type*} (f : Cell n k → C) (e : Edge n k) :
     mono (reflect f) (reflectEdge e) ↔ mono f e := by
