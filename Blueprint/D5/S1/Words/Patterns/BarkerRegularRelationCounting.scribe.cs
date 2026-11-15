@@ -109,7 +109,7 @@ internal sealed class BarkerRegularRelationCountingDocument : IScribeDocumentDef
                 + "and Journal of Integer Sequences 28, Article 25.4.3, Section 3.2, Theorem 4 "
                 + "and Corollary 5. Its displayed rational function is the full series 1+S, "
                 + "with constant coefficient one, although the described sequence starts at "
-                + "positive index. Here 1+S=(1−(q−3)x−2(q−2)x²−(q−2)x³)/" 
+                + "positive index. Here 1+S=(1−(q−3)x−2(q−2)x²−(q−2)x³)/"
                 + "(1−(2q−3)x+(q−1)(q−4)x²+2(q−1)²x³). The homogeneous recurrence "
                 + "b(n+3)=(2q−3)b(n+2)+(−q²+5q−4)b(n+1)−2(q−1)²b(n) "
                 + "has onset n≥1; b(0)=1 does not extend that onset. The cyclic and unequal "
