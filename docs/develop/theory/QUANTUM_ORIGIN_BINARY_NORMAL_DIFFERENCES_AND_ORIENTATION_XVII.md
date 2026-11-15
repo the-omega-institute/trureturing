@@ -1436,3 +1436,184 @@ $$
 [Q181L]: https://doi.org/10.1007/s10773-023-05282-3 "J. Paseka、T. Vetterlein，Linear Orthosets and Orthogeometries，International Journal of Theoretical Physics 62，55；Lemma 3.4、Corollary 3.11与Example 3.12。"
 
 ## 追加锚（本行以下为增补区）
+
+## 182. 共同零方向的商影体与局部正性不扩张
+
+### 182.1 从零关系定义商影体
+
+**定义 182.1（二元球、共同零方向及正限制锥）。** 完整沿用181.1的单系统前件：有限维实空间 $V$、闭尖生成锥 $C$、严格正单位 $u$、整个紧底 $K$、全部纯点 $P=\operatorname{ext}K$、完整原菜单 $\mathcal E=[0,u]$、实际 L2、全混态 $\mathsf Z_2$ 及实际线恢复 $\mathsf{PL}$。固定实际二元球 $B$，写
+
+$$
+\begin{aligned}
+L_B&=\operatorname{cone}B,& W_B&=\operatorname{span}L_B,\\
+H_B&=\operatorname{conv}(P_B^\perp),& M_B&=\operatorname{span}(\operatorname{cone}H_B),\\
+\Sigma_B&=C^*\cap M_B^\perp,&
+\Gamma_B&=\{g|_{W_B}:g\in\Sigma_B\},\\
+Q_B&=W_B\cap\overline{C+M_B},&
+\widehat B&=Q_B\cap\{u_B=1\},\qquad u_B=u|_{W_B}.
+\end{aligned}
+\tag{182.1}
+$$
+
+约定 $\operatorname{cone}\varnothing=\{0\}$，$M_B^\perp$ 为线性消去子，星号为相应空间中的非负对偶；不预设自对偶内积。$\widehat B$ 称为共同零方向的闭商影体。若 $\pi_B:V\to V/M_B$ 为商映射，则 $\overline{C+M_B}=\pi_B^{-1}(\overline{\pi_B(C)})$。因而这是先忘去共同零方向、再在 $W_B$ 中观察闭商锥的定义，不把商影点认作原 $K$ 中的实际准备。即使 $C$ 闭，$C+M_B$ 也不得省略闭包。
+
+**定理 182.2（精确确认菜单的紧性与正限制锥的闭性）。** 对181.1的空面、纯单点或实际二元球 $F$，精确菜单满足
+
+$$
+\mathcal U(F)
+=\{f\in[0,u]: f|_F=1,\ f|_{H_F}=0\},
+\tag{182.2}
+$$
+
+故非空、紧且凸。在182.1的精确背景下，$\Gamma_B$ 是闭凸锥；每个 $g\in\Sigma_B$ 都满足
+
+$$
+\max_Kg=\max_Bg.
+\tag{182.3}
+$$
+
+证明。非空性复用181.2。(182.2)从左到右直接。对球的反向，若 $f=1$ 于 $B$ 且零于 $H_B$，181.2的最大点定位使全部纯最大点属于 $P_B$；纯零点 $r$ 因 $f\in\mathcal F_p$ 对所有 $p\in P_B$ 成立而属于 $P_B^\perp$。紧面的纯凸生成遂给精确的一面和零面。对单点 $p$，$f(p)=1$ 且零于 $D_p$；任一纯最大点 $r$ 给 $N_p\subseteq N_r$，严格零分离迫 $r=p$。任一纯零点由 $f\in\mathcal F_p$ 属于 $N_p$，故零面也精确。空面时 $H_\varnothing=K$，右侧只含零效应。右侧是紧区间中的闭仿射截集，给紧凸性；不需把精确菜单换成相对内部。
+
+若非零 $g\in\Sigma_B$，它消去 $P_B^\perp$；181.2的归一化最大点定位及 $\mathsf{PL}$ 给其全部纯最大点在 $P_B$，从而给(182.3)。$g=0$ 时亦然。现令 $g_j|_{W_B}\to\varphi$，其中 $g_j\in\Sigma_B$。球紧且有限维，故 $\max_Bg_j$ 有共同有限上界 $A$；由(182.3)，$0\le g_j\le Au$ 于整个原锥。区间 $[0,Au]$ 紧，取收敛子列，其极限 $g$ 仍在闭集 $\Sigma_B$，且 $g|_{W_B}=\varphi$。所以 $\Gamma_B$ 闭。这里的有界提升由原最大点定位支付，不能只用“闭锥的线性像”推出闭性。$\square$
+
+### 182.2 自动闭合的四维锥与紧影体
+
+**定理 182.3（商影体的精确极化与紧性）。** 在182.1的背景下，已经有
+
+$$
+\boxed{\quad
+Q_B=\Gamma_B^{*_{W_B}},\qquad
+\Gamma_B=Q_B^{*_{W_B}},\qquad
+W_B\cap M_B=\{0\}.
+\quad}
+\tag{182.4}
+$$
+
+$Q_B$ 是四维空间 $W_B$ 中的闭、尖、满维锥，$u_B$ 对其每个非零点严格正；$\widehat B$ 是包含 $B$ 的紧三维凸体。这些性质不要求 $Q_B=L_B$。
+
+证明。线性消去子的定义给 $(C+M_B)^*=\Sigma_B$。有限维双极性给 $\Sigma_B^*=\overline{C+M_B}$；限制到 $W_B$，得 $\Gamma_B^{*_{W_B}}=Q_B$。182.2已付 $\Gamma_B$ 闭，第二次双极性遂给(182.4)第二式。此处仅把 [Boyd—Vandenberghe，§2.6.1、练习2.31][Q182B] 的成熟双极性作为中间步骤，不将其另立为新结果。
+
+还需证明单位位于 $\Gamma_B$ 内部。取球坐标 $B=\{(1,z):\|z\|\le1\}$。每个球面点 $a=(1,n)$ 的共同确认者 $e_a$ 消去 $H_B\subseteq D_a$，故属于 $\Sigma_B$；其唯一最大点为 $a$，所以球上的限制形为
+
+$$
+e_a(1,z)=\alpha_a+\beta_a\langle n,z\rangle,
+\qquad \alpha_a>0,\quad\beta_a>0.
+\tag{182.5}
+$$
+
+沿三条坐标轴的正负方向各取一个这样的效应。除以各自的 $\alpha_a$ 后，$\Gamma_B$ 含 $u_B+\delta_i^+z_i$ 与 $u_B-\delta_i^-z_i$，其中六个 $\delta$ 均正。其凸包在 $u_B+\operatorname{span}\{z_1,z_2,z_3\}$ 中包围 $u_B$ 的一个相对邻域；再沿正标量缩放，得到 $u_B$ 的四维邻域。因此 $u_B\in\operatorname{int}\Gamma_B$，且 $\operatorname{span}\Gamma_B=W_B^*$。若 $w\in W_B\cap M_B$，全部 $\Gamma_B$ 均消去 $w$，所以 $w=0$。
+
+$\Gamma_B\subseteq L_B^{*_{W_B}}$，而 $L_B$ 满维，故 $\Gamma_B$ 尖；它又有内点，其闭对偶 $Q_B$ 因而满维且尖。若 $0\ne q\in Q_B$ 而 $u_B(q)=0$，从 $u_B\pm\varepsilon\ell\in\Gamma_B$ 对任意 $\ell\in W_B^*$ 评价，得 $\ell(q)=0$，矛盾。因此单位严格正。闭切片 $\widehat B$ 若无界，将无界序列除以范数并取极限，得到非零 $q\in Q_B$ 且 $u_B(q)=0$，仍矛盾。它包含 $B$，故仿射维数恰为三。$\square$
+
+### 182.3 一颗球上的四个等价接口
+
+**定理 182.4（商不扩张、全部局部测试延拓与对径零）。** 固定182.1的一颗实际球 $B$。下列四项等价：
+
+1. $\widehat B=B$，等价地 $W_B\cap\overline{C+M_B}=L_B$；
+2. $\Gamma_B=L_B^{*_{W_B}}$，即每个球上正泛函都是消去共同零方向的原正泛函之限制；
+3. 每个局部效应 $f\in[0,u_B]_{L_B^*}$ 都有延拓 $g\in[0,u]$，满足 $g|_{W_B}=f$、$g|_{H_B}=0$；
+4. $B$ 的每对几何对径 $a,b$ 都满足原 $T_a(b)=0$，即该球全部 $\mathrm{AD}_B$。
+
+证明。182.3给单位严格正于非零 $Q_B$，故影底相等与锥相等互推。再由(182.4)和闭锥 $L_B$ 的双极性，1与2等价；没有把稠密延拓冒当精确延拓。
+
+若2成立，给局部效应 $f$ 选 $g\in\Sigma_B$ 作正延拓。(182.3)使 $\max_Kg=\max_Bf\le1$，故 $g\le u$ 于整个原域，给3。若3成立，球坐标中的局部效应
+
+$$
+\ell_a(1,z)=\frac{1+\langle n,z\rangle}{2}
+\tag{182.6}
+$$
+
+可延拓为确认 $a=(1,n)$、消去 $b=(1,-n)$ 的原效应，给4。
+
+最后设4成立。对任意球面方向 $n$，共同确认者 $e_a,e_b$ 分别消去原零面；由于 $a\perp b$，它们在 $B$ 上恰为 $\ell_a,\ell_b$。任意局部正泛函都有唯一球坐标形 $\varphi(1,z)=s+\langle v,z\rangle$，其中 $s\ge r:=\|v\|$。$r>0$ 时取 $n=v/r$，便有
+
+$$
+\varphi=(s+r)e_a|_{W_B}+(s-r)e_b|_{W_B}\in\Gamma_B.
+\tag{182.7}
+$$
+
+$r=0$ 时任取直径，同式仍成立；零泛函也包含在内。故4给2。此反向只用固定球的 AD，没有先调用全局量子分类。$\square$
+
+**定理 182.5（扩张影点恰好暴露一个缺失的一零方向）。** 若 $\widehat B\supsetneq B$，任取 $y=(1,r)\in\widehat B\setminus B$，令 $\rho=\|r\|>1$、$n=-r/\rho$。则 $a=(1,n)$、$b=(1,-n)$ 的局部效应 $\ell_a$ 不属于 $\Gamma_B$，并且该原直径的 AD 失败。反过来，若某条直径的 AD 失败，则对应 $\ell_a\notin\Gamma_B$，存在 $y\in\widehat B\setminus B$ 满足 $\ell_a(y)<0$。
+
+证明。由(182.6)，$\ell_a(y)=(1-\rho)/2<0$，而 $y\in\Gamma_B^*$，故 $\ell_a\notin\Gamma_B$。若 $a\perp b$，共同 $e_a\in\Sigma_B$ 的限制正是 $\ell_a$，矛盾。反向，$\ell_a\in\Gamma_B$ 会由(182.3)给原 proper 一零延拓，故与 AD 失败矛盾。$\Gamma_B$ 闭，锥分离遂给非零 $q\in\Gamma_B^*=Q_B$，使 $\ell_a(q)<0$。除以182.3支付的正数 $u_B(q)$，即得所需影点 $y$；它不能在 $B$ 上，因为 $\ell_a$ 在 $B$ 非负。
+
+这里在 $y$ 上评价的是 $W_B^*$ 中的线性泛函，不把 $T_a(y)$ 写成原 minimum；$y$ 只需属于闭商影体，不需属于原 $K$。这给失败的精确方向和分离证人，不给满足全部原前件而实际扩张的同域反模型。$\square$
+
+### 182.4 不选择确认族的完整候选及三点结构
+
+**定义 182.6（三复制闭商不扩张候选）。** 保留178.5的强实全有限背景：$\dim V>1$、$W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正乘法单位 $u_N$、全基与全对偶菜单、每个有限 min/max 分块、原正置换及正逆、规范重括号和标量层。另保留该定义第一项逐实际面的局部中心三角形条件；它由177.5a及177.4给整个原 $K_3$ 的 L2。只在整个原 $K_3$ 要求全混态 $\mathsf Z_2$、实际线恢复 $\mathsf{PL}$，以及对每颗实际二元球 $B$ 的单一几何约束
+
+$$
+\boxed{\qquad
+W_B\cap\overline{C_3+M_B}=\operatorname{cone}B.
+\qquad}
+\tag{182.8}
+$$
+
+其中全部对象按(182.1)用同一原三复制域定义，记完整候选为 $\mathsf Q_{\rm quot}$。不只检查产品纯点，也不另选一族 $E_F$；$M_B$ 完全由原零关系给出。
+
+**定理 182.7（同坐标量子层级与更大支持锥）。** 在182.6的精确强域中，$\mathsf Q_{\rm quot}$ 等价于181.6的 $\mathsf Q_{\rm ord}$，并等价于存在固定整数 $n\ge2$ 及同一个实线性同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$，对全部有限 $N\ge0$ 满足
+
+$$
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{182.9}
+$$
+
+在此条件结论内，三两正交纯点 $a,b,c$ 的实际三点面是 $\operatorname{PSD}_3$ 的迹一底，仿射维数八；三颗二元球的仿射张成恰为整个三点面的仿射空间。任意秩支持面也满足对应的闭商不扩张。
+
+证明。182.4在整个原三复制域逐球给全部 AD；178.2给同域 NC。因此直接消费178.6及其明确引用的 XIII162.16，得同一个 $\theta$ 的(182.9)，包括单位、全部有限层和 $N=0$；不为各层分别选坐标。181.6已给 $\mathsf Q_{\rm ord}$ 与(182.9)等价。
+
+反向在标准复 PSD 中，对任意支持子空间 $S$ 的面 $F_S$，有
+
+$$
+W_{F_S}=\operatorname{Herm}(S),\qquad
+M_{F_S}=\operatorname{Herm}(S^\perp),\qquad
+\Sigma_{F_S}=\operatorname{PSD}(S)
+\tag{182.10}
+$$
+
+（最后一式用迹配对识别对偶）。正矩阵若在 $S^\perp$ 上压缩为零，其交叉块也为零，故给最后等式。对 $X\in\overline{\operatorname{PSD}+\operatorname{Herm}(S^\perp)}$，压缩到 $S$ 总为正；若还 $X\in\operatorname{Herm}(S)$，就得 $X\in\operatorname{PSD}(S)$。反向包含直接，故(182.8)成立，并同样适用于任意秩支持面。标准模型的其余局部、零平均及 $\mathsf{PL}$ 条件复用180.8及181.6。
+
+三两正交纯点对应同一空间中三条正交复射线；其张成 $S$ 维数三，实际支持面为迹一 $\operatorname{PSD}(S)$，故维数为 $3^2-1=8$。三颗二元球分别张成三对坐标的 Hermitian 块，合在一起包含三条对角方向及三对复交叉方向，线性张成整个九维 $\operatorname{Herm}(S)$。这在完整重建之后支付181.7的三点包含；不把它倒灌成(182.8)之前的自动前件。因而二元的四维 Lorentz 锥是更大复支持锥的秩二片段，三点提升显出九维 PSD 锥及其八维底。$\square$
+
+**命题 182.8（闭包及空共同零面的端点）。** 即使标准 PSD 满足(182.8)，其中锥和仍可不闭。若 $H_B=\varnothing$，本章全部固定球结论退化为 $B=K$ 的恒等情形。
+
+证明。标准模型中取单位向量 $a\in S$、$c\in S^\perp$，在这两个方向上令 $\varepsilon>0$，有
+
+$$
+X_\varepsilon=
+\begin{pmatrix}\varepsilon&1\\1&0\end{pmatrix}
+=\begin{pmatrix}\varepsilon&1\\1&1/\varepsilon\end{pmatrix}
++\begin{pmatrix}0&0\\0&-1/\varepsilon\end{pmatrix}
+\in\operatorname{PSD}+M_B.
+\tag{182.11}
+$$
+
+第一项为正秩一，第二项支持在 $S^\perp$。极限 $X_0$ 若也在该锥和，其正项在 $a$ 的对角元为零，交叉项却为一；正性迫零对角行列全零，矛盾。此非闭例的交叉方向不在 $W_B$，所以不反驳(182.8)，只说明全局商闭包不能免费删除。若 $S^\perp=0$，此例没有可选的 $c$。
+
+一般背景中，$H_B=\varnothing$ 给 $P_B^\perp=\varnothing$；$\mathsf{PL}$ 给 $P_B=P_B^{\perp\perp}=P$，故 $B=K$、$M_B=0$、$W_B=V$。于是 $Q_B=C$、$\widehat B=K$，没有遗漏空补端点。$\square$
+
+### 182.5 量子公理的对应、简化范围与完整白话
+
+**推论 182.9（几何约束的量子字典及未决关系）。** 182.7与既有179.9、180.9给同一套有限维数学量子结构：
+
+| 现有量子结构 | 本候选中的来源与条件 |
+| --- | --- |
+| 纯态复射线、混态密度矩阵 | (182.9)的整锥同构，完整原底和全部极点均保留 |
+| Born 概率 $\operatorname{Tr}(E\rho)$ | 同一同构下的完整原对偶配对及效应区间 |
+| 数学 PVM/POVM、单位分解 | 支持面投影及全部有限正效应分解；实际可用事件仍需事件饱和 |
+| 复张量、纠缠、偏迹 | 同一 $\theta^{\otimes N}$、原全部有限复合及乘法单位 |
+| 数学 CP、Choi/Kraus 与仪器 | 全部原有限旁观者正性、有限矩形供应及全输入质量预算，含零分支 |
+| Lüders 更新、连续时间动力学 | 另选理想锐中性更新、原连续可逆时间群；钟及 $\hbar$ 标定继续独立 |
+
+在本候选的同一原域中，局部球与原全域之间的精确桥是(182.8)。它属于全部支持面的正性与商相容结构的秩二片段；没有从裸 $\mathrm{L2}+\mathsf Z_2+\mathsf{PL}$ 推出它。182.2的紧菜单、闭限制锥及最大点预算，182.3的紧影体和自动交空间分离，以及182.4—182.5的固定球等价与失败定位，采用 `repo-derived` 的关系接合纸面推导归属。双极性、有限维分离、球的仿射极值及标准 PSD 压缩是成熟中间步骤；完整分类及量子字典按既有接口复用，不申领新分类或文献优先权。
+
+证明与图景。182.4把效应延拓与商影体不扩张接为同一条双向桥，182.5把失败落到一个明确方向。相较181.5，所去掉的是任意选择整个忠实确认族的存在量词，改用仅由原 $C$ 和共同零方向定义的几何等式；独立前件数量没有得到减少。保留 $\mathsf{PL}$ 后，一般是否已经排除影体扩张，仍为 open，亦未给同域反模型。182.7的八维三点面是完整候选的后果，不把裸二元条件的三点闭合冒领为已证。
+
+白话上，仍把所有准备、混态和原测试放在同一个能任意有限复合的实概率系统中，只在整个三份系统检查。局部中心三角形先把任意两纯准备撑起的实际小面锁成三维球；零平均封闭让零邻点共用确认尺，两次取零又能找回实际球。现在看这颗球与整个世界的关系：把整颗球都看不见的共同零方向暂时忘掉，再回到球自己的四维锥空间，要求闭影子既不缺点，也不多长出点。若影子在球外鼓出一块，就有一个球内本来合法的一零方向在那块影子上读成负数，因此无法成为原世界的合法测试；相应对径便缺少零关系。影子恰好不扩张时，球上每把正尺都能原样接回全域，最高读数也不会在球外偷偷变大，一零方向遂全部落实。已有重建于是把这些小球接成同一个复射影空间与所有有限复 PSD 层级；三条正交方向撑成八维密度态底，二元小球就是其中的两坐标片。这次更简的是关系的几何表达：不再挑选一大族尺，只要求忘去共同零方向以后原球仍是原球。它是明写的定义相容约束；从更少的零关系自动推出这条约束，仍是下一条数学缺口。$\square$
+
+[Q182B]: https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf "S. Boyd、L. Vandenberghe，Convex Optimization，§2.6.1（印刷页53）及练习2.31：有限维对偶锥与双极性。"
+
+## 追加锚（本行以下为增补区）
