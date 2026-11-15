@@ -61,7 +61,7 @@ internal sealed class FiniteIntegerEulerCancellationDocument : IScribeDocumentDe
                     + "and H=Q-1; H need not be zero. For Q=1+X and N=1, c(X)=1 "
                     + "gives H=-X^2. This is a finite algebraic consequence of classical "
                     + "integer Euler extraction, rather than a claim of new mathematics. "
-                    + "Delabarre, On the domain of meromorphy of a multivariate Euler product, "
+                    + "Delabarre, Extension of Estermann's theorem to Euler products associated to a multivariate polynomial, "
                     + "BSMF 141 (2013), 225-265, DOI 10.24033/bsmf.2647, section 1.1 "
                     + "and section 2.2, Lemma 2, equations (5)-(6), Remark 4, printed pages "
                     + "233-235, gives an integral expansion Q=product(1-Y^u)^gamma(u), "
