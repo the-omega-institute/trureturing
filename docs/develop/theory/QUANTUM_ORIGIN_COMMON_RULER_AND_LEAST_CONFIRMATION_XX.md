@@ -418,3 +418,658 @@ $$
 [P270]: https://github.com/the-omega-institute/trureturing/blob/f5a6211e591351e1a2bdeea0165c2ef29ad21b48/Library/QuantumStates/barnumhilgert2019spectral.md "Conditional normal-form theorem and proof：Xu–Zheng–Fošner 产品保持供应；此处仅在整层矩阵分类后使用。"
 
 ## 追加锚（本行以下为增补区）
+
+## 271. 原 proper 最小确认的迹二桥与整个 qubit 分支
+
+**定义 271.1（原菜单中的最小确认与实际二元球）。** 设 $A$ 为有限维实空间，$C\subset A$ 为闭、尖、生成凸锥，$u$ 在 $C\setminus\{0\}$ 严格正。始终使用整个紧底 $K=C\cap\{u=1\}$、全部原纯点 $P=\operatorname{ext}K$、完整正对偶 $C^*$ 和完整 proper 区间 $\mathcal E=[0,u]_{C^*}$。两个效应的大小指其差属于这个**原正对偶**。条件 $\mathsf M$ 是：每个 $p\in P$ 有
+
+$$
+e_p\in\mathcal E,\qquad e_p(p)=1,\qquad
+ e_p\le f\quad(f\in\mathcal E,\ f(p)=1).
+\tag{271.1}
+$$
+
+等价地，对每个原纯目标 $p$，
+
+$$
+T_p(x)=\inf\{f(x):f\in\mathcal E,\ f(p)=1\}
+\tag{271.2}
+$$
+
+在**全部原归一混合**上仿射。这里的 infimum 只在完整原 proper 菜单中取，不改成全部非负仿射函数，也不限制为某个选定子菜单。这个等价是 [M271]“An intrinsic binary comparison and its consistency condition”的接口：least 效应实现整个 infimum；反向，仿射的 $T_p$ 取值于 $[0,1]$，在 $p$ 取一，齐次延拓就是低于每个确认者的 proper 效应。不要求 $e_p$ 只在 $p$ 取一，也不输入数值互易。
+
+实际 L2 指每对不同原纯点 $p,q$ 的**整个最小实际面** $B(p,q)=F_K(p,q)$ 仿射同构于非退化闭三球，且 $P\cap B(p,q)$ 恰为其整个球面，含义同 [XVIII240.1][G271]。没有共同尺、共同半径、一般暴露性、正面回缩或一般面效应延拓的附加前提。
+
+矩阵部分以实迹配对 $\langle X,Y\rangle=\operatorname{Tr}(XY)$ 识别 $H_d=\operatorname{Herm}_d(\mathbb C)$ 与其对偶。$\|X\|_2=\sqrt{\operatorname{Tr}(X^2)}$ 始终为 Hilbert–Schmidt 范数；$P_v=vv^*/\|v\|^2$。$\operatorname{Sep}(m|n)$ 是全部正产品矩阵的凸锥，$\operatorname{BP}(m|n)=\operatorname{Sep}(m|n)^*$；其元素的每个产品向量期望非负，不预设为 PSD。$T_1$ 是固定第一因子基下的部分转置。原效应矩阵 $E$ 的读数写成 $E(X)=\operatorname{Tr}(EX)$，故矩阵单位为 $I$。
+
+**定理 271.2（任意有限 $2\times b$ 的整锥分类）。** 对每个整数 $b\ge2$，设整个原载体就是
+
+$$
+A=H_2\otimes_{\mathbb R}H_b
+ =\operatorname{Herm}(\mathbb C^2\otimes\mathbb C^b),
+\qquad u=\operatorname{Tr},
+\qquad
+\operatorname{Sep}(2|b)\subseteq C\subseteq\operatorname{BP}(2|b).
+\tag{271.3}
+$$
+
+$C$ 闭、尖、生成，原菜单为271.1的完整菜单。若整个原 $K$ 满足 $\mathsf M$ 和实际 L2，则在这个原坐标中
+
+$$
+\boxed{\ C=C^*=\operatorname{PSD}_{2b}
+\quad\text{或}\quad
+C=C^*=T_1\operatorname{PSD}_{2b}.\ }
+\tag{271.4}
+$$
+
+两种整锥都满足这些前提。特别地，这不是对一个选定态族、某个压缩体或仅 Schmidt 秩二资源的分类；结论穷尽全部原态、纯点和原效应。证明不使用共同尺，也不使用260或270的分类作为前提。
+
+证明。先在本证明内注明所消费的成熟供应。[M271]“Positive dual generation and one common complete frame”只用 proper leastness 导出正对偶剥离和完整 frame 扩张；数值互易用于该笔记后面的其他结论，此处不消费。实际 L2 的外三角齐次维数至少九，取 [XVIII240.2][G271]，不取带共同尺的低维分类。外部矩阵预算取 [GB271, Theorem 1]。以下分别给出这些供应在原菜单中的确切用法，以及新的迹二接合。
+
+（一）原暴露面的 least 最大测试。由上述 M-only frame 供应，对任何 $f\in\mathcal E$，可在一个实际完整 frame 上写成
+
+$$
+f=\sum_i\lambda_i e_{p_i},\qquad
+ e_{p_i}(p_j)=\delta_{ij},\qquad
+ \sum_i e_{p_i}=u,\qquad 0\le\lambda_i\le1.
+\tag{271.5}
+$$
+
+最后的系数界由 $\lambda_i=f(p_i)$ 得到。此处的 frame 是一个共同单位分解，不是分别选择的两两测试。为明确所用前件，leastness 先给 reciprocal zeros：$e_p(q)=0$ 时 $u-e_p$ 确认 $q$，故 $e_q\le u-e_p$，于是 $e_q(p)=0$；反向同理。对非零正泛函，取纯最大点，按最大值倍数减去其 least 效应，得到仍为正的残余。各次新纯点与此前纯点双向为零，故线性独立，有限维性使剥离终止。把所得正交族补全时，非零残余 $u-\sum_i e_{p_i}$ 的纯最大点与旧点正交，在该点残余恰取一；再减去其 least 效应。有限终止给(271.5)。这正是 [M271] 的剥离／补全证明，并未增加 $e_p(q)=e_q(p)$ 的非零读数条件。
+
+设 $H=\{x\in K:f(x)=1\}\ne\varnothing$ 为一个原暴露面。置
+
+$$
+h_H=\sum_{\lambda_i=1}e_{p_i}.
+\tag{271.6}
+$$
+
+所有 frame 读数非负且和为一，所以 $f(x)=1$ 当且仅当每个 $\lambda_i<1$ 的项在 $x$ 上为零，也当且仅当 $h_H(x)=1$。若 $g\in\mathcal E$ 在 $H$ 上恒为一，则它确认所有 $\lambda_i=1$ 的 $p_i$。按这些下标逐个减去 $e_{p_i}$：leastness 保证差为正；差不超过 $g\le u$，且因交叉读数为零仍确认下一个 $p_i$。所以
+
+$$
+\{h_H=1\}=H,\qquad h_H\le g
+ \quad(g\in\mathcal E,\ g|_H=1).
+\tag{271.7}
+$$
+
+这同时证明 $h_H$ 与所选展开无关。它还是 $\mathcal E$ 的极点：若 $h_H=(g_1+g_2)/2$，两个 proper 效应在 $H$ 上都取一，由(271.7)均不小于 $h_H$，故均等于它。
+
+对每个原纯 $p\in H$，$e_p\le h_H$，因此 $d=h_H-e_p$ proper。它也是 $\mathcal E$ 的极点。事实上，若 $d=(d_1+d_2)/2$ 且 $d_i$ proper，则 $d_i(p)=0$；$u-d_i$ 确认 $p$，于是 $e_p\le u-d_i$。所以 $e_p+d_i$ 都 proper，其平均为极端 $h_H$，迫使 $d_1=d_2=d$。这里极端效应减法的论证保留了原全域上下预算，没有把面内效应当成全域效应。
+
+（二）两份原锥的 HS／迹预算与产品端点。对(271.3)取对偶得
+
+$$
+\operatorname{Sep}(2|b)\subseteq C^*\subseteq\operatorname{BP}(2|b).
+\tag{271.8}
+$$
+
+[GB271, Theorem 1] 在任意有限复 $m\times n$ 二体系统断言：Hermitian $\Delta$ 满足 $\|\Delta\|_2\le1$ 时，$I+\Delta$ 可分，包含等号。对非零 $W\in\operatorname{BP}(m|n)$，令 $\Delta=-W/\|W\|_2$，与 $W$ 配对得
+
+$$
+0\le\operatorname{Tr}\!\left[W\left(I-\frac W{\|W\|_2}\right)\right]
+=\operatorname{Tr}W-\|W\|_2,
+\qquad
+\boxed{\ \|W\|_2\le\operatorname{Tr}W.\ }
+\tag{271.9}
+$$
+
+零矩阵也满足此式。原态与原正效应都属于 BP，所以此预算对两者同时成立；正元素迹为零必为零。这是 HS 范数对普通迹的界，绝不是块正矩阵的核迹范数界。GB 的归一化可分球半径 $1/\sqrt{D(D-1)}$、$D=mn$，与此处单位矩阵周围的未归一半径一是不同表述。
+
+对任意原纯 $x$ 及其 $e_x$，有 $\operatorname{Tr}x=1$，因此
+
+$$
+1=\operatorname{Tr}(e_xx)
+ \le\|e_x\|_2\|x\|_2
+ \le\operatorname{Tr}e_x.
+\tag{271.10}
+$$
+
+若 $\operatorname{Tr}e_x=1$，Cauchy–Schwarz 及(271.9)全取等号；两者迹都为一，故
+
+$$
+e_x=x,\qquad \|x\|_2=1.
+\tag{271.11}
+$$
+
+这里是条件推论，尚未假定未知原纯态为 PSD。
+
+每个单位产品投影 $p=P_a\otimes P_b$ 都属于 $C$，且 $\operatorname{Tr}p=\|p\|_2=1$。整个 $K$ 由(271.9)包含于 HS 单位球；严格凸性使 $p$ 成为原纯点：若它是两个 $K$ 中点的非平凡凸平均，HS 范数等号迫使两点都等于 $p$。此外 $p$ 和 $I-p$ 都可分，后者可用含 $a,b$ 的产品正交基展开。所以 $p$ 是原 proper 效应。M 给 $e_p\le p$；由(271.9)的正差预算与(271.10)，
+
+$$
+1\le\operatorname{Tr}e_p\le\operatorname{Tr}p=1,
+\qquad e_p=p.
+\tag{271.12}
+$$
+
+同理，下文的产品投影 $R_i$、局部支持投影 $I_2\otimes Q$ 及其补都在原 proper 区间中；它们的合法性来自可分正展开，而不是未知锥对局部酉变换封闭。
+
+（三）一般位置产品对的整个实际面。取单位产品端点
+
+$$
+p=P_{a\otimes b},\qquad q=P_{c\otimes d},\qquad
+0<\alpha=|\langle a,c\rangle|<1,\quad
+0<\beta=|\langle b,d\rangle|<1.
+\tag{271.13}
+$$
+
+令 $S=\operatorname{span}_{\mathbb C}\{b,d\}$、$Q=P_S$，并置
+
+$$
+Q_0=I_2\otimes(I_b-Q),\qquad
+R_1=P_{a^\perp}\otimes P_{d_S^\perp},\qquad
+R_2=P_{c^\perp}\otimes P_{b_S^\perp}.
+\tag{271.14}
+$$
+
+第二因子正交补取在 $S$ 内，第一因子正交补取在 $\mathbb C^2$ 内。$b=2$ 时 $Q_0=0$，后面论证仍成立。定义原暴露面
+
+$$
+Z=\{X\in K:\operatorname{Tr}(Q_0X)
+=\operatorname{Tr}(R_1X)=\operatorname{Tr}(R_2X)=0\}.
+\tag{271.15}
+$$
+
+暴露它的原 proper 效应可取 $I-(Q_0+R_1+R_2)/3$：三个效应非负且各不超过 $I$，平均也 proper，其一面恰是三个非负零条件的交。$p,q\in Z$，故 $B(p,q)\subseteq Z$。
+
+先支付支持限制。若 $X\in\operatorname{BP}(2|b)$ 且 $\operatorname{Tr}(Q_0X)=0$，则
+
+$$
+X=(I_2\otimes Q)X(I_2\otimes Q).
+\tag{271.16}
+$$
+
+证明这个块正零边缘事实时，不使用 $X\succeq0$。在 $S^\perp$ 上对第二腿求迹所得第一腿矩阵 $Y$ 为 PSD，因为其每个向量期望是若干非负产品期望之和。$\operatorname{Tr}Y=0$，所以 $Y=0$。对任意第一腿向量 $v$，条件切片 $X_v=(\langle v|\otimes I)X(|v\rangle\otimes I)$ 为 PSD，且在 $S^\perp$ 上迹为零。因此 $X_v$ 消去 $S^\perp$，包括它与 $S$ 的交叉块。对 $v$ 用复极化，所有第一腿矩阵元也消去这些块，得到(271.16)。这同时可用于 $C$ 中的态和 $C^*$ 中的效应。
+
+选相位使 $\langle a,c\rangle=\alpha$、$\langle b,d\rangle=\beta$ 为正实数。在已证的支持 $\mathbb C^2\otimes S$ 中，
+
+$$
+T=[a\ c]\otimes[b\ d]:\mathbb C^2\otimes\mathbb C^2
+ \overset{\sim}{\longrightarrow}\mathbb C^2\otimes S
+\tag{271.17}
+$$
+
+可逆。这只是一张支持内的代数坐标图；$b>2$ 时 $T^{-1}$ 是此四复维支持到 $\mathbb C^4$ 的逆，绝不指整个 $\mathbb C^{2b}$ 上的逆，也不指一个原可操作的正回缩。
+
+对 $Z$ 中矩阵作 $X\mapsto T^{-1}XT^{-*}$。局部可逆合同在代数上保持产品期望非负。$T^*R_1T$、$T^*R_2T$ 分别是 $P_{10}$、$P_{01}$ 的严格正倍数，故其两个对角元为零。固定任一局部基向量所得条件切片 PSD；PSD 中零对角元对应的整行整列为零，因而消掉 $00$ 与 $01,10$ 的相邻元、以及 $11$ 与 $01,10$ 的相邻元。唯一可能留下的形状是
+
+$$
+\begin{pmatrix}
+ A&0&0&z\\
+ 0&0&w&0\\
+ 0&\bar w&0&0\\
+ \bar z&0&0&D
+\end{pmatrix},
+\qquad A,D\in\mathbb R,\quad z,w\in\mathbb C.
+\tag{271.18}
+$$
+
+所以 $\dim_{\mathbb R}\operatorname{span}Z\le6$。若 $Z$ 含有 $B(p,q)$ 外的原纯点 $r$，则实际面 $F_K(p,q,r)\subseteq Z$。实际 L2 下 [XVIII240.2][G271] 给这个外三角仿射维数至少八，故齐次维数至少九，矛盾。最后 $Z$ 是紧面，每点有有限原纯点分解，各分量仍在 $Z$；它们既全在 $B(p,q)$，就有
+
+$$
+\boxed{\ Z=B(p,q).\ }
+\tag{271.19}
+$$
+
+这里没有要求整个原纯点集闭，也没有从局部三球先推出所有面暴露。只对这些一般位置产品对，已经证明其整个实际球就是一个原暴露面。
+
+（四）least 面测试的**原迹**精确为二。取(271.7)供应的 $h=h_{B(p,q)}$。由产品 least 公式，
+
+$$
+h\ge_{C^*}p,\ q,\qquad h(p)=h(q)=1.
+\tag{271.20}
+$$
+
+$ I_2\otimes Q$、$I-R_1$、$I-R_2$ 都在整个 $Z=B(p,q)$ 上取一，所以 leastness 在原完整效应菜单中给
+
+$$
+h\le_{C^*} I_2\otimes Q,\quad
+h\le_{C^*} I-R_1,\quad
+h\le_{C^*} I-R_2.
+\tag{271.21}
+$$
+
+在原产品态 $R_i$ 上评价后两式，得到 $0\le h(R_i)\le0$。$Q_0$ 是非负可分矩阵，故属于 $C$；第一式给
+
+$$
+0\le\operatorname{Tr}(Q_0h)
+\le\operatorname{Tr}[Q_0(I_2\otimes Q)]=0.
+$$
+
+对 $h\in C^*\subseteq\operatorname{BP}$ 应用(271.16)，也把它的支持限制在同一四复维空间。没有任何面效应的全局正延拓被调用。
+
+在(271.17)中令 $\widetilde h=T^{-1}hT^{-*}$。它为(271.18)的稀疏形状，且(271.20)给
+
+$$
+\widetilde h-P_{00},\quad \widetilde h-P_{11}
+ \in\operatorname{BP}(2|2).
+\tag{271.22}
+$$
+
+该稀疏形状块正当且仅当
+
+$$
+A,D\ge0,\qquad |z|+|w|\le\sqrt{AD}.
+\tag{271.23}
+$$
+
+为核对必要性和充分性，对产品向量 $u\otimes v$ 置 $x=|u_0v_0|$、$y=|u_1v_1|$。两条相干项的绝对值因子都是 $xy$；两个局部相位的和与差可以独立指定模 $2\pi$，故最小期望恰为
+
+$$
+Ax^2+Dy^2-2(|z|+|w|)xy.
+$$
+
+所有 $x,y\ge0$ 都可实现，此二次式非负恰是(271.23)，包含 $A=0$ 或 $D=0$ 的端点。将它分别用于(271.22)，得到
+
+$$
+A,D\ge1,\qquad
+|z|+|w|\le
+ \min\{\sqrt{(A-1)D},\sqrt{A(D-1)}\}.
+\tag{271.24}
+$$
+
+记 $g=\alpha\beta\in(0,1)$。原确认方程必须在原产品向量上计算；$T^*(a\otimes b)=(1,\beta,\alpha,g)^t$、$T^*(c\otimes d)=(g,\alpha,\beta,1)^t$，所以
+
+$$
+\begin{split}
+ A+Dg^2+2g\operatorname{Re}(z+w)&=1,\\
+ Ag^2+D+2g\operatorname{Re}(z+w)&=1.
+\end{split}
+\tag{271.25}
+$$
+
+相减给 $(A-D)(1-g^2)=0$，即 $A=D$。于是
+
+$$
+\begin{aligned}
+1
+&=A(1+g^2)+2g\operatorname{Re}(z+w)\\
+&\ge A(1+g^2)-2g\sqrt{A(A-1)}\\
+&=1+\bigl(\sqrt{A-1}-g\sqrt A\bigr)^2
+\ge1.
+\end{aligned}
+\tag{271.26}
+$$
+
+第一不等式包含 $\operatorname{Re}(z+w)\ge-(|z|+|w|)$ 及(271.24)。全部取等，因而
+
+$$
+A=D=\frac1{1-g^2},\qquad
+z,w\in\mathbb R_{\le0},\qquad
+z+w=-\frac g{1-g^2}.
+\tag{271.27}
+$$
+
+$T$ 的各列是单位产品向量；$T^*T$ 在两个保留相干通道的元都是 $g$。因此原迹为
+
+$$
+\boxed{
+\operatorname{Tr}h
+=\operatorname{Tr}(T^*T\widetilde h)
+=A+D+2g\operatorname{Re}(z+w)=2.
+}
+\tag{271.28}
+$$
+
+它不是 $\operatorname{Tr}\widetilde h=2/(1-g^2)$。这里精确付出了原坐标的迹预算，也是 leastness 与实际产品零面之间的新接合。
+
+（五）实际残余纯态与两候选。置 $d=h-p$。由（一）和(271.12)，$d$ 是原 proper 区间的极点；(271.28)给 $\operatorname{Tr}d=1$，故 $d\ne0$。令 $m=\max_K d$。若 $m<1$，则 $m>0$，而
+
+$$
+d=m(d/m)+(1-m)0
+$$
+
+把它非平凡地分解成两个不同 proper 效应，矛盾。因此 $m=1$。紧的最大面有原纯点 $x$，满足 $d(x)=1$。M 给 $e_x\le d$，于是
+
+$$
+1\le\operatorname{Tr}e_x\le\operatorname{Tr}d=1.
+$$
+
+正差 $d-e_x\in C^*\subseteq\operatorname{BP}$ 的迹为零，由(271.9)差为零；再由(271.11)，
+
+$$
+\boxed{\ d=h-p=e_x=x\in K\cap\mathcal E,
+\qquad x\in P,\qquad \|x\|_2=1.\ }
+\tag{271.29}
+$$
+
+所以残余不只是一个代数上方便的矩阵，确是同一个原纯态与它的原最小效应。
+
+(271.27)把所有可能的 $h$ 限制在一个线段：
+
+$$
+h=tH_0+(1-t)H_1,\qquad 0\le t\le1,
+\tag{271.30}
+$$
+
+其中
+
+$$
+\begin{split}
+H_0&=P_{\operatorname{span}_{\mathbb C}\{a\otimes b,c\otimes d\}},\\
+H_1&=T_1P_{\operatorname{span}_{\mathbb C}\{\bar a\otimes b,\bar c\otimes d\}}.
+\end{split}
+\tag{271.31}
+$$
+
+这里 $P_S$ 对子空间表示正交投影。验证(271.31)只须把秩二投影的 Gram 逆写回 $T$ 坐标：$H_0$ 对应 $A=D=1/(1-g^2)$、$z=-g/(1-g^2),w=0$；在共轭第一腿上作同一计算后部分转置，$H_1$ 对应 $z=0,w=-g/(1-g^2)$。所以它们恰是(271.27)的两个端点，而非额外假设的原效应。
+
+其残余分别为
+
+$$
+H_0-p=P_{\psi_0},\qquad
+H_1-p=T_1P_{\psi_1},\qquad
+\psi_0=\frac{c\otimes d-g\,a\otimes b}{\sqrt{1-g^2}},\quad
+\psi_1=\frac{\bar c\otimes d-g\,\bar a\otimes b}{\sqrt{1-g^2}}.
+\tag{271.32}
+$$
+
+两个向量归一且分别正交于被减去的产品向量。部分转置是 HS 正交对合，故两个残余的 HS 范数都为一。它们不同：$g>0$，稀疏坐标的两个通道不同，$T$ 在支持内可逆。严格凸性明确给
+
+$$
+\|t(H_0-p)+(1-t)(H_1-p)\|_2^2
+=1-t(1-t)\|H_0-H_1\|_2^2<1
+\quad(0<t<1).
+$$
+
+这与(271.29)矛盾，故对每个一般位置产品对，
+
+$$
+h=H_0\quad\text{或}\quad h=H_1.
+\tag{271.33}
+$$
+
+所选端点 proper，其残余已经是实际原纯态兼效应。此时没有宣称未选端点也是原合法效应。
+
+（六）共同连通域上的闭、互斥方向。所有有序一般位置产品投影对由连通空间
+
+$$
+\Xi=U(2)\times U(b)\times(0,1)^2
+\tag{271.34}
+$$
+
+连续覆盖。例如取 $a=Ue_0$、$c=U(\alpha e_0+\sqrt{1-\alpha^2}e_1)$，$b=Ve_0$、$d=V(\beta e_0+\sqrt{1-\beta^2}e_1)$。任意一对可先择局部向量相位，再选择局部正交基取得这个形式。这里酉矩阵只参数化原本就全部存在的产品端点，未被当作未知 $C$ 的正变换。
+
+$H_i(\xi)$ 在 $\Xi$ 上连续。定义
+
+$$
+A_i=\{\xi\in\Xi:H_i(\xi)\in[0,I]_{C^*}\},\qquad i=0,1.
+\tag{271.35}
+$$
+
+原 proper 区间闭，故 $A_i$ 闭；(271.33)使它们覆盖 $\Xi$。它们互不相交。若两个候选同时 proper，它们都在 $p,q$ 上取一，一面包含整个最小实际面 $B(p,q)$，故由(271.7)
+
+$$
+h\le_{C^*}H_0,\ H_1.
+$$
+
+$h,H_0,H_1$ 的原迹都是二；两个正差迹零，(271.9)迫使 $h=H_0=H_1$，与候选不同矛盾。连通空间不能由两个非空、不交闭集覆盖，所以恰有一个 $A_i=\Xi$，另一个为空。方向因而全局固定。
+
+这个论证只用候选公式的连续性、原效应区间的闭性和逐对 leastness；没有假设 $h$、$p\mapsto e_p$、实际球族或整个纯点集连续／闭。
+
+（七）全部 Schmidt 秩二的实际覆盖与整锥夹逼。先设全局方向为 $H_0$。任意 Schmidt 秩二且非最大纠缠的单位向量，可在某个数学 Schmidt 基中写成
+
+$$
+\psi=\sqrt\lambda\,|00\rangle+\sqrt\mu\,|11\rangle,
+\qquad \lambda,\mu>0,\quad\lambda+\mu=1,\quad\lambda\ne\mu.
+\tag{271.36}
+$$
+
+Schmidt 基只是选取向量，不要求相关局部旋转已是原操作。定义单位产品向量和实数
+
+$$
+v=\frac{|0\rangle+|1\rangle}{\sqrt2}
+ \otimes(\sqrt\mu\,|0\rangle-\sqrt\lambda\,|1\rangle),
+\quad
+s=\frac{\lambda-\mu}{\sqrt{2\lambda\mu}}\ne0,
+\quad
+w=\frac{v+s\psi}{\sqrt{1+s^2}}.
+\tag{271.37}
+$$
+
+直接有 $\langle v,\psi\rangle=0$。$v+s\psi$ 的 $2\times2$ 系数矩阵为
+
+$$
+\begin{pmatrix}
+ \sqrt\mu/\sqrt2+s\sqrt\lambda&-\sqrt\lambda/\sqrt2\\
+ \sqrt\mu/\sqrt2&-\sqrt\lambda/\sqrt2+s\sqrt\mu
+\end{pmatrix},
+$$
+
+其行列式恰为
+
+$$
+s\frac{\mu-\lambda}{\sqrt2}+s^2\sqrt{\lambda\mu}=0.
+\tag{271.38}
+$$
+
+所以 $w$ 为归一产品向量，且 $|\langle v,w\rangle|=1/\sqrt{1+s^2}\in(0,1)$。这个全局重叠是两个局部重叠的乘积，故二者都非零。若一个局部重叠等于一，$v,w$ 共享该局部因子，$\psi$ 作为它们的线性组合也将是产品向量，矛盾。因此二者都严格小于一，$(P_v,P_w)$ 属于已支付的一般位置域，并且
+
+$$
+H_0(P_v,P_w)-P_v=P_\psi.
+\tag{271.39}
+$$
+
+由(271.29)及全局方向，$P_\psi$ 同时属于原 $C$ 和原 $C^*$，并为原纯态兼 least 效应。
+
+最大纠缠向量由固定 Schmidt 基中的 $\lambda\ne\mu$ 序列趋向 $\lambda=\mu=1/2$；$C,C^*$ 均闭，故对应投影也属于两锥。产品向量已由(271.12)包含。任何 $\mathbb C^2\otimes\mathbb C^b$ 向量的 Schmidt 秩至多二，故全部秩一投影都已覆盖，谱分解给
+
+$$
+\operatorname{PSD}_{2b}\subseteq C,\qquad
+\operatorname{PSD}_{2b}\subseteq C^*.
+\tag{271.40}
+$$
+
+取第二式的对偶，PSD 自对偶性给 $C\subseteq\operatorname{PSD}_{2b}$，于是 $C=C^*=\operatorname{PSD}_{2b}$。
+
+若全局方向为 $H_1$，对任意目标 $\psi$ 仍构造(271.37)的两个产品向量，再将它们第一因子逐个共轭。一般位置和两个局部重叠大小不变，(271.32)的 $H_1$ 残余正是 $T_1P_\psi$。同样包含最大纠缠极限和产品端点，得到
+
+$$
+T_1\operatorname{PSD}_{2b}\subseteq C,\qquad
+T_1\operatorname{PSD}_{2b}\subseteq C^*.
+\tag{271.41}
+$$
+
+$T_1$ 为迹配对的正交对合，故 $(T_1\operatorname{PSD})^*=T_1\operatorname{PSD}$；再次夹逼得另一整锥等式。没有遗漏高 Schmidt 秩态的可能，因为第一因子维数二已经使这类向量不存在；也没有先把未知原纯点认作 PSD，再来证明穷尽。
+
+（八）反向、退化产品对和原纯／效应穷尽。标准 PSD 锥中，对单位秩一 $p$，$0\preceq E\preceq I$ 且 $\operatorname{Tr}(Ep)=1$ 迫使 $Ep=p$，因而
+
+$$
+E=p+B,\qquad B=(I-p)B(I-p),\qquad
+0\preceq B\preceq I-p.
+\tag{271.42}
+$$
+
+所以 $p$ 是完整 proper 菜单中、同时对所有原混输入成立的 least 确认效应。任意两个不同纯点生成其复二维支持上的整个密度体，这正是三球；纯点为全部秩一投影。$T_1$ 是保迹实线性序同构，从 PSD 锥运输到 $T_1\operatorname{PSD}$，其逆对偶仍为 $T_1$，所以保留完整效应、配对、M、实际面和 L2。两种锥都含 Sep 且属于 BP，因为产品投影在 $T_1$ 下仍是产品投影。由此反向成立。
+
+整锥等式同时给出全部原纯点：分别为 $P_\psi$ 或 $T_1P_\psi$；全部 proper 效应分别为 $0\preceq E\preceq I$ 或其 $T_1$ 像。不存在除此之外的原纯态或原正效应。
+
+一般位置外的产品对不被略去。若 $p\ne q$，设 $L=\operatorname{span}\{a\otimes b,c\otimes d\}$。已证分类后，实际球和 least 最大测试分别为
+
+$$
+\begin{array}{c|c|c}
+ &B(p,q)&h_{B(p,q)}\\ \hline
+C=\operatorname{PSD}&\mathcal D(L)&P_L\\
+C=T_1\operatorname{PSD}&
+ T_1\mathcal D(\operatorname{span}\{\bar a\otimes b,\bar c\otimes d\})&
+ T_1P_{\operatorname{span}\{\bar a\otimes b,\bar c\otimes d\}}
+\end{array}
+\tag{271.43}
+$$
+
+两行的 $h$ 原迹均为二，$h-p$ 仍是实际纯态兼 least 效应。若一个局部重叠为零，则两候选同为 $p+q$；若一个局部重叠为一而 $p\ne q$，则两候选同为固定局部秩一因子乘另一个局部二维支持投影。这些覆盖 $\alpha,\beta$ 的零／一退化端点，可直接由支持式计算，也与不同端点的极限一致。若 $p=q$，最小面为单点，least 测试为 $p$，原迹为一；不把此重合情形混入 L2 或迹二断言，也不要求趋于重合时支持平面有唯一极限。$\square$
+
+**定理 271.3（原实维数四的同坐标全有限层级）。** 完整保留 [XVIII250.1][G271] 的强全有限背景：$W_N=V^{\otimes_{\mathbb R}N}$，闭尖生成的整个 $C_N$，严格正乘积单位 $u_N=u^{\otimes N}$，整个紧底、全部原纯点、完整效应和全部有限单位分解；标量零层、分离全部联合空间的原产品配对、规范重括号、正位置置换及其正逆、正单位丢弃；对全部有限 $a,b\ge0$，包括任意原相关输入，保留
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+ \subseteq C_a\otimes_{\max}C_b.
+\tag{271.44}
+$$
+
+在**同一原局域实维数 $\dim_{\mathbb R}V=4$** 下，下列等价：整个原 $K_3$ 满足271.1的 $\mathsf M$ 和实际 L2；存在一个固定保单位实线性同构 $\theta:V\to H_2$，使
+
+$$
+\boxed{
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{2^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}
+\quad\text{对每个有限 }N\ge0.
+}
+\tag{271.45}
+$$
+
+$N=0$ 取恒等标量同构。本等价仅结算原维数四分支。
+
+证明。（一）原纯旁观面与 M／L2 下降。对每个原纯旁观态 $r\in P_b$，全有限背景给
+
+$$
+\{z\in K_{a+b}:(u_a\otimes\operatorname{id})z=r\}
+ =\{x\otimes r:x\in K_a\}.
+\tag{271.46}
+$$
+
+这是 [XIII161.1][T271] 的实际纯旁观面供应，其证明只用 min/max、原单位配对和 tomography。具体地，每个 $0\le f\le u_a$ 条件态均被纯边缘 $r$ 支配，故为 $r$ 的非负倍数；完整效应张成对偶，产品配对分离，迫使 $z=x\otimes r$。纯边缘逆像为实际面；最小界给反向包含。产品纯点也是原纯点。
+
+M 的下降须保留原菜单，不能仅引用面内几何。固定低层纯 $p$；$p\otimes r$ 是高层原纯点。若高层 least 效应为 $e_{p\otimes r}$，则
+
+$$
+g_p(x)=e_{p\otimes r}(x\otimes r)
+\tag{271.47}
+$$
+
+是低层 proper 效应并确认 $p$。对任意低层原 proper $f$ 确认 $p$，$f\otimes u_b$ 是高层 proper 效应：最大界给它和 $(u_a-f)\otimes u_b$ 的非负性，总和是高层单位。它确认 $p\otimes r$，所以高层 leastness 限制为 $g_p\le f$。故 $g_p$ 就是低层完整菜单中的 least 确认者。这是明确的产品效应延拓，没有使用任意面效应延拓。
+
+实际面内生成面与原生成面相同，(271.46)是整面序同构，所以实际 L2 同样下降。从整个 $K_3$ 先固定一份纯旁观得到 $K_2$，再固定一份得到 $K_1$；或者直接用两份纯产品作旁观。于是两个低层都继承 M 与实际 L2。
+
+$K_1$ 的仿射维数为三，因为 $C_1$ 生成四维 $V$。任选两个不同原纯点，其实际三球也是三仿射维的面。满仿射维的面只能是整个 $K_1$：其相对内部含 $K_1$ 的内点，而含内点的面等于整个紧底。因此 $K_1$ 是一个完整三球。固定一个仿射球同构到 Bloch 球，按迹单位齐次延拓，得到
+
+$$
+\theta:V\overset\sim\longrightarrow H_2,
+\qquad \theta(C_1)=\operatorname{PSD}_2,
+\qquad u=\operatorname{Tr}\circ\theta.
+\tag{271.48}
+$$
+
+后面始终使用这个同一个 $\theta$，不逐层另选矩阵坐标。这个下降没有用共同尺或260的整锥分类。
+
+（二）同坐标分类整个 $C_2$，再分类整个 $C_3$。暂以 $C_N$ 表示 $\theta^{\otimes N}$ 下的像。(271.44)在 $1|1$ 上给 Sep／BP 夹逼；M、实际 L2 均已下降。271.2给
+
+$$
+C_2=T_1^\delta\operatorname{PSD}_4,
+\qquad \delta\in\{0,1\}.
+\tag{271.49}
+$$
+
+考虑 $1|23$ 分块，仅为第二块选择保迹序坐标 $T_2^\delta$，即令
+
+$$
+C'_3=T_2^\delta C_3.
+\tag{271.50}
+$$
+
+在该分块，第二块原 $C_2$ 由(271.49)恰送到整个 $\operatorname{PSD}_4$，第一块仍为整个 $\operatorname{PSD}_2$。保迹序同构运输整锥及逆对偶完整菜单；最小界显然运输，最大界因全部正泛函随逆对偶一一对应而运输。M 是菜单序中的 least 性，实际 L2 是整个实际面的仿射性质，也都保持。因此整个 $C'_3$ 满足271.2的 $2\times4$ 前件，得
+
+$$
+C'_3=T_1^\eta\operatorname{PSD}_8,\qquad
+C_3=T_1^\eta T_2^\delta\operatorname{PSD}_8,
+\qquad\eta\in\{0,1\}.
+\tag{271.51}
+$$
+
+$T_2^\delta$ 在此只是第二块的序坐标变换，不宣称它是原 $C_3$ 上可实现或正的局部操作，也没有预付原三份 PSD。
+
+（三）三个原边缘的同一性排除相对转置。任意两位置边缘映射把原 $C_3$ **满射**到对应的原 $C_2$：正丢弃给包含；对任意原二份正向量附加一份归一原正态，最小界给反向满射。原正置换及其逆使三条有序边都为同一个 $C_2$。偏迹与转置交换，且一个完整二体的全转置保持 PSD。故(271.51)在 $12,13,23$ 三条边的像依次具有转置奇偶
+
+$$
+\eta\mathbin{\oplus}\delta,\qquad \eta,\qquad\delta.
+\tag{271.52}
+$$
+
+标准二份锥与其单腿转置锥确实不同：$\Omega=(|00\rangle+|11\rangle)/\sqrt2$ 的 $T_1P_\Omega$ 在 $(|01\rangle-|10\rangle)/\sqrt2$ 上有本征值 $-1/2$。所以三条边与(271.49)相等，强制
+
+$$
+\eta\mathbin{\oplus}\delta=\delta,\qquad \eta=\delta,
+\qquad\text{从而 }\eta=\delta=0.
+\tag{271.53}
+$$
+
+因此在最初固定的 $\theta$ 中，完整 $C_1,C_2,C_3$ 已同时标准。这是三边奇偶接合的成熟论证，在此只消费新分类支付的整锥输入；不拿共同尺候选支付任何边。
+
+（四）精确匹配 XIII161.4 的全有限尾部。此时 [XIII, Proposition 161.4][T271] 的前件逐项满足：其固定局部 $\theta$ 就是(271.48)，其同坐标(161.14)就是刚取得的标准 $C_1,C_2,C_3$；原全有限 min/max、单位、配对、正置换、规范重括号就是(271.44)及本定理的完整背景。因此该命题给**同一个** $\theta^{\otimes N}$ 下的(271.45)。这里直接调用它的精确结论，不调用 XIII 的旧几何分类入口。
+
+所调用尾部的数学范围也固定：XIII161.4精确引用 [F271] 的 Lemmas 102.6—102.10 及(102.30)后的两条整锥包含。标准 $C_2$ 给正确归一的 Bell 杯帽；面对任意原相关输入，原最大界的正切片先给原 Choi 等价，不先假定高层 PSD。标准 $C_3$ 提供两种秩一三腿资源；其乘积由原最小界属于整个原 $C_6$，正 Bell 收缩产生原 $C_4$ 中的纠缠门 Choi 元。该尾部再导出全部数学局部酉群及一个 imprimitive 门，才使用 [H271, Corollary 2] 的精确有限普适性，包括不等分组维数；对每个有限 $N$ 的整个原态和整个原正效应做双向夹逼。这里物理局部旋转不是输入，Harrow 所需的数学映射则由尾部供应。六腿等中间资源确实使用未截断的全有限背景，不能用仅有三层的假设替代它。
+
+零层本来为标量正锥，$\theta^{\otimes0}$ 保单位；其余单位等式由原 $u^{\otimes N}$ 和(271.48)给出。反向，(271.45)下，标准 PSD 的完整确认者分块(271.42)给 M，任意两纯点的整个复二维支持密度体给实际 L2；特别对整个 $K_3$ 成立。$\square$
+
+**推论 271.4（同维比较、完整条件字典及原问题边界）。** 在271.3的固定250.1背景和同一原 $\dim_{\mathbb R}V=4$ 分支内，M 加实际 L2 已蕴含共同圆尺、自对偶、纯目标的唯一饱和 least 确认、实际二元面的暴露性、数值互易及正交分解性质。完整静态量子字典成立；过程、仪器、时间与实现只在各自额外前件下取得下述字典。原局域维数未指定的 M 加实际 L2 分类不由271.2—271.3结算，也不被它们反驳。
+
+证明与对应。记 $\Theta_N=\theta^{\otimes N}$、$D_N=2^N$。对原 $x\in W_N$ 写 $\rho=\Theta_Nx$；对原效应 $f$ 写 $E=(\Theta_N^{-1})^*f$。整锥等式及其逆对偶给全部 $\rho\succeq0$ 和全部正效应矩阵，单位配对为 $f(x)=\operatorname{Tr}(E\rho)$，没有产品菜单截断。以下是271.3的整锥后应用，成熟静态及过程接口分别归于 [XVIII250.4][G271]、[XIII161.6—161.10][T271]，不把这些标准结论另计作新的分类定理。
+
+| 原对象或明确另给的前件 | 同一原局部坐标中的完整对应 |
+| --- | --- |
+| 全部归一态、纯点与凸混合 | 全部密度矩阵 $\rho\succeq0,\operatorname{Tr}\rho=1$；全部秩一 $P_v$、纯域 $\mathbb{CP}^{D_N-1}$；凸混合与矩阵凸混合完全对应，谱分解成为实际正交纯态分解 |
+| 全部 proper 效应与全部有限单位分解 | 全部 $0\preceq E\preceq I$ 与全部有限 POVM $\{E_j\},\sum_jE_j=I$；原概率为 Born 配对 $p_j=\operatorname{Tr}(E_j\rho)$，PVM 为正交投影的单位分解 |
+| 纯目标 $p$ 的所有确认者与对全部原混输入的最小确认 | 若 $\Theta_Np=P_v$，确认者恰为 $P_v+B$，$B=(I-P_v)B(I-P_v)$、$0\preceq B\preceq I-P_v$；least 为 $P_v$，$T_p(x)=\operatorname{Tr}(P_v\Theta_Nx)$ |
+| 全部实际面、二元球与零邻面 | 全部支持面 $\mathcal D(S)$；二元面为复二维支持的整个三球，least 最大测试为 $P_S$；纯 $P_v$ 的零邻面为 $\mathcal D(v^\perp)$ |
+| 全部原复合、产品、置换、重括号及丢弃 | 标准复 Hilbert 张量积上的整个 PSD、产品密度矩阵、交换和偏迹；纯纠缠由相应切分 Schmidt 秩大于一判别，混态可分体为全部产品态的凸包 |
+| 实线性 $L:W_a\to W_b$，另要求对每个有限原旁观 $M\ge0$，$L\otimes\operatorname{id}_{W_M}$ 保持整个原正锥 | $\Phi=\Theta_bL\Theta_a^{-1}$ 的唯一复线性延拓为 CP；等价于 Choi 矩阵正及有限矩形 Kraus 和 $\Phi(X)=\sum_\alpha K_\alpha X K_\alpha^*$ |
+| 上行另要求在所有正输入上 $u_bL\le u_a$ 或等号 | 分别为 TNI 或 TP，即 $\sum_\alpha K_\alpha^*K_\alpha\preceq I$ 或 $=I$；预算针对整个输入，不是仅 Choi 总迹 |
+| 有限分支 $L_j$ 各全旁观正，另给总预算 $u_b\sum_jL_j=u_a$ | 数学仪器：$\rho_j=\Phi_j(\rho)$、$p_j=\operatorname{Tr}\rho_j$；仅 $p_j>0$ 时条件态为 $\rho_j/p_j$；总 Kraus 预算为 $\sum_{j,\alpha}K_{j,\alpha}^*K_{j,\alpha}=I$ |
+| 同层全旁观正分支的效应为投影 $A$，且在整个 certain-yes 支持的每个纯态上逐点中性 | 唯一锐更新 $\Phi(X)=AXA$；仅给投影效应或可重复性，不能替代逐点中性 |
+| 另给同层连续、可逆、保锥保单位的实一参数群 | 酉共轭群及 $\dot\rho=-i[H_{\rm gen},\rho]$；对纯态择相位后 $i\dot\psi=H_{\rm gen}\psi$，生成元可加实标量 |
+| 数学菜单的设备实现、物理时间、无限或近似极限 | 设备事件饱和、记录、接线与仪器实现另给；物理钟、能量与 $H_{\rm phys}=\hbar H_{\rm gen}$ 另标定；无限系统须指定连接映射、相容态、完备化与 normal 延拓，近似结论须另给范数、误差和资源界 |
+
+静态各行由整锥、单位及迹配对直接取得；(271.42)还说明 least $P_v$ 只在该纯点上取一，任意原混态同时达到(271.2)的 minimum。数值互易为 $\operatorname{Tr}(P_vP_w)=|v^*w|^2$，HS 距离平方为 $2(1-|v^*w|^2)$。取迹零空间上的 $g_N(X,Y)=\operatorname{Tr}(\Theta_NX\,\Theta_NY)$，每个实际二元球中心为 $P_S/2$、HS 半径为 $1/\sqrt2$，故得到共同圆尺；这是结论，不是271.2的输入。
+
+AD 沿用 XIII162.2 的原含义：每颗实际二元球内的每对内禀对径纯点可由一个原 proper 效应完全区分。标准支持球中，这两个秩一投影相加为支持投影，因而正交；其中一个投影就是原区分效应，故全部 AD 成立。另外，$r\perp p,q$ 时，$r$ 的向量正交于两向量的整个复线性张成，故 $r\perp s$ 对全部纯 $s\in B(p,q)$ 成立。正交补、投影暴露和正交纯分解均在整个支持面上成立。这些分类后性质不被逆向插入前面未知锥的证明。
+
+过程各行须逐项消费自己的前件。全部原辅助幂 $2^M$ 可以容纳任意给定有限辅助维数；标准嵌入和压缩把全旁观正性化为通常完全正性，反向由 Kraus 和保持全部 PSD，精确是 XIII161.7 的矩形参数接口 $d=2^a,e=2^b$。单系统正性不够。总质量条件独立于全旁观正性，且各支分别 TNI 不能替代总仪器预算。有相关旁观输入 $Z$ 时，分支是 $(\operatorname{id}\otimes\Phi_j)(Z)$，仍按整个输出迹取概率；零概率正输出为零，不指定它的归一条件态。锐更新使用 XIII161.7.1 的全支持逐点中性，连续群使用 XIII161.10；静态分类不指定某个实际 Hamiltonian、物理时间或设备可实现性。
+
+作为两个原坐标中的具体后应用，在已付出的标准 $C_2$ 中，Bell 支持球及其 least 测试为
+
+$$
+B(p_{00},p_{11})
+=\mathcal D(\operatorname{span}\{|00\rangle,|11\rangle\}),
+\qquad h=p_{00}+p_{11}.
+\tag{271.54}
+$$
+
+任意非产品壳点 $p=P_\psi$，$\psi=\sqrt t\,|00\rangle+e^{i\phi}\sqrt{1-t}\,|11\rangle$，$0<t<1$，其原 least 效应就是 $p$。在原球中心 $h/2$ 上，
+
+$$
+p(h/2)=\tfrac12,\qquad h(h/2)=1,
+\qquad e_p=p\ne h.
+\tag{271.55}
+$$
+
+$t=1/2$ 的最大纠缠也包含在内；它的原态和效应合法性已经由闭锥覆盖支付。另一方面，三个产品点生成的**整个**实际面为
+
+$$
+F_K(p_{00},p_{01},p_{10})
+=\mathcal D(\operatorname{span}\{|00\rangle,|01\rangle,|10\rangle\}),
+\qquad
+\dim_{\mathbb R}\operatorname{span}F_K(p_{00},p_{01},p_{10})=9.
+\tag{271.56}
+$$
+
+理由是 PSD 支持面的最小性及 $\dim_{\mathbb R}\operatorname{Herm}_3=9$。它不曾被作为共同尺之外尚未支付的三角输入。
+
+同维比较的确切范围如下。在固定250.1背景和原实维数四下，260.2的“实际 L2 加存在共同尺”和271.3的“实际 L2 加原 proper M”都等价于(271.45)。所以可用 M 作为这个 qubit 分支的另一入口，并由它导出共同尺；新证明消除了**输入一把共同尺**的需要。这里不声称两个入口在更弱背景中有严格蕴含关系，不声称独立公理数严格减少，也不把270任意维数共同尺定理移作任意维数 M 定理。271.2用整个 $H_2\otimes H_b$ 及全部向量 Schmidt 秩至多二，271.3用原 $\dim_{\mathbb R}V=4$ 固定 $H_2$；这些承重点没有给未知一般局域系统供应同样入口。任意原维数的 M 加实际 L2 目标仍为未解决问题。
+
+本推导的承重综合是：一般位置产品对的原 least 面测试有原迹二；极端残余因而成为实际原纯态兼 least 效应；闭且互斥的候选在共同连通域上统一方向，再由全 Schmidt 秩二覆盖锁定两个整个锥。M-only 剥离／补全、极端效应减法、GB 球及其对偶预算、产品零支持、稀疏块正代数、严格凸性、连通选择、Schmidt 分解和三边奇偶各保留成熟或所列仓内供应的归属；XIII161.4保留全有限尾部的归属。相对于所列供应及所检查的 [M271]、[G271]、[T271]、[GB271]、[AS271]、[N1-271]—[N3-271] 范围，这是 repo-derived composition，不作全球文献优先性或最少独立公理主张。
+
+相关文献的条件也不能被这次综合省略。[AS271] 的 Main Theorem／Theorem 7.2 使用 Hilbert-ball 几何、atomic／non-atomic 分拆、每个 norm-exposed 面的 projectivity 及相应正交正部结构；M-only 的效应 frame 展开没有直接提供这些结构。[N1-271, §3] 与 [N2-271, Theorem 1] 的 $(**)$ 在**全部非负仿射函数**、于指定点归一为一的集合上取 infimum，并另要求唯一饱和；本节的原 proper 菜单域与它不同，且不输入唯一饱和。前者的自对偶路线另需对称跃迁概率，后者另需 bit symmetry。[N3-271, Theorem 2] 所调用的 Wang 分类要求紧的两点齐性度量空间及 convex metric，实际二元三球没有免费提供全局两点齐性。这些结果因此不替代271.2的未知锥证明。[GB271] 的 Theorem 1 确实适用于任意有限复二体而非仅等维因子；[H271] 的精确有限生成确实要求全体数学局部酉和 imprimitive 门，只有在已匹配的传播尾部才使用。
+
+白话图景仍是上述证明的同一条件结论。在原维数四的分支，两颗一般位置、不正交的产品准备，先共同圈出一颗**真实存在的完整二元球**。要求整颗球都被确认的最省原测试，既不能少于两颗产品准备各自的确认测试，又不能在那些已知产品零方向上花预算；这把它的原总迹恰好钉成二。减掉一颗已知产品准备，余下的一份预算被极端性逼成另一颗真实原纯态，而且它同时就是自己的合法确认测试。这样的产品对可以连续换遍，两个候选方向不能在中间混合，也不能同时合法，于是全局只剩一个方向。第一腿只有二复维，所有纠缠向量的 Schmidt 秩最多二，这批残余就足以补齐整个态锥和效应锥；原三份的三条边再排掉相对转置。只有到这时，固定同一局部坐标的既有全有限传播才启动。因而得到原维数四的完整有限量子层级，同时保留一般维数入口、设备实现和物理时间各自未付出的条件。$\square$
+
+[M271]: https://github.com/the-omega-institute/trureturing/blob/eba96d281b55801fac95eef637e144ea56caad12/Library/QuantumStates/mullerududec2012selfduality.md "Proper least confirmation：完整原菜单、全混合 infimum、M-only positive-dual peeling 与共同完整 frame；不消费其后需数值互易的结论。"
+[G271]: https://github.com/the-omega-institute/trureturing/blob/eba96d281b55801fac95eef637e144ea56caad12/docs/develop/theory/QUANTUM_ORIGIN_HALF_TURN_PREPARATION_AND_GLOBAL_EFFECTS_XVIII.md "240.1—240.2 的实际 L2 与外三角下界；250.1 的完整强全有限背景；250.4 的整锥后字典。"
+[T271]: https://github.com/the-omega-institute/trureturing/blob/eba96d281b55801fac95eef637e144ea56caad12/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "161.1 的实际纯旁观面；Proposition 161.4 的同坐标全有限尾部；161.6—161.10 的完整条件过程字典。"
+[F271]: https://github.com/the-omega-institute/trureturing/blob/f5a6211e591351e1a2bdeea0165c2ef29ad21b48/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "XIII161.4 精确引用的版本：102.6—102.10 及(102.30)后全有限整锥夹逼。"
+[GB271]: https://arxiv.org/abs/quant-ph/0204159v2 "Gurvits–Barnum, Largest separable balls around the maximally mixed bipartite quantum state, Section III, Theorem 1, p. 4；任意有限复二体的未归一 HS 半径一。"
+[AS271]: https://doi.org/10.1007/BF02392307 "Alfsen–Shultz, State spaces of Jordan algebras (1978), Main Theorem 与 Theorem 7.2；保留 projectivity 及正交正部等前件。"
+[N1-271]: https://arxiv.org/abs/2312.13213v2 "Niestegge, §3 性质(**)：全部非负仿射函数的 infimum 与唯一饱和；自对偶路线另需对称跃迁概率。"
+[N2-271]: https://arxiv.org/abs/2411.18589v2 "Niestegge, Theorem 1：性质(**)与 bit symmetry；proper 菜单域不能替换其全部非负仿射函数域。"
+[N3-271]: https://arxiv.org/abs/2601.01936v1 "Niestegge, Theorem 2：所用 Wang 分类需要 compact two-point-homogeneous metric space 与 convex metric。"
+[H271]: https://arxiv.org/abs/0806.0631v1 "Harrow, Exact universality from any entangling gate without inverses, Corollary 2：全体局部酉和 imprimitive 门，含不等分组维数的精确有限生成。"
+
+## 追加锚（本行以下为增补区）
