@@ -6,7 +6,7 @@
    utility: none
    digest: Accessible finite union families have exact decidable propositional proof kernels. -/
 
-import D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed
+import D5.S3.ConceptDynamics.DependencyTopology.LegalLedgerFixedSet
 import D5.S3.ConceptDynamics.DagSemantics.StrictDependencyCoordinate
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.Data.Finset.Lattice.Fold

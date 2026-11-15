@@ -67,4 +67,4 @@ Soundness follows because every accepted formula is a tautology. Consistency fol
 - Truth anchor: `D5/S3/ConceptDynamics/DependencyTopology/FiniteSupportPatternRealization.finite_support_pattern_realization`
 - Truth anchor: `D5/S3/ConceptDynamics/DependencyTopology/FiniteSupportPatternRealization.kernel`
 - Dependency: [D5/S3/ConceptDynamics/DagSemantics/StrictDependencyCoordinate](../DagSemantics/StrictDependencyCoordinate.md)
-- Dependency: [D5/S3/ConceptDynamics/DependencyTopology/SupportFamilyNotIntersectionClosed](SupportFamilyNotIntersectionClosed.md)
+- Dependency: [D5/S3/ConceptDynamics/DependencyTopology/LegalLedgerFixedSet](LegalLedgerFixedSet.md)
