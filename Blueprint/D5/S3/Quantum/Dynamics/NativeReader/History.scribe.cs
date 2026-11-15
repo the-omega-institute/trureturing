@@ -27,8 +27,8 @@ internal sealed class HistoryDocument : IScribeDocumentDefinition
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
 
     private static Formula Statement() => Disp(Seq(
-        Call("card", F.Id("Source")), Sp, Eq, Sp, D(89), Sp, Land, Sp,
-        Call("card", F.Id("Extended")), Sp, Eq, Sp, D(610), Sp, Land, Sp,
+        Call("card", F.Id("Source")), Sp, Eq, Sp, D(8, 9), Sp, Land, Sp,
+        Call("card", F.Id("Extended")), Sp, Eq, Sp, D(6, 1, 0), Sp, Land, Sp,
         Exists, Sp, F.Id("eta"), Colon, Sp, F.Id("Real"), Comma, Sp,
         D(0), Sp, Lt, Sp, F.Id("eta"), Sp, Land, Sp,
         F.Id("eta"), Sp, Lt, Sp, Call("min", F.Id("alpha"),
@@ -42,8 +42,8 @@ internal sealed class HistoryDocument : IScribeDocumentDefinition
         Sp, Land, Sp, Forall, Sp, F.Id("h"), Colon, Sp,
         Call("NativeReaderHistory", F.Id("chi"), F.Id("q"), F.Id("lambda")), Comma, Sp,
         Call("EmptyEventTables", F.Id("h")), Sp, Land, Sp,
-        Call("readerConfiguration", Call("events", F.Id("h")), D(15)), Sp, Eq, Sp,
+        Call("readerConfiguration", Call("events", F.Id("h")), D(1, 5)), Sp, Eq, Sp,
         Call("readyTail", Call("b9", F.Id("q"))), Sp, Land, Sp,
-        Call("report", Call("readerConfiguration", Call("events", F.Id("h")), D(15))),
+        Call("report", Call("readerConfiguration", Call("events", F.Id("h")), D(1, 5))),
         Sp, Eq, Sp, F.Id("false")));
 }

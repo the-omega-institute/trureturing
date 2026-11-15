@@ -35,7 +35,7 @@ internal sealed class NoncompactStrassenDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/Probability/NoncompactStrassen.strassen_iff"),
                 H("Global convex tests and one native martingale joint"),
                 StatementSource.FromAuthor(Statement()),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Geometry/leskela2017conditionalconvex")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Convexity/leskela2017conditionalconvex")),
                 Blocks(
                     Paragraph(Text("All laws are Borel probability measures. IntegrableIdentity(rho) means that x maps to x is integrable against the underlying measure of rho. Mean is that identity integral. Integral(phi,rho) is the real Bochner integral; IntegrableAbs(phi,rho) means integrability of x maps to |phi(x)|. The test phi is globally real-valued and convex on all of the real line. It is quantified only when its absolute value is integrable under both mu and nu.")),
                     Paragraph(Text("Pushforward(pi,fst)=mu and Pushforward(pi,snd)=nu are equalities of the underlying pushforward measures, not approximate marginal constraints. NativeConditionalMean(pi) means pi.toMeasure[Prod.snd | (borel R).comap Prod.fst] equals Prod.fst almost everywhere under pi.toMeasure. The existential quantifier chooses one real-plane probability joint before this conditional expectation is asserted. There is no support, finite-support, density, nonatomicity or supplied-coupling premise. The conclusion asserts neither uniqueness nor an algorithm, vector or process extension.")),

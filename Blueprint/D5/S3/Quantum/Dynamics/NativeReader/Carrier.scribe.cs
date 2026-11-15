@@ -18,5 +18,5 @@ internal sealed class CarrierDocument : IScribeDocumentDefinition
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
-    private static Formula Statement() => Disp(Seq(Call("card", F.Id("Source")), Sp, Eq, Sp, D(89)));
+    private static Formula Statement() => Disp(Seq(Call("card", F.Id("Source")), Sp, Eq, Sp, D(8, 9)));
 }

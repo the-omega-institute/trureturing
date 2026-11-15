@@ -17,5 +17,5 @@ internal sealed class PropagationDocument : IScribeDocumentDefinition
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
-    private static Formula Statement() => Disp(Seq(Forall, Sp, F.Id("lambda"), Comma, Sp, Forall, Sp, F.Id("k"), Colon, Sp, Call("Fin", D(15)), Comma, Sp, Forall, Sp, F.Id("s"), Comma, Sp, Call("InUnitInterval", F.Id("s")), Sp, Implies, Sp, Call("OperatorNormDifference", Call("fullInternalOperator", F.Id("lambda"), F.Id("k"), F.Id("s")), Call("fullInternalOperator", F.Id("alpha"), F.Id("k"), F.Id("s"))), Sp, Leq, Sp, D(12), Sp, Times, Sp, Call("abs", Seq(F.Id("lambda"), Sp, Minus, Sp, F.Id("alpha")))));
+    private static Formula Statement() => Disp(Seq(Forall, Sp, F.Id("lambda"), Comma, Sp, Forall, Sp, F.Id("k"), Colon, Sp, Call("Fin", D(1, 5)), Comma, Sp, Forall, Sp, F.Id("s"), Comma, Sp, Call("InUnitInterval", F.Id("s")), Sp, Implies, Sp, Call("OperatorNormDifference", Call("fullInternalOperator", F.Id("lambda"), F.Id("k"), F.Id("s")), Call("fullInternalOperator", F.Id("alpha"), F.Id("k"), F.Id("s"))), Sp, Leq, Sp, D(1, 2), Sp, Times, Sp, Call("abs", Seq(F.Id("lambda"), Sp, Minus, Sp, F.Id("alpha")))));
 }

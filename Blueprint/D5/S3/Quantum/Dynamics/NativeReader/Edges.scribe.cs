@@ -10,7 +10,7 @@ internal sealed class EdgesDocument : IScribeDocumentDefinition
         "Exact full-vector two-point restriction.",
         H("Exact full-vector two-point restriction"),
         Blocks(Describe.Lean(
-            DescribeId.Create("projection-edge-mulVec"),
+            DescribeId.Create("projection-edge-mul-vec"),
             DeclarationHandle.Create("D5/S3/Quantum/Dynamics/NativeReader/Edges.projection_edge_mulVec"),
             H("Exact full-vector two-point restriction"), StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(),

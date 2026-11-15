@@ -10,7 +10,7 @@ internal sealed class GlobalDocument : IScribeDocumentDefinition
         "Full native matrix propagation retains every source column.",
         H("Full native matrix propagation retains every source column"),
         Blocks(Describe.Lean(
-            DescribeId.Create("fullDuring-factor"),
+            DescribeId.Create("full-during-factor"),
             DeclarationHandle.Create("D5/S3/Quantum/Dynamics/NativeReader/Global.fullDuring_factor"),
             H("Full native matrix propagation retains every source column"), StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(),
@@ -18,5 +18,5 @@ internal sealed class GlobalDocument : IScribeDocumentDefinition
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
-    private static Formula Statement() => Disp(Seq(Forall, Sp, F.Id("chi"), Colon, Sp, Call("SourceVector"), Comma, Sp, Forall, Sp, F.Id("lambda"), Colon, Sp, F.Id("Real"), Comma, Sp, Forall, Sp, F.Id("k"), Colon, Sp, Call("Fin", D(15)), Comma, Sp, Forall, Sp, F.Id("s"), Colon, Sp, F.Id("Real"), Comma, Sp, Call("fullDuring", F.Id("chi"), F.Id("lambda"), F.Id("k"), F.Id("s")), Sp, Eq, Sp, Call("GlobalDuringVector", F.Id("chi"), F.Id("lambda"), F.Id("k"), F.Id("s"))));
+    private static Formula Statement() => Disp(Seq(Forall, Sp, F.Id("chi"), Colon, Sp, Call("SourceVector"), Comma, Sp, Forall, Sp, F.Id("lambda"), Colon, Sp, F.Id("Real"), Comma, Sp, Forall, Sp, F.Id("k"), Colon, Sp, Call("Fin", D(1, 5)), Comma, Sp, Forall, Sp, F.Id("s"), Colon, Sp, F.Id("Real"), Comma, Sp, Call("fullDuring", F.Id("chi"), F.Id("lambda"), F.Id("k"), F.Id("s")), Sp, Eq, Sp, Call("GlobalDuringVector", F.Id("chi"), F.Id("lambda"), F.Id("k"), F.Id("s"))));
 }

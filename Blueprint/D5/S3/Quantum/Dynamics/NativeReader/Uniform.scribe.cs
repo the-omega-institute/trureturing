@@ -35,7 +35,7 @@ internal sealed class UniformDocument : IScribeDocumentDefinition
         Forall, Sp, F.Id("lambda"), Colon, Sp, F.Id("Real"), Comma, Sp,
         Call("PuncturedDistanceLess", F.Id("lambda"), F.Id("alpha"), F.Id("eta")), Sp, Implies, Sp,
         Forall, Sp, F.Id("i"), Colon, Sp, F.Id("Bool"), Comma, Sp,
-        Forall, Sp, F.Id("k"), Colon, Sp, Call("Fin", D(15)), Comma, Sp,
+        Forall, Sp, F.Id("k"), Colon, Sp, Call("Fin", D(1, 5)), Comma, Sp,
         Forall, Sp, F.Id("s"), Colon, Sp, F.Id("Real"), Comma, Sp,
         Call("during", F.Id("i"), F.Id("lambda"), F.Id("k"), F.Id("s"),
             Call("readyTail", F.Id("i"))), Sp, Neq, Sp, D(0)));

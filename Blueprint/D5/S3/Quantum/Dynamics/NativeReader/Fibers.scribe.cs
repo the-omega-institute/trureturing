@@ -10,7 +10,7 @@ internal sealed class FibersDocument : IScribeDocumentDefinition
         "All extended coordinates split into source and tail.",
         H("All extended coordinates split into source and tail"),
         Blocks(Describe.Lean(
-            DescribeId.Create("fullCarrierEquiv"),
+            DescribeId.Create("full-carrier-equiv"),
             DeclarationHandle.Create("D5/S3/Quantum/Dynamics/NativeReader/Fibers.fullCarrierEquiv"),
             H("All extended coordinates split into source and tail"), StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(),

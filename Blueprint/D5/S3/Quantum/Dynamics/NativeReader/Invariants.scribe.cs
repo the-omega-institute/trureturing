@@ -10,7 +10,7 @@ internal sealed class InvariantsDocument : IScribeDocumentDefinition
         "The actual entrance charge is not identically zero.",
         H("The actual entrance charge is not identically zero"),
         Blocks(Describe.Lean(
-            DescribeId.Create("entranceCharge-at-zero"),
+            DescribeId.Create("entrance-charge-at-zero"),
             DeclarationHandle.Create("D5/S3/Quantum/Dynamics/NativeReader/Invariants.entranceCharge_at_zero"),
             H("The actual entrance charge is not identically zero"), StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(),

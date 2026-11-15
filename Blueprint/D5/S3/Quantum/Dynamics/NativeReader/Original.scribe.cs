@@ -17,5 +17,5 @@ internal sealed class OriginalDocument : IScribeDocumentDefinition
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
-    private static Formula Statement() => Disp(Seq(Forall, Sp, F.Id("a"), Colon, Sp, Call("List", Call("Fin", D(11))), Comma, Sp, Call("extendedPreparation", F.Id("a")), Sp, Eq, Sp, Call("readyExtension", Call("originalPreparation", F.Id("a")))));
+    private static Formula Statement() => Disp(Seq(Forall, Sp, F.Id("a"), Colon, Sp, Call("List", Call("Fin", D(1, 1))), Comma, Sp, Call("extendedPreparation", F.Id("a")), Sp, Eq, Sp, Call("readyExtension", Call("originalPreparation", F.Id("a")))));
 }

@@ -15,7 +15,7 @@ motivation_gids:
 Colin Barker's first generating-function conjecture in OEIS A286848 concerns
 **every** labelled inclusion-minimal dominating vertex subset of the ordinary
 open grid $P_3\mathbin{\square}P_n$, for every $n\ge1$.
-The source note is [barker2017a286848](../Library/RecurrenceComposition/barker2017a286848.md),
+The source note is [barker2017a286848](../Library/Automata/barker2017a286848.md),
 and the immutable original question is preregistered in
 [#22395](https://github.com/the-omega-institute/trureturing/issues/22395).
 The exact settling declaration is
