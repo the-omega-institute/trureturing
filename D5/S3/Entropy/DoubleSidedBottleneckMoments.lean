@@ -7,26 +7,58 @@
    digest: Uniform entropy deficits control all posterior moment products. -/
 
 /-
-proof_shape: content
-escape_witness: posterior_local_optimality via Moments.power_taylor_bound
 admission_basis: escape-witness
-Direct frozen dependencies: identities pending extraction from the merged-base report.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30706
+The source entropy is the frozen binaryEntropyBits expression; no entropy alias is added.
+Direct frozen dependencies: declaration identities at base fcd028003080ee51fe117e1277b6f3768c12b47a.
+F1: D5/S3/Quantum/Information/QubitEntropyContraction.logRatio; statement_id=sha256:bb9ddc35fc615b4ef0c2ef184ee0b38420a2fea66b80854ce40df89141cdfd1e
+F2: D5/S3/Quantum/Information/QubitEntropyContraction.radialEntropy; statement_id=sha256:7a1844d69160c7cdadf8d7d90c10352564fffc2c16ba40e815a355ebc8bc8ebd
+F3: D5/S3/Quantum/Information/QubitEntropyContraction.radial_concave; statement_id=sha256:8026c9153902c93bfa1487395d7f93f3268e56ab78a89faa6aa82ebcb253cff0
+F4: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv; statement_id=sha256:e8867f89ff5d6dbfe903566df6ee22ac61ad20b965100eb78500fcd8a1d28307
+F5: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv2; statement_id=sha256:0d6c93f85b7e4c54a6cc869eee6cc53e301d2b85b55ae58405f8953d16d69a2a
+Declarations (frozen inputs above are followed through same-delivery helpers):
+Curvature.phi: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: Curvature.entropy_strong_convex,Curvature.phi_convex,Curvature.phi_hasDerivAt,Curvature.phi_strictMono,Curvature.phi_tangent_bound,D5.S3.Entropy.DoubleSidedBottleneckBSC.Boundary.phi_psi,D5.S3.Entropy.DoubleSidedBottleneckBSC.Boundary.scalar_mgl,D5.S3.Entropy.DoubleSidedBottleneckBSC.bias_zero_of_rate_nonpos,D5.S3.Entropy.DoubleSidedBottleneckBSC.full_budget_upper,D5.S3.Entropy.DoubleSidedBottleneckBSC.interior_bscOptimal,D5.S3.Entropy.DoubleSidedBottleneckBSC.objective_noiseless_formula,D5.S3.Entropy.DoubleSidedBottleneckBSC.phi_bias,D5.S3.Entropy.DoubleSidedBottleneckBSC.phi_crossover,D5.S3.Entropy.DoubleSidedBottleneckBSC.phi_f,D5.S3.Entropy.DoubleSidedBottleneckBSC.rate_phi,entropy_moment_deficits,entropy_product_moment_deficits,posterior_local_optimality
+Curvature.entropy_strong_convex: proof_shape: bind-only; escape_witness: none; dependencies: F1,F2,F4,F5; consumers: entropy_moment_deficits
+Curvature.phi_convex: proof_shape: bind-only; escape_witness: none; dependencies: F3; consumers: Curvature.phi_tangent_bound,D5.S3.Entropy.DoubleSidedBottleneckBSC.bias_zero_of_rate_nonpos,entropy_moment_deficits
+Curvature.phi_strictMono: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: D5.S3.Entropy.DoubleSidedBottleneckBSC.bias_zero_of_rate_nonpos,entropy_moment_deficits
+Curvature.slope: proof_shape: bind-only; escape_witness: none; dependencies: F1; consumers: Curvature.phi_hasDerivAt,Curvature.phi_tangent_bound,Curvature.slope_nonneg,D5.S3.Entropy.DoubleSidedBottleneckBSC.interior_bscOptimal,entropy_moment_deficits,entropy_product_moment_deficits,posterior_local_optimality
+Curvature.phi_hasDerivAt: proof_shape: bind-only; escape_witness: none; dependencies: F2,F1,F4; consumers: Curvature.phi_tangent_bound
+Curvature.slope_nonneg: proof_shape: bind-only; escape_witness: none; dependencies: F1; consumers: D5.S3.Entropy.DoubleSidedBottleneckBSC.interior_bscOptimal,entropy_product_moment_deficits,posterior_local_optimality
+Curvature.phi_tangent_bound: proof_shape: bind-only; escape_witness: none; dependencies: F2,F1,F4,F3; consumers: entropy_moment_deficits
+Moments.power_taylor_bound: proof_shape: content; escape_witness: Moments.power_taylor_bound; dependencies: none; consumers: Moments.even_moment_deficit
+Moments.avg_add: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: Moments.even_moment_deficit,Moments.variance_identity
+Moments.avg_sub: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: D5.S3.Entropy.DoubleSidedBottleneckBSC.Boundary.scalar_mgl,Moments.even_moment_deficit,Moments.odd_moment_sq_deficit,Moments.variance_identity
+Moments.avg_mul: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: Moments.even_moment_deficit,Moments.odd_moment_sq_deficit,Moments.variance_identity
+Moments.avg_const: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: D5.S3.Entropy.DoubleSidedBottleneckBSC.Boundary.scalar_mgl,Moments.even_moment_deficit,Moments.variance_identity
+Moments.variance_identity: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: Moments.strong_jensen_deficit
+Moments.strong_jensen_deficit: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: entropy_moment_deficits
+Moments.even_moment_deficit: proof_shape: content; escape_witness: Moments.power_taylor_bound; dependencies: none; consumers: entropy_moment_deficits
+Moments.power_lipschitz: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: Moments.odd_moment_sq_deficit
+Moments.weighted_cauchy: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: Moments.odd_moment_sq_deficit
+Moments.odd_moment_sq_deficit: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: entropy_moment_deficits
+Series.coeffTerm: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: Series.coefficient_comparison,Series.hasSum_f,Series.product_hasSum,posterior_local_optimality
+Series.hasSum_f: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: Series.product_hasSum
+ProductBounds.even_product_deficit: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: entropy_product_moment_deficits
+ProductBounds.odd_product_deficit: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: entropy_product_moment_deficits
+ProductBounds.leading_deficit: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: posterior_local_optimality
+ProductBounds.threshold_tail_nonpos: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: posterior_local_optimality
+entropy_moment_deficits: proof_shape: content; escape_witness: Moments.power_taylor_bound; dependencies: F2,F1,F4,F3,F5; consumers: entropy_product_moment_deficits,posterior_local_optimality
+power_avg_bounds: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: entropy_product_moment_deficits
+entropy_product_moment_deficits: proof_shape: content; escape_witness: Moments.power_taylor_bound; dependencies: F1,F2,F4,F3,F5; consumers: posterior_local_optimality
+Series.product_hasSum: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: posterior_local_optimality
+Series.half: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: D5.S3.Entropy.DoubleSidedBottleneckBSC.interior_bscOptimal,D5.S3.Entropy.DoubleSidedBottleneckBSC.objective_bsc_productValue,Series.coefficient_comparison,Series.symmetric_even,Series.symmetric_odd,posterior_local_optimality
+Series.signed: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: D5.S3.Entropy.DoubleSidedBottleneckBSC.interior_bscOptimal,D5.S3.Entropy.DoubleSidedBottleneckBSC.objective_bsc_productValue,Series.coefficient_comparison,Series.symmetric_even,Series.symmetric_odd,posterior_local_optimality
+Series.symmetric_even: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: Series.coefficient_comparison,posterior_local_optimality
+Series.symmetric_odd: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: Series.coefficient_comparison,posterior_local_optimality
+Series.coefficient_comparison: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: posterior_local_optimality
+Series.geometric_difference_bound: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: posterior_local_optimality
+productValue: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: D5.S3.Entropy.DoubleSidedBottleneckBSC.interior_bscOptimal,D5.S3.Entropy.DoubleSidedBottleneckBSC.objective_bsc_productValue,D5.S3.Entropy.DoubleSidedBottleneckBSC.objective_noiseless_formula,D5.S3.Entropy.DoubleSidedBottleneckBSC.objective_productValue,posterior_local_optimality
+posterior_local_optimality: proof_shape: content; escape_witness: Moments.power_taylor_bound; dependencies: F1,F2,F4,F3,F5; consumers: D5.S3.Entropy.DoubleSidedBottleneckBSC.interior_bscOptimal
+Definitions specify objects, not proof claims; their bind-only label claims no new theorem.
+The non-binding estimate is the induction invariant Moments.power_taylor_bound.
 -/
 
 import D5.S3.Quantum.Information.QubitEntropyContraction
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.Convex.Deriv
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
-import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Analysis.Convex.Jensen
-import Mathlib.Algebra.Order.Ring.Abs
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Tactic.Positivity
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
 
 
 open Set
@@ -139,7 +171,6 @@ open scoped BigOperators
 open Finset
 namespace D5.S3.Entropy.DoubleSidedBottleneckMoments.Moments
 
-noncomputable def avg {A : Type*} [Fintype A] (p f : A → ℝ) : ℝ := ∑ i, p i * f i
 
 private theorem power_taylor_bound (k : ℕ) {x v : ℝ}
     (hx : x ∈ Set.Icc (0 : ℝ) 1) (hv : v ∈ Set.Icc (0 : ℝ) 1) :
@@ -159,31 +190,27 @@ private theorem power_taylor_bound (k : ℕ) {x v : ℝ}
     nlinarith
 
 private theorem avg_add {A : Type*} [Fintype A] (p f g : A → ℝ) :
-    avg p (fun i => f i + g i) = avg p f + avg p g := by
-  simp [avg, mul_add, sum_add_distrib]
+    dotProduct p (fun i => f i + g i) = dotProduct p f + dotProduct p g := by
+  exact dotProduct_add p f g
 
 theorem avg_sub {A : Type*} [Fintype A] (p f g : A → ℝ) :
-    avg p (fun i => f i - g i) = avg p f - avg p g := by
-  simp [avg, mul_sub, sum_sub_distrib]
+    dotProduct p (fun i => f i - g i) = dotProduct p f - dotProduct p g := by
+  exact dotProduct_sub p f g
 
 private theorem avg_mul {A : Type*} [Fintype A] (p f : A → ℝ) (c : ℝ) :
-    avg p (fun i => c * f i) = c * avg p f := by
-  unfold avg
-  rw [Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro i _
-  ring
+    dotProduct p (fun i => c * f i) = c * dotProduct p f := by
+  exact dotProduct_smul c p f
 
 theorem avg_const {A : Type*} [Fintype A] (p : A → ℝ) (c : ℝ)
-    (hp : ∑ i, p i = 1) : avg p (fun _ => c) = c := by
-  unfold avg
+    (hp : ∑ i, p i = 1) : dotProduct p (fun _ => c) = c := by
+  unfold dotProduct
   rw [← Finset.sum_mul, hp, one_mul]
 
 private theorem variance_identity {A : Type*} [Fintype A] (p x : A → ℝ)
     (hp : ∑ i, p i = 1) :
-    avg p (fun i => (x i - avg p x) ^ 2) = avg p (fun i => x i ^ 2) - (avg p x) ^ 2 := by
-  have he : (fun i => (x i - avg p x) ^ 2) =
-      (fun i => x i ^ 2 - (2 * avg p x) * x i + avg p x ^ 2) := by funext i; ring
+    dotProduct p (fun i => (x i - dotProduct p x) ^ 2) = dotProduct p (fun i => x i ^ 2) - (dotProduct p x) ^ 2 := by
+  have he : (fun i => (x i - dotProduct p x) ^ 2) =
+      (fun i => x i ^ 2 - (2 * dotProduct p x) * x i + dotProduct p x ^ 2) := by funext i; ring
   rw [he, avg_add, avg_sub, avg_mul, avg_const p _ hp]
   ring
 
@@ -191,16 +218,16 @@ private theorem strong_jensen_deficit {A : Type*} [Fintype A]
     (p x : A → ℝ) (hp0 : ∀ i, 0 ≤ p i) (hp1 : ∑ i, p i = 1)
     (hx : ∀ i, x i ∈ Set.Icc (0 : ℝ) 1)
     (φ : ℝ → ℝ) (hφ : ConvexOn ℝ (Set.Icc 0 1) (fun t => φ t - t ^ 2 / 12))
-    (m M : ℝ) (hbudget : avg p (fun i => φ (x i)) ≤ φ m)
-    (htangent : φ m - φ (avg p x) ≤ M * (m - avg p x)) :
-    avg p (fun i => (x i - avg p x) ^ 2) ≤ 12 * M * (m - avg p x) := by
+    (m M : ℝ) (hbudget : dotProduct p (fun i => φ (x i)) ≤ φ m)
+    (htangent : φ m - φ (dotProduct p x) ≤ M * (m - dotProduct p x)) :
+    dotProduct p (fun i => (x i - dotProduct p x) ^ 2) ≤ 12 * M * (m - dotProduct p x) := by
   have hj := hφ.map_sum_le (t := Finset.univ) (w := p) (p := x)
     (fun i _ => hp0 i) hp1 (fun i _ => hx i)
   simp only [smul_eq_mul] at hj
   have heq : (∑ i, p i * (φ (x i) - x i ^ 2 / 12)) =
-      avg p (fun i => φ (x i)) - avg p (fun i => x i ^ 2) / 12 := by
-    simp only [avg, mul_sub, sum_sub_distrib, mul_div_assoc, sum_div]
-  change φ (avg p x) - avg p x ^ 2 / 12 ≤ _ at hj
+      dotProduct p (fun i => φ (x i)) - dotProduct p (fun i => x i ^ 2) / 12 := by
+    simp only [dotProduct, mul_sub, sum_sub_distrib, mul_div_assoc, sum_div]
+  change φ (dotProduct p x) - dotProduct p x ^ 2 / 12 ≤ _ at hj
   rw [heq] at hj
   rw [variance_identity p x hp1]
   linarith
@@ -208,24 +235,24 @@ private theorem strong_jensen_deficit {A : Type*} [Fintype A]
 private theorem even_moment_deficit {A : Type*} [Fintype A]
     (p x : A → ℝ) (hp0 : ∀ i, 0 ≤ p i) (hp1 : ∑ i, p i = 1)
     (hx : ∀ i, x i ∈ Set.Icc (0 : ℝ) 1)
-    (m M : ℝ) (hv : avg p x ∈ Set.Icc (0 : ℝ) 1) (hvm : avg p x ≤ m)
-    (hvariance : avg p (fun i => (x i - avg p x) ^ 2) ≤ 12 * M * (m - avg p x))
+    (m M : ℝ) (hv : dotProduct p x ∈ Set.Icc (0 : ℝ) 1) (hvm : dotProduct p x ≤ m)
+    (hvariance : dotProduct p (fun i => (x i - dotProduct p x) ^ 2) ≤ 12 * M * (m - dotProduct p x))
     (k : ℕ) :
-    avg p (fun i => x i ^ (k + 1)) ≤ m ^ (k + 1) +
-      6 * k * (k + 1 : ℝ) * M * (m - avg p x) := by
+    dotProduct p (fun i => x i ^ (k + 1)) ≤ m ^ (k + 1) +
+      6 * k * (k + 1 : ℝ) * M * (m - dotProduct p x) := by
   have hm : 0 ≤ m := hv.1.trans hvm
   have ht := Finset.sum_le_sum (s := Finset.univ) (fun i _ =>
     mul_le_mul_of_nonneg_left (power_taylor_bound k (hx i) hv) (hp0 i))
-  have hc : avg p (fun i => x i - avg p x) = 0 := by
+  have hc : dotProduct p (fun i => x i - dotProduct p x) = 0 := by
     rw [avg_sub, avg_const p _ hp1]; ring
-  have he : (∑ i, p i * (avg p x ^ (k + 1) + (k + 1 : ℝ) * avg p x ^ k *
-      (x i - avg p x) + (k : ℝ) * (k + 1) / 2 * (x i - avg p x) ^ 2)) =
-      avg p x ^ (k + 1) +
-        (k : ℝ) * (k + 1) / 2 * avg p (fun i => (x i - avg p x) ^ 2) := by
-    change avg p (fun i => _ + _ + _) = _
+  have he : (∑ i, p i * (dotProduct p x ^ (k + 1) + (k + 1 : ℝ) * dotProduct p x ^ k *
+      (x i - dotProduct p x) + (k : ℝ) * (k + 1) / 2 * (x i - dotProduct p x) ^ 2)) =
+      dotProduct p x ^ (k + 1) +
+        (k : ℝ) * (k + 1) / 2 * dotProduct p (fun i => (x i - dotProduct p x) ^ 2) := by
+    change dotProduct p (fun i => _ + _ + _) = _
     rw [avg_add, avg_add, avg_const p _ hp1, avg_mul, avg_mul, hc]
     ring
-  change avg p (fun i => x i ^ (k + 1)) ≤ _ at ht
+  change dotProduct p (fun i => x i ^ (k + 1)) ≤ _ at ht
   rw [he] at ht
   have hp := pow_le_pow_left₀ hv.1 hvm (k + 1)
   have hvar := mul_le_mul_of_nonneg_left hvariance
@@ -247,8 +274,8 @@ private theorem power_lipschitz (k : ℕ) {x v : ℝ}
 
 private theorem weighted_cauchy {A : Type*} [Fintype A]
     (p s t : A → ℝ) (hp : ∀ i, 0 ≤ p i) :
-    (avg p (fun i => s i * t i)) ^ 2 ≤
-      avg p (fun i => s i ^ 2) * avg p (fun i => t i ^ 2) := by
+    (dotProduct p (fun i => s i * t i)) ^ 2 ≤
+      dotProduct p (fun i => s i ^ 2) * dotProduct p (fun i => t i ^ 2) := by
   apply Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul Finset.univ
     (fun i _ => mul_nonneg (hp i) (sq_nonneg (s i)))
     (fun i _ => mul_nonneg (hp i) (sq_nonneg (t i)))
@@ -257,18 +284,18 @@ private theorem weighted_cauchy {A : Type*} [Fintype A]
 
 private theorem odd_moment_sq_deficit {A : Type*} [Fintype A]
     (p s : A → ℝ) (hp0 : ∀ i, 0 ≤ p i)
-    (hs : ∀ i, |s i| ≤ 1) (hcenter : avg p s = 0)
-    (m M : ℝ) (hv : avg p (fun i => s i ^ 2) ∈ Set.Icc (0 : ℝ) 1)
-    (hvm : avg p (fun i => s i ^ 2) ≤ m)
-    (hvariance : avg p (fun i => (s i ^ 2 - avg p (fun j => s j ^ 2)) ^ 2) ≤
-      12 * M * (m - avg p (fun i => s i ^ 2))) (k : ℕ) :
-    (avg p (fun i => s i ^ (2 * k + 1))) ^ 2 ≤
-      12 * m * k ^ 2 * M * (m - avg p (fun i => s i ^ 2)) := by
-  let v := avg p (fun i => s i ^ 2)
+    (hs : ∀ i, |s i| ≤ 1) (hcenter : dotProduct p s = 0)
+    (m M : ℝ) (hv : dotProduct p (fun i => s i ^ 2) ∈ Set.Icc (0 : ℝ) 1)
+    (hvm : dotProduct p (fun i => s i ^ 2) ≤ m)
+    (hvariance : dotProduct p (fun i => (s i ^ 2 - dotProduct p (fun j => s j ^ 2)) ^ 2) ≤
+      12 * M * (m - dotProduct p (fun i => s i ^ 2))) (k : ℕ) :
+    (dotProduct p (fun i => s i ^ (2 * k + 1))) ^ 2 ≤
+      12 * m * k ^ 2 * M * (m - dotProduct p (fun i => s i ^ 2)) := by
+  let v := dotProduct p (fun i => s i ^ 2)
   have hx (i : A) : s i ^ 2 ∈ Set.Icc (0 : ℝ) 1 :=
     ⟨sq_nonneg _, by nlinarith [abs_le.mp (hs i)]⟩
-  have hcentered : avg p (fun i => s i * ((s i ^ 2) ^ k - v ^ k)) =
-      avg p (fun i => s i ^ (2 * k + 1)) := by
+  have hcentered : dotProduct p (fun i => s i * ((s i ^ 2) ^ k - v ^ k)) =
+      dotProduct p (fun i => s i ^ (2 * k + 1)) := by
     have hf : (fun i => s i * ((s i ^ 2) ^ k - v ^ k)) =
         (fun i => s i ^ (2 * k + 1) - v ^ k * s i) := by
       funext i
@@ -282,19 +309,19 @@ private theorem odd_moment_sq_deficit {A : Type*} [Fintype A]
     have h := power_lipschitz k (hx i) hv
     have h' := mul_self_le_mul_self (abs_nonneg ((s i ^ 2) ^ k - v ^ k)) h
     simpa only [sq_abs, ← sq, mul_pow] using h'
-  have hbound : avg p (fun i => ((s i ^ 2) ^ k - v ^ k) ^ 2) ≤
-      (k : ℝ) ^ 2 * avg p (fun i => (s i ^ 2 - v) ^ 2) := by
+  have hbound : dotProduct p (fun i => ((s i ^ 2) ^ k - v ^ k) ^ 2) ≤
+      (k : ℝ) ^ 2 * dotProduct p (fun i => (s i ^ 2 - v) ^ 2) := by
     rw [← avg_mul]
     exact Finset.sum_le_sum (fun i _ => mul_le_mul_of_nonneg_left (hpoint i) (hp0 i))
   have hvar := mul_le_mul_of_nonneg_left hvariance (show 0 ≤ (k : ℝ) ^ 2 by positivity)
-  have hV : 0 ≤ avg p (fun i => (s i ^ 2 - v) ^ 2) :=
+  have hV : 0 ≤ dotProduct p (fun i => (s i ^ 2 - v) ^ 2) :=
     Finset.sum_nonneg (fun i _ => mul_nonneg (hp0 i) (sq_nonneg _))
   have hvv : 0 ≤ v := hv.1
   have hstep := mul_le_mul_of_nonneg_left hbound hvv
   have hstep2 := mul_le_mul_of_nonneg_right hvm (mul_nonneg (sq_nonneg (k : ℝ)) hV)
   have hm : 0 ≤ m := hv.1.trans hvm
   have hstep3 := mul_le_mul_of_nonneg_left hvar hm
-  change avg p (fun i => s i ^ (2 * k + 1)) ^ 2 ≤ v * _ at hcs
+  change dotProduct p (fun i => s i ^ (2 * k + 1)) ^ 2 ≤ v * _ at hcs
   nlinarith
 
 end D5.S3.Entropy.DoubleSidedBottleneckMoments.Moments
@@ -382,28 +409,28 @@ open scoped BigOperators
 
 private theorem entropy_moment_deficits {A : Type*} [Fintype A]
     (p s : A → ℝ) (hp0 : ∀ i, 0 ≤ p i) (hp1 : ∑ i, p i = 1)
-    (hs : ∀ i, |s i| ≤ 1) (hcenter : avg p s = 0)
+    (hs : ∀ i, |s i| ≤ 1) (hcenter : dotProduct p s = 0)
     (m : ℝ) (hm : m ∈ Set.Ioo (0 : ℝ) 1)
-    (hbudget : avg p (fun i => phi (s i ^ 2)) ≤ phi m) :
-    avg p (fun i => s i ^ 2) ∈ Set.Icc (0 : ℝ) m ∧
-    avg p (fun i => (s i ^ 2 - avg p (fun j => s j ^ 2)) ^ 2) ≤
-      12 * Curvature.slope m * (m - avg p (fun i => s i ^ 2)) ∧
+    (hbudget : dotProduct p (fun i => phi (s i ^ 2)) ≤ phi m) :
+    dotProduct p (fun i => s i ^ 2) ∈ Set.Icc (0 : ℝ) m ∧
+    dotProduct p (fun i => (s i ^ 2 - dotProduct p (fun j => s j ^ 2)) ^ 2) ≤
+      12 * Curvature.slope m * (m - dotProduct p (fun i => s i ^ 2)) ∧
     ∀ k : ℕ,
-      avg p (fun i => s i ^ (2 * (k + 1))) ≤ m ^ (k + 1) +
-        6 * k * (k + 1 : ℝ) * Curvature.slope m * (m - avg p (fun i => s i ^ 2)) ∧
-      (avg p (fun i => s i ^ (2 * k + 1))) ^ 2 ≤
-        12 * m * k ^ 2 * Curvature.slope m * (m - avg p (fun i => s i ^ 2)) := by
+      dotProduct p (fun i => s i ^ (2 * (k + 1))) ≤ m ^ (k + 1) +
+        6 * k * (k + 1 : ℝ) * Curvature.slope m * (m - dotProduct p (fun i => s i ^ 2)) ∧
+      (dotProduct p (fun i => s i ^ (2 * k + 1))) ^ 2 ≤
+        12 * m * k ^ 2 * Curvature.slope m * (m - dotProduct p (fun i => s i ^ 2)) := by
   have hx (i : A) : s i ^ 2 ∈ Set.Icc (0 : ℝ) 1 :=
     ⟨sq_nonneg _, by nlinarith [abs_le.mp (hs i)]⟩
-  have hv : avg p (fun i => s i ^ 2) ∈ Set.Icc (0 : ℝ) 1 := by
-    simpa only [avg, smul_eq_mul] using (convex_Icc (0 : ℝ) 1).sum_mem
+  have hv : dotProduct p (fun i => s i ^ 2) ∈ Set.Icc (0 : ℝ) 1 := by
+    simpa only [dotProduct, smul_eq_mul] using (convex_Icc (0 : ℝ) 1).sum_mem
       (t := Finset.univ) (w := p) (z := fun i => s i ^ 2)
       (fun i _ => hp0 i) hp1 (fun i _ => hx i)
   have hj := phi_convex.map_sum_le (t := Finset.univ) (w := p)
     (p := fun i => s i ^ 2) (fun i _ => hp0 i) hp1 (fun i _ => hx i)
   simp only [smul_eq_mul] at hj
-  change phi (avg p (fun i => s i ^ 2)) ≤ avg p (fun i => phi (s i ^ 2)) at hj
-  have hvm : avg p (fun i => s i ^ 2) ≤ m :=
+  change phi (dotProduct p (fun i => s i ^ 2)) ≤ dotProduct p (fun i => phi (s i ^ 2)) at hj
+  have hvm : dotProduct p (fun i => s i ^ 2) ≤ m :=
     (phi_strictMono.le_iff_le hv ⟨hm.1.le, hm.2.le⟩).mp (hj.trans hbudget)
   have hvar := strong_jensen_deficit p (fun i => s i ^ 2) hp0 hp1 hx phi
     entropy_strong_convex m (Curvature.slope m) hbudget (phi_tangent_bound hm hv hvm)
@@ -416,8 +443,8 @@ private theorem entropy_moment_deficits {A : Type*} [Fintype A]
 
 private theorem power_avg_bounds {C : Type*} [Fintype C] (w x : C → ℝ) (hw : ∀ i, 0 ≤ w i)
       (hx : ∀ i, |x i| ≤ 1) (k : ℕ) :
-      0 ≤ avg w (fun i => x i ^ (2 * (k + 1))) ∧
-      avg w (fun i => x i ^ (2 * (k + 1))) ≤ avg w (fun i => x i ^ 2) := by
+      0 ≤ dotProduct w (fun i => x i ^ (2 * (k + 1))) ∧
+      dotProduct w (fun i => x i ^ (2 * (k + 1))) ≤ dotProduct w (fun i => x i ^ 2) := by
     have hx2 (i : C) : x i ^ 2 ∈ Set.Icc (0 : ℝ) 1 :=
       ⟨sq_nonneg _, by nlinarith [abs_le.mp (hx i)]⟩
     constructor
@@ -434,22 +461,22 @@ private theorem entropy_product_moment_deficits {A B : Type*} [Fintype A] [Finty
     (hp0 : ∀ i, 0 ≤ p i) (hp1 : ∑ i, p i = 1)
     (hq0 : ∀ j, 0 ≤ q j) (hq1 : ∑ j, q j = 1)
     (hs : ∀ i, |s i| ≤ 1) (ht : ∀ j, |t j| ≤ 1)
-    (hsc : avg p s = 0) (htc : avg q t = 0)
+    (hsc : dotProduct p s = 0) (htc : dotProduct q t = 0)
     (m n : ℝ) (hm : m ∈ Set.Ioo (0 : ℝ) 1) (hn : n ∈ Set.Ioo (0 : ℝ) 1)
-    (hmb : avg p (fun i => phi (s i ^ 2)) ≤ phi m)
-    (hnb : avg q (fun j => phi (t j ^ 2)) ≤ phi n) :
+    (hmb : dotProduct p (fun i => phi (s i ^ 2)) ≤ phi m)
+    (hnb : dotProduct q (fun j => phi (t j ^ 2)) ≤ phi n) :
     let M := max (Curvature.slope m) (Curvature.slope n)
-    let D := m - avg p (fun i => s i ^ 2)
-    let E := n - avg q (fun j => t j ^ 2)
+    let D := m - dotProduct p (fun i => s i ^ 2)
+    let E := n - dotProduct q (fun j => t j ^ 2)
     ∀ k : ℕ,
-      avg p (fun i => s i ^ (2 * (k + 1))) * avg q (fun j => t j ^ (2 * (k + 1))) -
+      dotProduct p (fun i => s i ^ (2 * (k + 1))) * dotProduct q (fun j => t j ^ (2 * (k + 1))) -
           m ^ (k + 1) * n ^ (k + 1) ≤ 6 * k * (k + 1 : ℝ) * M * (n * D + m * E) ∧
-      |avg p (fun i => s i ^ (2 * k + 1)) * avg q (fun j => t j ^ (2 * k + 1))| ≤
+      |dotProduct p (fun i => s i ^ (2 * k + 1)) * dotProduct q (fun j => t j ^ (2 * k + 1))| ≤
         6 * k ^ 2 * M * (n * D + m * E) := by
   dsimp only
   let M := max (Curvature.slope m) (Curvature.slope n)
-  let D := m - avg p (fun i => s i ^ 2)
-  let E := n - avg q (fun j => t j ^ 2)
+  let D := m - dotProduct p (fun i => s i ^ 2)
+  let E := n - dotProduct q (fun j => t j ^ 2)
   have hsdef := entropy_moment_deficits p s hp0 hp1 hs hsc m hm hmb
   have htdef := entropy_moment_deficits q t hq0 hq1 ht htc n hn hnb
   have hm0 : 0 ≤ m := hm.1.le
@@ -460,14 +487,14 @@ private theorem entropy_product_moment_deficits {A B : Type*} [Fintype A] [Finty
   intro k
   have hms := le_max_left (Curvature.slope m) (Curvature.slope n)
   have hns := le_max_right (Curvature.slope m) (Curvature.slope n)
-  have hme : avg p (fun i => s i ^ (2 * (k + 1))) ≤ m ^ (k + 1) +
+  have hme : dotProduct p (fun i => s i ^ (2 * (k + 1))) ≤ m ^ (k + 1) +
       6 * k * (k + 1 : ℝ) * M * D := by
     have hu := mul_le_mul_of_nonneg_left hms
       (show 0 ≤ 6 * (k : ℝ) * (k + 1) * D by positivity)
     have hh := (hsdef.2.2 k).1
     dsimp [D, M] at *
     nlinarith
-  have hne : avg q (fun j => t j ^ (2 * (k + 1))) ≤ n ^ (k + 1) +
+  have hne : dotProduct q (fun j => t j ^ (2 * (k + 1))) ≤ n ^ (k + 1) +
       6 * k * (k + 1 : ℝ) * M * E := by
     have hu := mul_le_mul_of_nonneg_left hns
       (show 0 ≤ 6 * (k : ℝ) * (k + 1) * E by positivity)
@@ -499,14 +526,12 @@ namespace D5.S3.Entropy.DoubleSidedBottleneckMoments.Series
 open Moments
 open scoped BigOperators
 
-noncomputable def f (z : ℝ) : ℝ := (1 + z) * Real.log (1 + z)
-
 private theorem product_hasSum {A B : Type*} [Fintype A] [Fintype B]
     (p s : A → ℝ) (q t : B → ℝ) {δ : ℝ} (hδ : |δ| < 1)
     (hs : ∀ i, |s i| ≤ 1) (ht : ∀ j, |t j| ≤ 1) :
     HasSum (fun k : ℕ => coeffTerm δ k *
-      avg p (fun i => s i ^ (k + 2)) * avg q (fun j => t j ^ (k + 2)))
-      ((∑ i, ∑ j, p i * q j * f (δ * s i * t j)) - δ * avg p s * avg q t) := by
+      dotProduct p (fun i => s i ^ (k + 2)) * dotProduct q (fun j => t j ^ (k + 2)))
+      ((∑ i, ∑ j, p i * q j * (-Real.negMulLog (1 + δ * s i * t j))) - δ * dotProduct p s * dotProduct q t) := by
   have hz (i : A) (j : B) : |δ * s i * t j| < 1 := by
     have hst : |s i| * |t j| ≤ 1 := mul_le_one₀ (hs i) (abs_nonneg _) (ht j)
     rw [abs_mul, abs_mul]
@@ -519,7 +544,7 @@ private theorem product_hasSum {A B : Type*} [Fintype A] [Fintype B]
       (hasSum_f (hz i j)).mul_left (p i * q j)))
   convert hh using 1
   · funext k
-    dsimp only [avg, coeffTerm]
+    dsimp only [dotProduct, coeffTerm]
     rw [mul_assoc, Finset.sum_mul_sum, Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro i _
@@ -528,10 +553,10 @@ private theorem product_hasSum {A B : Type*} [Fintype A] [Fintype B]
     intro j _
     rw [show -(δ * s i * t j) = (-δ) * s i * t j by ring, mul_pow, mul_pow]
     ring
-  · dsimp only [f] at *
+  · simp only [Real.negMulLog, neg_mul, neg_neg] at *
     simp_rw [mul_sub, Finset.sum_sub_distrib]
     congr 1
-    dsimp [avg]
+    dsimp [dotProduct]
     rw [mul_assoc, Finset.sum_mul_sum]
     simp_rw [Finset.mul_sum]
     apply Finset.sum_congr rfl
@@ -543,13 +568,13 @@ private theorem product_hasSum {A B : Type*} [Fintype A] [Fintype B]
 noncomputable def half : Bool → ℝ := fun _ => 1 / 2
 noncomputable def signed (a : ℝ) : Bool → ℝ := fun i => if i then a else -a
 
-theorem symmetric_even (a : ℝ) (k : ℕ) :
-    avg half (fun i => signed a i ^ (2 * (k + 1))) = (a ^ 2) ^ (k + 1) := by
-  simp [avg, half, signed, pow_mul]
+private theorem symmetric_even (a : ℝ) (k : ℕ) :
+    dotProduct half (fun i => signed a i ^ (2 * (k + 1))) = (a ^ 2) ^ (k + 1) := by
+  simp [dotProduct, half, signed, pow_mul]
 
-theorem symmetric_odd (a : ℝ) (k : ℕ) :
-    avg half (fun i => signed a i ^ (2 * k + 1)) = 0 := by
-  simp [avg, half, signed, pow_add, pow_mul]
+private theorem symmetric_odd (a : ℝ) (k : ℕ) :
+    dotProduct half (fun i => signed a i ^ (2 * k + 1)) = 0 := by
+  simp [dotProduct, half, signed, pow_add, pow_mul]
 
 end D5.S3.Entropy.DoubleSidedBottleneckMoments.Series
 
@@ -565,7 +590,7 @@ private theorem coefficient_comparison (X Y : ℕ → ℝ) (a b M W δ : ℝ)
     (k : ℕ) :
     coeffTerm δ (k + 1) *
       (X (k + 3) * Y (k + 3) -
-        avg half (fun i => signed a i ^ (k + 3)) * avg half (fun j => signed b j ^ (k + 3))) ≤
+        dotProduct half (fun i => signed a i ^ (k + 3)) * dotProduct half (fun j => signed b j ^ (k + 3))) ≤
       (3 / 2 : ℝ) * M * W * δ ^ (k + 3) := by
   have hden : 0 < ((k : ℝ) + 2) * ((k : ℝ) + 3) := by positivity
   have hmw : 0 ≤ M * W := mul_nonneg hM hW
@@ -577,11 +602,11 @@ private theorem coefficient_comparison (X Y : ℕ → ℝ) (a b M W δ : ℝ)
     have hkr : (k : ℝ) + 3 = 2 * (u + 1 : ℝ) := by exact_mod_cast hku
     have hmom := heven u
     have hnorm : X (k + 3) * Y (k + 3) -
-        avg half (fun i => signed a i ^ (k + 3)) * avg half (fun j => signed b j ^ (k + 3)) ≤
+        dotProduct half (fun i => signed a i ^ (k + 3)) * dotProduct half (fun j => signed b j ^ (k + 3)) ≤
         6 * u * (u + 1 : ℝ) * M * W := by
       simpa only [hku, symmetric_even] using hmom
     have hc : (X (k + 3) * Y (k + 3) -
-        avg half (fun i => signed a i ^ (k + 3)) * avg half (fun j => signed b j ^ (k + 3))) /
+        dotProduct half (fun i => signed a i ^ (k + 3)) * dotProduct half (fun j => signed b j ^ (k + 3))) /
         (((k : ℝ) + 2) * ((k : ℝ) + 3)) ≤ (3 / 2 : ℝ) * M * W := by
       apply (div_le_iff₀ hden).mpr
       have hpoly : 6 * (u : ℝ) * (u + 1) ≤
@@ -609,7 +634,7 @@ private theorem coefficient_comparison (X Y : ℕ → ℝ) (a b M W δ : ℝ)
     have hneg : (-δ) ^ (k + 3) = -(δ ^ (k + 3)) := by
       rw [hku, pow_add, pow_one, pow_mul, neg_sq, ← pow_mul]
       ring
-    have hzeroa : avg half (fun i => signed a i ^ (k + 3)) = 0 := by
+    have hzeroa : dotProduct half (fun i => signed a i ^ (k + 3)) = 0 := by
       rw [hku, symmetric_odd]
     dsimp [coeffTerm]
     push_cast
@@ -645,29 +670,29 @@ open scoped BigOperators
 
 noncomputable def productValue {A B : Type*} [Fintype A] [Fintype B]
     (δ : ℝ) (p s : A → ℝ) (q t : B → ℝ) : ℝ :=
-  ∑ i, ∑ j, p i * q j * Series.f (δ * s i * t j)
+  ∑ i, ∑ j, p i * q j * (-Real.negMulLog (1 + δ * s i * t j))
 
 theorem posterior_local_optimality {A B : Type*} [Fintype A] [Fintype B]
     (p s : A → ℝ) (q t : B → ℝ)
     (hp0 : ∀ i, 0 ≤ p i) (hp1 : ∑ i, p i = 1)
     (hq0 : ∀ j, 0 ≤ q j) (hq1 : ∑ j, q j = 1)
     (hs : ∀ i, |s i| ≤ 1) (ht : ∀ j, |t j| ≤ 1)
-    (hsc : avg p s = 0) (htc : avg q t = 0)
+    (hsc : dotProduct p s = 0) (htc : dotProduct q t = 0)
     (a b : ℝ) (ha : a ^ 2 ∈ Set.Ioo (0 : ℝ) 1) (hb : b ^ 2 ∈ Set.Ioo (0 : ℝ) 1)
-    (hmb : avg p (fun i => phi (s i ^ 2)) ≤ phi (a ^ 2))
-    (hnb : avg q (fun j => phi (t j ^ 2)) ≤ phi (b ^ 2))
+    (hmb : dotProduct p (fun i => phi (s i ^ 2)) ≤ phi (a ^ 2))
+    (hnb : dotProduct q (fun j => phi (t j ^ 2)) ≤ phi (b ^ 2))
     {δ : ℝ} (hδ0 : 0 ≤ δ) (hδ1 : δ < 1)
     (hsmall : δ ≤ 1 / (1 + 6 * max (Curvature.slope (a ^ 2)) (Curvature.slope (b ^ 2)))) :
     productValue δ p s q t ≤ productValue δ half (signed a) half (signed b) := by
   let M := max (Curvature.slope (a ^ 2)) (Curvature.slope (b ^ 2))
-  let D := a ^ 2 - avg p (fun i => s i ^ 2)
-  let E := b ^ 2 - avg q (fun j => t j ^ 2)
+  let D := a ^ 2 - dotProduct p (fun i => s i ^ 2)
+  let E := b ^ 2 - dotProduct q (fun j => t j ^ 2)
   let W := b ^ 2 * D + a ^ 2 * E
-  let X : ℕ → ℝ := fun k => avg p (fun i => s i ^ k)
-  let Y : ℕ → ℝ := fun k => avg q (fun j => t j ^ k)
+  let X : ℕ → ℝ := fun k => dotProduct p (fun i => s i ^ k)
+  let Y : ℕ → ℝ := fun k => dotProduct q (fun j => t j ^ k)
   let c : ℕ → ℝ := fun k => coeffTerm δ k *
     (X (k + 2) * Y (k + 2) -
-      avg half (fun i => signed a i ^ (k + 2)) * avg half (fun j => signed b j ^ (k + 2)))
+      dotProduct half (fun i => signed a i ^ (k + 2)) * dotProduct half (fun j => signed b j ^ (k + 2)))
   have hsp := entropy_moment_deficits p s hp0 hp1 hs hsc (a ^ 2) ha hmb
   have htp := entropy_moment_deficits q t hq0 hq1 ht htc (b ^ 2) hb hnb
   have hD : D ∈ Set.Icc (0 : ℝ) (a ^ 2) :=
@@ -683,8 +708,8 @@ theorem posterior_local_optimality {A B : Type*} [Fintype A] [Fintype B]
   have hsb (i : Bool) : |signed b i| ≤ 1 := by
     have hh : |b| ≤ 1 := (sq_le_one_iff_abs_le_one b).mp hb.2.le
     cases i <;> simpa [signed] using hh
-  have hca : avg half (signed a) = 0 := by simpa using symmetric_odd a 0
-  have hcb : avg half (signed b) = 0 := by simpa using symmetric_odd b 0
+  have hca : dotProduct half (signed a) = 0 := by simpa using symmetric_odd a 0
+  have hcb : dotProduct half (signed b) = 0 := by simpa using symmetric_odd b 0
   have hδ : |δ| < 1 := by rwa [abs_of_nonneg hδ0]
   have hseries : HasSum c
       (productValue δ p s q t - productValue δ half (signed a) half (signed b)) := by
@@ -699,9 +724,9 @@ theorem posterior_local_optimality {A B : Type*} [Fintype A] [Fintype B]
   have hlead : c 0 ≤ -W * δ ^ 2 / 4 := by
     have hh := mul_le_mul_of_nonneg_right
       (ProductBounds.leading_deficit (sq_nonneg a) (sq_nonneg b) hD hE) (sq_nonneg δ)
-    have ha2 : avg half (fun i => signed a i ^ 2) = a ^ 2 := by
+    have ha2 : dotProduct half (fun i => signed a i ^ 2) = a ^ 2 := by
       simpa using symmetric_even a 0
-    have hb2 : avg half (fun i => signed b i ^ 2) = b ^ 2 := by
+    have hb2 : dotProduct half (fun i => signed b i ^ 2) = b ^ 2 := by
       simpa using symmetric_even b 0
     convert hh using 1 <;> dsimp [c, X, Y, D, E, W, coeffTerm] <;>
       norm_num [ha2, hb2] <;> ring

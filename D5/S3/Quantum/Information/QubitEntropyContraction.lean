@@ -6,6 +6,8 @@
    utility: none
    digest: Quadratic contraction of actual equal-spectrum qubit Holevo entropy. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30706 -/
+
 import D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
 import D5.S3.Quantum.Information.QubitNormalFormState
 import Mathlib.Analysis.SpecialFunctions.BinaryEntropy

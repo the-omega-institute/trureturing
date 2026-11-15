@@ -7,10 +7,109 @@
    digest: Exact BSC optimality for every finite channel at low correlation. -/
 
 /-
-proof_shape: content
-escape_witness: none
 admission_basis: open-problem-resolution (#26680; Proved)
-Direct frozen dependencies: identities pending extraction from the merged-base report.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30706
+The source entropy is the frozen binaryEntropyBits expression; no entropy alias is added.
+Direct frozen dependencies: declaration identities at base fcd028003080ee51fe117e1277b6f3768c12b47a.
+F1: D5/S3/Divergence/ChainRule.marginal; statement_id=sha256:dceda59c3d0878b0c3f2523a44ebc1eac8e993b60b5337d514272974eafd9e18
+F2: D5/S3/Divergence/ClassicalDPI.channelOutput; statement_id=sha256:bb11b45a5bb58d49bd779aa75b68940ca4390a1dc69947eb5336eed0279521e5
+F3: D5/S3/Divergence/ClassicalDPI.klDivergence; statement_id=sha256:5439abc1162340dc8a960e26ac9ec0e06ba733ba3a848aa4ce21aefc7592d01e
+F4: D5/S3/Divergence/ClassicalDPI.posterior; statement_id=sha256:140509554790e73238329c5ce180a67cad5e010943e52f4de445dbd5d050cfb0
+F5: D5/S3/Entropy/MaxEntropy.shannonEntropy; statement_id=sha256:0b9b0250c925b41ffab4b8ab0b198871ccb0bb46dd401760ec0158c98ad42e87
+F6: D5/S3/Entropy/MutualInformation.mutualInformation; statement_id=sha256:f23c55736018ea5fe356eea838c35e001592a5f37f3ecfdbd0ccf944b45bf7fb
+F7: D5/S3/Entropy/MutualInformationProduct.mutual_information_product_eq_zero; statement_id=sha256:fb1662e5f72b135780e9503d18aa6a2efd045eddf99bc3403804384352cd8acc
+F8: D5/S3/Entropy/MutualInformationSymm.mutual_information_symm; statement_id=sha256:0fddd5288477a64573448cde5ef886f056ad4e843fd79fcc85085abc66fdfd95
+F9: D5/S3/Entropy/Observation/ExpectedPosteriorEntropyReduction.expectedPosteriorEntropy; statement_id=sha256:ab8826faa9b59829d03b666f3a30689a5adf3778a60dfcb31ce1f4ba75b1b1c8
+F10: D5/S3/Entropy/Observation/ExpectedPosteriorEntropyReduction.experimentJointLaw; statement_id=sha256:120c4ed051eeb8d6130aad81cd97e40f364cc5439348dcd59e069002ece58115
+F11: D5/S3/Entropy/Observation/ExpectedPosteriorEntropyReduction.informationGain; statement_id=sha256:892ded2f9f2b8b0fa1a99c9931328df346766b195a372b52869a22a23c0bbc82
+F12: D5/S3/Entropy/Observation/ExpectedPosteriorEntropyReduction.information_gain_eq_expected_entropy_reduction; statement_id=sha256:f9ed4f8563d80f353a2786d77108a801fdae47732beaea980ed7c33154f6c6ec
+F13: D5/S3/Entropy/RenyiCombining/BinaryRenyiCombining.hRenyi; statement_id=sha256:636915c800a5648e56b5294f58b06369992cc982bf213f54a2a480ce21cdaa80
+F14: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.G; statement_id=sha256:d1ff0db76bb2dfaa6596159064f6a606f280fc28d1c49bf6c4ee450962658ff9
+F15: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.bias_combining; statement_id=sha256:eef238dadb2dfd4ce9a0d4b15fdf070897e2f3ed022818652c6f1c3a598baef1
+F16: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim; statement_id=sha256:ded331dfdefcb77a0fa5dbe2d45ab5bf7968446ef0ef8bda9ee91f45b526da35
+F17: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim._proof_1; statement_id=sha256:b8acbe8dbf1cf135cac93c7fc0a9918fb20bad7a90f616afc599b478bc417fde
+F18: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim._proof_2; statement_id=sha256:3ce3922ed4ab29de09bd85ddb7d0062c88ca17fc495ca5ce9073e6842986d966
+F19: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h; statement_id=sha256:284a16083fa547c8718507bae385b0542ebd97fc49aabbbf330bb0e75b8e75dc
+F20: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv; statement_id=sha256:fb70e873439c6eceb2ae437f09d7e70aebb758bc79aaf0b20ccc815ee81d6812
+F21: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv._proof_1; statement_id=sha256:9a3774433f4ef15a38067246c134ef0e443af352054d502302e538740e4a35d8
+F22: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv_h; statement_id=sha256:d5aff0666b4aaed97a04309960a4fd6d7fc87f5999865a4ca46ebe22ea955788
+F23: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias; statement_id=sha256:8365f896cd4b1b31312c1744a24b445824ff33f05c5cb0af1346a07da92f84b9
+F24: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias_anti; statement_id=sha256:27e03d50785a2f6756ac100319e342d53e1a32ae6b1364e3177487d523ade93d
+F25: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias_spec; statement_id=sha256:d75dcc8f622f4b47be37a0ff7f14a516aab2a7e9508af6a7888a67adfc56dc55
+F26: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.psi; statement_id=sha256:98d07665dfc5cc8eb46c5fe709180e6272444219bdc3cac606e1fd6976e3f606
+F27: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.psi_strictAntiOn; statement_id=sha256:c5e3d7a4c44bf353afbfb0d9b9cc5a66f0ef66ff79c11a6a15d0bedd8eec1b9d
+F28: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result; statement_id=sha256:39350541096004184d8e4a752e70f2a4e97a5f72d5cd0662ed71a50f035df133
+F29: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.star; statement_id=sha256:502852e1de45ca3e72b52dc5c212135444ff0e0bf03a649ed22feb27a0f66056
+F30: D5/S3/Entropy/Submodularity/MarkovDataProcessing.markov_of_channel; statement_id=sha256:20058f89b2ec5c4f19e9272fe12ebb03b1852225435ce570dfe7c636ecac9d7d
+F31: D5/S3/Entropy/Submodularity/MarkovDataProcessing.mutual_information_le_of_markov; statement_id=sha256:bc1aae6cfaee7a13325116d25cfe364fadf4433f2c1a92c129458a5650783afa
+F32: D5/S3/Entropy/Submodularity/MarkovDataProcessing.yFirstLaw; statement_id=sha256:3a9eaa59d1c60c221065f7c30c06c9405f81f571de2a78ab234f78fb309a30de
+F33: D5/S3/Entropy/Submodularity/StrongSubadditivity.xyProjection; statement_id=sha256:921d1bab0e37c1918409c74ae3fe63677a151848772ae5a8449222dcaf16c945
+F34: D5/S3/Entropy/Submodularity/StrongSubadditivity.xzProjection; statement_id=sha256:ad9cf98a95172d85e0406a94c9c8ed29a0137fa6bae14d85f0116b3a56de8db6
+F35: D5/S3/Quantum/CloningMachine.binaryEntropyBits; statement_id=sha256:688128ab90010a81f7deda9f09bce484b31dd0c87b4be4eba0ee15f631995292
+F36: D5/S3/Quantum/CloningMachine.machineReducedState._proof_2; statement_id=sha256:d5fe3322d971dc1c2b0ef6a814eeeb0cdec6553d0d5422db330c7c1de2f069bb
+F37: D5/S3/Quantum/Information/QubitEntropyContraction.logRatio; statement_id=sha256:bb9ddc35fc615b4ef0c2ef184ee0b38420a2fea66b80854ce40df89141cdfd1e
+F38: D5/S3/Quantum/Information/QubitEntropyContraction.radialEntropy; statement_id=sha256:7a1844d69160c7cdadf8d7d90c10352564fffc2c16ba40e815a355ebc8bc8ebd
+F39: D5/S3/Quantum/Information/QubitEntropyContraction.radial_concave; statement_id=sha256:8026c9153902c93bfa1487395d7f93f3268e56ab78a89faa6aa82ebcb253cff0
+F40: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv; statement_id=sha256:e8867f89ff5d6dbfe903566df6ee22ac61ad20b965100eb78500fcd8a1d28307
+F41: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv2; statement_id=sha256:0d6c93f85b7e4c54a6cc869eee6cc53e301d2b85b55ae58405f8953d16d69a2a
+Declarations (frozen inputs above are followed through same-delivery helpers):
+hbInv: proof_shape: bind-only; escape_witness: none; dependencies: F35; consumers: bscOptimal,bscOptimal_of_upper_bound,candidate_bias_interior,candidate_rate,claim,full_budget_bscOptimal,full_budget_upper,hbInv_zero,hb_inv_spec,interior_bscOptimal,result,zero_budget_bscOptimal
+dsbs: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,outputJoint,output_joint_nonneg,output_joint_posterior
+bsc: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bscOptimal,bscOptimal_of_upper_bound,bsc_apply_formula,candidate_rate,full_budget_bscOptimal,full_budget_upper,interior_bscOptimal,objective_bsc_productValue,objective_le_noiseless,objective_noiseless_formula,output_mass_bsc,posterior_bias_bsc,rate_bsc,zero_budget_bscOptimal
+mutualInformationBits: proof_shape: bind-only; escape_witness: none; dependencies: F6; consumers: objective,objective_product_formula,objective_symm,objective_zero_of_bias_zero,rate,rate_bsc,rate_posterior_formula
+rate: proof_shape: bind-only; escape_witness: none; dependencies: F6; consumers: achievable,bias_zero_of_rate_nonpos,bscOptimal,bscOptimal_of_upper_bound,candidate_rate,full_budget_bscOptimal,full_budget_upper,interior_bscOptimal,rate_bsc,rate_phi,rate_posterior_formula,zero_budget_bscOptimal
+outputJoint: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective,objective_le_noiseless,objective_product_formula,objective_symm,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_nonneg,output_joint_posterior,output_joint_row_sum
+objective: proof_shape: bind-only; escape_witness: none; dependencies: F6; consumers: achievable,bscOptimal,bscOptimal_of_upper_bound,full_budget_bscOptimal,full_budget_upper,interior_bscOptimal,objective_bsc_productValue,objective_le_noiseless,objective_noiseless_formula,objective_productValue,objective_product_formula,objective_symm,objective_zero_of_bias_zero,zero_budget_bscOptimal
+achievable: proof_shape: bind-only; escape_witness: none; dependencies: F6; consumers: R,bscOptimal_of_upper_bound
+R: proof_shape: bind-only; escape_witness: none; dependencies: F6; consumers: bscOptimal,bscOptimal_of_upper_bound
+bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F6,F35; consumers: bscOptimal_of_upper_bound,claim,full_budget_bscOptimal,interior_bscOptimal,result,zero_budget_bscOptimal
+claim: proof_shape: bind-only; escape_witness: none; dependencies: F35,F6; consumers: result
+outputMass: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal,mass_mul_bias,objective_bsc_productValue,objective_le_noiseless,objective_noiseless_formula,objective_productValue,objective_product_formula,objective_symm,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_posterior,output_joint_row_sum,output_mass_bsc,output_mass_probability,posterior_bias_bsc,posterior_bias_centered,rate_phi,rate_posterior_formula,zero_budget_bscOptimal
+posteriorBias: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal,mass_mul_bias,objective_bsc_productValue,objective_noiseless_formula,objective_productValue,objective_product_formula,objective_symm,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_posterior,output_joint_row_sum,posterior_bias_bsc,posterior_bias_centered,posterior_bias_mem,rate_phi,rate_posterior_formula,zero_budget_bscOptimal
+kernel_real_sum: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,output_mass_probability,posterior_bias_centered,rate_posterior_formula
+output_mass_probability: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal,objective_le_noiseless,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_row_sum,rate_posterior_formula
+posterior_bias_mem: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal
+mass_mul_bias: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: output_joint_posterior,posterior_bias_bsc,posterior_bias_centered
+posterior_bias_centered: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: interior_bscOptimal,output_joint_col_sum,output_joint_row_sum
+output_joint_posterior: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_product_formula,objective_symm,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_row_sum
+output_joint_row_sum: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_product_formula
+output_joint_col_sum: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,objective_product_formula
+objective_product_formula: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: objective_productValue
+rate_posterior_formula: proof_shape: bind-only; escape_witness: none; dependencies: F2,F11,F6,F10,F8,F5,F4,F9,F12; consumers: rate_phi
+hb_binEntropy: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36; consumers: candidate_bias_interior,hbInv_zero,hb_inv_spec,phi_crossover
+hb_inv_spec: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36; consumers: candidate_bias_interior,candidate_rate,full_budget_upper,hbInv_zero,interior_bscOptimal,result
+bsc_apply_formula: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,output_mass_bsc,posterior_bias_bsc,rate_bsc
+rate_bsc: proof_shape: bind-only; escape_witness: none; dependencies: F35,F6,F3,F1,F36; consumers: candidate_rate
+candidate_rate: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36,F6,F3,F1; consumers: bscOptimal_of_upper_bound,zero_budget_bscOptimal
+bscOptimal_of_upper_bound: proof_shape: bind-only; escape_witness: none; dependencies: F6,F35,F36,F3,F1; consumers: full_budget_bscOptimal,interior_bscOptimal,zero_budget_bscOptimal
+phi_bias: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: phi_crossover,phi_f,rate_phi
+rate_phi: proof_shape: bind-only; escape_witness: none; dependencies: F2,F11,F6,F10,F8,F5,F4,F9,F12; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal
+phi_crossover: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36; consumers: full_budget_upper,interior_bscOptimal
+output_mass_bsc: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: full_budget_upper,objective_bsc_productValue,objective_noiseless_formula,posterior_bias_bsc
+posterior_bias_bsc: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: full_budget_upper,objective_bsc_productValue,objective_noiseless_formula
+objective_productValue: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: interior_bscOptimal,objective_bsc_productValue,objective_noiseless_formula
+objective_bsc_productValue: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: interior_bscOptimal
+candidate_bias_interior: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36; consumers: interior_bscOptimal
+interior_bscOptimal: proof_shape: content; escape_witness: none; dependencies: F35,F6,F3,F1,F37,F38,F40,F39,F41,F2,F11,F10,F8,F5,F4,F9,F12,F36; consumers: result
+bias_zero_of_rate_nonpos: proof_shape: bind-only; escape_witness: none; dependencies: F39,F2,F11,F6,F10,F8,F5,F4,F9,F12; consumers: zero_budget_bscOptimal
+objective_zero_of_bias_zero: proof_shape: bind-only; escape_witness: none; dependencies: F6,F7; consumers: zero_budget_bscOptimal
+zero_budget_bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36,F6,F3,F1,F39,F2,F11,F10,F8,F5,F4,F9,F12,F7; consumers: result
+Boundary.combining_monotone: proof_shape: bind-only; escape_witness: none; dependencies: F14,F23,F26,F25,F24,F15,F27; consumers: Boundary.scalar_mgl
+Boundary.combining_bias: proof_shape: bind-only; escape_witness: none; dependencies: F14,F26,F19,F29,F20,F22; consumers: Boundary.scalar_mgl
+Boundary.phi_psi: proof_shape: bind-only; escape_witness: none; dependencies: F26,F21,F13; consumers: Boundary.scalar_mgl
+Boundary.scalar_mgl: proof_shape: bind-only; escape_witness: none; dependencies: F26,F21,F13,F17,F18,F14,F16,F28,F19,F29,F20,F22,F23,F25,F24,F15,F27; consumers: full_budget_upper
+phi_f: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_noiseless_formula
+output_joint_nonneg: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless
+objective_symm: proof_shape: bind-only; escape_witness: none; dependencies: F6,F8; consumers: full_budget_bscOptimal
+noiseless: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: full_budget_upper,hbInv_zero,objective_le_noiseless,objective_noiseless_formula
+objective_le_noiseless: proof_shape: bind-only; escape_witness: none; dependencies: F33,F34,F1,F32,F30,F6,F31,F8; consumers: full_budget_upper
+objective_noiseless_formula: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: full_budget_upper
+hbInv_zero: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36; consumers: full_budget_upper
+full_budget_upper: proof_shape: bind-only; escape_witness: none; dependencies: F35,F33,F34,F1,F32,F30,F6,F31,F8,F36,F3,F26,F21,F13,F17,F18,F14,F16,F28,F19,F29,F20,F22,F23,F25,F24,F15,F27,F2,F11,F10,F5,F4,F9,F12; consumers: full_budget_bscOptimal
+full_budget_bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F6,F8,F35,F33,F34,F1,F32,F30,F31,F36,F3,F26,F21,F13,F17,F18,F14,F16,F28,F19,F29,F20,F22,F23,F25,F24,F15,F27,F2,F11,F10,F5,F4,F9,F12; consumers: result
+result: proof_shape: content; escape_witness: none; dependencies: F35,F6,F3,F1,F37,F38,F40,F39,F41,F2,F11,F10,F8,F5,F4,F9,F12,F36,F33,F34,F32,F30,F31,F26,F21,F13,F17,F18,F14,F16,F28,F19,F29,F20,F22,F23,F25,F24,F15,F27,F7; consumers: terminal result
+Definitions specify objects, not proof claims; their bind-only label claims no new theorem.
+The settling result uses the posterior moment estimate and includes all budget endpoints.
 -/
 
 import D5.S3.Divergence.ChainRule
@@ -20,13 +119,8 @@ import D5.S3.Entropy.MaxEntropy
 import D5.S3.Entropy.DoubleSidedBottleneckMoments
 import D5.S3.Entropy.Observation.ExpectedPosteriorEntropyReduction
 import D5.S3.Entropy.MutualInformationSymm
-import Mathlib.Probability.ProbabilityMassFunction.Constructions
-import Mathlib.Data.EReal.Basic
-import Mathlib.Logic.Function.Basic
 import D5.S3.Entropy.MutualInformation
 import D5.S3.Quantum.CloningMachine
-import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
-import Mathlib.Topology.Order.IntermediateValue
 import D5.S3.Entropy.MutualInformationProduct
 import D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity
 import D5.S3.Entropy.Submodularity.MarkovDataProcessing
@@ -276,18 +370,19 @@ end D5.S3.Entropy.DoubleSidedBottleneckBSC
 
 namespace D5.S3.Entropy.DoubleSidedBottleneckBSC
 
+private theorem hb_binEntropy (a : ℝ) : D5.S3.Quantum.CloningMachine.binaryEntropyBits a = Real.binEntropy a / Real.log 2 := by
+  simp only [D5.S3.Quantum.CloningMachine.binaryEntropyBits,
+    Real.logb, Real.binEntropy, Real.log_inv]
+  ring
+
 private theorem hb_inv_spec (y : ℝ) (hy : y ∈ Set.Icc (0 : ℝ) 1) :
     D5.S3.Quantum.CloningMachine.binaryEntropyBits (hbInv y).val = y := by
-  have hf (a : ℝ) : D5.S3.Quantum.CloningMachine.binaryEntropyBits a = Real.binEntropy a / Real.log 2 := by
-    simp only [D5.S3.Quantum.CloningMachine.binaryEntropyBits, D5.S3.Quantum.CloningMachine.binaryEntropyBits,
-      Real.logb, Real.binEntropy, Real.log_inv]
-    ring
   have hc : Continuous D5.S3.Quantum.CloningMachine.binaryEntropyBits := by
-    simp_rw [show D5.S3.Quantum.CloningMachine.binaryEntropyBits = fun a => Real.binEntropy a / Real.log 2 by funext a; exact hf a]
+    simp_rw [show D5.S3.Quantum.CloningMachine.binaryEntropyBits = fun a => Real.binEntropy a / Real.log 2 by funext a; exact hb_binEntropy a]
     exact Real.binEntropy_continuous.div_const _
-  have h0 : D5.S3.Quantum.CloningMachine.binaryEntropyBits 0 = 0 := by rw [hf]; simp
+  have h0 : D5.S3.Quantum.CloningMachine.binaryEntropyBits 0 = 0 := by rw [hb_binEntropy]; simp
   have h1 : D5.S3.Quantum.CloningMachine.binaryEntropyBits (1 / 2) = 1 := by
-    rw [hf]
+    rw [hb_binEntropy]
     rw [show (1 / 2 : ℝ) = 2⁻¹ by norm_num, Real.binEntropy_two_inv]
     exact div_self (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne'
   have hy' : y ∈ Set.Icc (D5.S3.Quantum.CloningMachine.binaryEntropyBits 0) (D5.S3.Quantum.CloningMachine.binaryEntropyBits (1 / 2)) := by rwa [h0, h1]
@@ -324,13 +419,13 @@ private theorem rate_bsc (a : (Set.Icc (0 : ℝ) (1 / 2 : ℝ))) : rate (bsc a) 
     show a.val / 2 / ((1 / 2 : ℝ) * (1 / 2)) = 2 * a.val by ring,
     show (1 - a.val) / 2 / ((1 / 2 : ℝ) * (1 / 2)) = 2 * (1 - a.val) by ring]
   rcases hloga with ha | ha
-  · simp [ha, D5.S3.Quantum.CloningMachine.binaryEntropyBits, D5.S3.Quantum.CloningMachine.binaryEntropyBits, Real.logb]
+  · simp [ha, D5.S3.Quantum.CloningMachine.binaryEntropyBits, Real.logb]
     field_simp
     <;> ring
   · have hlog2 : Real.log (2 : ℝ) ≠ 0 := (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne'
     rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) ha.ne',
       Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) hcomp.ne']
-    simp only [D5.S3.Quantum.CloningMachine.binaryEntropyBits, D5.S3.Quantum.CloningMachine.binaryEntropyBits, Real.logb]
+    simp only [D5.S3.Quantum.CloningMachine.binaryEntropyBits, Real.logb]
     field_simp
     <;> ring
 
@@ -374,13 +469,8 @@ private theorem phi_bias (s : ℝ) :
       show (1 + -s) / 2 = 1 - (1 + s) / 2 by ring, Real.binEntropy_one_sub]
 
 private theorem rate_phi {n : ℕ} (K : (Bool → PMF (Fin n))) :
-    rate K = avg (outputMass K) (fun u => phi (posteriorBias K u ^ 2)) / Real.log 2 := by
-  simp only [rate_posterior_formula, avg, phi_bias]
-
-private theorem hb_binEntropy (a : ℝ) : D5.S3.Quantum.CloningMachine.binaryEntropyBits a = Real.binEntropy a / Real.log 2 := by
-  simp only [D5.S3.Quantum.CloningMachine.binaryEntropyBits, D5.S3.Quantum.CloningMachine.binaryEntropyBits,
-    Real.logb, Real.binEntropy, Real.log_inv]
-  ring
+    rate K = dotProduct (outputMass K) (fun u => phi (posteriorBias K u ^ 2)) / Real.log 2 := by
+  simp only [rate_posterior_formula, dotProduct, phi_bias]
 
 private theorem phi_crossover (a : ℝ) :
     phi ((1 - 2 * a) ^ 2) = (1 - D5.S3.Quantum.CloningMachine.binaryEntropyBits a) * Real.log 2 := by
@@ -407,7 +497,7 @@ private theorem objective_productValue {n m : ℕ} (p : ℝ) (K : (Bool → PMF 
   intro u _
   apply Finset.sum_congr rfl
   intro v _
-  dsimp [productValue, Series.f]
+  dsimp [productValue, Real.negMulLog]
   ring
 
 private theorem objective_bsc_productValue (p : ℝ) (a b : (Set.Icc (0 : ℝ) (1 / 2 : ℝ))) :
@@ -492,13 +582,13 @@ private theorem interior_bscOptimal {Cu Cv : ℝ}
     abs_le.mpr (posterior_bias_mem K u)
   have ht (v : Fin m) : |posteriorBias L v| ≤ 1 :=
     abs_le.mpr (posterior_bias_mem L v)
-  have hsc : avg (outputMass K) (posteriorBias K) = 0 := posterior_bias_centered K
-  have htc : avg (outputMass L) (posteriorBias L) = 0 := posterior_bias_centered L
-  have hmb : avg (outputMass K) (fun u => phi (posteriorBias K u ^ 2)) ≤ phi (a ^ 2) := by
+  have hsc : dotProduct (outputMass K) (posteriorBias K) = 0 := posterior_bias_centered K
+  have htc : dotProduct (outputMass L) (posteriorBias L) = 0 := posterior_bias_centered L
+  have hmb : dotProduct (outputMass K) (fun u => phi (posteriorBias K u ^ 2)) ≤ phi (a ^ 2) := by
     rw [rate_phi] at hK
     rw [hφa]
     exact (div_le_iff₀ hlog).mp hK
-  have hnb : avg (outputMass L) (fun v => phi (posteriorBias L v ^ 2)) ≤ phi (b ^ 2) := by
+  have hnb : dotProduct (outputMass L) (fun v => phi (posteriorBias L v ^ 2)) ≤ phi (b ^ 2) := by
     rw [rate_phi] at hL
     rw [hφb]
     exact (div_le_iff₀ hlog).mp hL
@@ -531,21 +621,21 @@ private theorem bias_zero_of_rate_nonpos {n : ℕ} (K : (Bool → PMF (Fin n))) 
   have hx (u : Fin n) : s u ^ 2 ∈ Set.Icc (0 : ℝ) 1 := by
     have hh := posterior_bias_mem K u
     exact ⟨sq_nonneg _, by dsimp [s]; nlinarith [hh.1, hh.2]⟩
-  have hv : avg p (fun u => s u ^ 2) ∈ Set.Icc (0 : ℝ) 1 := by
-    simpa only [avg, smul_eq_mul] using (convex_Icc (0 : ℝ) 1).sum_mem
+  have hv : dotProduct p (fun u => s u ^ 2) ∈ Set.Icc (0 : ℝ) 1 := by
+    simpa only [dotProduct, smul_eq_mul] using (convex_Icc (0 : ℝ) 1).sum_mem
       (t := Finset.univ) (w := p) (z := fun u => s u ^ 2)
       (fun u _ => hp0 u) hp1 (fun u _ => hx u)
   rw [rate_phi] at hK
   have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
-  have hbudget : avg p (fun u => phi (s u ^ 2)) ≤ 0 := by
+  have hbudget : dotProduct p (fun u => phi (s u ^ 2)) ≤ 0 := by
     have hh := (div_le_iff₀ hlog).mp hK
     simpa using hh
   have hj := phi_convex.map_sum_le (t := Finset.univ) (w := p) (p := fun u => s u ^ 2)
     (fun u _ => hp0 u) hp1 (fun u _ => hx u)
   simp only [smul_eq_mul] at hj
-  change phi (avg p (fun u => s u ^ 2)) ≤ avg p (fun u => phi (s u ^ 2)) at hj
+  change phi (dotProduct p (fun u => s u ^ 2)) ≤ dotProduct p (fun u => phi (s u ^ 2)) at hj
   have hphi0 : phi (0 : ℝ) = 0 := by norm_num [phi, Real.binEntropy] <;> ring
-  have hv0 : avg p (fun u => s u ^ 2) = 0 := by
+  have hv0 : dotProduct p (fun u => s u ^ 2) = 0 := by
     apply le_antisymm _ hv.1
     apply (phi_strictMono.le_iff_le hv (by norm_num)).mp
     rw [hphi0]
@@ -634,8 +724,8 @@ private theorem phi_psi (s : ℝ) : phi (s ^ 2) = Real.log 2 - psi 1 |s| := by
 private theorem scalar_mgl {B : Type*} [Fintype B] (q t : B → ℝ)
     (hq0 : ∀ j, 0 ≤ q j) (hq1 : ∑ j, q j = 1) (ht : ∀ j, |t j| ≤ 1)
     {b δ : ℝ} (hbHyp : b ∈ Set.Icc (0 : ℝ) 1) (hδ : δ ∈ Set.Icc (0 : ℝ) 1)
-    (hbudget : avg q (fun j => phi (t j ^ 2)) ≤ phi (b ^ 2)) :
-    avg q (fun j => phi ((δ * t j) ^ 2)) ≤ phi ((δ * b) ^ 2) := by
+    (hbudget : dotProduct q (fun j => phi (t j ^ 2)) ≤ phi (b ^ 2)) :
+    dotProduct q (fun j => phi ((δ * t j) ^ 2)) ≤ phi ((δ * b) ^ 2) := by
   have hmem {u : ℝ} (hu : u ∈ Set.Icc (0 : ℝ) 1) :
       psi 1 u ∈ Set.Icc (0 : ℝ) (Real.log 2) := by
     simpa [psi, h] using (show Real.binEntropy ((1 - u) / 2) ∈ Set.Icc (0 : ℝ) (Real.log 2) from
@@ -644,8 +734,8 @@ private theorem scalar_mgl {B : Type*} [Fintype B] (q t : B → ℝ)
   let y : ℝ := psi 1 δ
   have hx (j : B) : x j ∈ Set.Icc (0 : ℝ) (Real.log 2) := hmem ⟨abs_nonneg _, ht j⟩
   have hy : y ∈ Set.Icc (0 : ℝ) (Real.log 2) := hmem hδ
-  have hxbar : avg q x ∈ Set.Icc (0 : ℝ) (Real.log 2) := by
-    simpa only [avg, smul_eq_mul] using (convex_Icc (0 : ℝ) (Real.log 2)).sum_mem
+  have hxbar : dotProduct q x ∈ Set.Icc (0 : ℝ) (Real.log 2) := by
+    simpa only [dotProduct, smul_eq_mul] using (convex_Icc (0 : ℝ) (Real.log 2)).sum_mem
       (t := Finset.univ) (w := q) (z := x) (fun j _ => hq0 j) hq1 (fun j _ => hx j)
   obtain ⟨αhat, hhat, _, hc, _⟩ :=
     D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity.result
@@ -653,18 +743,18 @@ private theorem scalar_mgl {B : Type*} [Fintype B] (q t : B → ℝ)
   have hj := hconv.map_sum_le (t := Finset.univ) (w := q) (p := x)
     (fun j _ => hq0 j) hq1 (fun j _ => hx j)
   simp only [smul_eq_mul] at hj
-  change G 1 (avg q x) y ≤ avg q (fun j => G 1 (x j) y) at hj
+  change G 1 (dotProduct q x) y ≤ dotProduct q (fun j => G 1 (x j) y) at hj
   have hpoint (j : B) : x j = Real.log 2 - phi (t j ^ 2) := by
     dsimp [x]
     rw [phi_psi]
     ring
-  have hbar : avg q x = Real.log 2 - avg q (fun j => phi (t j ^ 2)) := by
+  have hbar : dotProduct q x = Real.log 2 - dotProduct q (fun j => phi (t j ^ 2)) := by
     rw [show x = (fun j => Real.log 2 - phi (t j ^ 2)) from funext hpoint,
       avg_sub, avg_const q _ hq1]
   have hbase : psi 1 b = Real.log 2 - phi (b ^ 2) := by
     rw [phi_psi, abs_of_nonneg hbHyp.1]
     ring
-  have hmin : psi 1 b ≤ avg q x := by rw [hbase, hbar]; linarith
+  have hmin : psi 1 b ≤ dotProduct q x := by rw [hbase, hbar]; linarith
   have hm := combining_monotone hy (hmem hbHyp) hxbar hmin
   have htarget : G 1 (psi 1 b) y = Real.log 2 - phi ((δ * b) ^ 2) := by
     rw [combining_bias hbHyp hδ, phi_psi, abs_of_nonneg (mul_nonneg hδ.1 hbHyp.1)]
@@ -672,10 +762,10 @@ private theorem scalar_mgl {B : Type*} [Fintype B] (q t : B → ℝ)
   have hgpoint (j : B) : G 1 (x j) y = Real.log 2 - phi ((δ * t j) ^ 2) := by
     rw [combining_bias ⟨abs_nonneg _, ht j⟩ hδ, phi_psi, abs_mul, abs_of_nonneg hδ.1]
     ring
-  change G 1 (psi 1 b) y ≤ G 1 (avg q x) y at hm
+  change G 1 (psi 1 b) y ≤ G 1 (dotProduct q x) y at hm
   rw [htarget] at hm
-  have hgsum : avg q (fun j => G 1 (x j) y) =
-      Real.log 2 - avg q (fun j => phi ((δ * t j) ^ 2)) := by
+  have hgsum : dotProduct q (fun j => G 1 (x j) y) =
+      Real.log 2 - dotProduct q (fun j => phi ((δ * t j) ^ 2)) := by
     simp_rw [hgpoint]
     rw [avg_sub, avg_const q _ hq1]
   rw [hgsum] at hj
@@ -691,11 +781,11 @@ open D5.S3.Entropy.Submodularity.StrongSubadditivity
 open D5.S3.Entropy.MutualInformationSymm
 open scoped BigOperators
 
-private theorem phi_f (z : ℝ) : phi (z ^ 2) = (Series.f z + Series.f (-z)) / 2 := by
+private theorem phi_f (z : ℝ) : phi (z ^ 2) = ((-Real.negMulLog (1 + z)) + (-Real.negMulLog (1 + -z))) / 2 := by
   rw [phi_bias, Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub,
     show 1 - (1 + z) / 2 = (1 - z) / 2 by ring]
   rw [div_eq_mul_inv, div_eq_mul_inv, Real.negMulLog_mul, Real.negMulLog_mul]
-  simp only [Real.negMulLog, Real.log_inv, Series.f]
+  simp only [Real.negMulLog, Real.log_inv, Real.negMulLog]
   ring
 
 private theorem output_joint_nonneg {n m : ℕ} {p : ℝ} (hp0 : 0 ≤ p) (hp1 : p ≤ 1)
@@ -766,17 +856,17 @@ private theorem objective_le_noiseless {n m : ℕ} {p : ℝ} (hp0 : 0 ≤ p) (hp
 
 private theorem objective_noiseless_formula {m : ℕ} (p : ℝ) (L : (Bool → PMF (Fin m))) :
     objective p (bsc noiseless) L =
-      avg (outputMass L) (fun v => phi (((1 - 2 * p) * posteriorBias L v) ^ 2)) / Real.log 2 := by
+      dotProduct (outputMass L) (fun v => phi (((1 - 2 * p) * posteriorBias L v) ^ 2)) / Real.log 2 := by
   rw [objective_productValue]
   congr 1
-  dsimp [productValue, avg]
+  dsimp [productValue, dotProduct]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro v _
   simp only [Fin.sum_univ_two, output_mass_bsc, posterior_bias_bsc, noiseless]
   norm_num
   rw [phi_f]
-  simp only [Series.f]
+  simp only [Real.negMulLog]
   ring_nf
 
 private theorem hbInv_zero : hbInv 0 = noiseless := by
@@ -799,7 +889,7 @@ private theorem full_budget_upper {Cv p : ℝ} (hCv0 : 0 ≤ Cv) (hCv1 : Cv ≤ 
   have hbHyp : b ∈ Set.Icc (0 : ℝ) 1 := by constructor <;> dsimp [b] <;> linarith [β.property.1, β.property.2]
   have hδ : 1 - 2 * p ∈ Set.Icc (0 : ℝ) 1 := by constructor <;> linarith
   have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
-  have hbudget : avg (outputMass L) (fun v => phi (posteriorBias L v ^ 2)) ≤ phi (b ^ 2) := by
+  have hbudget : dotProduct (outputMass L) (fun v => phi (posteriorBias L v ^ 2)) ≤ phi (b ^ 2) := by
     rw [rate_phi] at hL
     have hh := (div_le_iff₀ hlog).mp hL
     have he : phi (b ^ 2) = Cv * Real.log 2 := by
@@ -813,14 +903,14 @@ private theorem full_budget_upper {Cv p : ℝ} (hCv0 : 0 ≤ Cv) (hCv1 : Cv ≤ 
   have hcand : objective p (bsc noiseless) (bsc β) = phi (((1 - 2 * p) * b) ^ 2) / Real.log 2 := by
     rw [objective_noiseless_formula]
     congr 1
-    simp only [avg, Fin.sum_univ_two, output_mass_bsc, posterior_bias_bsc]
+    simp only [dotProduct, Fin.sum_univ_two, output_mass_bsc, posterior_bias_bsc]
     norm_num
     rw [show ((1 - 2 * p) * (2 * β.val - 1)) ^ 2 = ((1 - 2 * p) * b) ^ 2 by dsimp [b]; ring]
     ring
   simp only [sub_self, hbInv_zero]
   calc
     objective p K L ≤ objective p (bsc noiseless) L := objective_le_noiseless hp0 (by linarith) K L
-    _ = avg (outputMass L) (fun v => phi (((1 - 2 * p) * posteriorBias L v) ^ 2)) / Real.log 2 :=
+    _ = dotProduct (outputMass L) (fun v => phi (((1 - 2 * p) * posteriorBias L v) ^ 2)) / Real.log 2 :=
       objective_noiseless_formula p L
     _ ≤ phi (((1 - 2 * p) * b) ^ 2) / Real.log 2 := div_le_div_of_nonneg_right hmgl hlog.le
     _ = objective p (bsc noiseless) (bsc (hbInv (1 - Cv))) := hcand.symm

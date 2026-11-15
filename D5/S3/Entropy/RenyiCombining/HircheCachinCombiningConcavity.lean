@@ -6,6 +6,8 @@
    utility: none
    digest: Hirche binary Renyi combining conjecture with threshold five quarters. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30706 -/
+
 import D5.S3.QuantumChannels.ContractionSpectrumOrder
 import Mathlib.Analysis.SpecialFunctions.Artanh
 import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
