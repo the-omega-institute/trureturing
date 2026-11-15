@@ -1,7 +1,7 @@
 using StrataLint.Scribe;
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.FourierCircuit;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source;
 internal sealed class ResourcesDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
