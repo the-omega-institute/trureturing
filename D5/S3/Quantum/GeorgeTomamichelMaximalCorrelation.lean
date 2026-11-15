@@ -525,7 +525,7 @@ private lemma gmTraceTranspose (S X : Matrix n n ℂ) (hS : S.PosSemidef) (hX : 
     _ = _ := by simpa only [Matrix.mul_assoc] using
       Matrix.trace_mul_comm (CFC.sqrt S) (X * CFC.sqrt S * X)
 private lemma centerTranspose (S X : Matrix n n ℂ) : (Sᵀ * Xᵀ).trace = (S * X).trace := by
-  rw [← Matrix.transpose_mul, Matrix.trace_transpose, Matrix.trace_mul_comm]
+  exact Matrix.trace_transpose_mul S X
 end D5.S3.Quantum.GeorgeTomamichelMaximalCorrelation.Root end r3_quarter_root
 section r3_normalized_kraus
 open _root_.Matrix MatrixOrder ComplexOrder open scoped Matrix.Norms.L2Operator
