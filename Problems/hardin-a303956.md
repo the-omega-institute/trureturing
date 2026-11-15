@@ -74,7 +74,7 @@ agreement alone cannot establish `claim`.
 
 ## Evidence
 
-The unfrozen source is
+The formal source is
 `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.lean`.
 Its designated full result is `result : claim`, proving the complete
 original-domain recurrence. The finite transition and residual identities
@@ -92,10 +92,10 @@ than a substitute for the universal native correspondence or kernel proof.
 
 ### What the settlement shows
 
-- Proved (`HardinA303956KingStrip.result`): the decisive mechanism is annihilation of the boundary-conditioned
+- Proved (`D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.residual_invisible`): the decisive mechanism is annihilation of the boundary-conditioned
   degree-seven residual after two transitions, together with its first
   two zero terminal pairings.
-- Proved (`HardinA303956KingStrip.result`): the scope is exactly three binary columns with the allowed unequal
+- Proved (`D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.result`): the scope is exactly three binary columns with the allowed unequal
   neighbour counts and root specified above. Minimal order, threshold
   sharpness, other widths and changed allowed counts are open here.
 - The pinned entry supplies a finite table and the empirical formula;
