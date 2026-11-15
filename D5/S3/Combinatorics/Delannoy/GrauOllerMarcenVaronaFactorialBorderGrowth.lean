@@ -10,9 +10,10 @@
 admission_basis: open-problem-resolution (#19938; Proved)
 escape_witness: border_convolution, d_eq_binomial (admission remains external problem settlement)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22168
-Direct frozen dependencies: D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB,
-D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB_pos.
-qAB declaration statement_id: sha256:29896652822aaa7119e8470a97a0a75560731fffc4cbfc489026fab990c39f29.
+Frozen owner module: D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.
+Same-delivery publications: qAB and qAB_pos, with unchanged bodies and statements.
+Baseline declaration _private.D5.S3.Combinatorics.Matroids.SpeyerUniformNormality.0.D5.S3.Combinatorics.Matroids.SpeyerUniformNormality.qAB: statement_id=sha256:bb70bbb93da30fc04e810d18e0ade1b9f7a7896cd45964878eb811ef8187ef83.
+Baseline declaration _private.D5.S3.Combinatorics.Matroids.SpeyerUniformNormality.0.D5.S3.Combinatorics.Matroids.SpeyerUniformNormality.qAB_pos: statement_id=sha256:8346b50b8d61ae6863ad45bcb29b45e623b49d59386466894f7d20ca052c9a76.
 The recurrence and additive-limit statements use the conventions of #19938 and #19939.
 The literal recurrence defines the unit-border array; proofs use qAB evaluated at one.
 All declarations have utility none: unbounded identities, estimates and limits.
@@ -36,6 +37,8 @@ D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.result: 
 import D5.S3.Combinatorics.Matroids.SpeyerUniformNormality
 import Mathlib.Analysis.SpecialFunctions.Choose
 import Mathlib.Analysis.Normed.Group.Tannery
+import Mathlib.Topology.Algebra.InfiniteSum.DiscreteConvolution
+import Mathlib.Algebra.BigOperators.NatAntidiagonal
 
 
 
@@ -87,23 +90,27 @@ private theorem sum_delta (b : ℕ → ℕ) (m : ℕ) :
   rw [sum_range_sub (fun j => (b j:ℝ)) m]
   ring
 
-noncomputable def conv (a : ℕ → ℝ) (m n : ℕ) : ℝ :=
-  ∑ j ∈ range (m+1), a j * (f (fun _ => 1) (m-j) n : ℝ)
-
-@[simp] private theorem conv_zero (a : ℕ → ℝ) (n : ℕ) : conv a 0 n = a 0 := by
-  simp [conv]
+@[simp] private theorem conv_zero (a : ℕ → ℝ) (n : ℕ) : DiscreteConvolution.addRingConvolution a (fun j => (f (fun _ => 1) j n : ℝ)) 0 = a 0 := by
+  rw [DiscreteConvolution.addRingConvolution_eq_sum_antidiagonal,
+    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
+  simp
 @[simp] private theorem conv_zero_right (a : ℕ → ℝ) (m : ℕ) :
-    conv a m 0 = ∑ j ∈ range (m+1), a j := by simp [conv]
+    DiscreteConvolution.addRingConvolution a (fun j => (f (fun _ => 1) j 0 : ℝ)) m = ∑ j ∈ range (m+1), a j := by
+  rw [DiscreteConvolution.addRingConvolution_eq_sum_antidiagonal,
+    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
+  simp
 
 private theorem conv_succ (a : ℕ → ℝ) (m n : ℕ) :
-    conv a (m+1) (n+1) = conv a m (n+1) + conv a (m+1) n + conv a m n := by
-  have hs (r : ℕ) : conv a (m+1) r =
+    DiscreteConvolution.addRingConvolution a (fun j => (f (fun _ => 1) j (n+1) : ℝ)) (m+1) = DiscreteConvolution.addRingConvolution a (fun j => (f (fun _ => 1) j (n+1) : ℝ)) m + DiscreteConvolution.addRingConvolution a (fun j => (f (fun _ => 1) j n : ℝ)) (m+1) + DiscreteConvolution.addRingConvolution a (fun j => (f (fun _ => 1) j n : ℝ)) m := by
+  have hs (r : ℕ) : DiscreteConvolution.addRingConvolution a (fun j => (f (fun _ => 1) j r : ℝ)) (m+1) =
       (∑ j ∈ range (m+1), a j * (f (fun _ => 1) (m+1-j) r : ℝ)) + a (m+1) := by
-    unfold conv
+    rw [DiscreteConvolution.addRingConvolution_eq_sum_antidiagonal,
+      Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
     rw [sum_range_succ]
     simp
   rw [hs, hs]
-  simp only [conv]
+  simp only [DiscreteConvolution.addRingConvolution_eq_sum_antidiagonal,
+    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
   have h : ∀ j ∈ range (m+1),
       a j * (f (fun _ => 1) (m+1-j) (n+1) : ℝ) =
         a j * (f (fun _ => 1) (m-j) (n+1) : ℝ) + a j * (f (fun _ => 1) (m+1-j) n : ℝ) + a j * (f (fun _ => 1) (m-j) n : ℝ) := by
@@ -116,7 +123,7 @@ private theorem conv_succ (a : ℕ → ℝ) (m n : ℕ) :
   ring
 
 private theorem border_convolution (b : ℕ → ℕ) (m n : ℕ) :
-    (f b m n : ℝ) = conv (delta b) m n + conv (delta b) n m - (b 0 : ℝ) * (f (fun _ => 1) m n : ℝ) := by
+    (f b m n : ℝ) = DiscreteConvolution.addRingConvolution (delta b) (fun j => (f (fun _ => 1) j n : ℝ)) m + DiscreteConvolution.addRingConvolution (delta b) (fun j => (f (fun _ => 1) j m : ℝ)) n - (b 0 : ℝ) * (f (fun _ => 1) m n : ℝ) := by
   induction m generalizing n
   case zero =>
     rw [f_zero, conv_zero, conv_zero_right, sum_delta, d_zero]
@@ -133,7 +140,7 @@ private theorem border_convolution (b : ℕ → ℕ) (m n : ℕ) :
       ring
 
 theorem diagonal_convolution (b : ℕ → ℕ) (n : ℕ) :
-    (f b n n : ℝ) = 2 * conv (delta b) n n - (b 0 : ℝ) * (f (fun _ => 1) n n : ℝ) := by
+    (f b n n : ℝ) = 2 * DiscreteConvolution.addRingConvolution (delta b) (fun j => (f (fun _ => 1) j n : ℝ)) n - (b 0 : ℝ) * (f (fun _ => 1) n n : ℝ) := by
   rw [border_convolution]
   ring
 
@@ -559,9 +566,10 @@ private theorem delta_factorial_term (n k : ℕ) (hkn : k ≤ n) :
 private theorem normalized_convolution (n : ℕ) :
     (f Nat.factorial n n:ℝ) / n.factorial =
       2 * ∑' k, Q n k - 2 * ∑' k, P n k - Q n n := by
-  have hc : conv (delta Nat.factorial) n n / n.factorial =
+  have hc : DiscreteConvolution.addRingConvolution (delta Nat.factorial) (fun j => (f (fun _ => 1) j n : ℝ)) n / n.factorial =
       (∑' k, Q n k) - ∑' k, P n k := by
-    unfold conv
+    rw [DiscreteConvolution.addRingConvolution_eq_sum_antidiagonal,
+      Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
     have href := sum_range_reflect
       (fun j => delta Nat.factorial j * (f (fun _ => 1) (n-j) n : ℝ)) (n+1)
     simp only [Nat.add_sub_cancel] at href

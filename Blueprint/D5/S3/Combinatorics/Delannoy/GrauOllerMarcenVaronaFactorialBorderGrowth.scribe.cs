@@ -26,8 +26,6 @@ internal sealed class GrauOllerMarcenVaronaFactorialBorderGrowthDocument : IScri
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Definition("delta", "Border increments", DeltaFormula(),
                 "The first increment is b(0); every later increment is the real difference of consecutive border values."),
-            Definition("conv", "The finite border convolution", ConvolutionFormula(),
-                "The sum includes j = 0 through m. The second factor is the unit-border array. The index m−j uses natural subtraction."),
             Theorem("diagonal_convolution", "The exact diagonal convolution", DiagonalFormula(),
                 "Induction in the two coordinates gives the full border convolution; its two symmetric terms agree on the diagonal."),
             Definition("Q", "The normalized unit-border kernel", QFormula(),
@@ -151,17 +149,12 @@ internal sealed class GrauOllerMarcenVaronaFactorialBorderGrowthDocument : IScri
             All("b", bt, AllN("n", Equal(Call("delta", b, Add(N(), D(1))),
                 Subtract(Cast(Apply(b, Add(N(), D(1)))), Cast(Apply(b, N()))))))]);
     }
-    private static Formula ConvolutionFormula()
-    {
-        Formula a = F.Id("a"), m = F.Id("m"), j = F.Id("j");
-        return All("a", Arrow(Naturals(), Reals()), AllN("m", AllN("n", Equal(Call("conv", a, m, N()),
-            FiniteSum("j", Add(m, D(1)), Multiply(Apply(a, j), UnitArray(Subtract(m, j), N())))))));
-    }
     private static Formula DiagonalFormula()
     {
         Formula b = F.Id("b");
         return All("b", Arrow(Naturals(), Naturals()), AllN("n", Equal(Cast(Call("f", b, N(), N())),
-            Subtract(Multiply(D(2), Call("conv", Apply(Named("delta"), b), N(), N())),
+            Subtract(Multiply(D(2), Apply(Qualified("DiscreteConvolution", "addRingConvolution"),
+                    Parenthesized(Apply(Named("delta"), b)), Parenthesized(LambdaN("j", UnitArray(F.Id("j"), N()))), N())),
                 Multiply(Cast(Apply(b, D(0))), UnitArray(N(), N()))))));
     }
     private static Formula ExponentialCoefficient(byte value, Formula k)
