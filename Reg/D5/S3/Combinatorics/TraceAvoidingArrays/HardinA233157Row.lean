@@ -1,6 +1,7 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferPowers
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
@@ -9,39 +10,32 @@ import LeanInformationAuditInterface.Contract.Registration
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferPowers
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
 set_option maxRecDepth 100000
 namespace Certificate
-abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (Row 4) (fun _ => Fin 14) (fun _ => ℤ)
+abbrev signature : Signature.{0, 0, 0, 0, 0} :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => Fin 3) (fun _ => ℤ)
 def actual : Realization signature :=
-  realize signature (fun _ r s =>
-    ∑ c : Row 4, if columnCompatible r c ∧ classify c = s then (1 : ℤ) else 0)
-      (fun e => nomatch e)
+  realize signature (fun _ _ j => (![6, -15, 9] : Fin 3 → ℤ) j) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ r s => actual.readout () r s + 1) (fun e => nomatch e)
+  realize signature (fun _ _ _ => (0 : ℤ)) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R :=
-    (∀ r : Row 4, ∀ s : Fin 14,
-      R.readout () r s = quotient (classify r) s) ∧
-    (∀ s : Fin 14, (∑ c : Row 4, if classify c = s then (1 : ℤ) else 0) =
-      weights s) ∧
-    (quotient ^ (4+3)).mulVec (1 : Fin 14 → ℤ) =
-      ∑ j : Fin 3, (![6, -15, 9] : Fin 3 → ℤ) j •
-        (quotient ^ (4+j.val)).mulVec (1 : Fin 14 → ℤ)
+  Law R := (Q^(4+3)).mulVec (1 : Fin 14 → ℤ) =
+      ∑ j : Fin 3, R.readout () () j • (Q^(4+j.val)).mulVec (1 : Fin 14 → ℤ)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h.1 (fun _ => 0) 0
-  have ha := finite_certificate.1 (fun _ => 0) 0
-  change actual.readout () (fun _ => 0) 0 + 1 = _ at hb
-  change actual.readout () (fun _ => 0) 0 = _ at ha
-  have hc := hb.trans ha.symm
-  exact (by omega : ∀ z : ℤ, z + 1 ≠ z) _ hc
+  have hb := congrFun h (0 : Fin 14)
+  simp only [rejected, realize, zero_smul, Finset.sum_const_zero, Pi.zero_apply] at hb
+  rw [show 4+4 = (7 : Fin 9).val from rfl, powers_table] at hb
+  change (1893060 : ℤ) = 0 at hb
+  norm_num at hb
 def family : Registration arena (type_of% @finite_certificate) where
   actual := actual
   bridge := Iff.rfl
@@ -50,19 +44,15 @@ def family : Registration arena (type_of% @finite_certificate) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(fun _ => 0), 0, 4, ?_⟩
-    have h0 := finite_certificate.1 (fun _ => 0) 0
-    have h1 := finite_certificate.1 (fun _ => 0) 4
-    change actual.readout () (fun _ => 0) 0 = _ at h0
-    change actual.readout () (fun _ => 0) 4 = _ at h1
-    rw [h0, h1]
-    change (2 : ℤ) ≠ 0
-    omega
-
-def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    refine ⟨(), 0, 1, ?_⟩
+    change (6 : ℤ) ≠ -15
+    norm_num
+def audit : Contract.Registration.{0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@finite_certificate) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row.Certificate.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row.Certificate.family
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row.Certificate.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row.Certificate.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -72,9 +62,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ r s =>
-      ∑ c : Row 4, if columnCompatible r c ∧ classify c = s then (1 : ℤ) else 0)
-        (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ j => (![6, -15, 9] : Fin 3 → ℤ) j) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -82,10 +70,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
-      path := #["fn", "arg", "body", "body", "fn", "arg"]
-      stateBinder := 1
+      path := #["arg", "arg", "body", "fn", "arg"]
+      stateBinder := 0
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
