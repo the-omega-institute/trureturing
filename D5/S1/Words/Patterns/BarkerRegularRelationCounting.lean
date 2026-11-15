@@ -1,7 +1,7 @@
 /- GID: D5/S1/Words/Patterns/BarkerRegularRelationCounting
    generality: I
    mirror-B: D5/B/S1/Words/Patterns/BarkerRegularRelationCounting
-   mirror-E: none
+   mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
    digest: Literal repetition-word counts for loopless relations of constant indegree. -/
@@ -21,11 +21,26 @@ pinned Mathlib dependency neighborhood and is reused by exact applications.
 
 Escape registration is unfinished. Linked issue:
 https://github.com/the-omega-institute/trureturing/issues/25339
-The targets are relation_enumeration and event_enumeration. Missing evidence is an enrolled
+The targets are relation_enumeration, event_enumeration, and
+binary_substring_equivalence. Missing evidence is an enrolled
 source-owned reconstruction of its complete q,d,R telescope and conjunction,
 an actual-positive bridge for both full count and exact-event cardinalities,
 whole-family variation, slot sensitivity, and
-observational dependence. No validated registration is asserted.
+observational dependence. For binary_substring_equivalence the missing template
+also reconstructs the complete binary word, its actual contiguous sublists,
+signed counts, and the original overlapping event chain. Its actual-positive
+realization, whole-family variation, slot sensitivity and observational
+dependence are not supplied. No validated registration is asserted.
+
+C admission candidate: strip_states proves by induction the exact possible
+starting heights for each actual word and its first event; its live consumer
+events_iff_strip feeds binary_substring_equivalence. The reverse strip bridge
+constructs a starting height from a minimum actual prefix and bounds every
+other prefix by a genuine intervening sublist. No word cardinality is used.
+proof_shape: binary_substring_equivalence: content.
+escape_witness: strip_states on its live derivation path.
+The auxiliary equalities and logical bridges are consumed in that proof;
+no terminal bind-only specialization is retained.
 -/
 
 import D5.S1.Words.Patterns.BarkerCyclicRepetitionCounting
@@ -755,5 +770,191 @@ theorem event_enumeration {q d : ℕ} (R : Fin q → Fin q → Prop)
     have h' : (eventCount R (2 * (r + 1)) (r + 1) : ℚ) = (q : ℚ) * (d : ℚ) ^ r := by
       simpa [PowerSeries.coeff_zero_eq_constantCoeff] using h
     exact_mod_cast h'
+
+/-- Zero is a step -1 and one is a step +1, in the source's signed convention. -/
+def binaryStep (a : Fin 2) : ℤ := 2 * (a.val : ℤ) - 1
+
+/-- The number of ones minus the number of zeros of the actual binary list. -/
+def signedImbalance (w : List (Fin 2)) : ℤ := (w.map binaryStep).sum
+
+/-- Every actual contiguous sublist, including the empty one, has signed bound two. -/
+private def SubstringBound (w : List (Fin 2)) : Prop :=
+  ∀ u : List (Fin 2), u.IsInfix w → -2 ≤ signedImbalance u ∧ signedImbalance u ≤ 2
+
+private def strip : List (Fin 2) → ℤ → Prop
+  | [], h => 0 ≤ h ∧ h ≤ 2
+  | a :: l, h => 0 ≤ h ∧ h ≤ 2 ∧ strip l (h + binaryStep a)
+
+private theorem strip_outside (w : List (Fin 2)) (h : ℤ)
+    (hh : h < 0 ∨ 2 < h) : ¬ strip w h := by
+  cases w <;> simp only [strip] <;> omega
+
+-- The induction checks the three strip heights against both letters and the first event.
+set_option maxHeartbeats 1000000 in
+private theorem strip_states (b : Fin 2) (l : List (Fin 2)) :
+    (strip (b :: l) 0 ↔ (eventLabels (b :: l)).IsChain (· ≠ ·) ∧
+      b = 1 ∧ (eventLabels (b :: l)).head? ≠ some 0) ∧
+    (strip (b :: l) 1 ↔ (eventLabels (b :: l)).IsChain (· ≠ ·) ∧
+      (eventLabels (b :: l)).head? ≠ some b) ∧
+    (strip (b :: l) 2 ↔ (eventLabels (b :: l)).IsChain (· ≠ ·) ∧
+      b = 0 ∧ (eventLabels (b :: l)).head? ≠ some 1) := by
+  induction l generalizing b with
+  | nil => fin_cases b <;> norm_num [strip, binaryStep, eventLabels]
+  | cons c cs ih =>
+    have ht0 := strip_outside (c :: cs) (-1) (by omega)
+    have ht3 := strip_outside (c :: cs) 3 (by omega)
+    have hc := ih c
+    clear ih
+    cases he : eventLabels (c :: cs) with
+    | nil =>
+      simp only [he] at hc
+      simp only [eventLabels_cons, he]
+      fin_cases b <;> fin_cases c <;>
+        norm_num [strip, binaryStep, eventLabels_cons, prependEvents, he] at hc ht0 ht3 ⊢ <;> tauto
+    | cons d ds =>
+      simp only [he] at hc
+      simp only [eventLabels_cons, he]
+      fin_cases b <;> fin_cases c <;> fin_cases d <;>
+        norm_num [strip, binaryStep, eventLabels_cons, prependEvents, he,
+          List.isChain_cons_cons] at hc ht0 ht3 ⊢ <;> tauto
+
+private theorem imbalance_append (u v : List (Fin 2)) :
+    signedImbalance (u ++ v) = signedImbalance u + signedImbalance v := by
+  simp [signedImbalance]
+
+private theorem strip_append (u v : List (Fin 2)) (h : ℤ) :
+    strip (u ++ v) h ↔ strip u h ∧ strip v (h + signedImbalance u) := by
+  induction u generalizing h with
+  | nil =>
+    cases v <;> simp [strip, signedImbalance] <;> tauto
+  | cons a u ih =>
+    simp only [List.cons_append, strip, ih, signedImbalance, List.map_cons,
+      List.sum_cons, and_assoc, add_assoc]
+
+private theorem strip_iff_prefix (w : List (Fin 2)) (h : ℤ) :
+    strip w h ↔ ∀ k : ℕ,
+      0 ≤ h + signedImbalance (w.take k) ∧ h + signedImbalance (w.take k) ≤ 2 := by
+  induction w generalizing h with
+  | nil => simp [strip, signedImbalance]
+  | cons a w ih =>
+    constructor
+    · rintro ⟨h0, h2, hw⟩ k
+      cases k with
+      | zero => simpa [signedImbalance] using And.intro h0 h2
+      | succ k =>
+        simpa [signedImbalance, add_assoc] using (ih (h + binaryStep a)).mp hw k
+    · intro hp
+      have hz := hp 0
+      simp only [List.take_zero, signedImbalance, List.map_nil, List.sum_nil,
+        add_zero] at hz
+      refine ⟨hz.1, hz.2, (ih _).mpr ?_⟩
+      intro k
+      simpa [signedImbalance, add_assoc] using hp (k + 1)
+
+private theorem strip_to_substrings (w : List (Fin 2)) (h : ℤ)
+    (hw : strip w h) : SubstringBound w := by
+  rintro u ⟨a, b, rfl⟩
+  rw [List.append_assoc] at hw
+  have ha := ((strip_append a (u ++ b) h).mp hw).1
+  have hu := ((strip_append u b (h + signedImbalance a)).mp
+    ((strip_append a (u ++ b) h).mp hw).2).1
+  have hi := (strip_iff_prefix a h).mp ha a.length
+  have hj := (strip_iff_prefix u (h + signedImbalance a)).mp hu u.length
+  simp only [List.take_length] at hi hj
+  omega
+
+private theorem prefix_difference (w : List (Fin 2)) (hw : SubstringBound w)
+    (i j : ℕ) :
+    -2 ≤ signedImbalance (w.take j) - signedImbalance (w.take i) ∧
+      signedImbalance (w.take j) - signedImbalance (w.take i) ≤ 2 := by
+  have ordered (i j : ℕ) (hij : i ≤ j) :
+      -2 ≤ signedImbalance (w.take j) - signedImbalance (w.take i) ∧
+        signedImbalance (w.take j) - signedImbalance (w.take i) ≤ 2 := by
+    obtain ⟨u, hu⟩ := List.take_prefix_take_left (l := w) hij
+    have hin : u.IsInfix w := by
+      refine ⟨w.take i, w.drop j, ?_⟩
+      rw [hu, List.take_append_drop]
+    have hb := hw u hin
+    have he := congrArg signedImbalance hu
+    rw [imbalance_append] at he
+    omega
+  rcases le_total i j with hij | hji
+  · exact ordered i j hij
+  · have h := ordered j i hji
+    omega
+
+private theorem substrings_to_strip (w : List (Fin 2)) (hw : SubstringBound w) :
+    ∃ h : ℤ, strip w h := by
+  classical
+  obtain ⟨i, _, hi⟩ := (Finset.univ : Finset (Fin (w.length + 1))).exists_min_image
+    (fun j => signedImbalance (w.take j.val)) (by simp)
+  refine ⟨-signedImbalance (w.take i.val), (strip_iff_prefix _ _).mpr ?_⟩
+  intro k
+  have hmin := hi ⟨min k w.length, by omega⟩ (Finset.mem_univ _)
+  have ht : w.take (min k w.length) = w.take k := by
+    rcases le_total k w.length with hk | hk
+    · rw [Nat.min_eq_left hk]
+    · rw [Nat.min_eq_right hk, List.take_length, List.take_of_length_le hk]
+  simp only [ht] at hmin
+  have hmax := (prefix_difference w hw i.val k).2
+  omega
+
+private theorem events_iff_strip (w : List (Fin 2)) :
+    (eventLabels w).IsChain (· ≠ ·) ↔ ∃ h : ℤ, strip w h := by
+  cases w with
+  | nil => simp [eventLabels, strip]; exact ⟨0, by omega, by omega⟩
+  | cons b l =>
+    have hs := strip_states b l
+    constructor
+    · intro he
+      cases ht : (eventLabels (b :: l)).head? with
+      | none =>
+        refine ⟨1, hs.2.1.mpr ⟨he, ?_⟩⟩
+        simp [ht]
+      | some c =>
+        by_cases hcb : c = b
+        · subst c
+          fin_cases b
+          · refine ⟨2, hs.2.2.mpr ⟨he, rfl, ?_⟩⟩
+            change (eventLabels (0 :: l)).head? = some 0 at ht
+            change (eventLabels (0 :: l)).head? ≠ some 1
+            rw [ht]; decide
+          · refine ⟨0, hs.1.mpr ⟨he, rfl, ?_⟩⟩
+            change (eventLabels (1 :: l)).head? = some 1 at ht
+            change (eventLabels (1 :: l)).head? ≠ some 0
+            rw [ht]; decide
+        · refine ⟨1, hs.2.1.mpr ⟨he, ?_⟩⟩
+          simpa [ht] using hcb
+    · rintro ⟨h, hh⟩
+      have hh' : 0 ≤ h ∧ h ≤ 2 := ⟨hh.1, hh.2.1⟩
+      have hc : h = 0 ∨ h = 1 ∨ h = 2 := by omega
+      rcases hc with rfl | rfl | rfl
+      · exact (hs.1.mp hh).1
+      · exact (hs.2.1.mp hh).1
+      · exact (hs.2.2.mp hh).1
+
+private theorem imbalance_counts (w : List (Fin 2)) :
+    signedImbalance w = (w.count 1 : ℤ) - (w.count 0 : ℤ) := by
+  induction w with
+  | nil => simp [signedImbalance]
+  | cons a w ih =>
+    change binaryStep a + signedImbalance w = _
+    rw [ih]
+    fin_cases a <;> simp [binaryStep, List.count_cons] <;> omega
+
+/-- Every finite binary word satisfies the original overlapping event-label rule exactly
+when every actual contiguous substring has ones-minus-zeros between -2 and 2. -/
+theorem binary_substring_equivalence (w : List (Fin 2)) :
+    (eventLabels w).IsChain (fun a b => b.val = (a.val + 1) % 2) ↔
+      ∀ u : List (Fin 2), u.IsInfix w →
+        -2 ≤ (u.count 1 : ℤ) - (u.count 0 : ℤ) ∧
+          (u.count 1 : ℤ) - (u.count 0 : ℤ) ≤ 2 := by
+  have hrel : (fun a b : Fin 2 => b.val = (a.val + 1) % 2) = (· ≠ ·) := by
+    funext a b
+    fin_cases a <;> fin_cases b <;> simp
+  simp_rw [← imbalance_counts]
+  change (eventLabels w).IsChain _ ↔ SubstringBound w
+  rw [hrel, events_iff_strip]
+  exact ⟨fun ⟨h, hh⟩ => strip_to_substrings w h hh, substrings_to_strip w⟩
 
 end D5.S1.Words.Patterns.BarkerRegularRelationCounting

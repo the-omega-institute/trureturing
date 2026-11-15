@@ -132,6 +132,48 @@ $$\forall q \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall R \in \operato
 
 Filter the three indicator weights by the length of the extracted event list. Prepending a different letter preserves this length. Prepending the first letter adds exactly one event, and enters B precisely from U or A. The same unique first-letter and suffix correspondence therefore gives the exact-event fibers. Write H=1-(q-1)x and J=1+x. For positive event number, U vanishes. The eventful states satisfy J A_r=d x (A_r+B_r) and H(A_r+B_r)=x(U_(r-1)+A_(r-1)). For zero events, A and B vanish and U=qx/H. Thus E_1 H^2=qx^2 and E_(r+2) J H=d x^2 E_(r+1). Induction on event number proves the displayed formula, and coefficient extraction proves the literal-word identity and the shortest-length boundary. The parameter r in the formula represents r+1 events; hence the exponent d^r includes d^0=1 even when d=0. For one event the answer is qx^2/H^2, and at indegree zero every fiber with two or more events vanishes. There is one empty zero-event word, no empty eventful word, and no singleton eventful word. The shortest r+1-event words have length 2(r+1), with count q d^r. The final marked identity is in Q[[x]][[y]]. Its denominator has constant coefficient JH as a y-series, which is a unit because its x-constant is one. Ring.inverse denotes this unit inverse. The numerator is y x(1+x)U, exactly as in the source; both markers refer to actual word fibers.
 
+**Definition 1.10 (The signed binary steps).**
+
+$$\forall a \in \operatorname{Fin}\left(2\right),\; \operatorname{binaryStep}\left(a\right) = 2 \cdot (\operatorname{Fin.val}\left(a\right): \mathbb{Z}) - 1$$
+
+*Formalization.* `D5/S1/Words/Patterns/BarkerRegularRelationCounting.binaryStep` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker (2019). *OEIS A268943: cyclic successive equality events*. URL: <https://oeis.org/A268943>.
+
+*Commentary.*
+
+The source alphabet is literally {0,1}: zero contributes minus one and one contributes plus one. The values are integers, so subtraction is signed.
+
+**Definition 1.11 (Signed imbalance of an actual word).**
+
+$$\forall w \in \operatorname{List}\left(\operatorname{Fin}\left(2\right)\right),\; \operatorname{signedImbalance}\left(w\right) = \operatorname{List.sum}\left(\operatorname{List.map}\left(\operatorname{binaryStep}, w\right)\right)$$
+
+*Formalization.* `D5/S1/Words/Patterns/BarkerRegularRelationCounting.signedImbalance` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker (2019). *OEIS A268943: cyclic successive equality events*. URL: <https://oeis.org/A268943>.
+
+*Commentary.*
+
+Summing the signed steps gives the number of ones minus the number of zeros. The empty list has imbalance zero.
+
+**Theorem 1.12 (Binary events and every contiguous substring).**
+
+$$\forall w \in \operatorname{List}\left(\operatorname{Fin}\left(2\right)\right),\; (\operatorname{List.IsChain}\left(\lambda (a: \operatorname{Fin}\left(2\right)) \mapsto \lambda (b: \operatorname{Fin}\left(2\right)) \mapsto \operatorname{Fin.val}\left(b\right) = (\operatorname{Fin.val}\left(a\right) + 1) \bmod 2, \operatorname{eventLabels}\left(w\right)\right)) \Leftrightarrow (\forall u \in \operatorname{List}\left(\operatorname{Fin}\left(2\right)\right),\; \operatorname{List.IsInfix}\left(u, w\right) \Rightarrow \left((-2 \le (\operatorname{List.count}\left(1, u\right): \mathbb{Z}) - (\operatorname{List.count}\left(0, u\right): \mathbb{Z})) \land ((\operatorname{List.count}\left(1, u\right): \mathbb{Z}) - (\operatorname{List.count}\left(0, u\right): \mathbb{Z}) \le 2)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/BarkerRegularRelationCounting.binary_substring_equivalence` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker (2019). *OEIS A268943: cyclic successive equality events*. URL: <https://oeis.org/A268943>.
+
+*Commentary.*
+
+This equivalence concerns each actual word and all of its actual contiguous sublists. An infix u means there are lists a and b with a++u++b=w; neither positions nor alphabet labels are quotiented. The left side uses the original overlapping equality-event list and successor modulo two. On {0,1} this successor relation is exactly inequality. Replace zero by a step minus one and one by a step plus one. A word fits a strip of heights 0 through 2 from some integer starting height exactly when its event labels alternate. Induction on the word proves the three possible starting-height conditions: at height 0 the first letter and the first event, if present, are 1; at height 2 they are 0; at height 1 the first event, if present, differs from the first letter. Prepending an equal letter inserts that very letter as a new event, so the induction retains overlapping pairs. A strip path bounds the sum on every infix by subtracting its two endpoint heights. Conversely choose a prefix with minimum height among all prefixes, including the empty prefix of height zero. The difference between any two ordered prefix heights is the signed sum on their intervening actual infix. The substring hypothesis therefore places all prefix heights within two of the minimum. Translating by its negative gives a strip path and hence the event rule. Empty words, empty substrings, singleton words, words with no equality events and short event lists are all included. No counting formula enters either direction.
+
 Only q and d occur in the answer, so two loopless relations on the same alphabet with the same indegree have equal counts at every length. For d=1, take R(a,b) to mean b=σ(a), where σ is any fixed-point-free permutation. Every b has its unique predecessor σ⁻¹(b). The cyclic successor σ(a)=a+1 modulo q is one such permutation for q≥2. Its recurrence is a(n+3)=(2q−3)a(n+2)+(−q²+4q−2)a(n+1)−q(q−1)a(n) for n≥0; the n=0 case follows from 1,q,q²,q³−q. The positive series is qx(1−(q−3)x−(q−1)x²)/((1−(q−1)x)(1−(q−2)x−qx²)). The existing eight-letter cyclic theorem supplies its unique series and positive-index radical expression directly.
 
 For R(a,b) meaning a≠b, the indegree is q−1. Conversely a loopless relation of that indegree contains every unequal pair. This is Fried's unequal-event enumeration: arXiv:2410.07237v3, Theorem 10, equation (18), and Journal of Integer Sequences 28, Article 25.4.3, Section 3.2, Theorem 4 and Corollary 5. Its displayed rational function is the full series 1+S, with constant coefficient one, although the described sequence starts at positive index. Here 1+S=(1−(q−3)x−2(q−2)x²−(q−2)x³)/(1−(2q−3)x+(q−1)(q−4)x²+2(q−1)²x³). The homogeneous recurrence b(n+3)=(2q−3)b(n+2)+(−q²+5q−4)b(n+1)−2(q−1)²b(n) has onset n≥1; b(0)=1 does not extend that onset. The cyclic and unequal rules agree on a binary alphabet. For q≥3, the word (0,0,2,2) separates them. Other interpretations of the linked sequences are not implied.
@@ -139,6 +181,8 @@ For R(a,b) meaning a≠b, the indegree is q−1. Conversely a loopless relation 
 ## References
 
 - Truth anchor: `D5/S1/Words/Patterns/BarkerRegularRelationCounting.Admissible`
+- Truth anchor: `D5/S1/Words/Patterns/BarkerRegularRelationCounting.binaryStep`
+- Truth anchor: `D5/S1/Words/Patterns/BarkerRegularRelationCounting.binary_substring_equivalence`
 - Truth anchor: `D5/S1/Words/Patterns/BarkerRegularRelationCounting.count`
 - Truth anchor: `D5/S1/Words/Patterns/BarkerRegularRelationCounting.eventCount`
 - Truth anchor: `D5/S1/Words/Patterns/BarkerRegularRelationCounting.eventLabels`
@@ -146,5 +190,6 @@ For R(a,b) meaning a≠b, the indegree is q−1. Conversely a loopless relation 
 - Truth anchor: `D5/S1/Words/Patterns/BarkerRegularRelationCounting.event_enumeration`
 - Truth anchor: `D5/S1/Words/Patterns/BarkerRegularRelationCounting.markedSeries`
 - Truth anchor: `D5/S1/Words/Patterns/BarkerRegularRelationCounting.relation_enumeration`
+- Truth anchor: `D5/S1/Words/Patterns/BarkerRegularRelationCounting.signedImbalance`
 - Truth anchor: `D5/S1/Words/Patterns/BarkerRegularRelationCounting.sourceSeries`
 - Dependency: [D5/S1/Words/Patterns/BarkerCyclicRepetitionCounting](BarkerCyclicRepetitionCounting.md)

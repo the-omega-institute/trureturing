@@ -93,6 +93,40 @@ internal sealed class BarkerRegularRelationCountingDocument : IScribeDocumentDef
                 + "coefficient JH as a y-series, which is a unit because its x-constant is one. "
                 + "Ring.inverse denotes this unit inverse. The numerator is y x(1+x)U, exactly "
                 + "as in the source; both markers refer to actual word fibers.", DescribeRole.Theorem),
+            Node("binaryStep", "The signed binary steps", All("a", BinaryLetter(),
+                Equal(Call("binaryStep", V("a")), Subtract(Multiply(D(2),
+                    Cast(App(Q("Fin", "val"), V("a")), Integers())), D(1)))),
+                "The source alphabet is literally {0,1}: zero contributes minus one and one "
+                + "contributes plus one. The values are integers, so subtraction is signed.",
+                DescribeRole.Definition),
+            Node("signedImbalance", "Signed imbalance of an actual word", All("w", BinaryWords(),
+                Equal(Call("signedImbalance", V("w")), App(Q("List", "sum"),
+                    App(Q("List", "map"), Named("binaryStep"), V("w"))))),
+                "Summing the signed steps gives the number of ones minus the number of zeros. "
+                + "The empty list has imbalance zero.", DescribeRole.Definition),
+            Node("binary_substring_equivalence", "Binary events and every contiguous substring",
+                BinarySubstringFormula(),
+                "This equivalence concerns each actual word and all of its actual contiguous "
+                + "sublists. An infix u means there are lists a and b with a++u++b=w; neither "
+                + "positions nor alphabet labels are quotiented. The left side uses the original "
+                + "overlapping equality-event list and successor modulo two. On {0,1} this "
+                + "successor relation is exactly inequality. Replace zero by a step minus one "
+                + "and one by a step plus one. A word fits a strip of heights 0 through 2 "
+                + "from some integer starting height exactly when its event labels alternate. "
+                + "Induction on the word proves the three possible starting-height conditions: "
+                + "at height 0 the first letter and the first event, if present, are 1; at height 2 "
+                + "they are 0; at height 1 the first event, if present, differs from the first "
+                + "letter. Prepending an equal letter inserts that very letter as a new event, "
+                + "so the induction retains overlapping pairs. A strip path bounds the sum "
+                + "on every infix by subtracting its two endpoint heights. Conversely choose a "
+                + "prefix with minimum height among all prefixes, including the empty prefix "
+                + "of height zero. The difference between any two ordered prefix heights is "
+                + "the signed sum on their intervening actual infix. The substring hypothesis "
+                + "therefore places all prefix heights within two of the minimum. Translating "
+                + "by its negative gives a strip path and hence the event rule. Empty words, "
+                + "empty substrings, singleton words, words with no equality events and short "
+                + "event lists are all included. No counting formula enters either direction.",
+                DescribeRole.Theorem),
             Paragraph(Text("Only q and d occur in the answer, so two loopless relations on the "
                 + "same alphabet with the same indegree have equal counts at every length. For "
                 + "d=1, take R(a,b) to mean b=σ(a), where σ is any fixed-point-free permutation. "
@@ -121,6 +155,26 @@ internal sealed class BarkerRegularRelationCountingDocument : IScribeDocumentDef
         DescribeId.Create("regular-repetition-" + name.ToLowerInvariant().Replace("_", "-")),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(statement)),
         AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Integers() => Seq(Mathbb, Grp(V("Z")));
+    private static Formula BinaryLetter() => Call("Fin", D(2));
+    private static Formula BinaryWords() => App(Named("List"), BinaryLetter());
+
+    private static Formula BinarySubstringFormula()
+    {
+        var relation = Lam("a", BinaryLetter(), Lam("b", BinaryLetter(),
+            Equal(App(Q("Fin", "val"), V("b")), new Formula.Modulo(
+                Parenthesized(Add(App(Q("Fin", "val"), V("a")), D(1))), D(2)))));
+        var events = App(Q("List", "IsChain"), relation, Call("eventLabels", V("w")));
+        var imbalance = Subtract(Cast(App(Q("List", "count"), D(1), V("u")), Integers()),
+            Cast(App(Q("List", "count"), D(0), V("u")), Integers()));
+        var bounds = And(new Formula.Relation(new Formula.Negate(D(2)),
+            FormulaRelationOperator.LessThanOrEqual, imbalance),
+            new Formula.Relation(imbalance, FormulaRelationOperator.LessThanOrEqual, D(2)));
+        return All("w", BinaryWords(), new Formula.Logic(Parenthesized(events),
+            FormulaLogicOperator.Iff, Parenthesized(All("u", BinaryWords(),
+                Implies(App(Q("List", "IsInfix"), V("u"), V("w")), bounds)))));
+    }
 
     private static Formula EventLabelsFormula()
     {
