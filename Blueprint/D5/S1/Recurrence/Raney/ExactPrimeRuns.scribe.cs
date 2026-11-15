@@ -100,7 +100,7 @@ internal sealed class ExactPrimeRunsDocument : IScribeDocumentDefinition
     private static Formula Len(Formula q, Formula j) => Call("ell", q, j);
     private static Formula Run(Formula a, Formula b) => Call("IsMaximalDeltaInterval",
         Call("singleton", D(0)), Call("raneyResidue", D(3), D(1), V("p")), a, b);
-    private static Formula Div(Formula a, int b) => Call("NatDiv", a, D(b));
+    private static Formula Div(Formula a, byte b) => Call("NatDiv", a, D(b));
 
     private static Formula ResultFormula()
     {
