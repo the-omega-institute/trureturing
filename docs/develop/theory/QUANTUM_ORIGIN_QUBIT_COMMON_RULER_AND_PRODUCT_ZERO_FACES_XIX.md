@@ -3734,3 +3734,192 @@ $(n+1)^{-1}\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$，行列�
 白话：固定第三份的一颗纯旁观者，先让前两份所有纯准备都能靠在它旁边有自己的最低门，前两份内部的纠缠也包括在内。这一整条旁观面把双份几何交出来，尺子便从原关系里产生。接着只调整同一套描述坐标，让特制第一点落回这条已经有门的旁观面；第二点在面外，不要求先给它自己的门。只加这一对的共同门，再扣掉第一点自己的门：两个确认读数会互相锁定，因此一边的正性已经足够，不必再向第二点借一只门。剩下的仍是同一颗三腿种子或镜像，两张交叠影子排尽镜像，准确种子接上全部有限量子结构。比上一章少检验的是第三份的所有其他纯旁观者；同一完整概率表、全部相关准备、原复合与换点条件仍完整保留。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 284. 一条非正规关系线同时锁定两张交叠影子的方向
+
+本章完整保留283.1的原强全有限背景、固定纯旁观者 $b_*$、同一内部参照 $c$、整个原proper菜单、全部相关准备及有限实际复合。候选仍只检验固定纤维和一对源；将写死的矩阵单位种子换成一条满足几何判据的关系线。非正规性在低二层尺子产生后才定义，不把伴随、复坐标或高层PSD预置于原概率表。不改判既有条目。
+
+**定义 284.1（归一非正规方向与它的两端源）。** 完整沿用283.1的 $\mathsf D_{b_*}(c)$、282.2的低二层坐标集合 $\mathcal R$ 和283.3的对齐子集 $\mathcal R_{b_*}$。向量化严格采用XIII164.2的参考—输出次序：
+
+$$
+|M\rangle\!\rangle=\sum_i|i\rangle_1\otimes M|i\rangle_2,
+\qquad
+\Sigma_n=\{M\in M_n(\mathbb C):\operatorname{Tr}M=0,
+\ \|M\|_{\rm HS}=1,\ K_M:=MM^*-M^*M\ne0\}.
+\tag{284.1}
+$$
+
+$\Sigma_n$ 非空：$E_{10}$ 属于它，且给282.3原来的 $|01\rangle$。对任意 $M\in\Sigma_n$，令
+
+$$
+\begin{aligned}
+r_M&=|I_n\rangle\!\rangle|0\rangle_3+|M\rangle\!\rangle|1\rangle_3,
+&\psi_M&=r_M/\sqrt{n+1},&\Gamma_M&=|\psi_M\rangle\langle\psi_M|,\\
+A_0&=|I_n\rangle\!\rangle/\sqrt n,& A_1&=|M\rangle\!\rangle,
+&B_0&=|0\rangle,\quad B_1=|1\rangle,\\
+\alpha&=\sqrt{n/(n+1)},&\beta&=1/\sqrt{n+1},
+&s&=\alpha+\beta,\quad t=(\alpha-\beta)/(\alpha\beta),\\
+a_M&=(\sqrt\beta A_0+\sqrt\alpha A_1)/\sqrt s,
+&b_n&=(\sqrt\beta B_0-\sqrt\alpha B_1)/\sqrt s,\\
+v_M&=a_M\otimes b_n,&w_M&=(v_M+t\psi_M)/\sqrt{1+t^2},
+&P_M&=|v_M\rangle\langle v_M|,\quad Q_M=|w_M\rangle\langle w_M|.
+\end{aligned}
+\tag{284.2}
+$$
+
+相应原源是 $p_M=(\theta^{\otimes3})^{-1}T_1^\varepsilon P_M$ 和 $q_M=(\theta^{\otimes3})^{-1}T_1^\varepsilon Q_M$。$b_n$ 与 $M$ 无关，所以283.3的同局域坐标对齐完全保留。定义完整候选
+
+$$
+\boxed{\quad
+\mathsf Q_{\mathrm{rel}}(b_*,c)
+:=\mathsf D_{b_*}(c)+\mathsf X_{T,2}
++\exists(n,\theta,\varepsilon)\in\mathcal R_{b_*}\ \exists M\in\Sigma_n:
+\mathsf S_{(p_M+q_M)/2}(c).
+\quad}
+\tag{284.3}
+$$
+
+前两项先供应非空低二层坐标；最后一项才在该尺子下寻找一条关系和它指定的一对原产品源。$\Gamma_M$ 此时只是指定源所用的矩阵，尚未假设它是原三份状态。
+
+**定理 284.2（一条非正规关系线的完整量子候选）。** 在283.4的完整背景和全部明列供应下，对每个原 $b_*\in P_1$、$c\in\operatorname{ri}K_3$，候选 $\mathsf Q_{\mathrm{rel}}(b_*,c)$ 等价于存在同一 $n\ge2$ 和同一个保单位实线性序同构 $\theta:V\to H_n$，使
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}\qquad(\forall N\ge0).
+\tag{284.4}
+$$
+
+证明。（一）同一两个复残余端点。迹零和HS归一给 $A_0,A_1$ 正交单位，故 $\psi_M=\alpha A_0B_0+\beta A_1B_1$。在这两组正交基中的系数矩阵恰为(282.7)，其行列式计算不依赖 $A_1$ 在原计算基中是否实。因此 $v_M\perp\psi_M$，$w_M$ 是单位产品，且两块局域重叠的模严格介于零与一。系数实只保证第三块因子 $b_n,b'_n$ 可取实，不保证第一块因子 $a_M,a'_M$ 实。原min界及低二层正规形给两个逆像原产品源；$\theta b_*=P_{b_n}$ 使第一点落在已付固定纤维。
+
+283.4（一）—（二）遂给第一点least恰为 $P_M$、共同least $h$ 及极端proper残余 $d=h-P_M$。这里只使用 $h\ge_{D_3^*}P_M$；共同确认 $Q_M$ 仍不等于原序支配 $Q_M$。四个可分补上界和283.2的单边Gram饱和给原 $\operatorname{Tr}h=2$ 及 $h\in\operatorname{conv}\{H_0,H_1\}$。一般复产品对的第二端点是
+
+$$
+\begin{aligned}
+H_0&=P_{\operatorname{span}\{a_M\otimes b_n,a'_M\otimes b'_n\}}
+=P_M+\Gamma_M,\\
+H_1&=T_A P_{\operatorname{span}\{\bar a_M\otimes b_n,\bar a'_M\otimes b'_n\}}
+=T_A\overline{H_0}=T_3H_0,\qquad A=(12).
+\end{aligned}
+\tag{284.5}
+$$
+
+第二行的第一等式是原复产品Gram端点公式；第二等式使用第三块两个因子实，故共轭子空间的投影确为 $\overline{H_0}$；第三等式使用Hermitian矩阵的全转置 $\overline{H_0}=T_AT_3H_0$。又 $T_3P_M=P_M$，所以 $H_1-P_M=T_3\Gamma_M$。不将一般复 $\Gamma_M$ 误写成 $T_A\Gamma_M=T_3\Gamma_M$。
+
+迹一极端proper残余由276.2（三）的整个原底双HS／迹预算给 $d\in D_3\cap D_3^*$、$\|d\|_2=1$。两个线段端点 $\Gamma_M,T_3\Gamma_M$ 均HS范数一，且不同：前者为秩一投影，后者在这两块有负本征值 $-\alpha\beta$。严格凸性迫 $d$ 是其中一个端点，故 $\Gamma_M\in D_3$ 或 $T_3\Gamma_M\in D_3$，逆运输得某 $\delta\in\{0,1\}$ 满足
+
+$$
+T_1^\varepsilon T_3^\delta\Gamma_M\in\theta^{\otimes3}C_3.
+\tag{284.6}
+$$
+
+本步不索取第二点的单点门、不向未知高层外推低二层保型，也没有预给任一残余为原态。
+
+（二）同一非正规差异的两个交叠读数。对(284.2)，记 $\rho_{13}=\operatorname{Tr}_2\Gamma_M$、$\rho_{23}=\operatorname{Tr}_1\Gamma_M$。按实际第三腿的 $0,1$ 分块，非零控制支持上的矩阵为
+
+$$
+\rho_{13}=\frac1{n+1}
+\begin{pmatrix}I&\bar M\\ M^{\mathsf T}&M^{\mathsf T}\bar M\end{pmatrix},
+\qquad
+\rho_{23}=\frac1{n+1}
+\begin{pmatrix}I&M^*\\ M&MM^*\end{pmatrix}.
+\tag{284.7}
+$$
+
+控制支持外均为零。两个边缘都在对第三腿部分转置后非正，当且仅当 $K_M\ne0$。
+
+逐指标用 $|M\rangle\!\rangle=\sum_{ij}M_{ji}|ij\rangle$ 缩掉实际腿即得(284.7)；参考腿与输出腿的次序不能交换而不相应交换这两个公式。第三腿部分转置交换非对角块，正标量不影响正性。对左上可逆正块 $I$ 作Schur补，分别得到
+
+$$
+\begin{aligned}
+T_3\rho_{13}\succeq0
+&\ \Longleftrightarrow\
+M^{\mathsf T}\bar M-\bar M M^{\mathsf T}=-K_M^{\mathsf T}\succeq0,\\
+T_3\rho_{23}\succeq0
+&\ \Longleftrightarrow\
+MM^*-M^*M=K_M\succeq0.
+\end{aligned}
+\tag{284.8}
+$$
+
+$K_M$ Hermitian且迹零；非零时必兼有严格正、负本征值。因此 $K_M$ 与 $-K_M^{\mathsf T}$ 各有负方向，两个边缘同时NPT。反之 $K_M=0$ 使两个Schur补都为零，两边缘均PPT。这只是在这个满秩顶块、零余块的特殊图像中使用Schur判据，不以一般维数PPT推出可分性。
+
+该块正性／正规性工具属于成熟方法：[Q284S] §1式(1)—(6)及其后的canonical $2\otimes N$ form包含同类块形；取其 $S=M^*$ 给第二个边缘的未归一形式。这里的直接Schur证明只使用该特殊形式，不调用文中关于全部SPPT态的猜想。
+
+（三）两个原方向位和全有限传播。固定纤维先给M2；原 $\mathsf X_{T,2}$ 和282.2的完整低二层供应给 $C_1,C_2$ 的共同表示及原转置位 $\varepsilon$。283.3只在低二层证明同局域酉坐标对齐，得到 $\theta b_*=P_{b_n}$。选(284.3)的 $M$ 和共同接触，由（一）得同一实际三份原态
+
+$$
+x=T_1^\varepsilon T_3^\delta\Gamma_M
+\in\theta^{\otimes3}C_3.
+\tag{284.9}
+$$
+
+原正丢弃第二腿后，按剩余实际腿 $1,3$ 的顺序有
+
+$$
+T_1^\varepsilon T_3^\delta\rho_{13}
+\in T_1^\varepsilon\operatorname{PSD}_{n^2}
+\quad\Longrightarrow\quad T_3^\delta\rho_{13}\succeq0.
+\tag{284.10}
+$$
+
+（二）迫 $\delta=0$。再对同一(284.9)丢弃第一腿，得到 $\rho_{23}\in T_2^\varepsilon\operatorname{PSD}_{n^2}$，其中 $T_2$ 指剩余第一条实际腿。若 $\varepsilon=1$，则 $T_2\rho_{23}\succeq0$；对两条剩余腿同时转置等价于 $T_3\rho_{23}\succeq0$，与（二）矛盾。因此 $\varepsilon=0$，原低二层标准且 $\Gamma_M\in\theta^{\otimes3}C_3$。
+
+乘回 $n+1$ 得原 $r_Mr_M^*$。非正规性保证 $M\notin\mathbb CI$，所以这是XIII164.11第2项的准确原种子，直接接第2项到第4项得到(284.4)。第一切片 $I$ 满秩，第二切片独立，故不必再将它改写成指定矩阵单位种子。原全部有限相关旁观、实际位置置换、正切片、proper帽预算、有限相干控制与多项式／谱分支全部沿164.1、164.3—164.9保留。一般 $M$ 使用该尾部依赖 $M$ 的有限字预算，不冒称每个 $M$ 都有164.10对明确 $\tau_n$ 给出的统一六副本、十八腿构造；当 $M=E_{10}$ 时恰回到该明确预算。
+
+反向，完整复PSD模型的原纯点纤维和这对源的共同确认均有支持投影least，故281.2给全部所需 $\mathsf S$。取标准低二层坐标，按283.3对齐任意 $b_*$，再取 $M=E_{10}\in\Sigma_n$，就满足(284.3)。原换点也成立。因此候选与(284.4)等价。
+
+（四）带度量的正则关系线与方向不变量。低二层共同尺子给出伴随后，$\mathcal L_M=\operatorname{span}_{\mathbb C}\{I,M\}$ 是一条含满秩截面的二维算子平面；$\{(z,Mz):z\in\mathbb C^n\}$ 是其所选方向的关系图。非正规性比较的是同一关系与其伴随复合所得的两个Gram算子。它不依赖同时酉换基、非零方向缩放及加标量：
+
+$$
+K_{UMU^*}=UK_MU^*,\qquad
+K_{aI+bM}=|b|^2K_M\quad(b\ne0).
+\tag{284.11}
+$$
+
+更一般，重新选择平面上的可逆参照截面，令
+
+$$
+N=(cI+dM)(aI+bM)^{-1},\qquad
+ad-bc\ne0,\quad aI+bM\text{ 可逆},
+\tag{284.12}
+$$
+
+则 $N$ 正规当且仅当 $M$ 正规。归一化 $\operatorname{Tr}M=0,\|M\|_{\rm HS}=1$ 只固定标量与尺度；任意非正规 $M_0$ 都可用 $M=(M_0-\operatorname{Tr}(M_0)I/n)/\|M_0-\operatorname{Tr}(M_0)I/n\|_{\rm HS}$ 达到它。
+
+(284.11)由乘法展开。若 $M$ 正规，谱定理在同一酉基中将(284.12)对角化，故 $N$ 正规；反向用
+
+$$
+dI-bN=(ad-bc)(aI+bM)^{-1},\qquad
+M=(aN-cI)(dI-bN)^{-1}
+\tag{284.13}
+$$
+
+及同一谱定理。归一化由(284.11)且非正规矩阵非标量成立。这给带既得度量的正则算子平面的性质；它没有断言任意非酉局域滤波保正规性，也未把截面变换当作未支付的物理控制。改变截面所得新种子的原态性和预算不由这段代数自动取得；（三）所消费的仍是(284.2)中准确取得的原种子。$\square$
+
+**命题 284.3（简化的范围、反事实与既有量子公理）。** 本候选把“指定某个矩阵单位的准确种子”换成“存在一条两种往返Gram不同的正则关系线”。同一个 $K_M$ 的正、负方向分别在两个实际交叠边缘的Schur补中出现，联合锁定残余镜像位和低二层原转置位。模型定义仍受整个原概率表、确认关系、原序及真实复合的约束，未将least的存在改名为定义。
+
+证明与边界。给定 $M$ 的非正规性是显式可检验的充分判据，不是凭几何名称取得种子。若删掉该判据而取 $M=\operatorname{diag}(1,-1,0,\ldots,0)/\sqrt2$，则(284.8)的两个Schur补均为零；本章两个边缘便不能排除 $\delta,\varepsilon$。这只是本方向判据的边界，不是完整全有限候选的非量子反模型；XIII164.11本来只需非标量，一颗已经属于原锥的正规 $r_M$ 仍足以传播，当前缺的是怎样在未知转置位时保证取得那颗原种子。若没有第一点已付的单点least，残余极端性和单边Gram下界仍无本章依据；若没有同一实际对象的两次正丢弃，两个Schur补不能共同约束方向位。
+
+相对283，本章不减少固定纤维或共同源对的数目，简化在于用一个与矩阵条目无关的关系性质统一种子选择和两项边缘检验，并直接接更一般的正则铅笔入口。两候选在同一完整背景下刻画相同模型类；不据表达更短宣称严格逻辑弱化、最少独立公理或全球原创。若将原换点改为283.5的单体可筛球入口，须原样保留XX278.2的原球全域暴露和M-only矩阵整锥供应；不能用裸球或正对偶实际面的暴露性代付。
+
+(284.4)之后的公理对应如下；每个过程结论仍带自己的前件。
+
+| 原关系及新增条件 | 得到的量子结构 | 推导位置与边界 |
+| --- | --- | --- |
+| 固定纤维接触、原换点与明列低二层供应 | 共同有限维复单体和双份表示 | 283.1、282.2；尚有原转置位 |
+| 一对源的共同接触、单边残余与非正规差异 | 同一原三腿正则种子、两个方向位均为零 | 284.2（一）—（三）；两个边缘来自同一 $x$ |
+| 原全部有限复合与准确正则种子 | $\mathcal H_N:=(\mathbb C^n)^{\otimes N}$、$W_N\cong\operatorname{Herm}(\mathcal H_N)$，全部密度矩阵和复射线 | XIII164.11第2项到第4项；整锥与纯点在此后取得 |
+| 完整正对偶、proper单位区间、全部有限单位分解及原配对 | 全部数学POVM／PVM、$\Pr(a\mid\rho)=\operatorname{Tr}(E_a\rho)$ | 既定配对的Born坐标式；设备可用性另给 |
+| 原产品、置换、重括号及正丢弃 | 同一复张量与偏迹 | 所有有限层；不预给无限极限 |
+| 分支在所有有限相关旁观输入上保正 | 完全正映射 | 静态接触本身不指定过程集合 |
+| 整个正输入上的分支及总质量预算 | TNI／TP、数学仪器 | 预算作为独立关系条件保留 |
+| 锐效应及整个yes支持中性 | Lüders更新 | 不能仅由某一点的重复确认推出 |
+| 指定连续可逆保锥保单位一参数群 | 数学酉动力学 | 物理钟、能量和 $\hbar$ 的识别另给 |
+
+归属：产品对的实系数行列式、固定纤维下降、单边Gram与极端残余分别复用282.4、283.1—283.4；复产品端点复用274.15—274.19的局部Gram工具。本章将第三块实与第一块复分开，显式核对(284.5)，不重新证明旧稀疏判据。Schur补、谱定理、正规矩阵的有理函数及部分转置均为成熟工具；[Q284S]供应特殊块形的文献归属，[Q282P]供应Peres部分转置背景。repo-derived的接合是将同一非正规差异同时用于两个原方向位的消去，再将该精确原残余直接送入XIII164.11的更一般第2项，得到不写死矩阵条目的完整候选。没有把已知PPT／正规性判据单列为原创量子公理，也不主张Lean核验或宇宙本体真实性。
+
+白话：先固定一颗纯旁观者，让前两份所有纯准备靠着它时都有自己的最低门，这整条旁观面会把双份尺子交出来。再选一条关系线：沿它走再沿反向走，与先沿反向走再沿它走，留下的Gram账不同。让这条线指定的两个产品准备共用一只最低门，扣掉第一点已有的门，就只剩同一颗三腿残余或它的镜像。只看这颗残余的两张交叠影子，同一份往返差异在其中反号出现，两个镜像位便都藏不住。留下的一条关系线含满秩截面，正好接上整个有限量子结构。本章少写死的是那颗种子的矩阵条目；全部相关准备、确认关系、真实复合和过程预算仍各自承担自己的条件。$\square$
+
+[Q284S]: https://arxiv.org/abs/0710.1934v1 "D. Chruściński, J. Jurkowski, A. Kossakowski, Quantum states with strong positive partial transpose, §1 equations (1)–(6) and canonical 2⊗N form"
+
+## 追加锚（本行以下为增补区）
