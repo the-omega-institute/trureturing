@@ -1,7 +1,4 @@
 import Lake
-import Lake.CLI.Build
-import Lake.Util.StoreInsts
-import Std.Sync.Semaphore
 open Lake DSL System
 open Lean (Json)
 
