@@ -24,11 +24,13 @@ The normalized-zeta formula and the positive-real sign of zeta make T+B holomorp
 
 At the nonreal point a=rho-1 the exact double-pole coefficient of T is -m/rho. P and B are regular there. A punctured neighborhood of that selected pole, together with the Euler identity at its regular points, gives epsilon^2 (zG''+2G')(a+epsilon) tending to m/rho. Positivity of the genuine moment integrals gives norm(G'(x+i gamma)) <= -G'(x) and norm(G''(x+i gamma)) <= G''(x). Their real limits imply m/norm(rho) <= norm(rho-1)c, contradicting the assumed strict coefficient bound. No rightmost-zero hypothesis is needed.
 
+The same actual theta forcing gives both real signs. For every s with s^2=1, every 0<=c<m/(norm(rho) norm(rho-1)), and every real T, some u>max(T,log 2) satisfies c<u exp((1-Re(rho))u)(s f(u)). Apply EulerPoleObstruction.signed_peaks at U0=log 2 with g=f, d=-1/2, sigma=Re(rho)-1, a=rho-1 and Lambda=-m/rho. ActualThetaTailLaplace supplies integrability and the Euler equation. The normalized-zeta real sign supplies the full real corridor, and the local Laurent formula including the actual cutoff boundary term supplies the full complex DoublePole. The norm ratio is exactly m/(norm(rho) norm(rho-1)). The positive theorem uses s=1 directly in this common supplier. This conditional consequence asserts no off-line zero.
+
 Taking c to be half the positive amplitude supplies conditional arbitrarily late peaks. Since exp((beta-one half)u)/u tends to infinity, these eventually cross an envelope of the form 7 exp(-u/2). An arithmetic bridge from that envelope to actual prefix least-common-multiple Robin violations is a separate requirement. This theorem does not assert an off-line zero, the Riemann hypothesis, an unconditional violating integer, an effective peak location, an endpoint beta=one half or beta=one, or a peak strictly above the limiting amplitude. The argument uses classical positive Laplace continuation and local pole comparison; no literature originality is asserted.
 
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/CriticalThetaTailPeak.critical_theta_tail_peak`
 - Dependency: [D5/S3/Analytic/Isolation/RiemannZetaPositiveRealSign](../../Analytic/Isolation/RiemannZetaPositiveRealSign.md)
-- Dependency: [D5/S3/Analytic/Laplace/PositiveEulerContinuation](../../Analytic/Laplace/PositiveEulerContinuation.md)
+- Dependency: [D5/S3/Analytic/Laplace/EulerPoleObstruction](../../Analytic/Laplace/EulerPoleObstruction.md)
 - Dependency: [D5/S3/Weil/Mertens/ActualThetaTailLaplace](ActualThetaTailLaplace.md)

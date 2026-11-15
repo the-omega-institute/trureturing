@@ -519,11 +519,15 @@ internal static partial class RawLeanReportArtifact
                 throw new InvalidDataException($"Lean statement material archive is missing: {path}");
             }
 
+            FileStream? stream = null;
+            ZipArchive? archive = null;
             try
             {
-                var archive = new ZipArchive(
-                    new MemoryStream(File.ReadAllBytes(path), writable: false),
-                    ZipArchiveMode.Read);
+                // The archive can exceed the managed array limit. Keep its
+                // seekable file open for lazy reads, including after a producer
+                // replaces the pathname with a newer completed archive.
+                stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read | FileShare.Delete);
+                archive = new ZipArchive(stream, ZipArchiveMode.Read);
                 var builder = ImmutableDictionary.CreateBuilder<string, ZipArchiveEntry>(StringComparer.Ordinal);
                 foreach (var entry in archive.Entries)
                 {
@@ -536,7 +540,10 @@ internal static partial class RawLeanReportArtifact
                     }
                 }
 
-                return new ArchiveContents(archive, builder.ToImmutable());
+                var contents = new ArchiveContents(archive, builder.ToImmutable());
+                archive = null;
+                stream = null;
+                return contents;
             }
             catch (InvalidDataException exception)
             {
@@ -547,6 +554,13 @@ internal static partial class RawLeanReportArtifact
             {
                 throw new InvalidDataException(
                     $"Lean statement material archive cannot be read: {path}", exception);
+            }
+            finally
+            {
+                // Ownership moves to ArchiveContents only after the complete
+                // entry index has been validated. Failed loads retain no handle.
+                archive?.Dispose();
+                stream?.Dispose();
             }
         }
 
