@@ -8,7 +8,7 @@ internal sealed class DimitrovPartIVC3Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Divisors/DimitrovPartIVC3.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/ArithUnits/dimitrovlazarova2026part4c3");
+        LibraryNoteRef.Create("D5/L/ArithUnits/dimitrovlazarova2026part4c2");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The third conjecture in Dimitrov and Lazarova Part 4 holds throughout its full natural-number range.",

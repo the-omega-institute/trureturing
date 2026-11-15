@@ -1,6 +1,6 @@
 ---
 slug: dimitrov-lazarova-part4-conjecture-3
-bibkey: dimitrovlazarova2026part4c3
+bibkey: dimitrovlazarova2026part4c2
 doi: 10.3390/math14213935
 url: https://mdpi-res.com/d_attachment/mathematics/mathematics-14-03935/article_deploy/mathematics-14-03935.pdf
 triage: theorem
@@ -26,7 +26,13 @@ exponents and quotients are real. There are no prime-only, squarefree,
 finite-range or extra parameter restrictions.
 
 The exact source is Section 4, Conjecture 3, page 13; definitions are in
-Section 1, pages 1–2. The immutable original preregistration is
+Section 1, pages 1–2. The publisher PDF has 14 pages, 3219707 bytes and SHA-256
+`21c972599612cd12ac9354219cc73daa316fcdaff7548ed9be3ee381632a0d3a`.
+The XML has 422720 bytes and SHA-256
+`2a449be47b8bdecfcccf66158a6bf48b31637512d938e29bc4f5ff880e2507f9`;
+MathML mm199–201 contains the formula. The source license is CC BY 4.0.
+These identities and source agreement are attributed to the independent
+mathematical evidence linked below. The immutable original preregistration is
 [comment 6886661956](https://github.com/the-omega-institute/trureturing/issues/30625#issuecomment-6886661956).
 
 ## Motivation
@@ -39,9 +45,13 @@ only $k=1$. Bounds on numerator terms alone do not establish the quotient.
 This tier-1 named conjecture is stated in a 2026 paper. The bounded source and
 ownership qualification is recorded in
 [issue 30625](https://github.com/the-omega-institute/trureturing/issues/30625)
-and the [literature note](../Library/ArithUnits/dimitrovlazarova2026part4c3.md).
-No full prior solution was found within that inspected scope; global priority
-and inaccessible or unindexed sources remain unverified.
+and the [source note](../Library/ArithUnits/dimitrovlazarova2026part4c2.md).
+The C3 qualification reported current VOR metadata with no notices, all-state
+C3 ownership readings 3/3 and DOI readings 8/8, covering eight relevant bodies
+and seventeen comments. No full prior solution was found within that inspected
+scope. The public Part III C3 supplier `pro20541/dimitrov-conjectures-lean`
+addresses a different assertion. C3-specific arXiv access returned 429;
+global priority and inaccessible or unindexed sources remain unverified.
 
 ## Route
 
