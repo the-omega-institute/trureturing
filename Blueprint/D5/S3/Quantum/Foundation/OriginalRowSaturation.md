@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.pure_comparison_
 
 *Commentary.*
 
-Strict positivity, generation and pure reciprocity give continuity of (p,q) mapped to T(p,q) on the entire product P times P with its norm subspace topology. The uniform original row bound controls both variables after exchanging pure endpoints. This consumed helper supplies the separated-pure-pair gap construction and the whole-limit calibration proof. It supplies no independent escape witness and assumes no mixed reciprocity, label injectivity or singleton confirmer fiber.
+Strict positivity, generation and pure reciprocity give continuity of (p,q) mapped to T(p,q) on the entire product P times P with its norm subspace topology. The uniform original row bound controls both variables after exchanging pure endpoints. This consumed helper supplies the separated-pure-pair gap construction and the whole-limit calibration proof. The continuity statement follows from that uniform bound and pure reciprocity and assumes no mixed reciprocity, label injectivity or singleton confirmer fiber.
 
 ## Every actual diameter collapse makes budgets diverge
 

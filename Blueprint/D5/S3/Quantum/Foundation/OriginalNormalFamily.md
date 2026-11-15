@@ -162,7 +162,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalNormalFamily.original_uniform_
 
 *Commentary.*
 
-Strict positivity and generation give one finite L>0 such that abs(T(p,x)-T(p,y))<=L norm(x-y) for every original pure p and all original mixed x,y in K. This consumed helper directly uses the original frozen CommonOldExclusionConfirmation.comparison_lipschitz owner, enlarging its bound to a positive constant. It provides no independent new mathematical content or escape witness. Neither EB nor PR nor Inj is needed.
+Strict positivity and generation give one finite L>0 such that abs(T(p,x)-T(p,y))<=L norm(x-y) for every original pure p and all original mixed x,y in K. This consumed helper directly uses the original frozen CommonOldExclusionConfirmation.comparison_lipschitz owner, enlarging its bound to a positive constant. The estimate is a direct consequence of that comparison bound. Neither EB nor PR nor Inj is needed.
 
 **Theorem 1.14 (Universal actual scale-to-axis estimate).**
 
