@@ -28,7 +28,8 @@ theorem transition_counts (s : Fin 27) (hs : 26 ≤ s.val ∧ s.val < 27) :
       (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ d.val ∧
         cl (boundary r) (d.val - (cross p r + bondDefects horizontal r r)) = s
         then (1 : ℤ) else 0) = T (cl p d.val) s := by
-  revert s
+  have h : s = 26 := by omega
+  subst s
   decide +kernel
 
 end D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229691StripClasses13
