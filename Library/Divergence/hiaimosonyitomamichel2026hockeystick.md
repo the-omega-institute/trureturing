@@ -179,11 +179,37 @@ https://arxiv.org/abs/2607.08760v1
 ## Arbitrary convex posterior instruments
 
 `GeneralConvexReverseTestAttainment` treats an arbitrary concrete von Neumann
-algebra and the actual sigma-finite whole-complex-L1 source class. Its source
-universe and operator-algebra universe are independent. The preparation is
-initially only algebraic complex-linear, positive and complex-mass preserving,
-with intrinsically all-directed order-normal outputs. Normality is not replaced
-by an unproved identification with a chosen abstract predual.
+algebra M on any complete complex Hilbert space H. Its standard concrete
+predual class is independently defined by actual series
+phi(a)=sum_n <xi_n,a eta_n>, with sum_n ||xi_n||^2 and sum_n ||eta_n||^2 finite.
+`ConcreteCoefficientSeries.mem_coefficientSpace_iff_series` identifies this
+class exactly with E, the norm-closed complex span of restricted vector
+coefficients in the actual continuous dual of M. Its `dual_evaluation` proves
+the isometric evaluation representation E*=M: every bounded complex-linear
+functional on E is evaluation at an actual a in M, with equality of norms.
+No separability assumption is imposed on H.
+
+The positive output functionals rho,sigma belong to this series class.
+`StandardL1Preparation` quantifies algebraic complex-linear preparations on
+the entire complex L1 space, positive on nonnegative inputs, preserving the
+integral mass of every complex input, and with every output in the independent
+series class. Sources range over all sigma-finite measure spaces in an
+arbitrary universe independent of the operator-algebra universe; the two
+nonnegative inputs are original complex L1 elements. Continuity and contraction
+of an original preparation are not hypotheses. Zero, singular and unnormalized
+pairs, zero Hilbert space, infinite scalar endpoints and infinite total costs
+remain in scope. The only generator hypothesis is that f:R->R is convex on
+(0,infinity).
+
+`ConcreteCoefficientPredual` proves positive heredity in E using the actual
+GNS completion: if phi belongs to E and 0<=psi<=phi, then psi belongs to E.
+Using `DirectedPositiveNet`, it constructs the ambient strong limit from an
+operator upper bound. Commutation passes to vector limits, placing the limit
+in M; an M-internal directed positive least upper bound is therefore this
+strong limit.
+Vector coefficients, and hence their entire norm closure E, are intrinsically
+all-directed order-normal. This is the proved forward interface, without a
+blanket converse from intrinsic normality or an appeal to Sakai uniqueness.
 
 The posterior source is the finite measure obtained by pushing
 `(p+q) dmu` forward under `p/(p+q)`, with the zero fiber assigned zero.
@@ -193,24 +219,39 @@ identify this measure with the actual moment family's Riesz measure. The literal
 extended closed-perspective integral is preserved, including zero fibers and
 both infinite endpoint coefficients.
 
-The converse uses the constructed normal whole-L1 realization for every point
-of `NormalMomentFamily.Family`. Transport along the measurable equivalence
-between the compact interval and its universe lift gives an actual original
-source in the prescribed universe. Hence the full original attainable-cost set
-equals the image of the literal family objective, before minimizing either side.
+For every point F of `NormalMomentFamily.Family`,
+`standard_posterior_realization` uses the actual continuous whole-complex-L1
+map Gamma agreeing with all its continuous moments. Positive continuous
+coordinates are dominated by ||g||(rho+sigma), so GNS heredity puts them in E;
+four positive parts and continuous-function density then put Gamma(h) in E
+for every complex L1 input h. Its codRestriction to E retains exactly the
+same values, positivity, every complex mass, norm bound at most one and both
+prepared moments. The series equivalence applies to every output of this same
+Gamma and of its lifted preparation.
+
+Transport along the measurable equivalence between the compact interval and
+its universe lift gives an actual original source in the prescribed universe.
+`standardAttainableCosts_eq_range` proves that the entire standard-original
+attainable-cost set equals the range of the literal family objective, before
+minimizing either side; the intrinsic-original cost set has the same range.
 The objective is the fixed finite affine support contribution plus
 `PosteriorCurvatureCost.posteriorCurvatureCost`. The latter is the exact
 supremum of continuous truncated-curvature integrals and is lower
 semicontinuous in Mathlib's full weak topology of finite measures. Minimization
 in ENNReal on the actual compact nonempty family retains top as a possible
-minimum. The resulting original value is attained and cannot be minus infinity.
+minimum. The compiled `standard_original_reverse_test_extended_attainment`
+attains the standard-original infimum with the lifted test explicitly built
+from this same Gamma, densities t and 1-t, and the actual lifted finite regular
+Riesz measure. Its cost is literally `closedPerspectiveCost`; the infimum
+cannot be minus infinity and equals zero for the zero pair.
 If every admissible cost is +infinity, nonemptiness alone makes every admissible
 test a minimizer. This branch retains scope and is not counted as an additional
 independent solved optimization problem.
 
 The comparison with earlier literature retains its hypotheses. Matsumoto,
 [arXiv:1311.4722v4](https://arxiv.org/abs/1311.4722v4), Theorem 9.4,
-already proves finite-dimensional finite-value attainment under FC. Theorem 9.9
+PDF p. 30, already proves finite-dimensional finite-value attainment under FC
+(PDF p. 4). Theorem 9.9
 (PDF p. 35) concerns separable B(H), under FC and the finite endpoint hypotheses
 f(0)<infinity and hat f(0)<infinity stated throughout Section 9.3 (PDF p. 31).
 Lemma 4.1 already provides the finite-compression architecture.
@@ -220,10 +261,23 @@ Section 6, Lemma 6.1, Definition 6.2 and Theorem 6.3, gives an arbitrary-von-Neu
 whole-L1 spectral reverse test and attainment with infinite endpoint conventions
 under the paper's standing operator-convexity hypothesis. The posterior
 construction retains arbitrary convexity, without asserting spectral optimality
-or finite-alphabet realization. This endpoint addresses only attainment for the
-intrinsic all-directed order-normal source class stated above. HMT Remark VII.4
-(PDF p. 60) asks about minimal reverse-test existence; the separate question on
-PDF p. 62 asks for a classification of equality between maximal hockey-stick
-f-divergence and maximal f-divergence. The attainment endpoint does not supply
-that classification. These antecedents and scope distinctions do not establish
-a global priority claim.
+or arbitrary-von-Neumann finite-alphabet realization. These suppliers and
+finite-dimensional overlaps are not separate solved conjectures.
+
+Francesco Buscemi, *Quantum f-divergences from retrodictive tests: a unifying
+classical variational principle*,
+[arXiv:2610.29696v3](https://arxiv.org/abs/2610.29696v3), 31 October 2026,
+Theorem 3.1 (PDF pp. 5--6), assumes faithful density operators rho,sigma,gamma
+in finite dimension and operator-convex f with f(1)=0. It minimizes the distinct
+coupled retrodictive objective D_f(R||F) between two joint laws, over finite
+admissible implementations. As PDF p. 5 explicitly distinguishes, the separate
+reverse-test objectives compare each joint law with the reference law J;
+D_f(R||F) depends on their coupling. This theorem does not subsume the
+arbitrary-convex standard-original attainment endpoint here.
+
+HMT Remark VII.4 (PDF p. 60) asks about minimal reverse-test existence; the
+separate question on PDF p. 62 asks for a classification of equality between
+maximal hockey-stick f-divergence and maximal f-divergence. The attainment
+endpoint does not supply that classification. Bounded literature searches
+have not identified an exact subsuming theorem; worldwide priority remains
+unresolved.

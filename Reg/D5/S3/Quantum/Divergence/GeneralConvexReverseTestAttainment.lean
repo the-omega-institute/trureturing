@@ -90,7 +90,10 @@ def family : Registration arena.{u,v}
     have hf : (1 : ℝ) ≤ 0 := Eq.mp (congrFun h 0) le_rfl
     norm_num at hf
 
+def sourceProposition : Prop := type_of% (@original_reverse_test_extended_attainment.{u,v})
+
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (P := sourceProposition.{u,v})
     (@original_reverse_test_extended_attainment.{u,v}) (Realization signature) Unit Unit where
   unitName := `D5.S3.Quantum.Divergence.GeneralConvexReverseTestAttainment.attainmentUnit
   realizationName := `Reg.D5.S3.Quantum.Divergence.GeneralConvexReverseTestAttainment.family
