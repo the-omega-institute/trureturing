@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Triangle defects control simultaneous group gain potential errors on finite chordal graphs. -/
+   digest: Triangle defects bound simultaneous chordal group gain potential errors. -/
 
 import D5.S3.Combinatorics.Graph.Chordal.Dirac
 import Mathlib.Topology.MetricSpace.IsometricSMul
@@ -29,14 +29,14 @@ theorem IsChordal.exists_approximate_gain_potential [Finite V] {G : SimpleGraph 
     (hG : G.IsChordal) (g : V → V → H) (ε : ℝ) (hε : 0 ≤ ε)
     (hrev : ∀ i j, G.Adj i j → g j i = (g i j)⁻¹)
     (htri : ∀ i j k, G.Adj i j → G.Adj j k → G.Adj i k →
-      dist (g i j * g j k) (g i k) ≤ ε) :
+      _root_.dist (g i j * g j k) (g i k) ≤ ε) :
     ∃ φ : V → H, ∀ i j, G.Adj i j →
-      dist (g i j) ((φ i)⁻¹ * φ j) ≤ ((Nat.card V - 2 : ℕ) : ℝ) * ε := by
+      _root_.dist (g i j) ((φ i)⁻¹ * φ j) ≤ ((Nat.card V - 2 : ℕ) : ℝ) * ε := by
   classical
   let := Fintype.ofFinite V
   have construct : ∀ s : Finset V, ∃ φ : V → H,
       ∀ i ∈ s, ∀ j ∈ s, G.Adj i j →
-        dist (g i j) ((φ i)⁻¹ * φ j) ≤ ((s.card - 2 : ℕ) : ℝ) * ε := by
+        _root_.dist (g i j) ((φ i)⁻¹ * φ j) ≤ ((s.card - 2 : ℕ) : ℝ) * ε := by
     intro s
     induction s using Finset.strongInductionOn with
     | _ s ih =>
@@ -58,7 +58,7 @@ theorem IsChordal.exists_approximate_gain_potential [Finite V] {G : SimpleGraph 
         · obtain ⟨w, hw, hxw⟩ := hn
           let φ : V → H := Function.update ψ x (ψ w * (g x w)⁻¹)
           have extend : ∀ j ∈ s.erase x, G.Adj x j →
-              dist (g x j) ((φ x)⁻¹ * φ j) ≤ ((s.card - 2 : ℕ) : ℝ) * ε := by
+              _root_.dist (g x j) ((φ x)⁻¹ * φ j) ≤ ((s.card - 2 : ℕ) : ℝ) * ε := by
             intro j hj hxj
             have hjx : j ≠ x := (Finset.mem_erase.mp hj).1
             have hwx : w ≠ x := (Finset.mem_erase.mp hw).1
@@ -73,17 +73,17 @@ theorem IsChordal.exists_approximate_gain_potential [Finite V] {G : SimpleGraph 
                 intro heq
                 exact hjw (congrArg Subtype.val heq).symm)
               have htwo : 2 ≤ (s.erase x).card := by
-                exact Finset.one_lt_card.mpr ⟨w, hw, j, hj, hjw.symm⟩
+                exact Finset.one_lt_card.mpr ⟨w, hw, j, hj, Ne.symm hjw⟩
               have hsum : (1 : ℝ) + (((s.erase x).card - 2 : ℕ) : ℝ) =
                   ((s.card - 2 : ℕ) : ℝ) := by
                 exact_mod_cast (show 1 + ((s.erase x).card - 2) = s.card - 2 by omega)
               calc
-                dist (g x j) ((φ x)⁻¹ * φ j) ≤
-                    dist (g x j) (g x w * g w j) +
-                      dist (g x w * g w j) ((φ x)⁻¹ * φ j) := dist_triangle _ _ _
-                _ = dist (g x w * g w j) (g x j) +
-                      dist (g w j) ((ψ w)⁻¹ * ψ j) := by
-                    rw [dist_comm (g x j)]
+                _root_.dist (g x j) ((φ x)⁻¹ * φ j) ≤
+                    _root_.dist (g x j) (g x w * g w j) +
+                      _root_.dist (g x w * g w j) ((φ x)⁻¹ * φ j) := _root_.dist_triangle _ _ _
+                _ = _root_.dist (g x w * g w j) (g x j) +
+                      _root_.dist (g w j) ((ψ w)⁻¹ * ψ j) := by
+                    rw [_root_.dist_comm (g x j)]
                     simp only [φ, Function.update_same, Function.update_noteq hjx,
                       mul_inv_rev, inv_inv, mul_assoc, dist_mul_left]
                 _ ≤ ε + (((s.erase x).card - 2 : ℕ) : ℝ) * ε :=
@@ -97,14 +97,14 @@ theorem IsChordal.exists_approximate_gain_potential [Finite V] {G : SimpleGraph 
           · by_cases hjx : j = x
             · subst j
               calc
-                dist (g i x) ((φ i)⁻¹ * φ x) =
-                    dist (g x i) ((φ x)⁻¹ * φ i) := by
+                _root_.dist (g i x) ((φ i)⁻¹ * φ x) =
+                    _root_.dist (g x i) ((φ x)⁻¹ * φ i) := by
                   rw [hrev x i hij.symm, ← dist_inv_inv (g x i) ((φ x)⁻¹ * φ i)]
                   simp
                 _ ≤ _ := extend i (Finset.mem_erase.mpr ⟨hix, hi⟩) hij.symm
-            · exact (by simpa [φ, hix, hjx] using
-                hψ i (Finset.mem_erase.mpr ⟨hix, hi⟩)
-                  j (Finset.mem_erase.mpr ⟨hjx, hj⟩) hij).trans mono
+            · have hold := hψ i (Finset.mem_erase.mpr ⟨hix, hi⟩)
+                  j (Finset.mem_erase.mpr ⟨hjx, hj⟩) hij
+              simpa [φ, hix, hjx] using hold.trans mono
         · refine ⟨ψ, ?_⟩
           intro i hi j hj hij
           have hix : i ≠ x := by
