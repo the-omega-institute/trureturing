@@ -28,7 +28,7 @@ def coreCoordinates (t : Word 3 → ℂ) : Fin 5 → ℂ :=
   ![reconstructedLeft t 0, canonicalCore t 0 0 0, canonicalCore t 0 0 1,
     canonicalCore t 1 0 0, canonicalCore t 1 0 1]
 
-private lemma canonical_shape (t : Word 3 → ℂ) (ht : t ∈ openBoundaryMPS 3)
+lemma canonical_shape (t : Word 3 → ℂ) (ht : t ∈ openBoundaryMPS 3)
     (hg : eval t chartPoly ≠ 0) :
     let θ : OpenBoundaryMPSTwoSiteMinimality.Parameter := (coreCoordinates t, 0, 0)
     OpenBoundaryMPSTwoSiteMinimality.left θ = reconstructedLeft t ∧ OpenBoundaryMPSTwoSiteMinimality.core θ = canonicalCore t := by
@@ -599,7 +599,7 @@ theorem quotient_retraction (m : ℕ) (p : Quotient) (hp : 0 < p.2.1)
 def quotientLocusPolynomial (m : ℕ) : MvPolynomial (ObservationIndex ⊕ ObservationIndex) ℝ :=
   OpenBoundaryMPSDensityGenericity.observedPolynomial *
     OpenBoundaryMPSDensityGenericity.normPolynomial (boundaryGramPolynomial m 0 0)
-private lemma quotientLocus_eval (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ) :
+theorem quotientLocus_eval (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ) :
     eval (OpenBoundaryMPSDensityGenericity.realCoordinates (fun ij => Q ij.1 ij.2))
       (quotientLocusPolynomial m) ≠ 0 ↔
     eval (OpenBoundaryMPSDensityGenericity.realCoordinates
