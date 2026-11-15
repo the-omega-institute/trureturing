@@ -34,7 +34,7 @@ noncomputable section
 /-- Primitive `2^n`-th root of unity: `ω_n = e^{2πi/2^n}`
 [dW19, qcnotes.tex:1690].
 Forward-transform sign convention (`+2πi`, not `−2πi`). -/
-public def ω (n : ℕ) : ℂ :=
+@[expose] public def ω (n : ℕ) : ℂ :=
   Complex.exp (↑(2 * Real.pi / (2 : ℝ) ^ n) * Complex.I)
 -- [dW19, qcnotes.tex:1690]: ω_N = e^{2πi/N}
 
@@ -49,7 +49,7 @@ lemma omega_pow_eq_one (n : ℕ) : ω n ^ (2 ^ n) = 1 := by
 /-! ### Normalization -/
 
 /-- QFT normalization factor: `1/√(2^n)`, generalizing `NormalizedVector.invSqrt2`. -/
-public def invSqrtN (n : ℕ) : ℂ := (↑(Real.sqrt ((2 : ℝ) ^ n)))⁻¹
+@[expose] public def invSqrtN (n : ℕ) : ℂ := (↑(Real.sqrt ((2 : ℝ) ^ n)))⁻¹
 
 /-- Recursive normalization of the Fourier transform. -/
 lemma invSqrtN_succ (n : Nat) :

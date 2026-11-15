@@ -15,16 +15,11 @@ Modified to consume the receiver's independent analytic QFT on every vector.
 -/
 
 
-import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.NoSwapMatrix
-import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Reverse.Matrix
+import D5.S3.Quantum.FourierCircuit.Entries
+import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Mathematics
+import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Matrix
+import D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary
 import D5.S3.Quantum.ShorCountingMarginal
-import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.NoSwapMatrix
-import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Reverse.Matrix
-import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Matrix
-import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source
-import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Mathematics
-import all D5.S3.Quantum.FourierCircuit.Util.FinPow.BitReverse
-import all D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary
 
 namespace QuantumAlg.QuantumFourierTransform.Source
 noncomputable section
@@ -34,19 +29,8 @@ network, equals the receiver's positive normalized QFT on every input vector.
 No equality modulo global phase is taken. Width zero is included. -/
 theorem circuit_action (oracles : OracleModel) (q : Nat)
     (environment : oracles.Interpretation) (v : Fin (2 ^ q) → ℂ) :
-    (onBinaryLabels (circuit oracles q) environment).applyVec v =
+    Matrix.mulVec (onBinaryLabels (circuit oracles q) environment) v =
       QuantumPhaseEstimationGeneral.QFT (2 ^ q) v := by
-  have entry (output input : Fin (2 ^ q)) :
-      onBinaryLabels (circuit oracles q) environment output input =
-        invSqrtN q * ω q ^ (output.val * input.val) := by
-    rw [circuit, qftSource_binaryMatrix_seq (environment := environment),
-      qftSource_reverse_binaryMatrix (environment := environment)]
-    change Matrix.mulVec ((qftReverseBitsPerm q).permMatrix Complex)
-      (fun row => onBinaryLabels (noSwap oracles q) environment row input) output = _
-    rw [Matrix.permMatrix_mulVec]
-    change onBinaryLabels (noSwap oracles q) environment (qftReverseBits q output) input = _
-    rw [qftSource_noSwap_binaryMatrix_entry (environment := environment),
-      qftReverseBits_involutive]
   have scale : invSqrtN q = QuantumPhaseEstimationGeneral.scale (2 ^ q) := by
     simp only [invSqrtN, QuantumPhaseEstimationGeneral.scale, Nat.cast_pow, Nat.cast_ofNat]
   have phase (output input : Fin (2 ^ q)) :
@@ -63,7 +47,7 @@ theorem circuit_action (oracles : OracleModel) (q : Nat)
   rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro input _
-  rw [entry, scale, phase]
+  rw [circuit_entry, scale, phase]
   ring
 
 end

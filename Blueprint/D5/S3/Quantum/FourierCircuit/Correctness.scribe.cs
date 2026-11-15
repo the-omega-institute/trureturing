@@ -10,7 +10,7 @@ internal sealed class CorrectnessDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Correctness.circuit_action"),
                 H("Exact action on every vector"),
                 StatementSource.FromAuthor(Disp(All(Eq(
-                    C("applyVec", C("onBinaryLabels", C("circuit", X("oracles"), X("q")), X("environment")), X("v")),
+                    C("mulVec", C("onBinaryLabels", C("circuit", X("oracles"), X("q")), X("environment")), X("v")),
                     C("QFT", Pow(Num(2), X("q")), X("v"))),
                     ("oracles", X("OracleModel")), ("q", X("Nat")),
                     ("environment", C("Interpretation", X("oracles"))),
@@ -24,8 +24,6 @@ internal sealed class CorrectnessDocument : IScribeDocumentDefinition
     private static Formula C(string s, params Formula[] xs) => DefinitionDsl.Call(s, xs);
     private static Formula Eq(Formula x, Formula y) => DefinitionDsl.Equal(x, y);
     private static Formula Pow(Formula x, Formula y) => new Formula.Power(x, y);
-    private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
-    private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
     private static Formula All(Formula f, params (string Name, Formula Type)[] xs)
     {
         for (var i = xs.Length - 1; i >= 0; --i)

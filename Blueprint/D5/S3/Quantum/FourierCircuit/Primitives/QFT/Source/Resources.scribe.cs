@@ -23,7 +23,6 @@ internal sealed class ResourcesDocument : IScribeDocumentDefinition
     private static Formula X(string s) => DefinitionDsl.Id(s);
     private static Formula C(string s, params Formula[] xs) => DefinitionDsl.Call(s, xs);
     private static Formula Eq(Formula x, Formula y) => DefinitionDsl.Equal(x, y);
-    private static Formula Pow(Formula x, Formula y) => new Formula.Power(x, y);
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
     private static Formula All(Formula f, params (string Name, Formula Type)[] xs)
