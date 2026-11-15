@@ -70,14 +70,6 @@ namespace CShape
 
 end CShape
 
-namespace AccountingShapeFixtures
-
-/-- Every classical storage magnitude is derived from a closed shape. -/
-/-- Proof fields in unit residues do not add runtime storage. -/
-/-- The point encoding has one infinity tag and two coordinates. -/
-/-- error: Unknown constant -/
-/-- error: Unknown constant -/
-end AccountingShapeFixtures
 
 end QuantumAlg
 

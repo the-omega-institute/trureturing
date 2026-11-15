@@ -98,7 +98,7 @@ public def ket (x : R.Index) : NormalizedVector R :=
 @[simp]
 public lemma ket_apply (x i : R.Index) :
     ket x i = if i = x then 1 else 0 := by
-  simp [ket]
+  simp [ket, ofVector]
 
 
 end
