@@ -121,11 +121,14 @@ private theorem mulVec_successors (v : Fin 122 → ℤ) (i : Fin 122) :
   change (∑ s : Fin 122, quotient i s * v s) = _
   simp_rw [hq]
   simp_rw [← List.sum_map_mul_right]
-  rw [← show (((successors i : List (Fin 122)) : Multiset (Fin 122)).map
+  have hs : ((successors i).map
       (fun j => ∑ s : Fin 122, (if j = s then (1 : ℤ) else 0) * v s)).sum =
-      ∑ s : Fin 122, (((successors i : List (Fin 122)) : Multiset (Fin 122)).map
-        (fun j => (if j = s then (1 : ℤ) else 0) * v s)).sum from
-    Multiset.sum_map_sum]
+      ∑ s : Fin 122, ((successors i).map
+        (fun j => (if j = s then (1 : ℤ) else 0) * v s)).sum := by
+    simpa only [Multiset.map_coe, Multiset.sum_coe] using
+      (Multiset.sum_map_sum (m := (successors i : Multiset (Fin 122)))
+        (s := Finset.univ) (f := fun j s => (if j = s then (1 : ℤ) else 0) * v s))
+  rw [← hs]
   simp [ite_mul]
 
 theorem quotient_certificate :
