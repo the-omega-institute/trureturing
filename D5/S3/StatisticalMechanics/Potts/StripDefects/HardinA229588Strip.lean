@@ -21,9 +21,10 @@ W: proof_shape=bind-only; consumers=finite_certificate, result
 decidableValid: proof_shape=bind-only; consumers=finite_certificate
 a: proof_shape=bind-only; consumers=result
 finite_certificate: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=external sequence A229588
+result: proof_shape=bind-only; consumers=none (external open-problem-resolution #30838)
 -/
 
+import Mathlib.Data.Matrix.Block
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
@@ -44,22 +45,20 @@ def Valid (_ : Row) (d : ℕ) : Prop := d ≤ 1
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (d ≤ 1))
 def cl (p : Row) (d : ℕ) : Fin 10 :=
-  if h : d ≤ 1 then
-    ⟨(1 - d) * 5 + (HardinA233258PairTransfer.cls (p 0, p 1, p 2)).val, by
-      have hc := (HardinA233258PairTransfer.cls (p 0, p 1, p 2)).isLt
-      interval_cases d <;> omega⟩
+  if d = 1 then (HardinA233258PairTransfer.cls (p 0, p 1, p 2)).castAdd 5
+  else if d = 0 then (HardinA233258PairTransfer.cls (p 0, p 1, p 2)).natAdd 5
   else 9
 def T : Matrix (Fin 10) (Fin 10) ℤ :=
-  ![![2, 2, 2, 2, 0, 0, 2, 0, 0, 2],
-    ![1, 1, 0, 1, 1, 0, 3, 3, 2, 2],
-    ![1, 1, 0, 0, 0, 0, 1, 3, 3, 2],
-    ![1, 1, 1, 1, 0, 1, 2, 1, 3, 3],
-    ![0, 0, 0, 1, 1, 1, 3, 2, 2, 1],
-    ![0, 0, 0, 0, 0, 2, 2, 2, 2, 0],
-    ![0, 0, 0, 0, 0, 1, 1, 0, 1, 1],
-    ![0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
-    ![0, 0, 0, 0, 0, 1, 1, 1, 1, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 1, 1]]
+  Matrix.reindex (finSumFinEquiv : Fin 5 ⊕ Fin 5 ≃ Fin 10)
+    (finSumFinEquiv : Fin 5 ⊕ Fin 5 ≃ Fin 10)
+    (Matrix.fromBlocks (HardinA233258PairTransfer.Q)
+      (![![0, 2, 0, 0, 2],
+      ![0, 3, 3, 2, 2],
+      ![0, 1, 3, 3, 2],
+      ![1, 2, 1, 3, 3],
+      ![1, 3, 2, 2, 1]])
+      (0)
+      (HardinA233258PairTransfer.Q))
 def initial : Fin 10 → ℤ := ![3, 6, 6, 6, 6, 0, 0, 0, 0, 0]
 def terminal : Fin 10 → ℤ := ![0, 0, 0, 0, 0, 1, 1, 1, 1, 1]
 def W : Fin 7 → Fin 10 → ℤ :=
