@@ -51,13 +51,17 @@ internal sealed class MurthyA085124Document : IScribeDocumentDefinition
                 + "use with a prime-factor word and the joint classification are a repository "
                 + "derivation. The bounded literature screen found no exact resolution and "
                 + "does not establish global novelty.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source, Helper)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source, Helper),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a085124-murthy-joint-digit-product"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("murthy-a085124-" + name), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula All(string name, Formula body) => new Formula.Bind(
