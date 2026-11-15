@@ -1,0 +1,16 @@
+**定义 182.1（二元球、共同零方向及正限制锥）。** 完整沿用181.1的单系统前件：有限维实空间 $V$、闭尖生成锥 $C$、严格正单位 $u$、整个紧底 $K$、全部纯点 $P=\operatorname{ext}K$、完整原菜单 $\mathcal E=[0,u]$、实际 L2、全混态 $\mathsf Z_2$ 及实际线恢复 $\mathsf{PL}$。固定实际二元球 $B$，写
+
+$$
+\begin{aligned}
+L_B&=\operatorname{cone}B,& W_B&=\operatorname{span}L_B,\\
+H_B&=\operatorname{conv}(P_B^\perp),& M_B&=\operatorname{span}(\operatorname{cone}H_B),\\
+\Sigma_B&=C^*\cap M_B^\perp,&
+\Gamma_B&=\{g|_{W_B}:g\in\Sigma_B\},\\
+Q_B&=W_B\cap\overline{C+M_B},&
+\widehat B&=Q_B\cap\{u_B=1\},\qquad u_B=u|_{W_B}.
+\end{aligned}
+\tag{182.1}
+$$
+
+约定 $\operatorname{cone}\varnothing=\{0\}$，$M_B^\perp$ 为线性消去子，星号为相应空间中的非负对偶；不预设自对偶内积。$\widehat B$ 称为共同零方向的闭商影体。若 $\pi_B:V\to V/M_B$ 为商映射，则 $\overline{C+M_B}=\pi_B^{-1}(\overline{\pi_B(C)})$。因而这是先忘去共同零方向、再在 $W_B$ 中观察闭商锥的定义，不把商影点认作原 $K$ 中的实际准备。即使 $C$ 闭，$C+M_B$ 也不得省略闭包。
+
