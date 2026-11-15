@@ -232,12 +232,12 @@ private theorem rainbow_algebra (a b c d : K) :
       a + b = c + d ∧ a + c = b + d ∧ a + b ≠ 0 ∧ a + c ≠ 0 ∧ a + b ≠ a + c := by
   constructor
   · rintro ⟨hab,hac,had,hbc,hbd,hcd⟩
-    have hx : a + b ≠ 0 := by simpa only [add_eq_zero] using hab
-    have hy : a + c ≠ 0 := by simpa only [add_eq_zero] using hac
-    have hz : a + d ≠ 0 := by simpa only [add_eq_zero] using had
-    have hxy : a + b ≠ a + c := by simpa only [add_left_cancel_iff] using hbc
-    have hzx : a + d ≠ a + b := by simpa only [add_left_cancel_iff] using Ne.symm hbd
-    have hzy : a + d ≠ a + c := by simpa only [add_left_cancel_iff] using Ne.symm hcd
+    have hx : a + b ≠ 0 := fun h => hab ((add_eq_zero a b).mp h)
+    have hy : a + c ≠ 0 := fun h => hac ((add_eq_zero a c).mp h)
+    have hz : a + d ≠ 0 := fun h => had ((add_eq_zero a d).mp h)
+    have hxy : a + b ≠ a + c := fun h => hbc (add_left_cancel h)
+    have hzx : a + d ≠ a + b := fun h => hbd (add_left_cancel h).symm
+    have hzy : a + d ≠ a + c := fun h => hcd (add_left_cancel h).symm
     have ht := IsAddKleinFour.eq_add_of_ne_all hx hy hxy hz hzx hzy
     have hd : d = a + (b + c) := by
       simpa [add_assoc, add_left_comm, add_comm] using congrArg (fun z => a + z) ht
@@ -248,9 +248,9 @@ private theorem rainbow_algebra (a b c d : K) :
       simpa [add_assoc, add_left_comm, add_comm] using
         (congrArg (fun z => c + z) hh).symm
     subst d
-    have hab : a ≠ b := by simpa only [add_eq_zero] using hx
-    have hac : a ≠ c := by simpa only [add_eq_zero] using hy
-    have hbc : b ≠ c := by simpa only [add_left_cancel_iff] using hxy
+    have hab : a ≠ b := fun h => hx ((add_eq_zero a b).mpr h)
+    have hac : a ≠ c := fun h => hy ((add_eq_zero a c).mpr h)
+    have hbc : b ≠ c := fun h => hxy (congrArg (fun z => a + z) h)
     refine ⟨hab,hac,?_,hbc,?_,?_⟩
     · intro h
       have hz : b + c = 0 := add_left_cancel
@@ -354,24 +354,32 @@ theorem sum_fields_by_kind (N M : ℕ) :
   rw [sum_edges]
   have hV : (∑ i : Fin N, ∑ j : Fin (M + 1), N_e (.V i j : Edge (N + 1) (M + 1))) =
       N_H M N := by
-    rw [N_H, Finset.sum_comm]
-    apply Finset.sum_congr rfl
-    intro i _
-    apply Finset.sum_congr rfl
-    intro j _
-    exact (N_transpose (.V i j : Edge (N + 1) (M + 1))).symm
+    calc
+      _ = ∑ i : Fin N, ∑ j : Fin (M + 1),
+          N_e (.H j i : Edge (M + 1) (N + 1)) := by
+        apply Finset.sum_congr rfl
+        intro i _
+        apply Finset.sum_congr rfl
+        intro j _
+        exact (N_transpose (.V i j : Edge (N + 1) (M + 1))).symm
+      _ = ∑ j : Fin (M + 1), ∑ i : Fin N,
+          N_e (.H j i : Edge (M + 1) (N + 1)) := Finset.sum_comm
+      _ = N_H M N := rfl
   have hA : (∑ i : Fin N, ∑ j : Fin M, N_e (.A i j : Edge (N + 1) (M + 1))) =
       N_D N M := by
     unfold N_D
     apply Finset.sum_congr rfl
     intro i _
-    rw [← (Fin.revPerm (n := M)).sum_comp]
+    rw [← Equiv.sum_comp (Fin.revPerm (n := M))
+      (fun j => N_e (.A i j : Edge (N + 1) (M + 1)))]
     apply Finset.sum_congr rfl
     intro j _
     exact N_reflect (.D i j : Edge (N + 1) (M + 1))
   change N_H N M + _ + N_D N M + _ = _
-  rw [hV,hA]
-  omega
+  calc
+    _ = N_H N M + N_H M N + N_D N M + N_D N M :=
+      congrArg₂ (fun a b => N_H N M + a + N_D N M + b) hV hA
+    _ = _ := by omega
 
 /-- This is the orientation decomposition used in the closed-form count. -/
 theorem count_by_kind (N M : ℕ) (hN : 1 ≤ N) (hM : 1 ≤ M) :
