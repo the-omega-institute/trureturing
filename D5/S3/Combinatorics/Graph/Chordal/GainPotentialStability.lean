@@ -84,8 +84,7 @@ theorem IsChordal.exists_approximate_gain_potential [Finite V] {G : SimpleGraph 
                 _ = Dist.dist (g x w * g w j) (g x j) +
                       Dist.dist (g w j) ((ψ w)⁻¹ * ψ j) := by
                     rw [_root_.dist_comm (g x j)]
-                    simp only [φ, Function.update_same, Function.update_noteq hjx,
-                      mul_inv_rev, inv_inv, mul_assoc, dist_mul_left]
+                    simp [φ, hjx, mul_assoc, dist_mul_left]
                 _ ≤ ε + (((s.erase x).card - 2 : ℕ) : ℝ) * ε :=
                     add_le_add (htri x w j hxw hwj hxj) (hψ w hw j hj hwj)
                 _ = ((s.card - 2 : ℕ) : ℝ) * ε := by rw [← hsum]; ring
