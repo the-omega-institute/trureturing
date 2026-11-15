@@ -10,6 +10,10 @@ $$(\forall (n: \operatorname{Nat}), ((6 < n) \Rightarrow (\operatorname{Int}.\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229578.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin229578` (proved) by `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229578.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin229578","declaration_gid":"D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229578.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2013). *T(n,k) = number of defective 4-colorings of an n X k 0..3 array connected horizontally, vertically, diagonally and antidiagonally with exactly one mistake, and colors introduced in row-major 0..3 order.*. URL: <https://oeis.org/A229578>.
