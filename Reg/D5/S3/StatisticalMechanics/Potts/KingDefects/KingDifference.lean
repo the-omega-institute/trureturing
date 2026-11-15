@@ -16,21 +16,22 @@ noncomputable section
 namespace add_eq_zero
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.UniverseSingleReadout.signature K (fun _ => K) (fun _ => Prop)
+  _root_.Reg.Support.UniverseSingleReadout.signature K (fun _ => K) (fun _ => K)
 
 def actual : Realization signature :=
-  realize signature (fun _ a b => a = b) (fun e => nomatch e)
+  realize signature (fun _ a b => a + b) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ a b => a + b + 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (a b : K), a + b = 0 ↔ R.readout () a b
+  Law R := ∀ (a b : K), R.readout () a b = 0 ↔ a = b
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact (h 0 0).mp (by simp)
+  have hb := (h 0 0).mpr rfl
+  simpa [rejected, realize] using hb
 
 def family : Registration arena (type_of% @KingDifference.add_eq_zero) where
   actual := actual
@@ -42,9 +43,8 @@ def family : Registration arena (type_of% @KingDifference.add_eq_zero) where
     intro i
     cases i
     refine ⟨0, 0, 1, ?_⟩
-    change ((0 : K) = 0) ≠ ((0 : K) = 1)
-    intro h
-    exact zero_ne_one (Eq.mp h rfl)
+    change (0 + 0 : K) ≠ 0 + 1
+    simp
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@KingDifference.add_eq_zero) (Realization signature) Type Unit where
@@ -59,7 +59,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ a b => a = b) (fun e => nomatch e))
+  readout := some (realize signature (fun _ a b => a + b) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -68,7 +68,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingDifference
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "arg"]
+    readouts := #[{ path := #["body", "body", "fn", "arg", "fn", "arg"]
                     stateBinder := 1
                     functionOperand := false
                     booleanPredicate := false
