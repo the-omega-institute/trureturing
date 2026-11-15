@@ -66,7 +66,7 @@ The proof reuses the native inverseTransfer, inverseDualTransfer, trialLeft, tri
 
 In Hermitian coordinates h(s,d,u,v)=[[ (s+d)/2,(u+Iv)/2 ],[ (u-Iv)/2,(s-d)/2 ]], the determinant is (s squared-d squared-u squared-v squared)/4. Its differentials at the left and right rank-one Grams are delta s-delta u and delta s+delta v. The resulting real derivative is triangular: w maps to L Re(w)+I(C Re(w)+R Im(w)). The left angular entry is zero; C retains the full radial contribution of the right trial matrix.
 
-The division-free integer recurrences used on the live proof path are a0=(1,0,-1), b0=(1,0,1), x0=(0,1,0), y0=(1,0,0). Set a'=(3a0-2a1,5a2,-2a0+3a1), b'=(3b0+2b1,b2,2b0+3b1), x'=(3x0-2x1,5x2,-2x0+3x1), y'=(3y0+2y2,2y0+3y2,y1). With t(n)=a(n)0 b(n)1+a(n)1 b(n)0, set U0=V0=0, U(n+1)=5Un+2t(n+1), and V(n+1)=5Vn+2(-1)^(n+2)(x(n+1)0+5^(n+1)y(n+2)2). Coordinate inverse-power induction and finite-sum induction prove U(p)=5^p L and V(q)=5^q R after integer-to-real casts.
+OpenBoundaryMPSInteriorTransversalityCertificate supplies the division-free integer recurrences and their nonzero mod-5 product certificate. The recurrences used on the live proof path are a0=(1,0,-1), b0=(1,0,1), x0=(0,1,0), y0=(1,0,0). Set a'=(3a0-2a1,5a2,-2a0+3a1), b'=(3b0+2b1,b2,2b0+3b1), x'=(3x0-2x1,5x2,-2x0+3x1), y'=(3y0+2y2,2y0+3y2,y1). With t(n)=a(n)0 b(n)1+a(n)1 b(n)0, set U0=V0=0, U(n+1)=5Un+2t(n+1), and V(n+1)=5Vn+2(-1)^(n+2)(x(n+1)0+5^(n+1)y(n+2)2). Coordinate inverse-power induction and finite-sum induction prove U(p)=5^p L and V(q)=5^q R after integer-to-real casts.
 
 Over ZMod 5, induction gives a(n+1)=3^(n+1)(1,0,1), b(n+1)=2^n(3,1,2), and x(n+1)=3^(n+1)(1,0,1). Therefore U(p)=1 and V(q)=2(-1)^(q+1)3^q for every positive p,q. Their nonzero residues imply nonzero integer and real values, hence L and R are nonzero. This certificate is consumed to build e with inverse w maps to Re(w)/L+I((Im(w)-C Re(w)/L)/R). No rational-to-finite-field homomorphism or bounded experiment supplies this inference.
 
@@ -79,3 +79,4 @@ This closes the explicit derivative premise at one actual all-length witness for
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorTransversality.leftBoundary`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorTransversality.rightBoundary`
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization](OpenBoundaryMPSInteriorRootRealization.md)
+- Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorTransversalityCertificate](OpenBoundaryMPSInteriorTransversalityCertificate.md)
