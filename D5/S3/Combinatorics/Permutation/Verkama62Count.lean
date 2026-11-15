@@ -83,6 +83,5 @@ theorem Double.inversion_increment {n : ℕ} {π : Equiv.Perm (Fin n)}
     inversions_insert π S e.v e.hv, hvcount, hucount]
   have hxv : e.x ≠ e.v := ne_of_lt e.hxv
   simp [hxv]
-  omega
 
 end D5.S3.Combinatorics.Permutation.Verkama62Local
