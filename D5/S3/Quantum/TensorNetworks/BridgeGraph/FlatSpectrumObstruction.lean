@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/TensorNetworks/BridgeGraph/FlatSpectrumObstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/TensorNetworks/BridgeGraph/FlatSpectrumObstruction.claim; result=D5/S3/Quantum/TensorNetworks/BridgeGraph/FlatSpectrumObstruction.result; claim=D5/S3/Quantum/TensorNetworks/BridgeGraph/FlatSpectrumObstruction.claim
    digest: Kernel isolation for the native width-three scalar-Gram obstruction. -/
 
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
@@ -13,6 +13,8 @@ import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 
 /-! The global scalar-Gram equation retains the native rectangular tensor grouping. -/
+
+set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
 
@@ -242,7 +244,7 @@ private theorem rank_kronecker_one (H : Matrix (Fin 3) (Fin 3) ℂ) (n : ℕ) :
     · subst j
       simp [e, Matrix.kronecker, Matrix.kroneckerMap_apply]
     · simp [e, Matrix.kronecker, Matrix.kroneckerMap_apply,
-        Matrix.blockDiagonal'_apply_ne, hij, Matrix.one_apply]
+        Matrix.blockDiagonal'_apply_ne, hij]
   rw [← he, Matrix.rank_submatrix,
     D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Blocks.rank_block]
   simp
@@ -275,13 +277,75 @@ private theorem stack_gram {a b c d : ℕ}
     A (u, k) (v, k)) hF
   simp only [Matrix.sum_apply, Matrix.kronecker, Matrix.kroneckerMap_apply,
     Matrix.smul_apply, smul_eq_mul, Matrix.one_apply, Prod.mk.injEq, and_true] at h
-  simp only [Matrix.mul_apply, Fintype.sum_prod_type, Matrix.conjTranspose_apply,
-    Matrix.kronecker, Matrix.kroneckerMap_apply, Matrix.one_apply, stack]
-  simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
-  simp_rw [Finset.sum_mul]
+  simp only [Matrix.mul_apply, Fintype.sum_prod_type]
+  simp only [Matrix.conjTranspose_apply, Matrix.kronecker, Matrix.kroneckerMap_apply,
+    Matrix.one_apply, stack]
+  simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+  simp only [Fintype.sum_prod_type, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Finset.sum_mul, Finset.mul_sum] at h ⊢
+  simp only [Matrix.smul_apply, smul_eq_mul, Matrix.one_apply]
+  rw [← h]
+  simp only [mul_assoc, mul_left_comm, mul_comm]
+  conv_lhs =>
+    arg 2
+    ext s
+    rw [Finset.sum_comm]
   rw [Finset.sum_comm]
-  simp_rw [Finset.sum_comm (s := Finset.univ) (t := Finset.univ)]
-  simpa [Fintype.sum_prod_type, Matrix.mul_apply, Matrix.conjTranspose_apply,
-    Finset.sum_mul, Finset.mul_sum, mul_assoc, mul_left_comm, mul_comm] using h
+  apply Finset.sum_congr rfl
+  intro r _
+  apply Finset.sum_congr rfl
+  intro s _
+  rw [Finset.sum_comm]
+
+/-- A native width-three scalar column Gram forces the opposite dimension to be at least `3c`.
+Only positivity of `c` is needed in addition to the strict dimension threshold. -/
+theorem obstruction {a b c d : ℕ}
+    (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
+    (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ) (hc : 0 < c)
+    (hab : 5 * a < 2 * b) (lam : ℝ) (hlam : 0 < lam)
+    (hF : (QuantumMaxFlowBound.flow M N)ᴴ * QuantumMaxFlowBound.flow M N =
+      (lam : ℂ) • 1) : 3 * c ≤ d := by
+  classical
+  have hlam' : (lam : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (ne_of_gt hlam)
+  have hLI := matrix_gram_independent M (flow_common_kernel M N hc hlam' hF) hab
+  let k : Fin c := ⟨0, hc⟩
+  let H : Matrix (Fin 3) (Fin 3) ℂ := fun r s => ((N r)ᴴ * N s) k k
+  have hN : ∀ r s, (N r)ᴴ * N s = H r s • 1 :=
+    scalar_cross_grams M N k hLI hF
+  have hJ : (stack M)ᴴ * Matrix.kronecker H (1 : Matrix (Fin a) (Fin a) ℂ) *
+      stack M = (lam : ℂ) • 1 := stack_gram M N k hF
+  have hbr : b ≤ a * H.rank := by
+    calc
+      b = ((lam : ℂ) • (1 : Matrix (Fin b) (Fin b) ℂ)).rank := by
+        rw [Matrix.rank_smul_of_mem_nonZeroDivisors _
+          (mem_nonZeroDivisors_of_ne_zero hlam'), Matrix.rank_one]
+        simp
+      _ = ((stack M)ᴴ * Matrix.kronecker H (1 : Matrix (Fin a) (Fin a) ℂ) *
+          stack M).rank := congrArg Matrix.rank hJ.symm
+      _ ≤ (Matrix.kronecker H (1 : Matrix (Fin a) (Fin a) ℂ)).rank :=
+        (Matrix.rank_mul_le_left _ _).trans (Matrix.rank_mul_le_right _ _)
+      _ = a * H.rank := rank_kronecker_one H a
+  have hr : H.rank = 3 := by
+    have hle : H.rank ≤ 3 := by simpa using H.rank_le_card_width
+    by_contra hne
+    have htwo : H.rank ≤ 2 := by omega
+    have hmul := Nat.mul_le_mul_left a htwo
+    nlinarith
+  calc
+    3 * c = (Matrix.kronecker H (1 : Matrix (Fin c) (Fin c) ℂ)).rank := by
+      rw [rank_kronecker_one, hr]
+      omega
+    _ = ((concat N)ᴴ * concat N).rank := congrArg Matrix.rank (concat_gram N H hN).symm
+    _ ≤ (concat N).rank := Matrix.rank_mul_le_right _ _
+    _ ≤ d := by simpa using (concat N).rank_le_card_height
+
+/-- The ordered cone contains `(5,13,5,13)`, where the column-Gram obstruction applies. -/
+theorem result : ¬ claim := by
+  intro h
+  obtain ⟨M, N, lam, hlam, hcol, _⟩ :=
+    h 5 13 5 13 (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+      (by norm_num) (by norm_num)
+  have hdim := obstruction M N (by norm_num) (by norm_num) lam hlam (hcol (by norm_num))
+  norm_num at hdim
 
 end D5.S3.Quantum.TensorNetworks.BridgeGraph.FlatSpectrumObstruction
