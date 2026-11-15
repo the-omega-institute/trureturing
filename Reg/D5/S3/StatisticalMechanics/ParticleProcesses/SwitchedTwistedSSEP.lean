@@ -11,7 +11,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
-  (ℕ × ℕ) (fun p => Finset (Configuration p.1 p.2))
+  (Σ _L : ℕ, ℕ) (fun p => Finset (Configuration p.1 p.2))
     (fun p => Finset (Configuration p.1 p.2))
 
 def actual : Realization signature :=
@@ -24,16 +24,18 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ {L N : ℕ} (hL : 1 < L) (f g : Equiv.Perm (Fin N)),
     registeredReachabilityAnswer hL f g ∧
+    ((3 ≤ L → (unionConnected hL f g ↔ lAtLeastThreeCriterion f g)) ∧
+      (L = 2 → (unionConnected hL f g ↔ lTwoCriterion f g))) ∧
     (∀ (s t : Equiv.Perm (Fin N)) (x y : Configuration L N),
       overlap hL s t x y ↔ 0 < branchingProbability hL s t x y) ∧
     (∀ (start : Bool) (C : Finset (Configuration L N)) (k : ℕ),
       alternatingSupport hL f g start C k =
-        switchSupport hL f g start (R.readout () (L, N) C) k)
+        switchSupport hL f g start (R.readout () ⟨L, N⟩ C) k)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   classical
   intro h
-  have hb := (h (L := 2) (N := 1) (by decide) 1 1).2.2 true {fun _ => 0} 0
+  have hb := (h (L := 2) (N := 1) (by decide) 1 1).2.2.2 true {fun _ => 0} 0
   have hx : (fun _ : Fin 2 => (0 : Fin 1)) ∈
       alternatingSupport (by decide) 1 1 true {fun _ => 0} 0 := by
     simp [alternatingSupport]
@@ -43,7 +45,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   classical
   intro role
-  refine ⟨(2, 1), ∅, {fun _ => 0}, ?_⟩
+  refine ⟨⟨2, 1⟩, ∅, {fun _ => 0}, ?_⟩
   change (∅ : Finset (Configuration 2 1)) ≠ {fun _ => 0}
   simp
 
@@ -78,7 +80,7 @@ def registration :
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "arg",
+      path := #["body", "body", "body", "body", "body", "arg", "arg", "arg",
         "body", "body", "body", "arg", "fn", "arg"]
       stateBinder := 6
       functionOperand := false
