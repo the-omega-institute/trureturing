@@ -139,10 +139,7 @@ private theorem eigenfunction_mass_orthogonal {V w u v : ℝ → ℝ} {z y : ℝ
   have hp : (z-y) * bilinearMass w u v = 0 := by nlinarith
   exact (mul_eq_zero.mp hp).resolve_left (sub_ne_zero.mpr hzy)
 private theorem trial_mass_positive {w u : ℝ → ℝ} (hw : ContinuousOn w interval) (hwp : ∀ x ∈ interval, 0 < w x) (hu : dirichletTrial u) (hne : u ≠ 0) : 0 < weightedMass w u := by
-  obtain ⟨x,hx⟩ : ∃ x, u x ≠ 0 := by
-    by_contra hh
-    push_neg at hh
-    apply hne; funext x; exact hh x
+  obtain ⟨x,hx⟩ := Function.ne_iff.mp hne
   have hxi : x ∈ Ioo 0 Real.pi := by
     by_contra hh
     exact hx (hu.2 x hh)
@@ -298,11 +295,7 @@ private theorem minmax_upper_of_two_eigenfunctions {V w u v : ℝ → ℝ} {z y 
       have hpos := mul_pos (sq_pos_of_ne_zero hp2) hMv
       nlinarith [mul_nonneg (sq_nonneg p.1) hMu.le]
     exact Prod.ext hp1 hp2
-  have hinj : Function.Injective F := by
-    intro p q hpq
-    have hz : F (p-q)=0 := by rw [map_sub,hpq,sub_self]
-    have hh := hFzero (p-q) hz
-    exact sub_eq_zero.mp hh
+  have hinj : Function.Injective F := (injective_iff_map_eq_zero F).mpr hFzero
   refine ⟨LinearMap.range F,inferInstance,?_,?_,?_⟩
   · simpa using LinearMap.finrank_range_of_inj hinj
   · intro f hf
@@ -372,8 +365,8 @@ private theorem node_form_lower {V w u : ℝ → ℝ} {z ξ : ℝ} (hV : Continu
   have hdf := trial_derivative_continuous hf
   have hcR : ContinuousOn R interval :=
     (hdf.pow 2).add (hq.mul (hf.1.continuousOn.pow 2))
-  have hL : Icc 0 ξ ⊆ interval := fun _ hx => ⟨hx.1,hx.2.trans hξ.2.le⟩
-  have hR : Icc ξ Real.pi ⊆ interval := fun _ hx => ⟨hξ.1.le.trans hx.1,hx.2⟩
+  have hL : Icc 0 ξ ⊆ interval := Icc_subset_Icc le_rfl hξ.2.le
+  have hR : Icc ξ Real.pi ⊆ interval := Icc_subset_Icc hξ.1.le le_rfl
   have hln : ∀ x ∈ Icc 0 ξ, 0 ≤ u x := by
     intro x hx
     rcases eq_or_lt_of_le hx.1 with he|he
@@ -462,7 +455,7 @@ private theorem shooting_regular {V w : ℝ → ℝ} {z : ℝ} (hV : ContinuousO
 private theorem zero_endpoint_poincare (D : ℝ) (hD : 0 < D) (f df : ℝ → ℝ) (hf : ContinuousOn f (Icc 0 D)) (hdf : ContinuousOn df (Icc 0 D)) (hd : ∀ x ∈ Ioo 0 D, HasDerivAt f (df x) x) (hf0 : f 0=0) (hfD : f D=0) : (∫ x in (0:ℝ)..D, f x^2) ≤ D^2/8*(∫ x in (0:ℝ)..D, df x^2) := by
   have hint := hdf.intervalIntegrable_of_Icc (μ := volume) hD.le
   have hprim (x : ℝ) (hx : x ∈ Icc (0:ℝ) D) : (∫ t in (0:ℝ)..x, df t)=f x := by
-    have hsub : Icc (0:ℝ) x ⊆ Icc 0 D := fun _ ht => ⟨ht.1,ht.2.trans hx.2⟩
+    have hsub : Icc (0:ℝ) x ⊆ Icc 0 D := Icc_subset_Icc le_rfl hx.2
     have hh := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le hx.1 (hf.mono hsub) (fun y hy => hd y ⟨hy.1,hy.2.trans_le hx.2⟩) ((hdf.mono hsub).intervalIntegrable_of_Icc (μ := volume) hx.1)
     simpa [hf0] using hh
   have hc : ContinuousOn (fun x => (df x:ℂ)) (Icc 0 D) :=
@@ -518,7 +511,7 @@ private theorem second_order_unique_zero (a b Q : ℝ) (hab : a < b) (hQ : 0 ≤
         rw [he,abs_mul,abs_mul,abs_mul,abs_of_nonneg (by norm_num : (0:ℝ)≤2)]
       _ ≤ (1+Q)*E x := mul_le_mul h1 habs (by positivity) (by positivity)
   have hEz : E ξ=0 := by simp [E,huz,hduz]
-  have hright := eq_zero_of_abs_deriv_le_mul_abs_self_of_eq_zero_right (f := E) (f' := dE) (K := 1+Q) (a := ξ) (b := b) (hEc.mono (fun _ hx => ⟨hξ.1.le.trans hx.1,hx.2⟩)) (fun x hx => (hEd x ⟨hξ.1.trans_le hx.1,hx.2⟩).hasDerivWithinAt) hEz (fun x hx => hEb x ⟨hξ.1.le.trans hx.1,hx.2.le⟩)
+  have hright := eq_zero_of_abs_deriv_le_mul_abs_self_of_eq_zero_right (f := E) (f' := dE) (K := 1+Q) (a := ξ) (b := b) (hEc.mono (Icc_subset_Icc hξ.1.le le_rfl)) (fun x hx => (hEd x ⟨hξ.1.trans_le hx.1,hx.2⟩).hasDerivWithinAt) hEz (fun x hx => hEb x ⟨hξ.1.le.trans hx.1,hx.2.le⟩)
   have hleft := eq_zero_of_abs_deriv_le_mul_abs_self_of_eq_zero_right (f := fun x => E (-x)) (f' := fun x => -dE (-x)) (K := 1+Q) (a := -ξ) (b := -a) (hEc.comp (continuous_neg.continuousOn) (fun x hx => ⟨by linarith [hx.2],by linarith [hx.1,hξ.2]⟩)) (fun x hx => by
       have hh := (hEd (-x) ⟨by linarith [hx.2],by linarith [hx.1,hξ.2]⟩).comp x (hasDerivAt_neg x)
       simpa only [Function.comp_def,mul_neg_one] using hh.hasDerivWithinAt)
@@ -576,7 +569,7 @@ private theorem fixed_refutation_of_brackets (hbrackets : ∀ (e e0 : ℕ → �
   have hneg := bracket_gap_negative (e 0) (e 1) (e0 0) (e0 1) ha hb ha0 hb0
   have hle := hcomp e e0 he he0
   unfold gap at hle; linarith
-private theorem series_zero_is_shooting {δ z : ℝ} (hδ : δ ∈ Icc (0:ℝ) 1) (hz : z ∈ Icc (0:ℝ) 5) (hzero : determinant δ z = 0) : isShootingEigenvalue ((AffineMap.lineMap (0:ℝ) (δ/100))) fixedWeight z := by
+private theorem series_zero_is_shooting {δ z : ℝ} (hδ : δ ∈ Icc (0:ℝ) 1) (hz : z ∈ Icc (0:ℝ) 5) (hzero : (solution (aParameter z) (bParameter δ z) 1) = 0) : isShootingEigenvalue ((AffineMap.lineMap (0:ℝ) (δ/100))) fixedWeight z := by
   let A := aParameter z
   let B := bParameter δ z
   let u := fun x : ℝ => Real.pi * solution A B (x/Real.pi)
@@ -596,7 +589,7 @@ private theorem series_zero_is_shooting {δ z : ℝ} (hδ : δ ∈ Icc (0:ℝ) 1
   · have h0 := solution_volterra A B hAB.1 hAB.2 (x := 0) ⟨le_rfl,zero_le_one⟩
     simpa [u] using congrArg (fun v : ℝ => Real.pi*v) h0
   · have hs : solution A B 1 = 0 := by
-      rw [← determinant_solution]; exact hzero
+      exact hzero
     simpa [u,hpne,hs]
   · intro x hx
     have hs := congrArg (fun v : ℝ => Real.pi*v) (solution_volterra A B hAB.1 hAB.2 (hscale hx))
@@ -611,115 +604,123 @@ private theorem series_zero_is_shooting {δ z : ℝ} (hδ : δ ∈ Icc (0:ℝ) 1
           dsimp [u,A,B,aParameter,bParameter,fixedWeight]
           field_simp [hpne] <;> ring
     rw [hi]; simpa only [u,mul_add,hpx] using hs
-private theorem endpoint_0 : 0 < determinant 0 (999989311923 / 1000000000000) := by
+private theorem endpoint_0 : 0 < (solution (aParameter (999989311923 / 1000000000000)) (bParameter 0 (999989311923 / 1000000000000)) 1) := by
   have ht := short_full_series_tail D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.aValue0 D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.bValue0 D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.a_bound0 D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.b_bound0
   rw [← state_total] at ht
   have hs := D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.polynomial_sign0
   have htSmall := lt_of_le_of_lt ht short_remainder_lt
   clear ht
   rcases abs_lt.mp htSmall with ⟨htlo, hthi⟩
-  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.aValue0 D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.bValue0 n) = determinant 0 (999989311923 / 1000000000000) := by
-    unfold determinant aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.aValue_eq0,D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.bValue_eq0]
+  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.aValue0 D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.bValue0 n) = (solution (aParameter (999989311923 / 1000000000000)) (bParameter 0 (999989311923 / 1000000000000)) 1) := by
+    simp only [solution, one_pow, mul_one]
+    unfold aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.aValue_eq0,D5.S3.Analytic.SpectralGap.WeightedGapPolynomialCertificate.Endpoint0.bValue_eq0]
   rw [heq] at htlo hthi
   linarith only [hs, htlo, hthi]
-private theorem endpoint_1 : determinant 0 (999989311927 / 1000000000000) < 0 := by
+private theorem endpoint_1 : (solution (aParameter (999989311927 / 1000000000000)) (bParameter 0 (999989311927 / 1000000000000)) 1) < 0 := by
   have ht := short_full_series_tail D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.aValue1 D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.bValue1 D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.a_bound1 D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.b_bound1
   rw [← state_total] at ht
   have hs := D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.polynomial_sign1
   have htSmall := lt_of_le_of_lt ht short_remainder_lt
   clear ht
   rcases abs_lt.mp htSmall with ⟨htlo, hthi⟩
-  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.aValue1 D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.bValue1 n) = determinant 0 (999989311927 / 1000000000000) := by
-    unfold determinant aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.aValue_eq1,D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.bValue_eq1]
+  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.aValue1 D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.bValue1 n) = (solution (aParameter (999989311927 / 1000000000000)) (bParameter 0 (999989311927 / 1000000000000)) 1) := by
+    simp only [solution, one_pow, mul_one]
+    unfold aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.aValue_eq1,D5.S3.Analytic.SpectralGap.WeightedGapMajorant.Endpoint1.bValue_eq1]
   rw [heq] at htlo hthi
   linarith only [hs, htlo, hthi]
-private theorem endpoint_2 : determinant 0 (4000050992847 / 1000000000000) < 0 := by
+private theorem endpoint_2 : (solution (aParameter (4000050992847 / 1000000000000)) (bParameter 0 (4000050992847 / 1000000000000)) 1) < 0 := by
   have ht := short_full_series_tail D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.aValue2 D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.bValue2 D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.a_bound2 D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.b_bound2
   rw [← state_total] at ht
   have hs := D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.polynomial_sign2
   have htSmall := lt_of_le_of_lt ht short_remainder_lt
   clear ht
   rcases abs_lt.mp htSmall with ⟨htlo, hthi⟩
-  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.aValue2 D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.bValue2 n) = determinant 0 (4000050992847 / 1000000000000) := by
-    unfold determinant aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.aValue_eq2,D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.bValue_eq2]
+  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.aValue2 D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.bValue2 n) = (solution (aParameter (4000050992847 / 1000000000000)) (bParameter 0 (4000050992847 / 1000000000000)) 1) := by
+    simp only [solution, one_pow, mul_one]
+    unfold aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.aValue_eq2,D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint2.bValue_eq2]
   rw [heq] at htlo hthi
   linarith only [hs, htlo, hthi]
-private theorem endpoint_3 : 0 < determinant 0 (4000050992851 / 1000000000000) := by
+private theorem endpoint_3 : 0 < (solution (aParameter (4000050992851 / 1000000000000)) (bParameter 0 (4000050992851 / 1000000000000)) 1) := by
   have ht := short_full_series_tail D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.aValue3 D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.bValue3 D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.a_bound3 D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.b_bound3
   rw [← state_total] at ht
   have hs := D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.polynomial_sign3
   have htSmall := lt_of_le_of_lt ht short_remainder_lt
   clear ht
   rcases abs_lt.mp htSmall with ⟨htlo, hthi⟩
-  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.aValue3 D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.bValue3 n) = determinant 0 (4000050992851 / 1000000000000) := by
-    unfold determinant aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.aValue_eq3,D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.bValue_eq3]
+  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.aValue3 D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.bValue3 n) = (solution (aParameter (4000050992851 / 1000000000000)) (bParameter 0 (4000050992851 / 1000000000000)) 1) := by
+    simp only [solution, one_pow, mul_one]
+    unfold aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.aValue_eq3,D5.S3.Analytic.SpectralGap.WeightedGapStateSeries.Endpoint3.bValue_eq3]
   rw [heq] at htlo hthi
   linarith only [hs, htlo, hthi]
-private theorem endpoint_4 : 0 < determinant 1 (253926990157 / 250000000000) := by
+private theorem endpoint_4 : 0 < (solution (aParameter (253926990157 / 250000000000)) (bParameter 1 (253926990157 / 250000000000)) 1) := by
   have ht := short_full_series_tail D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.aValue4 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.bValue4 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.a_bound4 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.b_bound4
   rw [← state_total] at ht
   have hs := D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.polynomial_sign4
   have htSmall := lt_of_le_of_lt ht short_remainder_lt
   clear ht
   rcases abs_lt.mp htSmall with ⟨htlo, hthi⟩
-  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.aValue4 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.bValue4 n) = determinant 1 (253926990157 / 250000000000) := by
-    unfold determinant aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.aValue_eq4,D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.bValue_eq4]
+  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.aValue4 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.bValue4 n) = (solution (aParameter (253926990157 / 250000000000)) (bParameter 1 (253926990157 / 250000000000)) 1) := by
+    simp only [solution, one_pow, mul_one]
+    unfold aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.aValue_eq4,D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint4.bValue_eq4]
   rw [heq] at htlo hthi
   linarith only [hs, htlo, hthi]
-private theorem endpoint_5 : determinant 1 (126963495079 / 125000000000) < 0 := by
+private theorem endpoint_5 : (solution (aParameter (126963495079 / 125000000000)) (bParameter 1 (126963495079 / 125000000000)) 1) < 0 := by
   have ht := short_full_series_tail D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.aValue5 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.bValue5 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.a_bound5 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.b_bound5
   rw [← state_total] at ht
   have hs := D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.polynomial_sign5
   have htSmall := lt_of_le_of_lt ht short_remainder_lt
   clear ht
   rcases abs_lt.mp htSmall with ⟨htlo, hthi⟩
-  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.aValue5 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.bValue5 n) = determinant 1 (126963495079 / 125000000000) := by
-    unfold determinant aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.aValue_eq5,D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.bValue_eq5]
+  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.aValue5 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.bValue5 n) = (solution (aParameter (126963495079 / 125000000000)) (bParameter 1 (126963495079 / 125000000000)) 1) := by
+    simp only [solution, one_pow, mul_one]
+    unfold aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.aValue_eq5,D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.Endpoint5.bValue_eq5]
   rw [heq] at htlo hthi
   linarith only [hs, htlo, hthi]
-private theorem endpoint_6 : determinant 1 (4015736948983 / 1000000000000) < 0 := by
+private theorem endpoint_6 : (solution (aParameter (4015736948983 / 1000000000000)) (bParameter 1 (4015736948983 / 1000000000000)) 1) < 0 := by
   have ht := short_full_series_tail D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.aValue6 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.bValue6 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.a_bound6 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.b_bound6
   rw [← state_total] at ht
   have hs := D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.polynomial_sign6
   have htSmall := lt_of_le_of_lt ht short_remainder_lt
   clear ht
   rcases abs_lt.mp htSmall with ⟨htlo, hthi⟩
-  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.aValue6 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.bValue6 n) = determinant 1 (4015736948983 / 1000000000000) := by
-    unfold determinant aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.aValue_eq6,D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.bValue_eq6]
+  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.aValue6 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.bValue6 n) = (solution (aParameter (4015736948983 / 1000000000000)) (bParameter 1 (4015736948983 / 1000000000000)) 1) := by
+    simp only [solution, one_pow, mul_one]
+    unfold aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.aValue_eq6,D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.bValue_eq6]
   rw [heq] at htlo hthi
   linarith only [hs, htlo, hthi]
-private theorem endpoint_7 : 0 < determinant 1 (4015736948987 / 1000000000000) := by
+private theorem endpoint_7 : 0 < (solution (aParameter (4015736948987 / 1000000000000)) (bParameter 1 (4015736948987 / 1000000000000)) 1) := by
   have ht := short_full_series_tail D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.aValue7 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.bValue7 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.a_bound7 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.b_bound7
   rw [← state_total] at ht
   have hs := D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.polynomial_sign7
   have htSmall := lt_of_le_of_lt ht short_remainder_lt
   clear ht
   rcases abs_lt.mp htSmall with ⟨htlo, hthi⟩
-  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.aValue7 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.bValue7 n) = determinant 1 (4015736948987 / 1000000000000) := by
-    unfold determinant aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.aValue_eq7,D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.bValue_eq7]
+  have heq : (∑' n, coefficient D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.aValue7 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.bValue7 n) = (solution (aParameter (4015736948987 / 1000000000000)) (bParameter 1 (4015736948987 / 1000000000000)) 1) := by
+    simp only [solution, one_pow, mul_one]
+    unfold aParameter bParameter; rw [D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.aValue_eq7,D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint7.bValue_eq7]
   rw [heq] at htlo hthi
   linarith only [hs, htlo, hthi]
-private theorem determinant_zero_between {δ a b : ℝ} (hδ : δ ∈ Icc (0:ℝ) 1) (hab : a ≤ b) (hrange : Icc a b ⊆ Icc (0:ℝ) 5) (hs : (determinant δ a < 0 ∧ 0 < determinant δ b) ∨ (0 < determinant δ a ∧ determinant δ b < 0)) : ∃ z ∈ Icc a b, determinant δ z=0 := by
+private theorem determinant_zero_between {δ a b : ℝ} (hδ : δ ∈ Icc (0:ℝ) 1) (hab : a ≤ b) (hrange : Icc a b ⊆ Icc (0:ℝ) 5) (hs : ((solution (aParameter a) (bParameter δ a) 1) < 0 ∧ 0 < (solution (aParameter b) (bParameter δ b) 1)) ∨ (0 < (solution (aParameter a) (bParameter δ a) 1) ∧ (solution (aParameter b) (bParameter δ b) 1) < 0)) : ∃ z ∈ Icc a b, (solution (aParameter z) (bParameter δ z) 1)=0 := by
   have hc := (determinant_continuous hδ).mono hrange
   rcases hs with hs|hs
   · exact intermediate_value_Icc hab hc ⟨hs.1.le,hs.2.le⟩
   · exact intermediate_value_Icc' hab hc ⟨hs.2.le,hs.1.le⟩
-private theorem root_0 : ∃ z ∈ Icc ((999989311923 / 1000000000000):ℝ) (999989311927 / 1000000000000), determinant 0 z=0 := by
+private theorem root_0 : ∃ z ∈ Icc ((999989311923 / 1000000000000):ℝ) (999989311927 / 1000000000000), (solution (aParameter z) (bParameter 0 z) 1)=0 := by
   apply determinant_zero_between (by norm_num) (by norm_num)
   · intro z hz
     constructor <;> linarith [hz.1,hz.2]
   · exact Or.inr ⟨endpoint_0,endpoint_1⟩
-private theorem root_1 : ∃ z ∈ Icc ((4000050992847 / 1000000000000):ℝ) (4000050992851 / 1000000000000), determinant 0 z=0 := by
+private theorem root_1 : ∃ z ∈ Icc ((4000050992847 / 1000000000000):ℝ) (4000050992851 / 1000000000000), (solution (aParameter z) (bParameter 0 z) 1)=0 := by
   apply determinant_zero_between (by norm_num) (by norm_num)
   · intro z hz
     constructor <;> linarith [hz.1,hz.2]
   · exact Or.inl ⟨endpoint_2,endpoint_3⟩
-private theorem root_2 : ∃ z ∈ Icc ((253926990157 / 250000000000):ℝ) (126963495079 / 125000000000), determinant 1 z=0 := by
+private theorem root_2 : ∃ z ∈ Icc ((253926990157 / 250000000000):ℝ) (126963495079 / 125000000000), (solution (aParameter z) (bParameter 1 z) 1)=0 := by
   apply determinant_zero_between (by norm_num) (by norm_num)
   · intro z hz
     constructor <;> linarith [hz.1,hz.2]
   · exact Or.inr ⟨endpoint_4,endpoint_5⟩
-private theorem root_3 : ∃ z ∈ Icc ((4015736948983 / 1000000000000):ℝ) (4015736948987 / 1000000000000), determinant 1 z=0 := by
+private theorem root_3 : ∃ z ∈ Icc ((4015736948983 / 1000000000000):ℝ) (4015736948987 / 1000000000000), (solution (aParameter z) (bParameter 1 z) 1)=0 := by
   apply determinant_zero_between (by norm_num) (by norm_num)
   · intro z hz
     constructor <;> linarith [hz.1,hz.2]
@@ -803,7 +804,7 @@ private theorem strong_subinterval_nonzero {V w u : ℝ → ℝ} {z Q : ℝ} (hu
   · exact (hz x hx).1
   · exact hu.1.2 x (fun hh => hx ⟨hh.1.le,hh.2.le⟩)
 private theorem strong_zero_separation {V w u : ℝ → ℝ} {z Q : ℝ} (hV : ContinuousOn V interval) (hw : ContinuousOn w interval) (hu : strongEigenfunction V w z u) (hne : u≠0) (hQ : 0≤Q) (hqb : ∀ x ∈ interval, |V x-z*w x|≤Q) {a b : ℝ} (ha : 0≤a) (hab : a<b) (hb : b≤Real.pi) (hua : u a=0) (hub : u b=0) : 8≤Q*(b-a)^2 := by
-  have hm : Icc a b ⊆ interval := fun _ hx => ⟨ha.trans hx.1,hx.2.trans hb⟩
+  have hm : Icc a b ⊆ interval := Icc_subset_Icc ha hb
   exact D5.S3.Analytic.SpectralGap.WeightedConvexPotentialRefutation.interval_solution_separation a b Q hab u (derivWithin u interval) (fun x => V x-z*w x) (hu.1.1.continuousOn.mono hm) ((trial_derivative_continuous hu.1).mono hm) ((hV.sub (hw.const_mul z)).mono hm) (fun x hx => trial_hasDerivAt hu.1 ⟨lt_of_le_of_lt ha hx.1,lt_of_lt_of_le hx.2 hb⟩) (fun x hx => hu.2 x ⟨lt_of_le_of_lt ha hx.1,lt_of_lt_of_le hx.2 hb⟩) (fun x hx => (abs_le.mp (hqb x (hm hx))).1) hua hub (strong_subinterval_nonzero hu hne hQ hqb ha hab hb)
 private theorem continuous_nonzero_orientation (a b : ℝ) (hab : a<b) (u : ℝ → ℝ) (hu : ContinuousOn u (Icc a b)) (hnz : ∀ x ∈ Ioo a b, u x≠0) : (∀ x ∈ Ioo a b, 0<u x) ∨ (∀ x ∈ Ioo a b, u x<0) := by
   let m := (a+b)/2
@@ -847,8 +848,8 @@ private theorem impossible_positive_sides (u : ℝ → ℝ) (ξ d : ℝ) (hξ : 
     · exact (hr x ⟨hh,hx.2⟩).le
   exact hdn (hmin.hasDerivAt_eq_zero hd)
 private theorem simple_node_orientation {V w u : ℝ → ℝ} {z ξ : ℝ} (hu : strongEigenfunction V w z u) (hne : u≠0) (hξ : ξ ∈ Ioo 0 Real.pi) (hz : u ξ=0) (hunique : ∀ x ∈ Ioo 0 Real.pi, u x=0 → x=ξ) (hdn : derivWithin u interval ξ≠0) : ∃ v : ℝ → ℝ, strongEigenfunction V w z v ∧ v≠0 ∧ v ξ=0 ∧ (∀ x ∈ Ioo 0 ξ, 0<v x) ∧ (∀ x ∈ Ioo ξ Real.pi, v x<0) := by
-  have hlset : Icc 0 ξ ⊆ interval := fun _ hx => ⟨hx.1,hx.2.trans hξ.2.le⟩
-  have hrset : Icc ξ Real.pi ⊆ interval := fun _ hx => ⟨hξ.1.le.trans hx.1,hx.2⟩
+  have hlset : Icc 0 ξ ⊆ interval := Icc_subset_Icc le_rfl hξ.2.le
+  have hrset : Icc ξ Real.pi ⊆ interval := Icc_subset_Icc hξ.1.le le_rfl
   have hlnz : ∀ x ∈ Ioo 0 ξ, u x≠0 := by
     intro x hx he
     have hh := hunique x ⟨hx.1,hx.2.trans hξ.2⟩ he

@@ -22,10 +22,6 @@ internal sealed class WeightedGapVolterraDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/SpectralGap/WeightedGapVolterra.bParameter"), H("bParameter"),
                 StatementSource.FromAuthor(Disp(Statement2())), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("This is the linear coefficient in the rescaled equation for the indicated potential slope and spectral parameter."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("weightedgapvolterra-def-determinant"),
-                DeclarationHandle.Create("D5/S3/Analytic/SpectralGap/WeightedGapVolterra.determinant"), H("determinant"),
-                StatementSource.FromAuthor(Disp(Statement3())), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The shooting determinant is the sum of the rescaled solution coefficients."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("weightedgapvolterra-theorem-parameter-bounds"),
                 DeclarationHandle.Create("D5/S3/Analytic/SpectralGap/WeightedGapVolterra.parameter_bounds"), H("parameter_bounds"),
                 StatementSource.FromAuthor(Disp(Statement4())), AssessedProvenance.FromRepo(Source),
@@ -34,10 +30,6 @@ internal sealed class WeightedGapVolterraDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/SpectralGap/WeightedGapVolterra.determinant_continuous"), H("determinant_continuous"),
                 StatementSource.FromAuthor(Disp(Statement5())), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The shooting determinant is continuous in the spectral parameter on the indicated closed interval."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("weightedgapvolterra-theorem-determinant-solution"),
-                DeclarationHandle.Create("D5/S3/Analytic/SpectralGap/WeightedGapVolterra.determinant_solution"), H("determinant_solution"),
-                StatementSource.FromAuthor(Disp(Statement6())), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The shooting determinant equals the power-series solution evaluated at the right endpoint of the unit interval."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("weightedgapvolterra-theorem-short-full-series-tail"),
                 DeclarationHandle.Create("D5/S3/Analytic/SpectralGap/WeightedGapVolterra.short_full_series_tail"), H("short_full_series_tail"),
                 StatementSource.FromAuthor(Disp(Statement7())), AssessedProvenance.FromRepo(Source),
@@ -112,17 +104,11 @@ internal sealed class WeightedGapVolterraDocument : IScribeDocumentDefinition
     private static Formula Statement2() =>
         Seq(Forall, Sp, Parenthesized(Seq(Seq(DeltaLower, Sp, FormulaDsl.Id("z")), Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Comma, Sp, Seq(Seq(FormulaDsl.Id("bParameter"), Sp, DeltaLower, Sp, FormulaDsl.Id("z")), Sp, Eq, Sp, Parenthesized(Seq(FormulaDsl.Id("Real"), Sp, Dot, Sp, FormulaDsl.Id("pi"), Sp, Caret, Grp(D(3)), Sp, Cdot, Sp, Parenthesized(Seq(DeltaLower, Sp, Minus, Sp, FormulaDsl.Id("z"))), Sp, Slash, Sp, D(1,0,0)))));
 
-    private static Formula Statement3() =>
-        Seq(Forall, Sp, Parenthesized(Seq(Seq(DeltaLower, Sp, FormulaDsl.Id("z")), Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Comma, Sp, Seq(Seq(FormulaDsl.Id("determinant"), Sp, DeltaLower, Sp, FormulaDsl.Id("z")), Sp, Eq, Sp, Parenthesized(Seq(FormulaDsl.Id("tsum"), Sp, Parenthesized(Seq(FormulaDsl.Id("fun"), Sp, FormulaDsl.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("N"))), Sp, Mapsto, Sp, FormulaDsl.Id("coefficient"), Sp, Parenthesized(Seq(FormulaDsl.Id("aParameter"), Sp, FormulaDsl.Id("z"))), Sp, Parenthesized(Seq(FormulaDsl.Id("bParameter"), Sp, DeltaLower, Sp, FormulaDsl.Id("z"))), Sp, FormulaDsl.Id("n")))))));
-
     private static Formula Statement4() =>
         Seq(Forall, Sp, Parenthesized(Seq(Seq(DeltaLower, Sp, FormulaDsl.Id("z")), Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Comma, Sp, new Formula.Logic(Parenthesized(Seq(DeltaLower, Sp, InMacro, Sp, FormulaDsl.Id("Icc"), Sp, Parenthesized(Seq(D(0), Sp, Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Sp, D(1))), FormulaLogicOperator.Implies, Parenthesized(new Formula.Logic(Parenthesized(Seq(FormulaDsl.Id("z"), Sp, InMacro, Sp, FormulaDsl.Id("Icc"), Sp, Parenthesized(Seq(D(0), Sp, Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Sp, D(5))), FormulaLogicOperator.Implies, Parenthesized(Seq(Bar, Sp, FormulaDsl.Id("aParameter"), Sp, FormulaDsl.Id("z"), Sp, Bar, Sp, Leq, Sp, D(6,4), Sp, Land, Sp, Bar, Sp, FormulaDsl.Id("bParameter"), Sp, DeltaLower, Sp, FormulaDsl.Id("z"), Sp, Bar, Sp, Leq, Sp, D(3,2)))))));
 
     private static Formula Statement5() =>
-        Seq(Forall, Sp, Parenthesized(Seq(DeltaLower, Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Comma, Sp, new Formula.Logic(Parenthesized(Seq(DeltaLower, Sp, InMacro, Sp, FormulaDsl.Id("Icc"), Sp, Parenthesized(Seq(D(0), Sp, Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Sp, D(1))), FormulaLogicOperator.Implies, Parenthesized(Seq(FormulaDsl.Id("ContinuousOn"), Sp, Parenthesized(Seq(FormulaDsl.Id("determinant"), Sp, DeltaLower)), Sp, Parenthesized(Seq(FormulaDsl.Id("Icc"), Sp, D(0), Sp, D(5)))))));
-
-    private static Formula Statement6() =>
-        Seq(Forall, Sp, Parenthesized(Seq(Seq(DeltaLower, Sp, FormulaDsl.Id("z")), Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Comma, Sp, Seq(FormulaDsl.Id("determinant"), Sp, DeltaLower, Sp, FormulaDsl.Id("z"), Sp, Eq, Sp, FormulaDsl.Id("solution"), Sp, Parenthesized(Seq(FormulaDsl.Id("aParameter"), Sp, FormulaDsl.Id("z"))), Sp, Parenthesized(Seq(FormulaDsl.Id("bParameter"), Sp, DeltaLower, Sp, FormulaDsl.Id("z"))), Sp, D(1)));
+        Seq(Forall, Sp, Parenthesized(Seq(DeltaLower, Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Comma, Sp, new Formula.Logic(Parenthesized(Seq(DeltaLower, Sp, InMacro, Sp, FormulaDsl.Id("Icc"), Sp, Parenthesized(Seq(D(0), Sp, Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Sp, D(1))), FormulaLogicOperator.Implies, Parenthesized(Seq(FormulaDsl.Id("ContinuousOn"), Sp, Parenthesized(Seq(FormulaDsl.Id("fun"), Sp, FormulaDsl.Id("z"), Sp, Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))), Sp, Mapsto, Sp, FormulaDsl.Id("solution"), Sp, Parenthesized(Seq(FormulaDsl.Id("aParameter"), Sp, FormulaDsl.Id("z"))), Sp, Parenthesized(Seq(FormulaDsl.Id("bParameter"), Sp, DeltaLower, Sp, FormulaDsl.Id("z"))), Sp, D(1))), Sp, Parenthesized(Seq(FormulaDsl.Id("Icc"), Sp, D(0), Sp, D(5)))))));
 
     private static Formula Statement7() =>
         Seq(Forall, Sp, Parenthesized(Seq(Seq(FormulaDsl.Id("A"), Sp, FormulaDsl.Id("B")), Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Comma, Sp, new Formula.Logic(Parenthesized(Seq(Bar, Sp, FormulaDsl.Id("A"), Sp, Bar, Sp, Leq, Sp, D(6,4))), FormulaLogicOperator.Implies, Parenthesized(new Formula.Logic(Parenthesized(Seq(Bar, Sp, FormulaDsl.Id("B"), Sp, Bar, Sp, Leq, Sp, D(3,2))), FormulaLogicOperator.Implies, Parenthesized(Seq(Bar, Sp, Parenthesized(Seq(FormulaDsl.Id("tsum"), Sp, Parenthesized(Seq(FormulaDsl.Id("fun"), Sp, FormulaDsl.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("N"))), Sp, Mapsto, Sp, FormulaDsl.Id("coefficient"), Sp, FormulaDsl.Id("A"), Sp, FormulaDsl.Id("B"), Sp, FormulaDsl.Id("n"))))), Sp, Minus, Sp, Seq(Sum, Underscore, Grp(Seq(FormulaDsl.Id("n"), Sp, InMacro, Sp, Seq(FormulaDsl.Id("Finset"), Sp, Dot, Sp, FormulaDsl.Id("range"), Sp, D(8,1)))), Sp, Parenthesized(Seq(FormulaDsl.Id("coefficient"), Sp, FormulaDsl.Id("A"), Sp, FormulaDsl.Id("B"), Sp, FormulaDsl.Id("n")))), Sp, Bar, Sp, Leq, Sp, D(2), Sp, Cdot, Sp, Parenthesized(Seq(D(3), Sp, Colon, Sp, Seq(Mathbb, Grp(FormulaDsl.Id("R"))))), Sp, Caret, Grp(D(1,6)), Sp, Slash, Sp, D(2), Sp, Caret, Grp(D(8,1))))))));

@@ -12,12 +12,10 @@ escape_witness: D5.S3.Analytic.SpectralGap.WeightedGapVolterra.solution_volterra
 Direct frozen dependencies: declaration GID@statement_id in each row.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/27756
 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.solution_volterra; proof_shape: content; escape_witness: D5.S3.Analytic.SpectralGap.WeightedGapVolterra.solution_volterra; Direct frozen dependencies: none; consumers: series_zero_is_shooting
-D5.S3.Analytic.SpectralGap.WeightedGapVolterra.aParameter; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: endpoint_0, endpoint_1, endpoint_2, endpoint_3, endpoint_4, endpoint_5, endpoint_6, endpoint_7, series_zero_is_shooting, determinant, determinant_continuous, determinant_solution, parameter_bounds
-D5.S3.Analytic.SpectralGap.WeightedGapVolterra.bParameter; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: endpoint_0, endpoint_1, endpoint_2, endpoint_3, endpoint_4, endpoint_5, endpoint_6, endpoint_7, series_zero_is_shooting, determinant, determinant_continuous, determinant_solution, parameter_bounds
-D5.S3.Analytic.SpectralGap.WeightedGapVolterra.determinant; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: determinant_zero_between, endpoint_0, endpoint_1, endpoint_2, endpoint_3, endpoint_4, endpoint_5, endpoint_6, endpoint_7, result, root_0, root_1, root_2, root_3, series_zero_is_shooting, determinant_continuous, determinant_solution
+D5.S3.Analytic.SpectralGap.WeightedGapVolterra.aParameter; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: endpoint_0, endpoint_1, endpoint_2, endpoint_3, endpoint_4, endpoint_5, endpoint_6, endpoint_7, series_zero_is_shooting, determinant_continuous, parameter_bounds
+D5.S3.Analytic.SpectralGap.WeightedGapVolterra.bParameter; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: endpoint_0, endpoint_1, endpoint_2, endpoint_3, endpoint_4, endpoint_5, endpoint_6, endpoint_7, series_zero_is_shooting, determinant_continuous, parameter_bounds
 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.parameter_bounds; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: series_zero_is_shooting, determinant_continuous
 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.determinant_continuous; proof_shape: content; escape_witness: none; Direct frozen dependencies: none; consumers: determinant_zero_between
-D5.S3.Analytic.SpectralGap.WeightedGapVolterra.determinant_solution; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: series_zero_is_shooting
 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.short_full_series_tail; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: endpoint_0, endpoint_1, endpoint_2, endpoint_3, endpoint_4, endpoint_5, endpoint_6, endpoint_7
 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.short_remainder_lt; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: endpoint_0, endpoint_1, endpoint_2, endpoint_3, endpoint_4, endpoint_5, endpoint_6, endpoint_7
 D5.S3.Analytic.SpectralGap.WeightedGapVolterra.Endpoint6.aExpr6; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: D5/S0/Certificates/BoxCover/RationalIntervalExpression.Expr@sha256:7740d0d639e691784931b94a9f39a1e729a89943b3d162fba0338723c2634562, D5/S0/Certificates/BoxCover/RationalIntervalExpression.Expr.add@sha256:5de53c0c21af00283b7122bf98d3837ef8ead8e83fc76566c9470310e38b6b50, D5/S0/Certificates/BoxCover/RationalIntervalExpression.Expr.const@sha256:883830ed15e01b32856f92ae231290e494d5fd04397feef656ceb5c5a7c99beb, D5/S0/Certificates/BoxCover/RationalIntervalExpression.Expr.input@sha256:7c1ff706fd917d42fd8bac14c6f0823e57eb66d7d31e76616f7baea58a3ea428, D5/S0/Certificates/BoxCover/RationalIntervalExpression.Expr.mul@sha256:b961a54e1cd3f732396a35f036a1063ecddf913e56610486ab178f76030fbd77, D5/S0/Certificates/BoxCover/RationalIntervalExpression.Expr.neg@sha256:885ae424fe49611ff9ecd91cc5ed0fa3fc0a91f5f14c6f0d43681fde0f796826; consumers: aValue6, aValue_eq6, a_enclosed6
@@ -124,7 +122,6 @@ theorem solution_volterra (A B : ℝ) (hA : |A| ≤ 64) (hB : |B| ≤ 32)
      linarith [ht.unique hh])
 def aParameter (z : ℝ) : ℝ := -(Real.pi^2)*z*(1-Real.pi/200)
 def bParameter (δ z : ℝ) : ℝ := Real.pi^3*(δ-z)/100
-def determinant (δ z : ℝ) : ℝ := ∑' n, coefficient (aParameter z) (bParameter δ z) n
 theorem parameter_bounds {δ z : ℝ} (hδ : δ ∈ Icc (0:ℝ) 1) (hz : z ∈ Icc (0:ℝ) 5) :
     |aParameter z| ≤ 64 ∧ |bParameter δ z| ≤ 32 := by
   first |
@@ -153,7 +150,8 @@ theorem parameter_bounds {δ z : ℝ} (hδ : δ ∈ Icc (0:ℝ) 1) (hz : z ∈ I
        norm_num at hh ⊢
        linarith)
 theorem determinant_continuous {δ : ℝ} (hδ : δ ∈ Icc (0:ℝ) 1) :
-    ContinuousOn (determinant δ) (Icc 0 5) := by
+    ContinuousOn (fun z => solution (aParameter z) (bParameter δ z) 1) (Icc 0 5) := by
+  simp only [solution, one_pow, mul_one]
   first |
     (apply continuousOn_tsum (u := fun n : ℕ => (3:ℝ)^16*(1/2:ℝ)^n)
      · intro n
@@ -169,9 +167,6 @@ theorem determinant_continuous {δ : ℝ} (hδ : δ ∈ Icc (0:ℝ) 1) :
          (parameter_bounds hδ hz).1 (parameter_bounds hδ hz).2 n
        have hh := (le_div_iff₀ (by positivity : 0 < (2:ℝ)^n)).mpr h
        simpa [div_eq_mul_inv, inv_pow] using hh)
-theorem determinant_solution (δ z : ℝ) :
-    determinant δ z = solution (aParameter z) (bParameter δ z) 1 := by
-  first | simp [determinant, solution]
 theorem short_full_series_tail (A B : ℝ) (hA : |A| ≤ 64) (hB : |B| ≤ 32) :
     |(∑' n, coefficient A B n) - ∑ n ∈ Finset.range 81, coefficient A B n| ≤
       2*(3:ℝ)^16 / 2^81 := by
