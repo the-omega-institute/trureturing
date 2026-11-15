@@ -486,9 +486,7 @@ $$\forall (\operatorname{n} : \mathbb{N}), \operatorname{Set}.\operatorname{InjO
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LacunaryBinomialMarkers.golden_profile_two_injective` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
+*Citation.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
 
 *Commentary.*
 
