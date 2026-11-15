@@ -32,9 +32,7 @@ internal sealed class DimitrovPartFourC4Document : IScribeDocumentDefinition
                 + "+(4R³−1)(x−R)(y−R)+R²((x−R)³+(y−R)³), whose terms are nonnegative. "
                 + "Exact field normalization recovers every factor and ordinary power of the original quotient. "
                 + "This is the complete natural-number family; source Theorem 4 supplies only k=1. "
-                + "Both authored proof steps are bind-only, and cubic_ratio_bound is consumed by result. "
-                + "Admission is open-problem-resolution under issue 30640; utility is none. No escape witness, "
-                + "analytic novelty, equality classification or worldwide priority is claimed. The imported "
+                + "No analytic novelty, equality classification or worldwide priority is claimed. The imported "
                 + "arithmetic development retains its existing supplier attribution and license.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
