@@ -1903,7 +1903,7 @@ $$
 $$
 \mathrm{L2}^{\mathrm{exp}}_1:\quad
 \forall p\ne q\in P,\quad
-B(p,q)\text{ 是完整实三维闭球的仿射像，且 }
+B(p,q)\text{ 仿射同构于完整非退化实三维闭球，且 }
 \exists f_{p,q}\in\mathcal E:\ \{x\in K:f_{p,q}(x)=1\}=B(p,q).
 \tag{277.1}
 $$
