@@ -708,4 +708,3 @@ theorem result : claim := by
 
 end
 end D5.S3.Quantum.QuantumChannels.AmiriArrazolaHiddenMatchingCloningBound
-
