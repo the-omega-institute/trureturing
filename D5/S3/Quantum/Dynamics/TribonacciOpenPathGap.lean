@@ -105,11 +105,6 @@ private def parity (m : ℕ) : Fin m ⊕ Fin m ≃ Fin (2*m) :=
         · refine ⟨Sum.inr ⟨k.val/2, by have := k.isLt; omega⟩, ?_⟩
           apply Fin.ext; dsimp; omega)
 
-@[simp] private lemma parity_inl (m : ℕ) (i : Fin m) :
-    parity m (Sum.inl i) = ⟨2*i.val, by omega⟩ := rfl
-@[simp] private lemma parity_inr (m : ℕ) (i : Fin m) :
-    parity m (Sum.inr i) = ⟨2*i.val+1, by omega⟩ := rfl
-
 private lemma signs_square (m : ℕ) : signs m * signs m = 1 := by
   rw [signs, diagonal_mul_diagonal]
   ext i j
@@ -158,10 +153,13 @@ private lemma parity_path (t : ℕ → ℝ) (m : ℕ) :
   ext i j
   cases i with
   | inl i => cases j with
-    | inl j => simp only [submatrix_apply, parity_inl, parity_inr, Fin.val_mk, openPath, Matrix.map_apply, fromBlocks_apply₁₁, fromBlocks_apply₂₂, Matrix.zero_apply, Complex.ofRealHom_eq_coe, Complex.ofReal_zero, show ¬2*i.val+1=2*j.val by omega,
+    | inl j =>
+      change openPath t m ⟨2*i.val, by omega⟩ ⟨2*j.val, by omega⟩ = _
+      simp only [Fin.val_mk, openPath, Matrix.map_apply, fromBlocks_apply₁₁, fromBlocks_apply₂₂, Matrix.zero_apply, Complex.ofRealHom_eq_coe, Complex.ofReal_zero, show ¬2*i.val+1=2*j.val by omega,
         show ¬2*j.val+1=2*i.val by omega, ite_false]
     | inr j =>
-      simp only [submatrix_apply, parity_inl, parity_inr, Fin.val_mk, openPath,
+      change openPath t m ⟨2*i.val, by omega⟩ ⟨2*j.val+1, by omega⟩ = _
+      simp only [Fin.val_mk, openPath,
         fromBlocks_apply₁₂, Matrix.map_apply, Complex.ofRealHom_eq_coe, block_entry]
       by_cases h : i=j
       · subst j; simp
@@ -172,7 +170,8 @@ private lemma parity_path (t : ℕ → ℝ) (m : ℕ) :
         · simp [hji, show ¬2*j.val+1+1=2*i.val by omega]
   | inr i => cases j with
     | inl j =>
-      simp only [submatrix_apply, parity_inl, parity_inr, Fin.val_mk, openPath,
+      change openPath t m ⟨2*i.val+1, by omega⟩ ⟨2*j.val, by omega⟩ = _
+      simp only [Fin.val_mk, openPath,
         fromBlocks_apply₂₁, Matrix.map_apply, transpose_apply, block_entry]
       by_cases h : j=i
       · subst j; simp [show ¬2*i.val+1+1=2*i.val by omega]
@@ -181,7 +180,9 @@ private lemma parity_path (t : ℕ → ℝ) (m : ℕ) :
         by_cases hij : i.val+1=j.val
         · simp [hij, show 2*i.val+1+1=2*j.val by omega]
         · simp [hij, show ¬2*i.val+1+1=2*j.val by omega]
-    | inr j => simp only [submatrix_apply, parity_inl, parity_inr, Fin.val_mk, openPath, Matrix.map_apply, fromBlocks_apply₁₁, fromBlocks_apply₂₂, Matrix.zero_apply, Complex.ofRealHom_eq_coe, Complex.ofReal_zero,
+    | inr j =>
+      change openPath t m ⟨2*i.val+1, by omega⟩ ⟨2*j.val+1, by omega⟩ = _
+      simp only [Fin.val_mk, openPath, Matrix.map_apply, fromBlocks_apply₁₁, fromBlocks_apply₂₂, Matrix.zero_apply, Complex.ofRealHom_eq_coe, Complex.ofReal_zero,
         show ¬(2*i.val+1)+1=2*j.val+1 by omega,
         show ¬(2*j.val+1)+1=2*i.val+1 by omega, ite_false]
 
