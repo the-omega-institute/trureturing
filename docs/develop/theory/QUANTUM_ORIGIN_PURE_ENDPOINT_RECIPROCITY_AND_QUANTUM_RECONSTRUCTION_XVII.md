@@ -1891,3 +1891,287 @@ $$
 [Q180C139Unique]: https://github.com/the-omega-institute/trureturing/blob/1ce2944a218087efcb6c57e6d886645eaa7712e0/docs/develop/theory/AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md#L176
 
 ## 追加锚（本行以下为增补区）
+
+## 181. 原单位处自伴方向满射的同数据量子候选
+
+### 181.1 完整候选与原单位局部条件
+
+**定义 181.1（恒等伙伴与原单位自伴方向候选）。** 完整采用定义180.1及其纳入的定义179.1、178.1、C124定义10.2，只作如下两项替换：把全群伙伴全性换成恒等元存在一个伙伴，把全部内点传递性换成原单位处自伴Lie方向的评价满射。记这一个候选为 $\mathcal C_{181}$。
+
+具体地，同一原签名 $\Omega$ 的原非零有限维实空间 $E_A$、闭凸尖生成锥 $C_A$、原内点单位 $u_A$、有限实值 $q_A$、已命名比较数值 $g_A^0$ 及原双线性有向关系 $D$ 均保留。全部带符号原向量上的响应条件仍为
+
+$$
+\begin{gathered}
+F_A(x;y)=\lim_{t\downarrow0}\frac{q_A(x+ty)-q_A(x)}t\in\mathbb R
+\quad(x,y\in E_A),\qquad
+\inf_{t\in\mathbb R}q_A(tx)>-\infty\quad(x\in E_A),\\
+x\ne0\Longrightarrow\exists y\in E_A:\ F_A(x;y)\ne0,
+\qquad g_A^0(x,y)=\tfrac12F_A(x;y).
+\end{gathered}
+\tag{181.1}
+$$
+
+原比较数值的正定对称双线性性质由下述恒等伙伴入口恢复，不在入口预用。只从原锥定义同一个 $G_C(A)=\operatorname{Aut}(C_A)^\circ$，并在原域 $S,R\in G_C(A)$ 上沿用 $\Gamma_{q_A}$ 的定义。第一项新要求为
+
+$$
+\exists R_{0,A}\in G_C(A)\ \forall x,y\in E_A:
+F_A(x;y)=F_A(R_{0,A}y;x).
+\tag{181.2}
+$$
+
+在(181.1)–(181.2)恢复的原型上，定义并要求
+
+$$
+\begin{gathered}
+\mathfrak g_A=\operatorname{Lie}(G_C(A)),\qquad
+\mathfrak p_A^0=\mathfrak g_A\cap\operatorname{Sym}(E_A,g_A^0),\\
+\operatorname{ev}_{u_A}:\mathfrak p_A^0\longrightarrow E_A,
+\qquad X\longmapsto Xu_A\quad\text{满射}.
+\end{gathered}
+\tag{181.3}
+$$
+
+这里 $\operatorname{Sym}(E_A,g_A^0)$ 是关于该原正定型自伴随的实线性算子空间；(181.3)在其前件恢复该型后解释，不再输入一把度量。下述证明给出完全等价、不添参数的维数形式
+
+$$
+\operatorname{ev}_{u_A}\text{ 满射}
+\quad\Longleftrightarrow\quad\dim\mathfrak p_A^0=\dim E_A
+\quad\Longleftrightarrow\quad
+\dim\mathfrak p_A^0\ge\dim E_A.
+\tag{181.4}
+$$
+
+定义180.1的完整合同表仍逐字是本定义的一部分，只有上述两个条款被替换，仍为AC版本，不另加Q1。对象量词仍覆盖局部、实际联合、整个实际指针 $P$ 及每个原有限幂、原输出、被消费参考和其已声明联合；每个对象分别满足(181.1)–(181.3)及自己的全部原接口。保留每个实际准备的原质量及其有限正锥包恰为完整 $C_A^*$ 的要求、原单位适配的选择资料和原D、X/Xs、$N_u$、AC、全事件R、原F、具名支持双返回及其原 $q_{F,a}>0$。原装置、事件、补事件、失败输出、细记录、可访问性、标签、遗忘、丢弃、支持角、反向资料和全部有限合法历史不变，未声明连线仍未声明。共有P自对偶等式仍为待推结论；不加入预先齐性、自对偶或伴随封闭，不加入全空间正则性、商空间、自由群或中心参数。
+
+### 181.2 完整同数据等价及恒等伙伴入口
+
+**定理 181.2（原单位局部方向替代两个全局输入）。** 在同一份原资料及共有的全部实际见证上，
+
+$$
+\mathcal C_{181}\quad\Longleftrightarrow\quad
+\mathcal C_{180}\quad\Longleftrightarrow\quad
+\mathcal C_{179}\quad\Longleftrightarrow\quad
+\text{存在定义178.1的扩张}.
+\tag{181.5}
+$$
+
+对每个所需原对象，(181.2)的任意伙伴必为 $R_{0,A}=I$，原数值满足
+
+$$
+\begin{gathered}
+g_A^0(x,y)=\tfrac12F_A(x;y)
+=\frac{q_A(x+y)-q_A(x-y)}4,\qquad
+q_A(x)=q_A(0)+g_A^0(x,x),\\
+C_A=C_{A,g_A^0}^*,\qquad
+G_C(A)^{\dagger_0}=G_C(A),\qquad
+G_C(A)\curvearrowright C_A^\circ\ \text{传递},\\
+\Gamma_{q_A}(S,R)\Longleftrightarrow R=S^{\dagger_0}
+\quad(S,R\in G_C(A)).
+\end{gathered}
+\tag{181.6}
+$$
+
+178扩张的群逐对象唯一且字面等于 $G_C(A)$。遗忘与补回在原数值、原D、原单位适配选择及全部共有实际见证上为恒等；被删去的伙伴族有唯一可补回的算子值，不声称装置见证唯一。完整量子结论按180.3–180.4的全部参数、量词和资格保留。
+
+证明。先固定一个原对象，省略下标。这里只从(181.2)取一个原 $R_0$，不取其他群元的伙伴。在取得正定型前，精确复用180.2证明中从(180.4)到(180.12)的原 $q$ 片段：其输入只有可逆线性 $R_0$、$F(x;y)=F(R_0y;x)$、全部有限右响应、逐径向下界和探针分离，没有全群伙伴或内点传递性。以下列出这段应用的全部承重接口。
+
+有限的正、负方向右响应使每条仿射线上的 $q$ 连续；原右极限的正重参数化给 $F(x;\lambda y)=\lambda F(x;y)$（$\lambda\ge0$）。恒等伙伴把正齐次性搬到第一槽。应用C139引理3.2的一元唯一性，正好得到(180.5)–(180.6)：
+
+$$
+\begin{gathered}
+F(\lambda x;y)=\lambda F(x;y),\quad F(0;y)=0,\\
+F(x;x)=2(q(x)-q(0)),\qquad
+q(sx)=q(0)+s^2(q(x)-q(0))\quad(s\ge0).
+\end{gathered}
+\tag{181.7}
+$$
+
+径向下界遂给 $q\ge q(0)$；将恒等伙伴等式用两次给 $F(x;y)=F(R_0x;R_0y)$，故 $q(R_0x)=q(x)$。180.7的精确正径向剪切只沿一个固定探针取右极限；再用180.8–180.9的一元唯一性，得同一原标量的四角等式
+
+$$
+q(x+sR_0y+ty)-q(x+sR_0y)-q(x+ty)+q(x)
+=2st(q(y)-q(0))\quad(s,t\in\mathbb R).
+\tag{181.8}
+$$
+
+同时换 $(y,s,t)$ 为 $(-y,-s,-t)$，左边不变，故 $q(-y)=q(y)$；再取 $x=0,s=1,t=-1$，得 $q((R_0-I)y)=q(0)$。此处尚不能以最小点的单侧响应为零。若 $q(v)=q(0)$，则 $\pm R_0v$ 都是全局最小点，恒等伙伴只先给
+
+$$
+F(a;v)=F(R_0v;a)\ge0,\qquad
+F(a;-v)=F(-R_0v;a)\ge0\quad(a\in E).
+\tag{181.9}
+$$
+
+180.2证明中的单侧单调性工具只需仿射线连续和有限非负右导数，故两条反向直线都不下降。这正是(180.11)–(180.12)的入口，得到 $q(a+tv)=q(a)$ 对全部原 $a,t$ 成立，因而 $F(a;v)=0$。再用恒等伙伴得 $F(v;z)=F(R_0z;v)=0$ 对全部 $z$ 成立；原探针分离给 $v=0$。应用于 $v=(R_0-I)y$，取得 $R_0=I$。上述片段既未使用伴随，也未用整个定理180.2的结论。
+
+现在才有 $F(x;y)=F(y;x)$，其全部右响应前件正好支付C139定理3.3。直接应用该定理得(181.6)第一行的唯一对称双线性恢复式。刚证的 $q\ge q(0)$ 且仅在零点取等号，使它正定；已命名数值逐点就是 $g=g^0=F/2$。这才允许下面使用其伴随、正交群及自伴随谱，不替换原 $q$ 或原比较型。
+
+### 181.3 从原单位满射到原锥的两向识别
+
+继续证明。典范 $G=\operatorname{Aut}(C)^\circ$ 是闭连通矩阵Lie群，精确复用179.2证明首段的闭子群论证；该论证只需 $C$ 闭以及 $GL(E)$ 中逆映射连续。记 $\mathfrak g=\operatorname{Lie}G$、$\mathfrak p=\mathfrak g\cap\operatorname{Sym}(E,g)$。
+
+先对任意 $v\in C^\circ$ 支付评价的单射性。原序单位范数
+
+$$
+\|x\|_v=\inf\{r\ge0:-rv\le_C x\le_C rv\}
+\tag{181.10}
+$$
+
+是有限维真范数：内点性给吸收性，闭凸性给闭的绝对凸单位球，尖性排除非零零范数方向。每个 $S\in G_v$ 连同其逆保序且固定 $v$，故保持此范数；有限维范数等距群紧，$G_v$ 是其闭子群。若 $X\in\mathfrak p$ 且 $Xv=0$，则 $\exp(tX)\in G_v$ 对所有实 $t$ 成立，因而整条指数族有界。原 $g$ 自伴随谱全实，有界性排除每个非零特征值，于是 $X=0$。这证明
+
+$$
+\operatorname{ev}_v\text{ 对每个 }v\in C^\circ\text{ 单射},\qquad
+\dim\mathfrak p\le\dim E.
+\tag{181.11}
+$$
+
+因此原 $u$ 处满射、(181.4)两种维数形式严格等价；一旦成立，每个内点处的评价都是线性同构。这个结论没有使用齐性或伴随封闭，也不适用于任意边界点。
+
+只在证明中令 $K=G\cap O(g)$，$\mathfrak k=\operatorname{Lie}K=\mathfrak g\cap\mathfrak{so}(g)$。$K$ 紧，故可取
+
+$$
+e=\int_Kku\,dk.
+\tag{181.12}
+$$
+
+选 $r>0$ 使 $u+B_g(0,r)\subset C$；每个 $k\in K$ 正交且保锥，同一个半径对全部 $ku$ 成立，凸平均后仍有 $e+B_g(0,r)\subset C$。故 $e\in C^\circ$ 且 $Ke=e$。这是证明用内点，不是新增输入或替换原 $u$。(181.11)和原单位满射给 $\operatorname{ev}_e:\mathfrak p\to E$ 同构，无须先找将 $u$ 搬到 $e$ 的群元。
+
+对每个 $x$ 取唯一 $L_x\in\mathfrak p$ 使 $L_xe=x$，置 $x\circ_e y=L_xy$。此乘法双线性。正标量伸缩保持原锥，其指数路径给 $I\in\mathfrak p$，所以 $L_e=I$。两个自伴随Lie元的交换子属于 $\mathfrak k$，而 $\mathfrak k e=0$，故
+
+$$
+[L_x,L_y]e=0,\qquad x\circ_e y=y\circ_e x,
+\qquad g(x\circ_e y,z)=g(y,x\circ_e z).
+\tag{181.13}
+$$
+
+这一步只用交换子的斜伴随性，不假设尚未取得的分解 $\mathfrak g=\mathfrak k\oplus\mathfrak p$。对 $k\in K$，共轭保持 $\mathfrak p$ 且固定 $e$，评价唯一性给 $kL_xk^{-1}=L_{kx}$。微分得 $[\delta,L_x]=L_{\delta x}$（$\delta\in\mathfrak k$），即每个 $\delta$ 为 $\circ_e$ 的斜伴随导子。于是(178.10)–(178.11)的纯代数前件已逐项具备：取 $\delta=[L_a,L_c]$，
+
+$$
+0=g(\delta(b^2),b)+g(b^2,\delta b)=3g(b^2,\delta b),
+\qquad
+g([L_{b^2},L_b]a,c)=-g(b^2,[L_a,L_c]b)=0.
+\tag{181.14}
+$$
+
+任意 $a,c$ 及非退化性给 $[L_{b^2},L_b]=0$，即Jordan恒等式；没有断言某个这样的导子自动消去 $b$。若 $\sum_jx_j^2=0$，与 $e$ 配对得 $\sum_jg(x_j,x_j)=0$，所以形式实。至此才有同一 $E,g$ 上以 $e$ 为单位的有限维Euclidean Jordan代数。
+
+现在精确复用178.12–178.14的纯Jordan谱论片段，代入刚构造的 $(E,\circ_e,e,g,L)$。其幂结合性供应为HS引理2.4.5；实自伴随谱及幂等元处的Jordan极化给
+
+$$
+\begin{gathered}
+a=\sum_i\lambda_ic_i,\quad \sum_ic_i=e,\quad
+c_i\circ_e c_j=\delta_{ij}c_i,\quad c_i\ne0,\quad\lambda_i\in\mathbb R,\\
+Q:=\{x\circ_e x:x\in E\}
+=\{a:L_a\ge_g0\}=Q_g^*.
+\end{gathered}
+\tag{181.15}
+$$
+
+该片段只消费刚支付的有限维含幺Jordan代数和原正Frobenius型，不消费原锥的自对偶或传递性；特别地，$2L_c^3-3L_c^2+L_c=0$ 给幂等元乘法算子的非负谱。故 $Q$ 闭凸且 $e\in Q^\circ$，其内点恰为全部谱值严格正的元素。
+
+还须证明原 $C$ 恰为这个 $Q$，不能用传递性反推。对 $z=\sum_i\mu_i^2c_i\in Q$ 和 $\varepsilon>0$，令 $a_\varepsilon=\sum_i\log(\mu_i^2+\varepsilon)c_i$。由于 $L_{a_\varepsilon}\in\mathfrak g$，在同一原空间内有
+
+$$
+\exp(L_{a_\varepsilon})e
+=\sum_i(\mu_i^2+\varepsilon)c_i=z+\varepsilon e\in C^\circ.
+\tag{181.16}
+$$
+
+令 $\varepsilon\downarrow0$，原闭性给 $Q\subseteq C$。反向，任取 $z\in C$，用(181.15)对这个同一原向量写 $z=\sum_i\lambda_ic_i$。因 $L_{c_i}\in\mathfrak g$，对每个 $t>0$ 有
+
+$$
+e^{-t}\exp(tL_{c_i})z
+=\lambda_ic_i+e^{-t}\sum_{j\ne i}\lambda_jc_j\in C,
+\qquad \lambda_ic_i\in C\quad(t\to+\infty).
+\tag{181.17}
+$$
+
+若 $\lambda_i<0$，则非零 $c_i=c_i^2\in Q\subseteq C$，同时 $-c_i\in C$，违反原尖性。故所有 $\lambda_i\ge0$，$z=(\sum_i\sqrt{\lambda_i}c_i)^2\in Q$。这样独立取得两个包含和 $C=Q=Q_g^*=C_g^*$，而非一个抽象同构。
+
+对任意 $z\in C^\circ=Q^\circ$，置 $a_z=\sum_i\log\lambda_i\,c_i$，则 $S_z:=\exp(L_{a_z})\in G$ 且 $S_ze=z$。所以对任意原内点 $a,b$，同一原 $S_bS_a^{-1}\in G$ 将 $a$ 送到 $b$，恢复全局传递性。又对 $S\in\operatorname{Aut}(C)$、$x,y\in C$，$g(S^{\dagger_g}x,y)=g(x,Sy)\ge0$，自对偶给 $S^{\dagger_g}C\subseteq C$；对 $S^{-1}$ 同样应用便得等号。伴随是连续对合且固定 $I$，故保持恒等分支，$G^{\dagger_g}=G$。最后 $F=2g$ 给
+
+$$
+\Gamma_q(S,R)\Longleftrightarrow
+\forall x,y:\ g(Sx,y)=g(x,Ry)
+\Longleftrightarrow R=S^{\dagger_g}.
+\tag{181.18}
+$$
+
+全部伙伴因此在精确原 $G$ 内存在且唯一；一般不是群逆。所用平均、Jordan乘法和谱事实均为证明中间对象，没有增添原可调用变换。
+
+### 181.4 反向、原单位适配及完整消费者
+
+继续证明。逐个原对象应用以上论证，恢复定义180.1仅被替换的两个条款，得到 $\mathcal C_{181}\Rightarrow\mathcal C_{180}$。此后才完整使用180.2和179.2，接上(181.5)后两项及178扩张群的字面唯一性。
+
+反向从 $\mathcal C_{180}$ 出发，180.2已合法支付 $R_0=I$、原 $g$、全群伴随封闭和原传递性。此时定理178.3的全部原 $(E,g,C,G_C)$ 前件成立；只取其178.8的 $\mathfrak p\to E$ 在辅助 $e_*$ 处同构，得到 $\dim\mathfrak p=\dim E$。本证明(181.11)对原 $u$ 的单射性遂给 $\operatorname{ev}_u$ 满射。没有把 $e_*$ 当作 $u$，也没有假设共轭保持原 $g$ 的自伴随空间。保留所有原资料和见证就得到181.1；179及178扩张的反向通过既有等价取得。
+
+下面精确接回整个消费者。临时(181.12)的 $e$ 和 $\circ_e$ 不用来检验原D；仍沿用180.3/178.18及C123(3.3)–(3.4)中的原选择 $e_*\in C_A^\circ$、$h_A\in G_C(A)$、$h_Au_A=e_*$，以
+
+$$
+\widehat g_A(x,y)=g_A^0(h_Ax,h_Ay)
+\tag{181.19}
+$$
+
+构造同一个原 $u_A$ 适配乘法 $\circ$。全部全局前件现已恢复，原选择仍然可用；不需将它等同于本证明的临时平均选择，不假设 $h_A$ 交织原D。原D的全载体导子律及三元交换子抵消仍作用在这个 $\circ$ 上。180.14/178.4/C124命题11.1的参数因而逐项相同：
+
+$$
+a\cdot b=a\circ b-iD_ab,\qquad
+\mathcal A_A\cong\bigoplus_sM_{n_s}(\mathbb C),\qquad
+(E_A,C_A,u_A)=((\mathcal A_A)_{\rm sa},(\mathcal A_A)_+,I_A).
+\tag{181.20}
+$$
+
+复类型仍由原D选择，X的原嵌入、乘法/D保持、交叉D为零、乘积张成和原乘积准备供应全部已声明联合的普通复张量积及中心对。每个实际联合自身的条件和 $N_u$ 仍分别承担联合内酉的数学包含与系数一完整原调用；没有从局部满射推出实际联合控制。
+
+180.15–180.16/178.5给同一个 $\tau_A=\sum_s\operatorname{Tr}_{n_s}$ 及唯一迹自伴随正定算子 $B_A$。对原准备、效果及 $f:A\to B$，精确沿用
+
+$$
+\begin{aligned}
+g_A^0(x,y)&=\tau_A((B_Ax)y),&B_A(C_A)&=C_A,\\
+\rho_\alpha&=B_Ax_\alpha,&m_\alpha&=\tau_A(\rho_\alpha)=\alpha(u_A),\\
+v_\alpha&=B_A^{-1/2}\rho_\alpha,&w_e&=B_A^{-1/2}e,\\
+\alpha(e)&=\tau_A(\rho_\alpha e)=g_A^0(v_\alpha,w_e),&
+\Phi_f&=B_BT_f^{\dagger_0}B_A^{-1},\\
+T_p(r)&=\tau_A(pr)=\tau_A(rp)=T_r(p)
+&&=g_A^0(B_A^{-1/2}p,B_A^{-1/2}r).
+\end{aligned}
+\tag{181.21}
+$$
+
+这里 $\alpha=g_A^0(x_\alpha,\cdot)$，$T_f:E_B\to E_A$；$B_A^{-1/2}$ 是实响应空间算子的逆平方根。每个联合使用自己的 $B_{AB}$，不假设张量因子化。$p,r$ 是数学归一底中任意单块迹一秩一投影；$T_p(r)$ 是180.16在完整数学效果区间上的确认最小值，不同块为零，不是旧子菜单上的同一个最小值或原Riesz向量的裸重叠。数学底、效果和POVM的完整范围仍为全部密度矩阵、$[0,I_A]$ 及有限正效果的单位分解；实际准备的完整正锥包仍不供应每个底点的质量一准备。原 $m_\alpha\le1$ 和全部历史成功因子保留，正质量才可条件归一，零质量不除法。
+
+180.4/178.6的几何资格不变：复结构取得后，大小至少二的块中二维复支撑面的数学底是 $\rho=(\Pi_S+\mathbf r\cdot\boldsymbol\sigma)/2$、$|\mathbf r|\le1$ 的闭Bloch三球，其球面比较为 $(1+\mathbf r\cdot\mathbf s)/2$。它不自动是一只原可附接 $M_2$ 对象或满质量实际准备集。只有另保留原 $C_A$ 不可约、$\dim E_A=n^2$、固定整数 $n\ge2$，并实际声明全部 $A^{\otimes N}$ 及各自全部联合、准备、D和原接口，才对每个有限 $N$ 得 $C_{A^{\otimes N}}=\operatorname{PSD}_{n^N}$；$P$ 的所有参考幂不替任意 $A$ 声明这些对象。
+
+全事件结论精确复用180.4/178.4/C124命题11.3：整个实际 $P$ 的AC给某块维数 $r\ge2$ 的原质量一纯准备和系数一破坏性读口，实际 $P^{\otimes k}$ 的参考块 $r^k$ 无界。R的同记录执行及每个完整原联合准备锥上的保正，对每个输入块支付充分参考层，故(181.21)的每个原事件、细支、失败、标签、遗忘、返回及全部有限合法历史均CP/TNI，完整装置求和TP。不将此量词缩成新选词或乘积输入。
+
+180.18/178.20/C124定理12.1的选中原完整有限装置 $W_e$ 及其全部见证照用：每个数学 $0\le e\le I_A$，包括奇异、零和零中心分量，都有成功作用 $\operatorname{Ad}_{\sqrt e}$，每个已声明实际相关参考上为 $\operatorname{Ad}_{\sqrt e\otimes I_R}$。整个原 $P$、实际准备、比较、测试、补事件、失败端丢弃前的算子输出、系数、细记录及实际丢弃均原样保留，具体输出按C124(12.5)–(12.8)，不先取迹替代。C124命题12.2仍对原F给每个非零指定返回细支
+
+$$
+S_a=\operatorname{Ad}_{K_a},\qquad
+U_a=q_{F,a}\operatorname{Ad}_{K_a^+},\qquad q_{F,a}>0,
+\tag{181.22}
+$$
+
+连同原单中心输入/输出支持角、原同系数双返回等式和反向资料；零支保留标签，原遗忘仍是原细支求和。阶段细口只在原连线合法时相乘，否则用整个原词自己的全称F；任意数学Kraus指标不成为原记录。按180.15/178.25的迹对偶等式逐次运输每段原合法历史，原概率、输出、成功质量、记录、返回数和正条件分母均不变。
+
+选中 $W_e$ 的正成功质量才给条件态 $\sqrt e\rho\sqrt e/\tau_A(\rho e)$。旧同效果设备仍须自己的完整输出校准才能认作此更新；逐效果 $W_e$ 供应不自动组装任意指定原POVM仪器。时间仍只在C123命题4.1的原连续、确定、可逆一参数动态及物理钟标定下给逐块 $\rho_s(t)=e^{-itH_s/\hbar}\rho_s(0)e^{itH_s/\hbar}$，不由(181.3)指定Hamiltonian、$\hbar$ 或钟。至此完整180.3–180.4的消费者、量词和实际见证全部接回。
+
+### 181.5 生成元的含义及中文几何解释
+
+继续证明中的范围说明。$X\in\mathfrak p_A^0$ 的含义是原型自伴随且 $\exp(tX)$ 对全部实 $t$ 保持原锥，不是 $X$ 本身保正，也不要求 $I+tX$ 保正。此区别可在复矩阵锥的迹型几何中直接核算：在一个二维支撑上取 $H=\operatorname{diag}(1,-1)$、$X(z)=(Hz+zH)/2$。它迹自伴随且 $\exp(tX)z=e^{tH/2}ze^{tH/2}$ 保锥，但 $X(E_{22})=-E_{22}$ 不保正；对 $z=\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)\ge0$，
+
+$$
+(I+tX)z=\begin{pmatrix}1+t&1\\1&1-t\end{pmatrix},
+\qquad \det((I+tX)z)=-t^2<0\quad(t\ne0).
+\tag{181.23}
+$$
+
+故连任意小的非零Euler步也不必保锥；这种数学核算不供应一台原可控装置。
+
+用中文读(181.5)：先只要求“不做变化”有一个反向伙伴；同一读数的四角差量、下界和探针分离会迫使这个伙伴仍是不做变化，并恢复原尺子。然后只在原单位 $u$ 看全部关于这把尺子自伴随的无穷小锥变形，要求它们作用在 $u$ 上的方向铺满原空间。固定任一内点的保序变化都受序单位范数约束，自伴随变形若不移动该内点就只能为零，所以方向既无缺口也无多余。这个维数事实可搬到证明用的旋转平均点，在那里把方向组织成含幺Jordan乘法；谱分解和原锥的尖性迫使原来的正锥恰好是平方锥。于是全部内点可互达、全部伙伴为原伴随，都是结论。平均点从未替换原设备的单位；原D仍在原单位适配的乘法上选出复类型。
+
+这种静态几何也容纳经典标量直和；复结构、AC的非经典实际指针以及联合、参考和调用条件各有自己的职责。正确运输后的纯确认比较是两条射线的重叠，交换比较端点数值不变；顺序历史却逐次复合状态映射，交换执行先后并不由此保持输出或概率。数学三球上的点、保锥指数的存在、实际质量一准备、原装置的精确控制、旧设备的更新和物理时间各守上述资源范围。
+
+本结论是完整候选在同一原数值和实际见证上的等价，不是独立物理公理数减少、任意锥呈示的有限判定算法、实际可控性或物理资料满足性的证明。幂结合、自伴随谱和Lie群事实只作上述中间供应；没有以预设EJA的Lie代数分解反向赚取Jordan前件，也不以这里的综合推导主张文献优先权。$\square$
+
+## 追加锚（本行以下为增补区）
