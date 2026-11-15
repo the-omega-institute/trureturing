@@ -64,7 +64,19 @@ Lean statement: `D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.fullSubsetSums`
 
 Each index subset, including the empty set exactly once, contributes one occurrence of its sum.
 
-**Theorem 1.6 (The even incidence first moment).**
+**Theorem 1.6 (Both parity classes have half the subsets).**
+
+$$\forall A \in Type*,\; \forall s \in \operatorname{Finset}\left(A\right),\; \operatorname{Finset.Nonempty}\left(s\right) \Rightarrow ((\sum_{t\in\operatorname{evenSubsets}\left(s\right)}(1:\mathbb{R}) = (2:\mathbb{R})^{\operatorname{Finset.card}\left(s\right) - 1}) \land (\sum_{t\in\operatorname{oddSubsets}\left(s\right)}(1:\mathbb{R}) = (2:\mathbb{R})^{\operatorname{Finset.card}\left(s\right) - 1}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.parity_counts` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every nonempty finite index set has equally many even and odd subsets, each contributing one to its real-valued count.
+
+**Theorem 1.7 (The even incidence first moment).**
 
 Lean statement: `D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.even_first_moment`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.even_first_moment
 
 If s has at least two indices, summing the even spectrum gives 2^(|s|-2) times the sum of the coefficients. Inserting one index splits subsets into those containing it and those avoiding it, interchanges the two parities in the containing part, and gives the cardinal and weighted recurrences.
 
-**Theorem 1.7 (Complementation reflects the even spectrum).**
+**Theorem 1.8 (Complementation reflects the even spectrum).**
 
 Lean statement: `D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.odd_spectrum_reflection`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.odd_spectrum_refl
 
 For an odd finite index universe and total coefficient sum B, the odd spectrum is the multiset image of the even spectrum under x ↦ B-x. Complementation is a bijection on index subsets, so this equality preserves multiplicities even when several subsets have the same sum.
 
-**Theorem 1.8 (Even equality determines full equality).**
+**Theorem 1.9 (Even equality determines full equality).**
 
 Lean statement: `D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.even_spectrum_determines_full`
 
@@ -110,3 +122,4 @@ Let m be odd and at least three, and let b,c be arbitrary real coefficient famil
 - Truth anchor: `D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.oddSubsetSums`
 - Truth anchor: `D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.oddSubsets`
 - Truth anchor: `D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.odd_spectrum_reflection`
+- Truth anchor: `D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.parity_counts`

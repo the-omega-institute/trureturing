@@ -262,7 +262,10 @@ private noncomputable def partitionOrderEquiv {α : Type} [DecidableEq α] (N : 
         simp only [List.get_eq_getElem] at h
         rw [List.ofFn_getElem_eq_map] at h
         simpa only [List.pairwise_map] using h⟩
-    left_inv := fun σ => by apply Subtype.ext; ext x; simp
+    left_inv := fun σ => by
+      apply Subtype.ext
+      exact (Equiv.trans_cancel_left (chainLayout L R hd hm).symm
+        ((chainLayout L R hd hm).trans σ.val) σ.val).mpr rfl
     right_inv := fun e => by
       have h : (chainLayout L R hd hm).trans ((chainLayout L R hd hm).symm.trans e.positions) = e.positions :=
         (Equiv.trans_cancel_left (chainLayout L R hd hm) ((chainLayout L R hd hm).symm.trans e.positions) e.positions).mpr rfl
