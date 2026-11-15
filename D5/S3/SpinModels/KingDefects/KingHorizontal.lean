@@ -20,6 +20,7 @@ boundary_reconstruct: proof_shape=content; consumers=boundary_slot_equiv
 boundary_slot_equiv: proof_shape=content; consumers=KingClosedForm.horizontal_count
 -/
 import D5.S3.SpinModels.KingDefects.KingDifference
+import Mathlib.Algebra.Ring.GeomSum
 
 /-! Horizontal defects, with dimensions expressed as numbers of steps. -/
 namespace D5.S3.SpinModels.KingDefects.KingHorizontal
@@ -347,7 +348,7 @@ theorem boundary_words_pos_card (m c d : ℕ) (hm : 0 < m) :
   have htwo : 2 ≤ 2 ^ m := by
     calc
       2 = 2 ^ 1 := by norm_num
-      _ ≤ 2 ^ m := Nat.pow_le_pow_right (by decide) hm
+      _ ≤ 2 ^ m := Nat.pow_le_pow_right (n:=2) Nat.zero_lt_two hm
   omega
 
 #print axioms boundary_words_zero_card
@@ -1195,12 +1196,8 @@ theorem interior_three_rows_count (c d : ℕ) :
   rw [h, ← Nat.card_congr (three_row_slots_equiv c d), three_row_code_card]
 
 private theorem sum_two_powers (q : ℕ) : (∑ i : Fin q, 2 ^ i.val) + 1 = 2 ^ q := by
-  induction q with
-  | zero => simp
-  | succ q ih =>
-    rw [Fin.sum_univ_castSucc]
-    simp only [Fin.val_castSucc, Fin.val_last, pow_succ]
-    omega
+  rw [Fin.sum_univ_eq_sum_range]
+  simpa using (geom_sum_mul_add (1 : ℕ) q)
 
 private theorem sum_two_powers_reverse (q : ℕ) :
     (∑ i : Fin (q + 1), 2 ^ (q - i.val)) + 1 = 2 ^ (q + 1) := by
@@ -1398,8 +1395,8 @@ def interior_code_equiv (a b c d : ℕ) :
               (by simp [pivot, Fin.ext_iff])
       · rfl
 
-/-- An exact interior count as independent horizontal alphabet sizes over vertical words. -/
 set_option synthInstance.maxSize 2048 in
+/-- An exact interior count as independent horizontal alphabet sizes over vertical words. -/
 theorem interior_count_alphabets (a b c d : ℕ) :
     N_e (.H (cut_row (a + 1) (b + 1)) (pivot c d) :
       Edge ((a + 1) + (b + 1) + 1) (c + (d + 1) + 1)) =
@@ -1540,7 +1537,7 @@ private theorem ordinary_value_valid (x : NZPair) (b : Bool) :
       ordinary_value x b ≠ 0 ∧ ordinary_value x b ≠ x.val.1 + x.val.2 := by decide
   exact h x b
 
-private def ordinary_equiv (x : NZPair) : Bool ≃ OrdinaryAlphabet x :=
+private noncomputable def ordinary_equiv (x : NZPair) : Bool ≃ OrdinaryAlphabet x :=
   Equiv.ofBijective (fun b => ⟨ordinary_value x b,ordinary_value_valid x b⟩) (by
     constructor
     · intro b b' he
@@ -1566,7 +1563,7 @@ private theorem support_alphabet_card {a b : ℕ} (x y : NZPair)
   intro h
   simp [InteriorAlphabet, SupportAlphabet, word_support, ordinary_equiv, Equiv.ofBijective]
 
-private def pair_support_count (a b c d : ℕ) (x y : NZPair) : ℕ :=
+private noncomputable def pair_support_count (a b c d : ℕ) (x y : NZPair) : ℕ :=
   ∑ S : Finset Bool, ∑ T : Finset Bool,
     support_weight a S * support_weight b T *
       Nat.card (SupportAlphabet x y S T x.val.1 y.val.1) ^ c *
@@ -1578,9 +1575,9 @@ private theorem pair_count_support (a b c d : ℕ) (x y : NZPair) :
       Nat.card (InteriorAlphabet x y u v x.val.2 y.val.2) ^ d) =
         pair_support_count a b c d x y := by
   classical
-  have eu : (Fin a → Bool) ≃ (Fin a → OrdinaryAlphabet x) :=
+  let eu : (Fin a → Bool) ≃ (Fin a → OrdinaryAlphabet x) :=
     Equiv.arrowCongr (Equiv.refl _) (ordinary_equiv x)
-  have ev : (Fin b → Bool) ≃ (Fin b → OrdinaryAlphabet y) :=
+  let ev : (Fin b → Bool) ≃ (Fin b → OrdinaryAlphabet y) :=
     Equiv.arrowCongr (Equiv.refl _) (ordinary_equiv y)
   calc
     _ = ∑ u : Fin a → Bool, ∑ v : Fin b → Bool,
@@ -1591,12 +1588,17 @@ private theorem pair_count_support (a b c d : ℕ) (x y : NZPair) :
       intro u
       apply Fintype.sum_equiv ev
       intro v
-      exact (congrArg₂ (fun L R : ℕ => L^c*R^d)
-        (support_alphabet_card x y u v _ _)
-        (support_alphabet_card x y u v _ _)).symm
+      simpa [eu,ev,Equiv.arrowCongr, Function.comp_def] using (congrArg₂ (fun L R : ℕ => L^c*R^d)
+        (support_alphabet_card x y u v x.val.1 y.val.1)
+        (support_alphabet_card x y u v x.val.2 y.val.2)).symm
     _ = _ := by
-      simp_rw [sum_by_support b]
-      rw [sum_by_support a]
+      have hs (u : Fin a → Bool) := sum_by_support b
+        (fun T => Nat.card (SupportAlphabet x y (word_support u) T x.val.1 y.val.1)^c *
+          Nat.card (SupportAlphabet x y (word_support u) T x.val.2 y.val.2)^d)
+      simp_rw [hs]
+      rw [sum_by_support a (fun S => ∑ T : Finset Bool, support_weight b T *
+        (Nat.card (SupportAlphabet x y S T x.val.1 y.val.1)^c *
+          Nat.card (SupportAlphabet x y S T x.val.2 y.val.2)^d))]
       unfold pair_support_count
       apply Finset.sum_congr rfl
       intro S _
@@ -1617,6 +1619,308 @@ theorem interior_count_support (a b c d : ℕ) :
   intro y _
   exact pair_count_support a b c d x y
 
+private def supports : Fin 4 → Finset Bool := ![∅,{false},{true},Finset.univ]
+
+private noncomputable def supports_equiv : Fin 4 ≃ Finset Bool :=
+  Equiv.ofBijective supports (by decide)
+
+private def lower_pair_values (x : NZPair) : Fin 6 → K × K :=
+  ![(x.val.1,x.val.2),(x.val.2,x.val.1),(x.val.1,x.val.1+x.val.2),
+    (x.val.1+x.val.2,x.val.2),(x.val.1+x.val.2,x.val.1),(x.val.2,x.val.1+x.val.2)]
+
+private theorem lower_pair_valid (x : NZPair) (i : Fin 6) :
+    (lower_pair_values x i).1 ≠ 0 ∧ (lower_pair_values x i).2 ≠ 0 ∧
+      (lower_pair_values x i).1 ≠ (lower_pair_values x i).2 := by
+  have h : ∀ x : NZPair, ∀ i : Fin 6,
+      (lower_pair_values x i).1 ≠ 0 ∧ (lower_pair_values x i).2 ≠ 0 ∧
+        (lower_pair_values x i).1 ≠ (lower_pair_values x i).2 := by decide
+  exact h x i
+
+def lower_pair (x : NZPair) (i : Fin 6) : NZPair :=
+  ⟨lower_pair_values x i,lower_pair_valid x i⟩
+
+private noncomputable def lower_pair_equiv (x : NZPair) : Fin 6 ≃ NZPair :=
+  Equiv.ofBijective (lower_pair x) (by
+    have h : ∀ x : NZPair,
+        (∀ i j, lower_pair x i = lower_pair x j → i = j) ∧
+        (∀ y, ∃ i, lower_pair x i = y) := by decide
+    exact h x)
+
+private def support_sizes : Fin 6 → Fin 4 → Fin 4 → ℕ × ℕ :=
+  ![![![(2,2),(2,1),(1,2),(1,1)],![(2,1),(2,1),(1,1),(1,1)],![(1,2),(1,1),(1,2),(1,1)],![(1,1),(1,1),(1,1),(1,1)]],
+    ![![(1,1),(1,1),(1,1),(1,1)],![(1,1),(1,1),(1,1),(1,1)],![(1,1),(1,1),(1,1),(1,1)],![(1,1),(1,1),(1,1),(1,1)]],
+    ![![(2,1),(2,0),(1,1),(1,0)],![(2,0),(2,0),(1,0),(1,0)],![(1,1),(1,0),(0,1),(0,0)],![(1,0),(1,0),(0,0),(0,0)]],
+    ![![(1,2),(1,1),(0,2),(0,1)],![(1,1),(1,0),(0,1),(0,0)],![(0,2),(0,1),(0,2),(0,1)],![(0,1),(0,0),(0,1),(0,0)]],
+    ![![(1,1),(1,0),(1,1),(1,0)],![(1,1),(1,0),(1,1),(1,0)],![(0,1),(0,0),(0,1),(0,0)],![(0,1),(0,0),(0,1),(0,0)]],
+    ![![(1,1),(1,1),(0,1),(0,1)],![(1,0),(1,0),(0,0),(0,0)],![(1,1),(1,1),(0,1),(0,1)],![(1,0),(1,0),(0,0),(0,0)]]]
+
+private theorem support_sizes_correct (x : NZPair) (i : Fin 6) (j k : Fin 4) :
+    (Nat.card (SupportAlphabet x (lower_pair x i) (supports j) (supports k)
+      x.val.1 (lower_pair x i).val.1),
+    Nat.card (SupportAlphabet x (lower_pair x i) (supports j) (supports k)
+      x.val.2 (lower_pair x i).val.2)) = support_sizes i j k := by
+  have h : ∀ x : NZPair, ∀ i : Fin 6, ∀ j k : Fin 4,
+      (Fintype.card (SupportAlphabet x (lower_pair x i) (supports j) (supports k)
+        x.val.1 (lower_pair x i).val.1),
+      Fintype.card (SupportAlphabet x (lower_pair x i) (supports j) (supports k)
+        x.val.2 (lower_pair x i).val.2)) = support_sizes i j k := by decide
+  simpa only [Nat.card_eq_fintype_card] using h x i j k
+
+private def support_case_count (a b c d : ℕ) (i : Fin 6) : ℕ :=
+  ∑ j : Fin 4, ∑ k : Fin 4, support_weight a (supports j) * support_weight b (supports k) *
+    (support_sizes i j k).1 ^ c * (support_sizes i j k).2 ^ d
+
+private theorem pair_support_cases (a b c d : ℕ) (x : NZPair) (i : Fin 6) :
+    pair_support_count a b c d x (lower_pair x i) = support_case_count a b c d i := by
+  unfold pair_support_count support_case_count
+  symm
+  apply Fintype.sum_equiv supports_equiv
+  intro j
+  apply Fintype.sum_equiv supports_equiv
+  intro k
+  have h := support_sizes_correct x i j k
+  rw [← h]
+  rfl
+
+/-- The P term in the six lower-pair cases, including all empty-side cases. -/
+def P (a b c d : ℕ) : ℕ :=
+  if d = 0 then E c a b else ((if a = 0 then 1 else 0) + (if b = 0 then 1 else 0)) ^ c
+
+/-- The Q term in the six lower-pair cases. -/
+def Q (a b c d : ℕ) : ℕ :=
+  (1 + if c = 0 then 1 else 0) ^ a * (1 + if d = 0 then 1 else 0) ^ b
+
+def six_case_value (a b c d : ℕ) : Fin 6 → ℕ :=
+  ![E (a+b) c d,2^(a+b),P a b c d,P a b d c,Q a b c d,Q a b d c]
+
+set_option maxHeartbeats 800000 in
+private theorem support_case_eval (a b c d : ℕ) (i : Fin 6) :
+    support_case_count a b c d i = six_case_value a b c d i := by
+  have ha : 1 ≤ 2 ^ a := Nat.one_le_pow a 2 (by decide)
+  have hb : 1 ≤ 2 ^ b := Nat.one_le_pow b 2 (by decide)
+  have hc : 1 ≤ 2 ^ c := Nat.one_le_pow c 2 (by decide)
+  have hd : 1 ≤ 2 ^ d := Nat.one_le_pow d 2 (by decide)
+  have sub_bound (n : ℕ) : n=0 ∨ 2^n-2+2=2^n := by
+    by_cases hn : n=0
+    · exact Or.inl hn
+    · exact Or.inr (Nat.sub_add_cancel (Nat.pow_le_pow_right (n:=2) Nat.zero_lt_two (Nat.pos_of_ne_zero hn)))
+  have hsa := sub_bound a
+  have hsb := sub_bound b
+  have hse : a+b=0 ∨ (2^(a+b)+2^c+2^d-2)+2=2^(a+b)+2^c+2^d := by
+    by_cases hm : a+b=0
+    · exact Or.inl hm
+    · right
+      apply Nat.sub_add_cancel
+      have hp : 2 ≤ 2^(a+b) :=
+        Nat.pow_le_pow_right (n:=2) Nat.zero_lt_two (Nat.pos_of_ne_zero hm)
+      omega
+  have h0 : (Finset.univ : Finset Bool) ≠ ∅ := by decide
+  have h1 : (Finset.univ : Finset Bool) ≠ {false} := by decide
+  have h2 : (Finset.univ : Finset Bool) ≠ {true} := by decide
+  fin_cases i <;>
+    simp only [support_case_count, Fin.sum_univ_succ, Fin.sum_univ_zero] <;>
+    cases a <;> cases b <;> cases c <;> cases d <;>
+    simp [supports, support_weight, support_sizes, six_case_value, E, P, Q,
+      h0,h1,h2,pow_add,pow_succ] at * <;> simp_all <;> first | omega | nlinarith
+
+/-- The six lower ordered pairs have the E, binary, P, P', Q and Q' counts. -/
+theorem interior_six_lower_pairs (a b c d : ℕ) (x : NZPair) (i : Fin 6) :
+    (∑ u : Fin a → OrdinaryAlphabet x,
+      ∑ v : Fin b → OrdinaryAlphabet (lower_pair x i),
+        Nat.card (InteriorAlphabet x (lower_pair x i) u v
+          x.val.1 (lower_pair x i).val.1) ^ c *
+        Nat.card (InteriorAlphabet x (lower_pair x i) u v
+          x.val.2 (lower_pair x i).val.2) ^ d) = six_case_value a b c d i := by
+  rw [pair_count_support, pair_support_cases, support_case_eval]
+
+/-- Lemma 7, equation (10), for all interior rows and every empty-side case. -/
+theorem interior_count (a b c d : ℕ) :
+    N_e (.H (cut_row (a + 1) (b + 1)) (pivot c d) :
+      Edge ((a + 1) + (b + 1) + 1) (c + (d + 1) + 1)) =
+      6 * (E (a+b) c d + 2^(a+b) + P a b c d + P a b d c + Q a b c d + Q a b d c) := by
+  rw [interior_count_support]
+  have h (x : NZPair) :
+      (∑ y : NZPair, pair_support_count a b c d x y) =
+        E (a+b) c d + 2^(a+b) + P a b c d + P a b d c + Q a b c d + Q a b d c := by
+    rw [← Equiv.sum_comp (lower_pair_equiv x)]
+    change (∑ i : Fin 6, pair_support_count a b c d x (lower_pair x i)) = _
+    simp_rw [pair_support_cases, support_case_eval]
+    simp [six_case_value, Fin.sum_univ_succ, add_assoc]
+  simp_rw [h]
+  simp only [Finset.sum_const, Finset.card_univ, smul_eq_mul]
+  have hp : Fintype.card NZPair = 6 := by simpa [Nat.card_eq_fintype_card] using nz_pair_card
+  rw [hp]
+
+private theorem interior_endpoint_value (a b d : ℕ) (hm : 0 < a+b) (hd : 0 < d) :
+    E (a+b) 0 d + 2^(a+b) + P a b 0 d + P a b d 0 + Q a b 0 d + Q a b d 0 + 2 =
+      2^(a+b+1) + 2^(d+1) + 2^(a+1) + 2^(b+1) := by
+  have he : 2 ≤ 2 ^ (a+b) := Nat.pow_le_pow_right (n:=2) Nat.zero_lt_two hm
+  have hpa : 1 ≤ 2 ^ a := Nat.one_le_pow a 2 (by decide)
+  have hpb : 1 ≤ 2 ^ b := Nat.one_le_pow b 2 (by decide)
+  have hpd : 1 ≤ 2 ^ d := Nat.one_le_pow d 2 (by decide)
+  simp only [E,P,Q,Nat.ne_of_gt hm,Nat.ne_of_gt hd,ite_false,ite_true,
+    pow_zero,one_pow,zero_add,add_zero,pow_succ]
+  norm_num
+  omega
+
+private theorem interior_middle_value (a b c d : ℕ) (hm : 0 < a+b)
+    (hc : 0 < c) (hd : 0 < d) :
+    E (a+b) c d + 2^(a+b) + P a b c d + P a b d c + Q a b c d + Q a b d c =
+      2^(a+b+1) + 2^c + 2^d + 2*((if a=0 then 1 else 0)+(if b=0 then 1 else 0)) := by
+  have he : 2 ≤ 2 ^ (a+b) := Nat.pow_le_pow_right (n:=2) Nat.zero_lt_two hm
+  simp only [E,P,Q,Nat.ne_of_gt hm,Nat.ne_of_gt hc,Nat.ne_of_gt hd,
+    ite_false,ite_true,zero_add,add_zero,one_pow,pow_succ]
+  by_cases ha : a=0 <;> by_cases hb : b=0 <;> simp only [ha,hb,ite_true,ite_false]
+  all_goals norm_num
+  all_goals omega
+
+/-- A whole interior row, with two endpoint positions separated from the middle. -/
+theorem interior_row_sum (a b q : ℕ) (hm : 0 < a+b) :
+    (∑ s : Fin (q+2),
+      N_e (.H (cut_row (a+1) (b+1)) s : Edge ((a+1)+(b+1)+1) (q+2+1))) + 48 =
+      6*((q+2)*2^(a+b+1) + 3*2^(q+2) + 2^(a+2) + 2^(b+2) +
+        2*q*((if a=0 then 1 else 0)+(if b=0 then 1 else 0))) := by
+  have aux (c d : ℕ) {M : ℕ} (hM : M = c+(d+1)) (s : Fin M) (hs : s.val=c) :
+      N_e (.H (cut_row (a+1) (b+1)) s : Edge ((a+1)+(b+1)+1) (M+1)) =
+        6*(E (a+b) c d + 2^(a+b) + P a b c d + P a b d c + Q a b c d + Q a b d c) := by
+    subst M
+    have hp : s = pivot c d := Fin.ext hs
+    subst s
+    exact interior_count a b c d
+  have hfirst := aux 0 (q+1) (M:=q+2) (by omega) (0 : Fin (q+2)) rfl
+  have hlast := aux (q+1) 0 (M:=q+2) (by omega) (Fin.last (q+1)) rfl
+  have he := interior_endpoint_value a b (q+1) hm (by omega)
+  have hsym (c d : ℕ) :
+      E (a+b) c d + 2^(a+b) + P a b c d + P a b d c + Q a b c d + Q a b d c =
+      E (a+b) d c + 2^(a+b) + P a b d c + P a b c d + Q a b d c + Q a b c d := by
+    have he : E (a+b) c d = E (a+b) d c := by
+      simp only [E,Nat.ne_of_gt hm,ite_false]
+      congr 1
+      omega
+    rw [he]
+    omega
+  rw [hsym] at hlast
+  have hqe : q+1+1=q+2 := by omega
+  rw [hqe] at he
+  have hfirst' : N_e (.H (cut_row (a+1) (b+1)) (0 : Fin (q+2))) + 12 =
+      6*(2^(a+b+1)+2^(q+2)+2^(a+1)+2^(b+1)) := by omega
+  have hlast' : N_e (.H (cut_row (a+1) (b+1)) (Fin.last (q+1) : Fin (q+2))) + 12 =
+      6*(2^(a+b+1)+2^(q+2)+2^(a+1)+2^(b+1)) := by omega
+  have hmid (s : Fin q) :
+      N_e (.H (cut_row (a+1) (b+1)) s.castSucc.succ :
+        Edge ((a+1)+(b+1)+1) (q+2+1)) =
+        6*(2^(a+b+1)+2^(s.val+1)+2^(q-s.val)+
+          2*((if a=0 then 1 else 0)+(if b=0 then 1 else 0))) := by
+    have h := aux (s.val+1) (q-s.val) (by have := s.isLt; omega) s.castSucc.succ rfl
+    rw [h,interior_middle_value a b _ _ hm (by omega) (by have := s.isLt; omega)]
+  have hg := sum_two_powers q
+  have hr : (∑ s : Fin q, 2^(q-s.val)) + 2 = 2^(q+1) := by
+    cases q with
+    | zero => simp
+    | succ q =>
+      have h := sum_two_powers_reverse q
+      have he (s : Fin (q+1)) : q+1-s.val = (q-s.val)+1 := by have := s.isLt; omega
+      simp_rw [he,pow_succ]
+      rw [← Finset.sum_mul]
+      omega
+  rw [Fin.sum_univ_succ]
+  rw [Fin.sum_univ_castSucc (fun s : Fin (q+1) =>
+    N_e (.H (cut_row (a+1) (b+1)) s.succ : Edge ((a+1)+(b+1)+1) (q+2+1)))]
+  simp only [Fin.succ_last]
+  simp_rw [hmid]
+  simp only [pow_succ]
+  simp only [Finset.sum_add_distrib, Finset.mul_sum, Finset.sum_mul,
+    Finset.sum_const,Finset.card_univ,Fintype.card_fin,smul_eq_mul]
+  simp only [pow_succ] at hfirst' hlast' hr ⊢
+  nlinarith
+
+private theorem boundary_row_sum (m q : ℕ) (hm : 0 < m) :
+    (∑ s : Fin (q+2), N_e (.H (0 : Fin (m+2)) s : Edge (m+2) (q+2+1))) +
+        12*(q+2)+12 = 6*((q+2)*2^m+2^(q+3)) := by
+  have hc (s : Fin (q+2)) : N_e (.H (0 : Fin (m+2)) s : Edge (m+2) (q+2+1)) + 12 =
+      6*(2^m+2^s.val+2^(q+1-s.val)) := by
+    have h := boundary_count_at (m:=m) s
+    unfold E at h
+    rw [ite_eq_right (Nat.ne_of_gt hm)] at h
+    have he : q+2-1-s.val=q+1-s.val := by omega
+    rw [he] at h
+    have hp : 2 ≤ 2^m := Nat.pow_le_pow_right (n:=2) Nat.zero_lt_two hm
+    have hpc : (0 : ℕ) ≤ 2^s.val := Nat.zero_le _
+    have hpd : (0 : ℕ) ≤ 2^(q+1-s.val) := Nat.zero_le _
+    omega
+  have hsum := congrArg (fun f : Fin (q+2) → ℕ => ∑ s, f s) (funext hc)
+  have hg := sum_two_powers (q+2)
+  have hr := sum_two_powers_reverse (q+1)
+  simp only [Finset.sum_add_distrib,← Finset.mul_sum,Finset.sum_const,
+    Finset.card_univ,Fintype.card_fin,smul_eq_mul] at hsum
+  simp only [pow_succ] at hg hr ⊢
+  nlinarith
+
+private theorem sum_left_indicator (t : ℕ) :
+    (∑ i : Fin (t+2), if i.val=0 then 1 else 0) = (1 : ℕ) := by
+  rw [Fin.sum_univ_succ]
+  simp
+
+private theorem sum_right_indicator (t : ℕ) :
+    (∑ i : Fin (t+2), if t+1-i.val=0 then 1 else 0) = (1 : ℕ) := by
+  have hr := Equiv.sum_comp (Fin.revPerm (n:=t+2))
+    (fun i : Fin (t+2) => if i.val=0 then (1 : ℕ) else 0)
+  have hv (i : Fin (t+2)) : (Fin.revPerm i).val = t+1-i.val := by
+    simp [Fin.revPerm,Fin.rev]
+  simp only [hv] at hr
+  rw [hr]
+  exact sum_left_indicator t
+
+/-- Lemma 9 for at least four rows and three columns, with no natural subtraction. -/
+theorem horizontal_sum (t q : ℕ) :
+    N_H (t+3) (q+2) + 6*(8*(t+4)+4) =
+      6*((((t+4)*(q+2)+8)*2^(t+2))+(3*t+10)*2^(q+2)) := by
+  have hrows (i : Fin (t+2)) :
+      (∑ s : Fin (q+2), N_e (.H i.castSucc.succ s : Edge (t+3+1) (q+2+1))) + 48 =
+        6*((q+2)*2^(t+2)+3*2^(q+2)+2^(i.val+2)+2^(t+1-i.val+2)+
+          2*q*((if i.val=0 then 1 else 0)+(if t+1-i.val=0 then 1 else 0))) := by
+    have aux (a b : ℕ) {N : ℕ} (hN : N=(a+1)+(b+1))
+        (r : Fin (N+1)) (hr : r.val=a+1) (hm : 0<a+b) :
+        (∑ s : Fin (q+2), N_e (.H r s : Edge (N+1) (q+2+1))) + 48 =
+          6*((q+2)*2^(a+b+1)+3*2^(q+2)+2^(a+2)+2^(b+2)+
+            2*q*((if a=0 then 1 else 0)+(if b=0 then 1 else 0))) := by
+      subst N
+      have he : r=cut_row (a+1) (b+1) := Fin.ext hr
+      subst r
+      exact interior_row_sum a b q hm
+    have hi := i.isLt
+    have h := aux i.val (t+1-i.val) (by omega) i.castSucc.succ rfl (by omega)
+    have he : i.val+(t+1-i.val)+1=t+2 := by omega
+    simpa only [he] using h
+  have hsum := congrArg (fun f : Fin (t+2) → ℕ => ∑ i, f i) (funext hrows)
+  have hb := boundary_row_sum (t+2) q (by omega)
+  have hbottom :
+      (∑ s : Fin (q+2), N_e (.H (Fin.last (t+3)) s : Edge (t+3+1) (q+2+1))) =
+        ∑ s : Fin (q+2), N_e (.H (0 : Fin (t+3+1)) s) := by
+    apply Finset.sum_congr rfl
+    intro s _
+    simpa using horizontal_count_row_reflect (0 : Fin (t+3+1)) s
+  have hg := sum_two_powers (t+2)
+  have hr := sum_two_powers_reverse (t+1)
+  have hl := sum_left_indicator t
+  have hri := sum_right_indicator t
+  simp only [pow_add, pow_two] at hsum
+  simp only [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.sum_mul,
+    Finset.sum_const,Finset.card_univ,Fintype.card_fin,smul_eq_mul] at hsum
+  rw [hl,hri] at hsum
+  unfold N_H
+  rw [Fin.sum_univ_succ]
+  rw [Fin.sum_univ_castSucc (fun i : Fin (t+3) =>
+    ∑ s : Fin (q+2), N_e (.H i.succ s : Edge (t+3+1) (q+2+1)))]
+  simp only [Fin.succ_last]
+  rw [hbottom]
+  simp only [pow_succ] at hg hr hb ⊢
+  nlinarith
+
+#print axioms horizontal_sum
+#print axioms interior_row_sum
+#print axioms interior_count
+#print axioms support_case_eval
 #print axioms interior_count_support
 #print axioms word_support_card
 #print axioms interior_count_alphabets
