@@ -60,6 +60,7 @@ count_by_kind: proof_shape=bind-only; consumers=KingClosedForm.closed_form,KingC
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import Mathlib.GroupTheory.SpecificGroups.KleinFour
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Group.List.Basic
 import Mathlib.Order.Monotone.Basic
 
 /-! Discrete derivatives, exact integration and local rainbow rigidity. -/
@@ -131,19 +132,7 @@ private theorem integrate_h {N M : ℕ} (t : K) (s : DiffField N M)
 
 private theorem psum_add {n : ℕ} (f g : Fin n → K) (j : Fin (n+1)) :
     Fin.partialSum (fun i => f i + g i) j = Fin.partialSum f j + Fin.partialSum g j := by
-  let u : Fin (n+1) → K := fun j => Fin.partialSum f j + Fin.partialSum g j
-  have hd : (fun i : Fin n => -(u i.castSucc) + u i.succ) = (fun i => f i + g i) := by
-    funext i
-    have hf := Fin.partialSum_right_neg f i
-    have hg := Fin.partialSum_right_neg g i
-    dsimp [u]
-    calc
-      _ = (-Fin.partialSum f i.castSucc + Fin.partialSum f i.succ) +
-          (-Fin.partialSum g i.castSucc + Fin.partialSum g i.succ) := by abel
-      _ = _ := by rw [hf, hg]
-  have h := congrFun (Fin.partialSum_left_neg u) j
-  rw [hd] at h
-  simpa [u] using h
+  simp only [Fin.partialSum, List.ofFn_eq_map, ← List.map_take, List.sum_map_add]
 
 
 private theorem integrate_v {N M : ℕ} (t : K) (s : DiffField N M) (hs : Cocycle s)

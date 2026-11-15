@@ -468,20 +468,9 @@ theorem sum_by_support (n : ℕ) (f : Finset Bool → ℕ) :
     (∑ u : Fin n → Bool, f (word_support u)) =
       ∑ S : Finset Bool, support_weight n S * f S := by
   classical
-  have h := Equiv.sum_comp (Equiv.sigmaFiberEquiv (@word_support n))
-    (fun u => f (word_support u))
-  rw [Fintype.sum_sigma] at h
-  calc
-    _ = ∑ S : Finset Bool, ∑ u : {u : Fin n → Bool // word_support u = S},
-        f (word_support u.val) := h.symm
-    _ = ∑ S : Finset Bool, Nat.card {u : Fin n → Bool // word_support u = S} * f S := by
-      apply Finset.sum_congr rfl
-      intro S _
-      have he : (fun u : {u : Fin n → Bool // word_support u = S} => f (word_support u.val)) =
-          (fun _ => f S) := funext fun u => congrArg f u.property
-      rw [he]
-      simp [Nat.card_eq_fintype_card]
-    _ = _ := by simp_rw [word_support_card]
+  have h := Fintype.sum_fiberwise' (@word_support n) f
+  simpa only [Finset.sum_const, Finset.card_univ, smul_eq_mul,
+    ← Nat.card_eq_fintype_card, word_support_card] using h.symm
 
 def ordinary_value (x : NZPair) (b : Bool) : K := if b then x.val.2 else x.val.1
 

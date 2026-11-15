@@ -709,10 +709,10 @@ def boundary_bottom_slot_equiv (m M : ℕ) (s : Fin M) :
     (transport.trans (boundary_slot_equiv m M s))
 
 private def top_row {A : ℕ} (B : ℕ) (i : Fin (A + 1)) : Fin (A + B + 1) :=
-  ⟨i.val, by omega⟩
+  Fin.castLE (by omega) i
 
 private def bottom_row (A : ℕ) {B : ℕ} (i : Fin (B + 1)) : Fin (A + B + 1) :=
-  ⟨A + i.val, by omega⟩
+  Fin.natAdd A i
 
 private def top_field {A B M : ℕ} (t : DiffField (A + B) M) : DiffField A M where
   h i j := t.h (top_row B i) j
@@ -745,7 +745,7 @@ private theorem bottom_edge_value {A B M : ℕ} (t : DiffField (A + B) M)
       edgeValue t (bottom_edge A e) := by
   cases e <;> rfl
 
-def cut_row (A B : ℕ) : Fin (A + B + 1) := ⟨A, by omega⟩
+def cut_row (A B : ℕ) : Fin (A + B + 1) := pivot A B
 
 private theorem top_field_raw {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M)
     (ht : RawAdmissible (.H (cut_row A B) s) t) :

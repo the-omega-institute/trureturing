@@ -99,7 +99,7 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
             Node("cut_row", "cut row", Formula21(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
-                "The shared row has natural value A in a rectangle with A + B vertical steps."),
+                "The shared row is pivot A B, with natural value A in a rectangle with A + B vertical steps."),
             Node("CutFields", "CutFields", Formula22(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
@@ -107,7 +107,7 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
             Node("horizontal_cut_equiv", "horizontal cut equiv", Formula23(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
-                "Restrict above and below the selected row. The inverse joins the two fields along their common horizontal values."))));
+                "Restrict above and below the selected row. The consumed private row embeddings top_row and bottom_row use Fin.castLE and Fin.natAdd, respectively. The inverse joins the two fields along their common horizontal values."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,
         AssessedProvenance provenance, string prose) =>
@@ -1208,7 +1208,10 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
                         Call("KingHorizontal.cut_row", V("A"), V("B")),
                         App(Q("Fin"), Add(Add(V("A"), V("B")), Num("1")))
                     ),
-                    Eq(Call("Fin.val", Call("KingHorizontal.cut_row", V("A"), V("B"))), V("A"))
+                    And(
+                        Eq(Call("KingHorizontal.cut_row", V("A"), V("B")),
+                            Call("KingHorizontal.pivot", V("A"), V("B"))),
+                        Eq(Call("Fin.val", Call("KingHorizontal.cut_row", V("A"), V("B"))), V("A")))
                 )
             )
         );

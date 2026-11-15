@@ -53,7 +53,7 @@ internal sealed class KingDifferenceDocument : IScribeDocumentDefinition
             Node("differentiate_integrate", "Recover a compatible difference field", Formula5(),
                 DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
-                "Compatibility around squares makes the path integral recover every horizontal and vertical difference."),
+                "Compatibility around squares makes the path integral recover every horizontal and vertical difference. The consumed private helper psum_add obtains partial-sum additivity directly from List.sum_map_add after unfolding Fin.partialSum."),
             Node("edgeValue", "Differences on all four orientations", Formula6(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),

@@ -59,7 +59,7 @@ internal sealed class KingHorizontalSlotsDocument : IScribeDocumentDefinition
             Node("sum_by_support", "sum by support", Formula11(),
                 DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
-                "Partition all Boolean words by their support and weight each support by its number of realizations."),
+                "Apply Fintype.sum_fiberwise' to word_support, then use word_support_card to weight each support by its number of realizations."),
             Node("ordinary_value", "ordinary value", Formula12(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
