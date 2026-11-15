@@ -18,7 +18,55 @@ $$\forall x \in Fin\left(3\right),\; tau\left(x\right) = image\left(sigma, 4, x\
 
 Write tau=sigma^4, so tau^n(x)=image sigma (4n) x. The literal images are tau(A)=ABACABAABACAB, tau(B)=ABACABAABAC and tau(C)=ABACABA. Their lengths are 13, 11 and 7. In particular tau(A)=tau(C) followed by A and BACAB.
 
-**Definition 1.2 (Integer letter weights).**
+**Theorem 1.2 (Fourth image of A).**
+
+$$tau\left(0\right) = list\left(0, 1, 0, 2, 0, 1, 0, 0, 1, 0, 2, 0, 1\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/TribonacciPrefixRefutation.tau_A` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exact fourth image of A is ABACABAABACAB.
+
+**Theorem 1.3 (Fourth image of B).**
+
+$$tau\left(1\right) = list\left(0, 1, 0, 2, 0, 1, 0, 0, 1, 0, 2\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/TribonacciPrefixRefutation.tau_B` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exact fourth image of B is ABACABAABAC.
+
+**Theorem 1.4 (Fourth image of C).**
+
+$$tau\left(2\right) = list\left(0, 1, 0, 2, 0, 1, 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/TribonacciPrefixRefutation.tau_C` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exact fourth image of C is ABACABA.
+
+**Theorem 1.5 (All complete block charges).**
+
+$$\forall n \in \mathbb{N},\; a\left(n\right) = 2 \land \left(b\left(n\right) = 2 - \left(0 - 1\right)^{n} \land c\left(n\right) = 2 - \left(2 \cdot integer\left(n\right) + 2\right) \cdot \left(0 - 1\right)^{n}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/TribonacciPrefixRefutation.abc_closed` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The three complete block charges satisfy these identities at every natural level, including zero. The sign is (-1)^n and the coercion of n in c(n) is to the integers.
+
+**Definition 1.6 (Integer letter weights).**
 
 $$weight\left(0\right) = 2 \land \left(weight\left(1\right) = 1 \land weight\left(2\right) = 0\right)$$
 
@@ -30,7 +78,7 @@ $$weight\left(0\right) = 2 \land \left(weight\left(1\right) = 1 \land weight\lef
 
 The weights are exactly A=2, B=1 and C=0, with values in the integers.
 
-**Definition 1.3 (Alternating charge from the local start).**
+**Definition 1.7 (Alternating charge from the local start).**
 
 $$\forall v \in List\left(Fin\left(3\right)\right),\; signedWordSum\left(v\right) = alternatingSum\left(map\left(weight, v\right)\right)$$
 
@@ -44,7 +92,7 @@ For v of length m this is the sum of (-1)^i times weight(v[i]) over 0<=i<m. The 
 
 TribonacciAlignedWindows.four_parity supplies odd length for every tau^n letter image. Thus substitution of such blocks preserves the alternating pattern of the original letters. Put a_n=F(tau^n(A)), b_n=F(tau^n(B)) and c_n=F(tau^n(C)). Expanding the three literal images gives (a_0,b_0,c_0)=(2,1,0) and (a_(n+1),b_(n+1),c_(n+1))=(a_n,2a_n-b_n,4a_n-2b_n-c_n). Induction gives a_n=2, b_n=2-(-1)^n and c_n=2-(2n+2)(-1)^n. These are identities at every natural level.
 
-**Definition 1.4 (The actual recursive prefix family).**
+**Definition 1.8 (The actual recursive prefix family).**
 
 $$prefixWord\left(0\right) = nil\left(\right) \land \left(\forall n \in \mathbb{N},\; prefixWord\left(n + 1\right) = append\left(image\left(sigma, 4 \cdot \left(n + 1\right), 2\right), prefixWord\left(n\right)\right)\right)$$
 
@@ -56,7 +104,7 @@ $$prefixWord\left(0\right) = nil\left(\right) \land \left(\forall n \in \mathbb{
 
 Denote prefixWord(n) by U_n. Thus U_0 is empty and U_(n+1)=tau^(n+1)(C) U_n; the new block is prepended. The decomposition tau^(n+1)(A)=tau^(n+1)(C) tau^n(A) tau^n(BACAB) proves inductively that U_n is a literal prefix of tau^n(A). This is a prefix assertion about the original substitution, without an assumed occurrence hypothesis.
 
-**Definition 1.5 (Prefix lengths).**
+**Definition 1.9 (Prefix lengths).**
 
 $$\forall n \in \mathbb{N},\; prefixLength\left(n\right) = length\left(prefixWord\left(n\right)\right)$$
 
@@ -68,7 +116,7 @@ $$\forall n \in \mathbb{N},\; prefixLength\left(n\right) = length\left(prefixWor
 
 Let m_n=length(U_n). Each letter image is nonempty, so m_n>0 for n>=1. Each of the three fourth images has length at most 13; induction bounds the length of tau^n(A) by 13^n. Prefix containment therefore gives 0<m_n<=13^n for n>=1. Applying MBonacciSentinelDesubstitution.factor_of_prefix directly to that containment, at order 3 and iterate 4n, gives the exact identity factor W 0 m_n=U_n.
 
-**Definition 1.6 (Charge of the prefix family).**
+**Definition 1.10 (Charge of the prefix family).**
 
 $$\forall n \in \mathbb{N},\; prefixCharge\left(n\right) = signedWordSum\left(prefixWord\left(n\right)\right)$$
 
@@ -80,7 +128,7 @@ $$\forall n \in \mathbb{N},\; prefixCharge\left(n\right) = signedWordSum\left(pr
 
 Write q_n=F(U_n). Oddness of the prepended block gives q_0=0 and q_(n+1)=c_(n+1)-q_n. Substituting the formula for c_n and inducting yields q_n=1-(-1)^n(n^2+3n+1). For even positive n its absolute value is n^2+3n; for odd n it is n^2+3n+2. Hence |q_n|>=n^2, including n=0.
 
-**Definition 1.7 (The exact uniform interval claim).**
+**Definition 1.11 (The exact uniform interval claim).**
 
 $$\exists K \in \mathbb{R},\; 0 < K \land \left(\forall s \in \mathbb{N},\; \forall m \in \mathbb{N},\; abs\left(real\left(signedWordSum\left(factor\left(W, s, m\right)\right)\right)\right) \le K \cdot log\left(real\left(m\right) + 2\right)\right)$$
 
@@ -92,7 +140,7 @@ $$\exists K \in \mathbb{R},\; 0 < K \land \left(\forall s \in \mathbb{N},\; \for
 
 The constant K is real and strictly positive. Both s and m range over all natural numbers, including m=0. factor W s m consists of W(s),...,W(s+m-1). The integer charge is coerced to a real number before taking its absolute value. The logarithm is the natural real logarithm of the real coercion of m plus 2. There are no unmentioned lower cutoffs or restrictions on the interval start.
 
-**Theorem 1.8 (Failure of every positive logarithmic constant).**
+**Theorem 1.12 (Failure of every positive logarithmic constant).**
 
 $$\neg claim$$
 
@@ -110,6 +158,7 @@ Adamczewski, Symbolic discrepancy and self-similar dynamics, Annales de l'Instit
 
 ## References
 
+- Truth anchor: `D5/S1/Words/TribonacciPrefixRefutation.abc_closed`
 - Truth anchor: `D5/S1/Words/TribonacciPrefixRefutation.claim`
 - Truth anchor: `D5/S1/Words/TribonacciPrefixRefutation.prefixCharge`
 - Truth anchor: `D5/S1/Words/TribonacciPrefixRefutation.prefixLength`
@@ -117,5 +166,8 @@ Adamczewski, Symbolic discrepancy and self-similar dynamics, Annales de l'Instit
 - Truth anchor: `D5/S1/Words/TribonacciPrefixRefutation.result`
 - Truth anchor: `D5/S1/Words/TribonacciPrefixRefutation.signedWordSum`
 - Truth anchor: `D5/S1/Words/TribonacciPrefixRefutation.tau`
+- Truth anchor: `D5/S1/Words/TribonacciPrefixRefutation.tau_A`
+- Truth anchor: `D5/S1/Words/TribonacciPrefixRefutation.tau_B`
+- Truth anchor: `D5/S1/Words/TribonacciPrefixRefutation.tau_C`
 - Truth anchor: `D5/S1/Words/TribonacciPrefixRefutation.weight`
 - Dependency: [D5/S1/Words/TribonacciAlignedWindows](TribonacciAlignedWindows.md)

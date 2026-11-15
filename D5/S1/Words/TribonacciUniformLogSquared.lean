@@ -8,6 +8,7 @@
 import D5.S1.Words.SubstitutionPrefixEnvelope
 import D5.S1.Words.TribonacciPrefixRefutation
 import D5.S1.Words.MBonacciFactorWindow
+import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Data.Nat.Log
 
 /-! Uniform interval estimates for the literal Tribonacci word. -/
@@ -88,12 +89,16 @@ private theorem iterate_length_lower (j : ℕ) (a : Letter) :
 private theorem envelope_polynomial (j : ℕ) :
     (2 : ℤ) + 13 * ∑ i ∈ Finset.range j, (2*(i : ℤ)+4) =
       2 + 13*(j : ℤ)^2 + 39*(j : ℤ) := by
-  induction j with
-  | zero => simp
-  | succ j ih =>
-    rw [Finset.sum_range_succ]
-    push_cast
-    nlinarith
+  have hs : (∑ i ∈ Finset.range j, (i : ℤ)) * 2 =
+      (j : ℤ) * ((j-1 : ℕ) : ℤ) := by
+    have hh := congrArg (fun n : ℕ => (n : ℤ)) (Finset.sum_range_id_mul_two j)
+    simpa only [Nat.cast_mul, Nat.cast_ofNat, Nat.cast_sum] using hh
+  by_cases hj : j = 0
+  · subst j; simp
+  rw [Nat.cast_sub (by omega : 1 ≤ j), Nat.cast_one] at hs
+  rw [Finset.sum_add_distrib, ← Finset.mul_sum]
+  simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+  nlinarith
 
 private theorem interval_level_bound (j : ℕ) (x y : Letter) (v : List Letter)
     (hv : v <:+: image tau j x ++ image tau j y) :
