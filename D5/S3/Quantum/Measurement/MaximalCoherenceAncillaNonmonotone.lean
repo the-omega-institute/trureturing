@@ -598,7 +598,7 @@ private lemma sic_offdiag_square_sum (U : (Matrix (Fin 2) (Fin 2) Complex))
   rw [h01, hp, s3_square]
   norm_num
 
-private lemma entry_le_norm {d : Nat} (A : (Matrix (Fin d) (Fin d) Complex)) (i j : Fin d) : ‖A i j‖ ≤ ‖A‖ := by
+lemma entry_le_norm {d : Nat} (A : (Matrix (Fin d) (Fin d) Complex)) (i j : Fin d) : ‖A i j‖ ≤ ‖A‖ := by
   let e : EuclideanSpace Complex (Fin d) := PiLp.single 2 j 1
   calc
     ‖A i j‖ = ‖((EuclideanSpace.equiv (Fin d) Complex).symm (A *ᵥ e)) i‖ := by
