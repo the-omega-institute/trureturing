@@ -23,7 +23,7 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
             Node("boundary_build", "boundary build", Formula2(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
-                "The first horizontal row has its sole zero at s. Its first vertical step uses p through column s and q afterwards; the remaining vertical steps use v."),
+                "The first horizontal row sets position s to zero and copies the other slots. Its first vertical step uses p through column s and q afterwards; the remaining vertical steps use v."),
             Node("boundary_extract", "boundary extract", Formula3(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
@@ -1560,17 +1560,10 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(Parenthesized(a), Parenthesized(b));
     private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
     private static Formula Equivalence(Formula a, Formula b) => Call("Equiv", a, b);
-    private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
-    private static Formula Val(Formula a) => Call("Fin.val", a);
-    private static Formula Value(Formula a) => Call("Subtype.val", a);
     private static Formula Subtype(string x, Formula t, Formula b) =>
         Seq(OpenBrace, V(x), Colon, Sp, t, Sp, Slash, Slash, Sp, Parenthesized(b), CloseBrace);
-    private static Formula Fn(string x, Formula t, Formula b) =>
-        Parenthesized(Seq(LambdaLower, Sp, Typed(V(x), t), Sp, Mapsto, Sp, b));
     private static Formula All(string x, Formula t, Formula b) =>
         Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
-    private static Formula SumOver(string x, Formula t, Formula b) =>
-        Seq(Sum, Underscore, Grp(Seq(V(x), Colon, Sp, t)), Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
@@ -1584,12 +1577,5 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
     private static Formula Power(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula Or(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
-    private static Formula Gt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.GreaterThan, b);
-    private static Formula Geq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.GreaterThanOrEqual, b);
-    private static Formula Member(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
-    private static Formula Set(params Formula[] a) => new Formula.SetLiteral([.. a]);
-    private static Formula SumType(Formula a, Formula b) => Call("Sum", a, b);
-    private static Formula SigmaOver(string x, Formula t, Formula b) => Seq(Sigma, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
-    private static Formula Not(Formula a) => Seq(Neg, Sp, Parenthesized(a));
 
 }

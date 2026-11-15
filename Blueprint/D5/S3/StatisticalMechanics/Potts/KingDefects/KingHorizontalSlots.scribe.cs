@@ -1074,13 +1074,8 @@ internal sealed class KingHorizontalSlotsDocument : IScribeDocumentDefinition
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(Parenthesized(a), Parenthesized(b));
     private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
     private static Formula Equivalence(Formula a, Formula b) => Call("Equiv", a, b);
-    private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
-    private static Formula Val(Formula a) => Call("Fin.val", a);
-    private static Formula Value(Formula a) => Call("Subtype.val", a);
     private static Formula Subtype(string x, Formula t, Formula b) =>
         Seq(OpenBrace, V(x), Colon, Sp, t, Sp, Slash, Slash, Sp, Parenthesized(b), CloseBrace);
-    private static Formula Fn(string x, Formula t, Formula b) =>
-        Parenthesized(Seq(LambdaLower, Sp, Typed(V(x), t), Sp, Mapsto, Sp, b));
     private static Formula All(string x, Formula t, Formula b) =>
         Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
     private static Formula SumOver(string x, Formula t, Formula b) =>
@@ -1088,7 +1083,6 @@ internal sealed class KingHorizontalSlotsDocument : IScribeDocumentDefinition
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
-    private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
     private static Formula And(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
@@ -1098,12 +1092,7 @@ internal sealed class KingHorizontalSlotsDocument : IScribeDocumentDefinition
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
     private static Formula Power(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula Or(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
-    private static Formula Gt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.GreaterThan, b);
-    private static Formula Geq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.GreaterThanOrEqual, b);
     private static Formula Member(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
     private static Formula Set(params Formula[] a) => new Formula.SetLiteral([.. a]);
-    private static Formula SumType(Formula a, Formula b) => Call("Sum", a, b);
-    private static Formula SigmaOver(string x, Formula t, Formula b) => Seq(Sigma, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
-    private static Formula Not(Formula a) => Seq(Neg, Sp, Parenthesized(a));
 
 }
