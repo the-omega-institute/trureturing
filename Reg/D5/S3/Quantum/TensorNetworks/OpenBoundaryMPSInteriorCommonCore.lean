@@ -334,9 +334,145 @@ def registration :
 
 end RankOne
 
+namespace Phase
+
+private lemma certificate_transfer : Function.Injective (transfer certificateCore) := by
+  intro X Y h
+  have h00 := congrFun (congrFun h 0) 0
+  have h01 := congrFun (congrFun h 0) 1
+  have h10 := congrFun (congrFun h 1) 0
+  have h11 := congrFun (congrFun h 1) 1
+  norm_num [transfer, certificateCore, mul_apply, Matrix.vecMul, dotProduct,
+    conjTranspose_apply, Fin.sum_univ_two, map_ofNat] at h00 h01 h10 h11
+  ext i j
+  fin_cases i <;> fin_cases j
+  · change X 0 0 = Y 0 0
+    linear_combination (4 / 3 : ℂ) * h00 - (1 / 3 : ℂ) * h11
+  · change X 0 1 = Y 0 1
+    linear_combination (2 / 3 : ℂ) * h01 - (1 / 3 : ℂ) * h10
+  · change X 1 0 = Y 1 0
+    linear_combination (2 / 3 : ℂ) * h10 - (1 / 3 : ℂ) * h01
+  · change X 1 1 = Y 1 1
+    linear_combination (1 / 3 : ℂ) * h11 - (1 / 3 : ℂ) * h00
+
+private def target : Word 5 → ℂ :=
+  mpsState 5 (certificateCore 0) (certificateCore 1) ![1, 0] ![1, 0]
+
+private def competitor : Word 5 → ℂ :=
+  mpsState 5 (certificateCore 0) (certificateCore 1)
+    (Complex.I • (![1, 0] : Fin 2 → ℂ)) ![1, 0]
+
+private lemma complex_state : competitor = Complex.I • target := by
+  funext w
+  simp [competitor, target, mpsState]
+
+private lemma complex_raw : rawInterior 1 3 1 competitor = rawInterior 1 3 1 target := by
+  rw [complex_state]
+  have hc : interiorColumns 1 3 1 (Complex.I • target) =
+      Complex.I • interiorColumns 1 3 1 target := rfl
+  simp only [rawInterior, hc, conjTranspose_smul, Matrix.mul_smul]
+  simp [smul_smul]
+
+private lemma complex_nonzero : competitor ≠ 0 := by
+  intro h
+  have he := congrFun h (fun _ => 0)
+  norm_num [competitor, mpsState, certificateCore, List.ofFn_succ,
+    Matrix.mul_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_two] at he
+
+abbrev signature : Signature where
+  Params := Σ _ : ℕ, ℕ
+  State pq := Word ((pq.1 + 3) + pq.2) → ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ pq := (Word ((pq.1 + 3) + pq.2) → ℂ) → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ f g => f = g) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ f _ => f = 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (A B : Fin 2 → Bond) (l r lprime rprime : Fin 2 → ℂ)
+    (p q : ℕ), 1 ≤ p → 1 ≤ q → TwoSiteSpanning A →
+    Function.Injective (transfer A) →
+    ((dualTransfer A)^[p] (vecMulVec (star l) l)).PosDef →
+    ((transfer A)^[q] (vecMulVec r (star r))).PosDef →
+    rawInterior p 3 q (mpsState ((p + 3) + q) (B 0) (B 1) lprime rprime) =
+      rawInterior p 3 q (mpsState ((p + 3) + q) (A 0) (A 1) l r) →
+    ∃ z : ℂ, ‖z‖ = 1 ∧ R.readout () ⟨p, q⟩
+      (mpsState ((p + 3) + q) (B 0) (B 1) lprime rprime)
+      (z • mpsState ((p + 3) + q) (A 0) (A 1) l r)
+
+private lemma rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨_, _, hf⟩ := h certificateCore certificateCore ![1, 0] ![1, 0]
+    (Complex.I • (![1, 0] : Fin 2 → ℂ)) ![1, 0] 1 1 (by omega) (by omega)
+    certificate_spanning certificate_transfer certificate_left certificate_right complex_raw
+  exact complex_nonzero hf
+
+private lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨1, 1⟩, 0, 1, ?_⟩
+  intro h
+  have he : (1 : Word 5 → ℂ) = 0 := Eq.mp (congrFun h 0) rfl
+  have hv := congrFun he (fun _ => 0)
+  norm_num at hv
+
+def source_registration : Registration arena (type_of% @interior_phase_recovery) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@interior_phase_recovery, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@interior_phase_recovery) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorCommonCore.interior_phase_recovery.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorCommonCore.Phase.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ f g => f = g) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorCommonCore
+    definition := none
+    coordinates := #[6, 7]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end Phase
+
 #print axioms AllCoefficients.registration
 #print axioms CommonCore.registration
 #print axioms RankOne.registration
+#print axioms Phase.registration
 
 end
 end Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorCommonCore
