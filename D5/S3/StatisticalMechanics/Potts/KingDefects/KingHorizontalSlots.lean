@@ -17,8 +17,23 @@ interior_slot_equiv: proof_shape=content; consumers=interior_count_alphabets,int
 OrdinaryAlphabet: proof_shape=bind-only; consumers=InteriorAlphabet,InteriorCode,coded_boundary,coded_boundary_valid,interior_count_alphabets,interior_six_lower_pairs,ordinary_equiv,pair_count_support
 InteriorAlphabet: proof_shape=bind-only; consumers=InteriorCode,interior_count_alphabets,interior_six_lower_pairs,pair_count_support,support_alphabet_card
 InteriorCode: proof_shape=bind-only; consumers=interior_code_equiv,interior_count_alphabets
-coded_boundary: proof_shape=bind-only; consumers=coded_boundary_valid,interior_code_equiv
-coded_boundary_valid: proof_shape=content; consumers=interior_code_equiv
+coded_boundary: proof_shape=bind-only; consumers=coded_boundary_valid,coded_boundary_left,
+  coded_boundary_right,coded_boundaries_shared,interiorEncode
+coded_boundary_valid: proof_shape=content; consumers=interiorEncode
+coded_boundary_left: proof_shape=bind-only; consumers=coded_boundaries_shared,interiorDecode_encode
+coded_boundary_right: proof_shape=bind-only; consumers=coded_boundaries_shared,interiorDecode_encode
+coded_boundaries_shared: proof_shape=bind-only; consumers=interiorEncode
+interiorEncode: proof_shape=bind-only; consumers=interiorDecode_encode,interiorEncode_decode,interior_code_equiv
+interiorDecode: proof_shape=bind-only; consumers=interiorDecode_encode,interiorEncode_decode,interior_code_equiv
+interiorFirstPair: proof_shape=bind-only; consumers=interiorCode_ext,interiorDecode_encode
+interiorSecondPair: proof_shape=bind-only; consumers=interiorCode_ext,interiorDecode_encode
+interiorFirstWord: proof_shape=bind-only; consumers=interiorCode_ext,interiorDecode_encode
+interiorSecondWord: proof_shape=bind-only; consumers=interiorCode_ext,interiorDecode_encode
+interiorLeftWord: proof_shape=bind-only; consumers=interiorCode_ext,interiorDecode_encode
+interiorRightWord: proof_shape=bind-only; consumers=interiorCode_ext,interiorDecode_encode
+interiorCode_ext: proof_shape=bind-only; consumers=interiorDecode_encode
+interiorDecode_encode: proof_shape=bind-only; consumers=interior_code_equiv
+interiorEncode_decode: proof_shape=content; consumers=interior_code_equiv
 interior_code_equiv: proof_shape=content; consumers=interior_count_alphabets
 interior_count_alphabets: proof_shape=bind-only; consumers=interior_count_support
 word_support: proof_shape=bind-only; consumers=pair_count_support,sum_by_support,support_alphabet_card,word_support_card,word_support_empty,word_support_full,word_support_singleton
@@ -234,14 +249,41 @@ private def interiorDecode {a b c d : ℕ}
   · intro i
     exact fun he => hcross₂ i _ ((hshared _ (hright_ne j)).symm.trans he)
 
+private def interiorFirstPair {a b c d : ℕ} (w : InteriorCode a b c d) : NZPair := by
+  rcases w with ⟨x,y,u,v,l,r⟩
+  exact x
+
+private def interiorSecondPair {a b c d : ℕ} (w : InteriorCode a b c d) : NZPair := by
+  rcases w with ⟨x,y,u,v,l,r⟩
+  exact y
+
+private def interiorFirstWord {a b c d : ℕ} (w : InteriorCode a b c d) : Fin a → K := by
+  rcases w with ⟨x,y,u,v,l,r⟩
+  exact fun i => (u i).val
+
+private def interiorSecondWord {a b c d : ℕ} (w : InteriorCode a b c d) : Fin b → K := by
+  rcases w with ⟨x,y,u,v,l,r⟩
+  exact fun i => (v i).val
+
+private def interiorLeftWord {a b c d : ℕ} (w : InteriorCode a b c d) : Fin c → K := by
+  rcases w with ⟨x,y,u,v,l,r⟩
+  exact fun i => (l i).val
+
+private def interiorRightWord {a b c d : ℕ} (w : InteriorCode a b c d) : Fin d → K := by
+  rcases w with ⟨x,y,u,v,l,r⟩
+  exact fun i => (r i).val
+
 private theorem interiorCode_ext {a b c d : ℕ} {w z : InteriorCode a b c d}
-    (hx : w.1 = z.1) (hy : w.2.1 = z.2.1)
-    (hu : ∀ i, (w.2.2.1 i).val = (z.2.2.1 i).val)
-    (hv : ∀ i, (w.2.2.2.1 i).val = (z.2.2.2.1 i).val)
-    (hl : ∀ i, (w.2.2.2.2.1 i).val = (z.2.2.2.2.1 i).val)
-    (hr : ∀ i, (w.2.2.2.2.2 i).val = (z.2.2.2.2.2 i).val) : w = z := by
+    (hx : interiorFirstPair w = interiorFirstPair z)
+    (hy : interiorSecondPair w = interiorSecondPair z)
+    (hu : ∀ i, interiorFirstWord w i = interiorFirstWord z i)
+    (hv : ∀ i, interiorSecondWord w i = interiorSecondWord z i)
+    (hl : ∀ i, interiorLeftWord w i = interiorLeftWord z i)
+    (hr : ∀ i, interiorRightWord w i = interiorRightWord z i) : w = z := by
   rcases w with ⟨x,y,u,v,l,r⟩
   rcases z with ⟨x',y',u',v',l',r'⟩
+  change x = x' at hx
+  change y = y' at hy
   cases hx
   cases hy
   have eu : u = u' := funext fun i => Subtype.ext (hu i)
@@ -256,15 +298,16 @@ private theorem interiorCode_ext {a b c d : ℕ} {w z : InteriorCode a b c d}
 
 private theorem interiorDecode_encode {a b c d : ℕ} (w : InteriorCode a b c d) :
     interiorDecode (interiorEncode w) = w := by
+  rcases w with ⟨x,y,u,v,l,r⟩
   apply interiorCode_ext
   · rfl
   · rfl
   · intro i; rfl
   · intro i; rfl
   · intro j
-    exact coded_boundary_left _ _ _ _ j
+    exact coded_boundary_left x u (fun k => (l k).val) (fun k => (r k).val) j
   · intro j
-    exact coded_boundary_right _ _ _ _ j
+    exact coded_boundary_right x u (fun k => (l k).val) (fun k => (r k).val) j
 
 private theorem interiorEncode_decode {a b c d : ℕ}
     (w : InteriorSlots a b (c + (d + 1)) (pivot c d)) :
