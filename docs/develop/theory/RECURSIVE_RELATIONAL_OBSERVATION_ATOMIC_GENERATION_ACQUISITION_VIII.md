@@ -3346,8 +3346,9 @@ are those of §154, independent of the entire unknown input/reference.
 The acquisition schedule is deterministic. All relevant preparations,
 detectors and controls obey these exact laws; arbitrary correlated or
 drifting copies and an unspecified fixed noise floor are outside this
-iid promise. The source binding, not the controller, guarantees this
-model and independence. The controller receives no core, boundaries,
+iid promise. The model and independence promises belong to the separately supplied
+preparation contract for that source binding; an identifier alone certifies
+neither. The controller receives no core, boundaries,
 source-dependent accuracy gap, preparation label or unexecuted response.
 
 At epoch $j=0,1,\ldots$, use $m_j=2^j$ fresh full inputs for each of the
