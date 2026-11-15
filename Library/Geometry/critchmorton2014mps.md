@@ -11,6 +11,8 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality
 license: citation-only
@@ -67,7 +69,21 @@ $$
 
 The competitor $B,l',r'$ remains arbitrary. The proof consumes the common-core theorem and its actual rank-one refactorization, then cancels the four-column feature sandwich to obtain $\widehat H\otimes\widehat P^T=H\otimes P^T$. For fixed $t,j$, this is $\widehat P_{tj}\widehat H=P_{tj}H$; linearity and injectivity cancel $E_A^q$. The bilinear trace pairing $\operatorname{tr}(Y E_A(X))=\operatorname{tr}(E_A^*(Y)X)$ and finite-dimensional surjectivity of $E_A$ imply injectivity of $E_A^*$, which cancels the other iterate. Thus the flattened coefficients $x_{ij}=r_i l_j$ and $\widehat x_{ij}=\widehat r_i\widehat l_j$ have identical outer Grams. The dimension-generic, zero-safe form of the original boundary-phase argument gives $\widehat x=zx$, and trace linearity gives the full-state conclusion. The internal same-core argument works for arbitrary natural $p,q$ and uses neither positivity nor lower bounds on them; those assumptions belong to the arbitrary-competitor common-core reduction. This is an algebraic conditional result; transfer inversion is not asserted to be positive or physically implementable.
 
-Intrinsic interior genericity and full Conjecture 9 remain open. This conditional interior unit carries **zero solved-open-problem credit** and adds no normalized-state recovery, physical recovery operation, dynamics, time group, energy, clock or thermodynamic cost. The prefix results and their C8 provenance retain their stated scopes.
+The conditional interior unit is consumed by the intrinsic genericity theorem below. Interior two-site insufficiency and full Conjecture 9 remain open. This conditional interior unit carries **zero solved-open-problem credit** and adds no normalized-state recovery, physical recovery operation, dynamics, time group, energy, clock or thermodynamic cost. The prefix results and their C8 provenance retain their stated scopes.
+
+`OpenBoundaryMPSInteriorGenericity.intrinsic_interior_recovery` proves the all-interior three-site sufficiency portion intrinsically for every fixed $N=3+m\ge5$. There is one nonzero real polynomial $R_m$ in the real and imaginary entries of the complete raw prefix $Q_3$ whose nonvanishing defines a nonempty relatively open dense, unit-phase-saturated subset of the **entire actual** free-boundary uniform bond-two image. At every target in that same locus, every interior split $p,q\ge1$ with $p+q=m$ has the following property: equality of the complete raw three-site interior density with any actual competitor is equivalent to equality of the full states up to a unit complex phase. The competitor has no chart, spanning, transfer, environment, minimality or normalization premise. A polynomial may depend on the length; no common locus across different lengths is claimed.
+
+The sufficient factors use the existing thirteen real quotient coordinates. With canonical $A,l$, $v=(1,\eta)^T$, define $S_{(a,b),(i,j)}=(A_iA_j)_{ab}$ and $V_{a,i}=(A_iv)_a$. Both product indices are ordered $00,01,10,11$; the feature matrix in CommonCore uses the transposed entry convention for a different purpose. Let
+
+$$
+K(x)=|\det S_x|^2|\det A_0(x)|^2|\det V_x|^2.
+$$
+
+Each squared modulus is the sum of squares of coefficientwise real and imaginary polynomial parts. Existing coordinate-specific clearing gives $K(x(Q))=H(y)/B(y)$ with $B(y)\ne0$ on the quotient locus. The observed polynomial is $R_m=\rho_m H$; $B$ needs no additional factor. The all-length canonical witness has $c=(-3,1,1/2,-1/2,2)$, $\eta=17/5$ and $\sigma=25(2^{2+m})^2$. Its exact determinants are $64,-1/2,72/25$, respectively, giving $K=5308416/625$. The existing witness gauge and local quotient retraction put **this same full state** on every factor. The existing actual_principal_genericity then proves density in the entire actual image.
+
+The canonical identities $lA_i=e_i$ give $P_1=I$. Writing the actual right boundary as $r=\sqrt\sigma v$, the first right environment is $WW^\dagger$ for the invertible column matrix $W=(A_0r,A_1r)$. An invertible $A_0$ congruence plus the positive semidefinite $A_1$ term propagates strict positivity of both environments through every positive iterate. The factor $\det A_0$ is a sufficient locus restriction only and is not added to interior_phase_recovery. Actual observed_coherent, the original canonical_shape and the positive-representative alignment transport canonical transfer injectivity from the recovery polynomial; no separate transfer determinant is reproved. The accepted conditional phase theorem is then applied at every split, and its phase is composed with the exact actual quotient representative. Raw Gram scaling gives the reverse implication and phase saturation.
+
+This establishes interior three-site sufficiency, retains the C8 Ma--Zhang and Q2 LeanPool attributions, and carries **zero solved-open-problem credit**. Interior two-site insufficiency and full C9 remain open. It supplies no normalized-state theorem, physical recovery operation, dynamics, clock, energy or thermodynamic conclusion.
 
 `OpenBoundaryMPSQuotient` supplies a rational observable boundary-Gram inverse. With the same fixed column $t$, write $d=\operatorname{eval}_t(\mathrm{minorPoly})$, $v=\operatorname{eval}_t(\det\mathrm{basisNumerator})$, $b_i=\operatorname{eval}_t(\mathrm{leftNumerator}_i)$, $N_i=\operatorname{eval}_t(\mathrm{matrixNumerator}_i)$ and $M=\mathrm{transferMatrix}(N)$. The original normalized rows $lA_i=e_i$ give the contraction $L_{kw}=l_{w_0}l_{w_1}\mathbf1_{w_2=k}$, with $L\,\mathrm{prefixMap}=I$. Its cleared version is $L_0=d^2L$. For $B=L_0Q_3L_0^\dagger$ and $h(z)=z\bar z$, the exact full-length canonical boundary Gram is
 
@@ -99,3 +115,104 @@ This parameter-open result does not establish a dense intrinsic real-algebraic o
 `OpenBoundaryMPSQ2PolynomialFiber.exists_generic_fiber` strengthens this parameter-domain result to fibers through every certified parameter. Its new coordinates are five complex core entries c, a positive real sigma and a complex eta, with old representative (c,sqrt(sigma),sqrt(sigma)*eta). The actual raw Q2 record is a literal Fin 13 to Fin 12 real polynomial: lift the canonical matrices and left row, start the two by two transfer at sigma times [[1,conjugate eta],[eta,eta times conjugate eta]], and extract the existing twelve real record components. For each k, O={sigma positive, representative in canonicalChart k} is open and nonempty; one nonzero real polynomial D gives a nonempty open locus O intersect {D nonzero}, dense relative to O. Through each point of this locus and in every specified open neighborhood contained in O, there is a positive-dimensional real C1 same-Q2 fiber with a continuous linear left inverse and the exact dimension equation. Every nonzero fiber parameter gives an actual length 3+k state not unit-phase equivalent to the original state. Q2 has complement 1+k, and the coherent Q3 complement is k. The conclusion is genericity in the canonical parameter domain only; intrinsic density in the actual MPS image still needs a separate observable rational inverse and denominator descent. This supplies no additional solved-open-problem credit and no arbitrary interior-window, normalized-state, dynamics or thermodynamic assertion.
 
 The fiber theorem's C1 supplier credits BochaoKong's Apache-2.0 LeanPool constant-rank argument at commit `2b1ec889365345f19a45fa94b6457a4d92c96295`; the canonical inverse and phase argument retain Ma and Zhang's CC BY 4.0 attribution. These reused arguments are not claimed as new CommonCore or C9 mathematics.
+
+
+`OpenBoundaryMPSInteriorRootRealization` gives a conditional root-to-actual
+ambiguity theorem for every $p,q\ge1$, with $N=(p+2)+q$. Fix a regular complex
+sector $(\lambda,\mu,a)$ and write
+$\delta=\mu-\lambda$, $\alpha=\lambda-a$, $\beta=\mu-a$,
+$c=-\alpha\beta$. Regularity is
+$\delta\alpha\beta\ne0$ and
+$|1+\overline\lambda\mu|^2>0$. Put
+
+$$
+B=\operatorname{diag}(\lambda,\mu),\quad
+G(z)=\begin{pmatrix}1&z\\\alpha&\beta z\end{pmatrix},\quad
+C=\begin{pmatrix}a&1\\c&\lambda+\mu-a\end{pmatrix},\quad
+A(z)=(G(z),BG(z)).
+$$
+
+Then $CG=GB$ and $A_iA_j=K_{ij}G^2$, with
+$(K_{00},K_{01},K_{10},K_{11})=(I,C,B,BC)$. For arbitrary original finite
+boundaries $l,r$ and nonzero $z_0$, the fixed actual environments are
+
+$$
+P=(E_{z_0}^*)^p(l^\dagger l),\qquad
+H=G(z_0)^2 E_{z_0}^q(rr^\dagger)(G(z_0)^2)^\dagger.
+$$
+
+Assume both are positive definite. Reusing the original CommonCore observation
+and Gram dictionary, with prefix rows $L_u=lA_u$ and right columns
+$S_v=G^2 A_vr$, gives $P=L^\dagger L$, $H=SS^\dagger$ and the entire raw
+interior identity
+
+$$
+Q_2(w,w')=\operatorname{tr}(P K_w H K_{w'}^\dagger).
+$$
+
+The observation is still the actual sum over both exterior words, using
+`append(append(left,block),right)`. It retains all sixteen complex entries and
+the squared-norm scale. No prefix rank-at-most-two record replaces it.
+
+For the diagonal maps $D_B(X)=X+BXB^\dagger$ and
+$D_{B^*}(X)=X+B^\dagger XB$, the algebraic inverses have the exact orders
+
+$$
+(E_z^*)^{-1}(P)=D_{B^*}^{-1}(G(z)^{-\dagger}P G(z)^{-1}),\qquad
+E_z^{-1}(H)=G(z)^{-1}D_B^{-1}(H)G(z)^{-\dagger}.
+$$
+
+The maps $D_B^{-1}$ and $D_{B^*}^{-1}$ divide each entry by the corresponding
+nonzero diagonal Schur factor. They are not claimed positive. Define the trial
+boundary matrices with fixed $P,H$ by
+
+$$
+X_p(z)=((E_z^*)^{-1})^p(P),\qquad
+Y_q(z)=(E_z^{-1})^q\bigl((G(z)^2)^{-1}H((G(z)^2)^{-1})^\dagger\bigr).
+$$
+
+`distinct_residual_root_actual_ambiguity` proves that every nonzero
+$z\ne z_0$ with $\det X_p(z)=\det Y_q(z)=0$ yields actual finite boundaries
+$l',r'$ for $A(z)$ and hence an actual nonzero competitor $\phi$ with identical
+**entire** raw interior $Q_2$, while no unit complex scalar relates the two
+full states. Hermitian preservation and both inverse-composition identities
+are proved. The existing rank-one factor supplier and Hermitian symmetry
+express each trial matrix as a real multiple of an outer Gram. Forward CP
+positivity and the positive definite target exclude a nonpositive multiplier;
+its positive square root supplies actual boundaries. This does not assume
+abstract root realizability or a positive inverse.
+
+The phase proof uses the span of $I,C,B,BC$ and explicit inverses supplied by
+the positive target Grams. A hypothetical full-state phase equality gives
+$UMV=\eta M$ for every $M\in M_2(\mathbb C)$; the scalar-center theorem forces
+$U=hI$ with $h\ne0$, hence proportional actual prefix rows. The two columns
+on prefix words $0^{p-1}j$ have coefficient matrices
+$R_\alpha=\left(\begin{smallmatrix}1&\alpha\\\lambda&\mu\alpha\end{smallmatrix}\right)$
+and
+$R_\beta=\left(\begin{smallmatrix}1&\beta\\\lambda&\mu\beta\end{smallmatrix}\right)$,
+whose determinants are $\alpha\delta$ and $\beta\delta$. They force $z=z_0$.
+No old canonical-chart condition or extra regularity on $l',r'$ is used.
+
+`annular_regular_root_actual_ambiguity` uses the explicit real map
+$f(z)=\operatorname{Re}\det X_p(z)+i\operatorname{Re}\det Y_q(z)$.
+It proves continuity on every closed annulus excluding zero and proves
+$f(z_0)=0$ from the inverse identities. Under explicit radii
+$0<\epsilon<|z_0|<R$, strict negativity of $\operatorname{Re}f$ on both
+boundary circles, and an ordinary invertible **real** Frechet derivative at
+$z_0$, `AnnularSecondZero.annular_second_zero` supplies a nonzero distinct
+common root and the deterministic theorem supplies the actual competitor.
+No holomorphicity, strict derivative, regularity or finiteness of other zeros,
+or nonzero boundary winding is assumed.
+
+This is conditional ambiguity, not genericity or a solution of C9, and it
+adds **zero** solved-open-problem credit. General endpoint operator limits and
+signs, universal all-length transversality, finite canonical-chart coverage and
+dominance, and genericity on the actual state and actual raw-density images
+remain separate obligations. The C8 attribution to Ma and Zhang, CC BY 4.0,
+is unchanged. The topology supplier reuses
+`TauCeti.not_contractibleSpace_sphere` at revision
+`5a01f5fe3621126cccf9ba22e700493cbc7b7156`, with the Apache-2.0 license retained
+at `docs/reports/licenses/tauceti-sphere-port-LICENSE.txt` and source-port
+attribution in the owning topology note. This static finite-state theorem
+adds no normalization, physical positive inverse, stability, clock, dynamics,
+energy or thermodynamic cost.
