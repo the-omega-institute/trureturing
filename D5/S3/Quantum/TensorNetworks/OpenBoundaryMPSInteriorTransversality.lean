@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorTransversality
    mirror-E: none(waiver:static-algebraic-identifiability)
-   anchors: [mathlib/module/Mathlib.Analysis.Calculus.FDeriv.Prod]
+   anchors: [mathlib/module/Mathlib.Analysis.Calculus.FDeriv.Star]
    utility: none
    digest: All-length fixed-target real transversality at an actual interior witness. -/
 
