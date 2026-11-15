@@ -21,7 +21,6 @@ module
 import Mathlib.Init
 public import D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary
-import all D5.S3.Quantum.FourierCircuit.Components.BinaryLabelEncoding
 import all D5.S3.Quantum.FourierCircuit.Util.Complex
 
 /-!

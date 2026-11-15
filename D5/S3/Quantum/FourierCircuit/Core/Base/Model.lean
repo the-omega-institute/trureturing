@@ -18,7 +18,6 @@ Authors: QudeLeap Team
 
 module
 
-public import D5.S3.Quantum.FourierCircuit.Core.Base.Accounting.Kind
 public import D5.S3.Quantum.FourierCircuit.Core.Base.Classical.Model
 public import D5.S3.Quantum.FourierCircuit.Core.Base.Classical.Oracle
 public import D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Model
@@ -77,6 +76,9 @@ public instance classicalCoordinateDecidableEq (model : ExecutionModel) :
 
 public instance classicalOracleCoordinateDecidableEq (model : ExecutionModel) :
     DecidableEq model.ClassicalOracleCoordinate := model.classicalOracles.coordinateDecidableEq
+
+public instance hiddenStateFintype (model : ExecutionModel) : Fintype model.HiddenState :=
+  model.classicalOracles.stateFintype
 
 
 /-- Native gate coordinates are absent from classical execution. -/

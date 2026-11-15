@@ -20,7 +20,6 @@ module
 
 public import D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Placement.Entries
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Placement.Entries
-import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Realization
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Placement
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Model
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature

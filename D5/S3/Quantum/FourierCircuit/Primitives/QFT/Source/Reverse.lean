@@ -23,7 +23,6 @@ import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Reverse.Layout
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Quantum.Embedding.Composition
 import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Primitive
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Realization.Placement
-import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Placement.Macros
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit
 
 /-!

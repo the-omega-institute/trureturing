@@ -20,7 +20,6 @@ module
 
 public import D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Operator
 import all D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Operator
-import all D5.S3.Quantum.FourierCircuit.Components.BinaryLabelEncoding
 public import D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature
 public import D5.S3.Quantum.FourierCircuit.Core.Base.Control.Operator

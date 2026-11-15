@@ -22,7 +22,6 @@ public import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Mathematics
 import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Mathematics
 import all D5.S3.Quantum.FourierCircuit.Components.Gates.Swap.Label
 import all D5.S3.Quantum.FourierCircuit.Util.FinPow.BitReverse
-import all D5.S3.Quantum.FourierCircuit.Components.BinaryLabelEncoding
 import all D5.S3.Quantum.FourierCircuit.Util.FinPow
 public import Mathlib.Data.Nat.Bitwise
 import Mathlib.Algebra.BigOperators.Fin

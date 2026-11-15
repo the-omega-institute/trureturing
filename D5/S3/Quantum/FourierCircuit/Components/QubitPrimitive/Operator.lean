@@ -19,7 +19,6 @@ Authors: QudeLeap Team
 module
 
 import Mathlib.Init
-import all D5.S3.Quantum.FourierCircuit.Components.BinaryLabelEncoding
 public import D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary
 

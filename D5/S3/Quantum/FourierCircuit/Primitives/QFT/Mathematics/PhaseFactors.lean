@@ -21,7 +21,6 @@ module
 public import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Mathematics
 import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Mathematics
 import all D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Operator
-import all D5.S3.Quantum.FourierCircuit.Components.BinaryLabelEncoding
 import all D5.S3.Quantum.FourierCircuit.Util.FinPow
 import Mathlib.Algebra.BigOperators.Fin
 

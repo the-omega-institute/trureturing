@@ -21,11 +21,9 @@ module
 public import D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Leaf
 public import D5.S3.Quantum.FourierCircuit.Core.Base.Accounting.ResourcePool
 public import D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Quantum.Embedding.Operator
-public import D5.S3.Quantum.FourierCircuit.Core.Base.Depth.Expr
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Leaf
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Accounting.ResourcePool
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Quantum.Embedding.Operator
-import all D5.S3.Quantum.FourierCircuit.Core.Base.Depth.Expr
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Control.Operator
 
 /-!

@@ -60,6 +60,16 @@ public structure Interpretation (model : OracleModel) where
   operator : (query : model.Query) → UnitaryOperator (model.signature query).register
 
 
+public instance : Subsingleton (Interpretation empty) where
+  allEq left right := by
+    cases left with
+    | mk left =>
+      cases right with
+      | mk right =>
+        have same : left = right := funext fun query => nomatch query
+        cases same
+        rfl
+
 /-- One granted query, placed on systems of exactly its declared dimensions. -/
 public structure Occurrence (model : OracleModel) where
   /-- A value of the declaration's available-query type. -/

@@ -19,9 +19,7 @@ Authors: QudeLeap Team
 module
 
 import Mathlib.Init
-import all D5.S3.Quantum.FourierCircuit.Core.Base.Tensor.Basic
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Tensor.Certified
-import all D5.S3.Quantum.FourierCircuit.Core.Base.Tensor.Metadata
 
 /-!
 # Tensor products

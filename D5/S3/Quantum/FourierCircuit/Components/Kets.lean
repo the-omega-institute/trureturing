@@ -21,7 +21,6 @@ module
 import Mathlib.Init
 public import D5.S3.Quantum.FourierCircuit.Core.Base.State.Normalized
 import all D5.S3.Quantum.FourierCircuit.Core.Base.State.Normalized
-import all D5.S3.Quantum.FourierCircuit.Core.Base.Marginal
 
 /-!
 # Named one-qubit kets

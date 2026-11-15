@@ -23,7 +23,6 @@ public import D5.S3.Quantum.FourierCircuit.Core.Base.State.Normalized
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Construction
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Sequence
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Accounting.ResourcePool
-import all D5.S3.Quantum.FourierCircuit.Core.Base.Depth.Expr
 import all D5.S3.Quantum.FourierCircuit.Core.Base.State.Normalized
 
 /-!

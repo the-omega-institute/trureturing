@@ -25,7 +25,6 @@ import all D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Operato
 import all D5.S3.Quantum.FourierCircuit.Components.GateModel.Algorithm.Permutation
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Placement.Canonical
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit
-public import D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Realization
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature
 import all D5.S3.Quantum.FourierCircuit.Util.Complex
 

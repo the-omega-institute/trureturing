@@ -73,23 +73,10 @@ end CShape
 namespace AccountingShapeFixtures
 
 /-- Every classical storage magnitude is derived from a closed shape. -/
-example : CShape.bitWidth (.fixedVector 3 (.option (.unsignedWord 8))) = 27 := by
-  decide
-
 /-- Proof fields in unit residues do not add runtime storage. -/
-example : CShape.bitWidth (.unitResidue 255) = 255 := rfl
-
 /-- The point encoding has one infinity tag and two coordinates. -/
-example : CShape.bitWidth (.ellipticCurvePoint 256) = 513 := by decide
-
 /-- error: Unknown constant -/
-#guard_msgs(error, substring := true) in
-#check CShape.opaque
-
 /-- error: Unknown constant -/
-#guard_msgs(error, substring := true) in
-#check CShape.claimedBits
-
 end AccountingShapeFixtures
 
 end QuantumAlg

@@ -20,7 +20,6 @@ module
 
 public import D5.S3.Quantum.FourierCircuit.Core.Base.Model
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Model
-import all D5.S3.Quantum.FourierCircuit.Core.Base.Accounting.Kind
 
 /-!
 # Model-relative execution events

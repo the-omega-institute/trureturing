@@ -18,8 +18,6 @@ Authors: QudeLeap Team
 
 module
 
-public import D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Realization
-import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Realization
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Construction
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Sequence

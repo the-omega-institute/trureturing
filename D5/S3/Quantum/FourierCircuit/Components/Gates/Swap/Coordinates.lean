@@ -22,7 +22,6 @@ public import D5.S3.Quantum.FourierCircuit.Components.Gates.Swap.Label
 import all D5.S3.Quantum.FourierCircuit.Components.Gates.Swap.Label
 import all D5.S3.Quantum.FourierCircuit.Components.Gates.Swap.Operator
 import all D5.S3.Quantum.FourierCircuit.Components.QubitPrimitive.Operator
-import all D5.S3.Quantum.FourierCircuit.Components.BinaryLabelEncoding
 public import D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary.Permutation
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary.Permutation
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Control.Operator
