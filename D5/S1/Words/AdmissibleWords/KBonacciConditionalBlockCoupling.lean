@@ -570,6 +570,25 @@ def resetReady {n : ℕ} (fixed : Finset (Fin n)) (x y : Fin n → Bool) : Prop 
     (∀ i : Fin n, i.val ≤ z.val → i ∈ fixed) ∧
     ∀ i ∈ fixed, z.val < i.val → x i = y i
 
+/-- A common false at the head of an increasing complete free-site scan makes
+both updated histories ready for the native reset test. -/
+theorem reset_ready_after_false {n : ℕ} (i : Fin n) (rest : List (Fin n))
+    (fixed : Finset (Fin n)) (x y : Fin n → Bool)
+    (hlt : ∀ j ∈ rest, i.val < j.val)
+    (hcover : ∀ j : Fin n, j ∉ insert i fixed → j ∈ rest)
+    (hfar : ∀ j ∈ fixed, i.val < j.val → x j = y j) :
+    resetReady (insert i fixed) (Function.update x i false)
+      (Function.update y i false) := by
+  refine ⟨i, by simp, by simp, ?_, ?_⟩
+  · intro j hji
+    by_contra hj
+    have := hlt j (hcover j hj)
+    omega
+  · intro j hj hij
+    have hji : j ≠ i := by intro he; subst j; omega
+    have hjf : j ∈ fixed := (Finset.mem_insert.mp hj).resolve_left hji
+    simpa [Function.update_of_ne hji] using hfar j hjf hij
+
 private theorem reset_completion_laws {k n : ℕ} (hk : 0 < k)
     (fixed : Finset (Fin n)) (x y : Fin n → Bool)
     (hx : (completions k n fixed x).Nonempty)
@@ -861,12 +880,6 @@ theorem right_scan_hamming {k n : ℕ} (hk : 0 < k) (sites : List (Fin n))
       rcases List.mem_cons.mp (hcover j hjf) with hji | hjr
       · exact False.elim (hj (by simp [hji]))
       · exact hjr
-    have hl : ∀ j : Fin n, j.val ≤ i.val → j ∈ insert i fixed := by
-      intro j hji
-      by_contra hj
-      have hjr := hrc j hj
-      have := hlt j hjr
-      omega
     have hsame (a b : Bool) : ∀ j ∈ rest, ∀ t ∈ insert i fixed, j.val < t.val →
         Function.update x i a t = Function.update y i b t := by
       intro j hj t ht hjt
@@ -900,13 +913,8 @@ theorem right_scan_hamming {k n : ℕ} (hk : 0 < k) (sites : List (Fin n))
       by_cases hzero : bits = (false, false)
       · have hz : resetReady (insert i fixed) (Function.update x i bits.1)
             (Function.update y i bits.2) := by
-          refine ⟨i, ?_, ?_, hl, ?_⟩
-          · simp [hzero]
-          · simp [hzero]
-          · intro j hj hij
-            have hji : j ≠ i := by intro he; subst j; omega
-            have hjf : j ∈ fixed := (Finset.mem_insert.mp hj).resolve_left hji
-            simpa [Function.update_of_ne hji] using hfar i (by simp) j hjf hij
+          simpa only [hzero] using reset_ready_after_false i rest fixed x y hlt hrc
+            (hfar i (by simp))
         have hzmean : mean (child bits) (scanHamming rest) = 0 := by
           rw [hc, prefixCoupling.eq_def, dif_pos hz]
           exact reset_mean_zero rest _ _ _ _ _ hz.choose_spec.2.2.1 hrf
