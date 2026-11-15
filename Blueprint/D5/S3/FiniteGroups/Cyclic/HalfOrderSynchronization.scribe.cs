@@ -9,14 +9,18 @@ internal sealed class HalfOrderSynchronizationDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create()
     {
         var i = X("I"); var g = X("G"); var epsilon = X("epsilon"); var j = X("i");
-        Formula Context(Formula f) => All("I", X("Typeu"),
-            Instances(C("Fintype", i), Instances(C("Nonempty", i),
-            All("G", new Formula.TypeArrow(i, X("Typev")),
-            Instances(All("i", i, C("Group", C("G", j))),
-            Instances(All("i", i, C("Fintype", C("G", j))),
-            Instances(All("i", i, C("IsCyclic", C("G", j))),
-            All("epsilon", C("Pi", i, g),
-            Imp(All("i", i, Equal(C("orderOf", C("epsilon", j)), Num(2))), f))))))));
+        Formula Context(Formula f)
+        {
+            f = Imp(All("i", i, Equal(C("orderOf", C("epsilon", j)), Num(2))), f);
+            f = All("epsilon", C("Pi", i, g), f);
+            f = Instances(All("i", i, C("IsCyclic", C("G", j))), f);
+            f = Instances(All("i", i, C("Fintype", C("G", j))), f);
+            f = Instances(All("i", i, C("Group", C("G", j))), f);
+            f = All("G", new Formula.TypeArrow(i, X("Typev")), f);
+            f = Instances(C("Nonempty", i), f);
+            f = Instances(C("Fintype", i), f);
+            return All("I", X("Typeu"), f);
+        }
         var count = new Formula.Relation(
             Multiply(C("card", C("B", g, epsilon)),
                 new Formula.Power(Num(2), new Formula.Binary(C("card", i), FormulaBinaryOperator.Subtract, Num(1)))),
@@ -29,7 +33,7 @@ internal sealed class HalfOrderSynchronizationDocument : IScribeDocumentDefiniti
                 Describe.Lean(DescribeId.Create("half-order-failure-count"),
                     DeclarationHandle.Create("D5/S3/FiniteGroups/Cyclic/HalfOrderSynchronization.failure_count_le"),
                     H("The all-family failure count"), StatementSource.FromAuthor(Disp(Context(count))),
-                    AssessedProvenance.FromLiterature("shor1997gateorbits"),
+                    AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumChannels/shor1997gateorbits")),
                     Blocks(
                         Paragraph(Text("In a cyclic factor epsilon is the unique element of order two. If d=orderOf(x) divides an even positive M, the local half-power x^(M/2) equals epsilon exactly when d.factorization(2)=M.factorization(2). Indeed its square is one; its being one is equivalent to d dividing M/2, or to 2*d dividing M, which is equivalent to strict inequality between the binary order valuations. For the product, Pi.orderOf and Finset.factorization_lcm express its binary order valuation as the maximum of the local valuations. Thus failure is exactly synchronization of every local valuation. If the product order is odd all the valuations are zero, so this case is retained.")),
                         Paragraph(Text("Choose a full-order generator g(i) in each factor. Raising multiplication by g(i) to card(G(i))/2 multiplies the resulting half-power by epsilon(i), interchanging one and epsilon(i). The local half-power criterion therefore shows that multiplying any element by g(i) changes the binary valuation of its order. This argument applies to every even cyclic size and does not assign a finite binary valuation to the exponent zero.")),
