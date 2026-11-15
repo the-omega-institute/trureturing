@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianUniformCutoff
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianPeriodIdentity
+import D5.S3.Quantum.Analysis.TrotterProduct
 
 /-! Uniform limits for the original signed finite trace logarithms and determinants. -/
 
@@ -51,25 +52,6 @@ private lemma uniform_tsum {ι : Type*} {F : ℕ → ι → ℂ → ℂ}
   exact (hb.of_norm_bounded (fun a => hbound N a z hz)).tsum_sub
     (hb.of_norm_bounded (fun a => hf a z hz))
 
-private lemma power_error (X Y : H →L[ℂ] H) (hX : ‖X‖ ≤ 1)
-    (hY : ‖Y‖ ≤ 1) (p : ℕ) :
-    ‖X ^ p - Y ^ p‖ ≤ (p : ℝ) * ‖X - Y‖ := by
-  induction p with
-  | zero => simp
-  | succ p ih =>
-    have he : X ^ (p + 1) - Y ^ (p + 1) =
-        X ^ p * (X - Y) + (X ^ p - Y ^ p) * Y := by
-      simp only [pow_succ]
-      noncomm_ring
-    rw [he]
-    calc
-      _ ≤ ‖X ^ p‖ * ‖X - Y‖ + ‖X ^ p - Y ^ p‖ * ‖Y‖ :=
-        (norm_add_le _ _).trans (add_le_add (norm_mul_le _ _) (norm_mul_le _ _))
-      _ ≤ 1 * ‖X - Y‖ + ((p : ℝ) * ‖X - Y‖) * 1 := by
-        gcongr
-        exact (norm_pow_le _ _).trans ((pow_le_pow_left₀ (norm_nonneg X) hX p).trans_eq (one_pow p))
-      _ = _ := by push_cast; ring
-
 private lemma contraction_uniform {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
     (p : ℕ) (a : ℕ × ℕ) :
     TendstoUniformlyOn (fun N z => unit1ContractN N z p a)
@@ -101,7 +83,9 @@ private lemma contraction_uniform {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
   calc
     _ ≤ unit1Geo ρ a * ((p : ℝ) * ‖sectionOp N z - operator z‖) :=
       mul_le_mul (unit1Entry_bound hρ hz a.1 a.2)
-        (hc.trans (power_error _ _ hs ho p)) (norm_nonneg _)
+        (hc.trans (by simpa only [one_pow, mul_one] using
+          NormedSpace.norm_pow_sub_pow_le_of_norm_le (C := 1) le_rfl hs ho p))
+        (norm_nonneg _)
         (by unfold unit1Geo; positivity)
     _ = _ := by ring
 
