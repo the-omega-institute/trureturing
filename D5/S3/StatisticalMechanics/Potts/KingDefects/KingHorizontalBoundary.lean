@@ -486,8 +486,7 @@ theorem boundary_word_map_injective (m c d : ℕ) :
   subst y
   have hi {p q : K} (hpq : p ≠ q) :
       Function.Injective (fun b : Bool => if b then p else q) := by
-    intro a b h
-    cases a <;> cases b <;> simp_all
+    simpa using (Bool.injective_iff (f := fun b : Bool => if b then p else q)).mpr hpq.symm
   have hzp : x.val.1 + x.val.2 ≠ x.val.1 := by simpa using x.property.2.1
   have hzq : x.val.1 + x.val.2 ≠ x.val.2 := by simpa using x.property.1
   suffices w = z by rw [this]

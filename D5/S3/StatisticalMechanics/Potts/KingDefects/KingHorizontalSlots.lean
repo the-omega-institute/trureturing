@@ -495,8 +495,10 @@ noncomputable def ordinary_equiv (x : NZPair) : Bool ≃ OrdinaryAlphabet x :=
   Equiv.ofBijective (fun b => ⟨ordinary_value x b,ordinary_value_valid x b⟩) (by
     constructor
     · intro b b' he
-      have he := congrArg Subtype.val he
-      cases b <;> cases b' <;> simp_all [ordinary_value, x.property.2.2, Ne.symm x.property.2.2]
+      have hi : Function.Injective (fun b : Bool => if b then x.val.2 else x.val.1) := by
+        simpa using (Bool.injective_iff
+          (f := fun b : Bool => if b then x.val.2 else x.val.1)).mpr x.property.2.2
+      exact hi (congrArg Subtype.val he)
     · have h : ∀ x : NZPair, ∀ z : OrdinaryAlphabet x,
           ∃ b : Bool, ordinary_value x b = z.val := by decide
       intro z
