@@ -7,23 +7,53 @@
    digest: Low automatic complexity and its complement defeat bounded-depth circuits. -/
 
 /-
-proof_shape: content (see per-declaration classifications below).
-escape_witness: none; the settling result uses the finite-scale density and circuit obstructions.
+proof_shape: per-declaration rows below; definitions carry no theorem novelty claim.
+escape_witness: none; admission rests on the settling result.
 admission_basis: open-problem-resolution (#26742; Proved)
-Direct frozen dependencies: see per-declaration rows below.
-The circuit gate payload is written directly; List.extract and MvPolynomial.eval₂Hom
-provide the list slice and polynomial substitution operations.
+Direct frozen dependencies: B = D5/S3/Observer/Separation/BooleanRankThreeK4.bit2; statement_id = sha256:53632b1f9446d59ef22ddbbb7d61d5c3f0f40af1c067d7b9c67e6b47379da9cb.
+Each row gives name | proof_shape | frozen dependencies | escape_witness | consumers.
+B denotes that exact declaration identity; none denotes no frozen D5 dependency.
+Definition rows describe constructions, not additional mathematical content.
+claim | bind-only | none | none | claimOfSparse, result
+constantNFA | bind-only | none | none | constantNFAPathMem, constantNFAReplicatePath, realizesConstantWord
+constantNFAPathMem | content | none | constantNFAPathMem | realizesConstantWord
+constantNFAReplicatePath | content | none | constantNFAReplicatePath | realizesConstantWord
+realizesConstantWord | content | none | realizesConstantWord | constantWordMemLq
+ANeLeOfRealizes | bind-only | none | none | constantWordMemLq
+constantWordMemLq | content | none | constantWordMemLq | lowLanguageSparse
+pathState | bind-only | none | none | pathStateZero, pathStateLength, pathSegment, exactLoopsCommute, loopTripleShort, exactEqualLoopPump, closeEqualLoops, noRepeatsStateBound
+pathStateZero | bind-only | none | none | pathSegment, exactLoopsCommute, exactEqualLoopPump
+pathStateLength | content | none | pathStateLength | exactLoopsCommute, exactEqualLoopPump
+pathAppend | bind-only | none | none | exactLoopsCommute, exactEqualLoopPump
+pathSegment | content | none | pathSegment | exactLoopsCommute, exactEqualLoopPump
+repeatedFactor | bind-only | none | none | repeatedOfCommuting, loopTripleShort, repeatedOfOverlap, closeEqualLoops, noRepeatsStateBound, lowImpliesRepeat, repeatedCount, lowLanguageSparse
+segmentLength | bind-only | none | none | loopTripleShort, exactEqualLoopPump, closeEqualLoops
+segmentAppend | bind-only | none | none | segmentFour, exactEqualLoopPump, closeEqualLoops
+segmentFull | bind-only | none | none | segmentFour, exactEqualLoopPump, closeEqualLoops
+segmentFour | bind-only | none | none | exactLoopsCommute, loopTripleShort
+exactLoopsCommute | content | none | exactLoopsCommute | loopTripleShort
+repeatedOfCommuting | bind-only | none | none | loopTripleShort
+loopTripleShort | content | none | loopTripleShort | noRepeatsStateBound
+exactEqualLoopPump | content | none | exactEqualLoopPump | closeEqualLoops
+repeatedOfOverlap | bind-only | none | none | closeEqualLoops
+closeEqualLoops | content | none | closeEqualLoops | noRepeatsStateBound
+diameterCardLe | bind-only | none | none | sequenceBound
+sequenceBound | content | none | sequenceBound | noRepeatsStateBound
+noRepeatsStateBound | content | none | noRepeatsStateBound | lowImpliesRepeat
+lowImpliesRepeat | content | none | lowImpliesRepeat | lowLanguageSparse
+deleteBlockIndex | bind-only | none | none | deleteBlockInjective, fixedRepeatCount
+repeatedCoordinates | bind-only | none | none | deleteBlockInjective
+deleteBlockInjective | content | none | deleteBlockInjective | fixedRepeatCount
+fixedRepeatCount | content | none | fixedRepeatCount | repeatedCount
+repeatedCount | content | none | repeatedCount | lowLanguageSparse
+existsSparseScale | bind-only | none | none | lowLanguageSparse
+lowLanguageSparse | content | none | lowLanguageSparse | result
+claimOfSparse | content | B | claimOfSparse | result
+result | content | B | result | terminal settling result
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30628
 -/
 
 import D5.S3.Combinatorics.AutomataCircuits.ExactNFACircuitInfrastructure
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Data.List.TakeDrop
-import Mathlib.Data.Finset.Sort
-import Mathlib.Order.Interval.Finset.Nat
 
 /-! Arbitrary-alphabet lower bounds for low exact automatic complexity. -/
 

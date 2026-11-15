@@ -55,6 +55,10 @@ Definition 4.4, p. 16:
 >
 > (4) Each Ci accepts words of length i.
 
+Arithmetic interpretation, p. 16:
+
+> To extend this equivalence beyond binary alphabets, take the field Fₚ for some prime p > 2. By interpreting (⊕, ∧) as (+, ×) mod p, we extend SAC⁰-recognisability to alphabets of prime cardinality.
+
 ## Mathematical correspondence
 
 Words are `List Alphabet`. An epsilon-free Mathlib `NFA Alphabet (Fin k)`

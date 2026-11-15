@@ -7,26 +7,79 @@
    digest: Exact automata, bounded circuit polynomials and finite-grid support estimates. -/
 
 /-
-proof_shape: content (see per-declaration classifications below).
-escape_witness: gridSupportBound: nonempty finite-grid support has a degree-controlled positive fraction.
+proof_shape: per-declaration rows below; definitions carry no theorem novelty claim.
+escape_witness: gridSupportBound, via reducedGridSupport and its leading-coefficient induction.
 admission_basis: escape-witness
-Direct frozen dependencies: see per-declaration rows below.
-The circuit gate payload is written directly; List.extract and MvPolynomial.eval₂Hom
-provide the list slice and polynomial substitution operations.
+Direct frozen dependencies: B = D5/S3/Observer/Separation/BooleanRankThreeK4.bit2; statement_id = sha256:53632b1f9446d59ef22ddbbb7d61d5c3f0f40af1c067d7b9c67e6b47379da9cb.
+Each row gives name | proof_shape | frozen dependencies | escape_witness | consumers.
+B denotes that exact declaration identity; none denotes no frozen D5 dependency.
+Definition rows describe constructions, not additional mathematical content.
+exactlyAccepts | bind-only | none | none | realizesStateCount, realizesWordLengthSucc, realizesStateCountMapIff, realizesConstantWord, exactLoopsCommute, loopTripleShort, exactEqualLoopPump, closeEqualLoops, noRepeatsStateBound
+realizesStateCount | bind-only | none | none | A_Ne, complexityTotal, realizesWordLengthSucc, minimumAttained, complexityTotalProof, realizesStateCountMapIff, ANeMap, realizesConstantWord, ANeLeOfRealizes, constantWordMemLq, noRepeatsStateBound, lowImpliesRepeat
+A_Ne | bind-only | none | none | Lq, complexityTotal, minimumAttained, ANeMap, memLqMapIff, ANeLeOfRealizes, constantWordMemLq, lowImpliesRepeat
+Lq | bind-only | none | none | memLqMapIff, claim, constantWordMemLq, lowImpliesRepeat, lowLanguageSparse, claimOfSparse
+Circuit | bind-only | none | none | bounded, evalRounds, evaluate, arithmeticRecognizable, booleanRecognizable, polynomialRounds, circuitPolynomial, polynomialRoundsEval, circuitPolynomialEval, polynomialRoundsDegreeLe, circuitPolynomialDegreeLe, sparseArithmeticNotRecognizable, sparseArithmeticComplementNotRecognizable, booleanPolynomialFamily
+bounded | bind-only | none | none | arithmeticRecognizable, booleanRecognizable, polynomialRoundsDegreeLe, circuitPolynomialDegreeLe, sparseArithmeticNotRecognizable, sparseArithmeticComplementNotRecognizable, booleanPolynomialFamily
+evalRounds | bind-only | none | none | evaluate, polynomialRoundsEval
+evaluate | bind-only | none | none | arithmeticRecognizable, booleanRecognizable, circuitPolynomialEval, sparseArithmeticNotRecognizable, sparseArithmeticComplementNotRecognizable, booleanPolynomialFamily
+arithmeticRecognizable | bind-only | none | none | sparseArithmeticNotRecognizable, sparseArithmeticComplementNotRecognizable, claim, claimOfSparse
+booleanRecognizable | bind-only | none | none | booleanPolynomialFamily, sparseBooleanNotRecognizable, sparseBooleanComplementNotRecognizable, claim, claimOfSparse
+complexityTotal | bind-only | none | none | complexityTotalProof, claim, claimOfSparse
+wordChain | bind-only | none | none | wordChainPathDrop, wordChainPathOfDrop, wordChainAcceptsIff, realizesWordLengthSucc
+wordChainPathDrop | content | none | wordChainPathDrop | wordChainAcceptsIff
+wordChainPathOfDrop | content | none | wordChainPathOfDrop | wordChainAcceptsIff
+wordChainAcceptsIff | content | none | wordChainAcceptsIff | realizesWordLengthSucc
+realizesWordLengthSucc | content | none | realizesWordLengthSucc | complexityTotalProof, lowImpliesRepeat
+minimumAttained | bind-only | none | none | complexityTotalProof, constantWordMemLq, lowImpliesRepeat
+complexityTotalProof | content | none | complexityTotalProof | claimOfSparse
+pullbackNFA | bind-only | none | none | pullbackNFAEvalFrom, pullbackNFAAccepts, realizesStateCountMapIff
+pushforwardNFA | bind-only | none | none | pushforwardNFAPath, pushforwardNFAPathLift, pushforwardNFAAccepts, realizesStateCountMapIff
+pullbackNFAEvalFrom | bind-only | none | none | pullbackNFAAccepts
+pullbackNFAAccepts | bind-only | none | none | realizesStateCountMapIff
+pushforwardNFAPath | bind-only | none | none | pushforwardNFAAccepts
+pushforwardNFAPathLift | content | none | pushforwardNFAPathLift | pushforwardNFAAccepts
+pushforwardNFAAccepts | content | none | pushforwardNFAAccepts | realizesStateCountMapIff
+realizesStateCountMapIff | content | none | realizesStateCountMapIff | ANeMap
+ANeMap | content | none | ANeMap | memLqMapIff
+memLqMapIff | content | none | memLqMapIff | claimOfSparse
+polynomialRounds | bind-only | none | none | circuitPolynomial, polynomialRoundsEval, polynomialRoundsDegreeLe
+circuitPolynomial | bind-only | none | none | circuitPolynomialEval, circuitPolynomialDegreeLe, sparseArithmeticNotRecognizable, sparseArithmeticComplementNotRecognizable, booleanPolynomialFamily
+polynomialRoundsEval | content | none | polynomialRoundsEval | circuitPolynomialEval
+circuitPolynomialEval | content | none | circuitPolynomialEval | sparseArithmeticNotRecognizable, sparseArithmeticComplementNotRecognizable, booleanPolynomialFamily
+polynomialSumDegreeLe | bind-only | none | none | polynomialRoundsDegreeLe
+polynomialProdDegreeLe | bind-only | none | none | polynomialRoundsDegreeLe
+polynomialRoundsDegreeLe | content | none | polynomialRoundsDegreeLe | circuitPolynomialDegreeLe
+circuitPolynomialDegreeLe | content | none | circuitPolynomialDegreeLe | sparseArithmeticNotRecognizable, sparseArithmeticComplementNotRecognizable, booleanPolynomialFamily
+existsGridReduction | bind-only | none | none | gridSupportBound
+gridSupport | bind-only | none | none | gridSupportCardSplit, reducedGridSupport, gridSupportBound, gridSupportImageCard, sparsePolynomialObstruction
+nonzeroValuesCard | bind-only | none | none | reducedGridSupport
+gridSupportCardSplit | bind-only | none | none | reducedGridSupport
+reducedGridSupport | content | none | reducedGridSupport | gridSupportBound
+gridSupportBound | content | none | gridSupportBound | sparsePolynomialObstruction
+languageCount | bind-only | none | none | sparseNonempty, sparsePolynomialObstruction, lowLanguageSparse
+sparseNonempty | bind-only | none | none | sparsePolynomialObstruction, sparseArithmeticNotRecognizable, sparseArithmeticComplementNotRecognizable, sparseBooleanNotRecognizable, sparseBooleanComplementNotRecognizable, lowLanguageSparse, claimOfSparse
+gridSupportImageCard | bind-only | none | none | sparsePolynomialObstruction
+sparsePolynomialObstruction | content | none | sparsePolynomialObstruction | sparseArithmeticNotRecognizable, sparseArithmeticComplementNotRecognizable, sparseBooleanNotRecognizable, sparseBooleanComplementNotRecognizable
+sparseArithmeticNotRecognizable | content | none | sparseArithmeticNotRecognizable | claimOfSparse
+complementTransform | bind-only | none | none | sparseArithmeticComplementNotRecognizable, sparseBooleanComplementNotRecognizable
+sparseArithmeticComplementNotRecognizable | content | none | sparseArithmeticComplementNotRecognizable | claimOfSparse
+substituteEval | bind-only | none | none | booleanPolynomialFamily
+substituteDegreeLe | bind-only | none | none | booleanPolynomialFamily
+blockSubstitution | bind-only | B | none | blockSubstitutionDegree, blockSubstitutionEval, booleanPolynomialFamily
+blockSubstitutionDegree | bind-only | B | none | booleanPolynomialFamily
+blockSubstitutionEval | bind-only | B | none | booleanPolynomialFamily
+bit2Injective | bind-only | B | none | sparseBooleanNotRecognizable, sparseBooleanComplementNotRecognizable
+booleanPolynomialFamily | content | B | booleanPolynomialFamily | sparseBooleanNotRecognizable, sparseBooleanComplementNotRecognizable
+sparseBooleanNotRecognizable | content | B | sparseBooleanNotRecognizable | claimOfSparse
+sparseBooleanComplementNotRecognizable | content | B | sparseBooleanComplementNotRecognizable | claimOfSparse
+Circuit.nodes | bind-only | none | none | Circuit and its consumers
+Circuit.gate | bind-only | none | none | Circuit and its consumers
+Circuit.output | bind-only | none | none | Circuit and its consumers
+Circuit.level | bind-only | none | none | Circuit and its consumers
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30628
 -/
 
 import D5.S3.Observer.Separation.BooleanRankThreeK4
-import Mathlib.Algebra.Order.BigOperators.Group.List
-import Mathlib.Combinatorics.Nullstellensatz
-import Mathlib.Data.Fin.Tuple.Finset
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Computability.NFA
-import Mathlib.Data.ENat.Lattice
-import Mathlib.Data.Rat.Defs
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Algebra.BigOperators.Group.List.Basic
-import Mathlib.Data.List.OfFn
 
 /-! Exact automata and polynomial obstructions for sparse languages. -/
 
