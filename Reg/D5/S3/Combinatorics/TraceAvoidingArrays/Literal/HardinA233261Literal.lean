@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
+import D5.S3.Combinatorics.TraceAvoidingArrays.Literal.HardinA233261Literal
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -59,7 +59,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   partialSensitivity := none
   escapeFrom := some ℕ
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.Literal.HardinA233261Literal
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -144,7 +144,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   partialSensitivity := none
   escapeFrom := some ℤ
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.Literal.HardinA233261Literal
     definition := none
     coordinates := #[]
     readouts := #[{

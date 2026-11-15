@@ -10,7 +10,6 @@ import D5.S3.Quantum.Foundation.WholePairBallConfirmation
 import D5.S3.Quantum.Foundation.FinitePureSimplex
 import Mathlib.LinearAlgebra.Basis.VectorSpace
 import Mathlib.Analysis.Convex.Radon
-import Batteries.Tactic.OpenPrivate
 import Mathlib.Analysis.Normed.Affine.AddTorsorBases
 
 /-!
@@ -30,23 +29,13 @@ open WholePairBallConfirmation
 open FinitePureSimplex
 open scoped RealInnerProductSpace
 
-open private pair_extreme chart_sphere_pure chart_mem from
-  D5.S3.Quantum.Foundation.WholePairBallConfirmation
-open private simplex_kernel_zero from
-  D5.S3.Quantum.Foundation.FinitePureSimplex
-
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V]
 
 private theorem chart_linear_injective {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     {p q : V} (b : BallChart C u p q) :
     Function.Injective b.param.linear := by
-  intro x y hxy
-  have hlin0 : b.param.linear (x - y) = 0 := by
-    simpa [hxy] using b.param.linear_apply_vsub x y
-  have hparam : b.param (x - y) - b.param 0 = 0 := by
-    simpa [hlin0] using (b.param.linear_apply_vsub (x - y) 0).symm
-  exact sub_eq_zero.mp (b.injective (sub_eq_zero.mp hparam))
+  exact b.param.linear_injective_iff.mpr b.injective
 
 private theorem chart_linear_coordinate {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     {p q : V} (b : BallChart C u p q) (n : EuclideanSpace ℝ (Fin b.dim))

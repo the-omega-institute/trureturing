@@ -1,9 +1,9 @@
-/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal
+/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal
+   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.counting_bridge
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.counting_bridge
    digest: Literal six-row antidiagonal arrays and their exact complementary-pair count. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
