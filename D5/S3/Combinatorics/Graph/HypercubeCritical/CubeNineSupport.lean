@@ -15,10 +15,10 @@ set_option autoImplicit false
 
 noncomputable section
 
+
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CubeNineSupport
 
 open scoped BigOperators
-open Classical
 open D5.S3.Combinatorics.Graph.Hypercube
 open BalancedCriticalSpectrum (Q)
 open private diff diff_flip directions_covered from
@@ -26,19 +26,23 @@ open private diff diff_flip directions_covered from
 
 abbrev Q9 := BalancedCriticalSpectrum.Q 9
 
+open Classical in
 private def twoNeighbors (S : Finset Q9) (x : Q9) : Finset Q9 :=
   (S.erase x).filter (fun z => (diff x z).card = 2)
 
+open Classical in
 private theorem diff_self (x : Q9) : diff x x = ∅ := by
   classical
   ext i
   simp [diff]
 
+open Classical in
 private theorem diff_symm (x y : Q9) : diff x y = diff y x := by
   classical
   ext i
   simp [diff, ne_comm]
 
+open Classical in
 private theorem diff_empty_iff (x y : Q9) : diff x y = ∅ ↔ x = y := by
   classical
   constructor
@@ -51,6 +55,7 @@ private theorem diff_empty_iff (x y : Q9) : diff x y = ∅ ↔ x = y := by
   · rintro rfl
     exact diff_self x
 
+open Classical in
 private theorem diff_triangle (x y z : Q9) :
     diff x y = (diff x z \ diff y z) ∪ (diff y z \ diff x z) := by
   classical
@@ -58,6 +63,7 @@ private theorem diff_triangle (x y z : Q9) :
   cases hx : x i <;> cases hy : y i <;> cases hz : z i <;>
     simp [diff, hx, hy, hz]
 
+open Classical in
 private theorem diff_triangle_card (x y z : Q9) :
     (diff x y).card + 2 * (diff x z ∩ diff y z).card =
       (diff x z).card + (diff y z).card := by
@@ -72,11 +78,13 @@ private theorem diff_triangle_card (x y z : Q9) :
   rw [diff_triangle x y z, Finset.card_union_of_disjoint hd]
   omega
 
+open Classical in
 private theorem mem_twoNeighbors {S : Finset Q9} {x z : Q9} :
     z ∈ twoNeighbors S x ↔ z ∈ S ∧ z ≠ x ∧ (diff x z).card = 2 := by
   classical
   simp [twoNeighbors, and_assoc, and_comm]
 
+open Classical in
 private theorem twoNeighbors_card_ge_five (S : Finset Q9)
     (hno : ∀ y : Q9, (S.filter (fun z => (hypercube 9).Adj y z)).card ≠ 1)
     {x : Q9} (hx : x ∈ S) : 5 ≤ (twoNeighbors S x).card := by
@@ -98,6 +106,7 @@ private theorem twoNeighbors_card_ge_five (S : Finset Q9)
   rw [hU] at h
   omega
 
+open Classical in
 private theorem common_two_subset_of_four {x y w : Q9}
     (hxy : (diff x y).card = 4)
     (hxw : (diff x w).card = 2) (hyw : (diff y w).card = 2) :
@@ -115,8 +124,9 @@ private theorem common_two_subset_of_four {x y w : Q9}
   intro hj
   have hij := Finset.mem_inter.mpr ⟨hi, hj⟩
   rw [hempty] at hij
-  simpa using hij
+  simp at hij
 
+open Classical in
 private theorem two_union_card_le (S : Finset Q9) (x : Q9)
     (T : Finset Q9) (hT : T ⊆ twoNeighbors S x) :
     (T.biUnion (diff x)).card ≤ 2 * T.card := by
@@ -129,6 +139,7 @@ private theorem two_union_card_le (S : Finset Q9) (x : Q9)
       exact (mem_twoNeighbors.mp (hT hz)).2.2
     _ = _ := by simp [Nat.mul_comm]
 
+open Classical in
 private theorem exclusive_card_ge_three (S : Finset Q9)
     (hno : ∀ y : Q9, (S.filter (fun z => (hypercube 9).Adj y z)).card ≠ 1)
     {x y : Q9} (hx : x ∈ S) (hxy : (diff x y).card = 4) :
@@ -154,6 +165,7 @@ private theorem exclusive_card_ge_three (S : Finset Q9)
   rw [houtside] at hbound
   omega
 
+open Classical in
 private theorem pair_distance_two (S : Finset Q9) (hcard : S.card ≤ 9)
     (hno : ∀ y : Q9, (S.filter (fun z => (hypercube 9).Adj y z)).card ≠ 1)
     {x y : Q9} (hx : x ∈ S) (hy : y ∈ S) (hne : x ≠ y) :
@@ -209,6 +221,7 @@ private theorem pair_distance_two (S : Finset Q9) (hcard : S.card ≤ 9)
     rw [hempty, Finset.card_empty] at hcount
     omega
 
+open Classical in
 private theorem pair_with_mem (A : Finset (Fin 9)) (hA : A.card = 2)
     {a : Fin 9} (ha : a ∈ A) : ∃ b, a ≠ b ∧ A = {a, b} := by
   classical
@@ -219,6 +232,7 @@ private theorem pair_with_mem (A : Finset (Fin 9)) (hA : A.card = 2)
   · exact ⟨v, huv, hpair⟩
   · exact ⟨u, huv.symm, by simpa [Finset.pair_comm] using hpair⟩
 
+open Classical in
 private theorem common_direction (T : Finset Q9) (f : Q9 → Finset (Fin 9))
     (hsize : ∀ z ∈ T, (f z).card = 2)
     (hmeet : ∀ z ∈ T, ∀ w ∈ T, (f z ∩ f w).Nonempty)
@@ -229,7 +243,7 @@ private theorem common_direction (T : Finset Q9) (f : Q9 → Finset (Fin 9))
   obtain ⟨a, b, hab, hA⟩ := Finset.card_eq_two.mp (hsize A hAT)
   by_cases ha : ∀ z ∈ T, a ∈ f z
   · exact ⟨a, ha⟩
-  push_neg at ha
+  push Not at ha
   obtain ⟨B, hBT, haB⟩ := ha
   have hbB : b ∈ f B := by
     obtain ⟨i, hi⟩ := hmeet A hAT B hBT
@@ -247,7 +261,7 @@ private theorem common_direction (T : Finset Q9) (f : Q9 → Finset (Fin 9))
     simp [he]
   by_cases hb : ∀ z ∈ T, b ∈ f z
   · exact ⟨b, hb⟩
-  push_neg at hb
+  push Not at hb
   obtain ⟨C, hCT, hbC⟩ := hb
   have haC : a ∈ f C := by
     obtain ⟨i, hi⟩ := hmeet A hAT C hCT
@@ -297,10 +311,11 @@ private theorem common_direction (T : Finset Q9) (f : Q9 → Finset (Fin 9))
   omega
 
 open Classical in
-theorem eq_neighbors_of_no_singleton
-    (S : Finset (BalancedCriticalSpectrum.Q 9)) (hS : S.Nonempty) (hcard : S.card ≤ 9)
+private theorem eq_neighbors_of_pair_distance_two
+    (S : Finset (BalancedCriticalSpectrum.Q 9)) (hS : S.Nonempty)
     (hno : ∀ y : BalancedCriticalSpectrum.Q 9,
-      (S.filter (fun x => (hypercube 9).Adj y x)).card ≠ 1) :
+      (S.filter (fun x => (hypercube 9).Adj y x)).card ≠ 1)
+    (hall : ∀ x ∈ S, ∀ y ∈ S, x ≠ y → (diff x y).card = 2) :
     ∃ y : BalancedCriticalSpectrum.Q 9,
       S = Finset.univ.filter (fun x => (hypercube 9).Adj y x) := by
   classical
@@ -309,7 +324,7 @@ theorem eq_neighbors_of_no_singleton
   have hsize : ∀ z ∈ T, (diff x z).card = 2 := by
     intro z hz
     obtain ⟨hzx, hzS⟩ := Finset.mem_erase.mp hz
-    exact pair_distance_two S hcard hno hx hzS hzx.symm
+    exact hall x hx z hzS hzx.symm
   have hcover : Finset.univ ⊆ T.biUnion (diff x) := by
     intro i hi
     obtain ⟨z, hz, hiz⟩ := Finset.mem_biUnion.mp (directions_covered S hno hx hi)
@@ -325,7 +340,7 @@ theorem eq_neighbors_of_no_singleton
       by_cases he : z = w
       · subst w
         simp [diff_self]
-      · exact le_of_eq (pair_distance_two S hcard hno hzS hwS he)
+      · exact le_of_eq (hall z hzS w hwS he)
     have htri := diff_triangle_card z w x
     rw [diff_symm z x, diff_symm w x] at htri
     have hsz := hsize z hz
@@ -346,7 +361,7 @@ theorem eq_neighbors_of_no_singleton
       have hsz := hsize z hzT
       have hec := Finset.card_erase_add_one hjz
       change (diff (BalancedCriticalSpectrum.flip x j) z).card = 1
-      rw [diff_flip, if_pos hjz]
+      rw [diff_flip, ite_eq_left hjz]
       omega
   have hcoverErase : Finset.univ ⊆ insert j (T.biUnion (fun z => (diff x z).erase j)) := by
     intro i hi
@@ -372,11 +387,25 @@ theorem eq_neighbors_of_no_singleton
   have hU : (Finset.univ : Finset (Fin 9)).card = 9 := by simp
   rw [hU] at hlow
   have hTcard : T.card + 1 = S.card := herase
-  have hScard : S.card = 9 := by omega
   have hneighbor : (Finset.univ.filter (fun z => (hypercube 9).Adj center z)).card = 9 := by
     rw [← SimpleGraph.neighborFinset_eq_filter,
       SimpleGraph.card_neighborFinset_eq_degree, (hypercube_regular 9).degree_eq]
+  have hupper := Finset.card_le_card hsubset
+  rw [hneighbor] at hupper
+  have hScard : S.card = 9 := by omega
   refine ⟨center, Finset.eq_of_subset_of_card_le hsubset ?_⟩
   omega
+
+
+open Classical in
+theorem eq_neighbors_of_no_singleton
+    (S : Finset (BalancedCriticalSpectrum.Q 9)) (hS : S.Nonempty) (hcard : S.card ≤ 9)
+    (hno : ∀ y : BalancedCriticalSpectrum.Q 9,
+      (S.filter (fun x => (hypercube 9).Adj y x)).card ≠ 1) :
+    ∃ y : BalancedCriticalSpectrum.Q 9,
+      S = Finset.univ.filter (fun x => (hypercube 9).Adj y x) := by
+  apply eq_neighbors_of_pair_distance_two S hS hno
+  intro x hx y hy hne
+  exact pair_distance_two S hcard hno hx hy hne
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CubeNineSupport
