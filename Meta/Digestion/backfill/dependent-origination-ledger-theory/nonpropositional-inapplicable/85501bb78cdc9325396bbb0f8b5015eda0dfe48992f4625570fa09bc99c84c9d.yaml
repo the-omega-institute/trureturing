@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85501bb78cdc9325396bbb0f8b5015eda0dfe48992f4625570fa09bc99c84c9d
+  normalized_sha256: sha256:85501bb78cdc9325396bbb0f8b5015eda0dfe48992f4625570fa09bc99c84c9d
+cas_ref: sha256:85501bb78cdc9325396bbb0f8b5015eda0dfe48992f4625570fa09bc99c84c9d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure upstream-only binding at mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679 and its pinned Lean dependencies; no usable frozen repository GID for the exact source-ledger longest-path obligation. The archived FiniteCausalPaths result has additional HF, attribute and time hypotheses and is not this source statement. For the actual finite ledger node subtype V={p // p in N_L}, its actual selected-witness edge relation E is acyclic. Relation.TransGen gives the strict reachability relation on this same V; transitivity and acyclicity instantiate partialOrderOfSO. For each actual E-path ending at the given v, RelSeries.ofLE with Relation.TransGen.single transports it to an LTSeries on V, preserving the path and its EDGE count by the definition of ofLE. LTSeries.length_lt_card and Fintype.card_coe give length < |N_L|, hence length <= |N_L|-1 by Nat normalization. The zero-edge path at the actual v makes the set of path lengths nonempty; these lengths are bounded in the finite initial interval, so their maximum is the source depth and csSup_le gives the same bound. This uses neither an arbitrary topological index nor a node in an empty ledger. The final source remark merely distinguishes this per-ledger bound from an additional unbounded-chain hypothesis and does not assert the latter. All operations are upstream instantiation, projection and normalization. No new Lean statement or fresh compiled exact-application claim is made.
+    previous_atom_id: 62048bbd68ea9ab618aceedd43f9b97e978388f13e60ce9af6257ec70da0d64f
+    next_atom_id: 9fa511e61689c150dc61c6e418a3dd287d102445b2aa59d5dac23dbd7b3893d5

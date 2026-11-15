@@ -1,0 +1,11 @@
+**Theorem 16.2 (Coprime true-order membership).** For every modular model with natural $N\ge2$, natural base $a$ coprime to $N$, and independent target width $w$ satisfying $N\le2^w$, set $r=\operatorname{ord}_N(a)$. For every natural $n$ with $N^2\le Q=2^n$, every natural $s<r$ and $y<Q$ satisfying
+
+$$
+\exists k\in\mathbb Z,\qquad
+\left|\frac{s}{r}-\frac{y}{Q}-k\right|\le\frac1{2Q},
+$$
+
+if $\gcd(s,r)=1$, then $r$ belongs to the list $[\operatorname{den}(z):z\in A(y,Q,N)]$.
+
+Proof. Theorem 16.1 places the reduced fraction $s/r$ in the candidate list. Its denominator is $r/\gcd(s,r)=r$, which supplies the required member of the denominator list.
+

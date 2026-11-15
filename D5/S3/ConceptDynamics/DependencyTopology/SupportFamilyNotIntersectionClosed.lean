@@ -18,11 +18,6 @@ namespace D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionC
 
 open LegalLedgerFixedSet DependencyReachabilityOrder
 
-/-- The exact finite node sets admitting some accepted, closed, acyclic witness selection. -/
-def supportFamily {P Proof Ax Model : Type*} (k : KernelData P Proof Ax Model) :
-    Set (Set P) :=
-  {S | ∃ C : CertifiedNodes k, (↑C.nodes : Set P) = S}
-
 /-- Closure under binary intersection, with no nonemptiness requirement. -/
 def IntersectionClosed {P : Type*} (family : Set (Set P)) : Prop :=
   ∀ S ∈ family, ∀ T ∈ family, S ∩ T ∈ family

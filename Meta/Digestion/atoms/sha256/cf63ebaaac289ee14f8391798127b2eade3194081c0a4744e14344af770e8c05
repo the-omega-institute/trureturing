@@ -1,0 +1,13 @@
+### Proposition 4.2. Denominators from ideal spectral samples
+
+For a phase-free r-cycle, an ideal spectral outcome j/r is uniform over j=0,...,r-1. Its reduced denominator is r/gcd(j,r). For k independent such samples,
+
+$$\Pr\left(\operatorname{lcm}(d_1,\ldots,d_k)=r\right)
+=\prod_{p\mid r}(1-p^{-k}). \tag{4.3}$$
+
+Proof. The least common multiple misses a prime's full exponent exactly when all numerators are divisible by that prime. Independent uniform residues, and then the Chinese remainder theorem over the distinct prime divisors of r, give the product. The empty product for r=1 is one. QED.
+
+This identity concerns ideal eigenphase labels. An implemented finite binary clock yields approximations with the distribution (4.2). For a supplied bound r<=R and Q=2^m>=2R^2, a nearest clock outcome is within circular error 1/(2Q)<1/(2r^2), so continued fractions recover the reduced j/r, with the usual treatment of the 0/1 wraparound. The nearest-outcome probability for each eigenphase is at least 4/pi^2: the geometric sum in (4.2), |sin(pi Q delta)|>=2Q|delta| for |Q delta|<=1/2, and |sin(pi delta)|<=pi|delta| prove the bound. Other outcomes remain possible. Classical candidate validation and repeated samples are not omitted.
+
+If only P_tau^d s=s has been verified, d is a returning exponent, possibly a multiple of the true period. A primitive certificate consists of a complete prime factorization of d together with nonreturn at d/p for every distinct prime divisor p. This certifies minimality because the true period divides d. Obtaining that factorization has a computational cost; it is not a free byproduct of measuring the clock.
+
