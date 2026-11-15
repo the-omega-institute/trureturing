@@ -260,7 +260,11 @@ public sealed class RawLeanReportArtifactTests
             fromDisk.Files.Single().Value.Declarations.Single().LoadTypeRepresentation());
 
         var materialArchive = RawLeanReportArtifact.MaterialsPath(path);
-        using (var archive = ZipFile.Open(materialArchive, ZipArchiveMode.Update))
+        var replacementArchive = materialArchive + ".replacement";
+        // Keep loaded archives immutable; publish corrupt fixtures by replacement
+        // just as report producers replace a completed material archive.
+        File.Copy(materialArchive, replacementArchive);
+        using (var archive = ZipFile.Open(replacementArchive, ZipArchiveMode.Update))
         {
             var entry = Assert.Single(archive.Entries);
             var name = entry.FullName;
@@ -270,22 +274,27 @@ public sealed class RawLeanReportArtifactTests
                 replacement.Open(), new UTF8Encoding(false), leaveOpen: false);
             writer.Write("statement-v1(tampered)");
         }
+        File.Move(replacementArchive, materialArchive, overwrite: true);
         var tampered = RawLeanReportArtifact.ReadFile(path, snapshot);
         Assert.Contains(
             "hash",
             Assert.Throws<InvalidDataException>(() =>
                 _ = tampered.Files.Single().Value.Declarations.Single().LoadTypeRepresentation()).Message,
             StringComparison.OrdinalIgnoreCase);
-        using (var archive = ZipFile.Open(materialArchive, ZipArchiveMode.Update))
+        File.Copy(materialArchive, replacementArchive);
+        using (var archive = ZipFile.Open(replacementArchive, ZipArchiveMode.Update))
         {
             Assert.Single(archive.Entries).Delete();
         }
+        File.Move(replacementArchive, materialArchive, overwrite: true);
         var missingReport = RawLeanReportArtifact.ReadFile(path, snapshot);
         var missingMaterial = missingReport.Files.Single().Value.Declarations.Single();
         Assert.Contains(
             "missing",
             Assert.Throws<InvalidDataException>(() => missingMaterial.LoadTypeRepresentation()).Message,
             StringComparison.OrdinalIgnoreCase);
+        Assert.Equal("statement-v1(test)",
+            fromDisk.Files.Single().Value.Declarations.Single().LoadTypeRepresentation());
     }
 
     [Fact]
@@ -469,6 +478,77 @@ public sealed class RawLeanReportArtifactTests
         var declaration = Assert.Single(Assert.Single(report.Files).Value.Declarations);
         Assert.Equal(material, declaration.LoadTypeRepresentation());
         Assert.Same(declaration.LoadTypeRepresentation(), declaration.LoadTypeRepresentation());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MaterialReaderAcceptsAnArchiveLargerThanTheManagedArrayLimit(bool validateMaterials)
+    {
+        const string material = "statement-v1(∀ α, Ω𝒪😀)";
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        var address = WriteMaterialFixture(path, material);
+        var materials = RawLeanReportArtifact.MaterialsPath(path);
+        using (var output = File.Create(materials))
+        {
+            // A sparse prefix exercises both the 2 GiB array boundary and
+            // ZIP64 offsets without writing gigabytes of fixture content.
+            output.Position = (long)uint.MaxValue + 1;
+            using var archive = new ZipArchive(output, ZipArchiveMode.Create);
+            var entry = archive.CreateEntry("sha256/" + address[7..]);
+            using var destination = entry.Open();
+            destination.Write(Encoding.UTF8.GetBytes(material));
+        }
+        Assert.True(new FileInfo(materials).Length > uint.MaxValue);
+
+        var report = RawLeanReportArtifact.ReadFile(path, Snapshot(), validateMaterials);
+        var declaration = Assert.Single(Assert.Single(report.Files).Value.Declarations);
+        Assert.Equal(material, declaration.LoadTypeRepresentation());
+        Assert.Same(declaration.LoadTypeRepresentation(), declaration.LoadTypeRepresentation());
+    }
+
+    [Fact]
+    public void MaterialReaderKeepsTheOpenedArchiveAfterItsPathIsReplaced()
+    {
+        const string first = "statement-v1(first)";
+        const string second = "statement-v1(second Ω)";
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        var firstAddress = WriteMaterialFixture(path, first);
+        var secondAddress = WriteMaterialFixture(Path.Combine(temporary.Path, "second.json"), second);
+        var materials = RawLeanReportArtifact.MaterialsPath(path);
+        using (var archive = ZipFile.Open(materials, ZipArchiveMode.Update))
+        {
+            var entry = archive.CreateEntry("sha256/" + secondAddress[7..]);
+            using var destination = entry.Open();
+            destination.Write(Encoding.UTF8.GetBytes(second));
+        }
+        var read = RawLeanReportArtifact.OpenStatementMaterialSource(path, [firstAddress, secondAddress]);
+        Assert.Equal(first, read(firstAddress));
+
+        File.Move(materials, materials + ".previous");
+        File.WriteAllBytes(materials, [0xff]);
+
+        Assert.Equal(second, read(secondAddress));
+        Assert.Equal(first, read(firstAddress));
+    }
+
+    [Fact]
+    public void InvalidMaterialArchiveReleasesItsFileHandle()
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        var address = WriteMaterialFixture(path, "statement-v1(test)");
+        var materials = RawLeanReportArtifact.MaterialsPath(path);
+        using (var archive = ZipFile.Open(materials, ZipArchiveMode.Update))
+            archive.CreateEntry("sha256/" + address[7..]);
+
+        Assert.Throws<InvalidDataException>(() =>
+            RawLeanReportArtifact.ReadFile(path, Snapshot(), validateMaterials: true));
+
+        using var exclusive = new FileStream(materials, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+        Assert.True(exclusive.CanRead);
     }
 
     [Theory]

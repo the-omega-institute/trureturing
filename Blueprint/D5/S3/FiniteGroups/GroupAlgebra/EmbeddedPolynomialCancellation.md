@@ -1,0 +1,44 @@
+# Polynomial summand cancellation along an arbitrary additive embedding
+
+## Abstract
+
+Finite sampling along a faithful additive embedding, the top-line scalar and relative trace vanishing give a concrete polynomial cancellation pivot.
+
+Let K : Type uK be a field of prime characteristic p, and E : Type uE a finite nontrivial additive group, with uE independent of uK. Fix an injective additive homomorphism alpha:E->+K and put q=card E. In Lean the assumptions are Field K, Fact p.Prime, CharP K p, AddGroup E, Fintype E, Nontrivial E and Function.Injective alpha; there is no Fintype K assumption. The group Multiplicative E writes E multiplicatively. For each natural d let V_d=(K[z]_(degree<d))^*, with action rho_d(e)(lambda)(f)=lambda(f(z-alpha(e))). Thus V_0=0. For natural s, M_(p,s) is the literal direct sum over c in Fin s of V_(p(c+1)); M_(p,0)=0.
+
+Use the original relative definitions: RelativeProjective M P supplies a representation X and actual equivariant maps i:P->X tensor M and r:X tensor M->P with r i=id_P. RelativeFactors M f supplies such a P and a factorization f=b a through P. RelativeStableIso M rho sigma supplies actual equivariant F:rho->sigma and G:sigma->rho with G F-id_rho and F G-id_sigma in RelativeFactors M. P and X range over the original representations in K's universe, without finite-dimensional or finite-generation restrictions. Binary products of representations here are direct sums.
+
+The polynomial model and relative category come from Jonathan Elmer and Kazal Kadr, Some formulae relating modular representations of elementary abelian p-groups, DOI 10.1007/s13366-026-00855-9, arXiv:2510.07939v1, formulas (11)--(12), Section 2.2 and Lemma 2.1(iii). The common-summand step supports the recurrence in their Proof of Corollary 1.3. The scalar-pivot proof below uses the repository's embedding coefficient-separation and trace lemmas to justify that step for the actual restricted actions.
+
+**Theorem 1.1 (Cancel a positive polynomial summand with nonzero characteristic dimension).**
+
+Lean statement: `D5/S3/FiniteGroups/GroupAlgebra/EmbeddedPolynomialCancellation.polynomial_summand_cancellation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/GroupAlgebra/EmbeddedPolynomialCancellation.polynomial_summand_cancellation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the stated K,E,alpha,p assumptions, let s,d be natural numbers with 0<d, d+1<=q and (d:K) nonzero. For arbitrary K-modules A,B in Type uK and representations rho,sigma of Multiplicative E on them, RelativeStableIso M_(p,s) (rho direct sum V_d) (sigma direct sum V_d) implies RelativeStableIso M_(p,s) rho sigma. A and B may be infinitely generated. There is no positivity assumption on s and no additional restriction on the original P or X witnesses.
+
+Write e_0,...,e_(d-1) for the dual monomial basis. Expand the signed action at -e into coefficient operators C_k. An equivariant map commutes with each C_k: scalar dual tests turn the intertwining defect into a polynomial vanishing at the q distinct samples alpha(e), and the degree bound forces its coefficients to vanish. This finite-sample argument works over arbitrary K. Since C_i e_0=e_i, an endomorphism h satisfies h(e_i)=C_i h(e_0). The coefficient identities make its matrix lower triangular with constant diagonal and preserve the actual top line K e_(d-1).
+
+Let lambda(h) be the coefficient of e_(d-1) in h(e_(d-1)). Top-line preservation gives lambda(h k)=lambda(h)lambda(k); evaluation also gives additivity, subtraction and lambda(id)=1. Constant diagonal gives trace(h)=d*lambda(h). If lambda(h) is nonzero, the triangular determinant is nonzero, yielding an actual equivariant automorphism whose forward intertwiner is h and whose inverse is its actual Representation.Equiv.symm.
+
+Choose nonzero e in E. Injectivity makes alpha(e) nonzero and realizes its prime-cyclic subgroup inside E. The scaled relative norm identity for M_(p,s) implies trace(h)=0 for any endomorphism h of V_d in RelativeFactors M_(p,s). Hence (d:K) nonzero forces lambda(h)=0. Only V_d is traced; no trace or dimension assumption is imposed on A,B,P or X. The imported factors_sandwich lemma retains the same P, its retract witness, and the maps a r and l b when replacing b a by l(b a)r.
+
+Take the actual maps F:A direct sum V_d -> B direct sum V_d and G in reverse witnessing the premise. Write F=(a,b;c,d0) in blocks and the lower row of G as (gamma,delta). Sandwich G F-id by the V_d projection and inclusion. Its top scalar vanishes, so lambda(gamma b)+lambda(delta)lambda(d0)=1. If lambda(d0) is nonzero choose h=0:B->V_d; otherwise choose h=gamma. Then D=d0+h b has nonzero top scalar and an actual equivariant inverse.
+
+The left shear (y,z)->(y,z+h y) makes the lower row (c+h a,D). Define the Schur map S=a-b D^(-1)(c+h a):A->B, together with u(x)=(x,-D^(-1)(c+h a)x), v(y)=(y,-h y), w(y,z)=y-b D^(-1)(z+h y), and T=pr_A G v. These are actual equivariant maps. Direct block identities give T S-id_A=pr_A (G F-id) u and S T-id_B=w (F G-id) v. The sandwich lemma preserves the respective original relative factors, so S,T witness the conclusion.
+
+This is cancellation of the specific V_d under its displayed scalar and size hypotheses. It retains p=2, d=1 and s=0 when those hypotheses hold; it supplies no arbitrary common-module cancellation principle. In the tensor-reflection induction it cancels V_(pa+p-u+2) only after establishing these bounds. The boundary V_q is handled by its literal relative-projective summand, outside this cancellation theorem.
+
+The result is a structural existence statement with utility none. The auxiliary DependentFamily audit remains unfinished: https://github.com/the-omega-institute/trureturing/issues/30512.
+
+## References
+
+- Truth anchor: `D5/S3/FiniteGroups/GroupAlgebra/EmbeddedPolynomialCancellation.polynomial_summand_cancellation`
+- Dependency: [D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrPolynomialCancellation](ElmerKadrPolynomialCancellation.md)
+- Dependency: [D5/S3/FiniteGroups/GroupAlgebra/EmbeddedOriginalClassification](EmbeddedOriginalClassification.md)
+- Dependency: [D5/S3/FiniteGroups/GroupAlgebra/PrimeCyclicRelativeTrace](PrimeCyclicRelativeTrace.md)
