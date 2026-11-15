@@ -100,18 +100,7 @@ unionConnected_iff_lAtLeastThreeCriterion: proof_shape=bind-only; consumers=resu
 result: proof_shape=bind-only; consumers=none (designated external-question result)
 -/
 
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Rat.Defs
-import Mathlib.GroupTheory.Commutator.Basic
-import Mathlib.GroupTheory.Perm.Fin
 import Mathlib.GroupTheory.GroupAction.Transitive
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.GroupTheory.Perm.Sign
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.Logic.Equiv.Fin.Basic
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.Data.Set.Card
 import Mathlib.Tactic
 
 /-!

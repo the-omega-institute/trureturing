@@ -124,7 +124,7 @@ internal sealed class SwitchedTwistedSSEPDocument : IScribeDocumentDefinition
                 "The full support property is equivalent to union connectivity together with the appropriate criterion. Since hL asserts L greater than one, the alternative to L at least three is exactly L equal to two."),
             Describe.Lean(DescribeId.Create("switched-twisted-ssep-result"), DeclarationHandle.Create(Module + ".result"),
                 H("The complete reachability classification"), StatementSource.FromAuthor(Disp(ResultFormula())),
-                AssessedProvenance.FromLiterature(Source), Blocks(
+                AssessedProvenance.FromRepo(Source), Blocks(
                     Paragraph(Text("All natural N, all L greater than one, and every pair f,g are quantified. "
                         + "The first conjunct is the full registered answer. The second gives both directions between union connectivity and the group criterion. The third states Proposition 5.2 positivity exactly. "
                         + "The fourth identifies recursive configuration support with alternating sector closure for every finite initial set and every step count.")),
