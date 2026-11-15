@@ -96,6 +96,46 @@ theorem pderiv_substitution
         simp [pderiv_X, Pi.single_apply, Prod.mk.injEq]
       · simp [pderiv_X, Prod.mk.injEq, h, Ne.symm h]
 
+/-! Coefficient extraction turns the polynomial chain rule into the exact
+occupation step used by the inverse-substitution readout.  The added
+occupation is on the substituted side; the source derivative remains a
+literal derivative of the original polynomial. -/
+
+theorem substitution_coeff_step
+    (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (i : Fin D.rank) (k : ℕ) (p : Oscillator D) (alpha : Exponent D) :
+    ((alpha (i,k) : ℂ) + 1) *
+        (substitution A p).coeff (alpha + Finsupp.single (i,k) 1) =
+      ∑ a : Fin D.rank, A k i a *
+        (substitution A (pderiv (a,k) p)).coeff alpha := by
+  have h := congrArg (fun q : Oscillator D => q.coeff alpha)
+    (pderiv_substitution A i k p)
+  simpa only [coeff_pderiv, coeff_sum, coeff_smul, smul_eq_mul, mul_comm] using h
+
+theorem substitution_monomial_coeff_step
+    (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (i : Fin D.rank) (k : ℕ) (delta alpha : Exponent D) :
+    ((alpha (i,k) : ℂ) + 1) *
+        (substitution A (monomial delta 1)).coeff
+          (alpha + Finsupp.single (i,k) 1) =
+      ∑ a : Fin D.rank, A k i a * (delta (a,k) : ℂ) *
+        (substitution A (monomial (delta - Finsupp.single (a,k) 1) 1)).coeff alpha := by
+  have h := substitution_coeff_step A i k (monomial delta 1) alpha
+  simp only [pderiv_monomial, one_mul] at h
+  calc
+    _ = ∑ a : Fin D.rank, A k i a *
+        (substitution A (monomial (delta - Finsupp.single (a,k) 1)
+          (delta (a,k) : ℂ))).coeff alpha := h
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro a ha
+      rw [show monomial (delta - Finsupp.single (a,k) 1) (delta (a,k) : ℂ) =
+          (delta (a,k) : ℂ) •
+            monomial (delta - Finsupp.single (a,k) 1) 1 by
+        simp only [smul_monomial, smul_eq_mul, mul_one]]
+      simp only [map_smul, coeff_smul, smul_eq_mul]
+      ring
+
 /-! The lattice Gram matrix is symmetric, so the modewise inverse used by the
 source transpose is symmetric as well.  This removes a purely notational
 transpose before the finite coefficient is matched with the right affine row. -/
