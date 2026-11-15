@@ -1567,3 +1567,168 @@ $$
 [T274]: QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "164.1的已对齐低二层全有限原域；164.10的明确tau_n及六副本十八腿；164.11的3⇒4；164.12的字典与过程边界。"
 
 ## 追加锚（本行以下为增补区）
+
+## 275. 对角支撑的秩三接合、四接触补全与单复制互易
+
+**定义 275.1（互易只输入到单复制）。** 完整保留274.1的全有限原背景 $\mathsf F$、整个 $K_3$ 上的 $\mathsf M_3$ 与实际 $\mathrm{L2}_3$，不缩减原载体、原纯点、完整 proper 菜单、全部有限单位分解或任意相关输入上的各分块 min/max 界。额外的数值条件只为
+
+$$
+\mathsf R_1:\qquad e_p^1(q)=e_q^1(p)\qquad(p,q\in P_1).
+\tag{275.1}
+$$
+
+较高层的互易、矩阵类型、共同尺、正面压缩及面效应延拓均不作为输入。以下在274.2的统一 Schmidt 秩二覆盖之外，使用[XVIII240.5][Q275]的纯几何纸面供应：实际 L2 加全称三点面齐次维数至多九，给每个非共球三点的整个实际 qutrit 面。该九维上界将在明确构造的原暴露面内支付，不加到整个未知原锥。
+
+**定理 275.2（任意矩阵尺寸的整锥补全）。** 在整个原实载体 $H_m\otimes_{\mathbb R}H_n$、普通迹单位、完整 proper 菜单和整个迹一紧底上，设 $m,n\ge2$、$\operatorname{Sep}(m|n)\subseteq C\subseteq\operatorname{BP}(m|n)$，并要求 M 与实际 L2。相对于274.2及[Q275]的上述供应，有
+
+$$
+\boxed{\quad C=C^*=\operatorname{PSD}_{mn}\quad\text{或}\quad
+C=C^*=T_A\operatorname{PSD}_{mn}.\quad}
+\tag{275.2}
+$$
+
+对偶取普通迹配对，$T_A$ 为固定第一因子基的部分转置。这里不输入数值互易。
+
+证明。（一）固定共同方向并支付支撑。令 $P_\psi=\psi\psi^*/\|\psi\|^2$，$\mathcal S_k$ 为所有 Schmidt 秩至多 $k$ 的 $P_\psi$ 生成的锥。274.2给一个共同 $\delta$，使 $T_A^\delta\mathcal S_2\subseteq C\cap C^*$。对整个锥和逆对偶菜单作保迹正交坐标运输，置 $D=T_A^\delta C$。于是
+
+$$
+\mathcal S_2\subseteq D\cap D^*,\qquad
+D,D^*\subseteq\mathcal S_2^*.
+\tag{275.3}
+$$
+
+M、实际面、L2和 Sep/BP 夹逼均随这个序坐标运输；并未把部分转置宣布为原正操作。
+
+任选局域正交归一族 $a_1,\ldots,a_r$、$b_1,\ldots,b_r$，$r\le\min(m,n)$。置
+
+$$
+v_i=a_i\otimes b_i,\quad W_r=\operatorname{span}_{\mathbb C}\{v_i\}_{i=1}^r,
+\quad P_W=\sum_iP_{v_i},\quad Q_W=I-P_W,\quad
+Z_r=\{X\in K_D:\operatorname{Tr}(Q_WX)=0\}.
+\tag{275.4}
+$$
+
+将两族补为局域正交基，$P_W,Q_W$ 都是产品基投影之和，因而是整个原菜单中的互补 proper 效应。$Z_r$ 是原暴露面，且
+
+$$
+Z_r\subseteq\mathcal D(W_r).
+\tag{275.5}
+$$
+
+为证275.5，$Q_W$ 的所有产品对角读数非负，零和使每个未选产品基向量的对角元为零。任意两个产品基向量的线性组合 Schmidt 秩至多二，275.3使其二阶主矩阵 PSD；零对角元遂消去整个对应行列。故 $X=P_WXP_W$。对任意 $\xi=\sum_i\xi_i v_i$，产品向量 $z=(\sum_i\xi_i a_i)\otimes(\sum_i b_i)$ 满足 $P_Wz=\xi$，所以块正性给 $\langle\xi,X\xi\rangle=\langle z,Xz\rangle\ge0$。这才证明支持内 PSD；不假定原压缩映射为正。
+
+（二）新增秩一态的原全域确认。若单位 $\psi\in W_r$ 已有 $P_\psi\in D$，则它位于 $Z_r$，由275.5是该面的极点，因而是整个 $K_D$ 的原纯点。原 proper 效应 $P_W$ 确认它，M 给 $0\le_{D^*}e_{P_\psi}\le_{D^*}P_W$。在未选产品基态上评价，所得零对角元结合275.3的二阶主矩阵正性，将这个**原全域**效应也限制到 $W_r$。同（一）的产品向量论证给支持内 $e_{P_\psi}\succeq0$。
+
+对任一只占至多两个 $v_i$ 坐标、且 $s\perp\psi$ 的单位向量，
+
+$$
+g_s=P_W-P_s\in[0,I]_{D^*}.
+\tag{275.6}
+$$
+
+事实上，在这两个坐标里 $P_W-P_s$ 的对应项是另一只 Schmidt 秩至多二投影，其余项是产品投影；其补 $I-g_s=Q_W+P_s$ 也为已知原正效应之和。故 proper 性支付在整个原菜单。$g_s(P_\psi)=1$，leastness 与已知原态 $P_s\in D$ 给
+
+$$
+0\le\langle s,e_{P_\psi}s\rangle\le\langle s,g_ss\rangle=0.
+\tag{275.7}
+$$
+
+写 $\psi=\sum_i c_iv_i$ 并选 $c_k\ne0$，向量 $\overline{c_i}v_k-\overline{c_k}v_i$（$i\ne k$）是 $r-1$ 个独立的此类正交方向，张满 $\psi^\perp\cap W_r$。支持内 PSD 使 $e_{P_\psi}$ 消去它们；确认值一遂给
+
+$$
+\boxed{\quad e_{P_\psi}=P_\psi\in D^*.\quad}
+\tag{275.8}
+$$
+
+这个步骤在每次补出新态之后供应其原全域效应，不借用面内效应延拓。
+
+（三）在真实九维面内补齐秩三。若 $\min(m,n)\ge3$，取 $r=3$。由275.3，每个坐标二支持的整个普通密度球 $\mathcal D(\operatorname{span}\{v_i,v_j\})$ 都在 $Z_3$。三颗球共同张满九实维 $\operatorname{Herm}(W_3)$，故 $\dim_{\mathbb R}\operatorname{span}Z_3=9$。它们也是这些坐标纯点的实际二点面：与普通 PSD 支持面的交给 $Z_3$ 的一个实际面，恰为该整球；整球内任意两个不同纯点的最小面就是整球。
+
+设 $G$ 是三个 $P_{v_i}$ 的最小原实际面。$G\subseteq Z_3$，又含每对中点，因此由面性质含那对的整颗球。故 $G$ 张满九维，是 $Z_3$ 的满维面，只能等于 $Z_3$。特别地三个点不共处一个实际二点球。
+
+现在仅把这个原实际面作为辅助凸几何载体。它的所有实际面仍是原实际面，继承实际 L2；它自身齐次维数九，故其中所有实际三点面自动满足 TF9。精确调用[Q275,240.5]，得 $Z_3$ 仿射同构于整个 qutrit 密度体。这里使用该供应的几何结论，不将面内完整几何对偶当成原全域可用效应。
+
+还须对齐当前矩阵坐标。将该仿射同构齐次延拓为保迹线性同构 $L:H_3\to\operatorname{Herm}(W_3)$，有 $L(\mathcal D_3)=Z_3\subseteq\mathcal D(W_3)$。原效应族 $P_{v_1},P_{v_2},P_{v_3},Q_W$ 的前三项在 $Z_3$ 上和为一，并完全区分三个坐标纯点。拉回至标准 qutrit，三个纯原像因完全可区分而构成正交基；在源端选一个酉坐标后，可设 $L(P_i)=P_{v_i}$。
+
+$L$ 因而把每个标准坐标二支持密度球满射到上述同名实际球，并固定其两极。球的仿射自同构固定中心且在 Bloch 方向上正交；固定纵轴后，其二维非对角实空间上为 $O(2)$。三个对角方向固定，三个非对角二维空间在 HS 配对下互相正交，所以 $L$ 在整个 $H_3$ 上为 HS 正交映射。因此 $L(\operatorname{PSD}_3)$ 对当前迹配对自对偶。对包含关系取对偶给
+
+$$
+L(\operatorname{PSD}_3)\subseteq\operatorname{PSD}(W_3)
+\quad\Longrightarrow\quad
+\operatorname{PSD}(W_3)\subseteq L(\operatorname{PSD}_3)^*
+=L(\operatorname{PSD}_3).
+\tag{275.9}
+$$
+
+故 $Z_3=\mathcal D(W_3)$。任意 Schmidt 秩三向量可置入这样的一对局域 Schmidt 基；结合（二），得到 $\mathcal S_3\subseteq D\cap D^*$。
+
+（四）四个接触点补齐更高秩。先使用如下欧氏椭球事实，其证明附于本步以明确接触条件：若满维椭球 $E\subseteq\overline{\mathbb B}^3$ 有四个仿射无关的外球面接触点，则 $E=\overline{\mathbb B}^3$。写 $E=c+A\overline{\mathbb B}^3$，$A$ 可逆，$Q=A^TA$、$b=A^Tc$。接触点的逆像 $s_i$ 为单位球面上 $q(s)=s^TQs+2b^Ts+\|c\|^2$ 的全局最大点，值一。在 $s_0$ 用乘子 $Qs_0+b=\lambda s_0$。对 $s_0\cdot v\ne0$，令 $t=-2s_0\cdot v/\|v\|^2$，则 $s_0+tv$ 也在单位球面，且
+
+$$
+0\le q(s_0)-q(s_0+tv)=t^2v^T(\lambda I-Q)v.
+\tag{275.10}
+$$
+
+由稠密性，$\lambda I-Q\succeq0$。其他接触点给 $(s_i-s_0)^T(\lambda I-Q)(s_i-s_0)=0$。三个差向量独立，故 $Q=\lambda I$、$b=0$、$c=0$，最后由最大值一得 $\lambda=1$。
+
+对 $r\ge4$，归纳假定 $\mathcal S_{r-1}\subseteq D\cap D^*$。取目标 $\psi=\sum_{j=1}^r c_jv_j$，$c_j\ne0$；选互异非零复数 $t_j$，前四个为 $1,-1,\mathrm i,2\mathrm i$，并置 $\eta=-\sum_j(c_j/t_j)v_j$。每个 $\psi+t_j\eta$ 恰消去第 $j$ 个 Schmidt 项，其余项非零，故归一投影 $p_j$ 是已知 Schmidt 秩 $r-1$ 原纯态。纯性可由（二），或由271.9的 HS 单位球严格凸性取得。
+
+令 $L_0=\operatorname{span}_{\mathbb C}\{\psi,\eta\}$、$F=Z_r\cap\mathcal D(L_0)$。275.5使 $F$ 为 $Z_r$ 的实际面，继而是整个 $K_D$ 的实际面；不要求 $P_{L_0}$ 为原 proper 效应。实际 L2 给
+
+$$
+B(p_1,p_2)\subseteq F\subseteq\mathcal D(L_0).
+\tag{275.11}
+$$
+
+两端均为仿射三维，所以左端是 $F$ 的满维面，等于 $F$，并包含所有 $p_j$。前四个是外层普通密度球球面上的仿射无关点：源向量 $(1,t_j)$ 的 dyad 在实坐标 $(1,\operatorname{Re}t,\operatorname{Im}t,|t|^2)$ 下形成矩阵
+
+$$
+\begin{pmatrix}1&1&0&1\\1&-1&0&1\\1&0&1&1\\1&0&2&4\end{pmatrix},\qquad\det=-6.
+\tag{275.12}
+$$
+
+映到 $L_0$ 的可逆合同及各项正归一化保留齐次线性独立，亦即四个迹一投影仿射独立。四接触点事实于是给 $B(p_1,p_2)=\mathcal D(L_0)$，特别 $P_\psi\in D$；（二）再给 $e_{P_\psi}=P_\psi\in D^*$。归纳到 $r=\min(m,n)$ 完成。若该最小维数为二，275.3已经覆盖所有秩一投影，无需（三）—（四）。
+
+全部秩一投影现均属于 $D\cap D^*$。谱分解及普通 PSD 自对偶性给 $\operatorname{PSD}_{mn}\subseteq D,D^*$，因而 $D=D^*=\operatorname{PSD}_{mn}$。运输回共同方向即275.2。$\square$
+
+**定理 275.3（单复制互易足够）。** 在275.1的完整原域，相对于[M274]的单层完整 M 加互易到规范迹 Jordan 几何纸面桥、[Q275]的几何供应以及[T274]的全有限传播，下列等价：
+
+$$
+\mathsf M_3+\mathrm{L2}_3+\mathsf R_1
+\quad\Longleftrightarrow\quad
+\exists n\ge2,\ \theta:V\overset\sim\longrightarrow H_n:\quad
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\quad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}\quad(N\ge0).
+\tag{275.13}
+$$
+
+证明。M 和实际 L2 由272下降到一、二层。只对单体调用[M274]的完整 M 加已输入 $\mathsf R_1$ 的桥；实际三球排除其他 Jordan 类型及非平凡直和，如274.3第一步，得到同一个保单位局域坐标 $\theta:V\to H_n$，$C_1=\operatorname{PSD}_n$、$n\ge2$。尚不分类 $C_2$。
+
+在固定的原张量坐标中，整个 $C_2$ 满足275.2，参数为 $n|n$，所以 $C_2=T_1^\varepsilon\operatorname{PSD}_{n^2}$。在实际分块 $(12)|3$ 中运输 $C'_3=T_1^\varepsilon C_3$；两个完整局域锥现为 PSD，整个 M、L2、菜单和 min/max 原样运输。再用275.2，得一个共同 $\delta$，使
+
+$$
+C_3=T_1^\varepsilon T_3^\delta\operatorname{PSD}_{n^3}.
+\tag{275.14}
+$$
+
+这里 $T_{12}$ 与 $T_3$ 在整个 PSD 锥上的像相同，因为其复合为全转置。三种错误方向的真实 Bell 边缘已由274.3（三）的三个明确来源投影逐项排除：$(1,0)$ 用 $P_0^{(1)}\otimes B_{23}$，$(1,1)$ 和 $(0,1)$ 用 $B_{13}\otimes P_0^{(2)}$；原正丢弃与原正置换要求输出落入同一个 $C_2$，而 Bell 部分转置的反对称本征值为 $-1/2$。因此 $\varepsilon=\delta=0$，$C_2,C_3$ 已为同一 $\theta$ 下的标准 PSD。
+
+于是 $\tau_n=\sum_{i=0}^{n-1}|ii0\rangle+|011\rangle$ 的 dyad 属于原 $C_3$，迹质量 $n+1$。这精确给[T274,164.11]的条件3，且其标准低二层、全部有限 min/max 与相关输入等前件均已支付。直接消费 $3\Rightarrow4$，得到275.13的全有限结论。此路线只对单体使用 Jordan 桥；不再靠一个已分类的双体及产品保持正规形来取得 $C_2$。
+
+反向标准复层级的完整菜单有投影 least 确认、复二维支持三球和单体迹互易，故满足左边。$\square$
+
+**推论 275.4（几何、量子字典及剩余的内生桥）。** 在所列完整前提和纸面供应下，原纯准备为 $\mathbb{CP}^{n^N-1}$，实际二纯面为整个复二维密度球，整层共同尺为 $\operatorname{Tr}(XY)$。全部原归一态、proper 效应、有限单位分解及配对分别给密度矩阵、$0\preceq E\preceq I$、全部数学 POVM 和 $\operatorname{Tr}(E\rho)$；原全有限产品、相关输入及丢弃给同一复 Hilbert 坐标下的完整张量积与偏迹。
+
+较高层的完整 least 确认和全部数值互易均成为结论。结合272的下降，在保持不变的 $\mathsf F+\mathsf M_3+\mathrm{L2}_3$ 及所列供应下，$\mathsf R_1\Longleftrightarrow\mathsf R_2\Longleftrightarrow\mathsf R_3$；这是互易输入层数的冗余消除，不是严格逻辑弱化或最少独立公理数的证明。275.2的整锥结论现有明确的秩三接合和高秩归纳；不能把它回填为274.2单独已给的一般整锥分类。
+
+CP、TNI／TP、仪器、锐更新及 Hamilton 形式逐项保留274.5的额外过程条件：所有有限相关旁观输入的分支正性、整个正输入及分支之和的预算；同层正实线性更新的确切效应和所有 certain-yes 纯态的逐点中性；另给连续可逆保单位群。静态起点不供应这些设备，也不标定物理时钟、能量与 $\hbar$，不推出先后仪器可交换。
+
+新增的仓内接合是：统一秩二方向给明确可分效应暴露的对角支撑面；该面内自动支付九维几何供应，且将抽象 qutrit 坐标对齐原矩阵坐标；四个已知低秩接触点再补齐任意有限 Schmidt 秩。每次新增态的全域效应由275.6—275.8支付。GB 球、M-only 剥离、既有秩二构造、Hermitian Veronesean 分类和240.5、欧氏二次型、Schmidt／谱分解以及有限传播各保留其成熟或仓内归属；本节不申领这些工具的新意、全球优先性、Lean／kernel 认证或物理实现。
+
+完全删去单体互易仍未完成。只知道 $e_p(q)=0\Longleftrightarrow e_q(p)=0$，并不保证某张实际球的内禀对跖点可以由原全域 proper 效应读成一与零；若这个对跖分离条件能从其余原前件导出，既有球内半球比较桥才给 $\mathsf R_1$，继而应用275.3。这里没有把该条件列成新公理，也没有给满足全部原域的反模型。
+
+白话说，先只在一份系统里要求两边交换比较对象后读数不变。两份系统已有的二方向相干准备，先围出一块真正九维的三方向小世界；原来的整球关系把它补成完整 qutrit。更大的相干准备，再由四个已知低秩准备把同一颗实际球撑满，每一步的确认测试都在原完整菜单里付清。这样联合互易不用另给，三份整体的真实边缘统一方向后，就接回全部有限量子层级。仍要追的最后这类缺口，是球内几何上相反的两个纯准备，为什么一定有一只原全域测试把它们完全分开。$\square$
+
+[Q275]: QUANTUM_ORIGIN_HALF_TURN_PREPARATION_AND_GLOBAL_EFFECTS_XVIII.md "240.1—240.5：实际 L2、外三角九维下界、TF9 到 TC、纯扇穷尽及实际 qutrit 面；240.5 的几何供应经 XIII160.4 使用 Schillewaert—Van Maldeghem 的 Hermitian Veronesean Caps, Theorem2.4。"
+
+## 追加锚（本行以下为增补区）
