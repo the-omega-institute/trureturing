@@ -11,6 +11,37 @@ internal sealed class SpeyerUniformNormalityDocument : IScribeDocumentDefinition
         H("Speyer Uniform Normality"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("qab"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB"),
+                H("The binomial polynomial"),
+                StatementSource.FromAuthor(Disp(All("a", Nat, All("b", Nat,
+                    Equal(Call("qAB", V("a"), V("b")),
+                        Seq(new Formula.Subscript(Sum, Seq(V("j"), Sp, InMacro, Sp,
+                                new Formula.Apply(Qualified("Finset", "range"), [Add(V("a"), new Formula.Number(1))]))), Sp,
+                            Parenthesized(Multiply(
+                                Call("C", Parenthesized(Seq(
+                                    Parenthesized(Seq(Multiply(
+                                        new Formula.Apply(Qualified("Nat", "choose"), [V("a"), V("j")]),
+                                        new Formula.Apply(Qualified("Nat", "choose"), [V("b"), V("j")])), Colon, Sp, Nat)),
+                                    Colon, Sp, Real))),
+                                new Formula.Power(Parenthesized(Add(V("X"), new Formula.Number(1))), V("j")))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The polynomial sums the products of the two binomial coefficients against powers of X + 1. The product of natural binomial coefficients is cast to the reals. Evaluation at one gives the unit-border Delannoy binomial sum."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("qab-positive"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB_pos"),
+                H("Positivity on the half-line"),
+                StatementSource.FromAuthor(Disp(All("a", Nat, All("b", Nat, All("x", Real,
+                    Imp(Rel(Subtract(new Formula.Number(0), new Formula.Number(1)),
+                            FormulaRelationOperator.LessThanOrEqual, V("x")),
+                        Rel(new Formula.Number(0), FormulaRelationOperator.LessThan,
+                            new Formula.Apply(Qualified("Polynomial", "eval"),
+                                [V("x"), Call("qAB", V("a"), V("b"))])))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For all natural parameters a and b, qAB a b is strictly positive at every real x at least −1. Its constant summand is one and every summand is nonnegative on this half-line."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("g"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.g"),
                 H("g"),
@@ -33,8 +64,7 @@ internal sealed class SpeyerUniformNormalityDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(V("claim"))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Asymptotics/zhangzhao2024speyer")),
                 Blocks(Paragraph(Text("Every eventually admissible rank sequence tending to infinity satisfies both limits. The normalized coefficient law is a shifted Bernoulli sum, and the lower bound (d-1)/8 forces its variance to diverge. The general Bernoulli limit theorem then gives CLT and LLT. Bounded rank lies outside this claim."))),
-                DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("zhang-zhao-2024-speyer-g-uniform-normality"), ResolutionKind.Proved)))));
+                DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
