@@ -85,10 +85,21 @@ open KingGrid KingDifference
 attribute [local instance] Classical.propDecidable
 
 private theorem klein_alphabet (x y t : K) (hx : x ≠ 0) (hy : y ≠ 0)
-    (hxy : x ≠ y) : t ≠ 0 ∧ t ≠ x ↔ t = y ∨ t = x + y := by
-  have h : ∀ x y t : K, x ≠ 0 → y ≠ 0 → x ≠ y →
-      (t ≠ 0 ∧ t ≠ x ↔ t = y ∨ t = x + y) := by decide
-  exact h x y t hx hy hxy
+    (hxy : x ≠ y) : t ≠ 0 ∧ t ≠ x ↔ t = y ∨ t = x+y := by
+  have hm : t ∈ ({x+y,x,y,0} : Finset K) := by
+    rw [IsAddKleinFour.eq_finset_univ hx hy hxy]
+    exact Finset.mem_univ _
+  simp only [Finset.mem_insert, Finset.mem_singleton] at hm
+  constructor
+  · rintro ⟨ht0,htx⟩
+    rcases hm with h | h | h | h
+    · exact Or.inr h
+    · exact (htx h).elim
+    · exact Or.inl h
+    · exact (ht0 h).elim
+  · rintro (rfl | rfl)
+    · exact ⟨hy,hxy.symm⟩
+    · exact ⟨mt (KingDifference.add_eq_zero x y).mp hxy, by simpa using hy⟩
 
 /-- Four ordinary words, with the two split-slot values recorded separately. -/
 @[ext] private structure DiagonalSlots {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) where
