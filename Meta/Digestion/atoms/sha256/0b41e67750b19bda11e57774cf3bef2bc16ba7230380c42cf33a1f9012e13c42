@@ -1,0 +1,8 @@
+**定义 1.3（Task-relative record minima）。** Define three minima over the same family (1.4).
+
+1. $d_{\mathrm{un}}$ requires only the common full-input isometry. No exact edge read is required.
+2. $d_{\mathrm{succ}}$ also requires exact, deterministic one-shot identification of every positive edge when its actual successor $j$ is available to the decoder. For each $j$, a common POVM on $E$, selected using that actual $j$, must distinguish the vectors $\{e_{ji}:P_{ij}>0\}$. No source label is given to this decoder.
+3. $d_E$ requires exact, deterministic one-shot identification of all fifteen positive edges using $E$ alone, with one POVM independent of an unknown edge.
+
+The readout requirement is on every individual positive edge, without dropping rare edges, permitting an inconclusive outcome, or adding an error probability. For coherent input, an edge outcome refers to a specified instrument; an unmeasured superposition is not assigned an already acquired classical edge. In the second task the actual successor interface is an additional permitted read, whose measurement and output carrier are separately counted. The internal input can be arbitrary and is not a known orthogonal label. Definitions of POVMs, completely positive branches and instruments are used at their finite-dimensional scope; see John Watrous, [The Theory of Quantum Information, 2018, Chapter 2, §2.3.2, equations (2.255)–(2.262)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf).
+
