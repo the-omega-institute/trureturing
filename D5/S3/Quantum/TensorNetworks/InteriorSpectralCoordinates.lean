@@ -9,6 +9,7 @@
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSSpectralExtraction
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorPolynomial
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSQ2PolynomialFiber
+import Mathlib.Algebra.MvPolynomial.Eval
 
 set_option autoImplicit false
 set_option maxHeartbeats 2000000
