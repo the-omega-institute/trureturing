@@ -58,11 +58,13 @@ internal sealed class MurthyA087372ExponentRefutationDocument : IScribeDocumentD
         FormulaQuantifier.Exists, FormulaIdentifier.Create(name), Nat, body);
     private static Formula Le(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Qualifies(Formula k, Formula n) => new Formula.Logic(
         Le(D(1), k), FormulaLogicOperator.And,
-        Call("Prime", Add(new Formula.Power(D(3), k), Mul(D(2), n))));
+        Call("Prime", Add(new Formula.Power(D(3), k), Multiply(D(2), n))));
 
     private static Formula SequenceFormula()
     {
@@ -78,5 +80,5 @@ internal sealed class MurthyA087372ExponentRefutationDocument : IScribeDocumentD
     }
 
     private static Formula ClaimBody() => ExistsNat("M", All("n",
-        Imp(Le(D(1), F.Id("n")), Less(Call("a", F.Id("n")), F.Id("M")))));
+        Imp(Le(D(1), F.Id("n")), Lt(Call("a", F.Id("n")), F.Id("M")))));
 }
