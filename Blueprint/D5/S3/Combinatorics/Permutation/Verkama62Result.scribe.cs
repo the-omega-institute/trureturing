@@ -42,5 +42,9 @@ internal sealed class Verkama62ResultDocument : IScribeDocumentDefinition
         DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), declaration == "result" ? StatementSource.FromAuthor(Disp(FinalStatement)) : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: declaration == "result"
+                ? new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("verkama-2026-conjecture-62"), ResolutionKind.Proved)
+                : null);
 }

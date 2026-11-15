@@ -24,6 +24,10 @@ $$\forall n \in \mathbb{N},\; \forall p \in \operatorname{Perm}\left(\operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/Verkama62Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/verkama-2026-conjecture-62` (proved) by `D5/S3/Combinatorics/Permutation/Verkama62Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"verkama-2026-conjecture-62","declaration_gid":"D5/S3/Combinatorics/Permutation/Verkama62Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Emil Verkama (2026). *Permutation patterns and higher connectivity in inversion graphs*. DOI: [10.48550/arXiv.2611.17237](https://doi.org/10.48550/arXiv.2611.17237). URL: <https://arxiv.org/html/2611.17237v1>.
