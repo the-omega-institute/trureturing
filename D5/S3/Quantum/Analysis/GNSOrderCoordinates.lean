@@ -9,7 +9,6 @@
 import Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal
 import Mathlib.Analysis.CStarAlgebra.PositiveLinearMap
 import Mathlib.Analysis.InnerProductSpace.Positive
-import D5.S3.Quantum.Analysis.NormalFunctionals
 import D5.S3.Quantum.Algebra.StateApproximation.IrreducibleBoundedLift
 import Mathlib.Tactic
 
@@ -321,7 +320,8 @@ theorem original_pair_coordinate (ρ σ : StrongDual ℂ A)
   · ext a
     have hs : coefficient ψ (1 - C) a = coefficient ψ 1 a - coefficient ψ C a := by
       change inner ℂ (cyclicVector ψ) ((1 - C) (ψ.gnsStarAlgHom a (cyclicVector ψ))) =
-        inner ℂ (cyclicVector ψ) (1 (ψ.gnsStarAlgHom a (cyclicVector ψ))) -
+        inner ℂ (cyclicVector ψ)
+          ((1 : ψ.GNS →L[ℂ] ψ.GNS) (ψ.gnsStarAlgHom a (cyclicVector ψ))) -
         inner ℂ (cyclicVector ψ) (C (ψ.gnsStarAlgHom a (cyclicVector ψ)))
       rw [sub_apply, inner_sub_right]
     rw [hs, coefficient_one, hC.2.2.2]
@@ -329,21 +329,6 @@ theorem original_pair_coordinate (ρ σ : StrongDual ℂ A)
     exact add_sub_cancel_left (ρ a) (σ a)
   · intro S hS
     exact hunique S ⟨hS.1, hS.2.1, hS.2.2.1, hS.2.2.2.1⟩
-
-/-- Positive order coordinates inherit the existing arbitrary-directed normality predicate. -/
-theorem functional_isOrderNormal (ψ : A →ₚ[ℂ] ℂ)
-    (hψ : NormalFunctionals.IsOrderNormal
-      (PositiveContinuousLinearMap.ofClass ψ).toContinuousLinearMap)
-    (T : CommutantInterval ψ) :
-    NormalFunctionals.IsOrderNormal
-      (PositiveContinuousLinearMap.ofClass
-        (functional ψ T.val T.property.1 T.property.2.2)).toContinuousLinearMap := by
-  apply NormalFunctionals.isOrderNormal_of_domination
-    (PositiveContinuousLinearMap.ofClass ψ).toContinuousLinearMap hψ 1 zero_le_one
-  intro a ha
-  exact ⟨(functional ψ T.val T.property.1 T.property.2.2).map_nonneg ha,
-    by simpa using (functional_dominated ψ T.val T.property.1 T.property.2.1
-      T.property.2.2 a ha)⟩
 
 #print axioms comparison_norm_le
 #print axioms comparison_intertwines
@@ -356,6 +341,5 @@ theorem functional_isOrderNormal (ψ : A →ₚ[ℂ] ℂ)
 #print axioms existsUnique_coordinate
 #print axioms orderCoordinates
 #print axioms original_pair_coordinate
-#print axioms functional_isOrderNormal
 
 end D5.S3.Quantum.Analysis.GNSOrderCoordinates
