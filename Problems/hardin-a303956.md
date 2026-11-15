@@ -76,8 +76,10 @@ agreement alone cannot establish `claim`.
 
 The unfrozen source is
 `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.lean`.
-Its designated full result is `result : claim`; only a successful scoped
-Lean check and accepted axiom closure establish the formal result.
+Its designated full result is `result : claim`, proving the complete
+original-domain recurrence. The finite transition and residual identities
+are checked by the Lean kernel inside the proof. The axiom closure is
+`propext`, `Classical.choice` and `Quot.sound`.
 
 The pre-existing private experiment at local commit
 `7887bf79c93eab02e575b043cc59d86139819a7d` has certificate SHA-256
@@ -90,12 +92,12 @@ than a substitute for the universal native correspondence or kernel proof.
 
 ### What the settlement shows
 
-- The decisive mechanism is annihilation of the boundary-conditioned
+- Proved (`HardinA303956KingStrip.result`): the decisive mechanism is annihilation of the boundary-conditioned
   degree-seven residual after two transitions, together with its first
   two zero terminal pairings.
-- The scope is exactly three binary columns with the allowed unequal
+- Proved (`HardinA303956KingStrip.result`): the scope is exactly three binary columns with the allowed unequal
   neighbour counts and root specified above. Minimal order, threshold
-  sharpness, other widths and changed allowed counts remain open.
+  sharpness, other widths and changed allowed counts are open here.
 - The pinned entry supplies a finite table and the empirical formula;
   no downstream theorem in that entry is identified as depending on
   this formula. A303961 column 3 duplicates it.

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.row_bijective,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.transfer_table,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.values_zero,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.values_step,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.residual_identity,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.residual_step,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.residual_step_two,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.residual_terminal,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.residual_one_terminal
    digest: The literal rooted binary king-strip counts satisfy Hardin's seventh-order recurrence. -/
 
 import D5.S3.Combinatorics.NarayanaStrip.CiglerCycleWalkTransfer
