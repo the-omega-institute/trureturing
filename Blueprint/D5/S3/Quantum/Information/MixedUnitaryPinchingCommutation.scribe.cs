@@ -18,6 +18,18 @@ internal sealed class MixedUnitaryPinchingCommutationDocument : IScribeDocumentD
                 "QubitMatrix is the algebra of complex matrices with both indices in Fin 2. "
                 + "A starred matrix denotes its conjugate transpose, and I denotes the identity of the indicated size.")),
             Describe.Lean(
+                DescribeId.Create("mixed-unitary-pinching-spin-triple"),
+                DeclarationHandle.Create(Prefix + "spin_triple"),
+                H("Conjugation by a spin matrix"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For real three-vectors a and b, spin(a) spin(b) spin(a) "
+                    + "equals 2(a dot b) spin(a) minus (a dot a) spin(b). The vectors need not "
+                    + "be normalized or orthogonal. The Pauli anticommutator and square identities "
+                    + "give this formula. For a unit vector a it describes the action of its "
+                    + "unitary conjugation on every spin matrix, and hence the action of the "
+                    + "associated pinching on qubit blocks with arbitrary quantum memory."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("mixed-unitary-pinching-is-mixed-unitary"),
                 DeclarationHandle.Create(Prefix + "IsMixedUnitary"),
                 H("Finite mixtures of unitary conjugations"),
