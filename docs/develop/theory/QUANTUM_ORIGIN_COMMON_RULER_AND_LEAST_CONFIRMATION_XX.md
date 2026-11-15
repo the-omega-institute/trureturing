@@ -1073,3 +1073,144 @@ $$
 [H271]: https://arxiv.org/abs/0806.0631v1 "Harrow, Exact universality from any entangling gate without inverses, Corollary 2：全体局部酉和 imprimitive 门，含不等分组维数的精确有限生成。"
 
 ## 追加锚（本行以下为增补区）
+
+## 272. 局域 M 与单一产品目标的整联合最小确认
+
+**定义 272.1（完整菜单、整锥产品与指定目标）。** 对 $X=A,B,D$，取非零有限维实空间、闭尖生成锥 $C_X$、在非零正向量上严格正的单位 $u_X$、整个紧底 $K_X=C_X\cap\{u_X=1\}$、全部纯点 $P_X=\operatorname{ext}K_X$、完整正对偶及 proper 菜单 $\mathcal E_X=[0,u_X]_{C_X^*}$；全部有限单位分解均为菜单。局域 $\mathsf M_X$ 取271.1的完整量词：每个 $p\in P_X$ 有确认 $p$、并低于每个原 proper 确认者的 $e_p^X$。不要求数值互易 $e_p^X(q)=e_q^X(p)$ 或唯一取一。对原联合系统要求
+
+$$
+D=A\otimes_{\mathbb R}B,\qquad u_D=u_A\otimes u_B,\qquad
+C_A\otimes_{\min}C_B\subseteq C_D
+ \subseteq C_A\otimes_{\max}C_B.
+\tag{272.1}
+$$
+
+最小锥由全部正产品生成，最大锥由两块全部正泛函的产品非负性定义；配对为原张量配对，分离整个 $D$。不缩小原相关锥或原效应区间。对指定 $p\in P_A,q\in P_B$，仅在该产品目标假设存在实际 least proper 确认者
+
+$$
+E\in\mathcal E_D,\qquad E(p\otimes q)=1,\qquad
+E\le F\quad(F\in\mathcal E_D,\ F(p\otimes q)=1).
+\tag{272.2}
+$$
+
+此处 least 是原对偶序中的最小元，非仅极小元。$\mathsf M_A,\mathsf M_B$ 是各自全部纯目标上的条件；(272.2)不对别的联合目标作要求。
+
+**定理 272.2（局域完整 frame 支付单目标整载体因子化）。** 在272.1及局域 $\mathsf M_A,\mathsf M_B$ 下，$p\otimes q$ 是原联合纯点，且(272.2)强制
+
+$$
+\boxed{\ E=e_p^A\otimes e_q^B\quad\text{作为整个 }D\text{ 上的泛函。}\ }
+\tag{272.3}
+$$
+
+因此对每个原 $z\in K_D$，包括任意相关输入，完整 proper 菜单中的确认 infimum 由同一个产品效应达到：
+
+$$
+\inf_{\substack{F\in\mathcal E_D\\F(p\otimes q)=1}}F(z)
+ =(e_p^A\otimes e_q^B)(z).
+\tag{272.4}
+$$
+
+若(272.2)逐个提供给全部纯产品目标，则(272.3)—(272.4)逐个成立，仍不需要其他联合纯目标的 M。
+
+证明。（一）原菜单与纯性。最大界使正产品泛函在整个 $C_D$ 上非负。若 $f\in\mathcal E_A,g\in\mathcal E_B$，则
+
+$$
+u_D-f\otimes g
+ =(u_A-f)\otimes u_B+f\otimes(u_B-g)\in C_D^*;
+\tag{272.5}
+$$
+
+所以 $f\otimes g$ 是原 proper 效应。原边缘属于相应紧底。若 $z\in K_D$ 的 $B$ 边缘为纯 $q$，对每个 $f\in\mathcal E_A$ 的条件切片满足 $0\le(f\otimes\operatorname{id})z\le q$。纯射线迫使它为 $\lambda_fq$，取 $u_B$ 得 $\lambda_f=f(z_A)$。完整 proper 效应张成局域对偶：任意实泛函在紧底上有界，平移并缩放后进入 $[0,u_X]$。原产品配对分离遂给 $z=z_A\otimes q$；最小界给反向包含。故纯边缘逆像是实际面，并与整个 $K_A$ 仿射序同构。对 $p\otimes q$ 的任何凸分解，各分量的两个边缘都必须是 $p,q$，故各分量相同，产品纯性成立。这是 [B272]“A pure marginal fixes every conditional state”和 [XVIII250.2(i)][G272] 的 min/max 接口，不使用 M、共同尺或一般面效应延拓。
+
+（二）含指定纯点的**整个单位完整 frame**。这里直接使用 [M272]“Positive dual generation and one common complete frame”的 M-only 零互易与补全；为固定所需接口，写出其在本推导中的用法。由 $e_s(t)=0$，$u-e_s$ 确认 $t$，leastness 给 $e_t\le u-e_s$，故 $e_t(s)=0$；交换即得零值双向等价。这仅是零互易。对有限纯族 $e_{s_i}(s_j)=\delta_{ij}$，归纳地用余下 proper 效应确认下一点，得 $\sum_i e_{s_i}\le u$。从指定点开始；若 $h=u-\sum_i e_{s_i}\ne0$，在纯点 $t$ 达到 $m=\max_Kh>0$。$h/m$ 是 proper 确认者，故 $e_t\le h/m$。它在旧点为零，零互易使每个 $e_{s_i}(t)=0$，所以 $m=h(t)=1$，可继续减去 $e_t$。各态由上述 Kronecker 读数线性独立，至多 $\dim X$ 项即终止。由此分别选到
+
+$$
+p_1=p,\quad q_1=q,\qquad
+e_{p_i}^A(p_k)=\delta_{ik},\quad
+e_{q_j}^B(q_\ell)=\delta_{j\ell},\qquad
+\sum_i e_{p_i}^A=u_A,\quad\sum_j e_{q_j}^B=u_B.
+\tag{272.6}
+$$
+
+这些是真正的单位分解菜单，非分别选择的两两区分测试。[N272] 的 Lemmas 3(i),(iv),5 是零关系、最大值减法及联合预算的成熟参照；此处消费的是 [M272] 已给出的 proper-M 版本，不输入该文另外的饱和公理。
+
+置 $c_A=\sum_i p_i,c_B=\sum_jq_j$。证明 $c_X\in\operatorname{int}C_X$，这里的内部取**整个** $X$。若 $0\ne f\in C_X^*$ 且 $f(c_X)=0$，每个 frame 点上 $f(s_i)=0$。在纯 $t$ 取到正最大值 $m=\max_Kf$，则 $e_t\le f/m$，故 $e_t(s_i)=0$。零互易再给 $e_{s_i}(t)=0$，与 $\sum_i e_{s_i}(t)=u(t)=1$ 矛盾。因此每个非零正泛函在 $c_X$ 上严格正；有限维闭生成锥的对偶内部判据给所需内部性。
+
+这一接口也使 $c_A\otimes c_B$ 位于整个最小锥、从而整个 $C_D$ 的内部。确切地，对任何在正产品上非负的双线性泛函 $H$，若 $H(c_A\otimes c_B)=0$，内部性使每个 $x\in C_A,y\in C_B$ 各满足 $x\le s c_A,y\le t c_B$，其中 $s,t\ge0$。于是
+
+$$
+0\le H(x\otimes y)\le stH(c_A\otimes c_B)=0.
+\tag{272.7}
+$$
+
+两局域锥生成各自空间，实产品张成整个 $D$，故 $H=0$。有限维最小锥是紧归一产品底的凸包所生成的闭生成锥；再用对偶内部判据即得断言。这里的“正泛函消去受支配产品，再由张成消去整个载体”的接口也见 [B272]“Faithfulness and the exceptional-inclusive support bridge”“Ternary support and the common frame”及(58)后的内部性论证；这里用普通对偶序，未借用那些 Jordan 模型的自对偶尺或谱支持。
+
+（三）只在所选目标调用一次联合 leastness。由(272.5)—(272.6)，各 $h_{ij}=e_{p_i}^A\otimes e_{q_j}^B$ 是 proper 效应且 $\sum_{ij}h_{ij}=u_D$，故产品家族确为原联合菜单。特别地，$h=h_{11}$ 确认 $p\otimes q$，故
+
+$$
+H=h-E\in C_D^*,\qquad H(p\otimes q)=0.
+\tag{272.8}
+$$
+
+对其余 $(i,j)\ne(1,1)$，$h(p_i\otimes q_j)=0$；$0\le E\le h$ 迫使 $E$ 和 $H$ 都在这些产品点上为零。因此 $H(c_A\otimes c_B)=0$，(272.7)给 $H=0$，得到(272.3)和(272.4)。没有调用任何别的 $e^D_{p_i\otimes q_j}$。若所有纯产品目标各有 least，则逐个重复此推导；此时产品 frame 的 least 效应也确实合为 $u_D$，但本结论不要求联合全部纯点上的 M。
+
+白话图景就是这个正差证明。每一边先从指定准备出发，补齐一套真正共用的完整测试菜单；这些准备加起来，在整个局域正锥中没有遗漏任何正方向。把两边的菜单配对，得到原联合菜单中的产品测试。指定产品准备已有一个最省联合确认测试，它只能比对应产品测试更小。两者之差仍是非负测试：在目标上差为零，在菜单的其他每个产品准备上也为零。完整菜单的产品总准备处于整个联合锥的内部，非负测试若在那里读零，就只能处处为零。于是两个测试对所有原联合输入相同，相关态也在其中；并非先丢弃相关性，再用边缘替代输入。
+
+特别地，产品输入 $x\otimes y$ 的(272.4)为 $e_p^A(x)e_q^B(y)$，相关 $z$ 的读数仍是 $(e_p^A\otimes e_q^B)(z)$，一般不等于 $e_p^A(z_A)e_q^B(z_B)$。例如(272.6)两边各有第二项时，原最小界保证 $z=(p_1\otimes q_1+p_2\otimes q_2)/2$ 合法；前者为 $1/2$，两个边缘读数的乘积为 $1/4$。这是同一个原锥中的相关输入。
+
+上述内部性只针对满足 $\sum_i e_{s_i}=u_X$ 的**整个单位完整 frame**；其态和可以依赖所选 frame。不曾证明任意子面有内禀完整菜单、任意态有正交谱、不同 frame 等长、存在规范共同态和、数值互易或共同尺。任意子面的未付谱／内部性不能代替(272.6)。$\square$
+
+**推论 272.3（原 M3 的精确低份数应用与相容性）。** 完整保留 [XVIII250.1][G272]：任意非平凡有限实 $V$；每个有限 $N\ge0$ 的整个 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个紧底、全部原纯点、完整正对偶、全部 proper 效应及有限单位分解；标量零层、分离全载体的原产品配对、规范重括号、全部正位置置换及其正逆、正单位丢弃；全部有限分块的原 min/max 界包括全部相关输入。仅另假设整个 $K_3$ 的 $\mathsf M_3$，不预付共同尺或任何重建。则对非负整数 $a,b$ 满足 $a+b\le3$，每个 $p\in P_a,q\in P_b$ 有
+
+$$
+e^{a+b}_{p\otimes q}=e_p^a\otimes e_q^b
+\quad\text{于整个 }W_{a+b},\qquad
+T^{a+b}_{p\otimes q}(z)=(e_p^a\otimes e_q^b)(z)
+\quad(z\in K_{a+b}).
+\tag{272.9}
+$$
+
+$T$ 仍是271.1的完整 proper 菜单 infimum。$P_0=\{1\}$，$e_1^0=u_0=1$。尤其 $2|1$ 和 $1|2$ 中的二份块目标可以是其整个原 $K_2$ 的任意相关纯态，并非仅两颗单份纯态的产品。
+
+证明。对 $n=1,2$，任选实际纯旁观 $r\in P_{3-n}$；这类旁观存在，可由归一紧底取极点，或用（一）的产品纯性选纯产品。原 min/max 给实际整面
+
+$$
+\{z\in K_3:z_{3-n}=r\}
+ =\{x\otimes r:x\in K_n\}.
+\tag{272.10}
+$$
+
+对每个 $p\in P_n$，$p\otimes r$ 是原三份纯态。令 $g_p(x)=e^3_{p\otimes r}(x\otimes r)$；由正产品嵌入，$g_p\in\mathcal E_n$ 且 $g_p(p)=1$。对任何原 $f\in\mathcal E_n$ 确认 $p$，指定延拓
+
+$$
+\widetilde f=f\otimes u_{3-n},\qquad
+u_3-\widetilde f=(u_n-f)\otimes u_{3-n}
+\tag{272.11}
+$$
+
+二者均在原 $C_3^*$ 中，故 $\widetilde f$ 是确认 $p\otimes r$ 的三份 proper 效应。M3 给 $e^3_{p\otimes r}\le\widetilde f$，限制得 $g_p\le f$。因此 $g_p=e_p^n$ 是**完整低层菜单**中的 least，唯一性还使它与旁观选择无关。这是271.3（一）已用的具体菜单下降，不是任意面效应延拓。$\mathsf M_1,\mathsf M_2$ 均已支付；对 $1|1,1|2,2|1$ 依次将两个局域 M 与相应联合 M 的产品目标代入272.2，得(272.9)。零层切分由标量单位直接成立。
+
+重括号与位置相容性也在这同一个原空间中成立。对三个单份纯点，
+
+$$
+e^3_{(p\otimes q)\otimes r}
+ =e^2_{p\otimes q}\otimes e_r^1
+ =e_p^1\otimes e_q^1\otimes e_r^1
+ =e_p^1\otimes e^2_{q\otimes r}
+ =e^3_{p\otimes(q\otimes r)}.
+\tag{272.12}
+$$
+
+这是整个 $W_3$ 上的泛函等式，允许任意原相关输入。任意原位置置换 $\sigma$ 是保单位序同构，其逆对偶双射完整 proper 菜单并保持确认及 leastness，故 $e^n_{\sigma p}=e_p^n\circ\sigma^{-1}$，$n\le3$；与(272.9)一致。对块内相关纯 $p\in P_2$，结论只将 $e_p^2$ 作为整个二份块的效应，不再拆成两个边缘效应。
+
+若另给三份的实际 L2，(272.10)的整面序同构使面内生成面与原生成面相同，故实际 L2 同样下降；这是 [XVIII240.1、250.2(i)][G272] 的精确接口，不需要一般面投影。272.9本身不使用 L2。原背景虽为全有限，M 的输入只在三份，故上述推导在重建前仅供应 $a+b\le3$；不据此推广到更高份数的 M。任意原维数的 M 加实际 L2 重建仍未由本推论结算。
+
+文献与新内容的范围随推导固定。[B272]“Least comparisons factor without an extra product axiom”的(5)已经给出同一产品恒等式，但在 $S=M+R$ 及其共同自对偶尺、规范 frame 态和的桥梁下；本节所增加的是局域完整 M 加**所选单一产品目标**联合 leastness 的前提弱化，以及上述原低份数接合，不将恒等式本身申领为新发现。[BW272] 的 Lemma 8 在 Jordan 模型复合中证明迹形式因子化，其 §2.3 的 Jordan frame、Definition 6 的产品测试与联合 Jordan 条件仍属其前件，不能被裸 full-menu 背景代付。[N272] 的 Lemmas 3,5 以 Axioms 1–2 和性质 $(*)$ 工作，Axiom 1 要求最小极端效应有唯一饱和态；其 §3 的 $(**)$ 更在全部非负仿射函数中取 infimum 并要求唯一取一，均不替换本节的 proper 菜单。本节相对于这些具名来源及仓内供应属于 repo-derived composition，不主张全球优先性、严格逻辑独立性或最少公理；亦不从此提供数值互易、一般面效应／投影、CP 或任何物理操作。$\square$
+
+[M272]: ../../../Library/QuantumStates/mullerududec2012selfduality.md "Positive dual generation and one common complete frame：M-only 零互易、含指定纯点的完整单位 frame；不消费后续需数值互易的 signed spectrality。"
+[B272]: ../../../Library/QuantumStates/barnumhilgert2019spectral.md "Ordered carriers and the shared composite contract 至 Least comparisons factor without an extra product axiom；其后具名三处正产品支配／整载体内部性接口。"
+[G272]: QUANTUM_ORIGIN_HALF_TURN_PREPARATION_AND_GLOBAL_EFFECTS_XVIII.md "240.1 的实际 L2、250.1 的完整强全有限背景及250.2(i)的实际纯旁观整面。"
+[BW272]: https://arxiv.org/abs/1202.4513v2 "Barnum–Wilce, Local tomography and the Jordan structure of quantum theory，§2.3、Definitions 6–7、Lemma 8；Jordan 模型与产品测试条件下的迹形式因子化。"
+[N272]: https://arxiv.org/abs/2312.13213v2 "Niestegge, Quantum transition probability，Axioms 1–2、性质(*)、Lemmas 3、5及§3的(**)；保留其唯一饱和与不同 infimum 域的边界。"
+
+## 追加锚（本行以下为增补区）
