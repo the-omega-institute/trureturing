@@ -27,33 +27,29 @@ F13: D5/S3/Entropy/RenyiCombining/BinaryRenyiCombining.hRenyi; statement_id=sha2
 F14: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.G; statement_id=sha256:d1ff0db76bb2dfaa6596159064f6a606f280fc28d1c49bf6c4ee450962658ff9
 F15: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.bias_combining; statement_id=sha256:eef238dadb2dfd4ce9a0d4b15fdf070897e2f3ed022818652c6f1c3a598baef1
 F16: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim; statement_id=sha256:ded331dfdefcb77a0fa5dbe2d45ab5bf7968446ef0ef8bda9ee91f45b526da35
-F17: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim._proof_1; statement_id=sha256:b8acbe8dbf1cf135cac93c7fc0a9918fb20bad7a90f616afc599b478bc417fde
-F18: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim._proof_2; statement_id=sha256:3ce3922ed4ab29de09bd85ddb7d0062c88ca17fc495ca5ce9073e6842986d966
-F19: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h; statement_id=sha256:284a16083fa547c8718507bae385b0542ebd97fc49aabbbf330bb0e75b8e75dc
-F20: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv; statement_id=sha256:fb70e873439c6eceb2ae437f09d7e70aebb758bc79aaf0b20ccc815ee81d6812
-F21: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv._proof_1; statement_id=sha256:9a3774433f4ef15a38067246c134ef0e443af352054d502302e538740e4a35d8
-F22: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv_h; statement_id=sha256:d5aff0666b4aaed97a04309960a4fd6d7fc87f5999865a4ca46ebe22ea955788
-F23: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias; statement_id=sha256:8365f896cd4b1b31312c1744a24b445824ff33f05c5cb0af1346a07da92f84b9
-F24: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias_anti; statement_id=sha256:27e03d50785a2f6756ac100319e342d53e1a32ae6b1364e3177487d523ade93d
-F25: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias_spec; statement_id=sha256:d75dcc8f622f4b47be37a0ff7f14a516aab2a7e9508af6a7888a67adfc56dc55
-F26: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.psi; statement_id=sha256:98d07665dfc5cc8eb46c5fe709180e6272444219bdc3cac606e1fd6976e3f606
-F27: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.psi_strictAntiOn; statement_id=sha256:c5e3d7a4c44bf353afbfb0d9b9cc5a66f0ef66ff79c11a6a15d0bedd8eec1b9d
-F28: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result; statement_id=sha256:39350541096004184d8e4a752e70f2a4e97a5f72d5cd0662ed71a50f035df133
-F29: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.star; statement_id=sha256:502852e1de45ca3e72b52dc5c212135444ff0e0bf03a649ed22feb27a0f66056
-F30: D5/S3/Entropy/Submodularity/MarkovDataProcessing.markov_of_channel; statement_id=sha256:20058f89b2ec5c4f19e9272fe12ebb03b1852225435ce570dfe7c636ecac9d7d
-F31: D5/S3/Entropy/Submodularity/MarkovDataProcessing.mutual_information_le_of_markov; statement_id=sha256:bc1aae6cfaee7a13325116d25cfe364fadf4433f2c1a92c129458a5650783afa
-F32: D5/S3/Entropy/Submodularity/MarkovDataProcessing.yFirstLaw; statement_id=sha256:3a9eaa59d1c60c221065f7c30c06c9405f81f571de2a78ab234f78fb309a30de
-F33: D5/S3/Entropy/Submodularity/StrongSubadditivity.xyProjection; statement_id=sha256:921d1bab0e37c1918409c74ae3fe63677a151848772ae5a8449222dcaf16c945
-F34: D5/S3/Entropy/Submodularity/StrongSubadditivity.xzProjection; statement_id=sha256:ad9cf98a95172d85e0406a94c9c8ed29a0137fa6bae14d85f0116b3a56de8db6
-F35: D5/S3/Quantum/CloningMachine.binaryEntropyBits; statement_id=sha256:688128ab90010a81f7deda9f09bce484b31dd0c87b4be4eba0ee15f631995292
-F36: D5/S3/Quantum/CloningMachine.machineReducedState._proof_2; statement_id=sha256:d5fe3322d971dc1c2b0ef6a814eeeb0cdec6553d0d5422db330c7c1de2f069bb
-F37: D5/S3/Quantum/Information/QubitEntropyContraction.logRatio; statement_id=sha256:bb9ddc35fc615b4ef0c2ef184ee0b38420a2fea66b80854ce40df89141cdfd1e
-F38: D5/S3/Quantum/Information/QubitEntropyContraction.radialEntropy; statement_id=sha256:7a1844d69160c7cdadf8d7d90c10352564fffc2c16ba40e815a355ebc8bc8ebd
-F39: D5/S3/Quantum/Information/QubitEntropyContraction.radial_concave; statement_id=sha256:8026c9153902c93bfa1487395d7f93f3268e56ab78a89faa6aa82ebcb253cff0
-F40: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv; statement_id=sha256:e8867f89ff5d6dbfe903566df6ee22ac61ad20b965100eb78500fcd8a1d28307
-F41: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv2; statement_id=sha256:0d6c93f85b7e4c54a6cc869eee6cc53e301d2b85b55ae58405f8953d16d69a2a
+F17: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h; statement_id=sha256:284a16083fa547c8718507bae385b0542ebd97fc49aabbbf330bb0e75b8e75dc
+F18: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv; statement_id=sha256:fb70e873439c6eceb2ae437f09d7e70aebb758bc79aaf0b20ccc815ee81d6812
+F19: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv_h; statement_id=sha256:d5aff0666b4aaed97a04309960a4fd6d7fc87f5999865a4ca46ebe22ea955788
+F20: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias; statement_id=sha256:8365f896cd4b1b31312c1744a24b445824ff33f05c5cb0af1346a07da92f84b9
+F21: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias_anti; statement_id=sha256:27e03d50785a2f6756ac100319e342d53e1a32ae6b1364e3177487d523ade93d
+F22: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias_spec; statement_id=sha256:d75dcc8f622f4b47be37a0ff7f14a516aab2a7e9508af6a7888a67adfc56dc55
+F23: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.psi; statement_id=sha256:98d07665dfc5cc8eb46c5fe709180e6272444219bdc3cac606e1fd6976e3f606
+F24: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.psi_strictAntiOn; statement_id=sha256:c5e3d7a4c44bf353afbfb0d9b9cc5a66f0ef66ff79c11a6a15d0bedd8eec1b9d
+F25: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result; statement_id=sha256:39350541096004184d8e4a752e70f2a4e97a5f72d5cd0662ed71a50f035df133
+F26: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.star; statement_id=sha256:502852e1de45ca3e72b52dc5c212135444ff0e0bf03a649ed22feb27a0f66056
+F27: D5/S3/Entropy/Submodularity/MarkovDataProcessing.markov_of_channel; statement_id=sha256:20058f89b2ec5c4f19e9272fe12ebb03b1852225435ce570dfe7c636ecac9d7d
+F28: D5/S3/Entropy/Submodularity/MarkovDataProcessing.mutual_information_le_of_markov; statement_id=sha256:bc1aae6cfaee7a13325116d25cfe364fadf4433f2c1a92c129458a5650783afa
+F29: D5/S3/Entropy/Submodularity/MarkovDataProcessing.yFirstLaw; statement_id=sha256:3a9eaa59d1c60c221065f7c30c06c9405f81f571de2a78ab234f78fb309a30de
+F30: D5/S3/Entropy/Submodularity/StrongSubadditivity.xyProjection; statement_id=sha256:921d1bab0e37c1918409c74ae3fe63677a151848772ae5a8449222dcaf16c945
+F31: D5/S3/Entropy/Submodularity/StrongSubadditivity.xzProjection; statement_id=sha256:ad9cf98a95172d85e0406a94c9c8ed29a0137fa6bae14d85f0116b3a56de8db6
+F32: D5/S3/Quantum/CloningMachine.binaryEntropyBits; statement_id=sha256:688128ab90010a81f7deda9f09bce484b31dd0c87b4be4eba0ee15f631995292
+F33: D5/S3/Quantum/Information/QubitEntropyContraction.logRatio; statement_id=sha256:bb9ddc35fc615b4ef0c2ef184ee0b38420a2fea66b80854ce40df89141cdfd1e
+F34: D5/S3/Quantum/Information/QubitEntropyContraction.radialEntropy; statement_id=sha256:7a1844d69160c7cdadf8d7d90c10352564fffc2c16ba40e815a355ebc8bc8ebd
+F35: D5/S3/Quantum/Information/QubitEntropyContraction.radial_concave; statement_id=sha256:8026c9153902c93bfa1487395d7f93f3268e56ab78a89faa6aa82ebcb253cff0
+F36: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv; statement_id=sha256:e8867f89ff5d6dbfe903566df6ee22ac61ad20b965100eb78500fcd8a1d28307
+F37: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv2; statement_id=sha256:0d6c93f85b7e4c54a6cc869eee6cc53e301d2b85b55ae58405f8953d16d69a2a
 Declarations (frozen inputs above are followed through same-delivery helpers):
-hbInv: proof_shape: bind-only; escape_witness: none; dependencies: F35; consumers: bscOptimal,bscOptimal_of_upper_bound,candidate_bias_interior,candidate_rate,claim,full_budget_bscOptimal,full_budget_upper,hbInv_zero,hb_inv_spec,interior_bscOptimal,result,zero_budget_bscOptimal
+hbInv: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: bscOptimal,bscOptimal_of_upper_bound,candidate_bias_interior,candidate_rate,claim,full_budget_bscOptimal,full_budget_upper,hbInv_zero,hb_inv_spec,interior_bscOptimal,result,zero_budget_bscOptimal
 dsbs: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,outputJoint,output_joint_nonneg,output_joint_posterior
 bsc: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bscOptimal,bscOptimal_of_upper_bound,bsc_apply_formula,candidate_rate,full_budget_bscOptimal,full_budget_upper,interior_bscOptimal,objective_bsc_productValue,objective_le_noiseless,objective_noiseless_formula,output_mass_bsc,posterior_bias_bsc,rate_bsc,zero_budget_bscOptimal
 mutualInformationBits: proof_shape: bind-only; escape_witness: none; dependencies: F6; consumers: objective,objective_product_formula,objective_symm,objective_zero_of_bias_zero,rate,rate_bsc,rate_posterior_formula
@@ -62,9 +58,8 @@ outputJoint: proof_shape: bind-only; escape_witness: none; dependencies: none; c
 objective: proof_shape: bind-only; escape_witness: none; dependencies: F6; consumers: achievable,bscOptimal,bscOptimal_of_upper_bound,full_budget_bscOptimal,full_budget_upper,interior_bscOptimal,objective_bsc_productValue,objective_le_noiseless,objective_noiseless_formula,objective_productValue,objective_product_formula,objective_symm,objective_zero_of_bias_zero,zero_budget_bscOptimal
 achievable: proof_shape: bind-only; escape_witness: none; dependencies: F6; consumers: R,bscOptimal_of_upper_bound
 R: proof_shape: bind-only; escape_witness: none; dependencies: F6; consumers: bscOptimal,bscOptimal_of_upper_bound
-bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F6,F35; consumers: bscOptimal_of_upper_bound,claim,full_budget_bscOptimal,interior_bscOptimal,result,zero_budget_bscOptimal
-claim: proof_shape: bind-only; escape_witness: none; dependencies: F35,F6; consumers: result
-outputMass: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal,mass_mul_bias,objective_bsc_productValue,objective_le_noiseless,objective_noiseless_formula,objective_productValue,objective_product_formula,objective_symm,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_posterior,output_joint_row_sum,output_mass_bsc,output_mass_probability,posterior_bias_bsc,posterior_bias_centered,rate_phi,rate_posterior_formula,zero_budget_bscOptimal
+bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F6,F32; consumers: bscOptimal_of_upper_bound,claim,full_budget_bscOptimal,interior_bscOptimal,result,zero_budget_bscOptimal
+claim: proof_shape: bind-only; escape_witness: none; dependencies: F32,F6; consumers: result
 posteriorBias: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal,mass_mul_bias,objective_bsc_productValue,objective_noiseless_formula,objective_productValue,objective_product_formula,objective_symm,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_posterior,output_joint_row_sum,posterior_bias_bsc,posterior_bias_centered,posterior_bias_mem,rate_phi,rate_posterior_formula,zero_budget_bscOptimal
 kernel_real_sum: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,output_mass_probability,posterior_bias_centered,rate_posterior_formula
 output_mass_probability: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal,objective_le_noiseless,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_row_sum,rate_posterior_formula
@@ -76,38 +71,38 @@ output_joint_row_sum: proof_shape: bind-only; escape_witness: none; dependencies
 output_joint_col_sum: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,objective_product_formula
 objective_product_formula: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: objective_productValue
 rate_posterior_formula: proof_shape: bind-only; escape_witness: none; dependencies: F2,F11,F6,F10,F8,F5,F4,F9,F12; consumers: rate_phi
-hb_binEntropy: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36; consumers: candidate_bias_interior,hbInv_zero,hb_inv_spec,phi_crossover
-hb_inv_spec: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36; consumers: candidate_bias_interior,candidate_rate,full_budget_upper,hbInv_zero,interior_bscOptimal,result
+hb_binEntropy: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: candidate_bias_interior,hbInv_zero,hb_inv_spec,phi_crossover
+hb_inv_spec: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: candidate_bias_interior,candidate_rate,full_budget_upper,hbInv_zero,interior_bscOptimal,result
 bsc_apply_formula: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,output_mass_bsc,posterior_bias_bsc,rate_bsc
-rate_bsc: proof_shape: bind-only; escape_witness: none; dependencies: F35,F6,F3,F1,F36; consumers: candidate_rate
-candidate_rate: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36,F6,F3,F1; consumers: bscOptimal_of_upper_bound,zero_budget_bscOptimal
-bscOptimal_of_upper_bound: proof_shape: bind-only; escape_witness: none; dependencies: F6,F35,F36,F3,F1; consumers: full_budget_bscOptimal,interior_bscOptimal,zero_budget_bscOptimal
+rate_bsc: proof_shape: bind-only; escape_witness: none; dependencies: F32,F6,F3,F1; consumers: candidate_rate
+candidate_rate: proof_shape: bind-only; escape_witness: none; dependencies: F32,F6,F3,F1; consumers: bscOptimal_of_upper_bound,zero_budget_bscOptimal
+bscOptimal_of_upper_bound: proof_shape: bind-only; escape_witness: none; dependencies: F6,F32,F3,F1; consumers: full_budget_bscOptimal,interior_bscOptimal,zero_budget_bscOptimal
 phi_bias: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: phi_crossover,phi_f,rate_phi
 rate_phi: proof_shape: bind-only; escape_witness: none; dependencies: F2,F11,F6,F10,F8,F5,F4,F9,F12; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal
-phi_crossover: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36; consumers: full_budget_upper,interior_bscOptimal
+phi_crossover: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: full_budget_upper,interior_bscOptimal
 output_mass_bsc: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: full_budget_upper,objective_bsc_productValue,objective_noiseless_formula,posterior_bias_bsc
 posterior_bias_bsc: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: full_budget_upper,objective_bsc_productValue,objective_noiseless_formula
 objective_productValue: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: interior_bscOptimal,objective_bsc_productValue,objective_noiseless_formula
 objective_bsc_productValue: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: interior_bscOptimal
-candidate_bias_interior: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36; consumers: interior_bscOptimal
-interior_bscOptimal: proof_shape: content; escape_witness: none; dependencies: F35,F6,F3,F1,F37,F38,F40,F39,F41,F2,F11,F10,F8,F5,F4,F9,F12,F36; consumers: result
-bias_zero_of_rate_nonpos: proof_shape: bind-only; escape_witness: none; dependencies: F39,F2,F11,F6,F10,F8,F5,F4,F9,F12; consumers: zero_budget_bscOptimal
+candidate_bias_interior: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: interior_bscOptimal
+interior_bscOptimal: proof_shape: content; escape_witness: none; dependencies: F32,F6,F3,F1,F33,F34,F36,F35,F37,F2,F11,F10,F8,F5,F4,F9,F12; consumers: result
+bias_zero_of_rate_nonpos: proof_shape: bind-only; escape_witness: none; dependencies: F35,F2,F11,F6,F10,F8,F5,F4,F9,F12; consumers: zero_budget_bscOptimal
 objective_zero_of_bias_zero: proof_shape: bind-only; escape_witness: none; dependencies: F6,F7; consumers: zero_budget_bscOptimal
-zero_budget_bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36,F6,F3,F1,F39,F2,F11,F10,F8,F5,F4,F9,F12,F7; consumers: result
-Boundary.combining_monotone: proof_shape: bind-only; escape_witness: none; dependencies: F14,F23,F26,F25,F24,F15,F27; consumers: Boundary.scalar_mgl
-Boundary.combining_bias: proof_shape: bind-only; escape_witness: none; dependencies: F14,F26,F19,F29,F20,F22; consumers: Boundary.scalar_mgl
-Boundary.phi_psi: proof_shape: bind-only; escape_witness: none; dependencies: F26,F21,F13; consumers: Boundary.scalar_mgl
-Boundary.scalar_mgl: proof_shape: bind-only; escape_witness: none; dependencies: F26,F21,F13,F17,F18,F14,F16,F28,F19,F29,F20,F22,F23,F25,F24,F15,F27; consumers: full_budget_upper
+zero_budget_bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F32,F6,F3,F1,F35,F2,F11,F10,F8,F5,F4,F9,F12,F7; consumers: result
+Boundary.combining_monotone: proof_shape: bind-only; escape_witness: none; dependencies: F14,F20,F23,F22,F21,F15,F24; consumers: Boundary.scalar_mgl
+Boundary.combining_bias: proof_shape: bind-only; escape_witness: none; dependencies: F14,F23,F17,F26,F18,F19; consumers: Boundary.scalar_mgl
+Boundary.phi_psi: proof_shape: bind-only; escape_witness: none; dependencies: F23,F13; consumers: Boundary.scalar_mgl
+Boundary.scalar_mgl: proof_shape: bind-only; escape_witness: none; dependencies: F23,F13,F14,F16,F25,F17,F26,F18,F19,F20,F22,F21,F15,F24; consumers: full_budget_upper
 phi_f: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_noiseless_formula
 output_joint_nonneg: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless
 objective_symm: proof_shape: bind-only; escape_witness: none; dependencies: F6,F8; consumers: full_budget_bscOptimal
 noiseless: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: full_budget_upper,hbInv_zero,objective_le_noiseless,objective_noiseless_formula
-objective_le_noiseless: proof_shape: bind-only; escape_witness: none; dependencies: F33,F34,F1,F32,F30,F6,F31,F8; consumers: full_budget_upper
+objective_le_noiseless: proof_shape: bind-only; escape_witness: none; dependencies: F30,F31,F1,F29,F27,F6,F28,F8; consumers: full_budget_upper
 objective_noiseless_formula: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: full_budget_upper
-hbInv_zero: proof_shape: bind-only; escape_witness: none; dependencies: F35,F36; consumers: full_budget_upper
-full_budget_upper: proof_shape: bind-only; escape_witness: none; dependencies: F35,F33,F34,F1,F32,F30,F6,F31,F8,F36,F3,F26,F21,F13,F17,F18,F14,F16,F28,F19,F29,F20,F22,F23,F25,F24,F15,F27,F2,F11,F10,F5,F4,F9,F12; consumers: full_budget_bscOptimal
-full_budget_bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F6,F8,F35,F33,F34,F1,F32,F30,F31,F36,F3,F26,F21,F13,F17,F18,F14,F16,F28,F19,F29,F20,F22,F23,F25,F24,F15,F27,F2,F11,F10,F5,F4,F9,F12; consumers: result
-result: proof_shape: content; escape_witness: none; dependencies: F35,F6,F3,F1,F37,F38,F40,F39,F41,F2,F11,F10,F8,F5,F4,F9,F12,F36,F33,F34,F32,F30,F31,F26,F21,F13,F17,F18,F14,F16,F28,F19,F29,F20,F22,F23,F25,F24,F15,F27,F7; consumers: terminal result
+hbInv_zero: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: full_budget_upper
+full_budget_upper: proof_shape: bind-only; escape_witness: none; dependencies: F32,F30,F31,F1,F29,F27,F6,F28,F8,F3,F23,F13,F14,F16,F25,F17,F26,F18,F19,F20,F22,F21,F15,F24,F2,F11,F10,F5,F4,F9,F12; consumers: full_budget_bscOptimal
+full_budget_bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F6,F8,F32,F30,F31,F1,F29,F27,F28,F3,F23,F13,F14,F16,F25,F17,F26,F18,F19,F20,F22,F21,F15,F24,F2,F11,F10,F5,F4,F9,F12; consumers: result
+result: proof_shape: content; escape_witness: none; dependencies: F32,F6,F3,F1,F33,F34,F36,F35,F37,F2,F11,F10,F8,F5,F4,F9,F12,F30,F31,F29,F27,F28,F23,F13,F14,F16,F25,F17,F26,F18,F19,F20,F22,F21,F15,F24,F7; consumers: terminal result
 Definitions specify objects, not proof claims; their bind-only label claims no new theorem.
 The settling result uses the posterior moment estimate and includes all budget endpoints.
 -/
@@ -187,9 +182,6 @@ end D5.S3.Entropy.DoubleSidedBottleneckBSC
 
 namespace D5.S3.Entropy.DoubleSidedBottleneckBSC
 
-private noncomputable def outputMass {n : ℕ} (K : (Bool → PMF (Fin n))) (u : Fin n) : ℝ :=
-  ((K false u).toReal + (K true u).toReal) / 2
-
 private noncomputable def posteriorBias {n : ℕ} (K : (Bool → PMF (Fin n))) (u : Fin n) : ℝ :=
   ((K false u).toReal - (K true u).toReal) /
     ((K false u).toReal + (K true u).toReal)
@@ -203,10 +195,10 @@ private theorem kernel_real_sum {n : ℕ} (K : (Bool → PMF (Fin n))) (x : Bool
   simpa using h'
 
 private theorem output_mass_probability {n : ℕ} (K : (Bool → PMF (Fin n))) :
-    (∀ u, 0 ≤ outputMass K u) ∧ ∑ u, outputMass K u = 1 := by
+    (∀ u, 0 ≤ (fun w => ((K false w).toReal + (K true w).toReal) / 2) u) ∧ ∑ u, (fun w => ((K false w).toReal + (K true w).toReal) / 2) u = 1 := by
   constructor
   · intro u; exact div_nonneg (add_nonneg ENNReal.toReal_nonneg ENNReal.toReal_nonneg) (by norm_num)
-  · simp only [outputMass, ← Finset.sum_div, Finset.sum_add_distrib,
+  · simp only [← Finset.sum_div, Finset.sum_add_distrib,
       kernel_real_sum]
     norm_num
 
@@ -223,46 +215,46 @@ private theorem posterior_bias_mem {n : ℕ} (K : (Bool → PMF (Fin n))) (u : F
     · exact (div_le_iff₀ hpos).mpr (by linarith)
 
 private theorem mass_mul_bias {n : ℕ} (K : (Bool → PMF (Fin n))) (u : Fin n) :
-    outputMass K u * posteriorBias K u =
+    (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * posteriorBias K u =
       ((K false u).toReal - (K true u).toReal) / 2 := by
   have ha : 0 ≤ (K false u).toReal := ENNReal.toReal_nonneg
   have hbHyp : 0 ≤ (K true u).toReal := ENNReal.toReal_nonneg
   by_cases hzero : (K false u).toReal + (K true u).toReal = 0
   · have ha0 : (K false u).toReal = 0 := by linarith
     have hb0 : (K true u).toReal = 0 := by exact (eq_zero_iff_eq_zero_of_add_eq_zero hzero).mp ha0
-    simp [outputMass, posteriorBias, ha0, hb0]
-  · dsimp [outputMass, posteriorBias]
+    simp [posteriorBias, ha0, hb0]
+  · dsimp [posteriorBias]
     field_simp [hzero]
 
 private theorem posterior_bias_centered {n : ℕ} (K : (Bool → PMF (Fin n))) :
-    ∑ u, outputMass K u * posteriorBias K u = 0 := by
+    ∑ u, (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * posteriorBias K u = 0 := by
   simp only [mass_mul_bias, ← Finset.sum_div, Finset.sum_sub_distrib, kernel_real_sum]
   norm_num
 
 private theorem output_joint_posterior {n m : ℕ} (p : ℝ)
     (K : (Bool → PMF (Fin n))) (L : (Bool → PMF (Fin m))) (u : Fin n) (v : Fin m) :
-    outputJoint p K L (u, v) = outputMass K u * outputMass L v *
+    outputJoint p K L (u, v) = (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * (fun w => ((L false w).toReal + (L true w).toReal) / 2) v *
       (1 + (1 - 2 * p) * posteriorBias K u * posteriorBias L v) := by
   have hK := mass_mul_bias K u
   have hL := mass_mul_bias L v
   calc
-    outputJoint p K L (u, v) = outputMass K u * outputMass L v +
+    outputJoint p K L (u, v) = (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * (fun w => ((L false w).toReal + (L true w).toReal) / 2) v +
         (1 - 2 * p) *
           (((K false u).toReal - (K true u).toReal) / 2) *
           (((L false v).toReal - (L true v).toReal) / 2) := by
-      simp [outputJoint, dsbs, outputMass]
+      simp [outputJoint, dsbs]
       ring
     _ = _ := by rw [← hK, ← hL]; ring
 
 private theorem output_joint_row_sum {n m : ℕ} (p : ℝ)
     (K : (Bool → PMF (Fin n))) (L : (Bool → PMF (Fin m))) (u : Fin n) :
-    ∑ v, outputJoint p K L (u, v) = outputMass K u := by
+    ∑ v, outputJoint p K L (u, v) = (fun w => ((K false w).toReal + (K true w).toReal) / 2) u := by
   simp_rw [output_joint_posterior]
-  have hf (v : Fin m) : outputMass K u * outputMass L v *
+  have hf (v : Fin m) : (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * (fun w => ((L false w).toReal + (L true w).toReal) / 2) v *
       (1 + (1 - 2 * p) * posteriorBias K u * posteriorBias L v) =
-      outputMass K u * outputMass L v +
-      ((1 - 2 * p) * outputMass K u * posteriorBias K u) *
-        (outputMass L v * posteriorBias L v) := by ring
+      (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * (fun w => ((L false w).toReal + (L true w).toReal) / 2) v +
+      ((1 - 2 * p) * (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * posteriorBias K u) *
+        ((fun w => ((L false w).toReal + (L true w).toReal) / 2) v * posteriorBias L v) := by ring
   simp_rw [hf]
   rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum,
     (output_mass_probability L).2, posterior_bias_centered L]
@@ -270,13 +262,13 @@ private theorem output_joint_row_sum {n m : ℕ} (p : ℝ)
 
 private theorem output_joint_col_sum {n m : ℕ} (p : ℝ)
     (K : (Bool → PMF (Fin n))) (L : (Bool → PMF (Fin m))) (v : Fin m) :
-    ∑ u, outputJoint p K L (u, v) = outputMass L v := by
+    ∑ u, outputJoint p K L (u, v) = (fun w => ((L false w).toReal + (L true w).toReal) / 2) v := by
   simp_rw [output_joint_posterior]
-  have hf (u : Fin n) : outputMass K u * outputMass L v *
+  have hf (u : Fin n) : (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * (fun w => ((L false w).toReal + (L true w).toReal) / 2) v *
       (1 + (1 - 2 * p) * posteriorBias K u * posteriorBias L v) =
-      outputMass L v * outputMass K u +
-      ((1 - 2 * p) * outputMass L v * posteriorBias L v) *
-        (outputMass K u * posteriorBias K u) := by ring
+      (fun w => ((L false w).toReal + (L true w).toReal) / 2) v * (fun w => ((K false w).toReal + (K true w).toReal) / 2) u +
+      ((1 - 2 * p) * (fun w => ((L false w).toReal + (L true w).toReal) / 2) v * posteriorBias L v) *
+        ((fun w => ((K false w).toReal + (K true w).toReal) / 2) u * posteriorBias K u) := by ring
   simp_rw [hf]
   rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum,
     (output_mass_probability K).2, posterior_bias_centered K]
@@ -285,7 +277,7 @@ private theorem output_joint_col_sum {n m : ℕ} (p : ℝ)
 private theorem objective_product_formula {n m : ℕ} (p : ℝ)
     (K : (Bool → PMF (Fin n))) (L : (Bool → PMF (Fin m))) :
     objective p K L =
-      (∑ u, ∑ v, outputMass K u * outputMass L v *
+      (∑ u, ∑ v, (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * (fun w => ((L false w).toReal + (L true w).toReal) / 2) v *
         (1 + (1 - 2 * p) * posteriorBias K u * posteriorBias L v) *
         Real.log (1 + (1 - 2 * p) * posteriorBias K u * posteriorBias L v)) / Real.log 2 := by
   unfold objective mutualInformationBits
@@ -299,7 +291,7 @@ private theorem objective_product_formula {n m : ℕ} (p : ℝ)
   apply Finset.sum_congr rfl
   intro v _
   rw [output_joint_posterior]
-  by_cases h : outputMass K u * outputMass L v = 0
+  by_cases h : (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * (fun w => ((L false w).toReal + (L true w).toReal) / 2) v = 0
   · simp [h]
   · rw [mul_div_cancel_left₀ _ h]
 
@@ -312,12 +304,12 @@ open D5.S3.Entropy.Observation.ExpectedPosteriorEntropyReduction
 open D5.S3.Entropy.MutualInformationSymm
 
 private theorem rate_posterior_formula {n : ℕ} (K : (Bool → PMF (Fin n))) :
-    rate K = (∑ u, outputMass K u *
+    rate K = (∑ u, (fun w => ((K false w).toReal + (K true w).toReal) / 2) u *
       (Real.log 2 - Real.binEntropy ((1 + posteriorBias K u) / 2))) / Real.log 2 := by
   let c : Bool → Fin n → ℝ := fun x u => (K x u).toReal
   let prior : Bool → ℝ := fun _ => 1 / 2
-  have hmass (u : Fin n) : channelOutput c prior u = outputMass K u := by
-    simp [channelOutput, prior, c, outputMass]
+  have hmass (u : Fin n) : channelOutput c prior u = (fun w => ((K false w).toReal + (K true w).toReal) / 2) u := by
+    simp [channelOutput, prior, c]
     ring
   have hgain : informationGain c prior =
       D5.S3.Entropy.MutualInformation.mutualInformation
@@ -335,20 +327,20 @@ private theorem rate_posterior_formula {n : ℕ} (K : (Bool → PMF (Fin n))) :
         norm_num [shannonEntropy, prior, Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
         <;> ring
       _ = _ := Real.binEntropy_two_inv
-  have hpoint (u : Fin n) : outputMass K u * shannonEntropy (posterior c prior u) =
-      outputMass K u * Real.binEntropy ((1 + posteriorBias K u) / 2) := by
-    by_cases hz : outputMass K u = 0
+  have hpoint (u : Fin n) : (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * shannonEntropy (posterior c prior u) =
+      (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * Real.binEntropy ((1 + posteriorBias K u) / 2) := by
+    by_cases hz : (fun w => ((K false w).toReal + (K true w).toReal) / 2) u = 0
     · simp [hz]
     · have hd : (K false u).toReal + (K true u).toReal ≠ 0 := by
         intro h
         apply hz
-        simp [outputMass, h]
+        simp [h]
       have hfalse : posterior c prior u false = (1 + posteriorBias K u) / 2 := by
-        simp only [posterior, hmass, c, prior, outputMass, posteriorBias]
+        simp only [posterior, hmass, c, prior, posteriorBias]
         field_simp [hd]
         <;> ring
       have htrue : posterior c prior u true = 1 - (1 + posteriorBias K u) / 2 := by
-        simp only [posterior, hmass, c, prior, outputMass, posteriorBias]
+        simp only [posterior, hmass, c, prior, posteriorBias]
         field_simp [hd]
         <;> ring
       simp only [shannonEntropy, Fintype.sum_bool, hfalse, htrue,
@@ -469,7 +461,7 @@ private theorem phi_bias (s : ℝ) :
       show (1 + -s) / 2 = 1 - (1 + s) / 2 by ring, Real.binEntropy_one_sub]
 
 private theorem rate_phi {n : ℕ} (K : (Bool → PMF (Fin n))) :
-    rate K = dotProduct (outputMass K) (fun u => phi (posteriorBias K u ^ 2)) / Real.log 2 := by
+    rate K = dotProduct ((fun w => ((K false w).toReal + (K true w).toReal) / 2)) (fun u => phi (posteriorBias K u ^ 2)) / Real.log 2 := by
   simp only [rate_posterior_formula, dotProduct, phi_bias]
 
 private theorem phi_crossover (a : ℝ) :
@@ -478,8 +470,8 @@ private theorem phi_crossover (a : ℝ) :
     Real.binEntropy_one_sub, hb_binEntropy]
   field_simp [(Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne']
 
-private theorem output_mass_bsc (a : (Set.Icc (0 : ℝ) (1 / 2 : ℝ))) (u : Fin 2) : outputMass (bsc a) u = 1 / 2 := by
-  fin_cases u <;> norm_num [outputMass, bsc_apply_formula] <;> ring
+private theorem output_mass_bsc (a : (Set.Icc (0 : ℝ) (1 / 2 : ℝ))) (u : Fin 2) : (fun w => (((bsc a) false w).toReal + ((bsc a) true w).toReal) / 2) u = 1 / 2 := by
+  fin_cases u <;> norm_num [bsc_apply_formula] <;> ring
 
 private theorem posterior_bias_bsc (a : (Set.Icc (0 : ℝ) (1 / 2 : ℝ))) (u : Fin 2) :
     posteriorBias (bsc a) u = if u = 0 then 1 - 2 * a.val else -(1 - 2 * a.val) := by
@@ -489,7 +481,7 @@ private theorem posterior_bias_bsc (a : (Set.Icc (0 : ℝ) (1 / 2 : ℝ))) (u : 
 
 private theorem objective_productValue {n m : ℕ} (p : ℝ) (K : (Bool → PMF (Fin n))) (L : (Bool → PMF (Fin m))) :
     objective p K L =
-      productValue (1 - 2 * p) (outputMass K) (posteriorBias K) (outputMass L) (posteriorBias L) /
+      productValue (1 - 2 * p) ((fun w => ((K false w).toReal + (K true w).toReal) / 2)) (posteriorBias K) ((fun w => ((L false w).toReal + (L true w).toReal) / 2)) (posteriorBias L) /
         Real.log 2 := by
   rw [objective_product_formula]
   congr 1
@@ -582,23 +574,23 @@ private theorem interior_bscOptimal {Cu Cv : ℝ}
     abs_le.mpr (posterior_bias_mem K u)
   have ht (v : Fin m) : |posteriorBias L v| ≤ 1 :=
     abs_le.mpr (posterior_bias_mem L v)
-  have hsc : dotProduct (outputMass K) (posteriorBias K) = 0 := posterior_bias_centered K
-  have htc : dotProduct (outputMass L) (posteriorBias L) = 0 := posterior_bias_centered L
-  have hmb : dotProduct (outputMass K) (fun u => phi (posteriorBias K u ^ 2)) ≤ phi (a ^ 2) := by
+  have hsc : dotProduct ((fun w => ((K false w).toReal + (K true w).toReal) / 2)) (posteriorBias K) = 0 := posterior_bias_centered K
+  have htc : dotProduct ((fun w => ((L false w).toReal + (L true w).toReal) / 2)) (posteriorBias L) = 0 := posterior_bias_centered L
+  have hmb : dotProduct ((fun w => ((K false w).toReal + (K true w).toReal) / 2)) (fun u => phi (posteriorBias K u ^ 2)) ≤ phi (a ^ 2) := by
     rw [rate_phi] at hK
     rw [hφa]
     exact (div_le_iff₀ hlog).mp hK
-  have hnb : dotProduct (outputMass L) (fun v => phi (posteriorBias L v ^ 2)) ≤ phi (b ^ 2) := by
+  have hnb : dotProduct ((fun w => ((L false w).toReal + (L true w).toReal) / 2)) (fun v => phi (posteriorBias L v ^ 2)) ≤ phi (b ^ 2) := by
     rw [rate_phi] at hL
     rw [hφb]
     exact (div_le_iff₀ hlog).mp hL
-  have hpost := posterior_local_optimality (outputMass K) (posteriorBias K)
-    (outputMass L) (posteriorBias L) (output_mass_probability K).1 (output_mass_probability K).2
+  have hpost := posterior_local_optimality ((fun w => ((K false w).toReal + (K true w).toReal) / 2)) (posteriorBias K)
+    ((fun w => ((L false w).toReal + (L true w).toReal) / 2)) (posteriorBias L) (output_mass_probability K).1 (output_mass_probability K).2
     (output_mass_probability L).1 (output_mass_probability L).2 hs ht hsc htc
     a b ha hbHyp hmb hnb hδ0 hδ1 hsmall
   calc
     objective p K L =
-        productValue (1 - 2 * p) (outputMass K) (posteriorBias K) (outputMass L) (posteriorBias L) /
+        productValue (1 - 2 * p) ((fun w => ((K false w).toReal + (K true w).toReal) / 2)) (posteriorBias K) ((fun w => ((L false w).toReal + (L true w).toReal) / 2)) (posteriorBias L) /
           Real.log 2 := objective_productValue p K L
     _ ≤ productValue (1 - 2 * p) half (signed a) half (signed b) / Real.log 2 :=
       div_le_div_of_nonneg_right hpost hlog.le
@@ -613,8 +605,8 @@ open Moments Curvature Series
 open scoped BigOperators
 
 private theorem bias_zero_of_rate_nonpos {n : ℕ} (K : (Bool → PMF (Fin n))) (hK : rate K ≤ 0) :
-    ∀ u, outputMass K u * posteriorBias K u = 0 := by
-  let p := outputMass K
+    ∀ u, (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * posteriorBias K u = 0 := by
+  let p := (fun w => ((K false w).toReal + (K true w).toReal) / 2)
   let s := posteriorBias K
   have hp0 := (output_mass_probability K).1
   have hp1 := (output_mass_probability K).2
@@ -634,7 +626,8 @@ private theorem bias_zero_of_rate_nonpos {n : ℕ} (K : (Bool → PMF (Fin n))) 
     (fun u _ => hp0 u) hp1 (fun u _ => hx u)
   simp only [smul_eq_mul] at hj
   change phi (dotProduct p (fun u => s u ^ 2)) ≤ dotProduct p (fun u => phi (s u ^ 2)) at hj
-  have hphi0 : phi (0 : ℝ) = 0 := by norm_num [phi, Real.binEntropy] <;> ring
+  have hphi0 : phi (0 : ℝ) = 0 := by
+    simp only [phi, Real.sqrt_zero, add_zero, one_div, Real.binEntropy_two_inv, sub_self]
   have hv0 : dotProduct p (fun u => s u ^ 2) = 0 := by
     apply le_antisymm _ hv.1
     apply (phi_strictMono.le_iff_le hv (by norm_num)).mp
@@ -651,19 +644,19 @@ private theorem bias_zero_of_rate_nonpos {n : ℕ} (K : (Bool → PMF (Fin n))) 
     simp [h]
 
 private theorem objective_zero_of_bias_zero {n m : ℕ} (p : ℝ) (K : (Bool → PMF (Fin n))) (L : (Bool → PMF (Fin m)))
-    (hzero : (∀ u, outputMass K u * posteriorBias K u = 0) ∨
-      (∀ v, outputMass L v * posteriorBias L v = 0)) : objective p K L = 0 := by
-  have hprod : outputJoint p K L = fun uv => outputMass K uv.1 * outputMass L uv.2 := by
+    (hzero : (∀ u, (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * posteriorBias K u = 0) ∨
+      (∀ v, (fun w => ((L false w).toReal + (L true w).toReal) / 2) v * posteriorBias L v = 0)) : objective p K L = 0 := by
+  have hprod : outputJoint p K L = fun uv => (fun w => ((K false w).toReal + (K true w).toReal) / 2) uv.1 * (fun w => ((L false w).toReal + (L true w).toReal) / 2) uv.2 := by
     funext uv
     rcases uv with ⟨u, v⟩
     rw [output_joint_posterior]
     calc
-      _ = outputMass K u * outputMass L v + (1 - 2 * p) *
-          (outputMass K u * posteriorBias K u) * (outputMass L v * posteriorBias L v) := by ring
+      _ = (fun w => ((K false w).toReal + (K true w).toReal) / 2) u * (fun w => ((L false w).toReal + (L true w).toReal) / 2) v + (1 - 2 * p) *
+          ((fun w => ((K false w).toReal + (K true w).toReal) / 2) u * posteriorBias K u) * ((fun w => ((L false w).toReal + (L true w).toReal) / 2) v * posteriorBias L v) := by ring
       _ = _ := by rcases hzero with h | h <;> simp [h]
   unfold objective mutualInformationBits
   rw [hprod, D5.S3.Entropy.MutualInformationProduct.mutual_information_product_eq_zero
-    (outputMass K) (outputMass L) (output_mass_probability K) (output_mass_probability L)]
+    ((fun w => ((K false w).toReal + (K true w).toReal) / 2)) ((fun w => ((L false w).toReal + (L true w).toReal) / 2)) (output_mass_probability K) (output_mass_probability L)]
   exact zero_div _
 
 private theorem zero_budget_bscOptimal {Cu Cv p : ℝ}
@@ -856,7 +849,7 @@ private theorem objective_le_noiseless {n m : ℕ} {p : ℝ} (hp0 : 0 ≤ p) (hp
 
 private theorem objective_noiseless_formula {m : ℕ} (p : ℝ) (L : (Bool → PMF (Fin m))) :
     objective p (bsc noiseless) L =
-      dotProduct (outputMass L) (fun v => phi (((1 - 2 * p) * posteriorBias L v) ^ 2)) / Real.log 2 := by
+      dotProduct ((fun w => ((L false w).toReal + (L true w).toReal) / 2)) (fun v => phi (((1 - 2 * p) * posteriorBias L v) ^ 2)) / Real.log 2 := by
   rw [objective_productValue]
   congr 1
   dsimp [productValue, dotProduct]
@@ -889,7 +882,7 @@ private theorem full_budget_upper {Cv p : ℝ} (hCv0 : 0 ≤ Cv) (hCv1 : Cv ≤ 
   have hbHyp : b ∈ Set.Icc (0 : ℝ) 1 := by constructor <;> dsimp [b] <;> linarith [β.property.1, β.property.2]
   have hδ : 1 - 2 * p ∈ Set.Icc (0 : ℝ) 1 := by constructor <;> linarith
   have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
-  have hbudget : dotProduct (outputMass L) (fun v => phi (posteriorBias L v ^ 2)) ≤ phi (b ^ 2) := by
+  have hbudget : dotProduct ((fun w => ((L false w).toReal + (L true w).toReal) / 2)) (fun v => phi (posteriorBias L v ^ 2)) ≤ phi (b ^ 2) := by
     rw [rate_phi] at hL
     have hh := (div_le_iff₀ hlog).mp hL
     have he : phi (b ^ 2) = Cv * Real.log 2 := by
@@ -897,7 +890,7 @@ private theorem full_budget_upper {Cv p : ℝ} (hCv0 : 0 ≤ Cv) (hCv1 : Cv ≤ 
       rw [phi_crossover, hb_inv_spec _ ⟨by linarith, by linarith⟩]
       ring
     rwa [he]
-  have hmgl := Boundary.scalar_mgl (outputMass L) (posteriorBias L)
+  have hmgl := Boundary.scalar_mgl ((fun w => ((L false w).toReal + (L true w).toReal) / 2)) (posteriorBias L)
     (output_mass_probability L).1 (output_mass_probability L).2
     (fun v => abs_le.mpr (posterior_bias_mem L v)) hbHyp hδ hbudget
   have hcand : objective p (bsc noiseless) (bsc β) = phi (((1 - 2 * p) * b) ^ 2) / Real.log 2 := by
@@ -910,7 +903,7 @@ private theorem full_budget_upper {Cv p : ℝ} (hCv0 : 0 ≤ Cv) (hCv1 : Cv ≤ 
   simp only [sub_self, hbInv_zero]
   calc
     objective p K L ≤ objective p (bsc noiseless) L := objective_le_noiseless hp0 (by linarith) K L
-    _ = dotProduct (outputMass L) (fun v => phi (((1 - 2 * p) * posteriorBias L v) ^ 2)) / Real.log 2 :=
+    _ = dotProduct ((fun w => ((L false w).toReal + (L true w).toReal) / 2)) (fun v => phi (((1 - 2 * p) * posteriorBias L v) ^ 2)) / Real.log 2 :=
       objective_noiseless_formula p L
     _ ≤ phi (((1 - 2 * p) * b) ^ 2) / Real.log 2 := div_le_div_of_nonneg_right hmgl hlog.le
     _ = objective p (bsc noiseless) (bsc (hbInv (1 - Cv))) := hcand.symm
