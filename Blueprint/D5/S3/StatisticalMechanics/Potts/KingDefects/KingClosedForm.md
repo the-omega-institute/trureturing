@@ -67,4 +67,3 @@ The square case includes side length three and otherwise specializes the two-dim
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingClosedForm.width_three`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingClosedForm.width_two`
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingDiagonal](KingDiagonal.md)
-- Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingHorizontal](KingHorizontal.md)
