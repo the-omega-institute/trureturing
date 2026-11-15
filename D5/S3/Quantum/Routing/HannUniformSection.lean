@@ -9,6 +9,8 @@
 import D5.S3.Quantum.Routing.HannExactForest
 import D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
 import Mathlib.Analysis.Convex.Hull
+import Mathlib.Analysis.Convex.Combination
+import Mathlib.Data.Set.Finite.Lemmas
 
 /-! Real node rounding and the probability section of the original signed records. -/
 
@@ -477,5 +479,149 @@ private theorem binary_uniform (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
       apply_ite, Complex.ofReal_one, Complex.ofReal_zero, ite_mul, one_mul, zero_mul]
     simp [← Finset.sum_filter]
   · simp [hi, ← Finset.sum_filter]
+
+private def uniformValues (n : ℕ) (q : Router n → ℝ) (bus : Qutrit) : Set ℝ :=
+  {z | ∃ (S : Finset (Address n)) (e : ℝ), UniformCertificate n q bus S e ∧ z = e / S.card}
+
+private theorem uniform_mem_section (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
+    (S : Finset (Address n)) (e : ℝ) (h : UniformCertificate n q bus S e) :
+    e / S.card ∈ Section n q bus := by
+  classical
+  have hc : (S.card : ℝ) ≠ 0 := by exact_mod_cast h.1.card_ne_zero
+  let u : Address n → ℝ := fun a => if a ∈ S then 1 else 0
+  have hs : (∑ a, u a) = S.card := by simp [u, ← Finset.sum_filter]
+  have hr : synthesis n q bus (fun a => (u a : ℂ)) = (e : ℂ) • vacuumRecord n q := by
+    convert h.2.2 using 1
+    ext v
+    simp [u, synthesis, apply_ite, ite_mul, ← Finset.sum_filter]
+  refine ⟨fun a => (S.card : ℝ)⁻¹ * u a, ?_, ?_, ?_⟩
+  · intro a; exact mul_nonneg (inv_nonneg.mpr (Nat.cast_nonneg _)) (by simp [u]; split_ifs <;> norm_num)
+  · rw [← Finset.mul_sum, hs, inv_mul_cancel₀ hc]
+  · have heq : (fun a => (((S.card : ℝ)⁻¹ * u a : ℝ) : ℂ)) =
+        ((S.card : ℝ)⁻¹ : ℂ) • (fun a => (u a : ℂ)) := by ext a; simp
+    rw [heq, map_smul, hr, smul_smul]
+    congr 1
+    push_cast
+    ring
+
+private theorem section_convex (n : ℕ) (q : Router n → ℝ) (bus : Qutrit) :
+    Convex ℝ (Section n q bus) := by
+  rintro z ⟨p, hp, hpm, hpr⟩ w ⟨r, hr, hrm, hrr⟩ a b ha hb hab
+  refine ⟨fun i => a * p i + b * r i, fun i => add_nonneg (mul_nonneg ha (hp i))
+    (mul_nonneg hb (hr i)), ?_, ?_⟩
+  · simp only [Finset.sum_add_distrib, ← Finset.mul_sum, hpm, hrm, mul_one]
+    exact hab
+  · have heq : (fun i => ((a * p i + b * r i : ℝ) : ℂ)) =
+        (a : ℂ) • (fun i => (p i : ℂ)) + (b : ℂ) • (fun i => (r i : ℂ)) := by ext i; simp
+    rw [heq, map_add, map_smul, map_smul, hpr, hrr, smul_smul, smul_smul, ← add_smul]
+    congr 1
+    simp [smul_eq_mul]
+
+private theorem section_mem_hull (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v ∧ q v ≤ 1) (z : ℝ) (hz : z ∈ Section n q bus) :
+    z ∈ convexHull ℝ (uniformValues n q bus) := by
+  classical
+  obtain ⟨p, hp, hm, hr⟩ := hz
+  obtain ⟨d, hd, he⟩ := real_lift n q bus hq p z hr
+  let y : Variable n → ℝ := Sum.elim p d
+  have hy : (indexedMatrix n q).mulVec y = 0 :=
+    (indexed_kernel_iff n q y).mpr ((real_kernel_iff n q p d).mpr he)
+  obtain ⟨N, C, hsum, _, _, _, hC⟩ :=
+    Entanglement.AbsolutePPT.NonnegativeKernelCircuit.OrderedField.signConformalGlobalKernelCircuitDecomposition
+      (indexedMatrix n q) y hy
+  have hnonneg (j : Fin N) (a : Address n) : 0 ≤ C j (.inl a) := by
+    rcases (hC j).2.2.1 (.inl a) with hj | hj
+    · rw [hj]
+    · by_contra hn
+      have hneg : SignType.sign (C j (.inl a)) = -1 := sign_neg (lt_of_not_ge hn)
+      have hpy : SignType.sign (p a) = -1 := by simpa [y, hneg] using hj.symm
+      exact (not_lt_of_ge (hp a)) (sign_eq_neg_one_iff.mp hpy)
+  have hcir (j : Fin N) := circuit_binary n q (C j)
+    ((indexed_kernel_iff n q _).mp (hC j).2.1) (hC j).1 (hnonneg j)
+    (fun w hw hn hs => (hC j).2.2.2 w ((indexed_kernel_iff n q w).mpr hw) hn hs)
+  choose t u c ht hun hb hc hk hscale using hcir
+  have hcert (j : Fin N) := binary_uniform n q bus hq (u j) (c j) (hun j) (hb j) (hc j) (hk j)
+  choose S hS hi hmass using hcert
+  let weight : Fin N → ℝ := fun j => t j * (S j).card
+  let value : Fin N → ℝ := fun j => c j (root n) / (S j).card
+  have hweight : (∑ j, weight j) = 1 := by
+    calc
+      (∑ j, weight j) = ∑ j, ∑ a, C j (.inl a) := by
+        apply Finset.sum_congr rfl
+        intro j _
+        simp only [hscale j, Pi.smul_apply, smul_eq_mul, Sum.elim_inl,
+          ← Finset.mul_sum, hmass, weight]
+      _ = ∑ a, p a := by
+        rw [Finset.sum_comm]
+        apply Finset.sum_congr rfl
+        intro a _
+        simpa [y, Finset.sum_apply] using congrFun hsum (.inl a)
+      _ = 1 := hm
+  have hzsum : (∑ j, weight j • value j) = z := by
+    calc
+      (∑ j, weight j • value j) = ∑ j, C j (.inr (root n)) := by
+        apply Finset.sum_congr rfl
+        intro j _
+        have hcard : ((S j).card : ℝ) ≠ 0 := by exact_mod_cast (hS j).1.card_ne_zero
+        simp only [weight, value, smul_eq_mul, hscale j, Pi.smul_apply, Sum.elim_inr]
+        field_simp
+      _ = d (root n) := by simpa [y, Finset.sum_apply] using congrFun hsum (.inr (root n))
+      _ = z := hd
+  exact mem_convexHull_of_exists_fintype weight value
+    (fun j => mul_nonneg (ht j).le (Nat.cast_nonneg _)) hweight
+    (fun j => ⟨S j, c j (root n), hS j, rfl⟩) hzsum
+
+private theorem uniform_values_finite (n : ℕ) (q : Router n → ℝ) (bus : Qutrit) :
+    (uniformValues n q bus).Finite := by
+  let f : Finset (Address n) × Fin 3 → ℝ := fun se =>
+    (if se.2 = 0 then -1 else if se.2 = 1 then 0 else 1) / se.1.card
+  apply (Set.finite_range f).subset
+  rintro z ⟨S, e, he, rfl⟩
+  rcases he.2.1 with rfl | rfl | rfl
+  · exact ⟨(S, 0), by simp [f]⟩
+  · exact ⟨(S, 1), by simp [f]⟩
+  · exact ⟨(S, 2), by simp [f]⟩
+
+/-- The endpoint is attained by a uniform law on nonempty original leaves. -/
+def UniformEndpoint (n : ℕ) (q : Router n → ℝ) (bus : Qutrit) (z : ℝ) : Prop :=
+  ∃ (S : Finset (Address n)) (e : ℝ), UniformCertificate n q bus S e ∧
+    z = e / S.card ∧ 1 ≤ S.card ∧ S.card ≤ 2 ^ n
+
+/-- The complete real probability section is empty or a closed interval whose
+two endpoints have original-leaf uniform certificates. Zero has a nonempty zero
+certificate whether it is an endpoint or an interior point. -/
+theorem uniform_section (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v ∧ q v ≤ 1) :
+    (Section n q bus = ∅ ∨ ∃ l r : ℝ, l ≤ r ∧ Section n q bus = Set.Icc l r ∧
+      UniformEndpoint n q bus l ∧ UniformEndpoint n q bus r) ∧
+    (0 ∈ Section n q bus → ∃ S : Finset (Address n), S.Nonempty ∧
+      (∑ a ∈ S, record n q bus a) = 0) := by
+  classical
+  constructor
+  · by_cases hne : (Section n q bus).Nonempty
+    · have hvne : (uniformValues n q bus).Nonempty := convexHull_nonempty_iff.mp
+        ⟨hne.choose, section_mem_hull n q bus hq _ hne.choose_spec⟩
+      have hf := uniform_values_finite n q bus
+      obtain ⟨l, hl, hmin⟩ := Set.exists_min_image (uniformValues n q bus) id hf hvne
+      obtain ⟨r, hr, hmax⟩ := Set.exists_min_image (β := OrderDual ℝ)
+        (uniformValues n q bus) id hf hvne
+      have hval : uniformValues n q bus ⊆ Set.Icc l r := fun z hz => ⟨hmin z hz, hmax z hz⟩
+      have hmem (z : ℝ) (hz : z ∈ uniformValues n q bus) : z ∈ Section n q bus := by
+        obtain ⟨S, e, hc, rfl⟩ := hz
+        exact uniform_mem_section n q bus S e hc
+      have hep (z : ℝ) (hz : z ∈ uniformValues n q bus) : UniformEndpoint n q bus z := by
+        obtain ⟨S, e, hc, hze⟩ := hz
+        refine ⟨S, e, hc, hze, hc.1.card_pos, ?_⟩
+        simpa only [HannRouterDephasing.address_card] using Finset.card_le_univ S
+      right
+      refine ⟨l, r, hmin r hr, ?_, hep l hl, hep r hr⟩
+      apply Set.Subset.antisymm
+      · intro z hz
+        exact convexHull_min hval (convex_Icc l r) (section_mem_hull n q bus hq z hz)
+      · exact (section_convex n q bus).ordConnected.out (hmem l hl) (hmem r hr)
+    · exact Or.inl (Set.not_nonempty_iff_eq_empty.mp hne)
+  · rintro ⟨p, hp, hm, hz⟩
+    obtain ⟨S, hs, _, he⟩ := zero_certificate n q bus hq p hp hm (by simpa using hz)
+    exact ⟨S, hs, he⟩
 
 end D5.S3.Quantum.Routing.HannUniformSection
