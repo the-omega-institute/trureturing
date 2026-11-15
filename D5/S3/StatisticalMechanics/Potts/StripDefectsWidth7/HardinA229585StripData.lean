@@ -17,6 +17,7 @@ boundary: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 cross: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 Valid: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 decidableValid: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
+zeroBudgetClass: proof_shape=bind-only; consumers=cl
 cl: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 zeroBudgetIndex: proof_shape=bind-only; consumers=transfer_row29, transfer_row30, transfer_row33, transfer_row34, transfer_row37, transfer_row38, transfer_row39, transfer_row41, transfer_row54, transfer_row56, transfer_row57, transfer_row58, transfer_row61, transfer_row62, transfer_row65, transfer_row66
 transfer_row0: proof_shape=bind-only; consumers=T
@@ -108,6 +109,7 @@ set_option profiler true
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects)
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry (proper classOf)
 
 abbrev Row := Fin 7 → Fin 3
 abbrev Boundary := Fin 6 → Fin 3
@@ -122,8 +124,15 @@ def Valid (p : Boundary) (d : ℕ) : Prop :=
   d ≤ 1 ∧ (Finset.univ.filter fun j : Fin 5 => p j.castSucc = p j.succ).card ≤ 1 - d
 private instance decidableValid (p : Boundary) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (_ ∧ _))
+private def zeroBudgetClass : Fin 16 → Fin 72 :=
+  ![29, 30, 33, 34, 37, 38, 39, 41, 54, 56, 57, 58, 61, 62, 65, 66]
+
 def cl (p : Boundary) (d : ℕ) : Fin 72 :=
+  if proper p then
+    if d = 1 then ⟨(classOf p).val, by omega⟩ else zeroBudgetClass (classOf p)
+  else
   if d = 1 then (if p 0 = p 2 then (if p 0 = p 4 then (if p 1 = p 3 then (if p 1 = p 5 then (0) else (1)) else (if p 1 = p 5 then (4) else (5))) else (if p 0 = p 5 then (if p 1 = p 3 then (2) else (6)) else (if p 1 = p 3 then (3) else (7)))) else (if p 0 = p 3 then (if p 0 = p 5 then (if p 1 = p 4 then (8) else (10)) else (if p 1 = p 4 then (9) else (11))) else (if p 0 = p 4 then (if p 1 = p 5 then (12) else (13)) else (if p 0 = p 5 then (14) else (15))))) else (if p 0 = p 2 then (if p 0 = p 5 then (if p 1 = p 3 then (if p 0 = p 4 then (28) else (if p 1 = p 4 then (31) else (33))) else (if p 0 = p 3 then (if p 1 = p 4 then (24) else (26)) else (if p 0 = p 4 then (36) else (if p 1 = p 4 then (39) else (42))))) else (if p 1 = p 5 then (if p 0 = p 4 then (if p 1 = p 3 then (29) else (37)) else (if p 0 = p 3 then (27) else (if p 1 = p 3 then (34) else (if p 1 = p 4 then (40) else (43))))) else (if p 1 = p 3 then (if p 0 = p 4 then (30) else (if p 1 = p 4 then (32) else (35))) else (if p 0 = p 3 then (25) else (if p 0 = p 4 then (38) else (41)))))) else (if p 0 = p 3 then (if p 2 = p 4 then (if p 0 = p 5 then (if p 0 = p 1 then (16) else (if p 1 = p 2 then (44) else (57))) else (if p 0 = p 1 then (17) else (if p 1 = p 2 then (45) else (if p 1 = p 5 then (58) else (59))))) else (if p 1 = p 5 then (if p 0 = p 1 then (18) else (if p 0 = p 4 then (52) else (if p 1 = p 2 then (47) else (55)))) else (if p 0 = p 5 then (if p 1 = p 2 then (46) else (54)) else (if p 0 = p 1 then (19) else (if p 0 = p 4 then (53) else (56)))))) else (if p 0 = p 4 then (if p 2 = p 5 then (if p 0 = p 1 then (20) else (if p 1 = p 2 then (48) else (if p 1 = p 3 then (62) else (69)))) else (if p 1 = p 3 then (if p 0 = p 5 then (60) else (61)) else (if p 0 = p 1 then (21) else (if p 1 = p 2 then (49) else (68))))) else (if p 0 = p 5 then (if p 1 = p 3 then (if p 1 = p 4 then (63) else (65)) else (if p 0 = p 1 then (22) else (if p 1 = p 2 then (50) else (70)))) else (if p 1 = p 3 then (if p 1 = p 4 then (64) else (if p 1 = p 5 then (66) else (67))) else (if p 0 = p 1 then (23) else (if p 1 = p 2 then (51) else (71))))))))
+
 private def zeroBudgetIndex (j : Fin 56) : Option (Fin 16) :=
   if j.val = 13 then some 0
   else if j.val = 14 then some 1
