@@ -34,7 +34,7 @@ internal sealed class ConditionedRankOneNormDocument : IScribeDocumentDefinition
             Entry("fixed", "fixed_weight", "The genuine fixed-weight sharp norm", FixedFormula(),
                 "The complex integral modulus bound proves the estimate for every input. The actual input f=1/g belongs to L2 and L infinity, has weighted norm one, and attains a+(1-a)c integral(h/g)/Q. An affine essential-sup identity supplies equality.", true),
             Entry("minimum", "conditioned_optimum", "Sharp minimum, excess and all minimizers", MinimumFormula(),
-                "The same clipped weight attains the minimum for every a. The excess is exactly (1-a)/Q times the integral of h times absolute(c/g-max(h,H/kappa)). Integral-zero rigidity makes all minimizers for a<1 positive scalar multiples of the clipped weight modulo AE equality. At a=1 every admissible weight has sharp constant one. This weighted L1 identity gives no L infinity stability estimate. The actual interval semigroup consumes the theorem in its owner. A distinct finite atomic check uses h=(1/4,1), kappa=2 and projection optimum 18/17.", true))));
+                "The same clipped weight attains the minimum for every a. The excess is exactly (1-a)/Q times the integral of h times absolute(c/g-max(h,H/kappa)). Integral-zero rigidity makes all minimizers for a<1 positive scalar multiples of the clipped weight modulo AE equality. For a<1 the minimum equals one exactly when h>=H/kappa almost everywhere. At a=1 every admissible weight has sharp constant one. This weighted L1 identity gives no L infinity stability estimate. The actual interval semigroup consumes the theorem in its owner. A distinct finite atomic check uses h=(1/4,1), kappa=2 and projection optimum 18/17.", true))));
 
     private static Formula WeightFormula() => Base(All("g", RF,
         Iff(W(V("g")), And(Bounded(V("g")), And(Bounded(Inv(V("g"))), Pos(V("g")))))));
@@ -78,8 +78,11 @@ internal sealed class ConditionedRankOneNormDocument : IScribeDocumentDefinition
         Formula minimizers = Imp(Lt(V("a"), D(1)), Iff(Eqn(V("C"), O),
             Ex("s", Real, And(Lt(D(0), V("s")), scalarEquality))));
         Formula excess = Eqn(Sub(V("C"), O), Mul(Div(Sub(D(1), V("a")), Q), Excess));
-        Formula witness = Ex("C", Real, And(S(V("g"), V("C")), And(Le(O, V("C")),
-            And(excess, And(minimizers, Imp(Eqn(V("a"), D(1)), Eqn(V("C"), D(1))))))));
+        Formula floor = Imp(Lt(V("a"), D(1)), Iff(Eqn(O, D(1)), AE("x", Le(Div(Hh, V("kappa")), At(V("h"), V("x"))))));
+        Formula endpoint = Imp(Eqn(V("a"), D(1)), Eqn(V("C"), D(1)));
+        Formula tail = And(excess, And(minimizers, And(endpoint, floor)));
+        Formula witnessBody = And(S(V("g"), V("C")), And(Le(O, V("C")), tail));
+        Formula witness = Ex("C", Real, witnessBody);
         Formula universal = All("g", RF, Imp(And(W(V("g")), Le(K(V("g")), V("kappa"))), witness));
         Formula result = And(W(StarWeight), And(Le(K(StarWeight), V("kappa")), And(S(StarWeight, O), universal)));
         Formula hypothesis = And(Hyp, And(Le(D(1), V("kappa")), And(Le(D(0), V("a")), Le(V("a"), D(1)))));
@@ -133,7 +136,8 @@ internal sealed class ConditionedRankOneNormDocument : IScribeDocumentDefinition
     private static Formula Vee => Call("max", At(V("h"), V("x")), Div(Hh, V("kappa")));
     private static Formula StarWeight => Call("clipped", V("h"), Hh, V("kappa"));
     private static Formula O => Call("optimum", V("mu"), V("h"), V("a"), V("kappa"));
-    private static Formula Hyp => And(Call("IsFiniteMeasure", V("mu")), And(Call("NeZero", V("mu")), Bounded(V("h"))));
+    private static Formula Hyp => And(Call("IsFiniteMeasure", V("mu")),
+        And(Call("NeZero", V("mu")), And(Bounded(V("h")), Pos(V("h")))));
     private static Formula Evolve() => Call("evolve", V("mu"), V("h"), V("a"), V("f"));
     private static Formula S(Formula g, Formula c) => Call("Sharp", V("mu"), V("h"), V("a"), g, c);
     private static Formula Deficit => Integral(Map("x", V("X"), Mul(At(V("h"), V("x")),

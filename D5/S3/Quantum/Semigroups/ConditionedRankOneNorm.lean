@@ -30,7 +30,7 @@ Per-declaration proof shape and live consumers:
     construction with exact height, consumed in both sides of the minimum.
   top_le, top_pos, mul_top, bounded_integrable, height_le, clipped_weight,
     clipped_height, square_integrable, square_pos, affine_top, max_bounded,
-    clipped_envelope, variational_excess, excess_zero_iff: consumed helpers;
+    clipped_envelope, variational_excess, excess_zero_iff, optimum_one_iff: consumed helpers;
     their live consumers are the three public theorems and their auxiliaries.
   Weight, condition, evolve, Sharp, clipped, optimum: definitions consumed by
     the displayed theorems and the original interval semigroup.
@@ -514,6 +514,39 @@ private lemma excess_zero_iff [IsFiniteMeasure μ] [NeZero μ] {h g : X → ℝ}
     have henv : d/w x = v x := clipped_envelope hh hp hκ x
     rw [hcs, hx, mul_div_mul_left _ _ (ne_of_gt hs), henv, sub_self, abs_zero, mul_zero]
 
+private lemma optimum_one_iff [IsFiniteMeasure μ] [NeZero μ] {h : X → ℝ}
+    (hh : MemLp h ∞ μ) (hp : ∀ᵐ x ∂μ, 0 < h x) {a κ : ℝ} (ha : a < 1) :
+    optimum μ h a κ = 1 ↔ ∀ᵐ x ∂μ, lpNorm h ∞ μ/κ ≤ h x := by
+  let d := lpNorm h ∞ μ/κ
+  have hd := max_bounded ((memLp_top_const d).sub hh) 0
+  have hi : Integrable (fun x => h x*max (d-h x) 0) μ := bounded_integrable (mul_top hh hd)
+  have hn : ∀ᵐ x ∂μ, 0 ≤ h x*max (d-h x) 0 := by
+    filter_upwards [hp] with x hx
+    exact mul_nonneg hx.le (le_max_right _ _)
+  have hc : (1-a)/(∫ x, h x^2 ∂μ) ≠ 0 :=
+    ne_of_gt (div_pos (sub_pos.mpr ha) (square_pos hh hp))
+  constructor
+  · intro he
+    have hz : (∫ x, h x*max (d-h x) 0 ∂μ) = 0 := by
+      apply (mul_eq_zero.mp (show (1-a)/(∫ x, h x^2 ∂μ) *
+        (∫ x, h x*max (d-h x) 0 ∂μ) = 0 by
+          change 1 + _ = 1 at he
+          linarith)).resolve_left hc
+    have heq := (integral_eq_zero_iff_of_nonneg_ae hn hi).mp hz
+    filter_upwards [heq, hp] with x hx hp
+    change h x*max (d-h x) 0 = 0 at hx
+    have hz' := (mul_eq_zero.mp hx).resolve_left (ne_of_gt hp)
+    have := (le_max_left (d-h x) 0).trans_eq hz'
+    linarith
+  · intro hf
+    have hz : (∫ x, h x*max (d-h x) 0 ∂μ) = 0 := by
+      apply integral_eq_zero_of_ae
+      filter_upwards [hf] with x hx
+      change h x * max (d-h x) 0 = 0
+      rw [max_eq_right (sub_nonpos.mpr hx), mul_zero]
+    change 1 + _ * (∫ x, h x*max (d-h x) 0 ∂μ) = 1
+    rw [hz, mul_zero, add_zero]
+
 /-- Clipping attains the minimum over every condition-constrained positive
 weight, for every bounded complex input. The excess is a weighted L1 quantity. -/
 theorem conditioned_optimum [IsFiniteMeasure μ] [NeZero μ] {h : X → ℝ}
@@ -529,7 +562,8 @@ theorem conditioned_optimum [IsFiniteMeasure μ] [NeZero μ] {h : X → ℝ}
             max (h x) (lpNorm h ∞ μ/κ)| ∂μ ∧
         (a < 1 → (C = optimum μ h a κ ↔ ∃ s : ℝ, 0 < s ∧
           g =ᵐ[μ] (fun x => s*clipped h (lpNorm h ∞ μ) κ x))) ∧
-        (a = 1 → C = 1) := by
+        (a = 1 → C = 1) ∧
+        (a < 1 → (optimum μ h a κ = 1 ↔ ∀ᵐ x ∂μ, lpNorm h ∞ μ/κ ≤ h x)) := by
   obtain ⟨wg, hG, hB⟩ := clipped_weight hh hp hκ
   have hk : condition μ (clipped h (lpNorm h ∞ μ) κ) ≤ κ := by
     unfold condition
@@ -549,7 +583,7 @@ theorem conditioned_optimum [IsFiniteMeasure μ] [NeZero μ] {h : X → ℝ}
     let C := a+(1-a)*lpNorm (fun x => g x*h x) ∞ μ *
       (∫ x, h x/g x ∂μ)/(∫ x, h x^2 ∂μ)
     have he := variational_excess hh hp wg hκ hk (a := a)
-    refine ⟨C, fixed_weight hh hp wg ha ha1, ?_, he, ?_, ?_⟩
+    refine ⟨C, fixed_weight hh hp wg ha ha1, ?_, he, ?_, ?_, ?_⟩
     · have hi : 0 ≤ ∫ x, h x * |lpNorm (fun y => g y*h y) ∞ μ / g x -
           max (h x) (lpNorm h ∞ μ/κ)| ∂μ := by
         apply integral_nonneg_of_ae
@@ -575,5 +609,6 @@ theorem conditioned_optimum [IsFiniteMeasure μ] [NeZero μ] {h : X → ℝ}
     · intro ha'
       dsimp [C]
       simp [ha']
+    · exact fun ha' => optimum_one_iff hh hp ha'
 
 end D5.S3.Quantum.Semigroups.ConditionedRankOneNorm
