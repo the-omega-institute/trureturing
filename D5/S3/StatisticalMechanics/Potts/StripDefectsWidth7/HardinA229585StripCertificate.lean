@@ -92,8 +92,10 @@ theorem structural_certificate :
     · exact Initial.HardinA229585StripCounts7.initial_counts s ⟨by omega, h7⟩
     exact Initial.HardinA229585StripCounts8.initial_counts s ⟨by omega, s.isLt⟩
   · constructor
-    · rfl
+    · unfold W initial
+      rfl
     · intro i
+      change W ⟨i.val + 1, by omega⟩ = Matrix.vecMul (W ⟨i.val, by omega⟩) T
       by_cases h0 : i.val < 2
       · have h := ForwardChecks.HardinA229585StripForward0.forward_steps
           ⟨i.val - 0, by omega⟩

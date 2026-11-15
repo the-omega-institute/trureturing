@@ -38,6 +38,7 @@ set_option profiler true
 /-! Exact finite certificates for the width-seven one-defect strip. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
+open D5.S3.StatisticalMechanics.Potts.StripDefects
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects defects literalCount continuation lumped_count forward forward_shift)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical canonical_pattern_card)
 open HardinA229585StripData
@@ -225,17 +226,17 @@ theorem result (n : ℕ) :
   rcases n with _ | _ | n
   · have h := first 0
     simp_rw [table] at h
-    norm_num only [Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_succ,
+    norm_num only [Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_one, Fin.val_succ,
       Matrix.cons_val_zero, Matrix.cons_val_succ, Nat.add_assoc, Nat.add_zero] at h
     linarith
   · have h := first 1
     simp_rw [table] at h
-    norm_num only [Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_succ,
+    norm_num only [Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_one, Fin.val_succ,
       Matrix.cons_val_zero, Matrix.cons_val_succ, Nat.add_assoc, Nat.add_zero] at h
     linarith
   · have h := forward_shift T initial terminal 8 2 ![-656100, 1574640, -1513404, 750384, -206469, 31428, -2466, 84] polynomial_relation n
     simp_rw [bridge] at h
-    norm_num only [Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_succ,
+    norm_num only [Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_one, Fin.val_succ,
       Matrix.cons_val_zero, Matrix.cons_val_succ, Nat.add_assoc, Nat.add_zero] at h
     linarith
 
