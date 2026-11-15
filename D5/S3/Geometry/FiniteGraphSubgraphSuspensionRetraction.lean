@@ -16,7 +16,7 @@ with the old graph independence realization.
 -/
 
 noncomputable section
-open Set Topology CategoryTheory
+open Set Topology
 open scoped BigOperators unitInterval ContinuousMap
 
 namespace D5.S3.Geometry.FiniteGraphSubgraphSuspension
