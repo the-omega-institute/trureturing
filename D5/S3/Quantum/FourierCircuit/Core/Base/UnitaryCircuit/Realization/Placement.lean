@@ -18,6 +18,10 @@ Authors: QudeLeap Team
 
 module
 
+public import D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Physical
+public import D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Quantum.Embedding.Operator
+public import D5.S3.Quantum.FourierCircuit.Core.Base.Oracle.Model
+
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Construction
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Sequence
