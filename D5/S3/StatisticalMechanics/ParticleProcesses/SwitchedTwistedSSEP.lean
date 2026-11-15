@@ -810,10 +810,8 @@ private def twoSiteEquiv {N : ℕ} : Configuration 2 N ≃ Fin N × Fin N :=
   (finTwoArrowEquiv (Fin N)).trans (Equiv.prodComm _ _)
 private def flipPairHom {N : ℕ} :
     (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) →*
-      (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) where
-  toFun p := (p.2, p.1)
-  map_one' := rfl
-  map_mul' _ _ := rfl
+      (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) :=
+  MulEquiv.prodComm.toMonoidHom
 private lemma pair_flip_mem {N : ℕ} (f g : Equiv.Perm (Fin N)) :
     pairTwistGroup f g ≤ (pairTwistGroup f g).comap flipPairHom := by
   apply (Subgroup.closure_le _).mpr

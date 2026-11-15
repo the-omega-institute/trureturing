@@ -141,7 +141,7 @@ internal sealed class SwitchedTwistedSSEPDocument : IScribeDocumentDefinition
                         + "Writing an element of P as a derived element times a stabilizer element proves derived-group transitivity.")),
                     Paragraph(Text("For two sites the flip sends each paired generator to its inverse, hence normalizes K and fixes every diagonal pair. "
                         + "The union component of a diagonal configuration is exactly its K-orbit. The two-site criterion follows from orbit-stabilizer and the existing Mathlib pretransitivity characterization. "
-                        + "The proof is uniform and uses no bounded enumeration. Utility is none because the result is a general classification of the registered external question, with no asserted downstream computational application."))),
+                        + "The argument is uniform in the number of sites, the number of species and the two permutations."))),
                 DescribeRole.Theorem))));
 
     private static Formula ResultFormula() => Context(FG(AndF(
@@ -154,10 +154,18 @@ internal sealed class SwitchedTwistedSSEPDocument : IScribeDocumentDefinition
                 LT(Typed(D(0), Rat()), Call("branchingProbability", X("hL"), X("s"), X("t"), X("x"), X("y")))))),
             StartC(All("k", Nat(), Equal(Support("alternatingSupport", X("k")), Support("switchSupport", X("k"))))))))));
 
+    private static bool IsRepositoryConstruction(string name) =>
+        name is "unionMoveRelation" or "unionConnected" or "alternatingSupport" or "twistGroup"
+            or "derivedTwistGroup" or "pairTwistGroup" or "pointStabilizer" or "pointPairStabilizer"
+            or "lTwoCriterion" or "lAtLeastThreeCriterion" or "registeredReachabilityAnswer";
+
     private static DocumentBlock Definition(string name, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("switched-twisted-ssep-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Module + "." + name), H(name), StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            IsRepositoryConstruction(name)
+                ? AssessedProvenance.FromRepo(Source)
+                : AssessedProvenance.FromLiterature(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static Formula LN(Formula body) => All("L", Nat(), All("N", Nat(), body));
     private static Formula Context(Formula body) => LN(All("hL", LT(D(1), X("L")), body));
     private static Formula FG(Formula body) => All("f", Perm(), All("g", Perm(), body));

@@ -120,7 +120,9 @@ $$\forall \left(\operatorname{L}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.unionMoveRelation` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -132,7 +134,9 @@ $$\forall \left(\operatorname{L}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.unionConnected` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -180,7 +184,9 @@ $$\forall \left(\operatorname{L}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.alternatingSupport` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -192,7 +198,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.twistGroup` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -204,7 +212,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.derivedTwistGroup` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -216,7 +226,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.pairTwistGroup` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -228,7 +240,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.pointStabilizer` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -240,7 +254,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.pointPairStabilizer` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -252,7 +268,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.lTwoCriterion` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -264,7 +282,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.lAtLeastThreeCriterion` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -288,7 +308,9 @@ $$\forall \left(\operatorname{L}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.registeredReachabilityAnswer` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -314,7 +336,7 @@ Adjacent transpositions generate every site permutation. Composing the boundary 
 
 For necessity, connectivity first forces H to be transitive, since all entries of a configuration remain within the H-orbit of a constant initial species. Fix a species a and form the normal subgroup P given by the join of the commutator of H with the stabilizer of a. The quotient H/P is abelian. The charge of h acting on a is the quotient class of h; the stabilizer inclusion makes this well defined. Its product over all sites is invariant under exchanges and the paired twist. Connectivity to a configuration changing just one entry forces every charge to be the identity. Writing an element of P as a derived element times a stabilizer element proves derived-group transitivity.
 
-For two sites the flip sends each paired generator to its inverse, hence normalizes K and fixes every diagonal pair. The union component of a diagonal configuration is exactly its K-orbit. The two-site criterion follows from orbit-stabilizer and the existing Mathlib pretransitivity characterization. The proof is uniform and uses no bounded enumeration. Utility is none because the result is a general classification of the registered external question, with no asserted downstream computational application.
+For two sites the flip sends each paired generator to its inverse, hence normalizes K and fixes every diagonal pair. The union component of a diagonal configuration is exactly its K-orbit. The two-site criterion follows from orbit-stabilizer and the existing Mathlib pretransitivity characterization. The argument is uniform in the number of sites, the number of species and the two permutations.
 
 ## References
 
