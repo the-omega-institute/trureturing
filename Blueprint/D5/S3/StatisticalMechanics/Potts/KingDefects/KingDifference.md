@@ -128,7 +128,7 @@ $$\forall (N: \operatorname{Nat}), (\forall (M: \operatorname{Nat}), (\forall (t
 
 *Commentary.*
 
-Compatibility around squares makes the path integral recover every horizontal and vertical difference.
+Compatibility around squares makes the path integral recover every horizontal and vertical difference. The consumed private helper psum_add obtains partial-sum additivity directly from List.sum_map_add after unfolding Fin.partialSum.
 
 **Definition 1.10 (Differences on all four orientations).**
 

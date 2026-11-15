@@ -300,7 +300,7 @@ Reflect an admissible bottom-boundary field to the top boundary, then extract it
 
 **Definition 1.22 (cut row).**
 
-$$\forall (A: \operatorname{Nat}), (\forall (B: \operatorname{Nat}), (((\operatorname{KingHorizontal}.\operatorname{cut_{row}}\left(A, B\right): \operatorname{Fin}\left(((A) + (B)) + (1)\right))) \land (\operatorname{Fin}.\operatorname{val}\left(\operatorname{KingHorizontal}.\operatorname{cut_{row}}\left(A, B\right)\right) = A)))$$
+$$\forall (A: \operatorname{Nat}), (\forall (B: \operatorname{Nat}), (((\operatorname{KingHorizontal}.\operatorname{cut_{row}}\left(A, B\right): \operatorname{Fin}\left(((A) + (B)) + (1)\right))) \land ((\operatorname{KingHorizontal}.\operatorname{cut_{row}}\left(A, B\right) = \operatorname{KingHorizontal}.\operatorname{pivot}\left(A, B\right)) \land (\operatorname{Fin}.\operatorname{val}\left(\operatorname{KingHorizontal}.\operatorname{cut_{row}}\left(A, B\right)\right) = A))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/KingDefects/KingHorizontalBoundary.cut_row` (`✓ std3`).
 
@@ -310,7 +310,7 @@ $$\forall (A: \operatorname{Nat}), (\forall (B: \operatorname{Nat}), (((\operato
 
 *Commentary.*
 
-The shared row has natural value A in a rectangle with A + B vertical steps.
+The shared row is pivot A B, with natural value A in a rectangle with A + B vertical steps.
 
 **Definition 1.23 (CutFields).**
 
@@ -338,7 +338,7 @@ $$\forall (A: \operatorname{Nat}), (\forall (B: \operatorname{Nat}), (\forall (M
 
 *Commentary.*
 
-Restrict above and below the selected row. The inverse joins the two fields along their common horizontal values.
+Restrict above and below the selected row. The consumed private row embeddings top_row and bottom_row use Fin.castLE and Fin.natAdd, respectively. The inverse joins the two fields along their common horizontal values.
 
 ## References
 

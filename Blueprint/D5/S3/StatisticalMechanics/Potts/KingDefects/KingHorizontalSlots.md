@@ -170,7 +170,7 @@ $$\forall (n: \operatorname{Nat}), (\forall (f: (\operatorname{Finset}\left(\ope
 
 *Commentary.*
 
-Partition all Boolean words by their support and weight each support by its number of realizations.
+Apply Fintype.sum_fiberwise' to word_support, then use word_support_card to weight each support by its number of realizations.
 
 **Definition 1.13 (ordinary value).**
 
