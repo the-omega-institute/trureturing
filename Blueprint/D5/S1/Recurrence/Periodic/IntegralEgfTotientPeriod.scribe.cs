@@ -10,13 +10,13 @@ internal sealed class IntegralEgfTotientPeriodDocument : IScribeDocumentDefiniti
     private static readonly LibraryNoteRef SpecificSource =
         LibraryNoteRef.Create("D5/L/ArithSums/bala2022a305550");
     private static readonly LibraryNoteRef GeneralSource =
-        LibraryNoteRef.Create("D5/L/ArithSums/bala2022egfgeneral");
+        LibraryNoteRef.Create("D5/L/ArithSums/bala2022a305550");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Integral exponential substitutions have totient periods, including OEIS A305550.",
         H("Totient Periods for Integral Exponential Substitutions"),
         Blocks(
-            Paragraph(Text("The notes bala2022a305550 and bala2022egfgeneral record Bala's "
+            Paragraph(Text("The note bala2022a305550 records Bala's "
                 + "specific and broader conjectures. The broader sentence appears on both "
                 + "A305550 and A004123 and is one conjecture, settled once. Every positive "
                 + "modulus m has period totient(m) from n at least m. Neither the onset "
@@ -93,7 +93,7 @@ internal sealed class IntegralEgfTotientPeriodDocument : IScribeDocumentDefiniti
                 + "The weighted Stirling-transform totient-period theorem gives the "
                 + "displayed equality for every integral g and positive m from n "
                 + "at least m. This settles the single broader conjecture documented "
-                + "in bala2022egfgeneral, including its duplicate occurrence on A004123.",
+                + "in bala2022a305550, including its duplicate occurrence on A004123.",
                 DescribeRole.Theorem, AssessedProvenance.FromLiterature(GeneralSource),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("oeis-a305550-integral-egf-substitution-totient-period"),
