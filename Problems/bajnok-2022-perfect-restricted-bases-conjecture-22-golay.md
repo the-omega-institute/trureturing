@@ -88,7 +88,7 @@ conditional uninstantiated code, or a restricted family of competing subsets
 would not answer the source problem. The actual finite group and the full
 original predicate are required.
 
-## Evidence and literature limits
+## Evidence
 
 The exact settling declaration is
 `D5/S3/FiniteGroups/SubsetProducts/BajnokGolayRestrictedBasisRefutation.result`.
@@ -96,13 +96,21 @@ The abstract bridge is `BinaryCodePerfectRestrictedBasis.basis_of_minimum_weight
 The Golay weight enumeration is reused from `GolayEncoder.minimum_weight`;
 it is not repeated or replaced by a coding hypothesis.
 
+The public helper four-slot audits are unfinished under
+[#30740](https://github.com/the-omega-institute/trureturing/issues/30740).
+No validated registration is claimed. The designated refutation result is exempt.
+
+## Triage
+
+The construction refutes the stated classification and answers the companion
+Question 11 affirmatively. These are consequences of the same construction.
+The formal result does not establish literature priority.
+
+## ASSUMED-UNVERIFIED
+
 A bounded literature search recorded in #30733 found no exact-context
 settlement. Both official arXiv pages list v1. The complete Greene--Higgins
 TeX does not discuss this Golay connection. The Hang Yu material named
 without a title in the older Question 6 dossier remains unidentified, and
 the forward-citation inventory is incomplete. These limits are
 `ASSUMED-UNVERIFIED`; no worldwide novelty or mathematical-priority claim follows.
-
-The public helper four-slot audits are unfinished under
-[#30740](https://github.com/the-omega-institute/trureturing/issues/30740).
-No validated registration is claimed. The designated refutation result is exempt.
