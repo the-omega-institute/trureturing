@@ -21,7 +21,7 @@ import Mathlib.Data.Rat.Floor
 
 namespace QuantumShorContinuedFractions
 
-private theorem tail_den_lt (x : ℚ) (h : Int.fract x ≠ 0) :
+theorem tail_den_lt (x : ℚ) (h : Int.fract x ≠ 0) :
     ((Int.fract x)⁻¹).den < x.den := by
   rw [Rat.den_inv_of_ne_zero h, ← Rat.den_intFract x]
   have hn : 0 ≤ (Int.fract x).num := Rat.num_nonneg.mpr (Int.fract_nonneg x)
