@@ -1073,3 +1073,280 @@ $$
 [H271]: https://arxiv.org/abs/0806.0631v1 "Harrow, Exact universality from any entangling gate without inverses, Corollary 2：全体局部酉和 imprimitive 门，含不等分组维数的精确有限生成。"
 
 ## 追加锚（本行以下为增补区）
+
+## 272. 局域 M 与单一产品目标的整联合最小确认
+
+**定义 272.1（完整菜单、整锥产品与指定目标）。** 对 $X=A,B,D$，取非零有限维实空间、闭尖生成锥 $C_X$、在非零正向量上严格正的单位 $u_X$、整个紧底 $K_X=C_X\cap\{u_X=1\}$、全部纯点 $P_X=\operatorname{ext}K_X$、完整正对偶及 proper 菜单 $\mathcal E_X=[0,u_X]_{C_X^*}$；全部有限单位分解均为菜单。局域 $\mathsf M_X$ 取271.1的完整量词：每个 $p\in P_X$ 有确认 $p$、并低于每个原 proper 确认者的 $e_p^X$。不要求数值互易 $e_p^X(q)=e_q^X(p)$ 或唯一取一。对原联合系统要求
+
+$$
+D=A\otimes_{\mathbb R}B,\qquad u_D=u_A\otimes u_B,\qquad
+C_A\otimes_{\min}C_B\subseteq C_D
+ \subseteq C_A\otimes_{\max}C_B.
+\tag{272.1}
+$$
+
+最小锥由全部正产品生成，最大锥由两块全部正泛函的产品非负性定义；配对为原张量配对，分离整个 $D$。不缩小原相关锥或原效应区间。对指定 $p\in P_A,q\in P_B$，仅在该产品目标假设存在实际 least proper 确认者
+
+$$
+E\in\mathcal E_D,\qquad E(p\otimes q)=1,\qquad
+E\le F\quad(F\in\mathcal E_D,\ F(p\otimes q)=1).
+\tag{272.2}
+$$
+
+此处 least 是原对偶序中的最小元，非仅极小元。$\mathsf M_A,\mathsf M_B$ 是各自全部纯目标上的条件；(272.2)不对别的联合目标作要求。
+
+**定理 272.2（局域完整 frame 支付单目标整载体因子化）。** 在272.1及局域 $\mathsf M_A,\mathsf M_B$ 下，$p\otimes q$ 是原联合纯点，且(272.2)强制
+
+$$
+\boxed{\ E=e_p^A\otimes e_q^B\quad\text{作为整个 }D\text{ 上的泛函。}\ }
+\tag{272.3}
+$$
+
+因此对每个原 $z\in K_D$，包括任意相关输入，完整 proper 菜单中的确认 infimum 由同一个产品效应达到：
+
+$$
+\inf_{\substack{F\in\mathcal E_D\\F(p\otimes q)=1}}F(z)
+ =(e_p^A\otimes e_q^B)(z).
+\tag{272.4}
+$$
+
+若(272.2)逐个提供给全部纯产品目标，则(272.3)—(272.4)逐个成立，仍不需要其他联合纯目标的 M。
+
+证明。（一）原菜单与纯性。最大界使正产品泛函在整个 $C_D$ 上非负。若 $f\in\mathcal E_A,g\in\mathcal E_B$，则
+
+$$
+u_D-f\otimes g
+ =(u_A-f)\otimes u_B+f\otimes(u_B-g)\in C_D^*;
+\tag{272.5}
+$$
+
+所以 $f\otimes g$ 是原 proper 效应。原边缘属于相应紧底。若 $z\in K_D$ 的 $B$ 边缘为纯 $q$，对每个 $f\in\mathcal E_A$ 的条件切片满足 $0\le(f\otimes\operatorname{id})z\le q$。纯射线迫使它为 $\lambda_fq$，取 $u_B$ 得 $\lambda_f=f(z_A)$。完整 proper 效应张成局域对偶：任意实泛函在紧底上有界，平移并缩放后进入 $[0,u_X]$。原产品配对分离遂给 $z=z_A\otimes q$；最小界给反向包含。故纯边缘逆像是实际面，并与整个 $K_A$ 仿射序同构。对 $p\otimes q$ 的任何凸分解，各分量的两个边缘都必须是 $p,q$，故各分量相同，产品纯性成立。这是 [B272]“A pure marginal fixes every conditional state”和 [XVIII250.2(i)][G272] 的 min/max 接口，不使用 M、共同尺或一般面效应延拓。
+
+（二）含指定纯点的**整个单位完整 frame**。这里直接使用 [M272]“Positive dual generation and one common complete frame”的 M-only 零互易与补全；为固定所需接口，写出其在本推导中的用法。由 $e_s(t)=0$，$u-e_s$ 确认 $t$，leastness 给 $e_t\le u-e_s$，故 $e_t(s)=0$；交换即得零值双向等价。这仅是零互易。对有限纯族 $e_{s_i}(s_j)=\delta_{ij}$，归纳地用余下 proper 效应确认下一点，得 $\sum_i e_{s_i}\le u$。从指定点开始；若 $h=u-\sum_i e_{s_i}\ne0$，在纯点 $t$ 达到 $m=\max_Kh>0$。$h/m$ 是 proper 确认者，故 $e_t\le h/m$。它在旧点为零，零互易使每个 $e_{s_i}(t)=0$，所以 $m=h(t)=1$，可继续减去 $e_t$。各态由上述 Kronecker 读数线性独立，至多 $\dim X$ 项即终止。由此分别选到
+
+$$
+p_1=p,\quad q_1=q,\qquad
+e_{p_i}^A(p_k)=\delta_{ik},\quad
+e_{q_j}^B(q_\ell)=\delta_{j\ell},\qquad
+\sum_i e_{p_i}^A=u_A,\quad\sum_j e_{q_j}^B=u_B.
+\tag{272.6}
+$$
+
+这些是真正的单位分解菜单，非分别选择的两两区分测试。[N272] 的 Lemmas 3(i),(iv),5 是零关系、最大值减法及联合预算的成熟参照；此处消费的是 [M272] 已给出的 proper-M 版本，不输入该文另外的饱和公理。
+
+置 $c_A=\sum_i p_i,c_B=\sum_jq_j$。证明 $c_X\in\operatorname{int}C_X$，这里的内部取**整个** $X$。若 $0\ne f\in C_X^*$ 且 $f(c_X)=0$，每个 frame 点上 $f(s_i)=0$。在纯 $t$ 取到正最大值 $m=\max_Kf$，则 $e_t\le f/m$，故 $e_t(s_i)=0$。零互易再给 $e_{s_i}(t)=0$，与 $\sum_i e_{s_i}(t)=u(t)=1$ 矛盾。因此每个非零正泛函在 $c_X$ 上严格正；有限维闭生成锥的对偶内部判据给所需内部性。
+
+这一接口也使 $c_A\otimes c_B$ 位于整个最小锥、从而整个 $C_D$ 的内部。确切地，对任何在正产品上非负的双线性泛函 $H$，若 $H(c_A\otimes c_B)=0$，内部性使每个 $x\in C_A,y\in C_B$ 各满足 $x\le s c_A,y\le t c_B$，其中 $s,t\ge0$。于是
+
+$$
+0\le H(x\otimes y)\le stH(c_A\otimes c_B)=0.
+\tag{272.7}
+$$
+
+两局域锥生成各自空间，实产品张成整个 $D$，故 $H=0$。有限维最小锥是紧归一产品底的凸包所生成的闭生成锥；再用对偶内部判据即得断言。这里的“正泛函消去受支配产品，再由张成消去整个载体”的接口也见 [B272]“Faithfulness and the exceptional-inclusive support bridge”“Ternary support and the common frame”及(58)后的内部性论证；这里用普通对偶序，未借用那些 Jordan 模型的自对偶尺或谱支持。
+
+（三）只在所选目标调用一次联合 leastness。由(272.5)—(272.6)，各 $h_{ij}=e_{p_i}^A\otimes e_{q_j}^B$ 是 proper 效应且 $\sum_{ij}h_{ij}=u_D$，故产品家族确为原联合菜单。特别地，$h=h_{11}$ 确认 $p\otimes q$，故
+
+$$
+H=h-E\in C_D^*,\qquad H(p\otimes q)=0.
+\tag{272.8}
+$$
+
+对其余 $(i,j)\ne(1,1)$，$h(p_i\otimes q_j)=0$；$0\le E\le h$ 迫使 $E$ 和 $H$ 都在这些产品点上为零。因此 $H(c_A\otimes c_B)=0$，(272.7)给 $H=0$，得到(272.3)和(272.4)。没有调用任何别的 $e^D_{p_i\otimes q_j}$。若所有纯产品目标各有 least，则逐个重复此推导；此时产品 frame 的 least 效应也确实合为 $u_D$，但本结论不要求联合全部纯点上的 M。
+
+白话图景就是这个正差证明。每一边先从指定准备出发，补齐一套真正共用的完整测试菜单；这些准备加起来，在整个局域正锥中没有遗漏任何正方向。把两边的菜单配对，得到原联合菜单中的产品测试。指定产品准备已有一个最省联合确认测试，它只能比对应产品测试更小。两者之差仍是非负测试：在目标上差为零，在菜单的其他每个产品准备上也为零。完整菜单的产品总准备处于整个联合锥的内部，非负测试若在那里读零，就只能处处为零。于是两个测试对所有原联合输入相同，相关态也在其中；并非先丢弃相关性，再用边缘替代输入。
+
+特别地，产品输入 $x\otimes y$ 的(272.4)为 $e_p^A(x)e_q^B(y)$，相关 $z$ 的读数仍是 $(e_p^A\otimes e_q^B)(z)$，一般不等于 $e_p^A(z_A)e_q^B(z_B)$。例如(272.6)两边各有第二项时，原最小界保证 $z=(p_1\otimes q_1+p_2\otimes q_2)/2$ 合法；前者为 $1/2$，两个边缘读数的乘积为 $1/4$。这是同一个原锥中的相关输入。
+
+上述内部性只针对满足 $\sum_i e_{s_i}=u_X$ 的**整个单位完整 frame**；其态和可以依赖所选 frame。不曾证明任意子面有内禀完整菜单、任意态有正交谱、不同 frame 等长、存在规范共同态和、数值互易或共同尺。任意子面的未付谱／内部性不能代替(272.6)。$\square$
+
+**推论 272.3（原 M3 的精确低份数应用与相容性）。** 完整保留 [XVIII250.1][G272]：任意非平凡有限实 $V$；每个有限 $N\ge0$ 的整个 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个紧底、全部原纯点、完整正对偶、全部 proper 效应及有限单位分解；标量零层、分离全载体的原产品配对、规范重括号、全部正位置置换及其正逆、正单位丢弃；全部有限分块的原 min/max 界包括全部相关输入。仅另假设整个 $K_3$ 的 $\mathsf M_3$，不预付共同尺或任何重建。则对非负整数 $a,b$ 满足 $a+b\le3$，每个 $p\in P_a,q\in P_b$ 有
+
+$$
+e^{a+b}_{p\otimes q}=e_p^a\otimes e_q^b
+\quad\text{于整个 }W_{a+b},\qquad
+T^{a+b}_{p\otimes q}(z)=(e_p^a\otimes e_q^b)(z)
+\quad(z\in K_{a+b}).
+\tag{272.9}
+$$
+
+$T$ 仍是271.1的完整 proper 菜单 infimum。$P_0=\{1\}$，$e_1^0=u_0=1$。尤其 $2|1$ 和 $1|2$ 中的二份块目标可以是其整个原 $K_2$ 的任意相关纯态，并非仅两颗单份纯态的产品。
+
+证明。对 $n=1,2$，任选实际纯旁观 $r\in P_{3-n}$；这类旁观存在，可由归一紧底取极点，或用（一）的产品纯性选纯产品。原 min/max 给实际整面
+
+$$
+\{z\in K_3:z_{3-n}=r\}
+ =\{x\otimes r:x\in K_n\}.
+\tag{272.10}
+$$
+
+对每个 $p\in P_n$，$p\otimes r$ 是原三份纯态。令 $g_p(x)=e^3_{p\otimes r}(x\otimes r)$；由正产品嵌入，$g_p\in\mathcal E_n$ 且 $g_p(p)=1$。对任何原 $f\in\mathcal E_n$ 确认 $p$，指定延拓
+
+$$
+\widetilde f=f\otimes u_{3-n},\qquad
+u_3-\widetilde f=(u_n-f)\otimes u_{3-n}
+\tag{272.11}
+$$
+
+二者均在原 $C_3^*$ 中，故 $\widetilde f$ 是确认 $p\otimes r$ 的三份 proper 效应。M3 给 $e^3_{p\otimes r}\le\widetilde f$，限制得 $g_p\le f$。因此 $g_p=e_p^n$ 是**完整低层菜单**中的 least，唯一性还使它与旁观选择无关。这是271.3（一）已用的具体菜单下降，不是任意面效应延拓。$\mathsf M_1,\mathsf M_2$ 均已支付；对 $1|1,1|2,2|1$ 依次将两个局域 M 与相应联合 M 的产品目标代入272.2，得(272.9)。零层切分由标量单位直接成立。
+
+重括号与位置相容性也在这同一个原空间中成立。对三个单份纯点，
+
+$$
+e^3_{(p\otimes q)\otimes r}
+ =e^2_{p\otimes q}\otimes e_r^1
+ =e_p^1\otimes e_q^1\otimes e_r^1
+ =e_p^1\otimes e^2_{q\otimes r}
+ =e^3_{p\otimes(q\otimes r)}.
+\tag{272.12}
+$$
+
+这是整个 $W_3$ 上的泛函等式，允许任意原相关输入。任意原位置置换 $\sigma$ 是保单位序同构，其逆对偶双射完整 proper 菜单并保持确认及 leastness，故 $e^n_{\sigma p}=e_p^n\circ\sigma^{-1}$，$n\le3$；与(272.9)一致。对块内相关纯 $p\in P_2$，结论只将 $e_p^2$ 作为整个二份块的效应，不再拆成两个边缘效应。
+
+若另给三份的实际 L2，(272.10)的整面序同构使面内生成面与原生成面相同，故实际 L2 同样下降；这是 [XVIII240.1、250.2(i)][G272] 的精确接口，不需要一般面投影。272.9本身不使用 L2。原背景虽为全有限，M 的输入只在三份，故上述推导在重建前仅供应 $a+b\le3$；不据此推广到更高份数的 M。任意原维数的 M 加实际 L2 重建仍未由本推论结算。
+
+文献与新内容的范围随推导固定。[B272]“Least comparisons factor without an extra product axiom”的(5)已经给出同一产品恒等式，但在 $S=M+R$ 及其共同自对偶尺、规范 frame 态和的桥梁下；本节所增加的是局域完整 M 加**所选单一产品目标**联合 leastness 的前提弱化，以及上述原低份数接合，不将恒等式本身申领为新发现。[BW272] 的 Lemma 8 在 Jordan 模型复合中证明迹形式因子化，其 §2.3 的 Jordan frame、Definition 6 的产品测试与联合 Jordan 条件仍属其前件，不能被裸 full-menu 背景代付。[N272] 的 Lemmas 3,5 以 Axioms 1–2 和性质 $(*)$ 工作，Axiom 1 要求最小极端效应有唯一饱和态；其 §3 的 $(**)$ 更在全部非负仿射函数中取 infimum 并要求唯一取一，均不替换本节的 proper 菜单。本节相对于这些具名来源及仓内供应属于 repo-derived composition，不主张全球优先性、严格逻辑独立性或最少公理；亦不从此提供数值互易、一般面效应／投影、CP 或任何物理操作。$\square$
+
+[M272]: ../../../Library/QuantumStates/mullerududec2012selfduality.md "Positive dual generation and one common complete frame：M-only 零互易、含指定纯点的完整单位 frame；不消费后续需数值互易的 signed spectrality。"
+[B272]: ../../../Library/QuantumStates/barnumhilgert2019spectral.md "Ordered carriers and the shared composite contract 至 Least comparisons factor without an extra product axiom；其后具名三处正产品支配／整载体内部性接口。"
+[G272]: QUANTUM_ORIGIN_HALF_TURN_PREPARATION_AND_GLOBAL_EFFECTS_XVIII.md "240.1 的实际 L2、250.1 的完整强全有限背景及250.2(i)的实际纯旁观整面。"
+[BW272]: https://arxiv.org/abs/1202.4513v2 "Barnum–Wilce, Local tomography and the Jordan structure of quantum theory，§2.3、Definitions 6–7、Lemma 8；Jordan 模型与产品测试条件下的迹形式因子化。"
+[N272]: https://arxiv.org/abs/2312.13213v2 "Niestegge, Quantum transition probability，Axioms 1–2、性质(*)、Lemmas 3、5及§3的(**)；保留其唯一饱和与不同 infimum 域的边界。"
+
+## 追加锚（本行以下为增补区）
+
+
+## 273. 四点两种换位与原二态球的共同刻度
+
+**定义 273.1（原实际球上的有限换位条件）。** 单系统先采用271.1的非零有限实载体、闭尖生成原锥、严格正原单位、整个紧底 $K$、全部纯点 $P$ 和完整 proper 效应区间。取 $\dim V>1$；实际 L2 将给出所需的三维面。对整个 $K$ 的仿射自同构群记为 $\operatorname{Aut}_{\rm aff}(K)$：每个元素及其逆均把整个 $K$ 映到自身，并保持全部原凸准备关系。这是由原 $K$ 定义的数学群，不是另供的物理操作菜单。
+
+实际 L2 保留271.1的完整含义：每对不同原纯点的整个最小实际面 $B=F_K(p,q)$ 是仿射闭三球，原纯点在其中恰为整个球面。对每个这样的**不同实际面** $B$，条件 $\mathsf{X}_4$ 要求存在四个不同的原纯点 $r_1,r_2,r_3,r_4\in B$，以及两张整个原体的仿射自同构 $S_B,T_B$，满足
+
+$$
+\begin{aligned}
+S_Br_1=r_2,\quad S_Br_2=r_3,\quad S_Br_3=r_1,\quad S_Br_4=r_4,\\
+T_Br_1=r_2,\quad T_Br_2=r_1,\quad T_Br_3=r_4,\quad T_Br_4=r_3.
+\end{aligned}
+\tag{273.1}
+$$
+
+不先要求四点仿射独立或构成正四面体，不给共同尺、半径或全轴半转。$S_B,T_B$ 在面外的阶数与作用不作额外规定；不同面可以选不同四点及不同自同构。条件要求的是整个原体上的映射存在，不能以仅在四点或面内合法的置换代替。
+
+沿[XVIII200.1及(200.6)][C273]，在整个 $K$ 上取归一相对体积，记重心为 $c_K$、在 $L=\operatorname{lin}(K-K)$ 上的协方差为 $A_K$，定义
+
+$$
+g_K(v,w)=(A_K^{-1}v)(w),\qquad v,w\in L.
+\tag{273.2}
+$$
+
+该既有供应给出 $g_K$ 正定及其对全部 $\operatorname{Aut}_{\rm aff}(K)$ 的不变性。此处的数学体积不要求均匀准备装置；也不将 $g_K$ 先解释为自对偶锥配对。
+
+**定理 273.2（四点关系把每张原球接到同一整体尺）。** 在273.1的原域中，实际 L2 加 $\mathsf{X}_4$ 蕴含：对每个实际二态球 $B$，其球心为
+
+$$
+c_B=\frac{r_1+r_2+r_3+r_4}{4},
+\tag{273.3}
+$$
+
+四点在该球的内禀椭球度量下自动构成正四面体；整个 $B$ 在**同一个** $g_K$ 下为圆球。确切地，存在 $R_B>0$ 使
+
+$$
+\begin{aligned}
+L_B&=\operatorname{lin}(B-B),\qquad \dim L_B=3,\\
+B&=\{c_B+v:v\in L_B,\ g_K(v,v)\le R_B^2\},\\
+P\cap B&=\{c_B+v:v\in L_B,\ g_K(v,v)=R_B^2\}.
+\end{aligned}
+\tag{273.4}
+$$
+
+$R_B$ 可随面变化。只需273.1所列的两张全体映射，不需要把四面体的全部置换另作输入，也不要求它们在整个 $K$ 上满足有限群的全部关系。
+
+证明。先固定任一实际 $B$。严格凸球内两个不同纯点所生成的原最小面就是整个 $B$：它们开弦上的点属于 $\operatorname{ri}B$，包含它们的原面必须包含 $B$。仿射自同构将最小实际面送到像端点的最小实际面。因此 $S_B$ 和 $T_B$ 都保持整个 $B$，而不只是置换四点。
+
+在四个不同锚点上，$s=(123)$ 与 $t=(12)(34)$ 所生成的置换群是 $A_4$：$t$ 的三个循环共轭给全部三个非平凡双换位，与 $s$ 一起组成 $V_4\rtimes C_3$ 的十二个偶置换。特别地，顶点集和六条无序边各为一个轨道。先取把整个 $B$ 写成单位球的内禀方向二次型 $h_B$。保持 $B$ 的自同构保持其球心与 $h_B$；六边传递性使六条边的 $h_B$ 长度同为 $\ell>0$。对任意 $\sum_i\lambda_i=0$，平方距离的零和恒等式给
+
+$$
+h_B\!\left(\sum_i\lambda_i r_i,\sum_i\lambda_i r_i\right)
+=\frac{\ell^2}{2}\sum_i\lambda_i^2.
+\tag{273.2a}
+$$
+
+因此四点自动仿射独立。它们现在才唯一决定 $\operatorname{aff}B$ 上的映射，有限群关系也只在这个限制上成立；不向面外传递。
+
+整个仿射球的中心唯一，故被每个保持 $B$ 的自同构固定。将 $c_B$ 写成四点的唯一仿射坐标，顶点传递性使四个系数相同，系数和为一即得(273.3)。置 $v_i=r_i-c_B$，则 $\sum_i v_i=0$。将同一个内禀球二次型 $h_B$ 归一成
+
+$$
+B=\{c_B+v:h_B(v,v)\le1\}.
+\tag{273.5}
+$$
+
+保持整个球的仿射映射固定其中心，线性部分保持 $h_B$；这直接来自球的 Minkowski 泛函。因全部 $r_i$ 纯，$h_B(v_i,v_i)=1$。六边传递使非对角 $h_B(v_i,v_j)$ 为同一数 $a$。与 $\sum_i v_i=0$ 配对得 $1+3a=0$，所以 $a=-1/3$，四点自动为内禀正四面体。
+
+同样，整个原体的 $S_B,T_B$ 保持273.2的同一个 $g_K$。顶点与六边传递性分别使
+
+$$
+g_K(v_i,v_i)=\rho^2,\qquad g_K(v_i,v_j)=b\quad(i\ne j).
+\tag{273.6}
+$$
+
+$\rho^2>0$，因为 $v_i\ne0$。零和关系给 $b=-\rho^2/3$。四点仿射独立使前三个 $v_i$ 线性独立：若前三个有非零关系，用 $v_4=-v_1-v_2-v_3$ 即得到四点的非零零和仿射关系。因而它们构成 $L_B$ 的基，(273.6)与 $h_B$ 的相同 Gram 表给
+
+$$
+ g_K|_{L_B}=\rho^2 h_B.
+\tag{273.7}
+$$
+
+取 $R_B=\rho$，(273.5)及原 L2 的全部纯边界给(273.4)。对每张实际球分别作此推导，使用的始终是同一个全体协方差尺 $g_K$。证明没有先用全域确认、数值互易、一般面效应延拓或纯态传递性。$\square$
+
+**推论 273.3（原三复制上的完整有限复量子候选）。** 完整保留[XVIII250.1][F273]及270.1的强全有限背景：同一个非平凡有限实 $V$、每个 $N\ge0$ 的整个 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成原锥 $C_N$、严格正 $u_N=u^{\otimes N}$、整个归一紧底、全部原纯点、完整正对偶、全部 proper 效应及全部有限单位分解；标量零层、分离整个载体的原张量配对、规范重括号、全部正位置置换及其正逆、正单位丢弃；对全部有限分块和全部相关输入保留 min/max 界。仅在整个 $K_3$ 要求实际 L2 和 $\mathsf{X}_4$。
+
+相对于270.2—270.12所列的普通条件供应，这个入口与存在整数 $n\ge2$ 及同一个实线性同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$ 满足
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}\qquad(N\ge0)
+\tag{273.8}
+$$
+
+等价。此处未把 $\mathsf M_3$ 或原数值互易作为输入；它们在获得整锥对应后成为结论。
+
+证明。273.2用于原三复制的整个 $K_3$，恰好供应270.1所需的一个正定共同圆尺及所有实际二纯三球；半径可变与270.1的量词一致。全部原背景未变，因此直接调用270.12，得到(273.8)。不重证该节的三标签接合、矩形排核、共同局部坐标及全有限传播，不以四点置换代付其任何背景或文献前件。
+
+反向，在标准全有限复矩阵层级中，任何实际二纯面是复二维支持上的整个 qubit 密度体。取其中 Bloch 球的四个正四面体纯点。$(123)$ 固定第四点，是正四面体的 $2\pi/3$ 旋转；$(12)(34)$ 为 $\pi$ 旋转。每个都是 $\mathrm{SO}(3)$ 元素，可由二维支持上的一个酉矩阵共轭实现；将该酉矩阵在支持正交补上补成恒等，得到整个 $K_3$ 的仿射自同构，并实现(273.1)。这是数学自同构的存在，不要求该块酉为实际可调用的装置。实际 L2 同时由整个复二维支持成立，故反向完成。$\square$
+
+**命题 273.4（两个有限换位的判据边界）。** 273.2中的两类置换各自单独都不能迫使一个不变正定二次型与内禀球型成比例；四点上的这些置换也不能替代实际 L2 或它们向整个原体的延伸。
+
+证明。在正四面体的三维标准表示中，$s=(123)$ 的固定轴为第四个顶点方向 $a$。取欧氏单位轴 $a$ 和 $0\ne\varepsilon>-1$，则
+
+$$
+Q_s=I+\varepsilon aa^{\mathsf T}
+\tag{273.9}
+$$
+
+正定、保持 $s$，却不为标量型。对 $t=(12)(34)$，取其 $\pi$ 旋转轴为第一坐标，$t=\operatorname{diag}(1,-1,-1)$；$Q_t=\operatorname{diag}(2,1,1)$ 同样正定、不变且非标量。二者只是否定“只靠一种置换就锁定任意不变尺”的线性代数主张，不是删掉273.1一半后整个原全有限层级的反模型，也不证明原公理的逻辑独立性或最少生成元数。
+
+再取同一个正四面体四顶点的凸包 $\Delta$，与其外接整球 $B$ 比较。两者都容许(273.1)的两种全体仿射自同构，并且所列四点及置换表完全相同；$\Delta$ 的两纯最小面却是线段，$B$ 的则是整个三球。因此有限四点换位表没有独自恢复原最小面或球内连续状态。最后，对任一仿射球，其面内正四面体均有这两种旋转；若不要求它们延伸到整个 $K$，它们就未必保持整体 $g_K$，从而不能使用(273.6)。这后一项定位的是证明所需的环境相容性，不声称构造了违反原全有限结论的模型。$\square$
+
+**推论 273.5（现有量子公理的对应与候选的准确含义）。** 在273.3的完整前提及普通条件供应下，同一个 $\Theta_N=\theta^{\otimes N}$ 给出以下对应；它们直接消费270.13的整锥后字典。
+
+| 原定义或另给条件 | 对应 |
+| --- | --- |
+| 全部归一态、纯态与混合 | 全部密度矩阵、秩一投影与凸混合；纯标签为 $\mathbb{CP}^{n^N-1}$，谱分解成为原态的正交纯态分解 |
+| 完整 proper 效应、配对与全部有限单位分解 | $0\preceq E\preceq I$，$p_j=\operatorname{Tr}(E_j\rho)$，$\sum_jE_j=I$；得到全部数学 POVM 与其 PVM 特例 |
+| 原全菜单最小确认 | $e_{p_v}(x)=\operatorname{Tr}(P_v\Theta_Nx)$；纯端点读数 $|\langle v,w\rangle|^2$ 双向相同，全部混输入由同一个效应实现 minimum |
+| 原所有有限联合态、产品与丢弃 | 同一局部复 Hilbert 坐标的张量积、全部联合 PSD、纠缠与偏迹 |
+| 另给实线性分支在全部有限相关旁观输入上保持正性，并给原全正输入上的质量预算 | CP 与矩形 Kraus 表示；质量不增为 TNI、保质量为 TP；仪器另须各支总和的单位预算 |
+| 另给同层正实线性分支 $L:W_N\to W_N$，其效应 $u_N\circ L=e_P$ 对应投影 $P$，并在整个 certain-yes 支持的每个纯态上满足 $Lp=p$ | 唯一锐更新 $X\mapsto PXP$ |
+| 另给连续可逆保锥保单位的一参数群 | 酉共轭及 Hamilton 生成元形式；物理钟、能量与 $\hbar$ 的标定仍另给 |
+
+证明与范围。273.3已经供应270.13的整个实际矩阵锥、单位、配对和张量坐标，故逐项代入该既有字典；各过程行只在同一行所列的额外前提下成立。无限维、无限张量极限、近似稳定性、设备实现和资源成本仍无新增结论。数值互易只交换同一比较的两个纯端点，不改变两个有序仪器的状态更新；270.7已有非正交 qubit 测量的不同先后概率反例。
+
+本节新增的 repo-derived 接合是从每张实际球的四个原纯锚与两种**全体**换位，恢复内禀正四面体及同一全体协方差尺下的逐面圆性，再接到270的任意原维数全有限供应。有限置换群 $A_4$、不变二次型的有限维刚性、仿射球的中心与体积换元、Bloch 旋转的酉提升都是成熟中间工具；不将它们另领为新一般定理。关于对称与量子重建的成熟先例，[Müller—Ududec，Theorem 1及其bit symmetry定义][M273]使用有序可区分纯对的群传递性；本节未调用该定理，也未从两张映射直接申领它的自对偶结论。关于共同尺和完整重建的实际供应分别是[C273]与270.12—270.13，不将有限置换替换整个全域合同。不主张本入口相对 $\mathsf M_3+\mathrm{L2}$ 更弱、严格独立、全球最少或具有文献优先权；$\mathsf M_3+\mathrm{L2}$ 能否在任意原维数自行供应共同尺，仍未由本节解决。
+
+白话说，每两个不同的纯准备真正撑起一整颗三维球。在每颗球上，只挑四个不同的纯准备：前三个轮换、第四个不动；再让两对准备同时互换。要求这两种换位都能放回整个系统，所有原混合关系仍成立。四点于是自动变成不共面的正四面体，各颗球也被同一把从整体定义的尺量圆，不必先输入这把尺或逐方向输入连续旋转。保持原来全部有限复合和完整测试背景，已有重建才把它接成全部密度态、Born 读数、张量积与纠缠；实际更新、仪器和物理时间仍各有自己的条件。$\square$
+
+[C273]: QUANTUM_ORIGIN_HALF_TURN_PREPARATION_AND_GLOBAL_EFFECTS_XVIII.md "200.1、(200.5)—(200.6)：整个原体的协方差尺及仿射自然性。"
+[F273]: QUANTUM_ORIGIN_HALF_TURN_PREPARATION_AND_GLOBAL_EFFECTS_XVIII.md "250.1的强全有限原域；273.3完整保留其条件。"
+[M273]: ../../../Library/QuantumStates/mullerududec2012selfduality.md "Müller—Ududec，The structure of reversible computation determines the self-duality of quantum theory，Theorem 1；有序可区分纯对的bit symmetry及其条件边界。"
+
+## 追加锚（本行以下为增补区）
