@@ -14,11 +14,10 @@ QudeLeap/Lean-QuantumAlg@971dc8be8a153a116b6d7cd748f984d545861b00.
 Modified to consume the receiver's independent analytic QFT on every vector.
 -/
 
-module
 
-public import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.NoSwapMatrix
-public import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Reverse.Matrix
-public import D5.S3.Quantum.ShorCountingMarginal
+import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.NoSwapMatrix
+import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Reverse.Matrix
+import D5.S3.Quantum.ShorCountingMarginal
 import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.NoSwapMatrix
 import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Reverse.Matrix
 import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Matrix
@@ -33,7 +32,7 @@ noncomputable section
 /-- The literal recursive native word, with its actual terminal parallel SWAP
 network, equals the receiver's positive normalized QFT on every input vector.
 No equality modulo global phase is taken. Width zero is included. -/
-public theorem circuit_action (oracles : OracleModel) (q : Nat)
+theorem circuit_action (oracles : OracleModel) (q : Nat)
     (environment : oracles.Interpretation) (v : Fin (2 ^ q) → ℂ) :
     (onBinaryLabels (circuit oracles q) environment).applyVec v =
       QuantumPhaseEstimationGeneral.QFT (2 ^ q) v := by
