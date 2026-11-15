@@ -3923,3 +3923,130 @@ $$
 [Q284S]: https://arxiv.org/abs/0710.1934v1 "D. Chruściński, J. Jurkowski, A. Kossakowski, Quantum states with strong positive partial transpose, §1 equations (1)–(6) and canonical 2⊗N form"
 
 ## 追加锚（本行以下为增补区）
+
+## 285. 保留条件读数：一条非标量正则关系线已经足够
+
+本章完整保留284.1的原强全有限背景、固定纯旁观者 $b_*$、同一内部参照 $c$、整个proper菜单与全部相关输入。将284的非正规限制删除：不用丢弃后边缘的NPT，改用已经属于原菜单的交叠双份整块效应。条件读数只计算同一个原态的合法乘积配对，不预付条件态的物理制备。不改判284的非正规充分条件；扩充它的可选见证族。
+
+**定义 285.1（不再要求非正规的单对候选）。** 沿用284.1的参考—输出向量化、$r_M,\psi_M,\Gamma_M$ 及整套产品对公式，只将方向集换成
+
+$$
+\mathcal A_n=\{M\in M_n(\mathbb C):\operatorname{Tr}M=0,\ \|M\|_{\rm HS}=1\},\qquad n\ge2.
+\tag{285.1}
+$$
+
+其每个元素都非标量。仍由 $\mathsf D_{b_*}(c)+\mathsf X_{T,2}$ 及明列供应先产生同一低二层尺子和非空 $\mathcal R_{b_*}$；$b_n$ 不依赖 $M$。在该派生坐标中令
+
+$$
+\boxed{\quad
+\mathsf Q_{\mathrm{line}}(b_*,c)
+:=\mathsf D_{b_*}(c)+\mathsf X_{T,2}
++\exists(n,\theta,\varepsilon)\in\mathcal R_{b_*}\ \exists M\in\mathcal A_n:
+\mathsf S_{(p_M+q_M)/2}(c).
+\quad}
+\tag{285.2}
+$$
+
+这里 $\mathsf S$ 仍遍历整个原三份纯域的星形中点，$\mathsf D_{b_*}$ 仍遍历整个原 $P_2$，没有把原比较或确认菜单缩成选定探针。记 $\operatorname{BP}_{j|(ik)}$ 为在单腿 $j$ 与整个双腿块 $(ik)$ 的全部产品向量上非负的Hermitian矩阵锥；双腿测试向量允许 $i|k$ 纠缠。
+
+**定理 285.2（条件整块读数排尽两个原方向位并重建全部有限层）。** 在283.4的完整背景和全部明列供应下，对任意原 $b_*\in P_1$、$c\in\operatorname{ri}K_3$，候选(285.2)等价于存在同一 $n\ge2$ 与同一个保单位实线性序同构 $\theta:V\to H_n$，使
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}\qquad(N\ge0).
+\tag{285.3}
+$$
+
+证明。（一）先取得同一实际残余。固定纤维、低二层分类和同局域对齐完全复用283.1、282.2与283.3。284.2（一）的复产品端点证明只消费迹零、HS归一和 $\alpha>\beta>0$，不消费 $K_M\ne0$。故它对每个 $M\in\mathcal A_n$ 原样适用：第一点已有least $P_M$，共同确认只给所需 $h\ge P_M$；单边Gram、迹二、极端残余与双HS／迹预算给
+
+$$
+x=T_1^\varepsilon T_3^\delta\Gamma_M
+\in\mathcal C_3:=\theta^{\otimes3}C_3,
+\qquad \delta\in\{0,1\}.
+\tag{285.4}
+$$
+
+没有输入 $Q_M$ 自己的least，没有从共同确认偷换 $h\ge Q_M$，也没有对未知三份原锥预付PSD。
+
+（二）两个原整块正性约束。低二层锥 $T_1^\varepsilon\operatorname{PSD}_{n^2}$ 的迹对偶还是自身，因为部分转置是正交自伴随实线性对合。对实际分块 $2|(13)$，原max界及正置换允许所有 $P_y$ 与 $T_1^\varepsilon E_{13}$ 的乘积测试，其中 $E_{13}\succeq0$ 任意；故
+
+$$
+T_1^\varepsilon x\in\operatorname{BP}_{2|(13)}.
+\tag{285.5}
+$$
+
+同理，对 $1|(23)$，剩余第一条实际腿是2，得到
+
+$$
+T_2^\varepsilon x\in\operatorname{BP}_{1|(23)}.
+\tag{285.6}
+$$
+
+这里 $T_1^\varepsilon E_{13}$、$T_2^\varepsilon E_{23}$ 是原完整双份正对偶在同一坐标中的表达；特别地，$E$ 为单位秩一投影时它们就是proper原效应，因为其补分别是对应转置下的 $I-E\succeq0$。这些等式没有把部分转置当作原正控制，也没有把 $D_3=T_1^\varepsilon\mathcal C_3$ 误当作置换不变。
+
+（三）非标量性提供两侧的纠缠纯切片。若线性算子 $L$ 对每个向量 $z$ 都有 $Lz\in\mathbb Cz$，则对基向量 $e_i$ 写 $Le_i=\lambda_i e_i$，再用 $e_i+e_j$ 得全部 $\lambda_i$ 相等，所以 $L$ 是标量。反向显然。因 $M,M^{\mathsf T}$ 均非标量，分别存在单位向量 $y,z$ 使下列向量在所示两腿间Schmidt秩为二：
+
+$$
+\begin{aligned}
+\eta_y&=(I\otimes\langle y|\otimes I)r_M
+=|\bar y\rangle_1|0\rangle_3+|M^{\mathsf T}\bar y\rangle_1|1\rangle_3,\\
+\xi_z&=(\langle z|\otimes I\otimes I)r_M
+=|\bar z\rangle_2|0\rangle_3+|M\bar z\rangle_2|1\rangle_3.
+\end{aligned}
+\tag{285.7}
+$$
+
+对任一Schmidt秩二纯向量，部分转置的两个交叉Schmidt方向上有本征值 $s_1s_2,-s_1s_2$，其中 $s_1,s_2>0$。这是成熟的纯态部分转置计算[Q282P]、[Q285J]定理1，在本证明内作中间工具。因此可在整块 $(13)$、$(23)$ 分别选负方向的单位秩一投影 $E_{13},E_{23}$，给
+
+$$
+\begin{aligned}
+\operatorname{Tr}\bigl[(P_{y,2}\otimes E_{13})T_3\Gamma_M\bigr]
+&=\frac{\operatorname{Tr}(E_{13}T_3|\eta_y\rangle\langle\eta_y|)}{n+1}<0,\\
+\operatorname{Tr}\bigl[(P_{z,1}\otimes E_{23})T_3\Gamma_M\bigr]
+&=\frac{\operatorname{Tr}(E_{23}T_3|\xi_z\rangle\langle\xi_z|)}{n+1}<0.
+\end{aligned}
+\tag{285.8}
+$$
+
+张量在此按所标实际腿放置。于是 $T_3\Gamma_M$ 同时不属于 $\operatorname{BP}_{2|(13)}$ 与 $\operatorname{BP}_{1|(23)}$。只在计算中固定一个单体读数，未断言未知原锥已经含有这些PSD纯切片。
+
+（四）依次排位。(285.4)—(285.5)给 $T_3^\delta\Gamma_M\in\operatorname{BP}_{2|(13)}$，由(285.8)迫 $\delta=0$。再由(285.6)得 $(T_1T_2)^\varepsilon\Gamma_M\in\operatorname{BP}_{1|(23)}$。令 $\mathsf T=T_1T_2T_3$ 为全转置；它通过共轭全部产品测试向量保持每个所示BP锥，而
+
+$$
+(T_1T_2)^\varepsilon=\mathsf T^\varepsilon T_3^\varepsilon.
+\tag{285.9}
+$$
+
+故 $T_3^\varepsilon\Gamma_M\in\operatorname{BP}_{1|(23)}$，第二个负读数迫 $\varepsilon=0$。两个矛盾均来自同一个(285.4)，没有拼接不同状态或分别可达的最优值。
+
+（五）准确全有限尾部。现在才取得同坐标标准 $C_1,C_2$ 及 $\Gamma_M\in\mathcal C_3$；原 $r_Mr_M^*=(n+1)\Gamma_M$ 属于三份锥且 $M$ 非标量。XIII164.11第2项到第4项精确给(285.3)，完整保留164.1、164.3—164.9的全部有限相关旁观、实际重排、正切片与proper帽、相干控制及多项式／谱分支预算。一般 $M$ 不另取得明确 $\tau_n$ 的统一六副本、十八腿数字。
+
+反向，标准复PSD模型任意上述单点和共同源的确认菜单都有支持投影least。281.2给全部所需 $\mathsf S$，原换点成立，任意 $b_*$ 可按283.3对齐；$\mathcal A_n$ 非空，所以(285.2)成立。$\square$
+
+**推论 285.3（接最新单读数几何入口而不预付球暴露）。** 将(285.2)的原 $\mathsf X_{T,2}$ 换为XX279.1、279.5所定义的单体实际L2及 $\mathsf C_\Delta$，即每张原单体二纯球上规范的同准备双份共同门对两份球心读数为 $3/4$；完整保留XX279.6明列的M加数值互易到Jordan桥及M-only矩阵整锥供应，则该候选仍等价于(285.3)。
+
+证明。固定纤维先给完整M2、M1。XX279.1—279.5关于共同门、$\gamma_B$ 和 $\beta_B$ 的证明只消费这两个已得M及原背景，不需为其余第三份纯旁观者另给门。XX279.6的前半遂用 $\gamma_B=1/4$ 锁定同球互易，接具名Jordan与整锥供应，产生非空 $\mathcal R$；再用283.3对齐及285.2后半。反向PSD的同准备门是 $\operatorname{Sym}^2U$ 的支持投影，在两份qubit球心读数为 $3/4$，其余按285.2。这个数值条件仍是明示的额外关系约束，尚未由裸背景推出；此入口不偷加球暴露、全旁观正回缩或未知层自对偶。$\square$
+
+**命题 285.4（条件读数的几何、正规见证与公理对应）。** 在同一完整背景下，285与284刻画同一完整复量子模型类；285允许任意归一迹零方向，几何只要求一条含满秩截面的关系线确实改变某条射线，无须比较两种往返Gram。不据见证范围扩充宣称独立公理最少或严格逻辑弱化。
+
+证明与反事实。取 $M_0=\operatorname{diag}(1,-1,0,\ldots,0)/\sqrt2$，它属于 $\mathcal A_n$ 而不属于 $\Sigma_n$。284.2（二）的两个原丢弃边缘都PPT；但令 $a=(e_0+e_1)/\sqrt2$、$b=(e_0-e_1)/\sqrt2$，则 $M_0a=b/\sqrt2$。在任一所需单体腿固定实向量 $a$ 的读数，剩余纯切片是 $a\otimes0+b\otimes1/\sqrt2$；取整块负方向 $\chi=(a\otimes1-b\otimes0)/\sqrt2$，精确得到
+
+$$
+\operatorname{Tr}\bigl[(P_{a,2}\otimes P_{\chi,13})T_3\Gamma_{M_0}\bigr]
+=-\frac1{\sqrt2(n+1)},
+\tag{285.10}
+$$
+
+交换第一、二腿给另一负读数。故条件信息没有被PPT边缘捕获；直接丢弃先混合不同读数会失去这里使用的区别。若只保留三个单体效应的全产品测试，$E_{13},E_{23}$ 的纠缠方向不能作为上述整块测试，本证明即缺依据。这是证明依赖的准确定位，不是完整背景的反模型；当前原菜单本就包含整个双份块，所以没有新增测试可用性公理。
+
+几何可写作 $\operatorname{span}_{\mathbb C}\{I,M\}$：第一截面覆盖全部局域方向，第二截面与它独立。每侧都能找到一个条件读数，留下仍区分第三腿两支的纠缠切片。伴随及矩阵只是低二层尺子的派生语言；主体是原正配对、同一三腿实现和两个交叠整块读数之间的相容约束。它们没有凭定义保证least存在。
+
+(285.3)之后准确复用284.3的完整量子字典：$\mathcal H_N=(\mathbb C^n)^{\otimes N}$、$W_N\cong\operatorname{Herm}(\mathcal H_N)$，归一态为全部密度矩阵，纯点为复射线；完整正对偶、proper区间、全部有限单位分解和原配对给数学POVM／PVM及Born迹式；原产品、实际重排和正丢弃给张量与偏迹。CP仍要求所有有限相关旁观输入保正，TNI／TP和仪器仍要求整个正输入及总分支预算，Lüders仍要求锐效应及整个yes支持中性，数学酉动力学仍要求指定连续可逆保锥保单位群。设备实现、物理钟、能量、$\hbar$、无限与近似极限保留独立前件。
+
+归属：复杂产品割线与第二端点、固定纤维下降、单边Gram和极端残余、一般正则种子全有限传播均复用284.2（一）、283.1—283.4及XIII164.11；只对旧证明未使用非正规性的部分扩大参数域。纯态部分转置负方向、全转置保块正、线性算子保持全部射线则为标量，均为成熟中间工具，不单列为新定理。XX279的规范双份对角门、数值预算与Jordan入口保留原归属。repo-derived承重接合是把已有的整个双份原对偶与两个实际交叠分块用于同一残余，借条件纠缠读数排尽两个原位，从而删除284所要求的非正规限制，并与最新单读数入口给出完整候选。条件读数不等于实际后选择制备，数学兼容性不等于本体真实性；不主张Lean核验或外部优先性。
+
+白话：固定一颗纯旁观者，先让前两份的整条纯准备纤维把共同尺子交出来。仍只挑一对产品准备共用最低门，扣掉第一点已有的门，剩下同一条三腿关系或镜像。接下来先保留某一份的一个读数，再看另外两份组成的整个块，不急着把它平均丢掉。只要这条关系确实改变了某个方向，就能在两侧各留下一个纠缠的纯切片；任何镜像都会让原来合法的一只正门读出负数。因此无需再要求两种往返不同，连正规关系也可以。最后这条关系保有满秩截面，准确接上全部有限量子结构。少掉的是非正规限制，原完整菜单、真实复合与过程预算继续各自承担条件。$\square$
+
+[Q285J]: https://njohnston.ca/2013/07/the-spectrum-of-the-partial-transpose/ "Nathaniel Johnston, The Spectrum of the Partial Transpose of a Density Matrix, Theorem 1: pure-state partial-transpose spectrum from Schmidt coefficients; used only as a mature intermediate tool."
+
+## 追加锚（本行以下为增补区）
