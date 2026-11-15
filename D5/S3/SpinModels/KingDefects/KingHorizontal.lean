@@ -1028,7 +1028,7 @@ theorem horizontal_two_columns (p : ℕ) : N_H (p + 1) 1 = 6 * ((3 * p + 2) * 2 
 #print axioms interior_one_column_count
 #print axioms horizontal_two_columns
 
-private def SharedAlphabet (p q : K) := {x : K // x ≠ 0 ∧ x ≠ p ∧ x ≠ q}
+private abbrev SharedAlphabet (p q : K) := {x : K // x ≠ 0 ∧ x ≠ p ∧ x ≠ q}
 
 private theorem shared_alphabet_card (p q : K) (hp : p ≠ 0) (hq : q ≠ 0) :
     Nat.card (SharedAlphabet p q) = if p = q then 2 else 1 := by
@@ -1037,7 +1037,7 @@ private theorem shared_alphabet_card (p q : K) (hp : p ≠ 0) (hq : q ≠ 0) :
     decide
   exact (Nat.card_eq_fintype_card).trans (table p q hp hq)
 
-private def ThreeRowCode (c d : ℕ) :=
+private abbrev ThreeRowCode (c d : ℕ) :=
   Σ x : NZPair, Σ y : NZPair,
     (Fin c → SharedAlphabet x.val.1 y.val.1) × (Fin d → SharedAlphabet x.val.2 y.val.2)
 
@@ -1087,11 +1087,10 @@ private def three_row_slots_equiv (c d : ℕ) :
     ⟨empty_boundary w.2.1 (fun j => (w.2.2.1 j).val) (fun j => (w.2.2.2 j).val),
       empty_boundary_valid _ _ _ (fun j => ⟨(w.2.2.1 j).property.1,(w.2.2.1 j).property.2.2⟩)
         (fun j => ⟨(w.2.2.2 j).property.1,(w.2.2.2 j).property.2.2⟩)⟩), by
-    intro j hj
-    refine Fin.addCases (fun j => ?_) (fun j => ?_) j
-    · rfl
-    · refine Fin.cases ?_ (fun _ => rfl) j
-      exact (hj rfl).elim⟩
+    intro j
+    refine Fin.addCases (fun j _ => ?_) (fun j => ?_) j
+    · simp [empty_boundary]
+    · refine Fin.cases (fun hj => (hj rfl).elim) (fun _ _ => by simp [empty_boundary]) j⟩
   invFun w := ⟨⟨(w.val.1.val.p,w.val.1.val.q),w.val.1.property.1,
       w.val.1.property.2.1,w.val.1.property.2.2.1⟩,
     ⟨(w.val.2.val.p,w.val.2.val.q),w.val.2.property.1,
@@ -1108,7 +1107,7 @@ private def three_row_slots_equiv (c d : ℕ) :
       exact w.val.2.property.2.2.2.2.2.2.2.1 _ (by simp [pivot, Fin.lt_def])⟩)⟩
   left_inv w := by
     rcases w with ⟨x,y,l,r⟩
-    congr 2 <;> funext j <;> apply Subtype.ext <;> simp [empty_boundary]
+    simp [empty_boundary]
   right_inv w := by
     apply Subtype.ext
     apply Prod.ext
@@ -1139,6 +1138,489 @@ private def three_row_slots_equiv (c d : ℕ) :
       · funext i
         exact Fin.elim0 i
 
-#print axioms three_row_slots_equiv
+private theorem nz_pair_weighted_sum (x : NZPair) (u v : ℕ) :
+    ∑ y : NZPair, (if x.val.1 = y.val.1 then u else 1) *
+      (if x.val.2 = y.val.2 then v else 1) = u * v + u + v + 3 := by
+  have counts : ∀ x : NZPair,
+      (Finset.univ.filter (fun y : NZPair => x.val.1 = y.val.1 ∧ x.val.2 = y.val.2)).card = 1 ∧
+      (Finset.univ.filter (fun y : NZPair => x.val.1 = y.val.1 ∧ x.val.2 ≠ y.val.2)).card = 1 ∧
+      (Finset.univ.filter (fun y : NZPair => x.val.1 ≠ y.val.1 ∧ x.val.2 = y.val.2)).card = 1 ∧
+      (Finset.univ.filter (fun y : NZPair => x.val.1 ≠ y.val.1 ∧ x.val.2 ≠ y.val.2)).card = 3 := by
+    decide
+  have expand (y : NZPair) :
+      (if x.val.1 = y.val.1 then u else 1) * (if x.val.2 = y.val.2 then v else 1) =
+      (if x.val.1 = y.val.1 ∧ x.val.2 = y.val.2 then u*v else 0) +
+      (if x.val.1 = y.val.1 ∧ x.val.2 ≠ y.val.2 then u else 0) +
+      (if x.val.1 ≠ y.val.1 ∧ x.val.2 = y.val.2 then v else 0) +
+      (if x.val.1 ≠ y.val.1 ∧ x.val.2 ≠ y.val.2 then 1 else 0) := by
+    by_cases h1 : x.val.1 = y.val.1 <;>
+      by_cases h2 : x.val.2 = y.val.2 <;> simp [h1,h2]
+  simp_rw [expand, Finset.sum_add_distrib]
+  simp only [← Finset.sum_filter, Finset.sum_const, smul_eq_mul,
+    (counts x).1, (counts x).2.1, (counts x).2.2.1, (counts x).2.2.2]
+  ring
+
+private theorem three_row_code_card (c d : ℕ) :
+    Nat.card (ThreeRowCode c d) = 6 * (2 ^ (c + d) + 2 ^ c + 2 ^ d + 3) := by
+  rw [Nat.card_sigma]
+  have inner (x : NZPair) :
+      Nat.card (Σ y : NZPair,
+        (Fin c → SharedAlphabet x.val.1 y.val.1) ×
+        (Fin d → SharedAlphabet x.val.2 y.val.2)) = 2 ^ (c + d) + 2 ^ c + 2 ^ d + 3 := by
+    rw [Nat.card_sigma]
+    simp only [Nat.card_prod, Nat.card_fun, Nat.card_fin]
+    have pow_ite (P : Prop) [Decidable P] (n : ℕ) :
+        (if P then 2 else 1) ^ n = if P then 2 ^ n else 1 := by split_ifs <;> simp
+    calc
+      _ = ∑ y : NZPair, (if x.val.1 = y.val.1 then 2^c else 1) *
+          (if x.val.2 = y.val.2 then 2^d else 1) := by
+        apply Finset.sum_congr rfl
+        intro y _
+        rw [shared_alphabet_card _ _ x.property.1 y.property.1,
+          shared_alphabet_card _ _ x.property.2.1 y.property.2.1, pow_ite, pow_ite]
+      _ = _ := by rw [nz_pair_weighted_sum, pow_add]
+  simp_rw [inner]
+  simp only [Finset.sum_const, Finset.card_univ, smul_eq_mul]
+  have h : Fintype.card NZPair = 6 := by simpa [Nat.card_eq_fintype_card] using nz_pair_card
+  rw [h]
+
+/-- The middle row of a three-row rectangle, including empty left or right sides. -/
+theorem interior_three_rows_count (c d : ℕ) :
+    N_e (.H (1 : Fin 3) (pivot c d) : Edge 3 (c + (d + 1) + 1)) =
+      6 * (2 ^ (c + d) + 2 ^ c + 2 ^ d + 3) := by
+  unfold N_e
+  have h := Nat.card_congr (interior_slot_equiv 0 0 _ (pivot c d))
+  have hr : cut_row (0 + 1) (0 + 1) = (1 : Fin 3) := Fin.ext rfl
+  rw [hr] at h
+  rw [h, ← Nat.card_congr (three_row_slots_equiv c d), three_row_code_card]
+
+private theorem sum_two_powers (q : ℕ) : (∑ i : Fin q, 2 ^ i.val) + 1 = 2 ^ q := by
+  induction q with
+  | zero => simp
+  | succ q ih =>
+    rw [Fin.sum_univ_castSucc]
+    simp only [Fin.val_castSucc, Fin.val_last, pow_succ]
+    omega
+
+private theorem sum_two_powers_reverse (q : ℕ) :
+    (∑ i : Fin (q + 1), 2 ^ (q - i.val)) + 1 = 2 ^ (q + 1) := by
+  have hr := Equiv.sum_comp (Fin.revPerm (n := q + 1)) (fun i : Fin (q+1) => (2 : ℕ)^i.val)
+  have hv (i : Fin (q + 1)) : (Fin.revPerm i).val = q - i.val := by simp [Fin.revPerm, Fin.rev]
+  simp only [hv] at hr
+  rw [hr]
+  exact sum_two_powers (q + 1)
+
+/-- Three rows and any width at least two, in subtraction-free form. -/
+theorem horizontal_three_rows (q : ℕ) :
+    N_H 2 (q + 1) + 54 = 6 * ((q + 13) * 2 ^ q + 3 * (q + 2)) := by
+  have hc (s : Fin (q + 1)) :
+      N_e (.H (1 : Fin 3) s : Edge 3 (q + 1 + 1)) =
+        6 * (2 ^ q + 2 ^ s.val + 2 ^ (q - s.val) + 3) := by
+    have aux (c d : ℕ) {M : ℕ} (hM : M = c + (d + 1))
+        (s : Fin M) (hs : s.val = c) :
+        N_e (.H (1 : Fin 3) s : Edge 3 (M + 1)) =
+          6 * (2 ^ (c + d) + 2 ^ c + 2 ^ d + 3) := by
+      subst M
+      have hp : s = pivot c d := Fin.ext hs
+      subst s
+      exact interior_three_rows_count c d
+    have h := aux s.val (q - s.val) (by have := s.isLt; omega) s rfl
+    have he : s.val + (q - s.val) = q := by have := s.isLt; omega
+    simpa [he] using h
+  have hb (s : Fin (q + 1)) :
+      N_e (.H (0 : Fin 3) s : Edge 3 (q + 1 + 1)) + 12 =
+        6 * (2 + 2 ^ s.val + 2 ^ (q - s.val)) := by
+    have h := boundary_count_at (m := 1) s
+    simp only [E, one_ne_zero, ↓reduceIte, pow_one] at h
+    have hp : (2 : ℕ) ≤ 2 + 2 ^ s.val + 2 ^ (q - s.val) :=
+      (Nat.le_add_right 2 _).trans (Nat.le_add_right _ _)
+    have hs : q + 1 - 1 - s.val = q - s.val := by omega
+    rw [hs] at h
+    omega
+  have hb' (s : Fin (q + 1)) :
+      N_e (.H (Fin.last 2) s : Edge 3 (q + 1 + 1)) =
+        N_e (.H (0 : Fin 3) s) := by
+    simpa using horizontal_count_row_reflect (0 : Fin 3) s
+  have hbs := congrArg (fun f : Fin (q+1) → ℕ => ∑ s, f s) (funext hb)
+  simp only [Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum,
+    Finset.sum_const, Finset.card_univ, Fintype.card_fin, smul_eq_mul] at hbs
+  have hgeom := sum_two_powers (q+1)
+  have hrev := sum_two_powers_reverse q
+  unfold N_H
+  rw [Fin.sum_univ_three]
+  simp_rw [hc]
+  have hlast : (2 : Fin 3) = Fin.last 2 := rfl
+  rw [hlast]
+  simp_rw [hb']
+  simp only [Finset.sum_add_distrib, ← Finset.mul_sum,
+    Finset.sum_const, Finset.card_univ, Fintype.card_fin, smul_eq_mul] at hbs ⊢
+  simp only [pow_succ] at hgeom hrev
+  nlinarith
+
+/-- The ordinary vertical alphabet excludes the broken horizontal value. -/
+abbrev OrdinaryAlphabet (x : NZPair) := {v : K // v ≠ 0 ∧ v ≠ x.val.1 + x.val.2}
+
+/-- A shared horizontal slot avoids both special values and both ordinary vertical words. -/
+abbrev InteriorAlphabet {a b : ℕ} (x y : NZPair)
+    (u : Fin a → OrdinaryAlphabet x) (v : Fin b → OrdinaryAlphabet y) (p q : K) :=
+  {h : K // h ≠ 0 ∧ h ≠ p ∧ h ≠ q ∧ (∀ i, h ≠ (u i).val) ∧ ∀ i, h ≠ (v i).val}
+
+/-- Independent special pairs and ordinary vertical words, followed by shared horizontal words. -/
+abbrev InteriorCode (a b c d : ℕ) :=
+  Σ x : NZPair, Σ y : NZPair,
+    Σ u : Fin a → OrdinaryAlphabet x, Σ v : Fin b → OrdinaryAlphabet y,
+      (Fin c → InteriorAlphabet x y u v x.val.1 y.val.1) ×
+      (Fin d → InteriorAlphabet x y u v x.val.2 y.val.2)
+
+private def coded_boundary {m c d : ℕ} (x : NZPair)
+    (u : Fin m → OrdinaryAlphabet x) (l : Fin c → K) (r : Fin d → K) :
+    BoundaryData m (c + (d + 1)) where
+  p := x.val.1
+  q := x.val.2
+  h := Fin.addCases l (Fin.cases (x.val.1 + x.val.2) r)
+  v i := (u i).val
+
+private theorem coded_boundary_valid {m c d : ℕ} (x : NZPair)
+    (u : Fin m → OrdinaryAlphabet x) (l : Fin c → K) (r : Fin d → K)
+    (hl : ∀ j, l j ≠ 0 ∧ l j ≠ x.val.1 ∧ ∀ i, l j ≠ (u i).val)
+    (hr : ∀ j, r j ≠ 0 ∧ r j ≠ x.val.2 ∧ ∀ i, r j ≠ (u i).val) :
+    BoundaryValid (pivot c d) (coded_boundary x u l r) := by
+  have hz : x.val.1 + x.val.2 ≠ 0 := by
+    rw [ne_eq, add_eq_zero_iff_eq_neg, IsAddKleinFour.neg_eq_self]
+    exact x.property.2.2
+  refine ⟨x.property.1,x.property.2.1,x.property.2.2,?_,?_,?_,?_,?_,?_⟩
+  · simp [coded_boundary, pivot]
+  · intro j
+    refine Fin.addCases (fun j => ?_) (fun j => ?_) j
+    · simpa [coded_boundary] using (hl j).1
+    · refine Fin.cases ?_ (fun j => ?_) j
+      · simpa [coded_boundary] using hz
+      · simpa [coded_boundary] using (hr j).1
+  · exact fun i => (u i).property.1
+  · intro j
+    refine Fin.addCases (fun j _ => ?_) (fun j hj => ?_) j
+    · simpa [coded_boundary] using (hl j).2.1
+    · have := j.isLt
+      simp only [Fin.lt_def, Fin.val_natAdd, pivot, Fin.val_zero] at hj
+      omega
+  · intro j
+    refine Fin.addCases (fun j hj => ?_) (fun j hj => ?_) j
+    · have := j.isLt
+      simp only [Fin.lt_def, Fin.val_castAdd, pivot, Fin.val_natAdd, Fin.val_zero] at hj
+      omega
+    · refine Fin.cases (fun h => (lt_irrefl _ h).elim) (fun j _ => ?_) j hj
+      simpa [coded_boundary] using (hr j).2.1
+  · intro i j
+    refine Fin.addCases (fun j => ?_) (fun j => ?_) j
+    · simpa [coded_boundary] using (hl j).2.2 i
+    · refine Fin.cases ?_ (fun j => ?_) j
+      · simpa [coded_boundary] using Ne.symm (u i).property.2
+      · simpa [coded_boundary] using (hr j).2.2 i
+
+/-- A direct four-word version of the interior slot classification. -/
+def interior_code_equiv (a b c d : ℕ) :
+    InteriorCode a b c d ≃ InteriorSlots a b (c + (d + 1)) (pivot c d) where
+  toFun w := ⟨(
+    ⟨coded_boundary w.1 w.2.2.1 (fun j => (w.2.2.2.2.1 j).val)
+        (fun j => (w.2.2.2.2.2 j).val),
+      coded_boundary_valid _ _ _ _
+        (fun j => ⟨(w.2.2.2.2.1 j).property.1,(w.2.2.2.2.1 j).property.2.1,
+          (w.2.2.2.2.1 j).property.2.2.2.1⟩)
+        (fun j => ⟨(w.2.2.2.2.2 j).property.1,(w.2.2.2.2.2 j).property.2.1,
+          (w.2.2.2.2.2 j).property.2.2.2.1⟩)⟩,
+    ⟨coded_boundary w.2.1 w.2.2.2.1 (fun j => (w.2.2.2.2.1 j).val)
+        (fun j => (w.2.2.2.2.2 j).val),
+      coded_boundary_valid _ _ _ _
+        (fun j => ⟨(w.2.2.2.2.1 j).property.1,(w.2.2.2.2.1 j).property.2.2.1,
+          (w.2.2.2.2.1 j).property.2.2.2.2⟩)
+        (fun j => ⟨(w.2.2.2.2.2 j).property.1,(w.2.2.2.2.2 j).property.2.2.1,
+          (w.2.2.2.2.2 j).property.2.2.2.2⟩)⟩), by
+    intro j
+    refine Fin.addCases (fun j _ => ?_) (fun j => ?_) j
+    · simp [coded_boundary]
+    · refine Fin.cases (fun hj => (hj rfl).elim) (fun _ _ => by simp [coded_boundary]) j⟩
+  invFun w := ⟨⟨(w.val.1.val.p,w.val.1.val.q),w.val.1.property.1,
+      w.val.1.property.2.1,w.val.1.property.2.2.1⟩,
+    ⟨(w.val.2.val.p,w.val.2.val.q),w.val.2.property.1,
+      w.val.2.property.2.1,w.val.2.property.2.2.1⟩,
+    (fun i => ⟨w.val.1.val.v i,w.val.1.property.2.2.2.2.2.1 i, by
+      rw [← w.val.1.property.2.2.2.1]
+      exact Ne.symm (w.val.1.property.2.2.2.2.2.2.2.2 i (pivot c d))⟩),
+    (fun i => ⟨w.val.2.val.v i,w.val.2.property.2.2.2.2.2.1 i, by
+      rw [← w.val.2.property.2.2.2.1]
+      exact Ne.symm (w.val.2.property.2.2.2.2.2.2.2.2 i (pivot c d))⟩),
+    (fun j => ⟨w.val.1.val.h (j.castAdd (d + 1)),
+      w.val.1.property.2.2.2.2.1 _,
+      w.val.1.property.2.2.2.2.2.2.1 _ (by simp [pivot, Fin.lt_def]), by
+      rw [w.property _ (by simp [pivot, Fin.ext_iff]; omega)]
+      exact w.val.2.property.2.2.2.2.2.2.1 _ (by simp [pivot, Fin.lt_def]),
+      fun i => w.val.1.property.2.2.2.2.2.2.2.2 i _, by
+      intro i
+      rw [w.property _ (by simp [pivot, Fin.ext_iff]; omega)]
+      exact w.val.2.property.2.2.2.2.2.2.2.2 i _⟩),
+    (fun j => ⟨w.val.1.val.h (j.succ.natAdd c),
+      w.val.1.property.2.2.2.2.1 _,
+      w.val.1.property.2.2.2.2.2.2.2.1 _ (by simp [pivot, Fin.lt_def]), by
+      rw [w.property _ (by simp [pivot, Fin.ext_iff])]
+      exact w.val.2.property.2.2.2.2.2.2.2.1 _ (by simp [pivot, Fin.lt_def]),
+      fun i => w.val.1.property.2.2.2.2.2.2.2.2 i _, by
+      intro i
+      rw [w.property _ (by simp [pivot, Fin.ext_iff])]
+      exact w.val.2.property.2.2.2.2.2.2.2.2 i _⟩)⟩
+  left_inv w := by
+    rcases w with ⟨x,y,u,v,l,r⟩
+    simp [coded_boundary]
+  right_inv w := by
+    apply Subtype.ext
+    apply Prod.ext
+    · apply Subtype.ext
+      apply BoundaryData.ext
+      · rfl
+      · rfl
+      · funext j
+        refine Fin.addCases (fun j => ?_) (fun j => ?_) j
+        · simp [coded_boundary]
+        · refine Fin.cases ?_ (fun j => ?_) j
+          · simpa [coded_boundary, pivot] using w.val.1.property.2.2.2.1.symm
+          · simp [coded_boundary]
+      · rfl
+    · apply Subtype.ext
+      apply BoundaryData.ext
+      · rfl
+      · rfl
+      · funext j
+        refine Fin.addCases (fun j => ?_) (fun j => ?_) j
+        · simpa [coded_boundary] using w.property (j.castAdd (d + 1))
+            (by simp [pivot, Fin.ext_iff]; omega)
+        · refine Fin.cases ?_ (fun j => ?_) j
+          · simpa [coded_boundary, pivot] using w.val.2.property.2.2.2.1.symm
+          · simpa [coded_boundary] using w.property (j.succ.natAdd c)
+              (by simp [pivot, Fin.ext_iff])
+      · rfl
+
+/-- An exact interior count as independent horizontal alphabet sizes over vertical words. -/
+set_option synthInstance.maxSize 2048 in
+theorem interior_count_alphabets (a b c d : ℕ) :
+    N_e (.H (cut_row (a + 1) (b + 1)) (pivot c d) :
+      Edge ((a + 1) + (b + 1) + 1) (c + (d + 1) + 1)) =
+      ∑ x : NZPair, ∑ y : NZPair,
+        ∑ u : Fin a → OrdinaryAlphabet x, ∑ v : Fin b → OrdinaryAlphabet y,
+          Nat.card (InteriorAlphabet x y u v x.val.1 y.val.1) ^ c *
+          Nat.card (InteriorAlphabet x y u v x.val.2 y.val.2) ^ d := by
+  classical
+  unfold N_e
+  rw [Nat.card_congr (interior_slot_equiv a b _ (pivot c d)),
+    ← Nat.card_congr (interior_code_equiv a b c d)]
+  letI : Fintype (InteriorCode a b c d) := inferInstance
+  simp only [InteriorCode, Nat.card_eq_fintype_card, Fintype.card_sigma,
+    Fintype.card_prod, Fintype.card_fun, Fintype.card_fin]
+
+private def word_support {n : ℕ} (u : Fin n → Bool) : Finset Bool := Finset.univ.image u
+
+private theorem word_support_empty {n : ℕ} (u : Fin n → Bool) :
+    word_support u = ∅ ↔ n = 0 := by
+  constructor
+  · intro h
+    by_contra hn
+    have i : Fin n := ⟨0,Nat.pos_of_ne_zero hn⟩
+    have hm : u i ∈ word_support u := Finset.mem_image_of_mem _ (Finset.mem_univ _)
+    rw [h] at hm
+    exact Finset.notMem_empty _ hm
+  · intro h
+    subst n
+    simp [word_support]
+
+private theorem word_support_singleton {n : ℕ} (hn : 0 < n) (u : Fin n → Bool) (b : Bool) :
+    word_support u = {b} ↔ u = (fun _ => b) := by
+  constructor
+  · intro h
+    funext i
+    have hm : u i ∈ word_support u := Finset.mem_image_of_mem _ (Finset.mem_univ _)
+    rw [h] at hm
+    exact Finset.mem_singleton.mp hm
+  · intro h
+    subst u
+    let _ : Nonempty (Fin n) := ⟨⟨0,hn⟩⟩
+    exact Finset.image_const ⟨⟨0,hn⟩,Finset.mem_univ _⟩ b
+
+private theorem word_support_full {n : ℕ} (hn : 0 < n) (u : Fin n → Bool) :
+    word_support u = Finset.univ ↔
+      u ≠ (fun _ => false) ∧ u ≠ (fun _ => true) := by
+  constructor
+  · intro h
+    constructor <;> intro hu
+    · have he := (word_support_singleton hn u false).mpr hu
+      rw [h] at he
+      exact (by decide : (Finset.univ : Finset Bool) ≠ {false}) he
+    · have he := (word_support_singleton hn u true).mpr hu
+      rw [h] at he
+      exact (by decide : (Finset.univ : Finset Bool) ≠ {true}) he
+  · rintro ⟨hf,ht⟩
+    apply Finset.eq_univ_of_forall
+    intro b
+    by_contra hb
+    have hne (i : Fin n) : u i ≠ b := by
+      intro he
+      apply hb
+      exact Finset.mem_image.mpr ⟨i,Finset.mem_univ _,he⟩
+    cases b
+    · apply ht
+      funext i
+      cases hi : u i
+      · exact (hne i hi).elim
+      · rfl
+    · apply hf
+      funext i
+      cases hi : u i
+      · rfl
+      · exact (hne i hi).elim
+
+private def support_weight (n : ℕ) (S : Finset Bool) : ℕ :=
+  if n = 0 then (if S = ∅ then 1 else 0)
+  else if S = ∅ then 0 else if S = {false} ∨ S = {true} then 1 else 2 ^ n - 2
+
+private theorem word_support_card (n : ℕ) (S : Finset Bool) :
+    Nat.card {u : Fin n → Bool // word_support u = S} = support_weight n S := by
+  classical
+  by_cases hn : n = 0
+  · subst n
+    have he (u : Fin 0 → Bool) : word_support u = ∅ := (word_support_empty u).mpr rfl
+    by_cases hS : S = ∅
+    · subst S
+      simp [support_weight, he, Nat.card_eq_fintype_card]
+    · letI : IsEmpty {u : Fin 0 → Bool // word_support u = S} :=
+        ⟨fun u => hS (u.property.symm.trans (he u.val))⟩
+      simp [support_weight, hS, Nat.card_of_isEmpty]
+  · have hn' := Nat.pos_of_ne_zero hn
+    have casesS : S = ∅ ∨ S = {false} ∨ S = {true} ∨ S = Finset.univ := by
+      revert S
+      decide
+    rcases casesS with rfl | rfl | rfl | rfl
+    · simp [word_support_empty, hn, support_weight, Nat.card_eq_fintype_card]
+    · simp [word_support_singleton hn', support_weight, hn, Nat.card_eq_fintype_card]
+    · simp [word_support_singleton hn', support_weight, hn, Nat.card_eq_fintype_card]
+    · simp only [word_support_full hn', Nat.card_eq_fintype_card]
+      have hft : (fun _ : Fin n => false) ≠ (fun _ => true) := by
+        intro h
+        have := congrFun h ⟨0,hn'⟩
+        contradiction
+      have h := Fintype.card_subtype_compl
+        (fun u : Fin n → Bool => u = (fun _ => false) ∨ u = (fun _ => true))
+      rw [Fintype.card_subtype_eq_or_eq_of_ne hft] at h
+      have hw : support_weight n Finset.univ = 2 ^ n - 2 := by
+        unfold support_weight
+        rw [if_neg hn, if_neg (by decide), if_neg (by decide)]
+      rw [hw]
+      simpa only [not_or, Fintype.card_fun, Fintype.card_bool, Fintype.card_fin] using h
+
+private theorem sum_by_support (n : ℕ) (f : Finset Bool → ℕ) :
+    (∑ u : Fin n → Bool, f (word_support u)) =
+      ∑ S : Finset Bool, support_weight n S * f S := by
+  classical
+  have h := Equiv.sum_comp (Equiv.sigmaFiberEquiv (@word_support n))
+    (fun u => f (word_support u))
+  rw [Fintype.sum_sigma] at h
+  calc
+    _ = ∑ S : Finset Bool, ∑ u : {u : Fin n → Bool // word_support u = S},
+        f (word_support u.val) := h.symm
+    _ = ∑ S : Finset Bool, Nat.card {u : Fin n → Bool // word_support u = S} * f S := by
+      apply Finset.sum_congr rfl
+      intro S _
+      have he : (fun u : {u : Fin n → Bool // word_support u = S} => f (word_support u.val)) =
+          (fun _ => f S) := funext fun u => congrArg f u.property
+      rw [he]
+      simp [Nat.card_eq_fintype_card]
+    _ = _ := by simp_rw [word_support_card]
+
+private def ordinary_value (x : NZPair) (b : Bool) : K := if b then x.val.2 else x.val.1
+
+private theorem ordinary_value_valid (x : NZPair) (b : Bool) :
+    ordinary_value x b ≠ 0 ∧ ordinary_value x b ≠ x.val.1 + x.val.2 := by
+  have h : ∀ x : NZPair, ∀ b : Bool,
+      ordinary_value x b ≠ 0 ∧ ordinary_value x b ≠ x.val.1 + x.val.2 := by decide
+  exact h x b
+
+private def ordinary_equiv (x : NZPair) : Bool ≃ OrdinaryAlphabet x :=
+  Equiv.ofBijective (fun b => ⟨ordinary_value x b,ordinary_value_valid x b⟩) (by
+    constructor
+    · intro b b' he
+      have he := congrArg Subtype.val he
+      cases b <;> cases b' <;> simp_all [ordinary_value, x.property.2.2, Ne.symm x.property.2.2]
+    · have h : ∀ x : NZPair, ∀ z : OrdinaryAlphabet x,
+          ∃ b : Bool, ordinary_value x b = z.val := by decide
+      intro z
+      obtain ⟨b,hb⟩ := h x z
+      exact ⟨b,Subtype.ext hb⟩)
+
+private abbrev SupportAlphabet (x y : NZPair) (S T : Finset Bool) (p q : K) :=
+  {h : K // h ≠ 0 ∧ h ≠ p ∧ h ≠ q ∧
+    (∀ z ∈ S, h ≠ ordinary_value x z) ∧ ∀ z ∈ T, h ≠ ordinary_value y z}
+
+private theorem support_alphabet_card {a b : ℕ} (x y : NZPair)
+    (u : Fin a → Bool) (v : Fin b → Bool) (p q : K) :
+    Nat.card (InteriorAlphabet x y (fun i => ordinary_equiv x (u i))
+      (fun i => ordinary_equiv y (v i)) p q) =
+      Nat.card (SupportAlphabet x y (word_support u) (word_support v) p q) := by
+  apply Nat.card_congr
+  apply Equiv.subtypeEquivRight
+  intro h
+  simp [InteriorAlphabet, SupportAlphabet, word_support, ordinary_equiv, Equiv.ofBijective]
+
+private def pair_support_count (a b c d : ℕ) (x y : NZPair) : ℕ :=
+  ∑ S : Finset Bool, ∑ T : Finset Bool,
+    support_weight a S * support_weight b T *
+      Nat.card (SupportAlphabet x y S T x.val.1 y.val.1) ^ c *
+      Nat.card (SupportAlphabet x y S T x.val.2 y.val.2) ^ d
+
+private theorem pair_count_support (a b c d : ℕ) (x y : NZPair) :
+    (∑ u : Fin a → OrdinaryAlphabet x, ∑ v : Fin b → OrdinaryAlphabet y,
+      Nat.card (InteriorAlphabet x y u v x.val.1 y.val.1) ^ c *
+      Nat.card (InteriorAlphabet x y u v x.val.2 y.val.2) ^ d) =
+        pair_support_count a b c d x y := by
+  classical
+  have eu : (Fin a → Bool) ≃ (Fin a → OrdinaryAlphabet x) :=
+    Equiv.arrowCongr (Equiv.refl _) (ordinary_equiv x)
+  have ev : (Fin b → Bool) ≃ (Fin b → OrdinaryAlphabet y) :=
+    Equiv.arrowCongr (Equiv.refl _) (ordinary_equiv y)
+  calc
+    _ = ∑ u : Fin a → Bool, ∑ v : Fin b → Bool,
+        Nat.card (SupportAlphabet x y (word_support u) (word_support v) x.val.1 y.val.1) ^ c *
+        Nat.card (SupportAlphabet x y (word_support u) (word_support v) x.val.2 y.val.2) ^ d := by
+      symm
+      apply Fintype.sum_equiv eu
+      intro u
+      apply Fintype.sum_equiv ev
+      intro v
+      exact (congrArg₂ (fun L R : ℕ => L^c*R^d)
+        (support_alphabet_card x y u v _ _)
+        (support_alphabet_card x y u v _ _)).symm
+    _ = _ := by
+      simp_rw [sum_by_support b]
+      rw [sum_by_support a]
+      unfold pair_support_count
+      apply Finset.sum_congr rfl
+      intro S _
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro T _
+      ring
+
+/-- The general interior count reduces to sixteen support pairs for each ordered pair. -/
+theorem interior_count_support (a b c d : ℕ) :
+    N_e (.H (cut_row (a + 1) (b + 1)) (pivot c d) :
+      Edge ((a + 1) + (b + 1) + 1) (c + (d + 1) + 1)) =
+      ∑ x : NZPair, ∑ y : NZPair, pair_support_count a b c d x y := by
+  rw [interior_count_alphabets]
+  apply Finset.sum_congr rfl
+  intro x _
+  apply Finset.sum_congr rfl
+  intro y _
+  exact pair_count_support a b c d x y
+
+#print axioms interior_count_support
+#print axioms word_support_card
+#print axioms interior_count_alphabets
+#print axioms interior_three_rows_count
+#print axioms horizontal_three_rows
 
 end D5.S3.SpinModels.KingDefects.KingHorizontal
