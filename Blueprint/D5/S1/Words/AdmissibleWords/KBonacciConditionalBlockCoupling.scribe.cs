@@ -94,6 +94,28 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                     + "prefix transport proves both marginals in this stopped branch."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("kbonacci-prefix-coupling-emitted-tail"),
+                DeclarationHandle.Create(
+                    "D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.prefix_coupling_emitted_tail"),
+                H("Geometric tail of the original emitted no-common-false event"),
+                StatementSource.FromAuthor(Disp(TailFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a full-word pair w, E(s,j,w) means that for every site i in s.take(j), "
+                    + "the two emitted bits are not both false. The notation MassEvent(P,s,j) is "
+                    + "mean P (fun w => if E(s,j,w) then 1 else 0). This includes (true,true), "
+                    + "j=0 and the entire scan. No increasing-order or complement-cover assumption "
+                    + "is needed for this event estimate. A counting induction in the original "
+                    + "completion fibers bounds the all-true event by 2^(-j). This handles the "
+                    + "original reset branch, whose two outputs agree at every free site. In a "
+                    + "supported recursive child, the emitted head is the sampled bit pair. The "
+                    + "common-false child contributes zero; the other children carry the residual "
+                    + "event bound and have total mass at most one half. Impossible refinements "
+                    + "have zero joint mass. The resulting induction uses the original prefixCoupling "
+                    + "without modifying its fallback or initial-reset tests. Supported coalescence "
+                    + "after an emitted common false is a separate assertion and is not proved here."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("kbonacci-right-scan-hamming"),
                 DeclarationHandle.Create(
                     "D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.right_scan_hamming"),
@@ -118,6 +140,61 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                     + "fibers; it does not assert reflection, the geometric survival "
                     + "tail, or the final two-orientation contiguous-block assembly."))),
                 DescribeRole.Theorem),
+            new DocumentBlock.Section(
+                H("Paper application: first common zero and the emitted scan event"),
+                Blocks(
+                    Paragraph(Text(
+                        "In the Chinese and English Chapter 39 example ex-ch39-p2e-uniform-parent-gap, "
+                        + "fix k>=2, n>=1, two legal full words x,y agreeing off one site u (allow x=y), "
+                        + "and a nonempty interval B excluding u. Keep every coordinate of B-complement fixed. "
+                        + "For a right block scan increasingly; for a left block reverse the sites and both "
+                        + "full words. Put m=card(B), and let (X_j,Y_j) be the emitted bit pair at the j-th "
+                        + "scanned site, for 1<=j<=m. The following is the paper shared-threshold construction "
+                        + "and its finite probability argument, not an additional kernel-verified theorem.")),
+                    Paragraph(Text(
+                        "Given any positive-probability joint sampled history, each marginal next-bit law "
+                        + "is the uniform legal completion law with that chain's sampled prefix and entire "
+                        + "exterior fixed. Deleting the next true bit is an injection into false completions, "
+                        + "so its conditional false mass is at least 1/2. Before a common zero, use a fresh "
+                        + "shared uniform threshold at every step, even if the remaining conditional laws "
+                        + "already agree. The conditional common-zero probability is the minimum of the two "
+                        + "false masses, hence at least 1/2. At the first common zero, every forbidden window "
+                        + "joining earlier history to the remaining suffix crosses that zero. The suffix "
+                        + "laws, including the fixed far exterior, therefore coincide and can be sampled "
+                        + "identically. Each step and this suffix draw preserve the original completion-law "
+                        + "marginals. conditional_step_coupling and reset_law_transport supply the corresponding "
+                        + "native one-step and screening identities; they do not by themselves identify a "
+                        + "multi-step emitted event of prefixCoupling.")),
+                    Paragraph(Text(
+                        "Define T on every output as the first common-zero scan position, or T=m+1 if "
+                        + "there is none. Let G_j be the information generated by the first j emitted pairs "
+                        + "and A_j={T>j}, for 0<=j<=m; A_0 is the whole sample space. All conditional "
+                        + "probabilities refer only to histories of positive probability. For 1<=j<=m, "
+                        + "the finite tower identity gives Pr(A_j)=E[indicator(A_{j-1}) "
+                        + "Pr((X_j,Y_j)!=(false,false) | G_{j-1})]<=Pr(A_{j-1})/2. Induction yields "
+                        + "Pr(A_j)<=2^(-j), including j=0 and j=m. The event permits (true,true); it is "
+                        + "not the event that all preceding pairs disagree. A_m={T=m+1} means that the "
+                        + "whole block contains no common zero.")),
+                    Paragraph(Text(
+                        "On the support of this same paper joint law, a common zero at r forces "
+                        + "X_q=Y_q for every r<=q<=m, including the zero itself. Thus {X_j!=Y_j} is a "
+                        + "subset of A_j, and Pr(X_j!=Y_j)<=Pr(A_j)<=2^(-j). Linearity of the finite "
+                        + "disagreement sum gives E[sum_{j=1}^m indicator(X_j!=Y_j)]<=sum_{j=1}^m "
+                        + "2^(-j)=1-2^(-m)<=1, without independence between positions. Reversing the scan "
+                        + "gives the identical assertion for a left block; exterior coordinates remain fixed. "
+                        + "The empty-block extension has T=1 and zero cost. If the initial block laws "
+                        + "already coincide, an alternative synchronous whole-block draw has cost zero "
+                        + "without requiring any zero in its output.")),
+                    Paragraph(Text(
+                        "The native prefixCoupling tests resetReady before scanning a site and can "
+                        + "transport a shared completion before an emitted common zero. Its no-common-false "
+                        + "event must therefore also be bounded in this initial reset branch; it cannot "
+                        + "be identified with latent survival of the recursion. The native "
+                        + "prefix_coupling_emitted_tail now supplies this event estimate by a completion-fiber "
+                        + "count and recursive emitted-event induction. right_scan_hamming separately proves "
+                        + "expected cost at most one. Supported coalescence through every recursive ancestor "
+                        + "and the complete two-orientation event/support assembly remain unverified here. The paper derivation and synchronous alternative do not replace "
+                        + "that native-law obligation.")))),
             new DocumentBlock.Section(
                 H("Application: actual legal-state refresh, projection and complex energy"),
                 Blocks(
@@ -889,6 +966,24 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
         var fixedSet = All(f, Call("Finset", Call("Fin", n)), Imp(free, fibers));
         var lists = All(s, Call("List", Call("Fin", n)), Imp(Call("Nodup", s), fixedSet));
         return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k), lists));
+    }
+
+    private static Formula TailFormula()
+    {
+        var k = F.Id("k"); var n = F.Id("n"); var f = F.Id("F");
+        var s = F.Id("s"); var x = F.Id("x"); var y = F.Id("y");
+        var h = F.Id("h"); var g = F.Id("g"); var i = F.Id("i"); var j = F.Id("j");
+        var free = All(i, Call("Fin", n), Imp(Seq(i, Sp, InMacro, Sp, s),
+            Seq(Neg, Sp, Par(Seq(i, Sp, InMacro, Sp, f)))));
+        var bound = All(j, Nat, Imp(Rel(j, Leq, Call("length", s)),
+            Rel(Call("MassEvent", Call("P", s, f, x, y, h, g), s, j), Leq,
+                new Formula.Power(Par(Seq(D(1), Slash, D(2))), j))));
+        var fibers = All(Seq(x, Comma, y), Word(n),
+            All(h, Call("Nonempty", Call("C", k, n, f, x)),
+                All(g, Call("Nonempty", Call("C", k, n, f, y)), bound)));
+        var fixedSet = All(f, Call("Finset", Call("Fin", n)), Imp(free, fibers));
+        return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k),
+            All(s, Call("List", Call("Fin", n)), Imp(Call("Nodup", s), fixedSet))));
     }
 
     private static Formula CostFormula()
