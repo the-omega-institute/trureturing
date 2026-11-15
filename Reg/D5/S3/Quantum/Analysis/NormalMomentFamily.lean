@@ -86,7 +86,10 @@ def family : Registration arena.{u} (type_of% (@compact_normal_posterior_family.
     have hf : (1 : ℝ) ≤ 0 := Eq.mp (congrFun h 0) le_rfl
     norm_num at hf
 
+def sourceProposition : Prop := type_of% (@compact_normal_posterior_family.{u})
+
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (P := sourceProposition.{u})
     (@compact_normal_posterior_family.{u}) (Realization signature) Unit Unit where
   unitName := `D5.S3.Quantum.Analysis.NormalMomentFamily.posteriorUnit
   realizationName := `Reg.D5.S3.Quantum.Analysis.NormalMomentFamily.family

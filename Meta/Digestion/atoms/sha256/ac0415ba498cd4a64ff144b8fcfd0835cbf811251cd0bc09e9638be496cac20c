@@ -1,0 +1,8 @@
+For every $k\geq1$ and every $G$ in Definition 1.1,
+
+$$
+ S\text{ is }k\text{-contingent}\quad\Longleftrightarrow\quad
+ \lambda_G(S)>k,
+ \tag{2.2}
+$$
+

@@ -308,7 +308,7 @@ private lemma strip_theta_rate {alpha : ℝ} (ha : 0 < alpha) (hhalf : alpha ≤
   have hbeta : (1 / 2 : ℝ) < beta := by dsimp [beta]; linarith
   exact theta_power_bound hbeta hpsi'
 
-private lemma nonlinear_quadratic {x : ℝ} (hx : Real.exp 2 ≤ x)
+lemma nonlinear_quadratic {x : ℝ} (hx : Real.exp 2 ≤ x)
     (htheta : x / 2 ≤ Chebyshev.theta x) :
     |N x| ≤ 8 * ((Chebyshev.theta x - x) / x) ^ 2 / Real.log x := by
   have hx0 : 0 < x := (Real.exp_pos 2).trans_le hx
