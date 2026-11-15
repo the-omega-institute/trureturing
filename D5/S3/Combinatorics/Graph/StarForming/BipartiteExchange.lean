@@ -665,5 +665,3 @@ theorem selection_compensation (hG : G.Colorable 2)
   omega
 
 end D5.S3.Combinatorics.Graph.StarForming.BipartiteExchange
-
-

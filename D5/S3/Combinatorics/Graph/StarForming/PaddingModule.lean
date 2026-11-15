@@ -136,7 +136,7 @@ private theorem forming_edge_agreement (e : Equiv.Perm I) (mark : I)
           have hs : Cubic.fanoSelected v := by simpa [forming,HeawoodParameters.selectedSet] using h
           constructor <;> intro he <;> subst v <;> simp [Cubic.fanoSelected] at hs
         · right; simpa [forming,EqualityCore.S,EqualityCore.selected] using h
-      simp only [SimpleGraph.sum_adj, Bool.false_eq_true] 
+      simp only [SimpleGraph.sum_adj, Bool.false_eq_true]
       change False ↔ y.1=mark ∧ ((v=0 ∧ y.2=13) ∨ (v=8 ∧ y.2=12))
       rcases hv with ⟨h0,h8⟩ | hy
       · simp [h0,h8]
@@ -151,7 +151,7 @@ private theorem forming_edge_agreement (e : Equiv.Perm I) (mark : I)
         · right
           have hs : Cubic.fanoSelected w := by simpa [forming,HeawoodParameters.selectedSet] using h
           constructor <;> intro he <;> subst w <;> simp [Cubic.fanoSelected] at hs
-      simp only [SimpleGraph.sum_adj, Bool.false_eq_true] 
+      simp only [SimpleGraph.sum_adj, Bool.false_eq_true]
       change False ↔ x.1=mark ∧ ((w=0 ∧ x.2=13) ∨ (w=8 ∧ x.2=12))
       rcases hx with hx | ⟨h0,h8⟩
       · constructor

@@ -143,4 +143,3 @@ theorem linear_equality_iff (color : V → Bool)
     nlinarith
 
 end D5.S3.Combinatorics.Graph.StarForming.RegularCompensation
-
