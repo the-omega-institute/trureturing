@@ -22,6 +22,16 @@ def qualifyCompiled (request reading : Json) : Except String Json := do
   let mut disposition ← reading.getObjVal? "disposition"
   if (← disposition.getObjValAs? String "status") == "refuted" then return reading
   let mut readings ← disposition.getObjVal? "readings"
+  let prediction := (request.getObjVal? "compiled_prediction").toOption.getD
+    (explanation "unknown" "no source-owned operation contract supplied")
+  if let some continuation := (reading.getObjVal? "continuation_target").toOption then
+    if continuation != Json.null then
+      reading ← replace reading "continuation_target"
+        (← replace continuation "predictive_closure" prediction)
+      readings ← replace readings "predictive_closure" (explanation
+        (← prediction.getObjValAs? String "kind")
+        ((prediction.getObjValAs? String "reason").toOption.getD
+          "compiled source-bound operation evidence"))
   let mut source ← reading.getObjVal? "source_contract"
   let arena := (request.getObjValAs? String "arena").toOption.getD "native-single-window"
   if arena == "law-family" then
