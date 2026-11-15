@@ -5,7 +5,7 @@
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth,
      mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
    utility: none
-   digest: Joint endpoint bounds for actual one-step and nonbacktracking three-step paths.
+   digest: Cubic bipartite slice bounds from actual short-path injection and weighted incidence counting.
 -/
 
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
@@ -13,6 +13,9 @@ import Mathlib.Combinatorics.SimpleGraph.Bipartite
 import Mathlib.Combinatorics.SimpleGraph.Girth
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Tactic
+
+/-! Degree-two/degree-three bipartite graphs of extended girth at least eight
+satisfy both cubic slice inequalities by actual path and incidence counting. -/
 
 set_option autoImplicit false
 
@@ -24,7 +27,7 @@ open scoped BigOperators Classical
 open SimpleGraph
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
-variable {G : SimpleGraph V} [DecidableRel G.Adj]
+variable {G : SimpleGraph V}
 
 /-- A degree-two slice of a finite set of vertices. -/
 def degreeTwo (G : SimpleGraph V) (S : Finset V) : Finset V :=
@@ -174,15 +177,15 @@ private lemma three_endpoint_mem_rectangle
     (show q.first ∈ (R : Set V) from hb) hbc.symm
   have hd : q.endpoint ∈ (R : Set V) := hpart.mem_of_mem_adj
     (show q.second ∈ (L : Set V) from hc) hcd
-  simp [ha, hd]
+  exact Finset.mem_product.mpr ⟨ha, hd⟩
 
 private def endpoint (q : ThreeStep V) : V × V := (q.root, q.endpoint)
 
 /-- Retaining the root makes the length-one path count an exact degree sum. -/
-theorem one_paths_card_eq_three_mul
+private theorem one_paths_card_eq_three_mul
     (roots : Finset V) (hdeg : ∀ v ∈ roots, G.degree v = 3) :
     (onePaths G roots).card = 3 * roots.card := by
-  rw [Finset.card_sigma]
+  rw [onePaths, Finset.card_sigma]
   calc
     (∑ a ∈ roots, (G.neighborFinset a).card) = ∑ a ∈ roots, G.degree a := by
       simp only [SimpleGraph.card_neighborFinset_eq_degree]
@@ -218,7 +221,7 @@ private lemma endpoint_images_disjoint
 
 /-- Actual one-step and three-step path counts fit jointly in the root-by-right
 rectangle.  All endpoint uniqueness is derived from girth, not assumed. -/
-theorem one_three_paths_card_le_rectangle
+private theorem one_three_paths_card_le_rectangle
     {L R : Finset V} (roots : Finset V) (hroots : roots ⊆ L)
     (hpart : G.IsBipartiteWith (L : Set V) (R : Set V))
     (hg : (8 : ℕ∞) ≤ G.egirth) :
@@ -266,7 +269,7 @@ theorem one_three_paths_card_le_rectangle
     _ = roots.card * R.card := Finset.card_product roots R
 
 /-- The geometric half of the cubic slice estimate, using actual path families. -/
-theorem high_root_three_paths_bound
+private theorem high_root_three_paths_bound
     {L R : Finset V} (hpart : G.IsBipartiteWith (L : Set V) (R : Set V))
     (hg : (8 : ℕ∞) ≤ G.egirth) :
     3 * (degreeThree G L).card + (threePaths G (degreeThree G L)).card ≤
@@ -277,5 +280,292 @@ theorem high_root_three_paths_bound
     intro v hv
     exact (Finset.mem_filter.mp hv).2)] at h
   exact h
+
+private lemma degree_parts_disjoint (S : Finset V) :
+    Disjoint (degreeTwo G S) (degreeThree G S) := by
+  apply Finset.disjoint_left.mpr
+  intro v hv hw
+  have h2 := (Finset.mem_filter.mp hv).2
+  have h3 := (Finset.mem_filter.mp hw).2
+  omega
+
+private lemma degree_parts_union
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3) (S : Finset V) :
+    degreeTwo G S ∪ degreeThree G S = S := by
+  ext v
+  simp only [degreeTwo, degreeThree, Finset.mem_union, Finset.mem_filter]
+  constructor
+  · rintro (⟨hv, _⟩ | ⟨hv, _⟩) <;> exact hv
+  · intro hv
+    rcases hdeg v with h2 | h3
+    · exact Or.inl ⟨hv, h2⟩
+    · exact Or.inr ⟨hv, h3⟩
+
+private lemma sum_degree_parts
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3)
+    (S : Finset V) (f : V → ℕ) :
+    (∑ v ∈ S, f v) =
+      (∑ v ∈ degreeTwo G S, f v) + ∑ v ∈ degreeThree G S, f v := by
+  calc
+    (∑ v ∈ S, f v) = ∑ v ∈ degreeTwo G S ∪ degreeThree G S, f v := by
+      rw [degree_parts_union hdeg]
+    _ = _ := Finset.sum_union (degree_parts_disjoint S)
+
+private def forwardWeight (G : SimpleGraph V) (y w : V) : ℕ :=
+  ((G.neighborFinset w).erase y).card
+
+private lemma forwardWeight_add_one {y w : V} (hw : w ∈ G.neighborFinset y) :
+    forwardWeight G y w + 1 = G.degree w := by
+  have hy : y ∈ G.neighborFinset w := (G.mem_neighborFinset _ _).mpr
+    ((G.mem_neighborFinset _ _).mp hw).symm
+  simpa [forwardWeight, SimpleGraph.card_neighborFinset_eq_degree] using
+    (Finset.card_erase_add_one hy)
+
+private lemma neighbor_weight_sum
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3) (y : V) :
+    (∑ w ∈ G.neighborFinset y, forwardWeight G y w) =
+      (degreeTwo G (G.neighborFinset y)).card +
+        2 * (degreeThree G (G.neighborFinset y)).card := by
+  have hlow : (∑ w ∈ degreeTwo G (G.neighborFinset y), forwardWeight G y w) =
+      (degreeTwo G (G.neighborFinset y)).card := by
+    calc
+      _ = ∑ _w ∈ degreeTwo G (G.neighborFinset y), 1 := by
+        apply Finset.sum_congr rfl
+        intro w hw
+        have hm := Finset.mem_filter.mp hw
+        have hc := forwardWeight_add_one hm.1
+        omega
+      _ = _ := by simp
+  have hhigh : (∑ w ∈ degreeThree G (G.neighborFinset y), forwardWeight G y w) =
+      2 * (degreeThree G (G.neighborFinset y)).card := by
+    calc
+      _ = ∑ _w ∈ degreeThree G (G.neighborFinset y), 2 := by
+        apply Finset.sum_congr rfl
+        intro w hw
+        have hm := Finset.mem_filter.mp hw
+        have hc := forwardWeight_add_one hm.1
+        omega
+      _ = _ := by simp [Nat.mul_comm]
+  rw [sum_degree_parts hdeg, hlow, hhigh]
+
+private def localThreeCount (G : SimpleGraph V) (y : V) : ℕ :=
+  ∑ v ∈ degreeThree G (G.neighborFinset y),
+    ∑ w ∈ (G.neighborFinset y).erase v, forwardWeight G y w
+
+/-- Erasing the chosen high-degree root removes exactly two forward extensions. -/
+private lemma local_three_count_identity
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3) (y : V) :
+    localThreeCount G y + 2 * (degreeThree G (G.neighborFinset y)).card =
+      (degreeThree G (G.neighborFinset y)).card *
+        ((degreeTwo G (G.neighborFinset y)).card +
+          2 * (degreeThree G (G.neighborFinset y)).card) := by
+  have hi (v : V) (hv : v ∈ degreeThree G (G.neighborFinset y)) :
+      (∑ w ∈ (G.neighborFinset y).erase v, forwardWeight G y w) + 2 =
+        (degreeTwo G (G.neighborFinset y)).card +
+          2 * (degreeThree G (G.neighborFinset y)).card := by
+    have hm := Finset.mem_filter.mp hv
+    have hc := forwardWeight_add_one hm.1
+    have hw : forwardWeight G y v = 2 := by omega
+    have he := Finset.sum_erase_add (G.neighborFinset y) (forwardWeight G y) hm.1
+    simpa [hw, neighbor_weight_sum hdeg y] using he
+  have hs := Finset.sum_congr (s₁ := degreeThree G (G.neighborFinset y)) rfl hi
+  simpa [localThreeCount, Finset.sum_add_distrib, Nat.mul_comm] using hs
+
+/-- Partitioning the actual three-step path family by its first middle vertex
+gives the local extension counts, with every root and every extension retained. -/
+private lemma three_paths_card_eq_sum_local
+    {L R : Finset V} (hpart : G.IsBipartiteWith (L : Set V) (R : Set V)) :
+    (threePaths G (degreeThree G L)).card = ∑ y ∈ R, localThreeCount G y := by
+  let S : Finset (Σ _y : V, Σ _v : V, Σ _w : V, V) :=
+    R.sigma fun y => (degreeThree G (G.neighborFinset y)).sigma fun v =>
+      ((G.neighborFinset y).erase v).sigma fun w => (G.neighborFinset w).erase y
+  have hbij : (threePaths G (degreeThree G L)).card = S.card := by
+    apply Finset.card_bij (fun q _ => ⟨q.first, q.root, q.second, q.endpoint⟩)
+    · intro q hq
+      have hp : q.root ∈ degreeThree G L ∧ G.Adj q.root q.first ∧
+          G.Adj q.first q.second ∧ G.Adj q.second q.endpoint ∧
+          q.root ≠ q.second ∧ q.first ≠ q.endpoint := by
+        simpa [threePaths] using hq
+      have hr := Finset.mem_filter.mp hp.1
+      have hy : q.first ∈ R := hpart.mem_of_mem_adj hr.1 hp.2.1
+      apply Finset.mem_sigma.mpr
+      refine ⟨hy, Finset.mem_sigma.mpr ⟨?_, Finset.mem_sigma.mpr ⟨?_, ?_⟩⟩⟩
+      · exact Finset.mem_filter.mpr ⟨(G.mem_neighborFinset _ _).mpr hp.2.1.symm, hr.2⟩
+      · exact Finset.mem_erase.mpr ⟨hp.2.2.2.2.1.symm,
+          (G.mem_neighborFinset _ _).mpr hp.2.2.1⟩
+      · exact Finset.mem_erase.mpr ⟨hp.2.2.2.2.2.symm,
+          (G.mem_neighborFinset _ _).mpr hp.2.2.2.1⟩
+    · intro q hq q' hq' he
+      have hroot : q.root = q'.root := congrArg (fun t : Σ _y : V, Σ _v : V,
+        Σ _w : V, V => t.2.1) he
+      have hfirst : q.first = q'.first := congrArg (fun t : Σ _y : V, Σ _v : V,
+        Σ _w : V, V => t.1) he
+      have hsecond : q.second = q'.second := congrArg (fun t : Σ _y : V, Σ _v : V,
+        Σ _w : V, V => t.2.2.1) he
+      have hend : q.endpoint = q'.endpoint := congrArg (fun t : Σ _y : V, Σ _v : V,
+        Σ _w : V, V => t.2.2.2) he
+      cases q
+      cases q'
+      simp_all
+    · rintro ⟨y, v, w, z⟩ hx
+      rcases Finset.mem_sigma.mp hx with ⟨hy, hx⟩
+      rcases Finset.mem_sigma.mp hx with ⟨hv, hx⟩
+      rcases Finset.mem_sigma.mp hx with ⟨hw, hz⟩
+      have hv0 := Finset.mem_filter.mp hv
+      have hvy := ((G.mem_neighborFinset _ _).mp hv0.1).symm
+      have hvL : v ∈ L := hpart.mem_of_mem_adj' hy hvy
+      have hw0 := Finset.mem_erase.mp hw
+      have hz0 := Finset.mem_erase.mp hz
+      refine ⟨⟨v, y, w, z⟩, ?_, rfl⟩
+      apply Finset.mem_filter.mpr
+      refine ⟨Finset.mem_univ _, ?_⟩
+      exact ⟨Finset.mem_filter.mpr ⟨hvL, hv0.2⟩, hvy,
+        (G.mem_neighborFinset _ _).mp hw0.2, (G.mem_neighborFinset _ _).mp hz0.2,
+        hw0.1.symm, hz0.1.symm⟩
+  simpa [S, Finset.card_sigma, localThreeCount, forwardWeight] using hbij
+
+private lemma neighbor_parts_card
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3) (y : V) :
+    (degreeTwo G (G.neighborFinset y)).card +
+      (degreeThree G (G.neighborFinset y)).card = G.degree y := by
+  have h := congrArg Finset.card (degree_parts_union hdeg (G.neighborFinset y))
+  simpa [Finset.card_union_of_disjoint (degree_parts_disjoint (G.neighborFinset y)),
+    SimpleGraph.card_neighborFinset_eq_degree] using h
+
+/-- The local three-step count loses at most four at a low middle vertex and
+at most two at a high middle vertex. -/
+private lemma local_three_count_bound
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3)
+    (hlow : ∀ {v w}, G.Adj v w → G.degree v = 2 → G.degree w = 2 → False)
+    (y : V) :
+    4 * (degreeThree G (G.neighborFinset y)).card ≤
+      localThreeCount G y + if G.degree y = 2 then 4 else 2 := by
+  let g := (degreeThree G (G.neighborFinset y)).card
+  let j := (degreeTwo G (G.neighborFinset y)).card
+  have hd : j + g = G.degree y := neighbor_parts_card hdeg y
+  have he : localThreeCount G y + 2 * g = g * (j + 2 * g) :=
+    local_three_count_identity hdeg y
+  change 4 * g ≤ localThreeCount G y + if G.degree y = 2 then 4 else 2
+  rcases hdeg y with hy | hy
+  · have hj : j = 0 := by
+      apply Finset.card_eq_zero.mpr
+      apply Finset.eq_empty_iff_forall_notMem.mpr
+      intro w hw
+      have hm := Finset.mem_filter.mp hw
+      exact hlow ((G.mem_neighborFinset _ _).mp hm.1) hy hm.2
+    have hg : g = 2 := by omega
+    rw [ite_eq_left hy]
+    rw [hj, hg] at he
+    omega
+  · have hd' : j + g = 3 := hd.trans hy
+    have hjg : j * g ≤ 2 := by
+      have hc : g = 0 ∨ g = 1 ∨ g = 2 ∨ g = 3 := by omega
+      rcases hc with hg | hg | hg | hg <;> rw [hg] at hd' ⊢ <;> omega
+    have hm := congrArg (fun n : ℕ => g * n) hd'
+    have he' : localThreeCount G y + j * g = 4 * g := by nlinarith
+    have hy2 : G.degree y ≠ 2 := by omega
+    rw [ite_eq_right hy2]
+    omega
+
+/-- Double-count actual incidences from high left vertices to the right side. -/
+private lemma sum_high_neighbors
+    {L R : Finset V} (hpart : G.IsBipartiteWith (L : Set V) (R : Set V)) :
+    (∑ y ∈ R, (degreeThree G (G.neighborFinset y)).card) =
+      3 * (degreeThree G L).card := by
+  have hleft (v : V) (hv : v ∈ degreeThree G L) :
+      R.bipartiteAbove G.Adj v = G.neighborFinset v := by
+    ext w
+    simp only [Finset.mem_bipartiteAbove, SimpleGraph.mem_neighborFinset]
+    constructor
+    · exact And.right
+    · intro hvw
+      exact ⟨hpart.mem_of_mem_adj (Finset.mem_filter.mp hv).1 hvw, hvw⟩
+  have hright (y : V) (hy : y ∈ R) :
+      (degreeThree G L).bipartiteBelow G.Adj y = degreeThree G (G.neighborFinset y) := by
+    ext v
+    simp only [Finset.mem_bipartiteBelow, degreeThree, Finset.mem_filter,
+      SimpleGraph.mem_neighborFinset]
+    constructor
+    · rintro ⟨⟨hv, h3⟩, hvy⟩
+      exact ⟨hvy.symm, h3⟩
+    · rintro ⟨hyv, h3⟩
+      exact ⟨⟨hpart.mem_of_mem_adj' hy hyv.symm, h3⟩, hyv.symm⟩
+  have hdc := Finset.sum_card_bipartiteAbove_eq_sum_card_bipartiteBelow
+    (r := G.Adj) (s := degreeThree G L) (t := R)
+  calc
+    _ = ∑ y ∈ R, ((degreeThree G L).bipartiteBelow G.Adj y).card := by
+      apply Finset.sum_congr rfl
+      intro y hy
+      rw [hright y hy]
+    _ = ∑ v ∈ degreeThree G L, (R.bipartiteAbove G.Adj v).card := hdc.symm
+    _ = ∑ v ∈ degreeThree G L, 3 := by
+      apply Finset.sum_congr rfl
+      intro v hv
+      rw [hleft v hv, SimpleGraph.card_neighborFinset_eq_degree]
+      exact (Finset.mem_filter.mp hv).2
+    _ = _ := by simp [Nat.mul_comm]
+
+private lemma middle_penalty_sum
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3) (R : Finset V) :
+    (∑ y ∈ R, if G.degree y = 2 then 4 else 2) =
+      4 * (degreeTwo G R).card + 2 * (degreeThree G R).card := by
+  rw [sum_degree_parts hdeg R]
+  have h2 : (∑ y ∈ degreeTwo G R, if G.degree y = 2 then 4 else 2) =
+      4 * (degreeTwo G R).card := by
+    calc
+      _ = ∑ _y ∈ degreeTwo G R, 4 := by
+        apply Finset.sum_congr rfl
+        intro y hy
+        rw [ite_eq_left (Finset.mem_filter.mp hy).2]
+      _ = _ := by simp [Nat.mul_comm]
+  have h3 : (∑ y ∈ degreeThree G R, if G.degree y = 2 then 4 else 2) =
+      2 * (degreeThree G R).card := by
+    calc
+      _ = ∑ _y ∈ degreeThree G R, 2 := by
+        apply Finset.sum_congr rfl
+        intro y hy
+        have hy3 := (Finset.mem_filter.mp hy).2
+        rw [ite_eq_right (by omega)]
+      _ = _ := by simp [Nat.mul_comm]
+  rw [h2, h3]
+
+private lemma one_side_counting
+    {L R : Finset V} (hpart : G.IsBipartiteWith (L : Set V) (R : Set V))
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3)
+    (hlow : ∀ {v w}, G.Adj v w → G.degree v = 2 → G.degree w = 2 → False)
+    (hg : (8 : ℕ∞) ≤ G.egirth) :
+    15 * (degreeThree G L).card ≤ (degreeThree G L).card * R.card +
+      2 * (degreeThree G R).card + 4 * (degreeTwo G R).card := by
+  have hsum := Finset.sum_le_sum (s := R)
+    (fun y _ => local_three_count_bound hdeg hlow y)
+  have hcount : 12 * (degreeThree G L).card ≤
+      (threePaths G (degreeThree G L)).card +
+        4 * (degreeTwo G R).card + 2 * (degreeThree G R).card := by
+    calc
+      12 * (degreeThree G L).card = 4 * (3 * (degreeThree G L).card) := by omega
+      _ = ∑ y ∈ R, 4 * (degreeThree G (G.neighborFinset y)).card := by
+        rw [← sum_high_neighbors hpart, Finset.mul_sum]
+      _ ≤ ∑ y ∈ R, (localThreeCount G y + if G.degree y = 2 then 4 else 2) := hsum
+      _ = _ := by
+        rw [Finset.sum_add_distrib, ← three_paths_card_eq_sum_local hpart,
+          middle_penalty_sum hdeg R]
+        omega
+  have hgeom := high_root_three_paths_bound hpart hg
+  omega
+
+/-- A finite bipartite graph of degrees two and three, with independent degree-two
+vertices and extended girth at least eight, satisfies both cubic slice bounds.
+The path injection and the weighted incidence count are derived in the proof. -/
+theorem cubic_slice_counting
+    {L R : Finset V} (hpart : G.IsBipartiteWith (L : Set V) (R : Set V))
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3)
+    (hlow : ∀ {v w}, G.Adj v w → G.degree v = 2 → G.degree w = 2 → False)
+    (hg : (8 : ℕ∞) ≤ G.egirth) :
+    (15 * (degreeThree G L).card ≤ (degreeThree G L).card * R.card +
+      2 * (degreeThree G R).card + 4 * (degreeTwo G R).card) ∧
+    (15 * (degreeThree G R).card ≤ (degreeThree G R).card * L.card +
+      2 * (degreeThree G L).card + 4 * (degreeTwo G L).card) := by
+  exact ⟨one_side_counting hpart hdeg hlow hg,
+    one_side_counting hpart.symm hdeg hlow hg⟩
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
