@@ -4,7 +4,7 @@
 
 The two-layer block support has an exact uniform cardinality and inherits regular degree from actual Boolean cube adjacency.
 
-Fix a natural d at least two and partition the d squared Boolean coordinates into d rows. The upper layer has one marked double row and singleton entries elsewhere. The lower layer either has a marked double row, one empty row, and all other rows singleton, or is a transversal containing exactly one of the two marked coordinates. The graph is the induced subgraph on this explicit support, with no regularity assumption.
+Fix a natural d at least two and partition the d squared Boolean coordinates into d rows. The upper layer has one marked double row and singleton entries elsewhere. The lower layer either has a marked double row, one empty row, and all other rows singleton, or is a transversal containing exactly one of the two marked coordinates. The graph is the induced subgraph on this explicit support, with no regularity assumption. The external motivation is Hong–Wu–Xia, Graph Sensitivity of Cartesian Products with Matched Bridges, arXiv:2610.09483v1, Section 7 Problem 2: https://arxiv.org/html/2610.09483v1#Thmproblem2 . This support/count construction is repository-derived; it does not resolve that problem. The companion complete construction records the related literature and the limitations of the bounded search.
 
 **Theorem 1.1 (Exactly d actual neighbors at every selected vertex).**
 
@@ -13,8 +13,6 @@ Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/GridWedgeSupport.co
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/GridWedgeSupport.component_regular` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Zhen-Mu Hong, Zi-Yi Wu, Zheng-Jiang Xia (2026). *Graph Sensitivity of Cartesian Products with Matched Bridges*. DOI: [10.48550/arXiv.2610.09483](https://doi.org/10.48550/arXiv.2610.09483). URL: <https://arxiv.org/html/2610.09483v1>.
 
 *Commentary.*
 
@@ -27,8 +25,6 @@ Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/GridWedgeSupport.ca
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/GridWedgeSupport.card_support` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Zhen-Mu Hong, Zi-Yi Wu, Zheng-Jiang Xia (2026). *Graph Sensitivity of Cartesian Products with Matched Bridges*. DOI: [10.48550/arXiv.2610.09483](https://doi.org/10.48550/arXiv.2610.09483). URL: <https://arxiv.org/html/2610.09483v1>.
 
 *Commentary.*
 

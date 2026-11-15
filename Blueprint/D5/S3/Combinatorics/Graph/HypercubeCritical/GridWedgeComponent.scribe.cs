@@ -8,9 +8,6 @@ internal sealed class GridWedgeComponentDocument : IScribeDocumentDefinition
         "D5/S3/Combinatorics/Graph/HypercubeCritical/GridWedgeComponent.";
     private const string SupportPrefix =
         "D5/S3/Combinatorics/Graph/HypercubeCritical/GridWedgeSupport.";
-    private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/hongwuxia2026sensitivity");
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A uniform block construction gives connected balanced regular induced subgraphs "
             + "of square-dimensional Boolean cubes, with an explicit exact size.",
@@ -22,12 +19,51 @@ internal sealed class GridWedgeComponentDocument : IScribeDocumentDefinition
                     + "critical components for investigation of that question. The case d=3 "
                     + "has 72 vertices; it is not a 258-vertex witness or an exclusion of every "
                     + "such witness. No resolution or worldwide priority claim is made.")),
+            Paragraph(Text(
+                "The external anchor is Zhen-Mu Hong, Zi-Yi Wu and Zheng-Jiang Xia, "
+                    + "Graph Sensitivity of Cartesian Products with Matched Bridges, "
+                    + "arXiv:2610.09483v1, 7 October 2026, DOI 10.48550/arXiv.2610.09483. "
+                    + "Section 7, Problem 2 asks: Determine whether f₂(Q₉)=3 or 4. "
+                    + "Exact primary locator: https://arxiv.org/html/2610.09483v1#Thmproblem2 . "
+                    + "The source defines f_t(G) as the minimum maximum induced degree on "
+                    + "alpha(G)+t vertices. Since alpha(Q₉)=256, the target requires 258 "
+                    + "vertices of maximum degree at most three, or a complete exclusion. "
+                    + "The versioned source was read on 15 November 2026. This construction "
+                    + "is a repository derivation motivated by that source, not its theorem.")),
+            Paragraph(Text(
+                "Related prior work: Laplante, Naserasr, Sunny and Wang, Sensitivity "
+                    + "conjecture and signed hypercubes, https://hal.science/hal-04080411/document , "
+                    + "commentary after Lemma 4.1 (PDF page 9, printed page 7) and Theorem 6.2 "
+                    + "(PDF page 26, printed page 24), already supply general equality regularity "
+                    + "and switching mechanisms. The final journal DOI is 10.1145/3777401; "
+                    + "that full text was not read. Karasev, https://arxiv.org/abs/1907.11175v2 , "
+                    + "Sections 1.2–1.3, and Mathews, https://arxiv.org/abs/1907.12357v2 , "
+                    + "Sections 2.2–2.3, give exterior-algebra and Clifford formulations. "
+                    + "Those methods and general equality mechanisms are not claimed as new.")),
+            Paragraph(Text(
+                "The source https://arxiv.org/abs/2312.15336v1 , Section 1 and Construction 1, "
+                    + "identifies the standard Gray graph as the Levi graph of the 27-point, "
+                    + "27-line three-dimensional grid. Our 72-point case differs from that "
+                    + "54-point graph; this does not rule out every generalized Gray construction. "
+                    + "Bouwer's 1972 original paper was not read. On 15 November 2026 the official "
+                    + "anchor abstract page listed only v1, and a bounded Semantic Scholar lookup "
+                    + "reported zero citations. This is not an exhaustive search for later work "
+                    + "or evidence of worldwide priority. The exact block family was not found "
+                    + "in the related texts read; the candidate new content is its explicit "
+                    + "support, exact size and connectedness.")),
+            Paragraph(Text(
+                "Signing conventions: here the exponent counts occupied earlier coordinates. "
+                    + "Pinned Archive.Sensitivity instead counts unoccupied earlier coordinates. "
+                    + "On direction k the signs differ by (-1)^k; the vertex potential "
+                    + "(-1)^(sum of occupied coordinate indices) supplies diagonal switching. "
+                    + "This is a mathematical convention correspondence; no Lean ambient "
+                    + "matrix or gauge bridge is claimed by this combinatorial build.")),
             Describe.Lean(
                 DescribeId.Create("grid-wedge-support"),
                 DeclarationHandle.Create(SupportPrefix + "support"),
                 H("An explicit support in the actual cube"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every natural d at least two, arrange the d squared coordinates "
                         + "into d rows of d columns. Mark column zero in rows zero and one. "
@@ -44,7 +80,7 @@ internal sealed class GridWedgeComponentDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(SupportPrefix + "componentGraph"),
                 H("Inherited hypercube adjacency"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The graph is the induced subgraph of the existing repository hypercube "
                         + "on this support. Two selected vertices are adjacent precisely when "
@@ -57,7 +93,7 @@ internal sealed class GridWedgeComponentDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "grid_wedge_component"),
                 H("The uniform connected regular construction"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The result quantifies over every d at least two. The support has "
@@ -93,7 +129,7 @@ internal sealed class GridWedgeComponentDocument : IScribeDocumentDefinition
                             + "and Clifford descriptions appear in Karasev and Mathews. The "
                             + "candidate new content here is the explicit block support, its "
                             + "exact count and its connected induced graph, subject to the "
-                            + "literature limitations recorded in the source note."))),
+                            + "literature limitations recorded above."))),
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(

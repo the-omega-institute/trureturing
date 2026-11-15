@@ -6,9 +6,6 @@ internal sealed class GridWedgeSupportDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
         "D5/S3/Combinatorics/Graph/HypercubeCritical/GridWedgeSupport.";
-    private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/hongwuxia2026sensitivity");
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The two-layer block support has an exact uniform cardinality and inherits "
             + "regular degree from actual Boolean cube adjacency.",
@@ -21,13 +18,19 @@ internal sealed class GridWedgeSupportDocument : IScribeDocumentDefinition
                     + "double row, one empty row, and all other rows singleton, or is a "
                     + "transversal containing exactly one of the two marked coordinates. "
                     + "The graph is the induced subgraph on this explicit support, with no "
-                    + "regularity assumption.")),
+                    + "regularity assumption. The external motivation is Hong–Wu–Xia, "
+                    + "Graph Sensitivity of Cartesian Products with Matched Bridges, "
+                    + "arXiv:2610.09483v1, Section 7 Problem 2: "
+                    + "https://arxiv.org/html/2610.09483v1#Thmproblem2 . "
+                    + "This support/count construction is repository-derived; it does not "
+                    + "resolve that problem. The companion complete construction records "
+                    + "the related literature and the limitations of the bounded search.")),
             Describe.Lean(
                 DescribeId.Create("grid-wedge-actual-regularity"),
                 DeclarationHandle.Create(Prefix + "component_regular"),
                 H("Exactly d actual neighbors at every selected vertex"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every d at least two, the induced graph is regular of degree d. "
                         + "A bijection identifies the full actual neighbor set with the "
@@ -45,7 +48,7 @@ internal sealed class GridWedgeSupportDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "card_support"),
                 H("The exact number of vertices"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every d at least two, the support has 4*(d-1)*d^(d-1) vertices. "
                         + "The upper layer is in bijection with two choices of double row, "
