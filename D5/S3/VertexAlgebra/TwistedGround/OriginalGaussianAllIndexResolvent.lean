@@ -47,16 +47,6 @@ def squareResolvent (z : ℂ) : H →L[ℂ] H := ∑' k : ℕ, (operator z ^ 2) 
 
 def oddResolvent (z : ℂ) : H →L[ℂ] H := operator z * squareResolvent z
 
-private lemma shifted_geometric {R : ℝ} (hR : 0 < R) (hR1 : R < 1) (j : ℕ) :
-    Summable (fun n : ℕ => (n + 1 : ℝ) ^ j * R ^ n) := by
-  have hg := summable_pow_mul_geometric_of_norm_lt_one j (r := R)
-    (by simpa [Real.norm_eq_abs, abs_of_pos hR] using hR1)
-  have hs := ((summable_nat_add_iff 1).mpr hg).mul_right R⁻¹
-  convert hs using 1
-  funext n
-  simp only [Nat.cast_add, Nat.cast_one, pow_succ]
-  field_simp [hR.ne']
-
 private lemma weight_norm_le (n : ℕ) : ‖(centralWeight n : ℂ)‖ ≤ 1 := by
   simpa [Complex.norm_real, Real.norm_eq_abs,
     abs_of_nonneg (centralWeight_nonneg n)] using weight_le_one n
@@ -72,7 +62,7 @@ private lemma polynomial_series {a : ℕ → ℂ}
       (∑' n : ℕ, (n + 1 : ℂ) * a (n + 1) * x ^ n) x := by
   obtain ⟨R, hxR, hR1⟩ := exists_between hx
   have hR : 0 < R := lt_of_le_of_lt (norm_nonneg x) hxR
-  have hs := shifted_geometric hR hR1 2
+  have hs := derivative_shifted_geometric hR hR1 2
   have hb (n : ℕ) (w : ℂ) (hw : w ∈ Metric.ball (0 : ℂ) R) :
       ‖a n * w ^ n‖ ≤ (n + 1 : ℝ) ^ 2 * R ^ n := by
     rw [norm_mul, norm_pow]

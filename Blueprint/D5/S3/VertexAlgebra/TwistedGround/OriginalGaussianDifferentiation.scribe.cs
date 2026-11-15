@@ -43,6 +43,11 @@ internal sealed class OriginalGaussianDifferentiationDocument : IScribeDocumentD
                 H("radial_operator_derivative_rankOne"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("After multiplying by r, the radial operator derivative is one half of the rank-one map built from the actual weighted source and its unconjugated bilinear functional."))), DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("derivative-shifted-geometric"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.derivative_shifted_geometric"),
+                H("derivative_shifted_geometric"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every natural polynomial coordinate weight is summable against a positive geometric ratio strictly below one. This bound controls the differentiated source and central-binomial series."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("source-coefficient"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceCoefficient"),
                 H("sourceCoefficient"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

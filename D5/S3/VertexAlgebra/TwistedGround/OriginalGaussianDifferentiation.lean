@@ -35,7 +35,7 @@ open D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
    The auxiliary j is a coordinate weight on explicitly summable vectors;
    no diagonal frequency map on H is defined. -/
 
-private lemma derivative_shifted_geometric {R : ℝ} (hR : 0 < R) (hR1 : R < 1)
+lemma derivative_shifted_geometric {R : ℝ} (hR : 0 < R) (hR1 : R < 1)
     (j : ℕ) : Summable (fun n : ℕ => (n + 1 : ℝ) ^ j * R ^ n) := by
   have hg := summable_pow_mul_geometric_of_norm_lt_one j (r := R)
     (by simpa [Real.norm_eq_abs, abs_of_pos hR] using hR1)

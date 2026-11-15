@@ -46,6 +46,53 @@ private theorem summableDependence : ObservationalDependence summableSignature s
   have ht : Summable (fun _ : ℕ => (1 : ℝ)) := Eq.mp h hs
   exact one_ne_zero (tendsto_nhds_unique tendsto_const_nhds ht.tendsto_atTop_zero)
 
+namespace derivative_shifted_geometric
+abbrev arena : Arena where
+  signature := summableSignature
+  Law A := ∀ {R : ℝ} (hR : 0 < R) (hR1 : R < 1) (j : ℕ),
+    A.readout () () (fun n : ℕ => (n + 1 : ℝ) ^ j * R ^ n)
+private theorem rejected_fails : ¬ arena.Law summableRejected := by
+  intro h
+  exact h (R := 1 / 2) (by norm_num) (by norm_num) 0
+def family : Registration arena (type_of% (@derivative_shifted_geometric)) where
+  actual := summableActual
+  bridge := Iff.rfl
+  variation := ⟨@derivative_shifted_geometric, summableRejected, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_fails
+  dependence := summableDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@derivative_shifted_geometric) (Realization summableSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianDifferentiation.derivative_shifted_geometric.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianDifferentiation.derivative_shifted_geometric.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize summableSignature summableActual.readout summableActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianDifferentiation
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end derivative_shifted_geometric
+
 namespace sourceFamily_summable
 abbrev arena : Arena where
   signature := summableSignature
