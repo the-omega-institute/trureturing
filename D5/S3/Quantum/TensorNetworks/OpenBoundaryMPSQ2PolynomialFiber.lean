@@ -469,22 +469,6 @@ private lemma clear_polynomial {σ κ : Type*}
       rw [hp]
       field_simp
 
-def quotientRecordTarget (m : ℕ) : Fin 12 → RealPoly := recordPolynomial (1 + m)
-
-def quotientLeadingTarget (m : ℕ) : RealPoly := leadingPolynomial m
-
-def quotientFiberTarget (m : ℕ) (J : RealPoly) : RealPoly :=
-  J * quotientLeadingTarget m
-
-private lemma quotientFiberTarget_eval (m : ℕ) (J : RealPoly) (x : Coordinates)
-    (hx : 0 ≤ sigma x) :
-    eval x (quotientFiberTarget m J) = eval x J *
-      Complex.normSq (leading (density (1 + m) (positiveRepresentative x))).det := by
-  rw [quotientFiberTarget]
-  simp only [map_mul]
-  change _ * eval x (leadingPolynomial m) = _
-  rw [leadingPolynomial_eval m x hx]
-
 private lemma quotientCoordinate_ratio (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ)
     (hQ : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
       (fun ij => Q ij.1 ij.2))
@@ -757,20 +741,6 @@ theorem actual_principal_genericity (m : ℕ)
       exact hb
     exact ⟨⟨f b, by rw [← hrange]; exact Set.mem_range_self b⟩, hgood, rfl⟩
 
-
-/-- The quotient-locus polynomial is nonzero on a nonempty open dense subset of the
-literal actual MPS image. This is the intrinsic source-side density bridge used
-by the later Q2 fiber descent. -/
-theorem quotient_locus_actual_genericity (m : ℕ) :
-    (actualPrincipalLocus m (OpenBoundaryMPSQuotient.quotientLocusPolynomial m)).Nonempty ∧
-      IsOpen (actualPrincipalLocus m (OpenBoundaryMPSQuotient.quotientLocusPolynomial m)) ∧
-      Dense (actualPrincipalLocus m (OpenBoundaryMPSQuotient.quotientLocusPolynomial m)) := by
-  have hw := OpenBoundaryMPSQuotient.quotient_locus_witness m
-  dsimp only at hw
-  rcases hw with ⟨hψ, hQ, hrec, h00⟩
-  apply actual_principal_genericity m (OpenBoundaryMPSQuotient.quotientLocusPolynomial m)
-  refine ⟨⟨_, hψ⟩, ?_⟩
-  exact hQ
 
 private def quotientRawPrefix (m : ℕ) (x : Coordinates) : Matrix (Word 3) (Word 3) ℂ :=
   OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
