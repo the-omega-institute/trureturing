@@ -17,10 +17,10 @@ internal sealed class FileMapPatternException(string pattern)
 internal sealed class FileMapGlob
 {
     private static readonly ConcurrentDictionary<string, Lazy<FileMapGlob>> compiledPatterns = new(StringComparer.Ordinal);
-    private readonly Regex regex;
+    private readonly Regex? regex;
     private readonly string literalPrefix;
 
-    private FileMapGlob(string pattern, Regex regex)
+    private FileMapGlob(string pattern, Regex? regex)
     {
         Pattern = pattern;
         this.regex = regex;
@@ -30,10 +30,14 @@ internal sealed class FileMapGlob
 
     internal string Pattern { get; }
 
-    // Every accepted match begins with this literal prefix. Keep the regex as
-    // the final matcher, including its existing null-input diagnostic.
-    internal bool IsMatch(string path) =>
-        (path is null || path.StartsWith(literalPrefix, StringComparison.Ordinal)) && regex.IsMatch(path!);
+    // Literals match exactly; wildcard patterns use a prefix filter before the regex.
+    internal bool IsMatch(string path)
+    {
+        if (path is null) throw new ArgumentNullException("input");
+        return regex is null
+            ? string.Equals(path, Pattern, StringComparison.Ordinal)
+            : path.StartsWith(literalPrefix, StringComparison.Ordinal) && regex.IsMatch(path);
+    }
 
     internal static FileMapGlob Create(string pattern)
     {
@@ -81,6 +85,8 @@ internal sealed class FileMapGlob
 
     private static FileMapGlob Compile(string pattern)
     {
+        if (!pattern.Contains('*')) return new FileMapGlob(pattern, null);
+
         var expression = new StringBuilder("\\A");
         for (var index = 0; index < pattern.Length; index++)
         {
