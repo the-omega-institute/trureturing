@@ -12,6 +12,8 @@ escape_witness: none
 transition_counts: proof_shape=bind-only; consumers=HardinA229584Strip.finite_certificate
 -/
 
+import D5.S3.SpinModels.PottsDefects.HardinA229584StripClass14
+import D5.S3.SpinModels.PottsDefects.HardinA229584StripClass15
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.SpinModels.PottsDefects.HardinA229584StripData
 import D5.S3.SpinModels.PottsDefects.DefectTransfer
@@ -27,7 +29,8 @@ theorem transition_counts (s : Fin 32) (hs : 14 ≤ s.val ∧ s.val < 16) :
       (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ d.val ∧
         cl (boundary r) (d.val - (cross p r + bondDefects horizontal r r)) = s
         then (1 : ℤ) else 0) = T (cl p d.val) s := by
-  revert s
-  decide +kernel
+  by_cases h : s.val < 15
+  · exact HardinA229584StripClass14.transition_counts s ⟨hs.1, h⟩
+  · exact HardinA229584StripClass15.transition_counts s ⟨by omega, hs.2⟩
 
 end D5.S3.SpinModels.PottsDefects.HardinA229584StripClasses7
