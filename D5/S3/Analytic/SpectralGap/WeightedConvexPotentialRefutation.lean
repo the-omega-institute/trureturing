@@ -143,7 +143,7 @@ private theorem trial_mass_positive {w u : ℝ → ℝ} (hw : ContinuousOn w int
   have hxi : x ∈ Ioo 0 Real.pi := by
     by_contra hh
     exact hx (hu.2 x hh)
-  have hxc : x ∈ interval := ⟨hxi.1.le,hxi.2.le⟩
+  have hxc : x ∈ interval := Ioo_subset_Icc_self hxi
   have hm := hw.mul (hu.1.continuousOn.pow 2)
   have h := intervalIntegral.integral_lt_integral_of_continuousOn_of_le_of_exists_lt Real.pi_pos (continuousOn_const : ContinuousOn (fun _ : ℝ => (0:ℝ)) interval) hm (fun y hy => mul_nonneg (hwp y ⟨hy.1.le,hy.2⟩).le (sq_nonneg _)) ⟨x,hxc,mul_pos (hwp x hxc) (sq_pos_of_ne_zero hx)⟩
   simpa only [weightedMass, intervalIntegral.integral_zero, Pi.mul_apply, Pi.pow_apply] using h
@@ -202,7 +202,7 @@ private theorem ground_comparison (a b : ℝ) (hab : a < b) (f df u du q : ℝ �
       simpa only [uIoc_of_le hab.le] using ((hFc n).mono Ioc_subset_Icc_self).aestronglyMeasurable measurableSet_Ioc))
     (Filter.Eventually.of_forall (fun n => ae_of_all _ (fun x hx => by
       rw [uIoc_of_le hab.le] at hx
-      have hc : x ∈ Icc a b := ⟨hx.1.le,hx.2⟩
+      have hc : x ∈ Icc a b := Ioc_subset_Icc_self hx
       rw [Real.norm_eq_abs]
       calc
         |F n x| ≤ |df x^2|+|Q n x*f x^2| := abs_add_le _ _
@@ -478,8 +478,9 @@ private theorem zero_endpoint_poincare (D : ℝ) (hD : 0 < D) (f df : ℝ → �
     ← intervalIntegral.integral_of_le hD.le] using h
 private theorem interval_poincare (a b : ℝ) (hab : a < b) (f df : ℝ → ℝ) (hf : ContinuousOn f (Icc a b)) (hdf : ContinuousOn df (Icc a b)) (hd : ∀ x ∈ Ioo a b, HasDerivAt f (df x) x) (hfa : f a=0) (hfb : f b=0) : (∫ x in a..b, f x^2) ≤ (b-a)^2/8*(∫ x in a..b, df x^2) := by
   have hm : MapsTo (fun x => a+x) (Icc (0:ℝ) (b-a)) (Icc a b) := by
-    intro x hx
-    constructor <;> linarith [hx.1,hx.2]
+    simpa only [id_eq, add_zero, add_sub_cancel] using
+      ((monotone_const : Monotone (fun _ : ℝ => a)).add monotone_id).mapsTo_Icc
+        (a := 0) (b := b-a)
   have h := zero_endpoint_poincare (b-a) (sub_pos.mpr hab) (fun x => f (a+x)) (fun x => df (a+x)) (hf.comp (continuous_const.add continuous_id).continuousOn hm) (hdf.comp (continuous_const.add continuous_id).continuousOn hm) (fun x hx => by
       have hh := (hd (a+x) ⟨by linarith [hx.1],by linarith [hx.2]⟩).comp x ((hasDerivAt_id x).const_add a)
       simpa only [Function.comp_def,mul_one] using hh)
@@ -791,7 +792,7 @@ private theorem strong_subinterval_nonzero {V w u : ℝ → ℝ} {z Q : ℝ} (hu
   push_neg at hh
   let m := (a+b)/2
   have hmab : m ∈ Ioo a b := ⟨by dsimp [m]; linarith,by dsimp [m]; linarith⟩
-  have hm : m ∈ Ioo 0 Real.pi := ⟨lt_of_le_of_lt ha hmab.1,lt_of_lt_of_le hmab.2 hb⟩
+  have hm : m ∈ Ioo 0 Real.pi := Ioo_subset_Ioo ha hb hmab
   have hum : u m=0 := hh m ⟨hmab.1.le,hmab.2.le⟩
   have hevent : u =ᶠ[nhds m] (fun _ => (0:ℝ)) := by
     filter_upwards [Icc_mem_nhds hmab.1 hmab.2] with x hx

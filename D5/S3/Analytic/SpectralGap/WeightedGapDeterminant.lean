@@ -11,7 +11,7 @@ proof_shape: per-declaration rows below; object definitions are not proof witnes
 escape_witness: D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.coefficient_continuous
 Direct frozen dependencies: declaration GID@statement_id in each row.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/27756
-D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.solution; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: series_zero_is_shooting, forcing_hasSum, solution_continuous, determinant_solution, solution_volterra
+D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.solution; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: series_zero_is_shooting, forcing_hasSum, solution_continuous, solution_volterra, determinant_continuous, endpoint_0, endpoint_1, endpoint_2, endpoint_3, endpoint_4, endpoint_5, endpoint_6, endpoint_7, determinant_zero_between, root_0, root_1, root_2, root_3
 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.coefficient_geometric_bound; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: forcing_coefficient_bound, series_summable, solution_continuous
 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.series_summable; proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: forcing_hasSum, solution_volterra
 D5.S3.Analytic.SpectralGap.WeightedGapDeterminant.solution_continuous; proof_shape: content; escape_witness: none; Direct frozen dependencies: none; consumers: series_zero_is_shooting
