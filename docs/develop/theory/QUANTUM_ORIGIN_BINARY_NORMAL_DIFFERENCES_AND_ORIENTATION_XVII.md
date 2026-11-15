@@ -3293,3 +3293,1067 @@ $$
 [Q191R]: https://sites.math.washington.edu/~rtr/papers/rtr169-VarAnalysis-RockWets.pdf "Rockafellar–Wets, Variational Analysis，例9.14及定理9.60。"
 
 ## 追加锚（本行以下为增补区）
+
+## 192. 一个互反目标产生中心，两目标关系接入有限正配对
+
+### 192.1 先不给中心的完整确认关系
+
+**定义 192.1（无中心的局部域）。** 设 $K$ 是有限维实仿射空间内仿射维数 $d\ge2$ 的严格凸紧体，所有内部、边界均相对于 $\operatorname{aff}K$。保留全部纯点 $S=\operatorname{ext}K=\partial K$ 和全部内禀仿射效应
+
+$$
+\begin{aligned}
+\mathcal E(K)&=\{e:K\to[0,1]:e\text{ 仿射}\},\\
+\mathcal E_p&=\{e\in\mathcal E(K):e(p)=1\},\qquad
+T_p(x)=\min_{e\in\mathcal E_p}e(x),\\
+\mathsf R_K(p)&:\quad T_p(q)=T_q(p)\quad(q\in S).
+\end{aligned}
+\tag{192.1}
+$$
+
+这里未给中心、范数、内积或光滑性。两个目标的关系只写 $p\ne s$ 和 $T_p(s)>0$；后者等价于不存在完整菜单中的 $e$ 同时满足 $e(p)=1,e(s)=0$，取补效应可见这种不可确定区分是对称的。
+
+**引理 192.2（支持确认与近点缺口）。** 在192.1的域中，完整效应及每个确认菜单紧，所有 $T_p$ 连续且有共同 Lipschitz 界。暂选辅助 Euclidean 坐标，记
+
+$$
+h(n)=\max_{x\in K}n(x),\quad w(n)=h(n)+h(-n),\quad
+\mathcal N(q)=\{n:\|n\|=1,\ n(q)=h(n)\}.
+\tag{192.2}
+$$
+
+则
+
+$$
+T_q(x)=\min_{n\in\mathcal N(q)}
+\frac{n(x)+h(-n)}{w(n)},\qquad
+1-T_q(p)=o(\|q-p\|)\quad(q\in\partial K,\ q\to p).
+\tag{192.3}
+$$
+
+证明。$K$ 包含某个辅助球 $B(x_0,\rho)$。若 $e=b+\ell\in\mathcal E(K)$，比较球上对径点得 $\|\ell\|\le1/(2\rho)$；$e(x_0)\in[0,1]$ 又界住常数项。效应菜单在有限维仿射函数空间中闭有界，故紧；确认菜单闭、非空，最小值取得，公共斜率界给连续性。
+
+非恒定确认 $e(q)=1$ 的最小值若为 $m$，则 $(e-m)/(1-m)$ 仍确认 $q$ 且逐点不大于 $e$。归一后的确认正是(192.3)的支持效应；常数确认 $1$ 不降低最小值。每个单位方向满足 $w(n)\ge2\rho$，故只需证明
+
+$$
+\sup_{n\in\mathcal N(q)}n(q-p)=o(\|q-p\|).
+\tag{192.4}
+$$
+
+否则取 $q_j\to p$、$n_j\in\mathcal N(q_j)$ 及 $\varepsilon>0$，使 $n_j(q_j-p)\ge\varepsilon\|q_j-p\|$。抽子列使 $n_j\to n$。支持函数连续性给 $n(p)=h(n)$，所以 $n(q_j-p)\le0$，而
+
+$$
+0\le\frac{n_j(q_j-p)}{\|q_j-p\|}
+\le\|n_j-n\|\longrightarrow0,
+\tag{192.5}
+$$
+
+矛盾。小量结论本身不要求严格凸或光滑。$\square$
+
+### 192.2 一个互反目标的切平面与中心
+
+**定理 192.3（一个固定目标赚得中心）。** 在192.1的域中，若 $\mathsf R_K(p)$，则 $p$ 有唯一支持超平面，$T_p$ 是同一归一仿射支持效应 $e_p$。令 $a$ 为 $e_p$ 的唯一最小点，则 $c=(p+a)/2$ 是 $K$ 的对称中心。中心化后的 $p-c$ 因而满足191.2的欧氏轴分解。
+
+证明。先任选一个在 $p$ 取一、最小值零的非恒定仿射支持效应 $e$。对趋向 $p$ 的边界点 $q$，互反与192.2给
+
+$$
+0\le1-e(q)\le1-T_p(q)=1-T_q(p)=o(\|q-p\|).
+\tag{192.6}
+$$
+
+取从 $p$ 严格指向一个内接球的方向为竖直方向。$p$ 附近的下边界可写为 $q=(y,f(y))$、$p=(0,0)$，其中 $f$ 在零点邻域有限、凸且局部 Lipschitz。具体地，$p$ 与内接球的凸包给出向内圆锥，保证投影定义域包含零点邻域；内方向与支持超平面横截，故所选支持面写为 $t=b(y)$，且
+
+$$
+e(y,t)=1-\gamma(t-b(y)),\qquad\gamma>0.
+\tag{192.7}
+$$
+
+由局部 Lipschitz 性，$\|(y,f(y))\|=O(\|y\|)$。将图像代入(192.6)得 $f(y)-b(y)=o(\|y\|)$，所以 $f$ 在零点可微且导数为 $b$，支持超平面唯一。任何确认效应由同一支持方向给出，恰为 $m+(1-m)e_p$、$0\le m\le1$；故 $T_p=e_p$ 于整个 $K$。唯一的是统一最小确认，不是整个确认菜单。
+
+严格凸性使 $e_p$ 的最小点 $a$ 唯一，且开弦 $(p,a)$ 位于内部。现在才取 $c=(p+a)/2$ 为原点，作仿射坐标变换，使
+
+$$
+p=(0,1),\quad a=(0,-1),\quad e_p(y,z)=(1+z)/2.
+\tag{192.8}
+$$
+
+这只是坐标选择，尚未断言 $c$ 为中心。严格凸性使每个非零法向 $n$ 的支持点 $q(n)$ 唯一；支持函数因此在 $n\ne0$ 可微，导数为 $q(n)$。可直接核对：支持点的紧性与唯一性给 $q(n_j)\to q(n)$；两个极值不等式夹住 $h(n+v)-h(n)-v(q(n))$ 为 $o(\|v\|)$。这里没有假设边界点的法向唯一。
+
+归一支持效应 $e_n(x)=(n(x)+h(-n))/w(n)$ 确认 $q(n)$，而 $1-e_n$ 确认 $q(-n)$。分别使用互反，有
+
+$$
+e_n(p)\ge T_{q(n)}(p)=e_p(q(n)),\qquad
+1-e_n(p)\ge T_{q(-n)}(p)=e_p(q(-n)).
+\tag{192.9}
+$$
+
+相加得 $z(q(n))+z(q(-n))\le0$。固定非零横向法向 $u$，定义 $\beta_u(t)=h(u,t)-h(-u,-t)$，于是
+
+$$
+\beta_u'(t)=z(q(u,t))+z(q(-u,-t))\le0.
+\tag{192.10}
+$$
+
+另一方面，$p,a$ 是 $z$ 的唯一最大点与最小点，故
+
+$$
+h(u,t)-|t|\longrightarrow0\quad(t\to\pm\infty).
+\tag{192.11}
+$$
+
+例如 $t\to+\infty$，支持点 $q_t=(y_t,z_t)$ 趋向 $p$：比较 $q_t$ 与 $p$ 的极值读数并除以 $t$，任意聚点必须满足 $z=1$，严格凸性使其只能为 $p$。再有 $0\le h(u,t)-t\le u(y_t)\to0$。负无穷方向对 $a$ 同理。因此 $\beta_u$ 在正负无穷两端都趋零；它单调不增，只能恒零。$u=0$ 时直接有 $h(0,t)=|t|$。于是所有法向满足 $h(n)=h(-n)$，支持函数决定紧凸体，给 $K=-K$。
+
+所得中心即 $c$。在这个已赚得的中心域中，$\mathsf R_K(p)$ 字面支付191.1，直接调用191.2取得欧氏直和轴，无须重证其积分分解。辅助 Euclidean 标尺只用于有限维紧性、极限与微分，没有进入候选的原始结构。$\square$
+
+### 192.3 实际三维面不需预送中心
+
+**引理 192.4（原紧域内的实际面正则性）。** 设 $\Omega$ 为有限维紧凸基，且每个不同原纯对的实际最小面均有仿射维数三。那么每个这样的面紧、严格凸，其整个相对边界恰为原纯点与该面的交集；此结论不需中心对称。
+
+证明。对任意非空实际面 $F$，取 $x\in\operatorname{ri}F$。若 $y\in\Omega\cap\operatorname{aff}F$，可取小 $\varepsilon>0$ 使 $z=x+\varepsilon(x-y)\in F$。等式 $x=\varepsilon y/(1+\varepsilon)+z/(1+\varepsilon)$ 和面性质迫 $y\in F$。故 $F=\Omega\cap\operatorname{aff}F$，有限维仿射包闭，$F$ 因而紧。余下复用177.5a证明的严格凸步骤：非平凡边界线段给维数至多二的紧真支撑面 $G$，其两个不同极点也是原纯点，却生成包含于 $G$ 的实际面，与全原纯对三维量词矛盾。实际面极点性质给最后的边界等式。这里只复用不消费中心的证明段。$\square$
+
+**定理 192.5（无中心的两目标三球判据）。** 在192.4的域中，每张实际二元面 $F$ 是仿射三球，当且仅当其中存在两个原纯目标 $p\ne s$，满足 $T_p^F(s)>0$、$\mathsf R_F(p)$、$\mathsf R_F(s)$。所有比较均用本面完整内禀菜单。
+
+证明。192.4先给严格凸紧体域，192.3从一个互反目标给中心。此时复用177.5a证明最后一段的局部支持计算：在已知严格凸的中心体中，$T_p^F(s)=0$ 当且仅当 $s=2c-p$。因而 $p\ne s$ 和 $T_p^F(s)>0$ 排除相同与对径，给两个独立中心方向；191.2及177.4直接给三球，不要求其他实际面先有中心。反向由完整球的确认公式直接成立。三维一个目标不足的局部反例仍为191.4的 $\mathbb R\oplus_2\ell_4^2$；没有把局部反例冒充全有限层级的反模型。$\square$
+
+**命题 192.6（紧性不能从裸互反补回）。** 若不保留原紧凸域，三维、全部原纯对的三维最小面及全纯互反仍允许非中心对称的凸态集。
+
+证明。令 $K=\overline B^3\setminus\{n\}$，其中 $n$ 是 Euclidean 单位球面上一点。删去极点后集合仍凸，纯点为 $S^2\setminus\{n\}$，且仍由它们凸生成。任意不同纯对的中点在内部，实际最小面为整个 $K$。$K$ 在闭球中稠密，完整仿射效应菜单与闭球完全相同，所以剩余全部纯对满足 $T_p(q)=(1+p\cdot q)/2=T_q(p)$。但 $K$ 不闭、不紧；若有中心，其闭包也以它为中心，只能是零，而 $-n\in K,n\notin K$，矛盾。这只检验删除紧性的局部扩域，不改变192.1及原强全有限背景。$\square$
+
+### 192.4 两种原关系组成一个完整有限候选
+
+**定义 192.7（三复制互反—正配对候选）。** 完整保留190.4的强实全有限背景：$\dim V>1$、原 $W_N=V^{\otimes_{\mathbb R}N}$、各层闭尖生成 $C_N$、严格正乘法单位 $u_N=u^{\otimes N}$、全部原准备与完整效应、每个有限 min/max 分块、正置换及逆、规范重括号及标量层。只在整个 $K_3=C_3\cap\{u_3=1\}$ 要求：
+
+1. 每个不同原纯对的实际最小面仿射维数三；每张这样的面满足192.5的两个目标条件。
+2. 对每个原纯点 $a$，保留190.1的原全域 $\#$、$N_a$ 及有限正配对关系(190.2)，其中 $d=\dim W_3$、$k\le d^2$、$r\le d$，包括空和、任意有符号 $g_j\in W_3^*$ 和全部原效应。
+
+记此合取为 $\mathsf Q_{\rm reciprocal\,pair}$。局部菜单不预认作原可实施效应；第二项始终使用整个原系统的菜单。前端没有中心、球度量、复数、矩阵秩、删除映射或投影存在量词；强全有限背景、完整菜单、三维和有限配对一致性仍是明列条件。
+
+**定理 192.8（同原域的全有限复量子理论）。** 在192.7的准确背景下，$\mathsf Q_{\rm reciprocal\,pair}$ 当且仅当存在同一个整数 $n\ge2$ 及同一个实线性同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$，使
+
+$$
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}\quad(N\ge0).
+\tag{192.12}
+$$
+
+证明。第一项依次由192.4、192.3、192.5供应整个原 $K_3$ 的实际 L2；第二项就是同一域的全标签(190.2)。此时才精确达到190.4，直接调用190.5。190.2先从有限关系产生同一个原正删除，190.3识别它为指定零面的投影，188.4才延拓局部全菜单，188.5及既有分类传播支付共同坐标；没有偷用未延拓的局部效应定义原 $\#$，没有额外加入 TC 或 AHS projectivity。反向标准复层级中每张二元实际面为三球，所有目标互反；标准压缩按190.2必要性供应有限关系。$\square$
+
+**命题 192.9（量子字典、几何与简化边界）。** 在192.8的全部前件下，原态、效应与配对依次为迹一PSD、$[0,I]$ 及 $\operatorname{Tr}(\rho E)$；纯点为单位向量射线，最低确认为 $|\langle\psi_p,\psi_q\rangle|^2$。有限原效应分解给数学POVM，全部原张量层及边缘给标准复合与偏迹。实际二点面是 $\mathbb{CP}^1$ 的混态三球；三个两两原正交纯点在同一复三维支持中生成仿射维数八的面，三颗二点球是这同一大面内的实际面。三个标签的共同支持与三份物理复制是不同计数。
+
+证明。静态字典直接消费190.5后的条件表及191.7，几何由同一复矩阵支持对应给出。过程仍逐项保留：所有有限旁观者保正才给CP，全输入质量预算及分支总预算才给TNI/TP和数学仪器；实际事件饱和、指定锐中性更新及连续可逆保单位时间群仍须各自条件，钟、能量和 $\hbar$ 标定也没有由互反推出。
+
+相对于191的局部两目标入口，本章删除了中心对称前件，没有增加互反目标数，也没有加强为全纯对互反；192.3证明中心由剩余局部条件推出。相对于190的完整候选，本章用无中心的二元读数判据支付原实际 L2，有限配对关系继续保留。没有由此申领整套物理公理的独立性或最小性，也没有把交换比较端点变成任意接续测量可交换。$\square$
+
+**命题 192.10（承重归属与完整白话）。** 新接合是192.3：从一个未给中心、未给光滑的严格凸紧体中的固定目标互反，先以近点缺口取得目标光滑，再以两端趋零的支持函数差之单调性取得中心。中心后的轴分解归191.2及其注明的 $L^2$-summand先例，两轴闭合归177.4，有限正配对及完整量子重建归190。支持函数、有限凸函数局部图像与紧性是成熟凸分析工具。[Q192N]定理9.2及其后总结已覆盖光滑严格凸紧体的全纯互反到Hilbert球，定理7.1及[Q191A]定理3.2已覆盖注明的光滑赋范空间路线；本章不把这些已知情形重报为新定理。固定一个目标产生光滑和中心的自含桥梁是这里的repo-derived增量，未据有界文献检索申领优先权。
+
+证明。192.2—192.3给新增接合，192.4—192.8核对其实际消费者。完整候选可以说成：保留原系统的全部准备、全部测试和全部有限复合，只在整个三份系统检查；每两个不同纯准备撑起一张实际三维小面，每张面上能找到两个不同且不能确定区分的纯目标，让每个目标与这张外壳上任何纯点交换确认比较的两端，最低读数都不变；另外，原准备配原测试的有限正和若能写成某纯点自身项加上其可区分邻点项，删去自身项后总配对不能变负。第一位目标先把自身的棱角排掉，再使两张平行支持面的偏差成为两端归零的单调量，物体自己的中心因而出现；第二位目标补足独立勾股方向，三维小面只能成为三球。有限正配对再产生统一删除与零面投影，把小面上的尺接回同一原系统，已有重建给同一套复矩阵、Born配对及全部有限张量层。中心和删除不再预送，三维、全边界两目标量词、完整复合及有限关系一致性仍明确保留。$\square$
+
+[Q192N]: https://arxiv.org/abs/2208.07135v1 "Niestegge, Non-symmetric transition probability，定理9.1、9.2及其后总结；光滑严格凸紧体的全互反范围。"
+
+## 追加锚（本行以下为增补区）
+
+## 193. 商核的谱宽度、共同二元测试与最坏区分损失
+
+**定义 193.1（矩阵商中的原二元读数）。** 取 $D\ge2$、实线性子空间 $L\subset\operatorname{Herm}_D(\mathbb C)$，假定每个 $X\in L$ 均迹零。令 $\pi:\operatorname{Herm}_D\to\operatorname{Herm}_D/L$、$C=\pi(\operatorname{PSD}_D)$、$u\pi=\operatorname{Tr}$。商态为 $p_v=\pi P_v$，其中 $v$ 为单位向量、$P_v=vv^*$。完整商效应恰为
+
+$$
+\mathcal E_L=L^\perp\cap[0,I],\qquad
+T_v(p_z)=\min_{E\in\mathcal E_L,\ Ev=v}z^*Ez.
+\tag{193.1}
+$$
+
+常数效应 $I$ 保证最小化域非空。定义原向量正交对的共同区分条件
+
+$$
+\mathsf A(L):\quad
+\forall v\perp w\quad\exists E\in\mathcal E_L:
+Ev=v,\quad Ew=0.
+\tag{193.2}
+$$
+
+向量均取单位长度。此定义先于商像的纯性；只有另已证明全部 $p_v$ 恰为原纯点，且 $\pi$ 在每个二维复支持态集上限制为到相应原二元实际面的仿射同构、将正交射线送到几何对径时，才将它识别为原实际面对径零关系 AD。对 $0\ne X\in L$，记
+
+$$
+a(X)=\lambda_{\max}(X)>0,\quad b(X)=-\lambda_{\min}(X)>0,
+\quad t(X)=\operatorname{Tr}X_+=\operatorname{Tr}X_-.
+\tag{193.3}
+$$
+
+$X_\pm$ 均为正半定谱部。迹零、非零保证上述严格正性。以下所有矩阵、正性和范数属于这个明确给出的矩阵模型，不以它们为任意原系统预设坐标。
+
+**定理 193.2（谱宽度恰好控制同一个合法二元测试）。** 在193.1下，下列三项等价：
+
+1. $\mathsf A(L)$；
+2. 每个 $X\in L$ 满足 $\operatorname{Tr}X_+\ge\lambda_{\max}(X)-\lambda_{\min}(X)$；
+3. 所有单位向量 $v,z$ 满足 $T_v(p_z)=|v^*z|^2$。
+
+等价的核条件是
+
+$$
+\boxed{\quad\|X\|_1\ge2\bigl(\lambda_{\max}(X)-\lambda_{\min}(X)\bigr)
+\qquad(X\in L).\quad}
+\tag{193.4}
+$$
+
+证明。固定 $v\perp w$，置 $Q=I-P_v-P_w$。满足 $0\le E\le I$、$Ev=v$、$Ew=0$ 的矩阵恰为 $E=P_v+B$、$0\le B\le Q$。对迹零 Hermitian $X$，写 $h=v^*Xv$、$a=\lambda_{\max}X$、$b=-\lambda_{\min}X$、$t=\operatorname{Tr}X_+$。成熟的余维一 Cauchy 交错界给任意余维一压缩 $A'$：
+
+$$
+\operatorname{Tr}(A')_+\ge\operatorname{Tr}A_+-\max(\lambda_{\max}A,0),\qquad
+\operatorname{Tr}(A')_-\ge\operatorname{Tr}A_--\max(-\lambda_{\min}A,0).
+\tag{193.5}
+$$
+
+先将 $X$ 压到 $v^\perp$，得矩阵 $Y$，其迹为 $-h$，因而 $\operatorname{Tr}Y_- =\operatorname{Tr}Y_++h\ge t-a+h$。再删去 $w$，并用 $\lambda_{\min}Y\ge-b$，得
+
+$$
+\operatorname{Tr}(QXQ)_-\ge t-a-b+h,
+\qquad
+\min_{P_v\le E\le I-P_w}\operatorname{Tr}(EX)
+=h-\operatorname{Tr}(QXQ)_-\le a+b-t.
+\tag{193.6}
+$$
+
+压缩谱部只在 $\operatorname{ran}Q$ 上计；零维压缩允许。取 $v,w$ 分别为 $X$ 的最大、最小谱向量便达到等号，所以
+
+$$
+\sup_{v\perp w}\ \min_{P_v\le E\le I-P_w}\operatorname{Tr}(EX)
+=a+b-t.
+\tag{193.7}
+$$
+
+固定一对 $v,w$，将整个紧凸区间 $\{E:P_v\le E\le I-P_w\}$ 送到 $L^*$，映射为 $E\mapsto[X\mapsto\operatorname{Tr}(EX)]$。它的像包含零，当且仅当对每个 $X\in L$，该区间的最小配对不大于零；若零在像外，紧凸严格分离给一个所有配对均严格为正的 $X$。这里 $-X$ 也属于 $L$，故一个方向的条件已含另一方向。于是(193.7)证明1与2等价。这一步得到同一个 $E$ 同时消去整个 $L$，没有把各个方向分别可行拼成共同可行。
+
+任意确认 $v$ 的正收缩满足 $E\ge P_v$，故 $T_v(p_z)\ge|v^*z|^2$。若1成立，把 $z$ 写在 $\operatorname{span}\{v,w\}$ 中，取相应共同测试，达到这个下界；$z$ 平行 $v$ 时直接成立。故1推出3。3对正交 $v,w$ 给最小值零，紧性保证达到，正性使 $w^*Ew=0$ 等价于 $Ew=0$，故3推出1。$\square$
+
+**定义 193.3（最差原二元区分能力）。** 定义
+
+$$
+\kappa(L)=\min_{v\perp w}\ \max_{E\in\mathcal E_L}
+\operatorname{Tr}\bigl(E(P_v-P_w)\bigr)\in[0,1].
+\tag{193.8}
+$$
+
+最大值允许同一测试的两个结果互换，因为 $I-E\in\mathcal E_L$。若两种准备等先验且数学二结果测量为 $\{E,I-E\}$，其最优平均错误为该对比度的 $(1-\text{对比度})/2$；因此最难正交对的最优错误为 $(1-\kappa(L))/2$。这只是已给准备及测试模型中的统计量。
+
+**定理 193.4（共同菜单的精确损失公式）。** 若 $L\ne\{0\}$，则
+
+$$
+\boxed{\quad
+\kappa(L)=\min\left\{1,\ \min_{0\ne X\in L}
+\frac{t(X)-\min(a(X),b(X))}{\max(a(X),b(X))}\right\}.
+\quad}
+\tag{193.9}
+$$
+
+右侧齐次比值的最小值可在 $\max(a,b)=1$ 的紧集上取得。若 $L=\{0\}$，则 $\kappa(L)=1$。特别地，$\kappa(L)=1$ 恰为193.2；若谱条件失效，可选最优核方向，其两端谱向量给出达到全局最坏值的一对原正交向量。
+
+证明。令 $\Delta=P_v-P_w$。由于 $I\in L^\perp$、$\operatorname{Tr}\Delta=0$，置 $A=2E-I$，成熟的迹范数／算子范数商对偶给
+
+$$
+\max_{E\in\mathcal E_L}\operatorname{Tr}(E\Delta)
+=\frac12\max_{\substack{A\in L^\perp\\\|A\|_\infty\le1}}\operatorname{Tr}(A\Delta)
+=\frac12\min_{X\in L}\|\Delta+X\|_1.
+\tag{193.10}
+$$
+
+有限维 Hahn–Banach 商范数对偶亦直接给最后等式。基范数与全效应对偶归[Q193LPW]，不是新增对偶定理。
+
+对固定 $X\ne0$，Hermitian 特征值重排的迹范数下界给
+
+$$
+\min_{v\perp w}\frac12\|X+P_v-P_w\|_1
+=t+1-\min(a,1)-\min(b,1).
+\tag{193.11}
+$$
+
+具体地，把 $P_v$ 放在最小谱方向，把 $P_w$ 放在最大谱方向便达到；下界是成熟的特征值扰动不等式 $\sum_j|\lambda_j(A)-\lambda_j(B)|\le\|A-B\|_1$，取 $B=P_w-P_v$，特征值按同一顺序列出。这是谱重排工具的应用，不另申领该不等式。
+
+联合最小化中的 $v,w,X$ 可交换次序，因为它们都是最小化。沿每条核射线 $rX$，需最小化
+
+$$
+f(r)=rt+1-\min(ra,1)-\min(rb,1),\qquad r\ge0.
+\tag{193.12}
+$$
+
+设 $a\ge b$。在 $[0,1/a]$、$[1/a,1/b]$、$[1/b,\infty)$ 上斜率依次为 $t-a-b$、$t-b$、$t$。后两者非负，因为 $t\ge a\ge b$。故 $t\ge a+b$ 时最小值为1，否则在 $r=1/a$ 取 $(t-b)/a$。交换正负谱处理 $b\ge a$，即得(193.9)。非零 $L$ 的算子范数单位球面紧，且 $t\ge\max(a,b)$，所以比值连续、非负并达到最小值。若总值小于1，选最优核方向及上述极谱对，同时达到联合最小值。$\square$
+
+**定理 193.5（单核中纯互反不能与对径零分离）。** 令 $L=\mathbb RH$、$0\ne H=H^*$、$\operatorname{Tr}H=0$，并用193.1的完整菜单。则下列条件等价：全原向量对的 $T_v(p_z)=T_z(p_v)$、全原向量对 Born 公式、$\mathsf A(L)$、$t(H)\ge a(H)+b(H)$。若另已支付193.1注明的纯点及实际面对应，这也是全原纯互反、全纯 Born 与 AD 在该单核商类中的等价。此断言没有推广到任意多维核的“纯互反推出 AD”。
+
+证明。193.2给后三项等价，Born 公式给互反。反之设 $a+b>t$，取极谱单位向量 $v_+,v_-$，置
+
+$$
+z=\frac{\sqrt b\,v_++\sqrt a\,v_-}{\sqrt{a+b}},
+\qquad z^*Hz=0,\qquad s=\frac{a+b-t}{b}\in(0,1].
+\tag{193.13}
+$$
+
+$P_z$ 是合法效应，所以 $T_z(p_{v_+})=b/(a+b)$。任意确认 $v_+$ 的 $E$ 在该向量上为单位、与其余方向的交叉项为零；其余负谱方向最多补偿 $t-b$，故 $\operatorname{Tr}(EH)=0$ 迫 $v_-^*Ev_-\ge s$。等号由
+
+$$
+E=P_{v_+}+sP_{v_-}+P_{\mathcal H_-\cap v_-^\perp}
+\tag{193.14}
+$$
+
+达到。因此
+
+$$
+T_{v_+}(p_z)=\frac b{a+b}+\frac a{a+b}\frac{a+b-t}{b}
+>\frac b{a+b}=T_z(p_{v_+}),
+\tag{193.15}
+$$
+
+互反失败。这是同一原菜单中的两个达到效应。$\square$
+
+**定理 193.6（平衡方向与任意复迹零矩阵的共同中性基）。** 设 $m\ge2$、$H=\operatorname{diag}(I_m,-I_m)$，$M\in M_{2m}(\mathbb C)$ 满足 $\operatorname{Tr}M=0$，不要求 $M$ Hermitian。那么存在正交单位基 $(z_j)_{j=1}^{2m}$，同时满足
+
+$$
+z_j^*Hz_j=0,\qquad z_j^*Mz_j=0\quad(1\le j\le2m).
+\tag{193.16}
+$$
+
+证明。先给所需的酉迹抵消。对任意 $B,C\in M_m(\mathbb C)$，置 $p(U)=\operatorname{Tr}(BU)$、$q(U)=\operatorname{Tr}(U^*C)$。若 $B=V\Sigma W^*$ 为奇异值分解，取对角全零的循环置换矩阵 $Q$，则 $U_p=WQV^*$ 满足 $p(U_p)=\operatorname{Tr}(\Sigma Q)=0$；$m\ge2$ 正用在 $Q$ 的存在。由于 $q(U)=\overline{\operatorname{Tr}(C^*U)}$，同理有 $U_q$ 使 $q(U_q)=0$。酉群 $U(m)$ 路径连通，连续实函数 $|p(U)|-|q(U)|$ 在这两点分别非正、非负，所以某个 $U_0$ 满足 $|p(U_0)|=|q(U_0)|$。两者皆零时完成；否则选相位 $e^{2i\theta}=-q(U_0)/p(U_0)$。对 $U=e^{i\theta}U_0$ 得
+
+$$
+\operatorname{Tr}(BU+U^*C)=e^{i\theta}p(U_0)+e^{-i\theta}q(U_0)=0.
+\tag{193.17}
+$$
+
+按 $H$ 的正负扇区写 $M=\begin{pmatrix}A&B\\C&D\end{pmatrix}$，取(193.17)的 $U$，令
+
+$$
+T_\pm=\frac1{\sqrt2}\binom{I_m}{\pm U},\qquad
+M_\pm=T_\pm^*MT_\pm
+=\frac12(A+U^*DU\pm BU\pm U^*C).
+\tag{193.18}
+$$
+
+有 $T_\pm^*T_\pm=I_m$、$T_+^*T_-=0$、$T_\pm^*HT_\pm=0$。两个像因而是正交互补的整平面中性子空间，且 $\operatorname{Tr}M_\pm=0$。
+
+此时直接使用单个复迹零矩阵可酉零对角化的经典结论，见[Q193GA] Lemma 1 的有限维部分。其所需论证是：Toeplitz–Hausdorff 数值域凸性及对角元平均为零，给一个零期望单位向量；删去它后的压缩仍迹零，逐维继续即得完整零对角基。将 $M_+$、$M_-$ 的两组基分别经 $T_+$、$T_-$ 送回，$H$ 的整平面中性不被这些内部换基破坏，故得到(193.16)。经典单矩阵零对角化不是本条的新内容；接合在于(193.17)—(193.18)先保证两块同时中性且压缩迹零。$\square$
+
+**定理 193.7（任意有限层的共同合法投影区分）。** 设 $m\ge2$，$S=H^\perp\subset\operatorname{Herm}_{2m}$，并定义
+
+$$
+\pi:\operatorname{Herm}_{2m}\to\operatorname{Herm}_{2m}/\mathbb RH,
+\qquad L_N=\ker\pi^{\otimes N},\qquad L_N^\perp=S^{\otimes N}.
+\tag{193.19}
+$$
+
+那么每个有限 $N\ge1$、每对正交单位向量 $v,w\in(\mathbb C^{2m})^{\otimes N}$，都存在同一个正交投影
+
+$$
+\boxed{\quad E=E^*=E^2\in S^{\otimes N},\qquad Ev=v,\quad Ew=0.\quad}
+\tag{193.20}
+$$
+
+因此全部这些层满足193.2的谱条件、$\kappa(L_N)=1$，且对任意单位 $v,z$ 的完整原菜单最低值为 $|v^*z|^2$。
+
+证明。$L_N^\perp=S^{\otimes N}$ 由 $\operatorname{Herm}_{2m}=\mathbb RH\oplus S$ 的正交张量展开给出，正是165.2的空间恒等式。证明(193.20)时允许正交向量未归一化。若 $v=0$ 取 $E=0$；若 $v\ne0,w=0$ 取 $E=I$，其中 $I\in S^{\otimes N}$。
+
+当 $N=1$ 且二者非零，令 $M=|v\rangle\langle w|$，它的迹为 $w^*v=0$。193.6给共同中性基 $(z_j)$，于是 $P_{z_j}\in S$，且 $(z_j^*v)(w^*z_j)=0$。令 $J=\{j:z_j^*v\ne0\}$，则 $E=\sum_{j\in J}P_{z_j}$ 是 $S$ 中确认 $v$、消去 $w$ 的投影。
+
+对 $N\ge2$，假定结论对 $N-1$ 成立。令
+
+$$
+M=\operatorname{Tr}_{2,\ldots,N}(|v\rangle\langle w|),\qquad
+v_j=(z_j^*\otimes I)v,\quad w_j=(z_j^*\otimes I)w,
+\tag{193.21}
+$$
+
+其中 $(z_j)$ 由193.6作用于这个迹零 $M$ 取得。按偏迹定义，$w_j^*v_j=z_j^*Mz_j=0$。对每个分支用归纳假设，含上述零向量分支，取得 $E_j\in S^{\otimes(N-1)}$。置
+
+$$
+E=\sum_jP_{z_j}\otimes E_j.
+\tag{193.22}
+$$
+
+第一因子投影两两正交，所以 $E^*=E$、$E^2=E$；每个张量项属于 $S^{\otimes N}$。向量展开 $v=\sum_jz_j\otimes v_j$、$w=\sum_jz_j\otimes w_j$ 给 $Ev=v$、$Ew=0$。所有分支被拼成同一个完整原合法效应。由193.2和193.4得其余结论。
+
+这个条件重叠归零及逐方递归的证明骨架归 Walgate 等[Q193W]及[Q193GA] Theorem 2、§III；标准递归未要求本地投影处于 $H^\perp$，新增支付是193.6。这里仅构造完整商菜单内的数学效应；未据递归形式授予商理论中的实际自适应仪器或控制操作。$\square$
+
+**命题 193.8（精确阈值、旧不平衡商与全有限反模型）。** 对193.7的平衡族，全部原向量正交对区分的阈值恰为 $m\ge2$。对 XIV165 原来取定的 $m\ge3$，在其完整强全有限背景中，对每个有限 $N$ 同时有
+
+$$
+\boxed{\quad\mathrm{L2}_N+\mathrm{TC}_N+\mathrm{AD}_N
++\text{全部原纯点 Born 最低值与互反},\qquad\neg\mathrm{NC}_N.\quad}
+\tag{193.23}
+$$
+
+原混合零闭合也在各层失败。若另取 $m\ge4$，全部有限层还满足原 L3；固定任意有限支持预算 $r$ 时，取 $m\ge\max\{3,r+1\}$，165.5的该预算继续成立。故增加任意固定有限的实际小面预算、甚至加入全有限层纯 Born 读数，仍不能删除共同混合零约束。
+
+证明。$m\ge2$ 的正向由193.7。若 $m=1$，$X=H\otimes P_e^{\otimes(N-1)}\in L_N$ 只有非零谱 $1,-1$，正谱迹1而谱直径2，193.2必要性在每层排除区分；此阈值只涉及原向量条件，不把 $m=1$ 的商像预认作165的纯点几何。
+
+$m\ge3$ 时，165.2已给强全有限背景和完整效应，165.4—165.5已给各层全部原纯点、二维支持实际面的仿射同构与正交对径对应，所以193.7给真正的原 AD、全纯 Born 与纯互反。165.6给各层原零邻点的有限混合 $y$ 满足 $T_a(y)>0$ 且其实际生成面为整个 $K_N$；这同时违反混合零凸性及 NC。其余小面量词原样消费165.5，不将 $m\ge3$ 的 L2 范围错报为 L3 范围。
+
+非量子性也由实维数直接读出：固定 $\dim V=(2m)^2-1$，严格落在相邻平方 $(2m-1)^2$ 与 $(2m)^2$ 之间，不存在 $\operatorname{Herm}_n(\mathbb C)$ 的同维有序同构。这个模型没有满足192.7的有限正配对条件。
+
+另外，对 XII159.11 的旧 $H=\operatorname{diag}(7,1,1,1,-7,-1,-1,-1)$，$a=b=7,t=10$，193.4给 $\kappa=3/7$、最难正交对最优错误 $2/7$。193.5取 $v_+=e_1$、$v_-=e_5$、$z=(e_1+e_5)/\sqrt2$，给 $T_{v_+}(p_z)=11/14$、$T_z(p_{v_+})=1/2$。该已有不平衡商不能供应全纯互反且非 AD 的反模型。$\square$
+
+**命题 193.9（完整候选的逻辑位置与几何边界）。** 完整候选仍为192.7，量子理论仍精确由192.8—192.9给出。193.2将矩阵商类中的原二元确认关系压成一个齐次谱不等式；193.7—193.8表明这个条件甚至能在同一个强全有限反模型中处处成立，而共同混合零闭合仍失败。因此它不支付192.7的有限正配对关系，也不独立生成原矩阵表示。
+
+证明。193.23的全部性质在同一固定 $V$、同一系列 $\pi^{\otimes N}\operatorname{PSD}$ 及其完整原菜单中实现，包含每层所有纠缠原纯点；并非分别成立的单层模型。它因而精确加强165的反模型性质：若从192.7的第二项只保留全有限层原纯互反、对径零或全纯 Born 最低值，193.8仍满足这些替代读数，却没有所需共同混合零闭合。由192.8，192.7的有限正配对在该模型中不成立，故这种替换不能给同原域的完整复量子结论。
+
+几何上，(193.10)说明商后二元对比度是原秩二差 $P_v-P_w$ 到核 $L$ 的迹范数距离的一半；(193.4)恰好禁止所有这样的正交纯弦被商缩短。但是保持这些弦长没有保持混合邻点的共同零面。这个描述消费明确矩阵模型的迹范数，未将它称为已从裸关系内生的新度量。完整192.7仍由两目标互反取得实际三球，再由有限正配对取得统一正删除与原菜单延拓，192.8才给同一 $\theta$ 的全部有限复矩阵锥。相应态、效应、Born 配对、POVM 与复合字典原样保留192.9；过程公理和实际操作仍各守其条件。$\square$
+
+**命题 193.10（工具归属与完整白话）。** 交错、紧凸分离、商范数对偶、Hermitian 谱重排及单复矩阵零对角化均为成熟工具。基范数／全效应对偶归[Q193LPW]，纯态统计识别的核／惯性背景归 XIV165 所引[Q193CHST]；后者不承担零错误区分的谱质量条件。单复矩阵零对角化归[Q193GA] Lemma 1 所列经典结论，二正交纯态的条件重叠归零与逐方递归归[Q193W]、[Q193GA]。本章的 repo-derived 接合是193.2的共同原菜单谱判据、193.4的最坏对比度公式、193.5的单核互反分类，以及193.6的平衡中性基和它在193.7—193.8中的全有限层消费者；不申领历史优先权，已有平衡商、经典递归或既有重构不另计为新内容。
+
+证明。193.2—193.9给推导与适用边界。完整白话是：一个大空间可以压掉某些“看不见的方向”，却仍让任意两种纯准备之间的最低确认读数都和量子力学完全相同；这甚至能在全部有限复合中一起做到。办法是先把每次比较的重叠信息分到两张互补平面，让两张平面都对被删方向中性，再在里面选一组使条件重叠归零的基，逐层拼成同一把合法测试尺。谱判据说明这些被删方向为何不缩短任何正交纯弦。但两点之间总能各找一把好尺，不等于所有零邻点能共用一把尺：分别读零的准备混起来，仍会读出正数。因而回溯完整量子公理时，真正不能丢的是“这些关系能在同一个原系统里共同实现”的约束。完整候选继续用三维实际面上的两目标互反和有限正配对表达它；前者产生小球，后者把小球的尺接成共同删除与正延拓，才由既有定理给全部有限复矩阵理论。本章把纯点读数路线能走到哪里、在哪一步不足，给成了同一个全有限反模型的定理。$\square$
+
+[Q193LPW]: https://arxiv.org/pdf/1703.03392v2 "L. Lami, C. Palazuelos, A. Winter, Ultimate data hiding in quantum mechanics and beyond；§II.A Definition 2、Lemma 3，基范数与全效应对偶。"
+[Q193CHST]: https://arxiv.org/pdf/1411.0828v2 "C. Carmeli, T. Heinosaari, J. Schultz, A. Toigo, Expanding the Principle of Local Distinguishability；§§II—V，纯态统计识别、核、压缩与惯性，不作零错误区分谱条件的来源。"
+[Q193W]: https://arxiv.org/pdf/quant-ph/0007098 "J. Walgate, A. J. Short, L. Hardy, V. Vedral, Local Distinguishability of Multipartite Orthogonal Quantum States，PRL85 (2000), 4972—4975；条件重叠与逐方递归，不含平衡中性限制。"
+[Q193GA]: https://arxiv.org/pdf/2601.20074 "I. George, M. A. Alhejji, Local Distinguishability of Multipartite Orthogonal Quantum States: Generalized and Simplified；Lemma1的经典单复矩阵零对角化与Theorem2、§III的标准递归，不含H中性限制。"
+
+## 追加锚（本行以下为增补区）
+
+## 194. 截面正性看不见的四项回路，按未定方向压缩完整候选
+
+### 194.1 空和、单项与整个截面的准确区别
+
+**定义 194.1（原截面与收缩）。** 保留190.1的同一有限维原域 $V,C,u,K,P,[0,u]$，$d=\dim V>1$，以及完整原二元关系 $\#$。对原纯点 $a$ 置
+
+$$
+W_a=\operatorname{span}N_a,\qquad
+S_a=\mathbb Ra+W_a,\qquad
+s_a=\dim S_a,\qquad c_a=d-s_a.
+\tag{194.1}
+$$
+
+当 $a\notin W_a$ 时，定义唯一的代数删除及其张量收缩
+
+$$
+\delta_a(ta+w)=w\quad(w\in W_a),\qquad
+\Lambda_a(s\otimes f)=f(\delta_as).
+\tag{194.2}
+$$
+
+这里 $\delta_a$ 的定义域仅为 $S_a$，没有输入正性或全域延拓。张量 $x\otimes f$ 仍按190.1只表示准备与读数的代数配对。
+
+**定理 194.2（三种检验的精确含义）。** 固定 $a$。190.2式的全部空正和检验当且仅当 $a\notin W_a$。在此条件下，全部 $k\le1$ 检验当且仅当
+
+$$
+\delta_ap\in C\quad(p\in P\cap S_a).
+\tag{194.3}
+$$
+
+另一方面，整个截面正性
+
+$$
+\mathsf{LP}_a:\quad\delta_a(C\cap S_a)\subseteq C
+\tag{194.4}
+$$
+
+当且仅当190.2式在所有正项共用同一个原效应、且 $k\le d$ 时成立。若另有 $C\cap S_a=\operatorname{cone}(P\cap S_a)$，则(194.3)推出(194.4)；这里给出的是一条充分桥梁。
+
+证明。若 $a\in W_a$，190.2证明中的至多 $d$ 个原邻点和空和证书给读数 $-1$。反向在 $a\notin W_a$ 时，右侧任一表示的读数恰为其总张量的 $\Lambda_a$，故零张量读数为零。
+
+记 $\pi_a:V\to V/S_a$ 为商映射。非零单项 $tp\otimes f$ 属于 $S_a\otimes V^*$ 当且仅当 $p\in S_a$，因为 $t>0,f\ne0$ 时 $\pi_a(p)\otimes f=0$ 迫 $\pi_a(p)=0$。其读数就是 $tf(\delta_ap)$。完整原效应生成 $C^*$：非零 $h\in C^*$ 除以 $\max_Kh$ 就在 $[0,u]$ 中。因此所有原效应读数非负等价于落在闭锥 $C$。每个 $S_a$ 内总张量都能沿 $a$ 和一组原邻点基展开，右侧所需邻点数不超过 $d-1$，故没有遗漏原表示量词。
+
+若所有效应都是同一个 $f\ne0$，总张量为 $x\otimes f$，其中 $x=\sum_i t_ip_i\in C$；它属于 $S_a\otimes V^*$ 当且仅当 $x\in S_a$，读数为 $f(\delta_ax)$。任意 $x\in C$ 有有限原纯分解，锥Carathéodory可将输入项数压到 $d$，所以这恰好检查整个 $C\cap S_a$。零效应不贡献读数。最后一项由线性与锥生成立即成立；没有从原单项量词自行取得这个额外生成等式。$\square$
+
+### 194.2 整个截面保正之后，三项仍不增加共同延拓约束
+
+**定理 194.3（低秩与三项自动性）。** 设 $S\subseteq V$，实线性 $\delta:S\to V$ 满足 $\delta(C\cap S)\subseteq C$。将张量 $\mathcal T\in S\otimes V^*$ 看作从 $V$ 到 $S$ 的算子，收缩记为 $\Lambda_\delta$。若 $\mathcal T(C)\subseteq C$ 且普通算子秩不超过二，则
+
+$$
+\Lambda_\delta(\mathcal T)\ge0.
+\tag{194.5}
+$$
+
+若 $\mathcal T=\sum_{i=1}^k x_i\otimes f_i$，$x_i\in C,f_i\in C^*$ 且 $k\le3$，同一结论成立。因此，满足 $\mathsf{LP}_a$ 的标签通过190.2式的全部 $k\le3$ 检验；其负证书若存在，至少有四个正项、普通张量秩至少三。
+
+证明。置 $E=\operatorname{ran}\mathcal T\subseteq S$。因 $C$ 生成 $V$，$\mathcal T(C)-\mathcal T(C)=E$，所以 $C\cap E$ 是 $E$ 中的闭尖生成锥。维数至多二的这种锥为单纯锥。取其线性无关极射线生成元 $e_1,\ldots,e_r$，$r\le2$，沿此基展开
+
+$$
+\mathcal T=\sum_{j=1}^r e_j\otimes\ell_j.
+\tag{194.6}
+$$
+
+$\mathcal T(C)\subseteq C\cap E$ 使各坐标泛函 $\ell_j\in C^*$；而 $e_j\in C\cap S$，故 $\ell_j(\delta e_j)\ge0$，相加给(194.5)。秩零时收缩为零。
+
+正项数至多三时，只剩 $k=3$、普通秩为三尚未覆盖。此时三个输入因子与三个对偶因子分别线性无关，故 $\operatorname{ran}\mathcal T=\operatorname{span}\{x_1,x_2,x_3\}\subseteq S$。每个 $x_i\in C\cap S$，逐项 $f_i(\delta x_i)\ge0$ 即可。这里普通张量秩、正纯分解长度和实际可辨frame长度是不同的计数。$\square$
+
+### 194.3 一个实际三球补面中的最小四项障碍
+
+**命题 194.4（同一原六维域的精确障碍）。** 存在一个满足190.1原域的六维锥及原纯标签 $a$，使 $a\notin W_a$、$\mathsf{LP}_a$ 成立，$\operatorname{conv}N_a$ 是实际闭三球面，但全域正删除不存在。该标签的最小负证书恰有四个正纯张量项，最小普通秩恰为三，读数可取 $1-\sqrt2$。该模型不满足全标签空和条件或全局实际L2。
+
+证明。取 $V=\mathbb R^6$，坐标为 $(\alpha,\tau,x,y,r,z)$，对应坐标泛函为 $A,T,X,Y,R,Z$，单位 $u=A+T$。令 $c=1/\sqrt2$，并置
+
+$$
+\begin{aligned}
+D&=\{(0,\tau,x,y,r,0):\tau\ge\sqrt{x^2+y^2+r^2}\},\\
+a&=(1,0,0,0,0,0),\\
+v_\varepsilon&=(1,\tfrac12,\varepsilon c,0,0,1),\\
+w_\eta&=(1,\tfrac12,0,\eta c,0,-1),\qquad\varepsilon,\eta\in\{+1,-1\},\\
+C&=\operatorname{cone}\bigl(D\cup\{a,v_+,v_-,w_+,w_-\}\bigr),
+\qquad B=D\cap\{T=1\}.
+\end{aligned}
+\tag{194.7}
+$$
+
+整个归一底为 $K=\operatorname{conv}(B\cup\{a,\frac23v_+,\frac23v_-,\frac23w_+,\frac23w_-\})$。该紧凸集位于 $u=1$，其锥闭；所有非零生成方向满足 $A,T\ge0$ 且 $u>0$，故 $C$ 尖、$u$ 严格正。$D,a,v_+$ 张成 $V$，故 $C$ 生成。$D=C\cap\ker A$ 是面，$B$ 是实际闭三球面。
+
+全部原纯点恰为
+
+$$
+P=\operatorname{ext}B\ \cup\{a,p_+,p_-,q_+,q_-\},
+\qquad p_\varepsilon=\tfrac23v_\varepsilon,\quad q_\eta=\tfrac23w_\eta.
+\tag{194.8}
+$$
+
+球面纯点由面性质保持极端，$a$ 由 $T=0$ 隔离。若以生成元正表示 $v_\varepsilon$，令 $v$ 项总系数为 $s$、$w$ 项总系数为 $t$、$a$ 系数为 $\lambda$；比较 $Z,A$ 得 $s-t=1$、$s+t+\lambda=1$，迫 $t=\lambda=0,s=1$。再比较 $T$ 排除非零 $D$ 项，比较 $X$ 排除另一条 $v$ 射线。$w_\eta$ 同理。紧生成集的凸包不产生这些生成集之外的新极点，证明(194.8)。
+
+定义四个原球面纯点
+
+$$
+b_{\varepsilon\eta}=(0,1,\varepsilon c,\eta c,0,0),\qquad
+v_\varepsilon+w_\eta=2a+b_{\varepsilon\eta}.
+\tag{194.9}
+$$
+
+原效应 $A\in[0,u]$ 确认 $a$ 且排除全部球面点。反向若原效应 $f(a)=1$，置 $h=u-f\ge0$，则 $h(a)=0$，(194.9)给 $h(v_\varepsilon)+h(w_\eta)=h(b_{\varepsilon\eta})\le1$。所以 $f(p_\varepsilon),f(q_\eta)\ge1/3$，其余四个纯点不属于 $N_a$。由此
+
+$$
+N_a=\operatorname{ext}B,\qquad W_a=\operatorname{span}D,\qquad S_a=\{Z=0\}.
+\tag{194.10}
+$$
+
+若非负生成和的 $Z$ 坐标为零，$v$ 项和 $w$ 项总系数相等。将两组系数非负配对，逐对应用(194.9)，就有
+
+$$
+C\cap S_a=\mathbb R_+a+D,\qquad
+\delta_a(\alpha,\tau,x,y,r,0)=(0,\tau,x,y,r,0).
+\tag{194.11}
+$$
+
+故整个截面保正，且在截面上质量不增。假如全域正 $Q$ 杀掉 $a$ 并固定全部 $N_a$，(194.9)迫 $Qv_\varepsilon+Qw_\eta=b_{\varepsilon\eta}$。右侧是 $C$ 的极射线，故固定 $\varepsilon$、改变 $\eta$ 时，$Qv_\varepsilon$ 必落在两条不同极射线的交中，只能为零。随后同一 $Qw_\eta$ 又须等于两个不同的 $b_{+\eta},b_{-\eta}$，矛盾。
+
+精确负证书使用完整原效应
+
+$$
+H=\tfrac14A+\tfrac12T,\qquad
+f_\varepsilon=H-\tfrac\varepsilon2X,\qquad
+h_\eta=H-\tfrac\eta2Y.
+\tag{194.12}
+$$
+
+在 $D$ 上，$f_\varepsilon=(T-\varepsilon X)/2\in[0,T]$，$h_\eta$ 同理；在 $a$ 上两者为 $1/4$；在 $v_\sigma$ 上分别为 $(1-\varepsilon\sigma c)/2,1/2$，在 $w_\rho$ 上分别为 $1/2,(1-\eta\rho c)/2$。这些值均介于零和对应 $u$ 值之间，故确是原全域效应。以 $e_\tau,e_x,e_y$ 表示相应坐标向量，令
+
+$$
+\begin{aligned}
+\mathcal T
+&=\sum_\varepsilon v_\varepsilon\otimes f_\varepsilon
+  +\sum_\eta w_\eta\otimes h_\eta\\
+&=(4a+2e_\tau)\otimes H-c\,e_x\otimes X-c\,e_y\otimes Y,\\
+g_0&=4H,\qquad
+g_{\varepsilon\eta}=\tfrac12H-\tfrac\varepsilon4X-\tfrac\eta4Y.
+\end{aligned}
+\tag{194.13}
+$$
+
+四个正输入以原纯点表示时系数均为 $3/2$。直接展开得
+
+$$
+\mathcal T=a\otimes g_0+\sum_{\varepsilon,\eta}b_{\varepsilon\eta}\otimes g_{\varepsilon\eta},\qquad
+\sum_{\varepsilon,\eta}g_{\varepsilon\eta}(b_{\varepsilon\eta})
+=4(\tfrac14-\tfrac c2)=1-\sqrt2<0.
+\tag{194.14}
+$$
+
+右侧邻点数 $4\le d=6$。194.3和(194.11)排除全部至多三项负证书，也排除普通秩至多二的负证书；(194.13)两组三个因子分别线性无关，普通秩为三。所以两种最小性均已支付。
+
+最后明确原域范围。令 $b_N=(0,1,0,0,1,0)$、$b_S=(0,1,0,0,-1,0)$。原正泛函 $T-R$ 的零面锥恰为 $\operatorname{cone}\{a,b_N\}$，故 $F_K(a,b_N)=[a,b_N]$ 为线段，全局实际L2失败。原效应 $T$、$(T+R)/2$、$(T+R)/2-Z/4$、$(T+R)/2+Z/4$ 分别确认 $b_N$ 并排除 $a,b_S,p_\pm,q_\pm$；其原效应合法性逐生成元由(194.7)核对。又有
+
+$$
+b_N=v_++v_-+w_++w_- -4a-b_S\in\operatorname{span}N_{b_N}.
+\tag{194.15}
+$$
+
+因此全标签空和条件也失败。本例只反驳“单标签整个截面保正且补面为实际三球就能全域正延拓”，没有构造强全有限层级或全标签L2反模型。$\square$
+
+**命题 194.5（全局实际L2排除这个矩形拼法）。** 在任意原紧凸域中，不能同时保留实际三球面 $B$、外部原纯点 $a\notin B$、194.9的四个不同球面点及原纯射线关系，并使全部不同原纯对的实际最小面都是三球。
+
+证明。将(194.9)归一，有 $(p_\varepsilon+q_\eta)/2=(2a+b_{\varepsilon\eta})/3$。面遗传性使 $p_\varepsilon$ 属于 $F(a,b_{\varepsilon+})\cap F(a,b_{\varepsilon-})$。两颗实际三球都含不同原纯点 $a,p_\varepsilon$，故都含 $F(a,p_\varepsilon)$；三球没有非单点真面，三者只能相等。这一共同球面又含 $B$ 中两个不同原纯点 $b_{\varepsilon+},b_{\varepsilon-}$，故含整个实际面 $B$。$B$ 是该球的非单点面，只能等于该球，与 $a\notin B$ 矛盾。该排除只覆盖指定的矩形关系，不据此排除一切四项秩三障碍。$\square$
+
+### 194.4 只检查不能再拆的闭合配对回路
+
+**定义 194.6（商中的原始正回路）。** 固定 $a$，取非零原效应 $f_i$、原纯点 $p_i$，记 $z_i=\pi_a(p_i)\otimes f_i$。一个原始正回路是正系数 $t_i>0$ 满足 $\sum_i t_iz_i=0$，且没有真子集支持非零非负零关系。$z_i=0$ 时允许单项回路；它恰对应 $p_i\in S_a$。
+
+**定理 194.7（未定方向的精确充分界）。** 在190.1的同一原域，对每个标签 $a$，以下三项等价：
+
+1. 存在190.3式的同一个全域正删除。
+2. 保留全部空正和检验，并只对194.6的原始正回路检查190.2式。
+3. 保留全部空正和检验，并只对 $k\le d(d-s_a)+1$ 检查190.2式。
+
+原始正回路的项数自动不超过 $d(d-s_a)+1$；若该回路的效应线性跨度为 $q$，还有 $k\le c_aq+1$。还可用统一界 $k\le(d-1)^2$ 代替190.1的 $d^2$，而不增加任何模型前件。统一界与全标签L2类中的最优性均未断言。
+
+证明。先由空和取得 $a\notin W_a$，从而 $\delta_a,\Lambda_a$ 良定义。任取有限非负零关系 $\sum_i t_iz_i=0$，删去零系数；在其支持内选一个支持极小的非负零关系 $v$，沿它减去 $\lambda v$，其中 $\lambda=\min_{v_i>0}t_i/v_i$。余系数仍非负且至少去掉一个指标。有限归纳将原系数向量分成原始正回路的非负和。各回路的原正张量都属于 $S_a\otimes V^*$，故收缩线性保证：若总张量收缩为负，至少一条原始回路收缩为负。其右侧沿 $a$ 与原邻点基展开，仍符合 $r\le d$，没有要求每个正输入单独属于 $S_a$。
+
+原始回路的生成元关系空间是一维：若核中另有独立向量，从全正关系沿该方向移动到非负系数的边界，就得到真子集上的非负零关系，矛盾。因此其 $k$ 个商生成元的秩为 $k-1$，而商张量空间维数为 $c_ad$，故 $k\le c_ad+1$；把对偶因子限于该回路效应的实际跨度，便给 $k\le c_aq+1$。这证明只查第2项或第3项都能排除任何有限负证书；190.2即供应第1项。反向由正删除收缩原关系给非负数。
+
+194.4的证书在这个实际跨度界取等：$c_a=1$，四个效应张成 $\operatorname{span}\{H,X,Y\}$，$q=3$；商中唯一关系是 $f_++f_-=h_++h_-$，所有系数严格正，没有真子回路，故 $k=c_aq+1=4$。这里的取等仅针对这个单标签模型及其效应跨度，不声称原全维界或全局L2类的锐性。
+
+同一界还有直接的锥Carathéodory证明，可核对没有把正项误限在 $S_a$。任选 $\delta_a$ 的实线性延拓 $D_0$，对每个原正配对置
+
+$$
+\zeta(p,f)=\bigl(\pi_a(p)\otimes f,\ f(D_0p)\bigr)
+\in\bigl((V/S_a)\otimes V^*\bigr)\oplus\mathbb R.
+\tag{194.16}
+$$
+
+负证书经正缩放给 $(0,-1)$ 的有限锥表示；在 $c_ad+1$ 维空间用成熟锥Carathéodory，只保留至多该数量的原生成元。第一坐标仍为零使新总张量属于 $S_a\otimes V^*$，第二坐标保留负收缩，任意选取的 $D_0$ 没有成为额外正性前件。
+
+$d>1$ 时每个原纯点都有原零邻点：取在 $a$ 为零的非零正支持泛函 $h$，在其原纯最大点 $b$ 处用 $u-h/\max_Kh$ 确认 $a$、排除 $b$。所以空和通过后 $s_a\ge2$，遂有 $c_ad+1\le d(d-2)+1=(d-1)^2<d^2$。全域条件的强弱等价已证；减少的是必须显式量化的检验；原纯点与效应菜单仍可无限，回路长度有界不将它们变为有限枚举，也不给独立经验前提数减少或检验成本的界。$\square$
+
+### 194.5 完整候选、几何与量子对应
+
+**定义 194.8（三复制原始回路候选）。** 完整保留192.7的强实全有限背景和第一项无中心两目标条件：原 $W_N=V^{\otimes_{\mathbb R}N}$、全部 $C_N,u_N=u^{\otimes N}$、闭尖生成与严格正单位、全部原态及全效应、每个有限min/max分块、正置换及逆、规范重括号、标量层；在整个原 $K_3$ 中，每个不同原纯对生成三维实际最小面，每面有192.5的两个不同、不能确定区分的互反目标。将192.7第二项替换为：对每个原纯 $a$ 保留全部空正和，并仅对194.6的原始正回路要求190.2式的非负读数。可等价改成 $k\le d(d-s_a)+1$ 或统一 $k\le(d-1)^2$，其中 $d=\dim W_3$。记此候选为 $\mathsf Q_{\rm circuit}$。
+
+**定理 194.9（同一全有限量子理论与简化范围）。** 在194.8的精确背景下，$\mathsf Q_{\rm circuit}$ 当且仅当存在同一个 $n\ge2$ 和同一个实线性同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$，使所有有限 $N\ge0$ 满足
+
+$$
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{194.17}
+$$
+
+证明。194.7在同一整个原 $K_3$ 中恢复192.7第二项，192.8直接给(194.17)。反向原标准压缩支付190.2式，因而支付其原始回路子族。两目标、实际三维与强全有限背景均保留原量词，没有把局部内禀菜单用于定义原 $N_a$。
+
+在重建后的任一矩阵层，记矩阵大小为 $D$、$a=P_v$。则 $W_a=\operatorname{Herm}(v^\perp)$，$S_a$ 是 $\mathbb Cv\oplus v^\perp$ 的块对角空间，故 $d=D^2$、$s_a=1+(D-1)^2$、$c_a=2(D-1)$。新界为 $2D^2(D-1)+1$，原界为 $D^4$；商中未定方向恰是被删射线与其补空间之间的相干方向。这是重建后的维数解释，不在重建前预送矩阵大小。
+
+192.9的条件字典逐项保留：原态与原全效应成为迹一PSD和 $[0,I]$，配对成为Born迹，有限效应族总和为单位才成为数学POVM；同一个全有限张量坐标供应复合与偏迹。全部有限旁观者保正、全输入质量预算及分支总预算分别承担CP、TNI/TP与数学仪器；实际操作实现、指定锐事件更新、连续可逆时间群、物理钟、能量和 $\hbar$ 标定仍须各自前件。几何仍是复射影纯点、复支持面及正交压缩，三个两两原正交纯点在同一复三维支持内给仿射维数八的共同面，三颗二点球是其中的实际面。
+
+194.3—194.5在整个截面保正的前提下，将局部到整体的剩余问题准确留在四项以上、秩三以上的联合关系，并排除一个最简单的实际球矩形拼法；它们没有证明全标签实际L2加单项检验足够，也没有证明全标签实际L2加整个截面正性足够。194.7则在不等待这两条未证桥梁时，实质缩小原候选的检验子族。$\square$
+
+**命题 194.10（承重归属与完整白话）。** 单纯锥的低维结构、有限凸生成、锥Carathéodory及有限线性关系的支持消元是成熟工具。正核回路分解是[Müller–Regensburger，arXiv:1512.00267v2，定理3、命题5](https://arxiv.org/abs/1512.00267v2)在 $\ker B\cap\mathbb R_+^k$ 上的特例，其中 $B$ 为有限商生成元矩阵；194.3将它们用于原准备—读数配对，194.4给出指定删除形状的同原六维最小证书，194.5核对其与全局实际L2的冲突，194.7把商方向回路界接回190的正删除等价，构成本章的repo-derived接合。不申领正映射延拓理论、凸分析工具、既有重建或文献优先权。正算子对偶的文献前置仍按[Q190GKT]的注明范围复用。
+
+证明。相应推导分别在194.3—194.9。完整候选可说成：保留全部原准备、测试和有限复合，在整个三份系统中，每对纯准备仍撑起三维小面，每面两个不能确定区分的目标对整张纯外壳的确认比较交换端点不变；再挑一个待删纯点，把它和能与它确定区分的邻点共同张成一张截面，只检查那些离开截面又恰好闭合、并且不能拆成更小正回路的“准备配测试”关系，删去自身项后总读数不能负。空回路先排除自身已经藏在邻点线性关系中的冲突。单项只看原来就在截面里的纯点；连整个截面都保正时，三项以内仍看不见更深的错位，六维例子的四项回路正好留下 $1-\sqrt2$。这个例子缺少全局二点三球拼接，而那种最简单矩形又确被全局三球排除，所以不能拿它否定完整量子候选。对其余回路不用无限枚举全部长关系：每条正闭环都能拆成原始闭环，长度由截面外尚未指定的方向数控制；任何负总账必在其中一条短闭环出现。没有这种负闭环，统一正删除才作为结论出现，既有重建随后给Born配对和全部有限复张量层。这里省掉的是冗余长检验；“交换两个比较端点”依旧没有变成“任意接续测量可交换”。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 195. 邻点投影的实张成：三点切向闭合把共同正性压成线性不回卷
+
+### 195.1 原二元关系与纯线性约束
+
+**定义 195.1（完整原域与 LIN）。** 设 $V$ 是非零有限维实向量空间，$C\subset V$ 是闭、尖、生成的凸锥，$u\in V^*$ 在 $C\setminus\{0\}$ 严格正。保留紧底 $K=C\cap\{u=1\}$、全部原纯点 $P=\operatorname{ext}K$ 和全部原效应 $\mathcal E=[0,u]_{C^*}$。$F_K(A)$ 始终是包含 $A$ 的实际最小面，含空面与整个 $K$。定义
+
+$$
+\begin{gathered}
+a\mathrel\# b\quad\Longleftrightarrow\quad
+\exists e\in\mathcal E:\ e(a)=1,\ e(b)=0,\qquad a,b\in P,\\
+N_a=\{b\in P:a\mathrel\# b\},\quad
+W_a=\operatorname{span}_{\mathbb R}N_a,\\
+\mathrm{LIN}(a):\quad a\notin W_a,\qquad
+\mathrm{LIN}:\quad\forall a\in P,\ \mathrm{LIN}(a).
+\end{gathered}
+\tag{195.1}
+$$
+
+取补效应表明 $\#$ 对称。这里的张成允许任意实系数，并不是凸包，也不预给邻点共同为零的效应。NC 仍指 $a\notin F_K(N_a)$ 对所有 $a$ 成立。
+
+L2 仍要求每个不同纯对的整个实际面 $B(a,b)=F_K(a,b)$ 仿射同构于闭 Euclidean 三球。对 $p\ne y$，$\tau_p(y)$ 是这个球的纯边界在 $p$ 处的二维实仿射切方向；它由球内仿射结构唯一决定，不用原空间的预给内积。TC 是同一层内的三点相容关系
+
+$$
+\tau_p(y)\subseteq\tau_p(a)+\tau_p(b)
+\quad\bigl(a\ne b,\ p\notin B(a,b),\ y\in P\cap B(a,b)\bigr).
+\tag{195.2}
+$$
+
+定义160.2已给这个切方向的坐标无关性。本章的单锥候选为 $\mathrm{L2+TC+LIN}$；不在此前件中放入 AD、正删除、最小确认者或复矩阵坐标。
+
+### 195.2 从向量张成加强为秩一投影的实张成
+
+**定理 195.2（实际邻点的完整实张成）。** 设同一个满射实线性映射满足
+
+$$
+\Psi:\operatorname{Herm}_n(\mathbb C)\twoheadrightarrow V,
+\quad\Psi(\operatorname{PSD}_n)=C,\quad u\Psi=\operatorname{Tr},
+\quad p_v=\Psi(P_v),\quad\mathcal N=\ker\Psi.
+\tag{195.3}
+$$
+
+假设 $[v]\mapsto p_v$ 是到全部原 $P$ 的同胚，且支持维数至多二的限制是到对应实际面张成的序同构，准确如命题160.4。对每个单位 $v$，有
+
+$$
+\begin{aligned}
+\operatorname{span}_{\mathbb R}\{P_w:p_w\in N_{p_v},\ \|w\|=1\}
+ &=\operatorname{Herm}(v^\perp),\\
+W_{p_v}&=\Psi\operatorname{Herm}(v^\perp).
+\end{aligned}
+\tag{195.4}
+$$
+
+矩阵空间右端按零延拓嵌入 $\operatorname{Herm}_n$。此结论不要求 AD；尤其没有预设每个 $w\perp v$ 都是原邻点。
+
+证明。完整原菜单的准确拉回是 $\mathcal N^\perp\cap[0,I]$。任意原见证 $A$ 满足 $Av=v,Aw=0$，故 $w\perp v$；这先给第一行的包含方向。$n=1$ 时两边都是零，以下设 $H=v^\perp\ne0$。
+
+复用 XII159.8 的压缩空间
+
+$$
+\mathscr M_v=\{Q_vZQ_v|_H:Z\in\mathcal N\},\quad
+\mathscr L_v=\mathscr M_v^\perp,\quad Q_v=I-P_v.
+\tag{195.5}
+$$
+
+该引理的前件正是(195.3)及实际小面，并不需要 AD：每个非零压缩核元有至少两个正与两个负本征值，$\mathscr L_v$ 含正定元。XII159.9 的证明于是给出正定 $B\in\mathscr L_v$，其最大本征值 $\lambda$ 单重，单位本征向量记 $w$；并给出实线性满射
+
+$$
+A\longmapsto(\lambda I-B|_{w^\perp})^{-1}P_{w^\perp}Aw
+\quad\text{从 }\mathscr L_v\text{ 到 }w^\perp.
+\tag{195.6}
+$$
+
+因此对每个 $z\in w^\perp$，存在该证明中的归一化、固定相位扰动曲线
+
+$$
+w_z(t)=w+tz+o(t),
+\tag{195.7}
+$$
+
+它在充分小的正负 $t$ 上都是某个正定 $\mathscr L_v$ 元素的最大本征向量。每个这样的最大本征向量 $s$ 都是真正的原邻点：若对应正定元为 $B_s$、最大本征值为 $\lambda_s$，则 XII159.30 的
+
+$$
+A_s=I-\widehat B_s/\lambda_s
+\in\mathcal N^\perp\cap[0,I],\qquad A_sv=v,\quad A_ss=0
+\tag{195.8}
+$$
+
+逐个供应原见证，$\widehat B_s$ 为在 $\mathbb Cv$ 上补零的矩阵。不同 $s$ 可以用不同见证。
+
+现在令 $T\in\operatorname{Herm}(H)$ 与全部这些邻点投影迹正交。在基点有 $w^*Tw=0$，沿(195.7)的一阶项给
+
+$$
+2\operatorname{Re}(z^*Tw)=0\quad(z\in w^\perp).
+\tag{195.9}
+$$
+
+实方向包括 $z$ 及 $iz$，故 $Tw=0$。再用同一恒等式 $w_z(t)^*Tw_z(t)=0$，此时所有含 $w$ 的交叉项已经严格为零，除以 $t^2$ 并取极限得 $z^*Tz=0$ 对全部 $z\in w^\perp$ 成立。复极化给 $T|_{w^\perp}=0$，结合 $Tw=0$ 得 $T=0$。有限维迹配对非退化，故这些投影的实张成就是整个 $\operatorname{Herm}(H)$。$\dim H=1$ 时单个投影已张成该一维实空间。最后应用同一个 $\Psi$ 得第二行。
+
+XII159.9 已证明向量的复张成；这里增加的是二阶读数迫使投影实张成，既不把两种张成混同，也不需要增加全局光滑结构或开片假设。$\square$
+
+### 195.3 一个标签检测本征方向，全部标签排除整个核
+
+**定理 195.3（点态线性塌缩的精确谱字典）。** 在195.2的同一商中，对每个单位 $v$，
+
+$$
+\begin{aligned}
+\neg\mathrm{LIN}(p_v)
+&\Longleftrightarrow
+\exists Z\in\mathcal N,\ \exists\lambda\in\mathbb R\setminus\{0\}:\ Zv=\lambda v,\\
+p_v\notin F_K(N_{p_v})
+&\Longleftrightarrow
+v^*Zv=0\quad\text{对每个 }Z\in\mathcal N.
+\end{aligned}
+\tag{195.10}
+$$
+
+因而全标签 LIN、全标签 NC 与 $\mathcal N=0$ 等价；单个标签的 LIN 则不要求 $v^*Zv=0$。
+
+证明。由195.4，$p_v\in W_{p_v}$ 当且仅当某个 $Y\in\operatorname{Herm}(v^\perp)$ 满足 $\Psi Y=\Psi P_v$。此时 $Z=P_v-Y\in\mathcal N$ 且 $Zv=v$。反向若 $Zv=\lambda v$、$\lambda\ne0$，Hermitian 性给
+
+$$
+Z=\lambda P_v+Q_vZQ_v,\qquad
+p_v=-\lambda^{-1}\Psi(Q_vZQ_v)\in W_{p_v}.
+\tag{195.11}
+$$
+
+第二行直接复用 XII159.10 的实际面二分：若某个 $v^*Zv\ne0$，整个邻点生成面就是 $K$；若全部为零，它是 $\Psi\mathcal D(v^\perp)$，且排除 $p_v$。每个非零 Hermitian 核元都有非零本征值，故全标签 LIN 由第一行迫核为零。核为零时第二行给全标签 NC，并由第一行给全标签 LIN；全标签 NC 排核亦是159.10的结论。这里从未用 AD 把全部正交纯点免费放进邻点集。$\square$
+
+**定理 195.4（L2、TC 与线性不回卷的完整单锥重建）。** 在195.1的全部原域上，以下两项等价：
+
+1. L2、TC、全标签 LIN 成立。
+2. 存在有限 $n\ge1$ 和同一个实线性同构 $\Phi:\operatorname{Herm}_n(\mathbb C)\to V$，使 $\Phi(\operatorname{PSD}_n)=C$、$u\Phi=\operatorname{Tr}$。
+
+此时 AD、NC、完整混输入 Born 最低值及原菜单中的 least 确认者均为结论。
+
+证明。命题160.4只用 L2+TC，已供应195.2所需的归一化共同商和全部实际小面；195.2—195.3从 LIN 排除它的全部核，取 $\Phi=\Psi$。这一步复用成熟 cap 分类的原接口，不把共同矩阵商当作新增前提。反向矩阵锥的 L2 与 TC 由160.5的反向供应；若 $a=P_v$，其每个原邻点 $P_w$ 都有 $w\perp v$，迹配对 $X\mapsto\operatorname{Tr}(P_vX)$ 在邻点张成上为零、在 $a$ 上为一，故 LIN。原单位与整个菜单均由同一个同构保持。
+
+核为零后，原效应恰为 $0\preceq E\preceq I$；$P_v$ 是确认 $p_v$ 的 least 效应，因此对任意 $X\succeq0$，包括零与任意非负质量，
+
+$$
+\min_{\substack{0\preceq E\preceq I\\Ev=v}}\operatorname{Tr}(EX)
+=\operatorname{Tr}(P_vX)=v^*Xv.
+\tag{195.12}
+$$
+
+正交对由这个原效应直接区分，给 AD；邻点实际面是 $\Phi\mathcal D(v^\perp)$，给 NC。它们属于结论，未用于取得(195.4)。$\square$
+
+### 195.4 单正配对与完整正删除的点态边界
+
+**定义 195.5（有限正配对的截断）。** 在195.1的原域，固定 $a\in P$，记 $d=\dim V$。沿190.1，$\mathrm{FC}_1(a)$ 要求下列蕴涵对 $k=0,1$、$r\le d$ 成立；$\mathrm{FC}(a)$ 则要求所有 $k\le d^2$：
+
+$$
+\sum_{i=1}^k t_i p_i\otimes f_i
+=a\otimes g_0+\sum_{j=1}^r b_j\otimes g_j
+\quad\Longrightarrow\quad
+\sum_{j=1}^r g_j(b_j)\ge0.
+\tag{195.13}
+$$
+
+这里 $t_i\ge0$、$p_i\in P$、$f_i\in\mathcal E$、$b_j\in N_a$，而 $g_0,g_j\in V^*$ 任意有符号；空和也在量词中。
+
+**定理 195.6（单标签三层条件及其精确缺项）。** 在195.2的归一化商域中，
+
+$$
+\mathrm{FC}_1(p_v)\quad\Longleftrightarrow\quad
+\mathrm{FC}(p_v)\quad\Longleftrightarrow\quad
+Zv=0\quad(Z\in\mathcal N).
+\tag{195.14}
+$$
+
+相比195.10，完整正删除排除的不只是非零本征方向或非零对角读数，也排除所有核元在该方向的横向分量。
+
+证明。$\dim V=1$ 时原纯点集是单点，(195.3)的纯点同胚迫 $n=1$，迹归一化迫 $\mathcal N=0$；此时 $N_a=\varnothing$，$S_a=\mathbb Ra$，$\delta_a=0$，FC$_1$ 与 FC 都成立。以下设 $\dim V>1$，直接复用194.2的准确归约：全部空正和恰等价 LIN；在此条件下，$S_a=\mathbb Ra\oplus W_a$ 上良定义 $\delta_aa=0$、$\delta_a|_{W_a}=I$，且 $\mathrm{FC}_1(a)$ 恰等价于
+
+$$
+\delta_a(P\cap S_a)\subseteq C.
+\tag{195.16}
+$$
+
+该归约保留所有原纯点、完整效应、至多 $d$ 个原邻点及有符号读数；它没有将原纯截面正性升级为整个 $C\cap S_a$ 上的正性或全域正延拓。本定理新增的是共同矩阵商域中的精确充要条件。
+
+现进入同一个商，置 $a=p_v$。由195.4，$W_a=\Psi\operatorname{Herm}(v^\perp)$。若 $\mathrm{FC}_1(a)$ 成立而某 $Z\in\mathcal N$ 有 $b=Q_vZv\ne0$，取
+
+$$
+\begin{gathered}
+w=b/\|b\|,\quad q=(v+sw)/\sqrt{1+s^2},\quad s>0,\\
+t=\frac{s}{(1+s^2)\|b\|},\qquad
+\alpha=\frac1{1+s^2}-t\,v^*Zv,\qquad
+Y=P_q-\alpha P_v-tZ.
+\end{gathered}
+\tag{195.17}
+$$
+
+$Yv=0$，故 $Y\in\operatorname{Herm}(v^\perp)$，并有 $p_q=\alpha a+\Psi Y\in S_a$。令 $q'=(sv-w)/\sqrt{1+s^2}$，则 $P_q+P_{q'}=P_v+P_w$。$c=p_w\in W_a$，所以 $p_{q'}=a+c-p_q\in S_a$，且
+
+$$
+\delta_ap_q+\delta_ap_{q'}=c.
+\tag{195.18}
+$$
+
+(195.16)使左侧两项都在 $C$。$c$ 是原纯射线，其两项各为非负倍数；可写 $\delta_ap_q=\beta c$，$0\le\beta\le1$。于是 $p_q=\gamma a+\beta c$，原单位给 $\gamma+\beta=1$，所以 $p_q$ 位于 $a,c$ 的凸线段。这与它是不同于两端的原纯点矛盾。这里不需要 $c$ 本身是原邻点；它属于已证的邻点实张成就足够。
+
+因此全部 $Q_vZv=0$。若某 $v^*Zv\ne0$，$v$ 便是该核元的非零本征向量，由195.10违反 LIN。故全部 $Zv=0$。反向若全部 $Zv=0$，标准压缩 $R_v(X)=Q_vXQ_v$ 满足 $R_vZ=Z$ 对所有核元成立，因而下降为同一个原正映射 $Q_a$，杀掉 $a$ 并逐点固定全部原邻点。对(195.13)施加 $Q_a\otimes\operatorname{id}$ 后收缩，左侧为 $\sum_it_if_i(Q_ap_i)\ge0$，故完整 FC 成立。完整 FC 蕴涵其截断，证明闭合。$\square$
+
+**命题 195.7（两个严格的点态分离与全标签边界）。** 在193的平衡单核商中取 $m\ge3$、$H=\operatorname{diag}(I_m,-I_m)$，写正负基为 $e_i,f_i$。则
+
+$$
+\begin{array}{c|ccc}
+v&\mathrm{LIN}(p_v)&p_v\notin F_K(N_{p_v})&\mathrm{FC}_1(p_v)\\ \hline
+(\sqrt3e_1+f_1)/2&\text{成立}&\text{不成立}&\text{不成立}\\
+(e_1+f_1)/\sqrt2&\text{成立}&\text{成立}&\text{不成立}
+\end{array}
+\tag{195.19}
+$$
+
+这些是同一个完整原菜单、实际 L2+TC+AD 模型中的单标签分离，不是全标签 LIN 的反模型。
+
+证明。该商的原域、实际小面及 TC 由 XIV165 给出，AD由193.7给出，所以195.2适用。两个向量都不是 $H$ 的本征向量；第一行有 $v^*Hv=1/2$，第二行有 $v^*Hv=0$，但两者都有 $Hv\ne0$。分别代入195.10和195.14即得表格。第二行也对应190.6已有的一个正配对负证书，不重新申领该实例。
+
+同一模型在 $a=p_{e_1}$ 上确实违反 LIN，因为真实准备关系为
+
+$$
+p_{e_1}=\sum_{i=1}^m p_{f_i}-\sum_{i=2}^m p_{e_i}.
+\tag{195.20}
+$$
+
+右侧各点都与 $e_1$ 正交，且由原 AD 给出真正的原邻点。这不是凸分解，而是原纯点与其可排除准备的有符号线性混同。全标签条件正是要排除所有这样的混同，不能只选一个通过检查的标签。$\square$
+
+### 195.5 只在整个三复制域检查的完整候选
+
+**定义 195.8（三复制切向—线性候选）。** 完整采用162.15的强实全有限背景：$\dim V>1$，$W_N=V^{\otimes_{\mathbb R}N}$，各层 $C_N$ 为闭尖生成凸锥，严格正乘法单位 $u_N=u^{\otimes N}$，全部原准备、纯点和完整效应，所有有限分块的原 min/max 张量包含，所有位置置换及逆在整个锥上为正，规范重括号与标量层。只在整个 $K_3=C_3\cap\{u_3=1\}$ 要求
+
+$$
+\mathsf Q_{\rm tangent\,linear}
+:=\mathrm{L2}_3+\mathrm{TC}_3+\mathrm{LIN}_3.
+\tag{195.21}
+$$
+
+三个条件均量化全部原纯点，含纠缠纯点。TC 是同一层内的三点切向关系；三复制则指检查整个原三份复合，这两个“三”不混用。
+
+**定理 195.9（一个共同坐标下的全有限复量子理论）。** 在195.8的准确背景中，$\mathsf Q_{\rm tangent\,linear}$ 当且仅当存在同一个整数 $n\ge2$ 和同一个实线性同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$，使
+
+$$
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}
+\quad\text{对每个有限 }N\ge0.
+\tag{195.22}
+$$
+
+证明。195.4先只用于整个 $(W_3,C_3,u_3)$，给出该锥的同原单位复矩阵表示，以及同一个原域的 L2+NC+AD。此时才支付162.16的 $\mathsf R_3$；直接调用其已证的 pure-spectator 实际面、共同复方向与全有限传播尾部，得到同一个 $\theta$ 的(195.22)，不另立各层无关坐标。反向标准矩阵锥在整个三复制层满足195.4的三个条件。$\dim V>1$ 排除 $n=1$；标量层取空张量约定。$\square$
+
+**命题 195.10（几何与熟悉量子公理的条件字典）。** 在195.9的全部前件下，令 $\Theta_N=\theta^{\otimes N}$。既有162.9及192.9的字典可在同一原对象上直接复用：
+
+| 结构或公理 | 对应结论及其前件 |
+| --- | --- |
+| Hilbert 空间、纯态、叠加和混态 | $\mathcal H_N=(\mathbb C^n)^{\otimes N}$；全部原纯点为 $\mathbb{CP}^{n^N-1}$，全部原归一态为迹一 PSD，纯态射线的复线性叠加包含在该空间中 |
+| Born 概率、全效应和观测量 | 原配对为 $e(x)=\operatorname{Tr}(E\Theta_Nx)$，全部原效应恰为 $0\le E\le I$；同一个 least 确认者给全部混输入的(195.12)，纯点值为 $|\langle v,w\rangle|^2$；Hermitian 谱分解给数学 PVM，有限单位正分解给数学 POVM |
+| 复合、纠缠与约化 | 原产品、位置置换和括号对应通常复张量，原边缘 $\operatorname{id}\otimes u$ 对应偏迹；每层包含全部纠缠态 |
+| 过程、分支、通道和仪器 | 另要求原线性映射在每个有限旁观者下保持整个原正锥，恰对应 CP；全输入质量不增或保持分别给 Kraus 的 $\sum K_i^*K_i\le I$ 或 $=I$；这些数学分支的有限保质量族组成仪器 |
+| 理想锐中性测后更新 | 另给投影效应及逐点固定其读一原纯态的正分支，才由既有中性定理得到 $X\mapsto PXP$ |
+| 连续可逆动力学 | 另给连续、保原锥和原单位的实参数群，才推出 $X\mapsto e^{-itH}Xe^{itH}$，$H=H^*$ 唯一到标量；纯态的相应酉提升给 Schrödinger 形式，物理时间、能量与 $\hbar$ 的标定仍需其对应输入 |
+
+证明。195.22正是162.16所得共同表示，所列各行直接使用其后162.9的同域字典，未重证已有过程分类。几何上，二点实际三球是复射影直线 $\mathbb{CP}^1\cong S^2$ 的混态凸包；三条独立纯射线的共同面是复三维支持的 $\mathcal D_3$，仿射维数八。TC把小球的切向关系接进同一个 Hermitian Veronesean 商；LIN再迫这个嵌入没有隐藏核。作为数学映射，195.6的正压缩也随表示存在；它与POVM的存在均不额外宣告每个数学分支或测试族都已由某个实际设备实现。$\square$
+
+### 195.6 简化范围与完整白话
+
+**命题 195.11（空正和的消费者及保留的几何义务）。** 在 L2+TC 的原域中，全标签 LIN、全标签 NC、全标签 $\mathrm{FC}_1$ 与全标签 FC 等价，并由它们重建195.4。因而190.2的全部 $k\ge1$ 正配对在这个入口可作为后果；只保留其 $k=0$ 部分即足够。这个结论没有删除 TC，也不证明裸 L2+AD+LIN 的重建。
+
+证明。$\dim V=1$ 的单点情形中，全部条件直接成立。$\dim V>1$ 时，194.2给空正和恰为 LIN。195.3先使全标签 LIN 排核，195.6再给全部标签的完整 FC。反向 FC 蕴涵空正和，NC 与核为零的等价由195.3供应。强全有限背景下只需在 $K_3$ 应用这些同域等价，再由195.9传播。
+
+194.7—194.9已将192.7的有限正配对缩到原始正回路，长度由商中未定方向控制。在 L2+TC 入口，本候选再将这些非空回路也移入结论，只用原邻点的纯线性独立性表达不回卷；其代价是显式保留 TC 的三点切向闭合。正删除在这些候选中都作为结论。每张二元实际三球仍可由192.5的两个互反目标支付。上述完整候选在同一强背景中都等价于完整复量子层级，但这不证明独立经验公理条数严格减少，更不把 TC 自动从裸二元关系中赚得。
+
+承重新增是195.2的投影实张成、195.10与195.14的点态谱边界，以及它们对线性不回卷的完整重建消费者，属 repo-derived 接合。Hermitian 扰动、谱分解、极化及双对偶性为成熟工具；扰动的具体条件与实满射直接复用 XII159.8—159.9，射影分类通过160.4复用[Q195SV]的 Theorem2.4，全有限传播及过程字典归162.16及162.9。不申领新的 cap 分类、历史优先权或严格最小公理数。
+
+完整白话是：保留系统本来的全部准备、测试和有限复合，只看整个三份系统。任意两个不同纯准备撑起一颗实际三球；从第三个纯点看向这颗球，球上所有比较的切方向，都得装进看向两个端点的那四个方向里；再要求每个纯点都不能由那些能与它确定区分的纯准备，哪怕带正负号，也线性拼回自己。前两条先把小球接成同一个复几何的投影，但还允许压掉看不见的方向。新的桥梁说明，实际可区分邻点虽然未必已经填满所有正交纯点，它们的秩一矩阵却能撑满整个正交矩阵空间；沿原有曲线的一阶读数先消掉交叉项，二阶读数再消掉剩余缺口。若还藏着任何被压掉的方向，取它的一个非零本征方向，就会把对应纯点写成这些邻点的带符号组合，违反第三条。因此投影不能再压掉东西，同一套复矩阵、Born概率和全部有限复合随之恢复。正删除成为结果，动力学与实际过程则在各自明确的过程条件下接上。$\square$
+
+[Q195SV]: https://cage.ugent.be/~hvm/artikels/204.pdf "Schillewaert–Van Maldeghem, Hermitian Veronesean Caps；§2.3的H1—H3、Theorem2.4及§3.3的有限指数供应，经XIII160.3—160.4使用。"
+
+## 追加锚（本行以下为增补区）
+
+## 196. 两条邻方向的共同读数已足够，最短失败由单纯商给出
+
+### 196.1 单纯邻锥把截面正性接成全域正性
+
+**定义 196.1（指定原邻锥）。** 保留190.1的整个原域 $V,C,u,K,P,[0,u]$、原二元关系 $\#$，以及194.1的 $W_a,S_a,s_a,c_a$。记 $w_a=\dim W_a$、$d=\dim V>1$。空正和检验通过后 $a\notin W_a$，因而 $s_a=w_a+1$、$c_a=d-w_a-1$；仍只在 $S_a$ 上定义 $\delta_a(ta+w)=w$，并置
+
+$$
+J_a=C\cap W_a,\qquad
+\mathsf{LP}_a:\ \delta_a(C\cap S_a)\subseteq C.
+\tag{196.1}
+$$
+
+$J_a$ 是 $W_a$ 中的闭尖生成锥，因为原邻点属于它并张成 $W_a$。称它单纯，是指它由 $w_a$ 条线性无关极射线生成；没有预给这些射线的原可操作性。
+
+**定理 196.2（原邻锥的单纯延拓桥）。** 固定通过空和检验的原纯标签 $a$。
+
+1. 若 $w_a=1$，则原全域正删除自动存在，不需非空正和检验。
+2. 若 $J_a$ 单纯，则原全域正删除存在当且仅当 $\mathsf{LP}_a$。无正删除时，有至多 $c_a+1$ 个原纯输入、共用同一个原效应的负证书。
+3. 若 $w_a=2$，则 $N_a=\{b_1,b_2\}$、$J_a=\operatorname{cone}\{b_1,b_2\}$，第2项自动适用，其负证书至多有 $d-2$ 项。
+
+证明。$w_a=1$ 时归一化使 $N_a=\{b\}$。按原关系取 $e\in[0,u]$，$e(a)=1,e(b)=0$，则
+
+$$
+Qx=(u-e)(x)b
+\tag{196.2}
+$$
+
+在整个原锥上正，且 $Qa=0,Qb=b$。
+
+设单纯邻锥的生成元为 $v_1,\ldots,v_{w_a}$。若 $\mathsf{LP}_a$，将指定删除写成 $\delta_as=\sum_j\ell_j(s)v_j$。其正像属于 $J_a$，故每个坐标泛函 $\ell_j$ 在 $C\cap S_a$ 上非负。190.2证明已在同一原域中给出 $S_a\cap\operatorname{int}C\ne\varnothing$，不以正删除存在为前件。成熟的标量正 Hahn–Banach 延拓（[Paulsen–Tomforde，arXiv:0712.2613v4，定理2.14、推论2.15](https://arxiv.org/abs/0712.2613v4)）为每个 $\ell_j$ 供应 $H_j\in C^*$：其中 $S_a$ 包含内点序单位，恰支付所引推论的子空间条件。因此 $Qx=\sum_jH_j(x)v_j$ 是全域正延拓，杀掉 $a$ 并固定全部原邻点。反向限制任一原正删除即给 $\mathsf{LP}_a$。
+
+这个成熟工具只涉及标量：任选 $e\in S_a\cap\operatorname{int}C$，对正泛函 $\ell$ 定义
+
+$$
+p(x)=\inf\{\ell(s):s\in S_a,\ s-x\in C\}.
+\tag{196.3}
+$$
+
+序界 $-Me\le_Cx\le_CMe$ 同时给可行点与有限下界 $-M\ell(e)$。$p$ 次线性，且 $p|_{S_a}=\ell$。实 Hahn–Banach 给 $H|_{S_a}=\ell,H\le p$；$x\in C$ 时 $p(-x)\le0$，故 $H(x)\ge0$。没有使用一般向量值正延拓定理。
+
+若单纯邻锥情形无正删除，取 $x\in C\cap S_a$，$\delta_ax\notin C$。闭锥分离并按 $\max_K$ 归一，给原效应 $f$ 使 $f(\delta_ax)<0$。将 $x$ 有限分解为原纯输入。任选代数延拓 $D_0:V\to V$，在这些输入的向量
+
+$$
+\bigl(\pi_a(p_i),f(D_0p_i)\bigr)\in(V/S_a)\oplus\mathbb R
+\tag{196.4}
+$$
+
+上应用锥 Carathéodory，保留零商分量和负读数，只需至多 $c_a+1$ 个输入，仍共用原效应 $f$。沿 $a$ 及原邻点基展开给190.2允许的右侧，$r\le w_a\le d$。
+
+$w_a=2$ 时归一邻点位于仿射线 $W_a\cap\{u=1\}$。三个不同原纯点不能共线；张成维数二遂使邻点恰有两个。若 $K\cap W_a$ 在线段 $[b_1,b_2]$ 外还有点，一个原纯端点就成为严格凸组合，矛盾。因此 $K\cap W_a=[b_1,b_2]$，单纯性和 $c_a+1=d-2$ 均成立。$\square$
+
+### 196.2 分支短检验与精确达到界的原多面体
+
+**定理 196.3（更短的充分预算）。** 在190.1原域，每个标签的原正删除存在等价于全部空正和检验以及 $k\le B_a$ 的190.2检验。空和失败时条件直接判否；通过后取
+
+$$
+B_a=
+\begin{cases}
+0,&w_a=1,\\
+c_a+1=d-2,&w_a=2,\\
+c_ad+1=d(d-w_a-1)+1,&w_a\ge3.
+\end{cases}
+\tag{196.5}
+$$
+
+若已知 $J_a$ 单纯，还可将相应分支换成至多 $c_a+1$ 项的共同效应检验。对全部原域统一可取
+
+$$
+U(d)=
+\begin{cases}
+0,&d=2,\\
+1,&d=3,\\
+2,&d=4,\\
+d^2-4d+1,&d\ge5.
+\end{cases}
+\tag{196.6}
+$$
+
+证明。$w_a=1,2$ 由196.2，$w_a\ge3$ 由194.7。正删除的收缩又供应任意长度检验，故各分支是等价。194.7已证原邻点非空；空和通过后 $1\le w_a\le d-1$。$w_a\ge3$ 时 $c_a\le d-4$，$w_a=2$ 时预算为 $d-2$。逐维取可存在分支的最大值：$d=2$ 只有第一分支；$d=3$ 的第二分支给一；$d=4$ 的第二、第三分支分别给二、一；$d\ge5$ 时 $d(d-4)+1\ge d-2$。这给(196.6)，且总有 $U(d)<(d-1)^2$。除下项给出的固定标签情形外，不断言最优性。$\square$
+
+**命题 196.4（共同效应仍可需要 $d-2$ 个原纯输入）。** 对任意整数 $c\ge0$，有维数 $d=c+3$ 的完整原域与原纯标签 $a$，其 $w_a=2,c_a=c$，全部 $k\le c$ 检验通过，但一条 $k=c+1=d-2$ 的共同效应原始回路读数为 $-1/4$。故196.2第三项在固定标签类中精确。
+
+证明。置 $m=c+1$、$\alpha=1/(2m)$、$\beta=1/(4m)$，在 $\mathbb R^3\oplus\mathbb R^c$ 的坐标 $(t,x,y,z)$ 中取
+
+$$
+\begin{aligned}
+a&=(1,0,0,0),& b_1&=(1,1,0,0),& b_2&=(1,0,1,0),\\
+p_i&=(1,\alpha,-\beta,v_i),&
+q&=(1,\alpha,-\beta,0),&u&=t.
+\end{aligned}
+\tag{196.7}
+$$
+
+$c\ge1$ 时令 $v_i=e_i$（$1\le i\le c$）、$v_m=-\sum_{i=1}^ce_i$；$c=0$ 时只有 $v_1=0$。取整个 $K=\operatorname{conv}\{a,b_1,b_2,p_1,\ldots,p_m\}$、$C=\operatorname{cone}K$ 和全效应 $[0,u]$。生成元张成全空间，$K$ 紧且在 $u=1$，所以闭尖生成和严格正单位条件齐备。
+
+$t-x-y,x,y$ 分别唯一暴露 $a,b_1,b_2$。$c\ge1$ 时 $z_i$ 暴露 $p_i$、$-\sum z_i$ 暴露 $p_m$；$c=0$ 时 $-y$ 暴露 $p_1$。故所列顶点恰为全部原纯点。效应 $e_0=t-x-y$ 在 $a$ 为一，在 $b_1,b_2$ 为零，在每个 $p_i$ 为 $1-\alpha+\beta\in[0,1]$，故两端点属于 $N_a$。
+
+对任意原效应 $e(a)=1$，记 $B=e(b_1),H=e(b_2)\in[0,1]$。由
+
+$$
+\sum_{i=1}^mp_i=mq,\qquad
+q=(1-\alpha+\beta)a+\alpha b_1-\beta b_2
+\tag{196.8}
+$$
+
+得 $e(q)=1-\alpha+\beta+\alpha B-\beta H\ge1-\alpha$。所以 $\sum_ie(p_i)\ge m-1/2$；其余 $m-1$ 项各至多一，逐项 $e(p_i)\ge1/2$。因此 $N_a=\{b_1,b_2\}$、$W_a=\operatorname{span}\{b_1,b_2\}$、$S_a=\{z=0\}$，全部空和通过。
+
+$c\ge1$ 时，$v_1,\ldots,v_m$ 的任意至多 $c$ 个不同列线性无关。$k\le c$ 的原检验最多涉及 $c$ 个不同截面外纯点。按这些点合并效应因子，商约束成为 $\sum_i v_i\otimes F_i=0$，线性无关迫每个 $F_i=0$。余项只有 $a,b_1,b_2$，删除收缩均非负。$c=0$ 的较短检验只有已经通过的空和。这核对了全部更短检验，没有预限每个输入在 $S_a$。
+
+取原效应 $f=t-x$，它在 $a,b_2$ 为一，在 $b_1$ 为零，在 $p_i$ 为 $1-\alpha$，在整个原域合法。准确证书为
+
+$$
+\begin{aligned}
+\sum_{i=1}^mp_i\otimes f
+&=a\otimes\bigl[m(1-\alpha+\beta)f\bigr]
+ +b_1\otimes(m\alpha f)+b_2\otimes(-m\beta f),\\
+m\alpha f(b_1)-m\beta f(b_2)&=-m\beta=-\tfrac14.
+\end{aligned}
+\tag{196.9}
+$$
+
+商列 $v_i\otimes f$ 秩为 $c$，唯一正关系为全部等系数，故是原始回路并达到 $k=c+1$。$c=1$ 给 $d=4$ 的显式五顶点模型：$p_\pm=(1,1/4,-1/8,\pm1)$，全部单项通过，二项读数负；$c=0$ 给 $d=3$ 的单项失败。因此 $U(3)=1,U(4)=2$ 在无实际L2的固定标签类中不能下降。
+
+证书总张量为 $mq\otimes f$，普通秩一，却需 $m$ 个原纯输入；纯分解长度与普通秩不同。它直接违反 $\mathsf{LP}_a$：$q\in K\cap S_a$ 而 $f(\delta_aq)=-\beta<0$，不反驳196.2。零暴露面 $K\cap\ker e_0=[b_1,b_2]$ 是实际线段，实际L2失败。没有提供全标签缩短检验、强全有限层级或物理实现的反模型。$\square$
+
+### 196.3 完整候选、几何及量子对应
+
+**定义 196.5（三复制分支短关系候选）。** 完整保留194.8的强实全有限背景及第一项：全部原 $V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正乘积单位、原全态全效应、每个有限min/max分块、正置换及逆、规范重括号与标量层；在整个原 $K_3$，每个不同原纯对生成三维实际最小面，每面有192.5的两个不同且不能确定区分的互反目标。第二项改为：对每个原纯标签保留空正和，并只检查(196.5)预算内的190.2原正配对关系。等价地统一检查 $k\le U(d)$，$d=\dim(V^{\otimes_{\mathbb R}3})$，右侧仍允许任意有符号原对偶和至多 $d$ 个原邻点。记为 $\mathsf Q_{\rm short}$。
+
+**定理 196.6（同一完整量子对应）。** 在196.5的准确背景下，$\mathsf Q_{\rm short}$ 当且仅当存在同一个 $n\ge2$ 及实线性同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$，使全部有限 $N\ge0$ 满足
+
+$$
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{196.10}
+$$
+
+证明。196.3在整个原 $K_3$ 恢复全部原正删除，194.7遂恢复194.8的回路条件，194.9给(196.10)。反向标准正交压缩满足全部原有限配对检验。192.9及194.9的条件字典保留：态、全效应和配对成为迹一PSD、$[0,I]$ 及Born迹，纯点为复射影射线，实际二点面为三球；共同有限张量层供应复合与偏迹。全部有限旁观者保正、全输入与分支总预算分别承担CP、TNI/TP和数学仪器；实际更新、连续时间群、物理钟、能量及 $\hbar$ 标定仍须各自条件。
+
+在矩阵大小 $D$ 层，$W_a=\operatorname{Herm}(a^\perp)$。$D=2$ 时其维数一，该标签的正删除由(196.2)自动供应；$D\ge3$ 时其正锥为 $\operatorname{PSD}_{D-1}$，不是单纯锥。三份检验所在的实际矩阵大小为 $D=n^3\ge8$，不据单份qubit的自动性删除三份域的联合条件。减少的是显式关系长度上界，未减少背景、独立经验前件或无限菜单的枚举成本。未增加TC时，全标签实际L2加单项、或加全部 $\mathsf{LP}_a$ 的充分性仍未由本章证明。
+
+195.4—195.11已在明确增加TC的入口，用全标签空正和排除共同商核，并将非空正配对全部移入结论。本章的196.2—196.4适用于一般原域，不要求实际L2或TC；196.5的完整候选也不预设TC，而保留196.3的短正配对。两种入口在各自准确的强全有限背景中都接到同一复量子层级，不将较短预算重报为TC已被删除，也不重复195的切向重建。$\square$
+
+**命题 196.7（归属与完整白话）。** 标量正 Hahn–Banach、单纯锥坐标与锥 Carathéodory为成熟中间工具；196.2将它们接到指定原邻关系，196.3给分支预算，196.4给同一原全菜单中精确达到 $d-2$ 的族。新增是这些指定接口与锐例的接合，不申领正延拓理论、已有量子重建或文献优先权。
+
+证明。196.2—196.6给完整推导。白话上，仍保留全部原准备、测试和有限复合，只在整个原三份系统中检查：每对纯准备撑起三维小面，每面两位不同而不能确定区分的目标与整张纯外壳交换确认比较的两端，最低读数都不变；全部空正和先排除一颗纯点已经藏进自身可区分邻点的有符号线性关系中的冲突，再选一颗待删纯点，问能与它确定区分的邻点共同留下几条方向。只剩一条时，原区分测试直接给统一删除；只剩两条时，留下的部分是单纯锥，每条坐标的非负读数都能延拓到原全域，所以只需检查同一把尺下的准备正和。更大的非单纯邻锥才可能留下截面保正而共同延拓失败的障碍，仍用短正回路检查。显式的单纯商说明，同一把尺也可能必须同时放入 $d-2$ 颗原纯准备才看见负读数，不能把总张量秩一误读成只需一颗纯准备。这样保留完整量子对应，又去掉冗余长检验；比较端点互换仍未变成任意测量接续可交换。$\square$
+
+## 追加锚（本行以下为增补区）

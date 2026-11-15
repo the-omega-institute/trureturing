@@ -558,14 +558,10 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                                 + "full-space gap for 1<=n<k.")),
                             Paragraph(Text(
                                 "The scalar identity identifies legal-word entries and the factor two. The following full-word calculation "
-                                + "supplies the actual matrix multiplication C_i*(Id-X_i)*C_i, its complex quadratic energy, complete-window "
-                                + "penalties and legal/illegal sector invariance. A norm-preserving conversion between native "
-                                + "legal-supported amplitudes with the unweighted norm and functions in uniform legal L2(pi), and the "
-                                + "resulting legal-sector operator and spectral estimate, remain separate steps. If that legal-sector "
-                                + "identification and normalization are supplied, the Poincare chain gives its conditional parent bound "
-                                + "2/C(k) for n>=1: k=2 has ell=3,C=72,2/C=1/36, and k=3 has ell=5,C=800,2/C=1/400. These are conditional "
-                                + "native-parent constants; the full-space spectral estimate and physical or Rauzy realization are not "
-                                + "concluded here."))
+                                + "supplies the actual matrix multiplication, complex quadratic energy, complete-window penalties and "
+                                + "legal/illegal sector invariance. The subsequent normalization uses the inverse map f(x)=sqrt(Z)*psi(x.val) "
+                                + "for arbitrary legal-supported native amplitudes, and combines the original Poincare chain with the "
+                                + "illegal-sector unit bound. All native norms and energies remain unweighted."))
                         )),
                     new DocumentBlock.Section(
                         H("Native full-word matrices and the ordered flip energy"),
@@ -588,9 +584,17 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                                 "Use exactly the full-window, off-center Boolean control c_i defined above, embedded as zero or one in C, "
                                 + "and put C_i(v,w)=delta(v,w)c_i(w). Hence (C_i psi)(w)=c_i(w)psi(w), c_i(w)^2=c_i(w), and "
                                 + "c_i(F_i(w))=c_i(w). Define the actual native local matrix h_i=C_i*(Id-X_i)*C_i, where Id(v,w)=delta(v,w). "
-                                + "An independently specified product of off-center-window control projectors has its own product-to-control "
-                                + "identification argument. This calculation starts from the displayed diagonal C_i and does not include "
-                                + "that separate identification; sharing the name C_i is not a proof that the two constructions agree.")),
+                                + "To identify this with the book's ordered product, for each complete window a containing i let L_(a,i) "
+                                + "be its increasing site list with i deleted. The ordered inner product D_(a,i)=product_(j in L_(a,i)) P_j "
+                                + "is diagonal by the same ordered-projection rule used below for B_a, with diagonal value "
+                                + "product_(j in L_(a,i)) indicator(w(j)=true). Its complement Id-D_(a,i) is therefore diagonal with value "
+                                + "one exactly when some off-center site in that window is false. Multiply these complements in increasing "
+                                + "window-start order. Each step multiplies their diagonal values, so the outer product is diagonal with "
+                                + "value one exactly when every complete containing window has such a false site: precisely c_i(w). "
+                                + "The one-based book start a+1 corresponds to the natural start a here, preserving both orders. Empty "
+                                + "outer products are Id; an empty inner product is Id and its complement is zero. Thus this argument "
+                                + "identifies the actual ordered product with C_i on every full word, including illegal words, without "
+                                + "assuming that similarly named controls agree or using a commuting-product shortcut.")),
                             Paragraph(Text(
                                 "To evaluate the actual product, first expand its inner matrix multiplication: (C_i*(Id-X_i))(v,u)=sum_t "
                                 + "C_i(v,t)*(delta(t,u)-delta(t,F_i(u)))=c_i(v)*(delta(v,u)-delta(v,F_i(u))). Only t=v survives the diagonal "
@@ -694,8 +698,7 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                                 + "disjoint support and <psi_legal,psi_illegal>=0. The vanishing cross-sector entries make each subspace "
                                 + "invariant under the actual H, so H is their orthogonal direct sum and "
                                 + "Q(H,psi)=Q(H,psi_legal)+Q(H,psi_illegal). The illegal summand has the unit bound just derived. This is an "
-                                + "invariant direct-sum statement; it does not perform the remaining legal uniform-L2 normalization or "
-                                + "establish the final full-space spectral estimate.")),
+                                + "invariant direct-sum statement. The normalization and quadratic estimate below use this same actual H.")),
                             Paragraph(Text(
                                 "At n=0 there is exactly one full word, the empty function. There are no sites and, for k>=2, no complete "
                                 + "forbidden windows, so both sums defining H are empty and H=0. Every word is legal, and there is no "
@@ -719,6 +722,68 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                                 + "local terms have nonnegative energies. This example retains an enabled transition entirely within the "
                                 + "illegal sector and its original forbidden window, instead of equating enabled with legal."))
                         )),
+                    new DocumentBlock.Section(
+                        H("Uniform legal L2 and the bound for every native amplitude"),
+                        Blocks(
+                            Paragraph(Text(
+                                "Put S=DBonacciName k n, Z=|S|>0 and pi(x)=1/Z. Equip complex functions on S with "
+                                + "<f,g>_pi=(1/Z)sum_x conj(f(x))g(x); the native pairing is <psi,chi>=sum_w conj(psi(w))chi(w). "
+                                + "Define (Uf)(w)=f(x)/sqrt(Z) when w=x.val is legal, and zero otherwise. Restriction gives the inverse "
+                                + "f(x)=sqrt(Z)*psi(x.val) for every legal-supported psi. It is different from the unscaled restriction "
+                                + "g(x)=psi(x.val): f=sqrt(Z)*g. Both compositions are identities on their stated domains. Finite support "
+                                + "restriction and sqrt(Z)^2=Z give <Uf,Ug>=<f,g>_pi, hence ||Uf||^2=||f||_pi^2; there is no native "
+                                + "1/2^n weight.")),
+                            Paragraph(Text(
+                                "The normalized uniform legal vector is Omega=U1, so Omega(w)=1/sqrt(Z) on legal words and zero "
+                                + "otherwise, and ||Omega||^2=1. For an arbitrary full amplitude psi, put g(x)=psi(x.val), "
+                                + "m=(1/Z)sum_x g(x), and a=<Omega,psi>=(1/sqrt(Z))sum_x g(x)=sqrt(Z)*m. The illegal part contributes "
+                                + "nothing to a. For legal-supported psi and its inverse f=sqrt(Z)*g, pi[f]=a. Thus zero mean of f is "
+                                + "equivalent to orthogonality to Omega, but neither is required in the final inequality.")),
+                            Paragraph(Text(
+                                "Expand |g(x)-m|^2=|g(x)|^2+|m|^2-2 Re(g(x)conj(m)) and sum. Since sum_x g(x)=Z*m, the result is "
+                                + "sum_x |g(x)-m|^2=sum_x |g(x)|^2-Z*|m|^2. Consequently, for legal-supported psi, "
+                                + "Z*Var_pi(g)=||psi||^2-|a|^2, whereas Var_pi(f)=||psi||^2-|a|^2 for f=sqrt(Z)*g. The right side is "
+                                + "also ||psi-a*Omega||^2 and is nonnegative. This is the nonzero-mean variance identity; replacing "
+                                + "variance by the norm without subtracting the ground overlap would be false.")),
+                            Paragraph(Text(
+                                "The exact legal local action above gives (h_i psi)(x.val)=2*(g(x)-E_i g(x)), with zero action on "
+                                + "illegal coordinates. The complete-window penalty annihilates psi. The same formulas after division "
+                                + "by sqrt(Z) give H U f=U(2 sum_i(Id-E_i)f)=U(-2 L_site f), since E_i is complex-linear. Finite pairing "
+                                + "and clock sums give Q(h_i,psi)=2Z*energy_i(g)=2*energy_i(f) and "
+                                + "Q(H,psi)=2Z*sum_i energy_i(g)=2*sum_i energy_i(f). The coefficient 2Z belongs to unscaled restriction "
+                                + "g; coefficient 2 belongs to the isometric inverse f. Every singleton clock still has rate one. The "
+                                + "rescaled local and total energy equalities are finite-sum exposition; their direct exact Lean "
+                                + "application remains unverified. The full quadratic bound below instead uses the unscaled 2Z identity.")),
+                            Paragraph(Text(
+                                "For k>=2,n>=1 apply the original complex Poincare inequality to g, with C(k)=(2k-1)^2*2^(2k-1). "
+                                + "Multiplying Var_pi(g)<=C(k)*sum_i energy_i(g) by 2Z/C(k) and substituting the two identities yields "
+                                + "Q(H,psi)>=(2/C(k))*(||psi||^2-|<Omega,psi>|^2) for every legal-supported psi, including a nonzero "
+                                + "mean and arbitrary complex phases. Equivalently apply Poincare to f and use coefficient two. "
+                                + "No desired coercivity or positive-semidefinite conclusion is inserted as a premise.")),
+                            Paragraph(Text(
+                                "For an arbitrary full psi let l(w)=psi(w) on legal words and zero otherwise, and r(w)=psi(w) on "
+                                + "illegal words and zero otherwise. Then psi=l+r, ||psi||^2=||l||^2+||r||^2 and <Omega,psi>=<Omega,l>. "
+                                + "The actual cross-sector entries vanish in both orientations. Expanding each finite pairing therefore "
+                                + "gives <l,Hr>=<r,Hl>=0 and Q(H,psi)=Q(H,l)+Q(H,r). Apply the legal estimate to l and the illegal "
+                                + "unit estimate to r. With c=2/C(k) the result is Q(H,psi)>=c*(||l||^2-|<Omega,l>|^2)+||r||^2 "
+                                + ">=min(1,c)*(||psi||^2-|<Omega,psi>|^2). The last comparison uses the nonnegative centered legal "
+                                + "norm and the nonnegative illegal norm; it makes no support or orthogonality assumption on psi.")),
+                            Paragraph(Text(
+                                "Here ell=2k-1>=3, so ell^2>=9 and 2^ell>=8. Thus C(k)>=72, 0<c<=1/36<1, and min(1,c)=c. "
+                                + "In particular the full native quadratic estimate is Q(H,psi)>=(2/C(k))*(||psi||^2-|<Omega,psi>|^2). "
+                                + "At k=2 it gives 1/36 and at k=3 it gives 1/400, uniformly over n>=1 at each fixed k. These are lower "
+                                + "bounds, without an optimality or uniform-in-k claim. On vectors orthogonal to Omega this is the "
+                                + "usual coercive lower bound. A separate formal eigenvalue theorem is not needed for the displayed "
+                                + "quadratic statement.")),
+                            Paragraph(Text(
+                                "The finite support, pairing, variance and energy identities also apply at n=0. There Z=1, H=0 and "
+                                + "every amplitude lies along Omega, so the centered squared norm is zero. This is a zero-energy "
+                                + "boundary identity, with no excited gap. For 1<=n<k the forbidden-window sum is empty, all words are "
+                                + "legal, C_i=Id and H=sum_i(Id-X_i); the bound above remains valid. The quadratic application makes no "
+                                + "claim of physical, Rydberg, anyon, geometric or Rauzy realization. It adds application exposition "
+                                + "to the existing formal suppliers and does not add a separately retained Lean theorem or extend their "
+                                + "independent verification status."))
+                        )),
                     Paragraph(Text(
                         "This application gives the actual-law, conditional-projection and complex-energy "
                         + "calculation in the book's Chapter 39 example, Paper derivation: a uniform gap at fixed "
@@ -739,10 +804,10 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                         + "application now also derives the actual diagonal-control matrix product, ordered flip energy, ordered "
                         + "complete-window penalties, illegal-sector unit energy bound and zero cross-sector entries. These are "
                         + "applications of the reused definitions and finite-sum identities, without a claim of mathematical "
-                        + "novelty. Identifying a product of off-center-window controls with this C_i remains a distinct argument. "
-                        + "The norm-preserving legal uniform-L2 conversion and final full-space spectral estimate remain outside "
-                        + "this unit, as do physical or Rydberg realization and geometric or Rauzy realization. Neither the legal "
-                        + "refresh conclusion nor the invariant sector decomposition establishes those further results."))
+                        + "novelty. The ordered off-center-window product is identified with the diagonal C_i above. The "
+                        + "uniform-L2 isometry, ground-overlap variance identity and legal/illegal energy split give the direct "
+                        + "full-space quadratic bound for k>=2,n>=1 as application consequences. Physical or Rydberg realization "
+                        + "and geometric, Rauzy or anyon realization remain outside this result. No excited gap is asserted at n=0."))
                 )))));
 
     private static Formula StepFormula()
