@@ -1103,9 +1103,14 @@ Jordan--Korotkov,
 supplies the scaled-inverse probability and joint/conditional distinction.
 Neither supplies the concrete retained-service route (VIII.19).
 This is a conditional mathematical attainment result, with no physical
-realization or literature-priority assertion. All-outcome pure-standard
-reuse, the whole-class logarithmic immutable-recorder problem and the
-full original internal-observer space/time/boundary/memory recovery
-objective remain unresolved on their unchanged domains. $\square$
+realization or literature-priority assertion. For $0<\sigma<1$ in the
+normalized-total-return comparison class of VII116.1--116.2, VII120.2
+excludes exact full-$H/R$ selected recovery with joint success $p>0$
+and all-outcome return of the same pure $\eta$; even requiring the
+unconditional standard marginal on the original $r$ input to equal
+$\eta$ is excluded. The whole-class computable horizon-independent
+logarithmic immutable-recorder problem and the full original
+internal-observer space/time/boundary/memory recovery objective remain
+unresolved on their unchanged domains. $\square$
 
 ## 追加锚（本行以下为增补区）
