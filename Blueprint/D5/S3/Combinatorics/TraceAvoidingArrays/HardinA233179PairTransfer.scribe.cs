@@ -24,6 +24,10 @@ internal sealed class HardinA233179PairTransferDocument : IScribeDocumentDefinit
             Node("Col", "Six-label columns", Eq(Own("Col"), PaletteTuple(6)), false),
             Node("column", "Column coordinates", ColumnFormula(), false),
             Node("orbit", "Equality-pattern index", OrbitFormula(), false),
+            Paragraph(Text("The displayed formula is the equality-pattern property computed by the "
+                + "122-leaf case split that defines orbit. The property is confirmed by evaluating "
+                + "that case split on all 729 columns and is not proved as a separate theorem here; "
+                + "its forward direction is the content of class_rep.")),
             Node("representatives", "The 122 equality-pattern representatives", RepresentativesFormula(), false),
             Node("relabel", "Coordinatewise label permutations", RelabelFormula(), false),
             Node("class_rep", "Every column has its indexed representative", ClassRepFormula(), true),

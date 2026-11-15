@@ -1,5 +1,4 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferPowers
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -9,7 +8,6 @@ import LeanInformationAuditInterface.Contract.Registration
 /-! Exact readout laws preserve the complete telescopes of the strip identities. -/
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferPowers
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
