@@ -193,20 +193,19 @@ end Zero
 
 namespace Interval
 
-abbrev parameter := Σ _ : ℕ, Qutrit
-abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature parameter
-  (fun p => Router p.1 → ℝ) (fun _ => Set ℝ)
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature ℕ
+  (fun n => Router n → ℝ) (fun _ => Qutrit → Set ℝ)
 
 def actual : Realization signature :=
-  realize signature (fun _ p q => Section p.1 q p.2) (fun e => nomatch e)
+  realize signature (fun _ n q => Section n q) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => Set.univ) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => Set.univ) (fun e => nomatch e)
 
 def law (R : Realization signature) : Prop :=
   ∀ (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
     (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v ∧ q v ≤ 1),
-    (Section n q bus = ∅ ∨ ∃ l r : ℝ, l ≤ r ∧ R.readout () ⟨n,bus⟩ q = Set.Icc l r ∧
+    (Section n q bus = ∅ ∨ ∃ l r : ℝ, l ≤ r ∧ R.readout () n q bus = Set.Icc l r ∧
       UniformEndpoint n q bus l ∧ UniformEndpoint n q bus r) ∧
     (0 ∈ Section n q bus → ∃ S : Finset (Address n), S.Nonempty ∧
       (∑ a ∈ S, record n q bus a) = 0)
@@ -244,9 +243,10 @@ private theorem rejected_law : ¬ law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨⟨1,Qutrit.wait⟩, (fun _ => 1), (fun _ => 0), ?_⟩
+  refine ⟨1, (fun _ => 1), (fun _ => 0), ?_⟩
   intro heq
   apply interior_not_one
+  have heq := congrFun heq Qutrit.wait
   change Section 1 (fun _ => 1) Qutrit.wait = Section 1 (fun _ => 0) Qutrit.wait at heq
   rw [← heq]
   exact upper_one
@@ -259,7 +259,7 @@ def family : Registration arena (type_of% uniform_section) where
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    uniform_section (Realization signature) (parameter → Type) Unit where
+    uniform_section (Realization signature) (ℕ → Type) Unit where
   unitName := `Reg.D5.S3.Quantum.Routing.HannUniformSection.Interval.unit
   realizationName := `Reg.D5.S3.Quantum.Routing.HannUniformSection.Interval.family
   realizationSource := none
@@ -271,7 +271,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p q => Section p.1 q p.2) (fun e => nomatch e))
+  readout := some (realize signature (fun _ n q => Section n q) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -279,9 +279,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Routing.HannUniformSection
     definition := none
-    coordinates := #[0,2]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body","body","body","body","fn","arg","arg","arg","body","arg","body","arg","fn","arg","fn","arg"]
+      path := #["body","body","body","body","fn","arg","arg","arg","body","arg","body","arg","fn","arg","fn","arg","fn"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none

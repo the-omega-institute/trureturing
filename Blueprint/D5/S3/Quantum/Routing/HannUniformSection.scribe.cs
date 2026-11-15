@@ -19,7 +19,8 @@ internal sealed class HannUniformSectionDocument : IScribeDocumentDefinition
                 + "Address 0 is Unit and Address(n+1)=Bool times Address n, so there are exactly "
                 + "2^n original leaves. The synthesis is the sum of p(a) record(n,q,bus,a) using "
                 + "the actual HannSignedCertificate record and vacuumRecord, with real scalars "
-                + "cast to Complex. Probability is assigned only to these original leaves."),
+                + "cast to Complex. In the formulas, ofRealCoefficients denotes this pointwise cast. "
+                + "Probability is assigned only to these original leaves."),
             Def("uniform-real-local", "RealLocal", "The real local clauses",
                 "At q=1 the root scalar is the sum of the two child scalars. At q=-1/2 both "
                 + "child scalars are minus the root scalar. At every other q all three vanish. "
@@ -89,7 +90,7 @@ internal sealed class HannUniformSectionDocument : IScribeDocumentDefinition
                     + "There are finitely many subsets and three possible numerators. If any "
                     + "value is feasible, the least and greatest uniform values are feasible, "
                     + "bound the whole section, and convexity fills their closed interval. "
-                    + "This treats both signs and both endpoints together, including a singleton."))),
+                    + "This treats both signs and both endpoints together, including a singleton.")))),
             Paragraph(Text(
                 "The conformal-decomposition method is classical; the elementary-vector source "
                 + "is Mueller and Regensburger, Elementary vectors and conformal sums in polyhedral "
@@ -152,7 +153,7 @@ internal sealed class HannUniformSectionDocument : IScribeDocumentDefinition
     {
         Formula p=I("p"),a=I("a"),s=I("S");
         Formula premise=Both(All("a",Addr,Leq(D(0),App(p,a))),Eq(SumOver("a",Addr,App(p,a)),D(1)),
-            Eq(C("realSynthesis",N,Q,Bus,p),D(0)));
+            Eq(App(C("synthesis",N,Q,Bus),C("ofRealCoefficients",p)),D(0)));
         Formula conclusion=Ex("S",C("Finset",Addr),Both(C("Nonempty",s),
             All("a",s,Lt(D(0),App(p,a))),ZeroSum(s)));
         return Parameters(All("p",Arr(Addr,Real),Imp(premise,conclusion)));
