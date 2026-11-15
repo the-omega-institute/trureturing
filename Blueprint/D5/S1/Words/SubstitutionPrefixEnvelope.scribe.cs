@@ -13,7 +13,7 @@ internal sealed class SubstitutionPrefixEnvelopeDocument : IScribeDocumentDefini
         Blocks(
             Paragraph(Text("Let alpha be any alphabet, w an integer weight and f a list-valued substitution. No finiteness of the alphabet, nonerasing condition or parity hypothesis is imposed. image f j a is the actual jth iterate, with the zero iterate [a]. Alternation starts positively at the beginning of each list. A change of starting phase multiplies the charge by a power of -1 and therefore preserves its absolute value.")),
             Node("charge", "charge", "Local alternating charge", DescribeRole.Definition,
-                All("alpha", Call("Type"), All("w", Arrow(V("alpha"), Int()),
+                All("alpha", V("Type"), All("w", Arrow(V("alpha"), Int()),
                     All("v", Call("List", V("alpha")), Eq(Call("charge", V("w"), V("v")),
                         Call("alternatingSum", Call("map", V("w"), V("v"))))))),
                 "The empty charge is zero. For concatenation uv, the charge is Q(u)+(-1)^length(u) Q(v). Consequently its absolute value is at most |Q(u)|+|Q(v)|, regardless of whether either length is odd."),
@@ -35,7 +35,7 @@ internal sealed class SubstitutionPrefixEnvelopeDocument : IScribeDocumentDefini
             All("a", V("alpha"), Le(Call("length", Call("f", V("a"))), V("B"))),
             All("j", Nat(), Le(D(0), Call("H", V("j")))),
             All("j", Nat(), All("a", V("alpha"), Le(Abs(Call("charge", V("w"), Image(V("a")))), Call("H", V("j"))))));
-        return All("alpha", Call("Type"), All("w", Arrow(V("alpha"), Int()),
+        return All("alpha", V("Type"), All("w", Arrow(V("alpha"), Int()),
             All("f", Arrow(V("alpha"), Call("List", V("alpha"))),
             All("M", Int(), All("B", Nat(), All("H", Arrow(Nat(), Int()), Imp(assumptions, body)))))));
     }

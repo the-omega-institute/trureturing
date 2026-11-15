@@ -67,7 +67,8 @@ def family : Registration arena.{u}
     intro _
     let w : ULift.{u} Bool → ℤ := fun b => if b.down then 1 else 0
     refine ⟨⟨ULift.{u} Bool, w, (fun a => [a]), 0, 1⟩, ⟨false⟩, ⟨true⟩, ?_⟩
-    decide
+    change (0 : ℤ) ≠ 1
+    norm_num
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Words.SubstitutionPrefixEnvelope.prefix_envelope.{u})
@@ -82,9 +83,11 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   bundleNonempty := .absent, readout := some (realize signature actual.readout actual.anchor),
   variation := .absent, sensitivity := .absent, partialSensitivity := none,
   escapeFrom := none,
-  sourceSelection := some { owner := `D5.S1.Words.SubstitutionPrefixEnvelope,
+  sourceSelection := some {
+    owner := `D5.S1.Words.SubstitutionPrefixEnvelope,
     definition := none, coordinates := #[0, 1, 2, 11, 13],
-    readouts := #[{ path := #[], stateBinder := 12,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 12,
       functionOperand := false, stateOperand := some #["arg", "arg", "arg"],
       booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
@@ -142,7 +145,8 @@ def family : Registration arena.{u}
   dependence := by
     intro _
     refine ⟨⟨ULift.{u} Unit, (fun _ => 1)⟩, [], [⟨()⟩], ?_⟩
-    decide
+    change (0 : ℤ) ≠ 1
+    norm_num
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Words.SubstitutionPrefixEnvelope.two_block_interval_bound.{u})
@@ -157,9 +161,11 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   bundleNonempty := .absent, readout := some (realize signature actual.readout actual.anchor),
   variation := .absent, sensitivity := .absent, partialSensitivity := none,
   escapeFrom := none,
-  sourceSelection := some { owner := `D5.S1.Words.SubstitutionPrefixEnvelope,
+  sourceSelection := some {
+    owner := `D5.S1.Words.SubstitutionPrefixEnvelope,
     definition := none, coordinates := #[0, 1],
-    readouts := #[{ path := #[], stateBinder := 14,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 14,
       functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 end two_block_interval_bound
