@@ -9,7 +9,7 @@
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.Analysis.Analytic.Constructions
-import Mathlib.NumberTheory.Prime.Basic
+import Mathlib.Data.Nat.Prime.Defs
 import Mathlib.Tactic
 
 /-!
@@ -68,8 +68,9 @@ private theorem monomial_point (n : J → ℕ) (b : J → ℝ)
         (Real.log (p : ℝ) : ℂ)) := by
   simp only [monomialValue, point, ← Complex.exp_nat_mul, ← Complex.exp_sum]
   congr 1
-  push_cast
-  simp only [Finset.sum_mul, Finset.mul_sum, Finset.sum_neg_distrib]
+  simp only [Complex.ofReal_sum, Complex.ofReal_mul, Complex.ofReal_natCast,
+    Finset.sum_mul, neg_mul]
+  rw [← Finset.sum_neg_distrib]
   apply Finset.sum_congr rfl
   intro j _
   ring
@@ -90,11 +91,12 @@ private theorem monomial_norm_le (n : J → ℕ) (b : J → ℝ)
       _ ≤ _ := Finset.sum_le_sum fun j _ => mul_le_mul_of_nonneg_left (hb j) (Nat.cast_nonneg _)
   rw [monomial_point, Complex.norm_exp]
   simp only [Complex.mul_re, Complex.neg_re, Complex.ofReal_re, Complex.ofReal_im,
-    zero_mul, sub_zero, Complex.neg_im, mul_zero]
+    sub_zero, Complex.neg_im, mul_zero]
   apply Real.exp_le_exp.mpr
   have hprod := mul_le_mul hw hs.le (le_of_lt hε) (le_of_lt (hm.trans_le hw))
-  have hprod' := mul_le_mul hprod hlp (le_of_lt hl) (by positivity : 0 ≤
-    (∑ j, (n j : ℝ) * b j) * s.re)
+  have hw0 : 0 ≤ ∑ j, (n j : ℝ) * b j := hm.le.trans hw
+  have hs0 : 0 ≤ s.re := hε.le.trans hs.le
+  have hprod' := mul_le_mul hprod hlp hl.le (mul_nonneg hw0 hs0)
   nlinarith
 
 private theorem tail_monomial_norm_le (n : J → ℕ) (b : J → ℝ)
@@ -117,7 +119,7 @@ private theorem tail_monomial_norm_le (n : J → ℕ) (b : J → ℝ)
     nlinarith
   rw [monomial_point, Complex.norm_exp]
   simp only [Complex.mul_re, Complex.neg_re, Complex.ofReal_re, Complex.ofReal_im,
-    zero_mul, sub_zero, Complex.neg_im, mul_zero]
+    sub_zero, Complex.neg_im, mul_zero]
   calc
     _ ≤ Real.exp (-(2 * Real.log (p : ℝ))) := by
       apply Real.exp_le_exp.mpr
@@ -125,7 +127,7 @@ private theorem tail_monomial_norm_le (n : J → ℕ) (b : J → ℝ)
     _ = 1 / (p : ℝ) ^ 2 := by
       rw [Real.exp_neg, show (2 : ℝ) * Real.log (p : ℝ) =
         (2 : ℕ) * Real.log (p : ℝ) by norm_num, Real.exp_nat_mul, Real.exp_log hp]
-      rfl
+      simp
 
 private theorem integer_power_split (z : ℂ) (k : ℤ) :
     z ^ k = z ^ k.toNat / z ^ (-k).toNat := by
@@ -154,7 +156,6 @@ theorem evaluated_certificate_uniform (d : Data J I T) (N : ℕ)
   have hq1 : q < 1 := by
     apply Real.exp_lt_one_iff.mpr
     have : 0 < Real.log 2 := Real.log_pos (by norm_num)
-    dsimp only
     nlinarith [mul_pos hm hε]
   let U : ℝ := ∏ i, (1 + q) ^ (d.power i).toNat
   let V : ℝ := ∏ i, (1 - q) ^ (-d.power i).toNat
@@ -194,7 +195,7 @@ theorem evaluated_certificate_uniform (d : Data J I T) (N : ℕ)
   · intro s hs
     have hnum : ‖d.numerator (point b p s)‖ ≤ U := by
       rw [Data.numerator, norm_prod]
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro i _; positivity
       · intro i _
         rw [norm_pow]
@@ -202,7 +203,7 @@ theorem evaluated_certificate_uniform (d : Data J I T) (N : ℕ)
         exact (norm_sub_le _ _).trans (by simpa using add_le_add_left (hsmall s hs i) 1)
     have hden : V ≤ ‖d.denominator (point b p s)‖ := by
       rw [Data.denominator, norm_prod]
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro i _; positivity
       · intro i _
         rw [norm_pow]
@@ -222,7 +223,7 @@ theorem evaluated_certificate_uniform (d : Data J I T) (N : ℕ)
           rw [norm_mul]
           exact mul_le_mul_of_nonneg_left
             (tail_monomial_norm_le _ _ _ _ _ _ _ hm hb hε hs (htail t) hcut) (norm_nonneg _)
-        _ = D / (p : ℝ) ^ 2 := by simp only [D, ← Finset.sum_mul, mul_one_div]
+        _ = D / (p : ℝ) ^ 2 := by simp only [D, mul_one_div, Finset.sum_div]
     have hsplit : (∏ i, (1 - monomialValue (d.mode i) (point b p s)) ^ d.power i) =
         d.numerator (point b p s) / d.denominator (point b p s) := by
       simp only [integer_power_split, Finset.prod_div_distrib, Data.numerator, Data.denominator]
@@ -239,7 +240,7 @@ theorem evaluated_certificate_uniform (d : Data J I T) (N : ℕ)
       positivity
     calc
       _ ≤ (D / (p : ℝ) ^ 2 + (A / (p : ℝ) ^ 2) * U) / V := by
-        apply div_le_div₀ hV (by positivity) _ hden
+        apply div_le_div₀ (by positivity) _ hV hden
         apply (norm_add_le _ _).trans
         rw [norm_mul]
         exact add_le_add htailbound (mul_le_mul (hbound p s hs) hnum (norm_nonneg _) (by positivity))
