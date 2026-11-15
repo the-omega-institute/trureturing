@@ -38,6 +38,43 @@ public sealed class FileMapGlobTests
         Assert.Throws<FileMapPatternException>(() => FileMapGlob.Create(null!));
 
     [Fact]
+    public void LiteralPatternBatchUsesBoundedAllocation()
+    {
+        var batchId = Guid.NewGuid().ToString("N");
+        var patterns = Enumerable.Range(0, 64)
+            .Select(index => $"allocation/{batchId}/Literal{index:D2}[1]+(x).lean")
+            .ToArray();
+        var negativePaths = patterns.Select(pattern => pattern + ".extra").ToArray();
+        var positiveMatches = 0;
+        var negativeMatches = 0;
+
+        var before = GC.GetAllocatedBytesForCurrentThread();
+        for (var index = 0; index < patterns.Length; index++)
+        {
+            var glob = FileMapGlob.Create(patterns[index]);
+            if (glob.IsMatch(patterns[index])) positiveMatches++;
+            if (glob.IsMatch(negativePaths[index])) negativeMatches++;
+        }
+        var allocatedBytes = GC.GetAllocatedBytesForCurrentThread() - before;
+
+        Assert.Equal(patterns.Length, positiveMatches);
+        Assert.Equal(0, negativeMatches);
+        Assert.True(allocatedBytes <= 8 * 1024 * 1024,
+            $"Literal pattern construction and matching allocated {allocatedBytes} bytes; limit is 8 MiB.");
+    }
+
+    [Theory]
+    [InlineData("", "x")]
+    [InlineData("D5/é.lean", "D5/e.lean")]
+    public void AdmissionOnlyLiteralsMatchExactly(string pattern, string otherPath)
+    {
+        var glob = FileMapGlob.CreateForAdmissionPlane(pattern);
+        Assert.True(glob.IsMatch(pattern));
+        Assert.False(glob.IsMatch(otherPath));
+        Assert.Throws<FileMapPatternException>(() => FileMapGlob.Create(pattern));
+    }
+
+    [Fact]
     public void QuestionMarkIsRejectedByBothEntriesOnEveryCall()
     {
         for (var iteration = 0; iteration < 2; iteration++)
