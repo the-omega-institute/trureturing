@@ -115,6 +115,8 @@ theorem coordinate_mem (φ ψ : A →ₚ[ℂ] ℂ) (h : Dominated φ ψ) :
     intro x
     have hn := (comparison φ ψ h).le_opNorm x
     have hb := comparison_norm_le φ ψ h
+    have hn' : ‖comparison φ ψ h x‖ ≤ ‖x‖ :=
+      hn.trans (mul_le_of_le_one_left (norm_nonneg x) hb)
     have hs := (comparison φ ψ h).apply_norm_sq_eq_inner_adjoint_left x
     change 0 ≤ (inner ℂ (x - coordinate φ ψ h x) x).re
     have hx := norm_sq_eq_re_inner (𝕜 := ℂ) x
@@ -158,7 +160,7 @@ private theorem coefficient_star_mul (ψ : A →ₚ[ℂ] ℂ) (T : ψ.GNS →L[�
   rw [map_mul, map_star, ContinuousLinearMap.star_eq_adjoint]
   apply congrArg (inner ℂ (cyclicVector ψ))
   simpa only [map_star, ContinuousLinearMap.star_eq_adjoint,
-    ContinuousLinearMap.mul_apply] using
+    mul_apply_eq_comp] using
     congrArg (fun F => F (ψ.gnsStarAlgHom b (cyclicVector ψ))) (hc (star a)).eq
 
 /-- The coefficient determines every commutant operator, without positivity. -/
@@ -200,7 +202,9 @@ theorem coefficient_nonneg_iff (ψ : A →ₚ[ℂ] ℂ) (T : ψ.GNS →L[ℂ] ψ
     apply (ContinuousLinearMap.isPositive_iff_complex T).mpr
     intro x
     have hl : 0 ≤ inner ℂ (T x) x := by
-      simpa only [inner_conj_symm] using (star_nonneg_iff.mpr (hq x))
+      rw [← inner_conj_symm]
+      change 0 ≤ star (inner ℂ x (T x))
+      exact star_nonneg_iff.mpr (hq x)
     exact ⟨by apply Complex.ext <;> simp [(Complex.nonneg_iff.mp hl).2.symm],
       (Complex.nonneg_iff.mp hl).1⟩
   · intro h a ha
@@ -215,7 +219,7 @@ theorem coefficient_order_iff (ψ : A →ₚ[ℂ] ℂ) (T S : ψ.GNS →L[ℂ] �
     (∀ a, 0 ≤ a → coefficient ψ T a ≤ coefficient ψ S a) ↔ T ≤ S := by
   have hc : ∀ a, Commute (S - T) (ψ.gnsStarAlgHom a) := fun a => (hS a).sub_left (hT a)
   simpa only [sub_nonneg, coefficient, LinearMap.coe_mk, AddHom.coe_mk,
-    ContinuousLinearMap.sub_apply, inner_sub_right] using coefficient_nonneg_iff ψ (S - T) hc
+    sub_apply, inner_sub_right] using coefficient_nonneg_iff ψ (S - T) hc
 
 /-- A positive commutant operator defines an actual positive functional. -/
 def functional (ψ : A →ₚ[ℂ] ℂ) (T : ψ.GNS →L[ℂ] ψ.GNS)
@@ -297,7 +301,7 @@ def orderCoordinates (ψ : A →ₚ[ℂ] ℂ) : DominatedFunctional ψ ≃o Comm
     have he := coefficient_order_iff ψ (coordinate φ.val ψ φ.property)
       (coordinate χ.val ψ χ.property) (coordinate_mem _ ψ _).2.2
       (coordinate_mem _ ψ _).2.2
-    simpa only [coefficient_coordinate, PositiveLinearMap.coe_toLinearMap] using he.symm
+    simpa only [coefficient_coordinate, PositiveLinearMap.coe_toLinearMap, Dominated] using he.symm
 
 /-- Convert the existing positive continuous dual input to Mathlib's positive-map GNS input. -/
 def positiveOfDual (ρ : StrongDual ℂ A) (hρ : ∀ a, 0 ≤ a → 0 ≤ ρ a) : A →ₚ[ℂ] ℂ :=
@@ -310,25 +314,49 @@ theorem original_pair_coordinate (ρ σ : StrongDual ℂ A)
     let ψ := positiveOfDual (ρ + σ) (fun a ha => add_nonneg (hρ a ha) (hσ a ha))
     ∃! C : ψ.GNS →L[ℂ] ψ.GNS,
       0 ≤ C ∧ C ≤ 1 ∧ (∀ a, Commute C (ψ.gnsStarAlgHom a)) ∧
-        coefficient ψ C = ρ.toLinearMap := by
-  dsimp only
-  apply existsUnique_coordinate (positiveOfDual ρ hρ)
-  intro a ha
-  change ρ a ≤ ρ a + σ a
-  exact le_add_of_nonneg_right (hσ a ha)
+        coefficient ψ C = ρ.toLinearMap ∧ coefficient ψ (1 - C) = σ.toLinearMap := by
+  let ψ := positiveOfDual (ρ + σ) (fun a ha => add_nonneg (hρ a ha) (hσ a ha))
+  have hd : Dominated (positiveOfDual ρ hρ) ψ := by
+    intro a ha
+    change ρ a ≤ ρ a + σ a
+    exact le_add_of_nonneg_right (hσ a ha)
+  obtain ⟨C, hC, hunique⟩ := existsUnique_coordinate (positiveOfDual ρ hρ) ψ hd
+  refine ⟨C, ⟨hC.1, hC.2.1, hC.2.2.1, hC.2.2.2, ?_⟩, ?_⟩
+  · ext a
+    have hs : coefficient ψ (1 - C) a = coefficient ψ 1 a - coefficient ψ C a := by
+      simp only [coefficient, LinearMap.coe_mk, AddHom.coe_mk, sub_apply, inner_sub_right]
+    rw [hs, coefficient_one, hC.2.2.2]
+    change (ρ a + σ a) - ρ a = σ a
+    exact add_sub_cancel_left (ρ a) (σ a)
+  · intro S hS
+    exact hunique S ⟨hS.1, hS.2.1, hS.2.2.1, hS.2.2.2.1⟩
 
 /-- Positive order coordinates inherit the existing arbitrary-directed normality predicate. -/
 theorem functional_isOrderNormal (ψ : A →ₚ[ℂ] ℂ)
-    (hψ : NormalFunctionals.IsOrderNormal (ContinuousLinearMapClass.toContinuousLinearMap ψ))
+    (hψ : NormalFunctionals.IsOrderNormal
+      (PositiveContinuousLinearMap.ofClass ψ).toContinuousLinearMap)
     (T : CommutantInterval ψ) :
     NormalFunctionals.IsOrderNormal
-      (ContinuousLinearMapClass.toContinuousLinearMap
-        (functional ψ T.val T.property.1 T.property.2.2)) := by
+      (PositiveContinuousLinearMap.ofClass
+        (functional ψ T.val T.property.1 T.property.2.2)).toContinuousLinearMap := by
   apply NormalFunctionals.isOrderNormal_of_domination
-    (ContinuousLinearMapClass.toContinuousLinearMap ψ) hψ 1 zero_le_one
+    (PositiveContinuousLinearMap.ofClass ψ).toContinuousLinearMap hψ 1 zero_le_one
   intro a ha
   exact ⟨(functional ψ T.val T.property.1 T.property.2.2).map_nonneg ha,
-    by simpa using functional_dominated ψ T.val T.property.1 T.property.2.1
-      T.property.2.2 a ha⟩
+    by simpa using (functional_dominated ψ T.val T.property.1 T.property.2.1
+      T.property.2.2 a ha)⟩
+
+#print axioms comparison_norm_le
+#print axioms comparison_intertwines
+#print axioms comparison_adjoint_intertwines
+#print axioms coordinate_mem
+#print axioms coordinate_represents
+#print axioms coefficient_injective
+#print axioms coefficient_nonneg_iff
+#print axioms coefficient_order_iff
+#print axioms existsUnique_coordinate
+#print axioms orderCoordinates
+#print axioms original_pair_coordinate
+#print axioms functional_isOrderNormal
 
 end D5.S3.Quantum.Analysis.GNSOrderCoordinates
