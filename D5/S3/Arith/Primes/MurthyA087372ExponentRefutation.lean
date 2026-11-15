@@ -10,6 +10,8 @@ import D5.S3.Arith.Primes.PrimeGap
 import Mathlib.Algebra.Ring.Parity
 import Mathlib.Data.Nat.Find
 
+/-! The boundedness assertion for the least positive prime-producing exponent. -/
+
 set_option autoImplicit false
 
 namespace D5.S3.Arith.Primes.MurthyA087372ExponentRefutation
@@ -36,17 +38,17 @@ theorem result : ¬ claim := by
     have hp : Nat.Prime p := Nat.nth_mem_of_infinite Nat.infinite_setOfPred_prime (i + 1)
     have hqge : 2 ≤ q := hq.two_le
     have htge : 3 ≤ 3 ^ K := by
-      simpa using pow_le_pow_right' (by decide : 1 ≤ (3 : ℕ)) hK
+      simpa using Nat.pow_le_pow_of_le (by decide : 1 < (3 : ℕ)) hK
     have hple : 3 ^ K ≤ p := by omega
     have hpne : p ≠ 2 := by omega
-    have htodd : Odd (3 ^ K) := (by decide : Odd (3 : ℕ)).pow K
-    obtain ⟨n, hn⟩ := (hp.odd_of_ne_two hpne).sub_odd htodd
+    have htodd : Odd (3 ^ K) := (by decide : Odd (3 : ℕ)).pow
+    obtain ⟨n, hn⟩ := Nat.Odd.sub_odd (hp.odd_of_ne_two hpne) htodd
     have hsum : 3 ^ K + 2 * n = p := by omega
     have hnpos : 1 ≤ n := by omega
     have hearlier : ∀ j : ℕ, 1 ≤ j → j < K → ¬ Nat.Prime (3 ^ j + 2 * n) := by
       intro j hj hjK hr
-      have hjpos : 0 < (3 : ℕ) ^ j := pow_pos (by decide) j
-      have hjlt : (3 : ℕ) ^ j < 3 ^ K := pow_lt_pow_right' (by decide) hjK
+      have hjpos : 0 < (3 : ℕ) ^ j := Nat.pow_pos (by decide)
+      have hjlt : (3 : ℕ) ^ j < 3 ^ K := Nat.pow_lt_pow_of_lt (by decide) hjK
       have hleft : q < 3 ^ j + 2 * n := by omega
       have hright : 3 ^ j + 2 * n < p := by omega
       have hnext := (Nat.nth_add_one_le_iff Nat.infinite_setOfPred_prime hr).2 hleft
@@ -55,7 +57,7 @@ theorem result : ¬ claim := by
     have hex : ∃ k : ℕ, 1 ≤ k ∧ Nat.Prime (3 ^ k + 2 * n) :=
       ⟨K, hK, hsum ▸ hp⟩
     refine ⟨n, hnpos, ?_⟩
-    rw [a, dif_pos hex]
+    rw [a, dite_eq_left hex]
     apply (Nat.find_eq_iff hex).2
     refine ⟨⟨hK, hsum ▸ hp⟩, ?_⟩
     intro j hj hjprime
