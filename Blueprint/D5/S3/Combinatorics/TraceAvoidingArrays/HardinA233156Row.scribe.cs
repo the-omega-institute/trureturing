@@ -7,7 +7,9 @@ internal sealed class HardinA233156RowDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233156Row.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Automata/hardin2013a233156");
     private static DocumentBlock Node(string declaration, Formula formula, string prose, bool count = false, bool theorem = false) =>
-        Describe.Lean(DescribeId.Create("a233156-" + declaration.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + declaration), H(declaration), StatementSource.FromAuthor(Disp(formula)), count ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+        declaration == "result"
+            ? Describe.Lean(DescribeId.Create("a233156-" + declaration.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + declaration), H(declaration), StatementSource.FromAuthor(Disp(formula)), count ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233156"), ResolutionKind.Proved))
+            : Describe.Lean(DescribeId.Create("a233156-" + declaration.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + declaration), H(declaration), StatementSource.FromAuthor(Disp(formula)), count ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The number of labelled 3-row arrays obeys the order-2 recurrence from OEIS A233156.",
         H("OEIS A233156"), Blocks(
