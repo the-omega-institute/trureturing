@@ -93,7 +93,7 @@ private theorem mirror_pos (x : ℕ → A) (i : ℕ) :
 omit [Fintype A] in
 private theorem mirror_neg (x : ℕ → A) (i : ℕ) :
     mirrorWord x (-((i : ℤ) + 1)) = some (x i) := by
-  exact Option.mem_def.mp rfl
+  exact mirror_pos x i
 
 private theorem mem_intFactorSet {z : ℤ → Option A} {n : ℕ} {w : Fin n → Option A} :
     w ∈ intFactorSet z n ↔ ∃ i, w = intFactor z n i := by

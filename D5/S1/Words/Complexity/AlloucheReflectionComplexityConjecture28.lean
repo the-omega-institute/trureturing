@@ -134,14 +134,9 @@ private theorem card_edgePreimage_lower (f : E → V) (hf : Function.Surjective 
     S.card ≤ (edgePreimage f S).card := by
   classical
   have heq : (edgePreimage f S).image f = S := by
-    ext v
-    simp only [Finset.mem_image, edgePreimage, Finset.mem_filter, Finset.mem_univ, true_and]
-    constructor
-    · rintro ⟨e, he, rfl⟩
-      exact he
-    · intro hv
-      obtain ⟨e, rfl⟩ := hf v
-      exact ⟨e, hv, rfl⟩
+    change ((Finset.univ.filter fun e : E => f e ∈ S).image f) = S
+    rw [← Finset.filter_image (s := Finset.univ) (f := f) (p := fun v => v ∈ S),
+      Finset.image_univ_of_surjective hf, Finset.filter_univ_mem]
   calc
     S.card = ((edgePreimage f S).image f).card := congrArg Finset.card heq.symm
     _ ≤ (edgePreimage f S).card := Finset.card_image_le
