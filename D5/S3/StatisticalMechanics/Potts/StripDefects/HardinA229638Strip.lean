@@ -21,15 +21,18 @@ W: proof_shape=bind-only; consumers=finite_certificate, result
 decidableValid: proof_shape=bind-only; consumers=finite_certificate
 a: proof_shape=bind-only; consumers=result
 finite_certificate: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=external sequence A229638
+result: proof_shape=bind-only; consumers=none (external open-problem-resolution #30838)
 -/
 
+import Mathlib.Data.Matrix.Block
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinColumnContinuations
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Mathlib.Logic.Equiv.Fin.Basic
 
 /-! Literal row-major canonical counts and column transfer. -/
 open scoped BigOperators
+open D5.S3.Combinatorics.TraceAvoidingArrays
 namespace D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229638Strip
 open DefectTransfer (bondDefects defects literalCount lumped_count forward forward_shift)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical canonical_pattern_card)
@@ -42,19 +45,26 @@ def Valid (_ : Row) (d : ℕ) : Prop := d ≤ 2
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (d ≤ 2))
 def cl (p : Row) (d : ℕ) : Fin 6 :=
-  if d = 2 ∧ p 0 = p 1 then 0 else
-  if d = 2 ∧ p 0 ≠ p 1 then 1 else
-  if d = 1 ∧ p 0 = p 1 then 2 else
-  if d = 1 ∧ p 0 ≠ p 1 then 3 else
-  if d = 0 ∧ p 0 = p 1 then 4 else
-  5
+  if d = 2 then (HardinColumnContinuations.classB p).castAdd 4
+  else if d = 1 then ((HardinColumnContinuations.classB p).castAdd 2).natAdd 2
+  else if d = 0 then (HardinColumnContinuations.classB p).natAdd 4
+  else 5
 def T : Matrix (Fin 6) (Fin 6) ℤ :=
-  ![![2, 2, 0, 0, 0, 4],
-    ![1, 0, 0, 4, 2, 2],
-    ![0, 0, 2, 2, 0, 0],
-    ![0, 0, 1, 0, 0, 4],
-    ![0, 0, 0, 0, 2, 2],
-    ![0, 0, 0, 0, 1, 0]]
+  Matrix.reindex (finSumFinEquiv : Fin 4 ⊕ Fin 2 ≃ Fin 6)
+    (finSumFinEquiv : Fin 4 ⊕ Fin 2 ≃ Fin 6)
+    (Matrix.fromBlocks (Matrix.reindex (finSumFinEquiv : Fin 2 ⊕ Fin 2 ≃ Fin 4)
+    (finSumFinEquiv : Fin 2 ⊕ Fin 2 ≃ Fin 4)
+    (Matrix.fromBlocks (fun i j => (HardinColumnContinuations.B i j : ℤ))
+      (![![0, 0],
+      ![0, 4]])
+      (0)
+      (fun i j => (HardinColumnContinuations.B i j : ℤ))))
+      (![![0, 4],
+      ![2, 2],
+      ![0, 0],
+      ![0, 4]])
+      (0)
+      (fun i j => (HardinColumnContinuations.B i j : ℤ)))
 def initial : Fin 6 → ℤ := ![3, 6, 0, 0, 0, 0]
 def terminal : Fin 6 → ℤ := ![0, 0, 0, 0, 1, 1]
 def W : Fin 7 → Fin 6 → ℤ :=
