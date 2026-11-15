@@ -25,4 +25,6 @@ Each canonical admissible boundary and residual budget has the stated number of 
 - Truth anchor: `D5/S3/SpinModels/PottsDefects/HardinA229584StripClasses10.transition_counts`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/SpinModels/PottsDefects/DefectTransfer](DefectTransfer.md)
+- Dependency: [D5/S3/SpinModels/PottsDefects/HardinA229584StripClass20](HardinA229584StripClass20.md)
+- Dependency: [D5/S3/SpinModels/PottsDefects/HardinA229584StripClass21](HardinA229584StripClass21.md)
 - Dependency: [D5/S3/SpinModels/PottsDefects/HardinA229584StripData](HardinA229584StripData.md)
