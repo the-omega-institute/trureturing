@@ -3842,3 +3842,275 @@ TF9只说这整个实际面不能超过八个仿射方向，加回单位质量�
 然而这只守住每三个标签附近的实际几何。240.10的既有层级能在每个有限复制数保留全部这种小面，却把较大混态差合并，使一个纯目标的零邻点混合进入整个体的相对内部。NC正是禁止邻点生成面把目标也吞进去；它仍是全局条件。把这三项放在整个三复制体，并保留全部有限复合、原效应与正交换背景，既有共同方向和传播才给一套贯穿所有有限层的复矩阵坐标。得到的是全部密度矩阵、Born、数学 POVM、纠缠与偏迹；全部旁观者下的正性再刻画 CP，质量约束再刻画各支及总和，指定中性再确定锐更新。设备、物理钟、能量、$\hbar$ 和无限／近似极限各保留自己的桥梁。由此减少的是预先输入整个三点 qutrit 结构和 TC 的需要，不是宣称所有物理内容都已无前提地推出。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 250. 同一把圆尺、实际最小三角与无 NC 的全有限复层级
+
+**定义 250.1（强全有限背景与共同圆尺）。** 完整保留 XIII(161.1)—(161.3)、230.9及240.8的原背景：有限实空间 $V$ 满足 $\dim_{\mathbb R}V>1$；对每个有限 $N\ge0$，整个原载体为 $W_N=V^{\otimes_{\mathbb R}N}$，$C_N$ 是闭、尖、生成凸锥，$u_N=u^{\otimes N}$ 在其非零正向量上严格正。取整个 $K_N=C_N\cap\{u_N=1\}$、全部 $P_N=\operatorname{ext}K_N$、完整 $\mathcal E_N=[0,u_N]_{C_N^*}$ 和全部有限单位分解；零层为 $(\mathbb R,\mathbb R_+,1)$。原乘积配对分离整个联合空间；规范重括号是原恒等，全部位置置换及其逆为正，单位丢弃为正。对所有有限 $a,b\ge0$，包括任意相关输入，要求
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}\subseteq C_a\otimes_{\max}C_b.
+\tag{250.1}
+$$
+
+两界分别使用全部正乘积与两块全部正泛函；不把层级截断在三份。$F_N(A)$ 是原 $K_N$ 中的最小实际面，$B_N(p,q)=F_N(p,q)$。L2、内禀切方向 $\tau_{N,p}(q)$、TC 及 TF9 均取240.1的整个实际面含义，量词遍历全部原纯点。
+
+在 $L_N=\ker u_N$ 上给一正定实对称双线性型 $g_N$。定义 $\mathsf A_2(g_N)$：每颗实际二点球 $B=B_N(p,q)$ 在同一 $g_N$ 的限制下为真正的圆三球，即对其中心 $c_B$、三维方向空间 $D_B=\operatorname{aff}B-c_B$，存在 $r_B>0$ 使
+
+$$
+B=c_B+\{v\in D_B:g_N(v,v)\le r_B^2\},\qquad
+P_N\cap B=c_B+\{v\in D_B:g_N(v,v)=r_B^2\}.
+\tag{250.2}
+$$
+
+不同 $B$ 的 $r_B$ 可以不同；尺只须存在，不指定 Loewner 归属。不另假设共同纯球面、共同半径、D2、NC、标准 $C_2$、CP 操作、可正提升的局域旋转，或任意小面效应的原预算延拓。尤其共同圆尺本身不在此被当作 TC 的供应。
+
+**定理 250.2（共同尺的联合提升与同一个全有限坐标）。** 在250.1的强背景中，下列等价：
+
+1. 整个原 $K_3$ 满足 L2、TC，并存在 $g_3\succ0$ 满足 $\mathsf A_2(g_3)$。
+2. 存在一个整数 $n\ge2$ 及同一个保迹实线性序同构 $\pi:\operatorname{Herm}_n(\mathbb C)\to V$，使每个有限 $N\ge0$ 同时满足
+
+$$
+C_N=\pi^{\otimes N}(\operatorname{PSD}_{n^N}),\qquad
+u_N\pi^{\otimes N}=\operatorname{Tr}.
+\tag{250.3}
+$$
+
+正向对任意给定的上述 $g_3$ 成立；反向断言存在合适的尺，不断言任意预先指定的正定尺都合适。结论是整个原锥与全菜单的对应，不只识别纯乘积或逐层另选坐标。证明相对于 XIII160.4、220.8及 XIII161.4的明示纸面供应；以下补足它们之间的联合提升。
+
+证明。记 $H_d=\operatorname{Herm}_d(\mathbb C)$，$t_d(X)=X^{\mathsf T}$，并在固定乘积基中识别 $H_a\otimes_{\mathbb R}H_b=H_{ab}$；Hermitian 对偶用实迹配对识别。所有投影 $P_x=xx^*$ 的向量均取单位长度。
+
+（一）实际纯旁观面和尺下降。若 $q\in P_b$ 且 $z\in K_{a+b}$ 的 $b$ 边缘为 $q$，最大界与闭锥对偶给每个 $f\in\mathcal E_a$ 的
+
+$$
+0\le(f\otimes\operatorname{id})z\le q.
+\tag{250.4}
+$$
+
+$q$ 的极射线性迫使该切片为 $\lambda_fq$。令 $x=(\operatorname{id}\otimes u_b)z\in K_a$，对切片取质量得 $\lambda_f=f(x)$。完整效应张成 $W_a^*$：任意泛函在紧底上有界，平移、缩放后进入 $[0,u_a]$。产品配对分离遂给 $z=x\otimes q$；最小界供应反向的每个这样的产品。极边缘的逆像是实际面，嵌入 $x\mapsto x\otimes q$ 的逆为边缘，因而是实际面序同构。这直接实现 XIII161.1；面内的极点仍是全局极点，也证明纯态产品纯。
+
+故 $K_2$、$K_1$ 分别作为纯旁观实际面嵌入 $K_3$。面中生成面与整个凸体中的生成面相同，二点球及其切方向亦同，所以 L2 与 TC 下降。把 $g_3$ 沿 $v\mapsto v\otimes q$ 拉回，给 $L_2$ 上正定 $g_2$，再得 $g_1$；(250.2)同样下降，未令任何两颗球等半径，也未延拓面内效应。
+
+（二）只取得商，暂不排核。分别对 $K_1,K_2,K_3$ 应用 XIII160.3节的命题160.4，得到迹归一化实线性满射
+
+$$
+\pi:H_n\to V,\qquad \Gamma_2:H_m\to W_2,\qquad
+\Gamma_3:H_\ell\to W_3.
+\tag{250.5}
+$$
+
+它们把整个 PSD 锥满射到整个原锥，把全部复射影纯射线同胚地送到全部原纯点，并在每个复维数至多二的支持上，给到对应整个实际面张成的线性序同构。这里仅使用 L2+TC，不使用160.5的 NC 排核入口。$\dim V>1$ 迫 $n\ge2$；此时尚未假设三个满射全局单射。
+
+（三）纯产品切片保内禀重叠。由纯产品纯，定义连续映射
+
+$$
+F:\mathbb{CP}^{n-1}\times\mathbb{CP}^{n-1}\to\mathbb{CP}^{m-1},
+\qquad \Gamma_2(P_{F([x],[y])})=\pi(P_x)\otimes\pi(P_y).
+\tag{250.6}
+$$
+
+固定 $[y]$ 和两个不同 $[x],[x']$。纯旁观嵌入把 $\pi$ 的整个实际二点面送到产品两端点生成的整个联合二点面。$\pi$ 和 $\Gamma_2$ 在相应二维复支持上的限制，均把标准密度三球仿射双射到这些实际面；在中间接上旁观嵌入，得到标准三球之间的仿射双射。它固定中心且线性部分正交，故保持 Bloch 归一重叠，即
+
+$$
+\operatorname{Tr}\!\left(P_{F([x],[y])}P_{F([x'],[y])}\right)
+=|\langle x,x'\rangle|^2.
+\tag{250.7}
+$$
+
+另一变量同理。这是球的内禀重叠，排核前没有把它认作原全局确认效应。连续性来自(250.5)的纯标签同胚及原连续双线性产品。
+
+（四）异维 Wigner、固定型别与双变量接合。以下在同一个证明内对任意 $a,b\ge2$ 的双变量、逐切片保重叠映射使用成熟 Wigner 工具；稍后分别代入 $(a,b)=(n,n)$ 和 $(n,n^2)$。对保重叠映射 $\mathbb{CP}^{a-1}\to\mathbb{CP}^{c-1}$，取正交基 $e_i$ 的像的正交单位代表 $v_i$。任意像单位代表 $w$ 满足
+
+$$
+\sum_i|\langle w,v_i\rangle|^2
+=\sum_i|\langle x,e_i\rangle|^2=1,
+\tag{250.8}
+$$
+
+所以全部像在 $a$ 维的 $S=\operatorname{span}_{\mathbb C}\{v_i\}$。酉识别 $S\cong\mathbb C^a$ 后，直接应用 Gehér 的同空间非双射 Wigner 定理，得到到原 $\mathbb C^c$ 的线性或反线性等距嵌入；无需把该定理误读成异维陈述。[G250] 不要求满射，也不以仅保正交替代保重叠。
+
+各切片的型别是固定的：取 $a_0=e_1$、$b_0=(e_1+e_2)/\sqrt2$、$c_0=(e_1+i e_2)/\sqrt2$，有 $\operatorname{Tr}(P_{a_0}P_{b_0}P_{c_0})=(1+i)/4$。像的三重积按两种型别分别为此数及其共轭。它随另一射影变量连续，而该参数空间连通，故型别恒定。分别固定两个输入空间的共轭后，所有切片都为线性型；不作依切片而变的镜像选择。
+
+在线性型坐标下，写 $F(e_i,y)=[V_i y]$，其中 $V_i:\mathbb C^b\to\mathbb C^c$ 为线性等距嵌入。第一变量的正交性给 $\langle y,V_i^*V_jy\rangle=0$（$i\ne j$），复极化给
+
+$$
+V_i^*V_j=\delta_{ij}I_b.
+\tag{250.9}
+$$
+
+令 $h=\sum_i e_i/\sqrt a$，写 $F(h,y)=[V_0y]$。固定 $y$ 的第一变量 Wigner 嵌入说明 $V_0y\in\operatorname{span}\{V_i y\}$，且在每个正交块上的投影长度为 $\|y\|/\sqrt a$。于是线性算子 $T_i=V_i^*V_0$ 把每个 $y$ 送到其自身直线，长度因子为 $1/\sqrt a$。对两独立向量及其和应用线性性，得 $T_i=c_iI_b$，$|c_i|=1/\sqrt a$。给 $V_i$ 固定改相位后，可令 $V_0=\sum_iV_i/\sqrt a$。
+
+再固定 $y$。第一变量 Wigner 等距映射在 $e_i$ 上只差各自相位；它在 $h$ 的像必须是 $[\sum_iV_i y]$。由各 $V_i y$ 正交独立，这些相位全相同，故对所有 $x,y$ 有
+
+$$
+F(x,y)=\left[\sum_i x_iV_i y\right]=[A(x\otimes y)],
+\qquad A(e_i\otimes y)=V_i y,\qquad A^*A=I_{ab}.
+\tag{250.10}
+$$
+
+此为在所需异维载体中的 Segre 接合，保留线性化以前的两个固定共轭位。没有把它另立为新的 Wigner 或 Segre 定理。
+
+（五）完整两份向量空间上的提升。把(250.10)用于(250.6)，恢复两个固定位 $\epsilon_1,\epsilon_2\in\{0,1\}$，令 $\pi_i=\pi t_n^{\epsilon_i}$。具体地，记固定共轭为 $\kappa x=\bar x$；因 $\kappa^2=\operatorname{id}$，有 $\Gamma_2(P_{A(x\otimes y)})=\pi(P_{\kappa^{\epsilon_1}x})\otimes\pi(P_{\kappa^{\epsilon_2}y})$。秩一投影实张成 $H_n$，它们的产品实张成 $H_{n^2}$，所以此恒等式给
+
+$$
+A:\mathbb C^n\otimes\mathbb C^n\hookrightarrow\mathbb C^m,\qquad
+\Gamma_2\operatorname{Ad}_A=\pi_1\otimes\pi_2
+\quad\text{于整个 }H_{n^2}.
+\tag{250.11}
+$$
+
+这里 $\operatorname{Ad}_A(X)=AXA^*$；尚未以(250.11)宣称整个 $C_2$ 已被其像穷尽。在 $\mathcal W=(H_{n^2})_0$ 拉回 $g_2$，记 $q(X)=g_2((\pi_1\otimes\pi_2)X,(\pi_1\otimes\pi_2)X)$，极化为 $b$。若 $J_i=\ker\pi_i$，则实线性满射的张量核公式给
+
+$$
+\operatorname{rad}b=J_1\otimes H_n+H_n\otimes J_2,\qquad
+q(X)=\lambda_U\operatorname{Tr}X^2\quad(X\in\operatorname{Herm}_0(U)),\quad
+\lambda_U>0
+\tag{250.12}
+$$
+
+对每个复二维 $U\subset\mathbb C^{n^2}$ 成立。两核都迹零，故整个右端已在 $\mathcal W$。第二式因为 $AU$ 是二维支持，$\Gamma_2$ 在其上忠实地给整个实际二点面；$\mathsf A_2(g_2)$ 使从标准球到该实际圆球的线性方向部分为相似。实际中心由仿射双射保持；不同 $U$ 的 $\lambda_U$ 从未被令相等。
+
+（六）两个不同核下的共同谱方向与零核。若 $0\ne H\in\ker\pi$，则 $\operatorname{Tr}H=0$。写 $H=UDU^*$，$D$ 为实对角。取 $B_i=U$（$\epsilon_i=0$）或 $\overline U$（$\epsilon_i=1$），则
+
+$$
+\rho_i=\pi_i\operatorname{Ad}_{B_i}=(\pi\operatorname{Ad}_U)t_n^{\epsilon_i},
+\qquad \rho_1(D)=\rho_2(D)=0.
+\tag{250.13}
+$$
+
+暂以 $A(B_1\otimes B_2)$ 代替 $A$，记其拉回形式及极化为 $\widetilde q,\widetilde b$。它仍非负、在每个二维支持上严格 Pauli 成比例，且根空间为 $\ker(\rho_1\otimes\rho_2)$。因此它包含 $D\otimes H_n+H_n\otimes D$，即直接满足220.8的(220.19)，即便两个完整核并不相同。
+
+精确消费220.8的第一项结论：对任意正谱指标 $k$、负谱指标 $l$，$S_{kl}=E_{kl}+E_{lk}$ 满足 $D_+\otimes S_{kl}\in\operatorname{rad}\widetilde b$。该供应只用上述两侧包含、半正定及支持内 Pauli 比例；其(220.23)的四矩形系数为 $8$，(220.24)的正谱权重和把非负平方半范数逐项迫零。因此这里调用的是220.8，不是要求两个完整核相同的220.10，也不需重证矩形恒等式。
+
+正定尺遂给 $\rho_1(D_+)\otimes\rho_2(S_{kl})=0$。施加 $u\otimes\operatorname{id}$ 得 $\operatorname{Tr}(D_+)\rho_2(S_{kl})=0$；迹零非零 $D$ 有两种符号且 $\operatorname{Tr}D_+>0$，故 $\rho_2(S_{kl})=0$。对任意单位 $v$，$P_v\otimes S_{kl}$ 因而在根空间，却是在
+
+$$
+U_0=\operatorname{span}_{\mathbb C}\{v\otimes e_k,v\otimes e_l\}
+\quad\text{中的非零迹零 Pauli 方向，}\qquad
+\operatorname{Tr}\!\left[(P_v\otimes S_{kl})^2\right]=2.
+\tag{250.14}
+$$
+
+严格比例给其 $\widetilde q$ 值为 $2\lambda_{U_0}>0$，矛盾。于是 $\ker\pi=0$，$\pi,\pi_1,\pi_2$ 均为保迹序同构。这个临时换基仅用于反证；此后回到(250.11)原来的同一个 $\pi,A,\epsilon_1,\epsilon_2$。
+
+（七）正投影压缩穷尽整个两份锥。令 $M=\operatorname{ran}A$。对任意秩一投影 $P,Q\in H_n$，由刚取得的序同构选 $e,f\in\mathcal E_1$ 满足 $\pi_1^*e=P,\pi_2^*f=Q$。原最大界给 $e\otimes f\ge0$，而
+
+$$
+u_2-e\otimes f=(u-e)\otimes u+e\otimes(u-f)\ge0.
+\tag{250.15}
+$$
+
+故 $E=\Gamma_2^*(e\otimes f)$ 是 $0\le E\le I_m$ 的正收缩算子，(250.11)给 $A^*EA=P\otimes Q$。其压缩等于投影迫使 $E$ 约化 $M$：在该投影的像上，$\langle Av,(I-E)Av\rangle=0$，由 $I-E\ge0$ 得 $EAv=Av$；在其核上，$\langle Av,EAv\rangle=0$，由 $E\ge0$ 得 $EAv=0$。两部分张成 $M$，再用自伴性得 $M^\perp$ 亦不变。
+
+秩一投影张成各 Hermitian 对偶，故这些原产品效应实张成 $W_2^*$；于是每个 $\Gamma_2^*F$ 都约化 $M$。若 $M^\perp\ne0$，取单位 $s\in M,t\in M^\perp$，则两个不同射线 $r_\pm=(s\pm t)/\sqrt2$ 对每个 $\Gamma_2^*F$ 有相同读数，因而 $\Gamma_2(P_{r_+})=\Gamma_2(P_{r_-})$，违反纯标签单射。故 $A$ 满射，$m=n^2$，且
+
+$$
+\beta:=\pi t_n^{\epsilon_1}\otimes\pi t_n^{\epsilon_2}:H_{n^2}\to W_2,
+\qquad C_2=\beta(\operatorname{PSD}_{n^2})
+\tag{250.16}
+$$
+
+是整个锥的保迹序同构，不只给产品子集。
+
+（八）不等块三份提升及整锥穷尽。对全部 $[x]\in\mathbb{CP}^{n-1}$、$[z]\in\mathbb{CP}^{n^2-1}$，考虑 $\pi(P_x)\otimes\beta(P_z)$ 的 $\Gamma_3$ 纯标签。这里 $z$ 遍历整个二份块的纯域，包含纠缠纯态。纯旁观面分别用于原 $1|2$ 和 $2|1$ 切分，结合 $\pi,\beta$ 与 $\Gamma_3$ 的二维支持接口，逐字给(250.7)的两个保重叠切片。于是用（四）的异维接合，代入 $a=n,b=n^2,c=\ell$，得固定 $\eta,\nu\in\{0,1\}$ 及等距 $A_3$ 满足
+
+$$
+\begin{aligned}
+A_3&:\mathbb C^n\otimes\mathbb C^{n^2}\hookrightarrow\mathbb C^\ell,\\
+\Gamma_3\operatorname{Ad}_{A_3}
+&=(\pi t_n^\eta)\otimes(\beta t_{n^2}^\nu),\\
+(s_1,s_2,s_3)&=(\eta,\epsilon_1\mathbin{\oplus}\nu,\epsilon_2\mathbin{\oplus}\nu).
+\end{aligned}
+\tag{250.17}
+$$
+
+因为固定乘积基中 $t_{n^2}=t_n\otimes t_n$，第二整块的一个转置位同时翻转两内部位；未另给两个任意翻转，更未依切片重选方向。
+
+$\pi t_n^\eta$ 和 $\beta t_{n^2}^\nu$ 都是完整块的保迹序同构。对任意秩一块投影 $P\in H_n,Q\in H_{n^2}$，相应原 $e\in\mathcal E_1,f\in\mathcal E_2$ 的产品在整个 $\mathcal E_3$，由(250.15)的 $1|2$ 版本证明。其 $\Gamma_3$ 拉回为正收缩算子，$A_3$ 上压缩恰为 $P\otimes Q$，所以约化 $\operatorname{ran}A_3$。这些块产品效应张成整个 $W_3^*$。若有非零正交余块，仍取 $s\pm t$ 的两条不同纯射线，它们对全部原效应的像读数相同，再次违反 $\Gamma_3$ 纯标签单射。因此 $A_3$ 满射，$\ell=n^3$，得到整个
+
+$$
+C_3=(\pi t_n^{s_1}\otimes\pi t_n^{s_2}\otimes\pi t_n^{s_3})
+       (\operatorname{PSD}_{n^3}).
+\tag{250.18}
+$$
+
+（九）同一个原 $C_2$ 的三边奇偶。任意两位置边缘把原 $C_3$ 满射到原 $C_2$：正性给包含，向每个二份正向量附加任意归一一份正态给反向满射；正位置置换把三条有序边识别为同一个原锥。由于 $u\pi=\operatorname{Tr}$ 且迹与转置交换，(250.18)在固定 $\pi$ 坐标中的这三个边缘锥分别为
+
+$$
+(t_n^{s_i}\otimes t_n^{s_j})(\operatorname{PSD}_{n^2})
+=
+\begin{cases}
+\operatorname{PSD}_{n^2},&s_i=s_j,\\
+(t_n\otimes\operatorname{id})(\operatorname{PSD}_{n^2}),&s_i\ne s_j.
+\end{cases}
+\tag{250.19}
+$$
+
+两种锥确实不同：$n\ge2$ 时，嵌入的 Bell 投影 $P_\Omega$，$\Omega=(|00\rangle+|11\rangle)/\sqrt2$，的部分转置在 $(|01\rangle-|10\rangle)/\sqrt2$ 上有本征值 $-1/2$。由(250.16)，同一个 $C_2$ 的位差为 $\delta=\epsilon_1\oplus\epsilon_2$，所以
+
+$$
+s_1\oplus s_2=s_1\oplus s_3=s_2\oplus s_3=\delta.
+\tag{250.20}
+$$
+
+三式异或得 $\delta=0$，再得三位相同。共同转置是整个矩阵的转置，保持 PSD；故原来的同一个 $\pi$ 已给标准 $C_1,C_2,C_3$，无相对镜像余项。
+
+（十）精确进入全有限供应。置 $\theta=\pi^{-1}$，上一步正是 XIII(161.14)。[F250] 的命题161.4的前件为“在原全有限域(161.1)—(161.3)，一个固定 $\theta$ 满足(161.14)”；结论为对同一个 $\theta$ 的(161.7)。这些前件现已逐项支付，故直接得(250.3)，标量层取恒等。
+
+其精确尾部为 [V250] 的 VII102.6—102.10及(102.30)后的两锥包含，不取102.11的 S3/B1—B3 入口：102.6用最大界和闭锥对偶对全部原输入切片；102.7仅从标准 $C_2$ 的 Bell 杯帽、蛇式、原最小界与切片取得包括任意相关旁观输入的原 Choi 等价。102.8据二份 Choi 元素取得局域酉及其逆的全部原旁观正性。102.9把两个标准 $C_3$ 秩一资源的产品放入原 $C_6$，用正 $C_2$ 帽切片得到原 $C_4$ 中的纠缠门 Choi 元素；单块 $n\ge2$ 供应两条桥接基向量。102.10的归纳在已取得的前缀酉与最后一腿之间应用 Harrow 推论2的精确有限普适性，允许不等分组维数 [H250]。于是每个原 $C_N$ 有全部矩阵酉共轭的数学正自同构。产品秩一态沿它们运输给 $\operatorname{PSD}_{n^N}\subseteq\theta^{\otimes N}C_N$；原产品秩一效应沿正逆运输、测试任意向量二次型给反包含。这两步一直在固定 $\theta^{\otimes N}$ 中，不假设高阶 PSD、额外括号兼容性、操作菜单或预先可用的局域正旋转。XIII162.16证明第3项也明确给出这一分类后复用界面。
+
+反向假设(250.3)。在 $L_3$ 取拉回的 Hilbert–Schmidt 尺 $g_3(v,w)=\operatorname{Tr}(\theta^{\otimes3}v\,\theta^{\otimes3}w)$。实际两纯点面为其复二维支持上的完整密度三球，纯壳完整，故 L2 与 $\mathsf A_2(g_3)$ 成立。对 TC，外纯射线 $v$ 与实际球支持 $\operatorname{span}_{\mathbb C}\{a,b\}$ 给任意 $y=\alpha a+\beta b$。令 $y_\perp=y-v\langle v,y\rangle$，则在 $P_v$ 的切方向为 $\{zv^*+vz^*:z\in\mathbb C y_\perp\}$。由 $y_\perp=\alpha a_\perp+\beta b_\perp$，每个这样的 Hermitian 方向均在 $a_\perp,b_\perp$ 所给两切方向的实线性和中，故 TC。全部原强背景在标准 PSD 层级成立。这个反向只选择一把合适的尺，未把正向给定的尺认作 HS，也未从 A2 单独推 TC 或 D2。$\square$
+
+**推论 250.3（可见的两条几何候选与最小实际三角）。** 在250.1的完整强背景中，下列候选当且仅当(250.3)：
+
+$$
+\begin{array}{ll}
+\text{圆对：}&\exists g_3\succ0,\ \text{整个 }K_3\text{ 的每个不同纯点对生成的整个实际面}\\
+&\text{是在同一 }g_3\text{ 中的非退化圆三球，球内原纯点恰为整个球面；}\\[2pt]
+\text{小三角：}&\dim_{\mathbb R}\operatorname{span}F_3(a,b,c)\le9
+\quad\text{对全部 }a,b,c\in P_3.
+\end{array}
+\tag{250.21}
+$$
+
+三标签可各为原三复制体的纠缠纯态；重合、共球和外三角都在量词内。这里的“九”是整个实际面加质量后的齐次维数，不是三向量张成维数；“圆对”允许逐球半径不同。
+
+证明。圆对供应 L2 与 $\mathsf A_2(g_3)$；小三角就是 TF9。此时才应用已成立的240.3，得到整个 $K_3$ 的 TC，随后定理250.2给同一个全有限坐标。反向由标准复支持面：三纯射线张成复维数 $r\le3$，整个实际面为 $\mathcal D_r$，齐次维数 $r^2\le9$；HS 尺供应圆对。
+
+240.2只用 L2 已给每个外三角仿射维数至少八，所以 TF9 恰把它钉在八维，而不是预先输入 qutrit 矩阵结构。240.4—240.5还给纯扇穷尽及旧 L3，故此上界是外三角的最小相容尺寸。在所得 $n\ge2$ 的整个三复制体中可以选三条独立复射线，九维上界实际达到。所简化的是可见几何：一把尺下的实际圆对加最小实际三角；没有计算或声称更少的独立公理，也没有删除任何全有限背景。$\square$
+
+**推论 250.4（同一坐标中的完整量子字典及条件过程）。** 在250.1及(250.21)下，令 $\Theta_N=\theta^{\otimes N}$、$D_N=n^N$，每个有限层具有下列对应；过程及物理行只在各自额外前件下成立。
+
+| 原对象或另给的前件 | 同一 $\Theta_N$ 中的结论 |
+| --- | --- |
+| 整个归一原态、全部原纯点 | 全部 $\rho\succeq0,\operatorname{Tr}\rho=1$ 和全部 $P_v$，纯域 $\mathbb{CP}^{D_N-1}$，含全部混态和纠缠纯态 |
+| 完整效应与原配对、全部有限单位分解 | 全部 $0\preceq A\preceq I$；$e_A(x)=\operatorname{Tr}(A\Theta_Nx)$；全部数学 POVM 为 $A_j\succeq0,\sum_jA_j=I$，概率 $p_j=\operatorname{Tr}(\rho A_j)$ |
+| 纯目标 $p_v=\Theta_N^{-1}P_v$ 的完整确认菜单 | 全部 $A=P_v+B$，$B=(I-P_v)B(I-P_v)$、$0\preceq B\preceq I-P_v$；最小确认者为 $P_v$，$T_{N,p_v}(x)=\operatorname{Tr}(P_v\Theta_Nx)$，全部零邻点生成 $\mathcal D(v^\perp)$ |
+| 实际二点面、外三角面和混合 | 完整 $\mathcal D_2,\mathcal D_3$，仿射维数三、八，齐次维数四、九；纯壳 $S^2,\mathbb{CP}^2$，原凸混合就是密度矩阵凸混合 |
+| 全部有限复合、原产品与配对、置换、重括号及丢弃 | 标准复张量积、整个联合 PSD 锥、迹配对与偏迹，对全部原相关输入成立 |
+| 实线性 $L:W_a\to W_b$，对每个有限 $M\ge0$ 的整个原锥满足 $L\otimes\operatorname{id}_{W_M}\ge0$ | $\Phi=\Theta_bL\Theta_a^{-1}$ 的唯一复线性延拓为 CP，当且仅当左列条件；等价于有限 Kraus 表示 $\Phi(X)=\sum_\alpha K_\alpha X K_\alpha^*$ |
+| 上行再给每个正输入的质量约束 $u_bL\le u_a$，或等号 | 分别为 TNI、TP，即 $\sum_\alpha K_\alpha^*K_\alpha\preceq I$，或等于 $I$ |
+| 有限分支 $L_j$ 各满足全旁观正性，并另给总预算 $u_b\sum_jL_j=u_a$ | 数学仪器；$\rho_j=\Phi_j(\rho)$、$p_j=\operatorname{Tr}\rho_j$，仅 $p_j>0$ 时条件态为 $\rho_j/p_j$；各支单独 TNI 不代付总和预算 |
+| 同层正线性分支，指定效应为投影 $A$，并在整个 certain-yes 支持的每个纯态逐点中性 | 唯一锐更新为 $\Phi(X)=AXA$；锐效应或可重复性本身不代付中性条件 |
+| 另给同层连续、可逆、保锥保单位的实一参数群 | 数学动力学为酉共轭，$\dot\rho=-i[H_{\rm gen},\rho]$，纯态择相位后 $i\dot\psi=H_{\rm gen}\psi$；实际钟、能量及 $H_{\rm phys}=\hbar H_{\rm gen}$ 的标定另给 |
+| 将数学菜单作为实际设备，或进入无限／近似范围 | 实际事件饱和、记录、接线、仪器实现须另给；无限张量积的连接映射、相容态、拓扑完备化与 normal 延拓，以及近似稳定性和误差界须另立前件 |
+
+证明。250.2—250.3供应原锥及其原单位的同一序坐标；对偶逆即给全部原菜单、配对及单位分解，不需要一般面效应延拓。$A\succeq0,I-A\succeq0$ 且 $\langle v,Av\rangle=1$ 迫使 $Av=v$，于是确认菜单具有表中的分块形式；取 $B=0$ 达到 minimum，零纯邻点恰为 $v^\perp$ 中的射线。因而 NC 是重建后的结论，无须作为几何前提。
+
+过程项精确复用 [F250] 的 XIII161.6—161.10与240.11的参数字典，只有本章的静态入口不同。$n\ge2$ 使某个辅助幂 $n^M$ 能容纳任意给定有限矩阵辅助维数，标准嵌入与压缩把全部原旁观正性变成通常 CP，反向由 CP 保全部 PSD 输入。单系统正性不足以取得此项。质量约束分别对每支及总和施加；零概率正输出为零，不规定其归一条件态。有相关旁观输入 $Z$ 时，各支输出为 $(\operatorname{id}\otimes\Phi_j)(Z)$，仍以全输出迹给概率。
+
+锐中性唯一性取161.7.1的正分支、指定投影效应与整个 yes 支持逐点中性；不把更新规则塞进静态几何。给定连续群才用161.10选定酉生成元，其加标量自由不影响密度动力学；物理能量与时间刻度不是球几何的结论。$\square$
+
+**命题 250.5（几何简化的范围与完整白话图景）。** 250.2的无核联合提升、完整两份与不等块三份穷尽、同一 $C_2$ 的三边奇偶接合，以及250.3的圆对—最小三角候选是本章的 repo-derived 综合；其结论保持240的 NC 候选、240.10的无尺反例及230的单份共同尺反例的原适用范围。
+
+证明及图景。单份有共同圆尺，不能排除大的混态差被合并；220.7和230.7—230.8分别保留外给尺与规范尺的明确边界。240.10的全有限商层级保留实际小面，但220.9已排除该商的共同三复制圆尺，所以它不反驳250.3。反过来，250.3也未把240.10改成“L2+TF9 本身足够”：共同尺关系承担了不同的排核工作，TC 仍由额外 TF9 经240.3支付。
+
+保留系统全部真实准备、混合和测试，把每两个纯准备真正撑起的整颗小球放在同一把尺下，它们都圆，大小暂可不同；再要求每个真正三角只有二点球相接所必需的最小尺寸。最小尺寸先把各小球的切方向接好，已有射影分类因此给每个纯准备一个唯一复射线标签，但还允许较大混态差被压掉。把两个系统真正相乘以后，固定另一端所见的每条小球都保持内禀重叠；同一条带虚部的三点相位标记把所有切片的镜像类型固定，叠加比较再把它们接成一个整体张量等距映射。若局部还有被压掉的混态差，正负谱矩形关系会迫使联合小球中的一根非零 Pauli 方向长度为零；共同正尺禁止这种塌缩。局部核消失后，原乘积测试又像投影一样钉住整个提升空间；若还藏有正交余块，跨两块只差一个符号的两条不同纯射线就会给全部测试同样读数，违反标签唯一性。因此两份、三份的整个空间都被穷尽。三份中每一条边必须是同一个原两份系统；三角形不可能让三条边都带相对镜像，三边奇偶遂去掉剩余转置。至此同一局部坐标中的杯帽和三腿资源才把几何接合传播到任意有限份，得到全部态、效应、Born 规则、张量与纠缠。全旁观正性、各支及总和预算、中性更新、实际设备与物理钟各有自己的条件。纯端点的静态比较互反不等于接续测量可交换：两个不同且非正交的秩一投影已可不对易，顺序概率仍取决于实际仪器。
+
+成熟中间结果按各自范围直接使用：[G250] 的 Wigner 定理、有限维正交极化和 Segre 接合、正收缩算子的投影压缩与矩阵支持面工具不申领为新定理；220.8供应四矩形正和，XIII160.4供应商分类，[F250] 的161.4供应固定坐标的全有限尾部，[H250] 仅承担其精确普适性。所有结论是相对于这些明示前件的普通数学，不声称 Lean／kernel 核验、全球新颖性、独立公理数减少、无条件实际仪器实现或无限范围重建。$\square$
+
+[G250]: https://arxiv.org/html/1407.0527v1 "Gy. P. Gehér, An elementary proof for the non-bijective version of Wigner's theorem, Physics Letters A 378 (2014), 2054–2057；同一复 Hilbert 空间的保全部跃迁概率定理。"
+[F250]: https://github.com/the-omega-institute/trureturing/blob/34f5761ee1ccff84afa44f5a906002b13409b7b7/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "XIII161：精确背景、161.4的分类后固定坐标传播及161.6—161.10的条件字典。"
+[V250]: https://github.com/the-omega-institute/trureturing/blob/f5a6211e591351e1a2bdeea0165c2ef29ad21b48/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "VII102.6—102.10及(102.30)之后的两锥包含；不取 S3/B1—B3 入口。"
+[H250]: https://arxiv.org/abs/0806.0631v1 "A. W. Harrow, Exact universality from any entangling gate without inverses, Corollary 2；允许不等的两块维数，结论为精确有限乘积。"
+
+## 追加锚（本行以下为增补区）
