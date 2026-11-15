@@ -94,9 +94,8 @@ theorem source_hinges {ρ σ : StrongDual ℂ A}
     (R.preparation.mass _)).trans hqr
   have hpi : (∫ x, R.p x ∂μ) = (ρ 1).re := (congrArg Complex.re hp).symm
   have hqi : (∫ x, R.q x ∂μ) = (σ 1).re := (congrArg Complex.re hq).symm
-  have hi : Integrable (fun x => min (R.p x) (t * R.q x)) μ := by
-    simpa only [Pi.inf_apply, inf_eq_min] using
-      R.p_integrable.inf (R.q_integrable.const_mul t)
+  have hi : Integrable (fun x => min (R.p x) (t * R.q x)) μ :=
+    R.p_integrable.inf (R.q_integrable.const_mul t)
   have hn (a b : ℝ) : max (a - b) 0 = a - min a b := by
     rcases le_total a b with h | h
     · rw [min_eq_left h, sub_self, max_eq_right (sub_nonpos.mpr h)]
