@@ -12,10 +12,10 @@ internal sealed class KingPathDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite colourings with exactly one monochromatic king bond.", H("One-defect king colourings: KingPath"),
         Blocks(
-            Node("width_one", "The complete width-one count", Formula0(),
+            Node("width_one_large", "The width-one count for at least three cells", Formula0(),
                 DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
-                "A one-column array is a word with exactly one equal adjacent pair. Burnside counting for permutations of four colours gives the formula; the one- and two-cell words have the displayed separate counts."))));
+                "A one-column array is a word with exactly one equal adjacent pair. Burnside counting for permutations of four colours gives the formula for every word of length at least three."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,
         AssessedProvenance provenance, string prose) =>
@@ -24,22 +24,11 @@ internal sealed class KingPathDocument : IScribeDocumentDefinition
             provenance, Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Formula0() =>
-        And(
-            Eq(Call("KingGrid.T", Num("1"), Num("1")), Num("0")),
-            And(
-                Eq(Call("KingGrid.T", Num("2"), Num("1")), Num("1")),
-                All(
-                    "n",
-                    Q("Nat"),
-                    Imp(
-                        Leq(Num("3"), V("n")),
-                        Eq(
-                            Mul(Num("54"), CastInt(Call("KingGrid.T", V("n"), Num("1")))),
-                            Add(
-                                Mul(
-                                    Sub(CastInt(V("n")), Num("1")),
-                                    Power(Typed(Num("3"), Q("Int")), V("n"))),
-                                Mul(Num("27"), Sub(CastInt(V("n")), Num("1")))))))));
+        All("n", Q("Nat"), Imp(Leq(Num("3"), V("n")),
+            Eq(Mul(Num("54"), CastInt(Call("KingGrid.T", V("n"), Num("1")))),
+                Add(Mul(Sub(CastInt(V("n")), Num("1")),
+                        Power(Typed(Num("3"), Q("Int")), V("n"))),
+                    Mul(Num("27"), Sub(CastInt(V("n")), Num("1")))))));
 
     private static Formula V(string s) => F.Id(s);
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());

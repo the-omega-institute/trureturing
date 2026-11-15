@@ -394,13 +394,6 @@ theorem boundary_words_pos_card (m c d : ℕ) (hm : 0 < m) :
       _ ≤ 2 ^ m := Nat.pow_le_pow_right (n:=2) Nat.zero_lt_two hm
   omega
 
-/-- The six ordered pairs of distinct nonzero Klein values. -/
-abbrev NZPair := {pq : K × K // pq.1 ≠ 0 ∧ pq.2 ≠ 0 ∧ pq.1 ≠ pq.2}
-
-theorem nz_pair_card : Nat.card NZPair = 6 := by
-  rw [Nat.card_eq_fintype_card]
-  decide
-
 /-- The column pair separating the words of lengths `c` and `d`. -/
 def pivot (c d : ℕ) : Fin (c + (d + 1)) := Fin.natAdd c 0
 

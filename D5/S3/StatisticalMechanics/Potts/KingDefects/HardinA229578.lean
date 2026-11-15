@@ -48,11 +48,11 @@ theorem result :
     HardinA229575.result,HardinA229576.result,HardinA229577.result⟩
   intro n hn
   obtain ⟨m,rfl⟩ : ∃ m, n=m+7 := ⟨n-7,by omega⟩
-  have h0 := KingPath.width_one.2.2 (m+7) (by omega)
-  have h1 := KingPath.width_one.2.2 (m+6) (by omega)
-  have h2 := KingPath.width_one.2.2 (m+5) (by omega)
-  have h3 := KingPath.width_one.2.2 (m+4) (by omega)
-  have h4 := KingPath.width_one.2.2 (m+3) (by omega)
+  have h0 := KingPath.width_one_large (m+7) (by omega)
+  have h1 := KingPath.width_one_large (m+6) (by omega)
+  have h2 := KingPath.width_one_large (m+5) (by omega)
+  have h3 := KingPath.width_one_large (m+4) (by omega)
+  have h4 := KingPath.width_one_large (m+3) (by omega)
   push_cast at h0 h1 h2 h3 h4 ⊢
   norm_num [pow_succ] at h0 h1 h2 h3 h4 ⊢
   have hz : 54*((KingGrid.T (m+7) 1 : ℤ)-8*(KingGrid.T (m+6) 1 : ℤ)+

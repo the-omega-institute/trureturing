@@ -55,6 +55,7 @@ enumeration, checker, numerical reduction or certified instance is asserted.
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 import Mathlib.Tactic.DeriveFintype
 import Mathlib.Data.Fin.Rev
+import Mathlib.Logic.Equiv.Prod
 
 /-! Literal edges, restricted-growth words and their finite families. -/
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
@@ -194,21 +195,18 @@ theorem transpose_mono {n k : ℕ} {C : Type*} (f : Cell n k → C) (e : Edge n 
 
 def transposeDefectEquiv {n k : ℕ} {C : Type*} (e : Edge n k) :
     {f : Cell n k → C // DefectAt e f} ≃
-      {f : Cell k n → C // DefectAt (transposeEdge e) f} where
-  toFun f := ⟨transpose f.val, by
-    intro d
-    obtain ⟨a, rfl⟩ := transposeEdge.surjective d
-    rw [transpose_mono, f.property, transposeEdge.injective.eq_iff]⟩
-  invFun f := ⟨transpose f.val, by
-    intro d
-    have h := f.property (transposeEdge d)
-    have he : transposeEdge (transposeEdge d) = d := by cases d <;> rfl
-    rw [← transpose_mono f.val (transposeEdge d), he,
-      transposeEdge.injective.eq_iff] at h
-    exact h⟩
-  left_inv f := Subtype.ext rfl
-  right_inv f := Subtype.ext rfl
-
+      {f : Cell k n → C // DefectAt (transposeEdge e) f} :=
+  (Equiv.arrowCongr (Equiv.prodComm (Fin n) (Fin k)) (Equiv.refl C)).subtypeEquiv (by
+    intro f
+    change DefectAt e f ↔ DefectAt (transposeEdge e) (transpose f)
+    constructor
+    · intro hf d
+      obtain ⟨a,rfl⟩ := transposeEdge.surjective d
+      rw [transpose_mono, hf, transposeEdge.injective.eq_iff]
+    · intro hf d
+      have h := hf (transposeEdge d)
+      rw [transpose_mono, transposeEdge.injective.eq_iff] at h
+      exact h)
 
 private theorem endpoints_distinct {n k : ℕ} (e : Edge n k) : end0 e ≠ end1 e := by
   cases e <;> simp [end0, end1, lo, hi, Fin.ext_iff, Prod.mk.injEq]
@@ -247,20 +245,19 @@ private theorem reflect_mono {n k : ℕ} {C : Type*} (f : Cell n k → C) (e : E
 
 def reflectDefectEquiv {n k : ℕ} {C : Type*} (e : Edge n k) :
     {f : Cell n k → C // DefectAt e f} ≃
-      {f : Cell n k → C // DefectAt (reflectEdge e) f} where
-  toFun f := ⟨reflect f.val, by
-    intro d
-    obtain ⟨a,rfl⟩ := reflectEdge.surjective d
-    rw [reflect_mono, f.property, reflectEdge.injective.eq_iff]⟩
-  invFun f := ⟨reflect f.val, by
-    intro d
-    have h := f.property (reflectEdge d)
-    have he : reflectEdge (reflectEdge d) = d := by cases d <;> simp [reflectEdge]
-    rw [← reflect_mono f.val (reflectEdge d), he, reflectEdge.injective.eq_iff] at h
-    exact h⟩
-  left_inv f := by apply Subtype.ext; funext p; simp [reflect]
-  right_inv f := by apply Subtype.ext; funext p; simp [reflect]
-
+      {f : Cell n k → C // DefectAt (reflectEdge e) f} :=
+  (Equiv.arrowCongr (Equiv.prodCongr (Equiv.refl (Fin n)) Fin.revPerm)
+    (Equiv.refl C)).subtypeEquiv (by
+    intro f
+    change DefectAt e f ↔ DefectAt (reflectEdge e) (reflect f)
+    constructor
+    · intro hf d
+      obtain ⟨a,rfl⟩ := reflectEdge.surjective d
+      rw [reflect_mono, hf, reflectEdge.injective.eq_iff]
+    · intro hf d
+      have h := hf (reflectEdge d)
+      rw [reflect_mono, reflectEdge.injective.eq_iff] at h
+      exact h)
 
 private def UsesThree {X : Type*} (f : X → Fin 4) : Prop :=
   ∃ a b c, f a ≠ f b ∧ f a ≠ f c ∧ f b ≠ f c

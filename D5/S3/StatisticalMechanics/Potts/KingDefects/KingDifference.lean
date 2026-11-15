@@ -72,6 +72,14 @@ open KingGrid
 
 abbrev K := ZMod 2 × ZMod 2
 
+/-- The six ordered pairs of distinct nonzero Klein values. -/
+abbrev NZPair := {pq : K × K // pq.1 ≠ 0 ∧ pq.2 ≠ 0 ∧ pq.1 ≠ pq.2}
+
+theorem nz_pair_card : Nat.card NZPair = 6 := by
+  rw [Nat.card_eq_fintype_card]
+  decide
+
+
 private noncomputable def colourEquiv : Fin 4 ≃ K :=
   Fintype.equivOfCardEq (by simp [K])
 
@@ -119,30 +127,52 @@ private theorem integrate_root {N M : ℕ} (t : K) (s : DiffField N M) :
 private theorem integrate_h {N M : ℕ} (t : K) (s : DiffField N M)
     (i : Fin (N + 1)) (j : Fin M) :
     (differentiate (integrate t s)).h i j = s.h i j := by
+  have h := Fin.partialSum_right_neg (s.h i) j
   dsimp [differentiate, integrate]
-  rw [Fin.partialSum_succ]
-  simpa only [add_assoc] using add_add_cancel
-    (t + Fin.partialSum (fun i => s.v i 0) i + Fin.partialSum (s.h i) j.castSucc) (s.h i j)
+  simpa [IsAddKleinFour.neg_eq_self, add_assoc, add_left_comm, add_comm,
+    IsAddKleinFour.add_self] using h
+
+private theorem psum_add {n : ℕ} (f g : Fin n → K) (j : Fin (n+1)) :
+    Fin.partialSum (fun i => f i + g i) j = Fin.partialSum f j + Fin.partialSum g j := by
+  let u : Fin (n+1) → K := fun j => Fin.partialSum f j + Fin.partialSum g j
+  have hd : (fun i : Fin n => -(u i.castSucc) + u i.succ) = (fun i => f i + g i) := by
+    funext i
+    have hf := Fin.partialSum_right_neg f i
+    have hg := Fin.partialSum_right_neg g i
+    dsimp [u]
+    calc
+      _ = (-Fin.partialSum f i.castSucc + Fin.partialSum f i.succ) +
+          (-Fin.partialSum g i.castSucc + Fin.partialSum g i.succ) := by abel
+      _ = _ := by rw [hf, hg]
+  have h := congrFun (Fin.partialSum_left_neg u) j
+  rw [hd] at h
+  simpa [u] using h
+
 
 private theorem integrate_v {N M : ℕ} (t : K) (s : DiffField N M) (hs : Cocycle s)
     (i : Fin N) (j : Fin (M + 1)) :
     (differentiate (integrate t s)).v i j = s.v i j := by
-  induction j using Fin.inductionOn with
-  | zero =>
-    dsimp [differentiate, integrate]
-    rw [Fin.partialSum_succ]
-    simp [add_left_comm, add_comm]
-  | succ j ih =>
-    have hc := hs i j
-    have hd : (differentiate (integrate t s)).v i j.succ =
-        (differentiate (integrate t s)).v i j.castSucc +
-          (s.h i.castSucc j + s.h i.succ j) := by
+  have root : Fin.partialSum (fun r => s.v r 0) i.castSucc +
+      Fin.partialSum (fun r => s.v r 0) i.succ = s.v i 0 := by
+    simpa only [IsAddKleinFour.neg_eq_self] using
+      Fin.partialSum_right_neg (fun r => s.v r 0) i
+  have delta : (fun k : Fin M => s.h i.castSucc k + s.h i.succ k) =
+      (fun k => -(s.v i k.castSucc) + s.v i k.succ) := by
+    funext k
+    have h := congrArg (fun z => z + (s.h i.succ k + s.v i k.succ)) (hs i k)
+    simpa [IsAddKleinFour.neg_eq_self, add_assoc, add_left_comm, add_comm,
+      IsAddKleinFour.add_self] using h
+  calc
+    _ = (Fin.partialSum (fun r => s.v r 0) i.castSucc +
+        Fin.partialSum (fun r => s.v r 0) i.succ) +
+        (Fin.partialSum (s.h i.castSucc) j + Fin.partialSum (s.h i.succ) j) := by
       dsimp [differentiate, integrate]
-      simp only [Fin.partialSum_succ]
-      abel
-    rw [hd, ih]
-    have hc' := congrArg (fun z => s.h i.castSucc j + z) hc
-    simpa [add_assoc, add_left_comm, add_comm] using hc'.symm
+      simp [add_assoc, add_left_comm, add_comm, IsAddKleinFour.add_self]
+    _ = s.v i 0 + Fin.partialSum (fun k => s.h i.castSucc k + s.h i.succ k) j := by
+      rw [root, psum_add]
+    _ = s.v i j := by
+      rw [delta]
+      simpa using congrFun (Fin.partialSum_left_neg (fun k : Fin (M+1) => s.v i k)) j
 
 theorem differentiate_integrate {N M : ℕ} (t : K) (s : DiffField N M)
     (hs : Cocycle s) : differentiate (integrate t s) = s := by
@@ -153,24 +183,19 @@ theorem differentiate_integrate {N M : ℕ} (t : K) (s : DiffField N M)
     exact integrate_v t s hs i j
 
 private theorem difference_unique {N M : ℕ} (f g : Cell (N + 1) (M + 1) → K)
-    (hr : f (0, 0) = g (0, 0)) (hd : differentiate f = differentiate g) : f = g := by
-  have base (i : Fin (N + 1)) : f (i,0) = g (i,0) := by
-    induction i using Fin.inductionOn with
-    | zero => exact hr
-    | succ i ih =>
-      have hv := congrFun (congrFun (congrArg DiffField.v hd) i) 0
-      change f (i.castSucc,0) + f (i.succ,0) = g (i.castSucc,0) + g (i.succ,0) at hv
-      rw [ih] at hv
-      exact add_left_cancel hv
+    (hr : f (0,0) = g (0,0)) (hd : differentiate f = differentiate g) : f = g := by
+  have recoverRow {n : ℕ} (u v : Fin (n+1) → K) (hz : u 0 = v 0)
+      (hs : (fun j : Fin n => u j.castSucc + u j.succ) =
+        (fun j : Fin n => v j.castSucc + v j.succ)) : u = v := by
+    have hu := Fin.partialSum_left_neg u
+    have hv := Fin.partialSum_left_neg v
+    simp only [IsAddKleinFour.neg_eq_self] at hu hv
+    rw [← hu, ← hv, hz, hs]
+  have base : (fun i : Fin (N+1) => f (i,0)) = (fun i => g (i,0)) :=
+    recoverRow _ _ hr (congrArg (fun s : DiffField N M => fun i => s.v i 0) hd)
   funext p
-  obtain ⟨i,j⟩ := p
-  induction j using Fin.inductionOn with
-  | zero => exact base i
-  | succ j ih =>
-    have hh := congrFun (congrFun (congrArg DiffField.h hd) i) j
-    change f (i,j.castSucc) + f (i,j.succ) = g (i,j.castSucc) + g (i,j.succ) at hh
-    rw [ih] at hh
-    exact add_left_cancel hh
+  exact congrFun (recoverRow (fun j => f (p.1,j)) (fun j => g (p.1,j))
+    (congrFun base p.1) (congrArg (fun s : DiffField N M => s.h p.1) hd)) p.2
 
 private theorem integrate_differentiate {N M : ℕ} (f : Cell (N + 1) (M + 1) → K) :
     integrate (f (0, 0)) (differentiate f) = f :=
@@ -234,33 +259,17 @@ def defectIntegrationEquiv {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
     apply Prod.ext (integrate_root _ _)
     exact Subtype.ext (differentiate_integrate _ _ q.2.property.1)
 
-/-- The field alone parametrizes colourings whose root colour is zero. -/
-private def rootZeroEquiv {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
-    {f : Cell (N + 1) (M + 1) → K // DefectAt e f ∧ f (0, 0) = 0} ≃
-      {s : DiffField N M // RawAdmissible e s} where
-  toFun f := ⟨differentiate f.val, (raw_differentiate_iff f.val e).mpr f.property.1⟩
-  invFun s := ⟨integrate 0 s.val,
-    (defectIntegrationEquiv e).symm (0,s) |>.property, integrate_root _ _⟩
-  left_inv f := by
-    apply Subtype.ext
-    simpa only [f.property.2] using integrate_differentiate f.val
-  right_inv s := Subtype.ext (differentiate_integrate _ _ s.property.1)
-
-/-- By `rootZeroEquiv`, this is also the count of maps with defect `e` and root zero. -/
+/-- The number of admissible difference fields with selected zero bond `e`. -/
 noncomputable def N_e {N M : ℕ} (e : Edge (N + 1) (M + 1)) : ℕ :=
   Nat.card {s : DiffField N M // RawAdmissible e s}
 
 private noncomputable def relabelDefectEquiv {n k : ℕ} (e : Edge n k) :
     {f : Cell n k → Fin 4 // DefectAt e f} ≃
-      {f : Cell n k → K // DefectAt e f} where
-  toFun f := ⟨colourEquiv ∘ f.val, by
-    intro d
-    simpa only [mono, Function.comp_apply, colourEquiv.injective.eq_iff] using f.property d⟩
-  invFun f := ⟨colourEquiv.symm ∘ f.val, by
-    intro d
-    simpa only [mono, Function.comp_apply, colourEquiv.symm.injective.eq_iff] using f.property d⟩
-  left_inv f := by apply Subtype.ext; funext p; exact colourEquiv.symm_apply_apply _
-  right_inv f := by apply Subtype.ext; funext p; exact colourEquiv.apply_symm_apply _
+      {f : Cell n k → K // DefectAt e f} :=
+  (Equiv.arrowCongr (Equiv.refl _) colourEquiv).subtypeEquiv (by
+    intro f
+    change DefectAt e f ↔ DefectAt e (colourEquiv ∘ f)
+    simp only [DefectAt, mono, Function.comp_apply, colourEquiv.injective.eq_iff])
 
 theorem count_fixed_edge {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
     Nat.card {f : Cell (N + 1) (M + 1) → Fin 4 // DefectAt e f} = 4 * N_e e := by
@@ -507,7 +516,6 @@ theorem count_by_kind (N M : ℕ) (hN : 1 ≤ N) (hM : 1 ≤ M) :
   exact fields_eq_six_canonical N M hN hM
 
 #print axioms defectIntegrationEquiv
-#print axioms rootZeroEquiv
 #print axioms count_from_fields
 #print axioms rainbow_block
 #print axioms rainbow_field

@@ -13,7 +13,7 @@ open KingGrid
 
 noncomputable section
 
-namespace width_one
+namespace width_one_large
 
 abbrev signature : Signature :=
   _root_.Reg.Support.UniverseSingleReadout.signature Unit (fun _ => ℕ) (fun _ => ℤ)
@@ -26,20 +26,20 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := T 1 1 = 0 ∧ T 2 1 = 1 ∧ ∀ n : ℕ, 3 ≤ n →
+  Law R := ∀ n : ℕ, 3 ≤ n →
     54*(R.readout () () (T n 1)) = ((n : ℤ)-1)*3^n+27*((n : ℤ)-1)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   dsimp only [arena, rejected, realize] at h
-  have hb := h.2.2 4 (by norm_num)
-  have ha := width_one.2.2 4 (by norm_num)
+  have hb := h 4 (by norm_num)
+  have ha := width_one_large 4 (by norm_num)
   linarith only [hb, ha]
 
-def family : Registration arena (type_of% @width_one) where
+def family : Registration arena (type_of% @width_one_large) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@width_one, rejected, rejected_law⟩
+  variation := ⟨@width_one_large, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
@@ -50,9 +50,9 @@ def family : Registration arena (type_of% @width_one) where
     norm_num
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@width_one) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath.width_one.auditUnit
-  realizationName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath.width_one.family
+    (@width_one_large) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath.width_one_large.auditUnit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath.width_one_large.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -71,7 +71,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["arg", "arg", "body", "body", "fn", "arg", "arg"]
+    readouts := #[{ path := #["body", "body", "fn", "arg", "arg"]
                     stateBinder := 0
                     functionOperand := false
                     booleanPredicate := false
@@ -80,7 +80,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 
-end width_one
+end width_one_large
 
 end
 end Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath

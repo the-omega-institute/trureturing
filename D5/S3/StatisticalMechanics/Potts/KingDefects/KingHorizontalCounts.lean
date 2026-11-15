@@ -186,16 +186,6 @@ theorem support_case_eval (a b c d : ℕ) (i : Fin 6) :
     simp [supports, support_weight, support_sizes, six_case_value, E, P, Q,
       pow_add,pow_succ] at ha hb hc hd hsa hsb hse ⊢ <;> simp_all <;> first | omega | nlinarith
 
-/-- The six lower ordered pairs have the E, binary, P, P', Q and Q' counts. -/
-theorem interior_six_lower_pairs (a b c d : ℕ) (x : NZPair) (i : Fin 6) :
-    (∑ u : Fin a → OrdinaryAlphabet x,
-      ∑ v : Fin b → OrdinaryAlphabet (lower_pair x i),
-        Nat.card (InteriorAlphabet x (lower_pair x i) u v
-          x.val.1 (lower_pair x i).val.1) ^ c *
-        Nat.card (InteriorAlphabet x (lower_pair x i) u v
-          x.val.2 (lower_pair x i).val.2) ^ d) = six_case_value a b c d i := by
-  rw [pair_count_support, pair_support_cases, support_case_eval]
-
 /-- Lemma 7, equation (10), for all interior rows and every empty-side case. -/
 theorem interior_count (a b c d : ℕ) :
     N_e (.H (cut_row (a + 1) (b + 1)) (pivot c d) :
@@ -574,7 +564,6 @@ theorem horizontal_sum (t q : ℕ) :
 #print axioms P
 #print axioms Q
 #print axioms six_case_value
-#print axioms interior_six_lower_pairs
 #print axioms interior_count
 #print axioms horizontal_two_rows
 #print axioms interior_one_column_count

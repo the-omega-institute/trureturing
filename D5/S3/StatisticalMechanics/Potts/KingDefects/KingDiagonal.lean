@@ -42,8 +42,8 @@ emptyIndicator: proof_shape=bind-only; consumers=F,F_add,F_piecewise,indicator_c
 F: proof_shape=bind-only; consumers=F_add,F_piecewise,diagonal_count,sum_F,word_card
 word_card_add: proof_shape=content; consumers=F_add,word_card
 word_card: proof_shape=content; consumers=F_add,diagonal_count
-OrderedPair: proof_shape=bind-only; consumers=normalizedEquiv,normalizedSlots,normalized_valid,pair_card,third_ne,word_recover
-pair_card: proof_shape=bind-only; consumers=diagonal_count
+NZPair: proof_shape=bind-only; consumers=normalizedEquiv,normalizedSlots,normalized_valid,nz_pair_card,third_ne,word_recover
+nz_pair_card: proof_shape=bind-only; consumers=diagonal_count
 SlotsIndex: proof_shape=bind-only; consumers=normalizedEquiv,normalizedSlots,normalized_valid,slotsWord,word_recover
 normalizedSlots: proof_shape=bind-only; consumers=normalizedEquiv,normalized_recover,normalized_valid,word_recover
 third_ne: proof_shape=bind-only; consumers=normalized_valid,word_recover
@@ -664,19 +664,12 @@ private theorem word_card (A B C D : Type) [Fintype A] [Fintype B]
   unfold F
   omega
 
-/-- The six ordered distinct nonzero Klein directions. -/
-private abbrev OrderedPair := {p : K × K // p.1 ≠ 0 ∧ p.2 ≠ 0 ∧ p.1 ≠ p.2}
-
-private theorem pair_card : Nat.card OrderedPair = 6 := by
-  rw [Nat.card_eq_fintype_card]
-  decide
-
 private abbrev SlotsIndex {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) :=
   WordIndex {i : Fin N // i < i₀} {i : Fin N // i₀ < i}
     {j : Fin M // j < j₀} {j : Fin M // j₀ < j}
 
 private def normalizedSlots {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
-    (p : OrderedPair) (f : SlotsIndex i₀ j₀ → Bool) : DiagonalSlots i₀ j₀ where
+    (p : NZPair) (f : SlotsIndex i₀ j₀ → Bool) : DiagonalSlots i₀ j₀ where
   x := p.val.1
   y := p.val.2
   U i := if f (.inl i) then p.val.1 + p.val.2 else p.val.2
@@ -684,7 +677,7 @@ private def normalizedSlots {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
   C j := if f (.inr (.inr (.inl j))) then p.val.1 + p.val.2 else p.val.1
   D j := if f (.inr (.inr (.inr j))) then p.val.1 + p.val.2 else p.val.2
 
-private theorem third_ne (p : OrderedPair) :
+private theorem third_ne (p : NZPair) :
     p.val.1 + p.val.2 ≠ p.val.1 ∧ p.val.1 + p.val.2 ≠ p.val.2 := by
   constructor
   · intro h
@@ -695,7 +688,7 @@ private theorem third_ne (p : OrderedPair) :
     exact p.property.1 (add_right_cancel hh)
 
 private theorem normalized_valid {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
-    (p : OrderedPair) (f : SlotsIndex i₀ j₀ → Bool) :
+    (p : NZPair) (f : SlotsIndex i₀ j₀ → Bool) :
     SlotValid (normalizedSlots p f) ↔ WordCompatible f := by
   obtain ⟨hzx,hzy⟩ := third_ne p
   have hxy := p.property.2.2
@@ -753,7 +746,7 @@ private theorem normalized_recover {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
   · exact recov _ _ _ (hw.2.2.2.2.2.2.1 i)
 
 private theorem word_recover {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
-    (p : OrderedPair) (f : SlotsIndex i₀ j₀ → Bool) :
+    (p : NZPair) (f : SlotsIndex i₀ j₀ → Bool) :
     slotsWord (normalizedSlots p f) = f := by
   obtain ⟨hzx,hzy⟩ := third_ne p
   funext i
@@ -762,7 +755,7 @@ private theorem word_recover {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
   all_goals split <;> simp_all
 
 private def normalizedEquiv {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) :
-    OrderedPair × {f : SlotsIndex i₀ j₀ → Bool // WordCompatible f} ≃
+    NZPair × {f : SlotsIndex i₀ j₀ → Bool // WordCompatible f} ≃
       {w : DiagonalSlots i₀ j₀ // SlotValid w} where
   toFun q := ⟨normalizedSlots q.1 q.2.val, (normalized_valid q.1 q.2.val).mpr q.2.property⟩
   invFun w := (⟨(w.val.x,w.val.y),w.property.1,w.property.2.1,w.property.2.2.1⟩,
@@ -782,7 +775,7 @@ private theorem diagonal_count {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M) :
     N_e (.D i₀ j₀ : Edge (N + 1) (M + 1)) =
       6 * F i₀.val (N - 1 - i₀.val) j₀.val (M - 1 - j₀.val) := by
   rw [N_e, Nat.card_congr (diagonalSlotEquiv i₀ j₀),
-    ← Nat.card_congr (normalizedEquiv i₀ j₀), Nat.card_prod, pair_card, word_card]
+    ← Nat.card_congr (normalizedEquiv i₀ j₀), Nat.card_prod, nz_pair_card, word_card]
   have hlt {L : ℕ} (r : Fin L) : Fintype.card {i : Fin L // i < r} = r.val := by
     rw [Fintype.card_of_subtype (Finset.Iio r) (by simp), Fin.card_Iio]
   have hgt {L : ℕ} (r : Fin L) :
@@ -913,21 +906,6 @@ theorem N_D_closed (N M : ℕ) (hN : 2 ≤ N) (hM : 2 ≤ M) :
   rw [sum_F]
   ring
 
-/-- A two-row rectangle has no ordinary vertical slots. -/
-private theorem N_D_two_rows (M : ℕ) : N_D 1 M = 6 * (M * 2^(M-1)) := by
-  unfold N_D
-  simp only [Fin.sum_univ_one]
-  have point (j : Fin M) : N_e (.D (0 : Fin 1) j : Edge 2 (M+1)) = 6*2^(M-1) := by
-    rw [diagonal_count, F_piecewise]
-    simp only [Fin.val_zero, Nat.sub_self, Nat.zero_add, ite_true]
-    congr 2
-    have hj := j.isLt
-    omega
-  simp_rw [point]
-  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
-    Nat.cast_id]
-  ring
-
 /-- The transposed two-column boundary has the same empty-side count. -/
 theorem N_D_two_columns (N : ℕ) : N_D N 1 = 6 * (N * 2^(N-1)) := by
   unfold N_D
@@ -945,7 +923,6 @@ theorem N_D_two_columns (N : ℕ) : N_D N 1 = 6 * (N * 2^(N-1)) := by
 
 #print axioms F_piecewise
 #print axioms N_D_closed
-#print axioms N_D_two_rows
 #print axioms N_D_two_columns
 
 end D5.S3.StatisticalMechanics.Potts.KingDefects.KingDiagonal
