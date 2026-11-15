@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Topology.QuandleMarkovColoring
 import Reg.Support.DependentFamily
+import Reg.Support.UniverseSingleReadout
 
 open LeanInformationAudit
 open _root_.D5.S3.Quantum.Algebra.Knot.WeightedPathArtinRepresentation
@@ -155,5 +156,76 @@ def registration_1.{audit_u} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 #print axioms registration_1
+
+namespace AdjacentSlots
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.UniverseSingleReadout.signature ℕ (fun n => Fin (n - 1)) Fin
+
+def actual : Realization signature :=
+  realize signature (fun _ _ i => leftSlot i) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ i => rightSlot i) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (i : Fin (n - 1)), R.readout () n i ≠ rightSlot i
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (n := 2) ⟨0, by decide⟩ rfl
+
+def family : Registration arena (type_of% @slots_ne) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@slots_ne, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro role
+    cases role
+    refine ⟨3, ⟨0, by decide⟩, ⟨1, by decide⟩, ?_⟩
+    change leftSlot (n := 3) ⟨0, by decide⟩ ≠ leftSlot ⟨1, by decide⟩
+    decide
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@slots_ne) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Topology.QuandleMarkovColoring.slots_ne.__information_unit
+  realizationName := `Reg.D5.S3.Topology.QuandleMarkovColoring.AdjacentSlots.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ i => leftSlot i) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Topology.QuandleMarkovColoring
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false
+    }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms audit
+
+end AdjacentSlots
 
 end Reg.D5.S3.Topology.QuandleMarkovColoring

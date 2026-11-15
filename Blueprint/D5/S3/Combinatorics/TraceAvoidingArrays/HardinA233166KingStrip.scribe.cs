@@ -46,6 +46,11 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Write c(i,j)=beta(f(i,j)), where beta identifies the complementary pairs {0,7}, {1,6}, {2,5}, {3,4}. The binary operation xor is bitwise exclusive-or on Fin 4. Every adjacent square has four distinct pair colours. The xor of its upper edge equals that of its lower edge, and likewise for its left and right edges. Induction along rows and columns gives the displayed reconstruction. Horizontal and vertical increments are nonzero, and every horizontal increment differs from every vertical increment because the antidiagonal cells are adjacent. The first square also contains all four pair colours. Strict precedence then forces the literal colours one, two and three to have appeared within the first two rows. There are two allowed nonzero vertical increments when all five horizontal increments agree, and one otherwise. This is a count of pair increments, not yet a count of signed colour-row continuations. The zone correspondence is the algebraic rectangular form of Eppstein's published kinggraph construction. This statement concerns the original literal functions and does not replace their count with a labelled count."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("canonical-pattern-card-four"), DeclarationHandle.Create(Prefix + "canonical_pattern_card4"),
+                H("Twenty-four labelings per canonical pattern"), StatementSource.FromAuthor(Disp(CanonicalPatternCardFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The cell type C is arbitrary, finite and linearly ordered. The predicate S is invariant under every permutation of Fin 4, and every pattern satisfying S uses all four labels. Canonical retains the original first-occurrence normalization. Each canonical pattern therefore has exactly twenty-four distinct labelings. The surjectivity hypothesis is essential to the permutation factor; the theorem imposes no rectangle or adjacency hypothesis."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The complete literal count and formal series"), StatementSource.FromAuthor(Disp(EventFormula())),
                 AssessedProvenance.FromRepo(Source),
@@ -85,6 +90,23 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         var pred=Seq(LambdaLower,Sp,f,Colon,Sp,Arrow(Product(Call("Fin",n),Fin(6)),Fin(8)),
             Sp,Mapsto,Sp,Call("Legal",f));
         return All("n",V("Nat"),Eq(Call("a",n),Call("Finset.card",Call("Finset.filter",pred,Call("Finset.univ")))));
+    }
+
+    private static Formula CanonicalPatternCardFormula()
+    {
+        var c = V("C"); var s = V("S"); var p = V("P");
+        var word = Arrow(c, Fin(4));
+        var invariant = All("e", Call("Equiv.Perm", Fin(4)), All("P", word,
+            Iff(App(s, Call("Function.comp", V("e"), p)), App(s, p))));
+        var surjective = All("P", word, Imp(App(s, p), Call("Function.Surjective", p)));
+        Formula Patterns(Formula predicate) =>
+            Seq(OpenBrace, p, Colon, Sp, word, Sp, Vert, Sp, predicate, CloseBrace);
+        var count = Eq(Call("Nat.card", Patterns(App(s, p))),
+            Mul(D(2,4), Call("Nat.card", Patterns(And(App(s, p), Call("Canonical", p))))));
+        return All("C", Name("Type"), Seq(
+            OpenBracket, Call("Fintype", c), CloseBracket, Comma, Sp,
+            OpenBracket, Call("LinearOrder", c), CloseBracket, Comma, Sp,
+            All("S", Arrow(word, Name("Prop")), Imp(invariant, Imp(surjective, count)))));
     }
 
     private static Formula ClaimFormula() => Iff(Call("claim"), EventFormula());
