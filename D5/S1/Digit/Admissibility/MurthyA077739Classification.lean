@@ -1,5 +1,5 @@
 /- GID: D5/S1/Digit/Admissibility/MurthyA077739Classification
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Digit/Admissibility/MurthyA077739Classification
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
@@ -12,7 +12,12 @@ import Mathlib.Order.Lattice.Nat
 import Mathlib.Algebra.Order.BigOperators.Group.List
 import Mathlib.Tactic
 
-/-! Decimal blocks and the exact unbounded source predicate. -/
+/-! Decimal blocks and the exact unbounded source predicate.
+
+Generality I: the decimal classification consumes concrete certificate rows below 1000.
+The symbolic tail and the final assertion remain unbounded in n and witness length;
+no classification for arbitrary numeral bases is asserted.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

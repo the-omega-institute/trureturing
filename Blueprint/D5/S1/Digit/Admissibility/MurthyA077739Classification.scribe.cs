@@ -19,6 +19,9 @@ internal sealed class MurthyA077739ClassificationDocument : IScribeDocumentDefin
                 + "are exactly 11, 17 and 19. The statement below concerns every natural n at least one; "
                 + "there is no bound on the value or decimal length of the multiple. Decimal expansions "
                 + "have no leading zeros, may have interior zeros, and their prescribed ends may overlap.")),
+            Paragraph(Text("Generality I records the concrete decimal certificate rows consumed below 1000. "
+                + "The symbolic tail and final assertion remain unbounded in n and witness length; "
+                + "no classification for arbitrary numeral bases is asserted.")),
             Paragraph(Text("Write s(x) for the sum of Nat.digits 10 x and w(x) for that list's length. "
                 + "A positive N begins in n exactly when N=n times 10^k+r for some k,r with 0<=r<10^k. "
                 + "It ends in n exactly when N modulo 10^w(n) equals n. These conditions allow k=0 "
