@@ -4,9 +4,11 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=certified-instance; basis=refutes=atom:bc98f9a0480352eec7d4271cad8a27cb6d68310623fd783b041767e79cb76792; result=D5/S3/ConceptDynamics/DependencyTopology/KernelRelativeDependencyEmptiness.result; claim=D5/S3/ConceptDynamics/DependencyTopology/KernelRelativeDependencyEmptiness.claim
-   digest: Equal provable images with shared proof readouts do not determine dependency emptiness. -/
+   digest: Dependency emptiness varies between kernels with the same provable image. -/
 
 import D5.S3.ConceptDynamics.DependencyTopology.FiniteSupportPatternRealization
+
+/-! A shared-carrier pair with lawful certificates and different accepted-proof fibers. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -139,8 +141,8 @@ private def pairCore (extra : Bool) : CertifiedNodes (kernel extra) := by
 private theorem sound (extra : Bool) (p : Formula) (hp : Proved (kernel extra) p)
     (v : Nat → Bool) : p.eval v = true := by
   rcases (proved_iff extra p).mp hp with rfl | rfl
-  · cases v 0 <;> rfl
-  · cases v 0 <;> rfl
+  · cases hv : v 0 <;> simp [Q, Formula.neg, Formula.eval, hv]
+  · cases hv : v 0 <;> simp [P, Formula.eval, hv]
 
 private theorem source_laws (extra : Bool) : SourceLaws (kernel extra) := by
   refine ⟨?_, ?_, ?_⟩
@@ -171,7 +173,7 @@ private theorem emptiness_separates :
       rw [qualified_fiber]
       exact Set.mem_insert_of_mem _ (Set.mem_singleton _)
     have hd := h .delta hm
-    simpa [kernel, KernelData.refs, KernelData.axioms] using hd
+    simp [kernel, KernelData.refs, KernelData.axioms] at hd
 
 /-- Two lawful kernels have equal provable images but different dependency-emptiness values. -/
 theorem result : ¬ claim := by

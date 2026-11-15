@@ -31,8 +31,8 @@ internal sealed class KernelRelativeDependencyEmptinessDocument : IScribeDocumen
                 Call("DependencyEmpty", F.Id("k"), F.Id("p")), Sp, Iff, Sp,
                 Forall, Sp, F.Id("pi"), Comma, Sp,
                 Call("Qualified", F.Id("k"), F.Id("pi"), F.Id("p")), Sp, Implies, Sp, Open,
-                Call("refs", F.Id("k"), F.Id("pi")), Sp, Ne, Sp, EmptySet,
-                Sp, Lor, Sp, Call("axioms", F.Id("k"), F.Id("pi")), Sp, Ne, Sp, EmptySet, Close)),
+                Call("refs", F.Id("k"), F.Id("pi")), Sp, Neq, Sp, Emptyset,
+                Sp, Lor, Sp, Call("axioms", F.Id("k"), F.Id("pi")), Sp, Neq, Sp, Emptyset, Close)),
                 "Every qualified proof must have a nonempty reference readout or a nonempty axiom "
                 + "readout. This is a universal property of all qualified proofs, rather than a "
                 + "property of one selected certificate. With no qualified proofs it holds vacuously; "
