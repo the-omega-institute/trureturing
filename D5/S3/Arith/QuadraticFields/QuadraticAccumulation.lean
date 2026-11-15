@@ -6,6 +6,7 @@
    utility: none
    digest: Distinct signed approximation orbits for every nonzero quadratic trace-dual vector. -/
 
+import D5.S3.Arith.QuadraticFields.QuadraticOrderMaximal
 import Mathlib.Algebra.QuadraticAlgebra.Basic
 import Mathlib.LinearAlgebra.BilinearForm.DualLattice
 import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
@@ -46,10 +47,8 @@ def approximationValues (a : ℝ) : Set ℝ :=
 
 private theorem trace_coordinates (D : ℤ) (s : K D) :
     Algebra.trace ℚ (K D) s = 2 * s.re := by
-  rw [Algebra.trace_eq_matrix_trace (QuadraticAlgebra.basis (D : ℚ) 0)]
-  simp [Matrix.trace, Fin.sum_univ_two, Algebra.leftMulMatrix_eq_repr_mul,
-    QuadraticAlgebra.basis_repr_apply]
-  ring
+  simpa [QuadraticAlgebra.trace_def] using
+    QuadraticOrderMaximal.algebra_trace_eq (D : ℚ) 0 s
 
 private theorem norm_coordinates (D : ℤ) (s : K D) :
     Algebra.norm ℚ s = s.re ^ 2 - (D : ℚ) * s.im ^ 2 := by
