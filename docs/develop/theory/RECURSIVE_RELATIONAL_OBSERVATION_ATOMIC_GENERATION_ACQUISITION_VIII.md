@@ -748,3 +748,364 @@ worldwide priority, unconditional physical realization or recovery of
 those unsupplied correspondences. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 134. Returning the failure excitation attains the marginal bound
+
+**Definition 134.1 (a separate continuation of the two new failures).**
+Retain Definition 128.1, the actual acquisition of Theorem 128.2 and
+the entire operation of Theorem 130.1. Thus the domain is every original
+normalized $\rho_{HR}$, with arbitrary untouched $R$, and every supplied
+ordered-factor invertible contraction
+$A=P_r+K$, $K=U\operatorname{diag}(s_1,s_2,s_3)V^\dagger$ on
+$B=\operatorname{span}\{o,m,y\}$, where $0<\sigma=\min_js_j<1$.
+Repeated minima and $s_j=1$ remain included. The same original embedding
+$F_{\rm ext}$ includes the independently prepared $\eta_{ud}$ and exactly
+the actually appended vacua. All preparation/delivery systems and their
+spent one-use rights remain retained and noninteracting as specified in
+VI47 and VII105.1; no additional excitation, reference, reset, phase
+grant, $r$ edge or quantum feedback port is supplied.
+
+The six old failures and selected success stop exactly as before. On
+either new failure, first complete and retain its old output, End, local
+ACK and same-root Return. From an independently supplied actual Ready,
+holding the reached bank, append one separate apparatus transaction with
+the chronological list
+
+$$
+J_{wm},\quad J_{mu},\quad B_{ud}(\pi/4),\quad
+\operatorname{read}_d,
+\qquad J_{xy}=B_{xy}(\pi/2).
+\tag{VIII.19}
+$$
+
+Retain both outcomes and that transaction's own output, End, ACK and
+same-root Return. Here and below exact identities concern the real-angle
+**ideal reference word**. Each reached use in (VIII.19) requires its own
+actual enrollment, current rights, enabled positive catalogue controls,
+locks, clocks, complete-bank holds, calibration, finite command/output
+backing and progress. The extra read additionally requires actual
+readiness and discharge of the previous detector/service obligations;
+neither a former outcome nor Return supplies these conditions. Without
+them the execution stays at its actual pending cut, rather than acquiring
+a completed terminal operator. The finite-command meaning is Theorem
+136.1.
+
+Let $f$ be the physical vector of (VIII.5), with exactly the original
+$r,w$ occupied. Write $f_u,f_d$ for the vectors with exactly $r,u$ and
+$r,d$ occupied, respectively, and put
+$G_u=|f_u\rangle\langle r|$, $G_d=|f_d\rangle\langle r|$.
+Every other interactive factor, including $m,w,z,a,b,t,k$ and further
+vacuum spectators, is vacuum in $f_u,f_d$. These names denote the
+original physical factors; they do not relabel or replace an excitation.
+
+**Theorem 134.2 (eleven paths and same-pair marginal attainment).**
+For every instance and input of Definition 134.1 with the stated per-use
+supplies and completed services, the ideal reference operation has
+eleven designated terminal quantum paths. With $P_j$ in the original
+$o,m,y$ order and $s=\sqrt{1-\sigma^2}$, their operators from the
+original $H$ into the retained physical bank are the following.
+The record column separates the first, second and complement stages
+by commas and the separate continuation by a semicolon; a dash means
+the stage is not reached.
+
+| Path | Stage and continuation detector tags | Physical operator |
+| --- | --- | --- |
+| $A_1$ | $(1,-,-;-)$ | $-\sqrt{1-s_1^2}\,F_{\rm ext}UP_1V^\dagger$ |
+| $A_2$ | $(01,-,-;-)$ | $-\sqrt{1-s_2^2}\,F_{\rm ext}UP_2V^\dagger$ |
+| $A_3$ | $(001,-,-;-)$ | $-\sqrt{1-s_3^2}\,F_{\rm ext}UP_3V^\dagger$ |
+| $D_1$ | $(000,1,-;-)$ | $-\sqrt{s_1^2-\sigma^2}\,F_{\rm ext}VP_1V^\dagger$ |
+| $D_2$ | $(000,01,-;-)$ | $-\sqrt{s_2^2-\sigma^2}\,F_{\rm ext}VP_2V^\dagger$ |
+| $D_3$ | $(000,001,-;-)$ | $-\sqrt{s_3^2-\sigma^2}\,F_{\rm ext}VP_3V^\dagger$ |
+| selected success | $(000,000,00;-)$ | $\sigma F_{\rm ext}$ |
+| $(1;0)$ | $(000,000,1;0)$ | $sG_u/2$ |
+| $(1;1)$ | $(000,000,1;1)$ | $isG_d/2$ |
+| $(01;0)$ | $(000,000,01;0)$ | $isG_u/2$ |
+| $(01;1)$ | $(000,000,01;1)$ | $-sG_d/2$ |
+
+All old command prefixes, final bank words and complete service records
+remain; the displayed tags are not substitutes for those records.
+The eleven effects sum to $I_H$. For every displayed operator $Z$, its
+subnormalized bank/reference state is
+$(Z\otimes I_R)\rho_{HR}(Z^\dagger\otimes I_R)$, with all declared
+retained primitive outputs and actual backing. Complete records can
+further refine these eleven paths. Zero paths remain zero blocks and
+have no assigned normalized conditional state.
+
+Selected recovery is unchanged on the entire original $H/R$. Its joint
+mass before the first $A$ is $p=\sigma^2$; conditional on that actual
+first success it is $\sigma^2/a(\rho)$, with $a(\rho)$ as in (VIII.14).
+On the same physical pair $u,d$, set
+
+$$
+\begin{aligned}
+x&=\operatorname{Tr}[(P_r\otimes I_R)\rho_{HR}],\qquad
+\omega=\tfrac12\bigl(|10\rangle\langle10|+|01\rangle\langle01|\bigr),\\
+\tau_{ud}&=[1-(1-\sigma^2)x]\eta+(1-\sigma^2)x\omega,\qquad
+\tfrac12\|\tau_{ud}-\eta\|_1=\tfrac12(1-\sigma^2)x.
+\end{aligned}
+\tag{VIII.20}
+$$
+
+Consequently, on the original $r$ test, this ideal reference witness
+attains VII120.1's universal lower bound for the **unconditional marginal
+disturbance of the same $u,d$ at maximal joint success**:
+
+$$
+p=\sigma^2,\qquad q_r=1-\sigma^2,\qquad
+\epsilon_\eta=\frac{1-\sigma^2}{2}
+             =\frac p2(\sigma^{-2}-1).
+\tag{VIII.21}
+$$
+
+The comparison class is precisely VII116.1--116.2: normalized-total-return
+measurable adaptive native correctors after the actual first $A$ success,
+with their original common backing, record feedback, classical randomness,
+lawful native/service interleavings and finite resources on each returning
+history, without a common depth, bank-size or expected-cost bound, satisfying
+exact full-$H/R$ selected recovery with same-standard return. Equation
+(VIII.21) asserts no optimum for the complete laboratory, retained records,
+record-conditioned states or every other original input. It asserts exact
+attainment only for the ideal reference word; finite physical commands
+inherit the complete-interface error conclusion of Theorem 136.1.
+
+Proof. Use the full-qubit blocks of VI.3, which fix $00,11$, on the
+actual persistent $mw$ seam and fixed $mu,ud$ links. Endpoint reversal
+in $J_{wm}$ denotes that same symmetric $mw$ block. These three positive
+hops require none of the unavailable negative controls. Put
+$V_*=B_{ud}(\pi/4)J_{mu}J_{wm}$ and
+$T_h=\Pi_{d,h}V_*$, with products acting rightmost first. The literal
+route, including its phases, is
+
+$$
+f\ \longmapsto\ i|r,m\rangle\ \longmapsto\ -f_u
+\ \longmapsto\ -\frac{f_u+if_d}{\sqrt2},\qquad
+T_0f=-\frac{f_u}{\sqrt2},\quad
+T_1f=-\frac{if_d}{\sqrt2}.
+\tag{VIII.22}
+$$
+
+Here $|r,m\rangle$ has just those two physical excitations. In
+particular $w$ is emptied by the first hop and $m$ by the second;
+the original $r$ and the same resource excitation survive. There is
+no reset, hidden source edit or new resource preparation. The detector
+reads the reached occupation of the same $d$.
+
+For the complement alone at any $0<c<1$, multiply (VIII.22) by
+the two existing parent coefficients in (VIII.5), writing
+$s_c=\sqrt{1-c^2}$. In the order $(1;0),(1;1),(01;0),(01;1)$,
+the four maps are
+
+$$
+\frac{s_c}{2}G_u,\qquad \frac{is_c}{2}G_d,\qquad
+\frac{is_c}{2}G_u,\qquad -\frac{s_c}{2}G_d.
+\tag{VIII.23}
+$$
+
+The no-click complement map stays $F_{\rm ext}(cP_r+P_B)$.
+Each new effect is $s_c^2P_r/4$; the two children of either parent
+sum to its old effect. This is also justified on the full bank by
+$T_0^\dagger T_0+T_1^\dagger T_1=I$, since $V_*$ is a full-space
+unitary and the actual occupation instrument is normalized. Thus
+refining a failure preserves its probability and all prior records.
+It intentionally changes its subsequent quantum output.
+
+For recovery reuse VII109.1 and VIII130.1. Their actual intermediate
+operator is $Q=P_r+\sigma P_B$. The identities
+$D_\sigma Q=\sigma I_H$ and $G_uQ=G_u$, $G_dQ=G_d$
+give exactly the table at $c=\sigma$. The six old effects sum to
+$(1-\sigma^2)P_B$ by (VII.70); the selected effect is $\sigma^2I_H$;
+the four refined effects sum to $(1-\sigma^2)P_r$. Their total is
+$I_H$, including all repeated-minimum and unit-singular-value zero
+leaves. The unchanged selected operator gives joint mass $\sigma^2$;
+division by the real first-event mass $a(\rho)\ge\sigma^2>0$ gives
+the stated conditional mass.
+
+These are four-column operator identities, not just probabilities on
+$r$. The unchanged columns have (VIII.11), and (VIII.22) composes with
+the rank-one maps of (VIII.5). Hence each table entry gives the identity
+on every $|x\rangle\langle y|$, including all $r/B$ coherences.
+Expanding $\rho_{HR}=\sum_{x,y}|x\rangle\langle y|\otimes\rho_{xy}$
+and tensoring identity on $R$ proves every subnormalized branch for
+arbitrary reference, with no product-input or diagonal-input restriction.
+At each actual classical backing fibre, extend (VIII.15) by that
+path's own continuation records and complete retained primitive outputs,
+then integrate over the original joint backing law. No independent
+resampling of internally correlated backing is made. The normalized
+services and effect sum normalize this complete retained output.
+
+Each new fine failure has mass $(1-\sigma^2)x/4$. The six old
+failures and selected success carry the same pure independent $\eta$
+with combined mass $1-(1-\sigma^2)x$. Two new failures carry
+$|10\rangle$, and two carry $|01\rangle$, giving (VIII.20).
+On their two-dimensional occupation span, $\omega-\eta$ has zero
+diagonal and both off-diagonal entries $-1/2$, so its eigenvalues
+are $1/2,-1/2$. This proves the displayed trace distance. Every new
+fine failure already had a raw click in its retained parent record;
+the later read does not change the at-least-one-click event on $r$.
+Thus $q_r=1-\sigma^2$. Apply the existing (VII.93) at
+$p=\sigma^2$ to obtain equality (VIII.21), without reproving its
+necessity or the success upper bound.
+
+The marginal $\omega$ averages over the retained extra-read records;
+no record or quantum system is disposed of. At each fine failure the
+same pair is instead $|10\rangle$ or $|01\rangle$, each at trace
+distance $1/\sqrt2$ from $\eta$. Neither these states nor $\omega$
+supply VI47.2's pure independent $\eta$ premise for a subsequent
+returned VI48/VI66 macro. All grown/source, preparation/delivery,
+detector and spent-right factors remain, while $w,m$ really are vacuum.
+The full-space raw native operations keep their actual domains.
+
+The terminal cut in (VIII.20) follows the separate completed transaction
+(VIII.19). At its earlier stopped cut VIII133.1 still has the two
+vacuum-standard failures and disturbance (VIII.17)--(VIII.18).
+No old claim or output prefix is replaced. The new content is the
+same-apparatus attainment witness, rather than a generic dephasing
+identity, inverse principle or new lower bound. $\square$
+
+## 135. Complete and pending service for the separate continuation
+
+**Theorem 135.1 (the added word in the original all-phase relation).**
+Under Definition 134.1's per-use premises, the separate transaction
+(VIII.19) extends the original complete/pending service relation of
+AAV27.2, VI40.2, VI50.1, VI71.1, VII115.1 and VIII131.1 on both
+authentic entrances. Every subsequently chosen finite lawful original
+native continuation remains available with its own original conditions
+on successful, failing and pending states. Completion and the terminal
+identities in Theorem 134.2 require actual progress and all reached
+supplies. Missing readiness, backing, suffix, ACK or progress preserves
+the actual pending cut. Quantum return grants no current-at-Return
+certificate, source rewind or old observer-checkpoint recovery.
+
+Proof. Retain both Definition 128.1 entrances: the actual finite epoch
+cut of a known-alpha history and the selected bilateral fixed-slope
+joint source with each root's separate genuine empty/$P_\varepsilon$
+preparation. Keep their actual common source and root/header/gap/anchor/
+component bindings, source/acquisition versions, immutable samples,
+tapes, references and preparation histories. The genuine $P/S$ events
+of VIII128.2 and their native successors stay in those histories. The
+three hops in (VIII.19) add no native edit or seam and impose no common
+growth word, independent seed product or restriction on lawful local
+$P/S$/Next futures.
+
+Use VIII131.1's existing field relation. At Receive/Parse retain real
+input bits, occupied latches, parser/unary marks and unsupplied suffixes.
+At Navigate/Guard/Tag retain the actual operands, current parent/child
+bindings, birth and promotion/split facts, versions and borrowed cursors.
+Refusals, supplied grant denials, OutOfRange and BadFrame retain their
+distinct actual reasons and outputs; missing authority or a disabled
+entry performs no protected action. No pending frame becomes a completed
+read or branch by being assigned a terminal label.
+
+At reservation and partial maintenance retain locks, actual target and
+old/candidate pairs, attachment/ancestor cursors, partial tape/incidence
+writes and owed publication. FetchGrowth uses its actual one-based tape,
+counters and pending result. Genuine Next keeps the recalled old
+kind/address and pair, the current left descent, its real guarded edit
+or refusal and successor; its internal recall creates no extra reply.
+BuildAnswer, Print, End, local ACK and same-root Return discharge their
+actual owed actions, retaining emitted and unprinted output and releasing
+only permitted scratch.
+
+Each new parent failure first reaches its old complete output/End/ACK/
+Return boundary. Save the actual native Ready separately from the joint
+Busy state for (VIII.19). The latter stores the parent tag, continuation
+stage, hop and digit position, actual $w,m,u,d$ bindings, current rights,
+enable/control/hold records, detector readiness and latch, complete bank,
+output prefix and next owed action. Its quantum state is exactly that
+of the executed raw prefix. In particular no cut before the second hop
+is assigned the final $m$ vacuum, and no unfinished read or output is
+assigned $\omega$ or a completed fine state. Previous detector completion
+and actual readiness for the new read are separate supplied conditions;
+a previous outcome, pure-factor return or a spent preparation grant
+cannot discharge them.
+
+All three raw hops and the original occupation instrument are defined
+on the full qubit bank, including dirty operands. Serialized native
+growth at any allowed cut holds every old quantum identity, including
+dirty work/resource factors, and appends only genuine independent vacuum.
+Persistent old seams let the saved apparatus list resume at its actual
+position. These are precisely the new obligations of the old relation,
+not an assumed new conformance law. Keep the new command/read/control
+records and complete detector systems alongside every old record and
+grown factor. On completion append the separate transaction's actual
+BuildAnswer/Print/End/ACK/same-root Return. On an unsupplied or unfinished
+execution retain that real cut with its owed action. Raw future operations
+and native services retain their full-space meanings; returned-target
+macros require their own actual quantum domains and fresh per-use service
+supplies, including after an occupation-state failure. $\square$
+
+## 136. Finite commands and the scope of the attainment witness
+
+**Theorem 136.1 (finite transport through the added failure word).**
+For the same fixed ordered effective factors and positive-$\sigma$
+promise of VII111.1, (VIII.19) admits the existing same-sign effective
+dyadic commands on its actual positive endpoints. For every specified
+finite commission, supplied uniform full-interface physical certificates
+extend (VIII.16) to the enlarged feedback tree, including every retained
+terminal output and actual pending prefix. Exact (VIII.20)--(VIII.21)
+remain ideal reference identities; finite-command conclusions are only
+the resulting complete-output, marginal and probability error bounds.
+
+Proof. Apply VII111.2 to the two $\pi/2$ angles and $\pi/4$.
+Each expanded occurrence pays its own positive catalogue commands.
+Relative to VIII132.1, the complement first-failure path now has $81$
+hopping occurrences and two reads, the second-failure path $161$ and
+three reads; complement success remains $158$ and two reads. The
+unchanged first $A$/inverse stages add at most six reached reads, so
+the full recovery uses at most nine. These are counts for this word,
+excluding commissioning/native work and separately charged command-slot,
+hold, lock, output/End/ACK/Return costs; they are not cost optima.
+
+In (VIII.16), extend each reached failure path's $\mathcal H(p)$ by
+the three extra hopping occurrences, $\mathcal D(p)$ by its extra
+complete occupation instrument, and $\mathcal N(p)$ by all extra actual
+services and holds. Add their angle and physical errors on those paths
+only. Per-hop allowance $2^{-b}$ gives at most $161\,2^{-b}$ for
+the complement-and-continuation angle term, separately from old-stage
+budgets and every detector/physical/service error. Charge the joint
+initial discrepancy once. Native vacuum growth imperfections remain
+their actual service errors, rather than another initial preparation.
+
+The same finite normalized-tree contraction used in VIII132.1 applies:
+the added full-space unitary and complete two-outcome read preserve the
+parent normalization. All raw-hop, read, hold and service certificates
+must cover their full enlarged interfaces, arbitrary reference and
+leakage, controls and retained quantum/classical outputs. A certificate
+only on $f$ cannot justify this transport, since imperfect earlier work
+can reach other states. Completed-target substitutions are used only
+on their proved ideal domains; none invokes a returned macro on
+$\omega$ or a fine occupation state. At a pending digit/read/service
+cut use the actually executed prefix and its literal labels, as in
+Theorem 135.1.
+
+Thus rounded commands acquire neither an exact quarter-turn/inverse
+identity nor exact finite resource return or hardware attainment of
+(VIII.21). Each comparator keeps that commission's own endpoint, digit,
+enable, version and output records; different precisions need not
+converge to one raw-record output. Conditional-state accuracy additionally
+needs VII112.3's positive branch denominator. No noisy unbounded-policy
+conclusion follows from this finite transport.
+
+The construction is repo-derived on the original apparatus.
+VII108--109 and VIII128--133 supply the contraction, complement, previous
+failure maps and complete service/error framework; VII116--120 supplies
+the universal comparison class and lower bound. Their existing generic
+suppliers, DiagonalKrausInstrumentFactorization (including its private
+orthogonality support), KrausLeftInverseNecessity and
+FiniteCausalScheduleProtocol (including its private normalization
+support), retain the roles cited in §§130 and 132. No generic Kraus
+factorization, inverse scalarity or finite composition theorem is new.
+The literature roles are likewise the existing ones: Wu et al.,
+[arXiv:2007.14847v2, Theorem 2, equation (5)](https://arxiv.org/abs/2007.14847v2),
+as used by VII117/120, supplies real-operation fidelity background;
+Jordan--Korotkov,
+[arXiv:0906.3468v1, equations (6)--(8), (18)--(19)](https://arxiv.org/html/0906.3468v1#S2),
+supplies the scaled-inverse probability and joint/conditional distinction.
+Neither supplies the concrete retained-service route (VIII.19).
+This is a conditional mathematical attainment result, with no physical
+realization or literature-priority assertion. All-outcome pure-standard
+reuse, the whole-class logarithmic immutable-recorder problem and the
+full original internal-observer space/time/boundary/memory recovery
+objective remain unresolved on their unchanged domains. $\square$
+
+## 追加锚（本行以下为增补区）
