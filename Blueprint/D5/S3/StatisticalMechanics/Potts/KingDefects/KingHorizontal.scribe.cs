@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.Potts.KingDefec
 
 internal sealed class KingHorizontalDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/StatisticalMechanics/Potts/KingDefects/KingHorizontal.";
+    private const string Prefix = "D5/S3/StatisticalMechanics/Potts/KingDefects/KingHorizontalCounts.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229578");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

@@ -330,4 +330,4 @@ For both side lengths at least two, each one-defect array uses at least three co
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.transposeDefectEquiv`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.transposeEdge`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.transpose_mono`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip](../../Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip](../../../Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.md)
