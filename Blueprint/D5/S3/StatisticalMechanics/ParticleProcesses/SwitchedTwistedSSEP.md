@@ -322,6 +322,10 @@ $$\forall \left(\operatorname{L}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/dabrowski-poulain-ragoucy-2026-switched-ssep-reachability` (proved) by `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"dabrowski-poulain-ragoucy-2026-switched-ssep-reachability","declaration_gid":"D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
