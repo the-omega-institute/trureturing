@@ -78,7 +78,7 @@ private theorem descend_mk
     (t : ⨂[K] (_ : Fin n), V) :
     descend L hL (SymmetricPower.mk K (Fin n) V t) = L t := rfl
 
-private def liftSymmetric
+def liftSymmetric
     (F : MultilinearMap K (fun _ : Fin n => V) N)
     (hF : ∀ (e : Equiv.Perm (Fin n)) (v : Fin n → V),
       F (fun j => v (e j)) = F v) :
@@ -87,7 +87,7 @@ private def liftSymmetric
     intro e v
     simpa only [PiTensorProduct.lift.tprod] using (hF e v).symm)
 
-private theorem liftSymmetric_tprod
+theorem liftSymmetric_tprod
     (F : MultilinearMap K (fun _ : Fin n => V) N)
     (hF : ∀ (e : Equiv.Perm (Fin n)) (v : Fin n → V),
       F (fun j => v (e j)) = F v) (v : Fin n → V) :
@@ -96,7 +96,7 @@ private theorem liftSymmetric_tprod
     (PiTensorProduct.tprod K v)) = F v
   rw [descend_mk, PiTensorProduct.lift.tprod]
 
-private theorem ext_tprod
+theorem ext_tprod
     {F G : SymmetricPower K (Fin n) V →ₗ[K] N}
     (h : ∀ v : Fin n → V,
       F (SymmetricPower.tprod K v) = G (SymmetricPower.tprod K v)) : F = G := by
