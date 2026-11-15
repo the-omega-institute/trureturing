@@ -176,11 +176,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Analysis.TrotterProduct
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 9]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := true
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown

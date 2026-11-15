@@ -38,5 +38,6 @@ Determinants of one minus the square of each original finite section converge un
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianUniformDeterminant.finiteLog_tendstoUniformlyOn`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianUniformDeterminant.finite_determinants_tendstoUniformlyOn_period`
+- Dependency: [D5/S3/Quantum/Analysis/TrotterProduct](../../Quantum/Analysis/TrotterProduct.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianPeriodIdentity](OriginalGaussianPeriodIdentity.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianUniformCutoff](OriginalGaussianUniformCutoff.md)
