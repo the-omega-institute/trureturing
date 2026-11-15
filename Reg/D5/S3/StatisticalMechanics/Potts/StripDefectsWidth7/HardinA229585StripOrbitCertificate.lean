@@ -35,7 +35,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have ha := transition_counts ![0, 1, 0, 1, 0, 1] 1 (by decide +kernel)
     (by unfold Canonical; decide +kernel) 0
   change _ = T (cl ![0, 1, 0, 1, 0, 1] 1) 0 + 1 at hb
-  linarith
+  have he : T (cl ![0, 1, 0, 1, 0, 1] 1) 0 =
+      T (cl ![0, 1, 0, 1, 0, 1] 1) 0 + 1 := ha.symm.trans hb
+  omega
 def family : Registration arena (type_of% @transition_counts) where
   actual := readout
   bridge := Iff.rfl
