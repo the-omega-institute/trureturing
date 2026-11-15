@@ -289,8 +289,8 @@ open D5.S1.Words.Complexity.VivionBinomialConverseFails
 def tm (source : List Bool) : List Bool :=
   source.flatMap (fun a => [a, !a])
 theorem tm_length (source : List Bool) : (tm source).length = 2 * source.length := by
-  simpa [tm, Nat.mul_comm] using
-    (List.length_flatMap (l := source) (f := fun a => [a, !a]))
+  rw [tm, List.length_flatMap]
+  simp [Nat.mul_comm]
 theorem tm_counts (source : List Bool) :
     scatteredCount [false] (tm source) = source.length ∧
     scatteredCount [true] (tm source) = source.length ∧
