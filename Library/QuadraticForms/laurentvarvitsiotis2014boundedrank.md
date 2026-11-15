@@ -131,7 +131,7 @@ Other supplier source authors: The Tau Ceti contributors.
 The full Apache-2.0 license is retained at
 `docs/reports/licenses/TauCeti-LICENSE.txt`. The upstream tree has no NOTICE file.
 The source repository is https://github.com/TauCetiProject/TauCeti .
-Only these consumed declarations are adapted, with private names, imports and
+Only these consumed declarations are adapted, with local names, imports and
 pinned-Mathlib API adjustments. They are reused content, not new mathematics.
 
 The upstream toolchain is Lean 4.36.0-rc2, while the host uses Lean 4.35.0;
