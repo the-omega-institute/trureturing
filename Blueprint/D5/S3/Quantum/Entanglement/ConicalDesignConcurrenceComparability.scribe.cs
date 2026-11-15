@@ -20,6 +20,15 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
             Node("traceNorm_isometry", "Rectangular isometries preserve the trace norm", TraceNormIsometryFormula(),
                 "For finite index types M and N, a complex rectangular matrix V with adjoint times V equal to the identity preserves the trace norm under X mapped to V X V adjoint. The square matrix X is arbitrary. This invariance is used in the normal form of the concurrence bound and in the projection dilation.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("Q", "The normalized trace-vector projector", QFormula(),
+                "For every natural dimension d, Q is the reciprocal complex dimension times the outer product of Matrix.vec of the identity with its conjugate vector. At d equal to zero the same expression is defined.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("Q_square", "Idempotence of the trace-vector projector", QSquareFormula(),
+                "In positive dimension, multiplying Q by itself leaves Q unchanged.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("Q_hermitian", "Self-adjointness of the trace-vector projector", QHermitianFormula(),
+                "In every natural dimension, the conjugate transpose of Q equals Q.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("swap", "The literal tensor swap", SwapFormula(),
                 "The flip F in Siudzinska's Section 2, Eq. (9), p. 2, sends the computational-basis pair (a,b) to (b,a). The identity matrix is reindexed in its columns by Prod.swap, so its (p,q) entry is 1 exactly when p=(q.2,q.1). Scalars are complex.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Siudzinska)),
@@ -41,9 +50,7 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
             Node("result", "Uniform comparison by the ratio alpha over beta", Disp(F.Id("claim")),
                 "Vectorize each effect as A_ip=(E_i)_(p.2,p.1). The tensor identity gives A.conjTranspose times A=beta I+alpha vv.conjTranspose, where v=Matrix.vec I. With Q=vv.conjTranspose/d and t=sqrt(1+d alpha/beta), a rectangular isometry factors A as sqrt(beta) U (I+(t-1)Q). The trace norm is unchanged by that isometry, so the bound depends only on t. For s at most t, the projection dilation gives a trace-norm gain of at least (t squared minus s squared)/d, cancelling the change of the offset. Consequently alpha_E/beta_E at least alpha_G/beta_G gives B_E at least B_G for every state. Equal ratios give equal bounds. The total order on real ratios proves claim.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Wzcf),
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("wang-zhou-chen-fei-2026-conical-design-concurrence-comparability"),
-                    ResolutionKind.Proved)),
+                null),
             PhysicalApplication()),
         []));
 
@@ -244,6 +251,25 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
     private static Formula MatrixInputs(Formula body) => DesignInputs(All("rho", MatrixType(Pairs(F.Id("d"))), body));
     private static Formula SumOver(Formula i, Formula type, Formula body) =>
         Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, type)), Sp, body);
+
+    private static Formula QFormula()
+    {
+        Formula d = F.Id("d");
+        Formula v = Qualified("Matrix", "vec", Cast(D(1), MatrixType(Fin(d))));
+        Formula scalar = new Formula.Power(Cast(d, ComplexType()), Seq(Minus, D(1)));
+        Formula outer = Qualified("Matrix", "vecMulVec", v, Call("star", v));
+        return Disp(Dim(Eqn(Call("Q", d), Qualified("HSMul", "hSMul", scalar, outer))));
+    }
+    private static Formula QSquareFormula()
+    {
+        Formula d = F.Id("d"), q = Call("Q", d);
+        return Disp(Dim(Imp(Lt(D(0), d), Eqn(Mul(q, q), q))));
+    }
+    private static Formula QHermitianFormula()
+    {
+        Formula d = F.Id("d"), q = Call("Q", d);
+        return Disp(Dim(Eqn(Qualified("Matrix", "conjTranspose", q), q)));
+    }
 
     private static Formula TraceNormSmulFormula()
     {

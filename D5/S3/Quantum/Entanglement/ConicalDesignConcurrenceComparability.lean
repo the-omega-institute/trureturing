@@ -18,7 +18,7 @@ Direct frozen dependencies:
     statement_id: sha256:3487611db943d93cce4a86af60f6499c8a001bc73fe819953d9bfd08a4e811b1;
   D5/S3/Quantum/Foundation/FiniteStateChannel.DensityState
     statement_id: sha256:4607242f5ca0464588fa7eea47cf23ce7ba387f9018664f7796740270945b0f5.
-Private proof declarations (consumer -> prerequisite):
+Proof declarations (consumer -> prerequisite):
   traceNorm_isometry: proof_shape: bind-only; consumers: bound_normal_form,
     dilation_from_completion.
   traceNorm_smul_nonneg: proof_shape: bind-only; consumers: bound_normal_form.
@@ -51,6 +51,7 @@ Private proof declarations (consumer -> prerequisite):
   parameter_mono: proof_shape: bind-only; consumers: ratio_monotonicity.
   ratio_monotonicity: proof_shape: bind-only; consumers: result.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16913
+https://github.com/the-omega-institute/trureturing/issues/23694 covers Q_square and Q_hermitian.
 Utility kind is none: universal matrix identities and estimates, with no finite
 certificate, bounded enumeration, checker or numerical-reduction declaration.
 -/
@@ -69,6 +70,7 @@ Escape audit unfinished:
 -/
 
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
+import D5.S3.Quantum.Foundation.FiniteStateChannel
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 
 noncomputable section
@@ -421,7 +423,7 @@ private theorem correlation_factorization {d m : ℕ} (E : Design d m)
   intro e _
   ring
 
-private def Q (d : ℕ) : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
+def Q (d : ℕ) : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
   (d : ℂ)⁻¹ • vecMulVec (Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ))
     (star (Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ)))
 
@@ -434,9 +436,9 @@ private lemma Q_positive (d : ℕ) : (Q d).PosSemidef := by
   apply (posSemidef_vecMulVec_self_star ((Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ)))).smul
   simp
 
-private lemma Q_hermitian (d : ℕ) : (Q d)ᴴ = Q d := (Q_positive d).1
+lemma Q_hermitian (d : ℕ) : (Q d)ᴴ = Q d := (Q_positive d).1
 
-private lemma Q_square {d : ℕ} (hd : 0 < d) : Q d * Q d = Q d := by
+lemma Q_square {d : ℕ} (hd : 0 < d) : Q d * Q d = Q d := by
   have hn : (d : ℂ) ≠ 0 := by exact_mod_cast hd.ne'
   simp only [Q, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
     vecMulVec_mul_vecMulVec, vI_dot, vecMulVec_smul, smul_smul]
