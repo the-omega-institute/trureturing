@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Topology/AnnularSecondZero
    mirror-E: none(waiver:abstract-topology-without-experimental-evidence)
-   anchors: [mathlib/module/Mathlib.Analysis.Calculus.FDeriv.Basic]
+   anchors: [mathlib/module/Mathlib.Analysis.Calculus.FDeriv.Equiv]
    utility: none
    digest: A regular zero forces another zero under constant-exterior or annular boundary data. -/
 
