@@ -1,0 +1,5 @@
+**定理 195.4（L2、TC 与线性不回卷的完整单锥重建）。** 在195.1的全部原域上，以下两项等价：
+
+1. L2、TC、全标签 LIN 成立。
+2. 存在有限 $n\ge1$ 和同一个实线性同构 $\Phi:\operatorname{Herm}_n(\mathbb C)\to V$，使 $\Phi(\operatorname{PSD}_n)=C$、$u\Phi=\operatorname{Tr}$。
+

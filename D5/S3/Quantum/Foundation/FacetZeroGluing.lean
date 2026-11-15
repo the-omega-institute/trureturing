@@ -83,7 +83,7 @@ theorem zero_gluing_common_effect {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ
     exact ⟨hx.1, f, hf, hx.2⟩
 
 omit [FiniteDimensional ℝ A] in
-private theorem face_span_inter {C : PointedCone ℝ A} (F : PointedCone.Face C)
+theorem face_span_inter {C : PointedCone ℝ A} (F : PointedCone.Face C)
     {x : A} (hx : x ∈ C) (hxspan : x ∈ Submodule.span ℝ (F : Set A)) : x ∈ F := by
   obtain ⟨a, ha, b, hb, hab⟩ := F.toPointedCone.mem_span.mp hxspan
   apply F.isFaceOf.mem_of_add_mem_left hx (F.isFaceOf.le hb)

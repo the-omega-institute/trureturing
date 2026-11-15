@@ -1,0 +1,40 @@
+**定理 193.7（任意有限层的共同合法投影区分）。** 设 $m\ge2$，$S=H^\perp\subset\operatorname{Herm}_{2m}$，并定义
+
+$$
+\pi:\operatorname{Herm}_{2m}\to\operatorname{Herm}_{2m}/\mathbb RH,
+\qquad L_N=\ker\pi^{\otimes N},\qquad L_N^\perp=S^{\otimes N}.
+\tag{193.19}
+$$
+
+那么每个有限 $N\ge1$、每对正交单位向量 $v,w\in(\mathbb C^{2m})^{\otimes N}$，都存在同一个正交投影
+
+$$
+\boxed{\quad E=E^*=E^2\in S^{\otimes N},\qquad Ev=v,\quad Ew=0.\quad}
+\tag{193.20}
+$$
+
+因此全部这些层满足193.2的谱条件、$\kappa(L_N)=1$，且对任意单位 $v,z$ 的完整原菜单最低值为 $|v^*z|^2$。
+
+证明。$L_N^\perp=S^{\otimes N}$ 由 $\operatorname{Herm}_{2m}=\mathbb RH\oplus S$ 的正交张量展开给出，正是165.2的空间恒等式。证明(193.20)时允许正交向量未归一化。若 $v=0$ 取 $E=0$；若 $v\ne0,w=0$ 取 $E=I$，其中 $I\in S^{\otimes N}$。
+
+当 $N=1$ 且二者非零，令 $M=|v\rangle\langle w|$，它的迹为 $w^*v=0$。193.6给共同中性基 $(z_j)$，于是 $P_{z_j}\in S$，且 $(z_j^*v)(w^*z_j)=0$。令 $J=\{j:z_j^*v\ne0\}$，则 $E=\sum_{j\in J}P_{z_j}$ 是 $S$ 中确认 $v$、消去 $w$ 的投影。
+
+对 $N\ge2$，假定结论对 $N-1$ 成立。令
+
+$$
+M=\operatorname{Tr}_{2,\ldots,N}(|v\rangle\langle w|),\qquad
+v_j=(z_j^*\otimes I)v,\quad w_j=(z_j^*\otimes I)w,
+\tag{193.21}
+$$
+
+其中 $(z_j)$ 由193.6作用于这个迹零 $M$ 取得。按偏迹定义，$w_j^*v_j=z_j^*Mz_j=0$。对每个分支用归纳假设，含上述零向量分支，取得 $E_j\in S^{\otimes(N-1)}$。置
+
+$$
+E=\sum_jP_{z_j}\otimes E_j.
+\tag{193.22}
+$$
+
+第一因子投影两两正交，所以 $E^*=E$、$E^2=E$；每个张量项属于 $S^{\otimes N}$。向量展开 $v=\sum_jz_j\otimes v_j$、$w=\sum_jz_j\otimes w_j$ 给 $Ev=v$、$Ew=0$。所有分支被拼成同一个完整原合法效应。由193.2和193.4得其余结论。
+
+这个条件重叠归零及逐方递归的证明骨架归 Walgate 等[Q193W]及[Q193GA] Theorem 2、§III；标准递归未要求本地投影处于 $H^\perp$，新增支付是193.6。这里仅构造完整商菜单内的数学效应；未据递归形式授予商理论中的实际自适应仪器或控制操作。$\square$
+

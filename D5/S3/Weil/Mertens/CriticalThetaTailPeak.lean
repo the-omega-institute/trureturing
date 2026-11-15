@@ -32,7 +32,7 @@ private theorem forcing_meromorphic (U : ℝ) (hU : 0 ≤ U) :
   exact (hm.deriv.neg.add hm).add (by intro z hz; exact (by unfold boundary; fun_prop :
     AnalyticAt ℂ (boundary U) z).meromorphicAt)
 
-private theorem normalized_zeta_real_ne_zero {x : ℝ} (hx : 0 < x) :
+theorem normalized_zeta_real_ne_zero {x : ℝ} (hx : 0 < x) :
     riemannZeta₁ (x : ℂ) ≠ 0 := by
   by_cases hx1 : x = 1
   · subst x
