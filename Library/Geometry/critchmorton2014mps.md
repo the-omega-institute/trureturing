@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSMarginalBirationality
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality
 license: citation-only
@@ -42,6 +43,23 @@ For every natural $m$, `goodStates m` is the nonempty open dense subset of the s
 
 The uniform recovery witness uses the original matrices and boundaries displayed below. Its fixed-density effective boundary is $E^m(rr^\dagger)(37,54)^T$, rather than the coherent sum-tail. Writing the real symmetric tail as $\left(\begin{smallmatrix}a&b\\b&c\end{smallmatrix}\right)$, its entries remain strictly positive under $(a,b,c)\mapsto(26a+64b+40c,38a+92b+56c,58a+136b+80c)$. The effective boundary has the positive entries $37a+54b,37b+54c$, so the original positive-boundary chart theorem applies. The original transfer is injective, and the original three-site gauge preserves transfer injectivity through invertible conjugate sandwiches and a nonzero scalar.
 
+`OpenBoundaryMPSInteriorCommonCore.interior_common_core` supplies a separate arbitrary-interior common-core theorem. Let $p,q\ge1$, $N=(p+3)+q$, and let the target be the actual state $\psi(w)=lA_wr$. Assume `TwoSiteSpanning A`: the four products $A_iA_j$ span $M_2(\mathbb C)$. With $E_A(Z)=\sum_i A_iZA_i^\dagger$ and $E_A^*(Z)=\sum_i A_i^\dagger ZA_i$, require the **actual** environments $P=(E_A^*)^p(l^\dagger l)$ and $H=E_A^q(rr^\dagger)$ to be positive definite. For any actual competitor $\phi(w)=l'B_wr'$ of the same length, equality of the complete unnormalized `rawInterior p 3 q` matrices implies
+
+$$
+\exists X\in M_2(\mathbb C),\qquad
+\phi(w)=\operatorname{tr}(X A_w)\quad\text{for every word }w\text{ of length }N.
+$$
+
+The competitor matrices and both free boundaries are arbitrary; no spanning, environment or transfer-invertibility hypothesis is imposed on them. The conclusion gives one unrestricted complex coefficient $X$ in the same target core. The observation sums $\psi( a u b )\overline{\psi( a v b )}$ over both actual exterior words $a,b$, retaining their order and the squared-norm scale.
+
+The exact dictionary is $C=FK$ and $KK^\dagger=H\otimes P^T$, where $F(u,(i,j))=(A_u)_{ji}$ and $K((i,j),(a,b))=(A_b r)_i(lA_a)_j$. Positive definiteness gives context rank four; the original trace-separation theorem makes the target three-site feature injective. Equality of raw Grams therefore gives a rank-four observed competitor range. This saturates its entire coefficient image, whose dimension is at most four, so **every** $\operatorname{tr}(YB_u)$ belongs to the target three-site parent space. `all_coefficient_parent_induction` propagates this inclusion to every length $m+3$, generalizing the coefficient at each step: snoc uses $B_jY$, cons uses $YB_i$, and the original unrestricted parent intersection glues the two slices of the same function. Taking $m=p+q$ and $Y=r'l'$ gives the full actual competitor above.
+
+`OpenBoundaryMPSInteriorCommonCore.common_core_rank_one` now closes the coefficient-rank step for an already established actual common-core representation. For $N\ge4$, write $N=2+(s+2)$. The weighted flattening
+$$F_X((i,j),w)=\operatorname{tr}\!\bigl(XA_iA_jA_w\bigr)$$
+is a row submatrix of the competitor's two-prefix amplitude matrix, so `columns_factor` and the two-dimensional virtual boundary give $\operatorname{rank}F_X\le2$. If $\det X\ne0$, the left map $Y\mapsto\gamma_A(s+2)(XY)$ is injective by `trace_separates`; the original two-site span argument then gives $\operatorname{rank}F_X=4$, a contradiction. Full rank for a $2\times2$ matrix is equivalent to surjectivity of `mulVec` and to `IsUnit`, so the converse needed to exclude rank two is explicit. Thus $\operatorname{rank}X\le1$, including the zero case. The existing rank-one factorization writes $X=r_A l_A$ and the private state-gamma identity rewrites the same competitor state through $A$ with boundaries $(l_A,r_A)$. This is conditional on the common-core representation, introduces no phase or genericity claim, and does not settle Conjecture 9.
+
+Interior phase uniqueness, intrinsic interior genericity and full Conjecture 9 remain open. This common-core unit carries **zero solved-open-problem credit** and adds no normalized-state recovery, physical recovery operation, dynamics, time group, energy, clock or thermodynamic cost. The prefix results and their C8 provenance retain their stated scopes.
+
 `OpenBoundaryMPSQuotient` supplies a rational observable boundary-Gram inverse. With the same fixed column $t$, write $d=\operatorname{eval}_t(\mathrm{minorPoly})$, $v=\operatorname{eval}_t(\det\mathrm{basisNumerator})$, $b_i=\operatorname{eval}_t(\mathrm{leftNumerator}_i)$, $N_i=\operatorname{eval}_t(\mathrm{matrixNumerator}_i)$ and $M=\mathrm{transferMatrix}(N)$. The original normalized rows $lA_i=e_i$ give the contraction $L_{kw}=l_{w_0}l_{w_1}\mathbf1_{w_2=k}$, with $L\,\mathrm{prefixMap}=I$. Its cleared version is $L_0=d^2L$. For $B=L_0Q_3L_0^\dagger$ and $h(z)=z\bar z$, the exact full-length canonical boundary Gram is
 
 $$
@@ -70,3 +88,5 @@ This parameter-open result does not establish a dense intrinsic real-algebraic o
 - Source: https://arxiv.org/abs/1210.2812v4
 
 `OpenBoundaryMPSQ2PolynomialFiber.exists_generic_fiber` strengthens this parameter-domain result to fibers through every certified parameter. Its new coordinates are five complex core entries c, a positive real sigma and a complex eta, with old representative (c,sqrt(sigma),sqrt(sigma)*eta). The actual raw Q2 record is a literal Fin 13 to Fin 12 real polynomial: lift the canonical matrices and left row, start the two by two transfer at sigma times [[1,conjugate eta],[eta,eta times conjugate eta]], and extract the existing twelve real record components. For each k, O={sigma positive, representative in canonicalChart k} is open and nonempty; one nonzero real polynomial D gives a nonempty open locus O intersect {D nonzero}, dense relative to O. Through each point of this locus and in every specified open neighborhood contained in O, there is a positive-dimensional real C1 same-Q2 fiber with a continuous linear left inverse and the exact dimension equation. Every nonzero fiber parameter gives an actual length 3+k state not unit-phase equivalent to the original state. Q2 has complement 1+k, and the coherent Q3 complement is k. The conclusion is genericity in the canonical parameter domain only; intrinsic density in the actual MPS image still needs a separate observable rational inverse and denominator descent. This supplies no additional solved-open-problem credit and no arbitrary interior-window, normalized-state, dynamics or thermodynamic assertion.
+
+The fiber theorem's C1 supplier credits BochaoKong's Apache-2.0 LeanPool constant-rank argument at commit `2b1ec889365345f19a45fa94b6457a4d92c96295`; the canonical inverse and phase argument retain Ma and Zhang's CC BY 4.0 attribution. These reused arguments are not claimed as new CommonCore or C9 mathematics.
