@@ -513,4 +513,3 @@ theorem count_by_kind (N M : ℕ) (hN : 1 ≤ N) (hM : 1 ≤ M) :
 #print axioms count_by_kind
 
 end D5.S3.SpinModels.KingDefects.KingDifference
-
