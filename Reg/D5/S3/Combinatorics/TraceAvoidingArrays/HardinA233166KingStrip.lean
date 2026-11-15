@@ -111,8 +111,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 namespace PatternCount
 abbrev signature : Signature where
-  Params := Σ C : Type u, Σ _ : Fintype C, LinearOrder C
-  State p := (p.1 → Fin 4) → Prop
+  Params := Type u
+  State C := (C → Fin 4) → Prop
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -120,10 +120,10 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p S => Nat.card {P : p.1 → Fin 4 // S P})
+  realize signature (fun _ p S => Nat.card {P : p → Fin 4 // S P})
     (fun e => nomatch e)
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ p S => Nat.card {P : p.1 → Fin 4 // S P} + 1)
+  realize signature (fun _ p S => Nat.card {P : p → Fin 4 // S P} + 1)
     (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature.{u}
@@ -131,7 +131,7 @@ abbrev arena : Arena where
     (S : (C → Fin 4) → Prop),
     (∀ e : Equiv.Perm (Fin 4), ∀ P, S (e ∘ P) ↔ S P) →
     (∀ P, S P → Function.Surjective P) →
-    R.readout () ⟨C, ft, lo⟩ S = 24 * Nat.card {P : C → Fin 4 // S P ∧ Canonical P}
+    R.readout () C S = 24 * Nat.card {P : C → Fin 4 // S P ∧ Canonical P}
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := h (fun _ : ULift.{u} Unit → Fin 4 => False)
@@ -141,7 +141,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   simp at hh
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
-  refine ⟨⟨ULift.{u} Unit, inferInstance, inferInstance⟩,
+  refine ⟨ULift.{u} Unit,
     (fun _ => False), (fun _ => True), ?_⟩
   change Nat.card {P : ULift.{u} Unit → Fin 4 // False} ≠
     Nat.card {P : ULift.{u} Unit → Fin 4 // True}
@@ -174,7 +174,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some (realize signature
+    (fun _ C S => Nat.card {P : C → Fin 4 // S P}) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -182,7 +183,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
     definition := none
-    coordinates := #[0, 1, 2]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 3
