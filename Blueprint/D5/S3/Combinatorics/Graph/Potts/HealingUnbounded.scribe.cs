@@ -52,7 +52,7 @@ internal sealed class HealingUnboundedDocument : IScribeDocumentDefinition
                 + "The graph is connected, every degree is at most three, and there is no graph isomorphism to the complete graph on Fin 4. "
                 + "Every stuck tight S with residual frustration at least one must have an augmentable tight T of the same cardinality "
                 + "with at most C vertices of S absent from T. This is the displacement consequence of a uniform stage bound in Section VIII(1)."),
-            Node("result", "No uniform displacement bound", Not(Named("claim")), DescribeRole.Theorem,
+            ClaimedNode("result", "No uniform displacement bound", Not(Named("claim")), DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
                 "Fix any proposed C and put h=C+1 and B=3·2^h−2. The vertices are pairs of a block in Fin B and a port in Fin 3. "
                 + "Every block is a triangle. Root port b joins the apex of block b+1. At each positive block u, ports 1 and 2 join "
@@ -81,6 +81,13 @@ internal sealed class HealingUnboundedDocument : IScribeDocumentDefinition
                 + "give an absolute displacement bound, which the theorem refutes. This implication concerns the number of exchanges; "
                 + "zero-based stage labels differ by one and do not change unboundedness.")
         )));
+
+    private static DocumentBlock ClaimedNode(string name, string title, Formula formula, DescribeRole role,
+        AssessedProvenance provenance, string prose) =>
+        Describe.Lean(DescribeId.Create("potts-healing-" + name.ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("choi-yoo-kim-kwon-won-2026-healing-chain-unbounded"), ResolutionKind.Refuted));
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,
         AssessedProvenance provenance, string prose) =>

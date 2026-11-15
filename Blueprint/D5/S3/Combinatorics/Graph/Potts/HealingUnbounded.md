@@ -82,6 +82,10 @@ $$\neg (\operatorname{claim})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Potts/HealingUnbounded.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/choi-yoo-kim-kwon-won-2026-healing-chain-unbounded` (refuted) by `D5/S3/Combinatorics/Graph/Potts/HealingUnbounded.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"choi-yoo-kim-kwon-won-2026-healing-chain-unbounded","declaration_gid":"D5/S3/Combinatorics/Graph/Potts/HealingUnbounded.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jeehoon Choi, Suhwan Yoo, Chaeyeon Kim, Hee Young Kwon, Changyeon Won (2026). *Coordination three heals, coordination four is hard: the antiferromagnetic Potts model with a costly third state*. DOI: [10.48550/arXiv.2610.41277](https://doi.org/10.48550/arXiv.2610.41277). URL: <https://arxiv.org/html/2610.41277v1>.
