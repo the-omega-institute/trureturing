@@ -20,6 +20,15 @@ internal sealed class HardinA233255RecurrenceDocument : IScribeDocumentDefinitio
                 + "The six explicit vectors are checked powers of this actual seventeen-coordinate "
                 + "transfer on the all-ones vector. Their exact degree-five vector identity propagates "
                 + "to every height by multiplication with arbitrary further matrix powers.")),
+            Describe.Lean(DescribeId.Create("table"), DeclarationHandle.Create(
+                "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.table"),
+                H("The sixteen-state transfer table"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Automata/hardin2013a233255")),
+                Blocks(Paragraph(Text("The integer matrix records compatible proper boundary classes. "
+                    + "The private table_matches certificate identifies it with K. The width-seven "
+                    + "one-defect transfer uses it on the leading sixteen classes and on the "
+                    + "zero-budget injection 29, 30, 33, 34, 37, 38, 39, 41, 54, 56, 57, 58, "
+                    + "61, 62, 65, 66."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(
                 "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.result"),
                 H("The all-height five-step recurrence"), StatementSource.WithoutFormula(),
