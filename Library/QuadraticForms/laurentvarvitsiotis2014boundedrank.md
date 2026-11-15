@@ -60,7 +60,7 @@ are nonchordal, so it is not an application of the chordal theorem.
 
 Monique Laurent and Antonios Varvitsiotis, *The Gram dimension of a graph*,
 https://arxiv.org/abs/1112.5960v1 (full text:
-https://arxiv.org/pdf/1112.5960v1), Section 3.1, Lemma 7 and proof, page 11.
+https://arxiv.org/pdf/1112.5960v1), Section 3.1, Lemma 7 and proof, page 10.
 The introductory sentence and proof identify the target as a Gram realization
 in ℝ²; the displayed lemma abbreviates the target as a Gram representation.
 Its angle parameters lie in [0,π], and it gives the signed-angle closure
