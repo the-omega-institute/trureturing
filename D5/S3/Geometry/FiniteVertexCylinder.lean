@@ -23,6 +23,21 @@ open Set Finset Topology
 open scoped BigOperators unitInterval ContinuousMap
 open D5.S3.Geometry.FiniteConeCollapse
 
+namespace D5.S3.Geometry.FiniteComponentClosure
+
+/-- The singleton complex retains a genuine point when a sphere list is empty. -/
+def vertexComplex {V : Type*} [DecidableEq V] (v : V) :
+    PreAbstractSimplicialComplex V where
+  faces := {{v}}
+  isRelLowerSet_faces := by
+    rintro s rfl
+    refine ⟨by simp, ?_⟩
+    intro t hts ht
+    exact Set.mem_singleton_iff.mpr (Finset.eq_singleton_iff_nonempty_unique_mem.mpr
+      ⟨ht, fun w hw => Finset.mem_singleton.mp (hts hw)⟩)
+
+end D5.S3.Geometry.FiniteComponentClosure
+
 namespace D5.S3.Geometry.FiniteVertexCylinder
 
 variable {V : Type*} [Fintype V] [DecidableEq V]

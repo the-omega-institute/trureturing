@@ -7,7 +7,13 @@
    digest: Singleton-cylinder retractions construct both relative inverse homotopies. -/
 import Mathlib.Topology.Homotopy.Path
 import Mathlib.Topology.Piecewise
-import Mathlib.Tactic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.FunProp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.SplitIfs
 
 /-!
 # Based inverses from singleton-cylinder retractions
