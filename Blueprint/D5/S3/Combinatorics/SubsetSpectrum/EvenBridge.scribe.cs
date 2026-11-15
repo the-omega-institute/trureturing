@@ -61,14 +61,14 @@ internal sealed class EvenBridgeDocument : IScribeDocumentDefinition
         var a = F.Id("A"); var s = F.Id("s");
         var real = Seq(Mathbb, Grp(F.Id("R")));
         Formula Op(string name, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
-        Formula P(Formula value) => Seq(Open, value, Close);
-        Formula Count(string name) => Seq(new Formula.Subscript(Sum, Seq(F.Id("t"), InMacro, Op(name, s))), P(Seq(D(1), Colon, real)));
+        Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+        Formula Count(string name) => Seq(new Formula.Subscript(Sum, Seq(F.Id("t"), InMacro, Op(name, s))), Parenthesized(Seq(D(1), Colon, real)));
         var exponent = new Formula.Binary(new Formula.Apply(Seq(Operatorname, Grp(F.Id("Finset"), Dot, F.Id("card"))), [s]), FormulaBinaryOperator.Subtract, D(1));
-        var half = new Formula.Power(P(Seq(D(2), Colon, real)), exponent);
-        var statement = new Formula.Logic(P(Equal(Count("evenSubsets"), half)), FormulaLogicOperator.And, P(Equal(Count("oddSubsets"), half)));
-        var implication = new Formula.Logic(new Formula.Apply(Seq(Operatorname, Grp(F.Id("Finset"), Dot, F.Id("Nonempty"))), [s]), FormulaLogicOperator.Implies, P(statement));
+        var half = new Formula.Power(Parenthesized(Seq(D(2), Colon, real)), exponent);
+        var statement = new Formula.Logic(Parenthesized(Equal(Count("evenSubsets"), half)), FormulaLogicOperator.And, Parenthesized(Equal(Count("oddSubsets"), half)));
+        var implication = new Formula.Logic(new Formula.Apply(Seq(Operatorname, Grp(F.Id("Finset"), Dot, F.Id("Nonempty"))), [s]), FormulaLogicOperator.Implies, Parenthesized(statement));
         return new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("A"), Seq(F.Id("Type"), Star),
-            Seq(OpenBracket, Op("DecidableEq", a), CloseBracket, Sp, new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("s"), Op("Finset", a), implication)));
+            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("s"), Op("Finset", a), implication));
     }
 
 }

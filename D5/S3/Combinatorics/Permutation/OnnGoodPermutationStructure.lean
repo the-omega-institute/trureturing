@@ -8,24 +8,46 @@
 
 /-
 admission_basis: escape-witness
-escape_witness: D5.S3.Combinatorics.Permutation.OnnGoodPermutationStructure.good_iff_structure; sign propagation constructs the unique split.
+escape_witness: D5.S3.Combinatorics.Permutation.OnnGoodPermutationStructure.good_iff_structure
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30704
 Direct frozen dependencies: none
-The rank-array type is written as the existing equivalence type without a type alias.
+Declaration classifications inline the same-delivery helpers and stop at frozen or pinned upstream owners.
+entry — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationStructure.good_transpose, OnnGoodPermutationStructure.entry_transpose, OnnGoodPermutationStructure.GoodAt, OnnGoodPermutationStructure.entry_ne, OnnGoodPermutationStructure.two_good_iff, OnnGoodPermutationStructure.three_good_iff, OnnGoodPermutationStructure.no_good_large, OnnGoodPermutationStructure.Structure, OnnGoodPermutationCount.rowsSigmaEquiv, OnnGoodPermutationCount.typeB_card, OnnGoodPermutationCount.typeA_card, OnnGoodPermutationCount.typeA_center, OnnGoodPermutationCount.assembleA_type, OnnGoodPermutationCount.good_of_twoChains, OnnGoodPermutationCount.extractHigh, OnnGoodPermutationCount.typesGoodEquiv, OnnGoodPermutationCount.typeA_bounds, OnnGoodPermutationCount.typeABEquiv, OnnGoodPermutationCount.types_disjoint, OnnGoodPermutationCount.typeA_transpose, OnnGoodPermutationCount.extractLow, OnnGoodPermutationCount.count_three, OnnGoodPermutationCount.rowPositions_order, OnnGoodPermutationCount.typeA_edges, OnnGoodPermutationCount.typeAEquiv, OnnGoodPermutationCount.rowsEvenEquiv, OnnGoodPermutationCount.rowSplitSubsetEquiv.
+GoodSquare — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.split_of_signs, OnnGoodPermutationStructure.square_bounds, OnnGoodPermutationStructure.good_transpose, OnnGoodPermutationStructure.GoodAt, OnnGoodPermutationStructure.two_good_iff, OnnGoodPermutationStructure.PairGood, OnnGoodPermutationStructure.pairgood_iff_chains, OnnGoodPermutationStructure.square_transpose, OnnGoodPermutationStructure.three_good_iff, OnnGoodPermutationStructure.square_sign, OnnGoodPermutationStructure.no_good_large, OnnGoodPermutationStructure.three_local_iff, OnnGoodPermutationStructure.no_three_four, OnnGoodPermutationStructure.pairgood_sign_split.
+GoodAt — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.Good, OnnGoodPermutationStructure.two_good_iff, OnnGoodPermutationStructure.good_of_one.
+Good — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationStructure.good_transpose, OnnGoodPermutationStructure.two_good_iff, OnnGoodPermutationStructure.three_good_iff, OnnGoodPermutationStructure.good_of_one, OnnGoodPermutationStructure.no_good_large, OnnGoodPermutationCount.count_two, OnnGoodPermutationCount.rowsSigmaEquiv, OnnGoodPermutationCount.good_of_twoChains, OnnGoodPermutationCount.typesGoodEquiv, OnnGoodPermutationCount.count_large, OnnGoodPermutationCount.count_three, OnnGoodPermutationCount.result, OnnGoodPermutationCount.count_one, OnnGoodPermutationCount.goodCount, OnnGoodPermutationCount.count_transpose, OnnGoodPermutationCount.claim, OnnGoodPermutationCount.rowsEvenEquiv.
+TwoChains — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationStructure.two_good_iff, OnnGoodPermutationStructure.chains_iff, OnnGoodPermutationStructure.pairgood_iff_chains, OnnGoodPermutationStructure.Structure, OnnGoodPermutationCount.rowsSigmaEquiv, OnnGoodPermutationCount.good_of_twoChains, OnnGoodPermutationCount.twoChains_unique, OnnGoodPermutationCount.rowPositions_order, OnnGoodPermutationCount.rowsEvenEquiv, OnnGoodPermutationCount.rowSplitSubsetEquiv.
+TypeA — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.three_first_middle, OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationStructure.three_good_iff, OnnGoodPermutationStructure.three_local_iff, OnnGoodPermutationStructure.no_three_four, OnnGoodPermutationStructure.Structure, OnnGoodPermutationCount.typeB_card, OnnGoodPermutationCount.typeA_card, OnnGoodPermutationCount.typeA_center, OnnGoodPermutationCount.assembleA_type, OnnGoodPermutationCount.extractHigh, OnnGoodPermutationCount.typesGoodEquiv, OnnGoodPermutationCount.typeA_bounds, OnnGoodPermutationCount.typeABEquiv, OnnGoodPermutationCount.types_disjoint, OnnGoodPermutationCount.typeA_transpose, OnnGoodPermutationCount.extractLow, OnnGoodPermutationCount.count_three, OnnGoodPermutationCount.typeA_edges, OnnGoodPermutationCount.typeAEquiv.
+TypeB — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.three_first_middle, OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationStructure.three_good_iff, OnnGoodPermutationStructure.three_local_iff, OnnGoodPermutationStructure.no_three_four, OnnGoodPermutationStructure.Structure, OnnGoodPermutationCount.typeB_card, OnnGoodPermutationCount.typesGoodEquiv, OnnGoodPermutationCount.typeABEquiv, OnnGoodPermutationCount.types_disjoint, OnnGoodPermutationCount.typeA_transpose, OnnGoodPermutationCount.count_three.
+Structure — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationCount.result, OnnGoodPermutationCount.claim.
+square_bounds — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.square_sign.
+square_sign — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.split_of_signs, OnnGoodPermutationStructure.pairgood_iff_chains, OnnGoodPermutationStructure.three_local_iff, OnnGoodPermutationStructure.pairgood_sign_split.
+entry_ne — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.two_good_iff, OnnGoodPermutationStructure.three_good_iff, OnnGoodPermutationStructure.no_good_large.
+square_transpose — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_transpose.
+PairGood — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.split_of_signs, OnnGoodPermutationStructure.two_good_iff, OnnGoodPermutationStructure.pairgood_iff_chains, OnnGoodPermutationStructure.pairgood_sign_split.
+SplitOrder — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.split_of_signs, OnnGoodPermutationStructure.chains_iff, OnnGoodPermutationStructure.pairgood_iff_chains, OnnGoodPermutationCount.twoChains_unique.
+chains_iff — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.pairgood_iff_chains, OnnGoodPermutationCount.twoChains_unique.
+pairgood_sign_split — proof_shape: content; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.pairgood_iff_chains.
+split_of_signs — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.pairgood_iff_chains.
+pairgood_iff_chains — proof_shape: content; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.two_good_iff.
+three_local_iff — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.three_good_iff, OnnGoodPermutationStructure.no_three_four.
+three_first_middle — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.no_three_four.
+no_three_four — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.no_good_large.
+transpose — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationStructure.good_transpose, OnnGoodPermutationStructure.entry_transpose, OnnGoodPermutationStructure.transpose_twice, OnnGoodPermutationCount.typeABEquiv, OnnGoodPermutationCount.typeA_transpose, OnnGoodPermutationCount.count_transpose.
+entry_transpose — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationStructure.good_transpose.
+transpose_twice — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.count_transpose.
+good_transpose — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationCount.count_transpose.
+two_good_iff — proof_shape: content; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationCount.good_of_twoChains.
+three_good_iff — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_iff_structure.
+no_good_large — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationCount.count_large.
+good_of_one — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationStructure.good_iff_structure, OnnGoodPermutationCount.count_one.
+good_iff_structure — proof_shape: content; escape_witness: D5.S3.Combinatorics.Permutation.OnnGoodPermutationStructure.good_iff_structure; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.result.
+The rank-array type is the existing equivalence type, with no type alias.
 -/
 
-import Aesop
-import Mathlib.Order.Monotone.Basic
-import Mathlib.Order.SuccPred.Archimedean
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Ring
 import Mathlib.Tactic.IntervalCases
-import Mathlib.Data.Fintype.Card
 import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Data.List.OfFn
-import Mathlib.Data.List.Pairwise
 
 namespace D5.S3.Combinatorics.Permutation.OnnGoodPermutationStructure
 
@@ -363,7 +385,8 @@ end D5.S3.Combinatorics.Permutation.OnnGoodPermutationStructure
 namespace D5.S3.Combinatorics.Permutation.OnnGoodPermutationStructure
 
 def transpose {m n : ℕ} (σ : ((Fin m × Fin n) ≃ Fin (m * n))) : ((Fin n × Fin m) ≃ Fin (n * m)) :=
-  ((Equiv.prodComm (Fin n) (Fin m)).trans σ).trans (finCongr (Nat.mul_comm m n))
+  let h : m * n = n * m := by ring
+  ((Equiv.prodComm (Fin n) (Fin m)).trans σ).trans (finCongr h)
 
 @[simp] private theorem entry_transpose {m n : ℕ} (σ : ((Fin m × Fin n) ≃ Fin (m * n))) (i j : ℕ) :
     entry (transpose σ) i j = entry σ j i := by

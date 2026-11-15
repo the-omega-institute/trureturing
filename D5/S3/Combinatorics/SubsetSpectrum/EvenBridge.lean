@@ -6,6 +6,8 @@
    utility: none
    digest: Even subset spectra determine total and full spectra in odd length. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30704 -/
+
 import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
 import Mathlib.Algebra.Ring.Parity
 import Mathlib.Data.Real.Basic

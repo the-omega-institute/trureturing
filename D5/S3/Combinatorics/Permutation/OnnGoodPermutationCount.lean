@@ -9,19 +9,81 @@
 /-
 admission_basis: open-problem-resolution (#26707; Proved)
 escape_witness: none (settling result)
-Direct frozen dependencies: D5/S3/Combinatorics/SubsetSpectrum/EvenBridge.parity_counts (publication pending canonical re-pin).
-The rank-array type is written as the existing equivalence type without a type alias.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30704
+Direct frozen dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9
+F1: gid:D5/S1/Words/Patterns/A398542FixedBottom; declaration D5.S1.Words.Patterns.A398542FixedBottom.Shuffle; sha256:dd5fc640ababf1df241ef657ca84389b857beae142dde85339d0803f0d505f6e
+F2: gid:D5/S1/Words/Patterns/A398542FixedBottom; declaration D5.S1.Words.Patterns.A398542FixedBottom.Shuffle.casesOn; sha256:ef821427d8fa29568d12f476cb8a47500bff84af0acc02f48359210ab7d12295
+F3: gid:D5/S1/Words/Patterns/A398542FixedBottom; declaration D5.S1.Words.Patterns.A398542FixedBottom.Shuffle.lower_mono; sha256:429b30d3b271cdbab97e06329d4f625ee19844576f45921ccc5e8435843f1e37
+F4: gid:D5/S1/Words/Patterns/A398542FixedBottom; declaration D5.S1.Words.Patterns.A398542FixedBottom.Shuffle.mk; sha256:74c85131299e5efa919a9a01e2250ffc457ca814d37918293fbc5f6b2f9565e9
+F5: gid:D5/S1/Words/Patterns/A398542FixedBottom; declaration D5.S1.Words.Patterns.A398542FixedBottom.Shuffle.positions; sha256:1c8390956fe434af253a13095086928ae8d4266dc62485aa5a931a5c69beaf07
+F6: gid:D5/S1/Words/Patterns/A398542FixedBottom; declaration D5.S1.Words.Patterns.A398542FixedBottom.Shuffle.upper_mono; sha256:8f0123cb940a52c3beb7a6eb52d80b15e8c52290a117cfe8bc36f6ea9a7b992b
+F7: gid:D5/S3/Combinatorics/SubsetSpectrum/EvenBridge; declaration D5.S3.Combinatorics.SubsetSpectrum.evenSubsets; sha256:8f998106944694dc001e4e894e5e2310ef44c82b679b5a0f0ffdc390f7138888
+F8: gid:D5/S3/Combinatorics/SubsetSpectrum/EvenBridge; declaration D5.S3.Combinatorics.SubsetSpectrum.oddSubsets; sha256:56b4be0ffa94347164e3cf25c867fb1e1b26642bea6c6ce662b2513f6f49990e
+F9: gid:D5/S3/Combinatorics/SubsetSpectrum/EvenBridge; declaration _private.D5.S3.Combinatorics.SubsetSpectrum.EvenBridge.0.D5.S3.Combinatorics.SubsetSpectrum.parity_counts; sha256:ffae137768286f4e6b212938b1549a12ce569db9dc9579c1ce91f666938e2319 (original private identity; public re-pin pending)
+Declaration classifications inline the same-delivery helpers and stop at frozen or pinned upstream owners.
+goodCount — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.count_two, OnnGoodPermutationCount.count_large, OnnGoodPermutationCount.count_three, OnnGoodPermutationCount.result, OnnGoodPermutationCount.count_one, OnnGoodPermutationCount.count_transpose, OnnGoodPermutationCount.claim, OnnGoodPermutationCount.count_formula.
+proposedCount — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.result, OnnGoodPermutationCount.claim, OnnGoodPermutationCount.count_formula.
+claim — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.result.
+count_transpose — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.count_formula.
+count_one — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.count_formula.
+count_large — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.count_formula.
+leftLabels — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.rightLabels_compl, OnnGoodPermutationCount.leftLabels_card, OnnGoodPermutationCount.orderedSplitSubsetEquiv.
+leftLabels_card — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: settling result.
+rightLabels_compl — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: settling result.
+shuffle_ext — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F4, F5; consumers: settling result.
+orderedSplitSubsetEquiv — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6; consumers: OnnGoodPermutationCount.orderedSplit_card, OnnGoodPermutationCount.rowSplitSubsetEquiv.
+orderedSplit_card — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6; consumers: OnnGoodPermutationCount.typeA_card.
+chainLayout — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.partitionOrderEquiv, OnnGoodPermutationCount.chainLayout_left, OnnGoodPermutationCount.chainLayout_right.
+chainLayout_left — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: settling result.
+chainLayout_right — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: settling result.
+partitionOrderEquiv — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6; consumers: OnnGoodPermutationCount.rowSplitSubsetEquiv.
+evenFinset_card — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F7, F8, F9; consumers: OnnGoodPermutationCount.count_two.
+splitSubsetEvenEquiv — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.rowsEvenEquiv.
+lowPositions — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.rowPositions_nodup, OnnGoodPermutationCount.rowPositions_order, OnnGoodPermutationCount.rowPositions_all, OnnGoodPermutationCount.rowSplitSubsetEquiv.
+highPositions — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.rowPositions_nodup, OnnGoodPermutationCount.rowPositions_order, OnnGoodPermutationCount.rowPositions_all, OnnGoodPermutationCount.rowSplitSubsetEquiv.
+rowPositions_nodup — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.rowSplitSubsetEquiv.
+rowPositions_all — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.rowSplitSubsetEquiv.
+rowPositions_order — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.rowSplitSubsetEquiv.
+rowSplitSubsetEquiv — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6; consumers: OnnGoodPermutationCount.rowsEvenEquiv.
+twoChains_unique — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.good_of_twoChains.
+good_of_twoChains — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: settling result.
+rowsSigmaEquiv — proof_shape: content; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.rowsEvenEquiv.
+rowsEvenEquiv — proof_shape: content; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6; consumers: OnnGoodPermutationCount.count_two.
+count_two — proof_shape: content; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9; consumers: OnnGoodPermutationCount.count_formula.
+lowerPos — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.typeA_center, OnnGoodPermutationCount.assembleA_type, OnnGoodPermutationCount.extractHigh, OnnGoodPermutationCount.typeA_bounds, OnnGoodPermutationCount.assembleA_lower, OnnGoodPermutationCount.extractLow, OnnGoodPermutationCount.positionFun, OnnGoodPermutationCount.lowerPos_injective.
+upperPos — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.typeA_center, OnnGoodPermutationCount.assembleA_type, OnnGoodPermutationCount.extractHigh, OnnGoodPermutationCount.typeA_bounds, OnnGoodPermutationCount.extractLow, OnnGoodPermutationCount.positionFun, OnnGoodPermutationCount.upperPos_injective, OnnGoodPermutationCount.assembleA_upper.
+lowerPos_injective — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.typeA_center.
+upperPos_injective — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.typeA_center.
+positionFun — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.positionEquiv.
+positionEquiv — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.assembleA, OnnGoodPermutationCount.assembleA_lower, OnnGoodPermutationCount.assembleA_upper, OnnGoodPermutationCount.assembleA_middle.
+labelEquiv — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.assembleA, OnnGoodPermutationCount.assembleA_lower, OnnGoodPermutationCount.assembleA_upper, OnnGoodPermutationCount.assembleA_middle.
+typeA_edges — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.assembleA_type, OnnGoodPermutationCount.typeA_bounds.
+typeA_bounds — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.typeA_center, OnnGoodPermutationCount.extractHigh, OnnGoodPermutationCount.extractLow.
+typeA_center — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.extractHigh, OnnGoodPermutationCount.extractLow.
+extractLow — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F4; consumers: OnnGoodPermutationCount.typeAEquiv.
+extractHigh — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F4; consumers: OnnGoodPermutationCount.typeAEquiv.
+assembleA — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F5; consumers: OnnGoodPermutationCount.assembleA_type, OnnGoodPermutationCount.assembleA_lower, OnnGoodPermutationCount.typeAEquiv, OnnGoodPermutationCount.assembleA_upper, OnnGoodPermutationCount.assembleA_middle.
+assembleA_lower — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F5; consumers: OnnGoodPermutationCount.assembleA_type.
+assembleA_upper — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F5; consumers: OnnGoodPermutationCount.assembleA_type.
+assembleA_middle — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F5; consumers: OnnGoodPermutationCount.assembleA_type.
+assembleA_type — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F3, F5, F6; consumers: settling result.
+typeAEquiv — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6; consumers: OnnGoodPermutationCount.typeA_card.
+typeA_card — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6; consumers: OnnGoodPermutationCount.typeB_card, OnnGoodPermutationCount.count_three.
+typeA_transpose — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: settling result.
+typeABEquiv — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.typeB_card.
+typeB_card — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6; consumers: OnnGoodPermutationCount.count_three.
+types_disjoint — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: settling result.
+typesGoodEquiv — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.count_three.
+count_three — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6; consumers: OnnGoodPermutationCount.count_formula.
+count_formula — proof_shape: content; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9; consumers: OnnGoodPermutationCount.result.
+result — proof_shape: content; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9; consumers: none (settling result).
+The rank-array type is the existing equivalence type, with no type alias.
 -/
 
 import D5.S3.Combinatorics.Permutation.OnnGoodPermutationStructure
 import D5.S3.Combinatorics.SubsetSpectrum.EvenBridge
 import D5.S1.Words.Patterns.A398542FixedBottom
 import Mathlib.Data.Fintype.Sort
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Tactic.Ring
-import Mathlib.Data.List.NodupEquivFin
-import Mathlib.Logic.Equiv.Fin.Basic
 
 open D5.S3.Combinatorics.Permutation.OnnGoodPermutationStructure
 open D5.S1.Words.Patterns.A398542FixedBottom (Shuffle)

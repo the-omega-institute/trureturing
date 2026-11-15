@@ -35,7 +35,7 @@ internal sealed class OnnGoodPermutationStructureDocument : IScribeDocumentDefin
                 IffF(Call("TwoChains", V("n"), V("T"), V("B"), V("k")), Call("SplitOrder", V("n"), V("T"), V("B"), V("k")))))),
                 "Expanding pairwise order on concatenated lists gives exactly the indexed inequalities."),
             Node("transpose", "Transposing a rank array", TransposeFormula(),
-                "Swap the two coordinates and transport the label through finCongr along m*n=n*m.", true),
+                "Swap the two coordinates and transport the label through finCongr along m*n=n*m. The local proof h is obtained by natural-number arithmetic.", true),
             Node("transpose_twice", "Transposition is involutive", Rect(Equal(Call("transpose", Call("transpose", V("s"))), V("s"))),
                 "Both coordinate swaps cancel, and finCongr preserves label values."),
             Node("good_transpose", "Goodness and transposition", Rect(IffF(Call("Good", Call("transpose", V("s"))), Call("Good", V("s")))),
@@ -159,7 +159,10 @@ internal sealed class OnnGoodPermutationStructureDocument : IScribeDocumentDefin
     private static Formula TransposeFormula()
     {
         var swap = App(Q("Equiv", "prodComm"), Call("Fin", V("n")), Call("Fin", V("m")));
-        var cast = Call("finCongr", Parenthesized(Equal(Mul(V("m"), V("n")), Mul(V("n"), V("m")))));
-        return Rect(Equal(Call("transpose", V("s")), App(Q("Equiv", "trans"), App(Q("Equiv", "trans"), swap, V("s")), cast)));
+        var cast = Call("finCongr", V("h"));
+        var body = Seq(V("let"), Sp, V("h"), Colon, Equal(Mul(V("m"), V("n")), Mul(V("n"), V("m"))),
+            Sp, Colon, Eq, Sp, V("by"), Sp, V("ring"), Semi, Sp,
+            App(Q("Equiv", "trans"), App(Q("Equiv", "trans"), swap, V("s")), cast));
+        return Rect(Equal(Call("transpose", V("s")), Parenthesized(body)));
     }
 }
