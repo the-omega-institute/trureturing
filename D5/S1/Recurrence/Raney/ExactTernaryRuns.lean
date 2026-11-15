@@ -7,6 +7,8 @@
    digest: Exact ternary support and all maximal zero intervals of the literal Raney quotient. -/
 
 import D5.S1.Recurrence.Raney.ZeroRunFamilies
+import Mathlib.Algebra.Ring.Parity
+import Mathlib.Order.IsNormal
 
 /-! # Exact zero runs at the exceptional prime three
 
@@ -137,11 +139,9 @@ private def ternarySupportIndex (m : Nat) : Nat := (3 ^ m - 1) / 2
 
 private theorem ternary_index_identity (m : Nat) :
     2 * ternarySupportIndex m + 1 = 3 ^ m := by
-  induction m with
-  | zero => decide
-  | succ m ih =>
-    simp only [ternarySupportIndex, pow_succ] at *
-    omega
+  rcases ((by decide : Odd (3 : Nat)).pow : Odd (3 ^ m)) with ⟨k, hk⟩
+  dsimp [ternarySupportIndex]
+  omega
 
 private theorem ternary_index_step (m : Nat) :
     ternarySupportIndex (m + 1) = 3 * ternarySupportIndex m + 1 := by
@@ -177,14 +177,12 @@ private theorem ternary_gap_zero (m n : Nat)
 
 private theorem ternary_bracket (n : Nat) :
     ∃ m : Nat, ternarySupportIndex m ≤ n ∧ n < ternarySupportIndex (m + 1) := by
-  induction n with
-  | zero => exact ⟨0, by decide, by decide⟩
-  | succ n ih =>
-    obtain ⟨m, hlo, hhi⟩ := ih
-    by_cases hnext : n + 1 < ternarySupportIndex (m + 1)
-    · exact ⟨m, by omega, hnext⟩
-    · have heq : n + 1 = ternarySupportIndex (m + 1) := by omega
-      exact ⟨m + 1, by omega, by rw [heq]; exact ternary_index_strict (by omega)⟩
+  have hnormal : Order.IsNormal ternarySupportIndex := {
+    strictMono := ternary_index_strict
+    mem_lowerBounds_upperBounds_of_isSuccLimit := by
+      intro a ha
+      exact (Order.not_isSuccLimit ha).elim }
+  exact hnormal.exists_map_le_lt_map_succ (by simp [ternarySupportIndex])
 
 private theorem ternary_maximal_iff (first last : Nat) :
     IsMaximalDeltaInterval {0} (fun n => (raneyNumber 3 1 n : ZMod 3)) first last ↔
