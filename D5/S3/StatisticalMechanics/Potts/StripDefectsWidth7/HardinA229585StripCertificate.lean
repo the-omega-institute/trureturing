@@ -13,6 +13,11 @@ tail_bound: proof_shape=bind-only; consumers=structural_certificate
 structural_certificate: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 -/
 
+import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.ForwardChecks.HardinA229585StripForward0
+import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.ForwardChecks.HardinA229585StripForward1
+import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.ForwardChecks.HardinA229585StripForward2
+import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.ForwardChecks.HardinA229585StripForward3
+import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.ForwardChecks.HardinA229585StripForward4
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.Initial.HardinA229585StripCounts0
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.Initial.HardinA229585StripCounts1
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.Initial.HardinA229585StripCounts2
@@ -32,6 +37,8 @@ open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripCertificate
 open D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects)
+
+attribute [local irreducible] W T initial terminal cl
 
 private theorem tail_bound (r : Row) :
     (Finset.univ.filter fun z : Fin 5 =>
@@ -84,7 +91,28 @@ theorem structural_certificate :
     by_cases h7 : s.val < 64
     · exact Initial.HardinA229585StripCounts7.initial_counts s ⟨by omega, h7⟩
     exact Initial.HardinA229585StripCounts8.initial_counts s ⟨by omega, s.isLt⟩
-  · decide +kernel
+  · constructor
+    · rfl
+    · intro i
+      by_cases h0 : i.val < 2
+      · have h := ForwardChecks.HardinA229585StripForward0.forward_steps
+          ⟨i.val - 0, by omega⟩
+        simpa only [Fin.val_mk, show 0 + (i.val - 0) = i.val by omega] using h
+      by_cases h1 : i.val < 4
+      · have h := ForwardChecks.HardinA229585StripForward1.forward_steps
+          ⟨i.val - 2, by omega⟩
+        simpa only [Fin.val_mk, show 2 + (i.val - 2) = i.val by omega] using h
+      by_cases h2 : i.val < 6
+      · have h := ForwardChecks.HardinA229585StripForward2.forward_steps
+          ⟨i.val - 4, by omega⟩
+        simpa only [Fin.val_mk, show 4 + (i.val - 4) = i.val by omega] using h
+      by_cases h3 : i.val < 8
+      · have h := ForwardChecks.HardinA229585StripForward3.forward_steps
+          ⟨i.val - 6, by omega⟩
+        simpa only [Fin.val_mk, show 6 + (i.val - 6) = i.val by omega] using h
+      have h := ForwardChecks.HardinA229585StripForward4.forward_steps
+        ⟨i.val - 8, by omega⟩
+      simpa only [Fin.val_mk, show 8 + (i.val - 8) = i.val by omega] using h
   · decide +kernel
 
 end D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripCertificate

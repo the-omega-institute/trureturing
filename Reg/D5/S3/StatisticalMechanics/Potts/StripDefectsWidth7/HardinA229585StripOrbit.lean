@@ -41,10 +41,11 @@ def family : Registration arena (type_of% @sum_count) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨0, 0, {(0 : Fin 72)}, ?_⟩
-    change (Multiset.count (0 : Fin 72) 0 : ℤ) ≠
-      (Multiset.count (0 : Fin 72) {(0 : Fin 72)} : ℤ)
-    simp
+    refine ⟨0, nextClasses ![0, 1, 0, 1, 0, 1] 1,
+      nextClasses ![0, 1, 0, 1, 0, 1] 0, ?_⟩
+    change ((nextClasses ![0, 1, 0, 1, 0, 1] 1).count 0 : ℤ) ≠
+      ((nextClasses ![0, 1, 0, 1, 0, 1] 0).count 0 : ℤ)
+    decide +kernel
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@sum_count) (Realization signature) Type Unit where

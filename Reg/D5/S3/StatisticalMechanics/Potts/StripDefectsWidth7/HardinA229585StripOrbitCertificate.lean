@@ -1,6 +1,5 @@
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripOrbitCertificate
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
-import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripOrbit
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -12,14 +11,13 @@ set_option profiler true
 namespace Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripOrbitCertificate
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripOrbitCertificate
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
-open _root_.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripOrbit
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects)
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
-attribute [local irreducible] T images nextClasses
+attribute [local irreducible] T
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Fin 72) (fun _ => Fin 72) (fun _ => ℤ)
 def readout : Realization signature := realize signature (fun _ u x => T x u) (fun e => nomatch e)
