@@ -151,7 +151,7 @@ private lemma chart_prefix_injective (A : Fin 2 → Bond) (l g : Fin 2 → ℂ)
     ring
   simpa only [hw] using congrFun hxy ![i, 0, 0]
 
-private lemma tail_gram (A : Fin 2 → Bond) (r : Fin 2 → ℂ) (m : ℕ) :
+lemma tail_gram (A : Fin 2 → Bond) (r : Fin 2 → ℂ) (m : ℕ) :
     tailMap A r m * (tailMap A r m)ᴴ =
       (transfer A)^[m] (vecMulVec r (star r)) := by
   have hs (k : ℕ) : tailMap A r k * (tailMap A r k)ᴴ =
