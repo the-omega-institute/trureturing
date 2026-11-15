@@ -8,13 +8,14 @@
 
 /-
 admission_basis: open-problem-resolution (#30601; Proved)
-escape_witness: union_path_eventually_supported (alternating closure reaches the whole union component); derived_singleCoordinate_mem (isolated commutators at one site); derived_transitive_of_unionConnected (abelian species charge)
+escape_witness: none; every declaration is bind-only and the settlement is admitted as open-problem-resolution (#30601)
 Direct frozen mathematical dependencies: none (pinned Mathlib only).
 Utility is none: this is a uniform classification of the external switching
 question, rather than a finite certificate or an asserted computational use.
 The proof-shape judgments expand all same-delivery definitions and helpers.
-Consumed bind-only helpers organize normalization and existing library uses;
-they are not claimed as new mathematical content.
+Every declaration is judged bind-only: the proofs apply closure induction,
+commutator, quotient and orbit-stabilizer results of pinned Mathlib with
+normalization. The novelty is the settlement of the external question.
 Configuration: proof_shape=bind-only; consumers=adjacentMove, boundaryMove, moveRelation, sector, branchingProbability, overlap, unionMoveRelation, sectorsOf, alternatingSectorReach, switchSupport, alternatingSupport, adjacentMove_involutive, boundary_at_first, boundary_at_last, boundary_at_other, boundaryMove_involutive, sector_nonempty, branchingProbability_pos_iff, sector_overlap_is_positive, alternatingSupport_eq_switchSupport, fullSwitchingReachability, mem_sector_iff, alternatingSupport_step, alternatingSupport_mono, alternatingSupport_union_step, union_path_eventually_supported, supported_in_union_component, site_permutation_path, boundary_pair_path, unionConnected_of_derived_transitive, union_path_invariant, all_in_orbit_move, twist_transitive_of_unionConnected, charge_product_move, twoSiteEquiv, twoSite_move_orbit, unionConnected_two_iff_pair_pretransitive, result
 adjacentMove: proof_shape=bind-only; consumers=moveRelation, adjacentMove_involutive, twoSite_move_orbit
 lastSite: proof_shape=bind-only; consumers=boundaryMove, lastSite_ne_first, boundary_at_first, boundary_at_last, boundary_at_other, boundaryMove_involutive, boundary_pair_path, exists_site_permutation, pairedCoordinates_mem, all_in_orbit_move, charge_product_move
@@ -58,9 +59,9 @@ mem_sector_iff: proof_shape=bind-only; consumers=alternatingSupport_step, suppor
 alternatingSupport_step: proof_shape=bind-only; consumers=alternatingSupport_mono, alternatingSupport_union_step
 alternatingSupport_mono: proof_shape=bind-only; consumers=alternatingSupport_union_step
 alternatingSupport_union_step: proof_shape=bind-only; consumers=union_path_eventually_supported
-union_path_eventually_supported: proof_shape=content; consumers=fullSwitchingReachability_iff_unionConnected
-supported_in_union_component: proof_shape=content; consumers=fullSwitchingReachability_iff_unionConnected
-fullSwitchingReachability_iff_unionConnected: proof_shape=content; consumers=result
+union_path_eventually_supported: proof_shape=bind-only; consumers=fullSwitchingReachability_iff_unionConnected
+supported_in_union_component: proof_shape=bind-only; consumers=fullSwitchingReachability_iff_unionConnected
+fullSwitchingReachability_iff_unionConnected: proof_shape=bind-only; consumers=result
 UnionPath: proof_shape=bind-only; consumers=siteReachGroup, site_permutation_path, coordinateReachGroup, boundary_pair_path, unionConnected_of_derived_transitive
 siteReachGroup: proof_shape=bind-only; consumers=siteReachGroup_eq_top, site_permutation_path
 siteReachGroup_eq_top: proof_shape=bind-only; consumers=site_permutation_path
@@ -76,27 +77,27 @@ pairTwistGroup_le_product: proof_shape=bind-only; consumers=pairStabilizerEquiv
 twistGroup_le_pair_fst: proof_shape=bind-only; consumers=derived_singleCoordinate_mem
 singleCoordinateHom: proof_shape=bind-only; consumers=derived_singleCoordinate_mem, unionConnected_of_derived_transitive
 three_distinct_sites: proof_shape=bind-only; consumers=derived_singleCoordinate_mem
-derived_singleCoordinate_mem: proof_shape=content; consumers=unionConnected_of_derived_transitive
-unionConnected_of_derived_transitive: proof_shape=content; consumers=unionConnected_iff_lAtLeastThreeCriterion
+derived_singleCoordinate_mem: proof_shape=bind-only; consumers=unionConnected_of_derived_transitive
+unionConnected_of_derived_transitive: proof_shape=bind-only; consumers=unionConnected_iff_lAtLeastThreeCriterion
 union_path_invariant: proof_shape=bind-only; consumers=twist_transitive_of_unionConnected, derived_transitive_of_unionConnected
 all_in_orbit_move: proof_shape=bind-only; consumers=twist_transitive_of_unionConnected
-twist_transitive_of_unionConnected: proof_shape=content; consumers=derived_transitive_of_unionConnected
+twist_transitive_of_unionConnected: proof_shape=bind-only; consumers=derived_transitive_of_unionConnected
 actionCharge: proof_shape=bind-only; consumers=actionCharge_eval, actionCharge_smul, derived_transitive_of_unionConnected
 actionCharge_eval: proof_shape=bind-only; consumers=actionCharge_smul, derived_transitive_of_unionConnected
 actionCharge_smul: proof_shape=bind-only; consumers=derived_transitive_of_unionConnected
 charge_product_move: proof_shape=bind-only; consumers=derived_transitive_of_unionConnected
-derived_transitive_of_unionConnected: proof_shape=content; consumers=unionConnected_iff_lAtLeastThreeCriterion
+derived_transitive_of_unionConnected: proof_shape=bind-only; consumers=unionConnected_iff_lAtLeastThreeCriterion
 twoSiteEquiv: proof_shape=bind-only; consumers=twoSite_move_orbit, unionConnected_two_iff_pair_pretransitive
 flipPairHom: proof_shape=bind-only; consumers=pair_flip_mem, pair_orbit_swap
 pair_flip_mem: proof_shape=bind-only; consumers=pair_orbit_swap
 pair_orbit_swap: proof_shape=bind-only; consumers=twoSite_move_orbit
 twoSite_move_orbit: proof_shape=bind-only; consumers=unionConnected_two_iff_pair_pretransitive
-unionConnected_two_iff_pair_pretransitive: proof_shape=content; consumers=unionConnected_two_iff_lTwoCriterion
+unionConnected_two_iff_pair_pretransitive: proof_shape=bind-only; consumers=unionConnected_two_iff_lTwoCriterion
 pairStabilizerEquiv: proof_shape=bind-only; consumers=lTwoCriterion_iff_pair_pretransitive
 lTwoCriterion_iff_pair_pretransitive: proof_shape=bind-only; consumers=unionConnected_two_iff_lTwoCriterion
-unionConnected_two_iff_lTwoCriterion: proof_shape=content; consumers=result
-unionConnected_iff_lAtLeastThreeCriterion: proof_shape=content; consumers=result
-result: proof_shape=content; consumers=none (designated external-question result)
+unionConnected_two_iff_lTwoCriterion: proof_shape=bind-only; consumers=result
+unionConnected_iff_lAtLeastThreeCriterion: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=none (designated external-question result)
 -/
 
 import Mathlib.Data.Fin.Basic
