@@ -8,7 +8,53 @@
 /-
 admission_basis: escape-witness
 escape_witness: integrate_v (propagation of a cocycle along an arbitrary row),
-  integrationEquiv (root and difference field reconstruct a unique colouring).
+  integrationEquiv (root and difference field reconstruct a unique colouring),
+  horizontal_slot_eq and vertical_slot_eq (rainbow rigidity along clear intervals).
+K: proof_shape=bind-only; consumers=DiffField,integrate,colourEquiv
+colourEquiv: proof_shape=bind-only; consumers=relabelDefectEquiv
+neg_self: proof_shape=bind-only; consumers=add_eq_zero
+self_add: proof_shape=bind-only; consumers=add_add_cancel,differentiate_cocycle,integrate_v
+add_add_cancel: proof_shape=bind-only; consumers=integrate_h,integrate_v
+add_eq_zero: proof_shape=bind-only; consumers=raw_differentiate_iff,rainbow_algebra
+DiffField: proof_shape=bind-only; consumers=Cocycle,differentiate,integrate
+Cocycle: proof_shape=bind-only; consumers=differentiate_cocycle,integrate_v,integrationEquiv
+differentiate: proof_shape=bind-only; consumers=differentiate_cocycle,differentiate_integrate
+differentiate_cocycle: proof_shape=bind-only; consumers=integrationEquiv,raw_differentiate_iff
+integrate: proof_shape=bind-only; consumers=integrate_h,integrate_v,integrationEquiv
+integrate_root: proof_shape=bind-only; consumers=integrationEquiv,rootZeroEquiv
+integrate_h: proof_shape=bind-only; consumers=differentiate_integrate
+integrate_v: proof_shape=content; consumers=differentiate_integrate
+differentiate_integrate: proof_shape=content; consumers=defectIntegrationEquiv,rainbow_field
+difference_unique: proof_shape=content; consumers=integrate_differentiate
+integrate_differentiate: proof_shape=bind-only; consumers=integrationEquiv,rootZeroEquiv
+integrationEquiv: proof_shape=content; consumers=defectIntegrationEquiv
+edgeValue: proof_shape=bind-only; consumers=RawAdmissible,differentiate_edgeValue
+RawAdmissible: proof_shape=bind-only; consumers=raw_differentiate_iff,defectIntegrationEquiv,N_e
+differentiate_edgeValue: proof_shape=bind-only; consumers=raw_differentiate_iff
+raw_differentiate_iff: proof_shape=bind-only; consumers=defectIntegrationEquiv,rootZeroEquiv
+defectIntegrationEquiv: proof_shape=content; consumers=rootZeroEquiv,count_fixed_edge
+rootZeroEquiv: proof_shape=content; consumers=none
+N_e: proof_shape=bind-only; consumers=count_fixed_edge,count_from_fields,N_H,N_D
+relabelDefectEquiv: proof_shape=bind-only; consumers=count_fixed_edge
+count_fixed_edge: proof_shape=content; consumers=count_from_fields,N_transpose,N_reflect
+count_from_fields: proof_shape=content; consumers=fields_eq_six_canonical
+Rainbow: proof_shape=bind-only; consumers=rainbow_algebra,rainbow_block,good_differentiate
+rainbow_algebra: proof_shape=bind-only; consumers=rainbow_block
+rainbow_block: proof_shape=bind-only; consumers=rainbow_field
+GoodBlock: proof_shape=bind-only; consumers=good_differentiate,rainbow_field
+good_differentiate: proof_shape=bind-only; consumers=rainbow_field
+rainbow_field: proof_shape=bind-only; consumers=goodBlock_of_raw
+BlockAvoids: proof_shape=bind-only; consumers=goodBlock_of_raw,horizontal_slot_eq,vertical_slot_eq
+goodBlock_of_raw: proof_shape=bind-only; consumers=horizontal_slot_eq,vertical_slot_eq
+horizontal_slot_eq: proof_shape=content; consumers=none
+vertical_slot_eq: proof_shape=content; consumers=none
+fields_eq_six_canonical: proof_shape=content; consumers=count_by_kind
+N_transpose: proof_shape=bind-only; consumers=sum_fields_by_kind
+N_reflect: proof_shape=bind-only; consumers=sum_fields_by_kind
+N_H: proof_shape=bind-only; consumers=sum_fields_by_kind,count_by_kind
+N_D: proof_shape=bind-only; consumers=sum_fields_by_kind,count_by_kind
+sum_fields_by_kind: proof_shape=bind-only; consumers=count_by_kind
+count_by_kind: proof_shape=content; consumers=none
 The finite Klein identities support uniform structural theorems; no bounded
 colouring enumeration or numerical instance is asserted.
 -/
@@ -38,6 +84,7 @@ private theorem neg_self (a : K) : -a = a := by
 @[simp] private theorem add_eq_zero (a b : K) : a + b = 0 ↔ a = b := by
   simpa only [neg_self] using (add_eq_zero_iff_eq_neg (a := a) (b := b))
 
+/-- A rectangle with `N` vertical steps and `M` horizontal steps has `(N+1)(M+1)` cells. -/
 @[ext] structure DiffField (N M : ℕ) where
   h : Fin (N + 1) → Fin M → K
   v : Fin N → Fin (M + 1) → K
@@ -81,7 +128,7 @@ theorem integrate_v {N M : ℕ} (t : K) (s : DiffField N M) (hs : Cocycle s)
   | zero =>
     dsimp [differentiate, integrate]
     rw [Fin.partialSum_succ]
-    simp [add_assoc, add_left_comm, add_comm]
+    simp [add_left_comm, add_comm]
   | succ j ih =>
     have hc := hs i j
     have hd : (differentiate (integrate t s)).v i j.succ =
@@ -161,7 +208,7 @@ theorem differentiate_edgeValue {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
   | A i j =>
     change (f (i.castSucc,j.castSucc) + f (i.castSucc,j.succ)) +
       (f (i.castSucc,j.castSucc) + f (i.succ,j.castSucc)) = _
-    simp [add_assoc, add_left_comm, add_comm]
+    simp [add_assoc, add_left_comm]
     rfl
 
 theorem raw_differentiate_iff {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
@@ -179,7 +226,7 @@ def defectIntegrationEquiv {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
     apply (raw_differentiate_iff _ e).mp
     rw [differentiate_integrate _ _ q.2.property.1]
     exact q.2.property⟩
-  left_inv f := Subtype.ext (integrate_differentiate f.val)
+  left_inv f := Subtype.ext ((integrationEquiv N M).left_inv f.val)
   right_inv q := by
     apply Prod.ext (integrate_root _ _)
     exact Subtype.ext (differentiate_integrate _ _ q.2.property.1)
@@ -196,6 +243,7 @@ def rootZeroEquiv {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
     simpa only [f.property.2] using integrate_differentiate f.val
   right_inv s := Subtype.ext (differentiate_integrate _ _ s.property.1)
 
+/-- By `rootZeroEquiv`, this is also the count of maps with defect `e` and root zero. -/
 noncomputable def N_e {N M : ℕ} (e : Edge (N + 1) (M + 1)) : ℕ :=
   Nat.card {s : DiffField N M // RawAdmissible e s}
 
@@ -242,7 +290,7 @@ private theorem rainbow_algebra (a b c d : K) :
     have hd : d = a + (b + c) := by
       simpa [add_assoc, add_left_comm, add_comm] using congrArg (fun z => a + z) ht
     subst d
-    refine ⟨?_,?_,hx,hy,hxy⟩ <;> simp [add_assoc, add_left_comm, add_comm]
+    refine ⟨?_,?_,hx,hy,hxy⟩ <;> simp [add_left_comm]
   · rintro ⟨hh,_,hx,hy,hxy⟩
     have hd : d = a + (b + c) := by
       simpa [add_assoc, add_left_comm, add_comm] using
@@ -292,7 +340,7 @@ private theorem good_differentiate {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
     GoodBlock (differentiate f) i j ↔
       Rainbow (f (i.castSucc,j.castSucc)) (f (i.castSucc,j.succ))
         (f (i.succ,j.castSucc)) (f (i.succ,j.succ)) := by
-  simp [GoodBlock, Rainbow, differentiate, add_assoc, add_left_comm, add_comm, ne_comm]
+  simp [GoodBlock, Rainbow, differentiate, add_assoc, add_left_comm]
 
 /-- A cocycle has a good block exactly when its opposite slots agree. -/
 theorem rainbow_field {N M : ℕ} (s : DiffField N M) (hs : Cocycle s)
@@ -305,20 +353,86 @@ theorem rainbow_field {N M : ℕ} (s : DiffField N M) (hs : Cocycle s)
     (rainbow_block (integrate 0 s) i j)
   simpa only [differentiate_integrate 0 s hs] using h
 
-/-- Every block missing the selected edge is rainbow; no global classification is assumed. -/
+/-- The selected edge is absent from the six bonds of a block. -/
+def BlockAvoids {N M : ℕ} (e : Edge (N + 1) (M + 1)) (i : Fin N) (j : Fin M) : Prop :=
+  (Edge.H i.castSucc j : Edge (N + 1) (M + 1)) ≠ e ∧
+    (Edge.V i j.castSucc : Edge (N + 1) (M + 1)) ≠ e ∧
+    (Edge.D i j : Edge (N + 1) (M + 1)) ≠ e ∧
+    (Edge.A i j : Edge (N + 1) (M + 1)) ≠ e ∧
+    (Edge.V i j.succ : Edge (N + 1) (M + 1)) ≠ e ∧
+    (Edge.H i.succ j : Edge (N + 1) (M + 1)) ≠ e
+
+/-- Every block missing the selected edge has constant opposite differences. -/
 theorem goodBlock_of_raw {N M : ℕ} (e : Edge (N + 1) (M + 1))
     (s : DiffField N M) (hs : RawAdmissible e s) (i : Fin N) (j : Fin M)
-    (ht : (Edge.H i.castSucc j : Edge (N + 1) (M + 1)) ≠ e) (hl : (Edge.V i j.castSucc : Edge (N + 1) (M + 1)) ≠ e)
-    (hd : (Edge.D i j : Edge (N + 1) (M + 1)) ≠ e) (ha : (Edge.A i j : Edge (N + 1) (M + 1)) ≠ e)
-    (hr : (Edge.V i j.succ : Edge (N + 1) (M + 1)) ≠ e) (hb : (Edge.H i.succ j : Edge (N + 1) (M + 1)) ≠ e) :
+    (havoid : BlockAvoids e i j) :
     s.h i.castSucc j = s.h i.succ j ∧ s.v i j.castSucc = s.v i j.succ ∧
       s.h i.castSucc j ≠ 0 ∧ s.v i j.castSucc ≠ 0 ∧
       s.h i.castSucc j ≠ s.v i j.castSucc := by
   apply (rainbow_field s hs.1 i j).mp
   have nz (d : Edge (N + 1) (M + 1)) (hne : d ≠ e) : edgeValue s d ≠ 0 :=
     mt (hs.2 d).mp hne
+  obtain ⟨ht,hl,hd,ha,hr,hb⟩ := havoid
   exact ⟨nz (.H i.castSucc j) ht, nz (.V i j.castSucc) hl, nz (.D i j) hd,
     nz (.A i j) ha, nz (.V i j.succ) hr, nz (.H i.succ j) hb⟩
+
+/-- A horizontal slot is constant across any interval of unaffected blocks. -/
+theorem horizontal_slot_eq {N M : ℕ} (e : Edge (N + 1) (M + 1))
+    (s : DiffField N M) (hs : RawAdmissible e s) (j : Fin M)
+    (a b : Fin (N + 1)) (hab : a ≤ b)
+    (hclear : ∀ i : Fin N, a.val ≤ i.val → i.val < b.val → BlockAvoids e i j) :
+    s.h a j = s.h b j := by
+  revert hab hclear
+  induction b using Fin.inductionOn with
+  | zero =>
+    intro hab _
+    have ha : a = 0 := by apply Fin.ext; simp_all
+    subst a
+    rfl
+  | succ b ih =>
+    intro hab hclear
+    by_cases heq : a = b.succ
+    · rw [heq]
+    have ha : a ≤ b.castSucc := by
+      simp only [Fin.le_iff_val_le_val, Fin.val_castSucc, Fin.val_succ] at *
+      have hne : a.val ≠ b.val + 1 := fun h => heq (Fin.ext h)
+      omega
+    calc
+      s.h a j = s.h b.castSucc j := ih ha (fun i hia hib => hclear i hia (by
+        simp only [Fin.val_castSucc] at hib
+        simp only [Fin.val_succ]
+        omega))
+      _ = s.h b.succ j := (goodBlock_of_raw e s hs b j
+        (hclear b ha (by simp))).1
+
+/-- A vertical slot is constant across any interval of unaffected blocks. -/
+theorem vertical_slot_eq {N M : ℕ} (e : Edge (N + 1) (M + 1))
+    (s : DiffField N M) (hs : RawAdmissible e s) (i : Fin N)
+    (a b : Fin (M + 1)) (hab : a ≤ b)
+    (hclear : ∀ j : Fin M, a.val ≤ j.val → j.val < b.val → BlockAvoids e i j) :
+    s.v i a = s.v i b := by
+  revert hab hclear
+  induction b using Fin.inductionOn with
+  | zero =>
+    intro hab _
+    have ha : a = 0 := by apply Fin.ext; simp_all
+    subst a
+    rfl
+  | succ b ih =>
+    intro hab hclear
+    by_cases heq : a = b.succ
+    · rw [heq]
+    have ha : a ≤ b.castSucc := by
+      simp only [Fin.le_iff_val_le_val, Fin.val_castSucc, Fin.val_succ] at *
+      have hne : a.val ≠ b.val + 1 := fun h => heq (Fin.ext h)
+      omega
+    calc
+      s.v i a = s.v i b.castSucc := ih ha (fun j hja hjb => hclear j hja (by
+        simp only [Fin.val_castSucc] at hjb
+        simp only [Fin.val_succ]
+        omega))
+      _ = s.v i b.succ := (goodBlock_of_raw e s hs i b
+        (hclear b ha (by simp))).2.1
 
 /-- The canonical count is one sixth of the total root-zero field count. -/
 theorem fields_eq_six_canonical (N M : ℕ) (hN : 1 ≤ N) (hM : 1 ≤ M) :
@@ -327,24 +441,26 @@ theorem fields_eq_six_canonical (N M : ℕ) (hN : 1 ≤ N) (hM : 1 ≤ M) :
   rw [count_from_fields] at h
   have he : 24 * T (N + 1) (M + 1) = 4 * (6 * T (N + 1) (M + 1)) := by omega
   rw [he] at h
-  exact Nat.mul_left_cancel (by decide : 0 < 4) h
+  exact Nat.mul_left_cancel (by norm_num : 0 < 4) h
 
 
 private theorem N_transpose {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
     N_e (transposeEdge e) = N_e e := by
   have h := Nat.card_congr (transposeDefectEquiv (C := Fin 4) e)
   rw [count_fixed_edge, count_fixed_edge] at h
-  exact Nat.mul_left_cancel (by decide : 0 < 4) h.symm
+  exact Nat.mul_left_cancel (by norm_num : 0 < 4) h.symm
 
 private theorem N_reflect {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
     N_e (reflectEdge e) = N_e e := by
   have h := Nat.card_congr (reflectDefectEquiv (C := Fin 4) e)
   rw [count_fixed_edge, count_fixed_edge] at h
-  exact Nat.mul_left_cancel (by decide : 0 < 4) h.symm
+  exact Nat.mul_left_cancel (by norm_num : 0 < 4) h.symm
 
+/-- Sum of root-zero counts over horizontal defects in an `(N+1)` by `(M+1)` rectangle. -/
 noncomputable def N_H (N M : ℕ) : ℕ :=
   ∑ i : Fin (N + 1), ∑ j : Fin M, N_e (.H i j : Edge (N + 1) (M + 1))
 
+/-- Sum of root-zero counts over descending diagonals in the same rectangle. -/
 noncomputable def N_D (N M : ℕ) : ℕ :=
   ∑ i : Fin N, ∑ j : Fin M, N_e (.D i j : Edge (N + 1) (M + 1))
 
@@ -388,8 +504,13 @@ theorem count_by_kind (N M : ℕ) (hN : 1 ≤ N) (hM : 1 ≤ M) :
   exact fields_eq_six_canonical N M hN hM
 
 #print axioms defectIntegrationEquiv
+#print axioms rootZeroEquiv
 #print axioms count_from_fields
 #print axioms rainbow_block
+#print axioms rainbow_field
+#print axioms horizontal_slot_eq
+#print axioms vertical_slot_eq
+#print axioms count_by_kind
 
 end D5.S3.SpinModels.KingDefects.KingDifference
 

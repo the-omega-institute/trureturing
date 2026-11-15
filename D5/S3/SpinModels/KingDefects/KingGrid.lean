@@ -7,7 +7,48 @@
    digest: Literal king-grid colourings and decomposition by the unique defective edge. -/
 /-
 admission_basis: escape-witness
-escape_witness: defectEquiv (extracting the unique defective edge).
+escape_witness: canonical_count_three (the free four-colour action with only
+  three occurring colours), oneDefect_usesThree and oneDefect_surjective
+  (the local and global colour constraints imposed by a unique king-edge defect).
+Cell: proof_shape=bind-only; consumers=end0,end1,L,T
+Edge: proof_shape=bind-only; consumers=end0,end1,OneDefect
+lo: proof_shape=bind-only; consumers=end0,end1
+hi: proof_shape=bind-only; consumers=end0,end1
+end0: proof_shape=bind-only; consumers=mono
+end1: proof_shape=bind-only; consumers=mono
+mono: proof_shape=bind-only; consumers=OneDefect,DefectAt
+OneDefect: proof_shape=bind-only; consumers=L,T,oneDefect_iff
+DefectAt: proof_shape=bind-only; consumers=defectAt_iff,defectEquiv
+normal: proof_shape=bind-only; consumers=T,labelled_eq_twentyFour
+L: proof_shape=bind-only; consumers=labelled_count,count_by_edge,labelled_eq_twentyFour
+T: proof_shape=bind-only; consumers=labelled_eq_twentyFour
+oneDefect_iff: proof_shape=bind-only; consumers=defectAt_iff,oneDefect_usesThree
+defectAt_iff: proof_shape=bind-only; consumers=defectEquiv
+defectEquiv: proof_shape=bind-only; consumers=count_by_edge
+labelled_count: proof_shape=bind-only; consumers=count_by_edge,labelled_eq_twentyFour
+count_by_edge: proof_shape=bind-only; consumers=KingDifference.count_from_fields
+edgeSumEquiv: proof_shape=bind-only; consumers=sum_edges
+sum_edges: proof_shape=bind-only; consumers=KingDifference.sum_fields_by_kind
+transposeEdge: proof_shape=bind-only; consumers=transpose_mono,transposeDefectEquiv
+transpose: proof_shape=bind-only; consumers=transpose_mono,transposeDefectEquiv
+transpose_mono: proof_shape=bind-only; consumers=transposeDefectEquiv
+transposeDefectEquiv: proof_shape=bind-only; consumers=KingDifference.N_transpose
+endpoints_distinct: proof_shape=bind-only; consumers=oneDefect_usesThree
+reflectEdge: proof_shape=bind-only; consumers=reflect_mono,reflectDefectEquiv
+reflect: proof_shape=bind-only; consumers=reflect_mono,reflectDefectEquiv
+rev_lo: proof_shape=bind-only; consumers=reflect_mono
+rev_hi: proof_shape=bind-only; consumers=reflect_mono
+reflect_mono: proof_shape=bind-only; consumers=reflectDefectEquiv
+reflectDefectEquiv: proof_shape=bind-only; consumers=KingDifference.N_reflect
+UsesThree: proof_shape=bind-only; consumers=perm_ext_three,canonical_count_three,oneDefect_usesThree
+perm_ext_three: proof_shape=bind-only; consumers=canonical_count_three
+canonical_count_three: proof_shape=content; consumers=labelled_eq_twentyFour
+oneDefect_usesThree: proof_shape=content; consumers=labelled_eq_twentyFour
+blockEdges: proof_shape=bind-only; consumers=goodBlock_surjective,oneDefect_surjective
+corner: proof_shape=bind-only; consumers=goodBlock_surjective
+goodBlock_surjective: proof_shape=bind-only; consumers=oneDefect_surjective
+oneDefect_surjective: proof_shape=content; consumers=labelled_eq_twentyFour
+labelled_eq_twentyFour: proof_shape=content; consumers=KingDifference.fields_eq_six_canonical
 The declarations describe finite families uniformly in both dimensions; no bounded
 enumeration, checker, numerical reduction or certified instance is asserted.
 -/
@@ -15,7 +56,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 import Mathlib.Tactic.DeriveFintype
 import Mathlib.Data.Fin.Rev
 
-/-! Literal edges, restricted - growth words and their finite families. -/
+/-! Literal edges, restricted-growth words and their finite families. -/
 namespace D5.S3.SpinModels.KingDefects.KingGrid
 
 abbrev Cell (n k : ℕ) := Fin n × Fin k
@@ -247,13 +288,14 @@ private theorem perm_ext_three {X : Type*} (f : X → Fin 4) (hf : UsesThree f)
     p.injective.ne hbc, p.injective.ne (Ne.symm ha), p.injective.ne (Ne.symm hb),
     p.injective.ne (Ne.symm hc), hpa, hpb, hpc, hn] at hcard
 
-private theorem canonical_count_three {X : Type*} [Fintype X] [LinearOrder X]
+private theorem canonical_count_three {X : Type*} [Finite X] [LinearOrder X]
     (S : (X → Fin 4) → Prop)
     (hinv : ∀ p : Equiv.Perm (Fin 4), ∀ f, S (p ∘ f) ↔ S f)
     (hthree : ∀ f, S f → UsesThree f) :
     Nat.card {f // S f} = 24 * Nat.card {f // S f ∧
       D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical f} := by
   classical
+  let _ := Fintype.ofFinite X
   let E : ({f // S f ∧
       D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical f} ×
       Equiv.Perm (Fin 4)) → {f // S f} :=
@@ -391,7 +433,8 @@ theorem labelled_eq_twentyFour (n k : ℕ) (hn : 2 ≤ n) (hk : 2 ≤ k) :
   have h : Nat.card {f // S f} = 24 * Nat.card {f // S f ∧
       D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical f} := by
     by_cases hbig : 3 ≤ n ∧ 3 ≤ k
-    · apply D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip.canonical_pattern_card4 S hinv
+    · apply D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip.canonical_pattern_card4
+        S hinv
       intro f hf c
       obtain ⟨p,hp⟩ := oneDefect_surjective hbig.1 hbig.2 (word f) hf c
       exact ⟨finProdFinEquiv p,hp⟩
@@ -414,5 +457,7 @@ theorem labelled_eq_twentyFour (n k : ℕ) (hn : 2 ≤ n) (hk : 2 ≤ k) :
       rw [he]))
   rw [hL,hT]
   exact h
+
+#print axioms labelled_eq_twentyFour
 
 end D5.S3.SpinModels.KingDefects.KingGrid
