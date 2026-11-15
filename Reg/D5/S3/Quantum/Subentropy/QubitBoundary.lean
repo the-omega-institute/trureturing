@@ -22,7 +22,11 @@ inductive ReadoutRole
   | zeroValue
   | deficitLower
   | deficitUpper
-  deriving DecidableEq, Fintype
+  deriving DecidableEq
+
+instance : Fintype ReadoutRole where
+  elems := {.zeroValue, .deficitLower, .deficitUpper}
+  complete i := by cases i <;> simp
 
 @[reducible] def signature : Signature where
   Params := Unit
