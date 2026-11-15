@@ -113,9 +113,9 @@ internal sealed class InfiniteMinimalCertifiedSupportsDocument : IScribeDocument
                         + "finite candidate-domain hypothesis cannot be omitted."))),
                 DescribeRole.Theorem))));
 
-    private static ScribeNode Definition(string selector, string title, Formula formula, string prose) =>
+    private static DocumentBlock Definition(string selector, string title, Formula formula, string prose) =>
         Describe.Lean(
-            DescribeId.Create("infinite-minimal-" + selector),
+            DescribeId.Create("infinite-minimal-" + selector.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + selector), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
