@@ -26,7 +26,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := congrFun (h 0) 0
   have ha := congrFun (forward_steps 0) 0
   change W ⟨6+0+1, by omega⟩ 0 + 1 = _ at hb
-  linarith
+  have he : W 7 0 + 1 = W 7 0 := hb.trans ha.symm
+  omega
 def family : Registration arena (type_of% @forward_steps) where
   actual := readout
   bridge := Iff.rfl
