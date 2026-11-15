@@ -9,6 +9,11 @@
 /-
 admission_basis: escape-witness
 escape_witness: kadison_real
+kadison_real: proof_shape: content; consumer: exists_starAlgHom_of_square,
+through the private Jordan and power lemmas.
+exists_starAlgHom_of_square: proof_shape: content; constructs the full
+continuous star-algebra homomorphism from coordinate-square equality.
+All private lemmas are consumed in these proofs.
 Classical Kadison inequality and single-generator multiplicative-domain
 rigidity. The finite positive variance argument does not assume commutation
 of individual effects. Bernstein approximation passes this inequality to
