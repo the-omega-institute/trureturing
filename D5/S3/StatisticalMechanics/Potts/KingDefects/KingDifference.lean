@@ -242,19 +242,18 @@ theorem raw_differentiate_iff {N M : ℕ} (f : Cell (N + 1) (M + 1) → K)
   simp only [RawAdmissible, differentiate_cocycle, true_and,
     differentiate_edgeValue, add_eq_zero, DefectAt, mono]
 
-def defectIntegrationEquiv {N M : ℕ} (e : Edge (N + 1) (M + 1)) :
-    {f : Cell (N + 1) (M + 1) → K // DefectAt e f} ≃
-      K × {s : DiffField N M // RawAdmissible e s} where
-  toFun f := (f.val (0, 0), ⟨differentiate f.val,
-    (raw_differentiate_iff f.val e).mpr f.property⟩)
-  invFun q := ⟨integrate q.1 q.2.val, by
-    apply (raw_differentiate_iff _ e).mp
-    rw [differentiate_integrate _ _ q.2.property.1]
-    exact q.2.property⟩
-  left_inv f := Subtype.ext ((integrationEquiv N M).left_inv f.val)
-  right_inv q := by
-    apply Prod.ext (integrate_root _ _)
-    exact Subtype.ext (differentiate_integrate _ _ q.2.property.1)
+def defectIntegrationEquiv {N M : ℕ} (e : Edge (N+1) (M+1)) :
+    {f : Cell (N+1) (M+1) → K // DefectAt e f} ≃
+      K × {s : DiffField N M // RawAdmissible e s} := by
+  let E : {f : Cell (N+1) (M+1) → K // DefectAt e f} ≃
+      {q : K × {s : DiffField N M // Cocycle s} // True ∧ RawAdmissible e q.2.val} :=
+    (integrationEquiv N M).subtypeEquiv (by
+      intro f
+      change DefectAt e f ↔ True ∧ RawAdmissible e (differentiate f)
+      simpa only [true_and] using (raw_differentiate_iff f e).symm)
+  exact E.trans (Equiv.subtypeProdEquivProd.trans
+    (Equiv.prodCongr (Equiv.subtypeUnivEquiv (fun _ => True.intro))
+      (Equiv.subtypeSubtypeEquivSubtype (fun h => h.1))))
 
 /-- The number of admissible difference fields with selected zero bond `e`. -/
 noncomputable def N_e {N M : ℕ} (e : Edge (N + 1) (M + 1)) : ℕ :=
