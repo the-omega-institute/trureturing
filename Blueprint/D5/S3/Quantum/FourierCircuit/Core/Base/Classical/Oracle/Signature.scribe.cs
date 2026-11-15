@@ -10,6 +10,6 @@ internal sealed class SignatureDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Classical/Oracle/Signature.ClassicalOracleSignature"),
                 H("ClassicalOracleSignature"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("One classical service's query interface, without a transition law."))), DescribeRole.Definition))));
 }

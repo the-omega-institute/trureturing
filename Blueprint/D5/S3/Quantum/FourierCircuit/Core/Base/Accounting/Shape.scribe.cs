@@ -10,6 +10,6 @@ internal sealed class ShapeDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Accounting/Shape.CShape"),
                 H("CShape"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("Closed shapes admitted by typed classical storage and instructions."))), DescribeRole.Definition))));
 }

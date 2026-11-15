@@ -10,6 +10,6 @@ internal sealed class EntriesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/SingleQubit/Entries.singleQubitAt_matrix_entry"),
                 H("singleQubitAt matrix entry"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("Every native one-qubit entry retains the exact selected operator and full complement."))), DescribeRole.Lemma))));
 }

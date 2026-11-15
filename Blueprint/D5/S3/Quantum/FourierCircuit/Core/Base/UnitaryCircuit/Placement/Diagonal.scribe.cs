@@ -10,6 +10,6 @@ internal sealed class DiagonalDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Placement/Diagonal.operatorAt_diagonal"),
                 H("operatorAt diagonal"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("A placed diagonal target reads exactly the selected ambient coordinates."))), DescribeRole.Lemma))));
 }

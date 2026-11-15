@@ -10,11 +10,11 @@ internal sealed class ComplexDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/Complex.conj_exp_I"),
                 H("conj exp I"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("Retained original proof support for conj exp I."))), DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("declaration1"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/Complex.exp_I_mul_exp_neg_I"),
                 H("exp I mul exp neg I"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("Retained original proof support for exp I mul exp neg I."))), DescribeRole.Lemma))));
 }

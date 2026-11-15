@@ -10,6 +10,6 @@ internal sealed class OperatorDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap/Operator.qftSwapOperator"),
                 H("qftSwapOperator"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("A genuine addressed wire swap, decomposed semantically into the usual three addressed CNOT permutations."))), DescribeRole.Definition))));
 }

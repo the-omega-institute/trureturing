@@ -16,7 +16,7 @@ internal sealed class EntriesDocument : IScribeDocumentDefinition
                     ("environment", C("Interpretation", X("oracles"))),
                     ("output", C("Fin", Pow(Num(2), X("q")))),
                     ("input", C("Fin", Pow(Num(2), X("q"))))))),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("invSqrtN q is the reciprocal square root of two to the q, and omega q is exp(2 pi i / 2^q). This assembly consumes the original no-swap width induction and the actual terminal reversal. circuit_action consumes this entry law to identify every vector with the existing analytic transform."))), DescribeRole.Theorem))));
     private static Formula X(string s) => DefinitionDsl.Id(s);
     private static Formula C(string s, params Formula[] xs) => DefinitionDsl.Call(s, xs);

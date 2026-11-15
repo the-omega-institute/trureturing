@@ -10,6 +10,6 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/State/Basic.HilbertVector"),
                 H("HilbertVector"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("Raw Hilbert-space vector for a finite quantum register."))), DescribeRole.Definition))));
 }

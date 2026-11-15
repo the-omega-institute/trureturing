@@ -8,7 +8,7 @@
 
 /-
 Copyright (c) 2026 QudeLeap. All rights reserved.
-Apache-2.0; full license: Library/Quantum/qudeleap2026qft.md.
+Apache-2.0; full license: Library/Fourier/qudeleap2026qft.md.
 Original assembly: QuantumAlg/Primitives/QFT/Source/FourierMatrix.lean,
 QudeLeap/Lean-QuantumAlg@971dc8be8a153a116b6d7cd748f984d545861b00.
 Modified to expose the original scalar-entry assembly to the receiver's analytic consumer.

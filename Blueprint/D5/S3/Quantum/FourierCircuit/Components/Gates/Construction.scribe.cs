@@ -10,11 +10,11 @@ internal sealed class ConstructionDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Construction.singleQubitApplication"),
                 H("singleQubitApplication"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("Place the actual one-qubit operator on one dimension-two ambient system."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("declaration1"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Construction.singleQubitAt"),
                 H("singleQubitAt"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("Execute one actual one-qubit gate in the default algorithm model."))), DescribeRole.Definition))));
 }

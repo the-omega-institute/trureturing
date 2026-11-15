@@ -10,11 +10,11 @@ internal sealed class PlacementDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Realization/Placement.embed_matrix"),
                 H("embed matrix"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("The embedded circuit acts by the physical embedding of its original operator."))), DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("declaration1"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Realization/Placement.embed_eventTrace"),
                 H("embed eventTrace"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("Embedding retains every native occurrence, including expanded macro bodies."))), DescribeRole.Lemma))));
 }

@@ -10,6 +10,6 @@ internal sealed class DiagonalDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Layout/Quantum/Embedding/Diagonal.embedding_liftOperator_diagonal"),
                 H("embedding liftOperator diagonal"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("A diagonal operator stays diagonal under physical embedding, with its exact selected phase."))), DescribeRole.Lemma))));
 }

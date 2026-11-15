@@ -10,11 +10,11 @@ internal sealed class QubitRegisterDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap/QubitRegister.qubitLayout"),
                 H("qubitLayout"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("The original ordered register of physical qubits."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("declaration1"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap/QubitRegister.swap_qubitOperator_matrix"),
                 H("swap qubitOperator matrix"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("The placed SWAP has the unchanged addressed target, including exact phase."))), DescribeRole.Lemma))));
 }

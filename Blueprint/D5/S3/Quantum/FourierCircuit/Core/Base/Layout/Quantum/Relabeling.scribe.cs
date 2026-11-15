@@ -11,6 +11,6 @@ internal sealed class RelabelingDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("declaration2"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Layout/Quantum/Relabeling.relabelBasis"),
                 H("relabelBasis"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
                 Blocks(Paragraph(Text("Logical basis values retain the same finite dimension at every original position."))), DescribeRole.Definition))));
 }
