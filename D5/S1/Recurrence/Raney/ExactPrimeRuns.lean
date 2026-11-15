@@ -91,7 +91,7 @@ private theorem valuation_formula (p n b : ℕ) (hp : p.Prime)
     (hb : Nat.log p (3 * n + 1) < b) :
     padicValNat p (raneyNumber 3 1 n) =
       ∑ h ∈ Ico 1 b, charge (p ^ h) (n % p ^ h) := by
-  letI : Fact p.Prime := ⟨hp⟩
+  let : Fact p.Prime := ⟨hp⟩
   have hpos := (raney_pos n).ne'
   have hval := congrArg (padicValNat p) (factorial_identity n)
   rw [padicValNat.mul (Nat.mul_ne_zero hpos (Nat.factorial_ne_zero _))
@@ -115,7 +115,7 @@ private theorem valuation_formula (p n b : ℕ) (hp : p.Prime)
 private theorem zero_iff_charge (p n : ℕ) (hp : p.Prime) :
     (raneyNumber 3 1 n : ZMod p) = 0 ↔
       ∃ h : ℕ, 1 ≤ h ∧ charge (p ^ h) (n % p ^ h) = 1 := by
-  letI : Fact p.Prime := ⟨hp⟩
+  let : Fact p.Prime := ⟨hp⟩
   rw [ZMod.natCast_eq_zero_iff, dvd_iff_padicValNat_ne_zero (raney_pos n).ne']
   let b := Nat.log p (3 * n + 1) + 1
   rw [valuation_formula p n b hp (by dsimp [b]; omega)]
@@ -123,7 +123,7 @@ private theorem zero_iff_charge (p n : ℕ) (hp : p.Prime) :
   · intro hs
     have hh : ∃ h ∈ Ico 1 b, charge (p ^ h) (n % p ^ h) ≠ 0 := by
       by_contra hx
-      push_neg at hx
+      push Not at hx
       exact hs (sum_eq_zero hx)
     obtain ⟨h, hh, hc⟩ := hh
     have hb := charge_bounds (p ^ h) (n % p ^ h)
@@ -331,5 +331,262 @@ private theorem maximal_overlap (p a b c d n : ℕ)
     exact hr (hinc (b + 1) (by omega) (by omega))
   · by_contra heq
     exact hrc (hin (d + 1) (by omega) (by omega))
+
+private theorem lower_zero_lift (p m n : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p)
+    (hz : (raneyNumber 3 1 (n % p ^ m) : ZMod p) = 0) :
+    (raneyNumber 3 1 n : ZMod p) = 0 := by
+  obtain ⟨h, hh, hhm, hc⟩ := (zero_upto p m _ hp hp5
+    (Nat.le_of_lt (Nat.mod_lt _ (pow_pos hp.pos _)))).mp hz
+  apply (zero_iff_charge p n hp).mpr
+  refine ⟨h, hh, ?_⟩
+  rwa [Nat.mod_mod_of_dvd n (pow_dvd_pow p hhm)] at hc
+
+private theorem power_nonzero (p m : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) :
+    (raneyNumber 3 1 (p ^ m) : ZMod p) ≠ 0 := by
+  intro hz
+  obtain ⟨h, hh, hhm, hc⟩ := (zero_upto p m _ hp hp5 le_rfl).mp hz
+  rw [Nat.mod_eq_zero_of_dvd (pow_dvd_pow p hhm)] at hc
+  have hP : 2 ≤ p ^ h := hp.two_le.trans (Nat.le_self_pow (by omega) _)
+  simp [charge, Nat.div_eq_of_lt (by omega : 1 < p ^ h)] at hc
+
+/-- Each actual component in a prime-power prefix retains one scale length;
+its start is at least the first unshifted interval with that length. -/
+private theorem prefix_components (p m : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) :
+    ∀ a b : ℕ,
+      IsMaximalDeltaInterval {0} (fun n => (raneyNumber 3 1 n : ZMod p)) a b →
+      b < p ^ m → ∃ h j : ℕ, 1 ≤ h ∧ h ≤ m ∧ (j = 1 ∨ j = 2) ∧
+        first (p ^ h) j ≤ last (p ^ h) j ∧ first (p ^ h) j ≤ a ∧
+        b + 1 - a = last (p ^ h) j + 1 - first (p ^ h) j := by
+  induction m with
+  | zero =>
+    intro a b hab hb
+    have ha := hab.1
+    have hz := hab.2.1 a le_rfl ha
+    have ha0 : a = 0 := by simpa using (show a < 1 by simpa using ha.trans_lt hb)
+    subst a
+    simp only [mem_singleton] at hz
+    have : (raneyNumber 3 1 0 : ZMod p) ≠ 0 := by
+      intro hz
+      exact hp.not_dvd_one (by simpa [raneyNumber] using (ZMod.natCast_eq_zero_iff _ p).mp hz)
+    exact (this hz).elim
+  | succ m ih =>
+    intro a b hab hb
+    have hab' := hab
+    simp only [IsMaximalDeltaInterval, mem_singleton] at hab'
+    obtain ⟨habOrder, habIn, habLeft, habRight⟩ := hab'
+    let q := p ^ (m + 1)
+    let Q := p ^ m
+    have hQ : 0 < Q := pow_pos hp.pos _
+    have hq : 5 ≤ q := hp5.trans (Nat.le_self_pow (by omega) _)
+    have hq2 := (scale_residues p (m + 1) hp hp5).1
+    by_cases hmeet : ∃ j n : ℕ, (j = 1 ∨ j = 2) ∧ a ≤ n ∧ n ≤ b ∧
+        first q j ≤ n ∧ n ≤ last q j
+    · obtain ⟨j, n, hj, han, hnb, hfn, hnl⟩ := hmeet
+      have hne : first q j ≤ last q j := hfn.trans hnl
+      have heq := maximal_overlap p a b (first q j) (last q j) n hab
+        (interval_actual p (m + 1) j hp hp5 (by omega) hj hne) han hnb hfn hnl
+      exact ⟨m + 1, j, by omega, le_rfl, hj, hne, heq.1.ge, by rw [heq.1, heq.2]⟩
+    · have noTop (n : ℕ) (han : a ≤ n) (hnb : n ≤ b) : charge q n = 0 := by
+        have hnq : n < q := hnb.trans_lt hb
+        have hc := charge_bounds q n (by omega) hnq
+        by_contra hx
+        obtain ⟨j, hj, hf, hl⟩ := (charge_interval q n hq hq2 hnq).mp (by omega)
+        exact hmeet ⟨j, n, hj, han, hnb, hf, hl⟩
+      have lower (n : ℕ) (han : a ≤ n) (hnb : n ≤ b) :
+          (raneyNumber 3 1 (n % Q) : ZMod p) = 0 := by
+        obtain ⟨h, hh, hhm, hc⟩ := (zero_upto p (m + 1) n hp hp5
+          (Nat.le_of_lt (hnb.trans_lt hb))).mp (habIn n han hnb)
+        have hle : h ≤ m := by
+          by_contra hx
+          have heq : h = m + 1 := by omega
+          subst h
+          have hnq : n < q := hnb.trans_lt hb
+          rw [Nat.mod_eq_of_lt hnq] at hc
+          have hnz := noTop n han hnb
+          rw [hnz] at hc
+          omega
+        apply (zero_iff_charge p (n % Q) hp).mpr
+        refine ⟨h, hh, ?_⟩
+        change charge (p ^ h) ((n % p ^ m) % p ^ h) = 1
+        rwa [Nat.mod_mod_of_dvd n (pow_dvd_pow p hle)]
+      let t := a / Q
+      let r := a % Q
+      let s := b % Q
+      have hr : r < Q := Nat.mod_lt _ hQ
+      have hs : s < Q := Nat.mod_lt _ hQ
+      have haEq : a = Q * t + r := by simpa [t, r] using (Nat.div_add_mod a Q).symm
+      have hdiv : b / Q = t := by
+        have hle : t ≤ b / Q := Nat.div_le_div_right habOrder
+        by_contra hx
+        have ht : t + 1 ≤ b / Q := by omega
+        have hmul := Nat.mul_le_mul_left Q ht
+        have hbMul := Nat.div_mul_le_self b Q
+        have han : a ≤ Q * (t + 1) := by nlinarith
+        have hnb : Q * (t + 1) ≤ b := by nlinarith
+        have hz := lower (Q * (t + 1)) han hnb
+        rw [Nat.mul_mod_right] at hz
+        have hz0 : (raneyNumber 3 1 0 : ZMod p) ≠ 0 := by
+          intro hz
+          exact hp.not_dvd_one (by simpa [raneyNumber] using (ZMod.natCast_eq_zero_iff _ p).mp hz)
+        exact hz0 hz
+      have hbEq : b = Q * t + s := by
+        have := (Nat.div_add_mod b Q).symm
+        rwa [hdiv] at this
+      have hrs : r ≤ s := by omega
+      have hr0 : 0 < r := by
+        by_contra hx
+        have hz := lower a le_rfl habOrder
+        have hrz : r = 0 := by omega
+        change (raneyNumber 3 1 r : ZMod p) = 0 at hz
+        rw [hrz, ZMod.natCast_eq_zero_iff] at hz
+        simpa [raneyNumber] using (hp.not_dvd_one hz)
+      have small : IsMaximalDeltaInterval {0}
+          (fun n => (raneyNumber 3 1 n : ZMod p)) r s := by
+        simp only [IsMaximalDeltaInterval, mem_singleton]
+        refine ⟨hrs, ?_, Or.inr ?_, ?_⟩
+        · intro n hrn hns
+          have hnQ : n < Q := hns.trans_lt hs
+          have hz := lower (Q * t + n) (by omega) (by omega)
+          simpa [Nat.add_mod, Nat.mul_mod_right, Nat.mod_eq_of_lt hnQ] using hz
+        · intro hz
+          have hpred : (a - 1) % Q = r - 1 := by
+            have heq : a - 1 = Q * t + (r - 1) := by omega
+            rw [heq]
+            simp [Nat.add_mod, Nat.mul_mod_right, Nat.mod_eq_of_lt (by omega : r - 1 < Q)]
+          have hz' : (raneyNumber 3 1 ((a - 1) % p ^ m) : ZMod p) = 0 := by
+            change (raneyNumber 3 1 ((a - 1) % Q) : ZMod p) = 0
+            rwa [hpred]
+          have ha0 : a ≠ 0 := by omega
+          exact (habLeft.resolve_left ha0) (lower_zero_lift p m (a - 1) hp hp5 hz')
+        · by_cases hsQ : s + 1 < Q
+          · intro hz
+            have hsucc : (b + 1) % Q = s + 1 := by
+              rw [show b + 1 = Q * t + (s + 1) by omega]
+              simp [Nat.add_mod, Nat.mul_mod_right, Nat.mod_eq_of_lt hsQ]
+            have hz' : (raneyNumber 3 1 ((b + 1) % p ^ m) : ZMod p) = 0 := by
+              change (raneyNumber 3 1 ((b + 1) % Q) : ZMod p) = 0
+              rwa [hsucc]
+            exact habRight (lower_zero_lift p m (b + 1) hp hp5 hz')
+          · have heq : s + 1 = p ^ m := by change s + 1 = Q; omega
+            rw [heq]
+            exact power_nonzero p m hp hp5
+      obtain ⟨h, j, hh, hhm, hj, hne, hstart, hlen⟩ := ih r s small hs
+      refine ⟨h, j, hh, by omega, hj, hne, ?_, ?_⟩
+      · exact hstart.trans (by omega)
+      · omega
+
+private theorem interval_arithmetic (q j : ℕ) (hq : 5 ≤ q) (h2 : q % 2 = 1)
+    (h3 : q % 3 ≠ 0) (hj : j = 1 ∨ j = 2) :
+    (first q j ≤ last q j ↔ j = 2 ∨ (q ≠ 5 ∧ q ≠ 7)) ∧
+    last q j + 1 - first q j =
+      if j = 1 then (if q % 6 = 1 then (q - 7) / 6 else (q - 5) / 6) else q / 3 := by
+  have h6 : q % 6 = 1 ∨ q % 6 = 5 := by omega
+  rcases hj with rfl | rfl <;> dsimp [first, last]
+  · rcases h6 with h6 | h6 <;> simp only [h6] <;> norm_num <;> omega
+  · omega
+
+private theorem order_same (q : ℕ) (hq : 5 ≤ q) :
+    first q 1 < first q 2 ∧
+      last q 1 + 1 - first q 1 < last q 2 + 1 - first q 2 := by
+  dsimp [first, last]
+  omega
+
+private theorem order_across (Q q j k : ℕ) (hQ : 5 ≤ Q) (hq : 5 * Q ≤ q)
+    (hj : j = 1 ∨ j = 2) (hk : k = 1 ∨ k = 2) :
+    first Q j < first q k ∧
+      last Q j + 1 - first Q j < last q k + 1 - first q k := by
+  rcases hj with rfl | rfl <;> rcases hk with rfl | rfl <;> dsimp [first, last] <;> omega
+
+private theorem scale_growth (p h m : ℕ) (hp5 : 5 ≤ p) (hhm : h < m) :
+    5 * p ^ h ≤ p ^ m := by
+  have hp0 : 0 < p := by omega
+  have hg := Nat.pow_le_pow_right hp0 (Nat.succ_le_of_lt hhm)
+  rw [pow_succ] at hg
+  have hmul : 5 * p ^ h ≤ p ^ h * p := by
+    simpa [Nat.mul_comm] using Nat.mul_le_mul_right (p ^ h) hp5
+  exact hmul.trans hg
+
+private theorem earlier_shorter (p m j : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p)
+    (hm : 1 ≤ m) (hj : j = 1 ∨ j = 2)
+    (hne : first (p ^ m) j ≤ last (p ^ m) j) :
+    ∀ a b : ℕ,
+      IsMaximalDeltaInterval {0} (fun n => (raneyNumber 3 1 n : ZMod p)) a b →
+      a < first (p ^ m) j →
+      b + 1 - a < last (p ^ m) j + 1 - first (p ^ m) j := by
+  intro a b hab ha
+  have target := interval_actual p m j hp hp5 hm hj hne
+  have hb : b < first (p ^ m) j := by
+    by_contra hx
+    have heq := maximal_overlap p a b (first (p ^ m) j) (last (p ^ m) j)
+      (first (p ^ m) j) hab target (by omega) (by omega) le_rfl hne
+    omega
+  have hq : 5 ≤ p ^ m := hp5.trans (Nat.le_self_pow (by omega) _)
+  have he := endpoints (p ^ m) j hq (scale_residues p m hp hp5).1
+    (scale_residues p m hp hp5).2 hj
+  obtain ⟨h, k, hh, hhm, hk, hkne, hka, hlen⟩ := prefix_components p m hp hp5 a b hab
+    (hb.trans_le (hne.trans (Nat.le_of_lt he.2.1)))
+  rw [hlen]
+  rcases lt_or_eq_of_le hhm with hlt | rfl
+  · exact (order_across (p ^ h) (p ^ m) k j
+      (hp5.trans (Nat.le_self_pow (by omega) _)) (scale_growth p h m hp5 hlt) hk hj).2
+  · have hord := order_same (p ^ h) hq
+    rcases hk with rfl | rfl <;> rcases hj with rfl | rfl
+    · omega
+    · exact hord.2
+    · omega
+    · omega
+
+/-- The prime-at-least-five branch of the exact R31 run and record spectrum.
+The displayed nonempty intervals are actual maximal runs and are strictly
+longer than every earlier run. Every maximal run has one of their lengths,
+and the lengths strictly increase in exponent-then-interval order. -/
+theorem raney_prime_ge_five_spectrum (p : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) :
+    (∀ m : ℕ, 1 ≤ m → ∀ j : ℕ, (j = 1 ∨ j = 2) →
+      let q := p ^ m
+      let a := (j * q + 2) / 3
+      let b := if j = 1 then (q - 3) / 2 else q - 1
+      (a ≤ b ↔ j = 2 ∨ (q ≠ 5 ∧ q ≠ 7)) ∧
+      b + 1 - a =
+        (if j = 1 then (if q % 6 = 1 then (q - 7) / 6 else (q - 5) / 6) else q / 3) ∧
+      (a ≤ b →
+        IsMaximalDeltaInterval {0} (fun n => (raneyNumber 3 1 n : ZMod p)) a b ∧
+        ∀ c d : ℕ,
+          IsMaximalDeltaInterval {0} (fun n => (raneyNumber 3 1 n : ZMod p)) c d →
+          c < a → d + 1 - c < b + 1 - a)) ∧
+    (∀ a b : ℕ,
+      IsMaximalDeltaInterval {0} (fun n => (raneyNumber 3 1 n : ZMod p)) a b →
+      ∃ m j : ℕ, 1 ≤ m ∧ (j = 1 ∨ j = 2) ∧
+        let q := p ^ m
+        let c := (j * q + 2) / 3
+        let d := if j = 1 then (q - 3) / 2 else q - 1
+        c ≤ d ∧ b + 1 - a = d + 1 - c) ∧
+    (∀ m h j k : ℕ, 1 ≤ m → 1 ≤ h → (j = 1 ∨ j = 2) → (k = 1 ∨ k = 2) →
+      (m < h ∨ (m = h ∧ j < k)) →
+      (if j = 1 then (p ^ m - 3) / 2 else p ^ m - 1) + 1 - (j * p ^ m + 2) / 3 <
+        (if k = 1 then (p ^ h - 3) / 2 else p ^ h - 1) + 1 - (k * p ^ h + 2) / 3) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro m hm j hj
+    change (first (p ^ m) j ≤ last (p ^ m) j ↔ _) ∧
+      last (p ^ m) j + 1 - first (p ^ m) j = _ ∧ _
+    have hq : 5 ≤ p ^ m := hp5.trans (Nat.le_self_pow (by omega) _)
+    have he := interval_arithmetic (p ^ m) j hq (scale_residues p m hp hp5).1
+      (scale_residues p m hp hp5).2 hj
+    refine ⟨he.1, he.2, ?_⟩
+    intro hne
+    exact ⟨interval_actual p m j hp hp5 hm hj hne, earlier_shorter p m j hp hp5 hm hj hne⟩
+  · intro a b hab
+    have hb : b < p ^ (b + 1) :=
+      (Nat.lt_succ_self b).trans (Nat.lt_pow_self hp.one_lt)
+    obtain ⟨m, j, hm, _, hj, hne, _, hlen⟩ := prefix_components p (b + 1) hp hp5 a b hab hb
+    exact ⟨m, j, hm, hj, hne, hlen⟩
+  · intro m h j k hm hh hj hk horder
+    change last (p ^ m) j + 1 - first (p ^ m) j < last (p ^ h) k + 1 - first (p ^ h) k
+    have hq : 5 ≤ p ^ m := hp5.trans (Nat.le_self_pow (by omega) _)
+    rcases horder with hlt | ⟨rfl, hjk⟩
+    · exact (order_across (p ^ m) (p ^ h) j k hq (scale_growth p m h hp5 hlt) hj hk).2
+    · have hord := order_same (p ^ m) hq
+      rcases hj with rfl | rfl <;> rcases hk with rfl | rfl <;> first | omega | exact hord.2
+
+#print axioms raney_prime_ge_five_spectrum
 
 end TrureTuring.Raney.ExactPrime
