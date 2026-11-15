@@ -44,7 +44,7 @@ $$\forall k \in \operatorname{Nat},\; \forall n \in \operatorname{Nat},\; (prope
 
 *Commentary.*
 
-Let c be the permutation with values [2,1,0]. Applying c to the power j at every cell in column j gives an equivalence from all labelled sum-exclusion arrays to proper colourings. Injectivity cancels the common power at the ends of each bond; x differs from c(y) exactly when the two natural values have sum different from two. The inverse applies the inverse permutation separately at every cell. Empty dimensions are included.
+Let c be Fin.revPerm on Fin 3, with values [2,1,0]. Applying c to the power j at every cell in column j gives an equivalence from all labelled sum-exclusion arrays to proper colourings. Injectivity cancels the common power at the ends of each bond; x differs from c(y) exactly when the two natural values have sum different from two. The inverse applies the inverse permutation separately at every cell. Empty dimensions are included.
 
 **Definition 1.4 (successorClasses).**
 

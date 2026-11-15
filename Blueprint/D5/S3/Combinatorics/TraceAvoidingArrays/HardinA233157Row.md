@@ -16,79 +16,9 @@ $$\forall n \in \operatorname{Nat},\; U_{4}\left(n\right) = Finset.card\left(Fin
 
 Every labelled function satisfying horizontal and antidiagonal sum exclusion is counted.
 
-**Definition 1.2 (classes).**
+**Theorem 1.2 (finite_certificate).**
 
-$$\forall a \in Fin\left(3\right),\; \forall b \in Fin\left(3\right),\; \forall c \in Fin\left(3\right),\; \forall d \in Fin\left(3\right),\; classes\left(a, b, c, d\right) = HardinA233177PairTransfer.cls\left((a, (b, (c, d)))\right)$$
-
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.classes` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233157: 4-row three-state sum exclusion*. URL: <https://oeis.org/A233157>.
-
-*Commentary.*
-
-The existing first-appearance orbit index assigns the equality pattern.
-
-**Definition 1.3 (classify).**
-
-$$\forall r \in Row\left(4\right),\; classify\left(r\right) = classes\left(r\left(0\right), r\left(1\right), r\left(2\right), r\left(3\right)\right)$$
-
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.classify` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233157: 4-row three-state sum exclusion*. URL: <https://oeis.org/A233157>.
-
-*Commentary.*
-
-The coordinates select one of the 14 equality classes.
-
-**Definition 1.4 (representatives).**
-
-$$\forall i \in Fin\left(14\right),\; representatives\left(i\right) = HardinA233177PairTransfer.column\left(HardinA233177PairTransfer.representatives\left(i\right)\right)$$
-
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.representatives` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233157: 4-row three-state sum exclusion*. URL: <https://oeis.org/A233157>.
-
-*Commentary.*
-
-The existing representative tuple is read in row order.
-
-**Definition 1.5 (quotient).**
-
-$$(quotient: Matrix\left(Fin\left(14\right), Fin\left(14\right), \operatorname{Int}\right))$$
-
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.quotient` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233157: 4-row three-state sum exclusion*. URL: <https://oeis.org/A233157>.
-
-*Commentary.*
-
-The fixed 14 by 14 integer table records compatible successor multiplicities between equality classes.
-
-**Definition 1.6 (weights).**
-
-$$(weights: Fin\left(14\right) \to \operatorname{Int})$$
-
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.weights` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233157: 4-row three-state sum exclusion*. URL: <https://oeis.org/A233157>.
-
-*Commentary.*
-
-The fixed 14-entry integer vector records three labelled constant columns in the constant class and six labelled columns in every other equality class.
-
-**Theorem 1.7 (finite_certificate).**
-
-$$(\forall r \in Row\left(4\right),\; \forall s \in Fin\left(14\right),\; \sum_{(c: Row\left(4\right))} \operatorname{if} (columnCompatible\left(r, c\right)) \land (classify\left(c\right) = s) \operatorname{then} (1: \operatorname{Int}) \operatorname{else} 0 = quotient\left(classify\left(r\right), s\right)) \land ((\forall s \in Fin\left(14\right),\; \sum_{(c: Row\left(4\right))} \operatorname{if} classify\left(c\right) = s \operatorname{then} (1: \operatorname{Int}) \operatorname{else} 0 = weights\left(s\right)) \land (Matrix.mulVec\left((quotient)^{4 + 3}, (1: Fin\left(14\right) \to \operatorname{Int})\right) = \sum_{(j: Fin\left(3\right))} HSMul.hSMul\left(![6, -15, 9]\left(j\right), Matrix.mulVec\left((quotient)^{4 + Fin.val\left(j\right)}, (1: Fin\left(14\right) \to \operatorname{Int})\right)\right)))$$
+$$Matrix.mulVec\left((HardinA233259PairTransferCore.Q)^{4 + 3}, (1: Fin\left(14\right) \to \operatorname{Int})\right) = \sum_{(j: Fin\left(3\right))} HSMul.hSMul\left(![6, -15, 9]\left(j\right), Matrix.mulVec\left((HardinA233259PairTransferCore.Q)^{4 + Fin.val\left(j\right)}, (1: Fin\left(14\right) \to \operatorname{Int})\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.finite_certificate` (`✓ std3`). ∎
 
@@ -98,9 +28,9 @@ $$(\forall r \in Row\left(4\right),\; \forall s \in Fin\left(14\right),\; \sum_{
 
 *Commentary.*
 
-The three identities specify the quotient, the initial class counts and the finite relation among matrix powers.
+The four-row proper-colouring matrix HardinA233259PairTransferCore.Q satisfies this relation. HardinA233259PairTransferPowers.powers_table evaluates its fixed powers; no further transfer table is needed.
 
-**Theorem 1.8 (result).**
+**Theorem 1.3 (result).**
 
 $$\forall n \in \operatorname{Nat},\; (U_{4}\left(n + 8\right): \operatorname{Int}) = 9 \cdot (U_{4}\left(n + 7\right): \operatorname{Int}) - 15 \cdot (U_{4}\left(n + 6\right): \operatorname{Int}) + 6 \cdot (U_{4}\left(n + 5\right): \operatorname{Int})$$
 
@@ -112,19 +42,15 @@ $$\forall n \in \operatorname{Nat},\; (U_{4}\left(n + 8\right): \operatorname{In
 
 *Commentary.*
 
-Multiplication by every further matrix power extends the finite relation to all strip lengths in the displayed range.
+Alternating the labels in successive columns identifies the literal count with HardinA233259PairTransferCore.L. Its Proper predicate agrees after exchanging the row binders. HardinA233259PairTransferCount.count_transfer then supplies the weighted matrix-power count for every width at least two. Multiplication propagates the finite relation to later widths; the first recurrence index follows by evaluating powers three through six.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.U4`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.classes`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.classify`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.finite_certificate`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.quotient`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.representatives`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.result`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.weights`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233155ColumnTransfer](HardinA233155ColumnTransfer.md)
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233155RowTransfer](HardinA233155RowTransfer.md)
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer](HardinA233177PairTransfer.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore](HardinA233259PairTransferCore.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCount](HardinA233259PairTransferCount.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferPowers](HardinA233259PairTransferPowers.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)
