@@ -2669,7 +2669,7 @@ $$
 \begin{aligned}
 &P_B(V)=W_B,\quad P_B(C)=C_B,\quad
 P_B|_{W_B}=\mathrm{id},\quad P_B^2=P_B,\\
-&(P_B\otimes\mathrm{id}_m)(C_{m+1})\subseteq C_{m+1}qquad(m\ge0).
+&(P_B\otimes\mathrm{id}_m)(C_{m+1})\subseteq C_{m+1}\qquad(m\ge0).
 \end{aligned}
 \tag{281.13}
 $$
