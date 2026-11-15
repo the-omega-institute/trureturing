@@ -29,7 +29,9 @@ internal sealed class HardinA303956KingStripDocument : IScribeDocumentDefinition
             DescribeId.Create("hardina303956-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("hardin-a303956"), ResolutionKind.Proved) : null);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
