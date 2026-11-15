@@ -1762,7 +1762,7 @@ $$
 **定理 276.2（M-only任意矩阵尺寸整锥分类）。** 在整个原 $H_m\otimes_{\mathbb R}H_n$ 上取普通迹单位，$m,n\ge2$，闭尖生成锥满足 $\operatorname{Sep}(m|n)\subseteq C\subseteq\operatorname{BP}(m|n)$，使用整个迹一紧底及完整 proper 菜单。仅要求整个原纯域上的M。相对于[Q276S,274.3]的M-only统一秩二供应，有
 
 $$
-\boxed{\quad C=C^*=\operatorname{PSD}_{mn}quad\text{或}\quad
+\boxed{\quad C=C^*=\operatorname{PSD}_{mn}\quad\text{或}\quad
 C=C^*=T_A\operatorname{PSD}_{mn}.\quad}
 \tag{276.3}
 $$
@@ -1878,7 +1878,7 @@ $$
 
 反向，在标准复PSD模型，每对原纯射线的共同least确认为其张成支持的投影，包含重复端点；实际二纯面为完整三球，单体Born迹配对互易，故满足276.2。$\square$
 
-**推论 276.4（生成的几何、量子字典及仍未删除的条件）。** 在276.3的完整条件与具名纸面供应下，原共同least确认成为复子空间的支持join；对角支撑内的产品提升见证把其正交补逐点消去。此join、效应补及单位分解共同嵌入同一有限复投影格，原纯域为 $\mathbb{CP}^{n^N-1}$，所有层的实际二纯三球、完整least确认与数值互易都成为输出。
+**推论 276.4（生成的几何、量子字典及仍未删除的条件）。** 在276.3的完整条件与具名纸面供应下，原共同least确认成为复子空间的支持join；对角支撑内的产品提升见证把其正交补逐点消去。这些支持投影的join、投影补及正交锐单位分解共同嵌入同一有限复投影格，原纯域为 $\mathbb{CP}^{n^N-1}$，所有层的实际二纯三球、完整least确认与数值互易都成为输出。
 
 证明与对应。276.12中 $h_{P_v,P_w}=P_{\operatorname{span}\{v,w\}}$，$e_{P_v}=P_v$；面为支持内全部密度矩阵，互易为 $\operatorname{Tr}(P_vP_w)=\operatorname{Tr}(P_wP_v)$。所有归一态、完整proper菜单、有限单位分解及原配对依次给密度矩阵、$0\preceq E\preceq I$、全部数学POVM／PVM及Born概率 $\operatorname{Tr}(E\rho)$；原全有限产品、置换、丢弃给同一局域坐标的复张量与偏迹。
 
