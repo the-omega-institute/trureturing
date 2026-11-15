@@ -15,6 +15,7 @@ initial_counts: proof_shape=bind-only; consumers=HardinA229585StripCertificate.s
 import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
+/-! Exact finite certificates for the width-seven one-defect strip. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.Initial.HardinA229585StripCounts5
 open D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData

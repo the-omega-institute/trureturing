@@ -8,14 +8,14 @@
 
 /-
 admission_basis: open-problem-resolution (#30580; Proved)
-escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229585Strip.result)
+escape_witness: none
 cellOrder: proof_shape=bind-only; consumers=Normal, scale_count
 Normal: proof_shape=bind-only; consumers=a, scale_count
 decidableNormal: proof_shape=bind-only; consumers=a
 a: proof_shape=bind-only; consumers=result
-edge: proof_shape=bind-only; consumers=count_transfer
+edge: proof_shape=bind-only; consumers=cross_relabel, count_transfer
 class_relabel: proof_shape=bind-only; consumers=transition_counts
-horizontal_relabel: proof_shape=bind-only; consumers=transition_counts
+horizontal_relabel: proof_shape=bind-only; consumers=cross_relabel, transition_counts
 cross_relabel: proof_shape=bind-only; consumers=transition_counts
 transition_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=count_transfer, powers_table, polynomial_relation
@@ -176,6 +176,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.Budget1.Block2.Hardin
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Mathlib.Logic.Equiv.Fin.Basic
 
+/-! Exact finite certificates for the width-seven one-defect strip. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585Strip
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects defects literalCount continuation lumped_count forward forward_shift)
@@ -213,17 +214,19 @@ private theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) 
 
 private theorem horizontal_relabel (e : Equiv.Perm (Fin 3)) (r : Row) :
     bondDefects horizontal (e ∘ r) (e ∘ r) = bondDefects horizontal r r := by
-  simp only [bondDefects, Function.comp_apply, e.injective.eq_iff]
+  simpa only [List.map_cons, List.map_nil, defects, DefectTransfer.tailDefects,
+    Nat.add_zero] using DefectTransfer.relabel_defects horizontal antidiagonal e [r]
 
 private theorem cross_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (r : Row) :
     cross (e ∘ p) (e ∘ r) = cross p r := by
-  unfold cross bondDefects
-  apply congrArg Finset.card
-  ext a
-  by_cases ha : a ∈ antidiagonal
-  · obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp ha
-    simp only [Finset.mem_filter, Fin.cons_succ, Function.comp_apply, e.injective.eq_iff]
-  · simp [ha]
+  have h := DefectTransfer.relabel_defects horizontal antidiagonal e [Fin.cons 0 p, r]
+  simp only [List.map_cons, List.map_nil, defects, DefectTransfer.tailDefects,
+    Nat.add_zero, horizontal_relabel, edge] at h
+  change bondDefects horizontal (Fin.cons 0 p) (Fin.cons 0 p) +
+      (cross (e ∘ p) (e ∘ r) + bondDefects horizontal r r) =
+    bondDefects horizontal (Fin.cons 0 p) (Fin.cons 0 p) +
+      (cross p r + bondDefects horizontal r r) at h
+  omega
 
 private theorem transition_counts (p : Boundary) (d : Fin 2) (hp : Valid p d.val)
     (s : Fin 72) :
