@@ -360,24 +360,25 @@ end boundary_count
 namespace boundary_words_pos_card
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.UniverseSingleReadout.signature Unit (fun _ => Type) (fun _ => ℕ)
+  _root_.Reg.Support.UniverseSingleReadout.signature Unit (fun p => ℕ) (fun _ => ℕ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ x => Nat.card x) (fun e => nomatch e)
+  realize signature (fun _ p x => 2 ^ x) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ x => (Nat.card x) + 1) (fun e => nomatch e)
+  realize signature (fun _ p x => 2 ^ x + 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (m c d : ℕ) (hm : 0 < m),
-    R.readout () () ((BoundaryWords m c d)) + 2 = 2 ^ m + 2 ^ c + 2 ^ d
+    Nat.card (BoundaryWords m c d) + 2 = R.readout () () m + 2 ^ c + 2 ^ d
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  dsimp only [arena, rejected, realize] at h
-  have hb := @h 1 1 1 (by norm_num)
-  have ha := @boundary_words_pos_card 1 1 1 (by norm_num)
+  have hb := h 1 1 1 (by norm_num)
+  have ha := boundary_words_pos_card 1 1 1 (by norm_num)
+  dsimp only [arena, rejected, realize] at hb
+  norm_num at ha hb
   omega
 
 def family : Registration arena (type_of% @boundary_words_pos_card) where
@@ -389,11 +390,11 @@ def family : Registration arena (type_of% @boundary_words_pos_card) where
   dependence := by
     intro i
     cases i
-    refine ⟨(), PEmpty, PUnit, ?_⟩
-    change Nat.card PEmpty ≠ Nat.card PUnit
-    simp [Nat.card_eq_fintype_card]
+    refine ⟨(), 0, 1, ?_⟩
+    change 2 ^ (0 : ℕ) ≠ 2 ^ (1 : ℕ)
+    norm_num
 
-def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 1, 0, 0, 0, 0}
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@boundary_words_pos_card) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalBoundary.boundary_words_pos_card.auditUnit
   realizationName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalBoundary.boundary_words_pos_card.family
@@ -406,7 +407,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 1, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => Nat.card x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p x => 2 ^ x) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -415,7 +416,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 1, 0, 0, 0, 0}
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalBoundary
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+    readouts := #[{ path := #["body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"]
                     stateBinder := 0
                     functionOperand := false
                     booleanPredicate := false
@@ -425,6 +426,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 1, 0, 0, 0, 0}
   options := #[]
 
 end boundary_words_pos_card
+
 
 namespace boundary_count_at
 

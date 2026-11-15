@@ -1,3 +1,4 @@
+import Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalIndicatorReadouts
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
 import Reg.Support.UniverseSingleReadout
 import LeanInformationAuditInterface.Contract.Registration
@@ -919,30 +920,29 @@ end horizontal_sum
 namespace support_sizes_correct
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.UniverseSingleReadout.signature Unit (fun _ => Type) (fun _ => ℕ)
+  _root_.Reg.Support.UniverseSingleReadout.signature (Σ _ : Fin 6, Fin 4) (fun p => Fin 4) (fun _ => ℕ × ℕ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ x => Nat.card x) (fun e => nomatch e)
+  realize signature (fun _ p x => support_sizes p.1 p.2 x) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ x => (Nat.card x) + 1) (fun e => nomatch e)
+  realize signature (fun _ p x => ((support_sizes p.1 p.2 x).1 + 1, (support_sizes p.1 p.2 x).2)) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (x : NZPair) (i : Fin 6) (j k : Fin 4),
-    (R.readout () () ((SupportAlphabet x (lower_pair x i) (supports j) (supports k)
-      x.val.1 (lower_pair x i).val.1)),
+    (Nat.card (SupportAlphabet x (lower_pair x i) (supports j) (supports k)
+      x.val.1 (lower_pair x i).val.1),
     Nat.card (SupportAlphabet x (lower_pair x i) (supports j) (supports k)
-      x.val.2 (lower_pair x i).val.2)) = support_sizes i j k
+      x.val.2 (lower_pair x i).val.2)) = R.readout () ⟨i, j⟩ k
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  dsimp only [arena, rejected, realize] at h
-  have hb := @h ⟨((1, 0), (0, 1)), by decide +kernel⟩ 0 0 0
-  have ha := @support_sizes_correct ⟨((1, 0), (0, 1)), by decide +kernel⟩ 0 0 0
-  have hb := congrArg Prod.fst hb
-  have ha := congrArg Prod.fst ha
-  omega
+  have hb := h ⟨((1, 0), (0, 1)), by decide +kernel⟩ 0 0 0
+  have ha := support_sizes_correct ⟨((1, 0), (0, 1)), by decide +kernel⟩ 0 0 0
+  dsimp only [arena, rejected, realize] at hb
+  have heq := congrArg Prod.fst (ha.symm.trans hb)
+  exact (Nat.ne_of_lt (Nat.lt_succ_self _)) heq
 
 def family : Registration arena (type_of% @support_sizes_correct) where
   actual := actual
@@ -953,11 +953,11 @@ def family : Registration arena (type_of% @support_sizes_correct) where
   dependence := by
     intro i
     cases i
-    refine ⟨(), PEmpty, PUnit, ?_⟩
-    change Nat.card PEmpty ≠ Nat.card PUnit
-    simp [Nat.card_eq_fintype_card]
+    refine ⟨⟨0, 0⟩, 0, 1, ?_⟩
+    change support_sizes 0 0 0 ≠ support_sizes 0 0 1
+    decide +kernel
 
-def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 1, 0, 0, 0, 0}
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@support_sizes_correct) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts.support_sizes_correct.auditUnit
   realizationName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts.support_sizes_correct.family
@@ -970,7 +970,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 1, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => Nat.card x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p x => support_sizes p.1 p.2 x) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -978,8 +978,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 1, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
     definition := none
-    coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+    coordinates := #[1, 2]
+    readouts := #[{ path := #["body", "body", "body", "body", "arg"]
                     stateBinder := 0
                     functionOperand := false
                     booleanPredicate := false
@@ -989,6 +989,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 1, 0, 0, 0, 0}
   options := #[]
 
 end support_sizes_correct
+
 
 
 end

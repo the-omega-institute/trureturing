@@ -1,3 +1,4 @@
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingClosedForm
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import Reg.Support.UniverseSingleReadout
 import LeanInformationAuditInterface.Contract.Registration
@@ -157,6 +158,82 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 end sum_edges
 
+
+namespace count_by_edge
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.UniverseSingleReadout.signature ℕ (fun p => ℕ) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ p x => L x p) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ p x => L x p + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n k : ℕ),
+    R.readout () k n = ∑ e : Edge n k, Nat.card {f : Cell n k → Fin 4 // DefectAt e f}
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h 2 2
+  have ha := count_by_edge 2 2
+  dsimp only [arena, rejected, realize] at hb
+  exact (Nat.ne_of_lt (Nat.lt_succ_self _)) (ha.trans hb.symm)
+
+def family : Registration arena (type_of% @count_by_edge) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@count_by_edge, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    cases i
+    refine ⟨2, 2, 3, ?_⟩
+    change L 2 2 ≠ L 3 2
+    have h2 := KingClosedForm.width_two 2 (by norm_num)
+    have h3 := KingClosedForm.width_two 3 (by norm_num)
+    norm_num at h2 h3
+    have h2n : T 2 2 = 6 := by exact_mod_cast h2
+    have h3n : T 3 2 = 26 := by exact_mod_cast h3
+    rw [labelled_eq_twentyFour 2 2 (by norm_num) (by norm_num),
+      labelled_eq_twentyFour 3 2 (by norm_num) (by norm_num), h2n, h3n]
+    norm_num
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@count_by_edge) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid.count_by_edge.auditUnit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid.count_by_edge.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p x => L x p) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
+    definition := none
+    coordinates := #[1]
+    readouts := #[{ path := #["body", "body", "fn", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
+                    stateOperand := none }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end count_by_edge
 
 end
 end Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
