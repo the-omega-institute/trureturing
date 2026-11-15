@@ -467,4 +467,63 @@ end Rational
 #print axioms Witness.registration
 #print axioms Gram.registration
 #print axioms Representative.registration
+namespace Conjugate
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature (fun _ _ x => x) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law A := ∀ (ι : Type*) (p : _root_.D5.S3.Quantum.Algebra.PhasePolynomial.Poly ι) (z : ι → ℂ),
+    A.readout () () (_root_.D5.S3.Quantum.Algebra.PhasePolynomial.actual (polynomialConjugate p) z) =
+      star (_root_.D5.S3.Quantum.Algebra.PhasePolynomial.actual p z)
+private lemma rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h PUnit 1 (fun _ => 0)
+  norm_num [rejected,realize,_root_.D5.S3.Quantum.Algebra.PhasePolynomial.actual] at hh
+private lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(),0,1,?_⟩
+  norm_num [actual,realize]
+def source_registration : Registration arena (type_of% @polynomialConjugate_eval) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@polynomialConjugate_eval,rejected,rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected,fun j hj => (hj (Subsingleton.elim j i)).elim,rfl,rejected_law⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@polynomialConjugate_eval) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSQuotient.polynomialConjugate_eval.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSQuotient.Conjugate.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end Conjugate
 end Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSQuotient
