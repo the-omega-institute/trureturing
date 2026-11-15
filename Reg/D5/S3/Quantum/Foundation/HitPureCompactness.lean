@@ -75,11 +75,13 @@ theorem generating : Submodule.span ℝ (cone : Set V) = ⊤ := by
   apply Submodule.eq_top_iff'.mpr
   intro x
   have hone : (1 : V) ∈ Submodule.span ℝ (cone : Set V) :=
-    Submodule.subset_span (show (1 : V) ∈ cone from zero_le_one)
+    Submodule.subset_span (show (1 : V) ∈ cone from (show (0 : ℝ) ≤ 1 from zero_le_one))
   have he : x.down • (1 : V) = x := by
     apply ULift.ext
     exact mul_one _
-  simpa only [he] using (Submodule.span ℝ (cone : Set V)).smul_mem x.down hone
+  have hsm : x.down • (1 : V) ∈ Submodule.span ℝ (cone : Set V) :=
+    (Submodule.span ℝ (cone : Set V)).smul_mem x.down hone
+  exact he ▸ hsm
 
 theorem base_eq : base cone unit = ({1} : Set V) := by
   ext x
@@ -88,11 +90,11 @@ theorem base_eq : base cone unit = ({1} : Set V) := by
     exact ULift.ext h.2
   · intro h
     rcases Set.mem_singleton_iff.mp h with rfl
-    exact ⟨zero_le_one, rfl⟩
+    exact ⟨(show (0 : ℝ) ≤ 1 from zero_le_one), rfl⟩
 
 theorem pure_eq : pure cone unit = ({1} : Set V) := by
   rw [_root_.D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.pure,
-    base_eq, Set.extremePoints_singleton]
+    base_eq, extremePoints_singleton]
 
 theorem all_hit : ∀ a : pure cone unit, Hit cone unit a := by
   intro a p q hpq
@@ -136,6 +138,36 @@ def family : Registration arena.{v} sourceScope.{v} where
     · intro e
       exact nomatch e
   dependence := observational_dependence
+
+/-- The raw selector is absent: the source observes pure C u directly, while
+this family observes its intersection with an independently varying set. -/
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Foundation.HitPureCompactness.hit_pure_closed_compact.{v})
+      (Realization signature.{v}) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Foundation.HitPureCompactness.unit
+  realizationName := `Reg.D5.S3.Quantum.Foundation.HitPureCompactness.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{v}⟩
+  objectArena := .source ⟨arena.{v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{v} ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{v}
+    (fun _ P S => pure P.cone P.unit ∩ S) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration
 
 #print axioms family
 
