@@ -20,14 +20,14 @@ internal sealed class KingGridDocument : IScribeDocumentDefinition
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
                 "The four disjoint constructors list horizontal, vertical, descending diagonal and ascending diagonal bonds. Their parameters enumerate each undirected bond once."),
-            Node("lo", "Lower endpoint index", Formula2(),
+            Node("lo", "Left-slot endpoint index", Formula2(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
-                "The index is included in the longer finite interval with the displayed value."),
-            Node("hi", "Upper endpoint index", Formula3(),
+                "This endpoint uses QuandleMarkovColoring.leftSlot: its value is i.val in the longer finite interval."),
+            Node("hi", "Right-slot endpoint index", Formula3(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
-                "The index is included in the longer finite interval with the displayed value."),
+                "This endpoint uses QuandleMarkovColoring.rightSlot: its value is i.val+1 in the longer finite interval. The theorem QuandleMarkovColoring.slots_ne separates the two coordinates and hence the two endpoints of every king bond."),
             Node("end0", "First endpoints", Formula4(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
@@ -155,7 +155,8 @@ internal sealed class KingGridDocument : IScribeDocumentDefinition
         All(
             "n",
             Q("Nat"),
-            All("i", Call("Fin", Sub(V("n"), Num("1"))), Eq(Val(Call("KingGrid.lo", V("i"))), Val(V("i")))));
+            All("i", Call("Fin", Sub(V("n"), Num("1"))),
+                Eq(Call("KingGrid.lo", V("i")), Call("QuandleMarkovColoring.leftSlot", V("i")))));
 
     private static Formula Formula3() =>
         All(
@@ -164,7 +165,7 @@ internal sealed class KingGridDocument : IScribeDocumentDefinition
             All(
                 "i",
                 Call("Fin", Sub(V("n"), Num("1"))),
-                Eq(Val(Call("KingGrid.hi", V("i"))), Add(Val(V("i")), Num("1")))));
+                Eq(Call("KingGrid.hi", V("i")), Call("QuandleMarkovColoring.rightSlot", V("i")))));
 
     private static Formula Formula4() =>
         All(
@@ -767,7 +768,6 @@ internal sealed class KingGridDocument : IScribeDocumentDefinition
     private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
     private static Formula Equivalence(Formula a, Formula b) => Call("Equiv", a, b);
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
-    private static Formula Val(Formula a) => Call("Fin.val", a);
     private static Formula Value(Formula a) => Call("Subtype.val", a);
     private static Formula Instance(Formula t, Formula b) => Seq(OpenBracket, t, CloseBracket, Comma, Sp, b);
     private static Formula Subtype(string x, Formula t, Formula b) =>

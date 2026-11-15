@@ -10,8 +10,8 @@ admission_basis: open-problem-resolution (#30641; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
 Cell: proof_shape=bind-only; consumers=KingClosedForm.canonical_transpose,KingClosedForm.canonical_transpose_twice,KingClosedForm.normal_exists_unique,KingClosedForm.normal_unique,KingClosedForm.normalize,KingClosedForm.normalize_spec,KingClosedForm.symmetry,KingClosedForm.transpose_one,KingDifference.N_reflect,KingDifference.N_transpose,KingDifference.count_fixed_edge,KingDifference.count_from_fields,KingDifference.defectIntegrationEquiv,KingDifference.difference_unique,KingDifference.differentiate,KingDifference.differentiate_cocycle,KingDifference.differentiate_edgeValue,KingDifference.good_differentiate,KingDifference.integrate,KingDifference.integrate_differentiate,KingDifference.integrationEquiv,KingDifference.rainbow_block,KingDifference.raw_differentiate_iff,KingDifference.relabelDefectEquiv,KingGrid.DefectAt,KingGrid.L,KingGrid.OneDefect,KingGrid.T,KingGrid.corner,KingGrid.count_by_edge,KingGrid.defectAt_iff,KingGrid.defectEquiv,KingGrid.end0,KingGrid.end1,KingGrid.endpoints_distinct,KingGrid.goodBlock_surjective,KingGrid.labelled_count,KingGrid.labelled_eq_twentyFour,KingGrid.mono,KingGrid.normal,KingGrid.oneDefect_iff,KingGrid.oneDefect_surjective,KingGrid.oneDefect_usesThree,KingGrid.reflect,KingGrid.reflectDefectEquiv,KingGrid.reflect_mono,KingGrid.transpose,KingGrid.transposeDefectEquiv,KingGrid.transpose_mono,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.row_reflect_differentiate,KingHorizontal.row_reflect_raw,KingPath.literal_count,KingPath.literal_words,KingPath.normal_path,KingPath.oneDefect_path
 Edge: proof_shape=bind-only; consumers=KingClosedForm.canonical_transpose,KingClosedForm.transpose_one,KingDiagonal.N_D_closed,KingDiagonal.N_D_two_columns,KingDiagonal.diagonalSlotEquiv,KingDiagonal.diagonal_clear,KingDiagonal.diagonal_count,KingDiagonal.extract_valid,KingDiagonal.raw_h_ordinary,KingDiagonal.raw_h_special,KingDiagonal.raw_v_ordinary,KingDiagonal.raw_v_special,KingDiagonal.slot_raw,KingDiagonal.slot_reconstruction,KingDiagonal.special_block,KingDifference.BlockAvoids,KingDifference.N_D,KingDifference.N_H,KingDifference.N_e,KingDifference.N_reflect,KingDifference.N_transpose,KingDifference.RawAdmissible,KingDifference.count_by_kind,KingDifference.count_fixed_edge,KingDifference.count_from_fields,KingDifference.defectIntegrationEquiv,KingDifference.differentiate_edgeValue,KingDifference.edgeValue,KingDifference.fields_eq_six_canonical,KingDifference.goodBlock_of_raw,KingDifference.horizontal_slot_eq,KingDifference.raw_differentiate_iff,KingDifference.relabelDefectEquiv,KingDifference.sum_fields_by_kind,KingDifference.vertical_slot_eq,KingGrid.DefectAt,KingGrid.OneDefect,KingGrid.blockEdges,KingGrid.count_by_edge,KingGrid.defectAt_iff,KingGrid.defectEquiv,KingGrid.edgeSumEquiv,KingGrid.end0,KingGrid.end1,KingGrid.endpoints_distinct,KingGrid.goodBlock_surjective,KingGrid.labelled_eq_twentyFour,KingGrid.mono,KingGrid.oneDefect_iff,KingGrid.oneDefect_surjective,KingGrid.oneDefect_usesThree,KingGrid.reflectDefectEquiv,KingGrid.reflectEdge,KingGrid.reflect_mono,KingGrid.sum_edges,KingGrid.transposeDefectEquiv,KingGrid.transposeEdge,KingGrid.transpose_mono,KingHorizontal.CutFields,KingHorizontal.bottom_edge,KingHorizontal.bottom_edge_value,KingHorizontal.bottom_field_raw,KingHorizontal.boundary_bottom_shared,KingHorizontal.boundary_bottom_slot_equiv,KingHorizontal.boundary_build_raw,KingHorizontal.boundary_count,KingHorizontal.boundary_count_at,KingHorizontal.boundary_count_pos,KingHorizontal.boundary_count_zero,KingHorizontal.boundary_extract_valid,KingHorizontal.boundary_h,KingHorizontal.boundary_one_column,KingHorizontal.boundary_reconstruct,KingHorizontal.boundary_row_sum,KingHorizontal.boundary_rows_count,KingHorizontal.boundary_slot_equiv,KingHorizontal.boundary_slots_one_column,KingHorizontal.boundary_top_shared,KingHorizontal.boundary_v,KingHorizontal.boundary_word_equiv,KingHorizontal.cut_slots_equiv,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.horizontal_cut_equiv,KingHorizontal.horizontal_sum,KingHorizontal.horizontal_three_rows,KingHorizontal.horizontal_two_columns,KingHorizontal.horizontal_two_rows,KingHorizontal.interior_count,KingHorizontal.interior_count_alphabets,KingHorizontal.interior_count_support,KingHorizontal.interior_one_column_count,KingHorizontal.interior_row_sum,KingHorizontal.interior_slot_equiv,KingHorizontal.interior_three_rows_count,KingHorizontal.raw_of_halves,KingHorizontal.row_reflect_equiv,KingHorizontal.row_reflect_raw,KingHorizontal.top_edge,KingHorizontal.top_edge_value,KingHorizontal.top_field_raw,KingPath.edge_path,KingPath.oneDefect_path
-lo: proof_shape=bind-only; consumers=KingGrid.blockEdges,KingGrid.corner,KingGrid.end0,KingGrid.end1,KingGrid.goodBlock_surjective,KingGrid.oneDefect_surjective,KingGrid.oneDefect_usesThree,KingGrid.reflect_mono,KingGrid.rev_hi,KingGrid.rev_lo,KingGrid.transpose_mono,KingPath.bad,KingPath.bad_map,KingPath.errors_eq,KingPath.fixed_words
-hi: proof_shape=bind-only; consumers=KingGrid.blockEdges,KingGrid.corner,KingGrid.end0,KingGrid.end1,KingGrid.goodBlock_surjective,KingGrid.oneDefect_surjective,KingGrid.oneDefect_usesThree,KingGrid.reflect_mono,KingGrid.rev_hi,KingGrid.rev_lo,KingGrid.transpose_mono,KingPath.bad,KingPath.bad_map,KingPath.errors_eq,KingPath.fixed_words
+lo: proof_shape=bind-only; reuse=D5.S3.Topology.QuandleMarkovColoring.leftSlot; consumers=KingGrid.blockEdges,KingGrid.corner,KingGrid.end0,KingGrid.end1,KingGrid.goodBlock_surjective,KingGrid.oneDefect_surjective,KingGrid.oneDefect_usesThree,KingGrid.reflect_mono,KingGrid.rev_hi,KingGrid.rev_lo,KingGrid.transpose_mono,KingPath.bad,KingPath.bad_map,KingPath.errors_eq,KingPath.fixed_words
+hi: proof_shape=bind-only; reuse=D5.S3.Topology.QuandleMarkovColoring.rightSlot; consumers=KingGrid.blockEdges,KingGrid.corner,KingGrid.end0,KingGrid.end1,KingGrid.goodBlock_surjective,KingGrid.oneDefect_surjective,KingGrid.oneDefect_usesThree,KingGrid.reflect_mono,KingGrid.rev_hi,KingGrid.rev_lo,KingGrid.transpose_mono,KingPath.bad,KingPath.bad_map,KingPath.errors_eq,KingPath.fixed_words
 end0: proof_shape=bind-only; consumers=KingClosedForm.canonical_transpose,KingDifference.differentiate_edgeValue,KingDifference.raw_differentiate_iff,KingDifference.relabelDefectEquiv,KingGrid.OneDefect,KingGrid.endpoints_distinct,KingGrid.labelled_eq_twentyFour,KingGrid.mono,KingGrid.oneDefect_iff,KingGrid.reflect_mono,KingPath.oneDefect_path
 end1: proof_shape=bind-only; consumers=KingClosedForm.canonical_transpose,KingDifference.differentiate_edgeValue,KingDifference.raw_differentiate_iff,KingDifference.relabelDefectEquiv,KingGrid.OneDefect,KingGrid.endpoints_distinct,KingGrid.labelled_eq_twentyFour,KingGrid.mono,KingGrid.oneDefect_iff,KingGrid.reflect_mono,KingPath.oneDefect_path
 mono: proof_shape=bind-only; consumers=KingClosedForm.canonical_transpose,KingClosedForm.transpose_one,KingDifference.relabelDefectEquiv,KingGrid.DefectAt,KingGrid.OneDefect,KingGrid.defectAt_iff,KingGrid.defectEquiv,KingGrid.goodBlock_surjective,KingGrid.labelled_eq_twentyFour,KingGrid.oneDefect_iff,KingGrid.oneDefect_surjective,KingGrid.oneDefect_usesThree,KingGrid.reflectDefectEquiv,KingGrid.reflect_mono,KingGrid.transposeDefectEquiv,KingGrid.transpose_mono,KingPath.oneDefect_path
@@ -31,7 +31,7 @@ transposeEdge: proof_shape=bind-only; consumers=KingClosedForm.transpose_one,Kin
 transpose: proof_shape=bind-only; consumers=KingClosedForm.canonical_transpose,KingClosedForm.canonical_transpose_twice,KingClosedForm.transpose_one,KingGrid.transposeDefectEquiv,KingGrid.transpose_mono
 transpose_mono: proof_shape=bind-only; consumers=KingClosedForm.transpose_one,KingGrid.transposeDefectEquiv
 transposeDefectEquiv: proof_shape=bind-only; consumers=KingDifference.N_transpose,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.row_reflect_raw
-endpoints_distinct: proof_shape=bind-only; consumers=KingGrid.oneDefect_usesThree
+endpoints_distinct: proof_shape=bind-only; reuse=D5.S3.Topology.QuandleMarkovColoring.slots_ne; consumers=KingGrid.oneDefect_usesThree
 reflectEdge: proof_shape=bind-only; consumers=KingDifference.N_reflect,KingGrid.reflectDefectEquiv,KingGrid.reflect_mono,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.row_reflect_raw
 reflect: proof_shape=bind-only; consumers=KingGrid.reflectDefectEquiv,KingGrid.reflect_mono
 rev_lo: proof_shape=bind-only; consumers=KingGrid.reflect_mono
@@ -49,6 +49,7 @@ oneDefect_surjective: proof_shape=bind-only; consumers=KingGrid.labelled_eq_twen
 labelled_eq_twentyFour: proof_shape=bind-only; consumers=KingDifference.fields_eq_six_canonical
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
+import D5.S3.Topology.QuandleMarkovColoring
 import Mathlib.Tactic.DeriveFintype
 import Mathlib.Data.Fin.Rev
 import Mathlib.Logic.Equiv.Prod
@@ -65,8 +66,10 @@ inductive Edge (n k : ℕ)
   | A (i : Fin (n - 1)) (j : Fin (k - 1))
   deriving DecidableEq, Fintype
 
-def lo {n : ℕ} (i : Fin (n - 1)) : Fin n := ⟨i.val, by omega⟩
-def hi {n : ℕ} (i : Fin (n - 1)) : Fin n := ⟨i.val + 1, by omega⟩
+def lo {n : ℕ} (i : Fin (n - 1)) : Fin n :=
+  D5.S3.Topology.QuandleMarkovColoring.leftSlot i
+def hi {n : ℕ} (i : Fin (n - 1)) : Fin n :=
+  D5.S3.Topology.QuandleMarkovColoring.rightSlot i
 
 def end0 {n k : ℕ} : Edge n k → Cell n k
   | .H i j => (i, lo j)
@@ -209,7 +212,19 @@ def transposeDefectEquiv {n k : ℕ} {C : Type*} (e : Edge n k) :
       exact h)
 
 private theorem endpoints_distinct {n k : ℕ} (e : Edge n k) : end0 e ≠ end1 e := by
-  cases e <;> simp [end0, end1, lo, hi, Fin.ext_iff, Prod.mk.injEq]
+  cases e with
+  | H i j =>
+    intro h
+    exact D5.S3.Topology.QuandleMarkovColoring.slots_ne (n := k) j (congrArg Prod.snd h)
+  | V i j =>
+    intro h
+    exact D5.S3.Topology.QuandleMarkovColoring.slots_ne (n := n) i (congrArg Prod.fst h)
+  | D i j =>
+    intro h
+    exact D5.S3.Topology.QuandleMarkovColoring.slots_ne (n := n) i (congrArg Prod.fst h)
+  | A i j =>
+    intro h
+    exact D5.S3.Topology.QuandleMarkovColoring.slots_ne (n := n) i (congrArg Prod.fst h)
 
 /-- Reflection reverses H endpoints and exchanges D with A. -/
 def reflectEdge {n k : ℕ} : Edge n k ≃ Edge n k where

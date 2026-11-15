@@ -32,9 +32,9 @@ $$\forall (n: \operatorname{Nat}), (\forall (k: \operatorname{Nat}), (((\operato
 
 The four disjoint constructors list horizontal, vertical, descending diagonal and ascending diagonal bonds. Their parameters enumerate each undirected bond once.
 
-**Definition 1.3 (Lower endpoint index).**
+**Definition 1.3 (Left-slot endpoint index).**
 
-$$\forall (n: \operatorname{Nat}), (\forall (i: \operatorname{Fin}\left((n) - (1)\right)), (\operatorname{Fin}.\operatorname{val}\left(\operatorname{KingGrid}.\operatorname{lo}\left(i\right)\right) = \operatorname{Fin}.\operatorname{val}\left(i\right)))$$
+$$\forall (n: \operatorname{Nat}), (\forall (i: \operatorname{Fin}\left((n) - (1)\right)), (\operatorname{KingGrid}.\operatorname{lo}\left(i\right) = \operatorname{QuandleMarkovColoring}.\operatorname{leftSlot}\left(i\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.lo` (`✓ std3`).
 
@@ -44,11 +44,11 @@ $$\forall (n: \operatorname{Nat}), (\forall (i: \operatorname{Fin}\left((n) - (1
 
 *Commentary.*
 
-The index is included in the longer finite interval with the displayed value.
+This endpoint uses QuandleMarkovColoring.leftSlot: its value is i.val in the longer finite interval.
 
-**Definition 1.4 (Upper endpoint index).**
+**Definition 1.4 (Right-slot endpoint index).**
 
-$$\forall (n: \operatorname{Nat}), (\forall (i: \operatorname{Fin}\left((n) - (1)\right)), (\operatorname{Fin}.\operatorname{val}\left(\operatorname{KingGrid}.\operatorname{hi}\left(i\right)\right) = (\operatorname{Fin}.\operatorname{val}\left(i\right)) + (1)))$$
+$$\forall (n: \operatorname{Nat}), (\forall (i: \operatorname{Fin}\left((n) - (1)\right)), (\operatorname{KingGrid}.\operatorname{hi}\left(i\right) = \operatorname{QuandleMarkovColoring}.\operatorname{rightSlot}\left(i\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.hi` (`✓ std3`).
 
@@ -58,7 +58,7 @@ $$\forall (n: \operatorname{Nat}), (\forall (i: \operatorname{Fin}\left((n) - (1
 
 *Commentary.*
 
-The index is included in the longer finite interval with the displayed value.
+This endpoint uses QuandleMarkovColoring.rightSlot: its value is i.val+1 in the longer finite interval. The theorem QuandleMarkovColoring.slots_ne separates the two coordinates and hence the two endpoints of every king bond.
 
 **Definition 1.5 (First endpoints).**
 
@@ -331,3 +331,4 @@ For both side lengths at least two, each one-defect array uses at least three co
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.transposeEdge`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.transpose_mono`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip](../../../Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.md)
+- Dependency: [D5/S3/Topology/QuandleMarkovColoring](../../../Topology/QuandleMarkovColoring.md)
