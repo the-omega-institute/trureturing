@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:484a6617ff6c6f061b2f6aa2708d132ba600c4ba1047fbab8f6f61744fcc7d8e
+  normalized_sha256: sha256:484a6617ff6c6f061b2f6aa2708d132ba600c4ba1047fbab8f6f61744fcc7d8e
+cas_ref: sha256:484a6617ff6c6f061b2f6aa2708d132ba600c4ba1047fbab8f6f61744fcc7d8e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DependencyTopology/LegalLedgerFixedSet.appendCertificate
+    target_statement_id: sha256:2fd1e2fa2b74a8d13ee92fda5ec120a7792a0cd3511deb4be013db89408d5f1b
+receipts:
+  unresolved_subitems: []

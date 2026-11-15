@@ -1,0 +1,24 @@
+**Lemma 4.1.** With L=125/57 and C=32L/15=800/171, every ω admits i∈{1,2} such that
+
+$$
+\operatorname{TV}(N_\omega ,P_{p,r_i})\le C\,d(\omega ).\tag{4.1}
+$$
+
+**Proof.** First prove the full-law bound TV(P_{p,r},P_{p,t})≤L|r−t|. Couple their Bernoulli letters with the same fresh uniforms until the first discrepancy. Before a discrepancy both parsers coincide. At each live Read the discrepancy probability is |r−t|. For parameter r the expected number of remaining Reads is
+
+$$
+E_rN=(2-r)/(1-a_r)\le (5/3)/(19/25)=125/57.
+$$
+
+The recursion is E_rN=1+(1−r)(1+rE_rN). Summing first-discrepancy hazards is therefore bounded by L|r−t|. If there is no discrepancy, the entire stopped word and every rendered original event agree. Both source laws complete almost surely. The coupling thus bounds TV on the complete carrier, without a future cutoff.
+
+Choose endpoint 1 if m≤1/2 and endpoint 2 otherwise. Mixture convexity gives
+
+$$
+\operatorname{TV}(N_\omega ,P_{p,r_i})\le (L/15)\min(m,1-m)\le (2L/15)m(1-m).
+$$
+
+Apply Lemma 3.1. ∎
+
+The parameter-continuity estimate is a reused elementary coupling bound, also present in the CLIP/PAID source chain. The new use is its composition with the signed event change (3.2).
+

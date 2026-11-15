@@ -1,0 +1,27 @@
+**命题 277.4（确认关系的内生闭包及其准确几何）。** 只用 $\mathsf R_B$ 和277.2，每个 $S\subseteq\mathcal B_3$ 已有唯一least确认 $e_S$。定义
+
+$$
+\operatorname{cl}_B(S)=c_B(e_S)
+=\bigcap_{f\in\mathcal E(S)}c_B(f).
+\tag{277.4}
+$$
+
+这是原二元确认关系的闭包：具有扩张性、单调性和幂等性。其闭集按包含构成完全格，交为集合交，join为并后的闭包。更紧凑地，确认像映射 $c_B$ 有一个由原序唯一确定的左伴随 $S\mapsto e_S$：
+
+$$
+e_S\le f\quad\Longleftrightarrow\quad S\subseteq c_B(f).
+\tag{277.4a}
+$$
+
+在原紧背景中，$\mathsf R_B$ 等价于这个左伴随存在于全部 $S\subseteq\mathcal B_3$；不是预先输入Hilbert格。在277.3的重建坐标中，若 $W_S$ 为 $S$ 的产品射线的复线性张成，则
+
+$$
+e_S=P_{W_S},\qquad
+\operatorname{cl}_B(S)=\{p\in\mathcal B_3:\operatorname{ran}p\subseteq W_S\}.
+\tag{277.5}
+$$
+
+证明。任意纤维向下有向已在277.3首段给出，故277.2适用于无限 $S$。$e_S$ 本身是一个确认者，且它低于所有确认者；评价纯准备即给(277.4)。若 $S\subseteq T$，$e_T$ 确认 $S$，故 $e_S\le e_T$；所以闭包单调且扩张。$e_S$ 确认 $\operatorname{cl}_B(S)$，而该集合包含 $S$，因此两个确认纤维相同，给幂等。若 $e_S\le f$，评价 $S$ 给其被 $f$ 确认；反向由least定义，故(277.4a)成立。反之，若这个左伴随对所有 $S$ 存在，对 $S=c_B(f)\cap c_B(g)$ 取 $h=e_S$，伴随性给 $h\le f,g$，且 $h$ 确认 $S$；下界关系又给 $c_B(h)\subseteq S$，所以恰等于 $S$，得 $\mathsf R_B$。于是收紧规则恰是确认关系可在原序中选择唯一代表的条件。一般闭包的固定集在任意交下封闭，最小包含并集的闭集就是其闭包；这些性质也直接由(277.4)得到。空集给 $e_\varnothing=0$、空闭包；整个 $\mathcal B_3$ 张成原载体，故确认它的唯一效应为 $u_3$。
+
+重建后，确认 $S$ 的正效应在每条目标射线上恒等，也就在 $W_S$ 上恒等；故都支配 $P_{W_S}$。该投影本身确认 $S$，给(277.5)。这一步同样允许任意 $S$，有限维使其张成由有限子集支付。$\square$
+

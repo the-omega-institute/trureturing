@@ -64,11 +64,11 @@ def localRecord (q : ℝ) (s : Qutrit) (e : Fin 3) : ℂ :=
   else (Real.sqrt ((1 - q) / 3) : ℂ) *
     omega ^ (if e = 1 then labelIndex s else -labelIndex s)
 
-private theorem local_upper (s : Qutrit) (e : Fin 3) :
+theorem local_upper (s : Qutrit) (e : Fin 3) :
     localRecord 1 s e = localRecord 1 Qutrit.wait e := by
   simp [localRecord]
 
-private theorem local_lower (e : Fin 3) :
+theorem local_lower (e : Fin 3) :
     localRecord (-(1 / 2 : ℝ)) Qutrit.wait e =
       -localRecord (-(1 / 2 : ℝ)) Qutrit.zero e -
         localRecord (-(1 / 2 : ℝ)) Qutrit.one e := by
@@ -127,7 +127,7 @@ private theorem record_split (n : ℕ) (q : Router (n + 1) → ℝ)
       simp [routerLabel, programmed, vacuumRecord, restrict, childEnvironment,
         HannRouterProfiles.vacuum_label]
 
-private theorem vacuum_split (n : ℕ) (q : Router (n + 1) → ℝ)
+theorem vacuum_split (n : ℕ) (q : Router (n + 1) → ℝ)
     (e : Environment (n + 1)) :
     vacuumRecord (n + 1) q e = localRecord (q none) Qutrit.wait (e none) *
       vacuumRecord n (restrict n q false) (childEnvironment n e false) *
@@ -532,7 +532,7 @@ private theorem childEnvironment_join_left (n : ℕ) (i : Fin 3) (l r : Environm
 private theorem childEnvironment_join_right (n : ℕ) (i : Fin 3) (l r : Environment n) :
     childEnvironment n (joinEnvironment n i l r) true = r := rfl
 
-private def childCoeff (n : ℕ) (x : Coeff (n + 1)) (b : Bool) : Coeff n :=
+def childCoeff (n : ℕ) (x : Coeff (n + 1)) (b : Bool) : Coeff n :=
   fun a => x (b, a)
 
 private theorem coefficient_split (n : ℕ) (x : Coeff (n + 1)) :
@@ -541,7 +541,7 @@ private theorem coefficient_split (n : ℕ) (x : Coeff (n + 1)) :
   cases a with
   | mk b a => cases b <;> simp [embed, childCoeff]
 
-private theorem synthesis_split (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qutrit)
+theorem synthesis_split (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qutrit)
     (x : Coeff (n + 1)) (e : Environment (n + 1)) :
     synthesis (n + 1) q bus x e =
       localRecord (q none) Qutrit.zero (e none) *
@@ -555,7 +555,7 @@ private theorem synthesis_split (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qu
     synthesis_embed n q bus true _ e]
   rfl
 
-private theorem below_upper_relation (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qutrit)
+theorem below_upper_relation (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qutrit)
     (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (hr : q none < 1) (x : Coeff (n + 1)) (c : ℂ)
     (hx : synthesis (n + 1) q bus x = c • vacuumRecord (n + 1) q) :
     synthesis n (restrict n q false) bus (childCoeff n x false) =
@@ -595,7 +595,7 @@ private theorem below_upper_relation (n : ℕ) (q : Router (n + 1) → ℝ) (bus
     have he := (hlocal el er).2.2 hneq
     exact (mul_eq_zero.mp ((mul_eq_zero.mp he).resolve_right her)).resolve_right hel
 
-private theorem upper_relation (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qutrit)
+theorem upper_relation (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qutrit)
     (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (hr : q none = 1) (x : Coeff (n + 1)) (c : ℂ)
     (hx : synthesis (n + 1) q bus x = c • vacuumRecord (n + 1) q) :
     ∃ z : ℂ,
