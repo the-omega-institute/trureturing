@@ -1,0 +1,6 @@
+**引理 277.2（紧确认纤维中的局部收紧迫出唯一最小门）。** 设 $C$ 是非零有限维闭尖生成锥，$u$ 严格正，$K=\{x\in C:u(x)=1\}$ 是其整个紧底，$\mathcal E=[0,u]_{C^*}$。对任意 $S\subseteq K$，确认纤维 $\mathcal E(S)=\{f\in\mathcal E:f|_S=1\}$ 有least元，当且仅当它向下有向：任意 $f,g\in\mathcal E(S)$ 有同纤维的 $h\le f,g$。
+
+证明。原proper区间闭。由 $K$ 张成整个载体，可取有限个 $x_i\in K$ 张成之；所有 $f(x_i)\in[0,1]$，所以它有界，因而紧。$\mathcal E(S)$ 是这些闭等式的交，非空且紧，即使 $S$ 无限也如此。
+
+取任意 $\omega\in\operatorname{int}C\cap K$。若非零 $a\in C^*$ 满足 $a(\omega)=0$，则 $\omega$ 的小邻域均在 $C$ 中，线性性迫 $a$ 在所有方向上为零，矛盾。因此 $a\mapsto a(\omega)$ 严格检测非零正差。取 $e\in\mathcal E(S)$ 使 $e(\omega)$ 最小。对任意 $f\in\mathcal E(S)$，向下有向给 $h\in\mathcal E(S)$ 且 $h\le e,f$。最小性及 $h\le e$ 给 $(e-h)(\omega)=0$，严格性迫 $e=h\le f$。故 $e$ 是least，且唯一；其定义不依赖为证明而选的 $\omega$。这是存在性证明，不给有限步寻门算法或设备。反向用least本身作任意两元的共同下界。$\square$
+

@@ -10,7 +10,19 @@ A certified core has finitely many nodes, an exact witness for each node, accept
 
 An extension retains every old node, every derived edge, and the exact old witness. A transformation is a total map on all legal ledgers, and it is admissible when it is an extension on every input. Fix consists of propositions whose frozen membership is invariant under every such admissible map.
 
-**Theorem 1.1 (A certificate gives an admissible total transformation).**
+**Theorem 1.1 (Frozen nodes have permitted proofs).**
+
+$$\forall L: \operatorname{LegalLedger}\left(k\right), \forall p: P, p \in \operatorname{Frozen}\left(L\right) \implies \operatorname{Proved}\left(k, p\right).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DependencyTopology/LegalLedgerFixedSet.frozen_proved` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The selected core witness is accepted and uses only permitted axioms. This fact connects retained core membership to kernel consistency.
+
+**Theorem 1.2 (A certificate gives an admissible total transformation).**
 
 $$\forall p: P, \forall C: \operatorname{Certificate}\left(k, p\right), \operatorname{Admissible}\left(\operatorname{addWithCertificate}\left(p, C\right)\right).$$
 
@@ -26,7 +38,7 @@ Old nodes reference only old nodes. Edges between new nodes are certificate edge
 
 The resulting ledger is legal for every legal input and retains all old nodes, edges and witnesses.
 
-**Theorem 1.2 (Fixed membership is frozen or unprovable membership).**
+**Theorem 1.3 (Fixed membership is frozen or unprovable membership).**
 
 $$\forall laws: \operatorname{SourceLaws}\left(k\right), \forall L: \operatorname{LegalLedger}\left(k\right), \operatorname{Fix}\left(L\right) = \operatorname{Frozen}\left(L\right) \cup \{p: P \mid \neg \operatorname{Proved}\left(k, p\right)\}.$$
 
@@ -46,4 +58,5 @@ Conversely, an unfrozen proved proposition has a certificate. The admissible cer
 
 - Truth anchor: `D5/S3/ConceptDynamics/DependencyTopology/LegalLedgerFixedSet.addWithCertificate_admissible`
 - Truth anchor: `D5/S3/ConceptDynamics/DependencyTopology/LegalLedgerFixedSet.fixed_eq_frozen_union_unprovable`
+- Truth anchor: `D5/S3/ConceptDynamics/DependencyTopology/LegalLedgerFixedSet.frozen_proved`
 - Dependency: [D5/S3/ConceptDynamics/DependencyTopology/DependencyReachabilityOrder](DependencyReachabilityOrder.md)

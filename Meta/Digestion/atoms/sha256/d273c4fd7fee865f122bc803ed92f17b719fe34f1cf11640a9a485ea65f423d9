@@ -1,0 +1,26 @@
+**定义 274.1（四维局域载体上的完整候选）。** 完整保留270.1、272.1的强全有限背景 $\mathsf B_{\mathrm{fin}}$：每个有限 $N\ge0$ 的整个原实载体 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成锥 $C_N$、严格正乘积单位 $u_N=u^{\otimes N}$、整个归一紧底 $K_N$、全部原纯点 $P_N$、完整正对偶、完整 proper 区间及全部有限单位分解；标量零层、分离整个载体的张量配对、规范重括号、正位置置换及其正逆、正单位丢弃，以及每个有限分块上针对全部原相关输入的 min/max 界。另固定 $\dim_{\mathbb R}V=4$。
+
+每层 $R_{m,N}$ 仍由全部实际二纯面自己的体积重心径向种子生成，反端允许混合；不改变272.1的共同参照定义。只在整个双份要求
+
+$$
+\mathsf X_2:\quad
+\forall p\ne q\in P_2\ \exists g\in P_2:\quad
+\{p,q\}^{\perp}=\{p,g\}^{\perp},\qquad
+(pR_{m,2}q)\mathbin{\mathrm{xor}}(pR_{m,2}g).
+\tag{274.1}
+$$
+
+只在整个三份要求完整菜单的最小确认
+
+$$
+\mathsf M_3:\quad
+\forall p\in P_3\ \exists e_p\in[0,u_3]:\quad
+e_p(p)=1,\qquad
+e_p\le f\quad(f\in[0,u_3],\ f(p)=1).
+\qquad
+\boxed{\mathsf Q_{2,3}:=\mathsf X_2+\mathsf M_3.}
+\tag{274.2}
+$$
+
+效应序始终取原正对偶；leastness 同时作用于全部原混合输入。没有输入三份换边、实际二态球、共同尺或数值互易，也没有截断其余有限层级。
+
