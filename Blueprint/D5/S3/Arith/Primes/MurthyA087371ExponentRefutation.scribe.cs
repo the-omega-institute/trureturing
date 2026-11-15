@@ -45,8 +45,8 @@ internal sealed class MurthyA087371ExponentRefutationDocument : IScribeDocumentD
                 + "positive exponent fails. Thus the qualifying set is nonempty and its least "
                 + "member is exactly K: a(n)=K. Given a proposed bound M, take K=M+1 to "
                 + "contradict a(n)<M. This supplies genuine first successes of every positive "
-                + "size without a cutoff, while preserving the zero sentinel at all other "
-                + "indices. The consecutive-prime-gap theorem is reused directly; the offset, "
+                + "size without a cutoff, while retaining the zero value whenever no exponent "
+                + "qualifies. The consecutive-prime-gap theorem is reused directly; the offset, "
                 + "threshold and leastness are checked for this decimal sequence. No theorem "
                 + "about the separate base-three sequence is assumed.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
