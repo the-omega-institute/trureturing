@@ -36,11 +36,11 @@ def actual : Realization signature.{u, v} :=
 def rejected : Realization signature.{u, v} :=
   realize signature (fun _ p _ => by letI := p.2.2.1; exact 1) (fun e => nomatch e)
 
-private def discreteMetric (X : Type*) [DecidableEq X] : MetricSpace X where
+@[instance_reducible] private def discreteMetric (X : Type*) [DecidableEq X] : MetricSpace X where
   dist a b := if a = b then 0 else 1
-  dist_self a := if_pos rfl
+  dist_self a := ite_eq_left rfl
   dist_comm a b := by split_ifs <;> simp_all
-  dist_triangle a b c := by split_ifs <;> simp_all <;> norm_num
+  dist_triangle a b c := by split_ifs <;> simp_all
   eq_of_dist_eq_zero := by intro a b h; split_ifs at h <;> simp_all
 
 abbrev arena : Arena where
@@ -103,6 +103,7 @@ private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   have herr := hφ a b hab
   have heq : (θ a)⁻¹ * θ b = 1 := by
     apply dist_le_zero.mp
+    change dist ((θ a)⁻¹ * θ b) 1 ≤ _ at herr
     simpa only [mul_zero] using herr
   have hθa : θ a = 1 := ite_eq_left rfl
   have hθb : θ b = t := ite_eq_right hab_ne.symm
@@ -139,7 +140,8 @@ private theorem dependence : ObservationalDependence signature.{u, v} actual := 
   exact (by decide : (0 : Fin 2) ≠ 1) hbad
 
 def family : Registration arena.{u, v}
-    (type_of% (@SimpleGraph.IsChordal.exists_approximate_gain_potential.{u, v})) where
+    (type_of%
+      (@SimpleGraph.IsChordal.exists_approximate_gain_potential.{u, v})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@SimpleGraph.IsChordal.exists_approximate_gain_potential.{u, v}, rejected, rejected_law⟩
