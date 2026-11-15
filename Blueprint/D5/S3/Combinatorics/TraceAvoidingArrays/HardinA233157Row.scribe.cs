@@ -12,19 +12,11 @@ internal sealed class HardinA233157RowDocument : IScribeDocumentDefinition
         "The number of labelled 4-row arrays obeys the order-3 recurrence from OEIS A233157.",
         H("OEIS A233157"), Blocks(
             Node("U4",All("n",NatF(),Eq(C("U4",V("n")),FilterCard(N(4),V("n")))),"Every labelled function satisfying horizontal and antidiagonal sum exclusion is counted.",true),
-            Node("classes", All("a",FinF(N(3)),All("b",FinF(N(3)),All("c",FinF(N(3)),All("d",FinF(N(3)),Eq(C("classes",V("a"), V("b"), V("c"), V("d")),C("HardinA233177PairTransfer.cls",P(Seq(V("a"), Comma, Sp, P(Seq(V("b"), Comma, Sp, P(Seq(V("c"), Comma, Sp, V("d"))))))))))))), "The existing first-appearance orbit index assigns the equality pattern."),
-            Node("classify",All("r",RowF(N(4)),Eq(C("classify",V("r")),A(C("classes"),A(V("r"),N(0)), A(V("r"),N(1)), A(V("r"),N(2)), A(V("r"),N(3))))),"The coordinates select one of the 14 equality classes."),
-            Node("representatives", All("i",FinF(N(14)),Eq(C("representatives",V("i")),C("HardinA233177PairTransfer.column",C("HardinA233177PairTransfer.representatives",V("i"))))), "The existing representative tuple is read in row order."),
-            Node("quotient", Cast(C("quotient"), C("Matrix", FinF(N(14)), FinF(N(14)), IntF())), "The fixed 14 by 14 integer table records compatible successor multiplicities between equality classes."),
-            Node("weights", Cast(C("weights"), Arr(FinF(N(14)), IntF())), "The fixed 14-entry integer vector records three labelled constant columns in the constant class and six labelled columns in every other equality class."),
-            Node("finite_certificate",CertificateFormula(),"The three identities specify the quotient, the initial class counts and the finite relation among matrix powers.",theorem:true),
-            Node("result",ResultFormula(),"Multiplication by every further matrix power extends the finite relation to all strip lengths in the displayed range.",theorem:true)), []));
-    private static Formula MV(Formula n) => C("Matrix.mulVec",Pow(C("quotient"),n),Cast(N(1),Arr(FinF(N(14)),IntF())));
+            Node("finite_certificate",CertificateFormula(),"The four-row proper-colouring matrix HardinA233259PairTransferCore.Q satisfies this relation. HardinA233259PairTransferPowers.powers_table evaluates its fixed powers; no further transfer table is needed.",theorem:true),
+            Node("result",ResultFormula(),"Alternating the labels in successive columns identifies the literal count with HardinA233259PairTransferCore.L. Its Proper predicate agrees after exchanging the row binders. HardinA233259PairTransferCount.count_transfer then supplies the weighted matrix-power count for every width at least two. Multiplication propagates the finite relation to later widths; the first recurrence index follows by evaluating powers three through six.",theorem:true)), []));
+    private static Formula MV(Formula n) => C("Matrix.mulVec",Pow(C("HardinA233259PairTransferCore.Q"),n),Cast(N(1),Arr(FinF(N(14)),IntF())));
     private static Formula CertificateFormula() {
-        var row=All("r",RowF(N(4)),All("s",FinF(N(14)),Eq(Sum("c",RowF(N(4)),Ite(And(C("columnCompatible",V("r"),V("c")),Eq(C("classify",V("c")),V("s"))),Cast(N(1),IntF()),N(0))),A(C("quotient"),C("classify",V("r")),V("s")))));
-        var weights=All("s",FinF(N(14)),Eq(Sum("c",RowF(N(4)),Ite(Eq(C("classify",V("c")),V("s")),Cast(N(1),IntF()),N(0))),A(C("weights"),V("s"))));
-        var relation=Eq(MV(PlusF(N(4),N(3))),Sum("j",FinF(N(3)),C("HSMul.hSMul",A(Vec(N(6), N(-15), N(9)),V("j")),MV(PlusF(N(4),Val(V("j")))))));
-        return And(row,And(weights,relation));
+        return Eq(MV(PlusF(N(4),N(3))),Sum("j",FinF(N(3)),C("HSMul.hSMul",A(Vec(N(6), N(-15), N(9)),V("j")),MV(PlusF(N(4),Val(V("j")))))));
     }
     private static Formula ResultFormula() {
         Formula U(int j) => Cast(C("U4",PlusF(V("n"),N(j))),IntF());

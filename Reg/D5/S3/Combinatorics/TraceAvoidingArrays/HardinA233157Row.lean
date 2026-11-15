@@ -33,7 +33,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := congrFun h (0 : Fin 14)
   simp only [rejected, realize, zero_smul, Finset.sum_const_zero, Pi.zero_apply] at hb
-  rw [show 4+4 = (7 : Fin 9).val from rfl, powers_table] at hb
+  rw [show 4+3 = (7 : Fin 9).val from rfl, powers_table] at hb
   change (1893060 : ℤ) = 0 at hb
   norm_num at hb
 def family : Registration arena (type_of% @finite_certificate) where

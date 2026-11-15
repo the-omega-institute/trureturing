@@ -27,8 +27,10 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer (properEquiv)
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open HardinA233259PairTransferCore (Q Proper L weights)
-open HardinA233259PairTransferPowers (W powers_table)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
+  (Q Proper L weights)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferPowers
+  (W powers_table)
 open scoped BigOperators
 set_option maxRecDepth 100000
 

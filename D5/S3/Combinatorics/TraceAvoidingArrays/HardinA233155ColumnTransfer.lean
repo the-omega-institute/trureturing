@@ -15,22 +15,22 @@ successor_sum, quotient_rows and properEquiv are bind-only.
 columnCompatible: proof_shape=bind-only; consumers=successorClasses, count_transfer
 instDecidableColumnCompatible: proof_shape=bind-only; consumers=successorClasses
 relabel: proof_shape=bind-only; consumers=compatible_relabel, quotient_rows
-complement: proof_shape=bind-only; consumers=twist, complement_bond, alternatingEquiv, alternating_legal
 complement_bond: proof_shape=bind-only; consumers=alternating_legal
 alternatingEquiv: proof_shape=bind-only; consumers=alternating_legal, properEquiv
 alternating_legal: proof_shape=bind-only; consumers=properEquiv
-properEquiv: proof_shape=bind-only; consumers=HardinA233156Row.counting_bridge, HardinA233158Row.counting_bridge
+properEquiv: proof_shape=bind-only; consumers=HardinA233156Row.counting_bridge, HardinA233157Row.counting_bridge, HardinA233158Row.counting_bridge
 twist: proof_shape=bind-only; consumers=compatible_relabel, quotient_rows
 bond_relabel: proof_shape=bind-only; consumers=compatible_relabel
 compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
 successorClasses: proof_shape=bind-only; consumers=successor_sum, quotient_rows
 successor_sum: proof_shape=bind-only; consumers=quotient_rows
-quotient_rows: proof_shape=bind-only; consumers=HardinA233157Row.row_counts, HardinA233159RowCertificate.row_counts
+quotient_rows: proof_shape=bind-only; consumers=HardinA233159RowCertificate.row_counts
 grid_good: proof_shape=content; consumers=count_transfer
-count_transfer: proof_shape=content; consumers=HardinA233157Row.counting_bridge, HardinA233159Row.counting_bridge
+count_transfer: proof_shape=content; consumers=HardinA233159Row.counting_bridge
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
+import Mathlib.Data.Fin.Rev
 import Mathlib.Tactic
 
 /-! Horizontal and antidiagonal bonds connect successive unrestricted columns. -/
@@ -48,19 +48,13 @@ private instance instDecidableColumnCompatible {k : ℕ} (r s : Row k) :
 
 def relabel {k : ℕ} (e : Equiv.Perm (Fin 3)) : Row k ≃ Row k :=
   Equiv.arrowCongr (Equiv.refl _) e
-private def complement : Equiv.Perm (Fin 3) where
-  toFun := ![2, 1, 0]
-  invFun := ![2, 1, 0]
-  left_inv := by decide +kernel
-  right_inv := by decide +kernel
-
 private theorem complement_bond : ∀ x y : Fin 3,
-    x ≠ complement y ↔ x.val + y.val ≠ 2 := by decide +kernel
+    x ≠ (Fin.revPerm (n := 3)) y ↔ x.val + y.val ≠ 2 := by decide +kernel
 
 /-- Complement labels in each odd column, preserving every labelled array. -/
 private def alternatingEquiv (k n : ℕ) :
     (Fin k × Fin n → Fin 3) ≃ (Fin k × Fin n → Fin 3) :=
-  Equiv.piCongrRight (fun p => complement ^ p.2.val)
+  Equiv.piCongrRight (fun p => (Fin.revPerm (n := 3)) ^ p.2.val)
 
 private theorem alternating_legal (k n : ℕ) (f : Fin k × Fin n → Fin 3) :
     Legal f ↔ ∀ (j : Fin n) (h : j.val + 1 < n) (r s : Fin k),
@@ -68,13 +62,13 @@ private theorem alternating_legal (k n : ℕ) (f : Fin k × Fin n → Fin 3) :
       alternatingEquiv k n f (r, j) ≠
         alternatingEquiv k n f (s, ⟨j.val + 1, h⟩) := by
   have bond (j : ℕ) (x y : Fin 3) :
-      (complement ^ j) x ≠ (complement ^ (j + 1)) y ↔ x.val + y.val ≠ 2 := by
-    rw [pow_succ, Equiv.Perm.mul_apply, (complement ^ j).injective.ne_iff]
+      ((Fin.revPerm (n := 3)) ^ j) x ≠ ((Fin.revPerm (n := 3)) ^ (j + 1)) y ↔ x.val + y.val ≠ 2 := by
+    rw [pow_succ, Equiv.Perm.mul_apply, ((Fin.revPerm (n := 3)) ^ j).injective.ne_iff]
     exact complement_bond x y
   change Legal f ↔ ∀ (j : Fin n) (h : j.val + 1 < n) (r s : Fin k),
     (r = s ∨ r.val = s.val + 1) →
-      (complement ^ j.val) (f (r, j)) ≠
-        (complement ^ (j.val + 1)) (f (s, ⟨j.val + 1, h⟩))
+      ((Fin.revPerm (n := 3)) ^ j.val) (f (r, j)) ≠
+        ((Fin.revPerm (n := 3)) ^ (j.val + 1)) (f (s, ⟨j.val + 1, h⟩))
   constructor
   · intro hf j hj r s hrs
     apply (bond _ _ _).2
@@ -100,7 +94,7 @@ def properEquiv (k n : ℕ) :
   Equiv.subtypeEquiv (alternatingEquiv k n) (alternating_legal k n)
 
 private def twist (e : Equiv.Perm (Fin 3)) : Equiv.Perm (Fin 3) :=
-  complement.trans (e.trans complement)
+  (Fin.revPerm (n := 3)).trans (e.trans (Fin.revPerm (n := 3)))
 private theorem bond_relabel : ∀ (e : Equiv.Perm (Fin 3)) (x y : Fin 3),
     (e x).val + (twist e y).val ≠ 2 ↔ x.val + y.val ≠ 2 := by decide +kernel
 private theorem compatible_relabel {k : ℕ} (e : Equiv.Perm (Fin 3)) (r s : Row k) :
