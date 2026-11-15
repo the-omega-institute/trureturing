@@ -18,12 +18,18 @@ namespace Reg.D5.S3.Quantum.Subentropy.QubitBoundary
 
 abbrev M := Matrix (Fin 2) (Fin 2) ℂ
 
+inductive ReadoutRole
+  | zeroValue
+  | deficitLower
+  | deficitUpper
+  deriving DecidableEq, Fintype
+
 @[reducible] def signature : Signature where
   Params := Unit
   State _ := M
-  Role := Fin 3
+  Role := ReadoutRole
   finiteRole := inferInstance
-  nonemptyRole := inferInstance
+  nonemptyRole := ⟨.zeroValue⟩
   Output _ _ := ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
@@ -36,9 +42,9 @@ def actual : Realization signature :=
   Law obs := ∀ (A : M) (_hA : A.PosSemidef) (_htr : A.trace = 1),
     let δ := A.det.re
     0 ≤ δ ∧ δ ≤ 1 / 4 ∧
-      (δ = 0 → obs.readout 0 () A = 0) ∧
-      (0 < δ → 0 ≤ δ - obs.readout 1 () A ∧
-        δ - obs.readout 2 () A ≤ δ ^ 2 * Real.log (1 / δ) / (1 - δ))
+      (δ = 0 → obs.readout .zeroValue () A = 0) ∧
+      (0 < δ → 0 ≤ δ - obs.readout .deficitLower () A ∧
+        δ - obs.readout .deficitUpper () A ≤ δ ^ 2 * Real.log (1 / δ) / (1 - δ))
 
 private def pure : M := diagonal ![1, 0]
 private def mixed : M := diagonal (fun _ => ((1 / 2 : ℝ) : ℂ))
@@ -66,14 +72,15 @@ private theorem mixed_trace : mixed.trace = 1 := by
 private theorem mixed_det : mixed.det.re = 1 / 4 := by
   norm_num [mixed, Matrix.det_fin_two]
 
-def changed (i : Fin 3) : Realization signature := realize signature
+def changed (i : ReadoutRole) : Realization signature := realize signature
   (fun j p A => if j = i then
-    if i = 2 then -1 - A.det.re ^ 2 * Real.log (1 / A.det.re) / (1 - A.det.re) else 1
+    if i = .deficitUpper then
+      -1 - A.det.re ^ 2 * Real.log (1 / A.det.re) / (1 - A.det.re) else 1
     else actual.readout j p A) (fun e => nomatch e)
 
-private theorem changed_negative (i : Fin 3) : ¬ arena.Law (changed i) := by
+private theorem changed_negative (i : ReadoutRole) : ¬ arena.Law (changed i) := by
   intro h
-  fin_cases i
+  cases i
   · have hp := (h pure pure_psd pure_trace).2.2.1 pure_det
     norm_num [changed, realize] at hp
   · have hp := ((h mixed mixed_psd mixed_trace).2.2.2
@@ -88,7 +95,7 @@ private theorem changed_negative (i : Fin 3) : ¬ arena.Law (changed i) := by
 def evidence : Registration arena (type_of% @qubit_subentropy_near_pure) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨qubit_subentropy_near_pure, changed 0, changed_negative 0⟩
+  variation := ⟨qubit_subentropy_near_pure, changed .zeroValue, changed_negative .zeroValue⟩
   sensitivity := by
     constructor
     · intro i
