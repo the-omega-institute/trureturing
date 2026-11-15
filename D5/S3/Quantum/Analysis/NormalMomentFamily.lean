@@ -88,11 +88,11 @@ private theorem positive {ρ σ : StrongDual ℂ A} (F : Family ρ σ) :
   F.property.2.2.1
 
 omit [StarOrderedRing A] in
-private theorem unit_value {ρ σ : StrongDual ℂ A} (F : Family ρ σ) :
+theorem unit_value {ρ σ : StrongDual ℂ A} (F : Family ρ σ) :
     linearMap F 1 = ρ + σ := by ext a; exact F.property.2.2.2.1 a
 
 omit [StarOrderedRing A] in
-private theorem posterior_value {ρ σ : StrongDual ℂ A} (F : Family ρ σ) :
+theorem posterior_value {ρ σ : StrongDual ℂ A} (F : Family ρ σ) :
     linearMap F posterior = ρ := by ext a; exact F.property.2.2.2.2 a
 
 private def realMap (u : C(Interval, ℝ)) : C(Interval, ℂ) :=
@@ -255,7 +255,7 @@ private theorem mass_real_im {ρ σ : StrongDual ℂ A} (F : Family ρ σ)
   rw [he, map_sub, sub_apply, Complex.sub_im,
     hi p (fun _ => le_max_right _ _), hi n (fun _ => le_max_right _ _), sub_self]
 
-private theorem integral_complex {ρ σ : StrongDual ℂ A} (F : Family ρ σ)
+theorem integral_complex {ρ σ : StrongDual ℂ A} (F : Family ρ σ)
     (g : C(Interval, ℂ)) : linearMap F g 1 = ∫ x, g x ∂scalarMeasure F := by
   let u : C(Interval, ℝ) := ⟨fun x => (g x).re, by fun_prop⟩
   let v : C(Interval, ℝ) := ⟨fun x => (g x).im, by fun_prop⟩
