@@ -120,6 +120,23 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+/-- Exact exposed unit source; no serialization certificate is claimed. -/
+theorem unit_source_bridge : (type_of% (@unit_value.{u})) ↔
+    ∀ {A : Type u} [CStarAlgebra A] [PartialOrder A]
+      {ρ σ : StrongDual ℂ A} (F : Family ρ σ), linearMap F 1 = ρ + σ := Iff.rfl
+
+/-- Exact exposed posterior source with its original generic algebra. -/
+theorem posterior_source_bridge : (type_of% (@posterior_value.{u})) ↔
+    ∀ {A : Type u} [CStarAlgebra A] [PartialOrder A]
+      {ρ σ : StrongDual ℂ A} (F : Family ρ σ), linearMap F posterior = ρ := Iff.rfl
+
+/-- All continuous complex integrals, with the entire original telescope. -/
+theorem complex_mass_source_bridge : (type_of% (@integral_complex.{u})) ↔
+    ∀ {A : Type u} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
+      {ρ σ : StrongDual ℂ A} (F : Family ρ σ) (g : C(Interval, ℂ)),
+      linearMap F g 1 = ∫ t, g t ∂scalarMeasure F := Iff.rfl
+
 #print axioms family
 #print axioms audit
 

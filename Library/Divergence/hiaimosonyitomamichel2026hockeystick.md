@@ -14,6 +14,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/MaximalHockeyStickAttainment
   - D5/S3/Quantum/Divergence/MaximalHockeyStickLoewnerSlopes
   - D5/S3/Quantum/Divergence/MaximalHockeyStickArbitrarySupport
+  - D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment
 license: citation-only
 triage: anchor
 ---
@@ -164,3 +165,45 @@ classification remains unverified.
 ## Verified locator
 
 https://arxiv.org/abs/2607.08760v1
+
+## Arbitrary convex posterior instruments
+
+`GeneralConvexReverseTestAttainment` treats an arbitrary concrete von Neumann
+algebra and the actual sigma-finite whole-complex-L1 source class. Its source
+universe and operator-algebra universe are independent. The preparation is
+initially only algebraic complex-linear, positive and complex-mass preserving,
+with intrinsically all-directed order-normal outputs. Normality is not replaced
+by an unproved identification with a chosen abstract predual.
+
+The posterior source is the finite measure obtained by pushing
+`(p+q) dmu` forward under `p/(p+q)`, with the zero fiber assigned zero.
+The exact whole-L1 source equalities preserve both prepared moments without
+assuming continuity of an original preparation. All continuous scalar integrals
+identify this measure with the actual moment family's Riesz measure. The literal
+extended closed-perspective integral is preserved, including zero fibers and
+both infinite endpoint coefficients.
+
+The converse uses the constructed normal whole-L1 realization for every point
+of `NormalMomentFamily.Family`. Transport along the measurable equivalence
+between the compact interval and its universe lift gives an actual original
+source in the prescribed universe. Hence the full original attainable-cost set
+equals the image of the literal family objective, before minimizing either side.
+The objective is the fixed finite affine support contribution plus
+`PosteriorCurvatureCost.posteriorCurvatureCost`. The latter is the exact
+supremum of continuous truncated-curvature integrals and is lower
+semicontinuous in Mathlib's full weak topology of finite measures. Minimization
+in ENNReal on the actual compact nonempty family retains top as a possible
+minimum. The resulting original value is attained and cannot be minus infinity.
+
+The comparison with earlier literature retains its hypotheses. Matsumoto,
+[arXiv:1311.4722v4](https://arxiv.org/abs/1311.4722v4), Theorems 9.4 and 9.9,
+provides finite-value and separable B(H) attainment antecedents under his stated
+FC and endpoint conditions; Lemma 4.1 already provides the finite-compression
+architecture. Hiai, *Quantum f-divergences in von Neumann algebras II. Maximal
+f-divergences*, [arXiv:1807.03118v1](https://arxiv.org/abs/1807.03118v1),
+Section 6, Lemma 6.1, Definition 6.2 and Theorem 6.3, gives an arbitrary-von-Neumann
+whole-L1 spectral reverse test and attainment with infinite endpoint conventions
+under the paper's standing operator-convexity hypothesis. The posterior
+construction retains arbitrary convexity, without asserting spectral optimality
+or finite-alphabet realization. These antecedents and the question in Remark
+VII.4 delimit the contribution; they do not establish a global priority claim.
