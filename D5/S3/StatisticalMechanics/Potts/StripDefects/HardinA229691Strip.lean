@@ -31,7 +31,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229691StripClasses11
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229691StripClasses12
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229691StripClasses13
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229583StripData
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229583Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Mathlib.Logic.Equiv.Fin.Basic
 
@@ -107,11 +107,7 @@ theorem result (n : ℕ) :
       (literalCount (q := 3) horizontal antidiagonal 2 (m + 1) : ℤ) =
         dotProduct initial ((T ^ m).mulVec terminal) := by
     apply lumped_count horizontal antidiagonal boundary cross Valid cl T initial terminal 2
-      (by
-        intro r t
-        unfold cross boundary bondDefects antidiagonal
-        rw [Finset.filter_image, Finset.filter_image]
-        simp only [Fin.cons_succ, Fin.tail])
+      HardinA229583Strip.edge
     · intro p d h
       exact finite_certificate.1 p ⟨d, by have hd : d ≤ 2 := h.1; omega⟩ h
     · intro p d h r hr
