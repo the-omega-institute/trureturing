@@ -62,6 +62,37 @@ internal sealed class BarkerRegularRelationCountingDocument : IScribeDocumentDef
                 + "Both denominator factors have constant coefficient one. Eliminating the state "
                 + "counts also gives the displayed recurrence, which begins at positive length.",
                 DescribeRole.Theorem),
+            Node("eventCount", "Literal exact-event fibers", EventCountFormula(),
+                "This subtype retains the original admissibility predicate and requires the length "
+                + "of the ordered event list to be exactly r. Overlapping equality pairs remain "
+                + "individual events, and every word keeps its literal alphabet labels.", DescribeRole.Definition),
+            Node("eventSeries", "Exact-event coefficient series", EventSeriesFormula(),
+                "The coefficient of x to a positive length n is the rational cast of eventCount R n r. "
+                + "The constant coefficient is zero. Empty words are accounted for separately.", DescribeRole.Definition),
+            Node("markedSeries", "Eventful words marked by event number", MarkedDefinitionFormula(),
+                "This is a series in y with coefficients in Q[[x]]. Its coefficient at y to r+1 "
+                + "is eventSeries R (r+1), so the coefficient at x to n and y to r+1 is the actual "
+                + "exact-event cardinality. The coefficient at y to zero is zero; no substitution "
+                + "of one into an arbitrary formal series is used.", DescribeRole.Definition),
+            Node("event_enumeration", "Enumeration by the exact number of equality events", EventEnumerationFormula(),
+                "Filter the three indicator weights by the length of the extracted event list. "
+                + "Prepending a different letter preserves this length. Prepending the first letter "
+                + "adds exactly one event, and enters B precisely from U or A. The same unique "
+                + "first-letter and suffix correspondence therefore gives the exact-event fibers. "
+                + "Write H=1-(q-1)x and J=1+x. For positive event number, U vanishes. The eventful "
+                + "states satisfy J A_r=d x (A_r+B_r) and H(A_r+B_r)=x(U_(r-1)+A_(r-1)). "
+                + "For zero events, A and B vanish and U=qx/H. Thus E_1 H^2=qx^2 and "
+                + "E_(r+2) J H=d x^2 E_(r+1). Induction on event number proves the displayed "
+                + "formula, and coefficient extraction proves the literal-word identity and the "
+                + "shortest-length boundary. The parameter r in the formula represents r+1 events; "
+                + "hence the exponent d^r includes d^0=1 even when d=0. For one event the answer "
+                + "is qx^2/H^2, and at indegree zero every fiber with two or more events vanishes. "
+                + "There is one empty zero-event word, no empty eventful word, and no singleton "
+                + "eventful word. The shortest r+1-event words have length 2(r+1), with count q d^r. "
+                + "The final marked identity is in Q[[x]][[y]]. Its denominator has constant "
+                + "coefficient JH as a y-series, which is a unit because its x-constant is one. "
+                + "Ring.inverse denotes this unit inverse. The numerator is y x(1+x)U, exactly "
+                + "as in the source; both markers refer to actual word fibers.", DescribeRole.Theorem),
             Paragraph(Text("Only q and d occur in the answer, so two loopless relations on the "
                 + "same alphabet with the same indegree have equal counts at every length. For "
                 + "d=1, take R(a,b) to mean b=σ(a), where σ is any fixed-point-free permutation. "
@@ -117,6 +148,84 @@ internal sealed class BarkerRegularRelationCountingDocument : IScribeDocumentDef
                     Subtype("b", Letters(), CallR(V("b"), V("r")))), V("d"))),
                     And(Parenthesized(initials), And(Equal(Call("sourceSeries", V("R")),
                         GeneratingFunction()), recurrence)))))));
+    }
+
+    private static Formula EventCountFormula()
+    {
+        var labels = Call("eventLabels", App(Q("List", "ofFn"), V("w")));
+        var predicate = And(Call("Admissible", V("R"), V("w")),
+            Equal(App(Q("List", "length"), labels), V("r")));
+        var card = App(Q("Nat", "card"), Subtype("w", Words(V("n")), predicate));
+        var equality = Equal(Call("eventCount", V("R"), V("n"), V("r")), card);
+        return All("q", N(), All("R", RelationType(), All("n", N(), All("r", N(), equality))));
+    }
+
+    private static Formula EventSeriesFormula() => All("q", N(), All("R", RelationType(), All("r", N(),
+        Equal(Call("eventSeries", V("R"), V("r")), App(Q("PowerSeries", "mk"), Lam("n", N(),
+            Call("if", Equal(V("n"), D(0)), D(0), EventCount(V("n"), V("r")))))))));
+
+    private static Formula MarkedDefinitionFormula() => All("q", N(), All("R", RelationType(),
+        Equal(Call("markedSeries", V("R")), Multiply(Q("PowerSeries", "X"),
+            App(Q("PowerSeries", "mk"), Lam("r", N(),
+                Call("eventSeries", V("R"), Add(V("r"), D(1)))))))));
+
+    private static Formula EventCount(Formula n, Formula r) =>
+        Cast(Call("eventCount", V("R"), n, r), Rationals());
+
+    private static Formula EventFunction(Formula r)
+    {
+        var x = Q("PowerSeries", "X");
+        Formula C(Formula f) => App(Q("PowerSeries", "C"), Cast(f, Rationals()));
+        var numerator = Multiply(C(Multiply(V("q"), Power(V("d"), r))),
+            Power(x, Multiply(D(2), Add(r, D(1)))));
+        var denominator = Multiply(Power(Parenthesized(Add(D(1), x)), r),
+            Power(Parenthesized(Subtract(D(1), Multiply(C(Subtract(V("q"), D(1))), x))),
+                Add(r, D(2))));
+        return Multiply(numerator, Power(Parenthesized(denominator), new Formula.Negate(D(1))));
+    }
+
+    private static Formula MarkedFormula()
+    {
+        var x = Q("PowerSeries", "X");
+        var y = Q("PowerSeries", "X");
+        Formula C(Formula f) => App(Q("PowerSeries", "C"), f);
+        var h = Subtract(D(1), Multiply(C(Cast(Subtract(V("q"), D(1)), Rationals())), x));
+        var numerator = Multiply(y, C(Multiply(Multiply(x, Parenthesized(Add(D(1), x))),
+            Call("eventSeries", V("R"), D(0)))));
+        var denominator = Subtract(C(Multiply(Parenthesized(Add(D(1), x)), Parenthesized(h))),
+            Multiply(y, C(Multiply(C(Cast(V("d"), Rationals())), Power(x, D(2))))));
+        return Equal(Call("markedSeries", V("R")), Multiply(numerator,
+            App(Q("Ring", "inverse"), denominator)));
+    }
+
+    private static Formula EventEnumerationFormula()
+    {
+        var r = V("r");
+        var n = V("n");
+        var next = Add(r, D(1));
+        var empty = And(Equal(Call("eventCount", V("R"), D(0), D(0)), D(1)),
+            All("r", N(), Equal(Call("eventCount", V("R"), D(0), next), D(0))));
+        var x = Q("PowerSeries", "X");
+        var zero = Equal(Call("eventSeries", V("R"), D(0)), Multiply(
+            Multiply(App(Q("PowerSeries", "C"), Cast(V("q"), Rationals())), x),
+            Power(Parenthesized(Subtract(D(1), Multiply(App(Q("PowerSeries", "C"),
+                Cast(Subtract(V("q"), D(1)), Rationals())), x))), new Formula.Negate(D(1)))));
+        var series = All("r", N(), Equal(Call("eventSeries", V("R"), next), EventFunction(r)));
+        var coefficient = All("r", N(), All("n", N(), Equal(EventCount(n, next),
+            App(Q("PowerSeries", "coeff"), n, EventFunction(r)))));
+        var shortLength = All("r", N(), All("n", N(), Implies(
+            new Formula.Relation(n, FormulaRelationOperator.LessThan, Multiply(D(2), next)),
+            Equal(Call("eventCount", V("R"), n, next), D(0)))));
+        var shortest = All("r", N(), Equal(Call("eventCount", V("R"), Multiply(D(2), next), next),
+            Multiply(V("q"), Power(V("d"), r))));
+        var conclusion = And(empty, And(zero, And(series, And(coefficient,
+            And(shortLength, And(shortest, MarkedFormula()))))));
+        var loopless = All("a", Letters(), new Formula.Not(CallR(V("a"), V("a"))));
+        var degree = All("c", Letters(), Equal(App(Q("Nat", "card"),
+            Subtype("b", Letters(), CallR(V("b"), V("c")))), V("d")));
+        return All("q", N(), All("d", N(), All("R", RelationType(),
+            Implies(loopless, Implies(degree, conclusion)))));
+
     }
 
     private static Formula GeneratingFunction()
