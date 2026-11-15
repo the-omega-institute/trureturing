@@ -19,5 +19,24 @@ internal sealed class PositiveEulerContinuationDocument : IScribeDocumentDefinit
                 Paragraph(Text("On that connected half-plane the Euler defect z G'' + 2 G' - R is meromorphic. Its order is infinity near the positive real point one because the given equation holds on Re z > 0. The meromorphic identity theorem propagates infinite order to every point of Re z > sigma. This is equality of punctured germs; it does not identify totalized values at poles. Regularity of R at the real point sigma supplies a full disk on which R is holomorphic. The actual G and its derivatives are holomorphic on the entire complex right half of this disk, so continuity upgrades the zero punctured defect to the pointwise Euler equation there.")),
                 Paragraph(Text("If sigma is nonzero, EulerLocalContinuation.exists_extension_of_ne_zero constructs a holomorphic full-disk extension agreeing with G on the entire smaller complex right half-disk. If sigma is zero, the finite-measure dominated convergence theorem gives G(x) tending to the complex total mass as real x decreases to zero. Indeed, exp(-x X) has complex norm at most one almost everywhere for x > 0 and tends pointwise to one. EulerLocalContinuation.exists_extension_at_zero then removes the singular homogeneous solution and yields the same full complex agreement. Both cases contradict AbscissaSingularity.no_holomorphic_extension_at_abscissa at the actual convergence cut.")),
                 Paragraph(Text("This combines the classical positive-measure Landau mechanism with a meromorphic Euler equation. It makes no literature originality claim and proves no unconditional statement about zeta zeros or RH. In the Robin route, the finite positive measure, the actual transformed theta-tail equation, and the real regularity of its meromorphic forcing must still be supplied by their own mathematical results. Robin's inequality for integers above 5040 and the eventual theta-tail comparison are separate application hypotheses."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("positive-laplace-euler-corridor"),
+                DeclarationHandle.Create("D5/S3/Analytic/Laplace/PositiveEulerContinuation.integrable_and_analytic_of_euler_corridor"),
+                H("Regularity on the possible convergence-cut corridor"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("The same conclusion holds when real regularity of R is assumed only at a<x<=0. The actual convergence cut is nonpositive because the positive measure is finite, so the proof needs regularity only on that corridor. The original theorem requiring regularity at every real x>a follows from this shared proof.")),
+                    Paragraph(Text("The proof retains both branches: a nonzero cut uses the ordinary Euler extension, and a zero cut uses dominated convergence of the actual finite-measure Laplace integral followed by the complex extension at zero. No boundary limit or moment estimate is assumed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("positive-laplace-halfplane-analytic"),
+                DeclarationHandle.Create("D5/S3/Analytic/Laplace/PositiveEulerContinuation.analytic_laplace"),
+                H("Analyticity of the actual transform"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For any measure mu on a measurable space and real observable X, if exp(-x X) is integrable for every real x>c, the actual function z maps to complexMGF X mu (-z) is AnalyticOnNhd on Re z>c. The measure need not be finite and X need not be nonnegative. Reflection identifies an open interval inside the exponential integrability set, and the complex MGF analyticity theorem applies. Both the abscissa argument and the common signed Euler comparison use this supplier."))),
+                DescribeRole.Theorem))));
 }
