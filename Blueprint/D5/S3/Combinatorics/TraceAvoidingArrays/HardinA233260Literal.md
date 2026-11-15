@@ -70,7 +70,21 @@ $$\forall (n: \operatorname{Nat}), (\operatorname{D5}.\operatorname{S3}.\operato
 
 Labelled three-colour count.
 
-**Theorem 1.6 (Omitting a label forces constant columns).**
+**Definition 1.6 (Column-parity colouring).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.alternating`
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.alternating` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233260: five-row complementary-pair antidiagonal arrays*. URL: <https://oeis.org/A233260>.
+
+*Commentary.*
+
+For any width and two labels a and b, the array has label a at every even column and label b at every odd column.
+
+**Theorem 1.7 (Omitting a label forces constant columns).**
 
 $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow (\forall (P: (\operatorname{Fin}\left(5\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(3\right)), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{Proper}\left(P\right)) \Rightarrow (\forall (d: \operatorname{Fin}\left(3\right)), ((\forall (i: (\operatorname{Fin}\left(5\right)) \times (\operatorname{Fin}\left(n\right))), (P\left(i\right) \ne d)) \Rightarrow (\forall (j: \operatorname{Fin}\left(n\right)), (\forall (r: \operatorname{Fin}\left(5\right)), (P\left((r, j)\right) = P\left(((0: \operatorname{Fin}\left(5\right)), j)\right)))))))))$$
 
@@ -84,7 +98,21 @@ $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow (\forall (P: (\operato
 
 Omitting a label forces constant columns.
 
-**Theorem 1.7 (Exact complementary-pair count).**
+**Theorem 1.8 (Two remaining labels alternate with column parity).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.two_label_classification`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.two_label_classification` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233260: five-row complementary-pair antidiagonal arrays*. URL: <https://oeis.org/A233260>.
+
+*Commentary.*
+
+For every width n at least two and every proper Fin 5 by Fin n array P into Fin 3 omitting a label d, there are distinct labels a and b such that P(r,j) is a at even j and b at odd j. Properness uses exactly the horizontal and antidiagonal bonds defined here. The classification applies to any stronger edge predicate containing those bonds.
+
+**Theorem 1.9 (Exact complementary-pair count).**
 
 $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow ((48) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{a}\left(n\right): \operatorname{Int})) = ((32: \operatorname{Int})^{n}) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left(n\right): \operatorname{Int})) + (6))))$$
 
@@ -154,12 +182,14 @@ Column states record five independent pair labels. Relabelling reduces their tra
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.Legal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.Proper`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.a`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.alternating`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.columns_constant`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.counting_bridge`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.normal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.pair_base`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.pair_tail`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.result`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.two_label_classification`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](HardinA233177Canonical.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)
