@@ -2,11 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/GirthSliceCounting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth,
-     mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth, mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
    utility: none
-   digest: Cubic bipartite slice bounds from actual short-path injection and weighted incidence counting.
--/
+   digest: Cubic bipartite slice bounds from actual short-path injection and weighted incidence counting. -/
 
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
 import Mathlib.Combinatorics.SimpleGraph.Bipartite

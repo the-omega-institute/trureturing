@@ -1,5 +1,7 @@
 /- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/BalancedCubeGirth
    generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/BalancedCubeGirth
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Archive.Sensitivity]
    utility: none
    digest: Short-cycle exclusion for balanced restrictions of Huang's fixed cube signing. -/
@@ -18,12 +20,12 @@ noncomputable section
 
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 
-open scoped BigOperators Classical
+open scoped BigOperators
 open D5.S3.Combinatorics.Graph.Hypercube
 
 open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
   (Q flip gamma IsSwitching IsBalanced)
-open private gammaV coeff gammaV_zero gammaV_succ from
+open private gammaV coeff switching_sq from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 open private huangMatrix cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
@@ -39,16 +41,26 @@ private theorem gammaV_anticommute (n : Nat) (i j : Fin n) (hij : i ≠ j)
           induction j using Fin.cases with
           | zero => exact (hij rfl).elim
           | succ j =>
-              apply Prod.ext <;> simp [gammaV_zero, gammaV_succ]
+              apply Prod.ext
+              · change -gammaV n j v.2 = -gammaV n j v.2
+                rfl
+              · change gammaV n j v.1 = -(-gammaV n j v.1)
+                simp
       | succ i =>
           induction j using Fin.cases with
           | zero =>
-              apply Prod.ext <;> simp [gammaV_zero, gammaV_succ]
+              apply Prod.ext
+              · change gammaV n i v.2 = -(-gammaV n i v.2)
+                simp
+              · change -gammaV n i v.1 = -gammaV n i v.1
+                rfl
           | succ j =>
               have h : i ≠ j := fun he => hij (congrArg Fin.succ he)
               apply Prod.ext
-              · simpa [gammaV_succ] using ih i j h v.1
-              · simpa [gammaV_succ] using ih i j h v.2
+              · change gammaV n i (gammaV n j v.1) = -gammaV n j (gammaV n i v.1)
+                exact ih i j h v.1
+              · change -gammaV n i (-gammaV n j v.2) = -(-gammaV n j (-gammaV n i v.2))
+                simpa only [map_neg, neg_neg] using ih i j h v.2
 
 /-- Distinct actual coordinate operators anticommute for the fixed Huang matrix. -/
 theorem gamma_anticommute {n : Nat} {i j : Fin n} (hij : i ≠ j)
@@ -73,10 +85,6 @@ private theorem flip_comm {n : Nat} (x : Q n) (i j : Fin n) :
     · subst r
       simp [BalancedCriticalSpectrum.flip, hri, Ne.symm hri]
     · simp [BalancedCriticalSpectrum.flip, hri, hrj]
-
-private theorem switching_sq {n : Nat} {C : Finset (Q n)} {sigma : Q n → Real}
-    (hs : IsSwitching C sigma) {x : Q n} (hx : x ∈ C) : sigma x ^ 2 = 1 := by
-  rcases hs.1 x hx with h | h <;> rw [h] <;> norm_num
 
 private theorem switching_ne_zero {n : Nat} {C : Finset (Q n)}
     {sigma : Q n → Real} (hs : IsSwitching C sigma) {x : Q n} (hx : x ∈ C) :
@@ -131,7 +139,8 @@ private theorem gamma_three_switching {n : Nat} {C : Finset (Q n)}
           (sigma (flip (flip x i) j) * sigma (flip (flip (flip x i) j) k))) =
       (sigma x * sigma (flip (flip (flip x i) j) k)) *
         sigma (flip x i) ^ 2 * sigma (flip (flip x i) j) ^ 2 := by ring
-    _ = _ := by rw [switching_sq hs hxi, switching_sq hs hxij, mul_one, mul_one]
+    _ = _ := by
+      rw [switching_sq hs hxi, switching_sq hs hxij, mul_one, mul_one]
 
 private theorem gamma_reverse_three {n : Nat} {i j k : Fin n}
     (hij : i ≠ j) (hik : i ≠ k) (hjk : j ≠ k) (z : Q n → Real) :
@@ -160,7 +169,7 @@ private theorem triple_coord_mem {n : Nat} (x : Q n) {i j k a b c : Fin n}
     (he : flip (flip (flip x i) j) k = flip (flip (flip x a) b) c) :
     a = i ∨ a = j ∨ a = k := by
   by_contra h
-  push_neg at h
+  push Not at h
   have hv := congrFun he a
   cases hxa : x a <;>
     simp [BalancedCriticalSpectrum.flip, h.1, h.2.1, h.2.2, hab, hac, hxa] at hv
@@ -223,7 +232,7 @@ private theorem two_step_first_direction_eq {n : Nat} {C : Finset (Q n)}
     (he : flip (flip x i) j = flip (flip x a) b) : i = a := by
   have ha : a = i ∨ a = j := by
     by_contra h
-    push_neg at h
+    push Not at h
     have hv := congrFun he a
     cases hxa' : x a <;> simp [BalancedCriticalSpectrum.flip, h.1, h.2, hab, hxa'] at hv
   rcases ha with hai | haj
