@@ -14,24 +14,47 @@ import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.Tactic
 
 /-! The measure is arbitrary, finite and nonzero; atoms are allowed.
-Admission basis: escape-witness, preregistration #30862. The essential-envelope
-comparison is consumed by the all-weight lower bound and clipped attainment.
+Admission basis: escape-witness, preregistration #30862. The fixed_weight
+construction proves the actual all-complex-input bound and reciprocal-weight
+norm attainment, using the two-sided affine_top essential-norm identity.
+This construction is on the live path to conditioned_optimum. The preregistered
+fixed-weight least constant, actual norm inequalities and attaining input cover
+this content; the essential-envelope comparison is a consumed bind-only step.
 No claim of external novelty or open-problem resolution is made.
 Direct frozen D5 dependencies: none; the suppliers are pinned Mathlib.
 The general analytic declarations do not implement a finite certificate,
 checker, numerical reduction or certified instance; utility is none.
 
 Per-declaration proof shape and live consumers:
-  envelope: content; witness=the condition-budget essential-envelope estimate;
-    consumer=variational_excess.
+  envelope: bind-only; consumer=variational_excess. The upstream product bound,
+    AE norm bounds and scalar normalization give the condition-budget estimate.
   fixed_weight: content; witness=the all-complex-input integral estimate and
     reciprocal-weight norm attainment; consumer=conditioned_optimum.
-  conditioned_optimum: content; witness=envelope and the feasible clipped
-    construction with exact height, consumed in both sides of the minimum.
-  top_le, top_pos, mul_top, bounded_integrable, height_le, clipped_weight,
-    clipped_height, square_integrable, square_pos, affine_top, max_bounded,
-    clipped_envelope, variational_excess, excess_zero_iff, optimum_one_iff: consumed helpers;
-    their live consumers are the three public theorems and their auxiliaries.
+  conditioned_optimum: content; witness=the fixed_weight norm-attainment
+    construction, used for the clipped optimizer and every admissible weight;
+    consumer=PositiveRankOneWeightObstruction.conditioned_weight_optimum.
+  affine_top: content; witness=the two-sided affine essential-norm identity,
+    including the reverse estimate for a positive coefficient;
+    consumer=fixed_weight.
+  top_le: bind-only; consumers=height_le, clipped_weight, clipped_height,
+    affine_top.
+  top_pos: bind-only; consumers=clipped_weight, clipped_height,
+    clipped_envelope, excess_zero_iff.
+  mul_top, bounded_integrable: bind-only; consumers=square_integrable,
+    fixed_weight, variational_excess, excess_zero_iff, optimum_one_iff.
+  height_le: bind-only; specialization of the pinned essential-sup product
+    bound to (1/g)*(g*h), with AE cancellation and finite norm conversion;
+    consumers=envelope, clipped_height.
+  clipped_weight: bind-only; consumers=clipped_height, conditioned_optimum.
+  clipped_height: bind-only; consumers=excess_zero_iff, conditioned_optimum.
+  square_integrable: bind-only; consumers=square_pos, variational_excess.
+  square_pos: bind-only; consumers=fixed_weight, variational_excess,
+    optimum_one_iff, conditioned_optimum.
+  max_bounded: bind-only; consumers=variational_excess, excess_zero_iff,
+    optimum_one_iff.
+  clipped_envelope: bind-only; consumers=excess_zero_iff, conditioned_optimum.
+  variational_excess, excess_zero_iff, optimum_one_iff: bind-only;
+    consumer=conditioned_optimum.
   Weight, condition, evolve, Sharp, clipped, optimum: definitions consumed by
     the displayed theorems and the original interval semigroup.
 -/
