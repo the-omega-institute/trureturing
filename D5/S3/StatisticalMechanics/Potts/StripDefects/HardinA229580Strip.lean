@@ -132,7 +132,7 @@ private theorem powers_table (i : Fin 3) : forward T initial i.val = W i := by
   induction i using Fin.induction with
   | zero => exact finite_certificate.2.2.2.2.2.1.1.symm
   | succ i ih =>
-    rw [forward, Function.iterate_succ_apply']
+    rw [forward, Fin.val_succ, Function.iterate_succ_apply']
     change Matrix.vecMul (forward T initial i.val) T = W i.succ
     change forward T initial i.val = W i.castSucc at ih
     rw [ih]
