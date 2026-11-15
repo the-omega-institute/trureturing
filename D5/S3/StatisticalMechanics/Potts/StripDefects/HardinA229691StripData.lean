@@ -12,6 +12,7 @@ escape_witness: none (consumed bind-only helpers of the settlement on the live p
 Valid: proof_shape=bind-only; consumers=HardinA229691Strip.finite_certificate
 decidableValid: proof_shape=bind-only; consumers=HardinA229691Strip.finite_certificate
 cl: proof_shape=bind-only; consumers=HardinA229691Strip.finite_certificate
+zeroBudgetSector: proof_shape=bind-only; consumers=T
 T: proof_shape=bind-only; consumers=HardinA229691Strip.finite_certificate
 initial: proof_shape=bind-only; consumers=HardinA229691Strip.finite_certificate
 terminal: proof_shape=bind-only; consumers=HardinA229691Strip.finite_certificate
@@ -61,6 +62,9 @@ def cl (p : Boundary) (d : ℕ) : Fin 27 :=
   | 2, 11 => 2
   | 2, 12 => 3
   | _, _ => 26
+private def zeroBudgetSector : Fin 13 → Fin 10 ⊕ Fin 3 :=
+  ![Sum.inr 0, Sum.inl 0, Sum.inr 1, Sum.inl 1, Sum.inl 2, Sum.inl 3,
+    Sum.inl 4, Sum.inl 5, Sum.inr 2, Sum.inl 6, Sum.inl 7, Sum.inl 8, Sum.inl 9]
 def T : Matrix (Fin 27) (Fin 27) ℤ :=
   Matrix.reindex (finSumFinEquiv : Fin 14 ⊕ Fin 13 ≃ Fin 27)
     (finSumFinEquiv : Fin 14 ⊕ Fin 13 ≃ Fin 27)
@@ -80,19 +84,14 @@ def T : Matrix (Fin 27) (Fin 27) ℤ :=
       ![0, 2, 0, 2, 4, 6, 6, 1, 0, 1, 4, 4, 3],
       ![0, 2, 0, 2, 2, 5, 5, 4, 0, 4, 8, 8, 2]])
       (0)
-      (![![0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 2, 0],
-      ![0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 2, 2, 0],
-      ![0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 2, 0],
-      ![0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0],
-      ![0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 4, 4, 0],
-      ![0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 3, 3, 0],
-      ![0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 3, 3, 0],
-      ![0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 3, 3, 0],
-      ![0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 3, 3, 0],
-      ![0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 3, 3, 0],
-      ![0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 3, 3, 0],
-      ![0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0]]))
+      ((Matrix.fromBlocks
+        (HardinA229583StripData.T.submatrix (fun i : Fin 10 => i.natAdd 4)
+          (fun j : Fin 10 => j.natAdd 4))
+        (0 : Matrix (Fin 10) (Fin 3) ℤ)
+        (![![0, 0, 0, 1, 1, 0, 0, 2, 2, 0],
+          ![0, 0, 0, 1, 1, 0, 0, 2, 2, 0],
+          ![0, 0, 0, 3, 3, 0, 0, 0, 0, 0]])
+        (0 : Matrix (Fin 3) (Fin 3) ℤ)).submatrix zeroBudgetSector zeroBudgetSector))
 def initial : Fin 27 → ℤ :=
   Fin.append HardinA229583StripData.initial (![12, 6, 12, 6, 6, 0, 0, 6, 12, 6, 0, 0, 6])
 def terminal : Fin 27 → ℤ := ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
