@@ -79,7 +79,7 @@ internal sealed class KingHorizontalSlotsDocument : IScribeDocumentDefinition
             Node("pair_count_support", "pair count support", Formula16(),
                 DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
-                "Transport ordinary vertical words to Boolean words and group the sum by their two supports.")))));
+                "Transport ordinary vertical words to Boolean words and group the sum by their two supports."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,
         AssessedProvenance provenance, string prose) =>
@@ -159,9 +159,50 @@ internal sealed class KingHorizontalSlotsDocument : IScribeDocumentDefinition
                     All(
                         "s",
                         App(Q("Fin"), V("M")),
-                        Typed(
-                            Call("KingHorizontal.interior_slot_equiv", V("a"), V("b"), V("M"), V("s")),
-                            Equivalence(
+                        And(
+                            Typed(
+                                Call("KingHorizontal.interior_slot_equiv", V("a"), V("b"), V("M"), V("s")),
+                                Equivalence(
+                                    Subtype(
+                                        "t",
+                                        App(
+                                            App(
+                                                Q("KingDifference.DiffField"),
+                                                Add(Add(V("a"), Num("1")), Add(V("b"), Num("1")))
+                                            ),
+                                            V("M")
+                                        ),
+                                        App(
+                                            App(
+                                                Q("KingDifference.RawAdmissible"),
+                                                App(
+                                                    App(
+                                                        Q("KingGrid.Edge.H"),
+                                                        App(
+                                                            App(
+                                                                Q("KingHorizontal.cut_row"),
+                                                                Add(V("a"), Num("1"))
+                                                            ),
+                                                            Add(V("b"), Num("1"))
+                                                        )
+                                                    ),
+                                                    V("s")
+                                                )
+                                            ),
+                                            V("t")
+                                        )
+                                    ),
+                                    App(
+                                        App(
+                                            App(App(Q("KingHorizontal.InteriorSlots"), V("a")), V("b")),
+                                            V("M")
+                                        ),
+                                        V("s")
+                                    )
+                                )
+                            ),
+                            All(
+                                "t",
                                 Subtype(
                                     "t",
                                     App(
@@ -191,9 +232,92 @@ internal sealed class KingHorizontalSlotsDocument : IScribeDocumentDefinition
                                         V("t")
                                     )
                                 ),
-                                App(
-                                    App(App(App(Q("KingHorizontal.InteriorSlots"), V("a")), V("b")), V("M")),
-                                    V("s")
+                                And(
+                                    Eq(
+                                        Call(
+                                            "Subtype.val",
+                                            Call(
+                                                "Prod.fst",
+                                                Call(
+                                                    "Subtype.val",
+                                                    App(
+                                                        Call(
+                                                            "KingHorizontal.interior_slot_equiv",
+                                                            V("a"),
+                                                            V("b"),
+                                                            V("M"),
+                                                            V("s")
+                                                        ),
+                                                        V("t")
+                                                    )
+                                                )
+                                            )
+                                        ),
+                                        Call(
+                                            "KingHorizontal.boundary_extract",
+                                            V("s"),
+                                            Call(
+                                                "KingHorizontal.row_reflect",
+                                                Call(
+                                                    "Prod.fst",
+                                                    Call(
+                                                        "Subtype.val",
+                                                        App(
+                                                            Call(
+                                                                "KingHorizontal.horizontal_cut_equiv",
+                                                                Add(V("a"), Num("1")),
+                                                                Add(V("b"), Num("1")),
+                                                                V("M"),
+                                                                V("s")
+                                                            ),
+                                                            V("t")
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    Eq(
+                                        Call(
+                                            "Subtype.val",
+                                            Call(
+                                                "Prod.snd",
+                                                Call(
+                                                    "Subtype.val",
+                                                    App(
+                                                        Call(
+                                                            "KingHorizontal.interior_slot_equiv",
+                                                            V("a"),
+                                                            V("b"),
+                                                            V("M"),
+                                                            V("s")
+                                                        ),
+                                                        V("t")
+                                                    )
+                                                )
+                                            )
+                                        ),
+                                        Call(
+                                            "KingHorizontal.boundary_extract",
+                                            V("s"),
+                                            Call(
+                                                "Prod.snd",
+                                                Call(
+                                                    "Subtype.val",
+                                                    App(
+                                                        Call(
+                                                            "KingHorizontal.horizontal_cut_equiv",
+                                                            Add(V("a"), Num("1")),
+                                                            Add(V("b"), Num("1")),
+                                                            V("M"),
+                                                            V("s")
+                                                        ),
+                                                        V("t")
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
                                 )
                             )
                         )

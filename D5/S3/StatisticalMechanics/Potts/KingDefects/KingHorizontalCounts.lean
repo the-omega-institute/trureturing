@@ -524,17 +524,12 @@ theorem horizontal_sum (t q : ℕ) :
 #print axioms boundary_build
 #print axioms boundary_extract
 #print axioms boundary_h
-#print axioms boundary_v
-#print axioms boundary_build_raw
-#print axioms boundary_extract_valid
-#print axioms boundary_reconstruct
 #print axioms boundary_slot_equiv
 #print axioms BoundaryWords
 #print axioms boundary_words_zero_card
 #print axioms boundary_words_pos_card
 #print axioms NZPair
 #print axioms pivot
-#print axioms boundary_word_equiv
 #print axioms boundary_count_zero
 #print axioms boundary_count_pos
 #print axioms horizontal_count_row_reflect
@@ -551,8 +546,6 @@ theorem horizontal_sum (t q : ℕ) :
 #print axioms interior_slot_equiv
 #print axioms OrdinaryAlphabet
 #print axioms InteriorAlphabet
-#print axioms InteriorCode
-#print axioms interior_code_equiv
 #print axioms interior_count_alphabets
 #print axioms interior_count_support
 #print axioms lower_pair

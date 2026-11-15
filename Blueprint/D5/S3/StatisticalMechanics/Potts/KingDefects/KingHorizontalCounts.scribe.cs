@@ -115,7 +115,7 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
             Node("horizontal_sum", "horizontal sum", Formula25(),
                 DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
-                "Add the boundary rows and all interior rows, including their endpoint corrections.")))));
+                "Add the boundary rows and all interior rows, including their endpoint corrections."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,
         AssessedProvenance provenance, string prose) =>
@@ -191,20 +191,26 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
 
     private static Formula Formula1() =>
         And(
-            Eq(Call("KingHorizontal.supports", Typed(Num("0"), Call("Fin", Num("4")))), Q("Finset.empty")),
+            Typed(
+                Call("KingHorizontal.supports"),
+                Arrow(App(Q("Fin"), Num("4")), App(Q("Finset"), Q("Bool")))
+            ),
             And(
-                Eq(
-                    Call("KingHorizontal.supports", Typed(Num("1"), Call("Fin", Num("4")))),
-                    Set(Q("Bool.false"))
-                ),
+                Eq(Call("KingHorizontal.supports", Typed(Num("0"), Call("Fin", Num("4")))), Q("Finset.empty")),
                 And(
                     Eq(
-                        Call("KingHorizontal.supports", Typed(Num("2"), Call("Fin", Num("4")))),
-                        Set(Q("Bool.true"))
+                        Call("KingHorizontal.supports", Typed(Num("1"), Call("Fin", Num("4")))),
+                        Set(Q("Bool.false"))
                     ),
-                    Eq(
-                        Call("KingHorizontal.supports", Typed(Num("3"), Call("Fin", Num("4")))),
-                        Typed(Q("Finset.univ"), App(Q("Finset"), Q("Bool")))
+                    And(
+                        Eq(
+                            Call("KingHorizontal.supports", Typed(Num("2"), Call("Fin", Num("4")))),
+                            Set(Q("Bool.true"))
+                        ),
+                        Eq(
+                            Call("KingHorizontal.supports", Typed(Num("3"), Call("Fin", Num("4")))),
+                            Typed(Q("Finset.univ"), App(Q("Finset"), Q("Bool")))
+                        )
                     )
                 )
             )
@@ -215,23 +221,20 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
             "x",
             Q("KingDifference.NZPair"),
             And(
-                Eq(
-                    Call("KingHorizontal.lower_pair_values", V("x"), Typed(Num("0"), Call("Fin", Num("6")))),
-                    Pair(
-                        Call("Prod.fst", Call("Subtype.val", V("x"))),
-                        Call("Prod.snd", Call("Subtype.val", V("x")))
-                    )
+                Typed(
+                    Call("KingHorizontal.lower_pair_values", V("x")),
+                    Arrow(App(Q("Fin"), Num("6")), Product(Q("KingDifference.K"), Q("KingDifference.K")))
                 ),
                 And(
                     Eq(
                         Call(
                             "KingHorizontal.lower_pair_values",
                             V("x"),
-                            Typed(Num("1"), Call("Fin", Num("6")))
+                            Typed(Num("0"), Call("Fin", Num("6")))
                         ),
                         Pair(
-                            Call("Prod.snd", Call("Subtype.val", V("x"))),
-                            Call("Prod.fst", Call("Subtype.val", V("x")))
+                            Call("Prod.fst", Call("Subtype.val", V("x"))),
+                            Call("Prod.snd", Call("Subtype.val", V("x")))
                         )
                     ),
                     And(
@@ -239,14 +242,11 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
                             Call(
                                 "KingHorizontal.lower_pair_values",
                                 V("x"),
-                                Typed(Num("2"), Call("Fin", Num("6")))
+                                Typed(Num("1"), Call("Fin", Num("6")))
                             ),
                             Pair(
-                                Call("Prod.fst", Call("Subtype.val", V("x"))),
-                                Add(
-                                    Call("Prod.fst", Call("Subtype.val", V("x"))),
-                                    Call("Prod.snd", Call("Subtype.val", V("x")))
-                                )
+                                Call("Prod.snd", Call("Subtype.val", V("x"))),
+                                Call("Prod.fst", Call("Subtype.val", V("x")))
                             )
                         ),
                         And(
@@ -254,14 +254,14 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
                                 Call(
                                     "KingHorizontal.lower_pair_values",
                                     V("x"),
-                                    Typed(Num("3"), Call("Fin", Num("6")))
+                                    Typed(Num("2"), Call("Fin", Num("6")))
                                 ),
                                 Pair(
+                                    Call("Prod.fst", Call("Subtype.val", V("x"))),
                                     Add(
                                         Call("Prod.fst", Call("Subtype.val", V("x"))),
                                         Call("Prod.snd", Call("Subtype.val", V("x")))
-                                    ),
-                                    Call("Prod.snd", Call("Subtype.val", V("x")))
+                                    )
                                 )
                             ),
                             And(
@@ -269,27 +269,43 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
                                     Call(
                                         "KingHorizontal.lower_pair_values",
                                         V("x"),
-                                        Typed(Num("4"), Call("Fin", Num("6")))
+                                        Typed(Num("3"), Call("Fin", Num("6")))
                                     ),
                                     Pair(
                                         Add(
                                             Call("Prod.fst", Call("Subtype.val", V("x"))),
                                             Call("Prod.snd", Call("Subtype.val", V("x")))
                                         ),
-                                        Call("Prod.fst", Call("Subtype.val", V("x")))
+                                        Call("Prod.snd", Call("Subtype.val", V("x")))
                                     )
                                 ),
-                                Eq(
-                                    Call(
-                                        "KingHorizontal.lower_pair_values",
-                                        V("x"),
-                                        Typed(Num("5"), Call("Fin", Num("6")))
+                                And(
+                                    Eq(
+                                        Call(
+                                            "KingHorizontal.lower_pair_values",
+                                            V("x"),
+                                            Typed(Num("4"), Call("Fin", Num("6")))
+                                        ),
+                                        Pair(
+                                            Add(
+                                                Call("Prod.fst", Call("Subtype.val", V("x"))),
+                                                Call("Prod.snd", Call("Subtype.val", V("x")))
+                                            ),
+                                            Call("Prod.fst", Call("Subtype.val", V("x")))
+                                        )
                                     ),
-                                    Pair(
-                                        Call("Prod.snd", Call("Subtype.val", V("x"))),
-                                        Add(
-                                            Call("Prod.fst", Call("Subtype.val", V("x"))),
-                                            Call("Prod.snd", Call("Subtype.val", V("x")))
+                                    Eq(
+                                        Call(
+                                            "KingHorizontal.lower_pair_values",
+                                            V("x"),
+                                            Typed(Num("5"), Call("Fin", Num("6")))
+                                        ),
+                                        Pair(
+                                            Call("Prod.snd", Call("Subtype.val", V("x"))),
+                                            Add(
+                                                Call("Prod.fst", Call("Subtype.val", V("x"))),
+                                                Call("Prod.snd", Call("Subtype.val", V("x")))
+                                            )
                                         )
                                     )
                                 )
@@ -333,9 +349,12 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
             All(
                 "i",
                 App(Q("Fin"), Num("6")),
-                Eq(
-                    Call("Subtype.val", Call("KingHorizontal.lower_pair", V("x"), V("i"))),
-                    App(App(Q("KingHorizontal.lower_pair_values"), V("x")), V("i"))
+                And(
+                    Typed(Call("KingHorizontal.lower_pair", V("x"), V("i")), Q("KingDifference.NZPair")),
+                    Eq(
+                        Call("Subtype.val", Call("KingHorizontal.lower_pair", V("x"), V("i"))),
+                        Call("KingHorizontal.lower_pair_values", V("x"), V("i"))
+                    )
                 )
             )
         );
@@ -643,16 +662,9 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
                         "d",
                         Q("Nat"),
                         And(
-                            Eq(
-                                Call(
-                                    "KingHorizontal.six_case_value",
-                                    V("a"),
-                                    V("b"),
-                                    V("c"),
-                                    V("d"),
-                                    Typed(Num("0"), Call("Fin", Num("6")))
-                                ),
-                                App(App(App(Q("KingHorizontal.E"), Add(V("a"), V("b"))), V("c")), V("d"))
+                            Typed(
+                                Call("KingHorizontal.six_case_value", V("a"), V("b"), V("c"), V("d")),
+                                Arrow(App(Q("Fin"), Num("6")), Q("Nat"))
                             ),
                             And(
                                 Eq(
@@ -662,9 +674,9 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
                                         V("b"),
                                         V("c"),
                                         V("d"),
-                                        Typed(Num("1"), Call("Fin", Num("6")))
+                                        Typed(Num("0"), Call("Fin", Num("6")))
                                     ),
-                                    Power(Num("2"), Add(V("a"), V("b")))
+                                    App(App(App(Q("KingHorizontal.E"), Add(V("a"), V("b"))), V("c")), V("d"))
                                 ),
                                 And(
                                     Eq(
@@ -674,12 +686,9 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
                                             V("b"),
                                             V("c"),
                                             V("d"),
-                                            Typed(Num("2"), Call("Fin", Num("6")))
+                                            Typed(Num("1"), Call("Fin", Num("6")))
                                         ),
-                                        App(
-                                            App(App(App(Q("KingHorizontal.P"), V("a")), V("b")), V("c")),
-                                            V("d")
-                                        )
+                                        Power(Num("2"), Add(V("a"), V("b")))
                                     ),
                                     And(
                                         Eq(
@@ -689,11 +698,11 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
                                                 V("b"),
                                                 V("c"),
                                                 V("d"),
-                                                Typed(Num("3"), Call("Fin", Num("6")))
+                                                Typed(Num("2"), Call("Fin", Num("6")))
                                             ),
                                             App(
-                                                App(App(App(Q("KingHorizontal.P"), V("a")), V("b")), V("d")),
-                                                V("c")
+                                                App(App(App(Q("KingHorizontal.P"), V("a")), V("b")), V("c")),
+                                                V("d")
                                             )
                                         ),
                                         And(
@@ -704,31 +713,50 @@ internal sealed class KingHorizontalCountsDocument : IScribeDocumentDefinition
                                                     V("b"),
                                                     V("c"),
                                                     V("d"),
-                                                    Typed(Num("4"), Call("Fin", Num("6")))
+                                                    Typed(Num("3"), Call("Fin", Num("6")))
                                                 ),
                                                 App(
                                                     App(
-                                                        App(App(Q("KingHorizontal.Q"), V("a")), V("b")),
-                                                        V("c")
-                                                    ),
-                                                    V("d")
-                                                )
-                                            ),
-                                            Eq(
-                                                Call(
-                                                    "KingHorizontal.six_case_value",
-                                                    V("a"),
-                                                    V("b"),
-                                                    V("c"),
-                                                    V("d"),
-                                                    Typed(Num("5"), Call("Fin", Num("6")))
-                                                ),
-                                                App(
-                                                    App(
-                                                        App(App(Q("KingHorizontal.Q"), V("a")), V("b")),
+                                                        App(App(Q("KingHorizontal.P"), V("a")), V("b")),
                                                         V("d")
                                                     ),
                                                     V("c")
+                                                )
+                                            ),
+                                            And(
+                                                Eq(
+                                                    Call(
+                                                        "KingHorizontal.six_case_value",
+                                                        V("a"),
+                                                        V("b"),
+                                                        V("c"),
+                                                        V("d"),
+                                                        Typed(Num("4"), Call("Fin", Num("6")))
+                                                    ),
+                                                    App(
+                                                        App(
+                                                            App(App(Q("KingHorizontal.Q"), V("a")), V("b")),
+                                                            V("c")
+                                                        ),
+                                                        V("d")
+                                                    )
+                                                ),
+                                                Eq(
+                                                    Call(
+                                                        "KingHorizontal.six_case_value",
+                                                        V("a"),
+                                                        V("b"),
+                                                        V("c"),
+                                                        V("d"),
+                                                        Typed(Num("5"), Call("Fin", Num("6")))
+                                                    ),
+                                                    App(
+                                                        App(
+                                                            App(App(Q("KingHorizontal.Q"), V("a")), V("b")),
+                                                            V("d")
+                                                        ),
+                                                        V("c")
+                                                    )
                                                 )
                                             )
                                         )

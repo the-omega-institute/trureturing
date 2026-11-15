@@ -107,7 +107,7 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
             Node("horizontal_cut_equiv", "horizontal cut equiv", Formula23(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
-                "Restrict above and below the selected row. The inverse joins the two fields along their common horizontal values.")))));
+                "Restrict above and below the selected row. The inverse joins the two fields along their common horizontal values."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,
         AssessedProvenance provenance, string prose) =>
@@ -543,9 +543,30 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
                 All(
                     "s",
                     App(Q("Fin"), V("M")),
-                    Typed(
-                        Call("KingHorizontal.boundary_slot_equiv", V("m"), V("M"), V("s")),
-                        Equivalence(
+                    And(
+                        Typed(
+                            Call("KingHorizontal.boundary_slot_equiv", V("m"), V("M"), V("s")),
+                            Equivalence(
+                                Subtype(
+                                    "t",
+                                    App(App(Q("KingDifference.DiffField"), Add(V("m"), Num("1"))), V("M")),
+                                    App(
+                                        App(
+                                            Q("KingDifference.RawAdmissible"),
+                                            App(App(Q("KingGrid.Edge.H"), Num("0")), V("s"))
+                                        ),
+                                        V("t")
+                                    )
+                                ),
+                                Subtype(
+                                    "b",
+                                    App(App(Q("KingHorizontal.BoundaryData"), V("m")), V("M")),
+                                    App(App(Q("KingHorizontal.BoundaryValid"), V("s")), V("b"))
+                                )
+                            )
+                        ),
+                        All(
+                            "t",
                             Subtype(
                                 "t",
                                 App(App(Q("KingDifference.DiffField"), Add(V("m"), Num("1"))), V("M")),
@@ -557,10 +578,15 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
                                     V("t")
                                 )
                             ),
-                            Subtype(
-                                "b",
-                                App(App(Q("KingHorizontal.BoundaryData"), V("m")), V("M")),
-                                App(App(Q("KingHorizontal.BoundaryValid"), V("s")), V("b"))
+                            Eq(
+                                Call(
+                                    "Subtype.val",
+                                    App(
+                                        Call("KingHorizontal.boundary_slot_equiv", V("m"), V("M"), V("s")),
+                                        V("t")
+                                    )
+                                ),
+                                Call("KingHorizontal.boundary_extract", V("s"), Call("Subtype.val", V("t")))
                             )
                         )
                     )
@@ -1030,9 +1056,39 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
                     All(
                         "s",
                         App(Q("Fin"), V("M")),
-                        Typed(
-                            Call("KingHorizontal.row_reflect_equiv", V("r"), V("s")),
-                            Equivalence(
+                        And(
+                            Typed(
+                                Call("KingHorizontal.row_reflect_equiv", V("r"), V("s")),
+                                Equivalence(
+                                    Subtype(
+                                        "t",
+                                        App(App(Q("KingDifference.DiffField"), V("N")), V("M")),
+                                        App(
+                                            App(
+                                                Q("KingDifference.RawAdmissible"),
+                                                App(App(Q("KingGrid.Edge.H"), V("r")), V("s"))
+                                            ),
+                                            V("t")
+                                        )
+                                    ),
+                                    Subtype(
+                                        "t",
+                                        App(App(Q("KingDifference.DiffField"), V("N")), V("M")),
+                                        App(
+                                            App(
+                                                Q("KingDifference.RawAdmissible"),
+                                                App(
+                                                    App(Q("KingGrid.Edge.H"), Call("Fin.rev", V("r"))),
+                                                    V("s")
+                                                )
+                                            ),
+                                            V("t")
+                                        )
+                                    )
+                                )
+                            ),
+                            All(
+                                "t",
                                 Subtype(
                                     "t",
                                     App(App(Q("KingDifference.DiffField"), V("N")), V("M")),
@@ -1044,16 +1100,12 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
                                         V("t")
                                     )
                                 ),
-                                Subtype(
-                                    "t",
-                                    App(App(Q("KingDifference.DiffField"), V("N")), V("M")),
-                                    App(
-                                        App(
-                                            Q("KingDifference.RawAdmissible"),
-                                            App(App(Q("KingGrid.Edge.H"), Call("Fin.rev", V("r"))), V("s"))
-                                        ),
-                                        V("t")
-                                    )
+                                Eq(
+                                    Call(
+                                        "Subtype.val",
+                                        App(Call("KingHorizontal.row_reflect_equiv", V("r"), V("s")), V("t"))
+                                    ),
+                                    Call("KingHorizontal.row_reflect", Call("Subtype.val", V("t")))
                                 )
                             )
                         )
@@ -1072,9 +1124,36 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
                 All(
                     "s",
                     App(Q("Fin"), V("M")),
-                    Typed(
-                        Call("KingHorizontal.boundary_bottom_slot_equiv", V("m"), V("M"), V("s")),
-                        Equivalence(
+                    And(
+                        Typed(
+                            Call("KingHorizontal.boundary_bottom_slot_equiv", V("m"), V("M"), V("s")),
+                            Equivalence(
+                                Subtype(
+                                    "t",
+                                    App(App(Q("KingDifference.DiffField"), Add(V("m"), Num("1"))), V("M")),
+                                    App(
+                                        App(
+                                            Q("KingDifference.RawAdmissible"),
+                                            App(
+                                                App(
+                                                    Q("KingGrid.Edge.H"),
+                                                    App(Q("Fin.last"), Add(V("m"), Num("1")))
+                                                ),
+                                                V("s")
+                                            )
+                                        ),
+                                        V("t")
+                                    )
+                                ),
+                                Subtype(
+                                    "b",
+                                    App(App(Q("KingHorizontal.BoundaryData"), V("m")), V("M")),
+                                    App(App(Q("KingHorizontal.BoundaryValid"), V("s")), V("b"))
+                                )
+                            )
+                        ),
+                        All(
+                            "t",
                             Subtype(
                                 "t",
                                 App(App(Q("KingDifference.DiffField"), Add(V("m"), Num("1"))), V("M")),
@@ -1092,10 +1171,24 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
                                     V("t")
                                 )
                             ),
-                            Subtype(
-                                "b",
-                                App(App(Q("KingHorizontal.BoundaryData"), V("m")), V("M")),
-                                App(App(Q("KingHorizontal.BoundaryValid"), V("s")), V("b"))
+                            Eq(
+                                Call(
+                                    "Subtype.val",
+                                    App(
+                                        Call(
+                                            "KingHorizontal.boundary_bottom_slot_equiv",
+                                            V("m"),
+                                            V("M"),
+                                            V("s")
+                                        ),
+                                        V("t")
+                                    )
+                                ),
+                                Call(
+                                    "KingHorizontal.boundary_extract",
+                                    V("s"),
+                                    Call("KingHorizontal.row_reflect", Call("Subtype.val", V("t")))
+                                )
                             )
                         )
                     )
@@ -1205,9 +1298,35 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
                     All(
                         "s",
                         App(Q("Fin"), V("M")),
-                        Typed(
-                            Call("KingHorizontal.horizontal_cut_equiv", V("A"), V("B"), V("M"), V("s")),
-                            Equivalence(
+                        And(
+                            Typed(
+                                Call("KingHorizontal.horizontal_cut_equiv", V("A"), V("B"), V("M"), V("s")),
+                                Equivalence(
+                                    Subtype(
+                                        "t",
+                                        App(App(Q("KingDifference.DiffField"), Add(V("A"), V("B"))), V("M")),
+                                        App(
+                                            App(
+                                                Q("KingDifference.RawAdmissible"),
+                                                App(
+                                                    App(
+                                                        Q("KingGrid.Edge.H"),
+                                                        App(App(Q("KingHorizontal.cut_row"), V("A")), V("B"))
+                                                    ),
+                                                    V("s")
+                                                )
+                                            ),
+                                            V("t")
+                                        )
+                                    ),
+                                    App(
+                                        App(App(App(Q("KingHorizontal.CutFields"), V("A")), V("B")), V("M")),
+                                        V("s")
+                                    )
+                                )
+                            ),
+                            All(
+                                "t",
                                 Subtype(
                                     "t",
                                     App(App(Q("KingDifference.DiffField"), Add(V("A"), V("B"))), V("M")),
@@ -1225,9 +1344,193 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
                                         V("t")
                                     )
                                 ),
-                                App(
-                                    App(App(App(Q("KingHorizontal.CutFields"), V("A")), V("B")), V("M")),
-                                    V("s")
+                                And(
+                                    All(
+                                        "i",
+                                        App(Q("Fin"), Add(V("A"), Num("1"))),
+                                        All(
+                                            "k",
+                                            App(Q("Fin"), Add(Add(V("A"), V("B")), Num("1"))),
+                                            All(
+                                                "j",
+                                                App(Q("Fin"), V("M")),
+                                                Imp(
+                                                    Eq(Call("Fin.val", V("k")), Call("Fin.val", V("i"))),
+                                                    Eq(
+                                                        Call(
+                                                            "KingDifference.DiffField.h",
+                                                            Call(
+                                                                "Prod.fst",
+                                                                Call(
+                                                                    "Subtype.val",
+                                                                    App(
+                                                                        Call(
+                                                                            "KingHorizontal.horizontal_cut_equiv",
+                                                                            V("A"),
+                                                                            V("B"),
+                                                                            V("M"),
+                                                                            V("s")
+                                                                        ),
+                                                                        V("t")
+                                                                    )
+                                                                )
+                                                            ),
+                                                            V("i"),
+                                                            V("j")
+                                                        ),
+                                                        Call(
+                                                            "KingDifference.DiffField.h",
+                                                            Call("Subtype.val", V("t")),
+                                                            V("k"),
+                                                            V("j")
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    And(
+                                        All(
+                                            "i",
+                                            App(Q("Fin"), V("A")),
+                                            All(
+                                                "k",
+                                                App(Q("Fin"), Add(V("A"), V("B"))),
+                                                All(
+                                                    "j",
+                                                    App(Q("Fin"), Add(V("M"), Num("1"))),
+                                                    Imp(
+                                                        Eq(Call("Fin.val", V("k")), Call("Fin.val", V("i"))),
+                                                        Eq(
+                                                            Call(
+                                                                "KingDifference.DiffField.v",
+                                                                Call(
+                                                                    "Prod.fst",
+                                                                    Call(
+                                                                        "Subtype.val",
+                                                                        App(
+                                                                            Call(
+                                                                                "KingHorizontal.horizontal_cut_equiv",
+                                                                                V("A"),
+                                                                                V("B"),
+                                                                                V("M"),
+                                                                                V("s")
+                                                                            ),
+                                                                            V("t")
+                                                                        )
+                                                                    )
+                                                                ),
+                                                                V("i"),
+                                                                V("j")
+                                                            ),
+                                                            Call(
+                                                                "KingDifference.DiffField.v",
+                                                                Call("Subtype.val", V("t")),
+                                                                V("k"),
+                                                                V("j")
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        ),
+                                        And(
+                                            All(
+                                                "i",
+                                                App(Q("Fin"), Add(V("B"), Num("1"))),
+                                                All(
+                                                    "k",
+                                                    App(Q("Fin"), Add(Add(V("A"), V("B")), Num("1"))),
+                                                    All(
+                                                        "j",
+                                                        App(Q("Fin"), V("M")),
+                                                        Imp(
+                                                            Eq(
+                                                                Call("Fin.val", V("k")),
+                                                                Add(V("A"), Call("Fin.val", V("i")))
+                                                            ),
+                                                            Eq(
+                                                                Call(
+                                                                    "KingDifference.DiffField.h",
+                                                                    Call(
+                                                                        "Prod.snd",
+                                                                        Call(
+                                                                            "Subtype.val",
+                                                                            App(
+                                                                                Call(
+                                                                                    "KingHorizontal.horizontal_cut_equiv",
+                                                                                    V("A"),
+                                                                                    V("B"),
+                                                                                    V("M"),
+                                                                                    V("s")
+                                                                                ),
+                                                                                V("t")
+                                                                            )
+                                                                        )
+                                                                    ),
+                                                                    V("i"),
+                                                                    V("j")
+                                                                ),
+                                                                Call(
+                                                                    "KingDifference.DiffField.h",
+                                                                    Call("Subtype.val", V("t")),
+                                                                    V("k"),
+                                                                    V("j")
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            ),
+                                            All(
+                                                "i",
+                                                App(Q("Fin"), V("B")),
+                                                All(
+                                                    "k",
+                                                    App(Q("Fin"), Add(V("A"), V("B"))),
+                                                    All(
+                                                        "j",
+                                                        App(Q("Fin"), Add(V("M"), Num("1"))),
+                                                        Imp(
+                                                            Eq(
+                                                                Call("Fin.val", V("k")),
+                                                                Add(V("A"), Call("Fin.val", V("i")))
+                                                            ),
+                                                            Eq(
+                                                                Call(
+                                                                    "KingDifference.DiffField.v",
+                                                                    Call(
+                                                                        "Prod.snd",
+                                                                        Call(
+                                                                            "Subtype.val",
+                                                                            App(
+                                                                                Call(
+                                                                                    "KingHorizontal.horizontal_cut_equiv",
+                                                                                    V("A"),
+                                                                                    V("B"),
+                                                                                    V("M"),
+                                                                                    V("s")
+                                                                                ),
+                                                                                V("t")
+                                                                            )
+                                                                        )
+                                                                    ),
+                                                                    V("i"),
+                                                                    V("j")
+                                                                ),
+                                                                Call(
+                                                                    "KingDifference.DiffField.v",
+                                                                    Call("Subtype.val", V("t")),
+                                                                    V("k"),
+                                                                    V("j")
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
                                 )
                             )
                         )
