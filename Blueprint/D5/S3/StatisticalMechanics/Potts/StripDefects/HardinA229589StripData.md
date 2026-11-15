@@ -130,7 +130,7 @@ $$\operatorname{\mathit{HardinA229589StripData}}.\operatorname{W} = ![![3, 6, 6,
 
 *Commentary.*
 
-These integer tables give class transitions, initial weights, terminal acceptance and successive forward weights.
+For rows 0 through 8, the zero-defect block calls HardinA233259PairTransferPowers.W after reflection [0,9,5,3,13,2,6,12,8,1,10,11,7,4], scaled by 3 for coordinate 0 and 6 otherwise. Row 1 calls HardinA233259PairTransferCore.weights. The defect sector and final four rows remain tabulated here.
 
 ## References
 
@@ -145,3 +145,4 @@ These integer tables give class transitions, initial weights, terminal acceptanc
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229589StripData.terminal`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer](../../../Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore](../../../Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferPowers](../../../Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferPowers.md)

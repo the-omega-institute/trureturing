@@ -16,7 +16,7 @@ $$\forall n: \mathit{Nat}, (\operatorname{\mathit{HardinA229691Strip}}.\operator
 
 *Commentary.*
 
-The filter enumerates all n by k arrays. The ordinal i*k+j is the original row-major order, matching the row transfer.
+Canonical is the original HardinA233177Canonical.Canonical predicate, with order lifted through finProdFinEquiv to retain literal row-major order. The filter enumerates all n by k arrays. The ordinal i*k+j is the original row-major order, matching the row transfer.
 
 **Theorem 1.2 (Exact finite transfer certificate).**
 

@@ -75,10 +75,14 @@ def W : Fin 7 → Fin 10 → ℤ :=
 
 /-- Literal row-major canonical arrays, with columns swept only to count bonds. -/
 def a (n : ℕ) : ℕ :=
+  letI : DecidablePred (fun A : Fin 3 × Fin n → Fin 3 =>
+    @Canonical (Fin 3 × Fin n)
+      (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 A) :=
+    fun _ => by unfold Canonical; infer_instance
   (Finset.univ.filter fun A : Fin 3 × Fin n → Fin 3 =>
     defects horizontal between (List.ofFn fun j i => A (i, j)) = 1 ∧
-    (∀ p (c : Fin 3), c < A p →
-      ∃ q : Fin 3 × Fin n, finProdFinEquiv q < finProdFinEquiv p ∧ A q = c)).card
+    (@Canonical (Fin 3 × Fin n)
+      (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 A)).card
 
 theorem finite_certificate :
     (∀ p (d : Fin 2), Valid p d.val →
@@ -165,7 +169,6 @@ theorem result (n : ℕ) :
     apply congrArg Finset.card
     ext A
     simp only [Finset.mem_filter, Finset.mem_univ, true_and, S]
-    rfl
   have bridge (m : ℕ) :
       dotProduct initial ((T ^ m).mulVec terminal) = 6 * (a (m + 1) : ℤ) := by
     rw [← labelled, scale]

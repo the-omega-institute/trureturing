@@ -34,6 +34,7 @@ private theorem count_zero : a 0 = 0 := by
   decide +kernel
 private theorem count_two_pos : 0 < a 2 := by
   unfold a
+  unfold _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
   apply Finset.card_pos.mpr
   refine ⟨(fun x => ![![0, 0], ![0, 1]] x.1 x.2), ?_⟩
   apply Finset.mem_filter.mpr

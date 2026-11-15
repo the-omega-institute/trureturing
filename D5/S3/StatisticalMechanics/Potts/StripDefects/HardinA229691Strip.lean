@@ -45,10 +45,14 @@ open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical c
 
 /-- Literal row-major canonical arrays at the exact defect budget. -/
 def a (n : ℕ) : ℕ :=
+  letI : DecidablePred (fun A : Fin n × Fin 5 → Fin 3 =>
+    @Canonical (Fin n × Fin 5)
+      (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 A) :=
+    fun _ => by unfold Canonical; infer_instance
   (Finset.univ.filter fun A : Fin n × Fin 5 → Fin 3 =>
     defects horizontal antidiagonal (List.ofFn fun i j => A (i, j)) = 2 ∧
-    (∀ p (c : Fin 3), c < A p →
-      ∃ q : Fin n × Fin 5, finProdFinEquiv q < finProdFinEquiv p ∧ A q = c)).card
+    (@Canonical (Fin n × Fin 5)
+      (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 A)).card
 
 theorem finite_certificate :
     (∀ p (d : Fin 3), Valid p d.val →
@@ -162,7 +166,6 @@ theorem result (n : ℕ) :
     apply congrArg Finset.card
     ext A
     simp only [Finset.mem_filter, Finset.mem_univ, true_and, S]
-    rfl
   have bridge (m : ℕ) :
       dotProduct initial ((T ^ m).mulVec terminal) = 6 * (a (m + 1) : ℤ) := by
     rw [← labelled, scale]

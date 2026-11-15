@@ -47,7 +47,7 @@ internal sealed class HardinA229691StripDataDocument : IScribeDocumentDefinition
             App(p, Num("1")), Comma, Sp, App(p, Num("2")), Comma, Sp,
             App(p, Num("3"))));
         var c = Call("HardinA233177PairTransfer.cls", column);
-        Formula Lookup(params int[] entries) => App(Vector(entries.Select(x => Num(x.ToString())).ToArray()), c);
+        Formula Lookup(params int[] entries) => App(Vector(entries.Select(x => Num(x.ToString(System.Globalization.CultureInfo.InvariantCulture))).ToArray()), c);
         return All("p", Call("HardinA229583StripData.Boundary"), All("d", V("Nat"),
             Eq(Call("HardinA229691StripData.cl", p, d),
                 Conditional(Eq(d, Num("0")), Lookup(26,14,15,16,17,18,19,20,21,22,23,24,25,26),
@@ -69,7 +69,6 @@ internal sealed class HardinA229691StripDataDocument : IScribeDocumentDefinition
     private static Formula Call(string s, params Formula[] a) => a.Length == 0 ? Q(s) : App(Q(s), a);
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
-    private static Formula Ne(Formula a, Formula b) => Seq(a, Sp, Neq, Sp, b);
     private static Formula Leq(Formula a, Formula b) => Seq(a, Sp, Le, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
     private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a), Sp, F.Iff, Sp, Parenthesized(b));

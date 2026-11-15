@@ -130,7 +130,7 @@ $$\operatorname{\mathit{HardinA229588Strip}}.\operatorname{W} = \operatorname{\m
 
 *Commentary.*
 
-These integer tables give class transitions, initial weights, terminal acceptance and successive forward weights.
+For rows 0 through 5, the zero-defect block calls HardinA233258PairTransfer.W after reflection [0,3,2,1,4], scaled by 3 for coordinate 0 and 6 otherwise. Row 1 calls its original weights. The defect sector and final row remain tabulated here.
 
 **Definition 1.10 (The literal canonical array count).**
 
@@ -142,7 +142,7 @@ $$\forall n: \mathit{Nat}, (\operatorname{\mathit{HardinA229588Strip}}.\operator
 
 *Commentary.*
 
-The filter enumerates all k by n arrays. The ordinal i*n+j is the original row-major order, including when transfer sweeps columns.
+Canonical is the original HardinA233177Canonical.Canonical predicate, with order lifted through finProdFinEquiv to retain literal row-major order. The filter enumerates all k by n arrays. The ordinal i*n+j is the original row-major order, including when transfer sweeps columns.
 
 **Theorem 1.11 (Exact finite transfer certificate).**
 
