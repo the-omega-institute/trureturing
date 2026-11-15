@@ -48,8 +48,8 @@ internal sealed class KingPathDocument : IScribeDocumentDefinition
     private static Formula NamePart(string s)
     {
         var parts = s.Split('_');
-        Formula Word(string p) => Seq(p.Select(ch => char.IsDigit(ch)
-            ? Num(ch.ToString()) : V(ch.ToString())).ToArray());
+        Formula Word(string p) => Seq(p.Select(ch => ch >= '0' && ch <= '9'
+            ? Num(new string(new[] { ch })) : V(new string(new[] { ch }))).ToArray());
         Formula result = Word(parts[^1]);
         for (var i = parts.Length - 2; i >= 0; --i)
             result = Seq(Word(parts[i]), Underscore, Grp(result));
