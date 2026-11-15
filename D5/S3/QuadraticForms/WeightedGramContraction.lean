@@ -59,7 +59,7 @@ private theorem inner_eq_of_contraction (Z : F →L[ℝ] E) (hZ : ‖Z‖ ≤ 1)
   linarith
 
 omit [Fintype ι] in
-private theorem contraction_of_gram [Finite ι] (x : ι → E) (y : ι → F)
+theorem contraction_of_gram [Finite ι] (x : ι → E) (y : ι → F)
     (hg : ∀ j k, ⟪x j, x k⟫_ℝ = ⟪y j, y k⟫_ℝ) :
     ∃ Z : F →L[ℝ] E, ‖Z‖ ≤ 1 ∧ ∀ k, Z (y k) = x k := by
   classical
