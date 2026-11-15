@@ -71,7 +71,7 @@ private def CompilerMutex.new (value : α) : BaseIO (CompilerMutex α) :=
 private def CompilerMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadFinally m]
     (mutex : CompilerMutex α) (action : IO.Ref α → m β) : m β := do
   let complete ← IO.Promise.new
-  let previous ← mutex.tail.swap complete.result!
+  let previous ← (mutex.tail.swap complete.result! : BaseIO (Task Unit))
   discard <| IO.wait previous
   try action mutex.value finally complete.resolve ()
 
