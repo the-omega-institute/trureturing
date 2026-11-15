@@ -206,7 +206,7 @@ private noncomputable def completed : AbstractSimplicialComplex (Fin 10) := gene
 set_option maxRecDepth 65536 in
 private theorem clique_classification : ∀ s : Finset (Fin 10),
     (∀ u ∈ s, ∀ v ∈ s, u ≠ v → ∃ i : Fin 15, ({u,v} : Finset (Fin 10)) ⊆ facets i) ↔ ∃ i : Fin 16, s ⊆ completedFacets i := by
-  decide
+  decide +kernel
 
 private theorem completion_eq : (D5.S3.Geometry.FiniteGraphVertexSubstitution.independenceComplex (skeleton delta)ᶜ) = completed := by
   have test_iff (s : Finset (Fin 10)) :
