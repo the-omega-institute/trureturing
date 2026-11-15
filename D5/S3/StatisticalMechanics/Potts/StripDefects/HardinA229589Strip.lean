@@ -162,7 +162,8 @@ theorem result (n : ℕ) :
     apply congrArg (fun x : ℕ => 6 * x)
     apply congrArg Finset.card
     ext A
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, S, Canonical]
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, S]
+    rfl
   have bridge (m : ℕ) :
       dotProduct initial ((T ^ m).mulVec terminal) = 6 * (a (m + 1) : ℤ) := by
     rw [← labelled, scale]
