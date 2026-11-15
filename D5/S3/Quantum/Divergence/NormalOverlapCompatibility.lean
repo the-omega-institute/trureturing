@@ -7,6 +7,7 @@
    digest: Actual normal overlaps and finite positive-secant posterior interpolation. -/
 
 import D5.S3.Quantum.Divergence.GeneralConvexReverseTestAttainment
+import Mathlib.Analysis.Convex.Slope
 
 /-! Ordered functionals are tested on every positive algebra element. The
 posterior family is the actual full continuous-moment family, and its outputs
@@ -50,7 +51,7 @@ private theorem map_mono {ρ σ : StrongDual ℂ A} (F : Family ρ σ)
   intro a ha
   simpa only [map_sub, sub_apply, sub_nonneg] using hp a ha
 
-private theorem overlap_feasible {ρ σ : StrongDual ℂ A} (F : Family ρ σ)
+theorem overlap_feasible {ρ σ : StrongDual ℂ A} (F : Family ρ σ)
     (t : ℝ) (ht : 0 ≤ t) :
     Positive (overlap F t) ∧ Below (overlap F t) ρ ∧
       Below (overlap F t) (t • σ) := by
@@ -75,6 +76,89 @@ private theorem continuous_overlap_mass (ρ σ : StrongDual ℂ A) (t : ℝ) :
   exact Complex.continuous_re.comp
     ((WeakDual.eval_continuous (1 : A)).comp
       ((continuous_apply (overlapFunction t)).comp continuous_subtype_val))
+
+/-- Functional divided difference of the actual overlap path. -/
+def overlapSecant {ρ σ : StrongDual ℂ A} (F : Family ρ σ) (s t : ℝ) : StrongDual ℂ A :=
+  (t - s)⁻¹ • (overlap F t - overlap F s)
+
+private def secantFunction (s t : ℝ) : C(Interval, ℂ) :=
+  (((t - s)⁻¹ : ℝ) : ℂ) • (overlapFunction t - overlapFunction s)
+
+private theorem secant_map {ρ σ : StrongDual ℂ A} (F : Family ρ σ) (s t : ℝ) :
+    linearMap F (secantFunction s t) = overlapSecant F s t := by
+  rw [secantFunction, map_smul, map_sub]
+  simp only [Complex.coe_smul, overlapSecant, overlap]
+
+private theorem overlap_secant_bounds {ρ σ : StrongDual ℂ A} (F : Family ρ σ)
+    (s t : ℝ) (hst : s < t) :
+    Positive (overlapSecant F s t) ∧ Below (overlapSecant F s t) σ := by
+  have hpoint (x : Interval) :
+      0 ≤ (min x.val (t * (1 - x.val)) - min x.val (s * (1 - x.val))) / (t - s) ∧
+      (min x.val (t * (1 - x.val)) - min x.val (s * (1 - x.val))) / (t - s) ≤ 1 - x.val := by
+    have hq : 0 ≤ 1 - x.val := sub_nonneg.mpr x.property.2
+    have hmono := min_le_min_left x.val (mul_le_mul_of_nonneg_right hst.le hq)
+    have ha := abs_min_sub_min_le_max x.val (t * (1 - x.val)) x.val (s * (1 - x.val))
+    rw [sub_self, abs_zero, max_eq_right (abs_nonneg _), ← sub_mul,
+      abs_of_nonneg (mul_nonneg (sub_nonneg.mpr hst.le) hq)] at ha
+    exact ⟨div_nonneg (sub_nonneg.mpr hmono) (sub_pos.mpr hst).le,
+      (div_le_iff₀ (sub_pos.mpr hst)).mpr (by
+        have hh := le_abs_self (min x.val (t * (1 - x.val)) - min x.val (s * (1 - x.val)))
+        nlinarith)⟩
+  have hg (x : Interval) : secantFunction s t x =
+      (((min x.val (t * (1 - x.val)) - min x.val (s * (1 - x.val))) / (t - s) : ℝ) : ℂ) := by
+    simp only [secantFunction, ContinuousMap.smul_apply, ContinuousMap.sub_apply,
+      overlapFunction, ContinuousMap.coe_mk, smul_eq_mul, Complex.ofReal_div,
+      Complex.ofReal_sub, Complex.ofReal_inv, div_eq_mul_inv]
+    push_cast
+    ring
+  have hp := map_positive F (secantFunction s t) (fun x => by
+    rw [hg]; exact_mod_cast (hpoint x).1)
+  have hl := map_mono F (g := secantFunction s t) (h := 1 - posterior) (fun x => by
+    rw [hg]
+    change ((_ : ℝ) : ℂ) ≤ 1 - (x.val : ℂ)
+    exact_mod_cast (hpoint x).2)
+  rw [secant_map] at hp hl
+  rw [map_sub, unit_value, posterior_value] at hl
+  have he : (ρ + σ) - ρ = σ := by abel
+  rw [he] at hl
+  exact ⟨hp, hl⟩
+
+private theorem overlap_secant_antitone {ρ σ : StrongDual ℂ A} (F : Family ρ σ)
+    (r s t v : ℝ) (hrs : r < s) (hst : s ≤ t) (htv : t < v) :
+    Below (overlapSecant F t v) (overlapSecant F r s) := by
+  have hpoint (x : Interval) :
+      (min x.val (v * (1 - x.val)) - min x.val (t * (1 - x.val))) / (v - t) ≤
+      (min x.val (s * (1 - x.val)) - min x.val (r * (1 - x.val))) / (s - r) := by
+    have hc : ConcaveOn ℝ Set.univ (fun z : ℝ => min x.val (z * (1 - x.val))) := by
+      refine ⟨convex_univ, ?_⟩
+      intro y _ z _ a b ha hb hab
+      change a * min x.val (y * (1 - x.val)) + b * min x.val (z * (1 - x.val)) ≤
+        min x.val ((a * y + b * z) * (1 - x.val))
+      apply le_min
+      · have h1 := mul_le_mul_of_nonneg_left (min_le_left x.val (y * (1 - x.val))) ha
+        have h2 := mul_le_mul_of_nonneg_left (min_le_left x.val (z * (1 - x.val))) hb
+        calc
+          _ ≤ a * x.val + b * x.val := add_le_add h1 h2
+          _ = x.val := by rw [← add_mul, hab, one_mul]
+      · have h1 := mul_le_mul_of_nonneg_left (min_le_right x.val (y * (1 - x.val))) ha
+        have h2 := mul_le_mul_of_nonneg_left (min_le_right x.val (z * (1 - x.val))) hb
+        calc
+          _ ≤ a * (y * (1 - x.val)) + b * (z * (1 - x.val)) := add_le_add h1 h2
+          _ = _ := by ring
+    rcases hst.eq_or_lt with he | hlt
+    · subst t
+      exact hc.slope_anti_adjacent (mem_univ _) (mem_univ _) hrs htv
+    · exact (hc.slope_anti_adjacent (mem_univ _) (mem_univ _) hlt htv).trans
+        (hc.slope_anti_adjacent (mem_univ _) (mem_univ _) hrs hlt)
+  have h := map_mono F (g := secantFunction t v) (h := secantFunction r s) (fun x => by
+    change (((v - t)⁻¹ : ℝ) : ℂ) *
+      (((min x.val (v * (1 - x.val)) : ℝ) : ℂ) - ((min x.val (t * (1 - x.val)) : ℝ) : ℂ)) ≤
+      (((s - r)⁻¹ : ℝ) : ℂ) *
+      (((min x.val (s * (1 - x.val)) : ℝ) : ℂ) - ((min x.val (r * (1 - x.val)) : ℝ) : ℂ))
+    have hh := hpoint x
+    rw [div_eq_mul_inv, div_eq_mul_inv, mul_comm _ (v - t)⁻¹, mul_comm _ (s - r)⁻¹] at hh
+    exact_mod_cast hh)
+  rwa [secant_map, secant_map] at h
 
 private def endpoint (x : ℝ) (hx : x ∈ Icc (0 : ℝ) 1) : Interval := ⟨x, hx⟩
 
@@ -357,7 +441,7 @@ private theorem overlap_series (F : Family ρ σ) (t : ℝ) (ht : 0 ≤ t) :
   exact coefficientSpace_hereditary M ρ (overlap F t)
     (series_mem_coefficientSpace M hρs) hρ (fun a ha => ⟨hp a ha, hl a ha⟩)
 
-private theorem value_attained (t : ℝ) (ht : 0 < t) :
+theorem value_attained (t : ℝ) (ht : 0 < t) :
     ∃ F : Family ρ σ,
       (overlap F t 1).re = overlapValue M ρ σ t ∧
       ∀ η : StrongDual ℂ M.toStarSubalgebra,
@@ -385,6 +469,32 @@ def FiniteCompatibility (K : Set {t : ℝ // 0 < t}) : Prop :=
         (t i.succ - t i.castSucc)⁻¹ • (X i.succ - X i.castSucc)
       (∀ i, Positive (D i) ∧ Below (D i) σ) ∧
       (∀ i j, i ≤ j → Below (D j) (D i))
+
+private theorem simultaneous_implies_compatibility (K : Set {t : ℝ // 0 < t})
+    (F : Family ρ σ)
+    (hF : ∀ t ∈ K, (overlap F t 1).re = overlapValue M ρ σ t) :
+    FiniteCompatibility M ρ σ K := by
+  intro m t ht0 ht htK
+  refine ⟨fun j => overlap F (t j), ?_, ?_, ?_, ?_, ?_⟩
+  · have he : overlapFunction 0 = 0 := by
+      ext x
+      change ((min x.val (0 * (1 - x.val)) : ℝ) : ℂ) = 0
+      simp only [zero_mul, min_eq_right x.property.1, Complex.ofReal_zero]
+    change overlap F (t 0) = 0
+    rw [ht0, overlap, he, map_zero]
+  · intro j
+    have hn : 0 ≤ t j := by simpa only [ht0] using ht.monotone (Fin.zero_le j)
+    exact ⟨overlap_series M ρ σ hρ hσ hρs hσs F (t j) hn, overlap_feasible F (t j) hn⟩
+  · intro j hj
+    exact hF ⟨t j, hj⟩ (htK j hj)
+  · intro i
+    exact overlap_secant_bounds F _ _ (ht i.castSucc_lt_succ)
+  · intro i j hij
+    rcases hij.eq_or_lt with he | hlt
+    · subst j
+      exact fun _ _ => le_rfl
+    · exact overlap_secant_antitone F _ _ _ _ (ht i.castSucc_lt_succ)
+        (ht.monotone (show i.succ ≤ j.castSucc from hlt)) (ht j.castSucc_lt_succ)
 
 private theorem compatible_knots_realized (K : Set {t : ℝ // 0 < t})
     (hK : FiniteCompatibility M ρ σ K)
@@ -520,11 +630,25 @@ theorem finite_compatibility_simultaneous_realization
     rw [hagree]
     exact hopt t ht
 
+/-- Functional positive-secant finite compatibility is equivalent to a single
+actual posterior family optimal on K. Optimizers and simultaneous realization
+are derived, and the equivalence covers empty and uncountable K. -/
+theorem finite_compatibility_iff_simultaneous (K : Set {t : ℝ // 0 < t}) :
+    FiniteCompatibility M ρ σ K ↔
+      ∃ F : Family ρ σ, ∀ t ∈ K, (overlap F t 1).re = overlapValue M ρ σ t := by
+  constructor
+  · intro hK
+    obtain ⟨F, hF, _⟩ := finite_compatibility_simultaneous_realization M ρ σ hρ hσ hρs hσs K hK
+    exact ⟨F, hF⟩
+  · rintro ⟨F, hF⟩
+    exact simultaneous_implies_compatibility M ρ σ hρ hσ hρs hσs K F hF
+
 end Concrete
 
 #print axioms feasible_overlap_realized
 #print axioms finite_positive_secants_realized
 #print axioms normal_overlap_maximum
 #print axioms finite_compatibility_simultaneous_realization
+#print axioms finite_compatibility_iff_simultaneous
 
 end D5.S3.Quantum.Divergence.NormalOverlapCompatibility
