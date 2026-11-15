@@ -517,8 +517,56 @@ the same entire raw two-site interior and no unit-phase relation, retaining
 the complete $u^N$ boundary factor through `raw_amplitude`.
 
 This is a length-dependent canonical parameter exclusion and pointwise actual
-ambiguity result. Observed-Q3 descent and full actual-image density remain
-later obligations. Full C9 remains open and solved-open-problem KPI is zero.
+ambiguity result. Its observed descent is supplied below. Full C9 remains
+open and solved-open-problem KPI is zero.
 The existing C8 attribution and license are unchanged. New and exposed Reg
 attempts require native audit readout; compilation alone does not assert
 `declared_validated`, and unfinished evidence remains under issue #30422.
+
+
+`InteriorSpectralAmbiguity.observed_interior_ambiguity` descends the SAME
+substantive spectral exclusion unit to the literal actual image. Fix $m\ge1$,
+$N=3+m$, and $i\in\operatorname{Fin}(m)$. Put
+$p_i=i+1$, $q_i=m-i$, and clear the nonzero canonical certificate
+$P_{p_i,q_i}$ through the original quotient numerator and denominator families:
+$P_{p_i,q_i}(x(Q))=H_i(y(Q))/B_i(y(Q))$ on $\rho_m(Q)\ne0$.
+Here $y$ consists of the real and imaginary entries of the complete prefix $Q_3$,
+so $\Omega=(\mathrm{Word}_3\times\mathrm{Word}_3)\sqcup
+(\mathrm{Word}_3\times\mathrm{Word}_3)$ and the literal real polynomial is
+$R_m=\rho_m\prod_i H_i\in\mathbb R[\Omega]$.
+
+The nonzero product $\prod_i P_{p_i,q_i}$ has a real evaluation witness by
+polynomial function extensionality. Its dense nonzero locus intersects the
+EXISTING open nonempty `quotientValidityDomain m` at one common $x$.
+The positive representative gives an actual state $\psi_x$ of length $N$;
+quotient retraction recovers $x$, actual denominators and every $B_i$ are
+nonzero, and clearing makes every $H_i(y(Q_3(\psi_x)))$ nonzero. Thus
+$R_m(y(Q_3(\psi_x)))\ne0$, a genuine ACTUAL evaluation witness, before applying
+`actual_principal_genericity` once. The resulting `actualPrincipalLocus m R`
+is nonempty, relatively open, dense in the entire literal
+`openBoundaryMPS (3+m)` subtype, and $U(1)$ saturated. No image-openness or
+Zariski-closure substitute is used. The live `normg_nonzero` proof supplies
+$P_{p_i,q_i}\ne0$ through `P_nonzero`; the finite product is organization of
+that substantive exclusion result, not an independent novelty claim.
+
+For every target $\psi$ in this locus, every $p,q\ge1$ with $p+q=m+1$, and
+every exact length equality $h:((p+2)+q)=3+m$, there is a nonzero $\phi$ in the
+SAME actual image with
+$\mathrm{rawInterior}_{p,2,q}(\mathrm{castState}_h\phi)=
+\mathrm{rawInterior}_{p,2,q}(\mathrm{castState}_h\psi)$ and no unit phase
+$\phi=\eta\psi$. Only the target is restricted to the locus. The competitor
+has no chart, `Regular`, or locus premise and may depend on the window.
+The proof takes the target's positive quotient representative modulo unit
+phase, uses clearing to recover the appropriate $P_{p,q}\ne0$, chooses a
+complex root $e^2=D$ using `IsAlgClosed.exists_pow_nat_eq`, and invokes the
+actual canonical ambiguity supplier. Exact length casts and the SAME unit
+scalar transport its nonzero competitor and its complete raw observation;
+nonzero scalar cancellation proves the nonphase assertion. The native right
+still contains $u^N$ and the physical $\sqrt\sigma$.
+
+This includes $m=1$, $N=4$, with $p=q=1$. It does not assert a common competitor
+for all windows or one in every neighborhood. The $N=3$ boundary-only case,
+right reversal, one-site partial-trace adapters, full window composition and
+normalized readings remain separate obligations. Full C9 is open; the
+solved-open-problem KPI remains zero. Scoped kernel verification does not
+constitute freezing or independent acceptance.
