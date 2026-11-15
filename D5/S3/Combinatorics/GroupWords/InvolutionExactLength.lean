@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Combinatorics/GroupWords/InvolutionExactLength
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.Group.Pointwise.Set.Basic]
-   utility: none; digest: Exact-length involution products have bounded parity-specific powers. -/
+   utility: none
+   digest: Exact-length involution products have bounded parity-specific powers. -/
 
 import Mathlib.Algebra.Group.Pointwise.Set.Basic
 import Mathlib.Data.Int.Cast.Lemmas

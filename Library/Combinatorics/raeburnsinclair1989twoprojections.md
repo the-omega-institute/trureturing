@@ -41,3 +41,11 @@ The source application is equation (8.12) in
 This group theorem alone establishes no matrix minimal polynomial,
 linear independence, Choi rank or minimum environment dimension.
 Those applications require their own linear-algebra and channel bridges.
+
+## Verified locator
+
+DOI: https://doi.org/10.7146/math.scand.a-12283
+
+Original article: https://journals.msp.org/mscand/article/download/1364/1363
+
+Page 280, proof of Theorem 1.3, gives the normal-form passage described above.
