@@ -40,6 +40,7 @@ def family : Registration arena (type_of% @table_counts) where
     intro i
     refine ⟨0, 0, 2, ?_⟩
     change T 0 0 ≠ T 0 2
+    unfold T
     decide +kernel
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}

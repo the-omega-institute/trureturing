@@ -37,8 +37,9 @@ def family : Registration arena (type_of% @table_counts) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨0, 0, 1, ?_⟩
-    change T 0 0 ≠ T 0 1
+    refine ⟨0, 0, 2, ?_⟩
+    change T 0 0 ≠ T 0 2
+    unfold T
     decide +kernel
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}

@@ -45,6 +45,7 @@ def family : Registration arena (type_of% @canonical_next) where
     intro i
     refine ⟨(), 56, 57, ?_⟩
     change images 56 ≠ images 57
+    unfold images
     decide +kernel
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
