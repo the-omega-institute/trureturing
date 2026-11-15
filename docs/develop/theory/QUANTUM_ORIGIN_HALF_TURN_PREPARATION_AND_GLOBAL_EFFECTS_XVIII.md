@@ -2789,3 +2789,662 @@ ZR与四弦均沿用221的原准备关系及原二元刻度，不另给正定核
 [Q223M]: https://www.math.toronto.edu/mein/teaching/LectureNotes/action.pdf "Eckhard Meinrenken，Group actions on manifolds，§1，例1.3(5)的闭子群背景、定义1.18之后的紧群proper性、命题1.20的嵌入闭轨道；只作成熟中间工具。"
 
 ## 追加锚（本行以下为增补区）
+
+## 224. 原球刻度的内生可测性与只比较正方形的量子候选
+
+**定义 224.1（原正方形条件）。** 保留223.3的完整原域及实际L2，不预设 $P$ 闭或二元刻度连续。在任一实际球的单位球坐标中，取两两垂直的 $x,z,w\in\mathbb R^3$，满足
+
+$$
+\|z\|=\|w\|,\qquad \|x\|^2+\|z\|^2=1.
+\tag{224.1}
+$$
+
+四个壳点 $x\pm z,x\pm w$ 构成以 $x$ 为心的正方形；用原球仿射坐标将其记为 $p,q,r,s$。条件 $\mathsf{SQ}_4$ 要求对每个原纯参照 $a\in P$，
+
+$$
+\tau(a,p)+\tau(a,q)=\tau(a,r)+\tau(a,s).
+\tag{224.2}
+$$
+
+垂直性只用该实际球已有的内禀圆度，不给原全域另加内积。球坐标之间只差正交变换，所以条件与坐标选择无关。它包含全部小圆半径与全部方向，但只比较两根互相垂直的等长弦轴。参照仍可在球外；四标签只计球内端点，参照另计至多五标签。
+
+**定理 224.2（裸实际L2的二元刻度自动Borel）。** 在完整有限维原域中，仅由实际L2，便可将 $\tau$ 写成原紧底 $K^2$ 上一个Borel函数在 $P^2$ 的限制。因此对任意固定原纯参照及任意实际球，其壳读数都是有界Borel函数。这里没有增加纯域闭性或可测性前件。
+
+证明。在原 $V$ 中固定辅助欧氏坐标。对 $y\in K$ 与整数 $n\ge1$，置
+
+$$
+F_n(y)=\{b\in K:y+(y-b)/n\in K\}.
+\tag{224.3}
+$$
+
+它们非空、紧凸且递增，含 $y$。其并是含 $y$ 的最小面 $F_K(y)$：并中每个点与另一个 $K$ 点以严格正权重表示 $y$，所以属于每个含 $y$ 的面；反向，该并自身是面，因为将这种严格正凸表示再展开，任何出现在其点的非退化凸分解中的端点仍能以严格正权重出现在 $y$ 的凸表示中。较小的正权重总可改为 $1/(n+1)$，故仍属于某个 $F_n(y)$。
+
+对固定 $v\in V$ 定义支持读数
+
+$$
+h_n(y,v)=\max_{b\in F_n(y)}\langle v,b\rangle,
+\qquad h(y,v)=\sup_nh_n(y,v).
+\tag{224.4}
+$$
+
+$h_n(\cdot,v)$ 上半连续：若 $y_j\to y$，选对应极大点，利用 $K$ 紧抽取子列；(224.3)的闭约束图使极限点可行，给极大值的上半连续不等式。因此 $h(\cdot,v)$ 为Borel。若 $y=(p+q)/2$，其中 $p,q$ 是不同原纯点，则任何含 $y$ 的面都含 $p,q$，故 $F_K(y)=B(p,q)$。实际L2使它成为完整闭椭球 $c+T\overline{\mathbb B}_3$，此时 $h(y,\cdot)$ 就是该球的支持函数。
+
+无需恢复球心，只取半宽 $b_y(v)=(h(y,v)+h(y,-v))/2$。对固定环境正交基 $e_j$，令
+
+$$
+Q_{jj}(y)=b_y(e_j)^2,\qquad
+Q_{jk}(y)=\frac{b_y(e_j+e_k)^2-b_y(e_j)^2-b_y(e_k)^2}{2}.
+\tag{224.5}
+$$
+
+这些有限支持读数给Borel对称矩阵 $Q(y)$；在实际球处准确为 $TT^{\mathsf T}$。矩阵函数
+
+$$
+Q^+(y)=\lim_{m\to\infty}Q(y)\bigl(Q(y)^2+m^{-1}I\bigr)^{-1}
+\tag{224.6}
+$$
+
+在全部实对称矩阵上存在且为Borel；在球形状矩阵处就是Moore–Penrose逆。于是所需内禀刻度准确为
+
+$$
+\tau(p,q)=1-\frac14\langle p-q,Q^+((p+q)/2)(p-q)\rangle.
+\tag{224.7}
+$$
+
+确实，$p=c+Tv,q=c+Tw$ 时，右侧为 $1-\|v-w\|^2/4=(1+\langle v,w\rangle)/2$。$p=q$ 时，最小面为单点、半宽全零，公式仍给一。右侧可先定义于全部 $K^2$，是Borel函数；再限制到任一原纯参照与固定球壳即可。所有环境坐标与支持读数仅用于证明可测性，不进入(224.2)。$\square$
+
+**引理 224.3（可测壳函数的正方形刚性）。** 若有界Borel函数 $f:S^2\to\mathbb R$ 对(224.1)的全部正方形满足
+
+$$
+f(x+z)+f(x-z)=f(x+w)+f(x-w),
+\tag{224.8}
+$$
+
+则存在 $c\in\mathbb R$、$b\in\mathbb R^3$，使 $f(p)=c+\langle b,p\rangle$ 对每个 $p\in S^2$ 成立。不把仅几乎处处成立当作点式结论。
+
+证明。在 $SO(3)$ 上取光滑非负近似恒等核 $\eta_\varepsilon$，对归一Haar测度定义
+
+$$
+f_\varepsilon(p)=\int_{SO(3)}\eta_\varepsilon(g)f(g^{-1}p)\,dg.
+\tag{224.9}
+$$
+
+这是成熟的紧群光滑卷积：可将对 $p$ 的微分转移到光滑核，故 $f_\varepsilon$ 光滑；连续函数在 $L^1(S^2)$ 稠密及旋转保测给 $f_\varepsilon\to f$ 于 $L^1$。旋转逐点保持正方形，积分使每个 $f_\varepsilon$ 仍满足(224.8)。
+
+固定 $p\in S^2$ 及正交单位切向 $v,w$。将(224.8)用于小正方形 $\cos t\,p\pm\sin t\,v$ 与 $\cos t\,p\pm\sin t\,w$，二阶展开给球面Hessian在 $v,w$ 上的对角值相同；再将正交基转四十五度，迫交叉项为零。因此
+
+$$
+\operatorname{Hess}_{S^2}f_\varepsilon=\lambda\,g_{S^2}.
+\tag{224.10}
+$$
+
+令环境向量场 $A(p)=f_\varepsilon(p)p+\nabla_{S^2}f_\varepsilon(p)$。切向微分中两项的法向部分抵消，得到 $D_vA=(f_\varepsilon+\lambda)v$。置 $k=f_\varepsilon+\lambda$，在任一二维局部坐标中交换 $A$ 的混合二阶导数，给 $(\partial_1k)\partial_2p-(\partial_2k)\partial_1p=0$。两根坐标切向独立，故 $dk=0$。于是 $k=c_\varepsilon$ 恒定，$A-c_\varepsilon p=b_\varepsilon$ 恒定，取与 $p$ 的内积得到
+
+$$
+f_\varepsilon(p)=c_\varepsilon+\langle b_\varepsilon,p\rangle.
+\tag{224.11}
+$$
+
+对归一球面测度 $\sigma$，系数为 $c_\varepsilon=\int f_\varepsilon\,d\sigma$ 与 $b_\varepsilon=3\int p f_\varepsilon(p)\,d\sigma$。$L^1$ 收敛使系数收敛，所以 $f$ 几乎处处等于某个仿射函数。
+
+为补全每个点，减去这个仿射函数，记余函数为 $r$，零测异常集为 $E$。固定任意 $p\in S^2$，将 $q\notin\{p,-p\}$ 写成 $q=\cos\theta\,p+\sin\theta\,u$，其中 $0<\theta<\pi$、$u\perp p$ 且 $\|u\|=1$。置
+
+$$
+x=(p+q)/2,\quad z=(p-q)/2,\quad
+w=\sin(\theta/2)(p\times u),\quad
+a_q=x+w,\quad b_q=x-w.
+\tag{224.12}
+$$
+
+$p,q,a_q,b_q$ 是(224.1)的正方形。两映射 $q\mapsto a_q,b_q$ 各自都是从 $S^2\setminus\{p,-p\}$ 到 $\{y:0<\langle p,y\rangle<1\}$ 的光滑微分同胚：高度为 $\cos^2(\theta/2)$，相对 $u$ 的方位角分别加减 $\arctan(1/\cos(\theta/2))$。这给明确的光滑逆。它们的零测集逆像仍零测，所以可选 $q$，使 $q,a_q,b_q$ 同时不在 $E$。正方形关系便给 $r(p)+0=0+0$。任意 $p$ 都成立，取得点式仿射性。$\square$
+
+**定理 224.4（原正方形已经等价于全部等权交弦）。** 在完整实际L2原域中，$\mathsf{SQ}_4\iff\mathsf{MC}_4$，无需ZR、纯域闭性或另加的可测性。
+
+证明。固定任意原纯参照 $a$ 及实际球 $B$。224.2使其壳读数 $p\mapsto\tau(a,p)$ 有界Borel；$\mathsf{SQ}_4$ 恰给224.3的前件。因此这个壳函数处处仿射，自然保持全部等权同中点准备，得到 $\mathsf{MC}_4$。反向因每个正方形都是同中点矩形成立。该证明不先调用依赖完整四弦的223来取得连续性，因而没有正则性循环。$\square$
+
+**定义 224.5（三复制正方形候选）。** 在223.4的同一个强实全有限背景中，仅对整个原三复制域、包括全部原纠缠纯点，要求
+
+$$
+\mathsf Q_{\rm square}
+:=\mathrm{L2}_3+\mathsf{ZR}_3+\mathsf{SQ}_{4,3}.
+\tag{224.13}
+$$
+
+这里不另假设二元刻度可测、连续或纯域紧。实际球、全部准备关系及全有限锥背景仍保留。
+
+**定理 224.6（正方形候选的完整量子理论）。** 候选(224.13)当且仅当存在223.5的同一个全有限复矩阵坐标族。
+
+证明。224.4在原三复制域将正方形接到全部四弦，223.3内生纯域紧性与完整根基，223.5再给同一个 $\Theta_N=\theta^{\otimes N}$ 的全部有限传播。反向在标准复矩阵域以 $\tau(p,q)=\operatorname{Tr}(pq)$ 与同中点矩阵等式配对，立即保持正方形；全部原零关系也满足ZR。
+
+| 原对象或另需的前件 | 同一坐标中的量子对应 |
+| --- | --- |
+| 全部原态、纯点、完整效应与配对 | 迹一PSD、秩一投影、$0\preceq E\preceq I$、Born概率 $\operatorname{Tr}(E\rho)$ |
+| 有限单位效应分解、正交投影单位分解 | 数学POVM、PVM |
+| 同一全有限分块、乘积单位与边缘 | 复张量、全部纠缠态、一致重括号及偏迹 |
+| 原实线性分支在全部有限旁观者下保正 | CP；TNI、TP另需相应质量条件；仪器另需分支总预算 |
+| 指定投影效应的正实线性分支，质量为该效应且逐点固定全部读一纯态 | 既有锐中性条件下的 $X\mapsto PXP$；装置实现另需操作前件 |
+| 连续保锥保单位的一参数可逆群 | 数学酉共轭；物理钟、能量与 $\hbar$另需标定 |
+
+无限维normal表示、无限张量极限及实际装置可实现性仍各需自己的条件。$\square$
+
+**命题 224.7（只留直角的几何简化、反事实与完整白话）。** 本候选把221的任意同中点矩形缩为正方形，保持完整有限量子对应；没有声称独立前件数再次减少，也没有证明任意不可测有界壳函数的同类结论。
+
+证明及白话。仍把纯准备看作珠子，两颗珠子撑起一颗真正的三球。现在不用逐一比较球上所有长短不一的矩形，只画正方形：一根弦轴和垂直的另一根弦轴同样长，它们各取两个端点的一半，落到同一个中点。任何原纯参照都必须给这两份准备相同的平均重合。
+
+这里没有暗中加一句“读数要光滑”。从原混态的最小面出发，用一列闭的有限伸缩约束读出球的支持宽度，已经能把内禀重合写成可测函数。于是可以在证明中旋转平均，把它暂时磨光。极小正方形让所有切向的二阶弯曲相同，整个光滑壳读数只能是常数加一根线性坡度。再取回原读数时，不能留下几个例外珠子：固定任一珠子，总能选另一颗珠子，使正方形另外三端同时避开零测例外，正方形等式就把这个固定点也钉回同一坡面。全壳仿射性因此是每个点都成立的结论，全部同中点矩形随之自动相容。223的有界球壳闭合与隐藏零轴排除再恢复完整量子几何。
+
+若正方形规则失败，同一原混态的两份等权准备已对同一个原参照给出不同读数，仿射全域确认不能成立。若删ZR，221.8的完整商层级仍通过全部四弦，因而通过正方形，却留下严格正的原零关系自配对；所以本轮也不能删除ZR。裸ZR是否自动推出正方形、以及一般无锚 $\mathsf C_0$ 是否充分，仍未解决。任意不可测壳函数的更强抽象问题不由此宣告解决，也不成为该原域重建的缺口，因为224.2已经从原几何支付可测性。
+
+最小面公式、闭图极值的上半连续性、支持函数极化、矩阵广义逆、紧群光滑卷积及球面微分是成熟组件。新增repo-derived接合是裸实际L2的内禀刻度Borel表示、正方形关系的点式仿射刚性与不另加正则前件的完整原量子候选。这里简化的是需要约束的局部构型族，不申领全球文献优先权。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 230. 规范局部圆与纯共球面的全有限反例
+
+**定义 230.1（三维非交换核与整个原张量层级）。** 取整数 $m\ge3$，置 $\mathcal H=A\otimes B$，其中 $A=\mathbb C^m$、$B=\mathbb C^2$，$D=2m$。以下 $E=\operatorname{Herm}(\mathcal H)$ 是实空间，$E_0$ 表示迹零部分，正交性均指 $\langle X,Y\rangle=\operatorname{Tr}(XY)$。定义
+
+$$
+J=I_m\otimes\operatorname{Herm}_2(\mathbb C)_0,
+\qquad R=J^\perp,\qquad V=E/J,\qquad
+\pi:E\longrightarrow V,\qquad u\pi=\operatorname{Tr}.
+\tag{230.1}
+$$
+
+$J$ 的实维数为三，含 $I_m\otimes\sigma_x,I_m\otimes\sigma_y,I_m\otimes\sigma_z$ 三个不对易方向，$\dim_{\mathbb R}V=4m^2-3$。令 $Q:E\to R$ 为 HS 正交投影，以 $\pi|_R$ 识别 $V$ 和 $R$。对每个有限 $N\ge1$，取实际 Kronecker 识别并定义
+
+$$
+\begin{gathered}
+E_N=\operatorname{Herm}_{D^N}(\mathbb C)=E^{\otimes_{\mathbb R}N},
+\quad W_N=V^{\otimes_{\mathbb R}N},\quad
+\pi_N=\pi^{\otimes N},\quad Q_N=Q^{\otimes N},\quad R_N=R^{\otimes N},\\
+\mathcal N_N=\ker\pi_N
+=\sum_{j=1}^NE^{\otimes(j-1)}\otimes J\otimes E^{\otimes(N-j)},
+\qquad \mathcal N_N^\perp=R_N,\\
+C_N=\pi_N(\operatorname{PSD}_{D^N}),\quad u_N=u^{\otimes N},\quad
+K_N=\pi_N(\mathcal D_{D^N}),\quad P_N=\operatorname{ext}K_N.
+\end{gathered}
+\tag{230.2}
+$$
+
+这里 $\mathcal D_k=\{\rho\succeq0:\operatorname{Tr}\rho=1\}$，$P_v=vv^*$ 表示单位向量的秩一投影。标量层为 $(W_0,C_0,u_0)=(\mathbb R,\mathbb R_+,1)$。保留每层整个原态体、全部原纯点及完整效应区间 $[0,u_N]$，连同其全部有限单位分解；不把矩阵提升中的某个子菜单称作原菜单。$F_{K_N}(S)$ 表示包含 $S$ 的最小实际面。
+
+**定理 230.2（此三维核的强全有限背景）。** 定义230.1给每层闭、尖、生成的 $C_N$ 和严格正 $u_N$，且 $K_N=C_N\cap\{u_N=1\}$ 紧。整个原对偶、效应和测试为
+
+$$
+\begin{gathered}
+W_N^*\simeq R_N,\qquad C_N^*\simeq R_N\cap\operatorname{PSD}_{D^N},
+\qquad [0,u_N]\simeq R_N\cap[0,I_{D^N}],\\
+f_F(\pi_NX)=\operatorname{Tr}(FX),\qquad
+(F_1,\ldots,F_k)\text{ 是原测试}
+\ \Longleftrightarrow\ F_j\in R_N\cap\operatorname{PSD}_{D^N},\quad\sum_jF_j=I_{D^N}.
+\end{gathered}
+\tag{230.3}
+$$
+
+对所有有限 $a,b\ge0$，$C_a\otimes_{\min}C_b\subseteq C_{a+b}\subseteq C_a\otimes_{\max}C_b$；最大锥使用两块的全部原正泛函。规范重括号、全部因子置换及正逆均保留，原乘积配对分离联合载体，丢弃在全部相关输入上为偏迹下降。
+
+证明。应用 [XIV165.2](QUANTUM_ORIGIN_FINITE_TENSOR_QUOTIENT_AND_GLOBAL_NONCOLLAPSE_XIV.md) 的一般迹零核机制，参数替换为该处 $A\mapsto E$、$\mathbb RH\mapsto J$、$R\mapsto J^\perp$、局部矩阵大小 $d\mapsto D=2m$。该证明的背景部分只需实正交分解、$J\subset E_0$ 和 $I_D\in R$，不需核为一维；不调用165.3的一维核惯性结论。实 Hermitian 基的张量积给(230.2)的准确核、正交补及整个 Kronecker 载体，并有 $u_N\pi_N=\operatorname{Tr}$。
+
+紧密度集的像给紧底；正提升的迹受 $u_N$ 控制，收敛正像可取有界 PSD 提升的收敛子列，故像锥闭。PSD 提升的正迹给严格正性，继而给尖性；满射和 PSD 的线性张成给生成性。泛函下降等价于迹矩阵属于 $R_N$，对全部 PSD 提升非负等价于该矩阵 PSD；单位对应 $I_{D^N}$，故完整菜单准确为(230.3)。正提升的张量积给最小夹逼，对任意相关 $Z\succeq0$ 及正的 $F\in R_a,G\in R_b$，$\operatorname{Tr}((F\otimes G)Z)\ge0$ 给最大夹逼。矩阵置换保核且保 PSD；$I\in R$ 使偏迹下降，并在全部输入上满足
+
+$$
+(\operatorname{id}_{W_a}\otimes u_b)\pi_{a+b}Z
+=\pi_a(\operatorname{Tr}_{\mathcal H^{\otimes b}}Z).
+\tag{230.4}
+$$
+
+每个 $R_N$ 中的 Hermitian 矩阵夹于 $\pm cI$ 之间，所以完整效应张成全部对偶，乘积配对分离联合空间。这也包括标量分割及经置换得到的全部有限分区。$\square$
+
+**定理 230.3（三维核的锐全有限符号秩）。** 对所有有限 $N\ge1$ 和每个非零 $X\in\mathcal N_N$，
+
+$$
+n_+(X)\ge m,\qquad n_-(X)\ge m.
+\tag{230.5}
+$$
+
+每层均有符号秩恰为 $(m,m)$ 的核元。
+
+证明。归纳所需的公共零向量张成事实直接取自 Edward Poon，*Preservers of maximally entangled states*，Proposition 2.1，印刷页2—3，[原作者全文][Q230Poon]，DOI [10.1016/j.laa.2014.03.009](https://doi.org/10.1016/j.laa.2014.03.009)。其参数取较小维数 $m_{\rm Poon}=2$、较大维数 $n_{\rm Poon}=m>2$，交换两个因子。他的 $\mathbb RI+S_{2,m}$ 因而准确成为
+
+$$
+\operatorname{span}_{\mathbb R}\{P_v:v^*Hv=0\ \text{对全部 }H\in J\}
+=\{T\in E:\operatorname{Tr}_A T\in\mathbb RI_2\}=R.
+\tag{230.6}
+$$
+
+确实，公共零条件等价于 $\operatorname{Tr}_A P_v=I_2/2$；Schmidt 分解给恰好全部 $2$ 对 $m$ 最大纠缠向量
+$v=(a\otimes|0\rangle+e^{it}b\otimes|1\rangle)/\sqrt2$，其中 $a,b\in\mathbb C^m$ 正交归一。这里复用的是文献的实线性张成公式，不新增一个最大纠缠态张成定理。
+
+$N=1$ 时，$X=I_m\otimes T$，非零迹零 Hermitian $2\times2$ 矩阵 $T$ 有一正一负特征值，故符号秩为 $(m,m)$。设 $N\ge2$。对(230.6)的任一单位 $v$，泛函 $T\mapsto v^*Tv$ 消去整个 $J$，故压缩
+
+$$
+X_v=(v^*\otimes I)X(v\otimes I)\in\mathcal N_{N-1}.
+\tag{230.7}
+$$
+
+若某个 $X_v\ne0$，归纳假设与等距压缩的惯性单调性立即给 $n_\pm(X)\ge n_\pm(X_v)\ge m$。若全部压缩为零，在余下 $N-1$ 份的实 Hermitian 基 $(B_j)$ 上写 $X=\sum_jA_j\otimes B_j$。每个 $A_j$ 对全部公共零投影的迹配对为零，(230.6)迫使 $A_j\in R^\perp=J$。将前两小因子重新括号，遂有
+
+$$
+X=I_m\otimes Y,\qquad
+0\ne Y\in\operatorname{Herm}(\mathbb C^2\otimes\mathcal H^{\otimes(N-1)}),\qquad
+\operatorname{Tr}Y=0.
+\tag{230.8}
+$$
+
+$Y$ 非零且迹零，至少各有一个正、负特征值；每个特征值在 $I_m\otimes Y$ 中重复 $m$ 次，故又得(230.5)。最后 $(I_m\otimes\sigma_z)\otimes P_\zeta$ 给每层的 $(m,m)$，其中 $P_\zeta$ 是余下层任意秩一投影，$N=1$ 时省去辅助因子。$\square$
+
+**推论 230.4（与全部正提升比较的唯一性及整个实际 L2）。** 在每个有限 $N\ge1$，任意 $\sigma\succeq0$、$\operatorname{rank}\sigma<m$ 都是其商像的唯一 PSD 提升。对任意复支持 $S\subseteq\mathcal H^{\otimes N}$、$\dim_{\mathbb C}S<m$，
+
+$$
+\begin{gathered}
+F_S=\pi_N\mathcal D(S)\text{ 是 }K_N\text{ 的实际面},\qquad
+\pi_N^{-1}(F_S)\cap\mathcal D_{D^N}=\mathcal D(S),\\
+\pi_N|_{\operatorname{Herm}(S)}:
+\operatorname{Herm}(S)\longrightarrow\operatorname{span}_{\mathbb R}\pi_N\operatorname{PSD}(S)
+\text{ 是保迹线性序同构}.
+\end{gathered}
+\tag{230.9}
+$$
+
+全部原纯点恰为互异的 $\pi_NP_v$，其拓扑是 $\mathbb{CP}^{D^N-1}$。任意两个不同原纯点所生的最小实际面恰为其二维提升支持的完整 Bloch 三球，包括任意纠缠支持。秩阈值 $<m$ 为锐界。
+
+证明。准确复用220.4的符号秩／全正纤维机制，令其中的阈值 $r=m$、核取(230.2)，符号秩前件由230.3给出。其唯一性论证只用：若 $X=\rho-\sigma\in\mathcal N_N$、$\rho\succeq0$，则 $X$ 在 $\ker\sigma$ 上非负，从而 $n_-(X)\le\operatorname{rank}\sigma<m$，故 $X=0$。这里 $\rho$ 没有秩限制。低秩态与全部态比较的成熟判据仍归 [Carmeli–Heinosaari–Schultz–Toigo，*Tasks and premises in quantum state determination*，arXiv:1308.5502v2，§4.1，Lemma 1(b,c)、Lemma 2(a)、Theorem 1(a)](../../../Library/HilbertOperators/carmeliheinosaarischultztoigo2014tasks.md)；参数为其秩预算 $t=m-1$。
+
+220.4的其余实际面与整个张成上的序论证均只依赖上述唯一性，因而给(230.9)。特别地，每个秩一像是单点实际面；反过来，对任一原极点取密度提升并作谱分解，极端性迫使每个非零谱项的秩一像都等于该极点，所以没有遗漏的高秩来源纯标签。秩一提升唯一性给标签单射，紧射影空间到 Hausdorff 商的连续双射给同胚。两个不同纯提升的中点在其二维支持密度体的相对内部；该体已是实际面，故正是两点的最小面。$m\ge3$ 使所有这些支持满足 $2<m$。
+
+锐界由两个不同的秩 $m$ 正矩阵
+
+$$
+\sigma_0=(I_m\otimes P_0)\otimes P_\zeta,\qquad
+\sigma_1=(I_m\otimes P_1)\otimes P_\zeta,
+\qquad \pi_N\sigma_0=\pi_N\sigma_1
+\tag{230.10}
+$$
+
+给出，$P_j=|j\rangle\langle j|$，$N=1$ 时省去辅助因子；除以 $m$ 即为归一态。其差属于准确核。全部原效应仍为(230.3)；面内序同构不另承诺每个面内效应或单位分解能按相同预算延拓为整域测试。$\square$
+
+**定理 230.5（单层严格圆尺与共同纯球面）。** 在 $E_0$ 上定义
+
+$$
+q(X)=\operatorname{Tr}X^2+
+\frac1m\left\{\operatorname{Tr}\bigl((\operatorname{Tr}_BX)^2\bigr)
+-\operatorname{Tr}\bigl((\operatorname{Tr}_AX)^2\bigr)\right\}.
+\tag{230.11}
+$$
+
+它半正定且根空间恰为 $J$，因而下降为 $L=\ker u\simeq R\cap E_0$ 上的正定二次型 $\bar q$。每个复二维支持 $U\subset\mathcal H$ 都有严格正 $\lambda_U$，使 $q(X)=\lambda_U\operatorname{Tr}X^2$ 对全部 $X\in\operatorname{Herm}_0(U)$ 成立。对所有单位 $v$，
+
+$$
+\bar q\left(\pi P_v-\pi\frac{I_D}{D}\right)=1-\frac1{m^2}.
+\tag{230.12}
+$$
+
+证明。作实 HS 正交分解
+
+$$
+E_0=S_A\oplus J\oplus S_{AB},\qquad
+S_A=\operatorname{Herm}_m(\mathbb C)_0\otimes I_2,\quad
+S_{AB}=\operatorname{Herm}_m(\mathbb C)_0\otimes\operatorname{Herm}_2(\mathbb C)_0.
+\tag{230.13}
+$$
+
+偏迹在三块上的直接计算给
+
+$$
+q(X)=\left(1+\frac2m\right)\|X_A\|_{\rm HS}^2+\|X_{AB}\|_{\rm HS}^2.
+\tag{230.14}
+$$
+
+所以根空间准确为 $J$，且 $q(X)=\bar q(QX)$。此处 $QX$ 的商坐标 HS 长度不等于原支持上 $X$ 的 HS 长度；圆度检验使用后者。
+
+为证全部支持同时圆，令 $f(X)=\operatorname{Tr}((\operatorname{Tr}_BX)^2)-\operatorname{Tr}((\operatorname{Tr}_AX)^2)$，在整个 Hermitian 空间上使用它的二次极化。Schmidt 分解给每个秩一 $P_v$ 的 $f(P_v)=0$。在任一二维 $U$ 上写 $P_v=c+T(r)$，其中 $c=P_U/2$、$T(r)=\frac12\sum_{j=1}^3r_j\sigma_j^U$、$|r|=1$。将 $r$ 与 $-r$ 的零等式相减，得 $f$ 的线性交叉项为零；相加，得 $f(T(r))=-f(c)$。二次齐次性遂给 $f(T(r))=-f(c)|r|^2$，而 $\operatorname{Tr}T(r)^2=|r|^2/2$。因此该支持上 $q$ 是 HS 的标量倍。非零的 $\operatorname{Herm}_0(U)$ 元秩至多二，非零 $J$ 元秩为 $2m$，故此标量严格正；极化也给整个支持上的双线性等式。
+
+最后令 $X=P_v-I_D/D$、$\rho_A=\operatorname{Tr}_BP_v$、$\rho_B=\operatorname{Tr}_AP_v$，共同约化纯度 $t=\operatorname{Tr}\rho_A^2=\operatorname{Tr}\rho_B^2\in[1/2,1]$。直接正交投影给
+
+$$
+\|X_A\|_{\rm HS}^2=\frac{t-1/m}{2},\qquad
+\|X_{AB}\|_{\rm HS}^2=1+\frac1{2m}-\left(\frac12+\frac1m\right)t.
+\tag{230.15}
+$$
+
+代入(230.14)，$t$ 消去，得到(230.12)。230.4保证这些恰是全部原纯点；共同纯球面没有漏掉额外原标签。$\square$
+
+**定理 230.6（整个商态体的准确 Loewner 尺）。** 置 $s=m^2-1$、$n=\dim L=4s$，定义
+
+$$
+o=\pi(I_D/D),\qquad
+b=\frac{m^2}{m^2-1},\quad a=\frac{m(m+2)}{m^2-1},\qquad
+g_{\rm L}(x,x)=b\bar q(x)=a\|x_A\|_{\rm HS}^2+b\|x_{AB}\|_{\rm HS}^2.
+\tag{230.16}
+$$
+
+整个 $K_1$ 的唯一最小体积外接椭球恰为 $o+\{x:g_{\rm L}(x,x)\le1\}$。全部原纯点都在其单位边界上，且每个实际二点球在同一个规范 $g_{\rm L}$ 下严格圆。
+
+证明。230.5使全部纯点在所列单位椭球上，凸性使整个 $K_1$ 被包含。以下一个接触测度证书同时处理任意中心的竞争椭球。最小外接椭球的一般定义和成熟归属仍为210.1及其 [Güler–Gürtuna][Q210GG]；本处具体常数及证书直接计算。
+
+在 $U(m)\times U(2)$ 的两个纯投影轨道上分别取归一 Haar 推前测度：乘积态轨道 $t=1$，以及两个 Schmidt 系数均为 $1/\sqrt2$ 的轨道 $t=1/2$。以权重
+
+$$
+\nu=\frac3{m(m+2)},\qquad 1-\nu
+\tag{230.17}
+$$
+
+混合，得到数学接触测度 $\mu$，不附加物理随机准备前件。令随机向量 $x=QP_v-I_D/D\in L$。局部酉平均给 $\mathbb E_\mu x=0$。$S_A$ 的维数为 $s$，$S_{AB}$ 的维数为 $3s$；由(230.15)，两种轨道的平方分量分别是
+
+$$
+\begin{array}{c|cc}
+ &\|x_A\|_{\rm HS}^2&\|x_{AB}\|_{\rm HS}^2\\ \hline
+ t=1&p&p\\
+ t=1/2&r&3/4
+\end{array}
+\qquad p=\frac{m-1}{2m},\qquad r=\frac{m-2}{4m}.
+\tag{230.18}
+$$
+
+协方差在 $S_A,S_{AB}$ 间没有交叉项：先平均 $U(2)$，它固定前块并消去后块的一阶项。在 Pauli 三方向上，旋转 $\pi$ 消去不同方向间的协方差，旋转置换三轴使三个对角块相等。每个剩余 $U(m)$-不变二次型在 $\operatorname{Herm}_m^0$ 上都是 HS 的标量倍：限制到和为零的实对角元，置换不变性使系数矩阵的对角元一致、非对角元一致；和为零条件将其化为平方和，谱定理和极化再给全部 Hermitian 元的同一结论。因此只需计算上述两块的平均平方长度：
+
+$$
+\nu p+(1-\nu)r=\frac1{4a},\qquad
+\nu p+(1-\nu)\frac34=\frac3{4b}.
+\tag{230.19}
+$$
+
+除以各自维数 $s,3s$，若 $G_{\rm L}$ 是(230.16)相对于 HS 的正定矩阵，便得 $\mathbb E_\mu(xx^{\mathsf T})=G_{\rm L}^{-1}/n$。白化 $z=G_{\rm L}^{1/2}x$ 后，
+
+$$
+\mathbb E_\mu z=0,\qquad
+\mathbb E_\mu(zz^{\mathsf T})=I_n/n,\qquad \|z\|^2=1.
+\tag{230.20}
+$$
+
+任一包含整个白化态体的椭球可写为 $(z-c)^{\mathsf T}H(z-c)\le1$，其中 $H\succ0$、$c$ 任意。对接触测度积分给
+
+$$
+\frac{\operatorname{Tr}H}{n}+c^{\mathsf T}Hc\le1,
+\qquad
+\det H\le\left(\frac{\operatorname{Tr}H}{n}\right)^n\le1.
+\tag{230.21}
+$$
+
+AM–GM 使其体积至少为单位球体积；等体积时只能 $H=I_n,c=0$。这一次证书即证明所列椭球对全部中心及形状唯一最优。无需假定原纯域传递；局部酉群的两个轨道恰被允许不同。严格圆度随(230.14)的同一正比例缩放及230.4的实际面桥得到。$\square$
+
+**命题 230.7（两种实际半径与准确整体直径）。** 取 $A$ 中正交单位向量 $a_0,c_0$，$B$ 中正交单位向量 $b_0,d_0$，置 $v=a_0\otimes b_0$、$w=c_0\otimes b_0$、$z=a_0\otimes d_0$。其对应的两颗实际二点球在规范尺下的平方半径分别为
+
+$$
+r_{vw}^2=\frac{m}{2(m-1)},\qquad
+r_{vz}^2=\frac{m}{2(m+1)},\qquad
+\Delta_{g_{\rm L}}(K_1)^2=\frac{2m}{m-1}.
+\tag{230.22}
+$$
+
+因此，实际 L2、规范 $\mathsf A_2(g_{\rm L})$ 和规范纯单位共球面同时成立，仍不蕴含 $\mathsf D_2(g_{\rm L})$。
+
+证明。正交提升投影是各支持球的对径端点，且
+
+$$
+q(P_v-P_w)=2\left(1+\frac1m\right),\qquad
+q(P_v-P_z)=2\left(1-\frac1m\right).
+\tag{230.23}
+$$
+
+乘以 $b$ 再除以四给两个平方半径。为算整个体的直径，对任意纯 $P_v,P_w$ 记约化矩阵 $\rho_{A,v},\rho_{B,v}$ 等，则由各纯投影两侧约化纯度相等，
+
+$$
+q(P_v-P_w)=2\bigl(1-|\langle v,w\rangle|^2\bigr)
++\frac2m\left\{\operatorname{Tr}(\rho_{B,v}\rho_{B,w})
+-\operatorname{Tr}(\rho_{A,v}\rho_{A,w})\right\}
+\le2+\frac2m.
+\tag{230.24}
+$$
+
+两项约化矩阵均为密度矩阵，其交叉迹在 $[0,1]$ 中；第一对 $(v,w)$ 达到此上界。任意两混态之差可写为纯点差的凸组合，范数凸性保证不超过纯点间最大距离。故整体平方直径正是 $b(2+2/m)=2m/(m-1)$。第二颗实际球的对径平方长度为 $2m/(m+1)$，严格小于整体平方直径，故 D2 失败。
+
+例如 $m=3$ 时，$g_{\rm L}$ 在 $S_A,S_{AB}$ 上的系数分别为 $15/8,9/8$，两平方半径为 $3/4,3/8$，整个平方直径为 $3$。230.6同时认证所用尺确为整块体的规范尺，故这给210.8及220.13所列两个单层蕴含的反例：规范局部圆度不足，规范共同纯球面也不足，二者合取仍不足。此单层结论不替换只作用于整个 $K_3$ 的完整重建前件。$\square$
+
+**定理 230.8（两复制起失去任何共同圆尺）。** 对定义230.1的每个有限 $N\ge2$，不存在 $L_N=\ker u_N$ 上的正定内积使全部实际二点球同时圆。特别地，整个 $K_N$ 的规范 Loewner 尺既不满足 $\mathsf A_2$，也不满足 $\mathsf D_2$。
+
+证明。$N=2$ 时若有这样的 $g$，在 $\operatorname{Herm}_{D^2}(\mathbb C)_0$ 上拉回为 $\mathfrak q(X)=g(\pi_2X,\pi_2X)$。其极化根空间准确为 $J\otimes E+E\otimes J$。230.4已使每个提升二维支持忠实地成为完整实际 Bloch 面，所以对每个该支持 $U$，$\mathfrak q|_{\operatorname{Herm}_0(U)}=\lambda_U\operatorname{Tr}X^2$，且 $\lambda_U>0$。准确应用220.10，参数为其中 $A=E$、矩阵大小 $n=D=2m$、迹零核 $J=I_m\otimes\operatorname{Herm}_2^0$，得到 $J=0$，与 $\dim J=3$ 矛盾。
+
+同一矛盾也可用220.8显示为原菜单的具体可辨方向，无需重证其四坐标恒等式。取 $H=I_m\otimes\sigma_z\in J$，其参数为 $p=q=m$、$H_+=I_m\otimes P_0$。给定单位 $a_0\in A$，令 $S=P_{a_0}\otimes\sigma_x\in\mathcal O_{+-}$，$P_\pm=P_{(|0\rangle\pm|1\rangle)/\sqrt2}$。220.8只需的两侧核 $H\otimes E+E\otimes H$ 已包含在准确根空间内，故迫使 $H_+\otimes S$ 为零长度方向。另一方面原归一态及一份原效应
+
+$$
+\begin{gathered}
+x_\pm=\pi_2\left(\frac{H_+}{m}\otimes(P_{a_0}\otimes P_\pm)\right),\qquad
+F=P_{a_0}\otimes P_++\frac{I_m-P_{a_0}}{m-1}\otimes P_-,\\
+0\preceq F\preceq I_D,\qquad \operatorname{Tr}_A F=I_2,\qquad F\in R,
+\end{gathered}
+\tag{230.25}
+$$
+
+给合法两份效应 $I_D\otimes F\in R_2\cap[0,I_{D^2}]$，满足 $f_{I\otimes F}(x_+)=1$、$f_{I\otimes F}(x_-)=0$，但 $x_+-x_-=\pi_2(H_+\otimes S)/m$ 被迫零长度。$F$ 的区间条件由 $P_{a_0}\oplus(I_m-P_{a_0})$ 两块及 $1/(m-1)\le1$ 直接验证；其偏迹条件准确保证对整个三维 $J$ 正交。这说明矛盾发生于原菜单可辨的不同商态，不只发生于提升的不同矩阵。
+
+$N>2$ 时固定余下层任一单位纯辅助向量 $\zeta$，令 $z_*=\pi_{N-2}P_\zeta$。其迹为一，$i:x\mapsto x\otimes z_*$ 是线性单射，丢弃是左逆。若 $g_N$ 存在，沿 $i$ 拉回即得正定 $g_2$。每个两份提升支持 $U$ 经 $U\otimes\mathbb C\zeta$ 成为230.4已认证的实际二维支持，且
+
+$$
+\operatorname{Tr}((X\otimes P_\zeta)(Y\otimes P_\zeta))=\operatorname{Tr}(XY).
+\tag{230.26}
+$$
+
+所以拉回使全部两份支持同时严格圆，违反已证两复制结论。这正是220.9的纯辅助限制机制；无需把高层尺设为张量积，也不假设更高支持的全部面结构。D2 由210.2蕴含 A2，故规范尺的两条件均被排除。$\square$
+
+**定义 230.9（完整候选的保留形式）。** 对一般系统，保留210.5和220.11的全部强实全有限前件：一个有限实 $V$，$\dim V>1$，$W_N=V^{\otimes_{\mathbb R}N}$ 对每个有限 $N\ge0$ 都是整个原联合载体；$C_N$ 闭、尖、生成，$u_N=u^{\otimes N}$ 严格正。使用整个 $K_N=C_N\cap\{u_N=1\}$、全部 $P_N=\operatorname{ext}K_N$、完整原效应区间及全部有限单位分解，标量层为 $(\mathbb R,\mathbb R_+,1)$。原乘积配对分离联合空间；对任意有限块大小 $a,b\ge0$，
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}\subseteq C_a\otimes_{\max}C_b.
+\tag{230.27}
+$$
+
+最小锥使用全部正乘积，最大锥使用两块全部正泛函；规范重括号、全部有限因子置换及其正逆保留，所以夹逼对每个实际有限分区成立，量词包含全部相关与纠缠输入。
+
+在整个原三复制体 $K_3$ 要求两项：每对不同原纯点生成的最小实际面是非退化仿射 Bloch 三球；以整个 $K_3$ 的唯一最小体积外接椭球给 $g_3$，并对每个不同 $a,p\in P_3$ 要求
+
+$$
+\|a-b_a(p)\|_{g_3}=\Delta_3,\qquad
+\Delta_3=\max_{x,y\in K_3}\|x-y\|_{g_3}.
+\tag{230.28}
+$$
+
+这里 $p$ 指定实际球，$b_a(p)$ 是该球内 $a$ 的对径。此即完整 $\mathsf Q_{\rm diam\,2}$。共同半径、共同纯球面、TC、AD、E0、投影性和自对偶不另作前提；不要求面内测试按原预算全域延拓。单层230.7的较弱条件不能代付(230.28)。
+
+**推论 230.10（准确供应的同一全有限量子字典）。** 在230.9的全部强前件下，其三复制实际 L2 和(230.28)当且仅当存在同一个整数 $d\ge2$、同一个实线性同构 $\theta:V\to\operatorname{Herm}_d(\mathbb C)$，对所有有限 $N\ge0$ 同时有
+
+$$
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{d^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{230.29}
+$$
+
+证明。参数逐项与210.5、220.11一致，故直接应用210.6／220.12及其199.4、XVII190.5的分类与共同全有限传播。230.3—230.8供应具体商的反例和障碍，不代替这个一般抽象重建，也不重证分类。对非标量层令 $D_N=d^N$，同一 $\theta$ 下的对应为下表；几何常数直接取210.7／220.12。
+
+| 原对象或附加前件 | 同一量子坐标中的准确内容 |
+| --- | --- |
+| 整个原态体和全部原纯标签 | 全部密度矩阵 $\rho\succeq0,\operatorname{Tr}\rho=1$，全部秩一投影 $P_\psi$，纯标签为 $\mathbb{CP}^{D_N-1}$ |
+| 完整原效应及所有有限测试 | 全部 $0\preceq F\preceq I$，Born 读数 $\operatorname{Tr}(\rho F)$；单位分解恰为数学 POVM，$F_j\succeq0,\sum_jF_j=I$ |
+| 所有有限分区、置换和丢弃 | 标准复张量积、全部相关及纠缠态、在全部输入上的偏迹；同一 $\theta^{\otimes N}$，不逐层另选坐标 |
+| 实际二点面与整体几何 | 每个纯对的最小面为完整 Bloch 三球；整个规范尺 $g_N(X,Y)=D_N\operatorname{Tr}(XY)/(D_N-1)$，中心 $I/D_N$，平方直径 $2D_N/(D_N-1)$ |
+| 给定实线性分支 $\Phi:W_a\to W_b$ 对所有有限 $M\ge0$ 满足 $\Phi\otimes\operatorname{id}_{W_M}$ 在整个原正锥上为正 | 矩阵坐标的唯一复线性延拓为 CP，反向亦然；因 $d\ge2$，辅助幂可容纳任意有限辅助维数，再用嵌入和压缩取得通常完全正性 |
+| 对所有正输入另给 $u_b\Phi\le u_a$，或等号 | 分别为 TNI、TP；多分支还须对总和另给总质量预算，各支单独 TNI 不保证总预算 |
+| 给定实际仪器及其操作、设备中性条件 | 数学锐压缩 $X\mapsto aXa$ 和 $X\mapsto(I-a)X(I-a)$ 可作为指定中性更新；具有指定锐效应的正分支须在整个 yes 支持上逐点中性（161.7.1），仅结果可重复性不足；静态 POVM 不自动指定或实现全部数学仪器 |
+| 另给连续、可逆、保锥保单位的实一参数群 | 有限矩阵层为连续酉共轭；可写 $\dot\rho=-i[H_{\rm gen},\rho]$，纯态择相位后写 $i\dot\psi=H_{\rm gen}\psi$；物理钟、能量和 $H_{\rm phys}=\hbar H_{\rm gen}$ 的标定另给 |
+| 精确全有限层级之外 | 无限张量积、相容状态、连接映射、拓扑完备化及 normal 延拓须另给；无限维、热力学极限以及近似 D2 的稳定性和误差界不由此取得 |
+
+若 $a,p$ 纯、$\rho$ 任意混态，规范平方距离还满足
+
+$$
+\frac{\|a-p\|_{g_N}^2}{\Delta_N^2}=1-\operatorname{Tr}(ap),\qquad
+1-\frac{\|a-\rho\|_{g_N}^2}{\Delta_N^2}
+=\operatorname{Tr}(a\rho)+\frac{1-\operatorname{Tr}\rho^2}{2}.
+\tag{230.30}
+$$
+
+前者是 Fubini–Study 测地角的正弦平方，后者含混态纯度修正，不能把纯弦公式替换成混态线性效应。标量层不用零直径比值。Born 的端点静态互反也不蕴含接续测量可交换：两个非正交且不同的纯投影即可不对易，接续概率还取决于实际仪器及顺序。$\square$
+
+**命题 230.11（关系缺口与完整白话解释）。** 230.3的全有限三维核惯性、230.6的准确规范椭球及230.7—230.8的合成反例归 repo-derived；230.6证明的接触证书不依赖纯域传递。Poon Proposition 2.1供应公共零投影的张成，CHST2014 §4.1供应低秩对全部态的符号秩判据，XIV165.2与220.4分别供应一般迹零商背景及实际面机制，220.8／220.10供应两侧核的圆度障碍；Schmidt、Pauli、谱分解、Haar 平均、极化与 AM–GM 是成熟中间工具。完整重建及量子字典仍由210.6、210.7、220.12和其准确前件承担，不申领历史优先权、完整二次型分类或独立公理数的减少。
+
+证明。把全有限张量商看成一种合并读数：所有原混态、纯准备和合法测试仍在，只有某些提升中的混态差被压成同一状态。这里被压掉的是三种互不对易方向；每一份中任何非零差都至少占据 $m$ 个正方向和 $m$ 个负方向。这个门槛在任意有限复制数保持，所以低于 $m$ 维的整个支持面都没有偷偷并入外来的正提升。特别是每两个不同纯准备真正撑起的最小面，始终是一颗完整实心三球，纯标签也一条不少。
+
+再拿能罩住整块单份状态体的最小体积椭球定尺。230.6的接触分布证明它确是最小者，且不要求实验室存在均匀准备。此尺把每颗二点球都画圆，并把所有纯点放到同一个单位球面上。然而球面上的不同截面可以处在不同深度，半径便不同：一对只改 $A$ 的正交乘积纯态给较大球，一对只改 $B$ 的纯态给较小球。两者都是真正的原二点面；较小球的直径达不到整个体的最大距离。因此“各球圆”和“纯点共球面”，即便都由整块体的规范尺给出，也没有支付球与球之间的尺度比较。
+
+增加第二份后，比较关系不能继续分开藏在单份几何里。张量积将被消去方向同时放在左边和右边；若仍要求所有实际二点球共用一把圆尺，220.8的恒等式会迫使一个原合法测试能以概率一和零区分的状态差具有零长度。230.8明确给出这样的测试和状态，所以不是挑选了错误的规范尺，而是任何正定共同圆尺都不存在。余下复制固定为纯辅助态便把该矛盾传到每个更高有限层。
+
+完整量子候选据此仍保留全部原背景，只在整个三复制体要求实际二点球存在，且每根对径都达到整个体的直径。它检查的是共同比较尺度，不能由单份局部圆或共同纯壳替代。既有210.6再把这个全域条件接到原准备关系相容、共同确认、正删除及同一套全有限复矩阵坐标，给出密度矩阵、Born、POVM、纠缠和偏迹。操作更新、全部旁观者下的 CP、各支与总和的预算、物理钟和能量标定、无限及近似极限各有自己的前提。两个端点的静态读数对称不等于两次测量交换次序仍相同。以上区别正是230.4、230.7、230.8及230.10分别证明的数学内容。$\square$
+
+[Q230Poon]: https://cklixx.people.wm.edu/teaching/APSC695/EdPoon.pdf "Edward Poon，Preservers of maximally entangled states，Proposition 2.1，印刷页2—3；DOI 10.1016/j.laa.2014.03.009。"
+
+## 追加锚（本行以下为增补区）
+
+## 231. 一个固定正方形的二元刻度与完整量子候选
+
+**定义 231.1（固定正方形关系）。** 保留224.1的完整实际L2原域。在同一实际球内，仅取满足下列二元内禀刻度的四个原纯点：
+
+$$
+\tau(p,q)=\tau(r,s)=\frac12,\qquad
+\tau(p,r)=\tau(p,s)=\tau(q,r)=\tau(q,s)=\frac34.
+\tag{231.1}
+$$
+
+固定正方形条件 $\mathsf{SQ}^{\rm fixed}_4$ 要求对每个原纯参照 $a\in P$，
+
+$$
+\tau(a,p)+\tau(a,q)=\tau(a,r)+\tau(a,s).
+\tag{231.2}
+$$
+
+这只使用原二元刻度来识别构型，未给原全域另加内积。参照可在球外；四个球内标签加参照至多五标签。
+
+在任一单位球坐标中，(231.1)恰等价于
+
+$$
+p=x+z,\quad q=x-z,\quad r=x+w,\quad s=x-w,
+\qquad x\perp z\perp w\perp x,\qquad
+\|x\|^2=\|z\|^2=\|w\|^2=\frac12.
+\tag{231.3}
+$$
+
+确实，(231.1)的两对内积为零、四个跨对内积为二分之一，故 $\|p+q-r-s\|^2=0$；再取 $x=(p+q)/2,z=(p-q)/2,w=(r-s)/2$ 即得(231.3)。反向直接配对成立。这里只保留一个非中心正方形的全部旋转，不再量化小圆半径。Bloch内积零对应 $\tau=1/2$，不是量子正交的 $\tau=0$。
+
+**定理 231.2（固定尺寸的点式壳刚性）。** 若有界Borel函数 $h:S^2\to\mathbb R$ 对(231.3)的全部旋转满足 $h(p)+h(q)=h(r)+h(s)$，则存在 $c\in\mathbb R,b\in\mathbb R^3$，使 $h(v)=c+\langle b,v\rangle$ 对每个 $v\in S^2$ 成立。
+
+证明。对 $-1<s<1$，令 $A_s h(v)$ 为圆周 $\langle v,y\rangle=s$ 上的归一圆周平均。固定正方形的顶点 $p$，绕 $p$ 旋转平均：$q$ 均匀扫过 $p\cdot q=0$，$r,s$ 各自均匀扫过 $p\cdot y=1/2$。原等式逐点成立且函数有界Borel，因此
+
+$$
+h+A_0h=2A_{1/2}h,\qquad h=Bh,\qquad B=2A_{1/2}-A_0.
+\tag{231.4}
+$$
+
+使用成熟的球谐分解；旋转函数方程的通用谱方法见[Schneider，定理2.1][Q231S]。其原定理取连续函数，此处不先假设 $h$ 连续，而直接在 $L^2$ 中使用圆周平均。记 $\mathcal H_\ell$ 为 $\ell$ 次球谐空间，$P_\ell$ 为满足 $P_\ell(1)=1$ 的Legendre多项式。圆周平均在 $\mathcal H_\ell$ 上是标量 $P_\ell(s)$：将圆周轴转到北极，方位平均只保留零方位模，剩下的纬度因子正是 $P_\ell(s)$。$A_s$ 对球面积自伴，因为均匀有序点对 $v\cdot y=s$ 的联合测度在交换两点下不变。故(231.4)对 $h$ 的每个球谐分量给
+
+$$
+\kappa_\ell h_\ell=0,\qquad
+\kappa_\ell=1+P_\ell(0)-2P_\ell(1/2).
+\tag{231.5}
+$$
+
+显然 $\kappa_0=\kappa_1=0$。严格证明其余模全部排除，不能只检查有限阶。取纬度 $t=1/\sqrt2$、方位依次为 $0,\pi,\pi/2,3\pi/2$ 的正方形顶点 $v_1,v_2,v_3,v_4$，系数 $\epsilon=(1,1,-1,-1)$。球谐加法公式[DLMF 14.30.9][Q231A]使核 $P_\ell(v\cdot y)$ 正定，且
+
+$$
+\sum_{i,j=1}^4\epsilon_i\epsilon_jP_\ell(v_i\cdot v_j)
+=4\bigl[1+P_\ell(0)-2P_\ell(1/2)\bigr]=4\kappa_\ell\ge0.
+\tag{231.6}
+$$
+
+对以未归一球面积 $d\Omega$ 正交归一的标准球谐 $Y_{\ell m}$，其等价范数公式为
+
+$$
+\sum_{m=-\ell}^{\ell}\left|\sum_{i=1}^4\epsilon_iY_{\ell m}(v_i)\right|^2
+=\frac{2\ell+1}{\pi}\kappa_\ell.
+\tag{231.7}
+$$
+
+方位因子为 $(1+(-1)^m)(1-i^m)$，当 $m\equiv2\pmod4$ 时等于四。按 $\ell$ 模四的余数为 $2,3,0,1$，分别选 $m=\ell,\ell-1,\ell-2,\ell-3$。关联Legendre导数式[DLMF 14.7.8][Q231B]与Rodrigues公式[14.7.13][Q231C]给相应 $P_\ell^m(t)$ 为下列各式的非零常数倍：
+
+$$
+\begin{aligned}
+&(1-t^2)^{\ell/2},\\
+&t(1-t^2)^{(\ell-1)/2},\\
+&\bigl[(2\ell-1)t^2-1\bigr](1-t^2)^{(\ell-2)/2},\\
+&t\bigl[(2\ell-1)t^2-3\bigr](1-t^2)^{(\ell-3)/2}.
+\end{aligned}
+\tag{231.8}
+$$
+
+后两种分别从 $\ell=4,5$ 开始，且在 $t^2=1/2$ 时括号为 $(2\ell-3)/2$、$(2\ell-7)/2$，均不为零。前两种也非零。所以每个 $\ell\ge2$ 在(231.7)至少有一个非零分量，严格得到 $\kappa_\ell>0$。球谐完备性遂给 $h=c+b\cdot v$ 几乎处处。
+
+还须补上每一个点。减去此仿射函数，余函数 $f$ 仍满足(231.4)，且 $f=0$ 几乎处处。对任意 $s,t\in\{0,1/2\}$，两步圆周平均 $A_sA_t$ 的末点相对起点的高度为
+
+$$
+u=st+\gamma\cos\phi,\qquad
+\gamma=\sqrt{(1-s^2)(1-t^2)}>0,
+\tag{231.9}
+$$
+
+其中 $\phi$ 均匀分布于 $[0,2\pi)$。联合构造绕起点旋转不变，因此末点相对未归一球面积 $d\Omega$ 的密度为
+
+$$
+k_{s,t}(u)=
+\frac{\mathbf1_{\{|u-st|<\gamma\}}}
+{2\pi^2\sqrt{\gamma^2-(u-st)^2}}.
+\tag{231.10}
+$$
+
+这是可积密度，积分为一，端点无原子。故两步平均对任何面积零测支撑的有界函数逐点为零。由 $f=Bf$ 再作用一次 $B$，得到
+
+$$
+f=B^2f
+=4A_{1/2}A_{1/2}f-2A_{1/2}A_0f-2A_0A_{1/2}f+A_0A_0f=0
+\tag{231.11}
+$$
+
+对每一点成立。这里没有把圆周上的一维积分误认为能自动忽略球面零测集；起作用的是两步后的面积绝对连续性。原固定尺寸规则本身遂迫处处仿射，因而也迫连续。$\square$
+
+**定义 231.3（三复制固定正方形候选）。** 完整保留223.4的强实全有限背景，在整个原三复制域、包括全部原纠缠纯点上，仅要求
+
+$$
+\mathsf Q_{\rm fixed\,square}
+:=\mathrm{L2}_3+\mathsf{ZR}_3+\mathsf{SQ}^{\rm fixed}_{4,3}.
+\tag{231.12}
+$$
+
+不另假设原二元刻度可测、连续或纯域紧；全有限原锥、乘积单位、完整效应及全部有限分块条件原样保留。
+
+**定理 231.4（固定构型与完整全有限量子对应）。** 在完整实际L2原域中，$\mathsf{SQ}^{\rm fixed}_4\iff\mathsf{SQ}_4\iff\mathsf{MC}_4$，无需ZR或外加正则性。因此候选(231.12)当且仅当存在223.5的同一个全有限复矩阵坐标族。
+
+证明。224.2从裸实际L2支付任一原纯参照在任一球上的有界Borel壳读数；其中最小面的伸缩线段公式是成熟的Alfsen公式，见[Weis，命题4.1][Q231W]。固定正方形条件恰使它满足231.2，故每个读数处处仿射，保持全部同中点弦，给 $\mathsf{MC}_4$。反向包含显然；结合224.4得到三个条件等价。这个局部结论先于纯域闭性，未用223的结论来补231.2的前件。
+
+在原三复制域再用223.3取得 $P_3$ 紧和完整根基，223.5给同一个整数 $n\ge2$、同一个实线性同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$ 以及全部 $\Theta_N=\theta^{\otimes N}$，同时识别所有有限层的锥、单位与配对。反向在标准复矩阵中，同中点等式与 $\tau(a,p)=\operatorname{Tr}(ap)$ 直接给(231.2)，且原零关系满足ZR。
+
+| 原结构或仍需的操作前件 | 同一坐标中的量子结构 |
+| --- | --- |
+| 全部原态、纯点、完整效应及配对 | 迹一PSD、秩一投影、$0\preceq E\preceq I$ 与Born概率 $\operatorname{Tr}(E\rho)$ |
+| 有限单位效应分解、正交投影单位分解 | 数学POVM、PVM |
+| 同一个全有限背景的全部分块、乘积单位与边缘 | 复张量、全部纠缠态、一致重括号、偏迹 |
+| 原实线性分支在全部有限旁观者下保正 | CP；TNI、TP仍需分支质量条件，仪器仍需总预算 |
+| 指定投影效应的正实线性分支，质量为该效应且固定全部读一纯态 | 既有锐中性条件下的Lüders分支 $X\mapsto PXP$ |
+| 连续保锥保单位的一参数可逆群 | 数学酉共轭；物理钟、能量与 $\hbar$ 仍需标定 |
+
+无限维normal表示、无限张量极限与实际装置实现仍各需独立条件。$\square$
+
+**命题 231.5（不能只检球心、保留的边界与完整白话）。** 固定非中心正方形足以替代全部小圆半径；仅检查球心正方形不具有231.2的壳刚性。此简化未删除ZR，也未把全部方向缩成有限取样。
+
+证明。取 $h(v)=v_1^3$。它有界连续，且 $h(v)+h(-v)=0$，所以通过全部球心正方形。但令
+
+$$
+x=(e_1+e_3)/2,\quad z=(e_1-e_3)/2,\quad w=e_2/\sqrt2,
+\tag{231.13}
+$$
+
+则(231.3)成立，而两对读数和分别为一与四分之一，固定正方形关系失败。这是抽象壳规则的反例，不冒称已构造完整实际L2原域的反模型。若删ZR，221.8的完整全有限商通过全部四弦，因而也通过固定正方形，却留下严格正的原零关系自配对，仍不能成为量子坐标族。裸ZR及一般无锚 $\mathsf C_0$ 的充分性、任意不可测有界函数的固定正方形刚性均未解决；后一更强问题不阻断本原域，因为224.2已经支付可测性。
+
+白话。两颗纯准备撑起一颗真正的三球，球上的二元重合给每对珠子一把内禀尺。现在只留一块固定模板：两条对角线的重合都是二分之一，四条边都是四分之三。不拉大缩小，只把它在每颗球上转遍；任意原参照看模板两对对角点，各取一半，必须得到相同平均读数。这是在约束已有二元关系彼此怎样相容，没有再往世界里塞一张额外的度量表。
+
+把模板绕一颗珠子转一圈，规则变成两种圆周平均之间的一条等式。球谐分解把壳上的起伏按阶拆开，这块模板对每个二阶及更高阶起伏都给严格正的阻碍，只放过常数与一阶坡度。一次平均沿圆周走，尚可能碰到异常点；再走一次，落点铺成有面积密度的区域，所有零测例外都被消掉。因此每颗球上处处只剩平直读数，所有长短不同的同中点弦关系随之成立。再接已有ZR与有界球壳闭合，原纯菜单自己封口，隐藏零轴被排除，同一个复矩阵坐标贯穿全部有限复制，给态、Born概率、测量与复张量；操作分支和物理时间仍按表中的前提承担。
+
+球谐完备性、圆周平均乘子、加法公式、关联Legendre与Rodrigues公式是成熟组件；后两项及加法公式明确复用[Q231A]—[Q231C]。通用旋转谱判据归[Q231S]，该文第302页还把含无界多面体的rotor分类归于其参考文献[19]；这里不把这类旋转分类方法认作新基础理论。承重repo-derived接合是固定二元模板经全阶计算与两步圆核取得点式壳刚性，再在自动Borel的完整实际原域中替代全部四弦并恢复同一个全有限量子坐标。未将文献的连续函数前件静默用于Borel函数，不申领全球文献优先权。$\square$
+
+[Q231A]: https://dlmf.nist.gov/14.30.E9 "NIST DLMF 14.30.9，球谐加法公式。"
+[Q231B]: https://dlmf.nist.gov/14.7.E8 "NIST DLMF 14.7.8，关联Legendre的导数公式。"
+[Q231C]: https://dlmf.nist.gov/14.7.E13 "NIST DLMF 14.7.13，Rodrigues公式。"
+[Q231S]: https://doi.org/10.5169/seals-43867 "Rolf Schneider，Functional equations connected with rotations and their geometric applications，L'Enseignement Mathématique 16 (1970)，297—305；定理2.1的连续函数与有限Borel测度旋转谱判据，及第302页的rotor分类出处。"
+[Q231W]: https://journalofconvexanalysis.com/articles/jca32046/jca32046.pdf "Stephan Weis，A Note on Faces of Convex Sets，命题4.1；最小面的伸缩线段公式归Alfsen。"
+
+## 追加锚（本行以下为增补区）
