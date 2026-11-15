@@ -6,22 +6,13 @@
    utility: none
    digest: The literal signed Stirling sum A001724 satisfies Mathar's five-lag recurrence and its ordinary rational formal series has a nonzero homogeneous differential annihilator. -/
 
-import Mathlib.Algebra.Polynomial.Taylor
-import Mathlib.RingTheory.PowerSeries.Derivative
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.IntervalCases
+import D5.S3.Combinatorics.BinomialBases.MatharA001722
 
 open scoped BigOperators
 namespace D5.S3.Combinatorics.BinomialBases.MatharA001724
 open Polynomial
 
-private noncomputable def falling (N : ℕ) : Polynomial ℤ :=
-  ∏ i ∈ Finset.range N, (X - C (i : ℤ))
-
-/-- Signed first-kind Stirling coefficients, including the empty product. -/
-noncomputable def s (N K : ℕ) : ℤ := (falling N).coeff K
+open D5.S3.Combinatorics.BinomialBases.MatharA001722 (falling s falling_degree)
 
 /-- Crstici's inclusive signed sum; no recurrence is assumed. -/
 noncomputable def a (n : ℕ) : ℤ :=
@@ -50,12 +41,6 @@ def claim : Prop := Recurrence ∧ DFinite O
 
 private noncomputable def shifted (n : ℕ) : Polynomial ℤ :=
   C ((-1 : ℤ)^n) * taylor (-5) (falling (n + 4))
-
-private theorem falling_degree (N : ℕ) : (falling N).natDegree ≤ N := by
-  have hp := Polynomial.natDegree_prod_le (R := ℤ) (Finset.range N)
-    (fun i : ℕ => (X - C (i : ℤ) : Polynomial ℤ))
-  simpa only [falling, natDegree_X_sub_C, Finset.sum_const, Finset.card_range,
-    smul_eq_mul, mul_one] using hp
 
 private theorem shifted_coeff (n : ℕ) : (shifted n).coeff 4 = a n := by
   have hd : (hasseDeriv 4 (falling (n+4))).natDegree < n+1 := by

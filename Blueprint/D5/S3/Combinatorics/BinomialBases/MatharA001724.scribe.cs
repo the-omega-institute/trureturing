@@ -14,10 +14,8 @@ internal sealed class MatharA001724Document : IScribeDocumentDefinition
         "The signed first-kind Stirling sum defining OEIS A001724 satisfies Mathar's five-lag recurrence for every index at least five. Its ordinary rational formal generating series is annihilated by a nonzero sixth-order differential operator.",
         H("Mathar's recurrence and D-finiteness for A001724"),
         Blocks(
-            Node("s", "Signed Stirling coefficients", Signed(),
-                "The coefficient convention is signed: s(N,K) is the coefficient of X to the K in the product of X-i for i from zero through N-1. The empty product is one. Coefficients and casts are in the integers.", DescribeRole.Definition, true),
             Node("a", "The full coefficient sum", Sequence(),
-                "This is Borislav Crstici's all-index formula in OEIS A001724, revision 43, https://raw.githubusercontent.com/oeis/oeisdata/87b54f574c5f92e16a7c0f5446596eb42715d0ff/seq/A001/A001724.seq. The canonical entry name is Generalized Stirling numbers [n+9,9]_5. The range contains both zero and n; the binomial coefficient is computed in the naturals and cast to the integers. No recurrence or initial-value characterization is assumed.", DescribeRole.Definition, true),
+                "This is Borislav Crstici's all-index formula in OEIS A001724, revision 43, https://raw.githubusercontent.com/oeis/oeisdata/87b54f574c5f92e16a7c0f5446596eb42715d0ff/seq/A001/A001724.seq. The canonical entry name is Generalized Stirling numbers [n+9,9]_5. The range contains both zero and n; the binomial coefficient is computed in the naturals and cast to the integers. The signed coefficient s is the existing MatharA001722.s: the coefficient of X^K in the integer falling product of length N, including the empty product. No recurrence or initial-value characterization is assumed.", DescribeRole.Definition, true),
             Node("O", "Ordinary formal generating series", Generating(),
                 "O is the ordinary formal power series whose nth coefficient is a(n) cast to the rationals. It is not an exponential generating series, and no convergence assertion is involved.", DescribeRole.Definition),
             Node("claim", "Recurrence and the ordinary interpretation", ClaimFormula(),
@@ -51,13 +49,6 @@ internal sealed class MatharA001724Document : IScribeDocumentDefinition
     private static Formula And(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
     private static Formula Sum(Formula k, Formula bound, Formula body) =>
         Seq(F.Sum, Underscore, Grp(k, Sp, InMacro, Sp, Call("range", bound)), Sp, Par(body));
-    private static Formula Signed()
-    {
-        Formula n=F.Id("N"), k=F.Id("K"), i=F.Id("i");
-        Formula product=Seq(Prod, Underscore, Grp(i,Sp,InMacro,Sp,Call("range",n)), Sp,
-            Par(Sub(F.Id("X"),Call("C",Cast(i,Z())))));
-        return Disp(All("N",N(),All("K",N(),Eq(Call("s",n,k),Call("coeff",product,k)))));
-    }
     private static Formula Sequence()
     {
         Formula n=F.Id("n"), k=F.Id("k");
