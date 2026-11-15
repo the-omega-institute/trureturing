@@ -7,14 +7,136 @@
    digest: Hidden-matching cloning has mean marginal fidelity at most one half plus 1/n. -/
 
 /-
-result:
-  proof_shape: bind-only
-  escape_witness: none
-  admission_basis: open-problem-resolution (#24701; Proved)
-  Direct frozen dependencies: to be extracted from compiled proof terms.
+admission_basis: open-problem-resolution (#24701; Proved)
+escape_witness: none
+The settling result and its consumed helpers use finite-sum/parity rewriting,
+existing estimates, and normalization; no declaration claims independent content.
+Definitions describe the source objects and the auxiliary finite matrix certificate.
+Direct frozen dependencies are declaration identities at base 3476ce98dd3c4326181683b37fc2ddad3e33a743.
+The publicized selectors retain their base private declaration identities until canonical re-pin.
+  F1: D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence.partialTraceFirst
+    statement_id: sha256:60de08083a292a636d655dff7f5b06843146c051021ffe2d0b604db457edc565
+  F2: D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.pure_trace
+    statement_id: sha256:10a7dafe6e7a6b1cf2bcce71b142fca1562280cfd40a3330284db5fc95180878
+  F3: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap
+    statement_id: sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
+  F4: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus
+    statement_id: sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287
+  F5: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus._proof_1
+    statement_id: sha256:5dc7bcde8ce2ae710c058683e5324d31e0ca70317f167566967eee1cf3b23bbb
+  F6: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus._proof_2
+    statement_id: sha256:9b70ce4858eb731b17facafe93b167007eb9ca6533c641dc770fc553d31ddaa1
+  F7: D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel
+    statement_id: sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05
+  F8: D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap
+    statement_id: sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc
+  F9: D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.trace_preserving
+    statement_id: sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15
+  F10: D5/S3/Quantum/Information/HedgingMajorityThreshold.trace_retained
+    statement_id: sha256:db986ec7f4f4d0976fd1f41480c2c93228a7b154675ebf6ad636fb227b538d39
+  F11: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft
+    statement_id: sha256:68653a556c9228bbd8018884585aa56fe5fce5cd40b4a12a493f4aa319c78f5d
+  F12: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight
+    statement_id: sha256:8fd00cbe799f3e8a3163a296b2ad235e0a251e3e79b744b52197ba12d0343f77
+  F13: D5/S3/Quantum/QuantumChannels/EntanglementAssistedCommunicationValue.choi_tensor_pair
+    statement_id: sha256:380687bfe14a0a9a1c783ea8cf9072cd406a6247d9a1896729abf2bf0d2f6603
+  F14: D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.inputFirstChoi
+    statement_id: sha256:7620ae518a39944b6825fd260cd713177187b28856493804968f5ddc77f33bd0
+  F15: D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.matrixAction
+    statement_id: sha256:83ac791e170c8f29d6ff3fedd7eb6d261e6a7ec791b03ef14422460da17cc9dc
+  F16: D5/S3/Weil/ProjectiveRayleigh/ScaledComplexQuadraticRowBound.norm_complex_quadratic_le_scaled_rows
+    statement_id: sha256:0546d1b31c5831f1ec46dc0ae54d7592aac449e3f961a4ea5c4b83a26803cd2a
+proof_shape: sign: bind-only; consumers: sign_sq, sign_flip, moment_two, moment_four, phi_outer_entry, rho_entry, perf_entry, performance_eq_L
+  Direct frozen dependencies: none
+proof_shape: sign_sq: bind-only; consumers: moment_two, moment_four
+  Direct frozen dependencies: none
+proof_shape: sign_flip: bind-only; consumers: moment_two, moment_four
+  Direct frozen dependencies: none
+proof_shape: sum_flip_zero: bind-only; consumers: moment_two, moment_four
+  Direct frozen dependencies: none
+proof_shape: moment_two: bind-only; consumers: moment_four
+  Direct frozen dependencies: none
+proof_shape: momentEntry: bind-only; consumers: moment_four, momentEntry_eq, momentEntry_nonneg, momentEntry_symm, L, L_nonneg, L_symm, L_row, performance_eq_L
+  Direct frozen dependencies: none
+proof_shape: moment_four: bind-only; consumers: performance_eq_L
+  Direct frozen dependencies: none
+proof_shape: momentEntry_eq: bind-only; consumers: momentEntry_nonneg, momentEntry_symm
+  Direct frozen dependencies: none
+proof_shape: momentEntry_nonneg: bind-only; consumers: L_nonneg
+  Direct frozen dependencies: none
+proof_shape: momentEntry_symm: bind-only; consumers: L_symm
+  Direct frozen dependencies: none
+proof_shape: L: bind-only; consumers: L_nonneg, L_symm, L_row, weight_row_bound, L_quadratic_bound, performance_eq_L, trace_L_outer, trace_L_gram_bound, result
+  Direct frozen dependencies: none
+proof_shape: weight: bind-only; consumers: weight_pos, weight_diag_sum, weight_diag_sum', weight_row_bound, L_quadratic_bound
+  Direct frozen dependencies: none
+proof_shape: L_nonneg: bind-only; consumers: L_quadratic_bound
+  Direct frozen dependencies: none
+proof_shape: L_symm: bind-only; consumers: L_quadratic_bound
+  Direct frozen dependencies: none
+proof_shape: weight_pos: bind-only; consumers: L_quadratic_bound
+  Direct frozen dependencies: none
+proof_shape: L_row: bind-only; consumers: weight_row_bound
+  Direct frozen dependencies: none
+proof_shape: weight_diag_sum: bind-only; consumers: weight_diag_sum', weight_row_bound
+  Direct frozen dependencies: none
+proof_shape: weight_diag_sum': bind-only; consumers: weight_row_bound
+  Direct frozen dependencies: none
+proof_shape: weight_row_bound: bind-only; consumers: L_quadratic_bound
+  Direct frozen dependencies: none
+proof_shape: L_quadratic_bound: bind-only; consumers: trace_L_gram_bound
+  Direct frozen dependencies: F16
+proof_shape: phi: bind-only; consumers: rho, meanFidelity, phi_outer_entry, perf_pair, meanFidelity_pair
+  Direct frozen dependencies: none
+proof_shape: rho: bind-only; consumers: eta, tau, perf, rho_entry, perf_pair, perf_entry
+  Direct frozen dependencies: none
+proof_shape: eta: bind-only; consumers: meanFidelity, perf_pair, meanFidelity_pair
+  Direct frozen dependencies: F12, F8, F7
+proof_shape: tau: bind-only; consumers: meanFidelity, perf_pair, meanFidelity_pair
+  Direct frozen dependencies: F8, F11, F7
+proof_shape: meanFidelity: bind-only; consumers: claim, meanFidelity_pair, result
+  Direct frozen dependencies: F12, F8, F11, F7
+proof_shape: claim: bind-only; consumers: result
+  Direct frozen dependencies: F12, F8, F11, F7
+proof_shape: channelMap_trace: bind-only; consumers: choi_trace
+  Direct frozen dependencies: F9, F8, F15, F3, F7
+proof_shape: choi_trace: bind-only; consumers: result
+  Direct frozen dependencies: F9, F8, F15, F3, F7, F14
+proof_shape: choi_reindex: bind-only; consumers: choi_gram, perf_pair
+  Direct frozen dependencies: F8, F15, F7, F14
+proof_shape: choi_gram: bind-only; consumers: result
+  Direct frozen dependencies: F4, F5, F6, F8, F15, F3, F7, F14
+proof_shape: choi_tensor_pair: bind-only; consumers: perf_pair
+  Direct frozen dependencies: F13, F3
+proof_shape: trace_right_pair: bind-only; consumers: perf_pair
+  Direct frozen dependencies: F12, F1, F10
+proof_shape: trace_left_pair: bind-only; consumers: perf_pair
+  Direct frozen dependencies: F11, F10
+proof_shape: perf: bind-only; consumers: performance, perf_pair, perf_entry, performance_eq_L, meanFidelity_pair
+  Direct frozen dependencies: none
+proof_shape: performance: bind-only; consumers: performance_eq_L, meanFidelity_pair, result
+  Direct frozen dependencies: none
+proof_shape: phi_outer_entry: bind-only; consumers: rho_entry
+  Direct frozen dependencies: none
+proof_shape: rho_entry: bind-only; consumers: perf_entry
+  Direct frozen dependencies: none
+proof_shape: perf_pair: bind-only; consumers: meanFidelity_pair
+  Direct frozen dependencies: F12, F1, F8, F15, F13, F3, F11, F7, F14, F10
+proof_shape: perf_entry: bind-only; consumers: performance_eq_L
+  Direct frozen dependencies: none
+proof_shape: performance_eq_L: bind-only; consumers: result
+  Direct frozen dependencies: none
+proof_shape: meanFidelity_pair: bind-only; consumers: result
+  Direct frozen dependencies: F12, F1, F8, F15, F13, F3, F11, F7, F14, F10
+proof_shape: trace_outer_re: bind-only; consumers: trace_L_gram_bound
+  Direct frozen dependencies: F2
+proof_shape: trace_L_outer: bind-only; consumers: trace_L_gram_bound
+  Direct frozen dependencies: none
+proof_shape: trace_L_gram_bound: bind-only; consumers: result
+  Direct frozen dependencies: F2, F16
+proof_shape: result: bind-only; consumers: settling result
+  Direct frozen dependencies: F4, F12, F5, F9, F1, F6, F8, F15, F2, F13, F3, F11, F7, F14, F10, F16
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31047
-The channel statement uses the source's literal state and fidelity expressions.
-The proofs reuse matrixAction and inputFirstChoi for channel and Choi coordinates.
 -/
 
 import D5.S3.Quantum.QuantumChannels.EntanglementAssistedCommunicationValue

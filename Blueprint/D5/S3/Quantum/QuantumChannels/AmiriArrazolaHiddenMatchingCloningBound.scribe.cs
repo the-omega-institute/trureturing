@@ -44,7 +44,7 @@ internal sealed class AmiriArrazolaHiddenMatchingCloningBoundDocument : IScribeD
                     + "F̄ = 2⁻ⁿ ∑ₓ (⟨φ_x|η_x|φ_x⟩ + ⟨φ_x|τ_x|φ_x⟩)/2. "
                     + "The sum ranges over all functions Fin n → Fin 2, exactly 2ⁿ inputs. "
                     + "Complex.re gives the real scalar order on the two expectations."),
-            Node("claim", "claim", "The dimension-uniform assertion", Equal(Call("claim"), ClaimBody()),
+            Node("claim", "claim", "The dimension-uniform assertion", Equal(Named("claim"), ClaimBody()),
                 "Equation (21), p. 8, states F̄ ≤ 1/2 + 1/n. The following sentence, p. 9, is: "
                     + "“which we have verified numerically for n ≤ 14 and we conjecture holds for any n. "
                     + "From now on, we simply assume that n ≤ 14.” The dimensions here are all positive "

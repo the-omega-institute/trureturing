@@ -6,6 +6,9 @@
    utility: none
    digest: Shared entanglement increases communication value by at most the output dimension. -/
 
+/- Escape audit unfinished for choi_tensor_pair:
+https://github.com/the-omega-institute/trureturing/issues/31047 -/
+
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Resource.CompositeCones

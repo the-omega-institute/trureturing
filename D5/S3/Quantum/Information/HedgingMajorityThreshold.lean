@@ -6,6 +6,9 @@
    utility: none
    digest: Certain majority success in qubit hedging requires certain single-game success. -/
 
+/- Escape audit unfinished for trace_retained:
+https://github.com/the-omega-institute/trureturing/issues/31047 -/
+
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
 import D5.S3.Quantum.Foundation.FiniteStateChannel
