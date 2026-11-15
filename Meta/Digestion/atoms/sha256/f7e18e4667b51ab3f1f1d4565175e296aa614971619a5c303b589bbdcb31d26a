@@ -1,0 +1,17 @@
+**定理 10.5（Endpoint-sharing upper construction, with a distinct boundary）。** For every $N\ge2$ the same contract (9.1) has a pure realization with
+
+$$
+\dim E=\sum_{n=0}^Nr_n-1=4N-3 .
+\tag{10.14}
+$$
+
+This construction shares one environment coordinate between the initial and final boundary embeddings. It has no guaranteed cyclic return and does not provide distinct initial and final time labels; those are different contracts from the fully labelled construction.
+
+**证明。** Use $E_0=\mathbb C e_0$ and mutually orthogonal $E_n$ for $1\le n<N$, with $\dim E_n=r_n$. Apply Lemma 10.4 to $\Lambda_N$ and write a minimal Kraus family whose first operator is $K_0$ on the shared coordinate $e_0$ and whose other $r_N-1$ operators use a fresh space $F_N$. Define $V_0x=x\otimes e_0$, use arbitrary minimal $V_n$ in $E_n$ for $1\le n<N$, and use the split family for $V_N$ in $e_0\oplus F_N$. Then $V_0,\ldots,V_{N-1}$ have pairwise orthogonal ranges, and $V_1,\ldots,V_N$ also have pairwise orthogonal ranges; only $V_0$ and $V_N$ may overlap. Therefore every off-diagonal block on the two sides of (9.4) is zero, while diagonal blocks are $I_H$, so Lemma 9.2 extends $V_n\mapsto V_{n+1}$ to one unitary $W$ on $H\otimes E$. With the pure initial state $|e_0\rangle$, induction gives $W^n(x\otimes e_0)=V_nx$ for $n\le N$. The environment dimension is
+
+$$
+1+\sum_{n=1}^{N-1}r_n+(r_N-1)=\sum_{n=0}^Nr_n-1.
+$$
+
+For the source, (8.3) gives (10.14). The shared $e_0$ component in $V_N$ prevents interpreting the final embedding as a distinct time label. The extension on the orthogonal complement is arbitrary, so neither $W^{N+1}=I$ nor any cyclic return is guaranteed. Nevertheless this is the same full-input/reference and no-clock-readout contract (9.1). $\square$
+

@@ -1,0 +1,149 @@
+**定理 12.2（Uniform strict-unbalanced exact-length span and terminal rank）。** For every $(p,q,r)\in\mathcal D_{\ne}$, let $\mathcal S_N$ be the complex span of products of exactly $N$ letters from the two normalized configuration operators defined below. Then
+
+$$
+\boxed{\mathcal S_N=M_5(\mathbb C)\quad\text{for every }N\ge12.}
+\tag{12.3}
+$$
+
+Consequently, for every $N\ge12$,
+
+$$
+\boxed{\operatorname{rank}J(\Phi_{\ne}^N)=25.}
+\tag{12.4}
+$$
+
+The minimum environment dimension for a terminal realization with an initially pure environment is exactly $25$. The same channel and the same minimum act on every untouched reference extension. The assertion is about this terminal contract; it is not a claim about one autonomous interaction realizing all prefix powers.
+
+**证明。** Write $F=|4\rangle\langle4|$ and $Q=I_5-F$. The source frame is the one fixed in (3.1)–(3.2), namely
+
+$$
+G_0=I_K,\quad G_1=a,\quad G_2=ca=-b,\quad
+G_3=a^\dagger ca=-c,\quad G_4=b,
+$$
+
+and $D=\sum_i|i\rangle\langle i|\otimes G_i^\dagger$. Apply $D$ to both the input and output of the normalized operators in (12.2). Directly substituting the source transports (1.3) into (2.6), with the positive leaf transports $b,b^\dagger$ and the published negative closing square edge, gives
+
+$$
+DT_0D^*=U\otimes I_K,\qquad DT_1D^*=V\otimes I_K,
+\tag{12.5}
+$$
+
+where
+
+$$
+U=
+\begin{pmatrix}
+\eta&0&0&0&\zeta\\
+0&1&0&0&0\\
+0&0&1&0&0\\
+0&0&0&1&0\\
+\zeta&0&0&0&-\eta
+\end{pmatrix}
+$$
+
+and, with the signed square cycle $Ce_0=e_1$, $Ce_1=e_2$, $Ce_2=e_3$, $Ce_3=-e_0$, $Ce_4=0$,
+
+$$
+V=\alpha C+\beta C^*+F
+=\begin{pmatrix}
+0&\beta&0&-\alpha&0\\
+\alpha&0&\beta&0&0\\
+0&\alpha&0&\beta&0\\
+-\beta&0&\alpha&0&0\\
+0&0&0&0&1
+\end{pmatrix}.
+\tag{12.6}
+$$
+
+This is the actual source frame: the sign in $Ce_3=-e_0$ is retained, the two leaf entries are positive, and the protected logical factor is $I_K$. Since $C^*C=CC^*=Q$, $C^4=-Q$, and $C^2+(C^*)^2=0$, the normalization in (12.1) gives
+
+$$
+U^*=U,\quad U^2=I_5,\qquad V^*V=VV^*=I_5.
+\tag{12.7}
+$$
+
+Let $\mathcal S_N$ denote the span of all words of exactly $N$ letters from $\{U,V\}$, with $\mathcal S_0=\mathbb C I_5$. Put
+
+$$
+h=\alpha^2-\beta^2,\qquad s=\alpha\beta,\qquad
+d=2(1-2s)=2(\alpha-\beta)^2.
+$$
+
+The strict hypotheses give $h\ne0$ and $d>0$. On $Q\mathbb C^5$,
+
+$$
+V^2=2sQ+hC^2,
+$$
+
+and the full-space identity is
+
+$$
+V^4-4sV^2+I_5=dF.
+\tag{12.8}
+$$
+
+Because $U^2=I_5$, each term on the left has an exact length-four representation: $V^4$ is already such a word, $V^2=V^2U^2$ is represented by $VVUU$, and $I_5=U^4$. Hence
+
+$$
+F=d^{-1}(V^4-4sV^2U^2+U^4)\in\mathcal S_4.
+\tag{12.9}
+$$
+
+The square-sector columns $e_0,Ve_0,V^2e_0,V^3e_0$ have determinant
+
+$$
+\det[e_0\ Ve_0\ V^2e_0\ V^3e_0]=h^2(\alpha^2+\beta^2)=h^2\ne0,
+\tag{12.10}
+$$
+
+as follows by inserting $V^2e_0=2s e_0+h e_2$ and
+$V^3e_0=(3\alpha^2\beta-\beta^3)e_1+(\alpha^3-3\alpha\beta^2)e_3$. The row family $e_0^*,e_0^*V,e_0^*V^2,e_0^*V^3$ has the same determinant (the direct row expansion gives the same factor $h^2(\alpha^2+\beta^2)$). Thus both the square columns and square rows are bases of $Q\mathbb C^5$.
+
+Now use the source leaf coupling in $U$. The five exact-length-four words
+
+$$
+V^4,\qquad V^kUV^{3-k}\quad(0\le k\le3)
+$$
+
+send $e_4$ to $e_4$ and to $\zeta V^ke_0-\eta e_4$, respectively. By (12.10) their five images form a basis of $\mathbb C^5$, with determinant $\zeta^4h^2\ne0$. The five words
+
+$$
+V^4,\qquad V^{3-k}UV^k\quad(0\le k\le3)
+$$
+
+give, after applying $e_4^*$ on the left, the basis $e_4^*$ and $\zeta e_0^*V^k-\eta e_4^*$. Therefore
+
+$$
+\mathcal S_4e_4=\mathbb C^5,
+\qquad e_4^*\mathcal S_4=(\mathbb C^5)^*.
+\tag{12.11}
+$$
+
+For arbitrary $x\in\mathbb C^5$ and covector $y\in(\mathbb C^5)^*$ choose $A_x,B_y\in\mathcal S_4$ with $A_xe_4=x$ and $e_4^*B_y=y$. Since $F=|e_4\rangle\langle e_4|$,
+
+$$
+A_xFB_y=xy\in\mathcal S_{12}.
+$$
+
+Every rank-one matrix $xy$ is therefore in $\mathcal S_{12}$, so $\mathcal S_{12}=M_5(\mathbb C)$. If $\mathcal S_n=M_5(\mathbb C)$, prefixing every word by the invertible $U$ gives $M_5(\mathbb C)=U\mathcal S_n\subseteq\mathcal S_{n+1}\subseteq M_5(\mathbb C)$. Induction proves (12.3) for every exact $N\ge12$. This is a homogeneous-length statement; no cumulative bounded-length span or generic algebra-generation assertion is being substituted.
+
+Return to the actual ten-dimensional source. A length-$N$ Kraus word of (12.2) is a nonzero scalar $B^{n_0/2}t^{n_1/2}$ times $D^*(W\otimes I_K)D$ for the corresponding configuration word $W$, where $n_0+n_1=N$. Both weights are strictly positive. The map $W\mapsto D^*(W\otimes I_K)D$ is complex-linear and injective, so the full-input Kraus span has dimension $25$ for every $N\ge12$. Expanding the fresh-environment channel power gives
+
+$$
+J(\Phi_{\ne}^N)=\sum_{w\in\{0,1\}^N}
+|\operatorname{vec}L_w\rangle\langle\operatorname{vec}L_w|,
+\tag{12.12}
+$$
+
+where $L_w$ is the corresponding actual product of $L_0,L_1$. The kernel of this positive sum is the common orthogonal complement of the vectorized Kraus family, hence its rank is exactly the Kraus-span dimension, proving (12.4) on all of $H$. Tensoring every Kraus operator with $I_R$ preserves linear independence for every finite untouched reference $R$, so the same fresh terminal channel has Choi rank $25$ on $H\otimes R$ and acts on arbitrary coherent or entangled inputs.
+
+A pure terminal environment of dimension $d$ supplies at most $d$ Kraus components, so (12.4) forces $d\ge25$. Conversely, a rank-$25$ positive Choi decomposition supplies $25$ Kraus operators. Trace preservation makes $x\mapsto\sum_{a=1}^{25}K_ax\otimes|a\rangle$ an isometry from $H$ into $H\otimes\mathbb C^{25}$, and finite-dimensional isometry extension gives a unitary with one fixed pure ready state. Thus the pure minimum is attained at $25$. If the terminal environment has dimension $d$ and initial state $\sigma$ of rank $s$, the same spectral decomposition argument gives only
+
+$$
+25\le d\,\operatorname{rank}(\sigma)=ds\le d^2;
+\tag{12.13}
+$$
+
+no mixed-environment minimum or attainment at dimension five is asserted. The framed map remains a configuration channel tensored with $\operatorname{id}_K$; this theorem makes no primitivity claim for the full ten-dimensional channel.
+$\square$
+
