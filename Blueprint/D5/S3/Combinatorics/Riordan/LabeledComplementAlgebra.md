@@ -180,7 +180,7 @@ $$\forall (N: \operatorname{Nat}), \operatorname{coefficientEquiv}\left(N\right)
 
 *Commentary.*
 
-The power basis of the quotient identifies its elements with their N + 1 coefficients.
+The power basis of the quotient identifies its elements with their N + 1 coefficients. Polynomial.natDegree_X_pow at N + 1 supplies the degree equality in finCongr.
 
 **Definition 1.15 (truncatedCoeff).**
 
