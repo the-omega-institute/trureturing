@@ -13,6 +13,7 @@ open SimpleGraph
 open scoped BigOperators
 namespace D5.S3.QuadraticForms.PartialTwoTreePsdCompletion
 set_option backward.isDefEq.respectTransparency false
+attribute [local instance] Fintype.ofFinite
 variable {V : Type*}
 private def liftGraph (G : SimpleGraph V) : SimpleGraph (V × Bool) where
   Adj a b := G.Adj a.1 b.1
@@ -589,4 +590,140 @@ private lemma complete_extension [Finite V] (G : SimpleGraph V) (θ : V → V �
     exact hn (hback (Or.inr ⟨Or.inl ⟨rfl,rfl⟩,hne⟩))
   subst K
   exact ⟨Γ,hs,hdΓ,hbΓ,heΓ,hcΓ⟩
+theorem exists_joint_angle_table [Finite V] (G : SimpleGraph V) (θ : V → V → ℝ)
+    (hsym : ∀ a b, θ a b = θ b a) (hd : ∀ a, θ a a = 0)
+    (hθ : ∀ a b, G.Adj a b → 0 ≤ θ a b ∧ θ a b ≤ Real.pi)
+    (hcycles : ∀ (m : ℕ), 3 ≤ m → ∀ c : Fin m → V, Function.Injective c →
+      (∀ i, G.Adj (c i) (c (finRotate m i))) →
+      ∀ F : Finset (Fin m), Odd F.card →
+      (∑ i ∈ F, θ (c i) (c (finRotate m i))) -
+        (∑ i ∈ Finset.univ \ F, θ (c i) (c (finRotate m i))) ≤
+          ((F.card : ℝ) - 1) * Real.pi) :
+    ∃ Γ : V → V → ℝ, (∀ a b, Γ a b = Γ b a) ∧ (∀ a, Γ a a = 0) ∧
+      (∀ a b, 0 ≤ Γ a b ∧ Γ a b ≤ Real.pi) ∧
+      (∀ a b, G.Adj a b → Γ a b = θ a b) ∧
+      (∀ a b c, Γ a b ≤ Γ a c + Γ c b) ∧
+      (∀ a b c, Γ a b + Γ b c + Γ c a ≤ 2 * Real.pi) := by
+  have hc : ∀ {a b : V × Bool} (p : (liftGraph G).Walk a b),
+      a.1 = b.1 → a.2 ≠ b.2 → Real.pi ≤ total (weight θ) p := odd_walk_reduction G θ hθ (fun p hab hbits hp =>
+    elementary_cost G θ hsym hθ hcycles p hab hbits hp)
+  obtain ⟨Γ,hs,hdΓ,hb,he,hcl⟩ := complete_extension G θ hsym hd hθ hc
+  have hb' (a b : V) : 0 ≤ Γ a b ∧ Γ a b ≤ Real.pi := by
+    by_cases h : a = b
+    · subst b; simp [hdΓ,Real.pi_pos.le]
+    · exact hb a b h
+  have htri (a b c : V) : Γ a b ≤ Γ a c + Γ c b := by
+    by_cases hab : a = b
+    · subst b; rw [hdΓ]; linarith [(hb' a c).1,(hb' c a).1]
+    by_cases hac : a = c
+    · subst c; simp [hdΓ]
+    by_cases hcb : c = b
+    · subst c; simp [hdΓ]
+    let p : (liftGraph (⊤ : SimpleGraph V)).Walk (a,false) (a,true) :=
+      Walk.cons (u := (a,false)) (v := (c,false)) (show (⊤ : SimpleGraph V).Adj a c from hac)
+        (Walk.cons (u := (c,false)) (v := (b,false)) (show (⊤ : SimpleGraph V).Adj c b from hcb)
+          (Walk.cons (u := (b,false)) (v := (a,true)) (show (⊤ : SimpleGraph V).Adj b a from Ne.symm hab) Walk.nil))
+    have hh := hcl p rfl (by change false ≠ true; decide)
+    simp only [p,total_cons,total_nil,weight,Bool.false_eq_true,Bool.true_eq_false,ite_true,ite_false] at hh
+    rw [hs b a] at hh
+    linarith
+  refine ⟨Γ,hs,hdΓ,hb',he,htri,?_⟩
+  intro a b c
+  by_cases hab : a = b
+  · subst b; rw [hdΓ]; linarith [(hb' a c).2,(hb' c a).2]
+  by_cases hbc : b = c
+  · subst c; rw [hdΓ]; linarith [(hb' a b).2,(hb' b a).2]
+  by_cases hca : c = a
+  · subst c; rw [hdΓ]; linarith [(hb' a b).2,(hb' b a).2]
+  let p : (liftGraph (⊤ : SimpleGraph V)).Walk (a,false) (a,true) :=
+    Walk.cons (u := (a,false)) (v := (b,true)) (show (⊤ : SimpleGraph V).Adj a b from hab)
+      (Walk.cons (u := (b,true)) (v := (c,false)) (show (⊤ : SimpleGraph V).Adj b c from hbc)
+        (Walk.cons (u := (c,false)) (v := (a,true)) (show (⊤ : SimpleGraph V).Adj c a from hca) Walk.nil))
+  -- The signs alternate at every step, including the final edge.
+  change (liftGraph (⊤ : SimpleGraph V)).Walk (a,false) (a,true) at p
+  have hh := hcl p rfl (by change false ≠ true; decide)
+  simp only [p,total_cons,total_nil,weight,Bool.false_eq_true,Bool.true_eq_false,ite_true,ite_false] at hh
+  linarith
+private lemma triangle_constraints (Γ : V → V → ℝ)
+    (hs : ∀ a b, Γ a b = Γ b a)
+    (ht : ∀ a b c, Γ a b ≤ Γ a c + Γ c b)
+    (hp : ∀ a b c, Γ a b + Γ b c + Γ c a ≤ 2 * Real.pi)
+    (f : Fin 3 → V) : ∀ F : Finset (Fin 3), Odd F.card →
+      (∑ i ∈ F, Γ (f i) (f (finRotate 3 i))) -
+        (∑ i ∈ Finset.univ \ F, Γ (f i) (f (finRotate 3 i))) ≤
+          ((F.card : ℝ) - 1) * Real.pi := by
+  intro F hF
+  have hcard := F.card_le_univ
+  simp only [Fintype.card_fin] at hcard
+  have hodd : F.card = 1 ∨ F.card = 3 := by obtain ⟨k,hk⟩ := hF; omega
+  rcases hodd with h | h
+  · obtain ⟨i,rfl⟩ := Finset.card_eq_one.mp h
+    fin_cases i <;>
+      norm_num [Fin.sum_univ_succ, Finset.sum_sdiff_eq_sub, finRotate_apply] <;>
+      linarith [ht (f 0) (f 1) (f 2),ht (f 1) (f 2) (f 0),
+        ht (f 2) (f 0) (f 1),hs (f 0) (f 1),hs (f 0) (f 2),hs (f 1) (f 2)]
+  · have he : F = Finset.univ := Finset.eq_univ_of_card F (by simpa using h)
+    subst F
+    norm_num [Fin.sum_univ_succ, finRotate_apply]
+    linarith [hp (f 0) (f 1) (f 2)]
+
+private lemma small_psd {C : Type*} [Finite C] (Γ : C → C → ℝ)
+    (hcard : Nat.card C ≤ 3)
+    (hs : ∀ a b, Γ a b = Γ b a) (hd : ∀ a, Γ a a = 0)
+    (hb : ∀ a b, 0 ≤ Γ a b ∧ Γ a b ≤ Real.pi)
+    (ht : ∀ a b c, Γ a b ≤ Γ a c + Γ c b)
+    (hp : ∀ a b c, Γ a b + Γ b c + Γ c a ≤ 2 * Real.pi) :
+    Matrix.PosSemidef ((fun a b => Real.cos (Γ a b)) : Matrix C C ℝ) ∧
+      Matrix.rank ((fun a b => Real.cos (Γ a b)) : Matrix C C ℝ) ≤ 3 := by
+  classical
+  letI := Fintype.ofFinite C
+  have hcard' : Fintype.card C ≤ 3 := by simpa only [Nat.card_eq_fintype_card] using hcard
+  refine ⟨?_, (Matrix.rank_le_card_width _).trans hcard'⟩
+  cases isEmpty_or_nonempty C with
+  | inl h =>
+    letI := h
+    have he : ((fun a b => Real.cos (Γ a b)) : Matrix C C ℝ) = 0 := by ext a; exact isEmptyElim a
+    rw [he]
+    exact Matrix.PosSemidef.zero
+  | inr h =>
+    letI := h
+    let e : C ↪ Fin 3 := (Fintype.equivFin C).toEmbedding.trans (Fin.castLEEmb hcard')
+    let f : Fin 3 → C := Function.invFun e
+    have hfe : ∀ a, f (e a) = a := Function.leftInverse_invFun e.injective
+    have hc := triangle_constraints Γ hs ht hp f
+    have hc' : ∀ F : Finset (Fin 3), Odd F.card →
+        (∑ i ∈ F, Real.arccos (Real.cos (Γ (f i) (f (finRotate 3 i))))) -
+        (∑ i ∈ Finset.univ \ F, Real.arccos (Real.cos (Γ (f i) (f (finRotate 3 i))))) ≤
+          ((F.card : ℝ) - 1) * Real.pi := by
+      have hacc (a b : C) : Real.arccos (Real.cos (Γ a b)) = Γ a b := Real.arccos_cos (hb a b).1 (hb a b).2
+      simpa only [hacc] using hc
+    obtain ⟨B,hB,_,hdiag,hedge⟩ :=
+      (D5.S3.QuadraticForms.CycleRankThreePsdCompletion.cycle_rank_three_iff (n := 3)
+        (by omega) (fun i => Real.cos (Γ (f i) (f (finRotate 3 i))))
+        (fun i => ⟨Real.neg_one_le_cos _,Real.cos_le_one _⟩)).mpr hc'
+    have hentry : ∀ i j : Fin 3, B i j = Real.cos (Γ (f i) (f j)) := by
+      intro i j
+      have hsym (i j : Fin 3) : B i j = B j i := by simpa using hB.isHermitian.apply j i
+      have h00 (i : Fin 3) : B i i = Real.cos (Γ (f i) (f i)) := by rw [hdiag,hd,Real.cos_zero]
+      have h01 : B 0 1 = Real.cos (Γ (f 0) (f 1)) := by
+        simpa only [show finRotate 3 0 = 1 from rfl] using hedge 0
+      have h12 : B 1 2 = Real.cos (Γ (f 1) (f 2)) := by
+        simpa only [show finRotate 3 1 = 2 from rfl] using hedge 1
+      have h20 : B 2 0 = Real.cos (Γ (f 2) (f 0)) := by
+        simpa only [show finRotate 3 2 = 0 from rfl] using hedge 2
+      fin_cases i <;> fin_cases j
+      · exact h00 0
+      · exact h01
+      · exact (hsym 0 2).trans (h20.trans (congrArg Real.cos (hs (f 2) (f 0))))
+      · exact (hsym 1 0).trans (h01.trans (congrArg Real.cos (hs (f 0) (f 1))))
+      · exact h00 1
+      · exact h12
+      · exact h20
+      · exact (hsym 2 1).trans (h12.trans (congrArg Real.cos (hs (f 1) (f 2))))
+      · exact h00 2
+    have heq : ((fun a b => Real.cos (Γ a b)) : Matrix C C ℝ) = B.submatrix e e := by
+      ext a b
+      simp only [Matrix.submatrix_apply,hentry,hfe]
+    rw [heq]
+    exact hB.submatrix e
 end D5.S3.QuadraticForms.PartialTwoTreePsdCompletion
