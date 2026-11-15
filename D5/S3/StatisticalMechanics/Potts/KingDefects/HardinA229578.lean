@@ -7,10 +7,8 @@
    digest: The seven empirical column recurrences of the literal OEIS A229578 table. -/
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
-escape_witness: bind-only; the registered assertions follow from the structural counts.
-result: proof_shape=bind-only; consumers=none
-Every column index is unbounded. No bounded enumeration, checker, numerical
-reduction or certified instance is asserted.
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229578.result)
+result: proof_shape=bind-only; consumers=none (registered settlement result)
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
 import D5.S3.StatisticalMechanics.Potts.KingDefects.HardinA229572

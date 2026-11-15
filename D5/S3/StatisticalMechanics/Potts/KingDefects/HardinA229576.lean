@@ -7,10 +7,8 @@
    digest: Exact registered one-defect king-colouring identities for OEIS A229576. -/
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
-escape_witness: bind-only; the registered assertion follows from the structural counts.
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229576.result, HardinA229578.result)
 result: proof_shape=bind-only; consumers=HardinA229578.result
-The index is unbounded. No bounded enumeration, checker, numerical reduction
-or certified instance is asserted.
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingClosedForm
 

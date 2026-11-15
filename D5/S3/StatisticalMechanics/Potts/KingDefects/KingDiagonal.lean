@@ -6,66 +6,60 @@
    utility: none
    digest: Diagonal-defect slot classification and exact counts on king rectangles. -/
 /-
-admission_basis: escape-witness
-escape_witness: diagonalSlotEquiv (the exact diagonal slot classification),
-  diagonal_count (the exact count of compatible words).
-klein_zero: proof_shape=bind-only; consumers=slot_raw,special_block
-klein_alphabet: proof_shape=bind-only; consumers=extract_valid,slot_good
-DiagonalSlots: proof_shape=bind-only; consumers=SlotValid,diagonalSlotEquiv,extractSlots,extract_slotField,normalizedEquiv,normalizedSlots,normalized_recover,slotField,slot_good,slot_raw,slot_special,slotsWord
-SlotValid: proof_shape=bind-only; consumers=diagonalSlotEquiv,extract_valid,normalizedEquiv,normalized_recover,normalized_valid,slot_good,slot_raw
-slotField: proof_shape=bind-only; consumers=diagonalSlotEquiv,extract_slotField,slot_good,slot_raw,slot_reconstruction,slot_special
-diagonal_clear: proof_shape=bind-only; consumers=extract_valid,raw_h_ordinary,raw_h_special,raw_v_ordinary,raw_v_special
-special_block: proof_shape=bind-only; consumers=extract_valid,slot_reconstruction
-raw_h_ordinary: proof_shape=bind-only; consumers=extract_valid,slot_reconstruction
-raw_v_ordinary: proof_shape=bind-only; consumers=extract_valid,slot_reconstruction
-raw_h_special: proof_shape=bind-only; consumers=extract_valid,slot_reconstruction
-raw_v_special: proof_shape=bind-only; consumers=extract_valid,slot_reconstruction
-extractSlots: proof_shape=bind-only; consumers=diagonalSlotEquiv,extract_slotField,extract_valid,slot_reconstruction
-slot_reconstruction: proof_shape=content; consumers=diagonalSlotEquiv
-extract_slotField: proof_shape=bind-only; consumers=diagonalSlotEquiv
-extract_valid: proof_shape=content; consumers=diagonalSlotEquiv
-slot_good: proof_shape=bind-only; consumers=slot_raw
-slot_special: proof_shape=bind-only; consumers=slot_raw
-slot_raw: proof_shape=bind-only; consumers=diagonalSlotEquiv
-diagonalSlotEquiv: proof_shape=content; consumers=diagonal_count
-WordIndex: proof_shape=bind-only; consumers=SlotsIndex,WordCompatible,intersection_card,leftRule,left_card,rightRule,right_card,word_card,word_card_add,word_cover
-WordCompatible: proof_shape=bind-only; consumers=normalizedEquiv,normalized_valid,word_card,word_card_add,word_cover
-leftRule: proof_shape=bind-only; consumers=intersection_card,left_card,word_card_add,word_cover
-rightRule: proof_shape=bind-only; consumers=intersection_card,right_card,word_card_add,word_cover
-word_cover: proof_shape=content; consumers=word_card_add
-unary_card: proof_shape=bind-only; consumers=left_card,right_card
-left_card: proof_shape=bind-only; consumers=word_card_add
-right_card: proof_shape=bind-only; consumers=word_card_add
-intersection_card: proof_shape=bind-only; consumers=word_card_add
-card_or_add_inter: proof_shape=bind-only; consumers=word_card_add
-emptyIndicator: proof_shape=bind-only; consumers=F,F_add,F_piecewise,indicator_corners,sum_F,word_card_add
-F: proof_shape=bind-only; consumers=F_add,F_piecewise,diagonal_count,sum_F,word_card
-word_card_add: proof_shape=content; consumers=F_add,word_card
-word_card: proof_shape=content; consumers=F_add,diagonal_count
-NZPair: proof_shape=bind-only; consumers=normalizedEquiv,normalizedSlots,normalized_valid,nz_pair_card,third_ne,word_recover
-nz_pair_card: proof_shape=bind-only; consumers=diagonal_count
-SlotsIndex: proof_shape=bind-only; consumers=normalizedEquiv,normalizedSlots,normalized_valid,slotsWord,word_recover
-normalizedSlots: proof_shape=bind-only; consumers=normalizedEquiv,normalized_recover,normalized_valid,word_recover
-third_ne: proof_shape=bind-only; consumers=normalized_valid,word_recover
-normalized_valid: proof_shape=bind-only; consumers=normalizedEquiv
-slotsWord: proof_shape=bind-only; consumers=normalizedEquiv,normalized_recover,word_recover
-normalized_recover: proof_shape=bind-only; consumers=normalizedEquiv
-word_recover: proof_shape=bind-only; consumers=normalizedEquiv
-normalizedEquiv: proof_shape=bind-only; consumers=diagonal_count
-diagonal_count: proof_shape=content; consumers=N_D_closed,N_D_two_columns,N_D_two_rows
-F_piecewise: proof_shape=bind-only; consumers=N_D_two_columns,N_D_two_rows
-F_add: proof_shape=content; consumers=sum_F
-geometric_two: proof_shape=bind-only; consumers=geometric_two_reverse,sum_A
-geometric_two_reverse: proof_shape=bind-only; consumers=sum_A
-Aterm: proof_shape=bind-only; consumers=sum_A,sum_F
-sum_A: proof_shape=bind-only; consumers=sum_F
-indicator_corners: proof_shape=bind-only; consumers=sum_F
-sum_F: proof_shape=content; consumers=N_D_closed
-N_D_closed: proof_shape=content; consumers=KingClosedForm.closed_form,KingClosedForm.width_three
-N_D_two_rows: proof_shape=content; consumers=none
-N_D_two_columns: proof_shape=content; consumers=KingClosedForm.width_two
-The dimensions and word lengths are arbitrary. No bounded grid enumeration,
-checker, numerical reduction or certified instance is asserted.
+admission_basis: open-problem-resolution (#30641; Proved)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229572.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
+klein_zero: proof_shape=bind-only; consumers=KingDiagonal.slot_raw,KingDiagonal.special_block
+klein_alphabet: proof_shape=bind-only; consumers=KingDiagonal.extract_valid,KingDiagonal.slot_good
+DiagonalSlots: proof_shape=bind-only; consumers=KingDiagonal.SlotValid,KingDiagonal.diagonalSlotEquiv,KingDiagonal.diagonal_count,KingDiagonal.extractSlots,KingDiagonal.extract_slotField,KingDiagonal.extract_valid,KingDiagonal.normalizedEquiv,KingDiagonal.normalizedSlots,KingDiagonal.normalized_recover,KingDiagonal.normalized_valid,KingDiagonal.slotField,KingDiagonal.slot_good,KingDiagonal.slot_raw,KingDiagonal.slot_special,KingDiagonal.slotsWord,KingDiagonal.word_recover
+SlotValid: proof_shape=bind-only; consumers=KingDiagonal.diagonalSlotEquiv,KingDiagonal.diagonal_count,KingDiagonal.extract_valid,KingDiagonal.normalizedEquiv,KingDiagonal.normalized_recover,KingDiagonal.normalized_valid,KingDiagonal.slot_good,KingDiagonal.slot_raw
+slotField: proof_shape=bind-only; consumers=KingDiagonal.diagonalSlotEquiv,KingDiagonal.extract_slotField,KingDiagonal.slot_good,KingDiagonal.slot_raw,KingDiagonal.slot_reconstruction,KingDiagonal.slot_special
+diagonal_clear: proof_shape=bind-only; consumers=KingDiagonal.extract_valid,KingDiagonal.raw_h_ordinary,KingDiagonal.raw_h_special,KingDiagonal.raw_v_ordinary,KingDiagonal.raw_v_special
+special_block: proof_shape=bind-only; consumers=KingDiagonal.extract_valid,KingDiagonal.slot_reconstruction
+raw_h_ordinary: proof_shape=bind-only; consumers=KingDiagonal.extract_valid,KingDiagonal.slot_reconstruction
+raw_v_ordinary: proof_shape=bind-only; consumers=KingDiagonal.extract_valid,KingDiagonal.slot_reconstruction
+raw_h_special: proof_shape=bind-only; consumers=KingDiagonal.extract_valid,KingDiagonal.slot_reconstruction
+raw_v_special: proof_shape=bind-only; consumers=KingDiagonal.extract_valid,KingDiagonal.slot_reconstruction
+extractSlots: proof_shape=bind-only; consumers=KingDiagonal.diagonalSlotEquiv,KingDiagonal.extract_slotField,KingDiagonal.extract_valid,KingDiagonal.slot_reconstruction
+slot_reconstruction: proof_shape=bind-only; consumers=KingDiagonal.diagonalSlotEquiv
+extract_slotField: proof_shape=bind-only; consumers=KingDiagonal.diagonalSlotEquiv
+extract_valid: proof_shape=bind-only; consumers=KingDiagonal.diagonalSlotEquiv
+slot_good: proof_shape=bind-only; consumers=KingDiagonal.slot_raw
+slot_special: proof_shape=bind-only; consumers=KingDiagonal.slot_raw
+slot_raw: proof_shape=bind-only; consumers=KingDiagonal.diagonalSlotEquiv
+diagonalSlotEquiv: proof_shape=bind-only; consumers=KingDiagonal.diagonal_count
+WordIndex: proof_shape=bind-only; consumers=KingDiagonal.F_add,KingDiagonal.SlotsIndex,KingDiagonal.WordCompatible,KingDiagonal.diagonal_count,KingDiagonal.intersection_card,KingDiagonal.leftRule,KingDiagonal.left_card,KingDiagonal.rightRule,KingDiagonal.right_card,KingDiagonal.word_card,KingDiagonal.word_card_add,KingDiagonal.word_cover
+WordCompatible: proof_shape=bind-only; consumers=KingDiagonal.F_add,KingDiagonal.diagonal_count,KingDiagonal.normalizedEquiv,KingDiagonal.normalized_valid,KingDiagonal.word_card,KingDiagonal.word_card_add,KingDiagonal.word_cover
+leftRule: proof_shape=bind-only; consumers=KingDiagonal.intersection_card,KingDiagonal.left_card,KingDiagonal.word_card_add,KingDiagonal.word_cover
+rightRule: proof_shape=bind-only; consumers=KingDiagonal.intersection_card,KingDiagonal.right_card,KingDiagonal.word_card_add,KingDiagonal.word_cover
+word_cover: proof_shape=bind-only; consumers=KingDiagonal.word_card_add
+unary_card: proof_shape=bind-only; consumers=KingDiagonal.left_card,KingDiagonal.right_card
+left_card: proof_shape=bind-only; consumers=KingDiagonal.word_card_add
+right_card: proof_shape=bind-only; consumers=KingDiagonal.word_card_add
+intersection_card: proof_shape=bind-only; consumers=KingDiagonal.word_card_add
+card_or_add_inter: proof_shape=bind-only; consumers=KingDiagonal.word_card_add
+emptyIndicator: proof_shape=bind-only; consumers=KingDiagonal.F,KingDiagonal.F_add,KingDiagonal.F_piecewise,KingDiagonal.indicator_corners,KingDiagonal.sum_F,KingDiagonal.word_card,KingDiagonal.word_card_add
+F: proof_shape=bind-only; consumers=KingDiagonal.F_add,KingDiagonal.F_piecewise,KingDiagonal.N_D_closed,KingDiagonal.N_D_two_columns,KingDiagonal.diagonal_count,KingDiagonal.sum_F,KingDiagonal.word_card
+word_card_add: proof_shape=bind-only; consumers=KingDiagonal.F_add,KingDiagonal.word_card
+word_card: proof_shape=bind-only; consumers=KingDiagonal.F_add,KingDiagonal.diagonal_count
+SlotsIndex: proof_shape=bind-only; consumers=KingDiagonal.diagonal_count,KingDiagonal.normalizedEquiv,KingDiagonal.normalizedSlots,KingDiagonal.normalized_valid,KingDiagonal.slotsWord,KingDiagonal.word_recover
+normalizedSlots: proof_shape=bind-only; consumers=KingDiagonal.normalizedEquiv,KingDiagonal.normalized_recover,KingDiagonal.normalized_valid,KingDiagonal.word_recover
+third_ne: proof_shape=bind-only; consumers=KingDiagonal.normalized_valid,KingDiagonal.word_recover
+normalized_valid: proof_shape=bind-only; consumers=KingDiagonal.normalizedEquiv
+slotsWord: proof_shape=bind-only; consumers=KingDiagonal.normalizedEquiv,KingDiagonal.normalized_recover,KingDiagonal.word_recover
+normalized_recover: proof_shape=bind-only; consumers=KingDiagonal.normalizedEquiv
+word_recover: proof_shape=bind-only; consumers=KingDiagonal.normalizedEquiv
+normalizedEquiv: proof_shape=bind-only; consumers=KingDiagonal.diagonal_count
+diagonal_count: proof_shape=bind-only; consumers=KingDiagonal.N_D_closed,KingDiagonal.N_D_two_columns
+F_piecewise: proof_shape=bind-only; consumers=KingDiagonal.N_D_two_columns
+F_add: proof_shape=bind-only; consumers=KingDiagonal.sum_F
+geometric_two: proof_shape=bind-only; consumers=KingDiagonal.geometric_two_reverse,KingDiagonal.sum_A
+geometric_two_reverse: proof_shape=bind-only; consumers=KingDiagonal.sum_A
+Aterm: proof_shape=bind-only; consumers=KingDiagonal.sum_A,KingDiagonal.sum_F
+sum_A: proof_shape=bind-only; consumers=KingDiagonal.sum_F
+indicator_corners: proof_shape=bind-only; consumers=KingDiagonal.sum_F
+sum_F: proof_shape=bind-only; consumers=KingDiagonal.N_D_closed
+N_D_closed: proof_shape=bind-only; consumers=KingClosedForm.closed_form,KingClosedForm.width_three
+N_D_two_columns: proof_shape=bind-only; consumers=KingClosedForm.width_two
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingDifference
 import Mathlib.Order.Interval.Finset.Fin

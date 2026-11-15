@@ -6,42 +6,40 @@
    utility: none
    digest: Interior counts and horizontal orientation sums. -/
 /-
-admission_basis: escape-witness
-escape_witness: interior_six_lower_pairs, interior_count, horizontal_two_rows, horizontal_two_columns, horizontal_three_rows, horizontal_sum
-  (layered horizontal slot/count content).
-interior_count_support: proof_shape=content; consumers=interior_count
-supports: proof_shape=bind-only; consumers=support_case_count,support_case_eval,support_sizes_correct,supports_equiv
-supports_equiv: proof_shape=bind-only; consumers=pair_support_cases
-lower_pair_values: proof_shape=bind-only; consumers=lower_pair,lower_pair_valid
-lower_pair_valid: proof_shape=bind-only; consumers=lower_pair
-lower_pair: proof_shape=bind-only; consumers=interior_count,interior_six_lower_pairs,lower_pair_equiv,pair_support_cases,support_sizes_correct
-lower_pair_equiv: proof_shape=bind-only; consumers=interior_count
-support_sizes: proof_shape=bind-only; consumers=support_case_count,support_case_eval,support_sizes_correct
-support_sizes_correct: proof_shape=bind-only; consumers=pair_support_cases
-support_case_count: proof_shape=bind-only; consumers=pair_support_cases,support_case_eval
-pair_support_cases: proof_shape=bind-only; consumers=interior_count,interior_six_lower_pairs
-P: proof_shape=bind-only; consumers=interior_count,interior_endpoint_value,interior_middle_value,interior_row_sum,interior_three_rows_count,six_case_value,support_case_eval
-Q: proof_shape=bind-only; consumers=interior_count,interior_endpoint_value,interior_middle_value,interior_row_sum,interior_three_rows_count,six_case_value,support_case_eval
-six_case_value: proof_shape=bind-only; consumers=interior_count,interior_six_lower_pairs,support_case_eval
-support_case_eval: proof_shape=bind-only; consumers=interior_count,interior_six_lower_pairs
-interior_six_lower_pairs: proof_shape=content; consumers=none
-interior_count: proof_shape=content; consumers=interior_row_sum,interior_three_rows_count
-horizontal_two_rows: proof_shape=content; consumers=KingClosedForm.width_two,horizontal_two_columns
-boundary_one_column: proof_shape=bind-only; consumers=boundary_slots_one_column,horizontal_two_columns
-boundary_slots_one_column: proof_shape=bind-only; consumers=interior_one_column_count
-interior_one_column_count: proof_shape=content; consumers=horizontal_two_columns
-horizontal_two_columns: proof_shape=content; consumers=KingClosedForm.width_two
-interior_three_rows_count: proof_shape=content; consumers=horizontal_three_rows
-sum_two_powers: proof_shape=bind-only; consumers=boundary_row_sum,horizontal_sum,horizontal_three_rows,interior_row_sum,sum_two_powers_reverse
-sum_two_powers_reverse: proof_shape=bind-only; consumers=boundary_row_sum,horizontal_sum,horizontal_three_rows,interior_row_sum
-horizontal_three_rows: proof_shape=content; consumers=KingClosedForm.width_three
-interior_endpoint_value: proof_shape=bind-only; consumers=interior_row_sum
-interior_middle_value: proof_shape=bind-only; consumers=interior_row_sum
-interior_row_sum: proof_shape=content; consumers=horizontal_sum
-boundary_row_sum: proof_shape=bind-only; consumers=horizontal_sum
-sum_left_indicator: proof_shape=bind-only; consumers=horizontal_sum,sum_right_indicator
-sum_right_indicator: proof_shape=bind-only; consumers=horizontal_sum
-horizontal_sum: proof_shape=content; consumers=KingClosedForm.closed_form,KingClosedForm.width_three
+admission_basis: open-problem-resolution (#30641; Proved)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229572.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
+interior_count_support: proof_shape=bind-only; consumers=KingHorizontal.interior_count
+supports: proof_shape=bind-only; consumers=KingHorizontal.pair_support_cases,KingHorizontal.support_case_count,KingHorizontal.support_case_eval,KingHorizontal.support_sizes_correct,KingHorizontal.supports_equiv
+supports_equiv: proof_shape=bind-only; consumers=KingHorizontal.pair_support_cases
+lower_pair_values: proof_shape=bind-only; consumers=KingHorizontal.lower_pair,KingHorizontal.lower_pair_valid
+lower_pair_valid: proof_shape=bind-only; consumers=KingHorizontal.lower_pair
+lower_pair: proof_shape=bind-only; consumers=KingHorizontal.interior_count,KingHorizontal.lower_pair_equiv,KingHorizontal.pair_support_cases,KingHorizontal.support_sizes_correct
+lower_pair_equiv: proof_shape=bind-only; consumers=KingHorizontal.interior_count
+support_sizes: proof_shape=bind-only; consumers=KingHorizontal.pair_support_cases,KingHorizontal.support_case_count,KingHorizontal.support_case_eval,KingHorizontal.support_sizes_correct
+support_sizes_correct: proof_shape=bind-only; consumers=KingHorizontal.pair_support_cases
+support_case_count: proof_shape=bind-only; consumers=KingHorizontal.interior_count,KingHorizontal.pair_support_cases,KingHorizontal.support_case_eval
+pair_support_cases: proof_shape=bind-only; consumers=KingHorizontal.interior_count
+P: proof_shape=bind-only; consumers=KingHorizontal.interior_count,KingHorizontal.interior_endpoint_value,KingHorizontal.interior_middle_value,KingHorizontal.interior_row_sum,KingHorizontal.interior_three_rows_count,KingHorizontal.six_case_value,KingHorizontal.support_case_eval
+Q: proof_shape=bind-only; consumers=KingHorizontal.interior_count,KingHorizontal.interior_endpoint_value,KingHorizontal.interior_middle_value,KingHorizontal.interior_row_sum,KingHorizontal.interior_three_rows_count,KingHorizontal.six_case_value,KingHorizontal.support_case_eval
+six_case_value: proof_shape=bind-only; consumers=KingHorizontal.interior_count,KingHorizontal.support_case_eval
+support_case_eval: proof_shape=bind-only; consumers=KingHorizontal.interior_count
+interior_count: proof_shape=bind-only; consumers=KingHorizontal.interior_row_sum,KingHorizontal.interior_three_rows_count
+horizontal_two_rows: proof_shape=bind-only; consumers=KingClosedForm.width_two,KingHorizontal.horizontal_two_columns
+boundary_one_column: proof_shape=bind-only; consumers=KingHorizontal.boundary_slots_one_column,KingHorizontal.horizontal_two_columns
+boundary_slots_one_column: proof_shape=bind-only; consumers=KingHorizontal.interior_one_column_count
+interior_one_column_count: proof_shape=bind-only; consumers=KingHorizontal.horizontal_two_columns
+horizontal_two_columns: proof_shape=bind-only; consumers=KingClosedForm.width_two
+interior_three_rows_count: proof_shape=bind-only; consumers=KingHorizontal.horizontal_three_rows
+sum_two_powers: proof_shape=bind-only; consumers=KingHorizontal.boundary_row_sum,KingHorizontal.horizontal_sum,KingHorizontal.horizontal_three_rows,KingHorizontal.interior_row_sum,KingHorizontal.sum_two_powers_reverse
+sum_two_powers_reverse: proof_shape=bind-only; consumers=KingHorizontal.boundary_row_sum,KingHorizontal.horizontal_sum,KingHorizontal.horizontal_three_rows,KingHorizontal.interior_row_sum
+horizontal_three_rows: proof_shape=bind-only; consumers=KingClosedForm.width_three
+interior_endpoint_value: proof_shape=bind-only; consumers=KingHorizontal.interior_row_sum
+interior_middle_value: proof_shape=bind-only; consumers=KingHorizontal.interior_row_sum
+interior_row_sum: proof_shape=bind-only; consumers=KingHorizontal.horizontal_sum
+boundary_row_sum: proof_shape=bind-only; consumers=KingHorizontal.horizontal_sum
+sum_left_indicator: proof_shape=bind-only; consumers=KingHorizontal.horizontal_sum,KingHorizontal.sum_right_indicator
+sum_right_indicator: proof_shape=bind-only; consumers=KingHorizontal.horizontal_sum
+horizontal_sum: proof_shape=bind-only; consumers=KingClosedForm.closed_form,KingClosedForm.width_three
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalSlots
 import Mathlib.Algebra.Ring.GeomSum
