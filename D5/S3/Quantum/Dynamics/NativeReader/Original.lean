@@ -12,7 +12,6 @@ import D5.S3.Quantum.Algebra.Knot.WeightedPathProjectionNaturality
 /-! Original finite-word preparation uses the same legal paths and fixed exterior bits. -/
 
 set_option autoImplicit false
-set_option maxRecDepth 8192
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 namespace D5.S3.Quantum.Dynamics.NativeReader
@@ -249,15 +248,19 @@ private theorem projection_ready_action (j : Fin 11) (chi : Source → ℂ) :
   ext e
   have hsum : (extendedProjection ⟨j.val, by omega⟩ *ᵥ readyExtension chi) e =
       ∑ q : Source, extendedProjection ⟨j.val, by omega⟩ e (extendReady q) * chi q := by
-    change (∑ f : Extended, extendedProjection ⟨j.val, by omega⟩ e f *
-      globalVector chi readyVector f) = _
-    rw [← fullCarrierEquiv.symm.sum_comp]
-    change (∑ p : FiberCarrier,
-      extendedProjection ⟨j.val, by omega⟩ e
-        (joinPath (p.1.1 9) ⟨p.1, rfl⟩ p.2) *
-      globalVector chi readyVector (joinPath (p.1.1 9) ⟨p.1, rfl⟩ p.2)) = _
-    rw [Fintype.sum_sigma]
-    simp [globalVector_join, readyVector, Pi.single_apply, mul_ite, extendReady]
+    simp only [Matrix.mulVec, dotProduct, readyExtension]
+    calc
+      _ = ∑ p : FiberCarrier, extendedProjection ⟨j.val, by omega⟩ e
+          (fullCarrierEquiv.symm p) * globalVector chi readyVector (fullCarrierEquiv.symm p) :=
+        (fullCarrierEquiv.symm.sum_comp (fun f : Extended =>
+          extendedProjection ⟨j.val, by omega⟩ e f * globalVector chi readyVector f)).symm
+      _ = _ := by
+        change (∑ p : FiberCarrier,
+          extendedProjection ⟨j.val, by omega⟩ e
+            (joinPath (p.1.1 9) ⟨p.1, rfl⟩ p.2) *
+          globalVector chi readyVector (joinPath (p.1.1 9) ⟨p.1, rfl⟩ p.2)) = _
+        rw [Fintype.sum_sigma]
+        simp [globalVector_join, readyVector, Pi.single_apply, mul_ite, extendReady]
   rw [hsum]
   by_cases he : e = extendReady (originalPart e)
   · conv_lhs => rw [he]
