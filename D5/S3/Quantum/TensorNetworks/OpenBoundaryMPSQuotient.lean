@@ -599,7 +599,7 @@ theorem quotient_retraction (m : ℕ) (p : Quotient) (hp : 0 < p.2.1)
 def quotientLocusPolynomial (m : ℕ) : MvPolynomial (ObservationIndex ⊕ ObservationIndex) ℝ :=
   OpenBoundaryMPSDensityGenericity.observedPolynomial *
     OpenBoundaryMPSDensityGenericity.normPolynomial (boundaryGramPolynomial m 0 0)
-private lemma quotientLocus_eval (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ) :
+theorem quotientLocus_eval (m : ℕ) (Q : Matrix (Word 3) (Word 3) ℂ) :
     eval (OpenBoundaryMPSDensityGenericity.realCoordinates (fun ij => Q ij.1 ij.2))
       (quotientLocusPolynomial m) ≠ 0 ↔
     eval (OpenBoundaryMPSDensityGenericity.realCoordinates
