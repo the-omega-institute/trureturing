@@ -10,6 +10,8 @@ import D5.S3.Quantum.Routing.HannExactForest
 import D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
 import Mathlib.Analysis.Convex.Hull
 
+/-! Real node rounding and the probability section of the original signed records. -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators
@@ -44,17 +46,31 @@ private theorem real_equations_cast (n : ℕ) (q : Router n → ℝ)
   induction n with
   | zero => simp [RealEquations, Equations, sub_eq_zero]
   | succ n ih =>
-    simp only [RealEquations, Equations, childValues, childCoeff, ← ih]
-    apply and_congr_left
-    intro _
-    unfold RealLocal Local
-    split_ifs <;> push_cast <;> constructor <;> intro h
-    · exact sub_eq_zero.mpr (sub_eq_iff_eq_add.mpr (by exact_mod_cast h))
-    · exact_mod_cast (sub_eq_iff_eq_add.mp (sub_eq_zero.mp h))
-    · rcases h with ⟨hl, hr⟩; constructor <;> push_cast <;> simp_all
-    · rcases h with ⟨hl, hr⟩; constructor <;> exact_mod_cast (eq_neg_iff_add_eq_zero.mpr (by assumption))
-    · simpa using h
-    · simpa using h
+    change (RealLocal _ _ _ _ ∧ _) ↔ (Local _ _ _ _ ∧ _)
+    apply and_congr
+    swap
+    · exact forall_congr' (fun b => ih _ _ _)
+    simp only [childValues]
+    by_cases hu : q none = 1
+    · simp only [RealLocal, Local, ite_eq_left hu]
+      constructor
+      · intro h
+        have hc : (c none : ℂ) = (c (some (false, root n)) : ℂ) + (c (some (true, root n)) : ℂ) := by exact_mod_cast h
+        linear_combination hc
+      · intro h
+        have hc : (c none : ℂ) = (c (some (false, root n)) : ℂ) + (c (some (true, root n)) : ℂ) := by linear_combination h
+        exact_mod_cast hc
+    · by_cases hd : q none = -(1 / 2 : ℝ)
+      · simp only [RealLocal, Local, ite_eq_right hu, ite_eq_left hd]
+        constructor
+        · rintro ⟨hl, hr⟩
+          constructor <;> simp [hl, hr]
+        · rintro ⟨hl, hr⟩
+          constructor
+          · exact_mod_cast (eq_neg_iff_add_eq_zero.mpr hl)
+          · exact_mod_cast (eq_neg_iff_add_eq_zero.mpr hr)
+      · simp only [RealLocal, Local, ite_eq_right hu, ite_eq_right hd]
+        norm_cast
 
 private theorem real_equations_zero (n : ℕ) (q : Router n → ℝ) :
     RealEquations n q (fun _ => 0) (fun _ => 0) := by
@@ -72,7 +88,7 @@ private theorem nodes_zero_of_leaves_zero (n : ℕ) (q : Router n → ℝ)
   | succ n ih =>
     obtain ⟨hl, hs⟩ := he
     have hc (b : Bool) : (fun v => c (some (b, v))) = 0 :=
-      ih _ _ _ (hs b) (by simp [hx])
+      ih _ _ _ (hs b) (by ext a; simp [hx])
     have hroot : c none = 0 := by
       have h0 := congrFun (hc false) (root n)
       have h1 := congrFun (hc true) (root n)
@@ -93,7 +109,8 @@ private theorem sgn_neg (t : ℝ) : sgn (-t) = -sgn t := by
 
 private theorem sgn_ne_zero {t : ℝ} (h : t ≠ 0) : sgn t ≠ 0 := by
   unfold sgn
-  split_ifs <;> simp_all <;> linarith
+  split_ifs <;> norm_num
+  exact h (by linarith)
 
 private structure Piece (n : ℕ) (q : Router n → ℝ)
     (x : Address n → ℝ) (c : Node n → ℝ) where
@@ -157,5 +174,308 @@ private theorem join_nonzero_right (n : ℕ) (q : Router (n + 1) → ℝ)
   apply hR
   ext a
   exact congrFun h (true, a)
+
+private theorem piece_nonzero_of_root (n : ℕ) (q : Router n → ℝ)
+    (x : Address n → ℝ) (c : Node n → ℝ) (P : Piece n q x c)
+    (h : P.node (root n) ≠ 0) : P.leaf ≠ 0 := by
+  intro hz
+  exact h (congrFun (nodes_zero_of_leaves_zero n q P.leaf P.node P.equations hz) (root n))
+
+private theorem rounding (n : ℕ) (q : Router n → ℝ)
+    (x : Address n → ℝ) (c : Node n → ℝ) (hx : ∀ a, 0 ≤ x a)
+    (he : RealEquations n q x c) :
+    ∃ P : Piece n q x c, P.node (root n) = sgn (c (root n)) ∧ (x ≠ 0 → P.leaf ≠ 0) := by
+  induction n with
+  | zero =>
+    have hc : c () = x () := he
+    by_cases hz : x () = 0
+    · refine ⟨zeroPiece 0 q x c, ?_, ?_⟩
+      · simp [zeroPiece, root, hc, hz, sgn_zero]
+      · intro h; exact (h (funext (fun a => by cases a; exact hz))).elim
+    · have hp : 0 < x () := lt_of_le_of_ne (hx ()) (Ne.symm hz)
+      refine ⟨⟨fun _ => 1, fun _ => 1, rfl, fun _ => Or.inr rfl,
+        fun a _ => by cases a; exact hp, ?_⟩, ?_, ?_⟩
+      · intro v; cases v; right; simp [hc, sgn, hp]
+      · simp [root, hc, sgn, hp]
+      · intro _ h; exact one_ne_zero (congrFun h ())
+  | succ n ih =>
+    obtain ⟨hloc, hsub⟩ := he
+    obtain ⟨L, hL, hLn⟩ := ih (restrict n q false) (fun a => x (false, a))
+      (fun v => c (some (false, v))) (fun a => hx (false, a)) (hsub false)
+    obtain ⟨R, hR, hRn⟩ := ih (restrict n q true) (fun a => x (true, a))
+      (fun v => c (some (true, v))) (fun a => hx (true, a)) (hsub true)
+    let ZL := zeroPiece n (restrict n q false) (fun a => x (false, a)) (fun v => c (some (false, v)))
+    let ZR := zeroPiece n (restrict n q true) (fun a => x (true, a)) (fun v => c (some (true, v)))
+    have both_nonzero (t : ℝ) (ht : t = 0 ∨ t = sgn (c none))
+        (hh : RealLocal (q none) t (L.node (root n)) (R.node (root n)))
+        (hn : x ≠ 0) : (joinPiece n q x c L R t ht hh).leaf ≠ 0 := by
+      by_cases hxl : (fun a => x (false, a)) = 0
+      · apply join_nonzero_right n q x c L R t ht hh
+        apply hRn
+        intro hxr
+        apply hn
+        ext a
+        obtain ⟨b, a⟩ := a
+        cases b
+        · exact congrFun hxl a
+        · exact congrFun hxr a
+      · exact join_nonzero_left n q x c L R t ht hh (hLn hxl)
+    by_cases hu : q none = 1
+    · have hsum : c none = c (some (false, root n)) + c (some (true, root n)) := by
+        simpa [RealLocal, hu] using hloc
+      by_cases hz : c none = 0
+      · have hr : c (some (true, root n)) = -c (some (false, root n)) := by linarith
+        have hh : RealLocal (q none) 0 (L.node (root n)) (R.node (root n)) := by
+          simp [RealLocal, hu, hL, hR, hr, sgn_neg]
+        refine ⟨joinPiece n q x c L R 0 (Or.inl rfl) hh, ?_, ?_⟩
+        · simp [joinPiece, root, hz, sgn_zero]
+        · exact both_nonzero 0 (Or.inl rfl) hh
+      · have finish_left (hs : sgn (c (some (false, root n))) = sgn (c none)) :
+            ∃ P : Piece (n + 1) q x c,
+              P.node (root (n + 1)) = sgn (c (root (n + 1))) ∧ (x ≠ 0 → P.leaf ≠ 0) := by
+          have hh : RealLocal (q none) (sgn (c none)) (L.node (root n)) (ZR.node (root n)) := by
+            simp [RealLocal, hu, hL, hs, ZR, zeroPiece]
+          let P := joinPiece n q x c L ZR (sgn (c none)) (Or.inr rfl) hh
+          refine ⟨P, rfl, fun _ => piece_nonzero_of_root (n + 1) q x c P ?_⟩
+          exact sgn_ne_zero hz
+        have finish_right (hs : sgn (c (some (true, root n))) = sgn (c none)) :
+            ∃ P : Piece (n + 1) q x c,
+              P.node (root (n + 1)) = sgn (c (root (n + 1))) ∧ (x ≠ 0 → P.leaf ≠ 0) := by
+          have hh : RealLocal (q none) (sgn (c none)) (ZL.node (root n)) (R.node (root n)) := by
+            simp [RealLocal, hu, hR, hs, ZL, zeroPiece]
+          let P := joinPiece n q x c ZL R (sgn (c none)) (Or.inr rfl) hh
+          refine ⟨P, rfl, fun _ => piece_nonzero_of_root (n + 1) q x c P ?_⟩
+          exact sgn_ne_zero hz
+        by_cases hp : 0 < c none
+        · by_cases hl : 0 < c (some (false, root n))
+          · exact finish_left (by simp [sgn, hl, hp])
+          · have hr : 0 < c (some (true, root n)) := by linarith
+            exact finish_right (by simp [sgn, hr, hp])
+        · have hm : c none < 0 := lt_of_le_of_ne (le_of_not_gt hp) hz
+          by_cases hl : c (some (false, root n)) < 0
+          · exact finish_left (by simp [sgn, hl, hm, hp, not_lt_of_ge hl.le])
+          · have hr : c (some (true, root n)) < 0 := by linarith
+            exact finish_right (by simp [sgn, hr, hm, hp, not_lt_of_ge hr.le])
+    · by_cases hd : q none = -(1 / 2 : ℝ)
+      · have hlow : c (some (false, root n)) = -c none ∧
+            c (some (true, root n)) = -c none := by simpa only [RealLocal, ite_eq_right hu, ite_eq_left hd] using hloc
+        have hh : RealLocal (q none) (sgn (c none)) (L.node (root n)) (R.node (root n)) := by
+          simp only [RealLocal, ite_eq_right hu, ite_eq_left hd, hL, hR, hlow.1, hlow.2, sgn_neg]; trivial
+        exact ⟨joinPiece n q x c L R (sgn (c none)) (Or.inr rfl) hh, rfl,
+          both_nonzero _ (Or.inr rfl) hh⟩
+      · have hz : c none = 0 ∧ c (some (false, root n)) = 0 ∧
+            c (some (true, root n)) = 0 := by simpa only [RealLocal, ite_eq_right hu, ite_eq_right hd] using hloc
+        have hh : RealLocal (q none) 0 (L.node (root n)) (R.node (root n)) := by
+          simp only [RealLocal, ite_eq_right hu, ite_eq_right hd, hL, hR, hz.2.1, hz.2.2, sgn_zero]; trivial
+        refine ⟨joinPiece n q x c L R 0 (Or.inl rfl) hh, ?_, both_nonzero _ (Or.inl rfl) hh⟩
+        simp [joinPiece, root, hz.1, sgn_zero]
+
+private theorem real_kernel_iff (n : ℕ) (q : Router n → ℝ)
+    (x : Address n → ℝ) (c : Node n → ℝ) :
+    (matrix n q).mulVec (Sum.elim x c) = 0 ↔ RealEquations n q x c := by
+  have hc : (complexMatrix n q).mulVec (coordinates n (fun a => (x a : ℂ)) (fun v => (c v : ℂ))) =
+      fun i => ((matrix n q).mulVec (Sum.elim x c) i : ℂ) := by
+    ext i
+    simp only [Matrix.mulVec, dotProduct, complexMatrix, coordinates, Complex.ofReal_sum]
+    apply Finset.sum_congr rfl
+    intro v _
+    cases v <;> simp [Complex.ofReal_mul]
+  rw [real_equations_cast, ← kernel_iff_equations, hc]
+  constructor
+  · intro h; ext i; simp [h]
+  · intro h; ext i; exact Complex.ofReal_injective (by simpa using congrFun h i)
+
+private theorem real_lift (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v ∧ q v ≤ 1)
+    (x : Address n → ℝ) (z : ℝ)
+    (hx : synthesis n q bus (fun a => (x a : ℂ)) = (z : ℂ) • vacuumRecord n q) :
+    ∃ c : Node n → ℝ, c (root n) = z ∧ RealEquations n q x c := by
+  obtain ⟨c, hr, hk⟩ := (relation_iff_matrix_kernel n q bus hq _ _).mp hx
+  refine ⟨fun v => (c v).re, by simpa using congrArg Complex.re hr, ?_⟩
+  apply (real_kernel_iff n q x _).mp
+  ext i
+  have hi := congrArg Complex.re (congrFun hk i)
+  simpa [Matrix.mulVec, dotProduct, complexMatrix, coordinates, Complex.mul_re,
+    Sum.elim, Finset.sum_apply] using hi
+
+private theorem real_relation (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v ∧ q v ≤ 1)
+    (x : Address n → ℝ) (c : Node n → ℝ) (he : RealEquations n q x c) :
+    synthesis n q bus (fun a => (x a : ℂ)) = (c (root n) : ℂ) • vacuumRecord n q := by
+  apply (relation_iff_matrix_kernel n q bus hq _ _).mpr
+  exact ⟨fun v => (c v : ℂ), rfl, (kernel_iff_equations n q _ _).mpr
+    ((real_equations_cast n q x c).mp he)⟩
+
+/-- A real kernel vector with nonnegative nonzero original leaves has a binary-leaf
+certificate in the same kernel, supported and signed within the original vector. -/
+theorem binary_conformal_kernel (n : ℕ) (q : Router n → ℝ)
+    (x : Address n → ℝ) (c : Node n → ℝ) (hx : ∀ a, 0 ≤ x a) (hxn : x ≠ 0)
+    (hk : (matrix n q).mulVec (Sum.elim x c) = 0) :
+    ∃ (u : Address n → ℝ) (d : Node n → ℝ),
+      (matrix n q).mulVec (Sum.elim u d) = 0 ∧ u ≠ 0 ∧
+      (∀ a, u a = 0 ∨ u a = 1) ∧ (∀ a, u a ≠ 0 → 0 < x a) ∧
+      (∀ v, d v = 0 ∨ d v = -1 ∨ d v = 1) ∧
+      (∀ v, d v ≠ 0 → SignType.sign (d v) = SignType.sign (c v)) ∧
+      SignType.sign (d (root n)) = SignType.sign (c (root n)) := by
+  obtain ⟨P, hr, hn⟩ := rounding n q x c hx ((real_kernel_iff n q x c).mp hk)
+  have sign_sgn (t : ℝ) : SignType.sign (sgn t) = SignType.sign t := by
+    unfold sgn
+    split_ifs with hp hm
+    · simp [sign_pos hp]
+    · simp [sign_neg hm]
+    · have hz : t = 0 := by linarith
+      simp [hz]
+  refine ⟨P.leaf, P.node, (real_kernel_iff n q _ _).mpr P.equations, hn hxn,
+    P.binary, P.leaf_support, ?_, ?_, ?_⟩
+  · intro v
+    rcases P.conformal v with hv | hv
+    · exact Or.inl hv
+    · rw [hv]; unfold sgn; split_ifs <;> simp
+  · intro v hv
+    rcases P.conformal v with hz | hs
+    · exact (hv hz).elim
+    · rw [hs]; exact sign_sgn _
+  · rw [hr]; exact sign_sgn _
+
+/-- Zero in the original probability section has a nonempty original-leaf zero sum,
+even when zero is an interior point. The leaves lie in the given positive support. -/
+theorem zero_certificate (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v ∧ q v ≤ 1)
+    (p : Address n → ℝ) (hp : ∀ a, 0 ≤ p a) (hm : (∑ a, p a) = 1)
+    (hz : synthesis n q bus (fun a => (p a : ℂ)) = 0) :
+    ∃ S : Finset (Address n), S.Nonempty ∧ (∀ a ∈ S, 0 < p a) ∧
+      (∑ a ∈ S, record n q bus a) = 0 := by
+  classical
+  obtain ⟨c, hr, he⟩ := real_lift n q bus hq p 0 (by simpa using hz)
+  have hpn : p ≠ 0 := by intro h; simp [h] at hm
+  obtain ⟨u, d, hk, hu, hb, hs, _, hsign, hroot⟩ :=
+    binary_conformal_kernel n q p c hp hpn ((real_kernel_iff n q p c).mpr he)
+  have hd : d (root n) = 0 := sign_eq_zero_iff.mp (by simpa [hr] using hroot)
+  let S := Finset.univ.filter (fun a => u a = 1)
+  have hi (a : Address n) : u a = if a ∈ S then 1 else 0 := by
+    rcases hb a with h | h <;> simp [S, h]
+  have hn : S.Nonempty := by
+    by_contra h
+    apply hu
+    ext a
+    rw [hi]
+    simp [Finset.not_nonempty_iff_eq_empty.mp h]
+  refine ⟨S, hn, ?_, ?_⟩
+  · intro a ha
+    exact hs a (by rw [hi]; simp [ha])
+  · have hrel := real_relation n q bus hq u d ((real_kernel_iff n q u d).mp hk)
+    rw [hd, Complex.ofReal_zero, zero_smul] at hrel
+    convert hrel using 1
+    ext e
+    simp only [synthesis, LinearMap.coe_mk, AddHom.coe_mk, hi,
+      apply_ite, Complex.ofReal_one, Complex.ofReal_zero, ite_mul, one_mul, zero_mul]
+    simp [← Finset.sum_filter]
+
+private theorem circuit_binary (n : ℕ) (q : Router n → ℝ) (y : Variable n → ℝ)
+    (hy : (matrix n q).mulVec y = 0) (hyn : y ≠ 0)
+    (hpos : ∀ a, 0 ≤ y (.inl a))
+    (hmin : ∀ w : Variable n → ℝ, (matrix n q).mulVec w = 0 → w ≠ 0 →
+      Function.support w ⊆ Function.support y → Function.support w = Function.support y) :
+    ∃ (t : ℝ) (u : Address n → ℝ) (d : Node n → ℝ),
+      0 < t ∧ u ≠ 0 ∧ (∀ a, u a = 0 ∨ u a = 1) ∧
+      (∀ v, d v = 0 ∨ d v = -1 ∨ d v = 1) ∧
+      (matrix n q).mulVec (Sum.elim u d) = 0 ∧ y = t • Sum.elim u d := by
+  classical
+  let x : Address n → ℝ := fun a => y (.inl a)
+  let c : Node n → ℝ := fun v => y (.inr v)
+  have hsplit : Sum.elim x c = y := by ext v; cases v <;> rfl
+  have hx : x ≠ 0 := by
+    intro h
+    have hc := nodes_zero_of_leaves_zero n q x c
+      ((real_kernel_iff n q x c).mp (by simpa [hsplit] using hy)) h
+    apply hyn
+    rw [← hsplit, h, hc]
+    ext v; cases v <;> rfl
+  obtain ⟨u, d, hk, hu, hb, hs, ht, hsign, _⟩ :=
+    binary_conformal_kernel n q x c hpos hx (by simpa [hsplit] using hy)
+  let k : Variable n → ℝ := Sum.elim u d
+  have hkn : k ≠ 0 := by intro h; apply hu; ext a; exact congrFun h (.inl a)
+  have hsub : Function.support k ⊆ Function.support y := by
+    intro v hv
+    change k v ≠ 0 at hv
+    change y v ≠ 0
+    cases v with
+    | inl a => exact (hs a hv).ne'
+    | inr v =>
+      intro hz
+      have hsign0 := hsign v hv
+      have hd := sign_eq_zero_iff.mp (by simpa [c, hz] using hsign0)
+      exact hv hd
+  obtain ⟨a, ha⟩ := Function.ne_iff.mp hu
+  have hua : u a = 1 := (hb a).resolve_left ha
+  let t := x a
+  have htp : 0 < t := hs a ha
+  let w := y - t • k
+  have hwK : (matrix n q).mulVec w = 0 := by
+    simp [w, Matrix.mulVec_sub, Matrix.mulVec_smul, hy, hk, k]
+  have hwsub : Function.support w ⊆ Function.support y := by
+    intro v hv
+    change y v ≠ 0
+    intro hz
+    have hkz : k v = 0 := by
+      by_contra h
+      exact hsub h hz
+    exact hv (by simp [w, hz, hkz])
+  have hw : w = 0 := by
+    by_contra hn
+    have heq := hmin w hwK hn hwsub
+    have haY : Sum.inl a ∈ Function.support y := htp.ne'
+    have haW := heq.symm ▸ haY
+    apply haW
+    simp [w, k, hua, t, x]
+  refine ⟨t, u, d, htp, hu, hb, ht, hk, ?_⟩
+  exact sub_eq_zero.mp hw
+
+private def indexedMatrix (n : ℕ) (q : Router n → ℝ) :
+    Matrix (Fin (Fintype.card (Row n q))) (Variable n) ℝ :=
+  fun i v => matrix n q ((Fintype.equivFin (Row n q)).symm i) v
+
+private theorem indexed_kernel_iff (n : ℕ) (q : Router n → ℝ) (y : Variable n → ℝ) :
+    (indexedMatrix n q).mulVec y = 0 ↔ (matrix n q).mulVec y = 0 := by
+  constructor
+  · intro h; ext i
+    simpa [indexedMatrix, Matrix.mulVec, dotProduct] using
+      congrFun h ((Fintype.equivFin (Row n q)) i)
+  · intro h; ext i
+    exact congrFun h ((Fintype.equivFin (Row n q)).symm i)
+
+/-- Nonempty uniform original-leaf certificates, with their signed numerator. -/
+def UniformCertificate (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
+    (S : Finset (Address n)) (e : ℝ) : Prop :=
+  S.Nonempty ∧ (e = -1 ∨ e = 0 ∨ e = 1) ∧
+    (∑ a ∈ S, record n q bus a) = (e : ℂ) • vacuumRecord n q
+
+private theorem binary_uniform (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v ∧ q v ≤ 1)
+    (u : Address n → ℝ) (d : Node n → ℝ) (hu : u ≠ 0)
+    (hb : ∀ a, u a = 0 ∨ u a = 1)
+    (hd : ∀ v, d v = 0 ∨ d v = -1 ∨ d v = 1)
+    (hk : (matrix n q).mulVec (Sum.elim u d) = 0) :
+    ∃ S : Finset (Address n), UniformCertificate n q bus S (d (root n)) ∧
+      (∀ a, u a = if a ∈ S then 1 else 0) ∧ (∑ a, u a) = S.card := by
+  classical
+  let S := Finset.univ.filter (fun a => u a = 1)
+  have hi (a : Address n) : u a = if a ∈ S then 1 else 0 := by
+    rcases hb a with h | h <;> simp [S, h]
+  have hn : S.Nonempty := by
+    by_contra h
+    apply hu
+    ext a
+    rw [hi]
+    simp [Finset.not_nonempty_iff_eq_empty.mp h]
+  refine ⟨S, ⟨hn, ?_, ?_⟩, hi, ?_⟩
+  · rcases hd (root n) with h | h | h <;> simp [h]
+  · have hr := real_relation n q bus hq u d ((real_kernel_iff n q u d).mp hk)
+    convert hr using 1
+    ext e
+    simp only [synthesis, LinearMap.coe_mk, AddHom.coe_mk, hi,
+      apply_ite, Complex.ofReal_one, Complex.ofReal_zero, ite_mul, one_mul, zero_mul]
+    simp [← Finset.sum_filter]
+  · simp [hi, ← Finset.sum_filter]
 
 end D5.S3.Quantum.Routing.HannUniformSection
