@@ -112,7 +112,7 @@ def evidence : Registration arena (type_of% @qubit_subentropy_near_pure) where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@qubit_subentropy_near_pure) (Realization signature) Type Unit := {
+      (@qubit_subentropy_near_pure) (Realization signature) Unit Unit := {
   unitName := `D5.S3.Quantum.Subentropy.QubitBoundary.qubit_subentropy_near_pure.audit
   realizationName := `Reg.D5.S3.Quantum.Subentropy.QubitBoundary.evidence
   realizationSource := none
@@ -124,11 +124,11 @@ def registration :
   realization := .source arena ⟨evidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some (realize signature (fun _ _ A => matrixSubentropy A) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some M
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Subentropy.QubitBoundary
     definition := none
