@@ -5,7 +5,7 @@ year: 2002
 title: Algebraic Topology
 doi: null
 url: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf
-claim: "The alternating simplex boundary has square zero and defines the simplicial chain complex. The ordinary quotient join satisfies the classical sphere identity S^m * S^n homeomorphic to S^(m+n+1)."
+claim: "The alternating simplex boundary has square zero and defines the simplicial chain complex. The ordinary quotient join satisfies the classical sphere identity S^m * S^n homeomorphic to S^(m+n+1). Circle power maps are covering spaces, with lifts governed by the covering-space lifting criterion."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -55,3 +55,21 @@ concatenation, and selected first-coordinate endpoint formula are local
 refinements. These locators do not prescribe those formulas or certify an
 information-escape registration, and do not resolve Carnero Bravo
 Question 22.
+
+# Circle power covers and lifting
+
+The [author-hosted Chapter 1](https://pi.math.cornell.edu/~hatcher/AT/ATch1.pdf),
+printed p. 56 (chapter PDF page 36), describes the covering
+$p:S^1\to S^1$, $p(z)=z^n$, for positive integers $n$, with $|z|=1$.
+Proposition 1.33, printed p. 61 (chapter PDF page 41), states the
+based lifting criterion for a path-connected, locally path-connected
+source $Y$: a lift of $f:(Y,y_0)\to(X,x_0)$ through
+$p:(\widetilde X,\widetilde x_0)\to(X,x_0)$ exists exactly when
+$f_*(\pi_1(Y,y_0))\subseteq p_*(\pi_1(\widetilde X,\widetilde x_0))$.
+
+These are classical covering-space context for the matrix application in
+[CircleDoubleCoverNoSection](../../Blueprint/D5/S3/ConceptDynamics/Topology/CircleDoubleCoverNoSection.md).
+Its real rank-one projector field and factor-to-square-root correspondence
+are derived there from the existing Lean no-section theorem and pinned
+Mathlib matrix APIs. The citation alone is not a Lean certificate for the
+matrix application and makes no originality or physical claim.
