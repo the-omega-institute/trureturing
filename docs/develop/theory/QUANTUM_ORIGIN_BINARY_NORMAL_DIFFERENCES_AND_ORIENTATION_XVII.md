@@ -4208,3 +4208,251 @@ $$
 [Q195SV]: https://cage.ugent.be/~hvm/artikels/204.pdf "Schillewaert–Van Maldeghem, Hermitian Veronesean Caps；§2.3的H1—H3、Theorem2.4及§3.3的有限指数供应，经XIII160.3—160.4使用。"
 
 ## 追加锚（本行以下为增补区）
+
+## 196. 增补一百九十五·每线命中与纯准备的单侧系数
+
+### 196.1 原二元关系、实际面与有向商
+
+**定义 196.1（命中与纯系数条件）。** 完整保留 XIII160.1 的原域：非零有限维实空间 $V$，闭、尖、生成凸锥 $C$，在非零正元上严格正的原单位 $u$，整个紧底 $K=C\cap\{u=1\}$、全部原纯点 $P=\operatorname{ext}K$ 及整个原效应区间 $\mathcal E=[0,u]_{C^*}$。记 $d=\dim V$，$F_K(A)$ 是包含 $A$ 的最小实际面；空集生成空面。定义
+
+$$
+\begin{gathered}
+a\#b\quad\Longleftrightarrow\quad
+\exists e\in\mathcal E:\ e(a)=1,\ e(b)=0,\\
+N_a=\{b\in P:a\#b\},\qquad
+W_a=\operatorname{span}_{\mathbb R}N_a,\qquad
+S_a=\mathbb Ra+W_a,\\
+\mathrm{Hit}(a):\quad
+N_a\cap F_K(p,q)\ne\varnothing
+\quad\text{对所有不同的 }p,q\in P,\\
+\mathrm{SP}(a):\quad
+p\in P,\ \lambda\in\mathbb R,\ p-\lambda a\in W_a
+\quad\Longrightarrow\quad\lambda\ge0.
+\end{gathered}
+\tag{196.1}
+$$
+
+补效应使 $\#$ 对称，无自反性由读数一与零不同给出。Hit 只用纯点和原实际面，不预先指定球、对径、混态零凸性或共同确认者。若另给 L2，每个不同纯对的实际面就是整颗仿射三维闭球，Hit 便是 $N_a$ 命中每条纯点线；该线是球的整个纯边界。
+
+SP 只检查原纯准备的线性关系。其有限写法是：对任意 $0\le r\le d$、原 $b_1,\ldots,b_r\in N_a$、实数 $c_j,\lambda$ 和原 $p\in P$，
+
+$$
+p=\lambda a+\sum_{j=1}^r c_jb_j
+\quad\Longrightarrow\quad\lambda\ge0.
+\tag{196.2}
+$$
+
+$r=0$ 保留空和；邻点系数允许任意正负号。有限写法与(196.1)等价，因为任一 $W_a$ 向量可用至多 $\dim W_a\le d$ 个原邻点展开。它没有量化准备—效应张量、正删除或局部效应的全域延拓。
+
+**定理 196.2（有向商的准确几何）。** SP$(a)$ 蕴涵 $\mathrm{LIN}(a):a\notin W_a$。在 LIN 下，令 $\pi_a:V\to V/W_a$ 为原线性商，则 SP$(a)$ 等价于
+
+$$
+\pi_a(P)\cap\{-t\pi_a(a):t>0\}=\varnothing.
+\tag{196.3}
+$$
+
+同样，它等价于 $S_a=\mathbb Ra\oplus W_a$ 上的唯一线性系数函数
+
+$$
+\alpha_a(ta+w)=t
+\quad\text{在 }P\cap S_a\text{ 上非负}.
+\tag{196.4}
+$$
+
+证明。若 $a\in W_a$，取 $p=a,\lambda=-1$，有 $p-\lambda a=2a\in W_a$，违反 SP。故商中的 $\pi_a(a)$ 非零，目标系数唯一。等式 $p-\lambda a\in W_a$ 恰为 $\pi_a(p)=\lambda\pi_a(a)$，从而给(196.3)；同一唯一系数就是(196.4)。这是196.1的几何读法，不另外申领有限基抽取或商空间的新定理。$\square$
+
+### 196.2 命中实际面使截面仍由原纯点生成
+
+**定理 196.3（命中集的截面极点桥）。** 固定 $a\in P$，只假设 Hit$(a)$，不假设 L2。对每个包含 $N_a$ 的实线性子空间 $S\le V$，有
+
+$$
+\operatorname{ext}(K\cap S)=P\cap S,\qquad
+K\cap S=\operatorname{conv}(P\cap S),\qquad
+C\cap S=\operatorname{cone}(P\cap S).
+\tag{196.5}
+$$
+
+空截面时凸包取空集，正锥生成取含零的有限非负和。这里没有预设原纯点集闭或最小实际面闭。
+
+证明。设 $x\in\operatorname{ext}(K\cap S)$ 却不是原纯点。有限维紧凸生成使 $x$ 有原纯点的有限凸分解；非纯性使至少两个不同的原纯点 $p,q$ 以正系数出现。每个含 $x$ 的实际面都含这些分解点，故它们都属于最小实际面 $F_K(x)$。于是
+
+$$
+F_K(p,q)\subseteq F_K(x).
+\tag{196.6}
+$$
+
+Hit 给一个 $b\in N_a\cap F_K(p,q)$。由于 $N_a\subseteq S$，有 $b\in S\cap F_K(x)$；$b$ 原纯而 $x$ 非纯，故 $b\ne x$。点 $x$ 位于其最小面的相对内部，因而存在 $\varepsilon>0$ 使
+
+$$
+y=x+\varepsilon(x-b)\in F_K(x),\qquad
+x=\frac{\varepsilon}{1+\varepsilon}b+
+\frac1{1+\varepsilon}y.
+\tag{196.7}
+$$
+
+$y$ 也属于 $S$，且 $b,x,y$ 不同，矛盾于截面极点性。这个延伸只在最小面的相对内部进行，无需将该面替成其闭包。反向，原极点落在截面内便仍是截面极点。对紧凸集 $K\cap S$ 再用有限维极点生成给第二式；任何非零 $c\in C\cap S$ 都按原严格正单位写成 $c=u(c)k$、$k\in K\cap S$，给第三式。
+
+有限维紧凸生成、最小面的相对内部及支撑分离是成熟凸几何工具，参见 [Q196R, §§11,18]；本条新增的接合是 Hit 排除线性截面中的新极点。它不是一般线性截面自动保持原极点的断言。$\square$
+
+### 196.3 从纯系数到原共同正支撑
+
+**定理 196.4（逐标签纯系数与不塌缩等价）。** 在196.1的同一完整原域中，NC$(a)$ 总蕴涵 SP$(a)$。若另给 Hit$(a)$，则
+
+$$
+\boxed{\quad
+\mathrm{SP}(a)\quad\Longleftrightarrow\quad
+\mathrm{NC}(a):a\notin F_K(N_a).
+\quad}
+\tag{196.8}
+$$
+
+在 Hit$(a)$ 下，它们还等价于 LIN$(a)$ 加上 $\alpha_a\ge0$ 于整个 $C\cap S_a$。等价只要求该标签的命中；没有用其他标签的 SP。
+
+证明。SP 先由196.2给 LIN，故 $\alpha_a$ 良定义。SP 恰使它在 $P\cap S_a$ 非负。196.3用于 $S=S_a$，遂给
+
+$$
+\alpha_a(C\cap S_a)\subseteq\mathbb R_+.
+\tag{196.9}
+$$
+
+若 $z\in W_a\cap\operatorname{int}C$，充分小的 $\varepsilon>0$ 使 $z-\varepsilon a\in C\cap S_a$，其 $\alpha_a$ 值却为 $-\varepsilon$，矛盾。因此
+
+$$
+W_a\cap\operatorname{int}C=\varnothing.
+\tag{196.10}
+$$
+
+分离实线性子空间 $W_a$ 与开凸集 $\operatorname{int}C$，取得非零 $g\in V^*$，满足 $g|_{W_a}=0$ 且 $g\ge0$ 于 $\operatorname{int}C$。原锥闭且生成，故 $\overline{\operatorname{int}C}=C$，所以 $g\in C^*\setminus\{0\}$。这一标准分离步骤没有假设 $C+W_a$ 闭或正延拓定理。
+
+此时直接调用 XIII160.10 的全称严格性：完整原菜单使每个消去 $N_a$ 的非零正泛函都满足 $g(a)>0$，并给 NC$(a)$。该供应的关键不是令 $g/g(a)$ 自动 proper；它取 $g$ 的原纯最大点和原单位归一化，再以补效应排除 $g(a)=0$。这里准确使用其正支撑结论，不提前声称共同确认或 least。
+
+反向，NC 由同一160.10供应 $g\in C^*\setminus\{0\}$、$g|_{W_a}=0$、$g(a)>0$。若原纯点 $p=\lambda a+w$，则
+
+$$
+\lambda=g(p)/g(a)\ge0.
+\tag{196.11}
+$$
+
+这给 SP，且不需要 Hit。对整个 $C\cap S_a$ 同样成立，故给最后的等价。$\square$
+
+**命题 196.5（不遵守时的两类有限后果）。** 在 Hit$(a)$ 下，NC$(a)$ 失败当且仅当 SP$(a)$ 失败。其失败可按两类区分：
+
+1. $a\in W_a$，即旧的线性回卷；此时 $p=a,\lambda=-1$ 已是 SP 负证书。
+2. $a\notin W_a$，但存在不同于 $a$ 的原纯点 $p$ 及 $\lambda<0$，使 $p-\lambda a\in W_a$。
+
+第二类仍有至多 $d-1$ 个原邻点的有符号展开。只给 LIN 排除第一类；本命题没有证明全标签 LIN 也排除第二类。
+
+证明。196.4先给失败的等价和负证书的存在。若 LIN 成立，系数唯一且 $\alpha_a(a)=1$，负系数的 $p$ 不能等于 $a$；又 $\dim W_a\le d-1$，取其中原邻点基即得有限界。
+
+还可从原混态内部直接看到第二类。若 NC 失败，160.10排除任何非零正泛函消去 $W_a$，由前段分离的逆否有 $z\in W_a\cap\operatorname{int}C$。取 $x=z-\varepsilon a\in C\cap S_a$，$\alpha_a(x)=-\varepsilon$。196.3将 $x$ 写成原纯点的有限非负和；至少一个原纯项必须有负 $\alpha_a$，它就是所需 $p$。负系数不是测试给出的负概率，而是原准备之间确实成立、却翻转目标方向的线性关系。$\square$
+
+### 196.4 不经切向闭合的完整几何候选
+
+**定理 196.6（单系统的命中—单侧候选）。** 在196.1的原域上，下列等价：
+
+$$
+\boxed{\quad
+\mathrm{L2}+\forall a\in P\,[\mathrm{Hit}(a)+\mathrm{SP}(a)]
+\quad\Longleftrightarrow\quad
+\exists n\ge1,\ \theta:V\overset\sim\longrightarrow
+\operatorname{Herm}_n(\mathbb C):
+\ \theta(C)=\operatorname{PSD}_n,\quad u=\operatorname{Tr}\circ\theta.
+\quad}
+\tag{196.12}
+$$
+
+所有对象都沿同一个原实线性同构运输。左侧没有 TC、全混态零凸性、正删除或预给的矩阵商。
+
+证明。196.4先给全标签 NC。L2+Hit 给 AD：取任何实际二元球 $B$ 和球内纯点 $a$，Hit 给 $b\in N_a\cap B$。原区分效应在整个 $B$ 上取值于 $[0,1]$，于 $a,b$ 达到一、零。三球上非恒定仿射函数的最大、最小点唯一且互为对径，故 $b$ 正是 $a$ 的几何对径。这个步骤只使用179.3证明中的球内极值部分，无需其混态零凸性前件。于是准确达到 XIII162.10 的 L2+NC+AD，直接复用其完整单系统分类。
+
+反向，在完整复矩阵底中，$a=P_v$ 的原邻点恰为 $P_w$、$w\perp v$。任意二点实际球的复二维支持 $U$ 满足 $\dim(U\cap v^\perp)\ge1$，给 Hit，包括球外的 $a$。原正泛函 $X\mapsto\operatorname{Tr}(P_vX)$ 消去全部 $N_a$ 且在 $a$ 取一，故由(196.11)给 SP；实际二点底为三球，给 L2。$n=1$ 时 $K$ 单点，Hit 与 L2 为空量词，$N_a=\varnothing$，SP 直接成立。$\square$
+
+**定义 196.7（三复制候选的全部背景）。** 完整采用 XIII162.15 的强实全有限背景：对每个有限 $N\ge1$，原空间 $W_N=V^{\otimes_{\mathbb R}N}$，原锥 $C_N$ 闭、尖、生成，严格正乘法单位 $u_N=u^{\otimes N}$；每层保留全部原纯点和完整效应。对所有分块 $a+b=N$ 有原 min/max 张量包含，全部位置置换及其逆在整个锥上正，两个括号使用同一原规范识别，并保留标量层。只在整个三复制底要求
+
+$$
+\mathsf Q_{\rm incidence,sign}
+:=\mathrm{L2}_3+
+\forall a\in P_3\,[\mathrm{Hit}_3(a)+\mathrm{SP}_3(a)].
+\tag{196.13}
+$$
+
+量词包括所有纠缠纯点、所有实际二点面及全部原线性准备关系。球的仿射三维与检查整个三复制系统是两种不同的“三”。
+
+**定理 196.8（共同复几何及所有有限层）。** 在196.7的精确背景下，$\mathsf Q_{\rm incidence,sign}$ 当且仅当存在同一个整数 $n\ge1$ 和同一个 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$，使对每个有限 $N\ge0$，
+
+$$
+\Theta_N=\theta^{\otimes N},\qquad
+\Theta_N(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\Theta_N.
+\tag{196.14}
+$$
+
+证明。196.6只先用于整个 $(W_3,C_3,u_3)$，从三复制候选取得同域的 L2+NC+AD。此时才调用162.16的 $\mathsf R_3$ 入口；其 pure-spectator 实际面、共同复方向及全有限传播供应同一个 $\theta$ 的(196.14)。反向在每个标准复矩阵层使用196.6的矩阵反向。标量层取空张量，$n=1$ 包括所有一维层；$\dim V>1$ 时必有 $n\ge2$。没有另行分类各层后直接宣告坐标相同。$\square$
+
+### 196.5 局部更弱的条件及其准确边界
+
+**命题 196.9（SP 不等于单项正删除）。** 在195.7的旧平衡单核商 $H=\operatorname{diag}(I_m,-I_m)$、$m\ge3$ 中，令
+
+$$
+v=(e_1+f_1)/\sqrt2,\qquad
+w=(e_1-f_1)/\sqrt2,\qquad a=p_v.
+\tag{196.15}
+$$
+
+这个同原完整菜单模型保留 L2、TC、AD 及所有标签的 Hit；在标签 $a$ 上 SP 成立而 $\mathrm{FC}_1(a)$ 失败。它是既有模型的点态分离应用，不是全标签 SP 或全标签 LIN 的反模型。
+
+证明。193.7给全原 AD，原纯点及二点实际面对应由 XIV165 的商模型供应；复二维支持与 $v^\perp$ 必有交，故全标签 Hit。$v^*Hv=0$，所以矩阵 $P_v$ 是原合法效应，其消去全部原邻点且在 $a$ 取一；(196.11)给 SP。更明确地，旧商关系给
+
+$$
+p_{e_1}-\frac12a
+=\frac12p_w+
+\frac12\sum_{i=2}^m(p_{f_i}-p_{e_i})\in W_a.
+\tag{196.16}
+$$
+
+右侧每个原纯点都与 $v$ 正交，原 AD 使其确为原邻点。另一方面 $E=P_{f_1}+P_{e_2}$ 满足 $0\le E\le I$ 且 $\operatorname{Tr}(EH)=0$，是同一个完整原菜单中的效应，而
+
+$$
+E\!\left(p_{e_1}-\frac12a\right)=-\frac14.
+\tag{196.17}
+$$
+
+194.2的 $\mathrm{FC}_1(a)$ 正规形要求 $\delta_a(P\cap S_a)\subseteq C$，其中 $\delta_a p=p-\alpha_a(p)a$；(196.16)的目标系数为 $1/2$，(196.17)排除这个删除像的正性。因此 $\mathrm{FC}_1(a)$ 失败，与195.7第二行一致。SP 约束的是目标系数非负，FC$_1$ 约束的是删去目标后的余项为正，两个条件不能互换。$\square$
+
+### 196.6 熟悉量子公理的条件字典与更简结构
+
+**命题 196.10（量子字典及三种关系的分工）。** 在196.8的全部前件下，完整量子字典由同一个 $\Theta_N$ 给出：
+
+| 熟悉结构 | 由新候选得到的对应及保留的条件 |
+| --- | --- |
+| Hilbert 空间、纯态、叠加、混态 | $\mathcal H_N=(\mathbb C^n)^{\otimes N}$；全部原纯点为 $\mathbb{CP}^{n^N-1}$，全部原归一态为迹一 PSD；复线性叠加在该 Hilbert 空间中取射线 |
+| Born、效应、测量 | 原配对为 $e(x)=\operatorname{Tr}(E\Theta_Nx)$，整个原效应区间恰为 $0\le E\le I$；同一 least 确认者在纯输入读 $|\langle v,w\rangle|^2$，并在全部混输入线性延拓；Hermitian 谱与单位正分解分别给数学 PVM、POVM |
+| 复合、纠缠、约化 | 同一个 $\theta$ 保持原产品、位置置换、括号及原单位；原边缘对应偏迹，各层含全部纠缠态 |
+| 分支、通道、仪器 | 另要求原线性映射在每个有限旁观者下保持整个正锥，才恰得 CP；全输入质量不增或保持给 Kraus 预算，保质量的有限分支族给数学仪器 |
+| 理想锐中性更新 | 另给投影效应和逐点固定其读一原纯态的正分支，才得 $X\mapsto PXP$ |
+| 连续可逆动力学 | 另给连续、保原锥和原单位的实参数群，才得 $X\mapsto e^{-itH}Xe^{itH}$；物理时间、能量与 $\hbar$ 的标定另需经验对应 |
+
+证明。196.14是162.16的相同结论，表中全部对应及附加条件直接消费162.9的字典，未重证已有过程分类，也未把每个数学效应、分支或测试族的存在宣告成实际设备的完备实现。
+
+新入口的几何只分三种关系：L2 固定每个二点实际面的形状；Hit 要求每个纯标签的原邻点集合命中每条纯点线；SP 固定由原邻点线性张成所作商中的目标半轴方向。它先在原线性截面上排除新极点，再使目标系数具有原正支撑，最后消费既有复几何分类。重建后，纯点线就是 $\mathbb{CP}^1\cong S^2$，$N_a$ 是复射影正交超平面；若 $a=P_v$，则
+
+$$
+W_a=\operatorname{Herm}(v^\perp),\qquad
+S_a=\mathbb RP_v\oplus\operatorname{Herm}(v^\perp),\qquad
+\alpha_a(X)=\operatorname{Tr}(P_vX)\quad(X\in S_a).
+\tag{196.18}
+$$
+
+$W_a$ 的原实余维为 $2n-1$，$S_a$ 的余维为 $2n-2$。所以“纯点超平面”不是原实空间里的余维一超平面，商图也不提前把纯点线当普通实直线。相较195的入口，这里不输入 TC 或切方向；新增的纯生成桥让原纯系数的单侧性已经足够。不过没有证明 Hit+SP 由裸全标签 LIN 导出，亦没有证明独立公理数严格减少。
+
+承重新增196.3与196.4是原实际面命中、截面纯生成和纯系数符号之间的 repo-derived 接合。196.2的有限线性代数、分离、最小面相对内部及紧凸生成是成熟工具；原正支撑严格性归160.10，完整分类、全有限传播与量子字典归162.10、162.16及162.9。旧平衡商仅用于196.9的点态边界，不申领新反模型或文献优先权。$\square$
+
+**命题 196.11（完整白话与尚未消去的条件）。** 196.7的候选可以完整表述为：保留系统本来的全部准备、测试和任意有限复合，只在整个三份系统上查看三件事。任意两个不同纯准备撑起一颗实际三球；对任意目标纯准备，所有能与它确定区分的纯准备，必须碰到每颗这样的球；把这些可区分准备的线性张成压成零后，任何原纯准备都不能落到目标的反向半轴。这些条件约束同一批原定义之间的关系，不另外输入 Hilbert 空间、Born 公式、正删除或切向闭合。
+
+证明及图景。若线性截面里冒出一个并非原纯的新极点，它原本属于一个含不同纯点的实际面。命中律会从这个面中找出一个仍在截面内的原邻点；沿这点穿过新极点再走一点，便得到截面内的一条真线段，否定极点性。因此截面没有夹生的新尖角，全部混态都由原纯点填满。纯点不许反向，便使整个截面的目标系数非负。若邻点张成还能穿入整个正锥内部，轻轻减掉一点目标仍会留下正准备，却得到负系数，发生矛盾；所以它必须留在原锥边界的一侧。原完整测试随后供应一张同时消去全部邻点的正支撑；球上的一与零将相交邻点钉成对径，已有重建把这些小球接成同一复射影几何和全部有限复矩阵层。Born 和复张量由此得到，过程与时间各在196.10列明的条件下接上。
+
+这里的内生化，是把新候选写成原准备、原效应、实际面及原线性关系的相容约束；没有把所选原概率载体与这三条约束宣称成无前提真理。若想再只留 LIN，必须证明它同时禁止196.5第二类的纯准备负系数；这一联合命题尚未在当前推导中成立。$\square$
+
+[Q196R]: https://doi.org/10.1515/9781400873173 "R. T. Rockafellar, Convex Analysis；§§11,18的有限维分离、面与相对内部工具，沿用XIII160.10的工具归属。"
+
+## 追加锚（本行以下为增补区）
