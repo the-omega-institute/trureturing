@@ -48,9 +48,9 @@ internal sealed class TwoRowCycleObstructionDocument : IScribeDocumentDefinition
             Imp(Member(C(i), S(e)), Imp(Member(C(j), S(e)),
                 Or(Equal(Rotate(i), j), Equal(Rotate(j), i))))),
             B("e", I("E")), B("i", fin), B("j", fin));
-        var pair = Seq(OpenBrace, I("r0"), Comma, Sp, I("r1"), CloseBrace);
+        var pair = Seq(OpenBrace, I("a"), Comma, Sp, I("b"), CloseBrace);
         var local = All(Some(Equal(R(e), pair),
-            B("r0", Fn(S(e), I("Bool"))), B("r1", Fn(S(e), I("Bool")))),
+            B("a", Fn(S(e), I("Bool"))), B("b", Fn(S(e), I("Bool")))),
             B("e", I("E")));
         var overlap = All(Equal(
             Call("leftProjection", I("S"), e, f, R(e)),
