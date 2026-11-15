@@ -36,6 +36,10 @@ $$\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(\left(\left(\exists N \in 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/MurthyA085124.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a085124-murthy-joint-digit-product` (proved) by `D5/S1/Digit/MurthyA085124.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a085124-murthy-joint-digit-product","declaration_gid":"D5/S1/Digit/MurthyA085124.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Amarnath Murthy (2003). *OEIS A085124, Smallest multiple of n whose digital product is also a positive multiple of n, or 0 if no such number exists*. URL: <https://oeis.org/A085124>.
