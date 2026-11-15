@@ -207,8 +207,8 @@ No holomorphicity, strict derivative, regularity or finiteness of other zeros,
 or nonzero boundary winding is assumed.
 
 This is conditional ambiguity, not genericity or a solution of C9, and it
-adds **zero** solved-open-problem credit. The endpoint signs are supplied below.
-Universal all-length transversality, finite canonical-chart coverage and
+adds **zero** solved-open-problem credit. The endpoint signs and fixed-witness
+transversality are supplied below. Transversality beyond that witness, finite canonical-chart coverage and
 dominance, and genericity on the actual state and actual raw-density images
 remain separate obligations. The C8 attribution to Ma and Zhang, CC BY 4.0,
 is unchanged. The topology supplier reuses
@@ -218,6 +218,70 @@ at `docs/reports/licenses/tauceti-sphere-port-LICENSE.txt` and source-port
 attribution in the owning topology note. This static finite-state theorem
 adds no normalization, physical positive inverse, stability, clock, dynamics,
 energy or thermodynamic cost.
+
+
+`OpenBoundaryMPSInteriorTransversality.interior_q2_fixed_target_witness`
+closes the ordinary real derivative premise at one actual witness for every
+$p,q\ge1$. Its only inputs are these lengths and their positivity proofs.
+The native sector is $(\lambda,\mu,a)=(2,0,1)$, $z_0=1$,
+$l=(1,1)$ and $r=(1,i)^T$. With the same native targets, inverse transfers
+and residual defined above, the theorem proves $P_p,H_q$ positive definite,
+$X_p(1)=l^\dagger l$, $Y_q(1)=rr^\dagger$, and $f(1)=0$.
+
+The first positive environments are
+$S(l^\dagger l)=\left(\begin{smallmatrix}8&4\\4&4\end{smallmatrix}\right)$
+and $E(rr^\dagger)=\left(\begin{smallmatrix}10&2i\\-2i&2\end{smallmatrix}\right)$,
+with determinant $16$ in both cases. Invertible $G(1)$ congruence plus a
+positive semidefinite Kraus summand preserves strict positivity at every
+subsequent step, and $G(1)^2=2I$ gives $H_q=4E^q(rr^\dagger)$.
+
+The ordinary real derivative is a continuous linear equivalence with
+
+$$
+Df(1)[w]=L_p\operatorname{Re}w+
+i\bigl(C_q\operatorname{Re}w+R_q\operatorname{Im}w\bigr),
+\qquad
+\det\begin{pmatrix}L_p&0\\C_q&R_q\end{pmatrix}=L_pR_q\ne0.
+$$
+
+Joint parameter/input derivatives are proved before differentiating the
+parameter-dependent inverse iterates, with $P_p,H_q$ held fixed. Both
+$G(z)^{-1}$ factors in the central inverse-square sandwich contribute.
+Conjugation is real linear. Determinants are differentiated entrywise at
+the rank-one boundary Grams, without a matrix-inverse premise there.
+
+The nonvanishing proof uses division-free integer recurrences. Let
+$a_0=(1,0,-1)$, $b_0=(1,0,1)$, $x_0=(0,1,0)$, $y_0=(1,0,0)$ and
+
+$$
+D=\begin{pmatrix}3&0&-2\\-2&0&3\\0&5&0\end{pmatrix},\quad
+T=\begin{pmatrix}3&2&0\\0&0&1\\2&3&0\end{pmatrix},\quad M=T^T.
+$$
+
+Set $a_{n+1}=a_nD$, $b_{n+1}=Tb_n$, $x_{n+1}=D^Tx_n$,
+$y_{n+1}=My_n$ and $t_n=a_{n,0}b_{n,1}+a_{n,1}b_{n,0}$. From $U_0=V_0=0$ use
+
+$$
+U_{n+1}=5U_n+2t_{n+1},\qquad
+V_{n+1}=5V_n+2(-1)^{n+2}
+\bigl(x_{n+1,0}+5^{n+1}y_{n+2,2}\bigr).
+$$
+
+Real coordinate and inverse-power inductions identify
+$5^pL_p=U_p$ and $5^qR_q=V_q$ after integer-to-real casts.
+Successor induction in $\mathbb Z/5\mathbb Z$ proves
+$U_p=1$ and $V_q=2(-1)^{q+1}3^q$ for all positive lengths. Their nonzero
+residues imply $L_pR_q\ne0$, and the integrated theorem retains
+$5^{p+q}L_pR_q=U_pV_q$ and the product residue. No homomorphism from
+$\mathbb Q$ to $\mathbb Z/5\mathbb Z$, finite-length sweep or assumed
+invertibility certificate is used.
+
+This supplies one fixed-target all-length interior zero and its invertible
+real derivative. It supplies no general annular boundary signs, endpoint
+operator limits, polynomial clearance, genericity, or full C9, and adds
+zero solved-open-problem credit. Source attribution for the original MPS
+problem and reused C8 mathematics is unchanged. There is no normalized-state,
+positive physical inverse, clock, dynamics, energy or thermodynamic claim.
 
 
 `OpenBoundaryMPSInteriorEndpointSigns` supplies the general regular-sector annular

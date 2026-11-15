@@ -1,0 +1,17 @@
+**定理 197.2（有向商的准确几何）。** SP$(a)$ 蕴涵 $\mathrm{LIN}(a):a\notin W_a$。在 LIN 下，令 $\pi_a:V\to V/W_a$ 为原线性商，则 SP$(a)$ 等价于
+
+$$
+\pi_a(P)\cap\{-t\pi_a(a):t>0\}=\varnothing.
+\tag{197.3}
+$$
+
+同样，它等价于 $S_a=\mathbb Ra\oplus W_a$ 上的唯一线性系数函数
+
+$$
+\alpha_a(ta+w)=t
+\quad\text{在 }P\cap S_a\text{ 上非负}.
+\tag{197.4}
+$$
+
+证明。若 $a\in W_a$，取 $p=a,\lambda=-1$，有 $p-\lambda a=2a\in W_a$，违反 SP。故商中的 $\pi_a(a)$ 非零，目标系数唯一。等式 $p-\lambda a\in W_a$ 恰为 $\pi_a(p)=\lambda\pi_a(a)$，从而给(197.3)；同一唯一系数就是(197.4)。这是197.1的几何读法，不另外申领有限基抽取或商空间的新定理。$\square$
+
