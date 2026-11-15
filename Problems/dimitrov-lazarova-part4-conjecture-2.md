@@ -57,13 +57,16 @@ a finite successful search does not settle the original universal event.
 
 ## Evidence
 
-The exact declaration is `DimitrovPartIVC2.result : DimitrovPartIVC2.claim`.
+The exact declaration is
+`D5/S3/Arith/Divisors/DimitrovPartIVC2.result`, proving the complete
+`DimitrovPartIVC2.claim` above.
 Its helper `ordered_ratio_bound` is private and consumed by `result`.
-The candidate classification is `proof_shape: bind-only` for the definition,
+The classification is `proof_shape: bind-only` for the definition,
 helper and endpoint: the proof consists of existing order laws, positivity,
 explicit polynomial factorizations and field normalization. No escape witness
-or first-freeze admission is claimed. The endpoint's proposed basis is
-`open-problem-resolution`, subject to independent source and form review.
+is claimed. The endpoint's admission basis is `open-problem-resolution`,
+with the original preregistration linked above. The helper is retained only
+as a consumed auxiliary on the result's live proof path.
 
 The mirrored `Reg/D5/S3/Arith/Divisors/DimitrovPartIVC2.lean` supplies the
 complete source-equivalence bridge, a rejected totient family witnessing
@@ -71,21 +74,24 @@ whole-family variation and sensitivity, and actual observational dependence.
 Its continuation is explicitly unknown; it asserts no theorem about
 inexhaustibility or undecidability.
 
-The content remains unfrozen Stage A. The Scribe states the proved mathematical
-formula without an `OpenProblemResolutionClaim`: that metadata's producer
-requires an exact current frozen declaration. Attaching
+The Scribe attaches
 `OpenProblemResolutionClaim(ProblemSlugRef.Create("dimitrov-lazarova-part4-conjecture-2"), ResolutionKind.Proved)`
-belongs after independent review and an authorized first freeze. No first
-freeze is authorized by this handoff.
+to the exact frozen result. This identifies the complete source assertion,
+including every allowed natural exponent and every prime or composite input.
 
 ## Triage
 
-The factorization route treats arbitrary allowed exponents and composite as
+### What the settlement shows
+
+Proved by `D5/S3/Arith/Divisors/DimitrovPartIVC2.result`: the factorization
+route treats arbitrary allowed exponents and composite as
 well as prime inputs. At the analytic boundary $x=y=r$, both differences vanish.
 This gives a sharp analytic envelope; a separate equality classification for
-all arithmetic inputs is not asserted. Independent pre-freeze fidelity/form
-review, the original evaluator, Stage B producers and delivery to dev remain
-subsequent obligations. No KPI, priority or admission credit is granted here.
+all arithmetic inputs remains open. The decisive mechanism is the pair of
+nonnegative differences in the Route section, followed by exact normalization
+to the original quotient. The source's Theorem 2 is the $k=1$ case; the result
+establishes the full Conjecture 2. Consequences for other source questions
+remain open. No priority claim is made.
 
 ## ASSUMED-UNVERIFIED
 

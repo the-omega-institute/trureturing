@@ -34,14 +34,19 @@ internal sealed class DimitrovPartIVC2Document : IScribeDocumentDefinition
                 + "and the denominator exponents 2k and 4k. This covers every prime and composite n and every allowed k. "
                 + "The argument uses no new arithmetic-function definition and claims no priority for the analytic inequality. "
                 + "The imported arithmetic development retains its existing supplier attribution and license.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("dimitrov-lazarova-part4-conjecture-2"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("dimitrov-partiv-c2-" + name),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula ClaimBody()
     {
