@@ -179,6 +179,16 @@ new-content or external-problem counts. The checker instance is
 `certificateData`, with general soundness and an unbounded terminal
 consumer. Admission is the complete external open-problem resolution.
 
+The literal certificate rows are stored in the adjacent
+`MurthyA077739CertificateLow.entries` (indices 0 through 499) and
+`MurthyA077739CertificateHigh.entries` (indices 500 through 999) modules.
+The private `certificateData` appends these arrays in that order, preserving
+all 1000 index positions and 1643 multiplier-count pairs. Both exported
+definitions are consumed proof data, with no independent theorem or
+external-problem count. The original `certificates_checked` kernel
+reduction and the general `certificate_sound` consumer validate the
+assembled data; the storage modules alone assert no admissibility result.
+
 The retained Reg mirror is
 `Reg/D5/S1/Digit/Admissibility/MurthyA077739Classification.lean`.
 Its four-slot audit is `declared_validated`, with exact
