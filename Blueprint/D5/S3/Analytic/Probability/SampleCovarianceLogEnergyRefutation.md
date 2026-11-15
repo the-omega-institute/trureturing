@@ -22,6 +22,10 @@ $$\neg (\forall (\mu : Measure \mathbb{C}), EntryLaw \mu \to (\forall n : \mathb
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/SampleCovarianceLogEnergyRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-cdy2212q13` (refuted) by `D5/S3/Analytic/Probability/SampleCovarianceLogEnergyRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-cdy2212q13","declaration_gid":"D5/S3/Analytic/Probability/SampleCovarianceLogEnergyRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Djalil Chafaï; Benjamin Dadoun; Pierre Youssef (2024). *Monotonicity of the logarithmic energy for random matrices*. DOI: [10.1142/S2010326324500084](https://doi.org/10.1142/S2010326324500084). URL: <https://arxiv.org/abs/2212.06090v2>.
