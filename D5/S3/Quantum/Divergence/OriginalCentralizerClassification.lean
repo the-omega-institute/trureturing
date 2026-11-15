@@ -168,6 +168,57 @@ private abbrev concreteCStarAlgebra
     (M : VonNeumannAlgebra H) : CStarAlgebra M.toStarSubalgebra := inferInstance
 attribute [local instance] concreteCStarAlgebra
 
+private abbrev concreteNonUnitalCStarAlgebra
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (M : VonNeumannAlgebra H) : NonUnitalCStarAlgebra M.toStarSubalgebra := inferInstance
+
+attribute [local instance] concreteNonUnitalCStarAlgebra
+
+private abbrev concreteStarOrderedRing
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (M : VonNeumannAlgebra H) : StarOrderedRing M.toStarSubalgebra := inferInstance
+
+attribute [local instance] concreteStarOrderedRing
+
+private abbrev concreteTopology
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (M : VonNeumannAlgebra H) : TopologicalSpace M.toStarSubalgebra := inferInstance
+
+attribute [local instance] concreteTopology
+
+private abbrev concreteAddCommMonoid
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (M : VonNeumannAlgebra H) : AddCommMonoid M.toStarSubalgebra := inferInstance
+
+attribute [local instance] concreteAddCommMonoid
+
+private abbrev concreteModule
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (M : VonNeumannAlgebra H) : Module ℂ M.toStarSubalgebra := inferInstance
+
+attribute [local instance] concreteModule
+
+private abbrev Op {A : Type*} [NonUnitalCStarAlgebra A] [PartialOrder A]
+    [StarOrderedRing A] (ψ : A →ₚ[ℂ] ℂ) := ψ.GNS →L[ℂ] ψ.GNS
+
+private abbrev nonnegative {A : Type*} [CStarAlgebra A] [PartialOrder A]
+    [StarOrderedRing A] (ψ : A →ₚ[ℂ] ℂ) (C : Op ψ) : Prop := 0 ≤ C
+
+private abbrev atMostOne {A : Type*} [CStarAlgebra A] [PartialOrder A]
+    [StarOrderedRing A] (ψ : A →ₚ[ℂ] ℂ) (C : Op ψ) : Prop := C ≤ 1
+
+private abbrev commutesOriginal {A : Type*} [CStarAlgebra A] [PartialOrder A]
+    [StarOrderedRing A] (ψ : A →ₚ[ℂ] ℂ) (C : Op ψ) : Prop :=
+  ∀ a, Commute C (ψ.gnsStarAlgHom a)
+
+private abbrev complement {A : Type*} [CStarAlgebra A] [PartialOrder A]
+    [StarOrderedRing A] (ψ : A →ₚ[ℂ] ℂ) (C : Op ψ) : Op ψ := 1 - C
+
+private abbrev compressedCentralizer {A : Type*} [CStarAlgebra A] [PartialOrder A]
+    [StarOrderedRing A] (ψ : A →ₚ[ℂ] ℂ) (C : Op ψ) : Prop :=
+  ContinuousCutoffCentralizer.CompressedCentralizes
+    (GNSSpectralMoments.commutant ψ) C (cyclicVector ψ)
+
 variable {H : Type v} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     (M : VonNeumannAlgebra H) (ρ σ : StrongDual ℂ M.toStarSubalgebra)
     (hρ : Positive ρ) (hσ : Positive σ)
@@ -179,13 +230,12 @@ include hρ hσ hρs hσs
 set_option maxHeartbeats 3000000 in
 -- The full spectral-moment theorem retains its actual commutant and whole-L1 carriers.
 private theorem compatibility_implies_centralizes
-    (C : (ψ).GNS →L[ℂ] (ψ).GNS) (hC0 : 0 ≤ C) (hC1 : C ≤ 1)
-    (hc : ∀ a, Commute C ((ψ).gnsStarAlgHom a))
+    (C : Op ψ) (hC0 : nonnegative ψ C) (hC1 : atMostOne ψ C)
+    (hc : commutesOriginal ψ C)
     (hCr : coefficient ψ C = ρ.toLinearMap)
-    (hCs : coefficient ψ (1 - C) = σ.toLinearMap)
+    (hCs : coefficient ψ (complement ψ C) = σ.toLinearMap)
     (hK : FiniteCompatibility M ρ σ univ) :
-    ContinuousCutoffCentralizer.CompressedCentralizes
-      (GNSSpectralMoments.commutant ψ) C (cyclicVector ψ) := by
+    compressedCentralizer ψ C := by
   obtain ⟨F, hF⟩ :=
     (finite_compatibility_iff_simultaneous M ρ σ hρ hσ hρs hσs univ).mp hK
   have hopt (t : ℝ) (ht : 0 < t) :
@@ -200,12 +250,11 @@ private theorem compatibility_implies_centralizes
     (fun t ht => (value_attained M ρ σ hρ hσ hρs hσs t ht).choose_spec.2) hmass
 
 private theorem centralizes_implies_compatibility
-    (C : (ψ).GNS →L[ℂ] (ψ).GNS) (hC0 : 0 ≤ C) (hC1 : C ≤ 1)
-    (hc : ∀ a, Commute C ((ψ).gnsStarAlgHom a))
+    (C : Op ψ) (hC0 : nonnegative ψ C) (hC1 : atMostOne ψ C)
+    (hc : commutesOriginal ψ C)
     (hCr : coefficient ψ C = ρ.toLinearMap)
-    (hCs : coefficient ψ (1 - C) = σ.toLinearMap)
-    (hcentral : ContinuousCutoffCentralizer.CompressedCentralizes
-      (GNSSpectralMoments.commutant ψ) C (cyclicVector ψ))
+    (hCs : coefficient ψ (complement ψ C) = σ.toLinearMap)
+    (hcentral : compressedCentralizer ψ C)
     (K : Set {t : ℝ // 0 < t}) : FiniteCompatibility M ρ σ K := by
   have hopt := SpectralCentralizerEquality.spectral_overlap_optimal
     M ρ σ hρ hσ hρs hσs C hC0 hC1 hc hCr hCs hcentral
@@ -216,16 +265,15 @@ private theorem centralizes_implies_compatibility
 /-- Full actual curvature support and a real-finite literal original maximal
 value characterize equality by centralization on the actual interior corner. -/
 theorem full_support_finite_iff
-    (C : (ψ).GNS →L[ℂ] (ψ).GNS) (hC0 : 0 ≤ C) (hC1 : C ≤ 1)
-    (hc : ∀ a, Commute C ((ψ).gnsStarAlgHom a))
+    (C : Op ψ) (hC0 : nonnegative ψ C) (hC1 : atMostOne ψ C)
+    (hc : commutesOriginal ψ C)
     (hCr : coefficient ψ C = ρ.toLinearMap)
-    (hCs : coefficient ψ (1 - C) = σ.toLinearMap)
+    (hCs : coefficient ψ (complement ψ C) = σ.toLinearMap)
     {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
     (hsupport : (curvature hf).support = univ)
     (hfinite : ∃ c : ℝ, maximalValue.{u} M ρ σ hf = (c : EReal)) :
     maximalValue.{u} M ρ σ hf = originalHockeyValue.{u} M ρ σ hf ↔
-      ContinuousCutoffCentralizer.CompressedCentralizes
-        (GNSSpectralMoments.commutant ψ) C (cyclicVector ψ) := by
+      compressedCentralizer ψ C := by
   rw [original_operational_equality_iff_finite_compatibility.{u}
     M ρ σ hρ hσ hρs hσs hf hfinite, hsupport]
   exact ⟨compatibility_implies_centralizes M ρ σ hρ hσ hρs hσs C hC0 hC1 hc hCr hCs,
@@ -268,16 +316,15 @@ private theorem equality_iff_top_or_compatibility
 /-- Unrestricted extended-value equality has a separate top branch. No
 centralization is inferred from equality of two infinite values. -/
 theorem full_support_iff_top_or_centralizes
-    (C : (ψ).GNS →L[ℂ] (ψ).GNS) (hC0 : 0 ≤ C) (hC1 : C ≤ 1)
-    (hc : ∀ a, Commute C ((ψ).gnsStarAlgHom a))
+    (C : Op ψ) (hC0 : nonnegative ψ C) (hC1 : atMostOne ψ C)
+    (hc : commutesOriginal ψ C)
     (hCr : coefficient ψ C = ρ.toLinearMap)
-    (hCs : coefficient ψ (1 - C) = σ.toLinearMap)
+    (hCs : coefficient ψ (complement ψ C) = σ.toLinearMap)
     {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
     (hsupport : (curvature hf).support = univ) :
     maximalValue.{u} M ρ σ hf = originalHockeyValue.{u} M ρ σ hf ↔
       originalHockeyValue.{u} M ρ σ hf = ⊤ ∨
-        ContinuousCutoffCentralizer.CompressedCentralizes
-          (GNSSpectralMoments.commutant ψ) C (cyclicVector ψ) := by
+        compressedCentralizer ψ C := by
   rw [equality_iff_top_or_compatibility.{u} M ρ σ hρ hσ hρs hσs hf, hsupport]
   exact or_congr Iff.rfl
     ⟨compatibility_implies_centralizes M ρ σ hρ hσ hρs hσs C hC0 hC1 hc hCr hCs,
@@ -287,10 +334,10 @@ theorem full_support_iff_top_or_centralizes
 /-- The literal nonaffine all-Hilbert operator-convex hypothesis derives
 scalar convexity and full actual curvature support, with no added premise. -/
 theorem operatorConvex_finite_iff
-    (C : (ψ).GNS →L[ℂ] (ψ).GNS) (hC0 : 0 ≤ C) (hC1 : C ≤ 1)
-    (hc : ∀ a, Commute C ((ψ).gnsStarAlgHom a))
+    (C : Op ψ) (hC0 : nonnegative ψ C) (hC1 : atMostOne ψ C)
+    (hc : commutesOriginal ψ C)
     (hCr : coefficient ψ C = ρ.toLinearMap)
-    (hCs : coefficient ψ (1 - C) = σ.toLinearMap)
+    (hCs : coefficient ψ (complement ψ C) = σ.toLinearMap)
     {f : ℝ → ℝ}
     (hconv : LownerHeinzTheorem.OperatorConvexOnAll.{0} (Ioi 0) f)
     (nonaffine : ¬ ∃ α β : ℝ, ∀ x ∈ Ioi 0, f x = α * x + β)
@@ -300,18 +347,17 @@ theorem operatorConvex_finite_iff
         (Lieb.OperatorConvexCurvature.convexOn_of_operatorConvexOnAll (f := f) (@hconv)) =
       originalHockeyValue.{u} M ρ σ
         (Lieb.OperatorConvexCurvature.convexOn_of_operatorConvexOnAll (f := f) (@hconv)) ↔
-      ContinuousCutoffCentralizer.CompressedCentralizes
-        (GNSSpectralMoments.commutant ψ) C (cyclicVector ψ) :=
+      compressedCentralizer ψ C :=
   full_support_finite_iff.{u} M ρ σ hρ hσ hρs hσs C hC0 hC1 hc hCr hCs _
     (Lieb.OperatorConvexCurvature.operatorConvex_curvature_full_support (f := f) (@hconv) nonaffine) hfinite
 
 /-- Literal original operator-convex classification, including both the
 real-finite structural case and the essential infinite hockey case. -/
 theorem operatorConvex_iff_top_or_centralizes
-    (C : (ψ).GNS →L[ℂ] (ψ).GNS) (hC0 : 0 ≤ C) (hC1 : C ≤ 1)
-    (hc : ∀ a, Commute C ((ψ).gnsStarAlgHom a))
+    (C : Op ψ) (hC0 : nonnegative ψ C) (hC1 : atMostOne ψ C)
+    (hc : commutesOriginal ψ C)
     (hCr : coefficient ψ C = ρ.toLinearMap)
-    (hCs : coefficient ψ (1 - C) = σ.toLinearMap)
+    (hCs : coefficient ψ (complement ψ C) = σ.toLinearMap)
     {f : ℝ → ℝ}
     (hconv : LownerHeinzTheorem.OperatorConvexOnAll.{0} (Ioi 0) f)
     (nonaffine : ¬ ∃ α β : ℝ, ∀ x ∈ Ioi 0, f x = α * x + β) :
@@ -321,8 +367,7 @@ theorem operatorConvex_iff_top_or_centralizes
         (Lieb.OperatorConvexCurvature.convexOn_of_operatorConvexOnAll (f := f) (@hconv)) ↔
       originalHockeyValue.{u} M ρ σ
         (Lieb.OperatorConvexCurvature.convexOn_of_operatorConvexOnAll (f := f) (@hconv)) = ⊤ ∨
-      ContinuousCutoffCentralizer.CompressedCentralizes
-        (GNSSpectralMoments.commutant ψ) C (cyclicVector ψ) :=
+      compressedCentralizer ψ C :=
   full_support_iff_top_or_centralizes.{u} M ρ σ hρ hσ hρs hσs C hC0 hC1 hc hCr hCs _
     (Lieb.OperatorConvexCurvature.operatorConvex_curvature_full_support (f := f) (@hconv) nonaffine)
 
