@@ -2992,14 +2992,14 @@ $$
 先按(190.6)取有限秩一正分解，再逐个正输入作原纯点的有限分解，逐个非零正泛函按 $\max_Kh$ 归一成原效应。于是 $Z$ 已有有限个原纯点—效应正配对的精确表示。最后在 $d^2$ 维张量空间对这批有限生成元用锥Carathéodory，删去冗余项，得到
 
 $$
-Z=\sum_{i=1}^k t_ip_i\otimes f_i,qquad k\le d^2.
+Z=\sum_{i=1}^k t_ip_i\otimes f_i,\qquad k\le d^2.
 \tag{190.8}
 $$
 
 不要求原纯点集紧，不取纯点的极限，也不把近似证书冒充精确等式。另一方面，沿(190.4)的原基展开同一个总张量，有
 
 $$
-Z=a\otimes g_0+\sum_{j=1}^m b_j\otimes g_j,qquad
+Z=a\otimes g_0+\sum_{j=1}^m b_j\otimes g_j,\qquad
 \langle Z,\delta\rangle=\sum_{j=1}^m g_j(b_j)<0.
 \tag{190.9}
 $$
@@ -3011,7 +3011,7 @@ $$
 **定理 190.3（直接收回，不必先平均）。** 若整个原域满足全标签(190.2)，则每张满足(190.3)的原 $Q_a$ 已经满足
 
 $$
-Q_a^2=Q_a,\qquad Q_a(C)=\operatorname{cone}D_a,qquad
+Q_a^2=Q_a,\qquad Q_a(C)=\operatorname{cone}D_a,\qquad
 D_a=\operatorname{conv}N_a=K\cap\ker(u-uQ_a).
 \tag{190.10}
 $$
@@ -3061,9 +3061,9 @@ $$
 | 密度算子、纯射线、锐效应 | 原完整锥/底/效应经同一 $\theta$ 成为PSD、迹一态、$[0,I]$ 与秩一纯射线；支持面给投影 |
 | Born规则与数学POVM | 原配对在对偶坐标为 $\operatorname{Tr}(\rho E)$；有限效应族和为 $u$ 才对应和为 $I$ 的POVM |
 | 有限复合、纠缠、偏迹 | (190.13)固定全部层级的同一 $\theta^{\otimes N}$；乘法单位及边缘给标准偏迹 |
-| CP-TNI映射与仪器 | 给定线性变换须对全部有限旁观者保正，并逐输入质量不增；分支族另须总预算，才取得对应数学操作 |
+| CP-TNI映射与仪器 | 给定线性变换须对全部有限旁观者保正，并逐输入质量不增；分支总和质量不增给次数学仪器，保质量给完整数学仪器 |
 | 锐中性更新 | 原删除投影成为 $X\mapsto(I-p)X(I-p)$；把指定投影当作实际锐事件更新仍需相应操作合同 |
-| 酉时间演化、Schrödinger方程 | 连续可逆时间群及其物理时间解释仍须输入，钟、能量与 $\hbar$ 标定继续独立 |
+| 酉时间演化、Schrödinger方程 | 连续、保锥、保单位的可逆实一参数群及其物理时间解释仍须输入，钟、能量与 $\hbar$ 标定继续独立 |
 
 全效应菜单不自动让每个数学仪器成为实际设备；有限维重建也不自动供应无限维normal实现。dev的NormalMomentFamily与NormalL1Realization仍按它们自己的连续矩族、紧性及正常延拓合同使用，未作此处有限分类的免费推论。
 
@@ -3075,9 +3075,9 @@ $$
 
 $$
 \begin{gathered}
-v=(e_1+f_1)/\sqrt2,qquad z=Hv=(e_1-f_1)/\sqrt2,\\
-a=\pi(P_v),qquad r=(2v+z)/\sqrt5,qquad p_s=\pi(P_s),\\
-H_R=\sum_{i=2}^m(P_{e_i}-P_{f_i}),qquad Y=P_z-2H_R.
+v=(e_1+f_1)/\sqrt2,\qquad z=Hv=(e_1-f_1)/\sqrt2,\\
+a=\pi(P_v),\qquad r=(2v+z)/\sqrt5,\qquad p_s=\pi(P_s),\\
+H_R=\sum_{i=2}^m(P_{e_i}-P_{f_i}),\qquad Y=P_z-2H_R.
 \end{gathered}
 \tag{190.14}
 $$
