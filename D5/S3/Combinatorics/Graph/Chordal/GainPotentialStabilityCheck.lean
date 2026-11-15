@@ -1,5 +1,7 @@
 import D5.S3.Combinatorics.Graph.Chordal.GainPotentialStability
 
+/-! Transient exact applications and axiom diagnostics. -/
+
 universe u v
 
 example {V : Type u} [Finite V] {H : Type v} [Group H] [PseudoMetricSpace H]
@@ -20,12 +22,15 @@ example {H : Type v} [Group H] [PseudoMetricSpace H]
   have hr : ∀ i j, G.Adj i j → g j i = (g i j)⁻¹ := by intro i; exact i.elim
   have ht : ∀ i j k, G.Adj i j → G.Adj j k → G.Adj i k →
       dist (g i j * g j k) (g i k) ≤ ε := by intro i; exact i.elim
-  simpa using hG.exists_approximate_gain_potential g ε hε hr ht
+  have h := hG.exists_approximate_gain_potential g ε hε hr ht
+  simp only [Nat.card_eq_fintype_card, Fintype.card_empty, Nat.zero_sub,
+    Nat.cast_zero, zero_mul] at h
+  exact h
 
 namespace ConcreteCheck
 noncomputable section
 
-private def discreteMetric (X : Type*) [DecidableEq X] : MetricSpace X where
+@[instance_reducible] private def discreteMetric (X : Type*) [DecidableEq X] : MetricSpace X where
   dist a b := if a = b then 0 else 1
   dist_self a := ite_eq_left rfl
   dist_comm a b := by split_ifs <;> simp_all
@@ -105,6 +110,7 @@ example : ¬ ∃ φ : Fin 3 → H, ∀ i j, (⊤ : SimpleGraph (Fin 3)).Adj i j 
     simp [mul_assoc]
   exact (by decide : noisy 0 1 * noisy 1 2 ≠ noisy 0 2) hbad
 
+end
 end ConcreteCheck
 
 #print axioms SimpleGraph.IsChordal.exists_approximate_gain_potential
