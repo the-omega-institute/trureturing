@@ -188,7 +188,7 @@ private lemma inverse_transfer_right {s : Sector} (hs : Regular s) {z : ℂ}
   rw [h]
   exact diagonal_cancel hs X
 
-private lemma inverse_transfer_left {s : Sector} (hs : Regular s) {z : ℂ}
+lemma inverse_transfer_left {s : Sector} (hs : Regular s) {z : ℂ}
     (hz : z ≠ 0) (X : Bond) :
     inverseTransfer s z (transfer (core s z) X) = X := by
   rw [transfer_formula, inverseTransfer, diagonal_cancel' hs]
@@ -206,7 +206,7 @@ private lemma inverse_dual_right {s : Sector} (hs : Regular s) {z : ℂ}
   simp only [← Matrix.mul_assoc, hc, Matrix.one_mul,
     nonsing_inv_mul_cancel_right _ _ (unit_G hs hz)]
 
-private lemma inverse_dual_left {s : Sector} (hs : Regular s) {z : ℂ}
+lemma inverse_dual_left {s : Sector} (hs : Regular s) {z : ℂ}
     (hz : z ≠ 0) (X : Bond) :
     inverseDualTransfer s z (dualTransfer (core s z) X) = X := by
   rw [inverseDualTransfer, dual_formula]
@@ -290,12 +290,12 @@ private lemma right_forward {s : Sector} (hs : Regular s) {z : ℂ} (hz : z ≠ 
   simp only [Matrix.mul_assoc, mul_nonsing_inv_cancel_left _ _ hu,
     ← conjTranspose_mul, nonsing_inv_mul _ hu, mul_nonsing_inv _ hu, conjTranspose_one, Matrix.mul_one]
 
-private lemma left_at_target {s : Sector} (hs : Regular s) {z : ℂ} (hz : z ≠ 0)
+lemma left_at_target {s : Sector} (hs : Regular s) {z : ℂ} (hz : z ≠ 0)
     (p : ℕ) (l : Fin 2 → ℂ) :
     trialLeft s p (leftTarget s z l p) z = vecMulVec (star l) l :=
   Function.LeftInverse.iterate (inverse_dual_left hs hz) p _
 
-private lemma right_at_target {s : Sector} (hs : Regular s) {z : ℂ} (hz : z ≠ 0)
+lemma right_at_target {s : Sector} (hs : Regular s) {z : ℂ} (hz : z ≠ 0)
     (q : ℕ) (r : Fin 2 → ℂ) :
     trialRight s q (rightTarget s z r q) z = vecMulVec r (star r) := by
   have hu : IsUnit (G s z ^ 2).det := by rw [det_pow]; exact (unit_G hs hz).pow 2
@@ -308,7 +308,7 @@ private lemma det_outer (x y : Fin 2 → ℂ) : (vecMulVec x y).det = 0 := by
   simp [det_fin_two, vecMulVec_apply]
   ring
 
-private lemma residual_at_target {s : Sector} (hs : Regular s) {z : ℂ} (hz : z ≠ 0)
+lemma residual_at_target {s : Sector} (hs : Regular s) {z : ℂ} (hz : z ≠ 0)
     (p q : ℕ) (l r : Fin 2 → ℂ) :
     residual s p q (leftTarget s z l p) (rightTarget s z r q) z = 0 := by
   rw [residual, left_at_target hs hz, right_at_target hs hz,
