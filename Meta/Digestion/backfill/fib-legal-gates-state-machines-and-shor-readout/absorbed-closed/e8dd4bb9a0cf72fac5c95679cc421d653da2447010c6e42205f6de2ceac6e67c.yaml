@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e8dd4bb9a0cf72fac5c95679cc421d653da2447010c6e42205f6de2ceac6e67c
+  normalized_sha256: sha256:e8dd4bb9a0cf72fac5c95679cc421d653da2447010c6e42205f6de2ceac6e67c
+cas_ref: sha256:e8dd4bb9a0cf72fac5c95679cc421d653da2447010c6e42205f6de2ceac6e67c
+coverage_gids:
+  - gid: D5/S1/Depth/ContinuedFractions/FiniteRationalConvergents.reduced_den
+    target_statement_id: sha256:dc18ac0ee8de88834c6f478cfdbfcfc85a3a934e3f2e9d4fe1c64c7d5842ef37
+receipts:
+  unresolved_subitems: []
