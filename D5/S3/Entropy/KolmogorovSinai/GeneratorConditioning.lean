@@ -198,7 +198,7 @@ section Main
 
 variable [Fintype ι] [Fintype κ]
 
-theorem condEntropyGivenPartition_eq_condEntropy_generated {μ : Measure α}
+private theorem condEntropyGivenPartition_eq_condEntropy_generated {μ : Measure α}
     [IsProbabilityMeasure μ] (B : MeasurePartition μ ι) (t : κ → Set α)
     (ht : ∀ j, MeasurableSet (t j)) :
     condEntropyGivenPartition μ B.cells t = condEntropy μ (generatedSigmaAlgebra μ B) t := by
