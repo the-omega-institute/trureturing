@@ -33,9 +33,6 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Combinatorics.Digraph.Orientation
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Int.Interval
-import Mathlib.Data.Fintype.Fin
 
 /-! A 23-edge certificate for the fourteen-vertex DDMOG minimality conjecture. -/
 

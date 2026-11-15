@@ -40,7 +40,7 @@ internal sealed class AceskaLortRippergerSparsest14Document : IScribeDocumentDef
                 + "of vertices E(D), called edges.” This cardinality counts ordered adjacent pairs. "
                 + "For an oriented graph there are no loops or opposite arcs, so it also counts "
                 + "the underlying undirected edges.", AssessedProvenance.FromLiterature(Source)),
-            Node("claim", "The fourteen-vertex minimality conjecture", Iff(Call("claim"), ClaimBody()),
+            Node("claim", "The fourteen-vertex minimality conjecture", Iff(Name("claim"), ClaimBody()),
                 "Conclusion, page 25: “Another question we have encountered as we were writing this paper "
                 + "is related to the minimal number of edges a connected DDMOG with n vertices must have: "
                 + "What is the sparsest connected DDMOG with n vertices in terms of edges? When observing "
@@ -130,7 +130,8 @@ internal sealed class AceskaLortRippergerSparsest14Document : IScribeDocumentDef
     {
         var v = F.Id("V"); var d = F.Id("D"); var e = F.Id("e");
         var pair = Seq(v, Sp, Times, Sp, v);
-        var subtype = SetOf("e", pair, Adj(d, Seq(e, Dot, D(1)), Seq(e, Dot, D(2))));
+        var subtype = Seq(OpenBrace, e, Sp, Colon, Sp, pair, Sp, Slash, Slash, Sp,
+            Adj(d, Seq(e, Dot, D(1)), Seq(e, Dot, D(2))), CloseBrace);
         return All("V", F.Id("Type"), WithFinite(v, All("D", Call("Digraph", v),
             Eqn(Call("edgeCount", d), App(Q("Fintype", "card"), subtype)))));
     }
