@@ -13,13 +13,8 @@ internal sealed class QubitRegisterDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
                 Blocks(Paragraph(Text("The original ordered register of the supplied number of physical qubits."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("declaration1"),
-                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.qubitCircuit"),
-                H("qubitCircuit"), StatementSource.WithoutFormula(),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.controlledPhase_qubitOperator_matrix"),
+                H("controlledPhase qubitOperator matrix"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("Execute the full native word at two distinct positions of the original qubit register."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("declaration2"),
-                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.controlledPhase_qubitCircuit_matrix"),
-                H("controlledPhase qubitCircuit matrix"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("The native implementation realizes the unchanged addressed target on every register state."))), DescribeRole.Lemma))));
+                Blocks(Paragraph(Text("The placed native operator has the unchanged addressed target on every register state."))), DescribeRole.Lemma))));
 }

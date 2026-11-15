@@ -29,11 +29,10 @@ import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Placement.Entri
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature
 
 /-!
-# Native controlled phase with the original qubit-register target
+# Native ControlledPhase on the original qubit register
 
-The exact target is the existing addressed operator on big-endian integer
-labels. Reindexing only translates that fixed label convention to the physical
-layout basis. The implementation contains the complete native five-gate word.
+The original placement proof identifies the independently defined local operator
+with its addressed target, including every spectator coordinate and exact phase.
 -/
 
 namespace QuantumAlg.Gate.ControlledPhase
@@ -45,20 +44,12 @@ noncomputable section
 public def qubitLayout (width : Nat) : QuantumLayout width :=
   (QuantumSignature.qubits width).canonicalPlacement.layout
 
-/-- Execute the full native word at two distinct positions of the original qubit register. -/
-public def qubitCircuit (oracles : OracleModel) {width : Nat}
+/-- The placed native operator has the unchanged addressed target on every register state. -/
+public lemma controlledPhase_qubitOperator_matrix {width : Nat}
     (control target : Fin width) (distinct : control ≠ target) (angle : Real) :
-    UnitaryCircuit AlgorithmGate.model oracles (qubitLayout width) :=
-  circuitAt (qubitLayout width) control target distinct rfl rfl oracles angle
-
-/-- The native implementation realizes the unchanged addressed target on every register state. -/
-public lemma controlledPhase_qubitCircuit_matrix (oracles : OracleModel) {width : Nat}
-    (control target : Fin width) (distinct : control ≠ target) (angle : Real) (environment :
-      oracles.Interpretation) :
-    ((qubitCircuit oracles control target distinct angle).matrix environment) =
+    placedOperator (qubitLayout width) control target distinct rfl rfl angle =
       UnitaryOperator.reindex (QuantumSignature.qubitsIndexEquiv width).symm
         (qftControlledPhaseOperator control target angle) := by
-  rw [qubitCircuit, controlledPhase_circuitAt_matrix]
   apply Subtype.ext
   have localDiagonal : (operator angle : HilbertOperator layout.register) =
       Matrix.diagonal (fun (basis : Fin 2 → Fin 2) =>

@@ -11,15 +11,10 @@ internal sealed class ConstructionDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/Construction.layout"),
                 H("layout"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("The two ordered physical qubits of the local expansion."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("The two ordered physical qubits of the local operator."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("declaration1"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/Construction.operator"),
                 H("operator"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("The unchanged addressed controlled-phase target in the physical-layout basis."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("declaration2"),
-                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/Construction.circuit"),
-                H("circuit"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("Execute all three phase gates and both CNOTs without a new controlled-gate token."))), DescribeRole.Definition))));
+                Blocks(Paragraph(Text("The unchanged addressed controlled-phase target in the physical-layout basis."))), DescribeRole.Definition))));
 }

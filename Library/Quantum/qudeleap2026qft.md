@@ -37,8 +37,13 @@ QuantumPhaseEstimationGeneral.QFT in ShorCountingMarginal.
 The resource projection counts native tokens of this exact construction:
 H = q, controlled phase = choose(q,2), SWAP = q/2, and every other event is zero.
 It gives no data-loading, complete classical-readout, discrete-synthesis or
-hardware bound. The default-model controlled-phase and SWAP correctness chains
-support primitive semantics; their expanded gate counts are a different ledger.
+hardware bound. The primitive placement proofs are the supplier’s qubit-register diagonal and
+selected/complement-coordinate proofs, applied directly to the native local
+operators. They preserve angles, exact phase and spectators independently of
+any default-model controlled-phase or SWAP expansion. The source mapping retains
+`Construction.layout` and `Construction.operator`, the local SWAP permutation
+and operator, and the original placement proof tails. Expanded gate counts
+are outside this native-event ledger.
 
 ## Receiver-pin retirement
 

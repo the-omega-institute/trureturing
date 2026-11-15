@@ -80,10 +80,6 @@ public def parallel {leftCount rightCount count : Nat}
   ⟨.parallel left.sequence right.sequence leftPlacement rightPlacement disjoint⟩
 
 
-/-- Record a descriptive macro occurrence containing its complete actual expansion. -/
-public def macroCall (name : String) (body : UnitaryCircuit gates oracles layout) :
-    UnitaryCircuit gates oracles layout := ⟨.macroCall name body.sequence⟩
-
 end UnitaryCircuit
 
 end QuantumAlg

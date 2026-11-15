@@ -88,24 +88,11 @@ Lean statement: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construct
 
 Execute two constructions in parallel on certified disjoint physical subsystems.
 
-**Definition 1.8 (macroCall).**
-
-Lean statement: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construction.macroCall`
-
-*Formalization.* `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construction.macroCall` (`✓ std3`).
-
-*Citation.* QudeLeap Team (2026). *Original recursive quantum Fourier circuit proof and native event counts*. URL: <https://github.com/QudeLeap/Lean-QuantumAlg/tree/971dc8be8a153a116b6d7cd748f984d545861b00>.
-
-*Commentary.*
-
-Record a descriptive macro occurrence containing its complete actual expansion.
-
 ## References
 
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construction.UnitaryCircuit`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construction.embed`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construction.identity`
-- Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construction.macroCall`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construction.native`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construction.ofLeaf`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construction.parallel`

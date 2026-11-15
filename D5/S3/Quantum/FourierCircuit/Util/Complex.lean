@@ -35,9 +35,4 @@ lemma conj_exp_I (φ : ℝ) :
 lemma exp_I_mul_exp_neg_I (φ : ℝ) :
     Complex.exp (φ * Complex.I) * Complex.exp (-(φ * Complex.I)) = 1 := by
   rw [← Complex.exp_add, add_neg_cancel, Complex.exp_zero]
-
-lemma exp_neg_I_mul_exp_I (φ : ℝ) :
-    Complex.exp (-(φ * Complex.I)) * Complex.exp (φ * Complex.I) = 1 := by
-  rw [← Complex.exp_add, neg_add_cancel, Complex.exp_zero]
-
 end QuantumAlg

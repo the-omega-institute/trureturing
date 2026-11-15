@@ -16,34 +16,21 @@ Lean statement: `D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/Q
 
 The original ordered register of the supplied number of physical qubits.
 
-**Definition 1.2 (qubitCircuit).**
+**Lemma 1.2 (controlledPhase qubitOperator matrix).**
 
-Lean statement: `D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.qubitCircuit`
+Lean statement: `D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.controlledPhase_qubitOperator_matrix`
 
-*Formalization.* `D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.qubitCircuit` (`✓ std3`).
-
-*Citation.* QudeLeap Team (2026). *Original recursive quantum Fourier circuit proof and native event counts*. URL: <https://github.com/QudeLeap/Lean-QuantumAlg/tree/971dc8be8a153a116b6d7cd748f984d545861b00>.
-
-*Commentary.*
-
-Execute the full native word at two distinct positions of the original qubit register.
-
-**Lemma 1.3 (controlledPhase qubitCircuit matrix).**
-
-Lean statement: `D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.controlledPhase_qubitCircuit_matrix`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.controlledPhase_qubitCircuit_matrix` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.controlledPhase_qubitOperator_matrix` (`✓ std3`). ∎
 
 *Citation.* QudeLeap Team (2026). *Original recursive quantum Fourier circuit proof and native event counts*. URL: <https://github.com/QudeLeap/Lean-QuantumAlg/tree/971dc8be8a153a116b6d7cd748f984d545861b00>.
 
 *Commentary.*
 
-The native implementation realizes the unchanged addressed target on every register state.
+The placed native operator has the unchanged addressed target on every register state.
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.controlledPhase_qubitCircuit_matrix`
-- Truth anchor: `D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.qubitCircuit`
+- Truth anchor: `D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.controlledPhase_qubitOperator_matrix`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/QubitRegister.qubitLayout`
 - Dependency: [D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/Construction](Construction.md)
 - Dependency: [D5/S3/Quantum/FourierCircuit/Components/Gates/ControlledPhase/Coordinates](Coordinates.md)

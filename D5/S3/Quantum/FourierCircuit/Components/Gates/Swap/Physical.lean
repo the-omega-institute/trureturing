@@ -21,16 +21,15 @@ module
 public import D5.S3.Quantum.FourierCircuit.Components.Gates.Swap
 import all D5.S3.Quantum.FourierCircuit.Components.Gates.Swap
 public import D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Placement.Entries
-import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Placement
-import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit
+import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Placement.Entries
+public import D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature
 
 /-!
-# The complete native SWAP on selected ambient qubits
+# Exact native Swap placement
 
-Left and right are distinct physical positions of dimension two. The
-complete three-CNOT word is relocated there; every other ambient system keeps
-its original dimension and state. No native SWAP token is introduced.
+The independently defined local operator acts on the selected two physical wires.
+Every spectator keeps its original coordinate and dimension.
 -/
 
 namespace QuantumAlg.Gate.Swap
@@ -60,21 +59,6 @@ private lemma dimensions (index : Fin 2) :
 public def placedOperator : UnitaryOperator ambient.register :=
   UnitaryCircuit.operatorAt layout ambient (positions left right distinct)
     (dimensions ambient left right distinct leftQubit rightQubit) operator
-
-/-- Run the entire native expansion at the requested left and right positions. -/
-public def circuitAt (oracles : OracleModel) :
-    UnitaryCircuit AlgorithmGate.model oracles ambient :=
-  UnitaryCircuit.placeAt layout ambient (positions left right distinct)
-    (dimensions ambient left right distinct leftQubit rightQubit) (circuit oracles)
-
-/-- The physically placed implementation retains the exact SWAP on every input. -/
-public lemma swap_circuitAt_matrix (oracles : OracleModel) (environment :
-  oracles.Interpretation) :
-    ((circuitAt ambient left right distinct leftQubit rightQubit oracles).matrix environment) =
-      placedOperator ambient left right distinct leftQubit rightQubit := by
-  rw [circuitAt, UnitaryCircuit.placeAt_matrix, swap_circuit_matrix]
-  rfl
-
 
 end
 

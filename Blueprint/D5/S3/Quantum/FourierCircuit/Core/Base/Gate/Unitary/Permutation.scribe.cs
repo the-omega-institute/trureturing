@@ -16,10 +16,5 @@ internal sealed class PermutationDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Gate/Unitary/Permutation.ofPerm_mul"),
                 H("ofPerm mul"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("Operator multiplication reverses the row-permutation composition order."))), DescribeRole.Lemma),
-            Describe.Lean(DescribeId.Create("declaration2"),
-                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Gate/Unitary/Permutation.reindex_ofPerm"),
-                H("reindex ofPerm"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("Transporting a permutation operator conjugates its row permutation by the same equivalence."))), DescribeRole.Lemma))));
+                Blocks(Paragraph(Text("Operator multiplication reverses the row-permutation composition order."))), DescribeRole.Lemma))));
 }

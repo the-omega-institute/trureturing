@@ -18,30 +18,24 @@ Authors: QudeLeap Team
 
 module
 
-public import D5.S3.Quantum.FourierCircuit.Components.Gates.Construction
-import all D5.S3.Quantum.FourierCircuit.Components.Gates.Construction
 public import D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Operator
 import all D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Operator
-public import D5.S3.Quantum.FourierCircuit.Components.Gates.PhaseOperator
-import all D5.S3.Quantum.FourierCircuit.Components.Gates.PhaseOperator
-import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit
-import all D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Placement.Canonical
+public import D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary.Reindex
+import all D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary.Reindex
+public import D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature
 
 /-!
-# Native phase and CNOT word for controlled phase
+# Independent local controlled-phase operator
 
-The implementation contains three actual one-qubit phase gates and two actual
-CNOTs, with both physical qubits present throughout. The original addressed
-controlled-phase operator is an independent target. The macro retains the
-entire native word, including every sequential event and dependency.
+The two-qubit target preserves the original angle and big-endian labels.
 -/
 
 namespace QuantumAlg.Gate.ControlledPhase
 
 noncomputable section
 
-/-- The two ordered physical qubits of the local expansion. -/
+/-- The two ordered physical qubits of the local operator. -/
 @[expose, implicit_reducible]
 public def layout : QuantumLayout 2 := (QuantumSignature.qubits 2).canonicalPlacement.layout
 
@@ -49,17 +43,6 @@ public def layout : QuantumLayout 2 := (QuantumSignature.qubits 2).canonicalPlac
 public def operator (angle : Real) : UnitaryOperator layout.register :=
   UnitaryOperator.reindex (QuantumSignature.qubitsIndexEquiv 2).symm
     (qftControlledPhaseOperator (n := 2) 0 1 angle)
-
-/-- Execute all three phase gates and both CNOTs without a new controlled-gate token. -/
-public def circuit (oracles : OracleModel) (angle : Real) :
-    UnitaryCircuit AlgorithmGate.model oracles layout :=
-  let first := singleQubitAt layout oracles (phaseGateOp (angle / 2)) 0 rfl
-  let second := singleQubitAt layout oracles (phaseGateOp (angle / 2)) 1 rfl
-  let middle := singleQubitAt layout oracles (phaseGateOp (-(angle / 2))) 1 rfl
-  let controlled : UnitaryCircuit AlgorithmGate.model oracles layout :=
-    .native (GateModel.Application.canonical AlgorithmGate.model .cnot)
-  .macroCall "controlled-phase" ((((first.seq second).seq controlled).seq middle).seq controlled)
-
 
 end
 

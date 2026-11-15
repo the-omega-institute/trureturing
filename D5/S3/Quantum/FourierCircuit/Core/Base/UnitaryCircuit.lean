@@ -104,12 +104,6 @@ variable (environment : oracles.Interpretation)
 
 @[simp] lemma seq_eventCost (left right : UnitaryCircuit gates oracles layout) :
     (seq left right).eventCost = left.eventCost + right.eventCost := by rfl
-
-
-@[simp] lemma macroCall_matrix (name : String) (body : UnitaryCircuit gates oracles layout) :
-    ((macroCall name body).matrix environment) = (body.matrix environment) := by rfl
-
-
 end
 
 end QuantumAlg.UnitaryCircuit

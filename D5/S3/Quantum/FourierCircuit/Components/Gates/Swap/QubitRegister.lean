@@ -28,10 +28,10 @@ import all D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Quantum.Selection
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature
 
 /-!
-# Native SWAP with the original qubit-register target
+# Native Swap on the original qubit register
 
-The actual three-CNOT word has the original addressed SWAP matrix on every
-register state. Both exchanged inputs and all other qubits are unrestricted.
+The original placement proof identifies the independently defined local operator
+with its addressed target, including every spectator coordinate and exact phase.
 -/
 
 namespace QuantumAlg.Gate.Swap
@@ -102,19 +102,12 @@ private lemma matching_coordinates (row column : Fin width → Fin 2) :
         rw [Equiv.swap_apply_of_ne_of_ne atLeft atRight]
         exact result
 
-/-- Execute all three CNOTs on the selected positions of the original register. -/
-public def qubitCircuit (oracles : OracleModel) :
-    UnitaryCircuit AlgorithmGate.model oracles (qubitLayout width) :=
-  circuitAt (qubitLayout width) left right distinct rfl rfl oracles
-
-/-- The full native word realizes the unchanged addressed SWAP, including exact phase. -/
-public lemma swap_qubitCircuit_matrix (oracles : OracleModel) (environment :
-  oracles.Interpretation) :
-    ((qubitCircuit left right distinct oracles).matrix environment) =
+/-- The placed SWAP has the unchanged addressed target, including exact phase. -/
+public lemma swap_qubitOperator_matrix :
+    placedOperator (qubitLayout width) left right distinct rfl rfl =
       UnitaryOperator.reindex (QuantumSignature.qubitsIndexEquiv width).symm
         (qftSwapOperator left right distinct) := by
   classical
-  rw [qubitCircuit, swap_circuitAt_matrix]
   apply Subtype.ext
   refine Matrix.ext fun (row : Fin width → Fin 2) (column : Fin width → Fin 2) => ?_
   change UnitaryCircuit.operatorAt layout (qubitLayout width) (positions left right distinct)

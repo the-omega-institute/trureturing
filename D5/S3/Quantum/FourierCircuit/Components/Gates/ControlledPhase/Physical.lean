@@ -18,20 +18,18 @@ Authors: QudeLeap Team
 
 module
 
-public import D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Semantics
-import all D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Semantics
+public import D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Construction
 import all D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Construction
 public import D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Placement.Entries
-import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Placement
-import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit
+import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Placement.Entries
+public import D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Layout.Signature
 
 /-!
-# The complete native controlled phase on selected ambient qubits
+# Exact native ControlledPhase placement
 
-Control and target are distinct physical positions of dimension two. The
-complete five-gate word is relocated there; every other ambient system keeps
-its original dimension and state. No new controlled gate token is introduced.
+The independently defined local operator acts on the selected two physical wires.
+Every spectator keeps its original coordinate and dimension.
 -/
 
 namespace QuantumAlg.Gate.ControlledPhase
@@ -61,22 +59,6 @@ private lemma dimensions (index : Fin 2) :
 public def placedOperator (angle : Real) : UnitaryOperator ambient.register :=
   UnitaryCircuit.operatorAt layout ambient (positions control target distinct)
     (dimensions ambient control target distinct controlQubit targetQubit) (operator angle)
-
-/-- Run the entire native expansion at the requested control and target positions. -/
-public def circuitAt (oracles : OracleModel) (angle : Real) :
-    UnitaryCircuit AlgorithmGate.model oracles ambient :=
-  UnitaryCircuit.placeAt layout ambient (positions control target distinct)
-    (dimensions ambient control target distinct controlQubit targetQubit) (circuit oracles angle)
-
-/-- The physically placed implementation retains the exact controlled phase on every input. -/
-public lemma controlledPhase_circuitAt_matrix (oracles : OracleModel) (angle : Real)
-  (environment : oracles.Interpretation) :
-    ((circuitAt ambient control target distinct controlQubit targetQubit oracles angle).matrix
-      environment) =
-      placedOperator ambient control target distinct controlQubit targetQubit angle := by
-  rw [circuitAt, UnitaryCircuit.placeAt_matrix, controlledPhase_circuit_matrix]
-  rfl
-
 
 end
 

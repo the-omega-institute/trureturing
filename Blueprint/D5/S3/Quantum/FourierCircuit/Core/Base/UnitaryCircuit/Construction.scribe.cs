@@ -41,10 +41,5 @@ internal sealed class ConstructionDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construction.parallel"),
                 H("parallel"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("Execute two constructions in parallel on certified disjoint physical subsystems."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("declaration7"),
-                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit/Construction.macroCall"),
-                H("macroCall"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("Record a descriptive macro occurrence containing its complete actual expansion."))), DescribeRole.Definition))));
+                Blocks(Paragraph(Text("Execute two constructions in parallel on certified disjoint physical subsystems."))), DescribeRole.Definition))));
 }

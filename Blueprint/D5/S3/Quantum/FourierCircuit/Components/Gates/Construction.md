@@ -16,19 +16,7 @@ Lean statement: `D5/S3/Quantum/FourierCircuit/Components/Gates/Construction.sing
 
 Place the actual one-qubit operator on one dimension-two ambient system.
 
-**Definition 1.2 (cnotApplication).**
-
-Lean statement: `D5/S3/Quantum/FourierCircuit/Components/Gates/Construction.cnotApplication`
-
-*Formalization.* `D5/S3/Quantum/FourierCircuit/Components/Gates/Construction.cnotApplication` (`✓ std3`).
-
-*Citation.* QudeLeap Team (2026). *Original recursive quantum Fourier circuit proof and native event counts*. URL: <https://github.com/QudeLeap/Lean-QuantumAlg/tree/971dc8be8a153a116b6d7cd748f984d545861b00>.
-
-*Commentary.*
-
-Place CNOT with its control first and its distinct target second.
-
-**Definition 1.3 (singleQubitAt).**
+**Definition 1.2 (singleQubitAt).**
 
 Lean statement: `D5/S3/Quantum/FourierCircuit/Components/Gates/Construction.singleQubitAt`
 
@@ -42,7 +30,6 @@ Execute one actual one-qubit gate in the default algorithm model.
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/FourierCircuit/Components/Gates/Construction.cnotApplication`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Components/Gates/Construction.singleQubitApplication`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Components/Gates/Construction.singleQubitAt`
 - Dependency: [D5/S3/Quantum/FourierCircuit/Components/GateModel/Algorithm](../GateModel/Algorithm.md)

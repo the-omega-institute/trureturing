@@ -51,20 +51,6 @@ public def singleQubitApplication (operator : UnitaryOperator (Qubits 1))
   GateModel.Application.ofPositions AlgorithmGate.model (.singleQubit operator) layout
     ⟨fun _ => target, fun _ _ _ => Subsingleton.elim (α := Fin 1) _ _⟩ (fun _ => qubit)
 
-/-- Place CNOT with its control first and its distinct target second. -/
-@[expose]
-public def cnotApplication (control target : Fin count) (distinct : control ≠ target)
-    (controlQubit : (layout.wire control).dimension = 2)
-    (targetQubit : (layout.wire target).dimension = 2) :
-    GateModel.Application AlgorithmGate.model layout :=
-  GateModel.Application.ofPositions AlgorithmGate.model .cnot layout
-    { toFun := ![control, target]
-      inj' := by
-        intro left right same
-        fin_cases left <;> fin_cases right <;> simp_all }
-    (by intro index; fin_cases index <;> assumption)
-
-
 /-- Execute one actual one-qubit gate in the default algorithm model. -/
 public def singleQubitAt (oracles : OracleModel) (operator : UnitaryOperator (Qubits 1))
     (target : Fin count) (qubit : (layout.wire target).dimension = 2) :

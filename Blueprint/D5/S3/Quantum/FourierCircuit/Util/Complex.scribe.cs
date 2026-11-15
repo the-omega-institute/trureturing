@@ -11,15 +11,10 @@ internal sealed class ComplexDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/Complex.conj_exp_I"),
                 H("conj exp I"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("lemma conj_exp_I (φ : ℝ) : starRingEnd ℂ (Complex.exp (φ * Complex.I)) = Complex.exp (-(φ * Complex.I))."))), DescribeRole.Lemma),
+                Blocks(Paragraph(Text("Retained original proof support for conj exp I."))), DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("declaration1"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/Complex.exp_I_mul_exp_neg_I"),
                 H("exp I mul exp neg I"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("lemma exp_I_mul_exp_neg_I (φ : ℝ) : Complex.exp (φ * Complex.I) * Complex.exp (-(φ * Complex.I)) = 1."))), DescribeRole.Lemma),
-            Describe.Lean(DescribeId.Create("declaration2"),
-                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/Complex.exp_neg_I_mul_exp_I"),
-                H("exp neg I mul exp I"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("lemma exp_neg_I_mul_exp_I (φ : ℝ) : Complex.exp (-(φ * Complex.I)) * Complex.exp (φ * Complex.I) = 1."))), DescribeRole.Lemma))));
+                Blocks(Paragraph(Text("Retained original proof support for exp I mul exp neg I."))), DescribeRole.Lemma))));
 }

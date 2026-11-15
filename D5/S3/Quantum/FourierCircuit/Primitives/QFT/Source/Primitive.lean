@@ -24,9 +24,7 @@ public import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Primitive
 import all D5.S3.Quantum.FourierCircuit.Primitives.QFT.Primitive
 import all D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Placement.Construction
 import all D5.S3.Quantum.FourierCircuit.Core.Base.UnitaryCircuit.Realization.Native
-import all D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.Physical
 import all D5.S3.Quantum.FourierCircuit.Components.Gates.ControlledPhase.QubitRegister
-import all D5.S3.Quantum.FourierCircuit.Components.Gates.Swap.Physical
 import all D5.S3.Quantum.FourierCircuit.Components.Gates.Swap.QubitRegister
 
 /-!
@@ -67,17 +65,12 @@ public lemma qftPrimitive_sourceCircuit_matrix (oracles : OracleModel) {n : Nat}
   | controlledPhase control target angle distinct =>
       rw [sourceCircuit, UnitaryCircuit.native_matrix,
         ← UnitaryCircuit.nativeApplication_operatorAt]
-      exact (Gate.ControlledPhase.controlledPhase_circuitAt_matrix (environment := environment)
-        (layout n) control target distinct rfl rfl oracles angle).symm.trans
-          (Gate.ControlledPhase.controlledPhase_qubitCircuit_matrix (environment := environment)
-            oracles control target distinct angle)
+      exact Gate.ControlledPhase.controlledPhase_qubitOperator_matrix
+        control target distinct angle
   | swap left right distinct =>
       rw [sourceCircuit, UnitaryCircuit.native_matrix,
         ← UnitaryCircuit.nativeApplication_operatorAt]
-      exact (Gate.Swap.swap_circuitAt_matrix (environment := environment)
-        (layout n) left right distinct rfl rfl oracles).symm.trans
-          (Gate.Swap.swap_qubitCircuit_matrix (environment := environment) left right distinct
-            oracles)
+      exact Gate.Swap.swap_qubitOperator_matrix left right distinct
 
 end
 end QuantumAlg.QFTPrimitive

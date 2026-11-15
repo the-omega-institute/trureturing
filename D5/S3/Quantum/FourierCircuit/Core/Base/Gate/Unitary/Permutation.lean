@@ -48,18 +48,6 @@ public lemma ofPerm_mul (first second : Equiv.Perm R.Index) :
   apply Subtype.ext
   exact (Matrix.permMatrix_mul second first).symm
 
-/-- Transporting a permutation operator conjugates its row permutation by the same equivalence. -/
-public lemma reindex_ofPerm (equivalence : R.Index ≃ S.Index)
-    (permutation : Equiv.Perm R.Index) :
-    reindex equivalence (ofPerm permutation) =
-      ofPerm ((equivalence.symm.trans permutation).trans equivalence) := by
-  apply Subtype.ext
-  ext row column
-  change ofPerm permutation (equivalence.symm row) (equivalence.symm column) = _
-  rw [ofPerm_entry, ofPerm_entry]
-  simp only [Equiv.trans_apply]
-  exact if_congr equivalence.eq_symm_apply rfl rfl
-
 end
 
 end QuantumAlg.UnitaryOperator

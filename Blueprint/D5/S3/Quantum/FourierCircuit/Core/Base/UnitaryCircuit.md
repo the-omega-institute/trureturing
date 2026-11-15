@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.identity_
 
 *Commentary.*
 
-lemma identity_matrix : ((identity gates oracles layout).matrix environment) = 1.
+Forgetting order in the actual native trace yields exactly the circuit's event ledger.
 
 **Lemma 1.6 (identity eventCost).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.identity_
 
 *Commentary.*
 
-lemma identity_eventCost : (identity gates oracles layout).eventCost = 0.
+Forgetting order in the actual native trace yields exactly the circuit's event ledger.
 
 **Lemma 1.7 (native matrix).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.native_ma
 
 *Commentary.*
 
-public lemma native_matrix (application : GateModel.Application gates layout) : ((native (oracles.
+Forgetting order in the actual native trace yields exactly the circuit's event ledger.
 
 **Lemma 1.8 (seq matrix).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.seq_matri
 
 *Commentary.*
 
-lemma seq_matrix (left right : UnitaryCircuit gates oracles layout) : (seq left right).matrix environment = right.matrix environment * left.matrix environment.
+Forgetting order in the actual native trace yields exactly the circuit's event ledger.
 
 **Lemma 1.9 (parallel matrix raw).**
 
@@ -122,19 +122,7 @@ Lean statement: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.seq_event
 
 *Commentary.*
 
-lemma seq_eventCost (left right : UnitaryCircuit gates oracles layout) : (seq left right).eventCost = left.eventCost + right.eventCost.
-
-**Lemma 1.11 (macroCall matrix).**
-
-Lean statement: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.macroCall_matrix`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.macroCall_matrix` (`✓ std3`). ∎
-
-*Citation.* QudeLeap Team (2026). *Original recursive quantum Fourier circuit proof and native event counts*. URL: <https://github.com/QudeLeap/Lean-QuantumAlg/tree/971dc8be8a153a116b6d7cd748f984d545861b00>.
-
-*Commentary.*
-
-lemma macroCall_matrix (name : String) (body : UnitaryCircuit gates oracles layout) : ((macroCall name body).matrix environment) = (body.matrix environment).
+Parallel syntax denotes the product of the two actual lifted operators.
 
 ## References
 
@@ -142,7 +130,6 @@ lemma macroCall_matrix (name : String) (body : UnitaryCircuit gates oracles layo
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.eventTrace`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.identity_eventCost`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.identity_matrix`
-- Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.macroCall_matrix`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.matrix`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.native_matrix`
 - Truth anchor: `D5/S3/Quantum/FourierCircuit/Core/Base/UnitaryCircuit.ofList_eventTrace_eq_eventCost`
