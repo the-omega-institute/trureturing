@@ -4,11 +4,11 @@
 
 Finite colourings with exactly one monochromatic king bond.
 
-**Theorem 1.1 (The complete width-one count).**
+**Theorem 1.1 (The width-one count for at least three cells).**
 
-$$(\operatorname{KingGrid}.\operatorname{T}\left(1, 1\right) = 0) \land ((\operatorname{KingGrid}.\operatorname{T}\left(2, 1\right) = 1) \land (\forall (n: \operatorname{Nat}), ((3 \le n) \Rightarrow ((54) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{KingGrid}.\operatorname{T}\left(n, 1\right)\right)) = (((\operatorname{Int}.\operatorname{ofNat}\left(n\right)) - (1)) \cdot (((3: \operatorname{Int}))^{n})) + ((27) \cdot ((\operatorname{Int}.\operatorname{ofNat}\left(n\right)) - (1)))))))$$
+$$\forall (n: \operatorname{Nat}), ((3 \le n) \Rightarrow ((54) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{KingGrid}.\operatorname{T}\left(n, 1\right)\right)) = (((\operatorname{Int}.\operatorname{ofNat}\left(n\right)) - (1)) \cdot (((3: \operatorname{Int}))^{n})) + ((27) \cdot ((\operatorname{Int}.\operatorname{ofNat}\left(n\right)) - (1)))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/KingPath.width_one` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/KingPath.width_one_large` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -16,9 +16,9 @@ $$(\operatorname{KingGrid}.\operatorname{T}\left(1, 1\right) = 0) \land ((\opera
 
 *Commentary.*
 
-A one-column array is a word with exactly one equal adjacent pair. Burnside counting for permutations of four colours gives the formula; the one- and two-cell words have the displayed separate counts.
+A one-column array is a word with exactly one equal adjacent pair. Burnside counting for permutations of four colours gives the formula for every word of length at least three.
 
 ## References
 
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingPath.width_one`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingPath.width_one_large`
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid](KingGrid.md)
