@@ -12,6 +12,7 @@ import D5.S3.Quantum.Algebra.Knot.WeightedPathProjectionNaturality
 /-! Original finite-word preparation uses the same legal paths and fixed exterior bits. -/
 
 set_option autoImplicit false
+set_option maxRecDepth 8192
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 namespace D5.S3.Quantum.Dynamics.NativeReader
@@ -34,7 +35,6 @@ def sourceJ (v : OldSource) (i : Bool) : Source :=
         v.2.2.2 ⟨k.val, hk⟩
     · have hs : k = 6 ∨ k = 7 ∨ k = 8 ∨ k = 9 := by
         rcases k with ⟨k, hk'⟩
-        simp only [Fin.mk.injEq]
         omega
       have hv : v.1 6 = false := v.2.2.1
       rcases hs with rfl | rfl | rfl | rfl <;> simp [adjacent, hv]⟩
@@ -52,8 +52,13 @@ private theorem sourceJ_injective :
 
 def sourceCode : Set Source := Set.range (fun p : OldSource × Bool => sourceJ p.1 p.2)
 
-instance : Fintype sourceCode := by classical; unfold sourceCode; infer_instance
-instance : Fintype {q : Source // q ∉ sourceCode} := by classical; infer_instance
+instance : Fintype sourceCode := by
+  classical
+  unfold sourceCode
+  infer_instance
+instance : Fintype {q : Source // q ∉ sourceCode} := by
+  classical
+  infer_instance
 
 /-- The full 26-code and 63-complement remain subcarriers of the original 89-path space. -/
 theorem source_code_counts : Fintype.card sourceCode = 26 ∧
@@ -63,6 +68,7 @@ theorem source_code_counts : Fintype.card sourceCode = 26 ∧
     rw [Fintype.card_congr (pathWordEquiv 5), admissibleWord_card_eq_fib]
     decide
   have hc : Fintype.card sourceCode = 26 := by
+    change Fintype.card (Set.range (fun p : OldSource × Bool => sourceJ p.1 p.2)) = 26
     rw [← Fintype.card_congr (Equiv.ofInjective _ sourceJ_injective), Fintype.card_prod, ho]
     decide
   refine ⟨hc, ?_⟩
@@ -86,7 +92,7 @@ def padPath (n : ℕ) (q : LegalPath adjacent n false false) :
     refine ⟨by simp, by simp, ?_⟩
     intro k
     by_cases h0 : k.val = 0
-    · have hq : q.1 ⟨0, by omega⟩ = false := q.2.1
+    · have hq : q.1 0 = false := q.2.1
       simp [Fin.castSucc, Fin.castAdd, Fin.castLE, Fin.succ, h0, hq, adjacent]
     · by_cases hn : k.val = n + 1
       · have he : (⟨n, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext rfl
@@ -121,7 +127,7 @@ def padEquiv (n : ℕ) :
   left_inv q := by
     apply Subtype.ext
     funext k
-    simp [unpadPath, padPath]
+    simp [unpadPath, padPath, show k.val ≤ n by omega]
   right_inv p := by
     apply Subtype.ext
     funext k
@@ -167,7 +173,7 @@ private theorem padded_ready_old (q : Source) (k : Fin 13) :
 
 private theorem padded_ready_tail (q r : Source) (k : Fin 17) (hk : 13 ≤ k.val) :
     (padPath 14 (extendReady q)).1 k = (padPath 14 (extendReady r)).1 k := by
-  fin_cases k <;> first | omega | simp [padPath, extendReady, joinPath, readyTail]
+  fin_cases k <;> simp_all [padPath, extendReady, joinPath, readyTail]
 
 private theorem projection_ready_entry (j : Fin 11) (q r : Source) :
     extendedProjection ⟨j.val, by omega⟩ (extendReady q) (extendReady r) =
@@ -180,12 +186,19 @@ private theorem projection_ready_entry (j : Fin 11) (q r : Source) :
       simpa only [padded_ready_old] using h ⟨k.val, by omega⟩ hk
     · intro h k hk
       by_cases hb : k.val < 13
-      · simpa only [padded_ready_old] using h ⟨k.val, hb⟩ hk
+      · calc
+          _ = (padPath 10 q).1 ⟨k.val, hb⟩ := padded_ready_old q ⟨k.val, hb⟩
+          _ = (padPath 10 r).1 ⟨k.val, hb⟩ := h ⟨k.val, hb⟩ hk
+          _ = _ := (padded_ready_old r ⟨k.val, hb⟩).symm
       · exact padded_ready_tail q r k (by omega)
   unfold extendedProjection originalProjection
   simp only [Matrix.submatrix_apply, padEquiv, Equiv.coe_fn_mk, pathProjection]
-  rw [hc]
-  simp only [padded_ready_old, Nat.add_sub_cancel]
+  simp only [hc]
+  have hindex (m : ℕ) (hm : m < 13) (p : Source) :
+      (padPath 14 (extendReady p)).1 ⟨m, by omega⟩ =
+        (padPath 10 p).1 ⟨m, hm⟩ := padded_ready_old p ⟨m, hm⟩
+  simp only [hindex j.val (by omega), hindex (j.val + 1) (by omega),
+    hindex (j.val + 1 + 1) (by omega), Nat.add_sub_cancel]
 
 private theorem ready_of_tail (e : Extended) (h11 : e.1 11 = true)
     (h12 : e.1 12 = false) (h13 : e.1 13 = false) :
@@ -199,9 +212,7 @@ private theorem ready_of_tail (e : Extended) (h11 : e.1 11 = true)
   by_cases hk : k.val < 10
   · simp [extendReady, joinPath, originalPart, hk]
   · have hs : k = 10 ∨ k = 11 ∨ k = 12 ∨ k = 13 ∨ k = 14 := by
-      rcases k with ⟨k, hk'⟩
-      simp only [Fin.mk.injEq]
-      omega
+      fin_cases k <;> simp_all
     rcases hs with rfl | rfl | rfl | rfl | rfl <;>
       simp [extendReady, joinPath, readyTail, h10, h11, h12, h13, h14]
 
@@ -251,7 +262,8 @@ private theorem projection_ready_action (j : Fin 11) (chi : Source → ℂ) :
   by_cases he : e = extendReady (originalPart e)
   · conv_lhs => rw [he]
     conv_rhs => rw [he]
-    simp only [projection_ready_entry, readyExtension, extendReady, globalVector_join,
+    simp_rw [projection_ready_entry]
+    simp only [readyExtension, extendReady, globalVector_join,
       readyVector, Pi.single_eq_same, mul_one, Matrix.mulVec, dotProduct]
   · rw [readyExtension_outside _ _ he]
     exact Finset.sum_eq_zero (fun q _ => by rw [projection_outside_ready j e q he, zero_mul])
@@ -283,8 +295,9 @@ theorem original_preparation_bridge (a : List (Fin 11)) :
         readyExtension (a.foldl (fun v j => originalPulse j 1 *ᵥ v) chi) := by
     induction a generalizing chi with
     | nil => rfl
-    | cons j a ih => simpa only [List.foldl_cons, original_pulse_bridge] using
-        ih (originalPulse j 1 *ᵥ chi)
+    | cons j a ih =>
+      simpa only [List.foldl_cons, original_pulse_bridge] using
+        (ih (originalPulse j 1 *ᵥ chi))
   exact h a (Pi.single readySource 1)
 
 end D5.S3.Quantum.Dynamics.NativeReader
