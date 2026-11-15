@@ -13,6 +13,11 @@ import Mathlib.GroupTheory.Commutator.Basic
 import Mathlib.GroupTheory.Perm.Fin
 import Mathlib.GroupTheory.GroupAction.Transitive
 import Mathlib.SetTheory.Cardinal.Finite
+import Mathlib.GroupTheory.Perm.Sign
+import Mathlib.GroupTheory.QuotientGroup.Basic
+import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.GroupTheory.GroupAction.Quotient
+import Mathlib.Data.Set.Card
 import Mathlib.Tactic
 
 /-!
@@ -30,7 +35,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open scoped BigOperators
+open scoped BigOperators commutatorElement IsMulCommutative
 
 namespace D5.S3.StatisticalMechanics.ParticleProcesses.SwitchedTwistedSSEP
 
@@ -102,7 +107,7 @@ def alternatingSupport {L N : ℕ} (hL : 1 < L)
       {x | ∃ D ∈ sectorsOf hL (if start = (k % 2 == 0) then f else g),
         x ∈ D ∧ ∃ y ∈ alternatingSupport hL f g start C k, y ∈ D}
 
-lemma adjacentMove_involutive {L N : ℕ} (i : Fin L) (hi : i.1 + 1 < L)
+private lemma adjacentMove_involutive {L N : ℕ} (i : Fin L) (hi : i.1 + 1 < L)
     (x : Configuration L N) : adjacentMove i hi (adjacentMove i hi x) = x := by
   funext j
   by_cases hji : j = i
@@ -118,29 +123,29 @@ lemma adjacentMove_involutive {L N : ℕ} (i : Fin L) (hi : i.1 + 1 < L)
     simp [adjacentMove, Equiv.swap_apply_left, Equiv.swap_apply_right, hnext]
   simp [adjacentMove, Equiv.swap_apply_self]
 
-lemma lastSite_ne_first {L : ℕ} (hL : 1 < L) : lastSite hL ≠ firstSite hL := by
+private lemma lastSite_ne_first {L : ℕ} (hL : 1 < L) : lastSite hL ≠ firstSite hL := by
   intro h
   have hv := congrArg Fin.val h
   simp [lastSite, firstSite] at hv
   omega
 
-lemma boundary_at_first {L N : ℕ} (hL : 1 < L)
+private lemma boundary_at_first {L N : ℕ} (hL : 1 < L)
     (s : Equiv.Perm (Fin N)) (x : Configuration L N) :
     boundaryMove hL s x (firstSite hL) = s⁻¹ (x (lastSite hL)) := by
   simp [boundaryMove]
 
-lemma boundary_at_last {L N : ℕ} (hL : 1 < L)
+private lemma boundary_at_last {L N : ℕ} (hL : 1 < L)
     (s : Equiv.Perm (Fin N)) (x : Configuration L N) :
     boundaryMove hL s x (lastSite hL) = s (x (firstSite hL)) := by
   simp [boundaryMove, lastSite_ne_first hL]
 
-lemma boundary_at_other {L N : ℕ} (hL : 1 < L)
+private lemma boundary_at_other {L N : ℕ} (hL : 1 < L)
     (s : Equiv.Perm (Fin N)) (x : Configuration L N) {i : Fin L}
     (hi0 : i ≠ firstSite hL) (hil : i ≠ lastSite hL) :
     boundaryMove hL s x i = x i := by
   simp [boundaryMove, hi0, hil]
 
-lemma boundaryMove_involutive {L N : ℕ} (hL : 1 < L)
+private lemma boundaryMove_involutive {L N : ℕ} (hL : 1 < L)
     (s : Equiv.Perm (Fin N)) (x : Configuration L N) :
     boundaryMove hL s (boundaryMove hL s x) = x := by
   funext i
@@ -154,7 +159,7 @@ lemma boundaryMove_involutive {L N : ℕ} (hL : 1 < L)
       simp
     · rw [boundary_at_other hL s _ hi0 hil, boundary_at_other hL s _ hi0 hil]
 
-lemma moveRelation_symmetric {L N : ℕ} (hL : 1 < L)
+private lemma moveRelation_symmetric {L N : ℕ} (hL : 1 < L)
     (s : Equiv.Perm (Fin N)) : Symmetric (moveRelation hL s) := by
   intro x y hxy
   cases hxy with
@@ -169,13 +174,13 @@ lemma moveRelation_symmetric {L N : ℕ} (hL : 1 < L)
     rw [h]
     exact (boundaryMove_involutive hL s x).symm
 
-lemma sector_nonempty {L N : ℕ} (hL : 1 < L)
+private lemma sector_nonempty {L N : ℕ} (hL : 1 < L)
     (s : Equiv.Perm (Fin N)) (x : Configuration L N) :
     (sector hL s x).Nonempty := by
   classical
   exact ⟨x, Finset.mem_filter.mpr ⟨Finset.mem_univ _, Relation.EqvGen.refl _⟩⟩
 
-theorem branchingProbability_pos_iff {L N : ℕ} (hL : 1 < L)
+private theorem branchingProbability_pos_iff {L N : ℕ} (hL : 1 < L)
     (s t : Equiv.Perm (Fin N)) (x y : Configuration L N) :
     0 < branchingProbability hL s t x y ↔ overlap hL s t x y := by
   classical
@@ -193,12 +198,12 @@ theorem branchingProbability_pos_iff {L N : ℕ} (hL : 1 < L)
       Finset.card_pos.mpr h
     exact div_pos (by exact_mod_cast hnum) (by exact_mod_cast hden)
 
-theorem sector_overlap_is_positive {L N : ℕ} (hL : 1 < L)
+private theorem sector_overlap_is_positive {L N : ℕ} (hL : 1 < L)
     (s t : Equiv.Perm (Fin N)) (x y : Configuration L N) :
     overlap hL s t x y ↔ 0 < branchingProbability hL s t x y := by
   exact (branchingProbability_pos_iff hL s t x y).symm
 
-theorem alternatingSupport_eq_switchSupport {L N : ℕ} (hL : 1 < L)
+private theorem alternatingSupport_eq_switchSupport {L N : ℕ} (hL : 1 < L)
     (f g : Equiv.Perm (Fin N)) (start : Bool)
     (C : Finset (Configuration L N)) (k : ℕ) :
     alternatingSupport hL f g start C k = switchSupport hL f g start C k := by
@@ -232,11 +237,11 @@ def pairTwistGroup {N : ℕ} (f g : Equiv.Perm (Fin N)) :
     Subgroup (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) :=
   Subgroup.closure {(f, f⁻¹), (g, g⁻¹)}
 
-instance pairPermutationSMul {N : ℕ} :
+private instance pairPermutationSMul {N : ℕ} :
     SMul (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) (Fin N × Fin N) :=
   ⟨fun p x => (p.1 x.1, p.2 x.2)⟩
 
-instance pairPermutationMulAction {N : ℕ} :
+private instance pairPermutationMulAction {N : ℕ} :
     MulAction (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) (Fin N × Fin N) where
   smul := (· • ·)
   one_smul x := by rfl
@@ -259,7 +264,7 @@ def lTwoCriterion {N : ℕ} (f g : Equiv.Perm (Fin N)) : Prop :=
 def lAtLeastThreeCriterion {N : ℕ} (f g : Equiv.Perm (Fin N)) : Prop :=
   MulAction.IsPretransitive (derivedTwistGroup f g) (Fin N)
 
-def lTwoOrbitCriterion {N : ℕ} (f g : Equiv.Perm (Fin N)) (a : Fin N) : Prop :=
+private def lTwoOrbitCriterion {N : ℕ} (f g : Equiv.Perm (Fin N)) (a : Fin N) : Prop :=
   MulAction.orbit (pairTwistGroup f g) (a, a) = Set.univ
 
 def fullSwitchingReachability {L N : ℕ} (hL : 1 < L)
@@ -275,19 +280,675 @@ def registeredReachabilityAnswer {L N : ℕ} (hL : 1 < L)
     (unionConnected hL f g ∧
       (if 3 ≤ L then lAtLeastThreeCriterion f g else lTwoCriterion f g))
 
-theorem lTwoOrbitCriterion_iff_pretransitive {N : ℕ}
+private theorem lTwoOrbitCriterion_iff_pretransitive {N : ℕ}
     (f g : Equiv.Perm (Fin N)) (a : Fin N) :
     lTwoOrbitCriterion f g a ↔
       MulAction.IsPretransitive (pairTwistGroup f g) (Fin N × Fin N) := by
   unfold lTwoOrbitCriterion
   exact (MulAction.isPretransitive_iff_orbit_eq_univ (a, a)).symm
 
-theorem switching_support_result {L N : ℕ} (hL : 1 < L)
-    (f g : Equiv.Perm (Fin N)) (start : Bool)
-    (C : Finset (Configuration L N)) :
-    ∀ k x, x ∈ alternatingSupport hL f g start C k ↔
-      x ∈ switchSupport hL f g start C k := by
-  intro k x
-  rw [alternatingSupport_eq_switchSupport]
+private lemma mem_sector_iff {L N : ℕ} (hL : 1 < L) (s : Equiv.Perm (Fin N))
+    (x y : Configuration L N) :
+    y ∈ sector hL s x ↔ Relation.EqvGen (moveRelation hL s) x y := by
+  classical
+  simp [sector]
+
+private lemma alternatingSupport_step {L N : ℕ} (hL : 1 < L) (f g : Equiv.Perm (Fin N))
+    (start : Bool) (C : Finset (Configuration L N)) (k : ℕ)
+    {x y : Configuration L N} (hx : x ∈ alternatingSupport hL f g start C k)
+    (hxy : Relation.EqvGen
+      (moveRelation hL (if start = (k % 2 == 0) then f else g)) x y) :
+    y ∈ alternatingSupport hL f g start C (k + 1) := by
+  refine ⟨sector hL (if start = (k % 2 == 0) then f else g) x,
+    ⟨x, rfl⟩, (mem_sector_iff _ _ _ _).mpr hxy, x, hx, ?_⟩
+  exact (mem_sector_iff _ _ _ _).mpr (.refl x)
+
+private lemma alternatingSupport_mono {L N : ℕ} (hL : 1 < L) (f g : Equiv.Perm (Fin N))
+    (start : Bool) (C : Finset (Configuration L N)) (k : ℕ) :
+    alternatingSupport hL f g start C k ⊆ alternatingSupport hL f g start C (k + 1) := by
+  intro x hx
+  exact alternatingSupport_step hL f g start C k hx (.refl x)
+
+private lemma alternatingSupport_union_step {L N : ℕ} (hL : 1 < L)
+    (f g : Equiv.Perm (Fin N)) (start : Bool) (C : Finset (Configuration L N))
+    (k : ℕ) {x y : Configuration L N}
+    (hx : x ∈ alternatingSupport hL f g start C k)
+    (hxy : unionMoveRelation hL f g x y) :
+    y ∈ alternatingSupport hL f g start C (k + 2) := by
+  have hs (s : Equiv.Perm (Fin N)) (hs : s = f ∨ s = g)
+      (hm : moveRelation hL s x y) :
+      y ∈ alternatingSupport hL f g start C (k + 2) := by
+    have hp : ((k + 1) % 2 == 0) = (!(k % 2 == 0)) := by
+      by_cases hz : k % 2 = 0
+      · have ho : (k + 1) % 2 = 1 := by omega
+        simp [hz, ho]
+      · have ho : (k + 1) % 2 = 0 := by omega
+        simp [hz, ho]
+    by_cases ht : s = (if start = (k % 2 == 0) then f else g)
+    · exact alternatingSupport_mono hL f g start C (k + 1)
+        (alternatingSupport_step hL f g start C k hx (.rel _ _ (ht ▸ hm)))
+    · have ht' : s = (if start = ((k + 1) % 2 == 0) then f else g) := by
+        rw [hp]
+        rcases hs with rfl | rfl <;> cases start <;> cases he : (k % 2 == 0) <;>
+          simp_all
+      exact alternatingSupport_step hL f g start C (k + 1)
+        (alternatingSupport_mono hL f g start C k hx) (.rel _ _ (ht' ▸ hm))
+  exact hxy.elim (hs f (Or.inl rfl)) (hs g (Or.inr rfl))
+
+private lemma union_path_eventually_supported {L N : ℕ} (hL : 1 < L)
+    (f g : Equiv.Perm (Fin N)) (start : Bool) (C : Finset (Configuration L N))
+    {x y : Configuration L N} (hxy : Relation.EqvGen (unionMoveRelation hL f g) x y) :
+    ∀ k, x ∈ alternatingSupport hL f g start C k →
+      ∃ l, y ∈ alternatingSupport hL f g start C l := by
+  have symm : Symmetric (unionMoveRelation hL f g) := by
+    intro a b hab
+    exact hab.elim (fun h => Or.inl (moveRelation_symmetric hL f h))
+      (fun h => Or.inr (moveRelation_symmetric hL g h))
+  letI : Std.Symm (unionMoveRelation hL f g) := ⟨fun _ _ h => symm h⟩
+  rw [Relation.EqvGen.eqvGen_eq_reflTransGen] at hxy
+  induction hxy with
+  | refl => exact fun k hx => ⟨k, hx⟩
+  | @tail y z hpath hyz ih =>
+      intro k hx
+      obtain ⟨l, hy⟩ := ih k hx
+      exact ⟨l + 2, alternatingSupport_union_step hL f g start C l hy hyz⟩
+
+private lemma supported_in_union_component {L N : ℕ} (hL : 1 < L)
+    (f g : Equiv.Perm (Fin N)) (start : Bool) (x : Configuration L N) :
+    ∀ k y, y ∈ alternatingSupport hL f g start
+      (sector hL (if start then f else g) x) k →
+      Relation.EqvGen (unionMoveRelation hL f g) x y := by
+  intro k
+  induction k with
+  | zero =>
+      intro y hy
+      have h := (mem_sector_iff _ _ _ _).mp hy
+      apply Relation.EqvGen.eqvGen_mono (r := moveRelation hL (if start then f else g)) _ _ _ h
+      intro a b hab
+      cases start <;> simp_all [unionMoveRelation]
+  | succ k ih =>
+      rintro y ⟨D, ⟨z, rfl⟩, hyD, w, hw, hwD⟩
+      have hzy := (mem_sector_iff _ _ _ _).mp hyD
+      have hzw := (mem_sector_iff _ _ _ _).mp hwD
+      have hwy := Relation.EqvGen.trans _ _ _ (.symm _ _ hzw) hzy
+      refine .trans _ _ _ (ih w hw) (Relation.EqvGen.eqvGen_mono ?_ _ _ hwy)
+      intro a b hab
+      by_cases ht : start = (k % 2 == 0) <;> simp_all [unionMoveRelation]
+
+private theorem fullSwitchingReachability_iff_unionConnected {L N : ℕ} (hL : 1 < L)
+    (f g : Equiv.Perm (Fin N)) :
+    fullSwitchingReachability hL f g ↔ unionConnected hL f g := by
+  constructor
+  · intro h x y
+    obtain ⟨k, hk⟩ := h true x y
+    rw [← alternatingSupport_eq_switchSupport] at hk
+    exact supported_in_union_component hL f g true x k y hk
+  · intro h start x y
+    obtain ⟨k, hk⟩ := union_path_eventually_supported hL f g start
+      (sector hL (if start then f else g) x) (h x y) 0
+      ((mem_sector_iff _ _ _ _).mpr (.refl x))
+    exact ⟨k, by rwa [← alternatingSupport_eq_switchSupport]⟩
+
+
+
+
+private abbrev UnionPath {L N : ℕ} (hL : 1 < L) (f g : Equiv.Perm (Fin N)) :=
+  Relation.EqvGen (unionMoveRelation hL f g)
+
+private def siteReachGroup {L N : ℕ} (hL : 1 < L) (f g : Equiv.Perm (Fin N)) :
+    Subgroup (Equiv.Perm (Fin L)) where
+  carrier := {p | ∀ x, UnionPath hL f g x (x ∘ p)}
+  one_mem' := fun x => .refl x
+  mul_mem' := by
+    intro p q hp hq x
+    exact .trans _ _ _ (hp x) (hq (x ∘ p))
+  inv_mem' := by
+    intro p hp x
+    have h := hp (x ∘ p.symm)
+    have he : (x ∘ p.symm) ∘ p = x := by funext i; simp
+    rw [he] at h
+    exact .symm _ _ h
+
+private lemma siteReachGroup_eq_top {L N : ℕ} (hL : 1 < L) (f g : Equiv.Perm (Fin N)) :
+    siteReachGroup hL f g = ⊤ := by
+  obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : L ≠ 0)
+  apply top_unique
+  have hgen : Submonoid.closure
+      (Set.range fun i : Fin n => Equiv.swap i.castSucc i.succ) ≤
+      (siteReachGroup hL f g).toSubmonoid := by
+    rw [Submonoid.closure_le]
+    rintro _ ⟨i, rfl⟩ x
+    apply Relation.EqvGen.rel
+    left; left
+    exact ⟨i.castSucc, by simpa using i.isLt, rfl⟩
+  rw [Equiv.Perm.mclosure_swap_castSucc_succ] at hgen
+  exact hgen
+
+private lemma site_permutation_path {L N : ℕ} (hL : 1 < L) (f g : Equiv.Perm (Fin N))
+    (p : Equiv.Perm (Fin L)) (x : Configuration L N) :
+    UnionPath hL f g x (x ∘ p) := by
+  have hp : p ∈ siteReachGroup hL f g := by rw [siteReachGroup_eq_top]; trivial
+  exact hp x
+
+private def coordinateReachGroup {L N : ℕ} (hL : 1 < L) (f g : Equiv.Perm (Fin N)) :
+    Subgroup (Fin L → Equiv.Perm (Fin N)) where
+  carrier := {p | ∀ x, UnionPath hL f g x (fun i => p i (x i))}
+  one_mem' := fun x => .refl x
+  mul_mem' := by
+    intro p q hp hq x
+    exact .trans _ _ _ (hq x) (hp (fun i => q i (x i)))
+  inv_mem' := by
+    intro p hp x
+    have h := hp (fun i => (p i)⁻¹ (x i))
+    have he : (fun i => p i ((p i)⁻¹ (x i))) = x := by funext i; simp
+    rw [he] at h
+    exact .symm _ _ h
+
+private def pairedCoordinates {L N : ℕ} (i j : Fin L) (s : Equiv.Perm (Fin N)) :
+    Fin L → Equiv.Perm (Fin N) :=
+  fun k => if k = i then s else if k = j then s⁻¹ else 1
+
+private lemma boundary_pair_path {L N : ℕ} (hL : 1 < L) (f g s : Equiv.Perm (Fin N))
+    (hs : s = f ∨ s = g) (x : Configuration L N) :
+    UnionPath hL f g x (fun i => pairedCoordinates (lastSite hL) (firstSite hL) s i (x i)) := by
+  have hswap := site_permutation_path hL f g (Equiv.swap (lastSite hL) (firstSite hL)) x
+  have hb : UnionPath hL f g
+      (x ∘ Equiv.swap (lastSite hL) (firstSite hL))
+      (boundaryMove hL s (x ∘ Equiv.swap (lastSite hL) (firstSite hL))) := by
+    apply Relation.EqvGen.rel
+    rcases hs with rfl | rfl
+    · exact Or.inl (Or.inr rfl)
+    · exact Or.inr (Or.inr rfl)
+  have he : boundaryMove hL s (x ∘ Equiv.swap (lastSite hL) (firstSite hL)) =
+      (fun i => pairedCoordinates (lastSite hL) (firstSite hL) s i (x i)) := by
+    funext i
+    by_cases h0 : i = firstSite hL
+    · subst i
+      simp [boundaryMove, pairedCoordinates, (lastSite_ne_first hL).symm]
+    · by_cases hl : i = lastSite hL
+      · subst i
+        simp [boundaryMove, pairedCoordinates, lastSite_ne_first hL]
+      · simp [boundaryMove, pairedCoordinates, h0, hl,
+          Equiv.swap_apply_of_ne_of_ne hl h0]
+  rw [he] at hb
+  exact .trans _ _ _ hswap hb
+
+private lemma exists_site_permutation {L : ℕ} (hL : 1 < L) (i j : Fin L) (hij : i ≠ j) :
+    ∃ p : Equiv.Perm (Fin L), p i = lastSite hL ∧ p j = firstSite hL := by
+  let q := Equiv.swap i (lastSite hL)
+  have hqi : q i = lastSite hL := by simp [q]
+  have hqj : q j ≠ lastSite hL := by
+    rw [← hqi]; exact fun h => hij (q.injective h).symm
+  refine ⟨Equiv.swap (q j) (firstSite hL) * q, ?_, ?_⟩
+  · simp only [Equiv.Perm.mul_apply, hqi]
+    exact Equiv.swap_apply_of_ne_of_ne hqj.symm (lastSite_ne_first hL)
+  · simp
+
+private lemma pairedCoordinates_mem {L N : ℕ} (hL : 1 < L) (f g s : Equiv.Perm (Fin N))
+    (hs : s = f ∨ s = g) (i j : Fin L) (hij : i ≠ j) :
+    pairedCoordinates i j s ∈ coordinateReachGroup hL f g := by
+  obtain ⟨p, hpi, hpj⟩ := exists_site_permutation hL i j hij
+  intro x
+  have h1 := site_permutation_path hL f g p⁻¹ x
+  have h2 := boundary_pair_path hL f g s hs (x ∘ p.symm)
+  have h3 := site_permutation_path hL f g p
+    (fun k => pairedCoordinates (lastSite hL) (firstSite hL) s k ((x ∘ p.symm) k))
+  have he : (fun k => pairedCoordinates (lastSite hL) (firstSite hL) s k
+      ((x ∘ p.symm) k)) ∘ p = (fun k => pairedCoordinates i j s k (x k)) := by
+    funext k
+    have hpki : p k = lastSite hL ↔ k = i := by rw [← hpi]; exact p.injective.eq_iff
+    have hpkj : p k = firstSite hL ↔ k = j := by rw [← hpj]; exact p.injective.eq_iff
+    simp [pairedCoordinates, hpki, hpkj]
+  rw [he] at h3
+  exact .trans _ _ _ h1 (.trans _ _ _ h2 h3)
+
+
+private def pairCoordinateHom {L N : ℕ} (i j : Fin L) :
+    (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) →*
+      (Fin L → Equiv.Perm (Fin N)) where
+  toFun p k := if k = i then p.1 else if k = j then p.2 else 1
+  map_one' := by funext k; simp
+  map_mul' p q := by funext k; simp only [ite_mul, mul_ite, Pi.mul_apply]; split_ifs <;> simp_all
+
+private lemma pairCoordinate_mem {L N : ℕ} (hL : 1 < L) (f g : Equiv.Perm (Fin N))
+    (i j : Fin L) (hij : i ≠ j) :
+    pairTwistGroup f g ≤ (coordinateReachGroup hL f g).comap (pairCoordinateHom i j) := by
+  apply (Subgroup.closure_le _).mpr
+  intro p hp
+  rcases hp with rfl | rfl
+  · exact pairedCoordinates_mem hL f g f (Or.inl rfl) i j hij
+  · exact pairedCoordinates_mem hL f g g (Or.inr rfl) i j hij
+
+private lemma pairTwistGroup_le_product {N : ℕ} (f g : Equiv.Perm (Fin N)) :
+    pairTwistGroup f g ≤ (twistGroup f g).prod (twistGroup f g) := by
+  apply (Subgroup.closure_le _).mpr
+  have hf : f ∈ twistGroup f g := Subgroup.subset_closure (by simp)
+  have hg : g ∈ twistGroup f g := Subgroup.subset_closure (by simp)
+  rintro p (rfl | rfl)
+  · exact ⟨hf, (twistGroup f g).inv_mem hf⟩
+  · exact ⟨hg, (twistGroup f g).inv_mem hg⟩
+
+private lemma twistGroup_le_pair_fst {N : ℕ} (f g : Equiv.Perm (Fin N)) :
+    twistGroup f g ≤ (pairTwistGroup f g).map (MonoidHom.fst _ _) := by
+  apply (Subgroup.closure_le _).mpr
+  rintro s (rfl | rfl)
+  · exact ⟨(s, s⁻¹), Subgroup.subset_closure (by simp), rfl⟩
+  · exact ⟨(s, s⁻¹), Subgroup.subset_closure (by simp), rfl⟩
+
+private def singleCoordinateHom {L N : ℕ} (i : Fin L) :
+    Equiv.Perm (Fin N) →* (Fin L → Equiv.Perm (Fin N)) where
+  toFun s k := if k = i then s else 1
+  map_one' := by funext k; simp
+  map_mul' p q := by funext k; by_cases hi : k = i <;> simp [hi]
+
+private lemma three_distinct_sites {L : ℕ} (hL : 3 ≤ L) (i : Fin L) :
+    ∃ j k : Fin L, i ≠ j ∧ i ≠ k ∧ j ≠ k := by
+  let a : Fin L := ⟨0, by omega⟩
+  let b : Fin L := ⟨1, by omega⟩
+  let c : Fin L := ⟨2, by omega⟩
+  by_cases ha : i = a
+  · exact ⟨b, c, by subst i; simp [a, b], by subst i; simp [a, c], by simp [b, c]⟩
+  · by_cases hb : i = b
+    · exact ⟨a, c, ha, by subst i; simp [b, c], by simp [a, c]⟩
+    · exact ⟨a, b, ha, hb, by simp [a, b]⟩
+
+private lemma derived_singleCoordinate_mem {L N : ℕ} (hL : 1 < L) (h3 : 3 ≤ L)
+    (f g : Equiv.Perm (Fin N)) (i : Fin L) :
+    derivedTwistGroup f g ≤ (coordinateReachGroup hL f g).comap (singleCoordinateHom i) := by
+  rw [derivedTwistGroup, Subgroup.map_subtype_commutator]
+  apply Subgroup.commutator_le.mpr
+  intro a ha b hb
+  obtain ⟨j, k, hij, hik, hjk⟩ := three_distinct_sites h3 i
+  obtain ⟨p, hp, hpa⟩ := twistGroup_le_pair_fst f g ha
+  obtain ⟨q, hq, hqb⟩ := twistGroup_le_pair_fst f g hb
+  have hpc := pairCoordinate_mem hL f g i j hij hp
+  have hqc := pairCoordinate_mem hL f g i k hik hq
+  have hcomm := (coordinateReachGroup hL f g).mul_mem
+    ((coordinateReachGroup hL f g).mul_mem
+      ((coordinateReachGroup hL f g).mul_mem hpc hqc)
+      ((coordinateReachGroup hL f g).inv_mem hpc))
+    ((coordinateReachGroup hL f g).inv_mem hqc)
+  have he : pairCoordinateHom i j p * pairCoordinateHom i k q *
+      (pairCoordinateHom i j p)⁻¹ * (pairCoordinateHom i k q)⁻¹ =
+      singleCoordinateHom i ⁅a, b⁆ := by
+    funext t
+    by_cases hi : t = i
+    · subst t
+      simp [pairCoordinateHom, singleCoordinateHom, commutatorElement_def, ← hpa, ← hqb]
+    · by_cases hj : t = j
+      · subst t
+        simp [pairCoordinateHom, singleCoordinateHom, commutatorElement_def, hi, hjk]
+      · by_cases hk : t = k
+        · subst t
+          simp [pairCoordinateHom, singleCoordinateHom, commutatorElement_def, hi, hj, hjk.symm]
+        · simp [pairCoordinateHom, singleCoordinateHom, commutatorElement_def, hi, hj, hk]
+  rw [he] at hcomm
+  exact hcomm
+
+private lemma unionConnected_of_derived_transitive {L N : ℕ} (hL : 1 < L) (h3 : 3 ≤ L)
+    (f g : Equiv.Perm (Fin N)) (hD : lAtLeastThreeCriterion f g) :
+    unionConnected hL f g := by
+  classical
+  letI : MulAction.IsPretransitive (derivedTwistGroup f g) (Fin N) := hD
+  intro x y
+  have hu (z : Configuration L N) (i : Fin L) :
+      UnionPath hL f g z (Function.update z i (y i)) := by
+    obtain ⟨d, hd⟩ := MulAction.exists_smul_eq (derivedTwistGroup f g) (z i) (y i)
+    have h := derived_singleCoordinate_mem hL h3 f g i d.property z
+    have he : (fun k => singleCoordinateHom i d.val k (z k)) = Function.update z i (y i) := by
+      funext k
+      by_cases hk : k = i
+      · subst k; simp only [singleCoordinateHom, MonoidHom.coe_mk, OneHom.coe_mk, ite_true, Function.update_self]; simpa only [MulAction.subgroup_smul_def, Equiv.Perm.smul_def] using hd
+      · simp [singleCoordinateHom, hk, Function.update_of_ne hk]
+    rwa [he] at h
+  have hfin : ∀ S : Finset (Fin L),
+      UnionPath hL f g x (fun i => if i ∈ S then y i else x i) := by
+    intro S
+    induction S using Finset.induction_on with
+    | empty => simpa using (Relation.EqvGen.refl (r := unionMoveRelation hL f g) x)
+    | @insert i S hi ih =>
+        have h := hu (fun k => if k ∈ S then y k else x k) i
+        have he : Function.update (fun k => if k ∈ S then y k else x k) i (y i) =
+            (fun k => if k ∈ insert i S then y k else x k) := by
+          funext k
+          by_cases hk : k = i <;> simp [hk, Function.update_of_ne]
+        rw [he] at h
+        exact .trans _ _ _ ih h
+  simpa using hfin Finset.univ
+
+
+
+
+private lemma union_path_invariant {L N : ℕ} (hL : 1 < L)
+    (f g : Equiv.Perm (Fin N)) {A : Type*} (I : Configuration L N → A)
+    (hm : ∀ x y, unionMoveRelation hL f g x y → I x = I y)
+    {x y : Configuration L N} (hxy : Relation.EqvGen (unionMoveRelation hL f g) x y) :
+    I x = I y := by
+  induction hxy with
+  | rel a b hab => exact hm a b hab
+  | refl => rfl
+  | symm _ _ _ ih => exact ih.symm
+  | trans _ _ _ _ _ ih1 ih2 => exact ih1.trans ih2
+
+private lemma all_in_orbit_move {L N : ℕ} (hL : 1 < L)
+    (H : Subgroup (Equiv.Perm (Fin N))) (a : Fin N) (s : H)
+    {x y : Configuration L N} (hm : moveRelation hL s.val x y)
+    (hx : ∀ i, ∃ h : H, h • a = x i) : ∀ i, ∃ h : H, h • a = y i := by
+  rcases hm with ⟨i, hi, rfl⟩ | rfl
+  · intro k; exact hx _
+  · intro k
+    by_cases h0 : k = firstSite hL
+    · subst k
+      obtain ⟨h, hh⟩ := hx (lastSite hL)
+      refine ⟨s⁻¹ * h, ?_⟩
+      rw [mul_smul, hh, boundary_at_first]
+      rfl
+    · by_cases hl : k = lastSite hL
+      · subst k
+        obtain ⟨h, hh⟩ := hx (firstSite hL)
+        refine ⟨s * h, ?_⟩
+        rw [mul_smul, hh, boundary_at_last]
+        rfl
+      · simpa [boundaryMove, h0, hl] using hx k
+
+private lemma twist_transitive_of_unionConnected {L N : ℕ} (hL : 1 < L)
+    (f g : Equiv.Perm (Fin N)) (hc : unionConnected hL f g) :
+    MulAction.IsPretransitive (twistGroup f g) (Fin N) := by
+  constructor
+  intro a b
+  let P (x : Configuration L N) : Prop := ∀ i, ∃ h : twistGroup f g, h • a = x i
+  have hf : f ∈ twistGroup f g := Subgroup.subset_closure (by simp)
+  have hg : g ∈ twistGroup f g := Subgroup.subset_closure (by simp)
+  have hm (x y : Configuration L N) (hxy : unionMoveRelation hL f g x y) : P x → P y := by
+    rcases hxy with h | h
+    · exact all_in_orbit_move hL (twistGroup f g) a ⟨f, hf⟩ h
+    · exact all_in_orbit_move hL (twistGroup f g) a ⟨g, hg⟩ h
+  have hI : P (fun _ => a) = P (fun _ => b) :=
+    union_path_invariant hL f g P (fun x y hxy => propext ⟨hm x y hxy, by
+      intro hy
+      rcases hxy with h | h
+      · exact hm y x (Or.inl (moveRelation_symmetric hL f h)) hy
+      · exact hm y x (Or.inr (moveRelation_symmetric hL g h)) hy⟩)
+      (hc (fun _ => a) (fun _ => b))
+  have hstart : P (fun _ => a) := fun _ => ⟨1, one_smul _ _⟩
+  rw [hI] at hstart
+  exact hstart (firstSite hL)
+
+private def actionCharge {G X : Type*} [Group G] [MulAction G X]
+    (a : X) (ht : ∀ b, ∃ h : G, h • a = b) (P : Subgroup G) [P.Normal] : X → G ⧸ P :=
+  fun b => (QuotientGroup.mk' P) (Classical.choose (ht b))
+
+private lemma actionCharge_eval {G X : Type*} [Group G] [MulAction G X]
+    (a : X) (ht : ∀ b, ∃ h : G, h • a = b) (P : Subgroup G) [P.Normal]
+    (hstab : MulAction.stabilizer G a ≤ P) (h : G) :
+    actionCharge a ht P (h • a) = (QuotientGroup.mk' P) h := by
+  apply QuotientGroup.eq.mpr
+  apply hstab
+  rw [MulAction.mem_stabilizer_iff (G := G) (α := X), mul_smul]
+  exact (congrArg (fun z => (Classical.choose (ht (h • a)))⁻¹ • z)
+    (Classical.choose_spec (ht (h • a))).symm).trans
+      (inv_smul_smul (Classical.choose (ht (h • a))) a)
+
+private lemma actionCharge_smul {G X : Type*} [Group G] [MulAction G X]
+    (a : X) (ht : ∀ b, ∃ h : G, h • a = b) (P : Subgroup G) [P.Normal]
+    (hstab : MulAction.stabilizer G a ≤ P) (h : G) (b : X) :
+    actionCharge a ht P (h • b) = (QuotientGroup.mk' P) h * actionCharge a ht P b := by
+  obtain ⟨k, rfl⟩ := ht b
+  rw [← mul_smul, actionCharge_eval a ht P hstab (h * k),
+    actionCharge_eval a ht P hstab k, map_mul]
+
+private lemma charge_product_move {L N : ℕ} (hL : 1 < L)
+    {A : Type*} [CommGroup A] (χ : Fin N → A) (s : Equiv.Perm (Fin N)) (t : A)
+    (hχ : ∀ b, χ (s b) = t * χ b) {x y : Configuration L N}
+    (hm : moveRelation hL s x y) : (∏ i, χ (x i)) = ∏ i, χ (y i) := by
+  classical
+  rcases hm with ⟨i, hi, rfl⟩ | rfl
+  · exact (Equiv.prod_comp (Equiv.swap i ⟨i.val + 1, hi⟩) (fun i => χ (x i))).symm
+  · have hinv (b : Fin N) : χ (s⁻¹ b) = t⁻¹ * χ b := by
+      have h := hχ (s⁻¹ b)
+      simpa using (congrArg (fun z => t⁻¹ * z) h).symm
+    have he (i : Fin L) : χ (boundaryMove hL s x i) =
+        ((if i = firstSite hL then t⁻¹ else 1) * (if i = lastSite hL then t else 1)) *
+          χ (x (Equiv.swap (firstSite hL) (lastSite hL) i)) := by
+      by_cases h0 : i = firstSite hL
+      · subst i
+        simp only [boundary_at_first, ite_true, (lastSite_ne_first hL).symm, ite_false,
+          mul_one, Equiv.swap_apply_left]
+        exact hinv _
+      · by_cases hl : i = lastSite hL
+        · subst i; simp [boundaryMove, lastSite_ne_first hL, hχ]
+        · simp [boundaryMove, h0, hl, Equiv.swap_apply_of_ne_of_ne h0 hl]
+    simp_rw [he]
+    rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib]
+    simp only [Finset.prod_ite_eq', Finset.mem_univ, ite_true, inv_mul_cancel, one_mul]
+    exact (Equiv.prod_comp (Equiv.swap (firstSite hL) (lastSite hL)) (fun i => χ (x i))).symm
+
+private lemma derived_transitive_of_unionConnected {L N : ℕ} (hL : 1 < L)
+    (f g : Equiv.Perm (Fin N)) (hc : unionConnected hL f g) :
+    lAtLeastThreeCriterion f g := by
+  classical
+  have ht := twist_transitive_of_unionConnected hL f g hc
+  letI : MulAction.IsPretransitive (twistGroup f g) (Fin N) := ht
+  constructor
+  intro a b
+  let H := twistGroup f g
+  let P : Subgroup H := commutator H ⊔ MulAction.stabilizer H a
+  letI : P.Normal := Subgroup.Normal.of_commutator_le H (show commutator H ≤ P from le_sup_left)
+  letI : IsMulCommutative (H ⧸ P) :=
+    Subgroup.Normal.quotient_commutative_iff_commutator_le.mpr le_sup_left
+  have hbase : ∀ z : Fin N, ∃ h : H, h • a = z :=
+    fun z => MulAction.exists_smul_eq H a z
+  let χ := actionCharge a hbase P
+  have hstab : MulAction.stabilizer H a ≤ P := le_sup_right
+  have hχa : χ a = 1 := by
+    simpa using actionCharge_eval a hbase P hstab 1
+  have hf : f ∈ H := Subgroup.subset_closure (by simp [H, twistGroup])
+  have hg : g ∈ H := Subgroup.subset_closure (by simp [H, twistGroup])
+  have hinv : (∏ i, χ ((fun _ : Fin L => a) i)) =
+      ∏ i, χ ((Function.update (fun _ : Fin L => a) (firstSite hL) b) i) := by
+    apply union_path_invariant hL f g (fun x => ∏ i, χ (x i)) _
+      (hc (fun _ => a) (Function.update (fun _ => a) (firstSite hL) b))
+    intro x y hm
+    rcases hm with hm | hm
+    · exact charge_product_move hL χ f ((QuotientGroup.mk' P) ⟨f, hf⟩)
+        (actionCharge_smul a hbase P hstab ⟨f, hf⟩) hm
+    · exact charge_product_move hL χ g ((QuotientGroup.mk' P) ⟨g, hg⟩)
+        (actionCharge_smul a hbase P hstab ⟨g, hg⟩) hm
+  have hχb : χ b = 1 := by
+    simp only [Function.update_apply] at hinv
+    simp_rw [apply_ite χ] at hinv
+    simpa [hχa] using hinv.symm
+  obtain ⟨h, hh⟩ := hbase b
+  have hhP : h ∈ P := by
+    apply (QuotientGroup.eq_one_iff h).mp
+    change (QuotientGroup.mk' P) h = 1
+    rw [← actionCharge_eval a hbase P hstab h, hh]
+    exact hχb
+  obtain ⟨d, hd, s, hs, hds⟩ := Subgroup.mem_sup_of_normal_left.mp hhP
+  have hs' : s • a = a := hs
+  have hda : d • a = b := by
+    rw [← hs', ← mul_smul, hds, hh]
+  refine ⟨⟨d.val, ?_⟩, ?_⟩
+  · exact ⟨d, hd, rfl⟩
+  · exact hda
+
+
+
+
+private def twoSiteEquiv {N : ℕ} : Configuration 2 N ≃ Fin N × Fin N :=
+  (finTwoArrowEquiv (Fin N)).trans (Equiv.prodComm _ _)
+
+private def flipPairHom {N : ℕ} :
+    (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) →*
+      (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) where
+  toFun p := (p.2, p.1)
+  map_one' := rfl
+  map_mul' _ _ := rfl
+
+private lemma pair_flip_mem {N : ℕ} (f g : Equiv.Perm (Fin N)) :
+    pairTwistGroup f g ≤ (pairTwistGroup f g).comap flipPairHom := by
+  apply (Subgroup.closure_le _).mpr
+  rintro p (rfl | rfl)
+  · change (f⁻¹, f) ∈ pairTwistGroup f g
+    simpa using (pairTwistGroup f g).inv_mem
+      (Subgroup.subset_closure (by simp) : (f, f⁻¹) ∈ pairTwistGroup f g)
+  · change (g⁻¹, g) ∈ pairTwistGroup f g
+    simpa using (pairTwistGroup f g).inv_mem
+      (Subgroup.subset_closure (by simp) : (g, g⁻¹) ∈ pairTwistGroup f g)
+
+private lemma pair_orbit_swap {N : ℕ} (f g : Equiv.Perm (Fin N)) (a : Fin N)
+    {y : Fin N × Fin N} (hy : y ∈ MulAction.orbit (pairTwistGroup f g) (a, a)) :
+    y.swap ∈ MulAction.orbit (pairTwistGroup f g) (a, a) := by
+  obtain ⟨p, hp⟩ := MulAction.mem_orbit_iff.mp hy
+  apply MulAction.mem_orbit_iff.mpr
+  refine ⟨⟨flipPairHom p.val, pair_flip_mem f g p.property⟩, ?_⟩
+  exact congrArg Prod.swap hp
+
+private lemma twoSite_move_orbit {N : ℕ} (f g s : Equiv.Perm (Fin N))
+    (hs : s = f ∨ s = g) (a : Fin N) {x y : Configuration 2 N}
+    (hm : moveRelation (by decide) s x y)
+    (hx : twoSiteEquiv x ∈ MulAction.orbit (pairTwistGroup f g) (a, a)) :
+    twoSiteEquiv y ∈ MulAction.orbit (pairTwistGroup f g) (a, a) := by
+  rcases hm with ⟨i, hi, rfl⟩ | rfl
+  · have hi0 : i = 0 := Fin.ext (by omega)
+    subst i
+    have he : twoSiteEquiv (adjacentMove 0 hi x) = (twoSiteEquiv x).swap := by
+      apply Prod.ext <;> simp [twoSiteEquiv, adjacentMove, finTwoArrowEquiv]
+    rw [he]
+    exact pair_orbit_swap f g a hx
+  · have hsK : (s, s⁻¹) ∈ pairTwistGroup f g := by
+      rcases hs with rfl | rfl <;> exact Subgroup.subset_closure (by simp)
+    obtain ⟨p, hp⟩ := MulAction.mem_orbit_iff.mp (pair_orbit_swap f g a hx)
+    apply MulAction.mem_orbit_iff.mpr
+    refine ⟨⟨(s, s⁻¹), hsK⟩ * p, ?_⟩
+    rw [mul_smul, hp]
+    rfl
+
+private lemma unionConnected_two_iff_pair_pretransitive {N : ℕ} (f g : Equiv.Perm (Fin N)) :
+    unionConnected (L := 2) (by decide) f g ↔
+      MulAction.IsPretransitive (pairTwistGroup f g) (Fin N × Fin N) := by
+  classical
+  constructor
+  · intro hc
+    by_cases hn : Nonempty (Fin N)
+    · let a := hn.some
+      apply (lTwoOrbitCriterion_iff_pretransitive f g a).mp
+      apply Set.eq_univ_of_forall
+      intro b
+      let P (x : Configuration 2 N) : Prop :=
+        twoSiteEquiv x ∈ MulAction.orbit (pairTwistGroup f g) (a, a)
+      have hm (x y : Configuration 2 N) (hxy : unionMoveRelation (by decide) f g x y) :
+          P x → P y := by
+        rcases hxy with h | h
+        · exact twoSite_move_orbit f g f (Or.inl rfl) a h
+        · exact twoSite_move_orbit f g g (Or.inr rfl) a h
+      have he' : ∀ x y, Relation.EqvGen (unionMoveRelation (by decide) f g) x y → (P x ↔ P y) := by
+        intro x y hpath
+        induction hpath with
+        | rel x y hxy =>
+            refine ⟨hm x y hxy, ?_⟩
+            rcases hxy with h | h
+            · exact hm y x (Or.inl (moveRelation_symmetric (by decide) f h))
+            · exact hm y x (Or.inr (moveRelation_symmetric (by decide) g h))
+        | refl => rfl
+        | symm _ _ _ ih => exact ih.symm
+        | trans _ _ _ _ _ ih1 ih2 => exact ih1.trans ih2
+      have ha : P (fun _ => a) := MulAction.mem_orbit_self (a, a)
+      simpa [P] using (he' (fun _ => a) (twoSiteEquiv.symm b) (hc _ _)).mp ha
+    · constructor
+      intro x y
+      exact (hn ⟨x.1⟩).elim
+  · intro ht x y
+    letI := ht
+    obtain ⟨p, hp⟩ := MulAction.exists_smul_eq (pairTwistGroup f g)
+      (twoSiteEquiv x) (twoSiteEquiv y)
+    simp only [MulAction.subgroup_smul_def] at hp
+    change (p.val.1 (x 1), p.val.2 (x 0)) = (y 1, y 0) at hp
+    have h := pairCoordinate_mem (by decide) f g (1 : Fin 2) 0 (by decide) p.property x
+    have he : (fun i => pairCoordinateHom (1 : Fin 2) 0 p.val i (x i)) = y := by
+      funext i
+      fin_cases i
+      · simpa [pairCoordinateHom, twoSiteEquiv, finTwoArrowEquiv] using congrArg Prod.snd hp
+      · simpa [pairCoordinateHom, twoSiteEquiv, finTwoArrowEquiv] using congrArg Prod.fst hp
+    rwa [he] at h
+
+private def pairStabilizerEquiv {N : ℕ} (f g : Equiv.Perm (Fin N)) (a : Fin N) :
+    MulAction.stabilizer (pairTwistGroup f g) (a, a) ≃
+      ↥(pairTwistGroup f g ⊓ pointPairStabilizer (twistGroup f g) a) where
+  toFun p := by
+    have hfix : p.val.val.1 a = a ∧ p.val.val.2 a = a := by
+      have hp := (MulAction.mem_stabilizer_iff).mp p.property
+      exact ⟨congrArg Prod.fst hp, congrArg Prod.snd hp⟩
+    have hpH := pairTwistGroup_le_product f g p.val.property
+    exact ⟨p.val.val, ⟨p.val.property, ⟨⟨hpH.1, hfix.1⟩, ⟨hpH.2, hfix.2⟩⟩⟩⟩
+  invFun p := ⟨⟨p.val, p.property.1⟩, by
+    apply MulAction.mem_stabilizer_iff.mpr
+    apply Prod.ext
+    · exact p.property.2.1.2
+    · exact p.property.2.2.2⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+private lemma lTwoCriterion_iff_pair_pretransitive {N : ℕ} (f g : Equiv.Perm (Fin N)) :
+    lTwoCriterion f g ↔ MulAction.IsPretransitive (pairTwistGroup f g) (Fin N × Fin N) := by
+  classical
+  have hcard (a : Fin N) : Nat.card (MulAction.orbit (pairTwistGroup f g) (a, a)) *
+      Nat.card ↥(pairTwistGroup f g ⊓ pointPairStabilizer (twistGroup f g) a) =
+      Nat.card (pairTwistGroup f g) := by
+    rw [← Nat.card_congr (pairStabilizerEquiv f g a)]
+    letI := Fintype.ofFinite (MulAction.orbit (pairTwistGroup f g) (a, a))
+    simpa only [Nat.card_eq_fintype_card] using
+      MulAction.card_orbit_mul_card_stabilizer_eq_card_group (pairTwistGroup f g) (a, a)
+  have hiff (a : Fin N) :
+      Nat.card (pairTwistGroup f g) = N ^ 2 *
+        Nat.card ↥(pairTwistGroup f g ⊓ pointPairStabilizer (twistGroup f g) a) ↔
+      lTwoOrbitCriterion f g a := by
+    rw [lTwoOrbitCriterion, Set.eq_univ_iff_ncard, ← Nat.card_coe_set_eq,
+      Nat.card_prod, Nat.card_fin, ← hcard a]
+    have hpos : 0 < Nat.card
+        ↥(pairTwistGroup f g ⊓ pointPairStabilizer (twistGroup f g) a) :=
+      Nat.card_pos
+    rw [Nat.mul_right_cancel_iff hpos]
+    simp [pow_two]
+  constructor
+  · intro hc
+    by_cases hn : Nonempty (Fin N)
+    · exact (lTwoOrbitCriterion_iff_pretransitive f g hn.some).mp ((hiff hn.some).mp (hc hn.some))
+    · constructor; intro x y; exact (hn ⟨x.1⟩).elim
+  · intro ht a
+    exact (hiff a).mpr ((lTwoOrbitCriterion_iff_pretransitive f g a).mpr ht)
+
+private theorem unionConnected_two_iff_lTwoCriterion {N : ℕ} (f g : Equiv.Perm (Fin N)) :
+    unionConnected (L := 2) (by decide) f g ↔ lTwoCriterion f g :=
+  (unionConnected_two_iff_pair_pretransitive f g).trans
+    (lTwoCriterion_iff_pair_pretransitive f g).symm
+
+
+private theorem unionConnected_iff_lAtLeastThreeCriterion {L N : ℕ}
+    (hL : 1 < L) (h3 : 3 ≤ L) (f g : Equiv.Perm (Fin N)) :
+    unionConnected hL f g ↔ lAtLeastThreeCriterion f g :=
+  ⟨derived_transitive_of_unionConnected hL f g,
+    unionConnected_of_derived_transitive hL h3 f g⟩
+
+/-- The switched reachability classification together with the exact sector-kernel
+positivity and alternating-support identifications. The empty colour space is allowed. -/
+theorem result {L N : ℕ} (hL : 1 < L) (f g : Equiv.Perm (Fin N)) :
+    registeredReachabilityAnswer hL f g ∧
+    (∀ (s t : Equiv.Perm (Fin N)) (x y : Configuration L N),
+      overlap hL s t x y ↔ 0 < branchingProbability hL s t x y) ∧
+    (∀ (start : Bool) (C : Finset (Configuration L N)) (k : ℕ),
+      alternatingSupport hL f g start C k = switchSupport hL f g start C k) := by
+  refine ⟨?_, sector_overlap_is_positive hL, alternatingSupport_eq_switchSupport hL f g⟩
+  unfold registeredReachabilityAnswer
+  rw [fullSwitchingReachability_iff_unionConnected]
+  constructor
+  · intro hc
+    refine ⟨hc, ?_⟩
+    split_ifs with h3
+    · exact (unionConnected_iff_lAtLeastThreeCriterion hL h3 f g).mp hc
+    · have h2 : L = 2 := by omega
+      subst L
+      exact (unionConnected_two_iff_lTwoCriterion f g).mp hc
+  · exact And.left
 
 end D5.S3.StatisticalMechanics.ParticleProcesses.SwitchedTwistedSSEP
