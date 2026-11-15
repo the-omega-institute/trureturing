@@ -187,4 +187,79 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end Rigidity
+
+namespace ScalarHinges
+
+def arena : Arena where
+  signature := equalitySignature.{u}
+  Law R := ∀ {A : Type u} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
+    (Z : C(I, ℂ) →ₚ[ℂ] A) (_hunit : Z 1 = 1)
+    (φ : A →ₚ[ℂ] ℂ) (_hfaithful : ∀ b : A, 0 ≤ b → φ b = 0 → b = 0)
+    (_hhinge : ∀ s : ℝ, 0 < s → s < 1 →
+      (φ (Z (hinge s))).re ≤ (φ ((Z coordinate - algebraMap ℝ A s)⁺)).re),
+    R.readout () A (Z (coordinate * coordinate)) (Z coordinate * Z coordinate) ∧
+      ∃ Φ : C(I, ℂ) →⋆ₐ[ℂ] A, (∀ f, Φ f = Z f) ∧ Φ coordinate = Z coordinate
+
+private theorem actual_law : arena.{u}.Law equalityActual :=
+  @exists_starAlgHom_of_scalar_hinges.{u}
+
+private theorem rejected_law : ¬ arena.{u}.Law equalityRejected := by
+  intro h
+  let A := PUnit.{u+1} →L[ℂ] PUnit.{u+1}
+  obtain ⟨hf, _⟩ := h (A := A) 0 (Subsingleton.elim _ _) 0
+    (by intro b _ _; exact Subsingleton.elim _ _)
+    (by intro s _ _; simp)
+  exact hf
+
+def family : Registration arena.{u} (type_of% (@exists_starAlgHom_of_scalar_hinges.{u})) where
+  actual := equalityActual
+  bridge := Iff.rfl
+  variation := ⟨actual_law, equalityRejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨equalityRejected, ?_, rfl, rejected_law⟩
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
+    · intro e; exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨ULift.{u} Bool, ⟨false⟩, ⟨true⟩, ?_⟩
+    intro h
+    have hh := congrFun h (ULift.up false)
+    simp [equalityActual, realize] at hh
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@exists_starAlgHom_of_scalar_hinges.{u}) (Realization equalitySignature.{u}) Unit Unit where
+  unitName := `D5.S3.Quantum.Analysis.PositiveMomentRigidity.scalarHingesUnit
+  realizationName := `Reg.D5.S3.Quantum.Analysis.PositiveMomentRigidity.ScalarHinges.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize equalitySignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Analysis.PositiveMomentRigidity
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ScalarHinges
 end Reg.D5.S3.Quantum.Analysis.PositiveMomentRigidity

@@ -13,6 +13,9 @@ kadison_real: proof_shape: content; consumer: exists_starAlgHom_of_square,
 through the private Jordan and power lemmas.
 exists_starAlgHom_of_square: proof_shape: content; constructs the full
 continuous star-algebra homomorphism from coordinate-square equality.
+exists_starAlgHom_of_scalar_hinges: proof_shape: content; integrates the
+original scalar CFC hinge bounds, derives coordinate-square equality by
+Kadison and faithfulness, and consumes exists_starAlgHom_of_square.
 All private lemmas are consumed in these proofs.
 Classical Kadison inequality and single-generator multiplicative-domain
 rigidity. The finite positive variance argument does not assume commutation
@@ -22,13 +25,15 @@ arbitrary continuous real functions in an arbitrary ordered C-star algebra.
 
 import Mathlib.Analysis.CStarAlgebra.PositiveLinearMap
 import Mathlib.Topology.ContinuousMap.Weierstrass
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Tactic.Ring
 
 /-! # Positive moment rigidity
 
 Kadison's self-adjoint inequality is obtained from finite positive variance
 and Bernstein approximation. Equality at the interval coordinate determines
-the entire continuous moment map.
+the entire continuous moment map. Scalar bounds for the actual CFC hinges,
+tested by a faithful positive functional, supply this equality.
 -/
 
 noncomputable section
@@ -277,5 +282,143 @@ theorem exists_starAlgHom_of_square (Z : C(I, ℂ) →ₚ[ℂ] A) (hunit : Z 1 =
             map_star' := hs }, (fun _ => rfl), rfl⟩
   intro z
   rw [Algebra.algebraMap_eq_smul_one, map_smul, hunit, Algebra.algebraMap_eq_smul_one]
+
+
+private def realHinge (s : ℝ) : C(I, ℝ) :=
+  ⟨fun x => max ((x : ℝ) - s) 0, by fun_prop⟩
+
+/-- The continuous scalar hinge on the closed unit interval. -/
+def hinge (s : ℝ) : C(I, ℂ) := complexify (realHinge s)
+
+private theorem continuous_realHinge : Continuous realHinge := by
+  apply ContinuousMap.continuous_of_continuous_uncurry
+  change Continuous (fun p : ℝ × I => max ((p.2 : ℝ) - p.1) 0)
+  fun_prop
+
+private theorem integral_scalar_hinge (x : I) :
+    (∫ s in (0 : ℝ)..1, max ((x : ℝ) - s) 0) = (x : ℝ) ^ 2 / 2 := by
+  have hc : Continuous (fun s : ℝ => max ((x : ℝ) - s) 0) := by fun_prop
+  rw [← intervalIntegral.integral_add_adjacent_intervals
+    (hc.intervalIntegrable 0 x) (hc.intervalIntegrable x 1)]
+  have left : (∫ s in (0 : ℝ)..(x : ℝ), max ((x : ℝ) - s) 0) =
+      ∫ s in (0 : ℝ)..(x : ℝ), (x : ℝ) - s := by
+    apply intervalIntegral.integral_congr
+    intro s hs
+    rw [Set.uIcc_of_le x.2.1] at hs
+    exact max_eq_left (sub_nonneg.mpr hs.2)
+  have right : (∫ s in (x : ℝ)..1, max ((x : ℝ) - s) 0) = 0 := by
+    calc
+      _ = ∫ _ in (x : ℝ)..1, (0 : ℝ) := by
+        apply intervalIntegral.integral_congr
+        intro s hs
+        rw [Set.uIcc_of_le x.2.2] at hs
+        exact max_eq_right (sub_nonpos.mpr hs.1)
+      _ = 0 := intervalIntegral.integral_zero
+  rw [left, right, add_zero,
+    intervalIntegral.integral_sub (f := fun _ : ℝ => (x : ℝ)) (g := fun s : ℝ => s)
+      (continuous_const.intervalIntegrable _ _) (continuous_id.intervalIntegrable _ _),
+    intervalIntegral.integral_const, integral_id]
+  simp only [sub_zero, zero_pow (by decide : 2 ≠ 0), smul_eq_mul]
+  ring
+
+private theorem integral_realHinge :
+    (∫ s in (0 : ℝ)..1, realHinge s) = (1 / 2 : ℝ) • (realCoordinate * realCoordinate) := by
+  ext x
+  have he := (ContinuousMap.evalCLM ℝ x).intervalIntegral_comp_comm (μ := MeasureTheory.volume)
+    (continuous_realHinge.intervalIntegrable 0 1)
+  change (∫ s in (0 : ℝ)..1, (realHinge s) x) =
+    (∫ s in (0 : ℝ)..1, realHinge s) x at he
+  rw [← he]
+  change (∫ s in (0 : ℝ)..1, max ((x : ℝ) - s) 0) = (1 / 2 : ℝ) * ((x : ℝ) * x)
+  rw [integral_scalar_hinge]
+  ring
+
+private theorem quadratic_comparison (L M : C(I, ℝ) →L[ℝ] ℝ)
+    (hhinge : ∀ s : ℝ, 0 < s → s < 1 → L (realHinge s) ≤ M (realHinge s)) :
+    L (realCoordinate * realCoordinate) ≤ M (realCoordinate * realCoordinate) := by
+  have h := intervalIntegral.integral_mono_on_of_le_Ioo (μ := MeasureTheory.volume)
+    (by norm_num : (0 : ℝ) ≤ 1)
+    ((L.continuous.comp continuous_realHinge).intervalIntegrable 0 1)
+    ((M.continuous.comp continuous_realHinge).intervalIntegrable 0 1)
+    (fun s hs => hhinge s hs.1 hs.2)
+  change (∫ s in (0 : ℝ)..1, L (realHinge s)) ≤
+    ∫ s in (0 : ℝ)..1, M (realHinge s) at h
+  rw [L.intervalIntegral_comp_comm (continuous_realHinge.intervalIntegrable 0 1),
+    M.intervalIntegral_comp_comm (continuous_realHinge.intervalIntegrable 0 1),
+    integral_realHinge, map_smul, map_smul] at h
+  simpa only [smul_eq_mul] using (mul_le_mul_iff_right₀ (by norm_num : (0 : ℝ) < 1 / 2)).mp h
+
+private theorem calculus_hinge (a : A) (ha : IsSelfAdjoint a)
+    (hs : spectrum ℝ a ⊆ Set.Icc 0 1) (s : ℝ) :
+    cfcHomSuperset ha hs (realHinge s) = (a - algebraMap ℝ A s)⁺ := by
+  have he : cfcHomSuperset ha hs (realHinge s) =
+      cfc (fun x : ℝ => max (x - s) 0) a := by
+    rw [cfcHomSuperset_apply, cfc_apply _ a ha (by fun_prop)]
+    rfl
+  rw [he, CFC.posPart_def, cfcₙ_eq_cfc]
+  have hsub : cfc (fun x : ℝ => x - s) a = a - algebraMap ℝ A s := by
+    rw [cfc_sub _ _ a]
+    change cfc (id : ℝ → ℝ) a - cfc (fun _ : ℝ => s) a = _
+    rw [cfc_id ℝ a ha, cfc_const s a ha]
+  rw [← hsub, ← cfc_comp (fun x : ℝ => x⁺) (fun x : ℝ => x - s) a ha]
+  rfl
+
+/-- Scalar bounds for the actual CFC hinges, tested by a positive functional
+faithful on positives, force coordinate-square equality and a star-algebra
+homomorphism agreeing with the moment map on every complex continuous function. -/
+theorem exists_starAlgHom_of_scalar_hinges (Z : C(I, ℂ) →ₚ[ℂ] A) (hunit : Z 1 = 1)
+    (φ : A →ₚ[ℂ] ℂ) (hfaithful : ∀ b : A, 0 ≤ b → φ b = 0 → b = 0)
+    (hhinge : ∀ s : ℝ, 0 < s → s < 1 →
+      (φ (Z (hinge s))).re ≤ (φ ((Z coordinate - algebraMap ℝ A s)⁺)).re) :
+    Z (coordinate * coordinate) = Z coordinate * Z coordinate ∧
+      ∃ Φ : C(I, ℂ) →⋆ₐ[ℂ] A, (∀ f, Φ f = Z f) ∧ Φ coordinate = Z coordinate := by
+  have hpos : 0 ≤ Z coordinate := Z.map_nonneg (complexify_nonneg fun x => x.2.1)
+  have hone : Z coordinate ≤ 1 := by
+    rw [← hunit]
+    apply Z.monotone
+    intro x
+    change ((x : ℝ) : ℂ) ≤ 1
+    exact Complex.le_def.mpr ⟨x.2.2, rfl⟩
+  have hsa := hpos.isSelfAdjoint
+  have hs : spectrum ℝ (Z coordinate) ⊆ Set.Icc 0 1 := by
+    intro x hx
+    exact ⟨spectrum_nonneg_of_nonneg hpos hx, (CFC.le_one_iff (Z coordinate)).mp hone x hx⟩
+  let Q : C(I, ℝ) →⋆ₐ[ℝ] A := cfcHomSuperset hsa hs
+  have hQ : Continuous Q := cfcHomSuperset_continuous hsa hs
+  have hQu : Q realCoordinate = Z coordinate := cfcHomSuperset_id hsa hs
+  let L : C(I, ℝ) →L[ℝ] ℝ :=
+    { toFun := fun f => (φ (Z (complexify f))).re
+      map_add' := by intros; simp
+      map_smul' := by intros; simp [PositiveLinearMap.map_smul_of_tower]
+      cont := Complex.continuous_re.comp ((map_continuous φ).comp
+        ((map_continuous Z).comp continuous_complexify)) }
+  let M : C(I, ℝ) →L[ℝ] ℝ :=
+    { toFun := fun f => (φ (Q f)).re
+      map_add' := by intros; simp
+      map_smul' := by intros; simp [PositiveLinearMap.map_smul_of_tower]
+      cont := Complex.continuous_re.comp ((map_continuous φ).comp hQ) }
+  have hscalar := quadratic_comparison L M (by
+    intro s hs0 hs1
+    change (φ (Z (hinge s))).re ≤ (φ (Q (realHinge s))).re
+    rw [show Q (realHinge s) = (Z coordinate - algebraMap ℝ A s)⁺ from
+      calculus_hinge (Z coordinate) hsa hs s]
+    exact hhinge s hs0 hs1)
+  change (φ (Z (complexify (realCoordinate * realCoordinate)))).re ≤
+    (φ (Q (realCoordinate * realCoordinate))).re at hscalar
+  rw [map_mul Q, hQu] at hscalar
+  have hscalar' : (φ (Z (coordinate * coordinate))).re ≤
+      (φ (Z coordinate * Z coordinate)).re := by
+    simpa only [map_mul, coordinate] using hscalar
+  have hB : 0 ≤ Z (coordinate * coordinate) - Z coordinate * Z coordinate := by
+    simpa only [coordinate, ← map_mul] using sub_nonneg.mpr (kadison_real Z hunit realCoordinate)
+  have hφB := φ.map_nonneg hB
+  have hzero : φ (Z (coordinate * coordinate) - Z coordinate * Z coordinate) = 0 := by
+    apply Complex.ext
+    · have hn := (Complex.nonneg_iff.mp hφB).1
+      simp only [map_sub, Complex.sub_re, Complex.zero_re] at hn ⊢
+      linarith
+    · exact (Complex.nonneg_iff.mp hφB).2.symm
+  have hsquare := sub_eq_zero.mp (hfaithful _ hB hzero)
+  exact ⟨hsquare, exists_starAlgHom_of_square Z hunit hsquare⟩
 
 end D5.S3.Quantum.Analysis.PositiveMomentRigidity
