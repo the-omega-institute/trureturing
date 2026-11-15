@@ -110,7 +110,7 @@ include hα in
 exactly the given map as its forward intertwiner. Its inverse is the actual
 `Representation.Equiv.symm`; equivariance of that inverse follows by
 injectivity, as in Mathlib, rather than being an additional hypothesis. -/
-private theorem endomorphism_equiv_of_top_ne_zero (N : ℕ)
+theorem endomorphism_equiv_of_top_ne_zero (N : ℕ)
     (hsize : N + 2 ≤ Fintype.card E)
     (h : Representation.IntertwiningMap
       ((dualAction K (N + 1)).comp α.toMultiplicative) ((dualAction K (N + 1)).comp α.toMultiplicative))
@@ -154,7 +154,7 @@ variable {K : Type uK} [Field K]
   {E : Type uE} [AddGroup E] [Fintype E]
   (α : E →+ K) (hα : Function.Injective α)
 
-private def topScalar (N : ℕ)
+def topScalar (N : ℕ)
     (h : Representation.IntertwiningMap
       ((dualAction K (N + 1)).comp α.toMultiplicative) ((dualAction K (N + 1)).comp α.toMultiplicative)) : K :=
   h (dualBasis K (N + 1) (Fin.last N))
@@ -175,7 +175,7 @@ private theorem topScalar_id (N : ℕ) :
   simp [topScalar, dualBasis]
 
 include hα in
-private theorem topScalar_comp (N : ℕ) (hsize : N + 2 ≤ Fintype.card E)
+theorem topScalar_comp (N : ℕ) (hsize : N + 2 ≤ Fintype.card E)
     (h k : Representation.IntertwiningMap
       ((dualAction K (N + 1)).comp α.toMultiplicative) ((dualAction K (N + 1)).comp α.toMultiplicative)) :
     topScalar α N (h.comp k) = topScalar α N h * topScalar α N k := by
@@ -190,7 +190,7 @@ private theorem topScalar_comp (N : ℕ) (hsize : N + 2 ≤ Fintype.card E)
   exact mul_comm _ _
 
 include hα in
-private theorem topScalar_relativeFactors_zero [Nontrivial E]
+theorem topScalar_relativeFactors_zero [Nontrivial E]
     {p : ℕ} [Fact p.Prime] [CharP K p] (s N : ℕ)
     (hsize : N + 2 ≤ Fintype.card E) (hdim : ((N + 1 : ℕ) : K) ≠ 0)
     (h : Representation.IntertwiningMap

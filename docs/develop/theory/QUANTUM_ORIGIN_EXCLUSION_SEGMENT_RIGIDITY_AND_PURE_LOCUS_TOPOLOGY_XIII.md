@@ -644,3 +644,292 @@ neither entrance is supplied by the restricted bound.证毕。
 [L163]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability, §§1.2–1.3: projective faces and well-behaved transition probability spaces."
 
 ## 追加锚（本行以下为增补区）
+
+## 164. Selected actual neighbors and uniform reverse collapse
+
+**定义 164.1（Original objects and the selected neighboring family）。** Retain exactly Definition 163.1.
+Thus $V\ne0$ is a finite-dimensional real vector space, $C\subset V$ is a closed pointed generating convex cone,
+and $u$ is strictly positive on $C\setminus\{0\}$. On this same original carrier use
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad \mathcal E=[0,u]_{C^*},\\
+F_p=\{e\in\mathcal E:e(p)=1\},\qquad
+T_p(x)=\min_{e\in F_p}e(x)\quad(p\in P,\ x\in K),\\
+D_p=\{x\in K:T_p(x)=0\},\qquad S_p=P\cap D_p.
+\end{gathered}
+\tag{XIII164.1}
+$$
+
+Every minimum is attained, every entire $D_p$ is a nondegenerate affine closed Euclidean three-ball,
+and $T_p(q)=T_q(p)$ is assumed only for pure $p,q\in P$. The second input in (XIII164.1) includes every original mixed state.
+Use the fixed auxiliary norms of Definition 160.1 and Hausdorff distance $d_H$ on nonempty compact subsets of $K$.
+Let $\mathcal R=\operatorname{Cont}(p\mapsto D_p)$ and $\Sigma=P\setminus\mathcal R$.
+As in (XIII160.2), $P_{\rm s}$ consists of singleton labels,
+$N_p=\{h\in C^*:h(p)=0\}$, $L_p=\operatorname{span}_{\mathbb R}N_p$,
+and $a(p)$ is the kernel dimension of signed restriction $L_p\to\operatorname{Aff}(D_p)$ at a singleton label.
+Then $Z=\{p\in\mathcal R\cap P_{\rm s}:a(p)=0\}$ is the actual dense $G_\delta$ of Theorem 160.5.
+For $p\in Z$ and every actual $q\in S_p$, the dimension-free [Lemma XII147.2, (XII147.4)][XII164]
+gives $q\in P_{\rm s}$ and $a(q)=0$. Consequently
+$\mathcal A_q=\{e\in F_q:e|_{D_q}=0\}=\{e_q\}$.
+This defines the actual neighboring whole-face confirmer $e_q$ even when $q$ is not regular.
+The full menu $F_q$ remains the original one; it contains $u$ and the nonconstant $e_q$ and is not this singleton.
+The budget $\beta_F$ retains its original positive-extension meaning in (XIII160.5).
+
+**定理 164.2（Uniform return over a fixed positive selection）。** Suppose $z_n\in Z$ and
+$z_n\to s$, $D_{z_n}\to\{r\}$. By Theorem 163.2, $s,r\in P\cap\Sigma$, $s\ne r$,
+and pure reciprocity gives $s\in S_r$. Fix any one $y\in S_r\setminus\{s\}$, and put
+
+$$
+\begin{gathered}
+c=1-T_s(y)>0,\qquad \eta=c/8,\\
+Q_n=\{q\in S_{z_n}:e_q(y)\ge\eta\}.
+\end{gathered}
+\tag{XIII164.2}
+$$
+
+There is $N$ such that $Q_n\ne\varnothing$ for every $n\ge N$, and, with this same fixed $y$ and $\eta$,
+
+$$
+\Delta_n:=\sup_{q\in Q_n}\ \sup_{x\in D_q}\|x-s\|\longrightarrow0.
+\tag{XIII164.3}
+$$
+
+Both suprema concern actual objects, and the inner one ranges over the entire original ball, including its mixed interior.
+No regularity of the selected $q$ is required.
+
+证明。The nondegenerate ball $D_r$ has pure sphere $S_r$, so such a $y$ exists.
+Pure exposure from [IX114.3][IX164] supplies an original confirmer of $s$ whose top face is $\{s\}$.
+Its value at the distinct pure point $y$ is less than one, proving $c>0$.
+By pure reciprocity at the pure endpoints $z_n,y$ and $s,y$, and fixed-row continuity
+[IX114.4, (IX114.13)][IX164],
+
+$$
+T_{z_n}(y)=T_y(z_n)\longrightarrow T_y(s)=T_s(y).
+$$
+
+Choose $N$ so that $1-T_{z_n}(y)\ge c/2$ whenever $n\ge N$.
+The original full-menu estimate (XIII163.11), applied with $p=z_n$ and $x=y$, gives
+
+$$
+c/2\le1-T_{z_n}(y)\le2\sup_{q\in S_{z_n}}e_q(y).
+$$
+
+Thus this supremum is at least $c/4=2\eta>\eta$.
+Some actual $q$ has $e_q(y)>\eta$, so $Q_n$ is nonempty; no attainment of the supremum is used.
+All subsequent indices may be restricted to this tail.
+
+If (XIII164.3) failed, there would be $\varepsilon>0$, increasing indices $n_j$,
+actual $q_j\in Q_{n_j}$, and original $x_j\in D_{q_j}$ with $\|x_j-s\|\ge\varepsilon$.
+These witnesses can be chosen from the definition of a supremum, reducing $\varepsilon$ if necessary.
+Since $q_j\in D_{z_{n_j}}$, the whole-ball collapse gives $q_j\to r$.
+Compactness of the original $\mathcal E$ and $K$ permits a common subsequence with
+$e_{q_j}\to b\in\mathcal E$ and $x_j\to x\in K$.
+At every finite index, whole-face vanishing and the actual zero edge give
+
+$$
+e_{q_j}(q_j)=1,\qquad e_{q_j}(z_{n_j})=0,\qquad
+ e_{q_j}(x_j)=0,\qquad e_{q_j}(y)\ge\eta.
+$$
+
+Here $z_{n_j}\in D_{q_j}$ follows from pure reciprocity on the actual pure pair $z_{n_j},q_j$.
+Joint continuity of evaluation in finite dimension yields
+
+$$
+b(r)=1,\qquad b(s)=0,\qquad b(x)=0,\qquad b(y)\ge\eta>0.
+\tag{XIII164.4}
+$$
+
+In particular $b$ belongs to the original $F_r$. Its entire zero face
+$Z_K(b)=K\cap\ker b$ is nonempty, contains $s,x$, and is contained in $D_r$:
+for every $v\in Z_K(b)$, $0\le T_r(v)\le b(v)=0$.
+It is a face of $D_r$, and is proper because it omits $y\in D_r$.
+A proper nonempty face of this affine Euclidean ball is a singleton.
+Indeed, if it contained two distinct points, their midpoint would lie in $\operatorname{ri}D_r$;
+a nonnegative affine function vanishing at that midpoint vanishes throughout $D_r$, contrary to $b(y)>0$.
+Therefore $Z_K(b)=\{s\}$ and $x=s$, contradicting $\|x_j-s\|\ge\varepsilon$.
+This proves the uniform estimate without exchanging PR at any mixed endpoint.证毕。
+
+**推论 164.3（Selected synchronized actual pairs at every singular root）。** In Theorem 164.2 discard the finite initial
+prefix and relabel. Any choices $q_n\in Q_n$, with $p_n=z_n$ on this common tail, give
+
+$$
+\begin{gathered}
+p_n\in Z,\qquad q_n\in S_{p_n},\qquad
+p_n\to s,\quad q_n\to r,\quad s\ne r,\\
+D_{p_n}\longrightarrow\{r\},\qquad D_{q_n}\longrightarrow\{s\},\\
+q_n\in P_{\rm s},\qquad a(q_n)=0,\qquad
+\beta_{D_{p_n}}\longrightarrow+\infty,\quad \beta_{D_{q_n}}\longrightarrow+\infty.
+\end{gathered}
+\tag{XIII164.5}
+$$
+
+Every specified $s\in\Sigma$ is the first limit of such a pair, for some $r\in\Sigma\setminus\{s\}$.
+No assertion places $q_n$ in $\mathcal R$ or in $Z$.
+
+证明。The original collapse gives $q_n\to r$, and (XIII164.3) gives convergence of the entire nonempty $D_{q_n}$ to $\{s\}$.
+The label and kernel assertions are [XII147.2, (XII147.4)][XII164], applied at $p_n\in Z$ along the actual edge.
+Put $L=\max_{e\in\mathcal E}\|e\|_*<\infty$.
+The contrast identity (XIII160.5) and the fixed-row Lipschitz estimate give the universal original-ball inequality
+used in the proof of [IX115.3][IX164]:
+
+$$
+0<\beta_F^{-1}=\max_{v,w\in P\cap F}(1-T_v(w))\le L\operatorname{diam}F.
+\tag{XIII164.6}
+$$
+
+Both diameters in (XIII164.5) tend to zero, so both budgets tend to infinity.
+For a specified $s\in\Sigma$, Corollary 163.3, (XIII163.13), supplies the initial $Z$-collapse to some
+$r\in\Sigma\cap S_s$, $r\ne s$. Choose one $y\in S_r\setminus\{s\}$ and apply Theorem 164.2,
+keeping that $y$ fixed throughout the sequence.
+
+Along any convergent subsequence of the selected $e_{q_n}$, the limit $b$ belongs to the cluster family
+$\mathcal B$ of (XIII163.3) and satisfies (XIII164.4), hence $Z_K(b)=\{s\}$.
+Such a subsequence exists by compactness of $\mathcal E$.
+The existence of an original effect with $b(r)=1$ and $Z_K(b)=\{s\}$ is already supplied by
+[X126.3, (X126.10)][X164], with its limiting pair $(p,q)$ identified with $(s,r)$.
+Here it is obtained as a limit of the actual neighboring $e_{q_n}$ with a fixed positive reading at $y$;
+the uniform control (XIII164.3) concerns all their whole reverse balls.证毕。
+
+**推论 164.4（Compact symmetric irreflexive collapse relation）。** Define a relation on the original pure locus by
+
+$$
+\mathcal C_Z=\{(s,r)\in P^2:\ \exists z_n\in Z,\ z_n\to s,
+\ d_H(D_{z_n},\{r\})\to0\}.
+\tag{XIII164.7}
+$$
+
+Then $\mathcal C_Z$ is compact, symmetric and irreflexive, and
+
+$$
+\begin{gathered}
+\mathcal C_Z\subseteq\{(s,r)\in\Sigma^2:s\ne r,\ T_s(r)=T_r(s)=0\},\\
+\pi_1(\mathcal C_Z)=\pi_2(\mathcal C_Z)=\Sigma.
+\end{gathered}
+\tag{XIII164.8}
+$$
+
+证明。Theorem 163.2, (XIII163.4), gives the inclusion and irreflexivity for every defining collapse.
+Corollary 163.3 gives $\pi_1(\mathcal C_Z)=\Sigma$.
+To prove symmetry, fix $(s,r)\in\mathcal C_Z$ and use Corollary 164.3 to obtain actual neighboring $q_n\to r$
+whose entire balls converge to $\{s\}$.
+The $q_n$ need not be regular. For each fixed $n$, the one-sided upper semicontinuity of
+[IX115.4, (IX115.9)][IX164] gives a relative open neighborhood $U_n$ of $q_n$ in $P$ such that
+
+$$
+w\in U_n\quad\Longrightarrow\quad
+D_w\subseteq\{x\in K:\operatorname{dist}(x,D_{q_n})<1/n\}.
+\tag{XIII164.9}
+$$
+
+This uses the open $1/n$-neighborhood of the compact value $D_{q_n}$.
+It asserts only the displayed containment, not Hausdorff closeness to $D_{q_n}$ in both directions.
+Density of $Z$ in $P$ permits
+$w_n\in Z\cap U_n$ with $\|w_n-q_n\|<1/n$.
+Then $w_n\to r$ and
+
+$$
+\sup_{x\in D_{w_n}}\|x-s\|
+\le 1/n+\sup_{v\in D_{q_n}}\|v-s\|\longrightarrow0.
+\tag{XIII164.10}
+$$
+
+The values are nonempty, so $D_{w_n}\to\{s\}$ and $(r,s)\in\mathcal C_Z$.
+This perturbation does not preserve the original edge: $w_n\in S_{z_n}$ is not asserted.
+The synchronized actual edge is the unperturbed $q_n\in S_{z_n}$ in (XIII164.5).
+Symmetry now also gives the second projection assertion.
+
+For closedness, let $(s_j,r_j)\in\mathcal C_Z$ converge in $P^2$ to $(s,r)$.
+From a defining sequence for each pair choose one $v_j\in Z$ with
+$\|v_j-s_j\|<1/j$ and $d_H(D_{v_j},\{r_j\})<1/j$.
+Then $v_j\to s$ and $d_H(D_{v_j},\{r\})\to0$, so $(s,r)\in\mathcal C_Z$.
+Thus the relation is closed in the compact space $P^2$, where compactness of $P$ is [IX114.4][IX164],
+and hence is compact. This also covers the case $\Sigma=\varnothing$, when the relation is empty.证毕。
+
+**推论 164.5（Exact static consumer）。** Under Definition 164.1 the following conditions are equivalent:
+
+$$
+\begin{gathered}
+\exists\text{ real-linear bijection }\Psi:V\to\operatorname{Herm}_3(\mathbb C):\quad
+\Psi(C)=\operatorname{PSD}_3(\mathbb C),\qquad u=\operatorname{Tr}\circ\Psi;\\
+\Sigma=\varnothing;\\
+\nexists\ s,r\in P,\ p_n\in Z,\ q_n\in S_{p_n}:\quad
+s\ne r,\quad p_n\to s,\quad q_n\to r,\quad
+D_{p_n}\to\{r\},\quad D_{q_n}\to\{s\}.
+\end{gathered}
+\tag{XIII164.11}
+$$
+
+In the last condition, $p_n,q_n$ range over sequences, the memberships hold for every $n$,
+and the two whole-ball limits are Hausdorff limits.
+
+证明。First consider the standard qutrit with its entire original effect interval.
+At a rank-one projector $p$, every confirmer matrix $A$ satisfies $0\le A\le I$ and $\operatorname{Tr}(Ap)=1$.
+Positivity of $I-A$ therefore gives $(I-A)p=0$, so $Ap=p$;
+the other block of the Hermitian $A$ on $p^\perp$ is nonnegative.
+Consequently $A\ge p$, and $A=p$ attains the minimum.
+Thus in these coordinates
+
+$$
+T_p(X)=\operatorname{Tr}(pX),\qquad
+D_p=\{X\ge0:\operatorname{Tr}X=1,\ pX=Xp=0\}.
+\tag{XIII164.12}
+$$
+
+These entire balls vary continuously with $p$.
+Indeed, if rank-one $p_j\to p$ and $X\in D_p$, then
+$(I-p_j)X(I-p_j)/\operatorname{Tr}((I-p_j)X(I-p_j))$ belongs to $D_{p_j}$ for large $j$
+and converges uniformly to $X$ over the compact $D_p$, since the denominator converges uniformly to one.
+Conversely, every cluster point of $X_j\in D_{p_j}$ belongs to $D_p$ by positivity, trace normalization and $p_jX_j=0$.
+Compactness then gives Hausdorff convergence.
+A linear cone-and-unit isomorphism transfers this continuity to the same original $P$, proving the first condition implies the second.
+This qutrit computation has both $I$ and $p$ in $F_p$; it does not identify the entire menu with its least member.
+
+If $\Sigma=\varnothing$, no $Z$-collapse to a singleton can occur by Theorem 163.2, so no displayed synchronized pair exists.
+Conversely, any specified point of nonempty $\Sigma$ produces such a pair by Corollaries 163.3 and 164.3.
+This proves equivalence of the second and third conditions.
+Finally, if the static representation fails, Theorem 160.6, (XIII160.14)–(XIII160.15), supplies an actual $Z$-collapse
+with a singular root; Corollary 164.3 produces the displayed synchronized pair.
+Thus the third condition implies the first.
+
+These implications reduce the static endpoint to excluding the specified actual configuration.
+They establish neither its exclusion from the original axioms nor a faithful original realization of it.
+Symmetry of $\mathcal C_Z$ supplies the reversed ordered pair; no third endpoint or inconsistency follows from symmetry alone.
+The whole mixed domain is used in the zero-face argument of Theorem 164.2.
+No premise here asserts global label injectivity, all-pair proper faces, an ambient dimension upper bound,
+a uniform positive-extension budget, positivity of a signed restriction inverse, affine $T_p$ on all $K$,
+a least original confirmer, filters, a Jordan carrier or composites.
+Physical dynamics, time and $\hbar$ are outside (XIII164.11).证毕。
+
+Attached mathematical sources and boundaries for 164.1–164.5 are as follows.
+The correspondence from (XIII163.11) and the actual neighboring whole-face confirmers to the fixed-threshold uniform
+return estimate (XIII164.3) is `repo-derived`. The synchronized pair, the relation (XIII164.7) and the static reduction
+are consequences of that estimate and the cited suppliers, not separate classifications.
+Compact subsequence extraction, joint evaluation, the elementary face property of an affine ball and diagonal selection
+are intermediate finite-dimensional arguments within these proofs.
+The singleton-zero effect itself retains [X126.3, (X126.10)][X164] as an antecedent.
+
+For comparison, [G. Niestegge, *Quantum transition probability*, §3, property $(**)$ and Theorem 1][N164]
+defines $e_\omega(\zeta)$ by an infimum over all nonnegative continuous affine $a$ with $a(\omega)=1$,
+without requiring $a\le1$. This larger menu differs from the original interval $[0,u]$ in (XIII164.1);
+the source additionally requires the infimum to be affine in property $(**)$. Neither that property nor an identification
+of the two infima is supplied here. No projectivity assumption or conclusion is imported through this comparison.
+
+[N. P. Landsman, *Poisson spaces with a transition probability*, §1.3, (1.4)–(1.5)][L164]
+uses the bounded menu $0\le f\le1$; in finite dimension its affine functions on $K$ homogenize to the original effects,
+and its notation is $p(\rho,\sigma)=T_\sigma(\rho)$ on pure inputs.
+This agrees with the original upper unit bound, in contrast to Niestegge's larger menu above.
+Landsman's §1.2 explicitly assumes projective norm-exposed faces in AHS1, including an affine retraction with
+transversality, and actual pair-ball faces in AHS2; those requirements are not consequences asserted here.
+The well-behaved transition-space conditions of §1.3, (1.10)–(1.11), likewise include basis requirements beyond pure PR.
+Accordingly neither reconstruction route settles (XIII164.11) from the original EB3+PR premises.
+These references locate the definitions and their different assumptions; the correspondence above carries no global priority
+or exhaustive literature claim.
+
+[IX164]: https://github.com/the-omega-institute/trureturing/blob/a3338a34598246b3d4c93b249042a6c8172d1186/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.3–114.4 and (IX114.13): pure exposure, compact P and fixed-row continuity; IX115.3: inverse-budget diameter inequality in its proof; IX115.4 and (IX115.9): closed zero graph and one-sided upper semicontinuity."
+[X164]: https://github.com/the-omega-institute/trureturing/blob/a3338a34598246b3d4c93b249042a6c8172d1186/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X126.3, (X126.10): an original effect confirming the landing point and having the limiting label as its entire singleton zero face."
+[XII164]: https://github.com/the-omega-institute/trureturing/blob/a3338a34598246b3d4c93b249042a6c8172d1186/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XII.md "Dimension-free XII147.2, (XII147.4): local singleton-label whole-face confirmation and equality of signed restriction kernel dimensions along actual zero edges."
+[N164]: https://arxiv.org/html/2312.13213v2#S3 "G. Niestegge, Quantum transition probability, §3, property (**) and Theorem 1; no upper unit bound in the defining infimum."
+[L164]: https://arxiv.org/html/quant-ph/9603005v2#S1.SS2 "N. P. Landsman, Poisson spaces with a transition probability, §§1.2–1.3, AHS1–AHS2 and (1.4)–(1.11); projectivity, pair-ball and basis requirements retain their own assumptions."
+
+## 追加锚（本行以下为增补区）
