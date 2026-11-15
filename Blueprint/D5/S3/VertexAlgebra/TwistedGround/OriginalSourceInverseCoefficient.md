@@ -202,63 +202,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoeffici
 
 For every original D, arbitrary IsUnit(D.G.det) witness hu, charge a, occupations alpha, betaL, gammaL, betaR and gammaR, integers eL and eR, and natural n with oscillatorEnergy(alpha) at most n, the product chargeScalar(a) chargeScalar(-a) times the left Wick corrected row at X^alpha and the right Wick corrected row at dualOscillatorMonomial(alpha) equals the product of those two charge scalars, weight(alpha), all four external weights, the original left affineLaurent row, and the alpha coefficient of substitution(T transpose, the finite sum of X^delta times the original right affineLaurent row). The right charge is -a; each row keeps its own complete support union and exact selector eL+chargeNorm(a) or eR+chargeNorm(-a). This coefficient identity includes zero occupations, empty types and n=0. It does not introduce an extra charge average or assume an affine sewing equation.
 
-**Definition 1.15 (Finite linear substitution).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.linearSubstitution`
-
-*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.linearSubstitution` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-For arbitrary finite types I and J, including empty types, linearSubstitution(U) sends X_j to the sum of U[i,j] X_i. Matrices are complex and may be rectangular, zero or singular.
-
-**Definition 1.16 (Ordinary covariance transport).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.transportCovariance`
-
-*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.transportCovariance` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-transportCovariance(U,A) is U A transpose(U), with ordinary transpose and no complex conjugation.
-
-**Definition 1.17 (Affine mean transport).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.transportMean`
-
-*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.transportMean` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-transportMean(U,mu) is U mu.
-
-**Definition 1.18 (Fix the external coordinates).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.sourceBlock`
-
-*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.sourceBlock` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-sourceBlock(U) is block diagonal with U on source coordinates and identity on all external coordinates.
-
-**Definition 1.19 (Finite colour and mode block).**
+**Definition 1.15 (Finite colour and mode block).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.boxLabel`
 
@@ -272,7 +216,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoeffici
 
 boxLabel(D,M) embeds Fin(rank(D)) times Fin(M) into the original oscillator index type, keeping all colours and the actual natural mode.
 
-**Definition 1.20 (Literal restricted mode matrix).**
+**Definition 1.16 (Literal restricted mode matrix).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.boxMatrix`
 
@@ -286,7 +230,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoeffici
 
 boxMatrix(D,M,A) has entry A(k)[i,j] when the two finite coordinates have the same mode k, and zero otherwise. Its polynomial substitution commutes with the original mode substitution under boxLabel.
 
-**Definition 1.21 (Original occupation restriction).**
+**Definition 1.17 (Original occupation restriction).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.boxOccupation`
 
@@ -300,21 +244,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoeffici
 
 boxOccupation is the finite restriction of an original occupation along boxLabel. The proof uses a box that contains every relevant source, input and detector support.
 
-**Theorem 1.22 (Native affine coefficient covariance).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.affineCoefficient_linear_substitution`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.affineCoefficient_linear_substitution` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-For every finite I and J, U:I by J, symmetric complex A, arbitrary complex mean mu, target occupation d and natural N with degree(d) at most N, the sum over all source occupations e of total degree at most N of affineCoefficient(A,mu,e) times the d coefficient of linearSubstitution(U,X^e) equals affineCoefficient(U A transpose(U),U mu,d). The native auxiliary-coordinate coefficient definition is retained. A private comparison proves its equality with ordinary Taylor coefficients from the native moment recurrence, including zero degree and empty types.
-
-**Theorem 1.23 (Original inverse into the native right Gaussian).**
+**Theorem 1.18 (Original inverse into the native right Gaussian).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.original_two_rows_inverse_affine_coefficient`
 
@@ -332,7 +262,6 @@ Factorial Fock and Gaussian polynomial calculus are classical. The original carr
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.affineCoefficient_linear_substitution`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.boxLabel`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.boxMatrix`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.boxOccupation`
@@ -344,16 +273,13 @@ Factorial Fock and Gaussian polynomial calculus are classical. The original carr
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.inverse_occupation_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.inverse_occupation_interchange`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.inverse_support_energy`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.linearSubstitution`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.original_two_rows_inverse_affine_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.original_two_rows_inverse_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.oscillatorSublevel`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.pderiv_substitution`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.sourceBlock`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.sourceTaylor`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.sourceTaylor_coeff`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.substitution_factorial_transpose`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.transportCovariance`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient.transportMean`
 - Dependency: [D5/S3/VertexAlgebra/SourceBPZ/OriginalSourceCoevaluation](../SourceBPZ/OriginalSourceCoevaluation.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/NativeAffineTransport](NativeAffineTransport.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalAffineRecompositionSource](OriginalAffineRecompositionSource.md)

@@ -9,6 +9,7 @@ open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open D5.S3.VertexAlgebra
 open LatticeGeneratingFieldLocality OriginalCurrentMetric SignedOscillatorWick
 open D5.S3.VertexAlgebra.TwistedGround.OriginalSourceInverseCoefficient
+open D5.S3.VertexAlgebra.TwistedGround.NativeAffineTransport
 open LeanInformationAudit
 
 namespace Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalSourceInverseCoefficient
@@ -79,79 +80,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 
-namespace AffineTransport
-open _root_.D5.S3.VertexAlgebra.TwistedGround
-open MvPolynomial OriginalChargedRowSource
-open scoped BigOperators
-
-abbrev arena : Arena where
-  signature := complexSignature
-  Law r := ∀ {I : Type u} [Fintype I] [DecidableEq I]
-    {J : Type v} [Fintype J] [DecidableEq J]
-    (U : Matrix I J ℂ) (A : Matrix J J ℂ) (mu : J → ℂ)
-    (hs : ∀ i j, A i j = A j i) (d : I →₀ ℕ) (N : ℕ) (hN : d.degree ≤ N),
-    r.readout () ()
-      (∑ e ∈ (Finsupp.finite_of_degree_le (σ := J) N).toFinset,
-        affineCoefficient A mu e * (linearSubstitution U (monomial e 1)).coeff d)
-      (affineCoefficient (transportCovariance U A) (transportMean U mu) d)
-
-theorem sourceBridge : (type_of% (@affineCoefficient_linear_substitution.{u,v})) ↔
-    arena.{u,v}.Law complexEqual := Iff.rfl
-
-private theorem actualLaw : arena.{u,v}.Law complexEqual := @affineCoefficient_linear_substitution.{u,v}
-
-private theorem rejectedLaw : ¬ arena.{u,v}.Law complexFalse := by
-  intro h
-  exact @h (ULift.{u} (Fin 0)) inferInstance inferInstance
-    (ULift.{v} (Fin 0)) inferInstance inferInstance 0 0 0 (by intros; rfl) 0 0 (by simp)
-
-def family : Registration arena.{u,v} (type_of% (@affineCoefficient_linear_substitution.{u,v})) where
-  actual := complexEqual
-  bridge := sourceBridge
-  variation := ⟨actualLaw, complexFalse, rejectedLaw⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨complexFalse, ?_, rfl, rejectedLaw⟩
-      intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
-    · intro e
-      cases e
-  dependence := complexEqualDependence
-
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@affineCoefficient_linear_substitution.{u,v}) (Realization complexSignature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalSourceInverseCoefficient.AffineTransport.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalSourceInverseCoefficient.AffineTransport.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{u,v}⟩
-  objectArena := .source ⟨arena.{u,v}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{u,v} ⟨family.{u,v}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize complexSignature complexEqual.readout complexEqual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalSourceInverseCoefficient
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-end AffineTransport
 
 namespace OriginalInverseAffine
 open _root_.D5.S3.VertexAlgebra.TwistedGround
