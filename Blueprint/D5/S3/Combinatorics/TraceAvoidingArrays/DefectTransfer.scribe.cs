@@ -76,7 +76,7 @@ internal sealed class DefectTransferDocument : IScribeDocumentDefinition
         ? new[] { Seq(Operatorname, Grp(V(x))) }
         : new[] { Dot, Seq(Operatorname, Grp(V(x))) }).ToArray());
     private static Formula App(Formula g, params Formula[] a) => new Formula.Apply(g, [.. a]);
-    private static Formula Call(string s, params Formula[] a) => App(Q(s), a);
+    private static Formula Call(string s, params Formula[] a) => a.Length == 0 ? Q(s) : App(Q(s), a);
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
     private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, Parenthesized(b));
     private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));

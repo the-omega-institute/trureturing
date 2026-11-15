@@ -8,7 +8,7 @@
 
 /-
 admission_basis: escape-witness
-escape_witness: continuation_count, counting_bridge, continuation_matrix
+escape_witness: lumped_count (continuation_count, counting_bridge, continuation_matrix)
 Row: proof_shape=bind-only; consumers=bondDefects, literalCount
 bondDefects: proof_shape=bind-only; consumers=defects, lumped_count
 tailDefects: proof_shape=bind-only; consumers=defects, counting_bridge
@@ -20,14 +20,14 @@ constant_tail: proof_shape=content; consumers=constant_defects
 constant_defects: proof_shape=content; consumers=HardinA229580Strip.scale_count
 continuation: proof_shape=bind-only; consumers=lumped_count
 projectedCost: proof_shape=bind-only; consumers=continuation_count, counting_bridge
-cost_eq: proof_shape=bind-only; consumers=counting_bridge
+cost_eq: proof_shape=content; consumers=counting_bridge
 continuation_count: proof_shape=content; consumers=counting_bridge
 counting_bridge: proof_shape=content; consumers=lumped_count
 continuation_matrix: proof_shape=content; consumers=lumped_count
 lumped_count: proof_shape=content; consumers=HardinA229580Strip.count_transfer
 forward: proof_shape=bind-only; consumers=forward_shift
-forward_eq: proof_shape=bind-only; consumers=forward_shift
-forward_shift: proof_shape=bind-only; consumers=HardinA229580Strip.result
+forward_eq: proof_shape=content; consumers=forward_shift
+forward_shift: proof_shape=content; consumers=HardinA229580Strip.result
 -/
 
 import Mathlib.Data.Matrix.Mul

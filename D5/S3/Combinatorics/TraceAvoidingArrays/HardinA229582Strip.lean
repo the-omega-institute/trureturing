@@ -28,7 +28,7 @@ decidableNormal: proof_shape=bind-only; consumers=a
 a: proof_shape=bind-only; consumers=result
 edge: proof_shape=bind-only; consumers=count_transfer
 finite_certificate: proof_shape=bind-only; consumers=count_transfer, powers_table, polynomial_relation
-count_transfer: proof_shape=bind-only; consumers=result
+count_transfer: proof_shape=content; consumers=result
 powers_table: proof_shape=bind-only; consumers=polynomial_relation
 polynomial_relation: proof_shape=bind-only; consumers=result
 scale_count: proof_shape=content; consumers=result

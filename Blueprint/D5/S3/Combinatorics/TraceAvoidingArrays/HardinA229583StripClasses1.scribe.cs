@@ -21,7 +21,7 @@ internal sealed class HardinA229583StripClasses1Document : IScribeDocumentDefini
         ? new[] { Seq(Operatorname, Grp(V(x))) }
         : new[] { Dot, Seq(Operatorname, Grp(V(x))) }).ToArray());
     private static Formula App(Formula g, params Formula[] a) => new Formula.Apply(g, [.. a]);
-    private static Formula Call(string s, params Formula[] a) => App(Q(s), a);
+    private static Formula Call(string s, params Formula[] a) => a.Length == 0 ? Q(s) : App(Q(s), a);
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula Leq(Formula a, Formula b) => Seq(a, Sp, Le, Sp, b);

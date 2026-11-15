@@ -22,12 +22,21 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (n : ℕ),
     (R.readout () () (n + 4) : ℤ) = 8 * R.readout () () (n + 3) - 16 * R.readout () () (n + 2)
-private theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  have hb := h 0
-  have ha := result 0
+private theorem rejected_at (h : arena.Law rejected) (n : ℕ) : False := by
+  have hb := h n
+  have ha := result n
   simp only [rejected, realize, Nat.cast_add, Nat.cast_one] at hb
   linarith
+private theorem rejected_law : ¬ arena.Law rejected := fun h => rejected_at h 0
+private theorem count_zero : a 0 = 0 := by
+  unfold a
+  decide +kernel
+private theorem count_one_pos : 0 < a 1 := by
+  unfold a
+  apply Finset.card_pos.mpr
+  refine ⟨(fun x => ![0, 0] x.2), ?_⟩
+  apply Finset.mem_filter.mpr
+  exact ⟨Finset.mem_univ _, by decide +kernel⟩
 def family : Registration arena (type_of% @result) where
   actual := readout
   bridge := Iff.rfl
@@ -38,8 +47,8 @@ def family : Registration arena (type_of% @result) where
     intro i
     refine ⟨(), 0, 1, ?_⟩
     change a 0 ≠ a 1
-    unfold a
-    decide +kernel
+    rw [count_zero]
+    exact Nat.ne_of_lt count_one_pos
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Type Unit where

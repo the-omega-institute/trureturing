@@ -232,18 +232,26 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have check (R : Realization signature) (hR : arena.Law R) := hR sample
     (by intro r t; rfl)
     (by intro p d hd; simp_all [sample])
-    (by intro p d hd r hr; simpa [sample, bondDefects] using hd)
+    (by
+      intro p d hd r hr
+      change d = 0 at hd
+      change d - _ = 0
+      rw [hd, Nat.zero_sub])
     (by
       intro p d hd s
       subst d
-      have hs : s = ⟨0⟩ := Subsingleton.elim _ _
+      have hs : s = ⟨0⟩ := by
+        apply ULift.ext
+        exact Fin.eq_zero _
       subst s
       change (∑ _ : Fin 1 → Fin 2, (1 : ℤ)) = 2
       norm_num)
     (by intro r hr; rfl)
     (by
       intro s
-      have hs : s = ⟨0⟩ := Subsingleton.elim _ _
+      have hs : s = ⟨0⟩ := by
+        apply ULift.ext
+        exact Fin.eq_zero _
       subst s
       change (∑ _ : Fin 1 → Fin 2, (1 : ℤ)) = 2
       norm_num) 0
@@ -375,8 +383,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := h sample hp 0
   have ha := actual_law sample hp 0
   simp only [rejected, readout, realize] at hb ha
-  dsimp only [sample] at hb ha
-  simp only [Fin.sum_univ_one, Fin.val_zero, Nat.add_zero] at hb ha
+  have hc : (∑ j : Fin sample.d, sample.c j) = 2 := by decide +kernel
+  simp_rw [mul_add, mul_one] at hb
+  rw [Finset.sum_add_distrib, hc] at hb
   linarith
 
 def family : Registration arena (type_of% @forward_shift.{u}) where
@@ -402,7 +411,7 @@ def family : Registration arena (type_of% @forward_shift.{u}) where
     refine ⟨sample, 0, 1, ?_⟩
     letI := sample.finite
     letI := sample.equality
-    change (∑ _ : ULift (Fin 1), (1 : ℤ)) ≠ ∑ _ : ULift (Fin 1), (2 : ℤ)
+    change (∑ _ : ULift.{u} (Fin 1), (1 : ℤ)) ≠ ∑ _ : ULift.{u} (Fin 1), (2 : ℤ)
     norm_num
 
 def audit : Contract.Registration.{_, _, _, _, _, _, _, _, _, _, _, _}
