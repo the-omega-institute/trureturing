@@ -149,7 +149,8 @@ internal sealed class SwitchedTwistedSSEPDocument : IScribeDocumentDefinition
                         + "The union component of a diagonal configuration is exactly its K-orbit. The two-site criterion follows from orbit-stabilizer and the existing Mathlib pretransitivity characterization. "
                         + "The stabilizer identification uses MulEquiv.subgroupCongr and Subgroup.subgroupOfEquivOfLe after identifying the subgroup predicates. "
                         + "The argument is uniform in the number of sites, the number of species and the two permutations."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("dabrowski-poulain-ragoucy-2026-switched-ssep-reachability"), ResolutionKind.Proved)))));
 
     private static Formula ResultFormula() => Context(FG(AndF(
         Call("registeredReachabilityAnswer", X("hL"), X("f"), X("g")), AndF(
