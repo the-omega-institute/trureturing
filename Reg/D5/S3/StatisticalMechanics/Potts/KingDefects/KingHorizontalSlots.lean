@@ -529,7 +529,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := h 1 1 1 1 ⟨((1, 0), (0, 1)), by decide +kernel⟩ ⟨((1, 0), (0, 1)), by decide +kernel⟩
   have ha := pair_count_support 1 1 1 1 ⟨((1, 0), (0, 1)), by decide +kernel⟩ ⟨((1, 0), (0, 1)), by decide +kernel⟩
   dsimp only [arena, rejected, realize] at hb
-  omega
+  exact (Nat.ne_of_lt (Nat.lt_succ_self _)) (ha.symm.trans hb)
 
 def family : Registration arena (type_of% @pair_count_support) where
   actual := actual
