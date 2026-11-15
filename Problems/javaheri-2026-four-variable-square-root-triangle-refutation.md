@@ -92,7 +92,7 @@ implicit source convention for 0^0 does not affect this contradiction.
 ## Triage
 
 `theorem`; resolution `refuted` for the complete weak square-root triangle
-characterization. The settling theorem is bind-only, admitted as the
+characterization. The settling theorem is bind-only; its admission basis is
 external open-problem resolution #30729, with no escape witness. The parent
 dimension refutation is reused for definitions only and is not a new result.
 
@@ -107,10 +107,11 @@ dimension refutation is reused for definitions only and is not a new result.
   returns `327`; the formal proof independently checks the contradiction.
 - **Open — surviving and corrected questions:** Proposition 3.1's smaller
   linear region and Theorem 1.2's necessary condition are source theorems;
-  their independent formal verification is not supplied here. Whether a
-  strict square-root triangle condition is sufficient is not settled by
-  this boundary certificate. A complete corrected validity region remains
-  open here; no generalization from this single parameter pair is asserted.
+  their independent formal verification is not supplied here. The formal
+  certificate directly concerns the weak boundary. A quantitative
+  description of validity and failure in the strict interior, and a complete
+  corrected validity region, remain open here; no strict-interior
+  characterization is asserted.
 - **Proved — effect on the source prediction:** the separately stated n=4
   weak characterization is false, in addition to the parent dimension
   identity. This result does not verify or refute the source's other
@@ -119,5 +120,4 @@ dimension refutation is reused for definitions only and is not a new result.
 ## ASSUMED-UNVERIFIED
 
 The bounded literature screen does not establish worldwide absence of a
-prior resolution, novelty, or priority. Independent source-fidelity review,
-freezing and publication remain separate from the mathematical result.
+prior resolution, novelty, or priority.
