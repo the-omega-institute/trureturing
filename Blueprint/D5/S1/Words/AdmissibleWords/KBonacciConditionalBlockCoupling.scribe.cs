@@ -378,7 +378,7 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                         + "the block comparison are zero. At n=0 every block is empty and every indexed block "
                         + "and singleton energy sum is zero, without supplying an excited gap.")),
                     new DocumentBlock.Section(
-                        H("Adjacent-edge eigenfunctions for the original indexed refresh"),
+                        H("Original indexed refresh: from edge eigenfunctions to complex Poincare"),
                         Blocks(
                             Paragraph(Text(
                                 "For this spectral argument assume k>=2 and n>=1, keep S=DBonacciName k n and "
@@ -584,8 +584,8 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                         + "block-to-single-site comparison and the legal-state graph/Hamming correspondence. The real spectral "
                         + "bound, centering, complex split and exact indexed quadratic sum give the complete original complex "
                         + "block/singleton Poincare chain for k>=2,n>=1. The native scalar singleton calculation fixes its "
-                        + "coefficient two for k>=2,n>=0, with no new canonical specialization declaration or mathematical "
-                        + "novelty claimed. The missing native matrix-product, projector, illegal-sector and physical "
+                        + "coefficient two for k>=2,n>=0. These are applications of the reused results, without a claim of "
+                        + "mathematical novelty. The missing native matrix-product, projector, illegal-sector and physical "
                         + "realization bridges delimit the parent-Hamiltonian claim; the legal refresh conclusion does not "
                         + "supply them."))
                 )))));
