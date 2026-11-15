@@ -221,7 +221,7 @@ private theorem factors_lTensor {f : ρ.IntertwiningMap σ}
   change x ⊗ₜ[K] b (a y) = x ⊗ₜ[K] f y
   rw [show b (a y) = f y from congrArg (fun k => k y) hab]
 
-private theorem relativeStableIso_of_equiv (e : ρ.Equiv σ) :
+theorem relativeStableIso_of_equiv (e : ρ.Equiv σ) :
     RelativeStableIso τ ρ σ := by
   refine ⟨e.toIntertwiningMap, e.symm.toIntertwiningMap, ?_, ?_⟩
   · have hz : e.symm.toIntertwiningMap.comp e.toIntertwiningMap - .id ρ = 0 := by
@@ -250,7 +250,7 @@ private theorem stable_symm (h : RelativeStableIso τ ρ σ) : RelativeStableIso
 
 -- Shared sandwich outputs are left-associated; the pointwise change steps
 -- below normalize composition directly, retaining the original P witnesses.
-private theorem stable_trans (h : RelativeStableIso τ ρ σ)
+theorem stable_trans (h : RelativeStableIso τ ρ σ)
     (h' : RelativeStableIso τ σ υ) : RelativeStableIso τ ρ υ := by
   obtain ⟨f, g, hgf, hfg⟩ := h
   obtain ⟨f', g', hg'f', hf'g'⟩ := h'
@@ -272,7 +272,7 @@ private theorem stable_trans (h : RelativeStableIso τ ρ σ)
     rw [map_sub]
     abel
 
-private theorem stable_lTensor (h : RelativeStableIso τ ρ σ)
+theorem stable_lTensor (h : RelativeStableIso τ ρ σ)
     (υ : Representation K G C) : RelativeStableIso τ (υ.tprod ρ) (υ.tprod σ) := by
   obtain ⟨f, g, hgf, hfg⟩ := h
   refine ⟨f.lTensor υ, g.lTensor υ, ?_, ?_⟩
@@ -361,7 +361,7 @@ variable {K : Type uK} [Field K]
 
 /-- The Fin 1 sum in the saved full-residue decomposition is the actual
 single polynomial factor. All reindexing is on the original direct sum. -/
-private def expectedOne (i j : ℕ) :
+def expectedOne (i j : ℕ) :
     (expectedAction (K := K) i j 1).Equiv (dualAction K (i + j - 1)) := by
   let f := firstProjection (K := K) i j 1 (by decide)
   let g := firstInclusion (K := K) i j 1 (by decide)
