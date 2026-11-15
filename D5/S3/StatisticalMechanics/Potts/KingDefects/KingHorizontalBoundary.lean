@@ -63,6 +63,7 @@ horizontal_cut_equiv: proof_shape=bind-only; consumers=KingHorizontal.interior_s
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingDifference
 import Mathlib.Algebra.Ring.GeomSum
+import Mathlib.Data.Fin.Tuple.Basic
 
 /-! Horizontal defects, with dimensions expressed as numbers of steps. -/
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontal
@@ -87,9 +88,8 @@ def BoundaryValid {m M : ℕ} (s : Fin M) (b : BoundaryData m M) : Prop :=
 
 def boundary_build {m M : ℕ} (s : Fin M) (b : BoundaryData m M) :
     DiffField (m + 1) M where
-  h i j := if i = 0 ∧ j = s then 0 else b.h j
-  v i j := if hi : i = 0 then (if j.val ≤ s.val then b.p else b.q)
-    else b.v (i.pred hi)
+  h := Fin.cons (Function.update b.h s 0) (fun _ => b.h)
+  v := Fin.cons (fun j => if j.val ≤ s.val then b.p else b.q) (fun i _ => b.v i)
 
 def boundary_extract {m M : ℕ} (s : Fin M) (t : DiffField (m + 1) M) :
     BoundaryData m M where
@@ -188,18 +188,18 @@ private theorem boundary_build_raw {m M : ℕ} (s : Fin M) (b : BoundaryData m M
     intro i j
     refine Fin.cases ?_ (fun a => ?_) i
     · exact local_top j
-    · simp [boundary_build, Fin.succ_ne_zero, add_comm]
+    · simp [boundary_build, add_comm]
   refine ⟨hc, ?_⟩
   intro e
   cases e with
   | H i j =>
-    simp [edgeValue, boundary_build, hh, Edge.H.injEq]
+    refine Fin.cases ?_ (fun a => ?_) i <;>
+      simp [edgeValue, boundary_build, Function.update_apply, hh, Edge.H.injEq]
   | V i j =>
     suffices edgeValue (boundary_build s b) (.V i j) ≠ 0 by simpa using this
     dsimp only [edgeValue]
     refine Fin.cases ?_ (fun a => ?_) i
-    · dsimp only [boundary_build]
-      simp only [dite_true]
+    · simp only [boundary_build, Fin.cons_zero]
       split <;> assumption
     · simpa [boundary_build] using hv a
   | D i j =>
@@ -282,14 +282,14 @@ private theorem boundary_reconstruct {m M : ℕ} (s : Fin M) (t : DiffField (m +
     (ht : RawAdmissible (.H 0 s) t) : boundary_build s (boundary_extract s t) = t := by
   apply DiffField.ext
   · funext i j
-    exact (boundary_h s t ht i j).symm
+    refine Fin.cases ?_ (fun a => ?_) i
+    · simpa [boundary_build, boundary_extract, Function.update_apply] using
+        (boundary_h s t ht 0 j).symm
+    · simpa [boundary_build, boundary_extract] using (boundary_h s t ht a.succ j).symm
   · funext i j
-    dsimp only [boundary_build, boundary_extract]
-    rw [boundary_v s t ht i j]
-    split
-    · rfl
-    · congr 1
-      exact Fin.succ_pred _ _
+    refine Fin.cases ?_ (fun a => ?_) i
+    · simpa [boundary_build, boundary_extract] using (boundary_v s t ht 0 j).symm
+    · simpa [boundary_build, boundary_extract] using (boundary_v s t ht a.succ j).symm
 
 /-- Top-boundary fields are in bijection with compressed slot assignments. -/
 def boundary_slot_equiv (m M : ℕ) (s : Fin M) :
@@ -821,20 +821,19 @@ private theorem raw_of_halves {A B M : ℕ} (s : Fin M) (t : DiffField (A + B) M
 
 private def join_field {A B M : ℕ} (u : DiffField A M) (l : DiffField B M) :
     DiffField (A + B) M where
-  h i j := if hi : i.val < A then u.h ⟨i.val, by omega⟩ j
-    else l.h ⟨i.val - A, by have := i.isLt; omega⟩ j
-  v i j := if hi : i.val < A then u.v ⟨i.val, hi⟩ j
-    else l.v ⟨i.val - A, by have := i.isLt; omega⟩ j
+  h := Fin.append (m := A) (n := B + 1) (Fin.init u.h) l.h
+  v := Fin.append u.v l.v
 
 private theorem top_field_join {A B M : ℕ} (u : DiffField A M) (l : DiffField B M)
     (hshare : ∀ j, u.h (Fin.last A) j = l.h 0 j) : top_field (join_field u l) = u := by
   apply DiffField.ext
   · funext i j
-    by_cases hi : i.val < A
-    · simp only [top_field, join_field, top_row, Fin.val_castLE, hi, ↓reduceDIte]
-    · have he : i = Fin.last A := Fin.ext (by have := i.isLt; simp; omega)
-      subst i
-      simpa [top_field, join_field, top_row] using (hshare j).symm
+    refine Fin.lastCases ?_ (fun k => ?_) i
+    · have he : top_row B (Fin.last A) = Fin.natAdd A (0 : Fin (B + 1)) :=
+        Fin.ext (by simp [top_row])
+      simpa only [top_field, join_field, he, Fin.append_right] using (hshare j).symm
+    · have he : top_row B k.castSucc = k.castAdd (B + 1) := Fin.ext rfl
+      simp [top_field, join_field, he, Fin.init]
   · funext i j
     simp [top_field, join_field]
 
@@ -850,21 +849,12 @@ private theorem join_restrict {A B M : ℕ} (t : DiffField (A + B) M) :
     join_field (top_field t) (bottom_field t) = t := by
   apply DiffField.ext
   · funext i j
-    dsimp only [join_field, top_field, bottom_field]
-    split
-    · rfl
-    · apply congrArg (fun k => t.h k j)
-      apply Fin.ext
-      dsimp [bottom_row]
-      omega
+    refine Fin.addCases (m := A) (n := B + 1) (fun k => ?_) (fun k => ?_) i <;>
+      simp [join_field, Fin.init, top_field, bottom_field, top_row, bottom_row]
+    rfl
   · funext i j
-    dsimp only [join_field, top_field, bottom_field]
-    split
-    · rfl
-    · apply congrArg (fun k => t.v k j)
-      apply Fin.ext
-      simp only [Fin.val_natAdd]
-      omega
+    refine Fin.addCases (fun k => ?_) (fun k => ?_) i <;>
+      simp [join_field, top_field, bottom_field]
 
 def CutFields (A B M : ℕ) (s : Fin M) :=
   {q : DiffField A M × DiffField B M //

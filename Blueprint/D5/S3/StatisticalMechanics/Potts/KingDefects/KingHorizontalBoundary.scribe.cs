@@ -23,7 +23,7 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
             Node("boundary_build", "boundary build", Formula2(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
-                "The first horizontal row sets position s to zero and copies the other slots. Its first vertical step uses p through column s and q afterwards; the remaining vertical steps use v."),
+                "Fin.cons prepends the exceptional row to each field. Function.update sets horizontal position s to zero. The first vertical step uses p through column s and q afterwards; Function.const supplies the constant tails."),
             Node("boundary_extract", "boundary extract", Formula3(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
@@ -107,7 +107,7 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
             Node("horizontal_cut_equiv", "horizontal cut equiv", Formula23(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
-                "Restrict above and below the selected row. The consumed private row embeddings top_row and bottom_row use Fin.castLE and Fin.natAdd, respectively. The inverse joins the two fields along their common horizontal values."))));
+                "Restrict above and below the selected row. The row embeddings top_row and bottom_row use Fin.castLE and Fin.natAdd, respectively. The inverse uses Fin.append to join the vertical tuples, and Fin.append with Fin.init of the upper horizontal tuple joins the horizontal tuples, retaining the lower copy of the shared row."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,
         AssessedProvenance provenance, string prose) =>
@@ -314,90 +314,24 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
         );
 
     private static Formula Formula2() =>
-        All(
-            "m",
-            Q("Nat"),
-            All(
-                "M",
-                Q("Nat"),
-                All(
-                    "s",
-                    App(Q("Fin"), V("M")),
-                    All(
-                        "b",
-                        App(App(Q("KingHorizontal.BoundaryData"), V("m")), V("M")),
-                        And(
-                            All(
-                                "i",
-                                App(Q("Fin"), Add(Add(V("m"), Num("1")), Num("1"))),
-                                All(
-                                    "j",
-                                    App(Q("Fin"), V("M")),
-                                    Eq(
-                                        App(
-                                            App(
-                                                Call(
-                                                    "KingDifference.DiffField.h",
-                                                    App(
-                                                        App(Q("KingHorizontal.boundary_build"), V("s")),
-                                                        V("b")
-                                                    )
-                                                ),
-                                                V("i")
-                                            ),
-                                            V("j")
-                                        ),
-                                        Call(
-                                            "ite",
-                                            And(Eq(V("i"), Num("0")), Eq(V("j"), V("s"))),
-                                            Num("0"),
-                                            App(Call("KingHorizontal.BoundaryData.h", V("b")), V("j"))
-                                        )
-                                    )
-                                )
-                            ),
-                            All(
-                                "i",
-                                App(Q("Fin"), Add(V("m"), Num("1"))),
-                                All(
-                                    "j",
-                                    App(Q("Fin"), Add(V("M"), Num("1"))),
-                                    Eq(
-                                        App(
-                                            App(
-                                                Call(
-                                                    "KingDifference.DiffField.v",
-                                                    App(
-                                                        App(Q("KingHorizontal.boundary_build"), V("s")),
-                                                        V("b")
-                                                    )
-                                                ),
-                                                V("i")
-                                            ),
-                                            V("j")
-                                        ),
-                                        Call(
-                                            "ite",
-                                            Eq(V("i"), Num("0")),
-                                            Call(
-                                                "ite",
-                                                Leq(Call("Fin.val", V("j")), Call("Fin.val", V("s"))),
-                                                Call("KingHorizontal.BoundaryData.p", V("b")),
-                                                Call("KingHorizontal.BoundaryData.q", V("b"))
-                                            ),
-                                            App(
-                                                Call("KingHorizontal.BoundaryData.v", V("b")),
-                                                App(Q("Fin.pred"), V("i"))
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
+        All("m", Q("Nat"), All("M", Q("Nat"),
+            All("s", Call("Fin", V("M")),
+                All("b", Call("KingHorizontal.BoundaryData", V("m"), V("M")),
+                    And(
+                        Eq(Call("KingDifference.DiffField.h", Call("KingHorizontal.boundary_build", V("s"), V("b"))),
+                            Call("Fin.cons",
+                                Call("Function.update", Call("KingHorizontal.BoundaryData.h", V("b")), V("s"), Num("0")),
+                                Call("Function.const", Call("Fin", Add(V("m"), Num("1"))),
+                                    Call("KingHorizontal.BoundaryData.h", V("b"))))),
+                        Eq(Call("KingDifference.DiffField.v", Call("KingHorizontal.boundary_build", V("s"), V("b"))),
+                            Call("Fin.cons",
+                                Lam("j", Call("Fin", Add(V("M"), Num("1"))),
+                                    Call("ite", Leq(Call("Fin.val", V("j")), Call("Fin.val", V("s"))),
+                                        Call("KingHorizontal.BoundaryData.p", V("b")),
+                                        Call("KingHorizontal.BoundaryData.q", V("b")))),
+                                Lam("i", Call("Fin", V("m")),
+                                    Call("Function.const", Call("Fin", Add(V("M"), Num("1"))),
+                                        App(Call("KingHorizontal.BoundaryData.v", V("b")), V("i"))))))))));
 
     private static Formula Formula3() =>
         All(
@@ -1288,7 +1222,9 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
             )
         );
 
-    private static Formula Formula23() =>
+    private static Formula Formula23() => And(Formula23Restrictions(), Formula23Inverse());
+
+    private static Formula Formula23Restrictions() =>
         All(
             "A",
             Q("Nat"),
@@ -1542,6 +1478,27 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
             )
         );
 
+    private static Formula Formula23Inverse()
+    {
+        var halves = Call("Subtype.val", V("q"));
+        var upper = Call("Prod.fst", halves);
+        var lower = Call("Prod.snd", halves);
+        var joined = Call("Subtype.val",
+            App(Call("Equiv.symm", Call("KingHorizontal.horizontal_cut_equiv", V("A"), V("B"), V("M"), V("s"))), V("q")));
+        return All("A", Q("Nat"), All("B", Q("Nat"), All("M", Q("Nat"),
+            All("s", Call("Fin", V("M")),
+                All("q", Call("KingHorizontal.CutFields", V("A"), V("B"), V("M"), V("s")),
+                    And(
+                        Eq(Call("KingDifference.DiffField.h", joined),
+                            Call("Fin.append", Call("Fin.init", Call("KingDifference.DiffField.h", upper)),
+                                Call("KingDifference.DiffField.h", lower))),
+                        Eq(Call("KingDifference.DiffField.v", joined),
+                            Call("Fin.append", Call("KingDifference.DiffField.v", upper),
+                                Call("KingDifference.DiffField.v", lower))))))));
+    }
+
+    private static Formula Lam(string x, Formula t, Formula b) =>
+        Parenthesized(Seq(LambdaLower, Sp, Typed(V(x), t), Sp, Mapsto, Sp, b));
     private static Formula V(string s) => F.Id(s);
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((part, i) =>
