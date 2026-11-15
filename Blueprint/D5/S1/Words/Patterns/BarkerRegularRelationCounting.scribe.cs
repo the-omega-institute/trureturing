@@ -37,7 +37,7 @@ internal sealed class BarkerRegularRelationCountingDocument : IScribeDocumentDef
             Node("count", "Actual word cardinalities", All("q", N(), All("R", RelationType(),
                 All("n", N(), Equal(Call("count", V("R"), V("n")),
                     App(Q("Nat", "card"), Subtype("w", Words(V("n")),
-                        Call("Admissible", V("R"), V("w"))))))),
+                        Call("Admissible", V("R"), V("w")))))))),
                 "The carrier is the subtype of actual words satisfying the event relation. "
                 + "No recurrence is used to define this cardinality.", DescribeRole.Definition),
             Node("sourceSeries", "Positive-index coefficient series", All("q", N(),
@@ -87,7 +87,7 @@ internal sealed class BarkerRegularRelationCountingDocument : IScribeDocumentDef
 
     private static DocumentBlock Node(string name, string title, Formula statement,
         string prose, DescribeRole role) => Describe.Lean(
-        DescribeId.Create("regular-repetition-" + name.ToLowerInvariant()),
+        DescribeId.Create("regular-repetition-" + name.ToLowerInvariant().Replace("_", "-")),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(statement)),
         AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 

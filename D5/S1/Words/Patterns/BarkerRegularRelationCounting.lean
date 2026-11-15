@@ -6,6 +6,27 @@
    utility: none
    digest: Literal repetition-word counts for loopless relations of constant indegree. -/
 
+/-
+The source model is the regular-relation extension of Ma and Zhang's cyclic
+repetition enumeration. The eight-letter theorem and its original settlement
+remain in BarkerCyclicRepetitionCounting.
+
+Candidate admission_basis: escape-witness, the uniform literal-word fiber law
+in weight_transition and its unique first-letter/suffix correspondence in
+phaseCount_cons, consumed by relation_enumeration through actual cardinalities.
+The series elimination and scalar recurrence are consumed bind-only steps.
+Utility is none: the conclusion is an all-length symbolic enumeration.
+Direct frozen theorem dependencies: none; the original owner supplies the
+pinned Mathlib dependency neighborhood and is reused by exact applications.
+
+Escape registration is unfinished. Linked issue:
+https://github.com/the-omega-institute/trureturing/issues/25339
+The new target is relation_enumeration. Missing evidence is an enrolled
+source-owned reconstruction of its complete q,d,R telescope and conjunction,
+an actual-positive bridge, whole-family variation, slot sensitivity, and
+observational dependence. No validated registration is asserted.
+-/
+
 import D5.S1.Words.Patterns.BarkerCyclicRepetitionCounting
 
 /-! Literal word enumeration for regular incoming event relations. -/
