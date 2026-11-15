@@ -1,5 +1,5 @@
 /- GID: D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585StripData
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/StripDefectsWidth7/HardinA229585StripData
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -97,6 +97,9 @@ W: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence
+import Mathlib.Data.Matrix.Block
+import Mathlib.Logic.Equiv.Fin.Basic
 
 set_option profiler true
 
@@ -121,68 +124,68 @@ private instance decidableValid (p : Boundary) (d : ℕ) : Decidable (Valid p d)
 def cl (p : Boundary) (d : ℕ) : Fin 72 :=
   if d = 1 then (if p 0 = p 2 then (if p 0 = p 4 then (if p 1 = p 3 then (if p 1 = p 5 then (0) else (1)) else (if p 1 = p 5 then (4) else (5))) else (if p 0 = p 5 then (if p 1 = p 3 then (2) else (6)) else (if p 1 = p 3 then (3) else (7)))) else (if p 0 = p 3 then (if p 0 = p 5 then (if p 1 = p 4 then (8) else (10)) else (if p 1 = p 4 then (9) else (11))) else (if p 0 = p 4 then (if p 1 = p 5 then (12) else (13)) else (if p 0 = p 5 then (14) else (15))))) else (if p 0 = p 2 then (if p 0 = p 5 then (if p 1 = p 3 then (if p 0 = p 4 then (28) else (if p 1 = p 4 then (31) else (33))) else (if p 0 = p 3 then (if p 1 = p 4 then (24) else (26)) else (if p 0 = p 4 then (36) else (if p 1 = p 4 then (39) else (42))))) else (if p 1 = p 5 then (if p 0 = p 4 then (if p 1 = p 3 then (29) else (37)) else (if p 0 = p 3 then (27) else (if p 1 = p 3 then (34) else (if p 1 = p 4 then (40) else (43))))) else (if p 1 = p 3 then (if p 0 = p 4 then (30) else (if p 1 = p 4 then (32) else (35))) else (if p 0 = p 3 then (25) else (if p 0 = p 4 then (38) else (41)))))) else (if p 0 = p 3 then (if p 2 = p 4 then (if p 0 = p 5 then (if p 0 = p 1 then (16) else (if p 1 = p 2 then (44) else (57))) else (if p 0 = p 1 then (17) else (if p 1 = p 2 then (45) else (if p 1 = p 5 then (58) else (59))))) else (if p 1 = p 5 then (if p 0 = p 1 then (18) else (if p 0 = p 4 then (52) else (if p 1 = p 2 then (47) else (55)))) else (if p 0 = p 5 then (if p 1 = p 2 then (46) else (54)) else (if p 0 = p 1 then (19) else (if p 0 = p 4 then (53) else (56)))))) else (if p 0 = p 4 then (if p 2 = p 5 then (if p 0 = p 1 then (20) else (if p 1 = p 2 then (48) else (if p 1 = p 3 then (62) else (69)))) else (if p 1 = p 3 then (if p 0 = p 5 then (60) else (61)) else (if p 0 = p 1 then (21) else (if p 1 = p 2 then (49) else (68))))) else (if p 0 = p 5 then (if p 1 = p 3 then (if p 1 = p 4 then (63) else (65)) else (if p 0 = p 1 then (22) else (if p 1 = p 2 then (50) else (70)))) else (if p 1 = p 3 then (if p 1 = p 4 then (64) else (if p 1 = p 5 then (66) else (67))) else (if p 0 = p 1 then (23) else (if p 1 = p 2 then (51) else (71))))))))
 @[noinline]
-private def transfer_row0 : Fin 72 → ℤ :=
-  ![5, 5, 3, 3, 4, 4, 2, 2, 0, 0, 1, 1, 3, 3, 3, 3, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 5, 2, 2, 2, 2, 4, 4, 3, 4, 2, 2, 3, 2, 3, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0, 2, 5, 5, 1, 3, 4, 4, 0, 0, 3, 3, 3, 2, 2, 0, 0]
+private def transfer_row0 : Fin 56 → ℤ :=
+  ![1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 5, 2, 2, 2, 2, 4, 4, 3, 4, 2, 2, 3, 2, 3, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0, 2, 5, 5, 1, 3, 4, 4, 0, 0, 3, 3, 3, 2, 2, 0, 0]
 
 @[noinline]
-private def transfer_row1 : Fin 72 → ℤ :=
-  ![4, 4, 3, 3, 4, 4, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 4, 1, 1, 3, 3, 4, 4, 3, 4, 0, 0, 4, 2, 4, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 4, 1, 4, 3, 3, 1, 2, 4, 4, 3, 3, 7, 7, 1, 2, 2, 2, 2]
+private def transfer_row1 : Fin 56 → ℤ :=
+  ![1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 4, 1, 1, 3, 3, 4, 4, 3, 4, 0, 0, 4, 2, 4, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 4, 1, 4, 3, 3, 1, 2, 4, 4, 3, 3, 7, 7, 1, 2, 2, 2, 2]
 
 @[noinline]
-private def transfer_row2 : Fin 72 → ℤ :=
-  ![1, 1, 2, 2, 1, 1, 3, 3, 2, 2, 2, 2, 1, 1, 2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 4, 4, 4, 4, 1, 5, 5, 3, 3, 4, 4, 2, 1, 5, 5, 4, 3, 4, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 0, 0, 4, 2, 4, 2, 2, 2, 1, 4, 4, 3, 3, 1, 1, 2, 1, 1, 1, 1]
+private def transfer_row2 : Fin 56 → ℤ :=
+  ![0, 0, 0, 0, 1, 1, 0, 0, 4, 4, 4, 4, 1, 5, 5, 3, 3, 4, 4, 2, 1, 5, 5, 4, 3, 4, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 0, 0, 4, 2, 4, 2, 2, 2, 1, 4, 4, 3, 3, 1, 1, 2, 1, 1, 1, 1]
 
 @[noinline]
-private def transfer_row3 : Fin 72 → ℤ :=
-  ![3, 3, 3, 3, 3, 3, 2, 2, 0, 0, 2, 2, 3, 3, 3, 3, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 5, 5, 0, 0, 2, 2, 3, 3, 5, 5, 2, 2, 2, 1, 1, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 5, 0, 5, 2, 2, 2, 3, 2, 2, 0, 0, 2, 2, 3, 1, 1, 0, 0]
+private def transfer_row3 : Fin 56 → ℤ :=
+  ![0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 5, 5, 0, 0, 2, 2, 3, 3, 5, 5, 2, 2, 2, 1, 1, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 5, 0, 5, 2, 2, 2, 3, 2, 2, 0, 0, 2, 2, 3, 1, 1, 0, 0]
 
 @[noinline]
-private def transfer_row4 : Fin 72 → ℤ :=
-  ![4, 4, 2, 2, 4, 4, 2, 2, 0, 0, 1, 1, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 4, 1, 1, 2, 2, 4, 4, 2, 4, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0, 1, 1, 5, 0, 5, 3, 3, 1, 3, 4, 4, 2, 2, 7, 7, 1, 2, 2, 2, 2]
+private def transfer_row4 : Fin 56 → ℤ :=
+  ![1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 4, 1, 1, 2, 2, 4, 4, 2, 4, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0, 1, 1, 5, 0, 5, 3, 3, 1, 3, 4, 4, 2, 2, 7, 7, 1, 2, 2, 2, 2]
 
 @[noinline]
-private def transfer_row5 : Fin 72 → ℤ :=
-  ![4, 4, 2, 2, 4, 4, 2, 2, 1, 1, 1, 1, 2, 2, 3, 3, 2, 2, 2, 2, 0, 0, 1, 1, 0, 0, 0, 0, 4, 1, 1, 2, 2, 4, 4, 2, 4, 0, 0, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 3, 1, 3, 6, 6, 1, 2, 4, 4, 1, 1, 3, 3, 3, 2, 2, 0, 0]
+private def transfer_row5 : Fin 56 → ℤ :=
+  ![2, 2, 2, 2, 0, 0, 1, 1, 0, 0, 0, 0, 4, 1, 1, 2, 2, 4, 4, 2, 4, 0, 0, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 3, 1, 3, 6, 6, 1, 2, 4, 4, 1, 1, 3, 3, 3, 2, 2, 0, 0]
 
 @[noinline]
-private def transfer_row6 : Fin 72 → ℤ :=
-  ![0, 0, 2, 2, 0, 0, 2, 2, 3, 3, 2, 2, 0, 0, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 0, 3, 3, 2, 2, 2, 2, 2, 0, 4, 4, 4, 2, 4, 2, 2, 3, 3, 2, 2, 1, 1, 3, 3, 1, 1, 4, 3, 4, 4, 4, 2, 0, 5, 5, 2, 2, 1, 1, 2, 1, 1, 1, 1]
+private def transfer_row6 : Fin 56 → ℤ :=
+  ![1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 0, 3, 3, 2, 2, 2, 2, 2, 0, 4, 4, 4, 2, 4, 2, 2, 3, 3, 2, 2, 1, 1, 3, 3, 1, 1, 4, 3, 4, 4, 4, 2, 0, 5, 5, 2, 2, 1, 1, 2, 1, 1, 1, 1]
 
 @[noinline]
-private def transfer_row7 : Fin 72 → ℤ :=
-  ![2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 0, 0, 1, 1, 2, 2, 3, 3, 1, 2, 1, 0, 0, 3, 3, 1, 1, 2, 2, 3, 3, 2, 2, 7, 1, 7, 3, 3, 3, 2, 1, 1, 0, 0, 3, 3, 2, 0, 0, 1, 1]
+private def transfer_row7 : Fin 56 → ℤ :=
+  ![2, 2, 2, 2, 0, 0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 0, 0, 1, 1, 2, 2, 3, 3, 1, 2, 1, 0, 0, 3, 3, 1, 1, 2, 2, 3, 3, 2, 2, 7, 1, 7, 3, 3, 3, 2, 1, 1, 0, 0, 3, 3, 2, 0, 0, 1, 1]
 
 @[noinline]
-private def transfer_row8 : Fin 72 → ℤ :=
-  ![1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 1, 1, 1, 1, 4, 4, 4, 4, 0, 0, 2, 2, 1, 1, 1, 1, 1, 4, 4, 0, 0, 3, 3, 1, 1, 4, 4, 4, 1, 4, 0, 0, 3, 3, 2, 2, 1, 1, 3, 3, 1, 1, 4, 2, 4, 4, 4, 3, 1, 3, 3, 0, 0, 7, 7, 1, 0, 0, 2, 2]
+private def transfer_row8 : Fin 56 → ℤ :=
+  ![4, 4, 4, 4, 0, 0, 2, 2, 1, 1, 1, 1, 1, 4, 4, 0, 0, 3, 3, 1, 1, 4, 4, 4, 1, 4, 0, 0, 3, 3, 2, 2, 1, 1, 3, 3, 1, 1, 4, 2, 4, 4, 4, 3, 1, 3, 3, 0, 0, 7, 7, 1, 0, 0, 2, 2]
 
 @[noinline]
-private def transfer_row9 : Fin 72 → ℤ :=
-  ![0, 0, 1, 1, 0, 0, 1, 1, 3, 3, 1, 1, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 1, 1, 3, 3, 1, 0, 4, 4, 6, 1, 6, 1, 1, 3, 3, 1, 1, 2, 2, 3, 3, 2, 2, 3, 3, 3, 7, 7, 1, 0, 6, 6, 1, 1, 4, 4, 1, 2, 2, 2, 2]
+private def transfer_row9 : Fin 56 → ℤ :=
+  ![2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 1, 1, 3, 3, 1, 0, 4, 4, 6, 1, 6, 1, 1, 3, 3, 1, 1, 2, 2, 3, 3, 2, 2, 3, 3, 3, 7, 7, 1, 0, 6, 6, 1, 1, 4, 4, 1, 2, 2, 2, 2]
 
 @[noinline]
-private def transfer_row10 : Fin 72 → ℤ :=
-  ![2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 2, 2, 1, 1, 3, 3, 4, 4, 4, 4, 0, 0, 2, 2, 0, 0, 0, 0, 2, 5, 5, 1, 1, 6, 6, 1, 2, 4, 4, 3, 1, 3, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 2, 2, 2, 4, 4, 2, 1, 6, 6, 2, 2, 3, 3, 3, 1, 1, 0, 0]
+private def transfer_row10 : Fin 56 → ℤ :=
+  ![4, 4, 4, 4, 0, 0, 2, 2, 0, 0, 0, 0, 2, 5, 5, 1, 1, 6, 6, 1, 2, 4, 4, 3, 1, 3, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 2, 2, 2, 4, 4, 2, 1, 6, 6, 2, 2, 3, 3, 3, 1, 1, 0, 0]
 
 @[noinline]
-private def transfer_row11 : Fin 72 → ℤ :=
-  ![2, 2, 1, 1, 2, 2, 1, 1, 0, 0, 2, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 6, 6, 1, 1, 6, 6, 1, 2, 4, 4, 3, 1, 3, 1, 1, 0, 0, 2, 2, 1, 1, 0, 0, 2, 2, 6, 0, 6, 1, 1, 2, 3, 3, 3, 1, 1, 3, 3, 2, 1, 1, 1, 1]
+private def transfer_row11 : Fin 56 → ℤ :=
+  ![2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 6, 6, 1, 1, 6, 6, 1, 2, 4, 4, 3, 1, 3, 1, 1, 0, 0, 2, 2, 1, 1, 0, 0, 2, 2, 6, 0, 6, 1, 1, 2, 3, 3, 3, 1, 1, 3, 3, 2, 1, 1, 1, 1]
 
 @[noinline]
-private def transfer_row12 : Fin 72 → ℤ :=
-  ![3, 3, 3, 3, 3, 3, 1, 1, 0, 0, 1, 1, 3, 3, 3, 3, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 3, 5, 5, 0, 0, 2, 2, 3, 3, 5, 5, 6, 1, 6, 2, 2, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 3, 0, 3, 5, 5, 1, 3, 2, 2, 0, 0, 2, 2, 3, 2, 2, 0, 0]
+private def transfer_row12 : Fin 56 → ℤ :=
+  ![0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 3, 5, 5, 0, 0, 2, 2, 3, 3, 5, 5, 6, 1, 6, 2, 2, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 3, 0, 3, 5, 5, 1, 3, 2, 2, 0, 0, 2, 2, 3, 2, 2, 0, 0]
 
 @[noinline]
-private def transfer_row13 : Fin 72 → ℤ :=
-  ![2, 2, 1, 1, 2, 2, 3, 3, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 3, 3, 3, 3, 7, 7, 1, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 6, 1, 6, 3, 3, 1, 2, 1, 1, 3, 3, 4, 4, 1, 2, 2, 2, 2]
+private def transfer_row13 : Fin 56 → ℤ :=
+  ![0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 3, 3, 3, 3, 7, 7, 1, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 6, 1, 6, 3, 3, 1, 2, 1, 1, 3, 3, 4, 4, 1, 2, 2, 2, 2]
 
 @[noinline]
-private def transfer_row14 : Fin 72 → ℤ :=
-  ![2, 2, 3, 3, 2, 2, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 6, 6, 3, 3, 3, 3, 3, 2, 4, 4, 7, 1, 7, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 2, 1, 6, 6, 3, 3, 3, 3, 2, 1, 1, 1, 1]
+private def transfer_row14 : Fin 56 → ℤ :=
+  ![2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 6, 6, 3, 3, 3, 3, 3, 2, 4, 4, 7, 1, 7, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 2, 1, 6, 6, 3, 3, 3, 3, 2, 1, 1, 1, 1]
 
 @[noinline]
-private def transfer_row15 : Fin 72 → ℤ :=
-  ![4, 4, 3, 3, 2, 2, 1, 1, 0, 0, 2, 2, 3, 3, 3, 3, 2, 2, 0, 0, 2, 2, 2, 2, 0, 0, 2, 2, 4, 4, 4, 1, 1, 3, 3, 3, 2, 8, 8, 5, 1, 5, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 0, 3, 2, 2, 2, 3, 3, 3, 0, 0, 3, 3, 3, 1, 1, 0, 0]
+private def transfer_row15 : Fin 56 → ℤ :=
+  ![2, 2, 0, 0, 2, 2, 2, 2, 0, 0, 2, 2, 4, 4, 4, 1, 1, 3, 3, 3, 2, 8, 8, 5, 1, 5, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 0, 3, 2, 2, 2, 3, 3, 3, 0, 0, 3, 3, 3, 1, 1, 0, 0]
 
 @[noinline]
 private def transfer_row16 : Fin 72 → ℤ :=
@@ -409,7 +412,13 @@ private def transfer_row71 : Fin 72 → ℤ :=
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
 
 def T : Matrix (Fin 72) (Fin 72) ℤ :=
-  ![transfer_row0, transfer_row1, transfer_row2, transfer_row3, transfer_row4, transfer_row5, transfer_row6, transfer_row7, transfer_row8, transfer_row9, transfer_row10, transfer_row11, transfer_row12, transfer_row13, transfer_row14, transfer_row15, transfer_row16, transfer_row17, transfer_row18, transfer_row19, transfer_row20, transfer_row21, transfer_row22, transfer_row23, transfer_row24, transfer_row25, transfer_row26, transfer_row27, transfer_row28, transfer_row29, transfer_row30, transfer_row31, transfer_row32, transfer_row33, transfer_row34, transfer_row35, transfer_row36, transfer_row37, transfer_row38, transfer_row39, transfer_row40, transfer_row41, transfer_row42, transfer_row43, transfer_row44, transfer_row45, transfer_row46, transfer_row47, transfer_row48, transfer_row49, transfer_row50, transfer_row51, transfer_row52, transfer_row53, transfer_row54, transfer_row55, transfer_row56, transfer_row57, transfer_row58, transfer_row59, transfer_row60, transfer_row61, transfer_row62, transfer_row63, transfer_row64, transfer_row65, transfer_row66, transfer_row67, transfer_row68, transfer_row69, transfer_row70, transfer_row71]
+  Matrix.reindex finSumFinEquiv finSumFinEquiv
+    (Matrix.fromBlocks
+      D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table
+      ![transfer_row0, transfer_row1, transfer_row2, transfer_row3, transfer_row4, transfer_row5, transfer_row6, transfer_row7, transfer_row8, transfer_row9, transfer_row10, transfer_row11, transfer_row12, transfer_row13, transfer_row14, transfer_row15]
+      (0 : Matrix (Fin 56) (Fin 16) ℤ)
+      (fun i j => ![transfer_row16, transfer_row17, transfer_row18, transfer_row19, transfer_row20, transfer_row21, transfer_row22, transfer_row23, transfer_row24, transfer_row25, transfer_row26, transfer_row27, transfer_row28, transfer_row29, transfer_row30, transfer_row31, transfer_row32, transfer_row33, transfer_row34, transfer_row35, transfer_row36, transfer_row37, transfer_row38, transfer_row39, transfer_row40, transfer_row41, transfer_row42, transfer_row43, transfer_row44, transfer_row45, transfer_row46, transfer_row47, transfer_row48, transfer_row49, transfer_row50, transfer_row51, transfer_row52, transfer_row53, transfer_row54, transfer_row55, transfer_row56, transfer_row57, transfer_row58, transfer_row59, transfer_row60, transfer_row61, transfer_row62, transfer_row63, transfer_row64, transfer_row65, transfer_row66, transfer_row67, transfer_row68, transfer_row69, transfer_row70, transfer_row71] i (Fin.natAdd 16 j)))
+
 def initial : Fin 72 → ℤ := ![12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 6, 6, 12, 12, 6, 6, 12, 12, 6, 6, 6, 12, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 6, 12, 6, 6, 6, 12, 12, 6, 6, 12, 12, 6, 6, 12, 12, 12, 12, 12]
 def terminal : Fin 72 → ℤ := ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 def W : Fin 11 → Fin 72 → ℤ :=

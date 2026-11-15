@@ -20,6 +20,14 @@ internal sealed class HardinA233255RecurrenceDocument : IScribeDocumentDefinitio
                 + "The six explicit vectors are checked powers of this actual seventeen-coordinate "
                 + "transfer on the all-ones vector. Their exact degree-five vector identity propagates "
                 + "to every height by multiplication with arbitrary further matrix powers.")),
+            Describe.Lean(DescribeId.Create("table"), DeclarationHandle.Create(
+                "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.table"),
+                H("The sixteen proper-boundary transfer weights"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Automata/hardin2013a233255")),
+                Blocks(Paragraph(Text("The 16 by 16 integer matrix lists compatible proper seven-cell row fibres, "
+                    + "in HardinA233255ShapeSymmetry.representatives order on both axes. "
+                    + "Its entries equal HardinA233255ShapeSymmetry.K, as checked by the recurrence certificate."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(
                 "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.result"),
                 H("The all-height five-step recurrence"), StatementSource.WithoutFormula(),

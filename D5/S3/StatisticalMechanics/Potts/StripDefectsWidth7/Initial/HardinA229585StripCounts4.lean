@@ -1,5 +1,5 @@
 /- GID: D5/S3/StatisticalMechanics/Potts/StripDefectsWidth7/Initial/HardinA229585StripCounts4
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/StripDefectsWidth7/Initial/HardinA229585StripCounts4
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
