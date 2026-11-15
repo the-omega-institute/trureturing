@@ -94,28 +94,6 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                     + "prefix transport proves both marginals in this stopped branch."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("kbonacci-prefix-coupling-emitted-tail"),
-                DeclarationHandle.Create(
-                    "D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.prefix_coupling_emitted_tail"),
-                H("Geometric tail of the original emitted no-common-false event"),
-                StatementSource.FromAuthor(Disp(TailFormula())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For a full-word pair w, E(s,j,w) means that for every site i in s.take(j), "
-                    + "the two emitted bits are not both false. The notation MassEvent(P,s,j) is "
-                    + "mean P (fun w => if E(s,j,w) then 1 else 0). This includes (true,true), "
-                    + "j=0 and the entire scan. No increasing-order or complement-cover assumption "
-                    + "is needed for this event estimate. A counting induction in the original "
-                    + "completion fibers bounds the all-true event by 2^(-j). This handles the "
-                    + "original reset branch, whose two outputs agree at every free site. In a "
-                    + "supported recursive child, the emitted head is the sampled bit pair. The "
-                    + "common-false child contributes zero; the other children carry the residual "
-                    + "event bound and have total mass at most one half. Impossible refinements "
-                    + "have zero joint mass. The resulting induction uses the original prefixCoupling "
-                    + "without modifying its fallback or initial-reset tests. Supported coalescence "
-                    + "after an emitted common false is a separate assertion and is not proved here."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("kbonacci-right-scan-hamming"),
                 DeclarationHandle.Create(
                     "D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.right_scan_hamming"),
@@ -190,11 +168,14 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                         + "transport a shared completion before an emitted common zero. Its no-common-false "
                         + "event must therefore also be bounded in this initial reset branch; it cannot "
                         + "be identified with latent survival of the recursion. The native "
-                        + "prefix_coupling_emitted_tail now supplies this event estimate by a completion-fiber "
+                        + "prefix_coupling_emitted_tail in KBonacciEmittedTail supplies this event estimate by a completion-fiber "
                         + "count and recursive emitted-event induction. right_scan_hamming separately proves "
                         + "expected cost at most one. Supported coalescence through every recursive ancestor "
                         + "and the complete two-orientation event/support assembly remain unverified here. The paper derivation and synchronous alternative do not replace "
-                        + "that native-law obligation.")))),
+                        + "that native-law obligation.")),
+                    Paragraph(Text("The native emitted-event estimate is "),
+                        Ref("D5/S1/Words/AdmissibleWords/KBonacciEmittedTail.prefix_coupling_emitted_tail"),
+                        Text(".")))),
             new DocumentBlock.Section(
                 H("Application: actual legal-state refresh, projection and complex energy"),
                 Blocks(
@@ -966,24 +947,6 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
         var fixedSet = All(f, Call("Finset", Call("Fin", n)), Imp(free, fibers));
         var lists = All(s, Call("List", Call("Fin", n)), Imp(Call("Nodup", s), fixedSet));
         return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k), lists));
-    }
-
-    private static Formula TailFormula()
-    {
-        var k = F.Id("k"); var n = F.Id("n"); var f = F.Id("F");
-        var s = F.Id("s"); var x = F.Id("x"); var y = F.Id("y");
-        var h = F.Id("h"); var g = F.Id("g"); var i = F.Id("i"); var j = F.Id("j");
-        var free = All(i, Call("Fin", n), Imp(Seq(i, Sp, InMacro, Sp, s),
-            Seq(Neg, Sp, Par(Seq(i, Sp, InMacro, Sp, f)))));
-        var bound = All(j, Nat, Imp(Rel(j, Leq, Call("length", s)),
-            Rel(Call("MassEvent", Call("P", s, f, x, y, h, g), s, j), Leq,
-                new Formula.Power(Par(Seq(D(1), Slash, D(2))), j))));
-        var fibers = All(Seq(x, Comma, y), Word(n),
-            All(h, Call("Nonempty", Call("C", k, n, f, x)),
-                All(g, Call("Nonempty", Call("C", k, n, f, y)), bound)));
-        var fixedSet = All(f, Call("Finset", Call("Fin", n)), Imp(free, fibers));
-        return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k),
-            All(s, Call("List", Call("Fin", n)), Imp(Call("Nodup", s), fixedSet))));
     }
 
     private static Formula CostFormula()

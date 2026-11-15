@@ -56,19 +56,7 @@ $$(\forall (k,n:\mathbb{N}), (((0 < k) \implies ((\forall (s:\operatorname{List}
 
 P(s,F,x,y,h,g) denotes prefixCoupling. At each listed site, the finite next-bit joint law is bound to the recursively refined completion law. Its supported bit pairs have nonempty refined fibers. The marginal weight of a bit times its refined uniform completion mass is the original mass on that bit fiber; summing over Bool proves exact disintegration. If the fixed histories already contain a common screening zero and agree at all farther fixed sites, the recursion instead uses resetCoupling, with legal representatives chosen from the actual nonempty fibers. Uniform prefix transport proves both marginals in this stopped branch.
 
-**Theorem 1.5 (Geometric tail of the original emitted no-common-false event).**
-
-$$(\forall (k,n:\mathbb{N}), (((0 < k) \implies ((\forall (s:\operatorname{List}\left(\operatorname{Fin}\left(n\right)\right)), (((\operatorname{Nodup}\left(s\right)) \implies ((\forall (F:\operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), ((((\forall (i:\operatorname{Fin}\left(n\right)), (((i \in s) \implies (\neg (i \in F)))))) \implies ((\forall (x,y:(\operatorname{Fin}\left(n\right) \to \operatorname{Bool})), ((\forall (h:\operatorname{Nonempty}\left(\operatorname{C}\left(k, n, F, x\right)\right)), ((\forall (g:\operatorname{Nonempty}\left(\operatorname{C}\left(k, n, F, y\right)\right)), ((\forall (j:\mathbb{N}), (((j \leq \operatorname{length}\left(s\right)) \implies (\operatorname{MassEvent}\left(\operatorname{P}\left(s, F, x, y, h, g\right), s, j\right) \leq (1/2)^{j}))))))))))))))))))))))$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.prefix_coupling_emitted_tail` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For a full-word pair w, E(s,j,w) means that for every site i in s.take(j), the two emitted bits are not both false. The notation MassEvent(P,s,j) is mean P (fun w => if E(s,j,w) then 1 else 0). This includes (true,true), j=0 and the entire scan. No increasing-order or complement-cover assumption is needed for this event estimate. A counting induction in the original completion fibers bounds the all-true event by 2^(-j). This handles the original reset branch, whose two outputs agree at every free site. In a supported recursive child, the emitted head is the sampled bit pair. The common-false child contributes zero; the other children carry the residual event bound and have total mass at most one half. Impossible refinements have zero joint mass. The resulting induction uses the original prefixCoupling without modifying its fallback or initial-reset tests. Supported coalescence after an emitted common false is a separate assertion and is not proved here.
-
-**Theorem 1.6 (Expected internal Hamming cost for an increasing scan).**
+**Theorem 1.5 (Expected internal Hamming cost for an increasing scan).**
 
 $$(\forall (k,n:\mathbb{N}), (((0 < k) \implies ((\forall (s:\operatorname{List}\left(\operatorname{Fin}\left(n\right)\right)), (((((\operatorname{Nodup}\left(s\right)) \land ((\forall (i:\operatorname{Fin}\left(n\right)), ((\forall (j:\operatorname{Fin}\left(n\right)), (((\operatorname{Before}\left(s, i, j\right)) \implies (\operatorname{val}\left(i\right) < \operatorname{val}\left(j\right)))))))))) \implies ((\forall (F:\operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), ((((((\forall (i:\operatorname{Fin}\left(n\right)), (((i \in s) \implies (\neg (i \in F)))))) \land ((\forall (i:\operatorname{Fin}\left(n\right)), (((\neg (i \in F)) \implies (i \in s))))))) \implies ((\forall (x,y:(\operatorname{Fin}\left(n\right) \to \operatorname{Bool})), ((\forall (h:\operatorname{Nonempty}\left(\operatorname{C}\left(k, n, F, x\right)\right)), ((\forall (g:\operatorname{Nonempty}\left(\operatorname{C}\left(k, n, F, y\right)\right)), ((((\forall (i:\operatorname{Fin}\left(n\right)), ((\forall (j:\operatorname{Fin}\left(n\right)), (((((i \in s) \land (j \in F) \land (\operatorname{val}\left(i\right) < \operatorname{val}\left(j\right)))) \implies (\operatorname{at}\left(x, j\right) = \operatorname{at}\left(y, j\right)))))))) \implies (\operatorname{ExpectedHamming}\left(\operatorname{P}\left(s, F, x, y, h, g\right), s\right) \leq 1))))))))))))))))))))$$
 
@@ -90,7 +78,9 @@ Define T on every output as the first common-zero scan position, or T=m+1 if the
 
 On the support of this same paper joint law, a common zero at r forces X_q=Y_q for every r<=q<=m, including the zero itself. Thus {X_j!=Y_j} is a subset of A_j, and Pr(X_j!=Y_j)<=Pr(A_j)<=2^(-j). Linearity of the finite disagreement sum gives E[sum_{j=1}^m indicator(X_j!=Y_j)]<=sum_{j=1}^m 2^(-j)=1-2^(-m)<=1, without independence between positions. Reversing the scan gives the identical assertion for a left block; exterior coordinates remain fixed. The empty-block extension has T=1 and zero cost. If the initial block laws already coincide, an alternative synchronous whole-block draw has cost zero without requiring any zero in its output.
 
-The native prefixCoupling tests resetReady before scanning a site and can transport a shared completion before an emitted common zero. Its no-common-false event must therefore also be bounded in this initial reset branch; it cannot be identified with latent survival of the recursion. The native prefix_coupling_emitted_tail now supplies this event estimate by a completion-fiber count and recursive emitted-event induction. right_scan_hamming separately proves expected cost at most one. Supported coalescence through every recursive ancestor and the complete two-orientation event/support assembly remain unverified here. The paper derivation and synchronous alternative do not replace that native-law obligation.
+The native prefixCoupling tests resetReady before scanning a site and can transport a shared completion before an emitted common zero. Its no-common-false event must therefore also be bounded in this initial reset branch; it cannot be identified with latent survival of the recursion. The native prefix_coupling_emitted_tail in KBonacciEmittedTail supplies this event estimate by a completion-fiber count and recursive emitted-event induction. right_scan_hamming separately proves expected cost at most one. Supported coalescence through every recursive ancestor and the complete two-orientation event/support assembly remain unverified here. The paper derivation and synchronous alternative do not replace that native-law obligation.
+
+The native emitted-event estimate is `D5/S1/Words/AdmissibleWords/KBonacciEmittedTail.prefix_coupling_emitted_tail`.
 
 ## Application: actual legal-state refresh, projection and complex energy
 
@@ -271,11 +261,11 @@ The coupled-generator application in CostCoupling supplies the route from actual
 ## References
 
 - Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.conditional_step_coupling`
-- Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.prefix_coupling_emitted_tail`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.prefix_coupling_marginals`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.reset_law_transport`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.right_scan_hamming`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.zero_screening`
+- Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciEmittedTail.prefix_coupling_emitted_tail`
 - Dependency: [D5/S0/Tower/DBonacci/TerminalSampling](../../../S0/Tower/DBonacci/TerminalSampling.md)
 - Dependency: [D5/S1/Words/AdmissibleWords/KBonacciIntegerInterval](KBonacciIntegerInterval.md)
 - Dependency: [D5/S1/Words/ClosedRunStarts](../ClosedRunStarts.md)
