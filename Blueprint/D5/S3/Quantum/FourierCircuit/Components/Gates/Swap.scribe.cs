@@ -1,0 +1,60 @@
+using StrataLint.Scribe;
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.FourierCircuit.Components.Gates;
+
+internal sealed class SwapDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Addressed quantum circuit: Components Gates Swap", H("Components Gates Swap"), Blocks(
+            Describe.Lean(DescribeId.Create("declaration0"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap.layout"),
+                H("layout"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                Blocks(Paragraph(Text("The two physical qubits on which the local construction runs."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration1"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap.permutation"),
+                H("permutation"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                Blocks(Paragraph(Text("The independent two-qubit exchange permutation, in the fixed big-endian basis."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration2"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap.swap_permutation_pair"),
+                H("swap permutation pair"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                Blocks(Paragraph(Text("The target exchanges both values, without an assumption on either input."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration3"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap.operator"),
+                H("operator"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                Blocks(Paragraph(Text("The target acts coherently by exchanging the two basis coordinates."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration4"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap.backward"),
+                H("backward"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                Blocks(Paragraph(Text("private abbrev backward : GateModel.Application AlgorithmGate.model layout."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration5"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap.backwardPermutation"),
+                H("backwardPermutation"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                Blocks(Paragraph(Text("private def backwardPermutation : Equiv.Perm layout.Basis."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration6"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap.backward_pair"),
+                H("backward pair"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                Blocks(Paragraph(Text("private lemma backward_pair (left right : Fin 2) : backwardPermutation ![left, right] = ![left + right, right]."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration7"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap.native_permutation_word"),
+                H("native permutation word"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                Blocks(Paragraph(Text("private lemma native_permutation_word : (AlgorithmGate.cnotPermutation.trans backwardPermutation).trans AlgorithmGate.cnotPermutation = permutation."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration8"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap.circuit"),
+                H("circuit"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Execute the full forward/backward/forward CNOT word as one descriptive macro."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration9"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Components/Gates/Swap.swap_circuit_matrix"),
+                H("swap circuit matrix"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
+                Blocks(Paragraph(Text("The three actual CNOTs realize the independent SWAP operator with exact phase."))), DescribeRole.Lemma))));
+}
