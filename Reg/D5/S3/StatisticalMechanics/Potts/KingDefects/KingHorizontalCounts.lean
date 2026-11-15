@@ -2,6 +2,7 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
 import Reg.Support.UniverseSingleReadout
 import LeanInformationAuditInterface.Contract.Registration
 
+/-! Source-equivalent readout laws for king-graph defect counts. -/
 namespace Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
 
 open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects
@@ -9,7 +10,6 @@ open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontal
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open KingGrid KingDifference
-open scoped IsAddKleinFour
 
 noncomputable section
 
@@ -69,8 +69,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "body", "body", "body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -133,8 +137,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -197,8 +205,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -261,8 +273,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -326,8 +342,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -390,8 +410,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -454,8 +478,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -518,8 +546,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -582,8 +614,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -646,8 +682,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -712,8 +752,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "body", "body", "body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -777,8 +821,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "body", "body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
@@ -841,14 +889,230 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
 end horizontal_sum
+
+namespace support_sizes_correct
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.UniverseSingleReadout.signature Unit (fun _ => Type) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => Nat.card x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ x => (Nat.card x) + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (x : NZPair) (i : Fin 6) (j k : Fin 4),
+    (R.readout () () ((SupportAlphabet x (lower_pair x i) (supports j) (supports k)
+      x.val.1 (lower_pair x i).val.1)),
+    Nat.card (SupportAlphabet x (lower_pair x i) (supports j) (supports k)
+      x.val.2 (lower_pair x i).val.2)) = support_sizes i j k
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  dsimp only [arena, rejected, realize] at h
+  have hb := @h ⟨((1, 0), (0, 1)), by decide +kernel⟩ 0 0 0
+  have ha := @support_sizes_correct ⟨((1, 0), (0, 1)), by decide +kernel⟩ 0 0 0
+  have hb := congrArg Prod.fst hb
+  have ha := congrArg Prod.fst ha
+  omega
+
+def family : Registration arena (type_of% @support_sizes_correct) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@support_sizes_correct, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), PEmpty, PUnit, ?_⟩
+    change Nat.card PEmpty ≠ Nat.card PUnit
+    simp [Nat.card_eq_fintype_card]
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 1, 0, 0, 0, 0}
+    (@support_sizes_correct) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts.support_sizes_correct.auditUnit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts.support_sizes_correct.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => Nat.card x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
+                    stateOperand := some #["arg"] }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end support_sizes_correct
+
+namespace interior_endpoint_value
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.UniverseSingleReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => 2 ^ x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ x => (2 ^ x) + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (a b d : ℕ) (hm : 0 < a + b) (hd : 0 < d),
+    E (a+b) 0 d + 2^(a+b) + P a b 0 d + P a b d 0 + Q a b 0 d + Q a b d 0 + 2 =
+      R.readout () () (a+b+1) + 2^(d+1) + 2^(a+1) + 2^(b+1)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  dsimp only [arena, rejected, realize] at h
+  have hb := @h 1 1 1 (by norm_num) (by norm_num)
+  have ha := @interior_endpoint_value 1 1 1 (by norm_num) (by norm_num)
+  omega
+
+def family : Registration arena (type_of% @interior_endpoint_value) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@interior_endpoint_value, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change (2 ^ (0 : ℕ)) ≠ (2 ^ (1 : ℕ))
+    norm_num
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@interior_endpoint_value) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts.interior_endpoint_value.auditUnit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts.interior_endpoint_value.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => 2 ^ x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg", "fn", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
+                    stateOperand := some #["arg"] }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end interior_endpoint_value
+
+namespace interior_middle_value
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.UniverseSingleReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => 2 ^ x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ x => (2 ^ x) + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (a b c d : ℕ) (hm : 0 < a + b)
+    (hc : 0 < c) (hd : 0 < d),
+    E (a+b) c d + 2^(a+b) + P a b c d + P a b d c + Q a b c d + Q a b d c =
+      R.readout () () (a+b+1) + 2^c + 2^d + 2*((if a=0 then 1 else 0)+(if b=0 then 1 else 0))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  dsimp only [arena, rejected, realize] at h
+  have hb := @h 1 1 1 1 (by norm_num) (by norm_num) (by norm_num)
+  have ha := @interior_middle_value 1 1 1 1 (by norm_num) (by norm_num) (by norm_num)
+  omega
+
+def family : Registration arena (type_of% @interior_middle_value) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@interior_middle_value, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change (2 ^ (0 : ℕ)) ≠ (2 ^ (1 : ℕ))
+    norm_num
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@interior_middle_value) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts.interior_middle_value.auditUnit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts.interior_middle_value.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => 2 ^ x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg", "fn", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
+                    stateOperand := some #["arg"] }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end interior_middle_value
 
 end
 end Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts

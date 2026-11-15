@@ -2,14 +2,14 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import Reg.Support.UniverseSingleReadout
 import LeanInformationAuditInterface.Contract.Registration
 
+/-! Source-equivalent readout laws for king-graph defect counts. -/
 namespace Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 
 open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects
 open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open KingGrid KingDifference
-open scoped IsAddKleinFour
+open KingGrid
 
 noncomputable section
 
@@ -32,8 +32,8 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   dsimp only [arena, rejected, realize] at h
-  have hb := h 1 1 (by norm_num) (by norm_num)
-  have ha := labelled_eq_twentyFour 1 1 (by norm_num) (by norm_num)
+  have hb := h 4 4 (by norm_num) (by norm_num)
+  have ha := labelled_eq_twentyFour 4 4 (by norm_num) (by norm_num)
   omega
 
 def family : Registration arena (type_of% @labelled_eq_twentyFour) where
@@ -68,8 +68,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["body", "body", "body", "body", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none

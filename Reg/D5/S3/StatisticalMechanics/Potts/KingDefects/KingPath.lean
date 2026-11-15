@@ -2,14 +2,14 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
 import Reg.Support.UniverseSingleReadout
 import LeanInformationAuditInterface.Contract.Registration
 
+/-! Source-equivalent readout laws for king-graph defect counts. -/
 namespace Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
 
 open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects
 open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open KingGrid KingDifference
-open scoped IsAddKleinFour
+open KingGrid
 
 noncomputable section
 
@@ -68,8 +68,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
+    definition := none
     coordinates := #[]
     readouts := #[{ path := #["arg", "arg", "body", "body", "fn", "arg", "arg"]
+                    stateBinder := 0
+                    functionOperand := false
+                    booleanPredicate := false
                     stateOperand := some #["arg"] }] }
   continuation := .unknown
   familyRecord := none
