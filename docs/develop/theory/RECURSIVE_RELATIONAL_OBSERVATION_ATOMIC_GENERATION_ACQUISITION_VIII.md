@@ -1437,8 +1437,8 @@ $N\ge4$ there is a nonempty, relatively open dense, $U(1)$-saturated subset
 $\mathcal G_N\subset\mathcal X_N\setminus\{0\}$ such that every
 $\psi\in\mathcal G_N$ has the finite-fiber property of Theorem 139.1 for
 all positive splits $p+q=N-2$ simultaneously. Moreover, after multiplying
-$d_{N,p,q}$ by a nonzero branch polynomial for the finite morphism, the same
-$\mathcal G_N$ has local phase identification: for each
+$d_{N,p,q}$ by further nonzero target polynomials as constructed below, the
+same $\mathcal G_N$ has local phase identification: for each
 $\psi\in\mathcal G_N$ there is a relatively open $U(1)$-saturated neighbourhood
 $U_\psi$ such that, for every positive split and every $\phi,\chi\in U_\psi$,
 
@@ -1448,26 +1448,82 @@ Q_{p,2,q}(\phi)=Q_{p,2,q}(\chi)\quad\Longleftrightarrow\quad
 \tag{VIII.36}
 $$
 
-Proof. For a fixed split, the nonzero rank witness makes both the finite-open
-condition and the unramified condition proper algebraic exclusions. Pull
-both conditions back to the original polynomial parameter domain. A
-nonzero real polynomial has zero set with empty interior, and every nonempty
-relative-open subset of $\mathcal X_N$ has a nonempty open preimage under the
-surjective parameterization. Thus the pullback nonvanishing set is relatively
-open and dense in the literal actual image. Take the finite product of these
-pullbacks over the finitely many positive splits; its nonvanishing defines
-$\mathcal G_N$. It is automatically phase-saturated because every $Q$ is phase
-invariant.
+Proof. Fix a split and write $f:Z_N\to W_{N,p,q}$ for partial trace. By
+Theorem 139.1, on $W^\circ=D(d_{N,p,q})$ the entire inverse image
+$Z^\circ=f^{-1}(W^\circ)$ is finite over $W^\circ$. These are integral
+affine varieties of dimension thirteen. Over the perfect field $\mathbb R$,
+their smooth loci are nonempty Zariski opens. Also their finite function-field
+extension is separable, so the relative differential module
+$\Omega_{Z^\circ/W^\circ}$ vanishes at the generic point. Its support $R_f$
+is therefore a proper closed subset of $Z^\circ$.
 
-On the unramified principal open, the real inverse-function theorem on the
-smooth phase quotient gives a neighbourhood on which the finite observation
-map is one-to-one. Intersecting the finitely many such neighbourhoods gives
-$U_\psi$ and (VIII.36). If only target-versus-competitor identification is
-needed, the finite-fiber statement alone already supplies it by isolating the
-finite fibre in the Hausdorff quotient.
+Finiteness makes images of closed subsets closed and preserves their
+dimension. Consequently
 
-**Corollary 139.3 (one-site obstruction for a calibrated core).** Fix a core
-$A$ for which $\Gamma_N(X)(w)=\operatorname{tr}(XA_w)$ is injective and consider
+$$
+C_f=\operatorname{Sing}(W^\circ)\ \cup
+ f\bigl(\operatorname{Sing}(Z^\circ)\cup R_f\bigr)
+$$
+
+is closed of dimension at most twelve, hence proper in $W^\circ$. There is
+a nonzero real regular function on $W^\circ$ vanishing on $C_f$; clearing its
+power-of-$d_{N,p,q}$ denominator gives a polynomial representative
+$h_{N,p,q}$ in the sixteen target coordinates. Thus on
+$D(\widetilde d_{N,p,q})$, where
+$\widetilde d_{N,p,q}=d_{N,p,q}h_{N,p,q}$, both source and target are smooth
+and the finite map is unramified at every point of its entire inverse image.
+All these exclusions are proper: the singular loci are proper by generic
+smoothness, $R_f$ is proper by separability, and none of their finite images
+has dimension thirteen. The product $\widetilde d_{N,p,q}$ is nonzero in the
+target coordinate ring, and its pullback is nonzero by dominance of $f$.
+
+On $Z_N$ form the real regular function
+
+$$
+\Delta_N(\rho)=\operatorname{tr}(\rho)
+ \prod_{\substack{p,q\ge1\\p+q=N-2}}
+ \widetilde d_{N,p,q}\bigl(f_{p,q}(\rho)\bigr),
+\qquad
+\mathcal G_N=\{\psi\in\mathcal X_N:\Delta_N(\rho_\psi)\ne0\}.
+$$
+
+The trace factor is nonzero on $Z_N$, and integrality makes this finite
+product nonzero. Its pullback to the original real polynomial parameter
+domain is a nonzero polynomial, by the definition of $Z_N$ as the density
+image closure. Every nonempty relatively open subset of $\mathcal X_N$ has
+a nonempty open preimage under the continuous surjective amplitude
+parameterization. A nonzero real polynomial cannot vanish on that preimage.
+This proves nonemptiness and relative density of $\mathcal G_N$ in the literal
+actual image; continuity proves relative openness. The trace excludes zero,
+and dependence only on $\rho_\psi$ makes the locus phase-saturated. The
+finite-fiber conclusion follows for every split from its $d_{N,p,q}$ factor,
+with the unrestricted competitor quantifier of Theorem 139.1.
+
+For completeness, the density-image topology is exactly the phase-quotient
+topology away from zero. The continuous map $\pi(\psi)=\psi\psi^\dagger$
+induces a bijection
+$(\mathcal X_N\setminus\{0\})/U(1)\to\mathcal Y_N\setminus\{0\}$.
+On the relative-open set $\rho_{jj}>0$, a continuous actual representative is
+$\sigma_j(\rho)=\rho e_j/\sqrt{\rho_{jj}}$.
+Indeed, if $\rho=\psi\psi^\dagger$, this representative is
+$\psi\overline{\psi_j}/|\psi_j|$, which belongs to the same actual phase
+orbit. These local sections cover every nonzero density and make the
+bijection a homeomorphism.
+
+At $\rho_\psi$ with $\psi\in\mathcal G_N$, each $f_{p,q}$ is now a map
+between smooth real manifolds of dimension thirteen, with injective
+differential because its relative differential module vanishes. Its
+differential is therefore an isomorphism, so the real inverse-function
+theorem gives a neighbourhood in $Z_N(\mathbb R)$ on which it is one-to-one.
+Intersect these neighbourhoods over all positive splits, and restrict inside
+$D(\Delta_N)$, to obtain one open neighbourhood $V$ of $\rho_\psi$.
+Then $U_\psi=\pi^{-1}(V\cap\mathcal Y_N)$ is relatively open,
+phase-saturated, and contained in $\mathcal G_N$. Injectivity on $V$ and the
+density/phase equivalence prove (VIII.36) for every pair in $U_\psi$ and every
+positive split simultaneously.
+
+**Corollary 139.3 (one-site obstruction and a conditional calibrated minimum).**
+Fix a core $A$ for which $\Gamma_N(X)(w)=\operatorname{tr}(XA_w)$ is injective and consider
 only its actual free-boundary image. On the phase-fixed rank-one chart
 
 $$
@@ -1481,9 +1537,15 @@ locus of this real-analytic map, which is relatively open and dense, the
 constant-rank theorem gives local fibres of dimension at least one. Distinct
 points of (VIII.37) are not unit-phase equivalent because $\Gamma_N$ is
 injective. Equal one-site records have equal trace, so the same conclusion
-holds on the normalized section. Thus two sites are a sharp minimum for
-local phase identification only in this calibrated fixed-core family; this
-corollary says nothing about the unrestricted unknown-core image.
+holds on the normalized section.
+
+If, in addition, the two-letter words span $M_2(\mathbb C)$ and $E$ is
+invertible on $M_2(\mathbb C)$, then every positive-split complete two-site
+record identifies the state up to phase within this fixed-core family.
+Under these extra hypotheses two sites are a sharp minimum for generic local
+phase identification in the calibrated family. Injectivity of $\Gamma_N$
+alone does not imply this two-site sufficiency. These are fixed-core claims;
+the unrestricted unknown-core conclusions remain Theorems 139.1--139.2.
 
 Proof. The chart is the rank-one condition with $X_{00}$ made positive by a
 unit phase. The one-site record is a smooth map from a five-dimensional real
@@ -1491,8 +1553,38 @@ chart to a four-dimensional real vector space. Let $r$ be its maximal rank.
 The nonzero $r$-minors have a relatively open dense nonvanishing locus; at
 such points the constant-rank theorem gives fibres of dimension $5-r\ge1$.
 Injectivity of $\Gamma_N$ and the positive $X_{00}$ gauge exclude a phase
-identification between distinct chart points. Homogeneity of the raw record
-preserves the conclusion on the norm-one section.
+identification between distinct chart points. Each raw fibre stays in a
+single norm level because its trace is the squared norm. Positive scaling
+preserves the maximal-rank condition, so the same positive-dimensional fibres
+occur on the norm-one section. Under the two extra core hypotheses,
+Proposition 137.3 restores
+$\operatorname{vec}(rl)\operatorname{vec}(rl)^\dagger$ from the complete
+two-site record by actual inverse transfers. Equality of these outer products
+is exactly unit-phase equality of the coefficient vectors, hence of their
+full amplitude images. This supplies sufficiency for every positive split.
+
+To see the need for a stronger premise than $\Gamma_N$ injectivity, take
+
+$$
+A_0=\operatorname{diag}(1,2),\qquad
+A_1=\begin{pmatrix}0&1\\2&0\end{pmatrix},\qquad
+l=(1,0),\qquad
+r(t)=\frac1{1+t^2}(1-t^2,\,2it)^{\mathsf T},\qquad 0<t<1.
+$$
+
+The two-letter feature determinant is $-36$ and $A_0$ is invertible. Appending
+$N-2$ zero letters to the four two-letter words shows that $\Gamma_N$ is
+injective for every $N\ge2$. Nevertheless, with $D=\operatorname{diag}(1,4)$,
+$E(r(t)r(t)^\dagger)=D$ and $E(D)=5D$. Hence the actual right environment
+is $H_q=5^{q-1}D$ for every $q\ge1$, independent of $t$; the actual left
+environment is fixed as well. Formula (VIII.25) makes every positive-split
+two-site record constant in $t$. The coefficient matrices $r(t)l$ have
+positive $(0,0)$ entry and distinct $(1,0)/(0,0)$ ratios, so injectivity of
+$\Gamma_N$ excludes phase equivalence. Here
+$E\bigl(\begin{smallmatrix}0&i\\-i&0\end{smallmatrix}\bigr)=0$:
+the missing transfer hypothesis is real information loss. The constant raw
+trace makes the same family a normalized counterexample after one common
+rescaling at each length; for $N=4$ its squared norm is $125$.
 
 ## 140. Raw scale, normalized restrictions, and complete data
 
@@ -1513,9 +1605,10 @@ transferred to this two-site observation.
 Proof. The first assertions follow from the Gram definition (VIII.24) and
 $\operatorname{tr}Q=\sum_w|\psi(w)|^2$. Normalizing sends $Q$ to
 $Q/\operatorname{tr}Q$ only after the scale is known. A diagonal occupation
-record omits the four complex coherences and cannot determine the complete
-Hermitian matrix in general. The remaining statements are exactly the
-quantifier boundaries of Theorems 139.1--139.2.
+record omits six independent complex off-diagonal coherences, or twelve real
+coordinates in addition to the four real diagonal entries, and cannot
+determine the complete Hermitian matrix in general. The remaining statements
+are exactly the quantifier boundaries of Theorems 139.1--139.2.
 
 ## 141. Conditional native mounting and the literature boundary
 
