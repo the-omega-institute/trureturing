@@ -2197,3 +2197,1082 @@ are separate obligations. The fixed-recorder obstruction settles no
 completion or unconditional physical-realization claim for that goal.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 105. Original returned contractions and their input representation
+
+**Definition 105.1 (the fixed acquired apparatus).** In this addition,
+VI means [Acquisition VI](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_VI.md)
+and AAV means [Acquisition V](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_V.md).
+Retain exactly VI37.1--37.4, VI47.1--47.2 and VI66.1. In particular,
+
+$$
+H=\mathbb C|r\rangle\oplus B,\qquad
+B=\operatorname{span}\{|o\rangle,|m\rangle,|y\rangle\},\qquad
+\zeta=|00\rangle\langle00|_{zw}\otimes\eta_{ud},\quad
+|\eta\rangle=(|10\rangle+|01\rangle)/\sqrt2.
+\tag{VII.60}
+$$
+
+The input is every original, possibly mixed correlated $\rho_{HR}$,
+with arbitrary untouched $R$. Let $F:H\longrightarrow\mathcal H_{\rm bank}$
+be the original physical code embedding after the one actual VI37 split,
+with the clean $z,w$, the same $|\eta\rangle_{ud}$ and the other promised
+vacuum factors included. Thus $F$ is an isometry, not a preparation
+operation. All other original preparation/delivery systems and the same
+input-independent complete backing are retained; that backing may have
+internal correlations. The pure factor $\eta$ is initially independent
+of the whole old input, $R$ and the retained preparation systems. It is
+supplied once, with the consumed preparation grant and all spent systems
+kept. No later statement renews that grant.
+
+The real descriptors $r,o,m,y,z,w,k,u,d$, parent/child bindings, the
+distinct dormant marker $k$ acquired in the split, paid seams
+$mo,oy,mz,mw$, fixed links $mu,ud$ and
+all source/acquisition versions remain those of VI37/47. Positive hopping
+entries are supplied on these six links; negative entries are supplied
+on $mo,oy,ud$ only, as in VI41.2. The primitive is the literal full-qubit
+$B_{ab}(\theta)$ of VI.3, fixing $00,11$ and mixing $10,01$ with
+$\cos\theta$ and $i\sin\theta$. There is only the original occupation
+instrument at $d$. Each use requires its own actual readiness, rights,
+calibration, complete retained detector output and progress. A return of
+$\eta$ is not detector rearming.
+
+Both genuine entrances remain: AAV1.2's actual finite epoch cut from a
+known-alpha history, and AAV1.3's selected bilateral fixed-slope joint
+source with genuine separate empty/$P_\varepsilon$ preparations and actual
+root/header/gap/anchor associations. The free ordered alpha/beta grammar,
+all lawful local $P/S$, genuine Next, original exceptions/refusals and
+arbitrary finite source growth are unchanged. All material, acquisition,
+reference/control rights, locks, finite command/record/output backing,
+identity holds on every old quantum system, clocks and progress are
+premises for each selected finite use. This is conditional apparatus
+mathematics, not a physical-existence theorem.
+
+**Definition 105.2 (ordered factors and returned words).** Fix the
+coordinate order $e_1=o,e_2=m,e_3=y$, with $P_j=|e_j\rangle\langle e_j|$.
+Bank operators are extended by zero on $r$; for a bank unitary $W$ write
+$\bar W=P_r+W$. A contraction here is supplied with one fixed ordered
+factorization $K=U\operatorname{diag}(s_1,s_2,s_3)V^\dagger$,
+$U,V\in U(B)$, $0\le s_j\le1$. Existence of such factors is ordinary
+finite-dimensional SVD; it is not an algorithm for choosing their names.
+A returned realization of $\bar W$ is VI66.2's finite bank word, with
+every phase implemented by VI48's sixteen-hop $C_m(\phi)$.
+Its return word reverses bank factors, negates the permitted direct-edge
+angles and uses $C_m(-\phi)$ for a phase inverse. This is an inverse on
+the declared clean-helper return domain. It is not asserted to be the
+full-space inverse of the expanded word on dirty $z,w$.
+
+## 106. Whole-bank transport of the dirty helper occupation
+
+**Lemma 106.1 (three-link occupation transport with its phases).** Put
+$J_{ab}=B_{ab}(\pi/2)$ in the exact reference model and
+$S=J_{ud}J_{mu}J_{mz}$, with rightmost factor acting first. For both
+$a=0,1$, put $\Pi_{x,1}=n_x$, $\Pi_{x,0}=I-n_x$, where $n_x$
+is occupation at the actual qubit $x$. On the entire physical bank,
+including all occupation sectors,
+
+$$
+S^\dagger\Pi_{d,a}S=\Pi_{z,a}.
+\tag{VII.61}
+$$
+
+This includes occupied or entangled $u,d$ and arbitrary spectators.
+It installs a routed read of $z$ using the one real $d$ detector; it
+introduces no detector or native opcode at $z$.
+
+Proof. On any two endpoint bits,
+$J_{ab}|a,b\rangle=i^{a\mathbin\oplus b}|b,a\rangle$.
+For the order $(z,m,u,d)$, every one of its sixteen columns therefore has
+
+$$
+S|x,a,b,c\rangle
+=i^{(x\oplus a)+(x\oplus b)+(x\oplus c)}|a,b,c,x\rangle.
+\tag{VII.62}
+$$
+
+The $d$ projection tests exactly $x$. In $S^\dagger\Pi_{d,a}S$,
+the same column's phase and its conjugate cancel. The resulting
+operator is diagonal with exactly the $\Pi_{z,a}$ diagonal, proving
+(VII.61) as an operator identity. Tensoring with identities and taking
+linear combinations proves it for all dirty entangled inputs, rather
+than only their basis probabilities. This is the VI49.3 transport
+argument extended through the actually acquired $mz$ seam. $\square$
+
+**Definition 106.2 (literal forward/read/return list).** The reference
+chronological list for this routed read is
+
+$$
+\begin{gathered}
+J_{mz},\ J_{mu},\ J_{ud},\ \operatorname{read}_d,\\
+B_{ud}(-\pi/2),\ J_{mu},\ J_{mu},\ J_{mu},\
+J_{mz},\ J_{mz},\ J_{mz}.
+\end{gathered}
+\tag{VII.63}
+$$
+
+The last seven hops realize $S^\dagger$. Indeed $J_{ab}^4=I$ on the
+full two-qubit space, so three positive $J$ occurrences realize each
+of $J_{mu}^\dagger,J_{mz}^\dagger$. Only the already permitted $ud$
+negative inverse is used. There are three forward and seven return
+hops, plus the read, on either outcome. Every occurrence is a separately
+paid command. The order-four identity is an exact reference identity;
+rounded commands are never assigned exact order four.
+
+## 107. A returned rank-one attenuation from the dirty-helper read
+
+**Theorem 107.1 (the two complete returned branches).** For a unit
+$v\in B$ and $0\le\theta\le\pi/2$, choose VI66.2's returned $U_v$
+with $U_vP_vU_v^\dagger=P_m$. Execute, chronologically:
+$\bar U_v$, $B_{mz}(\theta)$, the entire routed read (VII.63),
+on click alone another positive $J_{mz}$, and only then the returned
+realization of $\bar U_v^\dagger$. With the actual bit retained, the two
+subnormalized branch operators on the original $H$ are
+
+$$
+M_{v,0}=I_H+(\cos\theta-1)P_v,\qquad
+M_{v,1}=-\sin\theta\,P_v.
+\tag{VII.64}
+$$
+
+If $\mathsf M_a$ denotes the physical branch word, it obeys
+$\mathsf M_aF=FM_{v,a}$. Consequently each branch on arbitrary $\rho_{HR}$
+is exactly $(F M_{v,a}\otimes I_R)\rho_{HR}(F M_{v,a}\otimes I_R)^\dagger$,
+alongside its complete retained apparatus record and actual source
+successor. Each subnormalized branch returns the same $\eta$, clean
+$z,w$ and the old quantum identities.
+
+Proof. First take $v=m$ and omit the two bank words. Write
+$c=\cos\theta$, $t=\sin\theta$. On the physical code columns,
+$B_{mz}(\theta)$ fixes $r,o,y$ and sends
+$|m\rangle$ to $c|m\rangle+it|z\rangle$, always with the same
+$|\eta\rangle$ factor before routing. By Lemma 106.1 the whole routed
+read followed by its seven-hop return is exactly $\Pi_{z,a}$, even
+though the routing temporarily displaces the occupied resource pair.
+The no-click column is $c|m\rangle$; the click column is $it|z\rangle$.
+The click-only $J_{mz}$ sends that last vector to $-t|m\rangle$.
+The complete column coefficients, with identical $F$ factors, are
+
+$$
+\begin{array}{c|rrrr}
+\text{original column}&r&o&m&y\\ \hline
+\text{no click}&1&1&c&1\\
+\text{click, after cleanup}&0&0&-t&0
+\end{array}.
+\tag{VII.65}
+$$
+
+In particular cleanup precedes every subsequent bank phase or bank
+inverse. No VI66 clean-helper projective macro is called while $z$ is
+dirty. Before the final bank word, $z,w$ are vacuum and $u,d$ are the
+same $\eta$ on both subnormalized branches. Thus VI66.2's returned
+inverse has its proved domain, and conjugation by $\bar U_v$ gives
+(VII.64). An arbitrary phase in $U_vv$ cancels in that conjugation.
+For coordinate filters one may fix $T_1=J_{mo}$, $T_2=I$,
+$T_3=J_{mo}J_{oy}$, because $T_jP_jT_j^\dagger=P_m$.
+Their return words use the supplied negative $mo,oy$ controls. These
+fixed projector transports need no effective coordinate-zero test.
+
+For completeness of the joint-state assertion, let $d_{a,x}$ be row
+$a$ of (VII.65). For each of the sixteen original matrix units,
+$\mathsf M_aF|x\rangle\langle y|F^\dagger\mathsf M_a^\dagger
+=d_{a,x}\overline{d_{a,y}}F|x\rangle\langle y|F^\dagger$.
+After the two bank conjugations the same statement holds with
+$M_{v,a}|x\rangle\langle y|M_{v,a}^\dagger$ for all original
+$x,y\in\{r,o,m,y\}$. Expanding
+$\rho_{HR}=\sum_{x,y}|x\rangle\langle y|\otimes\rho_{xy}$ proves
+the claimed identity with arbitrary $R$, including $r$--$B$ coherences.
+No normalization or independence of the blocks $\rho_{xy}$ is used.
+A zero branch is the zero matrix, not an assigned conditional state.
+
+The binary instrument is normalized because
+$M_{v,0}^\dagger M_{v,0}+M_{v,1}^\dagger M_{v,1}=I_H$.
+At $\theta=0$ its click is zero; at $\theta=\pi/2$ it gives the
+projective branches $I_H-P_v,-P_v$. The cleanup and record list still
+exist on these endpoints, including the zero-mass path. The core has
+eleven hops on no click and twelve on click, excluding the two bank
+words and their expanded phases, and exactly one real $d$ read.
+This count specifies the actual word rather than an optimum.
+
+The abstract partial-collapse pair is mature: Ota--Ashhab--Nori,
+[*Implementing general measurements on linear optical and solid-state
+qubits*, arXiv:1201.2234v2, §III.2](https://arxiv.org/html/1201.2234v2#S3.SS2),
+gives the corresponding pair with coefficients $\sqrt p,\sqrt{1-p}$.
+Their devices are not supplied here. The additional correspondence is
+(VII.61)--(VII.65) on this acquired dirty-helper apparatus, with the
+same physical resource returned. $\square$
+
+## 108. The complete ordered contraction family on the original bank
+
+**Theorem 108.1 (four outcomes with actual first-click prefixes).** For
+every fixed factorization of Definition 105.2 there is an ideal program
+on exactly this apparatus with four terminal quantum operators
+
+$$
+\begin{aligned}
+A_0&=P_r+K,\\
+A_j&=-\sqrt{1-s_j^2}\,U P_jV^\dagger,\qquad j=1,2,3.
+\end{aligned}
+\tag{VII.66}
+$$
+
+The program applies $\bar V^\dagger$, then Theorem 107.1's coordinate
+filters with $\theta_j=\arccos s_j$ in order $j=1,2,3$, continuing to
+the next filter only on no click. On the first click it stops filtering.
+It applies $\bar U$ on every terminal branch, including each failure.
+All four branches and their quantum outputs are retained.
+
+Proof. Let $F_{j,0}=I_H+(s_j-1)P_j$ and
+$F_{j,1}=-\sqrt{1-s_j^2}P_j$ denote the returned branch operators,
+not new elementary commands. Write $\mathcal F_j^a$ for their actual
+words from Theorem 107.1, including their coordinate transport,
+$B_{mz}(\theta_j)$, (VII.63), click cleanup when $a=1$, and the
+returned coordinate inverse. The actual chronological terminal lists are
+
+| Outcome | Detector word | Executed branch command prefix, then final bank word |
+| --- | --- | --- |
+| $0$ | $000$ | $\bar V^\dagger,\mathcal F_1^0,\mathcal F_2^0,\mathcal F_3^0,\bar U$ |
+| $1$ | $1$ | $\bar V^\dagger,\mathcal F_1^1,\bar U$ |
+| $2$ | $01$ | $\bar V^\dagger,\mathcal F_1^0,\mathcal F_2^1,\bar U$ |
+| $3$ | $001$ | $\bar V^\dagger,\mathcal F_1^0,\mathcal F_2^0,\mathcal F_3^1,\bar U$ |
+
+Every prefix keeps its literal commands, detector/controller records and
+native source fields. There is no fabricated read after a first click.
+Since $P_jP_i=0$ for $i\ne j$, earlier no-click factors act identically
+on the later $P_j$. The no-click product is
+$P_r+\sum_js_jP_j$; the first-click product at $j$ is
+$-\sqrt{1-s_j^2}P_j$. Multiplying by the actual initial and final bank
+words gives exactly (VII.66). Every filter and both bank words return
+the helpers on each branch before the next word starts. Thus the physical
+operator of every row is $F A_a$ on every original column, and its
+matrix-unit extension gives the whole $H/R$ identity, not only a bank
+probability formula.
+
+The effects sum to
+
+$$
+\begin{aligned}
+A_0^\dagger A_0&=P_r+V\operatorname{diag}(s_j^2)V^\dagger,\\
+\sum_{j=1}^3A_j^\dagger A_j
+ &=V\operatorname{diag}(1-s_j^2)V^\dagger,\\
+\sum_{a=0}^3A_a^\dagger A_a&=I_H.
+\end{aligned}
+\tag{VII.67}
+$$
+
+For a normalized input the row masses
+$p_a=\operatorname{Tr}[(A_a^\dagger A_a\otimes I_R)\rho_{HR}]$
+sum to one. When $p_a>0$, divide that row's joint output by $p_a$;
+when $p_a=0$, retain a zero subnormalized row and no conditional state.
+This covers $s_j=0,1$, repeated singular values and zero $K$ without
+removing a record or resetting a helper. Even for $K=0$, the $r$ input
+has successful output $r$: the success operator was specified on full
+$H$, with no new $r$ coupling. At most three reads occur on a path,
+each with its own detector-readiness obligation.
+
+The SVD and sequential two-outcome construction are reused mathematical
+mechanisms. Ota--Ashhab--Nori §III.3, equations (8)--(9), explicitly
+uses earlier no-click products and first-outcome branches. The
+source-specific statement here is their complete ordered family installed
+by (VII.63)--(VII.65) on the original inputs and returning factors.
+The existing D5 sources
+[DiagonalKrausInstrumentFactorization](../../../D5/S3/Quantum/Measurement/DiagonalKrausInstrumentFactorization.lean)
+(including its private orthogonality lemma) and
+[GeneralInstrumentEffectClosure](../../../D5/S3/Quantum/Measurement/GeneralInstrumentEffectClosure.lean)
+concern diagonal Kraus kernels and first-event effects. They do not
+supply this seam word or its physical return. $\square$
+
+## 109. Conditional inverse recovery with every failure retained
+
+**Theorem 109.1 (the complete two-stage tree).** Suppose all $s_j>0$
+and put $\sigma=\min_js_j$. After the actual $000$ success of
+Theorem 108.1 alone, execute that same program for the contraction
+
+$$
+L=\sigma K^{-1}
+ =V\operatorname{diag}(\sigma/s_1,\sigma/s_2,\sigma/s_3)U^\dagger.
+\tag{VII.68}
+$$
+
+Thus stage two starts with $\bar U^\dagger$, uses coordinate strengths
+$\sigma/s_j$, and finishes with $\bar V$ on every stage-two terminal
+branch. The whole normalized instrument has seven retained leaves:
+
+$$
+\begin{aligned}
+Q&=(P_r+L)A_0=P_r+\sigma P_B,\\
+A_j&=-\sqrt{1-s_j^2}\,UP_jV^\dagger,\\
+D_j&=-\sqrt{s_j^2-\sigma^2}\,VP_jV^\dagger,
+\qquad j=1,2,3.
+\end{aligned}
+\tag{VII.69}
+$$
+
+The first failures $A_j$ have exactly their original first-stage prefix
+and no stage-two commands. The $D_j$ have the entire first-stage $000$
+word followed by the corresponding second-stage first-click prefix
+$1,01,001$, including that stage's final $\bar V$. The $Q$ leaf has
+$000$ followed by $000$. Stage separators, different word lists and all
+previous detector records are retained, even if a concatenation of bit
+strings would otherwise be ambiguous.
+
+Proof. Stage two is available because stage-one success has exactly the
+same returned helpers. Its success operator is $P_r+L$ and its
+first-click operator at $j$ is
+$B_j=-\sqrt{1-\sigma^2/s_j^2}VP_jU^\dagger$. Therefore
+$B_jA_0=-s_j\sqrt{1-\sigma^2/s_j^2}VP_jV^\dagger=D_j$,
+where $s_j>0$ fixes the square-root sign. The product of success
+operators is $Q$ as displayed. Helpers and $\eta$ return on each of
+these subnormalized leaves by Theorem 108.1. Completeness is explicit:
+
+$$
+\begin{aligned}
+Q^\dagger Q&=P_r+\sigma^2P_B,\\
+\sum_jA_j^\dagger A_j&=V\operatorname{diag}(1-s_j^2)V^\dagger,\\
+\sum_jD_j^\dagger D_j&=V\operatorname{diag}(s_j^2-\sigma^2)V^\dagger,\\
+Q^\dagger Q+\sum_j(A_j^\dagger A_j+D_j^\dagger D_j)&=I_H.
+\end{aligned}
+\tag{VII.70}
+$$
+
+This also follows by composing the complete second instrument only at
+the first success node, rather than applying it to any failure. Every
+leaf has mass $p_X=\operatorname{Tr}[(X^\dagger X\otimes I_R)\rho]$;
+its normalized joint state is the displayed joint $X$ branch divided by
+$p_X$ exactly when $p_X>0$. These seven masses sum to one, with zero
+leaves treated as in Theorem 108.1. In particular a minimum-strength
+index has $D_j=0$ but still a defined actual path in the program tree.
+Repeated minima and $s_j=1$ cause no division by a zero branch mass.
+
+For every normalized original input supported on $B\otimes R$,
+the unnormalized double-success output is $\sigma^2\rho_{BR}$ on the
+same physical code, with the same returned factors. Its joint mass is
+$\sigma^2$; its conditional quantum input/reference state is recovered.
+The conditional probability of the second success given the first is
+$\sigma^2/p_0$, where $p_0=\operatorname{Tr}(K^\dagger K\rho_B)>0$.
+On the full original $H$, instead, the double-success bank/reference
+block is
+
+$$
+(Q\otimes I_R)\rho(Q\otimes I_R)=
+\begin{pmatrix}
+\rho_{rr}&\sigma\rho_{rB}\\
+\sigma\rho_{Br}&\sigma^2\rho_{BB}
+\end{pmatrix}.
+\tag{VII.71}
+$$
+
+Its mass is $\operatorname{Tr}\rho_{rr}+\sigma^2\operatorname{Tr}\rho_{BB}$.
+For $0<\sigma<1$ this is not recovery on the whole full-$H$ input family;
+for $\sigma=1$ one has $Q=I_H$. The original detector and preparation
+archives and every failure
+remain present; conditional recovery is not erasure of them, a reset,
+or a protocol which discards failed trials.
+
+The abstract scaled inverse and smallest-eigenvalue bound are
+literature-attested: Jordan--Korotkov,
+[*Uncollapsing the wavefunction by undoing quantum measurements*,
+arXiv:0906.3468v1, §§II.2--II.3, equations (4)--(13)](https://arxiv.org/html/0906.3468v1#S2),
+include mixed and entangled inputs. Their SVD discussion around
+(60)--(67), and the sequential single-axis attenuation in §IV.2,
+(70)--(71), and §V, (72)--(76), supply the generic mechanism. Here the
+new operational consumer is its implementation with the original seam controls,
+same resource and complete seven-leaf native tree. This is distinct
+from deterministic represented left-inverse necessity in
+[KrausLeftInverseNecessity](../../../D5/S3/Quantum/Recovery/KrausLeftInverseNecessity.lean).
+No inverse recovery is asserted for singular $K$. $\square$
+
+## 110. The same-source sequential readout consumes the actual update
+
+**Proposition 110.1 (general VI66 consumer).** Let
+$v_+=(m+o)/\sqrt2$ and $P_+=|v_+\rangle\langle v_+|$.
+After an actual first-stage success of Theorem 108.1, use the existing
+VI66.3 returned readout of $P_+$, with a fresh detector-readiness supply.
+For every original $\rho_{HR}$ the unnormalized success-then-click
+quantum branch, before its same returned embedding and records, is
+
+$$
+\begin{aligned}
+\omega_{0,+}
+ &=(P_+A_0\otimes I_R)\rho_{HR}(P_+A_0\otimes I_R)^\dagger,\\
+\operatorname{Tr}\omega_{0,+}
+ &=\operatorname{Tr}[(K^\dagger P_+K\otimes I_R)\rho_{HR}],\\
+\omega_{00,+}
+ &=(P_+Q\otimes I_R)\rho_{HR}(P_+Q\otimes I_R)^\dagger
+ =\sigma^2(P_+\otimes I_R)\rho_{HR}(P_+\otimes I_R).
+\end{aligned}
+\tag{VII.72}
+$$
+
+The last row concerns the actual double success of Theorem 109.1.
+For the complementary outcome put $E=P_B-P_+$, so that
+$I_H-P_+=P_r+E$. Its branch operators, outputs and masses are
+
+$$
+\begin{aligned}
+C_0&=(I_H-P_+)A_0=P_r+EK,\\
+C_{00}&=(I_H-P_+)Q=P_r+\sigma E,\\
+\omega_{0,-}&=(C_0\otimes I_R)\rho_{HR}(C_0\otimes I_R)^\dagger,\\
+\operatorname{Tr}\omega_{0,-}
+ &=\operatorname{Tr}[((P_r+K^\dagger EK)\otimes I_R)\rho_{HR}],\\
+\omega_{00,-}&=(C_{00}\otimes I_R)\rho_{HR}(C_{00}\otimes I_R)^\dagger,\\
+\operatorname{Tr}\omega_{00,-}
+ &=\operatorname{Tr}[((P_r+\sigma^2E)\otimes I_R)\rho_{HR}].
+\end{aligned}
+\tag{VII.72a}
+$$
+
+The read acts on the returned updated quantum bank at the same source;
+it does not fetch an archived input or prepare another copy.
+
+Proof. Each preceding successful leaf returns exactly the VI66 input
+domain. Compose its branch operator with each of VI66.3's two projectors
+and tensor identity on $R$. Since $P_+P_r=0$, $P_+A_0=P_+K$ and
+$P_+Q=\sigma P_+$, giving (VII.72). For the complement,
+$EP_r=P_rK=KP_r=0$ and $E^2=E$, so its products and effects are
+$C_0=P_r+EK$, $C_0^\dagger C_0=P_r+K^\dagger EK$ and
+$C_{00}=P_r+\sigma E$, $C_{00}^\dagger C_{00}=P_r+\sigma^2E$.
+These identities prove (VII.72a).
+
+In the $r\oplus B$ blocks of (VII.71), with every bank operator tensored
+with $I_R$, both complementary outputs can be written as
+
+$$
+((P_r+ET)\otimes I_R)\rho_{HR}((P_r+ET)\otimes I_R)^\dagger
+=\begin{pmatrix}
+\rho_{rr}&\rho_{rB}T^\dagger E\\
+ET\rho_{Br}&ET\rho_{BB}T^\dagger E
+\end{pmatrix},
+\quad T=K\ \text{or}\ T=\sigma P_B.
+\tag{VII.72b}
+$$
+
+Thus the $r$ contribution and the surviving $r/B$ coherences remain;
+the complementary double-success output is not in general
+$\sigma^2((I_H-P_+)\otimes I_R)\rho_{HR}((I_H-P_+)\otimes I_R)$.
+The block identity is linear in all sixteen original matrix units, so
+it holds with arbitrary reference blocks, without a support or
+independence restriction on $\rho_{HR}$.
+
+For the admitted boundary input $\rho=P_r$ with trivial $R$,
+$U=V=I_B$ and $s_1=s_2=s_3=3/5$, one has $A_0=Q=P_r+(3/5)P_B$.
+Both complementary outputs are exactly $P_r$, each of mass one; both
+click outputs have mass zero. Omitting $P_r$ from the first complementary
+effect would give mass zero, while multiplying the full complementary
+sandwich by $\sigma^2$ would give mass $9/25$.
+
+For either selected leaf $X=A_0$ or $Q$, the two refined effects sum to
+$X^\dagger[P_++(I_H-P_+)]X=X^\dagger X$, so their masses sum to
+the mass of that leaf. The previous failures are untouched leaves of
+the complete tree, while both read outcomes, with distinct appended
+detector/controller records, refine only the selected successful leaf.
+Each output has its same returned embedding, helpers, complete native
+record and actual successor; a zero-mass outcome has no normalized
+conditional state. $\square$
+
+**Proposition 110.2 (an illustrative subordinate family).** Put
+$K_\lambda=I_B+(\lambda-1)P_m$, $0\le\lambda\le1$, and take the
+original input $v_+$. Its actual success vector and subsequent joint
+click mass are
+
+$$
+A_0v_+=(\lambda m+o)/\sqrt2,\qquad
+p_{0,+}=(1+\lambda)^2/4.
+\tag{VII.73}
+$$
+
+As a mathematical comparison only, randomly skip with probability
+$\lambda^2$, reporting success, and otherwise projectively measure
+$P_m$, reporting success for its complementary branch. The aggregated
+success map has the same success effect $I_H-(1-\lambda^2)P_m$ but
+has subsequent joint $v_+$ click mass $(1+3\lambda^2)/4$. The difference
+is $\lambda(1-\lambda)/2$.
+
+Proof. In the comparison the unnormalized success map is
+$\lambda^2\rho+(1-\lambda^2)(I_H-P_m)\rho(I_H-P_m)$.
+On $v_+$ its two contributions to the later click are
+$\lambda^2$ and $(1-\lambda^2)/4$. Directly applying the actual
+$A_0$ instead gives (VII.73); subtraction gives the stated difference.
+Each comparison randomizer record would also have to be retained if
+this were physically implemented. No such randomization permission is
+supplied here. Equal effects and different sequential laws are already
+supplied in
+[StaticEffectSequentialSeparation](../../../D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.lean);
+this example only identifies the original VI66 consumer of the actual
+installed contraction, subordinate to (VII.66) and (VII.72). $\square$
+
+## 111. Fixed effective factors, finite words and endpoint-safe digits
+
+**Definition 111.1 (one ordered effective factorization name).** An
+input name $\mathfrak f=(U,V,s_1,s_2,s_3)$ is one fixed tuple of
+algorithms returning certified rational complex matrix approximations to
+$U,V$ and rational intervals for $s_j$ at every requested positive
+rational precision. At each level $n$ the supplied algorithms return
+$U_n,V_n\in\mathbb Q(i)^{3\times3}$ and rational intervals $I_{j,n}$,
+with certified $\|U_n-U\|_F,\|V_n-V\|_F\le2^{-n}$,
+$s_j\in I_{j,n}$ and $|I_{j,n}|\le2^{-n}$. Promises are that $U,V$ are
+unitary, $s_j\in[0,1]$, and the intended $K$ equals
+$U\operatorname{diag}(s_j)V^\dagger$ in the fixed order of Definition
+105.2. Equality is the specification, not an equality test performed on
+effective reals. The name is fixed across all commissions and precision
+requests. Matrix phases are part of this name: $\bar U,\bar V$ fix
+$r$, so a scalar bank phase is relative to that untouched sector.
+No uniform construction of $\mathfrak f$ from an unrestricted effective
+matrix name for $K$ is assumed or concluded.
+
+**Theorem 111.2 (terminating strict selection with legal angle commands).**
+Given $\mathfrak f$ and positive rational error allocations, finite bank
+words approximating the FULL $U,V$, all filter angles, and legal finite
+commands for the expanded first-click program can be selected
+effectively. The procedure terminates when singular values are zero,
+one, repeated or arbitrarily close, without deciding any real equality.
+Under the additional promise $\sigma>0$, this also holds for the full
+recovery program.
+
+Proof. Enumerate finite bank words in $B_{mo}(a),B_{oy}(b),D_m(c)$
+with signed-dyadic parameters. VI66.2 gives finite real-angle synthesis
+of every $U(3)$ matrix, including its phase relative to $r$. Continuity
+of each finite product makes the enumerated dyadic words dense in the
+FULL unitary group, not merely its projective quotient. All entries of
+these finite reference words are computable. Dovetail words and rational
+enclosures until a strict upper bound certifies
+$\|W_U-U\|_F<\varepsilon_U$, and independently
+$\|W_V-V\|_F<\varepsilon_V$. Density provides a word strictly inside
+each ball; its enclosure is eventually certified. Frobenius norm bounds
+operator norm. These tests do not diagonalize $K$, select singular
+vectors, or ask whether an entry or residual equals zero.
+
+The fixed coordinate transports of Theorem 107.1 may be used verbatim.
+For the strengths compute $\theta_j=\arccos s_j$ on $[0,1]$.
+This is computable uniformly up to both endpoints. One explicit argument
+uses $\arccos s=\int_s^1(1-x^2)^{-1/2}\,dx$: for rational
+$0<\delta<1$, omitting
+$[1-\delta,1]$ costs at most $2\sqrt\delta$, uniformly in $s$.
+The remaining integral from $\min(s,1-\delta)$ to $1-\delta$ has a
+computable continuous integrand on a compact interval and is uniformly
+computable: on $[0,1-\delta]$ its magnitude is at most
+$\delta^{-1/2}$ and its derivative is at most $\delta^{-3/2}$.
+Rational upper bounds on these constants bound respectively the error
+from approximating the lower endpoint and from a rational Riemann mesh.
+The operation $\min$ is computable using absolute value,
+without a comparison oracle. This gives certified enclosures to any
+precision. Equivalently its endpoint modulus follows, for $0\le a\le b\le1$,
+from
+
+$$
+|\arccos a-\arccos b|
+\le\int_a^b(1-x)^{-1/2}\,dx
+\le2\sqrt{b-a}.
+\tag{VII.74}
+$$
+
+Expand every phase in $W_U,W_V$, both returned bank inverses and every
+coordinate filter into its actual hops BEFORE allocating rounding
+errors. A phase is exactly VI48's chronological seven-hop word
+$J_{mz},J_{mu},J_{mw},J_{mz},J_{mu},J_{mw},J_{mu}$,
+then $B_{ud}(-\phi/2)$, the same seven hops, and $B_{ud}(\phi/2)$.
+Use (VII.63) at every read, with all three positive occurrences for
+each $mu,mz$ inverse, plus the click-only $J_{mz}$. The expanded finite
+tree includes all four paths, even reference-zero paths. A rounded
+quarter-turn's inverse is not obtained by claiming its fourth power
+is identity.
+
+For ANY nonnegative computable reference angle
+$\theta\in[0,\pi/2]$, including an angle which may be zero, enumerate
+positive dyadics $q$ satisfying the strict certified tests
+$0<q<\pi/2$ and $|q-\theta|<\delta_\ell$. The interior is dense up
+to both endpoints, so the enumeration terminates. This avoids testing
+$\theta=0$ even when $s_j=1$. The reference still has angle zero;
+the small actual positive pulse is charged in its rounding budget.
+Writing the actual digit decomposition $q=\sum_kq_k$ with $q_k\ge0$
+(including disabled zero slots), use the reference lift
+
+$$
+\theta_k=(\theta/q)q_k,\qquad
+\sum_k\theta_k=\theta,\qquad
+\sum_k|q_k-\theta_k|=|q-\theta|.
+\tag{VII.75}
+$$
+
+Because $q>0$, this definition is total even for $\theta=0$; then all
+reference slot actions are identity. Endpoints, positive sign labels,
+enable bits, digit widths and catalogue entries remain literally the
+actual ones. An enabled slot's reference semantics may be identity
+without changing its recorded enabled bit. The lift assigns no new
+irrational command string. The same scaled lift applies to known
+negative angles with a negative nonzero $q$ on a permitted edge.
+Other expanded reference angles here are signed dyadics, their halves,
+or fixed signed quarter-turns, whose signs are known from construction.
+An exactly rational zero parameter can instead use zero slots.
+No unknown real sign is decided. For every command the commuting slots
+sum to its reference $B(\theta)$, and a pending digit prefix retains
+only its executed slot actions and labels.
+
+Finite binary expansions and finite padded widths are selected after
+the nonzero dyadic $q$ is chosen. Their finitely many required catalogue
+entries, controls and physical realizations must be supplied on their
+actual endpoints; computability does not supply that hardware. Only
+positive $mz,mu,mw$ entries are needed. Both signs on $mo,oy,ud$ are
+exactly the permissions of Definition 105.1. With finitely many
+occurrences, their rational error allocations can have arbitrarily
+small total. There is no asserted uniform word-length, catalogue-size,
+classical-runtime or physical-clock bound.
+
+For recovery, $\sigma=\min_js_j$ is computable without selecting a
+minimum index. Under its strict-positive promise, refinement eventually
+certifies one positive rational lower bound for all three $s_j$.
+Division then computes $\sigma/s_j\in(0,1]$ and its acos angles.
+Ties cause no branching decision. Without the positive promise this
+lower-bound search need not terminate, and the inverse program is not
+asserted. $\square$
+
+## 112. The exact commission-indexed target and its joint error bound
+
+**Definition 112.1 (complete retained target for one actual commission).**
+A commission $C$ specifies a finite actual classical policy using the
+existing apparatus namespace: its selected bank words, fully expanded
+command lists and digit slots, external finite native requests, input
+suffixes and record/output backing, detector uses, latches and selected
+complete or pending cut. It also specifies its actual catalogue,
+endpoints, signs, enable fields and versions, not only an error number.
+It supplies no new primitive. The target below concerns its completed,
+admitted contraction case, with all required rights, readiness and
+progress supplied on every path that the finite program can execute.
+A denial or unfinished cut instead retains its full native/busy-prefix
+reference, as in Theorem 112.2, without a fabricated returned state.
+For a completed contraction its four
+quantum target operators are exactly $A_0,A_1,A_2,A_3$ of the SAME
+fixed $\mathfrak f$, not a fresh SVD chosen at this tolerance.
+
+Condition on the classical part $b$ of the common initial backing and
+retain its conditional quantum backing. For coarse outcome $a$, let
+$h\in\mathcal H_{C,a}(b)$ run over the literal full records of $C$ with
+that detector prefix. Let $\kappa_{C,a,h}(b)$ be their subnormalized
+retained backing/output states, with
+$\sum_h\operatorname{Tr}\kappa_{C,a,h}(b)=1$. They include any
+already supplied randomness and all returning preparation/detector
+systems. On a deterministic ideal record path this sum has one term.
+Let $F_{C,h}$ be $F$ with exactly the fresh vacuum extensions on that
+path, on the actual old and new identities. The complete target is
+
+$$
+\begin{aligned}
+\mathcal T_{\mathfrak f,C}(\rho_{HR})
+=\int \sum_{a=0}^3\sum_{h\in\mathcal H_{C,a}(b)}
+ |h\rangle\langle h|\otimes
+ (F_{C,h}A_a\otimes I_R)\rho_{HR}(F_{C,h}A_a\otimes I_R)^\dagger
+ \otimes\kappa_{C,a,h}(b)\,d\mu(b).
+\end{aligned}
+\tag{VII.76}
+$$
+
+Here the common-backing mixture notation also allows sums; it does not
+assume the backing's quantum components are independent of each other.
+Its independence from the original unknown input is Definition 105.1's
+existing ingress promise. All classical fields of $b$ remain in $h$ or
+$\kappa$. Each $F_{C,h}$ contains the same returned $\eta$ and clean
+$z,w$. Formula (VII.76) is normalized by (VII.67).
+
+The record $h$ contains literal command endpoints/signs/digits, every
+enabled/disabled slot and catalogue identifier, actual first-click
+prefix, detector and controller outputs, native source/root/header/gap
+identities and versions, preparation/grant records, pending input/output,
+phase/latch, actual successor and Print/End/local ACK/Return fields.
+The old records are appended to, never replaced. Native feedback uses
+the SAME policy of $C$ on the recorded outcomes and its real successor.
+A $\kappa$ is not permission to omit an output: it denotes exactly the
+complete ideal interface already supplied for those primitive services.
+For the recovery commission replace the four operators by the seven
+operators and distinct prefixes of (VII.69). For the consumer commission
+refine the appropriate successful leaf by the pair $P_+A_0,C_0$ or
+$P_+Q,C_{00}$ of Proposition 110.1, retaining both distinct VI66 read
+records. In particular its complementary target retains the $P_r$ term
+and the full reference/coherence blocks of (VII.72a)--(VII.72b).
+
+**Theorem 112.2 (effective per-commission full-output correctness).**
+Theorem 111.2 selects finite commands with arbitrarily small mathematical
+word/target errors for (VII.76). For actual implementation, separately
+supply complete physical and detector accuracy certificates on their
+full declared interfaces. Then the uniform half-trace error, including
+arbitrary untouched $R$, is bounded by (VII.79) below. This is a
+per-commission comparison with matched literal records. It does not
+assert convergence to a single record output independent of $C$.
+
+Proof. Let $W_U,W_V$ have operator errors
+$u=\|W_U-U\|$, $v=\|W_V-V\|$. If selected semantic reference strengths
+are $\hat s_j=\cos\hat\theta_j\in[0,1]$, put
+$b=\max_j|\cos\hat\theta_j-s_j|$ and
+$d_j=|\sin\hat\theta_j-\sqrt{1-s_j^2}|$.
+The selected returned operators $\hat A_a$ satisfy
+
+$$
+\begin{aligned}
+\|\hat A_0-A_0\|&\le u+v+b,\\
+\|\hat A_j-A_j\|&\le u+v+d_j,\\
+\varepsilon_{\rm tar}:=\sum_{a=0}^3\|\hat A_a-A_a\|
+ &\le4(u+v)+b+\sum_jd_j.
+\end{aligned}
+\tag{VII.77}
+$$
+
+These inequalities follow by adding and subtracting one unitary factor
+at a time, using that each diagonal strength and rank-one factor has
+norm at most one. One may take $\hat\theta_j=\theta_j$ exactly in the
+semantic reference, leaving $b=d_j=0$ and charging all actual angle
+rounding below. Alternatively use the computable sine/cosine enclosures
+to make these terms small. No singular-vector selection occurs in either
+choice, and all four operators are controlled, not only $A_0$.
+
+For contractions $C,D$ and positive trace-class $\rho$ on $H\otimes R$,
+expanding the two sandwich factors and using the trace norm ideal gives
+
+$$
+\|(C\otimes I_R)\rho(C\otimes I_R)^\dagger
+ -(D\otimes I_R)\rho(D\otimes I_R)^\dagger\|_1
+\le2\|C-D\|\operatorname{Tr}\rho.
+\tag{VII.78}
+$$
+
+Summing orthogonal outcome blocks and dividing by two gives
+$\varepsilon_{\rm tar}\operatorname{Tr}\rho$ for the complete
+four-branch target error. The same record-refinement/backing channels
+in (VII.76) are normalized and contractive. Thus this estimate holds
+for all literal records, the quantum successors and arbitrary $R$.
+It covers zero-mass target branches without conditional normalization.
+
+For path $p$, let $\mathcal H(p)$ index EVERY expanded hopping
+occurrence, $\mathcal D(p)$ every actual read, and $\mathcal N(p)$
+the remaining services, including holds, controls and native growth.
+Allocate $\delta_\ell\ge|q_\ell-\theta_\ell|$ and
+$\Gamma_p=\sum_{\ell\in\mathcal H(p)}\delta_\ell$.
+At digit cuts use (VII.75) and only completed slots. Each direct hop,
+phase expansion, coordinate transport, seven-hop routing return and
+click cleanup is indexed separately; no phase is charged a second time
+as a primitive macro. Let $e_n^{\rm phys}$ be separately supplied
+uniform full-interface half-diamond errors for non-detector primitives,
+and $e_d^{\rm det}$ the analogous complete occupation-instrument
+certificates, including its output state and records. A grouped
+certificate is allowed only when it covers all its internal slots,
+controls and holds and none is charged again.
+
+Let $e_{\rm init}$ be ONE uniform joint half-trace budget for the entire
+initial ingress, acquisition, helpers, $\eta$, preparation/delivery
+systems, common backing, controls and the SAME initial labels. It is
+not a resource-marginal bound. For any specified finite adaptive
+interleaving on these interfaces,
+
+$$
+d_{\rm out}\le e_{\rm init}+\max_p\left[
+ \sum_{c\in\mathcal C(p)}\varepsilon_{{\rm tar},c}
+ +2\Gamma_p
+ +\sum_{n\in\mathcal H(p)\cup\mathcal N(p)}e_n^{\rm phys}
+ +\sum_{d\in\mathcal D(p)}e_d^{\rm det}\right].
+\tag{VII.79}
+$$
+
+Here $\mathcal C(p)$ indexes completed target calls whose IDEAL inputs
+have their declared return domain. A contraction's local target budget
+is (VII.77); a two-stage call may use the sum of its first and second
+instrument budgets. Existing VI66 calls use their VI67 target budget.
+The maximum includes all program paths, including reference-zero ones.
+
+For example, for a mathematical allowance $\tau>0$, take
+$u,v<\tau/32$ and semantic $\hat\theta_j=\theta_j$, giving
+$\varepsilon_{\rm tar}<\tau/4$. After expansion let $N\ge1$ bound
+the number of hopping occurrences on any path. Selecting each
+$\delta_\ell<\tau/(8N)$ gives $2\Gamma_p<\tau/4$. Thus the
+mathematical part is less than $\tau/2$. A final error at most $\tau$
+additionally requires the separately supplied joint initial and complete
+physical/detector path budgets to sum to at most $\tau/2$; the word
+selection does not certify those premises.
+
+To prove the remaining terms, reuse VI67's full-slot comparison. The
+full-qubit hopping generator has norm one, so
+$\|B(q)-B(\theta)\|\le|q-\theta|$ and its half-diamond channel
+error is at most that number, with identical raw labels. Telescoping
+the expanded finite word, with the complete read instruments between
+its routing lists, gives $\Gamma_p$, hence also the conservative
+$2\Gamma_p$ in (VII.79). This comparison holds on all physical sectors,
+including dirty approximate helpers and leakage. Physical and detector
+replacements use their separate supplied full-interface errors.
+
+For adaptive trees, backward induction bounds each normalized node by
+its local error plus the largest child budget: positive child masses
+sum to its parent mass. This yields the maximum path sum, with no
+normalization of an individual branch. Target replacement is made on
+the ideal returned tree, while full-word replacements act on the full
+space; their triangle inequality never assumes an approximate state has
+an exactly pure returned helper. Initial discrepancy is inserted once
+before this normalized tree and contracts thereafter. Complete native
+service holds old qubits and appends its specified vacuum, so finite
+allowed native interleavings preserve the ideal domains. A raw action
+that dirties a helper remains lawful and has its full-word comparison;
+it receives no automatic completed-target identification.
+
+At a pending cut use the reference state obtained by executing precisely
+the actual busy-word prefix and its partial digit/control/read/record
+list. Do not replace an unfinished filter by (VII.64), or an unfinished
+contraction/recovery by its completed Kraus operator. Helpers may be
+dirty or entangled at that cut. The full-slot lift and the finite-prefix
+budget still apply there. Thus (VII.79) is an arbitrary-reference,
+complete-output estimate, not a rounded-return identity, a finite-test
+proof, or a hardware-precision certificate. $\square$
+
+**Proposition 112.3 (the separate denominator for conditioned error).**
+Suppose a chosen subnormalized actual/reference branch pair $X,Y$ has
+$\tfrac12\|X-Y\|_1\le e$, reference mass $q=\operatorname{Tr}Y$,
+and $q>2e$. Then the actual mass $p$ is positive and
+
+$$
+\tfrac12\|X/p-Y/q\|_1\le\frac{2e}{q-2e}.
+\tag{VII.80}
+$$
+
+Proof. $|p-q|\le2e$, so $p\ge q-2e>0$. Add and subtract $Y/p$;
+the triangle inequality gives
+$\tfrac12\|X/p-Y/q\|_1\le(e+|p-q|/2)/p\le2e/p$.
+This proves (VII.80). For a bank double success one can use its known
+$q=\sigma^2$, provided the error meets this strict threshold. There is
+no uniform conditioned-error conclusion as $\sigma\downarrow0$ or
+for an unspecified rare branch. $\square$
+
+## 113. The precise failure of a matrix-name-only singular-frame selector
+
+**Theorem 113.1 (interior degeneracy obstructs the prescribed family).**
+There is no continuous extensional selector from $K$ alone to the
+complete singular-frame first-click instrument (VII.66) at
+$K_0=\operatorname{diag}(1/2,1/2,1/4)$, even after allowing a permutation
+of the three click labels. Use matrix operator norm on inputs and
+uniform half-trace distance of complete instrument outputs on outputs.
+Here the success label remains distinguished,
+and the selected instrument must be one arising from an ordered SVD as
+in Theorem 108.1. The obstruction already holds after forgetting command
+records and testing only the four outcome probabilities on input $o$.
+
+Proof. Let $R_\phi$ be the real rotation of the $o,m$ plane, fixing $y$,
+and take $0<t<1/8$. The positive strict contractions
+
+$$
+K_{\phi,t}=R_\phi\operatorname{diag}(1/2+t,1/2-t,1/4)R_\phi^\dagger,
+\qquad\phi=0,\pi/4,
+\tag{VII.81}
+$$
+
+both approach the same $K_0$. Their three positive singular values are
+distinct. Since $K_{\phi,t}$ is positive, an SVD's right singular
+vectors are its eigenvectors up to phases/permutation, and its left
+vectors are the SAME vectors with the same phases: $Kv_j=s_ju_j$
+forces this. Thus each click operator is the scalar
+$-\sqrt{1-s_j^2}$ times the corresponding spectral rank-one projector,
+up to click permutations. No phase freedom changes its effect.
+
+For input $o$, label the eigenvectors by the displayed diagonal order.
+The success and first two click probabilities are
+
+$$
+\begin{aligned}
+p_0(\phi,t)&=1/4+t\cos(2\phi)+t^2,\\
+p_1(\phi,t)&=[1-(1/2+t)^2]\cos^2\phi,\\
+p_2(\phi,t)&=[1-(1/2-t)^2]\sin^2\phi,\qquad p_3=0.
+\end{aligned}
+\tag{VII.82}
+$$
+
+Their limits, in the order success, three clicks, are
+
+$$
+\begin{aligned}
+\lim_{t\downarrow0}p(0,t)&=(1/4,3/4,0,0),\\
+\lim_{t\downarrow0}p(\pi/4,t)&=(1/4,3/8,3/8,0),\\
+\min_{\pi\in S_3}
+ d_{\rm TV}\big((1/4,3/4,0,0),\ (1/4,\pi(3/8,3/8,0))\big)
+ &=3/8.
+\end{aligned}
+\tag{VII.83}
+$$
+
+For the last equality, placing one $3/8$ at the $3/4$ coordinate leaves
+absolute discrepancies $3/8,3/8,0$; placing zero there gives still
+larger distance. Half their sum is $3/8$. Hence no choice at $K_0$
+can be a common limit of the two paths. A permutation depending on
+$t$ cannot help: a sequence has a constant-permutation subsequence, and
+the same positive separation holds in the finite-permutation quotient.
+Outcome testing is contractive on instruments, so continuous complete
+instrument selection would imply the impossible continuous probability
+selection. Restoring all raw records cannot remove this obstruction.
+$\square$
+
+**Corollary 113.2 (what uniform certified Cauchy-name compilation would imply).**
+There is no uniform algorithm which, from every certified rational
+Cauchy name of $K$ alone in a neighborhood of $K_0$, approximates to
+arbitrary certified accuracy ONE extensional chosen instrument of this
+prescribed family, with a target independent of the requested precision
+and of the choice of name for $K$. This includes a proposed native
+compiler if its certified finite outputs allow the four reference
+outcome probabilities to be computed to the claimed accuracy.
+
+Proof. It is enough to prove the continuity implication directly.
+Use the standard matrix Cauchy representation in which level $n$ is a
+rational matrix within $2^{-n}$ in a fixed matrix norm. Since $K_0$ is
+rational, choose its name with every entry equal to $K_0$, hence with
+strict slack in every such error ball. Run the proposed algorithm for
+an output probability approximation with error $\epsilon>0$ at that
+name. The terminating computation reads finitely many input-name
+entries. For all sufficiently near $K$, these same entries are still
+valid: choose $\|K-K_0\|$ smaller than the minimum of their positive
+error radii. Extend them by valid rational approximations at all other
+indices to obtain a name of $K$. The algorithm follows the identical
+finite computation and produces the identical approximation.
+Extensionality of the chosen target therefore bounds its value at $K$
+and $K_0$ within $2\epsilon$ of each other. This works for every
+$\epsilon$, proving continuity at $K_0$, contrary to Theorem 113.1.
+If names use also adjacent-approximation constraints, choose the same
+constant slack prefix and a sufficiently close continuation; the same
+finite-prefix argument applies. Strict contractions form a neighborhood
+of $K_0$, so the promised domain does not invalidate either path.
+
+A search certifying only $\|U\operatorname{diag}(s)V^\dagger-K\|<e$
+controls success but not the three retained first-click branches. Choosing
+unrelated SVDs at successive tolerances does not specify one extensional
+target. Definition 111.1's ordered factor names supply additional input,
+and are the honest positive contract of Theorems 111.2 and 112.2.
+The negative result rules out neither alternative native instruments
+whose success is $K$, nor factor-name inputs, nor nonuniform existence
+of an SVD or ideal program for each $K$. It asserts no obstruction to
+every possible $K$-only completion. $\square$
+
+## 114. Literal records distinguish commissions even at the same factors
+
+**Proposition 114.1 (orthogonal retained-label blocks).** Per-commission
+correctness in (VII.76) does not imply convergence of complete outputs
+to one fixed raw-record output. If a retained deterministic record field
+is $\ell$ in one commission and $\ell'\ne\ell$ in another, their
+complete outputs have half-trace distance one. In particular their
+complete ideal targets can have distance one even when their quantum
+bank outputs agree exactly.
+
+Proof. Take the unchanged input $r$. Every filter has no click on this
+input and every bank unitary fixes it; there is one successful $000$
+path. For example, two legal commissions may use different padded digit
+widths or different deterministic command strings, retained in disjoint
+classical record blocks, while defining the same factors and acting
+identically on $r$. Their complete target densities are supported in
+orthogonal blocks. For normalized states $X,Y$ with orthogonal supports,
+$\|X-Y\|_1=\operatorname{Tr}X+\operatorname{Tr}Y=2$, proving the
+claim. The deterministic labels alone give the same distance by an
+actual record read, regardless of the other apparatus states.
+
+This is a conditional assertion about commissions which do carry such
+different labels; it does not say that every target or every precision
+sequence changes labels. A fixed commission, or a family with matching
+retained labels, has no such automatic separation. If an infinite
+precision sequence is pairwise separated in this way on $r$, its
+complete outputs are not even Cauchy in trace norm. Each individual
+commission can nevertheless satisfy (VII.79) against its OWN matched
+literal-record target. Equivalently these are the fibers of one
+commission-controlled instrument on the direct sum of classical $C$
+registers. VI67 already uses precisely matched raw labels in its
+reference lift. No archive is deleted here, and no future consumer is
+assumed to ignore its contents. $\square$
+
+## 115. Installation inside the existing complete native service
+
+**Theorem 115.1 (the same original histories and lawful futures).**
+Install the finite programs of §§107--112 as classical quantum-apparatus
+policies inside the VI50/VI71 namespace, using only its existing acquired
+controls and occupation instrument. For both entrances of Definition
+105.1, their completed ideal calls on the declared domain implement
+(VII.66), (VII.69) and both read outcomes of Proposition 110.1 on the
+same physical source, retaining all complete native service fields and
+actual source successors. Any
+finite lawful original native continuation remains available on its
+original full or pending domain with its own finite supplies, rights,
+holds and progress. A raw quantum action may dirty that domain and
+remains lawful; no unrestricted dirty-prefix returned-target theorem
+is inferred.
+
+Proof. The source-specific quantum work is exactly the finite lists of
+Theorems 107.1--109.1, on the persistent acquired old seams and fixed
+links. VI50 proves that arbitrary later native $P/S$ growth neither
+reparents nor deletes these old vertices/seams; it holds the entire old
+quantum bank and appends the actual newly supplied vacuum systems.
+This action is full-space and hence valid even during a dirty routed
+prefix. Current authority and enable guards are checked on the actual
+references before every protected action, just as before. There is no
+$r$ computation edge, endpoint substitution or one-use preparation
+replay in any list.
+
+Use AAV27.2's existing all-phase correspondence and the explicit field
+relation of VI50/VI71, not equality of port labels. The additional
+transaction starts from actual Ready with its current lock and apparatus
+rights. During its busy namespace its native projection is that saved
+Ready. It retains its actual bank-word/filter index, stage and
+first-click latch, digit position, borrowed real references, owed read
+or output, controller fields and complete quantum bank. A busy prefix
+is related by its actual list, not a completed return formula. The
+original native phases retain these exact obligations:
+
+| Original phase or field | Retained relation for the added program |
+| --- | --- |
+| Receive, Parse and partial input | Preserve received bits, occupied input latch, parser/unary marks, supplied prefix and unsupplied suffix; do not manufacture a reply. |
+| Navigate, Guard, Tag, HasPromotion, HasSplit | Traverse the actual acquired fields, birth facts and source versions; quantum occupation is not a native guard or an address-to-reference cast. |
+| Refusal, OutOfRange, BadFrame, missing right or disabled control | Keep the original reason and full pending/source state; no protected gate/read or successful edit token is fabricated. |
+| Reserve, edit, Maintain and publication | Pay original source/tape/incidence/memory/output material, retain partial writes, old-leaf/ancestor/attachment cursors and locks; append the genuine event and publish only its actual successor. |
+| FetchGrowth and genuine Next | Keep real one-based tape operands, recalled pair, current descent, guarded edit/refusal and conditional successor; quantum command records are not native events. |
+| BuildAnswer, Print, End, local ACK and Return | Keep sealed answer, output cursor, emitted prefix and unprinted suffix; discharge the original owed order and same-root Return, releasing only permitted scratch. |
+| Samples, resources and archives | Keep immutable samples/versions, real root/header/gap/epoch association, spent grants, calibration/control records, returning preparation systems and every detector record. |
+
+At every returned filter branch Theorem 107.1 proves the exact $F$
+relation, before another bank macro is invoked. This makes induction
+through first-click selection, recovery and the VI66 consumer valid on
+each subnormalized branch. Native interleavings merely preserve old
+quantum systems and append their own vacuum, so the same induction
+allows arbitrary finite source growth and original request futures with
+their authentic preparations and references. New components and deeper
+edits require their actual finite acquisition and supplied controls;
+there is no fixed roster or height cap. A read requires readiness anew
+when actually reached; neither skipped reads nor a returned $\eta$
+restore a spent detector or preparation grant.
+
+If additional raw operations or an interrupted word have dirtied helpers,
+VI50/71's full-space native hold/growth relation still applies to every
+original native request, including pending ones. The raw hopping action
+is also its lawful full-space word. Only the completed ideal target
+identification requires Definition 105.1's input domain. Actual finite
+accuracy is controlled by (VII.79) and its busy prefixes, not by
+pretending that source growth or Return has reset a dirty system.
+Missing progress leaves the actual pending cut, with every owed field
+retained. Thus the installation preserves all original interfaces and
+source futures without claiming a complete observer-checkpoint return.
+$\square$
+
+**Definition 115.2 (scope and source correspondence).** The additional
+repo-derived correspondence is the whole-bank dirty-$z$ routed read,
+its click cleanup before any returned inverse, and the resulting
+complete original-apparatus contraction/recovery family with the
+representation boundaries of §§113--114. It consumes the already supplied
+VI48 phase service, VI49.3 whole-bank transport, VI66 bank $U(3)$ and
+projective instruments, VI67 full-slot hybrid estimate and VI71 native
+service relation. Generic partial collapse, SVD, Kraus completeness,
+scaled-inverse recovery and sequential-effect separation are reused
+intermediate mathematics with the cited scopes, not new measurement
+principles. No worldwide-novelty or minimum-axiom claim is attached.
+
+The effective positive conclusion has a fixed ordered factor-name input
+and a literal-record target indexed by its actual finite commission.
+The matrix-name-only prescribed-frame claim has the negative conclusion
+of Theorem 113.1; fixed complete raw-output convergence has only the
+conditional scope of Proposition 114.1. No $r$ coupling, all-$r/B$
+tomography, full-$H$ inverse recovery, unrestricted dirty-helper return,
+free reference, repeated $\eta$ preparation, source replacement,
+postselection loss, actual hardware precision or physical clock law is
+derived. The existing static suppliers in
+[QUANTUM_ORIGIN_BINARY_NORMAL_DIFFERENCES_AND_ORIENTATION_XVII](QUANTUM_ORIGIN_BINARY_NORMAL_DIFFERENCES_AND_ORIENTATION_XVII.md),
+[QUANTUM_ORIGIN_PURE_ENDPOINT_RECIPROCITY_AND_QUANTUM_RECONSTRUCTION_XVII](QUANTUM_ORIGIN_PURE_ENDPOINT_RECIPROCITY_AND_QUANTUM_RECONSTRUCTION_XVII.md)
+and [OpenBoundaryMPSDensityGenericity](../../../D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity.lean)
+remain separate on their own carriers and hypotheses. The
+original free ordered generation, both authentic entrances, actual
+internal observer and the enduring space/time/boundary/memory common
+recovery question keep their full domains and unresolved obligations.
+
+## 追加锚（本行以下为增补区）
