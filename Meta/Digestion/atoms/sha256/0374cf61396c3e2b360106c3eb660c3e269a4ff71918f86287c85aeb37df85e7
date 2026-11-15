@@ -1,0 +1,19 @@
+**定义 180.4（关系交换与实际线恢复）。** 将文献的另一个关系条件单独写为
+
+$$
+\mathsf{EX}_0:\quad
+p\ne q,\ p\not\perp q\ \Longrightarrow\
+\exists r\perp p:\ \{p,q\}^\perp=\{p,r\}^\perp.
+\tag{180.4}
+$$
+
+它是179.10所引原文的 (L1)，不申领为新关系定义。另定义实际线的忠实恢复条件
+
+$$
+\mathsf{PL}:\qquad
+P\cap F_K(p,q)=\{p,q\}^{\perp\perp}\qquad(p\ne q).
+\tag{180.5}
+$$
+
+179.2只给(180.5)从左到右的包含。右侧纯点不预先拥有球内位置；将它叫作射影线不会支付反向包含。
+

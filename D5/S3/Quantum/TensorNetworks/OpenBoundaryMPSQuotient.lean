@@ -28,7 +28,7 @@ def coreCoordinates (t : Word 3 → ℂ) : Fin 5 → ℂ :=
   ![reconstructedLeft t 0, canonicalCore t 0 0 0, canonicalCore t 0 0 1,
     canonicalCore t 1 0 0, canonicalCore t 1 0 1]
 
-private lemma canonical_shape (t : Word 3 → ℂ) (ht : t ∈ openBoundaryMPS 3)
+lemma canonical_shape (t : Word 3 → ℂ) (ht : t ∈ openBoundaryMPS 3)
     (hg : eval t chartPoly ≠ 0) :
     let θ : OpenBoundaryMPSTwoSiteMinimality.Parameter := (coreCoordinates t, 0, 0)
     OpenBoundaryMPSTwoSiteMinimality.left θ = reconstructedLeft t ∧ OpenBoundaryMPSTwoSiteMinimality.core θ = canonicalCore t := by

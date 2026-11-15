@@ -1,0 +1,39 @@
+**定理 197.4（逐标签纯系数与不塌缩等价）。** 在197.1的同一完整原域中，NC$(a)$ 总蕴涵 SP$(a)$。若另给 Hit$(a)$，则
+
+$$
+\boxed{\quad
+\mathrm{SP}(a)\quad\Longleftrightarrow\quad
+\mathrm{NC}(a):a\notin F_K(N_a).
+\quad}
+\tag{197.8}
+$$
+
+在 Hit$(a)$ 下，它们还等价于 LIN$(a)$ 加上 $\alpha_a\ge0$ 于整个 $C\cap S_a$。等价只要求该标签的命中；没有用其他标签的 SP。
+
+证明。SP 先由197.2给 LIN，故 $\alpha_a$ 良定义。SP 恰使它在 $P\cap S_a$ 非负。197.3用于 $S=S_a$，遂给
+
+$$
+\alpha_a(C\cap S_a)\subseteq\mathbb R_+.
+\tag{197.9}
+$$
+
+若 $z\in W_a\cap\operatorname{int}C$，充分小的 $\varepsilon>0$ 使 $z-\varepsilon a\in C\cap S_a$，其 $\alpha_a$ 值却为 $-\varepsilon$，矛盾。因此
+
+$$
+W_a\cap\operatorname{int}C=\varnothing.
+\tag{197.10}
+$$
+
+分离实线性子空间 $W_a$ 与开凸集 $\operatorname{int}C$，取得非零 $g\in V^*$，满足 $g|_{W_a}=0$ 且 $g\ge0$ 于 $\operatorname{int}C$。原锥闭且生成，故 $\overline{\operatorname{int}C}=C$，所以 $g\in C^*\setminus\{0\}$。这一标准分离步骤没有假设 $C+W_a$ 闭或正延拓定理。
+
+此时直接调用 XIII160.10 的全称严格性：完整原菜单使每个消去 $N_a$ 的非零正泛函都满足 $g(a)>0$，并给 NC$(a)$。该供应的关键不是令 $g/g(a)$ 自动 proper；它取 $g$ 的原纯最大点和原单位归一化，再以补效应排除 $g(a)=0$。这里准确使用其正支撑结论，不提前声称共同确认或 least。
+
+反向，NC 由同一160.10供应 $g\in C^*\setminus\{0\}$、$g|_{W_a}=0$、$g(a)>0$。若原纯点 $p=\lambda a+w$，则
+
+$$
+\lambda=g(p)/g(a)\ge0.
+\tag{197.11}
+$$
+
+这给 SP，且不需要 Hit。对整个 $C\cap S_a$ 同样成立，故给最后的等价。$\square$
+

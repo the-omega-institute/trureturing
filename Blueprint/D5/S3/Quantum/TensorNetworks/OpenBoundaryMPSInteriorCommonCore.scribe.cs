@@ -23,6 +23,10 @@ internal sealed class OpenBoundaryMPSInteriorCommonCoreDocument : IScribeDocumen
                 "K((i,j),(a,b))=(A_b r)(i)(l A_a)(j), with bilinear row l. The corresponding virtual coefficient is A_b (r l) A_a. Matrix multiplication gives C=F K for every actual realization, including singular competitors."),
             Definition("dualTransfer", "The left environment transfer",
                 "The map sends X to the sum of A_i† X A_i. Write P=(dualTransfer A)^p(l†l), H=(transfer A)^q(rr†). Snoc induction over original words gives prefixMap† prefixMap=P; the original right tail_gram supplies H. The finite context dictionary is K K†=H tensor P-transpose, and the exact observed density is F (H tensor P-transpose) F†. The transpose and the order of the two exterior words are essential."),
+            Theorem("left_boundary_gram", "The actual left Gram dictionary", LeftGramFormula(),
+                "For every finite p, prefixMap dagger times prefixMap is the p-fold dual transfer of the actual bilinear boundary Gram. This is the original snoc-induction supplier, exposed with its proof unchanged for the root-realization consumer; it is not new mathematics in that consumer."),
+            Theorem("interior_density_dictionary", "The entire actual interior Gram dictionary", DictionaryFormula(),
+                "For every finite p,k,q, rawInterior is feature times the Kronecker product of the right environment and transposed left environment times feature dagger. The original proof is unchanged. The root-realization consumer specializes k=2 while retaining all exterior words and all raw matrix entries."),
             Theorem("all_coefficient_parent_induction", "Every virtual coefficient propagates", InductionFormula(),
                 "For arbitrary A,B with TwoSiteSpanning A, assume every three-site gamma B 3 X belongs to the target gamma image. For every natural m and every complex two by two X, there is Y with gamma B (m+3) X=gamma A (m+3) Y. The induction generalizes X. Its snoc branch uses B_j X through trace cyclicity, its cons branch uses X B_i. Both slices belong to the same actual function gamma B (m+4) X, so the original unrestricted parent_intersection applies. The statement imposes no physical cyclicity, shifted marginal or competitor regularity."),
             Theorem("interior_common_core", "A common core for every actual competitor", CommonCoreFormula(),
@@ -48,6 +52,32 @@ internal sealed class OpenBoundaryMPSInteriorCommonCoreDocument : IScribeDocumen
             StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
+    private static Formula LeftGramFormula()
+    {
+        var a = X("A"); var l = X("l"); var p = X("p");
+        var prefix = At(Supplier("OpenBoundaryMPSDensityRecovery", "prefixMap"), a, l, p);
+        var target = At(Q("Function", "iterate"), At(Local("dualTransfer"), a), p,
+            At(Q("Matrix", "vecMulVec"), At(Q("star"), l), l));
+        var gram = At(Q("Matrix", "mul"), At(Q("Matrix", "conjTranspose"), prefix), prefix);
+        return Disp(All("A", Core(), All("l", Boundary(), All("p", Nat(), Eq(gram, target)))));
+    }
+    private static Formula DictionaryFormula()
+    {
+        var a = X("A"); var l = X("l"); var r = X("r");
+        var p = X("p"); var k = X("k"); var q = X("q");
+        var n = Add(Add(p, k), q);
+        var feature = At(Local("feature"), a, k);
+        var left = At(Q("Function", "iterate"), At(Local("dualTransfer"), a), p,
+            At(Q("Matrix", "vecMulVec"), At(Q("star"), l), l));
+        var right = At(Q("Function", "iterate"), At(Supplier("OpenBoundaryMPSDensityRecovery", "transfer"), a), q,
+            At(Q("Matrix", "vecMulVec"), r, At(Q("star"), r)));
+        var middle = At(Q("Matrix", "kronecker"), right, At(Q("Matrix", "transpose"), left));
+        var sandwich = At(Q("Matrix", "mul"), At(Q("Matrix", "mul"), feature, middle),
+            At(Q("Matrix", "conjTranspose"), feature));
+        return Disp(All("A", Core(), All("l", Boundary(), All("r", Boundary(),
+            All("p", Nat(), All("k", Nat(), All("q", Nat(),
+            Eq(At(Local("rawInterior"), p, k, q, State(a, l, r, n)), sandwich))))))));
+    }
     private static Formula InductionFormula()
     {
         Formula a = X("A"), b = X("B"), m = X("m"), x = X("X"), y = X("Y");
