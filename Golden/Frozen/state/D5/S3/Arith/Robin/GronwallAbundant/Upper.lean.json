@@ -1,0 +1,1 @@
+{"statement_id":"sha256:246da463c466ba2d714e8700306b9ab26df8ad53c647659d5e21bca12a18b0b1","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),5:Robin),16:GronwallAbundant),21:ga1_log_count_le_cost)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),5:Robin),16:GronwallAbundant),6:result)","kind":"theorem"}]}
