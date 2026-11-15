@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/Algebra/BergmanCyclicCoefficients
    mirror-E: none(waiver:noncomputational)
    anchors: [D5/S0/Certificates/Algebra/BergmanCyclicSemigroup, D5/S0/Certificates/Algebra/BergmanContractedAlgebra]
-   utility: kind=none
+   utility: none
    digest: Exact terminal coefficients and span cancellation on cyclic contracted algebras. -/
 
 import D5.S0.Certificates.Algebra.BergmanCyclicSemigroup

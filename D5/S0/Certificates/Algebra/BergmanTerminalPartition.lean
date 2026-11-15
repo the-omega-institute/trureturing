@@ -17,6 +17,8 @@ open BergmanQuestion23Refutation (Monomial PositiveIndex DualIndex mixedPower)
 open BergmanQuestion15Refutation (Contracted delta positivePower product)
 open BergmanContractedAlgebra
 open BergmanCyclicGrading (positiveProduct)
+open private delta_power algebra_nilpotent from
+  D5.S0.Certificates.Algebra.BergmanCyclicGrading
 open scoped BigOperators IsMulCommutative
 
 abbrev Exponent := Monomial 2
@@ -186,81 +188,23 @@ private theorem product_degree {n I} (hn : 0 < n) (k : ℕ)
     have := ih (fun i => a i.succ) h₂
     omega
 
-private def filtration (F : Type*) [Field F] (n : ℕ) (I : Finset ℕ) (d : ℕ) :
-    Submodule F (Contracted F (Model n I)) :=
-  Finsupp.supported F F {s | d ≤ degree s.val}
-
-private theorem filtration_mul {F : Type*} [Field F] {n I i j} :
-    Submodule.map₂ (product F (Model n I)) (filtration F n I i)
-      (filtration F n I j) ≤ filtration F n I (i + j) := by
-  classical
-  rw [filtration, filtration, Finsupp.supported_eq_span_single,
-    Finsupp.supported_eq_span_single, Submodule.map₂_span_span]
-  apply Submodule.span_le.mpr
-  rintro _ ⟨_, ⟨a, ha, rfl⟩, _, ⟨b, hb, rfl⟩, rfl⟩
-  change Finsupp.single a (1 : F) * Finsupp.single b 1 ∈ _
-  rw [single_mul]
-  by_cases h : a.val * b.val = 0
-  · simp [h, delta]
-  · simp only [one_mul, one_smul, delta, dite_eq_right h]
-    apply Finsupp.single_mem_supported F 1
-    change i + j ≤ degree (a.val * b.val)
-    rw [degree_mul _ _ h]
-    exact Nat.add_le_add ha hb
-
-private theorem mixedPower_le {F : Type*} [Field F] {n I} (hn : 0 < n) (k : ℕ) :
-    mixedPower (product F (Model n I)) ⊤ k ≤ filtration F n I (k + 1) := by
-  have htop : (⊤ : Submodule F (Contracted F (Model n I))) = filtration F n I 1 := by
-    apply le_antisymm _ le_top
-    intro x hx
-    exact fun s hs => degree_pos hn s.val s.property
-  induction k with
-  | zero => exact le_of_eq htop
-  | succ k ih =>
-    exact (Submodule.map₂_le_map₂ (le_of_eq htop) ih).trans
-      (by simpa [Nat.add_comm] using
-        (filtration_mul (F := F) (n := n) (I := I) (i := 1) (j := k + 1)))
-
-private theorem algebra_product_mem {F : Type*} [Field F] {n I} (k : ℕ)
-    (a : Fin (k + 1) → Contracted F (Model n I)) :
-    positiveProduct k a ∈ mixedPower (product F (Model n I)) ⊤ k := by
-  induction k with
-  | zero => trivial
-  | succ k ih =>
-    exact Submodule.apply_mem_map₂ _ (Submodule.mem_top) (ih (fun i => a i.succ))
-
-private theorem delta_power {F : Type*} [Field F] {n I} (s : Model n I) (k : ℕ) :
-    positivePower (delta F (Model n I) s) k = delta F (Model n I) (positivePower s k) := by
-  induction k with
-  | zero => rfl
-  | succ k ih => rw [positivePower, ih, delta_mul]; rfl
-
-
 private theorem nilpotency (F : Type*) [Field F] (n : ℕ) (hn : 0 < n) (I : Finset ℕ)
     (h0 : 0 ∈ I) (hN : n ∉ I) :
     (∀ a : Fin (n + 1) → Model n I, positiveProduct n a = 0) ∧
     mixedPower (product F (Model n I)) ⊤ n = ⊥ ∧
     (∀ a : Fin (n + 1) → Contracted F (Model n I), positiveProduct n a = 0) ∧
     positivePower (delta F (Model n I) (generator n I 0)) (n - 1) ≠ 0 := by
-  have halg : mixedPower (product F (Model n I)) ⊤ n = ⊥ := by
-    apply le_antisymm _ bot_le
-    intro x hx
-    apply Finsupp.ext
-    intro s
-    have hm := (Finsupp.mem_supported' F x).mp (mixedPower_le hn n hx)
-    exact hm s (by have := degree_le s.val; change ¬ n + 1 ≤ degree s.val; omega)
-  refine ⟨?_, halg, ?_, ?_⟩
-  · intro a
+  have hzero : ∀ a : Fin (n + 1) → Model n I, positiveProduct n a = 0 := by
+    intro a
     by_contra h
     have := product_degree hn n a h
     have := degree_le (positiveProduct n a)
     omega
-  · intro a
-    have h := algebra_product_mem n a
-    rwa [halg, Submodule.mem_bot] at h
-  · classical
-    rw [delta_power, (terminal_powers n hn I h0 hN).1]
-    simp [delta, show (Model.terminal true : Model n I) ≠ 0 by intro h; cases h]
+  have halg := algebra_nilpotent (F := F) n hzero
+  refine ⟨hzero, halg.1, halg.2, ?_⟩
+  classical
+  rw [delta_power, (terminal_powers n hn I h0 hN).1]
+  simp [delta, show (Model.terminal true : Model n I) ≠ 0 by intro h; cases h]
 
 open private card_dual positiveEquiv from
   D5.S0.Certificates.Algebra.BergmanQuestion23Refutation

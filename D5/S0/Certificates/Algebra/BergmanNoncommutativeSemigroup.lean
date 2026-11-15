@@ -20,74 +20,8 @@ open BergmanCyclicGrading (positiveProduct)
 open BergmanContractedAlgebra
 open scoped BigOperators
 
-section Products
-variable {F S : Type*} [Field F] [SemigroupWithZero S]
-
-private theorem delta_power (s : S) (k : ℕ) :
-    positivePower (delta F S s) k = delta F S (positivePower s k) := by
-  induction k with
-  | zero => rfl
-  | succ k ih => rw [positivePower, ih, delta_mul]; rfl
-
-private theorem delta_span : Submodule.span F (Set.range (delta F S)) = ⊤ := by
-  apply top_unique
-  intro x _
-  induction x using Finsupp.induction_linear with
-  | zero => exact Submodule.zero_mem _
-  | add x y hx hy => exact Submodule.add_mem _ (hx trivial) (hy trivial)
-  | single s r =>
-    have h := Submodule.smul_mem (Submodule.span F (Set.range (delta F S))) r
-      (Submodule.subset_span (Set.mem_range_self s.val))
-    simpa [delta, s.property, Finsupp.smul_single] using h
-
-private theorem mixed_span (k : ℕ) :
-    mixedPower (product F S) ⊤ k = Submodule.span F
-      (Set.range (fun a : Fin (k + 1) → S => delta F S (positiveProduct k a))) := by
-  induction k with
-  | zero =>
-    simp only [mixedPower, positiveProduct]
-    rw [show (Set.range fun a : Fin 1 → S => delta F S (a 0)) =
-      Set.range (delta F S) by
-        ext x; constructor
-        · rintro ⟨a, rfl⟩; exact ⟨a 0, rfl⟩
-        · rintro ⟨s, rfl⟩; exact ⟨fun _ => s, rfl⟩]
-    exact delta_span.symm
-  | succ k ih =>
-    rw [mixedPower, ih, ← delta_span (F := F) (S := S), Submodule.map₂_span_span]
-    congr 1
-    ext x
-    constructor
-    · rintro ⟨_, ⟨s, rfl⟩, _, ⟨a, rfl⟩, rfl⟩
-      refine ⟨Fin.cons s a, ?_⟩
-      exact (delta_mul _ _).symm
-    · rintro ⟨a, rfl⟩
-      refine ⟨delta F S (a 0), ⟨a 0, rfl⟩,
-        delta F S (positiveProduct k (fun i => a i.succ)),
-        ⟨fun i => a i.succ, rfl⟩, ?_⟩
-      exact delta_mul _ _
-
-private theorem algebra_nilpotent (k : ℕ)
-    (h : ∀ a : Fin (k + 1) → S, positiveProduct k a = 0) :
-    mixedPower (product F S) ⊤ k = ⊥ ∧
-    ∀ a : Fin (k + 1) → Contracted F S, positiveProduct k a = 0 := by
-  have hz : mixedPower (product F S) ⊤ k = ⊥ := by
-    rw [mixed_span]
-    apply le_antisymm _ bot_le
-    apply Submodule.span_le.mpr
-    rintro _ ⟨a, rfl⟩
-    simp [h a, delta]
-  refine ⟨hz, ?_⟩
-  intro a
-  have hm (j : ℕ) (b : Fin (j + 1) → Contracted F S) :
-      positiveProduct j b ∈ mixedPower (product F S) ⊤ j := by
-    induction j with
-    | zero => trivial
-    | succ j ih =>
-      exact Submodule.apply_mem_map₂ _ (Submodule.mem_top) (ih (fun i => b i.succ))
-  have hh := hm k a
-  rwa [hz, Submodule.mem_bot] at hh
-
-end Products
+open private delta_power algebra_nilpotent from
+  D5.S0.Certificates.Algebra.BergmanCyclicGrading
 
 /-- Four actual elements, with pq=r as the only nonzero product. -/
 inductive FourElement where

@@ -44,7 +44,7 @@ Lean statement: `D5/S0/Certificates/Algebra/BergmanCyclicGrading.nilpotency`
 
 *Commentary.*
 
-For every positive n, either presentation and every field F, all products of n+1 semigroup elements vanish. The nth power of the first generator is a nonzero terminal. In the actual contracted algebra, the whole subspace spanned by arbitrary products of n+1 factors is zero, and every such product vanishes. The nth power of the first generator's basis image is nonzero. Thus both nilpotency indices are exactly n+1. The algebra upper bound applies to arbitrary vectors, rather than only to powers of the cancellation vector. A support filtration by total degree proves this bound using the bilinear contracted multiplication.
+For every positive n, either presentation and every field F, all products of n+1 semigroup elements vanish. The nth power of the first generator is a nonzero terminal. In the actual contracted algebra, the whole subspace spanned by arbitrary products of n+1 factors is zero, and every such product vanishes. The nth power of the first generator's basis image is nonzero. Thus both nilpotency indices are exactly n+1. The algebra upper bound applies to arbitrary vectors, rather than only to powers of the cancellation vector. The span of the basis images of all semigroup products equals the corresponding mixed-power subspace. This general correspondence transfers the semigroup degree bound to arbitrary algebra vectors. The terminal-partition and noncommutative families consume this same correspondence.
 
 **Theorem 1.4 (Exact carrier sizes and contracted dimensions).**
 

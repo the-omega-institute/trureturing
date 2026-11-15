@@ -31,6 +31,75 @@ def positiveProduct {R : Type*} [Mul R] : (k : ℕ) → (Fin (k + 1) → R) → 
   | 0, a => a 0
   | k + 1, a => a 0 * positiveProduct k (fun i => a i.succ)
 
+section Products
+variable {F S : Type*} [Field F] [SemigroupWithZero S]
+
+private theorem delta_power (s : S) (k : ℕ) :
+    positivePower (delta F S s) k = delta F S (positivePower s k) := by
+  induction k with
+  | zero => rfl
+  | succ k ih => rw [positivePower, ih, delta_mul]; rfl
+
+private theorem delta_span : Submodule.span F (Set.range (delta F S)) = ⊤ := by
+  apply top_unique
+  intro x _
+  induction x using Finsupp.induction_linear with
+  | zero => exact Submodule.zero_mem _
+  | add x y hx hy => exact Submodule.add_mem _ (hx trivial) (hy trivial)
+  | single s r =>
+    have h := Submodule.smul_mem (Submodule.span F (Set.range (delta F S))) r
+      (Submodule.subset_span (Set.mem_range_self s.val))
+    simpa [delta, s.property, Finsupp.smul_single] using h
+
+private theorem mixed_span (k : ℕ) :
+    mixedPower (product F S) ⊤ k = Submodule.span F
+      (Set.range (fun a : Fin (k + 1) → S => delta F S (positiveProduct k a))) := by
+  induction k with
+  | zero =>
+    simp only [mixedPower, positiveProduct]
+    rw [show (Set.range fun a : Fin 1 → S => delta F S (a 0)) =
+      Set.range (delta F S) by
+        ext x; constructor
+        · rintro ⟨a, rfl⟩; exact ⟨a 0, rfl⟩
+        · rintro ⟨s, rfl⟩; exact ⟨fun _ => s, rfl⟩]
+    exact delta_span.symm
+  | succ k ih =>
+    rw [mixedPower, ih, ← delta_span (F := F) (S := S), Submodule.map₂_span_span]
+    congr 1
+    ext x
+    constructor
+    · rintro ⟨_, ⟨s, rfl⟩, _, ⟨a, rfl⟩, rfl⟩
+      refine ⟨Fin.cons s a, ?_⟩
+      exact (delta_mul _ _).symm
+    · rintro ⟨a, rfl⟩
+      refine ⟨delta F S (a 0), ⟨a 0, rfl⟩,
+        delta F S (positiveProduct k (fun i => a i.succ)),
+        ⟨fun i => a i.succ, rfl⟩, ?_⟩
+      exact delta_mul _ _
+
+private theorem algebra_nilpotent (k : ℕ)
+    (h : ∀ a : Fin (k + 1) → S, positiveProduct k a = 0) :
+    mixedPower (product F S) ⊤ k = ⊥ ∧
+    ∀ a : Fin (k + 1) → Contracted F S, positiveProduct k a = 0 := by
+  have hz : mixedPower (product F S) ⊤ k = ⊥ := by
+    rw [mixed_span]
+    apply le_antisymm _ bot_le
+    apply Submodule.span_le.mpr
+    rintro _ ⟨a, rfl⟩
+    simp [h a, delta]
+  refine ⟨hz, ?_⟩
+  intro a
+  have hm (j : ℕ) (b : Fin (j + 1) → Contracted F S) :
+      positiveProduct j b ∈ mixedPower (product F S) ⊤ j := by
+    induction j with
+    | zero => trivial
+    | succ j ih =>
+      exact Submodule.apply_mem_map₂ _ (Submodule.mem_top) (ih (fun i => b i.succ))
+  have hh := hm k a
+  rwa [hz, Submodule.mem_bot] at hh
+
+end Products
+
 /-- Degree of the actual normal form, with zero assigned degree zero. -/
 def degree {n q} : Model n q → ℕ
   | .zero => 0
@@ -79,55 +148,6 @@ private theorem product_degree {n q} (hn : 0 < n) (k : ℕ)
     have := ih (fun i => a i.succ) h₂
     omega
 
-private def filtration (F : Type*) [Field F] (n : ℕ) (q : Bool) (d : ℕ) :
-    Submodule F (Contracted F (Model n q)) :=
-  Finsupp.supported F F {s | d ≤ degree s.val}
-
-private theorem filtration_mul {F : Type*} [Field F] {n q i j} :
-    Submodule.map₂ (product F (Model n q)) (filtration F n q i)
-      (filtration F n q j) ≤ filtration F n q (i + j) := by
-  classical
-  rw [filtration, filtration, Finsupp.supported_eq_span_single,
-    Finsupp.supported_eq_span_single, Submodule.map₂_span_span]
-  apply Submodule.span_le.mpr
-  rintro _ ⟨_, ⟨a, ha, rfl⟩, _, ⟨b, hb, rfl⟩, rfl⟩
-  change Finsupp.single a (1 : F) * Finsupp.single b 1 ∈ _
-  rw [single_mul]
-  by_cases h : a.val * b.val = 0
-  · simp [h, delta]
-  · simp only [one_mul, one_smul, delta, dite_eq_right h]
-    apply Finsupp.single_mem_supported F 1
-    change i + j ≤ degree (a.val * b.val)
-    rw [degree_mul _ _ h]
-    exact Nat.add_le_add ha hb
-
-private theorem mixedPower_le {F : Type*} [Field F] {n q} (hn : 0 < n) (k : ℕ) :
-    mixedPower (product F (Model n q)) ⊤ k ≤ filtration F n q (k + 1) := by
-  have htop : (⊤ : Submodule F (Contracted F (Model n q))) = filtration F n q 1 := by
-    apply le_antisymm _ le_top
-    intro x hx
-    exact fun s hs => degree_pos hn s.val s.property
-  induction k with
-  | zero => exact le_of_eq htop
-  | succ k ih =>
-    exact (Submodule.map₂_le_map₂ (le_of_eq htop) ih).trans
-      (by simpa [Nat.add_comm] using
-        (filtration_mul (F := F) (n := n) (q := q) (i := 1) (j := k + 1)))
-
-private theorem algebra_product_mem {F : Type*} [Field F] {n q} (k : ℕ)
-    (a : Fin (k + 1) → Contracted F (Model n q)) :
-    positiveProduct k a ∈ mixedPower (product F (Model n q)) ⊤ k := by
-  induction k with
-  | zero => trivial
-  | succ k ih =>
-    exact Submodule.apply_mem_map₂ _ (Submodule.mem_top) (ih (fun i => a i.succ))
-
-private theorem delta_power {F : Type*} [Field F] {n q} (s : Model n q) (k : ℕ) :
-    positivePower (delta F (Model n q) s) k = delta F (Model n q) (positivePower s k) := by
-  induction k with
-  | zero => rfl
-  | succ k ih => rw [positivePower, ih, delta_mul]; rfl
-
 /-- All n+1-fold products vanish in both actual objects, while a generator's nth power survives. -/
 theorem nilpotency (F : Type*) [Field F] (n : ℕ) (hn : 0 < n) (q : Bool) :
     (∀ a : Fin (n + 1) → Model n q, positiveProduct n a = 0) ∧
@@ -135,23 +155,15 @@ theorem nilpotency (F : Type*) [Field F] (n : ℕ) (hn : 0 < n) (q : Bool) :
     mixedPower (product F (Model n q)) ⊤ n = ⊥ ∧
     (∀ a : Fin (n + 1) → Contracted F (Model n q), positiveProduct n a = 0) ∧
     positivePower (delta F (Model n q) (generator n q 0)) (n - 1) ≠ 0 := by
-  have halg : mixedPower (product F (Model n q)) ⊤ n = ⊥ := by
-    apply le_antisymm _ bot_le
-    intro x hx
-    apply Finsupp.ext
-    intro s
-    have hm := (Finsupp.mem_supported' F x).mp (mixedPower_le hn n hx)
-    exact hm s (by have := degree_le s.val; change ¬ n + 1 ≤ degree s.val; omega)
-  refine ⟨?_, ?_, halg, ?_, ?_⟩
-  · intro a
+  have hzero : ∀ a : Fin (n + 1) → Model n q, positiveProduct n a = 0 := by
+    intro a
     by_contra h
     have := product_degree hn n a h
     have := degree_le (positiveProduct n a)
     omega
+  have halg := algebra_nilpotent (F := F) n hzero
+  refine ⟨hzero, ?_, halg.1, halg.2, ?_⟩
   · rw [terminal_powers n hn]; intro h; cases h
-  · intro a
-    have h := algebra_product_mem n a
-    rwa [halg, Submodule.mem_bot] at h
   · classical
     rw [delta_power, terminal_powers n hn]
     simp [delta, show (Model.terminal (0 : Fin 3) : Model n q) ≠ 0 by

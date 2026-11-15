@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/Algebra/BergmanContractedAlgebra
    mirror-E: none(waiver:noncomputational)
    anchors: [D5/S0/Certificates/Algebra/BergmanQuestion15Refutation]
-   utility: kind=none
+   utility: none
    digest: Contracted semigroup multiplication is associative and functorial without commutativity. -/
 
 import D5.S0.Certificates.Algebra.BergmanQuestion15Refutation
@@ -130,9 +130,5 @@ noncomputable def mapHom (f : S → T) (hzero : f 0 = 0)
   map_mul' := map_mul f hzero hmul
 
 end Maps
-
-#print axioms contractedRing
-#print axioms map_mul
-#print axioms mapHom
 
 end D5.S0.Certificates.Algebra.BergmanContractedAlgebra

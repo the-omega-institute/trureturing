@@ -30,8 +30,11 @@ internal sealed class BergmanCyclicGradingDocument : IScribeDocumentDefinition
                 + "such product vanishes. The nth power of the first generator's basis "
                 + "image is nonzero. Thus both nilpotency indices are exactly n+1. "
                 + "The algebra upper bound applies to arbitrary vectors, rather than only "
-                + "to powers of the cancellation vector. A support filtration by total "
-                + "degree proves this bound using the bilinear contracted multiplication.", DescribeRole.Theorem),
+                + "to powers of the cancellation vector. The span of the basis images of all "
+                + "semigroup products equals the corresponding mixed-power subspace. "
+                + "This general correspondence transfers the semigroup degree bound "
+                + "to arbitrary algebra vectors. The terminal-partition and noncommutative "
+                + "families consume this same correspondence.", DescribeRole.Theorem),
             Node("cardinalities", "Exact carrier sizes and contracted dimensions", "cardinalities",
                 "For n at least two, the cyclic carrier has choose(n+2,3)+3 elements "
                 + "and the xyz-zero quotient has 3n(n-1)/2+4 elements. Over every field "

@@ -80,8 +80,9 @@ internal sealed class BergmanTerminalPartitionDocument : IScribeDocumentDefiniti
                 + "of that source field domain is used. A binomial expansion in the "
                 + "unitization proves that the two terminal coefficients of (x-y)^n "
                 + "are the signed sum and its negative; it does not adjoin a basis "
-                + "identity to the contracted algebra. A degree support filtration "
-                + "controls arbitrary products, not only powers of this witness.", DescribeRole.Theorem),
+                + "identity to the contracted algebra. The general product-span correspondence "
+                + "in BergmanCyclicGrading transfers the actual semigroup degree bound "
+                + "to arbitrary algebra products, including products of distinct vectors.", DescribeRole.Theorem),
             Paragraph(Text("For the application in the source, set n=35 and "
                 + "I={0,1,...,13,20,21}. The endpoints are separated. The alternating "
                 + "partial-sum identity gives the signed sum as -choose(34,13) "

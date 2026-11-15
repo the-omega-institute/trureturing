@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/Algebra/BergmanCyclicSemigroup
    mirror-E: none(waiver:noncomputational)
    anchors: [D5/S0/Certificates/Algebra/BergmanQuestion23Refutation]
-   utility: kind=none
+   utility: none
    digest: Cyclic terminal monomials and their xyz-zero quotient have complete normal forms. -/
 
 import D5.S0.Certificates.Algebra.BergmanQuestion23Refutation
