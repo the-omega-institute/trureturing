@@ -4,14 +4,23 @@ import D5.S3.Quantum.FourierCircuit.Core.Base.Accounting.ResourcePool
 import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audit of every event count of the original circuit. -/
+
 namespace Reg.D5.S3.Quantum.FourierCircuit.Resources
 open QuantumAlg QuantumAlg.QuantumFourierTransform.Source
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 noncomputable section
 
 abbrev Params := Σ oracles : OracleModel, Resource.Event (.quantum FourierGate.model oracles)
-abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature Params (fun _ => Nat) (fun _ => Nat)
+abbrev signature : Signature where
+  Params := Params
+  State _ := Nat
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
 
 def actual : Realization signature :=
   realize signature (fun _ p q => ResourcePool.count p.2 (circuit p.1 q).eventCost)
@@ -34,8 +43,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro _
   refine ⟨⟨.empty, .gate .hadamard⟩, 0, 1, ?_⟩
-  change ResourcePool.count (.gate .hadamard) (circuit .empty 0).eventCost ≠
-    ResourcePool.count (.gate .hadamard) (circuit .empty 1).eventCost
+  change ResourcePool.count (.gate FourierGate.Coordinate.hadamard) (circuit .empty 0).eventCost ≠
+    ResourcePool.count (.gate FourierGate.Coordinate.hadamard) (circuit .empty 1).eventCost
   rw [qftSource_circuit_event_count, qftSource_circuit_event_count]
   norm_num
 
@@ -43,7 +52,16 @@ def source_registration : Registration arena (type_of% @qftSource_circuit_event_
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@qftSource_circuit_event_count, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro j h
+        exact (h (by cases j; cases i; rfl)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
   dependence := dependence
 
 def registration :
