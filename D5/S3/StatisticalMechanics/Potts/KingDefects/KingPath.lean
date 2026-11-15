@@ -7,15 +7,15 @@
    digest: Exact orbit counts for paths with a unique monochromatic edge. -/
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
-escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229578.result)
+escape_witness: KingPath.tail_counts (parametric induction for zero/one equality tails; propagated through path_count and width_one_large to the k = 1 recurrence)
 errors: proof_shape=bind-only; consumers=KingPath.errors_eq,KingPath.path_count,KingPath.root_split,KingPath.tail_counts,KingPath.tail_split
 tail_split: proof_shape=bind-only; consumers=KingPath.tail_counts
-tail_counts: proof_shape=bind-only; consumers=KingPath.path_count
+tail_counts: proof_shape=content; consumers=KingPath.path_count
 bad: proof_shape=bind-only; consumers=KingPath.Words,KingPath.bad_map,KingPath.burnside,KingPath.canonical_orbits,KingPath.errors_eq,KingPath.fixed_words,KingPath.literal_count,KingPath.literal_words,KingPath.oneDefect_path,KingPath.path_count,KingPath.root_split,KingPath.width_one_large,KingPath.word_action
 errors_eq: proof_shape=bind-only; consumers=KingPath.root_split
 bad_map: proof_shape=bind-only; consumers=KingPath.canonical_orbits,KingPath.word_action
 root_split: proof_shape=bind-only; consumers=KingPath.path_count
-path_count: proof_shape=bind-only; consumers=KingPath.width_one_large
+path_count: proof_shape=content; consumers=KingPath.width_one_large
 Words: proof_shape=bind-only; consumers=KingPath.burnside,KingPath.canonical_orbits,KingPath.fixed_words,KingPath.width_one_large,KingPath.word_action
 word_action: proof_shape=bind-only; consumers=KingPath.burnside,KingPath.canonical_orbits,KingPath.fixed_words,KingPath.width_one_large
 canonical_orbits: proof_shape=bind-only; consumers=KingPath.burnside
@@ -28,7 +28,7 @@ oneDefect_path: proof_shape=bind-only; consumers=KingPath.literal_words
 normal_path: proof_shape=bind-only; consumers=KingPath.literal_words
 literal_words: proof_shape=bind-only; consumers=KingPath.literal_count
 literal_count: proof_shape=bind-only; consumers=KingPath.width_one_large
-width_one_large: proof_shape=bind-only; consumers=HardinA229578.result
+width_one_large: proof_shape=content; consumers=HardinA229578.result
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import Mathlib.GroupTheory.GroupAction.Quotient

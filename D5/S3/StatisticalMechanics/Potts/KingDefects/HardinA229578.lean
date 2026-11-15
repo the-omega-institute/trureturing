@@ -7,8 +7,8 @@
    digest: The seven empirical column recurrences of the literal OEIS A229578 table. -/
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
-escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229578.result)
-result: proof_shape=bind-only; consumers=none (registered settlement result)
+escape_witness: KingPath.tail_counts (parametric induction for zero/one equality tails; propagated through path_count and width_one_large to the k = 1 recurrence)
+result: proof_shape=content; consumers=none (registered settlement result)
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingClosedForm
