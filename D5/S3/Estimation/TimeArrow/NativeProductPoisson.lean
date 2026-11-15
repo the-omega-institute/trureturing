@@ -127,7 +127,7 @@ theorem native_product_poisson {M q s : ℕ} {r : ℝ}
       if referenceCounts o ∈ E then referenceWeight M r o else 0) at href
   have hb := categorical_product_poisson (signalRates M r) ha s E
   rw [hs, href] at hb
-  have hnative := native_joint_count_comparison hq hqm hr hr1 hc1 S m hm hmS E
+  have hnative := native_joint_count_comparison (s := s) hq hqm hr hr1 hc1 S m hm hmS E
   calc
     _ ≤ |(∑ o : Obs M s .path, if nativeCounts m o ∈ E then probability r .path S o else 0) -
           (∑ o : Fin s → Option (Fin q ⊕ Fin q),
