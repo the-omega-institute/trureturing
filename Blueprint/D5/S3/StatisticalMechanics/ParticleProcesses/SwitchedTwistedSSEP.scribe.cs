@@ -134,6 +134,12 @@ internal sealed class SwitchedTwistedSSEPDocument : IScribeDocumentDefinition
                         + "and conjugating by site permutations places it at any distinct pair. The projection of K onto its first factor contains H. "
                         + "Lift arbitrary h and k in H onto the coordinate pairs i,j and i,k. Their commutator acts only at i. "
                         + "Subgroup.commutator_le gives every derived-group operation at each coordinate independently, which proves sufficiency when three sites are available.")),
+                    Paragraph(Text("The coordinate homomorphisms are assembled with MonoidHom.pi and MonoidHom.mulSingle. "
+                        + "A paired coordinate operation updates a Pi.mulSingle function at the other coordinate. "
+                        + "The pair action is Prod.mulAction applied to the actions pulled back along the two projections by MulAction.compHom. "
+                        + "Equiv.Perm.exists_extending_pair supplies the site permutation, and Fin.exists_ne_and_ne_of_two_lt supplies distinct auxiliary sites. "
+                        + "Site and coordinate reachability subgroups are stabilizers of the union-component quotient map under arrowAction; Subgroup.copy retains their path predicates. "
+                        + "Relation.EqvGen.eqvGen_le extends an elementary-move invariant to the whole union component.")),
                     Paragraph(Text("For necessity, connectivity first forces H to be transitive, since all entries of a configuration remain within the H-orbit of a constant initial species. "
                         + "Fix a species a and form the normal subgroup P given by the join of the commutator of H with the stabilizer of a. "
                         + "The quotient H/P is abelian. The charge of h acting on a is the quotient class of h; the stabilizer inclusion makes this well defined. "
@@ -141,6 +147,7 @@ internal sealed class SwitchedTwistedSSEPDocument : IScribeDocumentDefinition
                         + "Writing an element of P as a derived element times a stabilizer element proves derived-group transitivity.")),
                     Paragraph(Text("For two sites the flip sends each paired generator to its inverse, hence normalizes K and fixes every diagonal pair. "
                         + "The union component of a diagonal configuration is exactly its K-orbit. The two-site criterion follows from orbit-stabilizer and the existing Mathlib pretransitivity characterization. "
+                        + "The stabilizer identification uses MulEquiv.subgroupCongr and Subgroup.subgroupOfEquivOfLe after identifying the subgroup predicates. "
                         + "The argument is uniform in the number of sites, the number of species and the two permutations."))),
                 DescribeRole.Theorem))));
 
