@@ -8,7 +8,7 @@ internal sealed class HealingUnboundedDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Potts/HealingUnbounded.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/StatisticalMechanics/choi2026healing");
+        LibraryNoteRef.Create("D5/L/SpinModels/choi2026healing");
     private static Formula V => F.Id("V");
     private static Formula G => F.Id("G");
     private static Formula X => F.Id("X");
