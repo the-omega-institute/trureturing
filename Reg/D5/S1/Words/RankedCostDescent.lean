@@ -2,6 +2,8 @@ import D5.S1.Words.RankedCostDescent
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! A dependent-family audit attempt retaining the full ranked-cost telescope. -/
+
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -22,7 +24,7 @@ structure Parameters where
   charge : States → Letters → Nat
 
 abbrev signature : Signature where
-  Params := Parameters.{u,v}
+  Params := Parameters.{u, v}
   State p := p.States
   Role := Unit
   finiteRole := inferInstance
@@ -31,19 +33,19 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def goalConclusion (p : Parameters.{u,v}) (s : p.States) : Prop :=
+def goalConclusion (p : Parameters.{u, v}) (s : p.States) : Prop :=
   ∃ w : List p.Letters, p.goal (w.foldl p.step s) ∧
     _root_.D5.S1.Words.RankedCostDescent.wordCost p.step p.charge s w +
       p.potential (w.foldl p.step s) ≤ p.potential s
 
-def actual : Realization signature.{u,v} :=
+def actual : Realization signature.{u, v} :=
   realize signature (fun _ p s => goalConclusion p s) (fun e => nomatch e)
 
-def rejected : Realization signature.{u,v} :=
+def rejected : Realization signature.{u, v} :=
   realize signature (fun _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature.{u,v}
+  signature := signature.{u, v}
   Law R := ∀ (X : Type u) (A : Type v) (step : X → A → X)
     (Goal : X → Prop) (rank potential : X → Nat)
     (charge : X → A → Nat) (start : X),
@@ -53,13 +55,13 @@ abbrev arena : Arena where
         potential (a.foldl step s) ≤ potential s) →
       R.readout () ⟨X, A, step, Goal, rank, potential, charge⟩ start
 
-private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
   exact h (ULift.{u} Unit) (ULift.{v} Unit) (fun s _ => s)
     (fun _ => True) (fun _ => 0) (fun _ => 0) (fun _ _ => 0) ⟨()⟩
     (fun _ hs => (hs trivial).elim)
 
-private abbrev separatingParameters : Parameters.{u,v} where
+private abbrev separatingParameters : Parameters.{u, v} where
   States := ULift.{u} Bool
   Letters := ULift.{v} Unit
   step s _ := s
@@ -69,22 +71,24 @@ private abbrev separatingParameters : Parameters.{u,v} where
   charge _ _ := 0
 
 private theorem false_readout :
-    goalConclusion separatingParameters.{u,v} ⟨false⟩ := by
+    goalConclusion separatingParameters.{u, v} ⟨false⟩ := by
   exact ⟨[], rfl, Nat.zero_le _⟩
 
 private theorem true_readout :
-    ¬ goalConclusion separatingParameters.{u,v} ⟨true⟩ := by
-  rintro ⟨w, hgoal, _⟩
-  have unchanged : w.foldl separatingParameters.step ⟨true⟩ = ⟨true⟩ := by
+    ¬ goalConclusion separatingParameters.{u, v} ⟨true⟩ := by
+  have unchanged (w : List separatingParameters.{u, v}.Letters) :
+      w.foldl separatingParameters.step ⟨true⟩ = ⟨true⟩ := by
     induction w with
     | nil => rfl
     | cons a w ih => exact ih
+  rintro ⟨w, hgoal, _⟩
   change (w.foldl separatingParameters.step ⟨true⟩).down = false at hgoal
-  rw [unchanged] at hgoal
+  rw [unchanged w] at hgoal
   cases hgoal
 
-def family : Registration arena.{u,v}
-    (type_of% (@_root_.D5.S1.Words.RankedCostDescent.exists_goal_word_cost_add_potential_le.{u,v})) where
+def family : Registration arena.{u, v}
+    (type_of% (
+      @_root_.D5.S1.Words.RankedCostDescent.exists_goal_word_cost_add_potential_le.{u, v})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S1.Words.RankedCostDescent.exists_goal_word_cost_add_potential_le,
@@ -106,9 +110,10 @@ def family : Registration arena.{u,v}
     exact true_readout (Eq.mp heq false_readout)
 
 noncomputable def audit : Contract.Registration
-    (@_root_.D5.S1.Words.RankedCostDescent.exists_goal_word_cost_add_potential_le.{u,v})
-    (type_of% actual.{u,v}) Unit Unit := {
-  unitName := `D5.S1.Words.RankedCostDescent.exists_goal_word_cost_add_potential_le.__information_unit,
+    (@_root_.D5.S1.Words.RankedCostDescent.exists_goal_word_cost_add_potential_le.{u, v})
+    (type_of% actual.{u, v}) Unit Unit := {
+  unitName :=
+    `D5.S1.Words.RankedCostDescent.exists_goal_word_cost_add_potential_le.__information_unit,
   realizationName := `Reg.D5.S1.Words.RankedCostDescent.family,
   realizationSource := none, generated := false,
   arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
