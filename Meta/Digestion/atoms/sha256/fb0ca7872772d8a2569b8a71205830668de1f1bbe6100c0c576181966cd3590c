@@ -1,0 +1,19 @@
+**定义 194.1（原截面与收缩）。** 保留190.1的同一有限维原域 $V,C,u,K,P,[0,u]$，$d=\dim V>1$，以及完整原二元关系 $\#$。对原纯点 $a$ 置
+
+$$
+W_a=\operatorname{span}N_a,\qquad
+S_a=\mathbb Ra+W_a,\qquad
+s_a=\dim S_a,\qquad c_a=d-s_a.
+\tag{194.1}
+$$
+
+当 $a\notin W_a$ 时，定义唯一的代数删除及其张量收缩
+
+$$
+\delta_a(ta+w)=w\quad(w\in W_a),\qquad
+\Lambda_a(s\otimes f)=f(\delta_as).
+\tag{194.2}
+$$
+
+这里 $\delta_a$ 的定义域仅为 $S_a$，没有输入正性或全域延拓。张量 $x\otimes f$ 仍按190.1只表示准备与读数的代数配对。
+

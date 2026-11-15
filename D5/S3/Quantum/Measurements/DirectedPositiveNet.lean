@@ -22,17 +22,18 @@ open scoped InnerProductSpace ComplexOrder
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-/-- A positive increasing directed net converges strongly to its operator-order supremum. -/
-theorem directed_positive_net_strong_of_isLUB
+/-- A positive increasing directed net with an operator upper bound has an actual
+operator-order least upper bound and converges strongly to it. -/
+theorem exists_lub_strong_of_bdd
     {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     {J : Type*} [Preorder J] [Nonempty J] [IsDirectedOrder J]
     (X : J → H →L[ℂ] H) (U : H →L[ℂ] H)
     (hpos : ∀ j, 0 ≤ X j) (hmono : Monotone X)
-    (hU : IsLUB (Set.range X) U) :
-    (∀ j, ‖X j‖ ≤ ‖U‖) ∧
-      (∀ v, Tendsto (fun j => X j v) atTop (𝓝 (U v))) := by
+    (hupper : ∀ j, X j ≤ U) :
+    ∃ S : H →L[ℂ] H, IsLUB (Set.range X) S ∧
+      (∀ j, ‖X j‖ ≤ ‖U‖) ∧
+      (∀ v, Tendsto (fun j => X j v) atTop (𝓝 (S v))) := by
   classical
-  have hupper (j : J) : X j ≤ U := hU.1 ⟨j, rfl⟩
   have hnorm (j : J) : ‖X j‖ ≤ ‖U‖ :=
     CStarAlgebra.norm_le_norm_of_le_of_nonneg (hupper j) (hpos j)
   -- The positive square estimate is used on actual differences X k - X i.
@@ -176,8 +177,23 @@ theorem directed_positive_net_strong_of_isLUB
       · intro v
         simpa only [sub_apply] using tendsto_const_nhds.sub (hS v)
       · exact Eventually.of_forall fun j => sub_nonneg.mpr (hV ⟨j, rfl⟩)
-  have hSU : S = U := hSLUB.unique hU
-  exact ⟨hnorm, fun v => by simpa only [hSU] using hS v⟩
+  exact ⟨S, hSLUB, hnorm, hS⟩
+
+/-- A positive increasing directed net converges strongly to its operator-order supremum. -/
+theorem directed_positive_net_strong_of_isLUB
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    {J : Type*} [Preorder J] [Nonempty J] [IsDirectedOrder J]
+    (X : J → H →L[ℂ] H) (U : H →L[ℂ] H)
+    (hpos : ∀ j, 0 ≤ X j) (hmono : Monotone X)
+    (hU : IsLUB (Set.range X) U) :
+    (∀ j, ‖X j‖ ≤ ‖U‖) ∧
+      (∀ v, Tendsto (fun j => X j v) atTop (𝓝 (U v))) := by
+  obtain ⟨S, hS, hn, ht⟩ := exists_lub_strong_of_bdd X U hpos hmono
+    (fun j => hU.1 ⟨j, rfl⟩)
+  have he : S = U := hS.unique hU
+  exact ⟨hn, fun v => by simpa only [he] using ht v⟩
+
+#print axioms exists_lub_strong_of_bdd
 
 #print axioms directed_positive_net_strong_of_isLUB
 

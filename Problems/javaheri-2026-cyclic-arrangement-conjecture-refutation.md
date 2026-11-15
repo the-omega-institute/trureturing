@@ -122,15 +122,20 @@ make finite arithmetic screening itself a Lean proof.
   the weaker upper bound `N(a,b) ≤ N*(a,b)` (Theorem 1.2) and restricted cases
   of equality: `(1,1)`, the coordinate axes, and the triangle region with
   `N*=4` (Section 8). Their independent formal verification remains open
-  here; `result` does not prove them. Whether a strict threshold inequality
-  or a further parameter restriction suffices globally is also open, as are
-  a corrected formula and the actual value of `N(6,1)`.
-- **Open — effects on other source results and questions:** Section 8 uses
+  here; `result` does not prove them. A corrected validity region, including
+  a quantitative description within the strict-threshold region, and the
+  actual value of `N(6,1)` remain open here.
+- **Refuted — separate four-variable prediction:** Section 8 uses
   Conjecture 1.3 and the square-root triangle lemma to predict the exact
   parameter region for validity in dimension `4`. The refuted conjecture
-  no longer supplies that prediction's justification; the prediction itself
-  remains open here. The numerical observations in that section supply no
-  replacement proof. The source also gives separate arguments for
+  no longer supplies that prediction's justification. The full weak
+  four-variable prediction is independently refuted by
+  `D5/S0/Certificates/Polynomials/JavaheriFourVariableTriangleRefutation.result`
+  at `(a,b)=(4,1)` and `(10,9,7,7)`, with exact excess `327`; its separate
+  [dossier](javaheri-2026-four-variable-square-root-triangle-refutation.md)
+  states the complete assertion and surviving boundaries. This is a
+  separate result from the dimension-three refutation above. The source
+  also gives separate arguments for
   finiteness/descent, the triangle-region dimension-four inequality, the
   `(1,1)` case, ray monotonicity, and the arrangement/volume bounds. This
   settlement does not verify those arguments or settle those statements;

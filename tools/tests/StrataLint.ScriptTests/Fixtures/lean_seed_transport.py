@@ -79,7 +79,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
                     ["git", "-C", str(self.root), "status", "--porcelain"], text=True),
                 FAKE_NATIVE_TRACKED_STATUS=subprocess.check_output(
                     ["git", "-C", str(self.root), "status", "--porcelain", "--untracked-files=no"], text=True))
-        return {**os.environ, "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
+        return {**os.environ, "FULL_BUILD": "1", "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
             "HOME": str(self.root), "FAKE_BUILD_LOG": str(self.root / "build-runs"),
             "FAKE_REMOTE": str(self.remote), "GITHUB_SHA": head, "GITHUB_RUN_ID": run,
             "GITHUB_ACTIONS": "true", "FAKE_DEV_BRANCH": json.dumps(dev),
@@ -91,6 +91,97 @@ exit "${FAKE_BUILD_EXIT:-0}"
     def transport(self, verb, run="123", arguments=(), **extra):
         return subprocess.run(["bash", str(self.publisher), verb, "--repository", str(self.root), *arguments],
                               text=True, capture_output=True, env=self.transport_environment(run, **{"GITHUB_ACTIONS": "false" if verb == "fetch" else "true", **extra}))
+
+    def archive_quota(self, limit):
+        seed = random.Random(31).randbytes(3 * 1024 * 1024)
+        (self.root / ".lake/build/lib/lean/D5/A.olean").write_bytes(seed)
+        owner = self.publisher.with_name("lean_cache_release.py")
+        owner.write_text(owner.read_text().replace("CHUNK_BYTES = 1610612736", "CHUNK_BYTES = 1048576"))
+        self.commit_fixture()
+        # Enforce resident space before every actual staging write. A completed
+        # archive plus its parts must not fit, while one compressed copy does.
+        write(self.bin / "sitecustomize.py", '''
+import errno, os, pathlib
+original_open = pathlib.Path.open
+limit = int(os.environ["FAKE_ARCHIVE_QUOTA"])
+peak = pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "archive-peak"
+class QuotaOutput:
+    def __init__(self, output, path): self.output, self.path = output, path
+    def __getattr__(self, name): return getattr(self.output, name)
+    def __enter__(self): return self
+    def __exit__(self, *args): return self.output.__exit__(*args)
+    def flush(self):
+        self.output.flush()
+        if os.environ.get("FAKE_ARCHIVE_FAIL") == "flush": raise OSError(errno.EIO, "archive flush failed")
+    def close(self):
+        self.output.close()
+        if os.environ.get("FAKE_ARCHIVE_FAIL") == "close": raise OSError(errno.EIO, "archive close failed")
+    def write(self, block):
+        if os.environ.get("FAKE_ARCHIVE_FAIL") == "short": block = block[:4093]
+        self.output.flush()
+        resident = sum(p.stat().st_size for p in self.path.parent.glob("lean-build.tgz*"))
+        requested = resident + len(block)
+        if requested > limit: raise OSError(errno.ENOSPC, "archive staging quota exhausted")
+        with original_open(peak, "a") as log: log.write(str(requested) + "\\n")
+        return self.output.write(block)
+def open_path(path, mode="r", *args, **kwargs):
+    output = original_open(path, mode, *args, **kwargs)
+    if mode == "wb" and path.parent.name.startswith("lean-release-") and path.name.startswith("lean-build.tgz"):
+        return QuotaOutput(output, path)
+    return output
+pathlib.Path.open = open_path
+''')
+        return seed, dict(PYTHONPATH=str(self.bin), FAKE_ARCHIVE_QUOTA=str(limit))
+
+    def test_multipart_publication_fits_one_archive_staging_quota_and_restores(self):
+        quota = 4 * 1024 * 1024
+        seed, environment = self.archive_quota(quota)
+        result = self.transport("publish", **environment)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"published"', result.stdout)
+        snapshot = next(self.remote.iterdir())
+        manifest = json.loads((snapshot / "manifest.json").read_text())
+        self.assertGreater(len(manifest["parts"]), 1)
+        self.assertLess(manifest["archive_bytes"], quota)
+        self.assertGreater(2 * manifest["archive_bytes"], quota)
+        peak = max(map(int, (self.root / "archive-peak").read_text().splitlines()))
+        self.assertGreaterEqual(peak, manifest["archive_bytes"])
+        self.assertLessEqual(peak, quota)
+        shutil.rmtree(self.root / ".lake/build")
+        restored = self.transport("fetch")
+        self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
+        self.assertIn('"status":"unpacked"', restored.stdout)
+        self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_bytes())
+
+    def test_archive_staging_enospc_fails_before_release_creation(self):
+        seed, environment = self.archive_quota(1024 * 1024)
+        result = self.transport("publish", **environment)
+        self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"failed"', result.stdout)
+        self.assertIn("archive staging quota exhausted", result.stdout)
+        self.assertEqual([], list(self.remote.iterdir()))
+        self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_bytes())
+
+    def test_archive_flush_and_close_fail_before_release_creation(self):
+        seed, environment = self.archive_quota(4 * 1024 * 1024)
+        for phase in ("flush", "close"):
+            with self.subTest(phase=phase):
+                result = self.transport("publish", **environment, FAKE_ARCHIVE_FAIL=phase)
+                self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"failed"', result.stdout)
+                self.assertIn("archive " + phase + " failed", result.stdout)
+                self.assertEqual([], list(self.remote.iterdir()))
+                self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_bytes())
+
+    def test_short_archive_writes_preserve_digests_and_restored_bytes(self):
+        seed, environment = self.archive_quota(4 * 1024 * 1024)
+        result = self.transport("publish", **environment, FAKE_ARCHIVE_FAIL="short")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"published"', result.stdout)
+        shutil.rmtree(self.root / ".lake/build")
+        restored = self.transport("fetch")
+        self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
+        self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_bytes())
 
     def linked_checkout(self):
         self.main_checkout = self.root.resolve()
@@ -749,9 +840,10 @@ subprocess.run = transfer_run
         self.assertFalse((self.root / ".lake/build").exists())
 
     def preparation_deadline_probe(self, phase):
-        # Small incompressible material reaches archive hashing and multipart
-        # splitting without allocating a production-sized Release asset.
-        (self.root / ".lake/build/lib/lean/D5/A.olean").write_bytes(random.Random(31).randbytes(3 * 1024 * 1024))
+        # Small inputs exercise compressed buffering, multipart output and final
+        # close without allocating a production-sized Release asset.
+        payload = bytes(3 * 1024 * 1024) if phase == "archive-compressible" else random.Random(31).randbytes(3 * 1024 * 1024)
+        (self.root / ".lake/build/lib/lean/D5/A.olean").write_bytes(payload)
         owner = self.publisher.with_name("lean_cache_release.py")
         owner.write_text(owner.read_text().replace("CHUNK_BYTES = 1610612736", "CHUNK_BYTES = 2097152"))
         self.commit_fixture()
@@ -760,29 +852,37 @@ subprocess.run = transfer_run
             fixture.write('''
 import tarfile
 phase = os.environ["FAKE_PREPARATION_PHASE"]
-archive_opens = 0
 original_open, original_copy = pathlib.Path.open, tarfile.copyfileobj
+def expire(count):
+    global clock
+    with original_open(pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "preparation-reads", "a") as log:
+        log.write(str(count) + "\\n")
+    clock = 2
 class TimedReader:
     def __init__(self, source): self.source = source
     def __getattr__(self, name): return getattr(self.source, name)
     def __enter__(self): return self
     def __exit__(self, *args): return self.source.__exit__(*args)
     def read(self, size=-1):
-        global clock
         block = self.source.read(size)
-        if block:
-            with original_open(pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "preparation-reads", "a") as log:
-                log.write(str(len(block)) + "\\n")
-            clock = 2
+        if block: expire(len(block))
         return block
+class TimedOutput:
+    def __init__(self, output, path): self.output, self.path = output, path
+    def __getattr__(self, name): return getattr(self.output, name)
+    def write(self, block):
+        count = self.output.write(block)
+        if block and phase == "write": expire(count)
+        return count
+    def close(self):
+        was_closed = self.output.closed
+        self.output.close()
+        if not was_closed and ((phase == "rollover" and self.path.name.endswith("part-00"))
+                               or (phase == "close" and self.path.name.endswith("part-01"))): expire(1)
 def open_path(path, mode="r", *args, **kwargs):
-    global archive_opens
     source = original_open(path, mode, *args, **kwargs)
-    if mode == "rb" and path.name == "lean-build.tgz":
-        archive_opens += 1
-        if (phase, archive_opens) in (("hash", 1), ("split", 2)): return TimedReader(source)
-    if mode == "rb" and path.name == "lean-build.tgz.part-00" and phase == "part-hash":
-        return TimedReader(source)
+    if mode == "wb" and path.parent.name.startswith("lean-release-") and path.name.startswith("lean-build.tgz"):
+        return TimedOutput(source, path)
     return source
 def copy(source, target, *args, **kwargs):
     if phase == "archive" and str(getattr(source, "name", "")).endswith("A.olean"):
@@ -791,7 +891,7 @@ def copy(source, target, *args, **kwargs):
 pathlib.Path.open, tarfile.copyfileobj = open_path, copy
 ''')
         (self.root / "preparation-reads").unlink(missing_ok=True)
-        return {**environment, "FAKE_PREPARATION_PHASE": phase}
+        return {**environment, "FAKE_PREPARATION_PHASE": phase.split("-")[0]}
 
     def assert_preparation_stopped(self, result, status):
         self.assertEqual(status, result.returncode, result.stdout + result.stderr)
@@ -802,10 +902,14 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertLessEqual(consumed, 1024 * 1024, "local preparation continued reading after its deadline")
         self.assertEqual([], list(self.remote.iterdir()))
 
-    def test_publication_deadline_stops_local_archive_hash_and_split_work(self):
-        for phase in ("archive", "hash", "split", "part-hash"):
+    def test_publication_deadline_stops_archive_reads_writes_rollover_and_close(self):
+        for phase in ("archive", "write", "rollover", "close"):
             with self.subTest(phase=phase):
-                self.assert_preparation_stopped(self.transport("publish", **self.preparation_deadline_probe(phase)), 0)
+                self.assert_preparation_stopped(self.transport("publish", **self.preparation_deadline_probe(phase)), 2)
+
+    def test_compressible_archive_deadline_stops_reads_before_next_output(self):
+        self.assert_preparation_stopped(
+            self.transport("publish", **self.preparation_deadline_probe("archive-compressible")), 2)
 
     def test_hanging_direct_fetch_is_bounded_and_fallback_preserves_build_exit(self):
         self.assertEqual(0, self.transport("publish").returncode)
@@ -978,6 +1082,14 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertEqual(0, address.returncode, address.stdout + address.stderr)
         report_path = "build/lean-inspector/report.zip"
         write(self.root / ".lake" / report_path, '{"material":"report-seed"}\n')
+        setup_paths = ["build/A.setup.json", "build/ir/D5/A.setup.json",
+                       "build/reg/ir/Reg/A.setup.json", "build/lean-inspector/producer/ir/A.setup.json"]
+        for path in setup_paths:
+            write(self.root / ".lake" / path, "compiler setup")
+        retained_paths = ["build/ir/D5/A.c", "build/lib/lean/D5/A.trace",
+                          "build/ir/D5/A.setup.json.hash"]
+        for path in retained_paths:
+            write(self.root / ".lake" / path, path)
         saved = self.transport("publish")
         self.assertEqual(0, saved.returncode, saved.stdout + saved.stderr)
         self.assertIn('"status":"published"', saved.stdout.replace(" ", ""))
@@ -994,12 +1106,21 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         with tarfile.open(snapshot / "lean-build.tgz") as archive:
             self.assertEqual(b"locally-produced-olean", archive.extractfile("build/lib/lean/D5/A.olean").read())
             self.assertEqual(b'{"material":"report-seed"}\n', archive.extractfile(report_path).read())
+            for path in setup_paths:
+                self.assertNotIn(path, archive.getnames())
+                self.assertEqual("compiler setup", (self.root / ".lake" / path).read_text())
+            for path in retained_paths:
+                self.assertEqual(path.encode(), archive.extractfile(path).read())
         shutil.rmtree(self.root / ".lake/build")
         write(self.root / "D5/A.lean", "def a := 333\n")
         restored = self.transport("fetch", GITHUB_SHA="e"*40)
         self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
         self.assertEqual('{"material":"report-seed"}\n', (self.root / ".lake" / report_path).read_text())
+        for path in setup_paths:
+            self.assertFalse((self.root / ".lake" / path).exists())
+        for path in retained_paths:
+            self.assertEqual(path, (self.root / ".lake" / path).read_text())
         self.assertIn('"mode":"partition"', restored.stdout.replace(" ", ""))
 
     def test_missing_corrupt_and_cross_partition_are_misses_without_target_writes(self):
