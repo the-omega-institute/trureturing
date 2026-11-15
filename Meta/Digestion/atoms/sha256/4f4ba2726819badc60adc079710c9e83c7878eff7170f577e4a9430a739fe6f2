@@ -1,0 +1,33 @@
+**命题 6.3（The independently supplied coherent-history domain is a different domain）。** Let $\mathcal H_N$ contain all legal length-$N$ paths with their roots, and supply an independent history-label space with orthonormal basis $|h\rangle$. The map
+
+$$
+T_N:\mathbb C^{\mathcal H_N}\otimes K
+\longrightarrow\mathcal C\otimes K\otimes E_4^{\otimes N},
+\qquad
+T_N(|h\rangle\psi)=|i_N\rangle U_h\psi\otimes r_h
+\tag{6.5}
+$$
+
+is an isometry on that whole domain, including arbitrary coherent histories, internal inputs and untouched reference extensions. The actual $H$-input iteration (6.2) supplies a weighted subspace of its image. For $N\ge1$ this is a proper subspace and does not freely supply an arbitrary vector in the larger history-input domain; at $N=0$ the domains identify with $H$. This construction does not provide a general environment-alone history decoder.
+
+**证明。** Theorem 6.2 gives orthogonality of $q_h$ for $h\ne k$, irrespective of internal vectors. For $h=k$, $U_h$ is unitary and preserves every internal inner product. Thus
+
+$$
+\langle T_N(|h\rangle\psi),T_N(|k\rangle\phi)\rangle
+=\delta_{hk}\langle\psi,\phi\rangle.
+$$
+
+Linearity and tensoring with $I_R$ give the full isometry assertion. Its adjoint is a mathematical inverse on its image: it maps the encoded path with $U_h\psi$ back to $|h\rangle\psi$. Physical coherent reversal requires all carriers, phase-compatible controls and the permitted inverse; a classical path measurement instead removes between-path coherences.
+
+The actual iteration factors as $V_4^{[N]}=T_N A_N$, where
+
+$$
+A_N(|i\rangle\psi)
+=\sum_{h\in\mathcal H_N(i)}\sqrt{w(h)}\,|h\rangle\psi.
+\tag{6.6}
+$$
+
+Row normalization makes $A_N$ an isometry, but its domain is $H$. At $N=1$ it has only the ten input dimensions, whereas the independent history-internal domain has $15\cdot2=30$ dimensions. Every vertex has at least two positive successors, so $|\mathcal H_N|\ge5\cdot2^N$; for each $N\ge1$ the independent domain has dimension strictly greater than ten. At $N=0$, $A_0$ is the identification $|i\rangle\psi\mapsto|(i)\rangle\psi$. Thus for $N\ge1$ existence of (6.5) does not acquire its extra independent input degrees of freedom. This explicitly separates arbitrary history-domain recovery from the generated image of a common physical iteration, while retaining the empty-history boundary.
+
+Finally, already at $N=1$ with known root $0$, the edges $0\to0$ and $0\to1$ have the identical record $g_0$ and both have positive probability. $E_4$ alone cannot distinguish them. The terminal successor is essential to this construction's exact path decoder. At $N=0$, all environment records are the same empty scalar; the actually read terminal configuration, rather than that scalar, distinguishes different roots. $\square$
+

@@ -275,7 +275,7 @@ private theorem mulVec_child (n : ℕ) (q : Router (n + 1) → ℝ)
     simp [complexMatrix, coordinates, Sum.elim, matrix, childCoeff, childValues,
       Fintype.sum_prod_type, Fintype.sum_bool]
 
-private theorem kernel_iff_equations (n : ℕ) (q : Router n → ℝ)
+theorem kernel_iff_equations (n : ℕ) (q : Router n → ℝ)
     (x : Coeff n) (c : Node n → ℂ) :
     (complexMatrix n q).mulVec (coordinates n x c) = 0 ↔ Equations n q x c := by
   induction n with

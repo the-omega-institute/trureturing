@@ -1,0 +1,27 @@
+**定理 185.5（无需实际线恢复的单系统分类）。** 在同一完整有限维实原域、$d>1$ 内，实际 L2、$\mathsf E_2$ 及全部原纯点的 RJ，当且仅当存在保持原单位的整个锥同构
+
+$$
+\Phi:V\overset\sim\longrightarrow\operatorname{Herm}_n(\mathbb C),\qquad
+\Phi(C)=\operatorname{PSD}_n,\qquad
+u=\operatorname{Tr}\circ\Phi,\quad n\ge2.
+\tag{185.7}
+$$
+
+同样的分类适用于额外给定任意忠实有限谱截面表示 $A:V\hookrightarrow\operatorname{Herm}_m(\mathbb C)$、$C=\{v:A(v)\succeq0\}$ 的原域：此时只需另检验实际 L2与全纯 RJ，不需 ROG、原纯像秩一或矩阵大小上界。
+
+证明。184.6逐纯点先给全部 $\mathsf Z_2$；178.2于是供应 NC。185.3给全部 AD。现已准确达到 [XIII162.10][Q177XIII] 的 L2、NC、AD 入口，直接消费其完整复 PSD 分类，不从 Hilbert-ball 名称单独借来 projectivity。反向标准复矩阵中 $Q_a(X)=(I-a)X(I-a)$ 满足184.5；二维支持面由 $X\mapsto\operatorname{Tr}(P_{S^\perp}X)$ 暴露，故实际 L2及 $\mathsf E_2$ 均成立。
+
+谱截面分支只需供应 $\mathsf E_2$。直接复用 [VI94.2证明中的(94.8)][Q185VI] 的最小面支持公式；它的该步证明不使用 ROG：对原实际面 $F$ 的相对内点 $z$，令 $S=\operatorname{ran}A(z)$，则
+
+$$
+\operatorname{cone}F
+=\{v\in C:\operatorname{ran}A(v)\subseteq S\},\qquad
+k_F(v)=\operatorname{Tr}\bigl(P_{S^\perp}A(v)\bigr)\ge0,
+\quad K\cap\ker k_F=F.
+\tag{185.8}
+$$
+
+支持包含的一侧为 PSD 面性质；另一侧用 $A(z)$ 在 $S$ 上正定，取充分小 $\varepsilon>0$ 使 $A(z)-\varepsilon A(v)\succeq0$，再用原截面定义及实际面性质。对 $F=K$ 可取零测试。该成熟谱截面工具只在本受限分类的证明中使用，不重报为新增支持公式；共同矩阵表示仍是这一分支的明写前提，不称由裸原关系内生。
+
+取得(185.7)以后，才能运输复 PSD 的支持面规则，恢复原 $\mathsf{PL}$、全部 $Q_a(C)=\operatorname{cone}D_a$、唯一性及184.7的完整双侧互补；这些后果均未参与185.2—185.3的前件。$\square$
+
