@@ -60,7 +60,8 @@ internal sealed class KernelRelativeDependencyEmptinessDocument : IScribeDocumen
                 + "type is the ordinary implication/falsity Formula syntax, with natural-number "
                 + "variables, syntactic negation and Boolean valuation semantics.", DescribeRole.Definition),
             Node("Q", "The first tautology", Disp(Seq(
-                F.Id("Q"), Sp, Eq, Sp, Open, Neg, F.Id("p"), Sp, Implies, Sp, Neg, F.Id("p"), Close)),
+                F.Id("Q"), Sp, Eq, Sp, Open, Neg, Sp, F.Id("p"), Sp, Implies, Sp,
+                Neg, Sp, F.Id("p"), Close)),
                 "Here p is variable zero. Disjunction A or B is represented by not A implies B; "
                 + "therefore Q is precisely the implication/falsity encoding of p or not p. "
                 + "The two negated occurrences expand to implication into falsity.", DescribeRole.Definition),
