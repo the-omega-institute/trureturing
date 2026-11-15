@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Algebraic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PowerSeries;
 
 internal sealed class BalaA119370ExponentialDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S1/Recurrence/Algebraic/BalaA119370Exponential.";
+    private const string Prefix = "D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Certificates/bala2024a119370");
     private static readonly LibraryNoteRef Gessel = LibraryNoteRef.Create("D5/L/PermutationPatterns/gessel2016lagrange");
 

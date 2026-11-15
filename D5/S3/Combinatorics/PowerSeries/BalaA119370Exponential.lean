@@ -1,6 +1,6 @@
-/- GID: D5/S1/Recurrence/Algebraic/BalaA119370Exponential
+/- GID: D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential
    generality: I
-   mirror-B: D5/B/S1/Recurrence/Algebraic/BalaA119370Exponential
+   mirror-B: D5/B/S3/Combinatorics/PowerSeries/BalaA119370Exponential
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
@@ -20,7 +20,7 @@ open PowerSeries Finset
 open D5.S1.Recurrence.Invariants.UnitReversionSquareParity
 open D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
 
-namespace D5.S1.Recurrence.Algebraic.BalaA119370Exponential
+namespace D5.S3.Combinatorics.PowerSeries.BalaA119370Exponential
 
 /-- The generating function specified independently by the original quadratic. -/
 def IsSourceSeries (A : PowerSeries ℚ) : Prop :=
@@ -391,4 +391,4 @@ theorem result :
       exact (hu A hA).trans (hu (1 + X * b) hstar).symm
     exact ⟨hAe, fun m => congrArg (coeff m) hAe, branch_of_source A hA⟩
 
-end D5.S1.Recurrence.Algebraic.BalaA119370Exponential
+end D5.S3.Combinatorics.PowerSeries.BalaA119370Exponential

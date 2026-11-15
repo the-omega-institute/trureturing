@@ -1,4 +1,4 @@
-import D5.S1.Recurrence.Algebraic.BalaA119370Exponential
+import D5.S3.Combinatorics.PowerSeries.BalaA119370Exponential
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -6,11 +6,11 @@ import LeanInformationAuditInterface.Contract.Registration
 
 open PowerSeries Finset
 open scoped PowerSeries.WithPiTopology
-open _root_.D5.S1.Recurrence.Algebraic.BalaA119370Exponential
+open _root_.D5.S3.Combinatorics.PowerSeries.BalaA119370Exponential
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
-namespace Reg.D5.S1.Recurrence.Algebraic.BalaA119370Exponential
+namespace Reg.D5.S3.Combinatorics.PowerSeries.BalaA119370Exponential
 noncomputable section
 
 private local instance : UniformSpace ℚ := ⊥
@@ -66,8 +66,8 @@ def family : Registration arena (type_of% @result) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S1.Recurrence.Algebraic.BalaA119370Exponential.resultUnit
-  realizationName := `Reg.D5.S1.Recurrence.Algebraic.BalaA119370Exponential.family
+  unitName := `Reg.D5.S3.Combinatorics.PowerSeries.BalaA119370Exponential.resultUnit
+  realizationName := `Reg.D5.S3.Combinatorics.PowerSeries.BalaA119370Exponential.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -83,7 +83,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S1.Recurrence.Algebraic.BalaA119370Exponential
+    owner := `D5.S3.Combinatorics.PowerSeries.BalaA119370Exponential
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -98,4 +98,4 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 
 end
-end Reg.D5.S1.Recurrence.Algebraic.BalaA119370Exponential
+end Reg.D5.S3.Combinatorics.PowerSeries.BalaA119370Exponential

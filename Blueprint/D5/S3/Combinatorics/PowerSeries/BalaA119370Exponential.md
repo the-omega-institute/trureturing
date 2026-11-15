@@ -10,7 +10,7 @@ All series have rational coefficients. The topology used to express HasSum is co
 
 $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{IsSourceSeries}\left(A\right)) \iff ((\operatorname{constantCoeff}\left(A\right) = 1) \land (A = 1 + X \cdot (A)^{2} + (X)^{2} \cdot \left((A)^{2} - A\right)))$$
 
-*Formalization.* `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.IsSourceSeries` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.IsSourceSeries` (`✓ std3`).
 
 *Citation.* Peter Bala; Paul D. Hanna (2024). *OEIS A119370, Bala's formal-exponential identity conjecture*. URL: <https://oeis.org/A119370>.
 
@@ -22,7 +22,7 @@ OEIS A119370, revision 37, NAME: "G.f. satisfies A(x) = 1 + x*A(x)^2 + x^2*(A(x)
 
 $$\forall n: \mathbb{N}, \operatorname{row}\left(n\right) = \operatorname{Finset.sum}\left(\operatorname{range}\left(n + 1\right), (fun k: \mathbb{N} \mapsto \operatorname{C}\left(((\operatorname{Nat.choose}\left(n, k\right): \mathbb{Q}))^{2}\right) \cdot (1 + X)^{k})\right)$$
 
-*Formalization.* `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.row` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.row` (`✓ std3`).
 
 *Citation.* Peter Bala; Paul D. Hanna (2024). *OEIS A119370, Bala's formal-exponential identity conjecture*. URL: <https://oeis.org/A119370>.
 
@@ -34,7 +34,7 @@ The finite sum in Bala's FORMULA runs from k=0 through k=n. Its scalar binomial 
 
 $$\forall m: \mathbb{N}, \operatorname{coeff}\left(m, logarithm\right) = \operatorname{Finset.sum}\left(\operatorname{Icc}\left(1, m\right), (fun n: \mathbb{N} \mapsto \frac{1}{(n: \mathbb{Q})} \cdot \operatorname{coeff}\left(m - n, \operatorname{row}\left(n\right)\right))\right)$$
 
-*Formalization.* `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.logarithm` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.logarithm` (`✓ std3`).
 
 *Citation.* Peter Bala; Paul D. Hanna (2024). *OEIS A119370, Bala's formal-exponential identity conjecture*. URL: <https://oeis.org/A119370>.
 
@@ -46,7 +46,7 @@ This defines the whole series L by its degree-m coefficient. Only positive indic
 
 $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{formalExp}\left(f\right) = \operatorname{PowerSeries.subst}\left(f, \operatorname{PowerSeries.exp}\left(\mathbb{Q}\right)\right)$$
 
-*Formalization.* `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.formalExp` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.formalExp` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -58,7 +58,7 @@ At a zero-constant inner series f, this is the admissible substitution of f into
 
 $$discriminant = (1 + (X)^{2})^{2} - 4 \cdot X \cdot \left(1 + X\right)$$
 
-*Formalization.* `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.discriminant` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.discriminant` (`✓ std3`).
 
 *Citation.* Peter Bala; Paul D. Hanna (2024). *OEIS A119370, Bala's formal-exponential identity conjecture*. URL: <https://oeis.org/A119370>.
 
@@ -70,7 +70,7 @@ OEIS A119370, FORMULA: "A(x) = ((1+x^2) - sqrt( (1+x^2)^2 - 4*x*(1+x) ))/(2*x*(1
 
 $$\forall S: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{printedBranch}\left(S\right) = \operatorname{PowerSeries.mk}\left((fun n: \mathbb{N} \mapsto \operatorname{coeff}\left(n + 1, 1 + (X)^{2} - S\right))\right) \cdot (2 \cdot \left(1 + X\right))^{-1}$$
 
-*Formalization.* `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.printedBranch` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.printedBranch` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -82,11 +82,11 @@ After proving the numerator divisible by X, its coefficient shift removes that f
 
 $$(\exists! A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{IsSourceSeries}\left(A\right)) \land ((\operatorname{constantCoeff}\left(logarithm\right) = 0) \land ((\operatorname{HasSum}\left((fun n: \mathbb{N} \mapsto \operatorname{C}\left(\frac{1}{(n + 1: \mathbb{Q})}\right) \cdot \operatorname{row}\left(n + 1\right) \cdot (X)^{n + 1}), logarithm\right)) \land ((\forall m: \mathbb{N}, \forall n: \mathbb{N}, (m<n) \Rightarrow (\operatorname{coeff}\left(m, \operatorname{C}\left(\frac{1}{(n: \mathbb{Q})}\right) \cdot \operatorname{row}\left(n\right) \cdot (X)^{n}\right) = 0)) \land ((\operatorname{HasSum}\left((fun j: \mathbb{N} \mapsto \operatorname{C}\left(\frac{1}{(\operatorname{Nat.factorial}\left(j\right): \mathbb{Q})}\right) \cdot (logarithm)^{j}), \operatorname{formalExp}\left(logarithm\right)\right)) \land ((\forall m: \mathbb{N}, \forall j: \mathbb{N}, (m<j) \Rightarrow (\operatorname{coeff}\left(m, (logarithm)^{j}\right) = 0)) \land ((\forall m: \mathbb{N}, \operatorname{coeff}\left(m, \operatorname{formalExp}\left(logarithm\right)\right) = \operatorname{Finset.sum}\left(\operatorname{range}\left(m + 1\right), (fun j: \mathbb{N} \mapsto \frac{1}{(\operatorname{Nat.factorial}\left(j\right): \mathbb{Q})} \cdot \operatorname{coeff}\left(m, (logarithm)^{j}\right))\right)) \land (\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{IsSourceSeries}\left(A\right)) \Rightarrow ((A = 1 + X \cdot \operatorname{formalExp}\left(logarithm\right)) \land ((\forall m: \mathbb{N}, \operatorname{coeff}\left(m, A\right) = \operatorname{coeff}\left(m, 1 + X \cdot \operatorname{formalExp}\left(logarithm\right)\right)) \land ((\exists! S: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{constantCoeff}\left(S\right) = 1) \land ((S)^{2} = discriminant)) \land (\forall S: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{constantCoeff}\left(S\right) = 1) \Rightarrow (((S)^{2} = discriminant) \Rightarrow ((X\mid1 + (X)^{2} - S) \land (A = \operatorname{printedBranch}\left(S\right)))))))))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/bala-a119370-exponential` (proved) by `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.result`.
+*Resolves.* `Problems/bala-a119370-exponential` (proved) by `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala-a119370-exponential","declaration_gid":"D5/S1/Recurrence/Algebraic/BalaA119370Exponential.result","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala-a119370-exponential","declaration_gid":"D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -100,15 +100,15 @@ A normalized coefficient contraction constructs the unique source A independentl
 
 ## References
 
-- Truth anchor: `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.IsSourceSeries`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.discriminant`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.formalExp`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.logarithm`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.printedBranch`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.result`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/BalaA119370Exponential.row`
-- Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](../Invariants/PowerSeriesNormalizedContraction.md)
-- Dependency: [D5/S3/Arith/Congruence/TebniA350759PrimeCongruences](../../../S3/Arith/Congruence/TebniA350759PrimeCongruences.md)
-- Dependency: [D5/S3/Combinatorics/Nonnesting/CatalanLagrangeBridge](../../../S3/Combinatorics/Nonnesting/CatalanLagrangeBridge.md)
-- Dependency: [D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo](../../../S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo.md)
-- Dependency: [D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums](../../../S3/Combinatorics/PowerSeries/PositiveNewtonSums.md)
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.IsSourceSeries`
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.discriminant`
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.formalExp`
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.logarithm`
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.printedBranch`
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.result`
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential.row`
+- Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](../../../S1/Recurrence/Invariants/PowerSeriesNormalizedContraction.md)
+- Dependency: [D5/S3/Arith/Congruence/TebniA350759PrimeCongruences](../../Arith/Congruence/TebniA350759PrimeCongruences.md)
+- Dependency: [D5/S3/Combinatorics/Nonnesting/CatalanLagrangeBridge](../Nonnesting/CatalanLagrangeBridge.md)
+- Dependency: [D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo](../Nonnesting/NonnestingOneThreeTwoTwo.md)
+- Dependency: [D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums](PositiveNewtonSums.md)

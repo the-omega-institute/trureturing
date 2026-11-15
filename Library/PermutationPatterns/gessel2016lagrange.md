@@ -9,7 +9,7 @@ claim: "Theorem 2.1.1 gives coefficient forms of Lagrange inversion; Section 2.3
 strata_touched:
   - D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo
   - D5/S3/Combinatorics/Nonnesting/CatalanLagrangeBridge
-  - D5/S1/Recurrence/Algebraic/BalaA119370Exponential
+  - D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential
 license: citation-only
 triage: anchor
 ---
