@@ -915,3 +915,256 @@ $$
 [Q202N]: https://arxiv.org/pdf/2312.13213v2 "G. Niestegge，Quantum transition probability in convex sets and self-dual cones，§6 Theorem 3及其order-unit、proper least、有限容量与对称前件。"
 
 ## 追加锚（本行以下为增补区）
+
+## 203. 射影纯几何已经出现，混合零关系仍须不可见
+
+**定义 203.1（纯拓扑问题与原混合问题）。** 保留201.1的完整有限维原域、实际L2、全部原纯点及完整原效应。沿用XVII197.1的原可区分关系 $a\#b$、邻集 $N_a$ 与全标签Hit；Hit表示每个 $N_a$ 命中每条实际二点球的纯球缘。对实际球 $D$ 记 $\ell_D=P\cap D$。拓扑部分另给全标签Hit且 $P$ 非单点，直接复用XVII198.2、198.5–7：原纯域紧，存在对径投影 $\beta_a:P\setminus\{a\}\to N_a$，且
+
+$$
+P\setminus\{a\}\cong\operatorname{Tot}(\mathscr T_a),\qquad
+P\cong\operatorname{Th}(\mathscr T_a),\qquad
+\operatorname{rank}_{\mathbb R}\mathscr T_a=2.
+\tag{203.1}
+$$
+
+这里 $\beta_a$ 是丛投影，$N_a$ 是零截面；它不同于202.3的原准备映射 $\beta:\mathbb R^{(P)}\to V$。以下拓扑推论不先输入Flat、NC、全域内积、原仿射齐性或复射影空间。最后的完整量子候选继续只用实际L2与原准备核，不将Hit另加成重建前件。
+
+**定理 203.2（紧ENR与拓扑齐性）。** 在203.1的拓扑前件下，$P$ 是有限维紧欧氏邻域收缩空间，$N_a$ 与 $L_a=S(\mathscr T_a)$ 也是紧ENR。存在将任意指定纯点送到任意另一纯点的 $P$ 上同胚；这里没有要求该同胚保持原凸混合、原效应或全部球线。
+
+证明。给丛取连续范数。紧底上的范数有界闭盘丛紧，所以删点坐标中的
+
+$$
+U_R=\{a\}\cup\{(b,z):\|z\|>R\},\qquad R>0,
+\tag{203.2}
+$$
+
+构成 $a$ 的开邻域基。以 $s=1/\|z\|$ 写径向坐标，它是 $L_a$ 的开锥，锥顶为 $a$，从而在自身内可缩。每个纯点都能作为根，故 $P$ 局部可缩；它是原有限实空间中的紧子集，由[Hatcher，Theorem A.7][Q203AT]为ENR。
+
+零截面是开ENR $P\setminus\{a\}$ 的收缩像。单位球丛是开子集 $\operatorname{Tot}(\mathscr T_a)\setminus N_a$ 的径向收缩像；二者都紧，且可嵌入有限实空间，故仍是ENR。由同书Corollary A.8，它们各是某个有限单纯复形的收缩像，因此整数同调群有限生成且高次最终为零。这里只使用有限复形支配，不声称这些空间自身带有限CW结构。
+
+若 $p,q\ne a$ 位于同一根纤维，取丛的连续截面 $s$，使其在该纤维的值恰为两点坐标之差。可由局部平凡化与底上的bump函数构造，截面在紧底上有界。纤维平移 $(b,z)\mapsto(b,z+s(b))$ 是proper同胚，故延拓到单点紧化并固定 $a$。对任意不同 $p,q$，在实际球 $B(p,q)$ 的纯球缘上取第三点 $a$；二者对根 $a$ 有同一个对径投影，应用上述平移即可。$\square$
+
+**定理 203.3（整数同调流形与单连通）。** 在相同前件下，$P$ 是某个 $n\ge2$ 维的整数同调流形，并有 $\pi_1(P)=0$。对任意根 $a$，$L_a$ 有整数同调球面 $S^{n-1}$ 的全部同调群。
+
+证明。锥邻域的切除与锥对长正合列给
+
+$$
+H_j(P,P\setminus\{a\};\mathbb Z)
+\cong\widetilde H_{j-1}(L_a;\mathbb Z).
+\tag{203.3}
+$$
+
+203.2使右边在全部次数均有限生成。应用[Bryant，Reflections on the Bing–Borsuk Conjecture，Theorem 1][Q203B]：有限维、拓扑齐性的ENR，若全部次数的局部整数同调有限生成，就是整数同调流形。这里不是只检查某一个次数，也不以尚未证明的普通拓扑流形性替代其结论。实际球缘嵌入 $P$ 给 $n\ge2$，而(203.3)给 $L_a$ 的同调群。
+
+任意两点在同一实际球缘中可连路；删去至多一个点后球缘仍可连路，所以 $P\setminus\{a\}$ 也路径连通。由收缩，$N_a$ 路径连通；圆纤维丛 $L_a\to N_a$ 的总空间路径连通，且其基本群到 $\pi_1(N_a)$ 的映射满射。取开覆盖 $P=(P\setminus\{a\})\cup U_R$；第二项可缩，交集收缩到 $L_a$。van Kampen定理将 $\pi_1(N_a)$ 除以这个满射的像，故 $\pi_1(P)=0$。$\square$
+
+**定理 203.4（整数射影上同调与低维端点）。** 若上述同调流形维数 $n=2$，则 $N_a$ 是单点、$P\cong S^2$，整个 $K$ 是实际三球。若 $n>2$，则 $n=2m$，其中 $m\ge2$，$\mathscr T_a$ 可定向，并可选Euler类 $e_a$ 与Thom类 $U_a$ 使
+
+$$
+H^*(N_a;\mathbb Z)\cong\mathbb Z[e_a]/(e_a^m),\qquad
+H^*(P;\mathbb Z)\cong\mathbb Z[U_a]/(U_a^{m+1}),\qquad
+|e_a|=|U_a|=2.
+\tag{203.4}
+$$
+
+每条实际球缘在 $H_2(P;\mathbb Z)$ 中代表一个本原生成元，符号依其定向选择。这不声称一般 $P$ 已同胚于 $\mathbb{CP}^m$。
+
+证明。先处理 $n=2$。在零截面点 $b$ 附近取丛的局部乘积，局部同调的二维悬移给
+
+$$
+H_2(P,P\setminus\{b\};\mathbb Z)
+\cong H_0(N_a,N_a\setminus\{b\};\mathbb Z).
+\tag{203.5}
+$$
+
+左边为 $\mathbb Z$。若路径连通的 $N_a$ 不止一个点，右边由相对 $H_0$ 正合列为零，矛盾。故底为单点，(203.1)给 $P=S^2$；这恰是唯一一条根纤维的完整球缘，原 $K=\operatorname{conv}P$ 是该实际三球。
+
+若 $n>2$，203.3给 $H_1(L_a;\mathbb Z)=0$。圆丛基本群满射使 $H_1(N_a;\mathbb Z)=0$，从而 $H^1(N_a;\mathbb Z/2)=0$，实二平面丛的第一Stiefel–Whitney类为零。可使用整数Thom同构及圆丛Gysin序列；非CW底的适用性见[Hatcher，Theorem 4D.10及其证明、§4.D末的Gysin推导][Q203AT]。
+
+记 $A^k=H^k(N_a;\mathbb Z)$。由 $L_a$ 的同调球面性质，乘 $e_a$ 的映射 $A^{k-2}\to A^k$ 在 $2\le k\le n-2$ 以及 $k\ge n+1$ 时是同构。后一区间连同203.2的高次最终消失，迫使 $A^k=0$ 对所有 $k\ge n-1$。Gysin在顶端遂给
+
+$$
+H^{n-1}(L_a;\mathbb Z)=\mathbb Z
+\overset\sim\longrightarrow A^{n-2}.
+\tag{203.6}
+$$
+
+低次递推从 $A^0=\mathbb Z$、$A^1=0$ 出发：偶次由 $e_a$ 的幂生成，奇次为零。因此 $n-2$ 必为偶数，得到第一式。Thom同构和Thom平方公式 $U_a^2=\Phi(e_a)$ 给第二式，其中 $\Phi$ 是次数加二的Thom同构。
+
+任一实际球缘以其一个点 $r$ 为根时，恰是 $\mathscr T_r$ 的一根纤维的单点紧化；Thom类在该球缘上取值 $\pm1$。而 $H^2(P;\mathbb Z)=\mathbb Z$，不同根的Thom生成元只差符号，所以固定的 $U_a$ 在每条球缘上也取值 $\pm1$。整数同调的Thom同构给 $H_2(P;\mathbb Z)\cong H_0(N_a;\mathbb Z)=\mathbb Z$；上述评值给本原性。$\square$
+
+**定理 203.5（每颗外球给一个拓扑复射影平面）。** 在203.1的拓扑前件下，取实际球 $D$ 与 $a\in P\setminus D$。则 $i=\beta_a|_{\ell_D}:\ell_D\to N_a$ 是拓扑嵌入，且
+
+$$
+Q(a,D):=\{a\}\cup\beta_a^{-1}(i(\ell_D))
+\cong\operatorname{Th}(i^*\mathscr T_a)
+\cong\mathbb{CP}^2.
+\tag{203.7}
+$$
+
+这里只断言 $Q(a,D)$ 是原纯域中的紧嵌入子空间，未断言它对任意二点join封闭，或 $\operatorname{conv}Q(a,D)$ 是原实际面。
+
+证明。若 $p,q\in\ell_D$ 不同而 $\beta_a(p)=\beta_a(q)$，则它们位于同一根球 $B(a,\beta_a(p))$ 上。实际二点球唯一，故该球等于 $D$ 并包含 $a$，矛盾。连续单射从紧球面进入Hausdorff空间，故为嵌入。
+
+因有球 $D$ 不含 $a$，203.4的整球端点不适用，故 $n>2$。在删点丛坐标中，$\ell_D$ 是拉回丛 $i^*\mathscr T_a$ 上一个连续截面的像；将截面沿纤维缩到零截面，Thom类在总空间的限制等于Euler类的拉回。因此
+
+$$
+\left|\left\langle e(i^*\mathscr T_a),[\ell_D]\right\rangle\right|
+=\left|\left\langle U_a,[\ell_D]\right\rangle\right|=1.
+\tag{203.8}
+$$
+
+$S^2$ 上实秩二丛的粘合分类将这个丛识别为忘掉定向后的Hopf线丛，其Thom空间为 $\mathbb{CP}^2$；准确成熟接口与XI139.6相同，见[Hatcher，Proposition 1.14、§3.2][Q203VB]。紧底子丛的单点紧化就是(203.7)所列子空间，给嵌入与紧性。$\square$
+
+**命题 203.6（完整qutrit子体、原二点join与全效应延拓仍不保证原面）。** 取XIV165的 $m=3$ 平衡商，单份为
+
+$$
+H=\operatorname{diag}(I_3,-I_3),\quad
+V=\operatorname{Herm}_6(\mathbb C)/\mathbb RH,\quad
+K=\pi\mathcal D_6.
+\tag{203.9}
+$$
+
+正块记为 $E_+$，负块记为 $E_-$，其标准基分别为 $e_j,f_j$。令 $a=p_{e_1}$，$D=\pi\mathcal D(\operatorname{span}\{e_2,e_3\})$。这个完整原域满足实际L2、全标签Hit及上述全部纯拓扑结论，且
+
+$$
+Q(a,D)=\pi\mathbb P(E_+),\qquad
+B_+:=\operatorname{conv}Q(a,D)=\pi\mathcal D(E_+).
+\tag{203.10}
+$$
+
+该 $Q$ 对原任意二点join封闭，$B_+$ 仿射等价于整个八维qutrit密度态体，其每个自身二点球都是原实际面，整个自身效应区间均可延拓为原效应；但 $F_K(Q)=K$，所以 $B_+$ 不是原面。
+
+证明。纯点参数化、实际二维支持球与纯Born刻度分别复用XIV165.4和XVII193.8。因纯Born，原 $N_a$ 就是与向量 $e_1$ 正交的全部射线。其根对径投影为
+
+$$
+\beta_a(p_v)=p_{(I-P_{e_1})v/\|(I-P_{e_1})v\|},\qquad p_v\ne a.
+\tag{203.11}
+$$
+
+故 $\beta_a|_{\ell_D}$ 为恒等，且(203.10)由取逆像直接得到。正块中任意两射线的复二维支持仍在正块中，给完整join封闭。$\pi$ 在 $\operatorname{Herm}(E_+)$ 上单射，因为其与 $\mathbb RH$ 的交为零；所以 $B_+$ 确为完整八维仿射qutrit子体。三维支持在这里不是XIV165.4的“小支持实际面”消费者；该定理只给支持维数至多二的面。二点球的原面性才由它供应。
+
+任给qutrit效应 $0\le A\le I_3$，矩阵
+
+$$
+E(A)=A\oplus\frac{\operatorname{Tr}A}{3}I_3
+\tag{203.12}
+$$
+
+满足 $0\le E(A)\le I_6$ 且 $\operatorname{Tr}(HE(A))=0$，所以是原商域效应，并在 $B_+$ 上限制为 $A$。此延拓对 $A$ 线性、保单位，故也延拓全部有限数学POVM。
+
+面塌缩直接消费XIII160.7的既有关系：
+
+$$
+y=\pi(I_+/3)=\pi(I_-/3)=\pi(I_6/6)\in\operatorname{ri}K.
+\tag{203.13}
+$$
+
+任何包含 $Q$ 的原面都包含 $y$，因而为 $K$。若非负原效应在 $Q$ 上全为零，则它在 $y$ 为零，故在整个 $K$ 为零。因此连“对每个外部纯点，存在消去整个 $Q$ 而在该点严格为正的原效应”也不成立。内部全效应延拓与这种外部联合分离是两个不同问题。$\square$
+
+**命题 203.7（同一反事实存在于全部有限层）。** 在XIV165同一个 $m=3$ 强实全有限商中，令 $\zeta=e_1^{\otimes(N-1)}$，$N=1$ 时取标量。置 $J_\zeta(x)=x\otimes p_\zeta$，并将203.6的 $a,D,Q,B_+$ 经它送入第 $N$ 层。则它们仍是203.5的同一个根—外球构造，仍具完整join封闭、八维仿射qutrit子体、原二点实际面及内部全效应延拓，但
+
+$$
+F_{K_N}(Q_N)=J_\zeta(K_1),\qquad
+\operatorname{conv}Q_N\ne F_{K_N}(Q_N).
+\tag{203.14}
+$$
+
+证明。全层纯点与Born刻度由XIV165、XVII193.8供应；(203.11)对向量 $v\otimes\zeta$ 逐项成立。XIII161.1的纯旁观者面引理给 $J_\zeta(K_1)$ 为实际面且 $J_\zeta$ 是到该面的仿射同构，故最小面由203.6运输为(203.14)。三维支持限制的线性单射也可直接由XIV165.3读出：非零核元至少有三个正、三个负方向，不可能支撑在复三维空间内。
+
+延拓效应取 $E(A)\otimes I_6^{\otimes(N-1)}$。每个因子在 $H^\perp$ 中，故该矩阵属于 $(\ker\pi_N)^\perp$ 且在单位区间内，限制正是所需qutrit效应。正、负块三点的等重心关系同样保留。只在 $N=1$ 称(203.13)为整个 $K_N$ 的相对内点；一般 $N$ 它是实际面 $J_\zeta(K_1)$ 的相对内点。原效应若消去 $Q_N$，只能据此断言它在该面上全零，已经足以阻止分离负块外点。$\square$
+
+**命题 203.8（旧商的无锚条件也有真正最小回路失败证书）。** 记 $\mathsf C_0$ 为：每条原回路的规范正负概率配方满足 $R(\mu_S)=R(\nu_S)$。203.6–7的同一个旧商在每个有限层都有一条恰含九个纯标签的原回路违反 $\mathsf C_0$。因此202.4的六标签均匀回路恰好通过无锚比较，不足以把整个旧商当成满足 $\mathsf C_0$ 的反模型。
+
+证明。先在单份构造。取六个 $\mathbb C^3$ 向量
+
+$$
+(v_1,\ldots,v_6)=(e_1,e_2,e_3,e_1+e_2,e_1+e_3,e_2+e_3).
+\tag{203.15}
+$$
+
+其秩一矩阵实线性独立：三个非对角坐标先分别迫后三项系数为零，再由对角坐标迫前三项为零。令 $S=\sum_i v_iv_i^*$、$w_i=S^{-1/2}v_i$，则 $\sum_iw_iw_i^*=I_3$，六个 $w_iw_i^*$ 仍独立。将以 $w_i$ 为列的 $3\times6$ 行等距矩阵补成一个酉矩阵 $U$ 的前三行。
+
+任取 $t>0$，定义
+
+$$
+X=\operatorname{diag}(I_3,tI_3),\quad
+Y=(1+t)I_-,\quad r_i=X^{1/2}Ue_i\ (1\le i\le6).
+\tag{203.16}
+$$
+
+有 $\sum_i r_ir_i^*=X$、$X-Y=H$。九个原矩阵 $r_ir_i^*$ 与 $f_jf_j^*$ 实线性独立：将任何零关系压缩到正块，先由 $w_iw_i^*$ 的独立性消去六个系数，再消去负块三个系数。故这九个矩阵的张成与商核 $\mathbb RH$ 的交恰一维，其关系全部系数非零。归一秩一投影并取商后，九个不同纯标签因此构成真正的原回路，而非任意非最小配方。
+
+两侧总质量为 $M=3(1+t)$；规范配方为
+
+$$
+\mu=\sum_{i=1}^6\frac{\|r_i\|^2}{M}\delta_{p_{r_i}},\qquad
+\nu=\frac13\sum_{j=1}^3\delta_{p_{f_j}}.
+\tag{203.17}
+$$
+
+其同重心提升分别为 $X/M$ 与 $Y/M$。纯Born与二次迹展开给
+
+$$
+R(\mu)-R(\nu)
+=\frac{\operatorname{Tr}(X^2)-\operatorname{Tr}(Y^2)}{M^2}
+=-\frac{2t}{3(1+t)^2}\ne0.
+\tag{203.18}
+$$
+
+全部有限层将这九个向量乘同一纯旁观者 $\zeta$。因 $\pi_N(A\otimes P_\zeta)=\pi(A)\otimes p_\zeta$ 且 $p_\zeta\ne0$，这个九维矩阵张成中的核仍恰为原来一条关系；所以回路最小性与(203.18)都保留。$\square$
+
+**定义 203.9（保留的完整候选与尚待简化的桥）。** 用202.3已经建立的几何等价式压缩候选的表达。在整个原三复制域上，用实际二点球定义 $\tau_3$，以原准备定义
+
+$$
+\begin{aligned}
+\mathcal F_3&=\mathbb R^{(P_3)},&
+\beta_3(c)&=\sum_{p\in P_3}c_pp,\\
+\Gamma_3(c,h)&=\sum_{p,q\in P_3}c_ph_q\tau_3(p,q),&
+\mathsf Q_{\rm rel}&:=\mathrm{L2}_3+
+\bigl(\ker\beta_3\subseteq\operatorname{rad}\Gamma_3\bigr).
+\end{aligned}
+\tag{203.19}
+$$
+
+这表示“原准备中等于零的关系，对全部球内重合刻度都不可见”。它是202候选的几何短写，未减少已证明入口的独立数学条件。真正更弱的 $\mathsf C_0$ 是否足以供应该核包含，仍为open；203.8排除了一个草率反例，没有证明其充分性或不充分性。另一个条件 $\Gamma(c,c)=0$ 对所有 $c\in\ker\beta$ 只先给核内各向同性，极化只给 $\Gamma|_{\ker\beta\times\ker\beta}=0$，仍缺核与全部自由标签的交叉项；不能把它与 $\mathsf C_0$ 混同。
+
+**定理 203.10（完整理论与准确量子字典）。** 完整保留202.5的同一个强实全有限背景，包括原 $W_N$、全部原态与完整效应、每个有限分块的min/max包含、正置换及其逆、同一重括号与标量层。则(203.19)当且仅当存在同一个 $n\ge1$ 及同一个 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$，在所有有限层同时有
+
+$$
+\Theta_N=\theta^{\otimes N},\qquad
+\Theta_N(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\Theta_N.
+\tag{203.20}
+$$
+
+原三复制中的量词包含全部纠缠纯点，未换成乘积子菜单。
+
+证明及条件字典。直接应用202.3的核包含等价和202.6的共同全有限传播，不重证分类。所有实际球的刻度先下降到原空间，再由分类取得正定迹内积与自对偶；纯拓扑的(203.4)、(203.7)不承担这一步。各项对应为：
+
+| 原对象或另外前件 | 同一个坐标族中的结论 |
+| --- | --- |
+| 全部原态、纯点、完整效应与原配对 | 迹一PSD、秩一投影、$0\le E\le I$、Born概率 $\operatorname{Tr}(E\rho)$；效应族和为单位时给POVM |
+| 原准备核的不可见性 | 每层 $R(\mu)=\operatorname{Tr}(\Theta_N(b(\mu))^2)$，原proper least确认、同一正定迹内积及自对偶锥 |
+| 同一个全有限分块与三复制入口 | 标准复张量、全部纠缠态、偏迹及一致重括号；三颗纯点的实际共同面是其至多三维复支持上的完整密度体 |
+| 原实线性分支对全部有限旁观者保正 | CP；另给逐输入质量不增或保质量才分别给TNI或TP；仪器分支族还须总预算 |
+| 指定投影效应的正实线性分支，质量为该效应且逐点固定全部读一纯态 | 既有锐中性字典给 $X\mapsto PXP$；指定装置和实际实现保留操作前件 |
+| 连续保锥保单位的实一参数可逆群 | 数学酉共轭形式；物理钟、能量与 $\hbar$ 标定保留独立对应 |
+
+谱、PVM及过程各继续按202.7、XIII162.9–11与162.16的准确条件消费。这里的完整性指该背景内全部有限静态层及附条件过程字典，不将无限维、装置可实现性或时钟标定并入已证结论。$\square$
+
+**命题 203.11（完整白话与成果边界）。** 本轮把已知完整候选写成一条关系间约束，并判明纯几何所能承担的范围；没有宣称无锚简化已经成功。
+
+证明及图景。把每个纯准备想成珠子，每两颗珠子撑起一颗真正的三球，球上的位置告诉我们它们重合多少。若每个目标的可区分准备都碰到每颗球，那么删掉这个目标以后，全部纯准备已经可以摊成一张二维纤维的地图；收回删掉的点，就是这张地图的Thom空间。它有复射影空间的整数上同调，而且每颗不经过目标的球都撑出一个真正嵌在纯域里的拓扑CP²。
+
+但这张图即使内部完全像qutrit、任意两点都沿原来的球相连、全部内部测试也能在原系统中实施，仍可能漏掉一件事：三颗里面的珠子混在一起，与三颗外面的珠子混在一起，竟是同一个原状态。这样内部图形就不是原来的面，测试也无法把整张图与那些外部准备联合分开。旧商正好实现这种情况。需要保留的规则因此很直观：只要一组有符号准备在原系统中抵消为零，它与任何纯准备的平均球内重合也必须抵消。这样局部球的刻度才真正拼成同一个原内积，随后由既有分类接出密度矩阵、Born读数与全部有限复合。
+
+能否连半份纯锚也去掉，只看每条最小关系两边自己的自重合，仍有一个明确待证桥。本轮找到九标签最小回路，说明旧商连这个更弱条件也会失败；所以它不能被拿来宣告无锚路线不可能。下一步须证明无锚比较如何补出外部交叉项，或找到真正满足全部无锚回路的实际L2反模型。没有用“更简洁”的愿望替代这条证明义务。
+
+203.2–5是XVII198.7丛结构与成熟ENR、Bryant、van Kampen、Gysin、Thom及球面底丛分类的repo-derived接合。拓扑CP²的成熟识别已见XI139.6，此处新增的是从全Hit实际L2支付其前件。203.6–7把XIII160.7既有面塌缩定位到这个精确根—外球子空间，并补内部全效应延拓与全部有限旁观者层的边界，不重复申领旧塌缩。203.8的九标签无锚回路使用框架白化、酉补全和原商核；这些是成熟线性代数工具，新增的是其在该完整原域中的最小关系与自重合证书。203.9–10复用202的完整入口与分类，不计作新的独立重建定理。以上均为纸面理论，未宣称Lean核验、独立前件数已减少、一般纯域同胚分类或全球文献优先权。$\square$
+
+[Q203AT]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher，Algebraic Topology，Appendix Theorem A.7与Corollary A.8；§4.D的Thom同构、Theorem 4D.10非CW底说明、Gysin序列及Thom平方公式。"
+[Q203B]: https://sites.calvin.edu/venema/workshop/proceedingspapers/bryant.pdf "J. L. Bryant，Reflections on the Bing–Borsuk Conjecture，Theorem 1及其前文的全部次数有限生成条件；结论为整数同调流形。"
+[Q203VB]: https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf "Allen Hatcher，Vector Bundles and K-Theory，Proposition 1.14、S²上二平面丛粘合分类与§3.2的Euler类及Hopf丛Thom空间；§4.1的Thom紧化。"
+
+## 追加锚（本行以下为增补区）
