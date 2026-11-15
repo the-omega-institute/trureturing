@@ -38,6 +38,18 @@ internal sealed class NormalMomentFamilyDocument : IScribeDocumentDefinition
                 H("Reconstructed genuine complex-linear map"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every F in Family rho sigma, linearMap F is a genuine C-linear map from C(Interval,C) to StrongDual C A, obtained by applying WeakDual.toStrongDual in every coordinate. Its linearity follows by extensionality from the all-a compatibility equations. It is positive, maps 1 to rho+sigma and posterior to rho, and hence maps 1-posterior to sigma."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("moment-unit-value"),
+                DeclarationHandle.Create("D5/S3/Quantum/Analysis/NormalMomentFamily.unit_value"),
+                H("Exact unit moment"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every actual Family rho sigma point F, linearMap F 1=rho+sigma. This is the existing exact compatibility equation, exposed for the consumed affine-cost computation."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("moment-posterior-value"),
+                DeclarationHandle.Create("D5/S3/Quantum/Analysis/NormalMomentFamily.posterior_value"),
+                H("Exact posterior moment"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every actual Family rho sigma point F, linearMap F posterior=rho. Together with the unit equation this gives linearMap F (1-posterior)=sigma, consumed in GeneralConvexReverseTestAttainment.familyCost_eq_affine."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("moment-complex-integral"),
+                DeclarationHandle.Create("D5/S3/Quantum/Analysis/NormalMomentFamily.integral_complex"),
+                H("Every exact scalar complex integral"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every Family rho sigma point F and continuous complex g, linearMap F g 1 equals integral g against scalarMeasure F. The original scalar Riesz proof is reused directly by posteriorFamily_scalarMeasure and the exact affine objective computation, without duplicating its real/imaginary decomposition."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("scalar-riesz-measure"),
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/NormalMomentFamily.scalarMeasure"),
                 H("Scalar finite regular Riesz measure"), StatementSource.WithoutFormula(),
@@ -58,7 +70,7 @@ internal sealed class NormalMomentFamilyDocument : IScribeDocumentDefinition
                     Paragraph(Text("The map F maps to finiteMeasure F is weakly continuous and has compact range. Every scalarMeasure F is regular, has total mass ENNReal.ofReal(Re(S(1))), and satisfies J(g)(1)=integral g dnu for every continuous complex g. These conclusions are derived, rather than supplied as family fields.")),
                     Paragraph(Text("For every family point F, there exists a continuous complex-linear Gamma from the ENTIRE complex L1(scalarMeasure F) to StrongDual C M.toStarSubalgebra. It agrees exactly with linearMap F on every continuous complex g; every Gamma(h) is all-directed order-normal; for every almost-everywhere nonnegative h and positive a, Gamma(h)(a)>=0; for every complex h, Gamma(h)(1)=integral h dnu; and its operator norm is at most one. Both exact posterior identities hold: Gamma(toLp posterior)=rho and Gamma(toLp(1-posterior))=sigma. The proof applies exists_normal_L1_extension with the actual Riesz measure and derived mass identity; normality of J(1)=S suffices. The zero pair and zero measure remain in scope.")),
                     Paragraph(Text("The content consists of the constructed full coordinate family, its derived uniform coordinate bound and compactness, actual scalar Riesz measures with exact complex mass identity and weak continuity, and their connected whole-L1 realizations. The argument reuses Mathlib's Banach-Alaoglu, Tychonoff and real Riesz theorems and the existing normal L1 extension, rather than rebuilding them. It claims no global literature novelty, chosen-predual identification, ultraweak equivalence or vector-valued Radon-Nikodym theorem.")),
-                    Paragraph(Text("The original arbitrary-source reverse-test attainment problem remains open here. Still required are normalization and pushforward comparison for every original sigma-finite source and its entire complex L1 map, cost-set equality, and endpoint-complete extended minimization including the infinite-cost branch. Compactness and posterior realization alone do not assert attainment."))
+                    Paragraph(Text("This module supplies compactness and posterior realization. The consuming GeneralConvexReverseTestAttainment module addresses exact normalization and pushforward comparison for every original sigma-finite source and its entire complex L1 map, fixed-universe cost-set equality and endpoint-complete extended minimization. Those conclusions are not implicit premises of the compact family."))
                 ), DescribeRole.Theorem)
         )));
 }
