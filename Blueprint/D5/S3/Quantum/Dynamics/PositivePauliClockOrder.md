@@ -162,6 +162,22 @@ $$\forall Q,P,\rho\in\operatorname{Mat}\left(2, C\right),\forall j,k\in\operator
 
 Q, P and rho are arbitrary complex two-dimensional matrices. branch(Q,P,0) is Q and branch(Q,P,1) is P. The identity directly expands the mixed partial trace; no damping or Gram hypothesis is assumed.
 
+A finite-prefix application uses the same maximally mixed environment without resetting it. Let l be any real number strictly between minus one and one, including zero and negative values. In the following local notation t is the square root of one minus l squared; a is the square root of one plus t and b is the square root of three minus t. Both denominators a and b are strictly positive.
+
+$$
+(x = \frac{a}{2}) \land\\{}(u = \frac{b}{2}) \land\\{}(y = \frac{l}{2 a}) \land\\{}(q = \frac{3 l}{2 b}) \land\\{}(r = \frac{\sqrt{2} t}{b})
+$$
+
+$$
+(A = \begin{pmatrix}x+i u&0\\0&x-i u\end{pmatrix}) \land\\{}(B = \begin{pmatrix}y+i q&i r\\i r&y-i q\end{pmatrix})
+$$
+
+The parameter equations give x squared plus u squared equal to one, y squared plus q squared plus r squared equal to one, xy equal to l over four, uq equal to three l over four, and x squared plus y squared equal to one half. Thus A and B are unitary. Set W to the controlled matrix with branches A and B. Its nth power has branches A to the nth power and B to the nth power. The normalized overlap tr(A to the nth power times the adjoint of B to the nth power) over two equals l to the nth power for n equal to zero, one, two or three. Expanding the squares and cubes and substituting the five scalar equations proves these identities. The controlled partial-trace identity therefore preserves every diagonal matrix entry and multiplies both off-diagonal entries by l to the nth power throughout this window.
+
+This is one joint operator and one initial environment state for every input and every step in the window. It also applies to every finite untouched reference, including initially correlated system-reference states: evolve by the identity on the reference tensored with W to the nth power, and trace out the environment. Each reference matrix block is exactly the already computed system map; the environment must initially be independent. The complete real-parameter and finite-reference assertion has been checked as a transient Lean application using only standard logical axioms. It introduces no new mathematical declaration or frozen identity.
+
+The window matters. At l equal to zero, A is (I plus iZ) over the square root of two and B is iX. Their fourth powers are minus I and I, so the fourth overlap is minus one rather than zero. This excludes extending this particular construction to four steps at zero; it excludes neither other constructions nor establishes minimal environment dimension. It concerns the two-level dephasing channel only, not an arbitrary channel or a larger source model.
+
 **Theorem 1.13 (All entries of the actual reduced channel).**
 
 $$\forall v,w,t \in R, (|v| < \sqrt{\frac{3}{2}}) \Rightarrow \forall \rho\in\operatorname{Mat}\left(2, C\right),\operatorname{Phi}\left(v, w, t, \rho\right) = \begin{pmatrix}\operatorname{entry}\left(\rho, 0, 0\right)&(\operatorname{chi}\left(v, w, t\right))^{*} \operatorname{entry}\left(\rho, 0, 1\right)\\\operatorname{chi}\left(v, w, t\right) \operatorname{entry}\left(\rho, 1, 0\right)&\operatorname{entry}\left(\rho, 1, 1\right)\end{pmatrix}$$
