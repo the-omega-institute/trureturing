@@ -12,7 +12,7 @@ escape_witness: none; existing unfrozen TransferMatrix theorems and finite table
 Proper: proof_shape=bind-only; consumers=instDecidableProper, L, grid_good
 instDecidableProper: proof_shape=bind-only; consumers=L
 L: proof_shape=bind-only; consumers=count_transfer, initial_values, recurrence
-Col: proof_shape=bind-only; consumers=column, compatible, gridEquiv
+Col: proof_shape=bind-only; consumers=column, compatible, gridEquiv, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer.ClassRep.signature
 column: proof_shape=bind-only; consumers=compatible, column_relabel, column_grid
 compatible: proof_shape=bind-only; consumers=instDecidableCompatible, grid_good, quotient_rows
 instDecidableCompatible: proof_shape=bind-only; consumers=successors_spec, representative_rows
@@ -24,7 +24,7 @@ Q: proof_shape=bind-only; consumers=representative_rows, table_steps, powers_tab
 sizes: proof_shape=bind-only; consumers=class_sizes, initial_weights
 weights: proof_shape=bind-only; consumers=initial_weights, count_transfer
 successors: proof_shape=bind-only; consumers=successors_spec, representative_rows
-relabel: proof_shape=bind-only; consumers=column_relabel, class_rep
+relabel: proof_shape=bind-only; consumers=column_relabel, compatible_relabel, class_relabel, class_rep, quotient_rows, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer.ClassRep.arena
 column_relabel: proof_shape=bind-only; consumers=compatible_relabel
 compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
 class_relabel: proof_shape=bind-only; consumers=quotient_rows
@@ -69,7 +69,7 @@ private instance instDecidableProper {n : ℕ} (P : Fin 6 × Fin n → Fin 3) :
     Decidable (Proper P) := inferInstanceAs (Decidable (∀ _ _ _ _, _ → _))
 def L (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun P : Fin 6 × Fin n → Fin 3 => Proper P)).card
-private abbrev Col := Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3
+abbrev Col := Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3
 def column (c : Col) : Fin 6 → Fin 3 :=
   ![c.1,c.2.1,c.2.2.1,c.2.2.2.1,c.2.2.2.2.1,c.2.2.2.2.2]
 private def compatible (a b : Col) : Prop :=
@@ -302,7 +302,7 @@ private def successors : Fin 122 → Finset Col :=
     {(2,2,0,0,0,0), (2,2,0,0,0,2)}, {(2,2,0,0,0,0)}, {(2,2,0,0,1,1)}, {(2,2,0,0,0,0)},
     {(2,2,0,0,0,0), (2,2,0,0,0,1), (2,2,0,0,1,0), (2,2,0,0,1,1)}, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅,
     ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅, ∅]
-private def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
+def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
   Equiv.prodCongr e (Equiv.prodCongr e (Equiv.prodCongr e
     (Equiv.prodCongr e (Equiv.prodCongr e e))))
 private theorem column_relabel (e : Equiv.Perm (Fin 3)) (c : Col) (r : Fin 6) :

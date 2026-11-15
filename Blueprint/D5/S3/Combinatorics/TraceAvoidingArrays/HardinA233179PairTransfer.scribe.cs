@@ -21,9 +21,11 @@ internal sealed class HardinA233179PairTransferDocument : IScribeDocumentDefinit
                 + "rows at distance at most one across consecutive columns.")),
             Node("Proper", "Proper pair-label patterns", ProperFormula(), false),
             Node("L", "The literal pair-label count", CountFormula(), false),
+            Node("Col", "Six-label columns", Eq(Own("Col"), PaletteTuple(6)), false),
             Node("column", "Column coordinates", ColumnFormula(), false),
             Node("orbit", "Equality-pattern index", OrbitFormula(), false),
             Node("representatives", "The 122 equality-pattern representatives", RepresentativesFormula(), false),
+            Node("relabel", "Coordinatewise label permutations", RelabelFormula(), false),
             Node("class_rep", "Every column has its indexed representative", ClassRepFormula(), true),
             Node("initial_values", "Initial pair-label counts", InitialFormula(), true),
             Node("recurrence", "The shifted relation for L plus six", RecurrenceFormula(), true),
@@ -73,6 +75,13 @@ internal sealed class HardinA233179PairTransferDocument : IScribeDocumentDefinit
             Call("Prod.fst", Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", V("c"))))),
             Call("Prod.fst", Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", V("c")))))),
             Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", V("c")))))))));
+    private static Formula RelabelFormula()
+    {
+        var e = V("e");
+        return All("e", Call("Equiv.Perm", Fin(D(3))), Eq(Own("relabel", e),
+            Call("Equiv.prodCongr", e, Call("Equiv.prodCongr", e, Call("Equiv.prodCongr", e,
+                Call("Equiv.prodCongr", e, Call("Equiv.prodCongr", e, e)))))));
+    }
     private static Formula ClassRepFormula()
     {
         var c = V("c"); var e = V("e");
