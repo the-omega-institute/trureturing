@@ -746,4 +746,3 @@ theorem result : D5.S3.Combinatorics.Permutation.OnnGoodPermutationCount.claim :
   exact ⟨count_formula m n hm hn,fun σ => good_iff_structure σ hm hn⟩
 
 end D5.S3.Combinatorics.Permutation.OnnGoodPermutationCount
-

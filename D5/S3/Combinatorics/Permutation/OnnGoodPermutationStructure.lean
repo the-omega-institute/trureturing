@@ -505,4 +505,3 @@ theorem good_iff_structure {m n : ℕ} (σ : ((Fin m × Fin n) ≃ Fin (m * n)))
       exact (three_good_iff σ).mpr h
 
 end D5.S3.Combinatorics.Permutation.OnnGoodPermutationStructure
-
