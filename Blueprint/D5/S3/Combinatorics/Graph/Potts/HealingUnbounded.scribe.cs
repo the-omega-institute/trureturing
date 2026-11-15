@@ -136,7 +136,14 @@ internal sealed class HealingUnboundedDocument : IScribeDocumentDefinition
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Some(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
-    private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Named(string name) => Seq(Operatorname, Grp(name switch
+    {
+        "SimpleGraph.Iso" => Seq(F.Id("SimpleGraph"), Dot, F.Id("Iso")),
+        "Sym2" => Seq(F.Id("Sym"), D(2)),
+        "Sym2.mk" => Seq(F.Id("Sym"), D(2), Dot, F.Id("mk")),
+        "Finset.filter" => Seq(F.Id("Finset"), Dot, F.Id("filter")),
+        _ => F.Id(name)
+    }));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
