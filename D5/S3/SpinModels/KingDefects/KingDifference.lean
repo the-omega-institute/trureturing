@@ -46,15 +46,18 @@ good_differentiate: proof_shape=bind-only; consumers=rainbow_field
 rainbow_field: proof_shape=bind-only; consumers=goodBlock_of_raw
 BlockAvoids: proof_shape=bind-only; consumers=goodBlock_of_raw,horizontal_slot_eq,vertical_slot_eq
 goodBlock_of_raw: proof_shape=bind-only; consumers=horizontal_slot_eq,vertical_slot_eq
-horizontal_slot_eq: proof_shape=content; consumers=none
-vertical_slot_eq: proof_shape=content; consumers=none
+horizontal_slot_eq: proof_shape=content; consumers=KingDiagonal.raw_h_ordinary,
+  KingDiagonal.raw_h_special,KingHorizontal.boundary_h
+vertical_slot_eq: proof_shape=content; consumers=KingDiagonal.raw_v_ordinary,
+  KingDiagonal.raw_v_special,KingHorizontal.boundary_v
 fields_eq_six_canonical: proof_shape=content; consumers=count_by_kind
 N_transpose: proof_shape=bind-only; consumers=sum_fields_by_kind
 N_reflect: proof_shape=bind-only; consumers=sum_fields_by_kind
 N_H: proof_shape=bind-only; consumers=sum_fields_by_kind,count_by_kind
 N_D: proof_shape=bind-only; consumers=sum_fields_by_kind,count_by_kind
 sum_fields_by_kind: proof_shape=bind-only; consumers=count_by_kind
-count_by_kind: proof_shape=content; consumers=none
+count_by_kind: proof_shape=content; consumers=KingClosedForm.closed_form,
+  KingClosedForm.width_two,KingClosedForm.width_three
 The finite Klein identities support uniform structural theorems; no bounded
 colouring enumeration or numerical instance is asserted.
 -/

@@ -8,7 +8,7 @@
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
 escape_witness: bind-only; the registered assertion follows from the structural counts.
-result: proof_shape=bind-only; consumers=none
+result: proof_shape=bind-only; consumers=HardinA229578.result
 The index is unbounded. No bounded enumeration, checker, numerical reduction
 or certified instance is asserted.
 -/
@@ -35,5 +35,6 @@ theorem result :
     rw [KingClosedForm.width_two n (by omega)]
     ring
 
+#check @result
 #print axioms result
 end D5.S3.SpinModels.KingDefects.HardinA229572

@@ -8,7 +8,7 @@
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
 escape_witness: bind-only; the registered assertion follows from the structural counts.
-result: proof_shape=bind-only; consumers=none
+result: proof_shape=bind-only; consumers=HardinA229578.result
 The index is unbounded. No bounded enumeration, checker, numerical reduction
 or certified instance is asserted.
 -/
@@ -18,7 +18,8 @@ import D5.S3.SpinModels.KingDefects.KingClosedForm
 namespace D5.S3.SpinModels.KingDefects.HardinA229573
 
 theorem result (n : ℕ) (hn : 5 < n) :
-    (KingGrid.T n 3 : ℤ) = 6*(KingGrid.T (n-1) 3 : ℤ)-13*(KingGrid.T (n-2) 3 : ℤ)+12*(KingGrid.T (n-3) 3 : ℤ)-4*(KingGrid.T (n-4) 3 : ℤ) := by
+    (KingGrid.T n 3 : ℤ) = 6*(KingGrid.T (n-1) 3 : ℤ)-13*(KingGrid.T (n-2) 3 : ℤ)+
+      12*(KingGrid.T (n-3) 3 : ℤ)-4*(KingGrid.T (n-4) 3 : ℤ) := by
   obtain ⟨m,rfl⟩ : ∃ m, n=m+6 := ⟨n-6,by omega⟩
   have h0 := KingClosedForm.width_three (m+6) (by omega)
   have h1 := KingClosedForm.width_three (m+5) (by omega)
@@ -33,5 +34,6 @@ theorem result (n : ℕ) (hn : 5 < n) :
     linear_combination h0-6*h1+13*h2-12*h3+4*h4
   omega
 
+#check @result
 #print axioms result
 end D5.S3.SpinModels.KingDefects.HardinA229573

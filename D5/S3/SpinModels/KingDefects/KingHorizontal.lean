@@ -106,9 +106,9 @@ P: proof_shape=bind-only; consumers=six_case_value
 Q: proof_shape=bind-only; consumers=six_case_value
 six_case_value: proof_shape=bind-only; consumers=support_case_eval
 support_case_eval: proof_shape=bind-only; consumers=interior_six_lower_pairs
-interior_six_lower_pairs: proof_shape=content; consumers=KingClosedForm.horizontal_position_cases
+interior_six_lower_pairs: proof_shape=content; consumers=interior_count
 interior_count: proof_shape=content; consumers=interior_three_rows_count
-horizontal_two_rows: proof_shape=content; consumers=horizontal_two_columns
+horizontal_two_rows: proof_shape=content; consumers=horizontal_two_columns,KingClosedForm.width_two
 boundary_one_column: proof_shape=bind-only; consumers=boundary_slots_one_column
 boundary_slots_one_column: proof_shape=bind-only; consumers=interior_one_column_count
 interior_one_column_count: proof_shape=content; consumers=horizontal_two_columns
@@ -123,7 +123,7 @@ interior_row_sum: proof_shape=content; consumers=horizontal_sum
 boundary_row_sum: proof_shape=bind-only; consumers=horizontal_sum
 sum_left_indicator: proof_shape=bind-only; consumers=sum_right_indicator
 sum_right_indicator: proof_shape=bind-only; consumers=horizontal_sum
-horizontal_sum: proof_shape=content; consumers=KingClosedForm.main
+horizontal_sum: proof_shape=content; consumers=KingClosedForm.closed_form,KingClosedForm.width_three
 -/
 import D5.S3.SpinModels.KingDefects.KingDifference
 import Mathlib.Algebra.Ring.GeomSum

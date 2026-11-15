@@ -61,8 +61,8 @@ Aterm: proof_shape=bind-only; consumers=sum_A,sum_F
 sum_A: proof_shape=bind-only; consumers=sum_F
 indicator_corners: proof_shape=bind-only; consumers=sum_F
 sum_F: proof_shape=content; consumers=N_D_closed
-N_D_closed: proof_shape=content; consumers=KingClosedForm.diagonal_main
-N_D_two_rows: proof_shape=content; consumers=KingClosedForm.width_two
+N_D_closed: proof_shape=content; consumers=KingClosedForm.closed_form,KingClosedForm.width_three
+N_D_two_rows: proof_shape=content; consumers=none
 N_D_two_columns: proof_shape=content; consumers=KingClosedForm.width_two
 The dimensions and word lengths are arbitrary. No bounded grid enumeration,
 checker, numerical reduction or certified instance is asserted.

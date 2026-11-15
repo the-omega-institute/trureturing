@@ -8,11 +8,33 @@
 /-
 admission_basis: escape-witness
 escape_witness: tail_counts (a uniform decomposition by the next path colour).
-errors: proof_shape=bind-only; consumers=tail_counts
+errors: proof_shape=bind-only; consumers=tail_split,tail_counts,errors_eq
 tail_split: proof_shape=bind-only; consumers=tail_counts
 tail_counts: proof_shape=content; consumers=path_count
-The word length and palette are arbitrary. No bounded enumeration, checker,
-numerical reduction or certified instance is asserted.
+bad: proof_shape=bind-only; consumers=errors_eq,bad_map,Words,literal_words
+errors_eq: proof_shape=content; consumers=root_split
+bad_map: proof_shape=bind-only; consumers=word_action,canonical_orbits
+root_split: proof_shape=bind-only; consumers=path_count
+path_count: proof_shape=content; consumers=width_one_large
+Words: proof_shape=bind-only; consumers=word_action,canonical_orbits,fixed_words,burnside
+word_action: proof_shape=bind-only; consumers=canonical_orbits,fixed_words,burnside
+canonical_orbits: proof_shape=content; consumers=burnside
+fixed_words: proof_shape=bind-only; consumers=width_one_large
+burnside: proof_shape=bind-only; consumers=width_one_large
+fixedCard: proof_shape=bind-only; consumers=permutation_sum,width_one_large
+permutation_sum: proof_shape=bind-only; consumers=width_one_large
+edge_path: proof_shape=bind-only; consumers=oneDefect_path
+oneDefect_path: proof_shape=bind-only; consumers=literal_words
+normal_path: proof_shape=bind-only; consumers=literal_words
+literal_words: proof_shape=bind-only; consumers=literal_count
+literal_count: proof_shape=bind-only; consumers=width_one_large,one_vertex,two_vertices
+width_one_large: proof_shape=content; consumers=width_one
+one_vertex: proof_shape=bind-only; consumers=width_one
+two_vertices: proof_shape=bind-only; consumers=width_one
+width_one: proof_shape=content; consumers=HardinA229578.result
+The word length and palette are arbitrary. Finite palette identities and boundary
+values support this uniform family; no bounded colouring enumeration, checker,
+numerical reduction or independent certified instance is asserted.
 -/
 import D5.S3.SpinModels.KingDefects.KingGrid
 import Mathlib.GroupTheory.GroupAction.Quotient
@@ -28,7 +50,7 @@ private def errors {C : Type*} [DecidableEq C] : {n : ℕ} → C → (Fin n → 
 
 private noncomputable def tail_split {C : Type*} [DecidableEq C]
     (n d : ℕ) (p : C) :
-    {f : Fin (n+1) → C // errors p f = d} ≃
+    {f : Fin (n + 1) → C // errors p f = d} ≃
       Σ c : C, {f : Fin n → C // (if p=c then 1 else 0)+errors c f=d} where
   toFun f := ⟨f.val 0, Fin.tail f.val, f.property⟩
   invFun q := ⟨Fin.cons q.1 q.2.val, by simpa [errors] using q.2.property⟩
@@ -80,7 +102,7 @@ private def bad {C : Type*} [DecidableEq C] {n : ℕ} (f : Fin n → C) : ℕ :=
   ∑ i : Fin (n-1), if f (lo i) = f (hi i) then 1 else 0
 
 private theorem errors_eq {C : Type*} [DecidableEq C] (n : ℕ)
-    (f : Fin (n+1) → C) : bad f = errors (f 0) (Fin.tail f) := by
+    (f : Fin (n + 1) → C) : bad f = errors (f 0) (Fin.tail f) := by
   induction n with
   | zero => simp [bad, errors]
   | succ n ih =>
@@ -95,7 +117,7 @@ private theorem bad_map {C D : Type*} [DecidableEq C] [DecidableEq D]
     bad (e ∘ f) = bad f := by simp [bad, he.eq_iff]
 
 private noncomputable def root_split {C : Type*} [DecidableEq C] (n : ℕ) :
-    {f : Fin (n+1) → C // bad f=1} ≃
+    {f : Fin (n + 1) → C // bad f=1} ≃
       Σ c : C, {f : Fin n → C // errors c f=1} where
   toFun f := ⟨f.val 0, Fin.tail f.val, (errors_eq n f.val).symm.trans f.property⟩
   invFun q := ⟨Fin.cons q.1 q.2.val, by
@@ -104,7 +126,7 @@ private noncomputable def root_split {C : Type*} [DecidableEq C] (n : ℕ) :
   right_inv q := by rcases q with ⟨c,f,h⟩; rfl
 
 private theorem path_count {C : Type*} [Fintype C] [DecidableEq C] (n : ℕ) :
-    Nat.card {f : Fin (n+1) → C // bad f=1} =
+    Nat.card {f : Fin (n + 1) → C // bad f=1} =
       Fintype.card C * n * (Fintype.card C-1)^(n-1) := by
   classical
   rw [Nat.card_congr (root_split n), Nat.card_sigma]
@@ -154,8 +176,8 @@ private theorem burnside (n : ℕ) :
     24 * Nat.card {f : Fin n → Fin 4 // bad f=1 ∧ Canonical f} =
       ∑ p : Equiv.Perm (Fin 4), Nat.card (MulAction.fixedBy (Words n) p) := by
   classical
-  letI : Fintype (Words n) := Fintype.ofFinite _
-  letI : Fintype (MulAction.orbitRel.Quotient (Equiv.Perm (Fin 4)) (Words n)) :=
+  let : Fintype (Words n) := Fintype.ofFinite _
+  let : Fintype (MulAction.orbitRel.Quotient (Equiv.Perm (Fin 4)) (Words n)) :=
     Fintype.ofFinite _
   have h := MulAction.sum_card_fixedBy_eq_card_orbits_mul_card_group
     (Equiv.Perm (Fin 4)) (Words n)
@@ -277,8 +299,7 @@ private theorem one_vertex : T 1 1 = 0 := by
 
 private theorem two_vertices : T 2 1 = 1 := by
   rw [literal_count]
-  change Nat.card {f : Fin 2 → Fin 4 // bad f=1 ∧ Canonical f} = 1
-  letI : DecidablePred (fun f : Fin 2 → Fin 4 => bad f=1 ∧ Canonical f) :=
+  let : DecidablePred (fun f : Fin 2 → Fin 4 => bad f=1 ∧ Canonical f) :=
     fun f => by unfold bad Canonical; infer_instance
   rw [Nat.card_eq_fintype_card]
   decide +kernel
@@ -287,5 +308,6 @@ theorem width_one : T 1 1 = 0 ∧ T 2 1 = 1 ∧ ∀ n : ℕ, 3 ≤ n →
     54*(T n 1 : ℤ) = ((n : ℤ)-1)*3^n+27*((n : ℤ)-1) :=
   ⟨one_vertex,two_vertices,width_one_large⟩
 
+#check @width_one
 #print axioms width_one
 end D5.S3.SpinModels.KingDefects.KingPath

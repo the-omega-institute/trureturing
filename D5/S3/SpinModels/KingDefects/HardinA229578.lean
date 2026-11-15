@@ -61,5 +61,6 @@ theorem result :
     linear_combination h0-8*h1+22*h2-24*h3+9*h4
   omega
 
+#check @result
 #print axioms result
 end D5.S3.SpinModels.KingDefects.HardinA229578

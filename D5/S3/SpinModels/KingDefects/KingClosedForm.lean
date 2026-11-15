@@ -9,11 +9,19 @@
 admission_basis: escape-witness
 escape_witness: closed_form, width_two, width_three (the diagonal and horizontal
   slot bijections expanded through this delivery give the literal colouring counts).
-symmetry: proof_shape=content; consumers=width_three
-closed_form: proof_shape=content; consumers=HardinA229574.result,HardinA229575.result,
-  HardinA229576.result,HardinA229577.result,HardinA229571.result
+normal_exists_unique: proof_shape=bind-only; consumers=normalize,normalize_spec,normal_unique
+normalize: proof_shape=bind-only; consumers=normalize_spec,canonical_transpose
+normalize_spec: proof_shape=bind-only; consumers=canonical_transpose,canonical_transpose_twice
+normal_unique: proof_shape=bind-only; consumers=canonical_transpose_twice
+transpose_one: proof_shape=bind-only; consumers=canonical_transpose
+canonical_transpose: proof_shape=bind-only; consumers=canonical_transpose_twice,symmetry
+canonical_transpose_twice: proof_shape=bind-only; consumers=symmetry
+symmetry: proof_shape=bind-only; consumers=width_three
+closed_form: proof_shape=content; consumers=diagonal_closed,HardinA229574.result,
+  HardinA229575.result,HardinA229576.result,HardinA229577.result
 width_two: proof_shape=content; consumers=width_three,HardinA229572.result
-width_three: proof_shape=content; consumers=HardinA229573.result,HardinA229571.result
+width_three: proof_shape=content; consumers=diagonal_closed,HardinA229573.result
+diagonal_closed: proof_shape=bind-only; consumers=HardinA229571.result
 All dimensions are unbounded; no bounded enumeration, checker, numerical
 reduction or certified instance is asserted.
 -/
@@ -55,7 +63,7 @@ private theorem normalize_spec {n k : ℕ} (f : Cell n k → Fin 4) :
   (Classical.choose_spec (normal_exists_unique f)).1
 
 private theorem normal_unique {n k : ℕ} (f g : Cell n k → Fin 4)
-    (hf : normal f) (hg : normal g) (p : Equiv.Perm (Fin 4)) (hp : g=p ∘ f) : g=f := by
+    (hf : normal f) (hg : normal g) (p : Equiv.Perm (Fin 4)) (hp : g = p ∘ f) : g=f := by
   obtain ⟨u,hu,uniq⟩ := normal_exists_unique f
   exact (uniq g ⟨hg,p,hp⟩).trans (uniq f ⟨hf,Equiv.refl _,rfl⟩).symm
 
@@ -129,7 +137,7 @@ theorem width_two (n : ℕ) (hn : 2 ≤ n) :
   rw [horizontal_two_columns, horizontal_two_rows, N_D_two_columns] at h
   have h' := congrArg (fun x : ℕ => (x : ℤ)) h
   push_cast at h' ⊢
-  simp only [Nat.add_sub_cancel, pow_succ] at h' ⊢
+  simp only [pow_succ] at h' ⊢
   nlinarith [h']
 
 theorem width_three (n : ℕ) (hn : 2 ≤ n) :
@@ -170,6 +178,11 @@ theorem diagonal_closed (n : ℕ) (hn : 3 ≤ n) :
   · have h := closed_form n n (by omega) (by omega)
     nlinarith [h]
 
+#check @symmetry
+#check @closed_form
+#check @width_two
+#check @width_three
+#check @diagonal_closed
 #print axioms diagonal_closed
 #print axioms symmetry
 #print axioms closed_form
