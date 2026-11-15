@@ -289,7 +289,9 @@ private theorem read_batch (l : List D) (f : D → Label) (p : D) (initial : Lab
   | cons q l ih =>
     simp only [List.map_cons, List.foldl_cons]
     rw [ih]
-    by_cases hq : q = p <;> by_cases hl : p ∈ l <;> simp_all [eq_comm]
+    by_cases hq : q = p
+    · subst q; simp
+    · simp [hq, Ne.symm hq]
 
 private theorem latest_claim_log (t : ℕ) (p : D) :
     latest (claimLog policy t) p = policy.claim t p := by

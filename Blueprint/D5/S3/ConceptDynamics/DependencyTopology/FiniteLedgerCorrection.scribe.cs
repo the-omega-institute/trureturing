@@ -85,7 +85,7 @@ internal sealed class FiniteLedgerCorrectionDocument : IScribeDocumentDefinition
         Formula p = F.Id("p"), t = F.Id("t"), T = F.Id("T"), stop = F.Id("stop");
         Formula Dm = F.Id("D"), k = F.Id("k");
         Formula C = Call("C", t), R = Call("R", p), E = F.Id("E");
-        Formula total = Seq(Sup(Sub(Sum, Seq(t, Eq, D(0))), Infty), Sp, Card(C));
+        Formula total = Seq(Sum, Underscore, Grp(t, Eq, D(0)), Caret, Grp(Infty), Sp, Card(C));
         Formula stable = Call("Stable", T);
         return Disp(Seq(
             Forall, Sp, F.Id("P"), Comma, Sp, F.Id("Proof"), Comma, Sp,
@@ -115,11 +115,11 @@ internal sealed class FiniteLedgerCorrectionDocument : IScribeDocumentDefinition
                 Call("append", Call("U", t), Call("B", t)), Sp, Land, Sp,
                 Call("length", Call("B", t)), Sp, Eq, Sp, Card(C), Sp, Land, RowBreak, Grp(),
                 Call("Nodup", Call("map", F.Id("fst"), Call("B", t))), Sp, Land, Sp,
-                Forall, Sp, p, Sp, F.Id("s"), Comma, Sp,
-                Open, p, Comma, F.Id("s"), Close, Sp, InMacro, Sp, Call("B", t),
+                Forall, Sp, p, Sp, F.Id("sigma"), Comma, Sp,
+                Open, p, Comma, F.Id("sigma"), Close, Sp, InMacro, Sp, Call("B", t),
                 Sp, Leftrightarrow, Sp, Open, p, Sp, InMacro, Sp, C, Sp, Land, Sp,
-                F.Id("s"), Sp, Eq, Sp, Call("s", t, p), Close, Close, Dot));
+                F.Id("sigma"), Sp, Eq, Sp, Call("s", t, p), Close, Close, Dot));
     }
 
-    private static Formula Card(Formula f) => Seq(Vert, f, Vert);
+    private static Formula Card(Formula f) => Seq(Bar, f, Bar);
 }
