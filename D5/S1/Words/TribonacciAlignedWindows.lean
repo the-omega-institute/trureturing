@@ -41,10 +41,10 @@ private theorem subst_upper (w : List (Fin 3)) :
 
 private theorem length_step (k : ℕ) : L (k + 1) ≤ 2 * L k := subst_upper _
 
-private theorem length_mono {k j : ℕ} (h : k ≤ j) : L k ≤ L j :=
+theorem length_mono {k j : ℕ} (h : k ≤ j) : L k ≤ L j :=
   (iterate_prefix (by omega : 2 ≤ 3) h).length_le
 
-private theorem length_seven (k : ℕ) : L (k + 7) ≤ 128 * L k := by
+theorem length_seven (k : ℕ) : L (k + 7) ≤ 128 * L k := by
   have h0 := length_step k
   have h1 := length_step (k+1)
   have h2 := length_step (k+2)
@@ -55,7 +55,7 @@ private theorem length_seven (k : ℕ) : L (k + 7) ≤ 128 * L k := by
   simp only [Nat.add_assoc, Nat.reduceAdd] at *
   omega
 
-private theorem four_parity (k : ℕ) :
+theorem four_parity (k : ℕ) :
     ∀ a : Fin 3, (image sigma (4*k) a).length % 2 = 1 := by
   induction k with
   | zero => intro a; rfl
@@ -82,7 +82,7 @@ private theorem four_parity (k : ℕ) :
       simp only [subst, List.flatMap_cons, List.flatMap_nil, List.append_nil, List.length_append]
       omega
 
-private theorem seed (k : ℕ) :
+theorem seed (k : ℕ) :
     image sigma (k+4) 0 =
       subst (image sigma k) [0,1,0,2] ++
       subst (image sigma k) [0,1,0] ++

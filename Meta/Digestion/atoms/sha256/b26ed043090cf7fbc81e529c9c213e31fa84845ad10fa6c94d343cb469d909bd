@@ -1,0 +1,27 @@
+**引理 198.2（单标签的连续对径投影）。** 在 L2 与固定标签 Hit$(a)$ 下，有唯一连续映射
+
+$$
+\beta_a:P\setminus\{a\}\longrightarrow N_a,
+\qquad
+\beta_a(p)=a\text{ 在 }B(a,p)\text{ 内的对径点}.
+\tag{198.2}
+$$
+
+它固定 $N_a$；每个不含 $a$ 的实际二点球的纯点线连续嵌入 $N_a$。
+
+证明。Hit 给 $b\in N_a\cap B(a,p)$。原效应在球上取值于 $[0,1]$，在 $a,b$ 读一、零；球上非恒定仿射函数的两个极值点唯一且对径。因此这个 $b$ 唯一。反向，若 $p\in N_a$，同一极值论证给 $\beta_a(p)=p$。
+
+连续性不能预设实际面映射连续。暂选辅助 Euclidean 坐标。若 $p_j\to p\ne a$，写
+
+$$
+B(a,p_j)=c_j+A_j\overline{\mathbb B}^{,3},
+\qquad \|A_j\|\le\tfrac12\operatorname{diam}K.
+\tag{198.3}
+$$
+
+因为 $c_j\pm A_js\in K$，上界成立；球心也在紧 $K$ 中。任一子列可再取 $c_j\to c,A_j\to A$，极限椭球 $Q=c+A\overline{\mathbb B}^{,3}\subset K$ 含不同的原纯点 $a,p$。它们也是 $Q$ 的极点；正秩椭球严格凸，所以 $(a+p)/2\in\operatorname{ri}Q$。包含此中点的原面 $B(a,p)$ 必含整个 $Q$：对任意 $y\in Q$，从 $y$ 穿过中点可在 $Q$ 内再延长一点，随后用面性。这里允许 $A$ 降至秩一或二。
+
+记 $b_j=2c_j-a$，选原见证 $e_j(a)=1,e_j(b_j)=0$。完整效应区间紧，故可再取 $e_j\to e\in\mathcal E$。极限 $b=2c-a\in Q\subset B(a,p)$ 满足 $e(a)=1,e(b)=0$，球极值唯一性迫使 $b=\beta_a(p)$。每个聚点都相同，给连续性；未预设 $P$ 闭。
+
+最后，若球 $D$ 不含 $a$，不同 $p,q\in\ell_D$ 有同一个像 $b$，则 $B(a,b)$ 含 $p,q$，必等于 $D$，矛盾。连续单射从紧 $S^2$ 到 Hausdorff 空间是嵌入。$\square$
+

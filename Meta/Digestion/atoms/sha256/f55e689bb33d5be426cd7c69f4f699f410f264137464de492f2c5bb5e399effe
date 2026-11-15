@@ -1,0 +1,39 @@
+## Theorem 4: all-region entropy and min-cut identity
+
+For a region R, let r_j be its number of selected legs in loop j. Define
+
+    H_R = number of j with r_j > 0,
+    H_bar = number of j with r_j < 4,
+    p = number of j with 0 < r_j < 4,
+    e(0)=0, e(1)=0, e(2)=1, e(3)=2, e(4)=2,
+    E = sum_j e(r_j).
+
+Then H_R+H_bar=3+p and
+
+    rank(F_R) = H_R + min(3,E),
+    rank(F_bar) = H_bar + min(3,6-E),
+    S(R)/log 13 = p + min(E,6-E) = m(R).
+
+Here F_R is the selected boundary map on the six latent coordinates (lambda,z), and m(R) is the minimum number of edges separating R from its complement. In particular the equality holds for all 4096 subsets of individual boundary legs, including disconnected, empty, and full regions.
+
+Proof of ranks. Project the selected row space onto the three z coordinates. Each active loop contributes exactly its own z direction, so the image dimension is H_R. Its kernel consists of central-coordinate rows obtained by cancelling z separately within each loop. For r_j=0 or 1 no central row remains. For r_j=2, choosing both legs of A_j leaves a_j, both of B_j leaves b_j, and choosing one leg of each leaves a_j+b_j or a_j-b_j up to a nonzero scalar. For r_j=3, one vertex has both legs: their difference recovers z_j and their sum recovers its central row; the third leg then gives the other central row. For r_j=4 the same two-dimensional central space remains. Thus the kernel has the allowed block structure of Proposition 3 and rank min(3,E). Since e(r)+e(4-r)=2 for each r, the complementary rank formula follows.
+
+Proof of entropy. For the uniform positive state on a d-dimensional linear support L, let a,b be the dimensions of its two coordinate projections. The kernels on the two sides have dimensions d-b and d-a. Their cosets pair bijectively into q^(a+b-d) equal-sized, disjoint rectangles in the coefficient matrix. Every rectangle is a constant rank-one block. Hence the Schmidt spectrum is flat with q^(a+b-d) nonzero coefficients, and entropy is (a+b-d)log q. This uses identical amplitudes, not only identical moduli. Applying it with d=6 gives
+
+    S(R)/log 13
+      = H_R+H_bar+min(3,E)+min(3,6-E)-6
+      = p-3+min(3,E)+min(3,6-E)
+      = p+min(E,6-E).
+
+Proof of cut. Fix the central vertex side c, with c=0 the complement side. If a,b in {0,1,2} count selected legs at the two outer vertices of one loop, and alpha,beta in {0,1} are their sides, its cut cost is
+
+    [alpha != c] + [beta != c] + [alpha != beta]
+      + (a if alpha=0 else 2-a) + (b if beta=0 else 2-b).
+
+Minimizing over alpha,beta gives, for r=a+b=0,1,2,3,4 respectively,
+
+    c=0: 0,1,2,3,2;
+    c=1: 2,3,2,1,0.
+
+These equal e(r)+[0<r<4] and e(4-r)+[0<r<4]. With c fixed, the three outer-pair choices are independent. Therefore the full cut is min(E+p,6-E+p), which equals the entropy exponent. For the empty region H_R=E=p=0 and H_bar=3, giving ranks 0,6 and entropy 0; the full region follows by symmetry. QED.
+

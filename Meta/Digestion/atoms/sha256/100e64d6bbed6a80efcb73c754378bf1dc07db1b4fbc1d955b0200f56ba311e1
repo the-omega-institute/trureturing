@@ -1,0 +1,11 @@
+**定义 6.1（Common unmeasured record iteration）。** For a specified finite length $N$, apply the same $V_4$ of Theorem 4.1 sequentially to the current $H$ and $N$ fresh pure environments $E_4^{(1)},\ldots,E_4^{(N)}$. Retain each outgoing environment without subsequently coupling it to the current system. Their order is part of the protocol. No intermediate successor measurement is required for this construction. Let $V_4^{[N]}$ denote this composition, with $V_4^{[0]}=I_H$. For a legal length-$N$ path $h=(i_0,\ldots,i_N)$ write
+
+$$
+w(h)=\prod_{s=1}^NP_{i_{s-1}i_s},\qquad
+r_h=g_{\kappa(i_0)}\otimes\cdots\otimes g_{\kappa(i_{N-1})}
+\in E_4^{\otimes N},
+\tag{6.1}
+$$
+
+where the empty tensor at $N=0$ is the unit scalar. Terminal configuration $i_N$ is an actual additional read interface. For stochastic path weights use either the fixed known root or the actually prepared initialization (5.5). This construction does not supply that initialization from an arbitrary input.
+
