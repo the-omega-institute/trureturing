@@ -120,7 +120,9 @@ $$\forall \left(\operatorname{L}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.unionMoveRelation` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -132,7 +134,9 @@ $$\forall \left(\operatorname{L}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.unionConnected` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -180,7 +184,9 @@ $$\forall \left(\operatorname{L}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.alternatingSupport` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -192,7 +198,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.twistGroup` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -204,7 +212,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.derivedTwistGroup` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -216,7 +226,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.pairTwistGroup` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -228,7 +240,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.pointStabilizer` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -240,7 +254,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.pointPairStabilizer` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -252,7 +268,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.lTwoCriterion` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -264,7 +282,9 @@ $$\forall \left(\operatorname{N}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.lAtLeastThreeCriterion` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 
@@ -288,7 +308,9 @@ $$\forall \left(\operatorname{L}: \mathbb{N}\right), \left(\forall \left(\operat
 
 *Formalization.* `D5/S3/StatisticalMechanics/ParticleProcesses/SwitchedTwistedSSEP.registeredReachabilityAnswer` (`✓ std3`).
 
-*Citation.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mathieu Dabrowski; Loïc Poulain d’Andecy; Eric Ragoucy (2026). *Twisted symmetric exclusion processes and set-theoretical R-matrices*. DOI: [10.1088/1751-8121/ae751a](https://doi.org/10.1088/1751-8121/ae751a). URL: <https://arxiv.org/html/2602.18204v2>.
 
 *Commentary.*
 

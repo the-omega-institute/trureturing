@@ -155,10 +155,18 @@ internal sealed class SwitchedTwistedSSEPDocument : IScribeDocumentDefinition
                 LT(Typed(D(0), Rat()), Call("branchingProbability", X("hL"), X("s"), X("t"), X("x"), X("y")))))),
             StartC(All("k", Nat(), Equal(Support("alternatingSupport", X("k")), Support("switchSupport", X("k"))))))))));
 
+    private static bool IsRepositoryConstruction(string name) =>
+        name is "unionMoveRelation" or "unionConnected" or "alternatingSupport" or "twistGroup"
+            or "derivedTwistGroup" or "pairTwistGroup" or "pointStabilizer" or "pointPairStabilizer"
+            or "lTwoCriterion" or "lAtLeastThreeCriterion" or "registeredReachabilityAnswer";
+
     private static DocumentBlock Definition(string name, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("switched-twisted-ssep-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Module + "." + name), H(name), StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            IsRepositoryConstruction(name)
+                ? AssessedProvenance.FromRepo(Source)
+                : AssessedProvenance.FromLiterature(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static Formula LN(Formula body) => All("L", Nat(), All("N", Nat(), body));
     private static Formula Context(Formula body) => LN(All("hL", LT(D(1), X("L")), body));
     private static Formula FG(Formula body) => All("f", Perm(), All("g", Perm(), body));
