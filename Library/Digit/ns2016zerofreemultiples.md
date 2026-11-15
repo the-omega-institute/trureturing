@@ -2,7 +2,7 @@
 bibkey: ns2016zerofreemultiples
 authors: N. S.
 year: 2016
-title: "Answer to Integers n for which all multiples of n contain a zero digit"
+title: "Answer to Does every number not ending with zero have a multiple without zero digits at all?"
 doi: null
 url: https://math.stackexchange.com/a/2067782
 claim: "A positive integer has a zero-free decimal multiple if and only if it is not divisible by ten."

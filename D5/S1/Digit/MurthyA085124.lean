@@ -197,7 +197,7 @@ private theorem sufficiency (n : ℕ) (hn : 0 < n)
     rw [pow_succ]
     exact dvd_mul_of_dvd_right hwp _
 
-private theorem necessity (n : ℕ) (hn : 0 < n) (h : ∃ N, admissible n N) :
+private theorem necessity (n : ℕ) (h : ∃ N, admissible n N) :
     (∀ p : ℕ, Nat.Prime p → p ∣ n → p ≤ 7) ∧ ¬ 10 ∣ n := by
   obtain ⟨N, hN, hd, hp, hdp⟩ := h
   have hz : ∀ d ∈ Nat.digits 10 N, d ≠ 0 := by
@@ -235,7 +235,7 @@ theorem result (n : ℕ) (hn : 0 < n) :
   classical
   have he : (∃ N, admissible n N) ↔
       (∀ p : ℕ, Nat.Prime p → p ∣ n → p ≤ 7) ∧ ¬ 10 ∣ n :=
-    ⟨necessity n hn, fun h => sufficiency n hn h.1 h.2⟩
+    ⟨necessity n, fun h => sufficiency n hn h.1 h.2⟩
   refine ⟨he, ?_⟩
   by_cases hex : ∃ N, admissible n N
   · have ha : a085124 n = Nat.find hex := by simp [a085124, hex]

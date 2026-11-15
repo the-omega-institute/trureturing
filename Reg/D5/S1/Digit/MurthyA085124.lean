@@ -50,7 +50,7 @@ def family : Registration arena (type_of% @result) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(), 1, 10, ?_⟩
+    refine ⟨(), (1 : ℕ), (10 : ℕ), ?_⟩
     change a085124 1 ≠ a085124 10
     have hc := (result 1 (by decide)).1.mp ⟨1, one_qualifies⟩
     have hp := (result 1 (by decide)).2.1.mpr hc
