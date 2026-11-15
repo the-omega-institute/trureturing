@@ -141,7 +141,7 @@ internal sealed class SwitchedTwistedSSEPDocument : IScribeDocumentDefinition
                         + "Writing an element of P as a derived element times a stabilizer element proves derived-group transitivity.")),
                     Paragraph(Text("For two sites the flip sends each paired generator to its inverse, hence normalizes K and fixes every diagonal pair. "
                         + "The union component of a diagonal configuration is exactly its K-orbit. The two-site criterion follows from orbit-stabilizer and the existing Mathlib pretransitivity characterization. "
-                        + "The proof is uniform and uses no bounded enumeration. Utility is none because the result is a general classification of the registered external question, with no asserted downstream computational application."))),
+                        + "The argument is uniform in the number of sites, the number of species and the two permutations."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("dabrowski-poulain-ragoucy-2026-switched-ssep-reachability"), ResolutionKind.Proved)))));
 
