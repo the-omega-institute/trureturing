@@ -3333,3 +3333,209 @@ $$
 [Q281B]: https://web.stanford.edu/class/ee364b/lectures/subgradients_notes.pdf "Boyd、Duchi、Pilanci与Vandenberghe，Subgradients；§2.2的可微／唯一次梯度对应与§3.5的紧指标上包络公式，作为成熟中间工具，不将其当作新定理。"
 
 ## 追加锚（本行以下为增补区）
+
+## 282. 一对产品源与同一颗三腿种子：用交叠边缘锁定方向
+
+**定义 282.1（单点接触族）。** 完整保留281.1的非平凡强全有限背景、全部原态、完整proper菜单、全部相关输入、真实有限复合与同一总定义比较 $T_N$。仍取 $B_3=P_2\otimes P_1$；二份块允许块内纠缠。固定任一 $c\in\operatorname{ri}K_3$。对任意原源 $z\in K_3$，记以下性质为 $\mathsf S_z(c)$：
+
+$$
+\begin{aligned}
+&\left|\operatorname*{argmin}_{f\in\mathcal E_3(z)}f(c)\right|=1,\\
+&T_3\!\left(z,\frac{a+c}{2}\right)
+=\frac{T_3(z,a)+T_3(z,c)}2\qquad(\forall a\in P_3).
+\end{aligned}
+\tag{282.1}
+$$
+
+它对测试端仍遍历含跨块纠缠的整个原纯域，不把比较序缩为产品输入。定义 $\mathsf D_B(c):\Longleftrightarrow\forall P\in B_3,\ \mathsf S_P(c)$。281.2的逐纤维证明直接给：$\mathsf S_z(c)$ 当且仅当整个 $\mathcal E_3(z)$ 有least；特别地，$\mathsf D_B(c)$ 只为全部产品单点付最小确认，不为任意两个不同源付共同最小确认。
+
+**引理 282.2（先由单点和换点产生低二层坐标）。** 保留同一个279.2的 $\mathsf X_{T,2}$。在282.1的整个背景及278.4、275.2（六）的明确低二层供应下，$\mathsf D_B(c)+\mathsf X_{T,2}$ 已推出以下坐标集合非空：
+
+$$
+\mathcal R:=\left\{(n,\theta,\varepsilon):\begin{array}{l}
+ n\ge2,\ \theta:V\to H_n\text{ 为实线性双射},\ u_1=\operatorname{Tr}\circ\theta,\\
+ \theta C_1=\operatorname{PSD}_n,\quad
+ \theta^{\otimes2}C_2=T_1^\varepsilon\operatorname{PSD}_{n^2},\quad
+ \varepsilon\in\{0,1\}
+\end{array}\right\}.
+\tag{282.2}
+$$
+
+这里 $T_i$ 是指定矩阵坐标中第 $i$ 腿的转置，不是预给原物理正操作。对任一这样的坐标，$D_3:=T_1^\varepsilon\theta^{\otimes3}C_3$ 在真实 $(12)|3$ 上满足 $\operatorname{Sep}(n^2|n)\subseteq D_3\subseteq\operatorname{BP}(n^2|n)$；全部秩一产品投影都在整个原proper菜单中有least确认，且该确认恰为投影本身。
+
+证明。固定原纯旁观者 $b\in P_1$。每个 $a\otimes b$ 的单点least限制到 $x\mapsto x\otimes b$；任意确认 $a$ 的双份原proper $f$ 可提升为 $f\otimes u_1$，故限制低于全部双份确认者。这正是276.2（一）的完整M2下降，只消费对角产品目标。于是 $T_2(p,x)=e_p(x)$，原 $\mathsf X_{T,2}$ 成为278.2的确认零换点。准确复用278.3—278.4的M-only正对偶实际面、射影表示、连续极性与Gleason低二层步骤，再用275.2（六）的精确产品正规形，得到(282.2)。没有在此调用包含非对角产品对J的278.5或279.4重建结论。
+
+原min/max、完整逆对偶菜单、迹单位与原产品一起运输。原 $B_3$ 因而双射为 $n^2|n$ 的全部秩一产品投影。276.5的双HS／迹预算给 $\|x\|_2\le\operatorname{Tr}x$ 于 $D_3,D_3^*$；产品投影 $P$ 及其补可分，故proper。其单点least $e_P\le P$，276.6的Cauchy–Schwarz等号链迫 $e_P=P$。这一段只用产品单点least，不用非对角共同门。$\square$
+
+**定义 282.3（由低二层坐标指定的一对源）。** 对任意 $(n,\theta,\varepsilon)\in\mathcal R$，在上述运输坐标的真实两块 $A=(12),B=3$ 定义
+
+$$
+\begin{aligned}
+\tau_n&=\sum_{i=0}^{n-1}|ii0\rangle+|011\rangle,
+&\widehat\tau_n&=\tau_n/\sqrt{n+1},
+&\Gamma_n&=|\widehat\tau_n\rangle\langle\widehat\tau_n|,\\
+ A_0&=n^{-1/2}\sum_i|ii\rangle,& A_1&=|01\rangle,
+&B_0&=|0\rangle,\quad B_1=|1\rangle,\\
+ \alpha&=\sqrt{n/(n+1)},&\beta&=1/\sqrt{n+1},
+&s&=\alpha+\beta,\quad t=(\alpha-\beta)/(\alpha\beta),\\
+ a&=(\sqrt\beta A_0+\sqrt\alpha A_1)/\sqrt s,
+&b&=(\sqrt\beta B_0-\sqrt\alpha B_1)/\sqrt s,\\
+ v&=a\otimes b,&w&=(v+t\widehat\tau_n)/\sqrt{1+t^2},
+&P&=|v\rangle\langle v|,\quad Q=|w\rangle\langle w|.
+\end{aligned}
+\tag{282.3}
+$$
+
+下证 $v,w$ 都是不同的单位产品向量。因而原逆像
+
+$$
+p=(\theta^{\otimes3})^{-1}T_1^\varepsilon P,\qquad
+q=(\theta^{\otimes3})^{-1}T_1^\varepsilon Q
+\tag{282.4}
+$$
+
+确实属于原 $B_3$。本章候选为
+
+$$
+\boxed{\quad
+\mathsf Q_{\mathrm{one}}(c):=
+\mathsf D_B(c)+\mathsf X_{T,2}
++\exists(n,\theta,\varepsilon)\in\mathcal R:\ \mathsf S_{(p+q)/2}(c).
+\quad}
+\tag{282.5}
+$$
+
+集合 $\mathcal R$ 的非空先由282.2产生；存在量词只在已经获得的坐标中选择(282.3)的检验源，不额外输入低二层量子类型。$\tau_n$ 此时只用于指定两个原产品准备，尚不假定其dyad属于原三份锥。选择一组坐标或一对源的表示不会把部分转置变成原允许操作。
+
+**引理 282.4（一对共同门足以产生指定残余）。** 在282.2的运输坐标中，若仅对(282.3)这对源另有共同least确认 $h$，则
+
+$$
+\Gamma_n\in D_3\quad\text{或}\quad T_3\Gamma_n\in D_3.
+\tag{282.6}
+$$
+
+不需要全部一般位置产品对的J、全三份M或全域统一Schmidt方向。
+
+证明。（一）所选源是真实产品且处于一般位置。$A_0,A_1$ 正交，$B_0,B_1$ 正交，$\widehat\tau_n=\alpha A_0B_0+\beta A_1B_1$，且 $\alpha>\beta>0$。向量 $v$ 与它正交，在这两组基中的系数矩阵为
+
+$$
+ V=\frac1s\begin{pmatrix}\beta&-\sqrt{\alpha\beta}\\
+ \sqrt{\alpha\beta}&-\alpha\end{pmatrix},\qquad
+ \det\!\left(V+t\begin{pmatrix}\alpha&0\\0&\beta\end{pmatrix}\right)
+ =t(\beta-\alpha)+t^2\alpha\beta=0.
+\tag{282.7}
+$$
+
+因此非零实向量 $v+t\widehat\tau_n$ 的Schmidt秩为一，$w$ 是实单位产品。$\langle v,w\rangle=(1+t^2)^{-1/2}\in(0,1)$。若任一块的两个因子平行，则 $\widehat\tau_n\in\operatorname{span}\{v,w\}$ 也在该块固定为同一因子，与其Schmidt秩二矛盾；总重叠非零又排除局域正交。所以两个局域重叠都严格位于 $(0,1)$，正好满足旧稀疏计算的一般位置前件。
+
+（二）固定这一对的迹二与极端残余。282.2给每个产品单点least恰为其投影，故 $h\ge_{D_3^*}P,Q$。276.2（二）的极端性证明对这一对逐字适用：$h$ 的任何proper平均分解，两项都确认 $P,Q$，leastness迫两项等于 $h$。令 $d=h-P$；它proper且 $d(P)=0$。若 $d=(d_1+d_2)/2$，正性迫 $d_i(P)=0$，所以 $I-d_i$ 确认 $P$。仅用 $P$ 的单点least得 $P\le I-d_i$；于是 $P+d_i$ proper并以极端 $h$ 为平均，迫 $d_1=d_2=d$。
+
+现在只对 $P,Q$ 取274.15的两个块支持补 $Q_A,Q_B$ 和两个产品零点 $R_1,R_2$。它们及其补可分，四个补共同确认这一对，所以 $h\le I-Q_A,I-Q_B,I-R_1,I-R_2$。由 $h\in D_3^*\subseteq\operatorname{BP}$ 的零边缘消去和原产品Gram计算，准确使用274.16—274.17及276.2（四）的局部部分：若局域重叠为 $\mu,\nu$，$g=\mu\nu$，稀疏系数满足 $A=D_0=(1-g^2)^{-1}$、$z+w=-g/(1-g^2)$、$z,w\le0$，故
+
+$$
+\operatorname{Tr}h=A+D_0+2g\operatorname{Re}(z+w)=2,
+\qquad h\in\operatorname{conv}\{H_0,H_1\},
+\tag{282.8}
+$$
+
+其中 $H_0=P_{\operatorname{span}\{v,w\}}$，而实产品向量给 $H_1=T_AH_0$。这项局部结论的输入恰为上述四个上界、$h\ge P,Q$、两个确认等式和这对源的Gram矩阵；不使用其他源对、连续覆盖或纠缠纯点的least门。
+
+$\operatorname{Tr}d=1$。276.2（三）只消费极端proper及迹一，双HS／迹预算迫 $d$ 在原底的一个点取得一，并由Cauchy–Schwarz等号给
+
+$$
+d\in D_3\cap D_3^*,\qquad \|d\|_2=1.
+\tag{282.9}
+$$
+
+确切地，若 $\max_{K(D_3)}d<1$，可按该最大值把 $d$ 非平凡拆成零与另一proper效应，矛盾；在最大点 $x$ 有 $1=\operatorname{Tr}(dx)\le\|d\|_2\|x\|_2\le1$，故 $d=x$。没有对这个残余另行索取M。
+
+（三）只选这一对的方向。因 $v\perp\widehat\tau_n$，$H_0=P+\Gamma_n$；所有系数实，故
+
+$$
+H_1-P=T_A\Gamma_n=T_3\Gamma_n,
+\qquad \|\Gamma_n\|_2=\|T_3\Gamma_n\|_2=1.
+\tag{282.10}
+$$
+
+两残余不同：$\Gamma_n$ 在 $A|B$ 有两个非零Schmidt系数，$T_3\Gamma_n$ 有负本征值 $-\alpha\beta$。因此(282.8)的任何真中间残余HS范数严格小于一，与(282.9)冲突。于是 $d=\Gamma_n$ 或 $d=T_3\Gamma_n$，得(282.6)。不再接276.2（四）后半的连通参数域、两闭集覆盖或全部秩二dyad供应。$\square$
+
+**定理 282.5（同一颗种子的两个交叠边缘排尽镜像）。** 在282.1的整个背景及282.2、276.2局部矩阵供应与XIII164.11的明确全有限传播供应下，$\mathsf Q_{\mathrm{one}}(c)$ 等价于存在同一 $n\ge2$ 和保单位实线性序同构 $\theta:V\to H_n$，使
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}\qquad(\forall N\ge0).
+\tag{282.11}
+$$
+
+证明。282.2先给低二层坐标。额外的一对星形条件给这对源的共同least，282.4遂给某 $\delta\in\{0,1\}$，使
+
+$$
+x=T_1^\varepsilon T_3^\delta\Gamma_n
+\in\theta^{\otimes3}C_3.
+\tag{282.12}
+$$
+
+只计算同一个 $\Gamma_n$ 的两个真实边缘，记 $\rho_{13}=\operatorname{tr}_2\Gamma_n$、$\rho_{23}=\operatorname{tr}_1\Gamma_n$。在同一局域坐标中直接展开：
+
+$$
+\begin{aligned}
+(n+1)\rho_{13}
+ &=\sum_i|i0\rangle\langle i0|+|01\rangle\langle01|
+   +|10\rangle\langle01|+|01\rangle\langle10|,\\
+(n+1)\rho_{23}
+ &=\sum_i|i0\rangle\langle i0|+|11\rangle\langle11|
+   +|00\rangle\langle11|+|11\rangle\langle00|.
+\end{aligned}
+\tag{282.13}
+$$
+
+$T_3\rho_{13}$ 在 $|00\rangle,|11\rangle$ 上、$T_2\rho_{23}$ 在 $|10\rangle,|01\rangle$ 上各有主块
+
+$$
+\frac1{n+1}\begin{pmatrix}1&1\\1&0\end{pmatrix},
+\qquad \det=-\frac1{(n+1)^2}<0.
+\tag{282.14}
+$$
+
+所以两个部分转置都非PSD。这里用的是同一实际种子的联合关系，不是把分别可达的边缘拼成一个未给的共同实现。
+
+原丢弃与原正置换保证(282.12)的两个边缘都在(282.2)的同一个双份锥。先丢弃第二腿：
+
+$$
+T_1^\varepsilon T_3^\delta\rho_{13}
+\in T_1^\varepsilon\operatorname{PSD}_{n^2}
+\quad\Longrightarrow\quad T_3^\delta\rho_{13}\succeq0.
+\tag{282.15}
+$$
+
+(282.14)迫 $\delta=0$。再丢弃第一腿，转置与该丢弃交换，得
+
+$$
+\rho_{23}\in T_2^\varepsilon\operatorname{PSD}_{n^2}
+\quad\Longrightarrow\quad T_2^\varepsilon\rho_{23}\succeq0,
+\tag{282.16}
+$$
+
+故同一(282.14)迫 $\varepsilon=0$。因此低二层已标准，且 $\Gamma_n\in\theta^{\otimes3}C_3$。乘上 $n+1$ 恰得到XIII164.10—164.11的原向量 $\tau_n$ 的dyad，不是任意同维或相似种子。完整强背景、同坐标标准 $C_1,C_2$ 和这个明确原种子精确支付164.11第3项；其 $3\Rightarrow4$ 给(282.11)。六份种子、十八条实际腿及全部有限相关旁观仍由该尾部承担，没有只保留三层。
+
+反向，完整复PSD模型中，每个产品单点的least是其秩一投影，每对源的least是共同支持投影。281.2的反向使它们在任一原内部 $c$ 都满足(282.1)。279.4的复正交换点成立，取标准低二层坐标及 $\varepsilon=0$，即可选择(282.3)的一对源。因此 $\mathsf Q_{\mathrm{one}}(c)$ 成立。参照“某个内部 $c$”与“任意内部 $c$”在同一背景及供应下仍给相同模型类。$\square$
+
+**推论 282.6（与单体可筛球入口的精确接合）。** 若将(282.5)的 $\mathsf X_{T,2}$ 换为最新XX278.1的 $\mathrm{L2}^{\mathrm{exp}}_1$，即每对不同原单体纯点生成原全域proper效应可暴露的整个非退化实际三球，并保留XX278.2所明列的M加互易到Jordan几何和M-only矩阵供应，则同一单点族加同一对源的候选也等价于(282.11)。不额外索取全部产品对J或全三份M。
+
+证明。$\mathsf D_B(c)$ 的纯旁观下降给完整M2和M1。XX278.2（一）的原球非塌缩证明只消费M1及 $\mathrm{L2}^{\mathrm{exp}}_1$，给单体数值互易、具名Jordan桥和复类型；其（二）只用已付M2与产品正规形，给(282.2)。所以 $\mathcal R$ 非空的来源可替换，282.3—282.5的局部一对源、交叠边缘及准确种子证明原样适用。反向PSD模型同时有原可暴露二纯三球。一般维数下从裸实际球推出暴露性的问题仍未在这里解决，正对偶实际面暴露性也未被用来代付原态球暴露。$\square$
+
+**命题 282.7（几何、量子公理对应与来源边界）。** 相对281的全部产品源对检验，282保留所有产品单点，只增加(282.3)指定的一对不同产品源；测试端、菜单、原序与完整有限背景不变。在同一剩余背景及供应下两者定义同一模型类；不据源量词缩小宣称严格逻辑弱化、最少独立公理或全局原创。
+
+证明与几何。低二层先从原二元零换点及单点门产生复射影坐标；额外检验只作用于其中一条割线上的两个产品点。它们张成的复二维平面包含且只为本证明提供指定的 $\widehat\tau_n$ 残余方向。局部共同门只剩平面支持及其块镜像两个候选；不必先把其他所有平面的镜像选择连成全域一致。所得同一三腿残余的两张交叠影子分别锁定两个转置位，才得到原空间中的准确种子。其几何是“一条产品割线、一个残余方向和两张交叠边缘”，并不声称只由两个裸点且没有整个测试表便能恢复量子理论。
+
+(282.11)后，原全部态、纯点、proper菜单、有限单位分解和配对分别成为密度矩阵、复射线、全部数学POVM／PVM及Born迹概率；真实全有限产品、置换、重括号和丢弃成为同一复张量和偏迹。全部纠缠纯点的最小门与全部源对的共同门此时成为输出。CP仍以所有有限相关旁观输入保正为前件，TNI／TP及仪器保留整个正输入与总分支预算，Lüders保留锐效应及整个yes支持中性；数学酉动力学保留连续可逆保锥保单位的一参数群。设备、物理钟、能量、$\hbar$、无限和近似极限各保留原供应，静态重建不单独支付它们。
+
+反事实准确定位在步骤上：没有所选共同门，就没有(282.8)的极端迹一残余；没有单点least，残余极端性中的 $P\le I-d_i$ 没有本章给出的依据；没有真实正丢弃和同一个低二层锥，(282.15)—(282.16)不能约束两个方向位。这些是本证明的依赖，不是相关条件在完整全有限候选中相互独立的反模型。一般单层的星形等号、唯一性和隔离边界仍精确保留281.5的范围。
+
+归属：单点星形接触复用281.2；低二层复用278.3—278.4及275.2（六），替代入口精确消费XX278.2（一）—（二）。产品least的识别、双HS／迹预算、固定一对的四个可分补测试、稀疏迹二与严格凸性分别复用276.2（二）—（四）及274.15—274.19，不申领这些工具。向量 $\tau_n$ 与完整有限尾部复用XIII164.10—164.11。部分转置、负本征值与正主块判据是成熟矩阵方法；[Q282P]的部分转置可分必要条件也不作为新结果，本章不使用PPT在一般维数充分。repo-derived的新增接合是：只对准确种子构造一对一般位置产品源，以局部共同门直接得到该种子或其镜像，再用同一种子的两个NPT交叠边缘同时支付方向和全有限入口，省去全参数连通选向、全部秩二供应及另外选择Bell来源。结论为条件数学纸面推导，不声称Lean核验或物理实现。
+
+白话：先保留每个独立准备自己的最低门；双份的换点关系把这些门接成同一把复数尺。现在不用再要求任意两颗独立准备都有共同门，只挑一对特别安排的：它们本身都能按“两份一块、第三份一块”独立准备，但两点撑开的平面里藏着那颗指定的三腿种子。共同门扣去第一点自己的门，剩下的方向只能是这颗种子或它的镜像。接着看这同一颗东西的两张交叠影子：第一张排掉第三腿的反向，第二张排掉前两腿之间的反向。镜像全排掉，种子便真正落进原来的世界，既有有限拼接把它长成全部有限量子结构。压缩的是必须另检验的不同源对；完整概率表、全部相关准备和真实复合仍在。$\square$
+
+[Q282P]: https://arxiv.org/abs/quant-ph/9604005 "Asher Peres，Separability Criterion for Density Matrices，v2，式(3)—(6)及负部分转置例；仅作成熟部分转置方法的归属，本章两张边缘和主块直接计算。"
+
+## 追加锚（本行以下为增补区）
