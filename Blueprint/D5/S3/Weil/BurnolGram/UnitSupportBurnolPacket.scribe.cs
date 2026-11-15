@@ -28,5 +28,100 @@ internal sealed class UnitSupportBurnolPacketDocument : IScribeDocumentDefinitio
                 H("Explicit exceptional spectral radius"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Use the derived two-jet closed-strip decay and the unconditional half-strip bound on gamma. The spectral-radius versus real-ordinate conversion is proved using the complex norm square. The finite target set must also be included when assembling a packet."))), DescribeRole.Theorem)), []));
+                Blocks(Paragraph(Text("Use the derived two-jet closed-strip decay and the unconditional half-strip bound on gamma. The spectral-radius versus real-ordinate conversion is proved using the complex norm square. The finite target set must also be included when assembling a packet."))), DescribeRole.Theorem),
+            Paragraph(Text(
+                "Application: the amplitude price of resolving one signed orbit. "
+                + "The following is an elementary application derivation, not an additional "
+                + "kernel-checked declaration or a literature novelty claim. The existing "
+                + "unit-support theorem fixes a window for each finite interpolation problem; "
+                + "it does not bound the interpolant's size uniformly over moving nodes. "
+                + "This application supplies a necessary resource test for that exact construction.")),
+            Paragraph(Text(
+                "For every R>0, t real and eta real with t*eta nonzero, take any complex "
+                + "smooth even function g supported in [-R,R]. Set F(z)=integral_R "
+                + "exp(-i*z*x)*g(x) dx, z_plus=t+i*eta, z_minus=t-i*eta, "
+                + "L0=integral_R |g(x)| dx, L2=integral_R |g''(x)| dx, "
+                + "m=min(1,R*|t|), and S=m*sinh(R*|eta|)>0. The subscript R on "
+                + "integral_R denotes the whole real line, not the support radius. "
+                + "Suppose |F(z_plus)-1|<=epsilon and |F(z_minus)+1|<=epsilon, "
+                + "where 0<=epsilon<1. Then L0*S>=1-epsilon and "
+                + "L2*S>=max(0,|t^2-eta^2|-(t^2+eta^2)*epsilon). "
+                + "In particular exact interpolation requires "
+                + "L0>=1/S and L0+L2>=(1+|t^2-eta^2|)/S.")),
+            Paragraph(Text(
+                "Proof. Compact support makes every displayed integral absolutely "
+                + "convergent. Changing x to -x and using evenness gives "
+                + "F(z)=integral_R cos(z*x)*g(x) dx. The exact kernel difference is "
+                + "cos((t+i*eta)*x)-cos((t-i*eta)*x)="
+                + "-2*i*sin(t*x)*sinh(eta*x). On the support, "
+                + "|sin(t*x)|<=min(1,R*|t|) and "
+                + "|sinh(eta*x)|<=sinh(R*|eta|). The integral triangle inequality "
+                + "therefore gives |F(z_plus)-F(z_minus)|<=2*S*L0. "
+                + "The two error disks give the opposite bound 2*(1-epsilon), "
+                + "proving the first inequality. This proof also works for any integrable "
+                + "even g with the same support; smoothness is needed for the next step.")),
+            Paragraph(Text(
+                "The second derivative is even and has the same support bound. "
+                + "Twice integrating by parts, with zero boundary terms by smooth compact "
+                + "support, gives F_{g''}(z)=-z^2*F(z). Write "
+                + "F(z_plus)=1+e_plus and F(z_minus)=-1+e_minus, "
+                + "with both errors bounded by epsilon. The difference of the two "
+                + "derivative transforms is -z_plus^2-z_minus^2-z_plus^2*e_plus"
+                + "+z_minus^2*e_minus. Its modulus is at least "
+                + "2*|t^2-eta^2|-2*(t^2+eta^2)*epsilon. Apply the first kernel "
+                + "estimate to g'' and use L2>=0. This proves the second inequality; "
+                + "adding the exact-interpolation inequalities proves the two-jet bound.")),
+            Paragraph(Text(
+                "The actual-object map is rho=beta+i*t and "
+                + "gamma=(rho-1/2)/i=t+i*(1/2-beta), so eta=1/2-beta. "
+                + "For any supplied finite orbit frame and index j, set "
+                + "g=P.killer(j). The killer_values field of OrbitBurnolPacket gives "
+                + "F(gamma)=1 and F(conjugate(gamma))=-1 at that orbit. "
+                + "For a unit-support packet take R=1 and epsilon=0. Thus its actual "
+                + "zeroth and second L1 seminorms must pay the displayed bounds; "
+                + "any certified upper budgets J0 and J2 must be at least these actual "
+                + "seminorms. At fixed nonzero t and fixed R, the lower bound for L0 "
+                + "is asymptotic to 1/(m*R*|eta|) as eta tends to zero. This is a "
+                + "conditional statement about any such frames, not an assertion that "
+                + "arbitrarily close off-line zeta zeros exist. At eta=0 the two targets "
+                + "contradict each other; at t=0 they also contradict F(z)=F(-z).")),
+            Paragraph(Text(
+                "A usable budget test follows without an asymptotic approximation. "
+                + "If L0<=L with L>0, then R*|eta|>=arsinh((1-epsilon)/(m*L)), "
+                + "and in particular R*|eta|>=arsinh((1-epsilon)/L). "
+                + "A pointwise amplitude cap |g|<=A gives L0<=2*R*A. "
+                + "For a certified enclosure |eta|<=eta_max, the strict inequality "
+                + "L*sinh(R*eta_max)<1-epsilon rules out the claimed readout within "
+                + "that budget. This is a necessary feasibility test, not a sufficient "
+                + "interpolation criterion. It already allows arbitrarily small positive "
+                + "readout error; exact cancellation is not needed for the obstruction.")),
+            Paragraph(Text(
+                "The same test applies to the actual localized basis, not just its "
+                + "seed. In MultiOrbitBurnolUniformRemainder, burnolSynthesis with "
+                + "the one-hot coefficient vector at j still has values +1 and -1 "
+                + "at that orbit. The unit-support theorem supplies the radius cap "
+                + "R_N=N+2. If its final L1 norm is at most a fixed L, necessarily "
+                + "(N+2)*|eta|>=arsinh(1/L). Consequently fixed final amplitude "
+                + "and radius cannot be traded for an arbitrarily small off-line "
+                + "distance by increasing a nominal resonance count alone. "
+                + "If N+1=2^k is evaluated by repeated squaring, the available "
+                + "radius cap is 2^k+1. Logarithmically many multiplication stages "
+                + "can therefore conceal an exponentially growing support budget; "
+                + "this calculation neither disproves such a stage count nor proves "
+                + "a lower bound for arithmetic running time.")),
+            Paragraph(Text(
+                "What survives is finite conditional interpolation, the existing "
+                + "coefficient-uniform geometric remainder, and rational depth selection "
+                + "once the actual majorant is bounded. The lower seminorm estimate "
+                + "does not lower-bound the mixed spectral majorant: an upper bound "
+                + "built from large seminorms cannot be inverted to obtain such a "
+                + "lower bound. Nor does sparse synthesis imply sparse Gram matrices "
+                + "or a polynomial bit cost. OPEN: for the same actual packet, supply "
+                + "certified node enclosures, separation and target values, upper "
+                + "two-jet budgets, the full mixed head-tail majorant and a bit-cost "
+                + "bound as functions of height, off-line distance, channel count "
+                + "and tolerance. The feasibility inequality above is an immediate "
+                + "falsifier for any proposed simultaneous budget. A model slider "
+                + "may show this conditional forbidden region, but supplies neither "
+                + "an off-line zero nor an RH certificate."))), []));
 }
