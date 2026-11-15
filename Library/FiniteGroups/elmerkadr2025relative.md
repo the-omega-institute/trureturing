@@ -15,10 +15,17 @@ triage: anchor
 
 # The classical coordinates behind the relative tensor problem
 
+## Verified locator
+
 Jonathan Elmer and Kazal Kadr, *Some formulae relating modular
 representations of elementary abelian p-groups*, arXiv:2510.07939v1,
-Section 2.2 and formulas (11)--(12). The published identifier is
+https://arxiv.org/html/2510.07939v1: the introduction gives the faithful
+two-dimensional action; Section 2.2 gives the relative category; and
+the opening of Section 3, PDF page 6, gives formulas (11)--(12) for the
+symmetric powers and their ordinary duals. The published identifier is
 https://doi.org/10.1007/s13366-026-00855-9.
+
+## Scope
 
 The faithful two-dimensional action has a common fixed basis vector and
 an injective additive off-diagonal parameter. Symmetric powers are modeled
