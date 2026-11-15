@@ -110,7 +110,7 @@ abbrev InteriorAlphabet {a b : ℕ} (x y : NZPair)
   {h : K // h ≠ 0 ∧ h ≠ p ∧ h ≠ q ∧ (∀ i, h ≠ (u i).val) ∧ ∀ i, h ≠ (v i).val}
 
 /-- Independent special pairs and ordinary vertical words, followed by shared horizontal words. -/
-abbrev InteriorCode (a b c d : ℕ) :=
+def InteriorCode (a b c d : ℕ) :=
   Σ x : NZPair, Σ y : NZPair,
     Σ u : Fin a → OrdinaryAlphabet x, Σ v : Fin b → OrdinaryAlphabet y,
       (Fin c → InteriorAlphabet x y u v x.val.1 y.val.1) ×
@@ -161,86 +161,155 @@ theorem coded_boundary_valid {m c d : ℕ} (x : NZPair)
       · simpa [coded_boundary] using Ne.symm (u i).property.2
       · simpa [coded_boundary] using (hr j).2.2 i
 
+private theorem coded_boundary_left {m c d : ℕ} (x : NZPair)
+    (u : Fin m → OrdinaryAlphabet x) (l : Fin c → K) (r : Fin d → K) (j : Fin c) :
+    (coded_boundary x u l r).h (j.castAdd (d + 1)) = l j := by
+  simp only [coded_boundary, Fin.addCases_left]
+
+private theorem coded_boundary_right {m c d : ℕ} (x : NZPair)
+    (u : Fin m → OrdinaryAlphabet x) (l : Fin c → K) (r : Fin d → K) (j : Fin d) :
+    (coded_boundary x u l r).h (j.succ.natAdd c) = r j := by
+  simp only [coded_boundary, Fin.addCases_right, Fin.cases_succ]
+
+private theorem coded_boundaries_shared {a b c d : ℕ} (x y : NZPair)
+    (u : Fin a → OrdinaryAlphabet x) (v : Fin b → OrdinaryAlphabet y)
+    (l : Fin c → K) (r : Fin d → K) :
+    ∀ j, j ≠ pivot c d → (coded_boundary x u l r).h j =
+      (coded_boundary y v l r).h j := by
+  intro j
+  refine Fin.addCases (fun j _ => ?_) (fun j => ?_) j
+  · rw [coded_boundary_left, coded_boundary_left]
+  · refine Fin.cases (fun hj => (hj rfl).elim) (fun j _ => ?_) j
+    rw [coded_boundary_right, coded_boundary_right]
+
+private def interiorEncode {a b c d : ℕ} (w : InteriorCode a b c d) :
+    InteriorSlots a b (c + (d + 1)) (pivot c d) := by
+  rcases w with ⟨x,y,u,v,l,r⟩
+  refine ⟨(
+    ⟨coded_boundary x u (fun j => (l j).val) (fun j => (r j).val),
+      coded_boundary_valid _ _ _ _
+        (fun j => ⟨(l j).property.1,(l j).property.2.1,
+          (l j).property.2.2.2.1⟩)
+        (fun j => ⟨(r j).property.1,(r j).property.2.1,
+          (r j).property.2.2.2.1⟩)⟩,
+    ⟨coded_boundary y v (fun j => (l j).val) (fun j => (r j).val),
+      coded_boundary_valid _ _ _ _
+        (fun j => ⟨(l j).property.1,(l j).property.2.2.1,
+          (l j).property.2.2.2.2⟩)
+        (fun j => ⟨(r j).property.1,(r j).property.2.2.1,
+          (r j).property.2.2.2.2⟩)⟩), coded_boundaries_shared x y u v
+      (fun j => (l j).val) (fun j => (r j).val)⟩
+
+private def interiorDecode {a b c d : ℕ}
+    (w : InteriorSlots a b (c + (d + 1)) (pivot c d)) : InteriorCode a b c d := by
+  rcases w with ⟨⟨⟨b₁,hb₁⟩,⟨b₂,hb₂⟩⟩,hshared⟩
+  rcases hb₁ with ⟨hp₁,hq₁,hpq₁,hs₁,hh₁,hv₁,hl₁,hr₁,hcross₁⟩
+  rcases hb₂ with ⟨hp₂,hq₂,hpq₂,hs₂,hh₂,hv₂,hl₂,hr₂,hcross₂⟩
+  have hu₁ (i : Fin a) : b₁.v i ≠ b₁.p + b₁.q := by
+    intro he
+    exact hcross₁ i _ (hs₁.trans he.symm)
+  have hu₂ (i : Fin b) : b₂.v i ≠ b₂.p + b₂.q := by
+    intro he
+    exact hcross₂ i _ (hs₂.trans he.symm)
+  have hleft (j : Fin c) : j.castAdd (d + 1) < pivot c d := by
+    simp [pivot, Fin.lt_def]
+  have hright (j : Fin d) : pivot c d < j.succ.natAdd c := by
+    simp [pivot, Fin.lt_def]
+  have hleft_ne (j : Fin c) : j.castAdd (d + 1) ≠ pivot c d := ne_of_lt (hleft j)
+  have hright_ne (j : Fin d) : j.succ.natAdd c ≠ pivot c d := ne_of_gt (hright j)
+  refine ⟨⟨(b₁.p,b₁.q),hp₁,hq₁,hpq₁⟩, ⟨(b₂.p,b₂.q),hp₂,hq₂,hpq₂⟩,
+    (fun i => ⟨b₁.v i,hv₁ i,hu₁ i⟩), (fun i => ⟨b₂.v i,hv₂ i,hu₂ i⟩),
+    (fun j => ⟨b₁.h (j.castAdd (d + 1)), hh₁ _, hl₁ _ (hleft j), ?_, ?_, ?_⟩),
+    (fun j => ⟨b₁.h (j.succ.natAdd c), hh₁ _, hr₁ _ (hright j), ?_, ?_, ?_⟩)⟩
+  · intro he
+    exact hl₂ _ (hleft j) ((hshared _ (hleft_ne j)).symm.trans he)
+  · intro i
+    exact hcross₁ i _
+  · intro i
+    exact fun he => hcross₂ i _ ((hshared _ (hleft_ne j)).symm.trans he)
+  · intro he
+    exact hr₂ _ (hright j) ((hshared _ (hright_ne j)).symm.trans he)
+  · intro i
+    exact hcross₁ i _
+  · intro i
+    exact fun he => hcross₂ i _ ((hshared _ (hright_ne j)).symm.trans he)
+
+private theorem interiorCode_ext {a b c d : ℕ} {w z : InteriorCode a b c d}
+    (hx : w.1 = z.1) (hy : w.2.1 = z.2.1)
+    (hu : ∀ i, (w.2.2.1 i).val = (z.2.2.1 i).val)
+    (hv : ∀ i, (w.2.2.2.1 i).val = (z.2.2.2.1 i).val)
+    (hl : ∀ i, (w.2.2.2.2.1 i).val = (z.2.2.2.2.1 i).val)
+    (hr : ∀ i, (w.2.2.2.2.2 i).val = (z.2.2.2.2.2 i).val) : w = z := by
+  rcases w with ⟨x,y,u,v,l,r⟩
+  rcases z with ⟨x',y',u',v',l',r'⟩
+  cases hx
+  cases hy
+  have eu : u = u' := funext fun i => Subtype.ext (hu i)
+  have ev : v = v' := funext fun i => Subtype.ext (hv i)
+  cases eu
+  cases ev
+  have el : l = l' := funext fun i => Subtype.ext (hl i)
+  have er : r = r' := funext fun i => Subtype.ext (hr i)
+  cases el
+  cases er
+  rfl
+
+private theorem interiorDecode_encode {a b c d : ℕ} (w : InteriorCode a b c d) :
+    interiorDecode (interiorEncode w) = w := by
+  apply interiorCode_ext
+  · rfl
+  · rfl
+  · intro i; rfl
+  · intro i; rfl
+  · intro j
+    exact coded_boundary_left _ _ _ _ j
+  · intro j
+    exact coded_boundary_right _ _ _ _ j
+
+private theorem interiorEncode_decode {a b c d : ℕ}
+    (w : InteriorSlots a b (c + (d + 1)) (pivot c d)) :
+    interiorEncode (interiorDecode w) = w := by
+  rcases w with ⟨⟨⟨b₁,hb₁⟩,⟨b₂,hb₂⟩⟩,hshared⟩
+  apply Subtype.ext
+  apply Prod.ext
+  · apply Subtype.ext
+    apply BoundaryData.ext
+    · rfl
+    · rfl
+    · funext j
+      change Fin.addCases (fun k => b₁.h (k.castAdd (d + 1)))
+        (Fin.cases (b₁.p + b₁.q) (fun k => b₁.h (k.succ.natAdd c))) j = b₁.h j
+      refine Fin.addCases (fun j => ?_) (fun j => ?_) j
+      · rw [Fin.addCases_left]
+      · rw [Fin.addCases_right]
+        refine Fin.cases ?_ (fun j => ?_) j
+        · exact hb₁.2.2.2.1.symm
+        · rw [Fin.cases_succ]
+    · rfl
+  · apply Subtype.ext
+    apply BoundaryData.ext
+    · rfl
+    · rfl
+    · funext j
+      change Fin.addCases (fun k => b₁.h (k.castAdd (d + 1)))
+        (Fin.cases (b₂.p + b₂.q) (fun k => b₁.h (k.succ.natAdd c))) j = b₂.h j
+      refine Fin.addCases (fun j => ?_) (fun j => ?_) j
+      · rw [Fin.addCases_left]
+        exact hshared _ (ne_of_lt (by simp [pivot, Fin.lt_def]))
+      · rw [Fin.addCases_right]
+        refine Fin.cases ?_ (fun j => ?_) j
+        · exact hb₂.2.2.2.1.symm
+        · rw [Fin.cases_succ]
+          exact hshared _ (ne_of_gt (by simp [pivot, Fin.lt_def]))
+    · rfl
+
 /-- A direct four-word version of the interior slot classification. -/
 def interior_code_equiv (a b c d : ℕ) :
     InteriorCode a b c d ≃ InteriorSlots a b (c + (d + 1)) (pivot c d) where
-  toFun w := ⟨(
-    ⟨coded_boundary w.1 w.2.2.1 (fun j => (w.2.2.2.2.1 j).val)
-        (fun j => (w.2.2.2.2.2 j).val),
-      coded_boundary_valid _ _ _ _
-        (fun j => ⟨(w.2.2.2.2.1 j).property.1,(w.2.2.2.2.1 j).property.2.1,
-          (w.2.2.2.2.1 j).property.2.2.2.1⟩)
-        (fun j => ⟨(w.2.2.2.2.2 j).property.1,(w.2.2.2.2.2 j).property.2.1,
-          (w.2.2.2.2.2 j).property.2.2.2.1⟩)⟩,
-    ⟨coded_boundary w.2.1 w.2.2.2.1 (fun j => (w.2.2.2.2.1 j).val)
-        (fun j => (w.2.2.2.2.2 j).val),
-      coded_boundary_valid _ _ _ _
-        (fun j => ⟨(w.2.2.2.2.1 j).property.1,(w.2.2.2.2.1 j).property.2.2.1,
-          (w.2.2.2.2.1 j).property.2.2.2.2⟩)
-        (fun j => ⟨(w.2.2.2.2.2 j).property.1,(w.2.2.2.2.2 j).property.2.2.1,
-          (w.2.2.2.2.2 j).property.2.2.2.2⟩)⟩), by
-    intro j
-    refine Fin.addCases (fun j _ => ?_) (fun j => ?_) j
-    · simp [coded_boundary]
-    · refine Fin.cases (fun hj => (hj rfl).elim) (fun _ _ => by simp [coded_boundary]) j⟩
-  invFun w := ⟨⟨(w.val.1.val.p,w.val.1.val.q),w.val.1.property.1,
-      w.val.1.property.2.1,w.val.1.property.2.2.1⟩,
-    ⟨(w.val.2.val.p,w.val.2.val.q),w.val.2.property.1,
-      w.val.2.property.2.1,w.val.2.property.2.2.1⟩,
-    (fun i => ⟨w.val.1.val.v i,w.val.1.property.2.2.2.2.2.1 i, by
-      rw [← w.val.1.property.2.2.2.1]
-      exact Ne.symm (w.val.1.property.2.2.2.2.2.2.2.2 i (pivot c d))⟩),
-    (fun i => ⟨w.val.2.val.v i,w.val.2.property.2.2.2.2.2.1 i, by
-      rw [← w.val.2.property.2.2.2.1]
-      exact Ne.symm (w.val.2.property.2.2.2.2.2.2.2.2 i (pivot c d))⟩),
-    (fun j => ⟨w.val.1.val.h (j.castAdd (d + 1)),
-      w.val.1.property.2.2.2.2.1 _,
-      w.val.1.property.2.2.2.2.2.2.1 _ (by simp [pivot, Fin.lt_def]), by
-      rw [w.property _ (by simp [pivot, Fin.ext_iff]; omega)]
-      exact w.val.2.property.2.2.2.2.2.2.1 _ (by simp [pivot, Fin.lt_def]),
-      fun i => w.val.1.property.2.2.2.2.2.2.2.2 i _, by
-      intro i
-      rw [w.property _ (by simp [pivot, Fin.ext_iff]; omega)]
-      exact w.val.2.property.2.2.2.2.2.2.2.2 i _⟩),
-    (fun j => ⟨w.val.1.val.h (j.succ.natAdd c),
-      w.val.1.property.2.2.2.2.1 _,
-      w.val.1.property.2.2.2.2.2.2.2.1 _ (by simp [pivot, Fin.lt_def]), by
-      rw [w.property _ (by simp [pivot, Fin.ext_iff])]
-      exact w.val.2.property.2.2.2.2.2.2.2.1 _ (by simp [pivot, Fin.lt_def]),
-      fun i => w.val.1.property.2.2.2.2.2.2.2.2 i _, by
-      intro i
-      rw [w.property _ (by simp [pivot, Fin.ext_iff])]
-      exact w.val.2.property.2.2.2.2.2.2.2.2 i _⟩)⟩
-  left_inv w := by
-    rcases w with ⟨x,y,u,v,l,r⟩
-    simp [coded_boundary]
-  right_inv w := by
-    apply Subtype.ext
-    apply Prod.ext
-    · apply Subtype.ext
-      apply BoundaryData.ext
-      · rfl
-      · rfl
-      · funext j
-        refine Fin.addCases (fun j => ?_) (fun j => ?_) j
-        · simp [coded_boundary]
-        · refine Fin.cases ?_ (fun j => ?_) j
-          · simpa [coded_boundary, pivot] using w.val.1.property.2.2.2.1.symm
-          · simp [coded_boundary]
-      · rfl
-    · apply Subtype.ext
-      apply BoundaryData.ext
-      · rfl
-      · rfl
-      · funext j
-        refine Fin.addCases (fun j => ?_) (fun j => ?_) j
-        · simpa [coded_boundary] using w.property (j.castAdd (d + 1))
-            (by simp [pivot, Fin.ext_iff]; omega)
-        · refine Fin.cases ?_ (fun j => ?_) j
-          · simpa [coded_boundary, pivot] using w.val.2.property.2.2.2.1.symm
-          · simpa [coded_boundary] using w.property (j.succ.natAdd c)
-              (by simp [pivot, Fin.ext_iff])
-      · rfl
+  toFun := interiorEncode
+  invFun := interiorDecode
+  left_inv := interiorDecode_encode
+  right_inv := interiorEncode_decode
 
 set_option synthInstance.maxSize 2048 in
 /-- An exact interior count as independent horizontal alphabet sizes over vertical words. -/
@@ -255,7 +324,7 @@ theorem interior_count_alphabets (a b c d : ℕ) :
   unfold N_e
   rw [Nat.card_congr (interior_slot_equiv a b _ (pivot c d)),
     ← Nat.card_congr (interior_code_equiv a b c d)]
-  let _ : Fintype (InteriorCode a b c d) := inferInstance
+  let _ : Fintype (InteriorCode a b c d) := by unfold InteriorCode; infer_instance
   simp only [InteriorCode, Nat.card_eq_fintype_card, Fintype.card_sigma,
     Fintype.card_prod, Fintype.card_fun, Fintype.card_fin]
 
