@@ -2118,3 +2118,436 @@ $$
 [R278]: QUANTUM_ORIGIN_QUBIT_COMMON_RULER_AND_PRODUCT_ZERO_FACES_XIX.md "277.2的紧有向确认纤维及277.4的内生确认闭包；不直接消费277.3的旧X2入口。"
 
 ## 追加锚（本行以下为增补区）
+
+## 279. 同准备的双份共同门：九点决定、正回缩与单读数判据
+
+**定义 279.1（完整原域与球面对角确认）。** 保留278.1的整个非平凡强全有限背景 $\mathsf F$，包括全部有限原锥、整个归一紧底和全部原纯点、完整正对偶与proper菜单、全部有限单位分解、正置换及其正逆、正丢弃和含全部相关输入的每个有限分块min/max界。令 $\mathsf A_B$ 仅要求真实 $(12)|3$ 上每个 $a\otimes b\in P_2\otimes P_1$ 有原全域proper单点least；$P_2$ 包括块内纠缠。它不为两个不同三份目标预配共同门。单体实际L2仍指每对不同原纯点生成的整个最小实际面与完整非退化实三维闭球仿射同构。
+
+$\mathsf A_B$ 沿原纯旁观面限制给整个M2，再给M1，证明精确复用278.2（一）及[XIX282.2][Q279One]的单点下降部分，不使用换点或数值互易。任意满足M的有限层，对非空纯目标集 $S$ 取包含它的最小原暴露面 $H_S$，令 $h_S=h_{H_S}$；空集令 $h_\varnothing=0$。最小暴露包存在：从任意暴露包出发，每次若仍有更小包便作交；真包含降低面维数，有限次达到对所有包的交。有限交由各确认效应的平均暴露。271.7的least最大测试于是给
+
+$$
+h_S\le f\quad\Longleftrightarrow\quad f(s)=1\ (s\in S),
+\qquad f\in\mathcal E.
+\tag{279.1}
+$$
+
+这没有使用裸背景中尚未证明的 $\mathsf J_3^{\rm prod}\Rightarrow\mathsf R_B$。以下新推导只需已支付的M1、M2；$\mathsf J_3^{\rm prod}$ 或 $\mathsf R_B$ 都是 $\mathsf A_B$ 的充分来源。
+
+固定单体实际球 $B=\iota(\overline{\mathbb B}^3)$，记球心 $c_B=\iota(0)$、最小原暴露包 $H_B$、$h=h_{H_B}$。在整个双份菜单中定义
+
+$$
+\Delta_B=\{\iota(a)\otimes\iota(a):a\in S^2\},\qquad
+k_B=h_{\Delta_B},\qquad t_B=h\otimes h-k_B.
+\tag{279.2}
+$$
+
+全部球面点为原纯点，原产品纯性使 $\Delta_B\subset P_2$。原产品与完整菜单保证 $h\otimes h$ proper，故 $t_B\ge0$。单体球在此尚未假定暴露。
+
+**定理 279.2（矩形确认的全域张量化）。** 在上述完整域与低两层M下，对任意 $A,T\subseteq P_1$，
+
+$$
+h_{A\otimes T}=h_A\otimes h_T
+\quad\text{作为整个 }W_2\text{ 上的泛函。}
+\tag{279.3}
+$$
+
+特别地，$h_{(P_1\cap B)\otimes(P_1\cap B)}=h\otimes h$，且 $e_{p\otimes q}=e_p\otimes e_q$；后一单点结论已有272.2。
+
+证明。空集直接成立。非空时，令 $g=h_{A\otimes T}\le h_A\otimes h_T$。固定 $t\in T$，$g(\cdot\otimes t)$ proper、确认全部 $A$ 且不大于 $h_A$，由(279.1)等于 $h_A$。固定 $a\in A$ 同理得 $g(a\otimes\cdot)=h_T$。任取原归一 $y$；若 $h_T(y)>0$，则 $g(\cdot\otimes y)/h_T(y)$ proper、不大于 $h_A$，并确认 $A$，故等于 $h_A$。若 $h_T(y)=0$，正性和乘积上界使该切片为零。因此两边在全部正产品输入相同；两原锥生成原载体，原产品张成整个 $W_2$，给全域等式。$h_{P_1\cap B}=h$ 是最小暴露包的定义及(279.1)。$\square$
+
+**定理 279.3（九点决定的对角参数与半球预算）。** 存在唯一内生参数 $\gamma_B$，满足
+
+$$
+\begin{aligned}
+&k_B(\iota(x)\otimes\iota(y))=1-\gamma_B(1-x\cdot y),
+&&\|x\|,\|y\|\le1,\\
+&0\le\gamma_B\le\tfrac14,
+&&\gamma_B=1-k_B(c_B\otimes c_B),\\
+&\gamma_B=0\quad\Longleftrightarrow\quad k_B=h\otimes h.
+\end{aligned}
+\tag{279.4}
+$$
+
+对 $p=\iota(a)$、$\|a\|=1$，唯一写成
+
+$$
+e_p(\iota(x))=1-\beta_B(p)(1-a\cdot x),\qquad
+2\gamma_B\le\beta_B(p)\le\tfrac12.
+\tag{279.5}
+$$
+
+取任一正交球坐标基 $v_1,v_2,v_3$，下列九个 $a$ 的对角产品目标与整个 $\Delta_B$ 有完全相同的原确认纤维，因而有同一个 $k_B$：
+
+$$
+\pm v_1,\ \pm v_2,\ \pm v_3,\quad
+(v_1+v_2)/\sqrt2,\ (v_1+v_3)/\sqrt2,\ (v_2+v_3)/\sqrt2.
+\tag{279.6}
+$$
+
+证明。原交换正同构保持整个 $\Delta_B$，least唯一性使 $k_B$ 交换对称。球积限制为 $c+v\cdot(x+y)+x^{\mathsf T}My$、$M=M^{\mathsf T}$；对每个单位 $a$，在 $(a,a)$ 上取一。以 $a,-a$ 比较得 $v=0$，再由球面二次型恒定得 $M=(1-c)I$。令 $\gamma_B=1-c$；产品proper预算先给 $0\le\gamma_B\le1/2$。任一原 $e_p$ 在球内介于零一并在端点取一，其非恒定部分必须沿 $a$，给(279.5)的表示及 $0\le\beta_B(p)\le1/2$。
+
+由单点产品least，$e_p\otimes e_p\le k_B$。取单位 $v\perp a$，置 $x=\cos t\,a+\sin t\,v$、$y=\cos t\,a-\sin t\,v$、$s=1-\cos t>0$，则
+
+$$
+(1-\beta_B(p)s)^2\le1-\gamma_B(4s-2s^2).
+\tag{279.7}
+$$
+
+除以 $s$ 后令 $s\downarrow0$，得 $\beta_B(p)\ge2\gamma_B$，再得 $\gamma_B\le1/4$。若 $\gamma_B=0$，$k_B$ 确认整个球积；279.2给 $h\otimes h\le k_B$，反向已知。反之，$h\otimes h$ 在球积恒一，迫 $\gamma_B=0$。
+
+最后，对任意原双份效应，其球面对角限制是次数至多二的实多项式。设它在(279.6)九点都取一。三个正负对先使线性部分为零，并使三个对角系数同为 $1-c$；三个混合点再使所有对称非对角系数为零。斜对称部分在对角恒零。因此它在整个 $S^2$ 上恒一，得到完全相同的确认纤维，不要求这些效应交换对称。这项有限决定性不缩减任何原菜单、原纯域或相关输入。$\square$
+
+**定理 279.4（对角不塌缩给正回缩与真实纠缠资源）。** 若 $\gamma_B>0$，则存在正线性回缩
+
+$$
+\Pi_B:V\to\operatorname{span}C_B,\qquad
+\Pi_B(C)=C_B,\quad \Pi_B|_{\operatorname{span}C_B}=\mathrm{id},\qquad
+\gamma_B\,u_B\circ\Pi_B\le h\le u,
+\tag{279.8}
+$$
+
+其中 $C_B=\operatorname{cone}B$、$u_B=u|_{\operatorname{span}C_B}$。同时存在原双份纯点 $r\in P_2$ 及 $\lambda>0$，使
+
+$$
+\begin{aligned}
+&e_r(\iota(x)\otimes\iota(y))=\lambda(1-x\cdot y),\\
+&(e_p\otimes e_q)(r)=0\quad\Longleftrightarrow\quad p=q
+\qquad(p,q\in P_1\cap B).
+\end{aligned}
+\tag{279.9}
+$$
+
+$r$ 不是原 $1|1$ 产品纯点，其两个原边缘均在 $H_B$。
+
+证明。用球的齐次Lorentz坐标 $C_B=\{(s,x):s\ge\|x\|\}$。对任意 $v\in V$ 唯一写
+
+$$
+t_B(v,\iota(y))=\gamma_B\bigl(w(v)-z(v)\cdot y\bigr).
+\tag{279.10}
+$$
+
+$w,z$ 线性；原正 $v$ 使左边在整个球非负，故 $w(v)\ge\|z(v)\|$。定义 $\Pi_B(v)=(w(v),z(v))$。279.3使它在 $\operatorname{span}C_B$ 为恒等；$t_B\le h\otimes h$ 又给 $\gamma_B(w(v)+\|z(v)\|)\le h(v)$，得到(279.8)。
+
+任意least共同确认 $g$ 都是整个proper区间的极点：其平均分解的两项仍确认全部目标，因leastness均不小于 $g$，只能相同。若 $g\le f$ 是两个这样的门，$d=f-g$ 也极端。事实上，$d=(d_1+d_2)/2$ 迫 $d_i$ 在 $g$ 的全部目标上为零；$u-d_i$ 确认它们，故 $g+d_i$ proper，其平均为极端 $f$。因此 $t_B$ 非零且极端。M2的完整frame展开中，若某系数严格介于零一，可单独上下扰动它，违背极端性。所以
+
+$$
+t_B=\sum_i e_{r_i},\qquad r_i\in P_2.
+\tag{279.11}
+$$
+
+每一项在全部球面对角为零。一个在球积非负、且在全部 $(a,a)$、$\|a\|=1$ 取零的仿射双线性函数必为 $\lambda(1-x\cdot y)$、$\lambda\ge0$：写成 $c+v\cdot x+w\cdot y+x^{\mathsf T}My$，对角恒零给 $w=-v$、$\operatorname{sym}M=-cI$；对每个固定单位 $a$，关于 $y$ 的非负仿射函数在 $y=a$ 取零，其线性系数必须与 $-a$ 同向。比较 $a,-a$ 先消去 $\operatorname{skew}M$，再消去 $v$，剩余 $c\ge0$。应用于(279.11)，各系数 $\lambda_i\ge0$ 且和为 $\gamma_B$，可选 $\lambda_i>0$ 的一项为 $e_r$。
+
+若 $r=a\otimes b$，272.2给 $e_r=e_a\otimes e_b$。其球积限制作为四维齐次双线性表的秩至多一，然而 $\lambda(1-x\cdot y)$ 的秩为四，矛盾。M2的零互易及产品least因子化给(279.9)。又 $e_r\le t_B\le h\otimes h$，在 $r$ 上评价得 $h\otimes h(r)=1$；由 $h\otimes h\le h\otimes u,u\otimes h$，两个边缘均在 $\{h=1\}=H_B$。$\square$
+
+**定义 279.5（单读数条件与一对种子门）。** 定义
+
+$$
+\mathsf C_\Delta:\quad
+k_B(c_B\otimes c_B)=\tfrac34
+\quad\text{对每张原单体实际二纯球 }B.
+\tag{279.12}
+$$
+
+这里 $c_B,k_B$ 全由原凸准备、完整双份菜单和(279.1)—(279.2)定义，未预选外来效应；等式 $3/4$ 仍是明确的额外关系约束，不宣称由裸背景自动成立。
+
+令 $\mathcal R$ 精确采用[XIX282.2][Q279One]的同坐标集合：$n\ge2$，$\theta:V\to H_n$ 保单位实线性双射，$\theta C_1=\operatorname{PSD}_n$、$\theta^{\otimes2}C_2=T_1^\varepsilon\operatorname{PSD}_{n^2}$，$\varepsilon\in\{0,1\}$。性质 $\mathsf E_\tau$ 要求存在该集合中的一组坐标，使[XIX282.3，式(282.3)—(282.4)][Q279One]指定的那一对不同原产品源 $p,q\in P_2\otimes P_1$ 有原全域proper共同least。该式使用准确向量 $\tau_n=(\sum_i|ii\rangle)|0\rangle+|01\rangle|1\rangle$ 指定两只产品向量，尚不假定其dyad属于三份锥。候选为
+
+$$
+\boxed{\qquad
+\mathsf Q_\Delta:=\mathsf A_B+\mathrm{L2}_1+\mathsf C_\Delta+\mathsf E_\tau.
+\qquad}
+\tag{279.13}
+$$
+
+$\mathcal R$ 的非空将在下一定理中先由前三项推出；不是以存在量词额外输入低两层量子类型。
+
+**定理 279.6（单读数候选的完整有限量子对应）。** 保留完整 $\mathsf F$，相对于278.2明列的M加数值互易到Jordan桥、276.2的M-only矩阵整锥供应，以及[XIX282.4—282.5][Q279One]的固定一对产品源残余和XIII164.11准确全有限传播，$\mathsf Q_\Delta$ 等价于存在同一 $n\ge2$ 与同一保单位实线性序同构 $\theta:V\to H_n$，使
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}\qquad(N\ge0).
+\tag{279.14}
+$$
+
+证明。$\mathsf A_B$ 先给完整M2、M1。$\mathsf C_\Delta$ 使每颗球的 $\gamma_B=1/4$；式(279.5)的预算迫每个端点 $\beta_B(p)=1/2$，所以同球端点有
+
+$$
+e_p(q)=\frac{1+a\cdot b}{2}=e_q(p),
+\qquad p=\iota(a),\ q=\iota(b).
+\tag{279.15}
+$$
+
+这给整个单体数值互易。准确复用278.2（一）的具名M加互易Jordan桥及实际L2的复类型选择，取得 $C_1$ 的标准复矩阵表示；278.2（二）由M2及276.2给 $C_2$ 的PSD或相对转置坐标。因此 $\mathcal R\ne\varnothing$，没有输入球暴露性、双份换点或复合层实际L2。
+
+$\mathsf E_\tau$ 现在只支付[XIX282.4][Q279One]所选的一对共同门。该供应的局部稀疏计算、迹二共同门及迹一极端残余，给准确 $\tau_n$ 的dyad或其第三腿镜像；[XIX282.5，式(282.13)—(282.16)][Q279One]在同一种子的两个交叠边缘排尽两个转置位，取得同坐标标准 $C_1,C_2$ 与准确种子。它们精确支付XIII164.11的 $3\Rightarrow4$，得(279.14)。不需全体非重复产品对J、全三份M或整个三份锥的预先分类。
+
+反向，在(279.14)中 $\mathsf A_B$ 与 $\mathsf E_\tau$ 由秩一和共同支持投影实现，单体二纯面为二维复支持 $U$ 上的完整三球。$\{v\otimes v:v\in U\}$ 张成 $\operatorname{Sym}^2U$：在一组基 $v,w$ 中，$v^2,w^2,(v+w)^2$ 已张成三个对称基方向。因此 $k_B$ 是该三维复子空间的支持投影，球心为 $I_U/2$，有
+
+$$
+k_B(c_B\otimes c_B)
+=\operatorname{Tr}\!\left(P_{\operatorname{Sym}^2U}\frac{I_U\otimes I_U}{4}\right)
+=\tfrac34.
+\tag{279.16}
+$$
+
+这正是成熟交换／对称子空间概率 $\operatorname{Tr}(P_{\rm sym}\rho\otimes\sigma)=(1+\operatorname{Tr}\rho\sigma)/2$ 在qubit整球上的特例，参见[Q279Swap]式(2)及图2；这里只用矩阵恒等式，不输入其设备实现。于是 $\mathsf C_\Delta$ 成立。$\square$
+
+**定理 279.7（非暴露包的支持亏损与全有限放大）。** 仅用M1及[XIX278.3][D277]的正对偶实际面支持。对非空原暴露面 $H$，置
+
+$$
+D_H=\operatorname{face}_{C^*}(h_H),\quad L_H=\operatorname{span}D_H,\quad
+d_H=\dim L_H,\quad s_H=\dim\operatorname{span}\operatorname{cone}H.
+\tag{279.17}
+$$
+
+限制 $L_H\to\operatorname{Aff}(H)$ 是保单位序嵌入，因而 $d_H\le s_H$。若某实际面 $B\subsetneq H_B$，则 $d_{H_B}<s_{H_B}$。在整个 $\mathsf F$ 下，对每个有限 $N\ge1$，
+
+$$
+\begin{aligned}
+\operatorname{span}\operatorname{face}_{C_N^*}(h_H^{\otimes N})&=L_H^{\otimes N},\\
+\dim\operatorname{face}_{C_N^*}(h_H^{\otimes N})&=d_H^N,\\
+\dim\operatorname{span}\operatorname{cone}\{z\in K_N:h_H^{\otimes N}(z)=1\}&\ge s_H^N.
+\end{aligned}
+\tag{279.18}
+$$
+
+证明。给定 $a\in L_H$，取大 $t>0$ 使 $f=a+t h_H\in\operatorname{ri}D_H$。M-only完整frame展开为 $f=\sum_i\lambda_i e_{q_i}$、$\lambda_i>0$，其正项支持之和由XIX278.3的规范支持唯一性等于 $h_H$，且每个 $q_i\in H$。因此
+
+$$
+a=\sum_i(\lambda_i-t)e_{q_i},\qquad a(q_i)=\lambda_i-t.
+\tag{279.19}
+$$
+
+若 $a|_H\ge0$，所有系数非负，故 $a\in C^*$；反向显然。若限制为零，则 $a,-a\in C^*$，尖性迫 $a=0$。这给序嵌入和维数上界。
+
+若 $d_H=s_H$，限制成为保单位序同构。对 $x\in\operatorname{ri}B$、$B\subsetneq H=H_B$，相对支撑给非恒零 $0\le\ell\le1$ 于 $H$、$\ell(x)=0$。满射及正性反映把它提升为 $a\in[0,h_H]$。$a\ge0$ 且在 $B$ 的相对内部取零，故在整个 $B$ 取零。原proper效应 $u-a$ 确认 $B$ 却不确认整个 $H_B$，与最小暴露包矛盾。
+
+最后，有限维正锥中 $\operatorname{face}(z)=\{a\ge0:\exists t>0,\ a\le tz\}$。若 $0\le a\le t h_H^{\otimes N}$，固定除任一腿外的全部正输入，其正切片不大于 $h_H$ 的正倍数，所以在 $D_H$。正输入张成各腿，对每腿同时应用得 $a\in L_H^{\otimes N}$。反向，对任意 $f_i\in D_H$，各有 $0\le f_i\le t_i h_H$；原正对偶产品及张量序的望远镜分解给 $0\le\bigotimes_i f_i\le(\prod_i t_i)h_H^{\otimes N}$。这些产品张成 $L_H^{\otimes N}$。原态产品 $x_1\otimes\cdots\otimes x_N$、$x_i\in H$ 均在(279.18)的取一面，且张成维数 $s_H^N$ 的空间，完成证明。未对高层暗加M。$\square$
+
+**命题 279.8（几何、量子字典与剩余条件）。** 279.6把原球暴露性换成原双份共同门的单读数条件；三份仅保留产品单点族及准确种子的一对额外共同门。它与278及XIX282在同一背景和各具名供应下给相同完整复模型类，不据此声称严格逻辑弱化或最少独立公理。$3/4$ 条件尚未由裸实际球、单点门或全部产品对J自动推出。
+
+证明与边界。若某球内端点有 $m_p=e_p(\iota(-a))>0$，279.5给
+
+$$
+\gamma_B\le(1-m_p)/4<1/4,\qquad
+|e_p(q)-e_q(p)|\le1-4\gamma_B.
+\tag{279.20}
+$$
+
+第二式由 $\beta_B(p),\beta_B(q)\in[2\gamma_B,1/2]$ 及 $0\le1-a\cdot b\le2$ 得到。若每球 $\gamma_B>0$，则279.5使 $e_p(q)<1$ 对所有不同原纯点成立，给单点唯一饱和；但这还不是 $\gamma_B=1/4$。279.4的正回缩只满足带 $\gamma_B$ 的质量预算，不供给 $u_B\circ\Pi_B\le u$、全旁观正性或Alfsen—Shultz的compression。其纠缠资源的边缘只定位在 $H_B$，不能改报在 $B$。279.7的指数亏损也不是矛盾或反模型存在性证明。
+
+(279.14)后，完整态、纯点、proper菜单、全部有限单位分解及配对分别成为密度矩阵、复射线、全部数学POVM／PVM及Born迹概率；原有限产品、置换、重括号及丢弃成为同一复张量和偏迹。CP、TNI／TP、仪器、Lüders和连续动力学仍分别保留276.4及XIX282.7的全旁观保正、整个正输入及分支总预算、锐效应与yes支持中性、指定连续可逆保锥保单位群等独立条件；数值互易没有推出仪器先后交换。设备、物理钟、能量与 $\hbar$、无限及近似极限没有由静态字典单独供应。
+
+本节repo-derived承重内容为：原球面对角确认的规范参数及九点决定性、以单点产品least给出的 $1/4$ 预算、对角非塌缩的正回缩与真实双份纠缠资源、支持限制的序嵌入与全有限亏损公式，以及单读数条件接XIX282单对种子的完整有限重建。M-only剥离和面支持、纯旁观下降、产品单点因子化、Jordan／矩阵分类及一对种子尾部均保留所引已有归属。球上二次多项式、Lorentz对偶、有限维面与主面、矩阵对称投影及交换概率是成熟中间工具；[Q279Swap]给的是量子模型中的交换读数，不给未知原锥的重建。[Q279Nice]的面延伸／闭性判据也未被用于免费推原球暴露。不申领这些工具、全球优先性、Lean核验或物理实现。
+
+白话：先把一颗球上的“同一准备放两份”全部送进共同最小门。虽然准备有无穷多个，九个选定方向就能决定同一扇门。把这扇门与允许球内任意两份准备的门相比：若两门相同，确认关系完全看不出“相同”与“任意配对”的差别；若有差，差值已经能产生正回缩和真实纠缠资源。进一步要求这扇同准备门对“两份球心”的读数为四分之三，所有端点的正反刻度便被球几何和最小性一起锁定。低两层于是恢复复数结构，再用最新的一对产品源及同一颗种子的交叠边缘长出全部有限量子层级。这里把未付的要求集中成了一个明示读数，没有证明它已自动内生；继续回溯必须从原关系推出这个读数，或给满足完整背景的反模型。$\square$
+
+[Q279One]: QUANTUM_ORIGIN_QUBIT_COMMON_RULER_AND_PRODUCT_ZERO_FACES_XIX.md "282.2—282.5：产品单点下降、低二层坐标、准确tau种子指定的一对产品源、局部共同门残余、同一种子的两个交叠NPT边缘及XIII164.11全有限传播；282.6保留单体可筛球替代入口。"
+[Q279Swap]: https://arxiv.org/abs/quant-ph/0203016 "Ekert、Alves、Oi、Horodecki、Horodecki与Kwek，Direct estimations of linear and non-linear functionals of a quantum state；式(2)及图2的交换期望Tr(rho sigma)与P0=(1+Tr(rho sigma))/2；量子模型的成熟中间恒等式。"
+[Q279Nice]: https://arxiv.org/abs/1202.4043 "Pataki，On the connection of facially exposed and nice cones，Theorem2及Remark1的面正延伸／锥和闭性等价；未把对偶面暴露误代入原锥的niceness。"
+
+## 追加锚（本行以下为增补区）
+
+## 280. 原球内的双份零接触：刻度由同一关联准备的归一化锁定
+
+**定义 280.1（固定旁观纤维与原球内零面）。** 完整保留279.1的非平凡强全有限背景 $\mathsf F$、全部原有限层及相关输入、整个原proper菜单和全部有限单位分解。固定原纯旁观者 $b_*\in P_1$，仅要求
+
+$$
+\mathsf A_{b_*}:\quad
+\forall a\in P_2,\quad
+a\otimes b_*\text{ 在整个 }\mathcal E_3\text{ 有单点least确认}.
+\tag{280.1}
+$$
+
+前两腿仍遍历包括块内纠缠的整个 $P_2$。纯旁观下降精确复用278.2（一）及[XIX283.1][Q280Tail]，取得完整M2、M1；不向其他旁观者的产品单点或所有三份纯点预配门。以下先只使用这两个低层M及原 $1|1$ min/max。
+
+对一张原单体实际球 $B$，原丢弃记为 $\pi_1=\mathrm{id}\otimes u$、$\pi_2=u\otimes\mathrm{id}$，并定义
+
+$$
+\begin{aligned}
+\mathcal F_{BB}
+&=\{r\in K_2:\pi_1r\in B,\ \pi_2r\in B\},\\
+k_B&=h_{\{p\otimes p:p\in P_1\cap B\}},\\
+\mathsf Z_B
+&:\quad\mathcal F_{BB}\cap\{r:k_B(r)=0\}\ne\varnothing.
+\end{aligned}
+\tag{280.2}
+$$
+
+$k_B$ 仍是279.1中整个原菜单的共同least，确认整个同纯准备对角族，不是逐点各选一扇门。$\mathcal F_{BB}$ 是原态侧的实际面；零面由原全域效应给出。$\mathsf Z_B$ 要求两张原面的交非空，没有缩小原系统，也没有假定局部效应任意延伸、原球暴露或保单位压缩。定义了交集不等于证明它非空；$\mathsf Z_B$ 是明示新增的关系条件。
+
+**定理 280.2（零接触的维数预算、唯一纯态与内生刻度）。** 在上述完整低两层结构及M1、M2中，先允许所固定实际面为 $B=\iota(\overline{\mathbb B}^d)$，$d\ge2$，不要求其他实际面也有该维数。若 $\mathsf Z_B$ 成立，则
+
+$$
+\begin{aligned}
+&e_{\iota(a)}(\iota(x))=\frac{1+a\cdot x}{2}
+&&(\|a\|=1,\ \|x\|\le1),\\
+&\gamma_B=\frac1{d+1},\qquad d\ge3,\\
+&\mathcal F_{BB}\cap\{k_B=0\}=\{r_B\},\\
+&r_B=c_B\otimes c_B-\sum_{j=1}^d b_j\otimes b_j,
+&&b_j=\iota(v_j)-c_B,
+\end{aligned}
+\tag{280.3}
+$$
+
+其中 $(v_j)$ 是任意正交球坐标基。$r_B$ 是原 $K_2$ 的纠缠纯点，两张边缘都恰为 $c_B$。在整个 $\operatorname{span}C_B\otimes\operatorname{span}C_B$ 上，$r_B$ 的原最小确认效应满足
+
+$$
+e_{r_B}(\iota(x)\otimes\iota(y))
+=\frac{1-x\cdot y}{d+1}.
+\tag{280.4}
+$$
+
+证明。（一）实际面和载体定位。$B$ 是原实际面，正丢弃保归一，故两张原边缘逆像及其交 $\mathcal F_{BB}$ 都是 $K_2$ 的紧实际面。若 $r\in\mathcal F_{BB}$，任取原proper效应 $f$，则
+
+$$
+(\mathrm{id}\otimes f)r,\quad
+(\mathrm{id}\otimes(u-f))r\in C,\qquad
+(\mathrm{id}\otimes f)r+(\mathrm{id}\otimes(u-f))r=\pi_1r\in C_B.
+\tag{280.5}
+$$
+
+锥面性质迫两项都在 $C_B$；交换两腿同理。完整正菜单张成各腿的全对偶，因此逐腿切片给
+
+$$
+r\in\operatorname{span}C_B\otimes\operatorname{span}C_B.
+\tag{280.6}
+$$
+
+这项定位由同一个原态的两张边缘及互补测试得到，不是由两个分别可达的边缘拼出原态。
+
+（二）零接触迫半球刻度。279.3的球面积分、交换唯一性和小角二阶比较，在任意 $d\ge2$ 的正交切向方向中原样成立；其维数无关的中间结果为
+
+$$
+\begin{aligned}
+k_B(\iota(x)\otimes\iota(y))&=1-\gamma_B(1-x\cdot y),
+&0\le\gamma_B\le\tfrac14,\\
+e_p(\iota(x))&=1-\beta_p(1-a\cdot x),
+&0\le\beta_p\le\tfrac12,\qquad p=\iota(a).
+\end{aligned}
+\tag{280.7}
+$$
+
+这里 $d\ge2$ 保证小角证明有非零正交切向方向；不将该论证用于只有两个端点的一维线段。取(280.2)中的同一 $r$。产品单点least的279.2给 $e_p\otimes e_p\le k_B$，所以 $(e_p\otimes e_p)(r)=0$。令 $m_p=\min_Be_p=1-2\beta_p\ge0$，$z_p=(\mathrm{id}\otimes e_p)r$。由（一），$z_p\in C_B$，从而
+
+$$
+0=e_p(z_p)\ge m_pu(z_p)
+=m_p e_p(\pi_2r)\ge m_p^2.
+\tag{280.8}
+$$
+
+故 $m_p=0$，每个端点都满足 $\beta_p=1/2$。不需要先取得数值互易、全局面效应延伸或 $r$ 的纯性。
+
+（三）同一原态的张量刚性。在基 $(c_B,b_1,\ldots,b_d)$ 中，(280.6)及归一化将 $r$ 唯一写成系数 $(1,x,y,R)$。半球刻度使原产品测试读数为
+
+$$
+(e_{\iota(a)}\otimes e_{\iota(b)})(r)
+=\frac14\left(1+a\cdot x+b\cdot y+a^{\mathsf T}Rb\right)\ge0.
+\tag{280.9}
+$$
+
+全部单位对角 $a=b$ 上该值为零。279.4所用的非负仿射双线性零对角计算同样适用于 $d\ge2$：对角等式先给 $y=-x$、$\operatorname{sym}R=-I$。固定单位 $a$，关于 $b$ 的非负仿射函数在 $b=a$ 为零，其线性系数必须反向平行于 $a$；令 $R=-I+A$、$A^{\mathsf T}=-A$，得到
+
+$$
+x+Aa=(x\cdot a)a.
+\tag{280.10}
+$$
+
+比较 $a,-a$ 给 $Aa=0$，再对所有方向给 $x=0$。故 $x=y=0,R=-I$，得到(280.3)的唯一张量。该表达在正交换基下不变，两个原边缘均为球心。
+
+（四）归一化锁定尺度。令 $h=h_{H_B}$、$t_B=h\otimes h-k_B$。由 $h|_B=1$ 及(280.6)，$h\otimes h(r)=1$，所以 $t_B(r)=1$。另一方面，(280.7)在整个球积的限制给
+
+$$
+t_B(c_B\otimes c_B)=\gamma_B,\qquad
+t_B(b_i\otimes b_j)=-\gamma_B\delta_{ij}.
+\tag{280.11}
+$$
+
+将（三）的同一实际 $r$ 代入，得到
+
+$$
+1=t_B(r)=(d+1)\gamma_B.
+\tag{280.12}
+$$
+
+因此 $\gamma_B=1/(d+1)$；结合 $\gamma_B\le1/4$ 得 $d\ge3$。这一步用原态的归一化预算，绝不是从 $\beta_p=1/2$ 和 $\beta_p\ge2\gamma_B$ 将上界改报等号。
+
+（五）纯性、纠缠与最小确认。上述计算对交面内任意原态成立，故交面只有一个点。它是 $K_2$ 的非空实际面，单点即原纯点。若该态可分，将其写成有限个归一产品的凸组合；两边缘属于实际面 $B$ 迫每个非零项的两个因子都在 $B$。但在球内任意产品上，
+
+$$
+k_B(\iota(x)\otimes\iota(y))
+\ge1-2\gamma_B=\frac{d-1}{d+1}>0,
+\tag{280.13}
+$$
+
+与 $k_B(r_B)=0$ 矛盾。因此 $r_B$ 是原纠缠纯点。又 $t_B(r_B)=1$，所以 $e_{r_B}\le t_B$；其球面对角为零。非负双线性零对角刚性使其球积限制为 $\lambda(1-x\cdot y)$。在同一个(280.3)上评价 $e_{r_B}(r_B)=1$，迫 $\lambda=1/(d+1)$，得(280.4)。$\square$
+
+**推论 280.3（三球校准的无数值替代及其边界）。** 在原实际三球上，$\mathsf Z_B$ 给
+
+$$
+k_B(c_B\otimes c_B)=\tfrac34,\qquad
+(e_{\iota(a)}\otimes e_{\iota(b)})(r_B)=\frac{1-a\cdot b}{4}.
+\tag{280.14}
+$$
+
+因此对每张原实际二纯三球要求 $\mathsf Z_B$，即给279.5的整个 $\mathsf C_\Delta$，并给整个单体数值互易。若同时复用278.2明列的M加互易Jordan桥、实际L2的复类型选择及276.2的M-only双份矩阵供应，则全体 $\mathsf Z_B$ 与全体 $\mathsf C_\Delta$ 等价。
+
+证明。正向是280.2取 $d=3$。反向，$\mathsf C_\Delta$ 先由279.5锁定全部半球刻度和 $\mathsf R_1$，具名低层供应给同一 $C_1=\operatorname{PSD}_n$、$C_2=T_1^\varepsilon\operatorname{PSD}_{n^2}$。若 $\varepsilon=1$，对任一二维复支持 $U$ 的实际球，原对角纯产品在正PSD坐标中为 $\bar v\otimes v$。这些向量张成整个 $\bar U\otimes U$：在一组二维基中，$v=|0\rangle,|1\rangle,|0\rangle+|1\rangle,|0\rangle+i|1\rangle$ 已给四个复线性独立向量。因此其共同least支持是整个四维支持，球心读数为一，与 $\mathsf C_\Delta$ 矛盾。这里张成的是四维向量空间，不是声称四个投影张成十六维算子空间。
+
+故 $\varepsilon=0$。在标准双份PSD中，二维复支持上的反对称秩一态给(280.3)，其两个边缘是 $I_U/2$，且对称子空间least $k_B$ 在它上取零。这证明 $\mathsf Z_B$，并未要求三份种子或全三份M。
+
+本等价保留具名低层供应；没有证明固定一张球仅由端点刻度就足以校准，也没有从裸M或裸实际L2证明零交面存在。280.2在一般 $d$ 下只推出 $d\ge3$，不排除 $d>3$，不能把最小维数改报唯一维数。$\square$
+
+**定义 280.4（原球零接触与一条关系线的完整候选）。** 单体保持原完整 $\mathrm{L2}_1$。令 $\mathsf Z_1$ 表示全部原实际二纯球上的 $\mathsf Z_B$。低二层坐标集合 $\mathcal R$ 精确沿用279.5；取[XIX283.3][Q280Tail]的 $b_n$ 和对齐子集 $\mathcal R_{b_*}$。令
+
+$$
+\begin{aligned}
+\mathsf E_{\rm rel}(b_*):\quad
+\exists(n,\theta,\varepsilon)\in\mathcal R_{b_*}\quad
+\exists M\in\Sigma_n:\quad
+\{p_M,q_M\}\text{ 在整个 }\mathcal E_3\text{ 有共同least},\\
+\boxed{\quad
+\mathsf Q_Z(b_*):=
+\mathsf A_{b_*}+\mathrm{L2}_1+\mathsf Z_1+\mathsf E_{\rm rel}(b_*).
+\quad}
+\end{aligned}
+\tag{280.15}
+$$
+
+$\Sigma_n$、准确向量化以及 $p_M,q_M$ 原样采用[XIX284.1，式(284.1)—(284.2)][Q280Tail]：$\operatorname{Tr}M=0$、$\|M\|_{\rm HS}=1$、$MM^*-M^*M\ne0$，并使用实际原锥的逆运输。低二层非空及 $b_*$ 的对齐先由前三项和下述具名供应取得；不是预设复坐标。第一点 $p_M$ 落在已付的固定纤维，第二点不另要求自己的单点least。不把 $M$ 的伴随、两颗源的描述坐标或种子原态性预置于原概率表。
+
+**定理 280.5（固定纤维、球内零接触和单对关系线恢复全部有限层）。** 在完整 $\mathsf F$ 中，相对于278.2的M加互易Jordan及复类型选择、276.2的M-only矩阵整锥供应、[XIX283.2—283.4及284.2][Q280Tail]的单边Gram、极端残余与准确非正规种子，以及XIII164.11第2项到第4项的全有限传播，对任意固定 $b_*\in P_1$，候选 $\mathsf Q_Z(b_*)$ 等价于存在同一 $n\ge2$ 和同一保单位实线性序同构 $\theta:V\to H_n$，使
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}\qquad(N\ge0).
+\tag{280.16}
+$$
+
+证明。固定纤维先下降完整M2、M1。每张原球的零接触由280.2同时给端点半球刻度、唯一原球心边缘纯态及 $\gamma_B=1/4$，故取得全 $\mathsf R_1$ 和 $\mathsf C_\Delta$。具名Jordan和复类型供应、M-only双份分类于是给 $\mathcal R\ne\varnothing$；280.3还排除双份相对转置位。按XIX283.3的同局域酉坐标换基对齐 $b_*$，不把它当作未知高层的物理可实施操作。
+
+现在仅消费 $\mathsf E_{\rm rel}$ 指定的那一对源。第一点在原固定纤维，故其单点least已付；共同least给其上的单边支配。准确复用XIX283.2的两条确认方程与单边Gram饱和、283.4的极端残余及双HS／迹预算，再用284.2（一）的复产品端点公式，得到同一个原三腿态的两个可能残余方向。284.2（二）的同一 $K_M=MM^*-M^*M$ 在两张交叠边缘的Schur补中反号出现，原正丢弃排尽残余镜像；其中双份方向已由零接触固定，不需重新输入。
+
+所得准确原种子为 $r_Mr_M^*$，$r_M=|I_n\rangle\!\rangle|0\rangle+|M\rangle\!\rangle|1\rangle$。其第一截面满秩、第二截面非标量，精确支付XIII164.11第2项，得到(280.16)。一般 $M$ 保留该尾部依赖于 $M$ 的有限字预算，不冒称固定矩阵单位种子特有的统一六副本、十八腿构造。
+
+反向，在整个有限复PSD模型中，固定纤维的各单点和任意所选双目标都有支持投影least；每个原二纯面是二维复支持上的完整三球，反对称秩一态给 $\mathsf Z_B$。按XIX283.3对齐任意 $b_*$，再取 $M=E_{10}\in\Sigma_n$，即给(280.15)的最后一项。$\square$
+
+**命题 280.6（几何简化、量子字典与未付条件）。** 280.15将279的固定 $3/4$ 读数输入换成两张原实际面的非空交条件：同准备共同门有一个原零点，且同一个零点的两张原边缘仍在所生成的球内。刻度、球心边缘和唯一纠缠纯点由280.2的条件态与归一化推导；零面接触的存在性仍是新增要求，没有被“定义内生”一词消去。
+
+证明与范围。280.8先由同一个原零点锁定半球刻度，280.9—280.12再利用它的张量系数和原归一化预算确定 $1/(d+1)$。这分开支付单体刻度与双份刻度，不使用“半球刻度已标准，故对角参数取最大值”的无效逆推。280.15的固定旁观纤维、单边Gram和非正规关系线复用XIX283—284；本节没有将它们重新申领为新内容。简化是以不含预定概率常数的面接触性质替代读数校准，并复用已经缩小的源族和关系线尾部；不是独立条件数减少、严格逻辑弱化或最少公理结论。
+
+(280.16)后的静态字典精确复用279.8及XIX284.3：$\mathcal H_N=(\mathbb C^n)^{\otimes N}$，原态和纯点为全部密度矩阵和复射线，完整proper菜单与有限单位分解为全部数学POVM／PVM，原配对成为 $\operatorname{Tr}(E\rho)$，原产品、置换、重括号和丢弃成为同一复张量和偏迹。过程字典仍保留各自的全相关旁观保正、整个正输入和总质量预算、锐效应与yes支持中性、指定连续可逆群等前件，才分别得到CP、TNI／TP、仪器、Lüders和数学酉动力学。数值互易不表示仪器先后交换；物理钟、能量、$\hbar$、设备与无限极限不由本静态候选单独给出。
+
+若删除 $\mathsf Z_1$，279的 $\gamma_B=0$ 和 $0<\gamma_B<1/4$ 分支仍未排除。仅有279.4的纠缠纯残余，其边缘只在 $H_B$，没有本节(280.5)在 $B$ 内的条件态定位；仅有正回缩也没有它的保单位或全旁观正性。一般原 $\mathsf F+\mathsf J_3^{\rm prod}+\mathrm{L2}_1$ 是否强迫这些零交面非空，仍未由本节解决，也没有因此给出其全有限反模型。
+
+本节repo-derived承重内容是：以原球边缘面上的一个零接触，先内生全部半球刻度，再由同一归一原态推出唯一反向关联张量、$1/(d+1)$ 预算、$d\ge3$ 和原三球的 $3/4$，并接固定纤维与关系线的完整有限候选。实际面、条件态、非负双线性接触、Lorentz坐标和矩阵反对称态都是成熟工具；其中双线性刚性直接复用279.4，不申领singlet、球几何或关联态思想的发明。280.3的双份类型与280.5的完整传播均保留明列供应，不把条件兼容性当作物理实现或全球优先性。
+
+关联态重建自对偶性的成熟先例见[Q280Conj]：Definition 1 (bis)的weak conjugate要求一张态沿指定系统同构，在全部基本结果上给完美均匀关联；Theorem 1 (bis)另用sharpness及其完整conjugate条件，Theorem 2的Jordan刻画还保留可逆filters或相应制备条件。本节的 $\mathsf Z_B$ 则在同一个原实际双份系统中只要求两张实际面的零接触，由(280.8)—(280.12)推出球上的反向关联与刻度，不输入上述filters，也不据此替代280.5所列的Jordan供应。该文§3的Remark与Appendix A.3还区分：正归一双线性形式在最大张量积中存在，不保证它属于所指定的实际复合。本节同样要求 $r_B\in K_2$；不能把Lorentz双线性公式或抽象conjugate的存在当成 $\mathsf Z_B$ 已成立。
+
+白话：把一颗原球里的同一个纯准备各放两份，给整族准备找一扇共同最低门。再问：这扇门能否完全漏掉一种联合准备，而它的左右两张影子仍留在原来的球里？若能，单点自己的门在球内就必须真正碰到零，否则任何这样的联合准备都会留下正读数。各端点的刻度因此先被锁定；同一个漏网准备的左右相关性随后也只剩一种，两个影子恰是球心。它是一只归一准备，于是四个齐次方向的预算直接算出四分之一，最低门在两份球心处便读四分之三。这里新增的是“原球内确有这样的零接触”，没有把这个存在要求藏进定义。低两层尺子成立后，固定旁观纤维和一条非正规关系线的同一残余接上全部有限量子层级；原一般存在问题继续保留。$\square$
+
+[Q280Tail]: QUANTUM_ORIGIN_QUBIT_COMMON_RULER_AND_PRODUCT_ZERO_FACES_XIX.md "283.1的固定纯旁观纤维下降；283.2—283.4的单边Gram和极端残余；284.1—284.2的准确非正规关系线、复产品端点、同一K_M的两张交叠Schur补及XIII164.11第2项全有限入口；284.3保留静态和过程字典。"
+
+[Q280Conj]: https://arxiv.org/abs/1206.2897v8 "Alexander Wilce，Conjugates, Filters and Quantum Mechanics；§3 Definition 1 (bis)、Remark及Theorem 1 (bis)，§4 Theorem 2，Appendix A.3；关联态、自对偶与Jordan重建的成熟先例，指定实际复合与最大张量积的区别。"
+
+## 追加锚（本行以下为增补区）
