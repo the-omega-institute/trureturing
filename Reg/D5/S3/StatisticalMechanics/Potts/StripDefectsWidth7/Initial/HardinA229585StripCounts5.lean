@@ -15,6 +15,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
+attribute [local irreducible] initial
 abbrev signature : Signature := _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Fin 72) (fun _ => ℤ)
 def readout : Realization signature := realize signature (fun _ _ r => initial r) (fun e => nomatch e)
 def rejected : Realization signature := realize signature (fun _ _ r => initial r + 1) (fun e => nomatch e)

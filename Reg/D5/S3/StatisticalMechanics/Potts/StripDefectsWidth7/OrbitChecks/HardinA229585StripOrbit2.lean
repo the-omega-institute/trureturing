@@ -32,7 +32,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := h ![0, 0, 1, 0, 1, 0] 0 (by decide +kernel) (by unfold Canonical; decide +kernel) (by decide +kernel)
   have ha := canonical_next ![0, 0, 1, 0, 1, 0] 0 (by decide +kernel) (by unfold Canonical; decide +kernel) (by decide +kernel)
   change _ = images (cl ![0, 0, 1, 0, 1, 0] 0) + {(0 : Fin 72)} at hb
-  have hc := congrArg Multiset.card (ha.symm.trans hb)
+  have he : images (cl ![0, 0, 1, 0, 1, 0] 0) =
+      images (cl ![0, 0, 1, 0, 1, 0] 0) + {(0 : Fin 72)} := ha.symm.trans hb
+  have hc := congrArg Multiset.card he
   simp only [Multiset.card_add, Multiset.card_singleton] at hc
   omega
 def family : Registration arena (type_of% @canonical_next) where
