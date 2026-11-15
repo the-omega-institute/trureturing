@@ -36,13 +36,18 @@ internal sealed class UnitSupportBurnolPacketDocument : IScribeDocumentDefinitio
                 + "unit-support theorem fixes a window for each finite interpolation problem; "
                 + "it does not bound the interpolant's size uniformly over moving nodes. "
                 + "This application supplies a necessary resource test for that exact construction.")),
+            Paragraph(Text("The classical exponential-type difference bound and its "
+                + "Fourier normalization are recorded in "),
+                Ref("D5/L/Fourier/boas1956inequalities"),
+                Text(". The proof below keeps the extra evenness factor and the "
+                    + "actual signed packet data explicit.")),
             Paragraph(Text(
                 "For every R>0, t real and eta real with t*eta nonzero, take any complex "
-                + "smooth even function g supported in [-R,R]. Set F(z)=integral_R "
+                + "smooth even function g supported in [-R,R]. All following integrals "
+                + "are over the whole real line. Set F(z)=integral "
                 + "exp(-i*z*x)*g(x) dx, z_plus=t+i*eta, z_minus=t-i*eta, "
-                + "L0=integral_R |g(x)| dx, L2=integral_R |g''(x)| dx, "
-                + "m=min(1,R*|t|), and S=m*sinh(R*|eta|)>0. The subscript R on "
-                + "integral_R denotes the whole real line, not the support radius. "
+                + "L0=integral |g(x)| dx, L2=integral |g''(x)| dx, "
+                + "m=min(1,R*|t|), and S=m*sinh(R*|eta|)>0. "
                 + "Suppose |F(z_plus)-1|<=epsilon and |F(z_minus)+1|<=epsilon, "
                 + "where 0<=epsilon<1. Then L0*S>=1-epsilon and "
                 + "L2*S>=max(0,|t^2-eta^2|-(t^2+eta^2)*epsilon). "
@@ -51,7 +56,7 @@ internal sealed class UnitSupportBurnolPacketDocument : IScribeDocumentDefinitio
             Paragraph(Text(
                 "Proof. Compact support makes every displayed integral absolutely "
                 + "convergent. Changing x to -x and using evenness gives "
-                + "F(z)=integral_R cos(z*x)*g(x) dx. The exact kernel difference is "
+                + "F(z)=integral cos(z*x)*g(x) dx. The exact kernel difference is "
                 + "cos((t+i*eta)*x)-cos((t-i*eta)*x)="
                 + "-2*i*sin(t*x)*sinh(eta*x). On the support, "
                 + "|sin(t*x)|<=min(1,R*|t|) and "
@@ -71,6 +76,17 @@ internal sealed class UnitSupportBurnolPacketDocument : IScribeDocumentDefinitio
                 + "2*|t^2-eta^2|-2*(t^2+eta^2)*epsilon. Apply the first kernel "
                 + "estimate to g'' and use L2>=0. This proves the second inequality; "
                 + "adding the exact-interpolation inequalities proves the two-jet bound.")),
+            Paragraph(Text(
+                "This also identifies the two collisions in the existing "
+                + "GautschiEvenInterpolationBounds application: "
+                + "|z_plus^2-z_minus^2|=|z_plus-z_minus|*|z_plus+z_minus|="
+                + "4*|t*eta|. Its interpolation upper bounds retain both direct "
+                + "and reflected separation. The present lower bound shows that "
+                + "a uniformly bounded signed readout cannot evade those collisions "
+                + "by choosing different interpolation coefficients. When both "
+                + "R*|t| and R*|eta| are small, S is asymptotic to R^2*|t*eta|. "
+                + "This conclusion comes from the actual evaluation functional, "
+                + "not from reversing an upper estimate for a particular Lagrange basis.")),
             Paragraph(Text(
                 "The actual-object map is rho=beta+i*t and "
                 + "gamma=(rho-1/2)/i=t+i*(1/2-beta), so eta=1/2-beta. "
@@ -94,7 +110,12 @@ internal sealed class UnitSupportBurnolPacketDocument : IScribeDocumentDefinitio
                 + "L*sinh(R*eta_max)<1-epsilon rules out the claimed readout within "
                 + "that budget. This is a necessary feasibility test, not a sufficient "
                 + "interpolation criterion. It already allows arbitrarily small positive "
-                + "readout error; exact cancellation is not needed for the obstruction.")),
+                + "readout error; exact cancellation is not needed for the obstruction. "
+                + "Explicitly, for every R,L>0 and 0<=epsilon<1, choose t=1/R and "
+                + "eta=arsinh((1-epsilon)/L)/(2*R). Then m=1 and "
+                + "L*sinh(R*eta)<1-epsilon. No even integrable g in that window "
+                + "with L0<=L realizes those two error disks. These are generic "
+                + "spectral nodes, not asserted zeta zeros.")),
             Paragraph(Text(
                 "The same test applies to the actual localized basis, not just its "
                 + "seed. In MultiOrbitBurnolUniformRemainder, burnolSynthesis with "
