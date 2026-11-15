@@ -33,9 +33,9 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
                 + "factors in the shifted interval. Since both endpoint hoppings are at most one, "
                 + "each pair has product at least one and sum at least two. There are q(q+1)/2 pairs. "
                 + "The conclusion concerns the actual finite inverse, rather than an assumed Green function. "
-                + "It does not assert the Tribonacci all-prefix spectral-gap statement: that application "
-                + "also needs the exact word-to-hopping correspondence, aligned repeated windows "
-                + "and initial short prefixes. No infinite-volume spectrum, localization, quasimode or "
+                + "The theorem alone does not assert a Tribonacci prefix spectral bound. The application "
+                + "below also uses the exact word-to-hopping correspondence and aligned repeated windows. "
+                + "No infinite-volume spectrum, localization, quasimode or "
                 + "filling hypothesis enters this theorem.", DescribeRole.Theorem),
             new DocumentBlock.Section(H("Application: a Euclidean estimate for the full inverse"), Blocks(
             Paragraph(Text(
@@ -61,11 +61,11 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
                 + "m=2q+1, s=2a and N=2n. This supplies the complete-bidiagonal-inverse "
                 + "Euclidean consequence of the mass estimate. The following application supplies "
                 + "the parity reordering, sign conjugation and spectral conversion for a general "
-                + "finite positive open chain. Identifying the actual Tribonacci hopping sequence, "
-                + "assembling its repeated windows under a common index convention and treating "
-                + "the short prefixes remain separate obligations. No all-prefix Tribonacci "
-                + "spectral rate or entropy law is asserted.")))),
-            SpectralApplication())));
+                + "finite positive open chain. The final application identifies the actual Tribonacci "
+                + "hoppings and windows under this same index convention. Entropy requires a "
+                + "separate physical-state and spatial-cut argument.")))),
+            SpectralApplication(),
+            TribonacciApplication())));
 
     private static DocumentBlock SpectralApplication() => new DocumentBlock.Section(
         H("Application: a spectral residual bound for the finite open chain"), Blocks(
@@ -124,13 +124,62 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
         Paragraph(Text(
             "Here Spec(H) is the finite real spectrum and delta is its distance from zero; "
             + "division is valid because q>=1. This completes the generic finite positive-path "
-            + "conversion from full-inverse mass to a spectral bound. A quantitative rate along "
-            + "all actual Tribonacci prefixes still requires the exact word hoppings t(i)=t(W(i)), "
-            + "aligned repeated windows and the full-inverse mass estimate under one common "
-            + "index convention, together with the initial short prefixes. Entropy scaling "
-            + "requires a separate argument about physical states and spatial cuts. Neither an "
-            + "all-prefix Tribonacci spectral rate nor a physical entropy law follows from this "
-            + "application alone."))));
+            + "conversion from full-inverse mass to a spectral bound. The same entrywise formula "
+            + "defines a Hermitian matrix on C^(2n): its real orthonormal eigenbasis is also a "
+            + "complex orthonormal eigenbasis with the same real eigenvalues. Thus the spectral "
+            + "distance is unchanged when the scalar field is extended to C."))));
+
+    private static DocumentBlock TribonacciApplication() => new DocumentBlock.Section(
+        H("Application: a uniform spectral bound for actual Tribonacci open prefixes"), Blocks(
+        Paragraph(Text(
+            "Use the original Tribonacci substitution sigma(A)=AB, sigma(B)=AC, sigma(C)=A "
+            + "and its fixed word W, with sites and bonds indexed from zero. Put L_j=length(sigma^j(A)) "
+            + "and N_j=2 floor(L_j/2). For 0<rho<1 take t(i)=rho^2, rho or 1 according as "
+            + "W(i)=A, B or C. These are the same hoppings rho^(weight(W(i))) with the original "
+            + "integer weights 2,1,0 in TribonacciPrefixRefutation. The actual N_j-site matrix "
+            + "has zero diagonal, bond t(i) between i and i+1, and no closing bond. Let "
+            + "delta(rho,j) be its minimum absolute eigenvalue. For every j>=4, the existing "
+            + "aligned-window and inverse-mass results imply:")),
+        new DocumentBlock.DisplayFormula(TribonacciRateFormula()),
+        Paragraph(Text(
+            "This is an application of existing declarations, not a new mathematical declaration. "
+            + "The exact window uses k=4 floor((j-4)/4), so k+4<=j<=k+7, and the original "
+            + "TribonacciAlignedWindows.seed identity sigma^4(A)=ABAC|ABA|ABA|CAB. Set "
+            + "a0=sigma^k(A), b0=sigma^k(B), c0=sigma^k(C), s=length(a0 b0 a0 c0), "
+            + "and m=length(a0 b0 a0). Concatenation is indicated by juxtaposition. At levels "
+            + "divisible by four these three lengths are odd, since the fourth letter images "
+            + "have lengths 13,11,7. Hence s is even and m is odd and at least three. The two "
+            + "copies of a0 b0 a0 provide the repeated letters. The nonempty tail c0 a0 b0 "
+            + "preserves the whole window after even rounding. The original length_mono and "
+            + "length_seven estimates give N_j<=128m and s+2m<=N_j.")),
+        Paragraph(Text(
+            "Write m=2q+1, s=2a and N_j=2n. Then q>=1 and a+2q+1<=n. Equal repeated "
+            + "letters have equal actual hoppings, giving t(2a+i+2q+1)=t(2a+i) for i<2q. "
+            + "Use the shifted local block inside the full inverse L(t,n)^(-1), retaining all "
+            + "exterior sites. The full-inverse estimate and spectral conversion use the same "
+            + "Euclidean unit vector v=(1,...,1)/sqrt(n), and give delta(rho,j)q(q+1)<=N_j. "
+            + "The original complex open chain is reached by the even/odd reordering and "
+            + "alternating sign conjugation above; neither the boundary nor any hopping changes. "
+            + "Finally 9q(q+1)-2(2q+1)^2=(q-1)(q+2)>=0 and N_j<=128(2q+1) give "
+            + "N_j delta(rho,j)<=128^2 times 9/2=73728. No optimality is claimed.")),
+        Paragraph(Text(
+            "Non-erasing substitution beginning with A gives L_j>=j+1, hence N_j>=j. "
+            + "For every epsilon>0 choose J=max(4,floor(73728/epsilon)+1). For every j>=J "
+            + "and every 0<rho<1, the same bound gives 0<=delta(rho,j)<=73728/N_j<=73728/j "
+            + "<epsilon. Thus convergence to zero is uniform over the whole open rho interval; "
+            + "the cutoff does not depend on rho. The finite initial values j=1,2,3 need no "
+            + "separate estimate for this limit. The degenerate endpoint rho=0 is outside "
+            + "the positive-hopping argument. This concerns a single-particle finite open-chain "
+            + "spectral distance. It neither constructs a many-body ground state nor determines "
+            + "spatial-cut entanglement or Rauzy-boundary dimension."))));
+
+    private static Formula TribonacciRateFormula()
+    {
+        var rho=F.Id("rho"); var j=F.Id("j");
+        var delta=At(F.Id("delta"),rho,j); var count=At(F.Id("N"),j);
+        return All("rho",R(),All("j",N(),Implies(And(Lt(D(0),rho),Lt(rho,D(1))),
+            Implies(Le(D(4),j),And(Le(D(0),delta),Le(Mul(count,delta),D(7,3,7,2,8)))))));
+    }
 
     private static Formula OpenChainFormula()
     {
