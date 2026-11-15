@@ -49,4 +49,5 @@ The trust boundary is ordinary Lean/Mathlib proof checking. Closed finite index 
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/AsymmetricSliceExclusion.claim`
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/AsymmetricSliceExclusion.result`
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/AsymmetricSliceNonEmbedding](AsymmetricSliceNonEmbedding.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/AsymmetricSlicePairs](AsymmetricSlicePairs.md)
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/GirthSliceCounting](GirthSliceCounting.md)

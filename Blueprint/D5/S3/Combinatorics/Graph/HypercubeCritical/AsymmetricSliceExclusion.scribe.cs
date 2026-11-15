@@ -177,6 +177,8 @@ internal sealed class AsymmetricSliceExclusionDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
+                "D5/S3/Combinatorics/Graph/HypercubeCritical/AsymmetricSlicePairs")),
+            DocumentEdge.Dependency.Create(GidRef.Create(
                 "D5/S3/Combinatorics/Graph/HypercubeCritical/GirthSliceCounting")),
             DocumentEdge.Dependency.Create(GidRef.Create(
                 "D5/S3/Combinatorics/Graph/HypercubeCritical/AsymmetricSliceNonEmbedding"))
