@@ -1,0 +1,46 @@
+**定理 184.7（原零菜单保持恢复实际对径及双侧互补）。** 采用181.1的 L2、全部 $\mathsf Z_2$、$\mathsf{PL}$ 背景。若固定 $a$ 满足 $\mathsf{RJ}(a)$，则每颗经过 $a$ 的实际球的几何对径均在 $D_a$，并有
+
+$$
+Q_a(C)=\operatorname{cone}D_a,\qquad Q_a|_{\operatorname{cone}D_a}=\operatorname{id}.
+\tag{184.13}
+$$
+
+令 $P_a(v)=e_a(v)a$。这两个正投影满足原空间及整个对偶空间的四条互补关系：
+
+$$
+\begin{aligned}
+P_a(C)&=C\cap\ker Q_a=\mathbb R_+a,&
+Q_a(C)&=C\cap\ker P_a=\operatorname{cone}D_a,\\
+Q_a^*(C^*)&=C^*\cap\ker P_a^*
+=\{h\ge0:h(a)=0\},&
+P_a^*(C^*)&=C^*\cap\ker Q_a^*=\mathbb R_+e_a.
+\end{aligned}
+\tag{184.14}
+$$
+
+满足(184.10)的 $Q_a$ 唯一；其像和核均由原零关系决定：
+
+$$
+\operatorname{im}Q_a=\operatorname{span}D_a,\qquad
+\ker Q_a=\operatorname{ann}\operatorname{span}\{h\in C^*:h(a)=0\}.
+\tag{184.15}
+$$
+
+证明。184.6的 $e_a$ 是共同确认者。181.1使其全域最大面恰为 $\{a\}$。对任意纯点 $b\ne a$，令 $B=B_{ab}$，181.2给 $h_B$，其最大面为 $B$。原效应 $k_B=u-h_B$ 满足 $Z(k_B)=B$ 且 $k_B(a)=k_B(b)=0$。保持式给 $k_B(Q_ab)=0$，而
+
+$$
+u(Q_ab)=1-e_a(b)>0.
+$$
+
+所以真正的原归一化输出 $Q_ab/(1-e_a(b))$ 同时属于 $B$ 和 $D_a$。在整颗球上，原效应 $e_a$ 在 $a$ 取一、在某点取零，迫该零点为 $a_B^-$。这给经过 $a$ 的全部 AD，未把商影点当作实际准备。
+
+若 $b\in N_a$，其输出质量是一，且 $B_{ab}\cap D_a=\{b\}$，故 $Q_ab=b$。178.2的 $D_a=\operatorname{conv}N_a$ 给(184.13)。正像的张成是整个线性像；184.12的对偶正像给核的湮灭子公式，得到(184.15)。幂等投影由其像和核唯一确定。
+
+原空间的两式由像、$uQ_a=u-e_a$ 及 $e_a$ 的单点最大面得到。对偶第一式已由184.12支付。对最后一式，若非零 $g\ge0$ 且 $gQ_a=0$，则 $g$ 消去 $D_a$；182.2用于单点菜单的最大点定位使 $M=\max_Kg=g(a)>0$。于是 $u-g/M\in\mathcal Z_a$，保持式给
+
+$$
+u-g/M=(u-g/M)Q_a=uQ_a=u-e_a,
+$$
+
+故 $g=Me_a$；反向由 $e_aQ_a=0$。$P_a^2=P_a$、$P_aQ_a=Q_aP_a=0$ 直接成立。两张对偶正投影的单位像分别为 $e_a$ 和 $u-e_a$，所以均为 order-unit 范数收缩。全部四式正是 [Alfsen—Shultz，p.158，式(2.4)][Q184AS] 要求的双侧 quasicomplementarity；在有限维，连续性条件自动。本条没有把点线射影几何与该正投影定义混同，也没有要求 $P_a+Q_a=\operatorname{id}$。$\square$
+

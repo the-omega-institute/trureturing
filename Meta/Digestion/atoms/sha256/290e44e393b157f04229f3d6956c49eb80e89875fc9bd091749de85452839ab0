@@ -1,0 +1,8 @@
+## Proposition 2: local AME realization and normalization
+
+Psi is normalized and is the normalized contraction of one AME(6,13) tensor and six AME(4,13) tensors.
+
+Proof. At O use 13^(-3/2) times the sum over lambda of |C lambda>. At every outer vertex use 13^(-1) times the sum over u,v of |u,v,u+v,u-v>, ordered as (central wire, loop wire, boundary leg 1, boundary leg 2). Contract equal internal coordinates by Kronecker deltas. Every triple of rows of C is independent, as follows in particular from Proposition 3 below. Therefore either three-leg side uniquely determines lambda, so the central tensor is AME. The four coefficient directions u,v,u+v,u-v are pairwise independent in odd characteristic, proving the outer tensors are AME.
+
+The internal solutions are parametrized uniquely by lambda,z. Each boundary pair recovers its central coordinate and z_j using division by 2; C has rank 3, so the full boundary labels recover lambda as well. The support has 13^6 distinct elements. Before normalization every coefficient is 13^(-15/2), whose total norm is 13^(-9/2). Normalizing gives coefficient 13^(-3), as stated. Normalized maximally-entangled edge contractions change only the common pre-normalization scalar. QED.
+
