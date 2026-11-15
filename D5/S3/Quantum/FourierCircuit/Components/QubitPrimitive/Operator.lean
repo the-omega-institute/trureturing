@@ -67,8 +67,7 @@ def perm {n : Nat} : QubitPrimitive n → Equiv.Perm (Fin (2 ^ n))
 @[simp]
 lemma perm_apply {n : Nat} (primitive : QubitPrimitive n)
     (label : Fin (2 ^ n)) : primitive.perm label = primitive.applyLabel label := by
-  cases primitive <;> simp [perm, applyLabel, WireAddress.xPerm, WireAddress.xMap,
-    WireAddress.cnotPerm, WireAddress.toffoliPerm]
+  cases primitive <;> rfl
 
 
 /-- Canonical unitary operator of one addressed primitive declaration. -/
