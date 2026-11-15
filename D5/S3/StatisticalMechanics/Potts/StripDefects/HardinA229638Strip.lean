@@ -52,10 +52,9 @@ def T : Matrix (Fin 6) (Fin 6) ℤ :=
   Matrix.reindex (finSumFinEquiv : Fin 4 ⊕ Fin 2 ≃ Fin 6)
     (finSumFinEquiv : Fin 4 ⊕ Fin 2 ≃ Fin 6)
     (Matrix.fromBlocks (HardinA229535Strip.T)
-      (![![0, 4],
-      ![2, 2],
-      ![0, 0],
-      ![0, 4]])
+      (Fin.append (![![0, 4], ![2, 2]])
+        (HardinA229535Strip.T.submatrix (fun i : Fin 2 => i.castAdd 2)
+          (fun j : Fin 2 => j.natAdd 2)))
       (0)
       (fun i j => (HardinColumnContinuations.B i j : ℤ)))
 def initial : Fin 6 → ℤ :=
