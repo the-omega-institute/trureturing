@@ -1,0 +1,22 @@
+**定义 1.2（One common pure-record realization）。** An admissible realization consists of a finite complex Hilbert space $E$ and one jointly existing family of unit vectors $e_{ji}\in E$, $(j,i)\in\mathcal A$, for which
+
+$$
+V(|i\rangle\otimes\psi)=
+\sum_{j:P_{ij}>0}\sqrt{P_{ij}}\,
+|j\rangle\otimes U_{ji}\psi\otimes e_{ji}
+\tag{1.4}
+$$
+
+is an isometry on the whole ten-dimensional $H$. No restriction to basis preparations or a fixed internal vector is made. The environment is initially pure; $E$ is the entire auxiliary output of this one-step realization. There is no source copy, hidden reference, bypass, extra flag or source-dependent side register. An untouched reference $R$ is allowed as part of the input domain, with the map $V\otimes I_R$; it is not available as an additional record or decoder input.
+
+The source's cross-input criterion (126.1) is reused in precisely this domain:
+
+$$
+\sum_j\sqrt{P_{ij}P_{kj}}\,
+\langle e_{ji},e_{jk}\rangle U_{ji}^\dagger U_{jk}
+=\delta_{ik}I_K.
+\tag{1.5}
+$$
+
+The inner product is conjugate linear in its first argument. Equation (1.5) follows by comparing all inner products of $|i\rangle\psi$ and $|k\rangle\phi$; hence it tests arbitrary coherent input and arbitrary internal vectors. Merely checking $i=k$ does not establish admissibility. In finite dimension, an isometry with a pure initial environment has a unitary extension on $H\otimes E$, by extending its image of $H\otimes|\mathrm{ready}\rangle$ to an orthonormal basis. The choice of such an extension does not supply physical control permissions.
+

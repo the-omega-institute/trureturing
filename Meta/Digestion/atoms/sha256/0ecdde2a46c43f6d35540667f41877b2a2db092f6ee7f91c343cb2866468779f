@@ -1,0 +1,41 @@
+**Theorem 176.2 (the exact one-sided classification).** For every $d\ge1$ and every closed convex cone $K\subseteq E_d$,
+
+$$
+\mathsf A_+(K)
+\quad\Longleftrightarrow\quad
+\bigl(\operatorname{PSD}_d\subseteq K\bigr)
+\quad\text{or}\quad
+\bigl(K\subseteq-\operatorname{PSD}_d\bigr).
+\tag{176.3}
+$$
+
+The inclusions here need not be equalities. This is precisely the freedom lost by deleting the negative normal differences from Theorem 175.2.
+
+**Proof.** For each unit rank-one projection $P$, Moreau's decomposition, with positive-dual sign convention, is
+
+$$
+P=X-Y,\qquad X=\Pi_K(P)\in K,\quad Y\in K^*,\quad
+\operatorname{Tr}(XY)=0.
+\tag{176.4}
+$$
+
+If $\mathsf A_+$ holds, its two possible splits give $\Pi_K(P)=P$ or $0$. The nonexpansive projection and the connected family $\mathbb{CP}^{d-1}$ make $\|\Pi_K(P)\|_2^2\in\{0,1\}$ constant, exactly as in the positive-family part of Theorem 175.2. If the constant is one, every $P$ belongs to $K$ and positive spectral sums give $\operatorname{PSD}_d\subseteq K$. If it is zero, (176.4) gives $-P\in K^*$ for every $P$. Hence $-\operatorname{PSD}_d\subseteq K^*$, whose dual inclusion is $K\subseteq-\operatorname{PSD}_d$. This uses Moreau's cited decomposition and continuity, not positivity of its projection as an operation.
+
+Conversely let $X,Y$ satisfy the antecedent of $\mathsf A_+$ and put $P=X-Y=vv^*$. If $\operatorname{PSD}_d\subseteq K$, then $P\in K$, and
+
+$$
+0\le\operatorname{Tr}(PY)
+=\operatorname{Tr}((X-Y)Y)=-\|Y\|_2^2.
+\tag{176.5}
+$$
+
+Thus $Y=0$. If $K\subseteq-\operatorname{PSD}_d$, then $-P\in K^*$ and
+
+$$
+0\le\operatorname{Tr}(X(-P))
+=\operatorname{Tr}(X(Y-X))=-\|X\|_2^2,
+\tag{176.6}
+$$
+
+so $X=0$. These arguments include the zero and full-space cones where applicable. $\square$
+

@@ -54,7 +54,31 @@ $$\forall n : \operatorname{Type}\left(\right), [\operatorname{Fintype}\left(n\r
 
 This applies the constructed atomization to each individual actual source test. It assumes no density representation or finite-moment supplier: both are proved from the original map.
 
-**Theorem 1.5 (allL1Costs_of_positive_L1).**
+**Theorem 1.5 (cost_congr_ae).**
+
+Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.cost_congr_ae`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.cost_congr_ae` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On any measurable space and any measure, if p=pprime and q=qprime almost everywhere, then their literal closedPerspectiveCost values agree for every convex generator. Both the finite affine integral and extended nonnegative curvature integral are invariant. The theorem is generic in the source and has no matrix parameter; arbitrary-von-Neumann source normalization consumes it directly.
+
+**Theorem 1.6 (measurable_positive_L1_input).**
+
+Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.measurable_positive_L1_input`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.measurable_positive_L1_input` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On any measurable space X and measure mu, every a.e. nonnegative complex L1 input h has a measurable integrable real representative p, nonnegative almost everywhere, whose embedded complex toL1 class is EXACTLY h and which equals Re(h) almost everywhere. The theorem is generic in X and mu and needs no matrix, s-finiteness or finite-mass premise. It is used by both the original matrix source bridge and GeneralConvexReverseTestAttainment.representativeCosts_of_positive_L1.
+
+**Theorem 1.7 (allL1Costs_of_positive_L1).**
 
 $$\forall n : \operatorname{Type}\left(\right), [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall f : (\mathbb{R} \to \mathbb{R}), \forall h : \operatorname{ConvexOn}\left(\mathbb{R}, \operatorname{Ioi}\left(0\right), f\right), \forall alpha : \operatorname{Type}\left(\right), [\operatorname{MeasurableSpace}\left(alpha\right)] \forall mu : \operatorname{Measure}\left(alpha\right), \operatorname{SFinite}\left(mu\right) \Rightarrow \forall Gamma : \operatorname{PositiveTracePreservingLoneMap}\left(mu, n\right), \forall p : \operatorname{ComplexLone}\left(alpha, mu\right), \forall q : \operatorname{ComplexLone}\left(alpha, mu\right), \operatorname{AENonnegative}\left(p, mu\right) \Rightarrow \left(\operatorname{AENonnegative}\left(q, mu\right) \Rightarrow \operatorname{Mem}\left(\operatorname{closedPerspectiveCost}\left(h, mu, \operatorname{RealPart}\left(p\right), \operatorname{RealPart}\left(q\right)\right), \operatorname{allLoneCosts}\left(h, Gamma\left(p\right), Gamma\left(q\right)\right)\right)\right)$$
 
@@ -66,7 +90,7 @@ $$\forall n : \operatorname{Type}\left(\right), [\operatorname{Fintype}\left(n\r
 
 The measurable representatives in L1ReverseTest do not restrict the actual source class. For any nonnegative elements p,q of the original complex L1 space, measurable integrable real representatives have the same complex L1 classes and the same cost. Almost-everywhere equality leaves both the finite affine integral and the nonnegative curvature integral unchanged.
 
-**Theorem 1.6 (finite_cost_count).**
+**Theorem 1.8 (finite_cost_count).**
 
 $$\forall f : (\mathbb{R} \to \mathbb{R}), \forall h : \operatorname{ConvexOn}\left(\mathbb{R}, \operatorname{Ioi}\left(0\right), f\right), \forall beta : \operatorname{Type}\left(\right), [\operatorname{Fintype}\left(beta\right)] [\operatorname{MeasurableSpace}\left(beta\right)] [\operatorname{MeasurableSingletonClass}\left(beta\right)] \forall p : (beta \to \mathbb{R}), \forall q : (beta \to \mathbb{R}), \operatorname{Nonnegative}\left(p\right) \Rightarrow \left(\operatorname{Nonnegative}\left(q\right) \Rightarrow \operatorname{closedPerspectiveCost}\left(h, \operatorname{Count}\left(beta\right), p, q\right) = \operatorname{Sum}\left(i \mapsto \operatorname{closedPerspective}\left(h, p\left(i\right), q\left(i\right)\right)\right)\right)$$
 
@@ -78,7 +102,7 @@ $$\forall f : (\mathbb{R} \to \mathbb{R}), \forall h : \operatorname{ConvexOn}\l
 
 On a finite measurable alphabet, counting-measure integrals are the actual finite sums. The pointwise affine-plus-curvature identity, with its nonnegative extended remainder, proves the equality even when individual axis costs are infinite.
 
-**Theorem 1.7 (finite_density_atomization).**
+**Theorem 1.9 (finite_density_atomization).**
 
 $$\forall n : \operatorname{Type}\left(\right), [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall f : (\mathbb{R} \to \mathbb{R}), \forall h : \operatorname{ConvexOn}\left(\mathbb{R}, \operatorname{Ioi}\left(0\right), f\right), \forall alpha : \operatorname{Type}\left(\right), [\operatorname{MeasurableSpace}\left(alpha\right)] \forall mu : \operatorname{Measure}\left(alpha\right), \operatorname{IsFiniteMeasure}\left(mu\right) \Rightarrow \forall tau : (alpha \to \operatorname{Matrix}\left(n, n, \operatorname{Complex}\left(\right)\right)), \operatorname{Measurable}\left(tau\right) \Rightarrow \left(\forall x : alpha, \operatorname{PosSemidef}\left(tau\left(x\right)\right) \land \operatorname{Trace}\left(tau\left(x\right)\right) = 1 \Rightarrow \forall p : (alpha \to \mathbb{R}), \forall q : (alpha \to \mathbb{R}), \forall c : (alpha \to \mathbb{R}), \operatorname{Integrable}\left(p, mu\right) \Rightarrow \left(\operatorname{Integrable}\left(q, mu\right) \Rightarrow \left(\operatorname{Integrable}\left(c, mu\right) \Rightarrow \left(\operatorname{AENonnegative}\left(p, mu\right) \Rightarrow \left(\operatorname{AENonnegative}\left(q, mu\right) \Rightarrow \left(\operatorname{AE}\left(mu, x \mapsto \operatorname{closedPerspective}\left(h, p\left(x\right), q\left(x\right)\right) = c\left(x\right)\right) \Rightarrow \exists k : \operatorname{Nat}\left(\right), \exists R : \operatorname{ReverseTest}\left(\operatorname{Integral}\left(x \mapsto \operatorname{SMul}\left(p\left(x\right), tau\left(x\right)\right), mu\right), \operatorname{Integral}\left(x \mapsto \operatorname{SMul}\left(q\left(x\right), tau\left(x\right)\right), mu\right), k\right), \operatorname{Sum}\left(i \mapsto \operatorname{closedPerspective}\left(h, \operatorname{InputLeft}\left(R, i\right), \operatorname{InputRight}\left(R, i\right)\right)\right) = \operatorname{Integral}\left(c, mu\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -94,7 +118,7 @@ For finite density moments, the norm bound on tau makes p tau and q tau Bochner 
 
 closedPerspectiveCost_withDensity uses the actual unnormalized affine integral plus nonnegative curvature remainder. It retains infinite axis costs and makes no normalization assumption. finite_cost_count identifies that same integral with the finite perspective sum. finitePreparationL1Map is the actual counting-measure preparation, L1ReverseTest records its two L1 inputs and exact output identities, finiteCosts ranges over Fin k, and allL1Costs ranges over every s-finite measurable source and actual preparation map.
 
-**Definition 1.8 (L1ReverseTest.hockey).**
+**Definition 1.10 (L1ReverseTest.hockey).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.hockey`
 
@@ -106,7 +130,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.hockey
 
 The actual positive profile is the real Bochner integral of max(p-tq,0), for the actual integrable nonnegative inputs of the specified positive complex-linear TP L1 test.
 
-**Definition 1.9 (L1ReverseTest.negativeHockey).**
+**Definition 1.11 (L1ReverseTest.negativeHockey).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.negativeHockey`
 
@@ -118,7 +142,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.negati
 
 The actual negative profile is the real Bochner integral of max(tq-p,0), over the same test and source measure.
 
-**Theorem 1.10 (L1ReverseTest.hockey_integrable).**
+**Theorem 1.12 (L1ReverseTest.hockey_integrable).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.hockey_integrable`
 
@@ -130,7 +154,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.hockey
 
 For every real threshold, integrability of p and q proves integrability of max(p-tq,0); the actual positive integral is finite.
 
-**Theorem 1.11 (L1ReverseTest.negative_hockey_integrable).**
+**Theorem 1.13 (L1ReverseTest.negative_hockey_integrable).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.negative_hockey_integrable`
 
@@ -142,7 +166,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.negati
 
 For every real threshold, integrability of p and q proves integrability of max(tq-p,0); the actual negative integral is finite. This integrability is used in the direct construction.
 
-**Theorem 1.12 (L1ReverseTest.input_masses).**
+**Theorem 1.14 (L1ReverseTest.input_masses).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.input_masses`
 
@@ -154,7 +178,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.input_
 
 TP on the actual complex L1 inputs gives integral p=Re Tr(A) and integral q=Re Tr(B), without trace normalization or a measure-class assumption.
 
-**Theorem 1.13 (L1ReverseTest.negative_hockey_eq).**
+**Theorem 1.15 (L1ReverseTest.negative_hockey_eq).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.negative_hockey_eq`
 
@@ -166,7 +190,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.negati
 
 At every real threshold the negative integral equals the positive integral minus Re Tr(A) plus t Re Tr(B), by the scalar positive-part identity and the actual TP masses.
 
-**Theorem 1.14 (L1ReverseTest.finite_hockey_realization).**
+**Theorem 1.16 (L1ReverseTest.finite_hockey_realization).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finite_hockey_realization`
 
@@ -178,7 +202,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finite
 
 For every actual L1 test on any measure and every specified t>0, there exists a finite ReverseTest preparing exactly A,B and realizing both actual hockey integrals at t. Set r=(p-tq)+, h=p-r=min(p,tq) almost everywhere and s=tq-h=(tq-p)+. Whole-domain complex L1 linearity and positivity make X=Gamma(h), A-X=Gamma(r), tB-X=Gamma(s) PSD, and TP gives Re Tr(X)=integral h. In nonempty output dimension use the existing independently indexed weighted-component supplier on three labels with components X,A-X,tB-X and weights (1,1,0),(1/t,0,1/t). In empty dimension TP forces p=q=0 almost everywhere and the genuinely empty alphabet realizes zero profiles. No coordinate or density state is used in the empty branch. This is HMT Proposition V.1, not new mathematics. The quantifiers are for every t>0 and every test there exists a finite test, not one finite test for all t.
 
-**Definition 1.15 (finiteL1ReverseTest).**
+**Definition 1.17 (finiteL1ReverseTest).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finiteL1ReverseTest`
 
@@ -190,7 +214,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finite
 
 Factor the counting-measure constructor already used by finiteCosts_subset_allL1Costs, on ULift of Fin k in the arbitrary source universe. Reuse finitePreparationL1Map on the entire complex L1 domain; the two inputs and exact preparations are unchanged.
 
-**Theorem 1.16 (finiteL1ReverseTest_cost).**
+**Theorem 1.18 (finiteL1ReverseTest_cost).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finiteL1ReverseTest_cost`
 
@@ -202,7 +226,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finite
 
 The factored counting embedding preserves the same extended closed-perspective cost, by finite_cost_count and the universe-lift sum equivalence. The existing finite-cost subset theorem consumes this helper.
 
-**Theorem 1.17 (finiteL1ReverseTest_profiles).**
+**Theorem 1.19 (finiteL1ReverseTest_profiles).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finiteL1ReverseTest_profiles`
 
@@ -214,7 +238,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finite
 
 The same factored counting embedding preserves both actual hockey integrals at every threshold, by integral_count and the universe-lift sum equivalence.
 
-**Theorem 1.18 (positive_L1_profiles).**
+**Theorem 1.20 (positive_L1_profiles).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.positive_L1_profiles`
 
@@ -226,7 +250,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.positi
 
 For any two original nonnegative complex L1 elements and any actual positive complex-linear TP map, the existing measurable representative construction gives an L1ReverseTest with the exact same prepared matrices and both literal real-part hockey integrals at every threshold. integral_congr_ae proves representative independence. No sigma-finite or s-finite premise is needed, and there is no silent measurable-density restriction.
 
-**Theorem 1.19 (positive_L1_finite_hockey_realization).**
+**Theorem 1.21 (positive_L1_finite_hockey_realization).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.positive_L1_finite_hockey_realization`
 
@@ -238,7 +262,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.positi
 
 The raw positive complex L1 inputs therefore admit the same fixed-positive-threshold finite realization of both literal hockey integrals, consuming positive_L1_profiles and the direct three-component theorem.
 
-**Definition 1.20 (sigmaFiniteHockeyProfiles).**
+**Definition 1.22 (sigmaFiniteHockeyProfiles).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sigmaFiniteHockeyProfiles`
 
@@ -250,7 +274,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sigmaF
 
 Pairs of actual positive and negative hockey values of the same test at the specified threshold, quantified over every X in the arbitrary source universe, every measurable structure and sigma-finite measure, and every actual L1ReverseTest. Projecting the first or second coordinate gives exactly the respective original HMT value set.
 
-**Definition 1.21 (sFiniteHockeyProfiles).**
+**Definition 1.23 (sFiniteHockeyProfiles).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sFiniteHockeyProfiles`
 
@@ -262,7 +286,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sFinit
 
 The identical paired value set with every s-finite measure in place of sigma-finite; the source universe remains independent of the finite output universe.
 
-**Definition 1.22 (finiteHockeyProfiles).**
+**Definition 1.24 (finiteHockeyProfiles).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finiteHockeyProfiles`
 
@@ -274,7 +298,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finite
 
 Pairs of actual finite positive and negative profiles of the same ReverseTest, over all natural alphabet sizes.
 
-**Theorem 1.23 (sigmaFiniteHockeyProfiles_eq).**
+**Theorem 1.25 (sigmaFiniteHockeyProfiles_eq).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sigmaFiniteHockeyProfiles_eq`
 
@@ -286,7 +310,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sigmaF
 
 At each positive threshold the original sigma-finite paired value set equals the finite paired value set. Forward inclusion uses direct per-test realization on the original measure; reverse inclusion uses actual universe-lifted finite counting preparation.
 
-**Theorem 1.24 (sFiniteHockeyProfiles_eq).**
+**Theorem 1.26 (sFiniteHockeyProfiles_eq).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sFiniteHockeyProfiles_eq`
 
@@ -298,7 +322,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sFinit
 
 At each positive threshold the full s-finite paired value set equals the same finite paired value set, by the same measure-independent realization and counting embedding.
 
-**Definition 1.25 (operationalL1Hockey).**
+**Definition 1.27 (operationalL1Hockey).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.operationalL1Hockey`
 
@@ -310,7 +334,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.operat
 
 The real infimum of the first projection of sigmaFiniteHockeyProfiles is precisely the original sigma-finite infimum of integral max(p-tq,0).
 
-**Definition 1.26 (operationalL1NegativeHockey).**
+**Definition 1.28 (operationalL1NegativeHockey).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.operationalL1NegativeHockey`
 
@@ -322,7 +346,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.operat
 
 The real infimum of the second projection of sigmaFiniteHockeyProfiles is precisely the original sigma-finite infimum of integral max(tq-p,0).
 
-**Definition 1.27 (sFiniteOperationalHockey).**
+**Definition 1.29 (sFiniteOperationalHockey).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sFiniteOperationalHockey`
 
@@ -334,7 +358,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sFinit
 
 The real infimum of the positive actual integral profile over every s-finite L1 source.
 
-**Definition 1.28 (sFiniteOperationalNegativeHockey).**
+**Definition 1.30 (sFiniteOperationalNegativeHockey).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sFiniteOperationalNegativeHockey`
 
@@ -346,7 +370,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sFinit
 
 The real infimum of the negative actual integral profile over every s-finite L1 source.
 
-**Theorem 1.29 (operationalL1_eq_finite).**
+**Theorem 1.31 (operationalL1_eq_finite).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.operationalL1_eq_finite`
 
@@ -358,7 +382,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.operat
 
 At every positive threshold both original sigma-finite operational infima and both s-finite infima equal the respective finite operational infima. The paired source-set equalities are proved before taking either infimum.
 
-**Theorem 1.30 (operationalL1_hockey_eq).**
+**Theorem 1.32 (operationalL1_hockey_eq).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.operationalL1_hockey_eq`
 
@@ -370,7 +394,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.operat
 
 For arbitrary finite PSD A,B and t>0, the actual positive operational infimum is Re Tr(A)-overlapValue(A,tB), and the actual negative infimum is t Re Tr(B)-overlapValue(A,tB), for both original sigma-finite and s-finite sources. The proof consumes operationalL1_eq_finite and the existing finite operational formulas. Those finite infima have nonempty attaining classes and are bounded below. Empty, singular and zero output pairs and arbitrary traces remain included. No closedPerspectiveCost is assumed to be a literal hinge integral.
 
-**Definition 1.31 (sigmaFiniteL1Costs).**
+**Definition 1.33 (sigmaFiniteL1Costs).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sigmaFiniteL1Costs`
 
@@ -382,7 +406,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sigmaF
 
 The same actual closed-perspective cost class as allL1Costs, with the original sigma-finite measure quantifier and arbitrary independent source universe.
 
-**Theorem 1.32 (sigma_finite_source_infimum_eq).**
+**Theorem 1.34 (sigma_finite_source_infimum_eq).**
 
 Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.sigma_finite_source_infimum_eq`
 
@@ -400,6 +424,7 @@ Matsumoto, A new quantum version of f-divergence, arXiv:1311.4722v4, p. 8, Lemma
 
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.allL1Costs_finite`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.allL1Costs_of_positive_L1`
+- Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.cost_congr_ae`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finiteCosts_subset_allL1Costs`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finiteHockeyProfiles`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.finiteL1ReverseTest`
@@ -411,6 +436,7 @@ Matsumoto, A new quantum version of f-divergence, arXiv:1311.4722v4, p. 8, Lemma
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.hockey`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.hockey_integrable`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.input_masses`
+- Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.measurable_positive_L1_input`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.negativeHockey`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.negative_hockey_eq`
 - Truth anchor: `D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest.negative_hockey_integrable`
