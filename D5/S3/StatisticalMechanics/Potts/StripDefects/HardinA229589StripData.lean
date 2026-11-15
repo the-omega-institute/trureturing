@@ -21,11 +21,13 @@ terminal: proof_shape=bind-only; consumers=HardinA229589Strip.finite_certificate
 W: proof_shape=bind-only; consumers=HardinA229589Strip.finite_certificate
 -/
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import Mathlib.LinearAlgebra.Matrix.Action
 import Mathlib.Tactic
 
 /-! Finite class data consumed by the registered settlement. -/
 open scoped BigOperators
+open D5.S3.Combinatorics.TraceAvoidingArrays
 namespace D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229589StripData
 abbrev Row := Fin 4 → Fin 3
 def horizontal : Finset (Fin 4 × Fin 4) := ∅
@@ -35,34 +37,9 @@ def Valid (_ : Row) (d : ℕ) : Prop := d ≤ 1
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (d ≤ 1))
 def cl (p : Row) (d : ℕ) : Fin 28 :=
-  if d = 1 ∧ p 0 = p 1 ∧ p 0 = p 2 ∧ p 0 = p 3 ∧ p 1 = p 2 ∧ p 1 = p 3 ∧ p 2 = p 3 then 0 else
-  if d = 1 ∧ p 0 = p 1 ∧ p 0 = p 2 ∧ p 0 ≠ p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 1 else
-  if d = 1 ∧ p 0 = p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 ≠ p 2 ∧ p 1 = p 3 ∧ p 2 ≠ p 3 then 2 else
-  if d = 1 ∧ p 0 = p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 = p 3 then 3 else
-  if d = 1 ∧ p 0 = p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 4 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 = p 2 ∧ p 0 = p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 = p 3 then 5 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 = p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 = p 3 ∧ p 2 ≠ p 3 then 6 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 = p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 7 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 8 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 = p 2 ∧ p 1 = p 3 ∧ p 2 = p 3 then 9 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 10 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 11 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 = p 3 ∧ p 2 ≠ p 3 then 12 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 = p 3 then 13 else
-  if d = 0 ∧ p 0 = p 1 ∧ p 0 = p 2 ∧ p 0 = p 3 ∧ p 1 = p 2 ∧ p 1 = p 3 ∧ p 2 = p 3 then 14 else
-  if d = 0 ∧ p 0 = p 1 ∧ p 0 = p 2 ∧ p 0 ≠ p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 15 else
-  if d = 0 ∧ p 0 = p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 ≠ p 2 ∧ p 1 = p 3 ∧ p 2 ≠ p 3 then 16 else
-  if d = 0 ∧ p 0 = p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 = p 3 then 17 else
-  if d = 0 ∧ p 0 = p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 18 else
-  if d = 0 ∧ p 0 ≠ p 1 ∧ p 0 = p 2 ∧ p 0 = p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 = p 3 then 19 else
-  if d = 0 ∧ p 0 ≠ p 1 ∧ p 0 = p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 = p 3 ∧ p 2 ≠ p 3 then 20 else
-  if d = 0 ∧ p 0 ≠ p 1 ∧ p 0 = p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 21 else
-  if d = 0 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 22 else
-  if d = 0 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 = p 2 ∧ p 1 = p 3 ∧ p 2 = p 3 then 23 else
-  if d = 0 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 24 else
-  if d = 0 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3 then 25 else
-  if d = 0 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 = p 3 ∧ p 2 ≠ p 3 then 26 else
-  27
+  if d = 1 then (HardinA233177PairTransfer.cls (p 0, p 1, p 2, p 3)).castAdd 14
+  else if d = 0 then (HardinA233177PairTransfer.cls (p 0, p 1, p 2, p 3)).natAdd 14
+  else 27
 def T : Matrix (Fin 28) (Fin 28) ℤ :=
   ![![2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 0],
     ![1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 3, 3, 2, 2, 0, 2, 1, 2, 0, 1, 1, 1, 2],
