@@ -1,4 +1,5 @@
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalSlots
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingHorizontalCounts
 import Reg.Support.UniverseSingleReadout
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -527,7 +528,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 1 1 1 1 ⟨((1, 0), (0, 1)), by decide +kernel⟩ ⟨((1, 0), (0, 1)), by decide +kernel⟩
   have ha := pair_count_support 1 1 1 1 ⟨((1, 0), (0, 1)), by decide +kernel⟩ ⟨((1, 0), (0, 1)), by decide +kernel⟩
-  dsimp only [rejected, realize] at hb
+  dsimp only [arena, rejected, realize] at hb
   omega
 
 def family : Registration arena (type_of% @pair_count_support) where
