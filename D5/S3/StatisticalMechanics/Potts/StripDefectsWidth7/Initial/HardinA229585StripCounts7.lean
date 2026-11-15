@@ -23,6 +23,7 @@ namespace D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.Initial.HardinA229
 open D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.HardinA229585StripData
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects)
 
+set_option maxHeartbeats 1000000 in
 theorem initial_counts (s : Fin 72) (hs : 56 ≤ s.val ∧ s.val < 64) :
     (∑ r : Row, if bondDefects horizontal r r ≤ 1 ∧
       cl (boundary r) (1 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s := by
