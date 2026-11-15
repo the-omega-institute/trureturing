@@ -2346,3 +2346,357 @@ $$
 一般抽象实际 L2 域上的规范 $\mathsf A_2\Rightarrow\mathsf D_2$ 及规范共同纯球面的充分性仍未取得；220.7不把外给尺识别为 Loewner 尺，220.10也不为任意抽象域制造矩阵提升。这里没有仅凭新障碍重建全部量子模型、减少独立公理数、取得完整二次型分类或全局最简性。得到的是任意谱单核商完整原层级的共同尺缺口，以及两个复制如何用实际可辨方向检出它。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 230. 规范局部圆与纯共球面的全有限反例
+
+**定义 230.1（三维非交换核与整个原张量层级）。** 取整数 $m\ge3$，置 $\mathcal H=A\otimes B$，其中 $A=\mathbb C^m$、$B=\mathbb C^2$，$D=2m$。以下 $E=\operatorname{Herm}(\mathcal H)$ 是实空间，$E_0$ 表示迹零部分，正交性均指 $\langle X,Y\rangle=\operatorname{Tr}(XY)$。定义
+
+$$
+J=I_m\otimes\operatorname{Herm}_2(\mathbb C)_0,
+\qquad R=J^\perp,\qquad V=E/J,\qquad
+\pi:E\longrightarrow V,\qquad u\pi=\operatorname{Tr}.
+\tag{230.1}
+$$
+
+$J$ 的实维数为三，含 $I_m\otimes\sigma_x,I_m\otimes\sigma_y,I_m\otimes\sigma_z$ 三个不对易方向，$\dim_{\mathbb R}V=4m^2-3$。令 $Q:E\to R$ 为 HS 正交投影，以 $\pi|_R$ 识别 $V$ 和 $R$。对每个有限 $N\ge1$，取实际 Kronecker 识别并定义
+
+$$
+\begin{gathered}
+E_N=\operatorname{Herm}_{D^N}(\mathbb C)=E^{\otimes_{\mathbb R}N},
+\quad W_N=V^{\otimes_{\mathbb R}N},\quad
+\pi_N=\pi^{\otimes N},\quad Q_N=Q^{\otimes N},\quad R_N=R^{\otimes N},\\
+\mathcal N_N=\ker\pi_N
+=\sum_{j=1}^NE^{\otimes(j-1)}\otimes J\otimes E^{\otimes(N-j)},
+\qquad \mathcal N_N^\perp=R_N,\\
+C_N=\pi_N(\operatorname{PSD}_{D^N}),\quad u_N=u^{\otimes N},\quad
+K_N=\pi_N(\mathcal D_{D^N}),\quad P_N=\operatorname{ext}K_N.
+\end{gathered}
+\tag{230.2}
+$$
+
+这里 $\mathcal D_k=\{\rho\succeq0:\operatorname{Tr}\rho=1\}$，$P_v=vv^*$ 表示单位向量的秩一投影。标量层为 $(W_0,C_0,u_0)=(\mathbb R,\mathbb R_+,1)$。保留每层整个原态体、全部原纯点及完整效应区间 $[0,u_N]$，连同其全部有限单位分解；不把矩阵提升中的某个子菜单称作原菜单。$F_{K_N}(S)$ 表示包含 $S$ 的最小实际面。
+
+**定理 230.2（此三维核的强全有限背景）。** 定义230.1给每层闭、尖、生成的 $C_N$ 和严格正 $u_N$，且 $K_N=C_N\cap\{u_N=1\}$ 紧。整个原对偶、效应和测试为
+
+$$
+\begin{gathered}
+W_N^*\simeq R_N,\qquad C_N^*\simeq R_N\cap\operatorname{PSD}_{D^N},
+\qquad [0,u_N]\simeq R_N\cap[0,I_{D^N}],\\
+f_F(\pi_NX)=\operatorname{Tr}(FX),\qquad
+(F_1,\ldots,F_k)\text{ 是原测试}
+\ \Longleftrightarrow\ F_j\in R_N\cap\operatorname{PSD}_{D^N},\quad\sum_jF_j=I_{D^N}.
+\end{gathered}
+\tag{230.3}
+$$
+
+对所有有限 $a,b\ge0$，$C_a\otimes_{\min}C_b\subseteq C_{a+b}\subseteq C_a\otimes_{\max}C_b$；最大锥使用两块的全部原正泛函。规范重括号、全部因子置换及正逆均保留，原乘积配对分离联合载体，丢弃在全部相关输入上为偏迹下降。
+
+证明。应用 [XIV165.2](QUANTUM_ORIGIN_FINITE_TENSOR_QUOTIENT_AND_GLOBAL_NONCOLLAPSE_XIV.md) 的一般迹零核机制，参数替换为该处 $A\mapsto E$、$\mathbb RH\mapsto J$、$R\mapsto J^\perp$、局部矩阵大小 $d\mapsto D=2m$。该证明的背景部分只需实正交分解、$J\subset E_0$ 和 $I_D\in R$，不需核为一维；不调用165.3的一维核惯性结论。实 Hermitian 基的张量积给(230.2)的准确核、正交补及整个 Kronecker 载体，并有 $u_N\pi_N=\operatorname{Tr}$。
+
+紧密度集的像给紧底；正提升的迹受 $u_N$ 控制，收敛正像可取有界 PSD 提升的收敛子列，故像锥闭。PSD 提升的正迹给严格正性，继而给尖性；满射和 PSD 的线性张成给生成性。泛函下降等价于迹矩阵属于 $R_N$，对全部 PSD 提升非负等价于该矩阵 PSD；单位对应 $I_{D^N}$，故完整菜单准确为(230.3)。正提升的张量积给最小夹逼，对任意相关 $Z\succeq0$ 及正的 $F\in R_a,G\in R_b$，$\operatorname{Tr}((F\otimes G)Z)\ge0$ 给最大夹逼。矩阵置换保核且保 PSD；$I\in R$ 使偏迹下降，并在全部输入上满足
+
+$$
+(\operatorname{id}_{W_a}\otimes u_b)\pi_{a+b}Z
+=\pi_a(\operatorname{Tr}_{\mathcal H^{\otimes b}}Z).
+\tag{230.4}
+$$
+
+每个 $R_N$ 中的 Hermitian 矩阵夹于 $\pm cI$ 之间，所以完整效应张成全部对偶，乘积配对分离联合空间。这也包括标量分割及经置换得到的全部有限分区。$\square$
+
+**定理 230.3（三维核的锐全有限符号秩）。** 对所有有限 $N\ge1$ 和每个非零 $X\in\mathcal N_N$，
+
+$$
+n_+(X)\ge m,\qquad n_-(X)\ge m.
+\tag{230.5}
+$$
+
+每层均有符号秩恰为 $(m,m)$ 的核元。
+
+证明。归纳所需的公共零向量张成事实直接取自 Edward Poon，*Preservers of maximally entangled states*，Proposition 2.1，印刷页2—3，[原作者全文][Q230Poon]，DOI [10.1016/j.laa.2014.03.009](https://doi.org/10.1016/j.laa.2014.03.009)。其参数取较小维数 $m_{\rm Poon}=2$、较大维数 $n_{\rm Poon}=m>2$，交换两个因子。他的 $\mathbb RI+S_{2,m}$ 因而准确成为
+
+$$
+\operatorname{span}_{\mathbb R}\{P_v:v^*Hv=0\ \text{对全部 }H\in J\}
+=\{T\in E:\operatorname{Tr}_A T\in\mathbb RI_2\}=R.
+\tag{230.6}
+$$
+
+确实，公共零条件等价于 $\operatorname{Tr}_A P_v=I_2/2$；Schmidt 分解给恰好全部 $2$ 对 $m$ 最大纠缠向量
+$v=(a\otimes|0\rangle+e^{it}b\otimes|1\rangle)/\sqrt2$，其中 $a,b\in\mathbb C^m$ 正交归一。这里复用的是文献的实线性张成公式，不新增一个最大纠缠态张成定理。
+
+$N=1$ 时，$X=I_m\otimes T$，非零迹零 Hermitian $2\times2$ 矩阵 $T$ 有一正一负特征值，故符号秩为 $(m,m)$。设 $N\ge2$。对(230.6)的任一单位 $v$，泛函 $T\mapsto v^*Tv$ 消去整个 $J$，故压缩
+
+$$
+X_v=(v^*\otimes I)X(v\otimes I)\in\mathcal N_{N-1}.
+\tag{230.7}
+$$
+
+若某个 $X_v\ne0$，归纳假设与等距压缩的惯性单调性立即给 $n_\pm(X)\ge n_\pm(X_v)\ge m$。若全部压缩为零，在余下 $N-1$ 份的实 Hermitian 基 $(B_j)$ 上写 $X=\sum_jA_j\otimes B_j$。每个 $A_j$ 对全部公共零投影的迹配对为零，(230.6)迫使 $A_j\in R^\perp=J$。将前两小因子重新括号，遂有
+
+$$
+X=I_m\otimes Y,\qquad
+0\ne Y\in\operatorname{Herm}(\mathbb C^2\otimes\mathcal H^{\otimes(N-1)}),\qquad
+\operatorname{Tr}Y=0.
+\tag{230.8}
+$$
+
+$Y$ 非零且迹零，至少各有一个正、负特征值；每个特征值在 $I_m\otimes Y$ 中重复 $m$ 次，故又得(230.5)。最后 $(I_m\otimes\sigma_z)\otimes P_\zeta$ 给每层的 $(m,m)$，其中 $P_\zeta$ 是余下层任意秩一投影，$N=1$ 时省去辅助因子。$\square$
+
+**推论 230.4（与全部正提升比较的唯一性及整个实际 L2）。** 在每个有限 $N\ge1$，任意 $\sigma\succeq0$、$\operatorname{rank}\sigma<m$ 都是其商像的唯一 PSD 提升。对任意复支持 $S\subseteq\mathcal H^{\otimes N}$、$\dim_{\mathbb C}S<m$，
+
+$$
+\begin{gathered}
+F_S=\pi_N\mathcal D(S)\text{ 是 }K_N\text{ 的实际面},\qquad
+\pi_N^{-1}(F_S)\cap\mathcal D_{D^N}=\mathcal D(S),\\
+\pi_N|_{\operatorname{Herm}(S)}:
+\operatorname{Herm}(S)\longrightarrow\operatorname{span}_{\mathbb R}\pi_N\operatorname{PSD}(S)
+\text{ 是保迹线性序同构}.
+\end{gathered}
+\tag{230.9}
+$$
+
+全部原纯点恰为互异的 $\pi_NP_v$，其拓扑是 $\mathbb{CP}^{D^N-1}$。任意两个不同原纯点所生的最小实际面恰为其二维提升支持的完整 Bloch 三球，包括任意纠缠支持。秩阈值 $<m$ 为锐界。
+
+证明。准确复用220.4的符号秩／全正纤维机制，令其中的阈值 $r=m$、核取(230.2)，符号秩前件由230.3给出。其唯一性论证只用：若 $X=\rho-\sigma\in\mathcal N_N$、$\rho\succeq0$，则 $X$ 在 $\ker\sigma$ 上非负，从而 $n_-(X)\le\operatorname{rank}\sigma<m$，故 $X=0$。这里 $\rho$ 没有秩限制。低秩态与全部态比较的成熟判据仍归 [Carmeli–Heinosaari–Schultz–Toigo，*Tasks and premises in quantum state determination*，arXiv:1308.5502v2，§4.1，Lemma 1(b,c)、Lemma 2(a)、Theorem 1(a)](../../../Library/HilbertOperators/carmeliheinosaarischultztoigo2014tasks.md)；参数为其秩预算 $t=m-1$。
+
+220.4的其余实际面与整个张成上的序论证均只依赖上述唯一性，因而给(230.9)。特别地，每个秩一像是单点实际面；反过来，对任一原极点取密度提升并作谱分解，极端性迫使每个非零谱项的秩一像都等于该极点，所以没有遗漏的高秩来源纯标签。秩一提升唯一性给标签单射，紧射影空间到 Hausdorff 商的连续双射给同胚。两个不同纯提升的中点在其二维支持密度体的相对内部；该体已是实际面，故正是两点的最小面。$m\ge3$ 使所有这些支持满足 $2<m$。
+
+锐界由两个不同的秩 $m$ 正矩阵
+
+$$
+\sigma_0=(I_m\otimes P_0)\otimes P_\zeta,\qquad
+\sigma_1=(I_m\otimes P_1)\otimes P_\zeta,
+\qquad \pi_N\sigma_0=\pi_N\sigma_1
+\tag{230.10}
+$$
+
+给出，$P_j=|j\rangle\langle j|$，$N=1$ 时省去辅助因子；除以 $m$ 即为归一态。其差属于准确核。全部原效应仍为(230.3)；面内序同构不另承诺每个面内效应或单位分解能按相同预算延拓为整域测试。$\square$
+
+**定理 230.5（单层严格圆尺与共同纯球面）。** 在 $E_0$ 上定义
+
+$$
+q(X)=\operatorname{Tr}X^2+
+\frac1m\left\{\operatorname{Tr}\bigl((\operatorname{Tr}_BX)^2\bigr)
+-\operatorname{Tr}\bigl((\operatorname{Tr}_AX)^2\bigr)\right\}.
+\tag{230.11}
+$$
+
+它半正定且根空间恰为 $J$，因而下降为 $L=\ker u\simeq R\cap E_0$ 上的正定二次型 $\bar q$。每个复二维支持 $U\subset\mathcal H$ 都有严格正 $\lambda_U$，使 $q(X)=\lambda_U\operatorname{Tr}X^2$ 对全部 $X\in\operatorname{Herm}_0(U)$ 成立。对所有单位 $v$，
+
+$$
+\bar q\left(\pi P_v-\pi\frac{I_D}{D}\right)=1-\frac1{m^2}.
+\tag{230.12}
+$$
+
+证明。作实 HS 正交分解
+
+$$
+E_0=S_A\oplus J\oplus S_{AB},\qquad
+S_A=\operatorname{Herm}_m(\mathbb C)_0\otimes I_2,\quad
+S_{AB}=\operatorname{Herm}_m(\mathbb C)_0\otimes\operatorname{Herm}_2(\mathbb C)_0.
+\tag{230.13}
+$$
+
+偏迹在三块上的直接计算给
+
+$$
+q(X)=\left(1+\frac2m\right)\|X_A\|_{\rm HS}^2+\|X_{AB}\|_{\rm HS}^2.
+\tag{230.14}
+$$
+
+所以根空间准确为 $J$，且 $q(X)=\bar q(QX)$。此处 $QX$ 的商坐标 HS 长度不等于原支持上 $X$ 的 HS 长度；圆度检验使用后者。
+
+为证全部支持同时圆，令 $f(X)=\operatorname{Tr}((\operatorname{Tr}_BX)^2)-\operatorname{Tr}((\operatorname{Tr}_AX)^2)$，在整个 Hermitian 空间上使用它的二次极化。Schmidt 分解给每个秩一 $P_v$ 的 $f(P_v)=0$。在任一二维 $U$ 上写 $P_v=c+T(r)$，其中 $c=P_U/2$、$T(r)=\frac12\sum_{j=1}^3r_j\sigma_j^U$、$|r|=1$。将 $r$ 与 $-r$ 的零等式相减，得 $f$ 的线性交叉项为零；相加，得 $f(T(r))=-f(c)$。二次齐次性遂给 $f(T(r))=-f(c)|r|^2$，而 $\operatorname{Tr}T(r)^2=|r|^2/2$。因此该支持上 $q$ 是 HS 的标量倍。非零的 $\operatorname{Herm}_0(U)$ 元秩至多二，非零 $J$ 元秩为 $2m$，故此标量严格正；极化也给整个支持上的双线性等式。
+
+最后令 $X=P_v-I_D/D$、$\rho_A=\operatorname{Tr}_BP_v$、$\rho_B=\operatorname{Tr}_AP_v$，共同约化纯度 $t=\operatorname{Tr}\rho_A^2=\operatorname{Tr}\rho_B^2\in[1/2,1]$。直接正交投影给
+
+$$
+\|X_A\|_{\rm HS}^2=\frac{t-1/m}{2},\qquad
+\|X_{AB}\|_{\rm HS}^2=1+\frac1{2m}-\left(\frac12+\frac1m\right)t.
+\tag{230.15}
+$$
+
+代入(230.14)，$t$ 消去，得到(230.12)。230.4保证这些恰是全部原纯点；共同纯球面没有漏掉额外原标签。$\square$
+
+**定理 230.6（整个商态体的准确 Loewner 尺）。** 置 $s=m^2-1$、$n=\dim L=4s$，定义
+
+$$
+o=\pi(I_D/D),\qquad
+b=\frac{m^2}{m^2-1},\quad a=\frac{m(m+2)}{m^2-1},\qquad
+g_{\rm L}(x,x)=b\bar q(x)=a\|x_A\|_{\rm HS}^2+b\|x_{AB}\|_{\rm HS}^2.
+\tag{230.16}
+$$
+
+整个 $K_1$ 的唯一最小体积外接椭球恰为 $o+\{x:g_{\rm L}(x,x)\le1\}$。全部原纯点都在其单位边界上，且每个实际二点球在同一个规范 $g_{\rm L}$ 下严格圆。
+
+证明。230.5使全部纯点在所列单位椭球上，凸性使整个 $K_1$ 被包含。以下一个接触测度证书同时处理任意中心的竞争椭球。最小外接椭球的一般定义和成熟归属仍为210.1及其 [Güler–Gürtuna][Q210GG]；本处具体常数及证书直接计算。
+
+在 $U(m)\times U(2)$ 的两个纯投影轨道上分别取归一 Haar 推前测度：乘积态轨道 $t=1$，以及两个 Schmidt 系数均为 $1/\sqrt2$ 的轨道 $t=1/2$。以权重
+
+$$
+\nu=\frac3{m(m+2)},\qquad 1-\nu
+\tag{230.17}
+$$
+
+混合，得到数学接触测度 $\mu$，不附加物理随机准备前件。令随机向量 $x=QP_v-I_D/D\in L$。局部酉平均给 $\mathbb E_\mu x=0$。$S_A$ 的维数为 $s$，$S_{AB}$ 的维数为 $3s$；由(230.15)，两种轨道的平方分量分别是
+
+$$
+\begin{array}{c|cc}
+ &\|x_A\|_{\rm HS}^2&\|x_{AB}\|_{\rm HS}^2\\ \hline
+ t=1&p&p\\
+ t=1/2&r&3/4
+\end{array}
+\qquad p=\frac{m-1}{2m},\qquad r=\frac{m-2}{4m}.
+\tag{230.18}
+$$
+
+协方差在 $S_A,S_{AB}$ 间没有交叉项：先平均 $U(2)$，它固定前块并消去后块的一阶项。在 Pauli 三方向上，旋转 $\pi$ 消去不同方向间的协方差，旋转置换三轴使三个对角块相等。每个剩余 $U(m)$-不变二次型在 $\operatorname{Herm}_m^0$ 上都是 HS 的标量倍：限制到和为零的实对角元，置换不变性使系数矩阵的对角元一致、非对角元一致；和为零条件将其化为平方和，谱定理和极化再给全部 Hermitian 元的同一结论。因此只需计算上述两块的平均平方长度：
+
+$$
+\nu p+(1-\nu)r=\frac1{4a},\qquad
+\nu p+(1-\nu)\frac34=\frac3{4b}.
+\tag{230.19}
+$$
+
+除以各自维数 $s,3s$，若 $G_{\rm L}$ 是(230.16)相对于 HS 的正定矩阵，便得 $\mathbb E_\mu(xx^{\mathsf T})=G_{\rm L}^{-1}/n$。白化 $z=G_{\rm L}^{1/2}x$ 后，
+
+$$
+\mathbb E_\mu z=0,\qquad
+\mathbb E_\mu(zz^{\mathsf T})=I_n/n,\qquad \|z\|^2=1.
+\tag{230.20}
+$$
+
+任一包含整个白化态体的椭球可写为 $(z-c)^{\mathsf T}H(z-c)\le1$，其中 $H\succ0$、$c$ 任意。对接触测度积分给
+
+$$
+\frac{\operatorname{Tr}H}{n}+c^{\mathsf T}Hc\le1,
+\qquad
+\det H\le\left(\frac{\operatorname{Tr}H}{n}\right)^n\le1.
+\tag{230.21}
+$$
+
+AM–GM 使其体积至少为单位球体积；等体积时只能 $H=I_n,c=0$。这一次证书即证明所列椭球对全部中心及形状唯一最优。无需假定原纯域传递；局部酉群的两个轨道恰被允许不同。严格圆度随(230.14)的同一正比例缩放及230.4的实际面桥得到。$\square$
+
+**命题 230.7（两种实际半径与准确整体直径）。** 取 $A$ 中正交单位向量 $a_0,c_0$，$B$ 中正交单位向量 $b_0,d_0$，置 $v=a_0\otimes b_0$、$w=c_0\otimes b_0$、$z=a_0\otimes d_0$。其对应的两颗实际二点球在规范尺下的平方半径分别为
+
+$$
+r_{vw}^2=\frac{m}{2(m-1)},\qquad
+r_{vz}^2=\frac{m}{2(m+1)},\qquad
+\Delta_{g_{\rm L}}(K_1)^2=\frac{2m}{m-1}.
+\tag{230.22}
+$$
+
+因此，实际 L2、规范 $\mathsf A_2(g_{\rm L})$ 和规范纯单位共球面同时成立，仍不蕴含 $\mathsf D_2(g_{\rm L})$。
+
+证明。正交提升投影是各支持球的对径端点，且
+
+$$
+q(P_v-P_w)=2\left(1+\frac1m\right),\qquad
+q(P_v-P_z)=2\left(1-\frac1m\right).
+\tag{230.23}
+$$
+
+乘以 $b$ 再除以四给两个平方半径。为算整个体的直径，对任意纯 $P_v,P_w$ 记约化矩阵 $\rho_{A,v},\rho_{B,v}$ 等，则由各纯投影两侧约化纯度相等，
+
+$$
+q(P_v-P_w)=2\bigl(1-|\langle v,w\rangle|^2\bigr)
++\frac2m\left\{\operatorname{Tr}(\rho_{B,v}\rho_{B,w})
+-\operatorname{Tr}(\rho_{A,v}\rho_{A,w})\right\}
+\le2+\frac2m.
+\tag{230.24}
+$$
+
+两项约化矩阵均为密度矩阵，其交叉迹在 $[0,1]$ 中；第一对 $(v,w)$ 达到此上界。任意两混态之差可写为纯点差的凸组合，范数凸性保证不超过纯点间最大距离。故整体平方直径正是 $b(2+2/m)=2m/(m-1)$。第二颗实际球的对径平方长度为 $2m/(m+1)$，严格小于整体平方直径，故 D2 失败。
+
+例如 $m=3$ 时，$g_{\rm L}$ 在 $S_A,S_{AB}$ 上的系数分别为 $15/8,9/8$，两平方半径为 $3/4,3/8$，整个平方直径为 $3$。230.6同时认证所用尺确为整块体的规范尺，故这给210.8及220.13所列两个单层蕴含的反例：规范局部圆度不足，规范共同纯球面也不足，二者合取仍不足。此单层结论不替换只作用于整个 $K_3$ 的完整重建前件。$\square$
+
+**定理 230.8（两复制起失去任何共同圆尺）。** 对定义230.1的每个有限 $N\ge2$，不存在 $L_N=\ker u_N$ 上的正定内积使全部实际二点球同时圆。特别地，整个 $K_N$ 的规范 Loewner 尺既不满足 $\mathsf A_2$，也不满足 $\mathsf D_2$。
+
+证明。$N=2$ 时若有这样的 $g$，在 $\operatorname{Herm}_{D^2}(\mathbb C)_0$ 上拉回为 $\mathfrak q(X)=g(\pi_2X,\pi_2X)$。其极化根空间准确为 $J\otimes E+E\otimes J$。230.4已使每个提升二维支持忠实地成为完整实际 Bloch 面，所以对每个该支持 $U$，$\mathfrak q|_{\operatorname{Herm}_0(U)}=\lambda_U\operatorname{Tr}X^2$，且 $\lambda_U>0$。准确应用220.10，参数为其中 $A=E$、矩阵大小 $n=D=2m$、迹零核 $J=I_m\otimes\operatorname{Herm}_2^0$，得到 $J=0$，与 $\dim J=3$ 矛盾。
+
+同一矛盾也可用220.8显示为原菜单的具体可辨方向，无需重证其四坐标恒等式。取 $H=I_m\otimes\sigma_z\in J$，其参数为 $p=q=m$、$H_+=I_m\otimes P_0$。给定单位 $a_0\in A$，令 $S=P_{a_0}\otimes\sigma_x\in\mathcal O_{+-}$，$P_\pm=P_{(|0\rangle\pm|1\rangle)/\sqrt2}$。220.8只需的两侧核 $H\otimes E+E\otimes H$ 已包含在准确根空间内，故迫使 $H_+\otimes S$ 为零长度方向。另一方面原归一态及一份原效应
+
+$$
+\begin{gathered}
+x_\pm=\pi_2\left(\frac{H_+}{m}\otimes(P_{a_0}\otimes P_\pm)\right),\qquad
+F=P_{a_0}\otimes P_++\frac{I_m-P_{a_0}}{m-1}\otimes P_-,\\
+0\preceq F\preceq I_D,\qquad \operatorname{Tr}_A F=I_2,\qquad F\in R,
+\end{gathered}
+\tag{230.25}
+$$
+
+给合法两份效应 $I_D\otimes F\in R_2\cap[0,I_{D^2}]$，满足 $f_{I\otimes F}(x_+)=1$、$f_{I\otimes F}(x_-)=0$，但 $x_+-x_-=\pi_2(H_+\otimes S)/m$ 被迫零长度。$F$ 的区间条件由 $P_{a_0}\oplus(I_m-P_{a_0})$ 两块及 $1/(m-1)\le1$ 直接验证；其偏迹条件准确保证对整个三维 $J$ 正交。这说明矛盾发生于原菜单可辨的不同商态，不只发生于提升的不同矩阵。
+
+$N>2$ 时固定余下层任一单位纯辅助向量 $\zeta$，令 $z_*=\pi_{N-2}P_\zeta$。其迹为一，$i:x\mapsto x\otimes z_*$ 是线性单射，丢弃是左逆。若 $g_N$ 存在，沿 $i$ 拉回即得正定 $g_2$。每个两份提升支持 $U$ 经 $U\otimes\mathbb C\zeta$ 成为230.4已认证的实际二维支持，且
+
+$$
+\operatorname{Tr}((X\otimes P_\zeta)(Y\otimes P_\zeta))=\operatorname{Tr}(XY).
+\tag{230.26}
+$$
+
+所以拉回使全部两份支持同时严格圆，违反已证两复制结论。这正是220.9的纯辅助限制机制；无需把高层尺设为张量积，也不假设更高支持的全部面结构。D2 由210.2蕴含 A2，故规范尺的两条件均被排除。$\square$
+
+**定义 230.9（完整候选的保留形式）。** 对一般系统，保留210.5和220.11的全部强实全有限前件：一个有限实 $V$，$\dim V>1$，$W_N=V^{\otimes_{\mathbb R}N}$ 对每个有限 $N\ge0$ 都是整个原联合载体；$C_N$ 闭、尖、生成，$u_N=u^{\otimes N}$ 严格正。使用整个 $K_N=C_N\cap\{u_N=1\}$、全部 $P_N=\operatorname{ext}K_N$、完整原效应区间及全部有限单位分解，标量层为 $(\mathbb R,\mathbb R_+,1)$。原乘积配对分离联合空间；对任意有限块大小 $a,b\ge0$，
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}\subseteq C_a\otimes_{\max}C_b.
+\tag{230.27}
+$$
+
+最小锥使用全部正乘积，最大锥使用两块全部正泛函；规范重括号、全部有限因子置换及其正逆保留，所以夹逼对每个实际有限分区成立，量词包含全部相关与纠缠输入。
+
+在整个原三复制体 $K_3$ 要求两项：每对不同原纯点生成的最小实际面是非退化仿射 Bloch 三球；以整个 $K_3$ 的唯一最小体积外接椭球给 $g_3$，并对每个不同 $a,p\in P_3$ 要求
+
+$$
+\|a-b_a(p)\|_{g_3}=\Delta_3,\qquad
+\Delta_3=\max_{x,y\in K_3}\|x-y\|_{g_3}.
+\tag{230.28}
+$$
+
+这里 $p$ 指定实际球，$b_a(p)$ 是该球内 $a$ 的对径。此即完整 $\mathsf Q_{\rm diam\,2}$。共同半径、共同纯球面、TC、AD、E0、投影性和自对偶不另作前提；不要求面内测试按原预算全域延拓。单层230.7的较弱条件不能代付(230.28)。
+
+**推论 230.10（准确供应的同一全有限量子字典）。** 在230.9的全部强前件下，其三复制实际 L2 和(230.28)当且仅当存在同一个整数 $d\ge2$、同一个实线性同构 $\theta:V\to\operatorname{Herm}_d(\mathbb C)$，对所有有限 $N\ge0$ 同时有
+
+$$
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{d^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{230.29}
+$$
+
+证明。参数逐项与210.5、220.11一致，故直接应用210.6／220.12及其199.4、XVII190.5的分类与共同全有限传播。230.3—230.8供应具体商的反例和障碍，不代替这个一般抽象重建，也不重证分类。对非标量层令 $D_N=d^N$，同一 $\theta$ 下的对应为下表；几何常数直接取210.7／220.12。
+
+| 原对象或附加前件 | 同一量子坐标中的准确内容 |
+| --- | --- |
+| 整个原态体和全部原纯标签 | 全部密度矩阵 $\rho\succeq0,\operatorname{Tr}\rho=1$，全部秩一投影 $P_\psi$，纯标签为 $\mathbb{CP}^{D_N-1}$ |
+| 完整原效应及所有有限测试 | 全部 $0\preceq F\preceq I$，Born 读数 $\operatorname{Tr}(\rho F)$；单位分解恰为数学 POVM，$F_j\succeq0,\sum_jF_j=I$ |
+| 所有有限分区、置换和丢弃 | 标准复张量积、全部相关及纠缠态、在全部输入上的偏迹；同一 $\theta^{\otimes N}$，不逐层另选坐标 |
+| 实际二点面与整体几何 | 每个纯对的最小面为完整 Bloch 三球；整个规范尺 $g_N(X,Y)=D_N\operatorname{Tr}(XY)/(D_N-1)$，中心 $I/D_N$，平方直径 $2D_N/(D_N-1)$ |
+| 给定实线性分支 $\Phi:W_a\to W_b$ 对所有有限 $M\ge0$ 满足 $\Phi\otimes\operatorname{id}_{W_M}$ 在整个原正锥上为正 | 矩阵坐标的唯一复线性延拓为 CP，反向亦然；因 $d\ge2$，辅助幂可容纳任意有限辅助维数，再用嵌入和压缩取得通常完全正性 |
+| 对所有正输入另给 $u_b\Phi\le u_a$，或等号 | 分别为 TNI、TP；多分支还须对总和另给总质量预算，各支单独 TNI 不保证总预算 |
+| 给定实际仪器及其操作、设备中性条件 | 数学锐压缩 $X\mapsto aXa$ 和 $X\mapsto(I-a)X(I-a)$ 可作为指定中性更新；具有指定锐效应的正分支须在整个 yes 支持上逐点中性（161.7.1），仅结果可重复性不足；静态 POVM 不自动指定或实现全部数学仪器 |
+| 另给连续、可逆、保锥保单位的实一参数群 | 有限矩阵层为连续酉共轭；可写 $\dot\rho=-i[H_{\rm gen},\rho]$，纯态择相位后写 $i\dot\psi=H_{\rm gen}\psi$；物理钟、能量和 $H_{\rm phys}=\hbar H_{\rm gen}$ 的标定另给 |
+| 精确全有限层级之外 | 无限张量积、相容状态、连接映射、拓扑完备化及 normal 延拓须另给；无限维、热力学极限以及近似 D2 的稳定性和误差界不由此取得 |
+
+若 $a,p$ 纯、$\rho$ 任意混态，规范平方距离还满足
+
+$$
+\frac{\|a-p\|_{g_N}^2}{\Delta_N^2}=1-\operatorname{Tr}(ap),\qquad
+1-\frac{\|a-\rho\|_{g_N}^2}{\Delta_N^2}
+=\operatorname{Tr}(a\rho)+\frac{1-\operatorname{Tr}\rho^2}{2}.
+\tag{230.30}
+$$
+
+前者是 Fubini–Study 测地角的正弦平方，后者含混态纯度修正，不能把纯弦公式替换成混态线性效应。标量层不用零直径比值。Born 的端点静态互反也不蕴含接续测量可交换：两个非正交且不同的纯投影即可不对易，接续概率还取决于实际仪器及顺序。$\square$
+
+**命题 230.11（关系缺口与完整白话解释）。** 230.3的全有限三维核惯性、230.6的准确规范椭球及230.7—230.8的合成反例归 repo-derived；230.6证明的接触证书不依赖纯域传递。Poon Proposition 2.1供应公共零投影的张成，CHST2014 §4.1供应低秩对全部态的符号秩判据，XIV165.2与220.4分别供应一般迹零商背景及实际面机制，220.8／220.10供应两侧核的圆度障碍；Schmidt、Pauli、谱分解、Haar 平均、极化与 AM–GM 是成熟中间工具。完整重建及量子字典仍由210.6、210.7、220.12和其准确前件承担，不申领历史优先权、完整二次型分类或独立公理数的减少。
+
+证明。把全有限张量商看成一种合并读数：所有原混态、纯准备和合法测试仍在，只有某些提升中的混态差被压成同一状态。这里被压掉的是三种互不对易方向；每一份中任何非零差都至少占据 $m$ 个正方向和 $m$ 个负方向。这个门槛在任意有限复制数保持，所以低于 $m$ 维的整个支持面都没有偷偷并入外来的正提升。特别是每两个不同纯准备真正撑起的最小面，始终是一颗完整实心三球，纯标签也一条不少。
+
+再拿能罩住整块单份状态体的最小体积椭球定尺。230.6的接触分布证明它确是最小者，且不要求实验室存在均匀准备。此尺把每颗二点球都画圆，并把所有纯点放到同一个单位球面上。然而球面上的不同截面可以处在不同深度，半径便不同：一对只改 $A$ 的正交乘积纯态给较大球，一对只改 $B$ 的纯态给较小球。两者都是真正的原二点面；较小球的直径达不到整个体的最大距离。因此“各球圆”和“纯点共球面”，即便都由整块体的规范尺给出，也没有支付球与球之间的尺度比较。
+
+增加第二份后，比较关系不能继续分开藏在单份几何里。张量积将被消去方向同时放在左边和右边；若仍要求所有实际二点球共用一把圆尺，220.8的恒等式会迫使一个原合法测试能以概率一和零区分的状态差具有零长度。230.8明确给出这样的测试和状态，所以不是挑选了错误的规范尺，而是任何正定共同圆尺都不存在。余下复制固定为纯辅助态便把该矛盾传到每个更高有限层。
+
+完整量子候选据此仍保留全部原背景，只在整个三复制体要求实际二点球存在，且每根对径都达到整个体的直径。它检查的是共同比较尺度，不能由单份局部圆或共同纯壳替代。既有210.6再把这个全域条件接到原准备关系相容、共同确认、正删除及同一套全有限复矩阵坐标，给出密度矩阵、Born、POVM、纠缠和偏迹。操作更新、全部旁观者下的 CP、各支与总和的预算、物理钟和能量标定、无限及近似极限各有自己的前提。两个端点的静态读数对称不等于两次测量交换次序仍相同。以上区别正是230.4、230.7、230.8及230.10分别证明的数学内容。$\square$
+
+[Q230Poon]: https://cklixx.people.wm.edu/teaching/APSC695/EdPoon.pdf "Edward Poon，Preservers of maximally entangled states，Proposition 2.1，印刷页2—3；DOI 10.1016/j.laa.2014.03.009。"
+
+## 追加锚（本行以下为增补区）
