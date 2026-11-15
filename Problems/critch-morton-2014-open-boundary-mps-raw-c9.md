@@ -58,3 +58,21 @@ The mathematical source is `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindo
 ## Triage
 
 Candidate `admission_basis: open-problem-resolution` under CLAUDE 3.2; conservative `proof_shape: bind-only`. Each private auxiliary is used on the live proof path of `result`; no separate helper package is delivered. The same-unit `OpenProblemResolutionClaim(Proved)` refers only to this exact raw settlement candidate. Independent caller fidelity review, required checks, freezing, publication, literature priority and official acceptance remain separate. Global C9 status is OPEN and solved-open-problem KPI remains 0 until caller verification.
+
+### What the settlement shows
+
+**Proved (`D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9.result`):** The decisive mechanism combines the existing boundary and interior suppliers on a common finite dense-open intersection in the actual image. Reversal reuses boundary recovery at the other end by ordinary matrix transpose with the original boundary vectors swapped. Substitution of the complete raw $Q_3$ coordinates, together with reversal of the full amplitude coordinates, represents that intersection by one polynomial; a common actual point proves that polynomial nonzero.
+
+**Proved (`D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9.result`):** For each natural $m$, $N=3+m$, one nonzero real polynomial in all real and imaginary amplitude coordinates defines a nonempty, relatively open and dense, $U(1)$-saturated locus in the ENTIRE actual open-boundary image. Every target there is nonzero, and each individual adjacent $Q_3$ window identifies it among arbitrary actual competitors exactly up to unit phase. Every individual adjacent $Q_2$ or $Q_1$ window instead admits an actual nonzero nonphase competitor, which may depend on the window. Partial traces retain the chosen pair witness when passing to a contained one-site window. Thus three versus one or two sites is sharp for a single adjacent raw observation in this finite binary bond-two translation-invariant model, including $N=3$ and every placement.
+
+**Open beyond this proved scope:** A normalized-slice theorem, reconstruction from jointly observed smaller windows, stability estimates, and dynamical or thermodynamic conclusions are not established here. In particular, $U(1)$ saturation alone supplies no normalized-slice genericity argument. The raw identifiability statement supplies the mathematical input envisaged by the paper's tomography discussion only within the stated model; an operational tomography protocol and its error bounds remain outside this settlement.
+
+**Open for additional source consequences:** This result does not settle the periodic four-site question C10, and the bounded C9 literature check makes no claim about C10's global literature status. It does not alter the C8 coherent-sum result, its Ma--Zhang attribution or license, or the paper's other results. No extension to other bond or local dimensions or boundary models is proved here, and no new companion Lean theorem is asserted.
+
+## ASSUMED-UNVERIFIED
+
+The literature and priority assessment is bounded by the searched scope recorded in Gap: `not-found-in-searched-scope` is no global novelty, world-first or unique certificate. Global priority and a complete literature settlement remain unverified.
+
+The four-slot source audit remains unfinished under issue [#30422](https://github.com/the-omega-institute/trureturing/issues/30422): `source.selection_missing` records absent source-selection evidence for the whole original result family. Existing Reg evidence is retained; neither this prose repair nor the mathematical proof establishes `declared_validated`.
+
+Required CI, caller fidelity acceptance, canonical freezing and publication, and official acceptance remain pending. Local structural checks do not establish full Scribe validation, required CI or canonical admission. These lifecycle boundaries do not weaken the exact raw mathematical scope stated above; global C9 remains OPEN and solved-open-problem KPI remains 0 pending caller full acceptance.
