@@ -58,6 +58,10 @@ $$\forall n \in \operatorname{Nat},\; (1 \le n) \Rightarrow ((\operatorname{left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/HemmerStraubWestremWeightedAverage.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hsw17` (proved) by `D5/S3/Combinatorics/Partitions/HemmerStraubWestremWeightedAverage.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hsw17","declaration_gid":"D5/S3/Combinatorics/Partitions/HemmerStraubWestremWeightedAverage.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Hemmer, David J.; Straub, Armin; Westrem, Karlee J. (2025). *New identities in the character table of symmetric groups involving Riordan numbers*. DOI: [10.37236/14401](https://doi.org/10.37236/14401). URL: <https://arxiv.org/abs/2509.02796v1>.
