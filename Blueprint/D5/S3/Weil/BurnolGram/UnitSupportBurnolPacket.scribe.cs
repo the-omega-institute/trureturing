@@ -131,6 +131,16 @@ internal sealed class UnitSupportBurnolPacketDocument : IScribeDocumentDefinitio
                 + "this calculation neither disproves such a stage count nor proves "
                 + "a lower bound for arithmetic running time.")),
             Paragraph(Text(
+                "Normalization matters. With targets a and -a and absolute error "
+                + "at most e, the same triangle argument gives L0*S>=max(0,|a|-e). "
+                + "Shrinking a can keep an absolute L1 budget bounded, but also "
+                + "shrinks the signal and its admissible absolute error. Scaling an "
+                + "entire test by a multiplies its Weil quadratic value by |a|^2. "
+                + "The obstruction therefore concerns the packet's specified unit "
+                + "readout, or a fixed signal-to-error ratio with a specified norm "
+                + "budget. It asserts no amplitude lower bound for an arbitrarily "
+                + "rescaled, unnormalized negative witness.")),
+            Paragraph(Text(
                 "What survives is finite conditional interpolation, the existing "
                 + "coefficient-uniform geometric remainder, and rational depth selection "
                 + "once the actual majorant is bounded. The lower seminorm estimate "
