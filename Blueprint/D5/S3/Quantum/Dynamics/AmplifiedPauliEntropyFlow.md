@@ -4,6 +4,8 @@
 
 Actual amplified Pauli channels connect noncommuting trace entropy to dissipative dynamics.
 
+The qubit factor and its Pauli spin matrices are fixed. The finite quantum memory and real unit axes are arbitrary within this model. These results do not cover arbitrary algebras or conditional expectations.
+
 All matrix traces are ordinary unnormalized traces, and derivatives use the L2 operator norm. The faithful-memory derivative is a local milestone. The all-state arbitrary-memory two-axis inequality, its angular comparison, singular endpoint passage, amplified Pythagoras identity and sharpness remain separate mathematical obligations. No external open-problem resolution or literature novelty is asserted.
 
 **Definition 1.1 (Spin matrices with quantum memory).**

@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Dynamics/AmplifiedPauliEntropyFlow
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Dynamics/AmplifiedPauliEntropyFlow
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -15,7 +15,10 @@ The actual amplified pinchings compose to the partial-trace equilibrium map.
 The raw all-real curve has derivative minus its actual generator. Positivity
 at positive times and the trace-entropy chain rule yield entropy dissipation
 for arbitrary joint states whose actual memory marginal is faithful.
-These are general analytic and matrix identities, not bounded certificates.
+I-bearing scope warning: the qubit factor and its Pauli spin matrices are fixed.
+The finite quantum memory and real unit axes are arbitrary within this model;
+the results do not cover arbitrary algebras or conditional expectations.
+These are analytic and matrix identities, not bounded certificates.
 The all-state two-axis inequality and singular-memory limit remain separate.
 -/
 
