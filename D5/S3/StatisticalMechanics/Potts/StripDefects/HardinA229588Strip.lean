@@ -1,5 +1,5 @@
 /- GID: D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229588Strip
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/StripDefects/HardinA229588Strip
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -24,12 +24,14 @@ finite_certificate: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=external sequence A229588
 -/
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Mathlib.Logic.Equiv.Fin.Basic
 
 /-! Literal row-major canonical counts and column transfer. -/
 open scoped BigOperators
+open D5.S3.Combinatorics.TraceAvoidingArrays
 namespace D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 open DefectTransfer (bondDefects defects literalCount lumped_count forward forward_shift)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical canonical_pattern_card)
@@ -42,16 +44,11 @@ def Valid (_ : Row) (d : ℕ) : Prop := d ≤ 1
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (d ≤ 1))
 def cl (p : Row) (d : ℕ) : Fin 10 :=
-  if d = 1 ∧ p 0 = p 1 ∧ p 0 = p 2 ∧ p 1 = p 2 then 0 else
-  if d = 1 ∧ p 0 = p 1 ∧ p 0 ≠ p 2 ∧ p 1 ≠ p 2 then 1 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 = p 2 ∧ p 1 ≠ p 2 then 2 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 1 = p 2 then 3 else
-  if d = 1 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 1 ≠ p 2 then 4 else
-  if d = 0 ∧ p 0 = p 1 ∧ p 0 = p 2 ∧ p 1 = p 2 then 5 else
-  if d = 0 ∧ p 0 = p 1 ∧ p 0 ≠ p 2 ∧ p 1 ≠ p 2 then 6 else
-  if d = 0 ∧ p 0 ≠ p 1 ∧ p 0 = p 2 ∧ p 1 ≠ p 2 then 7 else
-  if d = 0 ∧ p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 1 = p 2 then 8 else
-  9
+  if h : d ≤ 1 then
+    ⟨(1 - d) * 5 + (HardinA233258PairTransfer.cls (p 0, p 1, p 2)).val, by
+      have hc := (HardinA233258PairTransfer.cls (p 0, p 1, p 2)).isLt
+      interval_cases d <;> omega⟩
+  else 9
 def T : Matrix (Fin 10) (Fin 10) ℤ :=
   ![![2, 2, 2, 2, 0, 0, 2, 0, 0, 2],
     ![1, 1, 0, 1, 1, 0, 3, 3, 2, 2],
