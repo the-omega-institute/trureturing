@@ -72,7 +72,7 @@ private lemma root_ne (s : ℕ) : (Real.sqrt (s + 1 : ℝ) : ℂ) ≠ 0 := by
 private lemma root_sq (s : ℕ) : (Real.sqrt (s + 1 : ℝ) : ℂ) ^ 2 = (s + 1 : ℂ) := by
   exact_mod_cast Real.sq_sqrt (by positivity : (0 : ℝ) ≤ s + 1)
 
-private lemma root_units (N : ℕ) :
+lemma root_units (N : ℕ) :
     frequencyRoot N * inverseFrequencyRoot N = 1 ∧
       inverseFrequencyRoot N * frequencyRoot N = 1 := by
   have hb (i : Fin N) : (Real.sqrt ((i.val : ℝ) + 1) : ℂ) ≠ 0 := by

@@ -52,10 +52,9 @@ private lemma sourceCoordinate_bound {ρ : ℝ} (hρ : 0 ≤ ρ) {z : ℂ} (hz :
 
 private lemma source_summable {z : ℂ} (hz : ‖z‖ < 1) :
     Summable (fun n : ℕ => ‖(lp.single 2 n (sourceCoordinate z n) : H)‖) := by
-  apply Summable.of_nonneg_of_le (fun _ => norm_nonneg _)
-    (fun n => ?_) ((summable_nat_add_iff 1).mpr (summable_geometric_of_lt_one (norm_nonneg z) hz))
-  rw [lp.norm_single (by norm_num : (0 : ℝ≥0∞) < 2)]
-  exact sourceCoordinate_bound (norm_nonneg z) le_rfl n
+  simpa only [sourceFamilyTerm, sourceCoefficient, pow_zero, one_mul,
+    ← lp.single_smul, sourceCoordinate, smul_eq_mul, mul_div_assoc, mul_comm]
+    using sourceFamily_summable 0 hz
 
 private lemma source_tsum {z : ℂ} (hz : ‖z‖ < 1) :
     (∑' n : ℕ, lp.single 2 n (sourceCoordinate z n) : H) = sourceFamily 0 z := by
@@ -63,7 +62,7 @@ private lemma source_tsum {z : ℂ} (hz : ‖z‖ < 1) :
   change (lp.evalCLM ℂ (fun _ : ℕ => ℂ) 2 n) (∑' k : ℕ,
     lp.single 2 k (sourceCoordinate z k)) = _
   rw [(lp.evalCLM ℂ (fun _ : ℕ => ℂ) 2 n).map_tsum (source_summable hz).of_norm,
-    source_coordinate 0 hz]
+    sourceFamily_apply 0 hz]
   simp only [pow_zero, one_mul]
   rw [tsum_eq_single n]
   · change (lp.single (E := fun _ : ℕ => ℂ) 2 n (sourceCoordinate z n)) n = _
@@ -99,7 +98,7 @@ private lemma source_constant_term {z : ℂ} (hz : ‖z‖ < 1) (n : ℕ) :
     sourceFamily 0 z n * columnSeries z n =
       (centralWeight (n + 1) : ℂ) * z ^ (2 * (n + 1)) *
         shiftedCentralSeries (z ^ 2) (n + 1) / ((n + 1 : ℂ) * period (z ^ 2)) := by
-  rw [source_coordinate 0 hz, columnSeries_entry_explicit_complex hz,
+  rw [sourceFamily_apply 0 hz, columnSeries_entry_explicit_complex hz,
     halfBinomial_eq_signed_centralWeight]
   have hs : (Real.sqrt (n + 1 : ℝ) : ℂ) ≠ 0 := by
     exact_mod_cast (Real.sqrt_pos.mpr (by positivity : (0 : ℝ) < n + 1)).ne'
@@ -274,15 +273,6 @@ private lemma tensor_action (D : LatticeData) (N : ℕ)
   intro t _
   ring
 
-private lemma root_units (N : ℕ) :
-    frequencyRoot N * inverseFrequencyRoot N = 1 ∧
-      inverseFrequencyRoot N * frequencyRoot N = 1 := by
-  have hn (s : Fin N) : (Real.sqrt (s.val + 1 : ℝ) : ℂ) ≠ 0 := root_ne N s
-  constructor <;> ext s t <;>
-    by_cases h : s = t <;>
-    simp [frequencyRoot, inverseFrequencyRoot, Matrix.diagonal_mul_diagonal,
-      Matrix.one_apply, Matrix.diagonal_apply, h, hn]
-
 private lemma normalized_sources (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (N : ℕ) {X : Type*} [Fintype X] [DecidableEq X]
     (e : X → External D) (z : ℂ) :
@@ -392,8 +382,8 @@ private lemma dressed_sources (D : LatticeData) (hu : IsUnit D.G.det)
   have hcc : (gramComplex D).mulVec (chargeVector D a) = chargeCovector D a := rfl
   simp only [tensor_action, hc, hcc, hadd, Matrix.one_mulVec]
   constructor
-  · rw [hfreq _ _ (root_units N).2 (root_units N).1]
-  · rw [hfreq _ _ (root_units N).1 (root_units N).2]
+  · rw [hfreq _ _ (OriginalGaussianExternalBlocks.root_units N).2 (OriginalGaussianExternalBlocks.root_units N).1]
+  · rw [hfreq _ _ (OriginalGaussianExternalBlocks.root_units N).1 (OriginalGaussianExternalBlocks.root_units N).2]
 
 private def finiteU (N : ℕ) (out : Bool) (p : ℕ) (z : ℂ) : ℂ :=
   ∑ s : Fin N, externalColumn out p z s.val *

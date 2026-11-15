@@ -74,61 +74,6 @@ private theorem hyperbolic_unit : IsUnit hyperbolic.G.det := by
   exact isUnit_neg_one
 private def labels : PUnit → Bool × Index hyperbolic := fun _ => (false, (0, 0))
 
-namespace source_coordinate
-abbrev arena : Arena where
-  signature := eqSignature
-  Law R := ∀ (j : ℕ) {z : ℂ} (hz : ‖z‖ < 1) (n : ℕ),
-    R.readout () _ (sourceFamily j z n) ((n + 1 : ℂ) ^ j * halfBinomial (n + 1) * z ^ (n + 1) /
-      (Real.sqrt (n + 1 : ℝ) : ℂ)) 
-private theorem rejected_fails : ¬ arena.Law eqRejected := by
-  intro h
-  exact h 0 (z := 0) (by simp) 0
-def family : Registration arena (type_of% (@source_coordinate)) where
-  actual := eqActual
-  bridge := Iff.rfl
-  variation := ⟨@source_coordinate, eqRejected, rejected_fails⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨eqRejected, ?_, rfl, rejected_fails⟩
-      intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
-    · intro e
-      cases e
-  dependence := eqDependence
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@source_coordinate) (Realization eqSignature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianAllIndexResolvent.source_coordinate.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianAllIndexResolvent.source_coordinate.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize eqSignature eqActual.readout eqActual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianAllIndexResolvent
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-end source_coordinate
-
 namespace columnSeries_entry_explicit_complex
 abbrev arena : Arena where
   signature := eqSignature

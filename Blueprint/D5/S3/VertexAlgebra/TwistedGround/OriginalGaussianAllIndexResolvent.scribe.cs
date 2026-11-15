@@ -9,7 +9,7 @@ internal sealed class OriginalGaussianAllIndexResolventDocument : IScribeDocumen
         H("All-index Original Gaussian Resolvents"),
         Blocks(
             Paragraph(Text("The central series A_s and its shifted derivative E_s have summable polynomial-geometric bounds. They are differentiated as genuine series, and the period is A_0. The explicit jet Q_s retains the period denominator, which is nonzero on the complex unit disk.")),
-            Paragraph(Text("The actual source column extends from the real radial interval to the full complex disk by holomorphic uniqueness. Public norm derivatives and the radial rank-one theorem give the differentiated column; the finite displacement limit then determines every odd resolvent entry. The branch-free central-binomial expression includes both diagonal and off-diagonal positive frequencies.")),
+            Paragraph(Text("The actual source column extends from the real radial interval to the full complex disk by holomorphic uniqueness. The original scaled radial column derivative gives the differentiated column; the finite displacement limit then determines every odd resolvent entry. The branch-free central-binomial expression includes both diagonal and off-diagonal positive frequencies.")),
             Paragraph(Text("The square resolvent is reconstructed from T = I + KJ. Its diagonal retains the identity term and a norm-absolutely convergent scalar convolution with the explicit odd entry. No unknown resolvent entry occurs in this formula.")),
             Paragraph(Text("These are classical Gaussian displacement and analytic continuation arguments on the repository carrier, consumed by the actual external source blocks. No literature novelty, boundary value at norm one, original cross-channel identityK or C1, or physical realization is claimed.")),
             Describe.Lean(
@@ -42,11 +42,6 @@ internal sealed class OriginalGaussianAllIndexResolventDocument : IScribeDocumen
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.oddResolvent"),
                 H("oddResolvent"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The oddResolvent definition fixes the literal objects and conventions used in the proof."))), DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("source-coordinate"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.source_coordinate"),
-                H("source_coordinate"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The source_coordinate statement is verified on its displayed full domain and consumed by the original Gaussian source calculation."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("column-series-entry-explicit-complex"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.columnSeries_entry_explicit_complex"),

@@ -13,6 +13,11 @@ internal sealed class OriginalGaussianExternalBlocksDocument : IScribeDocumentDe
             Paragraph(Text("Substitution into FiniteGaussianSewing.effectiveKernel gives equal diagonal blocks G times the free input-output covariance plus B_J, cross block minus G times B_T, and its ordinary transpose. Uniform signed and square cutoff estimates and the external l1 bounds prove locally uniform convergence on every smaller complex disk.")),
             Paragraph(Text("The effectiveKernel definition is used algebraically; finite_sewing is not applied outside its raw contraction hypotheses. This covariance theorem makes no claim of raw full-disk occupation summability, source energy coefficient extraction, Laurent selectors, theta averaging, identityK or C1.")),
             Describe.Lean(
+                DescribeId.Create("root-units"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.root_units"),
+                H("root_units"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The frequency square-root diagonal matrix and its reciprocal multiply to the identity in both orders, including the empty frequency box."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("original-row"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalBlocks.originalRow"),
                 H("originalRow"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

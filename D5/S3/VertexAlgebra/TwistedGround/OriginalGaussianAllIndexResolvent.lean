@@ -66,14 +66,6 @@ private lemma central_coefficient_bound (s k : ℕ) :
   simpa only [norm_mul, one_mul] using
     mul_le_mul (weight_norm_le k) (weight_norm_le (k + s)) (norm_nonneg _) zero_le_one
 
-private lemma central_summable {x : ℂ} (hx : ‖x‖ < 1) (s : ℕ) :
-    Summable (fun k : ℕ => ‖(centralWeight k : ℂ) * centralWeight (k + s) * x ^ k‖) := by
-  apply Summable.of_nonneg_of_le (fun _ => norm_nonneg _)
-    (fun k => ?_) (summable_geometric_of_lt_one (norm_nonneg x) hx)
-  rw [norm_mul, norm_pow]
-  simpa using mul_le_mul_of_nonneg_right (central_coefficient_bound s k)
-    (pow_nonneg (norm_nonneg x) k)
-
 private lemma polynomial_series {a : ℕ → ℂ}
     (ha : ∀ n, ‖a n‖ ≤ (n + 1 : ℝ) ^ 2) {x : ℂ} (hx : ‖x‖ < 1) :
     HasDerivAt (fun w : ℂ => ∑' n : ℕ, a n * w ^ n)
@@ -143,52 +135,6 @@ private lemma period_ofReal (r : ℝ) : period (r : ℂ) = (F r : ℂ) := by
   change F r = L r 0 at h
   rw [h]
 
-private lemma source_series_summable (j : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
-    Summable (fun n : ℕ => ‖((n + 1 : ℂ) ^ j * z ^ (n + 1)) •
-      (lp.single 2 n (halfBinomial (n + 1) / (Real.sqrt (n + 1 : ℝ) : ℂ)) : H)‖) := by
-  obtain ⟨R, hzR, hR1⟩ := exists_between hz
-  have hR : 0 < R := lt_of_le_of_lt (norm_nonneg z) hzR
-  have hc (n : ℕ) :
-      ‖(lp.single 2 n (halfBinomial (n + 1) / (Real.sqrt (n + 1 : ℝ) : ℂ)) : H)‖ ≤ 1 := by
-    rw [lp.norm_single (by norm_num : (0 : ℝ≥0∞) < 2)]
-    simpa [sourceValue] using sourceValue_bound 1 n
-  apply Summable.of_nonneg_of_le (fun _ => norm_nonneg _) (fun n => ?_)
-    ((shifted_geometric hR hR1 j).mul_right R)
-  simp only [norm_smul, norm_mul, norm_pow, show ‖(n + 1 : ℂ)‖ = (n + 1 : ℝ) by
-    exact_mod_cast Complex.norm_natCast (n + 1)]
-  calc
-    _ ≤ (n + 1 : ℝ) ^ j * R ^ (n + 1) * 1 := by
-      gcongr
-      exact hc n
-    _ = _ := by rw [pow_succ]; ring
-
-lemma source_coordinate (j : ℕ) {z : ℂ} (hz : ‖z‖ < 1) (n : ℕ) :
-    sourceFamily j z n = (n + 1 : ℂ) ^ j * halfBinomial (n + 1) * z ^ (n + 1) /
-      (Real.sqrt (n + 1 : ℝ) : ℂ) := by
-  change (lp.evalCLM ℂ (fun _ : ℕ => ℂ) 2 n)
-    (∑' i : ℕ, ((i + 1 : ℂ) ^ j * z ^ (i + 1)) •
-      lp.single 2 i (halfBinomial (i + 1) / (Real.sqrt (i + 1 : ℝ) : ℂ))) = _
-  rw [(lp.evalCLM ℂ (fun _ : ℕ => ℂ) 2 n).map_tsum
-    (source_series_summable j hz).of_norm]
-  rw [tsum_eq_single n]
-  · change ((n + 1 : ℂ) ^ j * z ^ (n + 1)) *
-      lp.single (E := fun _ : ℕ => ℂ) 2 n
-        (halfBinomial (n + 1) / (Real.sqrt (n + 1 : ℝ) : ℂ)) n = _
-    rw [lp.single_apply_self]
-    ring
-  · intro i hi
-    change ((i + 1 : ℂ) ^ j * z ^ (i + 1)) *
-      lp.single (E := fun _ : ℕ => ℂ) 2 i
-        (halfBinomial (i + 1) / (Real.sqrt (i + 1 : ℝ) : ℂ)) n = 0
-    simp [lp.single_apply, hi]
-
-private lemma source_radial {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
-    sourceFamily 0 (Real.sqrt r : ℂ) = source r hr hr1 := by
-  ext n
-  rw [source_coordinate 0 (radial_norm_lt_one hr1)]
-  change _ = sourceValue r n
-  simp [sourceValue]
-
 private lemma norm_sq_lt_one {z : ℂ} (hz : ‖z‖ < 1) : ‖z ^ 2‖ < 1 := by
   rw [norm_pow]
   exact pow_lt_one₀ (norm_nonneg z) hz (by norm_num)
@@ -214,7 +160,7 @@ private lemma column_radial {t : ℝ} (ht : 0 < t) (ht1 : t < 1) (n : ℕ) :
   have hc : (t : ℂ) ^ 2 = ((t ^ 2 : ℝ) : ℂ) := by push_cast; rfl
   have he := resolvent_column (sq_pos_of_pos ht) hr1 n
   rw [hs] at he
-  have hsrc := source_radial (sq_nonneg t) hr1
+  have hsrc := sourceFamily_zero_eq_source (sq_nonneg t) hr1
   rw [hs] at hsrc
   rw [columnSeries, hsrc, he]
   simp only [explicitColumn, hc, central_ofReal, period_ofReal]
@@ -253,89 +199,29 @@ theorem columnSeries_entry_explicit_complex {z : ℂ} (hz : ‖z‖ < 1) (n : �
     (hright.analyticOnNhd Metric.isOpen_ball) isPreconnected_ball (by simp) hacc
     (by simpa using hz)
 
-private lemma source_derivative_frequency {z : ℂ} (hz : ‖z‖ < 1) :
-    z • sourceFamilyDerivative 0 z = sourceFamily 1 z := by
-  ext n
-  have hd := (lp.evalCLM ℂ (fun _ : ℕ => ℂ) 2 n).hasFDerivAt.comp_hasDerivAt z
-    (hasDerivAt_sourceFamily 0 hz)
-  have hc := (hasDerivAt_pow (n + 1) z).const_mul
-    (halfBinomial (n + 1) / (Real.sqrt (n + 1 : ℝ) : ℂ))
-  simp only [Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one] at hc
-  have he : HasDerivAt (fun w => sourceFamily 0 w n)
-      ((halfBinomial (n + 1) / (Real.sqrt (n + 1 : ℝ) : ℂ)) *
-        ((n + 1 : ℂ) * z ^ n)) z := by
-    apply hc.congr_of_eventuallyEq
-    filter_upwards [(isOpen_lt continuous_norm continuous_const).mem_nhds hz] with w hw
-    rw [source_coordinate 0 hw]
-    simp only [pow_zero, one_mul]
-    ring
-  have hv := hd.unique he
-  change z * sourceFamilyDerivative 0 z n = sourceFamily 1 z n
-  rw [source_coordinate 1 hz]
-  change sourceFamilyDerivative 0 z n = _ at hv
-  rw [hv]
-  simp only [pow_one, pow_succ]
-  ring
-
-private lemma source_weight_radial {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
-    sourceFamily 1 (Real.sqrt r : ℂ) = weightedSource r hr hr1 := by
-  ext n
-  rw [source_coordinate 1 (radial_norm_lt_one hr1)]
-  change _ = (n + 1 : ℂ) * sourceValue r n
-  simp only [pow_one, sourceValue]
-  ring
-
-private lemma bilinear_apply (v x : H) :
-    innerSL ℂ (star v) x = ∑' n : ℕ, v n * x n := by
-  rw [innerSL_apply_apply, lp.inner_eq_tsum]
-  apply tsum_congr
-  intro n
-  simp only [lp.star_apply, RCLike.inner_apply', ← RCLike.star_def, star_star]
-
 private lemma radial_column_derivative {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     (Real.sqrt r : ℂ) • columnSeriesDerivative (Real.sqrt r : ℂ) =
       (1 / ((Real.sqrt (1 - r) : ℂ) * (F r : ℂ))) •
         resolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) := by
-  let z : ℂ := Real.sqrt r
-  let v := weightedSource r hr.le hr1
-  let f := columnSeries z
-  let R := resolvent z
-  have hz0 : z ≠ 0 := by dsimp [z]; exact_mod_cast (Real.sqrt_pos.mpr hr).ne'
-  have hz2 : z ^ 2 = (r : ℂ) := by dsimp [z]; exact_mod_cast Real.sq_sqrt hr.le
-  have hrank := radial_operator_derivative_rankOne hr hr1
-  change (r : ℂ) • (((1 / (2 * Real.sqrt r) : ℝ) : ℂ) • operatorDerivative z) =
-    (1 / 2 : ℂ) • (innerSL ℂ (star v)).smulRight v at hrank
-  have hscaled : z • operatorDerivative z = (innerSL ℂ (star v)).smulRight v := by
-    have h := congrArg (fun A : H →L[ℂ] H => (2 : ℂ) • A) hrank
-    simp only [smul_smul] at h
-    have hcoef : (2 : ℂ) * ((r : ℂ) * ((1 / (2 * Real.sqrt r) : ℝ) : ℂ)) = z := by
-      push_cast
-      change 2 * ((r : ℂ) * (1 / (2 * z))) = z
-      rw [← hz2]
-      field_simp [hz0]
-      <;> ring
-    norm_num only [show (2 : ℂ) * (1 / 2) = 1 by norm_num, one_smul] at h
-    rwa [hcoef] at h
-  have hA : z • operatorDerivative z f = (innerSL ℂ (star v) f) • v :=
-    congrArg (fun A : H →L[ℂ] H => A f) hscaled
-  have hv : z • sourceFamilyDerivative 0 z = v := by
-    rw [source_derivative_frequency (radial_norm_lt_one hr1)]
-    exact source_weight_radial hr.le hr1
-  have hc : 1 + innerSL ℂ (star v) f =
-      1 / ((Real.sqrt (1 - r) : ℂ) * (F r : ℂ)) := by
-    rw [bilinear_apply]
-    dsimp only [f, columnSeries, z, v]
-    rw [source_radial hr.le hr1]
-    exact (bilinear_resolvent_scalar hr hr1).2
-  calc
-    _ = R (z • operatorDerivative z f + z • sourceFamilyDerivative 0 z) := by
-      change z • ((R * operatorDerivative z * R) (sourceFamily 0 z) +
-        R (sourceFamilyDerivative 0 z)) = _
-      simp only [mul_apply_eq_comp, map_add, map_smul, smul_add]
-      rfl
-    _ = R ((1 + innerSL ℂ (star v) f) • v) := by
-      rw [hA, hv, add_smul, one_smul, add_comm]
-    _ = _ := by rw [hc, map_smul]
+  have h := congrArg (fun x : H => (2 : ℂ) • x)
+    (radial_column_derivative_scaled hr hr1)
+  simp only [radialColumnDerivative, smul_smul] at h
+  have hz : (Real.sqrt r : ℂ) ≠ 0 := by
+    exact_mod_cast (Real.sqrt_pos.mpr hr).ne'
+  have hs : (Real.sqrt r : ℂ) ^ 2 = (r : ℂ) := by
+    exact_mod_cast Real.sq_sqrt hr.le
+  have hcoef : (2 : ℂ) * ((r : ℂ) * ((1 / (2 * Real.sqrt r) : ℝ) : ℂ)) =
+      (Real.sqrt r : ℂ) := by
+    push_cast
+    rw [← hs]
+    field_simp [hz]
+    <;> ring
+  rw [hcoef] at h
+  convert h using 1
+  congr 1
+  simp only [radialNormalization]
+  push_cast
+  ring
 
 private lemma column_derivative_jet {z : ℂ} (hz : ‖z‖ < 1) (n : ℕ) :
     z * columnSeriesDerivative z n =
