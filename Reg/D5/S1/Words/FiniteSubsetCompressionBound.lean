@@ -125,7 +125,7 @@ noncomputable def audit : Contract.Registration
   escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Words.FiniteSubsetCompressionBound, definition := none,
-    coordinates := #[0, 1, 2, 3, 4],
+    coordinates := #[0, 1, 3, 4],
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body"],
       stateBinder := 5, functionOperand := false, stateOperand := none,
