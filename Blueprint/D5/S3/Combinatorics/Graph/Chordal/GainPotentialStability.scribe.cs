@@ -67,9 +67,13 @@ internal sealed class GainPotentialStabilityDocument : IScribeDocumentDefinition
         result = All("epsilon", Call("Real"), Imp(Le(D(0), eps), result));
         result = All("g", new Formula.TypeArrow(v, new Formula.TypeArrow(v, h)), result);
         result = All("G", Call("SimpleGraph", v), Imp(Call("IsChordal", graph), result));
-        result = Imp(Call("Finite", v), Imp(Call("Group", h),
-            Imp(Call("PseudoMetricSpace", h), Imp(Call("IsIsometricSMul", h, h),
-                Imp(Call("IsIsometricSMul", Call("MulOpposite", h), h), result)))));
+        result = Seq(
+            OpenBracket, Call("Finite", v), CloseBracket, Sp,
+            OpenBracket, Call("Group", h), CloseBracket, Sp,
+            OpenBracket, Call("PseudoMetricSpace", h), CloseBracket, Sp,
+            OpenBracket, Call("IsIsometricSMul", h, h), CloseBracket, Sp,
+            OpenBracket, Call("IsIsometricSMul", Call("MulOpposite", h), h),
+                CloseBracket, Comma, Sp, result);
         result = All("V", Call("Type", F.Id("u")), All("H", Call("Type", F.Id("v")), result));
         return All("u", Call("Universe"), All("v", Call("Universe"), result));
     }
