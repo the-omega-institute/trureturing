@@ -249,13 +249,29 @@ the return cancels its phase. It holds on all sixteen columns with
 arbitrary dirty or entangled operands. The last seven hops of (VIII.4)
 are its legal full inverse, not a returned clean-standard macro.
 
-After either $R_j$, the occupation $N$ equals the occupation of the
-original $o,m,y$ bank. For $R_1$, the old $m$ bit moves to $u$;
-for $R_2$, the old $m$ bit also moves to $u$, while the old $u$ bit
-moves to $d$ and old $d$ to $m$. Thus on every original $B$ column
-the echo is identity, irrespective of the resource routing phases.
-The inverse route cancels them exactly. Both $U_j$ are identity on
-those whole columns, $w$ stays vacuum and both reads yield $0$.
+For the original $B$ columns, resolve the two resource ket components
+and apply the literal routes. In the following table $|p,q\rangle$
+denotes the physical bit vector with exactly $p,q$ occupied and every
+other bank factor vacuum; the table entries include the routing phases.
+
+| Original column | Resource component | After $R_1$ | After $R_2$ |
+| --- | --- | --- | --- |
+| $o$ | $|10\rangle_{ud}$ | $i|o,m\rangle$ | $i|o,d\rangle$ |
+| $o$ | $|01\rangle_{ud}$ | $|o,d\rangle$ | $-|o,m\rangle$ |
+| $m$ | $|10\rangle_{ud}$ | $|m,u\rangle$ | $-|u,d\rangle$ |
+| $m$ | $|01\rangle_{ud}$ | $i|u,d\rangle$ | $i|m,u\rangle$ |
+| $y$ | $|10\rangle_{ud}$ | $i|m,y\rangle$ | $i|y,d\rangle$ |
+| $y$ | $|01\rangle_{ud}$ | $|y,d\rangle$ | $-|m,y\rangle$ |
+
+Every entry has $N=1$: in the $m$ rows exactly $u$ is occupied
+among $u,o,y$, and in the $o$ or $y$ rows exactly that original
+site is occupied among them. Equation (VIII.8) therefore fixes all
+twelve routed vectors for every $c\in(0,1)$. The actual inverse route
+cancels each displayed phase. By linearity both $U_j$ fix the whole
+supported $B$ space tensored with the span of these two resource
+components, including their coherent superpositions. In particular they
+fix every original $B$ column with the same $\eta$, $w$ stays vacuum
+and both reads yield $0$.
 
 For the original $r$ column keep its isolated excitation implicit and
 write $|u\rangle,|d\rangle,|m\rangle,|w\rangle$ for the work-bank
@@ -295,8 +311,9 @@ $$
 
 Expand $\rho_{HR}=\sum_{x,y}|x\rangle\langle y|\otimes\rho_{xy}$.
 Tensor identity on $R$ and use (VIII.11). This proves the joint-state
-claim without restricting $R$, assuming diagonal inputs or normalizing
-individual blocks. At each actual classical backing fibre, all untouched
+claim for every $\rho_{HR}$ and arbitrary $R$, with no assumption of
+diagonal input and no normalization of the individual blocks $\rho_{xy}$.
+At each actual classical backing fibre, all untouched
 conditional quantum backing, preparation and delivery systems are retained
 with the primitive's declared action. Append that leaf's own full record;
 then average over the actual joint backing law. No extra independence
