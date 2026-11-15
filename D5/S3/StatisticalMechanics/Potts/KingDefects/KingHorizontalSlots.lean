@@ -383,16 +383,9 @@ theorem word_support_empty {n : ℕ} (u : Fin n → Bool) :
 
 theorem word_support_singleton {n : ℕ} (hn : 0 < n) (u : Fin n → Bool) (b : Bool) :
     word_support u = {b} ↔ u = (fun _ => b) := by
-  constructor
-  · intro h
-    funext i
-    have hm : u i ∈ word_support u := Finset.mem_image_of_mem _ (Finset.mem_univ _)
-    rw [h] at hm
-    exact Finset.mem_singleton.mp hm
-  · intro h
-    subst u
-    let _ : Nonempty (Fin n) := ⟨⟨0,hn⟩⟩
-    exact Finset.image_const ⟨⟨0,hn⟩,Finset.mem_univ _⟩ b
+  letI : Nonempty (Fin n) := ⟨⟨0,hn⟩⟩
+  rw [← Finset.coe_inj]
+  simpa [word_support, funext_iff] using (Set.range_eq_singleton_iff (f := u) (y := b))
 
 theorem word_support_full {n : ℕ} (hn : 0 < n) (u : Fin n → Bool) :
     word_support u = Finset.univ ↔

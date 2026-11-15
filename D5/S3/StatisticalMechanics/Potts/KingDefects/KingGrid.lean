@@ -53,6 +53,7 @@ import D5.S3.Topology.QuandleMarkovColoring
 import Mathlib.Tactic.DeriveFintype
 import Mathlib.Data.Fin.Rev
 import Mathlib.Logic.Equiv.Prod
+import Mathlib.GroupTheory.Perm.Support
 
 /-! Literal edges, restricted-growth words and their finite families. -/
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
@@ -279,26 +280,30 @@ private def UsesThree {X : Type*} (f : X → Fin 4) : Prop :=
 
 private theorem perm_ext_three {X : Type*} (f : X → Fin 4) (hf : UsesThree f)
     (p q : Equiv.Perm (Fin 4)) (h : p ∘ f = q ∘ f) : p = q := by
+  classical
   obtain ⟨a,b,c,hab,hac,hbc⟩ := hf
-  have he (t : X) : p (f t) = q (f t) := congrFun h t
-  apply Equiv.ext
-  intro x
-  by_cases ha : x = f a
-  · simpa [ha] using he a
-  by_cases hb : x = f b
-  · simpa [hb] using he b
-  by_cases hc : x = f c
-  · simpa [hc] using he c
-  by_contra hn
-  have hcard : ({p (f a),p (f b),p (f c),p x,q x} : Finset (Fin 4)).card ≤ 4 := by
-    simpa using (Finset.card_le_card
-      (Finset.subset_univ ({p (f a),p (f b),p (f c),p x,q x} : Finset (Fin 4))))
-  have hpa : p (f a) ≠ q x := by rw [he a]; exact q.injective.ne (Ne.symm ha)
-  have hpb : p (f b) ≠ q x := by rw [he b]; exact q.injective.ne (Ne.symm hb)
-  have hpc : p (f c) ≠ q x := by rw [he c]; exact q.injective.ne (Ne.symm hc)
-  simp [Finset.card_insert_of_notMem, p.injective.ne hab, p.injective.ne hac,
-    p.injective.ne hbc, p.injective.ne (Ne.symm ha), p.injective.ne (Ne.symm hb),
-    p.injective.ne (Ne.symm hc), hpa, hpb, hpc, hn] at hcard
+  have fixed (t : X) : (q⁻¹ * p) (f t) = f t := by
+    change q.symm (p (f t)) = f t
+    have ht : p (f t) = q (f t) := congrFun h t
+    rw [ht, q.symm_apply_apply]
+  have hs : ({f a, f b, f c} : Finset (Fin 4)) ⊆
+      Finset.univ.filter (fun x => (q⁻¹ * p) x = x) := by
+    intro x hx
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hx
+    rcases hx with rfl | rfl | rfl
+    · exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, fixed a⟩
+    · exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, fixed b⟩
+    · exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, fixed c⟩
+  have hc : 3 ≤ (Finset.univ.filter (fun x => (q⁻¹ * p) x = x)).card := by
+    calc
+      3 = ({f a, f b, f c} : Finset (Fin 4)).card := by simp [hab,hac,hbc]
+      _ ≤ _ := Finset.card_le_card hs
+  have he : q⁻¹ * p = 1 := by
+    by_contra hn
+    have hh := Equiv.Perm.fixed_point_card_lt_of_ne_one hn
+    norm_num only [Fintype.card_fin] at hh
+    omega
+  exact (inv_mul_eq_one.mp he).symm
 
 private theorem canonical_count_three {X : Type*} [Finite X] [LinearOrder X]
     (S : (X → Fin 4) → Prop)
