@@ -194,7 +194,7 @@ private theorem source_prime_support (n : ℕ) (hn : 0 < n) :
   · intro h p hp hpn hz
     apply h p hp
     rw [C_dvd_iff_zmod, source_Q n hn, Q_map]
-    simp only [map_natCast] 
+    simp only [map_natCast]
     rw [(ZMod.natCast_eq_zero_iff n p).mpr hpn, Q_reduce p n hn hp.pos hpn]
     exact hz
   · intro h p hp hc
