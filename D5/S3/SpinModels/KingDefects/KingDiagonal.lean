@@ -191,8 +191,7 @@ private theorem extract_slotField {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
   cases w
   simp only [extractSlots, slotField, lt_self_iff_false, dite_false, Fin.val_castSucc,
     le_refl, ite_true, Fin.val_succ, Nat.add_one_le_iff, ite_false]
-  congr 1 <;> funext i <;> simp [i.property, not_lt_of_ge (le_of_lt i.property),
-    not_lt_of_ge (le_of_lt i.property)]
+  congr 1 <;> funext i <;> simp [i.property, not_lt_of_ge (le_of_lt i.property)]
 
 private theorem extract_valid {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M)
     (s : DiffField N M) (hs : RawAdmissible (.D i₀ j₀) s) :
@@ -205,27 +204,31 @@ private theorem extract_valid {N M : ℕ} (i₀ : Fin N) (j₀ : Fin M)
     have h := good i.val j₀ (Or.inl (ne_of_lt i.property))
     rw [raw_h_special i₀ j₀ s hs i.val.castSucc,
       raw_v_ordinary i₀ j₀ s hs i.val (ne_of_lt i.property) j₀.castSucc] at h
-    simp only [Fin.val_castSucc, ite_eq_left (show i.val.val ≤ i₀.val from Nat.le_of_lt i.property)] at h
+    have hi : i.val.val ≤ i₀.val := Nat.le_of_lt i.property
+    simp only [Fin.val_castSucc, ite_eq_left hi] at h
     exact (klein_alphabet _ _ _ hx hy hxy).mp ⟨h.2.2.2.1, h.2.2.2.2.symm⟩
   · intro i
     have h := good i.val j₀ (Or.inl (ne_of_gt i.property))
     rw [raw_h_special i₀ j₀ s hs i.val.castSucc,
       raw_v_ordinary i₀ j₀ s hs i.val (ne_of_gt i.property) j₀.castSucc] at h
-    simp only [Fin.val_castSucc, ite_eq_right (show ¬ i.val.val ≤ i₀.val from Nat.not_le_of_lt i.property)] at h
+    have hi : ¬ i.val.val ≤ i₀.val := Nat.not_le_of_lt i.property
+    simp only [Fin.val_castSucc, ite_eq_right hi] at h
     simpa only [extractSlots, add_comm] using
       (klein_alphabet _ _ _ hy hx hxy.symm).mp ⟨h.2.2.2.1, h.2.2.2.2.symm⟩
   · intro j
     have h := good i₀ j.val (Or.inr (ne_of_lt j.property))
     rw [raw_h_ordinary i₀ j₀ s hs j.val (ne_of_lt j.property) i₀.castSucc,
       raw_v_special i₀ j₀ s hs j.val.castSucc] at h
-    simp only [Fin.val_castSucc, ite_eq_left (show j.val.val ≤ j₀.val from Nat.le_of_lt j.property), hl] at h
+    have hj : j.val.val ≤ j₀.val := Nat.le_of_lt j.property
+    simp only [Fin.val_castSucc, ite_eq_left hj, hl] at h
     simpa only [extractSlots, add_comm] using
       (klein_alphabet _ _ _ hy hx hxy.symm).mp ⟨h.2.2.1, h.2.2.2.2⟩
   · intro j
     have h := good i₀ j.val (Or.inr (ne_of_gt j.property))
     rw [raw_h_ordinary i₀ j₀ s hs j.val (ne_of_gt j.property) i₀.castSucc,
       raw_v_special i₀ j₀ s hs j.val.castSucc] at h
-    simp only [Fin.val_castSucc, ite_eq_right (show ¬ j.val.val ≤ j₀.val from Nat.not_le_of_lt j.property), hr] at h
+    have hj : ¬ j.val.val ≤ j₀.val := Nat.not_le_of_lt j.property
+    simp only [Fin.val_castSucc, ite_eq_right hj, hr] at h
     exact (klein_alphabet _ _ _ hx hy hxy).mp ⟨h.2.2.1, h.2.2.2.2⟩
   all_goals
     intro i j
@@ -296,10 +299,22 @@ private theorem slot_raw {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
     (w : DiagonalSlots i₀ j₀) (hw : SlotValid w) :
     RawAdmissible (.D i₀ j₀) (slotField w) := by
   have hz : w.x + w.y ≠ 0 := mt (klein_zero _ _).mp hw.2.2.1
-  have hnU (i) : w.U i ≠ 0 := by rcases hw.2.2.2.1 i with h | h <;> rw [h]; exact hw.2.1; exact hz
-  have hnV (i) : w.V i ≠ 0 := by rcases hw.2.2.2.2.1 i with h | h <;> rw [h]; exact hw.1; exact hz
-  have hnC (j) : w.C j ≠ 0 := by rcases hw.2.2.2.2.2.1 j with h | h <;> rw [h]; exact hw.1; exact hz
-  have hnD (j) : w.D j ≠ 0 := by rcases hw.2.2.2.2.2.2.1 j with h | h <;> rw [h]; exact hw.2.1; exact hz
+  have hnU (i) : w.U i ≠ 0 := by
+    rcases hw.2.2.2.1 i with h | h
+    · rw [h]; exact hw.2.1
+    · rw [h]; exact hz
+  have hnV (i) : w.V i ≠ 0 := by
+    rcases hw.2.2.2.2.1 i with h | h
+    · rw [h]; exact hw.1
+    · rw [h]; exact hz
+  have hnC (j) : w.C j ≠ 0 := by
+    rcases hw.2.2.2.2.2.1 j with h | h
+    · rw [h]; exact hw.1
+    · rw [h]; exact hz
+  have hnD (j) : w.D j ≠ 0 := by
+    rcases hw.2.2.2.2.2.2.1 j with h | h
+    · rw [h]; exact hw.2.1
+    · rw [h]; exact hz
   have hs := slot_special w
   have self (x : K) : x + x = 0 := IsAddKleinFour.add_self x
   constructor
@@ -503,11 +518,11 @@ private theorem intersection_card (A B C D : Type) [Fintype A] [Fintype B]
       · rintro ⟨a⟩ ⟨d⟩
         have hh := hL (.inr (.inr (.inr d)))
         have hh' : f (.inr (.inr (.inr d))) = true := hh ⟨a⟩
-        simpa [hf] using hh'
+        simp [hf] at hh'
       · rintro ⟨b⟩ ⟨c⟩
         have hh := hL (.inr (.inr (.inl c)))
         have hh' : f (.inr (.inr (.inl c))) = true := hh ⟨b⟩
-        simpa [hf] using hh'
+        simp [hf] at hh'
     · rintro ⟨rfl,hAD,hBC⟩
       constructor <;> intro i <;> rcases i with a | b | c | d
       all_goals dsimp [leftRule, rightRule]
@@ -519,11 +534,11 @@ private theorem intersection_card (A B C D : Type) [Fintype A] [Fintype B]
   by_cases h : (Nonempty A → ¬ Nonempty D) ∧ (Nonempty B → ¬ Nonempty C)
   · have hp : ((Nonempty A → ¬ Nonempty D) ∧ (Nonempty B → ¬ Nonempty C)) = True :=
       propext (iff_true_intro h)
-    rw [hp]
+    simp only [hp, and_true, and_false, ite_true, ite_false]
     simp [Nat.card_eq_fintype_card]
   · have hp : ((Nonempty A → ¬ Nonempty D) ∧ (Nonempty B → ¬ Nonempty C)) = False :=
       propext (iff_false_intro h)
-    rw [hp]
+    simp only [hp, and_true, and_false, ite_true, ite_false]
     simp [Nat.card_eq_fintype_card]
 
 private theorem card_or_add_inter {I : Type} [Fintype I] (p q : I → Prop) :
@@ -614,11 +629,11 @@ private theorem normalized_valid {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
   have ac (u c : Bool) :
       ((if u then p.val.1 + p.val.2 else p.val.2) ≠
         (if c then p.val.1 + p.val.2 else p.val.1)) ↔ u = false ∨ c = false := by
-    cases u <;> cases c <;> simp [hxy, hxy.symm, hzx, hzx.symm, hzy, hzy.symm]
+    cases u <;> cases c <;> simp [hxy.symm, hzx, hzy.symm]
   have bd (v d : Bool) :
       ((if v then p.val.1 + p.val.2 else p.val.1) ≠
         (if d then p.val.1 + p.val.2 else p.val.2)) ↔ v = false ∨ d = false := by
-    cases v <;> cases d <;> simp [hxy, hxy.symm, hzx, hzx.symm, hzy, hzy.symm]
+    cases v <;> cases d <;> simp [hxy, hzx.symm, hzy]
   have ad (u d : Bool) :
       ((if u then p.val.1 + p.val.2 else p.val.2) ≠
         (if d then p.val.1 + p.val.2 else p.val.2)) ↔ u ≠ d := by
@@ -651,9 +666,9 @@ private theorem normalized_recover {N M : ℕ} {i₀ : Fin N} {j₀ : Fin M}
       (if decide (t = z) then z else x) = t := by
     simp only [decide_eq_true_eq]
     by_cases h : t = z
-    · rw [if_pos h]
+    · rw [ite_eq_left h]
       exact h.symm
-    · rw [if_neg h]
+    · rw [ite_eq_right h]
       exact (ht.resolve_right h).symm
   apply DiagonalSlots.ext
   · rfl
@@ -767,7 +782,6 @@ private theorem sum_A (n M : ℕ) :
     all_goals simp only [Fin.ext_iff, Fin.val_zero, Fin.val_last] at h0 h1
     all_goals simp [Aterm, h0, h1, Fin.ext_iff, show n + 2 - 1 = n + 1 by omega,
       show (n + 1 - i.val = 0 ↔ i.val = n + 1) by omega]
-    all_goals first | omega | ring
   simp_rw [hterm]
   rw [Finset.sum_comm]
   simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
@@ -826,9 +840,8 @@ theorem N_D_closed (N M : ℕ) (hN : 2 ≤ N) (hM : 2 ≤ M) :
   simp only [N_D]
   simp_rw [diagonal_count]
   push_cast
-  simp only [Nat.add_sub_cancel, Finset.mul_sum, ← Finset.mul_sum]
+  simp only [← Finset.mul_sum]
   rw [sum_F]
-  push_cast
   ring
 
 /-- A two-row rectangle has no ordinary vertical slots. -/
@@ -837,7 +850,7 @@ theorem N_D_two_rows (M : ℕ) : N_D 1 M = 6 * (M * 2^(M-1)) := by
   simp only [Fin.sum_univ_one]
   have point (j : Fin M) : N_e (.D (0 : Fin 1) j : Edge 2 (M+1)) = 6*2^(M-1) := by
     rw [diagonal_count, F_piecewise]
-    simp only [Fin.val_zero, Nat.sub_self, Nat.zero_sub, Nat.zero_add, ite_true]
+    simp only [Fin.val_zero, Nat.sub_self, Nat.zero_add, ite_true]
     congr 2
     have hj := j.isLt
     omega
