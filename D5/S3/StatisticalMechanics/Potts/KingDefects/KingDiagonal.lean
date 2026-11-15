@@ -7,7 +7,7 @@
    digest: Diagonal-defect slot classification and exact counts on king rectangles. -/
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
-escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229572.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
 klein_zero: proof_shape=bind-only; consumers=KingDiagonal.slot_raw,KingDiagonal.special_block
 klein_alphabet: proof_shape=bind-only; consumers=KingDiagonal.extract_valid,KingDiagonal.slot_good
 DiagonalSlots: proof_shape=bind-only; consumers=KingDiagonal.SlotValid,KingDiagonal.diagonalSlotEquiv,KingDiagonal.diagonal_count,KingDiagonal.extractSlots,KingDiagonal.extract_slotField,KingDiagonal.extract_valid,KingDiagonal.normalizedEquiv,KingDiagonal.normalizedSlots,KingDiagonal.normalized_recover,KingDiagonal.normalized_valid,KingDiagonal.slotField,KingDiagonal.slot_good,KingDiagonal.slot_raw,KingDiagonal.slot_special,KingDiagonal.slotsWord,KingDiagonal.word_recover

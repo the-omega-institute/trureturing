@@ -11,7 +11,7 @@ escape_witness: none (consumed bind-only helpers of the settlement on the live p
 result: proof_shape=bind-only; consumers=none (registered settlement result)
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
-import D5.S3.StatisticalMechanics.Potts.KingDefects.HardinA229572
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingClosedForm
 import D5.S3.StatisticalMechanics.Potts.KingDefects.HardinA229573
 import D5.S3.StatisticalMechanics.Potts.KingDefects.HardinA229574
 import D5.S3.StatisticalMechanics.Potts.KingDefects.HardinA229575
@@ -42,8 +42,17 @@ theorem result :
     (∀ n : ℕ, 7 < n → (KingGrid.T n 7 : ℤ) =
       6*(KingGrid.T (n-1) 7 : ℤ)-13*(KingGrid.T (n-2) 7 : ℤ)+
         12*(KingGrid.T (n-3) 7 : ℤ)-4*(KingGrid.T (n-4) 7 : ℤ)) := by
-  refine ⟨?_,HardinA229572.result.1,HardinA229573.result,HardinA229574.result,
+  refine ⟨?_,?_,HardinA229573.result,HardinA229574.result,
     HardinA229575.result,HardinA229576.result,HardinA229577.result⟩
+  swap
+  · intro n hn
+    obtain ⟨m,rfl⟩ : ∃ m, n=m+4 := ⟨n-4,by omega⟩
+    have h0 := KingClosedForm.width_two (m+4) (by omega)
+    have h1 := KingClosedForm.width_two (m+3) (by omega)
+    have h2 := KingClosedForm.width_two (m+2) (by omega)
+    push_cast at h0 h1 h2 ⊢
+    norm_num [pow_succ] at h0 h1 h2 ⊢
+    linear_combination h0-4*h1+4*h2
   intro n hn
   obtain ⟨m,rfl⟩ : ∃ m, n=m+7 := ⟨n-7,by omega⟩
   have h0 := KingPath.width_one_large (m+7) (by omega)

@@ -7,7 +7,7 @@
    digest: Interior counts and horizontal orientation sums. -/
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
-escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229572.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
 interior_count_support: proof_shape=bind-only; consumers=KingHorizontal.interior_count
 supports: proof_shape=bind-only; consumers=KingHorizontal.pair_support_cases,KingHorizontal.support_case_count,KingHorizontal.support_case_eval,KingHorizontal.support_sizes_correct,KingHorizontal.supports_equiv
 supports_equiv: proof_shape=bind-only; consumers=KingHorizontal.pair_support_cases

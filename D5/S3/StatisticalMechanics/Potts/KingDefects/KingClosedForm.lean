@@ -7,7 +7,7 @@
    digest: Closed counts of one-defect king colourings in arbitrary dimensions. -/
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
-escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229572.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
 normal_exists_unique: proof_shape=bind-only; consumers=KingClosedForm.normal_unique,KingClosedForm.normalize,KingClosedForm.normalize_spec
 normalize: proof_shape=bind-only; consumers=KingClosedForm.canonical_transpose,KingClosedForm.canonical_transpose_twice,KingClosedForm.normalize_spec
 normalize_spec: proof_shape=bind-only; consumers=KingClosedForm.canonical_transpose,KingClosedForm.canonical_transpose_twice
@@ -17,7 +17,7 @@ canonical_transpose: proof_shape=bind-only; consumers=KingClosedForm.canonical_t
 canonical_transpose_twice: proof_shape=bind-only; consumers=KingClosedForm.symmetry
 symmetry: proof_shape=bind-only; consumers=KingClosedForm.width_three
 closed_form: proof_shape=bind-only; consumers=HardinA229574.result,HardinA229575.result,HardinA229576.result,HardinA229577.result,KingClosedForm.diagonal_closed
-width_two: proof_shape=bind-only; consumers=HardinA229572.result,KingClosedForm.width_three
+width_two: proof_shape=bind-only; consumers=HardinA229578.result,KingClosedForm.width_three
 width_three: proof_shape=bind-only; consumers=HardinA229573.result,KingClosedForm.diagonal_closed
 diagonal_closed: proof_shape=bind-only; consumers=HardinA229571.result
 -/

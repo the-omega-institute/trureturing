@@ -7,7 +7,7 @@
    digest: Interior slot equivalences and alphabet/support encodings. -/
 /-
 admission_basis: open-problem-resolution (#30641; Proved)
-escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229572.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229571.result, HardinA229573.result, HardinA229574.result, HardinA229575.result, HardinA229576.result, HardinA229577.result, HardinA229578.result)
 InteriorSlots: proof_shape=bind-only; consumers=KingHorizontal.cut_slots_equiv,KingHorizontal.interiorDecode,KingHorizontal.interiorEncode,KingHorizontal.interiorEncode_decode,KingHorizontal.interior_code_equiv,KingHorizontal.interior_count_alphabets,KingHorizontal.interior_one_column_count,KingHorizontal.interior_slot_equiv
 boundary_top_shared: proof_shape=bind-only; consumers=KingHorizontal.boundary_bottom_shared,KingHorizontal.cut_slots_equiv
 boundary_bottom_shared: proof_shape=bind-only; consumers=KingHorizontal.cut_slots_equiv

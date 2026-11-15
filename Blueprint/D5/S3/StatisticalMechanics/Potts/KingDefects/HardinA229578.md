@@ -21,10 +21,10 @@ The seven conjuncts concern columns one through seven, in that order. Each retai
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229578.result`
-- Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229572](HardinA229572.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229573](HardinA229573.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229574](HardinA229574.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229575](HardinA229575.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229576](HardinA229576.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229577](HardinA229577.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingClosedForm](KingClosedForm.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingPath](KingPath.md)
