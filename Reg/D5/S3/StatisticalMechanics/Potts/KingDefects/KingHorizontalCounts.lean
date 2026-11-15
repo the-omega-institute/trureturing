@@ -46,6 +46,7 @@ def family : Registration arena (type_of% @interior_count) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -114,6 +115,7 @@ def family : Registration arena (type_of% @horizontal_two_rows) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -182,6 +184,7 @@ def family : Registration arena (type_of% @boundary_one_column) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -250,6 +253,7 @@ def family : Registration arena (type_of% @boundary_slots_one_column) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -319,6 +323,7 @@ def family : Registration arena (type_of% @interior_one_column_count) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (36 * (0 : ℕ)) ≠ (36 * (1 : ℕ))
     norm_num
@@ -387,6 +392,7 @@ def family : Registration arena (type_of% @horizontal_two_columns) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -455,6 +461,7 @@ def family : Registration arena (type_of% @interior_three_rows_count) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -523,6 +530,7 @@ def family : Registration arena (type_of% @sum_two_powers) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (2 ^ (0 : ℕ)) ≠ (2 ^ (1 : ℕ))
     norm_num
@@ -591,6 +599,7 @@ def family : Registration arena (type_of% @sum_two_powers_reverse) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (2 ^ (0 : ℕ)) ≠ (2 ^ (1 : ℕ))
     norm_num
@@ -659,6 +668,7 @@ def family : Registration arena (type_of% @horizontal_three_rows) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -729,6 +739,7 @@ def family : Registration arena (type_of% @interior_row_sum) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -798,6 +809,7 @@ def family : Registration arena (type_of% @boundary_row_sum) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -866,6 +878,7 @@ def family : Registration arena (type_of% @horizontal_sum) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -939,6 +952,7 @@ def family : Registration arena (type_of% @support_sizes_correct) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), PEmpty, PUnit, ?_⟩
     change Nat.card PEmpty ≠ Nat.card PUnit
     simp [Nat.card_eq_fintype_card]

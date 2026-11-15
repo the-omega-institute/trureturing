@@ -45,6 +45,7 @@ def family : Registration arena (type_of% @interior_endpoint_value) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (2 ^ (0 : ℕ)) ≠ (2 ^ (1 : ℕ))
     norm_num
@@ -115,6 +116,7 @@ def family : Registration arena (type_of% @interior_middle_value) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (2 ^ (0 : ℕ)) ≠ (2 ^ (1 : ℕ))
     norm_num
@@ -183,6 +185,7 @@ def family : Registration arena (type_of% @lower_pair_valid) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨⟨((1, 0), (0, 1)), by decide +kernel⟩, 0, 1, ?_⟩
     decide +kernel
 
@@ -251,6 +254,7 @@ def family : Registration arena (type_of% @support_case_eval) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨⟨1, 1, 1, 1⟩, 0, 1, ?_⟩
     change six_case_value 1 1 1 1 0 ≠ six_case_value 1 1 1 1 1
     decide +kernel
@@ -320,6 +324,7 @@ def family : Registration arena (type_of% @pair_support_cases) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨⟨1, 1, 1, 1⟩, 0, 1, ?_⟩
     change support_case_count 1 1 1 1 0 ≠ support_case_count 1 1 1 1 1
     rw [support_case_eval, support_case_eval]
@@ -395,6 +400,7 @@ def family : Registration arena (type_of% @interior_six_lower_pairs) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨⟨1, 1, 1, 1⟩, 0, 1, ?_⟩
     change six_case_value 1 1 1 1 0 ≠ six_case_value 1 1 1 1 1
     decide +kernel
@@ -469,6 +475,7 @@ def family : Registration arena (type_of% @interior_count_support) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     let x : NZPair := ⟨((1, 0), (0, 1)), by decide +kernel⟩
     refine ⟨⟨1, 1, 1, 1, x⟩, lower_pair x 0, lower_pair x 1, ?_⟩
     change pair_support_count 1 1 1 1 x (lower_pair x 0) ≠

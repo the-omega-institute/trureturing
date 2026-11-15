@@ -44,6 +44,7 @@ def family : Registration arena (type_of% @boundary_words_zero_card) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (2 ^ (0 : ℕ)) ≠ (2 ^ (1 : ℕ))
     norm_num
@@ -111,6 +112,7 @@ def family : Registration arena (type_of% @nz_pair_card) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), PEmpty, PUnit, ?_⟩
     change Nat.card PEmpty ≠ Nat.card PUnit
     simp [Nat.card_eq_fintype_card]
@@ -179,6 +181,7 @@ def family : Registration arena (type_of% @boundary_count_zero) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -247,6 +250,7 @@ def family : Registration arena (type_of% @boundary_count_pos) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -315,6 +319,7 @@ def family : Registration arena (type_of% @boundary_count) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -383,6 +388,7 @@ def family : Registration arena (type_of% @boundary_words_pos_card) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), PEmpty, PUnit, ?_⟩
     change Nat.card PEmpty ≠ Nat.card PUnit
     simp [Nat.card_eq_fintype_card]
@@ -451,6 +457,7 @@ def family : Registration arena (type_of% @boundary_count_at) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -520,6 +527,7 @@ def family : Registration arena (type_of% @boundary_rows_count) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num

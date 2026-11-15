@@ -45,6 +45,7 @@ def family : Registration arena (type_of% @N_D_closed) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (((0 : ℕ) : ℤ)) ≠ (((1 : ℕ) : ℤ))
     norm_num
@@ -113,6 +114,7 @@ def family : Registration arena (type_of% @N_D_two_columns) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num

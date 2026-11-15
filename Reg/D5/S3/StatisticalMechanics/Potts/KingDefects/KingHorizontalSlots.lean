@@ -49,6 +49,7 @@ def family : Registration arena (type_of% @support_alphabet_card) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), PEmpty, PUnit, ?_⟩
     change Nat.card PEmpty ≠ Nat.card PUnit
     simp [Nat.card_eq_fintype_card]
@@ -118,6 +119,7 @@ def family : Registration arena (type_of% @word_support_empty) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨1, (fun _ => false), (fun _ => true), ?_⟩
     change word_support (fun _ : Fin 1 => false) ≠ word_support (fun _ : Fin 1 => true)
     decide +kernel
@@ -187,6 +189,7 @@ def family : Registration arena (type_of% @word_support_singleton) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨1, (fun _ => false), (fun _ => true), ?_⟩
     change word_support (fun _ : Fin 1 => false) ≠ word_support (fun _ : Fin 1 => true)
     decide +kernel
@@ -255,6 +258,7 @@ def family : Registration arena (type_of% @word_support_full) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨1, (fun _ => false), (fun _ => true), ?_⟩
     change word_support (fun _ : Fin 1 => false) ≠ word_support (fun _ : Fin 1 => true)
     decide +kernel
@@ -323,6 +327,7 @@ def family : Registration arena (type_of% @sum_by_support) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨Finset.card, ∅, {false}, ?_⟩
     change (∅ : Finset Bool).card ≠ ({false} : Finset Bool).card
     simp
@@ -392,6 +397,7 @@ def family : Registration arena (type_of% @word_support_card) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨Finset.univ, 2, 3, ?_⟩
     change support_weight 2 Finset.univ ≠ support_weight 3 Finset.univ
     decide +kernel
@@ -459,6 +465,7 @@ def family : Registration arena (type_of% @ordinary_value_valid) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨⟨((1, 0), (0, 1)), by decide +kernel⟩, false, true, ?_⟩
     decide +kernel
 
@@ -531,6 +538,7 @@ def family : Registration arena (type_of% @pair_count_support) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     let x : NZPair := ⟨((1, 0), (0, 1)), by decide +kernel⟩
     refine ⟨⟨1, 1, 1, 1, x⟩, lower_pair x 0, lower_pair x 1, ?_⟩
     change pair_support_count 1 1 1 1 x (lower_pair x 0) ≠

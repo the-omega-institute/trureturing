@@ -44,6 +44,7 @@ def family : Registration arena (type_of% @labelled_eq_twentyFour) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (24 * (0 : ℕ)) ≠ (24 * (1 : ℕ))
     norm_num
@@ -116,6 +117,7 @@ def family : Registration arena (type_of% @sum_edges) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨⟨2, 2, fun e => if e = .H 0 0 then 0 else 1⟩,
       (Edge.H 0 0 : Edge 2 2), (Edge.V 0 0 : Edge 2 2), ?_⟩
     change (if (Edge.H 0 0 : Edge 2 2) = .H 0 0 then 0 else 1) ≠
@@ -203,6 +205,7 @@ def family : Registration arena (type_of% @oneDefect_iff.{0}) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨⟨1, 2, Bool, inferInstance⟩, (fun _ => false), (fun p => p.2 == 0), ?_⟩
     change decide (OneDefect (fun _ : Cell 1 2 => false)) ≠
       decide (OneDefect (fun p : Cell 1 2 => p.2 == 0))

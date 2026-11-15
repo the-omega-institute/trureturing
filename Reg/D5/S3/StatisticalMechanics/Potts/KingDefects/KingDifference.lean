@@ -44,6 +44,7 @@ def family : Registration arena (type_of% @count_by_kind) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (6 * (0 : ℕ)) ≠ (6 * (1 : ℕ))
     norm_num
@@ -112,6 +113,7 @@ def family : Registration arena (type_of% @count_fixed_edge) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
+    cases i
     refine ⟨(), 0, 1, ?_⟩
     change (4 * (0 : ℕ)) ≠ (4 * (1 : ℕ))
     norm_num
