@@ -10,6 +10,7 @@ import Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal
 import Mathlib.Analysis.CStarAlgebra.PositiveLinearMap
 import Mathlib.Analysis.InnerProductSpace.Positive
 import D5.S3.Quantum.Analysis.NormalFunctionals
+import D5.S3.Quantum.Algebra.StateApproximation.IrreducibleBoundedLift
 import Mathlib.Tactic
 
 /-! Classical order-Radon--Nikodym coordinates for the actual completed GNS.
@@ -144,24 +145,9 @@ theorem coordinate_represents (φ ψ : A →ₚ[ℂ] ℂ) (h : Dominated φ ψ) 
   rw [orbit_eq]
   simpa [cyclicVector] using (coordinate_inner φ ψ h 1 a).symm
 
-/-- The coefficient is complex linear in the algebra variable. -/
-def coefficient (ψ : A →ₚ[ℂ] ℂ) (T : ψ.GNS →L[ℂ] ψ.GNS) : A →ₗ[ℂ] ℂ where
-  toFun a := inner ℂ (cyclicVector ψ) (T (ψ.gnsStarAlgHom a (cyclicVector ψ)))
-  map_add' a b := by simp [map_add, inner_add_right]
-  map_smul' z a := by simp [map_smul, inner_smul_right]
-
-private theorem coefficient_star_mul (ψ : A →ₚ[ℂ] ℂ) (T : ψ.GNS →L[ℂ] ψ.GNS)
-    (hc : ∀ a, Commute T (ψ.gnsStarAlgHom a)) (a b : A) :
-    coefficient ψ T (star a * b) =
-      inner ℂ (ψ.toPreGNS a : ψ.GNS) (T (ψ.toPreGNS b : ψ.GNS)) := by
-  rw [← orbit_eq ψ a, ← orbit_eq ψ b, ← ContinuousLinearMap.adjoint_inner_right]
-  change inner ℂ (cyclicVector ψ)
-    (T (ψ.gnsStarAlgHom (star a * b) (cyclicVector ψ))) = _
-  rw [map_mul, map_star, ContinuousLinearMap.star_eq_adjoint]
-  apply congrArg (inner ℂ (cyclicVector ψ))
-  simpa only [map_star, ContinuousLinearMap.star_eq_adjoint,
-    mul_apply_eq_comp] using
-    congrArg (fun F => F (ψ.gnsStarAlgHom b (cyclicVector ψ))) (hc (star a)).eq
+/-- Use the existing continuous coefficient functional, with the actual GNS arguments. -/
+abbrev coefficient (ψ : A →ₚ[ℂ] ℂ) (T : ψ.GNS →L[ℂ] ψ.GNS) : A →ₗ[ℂ] ℂ :=
+  (Physicslib4.GNS.coeffFunctional ψ.gnsStarAlgHom (cyclicVector ψ) T).toLinearMap
 
 /-- The coefficient determines every commutant operator, without positivity. -/
 theorem coefficient_injective (ψ : A →ₚ[ℂ] ℂ)
@@ -169,25 +155,30 @@ theorem coefficient_injective (ψ : A →ₚ[ℂ] ℂ)
     (hT : ∀ a, Commute T (ψ.gnsStarAlgHom a))
     (hS : ∀ a, Commute S (ψ.gnsStarAlgHom a))
     (h : coefficient ψ T = coefficient ψ S) : T = S := by
-  apply DFunLike.coe_injective
-  apply (dense_pre ψ).equalizer <;> try fun_prop
-  funext b
-  apply ext_inner_left ℂ
-  intro x
-  have he : (fun x : ψ.GNS => inner ℂ x (T (ψ.toPreGNS b : ψ.GNS))) =
-      (fun x : ψ.GNS => inner ℂ x (S (ψ.toPreGNS b : ψ.GNS))) := by
-    apply (dense_pre ψ).equalizer <;> try fun_prop
-    funext a
-    exact (coefficient_star_mul ψ T hT a b).symm.trans
-      ((congrArg (fun f : A →ₗ[ℂ] ℂ => f (star a * b)) h).trans
-        (coefficient_star_mul ψ S hS a b))
-  exact congrFun he x
+  have hcyc : Physicslib4.GNS.IsCyclicVector ψ.gnsStarAlgHom (cyclicVector ψ) := by
+    change DenseRange (fun a : A => ψ.gnsStarAlgHom a (cyclicVector ψ))
+    simpa only [orbit_eq] using dense_pre ψ
+  have hz : T - S = (0 : ℂ) • 1 :=
+    Physicslib4.GNS.eq_smul_one_of_commute_of_cyclic hcyc
+      (fun a => ((hT a).sub_left (hS a)).eq.symm) (fun a => by
+        have he := congrArg (fun f : A →ₗ[ℂ] ℂ => f a) h
+        change inner ℂ (cyclicVector ψ) (T (ψ.gnsStarAlgHom a (cyclicVector ψ))) =
+          inner ℂ (cyclicVector ψ) (S (ψ.gnsStarAlgHom a (cyclicVector ψ))) at he
+        simp only [sub_apply, inner_sub_right, he, sub_self, zero_mul])
+  exact sub_eq_zero.mp (by simpa using hz)
 
 /-- Positivity of a commutant operator is equivalent to positivity of its actual coefficient.
 The reverse direction extends its quadratic form from the dense cyclic range. -/
 theorem coefficient_nonneg_iff (ψ : A →ₚ[ℂ] ℂ) (T : ψ.GNS →L[ℂ] ψ.GNS)
     (hc : ∀ a, Commute T (ψ.gnsStarAlgHom a)) :
     (∀ a, 0 ≤ a → 0 ≤ coefficient ψ T a) ↔ 0 ≤ T := by
+  have hdiag (a : A) : coefficient ψ T (star a * a) =
+      inner ℂ (ψ.toPreGNS a : ψ.GNS) (T (ψ.toPreGNS a : ψ.GNS)) := by
+    change Physicslib4.GNS.coeffFunctional ψ.gnsStarAlgHom (cyclicVector ψ) T
+      (star a * a) = _
+    simpa only [orbit_eq] using
+      Physicslib4.GNS.coeffFunctional_star_mul (π := ψ.gnsStarAlgHom)
+        (Ω := cyclicVector ψ) (T := T) (fun a => (hc a).eq.symm) a
   constructor
   · intro h
     have hq (x : ψ.GNS) : 0 ≤ inner ℂ x (T x) := by
@@ -195,7 +186,7 @@ theorem coefficient_nonneg_iff (ψ : A →ₚ[ℂ] ℂ) (T : ψ.GNS →L[ℂ] ψ
       have hp : ∀ x : ψ.GNS, 0 ≤ inner ℂ x (T x) := by
         apply isClosed_property hd (isClosed_le continuous_const (by fun_prop))
         intro a
-        rw [← coefficient_star_mul ψ T hc]
+        rw [← hdiag]
         exact h _ (star_mul_self_nonneg a)
       exact hp x
     apply ContinuousLinearMap.nonneg_iff_isPositive.mpr
@@ -209,7 +200,7 @@ theorem coefficient_nonneg_iff (ψ : A →ₚ[ℂ] ℂ) (T : ψ.GNS →L[ℂ] ψ
       (Complex.nonneg_iff.mp hl).1⟩
   · intro h a ha
     obtain ⟨b, rfl⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp ha
-    rw [coefficient_star_mul ψ T hc]
+    rw [hdiag]
     exact (ContinuousLinearMap.nonneg_iff_isPositive.mp h).inner_nonneg_right _
 
 /-- Order is reflected as well as preserved; no representing operator is postulated. -/
@@ -218,8 +209,13 @@ theorem coefficient_order_iff (ψ : A →ₚ[ℂ] ℂ) (T S : ψ.GNS →L[ℂ] �
     (hS : ∀ a, Commute S (ψ.gnsStarAlgHom a)) :
     (∀ a, 0 ≤ a → coefficient ψ T a ≤ coefficient ψ S a) ↔ T ≤ S := by
   have hc : ∀ a, Commute (S - T) (ψ.gnsStarAlgHom a) := fun a => (hS a).sub_left (hT a)
-  simpa only [sub_nonneg, coefficient, LinearMap.coe_mk, AddHom.coe_mk,
-    sub_apply, inner_sub_right] using coefficient_nonneg_iff ψ (S - T) hc
+  have he := coefficient_nonneg_iff ψ (S - T) hc
+  change (∀ a, 0 ≤ a → 0 ≤ inner ℂ (cyclicVector ψ)
+    ((S - T) (ψ.gnsStarAlgHom a (cyclicVector ψ)))) ↔ 0 ≤ S - T at he
+  change (∀ a, 0 ≤ a → inner ℂ (cyclicVector ψ)
+    (T (ψ.gnsStarAlgHom a (cyclicVector ψ))) ≤ inner ℂ (cyclicVector ψ)
+    (S (ψ.gnsStarAlgHom a (cyclicVector ψ)))) ↔ T ≤ S
+  simpa only [sub_nonneg, sub_apply, inner_sub_right] using he
 
 /-- A positive commutant operator defines an actual positive functional. -/
 def functional (ψ : A →ₚ[ℂ] ℂ) (T : ψ.GNS →L[ℂ] ψ.GNS)
@@ -324,7 +320,10 @@ theorem original_pair_coordinate (ρ σ : StrongDual ℂ A)
   refine ⟨C, ⟨hC.1, hC.2.1, hC.2.2.1, hC.2.2.2, ?_⟩, ?_⟩
   · ext a
     have hs : coefficient ψ (1 - C) a = coefficient ψ 1 a - coefficient ψ C a := by
-      simp only [coefficient, LinearMap.coe_mk, AddHom.coe_mk, sub_apply, inner_sub_right]
+      change inner ℂ (cyclicVector ψ) ((1 - C) (ψ.gnsStarAlgHom a (cyclicVector ψ))) =
+        inner ℂ (cyclicVector ψ) (1 (ψ.gnsStarAlgHom a (cyclicVector ψ))) -
+        inner ℂ (cyclicVector ψ) (C (ψ.gnsStarAlgHom a (cyclicVector ψ)))
+      rw [sub_apply, inner_sub_right]
     rw [hs, coefficient_one, hC.2.2.2]
     change (ρ a + σ a) - ρ a = σ a
     exact add_sub_cancel_left (ρ a) (σ a)

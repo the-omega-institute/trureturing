@@ -22,7 +22,7 @@ internal sealed class GNSOrderCoordinatesDocument : IScribeDocumentDefinition
             Node("coordinate_represents", "Exact coefficient of the original functional",
                 "For every a in A, phi(a)=<Omega,T pi_psi(a) Omega>. More generally the coefficient between the pre-GNS images of a and b is phi(a* b). Thus T represents the given functional itself, including every singular input allowed by domination."),
             Node("coefficient_injective", "Uniqueness on the full commutant",
-                "For any two bounded operators T and S commuting with pi_psi(A), equality of their complex-linear coefficient functionals implies T=S. Neither operator needs to be positive or self-adjoint. Commutation identifies the coefficient at a* b with the matrix coefficient between the pre-GNS vectors of a and b. Density in both variables then determines the whole operator."),
+                "For any two bounded operators T and S commuting with pi_psi(A), equality of their complex-linear coefficient functionals implies T=S. Neither operator needs to be positive or self-adjoint. Apply the existing cyclic Schur lemma to T-S and scalar zero, using the actual dense GNS orbit. That library theorem proves uniqueness by off-diagonal matrix coefficients and density."),
             Node("coefficient_nonneg_iff", "Positivity reflects through the cyclic coefficient",
                 "For any bounded commutant operator T, the coefficient is nonnegative on all positive elements of A if and only if T is positive in the Loewner order. In the reverse direction its quadratic form is nonnegative on the dense pre-GNS range, hence everywhere by continuity. The complex polarization criterion supplies self-adjointness; it is not assumed separately."),
             Node("coefficient_order_iff", "Preservation and reflection of order",
@@ -35,16 +35,16 @@ internal sealed class GNSOrderCoordinatesDocument : IScribeDocumentDefinition
                 "Let rho and sigma be arbitrary continuous complex-linear functionals nonnegative on positive elements. Convert rho+sigma to its actual positive-linear-map GNS input without changing any value. There exists exactly one positive commutant contraction C whose coefficient is rho and whose complementary operator I-C has coefficient sigma, as equalities of complex-linear functionals. This includes singular rho and sigma, the zero input pair and nonnormalized masses. No normality assumption is needed for this more general existence statement."),
             Node("functional_isOrderNormal", "Normality inherited by positive coordinates",
                 "If the continuous functional underlying psi satisfies the existing arbitrary-directed order-normality predicate, then every positive commutant contraction yields an order-normal continuous coefficient functional. The proof applies the existing domination-normality theorem to 0<=eta_T<=psi. This conclusion uses precisely that order-normal predicate; it does not identify order-normality with an independently defined coefficient-series predual."),
-            Paragraph(Text("These are classical foundational operator-algebra results, expressed using Mathlib's actual GNS spaces and completion API. They supply order coordinates for the pending arbitrary-von-Neumann full-curvature maximal-hockey versus maximal-f classification. They do not establish normality of the GNS representation, the compressed centralizer criterion, full-curvature necessity, or realization of all reverse tests on the entire complex L1 space. In particular the required centralization concerns the open spectral corner PNP and cannot be replaced by global commutation."))
+            Paragraph(Text("These are classical foundational operator-algebra results, expressed using Mathlib's actual GNS spaces and completion API. The continuous coefficient functional, its evaluation on a* a, and the cyclic Schur lemma are reused from the Physicslib4 suppliers in IrreducibleBoundedLift. They supply order coordinates for the pending arbitrary-von-Neumann full-curvature maximal-hockey versus maximal-f classification. They do not establish normality of the GNS representation, the compressed centralizer criterion, full-curvature necessity, or realization of all reverse tests on the entire complex L1 space. In particular the required centralization concerns the open spectral corner PNP and cannot be replaced by global commutation."))
         )));
 
     private static DocumentBlock Node(string name, string heading, string prose) =>
-        Describe.Lean(DescribeId.Create("gns-order-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("gns-order-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(heading), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static DocumentBlock Definition(string name, string heading, string prose) =>
-        Describe.Lean(DescribeId.Create("gns-order-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("gns-order-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(heading), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 }
