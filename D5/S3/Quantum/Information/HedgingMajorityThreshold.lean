@@ -6,6 +6,9 @@
    utility: none
    digest: Certain majority success in qubit hedging requires certain single-game success. -/
 
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Recovery.PurifiedLocalPath
+import D5.S3.Quantum.Foundation.FiniteStateChannel
 import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
 import D5.S3.QuantumStates.UnitWeightSupport
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound

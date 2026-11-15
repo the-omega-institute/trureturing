@@ -6,6 +6,11 @@
    utility: none
    digest: Shared entanglement increases communication value by at most the output dimension. -/
 
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Resource.CompositeCones
+import D5.S3.Resource.EntanglementWitness
+import D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages

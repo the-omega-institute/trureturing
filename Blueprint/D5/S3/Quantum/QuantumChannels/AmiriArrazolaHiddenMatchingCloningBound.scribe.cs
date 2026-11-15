@@ -28,8 +28,9 @@ internal sealed class AmiriArrazolaHiddenMatchingCloningBoundDocument : IScribeD
                     + "|φ_x⟩ = (1/√n) ∑ᵢ₌₁ⁿ (−1)^{x_i}|i⟩. "
                     + "The displayed coordinate function is this vector in the computational basis."),
             Node("rho", "rho", "The pure input matrix", RhoFormula(),
-                "Section II A 2, p. 6: “For simplicity, we drop the superscript on the n-bit strings xⁱ "
-                    + "in all that follows.” The same paragraph writes φ_x := |φ_x⟩⟨φ_x|. "
+                "Section II A 2, p. 6: “In reference to Fig. 4, we refer to these states as the white states, "
+                    + "and start by considering a single such state, φ_{xⁱ} := |φ_{xⁱ}⟩⟨φ_{xⁱ}|, contained in the coin.” "
+                    + "“For simplicity, we drop the superscript on the n-bit strings xⁱ in all that follows.” "
                     + "Matrix.vecMulVec forms that outer product, and CStarMatrix.ofMatrix places "
                     + "the matrix in the channel's ordered matrix carrier."),
             Node("eta", "eta", "The first marginal", MarginalFormula(false),
@@ -128,7 +129,7 @@ internal sealed class AmiriArrazolaHiddenMatchingCloningBoundDocument : IScribeD
     }
     private static Formula MarginalFormula(bool left)
     {
-        var n = F.Id("n"); var channel = Psi; var x = F.Id("x");
+        var n = F.Id("n"); var channel = F.Id("N"); var x = F.Id("x");
         var output = At(Seq(channel, Dot, Named("toCompletelyPositiveMap")), Call("rho", n, x));
         var raw = At(Seq(Qualified("CStarMatrix", "ofMatrix"), Dot, Named("symm")), output);
         return All(n, Nats(), All(channel, Channel(n), All(x, BitsOf(n),
@@ -136,14 +137,14 @@ internal sealed class AmiriArrazolaHiddenMatchingCloningBoundDocument : IScribeD
     }
     private static Formula MeanFormula()
     {
-        var n = F.Id("n"); var channel = Psi; var x = F.Id("x");
+        var n = F.Id("n"); var channel = F.Id("N"); var x = F.Id("x");
         return All(n, Nats(), All(channel, Channel(n), Equal(Call("meanFidelity", n, channel),
             Mul(Div(D(1), Pow(Typed(D(2), Reals()), n)), SumOver(x, BitsOf(n),
                 Div(Add(Expectation(n, channel, x, "eta"), Expectation(n, channel, x, "tau")), D(2)))))));
     }
     private static Formula ClaimBody()
     {
-        var n = F.Id("n"); var channel = Psi;
+        var n = F.Id("n"); var channel = F.Id("N");
         return All(n, Nats(), Implies(LE(D(2), n), Implies(Call("Even", n),
             All(channel, Channel(n), LE(Call("meanFidelity", n, channel),
                 Add(Div(Typed(D(1), Reals()), D(2)), Div(D(1), Typed(n, Reals()))))))));

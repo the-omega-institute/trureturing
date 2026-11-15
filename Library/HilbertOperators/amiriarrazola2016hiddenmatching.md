@@ -38,7 +38,9 @@ $$
 |\phi_x\rangle=\frac1{\sqrt n}\sum_{i=1}^n(-1)^{x_i}|i\rangle.
 $$
 
-Section II A 2, PDF page 6, writes $\phi_x:=|\phi_x\rangle\langle\phi_x|$ and states:
+Section II A 2, PDF page 6:
+
+> In reference to Fig. 4, we refer to these states as the white states, and start by considering a single such state, φ_{xⁱ} := |φ_{xⁱ}⟩⟨φ_{xⁱ}|, contained in the coin.
 
 > For simplicity, we drop the superscript on the n-bit strings xⁱ in all that follows.
 

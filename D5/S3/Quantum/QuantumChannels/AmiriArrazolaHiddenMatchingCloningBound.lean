@@ -12,6 +12,7 @@ result:
   escape_witness: none
   admission_basis: open-problem-resolution (#24701; Proved)
   Direct frozen dependencies: to be extracted from compiled proof terms.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31047
 The channel statement uses the source's literal state and fidelity expressions.
 The proofs reuse matrixAction and inputFirstChoi for channel and Choi coordinates.
 -/
@@ -19,26 +20,13 @@ The proofs reuse matrixAction and inputFirstChoi for channel and Choi coordinate
 import D5.S3.Quantum.QuantumChannels.EntanglementAssistedCommunicationValue
 import D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation
 import D5.S3.Quantum.Information.HedgingMajorityThreshold
-import Mathlib.Basic.Complex.BigOperators
-import Mathlib.Logic.Equiv.Fin.Rotate
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
-import Mathlib.Basic.Real.Basic
-import Mathlib.Tactic.SplitIfs
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Linarith
+import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
+import D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth
 import D5.S3.Weil.ProjectiveRayleigh.ScaledComplexQuadraticRowBound
 import D5.S3.Quantum.Foundation.FiniteStateChannel
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import Mathlib.Analysis.SpecialFunctions.Sqrt
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.Tactic.FieldSimp
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.Matrix.PosDef
 
 /-! The channel fidelity bound for the uniform binary-sign ensemble. -/
 
@@ -52,27 +40,24 @@ noncomputable section
 
 private def sign (s : Fin 2) : ℂ := (-1 : ℂ) ^ s.val
 
-private def flip {n : ℕ} (i : Fin n) : (Fin n → Fin 2) ≃ (Fin n → Fin 2) :=
-  Equiv.piCongrRight (fun j => if j = i then finRotate 2 else Equiv.refl _)
-
 private theorem sign_sq (s : Fin 2) : sign s * sign s = 1 := by
   fin_cases s <;> norm_num [sign]
 
 private theorem sign_flip {n : ℕ} (i j : Fin n) (x : Fin n → Fin 2) :
-    sign (flip i x j) = (if j = i then -1 else 1) * sign (x j) := by
+    sign ((Equiv.piCongrRight (fun j => if j = i then finRotate 2 else Equiv.refl _)) x j) = (if j = i then -1 else 1) * sign (x j) := by
   by_cases h : j = i
   · subst j
     have hs : sign (finRotate 2 (x i)) = -sign (x i) := by
       generalize x i = s
       fin_cases s <;> norm_num [sign, finRotate_apply, Fin.add_def]
-    simpa [flip] using hs
-  · simp [flip, h]
+    simpa [Equiv.piCongrRight] using hs
+  · simp [Equiv.piCongrRight, h]
 
 private theorem sum_flip_zero {n : ℕ} (i : Fin n) (f : (Fin n → Fin 2) → ℂ)
-    (hf : ∀ x, f (flip i x) = -f x) : ∑ x, f x = 0 := by
+    (hf : ∀ x, f ((Equiv.piCongrRight (fun j => if j = i then finRotate 2 else Equiv.refl _)) x) = -f x) : ∑ x, f x = 0 := by
   have hs : ∑ x, f x = -(∑ x, f x) := by
     calc
-      _ = ∑ x, f (flip i x) := (Equiv.sum_comp (flip i) f).symm
+      _ = ∑ x, f ((Equiv.piCongrRight (fun j => if j = i then finRotate 2 else Equiv.refl _)) x) := (Equiv.sum_comp ((Equiv.piCongrRight (fun j => if j = i then finRotate 2 else Equiv.refl _))) f).symm
       _ = _ := by simp_rw [hf]; rw [Finset.sum_neg_distrib]
   linear_combination hs / 2
 
@@ -85,7 +70,8 @@ private theorem moment_two {n : ℕ} (a b : Fin n) :
   · simp only [if_neg h, mul_zero]
     apply sum_flip_zero a
     intro x
-    simp [sign_flip, Ne.symm h]
+    rw [sign_flip a a x, sign_flip a b x]
+    simp [Ne.symm h]
 
 private def momentEntry {ι : Type*} [DecidableEq ι] (a b c d : ι) : ℝ :=
   (if a = b ∧ c = d then 1 else 0) +
@@ -128,7 +114,8 @@ private theorem moment_four {n : ℕ} (a b c d : Fin n) :
             sign (x a) * sign (x b) * sign (x c) * sign (x d)) = 0 := by
           apply sum_flip_zero a
           intro x
-          simp [sign_flip, Ne.symm hab, Ne.symm hac, Ne.symm had]
+          rw [sign_flip a a x, sign_flip a b x, sign_flip a c x, sign_flip a d x]
+          simp [Ne.symm hab, Ne.symm hac, Ne.symm had]
         simp [hz, momentEntry, hab, hac, had]
 
 end
@@ -211,14 +198,11 @@ private theorem weight_diag_sum (n : ℕ) (c : Fin n) :
 
 private theorem weight_diag_sum' (n : ℕ) (b : Fin n) :
     (∑ i, weight n (i,b,i)) = (n : ℝ)^2 + n - 2 := by
-  have hp (i : Fin n) : weight n (i,b,i) =
-      (n : ℝ) + (if i = b then (n : ℝ) - 2 else 0) := by
-    by_cases h : i = b
-    · subst i; simp [weight]; ring
-    · simp [weight, h, Ne.symm h]
-  simp_rw [hp]
-  simp [Finset.sum_add_distrib]
-  ring
+  rw [← weight_diag_sum n b]
+  apply Finset.sum_congr rfl
+  intro i _
+  by_cases h : i = b <;> simp_all [weight, eq_comm]
+
 
 private theorem weight_row_bound (n : ℕ) (hn : 2 ≤ n) (p : (Fin n × Fin n × Fin n)) :
     (∑ q, L n p q * weight n q) ≤ ((n : ℝ) + 2) * weight n p := by
@@ -537,12 +521,12 @@ noncomputable section
 
 private theorem trace_outer_re {ι : Type*} [Fintype ι] (z : ι → ℂ) :
     (Matrix.trace (Matrix.vecMulVec z (star z))).re = ∑ p, ‖z p‖ ^ 2 := by
-  simp only [Matrix.trace_vecMulVec, dotProduct, Pi.star_apply, Complex.re_sum]
-  apply Finset.sum_congr rfl
-  intro p _
-  change (z p * conj (z p)).re = _
-  rw [Complex.mul_conj]
-  exact Complex.normSq_eq_norm_sq _
+  have h := D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth.pure_trace
+    (WithLp.toLp 2 z)
+  rw [h]
+  rw [← Complex.ofReal_pow, Complex.ofReal_re]
+  exact EuclideanSpace.norm_sq_eq (WithLp.toLp 2 z)
+
 
 private theorem trace_L_outer (n : ℕ) (z : (Fin n × Fin n × Fin n) → ℂ) :
     Matrix.trace ((Matrix.of (fun p q => (L n p q : ℂ))) * Matrix.vecMulVec z (star z)) =
