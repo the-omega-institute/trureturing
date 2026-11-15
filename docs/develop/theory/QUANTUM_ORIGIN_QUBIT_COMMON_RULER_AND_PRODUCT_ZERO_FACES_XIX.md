@@ -2725,12 +2725,12 @@ $$
 
 证明。若 $e_p(q)=0$，$u_2-e_p$ 确认 $q$，故 $e_q\le u_2-e_p$，在 $p$ 上评价给 $e_q(p)=0$；反向交换两端。$e_p(p)=1$ 排自环。单点双极闭是[Paseka—Vetterlein, Lemma4.4][Q278P]的纯关系接口：若 $q\ne p$ 且 $p^{\perp_e}\subseteq q^{\perp_e}$，则 $p\not\perp_e q$，否则 $q\in p^{\perp_e}$ 会迫 $q\perp_e q$。换点遂给 $g\perp_e p$，且 $p^{\perp_e}\cap g^{\perp_e}=p^{\perp_e}$；因此 $g\in p^{\perp_e}\subseteq g^{\perp_e}$，仍矛盾。
 
-若 $e_p(q)=1$，leastness给 $e_q\le e_p$，所以 $p^{\perp_e}\subseteq q^{\perp_e}$，单点闭迫 $q=p$。$\square$
+若 $e_p(q)=1$，leastness给 $e_q\le e_p$，所以 $p^{\perp_e}\subseteq q^{\perp_e}$，单点闭迫 $q=p$。任意归一混态有有限纯点分解；若 $e_p$ 在它上面取一，则每个正权纯分量都取一，故整个饱和面也仅为 $\{p\}$。$\square$
 
-**引理 278.3（M-only的正对偶实际面与单位支持）。** 在任意非零有限维闭尖生成 $C$、严格正 $u$、整个紧底及完整proper菜单上，只假定每个原纯点有least确认。则 $C^*$ 的每个实际锥面 $F$ 都闭且暴露，存在唯一支持效应 $h_F\in[0,u]$，使
+**引理 278.3（M-only的正对偶实际面与单位支持）。** 在任意非零有限维闭尖生成 $C$、严格正 $u$、整个紧底及完整proper菜单上，只假定每个原纯点有least确认。则 $C^*$ 的每个实际锥面 $F$ 都闭且暴露，存在确认全部满足 $e_q\in F$ 的原纯点 $q$ 的唯一least共同确认效应 $h_F\in[0,u]$，称为该面的支持效应；它满足
 
 $$
-e_q\in F\quad\Longleftrightarrow\quad h_F(q)=1,
+\operatorname{face}(h_F)=F,\qquad e_q\in F\quad\Longleftrightarrow\quad h_F(q)=1,
 \qquad
 F\subseteq G\quad\Longleftrightarrow\quad h_F\le h_G.
 \tag{278.3}
@@ -2818,7 +2818,7 @@ $$
 
 证明。278.4已给整个原低二层的复矩阵类型。275.2（六）所用精确产品正规形只消费该类型、原正产品准备／效应、完整配对及单位，故在同一个局域 $\theta$ 下有 $C_2=T_1^\varepsilon\operatorname{PSD}_{r^2}$。277.2及277.3的直接方向仍给整个三份产品对J。现在只调用276.2（二）至（五）的矩阵接合，而不调用其含旧 $\mathsf X_2$ 的低二层入口：产品对角least给原产品确认，成对least给极端迹一残余；双HS／迹预算识别原纯残余，稀疏迹二计算及连通性给同一Schmidt秩二方向；三个明确Bell边缘排尽错误转置位，$\tau_r$ dyad在原三份中真实存在。于是准确支付XIII164.11的第3项到第4项，取得(278.9)，包括全部有限相关旁观、六副本与十八条腿的原范围。
 
-反向，复模型中277.3已给 $\mathsf R_B$，且 $e_p(x)=\operatorname{Tr}(P_px)$。对不同射线 $v,w$，若非正交，取 $w-v(v^*w)$ 的归一射线作 $g$；若正交，取 $v+w$ 的归一射线作 $g$。两者均保留原两射线的复张成及共同正交参照，并翻转与 $v$ 的零关系，所以满足(278.2)。$\square$
+反向，复模型中277.3已给 $\mathsf R_B$，且 $e_p(x)=\operatorname{Tr}(P_px)$。对不同射线取单位向量代表 $v,w$，若非正交，取 $w-v(v^*w)$ 的归一射线作 $g$；若正交，取 $v+w$ 的归一射线作 $g$。两者均保留原两射线的复张成及共同正交参照，并翻转与 $v$ 的零关系，所以满足(278.2)。$\square$
 
 **推论 278.6（更短几何、公理字典与范围）。** 这个候选的几何入口只有完整确认关系、两门收紧及其派生零关系上的linear orthoset换点。正对偶实际面先由效应剥离与共同frame长出；完整复射影格、正定尺及原态凸混合随后回读。它与277的候选在同一完整背景及明列供应下定义相同模型类；新增简洁性是消去重心种子和径向面闭构造，不宣称严格减少独立逻辑信息。
 
