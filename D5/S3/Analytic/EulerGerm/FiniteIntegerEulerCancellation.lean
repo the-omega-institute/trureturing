@@ -67,7 +67,6 @@ private theorem square_zero_product {R : Type*} [CommRing R] {ι : Type*}
           (k i : R) * (x i * ∑ j ∈ s, (k j : R) * x j) := by ring
       _ = _ := by rw [hh]; ring
 
-/-- The homogeneous residual is removed by integral signed binomial powers. -/
 omit [Fintype J] in
 private theorem cancel_layer (p U V : MvPolynomial J ℤ) (d : ℕ) (hd : 1 ≤ d)
     (hH : p * U - V ∈ idealOfVars J ℤ ^ d)
