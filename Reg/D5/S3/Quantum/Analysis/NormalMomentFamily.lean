@@ -67,7 +67,9 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   obtain ⟨_, _, _, Γ, _, _, _, _, hf, _, _⟩ := hall.2.2.2.2 F
   exact hf
 
-def family : Registration arena.{u} (type_of% (@compact_normal_posterior_family.{u})) where
+def sourceProposition : Prop := type_of% (@compact_normal_posterior_family.{u})
+
+def family : Registration arena.{u} sourceProposition.{u} where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
@@ -85,8 +87,6 @@ def family : Registration arena.{u} (type_of% (@compact_normal_posterior_family.
     intro h
     have hf : (1 : ℝ) ≤ 0 := Eq.mp (congrFun h 0) le_rfl
     norm_num at hf
-
-def sourceProposition : Prop := type_of% (@compact_normal_posterior_family.{u})
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (P := sourceProposition.{u})
@@ -122,6 +122,23 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+
+/-- Exact exposed unit source; no serialization certificate is claimed. -/
+theorem unit_source_bridge : (type_of% (@unit_value.{u})) ↔
+    ∀ {A : Type u} [CStarAlgebra A] [PartialOrder A]
+      {ρ σ : StrongDual ℂ A} (F : Family ρ σ), linearMap F 1 = ρ + σ := Iff.rfl
+
+/-- Exact exposed posterior source with its original generic algebra. -/
+theorem posterior_source_bridge : (type_of% (@posterior_value.{u})) ↔
+    ∀ {A : Type u} [CStarAlgebra A] [PartialOrder A]
+      {ρ σ : StrongDual ℂ A} (F : Family ρ σ), linearMap F posterior = ρ := Iff.rfl
+
+/-- All continuous complex integrals, with the entire original telescope. -/
+theorem complex_mass_source_bridge : (type_of% (@integral_complex.{u})) ↔
+    ∀ {A : Type u} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
+      {ρ σ : StrongDual ℂ A} (F : Family ρ σ) (g : C(Interval, ℂ)),
+      linearMap F g 1 = ∫ t, g t ∂scalarMeasure F := Iff.rfl
 
 #print axioms family
 #print axioms audit
