@@ -64,6 +64,14 @@ internal sealed class HedgingMajorityThresholdDocument : IScribeDocumentDefiniti
                     + "numbers. The assertion concerns strict majorities; it makes no "
                     + "characterization for k <= n/2."),
             Describe.Lean(
+                DescribeId.Create("hedging-retained-trace"), DeclarationHandle.Create(Prefix + "trace_retained"),
+                H("The retained-factor trace pairing"),
+                StatementSource.FromAuthor(Disp(RetainedTraceFormula())), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For arbitrary finite index types A and B, tracing X against the operator I ⊗ D "
+                        + "equals tracing the first-factor partial trace of X against D. "
+                        + "No positivity or Hermiticity hypothesis is required.")))),
+            Describe.Lean(
                 DescribeId.Create("hedging-majority-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Certain majority success requires certain single-game success"),
@@ -156,6 +164,18 @@ internal sealed class HedgingMajorityThresholdDocument : IScribeDocumentDefiniti
     private static Formula Shared(Formula n) => new Formula.Subscript(Psi, Seq(n, Comma, Alpha));
     private static Formula Winning() => new Formula.Subscript(X("v"), Theta);
     private static Formula Projection(Formula b) => new Formula.Subscript(X("P"), Seq(b, Comma, Theta));
+
+    private static Formula RetainedTraceFormula()
+    {
+        var a = X("A"); var b = X("B"); var x = X("X"); var d = X("D");
+        var body = All(x, MatrixType(ProductType(a, b)), All(d, MatrixType(b),
+            Equal(Call("trace", Mul(Call("kronecker", Typed(D(1), MatrixType(a)), d), x)),
+                Call("trace", Mul(d, Call("partialTraceFirst", x))))));
+        body = Seq(OpenBracket, Call("Fintype", a), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", a), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", b), CloseBracket, Sp, body);
+        return All(a, Named("Type"), All(b, Named("Type"), body));
+    }
 
     private static Formula SharedAmplitudeFormula()
     {
