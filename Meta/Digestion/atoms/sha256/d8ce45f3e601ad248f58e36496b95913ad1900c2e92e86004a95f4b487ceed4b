@@ -1,0 +1,105 @@
+**定理 9.2（同载体固定半入口的原生识别）。** 对定义 9.1 的函数和实际张成空间，下列两项等价：
+
+$$
+T_p\!\left(\frac{s+x}{2}\right)
+=\frac{T_s(p)+T_p(x)}2
+\quad\bigl(p,s\in\operatorname{ext}K,\ x\in K\bigr);
+\tag{9.4}
+$$
+
+$$
+q(y)=\operatorname{Tr}(EP_y)
+\quad(y\in Y),\qquad 0\le E\le I,
+\quad E\text{ 是唯一的非标量 Hermitian 效应}.
+\tag{9.5}
+$$
+
+成立时，存在唯一实线性同构 $\Phi:V\to\operatorname{Herm}_d(\mathbb C)$，满足
+
+$$
+\begin{aligned}
+\Phi(v_y)&=P_y,& \operatorname{Tr}\Phi(z)&=u(z),\\
+\Phi(C)&=\operatorname{PSD}_d(\mathbb C),&
+\Phi(K)&=\{\rho\ge0:\operatorname{Tr}\rho=1\},\\
+\Phi(R_hz)&=U_h\Phi(z)U_h^*,& \dim_{\mathbb R}V&=d^2.
+\end{aligned}
+\tag{9.6}
+$$
+
+$U_h$ 是 $h\in PU(d)$ 的任一酉代表，右端与整体相位无关。特别地，这是原射线、原作用、原锥和全部原效应的识别。对每个 $f\in[0,u]$，唯一的 $0\le F\le I$ 给出 $f(z)=\operatorname{Tr}(F\Phi(z))$；反向每个这样的矩阵均给原 proper 效应。这里 $u$ 对应迹泛函及效应 $I$，不是另加一个归一化。
+
+证明。先验证复用比较桥之前的对象，而不预先把射线标签称为纯态。$G$ 对射影距离等距，紧 $Y$ 上 $q$ 一致连续，因而
+
+$$
+\sup_{g\in G}|q(gy)-q(gy')|\longrightarrow0
+\quad\text{当 }y'\longrightarrow y.
+\tag{9.7}
+$$
+
+故 $y\mapsto v_y$ 在上述范数下连续。右平移保持全部行间线性关系，(9.3) 定义 $V$ 的线性可逆作用。取有限个轨道向量为基；各基向量的像连续，故这是连续表示。轨道 $O=\{v_y\}$ 紧，有限维 Carathéodory 定理使 $K=\operatorname{conv}O$ 紧。$u=1$ 于 $K$，于是 $C$ 闭、尖、生成，且 $u$ 在 $C\setminus\{0\}$ 上严格正。具体地，若 $t_nk_n$ 收敛，则 $t_n=u(t_nk_n)$ 收敛；$t_n\to0$ 时有界 $k_n$ 给零极限，否则紧性给极限仍在 $C$。$u$ 的严格正性排除非零正负共同元，生成性来自 $O$ 张成 $V$。这正是 Library 和 PRE77.1–77.2 的载体条件；其结论给 $[0,u]$、$F_p$ 紧和 (9.2) 的达到性。
+
+在 $V$ 上取任意内积并对紧群 $G$ 作 Haar 平均。各轨道向量具有相同的非零范数。对任一 $p\in O$，线性泛函 $z\mapsto\langle p,z\rangle$ 在 $O$ 上的唯一最大点是 $p$：等号情形由 Cauchy–Schwarz 及等范数给出。有限凸组合将此唯一性传到 $K$，故每个实际轨道向量都是 exposed 极点。反向，$K$ 的每个极点有有限轨道凸分解，极性迫使其中的正权项等于该点。因此
+
+$$
+\operatorname{ext}K=O.
+\tag{9.8}
+$$
+
+还须证明不同射线没有被这些未来读数合并。直接复用 [Galley–Masanes，1610.04859v3][GM9] 的 Result 3、A.3 和 Lemma 2（证明于 A.13）：当 $d\ge3$，两个不同射线的稳定子生成 $SU(d)$。若 $v_y=v_{y'}$ 且 $y\ne y'$，共同向量由这两个稳定子固定，因而由整个群固定；传递性使所有 $v_z$ 相同，空未来读数使 $q$ 恒定，矛盾。所以 $y\mapsto v_y$ 单射，紧到 Hausdorff 的连续单射给出
+
+$$
+\operatorname{ext}K\simeq\mathbb {CP}^{d-1}.
+\tag{9.9}
+$$
+
+假定 (9.4)。在刚证明的同一个载体上，Library 固定半附录给 $\mathrm B_{1/2}\iff S$，其中 S 是互反的最小 proper 确认效应，亦即完整有限纯准备比较律。其证明允许任意原混合余项；这里没有把余项缩为纯态。随后直接复用该 Library 中正对偶生成、共同框架、自对偶、正规范面投影和最大杂质论证的滤波纯性。这条已给的纸面桥正好供应 [Barnum–Müller–Ududec，1403.4147v4][BMU9] Theorem 16 的三个前件：有限维中的 projectivity、对称转移概率和所有 filters 保持纯射线。于是得到整个原基及其全效应的有限 Euclidean Jordan 表示。这里只调用 Theorem 16，不用 Theorem 17 的额外强对称性，也不把滤波纯性或 Jordan 结构另列为假设。
+
+该 Jordan 代数只有一个简单因子。否则各非零直和因子的纯点集合是互不相交的紧开闭分支，与 (9.9) 的连通性矛盾。标准有限简单 EJA 分类及 primitive-idempotent 几何可参见 [Barnum–Hilgert，1904.03753v1][BH9] §4、Table 1：其纯流形分别为 $\mathbb {RP}^{n-1}$、$\mathbb {CP}^{n-1}$、$\mathbb {HP}^{n-1}$、spin factor 的球面或 Albert 代数的 $\mathbb {OP}^{2}$。$\mathbb {CP}^{d-1}$ 的实维数为 $2d-2\ge4$，实系数二阶上同调为 $\mathbb R$。实、四元数、八元数射影备选的实二阶上同调均为零；球面的相同维数至少为四，二阶上同调亦为零。这些是标准射影胞腔分解的读数，$\mathbb {OP}^{2}$ 的胞腔维数为 $0,8,16$。所以只有复矩阵因子，纯流形维数再给 $n=d$。因此
+
+$$
+\dim_{\mathbb R}V=d^2.
+\tag{9.10}
+$$
+
+这一步只选出了抽象类型，尚未识别原生作用。为完成该缺口，令 $\mu=\int_Gv_{hy_0}\,dh$、$W=\ker u$、$w_y=v_y-\mu$。则 $\mu\in K$ 且固定于 $G$，$w_y$ 的 Haar 平均为零，$\operatorname{aff}\{w_y\}=W$。后一个等式来自 $v_y$ 张成 $V$、$u(v_y)=1$，以及零平均落在有限维闭仿射包内。这恰好满足 GM 的 (6)、(7)、(9) 所要求的等变性、群乘法和最小仿射张成；连续性已经由 (9.7) 证明，不借用任何物理闭像公设。
+
+复用 GM Result 2 和 (16)，这个原生中心表示是非平凡 spherical 模块 $\mathcal D_j^d$ 的有限和，$j\ge1$，且
+
+$$
+D_j^d=\left(1+\frac{2j}{d-1}\right)
+\prod_{k=1}^{d-2}\left(1+\frac jk\right)^2,
+\qquad D_1^d=d^2-1,\qquad D_j^d>D_1^d\ (j\ge2).
+\tag{9.11}
+$$
+
+由 $\dim W=d^2-1$，只能是单个 $j=1$ 的原生 adjoint 表示。取一个交织同构 $L:W\to\operatorname{Herm}_d^0(\mathbb C)$。原射线 $y_0$ 的稳定子在迹零 Hermitian 空间中的固定子空间恰为 $\mathbb R(P_{y_0}-I/d)$：其在 $y_0^\perp$ 上的 $U(d-1)$ 作用迫使该块为标量，并消去两块间项。因 $w_{y_0}\ne0$，有非零实数 $c$ 使
+
+$$
+L(w_{y_0})=c(P_{y_0}-I/d),\qquad
+L(w_y)=c(P_y-I/d)\quad(y\in Y).
+\tag{9.12}
+$$
+
+第二式由传递性和交织性给出。定义
+
+$$
+\Phi(z)=u(z)\frac Id+\frac1cL\bigl(z-u(z)\mu\bigr).
+\tag{9.13}
+$$
+
+它可逆、实线性、保迹并交织原生作用，且逐个将原 $v_y$ 送到原坐标中的 $P_y$。所有密度矩阵都是有限纯投影凸组合，故 (9.13) 将 $K$ 恰送到整个密度基，将 $C$ 恰送到 PSD 锥。$v_y$ 张成 $V$，还给此映射的唯一性。因此并未从一个纯流形同胚直接冒领仿射或操作对应。
+
+空未来评价 $\ell(z)=z(1_G)$ 是 $[0,u]$ 中的线性效应。经 $\Phi$ 和矩阵迹配对，唯一 Hermitian 矩阵 $E$ 满足 $\ell(z)=\operatorname{Tr}(E\Phi(z))$。在所有秩一投影上 $\ell\ge0$、$u-\ell\ge0$ 分别给 $E\ge0$、$I-E\ge0$。非恒定性排除标量 $E$；秩一投影张成或极化恒等式给唯一性。同一论证适用于任意 $f\in[0,u]$，并给 (9.6) 的整个效应对应。
+
+反向，给定非标量 $0\le E\le I$，定义
+
+$$
+\Psi_E(X)=\left(\operatorname{Tr}X,
+ \bigl(\operatorname{Tr}(E U_gXU_g^*)\bigr)_{g\in G}\right).
+\tag{9.14}
+$$
+
+这是 Hermitian 空间到有界行的实线性映射，且 $\Psi_E(P_y)=v_y$。若其值为零，先得 $\operatorname{Tr}X=0$；非零迹零部分 $E-(\operatorname{Tr}E)I/d$ 的酉共轭轨道张成整个迹零 Hermitian 空间，由 adjoint 不可约性得 $X=0$。故 $\Psi_E$ 单射；纯投影张成又使其像恰为 $V$。它将整个密度基、PSD 锥及全部 proper 效应分别识别为原 $K,C,[0,u]$。
+
+在矩阵载体中，若 $0\le F\le I$ 且 $\operatorname{Tr}(FP)=1$，则 $F$ 在 $P$ 的像上恒为一、两块间项为零，故 $F\ge P$。所以最小确认者是 $P$，比较为 $T_P(\rho)=\operatorname{Tr}(P\rho)$。对纯 $P,S$ 和任意混合 $\rho$，线性及 $\operatorname{Tr}(PS)=\operatorname{Tr}(SP)$ 正好给 (9.4)。这证明逆向和全部结论。∎
+

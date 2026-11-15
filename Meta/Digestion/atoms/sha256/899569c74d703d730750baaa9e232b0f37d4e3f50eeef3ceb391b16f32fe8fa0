@@ -1,0 +1,105 @@
+**定理 22.3（原行投影、同秩与同载体细化的充要关系）。** 在定义 22.1、假设 22.2 下，下列四项等价。
+
+(a) 保留全部细标签不增加实际实线性全未来方向：
+
+$$
+r_J=r_A.
+\tag{22.6}
+$$
+
+(b) 原粗行的每个有限实线性关系均被所有细行保留：对任意实际 $a_1,\ldots,a_m$、$c_1,\ldots,c_m\in\mathbb R$，
+
+$$
+\sum_{i=1}^m c_ix_{a_i}^A=0
+\quad\Longrightarrow\quad
+\sum_{i=1}^m c_iz_{a_i}=0.
+\tag{22.7}
+$$
+
+(c) 对每个原标签 $\ell$，存在唯一的同载体 proper 效应 $e_\ell\in[0,u_A]$，使
+
+$$
+p_\ell(a)=e_\ell(x_a^A)\qquad(a\in\mathsf W_{11}).
+\tag{22.8}
+$$
+
+这里 proper 是对整个 $C_A$ 要求 $e_\ell\ge0$、$u_A-e_\ell\ge0$；等价地，$e_\ell$ 在整个 $K_A$ 上是 $[0,1]$ 值仿射函数的齐次线性延拓。
+
+(d) 所有原标签具有同一原生坐标中的唯一 POVM 表示：
+
+$$
+p_\ell(a)=\operatorname{Tr}(E_\ell P_{\chi_a}),\qquad
+E_\ell\ge0,\qquad
+\sum_{\ell\in\Lambda}E_\ell=I_{89},\qquad
+\sum_{\ell\in A}E_\ell=E_A.
+\tag{22.9}
+$$
+
+成立时，$\pi$ 是保持单位、原字作用及生成锥的线性同构；$\Phi_J=\Psi_A^{-1}\pi$ 是唯一把每个原 $z_a$ 送到 $P_{\chi_a}$ 的实线性同构，且
+
+$$
+\Phi_J(C_J)=\operatorname{PSD}_{89}(\mathbb C),\qquad
+\Phi_J(K_J)=\{\rho\ge0:\operatorname{Tr}\rho=1\},\qquad
+\operatorname{Tr}\Phi_J=u_J.
+\tag{22.10}
+$$
+
+联合全射线响应与全群 profiles 的下降、连续性及原字限制均随之成立；不需另外假设联合 S 或固定半比较律。特别地，细标签的统计 $\mathrm R_{10}$ 与完整 ready 行回返是结论：
+
+$$
+\begin{aligned}
+p_\ell(aj^{10}f)&=p_\ell(af)
+ &&(a,f\in\mathsf W_{11},\ 0\le j\le10,\ \ell\in\Lambda),\\
+\|z_a-z_b\|_\infty&\le d_{\mathbb P}([\chi_a],[\chi_b]),\\
+d_{\mathbb P}([\chi_{a_n}],[e_0])\to0
+&\ \Longrightarrow\ \|z_{a_n}-z_\epsilon\|_\infty\to0.
+\end{aligned}
+\tag{22.11}
+$$
+
+证明。$\pi$ 已满射，$r_A=89^2<\infty$。故 (a) 等价于 $\ker\pi=0$。若 (b) 成立，将 $z\in\ker\pi$ 写成有限组合 $z=\sum_i c_iz_{a_i}$，即由 (22.7) 得 $z=0$；反向，$\ker\pi=0$ 立即给 (22.7)。因此 (a)、(b) 等价，且其共同内容不是只保持两个单点相等，而是保持所有有限有符号行关系。
+
+假设 (a)，令 $L=\pi^{-1}:V_A\to V_J$。这是由原实际数据唯一决定的有限维有界线性映射，$Lx_a^A=z_a$。粗 Born 公式和 $K_j^{10}=I$ 已给粗统计恒等式 $x_{aj^{10}}^A=x_a^A$；应用 $L$ 立即得到 $z_{aj^{10}}=z_a$，即全部标签、全部未来的统计 $\mathrm R_{10}$，不以联合回返为前提。再在未给细标签连续性的情况下取得共同下降：由粗 Born 公式和原纯态迹距离估计，
+
+$$
+\|x_a^A-x_b^A\|_\infty
+=\sup_{f\in\mathsf W_{11}}
+ \left|\operatorname{Tr}\bigl(E_AK_f(P_{\chi_a}-P_{\chi_b})K_f^*\bigr)\right|
+\le d_{\mathbb P}([\chi_a],[\chi_b]).
+\tag{22.12}
+$$
+
+于是 $y\mapsto L\Psi_A(P_y)$ 在全 $\mathbb {CP}^{88}$ 上连续，且在每个实际射线上等于 $z_a$。其各坐标在实际稠密集上的值属于 $[0,1]$ 并归一，故在全域仍然非负、归一。取空未来坐标即得共同连续 $q_\ell(y)$；对固定有限 $f$，在实际点已有第 $(\ell,f)$ 坐标等于 $q_\ell(K_fy)$，连续性将此恒等式延拓到全射线。唯一性也由实际稠密集给出。因此共同下降不是新增前件，联合 ready 回返在此已由 $\|L\|$ 乘 (22.12) 导出。
+
+连续线性同构在有限维中保持闭包，且把实际行逐点对应，故
+
+$$
+L(K_A)=K_J,\qquad L(C_A)=C_J,\qquad u_JL=u_A.
+\tag{22.13}
+$$
+
+每个空未来标签评价 $\lambda_\ell(z)=z(\ell,\epsilon)$ 在 $C_J$ 上非负，$u_J-\lambda_\ell$ 也非负，因为二者在全部生成行及其闭凸包上均非负。故 $e_\ell=\lambda_\ell L$ 是 $C_A$ 的 proper 效应，给 (c)。任何另一线性效应若给相同的全部实际值，就在张成 $V_A$ 的全部 $x_a^A$ 上相同，故唯一。
+
+现有的 (22.5) 序同构把 (c) 的每个效应唯一写为 $e_\ell(\Psi_A(X))=\operatorname{Tr}(E_\ell X)$，$0\le E_\ell\le I$。实际归一化与固定归组在全部 $x_a^A$ 上给
+
+$$
+\sum_{\ell\in\Lambda}e_\ell=u_A,\qquad
+\sum_{\ell\in A}e_\ell=e_A,\qquad
+ e_A(\Psi_A(X))=\operatorname{Tr}(E_AX).
+\tag{22.14}
+$$
+
+这些行张成整个空间，故两式是泛函恒等式；由迹对偶得到 (22.9)。反向，(d) 的矩阵给 (c) 的 proper 效应。特别要区分：全部标签和为 $I$，固定粗事件内的标签和为 $E_A$，不能把事件 $A$ 内的细化误写为一组归一 POVM。
+
+最后由 (d) 定义
+
+$$
+\Psi_J(X)=\left(\operatorname{Tr}X,
+ \bigl(\operatorname{Tr}(E_\ell K_fXK_f^*)\bigr)_{\ell,f}\right).
+\tag{22.15}
+$$
+
+其定义域实维数为 $89^2$，且 $z_a=\Psi_J(P_{\chi_a})$，故 $r_J\le89^2=r_A$。结合始终成立的 $r_J\ge r_A$，得到 (a)，完成等价证明。(22.13) 与 (22.5) 给 (22.10) 及唯一性；对每个原有限 $b$，$x_a^A\mapsto x_{ab}^A$、$z_a\mapsto z_{ab}$ 经 $\Phi_J$ 都是 $X\mapsto K_bXK_b^*$，所以交织的是同一原作用。
+
+由 (22.15) 得 $q_\ell(y)=\operatorname{Tr}(E_\ell P_y)$。每个 $E_\ell$ 是 proper 效应，纯投影差的迹距离界逐标签、逐未来给 (22.11) 的共同常数一，而非只给逐标签的当前读数连续性。上述统计回返的继承使用已知的粗实际恒等式及 $L$，与从矩阵恒等式直接假定未知细概率回返有区别。若粗 Born 先经 10.1–10.3 或 17.2 取得，该路线已经使用的原粗统计 $\mathrm R_{10}$ 和粗完整 ready 行回返仍属其原前件；17.2 的四前缀关系也须在原粗行上另付。本定理没有回溯删除这些条件。原生稠密性对有限组合使用 10.2 的限制等距论证，识别同一联合全群空间与原有限字空间，不另增全群秩。整个 PSD 锥的最小 proper 确认是 $P$，比较为 $\operatorname{Tr}(P\rho)$；由 9.2 的逆向论证，联合 S 和固定半律此时也是结论。∎
+

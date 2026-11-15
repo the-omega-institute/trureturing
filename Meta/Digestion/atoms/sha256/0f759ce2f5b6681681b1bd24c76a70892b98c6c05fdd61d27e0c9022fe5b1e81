@@ -1,0 +1,46 @@
+**定理 18.1（同一个联合行上的完整有限菜单）。** 固定所讨论的那个确切归一化 terminal menu，令 $\Lambda$ 为它的有限、完整、有类型标签集。它保留原 $\Lambda_0$ 的全部 $1024$ 个旧标签，包括零与非法坐标。理想 $\mathsf T$ 的原 failure contract 保持原域；不在该标签域内的过程失败类型继续分别有类型地保留，不能为方便而塞入 $\Lambda_0$。
+
+如果这个确切菜单本身还含额外有限失败标签，必须**从一开始**就把它们纳入同一个 $\Lambda$、同一联合行和下述全部共同前件；若没有这样的有限共同联合前件，本定理不向它们推断效果表示。不同程序的失败类型不能自动组成一个菜单。对所有 $\lambda\in\Lambda$ 定义
+
+$$
+ X_a=\bigl(1,(p_\lambda(af))_{(\lambda,f)\in\Lambda\times\mathsf W_{11}}\bigr),
+ \qquad p_\lambda(a)=P_{\mathsf T(a)}(\lambda).
+\tag{18.1}
+$$
+
+要求这个同一联合行有有限实秩，对每个标签及所有原前缀／future 满足统计 $\mathrm R_{10}$，并在其联合上确界范数中满足 uniform ready-return；保留原矩阵密度。它们是独立的共同前件，不能由单事件前件代付。完整菜单的概率还明确满足
+
+$$
+ p_\lambda(a)\ge0,\qquad
+ \sum_{\lambda\in\Lambda}p_\lambda(a)=1
+ \quad(a\in\mathsf W_{11}).
+\tag{18.2}
+$$
+
+这里始终使用完整未后选择的质量，不在成功后重归一化。
+
+若单个等权关系
+
+$$
+ X_\epsilon+X_{9^5}=X_9+X_{9^6}
+\tag{18.3}
+$$
+
+成立，则对每个 $\lambda\in\Lambda$，定理 16.3 给出唯一 $0\le E_\lambda\le I$，使
+
+$$
+ p_\lambda(a)=\operatorname {Tr}(E_\lambda P_{K_ae_0}).
+$$
+
+联合归一化和原射影密度给
+
+$$
+ \sum_{\lambda\in\Lambda}E_\lambda=I.
+\tag{18.4}
+$$
+
+故这是该确切菜单的唯一共同 Born POVM。若联合响应中至少一个标签非恒定，$\dim\operatorname {span}_{\mathbb R}\{X_a\}=d^2$，同一完成生成锥对应 PSD；若全部标签恒定，则联合秩为一并 $E_\lambda=c_\lambda I$。
+
+证明。将 III150.3 的有限维等距转移与 ready 下降用于同一个 $X_a$，得到共同连续行映射，其每个标签响应 $q_\lambda$ 连续。每个标签也可视为该联合行的坐标商，继承有限秩、统计回返及 uniform ready-return。(18.3) 因而逐标签给同一轨道关系，定理 16.3 得 $E_\lambda$。式 (18.2) 在实际字上给 $\operatorname {Tr}((\sum_\Lambda E_\lambda-I)P_{K_ae_0})=0$，再由原密度和秩一投影张成得到 (18.4)。联合版本的 (17.9) 是
+$Z\mapsto(\operatorname {Tr}Z,(\operatorname {Tr}(K_f^*E_\lambda K_fZ))_{(\lambda,f)})$；任一非标量 $E_\lambda$ 就使它单射，原 ready 密度与 (17.10) 的论证给相同 $d^2$ 秩和完成锥。全恒定时只有常数方向。原 $N_w$ 恒等式、投影存在或抽象 POVM 没有被用来构造实际菜单；将 $E_w$ 进一步识别为旧 $N_w$ 仍须各旧标签的事件合同与标定。证毕。
+

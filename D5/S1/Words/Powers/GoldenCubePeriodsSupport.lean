@@ -1,10 +1,21 @@
 /- GID: D5/S1/Words/Powers/GoldenCubePeriodsSupport
    generality: I
-   mirror-B: none(waiver:formal-kernel-cube-period-necessity)
+   mirror-B: D5/B/S1/Words/Powers/GoldenCubePeriodsSupport
    mirror-E: none(waiver:kernel-small-cases-in-formal-module)
    anchors: []
    digest: Internal Zeckendorf and rotation support for golden cube periods. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/26320 -/
+
+import D5.S1.Words.GoldenFactorComplexity
+import D5.S1.Words.GoldenMechanicalWord
+import D5.S1.Words.Powers.WordPower
+import D5.S1.Words.ReturnWords.GoldenArcFirstReturnCore
+import D5.S1.Words.ReturnWords.GoldenGapFirstReturn
+import D5.S1.Words.ReturnWords.GoldenOccurrenceGaps
+import D5.S1.Words.ReturnWords.GoldenRankArcs
+import D5.S1.Words.ReturnWords.GoldenReturnWords
+import D5.S1.Words.ReturnWords.RotationGapArcs
 import D5.S1.Words.Powers.GoldenFourthPower
 import D5.S1.Words.ReturnWords.GoldenArcFirstReturn
 import D5.S0.Conventions.WDigits
@@ -23,7 +34,7 @@ local instance : IsTrans Nat (fun a b => b + 2 ≤ a) where
 private def conjugateError (n : Nat) : Real :=
   ((wdigits n).map fun q => Real.goldenConj ^ q).sum
 
-private theorem inv_golden_sq_add_inv_golden :
+theorem inv_golden_sq_add_inv_golden :
     Real.goldenRatio⁻¹ ^ 2 + Real.goldenRatio⁻¹ = 1 := by
   rw [Real.inv_goldenRatio]
   nlinarith [Real.goldenConj_sq]

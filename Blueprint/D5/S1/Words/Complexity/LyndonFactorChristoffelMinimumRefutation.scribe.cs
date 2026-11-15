@@ -14,15 +14,6 @@ internal sealed class LyndonFactorChristoffelMinimumRefutationDocument : IScribe
         "A binary Lyndon word of length 506 has sixteen distinct Lyndon factors, fewer than every Christoffel word of that length.",
         H("Christoffel words need not attain the Lyndon-factor minimum"),
         Blocks(
-            Node("factor", "Contiguous factors", FactorFormula(),
-                "Section 1, p. 1: “A finite word z is said to be a factor of a given finite word w if there exist words u, v such that w = uzv.” Positions start at zero. The displayed list drops i letters and takes l letters from the finite word; occurrences counted below satisfy 1 ≤ l and i + l ≤ n.",
-                AssessedProvenance.FromLiterature(Source)),
-            Node("lyndonOccurrences", "Lyndon-factor occurrences", OccurrencesFormula(),
-                "Section 1, p. 2: “A Lyndon word over Σ is a non-empty primitive word that is the lexicographically least word in its conjugacy class, i.e., w ∈ Σ or w < vu for all non-empty words u, v such that w = uv (e.g., see [10]).” IsLyndon is the rotation predicate on lists. The finite set records every valid nonempty occurrence, including repeated occurrences of the same factor and the whole word when it is Lyndon.",
-                AssessedProvenance.FromLiterature(Source)),
-            Node("distinctLyndon", "Distinct Lyndon factors", DistinctFormula(),
-                "Section 5, p. 8: “Let L(w) denote the number of distinct Lyndon factors in a word w.” Taking the image of the occurrence set before its cardinality counts equal factor lists once. Single letters and the whole Lyndon word are included. Section 6, p. 9 gives aaabaaabaab with seven distinct Lyndon factors and aababababab with eight.",
-                AssessedProvenance.FromLiterature(Source)),
             Node("christoffel", "Lower Christoffel words", ChristoffelFormula(),
                 "Section 5, p. 8: “The so-called Christoffel word of slope p/q beginning with the letter a is the unique Sturmian Lyndon word over {a, b} of length q containing p occurrences of the letter b, given by:” followed by aPal(v)b. Here a = 0 < 1 = b, the denominator is n, and the lower mechanical word uses natural-number floor division and truncated subtraction. The parameters used in the question satisfy 0 < p < n and Nat.Coprime p n. The formula reproduces the source's slopes 3/11, 5/11, and 11/28.",
                 AssessedProvenance.FromLiterature(Source)),
@@ -62,43 +53,9 @@ internal sealed class LyndonFactorChristoffelMinimumRefutationDocument : IScribe
     private static Formula Nats() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Fn(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
+
     private static Formula Lam(Formula x, Formula type, Formula body) =>
         Parenthesized(Seq(x, Colon, Sp, type, Sp, Mapsto, Sp, body));
-    private static Formula Proj(Formula p, Formula digit) => Seq(p, Dot, digit);
-    private static Formula WordParameters(Formula body)
-    {
-        Formula sigma = SigmaLower, n = F.Id("n"), w = F.Id("w");
-        return All(sigma, Nats(), All(n, Nats(), All(w, Fn(Fin(n), Fin(sigma)), body)));
-    }
-
-    private static Formula FactorFormula()
-    {
-        Formula n = F.Id("n"), w = F.Id("w"), i = F.Id("i"), l = F.Id("l");
-        return Disp(WordParameters(All(i, Nats(), All(l, Nats(),
-            Equal(Call("factor", w, i, l),
-                Call("List.take", l, Call("List.drop", i, Call("List.map", w, Call("List.finRange", n)))))))));
-    }
-
-    private static Formula OccurrencesFormula()
-    {
-        Formula n = F.Id("n"), w = F.Id("w"), p = F.Id("p");
-        Formula i = Proj(p, D(1)), l = Proj(p, D(2));
-        Formula condition = And(Le(D(1), l), And(Le(new Formula.Binary(i, FormulaBinaryOperator.Add, l), n),
-            Call("IsLyndon", Call("factor", w, i, l))));
-        Formula pairs = Call("Finset.product", Call("Finset.range", n),
-            Call("Finset.range", new Formula.Binary(n, FormulaBinaryOperator.Add, D(1))));
-        return Disp(WordParameters(Equal(Call("lyndonOccurrences", w),
-            Call("Finset.filter", Lam(p, Seq(Nats(), Sp, Times, Sp, Nats()), condition), pairs))));
-    }
-
-    private static Formula DistinctFormula()
-    {
-        Formula w = F.Id("w"), p = F.Id("p");
-        return Disp(WordParameters(Equal(Call("distinctLyndon", w),
-            Call("Finset.card", Call("Finset.image",
-                Lam(p, Seq(Nats(), Sp, Times, Sp, Nats()), Call("factor", w, Proj(p, D(1)), Proj(p, D(2)))),
-                Call("lyndonOccurrences", w))))));
-    }
 
     private static Formula ChristoffelFormula()
     {

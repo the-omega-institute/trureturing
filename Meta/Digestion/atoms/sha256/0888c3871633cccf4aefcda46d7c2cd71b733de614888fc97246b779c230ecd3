@@ -1,0 +1,29 @@
+**实际仪器、Kraus 与两个预算。** 仅在各事件已经由自己的合法入口取得 CP 后，
+成熟矩形 Choi/Kraus 表示给
+
+$$
+ (\Phi_e(x))_j=\sum_{i,\nu}K_{e,ji\nu}x_iK_{e,ji\nu}^*,
+ \qquad K_{e,ji\nu}:\mathbb C^{n_i}\to\mathbb C^{m_j}.
+\tag{28.9}
+$$
+
+原完整输入输出类型、实际分支、参考、旁观者、记录、顺序接线、原同族真粗粒化、共同重置补全和输入行一致条件全部保留。
+未校准时不能删去局部及联合两个预算；以原滤波权 $u_{ik}$ 表示，它们分别为
+
+$$
+ \sum_{e,j}F^e_{ji}\le I_i,\qquad
+ \sum_{e,j}F^e_{ji}\otimes u_{jk}\le I_i\otimes u_{ik},
+ \qquad F^e_{ji}=\sum_\nu K_{e,ji\nu}^*K_{e,ji\nu}.
+\tag{28.10}
+$$
+
+$u_{ik}$ 不是概率单位。校准后 $u_{ik}=I_k$；同一实际完整菜单 $\mathcal M$ 的原局部及联合 TP 合同
+才给每输入块的完整等式
+
+$$
+ \sum_{e\in\mathcal M,j,\nu}K_{e,ji\nu}^*K_{e,ji\nu}=I_i.
+\tag{28.11}
+$$
+
+次单位、单分支 TNI 或矩阵分解的存在均不供应这份实际全菜单及其失败互补。
+

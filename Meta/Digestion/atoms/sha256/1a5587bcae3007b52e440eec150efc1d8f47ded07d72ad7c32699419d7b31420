@@ -1,0 +1,22 @@
+**命题 11.2（有限秩不是完整比较律）。** 对任意 $d\ge3$，固定单位 $e$，函数
+
+$$
+q_4(y)=\bigl(\operatorname{Tr}(P_eP_y)\bigr)^2
+\tag{11.3}
+$$
+
+连续、非恒定且全未来实秩有限，却不是原 $d$ 维射线上的 Born 效应；所以它的同一完整预测锥不满足 (9.4)。
+
+证明。在 $H_2=\operatorname{Sym}^2(\mathbb C^d)$ 上写 $Y_y=P_y^{\otimes2}$，则
+
+$$
+q_4(gy)=\operatorname{Tr}\bigl(P_e^{\otimes2}U_g^{\otimes2}Y_y
+ (U_g^{\otimes2})^*\bigr),\qquad
+\dim_{\mathbb C}H_2=d(d+1)/2.
+\tag{11.4}
+$$
+
+因此全部 profiles 是有限 Hermitian 空间的线性像，归一化坐标由 $\operatorname{Tr}Y_y=1$ 给出，秩至多 $[d(d+1)/2]^2$。这正属于 GM §2.4 的已知 symmetric-power 有限 OPF 表示。若 $q_4(y)=\operatorname{Tr}(FP_y)$ 且 $0\le F\le I$，在 $e$ 处取一、在全部 $e^\perp$ 射线上取零，迫使 $F=P_e$；但 $y=[(e+z)/\sqrt2]$、$z\perp e$ 单位时，两读数分别为 $1/4$ 和 $1/2$，矛盾。固定半律的失败由定理 9.2 的逆否命题给出。
+
+若在原 $89$ 维矩阵语义上定义终端数学控制 $p_4(a)=q_4([K_ae_0])$，有限秩、统计 $\mathrm R_{10}$ 及 ready 预测回返均成立：前两项分别由 (11.4)、$K_j^{10}=I$ 给出，最后一项由紧射线域一致连续性和所有 $K_f$ 的等距性统一控制全部未来。它说明 (10.2) 不自动供应比较律；并未给出原记录、全部旧有限可靠合同或完整 $\Omega$ 的物理实现。这里也没有把 $H_2$ 的 PSD 效应限制当作 $\operatorname{cone}\operatorname{conv}\{Y_y\}$ 的全部 proper 效应，故不声称某个受限测试版本已通过完整律。∎
+

@@ -29,23 +29,23 @@ def zeta : ℂ := Complex.exp ((3*Real.pi/5 : ℝ) * Complex.I)
 /-- The source's relative phase on the P branch. -/
 def phase : ℂ := (Complex.exp ((3*Real.pi/5 : ℝ) * Complex.I)) ^ (-3 : ℤ)
 
-private theorem x_properties : 0 < x ∧ x < 1 ∧ x+x^2=1 := by
+theorem x_properties : 0 < x ∧ x < 1 ∧ x+x^2=1 := by
   refine ⟨inv_pos.mpr Real.goldenRatio_pos, inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio, ?_⟩
   rw [x, Real.inv_goldenRatio]
   nlinarith [Real.goldenConj_sq]
 
 variable {d : ℕ}
 
-private def block (P : Matrix (Fin d) (Fin d) ℂ) (a b : ℂ) := a • (1-P) + b • P
+def block (P : Matrix (Fin d) (Fin d) ℂ) (a b : ℂ) := a • (1-P) + b • P
 
-private theorem block_mul (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P=P) (a b c e : ℂ) :
+theorem block_mul (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P=P) (a b c e : ℂ) :
     block P a b * block P c e = block P (a*c) (b*e) := by
   have hEE : (1-P)*(1-P) = 1-P := by noncomm_ring [hP]
   have hEP : (1-P)*P = 0 := by simp [sub_mul,hP]
   have hPE : P*(1-P) = 0 := by simp [mul_sub,hP]
   simp [block,add_mul,mul_add,Matrix.smul_mul,Matrix.mul_smul,hEE,hEP,hPE,hP,smul_smul,mul_comm]
 
-private theorem block_star (P : Matrix (Fin d) (Fin d) ℂ) (hP : P.IsHermitian) (a b : ℂ) :
+theorem block_star (P : Matrix (Fin d) (Fin d) ℂ) (hP : P.IsHermitian) (a b : ℂ) :
     (block P a b).conjTranspose = block P (star a) (star b) := by
   simp [block,Matrix.conjTranspose_smul,hP.eq]
 

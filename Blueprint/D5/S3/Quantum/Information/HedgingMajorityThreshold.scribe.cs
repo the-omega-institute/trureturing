@@ -64,6 +64,15 @@ internal sealed class HedgingMajorityThresholdDocument : IScribeDocumentDefiniti
                     + "numbers. The assertion concerns strict majorities; it makes no "
                     + "characterization for k <= n/2."),
             Describe.Lean(
+                DescribeId.Create("hedging-retained-trace"),
+                DeclarationHandle.Create(Prefix + "trace_retained"),
+                H("The trace pairing of a retained observable"),
+                StatementSource.FromAuthor(Disp(RetainedTraceFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The joint trace of an observable on the second factor equals its trace pairing with the partial trace over the first factor."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("hedging-majority-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Certain majority success requires certain single-game success"),
@@ -111,6 +120,22 @@ internal sealed class HedgingMajorityThresholdDocument : IScribeDocumentDefiniti
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula RetainedTraceFormula()
+    {
+        var a = X("A"); var b = X("B"); var x = X("X"); var d = X("D");
+        var multiplication = Seq(LambdaLower, Sp, X("u"), Sp, X("v"), Sp, Mapsto, Sp,
+            Mul(X("u"), X("v")));
+        var kronecker = Seq(Operatorname, Grp(Seq(X("Matrix"), Dot, X("kroneckerMap"))));
+        var body = Equal(Call("trace", Mul(At(kronecker, multiplication,
+            Typed(D(1), MatrixType(a)), d), x)),
+            Call("trace", Mul(d, Call("partialTraceFirst", x))));
+        var instances = Seq(OpenBracket, Call("Fintype", a), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", a), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", b), CloseBracket, Sp);
+        return All(a, Named("Type"), All(b, Named("Type"), Seq(instances,
+            All(x, MatrixType(ProductType(a, b)), All(d, MatrixType(b), body)))));
+    }
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(X(name)));

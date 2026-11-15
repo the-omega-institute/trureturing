@@ -1,0 +1,34 @@
+**定义 16.1（四点、单锚与全轨道关系）。** 固定一个复 Hilbert 空间
+$\mathbb C^d$，其中 $d\ge3$，取正数 $a,b$ 满足 $a^2+b^2=1$，取正交单位向量
+$e_-,e_+$，并置
+
+$$
+\zeta=e^{3\pi i/5},\qquad t=b^2\in(0,1),\qquad
+\psi_k=a e_-+b\zeta^k e_+\quad
+(k\in\{0,5,1,6\}).
+$$
+
+四个向量只代表四个数学射线。令
+
+$$
+\nu=\delta_{[\psi_0]}+\delta_{[\psi_5]}
+      -\delta_{[\psi_1]}-\delta_{[\psi_6]}.
+$$
+
+对连续实函数 $q:\mathbb {CP}^{d-1}\to\mathbb R$，单锚关系是
+
+$$
+\mathcal R_gq:=\nu(q\circ g)=0
+\qquad(g\in\mathrm {PU}(d)).
+\tag{16.1}
+$$
+
+它是同一个固定 ready 回路在所有群平移下的关系，不是变量准备上下文、随机选择、额外状态或整个档案等价。低次数的消去来自
+
+$$
+P_{\psi_0}+P_{\psi_5}=P_{\psi_1}+P_{\psi_6},
+\tag{16.2}
+$$
+
+因为 $\zeta^5=-1$ 且 $\zeta^6=-\zeta$；关键在于同一锚对每个更高次数分量都不恒为零，从而全轨道关系能排除这些分量。
+

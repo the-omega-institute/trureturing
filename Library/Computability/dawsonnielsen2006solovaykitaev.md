@@ -52,3 +52,7 @@ operation set cannot generate a noncommutative unitary group. Finite
 words over a finite discrete menu are countable and do not exactly
 enumerate a continuous unitary group. The continuously parameterized
 FIB menu of Assumption 55.2 is a different resource contract.
+
+## Verified locator
+
+https://arxiv.org/abs/quant-ph/0505030

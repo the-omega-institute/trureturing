@@ -1,0 +1,25 @@
+**定理 26.1（无独立有限秩的原生 Born 判据）。** 在定义 24.1 的固定原来源上，以下两项等价：
+
+$$
+\begin{aligned}
+ &\mathrm R_{10}+\mathrm {UR}
+       +\bigl(x_\epsilon+x_{9^5}=x_9+x_{9^6}\bigr);\\
+ &\exists!\, E=E^*,\quad0\le E\le I_d,\qquad
+       p(a)=\operatorname {Tr}(EP_a)\quad(a\in\mathsf W_{11}).
+\end{aligned}
+\tag{26.1}
+$$
+
+这里的四前缀关系是 (17.3) 的**一个全未来行等式**，不是一个空 future 标量等式。
+有限实际 predictive rank 不在前件中。
+
+证明。定理 25.1 先给连续 $q$。
+严格复用 (17.4)–(17.6) 的原门、$e_0=J(v\otimes|0\rangle)$ 及 $t=\varphi^{-1}$：
+四个实际前缀 $\epsilon,9^5,9,9^6$ 的射线正是定义 16.1 的四点，且
+$a=\varphi^{-1}=\sqrt{1-t}$、$b=\sqrt t$。
+逐 future 的行关系遂给 $\nu(q\circ[K_f])=0$；原 future 群在 $\mathrm {PU}(89)$ 中稠密，
+$q$ 连续，把等式延拓到全部群元素。定理 16.3 直接给唯一 $0\le E\le I$。
+该定理已经处理任意连续 $q$，不需要有限次数或有限函数秩；本处不重做谐和分类。
+反向，Born 函数连续，定理 25.1 给 $\mathrm R_{10}+\mathrm {UR}$；
+投影恒等式 (16.2) 经每个 $K_f$ 共轭后与 $E$ 配对，给整个四前缀行等式。证毕。
+

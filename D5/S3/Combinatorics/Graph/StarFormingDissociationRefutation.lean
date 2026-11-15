@@ -129,26 +129,30 @@ theorem starForming_two_iff (G : SimpleGraph V) [DecidableRel G.Adj]
 def claim : Prop := ∀ (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
   G.Colorable 2 → beta G 2 = SF G 2
 
-private def edges : Finset (Fin 10 × Fin 10) :=
+/-- The original sixteen-edge H₀ certificate, reused by port compositions. -/
+def edges : Finset (Fin 10 × Fin 10) :=
   {(0,5), (0,6), (0,9), (1,5), (1,6), (1,8), (2,8), (2,9),
    (3,6), (3,7), (3,8), (3,9), (4,5), (4,7), (4,8), (4,9)}
 
-private def counterGraph : SimpleGraph (Fin 10) where
+/-- The original ten-vertex bipartite counterexample H₀. -/
+def counterGraph : SimpleGraph (Fin 10) where
   Adj i j := (i, j) ∈ edges ∨ (j, i) ∈ edges
   symm := ⟨fun _ _ h => h.symm⟩
   loopless := ⟨by intro i h; fin_cases i <;> simp [edges] at h⟩
 
-private instance : DecidableRel counterGraph.Adj :=
+instance : DecidableRel counterGraph.Adj :=
   inferInstanceAs (DecidableRel (fun i j => (i, j) ∈ edges ∨ (j, i) ∈ edges))
 
-private def selected : Finset (Fin 10) := {0, 1, 2, 5, 6, 7}
+/-- The original minimal six-set, with selected attachment ports 0 and 5. -/
+def selected : Finset (Fin 10) := {0, 1, 2, 5, 6, 7}
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 2000000 in
 -- Expand and independently verify all 1024 subset implications.
-/-- The bipartite equality fails: beta is at most five, while a minimal
-2-star-forming set has six vertices. -/
-theorem result : ¬ claim := by
+/-- The original H₀ certificates, exposed for exact composition consumers.
+No graph, selection, or finite checking argument is replaced. -/
+theorem h0_properties : counterGraph.Colorable 2 ∧
+    IsMinimalStarForming counterGraph 2 selected ∧ beta counterGraph 2 ≤ 5 := by
   have coloring : counterGraph.Colorable 2 := by
     refine ⟨SimpleGraph.Coloring.mk (fun v => if v.val < 5 then 0 else 1) ?_⟩
     change ∀ i j : Fin 10, counterGraph.Adj i j →
@@ -196,6 +200,11 @@ theorem result : ¬ claim := by
     exact lt_of_le_of_lt
       (Finset.card_le_card (Finset.filter_subset_filter (counterGraph.Adj v) hTI))
       (hi v (hTI hv))
+  exact ⟨coloring, minimal, upper⟩
+
+/-- The bipartite equality fails at the original ten-vertex certificate. -/
+theorem result : ¬ claim := by
+  obtain ⟨coloring, minimal, upper⟩ := h0_properties
   have lower : 6 ≤ SF counterGraph 2 := by
     classical
     have hmem : selected ∈ Finset.univ.powerset.filter

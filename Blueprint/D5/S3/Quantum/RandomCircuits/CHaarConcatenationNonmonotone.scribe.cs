@@ -33,6 +33,9 @@ internal sealed class CHaarConcatenationNonmonotoneDocument : IScribeDocumentDef
                 "hsNormSq", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The concatenation monotonicity assertion", Claim(), ClaimQuote,
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("haar-average-entry", "Entries of the Haar second moment", HaarAverageEntry(),
+                "For a finite type of cardinality at least two, every entry of the Haar second moment is the displayed linear combination of the identity and coordinate-swap entries. The formula applies to arbitrary complex matrix-unit indices.",
+                "haarAverageEntry", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("result", "The concatenation assertion is false", new Formula.Not(Call("claim")),
                 "At d = e = t = 2 the fourth power has squared norm 1213852/1171875, and the fifth has squared norm 30362908/29296875. Their difference is 5536/9765625, which is positive. In the rational identity/swap basis, the decaying eigenmode coexists with a growing coefficient towards a non-orthogonal limiting projection.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -82,6 +85,31 @@ internal sealed class CHaarConcatenationNonmonotoneDocument : IScribeDocumentDef
         return All("i",F.Id("Type"),Instance(Call("Fintype",i),
             All("M",MatrixOf(i),Eqn(Call("hsNormSq",m),sum))));
     }
+    private static Formula HaarAverageEntry()
+    {
+        Formula n = F.Id("n"), r = F.Id("r"), c = F.Id("c");
+        Formula r1 = Proj(r, 1), r2 = Proj(r, 2), c1 = Proj(c, 1), c2 = Proj(c, 2);
+        Formula size = Cast(QCall("Fintype.card", n), Complex());
+        Formula denominator = Sub(Pow(size, D(2)), D(1));
+        Formula dc = Call("ite", Eqn(c2, c1), Cast(D(1), Complex()), D(0));
+        Formula dr = Call("ite", Eqn(r2, r1), Cast(D(1), Complex()), D(0));
+        Formula swap = SwapMatrix(n);
+        Formula sc = At(swap, c1, c2), sr = At(swap, r2, r1);
+        Formula rhs = Add(Mul(Div(Sub(dc, Div(sc, size)), denominator), dr),
+            Mul(Div(Sub(sc, Div(dc, size)), denominator), sr));
+        Formula pair = Product(Product(n, n), Product(n, n));
+        return Generic(All("r", pair, All("c", pair,
+            Implies(Leq(D(2), QCall("Fintype.card", n)),
+                Eqn(QCall("D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage", n, r, c), rhs)))));
+    }
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
+    private static Formula SwapMatrix(Formula n) => At(
+        Seq(Operatorname,Grp(F.Id("Equiv"),Dot,F.Id("Perm"),Dot,F.Id("permMatrix"))),
+        Complex(), QCall("Equiv.prodComm", n, n));
+    private static Formula Generic(Formula body) => All("n",F.Id("Type"),
+        Instance(Call("Fintype",F.Id("n")), Instance(Call("DecidableEq",F.Id("n")), body)));
     private static Formula Nat() => Seq(Mathbb,Grp(F.Id("N")));
     private static Formula Complex() => Seq(Mathbb,Grp(F.Id("C")));
     private static Formula Fin(Formula n) => Call("Fin",n);

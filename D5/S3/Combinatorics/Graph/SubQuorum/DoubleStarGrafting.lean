@@ -60,7 +60,9 @@ noncomputable instance {V : Type*} [DecidableEq V] (F : SimpleGraph V) [Decidabl
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
-private theorem independent_iff {W : Type*} [Fintype W] [DecidableEq W]
+/-- Dissociation means that two selected neighbors of a selected vertex coincide.
+This is also the relation-level predicate used by graph-cover arguments. -/
+theorem independent_iff {W : Type*} [Fintype W] [DecidableEq W]
     (G : SimpleGraph W) [DecidableRel G.Adj] (S : Finset W) :
     IsKIndependent G 2 S ↔ ∀ v ∈ S, ∀ a ∈ S, ∀ b ∈ S,
       G.Adj v a → G.Adj v b → a = b := by

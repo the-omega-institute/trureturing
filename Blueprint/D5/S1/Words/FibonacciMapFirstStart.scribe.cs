@@ -13,7 +13,8 @@ internal sealed class FibonacciMapFirstStartDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Locate the first longest monochromatic progression at every Fibonacci difference.",
         H("First Starts at Fibonacci Differences"),
-        Blocks(
+        Blocks(Describe.Lean(DescribeId.Create("cassaigne-owner-fibonacci-one-sided-records"), DeclarationHandle.Create("D5/S1/Words/FibonacciMapFirstStart.fibonacci_one_sided_records"), H("fibonacci one sided records"), StatementSource.FromAuthor(Disp(All(Q("m"), Q("Nat"), Seq(Parenthesized(Seq(D(2), Sp, Leq, Sp, Q("m"))), Rightarrow, Seq(Parenthesized(Seq(Q("Odd"), Sp, Q("m"), Sp, To, Sp, Forall, Sp, Q("k"), Sp, Colon, Sp, Q("Nat"), Sp, Comma, Sp, D(0), Sp, Lt, Sp, Q("k"), Sp, To, Sp, Q("k"), Sp, Lt, Sp, Q("Nat.fib"), Sp, Parenthesized(Seq(Q("m"), Sp, Plus, Sp, D(2))), Sp, To, Sp, new Formula.Power(new Formula.Apply(Q("Inv.inv"), [Q("Real.goldenRatio")]), Q("m")), Sp, Leq, Sp, Q("Int.fract"), Sp, Parenthesized(Seq(Parenthesized(Seq(Q("k"), Sp, Colon, Sp, Q("Real"))), Sp, Cdot, Sp, Q("Real.goldenRatio"))))), Sp, Land, Sp, Parenthesized(Seq(Q("Even"), Sp, Q("m"), Sp, To, Sp, Forall, Sp, Q("k"), Sp, Colon, Sp, Q("Nat"), Sp, Comma, Sp, D(0), Sp, Lt, Sp, Q("k"), Sp, To, Sp, Q("k"), Sp, Lt, Sp, Q("Nat.fib"), Sp, Parenthesized(Seq(Q("m"), Sp, Plus, Sp, D(2))), Sp, To, Sp, new Formula.Power(new Formula.Apply(Q("Inv.inv"), [Q("Real.goldenRatio")]), Q("m")), Sp, Leq, Sp, D(1), Sp, Minus, Sp, Q("Int.fract"), Sp, Parenthesized(Seq(Parenthesized(Seq(Q("k"), Sp, Colon, Sp, Q("Real"))), Sp, Cdot, Sp, Q("Real.goldenRatio")))))))))), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The displayed formula holds for the stated real parameters and natural indices. Natural subtraction is truncated; all casts retain their displayed codomains."))), DescribeRole.Theorem),
+
             Describe.Lean(
                 DescribeId.Create("fibonacci-map-first-start-definition"),
                 DeclarationHandle.Create(Prefix + "goldenMAPFirstStart"),
@@ -177,4 +178,7 @@ internal sealed class FibonacciMapFirstStartDocument : IScribeDocumentDefinition
         new Formula.Logic(left, FormulaLogicOperator.And, right);
     private static Formula Implies(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+
+    private static Formula Q(string name) => Seq(Operatorname, Grp(Seq([.. name.Split('.').SelectMany((part, index) => index == 0 ? new Formula[] { F.Id(part) } : new Formula[] { Dot, part is "1" ? D(1) : F.Id(part) })])));
+    private static Formula All(Formula variable, Formula type, Formula body) => Seq(Forall, Sp, variable, Colon, Sp, type, Comma, Sp, body);
 }

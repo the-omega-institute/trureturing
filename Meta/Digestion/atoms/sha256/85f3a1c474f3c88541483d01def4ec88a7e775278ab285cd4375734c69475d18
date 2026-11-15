@@ -1,0 +1,33 @@
+**定义与命题 24.3（三个模的精确一致）。** 对 $0\le s\le1$ 定义
+
+$$
+\begin{aligned}
+ \omega_{\rm ret}(s)
+ &=\sup\{\Delta(c,\epsilon):d_{\mathbb P}(P_c,P_e)\le s\},\\
+ \omega_{\rm pair}(s)
+ &=\sup\{\Delta(a,b):d_{\mathbb P}(P_a,P_b)\le s\},\\
+ \omega_{\rm scalar}(s)
+ &=\sup\{|p(a)-p(b)|:d_{\mathbb P}(P_a,P_b)\le s\}.
+\end{aligned}
+\tag{24.7}
+$$
+
+上确界都只取原实际字，集合非空，值在 $[0,1]$；不要求上确界由实际字取得。
+在统计 $\mathrm R_{10}$ 下，对每个 $s$ 精确有
+
+$$
+ \omega_{\rm ret}(s)=\omega_{\rm pair}(s)=\omega_{\rm scalar}(s).
+\tag{24.8}
+$$
+
+证明。式 (24.6) 把每个 pair 候选搬到同一距离的 return 候选，故
+$\omega_{\rm pair}\le\omega_{\rm ret}$；取 $b=\epsilon$ 得反向。
+空 future 坐标给 $\omega_{\rm scalar}\le\omega_{\rm pair}$。
+反向，对每个共同 future $f$，$a f,b f$ 仍是实际字，且
+$d_{\mathbb P}(P_{af},P_{bf})=d_{\mathbb P}(P_a,P_b)$。
+因此每个坐标差 $|p(af)-p(bf)|$ 都不超过同一 $\omega_{\rm scalar}(s)$；
+取全部 future 上确界即得剩余不等式。证毕。
+
+这把一个固定 ready 附近的全未来关系，精确接成任意两个实际前缀之间的全局统一关系。
+它不依赖 $\mathrm {UR}$、有限容量或 Born；这些模此时仍可能在 $s=0$ 为正，或在零附近不趋零。
+

@@ -1,0 +1,27 @@
+**定义 10.1（不变的来源与回返前件）。** 保留原唯一 $\Omega$，取 III150.1 的同一个 $\mathcal K=V_{12}^{\mathbf1}$、$\dim_{\mathbb C}\mathcal K=89$、唯一 ready $e_0=R_0v$、$\chi_a=K_ae_0$、原事件 $A=\{b_1=1\}$、原 $Q=N_A$。所有实际程序、全体 $1024$ 个旧终端标签、实际历史及档案、失败、拒绝、停止、告警和 Return 域均保持原样；普通因果归一律和理想、有限、成本、可靠性合同各守其原范围。此处预终端相干未来准确为
+
+$$
+\mathsf W_{11}=\{0,\ldots,10\}^{<\infty},\qquad
+p(a)=P_{\mathsf T(a)}(A),\qquad
+x_a=\bigl(1,(p(af))_{f\in\mathsf W_{11}}\bigr),\qquad
+V_{\mathrm w}=\operatorname{span}_{\mathbb R}\{x_a\},\quad
+K_{af}=K_fK_a.
+\tag{10.1}
+$$
+
+这不是记录后七地址未来；$\mathsf R(a,h)$ 的 $h\in\{0,\ldots,6\}^{<\infty}$ 仍保持原域。要求的实际统计前件恰为 III (150.4)–(150.5)：
+
+$$
+\begin{aligned}
+r:=\dim_{\mathbb R}V_{\mathrm w}&<\infty,\\
+p(aj^{10}f)&=p(af)
+ &&(a,f\in\mathsf W_{11},\ 0\le j\le10),\\
+d_{\mathbb P}([\chi_{a_n}],[e_0])\to0
+&\ \Longrightarrow\ \|x_{a_n}-x_\epsilon\|_\infty\to0
+ &&((a_n)\text{ 是任意实际有限字序列}).
+\end{aligned}
+\tag{10.2}
+$$
+
+第二行是统计 $\mathrm R_{10}$，不由 $K_j^{10}=I$ 代付。第三行只在原 ready 回返纤维上提出，不另添全域概率连续假设。有限秩不预设为 $7921$，更不由 $89$ 个复振幅自动推出。
+

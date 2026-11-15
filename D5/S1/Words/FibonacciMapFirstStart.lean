@@ -6,6 +6,8 @@
    utility: none
    digest: Least starts of longest Fibonacci-word monochromatic progressions. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/26320 -/
+
 import D5.S1.Words.FibonacciMapBound
 import D5.S1.Scale.Fibonacci
 import D5.S1.Deficit.Displacement.GoldenSubstStartSharpness
@@ -24,7 +26,7 @@ noncomputable def goldenMAPFirstStart (d : ℕ) : ℕ :=
     ∀ k < goldenMAPMaximum d, goldenWord (j + k * d) = symbol}
 
 /-- The forward and backward Fibonacci displacements exclude every smaller denominator. -/
-private theorem fibonacci_one_sided_records (m : ℕ) (hm : 2 ≤ m) :
+theorem fibonacci_one_sided_records (m : ℕ) (hm : 2 ≤ m) :
     (Odd m → ∀ k : ℕ, 0 < k → k < Nat.fib (m + 2) →
       Real.goldenRatio⁻¹ ^ m ≤ Int.fract ((k : ℝ) * Real.goldenRatio)) ∧
     (Even m → ∀ k : ℕ, 0 < k → k < Nat.fib (m + 2) →

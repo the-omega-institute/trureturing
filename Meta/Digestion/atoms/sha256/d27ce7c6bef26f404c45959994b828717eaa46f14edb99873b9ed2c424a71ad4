@@ -1,0 +1,39 @@
+**命题 26.3（Born 后的精确全未来距离）。** 令
+$\Delta_E=\lambda_{\max}(E)-\lambda_{\min}(E)$。对全部数学纯投影 $P,Q$ 有
+
+$$
+ \|\Phi(P)-\Phi(Q)\|_\infty
+   =\sup_{g\in\mathrm {PU}(d)}
+       |\operatorname {Tr}(E g(P-Q)g^*)|
+   =\Delta_E\,d_{\mathbb P}(P,Q).
+\tag{26.7}
+$$
+
+尤其 $\Delta(a,b)=\Delta_E d_{\mathbb P}(P_a,P_b)$，且对每个 $0\le s\le1$，
+
+$$
+ \omega_{\rm ret}(s)=\omega_{\rm pair}(s)
+       =\omega_{\rm scalar}(s)=\Delta_E s.
+\tag{26.8}
+$$
+
+证明。全 future 与全群的上确界相同，来自 (25.2)、原群密度及矩阵迹函数的连续性。
+若 $P=Q$，等式为零。否则 $P-Q$ 只有两个非零特征值 $+s,-s$，
+其中 $s=d_{\mathbb P}(P,Q)$；取对应正交单位向量后，酉共轭下的迹值写成
+$s(\langle u,Eu\rangle-\langle v,Ev\rangle)$。
+Rayleigh 商给绝对值至多 $s\Delta_E$。
+将正、负特征向量分别对齐 $E$ 的最大、最小特征向量，就在全酉群达到此界；
+这给 (26.7)，而原实际 futures 的上确界由密度取得同一值，不要求某个实际字恰好达到。
+
+固定 ready 后，整个射影空间上的距离取遍 $[0,1]$。
+对 $s>0$ 先取距离 $s'<s$ 的数学射线，再由实际密度逼近，充分近时距离仍小于 $s$；
+(26.7) 使 return 行差逼近 $\Delta_Es'$，最后令 $s'\uparrow s$。
+这给 $\omega_{\rm ret}(s)\ge\Delta_Es$；反向由 (26.7) 直接得到。
+$s=0$ 由同射线充分性成立，再用 (24.8) 得其余两模。证毕。
+
+这是同一模型的精确全未来度量恒等式，不是噪声稳定性界、有限实验认证或实际有限采样结论。
+$\Delta_E=0$ 时所有行塌缩；只有再支付 (10.9) 的旧事件不变性
+$p(aj)=p(a)$（$2\le j\le10$）及两项标定
+$q(P_e)=0$、$q(P_{e_1^{\rm cal}})=1$，才能沿 (10.10) 识别 $E=Q$，此时 $\Delta_Q=1$。
+两项标定不单独识别旧 $Q$；它们也没有把 $e_1^{\rm cal}$ 变成新 ready。
+

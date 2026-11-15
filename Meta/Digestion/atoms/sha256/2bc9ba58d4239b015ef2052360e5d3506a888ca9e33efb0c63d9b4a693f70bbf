@@ -1,0 +1,66 @@
+**推论 26.2（容量、同一完成锥及原完整半比较）。** 在 (26.1) 下定义已有映射
+
+$$
+ \iota_E(Z)=\left(\operatorname {Tr}Z,
+       (\operatorname {Tr}(EK_f ZK_f^*))_{f\in\mathsf W_{11}}\right),
+ \qquad Z\in\operatorname {Herm}_d(\mathbb C).
+\tag{26.2}
+$$
+
+所有原实际行已满足 $x_a=\iota_E(P_a)$，所以 $V$ 是有限维像的子空间，有限容量由此成为结论。
+若 $E$ 非标量，则
+
+$$
+ V=\widehat V=\iota_E(\operatorname {Herm}_d),\qquad
+ r=d^2=7921,
+\tag{26.3}
+$$
+
+且在原 $\ell^\infty$ 拓扑内
+
+$$
+ \overline{\operatorname {cone}\{x_a\}}
+       =\iota_E(\operatorname {PSD}_d),\qquad
+ \overline{\operatorname {conv}\{x_a\}}
+       =\iota_E\{\rho\ge0:\operatorname {Tr}\rho=1\},\qquad
+ u\iota_E=\operatorname {Tr}.
+\tag{26.4}
+$$
+
+证明。式 (26.2) 连续，因为 $0\le K_f^*EK_f\le I$，统一有
+$|\operatorname {Tr}(EK_fZK_f^*)|\le\|Z\|_1$。
+有限维定义域使其像有限维、闭合，故 $V\subseteq\operatorname {ran}\iota_E$ 已足以证明 $V$ 有限维。
+要取得准确等式，可以先在已知有限维的 **Hermitian 定义域** 取
+$W_P=\operatorname {span}_{\mathbb R}\{P_a\}\subseteq\operatorname {Herm}_d$。
+$W_P$ 是有限维子空间，故闭合；原 ready 射线密度使它包含每个秩一投影。
+秩一投影实张成全部 Hermitian 空间，因此 $W_P=\operatorname {Herm}_d$，从而
+$V=\iota_E(W_P)=\operatorname {ran}\iota_E$。
+这一步没有在 Born 取得前调用 $V$ 的有限维闭性。
+
+非标量时直接复用 (17.9) 后的 adjoint-orbit 张成论证：
+$E_0=E-(\operatorname {Tr}E)I/d\ne0$ 的整个酉共轭轨道张成迹零 Hermitian 空间；
+原 future 密度与星坐标 $\operatorname {Tr}Z$ 合起来使 $\iota_E$ 单射。
+于是其像维数为 $d^2$。同一密度、有限谱分解及有限维像的闭性给 (26.4)，正是 (17.10) 的同锥识别。
+标量情形 $E=cI$ 则所有实际行都是同一个非零行，$r=1$，完成锥只是一条射线。证毕。
+
+非标量分支的整个数学 proper 区间由迹配对精确对应 $0\le F\le I$。
+它不是把原行锥改成逐坐标非负锥，也不只比较纯样本。
+严格保留 (17.11) 的**最小确认**定义：对纯投影 $P$ 及整个完成密度基中的任意 $\rho$，
+
+$$
+ T_P(\rho)=\min_{0\le F\le I,\ \operatorname {Tr}(FP)=1}
+                 \operatorname {Tr}(F\rho)=\operatorname {Tr}(P\rho).
+\tag{26.5}
+$$
+
+理由是确认 $P$ 的效果必有 $F=P\oplus F_\perp\ge P$，而 $F=P$ 达到最小值。
+故对任意纯投影 $S$ 和任意原完成基的混态余项 $\rho$，
+
+$$
+ T_P((S+\rho)/2)=\bigl(T_S(P)+T_P(\rho)\bigr)/2.
+\tag{26.6}
+$$
+
+这才是 VII9、17 的 full proper、full mixed fixed-half comparison；不以另一条序不等式代替它。
+数学完成仍未供应其中每一点的实际准备或每个 proper 效果的实际菜单。
+

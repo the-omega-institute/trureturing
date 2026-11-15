@@ -14,6 +14,13 @@ internal sealed class ExactDecksGrowthPositiveWordBallDocument : IScribeDocument
         "Actual central digits inject the preceding cutoff ball into the next degree.",
         H("PositiveWordBall"),
         Blocks(
+            Describe.Lean(DescribeId.Create("scatteredcount-singleton-eq-count"),
+                DeclarationHandle.Create("D5/S1/Words/Complexity/ExactDecks/Growth/PositiveWordBall.scatteredCount_singleton_eq_count"),
+                H("scatteredCount singleton eq count"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Open, Seq(Operatorname, Grp(F.Id("A"))), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("Type"))), Close, Sp, OpenBracket, Seq(Operatorname, Grp(F.Id("DecidableEq"))), Sp, Seq(Operatorname, Grp(F.Id("A"))), CloseBracket, Sp, Open, Seq(Operatorname, Grp(F.Id("a"))), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("A"))), Close, Sp, Open, Seq(Operatorname, Grp(F.Id("source"))), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("List"))), Sp, Seq(Operatorname, Grp(F.Id("A"))), Close, Comma, Sp, Seq(Operatorname, Grp(F.Id("scatteredCount"))), Sp, OpenBracket, Seq(Operatorname, Grp(F.Id("a"))), CloseBracket, Sp, Seq(Operatorname, Grp(F.Id("source"))), Sp, Eq, Sp, Seq(Operatorname, Grp(F.Id("source"))), Dot, Seq(Operatorname, Grp(F.Id("count"))), Sp, Seq(Operatorname, Grp(F.Id("a")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The scattered count of a one-letter pattern is its list count."))), DescribeRole.Theorem),
+
             Paragraph(Text(
                 "The exponent uses the cardinalities of actual Lyndon-word subtypes at every "
                 + "degree. The proof combines a complete degree-one letter box with the "

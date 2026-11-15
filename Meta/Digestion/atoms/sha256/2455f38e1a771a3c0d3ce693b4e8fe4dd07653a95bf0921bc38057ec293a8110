@@ -1,0 +1,96 @@
+**定义 20.1（保留原静态包的条件候选）。** 完整候选保留 [PRE 第五卷 (84.37)][PRE8437] 的全部原静态条件：
+
+$$
+\mathrm {PRE}_0^{1/2}+(83.8)+\mathsf C_2+
+\mathsf E_3(R_A;1/2,2/3)+\mathrm A_0+\mathrm H13.
+\tag{20.1}
+$$
+
+这里的 (84.37) 在 `QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md`，不是 native VII 的条目。其中原 half/EJA 基础、(83.8) 的二阶零关系、C2、指定 $R_A$ 和两权重的 E3、A0，以及仅在精确 PRE 后定义的 H13 均保持各自原条件。这个静态包与原 $\mathrm {PRE}+C_{\rm joint}+\mathrm {C13}$ 的同数据等价单独保留，不从 native 结果删减它或推断其实际采用。候选在同一个完整原 $\Omega$ 上再要求：
+
+1. 原 typed source 的唯一 ready、原十一地址 terminal futures 和 (17.3) 的四前缀 one-anchor constraint，并同时保留 III150 的有限实际 predictive rank、$\mathrm R_{10}$、uniform ready-return 及原射影密度；
+2. 对所有已经供应的**同载体**实际事件 $e:A\to A$ 及各实际分支，另供同事件提升满足原 (82.22) 的全部原实输入精确律，供应第 85 章定义 85.3／推论 85.4 的相容纯探针及其中央扇区版本，并要求该同事件提升在所给探针上的整个输出为正；其它输入输出类型的事件保持原 typed 参考／递归参考合同；
+3. 全部原菜单、局部与联合预算、记录、零质量与不等质量、失败坐标和完整 typed 输出保持原合同；已取得的 CP 分支才展开为矩形 Kraus，正质量分支才归一为条件态；
+4. 同一 CP 分支的锐投影效应及对全部确定接受态的逐点 neutrality 作为实际前件，Lüders 更新由它们推出；
+5. 物理时间仍要求真实连续、时间齐次、可逆的 $*$-自同构群，以及原时钟、控制、时间与能量单位和共同 $\hbar$ 的对应；Hamiltonian 形式是这些前件的消费者结论。
+
+**完整量子消费者的逐项回接。** 候选中的消费者按原源位置逐项保留：
+
+- PRE 的态、效应、Born、纯态几何和任意原混态余项继续消费 65–72、79–83 的完整 S、一般有限 EJA 忠实桥及全部静态条件。其有限复表示为
+
+  $$
+  A=\bigoplus_i\operatorname {Herm}_{n_i}(\mathbb C),\qquad
+  \rho_i\ge0,\quad\sum_i\operatorname {Tr}\rho_i=1,\qquad
+  0\le F_i\le I_{n_i},\quad
+  \Pr(F\mid\rho)=\sum_i\operatorname {Tr}(F_i\rho_i).
+  $$
+
+  允许零与不等中心质量、不等维和经典扇区；纯态几何为 $\bigsqcup_i\mathbb {CP}^{n_i-1}$。全态、全效应和原任意混态余项不缩成可准备的纯样本；C2、$\mathsf E_3(R_A;1/2,2/3)$、A0、H13 各守其精确前件。
+- 原二份、三份、偏迹和共同普通方向只在已经供应的原载体上使用。在精确 PRE、联合校准及 H13/C13 的原条件下，原接口的普通坐标为
+
+  $$
+  M(a,b)_{ij}=a_i\otimes b_j,\qquad
+  L(d,c)_{ijk}=d_{ij}\otimes c_k,\qquad
+  (pz)_{jk}=\sum_i\operatorname {Tr}_i z_{ijk}.
+  $$
+
+  原相关联合仍覆盖整个原联合正锥；乘积式不把它缩成可分输入，也不授予独立准备、复制或相干控制。H13 检查同一合格原态的整个输出，不能改成两次独立纯态读数，也不能从一个 native terminal effect 生成另一括号或四份以上共同来源。
+- 对所有已供同载体实际事件及分支，(82.22) 必须在全部原实输入上成立：
+
+  $$
+  P_{E,e}Q(a,b,c)=\alpha_{e,1}Q(\Phi_e a,b,c)
+       +\alpha_{e,2}Q(a,\Phi_e b,c)
+       +\alpha_{e,3}Q(a,b,\Phi_e c),
+  \qquad\alpha_{e,\ell}\ge0,\quad\sum_\ell\alpha_{e,\ell}=1.
+  $$
+
+  原 $Q$ 实张满 $E$ 才唯一规定该同事件提升。在定义 85.3 的每个适用活跃块，令 $S=\{\ell:\alpha_{e,\ell}>0\}$，要求
+
+  $$
+  V_{\psi,\ell}(H)=H^{(\ell)}\psi,\quad
+  \mathbb V_{\psi,S}((H_\ell))=\sum_{\ell\in S}H_\ell^{(\ell)}\psi,
+  \quad\Sigma_S((H_\ell))=\sum_{\ell\in S}H_\ell,
+  \qquad\ker\mathbb V_{\psi,S}\subseteq\ker\Sigma_S.
+  $$
+
+  在单个复矩阵块中，推论 85.4 的共同解码器 $C_\psi V_{\psi,\ell}=I$ 于是给
+  $C_\psi P_{E,e}(\rho_\psi)C_\psi^*=J(\Phi_e)$，故
+  $P_{E,e}(\rho_\psi)\ge0\Longleftrightarrow\Phi_e\text{ CP}$。有限中央扇区 $\mathcal A=\bigoplus_iM_{n_i}(\mathbb C)$（$n_i\ge1$ 可不等，含标量块）使用定义 85.11 的既有 $\Xi_\psi$，其中 $(\Xi_\psi)_{iii}=\beta_iP_{\psi_i}$、$P_{\psi_i}=|\psi_i\rangle\langle\psi_i|$、$\beta_i=n_i/\sum_jn_j>0$，其余中央块为零；每个输入扇区种子满足该事件已固定活跃腿集的完整核条件。定理 85.12 结合定义 85.15 的同事件全部原实输入提升律 (85.30)／(82.22)，按定理 85.16 给出 $P_{E,e}(\Xi_\psi)\ge0\Longleftrightarrow\Phi_e\text{ CP}$，并按推论 85.17 回接原消费者。测试种子的正权不限制原输入，零输入及零与不等中心质量均保留；零腿权不入核条件。这里不把同载体纯探针判据外推到任意矩形／其它类型事件；那些过程继续消费 69.1–69.11、79.8 的原同事件实际参考与精确乘积／递归延拓。数学探针、共同解码器或平均提升均不提供实际探针准备、独立单腿控制、复制、滤器或环境记录。
+- 对已由各自合法入口取得 CP 的实际映射（包括其它输入输出类型），矩形 Choi／Kraus 定理给
+
+  $$
+  (\Phi_e(\rho))_j=\sum_{i,\alpha}
+       K_{e,ji\alpha}\rho_iK_{e,ji\alpha}^*,
+  \qquad K_{e,ji\alpha}:\mathbb C^{n_i}\to\mathbb C^{m_j}.
+  $$
+
+  原每输入扇区正权且足够维数的实际参考、旁观者、记录、乘积延拓及实际同事件合同仍须齐备。校准到普通单位后，单分支 TNI 只给
+  $\sum_{j,\alpha}K_{e,ji\alpha}^*K_{e,ji\alpha}\le I_{n_i}$；同一个实际完整菜单 $\mathcal M$ 的 TP 则要求对每个输入块
+
+  $$
+  \sum_{e\in\mathcal M,j,\alpha}
+       K_{e,ji\alpha}^*K_{e,ji\alpha}=I_{n_i}.
+  $$
+
+  分支 TNI 不代付菜单等式。未校准时，原局部和联合两概率预算、原两侧完整菜单 TP、同族粗粒化、共同重置补全及输入行一致条件均分别保留，不能提前用标准单位消去联合预算。Kraus 矩阵的存在也不生成实际菜单。
+- 输出仍用未归一质量 $m_e(\rho)=\sum_j\operatorname {Tr}(\Phi_e(\rho)_j)$；仅 $m_e(\rho)>0$ 时定义 $\rho_{e,j}=\Phi_e(\rho)_j/m_e(\rho)$。零质量分支保留标签、记录、失败、停止、销毁和未来，不赋条件态。对同一 CP 分支 $\Phi$，若效应是锐投影 $P$，即 $\Phi^*(I)=P$，且对每个支持在 $P$ 上的归一态 $\sigma$ 有逐点 neutrality $\Phi(\sigma)=\sigma$，才推出
+
+  $$
+  \Phi(\rho)=P\rho P,\qquad
+  \rho\longmapsto\frac{P\rho P}{\operatorname {Tr}(P\rho)}
+  \quad\text{仅当 }\operatorname {Tr}(P\rho)>0.
+  $$
+
+  原 CP/Kraus 更新定理的理由是每个 Kraus 算子由锐效应在 $P^\perp$ 上为零，逐点 neutrality 又把其在 $P$ 上的作用锁为恒等映射的标量 Kraus 形式；不能先假设 Lüders 再称由 neutrality 导出。顺序、原同族粗粒化及每个中间切口的条件核继续按原合同使用。
+- 动力学消费者仍要求原物理时间上的连续、齐次、可逆 $*$-自同构群 $\alpha_{t+s}=\alpha_t\alpha_s$、$\alpha_0=I$，以及实际逆、时钟、控制、时间／能量单位和共同 $\hbar$ 对应。连续群不交换有限个中央块；在每个复矩阵块上，连续一参数自同构的生成元是内导子，所以存在 $H_i=H_i^*$，给
+
+  $$
+  U_i(t)=e^{-itH_i/\hbar},\quad
+  \rho_i(t)=U_i(t)\rho_i(0)U_i(t)^*,\qquad
+  \dot\rho_i=-\frac{i}{\hbar}[H_i,\rho_i],
+  \quad H_i\sim H_i+c_iI.
+  $$
+
+  这是上述实际群和单位合同的有限块结论，Hamiltonian 形式不另作为来源假设。离散门密度不供应这样的真实时间群。
+- 原记录、参考、返回和未来消费者继续读取固定来源卷与有限返回卷的完整接口；本候选不构造原 23.7 named acceptance，也不构造 164.1 Bractive-ready。
+

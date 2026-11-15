@@ -4,9 +4,21 @@
 
 Actual central digits inject the preceding cutoff ball into the next degree.
 
+**Theorem 1.1 (scatteredCount singleton eq count).**
+
+$$\forall (\operatorname{A} : \operatorname{Type}) [\operatorname{DecidableEq} \operatorname{A}] (\operatorname{a} : \operatorname{A}) (\operatorname{source} : \operatorname{List} \operatorname{A}), \operatorname{scatteredCount} [\operatorname{a}] \operatorname{source} = \operatorname{source}.\operatorname{count} \operatorname{a}$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/Growth/PositiveWordBall.scatteredCount_singleton_eq_count` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The scattered count of a one-letter pattern is its list count.
+
 The exponent uses the cardinalities of actual Lyndon-word subtypes at every degree. The proof combines a complete degree-one letter box with the multi-scale central digits at higher degrees, always using images of actual positive words rather than an abstract free-coordinate family.
 
-**Definition 1.1 (The actual cutoff-Magnus ball).**
+**Definition 1.2 (The actual cutoff-Magnus ball).**
 
 $$\forall A,r,n, \operatorname{positiveWordBall}\left(A, r, n\right) = \operatorname{image}\left(\operatorname{cutoffMagnus}\left(r\right), \operatorname{wordsWithLengthAtMost}\left(A, n\right)\right)$$
 
@@ -20,7 +32,7 @@ $$\forall A,r,n, \operatorname{positiveWordBall}\left(A, r, n\right) = \operator
 
 For finite A, positiveWordBall A r n is the finite image of cutoffMagnus r on all actual lists over A whose length is at most n.
 
-**Definition 1.2 (Weighted actual Lyndon exponent).**
+**Definition 1.3 (Weighted actual Lyndon exponent).**
 
 $$\forall A,r, \operatorname{weightedLyndonExponent}\left(A, r\right) = \operatorname{sum}\left(\operatorname{range}\left(r + 1\right), \operatorname{lambda}\left(i, i \cdot \operatorname{actualLyndonCount}\left(A, i\right)\right)\right)$$
 
@@ -34,7 +46,7 @@ $$\forall A,r, \operatorname{weightedLyndonExponent}\left(A, r\right) = \operato
 
 For finite linearly ordered A, weightedLyndonExponent A r is sum over i in range(r+1) of i*actualLyndonCount A i; the degree-zero term is present syntactically and vanishes.
 
-**Theorem 1.3 (One central-digit growth step).**
+**Theorem 1.4 (One central-digit growth step).**
 
 $$\forall A,r,m,t,n, r\geq2\land m + \operatorname{baseLength}\left(A, r\right) \cdot \left(\operatorname{pow}\left(2, t\right) - 1\right)\leq n\Rightarrow\operatorname{card}\left(\operatorname{positiveWordBall}\left(A, r, n\right)\right)\geq\operatorname{card}\left(\operatorname{positiveWordBall}\left(A, r - 1, m\right)\right) \cdot \operatorname{pow}\left(\operatorname{digitBase}\left(r\right), t \cdot \operatorname{actualLyndonCount}\left(A, r\right)\right)$$
 
@@ -52,5 +64,6 @@ For degree r>=2, if a radius n accommodates a radius-m representative from degre
 
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/PositiveWordBall.positiveWordBall`
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/PositiveWordBall.positiveWordBall_card_step`
+- Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/PositiveWordBall.scatteredCount_singleton_eq_count`
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/PositiveWordBall.weightedLyndonExponent`
 - Dependency: [D5/S1/Words/Complexity/PositivePairs/Digits/CentralDigitInjection](../../PositivePairs/Digits/CentralDigitInjection.md)

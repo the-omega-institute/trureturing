@@ -11,6 +11,13 @@ internal sealed class SubshiftTopologyDocument : IScribeDocumentDefinition
             + "cardinality continuum.",
         H("Topology and Cardinality of Word Subshifts"),
         Blocks(
+            Describe.Lean(DescribeId.Create("golden-wordfactorset-card"),
+                DeclarationHandle.Create("D5/S1/Words/Complexity/SubshiftTopology.golden_wordFactorSet_card"),
+                H("golden wordFactorSet card"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Open, Seq(Operatorname, Grp(F.Id("n"))), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("Nat"))), Close, Comma, Sp, Open, Seq(Operatorname, Grp(F.Id("wordFactorSet"))), Sp, Seq(Operatorname, Grp(F.Id("goldenWord"))), Sp, Seq(Operatorname, Grp(F.Id("n"))), Close, Dot, Seq(Operatorname, Grp(F.Id("card"))), Sp, Eq, Sp, Seq(Operatorname, Grp(F.Id("n"))), Sp, Plus, Sp, D(1)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The golden word has exactly n + 1 factors of length n."))), DescribeRole.Theorem),
+
             Paragraph(Text(
                 "For a one-sided word x, let X_x contain the infinite words whose prefixes all "
                 + "occur as factors of x. Product cylinders expose both the topology of X_x and "

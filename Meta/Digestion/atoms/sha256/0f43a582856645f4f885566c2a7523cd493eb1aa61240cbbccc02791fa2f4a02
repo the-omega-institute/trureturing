@@ -1,0 +1,38 @@
+**定理 16.3（单锚全次数循环性）。** 连续实函数 $q:\mathbb {CP}^{d-1}\to\mathbb R$ 满足 (16.1) 当且仅当存在唯一 Hermitian 矩阵 $E$ 使
+
+$$
+ q(P)=\operatorname {Tr}(EP).
+\tag{16.6}
+$$
+
+并且 $0\le q\le1$ 当且仅当 $0\le E\le I$。
+
+证明。先看反向。式 (16.2) 说明所有 Hermitian 二次函数均被 $\nu$ 消灭；群作用保持这一恒等式，所以 (16.1) 成立。
+
+正向把 $q$ 看作紧射影空间上、酉不变全支撑概率测度 $\mu$ 的 $L^2$ 函数。球面相位不变性只把双次数限制为 $(j,j)$；中心 $U(1)$ 在每个 $\mathcal H_{(j,j)}$ 上都平凡，不能区分不同 $j$。[Moretti–Pastorello][MP96] Theorem 5(a)–(c) 给出完整球面 $L^2$ 分解、不可约性和互不等价性；取相位不变部分，得到射影空间上
+
+$$
+ L^2(\mathbb {CP}^{d-1},\mu)
+ =\widehat{\bigoplus}_{j\ge0}\mathcal H_j,
+ \qquad\mathcal H_j=\mathcal H_{(j,j)}.
+$$
+
+这也正是 native II (86.3)–(86.4) 由有限多项式分解和 Stone–Weierstrass 稠密性给出的无次数上界版本，其论证对这里的 $d\ge3$ 相同。令 $G=\mathrm {PU}(d)$，$dg$ 为归一化 Haar 测度，$U_gq(y)=q(g^{-1}y)$；记 $\chi_j$ 为 $U$ 在 $\mathcal H_j$ 上的不可约角色。实际使用的是该不可约角色投影
+
+$$
+ q_j=(\dim\mathcal H_j)\int_G\overline{\chi_j(g)}\,U_gq\,dg.
+$$
+
+等价地可在 $U(d)$ 上积分，这就是 MP Proposition 9(8) 的 $(j,j)$ 情形。因 $q$ 连续，此积分给连续函数，代表相应的 $L^2$ 正交投影。对每个 $a\in G$，(16.1) 及 $U_aU_g=U_{ag}$ 给
+
+$$
+ \nu(U_aq_j)=(\dim\mathcal H_j)
+ \int_G\overline{\chi_j(g)}\,\nu(U_{ag}q)\,dg=0.
+$$
+
+若 $j\ge2$ 且 $q_j\ne0$，有限维不可约性使 $q_j$ 的 $G$ 轨道复线性张成整个 $\mathcal H_j$。于是 $\nu$ 在该分量上恒为零；但命题 16.2 的 $H_j$ 给出非零值 (16.4)，矛盾。这一步采用 MP Theorem 10 证明 (10)–(12) 中的轨道张成方法，不把该文的 frame-function 前提当成本定理的前提。所有 $j\ge2$ 分量遂均为零。完整 $L^2$ 分解把 $q$ 留在 $\mathcal H_0\oplus\mathcal H_1$；连续性和 $\mu$ 的全支撑把几乎处处等式提升为逐点等式。没有假定 $q$ 的有限次数或有限函数秩。[Galley–Masanes][GM96] Result 2–3 和 [Masanes–Galley–Müller][MGM96] Appendix A Lemma 7 (48)–(50) 在这里只是有限维／多项式表示的对照，不承担任意连续函数的完备性。
+
+由 MP Lemma 7 的迹零二次型识别，加上常数分量，得到 $q(P)=\operatorname {Tr}(EP)$；实值性给 $E=E^*$。秩一投影实张成 Hermitian 空间，给出唯一性。若再有 $q(P)\in[0,1]$，$E$ 和 $I-E$ 在每个向量上的二次型非负，故 $0\le E\le I$；反向立即成立。证毕。
+
+这一定理的关键是固定四点在第三个复方向上的每一个次数见证；仅有旧的“所有准备上下文”判据，或只写一个可能为零的高次试探式，不能替代 (16.3)–(16.5) 的逐次数循环性。
+
