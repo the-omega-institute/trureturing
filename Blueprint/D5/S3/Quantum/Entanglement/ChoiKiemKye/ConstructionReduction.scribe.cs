@@ -7,6 +7,26 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.ChoiKiemKye;
 internal sealed class ConstructionReductionDocument : IScribeDocumentDefinition
 {
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula RankBlockFormula()
+    {
+        Formula op(string name) => Seq(Operatorname, Grp(F.Id(name)));
+        Formula at(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+        Formula ki = at(Kappa, F.Id("i"));
+        Formula matrix = at(op("Matrix"), ki, ki, Seq(Mathbb, Grp(F.Id("C"))));
+        Formula blocks = at(Seq(op("Matrix"), Dot, op("blockDiagonal"), Apos), F.Id("M"));
+        Formula rank(Formula f) => at(op("rank"), f);
+        return Seq(Forall, Sp, Parenthesized(Seq(Iota, Sp, Colon, Sp, F.Id("Type"), Star)), Comma, Sp,
+            OpenBracket, op("Fintype"), Sp, Iota, CloseBracket, Sp,
+            OpenBracket, op("DecidableEq"), Sp, Iota, CloseBracket, Sp,
+            Forall, Sp, Parenthesized(Seq(Kappa, Sp, Colon, Sp, new Formula.TypeArrow(Iota, Seq(F.Id("Type"), Star)))), Comma, Sp,
+            OpenBracket, Forall, Sp, F.Id("i"), Comma, Sp, at(op("Fintype"), ki), CloseBracket, Sp,
+            OpenBracket, Forall, Sp, F.Id("i"), Comma, Sp, at(op("DecidableEq"), ki), CloseBracket, Sp,
+            Forall, Sp, Parenthesized(Seq(F.Id("M"), Sp, Colon, Sp, Forall, Sp,
+                Parenthesized(Seq(F.Id("i"), Sp, Colon, Sp, Iota)), Comma, Sp, matrix)), Comma, Sp,
+            rank(blocks), Sp, Eq, Sp,
+            new Formula.Subscript(Sum, Seq(F.Id("i"), Sp, Colon, Sp, Iota)), Sp,
+            rank(Parenthesized(at(F.Id("M"), F.Id("i")))));
+    }
     private static Formula MulVecBlockFormula()
     {
         Formula typeStar = Seq(F.Id("Type"), Star);
@@ -49,6 +69,14 @@ internal sealed class ConstructionReductionDocument : IScribeDocumentDefinition
         "Public declarations of ConstructionReduction, with complete parameters and the Lean operations.",
         H("ConstructionReduction"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("rank-block"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.rank_block"),
+                H("Rank of a dependent block diagonal matrix"),
+                StatementSource.FromAuthor(Disp(RankBlockFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For an arbitrary finite family of finite square complex matrix blocks, the block diagonal rank is the sum of the block ranks. The family includes zero-dimensional blocks. The proof identifies its kernel with the product of the block kernels and applies rank-nullity."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("mulvec-block"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.mulVec_block"),

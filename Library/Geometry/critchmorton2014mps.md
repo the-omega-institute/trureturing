@@ -12,6 +12,8 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorEndpointSigns
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality
@@ -205,8 +207,8 @@ No holomorphicity, strict derivative, regularity or finiteness of other zeros,
 or nonzero boundary winding is assumed.
 
 This is conditional ambiguity, not genericity or a solution of C9, and it
-adds **zero** solved-open-problem credit. General endpoint operator limits and
-signs, transversality beyond the fixed witness below, finite canonical-chart coverage and
+adds **zero** solved-open-problem credit. The endpoint signs and fixed-witness
+transversality are supplied below. Transversality beyond that witness, finite canonical-chart coverage and
 dominance, and genericity on the actual state and actual raw-density images
 remain separate obligations. The C8 attribution to Ma and Zhang, CC BY 4.0,
 is unchanged. The topology supplier reuses
@@ -280,3 +282,108 @@ operator limits, polynomial clearance, genericity, or full C9, and adds
 zero solved-open-problem credit. Source attribution for the original MPS
 problem and reused C8 mathematics is unchanged. There is no normalized-state,
 positive physical inverse, clock, dynamics, energy or thermodynamic claim.
+
+
+`OpenBoundaryMPSInteriorEndpointSigns` supplies the general regular-sector annular
+boundary-sign premise, using exactly the existing native `inverseDualTransfer`,
+`trialLeft` and `residual`. For a regular sector put
+$d=|\mu-\lambda|^2$, $a_0=1+|\lambda|^2$, $a_1=1+|\mu|^2$,
+$c=|1+\overline\lambda\mu|^2$, $T=D_{B^*}^{-1}$,
+$u=(\beta,-1)$ and $v=(-\alpha,1)$. Let
+$M_\infty=T(u^\dagger u)$ and $M_0=T(v^\dagger v)$. In the actual
+complex continuous-linear operator norm on $M_2(\mathbb C)\to M_2(\mathbb C)$,
+with the elementwise supremum norm on the matrices, the Lean proof establishes
+
+$$
+|z|^2(E_z^*)^{-1}\longrightarrow[X\mapsto X_{11}M_0/d]
+\quad(z\to0,\ z\ne0),\qquad
+(E_z^*)^{-1}\longrightarrow[X\mapsto X_{00}M_\infty/d]
+\quad(z\to\infty).
+$$
+
+The second filter is the cobounded filter on the entire complex plane. The
+proof constructs exact continuous extensions: with $U$ having rows
+$(\beta,-1),(0,0)$ and $V$ having rows $(0,0),(-\alpha,1)$,
+$G(z)^{-1}=\delta^{-1}(U+z^{-1}V)$ for $z\ne0$. At infinity use
+$d^{-1}T((U+wV)^\dagger X(U+wV))$ at $w=z^{-1}\to0$. At zero use
+$d^{-1}T(|z|^2U^\dagger XU+\bar z U^\dagger XV+zV^\dagger XU+V^\dagger XV)$.
+Finite-dimensional `continuous_clm_apply` promotes application continuity to
+operator-norm continuity; scalar casts are complex and the native inverse
+order is retained. Powers of these same operators converge before applying
+them to the fixed target. Thus for every fixed $p\ge1$ and every Bond $P$,
+
+$$
+|z|^{2p}X_p(z)\longrightarrow P_{11}d^{-p}a_1^{-(p-1)}M_0,\qquad
+X_p(z)\longrightarrow P_{00}d^{-p}(|\beta|^2/a_0)^{p-1}M_\infty.
+$$
+
+The exact determinants are real:
+$\det M_0=|\alpha|^2(1/(a_0a_1)-1/c)$ and
+$\det M_\infty=|\beta|^2(1/(a_0a_1)-1/c)$. Since
+$c=a_0a_1-d>0$ and regularity makes $d,|\alpha|^2,|\beta|^2$ positive,
+both determinants are strictly negative. If $P$ is positive definite,
+$P_{00},P_{11}$ are real and positive, so the two determinant limits are
+strictly negative. The positive factor $|z|^{4p}$ removes the zero-endpoint
+scale. At infinity the determinant tends to a negative constant.
+
+`annular_residual_negative` constructs for every nonzero $z_0$ radii
+$0<\epsilon<|z_0|<R$ for which $\operatorname{Re}f(z)<0$ on both whole
+circles, simultaneously for every $q$ and $H$. Uniform filter convergence,
+rather than a raywise assertion, supplies the circle-wide signs. This is a
+new endpoint proof within the Critch--Morton C9 program, not a literature
+claim or a full C9 solution. Real transversality, finite chart coverage,
+polynomial clearance and actual-density genericity remain separate.
+It earns zero resolved external open problems and supplies no dynamics,
+energy, clock, normalization or physical inverse.
+
+
+`OpenBoundaryMPSSpectralExtraction` supplies the finite algebraic bridge from
+the existing Ma--Zhang five-complex canonical core to the native sector of
+`OpenBoundaryMPSInteriorRootRealization`. For the canonical coordinates
+$c=(c_0,\ldots,c_4)$ put $h=c_4-c_1$, $D=h^2+4c_2c_3$,
+$t_0=c_1-c_0c_2$, $t_1=1+c_3-c_0c_4$ and
+$U=ht_0t_1-c_2t_1^2+c_3t_0^2$. The exact exclusions are
+$e^2=D$ and $c_2DU(U+D)\ne0$. With
+$\lambda=(h+e)/(2c_2)$, $\mu=(h-e)/(2c_2)$,
+$T=A_0[(1,\lambda)^T,(1,\mu)^T]$ and $K=T^{-1}A_0T$,
+the identities are $\det T=e$, $LT=(1,1)$,
+$(A_1A_0^{-1})T=T\operatorname{diag}(\lambda,\mu)$,
+$\det K=-c_2$, $ut=c_2U/D$ and $vw=c_2(U+D)/D$.
+All four entries $u,v,w,t$ and $\delta=-e/c_2$ are nonzero.
+
+Set $\rho=-c_2/(\delta uv)$, $S=T\operatorname{diag}(1,\rho)$,
+$z=-c_2/(\delta u^2)$, $\alpha=\delta vw/(-c_2)$,
+$a=\lambda-\alpha$. The native sector is $(\lambda,\mu,a)$;
+$\beta=\mu-a=\delta ut/(-c_2)$ and $\beta-\alpha=\delta$.
+The bridge retains the existing native $G,B$ and proves
+$A_iS=uS\,\mathrm{core}_{\mathrm{native},i}$. The Schur cross
+factor $1+\bar\lambda\mu\ne0$ is a separate condition for native
+regularity; distinct eigenvalues alone do not supply it.
+For every natural length $N$ and arbitrary original right boundary $R$,
+the complete raw state is unchanged under
+$l=LS=(1,\rho)$ and $r=u^NS^{-1}R$.
+The actual native normalizer with rows $lG,lBG$ is $S/u$;
+$lK_l^{-1}=uL$, whose second entry recovers $u$. Canonicalization
+at this scalar returns both original cores, $L$ and $R$ exactly.
+
+The same supplier starts from the actual native matrices
+$G=\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$,
+$B=\operatorname{diag}(2,0)$, $l=(1,1)$, $r=(1,i)$.
+Its normalizer is $\left(\begin{smallmatrix}2&0\\2&2\end{smallmatrix}\right)$,
+with inverse $\left(\begin{smallmatrix}1/2&0\\-1/2&1/2\end{smallmatrix}\right)$.
+Thus $lK_l^{-1}=(0,1/2)$ and its second entry recovers the canonical scalar
+$1/2$. This is the numerical application of `canonicalization_inverse` to
+the same witness. The general normalizer proof directly reuses the original
+`OpenBoundaryMPSTwoSiteMinimality.normalized_rows` at $(c,0,0)$.
+Canonicalization gives
+$c_*=(0,0,1/2,0,1)$, $R=2^N(1,1+i)$, $\sigma=4^N$,
+$\eta=1+i$. At $e=1$ extraction returns the same native sector
+$(2,0,1)$, $z=1$, $l=(1,1)$ and $r=(1,i)$.
+Using only the raw boundary $(1,\eta)$ instead gives $2^{-N}(1,i)$.
+Here $D=1$, $U=-1/2$, $U+D=1/2$ and the cross factor equals one.
+The canonical quotient's existing `positiveBoundary` restores exactly the
+same full scalar boundary. The C8 attribution and CC BY 4.0 license are
+unchanged. This is a reusable inverse supplier, with no dimension-fourteen
+assumption, arbitrary polynomial restriction, norm-field argument, genericity
+proof, positive-environment extension or actual-image density claim.
+Full C9 remains open and this unit earns zero solved-open-problem credit.
