@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Mode-dependent bilinear factorial transpose and original inverse row coefficients. -/
+   digest: Original source inverse transport into the native affine Gaussian with exact Laurent selectors. -/
 
 import D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation
 import D5.S3.VertexAlgebra.TwistedGround.OriginalAffineRecompositionSource
@@ -22,12 +22,14 @@ helpers organize that path and do not provide independent admission witnesses.
 Utility is none: arbitrary polynomials, occupations and integer modes are in
 scope; finite sums express coefficients, not bounded certificate enumeration.
 Factorial Fock and Gaussian calculus are classical; this carrier-specific
-composition is repo-derived and makes no literature-priority claim. No affine
-sewing, Laurent-transfer equation or global identityK is assumed or concluded.
+composition is repo-derived and makes no literature-priority claim. The native affine comparison and source_inverse_affine_row_box supply the
+new transport content; normalization helpers have actual proof consumers.
+No full sewing equation or global identityK is assumed or concluded.
 -/
 
 set_option autoImplicit false
 set_option maxRecDepth 4096
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open scoped BigOperators Matrix
 
@@ -373,10 +375,9 @@ There is ONE internal alpha!, FOUR external factorials, both original charge
 scalars, arbitrary charge and integer Laurent modes. The left theta projection
 is applied only once in cosetKernel; it is deliberately not duplicated here.
 
-The first remaining affine application is identification of the transposed
-finite polynomial coefficient below with the FH right affine coefficient at
-B=T^t A_R T, S=T^t H_R, v=T^t mu_R, uniformly in the external variables and
-the signed Laurent selectors. This theorem does not assume that equation.
+The finite coefficient is transported to the native right affine Gaussian
+in original_two_rows_inverse_affine_coefficient. External occupations and
+the signed Laurent selectors are retained throughout that comparison.
 -/
 theorem original_two_rows_inverse_coefficient
     (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D)
@@ -413,5 +414,754 @@ theorem original_two_rows_inverse_coefficient
   rw [hr, original_corrected_gaussian_row]
   dsimp only
   ring
+
+section NativeTransport
+open OriginalChargedRowSource
+open NativeGaussianMoment (weight_sub_single sub_single_degree occupation_nonzero)
+open FactorialFockQuadraticEstimate (quadratic gaussianPiece gaussianPiece_pderiv)
+
+universe u v
+variable {I : Type u} [Fintype I] [DecidableEq I]
+
+private def expCut (p : MvPolynomial I ℂ) (N : ℕ) : MvPolynomial I ℂ :=
+  ∑ k ∈ Finset.range (N+1), (k.factorial : ℂ)⁻¹ • p^k
+
+private def affineExponent (A : Matrix I I ℂ) (mu : I → ℂ) : MvPolynomial I ℂ :=
+  quadratic A + ∑ i, mu i • X i
+
+private def taylorCoefficient (A : Matrix I I ℂ) (mu : I → ℂ) (d : I →₀ ℕ) : ℂ :=
+  (expCut (affineExponent A mu) d.degree).coeff d
+
+private theorem pow_coeff_vanish (p : MvPolynomial I ℂ) (hp : p.coeff 0 = 0)
+    (k : ℕ) (d : I →₀ ℕ) (hd : d.degree < k) : (p^k).coeff d = 0 := by
+  classical
+  induction k generalizing d with
+  | zero => omega
+  | succ k ih =>
+    rw [pow_succ, coeff_mul]
+    apply Finset.sum_eq_zero
+    rintro ⟨a,b⟩ hab
+    have he : a+b = d := by simpa only [Finset.HasAntidiagonal.mem_antidiagonal] using hab
+    by_cases hb : b = 0
+    · simp [hb, hp]
+    · have hbdeg : 0 < b.degree := by
+        obtain ⟨i,hi⟩ := occupation_nonzero b hb
+        have hh := sub_single_degree b i hi
+        omega
+      have hedeg : a.degree+b.degree = d.degree := by
+        simpa only [map_add] using congrArg Finsupp.degree he
+      rw [ih a (by omega), zero_mul]
+
+private theorem affineExponent_constant (A : Matrix I I ℂ) (mu : I → ℂ) :
+    (affineExponent A mu).coeff 0 = 0 := by
+  classical
+  simp [affineExponent, quadratic, coeff_mul_X']
+
+private theorem taylorCoefficient_cut (A : Matrix I I ℂ) (mu : I → ℂ)
+    (d : I →₀ ℕ) (N : ℕ) (hN : d.degree ≤ N) :
+    taylorCoefficient A mu d = (expCut (affineExponent A mu) N).coeff d := by
+  classical
+  simp only [taylorCoefficient, expCut, coeff_sum, coeff_smul, smul_eq_mul]
+  apply Finset.sum_subset (Finset.range_mono (Nat.add_le_add_right hN 1))
+  intro k hk hout
+  rw [pow_coeff_vanish _ (affineExponent_constant A mu) k d (by
+    have hh : ¬ k < d.degree+1 := by simpa only [Finset.mem_range] using hout
+    omega), mul_zero]
+
+private theorem factorial_ratio (j : ℕ) :
+    ((j+1).factorial : ℂ)⁻¹ * (j+1 : ℂ) = (j.factorial : ℂ)⁻¹ := by
+  have hj : (j.factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero j
+  have hs : (j+1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero j
+  rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
+  field_simp [hj, hs]
+
+private theorem pderiv_expCut (p : MvPolynomial I ℂ) (n : ℕ) (i : I) :
+    pderiv i (expCut p (n+1)) = pderiv i p * expCut p n := by
+  classical
+  have ht (j : ℕ) :
+      pderiv i (((j+1).factorial : ℂ)⁻¹ • p^(j+1)) =
+        pderiv i p * ((j.factorial : ℂ)⁻¹ • p^j) := by
+    rw [Derivation.map_smul, pderiv_pow, Nat.add_sub_cancel]
+    simp only [smul_eq_C_mul]
+    have hcast : ((j+1 : ℕ) : MvPolynomial I ℂ) = C (j+1 : ℂ) := by simp
+    rw [hcast]
+    calc
+      _ = (C (((j+1).factorial : ℂ)⁻¹) * C (j+1 : ℂ)) *
+          (p^j * pderiv i p) := by ring
+      _ = _ := by rw [← map_mul, factorial_ratio]; ring
+  rw [expCut, map_sum, Finset.sum_range_succ']
+  simp_rw [ht]
+  simp only [pow_zero, pderiv_one, Derivation.map_smul, smul_zero, add_zero]
+  rw [← Finset.mul_sum]
+  rfl
+
+private theorem affineExponent_pderiv (A : Matrix I I ℂ) (mu : I → ℂ)
+    (hs : ∀ i j, A i j = A j i) (i : I) :
+    pderiv i (affineExponent A mu) = (∑ j, A i j • X j) + C (mu i) := by
+  classical
+  have hq := gaussianPiece_pderiv A hs 0 i
+  simp only [gaussianPiece, Nat.zero_add, Nat.factorial_one, Nat.factorial_zero,
+    Nat.cast_one, inv_one, one_smul, pow_one, pow_zero, mul_one] at hq
+  simp [affineExponent, hq, pderiv_X, Pi.single_apply, eq_comm, smul_eq_C_mul]
+
+private theorem taylor_coefficient_step (A : Matrix I I ℂ) (mu : I → ℂ)
+    (hs : ∀ i j, A i j = A j i) (d : I →₀ ℕ) (i : I) :
+    taylorCoefficient A mu (d+Finsupp.single i 1) * (d i+1 : ℂ) =
+      mu i * taylorCoefficient A mu d + ∑ j, A i j *
+        (if d j ≠ 0 then taylorCoefficient A mu (d-Finsupp.single j 1) else 0) := by
+  classical
+  have htop : (expCut (affineExponent A mu) (d.degree+1)).coeff
+      (d+Finsupp.single i 1) = taylorCoefficient A mu (d+Finsupp.single i 1) := by
+    symm
+    apply taylorCoefficient_cut
+    simp only [map_add, Finsupp.degree_single, le_refl]
+  have hbase : (expCut (affineExponent A mu) d.degree).coeff d =
+      taylorCoefficient A mu d := rfl
+  have hsub (j : I) : (expCut (affineExponent A mu) d.degree).coeff
+      (d-Finsupp.single j 1) = taylorCoefficient A mu (d-Finsupp.single j 1) := by
+    symm
+    exact taylorCoefficient_cut A mu _ _ (Finsupp.degree_mono tsub_le_self)
+  have h := congrArg (fun p : MvPolynomial I ℂ => p.coeff d)
+    (pderiv_expCut (affineExponent A mu) d.degree i)
+  rw [coeff_pderiv, htop] at h
+  rw [affineExponent_pderiv A mu hs, add_mul, MvPolynomial.coeff_add, Finset.sum_mul,
+    coeff_sum, coeff_C_mul, hbase] at h
+  simp only [smul_mul_assoc, coeff_smul, smul_eq_mul, coeff_X_mul', hsub,
+    Finsupp.mem_support_iff] at h
+  exact h.trans (add_comm _ _)
+
+private theorem taylor_moment_step (A : Matrix I I ℂ) (mu : I → ℂ)
+    (hs : ∀ i j, A i j = A j i) (d : I →₀ ℕ) (i : I) :
+    (weight (d+Finsupp.single i 1) : ℂ) * taylorCoefficient A mu (d+Finsupp.single i 1) =
+      mu i * ((weight d : ℂ) * taylorCoefficient A mu d) +
+      ∑ j, (d j : ℂ) * A i j *
+        ((weight (d-Finsupp.single j 1) : ℂ) * taylorCoefficient A mu (d-Finsupp.single j 1)) := by
+  classical
+  have hw : (weight (d+Finsupp.single i 1) : ℂ) =
+      (d i+1 : ℂ) * (weight d : ℂ) := by
+    exact_mod_cast FactorialFockMetric.weight_add_single d i
+  rw [hw]
+  calc
+    _ = (weight d : ℂ) *
+        (taylorCoefficient A mu (d+Finsupp.single i 1) * (d i+1 : ℂ)) := by ring
+    _ = _ := by
+      rw [taylor_coefficient_step A mu hs, mul_add, Finset.mul_sum]
+      congr 1
+      · ring
+      · apply Finset.sum_congr rfl
+        intro j hj
+        by_cases hz : d j = 0
+        · simp [hz]
+        · rw [if_pos hz]
+          have hwj : (weight d : ℂ) =
+              (d j : ℂ) * (weight (d-Finsupp.single j 1) : ℂ) := by
+            exact_mod_cast weight_sub_single d j hz
+          rw [hwj]
+          ring
+
+private theorem native_affine_eq_taylor (A : Matrix I I ℂ) (mu : I → ℂ)
+    (hs : ∀ i j, A i j = A j i) (d : I →₀ ℕ) :
+    affineCoefficient A mu d = taylorCoefficient A mu d := by
+  classical
+  have hm (d : I →₀ ℕ) : affineMoment A mu d =
+      (weight d : ℂ) * taylorCoefficient A mu d := by
+    induction hn : d.degree using Nat.strong_induction_on generalizing d with
+    | h n ih =>
+      by_cases hd : d = 0
+      · subst d
+        simp [affineMoment_zero, taylorCoefficient, expCut, weight]
+      · obtain ⟨i,hi⟩ := occupation_nonzero d hd
+        let r := d-Finsupp.single i 1
+        have hr : r+Finsupp.single i 1 = d := Finsupp.sub_add_single_one_cancel hi
+        have hrd : r.degree < n := by
+          have hh := sub_single_degree d i hi
+          dsimp only [r]
+          omega
+        have ir := ih r.degree hrd r rfl
+        have ij (j : I) : affineMoment A mu (r-Finsupp.single j 1) =
+            (weight (r-Finsupp.single j 1) : ℂ) *
+              taylorCoefficient A mu (r-Finsupp.single j 1) := by
+          apply ih (r-Finsupp.single j 1).degree
+          · exact (Finsupp.degree_mono tsub_le_self).trans_lt hrd
+          · rfl
+        rw [← hr, affineMoment_step A mu hs, taylor_moment_step A mu hs, ir]
+        simp_rw [ij]
+  have h := hm d
+  rw [affineMoment_coefficient] at h
+  have hw : (weight d : ℂ) ≠ 0 := by exact_mod_cast (ne_of_gt (weight_pos d))
+  exact mul_left_cancel₀ hw h
+
+
+variable {J : Type v} [Fintype J] [DecidableEq J]
+
+/-- Linear coordinate substitution: the image of source coordinate j is
+sum_i U[i,j] X_i. No invertibility or complex conjugation is involved. -/
+def linearSubstitution (U : Matrix I J ℂ) :
+    MvPolynomial J ℂ →ₐ[ℂ] MvPolynomial I ℂ :=
+  aeval (fun j => ∑ i, U i j • X i)
+
+/-- Ordinary congruence U A U transpose, including rectangular or zero U. -/
+def transportCovariance (U : Matrix I J ℂ) (A : Matrix J J ℂ) : Matrix I I ℂ :=
+  fun i j => ∑ a, ∑ b, U i a * A a b * U j b
+
+/-- The transported affine mean U mu. -/
+def transportMean (U : Matrix I J ℂ) (mu : J → ℂ) : I → ℂ :=
+  fun i => ∑ a, U i a * mu a
+
+private theorem transportCovariance_symm (U : Matrix I J ℂ) (A : Matrix J J ℂ)
+    (hs : ∀ i j, A i j = A j i) :
+    ∀ i j, transportCovariance U A i j = transportCovariance U A j i := by
+  intro i j
+  unfold transportCovariance
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro a ha
+  apply Finset.sum_congr rfl
+  intro b hb
+  rw [hs b a]
+  ring
+
+private theorem sum_four_swap {M : Type*} [AddCommMonoid M]
+    (f : J → J → I → I → M) :
+    (∑ a, ∑ b, ∑ i, ∑ j, f a b i j) = ∑ i, ∑ j, ∑ a, ∑ b, f a b i j := by
+  calc
+    _ = ∑ a, ∑ i, ∑ b, ∑ j, f a b i j := by
+      apply Finset.sum_congr rfl
+      intro a ha
+      exact Finset.sum_comm
+    _ = ∑ i, ∑ a, ∑ b, ∑ j, f a b i j := Finset.sum_comm
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      calc
+        _ = ∑ a, ∑ j, ∑ b, f a b i j := by
+          apply Finset.sum_congr rfl
+          intro a ha
+          exact Finset.sum_comm
+        _ = _ := Finset.sum_comm
+
+private theorem quadratic_linearSubstitution (U : Matrix I J ℂ) (A : Matrix J J ℂ) :
+    linearSubstitution U (quadratic A) = quadratic (transportCovariance U A) := by
+  classical
+  simp only [quadratic, map_smul, map_sum, map_mul, linearSubstitution, aeval_X,
+    Finset.sum_mul, Finset.mul_sum, Finset.smul_sum, smul_mul_smul_comm, smul_smul,
+    transportCovariance, Finset.sum_smul]
+  rw [sum_four_swap, Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro i hi
+  apply Finset.sum_congr rfl
+  intro j hj
+  apply Finset.sum_congr rfl
+  intro a ha
+  apply Finset.sum_congr rfl
+  intro b hb
+  congr 1
+  ring
+
+private theorem affineExponent_linearSubstitution (U : Matrix I J ℂ)
+    (A : Matrix J J ℂ) (mu : J → ℂ) :
+    linearSubstitution U (affineExponent A mu) =
+      affineExponent (transportCovariance U A) (transportMean U mu) := by
+  classical
+  rw [affineExponent, map_add, quadratic_linearSubstitution]
+  congr 1
+  simp only [map_sum, map_smul, linearSubstitution, aeval_X, Finset.smul_sum,
+    smul_smul, transportMean, Finset.sum_smul]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro i hi
+  apply Finset.sum_congr rfl
+  intro a ha
+  rw [mul_comm]
+
+private theorem linearSubstitution_monomial_homogeneous
+    (U : Matrix I J ℂ) (d : J →₀ ℕ) (c : ℂ) :
+    (linearSubstitution U (monomial d c)).IsHomogeneous d.degree := by
+  classical
+  simpa only [linearSubstitution, Nat.one_mul] using (isHomogeneous_monomial (d := d) c rfl).aeval (n := 1)
+    (fun j => ∑ i, U i j • (X i : MvPolynomial I ℂ)) (by
+      intro j
+      apply IsHomogeneous.sum
+      intro i hi
+      rw [smul_eq_C_mul]
+      exact (isHomogeneous_X ℂ i).C_mul _)
+
+private theorem linearSubstitution_coeff_finite (U : Matrix I J ℂ)
+    (p : MvPolynomial J ℂ) (d : I →₀ ℕ) (N : ℕ) (hN : d.degree ≤ N) :
+    (linearSubstitution U p).coeff d =
+      ∑ e ∈ (Finsupp.finite_of_degree_le (σ := J) N).toFinset,
+        p.coeff e * (linearSubstitution U (monomial e 1)).coeff d := by
+  classical
+  conv_lhs => rw [p.as_sum]
+  simp only [map_sum, coeff_sum]
+  have ht (e : J →₀ ℕ) :
+      (linearSubstitution U (monomial e (p.coeff e))).coeff d =
+        p.coeff e * (linearSubstitution U (monomial e 1)).coeff d := by
+    rw [show monomial e (p.coeff e) = p.coeff e • monomial e 1 by
+      simp [smul_monomial], map_smul, coeff_smul, smul_eq_mul]
+  simp_rw [ht]
+  apply Finset.sum_congr_of_eq_on_inter
+  · intro e he hout
+    have hedeg : N < e.degree := by
+      simpa only [Set.Finite.mem_toFinset, Set.mem_setOf_eq, not_le] using hout
+    rw [(linearSubstitution_monomial_homogeneous U e 1).coeff_eq_zero (by omega), mul_zero]
+  · intro e he hout
+    rw [MvPolynomial.notMem_support_iff.mp hout, zero_mul]
+  · intros; rfl
+
+/-- Native affine coefficients transform under arbitrary finite linear
+substitution. N bounds the TOTAL degree of the target occupation. The proof
+compares the native moment recurrence with ordinary finite Taylor coefficients
+and then transports the actual quadratic and linear exponent polynomials. -/
+theorem affineCoefficient_linear_substitution (U : Matrix I J ℂ)
+    (A : Matrix J J ℂ) (mu : J → ℂ) (hs : ∀ i j, A i j = A j i)
+    (d : I →₀ ℕ) (N : ℕ) (hN : d.degree ≤ N) :
+    (∑ e ∈ (Finsupp.finite_of_degree_le (σ := J) N).toFinset,
+      affineCoefficient A mu e * (linearSubstitution U (monomial e 1)).coeff d) =
+      affineCoefficient (transportCovariance U A) (transportMean U mu) d := by
+  classical
+  rw [native_affine_eq_taylor _ _ (transportCovariance_symm U A hs),
+    taylorCoefficient_cut _ _ d N hN]
+  have ht : linearSubstitution U (expCut (affineExponent A mu) N) =
+      expCut (affineExponent (transportCovariance U A) (transportMean U mu)) N := by
+    simp only [expCut, map_sum, map_smul, map_pow, affineExponent_linearSubstitution]
+  rw [← ht, linearSubstitution_coeff_finite U _ d N hN]
+  apply Finset.sum_congr rfl
+  intro e he
+  have hedeg : e.degree ≤ N := by
+    simpa only [Set.Finite.mem_toFinset, Set.mem_setOf_eq] using he
+  rw [native_affine_eq_taylor A mu hs, taylorCoefficient_cut A mu e N hedeg]
+
+
+/-- Extend a source substitution by fixing every external coordinate. -/
+def sourceBlock (U : Matrix I I ℂ) : Matrix (I ⊕ J) (I ⊕ J) ℂ :=
+  Matrix.fromBlocks U 0 0 1
+
+private def externalSection (p : MvPolynomial (I ⊕ J) ℂ) (h : J →₀ ℕ) :
+    MvPolynomial I ℂ :=
+  (sumRingEquiv ℂ J I (rename Sum.swap p)).coeff h
+
+private theorem externalSection_coeff (p : MvPolynomial (I ⊕ J) ℂ)
+    (h : J →₀ ℕ) (d : I →₀ ℕ) :
+    (externalSection p h).coeff d = p.coeff (d.sumElim h) := by
+  classical
+  change (AddMonoidAlgebra.mapDomainRingEquiv ℂ Finsupp.sumFinsuppAddEquivProdFinsupp
+    (rename Sum.swap p)).coeff (h,d) = _
+  rw [AddMonoidAlgebra.coeff_mapDomainRingEquiv]
+  simp only [Finsupp.equivMapDomain_apply]
+  change (rename Sum.swap p).coeff (h.sumElim d) = _
+  have hj : (d.sumElim h).mapDomain Sum.swap = h.sumElim d := by
+    ext (j | i)
+    · exact Finsupp.mapDomain_apply_of_injective (Equiv.sumComm I J).injective _ (.inr j)
+    · exact Finsupp.mapDomain_apply_of_injective (Equiv.sumComm I J).injective _ (.inl i)
+  rw [← hj]
+  exact coeff_rename_mapDomain Sum.swap (Equiv.sumComm I J).injective p (d.sumElim h)
+
+private theorem sourceBlock_X (U : Matrix I I ℂ) (x : I ⊕ J) :
+    linearSubstitution (sourceBlock (J := J) U) (X x) =
+      match x with
+      | .inl i => rename Sum.inl (linearSubstitution U (X i))
+      | .inr j => X (.inr j) := by
+  classical
+  cases x <;> simp [linearSubstitution, sourceBlock, Fintype.sum_sum_type,
+    Matrix.one_apply, eq_comm, map_sum, map_smul]
+
+private theorem externalSection_substitution (U : Matrix I I ℂ)
+    (p : MvPolynomial (I ⊕ J) ℂ) (h : J →₀ ℕ) :
+    externalSection (linearSubstitution (sourceBlock U) p) h =
+      linearSubstitution U (externalSection p h) := by
+  classical
+  have he : (sumRingEquiv ℂ J I).toRingHom.comp
+      ((rename Sum.swap).toRingHom.comp (linearSubstitution (sourceBlock U)).toRingHom) =
+      (MvPolynomial.map (linearSubstitution U).toRingHom).comp
+        ((sumRingEquiv ℂ J I).toRingHom.comp (rename Sum.swap).toRingHom) := by
+    apply MvPolynomial.ringHom_ext
+    · intro c
+      simp [linearSubstitution, RingHom.comp_apply]
+    · intro x
+      change (sumRingEquiv ℂ J I) (rename Sum.swap
+          (linearSubstitution (sourceBlock U) (X x))) =
+        MvPolynomial.map (linearSubstitution U).toRingHom
+          ((sumRingEquiv ℂ J I) (rename Sum.swap (X x)))
+      rw [sourceBlock_X]
+      cases x <;> simp [linearSubstitution, map_sum, smul_eq_C_mul,
+        MvPolynomial.rename_rename, Function.comp_def]
+
+  have hp := congrArg (fun f : MvPolynomial (I ⊕ J) ℂ →+*
+      MvPolynomial J (MvPolynomial I ℂ) => (f p).coeff h) he
+  simp only [RingHom.comp_apply, coeff_map] at hp
+  exact hp
+
+private theorem externalSection_native (U : Matrix I I ℂ)
+    (A : Matrix (I ⊕ J) (I ⊕ J) ℂ) (mu : I ⊕ J → ℂ)
+    (hs : ∀ i j, A i j = A j i) (d : I →₀ ℕ) (h : J →₀ ℕ)
+    (N : ℕ) (hN : (d.sumElim h).degree ≤ N) :
+    (linearSubstitution U (externalSection (expCut (affineExponent A mu) N) h)).coeff d =
+      affineCoefficient (transportCovariance (sourceBlock U) A)
+        (transportMean (sourceBlock U) mu) (d.sumElim h) := by
+  rw [← externalSection_substitution, externalSection_coeff]
+  have he : linearSubstitution (sourceBlock (J := J) U) (expCut (affineExponent A mu) N) =
+      expCut (affineExponent (transportCovariance (sourceBlock U) A)
+        (transportMean (sourceBlock U) mu)) N := by
+    simp only [expCut, map_sum, map_smul, map_pow, affineExponent_linearSubstitution]
+  rw [he, native_affine_eq_taylor _ _ (transportCovariance_symm _ A hs),
+    taylorCoefficient_cut _ _ _ N hN]
+
+private theorem correctedMatrix_symm (D : LatticeData) (label : I ↪ Index D) :
+    ∀ i j, correctedMatrix D label i j = correctedMatrix D label j i := by
+  rintro (i | (i | i)) (j | (j | j)) <;>
+    simp only [correctedMatrix] <;>
+    first | exact sourceCovariance_symm D label _ _ | exact normalMatrix_symm D label _ _
+
+
+/-- Finite mode coordinates retain every colour at every included mode. -/
+def boxLabel (D : LatticeData) (M : ℕ) : (Fin D.rank × Fin M) ↪ Index D where
+  toFun b := (b.1,b.2.val)
+  inj' := by
+    rintro ⟨i,k⟩ ⟨j,l⟩ h
+    simp only [Prod.mk.injEq] at h
+    exact Prod.ext h.1 (Fin.ext h.2)
+
+/-- The exact finite restriction of a mode-dependent coordinate substitution. -/
+def boxMatrix (D : LatticeData) (M : ℕ)
+    (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ) :
+    Matrix (Fin D.rank × Fin M) (Fin D.rank × Fin M) ℂ :=
+  fun i j => if i.2 = j.2 then A j.2.val i.1 j.1 else 0
+
+def boxOccupation (D : LatticeData) (M : ℕ) (d : Exponent D) :
+    (Fin D.rank × Fin M) →₀ ℕ :=
+  d.comapDomain (boxLabel D M) (boxLabel D M).injective.injOn
+
+private theorem box_reconstruct (D : LatticeData) (M : ℕ) (d : Exponent D)
+    (hd : ∀ b ∈ d.support, b.2 < M) :
+    (boxOccupation D M d).embDomain (boxLabel D M) = d := by
+  apply Finsupp.embDomain_comapDomain
+  intro b hb
+  exact ⟨(b.1,⟨b.2,hd b hb⟩),rfl⟩
+
+private theorem box_degree (D : LatticeData) (M : ℕ) (d : Exponent D)
+    (hd : ∀ b ∈ d.support, b.2 < M) :
+    (boxOccupation D M d).degree = d.degree := by
+  have h := congrArg Finsupp.degree (box_reconstruct D M d hd)
+  simpa only [Finsupp.embDomain_eq_mapDomain, Finsupp.degree_mapDomain] using h
+
+private theorem box_substitution (D : LatticeData) (M : ℕ)
+    (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (p : MvPolynomial (Fin D.rank × Fin M) ℂ) :
+    rename (boxLabel D M) (linearSubstitution (boxMatrix D M A) p) =
+      substitution A (rename (boxLabel D M) p) := by
+  classical
+  have he : (rename (boxLabel D M)).comp (linearSubstitution (boxMatrix D M A)) =
+      (substitution A).comp (rename (boxLabel D M)) := by
+    ext ⟨j,k⟩
+    simp [linearSubstitution, boxMatrix, boxLabel, substitution_X, variableImage,
+      Fintype.sum_prod_type, map_sum, map_smul, eq_comm]
+  exact congrArg (fun f => f p) he
+
+private theorem energy_degree (D : LatticeData) (d : Exponent D) :
+    d.degree ≤ oscillatorEnergy d := by
+  classical
+  change (∑ b ∈ d.support, d b) ≤ ∑ b ∈ d.support, d b * (b.2+1)
+  apply Finset.sum_le_sum
+  intro b hb
+  nlinarith
+
+private theorem energy_mode (D : LatticeData) (d : Exponent D) (n M : ℕ)
+    (hd : oscillatorEnergy d ≤ n) (hn : n < M) :
+    ∀ b ∈ d.support, b.2 < M := by
+  intro b hb
+  have hpos : 0 < d b := Nat.pos_of_ne_zero (Finsupp.mem_support_iff.mp hb)
+  have hle : d b * (b.2+1) ≤ oscillatorEnergy d := by
+    simpa only [oscillatorEnergy, Finsupp.weight_apply, Finsupp.sum, smul_eq_mul] using
+      (Finset.single_le_sum (f := fun x : Index D => d x * (x.2+1))
+        (fun _ _ => Nat.zero_le _) hb :
+        d b * (b.2+1) ≤ ∑ x ∈ d.support, d x * (x.2+1))
+  nlinarith
+
+private theorem correctedLaurentRow_on_box (D : LatticeData) (a : Charge D)
+    (delta beta gamma : Exponent D) (M : ℕ)
+    (hd : ∀ b ∈ delta.support, b.2 < M)
+    (hb : ∀ b ∈ beta.support, b.2 < M)
+    (hc : ∀ b ∈ gamma.support, b.2 < M) :
+    (let L := rowSupport D delta beta gamma;
+      affineLaurent (correctedMatrix D (supportLabel D L))
+        (correctedMean D a (supportLabel D L)) (normalWeight D (supportLabel D L))
+        (threeOccupation (restricted D L delta) (restricted D L beta)
+          (restricted D L gamma))) =
+      affineLaurent (correctedMatrix D (boxLabel D M))
+        (correctedMean D a (boxLabel D M)) (normalWeight D (boxLabel D M))
+        (threeOccupation (boxOccupation D M delta) (boxOccupation D M beta)
+          (boxOccupation D M gamma)) := by
+  classical
+  let L := rowSupport D delta beta gamma
+  have hL : ∀ b ∈ L, b.2 < M := by
+    intro b hb'
+    rcases Finset.mem_union.mp hb' with h | h
+    · rcases Finset.mem_union.mp h with h | h
+      · exact hd b h
+      · exact hb b h
+    · exact hc b h
+  let e : {b // b ∈ L} ↪ (Fin D.rank × Fin M) :=
+    { toFun := fun b => (b.val.1,⟨b.val.2,hL b.val b.property⟩)
+      inj' := by
+        intro b c he
+        apply Subtype.ext
+        exact congrArg (boxLabel D M) he }
+  have hi (p : Exponent D) (hp : p.support ⊆ L) :
+      (restricted D L p).embDomain e = boxOccupation D M p := by
+    apply Finsupp.embDomain_injective (boxLabel D M)
+    rw [Finsupp.embDomain_eq_mapDomain, Finsupp.embDomain_eq_mapDomain,
+      Finsupp.embDomain_eq_mapDomain, ← Finsupp.mapDomain_fun_comp]
+    change (restricted D L p).mapDomain (supportLabel D L) =
+      (boxOccupation D M p).mapDomain (boxLabel D M)
+    rw [← Finsupp.embDomain_eq_mapDomain, ← Finsupp.embDomain_eq_mapDomain,
+      restricted_reconstruct D L p hp, box_reconstruct D M p (fun b hb' => hL b (hp hb'))]
+  have hdelta : delta.support ⊆ L :=
+    Finset.subset_union_left.trans Finset.subset_union_left
+  have hbeta : beta.support ⊆ L :=
+    Finset.subset_union_right.trans Finset.subset_union_left
+  have hgamma : gamma.support ⊆ L := Finset.subset_union_right
+  dsimp only
+  have he := affineLaurent_enlarge
+    (correctedMatrix D (boxLabel D M)) (correctedMean D a (boxLabel D M))
+    (normalWeight D (boxLabel D M)) (e.sumMap (e.sumMap e))
+    (threeOccupation (restricted D L delta) (restricted D L beta) (restricted D L gamma))
+  rw [map_three, hi delta hdelta, hi beta hbeta, hi gamma hgamma] at he
+  have hA : (fun i j => correctedMatrix D (boxLabel D M)
+      ((e.sumMap (e.sumMap e)) i) ((e.sumMap (e.sumMap e)) j)) =
+      correctedMatrix D (supportLabel D L) := by
+    funext x y
+    rcases x with i | (i | i) <;> rcases y with j | (j | j) <;> rfl
+  have hmu : (fun i => correctedMean D a (boxLabel D M)
+      ((e.sumMap (e.sumMap e)) i)) = correctedMean D a (supportLabel D L) := by
+    funext x
+    rcases x with i | (i | i) <;> rfl
+  have hw : (fun i => normalWeight D (boxLabel D M)
+      ((e.sumMap (e.sumMap e)) i)) = normalWeight D (supportLabel D L) := by
+    funext x
+    rcases x with i | (i | i) <;> rfl
+  rw [hA, hmu, hw] at he
+  exact he.symm
+
+private theorem substitution_coeff_energy (D : LatticeData)
+    (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (p q : Oscillator D) (alpha : Exponent D) (c : ℂ)
+    (h : ∀ delta, oscillatorEnergy delta = oscillatorEnergy alpha →
+      p.coeff delta = c * q.coeff delta) :
+    (substitution A p).coeff alpha = c * (substitution A q).coeff alpha := by
+  classical
+  have hw (delta : Exponent D)
+      (hd : (substitution A (monomial delta 1)).coeff alpha ≠ 0) :
+      oscillatorEnergy delta = oscillatorEnergy alpha := by
+    have hh := substitution_monomial_weight D A delta 1 hd
+    rw [integer_weight, integer_weight] at hh
+    exact_mod_cast hh.symm
+  conv_lhs => rw [p.as_sum]
+  conv_rhs => rw [q.as_sum]
+  simp only [map_sum, coeff_sum, Finset.mul_sum]
+  have ht (delta : Exponent D) (z : ℂ) :
+      (substitution A (monomial delta z)).coeff alpha =
+        z * (substitution A (monomial delta 1)).coeff alpha := by
+    rw [show monomial delta z = z • monomial delta 1 by simp [smul_monomial],
+      map_smul, coeff_smul, smul_eq_mul]
+  apply Finset.sum_congr_of_eq_on_inter
+  · intro delta hd hout
+    rw [ht delta (p.coeff delta)]
+    by_cases hz : (substitution A (monomial delta 1)).coeff alpha = 0
+    · rw [hz, mul_zero]
+    · rw [h delta (hw delta hz), MvPolynomial.notMem_support_iff.mp hout, mul_zero, zero_mul]
+  · intro delta hd hout
+    rw [ht delta (q.coeff delta)]
+    by_cases hz : (substitution A (monomial delta 1)).coeff alpha = 0
+    · rw [hz, mul_zero, mul_zero]
+    · have hh := h delta (hw delta hz)
+      rw [MvPolynomial.notMem_support_iff.mp hout] at hh
+      rw [← mul_assoc, ← hh, zero_mul]
+  · intro delta hd he
+    rw [ht delta (p.coeff delta), ht delta (q.coeff delta)]
+    by_cases hz : (substitution A (monomial delta 1)).coeff alpha = 0
+    · rw [hz, mul_zero, mul_zero, mul_zero]
+    · rw [h delta (hw delta hz), mul_assoc]
+
+
+private theorem box_energy (D : LatticeData) (M : ℕ) (d : Exponent D)
+    (hd : ∀ b ∈ d.support, b.2 < M) :
+    Finsupp.weight (fun i => LatticeHalfFockFiniteCorrection.sourceWeight D (boxLabel D M i))
+      (boxOccupation D M d) = oscillatorEnergy d := by
+  have h := congrArg (Finsupp.weight (fun b : Index D => b.2+1))
+    (box_reconstruct D M d hd)
+  simpa only [Finsupp.weight_apply, Finsupp.sum_embDomain, oscillatorEnergy,
+    LatticeHalfFockFiniteCorrection.sourceWeight] using h
+
+private theorem source_inverse_affine_row_box
+    (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D)
+    (alpha beta gamma : Exponent D) (e : ℤ) (n M : ℕ)
+    (ha : oscillatorEnergy alpha ≤ n) (hn : n < M)
+    (hb : ∀ b ∈ beta.support, b.2 < M) (hg : ∀ b ∈ gamma.support, b.2 < M) :
+    wick D (monomial gamma 1) (oscillatorCorrected D hu a e
+      (dualOscillatorMonomial D alpha) (monomial beta 1)) =
+    let label := boxLabel D M
+    let B := boxMatrix D M (fun k => (((-((k : ℂ)+1))⁻¹ • (gramComplex D)⁻¹))ᵀ)
+    let U := sourceBlock (J := (Fin D.rank × Fin M) ⊕ (Fin D.rank × Fin M)) B
+    (weight beta : ℂ) * (weight gamma : ℂ) *
+      affineLaurent (transportCovariance U (correctedMatrix D label))
+        (transportMean U (correctedMean D a label)) (normalWeight D label)
+        (threeOccupation (boxOccupation D M alpha) (boxOccupation D M beta)
+          (boxOccupation D M gamma)) (e+chargeNorm D a) := by
+  classical
+  let label := boxLabel D M
+  let A := correctedMatrix D label
+  let mu := correctedMean D a label
+  let h := (boxOccupation D M beta).sumElim (boxOccupation D M gamma)
+  let d := boxOccupation D M alpha
+  let N := n+beta.degree+gamma.degree
+  let R := externalSection (expCut (affineExponent A mu) N) h
+  let q : Oscillator D := rename label R
+  let w := Finsupp.weight (normalWeight D label) (d.sumElim h)
+  let c : ℂ := if e+chargeNorm D a = w then (weight beta : ℂ)*(weight gamma : ℂ) else 0
+  let B := fun k : ℕ => (((-((k : ℂ)+1))⁻¹ • (gramComplex D)⁻¹))ᵀ
+  let f := correctedSourceReadout D hu a e (monomial beta 1) (monomial gamma 1)
+  have hA : ∀ i j, A i j = A j i := correctedMatrix_symm D label
+  have hmode := energy_mode D alpha n M ha hn
+  have hdeg (delta : Exponent D) (hd : oscillatorEnergy delta ≤ n) :
+      ((boxOccupation D M delta).sumElim h).degree ≤ N := by
+    have ht : ((boxOccupation D M delta).sumElim h).degree =
+        (boxOccupation D M delta).degree + (boxOccupation D M beta).degree +
+          (boxOccupation D M gamma).degree := by
+      simp only [h, Finsupp.degree_eq_sum, Fintype.sum_sum_type,
+        Finsupp.sumElim_inl, Finsupp.sumElim_inr, add_assoc]
+    rw [ht, box_degree D M delta (energy_mode D delta n M hd hn),
+      box_degree D M beta hb, box_degree D M gamma hg]
+    have hh := energy_degree D delta
+    dsimp only [N]
+    omega
+  have hq (delta : Exponent D) (hd : oscillatorEnergy delta ≤ n) :
+      q.coeff delta = affineCoefficient A mu
+        ((boxOccupation D M delta).sumElim h) := by
+    calc
+      q.coeff delta = q.coeff ((boxOccupation D M delta).embDomain label) := by
+        rw [box_reconstruct D M delta (energy_mode D delta n M hd hn)]
+      _ = R.coeff (boxOccupation D M delta) :=
+        coeff_rename_embDomain label R _
+      _ = (expCut (affineExponent A mu) N).coeff
+          ((boxOccupation D M delta).sumElim h) := externalSection_coeff _ _ _
+      _ = _ := ((native_affine_eq_taylor A mu hA _).trans
+          (taylorCoefficient_cut A mu _ N (hdeg delta hd))).symm
+  have hs (delta : Exponent D) (he : oscillatorEnergy delta = oscillatorEnergy alpha) :
+      (sourceTaylor D f n).coeff delta = c * q.coeff delta := by
+    have hd : oscillatorEnergy delta ≤ n := he.trans_le ha
+    have hdm := energy_mode D delta n M hd hn
+    have hw : Finsupp.weight (normalWeight D label)
+        ((boxOccupation D M delta).sumElim h) = w := by
+      change Finsupp.weight (normalWeight D label)
+        (threeOccupation (boxOccupation D M delta) (boxOccupation D M beta)
+          (boxOccupation D M gamma)) = _
+      dsimp only [w, d, h]
+      rw [show (boxOccupation D M alpha).sumElim
+          ((boxOccupation D M beta).sumElim (boxOccupation D M gamma)) =
+          threeOccupation (boxOccupation D M alpha) (boxOccupation D M beta)
+            (boxOccupation D M gamma) from rfl]
+      rw [normal_weight_formula, normal_weight_formula,
+        box_energy D M delta hdm, box_energy D M alpha hmode, he]
+    have hr := original_corrected_gaussian_row D hu a delta beta gamma e
+    have hh := congrArg (fun g : ℤ →₀ ℂ => g (e+chargeNorm D a))
+      (correctedLaurentRow_on_box D a delta beta gamma M hdm hb hg)
+    dsimp only at hr hh
+    rw [hh] at hr
+    rw [sourceTaylor_coeff, ite_eq_left hd, hq delta hd]
+    change (weight delta : ℂ)⁻¹ *
+      wick D (monomial gamma 1) (oscillatorCorrected D hu a e
+        (monomial delta 1) (monomial beta 1)) = _
+    rw [hr]
+    change (weight delta : ℂ)⁻¹ * ((weight delta : ℂ)*(weight beta : ℂ)*
+      (weight gamma : ℂ)*affineLaurent A mu (normalWeight D label)
+        ((boxOccupation D M delta).sumElim h) (e+chargeNorm D a)) = _
+    rw [affineLaurent_apply, hw]
+    dsimp only [c]
+    split_ifs <;> field_simp [weight_ne_zero delta] <;> ring
+  have hc := substitution_coeff_energy D B (sourceTaylor D f n) q alpha c hs
+  have ht : (substitution B q).coeff alpha =
+      affineCoefficient
+        (transportCovariance (sourceBlock (J := (Fin D.rank × Fin M) ⊕ (Fin D.rank × Fin M))
+          (boxMatrix D M B)) A)
+        (transportMean (sourceBlock (J := (Fin D.rank × Fin M) ⊕ (Fin D.rank × Fin M))
+          (boxMatrix D M B)) mu) (d.sumElim h) := by
+    change (substitution B (rename label R)).coeff alpha = _
+    rw [← box_substitution D M B R]
+    calc
+      _ = (rename label (linearSubstitution (boxMatrix D M B) R)).coeff
+          (d.embDomain label) := by rw [box_reconstruct D M alpha hmode]
+      _ = (linearSubstitution (boxMatrix D M B) R).coeff d :=
+        coeff_rename_embDomain label _ d
+      _ = _ := externalSection_native (boxMatrix D M B) A mu hA d h N (hdeg alpha ha)
+  have hh := dual_readout_coefficient D f alpha n ha
+  rw [hc, ht] at hh
+  change wick D (monomial gamma 1) (oscillatorCorrected D hu a e
+      (dualOscillatorMonomial D alpha) (monomial beta 1)) = _ at hh
+  rw [hh]
+  dsimp only
+  rw [affineLaurent_apply]
+  change c * _ = (weight beta : ℂ)*(weight gamma : ℂ)*
+    (if e+chargeNorm D a = w then _ else 0)
+  dsimp only [c, B, A, mu, d, h, label, threeOccupation]
+  split_ifs <;> ring
+
+
+/-- Actual two original rows with the inverse transported into the native
+right affine Gaussian. The right external variables and exact integer
+Laurent selector are retained. The finite Taylor cutoff used in the proof
+is n+betaR.degree+gammaR.degree, including both external degrees. -/
+theorem original_two_rows_inverse_affine_coefficient
+    (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D)
+    (alpha betaL gammaL betaR gammaR : Exponent D) (eL eR : ℤ)
+    (n : ℕ) (ha : oscillatorEnergy alpha ≤ n) :
+    chargeScalar D a * chargeScalar D (-a) *
+      wick D (monomial gammaL 1)
+        (oscillatorCorrected D hu a eL (monomial alpha 1) (monomial betaL 1)) *
+      wick D (monomial gammaR 1)
+        (oscillatorCorrected D hu (-a) eR
+          (dualOscillatorMonomial D alpha) (monomial betaR 1)) =
+    let K := rowSupport D alpha betaL gammaL
+    let left := affineLaurent (correctedMatrix D (supportLabel D K))
+      (correctedMean D a (supportLabel D K)) (normalWeight D (supportLabel D K))
+      (threeOccupation (restricted D K alpha) (restricted D K betaL)
+        (restricted D K gammaL)) (eL+chargeNorm D a)
+    let M := n+1+betaR.support.sup Prod.snd+gammaR.support.sup Prod.snd
+    let label := boxLabel D M
+    let B := boxMatrix D M (fun k => (((-((k : ℂ)+1))⁻¹ • (gramComplex D)⁻¹))ᵀ)
+    let U := sourceBlock (J := (Fin D.rank × Fin M) ⊕ (Fin D.rank × Fin M)) B
+    chargeScalar D a * chargeScalar D (-a) *
+      (weight alpha : ℂ)*(weight betaL : ℂ)*(weight gammaL : ℂ)*
+      (weight betaR : ℂ)*(weight gammaR : ℂ)*left *
+        affineLaurent (transportCovariance U (correctedMatrix D label))
+          (transportMean U (correctedMean D (-a) label)) (normalWeight D label)
+          (threeOccupation (boxOccupation D M alpha) (boxOccupation D M betaR)
+            (boxOccupation D M gammaR)) (eR+chargeNorm D (-a)) := by
+  classical
+  let M := n+1+betaR.support.sup Prod.snd+gammaR.support.sup Prod.snd
+  have hn : n < M := by dsimp only [M]; omega
+  have hb : ∀ b ∈ betaR.support, b.2 < M := by
+    intro b hb
+    have hh := Finset.le_sup (f := Prod.snd) hb
+    dsimp only [M]
+    omega
+  have hg : ∀ b ∈ gammaR.support, b.2 < M := by
+    intro b hg
+    have hh := Finset.le_sup (f := Prod.snd) hg
+    dsimp only [M]
+    omega
+  have hr := source_inverse_affine_row_box D hu (-a) alpha betaR gammaR eR n M ha hn hb hg
+  have hd := dual_readout_coefficient D
+    (correctedSourceReadout D hu (-a) eR (monomial betaR 1) (monomial gammaR 1))
+    alpha n ha
+  rw [corrected_sourceTaylor, map_smul, coeff_smul, smul_eq_mul] at hd
+  dsimp only at hr
+  have he := mul_left_cancel₀
+    (mul_ne_zero (weight_ne_zero betaR) (weight_ne_zero gammaR)) (hd.symm.trans hr)
+  rw [original_two_rows_inverse_coefficient D hu a alpha betaL gammaL betaR gammaR eL eR n ha]
+  dsimp only
+  rw [he]
+
+end NativeTransport
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalSourceInverseCoefficient
