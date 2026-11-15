@@ -4,7 +4,7 @@
 
 Coefficient-direction rigidity refutes the restricted native scalar-Gram cone.
 
-All dimensions are natural numbers and all local matrices are unrestricted complex rectangular matrices. The native map F is QuantumMaxFlowBound.flow M N, the sum over r in Fin 3 of M r tensor N r. Its rows are Fin a times Fin d and its columns are Fin b times Fin c. The notation conjTranspose means the complex conjugate transpose, ofReal is the real-to-complex embedding, and smul is scalar multiplication of a matrix. Each displayed identity has its indicated matrix index type. The exact universal event is the assertion registered in trureturing issue 31053; this document records a repository-derived finite-dimensional refutation, with no literature-originality claim.
+All dimensions are natural numbers and all local matrices are unrestricted complex rectangular matrices. The native map F is QuantumMaxFlowBound.flow M N, the sum over r in Fin 3 of M r tensor N r. Its rows are Fin a times Fin d and its columns are Fin b times Fin c. The notation conjTranspose means the complex conjugate transpose, ofReal is the real-to-complex embedding, and smul is scalar multiplication of a matrix. Each displayed identity has its indicated matrix index type.
 
 **Definition 1.1 (The universal eight-premise assertion).**
 
@@ -28,7 +28,7 @@ $$\forall (a : \mathbb{N}), (\forall (b : \mathbb{N}), (\forall (c : \mathbb{N})
 
 *Commentary.*
 
-A scalar column Gram with c positive and b > 2a forces 3c <= d; no positivity assumption on a is needed. The common kernel of the M maps is trivial. Their stack has b-dimensional range in the 3a-dimensional ambient space. For each nonzero z in C^3, the a-dimensional subspace of vectors (z r times u) intersects this range nontrivially, since b+a > 3a. Thus there are x and nonzero u with M r x = z r times u for every r. Applying a proposed relation between the nine adjoint products to x on both sides gives the quadratic form of its coefficient matrix times the nonzero inner product of u with itself. This vanishes for every z, so complex polarization forces the coefficient matrix to vanish. The original scalar_cross_grams lemma then makes every N r adjoint times N s a scalar identity. The original stack_gram, concat_gram and rank_kronecker_one lemmas give b <= a rank H, rank H = 3, and 3c <= d. The coefficient-direction intersection is the new live bridge; the predecessor threshold 5a < 2b is not used.
+A scalar column Gram with c positive and b > 2a forces 3c <= d; no positivity assumption on a is needed. The common kernel of the M maps is trivial. Their stack has b-dimensional range in the 3a-dimensional ambient space. For each nonzero z in C^3, the a-dimensional subspace of vectors (z r times u) intersects this range nontrivially, since b+a > 3a. Thus there are x and nonzero u with M r x = z r times u for every r. Applying a proposed relation between the nine adjoint products to x on both sides gives the quadratic form of its coefficient matrix times the nonzero inner product of u with itself. This vanishes for every z, so complex polarization forces the coefficient matrix to vanish. The original scalar_cross_grams lemma then makes every N r adjoint times N s a scalar identity. The original stack_gram, concat_gram and rank_kronecker_one lemmas give b <= a rank H, rank H = 3, and 3c <= d.
 
 **Theorem 1.3 (Failure at the equality boundary).**
 
