@@ -10,6 +10,11 @@ internal sealed class GeneratorConditioningDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "GeneratorConditioning", H("Generator Conditioning"), Blocks(
             Paragraph(Text("Selected live supplier declarations for the classical KS generator argument. Entropy is measured in nats. Finite partitions are measurable, cover the space and are pairwise disjoint modulo the probability law. The source port preserves the supplier hypotheses and the standard-axiom boundary; all helpers have actual downstream consumers. No mathematical novelty is claimed for the port.")),
+            Describe.Lean(DescribeId.Create("finite-partition-conditioning-bridge"),
+                DeclarationHandle.Create("D5/S3/Entropy/KolmogorovSinai/GeneratorConditioning.condEntropyGivenPartition_eq_condEntropy_generated"),
+                H("Finite partition conditioning and its generated sigma-algebra"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("For every probability measure mu on a standard Borel measurable space, every finite measurable partition B, and every finite family t of measurable sets, condEntropyGivenPartition mu B.cells t equals condEntropy mu (generatedSigmaAlgebra mu B) t. The family t need not itself be a partition. Zero-mass B cells contribute zero. This is the existing finite-conditioning bridge, used by the finite-history rate envelope."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("generatedsigmaalgebra-le"),
                 DeclarationHandle.Create("D5/S3/Entropy/KolmogorovSinai/GeneratorConditioning.generatedSigmaAlgebra_le"),
                 H("generatedSigmaAlgebra le"), StatementSource.FromAuthor(Presentation0()),
