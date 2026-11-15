@@ -20,7 +20,7 @@ For every n at least three and permutation pi of Fin n, assume the value-labelle
 
 **Theorem 1.2 (The exact inversion bound).**
 
-Lean statement: `D5/S3/Combinatorics/Permutation/Verkama62Result.result`
+$$\forall n \in \mathbb{N},\; \forall p \in \operatorname{Perm}\left(\operatorname{Fin}\left(n\right)\right),\; ((3 \le n) \land (\neg \operatorname{ContainsOneBased}\left(p\right)) \land (\operatorname{Connected}\left(\operatorname{valueGraph}\left(p\right)\right)) \land (\forall v \in \operatorname{Fin}\left(n\right),\; \operatorname{Connected}\left(\operatorname{delete}\left(\operatorname{valueGraph}\left(p\right), v\right)\right))) \Rightarrow (\frac{7}{4} \cdot n - 3 \le \operatorname{inv}\left(\operatorname{word}\left(p\right)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/Verkama62Result.result` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Combinatorics/Permutation/Verkama62Result.result`
 
 *Commentary.*
 
-For every integer n at least zero and every permutation pi of {1,...,n}, suppose pi classically avoids 351624 and its inversion graph has at least three vertices, is connected, and remains connected after deletion of each vertex. Then inv(pi) is at least (7/4)n - 3, with comparison in the rationals. In Lean the graph vertices are values in Fin n, the source label of i is i.val+1, and the graph is defined by the strictly negative integer product of the difference of value labels and the difference of their inverse-position labels. The at-least-three-vertices condition is 3 <= n. An occurrence uses six increasing positions and the relative value order [3,5,1,6,2,4], corresponding to [2,4,0,5,1,3] in Fin 6. The inversion statistic is the existing list counter on the one-based permutation word, proved equal to the number of increasing-position inversions, each counted once. A complete ear run and avoidance imply 7n <= 4 inv(pi)+12, which is equivalent to the displayed rational bound. No further avoidance, bipartiteness, asymptotic qualification, or assumed ear decomposition is used.
+For every integer n at least zero and every permutation pi of {1,...,n}, suppose pi classically avoids 351624 and its inversion graph has at least three vertices, is connected, and remains connected after deletion of each vertex. Then inv(pi) is at least (7/4)n - 3, with comparison in the rationals. In the formula, delete(G,v) is the graph induced on all vertices other than v. In Lean the graph vertices are values in Fin n, the source label of i is i.val+1, and the graph is defined by the strictly negative integer product of the difference of value labels and the difference of their inverse-position labels. The at-least-three-vertices condition is 3 <= n. An occurrence uses six increasing positions and the relative value order [3,5,1,6,2,4], corresponding to [2,4,0,5,1,3] in Fin 6. The inversion statistic is the existing list counter on the one-based permutation word, proved equal to the number of increasing-position inversions, each counted once. A complete ear run and avoidance imply 7n <= 4 inv(pi)+12, which is equivalent to the displayed rational bound. No further avoidance, bipartiteness, asymptotic qualification, or assumed ear decomposition is used.
 
 ## References
 

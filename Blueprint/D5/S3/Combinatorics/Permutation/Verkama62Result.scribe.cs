@@ -18,16 +18,17 @@ internal sealed class Verkama62ResultDocument : IScribeDocumentDefinition
     private static Formula And(params Formula[] xs) => Seq([.. xs.SelectMany((x, i) =>
         i == 0 ? new Formula[] { Par(x) } : new Formula[] { Sp, Land, Sp, Par(x) })]);
     private static Formula Graph => Call("valueGraph", F.Id("p"));
+    private static Formula Premises => And(Rel(D(3), Le, F.Id("n")),
+        Seq(Neg, Sp, Call("ContainsOneBased", F.Id("p"))),
+        Call("Connected", Graph),
+        All("v", Call("Fin", F.Id("n")),
+            Call("Connected", Call("delete", Graph, F.Id("v")))));
+    private static Formula Bound => Rel(
+        Seq(Frac, Grp(D(7)), Grp(D(4)), Sp, Cdot, Sp, F.Id("n"), Sp, Minus, Sp, D(3)),
+        Le, Call("inv", Call("word", F.Id("p"))));
     private static Formula FinalStatement => All("n", Seq(Mathbb, Grp(F.Id("N"))),
         All("p", Call("Perm", Call("Fin", F.Id("n"))),
-            new Formula.Logic(Par(And(Rel(D(3), Le, F.Id("n")),
-                Seq(Neg, Sp, Call("ContainsOneBased", F.Id("p"))),
-                Call("Connected", Graph),
-                All("v", Call("Fin", F.Id("n")),
-                    Call("Connected", Call("delete", Graph, F.Id("v")))))),
-                FormulaLogicOperator.Implies,
-                Par(Rel(Call("sub", Call("mul", Seq(Frac, Grp(D(7)), Grp(D(4))),
-                    F.Id("n")), D(3)), Le, Call("inv", Call("word", F.Id("p")))))));
+            new Formula.Logic(Par(Premises), FormulaLogicOperator.Implies, Par(Bound))));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Verkama Conjecture 6.2.", H("Verkama Conjecture 6.2"), Blocks(
