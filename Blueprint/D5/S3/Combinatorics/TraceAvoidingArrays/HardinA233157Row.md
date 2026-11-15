@@ -18,7 +18,7 @@ Every labelled function satisfying horizontal and antidiagonal sum exclusion is 
 
 **Definition 1.2 (classes).**
 
-$$(classes: Fin\left(3\right) \to \left(Fin\left(3\right) \to \left(Fin\left(3\right) \to \left(Fin\left(3\right) \to Fin\left(14\right)\right)\right)\right))$$
+$$\forall a \in Fin\left(3\right),\; \forall b \in Fin\left(3\right),\; \forall c \in Fin\left(3\right),\; \forall d \in Fin\left(3\right),\; classes\left(a, b, c, d\right) = HardinA233177PairTransfer.cls\left((a, (b, (c, d)))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.classes` (`✓ std3`).
 
@@ -28,7 +28,7 @@ $$(classes: Fin\left(3\right) \to \left(Fin\left(3\right) \to \left(Fin\left(3\r
 
 *Commentary.*
 
-The fixed lookup table assigns a class in Fin 14 to each tuple of 4 colors according to its equality pattern.
+The existing first-appearance orbit index assigns the equality pattern.
 
 **Definition 1.3 (classify).**
 
@@ -46,7 +46,7 @@ The coordinates select one of the 14 equality classes.
 
 **Definition 1.4 (representatives).**
 
-$$(representatives: Fin\left(14\right) \to Row\left(4\right))$$
+$$\forall i \in Fin\left(14\right),\; representatives\left(i\right) = HardinA233177PairTransfer.column\left(HardinA233177PairTransfer.representatives\left(i\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.representatives` (`✓ std3`).
 
@@ -56,7 +56,7 @@ $$(representatives: Fin\left(14\right) \to Row\left(4\right))$$
 
 *Commentary.*
 
-The fixed table selects one canonical 4-entry column for each of the 14 equality classes.
+The existing representative tuple is read in row order.
 
 **Definition 1.5 (quotient).**
 
@@ -126,4 +126,5 @@ Multiplication by every further matrix power extends the finite relation to all 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.weights`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233155ColumnTransfer](HardinA233155ColumnTransfer.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233155RowTransfer](HardinA233155RowTransfer.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer](HardinA233177PairTransfer.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)

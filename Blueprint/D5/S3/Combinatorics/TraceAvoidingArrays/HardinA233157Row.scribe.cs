@@ -59,7 +59,6 @@ internal sealed class HardinA233157RowDocument : IScribeDocumentDefinition
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(P(a), b);
     private static Formula N(int n) => n < 0 ? Seq(Minus, N(-n)) : D(n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => (byte)(c - '0')).ToArray());
     private static Formula FinF(Formula n) => C("Fin", n);
-    private static Formula ClassTableType(int width, int q) { Formula t = FinF(N(q)); for (int i = 0; i < width; ++i) t = Arr(FinF(N(3)), t); return t; }
     private static Formula NatF() => Op("Nat");
     private static Formula IntF() => Op("Int");
     private static Formula Cast(Formula x, Formula t) => P(Seq(x, Colon, Sp, t));
