@@ -23,10 +23,7 @@ from four-slot escape registration (CLAUDE.md §3.9).
 import D5.S3.Geometry.FiniteRelativeSimplicialCollapse
 import D5.S3.Geometry.FiniteGraphVertexSubstitution
 import D5.S3.Geometry.FiniteAlexanderDualCollapse
-import Mathlib.AlgebraicTopology.SimplicialComplex.Basic
-import Mathlib.Combinatorics.SimpleGraph.Clique
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Data.Fintype.Powerset
 
 namespace D5.S3.Combinatorics.SimplicialComplexes.BenedettiMenaraNormalityRefutation
 
