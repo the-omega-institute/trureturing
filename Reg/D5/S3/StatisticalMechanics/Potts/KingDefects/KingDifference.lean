@@ -19,14 +19,14 @@ abbrev signature : Signature :=
   _root_.Reg.Support.UniverseSingleReadout.signature K (fun _ => K) (fun _ => Prop)
 
 def actual : Realization signature :=
-  realize signature (fun _ b a => a = b) (fun e => nomatch e)
+  realize signature (fun _ a b => a = b) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (a b : K), a + b = 0 ↔ R.readout () b a
+  Law R := ∀ (a b : K), a + b = 0 ↔ R.readout () a b
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -42,9 +42,9 @@ def family : Registration arena (type_of% @KingDifference.add_eq_zero) where
     intro i
     cases i
     refine ⟨0, 0, 1, ?_⟩
-    change ((0 : K) = 0) ≠ ((1 : K) = 0)
+    change ((0 : K) = 0) ≠ ((0 : K) = 1)
     intro h
-    exact one_ne_zero (Eq.mp h rfl)
+    exact zero_ne_one (Eq.mp h rfl)
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@KingDifference.add_eq_zero) (Realization signature) Type Unit where
@@ -59,7 +59,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ b a => a = b) (fun e => nomatch e))
+  readout := some (realize signature (fun _ a b => a = b) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -67,9 +67,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingDifference
     definition := none
-    coordinates := #[1]
+    coordinates := #[0]
     readouts := #[{ path := #["body", "body", "arg"]
-                    stateBinder := 0
+                    stateBinder := 1
                     functionOperand := false
                     booleanPredicate := false
                     stateOperand := none }] }
