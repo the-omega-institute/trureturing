@@ -306,16 +306,6 @@ theorem b_nonzero (p q : ℕ) (hp : 1 ≤ p) (hq : 1 ≤ q) :
   intro hb
   simpa [hb] using hval
 
-private lemma iterate_smul (F : Bond → Bond) (hF : ∀ (c : ℂ) X, F (c • X) = c • F X)
-    (n : ℕ) (c : ℂ) (X : Bond) : F^[n] (c • X) = c • F^[n] X := by
-  induction n with
-  | zero => rfl
-  | succ n ih => simp only [Function.iterate_succ_apply',ih,hF]
-
-private lemma transfer_smul (A : Fin 2 → Bond) (c : ℂ) (X : Bond) :
-    transfer A (c • X) = c • transfer A X := by
-  simp [transfer,mul_smul_comm,smul_mul_assoc,Finset.smul_sum]
-
 private lemma right_step_smul (s : Sector) (z c : ℂ) (X : Bond) :
     rightStep s z (c • X) = c • rightStep s z X := by
   unfold rightStep
@@ -333,9 +323,11 @@ private lemma right_boundary_scale (s : Sector) (z₀ z : ℂ) (r : Fin 2 → �
     ring
   have ht : rightTarget s z₀ (fun i => (a : ℂ)*r i) q = (a : ℂ)^2 • rightTarget s z₀ r q := by
     unfold rightTarget
-    rw [hout,iterate_smul _ (transfer_smul _) q,mul_smul_comm,smul_mul_assoc]
+    rw [hout,OpenBoundaryMPSInteriorRootRealization.iterate_smul _
+      (OpenBoundaryMPSInteriorRootRealization.transfer_smul _) q,mul_smul_comm,smul_mul_assoc]
   unfold rightNumerator
-  rw [ht,mul_smul_comm,smul_mul_assoc,iterate_smul _ (right_step_smul s z)]
+  rw [ht,mul_smul_comm,smul_mul_assoc,
+    OpenBoundaryMPSInteriorRootRealization.iterate_smul _ (right_step_smul s z)]
 
 private lemma row_values (p q : ℕ) (s : Sector) (l r : Fin 2 → ℂ) (z₀ z : ℂ) :
     eval (slice (coordinates s l r z₀) z) (FL p q) =
