@@ -209,10 +209,47 @@ private theorem coefficient_overlap_bounds
 
 end FunctionalCalculus
 
+section CommutantOperations
+
+variable {A : Type*} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
+
+private abbrev gnsCarrier (ψ : A →ₚ[ℂ] ℂ) : Type _ := commutant ψ
+
+private abbrev gnsSemiring (ψ : A →ₚ[ℂ] ℂ) : Semiring (gnsCarrier ψ) := inferInstance
+attribute [local instance] gnsSemiring
+
+private abbrev gnsAlgebra (ψ : A →ₚ[ℂ] ℂ) : Algebra ℂ (gnsCarrier ψ) := inferInstance
+attribute [local instance] gnsAlgebra
+
+private abbrev gnsStar (ψ : A →ₚ[ℂ] ℂ) : Star (gnsCarrier ψ) := inferInstance
+attribute [local instance] gnsStar
+
+private abbrev gnsAddCommMonoid (ψ : A →ₚ[ℂ] ℂ) : AddCommMonoid (gnsCarrier ψ) :=
+  inferInstance
+attribute [local instance] gnsAddCommMonoid
+
+private abbrev gnsModule (ψ : A →ₚ[ℂ] ℂ) : Module ℂ (gnsCarrier ψ) := inferInstance
+attribute [local instance] gnsModule
+
+private abbrev gnsTopology (ψ : A →ₚ[ℂ] ℂ) : TopologicalSpace (gnsCarrier ψ) :=
+  inferInstance
+attribute [local instance] gnsTopology
+
+private abbrev gnsApply (ψ : A →ₚ[ℂ] ℂ)
+    (Φ : C(Interval, ℂ) →⋆ₐ[ℂ] gnsCarrier ψ) (g : C(Interval, ℂ)) : gnsCarrier ψ := Φ g
+
+private abbrev gnsCoefficient (ψ : A →ₚ[ℂ] ℂ) (T : gnsCarrier ψ) : StrongDual ℂ A :=
+  coefficientMap ψ T
+
+private abbrev gnsVectorValue (ψ : A →ₚ[ℂ] ℂ) (T : gnsCarrier ψ) : ℂ :=
+  vectorFunctional ψ T
+
+end CommutantOperations
+
 private theorem vectorFunctional_apply
     {A : Type*} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
-    (ψ : A →ₚ[ℂ] ℂ) (T : commutant ψ) :
-    vectorFunctional ψ T = coefficientMap ψ T 1 := rfl
+    (ψ : A →ₚ[ℂ] ℂ) (T : gnsCarrier ψ) :
+    gnsVectorValue ψ T = gnsCoefficient ψ T 1 := rfl
 
 set_option maxHeartbeats 800000 in
 -- The generic family uses both continuous dual and ordered C-star structures.
@@ -296,6 +333,30 @@ end ConcreteCarrier
 
 attribute [local instance] concreteCStar concreteOrder concreteStarOrdered
 
+private abbrev concreteNonUnitalCStar
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (M : VonNeumannAlgebra H) : NonUnitalCStarAlgebra (concreteAlgebra M) := inferInstance
+
+attribute [local instance] concreteNonUnitalCStar
+
+private abbrev concreteTopology
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (M : VonNeumannAlgebra H) : TopologicalSpace (concreteAlgebra M) := inferInstance
+
+attribute [local instance] concreteTopology
+
+private abbrev concreteAddCommMonoid
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (M : VonNeumannAlgebra H) : AddCommMonoid (concreteAlgebra M) := inferInstance
+
+attribute [local instance] concreteAddCommMonoid
+
+private abbrev concreteModule
+    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (M : VonNeumannAlgebra H) : Module ℂ (concreteAlgebra M) := inferInstance
+
+attribute [local instance] concreteModule
+
 set_option maxHeartbeats 3000000 in
 -- The concrete GNS and L1 application elaborates several dependent C-star structures.
 private theorem spectral_data
@@ -306,17 +367,17 @@ private theorem spectral_data
     (F : Family ρ σ)
     (hopt : ∀ t : ℝ, 0 < t → (overlap F t 1).re = overlapValue M ρ σ t) :
     let ψ := pairFunctional ρ σ hρ hσ
-    let N : Type _ := commutant ψ
+    let N : Type _ := gnsCarrier ψ
     letI : CStarAlgebra N := commutant_cstar ψ
     letI : PartialOrder N := inferInstance
     letI : StarOrderedRing N := commutant_starOrderedRing ψ
     let C : N := pairCoordinate ρ σ hρ hσ
     ∃ Φ : C(Interval, ℂ) →⋆ₐ[ℂ] N,
-      Φ posterior = C ∧
-      (∀ g, coefficientMap ψ (Φ g) = linearMap F g) ∧
-      (∀ t : ℝ, Φ (overlapFunction t) = spectralOverlap C t) ∧
+      gnsApply ψ Φ posterior = C ∧
+      (∀ g, gnsCoefficient ψ (gnsApply ψ Φ g) = linearMap F g) ∧
+      (∀ t : ℝ, gnsApply ψ Φ (overlapFunction t) = spectralOverlap C t) ∧
       (∀ t : ℝ, 0 < t →
-        (vectorFunctional ψ (spectralOverlap C t)).re =
+        (gnsVectorValue ψ (spectralOverlap C t)).re =
           overlapValue M ρ σ t) := by
   let ψ := pairFunctional ρ σ hρ hσ
   have hlift := exists_lift (A := M.toStarSubalgebra) (ρ := ρ) (σ := σ) hρ hσ F
@@ -351,7 +412,7 @@ theorem spectral_moments_of_all_overlap_optima
     (F : Family ρ σ)
     (hopt : ∀ t : ℝ, 0 < t → (overlap F t 1).re = overlapValue M ρ σ t) :
     let ψ := pairFunctional ρ σ hρ hσ
-    let N : Type _ := commutant ψ
+    let N : Type _ := gnsCarrier ψ
     letI : CStarAlgebra N := commutant_cstar ψ
     letI : PartialOrder N := inferInstance
     letI : StarOrderedRing N := commutant_starOrderedRing ψ
@@ -362,14 +423,14 @@ theorem spectral_moments_of_all_overlap_optima
     letI : NormedAddCommGroup V := inferInstance
     letI : NormedSpace ℂ V := inferInstance
     ∃ Φ : C(Interval, ℂ) →⋆ₐ[ℂ] N,
-      Φ posterior = C ∧
-      (∀ g, coefficientMap ψ (Φ g) = linearMap F g) ∧
-      (∀ t : ℝ, Φ (overlapFunction t) = spectralOverlap C t) ∧
+      gnsApply ψ Φ posterior = C ∧
+      (∀ g, gnsCoefficient ψ (gnsApply ψ Φ g) = linearMap F g) ∧
+      (∀ t : ℝ, gnsApply ψ Φ (overlapFunction t) = spectralOverlap C t) ∧
       (∀ t : ℝ, 0 < t →
-        (vectorFunctional ψ (spectralOverlap C t)).re =
+        (gnsVectorValue ψ (spectralOverlap C t)).re =
           overlapValue M ρ σ t) ∧
       ∃ Γ : (Interval →₁[μ] ℂ) →L[ℂ] V,
-        (∀ g, Γ (ContinuousMap.toLp 1 μ ℂ g) = coefficientMap ψ (Φ g)) ∧
+        (∀ g, Γ (ContinuousMap.toLp 1 μ ℂ g) = gnsCoefficient ψ (gnsApply ψ Φ g)) ∧
         (∀ h, IsCoefficientSeries M (Γ h)) ∧
         (∀ h, Analysis.NormalFunctionals.IsOrderNormal (Γ h)) ∧
         (∀ h, (∀ᵐ x ∂μ, 0 ≤ h x) → Positive (Γ h)) ∧

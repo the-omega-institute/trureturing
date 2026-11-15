@@ -194,6 +194,12 @@ private theorem moment_range {ρ σ : StrongDual ℂ A}
   simp_rw [map_smul]
   exact Submodule.sum_mem _ (fun i _ => Submodule.smul_mem _ _ (hp (f i) (hf i)))
 
+private abbrev momentApply (ψ : A →ₚ[ℂ] ℂ)
+    (Z : C(Interval, ℂ) →ₚ[ℂ] commutant ψ) (g : C(Interval, ℂ)) : commutant ψ := Z g
+
+private abbrev momentCoefficient (ψ : A →ₚ[ℂ] ℂ) (T : commutant ψ) : StrongDual ℂ A :=
+  coefficientMap ψ T
+
 set_option maxHeartbeats 800000 in
 -- Elaborating the actual nested commutant, dual and GNS instances requires this limit.
 /-- Every full Family lifts to a positive complex-linear map into its actual GNS commutant.
@@ -203,8 +209,9 @@ theorem exists_lift {ρ σ : StrongDual ℂ A}
     (F : Family ρ σ) :
     let ψ := pairFunctional ρ σ hρ hσ
     ∃ Z : C(Interval, ℂ) →ₚ[ℂ] commutant ψ,
-      Z 1 = 1 ∧ (∀ g, coefficientMap ψ (Z g) = linearMap F g) ∧
-      Z posterior = pairCoordinate ρ σ hρ hσ := by
+      momentApply ψ Z 1 = 1 ∧
+      (∀ g, momentCoefficient ψ (momentApply ψ Z g) = linearMap F g) ∧
+      momentApply ψ Z posterior = pairCoordinate ρ σ hρ hσ := by
   let ψ := pairFunctional ρ σ hρ hσ
   let e := LinearEquiv.ofInjective (coefficientMap ψ) (coefficientMap_injective ψ)
   let L := e.symm.toLinearMap.comp
@@ -233,24 +240,29 @@ set_option maxHeartbeats 800000 in
 def familyOfMap {ρ σ : StrongDual ℂ A}
     (hρ : ∀ a, 0 ≤ a → 0 ≤ ρ a) (hσ : ∀ a, 0 ≤ a → 0 ≤ σ a)
     (Z : C(Interval, ℂ) →ₚ[ℂ] commutant (pairFunctional ρ σ hρ hσ))
-    (hu : Z 1 = 1) (hc : Z posterior = pairCoordinate ρ σ hρ hσ) : Family ρ σ :=
+    (hu : momentApply (pairFunctional ρ σ hρ hσ) Z 1 = 1)
+    (hc : momentApply (pairFunctional ρ σ hρ hσ) Z posterior = pairCoordinate ρ σ hρ hσ) :
+    Family ρ σ :=
   ofLinearMap ((coefficientMap _).comp Z.toLinearMap)
     (fun g hg => (coefficientMap_nonneg _ _).mpr (Z.map_nonneg hg))
     (by
-      change coefficientMap _ (Z 1) = _
+      change coefficientMap _ (momentApply _ Z 1) = _
       rw [hu]
       apply ContinuousLinearMap.coe_injective
       exact coefficientMap_one _)
-    (by change coefficientMap _ (Z posterior) = _; rw [hc, pairCoordinate_coefficient])
+    (by change coefficientMap _ (momentApply _ Z posterior) = _
+        rw [hc, pairCoordinate_coefficient])
 
 /-- The correspondence retains every complex continuous coordinate in both directions. -/
 theorem familyOfMap_agrees {ρ σ : StrongDual ℂ A}
     (hρ : ∀ a, 0 ≤ a → 0 ≤ ρ a) (hσ : ∀ a, 0 ≤ a → 0 ≤ σ a)
     (Z : C(Interval, ℂ) →ₚ[ℂ] commutant (pairFunctional ρ σ hρ hσ))
-    (hu : Z 1 = 1) (hc : Z posterior = pairCoordinate ρ σ hρ hσ)
+    (hu : momentApply (pairFunctional ρ σ hρ hσ) Z 1 = 1)
+    (hc : momentApply (pairFunctional ρ σ hρ hσ) Z posterior = pairCoordinate ρ σ hρ hσ)
     (g : C(Interval, ℂ)) :
     linearMap (familyOfMap hρ hσ Z hu hc) g =
-      coefficientMap (pairFunctional ρ σ hρ hσ) (Z g) := rfl
+      momentCoefficient (pairFunctional ρ σ hρ hσ)
+        (momentApply (pairFunctional ρ σ hρ hσ) Z g) := rfl
 
 set_option maxHeartbeats 800000 in
 -- Elaborating the actual nested commutant, dual and GNS instances requires this limit.
@@ -259,7 +271,8 @@ def familyEquiv (ρ σ : StrongDual ℂ A)
     (hρ : ∀ a, 0 ≤ a → 0 ≤ ρ a) (hσ : ∀ a, 0 ≤ a → 0 ≤ σ a) :
     Family ρ σ ≃
       {Z : C(Interval, ℂ) →ₚ[ℂ] commutant (pairFunctional ρ σ hρ hσ) //
-        Z 1 = 1 ∧ Z posterior = pairCoordinate ρ σ hρ hσ} where
+        momentApply (pairFunctional ρ σ hρ hσ) Z 1 = 1 ∧
+        momentApply (pairFunctional ρ σ hρ hσ) Z posterior = pairCoordinate ρ σ hρ hσ} where
   toFun F := ⟨(exists_lift hρ hσ F).choose,
     (exists_lift hρ hσ F).choose_spec.1, (exists_lift hρ hσ F).choose_spec.2.2⟩
   invFun Z := familyOfMap hρ hσ Z.val Z.property.1 Z.property.2
