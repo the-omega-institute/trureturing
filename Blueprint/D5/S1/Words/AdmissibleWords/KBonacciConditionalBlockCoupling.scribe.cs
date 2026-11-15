@@ -751,7 +751,9 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                                 + "by sqrt(Z) give H U f=U(2 sum_i(Id-E_i)f)=U(-2 L_site f), since E_i is complex-linear. Finite pairing "
                                 + "and clock sums give Q(h_i,psi)=2Z*energy_i(g)=2*energy_i(f) and "
                                 + "Q(H,psi)=2Z*sum_i energy_i(g)=2*sum_i energy_i(f). The coefficient 2Z belongs to unscaled restriction "
-                                + "g; coefficient 2 belongs to the isometric inverse f. Every singleton clock still has rate one.")),
+                                + "g; coefficient 2 belongs to the isometric inverse f. Every singleton clock still has rate one. The "
+                                + "rescaled local and total energy equalities are finite-sum exposition; their direct exact Lean "
+                                + "application remains unverified. The full quadratic bound below instead uses the unscaled 2Z identity.")),
                             Paragraph(Text(
                                 "For k>=2,n>=1 apply the original complex Poincare inequality to g, with C(k)=(2k-1)^2*2^(2k-1). "
                                 + "Multiplying Var_pi(g)<=C(k)*sum_i energy_i(g) by 2Z/C(k) and substituting the two identities yields "
