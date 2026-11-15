@@ -94,17 +94,23 @@ are consumed bind-only steps.
 - [proved: D5/S3/Combinatorics/Graph/Potts/HealingUnbounded.result]
   No constant bounds the number of exchanges needed to reach an augmentable
   tight set of the same size, uniformly over connected graphs of maximum
-  degree at most three other than K₄. On the tree of triangles of height h,
-  at least h exchanges are needed, so the number of chain stages grows at
-  least like log₂((|V| + 6)/9), where |V| = 3B.
+  degree at most three other than K₄. On the tree of triangles of height h
+  (B = 3·2^h − 2 triangles, |V| = 3B), every augmentable tight set T with
+  |T| = |S| misses at least h apices of S, so at least h exchanges are
+  needed, where h = log₂((|V| + 6)/9). Through the bridge of the Problem
+  section (a set tested at stage j = 0, 1, … differs from S by at most
+  j + 1 exchanges), the first successful stage has index j ≥ h − 1, so at
+  least h stages are tested; that bridge is a reading of Proposition 15
+  and is not part of the Lean statement.
 - [proved: D5/S3/Combinatorics/Graph/Potts/HealingUnbounded.result]
-  The obstruction is a descent: a stuck tight set can sit at the root of a
-  deep tree of odd cycles whose only free vertices are at the leaves. An
-  augmentable tight set T with |T| = |S| meets every triangle exactly once;
-  it meets the root triangle at a port, which forces the child's apex out of
-  T, and the same argument continues along a root-to-leaf path, so at least h
-  apices of S are missing from T. The theorem bounds this static displacement;
-  it does not describe the trajectory of individual exchanges. The paper's
+  The obstruction is a descent. If T is augmentable with |T| = |S|, its
+  augmentation R = T ∪ {v} is an independent set of size B, so it meets
+  every triangle exactly once. R meets the root triangle at a port, which
+  forces the apex of the adjacent child out of R, and the same argument
+  continues along a root-to-leaf path, so at least h apices are missing
+  from R; since T ⊆ R, they are missing from T as well. The theorem bounds
+  this static displacement; it does not describe the trajectory of
+  individual exchanges. The paper's
   upper bound by the number of components of G − S is consistent with this
   family, whose G − S has B components.
 - [open] Whether the stage count is bounded on the coordination-three
