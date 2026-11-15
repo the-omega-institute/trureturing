@@ -143,3 +143,5 @@ These integer tables give class transitions, initial weights, terminal acceptanc
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229589StripData.horizontal`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229589StripData.initial`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229589StripData.terminal`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer](../../../Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore](../../../Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.md)

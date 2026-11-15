@@ -38,10 +38,6 @@ $$\forall n: \mathit{Nat}, ((\operatorname{\mathit{HardinA229691Strip}}.\operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229691Strip.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/hardin229691` (proved) by `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229691Strip.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin229691","declaration_gid":"D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229691Strip.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229691: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229691>.
@@ -57,7 +53,7 @@ The row transfer counts labelled arrays. the original row-major canonical repres
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229691Strip.result`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](DefectTransfer.md)
-- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229583StripData](HardinA229583StripData.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229583Strip](HardinA229583Strip.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229691StripCertificate](HardinA229691StripCertificate.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229691StripClasses0](HardinA229691StripClasses0.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229691StripClasses1](HardinA229691StripClasses1.md)
