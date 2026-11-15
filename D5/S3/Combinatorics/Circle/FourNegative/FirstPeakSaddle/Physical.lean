@@ -16,7 +16,7 @@ All new declarations are private and occur on the path to actualSource_of_native
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle
-open SourceWidth PeriodicShortening RunFirstEarTransport
+open SourceWidth PeriodicShortening RunFirstEarTransport PacketNormalForm
 open scoped BigOperators
 
 open private gate JointChoice JointChoice.s JointChoice.r JointChoice.h JointChoice.v
@@ -24,8 +24,8 @@ open private gate JointChoice JointChoice.s JointChoice.r JointChoice.h JointCho
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle.Structure
 open private source_parity source_centered_bounds source_recurrences
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle.Source
-open private size sourceMod base newBase charge chainLength chainStart nextBase nextNewBase
-  oldValue newValue negatives chain_values source_signs source_totals
+open private sourceMod charge nextBase nextNewBase
+  chain_values source_signs source_totals
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private label lift_order marked_word
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
