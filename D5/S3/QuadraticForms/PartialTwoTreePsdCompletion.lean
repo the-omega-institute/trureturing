@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Signed-walk reduction for simultaneous partial two-tree angle completion. -/
+   digest: All cycle angle inequalities characterize real rank-three completion on partial two-trees. -/
 
 import D5.S3.QuadraticForms.CycleRankThreePsdCompletion
 import Mathlib.Combinatorics.SimpleGraph.Paths
@@ -252,7 +252,7 @@ private lemma interval_bound (G : SimpleGraph V) (θ : V → V → ℝ)
     (hθ : ∀ a b, G.Adj a b → 0 ≤ θ a b ∧ θ a b ≤ Real.pi)
     (hclosed : ∀ {a b : V × Bool} (p : (liftGraph G).Walk a b),
       a.1 = b.1 → a.2 ≠ b.2 → Real.pi ≤ total (weight θ) p)
-    {u v : V} (hne : u ≠ v) {x : ℝ} (hx : 0 ≤ x ∧ x ≤ Real.pi)
+    {u v : V} (hne : u ≠ v) {x : ℝ}
     (h₀ : ∀ p : (liftGraph G).Walk (u,false) (v,false), x ≤ total (weight θ) p)
     (h₁ : ∀ p : (liftGraph G).Walk (u,false) (v,true), Real.pi - x ≤ total (weight θ) p)
     {a b : V × Bool} (ha : a.1 = u ∨ a.1 = v) (hb : b.1 = u ∨ b.1 = v)
@@ -340,7 +340,7 @@ private lemma extend_one (G : SimpleGraph V) (θ : V → V → ℝ)
   have hold {a b : V × Bool} (ha : a ∈ S) (hb : b ∈ S) (p : (liftGraph G).Walk a b) :
       boundaryDist x a b ≤ total (weight θ') p := by
     rw [total_congr _ _ hsame]
-    exact interval_bound G θ hsym hθ hclosed hne ⟨hx₀,hx₁⟩ h₀ h₁ ha hb p
+    exact interval_bound G θ hsym hθ hclosed hne h₀ h₁ ha hb p
   have hnew : ∀ a b, N a b → a ∈ S ∧ b ∈ S ∧
       boundaryDist x a b ≤ weight θ' a b := by
     intro a b hn
@@ -351,7 +351,7 @@ private lemma extend_one (G : SimpleGraph V) (θ : V → V → ℝ)
       · simpa only [ha,hb] using Ne.symm hne
     refine ⟨by rcases hn with h | h; exact Or.inl h.1; exact Or.inr h.1,
       by rcases hn with h | h; exact Or.inr h.2; exact Or.inl h.2, ?_⟩
-    simp only [boundaryDist, if_neg hab, weight, θ', insertAngle, if_pos hn, le_refl]
+    simp only [boundaryDist, ite_eq_right hab, weight, θ', insertAngle, ite_eq_left hn, le_refl]
   have hbound : ∀ {a b}, a ∈ S → b ∈ S →
       ∀ p : (liftGraph (insertGraph G u v)).Walk a b, boundaryDist x a b ≤ total (weight θ') p := boundary_gluing (liftGraph G) (liftGraph (insertGraph G u v))
     (weight θ') S (boundaryDist x) N hsplit hnew
@@ -412,11 +412,10 @@ private lemma flips_parity {G : SimpleGraph V} {a b : V × Bool} (p : (liftGraph
     change Odd ((if a.2 = b.2 then 0 else 1) + flips p) ↔ _
     cases ha : a.2 <;> cases hb : b.2 <;> cases hc : c.2 <;>
       simp only [ha,hb,hc] at ih ⊢ <;>
-      simp_all [Nat.odd_add_one, add_comm]
+      simp_all
 
 private lemma elementary_cost (G : SimpleGraph V) (θ : V → V → ℝ)
     (hsym : ∀ a b, θ a b = θ b a)
-    (hθ : ∀ a b, G.Adj a b → 0 ≤ θ a b ∧ θ a b ≤ Real.pi)
     (hcycles : ∀ (m : ℕ), 3 ≤ m → ∀ c : Fin m → V, Function.Injective c →
       (∀ i, G.Adj (c i) (c (finRotate m i))) →
       ∀ F : Finset (Fin m), Odd F.card →
@@ -441,7 +440,7 @@ private lemma elementary_cost (G : SimpleGraph V) (θ : V → V → ℝ)
   have hlast : (p.getVert p.length).1 = (p.getVert 0).1 := by simpa using hab.symm
   have hnext (i : Fin p.length) :
       (p.getVert (finRotate p.length i)).1 = (p.getVert (i + 1)).1 := by
-    haveI : NeZero p.length := ⟨by omega⟩
+    have : NeZero p.length := ⟨by omega⟩
     rw [finRotate_apply, Fin.val_add, Fin.val_one', Nat.mod_eq_of_lt htwo]
     by_cases hi : i.val + 1 < p.length
     · rw [Nat.mod_eq_of_lt hi]
@@ -606,7 +605,7 @@ theorem exists_joint_angle_table [Finite V] (G : SimpleGraph V) (θ : V → V �
       (∀ a b c, Γ a b + Γ b c + Γ c a ≤ 2 * Real.pi) := by
   have hc : ∀ {a b : V × Bool} (p : (liftGraph G).Walk a b),
       a.1 = b.1 → a.2 ≠ b.2 → Real.pi ≤ total (weight θ) p := odd_walk_reduction G θ hθ (fun p hab hbits hp =>
-    elementary_cost G θ hsym hθ hcycles p hab hbits hp)
+    elementary_cost G θ hsym hcycles p hab hbits hp)
   obtain ⟨Γ,hs,hdΓ,hb,he,hcl⟩ := complete_extension G θ hsym hd hθ hc
   have hb' (a b : V) : 0 ≤ Γ a b ∧ Γ a b ≤ Real.pi := by
     by_cases h : a = b
@@ -673,8 +672,8 @@ private lemma small_psd {C : Type*} [Finite C] (Γ : C → C → ℝ)
     (hb : ∀ a b, 0 ≤ Γ a b ∧ Γ a b ≤ Real.pi)
     (ht : ∀ a b c, Γ a b ≤ Γ a c + Γ c b)
     (hp : ∀ a b c, Γ a b + Γ b c + Γ c a ≤ 2 * Real.pi) :
-    Matrix.PosSemidef ((fun a b => Real.cos (Γ a b)) : Matrix C C ℝ) ∧
-      Matrix.rank ((fun a b => Real.cos (Γ a b)) : Matrix C C ℝ) ≤ 3 := by
+    Matrix.PosSemidef (Matrix.of (fun a b : C => Real.cos (Γ a b))) ∧
+      Matrix.rank (Matrix.of (fun a b : C => Real.cos (Γ a b))) ≤ 3 := by
   classical
   letI := Fintype.ofFinite C
   have hcard' : Fintype.card C ≤ 3 := by simpa only [Nat.card_eq_fintype_card] using hcard
@@ -682,7 +681,7 @@ private lemma small_psd {C : Type*} [Finite C] (Γ : C → C → ℝ)
   cases isEmpty_or_nonempty C with
   | inl h =>
     letI := h
-    have he : ((fun a b => Real.cos (Γ a b)) : Matrix C C ℝ) = 0 := by ext a; exact isEmptyElim a
+    have he : (Matrix.of (fun a b : C => Real.cos (Γ a b))) = 0 := by ext a; exact isEmptyElim a
     rw [he]
     exact Matrix.PosSemidef.zero
   | inr h =>
@@ -721,9 +720,59 @@ private lemma small_psd {C : Type*} [Finite C] (Γ : C → C → ℝ)
       · exact h20
       · exact (hsym 2 1).trans (h12.trans (congrArg Real.cos (hs (f 1) (f 2))))
       · exact h00 2
-    have heq : ((fun a b => Real.cos (Γ a b)) : Matrix C C ℝ) = B.submatrix e e := by
+    have heq : (Matrix.of (fun a b : C => Real.cos (Γ a b))) = B.submatrix e e := by
       ext a b
-      simp only [Matrix.submatrix_apply,hentry,hfe]
+      simp only [Matrix.of_apply,Matrix.submatrix_apply,hentry,hfe]
     rw [heq]
     exact hB.submatrix e
+set_option maxHeartbeats 800000 in
+theorem partial_two_tree_rank_three_iff [Finite V] (G : SimpleGraph V)
+    (hG : ∃ H : SimpleGraph V, G ≤ H ∧ H.IsChordal ∧
+      ∀ C : Set V, H.IsClique C → Nat.card C ≤ 3)
+    (A : Matrix V V ℝ) (hsym : ∀ i j, A i j = A j i)
+    (hdiag : ∀ i, A i i = 1)
+    (hbound : ∀ i j, G.Adj i j → -1 ≤ A i j ∧ A i j ≤ 1) :
+    (∃ B : Matrix V V ℝ, B.PosSemidef ∧ B.rank ≤ 3 ∧
+      (∀ i, B i i = 1) ∧ (∀ i j, G.Adj i j → B i j = A i j)) ↔
+    ∀ (m : ℕ), 3 ≤ m → ∀ c : Fin m → V, Function.Injective c →
+      (∀ i, G.Adj (c i) (c (finRotate m i))) →
+      ∀ F : Finset (Fin m), Odd F.card →
+      (∑ i ∈ F, Real.arccos (A (c i) (c (finRotate m i)))) -
+        (∑ i ∈ Finset.univ \ F, Real.arccos (A (c i) (c (finRotate m i)))) ≤
+          ((F.card : ℝ) - 1) * Real.pi := by
+  classical
+  letI := Fintype.ofFinite V
+  constructor
+  · rintro ⟨B,hB,hr,hd,he⟩ m hm c hc hadj
+    apply (D5.S3.QuadraticForms.CycleRankThreePsdCompletion.cycle_rank_three_iff
+      hm (fun i => A (c i) (c (finRotate m i))) (fun i => hbound _ _ (hadj i))).mp
+    refine ⟨B.submatrix c c,hB.submatrix c, (B.rank_submatrix_le c c).trans hr,?_,?_⟩
+    · intro i; exact hd (c i)
+    · intro i; exact he _ _ (hadj i)
+  · intro hcycles
+    obtain ⟨Γ,hΓs,hΓd,hΓb,hΓe,hΓt,hΓp⟩ := exists_joint_angle_table G
+      (fun i j => Real.arccos (A i j))
+      (fun i j => congrArg Real.arccos (hsym i j))
+      (fun i => by rw [hdiag,Real.arccos_one])
+      (fun i j _ => ⟨Real.arccos_nonneg _,Real.arccos_le_pi _⟩) hcycles
+    obtain ⟨H,hGH,hH,hcard⟩ := hG
+    let T : Matrix V V ℝ := fun i j => Real.cos (Γ i j)
+    have hlocal (C : Set V) (hC : H.IsClique C) :
+        (T.submatrix (Subtype.val : C → V) (Subtype.val : C → V)).PosSemidef ∧
+        (T.submatrix (Subtype.val : C → V) (Subtype.val : C → V)).rank ≤ 3 := by
+      simpa only [T,Matrix.submatrix,Matrix.rank_eq_finrank_span_cols] using small_psd (fun i j : C => Γ i j) (hcard C hC)
+        (fun i j => hΓs i j) (fun i => hΓd i) (fun i j => hΓb i j)
+        (fun i j k => hΓt i j k) (fun i j k => hΓp i j k)
+    obtain ⟨B,hB,hr,he⟩ :=
+      D5.S3.QuadraticForms.RankBoundedChordalPsdCompletion.exists_posSemidef_completion_rank_le
+        3 H hH T (fun C hC => by
+          simpa only [Matrix.rank_eq_finrank_span_cols] using hlocal C hC)
+    refine ⟨B,hB,hr,?_,?_⟩
+    · intro i
+      rw [he i i (Or.inl rfl)]
+      simp only [T,hΓd,Real.cos_zero]
+    · intro i j hij
+      rw [he i j (Or.inr (hGH hij))]
+      change Real.cos (Γ i j) = A i j
+      rw [hΓe i j hij, Real.cos_arccos (hbound i j hij).1 (hbound i j hij).2]
 end D5.S3.QuadraticForms.PartialTwoTreePsdCompletion
