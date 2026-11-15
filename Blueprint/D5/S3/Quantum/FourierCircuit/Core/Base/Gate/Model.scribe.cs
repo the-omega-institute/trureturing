@@ -7,6 +7,7 @@ internal sealed class ModelDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Addressed quantum circuit: Core Base Gate Model", H("Core Base Gate Model"), Blocks(
+            Paragraph(Text("For every GateModel model and Occurrence gate, QuantumAlg.GateModel.Occurrence.coordinate gate is model.coordinate gate.token. Its operator reindexes model.operator gate.token along the certified placement index equivalence; the occurrence does not supply an independently chosen matrix.")),
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Gate/Model.GateModel"),
                 H("GateModel"), StatementSource.WithoutFormula(),

@@ -7,6 +7,7 @@ internal sealed class ModelDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Addressed quantum circuit: Core Base Oracle Model", H("Core Base Oracle Model"), Blocks(
+            Paragraph(Text("For every OracleModel model, Occurrence query and Interpretation environment, QuantumAlg.OracleModel.Occurrence.coordinate query is model.coordinate query.query. Its operator reindexes environment.operator query.query along the certified placement index equivalence.")),
             Describe.Lean(DescribeId.Create("declaration0"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Oracle/Model.OracleModel"),
                 H("OracleModel"), StatementSource.WithoutFormula(),

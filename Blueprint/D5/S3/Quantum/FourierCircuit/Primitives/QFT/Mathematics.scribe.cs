@@ -7,11 +7,12 @@ internal sealed class MathematicsDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Addressed quantum circuit: Primitives QFT Mathematics", H("Primitives QFT Mathematics"), Blocks(
+            Paragraph(Text("For every natural n, the source constant QuantumAlg.ω n is exp((2 pi / 2^n) i). Its positive sign fixes the forward-transform convention, and n equal to zero is included.")),
             Describe.Lean(DescribeId.Create("declaration1"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Primitives/QFT/Mathematics.omega_pow_eq_one"),
                 H("omega pow eq one"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/qudeleap2026qft")),
-                Blocks(Paragraph(Text("ω_n ^ (2^n) = 1: the root has exact period 2^n."))), DescribeRole.Lemma),
+                Blocks(Paragraph(Text("For every natural n, ω_n ^ (2^n) = 1. This states that 2^n is a period."))), DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("declaration2"),
                 DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Primitives/QFT/Mathematics.invSqrtN"),
                 H("invSqrtN"), StatementSource.WithoutFormula(),

@@ -23,16 +23,10 @@ public import D5.S3.Quantum.FourierCircuit.Core.Base.State.Normalized
 import all D5.S3.Quantum.FourierCircuit.Core.Base.State.Normalized
 
 /-!
-# Named one-qubit kets
+# Hadamard normalization scalar
 
-The standard one-qubit computational- and Hadamard-basis kets, as Components-layer
-instances of the generic basis ket `QuantumAlg.NormalizedVector.ket`:
-
-`|0>`, `|1>`, `|+> = (|0> + |1>)/sqrt 2`, and
-`|-> = (|0> - |1>)/sqrt 2`.
-
-Linear combinations are formed at the raw `HilbertVector` layer and then certified
-as metadata-free `NormalizedVector` values once their unit norm has been proved.
+The reciprocal square root of two, its square, and its invariance under complex
+conjugation support the certified Hadamard operator.
 -/
 
 section

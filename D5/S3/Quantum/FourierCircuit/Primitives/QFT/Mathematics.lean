@@ -38,7 +38,7 @@ Forward-transform sign convention (`+2πi`, not `−2πi`). -/
   Complex.exp (↑(2 * Real.pi / (2 : ℝ) ^ n) * Complex.I)
 -- [dW19, qcnotes.tex:1690]: ω_N = e^{2πi/N}
 
-/-- `ω_n ^ (2^n) = 1`: the root has exact period `2^n`. -/
+/-- `ω_n ^ (2^n) = 1`: `2^n` is a period of the Fourier root. -/
 lemma omega_pow_eq_one (n : ℕ) : ω n ^ (2 ^ n) = 1 := by
   rw [ω, ← Complex.exp_nat_mul, Complex.exp_eq_one_iff]
   refine ⟨1, ?_⟩
