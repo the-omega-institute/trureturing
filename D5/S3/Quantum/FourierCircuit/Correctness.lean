@@ -21,6 +21,8 @@ import D5.S3.Quantum.FourierCircuit.Primitives.QFT.Source.Matrix
 import D5.S3.Quantum.FourierCircuit.Core.Base.Gate.Unitary
 import D5.S3.Quantum.ShorCountingMarginal
 
+/-! The original full-word interpreter equals the existing analytic transform. -/
+
 namespace QuantumAlg.QuantumFourierTransform.Source
 noncomputable section
 
