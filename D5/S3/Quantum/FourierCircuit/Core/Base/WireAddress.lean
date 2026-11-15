@@ -98,7 +98,7 @@ public lemma flipBit_flipBit {n : Nat} (target : Fin n) (x : Fin (2 ^ n)) :
     flipBit target (flipBit target x) = x := by
   unfold flipBit
   ext
-  simp
+  simp [Nat.xor_assoc]
 
 public lemma flipBit_comm {n : Nat} (left right : Fin n) (x : Fin (2 ^ n)) :
     flipBit left (flipBit right x) = flipBit right (flipBit left x) := by
