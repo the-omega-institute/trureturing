@@ -1,0 +1,27 @@
+**命题 277.5（产品影子不是整个射影格，效应也不组成格）。** (277.4)的闭集只对应产品射线张成的子空间，不能以这个受限二元关系代替整个联合纯态几何。整个proper区间也不能据此解释成Löwner格。
+
+证明。在 $\mathbb C^m\otimes\mathbb C^n$ 的两个复二维局域支持内，取
+
+$$
+U=\operatorname{span}\{|00\rangle,|11\rangle\},\qquad
+V=\operatorname{span}\{|++\rangle,|--\rangle\},\qquad
+|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2.
+\tag{277.6}
+$$
+
+两空间都由产品向量张成。$V$ 中向量的系数为 $(a+b,a-b,a-b,a+b)/2$；属于 $U$ 恰当 $a=b$，故 $U\cap V=\mathbb C(|00\rangle+|11\rangle)$。这条Schmidt秩二射线不含非零产品向量。因此两投影的共同产品确认集为空，$h=0$ 符合(277.2)，即使它们共同确认这颗纠缠纯点。产品闭包格中的meet因而为零，而整个投影格中的meet为非零纠缠射线投影。一般地，令 $\Gamma(W)$ 是 $W$ 内全部产品射线的张成，产品张成子空间格的meet是 $\Gamma(U\cap V)$，join是 $U+V$；不能把前者写成未经 $\Gamma$ 的交。
+
+若在重建后的完整 $P_3$ 上定义同一确认闭包，任意子空间都由其纯射线张成，才得到整个复子空间格。相应锐核 $s(f)=P_{\ker(I-f)}$ 满足 $s(f)\le f$、$s(s(f))=s(f)$；它是 $f$ 下最大的正交投影。它不是保留所有概率的表示：例如所有 $tI$、$0\le t<1$ 都没有纯确认点，但概率并不相等。因此完整Born读数仍由原仿射概率表和277.3的重建承担，不由零一关联单独决定。
+
+最后，整个proper区间确实不能成为Löwner格。只在一个复二维支持内取
+
+$$
+A=\begin{pmatrix}1&0\\0&1/2\end{pmatrix},\qquad
+B=\begin{pmatrix}1/2&0\\0&1\end{pmatrix},\qquad
+D=\tfrac12 I_2,\qquad
+Z=\begin{pmatrix}2/5&1/5\\1/5&2/5\end{pmatrix}.
+\tag{277.7}
+$$
+
+它们均proper，$D,Z\preceq A,B$；后一个断言由 $A-Z$、$B-Z$ 的非负对角及行列式 $1/50$ 得到。若有最大下界 $G$，则 $D\preceq G\preceq A,B$，两对角元必须均为 $1/2$；正矩阵 $G-D$ 的零对角迫它为零，所以 $G=D$。但 $Z$ 的最大特征值为 $3/5$，故 $Z\npreceq D$，矛盾。高维时在该二维支持外补零，相同论证成立。因此(277.2)只给某个保确证的共同下界，不能改称所有下界中的最大者。$\square$
+

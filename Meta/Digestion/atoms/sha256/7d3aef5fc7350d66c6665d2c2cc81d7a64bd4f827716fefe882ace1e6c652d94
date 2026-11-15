@@ -1,0 +1,13 @@
+**定理 272.5（一条三份关系约束重建全部有限复量子理论）。** 在272.1的完整强全有限背景下，$\mathsf Q_{\rm switch}$ 当且仅当存在同一个 $r\ge2$ 及保单位实线性序同构 $\theta:V\to\operatorname{Herm}_r(\mathbb C)$，对每个有限 $N\ge0$ 同时有
+
+$$
+\Theta_N=\theta^{\otimes N},\qquad
+\Theta_N(C_N)=\operatorname{PSD}_{r^N},\qquad
+u_N=\operatorname{Tr}\circ\Theta_N.
+\tag{272.5}
+$$
+
+证明。272.3直接在整个 $K_3$ 付清266.1的 $\mathsf{SC}_3+\mathsf B_{b,3}$，故准确复用266.8，取得(272.5)。此入口无需预给单份共见或纯域连通，也无需先用271.5的逐坐标产品路径来判三份不可约。266.8的原射影、连续分类、矩形条件化、共同第一因子、Gleason、单Kraus、Choi及全有限传播仍承担各自桥梁；单条换点本身不直接指定复数和概率尺。
+
+反向，在标准复PSD底上原关系为支持正交。取单位向量 $v,w$ 表示不同纯射线。若 $v^*w\ne0$，令 $h=w-v(v^*w)\ne0$，取 $g=P_h$；它与 $P_v$ 正交，且 $\operatorname{span}\{v,w\}=\operatorname{span}\{v,h\}$。若 $v^*w=0$，取 $g=P_{v+w}$，它与 $P_v$ 非正交，仍保同一二维张成。两种情形的共同正交射线集相同且关系恰好翻转。因此 $\mathsf X_3$ 成立。$P_h$ 表示按 $h^*h$ 归一的秩一投影，未将非单位向量直接当作归一态。$\square$
+

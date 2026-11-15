@@ -1,0 +1,48 @@
+**定理 266.7（纯条件化方向先给单Kraus，再给整个三份PSD）。** 原 $C_3$ 与复 $\operatorname{PSD}_{sr}$ 实线性序同构；以原单位归一后，原整个 $K_3$ 的全部二元实际面中心对称。此处的临时三份坐标不预称 $\theta^{\otimes3}$。
+
+证明。取等距满列秩 $M_0:\mathbb C^r\hookrightarrow\mathbb C^s$，由266.5—266.6定义
+
+$$
+J(g)=M_0^\dagger\alpha_2(T_{M_0}g)M_0,
+\qquad
+\Phi_z=\alpha_2T_zJ^{-1}.
+\tag{266.11}
+$$
+
+$J:C_1^*\to\operatorname{PSD}_r$ 是序同构，且 $J(g_b)$ 在 $c_bc_b^\dagger$ 的正射线上。对纯点 $z_M$，$\Phi_{z_M}$ 为正实线性映射，并对每个非零 $c$ 满足
+
+$$
+Mc=0\Rightarrow\Phi_{z_M}(cc^\dagger)=0,
+\qquad
+Mc\ne0\Rightarrow\Phi_{z_M}(cc^\dagger)
+\in\mathbb R_{>0}(Mc)(Mc)^\dagger.
+\tag{266.12}
+$$
+
+补齐纯射线方向到线性幅度的桥。一般正实线性 $R:\operatorname{Herm}_r\to\operatorname{Herm}_s$ 若满足(266.12)，令 $N=\ker M$。对 $n\in N$，有 $R(nn^\dagger)=0$。$R((x+tn)(x+tn)^\dagger)\succeq0$ 对全部实 $t$ 成立，二次项已为零，迫实交叉项的像为零；以 $x+itn$ 同理消掉虚交叉项。故 $R$ 只依赖 $N^\perp$ 上的压缩，像支持于 $\operatorname{im}M$。用 $M|_{N^\perp}$ 共轭化为同维正线性 $B$，它在每个秩一投影上满足 $B(P)=\lambda(P)P$。$\lambda(P)=\operatorname{Tr}B(P)>0$ 连续，却只能取固定有限维线性算子 $B$ 的有限个特征值。复纯射影域连通，故 $\lambda$ 恒定；秩一投影张成全部Hermitian空间，得到
+
+$$
+\Phi_{z_M}(X)=\kappa_MMXM^\dagger,
+\qquad\kappa_M>0.
+\tag{266.13}
+$$
+
+论证包含 $\operatorname{rank}M=1$，不预给完全正性。将Hermitian上的实线性映射唯一延拓为矩阵上的复线性保伴随映射，定义Choi坐标
+
+$$
+\Xi(z)=\sum_{j,k}\Phi_z^{\mathbb C}(E_{jk})\otimes E_{jk}.
+\tag{266.14}
+$$
+
+原张量—条件化对应、$\alpha_2,J$ 和Choi对应均为实线性同构，故 $\Xi:V_3\to\operatorname{Herm}_{sr}$ 为实线性同构。(266.13)先给
+
+$$
+\Xi(z_M)=\kappa_M|\operatorname{vec}M\rangle\langle\operatorname{vec}M|,
+\qquad \Xi(C_3)=\operatorname{PSD}_{sr}.
+\tag{266.15}
+$$
+
+第二个等号来自全部非零 $M$ 都有原纯点标签及纯射线锥生成，两向都包含。这里没有使用“正映射的Choi矩阵必正”，也不把 $\Xi$ 称为已实现物理操作。
+
+原严格正单位满足 $u_3\Xi^{-1}(X)=\operatorname{Tr}(hX)$、$h>0$。因此 $z\mapsto h^{1/2}\Xi(z)h^{1/2}$ 把整个原底保单位仿射同构到标准迹一复PSD底。原每个二元实际面随之成为完整Bloch三球，中央性是结论。$\square$
+

@@ -435,7 +435,7 @@ internal static partial class RepositoryRules
         var counts = new Dictionary<string, int>(StringComparer.Ordinal);
         foreach (var (path, file) in FormalFiles(context.Current))
         {
-            if (!TryHeader(file.Text, out var header))
+            if (!TryHeader(file, out var header))
             {
                 findings.Add(new RuleFinding(
                     path.Value,
