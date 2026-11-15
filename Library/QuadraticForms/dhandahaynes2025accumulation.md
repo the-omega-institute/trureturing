@@ -8,6 +8,7 @@ url: https://arxiv.org/html/2310.00173v2
 claim: Theorem 4 identifies the signed accumulation set for every real quadratic irrational with the scaled nonzero norm values of its trace-dual lattice.
 strata_touched:
   - D5/S3/Arith/QuadraticFields/QuadraticAccumulation
+  - D5/S3/Arith/QuadraticFields/QuadraticAccumulationClassification
 license: citation-only
 triage: anchor
 ---
@@ -31,9 +32,9 @@ introduction also explicitly allows the possibility of elementary quadratic
 proofs; the use of general algebraic number theory is motivated by higher
 dimensional extensions.
 
-The Lean statement `signed_norm_values_accumulate` supplies the norm-value
+The Lean statement `QuadraticAccumulation.signed_norm_values_accumulate` supplies the norm-value
 inclusion, including injective sequences of genuine approximation values.
-The Lean statement `derivedSet_eq_signed_norm_values` establishes the complete
+The Lean statement `QuadraticAccumulationClassification.derivedSet_eq_signed_norm_values` establishes the complete
 classification. Its converse uses finite bounded-denominator sets, vanishing
 unnormalized errors and eventual constancy of signed norm labels in a fixed
 rational grid. This elementary argument is distinct from the source's

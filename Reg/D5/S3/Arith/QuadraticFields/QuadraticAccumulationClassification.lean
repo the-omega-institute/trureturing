@@ -1,4 +1,4 @@
-import D5.S3.Arith.QuadraticFields.QuadraticAccumulation
+import D5.S3.Arith.QuadraticFields.QuadraticAccumulationClassification
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 
@@ -7,8 +7,9 @@ import Reg.Support.SingleDependentReadout
 noncomputable section
 set_option autoImplicit false
 
-namespace Reg.D5.S3.Arith.QuadraticFields.QuadraticAccumulation
+namespace Reg.D5.S3.Arith.QuadraticFields.QuadraticAccumulationClassification
 open _root_.D5.S3.Arith.QuadraticFields.QuadraticAccumulation
+open _root_.D5.S3.Arith.QuadraticFields.QuadraticAccumulationClassification
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit Set Filter
 open scoped Topology
@@ -80,8 +81,8 @@ def family : Registration arena (type_of% (@derivedSet_eq_signed_norm_values)) w
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@derivedSet_eq_signed_norm_values) (Realization signature) Unit Unit where
   unitName :=
-    `D5.S3.Arith.QuadraticFields.QuadraticAccumulation.derivedSet_eq_signed_norm_values.audit
-  realizationName := `Reg.D5.S3.Arith.QuadraticFields.QuadraticAccumulation.family
+    `D5.S3.Arith.QuadraticFields.QuadraticAccumulationClassification.derivedSet_eq_signed_norm_values.audit
+  realizationName := `Reg.D5.S3.Arith.QuadraticFields.QuadraticAccumulationClassification.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -97,7 +98,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.QuadraticFields.QuadraticAccumulation
+    owner := `D5.S3.Arith.QuadraticFields.QuadraticAccumulationClassification
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -110,4 +111,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   familyRecord := none
   options := #[]
 
-end Reg.D5.S3.Arith.QuadraticFields.QuadraticAccumulation
+end Reg.D5.S3.Arith.QuadraticFields.QuadraticAccumulationClassification
