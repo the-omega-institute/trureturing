@@ -27,7 +27,9 @@ theorem transition_counts (s : Fin 32) (hs : 2 ≤ s.val ∧ s.val < 4) :
       (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ d.val ∧
         cl (boundary r) (d.val - (cross p r + bondDefects horizontal r r)) = s
         then (1 : ℤ) else 0) = T (cl p d.val) s := by
-  revert s
-  decide +kernel
+  have h : s = 2 ∨ s = 3 := by omega
+  rcases h with rfl | rfl
+  · decide +kernel
+  · decide +kernel
 
 end D5.S3.SpinModels.PottsDefects.HardinA229584StripClasses1
