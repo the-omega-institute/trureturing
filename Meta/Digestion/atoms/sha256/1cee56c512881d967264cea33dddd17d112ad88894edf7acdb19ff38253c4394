@@ -1,0 +1,11 @@
+**定理 195.9（一个共同坐标下的全有限复量子理论）。** 在195.8的准确背景中，$\mathsf Q_{\rm tangent\,linear}$ 当且仅当存在同一个整数 $n\ge2$ 和同一个实线性同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$，使
+
+$$
+\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}
+\quad\text{对每个有限 }N\ge0.
+\tag{195.22}
+$$
+
+证明。195.4先只用于整个 $(W_3,C_3,u_3)$，给出该锥的同原单位复矩阵表示，以及同一个原域的 L2+NC+AD。此时才支付162.16的 $\mathsf R_3$；直接调用其已证的 pure-spectator 实际面、共同复方向与全有限传播尾部，得到同一个 $\theta$ 的(195.22)，不另立各层无关坐标。反向标准矩阵锥在整个三复制层满足195.4的三个条件。$\dim V>1$ 排除 $n=1$；标量层取空张量约定。$\square$
+
