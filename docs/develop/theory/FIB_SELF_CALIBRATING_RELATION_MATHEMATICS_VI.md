@@ -3404,3 +3404,357 @@ $$
 全证明不除 $\Delta$、$g(6)$、$g(7)$ 或任何采样增益；低次数、任意增益符号及采样零点均保留。$\xi=0$ 及其 $\Phi=0$、零漂移分支仍属原问题，但不在本条条件域内。上述必要边尚不提供其余三种末碰撞与它的共同父实现，也不决定一般 $L_2$ 的存在、原根八读／九读问题或九读上界。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 24. 单个实际 M 子纤维的全参数有限性与完整根重构
+
+**定义 24.1（单响应直线及无除数消元式）。** 使用定义1.1的整个 $\mathcal W_3$、定义8.1的字面父历史和原时钟。父方程与响应复用定理8.2，源二次曲面与唯一源逆复用(10.2)—(10.3)、(20.11)；这些供给的[固定正文](https://github.com/the-omega-institute/trureturing/blob/f4f1d65445c7ee55f2619e5597e939eebdbeb91c/docs/develop/theory/FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VI.md)均按原前件使用。
+
+给定 $\theta,w\in\mathbb R$、$\xi\ne0$，置
+
+$$
+\begin{gathered}
+H=H^-_{\theta,\xi},\qquad H_M=(H,M,w),\qquad
+K_{\theta,\xi,w}=\mathcal F(H_M),\\
+b=\frac{w-120(1+2\theta)}{120\xi}.
+\end{gathered}
+\tag{24.1}
+$$
+
+以下 $u=\operatorname{tr}(MP)$、$n,a$ 为既有源迹坐标，$h=u(u+1)$、$\ell=u^2+3u-4$、$\Phi,\Delta,\Psi_6$ 沿用(8.1)、(8.6)。记 $\mathcal Q(u,n,a)=\det P(u,n,a)$，其中 $P$ 是(20.11)的唯一源逆。定义
+
+$$
+\begin{aligned}
+\alpha&=3h-10,\qquad \beta=8u^2+18u-30,\\
+A&=(10-3b)u^2+(8-3b)u+10b-32,\\
+B&=(10-8b)u^2+(19-18b)u+30b-36,\\
+C&=(23b-29)h,\\
+\mathcal L&=Aa+Bn+C=\Psi_6-b\Phi,\\
+\mathcal T&=(\theta n-a)\Phi-5\xi\Delta.
+\end{aligned}
+\tag{24.2}
+$$
+
+字母 $b$ 是单个实际第六 $M$ 响应的归一化参数，不是另一个读出端口。为构造多项式，暂把 $u,b,\theta,\xi$ 视为独立变量。按齐次坐标 $x=(a,n,z)^{\mathsf T}$，定义对称矩阵
+
+$$
+\mathsf Q=
+\begin{pmatrix}
+1&-1/2&-u-1\\
+-1/2&-1&2u+1\\
+-u-1&2u+1&-u^2+u+1
+\end{pmatrix},
+\tag{24.3}
+$$
+
+$$
+\mathsf T=
+\begin{pmatrix}
+-\alpha&(\theta\alpha-\beta-5\xi\ell)/2&(23+20\xi)h/2\\
+(\theta\alpha-\beta-5\xi\ell)/2&\theta\beta&-(23\theta+5\xi)h/2\\
+(23+20\xi)h/2&-(23\theta+5\xi)h/2&0
+\end{pmatrix}.
+\tag{24.4}
+$$
+
+于是 $x^{\mathsf T}\mathsf Qx$、$x^{\mathsf T}\mathsf Tx$ 分别是 $\mathcal Q$、$\mathcal T$ 关于 $(a,n)$ 的二次齐次化。令 $v=(A,B,C)^{\mathsf T}$，并置
+
+$$
+\begin{aligned}
+\rho&=v^{\mathsf T}\operatorname{adj}(\mathsf Q)v,\\
+\sigma&=v^{\mathsf T}\operatorname{adj}(\mathsf T)v,\\
+\tau&=v^{\mathsf T}\bigl(
+\operatorname{adj}(\mathsf Q+\mathsf T)
+-\operatorname{adj}(\mathsf Q)-\operatorname{adj}(\mathsf T)
+\bigr)v,\\
+R(u,b,\theta,\xi)&=\tau^2-4\rho\sigma.
+\end{aligned}
+\tag{24.5}
+$$
+
+伴随矩阵在此仅由二阶子式定义，不要求任何矩阵可逆。(24.2)—(24.5)给出一个完全指定的有理系数多项式，不含按参数值实施的除法。
+
+**引理 24.2（两张主元图上的同一消元式）。** 多项式 $R$ 满足 $\deg_uR\le16$。对任意实 $u,b,\theta,\xi,n,a$，有
+
+$$
+\mathcal Q=\mathcal L=\mathcal T=0
+\quad\Longrightarrow\quad R(u,b,\theta,\xi)=0.
+\tag{24.6}
+$$
+
+此必要条件包括 $A=0$、$B=0$ 以及二次式首项消失的全部分支。
+
+证明。对两个对称二阶矩阵 $F,G$，令
+
+$$
+\mathfrak d(F,G)=
+\bigl(\det(F+G)-\det F-\det G\bigr)^2
+-4\det F\det G.
+\tag{24.7}
+$$
+
+若其二元齐次二次式写成
+$f_2r^2+f_1rs+f_0s^2$ 与 $g_2r^2+g_1rs+g_0s^2$，逐项展开给
+
+$$
+\begin{aligned}
+\mathfrak d(F,G)
+&=(f_2g_0-f_0g_2)^2
+ -(f_2g_1-f_1g_2)(f_1g_0-f_0g_1)\\
+&=\det
+\begin{pmatrix}
+f_2&f_1&f_0&0\\
+0&f_2&f_1&f_0\\
+g_2&g_1&g_0&0\\
+0&g_2&g_1&g_0
+\end{pmatrix}.
+\end{aligned}
+\tag{24.8}
+$$
+
+这是齐次二次结式的行列式表达，首项为零时仍是同一个多项式。若两式有共同非零实向量，取可逆线性换元将该向量移到 $(1,0)$；两式的首项遂同时为零，(24.8)为零。换元使(24.7)乘以换元行列式的四次方，所以原来的 $\mathfrak d$ 也为零。
+
+现在取
+
+$$
+U_A=\begin{pmatrix}-B&-C\\A&0\\0&A\end{pmatrix},
+\qquad
+U_B=\begin{pmatrix}B&0\\-A&-C\\0&B\end{pmatrix}.
+\tag{24.9}
+$$
+
+对任意三阶对称矩阵 $S$ 及列向量为 $p,q$ 的三行二列矩阵 $U$，二阶行列式展开给
+
+$$
+\det(U^{\mathsf T}SU)
+=(p\mathbin\times q)^{\mathsf T}\operatorname{adj}(S)
+ (p\mathbin\times q).
+\tag{24.10}
+$$
+
+$U_A$、$U_B$ 的列叉积分别为 $Av$、$-Bv$。对 $S=\mathsf Q,\mathsf T,\mathsf Q+\mathsf T$ 使用(24.10)，得到无除数恒等式
+
+$$
+\begin{aligned}
+\mathfrak d(U_A^{\mathsf T}\mathsf Q U_A,
+             U_A^{\mathsf T}\mathsf T U_A)&=A^4R,\\
+\mathfrak d(U_B^{\mathsf T}\mathsf Q U_B,
+             U_B^{\mathsf T}\mathsf T U_B)&=B^4R.
+\end{aligned}
+\tag{24.11}
+$$
+
+若 $A\ne0$ 且三式同时成立，$U_A(n,1)^{\mathsf T}=A(a,n,1)^{\mathsf T}$ 给两张限制二次式的共同非零根，故第一式强制 $R=0$。若 $B\ne0$，用 $U_B(a,1)^{\mathsf T}=B(a,n,1)^{\mathsf T}$ 和第二式。若 $A=B=0$，$\mathcal L=0$ 迫 $C=0$，于是 $v=0$，(24.5)直接给 $R=0$。因此没有遗漏坏主元。
+
+最后，$\mathsf Q,\mathsf T$ 的每项关于 $u$ 的次数至多二，$v$ 的每项也是如此；$\rho,\sigma,\tau$ 的次数至多八，故 $R$ 的次数至多十六。这是多项式环内的界，任意参数特殊化均保留。$\square$
+
+**引理 24.3（所有实参数下的非塌缩）。** 对每个 $(b,\theta,\xi)\in\mathbb R^3$，$R(\,\cdot\,,b,\theta,\xi)$ 都不是零多项式。
+
+证明。定义
+
+$$
+\begin{aligned}
+E&=(50-15b)\theta+(12b^2-55b+50)\xi-40b+50,\\
+H_0&=5(5b-16)\theta-(5b-16)(5b-6)\xi+15(5b-6),\\
+H_-&=10(b-3)\theta-2(b-3)(8b-9)\xi+5(8b-9).
+\end{aligned}
+\tag{24.12}
+$$
+
+由(24.2)—(24.5)的子式乘法，得到三个多项式恒等式
+
+$$
+[u^{16}]R=100E^2,\qquad
+R(0,b,\theta,\xi)=57600H_0^2,\qquad
+R(-1,b,\theta,\xi)=562500H_-^2.
+\tag{24.13}
+$$
+
+这里 $0,-1$ 只是多项式的代入点，并非物理来源。若 $R$ 恒零，则 $E=H_0=H_-=0$。按 $(\theta,\xi,1)$ 排列这三个仿射式的系数，其行列式为
+
+$$
+\det\begin{pmatrix}
+50-15b&12b^2-55b+50&-40b+50\\
+5(5b-16)&-(5b-16)(5b-6)&15(5b-6)\\
+10(b-3)&-2(b-3)(8b-9)&5(8b-9)
+\end{pmatrix}
+=125b(b-1)(b-2).
+\tag{24.14}
+$$
+
+非零向量 $(\theta,\xi,1)^{\mathsf T}$ 在其核中，故 $b\in\{0,1,2\}$。当 $b=1$ 时，$4H_0-11H_-=-5$，矛盾。当 $b=0,2$ 时，$H_0=H_-=0$ 关于 $(\theta,\xi)$ 的二阶系数行列式分别为 $1440,-180$，所以唯一可能参数及其残余值为
+
+$$
+\begin{array}{c|c|c|r}
+b&\theta&\xi&R(1,b,\theta,\xi)\\ \hline
+0&-3/8&-5/8&55531247\\
+2&0&-5/2&-4146716
+\end{array}.
+\tag{24.15}
+$$
+
+两项都非零，再次矛盾。这里并未假设首项、$A$、$B$ 或 $\xi$ 非零；(24.13)—(24.15)排除的是恒零，允许普通降次和重根。$\square$
+
+**引理 24.4（每个正迹层至多两个来源候选）。** 对每个实 $b$ 和每个 $u>0$，仿射方程
+
+$$
+\mathcal Q(u,n,a)=0,\qquad Aa+Bn+C=0
+\tag{24.16}
+$$
+
+至多有两个实解 $(n,a)$。此结论尚未施加来源正性、父条件或 $\Phi\ne0$。
+
+证明。先排除零直线。若 $A=B=C=0$，由 $h>0$ 得 $b=29/23$，此时
+
+$$
+23A=143u^2+97u-446,\qquad
+23B=-(2u^2+85u-42).
+\tag{24.17}
+$$
+
+这两个多项式没有共同零点，直接复用(20.6)的证书。因此 $(A,B,C)\ne0$。若 $A=B=0$，则 $C\ne0$，(24.16)无解；以下 $\mathcal L=0$ 是一条真正的仿射直线。
+
+由(24.3)，
+
+$$
+\det\mathsf Q=\frac{u^2-u-1}{4}.
+\tag{24.18}
+$$
+
+若 $u^2-u-1\ne0$，源二次曲面在此平面上不含直线分量：二次多项式若含一次因子，其齐次二次型是两个线性式的乘积，对称矩阵秩至多二，与(24.18)矛盾。因此把 $\mathcal Q$ 限制到 $\mathcal L=0$ 得到非零的至多二次多项式，至多有两个实根。
+
+唯一正的退化迹为 $\varphi=(1+\sqrt5)/2$。使用 $\varphi^2=\varphi+1$，(10.3)给
+
+$$
+\mathcal Q(\varphi,n,a)
+=(a-\varphi n)
+ \bigl(a+(\varphi-1)n-2(\varphi+1)\bigr).
+\tag{24.19}
+$$
+
+若 $\mathcal L$ 包含第一条分量 $a=\varphi n$，必须 $C=0$、$\varphi A+B=0$。前者给 $b=29/23$，而此时
+
+$$
+\varphi A+B=\frac{280-150\varphi}{23}\ne0.
+\tag{24.20}
+$$
+
+若 $\mathcal L$ 包含第二条分量，必须同时有
+
+$$
+\begin{aligned}
+B-(\varphi-1)A
+ &=(35-33\varphi)b+51\varphi-66=0,\\
+2(\varphi+1)A+C
+ &=(36\varphi+25)b-30\varphi-37=0.
+\end{aligned}
+\tag{24.21}
+$$
+
+这两个关于 $b$ 的仿射式的系数行列式为
+
+$$
+\det\begin{pmatrix}
+35-33\varphi&51\varphi-66\\
+36\varphi+25&-30\varphi-37
+\end{pmatrix}
+=426\varphi-491\ne0.
+\tag{24.22}
+$$
+
+(24.20)、(24.22)的非零性都由 $\varphi$ 的无理性给出。故 $\mathcal L$ 与两条分量均不重合，每条至多贡献一个交点。退化层也至多有两个实解。$\square$
+
+**定理 24.5（整个实际 M 子纤维至多三十二个完整世界）。** 对任意 $\theta,w\in\mathbb R$、$\xi\in\mathbb R\setminus\{0\}$，在定义1.1的全部严格正秩一迹一实二阶来源、整个非零且次数至多三的增益和任意实常漂移模型中，
+
+$$
+|K_{\theta,\xi,w}|\le32.
+\tag{24.23}
+$$
+
+其完整世界恰由以下有限根描述恢复。取(24.1)的 $b$，取非零多项式 $R(\,\cdot\,,b,\theta,\xi)$ 的全部不同正实根 $u$。对每个根保留全部满足
+
+$$
+\mathcal Q=0,\qquad \mathcal L=0,\qquad \mathcal T=0,
+\qquad \Phi\ne0,\qquad
+P(u,n,a)>0\text{ 逐项}
+\tag{24.24}
+$$
+
+的实解 $(n,a)$。用(20.11)恢复 $P$，再令
+
+$$
+d=\frac{120h\xi}{\Phi},
+\qquad g=\text{(8.2)四个原钟节点值的唯一至多三次插值多项式}.
+\tag{24.25}
+$$
+
+该对应在所保留三元组与 $K_{\theta,\xi,w}$ 之间是双射。每个根的候选可用次数至多二的方程给出：$A\ne0$ 时先取 $a=-(Bn+C)/A$；$A=0,B\ne0$ 时先取 $n=-C/B$；再解 $\mathcal Q=0$ 并施加其余过滤。$A=B=0$ 时没有候选。所有方程按实际次数求根，不要求二次首项非零，也不以根的重数重复计数。
+
+证明。任取实际世界。其严格正来源有 $u,n,h>0$，并由(10.2)—(10.3)满足源逆与 $\mathcal Q=0$。定理8.2的无除数父方程给
+
+$$
+d\Phi=120h\xi\ne0,
+\qquad d\Delta=24h(\theta n-a).
+\tag{24.26}
+$$
+
+因此 $\Phi\ne0$，漂移唯一等于(24.25)，消去 $d$ 得 $\mathcal T=0$。实际第六 $M$ 读数由(8.7)给 $\Psi_6/\Phi=b$，故 $\mathcal L=0$。引理24.2于是给 $R(u,b,\theta,\xi)=0$，包括全部坏主元。故每个实际世界均进入(24.24)的候选，未丢弃任何 $\Delta=0$ 来源。
+
+反向取任一保留三元组。既有源逆给 $\operatorname{tr}P=1$ 及三个声明的迹；$\mathcal Q=\det P=0$ 与逐项正性给秩恰为一。由正迹得 $n>0$，所以(8.2)的插值及(24.25)都有定义。由 $\mathcal T=0$，
+
+$$
+\frac{120h\xi}{\Phi}\Delta
+=24h(\theta n-a).
+\tag{24.27}
+$$
+
+故(24.26)的两个父方程成立。定理8.2保证全部六个原父读数；$\mathcal L=0$ 和 $\Phi\ne0$ 再保证第六 $M$ 的实际读数恰为 $w$。增益不可能恒零，因为同一个原历史的时钟零读数为零、时钟三读数为六；零增益会迫使常漂移同时等于零和六。因此恢复的是合法完整世界，包括整个多项式，而非有限节点值的等价类。
+
+源逆唯一；在固定 $\theta,\xi$ 下漂移由(24.26)唯一；整个增益由四节点插值唯一。不同保留三元组给不同来源，因而给不同完整世界；上述正反构造互逆。引理24.3保证至多十六个不同正根，引理24.4保证每根至多两个候选，得到(24.23)。其余过滤只删除候选。
+
+两张回代图穷尽所有候选，是因为引理24.4已经排除正 $u$ 上的 $A=B=C=0$；$A=B=0$ 时 $C\ne0$，无解。各图中的源二次式不恒零也由该引理的直线分量排除证明保证。这里没有除以 $\Delta$、$g(6)$、$g(7)$ 或任何采样增益；没有假设增益符号、实际次数、采样非零或消元根为单根。$\Delta=0$、低次数、全部增益符号、采样零点及消元重根全部保留。
+
+这是一份任意实参数下的有限数学描述。它不把任意实数参数自动赋予有效有限位表示，也不据此宣称有限位程序可以取得全部根或判定全部相等关系。$\square$
+
+**推论 24.6（同一个实际子纤维上的两末碰撞判据）。** 固定定理24.5的同一个 $H_M=(H^-_{\theta,\xi},M,w)$ 及完整根重构集 $K=K_{\theta,\xi,w}$。对 $D\in\{M,J\}$，令 $r_D^K(W)$ 表示从该实际子历史在原时钟七选取 $D$ 的响应函数，并定义
+
+$$
+N_D(K)\quad\Longleftrightarrow\quad
+\exists W\ne W'\in K:\ r_D^K(W)=r_D^K(W').
+\tag{24.28}
+$$
+
+则
+
+$$
+L_1(K,H_M)\quad\Longleftrightarrow\quad
+N_M(K)\ \land\ N_J(K).
+\tag{24.29}
+$$
+
+每个末动作的存在量词至多涉及 $\binom{32}{2}=496$ 个无序不同世界对，两项可以由不同对见证。特别地，对定理23.2的任一实际 MM 碰撞，使用它重建的同一个 $(\theta,\xi)$ 和共同 $\mu=b$，取 $w=120(1+2\theta)+120\xi b$；锚定对已给 $N_M(K)$，另一项恰须在本定理恢复的同一个 $K$ 内寻找 $N_J(K)$。
+
+证明。(24.29)直接展开(1.2)：每个末动作都有一个至少含两个不同世界的实际响应纤维，当且仅当该响应函数在 $K$ 上非单射。一个碰撞对已经保证 $|K|\ge2$。定理24.5供应全部候选，故两种末动作的比较均无遗漏。末响应函数可分别使用(8.7)的 $m,j$；这些函数值是对完整世界的数学比较，未增加实际读数，也未把未选动作的预测改成已取得数据。
+
+一般共同父条件仍须保持全部独立存在量词。对 $E\in\{M,J\}$ 定义父参数集
+
+$$
+\mathcal P_E=\left\{(\theta,\xi):\ \exists z_E\in\mathbb R,\
+L_1\bigl(\mathcal F(H^-_{\theta,\xi},E,z_E),
+         (H^-_{\theta,\xi},E,z_E)\bigr)\right\}.
+\tag{24.30}
+$$
+
+仍由(1.2)，对完整父纤维有
+
+$$
+L_2\bigl(\mathcal F(H^-_{\theta,\xi}),H^-_{\theta,\xi}\bigr)
+\quad\Longleftrightarrow\quad
+(\theta,\xi)\in\mathcal P_M\cap\mathcal P_J.
+\tag{24.31}
+$$
+
+两个第六臂各自选择自己的实际响应 $z_E$；每个实际子纤维的两个末动作又各自选择碰撞对。无需同对、四个不同世界、两臂共享来源或共享互择第六预测。(24.29)—(24.31)只是既有失败递归的量词重写；新增有限性供应固定非零 $\xi$ 实际 $M$ 子纤维的完整候选全集，未给 $\mathcal P_M\cap\mathcal P_J$ 的非空或空结论。
+
+$\xi=0$ 的全局分支仍在原目标内，不能由(24.23)延拓覆盖：[V，定理28.2](https://github.com/the-omega-institute/trureturing/blob/f4f1d65445c7ee55f2619e5597e939eebdbeb91c/docs/develop/theory/FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md)已给出零偏离下连续的实际 $M$ 子纤维。本章不结清一般共同父 $L_2$、祖先兼容、原根八读／九读问题或九读上界。所用四节点插值、二次结式和直线与圆锥交点界均为成熟代数工具；固定 FIB 单实际子纤维的非塌缩、完整重构和统一界是这里的仓内推导，不作全球首创主张。$\square$
+
+## 追加锚（本行以下为增补区）
