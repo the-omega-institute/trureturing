@@ -583,15 +583,23 @@ namespace root_units
 abbrev arena : Arena where
   signature := eqSignature
   Law R := ∀ N : ℕ,
-    R.readout () _ (frequencyRoot N * inverseFrequencyRoot N) 1 ∧
-      R.readout () _ (inverseFrequencyRoot N * frequencyRoot N) 1
+    R.readout () (Matrix (Fin N) (Fin N) ℂ)
+      (frequencyRoot N * inverseFrequencyRoot N) (1 : Matrix (Fin N) (Fin N) ℂ) ∧
+      R.readout () (Matrix (Fin N) (Fin N) ℂ)
+        (inverseFrequencyRoot N * frequencyRoot N) (1 : Matrix (Fin N) (Fin N) ℂ)
 private theorem rejected_fails : ¬ arena.Law eqRejected := by
   intro h
   exact (h 0).1
 def family : Registration arena (type_of% (@root_units)) where
   actual := eqActual
-  bridge := Iff.rfl
-  variation := ⟨@root_units, eqRejected, rejected_fails⟩
+  bridge := by
+    constructor
+    · intro h N
+      exact ⟨(h N).1, (h N).2⟩
+    · intro h N
+      exact ⟨(h N).1, (h N).2⟩
+  variation := ⟨(by intro N; exact ⟨(root_units N).1, (root_units N).2⟩),
+    eqRejected, rejected_fails⟩
   sensitivity := by
     constructor
     · intro i

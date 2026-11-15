@@ -44,7 +44,7 @@ private theorem summableDependence : ObservationalDependence summableSignature s
   intro h
   have hs : Summable (fun _ : ℕ => (0 : ℝ)) := summable_zero
   have ht : Summable (fun _ : ℕ => (1 : ℝ)) := Eq.mp h hs
-  simpa using ht
+  exact one_ne_zero (tendsto_nhds_unique tendsto_const_nhds ht.tendsto_atTop_zero)
 
 namespace sourceFamily_summable
 abbrev arena : Arena where
