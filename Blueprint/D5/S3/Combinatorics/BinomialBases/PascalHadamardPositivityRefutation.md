@@ -26,6 +26,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/PascalHadamardPositivityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mo515594-original-pascal-hadamard-positivity` (refuted) by `D5/S3/Combinatorics/BinomialBases/PascalHadamardPositivityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mo515594-original-pascal-hadamard-positivity","declaration_gid":"D5/S3/Combinatorics/BinomialBases/PascalHadamardPositivityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* VSP (2026). *Total positivity of Hadamard powers of Binomial matrix*. URL: <https://mathoverflow.net/questions/515594>.
