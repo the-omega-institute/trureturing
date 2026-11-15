@@ -6,7 +6,7 @@ A tree of triangles forces arbitrarily many displaced apices before a stuck tigh
 
 **Definition 1.1 (Two-colour frustration).**
 
-$$\forall V \in \operatorname{Type}_{0},\; [\operatorname{Fintype}\left(V\right)] [\operatorname{DecidableEq}\left(V\right)] \forall G \in \operatorname{SimpleGraph}\left(V\right),\; [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)] \operatorname{frustration}\left(G\right) = \operatorname{sInf}\left(\{ \operatorname{card}\left(\operatorname{mono}\left(G, c\right)\right) \mid c: V \to \operatorname{Bool} \}\right)$$
+$$\forall V \in \operatorname{Type}_{0},\; [\operatorname{Fintype}\left(V\right)] [\operatorname{DecidableEq}\left(V\right)] \forall G \in \operatorname{SimpleGraph}\left(V\right),\; [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)] \operatorname{frustration}\left(G\right) = \operatorname{sInf}\left(\{ \operatorname{card}\left(\operatorname{Finset.filter}\left((\lambda e: \operatorname{Sym2}\left(V\right) \mapsto \exists u \in V,\; \exists v \in V,\; (e = \operatorname{Sym2.mk}\left(u, v\right)) \land (c\left(u\right) = c\left(v\right))), \operatorname{edgeFinset}\left(G\right)\right)\right) \mid c: V \to \operatorname{Bool} \}\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Potts/HealingUnbounded.frustration` (`✓ std3`).
 
@@ -30,7 +30,7 @@ X is a finite vertex set. Deletion is the actual induced simple graph on the sub
 
 **Definition 1.3 (Independent tight sets).**
 
-$$\forall V \in \operatorname{Type}_{0},\; [\operatorname{Fintype}\left(V\right)] [\operatorname{DecidableEq}\left(V\right)] \forall G \in \operatorname{SimpleGraph}\left(V\right),\; [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)] \forall X \in \operatorname{Finset}\left(V\right),\; \operatorname{Tight}\left(G, X\right) = \left((\operatorname{IsIndepSet}\left(G, X\right)) \land (\operatorname{phi}\left(G, X\right) = \operatorname{frustration}\left(G\right))\right)$$
+$$\forall V \in \operatorname{Type}_{0},\; [\operatorname{Fintype}\left(V\right)] [\operatorname{DecidableEq}\left(V\right)] \forall G \in \operatorname{SimpleGraph}\left(V\right),\; [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)] \forall X \in \operatorname{Finset}\left(V\right),\; \operatorname{Tight}\left(G, X\right) = \left((\operatorname{IsIndepSet}\left(G, (X: \operatorname{Set}\left(V\right))\right)) \land (\operatorname{phi}\left(G, X\right) = \operatorname{frustration}\left(G\right))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Potts/HealingUnbounded.Tight` (`✓ std3`).
 
@@ -66,7 +66,7 @@ A stuck set is tight and admits no independent tight augmentation, exactly as in
 
 **Definition 1.6 (The uniform displacement assertion).**
 
-$$\operatorname{claim} = \left(\exists C \in \mathbb{N},\; \forall V \in \operatorname{Type}_{0},\; [\operatorname{Fintype}\left(V\right)] [\operatorname{DecidableEq}\left(V\right)] \forall G \in \operatorname{SimpleGraph}\left(V\right),\; [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)] (\operatorname{Connected}\left(G\right)) \Rightarrow ((\forall v \in V,\; \operatorname{degree}\left(G, v\right) \le 3) \Rightarrow ((\neg (\operatorname{Nonempty}\left(\operatorname{GraphIso}\left(G, \operatorname{completeGraph}\left(\operatorname{Fin}\left(4\right)\right)\right)\right))) \Rightarrow (\forall S \in \operatorname{Finset}\left(V\right),\; (\operatorname{Stuck}\left(G, S\right)) \Rightarrow ((1 \le \operatorname{frustration}\left(\operatorname{induce}\left(G, \{ v: V \mid \neg (v \in S) \}\right)\right)) \Rightarrow (\exists T \in \operatorname{Finset}\left(V\right),\; (\operatorname{Augmentable}\left(G, T\right)) \land ((\operatorname{card}\left(T\right) = \operatorname{card}\left(S\right)) \land (\operatorname{card}\left((S \setminus T)\right) \le C)))))))\right)$$
+$$\operatorname{claim} = \left(\exists C \in \mathbb{N},\; \forall V \in \operatorname{Type}_{0},\; [\operatorname{Fintype}\left(V\right)] [\operatorname{DecidableEq}\left(V\right)] \forall G \in \operatorname{SimpleGraph}\left(V\right),\; [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)] (\operatorname{Connected}\left(G\right)) \Rightarrow ((\forall v \in V,\; \operatorname{degree}\left(G, v\right) \le 3) \Rightarrow ((\neg (\operatorname{Nonempty}\left(\operatorname{SimpleGraph.Iso}\left(G, \operatorname{completeGraph}\left(\operatorname{Fin}\left(4\right)\right)\right)\right))) \Rightarrow (\forall S \in \operatorname{Finset}\left(V\right),\; (\operatorname{Stuck}\left(G, S\right)) \Rightarrow ((1 \le \operatorname{frustration}\left(\operatorname{induce}\left(G, \{ v: V \mid \neg (v \in S) \}\right)\right)) \Rightarrow (\exists T \in \operatorname{Finset}\left(V\right),\; (\operatorname{Augmentable}\left(G, T\right)) \land ((\operatorname{card}\left(T\right) = \operatorname{card}\left(S\right)) \land (\operatorname{card}\left((S \setminus T)\right) \le C)))))))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Potts/HealingUnbounded.claim` (`✓ std3`).
 
