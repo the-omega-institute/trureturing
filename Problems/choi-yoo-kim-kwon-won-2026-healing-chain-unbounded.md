@@ -98,13 +98,18 @@ are consumed bind-only steps.
   at least h exchanges are needed, so the number of chain stages grows at
   least like log₂((|V| + 6)/9), where |V| = 3B.
 - [proved: D5/S3/Combinatorics/Graph/Potts/HealingUnbounded.result]
-  The mechanism is a cascade: a stuck tight set can sit at the root of a deep
-  tree of odd cycles whose only free vertices are at the leaves, and every
-  exchange moves the unique untouched triangle by one level. The paper's
+  The obstruction is a descent: a stuck tight set can sit at the root of a
+  deep tree of odd cycles whose only free vertices are at the leaves. An
+  augmentable tight set T with |T| = |S| meets every triangle exactly once;
+  it meets the root triangle at a port, which forces the child's apex out of
+  T, and the same argument continues along a root-to-leaf path, so at least h
+  apices of S are missing from T. The theorem bounds this static displacement;
+  it does not describe the trajectory of individual exchanges. The paper's
   upper bound by the number of components of G − S is consistent with this
   family, whose G − S has B components.
-- [open] Whether the stage count is bounded on the planar lattices the
-  authors tested (square, honeycomb and their decorations), or by a function
+- [open] Whether the stage count is bounded on the coordination-three
+  lattices on which the authors ran the constructive procedure (truncated
+  Penrose tilings, Voronoi foams and the defect honeycomb), or by a function
   of the maximum depth of such odd-cycle trees, is not settled here.
 - [open] Planarity is not part of the formal claim; the family is planar, so
   the answer is also negative for planar graphs, but that statement is not
