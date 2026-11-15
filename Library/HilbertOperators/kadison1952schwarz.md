@@ -28,3 +28,11 @@ single-generator multiplicative-domain rigidity, with an explicit alternate
 proof. No claim of new mathematical priority or a solved open conjecture is
 made. Complete positivity is not assumed, and the inequality is applied only
 to self-adjoint inputs.
+
+## Verified locator
+
+DOI: 10.2307/1969657
+
+Source: https://doi.org/10.2307/1969657
+
+Canonical journal citation: Richard V. Kadison, Annals of Mathematics, second series, 56 (1952), 494–503. The locator identifies the classical self-adjoint Schwarz inequality; the project supplies its own formal proof and makes no new mathematical-priority claim.
