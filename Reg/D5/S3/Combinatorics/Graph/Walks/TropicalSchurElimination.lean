@@ -21,30 +21,30 @@ private theorem endpoints_eq_of_top_bound {X : Type u} {a z : X} (q : Walk a z)
   | cons q e => simp [weight] at h
 
 abbrev signature : Signature where
-  Params := Σ V : Type u, V
-  State p := p.1 → p.1 → ℝ≥0∞
+  Params := Type u
+  State V := V → V → ℝ≥0∞
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := {x : p.1 // x ≠ p.2} → {x : p.1 // x ≠ p.2} → ℝ≥0∞
+  Output _ V := ∀ b : V, {x : V // x ≠ b} → {x : V // x ≠ b} → ℝ≥0∞
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p W => schur W p.2) (fun e => nomatch e)
+  realize signature (fun _ _ W => schur W) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ _ _ _ _ => ⊤) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ _ _ => ⊤) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {V : Type u} (W : V → V → ℝ≥0∞) (b : V)
     (a z : {x : V // x ≠ b}),
     (∀ p : Walk a.val z.val, ∃ q : Walk a z,
-      weight (R.readout () ⟨V, b⟩ W) q ≤ weight W p) ∧
+      weight (R.readout () V W b) q ≤ weight W p) ∧
     (∀ q : Walk a z, ∃ p : Walk a.val z.val,
-      weight W p = weight (R.readout () ⟨V, b⟩ W) q) ∧
-    distance (R.readout () ⟨V, b⟩ W) a z = distance W a.val z.val
+      weight W p = weight (R.readout () V W b) q) ∧
+    distance (R.readout () V W b) a z = distance W a.val z.val
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -62,9 +62,9 @@ private theorem actual_dependence : ObservationalDependence signature.{u} actual
   intro i
   let b : ULift.{u} (Fin 2) := ⟨0⟩
   let a : {x : ULift.{u} (Fin 2) // x ≠ b} := ⟨⟨1⟩, by decide⟩
-  refine ⟨⟨ULift.{u} (Fin 2), b⟩, (fun _ _ => 0), (fun _ _ => 1), ?_⟩
+  refine ⟨ULift.{u} (Fin 2), (fun _ _ => 0), (fun _ _ => 1), ?_⟩
   intro h
-  have he := congrFun (congrFun h a) a
+  have he := congrFun (congrFun (congrFun h b) a) a
   norm_num [actual, realize, schur] at he
 
 def evidence : Registration arena.{u} (type_of% (@pivot_walks_and_distance.{u})) where
@@ -94,7 +94,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ p W => schur W p.2) (fun e => nomatch e))
+  readout := some (realize signature.{u} (fun _ _ W => schur W) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -102,19 +102,9 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Walks.TropicalSchurElimination
     definition := none
-    coordinates := #[0, 2]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "body", "arg", "body", "fn", "arg", "fn", "fn", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "body", "arg", "body", "arg", "fn", "fn", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "fn", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "body", "arg", "body", "fn", "arg", "fn", "fn", "fn", "arg", "fn"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
