@@ -10,9 +10,11 @@ $$\forall m \in Nat,\; \exists P \in MvPolynomial\left(Sum\left(Word\left(3 + m\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/critch-morton-2014-open-boundary-mps-raw-c9` (proved) by `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9.result`.
+*Resolves.* `Problems/critch-morton-2014-open-boundary-mps-raw-c9` (proved) by `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9.result` and `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSNormalizedC9.result`.
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"critch-morton-2014-open-boundary-mps-raw-c9","declaration_gid":"D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9.result","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"critch-morton-2014-open-boundary-mps-raw-c9","declaration_gid":"D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSNormalizedC9.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -32,7 +34,7 @@ At m=0 (N=3), only the whole-chain Q3 and the two boundary Q2 windows occur, and
 
 Critch and Morton, SIGMA 10 (2014), 095, Conjecture 9, provide the original assertion and raw displayed partial trace; the exact source and preregistration are recorded in issue #30422. This result is a sufficient strengthening of the preregistered raw N>=4 prefix recovery and no-fewer target to every N>=3 and every placement. N>=3 and the specific real-principal genericity convention are the formal strengthening, not quoted author wording. Attribution of all reused suppliers, including the Ma--Zhang C8 contribution and its license, is unchanged. GVHunter.reverse_word_list is reused; its existing unfinished audit is #19685. The bounded literature check found no exact C9 settlement in its accessible searched scope and is not a priority or uniqueness certificate.
 
-The conservative proof_shape is bind-only and candidate admission_basis is open-problem-resolution under CLAUDE 3.2, preregistered before proof probes in #30422. Every private auxiliary has a live consumer in result. The claim attached here concerns only the exact raw actual-image settlement candidate. Independent caller source-fidelity review, required checks, freezing and publication remain separate; global C9 status is OPEN and solved-open-problem KPI remains 0 until caller verification. The Reg source attempt has no source-selection certificate and makes no declared_validated claim; unfinished audit is disclosed under #30422. This result makes no normalized-state, closure-only, exceptional-target, jointly known marginal, stability, dynamics, energy or thermodynamic claim. Unit-phase saturation alone does not justify a dense normalized slice.
+The conservative proof_shape is bind-only and candidate admission_basis is open-problem-resolution under CLAUDE 3.2, preregistered before proof probes in #30422. Every private auxiliary has a live consumer in result. The single claim attached here has this exact raw actual-image result as host and OpenBoundaryMPSNormalizedC9.result as its AdditionalMember. That member supplies the separately proved dense physical-mass-one slice with both states normalized, completing the same preregistered physical C9 reading; it asserts no second problem, independent priority or additional KPI. This raw theorem retains exactly its original scope: unit-phase saturation alone does not justify a dense normalized slice. Independent caller source-fidelity review, required checks, freezing and publication remain separate; global C9 status is OPEN and solved-open-problem KPI remains 0 until caller verification. The Reg source attempt has no source-selection certificate and makes no declared_validated claim; unfinished audit is disclosed under #30422. This result makes no closure-only, exceptional-target, jointly known marginal, stability, dynamics, energy or thermodynamic claim.
 
 ## References
 

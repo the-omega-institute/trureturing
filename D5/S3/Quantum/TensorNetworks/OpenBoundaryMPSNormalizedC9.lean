@@ -13,7 +13,11 @@ import Mathlib.Algebra.Polynomial.Roots
 /-! Positive-ray saturation uses the homogeneous components of the raw supplier's
 full-amplitude polynomial. Physical mass is the sum of squared complex amplitudes.
 All private helpers are consumed by the normalized all-window result.
-No open-problem resolution or escape-witness credit is asserted here.
+proof_shape: bind-only for result and all 28 private lemmas.
+Candidate admission_basis: open-problem-resolution under pre-probe issue #30422,
+completing the same physical C9 reading with both states normalized.
+No escape witness, independent priority or additional solved-problem KPI is asserted.
+C9 remains OPEN; solved-open-problem KPI increment is zero.
 Unfinished faithful escape audit: issue #30422. -/
 
 set_option autoImplicit false
