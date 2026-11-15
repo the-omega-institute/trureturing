@@ -4,7 +4,7 @@
    mirror-E: none(waiver:integer-word-estimates)
    anchors: []
    utility: none
-   digest: Complete substitution block charges control all recursive prefixes and two-block intervals. -/
+   digest: Block charges control all recursive prefixes and two-block intervals. -/
 import D5.S1.Words.GoldenUniformRecurrence
 import D5.S1.Words.RankOneMorphismIterationBoundDefs
 import Mathlib.Algebra.BigOperators.Group.List.Lemmas
@@ -112,7 +112,7 @@ private theorem infix_charge {α : Type*} (w : α → ℤ) (l v : List α) (P : 
   have htakepre : (pre ++ v ++ post).take pre.length = pre := by
     simp [List.append_assoc]
   rw [htakepre] at hpre
-  have htake : (pre ++ v ++ post).take (pre ++ v).length = pre ++ v := by simp
+  have htake : (pre ++ v ++ post).take (pre ++ v).length = pre ++ v := List.take_left
   rw [htake] at hboth
   have hh := abs_charge_right w pre v
   omega
