@@ -313,25 +313,26 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
             )
         );
 
-    private static Formula Formula2() =>
-        All("m", Q("Nat"), All("M", Q("Nat"),
+    private static Formula Formula2()
+    {
+        var field = Call("KingHorizontal.boundary_build", V("s"), V("b"));
+        var horizontal = Call("KingHorizontal.BoundaryData.h", V("b"));
+        var vertical = Call("KingHorizontal.BoundaryData.v", V("b"));
+        var first = Lam("j", Call("Fin", Add(V("M"), Num("1"))),
+            Call("ite", Leq(Call("Fin.val", V("j")), Call("Fin.val", V("s"))),
+                Call("KingHorizontal.BoundaryData.p", V("b")),
+                Call("KingHorizontal.BoundaryData.q", V("b"))));
+        var tail = Lam("i", Call("Fin", V("m")),
+            Call("Function.const", Call("Fin", Add(V("M"), Num("1"))), App(vertical, V("i"))));
+        return All("m", Q("Nat"), All("M", Q("Nat"),
             All("s", Call("Fin", V("M")),
                 All("b", Call("KingHorizontal.BoundaryData", V("m"), V("M")),
                     And(
-                        Eq(Call("KingDifference.DiffField.h", Call("KingHorizontal.boundary_build", V("s"), V("b"))),
-                            Call("Fin.cons",
-                                Call("Function.update", Call("KingHorizontal.BoundaryData.h", V("b")), V("s"), Num("0")),
-                                Call("Function.const", Call("Fin", Add(V("m"), Num("1"))),
-                                    Call("KingHorizontal.BoundaryData.h", V("b"))))),
-                        Eq(Call("KingDifference.DiffField.v", Call("KingHorizontal.boundary_build", V("s"), V("b"))),
-                            Call("Fin.cons",
-                                Lam("j", Call("Fin", Add(V("M"), Num("1"))),
-                                    Call("ite", Leq(Call("Fin.val", V("j")), Call("Fin.val", V("s"))),
-                                        Call("KingHorizontal.BoundaryData.p", V("b")),
-                                        Call("KingHorizontal.BoundaryData.q", V("b")))),
-                                Lam("i", Call("Fin", V("m")),
-                                    Call("Function.const", Call("Fin", Add(V("M"), Num("1"))),
-                                        App(Call("KingHorizontal.BoundaryData.v", V("b")), V("i"))))))))));
+                        Eq(Call("KingDifference.DiffField.h", field),
+                            Call("Fin.cons", Call("Function.update", horizontal, V("s"), Num("0")),
+                                Call("Function.const", Call("Fin", Add(V("m"), Num("1"))), horizontal))),
+                        Eq(Call("KingDifference.DiffField.v", field), Call("Fin.cons", first, tail)))))));
+    }
 
     private static Formula Formula3() =>
         All(
@@ -1494,7 +1495,7 @@ internal sealed class KingHorizontalBoundaryDocument : IScribeDocumentDefinition
                                 Call("KingDifference.DiffField.h", lower))),
                         Eq(Call("KingDifference.DiffField.v", joined),
                             Call("Fin.append", Call("KingDifference.DiffField.v", upper),
-                                Call("KingDifference.DiffField.v", lower))))))));
+                                Call("KingDifference.DiffField.v", lower)))))))));
     }
 
     private static Formula Lam(string x, Formula t, Formula b) =>
