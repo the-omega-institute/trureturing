@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal
+/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal
+   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

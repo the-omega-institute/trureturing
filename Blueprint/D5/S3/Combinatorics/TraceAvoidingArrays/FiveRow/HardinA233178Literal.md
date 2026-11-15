@@ -8,9 +8,9 @@ The domain is Fin 5 times Fin n. Every cell has one of six colours, the top left
 
 **Definition 1.1 (Exchange of the two noninitial labels).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.swap`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.swap`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.swap` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.swap` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ The involution exchanges one and two and fixes zero.
 
 **Definition 1.2 (A whole-word absence indicator).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.absent`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.absent`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.absent` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.absent` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ The integer indicator is one exactly when the specified label never occurs, incl
 
 **Theorem 1.3 (Exact scanner symmetrization).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.normalization_result`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.normalization_result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.normalization_result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.normalization_result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ For every natural k and every word q from Fin k into Fin 3, write W(q)=rowWeight
 
 **Definition 1.4 (The literal function domain).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Array`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Array`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Array` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Array` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -56,9 +56,9 @@ Arrays are arbitrary functions on the five rows and n columns into a finite colo
 
 **Definition 1.5 (Strict row-major rank).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.rank`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.rank`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.rank` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.rank` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ The rank of cell (i,j) is i*n+j.
 
 **Definition 1.6 (Exactly the constrained pairs).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Edges`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Edges`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Edges` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Edges` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -80,9 +80,9 @@ An edge goes one column to the right and changes the row by at most one. There i
 
 **Definition 1.7 (Literal first appearances).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Normal`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Normal`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Normal` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Normal` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -92,9 +92,9 @@ Every occurrence of two, three or four has an earlier one, and every occurrence 
 
 **Definition 1.8 (The full source predicate).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Legal`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Legal`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Legal` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Legal` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -104,9 +104,9 @@ The predicate conjoins the pinned initial cell, every edge restriction and the f
 
 **Definition 1.9 (Literal cardinality).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.a`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.a`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.a` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.a` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -116,9 +116,9 @@ The count is the cardinality of the legal function subtype, expressed as a finit
 
 **Definition 1.10 (The unchanged event).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.FullE`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.FullE`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.FullE` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.FullE` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -128,9 +128,9 @@ For every natural n greater than eleven, the literal count satisfies the ten-ter
 
 **Definition 1.11 (Exact row-major reindexing).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.word`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.word`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.word` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.word` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -140,9 +140,9 @@ The product-to-Fin equivalence enumerates the cells at their actual rank. It is 
 
 **Definition 1.12 (Proper pair-label arrays).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Proper`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Proper`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Proper` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Proper` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -152,9 +152,9 @@ Complementary pairs become the three labels. Properness requires different label
 
 **Definition 1.13 (Anchored proper pair labels).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Anchored`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Anchored`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Anchored` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Anchored` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -164,9 +164,9 @@ The initial pair label is zero and the array is proper. There is no occurrence r
 
 **Theorem 1.14 (Exact scanner pushforward).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.scanner_count`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.scanner_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.scanner_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.scanner_count` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -176,9 +176,9 @@ Twice the literal source count is the sum of the existing scanner weights over t
 
 **Definition 1.15 (Anchored chromatic count).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.pairCount`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.pairCount`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.pairCount` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.pairCount` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -188,9 +188,9 @@ This integer finite sum counts every proper three-label array with its initial l
 
 **Theorem 1.16 (Exact missing-label correction).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.source_count`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.source_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.source_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.source_count` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -200,9 +200,9 @@ For n at least two, sixteen times a(n) equals 32^n times (pairCount(n)+2). Excha
 
 **Definition 1.17 (Unrestricted chromatic cardinality).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.chromaticCount`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.chromaticCount`
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.chromaticCount` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.chromaticCount` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -212,9 +212,9 @@ This counts all proper three-label arrays on the literal graph, with every initi
 
 **Theorem 1.18 (Division-free literal source bridge).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.chromatic_source_count`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.chromatic_source_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.chromatic_source_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.chromatic_source_count` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -224,23 +224,23 @@ For every n at least two, 48*a(n) equals 32^n*(chromaticCount(n)+6). Permuting z
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Anchored`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Array`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Edges`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.FullE`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Legal`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Normal`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.Proper`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.a`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.absent`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.chromaticCount`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.chromatic_source_count`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.normalization_result`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.pairCount`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.rank`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.scanner_count`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.source_count`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.swap`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.word`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry](HardinA233255ShapeSymmetry.md)
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal](HardinA233260Literal.md)
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Anchored`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Array`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Edges`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.FullE`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Legal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Normal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.Proper`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.a`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.absent`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.chromaticCount`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.chromatic_source_count`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.normalization_result`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.pairCount`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.rank`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.scanner_count`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.source_count`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.swap`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.word`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry](../HardinA233255ShapeSymmetry.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal](../HardinA233260Literal.md)

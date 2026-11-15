@@ -1,5 +1,5 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Recurrence
-import Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal
+import Reg.D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Literal
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -182,7 +182,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Recurrence
     definition := some {
-      owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal
+      owner := `D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Literal
       name := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal.FullE
       path := #[] }
     coordinates := #[]

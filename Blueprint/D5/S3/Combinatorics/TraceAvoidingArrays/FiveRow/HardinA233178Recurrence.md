@@ -52,4 +52,4 @@ The theorem proves FullE itself. The chromatic coefficients sum to one, so addin
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.count_transfer`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Recurrence.result`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Chromatic](HardinA233178Chromatic.md)
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal](../HardinA233178Literal.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal](HardinA233178Literal.md)

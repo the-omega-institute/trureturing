@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow;
 
 internal sealed class HardinA233178LiteralDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.";
+    private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/FiveRow/HardinA233178Literal.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact five-row six-colour source count and a division-free chromatic correspondence.",

@@ -24,7 +24,7 @@ No exact full-E supplier was found in the acquired bounded searches; third-party
 remains incomplete and this unit makes no global-priority claim.
 -/
 
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal
+import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Literal
 import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Chromatic
 
 /-! The array-to-column correspondence precedes the all-width recurrence. -/
