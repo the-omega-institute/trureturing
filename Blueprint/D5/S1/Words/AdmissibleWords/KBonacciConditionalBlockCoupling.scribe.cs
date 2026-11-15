@@ -377,6 +377,97 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                         + "A singleton F_eta has Q_eta=U_eta=Var_eta=Dsite_eta=0. If B is empty, both sides of "
                         + "the block comparison are zero. At n=0 every block is empty and every indexed block "
                         + "and singleton energy sum is zero, without supplying an excited gap.")),
+                    new DocumentBlock.Section(
+                        H("Adjacent-edge eigenfunctions for the original indexed refresh"),
+                        Blocks(
+                            Paragraph(Text(
+                                "For this spectral argument assume k>=2 and n>=1, keep S=DBonacciName k n and "
+                                + "the uniform legal-state law pi, and put ell=2k-1. Let I be the integer interval "
+                                + "Icc(1-ell,n-1), with B_a={i : a<=i.val<=a+ell-1}. Its cardinality is "
+                                + "m=n+ell-1. Each a is a separate rate-one clock, even when clipping gives "
+                                + "B_a=B_b for different starts. Write T_a=T_{B_a}, with the actual transition "
+                                + "masses already identified above, and A=-L_refresh=sum_{a in I}(Id-E_{B_a}). "
+                                + "Thus (Af)(x)=sum_{a in I}(f(x)-sum_y T_a(x,y)f(y)).")),
+                            Paragraph(Text(
+                                "The graph G here has exactly the legal names as vertices and an edge exactly "
+                                + "when d_H(x,y)=card({i : x.val(i) differs from y.val(i)})=1. The full true-bit "
+                                + "subset bijection above transports HereditaryFlip.Metric.flipGraph to G; "
+                                + "legal_delete makes that support hereditary. The frozen exists_shortest_walk, "
+                                + "connected and dist_eq suppliers consequently give a legal G-walk of length "
+                                + "d_H(x,y) for every pair x,y. This is the actual full-state Hamming distance, "
+                                + "not just a distance within one refresh fiber.")),
+                            Paragraph(Text(
+                                "Take a nonconstant real function f:S to R satisfying Af=lambda*f for a real "
+                                + "lambda. The finite maximum L=max_{G.Adj(x,y)} |f(x)-f(y)| is attained and "
+                                + "positive: connectedness supplies a path between states with different values, "
+                                + "so some edge on it has nonzero difference. Orient an attaining edge (s,t) so "
+                                + "f(s)-f(t)=L>0. For any v,w, sum the edge differences along a Hamming geodesic "
+                                + "to obtain |f(v)-f(w)|<=L*d_H(v,w). This extends the edge bound on f to every "
+                                + "pair without constructing or assuming couplings for all pairs.")),
+                            Paragraph(Text(
+                                "Let u be the unique differing coordinate of s,t. For each indexed block choose "
+                                + "one joint law Q_a on S times S with first marginal mu_{B_a}(s) and second "
+                                + "marginal mu_{B_a}(t). These are the same original refresh laws used in T_a. "
+                                + "For an exterior-near block, meaning u is outside B_a and some block site is "
+                                + "at distance less than k from u, the frozen "
+                                + "KBonacciIntervalBlockCoupling.conditional_interval_block_coupling supplies an "
+                                + "actual block-assignment joint J_a with both conditionalBlockLaw marginals and "
+                                + "expected internal blockHamming at most one. Restore each sampled assignment "
+                                + "with its own unchanged full exterior, using the supported legal-state "
+                                + "conversion above. The marginal support guarantees legality, and restriction "
+                                + "and restoration are inverse there; hence the pushforward Q_a has both "
+                                + "required full-state marginals. Off-support fallback values have zero mass.")),
+                            Paragraph(Text(
+                                "On every supported pair from this restoration, the full Hamming cost is the "
+                                + "internal blockHamming plus one: the unchanged exteriors differ exactly at u. "
+                                + "Thus c_a=E_{Q_a}[d_H] is finite and at most two for an exterior-near block. "
+                                + "If u belongs to B_a, the two full exteriors agree; completionLaw_congr makes "
+                                + "their original refresh laws equal and a diagonal joint gives c_a=0. If u is "
+                                + "outside B_a and every block site is at distance at least k from u, changing "
+                                + "only u gives an inverse pair of bijections between the two completion fibers. "
+                                + "No length-k window meets both u and B_a, so legality is preserved. Choose Q_a "
+                                + "as the joint induced by this uniform fiber transport; it has both exact "
+                                + "marginals and c_a=1. These containing, near and far choices define one "
+                                + "coupling family. The scanner_iff_literal "
+                                + "and completionLaw_apply suppliers justify this far-block identification.")),
+                            Paragraph(Text(
+                                "There are exactly ell indexed blocks containing u, whose starts are "
+                                + "u.val-ell+1,...,u.val. An exterior-near block has a site at distance less than "
+                                + "k from u. Its start lies in one of the two integer intervals "
+                                + "[u.val+1,u.val+k-1] and [u.val-ell-k+2,u.val-ell], so there are at most "
+                                + "2(k-1) such clocks. The remaining clocks are far. Applying the preceding "
+                                + "costs to this same indexed family yields sum_a(c_a-1)<=-ell+2(k-1)=-1, "
+                                + "or sum_a c_a<=m-1. Repeated clipped blocks remain counted separately "
+                                + "throughout this drift estimate.")),
+                            Paragraph(Text(
+                                "Put q_a(v,w)=Q_a(v,w).toReal. Since this is a finite probability law, "
+                                + "q_a>=0, sum_w q_a(v,w)=T_a(s,v), sum_v q_a(v,w)=T_a(t,w), and "
+                                + "c_a=sum_v sum_w q_a(v,w)d_H(v,w). The exact marginals and the geodesic "
+                                + "bound give (E_{B_a}f)(s)-(E_{B_a}f)(t) "
+                                + "=sum_v sum_w q_a(v,w)(f(v)-f(w))<=L*c_a. This is weak expectation "
+                                + "comparison under the same actual joint used for the cost and drift; it "
+                                + "needs neither an optimal transport law nor the attained finite KR equality.")),
+                            Paragraph(Text(
+                                "Subtract Af(s)=lambda*f(s) and Af(t)=lambda*f(t). Since f(s)-f(t)=L and "
+                                + "each of the m clocks contributes its own identity term, "
+                                + "(m-lambda)L=sum_a((E_{B_a}f)(s)-(E_{B_a}f)(t)) "
+                                + "<=L*sum_a c_a<=L(m-1). Positivity of L gives lambda>=1. There is no "
+                                + "division by m and no change of stationary measure: this is the original "
+                                + "rate-one indexed generator on the original legal subtype.")),
+                            Paragraph(Text(
+                                "This conclusion concerns nonconstant real eigenfunctions of that actual "
+                                + "generator. CostCoupling's generic symmetric-matrix application explains the "
+                                + "separate passage through a real orthonormal eigenbasis, centering and the "
+                                + "real/imaginary split to a complex Poincare inequality. That generic spectral "
+                                + "step is distinct from the actual-state marginal, Hamming and clock "
+                                + "identifications made here; a complete native complex actual-model assembly "
+                                + "is outside this exposition's verification claim. A native full-space parent "
+                                + "Hamiltonian or a physical realization additionally needs its own operator and "
+                                + "sector or realization bridges. At n=0 every refresh is the identity, the "
+                                + "generator and energy sums vanish, and there is no nonconstant function or "
+                                + "excited-gap assertion. This derivation applies the named frozen suppliers and "
+                                + "finite-sum reasoning, without a claim of mathematical novelty."))
+                        )),
                     Paragraph(Text(
                         "This application gives the actual-law, conditional-projection and complex-energy "
                         + "calculation in the book's Chapter 39 example, Paper derivation: a uniform gap at fixed "
