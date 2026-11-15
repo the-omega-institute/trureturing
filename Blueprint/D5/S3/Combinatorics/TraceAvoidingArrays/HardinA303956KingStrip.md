@@ -46,6 +46,10 @@ $$\forall n: Nat, ((8 < n) \Rightarrow (\operatorname{a}\left(n\right) = \operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a303956` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a303956","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA303956KingStrip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2018). *OEIS A303956: rooted binary arrays with prescribed unequal king neighbours*. URL: <https://oeis.org/A303956>.
