@@ -44,7 +44,7 @@ noncomputable section
 private lemma hadamard_entry (output input : Fin 2) :
     Gate.HOp output input =
       invSqrt2 * (if output = 1 ∧ input = 1 then -1 else 1) := by
-  fin_cases output <;> fin_cases input <;> simp [Gate.HOp]
+  fin_cases output <;> fin_cases input <;> simp [Gate.HOp, UnitaryOperator.ofMatrix]
 
 /-- Closed matrix formula for the actual recursive no-swap circuit.  Its row
 label is bit-reversed because the final symmetric SWAP network has not yet

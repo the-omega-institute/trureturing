@@ -98,7 +98,13 @@ lemma qftSource_reverse_binaryMatrix (oracles : OracleModel) (n : Nat)
     (UnitaryOperator.ofPerm_applyVec_ket (qftReverseBitsPerm n) input)
   have inverse : (qftReverseBitsPerm n)⁻¹ input = qftReverseBits n input := rfl
   rw [inverse] at target
-  simpa [UnitaryOperator.applyVec, HilbertOperator.applyVec_ket] using actual.trans target.symm
+  have applyKet (A : HilbertOperator (Qubits n)) :
+      HilbertOperator.applyVec A (NormalizedVector.ket input : HilbertVector (Qubits n)) output =
+        A output input := by
+    change (∑ j, A output j * NormalizedVector.ket input j) = _
+    simp only [NormalizedVector.ket_apply, mul_ite, mul_one, mul_zero]
+    exact Fintype.sum_ite_eq' input (fun j => A output j)
+  simpa only [UnitaryOperator.applyVec, applyKet] using actual.trans target.symm
 
 end
 
