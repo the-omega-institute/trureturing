@@ -85,13 +85,7 @@ public lemma controlledPhase_qubitCircuit_matrix (oracles : OracleModel) {width 
     apply Fin.ext
     rfl
   rw [first, second]
-
-/-- The original register realization retains all five native occurrences. -/
-public lemma controlledPhase_qubitCircuit_events (oracles : OracleModel) {width : Nat}
-    (control target : Fin width) (distinct : control ≠ target) (angle : Real) :
-    (qubitCircuit oracles control target distinct angle).eventTrace =
-      [.gate .singleQubit, .gate .singleQubit, .gate .cnot, .gate .singleQubit, .gate .cnot] := by
-  exact controlledPhase_circuitAt_events (qubitLayout width) control target distinct rfl rfl
+dPhase_circuitAt_events (qubitLayout width) control target distinct rfl rfl
     oracles angle
 
 end

@@ -68,12 +68,7 @@ public def prodIndexEquiv (left right : Register) :
   exact Equiv.refl _
 
 end Register
-
-/-- One positive-dimensional quantum system with its computational basis.
-The dimension labels one physical system; it is not a number of qubits. -/
-public abbrev Qudit (dimension : ℕ+) : Register where
-  Index := Fin dimension
-  fintype := inferInstance
+ce
   decEq := inferInstance
 
 /-- The `n`-qubit register with big-endian computational basis labels. -/

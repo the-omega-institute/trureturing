@@ -90,12 +90,7 @@ public def indexEquiv {signature : QuantumSignature} (placement : Placement sign
     funext index
     apply Fin.ext
     rfl
-
-/-- Placement preserves the represented value of each gate argument. -/
-@[simp] public lemma indexEquiv_apply_val {signature : QuantumSignature}
-    (placement : Placement signature) (basis : placement.layout.register.Index)
-    (index : Fin signature.systemCount) :
-    (placement.indexEquiv basis index).val = (basis index).val := rfl
+asis index).val = (basis index).val := rfl
 
 end Placement
 
@@ -116,24 +111,10 @@ public def canonicalPlacement (signature : QuantumSignature) : Placement signatu
 end QuantumSignature
 
 namespace QuantumLayout
-
-/-- Forget only physical identities while retaining ordered system dimensions. -/
-@[expose]
-public def signature {systemCount : Nat} (layout : QuantumLayout systemCount) :
-    QuantumSignature where
-  systemCount := systemCount
-  dimension := fun index => (layout.wire index).dimension
-
-/-- Forgetting identities does not change computational-basis coordinates. -/
-public lemma signature_register {systemCount : Nat} (layout : QuantumLayout systemCount) :
+(layout.wire index).dimension
+ayout : QuantumLayout systemCount) :
     layout.signature.register = layout.register := rfl
-
-/-- Every layout is a legal placement of its own physical signature. -/
-@[expose]
-public def signaturePlacement {systemCount : Nat} (layout : QuantumLayout systemCount) :
-    layout.signature.Placement where
-  layout := layout
-  dimension_eq := fun _ => rfl
+_eq := fun _ => rfl
 
 end QuantumLayout
 

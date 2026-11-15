@@ -61,16 +61,9 @@ public noncomputable def operator (application : Application model layout) :
   UnitaryOperator.reindex application.embedding.splitBasis.symm
     (UnitaryOperator.prodTensor application.occurrence.operator
       (1 : UnitaryOperator (layout.complementRegister application.embedding.selection)))
-
-/-- Native accounting cannot be detached from the applied gate instance. -/
-public lemma application_coordinate_from_token (application : Application model layout) :
+ayout) :
     application.coordinate = model.coordinate application.occurrence.token := rfl
-
-/-- Application retains the original physical identity at every gate argument. -/
-public lemma application_wire_identity (application : Application model layout)
-    (index : Fin (model.signature application.occurrence.token).systemCount) :
-    (layout.wire (application.embedding.position index)).identity =
-      (application.occurrence.placement.layout.wire index).identity :=
+=
   congrArg QuantumWire.identity (application.embedding.wire_eq index)
 
 /-- Each matrix entry factors through the actual gate and identity on its full complement. -/

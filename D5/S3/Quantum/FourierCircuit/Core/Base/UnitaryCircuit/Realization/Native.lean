@@ -68,19 +68,7 @@ public lemma nativeApplication_operatorAt
     rfl
   rw [selected row, selected column]
   rfl
-
-/-- Execute a certified local word at exactly the original occurrence's physical positions. -/
-public def realizeNativeApplication (application : GateModel.Application sourceGates ambient)
-    (localWord : ExactRealization targetGates oracles
-      (sourceGates.signature application.occurrence.token).canonicalPlacement.layout
-      (fun _ => sourceGates.operator application.occurrence.token)) :
-    ExactRealization targetGates oracles ambient (fun _ => application.operator) where
-  circuit := placeAt
-    (sourceGates.signature application.occurrence.token).canonicalPlacement.layout
-    ambient application.embedding.position (nativeDimensions application) localWord.circuit
-  matrix_eq := by
-    intro environment
-    rw [placeAt_matrix, localWord.matrix_eq, nativeApplication_operatorAt]
+pplication_operatorAt]
 
 end
 end QuantumAlg.UnitaryCircuit

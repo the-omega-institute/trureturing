@@ -67,23 +67,9 @@ public def empty : ClassicalOpModel where
   outputShape token := nomatch token
   evaluate token := nomatch token
   coordinate token := nomatch token
-
-/-- Declare deterministic native instructions through the same normalized semantics. -/
-@[expose, implicit_reducible]
-public noncomputable def deterministic (Token Coordinate : Type)
-    (equality : DecidableEq Coordinate) (inputShape outputShape : Token → CShape)
-    (evaluate : (token : Token) → (inputShape token).Value → (outputShape token).Value)
-    (coordinate : Token → Coordinate) : ClassicalOpModel where
-  Token := Token
-  Coordinate := Coordinate
-  coordinateDecidableEq := equality
-  inputShape := inputShape
-  outputShape := outputShape
-  evaluate token input := PMF.pure (evaluate token input)
+PMF.pure (evaluate token input)
   coordinate := coordinate
-
-/-- The empty declaration cannot supply a classical native instruction. -/
-public lemma no_empty_classical_native_token (token : empty.Token) : False :=
+_empty_classical_native_token (token : empty.Token) : False :=
   nomatch token
 
 end ClassicalOpModel

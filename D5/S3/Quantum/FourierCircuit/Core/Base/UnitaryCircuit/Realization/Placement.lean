@@ -52,25 +52,11 @@ public lemma embed_eventTrace (placement : QuantumLayout.Embedding source target
     (body : UnitaryCircuit gates oracles source) :
     (body.embed placement).eventTrace = body.eventTrace := by
   simp only [embed, eventTrace, UnitarySequence.eventTrace]
-
-/-- Physical placement does not insert or remove any dependency in the native word. -/
-public lemma embed_eventDepth (placement : QuantumLayout.Embedding source target)
-    (body : UnitaryCircuit gates oracles source) :
-    (body.embed placement).eventDepth = body.eventDepth := by
+by
   simp only [embed, eventDepth, UnitarySequence.eventDepth]
 
 namespace ExactRealization
-
-/-- Place the complete exact implementation with identity on every complementary system. -/
-public def embed {operator : oracles.Interpretation → UnitaryOperator source.register}
-    (placement : QuantumLayout.Embedding source target)
-    (realized : ExactRealization gates oracles source operator) :
-    ExactRealization gates oracles target (fun environment => placement.liftOperator (operator
-      environment)) where
-  circuit := realized.circuit.embed placement
-  matrix_eq := by
-    intro environment
-    rw [embed_matrix, realized.matrix_eq]
+x, realized.matrix_eq]
 
 end ExactRealization
 

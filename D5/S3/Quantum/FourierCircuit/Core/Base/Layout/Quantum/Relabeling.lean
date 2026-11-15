@@ -38,19 +38,7 @@ namespace QuantumWire
 @[expose] public def relabel (physical : Nat ↪ Nat) (wire : QuantumWire) : QuantumWire where
   identity := physical wire.identity
   dimension := wire.dimension
-
-/-- Injective physical placement retains complete wire-record distinguishability. -/
-public lemma relabel_injective (physical : Nat ↪ Nat) :
-    Function.Injective (relabel physical) := by
-  intro left right same
-  have identities := physical.injective (congrArg QuantumWire.identity same)
-  have dimensions := congrArg QuantumWire.dimension same
-  cases left with
-  | mk leftIdentity leftDimension =>
-    cases right with
-    | mk rightIdentity rightDimension =>
-      cases identities
-      cases dimensions
+es dimensions
       rfl
 
 end QuantumWire
@@ -64,36 +52,18 @@ variable {count : Nat}
     (physical : Nat ↪ Nat) : QuantumLayout count where
   wire index := QuantumWire.relabel physical (layout.wire index)
   identityInjective := fun _ _ equal => layout.identityInjective (physical.injective equal)
-
-/-- The ordered wire list uses exactly the same physical map as its per-position definition. -/
-public lemma relabel_wires (layout : QuantumLayout count) (physical : Nat ↪ Nat) :
-    (layout.relabel physical).wires = layout.wires.map (QuantumWire.relabel physical) := by
-  simp only [wires, List.map_ofFn]
+p only [wires, List.map_ofFn]
   rfl
-
-/-- The complete physical identity list is precisely the injective image of the original list. -/
-public lemma relabel_identities (layout : QuantumLayout count) (physical : Nat ↪ Nat) :
-    (layout.relabel physical).identities = layout.identities.map physical := by
-  simp only [identities, List.map_ofFn]
+p only [identities, List.map_ofFn]
   rfl
-
-/-- Placement preserves every positive native dimension in its original logical order. -/
-public lemma relabel_dimensions (layout : QuantumLayout count) (physical : Nat ↪ Nat) :
+sical : Nat ↪ Nat) :
     (layout.relabel physical).dimensions = layout.dimensions := rfl
-
-/-- Every dimension-indexed resident quantum count remains unchanged by placement. -/
-public lemma relabel_dimensionCount (layout : QuantumLayout count) (physical : Nat ↪ Nat)
-    (dimension : ℕ+) :
-    (layout.relabel physical).dimensionCount dimension = layout.dimensionCount dimension := rfl
+nCount dimension := rfl
 
 /-- Logical basis values retain the same finite dimension at every original position. -/
 @[expose] public def relabelBasis (layout : QuantumLayout count) (physical : Nat ↪ Nat) :
     layout.register.Index ≃ (layout.relabel physical).register.Index := Equiv.refl _
-
-/-- The finite value at each mapped physical system is unchanged, including nonbinary systems. -/
-public lemma relabelBasis_value (layout : QuantumLayout count) (physical : Nat ↪ Nat)
-    (value : layout.register.Index) (index : Fin count) :
-    (relabelBasis layout physical value index).val = (value index).val := rfl
+ayout physical value index).val = (value index).val := rfl
 
 end QuantumLayout
 

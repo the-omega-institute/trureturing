@@ -47,10 +47,6 @@ public inductive ExecutionModel where
 
 namespace ExecutionModel
 
-/-- Forget operation selection when constructing mathematical state and storage types. -/
-@[expose, implicit_reducible]
-public def kind : ExecutionModel → ProblemKind
-  | .classical _ _ => .classical
   | .quantum _ _ _ _ => .quantum
 
 /-- The chosen classical native language is present in pure and hybrid execution. -/
@@ -64,18 +60,8 @@ public def classicalOperations : ExecutionModel → ClassicalOpModel
 public def classicalOracles : ExecutionModel → ClassicalOracleModel
   | .classical _ oracles => oracles
   | .quantum _ _ _ oracles => oracles
-
-/-- Quantum query syntax is absent from classical execution. -/
-@[expose, implicit_reducible]
-public def quantumOracles : ExecutionModel → OracleModel
-  | .classical _ _ => .empty
-  | .quantum _ oracles _ _ => oracles
-
-/-- Fixed query interpretations supplied to the interpreter, never stored in program syntax. -/
-public structure Environment (model : ExecutionModel) where
-  /-- Interpretation of the granted quantum query interface. -/
-  quantum : model.quantumOracles.Interpretation
-  /-- Separate transition laws of the declared persistent classical services. -/
+ntum _ oracles _ _ => oracles
+istent classical services. -/
   classical : model.classicalOracles.Interpretation
 
 /-- Model-owned native coordinates for actual classical instructions. -/
@@ -87,27 +73,17 @@ public def ClassicalCoordinate (model : ExecutionModel) : Type :=
 @[expose, implicit_reducible]
 public def ClassicalOracleCoordinate (model : ExecutionModel) : Type :=
   model.classicalOracles.Coordinate
-
-/-- Persistent service state is fixed by the selected classical oracle declaration. -/
-@[expose, implicit_reducible]
-public def HiddenState (model : ExecutionModel) : Type := model.classicalOracles.HiddenState
+l.classicalOracles.HiddenState
 
 public instance classicalCoordinateDecidableEq (model : ExecutionModel) :
     DecidableEq model.ClassicalCoordinate := model.classicalOperations.coordinateDecidableEq
 
 public instance classicalOracleCoordinateDecidableEq (model : ExecutionModel) :
     DecidableEq model.ClassicalOracleCoordinate := model.classicalOracles.coordinateDecidableEq
-
-public instance hiddenStateFintype (model : ExecutionModel) : Fintype model.HiddenState :=
+odel : ExecutionModel) : Fintype model.HiddenState :=
   model.classicalOracles.stateFintype
-
-/-- Classical state and storage types do not depend on operation selection. -/
-@[simp] public lemma classical_kind (operations : ClassicalOpModel)
-    (oracles : ClassicalOracleModel) : (classical operations oracles).kind = .classical := rfl
-
-/-- Quantum state and storage types do not depend on operation selection. -/
-@[simp] public lemma quantum_kind (gates : GateModel) (oracles : OracleModel)
-    (operations : ClassicalOpModel) (classicalOracles : ClassicalOracleModel) :
+acleModel) : (classical operations oracles).kind = .classical := rfl
+:
     (quantum gates oracles operations classicalOracles).kind = .quantum := rfl
 
 /-- Native gate coordinates are absent from classical execution. -/

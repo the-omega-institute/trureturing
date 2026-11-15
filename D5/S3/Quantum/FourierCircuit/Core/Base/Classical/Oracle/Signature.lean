@@ -56,13 +56,7 @@ attribute [instance] ClassicalOracleSignature.coordinateDecidableEq
 attribute [instance] ClassicalOracleSignature.stateFintype
 
 namespace ClassicalOracleSignature
-
-/-- One fixed transition law for every query to the same persistent service. -/
-public structure Interpretation (signature : ClassicalOracleSignature) where
-  /-- Next hidden state and visible result are sampled jointly. -/
-  transition : (query : signature.Query) → signature.HiddenState →
-    (signature.inputShape query).Value →
-      PMF (signature.HiddenState × (signature.outputShape query).Value)
+te × (signature.outputShape query).Value)
 
 end ClassicalOracleSignature
 

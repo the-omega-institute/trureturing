@@ -126,24 +126,10 @@ public lemma swap_circuit_matrix (oracles : OracleModel) (environment : oracles.
     backward.operator_ofPerm AlgorithmGate.cnotPermutation AlgorithmGate.cnot_operator_ofPerm]
   simp only [UnitaryOperator.ofPerm_mul]
   exact congrArg UnitaryOperator.ofPerm native_permutation_word
-
-/-- The native realization records its actual target-language implementation. -/
-public def realization (oracles : OracleModel) :
-    UnitaryCircuit.ExactRealization AlgorithmGate.model oracles layout (fun _ => operator) where
-  circuit := circuit oracles
-  matrix_eq := swap_circuit_matrix oracles
-
-/-- Every event is one of the three actual CNOT occurrences in execution order. -/
-public lemma swap_circuit_events (oracles : OracleModel) :
-    (circuit oracles).eventTrace = [.gate .cnot, .gate .cnot, .gate .cnot] := by rfl
-
-/-- The three CNOTs share physical wires and contribute three sequential unit-depth steps. -/
-public lemma swap_circuit_unit_depth (oracles : OracleModel) :
-    (circuit oracles).evaluatedEventDepth (fun _ => 1) = 3 := by rfl
-
-/-- The descriptive SWAP annotation accompanies exactly one full expanded word. -/
-public lemma swap_circuit_macro_count (oracles : OracleModel) :
-    (circuit oracles).macroCount "swap" = 1 := by
+= swap_circuit_matrix oracles
+ntTrace = [.gate .cnot, .gate .cnot, .gate .cnot] := by rfl
+circuit oracles).evaluatedEventDepth (fun _ => 1) = 3 := by rfl
+circuit oracles).macroCount "swap" = 1 := by
   rfl
 
 end

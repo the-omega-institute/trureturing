@@ -48,38 +48,18 @@ variable {R : Register}
 @[expose]
 public def ofMatrix (op : HilbertOperator R) (unitary : op ∈ Matrix.unitaryGroup R.Index ℂ) :
     UnitaryOperator R := ⟨op, unitary⟩
-
-@[simp]
-lemma coe_ofMatrix (op : HilbertOperator R) (h : op ∈ Matrix.unitaryGroup R.Index ℂ) :
+ R.Index ℂ) :
     ((ofMatrix op h : UnitaryOperator R) : HilbertOperator R) = op := rfl
 
 /-- A unitary operator still acts linearly on arbitrary raw vectors. -/
 public def applyVec (U : UnitaryOperator R) (ψ : HilbertVector R) : HilbertVector R :=
   HilbertOperator.applyVec (U : HilbertOperator R) ψ
-
-@[simp]
-lemma applyVec_apply (U : UnitaryOperator R) (ψ : HilbertVector R) (i : R.Index) :
+ (ψ : HilbertVector R) (i : R.Index) :
     U.applyVec ψ i = ∑ j, U i j * ψ j := rfl
-
-@[simp]
-lemma applyVec_add (U : UnitaryOperator R) (ψ φ : HilbertVector R) :
-    U.applyVec (ψ + φ) = U.applyVec ψ + U.applyVec φ :=
-  HilbertOperator.applyVec_add (U : HilbertOperator R) ψ φ
-
-@[simp]
-lemma applyVec_sub (U : UnitaryOperator R) (ψ φ : HilbertVector R) :
-    U.applyVec (ψ - φ) = U.applyVec ψ - U.applyVec φ :=
-  HilbertOperator.applyVec_sub (U : HilbertOperator R) ψ φ
-
-@[simp]
-lemma applyVec_smul (U : UnitaryOperator R) (c : ℂ) (ψ : HilbertVector R) :
-    U.applyVec (c • ψ) = c • U.applyVec ψ :=
-  HilbertOperator.applyVec_smul (U : HilbertOperator R) c ψ
-
-@[simp]
-lemma applyVec_neg (U : UnitaryOperator R) (ψ : HilbertVector R) :
-    U.applyVec (-ψ) = -U.applyVec ψ :=
-  HilbertOperator.applyVec_neg (U : HilbertOperator R) ψ
+HilbertOperator.applyVec_add (U : HilbertOperator R) ψ φ
+HilbertOperator.applyVec_sub (U : HilbertOperator R) ψ φ
+tor.applyVec_smul (U : HilbertOperator R) c ψ
+.applyVec_neg (U : HilbertOperator R) ψ
 
 @[simp]
 lemma one_applyVec (ψ : HilbertVector R) :
@@ -140,17 +120,8 @@ lemma norm_applyVec (U : UnitaryOperator R) (ψ : HilbertVector R) :
 public def apply (U : UnitaryOperator R) (ψ : NormalizedVector R) : NormalizedVector R :=
   NormalizedVector.ofVector (U.applyVec (ψ : HilbertVector R)) (by
     rw [U.norm_applyVec, ψ.norm_eq_one])
-
-@[simp]
-lemma apply_coe (U : UnitaryOperator R) (ψ : NormalizedVector R) :
-    ((U.apply ψ : NormalizedVector R) : HilbertVector R) = U.applyVec ψ := rfl
-
-/-- The identity unitary fixes every normalized state. -/
-@[simp] public lemma one_apply (ψ : NormalizedVector R) :
-    (1 : UnitaryOperator R).apply ψ = ψ := by
-  apply NormalizedVector.ext
-  intro index
-  change (1 : UnitaryOperator R).applyVec (ψ : HilbertVector R) index = ψ index
+ly ψ : NormalizedVector R) : HilbertVector R) = U.applyVec ψ := rfl
+ryOperator R).applyVec (ψ : HilbertVector R) index = ψ index
   rw [one_applyVec]
 
 /-- Unitary permutation operator on computational-basis labels. -/
@@ -195,13 +166,8 @@ lemma ofPerm_apply_ket (σ : Equiv.Perm R.Index) (x : R.Index) :
   intro i
   exact congrArg (fun ψ : HilbertVector R => ψ i)
     (ofPerm_applyVec_ket σ x)
-
-/-- Adjoint/inverse of a unitary operator. -/
-def dagger (U : UnitaryOperator R) : UnitaryOperator R := U⁻¹
-
-@[simp]
-lemma coe_dagger (U : UnitaryOperator R) :
-    (U.dagger : HilbertOperator R) = (U : HilbertOperator R).conjTranspose := by
+ UnitaryOperator R) : UnitaryOperator R := U⁻¹
+se := by
   rw [dagger, Matrix.UnitaryGroup.inv_val, Matrix.star_eq_conjTranspose]
 
 end

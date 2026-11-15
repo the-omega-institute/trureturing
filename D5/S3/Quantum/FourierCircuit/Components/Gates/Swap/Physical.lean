@@ -74,21 +74,8 @@ public lemma swap_circuitAt_matrix (oracles : OracleModel) (environment :
       placedOperator ambient left right distinct leftQubit rightQubit := by
   rw [circuitAt, UnitaryCircuit.placeAt_matrix, swap_circuit_matrix]
   rfl
-
-/-- Placement retains all three actual native occurrences in their original order. -/
-public lemma swap_circuitAt_events (oracles : OracleModel) :
-    (circuitAt ambient left right distinct leftQubit rightQubit oracles).eventTrace =
-      [.gate .cnot, .gate .cnot, .gate .cnot] := by
-  rw [circuitAt, UnitaryCircuit.placeAt_eventTrace, swap_circuit_events]
-
-/-- The same serial implementation has depth three on every dimension-correct ambient layout. -/
-public lemma swap_circuitAt_unit_depth (oracles : OracleModel) :
-    UnitaryCircuit.evaluatedEventDepth (fun _ => 1)
-      (circuitAt ambient left right distinct leftQubit rightQubit oracles) = 3 := by
-  change DepthExpr.depthEval (fun _ => 1)
-    (circuitAt ambient left right distinct leftQubit rightQubit oracles).eventDepth =
-      3
-  rw [circuitAt, UnitaryCircuit.placeAt_eventDepth]
+taryCircuit.placeAt_eventTrace, swap_circuit_events]
+_eventDepth]
   exact swap_circuit_unit_depth oracles
 
 end

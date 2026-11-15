@@ -167,52 +167,9 @@ variable {count : Nat} {layout : QuantumLayout count}
   | indexedProduct label steps start step startIH stepIH =>
       simp [relabel, eventTrace, startIH, stepIH]
   | macroCall name body bodyIH => simpa [relabel, eventTrace] using bodyIH
-
-/-- Exact native costs follow the same unchanged occurrence trace. -/
-@[simp] lemma eventCost_relabel (physical : Nat ↪ Nat)
-    (sequence : UnitarySequence gates oracles layout)
-    (operations : ClassicalOpModel := .empty)
-    (classicalOracles : ClassicalOracleModel := .empty) :
-    (sequence.relabel physical).eventCost operations classicalOracles =
-      sequence.eventCost operations classicalOracles := by
-  rw [← ofList_eventTrace_eq_eventCost (sequence.relabel physical) operations classicalOracles,
-    eventTrace_relabel physical sequence operations classicalOracles,
-    ofList_eventTrace_eq_eventCost sequence operations classicalOracles]
-
-/-- Relocation preserves every sequential and parallel dependency. -/
-@[simp] lemma eventDepth_relabel (physical : Nat ↪ Nat)
-    (sequence : UnitarySequence gates oracles layout)
-    (operations : ClassicalOpModel := .empty)
-    (classicalOracles : ClassicalOracleModel := .empty) :
-    (sequence.relabel physical).eventDepth operations classicalOracles =
-      sequence.eventDepth operations classicalOracles := by
-  induction sequence with
-  | id => rfl
-  | leaf atom => cases atom <;> rfl
-  | seq left right leftIH rightIH => simp [relabel, eventDepth, leftIH, rightIH]
-  | embed placement body bodyIH => simpa [relabel, eventDepth] using bodyIH
-  | parallel left right leftPlacement rightPlacement disjoint leftIH rightIH =>
-      simp [relabel, eventDepth, leftIH, rightIH]
-  | iterate repetitions body bodyIH => simp [relabel, eventDepth, bodyIH]
-  | indexedProduct label steps start step startIH stepIH =>
-      simp [relabel, eventDepth, startIH, stepIH]
-  | macroCall name body bodyIH => simpa [relabel, eventDepth] using bodyIH
-
-/-- Descriptive macro observations still refer to the same complete expansion tree. -/
-@[simp] lemma macroTrace_relabel (physical : Nat ↪ Nat)
-    (sequence : UnitarySequence gates oracles layout) :
-    (sequence.relabel physical).macroTrace = sequence.macroTrace := by
-  induction sequence with
-  | id => rfl
-  | leaf => rfl
-  | seq left right leftIH rightIH => simp [relabel, macroTrace, leftIH, rightIH]
-  | embed placement body bodyIH => simpa [relabel, macroTrace] using bodyIH
-  | parallel left right leftPlacement rightPlacement disjoint leftIH rightIH =>
-      simp [relabel, macroTrace, leftIH, rightIH]
-  | iterate repetitions body bodyIH => simp [relabel, macroTrace, bodyIH]
-  | indexedProduct label steps start step startIH stepIH =>
-      simp [relabel, macroTrace, startIH, stepIH]
-  | macroCall name body bodyIH => simp [relabel, macroTrace, bodyIH]
+  ofList_eventTrace_eq_eventCost sequence operations classicalOracles]
+bodyIH => simpa [relabel, eventDepth] using bodyIH
+ body bodyIH => simp [relabel, macroTrace, bodyIH]
 
 end UnitarySequence
 
@@ -235,29 +192,9 @@ private lemma relabel_matrix_internal (circuit : UnitaryCircuit gates oracles la
     (physical : Nat ↪ Nat) (environment : oracles.Interpretation) : ((circuit.relabel
       physical).matrix environment) = (circuit.matrix environment) :=
   relabel_matrix_internal circuit physical environment
-
-/-- Physical-address relabelling retains the action on the unchanged logical values. -/
-@[simp] public lemma relabel_applyVec (circuit : UnitaryCircuit gates oracles layout)
-    (physical : Nat ↪ Nat) (state : HilbertVector layout.register) (environment :
-      oracles.Interpretation) :
-    ((circuit.relabel physical).applyVec environment) state = (circuit.applyVec environment) state
-      := by
-  unfold applyVec
-  rw [relabel_matrix]
+[relabel_matrix]
   rfl
-
-/-- Relocating both the circuit and its vector coordinates preserves their
-complete action. -/
-@[simp] public lemma relabel_applyVec_reindex
-    (circuit : UnitaryCircuit gates oracles layout)
-    (physical : Nat ↪ Nat) (state : HilbertVector layout.register) (environment :
-      oracles.Interpretation) :
-    ((circuit.relabel physical).applyVec environment)
-        (HilbertVector.reindex (QuantumLayout.relabelBasis layout physical) state) =
-      HilbertVector.reindex (QuantumLayout.relabelBasis layout physical)
-        ((circuit.applyVec environment) state) := by
-  unfold applyVec
-  rw [relabel_matrix]
+[relabel_matrix]
   rfl
 
 private lemma relabel_eventTrace_internal
@@ -274,62 +211,15 @@ private lemma relabel_eventTrace_internal
     (circuit.relabel physical).eventTrace operations classicalOracles =
       circuit.eventTrace operations classicalOracles :=
   relabel_eventTrace_internal circuit physical operations classicalOracles
-
-private lemma relabel_eventCost_internal
-    (circuit : UnitaryCircuit gates oracles layout) (physical : Nat ↪ Nat)
-    (operations : ClassicalOpModel := .empty)
-    (classicalOracles : ClassicalOracleModel := .empty) :
-    (circuit.relabel physical).eventCost operations classicalOracles =
-      circuit.eventCost operations classicalOracles :=
-  UnitarySequence.eventCost_relabel physical circuit.sequence operations classicalOracles
-
-@[simp] public lemma relabel_eventCost (circuit : UnitaryCircuit gates oracles layout)
-    (physical : Nat ↪ Nat) (operations : ClassicalOpModel := .empty)
-    (classicalOracles : ClassicalOracleModel := .empty) :
-    (circuit.relabel physical).eventCost operations classicalOracles =
-      circuit.eventCost operations classicalOracles :=
-  relabel_eventCost_internal circuit physical operations classicalOracles
-
-private lemma relabel_eventDepth_internal
-    (circuit : UnitaryCircuit gates oracles layout) (physical : Nat ↪ Nat)
-    (operations : ClassicalOpModel := .empty)
-    (classicalOracles : ClassicalOracleModel := .empty) :
-    (circuit.relabel physical).eventDepth operations classicalOracles =
-      circuit.eventDepth operations classicalOracles :=
-  UnitarySequence.eventDepth_relabel physical circuit.sequence operations classicalOracles
-
-@[simp] public lemma relabel_eventDepth (circuit : UnitaryCircuit gates oracles layout)
-    (physical : Nat ↪ Nat) (operations : ClassicalOpModel := .empty)
-    (classicalOracles : ClassicalOracleModel := .empty) :
-    (circuit.relabel physical).eventDepth operations classicalOracles =
-      circuit.eventDepth operations classicalOracles :=
-  relabel_eventDepth_internal circuit physical operations classicalOracles
-
-private lemma relabel_evaluatedEventDepth_internal
-    (circuit : UnitaryCircuit gates oracles layout) (physical : Nat ↪ Nat)
-    (duration : Resource.Event (.quantum gates oracles) → Nat) :
-    (circuit.relabel physical).evaluatedEventDepth duration =
-      circuit.evaluatedEventDepth duration := by
-  unfold evaluatedEventDepth
-  rw [relabel_eventDepth_internal]
-
-/-- Relocation preserves evaluated dependency depth under every event-duration assignment. -/
-@[simp] public lemma relabel_evaluatedEventDepth
-    (circuit : UnitaryCircuit gates oracles layout) (physical : Nat ↪ Nat)
-    (duration : Resource.Event (.quantum gates oracles) → Nat) :
-    (circuit.relabel physical).evaluatedEventDepth duration =
-      circuit.evaluatedEventDepth duration := by
-  exact relabel_evaluatedEventDepth_internal circuit physical duration
-
-private lemma relabel_macroCount_internal
-    (circuit : UnitaryCircuit gates oracles layout) (physical : Nat ↪ Nat)
-    (name : String) :
-    (circuit.relabel physical).macroCount name = circuit.macroCount name := by
+l physical circuit.sequence operations classicalOracles
+t_internal circuit physical operations classicalOracles
+el physical circuit.sequence operations classicalOracles
+th_internal circuit physical operations classicalOracles
+[relabel_eventDepth_internal]
+atedEventDepth_internal circuit physical duration
+ame := by
   simp only [macroCount, relabel, UnitarySequence.macroTrace_relabel]
-
-@[simp] public lemma relabel_macroCount (circuit : UnitaryCircuit gates oracles layout)
-    (physical : Nat ↪ Nat) (name : String) :
-    (circuit.relabel physical).macroCount name = circuit.macroCount name := by
+macroCount name := by
   exact relabel_macroCount_internal circuit physical name
 
 end UnitaryCircuit

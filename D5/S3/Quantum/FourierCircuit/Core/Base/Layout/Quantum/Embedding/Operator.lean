@@ -57,51 +57,10 @@ public lemma liftOperator_entry (embedding : Embedding source target)
     (embedding.splitBasis row) (embedding.splitBasis column) = _
   rw [UnitaryOperator.unitaryOperator_prodTensor_apply]
   rfl
-
-/-- Assemble a target vector from a vector on the embedded subsystem and a
-vector on its exact physical complement. -/
-public noncomputable def mergeVector (embedding : Embedding source target)
-    (selected : HilbertVector source.register)
-    (complement : HilbertVector (target.complementRegister embedding.selection)) :
-    HilbertVector target.register :=
-  WithLp.toLp 2 fun basis =>
-    selected (embedding.splitBasis basis).1 *
-      complement (embedding.splitBasis basis).2
-
-/-- Pointwise form of assembling a vector through an embedding. -/
-@[simp] public lemma mergeVector_apply (embedding : Embedding source target)
-    (selected : HilbertVector source.register)
-    (complement : HilbertVector (target.complementRegister embedding.selection))
-    (basis : target.Basis) :
-    embedding.mergeVector selected complement basis =
-      selected (embedding.splitBasis basis).1 *
-        complement (embedding.splitBasis basis).2 := by
+     complement (embedding.splitBasis basis).2
+   complement (embedding.splitBasis basis).2 := by
   rfl
-
-/-- A lifted operator acts only on the embedded vector and leaves an
-arbitrary complementary vector unchanged. -/
-public lemma liftOperator_applyVec_mergeVector
-    (embedding : Embedding source target)
-    (operator : UnitaryOperator source.register)
-    (selected : HilbertVector source.register)
-    (complement : HilbertVector (target.complementRegister embedding.selection)) :
-    (embedding.liftOperator operator).applyVec
-        (embedding.mergeVector selected complement) =
-      embedding.mergeVector (operator.applyVec selected) complement := by
-  apply WithLp.ofLp_injective
-  funext row
-  rw [UnitaryOperator.applyVec, HilbertOperator.applyVec_apply]
-  let summand : target.Basis → ℂ := fun column =>
-      embedding.liftOperator operator row column *
-        embedding.mergeVector selected complement column
-  change (∑ column : target.Basis, summand column) =
-    embedding.mergeVector (operator.applyVec selected) complement row
-  rw [← Equiv.sum_comp embedding.splitBasis.symm summand, Fintype.sum_prod_type]
-  simp only [summand, liftOperator_entry, mergeVector_apply, Equiv.apply_symm_apply,
-    mul_ite, ite_mul, mul_one, mul_zero, zero_mul, Finset.sum_ite_eq,
-    Finset.mem_univ, if_true, UnitaryOperator.applyVec_apply]
-  rw [Finset.sum_mul]
-  simp only [mul_assoc]
+p only [mul_assoc]
   rfl
 
 /-- A placement covering every target position has no complementary quantum subsystem. -/

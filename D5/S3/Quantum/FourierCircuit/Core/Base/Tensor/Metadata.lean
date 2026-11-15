@@ -39,65 +39,21 @@ variable {m n : ℕ}
 namespace PureState
 
 noncomputable section
-
-/-- Tensor product of placed pure states. -/
-def tensor (ψ : PureState (Qubits m)) (φ : PureState (Qubits n)) :
-    PureState (Qubits (m + n)) :=
-  ofNormalized (ψ.state.tensor φ.state)
+tate)
     (ψ.system_idx ++ φ.system_idx)
-
-@[simp]
-lemma coe_tensor (ψ : PureState (Qubits m)) (φ : PureState (Qubits n)) :
-    ((ψ.tensor φ : PureState (Qubits (m + n))) : HilbertVector (Qubits (m + n))) =
-      HilbertVector.tensor (ψ : HilbertVector (Qubits m))
+ (Qubits m))
         (φ : HilbertVector (Qubits n)) := rfl
-
-@[simp]
-lemma tensor_system_idx (ψ : PureState (Qubits m)) (φ : PureState (Qubits n)) :
+ (Qubits n)) :
     (ψ.tensor φ).system_idx = ψ.system_idx ++ φ.system_idx := rfl
-
-@[simp]
-lemma tensor_apply (ψ : PureState (Qubits m)) (φ : PureState (Qubits n))
-    (i : Fin (2 ^ (m + n))) :
-    ψ.tensor φ i = ψ (prodEquiv.symm i).1 * φ (prodEquiv.symm i).2 :=
+.tensor φ i = ψ (prodEquiv.symm i).1 * φ (prodEquiv.symm i).2 :=
   rfl
-
-lemma tensor_apply_prod (ψ : PureState (Qubits m)) (φ : PureState (Qubits n))
-    (x : Fin (2 ^ m)) (y : Fin (2 ^ n)) :
-    ψ.tensor φ (prodEquiv (x, y)) = ψ x * φ y := by
+ y := by
   rw [tensor_apply, Equiv.symm_apply_apply]
-
-/-- Placed basis states tensor by composing their labels and placements. -/
-lemma tensor_basis (x : Fin (2 ^ m)) (y : Fin (2 ^ n))
-    (leftSystem rightSystem : List Nat) :
-    (basis x leftSystem).tensor (basis y rightSystem) =
-      basis (prodEquiv (x, y)) (leftSystem ++ rightSystem) := by
-  apply PureState.ext
-  · intro i
-    change (NormalizedVector.ket x).tensor (NormalizedVector.ket y) i =
-      NormalizedVector.ket (prodEquiv (x, y)) i
-    rw [NormalizedVector.tensor_ket]
+[NormalizedVector.tensor_ket]
   · rfl
-
-lemma norm_tensor (ψ : PureState (Qubits m)) (φ : PureState (Qubits n)) :
-    ‖ψ.tensor φ‖ = ‖ψ‖ * ‖φ‖ := by
-  change
-    ‖HilbertVector.tensor (ψ : HilbertVector (Qubits m))
-      (φ : HilbertVector (Qubits n))‖ =
-      ‖(ψ : HilbertVector (Qubits m))‖ * ‖(φ : HilbertVector (Qubits n))‖
+s m))‖ * ‖(φ : HilbertVector (Qubits n))‖
   rw [HilbertVector.norm_tensor]
-
-lemma inner_tensor_tensor (ψ ψ' : PureState (Qubits m))
-    (φ φ' : PureState (Qubits n)) :
-    inner ℂ (ψ.tensor φ) (ψ'.tensor φ') =
-      inner ℂ ψ ψ' * inner ℂ φ φ' := by
-  change inner ℂ
-      (HilbertVector.tensor (ψ : HilbertVector (Qubits m))
-        (φ : HilbertVector (Qubits n)))
-      (HilbertVector.tensor (ψ' : HilbertVector (Qubits m))
-        (φ' : HilbertVector (Qubits n))) =
-    inner ℂ (ψ : HilbertVector (Qubits m)) (ψ' : HilbertVector (Qubits m)) *
-      inner ℂ (φ : HilbertVector (Qubits n)) (φ' : HilbertVector (Qubits n))
+ n)) (φ' : HilbertVector (Qubits n))
   rw [HilbertVector.inner_tensor_tensor]
 
 end

@@ -38,73 +38,26 @@ modular addition, multiplication, and exponentiation [VBE95,
 section
 
 namespace QuantumAlg
-
-/-- A binary register large enough to store every residue modulo `N`.
-
-The label type is `Fin (2^n)`. Labels below `N` are valid canonical residue
-representatives; labels at least `N` are padding labels and decode by reduction
-modulo `N`. -/
-structure BinaryResidueEncoding (N n : ℕ) where
-  modulus_pos : 0 < N
-  register_fits : N ≤ 2 ^ n
+ister_fits : N ≤ 2 ^ n
 
 namespace BinaryResidueEncoding
-
-/-- A register label is canonical when its natural value is below the modulus. -/
-def IsValid {N n : ℕ} (E : BinaryResidueEncoding N n) (x : Fin (2 ^ n)) : Prop :=
-  let _h := E.modulus_pos
+ E.modulus_pos
   x.val < N
-
-instance instDecidableIsValid {N n : ℕ} (E : BinaryResidueEncoding N n)
-    (x : Fin (2 ^ n)) : Decidable (E.IsValid x) :=
+lid x) :=
   inferInstanceAs (Decidable (x.val < N))
-
-/-- Decode a binary register label as a residue modulo `N`.
-
-Padding labels are intentionally reduced modulo `N`; canonical round-tripping is
-available through `encode_decode_of_valid`. -/
-def decode {N n : ℕ} (E : BinaryResidueEncoding N n) (x : Fin (2 ^ n)) : ZMod N :=
-  let _h := E.modulus_pos
+lus_pos
   (x.val : ZMod N)
-
-/-- Encode a residue modulo `N` as its canonical binary register label. -/
-def encode {N n : ℕ} (E : BinaryResidueEncoding N n) (z : ZMod N) : Fin (2 ^ n) :=
-  haveI : NeZero N := ⟨ne_of_gt E.modulus_pos⟩
-  ⟨z.val, lt_of_lt_of_le (ZMod.val_lt z) E.register_fits⟩
-
-@[simp]
-lemma encode_val {N n : ℕ} (E : BinaryResidueEncoding N n) (z : ZMod N) :
+lt_of_lt_of_le (ZMod.val_lt z) E.register_fits⟩
+aryResidueEncoding N n) (z : ZMod N) :
     (E.encode z).val = z.val := rfl
-
-@[simp]
-lemma decode_val {N n : ℕ} (E : BinaryResidueEncoding N n) (x : Fin (2 ^ n)) :
-    (E.decode x).val = x.val % N := by
+:= by
   simp [decode, ZMod.val_natCast]
-
-/-- Encoding always produces a canonical register label. -/
-lemma encode_isValid {N n : ℕ} (E : BinaryResidueEncoding N n) (z : ZMod N) :
-    E.IsValid (E.encode z) := by
-  let _ : NeZero N := ⟨ne_of_gt E.modulus_pos⟩
+⟩
   simpa [IsValid, encode] using ZMod.val_lt z
-
-@[simp]
-lemma decode_encode {N n : ℕ} (E : BinaryResidueEncoding N n) (z : ZMod N) :
-    E.decode (E.encode z) = z := by
-  let _ : NeZero N := ⟨ne_of_gt E.modulus_pos⟩
+ne_of_gt E.modulus_pos⟩
   simp [decode, encode]
-
-/-- Canonical binary encoding does not identify distinct residues. -/
-lemma encode_injective {N n : ℕ} (E : BinaryResidueEncoding N n) :
-    Function.Injective E.encode := by
-  intro left right h
-  rw [← E.decode_encode left, ← E.decode_encode right, h]
-
-/-- Valid canonical labels round-trip through `decode` and `encode`. -/
-lemma encode_decode_of_valid {N n : ℕ} (E : BinaryResidueEncoding N n)
-    (x : Fin (2 ^ n)) (hx : E.IsValid x) :
-    E.encode (E.decode x) = x := by
-  apply Fin.ext
-  have hmod : x.val % N = x.val := Nat.mod_eq_of_lt hx
+code_encode right, h]
+Nat.mod_eq_of_lt hx
   rw [encode_val, decode_val, hmod]
 
 end BinaryResidueEncoding

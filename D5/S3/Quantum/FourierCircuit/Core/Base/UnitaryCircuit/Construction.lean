@@ -56,9 +56,7 @@ public def ofLeaf (leaf : UnitaryLeaf gates oracles layout) :
 /-- Execute a native token on its certified physical placement. -/
 public def native (application : GateModel.Application gates layout) :
     UnitaryCircuit gates oracles layout := ofLeaf (.gate application)
-
-/-- Execute only a query value granted by the selected oracle declaration. -/
-public def query (application : OracleModel.Application oracles layout) :
+ :
     UnitaryCircuit gates oracles layout := ofLeaf (.oracle application)
 
 /-- Sequential composition keeps the same language and actual physical systems. -/
@@ -81,22 +79,10 @@ public def parallel {leftCount rightCount count : Nat}
     (disjoint : Disjoint leftPlacement.selection rightPlacement.selection) :
     UnitaryCircuit gates oracles layout :=
   ⟨.parallel left.sequence right.sequence leftPlacement rightPlacement disjoint⟩
-
-/-- Repeat exactly the actual construction, retaining the same physical workspace. -/
-public def iterate (repetitions : Nat) (body : UnitaryCircuit gates oracles layout) :
+out) :
     UnitaryCircuit gates oracles layout := ⟨.iterate repetitions body.sequence⟩
-
-/-- Execute a finite list of constructions in the listed order. -/
-public def sequenceList (start : UnitaryCircuit gates oracles layout)
-    (steps : List (UnitaryCircuit gates oracles layout)) :
-    UnitaryCircuit gates oracles layout := steps.foldl seq start
-
-/-- Execute the start and each indexed step; the label only describes the construction. -/
-public def indexedProduct (label : String) (steps : Nat)
-    (start : UnitaryCircuit gates oracles layout)
-    (step : Fin steps → UnitaryCircuit gates oracles layout) :
-    UnitaryCircuit gates oracles layout :=
-  ⟨.indexedProduct label steps start.sequence (fun index => (step index).sequence)⟩
+nitaryCircuit gates oracles layout := steps.foldl seq start
+uence (fun index => (step index).sequence)⟩
 
 /-- Record a descriptive macro occurrence containing its complete actual expansion. -/
 public def macroCall (name : String) (body : UnitaryCircuit gates oracles layout) :

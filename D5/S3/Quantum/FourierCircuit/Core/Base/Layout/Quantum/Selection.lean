@@ -42,30 +42,10 @@ variable {systemCount : Nat}
 /-- The original positions of the selected physical wires. -/
 public abbrev SelectedPosition (selection : Finset (Fin systemCount)) :=
   {index : Fin systemCount // index ∈ selection}
-
-/-- Selection retains the exact original physical wire record. -/
-@[expose]
-public def selectedWire (layout : QuantumLayout systemCount)
-    (selection : Finset (Fin systemCount)) (index : SelectedPosition selection) :
-    QuantumWire :=
-  layout.wire index.val
-
-/-- A selected wire has the same physical identity as its original position. -/
-public lemma selectedWire_identity (layout : QuantumLayout systemCount)
-    (selection : Finset (Fin systemCount)) (index : SelectedPosition selection) :
-    (layout.selectedWire selection index).identity = (layout.wire index.val).identity := rfl
-
-/-- A selected wire keeps its actual local dimension. -/
-public lemma selectedWire_dimension (layout : QuantumLayout systemCount)
-    (selection : Finset (Fin systemCount)) (index : SelectedPosition selection) :
-    (layout.selectedWire selection index).dimension = (layout.wire index.val).dimension := rfl
-
-/-- Restriction cannot introduce repeated physical identities. -/
-public lemma selectedWire_identity_injective (layout : QuantumLayout systemCount)
-    (selection : Finset (Fin systemCount)) :
-    Function.Injective (fun index => (layout.selectedWire selection index).identity) := by
-  intro left right sameIdentity
-  exact Subtype.ext (layout.identityInjective sameIdentity)
+yout.wire index.val
+t.selectedWire selection index).identity = (layout.wire index.val).identity := rfl
+selectedWire selection index).dimension = (layout.wire index.val).dimension := rfl
+.identityInjective sameIdentity)
 
 /-- One local finite value at each selected original position. -/
 public abbrev SelectedBasis (layout : QuantumLayout systemCount)
@@ -146,20 +126,9 @@ public def selectionBasisEquiv (layout : QuantumLayout systemCount)
       exact layout.joinSelectedBasis_selected_value selection basis.1 basis.2 index
     · funext index
       exact layout.joinSelectedBasis_complement_value selection basis.1 basis.2 index
-
-/-- Splitting reassembled coordinates recovers both subsystem labels exactly. -/
-public lemma selectionBasisEquiv_join (layout : QuantumLayout systemCount)
-    (selection : Finset (Fin systemCount)) (selected : layout.SelectedBasis selection)
-    (complement : layout.ComplementBasis selection) :
-    layout.selectionBasisEquiv selection
-      (layout.joinSelectedBasis selection selected complement) = (selected, complement) :=
+lement) :=
   (layout.selectionBasisEquiv selection).apply_symm_apply (selected, complement)
-
-/-- Restricting and reassembling retains every coordinate of the original label. -/
-public lemma joinSelectedBasis_restrict (layout : QuantumLayout systemCount)
-    (selection : Finset (Fin systemCount)) (basis : layout.Basis) :
-    layout.joinSelectedBasis selection (layout.restrictSelectedBasis selection basis)
-      (layout.restrictComplementBasis selection basis) = basis :=
+:=
   (layout.selectionBasisEquiv selection).symm_apply_apply basis
 
 end QuantumAlg.QuantumLayout

@@ -147,90 +147,20 @@ public def eventCost {count : Nat} {layout : QuantumLayout count}
       start.eventCost operations classicalOracles +
         ∑ index, (step index).eventCost operations classicalOracles
   | .macroCall _ body => body.eventCost operations classicalOracles
-
-/-- Native dependency depth; only physically disjoint branches use parallel composition. -/
-@[expose]
-public def eventDepth {count : Nat} {layout : QuantumLayout count}
-    (sequence : UnitarySequence gates oracles layout)
-    (operations : ClassicalOpModel := .empty)
-    (classicalOracles : ClassicalOracleModel := .empty) :
-    DepthExpr (Resource.Event (.quantum gates oracles operations classicalOracles)) :=
-  match sequence with
-  | .id _ => .id
-  | .leaf atom => .atom (atom.event operations classicalOracles)
-  | .seq left right =>
-      .seq (left.eventDepth operations classicalOracles)
-        (right.eventDepth operations classicalOracles)
-  | .embed _ body => body.eventDepth operations classicalOracles
-  | .parallel left right _ _ _ =>
-      .tensor (left.eventDepth operations classicalOracles)
-        (right.eventDepth operations classicalOracles)
-  | .iterate repetitions body => .iterate repetitions (body.eventDepth operations classicalOracles)
-  | .indexedProduct label steps start step =>
-      .indexedProduct label steps (start.eventDepth operations classicalOracles)
-        (fun index => (step index).eventDepth operations classicalOracles)
+acles)
   | .macroCall _ body => body.eventDepth operations classicalOracles
-
-/-- Descriptive macro occurrences are observed on the same tree as native execution. -/
-@[expose]
-public def macroTrace : {count : Nat} → {layout : QuantumLayout count} →
-    UnitarySequence gates oracles layout → List String
-  | _, _, .id _ | _, _, .leaf _ => []
-  | _, _, .seq left right => left.macroTrace ++ right.macroTrace
-  | _, _, .embed _ body => body.macroTrace
-  | _, _, .parallel left right _ _ _ => left.macroTrace ++ right.macroTrace
-  | _, _, .iterate repetitions body => (List.replicate repetitions body.macroTrace).flatten
-  | _, _, .indexedProduct _ _ start step =>
-      start.macroTrace ++ (List.ofFn fun index => (step index).macroTrace).flatten
+ndex).macroTrace).flatten
   | _, _, .macroCall name body => name :: body.macroTrace
 
 variable {count : Nat} {layout : QuantumLayout count}
 
 variable (environment : oracles.Interpretation)
-
-/-- The identity changes no state and contributes no native event. -/
-@[simp] public lemma toUnitary_id :
-    toUnitary environment (id (gates := gates) (oracles := oracles) layout) = 1 := rfl
-
-/-- Sequential order is actual execution order. -/
-@[simp] public lemma toUnitary_seq (left right : UnitarySequence gates oracles layout) :
-    toUnitary environment (.seq left right) =
-      right.toUnitary environment * left.toUnitary environment := rfl
-
-/-- A macro's exact operator is the operator of its actual expansion. -/
-@[simp] public lemma toUnitary_macroCall (name : String)
-    (body : UnitarySequence gates oracles layout) :
-    toUnitary environment (.macroCall name body) = body.toUnitary environment := rfl
-
-/-- A macro's native cost is its expansion's actual cost. -/
-@[simp] public lemma eventCost_macroCall (name : String)
-    (body : UnitarySequence gates oracles layout) :
-    eventCost (.macroCall name body) = body.eventCost := rfl
-
-/-- Macro boundaries do not restart or truncate a circuit's depth. -/
-@[simp] public lemma eventDepth_macroCall (name : String)
-    (body : UnitarySequence gates oracles layout) :
-    eventDepth (.macroCall name body) = body.eventDepth := rfl
-
-/-- Cost and dependency depth are coherent interpretations of the same execution tree. -/
-public lemma resourcesFromEventDepth_eq_eventCost
-    (sequence : UnitarySequence gates oracles layout)
-    (operations : ClassicalOpModel := .empty)
-    (classicalOracles : ClassicalOracleModel := .empty) :
-    DepthExpr.costEval (fun event => ResourcePool.singleton event)
-        (sequence.eventDepth operations classicalOracles) =
-      sequence.eventCost operations classicalOracles := by
-  induction sequence with
-  | id => rfl
-  | leaf atom => rfl
-  | seq left right leftIH rightIH => simp [eventDepth, eventCost, leftIH, rightIH]
-  | embed placement body bodyIH => simpa [eventDepth, eventCost] using bodyIH
-  | parallel left right leftPlacement rightPlacement disjoint leftIH rightIH =>
-      simp [eventDepth, eventCost, leftIH, rightIH]
-  | iterate repetitions body bodyIH => simp [eventDepth, eventCost, bodyIH]
-  | indexedProduct label steps start step startIH stepIH =>
-      simp [eventDepth, eventCost, startIH, stepIH]
-  | macroCall name body bodyIH => simpa [eventDepth, eventCost] using bodyIH
+acles := oracles) layout) = 1 := rfl
+nvironment * left.toUnitary environment := rfl
+oCall name body) = body.toUnitary environment := rfl
+tCost (.macroCall name body) = body.eventCost := rfl
+epth (.macroCall name body) = body.eventDepth := rfl
+bodyIH => simpa [eventDepth, eventCost] using bodyIH
 
 private lemma ofList_flatten_eventTraces {model : ExecutionModel}
     (traces : List (List (Resource.Event model))) :

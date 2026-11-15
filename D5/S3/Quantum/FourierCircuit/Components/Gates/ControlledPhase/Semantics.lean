@@ -132,13 +132,7 @@ public lemma controlledPhase_circuit_matrix (oracles : OracleModel) (angle : Rea
   apply Subtype.ext
   rw [word_diagonal, target_diagonal]
   exact congrArg Matrix.diagonal (funext (phase_product angle))
-
-/-- The exact realization carries the actual default-model expansion and its own resource trace. -/
-public def realization (oracles : OracleModel) (angle : Real) :
-    UnitaryCircuit.ExactRealization AlgorithmGate.model oracles layout (fun _ => operator angle)
-      where
-  circuit := circuit oracles angle
-  matrix_eq := controlledPhase_circuit_matrix oracles angle
+dPhase_circuit_matrix oracles angle
 
 end
 

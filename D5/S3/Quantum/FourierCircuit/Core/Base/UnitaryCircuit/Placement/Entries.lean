@@ -66,85 +66,8 @@ public lemma operatorAt_entry (operator : UnitaryOperator source.register)
     operator row column).trans ?_
   rw [selected row, selected column]
   rfl
-
-/-- An ambient basis is determined by the values read at the placed source
-positions together with the complete unselected complement. -/
-public lemma basis_eq_iff_selectedInput_eq_and_complement_eq
-    (left right : target.Basis) :
-    left = right ↔
-      selectedInput source target position dimensions left =
-          selectedInput source target position dimensions right ∧
-        target.restrictComplementBasis (Finset.univ.map position) left =
-          target.restrictComplementBasis (Finset.univ.map position) right := by
-  constructor
-  · intro same
-    subst right
-    exact ⟨rfl, rfl⟩
-  · rintro ⟨selected, complement⟩
-    apply (target.selectionBasisEquiv (Finset.univ.map position)).injective
-    apply Prod.ext
-    · funext index
-      obtain ⟨sourceIndex, _present, same⟩ := Finset.mem_map.mp index.property
-      have value := congrArg
-        (fun basis => (basis sourceIndex).val) selected
-      change (left (position sourceIndex)).val =
-        (right (position sourceIndex)).val at value
-      apply Fin.ext
-      change (left index.val).val = (right index.val).val
-      rw [← same]
-      exact value
-    · exact complement
-
-/-- Place a proved computational-basis action at selected ambient positions.
-The unselected physical systems retain their exact original values. -/
-public lemma placeAt_applyNormalized_ket_of_eq
-    (body : UnitaryCircuit gates oracles source)
-    (environment : oracles.Interpretation)
-    (sourceInput sourceOutput : source.Basis)
-    (actual : body.applyNormalized environment (NormalizedVector.ket sourceInput) =
-      NormalizedVector.ket sourceOutput)
-    (targetInput targetOutput : target.Basis)
-    (inputSelected : selectedInput source target position dimensions targetInput = sourceInput)
-    (outputSelected : selectedInput source target position dimensions targetOutput = sourceOutput)
-    (complementUnchanged :
-      target.restrictComplementBasis (Finset.univ.map position) targetOutput =
-        target.restrictComplementBasis (Finset.univ.map position) targetInput) :
-    (placeAt source target position dimensions body).applyNormalized environment
-        (NormalizedVector.ket targetInput) = NormalizedVector.ket targetOutput := by
-  apply NormalizedVector.ext
-  intro row
-  have sourceEntry := congrArg
-    (fun state : NormalizedVector source.register =>
-      state (selectedInput source target position dimensions row)) actual
-  change (body.matrix environment).applyVec
-      (NormalizedVector.ket (R := source.register) sourceInput).vec
-        (selectedInput source target position dimensions row) =
-    NormalizedVector.ket (R := source.register) sourceOutput
-      (selectedInput source target position dimensions row) at sourceEntry
-  simp only [UnitaryOperator.applyVec, HilbertOperator.applyVec_ket] at sourceEntry
-  change ((placeAt source target position dimensions body).matrix environment).applyVec
-      (NormalizedVector.ket (R := target.register) targetInput).vec row =
-    NormalizedVector.ket (R := target.register) targetOutput row
-  rw [UnitaryOperator.applyVec, HilbertOperator.applyVec_ket]
-  rw [placeAt_matrix, operatorAt_entry, inputSelected, sourceEntry]
-  simp only [NormalizedVector.ket_apply]
-  have rowCharacterization :=
-    basis_eq_iff_selectedInput_eq_and_complement_eq source target position dimensions
-      row targetOutput
-  rw [outputSelected, complementUnchanged] at rowCharacterization
-  by_cases same : row = targetOutput
-  · have parts := rowCharacterization.mp same
-    rw [if_pos same, if_pos parts.1, if_pos parts.2, one_mul]
-  · have notParts :
-        selectedInput source target position dimensions row ≠ sourceOutput ∨
-          target.restrictComplementBasis (Finset.univ.map position) row ≠
-            target.restrictComplementBasis (Finset.univ.map position) targetInput := by
-      by_contra neither
-      push Not at neither
-      exact same (rowCharacterization.mpr neither)
-    rcases notParts with selectedDifferent | complementDifferent
-    · rw [if_neg same, if_neg selectedDifferent, zero_mul]
-    · rw [if_neg same, if_neg complementDifferent, mul_zero]
+· exact complement
+   · rw [if_neg same, if_neg complementDifferent, mul_zero]
 
 end
 

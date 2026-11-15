@@ -65,29 +65,10 @@ public noncomputable def operator (environment : oracles.Interpretation) :
     UnitaryOperator layout.register
   | .gate application => application.operator
   | .oracle application => application.operator environment
-
-/-- The actual ordered physical footprint of the native or query instance. -/
-@[expose]
-public def systemIdx : UnitaryLeaf gates oracles layout → List Nat
-  | .gate application => application.occurrence.placement.layout.identities
-  | .oracle application => application.occurrence.placement.layout.identities
-
-/-- Every leaf retains a duplicate-free physical footprint. -/
-public lemma leaf_systemIdx_nodup (leaf : UnitaryLeaf gates oracles layout) :
-    leaf.systemIdx.Nodup := by
-  cases leaf with
-  | gate application => exact application.occurrence.placement.layout.identities_nodup
-  | oracle application => exact application.occurrence.placement.layout.identities_nodup
-
-/-- A gate event is determined by the same token as its operator. -/
-@[simp] public lemma leaf_gate_event (application : GateModel.Application gates layout) :
-    (gate (oracles := oracles) application).event =
-      .gate (gates.coordinate application.occurrence.token) := rfl
-
-/-- Query accounting cannot acquire an ungranted access form. -/
-@[simp] public lemma leaf_oracle_event (application : OracleModel.Application oracles layout) :
-    (oracle (gates := gates) application).event =
-      .oracle (oracles.coordinate application.occurrence.query) := rfl
+ | .oracle application => application.occurrence.placement.layout.identities
+ | oracle application => exact application.occurrence.placement.layout.identities_nodup
+ates.coordinate application.occurrence.token) := rfl
+es.coordinate application.occurrence.query) := rfl
 
 end UnitaryLeaf
 

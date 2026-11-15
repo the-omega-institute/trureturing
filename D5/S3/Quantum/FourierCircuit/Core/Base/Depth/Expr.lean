@@ -70,190 +70,50 @@ section
 namespace QuantumAlg
 
 open scoped BigOperators
-
-/-- Syntactic construction tree whose atoms carry a symbolic resource unit of
-type `U`.  It mirrors a circuit construction history: identity, a unit-labelled
-atom, sequential/parallel composition, inverse, a controlled block, a fixed
-repetition, and an indexed finite product with a `Fin count`-indexed step
-family. -/
-public inductive DepthExpr (U : Type) where
-  /-- The empty (identity) circuit; contributes no resources. -/
-  | id
-  /-- A primitive operation labelled by the resource unit `unit`. -/
-  | atom (unit : U)
-  /-- Sequential composition: `left` followed by `right`. -/
-  | seq (left right : DepthExpr U)
-  /-- Parallel/tensor composition of `left` and `right`. -/
-  | tensor (left right : DepthExpr U)
-  /-- The inverse of `body`. -/
-  | inverse (body : DepthExpr U)
-  /-- `body` conditioned on a control register labelled `controlLabel`. -/
-  | controlled (controlLabel : String) (body : DepthExpr U)
-  /-- `count`-fold repetition of `body`. -/
-  | iterate (count : Nat) (body : DepthExpr U)
-  /-- Indexed finite product: `start` followed by the blocks
-  `step 0, …, step (count - 1)` composed in sequence, tagged by `label`. -/
-  | indexedProduct (label : String) (count : Nat) (start : DepthExpr U)
+ount : Nat) (start : DepthExpr U)
       (step : Fin count → DepthExpr U)
 
 namespace DepthExpr
 
 variable {U : Type} {M : Type} [AddCommMonoid M]
-
-/-- Linear total-work cost of a depth expression under the per-unit weight
-`assign` valued in an additive commutative monoid.  Every composition adds;
-`iterate n` scales by `n`; an indexed product sums its start and step blocks;
-`inverse`/`controlled` pass through. -/
-public def costEval (assign : U → M) : DepthExpr U → M
-  | .id => 0
-  | .atom u => assign u
-  | .seq l r => costEval assign l + costEval assign r
-  | .tensor l r => costEval assign l + costEval assign r
-  | .inverse b => costEval assign b
-  | .controlled _ b => costEval assign b
-  | .iterate c b => c • costEval assign b
-  | .indexedProduct _ _ start step =>
-      costEval assign start + ∑ j, costEval assign (step j)
-
-/-- Max-plus critical-path depth of a depth expression under the per-unit weight
-`assign`.  Sequential composition adds and parallel composition takes the `max`;
-`iterate n` multiplies by `n`; an indexed product (a sequential composition of
-its steps) adds; `inverse`/`controlled` pass through. -/
-public def depthEval (assign : U → ℕ) : DepthExpr U → ℕ
-  | .id => 0
-  | .atom u => assign u
-  | .seq l r => depthEval assign l + depthEval assign r
-  | .tensor l r => max (depthEval assign l) (depthEval assign r)
-  | .inverse b => depthEval assign b
-  | .controlled _ b => depthEval assign b
-  | .iterate c b => c * depthEval assign b
-  | .indexedProduct _ _ start step =>
-      depthEval assign start + ∑ j, depthEval assign (step j)
-
-@[simp] lemma costEval_id (assign : U → M) : costEval assign .id = 0 := rfl
-
-@[simp] lemma costEval_atom (assign : U → M) (u : U) :
+ start + ∑ j, costEval assign (step j)
+start + ∑ j, depthEval assign (step j)
+l
+ : U) :
     costEval assign (.atom u) = assign u := rfl
-
-@[simp] lemma costEval_seq (assign : U → M) (l r : DepthExpr U) :
-    costEval assign (.seq l r) = costEval assign l + costEval assign r := rfl
-
-@[simp] lemma costEval_tensor (assign : U → M) (l r : DepthExpr U) :
-    costEval assign (.tensor l r) = costEval assign l + costEval assign r := rfl
-
-@[simp] lemma costEval_inverse (assign : U → M) (b : DepthExpr U) :
+l assign (.seq l r) = costEval assign l + costEval assign r := rfl
+l assign (.tensor l r) = costEval assign l + costEval assign r := rfl
+xpr U) :
     costEval assign (.inverse b) = costEval assign b := rfl
-
-@[simp] lemma costEval_controlled (assign : U → M) (controlLabel : String)
-    (b : DepthExpr U) :
-    costEval assign (.controlled controlLabel b) = costEval assign b := rfl
-
-@[simp] lemma costEval_iterate (assign : U → M) (count : Nat) (b : DepthExpr U) :
+costEval assign b := rfl
+xpr U) :
     costEval assign (.iterate count b) = count • costEval assign b := rfl
-
-@[simp] lemma costEval_indexedProduct (assign : U → M) (label : String)
-    (count : Nat) (start : DepthExpr U) (step : Fin count → DepthExpr U) :
-    costEval assign (.indexedProduct label count start step) =
-      costEval assign start + ∑ j, costEval assign (step j) := rfl
-
-@[simp] lemma depthEval_id (assign : U → ℕ) : depthEval assign .id = 0 := rfl
-
-@[simp] lemma depthEval_atom (assign : U → ℕ) (u : U) :
+   costEval assign start + ∑ j, costEval assign (step j) := rfl
+l
+ : U) :
     depthEval assign (.atom u) = assign u := rfl
-
-@[simp] lemma depthEval_seq (assign : U → ℕ) (l r : DepthExpr U) :
-    depthEval assign (.seq l r) = depthEval assign l + depthEval assign r := rfl
-
-@[simp] lemma depthEval_tensor (assign : U → ℕ) (l r : DepthExpr U) :
-    depthEval assign (.tensor l r) = max (depthEval assign l) (depthEval assign r) := rfl
-
-@[simp] lemma depthEval_inverse (assign : U → ℕ) (b : DepthExpr U) :
+ assign (.seq l r) = depthEval assign l + depthEval assign r := rfl
+n (.tensor l r) = max (depthEval assign l) (depthEval assign r) := rfl
+pr U) :
     depthEval assign (.inverse b) = depthEval assign b := rfl
-
-@[simp] lemma depthEval_controlled (assign : U → ℕ) (controlLabel : String)
-    (b : DepthExpr U) :
-    depthEval assign (.controlled controlLabel b) = depthEval assign b := rfl
-
-@[simp] lemma depthEval_iterate (assign : U → ℕ) (count : Nat) (b : DepthExpr U) :
+epthEval assign b := rfl
+pr U) :
     depthEval assign (.iterate count b) = count * depthEval assign b := rfl
-
-@[simp] lemma depthEval_indexedProduct (assign : U → ℕ) (label : String)
-    (count : Nat) (start : DepthExpr U) (step : Fin count → DepthExpr U) :
-    depthEval assign (.indexedProduct label count start step) =
-      depthEval assign start + ∑ j, depthEval assign (step j) := rfl
-
-/-- Max-plus depth is monotone in every atomic-unit assignment. -/
-lemma depthEval_mono {assign₁ assign₂ : U → ℕ}
-    (assignmentLe : ∀ unit, assign₁ unit ≤ assign₂ unit)
-    (expression : DepthExpr U) :
-    depthEval assign₁ expression ≤ depthEval assign₂ expression := by
-  induction expression with
-  | id => simp
-  | atom unit => exact assignmentLe unit
-  | seq left right leftLe rightLe =>
-      simpa only [depthEval_seq] using Nat.add_le_add leftLe rightLe
-  | tensor left right leftLe rightLe =>
-      simpa only [depthEval_tensor] using max_le_max leftLe rightLe
-  | inverse body bodyLe =>
-      simpa only [depthEval_inverse] using bodyLe
-  | controlled _ body bodyLe =>
-      simpa only [depthEval_controlled] using bodyLe
-  | iterate count body bodyLe =>
-      simpa only [depthEval_iterate] using Nat.mul_le_mul_left count bodyLe
-  | indexedProduct _ _ start step startLe stepLe =>
-      simp only [depthEval_indexedProduct]
-      exact Nat.add_le_add startLe (Finset.sum_le_sum fun index _ => stepLe index)
-
-/-- The query-depth indicator weight for a distinguished unit: the focus unit has
-weight `1` and every other unit weight `0`. -/
-def indicator [DecidableEq U] (focus : U) : U → ℕ :=
+  depthEval assign start + ∑ j, depthEval assign (step j) := rfl
+set.sum_le_sum fun index _ => stepLe index)
+: U) : U → ℕ :=
   fun u => if u = focus then 1 else 0
-
-@[simp] lemma indicator_self [DecidableEq U] (focus : U) :
-    indicator focus focus = 1 := by
+s focus = 1 := by
   simp [indicator]
-
-lemma indicator_of_ne [DecidableEq U] {u focus : U} (h : u ≠ focus) :
-    indicator focus u = 0 := by
+ = 0 := by
   simp [indicator, h]
-
-/-- Query depth relative to a distinguished unit `focus`: the max-plus depth under
-the indicator weight, i.e. the longest sequential chain of focus-unit atoms with
-all other units discounted. -/
-def queryDepthEval [DecidableEq U] (focus : U) (e : DepthExpr U) : ℕ :=
+ U] (focus : U) (e : DepthExpr U) : ℕ :=
   depthEval (indicator focus) e
-
-@[simp] lemma queryDepthEval_atom_self [DecidableEq U] (focus : U) :
-    queryDepthEval focus (.atom focus) = 1 := by
+s (.atom focus) = 1 := by
   simp [queryDepthEval]
-
-lemma queryDepthEval_atom_of_ne [DecidableEq U] {u focus : U} (h : u ≠ focus) :
-    queryDepthEval focus (.atom u) = 0 := by
+0 := by
   simp [queryDepthEval, indicator, h]
 
-/-- The max-plus depth never exceeds the linear cost under the same weight:
-parallel composition can only shorten the critical path relative to the total
-work. -/
-lemma depthEval_le_costEval (assign : U → ℕ) (e : DepthExpr U) :
-    depthEval assign e ≤ costEval assign e := by
-  induction e with
-  | id => simp
-  | atom u => simp
-  | seq l r ihl ihr =>
-      simp only [depthEval_seq, costEval_seq]
-      exact Nat.add_le_add ihl ihr
-  | tensor l r ihl ihr =>
-      simp only [depthEval_tensor, costEval_tensor]
-      exact max_le (ihl.trans (Nat.le_add_right _ _)) (ihr.trans (Nat.le_add_left _ _))
-  | inverse b ih =>
-      simpa only [depthEval_inverse, costEval_inverse] using ih
-  | controlled _ b ih =>
-      simpa only [depthEval_controlled, costEval_controlled] using ih
-  | iterate count b ih =>
-      simp only [depthEval_iterate, costEval_iterate, smul_eq_mul]
-      exact Nat.mul_le_mul_left count ih
-  | indexedProduct _ _ start step ihs ihf =>
-      simp only [depthEval_indexedProduct, costEval_indexedProduct]
       exact Nat.add_le_add ihs (Finset.sum_le_sum fun j _ => ihf j)
 
 /-- A two-layer circuit of parallel pairs.  Two `H`/`H` tensor layers composed in

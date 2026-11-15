@@ -76,22 +76,9 @@ public lemma controlledPhase_circuitAt_matrix (oracles : OracleModel) (angle : R
       placedOperator ambient control target distinct controlQubit targetQubit angle := by
   rw [circuitAt, UnitaryCircuit.placeAt_matrix, controlledPhase_circuit_matrix]
   rfl
-
-/-- Placement retains all five actual native occurrences in their original order. -/
-public lemma controlledPhase_circuitAt_events (oracles : OracleModel) (angle : Real) :
-    (circuitAt ambient control target distinct controlQubit targetQubit oracles angle).eventTrace =
-      [.gate .singleQubit, .gate .singleQubit, .gate .cnot, .gate .singleQubit, .gate .cnot] := by
+te .cnot] := by
   rw [circuitAt, UnitaryCircuit.placeAt_eventTrace, controlledPhase_circuit_events]
-
-/-- The same serial implementation has depth five on every dimension-correct ambient layout. -/
-public lemma controlledPhase_circuitAt_unit_depth (oracles : OracleModel) (angle : Real) :
-    UnitaryCircuit.evaluatedEventDepth (fun _ => 1)
-      (circuitAt ambient control target distinct controlQubit targetQubit oracles angle) = 5 := by
-  change DepthExpr.depthEval (fun _ => 1)
-    (circuitAt ambient control target distinct controlQubit targetQubit oracles angle).eventDepth =
-      5
-  rw [circuitAt, UnitaryCircuit.placeAt_eventDepth]
-  exact controlledPhase_circuit_unit_depth oracles angle
+act controlledPhase_circuit_unit_depth oracles angle
 
 end
 

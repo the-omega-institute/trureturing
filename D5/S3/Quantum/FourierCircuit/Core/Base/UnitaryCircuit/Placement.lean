@@ -83,77 +83,13 @@ public def operatorAt (operator : UnitaryOperator source.register) :
     (UnitaryOperator.reindex
       (QuantumLayout.relabelBasis source
         (addressPermutation source target position).toEmbedding) operator)
-
-/-- Read an ambient computational basis at the selected physical positions,
-in the source word's argument order. -/
-@[expose] public def basisAt (basis : target.Basis) : source.Basis :=
-  fun index => Fin.cast (congrArg Subtype.val (dimensions index).symm)
+grArg Subtype.val (dimensions index).symm)
     (basis (position index))
-
-@[simp] public lemma basisAt_val (basis : target.Basis) (index : Fin small) :
-    (basisAt source target position dimensions basis index).val =
+sions basis index).val =
       (basis (position index)).val := rfl
-
-/-- When the selected positions cover the ambient layout, an embedded
-operator entry is the source entry read in the supplied position order. -/
-public lemma operatorAt_entry_of_surjective
-    (onto : Function.Surjective position)
-    (operator : UnitaryOperator source.register) (row column : target.Basis) :
-    operatorAt source target position dimensions operator row column =
-      operator (basisAt source target position dimensions row)
-        (basisAt source target position dimensions column) := by
-  rw [operatorAt, QuantumLayout.Embedding.liftOperator_entry_of_surjective
-    (relocatedPlacement source target position dimensions) onto]
-  simp only [UnitaryOperator.coe_reindex, Matrix.reindex_apply,
-    Matrix.submatrix_apply]
-  have rowBasis :
-      (QuantumLayout.relabelBasis source
-        (addressPermutation source target position).toEmbedding).symm
-          ((relocatedPlacement source target position dimensions).splitBasis row).1 =
-        basisAt source target position dimensions row := by
-    funext index
-    apply Fin.ext
-    change
-      (((relocatedPlacement source target position dimensions).splitBasis row).1
-          index).val = (row (position index)).val
-    rw [QuantumLayout.Embedding.embedding_splitBasis_selected_value]
-    rfl
-  have columnBasis :
-      (QuantumLayout.relabelBasis source
-        (addressPermutation source target position).toEmbedding).symm
-          ((relocatedPlacement source target position dimensions).splitBasis column).1 =
-        basisAt source target position dimensions column := by
-    funext index
-    apply Fin.ext
-    change
-      (((relocatedPlacement source target position dimensions).splitBasis column).1
-          index).val = (column (position index)).val
-    rw [QuantumLayout.Embedding.embedding_splitBasis_selected_value]
-    rfl
-  rw [rowBasis, columnBasis]
-
-/-- Assemble a target vector from the selected source coordinates and the
-exact complementary physical coordinates of this placement. -/
-public def vectorAt
-    (selected : HilbertVector source.register)
-    (complement : HilbertVector
-      (target.complementRegister (Finset.univ.map position))) :
-    HilbertVector target.register :=
-  (relocatedPlacement source target position dimensions).mergeVector selected complement
-
-/-- A placed operator acts only on the selected vector and fixes an arbitrary
-vector on every unselected physical system. -/
-public lemma operatorAt_applyVec_vectorAt
-    (operator : UnitaryOperator source.register)
-    (selected : HilbertVector source.register)
-    (complement : HilbertVector
-      (target.complementRegister (Finset.univ.map position))) :
-    (operatorAt source target position dimensions operator).applyVec
-        (vectorAt source target position dimensions selected complement) =
-      vectorAt source target position dimensions
-        (operator.applyVec selected) complement :=
-  QuantumLayout.Embedding.liftOperator_applyVec_mergeVector
-    (relocatedPlacement source target position dimensions) operator selected complement
+mnBasis]
+ions).mergeVector selected complement
+rce target position dimensions) operator selected complement
 
 /-- Relocate and embed the actual native construction at the selected dimension-correct wires. -/
 public def placeAt (body : UnitaryCircuit gates oracles source) :
@@ -168,57 +104,20 @@ public lemma placeAt_matrix (body : UnitaryCircuit gates oracles source) (enviro
       operatorAt source target position dimensions (body.matrix environment) := by
   rw [placeAt, embed_matrix, relabel_matrix]
   rfl
-
-/-- A placed native word acts only on its selected vector and fixes an
-arbitrary vector on the exact physical complement. -/
-public lemma placeAt_applyVec_vectorAt
-    (body : UnitaryCircuit gates oracles source)
-    (selected : HilbertVector source.register)
-    (complement : HilbertVector
-      (target.complementRegister (Finset.univ.map position))) (environment :
-        oracles.Interpretation) :
-    ((placeAt source target position dimensions body).matrix environment).applyVec
-        (vectorAt source target position dimensions selected complement) =
-      vectorAt source target position dimensions
-        ((body.matrix environment).applyVec selected) complement := by
-  rw [placeAt_matrix]
-  exact operatorAt_applyVec_vectorAt source target position dimensions
+t position dimensions
     (body.matrix environment) selected complement
 
 /-- Physical placement retains the exact native occurrence order. -/
 public lemma placeAt_eventTrace (body : UnitaryCircuit gates oracles source) :
     (placeAt source target position dimensions body).eventTrace = body.eventTrace := by
   rw [placeAt, embed_eventTrace, relabel_eventTrace]
-
-/-- Physical placement retains the exact native-event ledger of the original word. -/
-public lemma placeAt_eventCost (body : UnitaryCircuit gates oracles source) :
-    (placeAt source target position dimensions body).eventCost = body.eventCost := by
-  rw [← ofList_eventTrace_eq_eventCost, placeAt_eventTrace,
+ost, placeAt_eventTrace,
     ofList_eventTrace_eq_eventCost]
-
-/-- Physical placement retains the complete dependency expression of the original word. -/
-public lemma placeAt_eventDepth (body : UnitaryCircuit gates oracles source) :
-    (placeAt source target position dimensions body).eventDepth = body.eventDepth := by
+.eventDepth = body.eventDepth := by
   rw [placeAt, embed_eventDepth, relabel_eventDepth]
-
-/-- Physical placement retains every evaluated dependency depth of the original word. -/
-public lemma placeAt_evaluatedEventDepth
-    (duration : Resource.Event (.quantum gates oracles) → Nat)
-    (body : UnitaryCircuit gates oracles source) :
-    (placeAt source target position dimensions body).evaluatedEventDepth duration =
-      body.evaluatedEventDepth duration := by
-  unfold evaluatedEventDepth
+pth
   rw [placeAt_eventDepth]
-
-/-- Realize the independently placed target using the complete relocated native word. -/
-public def placeRealization {operator : oracles.Interpretation → UnitaryOperator source.register}
-    (realized : ExactRealization gates oracles source operator) :
-    ExactRealization gates oracles target (fun environment => operatorAt source target position
-      dimensions (operator environment)) where
-  circuit := placeAt source target position dimensions realized.circuit
-  matrix_eq := by
-    intro environment
-    rw [placeAt_matrix, realized.matrix_eq]
+x, realized.matrix_eq]
 
 end
 

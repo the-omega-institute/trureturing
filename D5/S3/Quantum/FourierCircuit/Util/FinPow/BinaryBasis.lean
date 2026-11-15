@@ -59,11 +59,6 @@ public lemma bigEndianEquiv_bit (width : Nat) (basis : Fin width → Fin 2) (ind
   rw [Nat.testBit_ofBits_lt]
   · exact congrArg (fun position => finTwoEquiv (basis position)) (Fin.rev_rev index)
   · exact index.rev.isLt
-
-/-- Decoding a label yields the original finite value on every logical wire. -/
-public lemma bigEndianEquiv_symm_value (width : Nat) (label : Fin (2 ^ width))
-    (index : Fin width) :
-    (bigEndianEquiv width).symm label index =
-      finTwoEquiv.symm (label.val.testBit index.rev.val) := rfl
+.symm (label.val.testBit index.rev.val) := rfl
 
 end QuantumAlg.BinaryBasis
