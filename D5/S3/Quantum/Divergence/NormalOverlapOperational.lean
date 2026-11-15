@@ -43,8 +43,8 @@ private theorem source_overlap_integral {ρ σ : StrongDual ℂ A}
     R.p_integrable R.q_integrable (1 - coordinate)
   rw [hw.2.1] at hwp
   rw [hw.2.2] at hwq
-  have hpC := R.p_integrable.ofReal.coeFn_toL1
-  have hqC := R.q_integrable.ofReal.coeFn_toL1
+  have hpC := (R.p_integrable.ofReal : Integrable (fun x => (R.p x : ℂ)) μ).coeFn_toL1
+  have hqC := (R.q_integrable.ofReal : Integrable (fun x => (R.q x : ℂ)) μ).coeFn_toL1
   have he := R.preparation.mass
     (pullContinuous R.p_measurable R.q_measurable R.p_integrable R.q_integrable
       (overlapFunction t))
@@ -78,17 +78,25 @@ theorem source_hinges {ρ σ : StrongDual ℂ A}
         t * (σ 1).re - (overlap (posteriorFamily R) t 1).re ∧
     (∫ x, max (R.p x - t * R.q x) 0 ∂μ) =
         (ρ 1).re - (overlap (posteriorFamily R) t 1).re := by
-  have hm (w : X → ℝ) (hi : Integrable w μ) := R.preparation.mass
-    (hi.ofReal.toL1 (fun x => (w x : ℂ)))
-  have hp := hm R.p R.p_integrable
-  have hq := hm R.q R.q_integrable
-  rw [R.prepares_left, integral_congr_ae R.p_integrable.ofReal.coeFn_toL1,
-    integral_complex_ofReal] at hp
-  rw [R.prepares_right, integral_congr_ae R.q_integrable.ofReal.coeFn_toL1,
-    integral_complex_ofReal] at hq
+  have hpr : (∫ x, R.p_integrable.ofReal.toL1 (fun y => (R.p y : ℂ)) x ∂μ) =
+      ((∫ x, R.p x ∂μ : ℝ) : ℂ) :=
+    (integral_congr_ae
+      (R.p_integrable.ofReal : Integrable (fun x => (R.p x : ℂ)) μ).coeFn_toL1).trans
+      integral_complex_ofReal
+  have hqr : (∫ x, R.q_integrable.ofReal.toL1 (fun y => (R.q y : ℂ)) x ∂μ) =
+      ((∫ x, R.q x ∂μ : ℝ) : ℂ) :=
+    (integral_congr_ae
+      (R.q_integrable.ofReal : Integrable (fun x => (R.q x : ℂ)) μ).coeFn_toL1).trans
+      integral_complex_ofReal
+  have hp := ((congrArg (fun φ : StrongDual ℂ A => φ 1) R.prepares_left.symm).trans
+    (R.preparation.mass _)).trans hpr
+  have hq := ((congrArg (fun φ : StrongDual ℂ A => φ 1) R.prepares_right.symm).trans
+    (R.preparation.mass _)).trans hqr
   have hpi : (∫ x, R.p x ∂μ) = (ρ 1).re := (congrArg Complex.re hp).symm
   have hqi : (∫ x, R.q x ∂μ) = (σ 1).re := (congrArg Complex.re hq).symm
-  have hi := R.p_integrable.min (R.q_integrable.const_mul t)
+  have hi : Integrable (fun x => min (R.p x) (t * R.q x)) μ := by
+    simpa only [Pi.inf_apply, inf_eq_min] using
+      R.p_integrable.inf (R.q_integrable.const_mul t)
   have hn (a b : ℝ) : max (a - b) 0 = a - min a b := by
     rcases le_total a b with h | h
     · rw [min_eq_left h, sub_self, max_eq_right (sub_nonpos.mpr h)]
@@ -131,8 +139,10 @@ private theorem hinge_mem_of_test {X : Type u} [MeasurableSpace X]
       positive := R.preparation.positive, mass := R.preparation.mass, series := hs }
   let P := R.p_integrable.ofReal.toL1 (fun x => (R.p x : ℂ))
   let Q := R.q_integrable.ofReal.toL1 (fun x => (R.q x : ℂ))
-  have hP := R.p_integrable.ofReal.coeFn_toL1
-  have hQ := R.q_integrable.ofReal.coeFn_toL1
+  have hP : P =ᵐ[μ] (fun x => (R.p x : ℂ)) :=
+    (R.p_integrable.ofReal : Integrable (fun x => (R.p x : ℂ)) μ).coeFn_toL1
+  have hQ : Q =ᵐ[μ] (fun x => (R.q x : ℂ)) :=
+    (R.q_integrable.ofReal : Integrable (fun x => (R.q x : ℂ)) μ).coeFn_toL1
   refine ⟨X, inferInstance, μ, inferInstance, Γ, P, Q, ?_, ?_,
     R.prepares_left, R.prepares_right, ?_⟩
   · filter_upwards [hP, R.p_nonneg] with x hx hn
@@ -202,6 +212,8 @@ private theorem family_real_hinges (F : Family ρ σ) (t : ℝ) (ht : 0 ≤ t) :
   have hp := ofReal_integral_eq_lintegral_ofReal
     (hi ⟨fun x => max (x.val - t * (1 - x.val)) 0, by fun_prop⟩)
     (Filter.Eventually.of_forall (fun _ => le_max_right _ _))
+  simp only [ContinuousMap.coe_mk] at hn hp
+  simp at hn hp
   have hn' : ENNReal.ofReal
       (∫ x : Interval, max (t * (1 - x.val) - x.val) 0 ∂scalarMeasure F) =
       ENNReal.ofReal (t * (σ 1).re - (overlap F t 1).re) := by
@@ -212,11 +224,13 @@ private theorem family_real_hinges (F : Family ρ σ) (t : ℝ) (ht : 0 ≤ t) :
     simpa using hp.trans (family_hinge_integrals F t).2
   constructor
   · have he := congrArg ENNReal.toReal hn'
-    simpa only [ENNReal.toReal_ofReal hdn,
-      ENNReal.toReal_ofReal (integral_nonneg (fun _ => le_max_right _ _))] using he
+    have hni : 0 ≤ ∫ x : Interval, max (t * (1 - x.val) - x.val) 0 ∂scalarMeasure F :=
+      integral_nonneg (fun _ => le_max_right _ _)
+    rwa [ENNReal.toReal_ofReal hni, ENNReal.toReal_ofReal hdn] at he
   · have he := congrArg ENNReal.toReal hp'
-    simpa only [ENNReal.toReal_ofReal hdp,
-      ENNReal.toReal_ofReal (integral_nonneg (fun _ => le_max_right _ _))] using he
+    have hpi : 0 ≤ ∫ x : Interval, max (x.val - t * (1 - x.val)) 0 ∂scalarMeasure F :=
+      integral_nonneg (fun _ => le_max_right _ _)
+    rwa [ENNReal.toReal_ofReal hpi, ENNReal.toReal_ofReal hdp] at he
 
 private theorem optimal_hinge_mem (b : Bool) (t : ℝ) (ht : 0 < t) :
     (if b then t * (σ 1).re else (ρ 1).re) - overlapValue M ρ σ t ∈
@@ -233,7 +247,13 @@ private theorem optimal_hinge_mem (b : Bool) (t : ℝ) (ht : 0 < t) :
       (if b then t * (σ 1).re else (ρ 1).re) - overlapValue M ρ σ t := by
     change (∫ x : ULift.{u} Interval, if b then max (t * (1 - x.down.val) - x.down.val) 0
       else max (x.down.val - t * (1 - x.down.val)) 0 ∂(scalarMeasure F).map ULift.up) = _
-    rw [integral_map measurable_up.aemeasurable (by fun_prop)]
+    have ha : AEStronglyMeasurable (fun x : ULift.{u} Interval =>
+        if b then max (t * (1 - x.down.val) - x.down.val) 0
+        else max (x.down.val - t * (1 - x.down.val)) 0)
+        ((scalarMeasure F).map ULift.up) := by
+      cases b <;> simp only [Bool.false_eq_true, ↓reduceIte] <;>
+        exact (show Continuous _ from by fun_prop).aestronglyMeasurable
+    rw [integral_map measurable_up.aemeasurable ha]
     cases b
     · simpa only [Bool.false_eq_true, ↓reduceIte, ULift.down_up, hF] using
         (family_real_hinges M ρ σ hρ hσ hρs hσs F t ht.le).2
@@ -270,13 +290,16 @@ theorem originalHockeyValue_eq_overlap {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi
   rw [originalHockeyValue, hockeyValue]
   have he (t : Positive) := (operational_hinge_eq.{u} M ρ σ hρ hσ hρs hσs true t t.property).2
   have he' (t : Positive) := (operational_hinge_eq.{u} M ρ σ hρ hσ hρs hσs false t t.property).2
-  simp only [↓reduceIte] at he he'
+  simp only [Bool.false_eq_true, ↓reduceIte] at he he'
   simp_rw [he, he']
   congr 1
   congr 1
   have hm : MeasurableSet (Iic (⟨1, by norm_num⟩ : Positive)) := measurableSet_Iic
-  rw [← lintegral_piecewise hm.nullMeasurableSet, compl_Iic]
-  rfl
+  rw [← compl_Iic (a := (⟨1, by norm_num⟩ : Positive)),
+    ← lintegral_piecewise hm.nullMeasurableSet]
+  apply lintegral_congr
+  intro t
+  by_cases ht : (t : ℝ) ≤ 1 <;> simp [Set.piecewise, ht, show (t ≤ (⟨1, by norm_num⟩ : Positive)) ↔ (t : ℝ) ≤ 1 from Iff.rfl]
 
 /-- Exact arbitrary-curvature-support equality classification over the actual
 original standard-predual whole-L1 source class, assuming only that the literal
@@ -289,11 +312,84 @@ theorem original_operational_equality_iff_finite_compatibility
   rw [originalHockeyValue_eq_overlap M ρ σ hρ hσ hρs hσs hf]
   exact original_equality_iff_finite_compatibility.{u} M ρ σ hρ hσ hρs hσs hf hfinite
 
+/-- The arbitrary-support original operational classification and its actual
+simultaneous minimizing test. The same whole-complex-L1 Gamma realizes all
+support overlaps and its universe-lifted original test has the literal finite
+closed-perspective cost. Necessity is restricted to a real-finite original
+infimum; no necessity for infinity=infinity is asserted. -/
+theorem arbitrary_support_classification
+    {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
+    (hfinite : ∃ c : ℝ, maximalValue.{u} M ρ σ hf = (c : EReal)) :
+    (∃ h : ℝ, originalHockeyValue.{u} M ρ σ hf = (h : EReal)) ∧
+    (maximalValue.{u} M ρ σ hf = originalHockeyValue.{u} M ρ σ hf ↔
+      FiniteCompatibility M ρ σ (curvature hf).support) ∧
+    ((maximalValue.{u} M ρ σ hf = originalHockeyValue.{u} M ρ σ hf ∨
+        FiniteCompatibility M ρ σ (curvature hf).support) →
+      ∃ (F : Family ρ σ)
+        (Γ : (Interval →₁[scalarMeasure F] ℂ) →L[ℂ] StrongDual ℂ M.toStarSubalgebra)
+        (hn : ∀ h, IsOrderNormal (Γ h))
+        (hp : ∀ h, (∀ᵐ x ∂scalarMeasure F, 0 ≤ h x) → Positive (Γ h))
+        (hm : ∀ h, Γ h 1 = ∫ x, h x ∂scalarMeasure F)
+        (hl : Γ (ContinuousMap.toLp 1 (scalarMeasure F) ℂ posterior) = ρ)
+        (hr : Γ (ContinuousMap.toLp 1 (scalarMeasure F) ℂ (1 - posterior)) = σ),
+        IsFiniteMeasure (scalarMeasure F) ∧ (scalarMeasure F).Regular ∧
+        (scalarMeasure F) univ = ENNReal.ofReal ((ρ 1).re + (σ 1).re) ∧
+        (∀ h, IsCoefficientSeries M (Γ h)) ∧ ‖Γ‖ ≤ 1 ∧
+        (∀ t ∈ (curvature hf).support,
+          (overlap F t 1).re = overlapValue M ρ σ t ∧
+          (Γ (ContinuousMap.toLp 1 (scalarMeasure F) ℂ (overlapFunction t)) 1).re =
+            overlapValue M ρ σ t) ∧
+        closedPerspectiveCost hf (scalarMeasure F)
+          (fun x : Interval => x.val) (fun x => 1 - x.val) = maximalValue.{u} M ρ σ hf ∧
+        (let R := liftedReverseTest.{u} F Γ hn hp hm hl hr
+         IsFiniteMeasure (liftedMeasure.{u} (scalarMeasure F)) ∧
+         R.p = (fun x => x.down.val) ∧ R.q = (fun x => 1 - x.down.val) ∧
+         (∀ h, IsCoefficientSeries M (R.preparation.toLinearMap h)) ∧
+         closedPerspectiveCost hf (liftedMeasure (scalarMeasure F)) R.p R.q =
+           maximalValue.{u} M ρ σ hf ∧
+         closedPerspectiveCost hf (liftedMeasure (scalarMeasure F)) R.p R.q =
+           originalHockeyValue.{u} M ρ σ hf ∧
+         ∃ c : ℝ, closedPerspectiveCost hf (liftedMeasure (scalarMeasure F)) R.p R.q =
+           (c : EReal))) := by
+  have hiff := original_operational_equality_iff_finite_compatibility.{u}
+    M ρ σ hρ hσ hρs hσs hf hfinite
+  have hformula := originalHockeyValue_eq_overlap.{u} M ρ σ hρ hσ hρs hσs hf
+  refine ⟨?_, hiff, ?_⟩
+  · rw [hformula]
+    exact hockey_real_of_maximal_real.{u} M ρ σ hρ hσ hρs hσs hf hfinite
+  · intro hcondition
+    have heq : maximalValue.{u} M ρ σ hf = originalHockeyValue.{u} M ρ σ hf :=
+      hcondition.elim id hiff.mpr
+    obtain ⟨F, hmin, _, _, hreg, hfin, _, Γ, hn, hp, hm, hl, hr, hΓE,
+      hagree, hb, _, hlift⟩ :=
+      standard_original_reverse_test_extended_attainment.{u} M ρ σ hρ hσ hρs hσs hf
+    have hopt := minimizing_equality_implies_support_optimal M ρ σ hρ hσ hρs hσs hf F
+      (hmin.trans (heq.trans hformula))
+      (by obtain ⟨c, hc⟩ := hfinite; exact ⟨c, hmin.trans hc⟩)
+    have hsum : ρ + σ ∈ coefficientSpace M :=
+      (coefficientSpace M).add_mem (series_mem_coefficientSpace M hρs)
+        (series_mem_coefficientSpace M hσs)
+    have htotal := (compact_normal_posterior_family M ρ σ hρ hσ
+      (coefficientSpace_le_normalDual M hsum)).2.2.2.2 F |>.2.1
+    refine ⟨F, Γ, hn, hp, hm, hl, hr, inferInstance, hreg, ?_, ?_, hb, ?_, hmin,
+      hfin, hlift.1, hlift.2.1, hlift.2.2.1, hlift.2.2.2,
+      hlift.2.2.2.trans heq, ?_⟩
+    · simpa only [add_apply, Complex.add_re] using htotal
+    · intro h
+      exact (mem_coefficientSpace_iff_series M _).mp (hΓE h)
+    · intro t ht
+      refine ⟨hopt t ht, ?_⟩
+      rw [hagree]
+      exact hopt t ht
+    · obtain ⟨c, hc⟩ := hfinite
+      exact ⟨c, hlift.2.2.2.trans hc⟩
+
 end Concrete
 
 #print axioms source_hinges
 #print axioms operational_hinge_eq
 #print axioms originalHockeyValue_eq_overlap
 #print axioms original_operational_equality_iff_finite_compatibility
+#print axioms arbitrary_support_classification
 
 end D5.S3.Quantum.Divergence.NormalOverlapOperational

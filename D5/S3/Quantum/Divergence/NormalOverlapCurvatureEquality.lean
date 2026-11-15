@@ -204,6 +204,22 @@ private theorem hockey_le_maximal {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f
   rintro z ⟨F, rfl⟩
   exact hockey_le_familyCost M ρ σ hρ hσ hρs hσs hf F
 
+/-- The literal maximal infimum being real finite already forces the entire
+optimal-overlap curvature value to be real finite, without endpoint assumptions. -/
+theorem hockey_real_of_maximal_real {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
+    (hfinite : ∃ c : ℝ, maximalValue.{u} M ρ σ hf = (c : EReal)) :
+    ∃ h : ℝ, hockeyValue M ρ σ hf = (h : EReal) := by
+  obtain ⟨c, hc⟩ := hfinite
+  have hu : hockeyValue M ρ σ hf ≤ (c : EReal) :=
+    (hockey_le_maximal.{u} M ρ σ hρ hσ hρs hσs hf).trans_eq hc
+  have hl : (affineCost f ρ σ : EReal) ≤ hockeyValue M ρ σ hf := by
+    unfold hockeyValue
+    apply le_add_of_nonneg_right
+    positivity
+  have ht := ne_top_of_le_ne_top (EReal.coe_ne_top c) hu
+  have hb := ne_bot_of_le_ne_bot (EReal.coe_ne_bot (affineCost f ρ σ)) hl
+  exact ⟨_, (EReal.coe_toReal ht hb).symm⟩
+
 private theorem support_optimal_cost {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
     (F : Family ρ σ)
     (hF : ∀ t ∈ (curvature hf).support,
