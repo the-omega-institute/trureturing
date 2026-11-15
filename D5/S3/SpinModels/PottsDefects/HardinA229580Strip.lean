@@ -43,7 +43,7 @@ import Mathlib.Logic.Equiv.Fin.Basic
 open scoped BigOperators
 namespace D5.S3.SpinModels.PottsDefects.HardinA229580Strip
 open DefectTransfer (bondDefects defects literalCount continuation lumped_count forward forward_shift)
-open HardinA233177Canonical (Canonical canonical_pattern_card)
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical canonical_pattern_card)
 
 abbrev Row := Fin 2 → Fin 3
 abbrev Boundary := Fin 1 → Fin 3
