@@ -1,5 +1,5 @@
 import D5.S3.ConceptDynamics.DependencyTopology.FiniteLedgerCorrection
-import D5.S3.ConceptDynamics.DagSemantics.StrictDependencyCoordinate
+import Reg.D5.S3.ConceptDynamics.DependencyTopology.LegalLedgerFixedSet
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -13,7 +13,8 @@ namespace Reg.D5.S3.ConceptDynamics.DependencyTopology.FiniteLedgerCorrection
 open _root_.D5.S3.ConceptDynamics.DependencyTopology
 open LegalLedgerFixedSet FiniteLedgerCorrection
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.ConceptDynamics.DagSemantics.StrictDependencyCoordinate
+open _root_.Reg.D5.S3.ConceptDynamics.DependencyTopology.LegalLedgerFixedSet
+  (testKernel emptyLedger)
 open LeanInformationAudit
 
 universe u v w x
@@ -71,31 +72,14 @@ def actual : Realization signature.{u,v,w,x} := realize signature
 def rejected : Realization signature.{u,v,w,x} := realize signature
   (fun _ _ _ => .unverified) (fun a => nomatch a)
 
-/-- Empty actual certified cores, for arbitrary carrier universes. -/
-def emptyKernel : KernelData (ULift.{u} Unit) (ULift.{v} Unit)
-    (ULift.{w} Unit) (ULift.{x} Unit) :=
-  (fun _ _ => false, fun _ => ∅, fun _ => ∅, ∅, id, fun _ _ => True, fun _ _ => True)
-
-def emptyCore : CertifiedNodes emptyKernel.{u,v,w,x} := by
-  refine ⟨⟨∅, fun p => (Finset.notMem_empty p.val p.property).elim⟩, ?_, ?_, ?_, ?_⟩
-  · intro p; exact (Finset.notMem_empty p.val p.property).elim
-  · intro p; exact (Finset.notMem_empty p.val p.property).elim
-  · intro p; exact (Finset.notMem_empty p.val p.property).elim
-  · apply acyclic_of_strictCoordinate (coordinate := fun _ => (0 : ℕ))
-    rintro p q ⟨hq,_⟩
-    exact (Finset.notMem_empty q hq).elim
-
-def emptyLedger : LegalLedger emptyKernel.{u,v,w,x} :=
-  ⟨⟨emptyCore, ∅⟩, by simp⟩
-
-def emptyChain : Chain emptyKernel.{u,v,w,x} where
-  ledger _ := emptyLedger
+def emptyChain : Chain (testKernel.{u,v,w,x} false) where
+  ledger _ := emptyLedger _
   step _ := id
   admissible _ _ := ⟨fun _ h => h, fun _ _ h => h, fun _ _ _ => rfl⟩
   next _ := rfl
 
 def sampleSource : Source.{u,v,w,x} :=
-  ⟨ULift Unit, ULift Unit, ULift Unit, ULift Unit, emptyKernel,
+  ⟨ULift Unit, ULift Unit, ULift Unit, ULift Unit, (testKernel false),
     emptyChain, {⟨()⟩}⟩
 
 instance : Unique sampleSource.{u,v,w,x}.domain where
@@ -182,7 +166,9 @@ def family : Registration arena.{u,v,w,x}
 
 #print axioms family
 
-def registration : Contract.Registration
+def registration : Contract.Registration.{
+    max (max (u + 1) (v + 1)) (max (w + 1) (x + 1)), 0, 1, 0, 0, 0,
+    max (max (u + 1) (v + 1)) (max (w + 1) (x + 1)), u, 0, 0, 0, 0}
     (@finite_ledger_correction.{u,v,w,x}) (Realization signature.{u,v,w,x})
     Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.DependencyTopology.FiniteLedgerCorrection.unit
