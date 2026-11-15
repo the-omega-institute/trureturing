@@ -30,7 +30,7 @@ $$(\forall p: \mathit{Boundary}, (\forall d: \operatorname{\mathit{Fin}}\left(2\
 
 *Commentary.*
 
-The first two clauses preserve the exact residual budget. The next three clauses give all class transition and initial counts. The final clauses verify each forward-table step and its polynomial relation. Finite indices in the last clause have value b+j and bound b+j < b+d+1.
+The first two clauses preserve the exact residual budget. The next three clauses give all class transition and initial counts. The final clauses verify each forward-table step and its polynomial relation. Finite indices in the last clause have value 1+j.val and bound 1+j.val < 8.
 
 **Theorem 1.3 (The integer recurrence).**
 
