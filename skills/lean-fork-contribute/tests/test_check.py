@@ -51,6 +51,13 @@ class ScopeTests(unittest.TestCase):
         roots, _ = fork_check.select(self.root, self.base, ["D5.Old"])
         self.assertEqual(roots, ["D5/Old.lean", "Reg/D5/Old.lean"])
 
+    def test_registration_only_change_includes_mathematical_owner_and_scribe(self):
+        self.write("Reg/D5/Old.lean", "import D5.Old\n")
+        for modules in ([], ["Reg.D5.Old"]):
+            roots, paths = fork_check.select(self.root, self.base, modules)
+            self.assertEqual(roots, ["D5/Old.lean", "Reg/D5/Old.lean"])
+            self.assertIn("Blueprint/D5/Old.scribe.cs", paths)
+
     def test_missing_scribe_and_deleted_lean_fail_before_build(self):
         self.write("D5/New.lean", "def fresh := 2\n")
         with self.assertRaisesRegex(ValueError, "missing Blueprint"):

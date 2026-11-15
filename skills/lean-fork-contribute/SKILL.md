@@ -23,7 +23,7 @@ CONTRIBUTION_BASE=$(git rev-parse upstream/dev)
 export STRATALINT_ACCEPT_COLD_BUILD=1
 ```
 
-`CONTRIBUTION_BASE` 是开始贡献时取得的受保护上游提交，后续命令一直使用它。需要同步时 merge 新的上游，并重新确定基线、重做受影响检查。不要把贡献分支自己的 `HEAD` 当成受保护基线来漏掉已提交的新定理。不要为了缓存先运行 `make lean`、`warm-donor` 或项目缓存下载命令。冷构建入口仅在 linked worktree 中成立；fork 的主检出不走这条分支。
+`CONTRIBUTION_BASE` 是开始贡献时取得的受保护上游提交，后续命令一直使用它。需要同步时 merge 新的上游，并重新确定基线、重做受影响检查。不要把贡献分支自己的 `HEAD` 当成受保护基线来漏掉已提交的新定理；适配器只验证提交存在且为祖先，上游来源是调用方条件。不要为了缓存先运行 `make lean`、`warm-donor` 或项目缓存下载命令。冷构建入口仅在 linked worktree 中成立；fork 的主检出不走这条分支。
 
 ## 写内容与定向核验
 
@@ -81,4 +81,4 @@ make deposit BASE="$CONTRIBUTION_BASE" ATOM_ID=<atom-id> GID=D5/My/Module.theore
 
 GID 使用 slash 路径与现有 selector；dotted module name 只用于 Lean targets。既有冻结声明用 `make cover` 复用，不重复新增或首冻。上述 writer 自己运行定向编译、头部/utility 准入、Scribe 生成和 ledger 对齐；同样继承冷构建环境。写后检查源码、生成 Markdown 和状态片 diff，修正问题后重跑受影响检查。
 
-提交到开发者自己的 fork，并向原仓库的 `dev` 提 PR。PR 写清数学交付、冻结/覆盖变化、定向验证范围和未完成审计 issue。先看 `make gate-plan BASE="$CONTRIBUTION_BASE"`；不要为本地验证启动全库 gate/build。required CI 由维护端承担完整准入范围。等待准确 head 的 required checks、MERGED 和合并后的首次 dev push 核验后才能称交付完成。发布、合并与消息发送仍受用户授权范围约束。
+用 `git push origin HEAD` 提交到开发者自己的 fork，并向原仓库的 `dev` 提 PR，避免工作分支跟踪 `upstream/dev` 时默认推错 remote。PR 写清数学交付、冻结/覆盖变化、定向验证范围和未完成审计 issue。先看 `make gate-plan BASE="$CONTRIBUTION_BASE"`；不要为本地验证启动全库 gate/build。required CI 由维护端承担完整准入范围。等待准确 head 的 required checks、MERGED 和合并后的首次 dev push 核验后才能称交付完成。发布、合并与消息发送仍受用户授权范围约束。

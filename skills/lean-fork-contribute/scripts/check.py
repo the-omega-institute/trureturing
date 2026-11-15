@@ -34,6 +34,8 @@ def select(root, base, modules):
     roots = {lean_path(module) for module in modules}
     roots.update(path for path in changed
                  if path.startswith(("D5/", "Reg/")) and path.endswith(".lean"))
+    roots.update(path.removeprefix("Reg/") for path in list(roots)
+                 if path.startswith("Reg/D5/") and (root / path.removeprefix("Reg/")).is_file())
     for path in sorted(roots):
         if not (root / path).is_file():
             raise ValueError("missing/deleted Lean input requires separate review: " + path)
@@ -74,10 +76,12 @@ def check(args):
         scratch = Path(directory)
         manifest = scratch / "paths.nul"
         manifest.write_bytes(b"\0".join(path.encode() for path in paths) + b"\0")
-        run(["make", "emit", "BASE=" + base, "PATHS=" + str(manifest)], root, env=environment)
-        scribe_dll = root / "tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll"
-        scribe_inputs = run([dotnet, str(scribe_dll), "lean-inputs", "--paths-from", str(manifest)],
-                            root, env=environment, capture=True).stdout.splitlines()
+        scribe_inputs = []
+        if any(path.endswith(".scribe.cs") for path in paths):
+            run(["make", "emit", "BASE=" + base, "PATHS=" + str(manifest)], root, env=environment)
+            scribe_dll = root / "tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll"
+            scribe_inputs = run([dotnet, str(scribe_dll), "lean-inputs", "--paths-from", str(manifest)],
+                                root, env=environment, capture=True).stdout.splitlines()
         roots = sorted(set(roots) | {lean_path(module) for module in scribe_inputs})
         targets = " ".join(path.removesuffix(".lean").replace("/", ".") for path in roots)
         run(["make", "lean-report-scoped", "LEAN_TARGETS=" + targets], root, env=environment)
