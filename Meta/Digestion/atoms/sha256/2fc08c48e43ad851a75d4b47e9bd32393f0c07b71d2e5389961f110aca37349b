@@ -1,0 +1,55 @@
+## 2. One common actual row
+
+The following is the common paid-history extraction of [NATIVE], §3 and [FLOW], §3, with the additional bounded state statistic recorded explicitly. It is reused machinery, not a new periodicization theorem.
+
+**Lemma 2.1.** Fix one allowed finite observer and one allowed prior. On a fixed original record fibre there are finite p and suspended carriers X,Y, actual kernels B,A and probability rows π,τ such that
+
+$$
+\pi B=\tau ,\qquad \tau A=\pi .
+$$
+
+For every supported k, simultaneously,
+
+$$
+\sum_x\pi _x\operatorname{TV}(Q_x,P_{p,r_k})\le R_{\mathrm{conf},p},\qquad \operatorname{TV}\left(\sum_y\tau _yW_y,P_{\beta ,r_k}\right)\le R_{\mathrm{law},\beta }.\tag{2.1}
+$$
+
+For every bounded nonnegative function f of the p configuration,
+
+$$
+\pi f\le \sup_{h\in H_p}\sum_z\rho _h(z)f(z),\tag{2.2}
+$$
+
+where f on this fibre is the restriction of the corresponding original state function. Every positive-weight state in this row is reachable after a finite positive actual history.
+
+**Proof.** Use the fixed legal suffix S=βα|ββαα. It accepts seed 1, writes markers 100, and reaches the third latch before any fourth Read. At the seed-pair boundary, the two equal-pair updates are finite stochastic matrices. The standard finite-chain decomposition supplies positive integers d_α,d_β such that their powers along multiples of these integers converge to matrices E_α,E_β. Closed-class periods are removed by the common multiples; transient mass tends to zero and each remaining aperiodic finite class has convergent powers.
+
+For each supported $r=r_k$, set
+
+$$
+m_n=d_\alpha\left\lfloor\frac{nr}{d_\alpha}\right\rfloor,
+\qquad t_n=d_\beta\left\lfloor\frac{n(1-r)}{d_\beta}\right\rfloor,
+$$
+
+and consider the original paid histories
+
+$$
+(\alpha \alpha )^{m_n}(\beta \beta )^{t_n}S.
+$$
+
+Their configuration rows converge to the same λ=η₀E_αE_βP_S, independently of r. Every rejected pair is an actual paid pair. The finite suffix fixes the same original records and permissions.
+
+Relative to the chosen depth r, another supported parameter r_i has rejection likelihood ratio exp(−2n KL(Ber(r)||Ber(r_i))+O(1)). The bounded rounding error is uniform in i because all parameters lie in I. The Fibonacci ratios are distinct: their recurrence r↦(1−r)/(2−r) is a strict contraction with an irrational fixed point, so its rational orbit has no repetition. Hence each competing likelihood ratio tends to zero. Multiplying by the summable prior masses and the positive fixed-suffix likelihoods, dominated convergence shows that the entire posterior concentrates at the chosen depth. This includes countable priors.
+
+Appending any fixed number j of original returns, and optionally the next β, preserves posterior concentration and gives the common rows λ(BA)^j and λ(BA)^jB. Full-tail target convergence is in TV because a mixture with posterior mass at least 1−ζ at k is within ζ of P_{s,r_k}. Configuration risk is 1-Lipschitz in its target. Finite mixing of the fixed decoded measures is continuous in the row. Thus (2.1) holds first for every j with those rows, and (2.2) holds by its defining actual-history bound.
+
+Take a convergent subsequence of the Cesàro rows
+
+$$
+\pi_N=\frac1N\sum_{j<N}\lambda(BA)^j.
+$$
+
+The telescoping identity π_NBA−π_N=(λ(BA)^N−λ)/N gives πBA=π. Put τ=πB. Configuration loss and f are linear in the row; marginalized loss is convex. Averaging and then taking the finite-row limit preserves all the bounds, for every supported k on the same π. A positive limiting coordinate is positive in some finite λ(BA)^j and hence in a sufficiently late finite paid-history approximant. This proves reachability. No row or limiting history is installed in the observer. ∎
+
+The lemma can retain the other two risk bounds as well. Only the displayed bounds are needed below. Its use of H_p is material; no H₃-only assertion follows.
+

@@ -1,0 +1,90 @@
+## 1. The unchanged experiment and the statement's scope
+
+For a prior with positive mass on at least one depth $k\ge3$, this volume proves a necessary quantitative property of one finite observer approaching the common p-conf and suspended-law minima. The same result therefore applies to the common conf/conf question. Even with arbitrarily many finite configurations, its p decoders cannot approach the entire family of constant-parameter stopped-law mixtures uniformly in configuration-average full-tail TV over positive actual histories.
+
+The result is a structural restriction on the remaining common-model frontier. It supplies a positive risk gap on an explicitly defined neighborhood of that representation family. The unrestricted risk gap and an exact conf/conf attaining table remain undecided.
+
+Keep the source of [ST], [PH] and the full-marker writer clause of [E1]. The fixed parameters are $m=2,d=1,\ell=2,n=4$. One common $K$ is drawn once, before all Reads, from one fixed finite or countable prior $\mu$ with $\mu(1),\mu(2)>0$. That same draw is used for every paid seed rejection and every payload Read. Conditional on this same $K=k$, all paid seed Reads and payload Reads are independent with α probability
+
+$$
+r_k=F_{k+1}/F_{k+3},\qquad r_1=1/3,\quad r_2=2/5,\quad r_k\in [3/8,5/13]\ (k\ge 3).
+$$
+
+Equal seed pairs are rejected and both Reads remain paid. The unequal pairs accept the two original seeds. At payload p, α completes marker 0 and β suspends. At suspension, α returns to p and β completes marker 1. The third record is written before its latch. Fourth completion enables only its matching original Stop, with unique delivery. Pending and delivered states admit no Read.
+
+The original finite control C₀ contains both seeds, parser, selectors, full marker tree, bare fields, held B,Q⁺,Z records, write/latch flags, permissions and completion/Stop control. Both seeds, every marker triple, and every positive finite rejection and return history remain in the domain. There is no source reset, fresh depth, future-E₁ conditioning, additional observation or controller port.
+
+Put a_r=r(1-r) and
+
+$$
+w_{j,0}=(\beta \alpha )^j\alpha ,\qquad w_{j,1}=(\beta \alpha )^j\beta \beta ,\qquad j\ge 0.
+$$
+
+The complete p carrier consists of these words and the infinite noncompletion word. The suspended carrier consists of β, the words αw_{j,b}, and its infinite noncompletion word. For any mathematical parameter r∈I:=[1/3,2/5], define
+
+$$
+P_{p,r}(w_{j,0})=r a_r^j,\qquad P_{p,r}(w_{j,1})=(1-r)^2a_r^j,
+$$
+
+$$
+P_{\beta ,r}(\beta )=1-r,\quad P_{\beta ,r}(\alpha w_{j,0})=r^2a_r^j,\quad P_{\beta ,r}(\alpha w_{j,1})=r(1-r)^2a_r^j.
+$$
+
+The geometric sums give total mass one; their noncompletion masses are zero. Introducing I as a comparison interval changes no actual depth or source operation.
+
+For the current actual control c, the original map I_c retains every future Read and inserts exactly its original deterministic control, record, permission, completion and Stop events. Reading back the letters is its inverse. On these countable fourth-segment carriers the maps are measurable bijections, preserve TV, and commute with deleting the next operation and its deterministic event block. The acquired suspended β is not a future Read.
+
+At a positive actual history h the target is
+
+$$
+\begin{aligned}
+T_h^\mu&=(I_{C_0(h)})_*\sum_k\nu_h(k)P_{s,r_k},\\
+\nu_h(k)&=\frac{\mu(k)r_k^{A(h)}(1-r_k)^{B(h)}}
+{\sum_t\mu(t)r_t^{A(h)}(1-r_t)^{B(h)}}.
+\end{aligned}
+$$
+
+All acquired Reads, including rejected and partial pairs, contribute to the counts. These counts and posterior probabilities are analysis quantities.
+
+An observer has one fixed finite COMPLETE carrier, source-independent initialization, fixed time-homogeneous source-independent letter kernels and a decoder reading one actual configuration. COMPLETE includes the entire original control, program/table selectors, workspace, addresses, output indices and persistent randomness. There is no readable distribution vector, continuous hidden register, uncounted tape, clock, archive, advice or source-correlated seed.
+
+Every decoder is the complete law of its own finite generator, using its synthetic letter probabilities and the same acquired-letter kernels. In particular, at a p configuration x and suspended configuration y, write their raw laws Q_x,W_y, their synthetic α probabilities u_x,v_y, and their actual noncompleting kernels B:X→Y and A:Y→X. Exact individual generation requires
+
+$$
+\begin{aligned}
+Q_x(\beta E)&=(1-u_x)\sum_y B_{xy}W_y(E),\\
+W_y(\alpha E)&=v_y\sum_x A_{yx}Q_x(E).
+\end{aligned}
+\tag{1.1}
+$$
+
+These identities do not assume marginalized coherence. They hold on complete futures, including possible predicted noncompletion. No positivity restriction is imposed on u or v.
+
+For the conditional configuration row ρ_h, define
+
+$$
+\begin{aligned}
+Q_h&=\sum_z\rho_h(z)D_z,\\
+e_{\mathrm{law}}(h)&=\operatorname{TV}(Q_h,T_h^\mu),\\
+e_{\mathrm{conf}}(h)&=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu).
+\end{aligned}
+$$
+
+Here TV is the event-supremum convention, equivalently half the ℓ¹ distance on the fourth-tail carrier. R_{j,s} is the supremum over all positive histories in H_s, for s=p,β. H_p includes arbitrary fourth-segment returns; H₃ is only the first such p cut.
+
+Retain the original defect. For a legal operation $a$, put $q_h(a)=Q_h([a])$, the predicted probability of its original next-operation cylinder. When $q_h(a)>0$, $\operatorname{res}_aQ_h$ means conditioning on that cylinder and deleting the operation together with its deterministic original event block. Define
+
+$$
+\delta (h,a)=\operatorname{TV}(\operatorname{res}_a Q_h,Q_{ha}).
+$$
+
+When q_h(a)=0, its defect is zero without defining a conditional law; the actual successor and its risk remain in the domain. Δ₄ and Δ_all take their respective fourth-segment and full original-operation suprema. The pending Stop successor has zero defect and the delivered empty supremum is zero. Exact zero defect means precisely the conditional equalities on positive predicted events. This volume assumes no defect budget, obtains no zero-defect model by taking a limit, and retains exact individual generation throughout.
+
+The supplied separate full-tail minima are
+
+$$
+\rho _p=1116529/22781250,\qquad \rho _\beta =239/6750.
+$$
+
+The separate terminal projections have the supplied values 13/266 and 9/266. Those projections are not used in place of the complete laws.
+
