@@ -36,11 +36,13 @@ internal sealed class FlatSpectrumObstructionDocument : IScribeDocumentDefinitio
         return Seq(Op("claim"), Sp, Iff, Sp, P(OverDimensions(premises)));
     }
 
-    private static Formula ObstructionFormula() => OverDimensions(
-        All("M", Matrices("a", "b"), All("N", Matrices("d", "c"),
-        Imp(LtF(D(0), X("c")), Imp(LtF(Mul(D(5), X("a")), Mul(D(2), X("b"))),
-        All("lam", RealF(), Imp(LtF(D(0), X("lam")),
-        Imp(ColumnGram(), LeF(Mul(D(3), X("c")), X("d")))))))));
+    private static Formula ObstructionFormula()
+    {
+        Formula body = Imp(ColumnGram(), LeF(Mul(D(3), X("c")), X("d")));
+        body = All("lam", RealF(), Imp(LtF(D(0), X("lam")), body));
+        body = Imp(LtF(D(0), X("c")), Imp(LtF(Mul(D(5), X("a")), Mul(D(2), X("b"))), body));
+        return OverDimensions(All("M", Matrices("a", "b"), All("N", Matrices("d", "c"), body)));
+    }
 
     private static Formula Flow() => At(Qualified("QuantumMaxFlowBound", "flow"), X("M"), X("N"));
     private static Formula Adj(Formula x) => At(Op("conjTranspose"), x);
