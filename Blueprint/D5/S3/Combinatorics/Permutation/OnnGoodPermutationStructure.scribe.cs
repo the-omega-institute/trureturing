@@ -8,7 +8,7 @@ internal sealed class OnnGoodPermutationStructureDocument : IScribeDocumentDefin
 {
     private const string Root = "D5/S3/Combinatorics/Permutation/OnnGoodPermutationStructure.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/onn2023supmodular");
-    private const string GoodQuote = "Section 2, page 4: “We say an m×n matrix σ whose entries are a permutation of 1,2,…,mn is good on i,j with 1≤i<m and 1≤j<n if the maximum among σᵢ,ⱼ,σᵢ,ⱼ₊₁,σᵢ₊₁,ⱼ,σᵢ₊₁,ⱼ₊₁ is either σᵢ,ⱼ or σᵢ₊₁,ⱼ₊₁ and the minimum among these entries is either σᵢ,ⱼ₊₁ or σᵢ₊₁,ⱼ.” ";
+    private const string GoodQuote = "Section 2, page 4: “We say an m×n matrix σ whose entries are a permutation of 1,2,…,mn is good on i,j with 1≤i<m and 1≤j<n if the maximum among σᵢ,ⱼ,σᵢ,ⱼ₊₁,σᵢ₊₁,ⱼ,σᵢ₊₁,ⱼ₊₁ is either σᵢ,ⱼ or σᵢ₊₁,ⱼ₊₁ and the minimum among these entries is either σᵢ,ⱼ₊₁ or σᵢ₊₁,ⱼ.”";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Local extreme positions force a unique split into two chains.", H("The structure of good permutations"),
@@ -19,8 +19,8 @@ internal sealed class OnnGoodPermutationStructureDocument : IScribeDocumentDefin
                 "Introduction, page 1: “For an m×n matrix σ whose entries form a permutation of 1,2,…,mn, let A^σ be obtained from A by permuting its entries such that σᵢ,ⱼ<σᵣ,ₛ implies A^σᵢ,ⱼ≤A^σᵣ,ₛ.” "
                 + "The equivalence records zero-based ranks; the displayed function adds one and returns zero outside the rectangle.", true, true),
             Node("GoodSquare", "Extreme positions in a square", SquareFormula(), GoodQuote, true, true),
-            Node("GoodAt", "Goodness at one adjacent square", AtFormula(), GoodQuote + "The source square (i,j) has coordinates (i−1,j−1) here.", true, true),
-            Node("Good", "Goodness at every adjacent square", GoodFormula(), GoodQuote + "Every in-range adjacent square satisfies this condition.", true, true),
+            Node("GoodAt", "Goodness at one adjacent square", AtFormula(), GoodQuote + " The source square (i,j) has coordinates (i−1,j−1) here.", true, true),
+            Node("Good", "Goodness at every adjacent square", GoodFormula(), GoodQuote + " Every in-range adjacent square satisfies this condition.", true, true),
             Node("TwoChains", "The two increasing chains", ChainsFormula(),
                 "The first chain follows B up to k and returns along T in reverse. The second returns along T from n to k and then follows B. Empty chains are allowed.", true),
             Node("TypeA", "The first three-by-three type", TypeFormula(true),

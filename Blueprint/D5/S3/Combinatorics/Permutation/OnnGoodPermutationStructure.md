@@ -28,7 +28,7 @@ $$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; \forall c \in \mathbb{
 
 *Commentary.*
 
-Section 2, page 4: “We say an m×n matrix σ whose entries are a permutation of 1,2,…,mn is good on i,j with 1≤i<m and 1≤j<n if the maximum among σᵢ,ⱼ,σᵢ,ⱼ₊₁,σᵢ₊₁,ⱼ,σᵢ₊₁,ⱼ₊₁ is either σᵢ,ⱼ or σᵢ₊₁,ⱼ₊₁ and the minimum among these entries is either σᵢ,ⱼ₊₁ or σᵢ₊₁,ⱼ.” 
+Section 2, page 4: “We say an m×n matrix σ whose entries are a permutation of 1,2,…,mn is good on i,j with 1≤i<m and 1≤j<n if the maximum among σᵢ,ⱼ,σᵢ,ⱼ₊₁,σᵢ₊₁,ⱼ,σᵢ₊₁,ⱼ₊₁ is either σᵢ,ⱼ or σᵢ₊₁,ⱼ₊₁ and the minimum among these entries is either σᵢ,ⱼ₊₁ or σᵢ₊₁,ⱼ.”
 
 **Definition 1.3 (Goodness at one adjacent square).**
 
