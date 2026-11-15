@@ -27,6 +27,18 @@ theorem transition_counts :
       (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ 0 ∧
         cl (boundary r) (0 - (cross p r + bondDefects horizontal r r)) = (15 : Fin 72)
         then (1 : ℤ) else 0) = T (cl p 0) 15 := by
-  decide +kernel
+  have hc : ∀ p : Boundary, cl p 0 ≠ (15 : Fin 72) := by decide +kernel
+  have ht : ∀ p : Boundary, T (cl p 0) 15 = 0 := by decide +kernel
+  intro p _ _
+  calc
+    (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ 0 ∧
+        cl (boundary r) (0 - (cross p r + bondDefects horizontal r r)) = (15 : Fin 72)
+        then (1 : ℤ) else 0) = 0 := by
+      apply Finset.sum_eq_zero
+      intro r _
+      apply if_neg
+      intro h
+      exact hc (boundary r) (by simpa only [Nat.zero_sub] using h.2)
+    _ = T (cl p 0) 15 := (ht p).symm
 
 end D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.Budget0.Block0.HardinA229585StripClass15

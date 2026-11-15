@@ -26,8 +26,8 @@ abbrev arena : Arena where
         then (1 : ℤ) else 0) = (fun x => R.readout () () x) (cl p 1)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h ![0, 1, 0, 1, 0, 1] (by decide +kernel) (by decide +kernel)
-  have ha := transition_counts ![0, 1, 0, 1, 0, 1] (by decide +kernel) (by decide +kernel)
+  have hb := h ![0, 1, 0, 1, 0, 1] (by decide +kernel) (by unfold Canonical; decide +kernel)
+  have ha := transition_counts ![0, 1, 0, 1, 0, 1] (by decide +kernel) (by unfold Canonical; decide +kernel)
   change _ = T (cl ![0, 1, 0, 1, 0, 1] 1) 6 + 1 at hb
   linarith
 def family : Registration arena (type_of% @transition_counts) where
@@ -69,7 +69,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #["body", "body", "body", "arg"]
       stateBinder := 2
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

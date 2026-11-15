@@ -27,6 +27,7 @@ theorem transition_counts :
       (∑ r : Row, if cross p r + bondDefects horizontal r r ≤ 1 ∧
         cl (boundary r) (1 - (cross p r + bondDefects horizontal r r)) = (5 : Fin 72)
         then (1 : ℤ) else 0) = T (cl p 1) 5 := by
+  unfold Canonical
   decide +kernel
 
 end D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.Budget1.Block0.HardinA229585StripClass5
