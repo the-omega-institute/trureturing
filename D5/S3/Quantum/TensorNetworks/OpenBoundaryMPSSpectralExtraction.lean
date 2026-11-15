@@ -6,6 +6,7 @@
    utility: none
    digest: Exact canonical-to-native spectral extraction with scalar and boundary inverse. -/
 
+import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSTwoSiteMinimality
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSQuotient
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization
