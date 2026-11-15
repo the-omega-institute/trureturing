@@ -222,7 +222,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S0.Certificates.Algebra.BergmanCyclicCoefficients
     definition := none
-    coordinates := #[0, 2, 4, 5]
+    coordinates := #[0, 1, 2, 4, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "fn", "arg"]
