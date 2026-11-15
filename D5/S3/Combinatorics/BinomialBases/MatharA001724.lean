@@ -115,11 +115,6 @@ private theorem recurrence_rational (m : ℕ) :
       ((m : ℚ)+9)^5*(a m : ℚ) = 0 := by
   exact_mod_cast recurrence_forward m
 
-private theorem initial : a 0 = 1 ∧ a 1 = 35 ∧ a 2 = 835 ∧
-    a 3 = 17360 ∧ a 4 = 342769 := by
-  norm_num [a, s, falling, Finset.sum_range_succ, Finset.prod_range_succ,
-    Polynomial.coeff_mul, Finset.Nat.antidiagonal_succ, Finset.Nat.antidiagonal_zero,
-    Polynomial.coeff_X, Polynomial.coeff_C, Polynomial.coeff_one, Nat.choose]
 
 private noncomputable def op : ℕ → Polynomial ℚ
   | 0 => -35 + 1130*X - 15480*X^2 + 105124*X^3 - 295245*X^4
@@ -168,7 +163,12 @@ private theorem annihilates :
   simp only [map_add, map_sub, neg_mul, map_neg, PowerSeries.coeff_ofNat_mul,
     map_zero, term_coeff]
   by_cases hn : n < 10
-  · obtain ⟨h0, h1, h2, h3, h4⟩ := initial
+  · have initial : a 0 = 1 ∧ a 1 = 35 ∧ a 2 = 835 ∧
+        a 3 = 17360 ∧ a 4 = 342769 := by
+      norm_num [a, s, falling, Finset.sum_range_succ, Finset.prod_range_succ,
+        Polynomial.coeff_mul, Finset.Nat.antidiagonal_succ, Finset.Nat.antidiagonal_zero,
+        Polynomial.coeff_X, Polynomial.coeff_C, Polynomial.coeff_one, Nat.choose]
+    obtain ⟨h0, h1, h2, h3, h4⟩ := initial
     have hr0 := recurrence_rational 0
     have hr1 := recurrence_rational 1
     have hr2 := recurrence_rational 2

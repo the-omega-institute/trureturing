@@ -74,7 +74,7 @@ internal sealed class MatharA001724Document : IScribeDocumentDefinition
     private static Formula Recurrence()
     {
         Formula n=F.Id("n"), x=Cast(n,Z());
-        Formula At(int lag) => Call("a",Sub(n,D(lag)));
+        Formula At(byte lag) => Call("a",Sub(n,D(lag)));
         Formula body=Call("a",n);
         body=Add(body,Mul(Mul(D(5),Sub(new Formula.Negate(x),D(6))),At(1)));
         body=Add(body,Mul(Mul(D(5),Add(Add(Mul(D(2),Pow(x,D(2))),Mul(D(2,2),x)),D(6,1))),At(2)));
