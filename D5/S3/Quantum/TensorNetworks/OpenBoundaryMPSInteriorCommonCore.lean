@@ -9,6 +9,7 @@
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityRecovery
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.LinearAlgebra.Matrix.PosDef
+import D5.S3.Quantum.Schatten.RankOneHadamard
 
 /-! Raw interior windows retain their actual left and right complements. The
 common-core conclusion is conditional on target spanning and positive definite
@@ -256,8 +257,116 @@ theorem interior_common_core (A B : Fin 2 → Bond)
   rw [hn] at h
   simpa only [state_gamma] using h
 
+/-- The two-site flattening weighted by a virtual coefficient. -/
+private def weightedTwoFlattening (A : Fin 2 → Bond) (X : Bond) (s : ℕ) :
+    Matrix (Fin 2 × Fin 2) (Word (s + 2)) ℂ :=
+  fun ij w => gamma A (2 + (s + 2)) X (Fin.append ![ij.1, ij.2] w)
+
+private lemma weighted_rank_of_spanning (A : Fin 2 → Bond)
+    (hA : TwoSiteSpanning A) (X : Bond) (hdet : X.det ≠ 0) (s : ℕ) :
+    (weightedTwoFlattening A X s).rank = 4 := by
+  classical
+  let L : Bond →ₗ[ℂ] (Word (s + 2) → ℂ) :=
+    { toFun := fun Y => gamma A (s + 2) (X * Y)
+      map_add' := by
+        intros Y Z
+        ext w
+        change trace ((X * (Y + Z)) * wordMatrix A w) =
+          trace ((X * Y) * wordMatrix A w) + trace ((X * Z) * wordMatrix A w)
+        rw [Matrix.mul_add, Matrix.add_mul, Matrix.trace_add]
+      map_smul' := by
+        intros c Y
+        ext w
+        change trace ((X * (c • Y)) * wordMatrix A w) =
+          c • trace ((X * Y) * wordMatrix A w)
+        rw [Matrix.mul_smul, smul_mul_assoc, Matrix.trace_smul] }
+  have hu : IsUnit X :=
+    (Matrix.isUnit_iff_isUnit_det X).mpr (isUnit_iff_ne_zero.mpr hdet)
+  have hinj : Function.Injective L := by
+    intro Y Z he
+    exact hu.mul_left_cancel
+      (trace_separates A hA s (X * Y) (X * Z) (congrFun he))
+  have heq : LinearMap.range L = Submodule.span ℂ
+      (Set.range (weightedTwoFlattening A X s).row) := by
+    calc
+      LinearMap.range L = (Submodule.span ℂ
+          (Set.range fun p : Fin 2 × Fin 2 => A p.1 * A p.2)).map L := by
+        rw [hA, Submodule.map_top]
+      _ = _ := by
+        rw [Submodule.map_span, ← Set.range_comp]
+        have he : (fun p : Fin 2 × Fin 2 => L (A p.1 * A p.2)) =
+            (weightedTwoFlattening A X s).row := by
+          funext p b
+          change ((X * (A p.1 * A p.2)) *
+              (List.ofFn fun i => A (b i)).prod).trace =
+            (X * (List.ofFn fun i => A (Fin.append ![p.1, p.2] b i)).prod).trace
+          rw [List.ofFn_comp' (Fin.append ![p.1, p.2] b) A,
+            List.ofFn_fin_append, List.map_append, List.prod_append]
+          simp [List.map_ofFn, List.ofFn_succ, Matrix.mul_assoc, Function.comp_def]
+        change Submodule.span ℂ (Set.range (fun p : Fin 2 × Fin 2 =>
+          L (A p.1 * A p.2))) = _
+        rw [he]
+  rw [Matrix.rank_eq_finrank_span_row, ← heq,
+    LinearMap.finrank_range_of_inj hinj]
+  norm_num [Bond, Module.finrank_matrix]
+
+/-- Any actual bond-two state in the target parent space has rank at most one
+and can therefore be refactored through the target core. -/
+theorem common_core_rank_one (A B : Fin 2 → Bond)
+    (lprime rprime : Fin 2 → ℂ) (N : ℕ) (hN : 4 ≤ N)
+    (hA : TwoSiteSpanning A) (X : Bond)
+    (hX : mpsState N (B 0) (B 1) lprime rprime = gamma A N X) :
+    X.rank ≤ 1 ∧ ∃ lA rA : Fin 2 → ℂ,
+      X = vecMulVec rA lA ∧
+      mpsState N (B 0) (B 1) lprime rprime =
+        mpsState N (A 0) (A 1) lA rA := by
+  classical
+  obtain ⟨s, rfl⟩ : ∃ s : ℕ, N = 2 + (s + 2) := by
+    refine ⟨N - 4, ?_⟩
+    omega
+  have hflat : weightedTwoFlattening A X s =
+      (amplitudeColumns 2 (s + 2)
+        (mpsState (2 + (s + 2)) (B 0) (B 1) lprime rprime)).submatrix
+        (fun ij : Fin 2 × Fin 2 => ![ij.1, ij.2]) id := by
+    ext ij w
+    exact (congrFun hX (Fin.append ![ij.1, ij.2] w)).symm
+  have hupper : (weightedTwoFlattening A X s).rank ≤ 2 := by
+    rw [hflat]
+    calc
+      _ ≤ (amplitudeColumns 2 (s + 2)
+          (mpsState (2 + (s + 2)) (B 0) (B 1) lprime rprime)).rank :=
+        Matrix.rank_submatrix_le _ _ _
+      _ = (prefixMap B lprime 2 * tailMap B rprime (s + 2)).rank := by
+        rw [columns_factor]
+      _ ≤ (prefixMap B lprime 2).rank := Matrix.rank_mul_le_left _ _
+      _ ≤ 2 := by simpa using (prefixMap B lprime 2).rank_le_card_width
+  have hzero : X.det = 0 := by
+    by_contra hdet
+    have hfour := weighted_rank_of_spanning A hA X hdet s
+    omega
+  have hxupper : X.rank ≤ 2 := by simpa using X.rank_le_card_width
+  have hrank : X.rank ≤ 1 := by
+    by_contra hn
+    have hfull : X.rank = Fintype.card (Fin 2) := by
+      simpa using (show X.rank = 2 by omega)
+    have hunit : IsUnit X :=
+      Matrix.mulVec_surjective_iff_isUnit.mp
+        (Matrix.mulVec_surjective_iff_rank_eq_card.mpr hfull)
+    exact ((Matrix.isUnit_iff_isUnit_det X).mp hunit).ne_zero hzero
+  obtain ⟨rA, lA, hfactor⟩ :=
+    D5.S3.Quantum.Schatten.exists_rank_one_factors X hrank
+  refine ⟨hrank, lA, rA, hfactor, ?_⟩
+  calc
+    mpsState (2 + (s + 2)) (B 0) (B 1) lprime rprime =
+        gamma A (2 + (s + 2)) X := hX
+    _ = gamma A (2 + (s + 2)) (vecMulVec rA lA) :=
+        congrArg (gamma A (2 + (s + 2))) hfactor
+    _ = mpsState (2 + (s + 2)) (A 0) (A 1) lA rA :=
+        (state_gamma A lA rA (2 + (s + 2))).symm
+
 #print axioms all_coefficient_parent_induction
 #print axioms interior_common_core
+#print axioms common_core_rank_one
 
 end
 end D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorCommonCore

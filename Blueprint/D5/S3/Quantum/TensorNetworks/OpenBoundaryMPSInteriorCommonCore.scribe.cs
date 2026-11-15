@@ -27,8 +27,11 @@ internal sealed class OpenBoundaryMPSInteriorCommonCoreDocument : IScribeDocumen
                 "For arbitrary A,B with TwoSiteSpanning A, assume every three-site gamma B 3 X belongs to the target gamma image. For every natural m and every complex two by two X, there is Y with gamma B (m+3) X=gamma A (m+3) Y. The induction generalizes X. Its snoc branch uses B_j X through trace cyclicity, its cons branch uses X B_i. Both slices belong to the same actual function gamma B (m+4) X, so the original unrestricted parent_intersection applies. The statement imposes no physical cyclicity, shifted marginal or competitor regularity."),
             Theorem("interior_common_core", "A common core for every actual competitor", CommonCoreFormula(),
                 "Let p,q be at least one and N=(p+3)+q. Only the target A satisfies TwoSiteSpanning and positive definiteness of P,H. The competitor B and its two free boundaries are entirely arbitrary. Equality of their raw interior observations implies that the entire actual competitor state is gamma A N X for one unrestricted complex two by two coefficient X. No transfer inverse, common-core premise, coefficient-image equality, rank-one premise or regularity of B is assumed."),
+            Theorem("common_core_rank_one", "Rank-one obstruction for an actual common core", RankOneFormula(),
+                "Let N be at least four and suppose an actual free-boundary binary bond-two competitor equals gamma A N X for a TwoSiteSpanning target core A. The weighted two-site flattening of gamma A N X is a submatrix of the competitor's amplitude-column matrix, so its rank is at most two. If X were invertible, left multiplication by X would preserve the four-dimensional two-site span and give rank four, a contradiction. Hence rank X is at most one, including X=0; the existing rank-one factorization and the private state-gamma identity then refactor the same competitor through A with arbitrary new boundaries. This adds no transfer, positivity, phase, genericity, dynamical or thermodynamic premise."),
             Paragraph(Text("Positive definiteness makes det(H tensor P-transpose) nonzero by the existing Kronecker determinant theorem. The context has full row rank four. Original trace_separates makes the target three-site feature injective, hence the observed column range is precisely the four-dimensional target parent space. Original gram_range transfers this range to the competitor. Its observed dimension four saturates the entire competitor coefficient image, whose dimension is at most four; this establishes the all-coefficient induction hypothesis. Apply that induction at m=p+q and coefficient r′ l′ to obtain the actual full competitor.")),
-            Paragraph(Text("This intermediate common-core result does not establish a rank-one coefficient, phase recovery, intrinsic genericity, or Critch–Morton Conjecture 9 and earns no solved-open-problem credit. The imported Conjecture 8 canonical reconstruction remains attributed to Haobo Ma and Wenlin Zhang, Proof of Critch–Morton Conjecture 8 (3 November 2026), CC BY 4.0; it is not new interior recovery mathematics. No normalization, physical recovery operation, dynamics, time group, energy, clock or thermodynamic cost is asserted.")))));
+            Paragraph(Text("The rank-one result is conditional on the already established common-core representation and N≥4. It is a coefficient-rank statement for actual free-boundary points; it does not by itself recover the boundary phase, prove transfer injectivity, extend to the closure of the MPS image, or settle Critch–Morton Conjecture 9.")),
+            Paragraph(Text("The theorem interior_common_core alone supplies the common-core representation; common_core_rank_one now proves rank X≤1 and free-boundary refactorization under N≥4 and TwoSiteSpanning A. Interior phase recovery, intrinsic interior genericity and Critch–Morton Conjecture 9 remain unproved, and this unit earns no solved-open-problem credit. The imported Conjecture 8 canonical reconstruction remains attributed to Haobo Ma and Wenlin Zhang, Proof of Critch–Morton Conjecture 8 (3 November 2026), CC BY 4.0; it is not new interior recovery mathematics. No normalization, physical recovery operation, dynamics, time group, energy, clock or thermodynamic cost is asserted.")))));
 
     private static DocumentBlock Definition(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create("interior-core-" + name.ToLowerInvariant()),
@@ -65,6 +68,20 @@ internal sealed class OpenBoundaryMPSInteriorCommonCoreDocument : IScribeDocumen
             Imp(Le(D(1), p), Imp(Le(D(1), q), Imp(Spanning(a),
             Imp(At(Q("Matrix", "PosDef"), left), Imp(At(Q("Matrix", "PosDef"), right), Imp(raw, result)))))))))))))));
     }
+    private static Formula RankOneFormula()
+    {
+        Formula a = X("A"), b = X("B"), lp = X("lprime"), rp = X("rprime");
+        Formula n = X("N"), x = X("X"), la = X("lA"), ra = X("rA");
+        Formula competitor = State(b, lp, rp, n);
+        Formula target = State(a, la, ra, n);
+        Formula factor = And(Eq(x, At(Q("Matrix", "vecMulVec"), ra, la)), Eq(competitor, target));
+        Formula result = And(Le(At(Q("Matrix", "rank"), x), D(1)), Some("lA", Boundary(),
+            Some("rA", Boundary(), factor)));
+        Formula premise = Eq(competitor, G(a, n, x));
+        return Disp(All("A", Core(), All("B", Core(), All("lprime", Boundary(),
+            All("rprime", Boundary(), All("N", Nat(), All("X", Bond(),
+            Imp(Le(D(4), n), Imp(Spanning(a), Imp(premise, result))))))))));
+    }
     private static Formula State(Formula a, Formula l, Formula r, Formula n) =>
         At(Supplier("OpenBoundaryMPSMarginalBirationality", "mpsState"), n, At(a, D(0)), At(a, D(1)), l, r);
     private static Formula G(Formula a, Formula n, Formula x) => At(Supplier("PeriodicMPSParentIntersection", "gamma"), a, n, x);
@@ -90,4 +107,6 @@ internal sealed class OpenBoundaryMPSInteriorCommonCoreDocument : IScribeDocumen
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula And(params Formula[] fs) => fs.Aggregate((a, b) =>
+        new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b)));
 }

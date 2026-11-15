@@ -237,8 +237,106 @@ def registration :
 
 end CommonCore
 
+namespace RankOne
+
+abbrev signature : Signature where
+  Params := Bond × ℕ
+  State p := Word p.2 → ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := (Word p.2 → ℂ) → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ f g => f = g) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (A B : Fin 2 → Bond) (lprime rprime : Fin 2 → ℂ)
+    (N : ℕ), 4 ≤ N → TwoSiteSpanning A → ∀ X : Bond,
+    mpsState N (B 0) (B 1) lprime rprime = gamma A N X →
+    X.rank ≤ 1 ∧ ∃ lA rA : Fin 2 → ℂ,
+      X = vecMulVec rA lA ∧
+      R.readout () (X, N)
+        (mpsState N (B 0) (B 1) lprime rprime)
+        (mpsState N (A 0) (A 1) lA rA)
+
+private lemma zero_common_core :
+    mpsState 4 (certificateCore 0) (certificateCore 1)
+        (![0, 0] : Fin 2 → ℂ) (![0, 0] : Fin 2 → ℂ) =
+      gamma certificateCore 4 0 := by
+  funext w
+  rw [state_formula, gamma]
+  simp [vecMulVec, Matrix.mulVec, Matrix.vecMul, dotProduct, Fin.sum_univ_two]
+
+private lemma rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨_, hf⟩ := h certificateCore certificateCore ![0, 0] ![0, 0] 4
+    (by omega) certificate_spanning 0 zero_common_core
+  obtain ⟨lA, rA, _, hf⟩ := hf
+  exact hf
+
+private lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(0, 4), 0, 1, ?_⟩
+  intro h
+  have he : (1 : Word 4 → ℂ) = 0 := Eq.mp (congrFun h 0) rfl
+  have hv := congrFun he (fun _ => 0)
+  norm_num at hv
+
+def source_registration : Registration arena (type_of% @common_core_rank_one) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@common_core_rank_one, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@common_core_rank_one) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorCommonCore.common_core_rank_one.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorCommonCore.RankOne.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ f g => f = g) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorCommonCore
+    definition := none
+    coordinates := #[8]
+    readouts := #[{
+      path := #[],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end RankOne
+
 #print axioms AllCoefficients.registration
 #print axioms CommonCore.registration
+#print axioms RankOne.registration
 
 end
 end Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorCommonCore

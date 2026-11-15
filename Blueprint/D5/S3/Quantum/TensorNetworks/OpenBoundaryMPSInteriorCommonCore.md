@@ -102,17 +102,35 @@ $$\forall (A: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.T
 
 Let p,q be at least one and N=(p+3)+q. Only the target A satisfies TwoSiteSpanning and positive definiteness of P,H. The competitor B and its two free boundaries are entirely arbitrary. Equality of their raw interior observations implies that the entire actual competitor state is gamma A N X for one unrestricted complex two by two coefficient X. No transfer inverse, common-core premise, coefficient-image equality, rank-one premise or regularity of B is assumed.
 
+**Theorem 1.8 (Rank-one obstruction for an actual common core).**
+
+$$\forall (A: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (B: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (lprime: \operatorname{Fin}\left(2\right) \to \mathbb{C}), (\forall (rprime: \operatorname{Fin}\left(2\right) \to \mathbb{C}), (\forall (N: \mathbb{N}), (\forall (X: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), ((4 \le N) \to ((\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.TwoSiteSpanning}\left(A\right)) \to ((\operatorname{D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSMarginalBirationality.mpsState}\left(N, B\left(0\right), B\left(1\right), lprime, rprime\right) = \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.gamma}\left(A, N, X\right)) \to ((\operatorname{Matrix.rank}\left(X\right) \le 1) \land (\exists (lA: \operatorname{Fin}\left(2\right) \to \mathbb{C}), (\exists (rA: \operatorname{Fin}\left(2\right) \to \mathbb{C}), ((X = \operatorname{Matrix.vecMulVec}\left(rA, lA\right)) \land (\operatorname{D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSMarginalBirationality.mpsState}\left(N, B\left(0\right), B\left(1\right), lprime, rprime\right) = \operatorname{D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSMarginalBirationality.mpsState}\left(N, A\left(0\right), A\left(1\right), lA, rA\right))))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.common_core_rank_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Critch, Andrew; Morton, Jason (2014). *Algebraic geometry of matrix product states*. DOI: [10.3842/SIGMA.2014.095](https://doi.org/10.3842/SIGMA.2014.095). URL: <https://arxiv.org/abs/1210.2812v4>.
+
+*Commentary.*
+
+Let N be at least four and suppose an actual free-boundary binary bond-two competitor equals gamma A N X for a TwoSiteSpanning target core A. The weighted two-site flattening of gamma A N X is a submatrix of the competitor's amplitude-column matrix, so its rank is at most two. If X were invertible, left multiplication by X would preserve the four-dimensional two-site span and give rank four, a contradiction. Hence rank X is at most one, including X=0; the existing rank-one factorization and the private state-gamma identity then refactor the same competitor through A with arbitrary new boundaries. This adds no transfer, positivity, phase, genericity, dynamical or thermodynamic premise.
+
 Positive definiteness makes det(H tensor P-transpose) nonzero by the existing Kronecker determinant theorem. The context has full row rank four. Original trace_separates makes the target three-site feature injective, hence the observed column range is precisely the four-dimensional target parent space. Original gram_range transfers this range to the competitor. Its observed dimension four saturates the entire competitor coefficient image, whose dimension is at most four; this establishes the all-coefficient induction hypothesis. Apply that induction at m=p+q and coefficient r′ l′ to obtain the actual full competitor.
 
-This intermediate common-core result does not establish a rank-one coefficient, phase recovery, intrinsic genericity, or Critch–Morton Conjecture 9 and earns no solved-open-problem credit. The imported Conjecture 8 canonical reconstruction remains attributed to Haobo Ma and Wenlin Zhang, Proof of Critch–Morton Conjecture 8 (3 November 2026), CC BY 4.0; it is not new interior recovery mathematics. No normalization, physical recovery operation, dynamics, time group, energy, clock or thermodynamic cost is asserted.
+The rank-one result is conditional on the already established common-core representation and N≥4. It is a coefficient-rank statement for actual free-boundary points; it does not by itself recover the boundary phase, prove transfer injectivity, extend to the closure of the MPS image, or settle Critch–Morton Conjecture 9.
+
+The theorem interior_common_core alone supplies the common-core representation; common_core_rank_one now proves rank X≤1 and free-boundary refactorization under N≥4 and TwoSiteSpanning A. Interior phase recovery, intrinsic interior genericity and Critch–Morton Conjecture 9 remain unproved, and this unit earns no solved-open-problem credit. The imported Conjecture 8 canonical reconstruction remains attributed to Haobo Ma and Wenlin Zhang, Proof of Critch–Morton Conjecture 8 (3 November 2026), CC BY 4.0; it is not new interior recovery mathematics. No normalization, physical recovery operation, dynamics, time group, energy, clock or thermodynamic cost is asserted.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.all_coefficient_parent_induction`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.common_core_rank_one`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.context`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.dualTransfer`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.feature`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.interiorColumns`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.interior_common_core`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.rawInterior`
+- Dependency: [D5/S3/Quantum/Schatten/RankOneHadamard](../Schatten/RankOneHadamard.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery](OpenBoundaryMPSDensityRecovery.md)
