@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Graph/ZeroForcing/ContingentThreshold
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/ZeroForcing/ContingentThreshold
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.DeleteEdges, mathlib/module/Mathlib.Data.ENat.Lattice]
    utility: none
    digest: Fixed edge faults are characterized by the minimum unique-neighbour boundary. -/
