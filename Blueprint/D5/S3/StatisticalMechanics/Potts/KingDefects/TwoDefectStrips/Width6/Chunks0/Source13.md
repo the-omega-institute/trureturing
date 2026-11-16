@@ -4,9 +4,9 @@
 
 Exact successor multisets at canonical boundary states.
 
-**Theorem 1.1 (Source states 39 through 47).**
+**Theorem 1.1 (Source states 0 through 47).**
 
-$$\forall (i: \operatorname{Fin}\left(9\right)), (\operatorname{Data}.\operatorname{successors}\left(\operatorname{Prod}.\operatorname{fst}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(39+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right), \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(39+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right)\right)\right) = \operatorname{Data}.\operatorname{classList}\left(\operatorname{Data}.\operatorname{cl}\left(\operatorname{Prod}.\operatorname{fst}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(39+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right), \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(39+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right)\right)\right)\right))$$
+$$\forall (i: \operatorname{Fin}\left(48\right)), (\operatorname{Data}.\operatorname{successors}\left(\operatorname{Prod}.\operatorname{fst}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(0+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right), \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(0+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right)\right)\right) = \operatorname{Data}.\operatorname{classList}\left(\operatorname{Data}.\operatorname{cl}\left(\operatorname{Prod}.\operatorname{fst}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(0+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right), \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(0+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right)\right)\right)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Chunks0/Source13.successor_rows` (`✓ std3`). ∎
 
@@ -21,5 +21,6 @@ The source table supplies a canonical row and residual budget. Every admissible 
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Chunks0/Source13.successor_rows`
+- Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Chunks0/Source12](Source12.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Data](../Data.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Sources](../Sources.md)
