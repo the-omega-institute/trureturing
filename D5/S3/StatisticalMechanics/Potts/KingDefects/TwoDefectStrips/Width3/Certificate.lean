@@ -90,7 +90,7 @@ theorem transition_counts (p : Boundary) (d : ℕ) (hp : Valid p d) (s : Fin 9) 
     · right
       rw [he]
       simpa only [D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip.proper, Function.comp_apply,
-        e.injective.eq_iff] using h
+        ne_eq, e.injective.eq_iff] using h
   have hlist := canonical_successors p' ⟨d, hd⟩ hv hnormal hd0'
   have hT :
       (∑ r : Boundary, if bondDefects between p' r + bondDefects horizontal r r ≤ d ∧

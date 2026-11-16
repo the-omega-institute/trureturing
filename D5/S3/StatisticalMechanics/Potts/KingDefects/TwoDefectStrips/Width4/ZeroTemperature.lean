@@ -11,6 +11,7 @@ admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (consumed bind-only helpers on the live path of HardinA229751.result)
 legal_iff: proof_shape=bind-only; consumers=transition_counts
 class_correspondence: proof_shape=bind-only; consumers=transition_counts
+proper_transition_counts: proof_shape=bind-only; consumers=transition_counts
 transition_counts: proof_shape=bind-only; consumers=Certificate.transition_counts
 -/
 
@@ -43,7 +44,7 @@ private theorem class_correspondence : ∀ p : Boundary, proper p →
     cl p 0 = (if kind p then 14 else 12 : Fin 19) := by
   decide +kernel
 
-theorem transition_counts (p : Boundary) (hp : proper p) (s : Fin 19) :
+private theorem proper_transition_counts (p : Boundary) (hp : proper p) (s : Fin 19) :
     (∑ r : Boundary, if bondDefects between p r + bondDefects horizontal r r ≤ 0 ∧
       cl r (0 - (bondDefects between p r + bondDefects horizontal r r)) = s
       then (1 : ℤ) else 0) = T (cl p 0) s := by
@@ -82,5 +83,33 @@ theorem transition_counts (p : Boundary) (hp : proper p) (s : Fin 19) :
     cases hk : kind p <;> simp [T, rate, hk, eq_comm]
   have hsum : (∑ r : Boundary, w r) = T (cl p 0) s := by linarith
   simpa only [w, Nat.le_zero, Nat.zero_sub] using hsum
+
+theorem transition_counts (p : Boundary) (hp : proper p ∨ cl p 0 = 14) (s : Fin 19) :
+    (∑ r : Boundary, if bondDefects between p r + bondDefects horizontal r r ≤ 0 ∧
+      cl r (0 - (bondDefects between p r + bondDefects horizontal r r)) = s
+      then (1 : ℤ) else 0) = T (cl p 0) s := by
+  classical
+  by_cases hpr : proper p
+  · exact proper_transition_counts p hpr s
+  have h14 : cl p 0 = 14 := hp.resolve_left hpr
+  have hpat : p 0 ≠ p 1 ∧ p 2 = p 1 ∧ p 3 = p 0 := by
+    have h : ∀ p : Boundary, cl p 0 = 14 → ¬ proper p →
+        p 0 ≠ p 1 ∧ p 2 = p 1 ∧ p 3 = p 0 := by decide +kernel
+    exact h p h14 hpr
+  let q : Boundary := ![p 0, p 1, p 0, p 1]
+  have hq : proper q := by
+    simp [proper, q, Fin.forall_fin_succ, hpat.1, Ne.symm hpat.1]
+  have hcl : cl q 0 = cl p 0 := by
+    rw [h14, class_correspondence q hq]
+    simp [kind, q]
+  have hz (r : Boundary) :
+      bondDefects between q r + bondDefects horizontal r r ≤ 0 ↔
+        bondDefects between p r + bondDefects horizontal r r ≤ 0 := by
+    simp only [Nat.le_zero, Nat.add_eq_zero_iff, bondDefects, Finset.card_eq_zero,
+      Finset.filter_eq_empty_iff, between, horizontal, Finset.mem_insert,
+      Finset.mem_singleton, forall_eq_or_imp, forall_eq, Prod.fst, Prod.snd]
+    simp [q, hpat.2.1, hpat.2.2]
+    <;> tauto
+  simpa only [hz, Nat.zero_sub, hcl] using proper_transition_counts q hq s
 
 end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.ZeroTemperature

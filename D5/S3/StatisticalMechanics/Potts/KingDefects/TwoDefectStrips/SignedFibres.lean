@@ -9,7 +9,8 @@
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (consumed bind-only helpers on the live paths of HardinA229750.result and HardinA229751.result)
-sum_beta: proof_shape=bind-only; consumers=Width3.Certificate.zero_temperature,Width4.Certificate.zero_temperature
+sum_beta: proof_shape=bind-only;
+consumers=Width3.ZeroTemperature.transition_counts,Width4.ZeroTemperature.transition_counts
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip

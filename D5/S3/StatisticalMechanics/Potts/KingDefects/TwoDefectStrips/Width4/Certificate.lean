@@ -55,7 +55,7 @@ private theorem bond_relabel (E : Finset (Fin 4 × Fin 4))
   simp only [bondDefects, Function.comp_apply, e.injective.eq_iff]
 
 private theorem canonical_successors (p : Boundary) (d : Fin 3) (hp : Valid p d.val)
-    (hc : Canonical p) (hd0 : d.val ≠ 0 ∨ ¬ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p) : successors p d.val = classList (cl p d.val) := by
+    (hc : Canonical p) (hd0 : d.val ≠ 0 ∨ ¬ (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p ∨ cl p 0 = 14)) : successors p d.val = classList (cl p d.val) := by
   by_cases h0 : cl p d.val = 0
   · rw [h0]; exact Classes0.class_successors p d hp hc h0
   by_cases h1 : cl p d.val = 1
@@ -89,7 +89,7 @@ private theorem canonical_successors (p : Boundary) (d : Fin 3) (hp : Valid p d.
   by_cases h17 : cl p d.val = 17
   · rw [h17]; exact Classes17.class_successors p d hp hc h17
   have hz : cl p d.val ≠ 12 ∧ cl p d.val ≠ 14 := by
-    have hh : ∀ p (d : Fin 3), (d.val ≠ 0 ∨ ¬ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p) →
+    have hh : ∀ p (d : Fin 3), (d.val ≠ 0 ∨ ¬ (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p ∨ cl p 0 = 14)) →
         cl p d.val ≠ 12 ∧ cl p d.val ≠ 14 := by decide +kernel
     exact hh p d hd0
   have hh : cl p d.val = 18 := by apply Fin.ext; omega
@@ -105,22 +105,22 @@ theorem transition_counts (p : Boundary) (d : ℕ) (hp : Valid p d) (s : Fin 19)
     (∑ r : Boundary, if bondDefects between p r + bondDefects horizontal r r ≤ d ∧
       cl r (d - (bondDefects between p r + bondDefects horizontal r r)) = s
       then (1 : ℤ) else 0) = T (cl p d) s := by
-  by_cases hz : d = 0 ∧ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p
+  by_cases hz : d = 0 ∧ (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p ∨ cl p 0 = 14)
   · rcases hz with ⟨rfl, hp0⟩
     exact ZeroTemperature.transition_counts p hp0 s
-  have hd0 : d ≠ 0 ∨ ¬ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p := by tauto
+  have hd0 : d ≠ 0 ∨ ¬ (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p ∨ cl p 0 = 14) := by tauto
   obtain ⟨p', ⟨hnormal, e, he⟩, _⟩ := canonical_exists_unique p
   have hv : Valid p' d := by
     rw [he]
     simpa only [Valid, bond_relabel] using hp
   have hd : d < 3 := by change d ≤ 2 ∧ _ at hp; omega
-  have hd0' : d ≠ 0 ∨ ¬ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p' := by
+  have hd0' : d ≠ 0 ∨ ¬ (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p' ∨ cl p' 0 = 14) := by
     rcases hd0 with h | h
     · exact Or.inl h
     · right
       rw [he]
       simpa only [D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper, Function.comp_apply,
-        e.injective.eq_iff] using h
+        ne_eq, e.injective.eq_iff, class_relabel] using h
   have hlist := canonical_successors p' ⟨d, hd⟩ hv hnormal hd0'
   have hT :
       (∑ r : Boundary, if bondDefects between p' r + bondDefects horizontal r r ≤ d ∧
@@ -136,7 +136,7 @@ theorem transition_counts (p : Boundary) (d : ℕ) (hp : Valid p d) (s : Fin 19)
         then (1 : ℤ) else 0) = ((classList (cl p' d)).count s : ℤ) := by
       exact_mod_cast h.symm
     have hne : cl p' d ≠ 12 ∧ cl p' d ≠ 14 := by
-      have h : ∀ p (d : Fin 3), (d.val ≠ 0 ∨ ¬ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p) →
+      have h : ∀ p (d : Fin 3), (d.val ≠ 0 ∨ ¬ (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip.proper p ∨ cl p 0 = 14)) →
           cl p d.val ≠ 12 ∧ cl p d.val ≠ 14 := by decide +kernel
       exact h p' ⟨d, hd⟩ hd0'
     exact hh.trans (class_counts _ _ hne.1 hne.2)

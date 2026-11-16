@@ -42,7 +42,7 @@ internal sealed class DataDocument : IScribeDocumentDefinition
             Describe.Remark(DescribeId.Create("classlist"),
                 DeclarationHandle.Create(Prefix + "classList"), H("classList"),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The Lean type is Fin 19 -> List (Fin 19). Certificate.class_counts pins the multiplicity of each class as the corresponding matrix entry. These finite lists describe all successor multiplicities without transcribing the matrix.")))),
+                Blocks(Paragraph(Text("The Lean type is Fin 19 -> List (Fin 19). Certificate.class_counts pins the multiplicity of each remaining class as the corresponding matrix entry. The two productive proper zero-budget classes use empty list placeholders; ZeroTemperature.transition_counts supplies their transfer entries directly from the saturated signed owner. These finite lists describe all successor multiplicities without transcribing the matrix.")))),
             Describe.Remark(DescribeId.Create("successors"),
                 DeclarationHandle.Create(Prefix + "successors"), H("successors"),
                 AssessedProvenance.FromRepo(Source),
