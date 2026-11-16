@@ -160,4 +160,112 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end external_negative_zero_boundary
 
+
+namespace square_half
+abbrev arena : Arena where
+  signature := eqSignature
+  Law R := ∀ {z : ℂ} (hz : ‖z‖ < 1),
+    R.readout () _ (squareResolvent z) ((1 / 2 : ℂ) • (resolvent z + oppositeResolvent z))
+private theorem rejected_fails : ¬ arena.Law eqRejected := by
+  intro h
+  exact h (z := 0) (by simp)
+def family : Registration arena (type_of% (@square_half)) where
+  actual := eqActual
+  bridge := Iff.rfl
+  variation := ⟨@square_half, eqRejected, rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨eqRejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      cases e
+  dependence := eqDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@square_half) (Realization eqSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEvolution.square_half.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEvolution.square_half.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize eqSignature eqActual.readout eqActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEvolution
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end square_half
+
+namespace opposite_bilinear_transpose
+abbrev arena : Arena where
+  signature := eqSignature
+  Law R := ∀ {z : ℂ} (hz : ‖z‖ < 1) (x y : H),
+    R.readout () _ (sourceBilinearFunctional x (oppositeResolvent z y)) (sourceBilinearFunctional (oppositeResolvent z x) y)
+private theorem rejected_fails : ¬ arena.Law eqRejected := by
+  intro h
+  exact h (z := 0) (by simp) (0 : H) (0 : H)
+def family : Registration arena (type_of% (@opposite_bilinear_transpose)) where
+  actual := eqActual
+  bridge := Iff.rfl
+  variation := ⟨@opposite_bilinear_transpose, eqRejected, rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨eqRejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      cases e
+  dependence := eqDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@opposite_bilinear_transpose) (Realization eqSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEvolution.opposite_bilinear_transpose.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEvolution.opposite_bilinear_transpose.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize eqSignature eqActual.readout eqActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEvolution
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end opposite_bilinear_transpose
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEvolution

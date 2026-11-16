@@ -8,6 +8,16 @@ internal sealed class OriginalGaussianExternalEvolutionDocument : IScribeDocumen
         "Full Literal T Radial Evolution and Input Boundary",
         H("Full Literal T Radial Evolution and Input Boundary"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("square-half"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalEvolution.square_half"),
+                H("square_half"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every complex z with norm(z)<1, the actual squareResolvent is one half of the sum of the original resolvent and oppositeResolvent."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("opposite-bilinear-transpose"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalEvolution.opposite_bilinear_transpose"),
+                H("opposite_bilinear_transpose"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every complex z with norm(z)<1 and original Hilbert vectors x,y, the oppositeResolvent has ordinary complex bilinear transpose symmetry, with no Hermitian substitution."))), DescribeRole.Theorem),
             Paragraph(Text("The square resolvent is half the sum of the two actual signed inverses. Its derivative uses the original rank-one operator derivative and ordinary bilinear transpose. The full externalT includes its identity contribution.")),
             Describe.Lean(
                 DescribeId.Create("externalt-radial-equation"),

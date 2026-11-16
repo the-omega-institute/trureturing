@@ -316,4 +316,58 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end kernelMode_derivative
+
+namespace boundary_normalization
+abbrev arena : Arena where
+  signature := eqSignature
+  Law R := ∀ {r : ℝ} (hr : 0 < r) (hr1 : r < 1),
+    R.readout () _ ((Real.sqrt (1 - r) : ℂ) * sourceAmplitude false 0 r) (1)
+private theorem rejected_fails : ¬ arena.Law eqRejected := by
+  intro h
+  exact h (r := 1/4) (by norm_num) (by norm_num)
+def family : Registration arena (type_of% (@boundary_normalization)) where
+  actual := eqActual
+  bridge := Iff.rfl
+  variation := ⟨@boundary_normalization, eqRejected, rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨eqRejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      cases e
+  dependence := eqDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@boundary_normalization) (Realization eqSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGeneratedSource.boundary_normalization.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGeneratedSource.boundary_normalization.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize eqSignature eqActual.readout eqActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGeneratedSource
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end boundary_normalization
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGeneratedSource
