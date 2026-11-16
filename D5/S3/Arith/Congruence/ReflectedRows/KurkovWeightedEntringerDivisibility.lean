@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Congruence/KurkovWeightedEntringerDivisibility
+/- GID: D5/S3/Arith/Congruence/ReflectedRows/KurkovWeightedEntringerDivisibility
    generality: I
-   mirror-B: D5/B/S3/Arith/Congruence/KurkovWeightedEntringerDivisibility
+   mirror-B: D5/B/S3/Arith/Congruence/ReflectedRows/KurkovWeightedEntringerDivisibility
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.RingTheory.Binomial]
    utility: none
@@ -16,12 +16,12 @@ set_option autoImplicit false
 noncomputable section
 open Finset Polynomial Function
 
-namespace D5.S3.Arith.Congruence.KurkovWeightedEntringerDivisibility
+namespace D5.S3.Arith.Congruence.ReflectedRows.KurkovWeightedEntringerDivisibility
 
 /-- The literal source triangle; values beyond the row are auxiliary. -/
 def triangle : ℕ → ℕ → ℕ
   | 0, k => if k = 0 then 1 else 0
-  | n + 1, 0 => 0
+  | _n + 1, 0 => 0
   | n + 1, 1 => triangle n n
   | n + 1, k + 2 => triangle (n + 1) (k + 1) + (n - 1) * triangle n (n - (k + 1))
 termination_by n k => (n, k)
@@ -237,14 +237,16 @@ private theorem P_difference (r : ℕ) (x : ℤ) :
 private def rowPoly (r : ℕ) : ℤ[X] := Classical.choose (P_integral r)
 
 private theorem rowPoly_cast_eval (r : ℕ) (x : ℤ) :
-    ((rowPoly r).eval x : ℚ) = (P r).eval (x : ℚ) := by
+    (((rowPoly r).eval x : ℤ) : ℚ) = (P r).eval (x : ℚ) := by
   have h := Classical.choose_spec (P_integral r)
   rw [← h, eval_intCast_map]
   rfl
 
 private theorem rowPoly_anchor (r : ℕ) : (rowPoly r).eval 1 = (a (r + 1) : ℤ) := by
   have h := P_anchor r
-  rw [← rowPoly_cast_eval r 1] at h
+  have hc := rowPoly_cast_eval r 1
+  norm_num only [Int.cast_one] at hc
+  rw [← hc] at h
   exact_mod_cast h
 
 private theorem rowPoly_difference (r : ℕ) (x : ℤ) :
@@ -289,8 +291,10 @@ private theorem rowPoly_interior (r k : ℕ) (hk : 1 ≤ k) (hkr : k ≤ r + 1) 
         hp, hq] at he
       have hs : triangle (r + 1 + 2) (2 + j) =
           triangle (r + 1 + 2) (1 + j) + (r + 1) * triangle (r + 2) (r + 1 - j) := by
-        simpa only [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm, Nat.add_sub_cancel,
-          Nat.add_sub_add_right] using (triangle.eq_4 (r + 2) j)
+        have h1 : r + 2 - 1 = r + 1 := by omega
+        have h2 : r + 2 - (j + 1) = r + 1 - j := by omega
+        simpa only [h1, h2, Nat.succ_eq_add_one, Nat.add_assoc, Nat.add_comm,
+          Nat.add_left_comm] using triangle.eq_4 (r + 2) j
       rw [hs]
       push_cast
       linear_combination he
@@ -300,4 +304,150 @@ private theorem rowPoly_diagonal (r : ℕ) :
   rw [triangle_last]
   exact_mod_cast rowPoly_interior r (r + 1) (by omega) le_rfl
 
-end D5.S3.Arith.Congruence.KurkovWeightedEntringerDivisibility
+private def E (d r : ℕ) (x : ℤ) : ZMod d :=
+  (rowPoly r).eval₂ (Int.castRingHom (ZMod d)) (x : ZMod d)
+
+private theorem E_period (d r : ℕ) (x : ℤ) : E d r (x + d) = E d r x := by
+  simp only [E, Int.cast_add, Int.cast_natCast, ZMod.natCast_self, add_zero]
+
+private theorem E_cast (d r : ℕ) (x : ℤ) :
+    E d r x = (((rowPoly r).eval x : ℤ) : ZMod d) :=
+  eval₂_at_apply (Int.castRingHom (ZMod d)) x
+
+private theorem E_anchor (d r : ℕ) : E d r 1 = (a (r + 1) : ZMod d) := by
+  rw [E_cast, rowPoly_anchor]
+  simp only [Int.cast_natCast]
+
+private theorem E_diagonal (d r : ℕ) : E d r (r + 1) = (a (r + 2) : ZMod d) := by
+  rw [E_cast, rowPoly_diagonal]
+  simp only [Int.cast_natCast]
+
+private theorem E_difference (d r : ℕ) (x : ℤ) :
+    E d (r + 1) x - E d (r + 1) (x - 1) =
+      (r + 1 : ZMod d) * E d r ((r : ℤ) + 3 - x) := by
+  have h := congrArg (Int.castRingHom (ZMod d)) (rowPoly_difference r x)
+  simp only [E_cast]
+  simpa using h
+
+private theorem integer_difference_ext {V : Type*} [AddCommGroup V] (f g : ℤ → V)
+    (ha : f 1 = g 1)
+    (hd : ∀ x, f x - f (x - 1) = g x - g (x - 1)) : ∀ x, f x = g x := by
+  have h0 : f 0 = g 0 := by
+    have h := hd 1
+    norm_num only [sub_self] at h
+    rw [ha] at h
+    exact sub_right_inj.mp h
+  intro x
+  refine Int.induction_on x h0 ?_ ?_
+  · intro i hi
+    have h := hd (i + 1)
+    rw [show (i : ℤ) + 1 - 1 = i by ring, hi] at h
+    exact sub_left_inj.mp h
+  · intro i hi
+    have h := hd (-(i : ℤ))
+    rw [hi] at h
+    exact sub_right_inj.mp h
+
+private theorem E_shift (d : ℕ) (hd : 0 < d) (r : ℕ) (x : ℤ) :
+    E d (r + d) x = (a (d + 1) : ZMod d) * E d r x := by
+  induction r generalizing x with
+  | zero =>
+    have he (y : ℤ) : E d d y - E d d (y - 1) = 0 := by
+      obtain ⟨t, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : d ≠ 0)
+      simpa [ZMod.natCast_self] using E_difference (t + 1) t y
+    have hz (y : ℤ) : E d 0 y = 1 := by simp [E, rowPoly_zero]
+    simp only [Nat.zero_add]
+    rw [hz, mul_one]
+    apply integer_difference_ext (fun y => E d d y) (fun _ => (a (d + 1) : ZMod d))
+    · exact E_anchor d d
+    · intro y
+      rw [he, sub_self]
+  | succ r ih =>
+    have ha : E d (r + 1 + d) 1 = (a (d + 1) : ZMod d) * E d (r + 1) 1 := by
+      calc
+        _ = (a (r + d + 2) : ZMod d) := by rw [E_anchor]; congr 2 <;> omega
+        _ = E d (r + d) ((r : ℤ) + 1 + d) := by
+          convert (E_diagonal d (r + d)).symm using 1 <;> push_cast <;> congr 1 <;> ring
+        _ = (a (d + 1) : ZMod d) * E d r ((r : ℤ) + 1 + d) := ih _
+        _ = (a (d + 1) : ZMod d) * E d r ((r : ℤ) + 1) := by rw [E_period]
+        _ = _ := by rw [E_diagonal, E_anchor]
+    apply integer_difference_ext (fun y => E d (r + 1 + d) y)
+      (fun y => (a (d + 1) : ZMod d) * E d (r + 1) y) ha
+    intro y
+    have hs : r + 1 + d = (r + d) + 1 := by omega
+    rw [hs, E_difference, ih, ← mul_sub, E_difference]
+    push_cast
+    rw [ZMod.natCast_self, add_zero]
+    have hx : (r : ℤ) + d + 3 - y = ((r : ℤ) + 3 - y) + d := by ring
+    rw [hx, E_period]
+    ring
+
+private theorem sequence_shift (d n : ℕ) (hd : 0 < d) (hn : 0 < n) :
+    (a (n + d) : ZMod d) = (a (d + 1) : ZMod d) * (a n : ZMod d) := by
+  by_cases h1 : n = 1
+  · subst n
+    simp [a, triangle, Nat.add_comm]
+  obtain ⟨r, rfl⟩ := Nat.exists_eq_add_of_le (by omega : 2 ≤ n)
+  have h := E_shift d hd r ((r : ℤ) + 1 + d)
+  rw [E_period d r] at h
+  have hl : E d (r + d) ((r : ℤ) + 1 + d) = (a (2 + r + d) : ZMod d) := by
+    have hx : (r : ℤ) + 1 + d = ((r + d : ℕ) : ℤ) + 1 := by push_cast; ring
+    rw [hx, E_diagonal]
+    congr 2 <;> omega
+  rw [hl, E_diagonal] at h
+  simpa only [Nat.add_comm 2 r] using h
+
+private theorem divisor_propagation (k m d : ℕ) (hd : 0 < d) (h : d ∣ a k) :
+    d ∣ a (k + m * d) := by
+  by_cases hk : k = 0
+  · subst k
+    have hd1 : d = 1 := Nat.dvd_one.mp (by simpa [a, triangle] using h)
+    simp [hd1]
+  induction m with
+  | zero => simpa using h
+  | succ m ih =>
+    apply (ZMod.natCast_eq_zero_iff _ d).mp
+    have hs := sequence_shift d (k + m * d) hd (by omega)
+    have hz := (ZMod.natCast_eq_zero_iff _ d).mpr ih
+    rw [hz, mul_zero] at hs
+    simpa only [Nat.succ_mul, Nat.add_assoc] using hs
+
+private theorem triangle_ge_first (n k : ℕ) (hk : 1 ≤ k) :
+    triangle (n + 1) 1 ≤ triangle (n + 1) k := by
+  induction k with
+  | zero => omega
+  | succ k ih =>
+    cases k with
+    | zero => rfl
+    | succ k =>
+      rw [triangle.eq_4]
+      exact (ih (by omega)).trans (Nat.le_add_right _ _)
+
+private theorem a_positive (n : ℕ) : 0 < a n := by
+  induction n with
+  | zero => norm_num [a, triangle]
+  | succ n ih =>
+    have h := triangle_ge_first n (n + 1) (by omega)
+    have h' : a n ≤ a (n + 1) := by simpa only [a, triangle.eq_3] using h
+    exact ih.trans_le h'
+
+/-- Conjecture 1, including its stated particular consequence. The positive
+integer modulus is converted to a natural only in the nonnegative index. -/
+theorem result :
+    (∀ (k m : ℕ) (d : ℤ), 0 < d → d ∣ (a k : ℤ) →
+      d ∣ (a (k + m * d.toNat) : ℤ)) ∧
+    (∀ k m : ℕ, a k ∣ a (k + m * a k)) := by
+  constructor
+  · intro k m d hd h
+    have hd' : (d.toNat : ℤ) = d := Int.toNat_of_nonneg hd.le
+    have hn : d.toNat ∣ a k := by exact_mod_cast (hd' ▸ h)
+    have hp := divisor_propagation k m d.toNat (by omega) hn
+    rw [← hd']
+    exact_mod_cast hp
+  · intro k m
+    exact divisor_propagation k m (a k) (a_positive k) (dvd_refl _)
+
+#print axioms result
+
+
+end D5.S3.Arith.Congruence.ReflectedRows.KurkovWeightedEntringerDivisibility
