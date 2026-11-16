@@ -8,17 +8,17 @@
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (consumed bind-only helpers on the live path of HardinA229753.result)
-Row: proof_shape=bind-only; consumers=Rows.rows,Classes0-31.class_successors,Forward.structural_certificate,Certificate.transition_counts
+Row: proof_shape=bind-only; consumers=Rows.rows,Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors,Forward.structural_certificate,Certificate.transition_counts
 horizontal: proof_shape=bind-only; consumers=Valid,Forward.structural_certificate,HardinA229753.result
 between: proof_shape=bind-only; consumers=successors,Certificate.transition_counts,HardinA229753.result
-Valid: proof_shape=bind-only; consumers=Classes0-31.class_successors,Forward.structural_certificate,Certificate.transition_counts
-cl: proof_shape=bind-only; consumers=Classes0-31.class_successors,Forward.structural_certificate,Certificate.transition_counts
+Valid: proof_shape=bind-only; consumers=Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors,Forward.structural_certificate,Certificate.transition_counts
+cl: proof_shape=bind-only; consumers=Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors,Forward.structural_certificate,Certificate.transition_counts
 T: proof_shape=bind-only; consumers=Forward.structural_certificate,Certificate.transition_counts,HardinA229753.result
 initial: proof_shape=bind-only; consumers=Forward.structural_certificate,HardinA229753.result
 terminal: proof_shape=bind-only; consumers=Forward.structural_certificate,HardinA229753.result
 W: proof_shape=bind-only; consumers=Forward.structural_certificate,HardinA229753.result
-classList: proof_shape=bind-only; consumers=Classes0-31.class_successors,Certificate.transition_counts
-successors: proof_shape=bind-only; consumers=Classes0-31.class_successors,Certificate.transition_counts
+classList: proof_shape=bind-only; consumers=Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors,Certificate.transition_counts
+successors: proof_shape=bind-only; consumers=Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors,Certificate.transition_counts
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer

@@ -9,6 +9,7 @@
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (consumed bind-only helpers on the live path of HardinA229753.result)
+source_successors: proof_shape=bind-only; consumers=canonical_successors
 class_relabel: proof_shape=bind-only; consumers=transition_counts
 bond_relabel: proof_shape=bind-only; consumers=transition_counts
 canonical_successors: proof_shape=bind-only; consumers=transition_counts
@@ -19,38 +20,113 @@ transition_counts: proof_shape=bind-only; consumers=HardinA229753.result
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes0
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes1
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes2
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes3
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes4
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes5
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes6
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes7
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes8
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes9
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes10
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes11
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes12
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes13
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes14
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes15
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes16
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes17
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes18
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes19
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes20
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes21
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes22
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes23
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes24
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes25
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes26
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes27
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes28
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes29
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes30
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Classes31
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Rows
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Sources
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source0
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source1
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source2
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source3
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source4
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source5
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source6
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source7
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source8
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source9
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source10
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source11
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source12
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source13
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source14
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source15
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source16
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source17
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source18
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source19
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source20
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source21
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source22
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source23
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source24
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source25
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source26
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source27
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source28
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source29
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source30
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source31
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source32
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source33
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source34
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source35
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source36
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source37
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source38
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source39
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source40
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source41
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source42
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source43
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source44
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source45
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source46
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source47
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source48
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source49
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source50
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source51
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source52
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source53
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source54
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source55
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source56
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source57
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source58
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source59
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source60
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source61
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source62
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source63
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source64
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source65
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source66
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source67
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source68
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source69
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source70
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source71
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source72
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source73
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source74
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source75
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source76
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source77
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source78
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source79
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source80
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source81
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source82
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source83
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source84
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source85
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source86
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source87
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source88
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source89
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source90
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source91
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source92
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source93
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source94
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source95
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source96
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source97
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source98
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source99
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source100
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source101
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source102
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source103
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source104
 /-! Every admissible boundary has the certified successor multiset. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Certificate
@@ -67,203 +143,340 @@ private theorem bond_relabel (E : Finset (Fin 6 × Fin 6))
     bondDefects E (e ∘ p) (e ∘ r) = bondDefects E p r := by
   simp only [bondDefects, Function.comp_apply, e.injective.eq_iff]
 
-private theorem canonical_successors (p : Row) (d : Fin 3) (hp : Valid p d.val)
-    (hc : Canonical p) : successors p d.val = classList (cl p d.val) := by
-  by_cases h0 : cl p d.val = 0
-  · rw [h0]; exact Classes0.class_successors ⟨0, by decide⟩ p d hp hc h0
-  by_cases h1 : cl p d.val = 1
-  · rw [h1]; exact Classes0.class_successors ⟨1, by decide⟩ p d hp hc h1
-  by_cases h2 : cl p d.val = 2
-  · rw [h2]; exact Classes0.class_successors ⟨2, by decide⟩ p d hp hc h2
-  by_cases h3 : cl p d.val = 3
-  · rw [h3]; exact Classes1.class_successors ⟨0, by decide⟩ p d hp hc h3
-  by_cases h4 : cl p d.val = 4
-  · rw [h4]; exact Classes1.class_successors ⟨1, by decide⟩ p d hp hc h4
-  by_cases h5 : cl p d.val = 5
-  · rw [h5]; exact Classes1.class_successors ⟨2, by decide⟩ p d hp hc h5
-  by_cases h6 : cl p d.val = 6
-  · rw [h6]; exact Classes2.class_successors ⟨0, by decide⟩ p d hp hc h6
-  by_cases h7 : cl p d.val = 7
-  · rw [h7]; exact Classes2.class_successors ⟨1, by decide⟩ p d hp hc h7
-  by_cases h8 : cl p d.val = 8
-  · rw [h8]; exact Classes2.class_successors ⟨2, by decide⟩ p d hp hc h8
-  by_cases h9 : cl p d.val = 9
-  · rw [h9]; exact Classes3.class_successors ⟨0, by decide⟩ p d hp hc h9
-  by_cases h10 : cl p d.val = 10
-  · rw [h10]; exact Classes3.class_successors ⟨1, by decide⟩ p d hp hc h10
-  by_cases h11 : cl p d.val = 11
-  · rw [h11]; exact Classes3.class_successors ⟨2, by decide⟩ p d hp hc h11
-  by_cases h12 : cl p d.val = 12
-  · rw [h12]; exact Classes4.class_successors ⟨0, by decide⟩ p d hp hc h12
-  by_cases h13 : cl p d.val = 13
-  · rw [h13]; exact Classes4.class_successors ⟨1, by decide⟩ p d hp hc h13
-  by_cases h14 : cl p d.val = 14
-  · rw [h14]; exact Classes4.class_successors ⟨2, by decide⟩ p d hp hc h14
-  by_cases h15 : cl p d.val = 15
-  · rw [h15]; exact Classes5.class_successors ⟨0, by decide⟩ p d hp hc h15
-  by_cases h16 : cl p d.val = 16
-  · rw [h16]; exact Classes5.class_successors ⟨1, by decide⟩ p d hp hc h16
-  by_cases h17 : cl p d.val = 17
-  · rw [h17]; exact Classes5.class_successors ⟨2, by decide⟩ p d hp hc h17
-  by_cases h18 : cl p d.val = 18
-  · rw [h18]; exact Classes6.class_successors ⟨0, by decide⟩ p d hp hc h18
-  by_cases h19 : cl p d.val = 19
-  · rw [h19]; exact Classes6.class_successors ⟨1, by decide⟩ p d hp hc h19
-  by_cases h20 : cl p d.val = 20
-  · rw [h20]; exact Classes6.class_successors ⟨2, by decide⟩ p d hp hc h20
-  by_cases h21 : cl p d.val = 21
-  · rw [h21]; exact Classes7.class_successors ⟨0, by decide⟩ p d hp hc h21
-  by_cases h22 : cl p d.val = 22
-  · rw [h22]; exact Classes7.class_successors ⟨1, by decide⟩ p d hp hc h22
-  by_cases h23 : cl p d.val = 23
-  · rw [h23]; exact Classes7.class_successors ⟨2, by decide⟩ p d hp hc h23
-  by_cases h24 : cl p d.val = 24
-  · rw [h24]; exact Classes8.class_successors ⟨0, by decide⟩ p d hp hc h24
-  by_cases h25 : cl p d.val = 25
-  · rw [h25]; exact Classes8.class_successors ⟨1, by decide⟩ p d hp hc h25
-  by_cases h26 : cl p d.val = 26
-  · rw [h26]; exact Classes8.class_successors ⟨2, by decide⟩ p d hp hc h26
-  by_cases h27 : cl p d.val = 27
-  · rw [h27]; exact Classes9.class_successors ⟨0, by decide⟩ p d hp hc h27
-  by_cases h28 : cl p d.val = 28
-  · rw [h28]; exact Classes9.class_successors ⟨1, by decide⟩ p d hp hc h28
-  by_cases h29 : cl p d.val = 29
-  · rw [h29]; exact Classes9.class_successors ⟨2, by decide⟩ p d hp hc h29
-  by_cases h30 : cl p d.val = 30
-  · rw [h30]; exact Classes10.class_successors ⟨0, by decide⟩ p d hp hc h30
-  by_cases h31 : cl p d.val = 31
-  · rw [h31]; exact Classes10.class_successors ⟨1, by decide⟩ p d hp hc h31
-  by_cases h32 : cl p d.val = 32
-  · rw [h32]; exact Classes10.class_successors ⟨2, by decide⟩ p d hp hc h32
-  by_cases h33 : cl p d.val = 33
-  · rw [h33]; exact Classes11.class_successors ⟨0, by decide⟩ p d hp hc h33
-  by_cases h34 : cl p d.val = 34
-  · rw [h34]; exact Classes11.class_successors ⟨1, by decide⟩ p d hp hc h34
-  by_cases h35 : cl p d.val = 35
-  · rw [h35]; exact Classes11.class_successors ⟨2, by decide⟩ p d hp hc h35
-  by_cases h36 : cl p d.val = 36
-  · rw [h36]; exact Classes12.class_successors ⟨0, by decide⟩ p d hp hc h36
-  by_cases h37 : cl p d.val = 37
-  · rw [h37]; exact Classes12.class_successors ⟨1, by decide⟩ p d hp hc h37
-  by_cases h38 : cl p d.val = 38
-  · rw [h38]; exact Classes12.class_successors ⟨2, by decide⟩ p d hp hc h38
-  by_cases h39 : cl p d.val = 39
-  · rw [h39]; exact Classes13.class_successors ⟨0, by decide⟩ p d hp hc h39
-  by_cases h40 : cl p d.val = 40
-  · rw [h40]; exact Classes13.class_successors ⟨1, by decide⟩ p d hp hc h40
-  by_cases h41 : cl p d.val = 41
-  · rw [h41]; exact Classes13.class_successors ⟨2, by decide⟩ p d hp hc h41
-  by_cases h42 : cl p d.val = 42
-  · rw [h42]; exact Classes14.class_successors ⟨0, by decide⟩ p d hp hc h42
-  by_cases h43 : cl p d.val = 43
-  · rw [h43]; exact Classes14.class_successors ⟨1, by decide⟩ p d hp hc h43
-  by_cases h44 : cl p d.val = 44
-  · rw [h44]; exact Classes14.class_successors ⟨2, by decide⟩ p d hp hc h44
-  by_cases h45 : cl p d.val = 45
-  · rw [h45]; exact Classes15.class_successors ⟨0, by decide⟩ p d hp hc h45
-  by_cases h46 : cl p d.val = 46
-  · rw [h46]; exact Classes15.class_successors ⟨1, by decide⟩ p d hp hc h46
-  by_cases h47 : cl p d.val = 47
-  · rw [h47]; exact Classes15.class_successors ⟨2, by decide⟩ p d hp hc h47
-  by_cases h48 : cl p d.val = 48
-  · rw [h48]; exact Classes16.class_successors ⟨0, by decide⟩ p d hp hc h48
-  by_cases h49 : cl p d.val = 49
-  · rw [h49]; exact Classes16.class_successors ⟨1, by decide⟩ p d hp hc h49
-  by_cases h50 : cl p d.val = 50
-  · rw [h50]; exact Classes16.class_successors ⟨2, by decide⟩ p d hp hc h50
-  by_cases h51 : cl p d.val = 51
-  · rw [h51]; exact Classes17.class_successors ⟨0, by decide⟩ p d hp hc h51
-  by_cases h52 : cl p d.val = 52
-  · rw [h52]; exact Classes17.class_successors ⟨1, by decide⟩ p d hp hc h52
-  by_cases h53 : cl p d.val = 53
-  · rw [h53]; exact Classes17.class_successors ⟨2, by decide⟩ p d hp hc h53
-  by_cases h54 : cl p d.val = 54
-  · rw [h54]; exact Classes18.class_successors ⟨0, by decide⟩ p d hp hc h54
-  by_cases h55 : cl p d.val = 55
-  · rw [h55]; exact Classes18.class_successors ⟨1, by decide⟩ p d hp hc h55
-  by_cases h56 : cl p d.val = 56
-  · rw [h56]; exact Classes18.class_successors ⟨2, by decide⟩ p d hp hc h56
-  by_cases h57 : cl p d.val = 57
-  · rw [h57]; exact Classes19.class_successors ⟨0, by decide⟩ p d hp hc h57
-  by_cases h58 : cl p d.val = 58
-  · rw [h58]; exact Classes19.class_successors ⟨1, by decide⟩ p d hp hc h58
-  by_cases h59 : cl p d.val = 59
-  · rw [h59]; exact Classes19.class_successors ⟨2, by decide⟩ p d hp hc h59
-  by_cases h60 : cl p d.val = 60
-  · rw [h60]; exact Classes20.class_successors ⟨0, by decide⟩ p d hp hc h60
-  by_cases h61 : cl p d.val = 61
-  · rw [h61]; exact Classes20.class_successors ⟨1, by decide⟩ p d hp hc h61
-  by_cases h62 : cl p d.val = 62
-  · rw [h62]; exact Classes20.class_successors ⟨2, by decide⟩ p d hp hc h62
-  by_cases h63 : cl p d.val = 63
-  · rw [h63]; exact Classes21.class_successors ⟨0, by decide⟩ p d hp hc h63
-  by_cases h64 : cl p d.val = 64
-  · rw [h64]; exact Classes21.class_successors ⟨1, by decide⟩ p d hp hc h64
-  by_cases h65 : cl p d.val = 65
-  · rw [h65]; exact Classes21.class_successors ⟨2, by decide⟩ p d hp hc h65
-  by_cases h66 : cl p d.val = 66
-  · rw [h66]; exact Classes22.class_successors ⟨0, by decide⟩ p d hp hc h66
-  by_cases h67 : cl p d.val = 67
-  · rw [h67]; exact Classes22.class_successors ⟨1, by decide⟩ p d hp hc h67
-  by_cases h68 : cl p d.val = 68
-  · rw [h68]; exact Classes22.class_successors ⟨2, by decide⟩ p d hp hc h68
-  by_cases h69 : cl p d.val = 69
-  · rw [h69]; exact Classes23.class_successors ⟨0, by decide⟩ p d hp hc h69
-  by_cases h70 : cl p d.val = 70
-  · rw [h70]; exact Classes23.class_successors ⟨1, by decide⟩ p d hp hc h70
-  by_cases h71 : cl p d.val = 71
-  · rw [h71]; exact Classes23.class_successors ⟨2, by decide⟩ p d hp hc h71
-  by_cases h72 : cl p d.val = 72
-  · rw [h72]; exact Classes24.class_successors ⟨0, by decide⟩ p d hp hc h72
-  by_cases h73 : cl p d.val = 73
-  · rw [h73]; exact Classes24.class_successors ⟨1, by decide⟩ p d hp hc h73
-  by_cases h74 : cl p d.val = 74
-  · rw [h74]; exact Classes24.class_successors ⟨2, by decide⟩ p d hp hc h74
-  by_cases h75 : cl p d.val = 75
-  · rw [h75]; exact Classes25.class_successors ⟨0, by decide⟩ p d hp hc h75
-  by_cases h76 : cl p d.val = 76
-  · rw [h76]; exact Classes25.class_successors ⟨1, by decide⟩ p d hp hc h76
-  by_cases h77 : cl p d.val = 77
-  · rw [h77]; exact Classes25.class_successors ⟨2, by decide⟩ p d hp hc h77
-  by_cases h78 : cl p d.val = 78
-  · rw [h78]; exact Classes26.class_successors ⟨0, by decide⟩ p d hp hc h78
-  by_cases h79 : cl p d.val = 79
-  · rw [h79]; exact Classes26.class_successors ⟨1, by decide⟩ p d hp hc h79
-  by_cases h80 : cl p d.val = 80
-  · rw [h80]; exact Classes26.class_successors ⟨2, by decide⟩ p d hp hc h80
-  by_cases h81 : cl p d.val = 81
-  · rw [h81]; exact Classes27.class_successors ⟨0, by decide⟩ p d hp hc h81
-  by_cases h82 : cl p d.val = 82
-  · rw [h82]; exact Classes27.class_successors ⟨1, by decide⟩ p d hp hc h82
-  by_cases h83 : cl p d.val = 83
-  · rw [h83]; exact Classes27.class_successors ⟨2, by decide⟩ p d hp hc h83
-  by_cases h84 : cl p d.val = 84
-  · rw [h84]; exact Classes28.class_successors ⟨0, by decide⟩ p d hp hc h84
-  by_cases h85 : cl p d.val = 85
-  · rw [h85]; exact Classes28.class_successors ⟨1, by decide⟩ p d hp hc h85
-  by_cases h86 : cl p d.val = 86
-  · rw [h86]; exact Classes28.class_successors ⟨2, by decide⟩ p d hp hc h86
-  by_cases h87 : cl p d.val = 87
-  · rw [h87]; exact Classes29.class_successors ⟨0, by decide⟩ p d hp hc h87
-  by_cases h88 : cl p d.val = 88
-  · rw [h88]; exact Classes29.class_successors ⟨1, by decide⟩ p d hp hc h88
-  by_cases h89 : cl p d.val = 89
-  · rw [h89]; exact Classes29.class_successors ⟨2, by decide⟩ p d hp hc h89
-  by_cases h90 : cl p d.val = 90
-  · rw [h90]; exact Classes30.class_successors ⟨0, by decide⟩ p d hp hc h90
-  by_cases h91 : cl p d.val = 91
-  · rw [h91]; exact Classes30.class_successors ⟨1, by decide⟩ p d hp hc h91
-  by_cases h92 : cl p d.val = 92
-  · rw [h92]; exact Classes30.class_successors ⟨2, by decide⟩ p d hp hc h92
-  by_cases h93 : cl p d.val = 93
-  · rw [h93]; exact Classes31.class_successors ⟨0, by decide⟩ p d hp hc h93
-  by_cases h94 : cl p d.val = 94
-  · rw [h94]; exact Classes31.class_successors ⟨1, by decide⟩ p d hp hc h94
-  have hh : cl p d.val = 95 := by apply Fin.ext; omega
-  rw [hh]; exact Classes31.class_successors ⟨2, by decide⟩ p d hp hc hh
+set_option maxHeartbeats 0 in
+private theorem source_successors (i : Fin 313) :
+    successors (Sources.sources i).1 (Sources.sources i).2.val =
+      classList (cl (Sources.sources i).1 (Sources.sources i).2.val) := by
+  fin_cases i
+  · exact Chunks0.Source0.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source0.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source0.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source1.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source1.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source1.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source2.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source2.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source2.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source3.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source3.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source3.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source4.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source4.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source4.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source5.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source5.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source5.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source6.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source6.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source6.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source7.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source7.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source7.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source8.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source8.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source8.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source9.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source9.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source9.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source10.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source10.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source10.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source11.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source11.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source11.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source12.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source12.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source12.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source13.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source13.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source13.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source14.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source14.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source14.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source15.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source15.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source15.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source16.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source16.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source16.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source17.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source17.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source17.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source18.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source18.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source18.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source19.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source19.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source19.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source20.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source20.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source20.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source21.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source21.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source21.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source22.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source22.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source22.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source23.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source23.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source23.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source24.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source24.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source24.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source25.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source25.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source25.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source26.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source26.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source26.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source27.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source27.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source27.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source28.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source28.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source28.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source29.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source29.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source29.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source30.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source30.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source30.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source31.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source31.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source31.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source32.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source32.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source32.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source33.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source33.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source33.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source34.successor_rows ⟨0, by decide⟩
+  · exact Chunks0.Source34.successor_rows ⟨1, by decide⟩
+  · exact Chunks0.Source34.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source35.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source35.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source35.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source36.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source36.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source36.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source37.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source37.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source37.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source38.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source38.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source38.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source39.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source39.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source39.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source40.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source40.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source40.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source41.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source41.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source41.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source42.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source42.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source42.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source43.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source43.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source43.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source44.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source44.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source44.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source45.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source45.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source45.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source46.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source46.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source46.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source47.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source47.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source47.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source48.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source48.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source48.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source49.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source49.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source49.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source50.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source50.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source50.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source51.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source51.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source51.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source52.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source52.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source52.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source53.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source53.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source53.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source54.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source54.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source54.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source55.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source55.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source55.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source56.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source56.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source56.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source57.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source57.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source57.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source58.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source58.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source58.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source59.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source59.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source59.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source60.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source60.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source60.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source61.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source61.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source61.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source62.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source62.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source62.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source63.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source63.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source63.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source64.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source64.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source64.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source65.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source65.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source65.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source66.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source66.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source66.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source67.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source67.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source67.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source68.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source68.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source68.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source69.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source69.successor_rows ⟨1, by decide⟩
+  · exact Chunks1.Source69.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source70.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source70.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source70.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source71.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source71.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source71.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source72.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source72.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source72.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source73.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source73.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source73.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source74.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source74.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source74.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source75.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source75.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source75.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source76.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source76.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source76.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source77.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source77.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source77.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source78.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source78.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source78.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source79.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source79.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source79.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source80.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source80.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source80.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source81.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source81.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source81.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source82.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source82.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source82.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source83.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source83.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source83.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source84.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source84.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source84.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source85.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source85.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source85.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source86.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source86.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source86.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source87.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source87.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source87.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source88.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source88.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source88.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source89.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source89.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source89.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source90.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source90.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source90.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source91.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source91.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source91.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source92.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source92.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source92.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source93.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source93.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source93.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source94.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source94.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source94.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source95.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source95.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source95.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source96.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source96.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source96.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source97.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source97.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source97.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source98.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source98.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source98.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source99.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source99.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source99.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source100.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source100.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source100.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source101.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source101.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source101.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source102.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source102.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source102.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source103.successor_rows ⟨0, by decide⟩
+  · exact Chunks2.Source103.successor_rows ⟨1, by decide⟩
+  · exact Chunks2.Source103.successor_rows ⟨2, by decide⟩
+  · exact Chunks2.Source104.successor_rows ⟨0, by decide⟩
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
+private theorem canonical_successors (p : Row) (d : Fin 3) (hp : Valid p d.val)
+    (hc : Canonical p) : successors p d.val = classList (cl p d.val) := by
+  have h : ∀ (i : Fin 187) (d : Fin 3), Valid (Rows.rows i) d.val →
+      Sources.sources (Sources.sourceIndex i d) = (Rows.rows i, d) := by
+    decide +kernel
+  have hr := Rows.reconstruction p hc
+  have hv : Valid (Rows.rows (Rows.rowIndex p)) d.val := by rw [hr]; exact hp
+  have hs := h (Rows.rowIndex p) d hv
+  rw [hr] at hs
+  have hh := source_successors (Sources.sourceIndex (Rows.rowIndex p) d)
+  rw [hs] at hh
+  exact hh
+
 private theorem class_counts : ∀ c s : Fin 96, ((classList c).count s : ℤ) = T c s := by
   intro c
   fin_cases c <;> decide +kernel

@@ -9,9 +9,9 @@
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (consumed bind-only helpers on the live path of HardinA229753.result)
-rows: proof_shape=bind-only; consumers=reconstruction,Width6.Classes0-31.class_successors
-rowIndex: proof_shape=bind-only; consumers=reconstruction,Width6.Classes0-31.class_successors
-reconstruction: proof_shape=bind-only; consumers=Width6.Classes0-31.class_successors
+rows: proof_shape=bind-only; consumers=reconstruction,Width6.Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors
+rowIndex: proof_shape=bind-only; consumers=reconstruction,Width6.Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors
+reconstruction: proof_shape=bind-only; consumers=Width6.Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
