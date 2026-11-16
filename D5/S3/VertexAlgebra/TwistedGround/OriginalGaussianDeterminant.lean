@@ -594,7 +594,7 @@ private lemma unit1FiniteDet_diff (N : ℕ) : Differentiable ℂ (unit1DetN N) :
 
 /-- Holomorphy is local in z; the actual trace bound pays the M-test on
 each smaller disk for this fixed finite N. This is NOT spatial uniformity. -/
-private lemma finiteLog_diff (N : ℕ) :
+lemma finiteLog_diff (N : ℕ) :
     DifferentiableOn ℂ (finiteLog N) (ball (0 : ℂ) 1) := by
   intro z hz
   have hz1 : ‖z‖ < 1 := mem_ball_zero_iff.mp hz
