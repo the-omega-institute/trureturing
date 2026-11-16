@@ -18,6 +18,7 @@ cross: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 Valid: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 decidableValid: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 zeroBudgetClass: proof_shape=bind-only; consumers=cl
+zeroBudgetTransferRow: proof_shape=bind-only; consumers=transfer_row29,transfer_row30,transfer_row33,transfer_row34,transfer_row37,transfer_row38,transfer_row39,transfer_row41,transfer_row54,transfer_row56,transfer_row57,transfer_row58,transfer_row61,transfer_row62,transfer_row65,transfer_row66
 cl: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 transfer_row0: proof_shape=bind-only; consumers=T
 transfer_row1: proof_shape=bind-only; consumers=T
@@ -98,7 +99,7 @@ W: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence
 
 set_option profiler true
 
@@ -131,68 +132,88 @@ def cl (p : Boundary) (d : ℕ) : Fin 72 :=
   if d = 1 then (if p 0 = p 2 then (if p 0 = p 4 then (if p 1 = p 3 then (if p 1 = p 5 then (0) else (1)) else (if p 1 = p 5 then (4) else (5))) else (if p 0 = p 5 then (if p 1 = p 3 then (2) else (6)) else (if p 1 = p 3 then (3) else (7)))) else (if p 0 = p 3 then (if p 0 = p 5 then (if p 1 = p 4 then (8) else (10)) else (if p 1 = p 4 then (9) else (11))) else (if p 0 = p 4 then (if p 1 = p 5 then (12) else (13)) else (if p 0 = p 5 then (14) else (15))))) else (if p 0 = p 2 then (if p 0 = p 5 then (if p 1 = p 3 then (if p 0 = p 4 then (28) else (if p 1 = p 4 then (31) else (33))) else (if p 0 = p 3 then (if p 1 = p 4 then (24) else (26)) else (if p 0 = p 4 then (36) else (if p 1 = p 4 then (39) else (42))))) else (if p 1 = p 5 then (if p 0 = p 4 then (if p 1 = p 3 then (29) else (37)) else (if p 0 = p 3 then (27) else (if p 1 = p 3 then (34) else (if p 1 = p 4 then (40) else (43))))) else (if p 1 = p 3 then (if p 0 = p 4 then (30) else (if p 1 = p 4 then (32) else (35))) else (if p 0 = p 3 then (25) else (if p 0 = p 4 then (38) else (41)))))) else (if p 0 = p 3 then (if p 2 = p 4 then (if p 0 = p 5 then (if p 0 = p 1 then (16) else (if p 1 = p 2 then (44) else (57))) else (if p 0 = p 1 then (17) else (if p 1 = p 2 then (45) else (if p 1 = p 5 then (58) else (59))))) else (if p 1 = p 5 then (if p 0 = p 1 then (18) else (if p 0 = p 4 then (52) else (if p 1 = p 2 then (47) else (55)))) else (if p 0 = p 5 then (if p 1 = p 2 then (46) else (54)) else (if p 0 = p 1 then (19) else (if p 0 = p 4 then (53) else (56)))))) else (if p 0 = p 4 then (if p 2 = p 5 then (if p 0 = p 1 then (20) else (if p 1 = p 2 then (48) else (if p 1 = p 3 then (62) else (69)))) else (if p 1 = p 3 then (if p 0 = p 5 then (60) else (61)) else (if p 0 = p 1 then (21) else (if p 1 = p 2 then (49) else (68))))) else (if p 0 = p 5 then (if p 1 = p 3 then (if p 1 = p 4 then (63) else (65)) else (if p 0 = p 1 then (22) else (if p 1 = p 2 then (50) else (70)))) else (if p 1 = p 3 then (if p 1 = p 4 then (64) else (if p 1 = p 5 then (66) else (67))) else (if p 0 = p 1 then (23) else (if p 1 = p 2 then (51) else (71))))))))
 
 @[noinline]
+private def zeroBudgetTransferRow (i : Fin 16) : Fin 72 → ℤ :=
+  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 0), (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 1), 0, 0, (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 2), (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 3), 0, 0, (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 4), (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 5), (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 6), 0, (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 7), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 8), 0, (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 9), (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 10), (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 11), 0, 0, (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 12), (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 13), 0, 0, (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 14), (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table i 15), 0, 0, 0, 0, 0]
+
+@[noinline]
 private def transfer_row0 : Fin 72 → ℤ :=
-  ![5, 5, 3, 3, 4, 4, 2, 2, 0, 0, 1, 1, 3, 3, 3, 3, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 5, 2, 2, 2, 2, 4, 4, 3, 4, 2, 2, 3, 2, 3, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0, 2, 5, 5, 1, 3, 4, 4, 0, 0, 3, 3, 3, 2, 2, 0, 0]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 0)
+    (![1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 5, 2, 2, 2, 2, 4, 4, 3, 4, 2, 2, 3, 2, 3, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0, 2, 5, 5, 1, 3, 4, 4, 0, 0, 3, 3, 3, 2, 2, 0, 0] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row1 : Fin 72 → ℤ :=
-  ![4, 4, 3, 3, 4, 4, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 4, 1, 1, 3, 3, 4, 4, 3, 4, 0, 0, 4, 2, 4, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 4, 1, 4, 3, 3, 1, 2, 4, 4, 3, 3, 7, 7, 1, 2, 2, 2, 2]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 1)
+    (![1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 4, 1, 1, 3, 3, 4, 4, 3, 4, 0, 0, 4, 2, 4, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 4, 1, 4, 3, 3, 1, 2, 4, 4, 3, 3, 7, 7, 1, 2, 2, 2, 2] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row2 : Fin 72 → ℤ :=
-  ![1, 1, 2, 2, 1, 1, 3, 3, 2, 2, 2, 2, 1, 1, 2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 4, 4, 4, 4, 1, 5, 5, 3, 3, 4, 4, 2, 1, 5, 5, 4, 3, 4, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 0, 0, 4, 2, 4, 2, 2, 2, 1, 4, 4, 3, 3, 1, 1, 2, 1, 1, 1, 1]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 2)
+    (![0, 0, 0, 0, 1, 1, 0, 0, 4, 4, 4, 4, 1, 5, 5, 3, 3, 4, 4, 2, 1, 5, 5, 4, 3, 4, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 0, 0, 4, 2, 4, 2, 2, 2, 1, 4, 4, 3, 3, 1, 1, 2, 1, 1, 1, 1] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row3 : Fin 72 → ℤ :=
-  ![3, 3, 3, 3, 3, 3, 2, 2, 0, 0, 2, 2, 3, 3, 3, 3, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 5, 5, 0, 0, 2, 2, 3, 3, 5, 5, 2, 2, 2, 1, 1, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 5, 0, 5, 2, 2, 2, 3, 2, 2, 0, 0, 2, 2, 3, 1, 1, 0, 0]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 3)
+    (![0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 5, 5, 0, 0, 2, 2, 3, 3, 5, 5, 2, 2, 2, 1, 1, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 5, 0, 5, 2, 2, 2, 3, 2, 2, 0, 0, 2, 2, 3, 1, 1, 0, 0] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row4 : Fin 72 → ℤ :=
-  ![4, 4, 2, 2, 4, 4, 2, 2, 0, 0, 1, 1, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 4, 1, 1, 2, 2, 4, 4, 2, 4, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0, 1, 1, 5, 0, 5, 3, 3, 1, 3, 4, 4, 2, 2, 7, 7, 1, 2, 2, 2, 2]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 4)
+    (![1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 4, 1, 1, 2, 2, 4, 4, 2, 4, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0, 1, 1, 5, 0, 5, 3, 3, 1, 3, 4, 4, 2, 2, 7, 7, 1, 2, 2, 2, 2] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row5 : Fin 72 → ℤ :=
-  ![4, 4, 2, 2, 4, 4, 2, 2, 1, 1, 1, 1, 2, 2, 3, 3, 2, 2, 2, 2, 0, 0, 1, 1, 0, 0, 0, 0, 4, 1, 1, 2, 2, 4, 4, 2, 4, 0, 0, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 3, 1, 3, 6, 6, 1, 2, 4, 4, 1, 1, 3, 3, 3, 2, 2, 0, 0]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 5)
+    (![2, 2, 2, 2, 0, 0, 1, 1, 0, 0, 0, 0, 4, 1, 1, 2, 2, 4, 4, 2, 4, 0, 0, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 3, 1, 3, 6, 6, 1, 2, 4, 4, 1, 1, 3, 3, 3, 2, 2, 0, 0] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row6 : Fin 72 → ℤ :=
-  ![0, 0, 2, 2, 0, 0, 2, 2, 3, 3, 2, 2, 0, 0, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 0, 3, 3, 2, 2, 2, 2, 2, 0, 4, 4, 4, 2, 4, 2, 2, 3, 3, 2, 2, 1, 1, 3, 3, 1, 1, 4, 3, 4, 4, 4, 2, 0, 5, 5, 2, 2, 1, 1, 2, 1, 1, 1, 1]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 6)
+    (![1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 0, 3, 3, 2, 2, 2, 2, 2, 0, 4, 4, 4, 2, 4, 2, 2, 3, 3, 2, 2, 1, 1, 3, 3, 1, 1, 4, 3, 4, 4, 4, 2, 0, 5, 5, 2, 2, 1, 1, 2, 1, 1, 1, 1] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row7 : Fin 72 → ℤ :=
-  ![2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 0, 0, 1, 1, 2, 2, 3, 3, 1, 2, 1, 0, 0, 3, 3, 1, 1, 2, 2, 3, 3, 2, 2, 7, 1, 7, 3, 3, 3, 2, 1, 1, 0, 0, 3, 3, 2, 0, 0, 1, 1]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 7)
+    (![2, 2, 2, 2, 0, 0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 0, 0, 1, 1, 2, 2, 3, 3, 1, 2, 1, 0, 0, 3, 3, 1, 1, 2, 2, 3, 3, 2, 2, 7, 1, 7, 3, 3, 3, 2, 1, 1, 0, 0, 3, 3, 2, 0, 0, 1, 1] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row8 : Fin 72 → ℤ :=
-  ![1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 1, 1, 1, 1, 4, 4, 4, 4, 0, 0, 2, 2, 1, 1, 1, 1, 1, 4, 4, 0, 0, 3, 3, 1, 1, 4, 4, 4, 1, 4, 0, 0, 3, 3, 2, 2, 1, 1, 3, 3, 1, 1, 4, 2, 4, 4, 4, 3, 1, 3, 3, 0, 0, 7, 7, 1, 0, 0, 2, 2]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 8)
+    (![4, 4, 4, 4, 0, 0, 2, 2, 1, 1, 1, 1, 1, 4, 4, 0, 0, 3, 3, 1, 1, 4, 4, 4, 1, 4, 0, 0, 3, 3, 2, 2, 1, 1, 3, 3, 1, 1, 4, 2, 4, 4, 4, 3, 1, 3, 3, 0, 0, 7, 7, 1, 0, 0, 2, 2] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row9 : Fin 72 → ℤ :=
-  ![0, 0, 1, 1, 0, 0, 1, 1, 3, 3, 1, 1, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 1, 1, 3, 3, 1, 0, 4, 4, 6, 1, 6, 1, 1, 3, 3, 1, 1, 2, 2, 3, 3, 2, 2, 3, 3, 3, 7, 7, 1, 0, 6, 6, 1, 1, 4, 4, 1, 2, 2, 2, 2]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 9)
+    (![2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 1, 1, 3, 3, 1, 0, 4, 4, 6, 1, 6, 1, 1, 3, 3, 1, 1, 2, 2, 3, 3, 2, 2, 3, 3, 3, 7, 7, 1, 0, 6, 6, 1, 1, 4, 4, 1, 2, 2, 2, 2] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row10 : Fin 72 → ℤ :=
-  ![2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 2, 2, 1, 1, 3, 3, 4, 4, 4, 4, 0, 0, 2, 2, 0, 0, 0, 0, 2, 5, 5, 1, 1, 6, 6, 1, 2, 4, 4, 3, 1, 3, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 2, 2, 2, 4, 4, 2, 1, 6, 6, 2, 2, 3, 3, 3, 1, 1, 0, 0]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 10)
+    (![4, 4, 4, 4, 0, 0, 2, 2, 0, 0, 0, 0, 2, 5, 5, 1, 1, 6, 6, 1, 2, 4, 4, 3, 1, 3, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 2, 2, 2, 4, 4, 2, 1, 6, 6, 2, 2, 3, 3, 3, 1, 1, 0, 0] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row11 : Fin 72 → ℤ :=
-  ![2, 2, 1, 1, 2, 2, 1, 1, 0, 0, 2, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 6, 6, 1, 1, 6, 6, 1, 2, 4, 4, 3, 1, 3, 1, 1, 0, 0, 2, 2, 1, 1, 0, 0, 2, 2, 6, 0, 6, 1, 1, 2, 3, 3, 3, 1, 1, 3, 3, 2, 1, 1, 1, 1]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 11)
+    (![2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 6, 6, 1, 1, 6, 6, 1, 2, 4, 4, 3, 1, 3, 1, 1, 0, 0, 2, 2, 1, 1, 0, 0, 2, 2, 6, 0, 6, 1, 1, 2, 3, 3, 3, 1, 1, 3, 3, 2, 1, 1, 1, 1] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row12 : Fin 72 → ℤ :=
-  ![3, 3, 3, 3, 3, 3, 1, 1, 0, 0, 1, 1, 3, 3, 3, 3, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 3, 5, 5, 0, 0, 2, 2, 3, 3, 5, 5, 6, 1, 6, 2, 2, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 3, 0, 3, 5, 5, 1, 3, 2, 2, 0, 0, 2, 2, 3, 2, 2, 0, 0]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 12)
+    (![0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 3, 5, 5, 0, 0, 2, 2, 3, 3, 5, 5, 6, 1, 6, 2, 2, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 3, 0, 3, 5, 5, 1, 3, 2, 2, 0, 0, 2, 2, 3, 2, 2, 0, 0] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row13 : Fin 72 → ℤ :=
-  ![2, 2, 1, 1, 2, 2, 3, 3, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 3, 3, 3, 3, 7, 7, 1, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 6, 1, 6, 3, 3, 1, 2, 1, 1, 3, 3, 4, 4, 1, 2, 2, 2, 2]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 13)
+    (![0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 3, 3, 3, 3, 7, 7, 1, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 6, 1, 6, 3, 3, 1, 2, 1, 1, 3, 3, 4, 4, 1, 2, 2, 2, 2] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row14 : Fin 72 → ℤ :=
-  ![2, 2, 3, 3, 2, 2, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 6, 6, 3, 3, 3, 3, 3, 2, 4, 4, 7, 1, 7, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 2, 1, 6, 6, 3, 3, 3, 3, 2, 1, 1, 1, 1]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 14)
+    (![2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 6, 6, 3, 3, 3, 3, 3, 2, 4, 4, 7, 1, 7, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 2, 1, 6, 6, 3, 3, 3, 3, 2, 1, 1, 1, 1] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row15 : Fin 72 → ℤ :=
-  ![4, 4, 3, 3, 2, 2, 1, 1, 0, 0, 2, 2, 3, 3, 3, 3, 2, 2, 0, 0, 2, 2, 2, 2, 0, 0, 2, 2, 4, 4, 4, 1, 1, 3, 3, 3, 2, 8, 8, 5, 1, 5, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 0, 3, 2, 2, 2, 3, 3, 3, 0, 0, 3, 3, 3, 1, 1, 0, 0]
+  Fin.append (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.table 15)
+    (![2, 2, 0, 0, 2, 2, 2, 2, 0, 0, 2, 2, 4, 4, 4, 1, 1, 3, 3, 3, 2, 8, 8, 5, 1, 5, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 0, 3, 2, 2, 2, 3, 3, 3, 0, 0, 3, 3, 3, 1, 1, 0, 0] : Fin 56 → ℤ)
 
 @[noinline]
 private def transfer_row16 : Fin 72 → ℤ :=
@@ -248,11 +269,11 @@ private def transfer_row28 : Fin 72 → ℤ :=
 
 @[noinline]
 private def transfer_row29 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 3, 3, 0, 0, 4, 4, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 0
 
 @[noinline]
 private def transfer_row30 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 3, 3, 0, 0, 4, 4, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 2, 2, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 1
 
 @[noinline]
 private def transfer_row31 : Fin 72 → ℤ :=
@@ -264,11 +285,11 @@ private def transfer_row32 : Fin 72 → ℤ :=
 
 @[noinline]
 private def transfer_row33 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 1, 1, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 2
 
 @[noinline]
 private def transfer_row34 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 3
 
 @[noinline]
 private def transfer_row35 : Fin 72 → ℤ :=
@@ -280,15 +301,15 @@ private def transfer_row36 : Fin 72 → ℤ :=
 
 @[noinline]
 private def transfer_row37 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 2, 2, 0, 0, 4, 4, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 3, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 4
 
 @[noinline]
 private def transfer_row38 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 2, 2, 0, 0, 4, 4, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 5
 
 @[noinline]
 private def transfer_row39 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 6
 
 @[noinline]
 private def transfer_row40 : Fin 72 → ℤ :=
@@ -296,7 +317,7 @@ private def transfer_row40 : Fin 72 → ℤ :=
 
 @[noinline]
 private def transfer_row41 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 3, 3, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 7
 
 @[noinline]
 private def transfer_row42 : Fin 72 → ℤ :=
@@ -348,7 +369,7 @@ private def transfer_row53 : Fin 72 → ℤ :=
 
 @[noinline]
 private def transfer_row54 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 3, 3, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 8
 
 @[noinline]
 private def transfer_row55 : Fin 72 → ℤ :=
@@ -356,15 +377,15 @@ private def transfer_row55 : Fin 72 → ℤ :=
 
 @[noinline]
 private def transfer_row56 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 9
 
 @[noinline]
 private def transfer_row57 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 1, 1, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 0, 0, 1, 1, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 10
 
 @[noinline]
 private def transfer_row58 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 1, 1, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 11
 
 @[noinline]
 private def transfer_row59 : Fin 72 → ℤ :=
@@ -376,11 +397,11 @@ private def transfer_row60 : Fin 72 → ℤ :=
 
 @[noinline]
 private def transfer_row61 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 3, 3, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 12
 
 @[noinline]
 private def transfer_row62 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 1, 1, 0, 0, 2, 2, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 2, 2, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 13
 
 @[noinline]
 private def transfer_row63 : Fin 72 → ℤ :=
@@ -392,11 +413,11 @@ private def transfer_row64 : Fin 72 → ℤ :=
 
 @[noinline]
 private def transfer_row65 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 14
 
 @[noinline]
 private def transfer_row66 : Fin 72 → ℤ :=
-  ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 3, 3, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0]
+  zeroBudgetTransferRow 15
 
 @[noinline]
 private def transfer_row67 : Fin 72 → ℤ :=
