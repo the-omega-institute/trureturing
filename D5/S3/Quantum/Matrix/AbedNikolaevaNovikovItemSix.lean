@@ -4,17 +4,75 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: The sharp spectral-mean trace-violation envelope for faithful complex qubit densities. -/
+   digest: Sharp spectral-mean trace-violation bounds for faithful complex qubit densities. -/
 
 /-
 admission_basis: open-problem-resolution (#22896; Proved)
 escape_witness: none
-proof_shape: result: bind-only; settling result of the external named open problem.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/24453.
 The literal spectral contrast occurs in envelope; proofs use the existing
-AbedNikolaevaNovikovTwoContrastYoung.contrast, with definitional correspondence.
+AbedNikolaevaNovikovTwoContrastYoung.contrast through contrast_expression.
 The real trace functional is bornProbability followed by Complex.re.
-Direct frozen dependencies: see the per-declaration inventory below.
+All proposition proofs are bind-only after expanding same-delivery helpers;
+none supplies an escape witness. The public result settles claim.
+Definition rows describe values and claim, without asserting new proof content.
+Direct frozen dependencies use declaration identities from the matching base sources.
+The trace_pair_pos identity is its private prepublication identity; its public
+identity and canonical re-pin are reserved for the subsequent freezing stage.
+Dependency keys:
+F1: D5.S3.Quantum.Bogoliubov.HardyBlockConservation.compressedBlock; declaration statement_id: sha256:2ac1332dea41c82e6801ecbf96346c6b514d05a0d9b6a632a6962d7efbaf156d.
+F2: D5.S3.Quantum.FiniteDimensional.bornProbability; declaration statement_id: sha256:70d0693159ac58607261fa66304a04ba6078de3492431f14485817d5497d9d6d.
+F3: D5.S3.Quantum.Matrix.AbedNikolaevaNovikovAFDensityBound.trace_pair_pos; declaration statement_id: sha256:bc10bdaefde95b9a0a9dcb40617bead6ada43a30bc17a8b27aba1557d459b814 (prepublication).
+F4: D5.S3.Quantum.Matrix.AbedNikolaevaNovikovTwoContrastYoung.contrast; declaration statement_id: sha256:5ec033194bbce36cac7b489f77a2fdc67eb6f4a1d185769506cdc211089e6711.
+F5: D5.S3.Quantum.Matrix.AbedNikolaevaNovikovTwoContrastYoung.contrast.eq_1; declaration statement_id: sha256:3cef5446fd1cdbd3a2cf88e1dddeb3ac9fe6313ffa031c94c81fb75e3cca8766.
+F6: D5.S3.Quantum.Matrix.AlternativeMeanLinearization.gmInv; declaration statement_id: sha256:485f301967ad92c67d9517ca9019d415c27d5d09269db36a8f792fa51fe66702.
+F7: D5.S3.Quantum.Matrix.AlternativeMeanLinearization.half_eq_sqrt; declaration statement_id: sha256:d4eefa8f223cba782f219ee5254e55195d6d55be4b6bbddc5f645e0ca5ccabcc.
+F8: D5.S3.Quantum.Matrix.AlternativeMeanLinearization.riccati; declaration statement_id: sha256:57aa8048e63436772a51754a97319e30bead90eb9070acac3272303df4f878c9.
+F9: D5.S3.Quantum.Matrix.AlternativeMeanLinearization.riccati_unique; declaration statement_id: sha256:f7157bd742dbeb3e2dc7aecea5ec136ee56558a198f3302f1251443ce5757617.
+F10: D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound; declaration statement_id: sha256:029989c48264702a7ddb2f7963b30fbc3260f0c293862ce2cf6561a7a358a67e.
+F11: D5.S3.Quantum.Matrix.SpectralGeometricLogEuclideanRefutation.specMean; declaration statement_id: sha256:90903da05113bdccf0917e16f302b962a57ed770600ed5aea5473dd57c5e62a7.
+F12: D5.S3.Quantum.Matrix.SpectralGeometricLogEuclideanRefutation.wgm; declaration statement_id: sha256:1c01374a39b9570fee8e969018fd169c9b4424811033dd27358adfa8ab28df98.
+F13: D5.S3.Quantum.Matrix.SpectralGeometricLogEuclideanRefutation.wgm._proof_1; declaration statement_id: sha256:e4e6274881cf2f814be46f0bb514be70e193e66981c2e9b8af206acda38dd157.
+F14: D5.S3.Quantum.Matrix.SpectralPower.mpow; declaration statement_id: sha256:90a65cb357060c4a1a494f0fe9c2e62f452bd9f1f01bdbcbcb9cd8814fcc3216.
+F15: D5.S3.Quantum.Matrix.SpectralPower.mpow._proof_1; declaration statement_id: sha256:140863a1f678ee366aee42aa4ff5a0f20a4df4db6c317374a27a5d2b307c1f21.
+F16: D5.S3.Quantum.Matrix.SpectralPower.posDef_two; declaration statement_id: sha256:aab0c093aa3d2b2ec35e668b9050f590c2f79cbaf6d347b59632a1280bc73376.
+F17: D5.S3.TotalVariation.Hellinger.sq_sqrt_sub_sqrt_le_abs_sub; declaration statement_id: sha256:cde097da805e4c97be512a336451e1b15559dcceb2beaa5278d333e19b1e918d.
+Per-declaration inventory (the module basis above applies to every row):
+V: proof_shape: bind-only; escape_witness: none; consumers: envelope, V_bound, sharp_lower, result; Direct frozen dependencies: F2, F11.
+envelope: proof_shape: bind-only; escape_witness: none; consumers: claim, result; Direct frozen dependencies: F2, F11.
+claim: proof_shape: bind-only; escape_witness: none; consumers: result; Direct frozen dependencies: F2, F11.
+contrast_expression: proof_shape: bind-only; escape_witness: none; consumers: result; Direct frozen dependencies: F4.
+difference_sq_le: proof_shape: bind-only; escape_witness: none; consumers: scalar_squared; Direct frozen dependencies: F17.
+quadratic_nonneg: proof_shape: bind-only; escape_witness: none; consumers: scalar_squared; Direct frozen dependencies: none.
+scalar_squared: proof_shape: bind-only; escape_witness: none; consumers: diagonal_trace_bound; Direct frozen dependencies: F17.
+mpow_inv: proof_shape: bind-only; escape_witness: none; consumers: wgm_inverse; Direct frozen dependencies: F14, F15.
+mpow_half: proof_shape: bind-only; escape_witness: none; consumers: spectral_param, spectral_congruence; Direct frozen dependencies: F7.
+wgm_inverse: proof_shape: bind-only; escape_witness: none; consumers: spectral_param, spectral_congruence; Direct frozen dependencies: F6, F12, F13, F14, F15.
+spectral_param: proof_shape: bind-only; escape_witness: none; consumers: quotient_bound; Direct frozen dependencies: F6, F7, F8, F11, F12, F13, F14, F15.
+spectral_congruence: proof_shape: bind-only; escape_witness: none; consumers: sharp_traces; Direct frozen dependencies: F6, F7, F9, F11, F12, F13, F14, F15.
+spectrum_pair: proof_shape: bind-only; escape_witness: none; consumers: contrast_invariants; Direct frozen dependencies: none.
+contrast_invariants: proof_shape: bind-only; escape_witness: none; consumers: quotient_bound, density_data; Direct frozen dependencies: F4, F5.
+phi_diagonal: proof_shape: bind-only; escape_witness: none; consumers: diagonal_trace_bound; Direct frozen dependencies: F2.
+offdiag_contrast: proof_shape: bind-only; escape_witness: none; consumers: diagonal_trace_bound; Direct frozen dependencies: F10.
+diagonal_trace_bound: proof_shape: bind-only; escape_witness: none; consumers: trace_bound; Direct frozen dependencies: F2, F10, F17.
+trace_bound: proof_shape: bind-only; escape_witness: none; consumers: quotient_bound; Direct frozen dependencies: F2, F10, F17.
+phi_pos: proof_shape: bind-only; escape_witness: none; consumers: quotient_bound; Direct frozen dependencies: F3.
+quotient_bound: proof_shape: bind-only; escape_witness: none; consumers: V_bound, sharp_lower; Direct frozen dependencies: F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F17.
+V_bound: proof_shape: bind-only; escape_witness: none; consumers: result; Direct frozen dependencies: F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F17.
+density: proof_shape: bind-only; escape_witness: none; consumers: density_data, sharp_traces, sharp_lower, result; Direct frozen dependencies: none.
+sharpA: proof_shape: bind-only; escape_witness: none; consumers: sharpB, sharp_positive, sharp_traces, sharp_lower; Direct frozen dependencies: none.
+sharpX: proof_shape: bind-only; escape_witness: none; consumers: sharpB, sharp_positive, sharp_traces; Direct frozen dependencies: none.
+sharpB: proof_shape: bind-only; escape_witness: none; consumers: sharp_positive, sharp_traces, sharp_lower; Direct frozen dependencies: F1.
+f0: proof_shape: bind-only; escape_witness: none; consumers: familyRatio, sharp_traces, family_limit; Direct frozen dependencies: none.
+f2: proof_shape: bind-only; escape_witness: none; consumers: familyRatio, sharp_traces, family_limit; Direct frozen dependencies: none.
+f4: proof_shape: bind-only; escape_witness: none; consumers: familyRatio, sharp_traces, family_limit; Direct frozen dependencies: none.
+familyRatio: proof_shape: bind-only; escape_witness: none; consumers: family_limit, sharp_lower; Direct frozen dependencies: none.
+density_data: proof_shape: bind-only; escape_witness: none; consumers: sharp_lower, result; Direct frozen dependencies: F4, F5, F16.
+sharp_positive: proof_shape: bind-only; escape_witness: none; consumers: sharp_traces, sharp_lower; Direct frozen dependencies: F1, F16.
+sharp_traces: proof_shape: bind-only; escape_witness: none; consumers: sharp_lower; Direct frozen dependencies: F1, F2, F6, F7, F9, F11, F12, F13, F14, F15, F16.
+family_limit: proof_shape: bind-only; escape_witness: none; consumers: sharp_lower; Direct frozen dependencies: none.
+sharp_lower: proof_shape: bind-only; escape_witness: none; consumers: result; Direct frozen dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17.
+result: proof_shape: bind-only; escape_witness: none; consumers: settling result; Direct frozen dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17.
 -/
 
 import D5.S3.Quantum.Matrix.SpectralGeometricLogEuclideanRefutation
@@ -25,9 +83,7 @@ import D5.S3.Quantum.Matrix.AbedNikolaevaNovikovTwoContrastYoung
 import D5.S3.Quantum.Matrix.AbedNikolaevaNovikovAFDensityBound
 import D5.S3.Quantum.FiniteDimensional
 import D5.S3.Quantum.Bogoliubov.HardyBlockConservation
-import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
 import D5.S3.TotalVariation.Hellinger
-import Mathlib.Analysis.Matrix.Spectrum
 
 set_option maxHeartbeats 800000
 
@@ -60,6 +116,10 @@ def envelope (δ : ℝ) : ℝ :=
 def claim : Prop :=
   ∀ (δ : ℝ), 0 ≤ δ → δ < 1 → envelope δ = 1 / Real.sqrt (1 - δ ^ 2) - 1
 
+private lemma contrast_expression (R : Matrix (Fin 2) (Fin 2) ℂ) :
+    contrast R = (sSup (spectrum ℝ R) - sInf (spectrum ℝ R)) /
+      (sSup (spectrum ℝ R) + sInf (spectrum ℝ R)) := rfl
+
 private lemma difference_sq_le (x y : ℝ) (hx : 0 ≤ x) (hy : 0 ≤ y) :
     (x-y)^2 ≤ |x^2-y^2| := by
   have h := D5.S3.TotalVariation.Hellinger.sq_sqrt_sub_sqrt_le_abs_sub (x^2) (y^2)
@@ -86,14 +146,12 @@ private theorem scalar_squared (t u v x y : ℝ) (ht : |t| < 1)
       (mul_nonneg hu hx) (mul_nonneg hv hy) using 1 <;> dsimp [F] <;> ring
   have hd : 0 ≤ d := mul_nonneg (mul_nonneg hu hv) (sq_nonneg _)
   have hdw : d ≤ w := mul_le_mul_of_nonneg_left (difference_sq_le x y hx hy) (mul_nonneg hu hv)
-  have hw : 0 ≤ w := le_trans hd hdw
   have he : F = H-t*d := by dsimp [F,H,d]; ring
   have hb : F ≤ H+|t| *w := by
     have h1 := mul_le_mul_of_nonneg_right (neg_le_abs t) hd
     have h2 := mul_le_mul_of_nonneg_left hdw (abs_nonneg t)
     nlinarith only [he,h1,h2]
   have hsq : F^2 ≤ (H+|t| *w)^2 := (sq_le_sq₀ hF (le_trans hF hb)).mpr hb
-  have habs : |t|^2 = t^2 := sq_abs t
   have hcs : (1-t^2)*(H+|t| *w)^2 ≤ H^2+(1-t^2)*w^2 := by
     have hi : H^2+(1-t^2)*w^2-(1-t^2)*(H+|t| *w)^2 =
         (|t| *H-(1-t^2)*w)^2 := by
@@ -299,14 +357,16 @@ private theorem diagonal_trace_bound {R A : Matrix (Fin 2) (Fin 2) ℂ} (hR : R.
   have h0 := phi_diagonal hR hA 1 1
   have h2 := phi_diagonal hR hA x y
   have h4 := phi_diagonal hR hA (x^2) (y^2)
-  have hcone : (diagonal ![(1 : ℂ),1] : Matrix (Fin 2) (Fin 2) ℂ) = 1 := by ext i j; fin_cases i <;> fin_cases j <;> simp
+  have hcone : (diagonal ![(1 : ℂ),1] : Matrix (Fin 2) (Fin 2) ℂ) = 1 := by
+    convert (Matrix.diagonal_one : (Matrix.diagonal (fun _ : Fin 2 => (1 : ℂ))) = 1) using 1
+    funext i
+    fin_cases i <;> rfl
   simp only [Complex.ofReal_one] at h0
   rw [hcone,one_mul,mul_one] at h0
   change (bornProbability R A).re = a*p*1^2+b*q*1^2+2*c*1*1 at h0
   change (bornProbability R _).re = a*p*x^2+b*q*y^2+2*c*x*y at h2
   change (bornProbability R _).re = a*p*(x^2)^2+b*q*(y^2)^2+2*c*x^2*y^2 at h4
   have hc0 : 2*t*u*v = 2*c := by nlinarith only [htc]
-  rw [mul_pow,hu2,hv2] at hc
   rw [hu2,hv2,hc0] at hmain
   simp only [one_pow,mul_one] at h0
   rw [hD2,h0,h2,h4]
@@ -454,7 +514,6 @@ private theorem sharp_traces (δ ε : ℝ) (hε : 0 < ε) :
       Matrix.trace,Matrix.mul_apply,Matrix.vecMul,dotProduct,Matrix.diagonal,Fin.sum_univ_two,Complex.mul_re,Complex.mul_im,pow_two]
     <;> ring
 
-open Filter Topology in
 private theorem family_limit (δ : ℝ) (hδ : 0 ≤ δ) (hδ1 : δ < 1) :
     Tendsto (familyRatio δ) (𝓝[>] (0 : ℝ)) (𝓝 (1/Real.sqrt (1-δ^2)-1)) := by
   have hd : 0 < 1-δ^2 := sub_pos.mpr ((sq_lt_one_iff₀ hδ).mpr hδ1)
@@ -495,6 +554,8 @@ private theorem sharp_lower (δ : ℝ) (hδ : 0 ≤ δ) (hδ1 : δ < 1) :
 
 theorem result : claim := by
   intro δ hδ hδ1
+  unfold envelope
+  simp_rw [← contrast_expression]
   have hd := density_data δ hδ hδ1
   let G := 1/Real.sqrt (1-δ^2)-1
   have hb : ∀ r ∈ {r : ℝ | ∃ R : Matrix (Fin 2) (Fin 2) ℂ, R.PosDef ∧ contrast R=δ ∧ r=V R}, r ≤ G := by

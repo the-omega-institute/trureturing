@@ -18,7 +18,7 @@ internal sealed class AbedNikolaevaNovikovAFDensityBoundDocument : IScribeDocume
                 "For an arbitrary finite index type iota, bornProbability(rho,Y) is the existing unnormalized complex trace Tr(rho Y). "
                 + "The set consists exactly of real q obtained from A positive semidefinite, B Hermitian, and A+iB nonzero. "
                 + "Both traces are projected to their real parts. Positivity of rho makes the denominator strictly positive. "
-                + "The definition is Section 5.12 of arXiv:2610.34388v1, with the standing positive definite density convention of Section 3.1.",
+                + "The definition is Section 5.12 of arXiv:2610.34388v1, with the standing positive definite density assumption of Section 3.1.",
                 DescribeRole.Definition),
             Entry("supremum", "a", "The real supremum", IndexBinders(All("rho", Mat(Id("iota")),
                 Eqn(Call("a",Id("rho")),Call("sSup",Call("quotientValues",Id("rho")))))),

@@ -8,7 +8,7 @@ internal sealed class AbedNikolaevaNovikovItemSixDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Quantum/Matrix/AbedNikolaevaNovikovItemSix.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Eigenstructure/abednikolaevanovikov2026trace");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/abednikolaevanovikov2026traces");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The spectral geometric mean has sharp relative trace-violation envelope 1/√(1−δ²)−1 in complex dimension two.",

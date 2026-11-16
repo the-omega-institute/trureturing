@@ -14,6 +14,7 @@ import Mathlib.Tactic
 
 /-! The quotient and supremum in arXiv:2610.34388v1, Sections 5.12 and 11.2(5).
 The density is positive definite and is not required to have trace one.
+Escape audit unfinished for trace_pair_pos: https://github.com/the-omega-institute/trureturing/issues/24453.
 The ordinary matrix inequality is used without any invertibility hypothesis on X.
 
 The external problem binding is owner #22774. The proposed admission basis is
@@ -26,6 +27,10 @@ standard identities and Cauchy–Schwarz applications; their consumer is
 `accretive_le_card_abs`. The trace factorization in `trace_pair_pos` is consumed
 by `denominator_pos`, then by `one_mem_quotientValues`, `quotient_bounds`, and
 `result`. These helpers are not independent novelty claims.
+Publication inventory: trace_pair_pos: proof_shape: bind-only; escape_witness: none;
+consumers: denominator_pos and AbedNikolaevaNovikovItemSix.phi_pos.
+Direct frozen dependencies: RHLinalg.trace_mul_nonneg_of_posSemidef (declaration statement_id sha256:d0be9623184a0aa6b2753f04a89d828122fe7292de10124c81506a795f6decf6).
+The existing owner basis applies; statement and proof are unchanged.
 -/
 
 noncomputable section
