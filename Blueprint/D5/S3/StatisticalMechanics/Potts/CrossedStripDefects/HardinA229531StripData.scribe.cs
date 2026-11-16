@@ -11,7 +11,7 @@ internal sealed class HardinA229531StripDataDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("inherited-transitions"),
                 DeclarationHandle.Create(Prefix + "raw_successors"),
                 H("Proper successors from the frozen scanner certificate"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note)),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("For every proper source row and every Fin 7 target class, thirty-two times the raw proper successor sum equals the corresponding frozen transfer entry. The proof applies the original class_fibres and finite_certificate and pushes saturated Seen fibres with weight 32. Each consumed target-class theorem supplies its own exact bond, budget and class correspondence before integer division."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("row"), DeclarationHandle.Create(Prefix + "Row"),
                 H("Actual rows"), StatementSource.WithoutFormula(),
