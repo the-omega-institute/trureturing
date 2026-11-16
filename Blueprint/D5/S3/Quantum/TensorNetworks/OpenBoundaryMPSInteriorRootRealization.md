@@ -270,7 +270,35 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealiza
 
 f(zeta)=Re(det X_p(zeta))+I Re(det Y_q(zeta)). The map is real rather than holomorphic. Target P,H are fixed in all trial derivatives.
 
-**Theorem 1.20 (Every distinct common root is actual).**
+**Theorem 1.20 (Homogeneous iteration).**
+
+$$\forall F \in Bond \to Bond,\; \left(\forall t \in Complex,\; \forall X \in Bond,\; F\left(smul\left(t, X\right)\right) = smul\left(t, F\left(X\right)\right)\right) \Rightarrow \left(\forall n \in Nat,\; \forall t \in Complex,\; \forall X \in Bond,\; iterate\left(F, n, smul\left(t, X\right)\right) = smul\left(t, iterate\left(F, n, X\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.iterate_smul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Critch, Andrew; Morton, Jason (2014). *Algebraic geometry of matrix product states*. DOI: [10.3842/SIGMA.2014.095](https://doi.org/10.3842/SIGMA.2014.095). URL: <https://arxiv.org/abs/1210.2812v4>.
+
+*Commentary.*
+
+Every complex-homogeneous map on Bond remains complex-homogeneous under every natural iterate, including zero. The original root-realization factorization and InteriorPolynomial's live right-boundary and Jacobian-scaling proofs directly consume this original helper.
+
+**Theorem 1.21 (Homogeneous transfer).**
+
+$$\forall A \in Fin\left(2\right) \to Bond,\; \forall t \in Complex,\; \forall X \in Bond,\; transfer\left(A, smul\left(t, X\right)\right) = smul\left(t, transfer\left(A, X\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.transfer_smul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Critch, Andrew; Morton, Jason (2014). *Algebraic geometry of matrix product states*. DOI: [10.3842/SIGMA.2014.095](https://doi.org/10.3842/SIGMA.2014.095). URL: <https://arxiv.org/abs/1210.2812v4>.
+
+*Commentary.*
+
+For every binary pair of Bond matrices, every complex scalar and every Bond matrix, transfer commutes with scalar multiplication. The original root proof and InteriorPolynomial's actual right-target scaling use this declaration directly through iterate_smul; no positivity or nonzero-scalar hypothesis is added.
+
+**Theorem 1.22 (Every distinct common root is actual).**
 
 $$\forall p \in Nat,\; \forall q \in Nat,\; \forall s \in Sector,\; \forall zo \in Complex,\; \forall l \in Fin\left(2\right) \to Complex,\; \forall r \in Fin\left(2\right) \to Complex,\; \left((((((1 \le p) \land (1 \le q)) \land (Regular\left(s\right))) \land (zo \neq 0)) \land (PosDef\left(leftTarget\left(s, zo, l, p\right)\right))) \land (PosDef\left(rightTarget\left(s, zo, r, q\right)\right))\right) \Rightarrow \left(\forall z \in Complex,\; \left((((z \neq 0) \land (z \neq zo)) \land (det\left(trialLeft\left(s, p, leftTarget\left(s, zo, l, p\right), z\right)\right) = 0)) \land (det\left(trialRight\left(s, q, rightTarget\left(s, zo, r, q\right), z\right)\right) = 0)\right) \Rightarrow \left(\exists phi \in Word\left(p + 2 + q\right) \to Complex,\; (((SetMember\left(phi, openBoundaryMPS\left(p + 2 + q\right)\right)) \land (phi \neq 0)) \land (rawInterior\left(p, 2, q, phi\right) = rawInterior\left(p, 2, q, mpsState\left(p + 2 + q, core\left(s, zo, 0\right), core\left(s, zo, 1\right), l, r\right)\right))) \land (\neg (\exists eta \in Complex,\; (norm\left(eta\right) = 1) \land (phi = smul\left(eta, mpsState\left(p + 2 + q, core\left(s, zo, 0\right), core\left(s, zo, 1\right), l, r\right)\right))))\right)\right)$$
 
@@ -284,7 +312,7 @@ $$\forall p \in Nat,\; \forall q \in Nat,\; \forall s \in Sector,\; \forall zo \
 
 For every p,q at least one, every regular sector, nonzero original z0, arbitrary complex l,r and positive definite actual P,H, any nonzero zeta distinct from z0 with both trial determinants zero gives a nonzero actual finite uniform bond-two competitor. It has identical complete unnormalized rawInterior p 2 q, at length (p+2)+q, and is not any unit complex scalar times the original full state. No canonical-chart or regularity hypothesis is imposed on the constructed boundaries.
 
-**Theorem 1.21 (Conditional annular actual ambiguity).**
+**Theorem 1.23 (Conditional annular actual ambiguity).**
 
 $$\forall p \in Nat,\; \forall q \in Nat,\; \forall s \in Sector,\; \forall zo \in Complex,\; \forall l \in Fin\left(2\right) \to Complex,\; \forall r \in Fin\left(2\right) \to Complex,\; \left((((((1 \le p) \land (1 \le q)) \land (Regular\left(s\right))) \land (zo \neq 0)) \land (PosDef\left(leftTarget\left(s, zo, l, p\right)\right))) \land (PosDef\left(rightTarget\left(s, zo, r, q\right)\right))\right) \Rightarrow \left(\forall epsilon \in Real,\; \forall R \in Real,\; \forall L \in ContinuousLinearEquiv\left(Real, Complex, Complex\right),\; \left(((((0 < epsilon) \land (epsilon < norm\left(zo\right))) \land (norm\left(zo\right) < R)) \land (HasFDerivAt\left(residual\left(s, p, q, leftTarget\left(s, zo, l, p\right), rightTarget\left(s, zo, r, q\right)\right), toContinuousLinearMap\left(L\right), zo\right))) \land (\forall z \in Complex,\; \left(norm\left(z\right) = epsilon \lor norm\left(z\right) = R\right) \Rightarrow re\left(residual\left(s, p, q, leftTarget\left(s, zo, l, p\right), rightTarget\left(s, zo, r, q\right)\right)\left(z\right)\right) < 0)\right) \Rightarrow \left(\exists phi \in Word\left(p + 2 + q\right) \to Complex,\; (((SetMember\left(phi, openBoundaryMPS\left(p + 2 + q\right)\right)) \land (phi \neq 0)) \land (rawInterior\left(p, 2, q, phi\right) = rawInterior\left(p, 2, q, mpsState\left(p + 2 + q, core\left(s, zo, 0\right), core\left(s, zo, 1\right), l, r\right)\right))) \land (\neg (\exists eta \in Complex,\; (norm\left(eta\right) = 1) \land (phi = smul\left(eta, mpsState\left(p + 2 + q, core\left(s, zo, 0\right), core\left(s, zo, 1\right), l, r\right)\right))))\right)\right)$$
 
@@ -326,9 +354,11 @@ This is a conditional root-to-actual result, not C9 or a genericity theorem, and
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.distinct_residual_root_actual_ambiguity`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.inverseDualTransfer`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.inverseTransfer`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.iterate_smul`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.leftTarget`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.residual`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.rightTarget`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.transfer_smul`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.trialLeft`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization.trialRight`
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore](OpenBoundaryMPSInteriorCommonCore.md)
