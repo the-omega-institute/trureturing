@@ -14,59 +14,47 @@ universe u
 namespace Reg.D5.S3.Quantum.Hiai.GeometricTraceConvexity
 
 abbrev signature : Signature where
-  Params := Σ d : Type u, Σ _ : Fintype d, Σ _ : DecidableEq d, Σ _ : ℝ, ℝ
-  State p := Matrix p.1 p.1 ℂ × Matrix p.1 p.1 ℂ
+  Params := Type u
+  State d := Set (Matrix d d ℂ × Matrix d d ℂ)
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℝ
+  Output _ d := (Matrix d d ℂ × Matrix d d ℂ → ℝ) → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p z =>
-    @geometricTrace p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 z.1 z.2)
-    (fun e => nomatch e)
+  realize signature (fun _ _ s f => ConvexOn ℝ s f) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ p z =>
-    letI : Fintype p.1 := p.2.1;
-    -((Matrix.trace z.1).re ^ 2)) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {d : Type u} [ft : Fintype d] [de : DecidableEq d] {α p : ℝ},
     α ∈ Set.Icc (1 : ℝ) 2 → p ∈ Set.Icc (1 / 2 : ℝ) 1 →
-    ConvexOn ℝ (@supportPairDomain d ft) (R.readout () ⟨d, ft, de, α, p⟩)
-
-private theorem zero_mem {d : Type u} [Fintype d] [DecidableEq d] :
-    (0, 0) ∈ (supportPairDomain : Set (Matrix d d ℂ × Matrix d d ℂ)) := by
-  exact ⟨Matrix.PosSemidef.zero, Matrix.PosSemidef.zero, by simp⟩
-
-private theorem one_mem {d : Type u} [Fintype d] [DecidableEq d] :
-    (1, 1) ∈ (supportPairDomain : Set (Matrix d d ℂ × Matrix d d ℂ)) := by
-  exact ⟨Matrix.PosSemidef.one, Matrix.PosSemidef.one, fun _ h => h⟩
+    R.readout () d (@supportPairDomain d ft)
+      (fun z => geometricTrace α p z.1 z.2)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have hc := h (d := ULift.{u} (Fin 1)) (α := 1) (p := 1)
+  exact h (d := ULift.{u} (Fin 1)) (α := 1) (p := 1)
     (by norm_num) (by norm_num)
-  have hi := hc.2 zero_mem one_mem
-    (by norm_num : (0 : ℝ) ≤ 1 / 2) (by norm_num : (0 : ℝ) ≤ 1 / 2)
-    (by norm_num : (1 / 2 : ℝ) + 1 / 2 = 1)
-  norm_num [rejected, realize, Matrix.trace] at hi
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
-  refine ⟨⟨ULift.{u} (Fin 1), inferInstance, inferInstance, 1, 1⟩, (0, 0), (1, 1), ?_⟩
-  change geometricTrace 1 1 (0 : Matrix (ULift.{u} (Fin 1)) _ ℂ) 0 ≠
-    geometricTrace 1 1 (1 : Matrix (ULift.{u} (Fin 1)) _ ℂ) 1
-  letI : Pow (Matrix (ULift.{u} (Fin 1)) (ULift.{u} (Fin 1)) ℂ) ℝ := ⟨CFC.rpow⟩
-  have hz (q : ℝ) (hq : q ≠ 0) :
-      (0 : Matrix (ULift.{u} (Fin 1)) (ULift.{u} (Fin 1)) ℂ) ^ q = 0 :=
-    CFC.zero_rpow hq
-  norm_num [geometricTrace, geometricMean, tracePower, Matrix.trace,
-    hz, CFC.one_rpow]
+  let d := ULift.{u} (Fin 1)
+  let f : Matrix d d ℂ × Matrix d d ℂ → ℝ := fun z => -((Matrix.trace z.1).re ^ 2)
+  refine ⟨d, ∅, Set.univ, ?_⟩
+  intro he
+  have hz : ConvexOn ℝ (∅ : Set (Matrix d d ℂ × Matrix d d ℂ)) f :=
+    ⟨convex_empty, by intro x hx; exact False.elim hx⟩
+  have hc : ConvexOn ℝ (Set.univ : Set (Matrix d d ℂ × Matrix d d ℂ)) f :=
+    Eq.mp (congrFun he f) hz
+  have hi := hc.2 (x := (0, 0)) (y := (1, 1)) (by trivial) (by trivial)
+    (by norm_num : (0 : ℝ) ≤ 1 / 2) (by norm_num : (0 : ℝ) ≤ 1 / 2)
+    (by norm_num : (1 / 2 : ℝ) + 1 / 2 = 1)
+  norm_num [f, Matrix.trace] at hi
 
 def family : Registration arena.{u} (type_of% (@geometric_trace_support_convex.{u})) where
   actual := actual
@@ -91,7 +79,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   arena := .source ⟨arena⟩
   objectArena := .source ⟨arena⟩
   catalog := Lean.Name.anonymous
-  localNames := true
+  localNames := false
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
@@ -103,9 +91,9 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Hiai.GeometricTraceConvexity
     definition := none
-    coordinates := #[0, 1, 2, 3, 4]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
