@@ -139,7 +139,19 @@ private theorem finite_certificate :
           cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = j.castAdd 9) ↔
           bondDefects HardinA229530Strip.between p r + bondDefects horizontal r r ≤ d.val - 1 ∧
             HardinA229530Strip.cl r (d.val - 1 - (bondDefects HardinA229530Strip.between p r + bondDefects horizontal r r)) = j) := by
-      decide +kernel
+      have numeric : ∀ (r : Row) (c d : Fin 3) (j : Fin 10), 0 < d.val →
+          ((c.val ≤ d.val ∧ cl r (d.val - c.val) = j.castAdd 9) ↔
+            c.val ≤ d.val - 1 ∧ HardinA229530Strip.cl r (d.val - 1 - c.val) = j) := by
+        decide +kernel
+      intro p r d j _ hd
+      by_cases hc : bondDefects between p r + bondDefects horizontal r r < 3
+      · exact numeric r ⟨_, hc⟩ d j hd
+      · have h0 : ¬ (bondDefects between p r + bondDefects horizontal r r ≤ d.val) := by omega
+        have h1 : ¬ (bondDefects HardinA229530Strip.between p r +
+            bondDefects horizontal r r ≤ d.val - 1) := by
+          change ¬ (bondDefects between p r + bondDefects horizontal r r ≤ d.val - 1)
+          omega
+        simp only [h0, h1, false_and]
     have active_table : ∀ p (d : Fin 3) (j : Fin 10),
         Valid p d.val → 0 < d.val →
         HardinA229530Strip.T (HardinA229530Strip.cl p (d.val - 1)) j =
@@ -180,7 +192,7 @@ private theorem finite_certificate :
             HardinSourceContinuations.M
               (HardinSourceContinuations.sourceClass (true, true) p)
               ⟨s.val - 10 + 1, by omega⟩ / 16 := by
-        exact Int.eq_ediv_of_mul_eq_right (by decide) h
+          exact Int.eq_ediv_of_mul_eq_right (by decide) h
         exact hd.trans (zero_table p d s hz)
       · exact remaining p d hp s ha hz
   · have initial_cut : ∀ (r : Row) (j : Fin 10),
