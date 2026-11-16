@@ -11,7 +11,7 @@ internal sealed class HardinA229531StripClass15Document : IScribeDocumentDefinit
             Describe.Lean(DescribeId.Create("transition-counts"), DeclarationHandle.Create(Prefix + "transition_counts"),
                 H("Exact successor count"), StatementSource.FromAuthor(Disp(TransitionFormula(Num("15")))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("For every actual row p : Fin 5 to Fin 3 and residual d : Fin 2 satisfying Valid p (Fin.val d), the number of successor rows r whose horizontal and cross-bond defects fit Fin.val d and whose new residual class is 15 equals T (cl p (Fin.val d)) 15. Finite kernel evaluation checks this exact column of the 20 by 20 transfer. The combined successor identity applies this column in its corresponding target case."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For every actual row p : Fin 5 to Fin 3 and residual d : Fin 2 satisfying Valid p (Fin.val d), the number of successor rows r whose horizontal and cross-bond defects fit Fin.val d and whose new residual class is 15 equals T (cl p (Fin.val d)) 15. Nine source-colour fibres partition the finite kernel checks of this exact column of the 20 by 20 transfer. The combined successor identity applies this column in its corresponding target case."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
     private static Formula Num(string value) => D(value.Select(c => (byte)(c - '0')).ToArray());
     private static Formula Q(string name) => Seq(name.Split('.').SelectMany((part,i) => i == 0
