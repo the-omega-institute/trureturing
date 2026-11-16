@@ -8,6 +8,8 @@
 
 import D5.S3.Analytic.CanonicalProducts.IntegratedTransverseMoment
 
+/-! Two-sided Poisson comparisons from scalar logarithmic estimates. -/
+
 open Filter MeasureTheory
 open scoped Topology BigOperators
 
@@ -106,7 +108,7 @@ private lemma endpoint_poisson_bounds {a g T : ℝ}
       (hlog.intervalIntegrable (μ := volume) 0 a) hhigh hu
   rw [intervalIntegral.integral_const_mul, integral_id] at hL hU
   constructor
-  · convert hL using 1 <;> ring
+  · convert hL using 1 <;> field_simp [(quadratic_pos hg T).ne'] <;> ring
   · convert hU using 1 <;> ring
 
 theorem integrated_defect_poisson_bounds {I : Type*} (w a gamma : I → ℝ)
