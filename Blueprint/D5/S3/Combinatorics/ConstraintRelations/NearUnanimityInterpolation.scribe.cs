@@ -15,8 +15,8 @@ internal sealed class NearUnanimityInterpolationDocument : IScribeDocumentDefini
             Paragraph(Text("Let I be any type in universe u and X(i) any family of types in an independent universe v. Tuple(X) denotes the dependent product of the X(i). Operations(X,k) denotes the family of functions nu(i) from (Fin(k) to X(i)) to X(i). Neither I nor any X(i) is required to be finite.")),
             Paragraph(Text("For tuples r and theta and a finite coordinate set T, Agree(r,theta,T) means that r(i)=theta(i) for every i in T. For values a,b in X(i) and bad in Fin(k), OneException(a,b,bad) is the function taking value b at bad and a at every other index. Combine(nu,rows) is the tuple whose ith coordinate is nu(i) applied to the k values rows(j)(i).")),
             Paragraph(Text("The near-unanimity law and coordinatewise preservation have the following full meanings:")),
-            Disp(NearUnanimity()),
-            Disp(Preservation()),
+            Paragraph(Math(Disp(NearUnanimity()))),
+            Paragraph(Math(Disp(Preservation()))),
             Describe.Lean(
                 DescribeId.Create("fixed-arity-near-unanimity-finite-coordinate-interpolation"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/ConstraintRelations/NearUnanimityInterpolation.finite_coordinate_interpolation"),
@@ -49,7 +49,7 @@ internal sealed class NearUnanimityInterpolationDocument : IScribeDocumentDefini
     private static Formula NearUnanimity() => All("i", Index,
         All("a", Call("X", F.Id("i")), All("b", Call("X", F.Id("i")), All("bad", Arity,
             Rel(Call("nu", F.Id("i"), Call("OneException", F.Id("a"), F.Id("b"), F.Id("bad"))),
-                FormulaRelationOperator.Equal, F.Id("a")))));
+                FormulaRelationOperator.Equal, F.Id("a"))))));
     private static Formula Preservation() => All("rows", Fn(Arity, Tuple),
         Imp(All("j", Arity, Rel(Call("rows", F.Id("j")), FormulaRelationOperator.MemberOf, F.Id("R"))),
             Rel(Call("Combine", F.Id("nu"), F.Id("rows")), FormulaRelationOperator.MemberOf, F.Id("R"))));
@@ -70,6 +70,6 @@ internal sealed class NearUnanimityInterpolationDocument : IScribeDocumentDefini
             All("F", Call("Finset", Index),
                 Imp(And(Rel(D(3), FormulaRelationOperator.LessThanOrEqual, F.Id("k")),
                     And(Call("NULaw", F.Id("nu")), And(Call("Preserves", F.Id("nu"), F.Id("R")), small))),
-                    Interpolates(F.Id("F")))))))));
+                    Interpolates(F.Id("F"))))))))));
     }
 }
