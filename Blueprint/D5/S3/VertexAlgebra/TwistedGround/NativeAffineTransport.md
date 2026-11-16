@@ -188,6 +188,20 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/NativeAffineTransport.externa
 
 For every finite I and J, complex square U on I, symmetric complex A on I plus J, arbitrary mean mu, occupations d and h and N at least degree(d.sumElim(h)), the d coefficient of linearSubstitution(U,externalSection(expCut(affineExponent(A,mu),N),h)) equals affineCoefficient(transportCovariance(sourceBlock(U),A),transportMean(sourceBlock(U),mu),d.sumElim(h)). The block fixes every external coordinate and ordinary transpose is used. This supplies the original-row proof with both external occupations intact.
 
+**Theorem 1.14 (Ordinary symmetry under transport).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/NativeAffineTransport.transportCovariance_symm`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/NativeAffineTransport.transportCovariance_symm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For arbitrary finite types, a complex rectangular substitution transports a symmetric covariance to a symmetric covariance by ordinary transpose. No positivity, invertibility or nonempty-type hypothesis is required.
+
 The native moment recurrence is compared with the finite exponential polynomial by strong occupation induction. Total target degree controls the Taylor cutoff. Gaussian polynomial calculus is classical, and this reusable transport makes no literature novelty claim.
 
 ## References
@@ -204,5 +218,6 @@ The native moment recurrence is compared with the finite exponential polynomial 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/NativeAffineTransport.taylorCoefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/NativeAffineTransport.taylorCoefficient_cut`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/NativeAffineTransport.transportCovariance`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/NativeAffineTransport.transportCovariance_symm`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/NativeAffineTransport.transportMean`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalChargedRowSource](OriginalChargedRowSource.md)

@@ -225,7 +225,7 @@ def transportCovariance (U : Matrix I J ℂ) (A : Matrix J J ℂ) : Matrix I I �
 def transportMean (U : Matrix I J ℂ) (mu : J → ℂ) : I → ℂ :=
   fun i => ∑ a, U i a * mu a
 
-private theorem transportCovariance_symm (U : Matrix I J ℂ) (A : Matrix J J ℂ)
+theorem transportCovariance_symm (U : Matrix I J ℂ) (A : Matrix J J ℂ)
     (hs : ∀ i j, A i j = A j i) :
     ∀ i j, transportCovariance U A i j = transportCovariance U A j i := by
   intro i j
