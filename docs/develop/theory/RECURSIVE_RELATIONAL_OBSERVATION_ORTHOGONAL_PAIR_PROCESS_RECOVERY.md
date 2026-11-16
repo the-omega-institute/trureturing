@@ -3144,3 +3144,1046 @@ $A_{ca}$、隐藏指标、矩阵单位、Gram 逆、Haar 平均、Choi 参考和
 [WRCKSW]: https://arxiv.org/html/quant-ph/0605009v1 "Dennis Kretschmann, Dirk Schlingemann and Reinhard F. Werner, The Information-Disturbance Tradeoff and the Continuity of Stinespring Representation，Theorem 3、(32)：完全范数的信息—扰动界。"
 
 ## 追加锚（本行以下为增补区）
+
+## 36. 同一固定来源上的二至七维可达返回族
+
+**定义 36.1（新声明的相干仪器与返回切口）。** 固定定义 30.1 的完整合同、同一个 $\mathcal N_\star=\mathcal N_{1/1000}$ 及整个复承诺族 $\mathfrak F$。使用 §22 的固定 Weyl 坐标
+
+$$
+\begin{aligned}
+\omega&=e^{2\pi i/3},&
+X|k\rangle&=|k+1\bmod3\rangle,&
+Z|k\rangle&=\omega^k|k\rangle,\\
+\mathcal J&=(\mathbb Z/3\mathbb Z)^2\setminus\{(0,0)\},&
+W_j&=X^aZ^b\quad(j=(a,b)\in\mathcal J),\\
+K_j&=\frac{I\otimes W_j+u_\star W_j\otimes I
+             +v_\star(I\otimes W_j)S+w_\star(W_j\otimes I)S}
+             {\sqrt{3A_\star}}.
+\end{aligned}
+\tag{36.1}
+$$
+
+$S$ 是原交换，$u_\star,v_\star,w_\star,A_\star$ 恰为 (24.4)。这是 (22.4) 的同一组 Weyl Kraus 算子；本定义不把已经测出细标签 $j$ 的实现改称相干实现。
+
+对每个 $d\in\{2,\ldots,7\}$，令
+
+$$
+\mathcal S_d=\{T\subset\mathcal J:|T|=d\},\qquad
+N_d=\binom8d,\qquad n_d=\binom7{d-1},
+\qquad M_T=\mathbb C^d.
+\tag{36.2}
+$$
+
+固定 $\mathcal J$ 的字典序，令 $\ell_T:T\to\{1,\ldots,d\}$ 为递增编号。实际经典结果是完整子集 $T$；细指标 $j\in T$ 保持为 $M_T$ 内的相干坐标，不被测成另一个记录。所声明的分支是
+
+$$
+L_T\psi=\frac1{\sqrt{n_d}}\sum_{j\in T}K_j\psi\otimes|\ell_T(j)\rangle,
+\qquad
+\Psi_T(Y)=L_TYL_T^\dagger.
+\tag{36.3}
+$$
+
+返回切口位于这一仪器完成、实际 $T$ 已经典化之后，以及条件返回开始之前。切口处除原 $AB$ 外的全部保留相干载体的联合空间是 $M_T$；没有另外保留的输入相关相干程序、控制器、通信或工作区。经典 $T$ 单独计费。独立初始辅助态、固定门、测量与返回映射均不依赖未知 $(P,Q)$；丢弃系统和不可访问的测量纯化不交给返回端。
+
+**定理 36.2（全边缘不变的中间相干维数与统一原误差）。** 定义 36.1 给出每个 $d=2,\ldots,7$ 的真实有限 CP 仪器，满足整个代数上的精确边缘
+
+$$
+\sum_{T\in\mathcal S_d}\operatorname{Tr}_{M_T}\Psi_T(Y)
+       =\mathcal N_\star(Y)\qquad(Y\in M_9(\mathbb C)).
+\tag{36.4}
+$$
+
+存在与输入无关、只读取实际 $T$ 及 $ABM_T$ 的固定 CPTP 返回 $\mathcal D_T$，使 $\mathcal T_d=\sum_T\mathcal D_T\Psi_T$ 对每个九维密度矩阵 $\rho$ 都满足
+
+$$
+\frac12\|\mathcal T_d(\rho)-\rho\|_1\le U_d,
+\qquad
+U_d=\kappa\frac{8-d}{7d},\qquad
+\kappa=\frac{322140963158481640000}
+              {186231589781788370526267}<\frac7{4000}.
+\tag{36.5}
+$$
+
+因此原定义 30.1 的同输入误差 $E_d$ 也不超过 $U_d$。所有分支、包括稀有结果均在无条件和中，不后选择。实际概率和诊断概率分别为
+
+$$
+\begin{aligned}
+p_T(\rho)&=\frac1{n_d}\operatorname{Tr}
+                 \left[\rho\sum_{j\in T}K_j^\dagger K_j\right],\\
+q_T&=\operatorname{Tr}\Psi_T(I_9/9)=\frac1{N_d}.
+\end{aligned}
+\tag{36.6}
+$$
+
+后一等式不把 $p_T(\rho)$ 宣告为均匀概率。同一实际记录的纯承诺 CQ 误差具有
+
+$$
+\sup_{\rho=P\otimes Q,\ (P,Q)\in\mathfrak F}
+ \frac12\sum_T\|\mathcal D_T\Psi_T(\rho)-p_T(\rho)\rho\|_1
+ \le\sqrt{U_d}.
+\tag{36.7}
+$$
+
+每个条件侧空间的维数为 $d$，实际经典结果数为 $N_d$；单个结果可用 $\lceil\log_2N_d\rceil$ 个固定长度比特编码。这些是所声明切口和末标签的预算，不是编解码瞬时峰值或完整运行费用的预算。证明见 §37—38；其中一般子集压缩和极分解返回仅作为已知供应，新增结论是这张固定来源上的 (36.5) 及其 §39 的严格比较。
+
+## 37. 固定 Weyl 来源的算子二阶恒等式
+
+**命题 37.1（用于实际误差的精确源常数）。** 对 (36.1) 置
+
+$$
+F_j=K_j^\dagger K_j,\qquad \Delta_j=F_j-I_9/8,\qquad
+\mu=\frac{706845429081}{6323246880968}.
+\tag{37.1}
+$$
+
+则
+
+$$
+\begin{aligned}
+&\sum_jF_j=I_9,\qquad
+  \operatorname{Tr}F_j=9/8,\qquad F_j\succeq\mu I_9,\qquad
+ 0<\mu\le1/8,\\
+&\sum_j\Delta_j=0,\\
+&\sum_j\Delta_j^2
+  =\frac{434769256463190827400\,I_9
+               -48442188274531632600\,S}
+          {624741423713617818134641}.
+\end{aligned}
+\tag{37.2}
+$$
+
+特别地，记
+
+$$
+\nu=\left\|\sum_j\Delta_j^2\right\|_{\rm op}
+   =\frac{483211444737722460000}{624741423713617818134641},
+\qquad
+\frac{\nu}{4\mu}=\kappa.
+\tag{37.3}
+$$
+
+证明。全保迹恒等式直接复用原定理 8.2；(22.5) 保证改变无迹正交归一基没有改变 $\mathcal N_\star$。其余源数值在这里直接求出。
+
+对任一非零 Weyl 指标，$W_j$ 酉、$\operatorname{Tr}W_j=0$、$W_j^3=I_3$。这些等式由 $ZX=\omega XZ$、$\omega^3=1$ 直接成立：若 $a\ne0$ 则矩阵没有对角元，若 $a=0,b\ne0$ 则迹为 $1+\omega^b+\omega^{2b}=0$；三次乘积的相位为 $\omega^{3ab}=1$。定义
+
+$$
+R_j=W_j\otimes W_j^\dagger,\qquad B_j=R_j+R_j^\dagger.
+\tag{37.4}
+$$
+
+于是 $R_j^3=I_9$、$SR_jS=R_j^\dagger$。由
+$\operatorname{Tr}[(A\otimes B)S]=\operatorname{Tr}(AB)$，
+
+$$
+\operatorname{Tr}R_j=0,\qquad
+\operatorname{Tr}S=\operatorname{Tr}(R_jS)
+ =\operatorname{Tr}(R_j^\dagger S)=3.
+\tag{37.5}
+$$
+
+完整九个 Weyl 矩阵满足
+$\operatorname{Tr}(W_{ab}^\dagger W_{a'b'})=3\delta_{aa'}\delta_{bb'}$：
+不同移位没有对角重叠，同一移位时对相位求和。因此其矩阵元完整性为
+
+$$
+\sum_{a,b}(W_{ab})_{rs}\overline{(W_{ab})_{ut}}
+       =3\delta_{ru}\delta_{st}.
+\tag{37.6}
+$$
+
+按张量指标解释右侧就是 $3S$；去掉 $(a,b)=(0,0)$ 后得到
+
+$$
+\sum_{j\in\mathcal J}R_j=\sum_jR_j^\dagger=3S-I_9,
+\qquad
+\sum_jR_jS=\sum_jR_j^\dagger S=3I_9-S.
+\tag{37.7}
+$$
+
+现在仅在本证明中简写 $u=u_\star,v=v_\star,w=w_\star,A=A_\star$。从 (36.1) 左提取酉 $I\otimes W_j$，得到
+
+$$
+K_j=\frac{I\otimes W_j}{\sqrt{3A}}
+           (I_9+uR_j+vS+wR_jS).
+\tag{37.8}
+$$
+
+$S,R_jS,R_j^\dagger S$ 都是自伴对合。直接展开伴随乘积可写成
+
+$$
+\begin{aligned}
+F_j&=\frac1{3A}
+       (h_0I_9+h_1B_j+h_2S+h_3R_jS+h_4R_j^\dagger S),\\
+h_0&=1+u^2+v^2+w^2
+        =\frac{820919723401}{819025000000},\\
+h_1&=u+vw=\frac{932379}{56562500},\\
+h_2&=2(v+uw)=-\frac{1324023}{56562500},\\
+h_3&=2w=-\frac{9956}{113125},\qquad
+h_4=2uv=-\frac{11}{31250}.
+\end{aligned}
+\tag{37.9}
+$$
+
+例如交叉项 $uv$ 乘上 $R_j^\dagger S+SR_j=2R_j^\dagger S$，而 $uw$ 的两项均为 $S$，所以 (37.9) 包含其符号与系数，未把 $R_jS$ 与 $R_j^\dagger S$ 混同。(37.5) 说明所有 $F_j$ 的迹相同；由 $\sum_jF_j=I_9$，每个迹为 $9/8$。
+
+为求平方，令 $J_0=S,J_1=R_jS,J_2=R_j^\dagger S$。它们满足
+
+$$
+B_j^2=2I_9+B_j,\qquad
+J_r^2=I_9,\qquad
+J_rJ_s+J_sJ_r=B_j\ (r\ne s),
+\qquad
+B_jJ_r=J_s+J_t
+\tag{37.10}
+$$
+
+其中最后一式的 $\{r,s,t\}=\{0,1,2\}$；$B_j$ 与各 $J_r$ 对易。这些关系只用 $R_j^3=I_9$ 和 $SR_jS=R_j^\dagger$，因此适用于全部八个复 Weyl 坐标。置
+
+$$
+\begin{aligned}
+t_0&=h_0^2+2h_1^2+h_2^2+h_3^2+h_4^2,\\
+t_1&=2h_0h_1+h_1^2+h_2h_3+h_2h_4+h_3h_4,\\
+t_2&=2h_0h_2+2h_1(h_3+h_4),\\
+t_3&=2h_0h_3+2h_1(h_2+h_4),\\
+t_4&=2h_0h_4+2h_1(h_2+h_3).
+\end{aligned}
+\tag{37.11}
+$$
+
+(37.10) 给出
+$F_j^2=(t_0I_9+t_1B_j+t_2S+t_3R_jS+t_4R_j^\dagger S)/(9A^2)$。
+对八个指标求和并用 (37.7)，再用 $\sum F_j=I_9$，便有
+
+$$
+\begin{aligned}
+\sum_j\Delta_j^2
+ &=\sum_jF_j^2-I_9/8\\
+ &=\left(\frac{8t_0-2t_1+3(t_3+t_4)}{9A^2}-\frac18\right)I_9
+    +\frac{6t_1+8t_2-t_3-t_4}{9A^2}S.
+\end{aligned}
+\tag{37.12}
+$$
+
+将 (37.9) 及 $A=790405860121/307134375000$ 代入，两系数分别为
+
+$$
+\frac{434769256463190827400}{790405860121^2},
+\qquad
+-\frac{48442188274531632600}{790405860121^2};
+\qquad
+790405860121^2=624741423713617818134641.
+\tag{37.13}
+$$
+
+这给出 (37.2) 的二阶恒等式。$S$ 在对称、反对称空间上分别为 $+1,-1$，故该正算子的两个本征值分别为
+
+$$
+\frac{386327068188659194800}{624741423713617818134641},
+\qquad
+\frac{483211444737722460000}{624741423713617818134641}.
+\tag{37.14}
+$$
+
+后者较大，得到 (37.3) 的 $\nu$。
+
+最后，置 $r=(3A)^{-1/2}$。原四项表达式及酉性给出
+$\|K_j-r(I\otimes W_j)\|_{\rm op}\le rb$，其中
+
+$$
+b=|u|+|v|+|w|=\frac{64259}{905000}<1.
+\tag{37.15}
+$$
+
+任意单位向量 $\psi$ 因而满足
+$\|K_j\psi\|\ge r(1-b)$。所以
+
+$$
+F_j\succeq\frac{(1-b)^2}{3A}I_9
+ =\frac{706845429081}{6323246880968}I_9=\mu I_9.
+\tag{37.16}
+$$
+
+$\mu>0$，而对八项求和给 $8\mu I_9\preceq I_9$，故 $\mu\le1/8$。代入 (37.3)、(37.16) 并约分，得到 (36.5) 的 $\kappa$。其严格有理比较为
+
+$$
+\frac7{4000}-\kappa
+ =\frac{15057275838592033683869}
+        {744926359127153482105068000}>0.
+\tag{37.17}
+$$
+
+所有这些数值只依赖原固定来源，不依赖未知输入或任何连续采样。证毕。
+
+## 38. 实际粗记录、固定返回与全部结果的误差
+
+定理 36.2 的证明。每个 $j$ 恰好属于 $n_d$ 个子集。由 (36.3)，
+
+$$
+\operatorname{Tr}_{M_T}\Psi_T(Y)
+       =\frac1{n_d}\sum_{j\in T}K_jYK_j^\dagger,
+\qquad
+L_T^\dagger L_T=\frac{G_T}{n_d},\qquad
+G_T=\sum_{j\in T}F_j.
+\tag{38.1}
+$$
+
+对所有实际 $T$ 求和得到 (36.4) 以及
+$\sum_TL_T^\dagger L_T=I_9$，所以这是一套 CP、无条件保迹的有限仪器，包括承诺外矩阵。它可以直接以等距
+$\psi\mapsto\sum_TL_T\psi\otimes|T\rangle$
+及只测量 $T$ 的指针实现；等距性来自上述完备关系，辅助输入固定且独立。另一种等价因子化是先用
+$V_{\rm W}\psi=\sum_jK_j\psi\otimes|j\rangle$，
+再在原八维环境上施行
+
+$$
+A_T=\frac1{\sqrt{n_d}}\sum_{j\in T}
+            |\ell_T(j)\rangle\langle j|,
+\qquad
+\sum_TA_T^\dagger A_T=I_8,\qquad
+L_T=(I_9\otimes A_T)V_{\rm W}.
+\tag{38.2}
+$$
+
+这是已知秩受限仪器／子集压缩形状的应用，参见 [Farber—Gour，Lemma 6、Theorem 7 证明中的 (67)—(71)][ICRFG]。这里 (38.1) 另外保证了所需的整个 $\mathcal N_\star$ 边缘；不是只比较环境的某个平均保真度。没有测量 $j$，没有在一个已测细仪器中恢复已丢的交叉项。
+
+命题 37.1 给 $G_T\succeq d\mu I_9$，故每个 $L_T$ 都满列秩。定义
+
+$$
+H_T=\sqrt{L_T^\dagger L_T}=\sqrt{G_T/n_d},\qquad
+V_T=L_TH_T^{-1},\qquad V_T^\dagger V_T=I_9.
+\tag{38.3}
+$$
+
+固定任意与输入无关的九维密度矩阵 $\tau_0$，取
+
+$$
+\mathcal D_T(Y)=V_T^\dagger YV_T
+       +\operatorname{Tr}[(I_{9d}-V_TV_T^\dagger)Y]\tau_0.
+\tag{38.4}
+$$
+
+第一项是 CP，第二项是正效应的测量—准备映射，亦为 CP；两项的迹之和是 $\operatorname{Tr}Y$。所以 (38.4) 是定义在整个 $M_{9d}$ 上的固定 CPTP 返回。$L_T=V_TH_T$ 的像位于 $V_TV_T^\dagger$ 内，故
+
+$$
+\mathcal D_T\Psi_T(Y)=H_TYH_T,\qquad
+\mathcal T_d(Y)=\sum_TH_TYH_T,\qquad
+\sum_TH_T^2=I_9.
+\tag{38.5}
+$$
+
+这个矩形极分解返回正是 [Gregoratti—Werner，Proposition 8，(19)—(20)][ARRGW02] 的既有映射；平方情形也见 [Proposition 4，(19)—(20)][ARRGW04]。这里只用它提供具体合法返回，误差并不由其最优纠缠保真度叙述推断。
+
+现在求原最坏半迹距离。令
+
+$$
+B_T=\sum_{j\in T}\Delta_j=G_T-\frac d8I_9,
+\qquad
+Z_T=H_T-\sqrt{\frac{d}{8n_d}}I_9,\qquad
+R_d=\sum_TZ_T^2.
+\tag{38.6}
+$$
+
+对任意 $\lambda\ge d\mu$，由于 $\mu\le1/8$，
+
+$$
+\left(\sqrt\lambda-\sqrt{d/8}\right)^2
+ =\frac{(\lambda-d/8)^2}{(\sqrt\lambda+\sqrt{d/8})^2}
+ \le\frac{(\lambda-d/8)^2}{4d\mu}.
+\tag{38.7}
+$$
+
+$G_T$ 与其减去的标量矩阵对易，故对 $G_T$ 的本征值逐项应用此标量不等式便得算子序
+
+$$
+Z_T^2\preceq\frac{B_T^2}{4d\mu n_d}.
+\tag{38.8}
+$$
+
+不能把各子集的算子范数先相加来替代下面的二阶抵消。每个 $j$ 出现 $n_d$ 次，每个有序不同指标对 $(j,k)$ 出现
+$m_d=\binom6{d-2}=n_d(d-1)/7$ 次。又 $\sum_j\Delta_j=0$，所以即使不同 $\Delta_j$ 不对易，仍有
+
+$$
+\begin{aligned}
+\sum_TB_T^2
+ &=n_d\sum_j\Delta_j^2
+        +m_d\sum_{j\ne k}\Delta_j\Delta_k\\
+ &=(n_d-m_d)\sum_j\Delta_j^2
+   =n_d\frac{8-d}{7}\sum_j\Delta_j^2.
+\end{aligned}
+\tag{38.9}
+$$
+
+交叉和使用全部有序对，等于
+$(\sum_j\Delta_j)^2-\sum_j\Delta_j^2$，没有引入交换性。将 (38.8)—(38.9) 相加并接入源恒等式 (37.3)，得
+
+$$
+0\preceq R_d
+ \preceq\frac{8-d}{28d\mu}\sum_j\Delta_j^2,
+\qquad
+\|R_d\|_{\rm op}\le\frac{\nu}{4\mu}\frac{8-d}{7d}=U_d.
+\tag{38.10}
+$$
+
+最后复用 (22.12) 的双交换子恒等式，但保持二阶和的算子形式。对任意 $Y$，
+
+$$
+\mathcal T_d(Y)-Y
+ =-\frac12\sum_T[H_T,[H_T,Y]]
+ =\sum_TZ_TYZ_T-\frac12(R_dY+YR_d).
+\tag{38.11}
+$$
+
+对密度矩阵 $\rho$，第一项为正，迹范数等于
+$\operatorname{Tr}(R_d\rho)\le\|R_d\|_{\rm op}$。
+另一方面，
+$\|R_d\rho\|_1,\|\rho R_d\|_1\le\|R_d\|_{\rm op}$。
+所以
+
+$$
+\frac12\|\mathcal T_d(\rho)-\rho\|_1
+ \le\frac12\operatorname{Tr}(R_d\rho)
+       +\frac14\|R_d\rho+\rho R_d\|_1
+ \le\|R_d\|_{\rm op}\le U_d.
+\tag{38.12}
+$$
+
+这证明了全部九维态上的 (36.5)，不需要假设返回通道协变，也不把平均保证冒充最坏保证。
+
+由 (38.1) 的分支迹直接得到 (36.6) 的 $p_T$。由
+$\operatorname{Tr}F_j=9/8$ 和 $N_dd=8n_d$，
+
+$$
+q_T=\frac{\operatorname{Tr}G_T}{9n_d}
+     =\frac{d}{8n_d}=\frac1{N_d},
+\qquad
+p_T(\rho)\ge\frac{d\mu}{n_d}>0.
+\tag{38.13}
+$$
+
+最后一个下界适用于每个密度输入，所以没有零概率失败出口或后选择。它不把不同输入的实际概率变成同一个诊断概率。
+
+为证明 (36.7)，只在原纯承诺上令
+$\omega_T=H_T\rho H_T$、$p_T=\operatorname{Tr}\omega_T$。
+既有 (22.17)、推论 33.2 的纯输入比较给出
+
+$$
+\begin{aligned}
+\frac12\sum_T\|\omega_T-p_T\rho\|_1
+ &\le\sum_Tp_T
+       \sqrt{1-\operatorname{Tr}(\rho\omega_T)/p_T}\\
+ &\le\sqrt{1-\operatorname{Tr}(\rho\mathcal T_d(\rho))}
+ \le\sqrt{\tfrac12\|\mathcal T_d(\rho)-\rho\|_1}
+ \le\sqrt{U_d}.
+\end{aligned}
+\tag{38.14}
+$$
+
+第一步使用 [Fuchs—van de Graaf，Theorem 1，(46)][ARRFVG]，中间是加权 Cauchy—Schwarz，随后是纯态效应 $\rho$ 的变分界。理想块保留同一实际 $T$ 和同一 $p_T(\rho)$。此处没有 $U_d$ 阶的 CQ 保证，也没有对每个归一化条件分支宣告相同误差。仪器及返回的全部系数只依赖固定来源、$d,T$；因此满足准备独立性和原访问条件。证毕。
+
+## 39. 原 AB 返回误差的严格经典分离
+
+**推论 39.1（四至七维的同源严格比较）。** 令 $e_{\rm cl}$ 为忽略记录后在整个 $M_9$ 上恰为 $\mathcal N_\star$、只保留原 $AB$ 和任意有限或可数实际经典历史的全部允许仪器及固定 CPTP 返回的原误差下确界。则
+
+$$
+e_{\rm cl}\ge
+L:=\frac{185719723648099707780}{624741423713617818134641}
+ >\frac1{3500}.
+\tag{39.1}
+$$
+
+定义 36.1 的构造满足
+
+$$
+0<\frac{8-d}{12398400d}\le E_d\le U_d
+\quad(2\le d\le7),\qquad
+U_d<L\le e_{\rm cl}\quad(4\le d\le7).
+\tag{39.2}
+$$
+
+各维数的一组明确预算如下；表中严格上界来自同一个 $\kappa<7/4000$。
+
+| 保留相干侧维数 $d$ | 实际结果数 $N_d$ | 单结果固定比特数 | $U_d$ 的表达式 | 简单严格上界 |
+| --- | --- | --- | --- | --- |
+| $2$ | $28$ | $5$ | $3\kappa/7$ | $3/4000$ |
+| $3$ | $56$ | $6$ | $5\kappa/21$ | $1/2400$ |
+| $4$ | $70$ | $7$ | $\kappa/7$ | $1/4000$ |
+| $5$ | $56$ | $6$ | $3\kappa/35$ | $3/20000$ |
+| $6$ | $28$ | $5$ | $\kappa/21$ | $1/12000$ |
+| $7$ | $8$ | $3$ | $\kappa/49$ | $1/28000$ |
+
+比较的是同一原复承诺、同一 $\mathcal N_\star$、同一未知原输入的无条件 $AB$ 返回误差；不要求经典比较方采用相同标签数。二、三维的上界没有给出对经典下界的严格优势；该事实既不证明二、三维不可能有优势，也不证明这些上界最优。
+
+证明。原 (15.2) 在固定参数下给出
+
+$$
+a_\star=\frac{2(1-u_\star)(v_\star-w_\star)}{A_\star}
+       =\frac{19949206410}{790405860121}.
+\tag{39.3}
+$$
+
+直接复用定理 22.1 的普遍经典下界，而不把其某一特定 Weyl 实现作为比较方，得到
+
+$$
+e_{\rm cl}\ge\frac7{15}a_\star^2=L,\qquad
+L-\frac1{3500}
+ =\frac{25277609054731159095359}
+        {2186594982997662363471243500}>0.
+\tag{39.4}
+$$
+
+这里原下界已覆盖一般 CP 分支、不可读隐藏细化、全部实际历史和任意允许校正。另一边，定理 36.2 给出实际达到不超过 $U_d$ 的仪器。$d\ge4$ 时
+$(8-d)/(7d)\le1/7$，故
+
+$$
+E_d\le U_d\le\kappa/7
+  <\frac1{4000}<\frac1{3500}<L.
+\tag{39.5}
+$$
+
+这是两个真实可行类在相同误差指标上的严格分离，未用分别可达的边缘最优值拼成同一次实现。
+
+每个分支的 $d_T=d$、$\sum_Tq_T=1$。因此既有定理 30.2 另给
+
+$$
+E_d\ge\frac1{1549800}\left(\frac1d-\frac18\right)
+       =\frac{8-d}{12398400d}>0.
+\tag{39.6}
+$$
+
+这与原精确八维端点一致，不把正误差构造宣告为精确返回。表中计数是 (36.2) 的二项式，固定比特数是其二进制编码长度；各误差上界只是 (36.5)、(37.17) 的代入。证毕。
+
+**命题 39.2（实际概率仍可区分同一个来源的输入）。** 定义 36.1 的每个 $d=2,\ldots,7$ 均有实际结果 $T$，使 $p_T(|0,1\rangle\langle0,1|)\ne p_T(|1,0\rangle\langle1,0|)$，虽然其 $q_T$ 一律为 $1/N_d$。
+
+证明。使用 (37.9) 的同一 $h_0,\ldots,h_4$。对 $j=(a,b)$，直接计算 (37.4) 在 $|0,1\rangle$ 上的对角元：当 $a=0$ 时 $B_j$ 的期望为 $-1$；当 $a\ne0$ 时为零。$S$ 的期望为零，$R_jS$ 的期望恰在 $a=2$ 时为一，$R_j^\dagger S$ 的期望恰在 $a=1$ 时为一，其余为零。相位在这些返回对角元中抵消。因此
+
+$$
+\langle0,1|F_{(a,b)}|0,1\rangle
+ =\frac1{3A_\star}
+ \begin{cases}
+ h_0-h_1,&a=0,\ b=1,2,\\
+ h_0+h_4,&a=1,\\
+ h_0+h_3,&a=2.
+ \end{cases}
+\tag{39.7}
+$$
+
+换成 $|1,0\rangle$ 后，$a=1,2$ 两行互换。若 $r_a(T)$ 是 $T$ 中第一坐标为 $a$ 的指标数，则 (36.6) 给出
+
+$$
+p_T(|0,1\rangle\langle0,1|)
+ -p_T(|1,0\rangle\langle1,0|)
+ =\frac{(r_1(T)-r_2(T))(h_4-h_3)}
+        {3A_\star n_d}.
+\tag{39.8}
+$$
+
+$h_4\ne h_3$。对 $d=2,3,4,5,6,7$，分别选择计数
+$(r_0,r_1,r_2)=(0,2,0),(0,3,0),(1,3,0),(2,3,0),(2,3,1),(2,3,2)$；
+每个计数均在两、三、三种可用指标的容量内且总数为 $d$，并有 $r_1\ne r_2$。两个输入都是原完整复承诺的成员，故此例没有更换来源。证毕。
+
+## 40. 保留切口、原消费者与数学归属
+
+**范围约定 40.1（同一原关联上的条件应用）。** 定义 36.1—定理 36.2 与推论 39.1 的来源解释保持定义 1.1—1.3 的闭尖生成锥、严格正单位、每个完整排除球及全部原效应的 $\mathsf Q_1$、同锥同单位 $\Phi$、实际独立产品准备 $\mathrm E_2$。所有有序复正交对都在量词中，同一个未知 $\mathrm E_2(p,q)=P\otimes Q$ 被处理并被返回。第一步指定消费者仍为 $\mathrm E_2(\tau(p,q))=P\otimes(I-P-Q)$，其边缘和目标分数在返回之前评价。由 (36.4)，原 (24.2) 的 $D(\mathcal N_\star)$ 和 $s_{\mathcal N_\star}$ 原样适用；这里没有在返回未知原输入的同时另保留一份独立精确的 $P\otimes R$。
+
+本构造声明新的相干仪器和相应固定控制。它没有从一个只报告 $\mathcal N_\star$ 边缘的实际装置推断可访问环境，也没有把已测细标签的装置升级成 (36.3)。在 (36.3) 中，同一个 $T$ 内的交叉项
+$K_jYK_k^\dagger\otimes|\ell_T(j)\rangle\langle\ell_T(k)|$ 保留；先测 $j$ 再忘记细标签会删掉这些项，得到另一套仪器。本结论仅在所声明仪器、独立辅助准备及条件返回实际被供给时适用；数学 CP 构造不供应物理门、校准、权限或产品准备。
+
+切口处 $AB$ 的维数仍为九，联合保留量子系统是 $ABM_T$，维数为 $9d$，另有实际经典标签 $T$。$d$ 合计每一个跨切口保留的输入相关相干侧载体；若一个实际控制器、程序、通信、decoder workspace 或附件跨切口保留额外相干信息，其联合空间必须并入 $M_T$，便不再自动满足这里的 $d$ 预算。经典记录可有不同的物理编码，表中比特数只编码单个 $T$，不编码完整执行历史。
+
+这是指定切口的保留量，不是从准备到复位的同时峰值。例如 (38.2) 的实现可以先产生八维环境；对子集仪器作相干 Stinespring 实现时，测量前的量子指针和 $d$ 维输出也占用瞬时相干空间。返回 (38.4) 在开始后还可引入固定辅助态及其丢弃输出。这些在编解码期间实际存在的系统均计入相应瞬时峰值和总费用；没有把它们隐去后宣称全程只需 $d$ 维。按 [Bisio 等，§IV，Definition 3、(24)][ICRBISIO] 的指定步骤记忆口径，选择切口和全程联合优化是不同问题；其 Definition 4 的完整策略操作范数也不是本卷的原承诺误差 $E$。
+
+原产品准备、正反向门、辅助和丢弃系统、测量与反馈、标签及完整记录存储和通信、程序与 backing、控制与校准、验证、当前授权、返回与复位仍属同次运行的费用向量。相干维数、经典比特、熵、物理存储、峰值和总费用不是同一个量。推论 39.1 只证明原 $AB$ 指标上的误差分离，不证明总内存或总费用节省；(36.7) 也没有给出 CQ 严格优势、逐分支最优性或完整过程返回。
+
+原合法域、守卫、接受与执行后拒绝、全部回应和记录、来源身份与谱系、控制状态、rights、backing、当前 source-bound 权限、owed action、Handback／Stop／INITIAL、AA／ACK／token／吸收 halt 及下一入口语义仍保留。返回的 $AB$ 接近性没有恢复这些操作对象，没有构造一般非承诺中间态上的共同 $\sigma,\tau$，也没有供应全部有限字的在线中间输出或原完整操作返回。四份独立实际取得的完整 body、INPUT／STACK 分离及所选实际收到的 body 驱动同一 owed consumer 的桥仍要求其原条件。
+
+已有增广 $J_r$ 的定理 65.3、70.2、75.4 在其完整实际入口、封闭 writer／输入、门、当前权限、每个请求切口独立实际 wake、材料与进展前提下所解决的全部声明切口、每个有限有序请求森林和原 owed-action 返回继续成立，参见 [CRJR]；这些条件域没有被重新列为未解。未增广或物理来源、更细 primitive 内部及更广供应桥，GENERAL15.5／18.4、RG13.3 已解受限域之外的 changed／new-row Q、较广 mixed interiors 和 full terminal-task kernel，以及原未付 $3+3$ 产品、一般 completion-added 态的同时准备和实际取得，均没有由这条 $AB$ 返回腿得到新解。
+
+**数学归属约定 40.2。** 命题 37.1 的原 Weyl 效应二阶算子、其精确常数，及接入实际子集仪器后得到的全态半迹距离证书 (36.5)、同源经典严格分离 (39.2) 和实际概率例 (39.8)，是这里的 repo-derived 数学内容。所给常数是充分估计，不是精确最坏误差或锐资源前沿；范围固定在 $t_\star=1/1000$ 和所声明的六种有限仪器。普通证明和精确有理算术不宣称 Lean／kernel 核验或全球文献优先性。
+
+Gregoratti—Werner 的 quant-ph/0209025v1 Proposition 8、(16)—(21) 已包含不同输入输出维数的极分解反馈和补全为 CPTP 的公式；quant-ph/0403092v1 Proposition 4、(17)—(21) 给出同空间单步版本。它们供应 (38.4)—(38.5)，没有被另命名为新校正原理。其最优性指标是固定 Kraus 分解的通道纠缠保真度；本结论的实际粗结果是 $T$，不是一个事后可读的细 Kraus 结果。
+
+Farber—Gour arXiv:2610.14785v1 Lemma 6 已给秩受限 Kraus 与量子加经典压缩实现的等价；Theorem 7 及证明 (67)—(71) 已使用固定大小子集、关联权重和完备仪器。在均匀情形，(38.2) 就是该已知子集机制的均匀对称选择，不作为新增一般压缩定理。该文的目标是指定源及其不可访问参考的压缩保真度；本卷另外保留已指定的整个 $\mathcal N_\star$ 边缘，并对其完整原复承诺消费者求半迹距离和与全部经典实现的比较。那一压缩定理本身没有计算 (37.2) 或给出 (39.5)。
+
+Bisio—D’Ariano—Perinotti—Sedlák arXiv:1112.3853v1 的指定步骤记忆和经典辅助记忆口径仅供应上面的资源解释，不供应本来源的误差常数，也不把单切口维数当作完整策略峰值。§22 的双交换子、§30—33 的必要关系及纯输入 CQ 比较，§27—28 的精确八维端点和 §15、§22 的经典下界均按原范围直接复用；一般仪器、子集、极分解或纯态 CQ 工具不另计新成果。
+
+[ICRFG]: https://arxiv.org/html/2610.14785v1 "Omri Farber and Gilad Gour, Classical Communication Helps Single-Shot Quantum Compression；v1，Lemma 6、Theorem 7、(67)—(71)：秩受限量子／经典压缩与子集仪器。"
+[ICRBISIO]: https://arxiv.org/html/1112.3853v1 "Alessandro Bisio, Giacomo Mauro D’Ariano, Paolo Perinotti and Michal Sedlák, Memory cost of quantum protocols；v1，§IV，Definition 3、(24) 的指定步骤量子记忆及 Definition 4 的策略误差口径。"
+
+## 追加锚（本行以下为增补区）
+
+## 41. 实际子集记录的统一返回下界与原效应消费者
+
+**定义 41.1（固定来源、任意返回与逐点基准）。** 保留定义 1.1—1.3、30.1、36.1 的完整合同：整个复正交对族 $\mathfrak F$、同一个未知输入 $\rho=P\otimes Q$、整个 $M_9$ 上的精确第一步边缘 $\mathcal N_\star=\mathcal N_{1/1000}$、实际子集记录 $T\in\mathcal S_d$、联合侧空间 $M_T$、与准备独立的初始辅助态，以及不后选择的全部结果。这里 $d\in\{2,\ldots,7\}$，$n_d=\binom7{d-1}$，$N_d=\binom8d$。沿用
+
+$$
+F_j=K_j^\dagger K_j,\qquad
+G_T=\sum_{j\in T}F_j,\qquad
+p_T(\rho)=\frac{\operatorname{Tr}(G_T\rho)}{n_d}.
+\tag{41.1}
+$$
+
+对任意允许的固定 CPTP 返回 $\mathcal D_T:M_{9d}\to M_9$，定义保留同一实际 $T$ 的状态及比较族
+
+$$
+\begin{aligned}
+\Omega_{\mathcal D,d}(\rho)
+ &=\bigoplus_{T\in\mathcal S_d}\mathcal D_T\Psi_T(\rho),\\
+\mathcal J_d(\rho)
+ &=\bigoplus_{T\in\mathcal S_d}p_T(\rho)\rho,\\
+E_{\rm CQ}(\mathcal D,d)
+ &=\sup_{(P,Q)\in\mathfrak F}
+       \frac12\|\Omega_{\mathcal D,d}(P\otimes Q)
+                       -\mathcal J_d(P\otimes Q)\|_1.
+\end{aligned}
+\tag{41.2}
+$$
+
+每个 $\mathcal D_T$ 只读取实际的 $ABM_T,T$；独立辅助准备和固定后处理可吸收到该映射中。没有额外未知样本、准备描述、可读细指标 $j$ 或输入相关程序。保迹性使每个实际输出块的迹恰为 $p_T(\rho)$。$\mathcal J_d(\rho)$ 对每个给定密度矩阵都是归一正 CQ 状态；此定义只指定逐点比较态，不假设存在实现整个比较族的通道。
+
+**定理 41.2（所有固定返回的同记录下界及一个共同原效应测试）。** 令
+
+$$
+\begin{aligned}
+c&=\frac{h_4-h_3}{3A_\star}
+    =\frac{8974142900}{790405860121}>0,\\
+r_a(T)&=|\{(a,b)\in T\}|,\\
+S_d&=\sum_{T\in\mathcal S_d}|r_1(T)-r_2(T)|,
+\qquad b_d=\frac{cS_d}{8n_d}.
+\end{aligned}
+\tag{41.3}
+$$
+
+其中 $h_0,\ldots,h_4$ 是 (37.9) 的原系数。则对定义 41.1 的每个固定返回族，
+
+$$
+E_{\rm CQ}(\mathcal D,d)\ge b_d>\frac1{1000}>U_d.
+\tag{41.4}
+$$
+
+一个只由 $d,T$ 决定、与返回映射及未知准备均无关的二元原 $B$ 效应测试，在下面四个真正原输入中至少一个上，具有不小于 $b_d$ 的无条件概率误差：
+
+$$
+\begin{aligned}
+\rho_1&=|0,1\rangle\langle0,1|,&
+\rho_2&=|0,2\rangle\langle0,2|,\\
+|\!\pm\!\rangle&=(|1\rangle\pm|2\rangle)/\sqrt2,&
+\rho_\pm&=|0\rangle\langle0|\otimes|\!\pm\!\rangle\langle\!\pm\!|.
+\end{aligned}
+\tag{41.5}
+$$
+
+概率误差是同一测试作用于实际输出与 (41.2) 逐点基准所得概率之差的绝对值。四个输入是全承诺内的见证，不向一次运行供应四份样本或可读的准备选择标签。并且 $\rho\mapsto\mathcal J_d(\rho)$ 在整个原承诺上没有仿射延拓至其凸包。
+
+证明。先在原 Weyl 效应上求出该测试需要的关系。置
+$\Pi=|0\rangle\langle0|\otimes(|1\rangle\langle1|+|2\rangle\langle2|)$。
+在有序基 $|0,1\rangle,|0,2\rangle$ 中，(37.9) 给出
+
+$$
+\left.\Pi F_{(a,b)}\Pi\right|_{\Pi H_{AB}}
+ =\frac1{3A_\star}
+ \begin{cases}
+ \operatorname{diag}(h_0-h_1,h_0-h_1),&a=0,\ b=1,2,\\
+ \operatorname{diag}(h_0+h_4,h_0+h_3),&a=1,\\
+ \operatorname{diag}(h_0+h_3,h_0+h_4),&a=2.
+ \end{cases}
+\tag{41.6}
+$$
+
+具体地，$R_j=W_j\otimes W_j^\dagger$ 保持两个坐标之和模三，$S$ 也保持它，故所有 $F_j$ 都与 $Z\otimes Z$ 对易。$|0,1\rangle,|0,2\rangle$ 的本征值不同，压缩的非对角元为零。在 $|0,1\rangle$ 上，$R_j+R_j^\dagger$ 的对角元仅在 $a=0$ 时为 $\omega^b+\omega^{-b}=-1$；$S$ 的对角元为零；$R_jS$、$R_j^\dagger S$ 的对角元分别仅在 $a=2$、$a=1$ 时为一。对 $|0,2\rangle$，后两种移位条件互换。这证明整个 (41.6)，而非只用一个诊断平均。
+
+因此对每个实际 $T$，记 $p_{T,i}=p_T(\rho_i)$，有
+
+$$
+\begin{aligned}
+\delta_T:=p_{T,1}-p_{T,2}
+ &=\frac{c}{n_d}(r_1(T)-r_2(T)),\\
+p_T(\rho_+)=p_T(\rho_-)
+ &=\frac{p_{T,1}+p_{T,2}}2.
+\end{aligned}
+\tag{41.7}
+$$
+
+这与 (39.8) 使用同一源常数，但这里比较 $|0,1\rangle$ 与 $|0,2\rangle$，并使用整个二维压缩。令
+
+$$
+\mathcal J_z=\frac{\mathcal J_d(\rho_1)+\mathcal J_d(\rho_2)}2,
+\qquad
+\mathcal J_x=\frac{\mathcal J_d(\rho_+)+\mathcal J_d(\rho_-)}2.
+$$
+
+由 $\rho_1+\rho_2=\rho_++\rho_-$ 和 (41.7)，
+
+$$
+(\mathcal J_z-\mathcal J_x)_T
+       =\frac{\delta_T}{4}(\rho_1-\rho_2),
+\qquad
+\frac12\|\mathcal J_z-\mathcal J_x\|_1
+       =\frac14\sum_T|\delta_T|.
+\tag{41.8}
+$$
+
+两种输入系综的平均相等，所以任何共同仿射处理的平均输出相等；特别地，$\Omega_{\mathcal D,d}$ 的两个平均输出是同一个状态。若四个逐点距离均不超过 $\epsilon$，凸性和三角不等式给
+$\frac14\sum_T|\delta_T|\le2\epsilon$，从而得到 $b_d$ 下界。正的 (41.8) 也直接排除 $\mathcal J_d$ 的仿射延拓。此处复用的是等输入混合与输出缺口的成熟方法；仓内 [Acquired Continuation Limits 的定理 6.1、7.1][RCACL] 已使用相同的仿射／三角不等式供应，其五模式来源和常数不被移植到本来源。
+
+现在给出同一个固定原效应消费者，而不依赖最优区分测量。取
+
+$$
+Z_B=|1\rangle\langle1|-|2\rangle\langle2|,
+\quad s_T=\operatorname{sign}(r_1(T)-r_2(T)),
+\quad E_T=\frac{I_3+s_TZ_B}{2},
+\tag{41.9}
+$$
+
+其中 $\operatorname{sign}(0)=0$。$0\preceq E_T\preceq I_3$；它在定义 1.2 的同一个 $\Phi$ 下是原效应 $f_{E_T}$。在返回 $AB$ 后读取实际 $T$，于 $B$ 施行 Kraus 算子 $\sqrt{E_T},\sqrt{I_3-E_T}$ 的二元仪器，并保留 $T$ 与两个可能的新结果。其完整映射为
+
+$$
+\bigoplus_TX_T\longmapsto
+\bigoplus_{T,e\in\{+,-\}}
+ (I_3\otimes\sqrt{E_{T,e}})X_T(I_3\otimes\sqrt{E_{T,e}}),
+\quad E_{T,+}=E_T,\quad E_{T,-}=I_3-E_T.
+\tag{41.10}
+$$
+
+各块 Kraus 完备，故这是整个 CQ 代数上的 CPTP 续行；所有结果均保留。令 $a_i$ 为实际输出的 $+$ 概率，$j_i$ 为逐点基准的 $+$ 概率。实际仿射性给
+$a_1+a_2=a_++a_-$；另一方面，
+
+$$
+\frac{j_1+j_2-j_+-j_-}{2}
+ =\sum_T\frac{\delta_T}{4}
+       \operatorname{Tr}[(I_3\otimes E_T)(\rho_1-\rho_2)]
+ =\frac14\sum_T|\delta_T|=2b_d.
+\tag{41.11}
+$$
+
+四个个别概率误差若均小于 $b_d$，左式减去实际的零将小于 $2b_d$，矛盾；一般三角不等式给 $\max_i|a_i-j_i|\ge b_d$。固定效应的概率差不超过半迹距离，故这个测试也见证 (41.4)，并见证其完整记录输出的同一下界。所用效应只依赖可读 $T$，没有使用解码器的描述或未知输入。
+
+最后作全部子集的精确求和。第一坐标为 $0,1,2$ 的指标分别有 $2,3,3$ 个，所以
+
+$$
+S_d=\sum_{r_0+r_1+r_2=d}
+       \binom2{r_0}\binom3{r_1}\binom3{r_2}|r_1-r_2|.
+\tag{41.12}
+$$
+
+以越界二项式为零，整个生成多项式为
+
+$$
+\begin{aligned}
+\sum_{d=0}^8S_dx^d
+ &=(1+x)^2\sum_{r_1,r_2=0}^3
+             \binom3{r_1}\binom3{r_2}|r_1-r_2|x^{r_1+r_2}\\
+ &=(1+x)^2(6x+12x^2+24x^3+12x^4+6x^5)\\
+ &=6x+24x^2+54x^3+72x^4+54x^5+24x^6+6x^7.
+\end{aligned}
+\tag{41.13}
+$$
+
+从而获得下表；每个条目都对所有实际 $T$ 求和。
+
+| $d$ | $n_d$ | $S_d$ | $b_d$ |
+| --- | --- | --- | --- |
+| $2$ | $7$ | $24$ | $26922428700/5532841020847$ |
+| $3$ | $21$ | $54$ | $20191821525/5532841020847$ |
+| $4$ | $35$ | $72$ | $16153457220/5532841020847$ |
+| $5$ | $35$ | $54$ | $12115092915/5532841020847$ |
+| $6$ | $21$ | $24$ | $8974142900/5532841020847$ |
+| $7$ | $7$ | $6$ | $6730607175/5532841020847$ |
+
+最小值为 $b_7$，且
+
+$$
+b_7-\frac1{1000}
+ =\frac{1197766154153}{5532841020847000}>0.
+\tag{41.14}
+$$
+
+已有 $U_d\le U_2<3/4000<1/1000$，证明所需严格比较。对既有极分解返回，(36.7) 同时给 $b_d\le E_{\rm CQ}\le\sqrt{U_d}$。逐点基准仍可用于这一上界：对两张给定的比较状态施行共同 CPTP 映射时可用收缩性，不要求把整个比较族实现成通道。固定效应变分式、凸性及收缩性采用 [Gilchrist—Langford—Nielsen，§III][RCGLN] 的通常半迹距离约定；它们不是新增一般原理。证毕。
+
+## 42. 极分解返回的每个实际分支均离开产品入口
+
+**定理 42.1（一个原输入的全分支纠缠）。** 仅取 (38.3)—(38.5) 的既有极分解返回。对每个 $d=2,\ldots,7$ 和每个实际 $T\in\mathcal S_d$，输入 $\rho_1=|0,1\rangle\langle0,1|$ 的概率 $p_T(\rho_1)>0$，返回的归一化条件状态
+
+$$
+\widehat\rho_T
+ =\frac{H_T\rho_1H_T}{p_T(\rho_1)},
+\qquad H_T=\sqrt{G_T/n_d},
+\tag{42.1}
+$$
+
+是 Schmidt 秩至少二的纯纠缠态。因此在这个合法原输入上，字面产品入口
+$\{\mathrm E_2(p,q):(p,q)\in\mathcal I\}$ 的再进入概率为零。
+
+证明。(37.16) 给 $G_T\succeq d\mu I_9>0$，所以 $H_T>0$ 且全部分支概率严格正。由 (41.6) 证明中的对易性，$G_T$ 及其正平方根均保持 $Z\otimes Z$ 的本征空间，特别是
+
+$$
+\mathcal H_1=\operatorname{span}\{|0,1\rangle,|1,0\rangle,|2,2\rangle\}.
+\tag{42.2}
+$$
+
+下面证明 $|0,1\rangle$ 不是任何一个 $G_T$ 的本征向量。记
+
+$$
+g_T=\langle1,0|G_T|0,1\rangle,
+\qquad t_0(T)=\sum_{(0,b)\in T}\omega^b.
+$$
+
+对单个 $j=(a,b)$，$S$ 的该矩阵元为一；$R_j+R_j^\dagger$ 在 $a=1,2$ 时恰有一项给一，在 $a=0$ 时给零；$R_jS$ 和 $R_j^\dagger S$ 则仅在 $a=0$ 时分别给 $\omega^b,\omega^{-b}$。所以 (37.9) 给出精确式
+
+$$
+3A_\star g_T
+ =dh_2+(d-r_0(T))h_1+h_3t_0(T)+h_4\overline{t_0(T)}.
+\tag{42.3}
+$$
+
+原系数满足
+
+$$
+h_1+h_2=-\frac{97911}{14140625}\ne0,
+\qquad h_3-h_4=-\frac{495809}{5656250}\ne0,
+\qquad 8h_2+6h_1-h_3-h_4=0.
+\tag{42.4}
+$$
+
+若 $r_0(T)=0$，(42.3) 为 $d(h_1+h_2)\ne0$。若 $r_0(T)=2$，则 $t_0(T)=\omega+\omega^2=-1$，(42.3) 为 $(d-8)(h_1+h_2)\ne0$。若 $r_0(T)=1$，则 $t_0(T)$ 是 $\omega$ 或 $\omega^2$，(42.3) 的虚部为 $(h_3-h_4)\operatorname{Im}t_0(T)\ne0$。三种情况穷尽全部实际子集，故 $g_T\ne0$。
+
+由 (42.2)，可写
+
+$$
+H_T|0,1\rangle
+ =a_T|0,1\rangle+b_T|1,0\rangle+c_T|2,2\rangle,
+\qquad a_T=\langle0,1|H_T|0,1\rangle>0.
+\tag{42.5}
+$$
+
+若 $b_T=c_T=0$，则 $H_T|0,1\rangle=a_T|0,1\rangle$，继而
+$G_T|0,1\rangle=n_da_T^2|0,1\rangle$，与 $g_T\ne0$ 矛盾。故至少还有一个系数非零。该向量的双系统系数矩阵在三个不同的行与列上放置 $a_T,b_T,c_T$，其秩等于其中非零系数的个数，至少为二。归一化不改变 Schmidt 秩，证明纠缠结论。每个实际结果的概率为正，且全部概率之和为一，所以产品再入口概率恰为零。证毕。
+
+**范围约定 42.2（字面入口与全空间操作）。** 定理 42.1 判定的是 (42.1) 的产品入口身份。它不把纠缠态视为不能受物理操作的对象：一张已声明在整个 $M_9$ 上的 CPTP 映射仍可作用于它。它也不约束所有其他返回映射。例如固定丢弃—准备通道 $Y\mapsto\operatorname{Tr}(Y)\rho_1$ 对每个分支均返回产品态，虽不保留未知原输入。以下续行使用交换的全空间扩张，因而无需把 (42.1) 重新命名为 $\mathrm E_2$ 的合法产品条目。
+
+## 43. 只用实际子集的原交换续行与固定检测器
+
+**定义 43.1（原交换的全空间反馈扩张）。** 仍仅取既有极分解返回。命名两个 Weyl 坐标 $\alpha=(0,1)$、$\beta=(0,2)$，令
+
+$$
+\varepsilon(T)=
+ \begin{cases}1,&\beta\in T,\ \alpha\notin T,\\0,&\text{其他情况},\end{cases}
+\qquad U_T=S^{\varepsilon(T)}.
+\tag{43.1}
+$$
+
+这是读取实际子集的成员判据，不是测量其内部相干细指标。定义整个 CQ 代数上的固定续行及其 $AB$ 边缘
+
+$$
+\mathcal F_d\left(\bigoplus_TX_T\right)
+       =\bigoplus_TU_TX_TU_T^\dagger,
+\qquad
+\mathcal A_d(Y)=\sum_TU_TH_TYH_TU_T^\dagger.
+\tag{43.2}
+$$
+
+每个 $U_T$ 为固定酉，$\sum_TH_T^2=I_9$，故两者均为 CPTP；$\mathcal A_d$ 在整个 $M_9$ 上定义。对于原产品输入，应用 4.1 的
+$\operatorname{Ad}_S\mathrm E_2=\mathrm E_2\circ\sigma$
+识别其命令为原 $\sigma^{\varepsilon(T)}$；恒等也可用 $\sigma^2$ 表示。在承诺外，(43.2) 指定的就是同一寄存器 SWAP 或恒等，不调用只在原关联上定义的抽象 $\sigma$。
+
+取固定向量、观测量和效应
+
+$$
+\psi=|0,1\rangle,\qquad\chi=|1,0\rangle,
+\qquad M=i(|\psi\rangle\langle\chi|-|\chi\rangle\langle\psi|),
+\qquad C=\frac{I_9+M}{2}.
+\tag{43.3}
+$$
+
+$M$ 在 $\operatorname{span}\{\psi,\chi\}$ 上的本征值为 $+1,-1$，在其正交补上为零，所以 $0\preceq C\preceq I_9$。固定联合检测器可用 Kraus 算子 $\sqrt C,\sqrt{I_9-C}$ 实现，并保留两个检测结果及实际 $T$。等距
+$\xi\mapsto\sqrt C\xi\otimes|+\rangle+\sqrt{I_9-C}\xi\otimes|-\rangle$
+给出独立固定空白辅助态的实现；它在整个九维空间保范。由此，续行与检测器都在假设 1.3 的固定联合 CPTP 类中有明确全空间定义，不需要未知输入描述或产品再入口。
+
+**定理 43.2（对每一种精确命令后继混合的同源偏差）。** 令
+
+$$
+y=\frac{4487071450\sqrt3}{790405860121},
+\qquad B_d=\frac{8-d}{7}y-U_d.
+\tag{43.4}
+$$
+
+在原输入 $\rho_1=|\psi\rangle\langle\psi|$ 上，(43.1)—(43.3) 满足
+
+$$
+\operatorname{Tr}[C\mathcal A_d(\rho_1)]\ge\frac12+B_d,
+\qquad B_d>10U_d>0.
+\tag{43.5}
+$$
+
+对每个 $\lambda\in[0,1]$，两个可能的精确原命令后继的混合
+
+$$
+\zeta_\lambda=\lambda\rho_1+(1-\lambda)S\rho_1S
+$$
+
+都有 $\operatorname{Tr}(C\zeta_\lambda)=1/2$，因而
+
+$$
+\frac12\|\mathcal A_d(\rho_1)-\zeta_\lambda\|_1\ge B_d.
+\tag{43.6}
+$$
+
+特别地，$B_4>1/200$。此结论使用全部实际结果，既不选择子系综，也不要求任何特定的理想混合权重。
+
+证明。先求固定检测器所需的源矩阵元。(42.3) 的单指标计算给
+
+$$
+\operatorname{Im}\langle\chi|F_j|\psi\rangle
+ =\begin{cases}-y,&j=\alpha,\\y,&j=\beta,\\0,&\text{其他六个指标}.
+ \end{cases}
+\tag{43.7}
+$$
+
+其中 $R_j+R_j^\dagger$ 及 $S$ 的贡献为实数，非实部分仅来自 $a=0$ 时的
+$(h_3\omega^b+h_4\omega^{-b})/(3A_\star)$。由
+$\operatorname{Im}\omega=\sqrt3/2$ 和
+$(h_4-h_3)/(6A_\star)=4487071450/790405860121$
+得到 (43.7) 的数值和符号。
+
+沿用 (38.6) 的 $Z_T$，写
+
+$$
+q=\frac1{N_d}=\frac{d}{8n_d},\qquad
+H_T=\sqrt q I_9+Z_T,\qquad
+R_d=\sum_TZ_T^2\preceq U_dI_9.
+\tag{43.8}
+$$
+
+这里 $q$ 仅是平方根中的标量，不替代任何实际概率 $p_T(\rho)$。置
+$D_T=H_T^2-qI_9=(G_T-dI_9/8)/n_d$。
+直接展开两次平方根恒等式，得到精确等式
+
+$$
+H_T\rho_1H_T-q\rho_1
+ =\frac12\{D_T,\rho_1\}
+       +Z_T\rho_1Z_T-\frac12\{Z_T^2,\rho_1\}.
+\tag{43.9}
+$$
+
+花括号为反交换子；此处没有截断级数。因为 $\operatorname{Tr}(M\rho_1)=0$，令
+
+$$
+\begin{aligned}
+m_T&=\operatorname{Tr}(MH_T\rho_1H_T)=\ell_T+r_T,\\
+\ell_T&=\tfrac12\operatorname{Tr}(M\{D_T,\rho_1\})
+       =-\frac{\operatorname{Im}\langle\chi|G_T|\psi\rangle}{n_d}
+       =\frac y{n_d}(\mathbf1_{\alpha\in T}-\mathbf1_{\beta\in T}),\\
+r_T&=\langle Z_T\psi|M|Z_T\psi\rangle
+          -\operatorname{Re}\langle\psi|MZ_T^2|\psi\rangle.
+\end{aligned}
+\tag{43.10}
+$$
+
+由于 $\|M\|_{\rm op}=1$、$\|M\psi\|=1$，Cauchy—Schwarz 与 (43.8) 给全部结果的余项界
+
+$$
+\begin{aligned}
+\sum_T|r_T|
+ &\le\sum_T\|Z_T\psi\|^2
+       +\sum_T\|Z_TM\psi\|\,\|Z_T\psi\|\\
+ &\le\langle\psi|R_d|\psi\rangle
+       +\sqrt{\langle M\psi|R_d|M\psi\rangle
+                        \langle\psi|R_d|\psi\rangle}
+ \le2U_d.
+\end{aligned}
+\tag{43.11}
+$$
+
+这控制的是同一次实现的正算子和 $R_d$；没有把各分支分别可达的最优值拼在一起。
+
+直接由 (43.3) 有 $SMS=-M$。判据 (43.1) 因而满足
+$(-1)^{\varepsilon(T)}\ell_T=|\ell_T|$。
+恰有 $\binom6{d-1}$ 个实际子集含 $\alpha$ 而不含 $\beta$，另有同样多个含 $\beta$ 而不含 $\alpha$。因此
+
+$$
+\begin{aligned}
+\operatorname{Tr}[M\mathcal A_d(\rho_1)]
+ &=\sum_T(-1)^{\varepsilon(T)}(\ell_T+r_T)\\
+ &\ge\frac{2\binom6{d-1}}{n_d}y-2U_d
+   =2\frac{8-d}{7}y-2U_d=2B_d.
+\end{aligned}
+\tag{43.12}
+$$
+
+$\mathcal A_d(\rho_1)$ 的迹为一，故 (43.12) 等价于 (43.5) 的第一条。$M$ 在 $\psi,\chi$ 的各自纯态上的期望均为零，所以每个 $\zeta_\lambda$ 的 $C$ 概率恰为 $1/2$。对这个固定效应应用半迹距离的变分界即得 (43.6)。保留 $T$ 或新增检测记录不会消除这个边缘上的见证。
+
+最后给出严格数值比较而不依赖小数近似。设 $t=4487071450/790405860121$。有
+
+$$
+3t^2-\frac1{102^2}
+ =\frac{3675060167790241095359}
+        {6499809772316479779872804964}>0,
+\qquad y>\frac1{102}.
+\tag{43.13}
+$$
+
+接入已有 $\kappa<7/4000$，对于 $d\ge2$，
+
+$$
+dy-11\kappa
+ >\frac2{102}-11\frac7{4000}
+ =\frac{73}{204000}>0.
+\tag{43.14}
+$$
+
+所以
+$B_d-10U_d=\frac{8-d}{7d}(dy-11\kappa)>0$。
+在 $d=4$，$U_4<1/4000$，于是
+
+$$
+B_4>\frac4{7\cdot102}-\frac1{4000}
+ =\frac{7643}{1428000}
+ =\frac1{200}+\frac{503}{1428000}>\frac1{200}.
+\tag{43.15}
+$$
+
+证毕。
+
+**推论 43.3（逐点原后继比较与既有 CQ 上界相容）。** 对同一极分解返回，令
+
+$$
+\Gamma_d(\rho)=\sum_Tp_T(\rho)U_T\rho U_T^\dagger.
+\tag{43.16}
+$$
+
+它只表示同一实际命令及概率下的逐点精确后继目标。则
+
+$$
+\frac12\|\mathcal A_d(\rho_1)-\Gamma_d(\rho_1)\|_1\ge B_d,
+\qquad E_{\rm CQ}(\mathcal D^{\rm polar},d)\ge B_d,
+\tag{43.17}
+$$
+
+而对每个原承诺输入仍有
+
+$$
+\frac12\|\mathcal A_d(\rho)-\Gamma_d(\rho)\|_1
+ \le\frac12\|\Omega_{\mathcal D^{\rm polar},d}(\rho)
+                   -\mathcal J_d(\rho)\|_1
+ \le\sqrt{U_d}.
+\tag{43.18}
+$$
+
+证明。$\Gamma_d(\rho_1)$ 是 (43.6) 的一个 $\zeta_\lambda$，其中
+$\lambda=\sum_{T:\varepsilon(T)=0}p_T(\rho_1)$，故第一条下界成立。对同一个 $\rho$，将 (43.2) 的共同续行作用于 (41.2) 的两张状态，再丢弃 $T$，收缩性给 (43.18) 的第一步；(36.7) 给第二步。这也给 (43.17) 的 CQ 下界。不需要假设 $\Gamma_d$ 或 $\mathcal J_d$ 是可物理供应的仿射通道。这个逐点收缩步骤复用 [Quantum Carrier Minimum，推论 11.4][RCQCM] 的共同已供给续行原则，而非构造该卷的完整匹配端口。证毕。
+
+## 44. 原来源、操作合同与上述三个结论的范围
+
+**约定 44.1（同一源、实际控制与资源）。** §§41—43 的仪器始终是 (36.3)，其第一步边缘始终是整个 $M_9$ 上的原 $\mathcal N_\star$；返回之前评价的原 $\tau$ 消费者 $P\otimes(I-P-Q)$ 及其分数保持原定义。§41 的效应测试和 §43 的交换是其后的具体消费者，不取代第一步。全部复承诺保持不变；有限的见证输入仅用来反驳统一保证，不缩小原未知输入域。
+
+(41.10) 只读取 $T$ 的行计数，(43.1) 只读取 $T$ 的两个成员关系。它们保留完整实际 $T$，不把 $j$ 变成可读结果，不以均匀 $q_T$ 替代输入相关的 $p_T$，也不删除任何成功、失败或稀有分支。保持记录的数学比较态不是所获理想样本、源回调或制备服务。两个检测器及 SWAP 的固定全空间映射已给出；实际执行仍以前述独立辅助态、门、校准、原效应访问和当前权限实际供给为条件。静态 $\Phi$ 与几何重构不提供这些物理条件。
+
+在定义 36.1 的切口，原 $AB$ 维数九，全部输入相关相干侧载体的联合空间仍是 $M_T$，维数 $d$；另计完整经典 $T$。新增经典判据不引入跨该切口的未知相干副本。返回、反馈与检测期间实际使用的辅助态、指针、控制器、通信、记录及丢弃系统均计入其瞬时峰值和费用；切口的 $d$ 维预算不等于全程峰值或总费用节省。
+
+定理 41.2 是这六套既定仪器的所有固定解码器下界，不是所有仪器的下界、锐 CQ minimax 或经典／相干 CQ 分离。定理 42.1 与 43.2 限于既有极分解解码器，不推断其他解码器均纠缠或均有同一续行偏差。全空间交换和终端检测不要求产品再入口；它们也不构造一般承诺外的 $\tau$、全部有限原字的中间输出或完整原操作返回。§27—28 的精确八维端点、§39 的 $AB$ 经典分离及 §40.1 中所有已解决条件域均保持原范围，特别是 [增广 $J_r$ 的既有条件结果][CRJR] 不被重新列为未解。原来源身份、合法域、rights、backing、owed action、Handback／Stop／INITIAL 及 Native／AA／Fibonacci 的实际取得与消费者对应仍遵守 §40.1 的独立条件。
+
+**数学归属约定 44.2。** (41.6)—(41.14) 的同源四输入求值、全部实际子集的 $b_d$、共同原 $B$ 效应消费者，(42.3)—(42.5) 的全分支产品入口障碍，以及 (43.7)—(43.15) 的实际成员控制与固定后继检测，是本来源上的 repo-derived 推导，不主张全球文献优先性。一般等系综仿射障碍、Schmidt 秩判据、正平方根函数演算、Cauchy—Schwarz、固定效应变分界及 CPTP 收缩性均为既有供应。极分解返回直接复用 [Gregoratti—Werner，Proposition 8，(18)—(20)][ARRGW02]，既有子集构造的归属仍按 §40.2；上述推导不将它们重列为新一般框架。这里给出普通有限维证明，不作 Lean 或 kernel 核验声明。
+
+[RCACL]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_ACQUIRED_CONTINUATION_LIMITS.md "Theorems 6.1、7.1，(AC.16)、(AC.25)—(AC.26)：相等输入混合、输出缺口及共同处理的三角不等式供应。"
+[RCQCM]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md "Corollary 11.4，(QC.74)—(QC.75)：完整匹配输入上共同已供给有限合法续行的条件误差传播。"
+[RCGLN]: https://arxiv.org/html/quant-ph/0408063v2 "Alexei Gilchrist, Nathan K. Langford and Michael A. Nielsen, Distance measures to compare real and ideal quantum processes；v2，§III：半迹距离、固定效应变分式、凸性与 CPTP 收缩性。"
+
+## 追加锚（本行以下为增补区）

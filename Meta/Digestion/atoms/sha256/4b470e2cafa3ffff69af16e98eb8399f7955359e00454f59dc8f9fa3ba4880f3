@@ -1,0 +1,6 @@
+(iii) 交换 $p,q$ 使 $p$ 为奇素数。$i=1$ 至多对应一个 $j$，因为 $F_k(q,\cdot)$ 严格递减（该文定理 4.3）。对 $i\ge2$ 的碰撞，记 $t=kF_k(p,i)$，有 $v_p(p^t)=c:=1-k$。若无此类碰撞，结论成立；否则固定其中一个 $t_0$。对另一个 $t$：
+- 若 $1,t_0,t$ 在 $\mathbb Q$ 上线性无关，以 $\log p,\log q$ 为两行、$1,t_0,t$ 为三列，六个值全为有理数，与六指数定理矛盾。故 $t=r+st_0$，$r,s\in\mathbb Q$。
+- 取 $N$ 使 $Nr,Ns\in\mathbb Z$，由 $p^{Nt}=p^{Nr}(p^{t_0})^{Ns}$ 比较 $p$ 进赋值得 $c=r+sc$，即 $t=c+s(t_0-c)$。
+- 令 $A=p^{t_0-c}\in\mathbb Q_{>0}\setminus\{1\}$，$d=\gcd\{|v_\ell(A)|:v_\ell(A)\ne0\}$。由 $A^s=p^{t-c}\in\mathbb Q$ 与唯一分解，$s$ 的既约分母整除 $d$。故所有碰撞的 $t$ 属于离散集 $c+\frac{t_0-c}{d}\mathbb Z$。
+- 又 $0<t\le kF_k(p,2)$，故这样的 $t$ 只有有限多个。每个 $t$ 至多对应一个 $i$ 与一个 $j$。
+

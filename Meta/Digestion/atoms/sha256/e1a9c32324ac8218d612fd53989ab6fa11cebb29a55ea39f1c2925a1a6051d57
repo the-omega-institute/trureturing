@@ -1,0 +1,5 @@
+**证明。**
+- 第一式就是引理 1.4 证明中的中间不等式 $(1-r)^\kappa\sigma^{[\kappa]}(p^a)/p^{\kappa a}\ge1-\kappa r^{a+1}-r^\kappa$。
+- 第二式：$-\log(1-u)=u+O(u^2)$，$\sum_{p>x}p^{-3}=O(x^{-2})$；由素数定理分部求和，$\sum_{p>x}p^{-3/2}=\int_x^\infty t^{-3/2}(\log t)^{-1}\,dt\,(1+o(1))=(2+o(1))/(\sqrt x\log x)$。
+- 第三式同理。
+

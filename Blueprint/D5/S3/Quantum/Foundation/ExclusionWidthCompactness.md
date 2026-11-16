@@ -44,6 +44,10 @@ Lean statement: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.width`
 
 The supremum of whole-set oscillations over the entire original proper effect interval. On each entire original exclusion ball this supremum is attained by an effect and two endpoints.
 
+The complete calibration used by X126.2-X126.4 is developed in CommonOldExclusionConfirmation. On any whole original exclusion ball H, comparison_attained chooses an original confirmer at the actual pure antipode. OriginalRegularHeight.peak_formula applies with its original proper-effect and peak hypotheses. Antipodal minimality makes this same effect minimize at every mixed input of H; pure PR makes the coefficient independent of the sphere endpoint.
+
+Thus T_(b(w))(b(z))=1-a_H+a_H inner(w,z) for every unit w and every norm(z)<=1, with 0<a_H<=1/2. Strict original endpoint exposure supplies positivity, and the common center-uniqueness result identifies the coefficient across all whole charts. The detailed application keeps every original effect and mixed state and assumes no Inj, Pair, mixed PR or RegularAnchor. Its sharp positive-extension budget is a separate obligation, and no reciprocal budget is introduced by definition.
+
 **Theorem 1.4 (Full-effect attainment on compact sets).**
 
 Lean statement: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.width_attained`
@@ -67,6 +71,10 @@ Lean statement: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.effect_diffe
 *Commentary.*
 
 On every compact F, each original effect and every pair y,z in F satisfy f(y)-f(z)<=width(F). The extrema of the same effect bound the contrast, and full-effect attainment bounds its oscillation by the width.
+
+Application to a failed antipodal separator. Fix the same original model and an entire exclusion chart a at an actual pure p. If width(D_p)<1, effect_difference_le_width rules out every original proper effect with e(a(w))=1 and e(a(-w))=0 for any unit chart direction w: its ordered contrast would be one. Under the global positive-dimensional ball hypothesis, OriginalFacePolarity.chart_boundary makes both chart endpoints original pure states, and injectivity makes them distinct. Thus y=(3a(w)+a(-w))/4=a(w/2) has exactly the designated geometric and failed-separator inputs of the approximate-frame closure application. This deduction neither asserts width(D_p)<1 in every model nor proves that this y is outside closure(P).
+
+The regular-pentagon source geometry gives a concrete candidate for these same inputs. Take V5=R times R squared, u5(t,z)=t, p_j=(1,cos(2 pi j/5),sin(2 pi j/5)), K5 the convex hull of all five vertices, C5 its entire cone and all original effects [0,u5]. The required whole-model correspondence is P5={p_0,...,p_4}, D_(p_j)=[p_(j+2),p_(j+3)] for every cyclic index, with one-dimensional whole-ball charts. At p=p_0 use a(t)=(p_2+p_3)/2+t(p_2-p_3)/2, so a(1)=p_2 and a(-1)=p_3. The same-vector identity p_2-p_3=M(p_1-p_4), M=1/phi<1, bounds e(p_2)-e(p_3) by M for every effect on the entire original cone. Once the whole-model correspondence is supplied, this gives the joint failed-antipodal input with y=(3p_2+p_3)/4. This y is distinct from the contact point p_4 used in the width-contact calculation. The pentagon correspondence is source geometry, not a complete native kernel application attached to this document: the cone and base, all pure points, all five entire exclusions and their charts, and the full-effect identification must hold together. No EB3 countermodel, general local pure-limit exclusion or physical realization follows from this candidate.
 
 **Definition 1.6 (EndpointData).**
 

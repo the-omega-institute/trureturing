@@ -1,0 +1,12 @@
+**注记 4.4（阈值的形状）。**
+- **κ=2 的端点。** 该文附录证明了 $\kappa=2$ 时 $x\ge2$ 的非严格不等式与 $x>2$ 的严格不等式。在 $x=2$ 处，对每个整数 $\ell\ge2$ 有 $F^{[2]}(2^{1/\ell},\ell)=F^{[2]}(2,1)=\tfrac12$，即 $x_\ell=2^{1/\ell}$。定理 4.3 给出的 $X(2)=e^{8.06\ldots}$ 远比它粗。
+- **对 $1<\kappa<2$，严格不等式在 $x=2$ 处对某些 $\ell$ 不成立。** 取 $u=\log2$、$h=1/2$，由下一条的 $\ell\to\infty$ 极限，只需证 $L(\kappa,\log2)=(\kappa-1)\log2<B_\kappa(1/2)$。令 $g(\kappa)=B_\kappa(1/2)=\log(3^\kappa-1)-\kappa\log2$，则 $g''(\kappa)=-\dfrac{(\log3)^2\,3^\kappa}{(3^\kappa-1)^2}<0$，且 $g(1)=0$、$g(2)=\log2$。由严格凹性，$1<\kappa<2$ 时 $g(\kappa)>(\kappa-1)\log2$。所以对每个 $1<\kappa<2$，存在 $\ell$ 使 $F^{[\kappa]}(2^{1/\ell},\ell)<F^{[\kappa]}(2,1)$，也就是阈值不能取 $2$。一个具体的有限 $\ell$ 例子是 $\kappa=3/2$、$\ell=2$：两侧比值分别为 $(3\sqrt3-1)/(2\sqrt2)\approx1.4836$ 与 $\bigl((2\sqrt2-1)^{3/2}-1\bigr)/\bigl(2^{3/4}-(2-\sqrt2)^{3/2}\bigr)\approx1.1937$，而 $1.4836>1.1937^2$。
+- **κ→1⁺ 时阈值必须发散。** 固定 $u>0$，令 $h=e^{-u}$。对固定的 $\kappa>1$ 令 $\ell\to\infty$：$y=e^{u/\ell}\to1$，$\sigma_{\ell-1}\to\infty$，且 $\ell/\sigma_{\ell-1}\to u/(1-h)$。又 $\sigma B'(\sigma)\to\kappa-1$（$\sigma\to\infty$），因此
+  $$\ell\bigl(B(\sigma_\ell)-B(\sigma_{\ell-1})\bigr)\to L(\kappa,u):=(\kappa-1)\frac{uh}{1-h}.$$
+  $L$ 与 $B_\kappa(h)=\log\bigl((1+h)^\kappa-h^\kappa\bigr)$ 都关于 $\kappa$ 光滑，且在 $\kappa=1$ 处为 $0$。在 $\kappa=1$ 处二者对 $\kappa$ 的导数分别为 $\frac{uh}{1-h}$ 与 $(1+h)\log(1+h)+uh$。因为 $(1+h)\log(1+h)\ge h$ 且 $\frac{u}{e^u-1}<1$，有
+  $$\frac{uh}{1-h}-uh-(1+h)\log(1+h)\le h\Bigl(\frac{uh}{1-h}-1\Bigr)=h\Bigl(\frac{u}{e^u-1}-1\Bigr)<0 .$$
+  所以对每个 $u>0$，存在 $\kappa_u>1$，使 $1<\kappa<\kappa_u$ 时 $L(\kappa,u)<B_\kappa(h)$；于是对充分大的 $\ell$，(4.1) 在 $x=e^u$ 处不成立。由此可知任何对 $\ell$ 一致的阈值 $X(\kappa)$ 都满足 $X(\kappa)\to\infty$（$\kappa\to1^+$）。
+- **$u_0$ 的阶。** $\kappa\to1^+$ 时 $u_0(\kappa)=2^{(\kappa+1.01)/(\kappa-1)}=2\cdot2^{2.01/(\kappa-1)}$。它来自 (6) 中对 $\varphi$ 的粗略下界，没有追求最优。
+
+**范围。** 外部输入为 Fan–Kobayashi–Molnar 定义 4.2、定理 4.3（单调性）、引理 4.12 及附录。本仓推导的是：引理 4.1 的增量表示，定理 4.3（对 $\ell$ 一致的显式阈值），以及注记 4.4 中阈值不能取 $2$（$1<\kappa<2$）与 $\kappa\to1^+$ 时阈值发散的论证。在所查范围（该文、Molnar arXiv:2610.12816v1、arXiv 检索）内未见此结论，本节不主张文献优先权。
+

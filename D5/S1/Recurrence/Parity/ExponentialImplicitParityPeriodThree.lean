@@ -5,6 +5,8 @@
    anchors: []
    utility: kind=certified-instance; basis=terminal=atom:148fce9b2a685f895d65e8a92b6e15e15097f5b36b12cbd8570b32957f1bff67
    digest: The OEIS A392208 EGF equation forces coefficient parity with period three. -/
+/- Escape audit for the public convolution-algebra lemmas is unfinished:
+https://github.com/the-omega-institute/trureturing/issues/26285. -/
 import Mathlib.LinearAlgebra.SymmetricAlgebra.Basis
 import Mathlib.RingTheory.Bialgebra.SymmetricAlgebra
 import Mathlib.RingTheory.Coalgebra.Convolution
@@ -16,11 +18,11 @@ set_option relaxedAutoImplicit false
 namespace D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree
 private abbrev F2 := ZMod 2
 private abbrev SAlg := SymmetricAlgebra F2 F2
-private abbrev Series := WithConv (SAlg →ₗ[F2] F2)
+abbrev Series := WithConv (SAlg →ₗ[F2] F2)
 private noncomputable def b : Basis Unit F2 F2 := Basis.singleton Unit F2
 private noncomputable def sb : Basis (Unit →₀ Nat) F2 SAlg := b.symmetricAlgebra
-private noncomputable def X : SAlg := SymmetricAlgebra.ι F2 F2 1
-private noncomputable def coeff (f : Series) (n : Nat) : F2 := f.ofConv (X ^ n)
+noncomputable def X : SAlg := SymmetricAlgebra.ι F2 F2 1
+noncomputable def coeff (f : Series) (n : Nat) : F2 := f.ofConv (X ^ n)
 example : b () = 1 := by simp [b]
 private theorem sb_single (n : Nat) : sb (Finsupp.single () n) = X ^ n := by
   apply (SymmetricAlgebra.equivMvPolynomial b).injective
@@ -54,14 +56,14 @@ private theorem series_ext {f g : Series} (h : ∀ n, coeff f n = coeff g n) : f
   exact LinearMap.congr_fun hfg p
 /-- Binomial convolution for the exponential generating function in OEIS A392208 (2026-01-24). -/
 def egfMul {R : Type*} [CommSemiring R] (f g : Nat → R) (n : Nat) : R := ∑ k ∈ Finset.range (n + 1), n.choose k * f k * g (n - k)
-private theorem coeff_mul_egf (f g : Series) (n : Nat) :
+theorem coeff_mul_egf (f g : Series) (n : Nat) :
     coeff (f * g) n = egfMul (coeff f) (coeff g) n := coeff_mul f g n
-private def egfOne {R : Type*} [CommSemiring R] (n : Nat) : R := if n = 0 then 1 else 0
+def egfOne {R : Type*} [CommSemiring R] (n : Nat) : R := if n = 0 then 1 else 0
 /-- Iterated binomial convolution for the exponential generating function in OEIS A392208 (2026-01-24). -/
 def egfPow {R : Type*} [CommSemiring R] (f : Nat → R) : Nat → Nat → R
   | 0 => egfOne
   | m + 1 => egfMul f (egfPow f m)
-private theorem egfMul_congr_at {R : Type*} [CommSemiring R] {f f' g g' : Nat → R} {n : Nat}
+theorem egfMul_congr_at {R : Type*} [CommSemiring R] {f f' g g' : Nat → R} {n : Nat}
     (hf : ∀ k ≤ n, f k = f' k) (hg : ∀ k ≤ n, g k = g' k) : egfMul f g n = egfMul f' g' n := by
   apply Finset.sum_congr rfl; intro k hk
   have hk' : k ≤ n := by simpa using (Finset.mem_range.mp hk)
@@ -146,9 +148,9 @@ example : a 7 = 4408983 := by decide
 example : a 8 = 223281351 := by decide
 example : a 9 = 13270085748 := by decide
 example : a 10 = 905661982179 := by decide
-private noncomputable def seriesOf (s : Nat → F2) : Series := WithConv.toConv (seriesLinear s)
-@[simp] private theorem coeff_seriesOf (s : Nat → F2) (n : Nat) : coeff (seriesOf s) n = s n := by rw [coeff, seriesOf, WithConv.ofConv_toConv, ← sb_single]; simp [seriesLinear]
-private theorem coeff_one (n : Nat) : coeff (1 : Series) n = egfOne n := by
+noncomputable def seriesOf (s : Nat → F2) : Series := WithConv.toConv (seriesLinear s)
+@[simp] theorem coeff_seriesOf (s : Nat → F2) (n : Nat) : coeff (seriesOf s) n = s n := by rw [coeff, seriesOf, WithConv.ofConv_toConv, ← sb_single]; simp [seriesLinear]
+theorem coeff_one (n : Nat) : coeff (1 : Series) n = egfOne n := by
   cases n with
   | zero => simp [coeff, egfOne, LinearMap.convOne_apply]
   | succ n => simp [coeff, egfOne, LinearMap.convOne_apply, X, Bialgebra.counit_mul]
@@ -254,7 +256,7 @@ private theorem eq_algebraMap_eval_one_of_shift_eq_zero (f : Series) (hf : shift
       rfl
     _ = f.ofConv 1 * Coalgebra.counit (R := F2) p := mul_comm _ _
     _ = (algebraMap F2 Series (f.ofConv 1)).ofConv p := by rw [LinearMap.convAlgebraMap_apply]; simp
-private theorem square_collapse (f : Series) : f * f = algebraMap F2 Series (f.ofConv 1 * f.ofConv 1) := by
+theorem square_collapse (f : Series) : f * f = algebraMap F2 Series (f.ofConv 1 * f.ofConv 1) := by
   have hs : shift (f * f) = 0 := by
     rw [shift_mul]
     have htwo : (2 : Series) = 0 := by

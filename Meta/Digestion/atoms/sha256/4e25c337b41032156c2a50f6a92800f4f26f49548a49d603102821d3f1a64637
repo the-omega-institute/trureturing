@@ -1,0 +1,21 @@
+**定理 150.3（互易、同值与完整三能级原域等价）。** 在150.1的完整 EB3+$\mathsf{Conn}$ 及全部原量词下，下列条件逐模型等价：$\mathsf{ER}$；$\mathsf{CR}_c$；144.1的原全域 $\mathsf{UC}$；存在同一原锥和原单位的实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,
+\qquad \Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{XI150.10}
+$$
+
+这时 $e_p$ 才成为整个原确认菜单的 least，并在全部原混输入上等于 $T_p$；不要求矩阵、九维上界、ZC、Seed或全纯域连续性作为额外输入。
+
+证明。150.2给 $\mathsf{ER}\Rightarrow\mathsf{CR}_c$，其余等价可直接消费149.4；表示到 $\mathsf{ER}$ 由
+$e_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2$
+对称得到。为明确从本候选出发的路线无需调用149.2—149.3的微分步骤，也可直接支付原 UC入口。记 $h_p=R_p/(1+R_p)\in[1/2,1)$；(XI150.9)在每条原零边给 $h_p=h_q$。全部原纯标签的有限零路连通使 $h_p=h$ 对同一个 $h<1$ 成立。任意 $a\in P$、$x\in S_a$ 及其完整原球内对径 $\bar x=2c_a-x$ 满足
+
+$$
+e_a(c_x)+e_a(c_{\bar x})=2h=:\kappa<2.
+\tag{XI150.11}
+$$
+
+这正是144.1的全标签、同一严格余量的 UC。直接消费144.5即得(XI150.10)；分类链中的面覆盖、least、自对偶、谱性及成熟 Jordan分类均取其已付清的完整前件，不把对称性本身当作这些前件。完整原菜单和全混态 minimum的读回，直接用149.5及其来源145.9在同一个 $\Phi$ 下的字典。因此原 $e_p$ 是 least、$T_p=e_p$ 于全部 $K$、$\mathsf{PR}$ 成立；这些是结论。证毕。
+

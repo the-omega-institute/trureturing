@@ -1,0 +1,86 @@
+**定理 124.10（固定EB3+PR域内的条件类）。** 在定义124.1的完整原域中，假设 EB3 和 PR。记 $H(p,q)$ 为原 $K$ 中包含 $p,q$ 的最小面，记
+
+$$
+\mathrm{Pair}_{\perp}:\quad
+\forall p,q\in P:\ T_p(q)=0\Longrightarrow H(p,q)\ne K.
+\tag{X124.17}
+$$
+
+对每个完整球 $F=D_p$，$\beta_F$ 保留 [IX114.5—114.6][Q124IX] 的原全锥正延拓预算定义：在任意仿射球图 $b_F:\overline B^3\to F$ 中，令 $h_v(b_F(z))=(1+v\cdot z)/2$，$v\in S^2$；则
+
+$$
+\beta_F=
+\min_{\substack{g\in C^{\ast}\\g|_F=h_v}}\max_Kg
+=\frac1{2a_F}\ge1,
+\tag{X124.18}
+$$
+
+其中 $a_F$ 为该来源的球内共同系数。这里仅复用其有限性、方向无关性及准确预算，不重新推导校准公式。
+
+在这个固定域内，令 $\mathscr B=\{D_p:p\in P\}$，即不同实际完整球的集合，并准确沿用 [IX115.1、IX115.8][Q124IX] 的参数与名称：
+
+$$
+\begin{gathered}
+d(p)=\operatorname{diam}D_p,\qquad a(p)=a_{D_p},\qquad
+\beta(p)=\beta_{D_p}=\frac1{2a(p)},\\
+\mathrm{UF}:\quad\sup_{F\in\mathscr B}\beta_F
+=\sup_{p\in P}\beta(p)<\infty.
+\end{gathered}
+\tag{X124.18a}
+$$
+
+即使尚未有 Inj，两种上确界也相同，因为预算属于球本身，不依赖同球标签的选择。
+
+在固定的 EB3+PR 域内，下列六项等价：
+
+1. NC，即全部原完整球的直径有统一正下界；
+2. Inj 与 NC 同时成立；
+3. 原 $\mathrm{Pair}_{\perp}$；
+4. 对全部 $p\in P$，$\beta_{D_p}=1$；
+5. 存在同原锥、同原单位的实线性双射
+
+$$
+\Phi:H_3(\mathbb C)\overset{\sim}{\longrightarrow}V,
+\qquad
+\Phi(\operatorname{Herm}_+(\mathbb C^3))=C,
+\qquad u(\Phi X)=\operatorname{Tr}X.
+\tag{X124.19}
+$$
+
+6. IX115.8 的 UF，即所有原完整球的预算有同一个有限上界。
+
+因此候选包 $\mathrm{EB3}+\mathrm{PR}+\mathrm{NC}$ 及 $\mathrm{EB3}+\mathrm{PR}+\mathrm{UF}$ 都与(X124.19)等价，并给 $\dim_{\mathbb R}V=9$。全 Pair 指任意两个不同原纯点均生成真最小面；它也与这些条件等价。其中自动去掉单列 Inj 的推导是推论124.8；复三能级分类本身完全复用既有结果。
+
+证明。先在取得 Inj 之前核对 $1\Longleftrightarrow6$。取与定义124.1相同的辅助范数，令 $L=\max_{f\in\mathcal E}\|f\|_{\ast}>0$。IX115.3、IX115.6 的普遍估计为 $2a(p)\le Ld(p)$。若 UF 给出 $\beta(p)\le M<\infty$，则
+
+$$
+d(p)\ge\frac{2a(p)}L=\frac1{L\beta(p)}\ge\frac1{LM}>0,
+\tag{X124.18b}
+$$
+
+故有 NC。反之，若 $d(p)\ge d_0>0$ 对全部 $p$ 成立，取 $j$ 使 $1/j\le d_0$，则 IX115.1 的 $S_j=P$，故 $\mathcal R=P$。IX115.6 给整球映射在全部 $P$ 上 Hausdorff 连续；IX115.8 因而给 UF。这里使用 IX114.4 的紧 $P$：等价地，IX115.6 已给 $\beta$ 在 $\mathcal R=P$ 连续，故其在 $P$ 上有有限上界；直径也随整球连续且处处为正。此段只消费原预算、正则区及紧性，不用量子重构、Inj 或 Pair。
+
+$1\Rightarrow2$ 是推论124.8，$2\Rightarrow1$ 直接成立。第2项与第5项的等价恰为 [IX118.8][Q124IX] 的第2、4项：其前件是同一完整 EB3 域、Inj 及这个正直径下界，三项现均已支付；不在取得 Inj 前调用该重构。它不要求 PR，而本定理保留 PR 的较窄原域也满足其适用条件。第3、4项的等价直接使用 IX114.8；第4、5项的等价直接使用 IX114.9。IX118.8还给第5项下的全Pair，反向全Pair当然蕴含第3项，所以全Pair同属这个条件类。此处不重证成熟静态分类、拓扑环计算或 Jordan 桥。
+
+反向的完整量词不能缩为有限菜单。IX118.8 的反向及 IX114.9 的字典给出：在(X124.19)坐标中，全部原态、纯点、效应和原最小确认分别为
+
+$$
+\begin{gathered}
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1\},\qquad
+P=\{\Phi(vv^{\ast}):v\in\mathbb C^3,\ v^{\ast}v=1\},\\
+\mathcal E=\{f_E:0\preceq E\preceq I_3\},\qquad
+f_E(\Phi X)=\operatorname{Tr}(EX),\\
+T_{\Phi(vv^{\ast})}(\Phi\rho)=\operatorname{Tr}(vv^{\ast}\rho),\qquad
+T_{\Phi(vv^{\ast})}(\Phi(ww^{\ast}))=|v^{\ast}w|^2,\\
+D_{\Phi(vv^{\ast})}
+=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1,\ \rho v=0\}.
+\end{gathered}
+\tag{X124.20}
+$$
+
+所以 PR 对全部纯对成立，每个完整排除集都是 $v^{\perp}\cong\mathbb C^2$ 上的整个密度态三球；不是从其中选择三球子面。其支撑确定 $v^{\perp}$，故已有反向也给 Inj。
+
+为明确 NC 的原环境含义，可取 $a>0$ 使 $\|\Phi X\|\ge a\|X\|_{\mathrm{HS}}$ 对全部 Hermitian $X$ 成立。每个上述二维复支撑中的一对正交秩一投影相距 $\sqrt2$，故每张原完整球直径至少 $a\sqrt2>0$。这只是固定线性同构下的长度运输，不要求 $\Phi$ 对辅助尺等距。于是同一个整个量子模型确实满足 EB3、PR、NC 的全部原量词，证明反向候选包成立。证毕。
+
+这里没有得到 Inj 单独推出 NC，也没有证明非塌缩比原 $\mathrm{Pair}_{\perp}$ 或单位预算严格更弱。在固定 EB3+PR 域中，它们正是同一条件类的不同表述。少列一个 Inj 前件指上述特定桥梁中的逻辑蕴含，不是独立公理数量、最小性或总体量子起源任务已经完成的结论。
+

@@ -36,7 +36,7 @@ def phi (a : Fin m) : List (Fin m) :=
 private theorem phi_pos (a : Fin m) : 0 < (phi hm a).length := by
   unfold phi; split <;> simp
 
-private theorem phi_len_le (a : Fin m) : (phi hm a).length ≤ 2 := by
+theorem phi_len_le (a : Fin m) : (phi hm a).length ≤ 2 := by
   unfold phi; split <;> simp
 
 private theorem rot_injective : Function.Injective (rot hm) := by
@@ -54,7 +54,7 @@ private theorem subst_length_ge (s : List (Fin m)) : s.length ≤ (subst (phi hm
     have := phi_pos hm a
     omega
 
-private theorem image_pos (k : ℕ) (a : Fin m) : 0 < (image (phi hm) k a).length := by
+theorem image_pos (k : ℕ) (a : Fin m) : 0 < (image (phi hm) k a).length := by
   induction k with
   | zero => simp [image]
   | succ k ih => exact lt_of_lt_of_le ih (subst_length_ge hm _)
@@ -124,7 +124,7 @@ private theorem iterate_factor (k : ℕ) :
     rw [factor_get _ _ _ _ (by simpa [factor_len] using hi)]
     simpa using word_eq_iterate hm k i hj
 
-private theorem factor_of_prefix {s : List (Fin m)} {k : ℕ}
+theorem factor_of_prefix {s : List (Fin m)} {k : ℕ}
     (h : s <+: image (phi hm) k (zero hm)) : factor (word hm) 0 s.length = s := by
   have hlen := h.length_le
   rw [← iterate_factor hm k] at h

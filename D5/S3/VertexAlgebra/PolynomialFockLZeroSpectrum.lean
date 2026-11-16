@@ -18,6 +18,7 @@ Direct frozen dependencies:
   (sha256:70348f27aba9962d3e7e1069a03392b19973770fa93026cf488d6119d17860b5).
 -/
 
+import D5.S3.Combinatorics.Partitions.PositiveEnergyPartition
 import D5.S3.VertexAlgebra.PolynomialFockSugawaraCommutators
 import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.Data.Finsupp.Weight
@@ -30,12 +31,6 @@ namespace D5.S3.VertexAlgebra.PolynomialFockLZeroSpectrum
 open MvPolynomial
 open D5.S3.VertexAlgebra.PolynomialFockSugawaraSupport
 open D5.S3.VertexAlgebra.PolynomialFockSugawaraCommutators
-
-/-- Weighted degree, with the variable `X i` contributing `i + 1`. -/
-def energy (d : ℕ →₀ ℕ) : ℕ := d.sum fun i e => (i + 1) * e
-
-/-- Exponent vectors of a fixed nonnegative energy. -/
-abbrev EnergyFiber (N : ℕ) := {d : ℕ →₀ ℕ // energy d = N}
 
 /-- The eigenspace of the actual pointwise-finite Sugawara operator. -/
 noncomputable def lZeroEigenspace (N : ℕ) : Submodule ℂ Fock :=
