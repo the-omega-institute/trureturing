@@ -735,12 +735,6 @@ private theorem conjugateState_value (U : Matrix.unitaryGroup A ℂ) (rho : Dens
     CStarMatrix.ofMatrix.symm (conjugateState U rho).1 =
       U.val * CStarMatrix.ofMatrix.symm rho.1 * U.valᴴ := rfl
 
-private theorem conjugateState_one (rho : DensityState A) : conjugateState 1 rho = rho := by
-  apply Subtype.ext
-  apply CStarMatrix.ofMatrix.symm.injective
-  rw [conjugateState_value]
-  simp
-
 private theorem entropy_conjugateState (U : Matrix.unitaryGroup A ℂ) (rho : DensityState A) :
     vonNeumannEntropy (conjugateState U rho) = vonNeumannEntropy rho :=
   D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.von_neumann_entropy_unitary
@@ -759,16 +753,6 @@ private def conjugateChannel (U : Matrix.unitaryGroup A ℂ) : QuantumChannel A 
     rw [Matrix.trace_mul_cycle, (show U.valᴴ * U.val = 1 from Unitary.coe_star_mul_self U),
       Matrix.one_mul]
     rfl
-
-private theorem conjugateChannel_apply (U : Matrix.unitaryGroup A ℂ)
-    (X : CStarMatrix A A ℂ) :
-    CStarMatrix.ofMatrix.symm ((conjugateChannel U).toCompletelyPositiveMap X) =
-      U.val * CStarMatrix.ofMatrix.symm X * U.valᴴ := rfl
-
-private theorem conjugateChannel_mapState (U : Matrix.unitaryGroup A ℂ)
-    (rho : DensityState A) : (conjugateChannel U).mapState rho = conjugateState U rho := by
-  apply Subtype.ext
-  rfl
 
 private theorem conjugateState_inverse (U : Matrix.unitaryGroup A ℂ)
     (rho : DensityState A) : conjugateState U (conjugateState (star U) rho) = rho := by
