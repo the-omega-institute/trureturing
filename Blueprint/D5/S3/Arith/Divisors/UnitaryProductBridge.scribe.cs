@@ -51,7 +51,7 @@ internal sealed class UnitaryProductBridgeDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, string prose) =>
         Describe.Lean(
-            DescribeId.Create("unitary-product-bridge-" + name.Replace('_', '-')),
+            DescribeId.Create("unitary-product-bridge-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }
