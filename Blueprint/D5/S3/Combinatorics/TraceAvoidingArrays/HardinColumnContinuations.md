@@ -172,7 +172,21 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuatio
 
 vH uses Hfull and has initial value one in every class. Its first three entries equal hV at every length. Its fourth entry is one at length zero and zero at every positive length.
 
-**Theorem 1.13 (Exact universal B and H interpretations).**
+**Theorem 1.13 (Exact column transitions and class sizes).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations.column_certificate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations.column_certificate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
+
+*Commentary.*
+
+For every actual column, the successor counts equal B or Hfull at its class. The two-row class sizes are 3 and 6; the three-row class sizes are 3, 12, 6 and 6. The Hfull transition and size projections supply the zero-defect sectors of HardinA229536Strip after its exact budget and class cut and the natural-to-integer cast.
+
+**Theorem 1.14 (Exact universal B and H interpretations).**
 
 $$\forall k: \operatorname{Nat}\left(\right), \operatorname{Nat}.\operatorname{card}\left(\operatorname{Coloring}\left(\operatorname{stripGraph}\left(\operatorname{true}\left(\right), 1, k\right), \operatorname{Fin}\left(3\right)\right)\right) = 3 \cdot \operatorname{vB}\left(k, 0\right) + 6 \cdot \operatorname{vB}\left(k, 1\right) \land \operatorname{Nat}.\operatorname{card}\left(\operatorname{Coloring}\left(\operatorname{stripGraph}\left(\operatorname{true}\left(\right), 2, k\right), \operatorname{Fin}\left(3\right)\right)\right) = 3 \cdot \operatorname{hV}\left(k, 0\right) + 12 \cdot \operatorname{hV}\left(k, 1\right) + 6 \cdot \operatorname{hV}\left(k, 2\right) + \operatorname{ite}\left(k = 0, 6, 0\right)$$
 
@@ -196,6 +210,7 @@ The variable k is the number of appended columns, so the actual width is k+1. Th
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations.classH`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations.coloringEquiv`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations.columnV`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations.column_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations.column_result`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations.cross`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinColumnContinuations.hV`
