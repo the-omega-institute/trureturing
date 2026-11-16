@@ -2188,7 +2188,10 @@ private theorem physicalOutput_pointer {E : Type*} [Fintype E] [DecidableEq E]
   by_cases h : j = k
   · subst k
     simp only [ite_true,apply_ite,star_zero,mul_ite,mul_zero,
-      Finset.sum_ite_eq,Finset.mem_univ,if_true,ite_mul,zero_mul,ite_self]
+      Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ,
+      if_true,ite_mul,zero_mul,ite_self]
+    simp only [normalizedEnvironment, marginalRight, pureState,
+      CStarMatrix.ofMatrix_apply, partialTraceRight, Matrix.vecMulVec_apply]
     change (∑ e : E, v j (c,e) * (P.1 (a,j) (b,j)) * star (v j (d,e))) =
       P.1 (a,j) (b,j) * ∑ e : E, v j (c,e) * star (v j (d,e))
     rw [Finset.mul_sum]

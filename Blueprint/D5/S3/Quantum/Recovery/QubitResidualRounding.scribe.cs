@@ -9,6 +9,24 @@ internal sealed class QubitResidualRoundingDocument : IScribeDocumentDefinition
         H("Physical qubit residual geometry"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("classical-pointer-repair"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.classical_pointer_repair"),
+                H("A classical repair on the same physical system"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let W be an actual dilation of T, and let s squared be its total flip probability in the chosen qubit basis. If s squared is below one, normalizing its two retained vectors and pinching the actual AB input produces a classical Markov state on the same ABC carrier. Its half trace distance from rho is at most r plus the trace norm z of the actual off-diagonal AB block plus 2s. A positive block weight normalizes its conditional A state; a zero block has zero positive matrix and needs no division."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("pointerinput-distance"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.pointerInput_distance"),
+                H("The cost of deleting qubit coherence"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Pinching an actual AB density state in the two-dimensional B basis changes it in half trace distance by at most the trace norm of its complex off-diagonal A block. The two conjugate off-diagonal terms and the half-distance convention account for the factor."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("physicaloutput-distance"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.physicalOutput_distance"),
+                H("A common environment comparison"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Two physical isometries applied to the same AB density state, followed by discarding their common environment, differ in half trace distance by at most the operator norm of the difference of the isometries. This comparison has no reference-dimension factor."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-b-unitary-transport"),
                 DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.actual_B_unitary_transport"),
                 H("Coherent transport of the physical recovery data"), StatementSource.WithoutFormula(),
