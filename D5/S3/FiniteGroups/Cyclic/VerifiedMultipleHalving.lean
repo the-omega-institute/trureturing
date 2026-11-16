@@ -4,7 +4,7 @@
    mirror-E: none(waiver:general-monoid-recursion)
    anchors: [mathlib/module/Mathlib.GroupTheory.OrderOfElement]
    utility: none
-   digest: Executable halving preserves the true half-power of every positive returning exponent. -/
+   digest: Executable halving reaches an odd order quotient and preserves half-powers at even order. -/
 
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Tactic

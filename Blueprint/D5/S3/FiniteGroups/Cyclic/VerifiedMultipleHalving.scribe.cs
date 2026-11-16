@@ -23,9 +23,9 @@ internal sealed class VerifiedMultipleHalvingDocument : IScribeDocumentDefinitio
             Instances(C("Monoid", g), Instances(C("DecidableEq", g),
             All("x", g, All("m", X("Nat"),
             Imp(Rel(zero, FormulaRelationOperator.LessThan, m),
-            Imp(Equal(Pow(x, m), one), result))))));
+            Imp(Equal(Pow(x, m), one), result)))))));
         return DocumentDefinition.Create(ScribeNode.Create(
-            "An executable same-element halving loop preserves the true-order half-power of every positive returning exponent.",
+            "An executable same-element halving loop reaches an odd order quotient and, at even order, preserves the true-order half-power.",
             H("Halving a verified returning exponent"), Blocks(
                 Paragraph(Text("Let G be any monoid with decidable equality. The function stripTwos x m tests whether m is positive, m modulo two is zero, and x raised to the natural quotient m/2 is one. If all three tests pass, it calls itself at m/2; otherwise it returns m. The positive branch strictly decreases the natural measure m, so this is a total executable definition, including m equal to zero. Its only inputs are the element and the supplied exponent; the unknown order is not an input. Computability of concrete monoid operations and equality is needed for actual evaluation.")),
                 Describe.Lean(DescribeId.Create("returning-exponent-halving"),
@@ -47,6 +47,8 @@ internal sealed class VerifiedMultipleHalvingDocument : IScribeDocumentDefinitio
     private static Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Instances(Formula type, Formula body) =>
+        Seq(OpenBracket, type, CloseBracket, Sp, body);
     private static Formula And(params Formula[] xs)
     {
         var result = xs[^1];
