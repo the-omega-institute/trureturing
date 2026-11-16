@@ -47,7 +47,8 @@ theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val →
       ¬ (HardinThinGraphTransport.proper p ∧ d.val = 0) →
       (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
         cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 10
-        then (1 : ℤ) else 0) = T (cl p d.val) 10 := by intro p
+        then (1 : ℤ) else 0) = T (cl p d.val) 10 := by
+    intro p
     generalize h0 : p 0 = c0
     generalize h1 : p 1 = c1
     fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert

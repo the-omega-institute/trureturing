@@ -165,7 +165,8 @@ private theorem finite_certificate :
           cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s) ↔
           HardinThinGraphTransport.proper r ∧ HardinThinGraphTransport.compatible true p r ∧
           HardinSourceContinuations.sourceClass (true, true) r =
-            ⟨s.val - 10 + 1, by omega⟩ := by intro p
+            ⟨s.val - 10 + 1, by omega⟩ := by
+      intro p
       generalize h0 : p 0 = c0
       generalize h1 : p 1 = c1
       fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert

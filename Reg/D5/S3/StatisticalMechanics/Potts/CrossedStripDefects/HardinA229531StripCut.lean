@@ -24,18 +24,18 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (p r : Row) (d : Fin 2) (s : Fin 12),
     ((d.val = 1 ∧ s.val < 6) ∨ (d.val = 0 ∧ 6 ≤ s.val)) →
-    ((bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
-      cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s.castAdd 8) ↔
+    ((bondDefects (q := 3) between p r + bondDefects (q := 3) horizontal r r ≤ d.val ∧
+      cl r (d.val - (bondDefects (q := 3) between p r + bondDefects (q := 3) horizontal r r)) = s.castAdd 8) ↔
       HardinThinGraphTransport.proper r ∧ HardinThinGraphTransport.compatible true p r ∧
         R.readout () ⟨p, d, s⟩ r =
           ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h ![0, 1, 0, 1, 0] ![0, 1, 0, 1, 0] 1 0 (by decide +kernel)
-  have hc : bondDefects between ![0, 1, 0, 1, 0] ![0, 1, 0, 1, 0] +
-      bondDefects horizontal ![0, 1, 0, 1, 0] ![0, 1, 0, 1, 0] ≤ 1 ∧
-      cl ![0, 1, 0, 1, 0] (1 - (bondDefects between ![0, 1, 0, 1, 0] ![0, 1, 0, 1, 0] +
-        bondDefects horizontal ![0, 1, 0, 1, 0] ![0, 1, 0, 1, 0])) = 0 := by decide +kernel
+  have hc : bondDefects (q := 3) between (![0, 1, 0, 1, 0] : Row) ![0, 1, 0, 1, 0] +
+      bondDefects (q := 3) horizontal ![0, 1, 0, 1, 0] ![0, 1, 0, 1, 0] ≤ 1 ∧
+      cl ![0, 1, 0, 1, 0] (1 - (bondDefects (q := 3) between ![0, 1, 0, 1, 0] ![0, 1, 0, 1, 0] +
+        bondDefects (q := 3) horizontal ![0, 1, 0, 1, 0] ![0, 1, 0, 1, 0])) = 0 := by decide +kernel
   have hf := (hb.mp hc).2.2
   change (0 : Fin 7) = 1 at hf
   exact (by decide : (0 : Fin 7) ≠ 1) hf
@@ -47,8 +47,8 @@ def family : Registration arena (type_of% @class_cut) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨⟨![0, 1, 0, 1, 0], 1, 0⟩, (fun _ => 0), ![0, 1, 0, 1, 0], ?_⟩
-    change HardinA233126SquareStrip.boundaryClass (true, true) (fun _ => 0) ≠
+    refine ⟨⟨![0, 1, 0, 1, 0], 1, 0⟩, ![0, 1, 0, 1, 2], ![0, 1, 0, 1, 0], ?_⟩
+    change HardinA233126SquareStrip.boundaryClass (true, true) ![0, 1, 0, 1, 2] ≠
       HardinA233126SquareStrip.boundaryClass (true, true) ![0, 1, 0, 1, 0]
     decide +kernel
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
