@@ -75,11 +75,11 @@ private theorem xor_cross : ∀ a b c d : Fin 4,
     a ^^^ b = c ^^^ d → a ^^^ c = b ^^^ d := by
   decide +kernel
 
-private theorem xor_cancel : ∀ a b c : Fin 4,
+theorem xor_cancel : ∀ a b c : Fin 4,
     a ^^^ b = a ^^^ c ↔ b = c := by
   decide +kernel
 
-private theorem xor_nonzero : ∀ a b : Fin 4, a ^^^ b ≠ 0 ↔ a ≠ b := by
+theorem xor_nonzero : ∀ a b : Fin 4, a ^^^ b ≠ 0 ↔ a ≠ b := by
   decide +kernel
 
 private theorem square_exhausts : ∀ a b c d : Fin 4,
@@ -275,7 +275,7 @@ def zones (n : ℕ) : Set ((Fin n → Fin 4) × (Fin 6 → Fin 4)) := fun z =>
     ∀ j : Fin 5, z.2 j.castSucc ^^^ z.2 j.succ ≠
       z.1 ⟨i,by omega⟩ ^^^ z.1 ⟨i+1,hi⟩)
 
-private theorem xor_shift : ∀ a b c : Fin 4,
+theorem xor_shift : ∀ a b c : Fin 4,
     (a ^^^ b) ^^^ (a ^^^ c) = b ^^^ c := by decide +kernel
 
 private theorem adjacent_delta {m : ℕ} (u : Fin m → Fin 4) (i r : Fin m)
@@ -729,7 +729,7 @@ private theorem literal_pair_count {n : ℕ} (hn : 2 ≤ n) :
 open private count_histories from
   D5.S3.Combinatorics.Graph.Pressure.HardinBarkerA209721EdgeDifferences
 
-private theorem xor_right_cancel : ∀ x d : Fin 4, x ^^^ (x ^^^ d) = d := by
+theorem xor_right_cancel : ∀ x d : Fin 4, x ^^^ (x ^^^ d) = d := by
   decide +kernel
 
 private theorem xor_walk_count (T : Finset (Fin 4)) (m : ℕ) :
@@ -755,13 +755,13 @@ private theorem xor_walk_count (T : Finset (Fin 4)) (m : ℕ) :
     (fun k _ => T.card^k) (by simp) hs m
   simpa only [Finset.sum_const,Finset.card_univ,Fintype.card_fin,smul_eq_mul] using h
 
-private def offsetOK (v : Fin 6 → Fin 4) : Prop :=
+def offsetOK (v : Fin 6 → Fin 4) : Prop :=
   v 0 = 0 ∧ ∀ j : Fin 5, v j.castSucc ^^^ v j.succ ≠ 0
 
-private def offsetChoices (v : Fin 6 → Fin 4) : Finset (Fin 4) :=
+def offsetChoices (v : Fin 6 → Fin 4) : Finset (Fin 4) :=
   choices (fun j => v j.castSucc ^^^ v j.succ)
 
-private instance (v : Fin 6 → Fin 4) : Decidable (offsetOK v) := by
+instance (v : Fin 6 → Fin 4) : Decidable (offsetOK v) := by
   unfold offsetOK
   infer_instance
 
@@ -778,7 +778,7 @@ private theorem offset_certificate :
       offsetOK v ∧ (offsetChoices v).card = 2)).card = 3) := by
   decide +kernel
 
-private theorem zones_iff (m : ℕ) (u : Fin (m+1) → Fin 4) (v : Fin 6 → Fin 4) :
+theorem zones_iff (m : ℕ) (u : Fin (m+1) → Fin 4) (v : Fin 6 → Fin 4) :
     (u,v) ∈ zones (m+1) ↔ offsetOK v ∧ ∀ i : Fin m,
       u i.castSucc ^^^ u i.succ ∈ offsetChoices v := by
   constructor
