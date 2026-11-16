@@ -16,7 +16,7 @@ namespace Reg.D5.S3.Quantum.Foundation.QubitWeightedCommutator
 abbrev Q := Matrix (Fin 2) (Fin 2) ℂ
 
 abbrev signature : Signature where
-  Params := Q × Q
+  Params := Q
   State _ := Q
   Role := Unit
   finiteRole := inferInstance
@@ -26,7 +26,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p X => ‖X * p.1 - p.1 * X‖) (fun e => nomatch e)
+  realize signature (fun _ X W => ‖X * W - W * X‖) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
@@ -34,7 +34,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (X W b : Q) (_hb : b.PosSemidef) (_ht : b.trace = 1),
-    R.readout () (W, b) X ≤
+    R.readout () X W ≤
       Real.sqrt 2 * ‖CFC.sqrt b * (X * W - W * X)‖ +
         (1 + Real.sqrt 2) * ‖X * Wᴴ - Wᴴ * X‖
 
@@ -56,8 +56,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   let W : Q := !![0, 1; 0, 0]
   let X : Q := !![1, 0; 0, 0]
-  refine ⟨(W, 0), 0, X, ?_⟩
-  change ‖(0 : Q) * W - W * 0‖ ≠ ‖X * W - W * X‖
+  refine ⟨X, 0, W, ?_⟩
+  change ‖X * (0 : Q) - 0 * X‖ ≠ ‖X * W - W * X‖
   simp only [zero_mul, mul_zero, sub_zero, norm_zero, ne_eq, eq_comm (a := (0 : ℝ)),
     norm_eq_zero]
   intro he
@@ -89,7 +89,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p X => ‖X * p.1 - p.1 * X‖)
+  readout := some (realize signature (fun _ X W => ‖X * W - W * X‖)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -98,10 +98,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Foundation.QubitWeightedCommutator
     definition := none
-    coordinates := #[1, 2]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 0
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
