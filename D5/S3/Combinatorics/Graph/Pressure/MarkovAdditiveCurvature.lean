@@ -264,7 +264,7 @@ def corrector (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
 def secondCorrector (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
     (g : V → V → ℝ) : V → ℝ := π.poisson hP hI (π.corrector hP hI g)
 
-theorem corrector_spec (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
+private theorem corrector_spec (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
     (g : V → V → ℝ) :
     π.corrector hP hI g - P *ᵥ π.corrector hP hI g = π.drift g ∧
       π.prob ⬝ᵥ π.corrector hP hI g = 0 :=
