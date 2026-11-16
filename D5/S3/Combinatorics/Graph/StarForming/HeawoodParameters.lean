@@ -17,6 +17,9 @@ it is not a finite substitute for any unbounded composition or cover theorem. -/
 namespace D5.S3.Combinatorics.Graph.StarForming.Cubic
 open Regular Subcubic
 
+set_option synthInstance.maxSize 4096
+set_option maxSynthPendingDepth 128
+
 def fanoNeighbors (vertex : Fin 14) : List (Fin 14) :=
   match vertex.val with
   | 0 => [7,8,10]

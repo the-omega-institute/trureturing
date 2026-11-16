@@ -6,7 +6,7 @@
    utility: none
    digest: Original cell score and adjacent tight-cell obstruction proofs. -/
 
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
 
 /-! Local proof bodies from formal/StarForming/LongCoreUpper.lean,
 subquorum-colorings 48728b42d39ab3de5de251c61da5a404ec418a69,

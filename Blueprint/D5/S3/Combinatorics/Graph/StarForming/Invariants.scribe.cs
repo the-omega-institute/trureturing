@@ -57,7 +57,17 @@ internal sealed class InvariantsDocument : IScribeDocumentDefinition
                     + "neighbour gives a star centred at that selected neighbour. The "
                     + "argument works on any vertex type with decidable equality and adjacency.",
                 DescribeRole.Theorem),
-            Node("independent_iff", "Selected-neighbor uniqueness", Disp(Iff(Call("IsKIndependent", G, D(2), S), Call("SelectedNeighborUniqueness", G, S))), "A finite set is two-independent exactly when any two selected neighbors of a selected vertex are equal. The vertex type, graph and selected set are arbitrary.", DescribeRole.Theorem))));
+            Describe.Lean(DescribeId.Create("dissociation-neighbor-uniqueness"),
+                DeclarationHandle.Create(Prefix + "independent_iff"),
+                H("The exact selected-neighbor condition"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/GraphInvariants/zhang2026doublegrafting")),
+                Blocks(Paragraph(Text("For every finite simple graph with decidable equality and "
+                    + "adjacency, a finite set is two-independent exactly when any two selected "
+                    + "neighbors of a selected vertex are equal. This is the original local "
+                    + "grafting proof's characterization, also used by canonical composition "
+                    + "and cover arguments. No grafting or nonempty hypothesis is needed."))),
+                DescribeRole.Theorem))));
+
 
     private static Formula G => F.Id("G");
     private static Formula V => F.Id("V");
