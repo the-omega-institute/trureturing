@@ -1,0 +1,14 @@
+**命题 133.7（完整最低定义及静态字典的同域兑现）。** 在定理133.6任一等价条件下，采用该定理的同一个 $\Phi$。令 $v,w$ 为单位复向量，$P_v=vv^\ast$、$Q_v=I_3-P_v$、$p_v=\Phi(P_v)$。则全部原对象有下列对应；它们是 IX116.17—116.18、IX120.5及 X130.3 已有字典的应用。
+
+| 静态对象或通常量子公理 | 同一个原表示中的完整对应 |
+| --- | --- |
+| 实载体、锥、质量和单位 | $\dim_{\mathbb R}V=9$；$C=\Phi(\mathrm{PSD}_3)$，含零及全部非负质量；$u(\Phi X)=\operatorname{Tr}X$。原单位泛函 $u\in V^\ast$ 与运输的 Jordan 单位 $U=\Phi(I_3)\in V$ 不混型。 |
+| 全部状态、混合和复射线 | $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$；全部有限凸组合和非负组合保持。$P=\{\Phi(vv^\ast):v^\ast v=1\}\cong\mathbb{CP}^2$；非归一 $z\ne0$ 对应 $\Phi(zz^\ast/(z^\ast z))$，相差非零复标量表示同一标签。 |
+| 全部原效应与 Born 评价 | $f_M(\Phi X)=\operatorname{Tr}(MX)$，恰遍历所有 $0\preceq M\preceq I_3$；零、单位、补、序及对全部混态的评价均保持。全部实线性读数相应由任意 Hermitian $M$ 表示。 |
+| 全确认、least 与原 minimum | $\mathcal F_{p_v}$ 恰对应 $M=P_v+B$，其中 $B=Q_vBQ_v$、$0\preceq B\preceq Q_v$；least 是 $f_{P_v}$，而不是说整个确认菜单只有这一张。对每个原混态，$T_{p_v}(\Phi\rho)=\operatorname{Tr}(P_v\rho)=v^\ast\rho v$。 |
+| 纯比较、原零边与完整排除 | $T_{p_v}(p_w)=\lvert v^\ast w\rvert^2$；未归一向量时分母为 $(v^\ast v)(w^\ast w)$。原零边恰为复正交，$D_{p_v}$ 恰是 (X133.21) 的全部原像，含其全部混态。 |
+| 局部球与总体维数 | $\dim_{\mathrm{aff}}K=8$，$P$ 的实维数为四；每个完整 $D_{p_v}$ 的实仿射维数为三，其纯球缘为 $\mathbb{CP}^1\cong S^2$。球心为 $\Phi(Q_v/2)=(U-p_v)/2$，总体中心态为 $\Phi(I_3/3)=U/3$。 |
+| 完备正交框架与共同效应 | 原零三角对应三个正交秩一投影，其和为 $I_3$；三个原 least 效应之和为 $u$。每条原零边有唯一第三原纯点；数学可完美区别容量为三。共同三结果效应在既有分类链后取得。 |
+| 全部有限数学测量 | 对任意有限结果数，原 $f_j\in C^\ast,\ \sum_jf_j=u$ 恰对应全部 POVM $M_j\succeq0,\ \sum_jM_j=I_3$；概率为 $\operatorname{Tr}(M_j\rho)$，含零效应及全部原输入。 |
+| 全态谱分解与实可观测量谱 | 每个 $\Phi\rho$ 有三项正交谱分解 $\Phi\rho=\sum_{i=1}^3\lambda_i\Phi(P_i)$，$\lambda_i\ge0,\sum_i\lambda_i=1$；允许零权、重谱。全部 Hermitian 可观测量有相应实谱及谱效应；重谱不指定唯一的逐本征射线。 |
+| 共同尺、自对偶与 Jordan 乘法 | $\langle\Phi X,\Phi Y\rangle_\Phi=\operatorname{Tr}(XY)$，$C$ 在该派生正定配对下自对偶；$\Phi X\circ\Phi Y=\Phi((XY+YX)/2)$，单位为 $U$。这些是同一表示运输的静态结构。 |

@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Semigroups/PositiveRankOneWeightObstruction.claim; result=D5/S3/Quantum/Semigroups/PositiveRankOneWeightObstruction.result; claim=D5/S3/Quantum/Semigroups/PositiveRankOneWeightObstruction.claim
    digest: A positive rank-one semigroup on the unit interval has no equivalent contractive weighted essential sup norm. -/
 
+import D5.S3.Quantum.Semigroups.ConditionedRankOneNorm
 import Mathlib.Analysis.InnerProductSpace.Projection.Basic
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.Normed.Algebra.Exponential
@@ -448,6 +449,189 @@ private lemma T_linf_bound (t : ℝ) (ht : 0 ≤ t) (f : H) (hf : MemLp f ∞ μ
     _ ≤ ENNReal.ofReal ((3/2)*b) := by
       simpa using eLpNorm_le_of_ae_bound (Lp.aestronglyMeasurable (T (t:ℂ) f)) hout
     _ = _ := by rw [ENNReal.ofReal_mul (by norm_num), ofReal_lpNorm hf]
+
+private lemma linear_bounded : MemLp (fun x : ℝ => x) ∞ μ := by
+  apply memLp_top_of_bound (by fun_prop) 1
+  filter_upwards [ae_interval] with x hx
+  simpa [Real.norm_eq_abs, abs_of_pos hx.1] using hx.2.le
+
+private lemma linear_top : lpNorm (fun x : ℝ => x) ∞ μ = 1 := by
+  have hle : lpNorm (fun x : ℝ => x) ∞ μ ≤ 1 := by
+    apply (ENNReal.ofReal_le_ofReal_iff zero_le_one).mp
+    rw [ofReal_lpNorm linear_bounded]
+    simpa using (eLpNorm_le_of_ae_bound (p := ∞) (C := (1:ℝ)) linear_bounded.aestronglyMeasurable
+      (by filter_upwards [ae_interval] with x hx
+          simpa [Real.norm_eq_abs, abs_of_pos hx.1] using hx.2.le))
+  apply le_antisymm hle
+  by_contra hn
+  let c := lpNorm (fun x : ℝ => x) ∞ μ
+  have hc : c < 1 := lt_of_not_ge hn
+  have hc0 : 0 ≤ c := lpNorm_nonneg
+  have hm : μ (Ioo c 1) ≠ 0 := by
+    rw [μ, Measure.restrict_apply measurableSet_Ioo,
+      inter_eq_left.mpr (Ioo_subset_Ioo hc0 le_rfl), Real.volume_Ioo]
+    exact ne_of_gt (ENNReal.ofReal_pos.mpr (sub_pos.mpr hc))
+  obtain ⟨x, hx, hb⟩ := Measure.exists_mem_of_measure_ne_zero_of_ae hm
+    (ae_restrict_of_ae (ae_le_lpNorm_exponent_top linear_bounded))
+  exact (not_lt_of_ge ((le_abs_self x).trans hb)) hx.1
+
+private lemma clipped_integral {κ : ℝ} (hk : 1 ≤ κ) :
+    (∫ x : ℝ, x * max (1/κ-x) 0 ∂μ) = 1/(6*κ^3) := by
+  have hk0 : 0 < κ := zero_lt_one.trans_le hk
+  let r := 1/κ
+  have hr : 0 < r := one_div_pos.mpr hk0
+  have hr1 : r ≤ 1 := (div_le_one hk0).mpr hk
+  have hfun : (fun x : ℝ => x * max (r-x) 0) =ᵐ[μ]
+      (Ioo 0 r).indicator (fun x : ℝ => x*(r-x)) := by
+    filter_upwards [ae_interval] with x hx
+    by_cases hxr : x < r
+    · rw [Set.indicator_of_mem (show x ∈ Ioo 0 r from ⟨hx.1, hxr⟩), max_eq_left (sub_nonneg.mpr hxr.le)]
+    · rw [Set.indicator_of_notMem (by simp only [mem_Ioo]; tauto),
+        max_eq_right (sub_nonpos.mpr (le_of_not_gt hxr)), mul_zero]
+  change (∫ x : ℝ, x * max (r-x) 0 ∂μ) = _
+  rw [integral_congr_ae hfun, integral_indicator measurableSet_Ioo]
+  rw [μ, Measure.restrict_restrict measurableSet_Ioo,
+    inter_eq_left.mpr (Ioo_subset_Ioo le_rfl hr1)]
+  rw [← integral_Ioc_eq_integral_Ioo, ← intervalIntegral.integral_of_le hr.le]
+  have he : (fun x : ℝ => x*(r-x)) = fun x => r*x-x^2 := by ext x; ring
+  rw [he, intervalIntegral.integral_sub
+    (f := fun x : ℝ => r*x) (g := fun x : ℝ => x^2)
+    ((continuous_const.mul continuous_id).intervalIntegrable 0 r)
+    ((continuous_id.pow 2).intervalIntegrable 0 r)]
+  rw [intervalIntegral.integral_const_mul, integral_id, integral_pow]
+  dsimp [r]
+  field_simp
+  <;> ring
+
+/-- An all-input estimate for the original complex L2 semigroup, together with
+an actual normalized L2 and L-infinity input attaining the constant. -/
+def WeightedSharp (t : ℝ) (g : ℝ → ℝ) (C : ℝ) : Prop :=
+  0 ≤ C ∧
+  (∀ f : H, MemLp f ∞ μ →
+    eLpNorm (fun x => (g x:ℂ)*T (t:ℂ) f x) ∞ μ ≤
+      ENNReal.ofReal C * eLpNorm (fun x => (g x:ℂ)*f x) ∞ μ) ∧
+  ∃ f : H, MemLp f ∞ μ ∧
+    eLpNorm (fun x => (g x:ℂ)*f x) ∞ μ = 1 ∧
+    eLpNorm (fun x => (g x:ℂ)*T (t:ℂ) f x) ∞ μ = ENNReal.ofReal C
+
+private lemma T_evolve_rep (t : ℝ) (f : H) : T (t:ℂ) f =ᵐ[μ]
+    ConditionedRankOneNorm.evolve μ (fun x : ℝ => x) (Real.exp (-t)) f := by
+  filter_upwards [T_rep (t:ℂ) f] with x hx
+  rw [hx]
+  simp only [ConditionedRankOneNorm.evolve, integral_sq,
+    ← Complex.ofReal_neg, ← Complex.ofReal_exp]
+  push_cast
+  ring
+
+private lemma sharp_transport {t C : ℝ} {g : ℝ → ℝ}
+    (hs : ConditionedRankOneNorm.Sharp μ (fun x : ℝ => x) (Real.exp (-t)) g C) :
+    WeightedSharp t g C := by
+  refine ⟨hs.1, ?_, ?_⟩
+  · intro f hf
+    have he : (fun x => (g x:ℂ)*T (t:ℂ) f x) =ᵐ[μ]
+        (fun x => (g x:ℂ)*ConditionedRankOneNorm.evolve μ (fun x : ℝ => x)
+          (Real.exp (-t)) f x) := (T_evolve_rep t f).mono fun x hx => congrArg _ hx
+    rw [eLpNorm_congr_ae he]
+    exact hs.2.1 f hf (Lp.memLp f)
+  · obtain ⟨f, hf, hf2, hin, hout⟩ := hs.2.2
+    let F : H := hf2.toLp f
+    have hF : F =ᵐ[μ] f := hf2.coeFn_toLp
+    have hint : (∫ y : ℝ, (y:ℂ)*F y ∂μ) = ∫ y : ℝ, (y:ℂ)*f y ∂μ := by
+      apply integral_congr_ae
+      exact hF.mono fun y hy => congrArg _ hy
+    have hin' : (fun x => (g x:ℂ)*F x) =ᵐ[μ] (fun x => (g x:ℂ)*f x) :=
+      hF.mono fun x hx => congrArg _ hx
+    have hout' : (fun x => (g x:ℂ)*T (t:ℂ) F x) =ᵐ[μ]
+        (fun x => (g x:ℂ)*ConditionedRankOneNorm.evolve μ (fun x : ℝ => x)
+          (Real.exp (-t)) f x) := by
+      filter_upwards [T_evolve_rep t F, hF] with x hx hfx
+      rw [hx]
+      simp only [ConditionedRankOneNorm.evolve, hfx, hint]
+    exact ⟨F, (memLp_congr_ae hF).mpr hf,
+      (eLpNorm_congr_ae hin').trans hin, (eLpNorm_congr_ae hout').trans hout⟩
+
+private lemma clipped_condition {κ : ℝ} (hk : 1 ≤ κ)
+    (wg : ConditionedRankOneNorm.Weight μ (fun x : ℝ => (max 1 (κ*x))⁻¹))
+    (hbudget : ConditionedRankOneNorm.condition μ (fun x : ℝ => (max 1 (κ*x))⁻¹) ≤ κ) :
+    ConditionedRankOneNorm.condition μ (fun x : ℝ => (max 1 (κ*x))⁻¹) = κ := by
+  let g := fun x : ℝ => (max 1 (κ*x))⁻¹
+  let G := lpNorm g ∞ μ
+  let B := lpNorm (fun x => (g x)⁻¹) ∞ μ
+  have hk0 : 0 < κ := zero_lt_one.trans_le hk
+  have hB0 : 0 ≤ B := lpNorm_nonneg
+  have hG : 1 ≤ G := by
+    let r := 1/κ
+    have hr : 0 < r := one_div_pos.mpr hk0
+    have hr1 : r ≤ 1 := (div_le_one hk0).mpr hk
+    have hm : μ (Ioo 0 r) ≠ 0 := by
+      rw [μ, Measure.restrict_apply measurableSet_Ioo,
+        inter_eq_left.mpr (Ioo_subset_Ioo le_rfl hr1), Real.volume_Ioo]
+      exact ne_of_gt (ENNReal.ofReal_pos.mpr (by simpa using hr))
+    obtain ⟨x, hx, hb⟩ := Measure.exists_mem_of_measure_ne_zero_of_ae hm
+      (ae_restrict_of_ae (ae_le_lpNorm_exponent_top wg.bounded))
+    have hxr : κ*x ≤ 1 := by
+      have := (lt_div_iff₀ hk0).mp hx.2
+      nlinarith
+    simpa [g, max_eq_left hxr] using hb
+  have hB : κ ≤ B := by
+    have hle : lpNorm (fun x : ℝ => x) ∞ μ ≤ B/κ := by
+      apply (ENNReal.ofReal_le_ofReal_iff (div_nonneg hB0 hk0.le)).mp
+      rw [ofReal_lpNorm linear_bounded]
+      have hb : ∀ᵐ x ∂μ, ‖x‖ ≤ B/κ := by
+        filter_upwards [ae_interval, ae_le_lpNorm_exponent_top wg.inv_bounded] with x hx hb
+        have hb' : max 1 (κ*x) ≤ B := by
+          change ‖((max 1 (κ*x))⁻¹)⁻¹‖ ≤ B at hb
+          simpa only [inv_inv, Real.norm_eq_abs,
+            abs_of_pos (zero_lt_one.trans_le (le_max_left 1 (κ*x)))] using hb
+        rw [Real.norm_eq_abs, abs_of_pos hx.1]
+        apply (le_div_iff₀ hk0).mpr
+        nlinarith [le_max_right 1 (κ*x)]
+      simpa using (eLpNorm_le_of_ae_bound (p := ∞) linear_bounded.aestronglyMeasurable hb)
+    rw [linear_top] at hle
+    have := (le_div_iff₀ hk0).mp hle
+    nlinarith
+  apply le_antisymm hbudget
+  change κ ≤ G*B
+  calc
+    κ = 1*κ := (one_mul κ).symm
+    _ ≤ G*B := mul_le_mul hG hB hk0.le (zero_le_one.trans hG)
+
+/-- The exact attained condition-budget optimum for the original semigroup.
+The least-constant assertion quantifies all admissible weights and all complex
+L2 inputs with bounded representatives. -/
+theorem conditioned_weight_optimum {κ t : ℝ} (hk : 1 ≤ κ) (ht : 0 ≤ t) :
+    let g := fun x : ℝ => (max 1 (κ*x))⁻¹
+    ConditionedRankOneNorm.Weight μ g ∧
+    ConditionedRankOneNorm.condition μ g = κ ∧
+    WeightedSharp t g (1+(1-Real.exp (-t))/(2*κ^3)) ∧
+    ∀ w : ℝ → ℝ, ConditionedRankOneNorm.Weight μ w →
+      ConditionedRankOneNorm.condition μ w ≤ κ →
+      ∀ C : ℝ, 0 ≤ C →
+        (∀ f : H, MemLp f ∞ μ →
+          eLpNorm (fun x => (w x:ℂ)*T (t:ℂ) f x) ∞ μ ≤
+            ENNReal.ofReal C * eLpNorm (fun x => (w x:ℂ)*f x) ∞ μ) →
+        1+(1-Real.exp (-t))/(2*κ^3) ≤ C := by
+  have hpos : ∀ᵐ x ∂μ, 0 < x := ae_interval.mono fun x hx => hx.1
+  have he0 := (Real.exp_pos (-t)).le
+  have he1 : Real.exp (-t) ≤ 1 := Real.exp_le_one_iff.mpr (neg_nonpos.mpr ht)
+  have hopt := ConditionedRankOneNorm.conditioned_optimum linear_bounded hpos hk he0 he1
+  have hc : ConditionedRankOneNorm.clipped (fun x : ℝ => x)
+      (lpNorm (fun x : ℝ => x) ∞ μ) κ = (fun x : ℝ => (max 1 (κ*x))⁻¹) := by
+    rw [linear_top]
+    ext x
+    simp [ConditionedRankOneNorm.clipped]
+  have hv : ConditionedRankOneNorm.optimum μ (fun x : ℝ => x) (Real.exp (-t)) κ =
+      1+(1-Real.exp (-t))/(2*κ^3) := by
+    rw [ConditionedRankOneNorm.optimum, integral_sq, linear_top, clipped_integral hk]
+    ring
+  rw [hc, hv] at hopt
+  refine ⟨hopt.1, clipped_condition hk hopt.1 hopt.2.1, sharp_transport hopt.2.2.1, ?_⟩
+  intro w hw hwk C hC hbound
+  obtain ⟨D, hs, hD, _⟩ := hopt.2.2.2 w hw hwk
+  obtain ⟨f, hf, hin, hout⟩ := (sharp_transport hs).2.2
+  have he := hbound f hf
+  rw [hin, mul_one, hout] at he
+  exact hD.trans ((ENNReal.ofReal_le_ofReal_iff hC).mp he)
 
 /-- The source convention is linear in u, conjugate-linear in v. Lean's
 inner product is conjugate-linear in its first argument, hence this order. -/

@@ -210,4 +210,63 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 end result
 
+namespace ones_value
+abbrev signature := Reg.Support.SingleDependentReadout.signature Unit
+  (fun _ => Nat) (fun _ => Nat)
+def actual : Realization signature :=
+  realize signature (fun _ _ m => Nat.ofDigits 2 (List.replicate m 1)) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ m : Nat, R.readout () () m + 1 = 2^m
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 1
+  change 0+1 = 2^1 at hh
+  norm_num at hh
+def family : Registration arena (type_of% (@_root_.D5.S1.Words.DoubleTailShuffleSupport.ones_value)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Words.DoubleTailShuffleSupport.ones_value, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), (0 : Nat), (1 : Nat), ?_⟩
+    change Nat.ofDigits (2 : Nat) (List.replicate 0 1) ≠
+      Nat.ofDigits (2 : Nat) (List.replicate 1 1)
+    norm_num [List.replicate, Nat.ofDigits]
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.DoubleTailShuffleSupport.ones_value) (type_of% actual) Unit Unit where
+  unitName := `D5.S1.Words.DoubleTailShuffleSupport.ones_value.__information_unit
+  realizationName := `Reg.D5.S1.Words.DoubleTailShuffleSupport.ones_value.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Words.DoubleTailShuffleSupport
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end ones_value
+
 end Reg.D5.S1.Words.DoubleTailShuffleSupport

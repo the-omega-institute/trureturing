@@ -1,0 +1,30 @@
+**定义 279.1（先于最小门的二元比较）。** 保留278.1的非平凡强全有限背景、全部原态、完整proper菜单、概率混合、真实有限复合及所有相关输入。对每层任意原归一态 $z,x\in K_N$，直接定义
+
+$$
+\mathcal E_N(z)=\{f\in[0,u_N]_{C_N^*}:f(z)=1\},\qquad
+T_N(z,x)=\min_{f\in\mathcal E_N(z)}f(x),\qquad
+p\perp_T q\ \Longleftrightarrow\ T_2(p,q)=0\quad(p,q\in P_2).
+\tag{279.1}
+$$
+
+菜单紧且包含 $u_N$，故每个最小值都达到。$T_N$ 是同一原概率表所定义的二元最低确认读数，不预选测试、内积、最小门或几何种子。它在第二端非负、有界、凹且Lipschitz，因为取最小值的全部效应具有同一范数界；一般不仿射，也不假定数值互易。达到零的确认测试之补反向见证零，故 $\perp_T$ 在未给任何新条件前就对称且无自环。
+
+沿真实 $(12)|3$ 分块取277.1的 $B_3=\{a\otimes b:a\in P_2,b\in P_1\}$，块内允许纠缠。对 $p,q\in B_3$，包括 $p=q$，记 $m_{p,q}=(p+q)/2$。要求
+
+$$
+\begin{aligned}
+\mathsf A_{B,3}:\quad
+T_3\!\left(m_{p,q},\frac{x+y}{2}\right)
+&=\frac{T_3(m_{p,q},x)+T_3(m_{p,q},y)}2
+&& (p,q\in B_3,\ x,y\in K_3),\\
+\mathsf X_{T,2}:\quad
+\forall p\ne q\in P_2\ \exists g\in P_2:\quad
+\{p,q\}^{\perp_T}&=\{p,g\}^{\perp_T},\qquad
+(p\perp_T q)\mathbin{\mathrm{xor}}(p\perp_T g),\\
+\boxed{\qquad\mathsf Q_{\mathrm{flat}}&:=\mathsf A_{B,3}+\mathsf X_{T,2}.\qquad}
+\end{aligned}
+\tag{279.2}
+$$
+
+第一条只要求等权二元混合；它比较的是整个原 $K_3$，不是仅产品输入或仅纯输入。第二条是同一二元比较的零关系换点；两条均可在尚未证明有最小门时陈述。换点保留全部共同参照的量词，不被改写成仅含两个变量的公式。
+
