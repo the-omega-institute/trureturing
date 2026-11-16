@@ -21,17 +21,6 @@ open D5.S1.Words.Patterns.Separable.ProperCut
 open scoped BigOperators
 private noncomputable def positive (f : ℕ → ℕ → ℕ) : PowerSeries (PowerSeries ℚ) :=
   PowerSeries.mk fun k => PowerSeries.mk fun n => if n = 0 then 0 else (f n k : ℚ)
-noncomputable def ckzT (r : ℕ) : PowerSeries ℚ :=
-  PowerSeries.coeff r (PowerSeries.invOfUnit
-    (1 - PowerSeries.C (PowerSeries.X * (3 + 2 * PowerSeries.X)) * PowerSeries.X) 1 *
-    PowerSeries.subst (PowerSeries.C (PowerSeries.X * (1 + PowerSeries.X)^3) * PowerSeries.X^2 *
-      (PowerSeries.invOfUnit (1 - PowerSeries.C (PowerSeries.X * (3 + 2 * PowerSeries.X)) * PowerSeries.X) 1)^2)
-      (PowerSeries.catalanSeries.map (Nat.castRingHom (PowerSeries ℚ))))
-noncomputable def ckzG (r : ℕ) : PowerSeries ℚ :=
-  (1 + PowerSeries.X)^2 * (ckzT r + ckzT (r + 1)) -
-    PowerSeries.X * (1 - PowerSeries.X) * (1 + PowerSeries.X) *
-      (ckzT r + 2 * ckzT (r + 1) + ckzT (r + 2))
-
 set_option maxHeartbeats 2000000 in
 set_option maxRecDepth 4096 in
 theorem actual_weighted_quadratic :
@@ -475,111 +464,5 @@ theorem actual_weighted_quadratic :
     rw [R_qJ, U_J] at J_product
     linear_combination J_product
   exact J_quadratic
-
-noncomputable def actualJCoeff (k : ℕ) : PowerSeries ℚ :=
-  PowerSeries.coeff k D5.S1.Words.Patterns.Separable.RecordPeak.J
-
-private theorem actual_coefficient_recurrence (k : ℕ) :
-    actualJCoeff k =
-      (if k = 1 then PowerSeries.X else 0) +
-        (PowerSeries.X : PowerSeries ℚ) *
-          (1 + D5.S1.Words.Patterns.Separable.RecordPeak.q) *
-          actualJCoeff (k - 1) +
-        D5.S1.Words.Patterns.Separable.RecordPeak.q *
-          (1 + D5.S1.Words.Patterns.Separable.RecordPeak.q) *
-          (∑ j ∈ Finset.Ioo 0 k, actualJCoeff j * actualJCoeff (k-j)) := by
-  classical
-  have h := congrArg (PowerSeries.coeff k)
-    actual_weighted_quadratic
-  dsimp [actualJCoeff]
-  have J0 : PowerSeries.coeff 0 D5.S1.Words.Patterns.Separable.RecordPeak.J = 0 := by
-    have Jdef : D5.S1.Words.Patterns.Separable.RecordPeak.J =
-        positive (signedCount false) := rfl
-    rw [Jdef]
-    apply PowerSeries.ext
-    intro n
-    simp only [positive, PowerSeries.coeff_mk, map_zero]
-    by_cases hn : n = 0
-    · simp [hn]
-    · have hz := (actual_four_record_transports_and_rising.2.1 n (by omega)).1
-      simp only [irreducibleCount, if_neg hn] at hz
-      simp [hn, signedCount]
-      rw [← Nat.card_eq_fintype_card]
-      exact hz
-  have outerLengthProduct (f g : PowerSeries (PowerSeries ℚ)) (n : ℕ)
-      (hf : PowerSeries.coeff 0 f = 0) (hg : PowerSeries.coeff 0 g = 0) :
-      PowerSeries.coeff n (f * g) =
-        ∑ c ∈ Finset.Ioo 0 n,
-          PowerSeries.coeff c f * PowerSeries.coeff (n-c) g := by
-    rw [PowerSeries.coeff_mul,
-      Finset.Nat.sum_antidiagonal_eq_sum_range_succ
-        (fun a b => PowerSeries.coeff a f * PowerSeries.coeff b g) n]
-    apply (Finset.sum_subset (by
-      intro c hc
-      have hmem := Finset.mem_Ioo.mp hc
-      exact Finset.mem_range.mpr (by omega)) ?_).symm
-    intro c hc hnot
-    have hlt := Finset.mem_range.mp hc
-    simp only [Finset.mem_Ioo, not_and, not_lt] at hnot
-    by_cases hc0 : c = 0
-    · simp [hc0, hf]
-    · have hcn : c = n := by
-        have := hnot (by omega)
-        omega
-      simp [hcn, hg]
-  have hlin : PowerSeries.coeff k
-      (D5.S1.Words.Patterns.Separable.RecordPeak.z *
-        (1 + PowerSeries.C D5.S1.Words.Patterns.Separable.RecordPeak.q) *
-        D5.S1.Words.Patterns.Separable.RecordPeak.J) =
-      if k = 0 then 0 else
-        (PowerSeries.X : PowerSeries ℚ) *
-          (1 + D5.S1.Words.Patterns.Separable.RecordPeak.q) *
-          PowerSeries.coeff (k - 1) D5.S1.Words.Patterns.Separable.RecordPeak.J := by
-    have hz : D5.S1.Words.Patterns.Separable.RecordPeak.z *
-        (1 + PowerSeries.C D5.S1.Words.Patterns.Separable.RecordPeak.q) *
-        D5.S1.Words.Patterns.Separable.RecordPeak.J =
-        PowerSeries.C ((PowerSeries.X : PowerSeries ℚ) *
-          (1 + D5.S1.Words.Patterns.Separable.RecordPeak.q)) *
-          ((PowerSeries.X : PowerSeries (PowerSeries ℚ)) *
-            D5.S1.Words.Patterns.Separable.RecordPeak.J) := by
-      simp only [D5.S1.Words.Patterns.Separable.RecordPeak.z,
-        map_mul, map_add, map_one]
-      ring
-    rw [hz, PowerSeries.coeff_C_mul]
-    cases k with
-    | zero => simp
-    | succ k => simp [PowerSeries.coeff_succ_X_mul]
-  have hquad : PowerSeries.coeff k
-      (PowerSeries.C D5.S1.Words.Patterns.Separable.RecordPeak.q *
-        (1 + PowerSeries.C D5.S1.Words.Patterns.Separable.RecordPeak.q) *
-        D5.S1.Words.Patterns.Separable.RecordPeak.J ^ 2) =
-      D5.S1.Words.Patterns.Separable.RecordPeak.q *
-        (1 + D5.S1.Words.Patterns.Separable.RecordPeak.q) *
-        (∑ j ∈ Finset.Ioo 0 k,
-          PowerSeries.coeff j D5.S1.Words.Patterns.Separable.RecordPeak.J *
-            PowerSeries.coeff (k-j) D5.S1.Words.Patterns.Separable.RecordPeak.J) := by
-    have hc : PowerSeries.C D5.S1.Words.Patterns.Separable.RecordPeak.q *
-        (1 + PowerSeries.C D5.S1.Words.Patterns.Separable.RecordPeak.q) =
-        PowerSeries.C (D5.S1.Words.Patterns.Separable.RecordPeak.q *
-          (1 + D5.S1.Words.Patterns.Separable.RecordPeak.q)) := by
-      simp only [map_add, map_mul, map_one]
-    rw [hc, PowerSeries.coeff_C_mul, show
-      D5.S1.Words.Patterns.Separable.RecordPeak.J ^ 2 =
-        D5.S1.Words.Patterns.Separable.RecordPeak.J *
-          D5.S1.Words.Patterns.Separable.RecordPeak.J by ring,
-      outerLengthProduct _ _ k J0 J0]
-  have hzcoeff : PowerSeries.coeff k
-      D5.S1.Words.Patterns.Separable.RecordPeak.z =
-      if k = 1 then (PowerSeries.X : PowerSeries ℚ) else 0 := by
-    simp only [D5.S1.Words.Patterns.Separable.RecordPeak.z,
-      PowerSeries.coeff_C_mul, PowerSeries.coeff_X]
-    by_cases hk : k = 1 <;> simp [hk]
-  simp only [map_add] at h
-  rw [hzcoeff, hlin, hquad] at h
-  by_cases hk : k = 0
-  · subst k
-    simpa [J0] using h
-  · simp only [if_neg hk, if_neg (show k ≠ 0 from hk), map_add] at h ⊢
-    simpa only [zero_add] using h
 
 end D5.S1.Words.Patterns.Separable.RecordAllIndex
