@@ -69,7 +69,7 @@ private theorem pow_coeff_vanish (p : MvPolynomial I ℂ) (hp : p.coeff 0 = 0)
         simpa only [map_add] using congrArg Finsupp.degree he
       rw [ih a (by omega), zero_mul]
 
-private theorem affineExponent_constant (A : Matrix I I ℂ) (mu : I → ℂ) :
+theorem affineExponent_constant (A : Matrix I I ℂ) (mu : I → ℂ) :
     (affineExponent A mu).coeff 0 = 0 := by
   classical
   simp [affineExponent, quadratic, coeff_mul_X']
@@ -92,7 +92,7 @@ private theorem factorial_ratio (j : ℕ) :
   rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
   field_simp [hj, hs]
 
-private theorem pderiv_expCut (p : MvPolynomial I ℂ) (n : ℕ) (i : I) :
+theorem pderiv_expCut (p : MvPolynomial I ℂ) (n : ℕ) (i : I) :
     pderiv i (expCut p (n+1)) = pderiv i p * expCut p n := by
   classical
   have ht (j : ℕ) :

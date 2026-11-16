@@ -40,7 +40,7 @@ private theorem energy_embedding (D : LatticeData) (N : ℕ) (d : Internal D N �
   intro i hi
   exact Nat.mul_comm _ _
 
-private theorem energy_layer_finite (D : LatticeData) (N n : ℕ) :
+theorem energy_layer_finite (D : LatticeData) (N n : ℕ) :
     {d : Internal D N →₀ ℕ | internalEnergy D N d = n}.Finite := by
   letI : Finite {d : Exponent D // oscillatorEnergy d ≤ n} := oscillatorLeFinite D n
   have hs : {d : Exponent D | oscillatorEnergy d ≤ n}.Finite := by
@@ -68,7 +68,7 @@ private theorem term_coefficient (D : LatticeData) (a : Charge D) (N : ℕ)
   · have hn : 2 * n ≠ 2 * internalEnergy D N d := by omega
     simp [h, hn]
 
-private theorem iterated_partial_diff {I : Type*} {F : I → ℂ → ℂ}
+theorem iterated_partial_diff {I : Type*} {F : I → ℂ → ℂ}
     (hF : ∀ i, ContDiff ℂ (⊤ : ℕ∞ω) (F i)) (s : Finset I) (m : ℕ) :
     Differentiable ℂ (iteratedDeriv m (fun z => ∑ i ∈ s, F i z)) := by
   have hc : ContDiff ℂ (⊤ : ℕ∞ω) (fun z => ∑ i ∈ s, F i z) :=

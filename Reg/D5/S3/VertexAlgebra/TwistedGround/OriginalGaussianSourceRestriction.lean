@@ -326,4 +326,73 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end original_fixed_energy_common_box
 
+namespace original_fixed_energy_compact
+def arena : Arena where
+  signature := eqSignature
+  Law O := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
+    (a : Charge D) (betaL gammaL betaR gammaR : Exponent D) (eL eR : ℤ)
+    (n M : ℕ) (hn : n < M)
+    (hF : ∀ b ∈ fourSupport D betaL gammaL betaR gammaR, b.2 < M),
+    O.readout () () ((∑ᶠ alpha : Exponent D, if oscillatorEnergy alpha = n then
+      chargeScalar D a * chargeScalar D (-a) *
+        wick D (monomial gammaL 1) (oscillatorCorrected D hu a eL
+          (monomial alpha 1) (monomial betaL 1)) *
+        wick D (monomial gammaR 1) (oscillatorCorrected D hu (-a) eR
+          (dualOscillatorMonomial D alpha) (monomial betaR 1)) else 0)) (let F := fourSupport D betaL gammaL betaR gammaR
+    let e := compactExternal D F
+    let h := (restricted D F betaL).sumElim (restricted D F gammaL)
+    let k := (restricted D F betaR).sumElim (restricted D F gammaR)
+    chargeScalar D a * chargeScalar D (-a) *
+      (weight betaL : ℂ) * (weight gammaL : ℂ) *
+      (weight betaR : ℂ) * (weight gammaR : ℂ) *
+      (if eL + chargeNorm D a = -2 * (n : ℤ) -
+        Finsupp.weight (fun b => (omega D b : ℤ)) betaL +
+        Finsupp.weight (fun b => (omega D b : ℤ)) gammaL then (1 : ℂ) else 0) *
+      (if eR + chargeNorm D (-a) = -2 * (n : ℤ) -
+        Finsupp.weight (fun b => (omega D b : ℤ)) betaR +
+        Finsupp.weight (fun b => (omega D b : ℤ)) gammaR then (1 : ℂ) else 0) *
+      ∑ᶠ d : {d : Internal D M →₀ ℕ // internalEnergy D M d = n},
+        (weight d.val : ℂ) *
+          OriginalChargedRowSource.affineCoefficient (originalRow D M e)
+            (originalMean D a M e) (d.val.sumElim h) *
+          OriginalChargedRowSource.affineCoefficient
+            (transportCovariance (sourceBlock (J := CompactExternal D F) (inverseSubstitution D M))
+              (originalRow D M e))
+            (originalInverseMean D a M e) (d.val.sumElim k))
+private theorem bad_fails : ¬ arena.Law eqBad := by
+  intro h
+  exact h hyperbolic hyperbolic_unit 0 0 0 0 0 0 0 0 1 (by decide)
+    (by simp [fourSupport])
+def evidence : Registration arena (type_of% (@original_fixed_energy_compact)) where
+  actual := eqActual
+  bridge := Iff.rfl
+  variation := ⟨fun D hu a betaL gammaL betaR gammaR eL eR n M hn hF =>
+    original_fixed_energy_compact D hu a betaL gammaL betaR gammaR eL eR n M hn hF, eqBad, bad_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law eqActual eqBad bad_fails
+  dependence := eqDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@original_fixed_energy_compact) (Realization eqSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction.original_fixed_energy_compact.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction.original_fixed_energy_compact.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize eqSignature eqActual.readout eqActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end original_fixed_energy_compact
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction

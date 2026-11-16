@@ -778,7 +778,7 @@ def effectiveKernel {X : Type v} {Y : Type w}
     (R * (1 - B * A)⁻¹ʳ * S)
     (S.transpose * (1 - A * B)⁻¹ʳ * R.transpose)
     (Q + S.transpose * (1 - A * B)⁻¹ʳ * A * S)
-private theorem effectiveKernel_symm {X : Type v} {Y : Type w}
+theorem effectiveKernel_symm {X : Type v} {Y : Type w}
     [Fintype X] [DecidableEq X] [Fintype Y] [DecidableEq Y]
     (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
     (A B : Matrix H H ℂ) (R : Matrix X H ℂ) (S : Matrix H Y ℂ)

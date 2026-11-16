@@ -154,7 +154,19 @@ For arbitrary finite X,H,Y, symmetric complex P:X by X, Q:Y by Y, A,B:H by H, an
 
 The external coefficient bridge acts directly on the actual polynomial Gaussian rows. Their internal annihilation equation includes the external lowerings with coefficients R^T and S. With F(d,e) the actual convergent row pairing, U_h the pairing with creation on the first row and V_h that with creation on the second, factorial adjointness gives U=B V+S r and V=A U+R^T l. Here l_j is zero if d_j=0 and otherwise F(d-e_j,e), and r_j is zero if e_j=0 and otherwise F(d,e-e_j). These lowerings carry no extra occupation factor because d and e index ordinary coefficients. Multiplication by the actual ordered inverse solves U=N(B R^T l+S r). The external annihilation equation then has coefficients E_xx and E_xy; the exchanged equation has E_yx and E_yy. The native Gaussian coefficient of E obeys exactly the same two recurrences. Strong induction on external total degree, with base Z, proves the full equality. All finite/infinite sum exchanges use the genuine polynomial-row summability.
 
-**Theorem 1.13 (Full all-occupation finite sewing identity).**
+**Theorem 1.13 (Symmetry of the full effective external kernel).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.effectiveKernel_symm`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.effectiveKernel_symm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual ordered effective kernel is symmetric when the external diagonal blocks and shared internal blocks are symmetric and the shared blocks are strict contractions. The ordinary ordered inverses and both mixed rectangles remain literal. Fixed external ordinary extraction consumes this symmetry.
+
+**Theorem 1.14 (Full all-occupation finite sewing identity).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.finite_sewing`
 
@@ -177,6 +189,7 @@ This is a finite coefficient sewing theorem in classical Gaussian/Fock calculus,
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.covariance`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.covariance_symm`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.effectiveKernel`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.effectiveKernel_symm`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.finite_sewing`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.polynomialGaussian`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.row`
