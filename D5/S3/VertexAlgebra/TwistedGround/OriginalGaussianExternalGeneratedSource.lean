@@ -169,7 +169,7 @@ theorem external_radial_generated (out out' : Bool) {u v : ℂ} {r : ℝ}
   field_simp [hr0]
   ring
 
-private lemma boundary_normalization {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+lemma boundary_normalization {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     (Real.sqrt (1 - r) : ℂ) * sourceAmplitude false 0 r = 1 := by
   have hs : ‖(0 : ℂ)‖ + ‖(r : ℂ)‖ < 1 := by
     simpa only [norm_zero, zero_add, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr]

@@ -22,7 +22,7 @@ open OriginalGaussianBilinearTranspose OriginalGaussianExternalDisplacement
 open OriginalGaussianExternalRadial
 open OriginalGaussianExternalMoments
 
-private lemma square_half {z : ℂ} (hz : ‖z‖ < 1) :
+lemma square_half {z : ℂ} (hz : ‖z‖ < 1) :
     squareResolvent z = (1 / 2 : ℂ) • (resolvent z + oppositeResolvent z) := by
   rw [(signed_square_factorization hz).1, (signed_square_factorization hz).2]
   have he : (1 + operator z) * squareResolvent z +
@@ -32,7 +32,7 @@ private lemma square_half {z : ℂ} (hz : ‖z‖ < 1) :
   rw [he, smul_smul]
   norm_num
 
-private lemma opposite_bilinear_transpose {z : ℂ} (hz : ‖z‖ < 1) (x y : H) :
+lemma opposite_bilinear_transpose {z : ℂ} (hz : ‖z‖ < 1) (x y : H) :
     sourceBilinearFunctional x (oppositeResolvent z y) =
       sourceBilinearFunctional (oppositeResolvent z x) y := by
   have he (k : ℕ) : sourceBilinearFunctional x (((-operator z) ^ k) y) =

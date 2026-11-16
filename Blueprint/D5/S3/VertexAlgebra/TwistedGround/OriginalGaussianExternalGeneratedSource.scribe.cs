@@ -8,6 +8,11 @@ internal sealed class OriginalGaussianExternalGeneratedSourceDocument : IScribeD
         "Signed Generated Source Displacement", H("Signed Generated Source Displacement"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("boundary-normalization"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGeneratedSource.boundary_normalization"),
+                H("boundary_normalization"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real 0<r<1, sqrt(1-r) times the actual sourceAmplitude(false,0,r) equals one. The actual analytic binomial branch supplies this normalization."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("modescale"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGeneratedSource.modeScale"),
                 H("modeScale"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

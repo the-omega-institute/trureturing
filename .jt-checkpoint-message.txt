@@ -1,0 +1,3 @@
+WIP: checkpoint external Gaussian JT frequency and radial equations
+
+Save the compiled frequency-row, displacement-equation, and radial-sum source chain with its generated Blueprint and Reg projections.
