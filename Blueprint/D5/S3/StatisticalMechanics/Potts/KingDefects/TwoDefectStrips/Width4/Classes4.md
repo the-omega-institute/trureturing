@@ -6,7 +6,7 @@ The finite data support the literal width-4 king-grid recurrence.
 
 **Theorem 1.1 (The successor multiset for source class 4).**
 
-$$\forall (p: \operatorname{Data}.\operatorname{Row}), (\forall (d: \operatorname{Fin}\left(3\right)), ((\operatorname{Data}.\operatorname{Valid}\left(p, \operatorname{Fin}.\operatorname{val}\left(d\right)\right)) \Rightarrow ((\operatorname{Canonical}\left(p\right)) \Rightarrow ((\operatorname{Data}.\operatorname{cl}\left(p, \operatorname{Fin}.\operatorname{val}\left(d\right)\right) = 4) \Rightarrow (\operatorname{Data}.\operatorname{successors}\left(p, \operatorname{Fin}.\operatorname{val}\left(d\right)\right) = \operatorname{Data}.\operatorname{classList}\left(4\right))))))$$
+$$\forall (p: \operatorname{HardinA233164KingStrip}.\operatorname{Boundary}), (\forall (d: \operatorname{Fin}\left(3\right)), ((\operatorname{Data}.\operatorname{Valid}\left(p, \operatorname{Fin}.\operatorname{val}\left(d\right)\right)) \Rightarrow ((\operatorname{Canonical}\left(p\right)) \Rightarrow ((\operatorname{Data}.\operatorname{cl}\left(p, \operatorname{Fin}.\operatorname{val}\left(d\right)\right) = 4) \Rightarrow (\operatorname{Data}.\operatorname{successors}\left(p, \operatorname{Fin}.\operatorname{val}\left(d\right)\right) = \operatorname{Data}.\operatorname{classList}\left(4\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width4/Classes4.class_successors` (`✓ std3`). ∎
 
