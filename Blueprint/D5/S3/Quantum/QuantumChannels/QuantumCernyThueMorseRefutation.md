@@ -114,7 +114,35 @@ $$\forall K, V : \operatorname{Type}\left(\right), (((\operatorname{Field}\left(
 
 For two linear maps f(0), f(1) of a vector space V (an additive commutative group with a K-module structure) over a field K, the empty word gives the identity and the word a :: u gives the map of u after f(a).
 
-**Theorem 1.10 (A dimension lemma for the Thue-Morse prefix).**
+**Definition 1.10 (Repeated 01 words).**
+
+$$\forall u : \operatorname{List}\left(\operatorname{Fin}\left(2\right)\right), \forall z : \operatorname{List}\left(\operatorname{Fin}\left(2\right)\right), \operatorname{repeated01}\left(u, z\right) = \operatorname{List}.\operatorname{append}\left(\operatorname{List}.\operatorname{append}\left(\operatorname{List}.\operatorname{append}\left(\operatorname{List}.\operatorname{append}\left([0, 1], u\right), [0, 1]\right), z\right), [1]\right)$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.repeated01` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Pui Hang Lee, Pui Yee Lee and Bjørn Kjos-Hanssen (2026). *Quantum Černý complexity of binary words*. URL: <https://arxiv.org/abs/2609.40154>.
+
+*Commentary.*
+
+The family word starts with 01, contains a second 01 after an arbitrary intervening word, has an arbitrary tail, and ends with 1.
+
+**Theorem 1.11 (A dimension lemma for repeated 01 words).**
+
+$$\forall K, V : \operatorname{Type}\left(\right), ((((\operatorname{Field}\left(K\right)) \land (\operatorname{AddCommGroup}\left(V\right))) \land (\operatorname{Module}\left(K, V\right))) \land (\operatorname{FiniteDimensional}\left(K, V\right))) \Rightarrow (\forall f : \operatorname{Fin}\left(2\right) \to \operatorname{End}\left(K, V\right), \forall u : \operatorname{List}\left(\operatorname{Fin}\left(2\right)\right), \forall z : \operatorname{List}\left(\operatorname{Fin}\left(2\right)\right), ((\operatorname{finrank}\left(K, V\right) \le 3) \Rightarrow (\operatorname{wordComp}\left(f, \operatorname{repeated01}\left(u, z\right)\right) = 0)) \Rightarrow (((\operatorname{wordComp}\left(f, \operatorname{List}.\operatorname{append}\left(\operatorname{List}.\operatorname{append}\left([0, 1], u\right), [0, 1]\right)\right) = 0) \lor (\operatorname{wordComp}\left(f, \operatorname{List}.\operatorname{append}\left(\operatorname{List}.\operatorname{append}\left([0, 1], z\right), [1]\right)\right) = 0)) \lor ((\operatorname{wordComp}\left(f, \operatorname{List}.\operatorname{append}\left(\operatorname{List}.\operatorname{append}\left(\operatorname{List}.\operatorname{append}\left(\operatorname{List}.\operatorname{append}\left([1], u\right), [0, 1]\right), z\right), [1]\right)\right) = 0) \lor (\operatorname{wordComp}\left(f, \operatorname{List}.\operatorname{append}\left(\operatorname{List}.\operatorname{append}\left(\operatorname{List}.\operatorname{append}\left([0, 1], u\right), [0, 1]\right), z\right)\right) = 0))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.mortal_repeated01` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Pui Hang Lee, Pui Yee Lee and Bjørn Kjos-Hanssen (2026). *Quantum Černý complexity of binary words*. URL: <https://arxiv.org/abs/2609.40154>.
+
+*Commentary.*
+
+In dimension at most three, a vanishing repeated 01 word forces one of the prefix through the second 01, the word beginning with 01 and its tail, the word with its first letter removed, or the word with its final 1 removed to vanish.
+
+**Theorem 1.12 (A dimension lemma for the Thue-Morse prefix).**
 
 $$\forall K, V : \operatorname{Type}\left(\right), ((((\operatorname{Field}\left(K\right)) \land (\operatorname{AddCommGroup}\left(V\right))) \land (\operatorname{Module}\left(K, V\right))) \land (\operatorname{FiniteDimensional}\left(K, V\right))) \Rightarrow (\forall f : \operatorname{Fin}\left(2\right) \to \operatorname{End}\left(K, V\right), ((\operatorname{dim}\left(K, V\right) \le 3) \land (\operatorname{wordComp}\left(f, [0, 1, 1, 0, 1, 0, 0, 1]\right) = 0)) \Rightarrow (((\operatorname{wordComp}\left(f, [0, 1, 1, 0, 1]\right) = 0) \lor (\operatorname{wordComp}\left(f, [0, 1, 0, 0, 1]\right) = 0)) \lor ((\operatorname{wordComp}\left(f, [1, 1, 0, 1, 0, 0, 1]\right) = 0) \lor (\operatorname{wordComp}\left(f, [0, 1, 1, 0, 1, 0, 0]\right) = 0))))$$
 
@@ -128,7 +156,7 @@ $$\forall K, V : \operatorname{Type}\left(\right), ((((\operatorname{Field}\left
 
 Let P, Q and T be the maps of 01101, 01 and 001, so that the map of 01101001 is T after P, and suppose that this map vanishes while the maps of 01101, 01001, 1101001 and 0110100 are all nonzero. The image of P lies in the image of Q. If the two images had equal dimension they would coincide; then for each x there is y with Q x = P y, so T Q x = T P y = 0 and the map of 01001, which is T after Q, would vanish. Hence the image of Q has larger dimension than the image of P, which is at least 1 because P is nonzero. The map f(0) is not surjective, since otherwise the map of 1101001 would vanish: the map of 01101001 is the map of 1101001 after f(0). So the image of Q, the image of the image of f(0) under f(1), has dimension at most 2, hence exactly 2. The image of Q lies in the image of f(1); if they coincided, then for each x there would be y with f(1) x = Q y, and the map of 1101001, which is the map of 101001 after f(1), would send x to the map of 01101001 applied to y, which is 0. So f(1) has rank 3, it is injective, and the map of 0110100 vanishes because f(1) after it is the map of 01101001.
 
-**Theorem 1.11 (The conjecture fails).**
+**Theorem 1.13 (The conjecture fails).**
 
 $$\neg claim$$
 
@@ -153,9 +181,11 @@ If the complexity were 2, the set defining it would contain 2, giving a qubit in
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.UniqueShortestSync`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.applyWord`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.claim`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.mortal_repeated01`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.mortal_thueMorse`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.qc`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.reachable`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.repeated01`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.result`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.thueMorsePrefix`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.wordComp`

@@ -88,6 +88,137 @@ def wordComp {K V : Type*} [Field K] [AddCommGroup V] [Module K V] (f : Fin 2 �
   | [] => LinearMap.id
   | a :: u => wordComp f u ∘ₗ f a
 
+/-- Binary words with an initial `01`, a later `01`, and a terminal `1`. -/
+def repeated01 (u z : List (Fin 2)) : List (Fin 2) :=
+  [0, 1] ++ u ++ [0, 1] ++ z ++ [1]
+
+/-- A repeated `01` word is mortal in dimension at most three, or one of its
+shorter structural words is mortal. This is the parameterized rank obstruction
+behind the Thue--Morse counterexample below. -/
+theorem mortal_repeated01 {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+    [FiniteDimensional K V] (hV : finrank K V ≤ 3) (f : Fin 2 → V →ₗ[K] V)
+    (u z : List (Fin 2)) (hw : wordComp f (repeated01 u z) = 0) :
+    wordComp f ([0, 1] ++ u ++ [0, 1]) = 0 ∨
+      wordComp f ([0, 1] ++ z ++ [1]) = 0 ∨
+      wordComp f ([1] ++ u ++ [0, 1] ++ z ++ [1]) = 0 ∨
+      wordComp f ([0, 1] ++ u ++ [0, 1] ++ z) = 0 := by
+  set f₀ := f 0
+  set f₁ := f 1
+  have hw' : ∀ x, wordComp f (repeated01 u z) x = 0 :=
+    fun x => LinearMap.congr_fun hw x
+  by_contra hne
+  simp only [not_or] at hne
+  obtain ⟨hP, hA, hB, hD⟩ := hne
+  have ex : ∀ {v : List (Fin 2)}, wordComp f v ≠ 0 → ∃ x, wordComp f v x ≠ 0 := by
+    intro v hv
+    by_contra h
+    push Not at h
+    exact hv (LinearMap.ext h)
+  obtain ⟨xP, hxP⟩ := ex hP
+  obtain ⟨xA, hxA⟩ := ex hA
+  obtain ⟨xB, hxB⟩ := ex hB
+  obtain ⟨xD, hxD⟩ := ex hD
+  let qword : List (Fin 2) := [0, 1]
+  let pword : List (Fin 2) := [0, 1] ++ u ++ [0, 1]
+  let Q := LinearMap.range (wordComp f qword)
+  let P := LinearMap.range (wordComp f pword)
+  have append_comp : ∀ (a b : List (Fin 2)),
+      wordComp f (a ++ b) = wordComp f b ∘ₗ wordComp f a := by
+    intro a
+    induction a with
+    | nil => intro b; simp [wordComp]
+    | cons c a ih =>
+      intro b
+      simp only [List.cons_append, wordComp, ih, LinearMap.comp_assoc]
+  have hfactorP : wordComp f pword =
+      wordComp f qword ∘ₗ wordComp f ([0, 1] ++ u) := by
+    rw [show pword = ([0, 1] ++ u) ++ [0, 1] by simp [pword, List.append_assoc],
+      append_comp]
+  have hfullP : wordComp f (repeated01 u z) =
+      wordComp f (z ++ [1]) ∘ₗ wordComp f pword := by
+    rw [show repeated01 u z = pword ++ (z ++ [1]) by
+      simp [repeated01, pword, List.append_assoc], append_comp]
+  have hfullQ : wordComp f (repeated01 u z) =
+      wordComp f (u ++ [0, 1] ++ z ++ [1]) ∘ₗ wordComp f qword := by
+    rw [show repeated01 u z = qword ++ (u ++ [0, 1] ++ z ++ [1]) by
+      simp [repeated01, qword, List.append_assoc], append_comp]
+  have hfull0 : wordComp f (repeated01 u z) =
+      wordComp f ([1] ++ u ++ [0, 1] ++ z ++ [1]) ∘ₗ f₀ := by
+    rw [show repeated01 u z = [0] ++ ([1] ++ u ++ [0, 1] ++ z ++ [1]) by
+      simp [repeated01, List.append_assoc], append_comp]
+    rfl
+  have hfull1 : wordComp f (repeated01 u z) =
+      f₁ ∘ₗ wordComp f ([0, 1] ++ u ++ [0, 1] ++ z) := by
+    rw [show repeated01 u z = ([0, 1] ++ u ++ [0, 1] ++ z) ++ [1] by
+      simp [repeated01, List.append_assoc], append_comp]
+    rfl
+  have hP_le_Q : P ≤ Q := by
+    rintro y ⟨x, rfl⟩
+    refine ⟨wordComp f ([0, 1] ++ u) x, ?_⟩
+    rw [hfactorP]
+    rfl
+  have hP_pos : 0 < finrank K P := by
+    apply Nat.pos_of_ne_zero
+    intro hzero
+    have hbot : P = ⊥ := Submodule.finrank_eq_zero.mp hzero
+    apply hxP
+    have hxmem : wordComp f pword xP ∈ P := LinearMap.mem_range_self _ _
+    rw [hbot, Submodule.mem_bot] at hxmem
+    exact hxmem
+  have hPQ : finrank K P < finrank K Q := by
+    by_contra h
+    have heq : P = Q := Submodule.eq_of_le_of_finrank_le hP_le_Q (not_lt.mp h)
+    have hmem : wordComp f qword xA ∈ P := heq ▸ LinearMap.mem_range_self _ _
+    obtain ⟨y, hy⟩ := hmem
+    apply hxA
+    have hwx := hw' y
+    rw [hfullP] at hwx
+    simp only [LinearMap.comp_apply] at hwx
+    rw [hy] at hwx
+    simpa [qword, List.append_assoc, append_comp, wordComp] using hwx
+  have hf₀ : LinearMap.range f₀ ≠ ⊤ := by
+    intro htop
+    obtain ⟨y, hy⟩ : xB ∈ LinearMap.range f₀ := htop ▸ Submodule.mem_top
+    apply hxB
+    rw [← hy]
+    have hwx := hw' y
+    simpa [hfull0, LinearMap.comp_apply] using hwx
+  have hrank₀ : finrank K (LinearMap.range f₀) ≤ 2 := by
+    have := Submodule.finrank_lt hf₀
+    omega
+  have hQ_le_0 : finrank K Q ≤ finrank K (LinearMap.range f₀) := by
+    change finrank K (LinearMap.range (wordComp f [0, 1])) ≤ _
+    rw [show wordComp f [0, 1] = f₁ ∘ₗ f₀ by rfl, LinearMap.range_comp]
+    exact Submodule.finrank_map_le _ _
+  have hQ_pos : 0 < finrank K Q := lt_of_lt_of_le hP_pos (Nat.le_of_lt hPQ)
+  have hQ_eq_two : finrank K Q = 2 := by omega
+  have hQ_le_1 : Q ≤ LinearMap.range f₁ := by
+    dsimp [Q, qword]
+    exact LinearMap.range_comp_le_range _ _
+  have hrank₁ : 2 < finrank K (LinearMap.range f₁) := by
+    by_contra h
+    have heq : Q = LinearMap.range f₁ :=
+      Submodule.eq_of_le_of_finrank_le hQ_le_1 (by omega)
+    have hmem : f₁ xB ∈ Q := heq ▸ LinearMap.mem_range_self _ _
+    obtain ⟨y, hy⟩ := hmem
+    apply hxB
+    have hwx := hw' y
+    rw [hfullQ] at hwx
+    simp only [LinearMap.comp_apply] at hwx
+    rw [hy] at hwx
+    simpa [List.append_assoc, append_comp, wordComp, LinearMap.comp_apply] using hwx
+  have hsurj : Function.Surjective f₁ := by
+    rw [← LinearMap.range_eq_top]
+    apply Submodule.eq_top_of_finrank_eq
+    have hle := Submodule.finrank_le (LinearMap.range f₁)
+    omega
+  have hinj : Function.Injective f₁ := LinearMap.injective_iff_surjective.mpr hsurj
+  apply hxD
+  apply hinj
+  rw [map_zero]
+  have hwx := hw' xD
+  simpa [hfull1, LinearMap.comp_apply] using hwx
+
 /-- In dimension at most 3, if the word map of `01101001` vanishes then the word map of one of
 the shorter words `01101`, `01001`, `1101001`, `0110100` vanishes. -/
 theorem mortal_thueMorse {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
