@@ -402,4 +402,69 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end ContractNTrace
 
+abbrev diffSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ → ℂ)
+    (fun _ => Set ℂ → Prop)
+def diffActual : Realization diffSignature :=
+  realize _ (fun _ _ f s => DifferentiableOn ℂ f s) (fun e => nomatch e)
+def diffBad : Realization diffSignature :=
+  realize _ (fun _ _ _ _ => False) (fun e => nomatch e)
+private theorem diffDependence : ObservationalDependence diffSignature diffActual := by
+  intro i
+  refine ⟨(), (fun _ => 0), (fun z => z⁻¹), ?_⟩
+  intro h
+  have he := congrFun h Set.univ
+  have hd : DifferentiableOn ℂ (fun z : ℂ => z⁻¹) Set.univ :=
+    Eq.mp he (differentiableOn_const _)
+  have hi := differentiableOn_univ.mp hd (0 : ℂ)
+  exact (differentiableAt_inv_iff.mp hi) rfl
+
+
+namespace finiteLog_diff
+def arena : Arena where
+  signature := diffSignature
+  Law A := ∀ N : ℕ, A.readout () () (finiteLog N) (Metric.ball (0 : ℂ) 1)
+private theorem bad_fails : ¬ arena.Law diffBad := by
+  intro h
+  exact h 0
+def evidence : Registration arena (type_of% (@finiteLog_diff)) where
+  actual := diffActual
+  bridge := Iff.rfl
+  variation := ⟨@finiteLog_diff, diffBad, bad_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law diffActual diffBad bad_fails
+  dependence := diffDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@finiteLog_diff) (Realization diffSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianDeterminant.finiteLog_diff.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianDeterminant.finiteLog_diff.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize diffSignature diffActual.readout diffActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianDeterminant
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end finiteLog_diff
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianDeterminant
