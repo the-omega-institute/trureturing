@@ -20,7 +20,7 @@ $$\forall p: \mathit{Boundary}, (\forall d: \mathit{Nat}, (\operatorname{\mathit
 
 Every permitted row contributes its destination class once; disallowed rows contribute the empty multiset.
 
-**Definition 1.2 (Explicit successor multisets).**
+**Definition 1.2 (Successor multisets).**
 
 $$\operatorname{\mathit{HardinA229585StripOrbit}}.\operatorname{\mathit{images}}: (\operatorname{\mathit{Fin}}\left(72\right)) \to (\operatorname{\mathit{Multiset}}\left(\operatorname{\mathit{Fin}}\left(72\right)\right))$$
 
@@ -32,7 +32,7 @@ $$\operatorname{\mathit{HardinA229585StripOrbit}}.\operatorname{\mathit{images}}
 
 *Commentary.*
 
-The table has 72 multisets in cl index order, each containing destination indices in Fin 72 with their successor multiplicities. Entries are defined by the finite lists image0 through image71 in the Lean owner, coerced to multisets. The OrbitChecks.canonical_next theorems identify images with nextClasses on each valid class interval, and HardinA229585StripOrbitTable.table_counts pins each destination multiplicity to the corresponding entry of T.
+The table has 72 multisets in cl index order, each containing destination indices in Fin 72 with their successor multiplicities. For source classes below 16, the destinations below 16 are generated from HardinA233255Recurrence.table: each j contributes table i j converted to a natural multiplicity via Multiset.replicate, using Fin.castAdd 56 for the inclusion. Only destinations at least 16 are retained as a literal tail. For sources zeroBudgetClass i, the complete multiset is generated from the same owner row through HardinA229585StripData.zeroBudgetClass on the destination index. The other rows retain their finite lists. The OrbitChecks.canonical_next theorems identify images with nextClasses on each valid class interval, and HardinA229585StripOrbitTable.table_counts pins each destination multiplicity to the corresponding entry of T.
 
 **Theorem 1.3 (Histogram as a multiset multiplicity).**
 
