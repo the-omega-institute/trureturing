@@ -57,6 +57,39 @@ internal static partial class RepositoryRules
                 && item.Key.Value.EndsWith(".lean", StringComparison.Ordinal))
             .Select(static item => (item.Key, item.Value));
 
+    private static readonly UTF8Encoding HeaderUtf8 = new(false, true);
+
+    internal static bool TryHeader(RepositoryFile file, out HeaderData header)
+    {
+        if (!file.TextIsRawUtf8)
+        {
+            return TryHeader(file.Text, out header);
+        }
+
+        // The canonical pattern needs six lines, or seven with utility. Include
+        // complete lines to preserve greedy digest matching and its final newline.
+        var bytes = file.RawBytes.AsSpan();
+        var length = 0;
+        for (var line = 0; line < 7; line++)
+        {
+            var lineStart = length;
+            var newline = bytes[length..].IndexOf((byte)'\n');
+            if (newline < 0)
+            {
+                length = bytes.Length;
+                break;
+            }
+
+            length += newline + 1;
+            if (line == 5 && !bytes[lineStart..].StartsWith("   utility: "u8))
+            {
+                break;
+            }
+        }
+
+        return TryHeader(HeaderUtf8.GetString(bytes[..length]), out header);
+    }
+
     internal static bool TryHeader(string text, out HeaderData header)
     {
         var match = HeaderPattern.Match(text);

@@ -1,0 +1,64 @@
+**Theorem 8 (Exact binary order and the full cyclic action).**
+For every $q\ge1$, including composite $M$,
+
+$$
+\operatorname{ord}_M(2)=3q=\ell.
+\tag{16}
+$$
+
+Whenever the natural comparison $U\to\mathbb Z/M$ in Definition 5 is an
+isomorphism, the full label symmetry group is the regular wreath product
+
+$$
+G\cong\operatorname{Sym}(m)^\ell\rtimes C_\ell
+=\operatorname{Sym}(m)\wr C_\ell,\qquad
+|G|=\ell(m!)^\ell.
+\tag{17}
+$$
+
+Its unique destination-fiber coordinates and multiplication are
+
+$$
+p_{\sigma,k}(a,j)=(\sigma_{j+k}(a),j+k),\qquad
+(\sigma,k)(\tau,h)=(\eta,k+h),\quad
+\eta_r=\sigma_r\circ\tau_{r-k}.
+\tag{18}
+$$
+
+In particular, (17)–(18) hold for $q,m\ge2$.
+
+*Proof.* The order $d$ of the unit $2$ divides $3q$ by (8). If
+$d<3q$, write $3q=ed$ with $e\ge2$. Then
+$d\le3q/2<2q$, so $0<2^d-1<M$, contradicting
+$M\mid2^d-1$. This proves (16).
+
+Under the assumed comparison, $W=\{2^j:0\le j<\ell\}$ has $\ell$
+distinct elements and each fiber has $m$ labels. An additive
+automorphism of $\mathbb Z/M$ is multiplication by its value at $1$:
+it has this form because $1$ generates, and the value is a unit because
+the inverse homomorphism supplies an inverse multiplier. To preserve $W$
+it must take $1$ to $2^k$. Conversely, multiplication by $2^k$
+permutes $W$. Thus $K=C_\ell$, acting regularly on the colors.
+Theorem 3 now gives (17) and the common shift in (18).
+
+For completeness, any permutation in (18) sends the sum of the weights of
+every subset to $2^k$ times that sum. This unit multiplication preserves
+zero in both directions, so it preserves the entire hypergraph. Finally,
+
+$$
+p_{\sigma,k}p_{\tau,h}(a,j)
+=(\sigma_{j+h+k}(\tau_{j+h}(a)),j+h+k).
+$$
+
+At destination $r=j+h+k$, this gives exactly the product in (18), with
+$\eta_r=\sigma_r\circ\tau_{r-k}$. Uniqueness of $k$ follows from
+(16), and the restrictions to the fibers uniquely determine $\sigma$.
+$\square$
+
+*Mathematical citation 8.1.* The regular wreath product and its action on a
+product set are standard; [3] gives the convention whose base coordinate at
+$r$ is multiplied against the second base coordinate at $r-k$.
+Theorems 6–8 identify this established group with the particular full
+zero-subset symmetry group by the actual-mask reconstruction; that
+identification is repo-derived.
+

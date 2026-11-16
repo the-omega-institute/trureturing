@@ -1,0 +1,2 @@
+**本批核验。** Exact symbolic checks for the source vectors, the eigenoperator equation (10.4), the mixed one-step counterexample (10.15), the $N=2$ block construction (9.16)--(9.18), the four-node Prony endpoint, and the charged cyclic embeddings agree with the displayed identities. These are ordinary algebraic checks, not Lean verification or a replacement for the repository's required checks. No digestion, Lean addition, judge/tool change, experiment material, publication or physical implementation is part of this addition.
+
