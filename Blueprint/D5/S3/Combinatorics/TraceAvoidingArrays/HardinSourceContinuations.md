@@ -76,7 +76,21 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuatio
 
 For every class i, sourceV(0,i)=1 and sourceV(m+1,i)=sum over j of M(i,j)sourceV(m,j). The theorem identifies this recurrence with the existing literal row-continuation count for all admissible scanner states and boundaries.
 
-**Theorem 1.6 (Universal literal interpretation of M and r).**
+**Theorem 1.6 (Exact admissible four-class transfer certificate).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.four_class_certificate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.four_class_certificate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
+
+*Commentary.*
+
+The certificate proves admissible successors and initial states, every actual six-colour transition count M, and the normalized initial distribution r. At saturated Seen flags, scanner_fibres pushes the transition projection to sixteen times the proper three-colour successor count. The exact budget and class adapter followed by integer division supplies the proper diagonal sectors of the width-four defect strips. Their raw initial distributions are separate.
+
+**Theorem 1.7 (Universal literal interpretation of M and r).**
 
 $$\forall m: \operatorname{Nat}\left(\right), (\forall s: \operatorname{Seen}\left(\right), \forall p: \operatorname{Fin}\left(4\right) \to \operatorname{Fin}\left(3\right), \operatorname{admissible}\left(s, p\right) \implies \operatorname{widthV}\left(\operatorname{rowOK}\left(\right), \operatorname{pairs}\left(\right), \operatorname{nextOK}\left(\right), m, s, p\right) = \operatorname{sourceV}\left(m, \operatorname{sourceClass}\left(s, p\right)\right)) \land \operatorname{Nat}.\operatorname{card}\left(\operatorname{HardinThinGraphTransport}.\operatorname{literalStrip}\left(\operatorname{true}\left(\right), m, 3\right)\right) = \sum_{j: \operatorname{Fin}\left(4\right)} \operatorname{r}\left(j\right) \cdot \operatorname{sourceV}\left(m, j\right)$$
 
@@ -94,6 +108,7 @@ The first equality holds for every continuation length m, scanner state s and ad
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.M`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.admissible`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.four_class_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.four_class_result`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.r`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.sourceClass`
