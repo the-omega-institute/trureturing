@@ -55,7 +55,11 @@ The path edges are 01,12,23 and the star edges 01,02,03. A star leaf may force t
 
 ## Evidence
 
-The source module is `D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.lean`. Its public definitions are `connectedForcing`, `coefficient`, `leafCount` and `claim`; its only public theorem is the designated `result`. The private graph, decidability instance and singleton helpers all occur on the live result path. The designated result has the four-slot registration exemption; no other public theorem is introduced.
+The source module is `D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.lean`. Its public definitions are `connectedForcing`, `coefficient`, `leafCount` and `claim`; its only public theorem is the designated `result`. The private graph and decidability instance supply the star semantics. `singleton_connected` is consumed by `result`; `path_singleton` is consumed by `result`; `star_singleton` is consumed by `result`. Each helper has proposed `proof_shape: bind-only`: respectively singleton subtype normalization, explicit forcing constructors plus a finite fort certificate, and finite fort certificates applied to the frozen obstruction theorem. All are on the live result path. The designated result has the four-slot registration exemption; no other public theorem is introduced.
+
+Direct frozen prerequisite owners are `D5/S3/Combinatorics/GeneralizedPetersen/ZeroForcingThree` (`Black`, its constructors, `IsZeroForcing`, `IsFort.not_black_of_disjoint`) and `ZeroForcingThreeFinite` (`IsFort`, `finiteNeighbors`). Their exact frozen module statement identities are: ZeroForcingThree `sha256:09006a0e8fc30987321439153310f86ebfc30d7e8836789450cd5f5b90fd43eb`.
+
+`ZeroForcingThreeFinite` frozen module statement identity: `sha256:a7fe629eed58fabb6b939cb273119655c222535b6ea86445fafe78844162c652`.
 
 Proposed `proof_shape: bind-only`; `admission_basis: open-problem-resolution` under original #31033; `escape_witness: none`. The proof applies frozen forcing/fort semantics, pinned graph interfaces and finite normalization. Consumed helpers are mathematical organization, not separate mathematical novelties. Utility is `certified-instance` with `refutes` directed at the literal claim and result. Final shape and fidelity require independent prefreeze evaluation.
 
