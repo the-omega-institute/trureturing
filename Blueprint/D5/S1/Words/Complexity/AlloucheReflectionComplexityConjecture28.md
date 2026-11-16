@@ -22,6 +22,10 @@ $$\forall A: \operatorname{Type}, [\operatorname{Fintype}\left(A\right)] \forall
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/AlloucheReflectionComplexityConjecture28.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/acls-reflection-complexity-c28` (proved) by `D5/S1/Words/Complexity/AlloucheReflectionComplexityConjecture28.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"acls-reflection-complexity-c28","declaration_gid":"D5/S1/Words/Complexity/AlloucheReflectionComplexityConjecture28.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jean-Paul Allouche; John M. Campbell; Shuo Li; Jeffrey Shallit; Manon Stipulanti (2025). *The reflection complexity of sequences over finite alphabets*. DOI: [10.1007/s00224-025-10234-x](https://doi.org/10.1007/s00224-025-10234-x). URL: <https://arxiv.org/abs/2406.09302v4>.

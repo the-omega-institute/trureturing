@@ -19,13 +19,16 @@ internal sealed class AlloucheReflectionComplexityConjecture28Document : IScribe
                 AssessedProvenance.FromLiterature(Source), DescribeRole.Definition),
             Node("result", "Every such word has bounded reflection differences", ClaimBody(),
                 "Place a new marker between the two sides of a bi-infinite mirror of x. Its factor count is the reversal-symmetrized count plus n. For a bi-infinite language, every fixed-offset cropping map is surjective. Weighted factor graphs then control intermediate excess using two lengths with small increments: a cut estimate forces heavy edges to return, and word overlap prevents two heavy outgoing edges. Linear growth supplies those two lengths by interval averaging. The resulting mirror increment bound transfers through reflection-orbit and palindromic-loop counts to the displayed absolute-difference bound. The same proof includes periodic words and transient prefixes. It supplies a finite bound without asserting optimal dependence on the growth coefficient.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("acls-reflection-complexity-c28"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role) =>
+        AssessedProvenance provenance, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("acls-c28-" + name), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname,
         Grp(Seq([.. name.Split('.').SelectMany((part, index) =>
