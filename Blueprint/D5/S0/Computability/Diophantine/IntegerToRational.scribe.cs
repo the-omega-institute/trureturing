@@ -36,9 +36,29 @@ internal sealed class DiophantineIntegerToRationalDocument : IScribeDocumentDefi
                     Paragraph(Text(
                         "This is conditional. It neither constructs the defining polynomial P nor "
                         + "proves integer Hilbert-tenth undecidability. The semantic compiler is "
-                        + "formalized here; an explicit standard polynomial-code implementation and "
-                        + "its compiled computability proof remain a separate downstream obligation "
-                        + "before the full effective H10-END interface can be claimed."))),
+                        + "formalized here. The companion effective theorem fixes a total raw Nat code, "
+                        + "proves code completeness, and supplies a primitive-recursive compiler whose "
+                        + "decoded output is this same semantic compiler."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("integer-to-rational-effective-compiler"),
+                DeclarationHandle.Create(
+                    "D5/S0/Computability/Diophantine/IntegerToRational.effective_compiler"),
+                H("The total primitive-recursive code compiler"),
+                StatementSource.FromAuthor(EffectivePresentation()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Polynomial codes are finite lists of signed-coefficient monomials. "
+                        + "A coefficient is a difference of naturals and a variable word uses "
+                        + "natural indices; an index outside the declared finite dimension is "
+                        + "interpreted as zero. Raw Nat codes use Mathlib's Encodable numbering; "
+                        + "malformed numerals decode to the empty code.")),
+                    Paragraph(Text(
+                        "The compiler takes both dimensions and both raw codes as inputs. Its "
+                        + "natural/list operations are proved primitive recursive, every finite "
+                        + "MvPolynomial has a code, and the decoded result has the same rational "
+                        + "solvability equivalence as the semantic joint-assignment reduction."))),
                 DescribeRole.Theorem))));
 
     private static Formula A(string name, Formula domain, Formula body) =>
@@ -63,5 +83,21 @@ internal sealed class DiophantineIntegerToRationalDocument : IScribeDocumentDefi
         return F.Disp(A("n", F.Id("N"), A("m", F.Id("N"),
             A("P", Call("IntegerPolynomial", Call("succ", m)),
                 A("f", Call("IntegerPolynomial", n), body)))));
+    }
+
+    private static Formula EffectivePresentation()
+    {
+        var q = F.Id("q");
+        var n = F.Id("n");
+        var m = F.Id("m");
+        var p = F.Id("p");
+        var f = F.Id("f");
+        var code = Call("NatCodeInput", n, m, p, f);
+        var computable = Call("Computable", Call("compileCodeNat", code));
+        var complete = Forall, Sp;
+        var completeness = Call("decodePolynomial", n, Call("decodeCode", F.Id("k")));
+        var solvable = Call("codeSolvability", n, m, p, f);
+        return F.Disp(A("q", Call("NatCodeInput", F.Id("N"), F.Id("N"), F.Id("N"), F.Id("N")),
+            And(computable, And(Call("codeComplete", q), solvable)));
     }
 }
