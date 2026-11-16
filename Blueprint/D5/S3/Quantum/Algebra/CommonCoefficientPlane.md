@@ -28,5 +28,4 @@ Finally, the kernel matrices for Y = B inverse times X are B* T B. Transporting 
 
 - Truth anchor: `D5/S3/Quantum/Algebra/CommonCoefficientPlane.common_plane`
 - Dependency: [D5/S3/Quantum/Algebra/GramUnitaryExtension](GramUnitaryExtension.md)
-- Dependency: [D5/S3/Quantum/Algebra/SemidefiniteCoefficientKernelCheck](SemidefiniteCoefficientKernelCheck.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/BridgeGraph/FlatSpectrumObstruction](../TensorNetworks/BridgeGraph/FlatSpectrumObstruction.md)
