@@ -9,6 +9,8 @@
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Algebra.Order.Group.Abs
 import Mathlib.Tactic.Ring
 
 /-! The path-neighborhood argument of GRID_PROFILE_PROOF, received from
