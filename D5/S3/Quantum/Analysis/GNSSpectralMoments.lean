@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Analysis/GNSSpectralMoments
    mirror-E: none(waiver:registration-template-not-established)
-   anchors: [mathlib/module/Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Unital]
+   anchors: [mathlib/module/Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Commute]
    utility: none
    digest: Genuine complex spectral moment families for prescribed GNS coordinates. -/
 
