@@ -125,15 +125,6 @@ internal sealed class InvariantsDocument : IScribeDocumentDefinition
                 And(Member(u, S), And(Call("Adj", G, v, u), Le(D(1), Degree(S, u))))))));
     }
 
-    private static Formula ClaimFormula()
-    {
-        var n = F.Id("n"); var graph = F.Id("G");
-        return Disp(Iff(F.Id("claim"), All("n", F.Id("Nat"),
-            All("G", Call("SimpleGraph", Call("Fin", n)),
-                Imp(Call("Colorable", graph, D(2)),
-                    Eq(Call("beta", graph, D(2)), Call("SF", graph, D(2))))))));
-    }
-
     private static DocumentBlock Node(string selector, string title, Formula formula,
         string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(selector == "starForming_two_iff"

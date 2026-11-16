@@ -49,61 +49,16 @@ internal sealed class StarFormingDissociationRefutationDocument : IScribeDocumen
                     ProblemSlugRef.Create("sahbi-2026-star-forming-bipartite-refutation"),
                     ResolutionKind.Refuted)))));
 
-    private static Formula G => F.Id("G");
-    private static Formula V => F.Id("V");
-    private static Formula K => F.Id("k");
-    private static Formula S => F.Id("S");
-    private static Formula T => F.Id("T");
-    private static Formula I => F.Id("I");
-    private static Formula v => F.Id("v");
-    private static Formula Sets => Call("Finset", V);
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
-    private static Formula Ex(string name, Formula type, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
     private static Formula Eq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Lt(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
-    private static Formula Le(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Iff(Formula a, Formula b) =>
         new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(a, FormulaLogicOperator.Implies, b);
-    private static Formula And(Formula a, Formula b) =>
-        new Formula.Logic(a, FormulaLogicOperator.And, b);
-    private static Formula Or(Formula a, Formula b) =>
-        new Formula.Logic(a, FormulaLogicOperator.Or, b);
-    private static Formula Member(Formula a, Formula b) => Call("Member", a, b);
-    private static Formula Degree(Formula s, Formula x) => Call("d", G, s, x);
-    private static Formula Star(Formula s) => Call("IsStarForming", G, K, s);
-    private static Formula Independent(Formula s) => Call("IsKIndependent", G, K, s);
-    private static Formula Maximum(string name, Formula condition) => Call("supCard",
-        Seq(OpenBrace, F.Id(name), Sp, InMacro, Sp,
-            Call("powerset", Call("univ", V)), Sp, Mid, Sp, condition, CloseBrace));
-
-    private static Formula StarFormula()
-    {
-        var c = F.Id("c"); var l = F.Id("L"); var leaf = F.Id("ell");
-        var copy = And(Eq(Call("card", l), K),
-            And(new Formula.Not(Member(c, l)),
-            And(Call("Subset", Call("insert", c, l), Call("insert", v, S)),
-            And(All("ell", V, Imp(Member(leaf, l), Call("Adj", G, c, leaf))),
-                Member(v, Call("insert", c, l))))));
-        return Disp(Iff(Star(S), All("v", V, Imp(new Formula.Not(Member(v, S)),
-            Ex("c", V, Ex("L", Sets, copy))))));
-    }
-
-    private static Formula LocalFormula()
-    {
-        var u = F.Id("u");
-        return All("v", V, Imp(new Formula.Not(Member(v, S)),
-            Or(Le(D(2), Degree(S, v)), Ex("u", V,
-                And(Member(u, S), And(Call("Adj", G, v, u), Le(D(1), Degree(S, u))))))));
-    }
 
     private static Formula ClaimFormula()
     {
