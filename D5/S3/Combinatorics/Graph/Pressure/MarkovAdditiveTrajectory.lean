@@ -384,6 +384,124 @@ theorem actual_circuit_path_laws (q : ℝ) (hq : 0 < q) (hq1 : q < 1) (φ : ℕ 
   · intro m l r w
     rw [hc, hm, sourcePath_head, if_pos rfl, sourcePath_block]
 
+private theorem sourcePath_register_snoc : ∀ (n : ℕ) (i j : Bool) (w : Fin n → Bool),
+    PhaseHistoryBound.register (n+1) (sourcePath (n+1) i (Fin.snoc w j)) =
+      (Fin.cons i w, j) := by
+  intro n
+  induction n with
+  | zero =>
+    intro i j w
+    have hw : w = Fin.elim0 := Subsingleton.elim _ _
+    subst w
+    rfl
+  | succ n ih =>
+    intro i j w
+    have he : Fin.snoc w j = Fin.cons (α := fun _ : Fin (n+2) => Bool) (w 0)
+        (Fin.snoc (α := fun _ : Fin (n+1) => Bool) (Fin.tail w) j) := by
+      rw [Fin.cons_snoc_eq_snoc_cons, Fin.cons_self_tail]
+    rw [he]
+    change (SequentialRegisterCircuit.headRest (n+1)).symm
+      (i, PhaseHistoryBound.register (n+1)
+        (sourcePath (n+1) (w 0) (Fin.snoc (Fin.tail w) j))) = _
+    rw [ih]
+    simp [SequentialRegisterCircuit.headRest, Fin.cons_self_tail, Fin.consEquiv]
+
+end Born
+
+private theorem pathWeight_snoc (K : Matrix V V ℝ) (n : ℕ) (i j : V)
+    (w : Fin n → V) :
+    pathWeight K (n+1) i (Fin.snoc w j) = pathWeight K n i w * K (endpoint n i w) j := by
+  induction n generalizing i with
+  | zero => simp [pathWeight, endpoint, Fin.snoc_zero]
+  | succ n ih =>
+    have he : Fin.snoc w j = Fin.cons (α := fun _ : Fin (n+2) => V) (w 0)
+        (Fin.snoc (α := fun _ : Fin (n+1) => V) (Fin.tail w) j) := by
+      rw [Fin.cons_snoc_eq_snoc_cons, Fin.cons_self_tail]
+    rw [he]
+    change K i (w 0) * pathWeight K (n+1) (w 0) (Fin.snoc (Fin.tail w) j) =
+      K i (w 0) * pathWeight K n (w 0) (Fin.tail w) * K (endpoint n (w 0) (Fin.tail w)) j
+    rw [ih]
+    ring
+
+namespace Stationary
+variable {P : Matrix V V ℝ} (π : Stationary P)
+
+/-- The actual archive masses after the last state of an (n+1)-transition path is discarded. -/
+def archiveMass (K : Matrix V V ℝ) (n : ℕ) (i : V) (w : Fin n → V) : ℝ :=
+  ∑ j, π.prob i * pathWeight K (n+1) i (Fin.snoc w j)
+
+private theorem archive_marginal (K : Matrix V V ℝ)
+    (hK : K ∈ Matrix.rowStochastic ℝ V) (n : ℕ) (i : V) (w : Fin n → V) :
+    π.archiveMass K n i w = π.prob i * pathWeight K n i w := by
+  simp only [archiveMass, pathWeight_snoc, ← mul_assoc, ← Finset.mul_sum]
+  rw [Matrix.sum_row_of_mem_rowStochastic hK, mul_one]
+
+/-- Classical Fisher of the observed archive, with the reference initial law fixed. -/
+def archiveFisher (hI : P.IsIrreducible) (g : V → V → ℝ) (n : ℕ) : ℝ :=
+  ∑ x : V × (Fin n → V), π.archiveMass (π.globalDoob hI g 0) n x.1 x.2 *
+    (deriv (fun t => Real.log (π.archiveMass (π.globalDoob hI g t) n x.1 x.2)) 0)^2
+
+/-- Discarding the final memory removes exactly one transition's information.
+Here n+1 gates leave an archive of n+1 states, hence n observed transitions. -/
+theorem archive_information_loss (hP : P ∈ Matrix.rowStochastic ℝ V)
+    (hI : P.IsIrreducible) (g : V → V → ℝ) (n : ℕ) :
+    π.archiveFisher hI g n = n * π.varianceRate hP hI g ∧
+    π.completePathFisher hI g (n+1) - π.archiveFisher hI g n = π.varianceRate hP hI g := by
+  have he : π.archiveFisher hI g n = π.completePathFisher hI g n := by
+    unfold archiveFisher completePathFisher
+    apply Finset.sum_congr rfl
+    intro x _
+    simp_rw [π.archive_marginal _ (π.globalDoob_stochastic hI g _).1]
+    have hm (t : ℝ) :
+        ((π.initialPathPMF (π.globalDoob hI g t)
+          (π.globalDoob_stochastic hI g t).1 n) x).toReal =
+        π.prob x.1 * pathWeight (π.globalDoob hI g t) n x.1 x.2 := by
+      simp only [initialPathPMF, PMF.ofFintype_apply,
+        ENNReal.toReal_ofReal (mul_nonneg (π.positive x.1).le
+          (pathWeight_nonneg _ (π.globalDoob_stochastic hI g t).1 n x.1 x.2))]
+    simp_rw [hm]
+  rw [he, π.completePathFisher_eq hP hI g n,
+    π.completePathFisher_eq hP hI g (n+1)]
+  constructor
+  · rfl
+  · push_cast
+    ring
+
+end Stationary
+
+namespace Born
+open D5.S3.Quantum.Entanglement
+
+/-- Computational-basis archive and final-memory coordinates realize the full and marginal laws. -/
+theorem actual_circuit_archive_law (q : ℝ) (hq : 0 < q) (hq1 : q < 1) (φ : ℕ → ℝ)
+    {R : Matrix Bool Bool ℝ} (π : Stationary R)
+    (hP : Matrix.of (PhaseHistoryBound.transition q) ∈ Matrix.rowStochastic ℝ Bool) :
+    ∃ U : ℕ → SequentialRegisterCircuit.Unitary (Bool × Bool),
+      (∀ n i (w : Fin n → Bool) j,
+        ∑ k, π.prob k * ‖SequentialRegisterCircuit.circuit U (n+1) 0
+          (SequentialRegisterCircuit.blankState false (n+1) k) (Fin.cons i w,j)‖^2 =
+        π.prob i * pathWeight (Matrix.of (PhaseHistoryBound.transition q))
+          (n+1) i (Fin.snoc w j)) ∧
+      (∀ n i (w : Fin n → Bool),
+        ∑ j, ∑ k, π.prob k * ‖SequentialRegisterCircuit.circuit U (n+1) 0
+          (SequentialRegisterCircuit.blankState false (n+1) k) (Fin.cons i w,j)‖^2 =
+        π.prob i * pathWeight (Matrix.of (PhaseHistoryBound.transition q)) n i w) := by
+  obtain ⟨U, _, hc, hm, _⟩ := PhaseHistoryBound.actual_source_moments q hq hq1 φ
+  have hf (n : ℕ) (i : Bool) (w : Fin n → Bool) (j : Bool) :
+      (∑ k, π.prob k * ‖SequentialRegisterCircuit.circuit U (n+1) 0
+        (SequentialRegisterCircuit.blankState false (n+1) k) (Fin.cons i w,j)‖^2) =
+      π.prob i * pathWeight (Matrix.of (PhaseHistoryBound.transition q))
+        (n+1) i (Fin.snoc w j) := by
+    rw [← sourcePath_register_snoc n i j w]
+    simp_rw [hc, hm, sourcePath_head]
+    simp only [mul_ite, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+    rw [sourcePath_mass]
+    rfl
+  refine ⟨U, hf, ?_⟩
+  intro n i w
+  simp_rw [hf]
+  exact π.archive_marginal _ hP n i w
+
 end Born
 
 end D5.S3.Combinatorics.Graph.Pressure.MarkovAdditive

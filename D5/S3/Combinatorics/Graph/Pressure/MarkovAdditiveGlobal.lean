@@ -44,7 +44,7 @@ def perronVector (hI : P.IsIrreducible) (g : V → V → ℝ) (t : ℝ) : V → 
   fun i => (tiltPerron P hI g t).right i /
     (∑ j, π.prob j * (tiltPerron P hI g t).right j)
 
-private theorem perronVector_spec (hI : P.IsIrreducible) (g : V → V → ℝ) (t : ℝ) :
+theorem perronVector_spec (hI : P.IsIrreducible) (g : V → V → ℝ) (t : ℝ) :
     (∀ i, 0 < π.perronVector hI g t i) ∧
       π.prob ⬝ᵥ π.perronVector hI g t = 1 ∧
       tilt P g t *ᵥ π.perronVector hI g t =
