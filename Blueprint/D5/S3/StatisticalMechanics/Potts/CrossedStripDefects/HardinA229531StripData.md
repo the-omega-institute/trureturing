@@ -62,7 +62,7 @@ The inter-row bond set is the union of HardinA229583StripData.antidiagonal with 
 
 **Definition 1.5 (Valid residual states).**
 
-$$\forall p: (\operatorname{\mathit{Fin}}\left(5\right)) \to (\operatorname{\mathit{Fin}}\left(3\right)), (\forall d: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{Valid}}\left(p, d\right) = (d \le 1) \land (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{horizontal}}, p, p\right) \le 1 - d)))$$
+$$\forall p: (\operatorname{\mathit{Fin}}\left(5\right)) \to (\operatorname{\mathit{Fin}}\left(3\right)), (\forall d: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{Valid}}\left(p, d\right) = ((d \le 1) \land (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{horizontal}}, p, p\right) \le 1 - d))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.Valid` (`✓ std3`).
 

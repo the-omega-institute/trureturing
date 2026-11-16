@@ -106,7 +106,7 @@ K : Bool to Bool to Nat counts target classes in the order true, false. Its entr
 
 **Theorem 1.8 (Exact successor counts at widths two and three).**
 
-$$(\forall d: \operatorname{Bool}\left(\right), (\forall p: \operatorname{Row}\left(1\right), ((\operatorname{proper}\left(p\right)) \implies (\sum_{q: \operatorname{Row}\left(1\right)} \operatorname{if}\left((\operatorname{proper}\left(q\right)) \land (\operatorname{compatible}\left(d, p, q\right)), 1, 0\right) = 3)))) \land (\forall d: \operatorname{Bool}\left(\right), (\forall p: \operatorname{Row}\left(2\right), ((\operatorname{proper}\left(p\right)) \implies (\forall b: \operatorname{Bool}\left(\right), (\sum_{q: \operatorname{Row}\left(2\right)} \operatorname{if}\left(((\operatorname{proper}\left(q\right)) \land (\operatorname{compatible}\left(d, p, q\right))) \land (\operatorname{boundaryClass}\left(q\right) = b), 1, 0\right) = \operatorname{K}\left(\operatorname{boundaryClass}\left(p\right), b\right))))))$$
+$$(\forall d: \operatorname{Bool}, (\forall p: \operatorname{Row}\left(1\right), ((\operatorname{proper}\left(p\right)) \implies (\sum_{q: \operatorname{Row}\left(1\right)} \operatorname{if}\left((\operatorname{proper}\left(q\right)) \land (\operatorname{compatible}\left(d, p, q\right)), 1, 0\right) = 3)))) \land (\forall d: \operatorname{Bool}, (\forall p: \operatorname{Row}\left(2\right), ((\operatorname{proper}\left(p\right)) \implies (\forall b: \operatorname{Bool}, (\sum_{q: \operatorname{Row}\left(2\right)} \operatorname{if}\left(((\operatorname{proper}\left(q\right)) \land (\operatorname{compatible}\left(d, p, q\right))) \land (\operatorname{boundaryClass}\left(q\right) = b), 1, 0\right) = \operatorname{K}\left(\operatorname{boundaryClass}\left(p\right), b\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport.transition_counts` (`✓ std3`). ∎
 
@@ -204,7 +204,7 @@ Flattening the actual array along rowMajor gives exactly GraphNormalization.Lega
 
 **Theorem 1.15 (The actual one-row path count).**
 
-$$\forall k: \operatorname{Nat}\left(\right), 2 \cdot \operatorname{Nat}.\operatorname{card}\left(\operatorname{literalStrip}\left(\operatorname{true}\left(\right), 0, k + 1\right)\right) = 4^{k} + 2^{k}$$
+$$\forall k: \operatorname{Nat}, 2 \cdot \operatorname{Nat}.\operatorname{card}\left(\operatorname{literalStrip}\left(\operatorname{true}, 0, k + 1\right)\right) = 4^{k} + 2^{k}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport.path_result` (`✓ std3`). ∎
 
@@ -216,7 +216,7 @@ For every k≥0 the one-row path has k+2 vertices and its literal normalized six
 
 **Theorem 1.16 (Literal diagonal counts equal the existing square counts).**
 
-$$\forall n: \operatorname{Nat}\left(\right), \operatorname{Nat}.\operatorname{card}\left(\operatorname{literalStrip}\left(\operatorname{true}\left(\right), n, 1\right)\right) = \operatorname{HardinA233123SquareStrip}.\operatorname{a}\left(n + 1\right) \land \operatorname{Nat}.\operatorname{card}\left(\operatorname{literalStrip}\left(\operatorname{true}\left(\right), n, 2\right)\right) = \operatorname{HardinA233124SquareStrip}.\operatorname{a}\left(n + 1\right)$$
+$$\forall n: \operatorname{Nat}, \operatorname{Nat}.\operatorname{card}\left(\operatorname{literalStrip}\left(\operatorname{true}, n, 1\right)\right) = \operatorname{HardinA233123SquareStrip}.\operatorname{a}\left(n + 1\right) \land \operatorname{Nat}.\operatorname{card}\left(\operatorname{literalStrip}\left(\operatorname{true}, n, 2\right)\right) = \operatorname{HardinA233124SquareStrip}.\operatorname{a}\left(n + 1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport.normalized_result` (`✓ std3`). ∎
 
@@ -230,7 +230,7 @@ For every positive height, the normalized six-colour diagonal strips at widths t
 
 **Theorem 1.17 (Equality at every positive height).**
 
-$$\forall n: \operatorname{Nat}\left(\right), \operatorname{Nat}.\operatorname{card}\left(\operatorname{Coloring}\left(\operatorname{stripGraph}\left(\operatorname{true}\left(\right), n, 1\right), \operatorname{Fin}\left(3\right)\right)\right) = \operatorname{Nat}.\operatorname{card}\left(\operatorname{Coloring}\left(\operatorname{stripGraph}\left(\operatorname{false}\left(\right), n, 1\right), \operatorname{Fin}\left(3\right)\right)\right) \land \operatorname{Nat}.\operatorname{card}\left(\operatorname{Coloring}\left(\operatorname{stripGraph}\left(\operatorname{true}\left(\right), n, 2\right), \operatorname{Fin}\left(3\right)\right)\right) = \operatorname{Nat}.\operatorname{card}\left(\operatorname{Coloring}\left(\operatorname{stripGraph}\left(\operatorname{false}\left(\right), n, 2\right), \operatorname{Fin}\left(3\right)\right)\right)$$
+$$\forall n: \operatorname{Nat}, \operatorname{Nat}.\operatorname{card}\left(\operatorname{Coloring}\left(\operatorname{stripGraph}\left(\operatorname{true}, n, 1\right), \operatorname{Fin}\left(3\right)\right)\right) = \operatorname{Nat}.\operatorname{card}\left(\operatorname{Coloring}\left(\operatorname{stripGraph}\left(\operatorname{false}, n, 1\right), \operatorname{Fin}\left(3\right)\right)\right) \land \operatorname{Nat}.\operatorname{card}\left(\operatorname{Coloring}\left(\operatorname{stripGraph}\left(\operatorname{true}, n, 2\right), \operatorname{Fin}\left(3\right)\right)\right) = \operatorname{Nat}.\operatorname{card}\left(\operatorname{Coloring}\left(\operatorname{stripGraph}\left(\operatorname{false}, n, 2\right), \operatorname{Fin}\left(3\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport.result` (`✓ std3`). ∎
 

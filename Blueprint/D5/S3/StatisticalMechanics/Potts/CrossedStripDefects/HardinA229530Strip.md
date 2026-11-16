@@ -20,7 +20,7 @@ The exact HDA bonds between consecutive rows, shared with the two-defect extensi
 
 **Definition 1.2 (Shared Valid).**
 
-$$\forall p: (\operatorname{\mathit{Fin}}\left(4\right)) \to (\operatorname{\mathit{Fin}}\left(3\right)), (\forall d: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{HardinA229530Strip}}.\operatorname{\mathit{Valid}}\left(p, d\right) = (d \le 1) \land (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229582Strip}}.\operatorname{\mathit{horizontal}}, p, p\right) \le 1 - d)))$$
+$$\forall p: (\operatorname{\mathit{Fin}}\left(4\right)) \to (\operatorname{\mathit{Fin}}\left(3\right)), (\forall d: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{HardinA229530Strip}}.\operatorname{\mathit{Valid}}\left(p, d\right) = ((d \le 1) \land (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229582Strip}}.\operatorname{\mathit{horizontal}}, p, p\right) \le 1 - d))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229530Strip.Valid` (`✓ std3`).
 
