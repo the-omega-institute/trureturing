@@ -1,0 +1,62 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.CharacterSums;
+
+internal sealed class PascadiModularZeroPartnersDocument : IScribeDocumentDefinition
+{
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/pascadi2025nonabelianamplification");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The original integer chart carries the finite actual modular-zero partner set. For endpoints in the rectangle, the three modular determinant equations on one orientation of two lines lift to exact integer equations under 8J₁J₂<p. A direct injective map into signed divisor pairs gives the finite count; both orientations cost a factor of two. The full polynomial-to-lines classification and nondividing absolute bound remain open.",
+        H("Modular-zero partner count: determinant component"),
+        Blocks(
+            Paragraph(Text("The source is the supplied proof.tex, Lemma modular-zero partner bound, lines 235–370, SHA256 81da80fcfc8b93fadb2b5bb12d99f7ea4ea7a8b4c1cd95594e763e378bc21f7f. The definitions retain Original.Coordinate, Original.Endpoint and the actual original endpointL, endpointQ and pencil. ActualPair uses u(i,j)=α+i+βj and the equation u(x)u(y)=α(α+q₁+βq₂).")),
+            Paragraph(Text("For integer directions f,h with det(f,h)≠0 and AC=det(q,h)det(q,f)≠0, an oriented pair (z,v) satisfies three modular equations: det(f,z)=0, det(h,v−q)=0 and det(z−q,v)=0. The direction bounds are |f₁|≤J₁, |f₂|≤J₂, |h₁|≤2J₁, |h₂|≤2J₂; q,z,v lie in the original rectangle. Their determinant heights are at most 2J₁J₂, 8J₁J₂ and 4J₁J₂. Thus 8J₁J₂<p forces all three integer determinants to vanish.")),
+            Paragraph(Text("The map (z,v)↦(det(z−q,h),det(f,v)) lands in Int.divisorsAntidiag(AC). Its injectivity follows from det(f,h)≠0 and the two line equations, without choosing primitive integer generators. Consequently the oriented count is at most the cardinality of that signed divisor antidiagonal, and allowing both endpoint orientations gives twice that cardinality. The constant satisfies |AC|≤8(J₁J₂)²<p².")),
+            Paragraph(Text("Nonaligned actual pairs have nonzero evaluations of L and Q and a nonzero quartic Q(Q−LZ), using actual injectivity and κ≠0. Completing the full partner theorem still requires deriving the two modular line orientations and their nondegeneracy from the L-divides-Q branch, proving the absolute bound in the other branch with vertical factors retained, and applying the divisor growth estimate. The finite determinant count is an intermediate component of the B⁵ prime-count prerequisite.")),
+            Describe.Lean(DescribeId.Create("pascadi-modular-zero-coordinate-det"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.coordinateDet"), H("coordinateDet"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Determinant of actual integer coordinates."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("pascadi-modular-zero-actual-value"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.actualValue"), H("actualValue"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Original shifted endpoint value α+i+βj."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("pascadi-modular-zero-actual-pair"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.ActualPair"), H("ActualPair"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Both endpoints belong to E and satisfy the actual anchor product equation."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("pascadi-modular-zero-partners"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modularZeroPartners"), H("modularZeroPartners"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Finite actual endpoint pairs with identically zero original pencil modulo p."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("pascadi-modular-zero-aligned"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.Aligned"), H("Aligned"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Exact integer collinearity of both endpoints with q."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("pascadi-modular-zero-nondegenerate"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.nonaligned_actual_pair_nondegenerate"), H("nonaligned_actual_pair_nondegenerate"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Actual injectivity excludes anchor degeneracy and proves the nonzero L,Q evaluations and quartic."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("pascadi-modular-zero-line-pair"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.ModularLinePair"), H("ModularLinePair"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Three modular determinant conditions on an oriented endpoint pair."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("pascadi-modular-zero-integer-lift"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_pair_integer_lift"), H("modular_line_pair_integer_lift"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("All three exact integer determinant equations follow from rectangle bounds and modular vanishing."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("pascadi-modular-zero-oriented-count"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.oriented_modular_line_partner_count"), H("oriented_modular_line_partner_count"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The finite oriented endpoint count is bounded by the cardinality of Int.divisorsAntidiag(AC)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("pascadi-modular-zero-two-orientations"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_partner_count"), H("modular_line_partner_count"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The two endpoint orientations have total cardinality at most twice the signed divisor bound; the same theorem supplies |AC|≤8(J₁J₂)²<p²."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("pascadi-modular-zero-divisor-height"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_divisor_height"), H("modular_line_divisor_height"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The divisor constant has absolute value at most 8(J₁J₂)², strictly less than p²."))), DescribeRole.Theorem)),
+        edges: []));
+}

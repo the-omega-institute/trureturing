@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiSixWordFiber
   - D5/S3/Arith/CharacterSums/PascadiMinusRows
   - D5/S3/Arith/CharacterSums/PascadiOriginalCoefficients
+  - D5/S3/Arith/CharacterSums/PascadiModularZeroPartners
   - D5/S3/Arith/CharacterSums/PascadiSingularResultant
   - D5/S3/Arith/CharacterSums/PascadiSingularFactorCover
   - D5/S3/Arith/CharacterSums/PascadiLocalizedFactor
