@@ -67,11 +67,11 @@ def equilibrium :
       mul_left_comm, mul_assoc, mul_comm]
     ring
 
-private lemma lift_hermitian (v : Fin 3 → ℝ) :
+lemma lift_hermitian (v : Fin 3 → ℝ) :
     (spinLift (R := R) v)ᴴ = spinLift v := by
   simp [spinLift, Matrix.conjTranspose_kronecker, (spin_hermitian v).eq]
 
-private lemma lift_square (v : Fin 3 → ℝ) (hv : v ⬝ᵥ v = 1) :
+lemma lift_square (v : Fin 3 → ℝ) (hv : v ⬝ᵥ v = 1) :
     spinLift (R := R) v * spinLift v = 1 := by
   have h := spin_square v
   rw [vlen_sq, hv, one_smul] at h
@@ -156,7 +156,7 @@ theorem pinching_comp_eq_equilibrium (a b : Fin 3 → ℝ)
     ring
   exact ⟨hcomp a b ha hb hab, hcomp b a hb ha (by rwa [dotProduct_comm])⟩
 
-private lemma pinching_idempotent (v : Fin 3 → ℝ) (hv : v ⬝ᵥ v = 1)
+lemma pinching_idempotent (v : Fin 3 → ℝ) (hv : v ⬝ᵥ v = 1)
     (X : Matrix (Fin 2 × R) (Fin 2 × R) ℂ) :
     pinching v (pinching v X) = pinching v X := by
   have hU := lift_square (R := R) v hv
@@ -170,7 +170,7 @@ private lemma pinching_idempotent (v : Fin 3 → ℝ) (hv : v ⬝ᵥ v = 1)
   rw [hUX]
   module
 
-private lemma pinching_equilibrium (v : Fin 3 → ℝ) (hv : v ⬝ᵥ v = 1)
+lemma pinching_equilibrium (v : Fin 3 → ℝ) (hv : v ⬝ᵥ v = 1)
     (X : Matrix (Fin 2 × R) (Fin 2 × R) ℂ) :
     pinching v (equilibrium X) = equilibrium X := by
   have h := spin_square v
@@ -208,7 +208,7 @@ private lemma equilibrium_marginal (X : Matrix (Fin 2 × R) (Fin 2 × R) ℂ) :
   ext r s
   simp [equilibrium, partialTraceLeft, Fin.sum_univ_two]
 
-private lemma pinching_trace (v : Fin 3 → ℝ) (hv : v ⬝ᵥ v = 1)
+lemma pinching_trace (v : Fin 3 → ℝ) (hv : v ⬝ᵥ v = 1)
     (X : Matrix (Fin 2 × R) (Fin 2 × R) ℂ) : (pinching v X).trace = X.trace := by
   rw [← trace_partialTraceLeft, partialTraceLeft_pinching v hv, trace_partialTraceLeft]
 
@@ -216,13 +216,13 @@ private lemma equilibrium_trace (X : Matrix (Fin 2 × R) (Fin 2 × R) ℂ) :
     (equilibrium X).trace = X.trace := by
   rw [← trace_partialTraceLeft, equilibrium_marginal, trace_partialTraceLeft]
 
-private lemma pinching_posSemidef (v : Fin 3 → ℝ)
+lemma pinching_posSemidef (v : Fin 3 → ℝ)
     {X : Matrix (Fin 2 × R) (Fin 2 × R) ℂ} (hX : X.PosSemidef) :
     (pinching v X).PosSemidef := by
   exact (hX.add (hX.mul_mul_conjTranspose_same (spinLift v))).smul (by norm_num :
     (0 : ℝ) ≤ 1 / 2)
 
-private lemma equilibrium_posSemidef {X : Matrix (Fin 2 × R) (Fin 2 × R) ℂ}
+lemma equilibrium_posSemidef {X : Matrix (Fin 2 × R) (Fin 2 × R) ℂ}
     (hX : X.PosSemidef) : (equilibrium X).PosSemidef :=
   (Matrix.PosSemidef.one.kronecker (partialTraceLeft_posSemidef hX)).smul
     (Complex.nonneg_iff.mpr ⟨by norm_num, by norm_num⟩ : (0 : ℂ) ≤ 1 / 2)
@@ -319,7 +319,7 @@ private lemma generator_trace (a b : Fin 3 → ℝ)
     pinching_trace a ha, pinching_trace b hb]
   module
 
-private lemma pinching_log_pairing (v : Fin 3 → ℝ) (hv : v ⬝ᵥ v = 1)
+lemma pinching_log_pairing (v : Fin 3 → ℝ) (hv : v ⬝ᵥ v = 1)
     (X Y : Matrix (Fin 2 × R) (Fin 2 × R) ℂ) :
     (pinching v Y * cfc Real.log (equilibrium X)).trace =
       (Y * cfc Real.log (equilibrium X)).trace := by
