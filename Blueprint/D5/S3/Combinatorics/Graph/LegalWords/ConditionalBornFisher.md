@@ -194,18 +194,83 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.cond
 
 *Commentary.*
 
-For 0<q<1, m>=1, exterior bits and every real t, put L=m+1 and B_t=pathNormalizer(q(t),m,l,r). Then conditionalFisher(t)=(L+r-l) p double-prime(t)+(log B) double-prime(t), where p is the actual pressure log(lambda). The proof takes two derivatives of log B=log Z-(L+r-l)p+t r+log(q^r(1-q)^(L-l-r)). Thus the conditioned Fisher is not identified with L times the stationary variance rate. The explicit decaying correction and its normalized infinite-volume limit require further estimates.
+For 0<q<1, m>=1, exterior bits and every real t, put L=m+1 and B_t=pathNormalizer(q(t),m,l,r). Then conditionalFisher(t)=(L+r-l) p double-prime(t)+(log B) double-prime(t), where p is the actual pressure log(lambda). The proof takes two derivatives of log B=log Z-(L+r-l)p+t r+log(q^r(1-q)^(L-l-r)). Thus the conditioned Fisher is not identified with L times the stationary variance rate. The alternating remainder below decays after two derivatives; the stationary endpoint curvature remains in the finite correction.
+
+**Theorem 1.17 (Stationary and alternating parts of the endpoint log).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_log_decomposition`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_log_decomposition` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Put x=q(t), L=m+1, k=m+2-l-r and pi_r(x)=x^r/(1+x). For every m>=1, all four exterior pairs and every real t, B_t=pi_r(x)(1-(-x)^k), so log B_t=log pi_r(x)+R_m(t), with R_m(t)=log(1-(-q(t))^k). The actual endpoint_power_formula is used to derive this factorization. The shift k records both endpoints and retains both parities.
+
+**Theorem 1.18 (Explicit decay of the differentiated alternating remainder).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_remainder_second_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_remainder_second_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At each real tilt put f=-q(t), a=f prime/f and b=(f double-prime f-(f prime)^2)/f^2. The theorem fixes the explicit nonnegative coefficient C=(a^2+abs(b))/(1-abs(f))+a^2/(1-abs(f))^2 and proves abs(R_m double-prime(t)) <= C(m+2)^2 q(t)^m for every m>=1 and every exterior pair. It derives the two derivatives by product, quotient and logarithm rules and bounds the denominators using 0<q(t)<1; no derivative estimate or regularity certificate is assumed. In particular this differentiated remainder tends to zero at every real tilt.
+
+**Theorem 1.19 (Exact finite Fisher correction with stationary endpoint curvature).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_fisher_stationary_remainder`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_fisher_stationary_remainder` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m>=1 and all exterior bits, F_m(t)=(m+1+r-l)p double-prime(t)+(log pi_r(q(t))) double-prime(t)+R_m double-prime(t). This uses the actual conditional_fisher_boundary and the differentiated endpoint decomposition. The middle term is independent of m and generally does not vanish. Only the alternating remainder has exponential decay.
+
+**Theorem 1.20 (The stationary boundary limit survives differentiation).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_boundary_limit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_boundary_limit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For fixed original exterior bits and every real tilt, log B_m(t) tends to log pi_r(q(t)) as m tends to infinity through every positive interior length. Its second derivative tends to (log pi_r(q(t))) double-prime(t). Both limits are proved from the exact endpoint formula and the derived differentiated remainder bound, without exchanging an unproved derivative and limit.
+
+**Theorem 1.21 (Conditional information rate equals actual pressure curvature).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_fisher_rate_tendsto`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_fisher_rate_tendsto` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real tilt and every fixed exterior pair, F_(n+1)(t)/(n+2) tends to p double-prime(t). This is every positive interior length m=n+1 divided by its exact transition length m+1. The finite conversion to normalization per interior site is F_m/m=((m+1)/m)(F_m/(m+1)), with (m+1)/m tending to one. The same theorem identifies p double-prime(t) with the actual Poisson varianceRate of the stationary globalDoob kernel at t, using the existing scalar pressure theorem. The legal count experiment, actual circuit, original endpoints and Perron-derived q(t) are those of conditional_tilt and actual_conditional_experiment; no endpoint is changed as t varies.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.actual_conditional_experiment`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_fisher_boundary`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_fisher_rate_tendsto`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_fisher_stationary_remainder`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_normalization`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_tilt`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.count_mean_deriv`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.count_recovery`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.count_score`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_boundary_limit`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_log_decomposition`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_power_formula`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_remainder_second_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.fisher_eq_count_variance`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.global_doob_parameter`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.illegal_mass_zero`

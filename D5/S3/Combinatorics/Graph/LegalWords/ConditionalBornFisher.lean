@@ -612,4 +612,384 @@ theorem conditional_fisher_boundary (q : ℝ) (hq : 0 < q) (hq1 : q < 1)
   rw [hdd]
   ring
 
+/-- The stationary endpoint mass, separated from the alternating correction. -/
+def endpointStationary (x : ℝ) (r : Bool) : ℝ :=
+  if r then x / (1+x) else 1 / (1+x)
+/-- Exact logarithmic alternating remainder, with the original exterior bits fixed. -/
+def endpointLogRemainder (q : ℝ) (m : ℕ) (l r : Bool) (t : ℝ) : ℝ :=
+  Real.log (1 - (-tiltParameter q t)^(m+2-l.toNat-r.toNat))
+private theorem tilt_parameter_contDiff (q : ℝ)
+    (π : Stationary (Matrix.of (transition q)))
+    (hI : (Matrix.of (transition q)).IsIrreducible) :
+    ContDiff ℝ 2 (tiltParameter q) := by
+  have he : (fun t => Real.exp (pressure (Matrix.of (transition q)) arrival t)) =
+      eigenvalue (Matrix.of (transition q)) arrival := by
+    funext t
+    exact Real.exp_log (eigenvalue_pos _ hI arrival t)
+  have hc := (π.pressure_contDiff hI arrival).exp
+  rw [he] at hc
+  exact contDiff_const.sub (contDiff_const.div hc (fun t => (eigenvalue_pos _ hI arrival t).ne'))
+private theorem endpoint_factor (x : ℝ) (hx : 0 < x) (m : ℕ) (hm : 1 ≤ m)
+    (l r : Bool) :
+    pathNormalizer x m l r = endpointStationary x r *
+      (1 - (-x)^(m+2-l.toNat-r.toNat)) := by
+  rw [normalizer_eq_power, endpoint_power_formula x hx]
+  cases l <;> cases r <;> simp only [endpointStationary, Bool.toNat_false,
+    Bool.toNat_true, Bool.false_eq_true, Bool.true_eq_false, ite_true, ite_false,
+    Nat.sub_zero, Nat.add_sub_cancel]
+  · rw [show m+2 = (m+1)+1 by omega, pow_succ]
+    field_simp; ring
+  · rw [show m+2-1 = m+1 by omega]
+    field_simp; ring
+  · rw [show m+2-1 = m+1 by omega]
+    field_simp; ring
+  · rw [show m+2-1-1 = m by omega, pow_succ]
+    field_simp; ring
+private theorem power_deriv (f : ℝ → ℝ) (hf : Differentiable ℝ f)
+    (k : ℕ) (t : ℝ) (hft : f t ≠ 0) :
+    HasDerivAt (fun s => f s^k) ((k : ℝ) * f t^k * (deriv f t / f t)) t := by
+  have hh := (hf t).hasDerivAt.pow k
+  convert hh using 1
+  cases k with
+  | zero => simp
+  | succ k =>
+    dsimp
+    simp only [Nat.add_sub_cancel, pow_succ]
+    field_simp
+private theorem alternating_log_second (f : ℝ → ℝ) (hf : ContDiff ℝ 2 f)
+    (hfn : ∀ t, f t ≠ 0) (hfp : ∀ t, |f t| < 1) (k : ℕ) (hk : 1 ≤ k) (t : ℝ) :
+    deriv (deriv (fun s => Real.log (1-f s^k))) t =
+      -(k : ℝ) * f t^k *
+          ((k : ℝ) * (deriv f t / f t)^2 +
+            ((deriv (deriv f) t * f t - (deriv f t)^2) / (f t)^2)) / (1-f t^k) -
+        ((k : ℝ) * f t^k * (deriv f t / f t))^2 / (1-f t^k)^2 := by
+  let A := fun s => deriv f s / f s
+  have hpow (s : ℝ) := power_deriv f (hf.differentiable (by norm_num)) k s (hfn s)
+  have hden (s : ℝ) : 1-f s^k ≠ 0 := by
+    have hh : |f s^k| < 1 := by
+      rw [abs_pow]
+      exact pow_lt_one₀ (abs_nonneg _) (hfp s) (by omega)
+    linarith [le_abs_self (f s^k)]
+  have hlog (s : ℝ) : HasDerivAt (fun z => Real.log (1-f z^k))
+      (-(k : ℝ) * f s^k * A s / (1-f s^k)) s := by
+    convert ((hpow s).const_sub 1).log (hden s) using 1 <;> dsimp [A] <;> ring
+  have heq : deriv (fun s => Real.log (1-f s^k)) =
+      fun s => -(k : ℝ) * f s^k * A s / (1-f s^k) := funext fun s => (hlog s).deriv
+  have hA : HasDerivAt A
+      ((deriv (deriv f) t * f t - (deriv f t)^2) / (f t)^2) t := by
+    convert ((hf.differentiable_deriv_two t).hasDerivAt.div
+      (hf.differentiable (by norm_num) t).hasDerivAt (hfn t)) using 1 <;> ring
+  have hh := (((hpow t).mul hA).const_mul (-(k : ℝ))).div
+    ((hpow t).const_sub 1) (hden t)
+  have hh' := hh.congr_of_eventuallyEq (Filter.Eventually.of_forall (fun s =>
+    show -(k : ℝ) * f s^k * A s / (1-f s^k) = _ by dsimp; ring))
+  rw [heq]
+  convert hh'.deriv using 1 <;> dsimp [A] <;> field_simp <;> ring
+private def alternatingBound (f : ℝ → ℝ) (t : ℝ) : ℝ :=
+  let a := deriv f t / f t
+  let b := (deriv (deriv f) t * f t - (deriv f t)^2) / (f t)^2
+  (a^2 + |b|) / (1-|f t|) + a^2 / (1-|f t|)^2
+private theorem alternating_log_bound (f : ℝ → ℝ) (hf : ContDiff ℝ 2 f)
+    (hfn : ∀ t, f t ≠ 0) (hfp : ∀ t, |f t| < 1) (k : ℕ) (hk : 1 ≤ k) (t : ℝ) :
+    |deriv (deriv (fun s => Real.log (1-f s^k))) t| ≤
+      (k : ℝ)^2 * |f t|^k * alternatingBound f t := by
+  let a := deriv f t / f t
+  let b := (deriv (deriv f) t * f t - (deriv f t)^2) / (f t)^2
+  let z := |f t|^k
+  let d := 1-|f t|
+  have hd : 0 < d := sub_pos.mpr (hfp t)
+  have hz0 : 0 ≤ z := pow_nonneg (abs_nonneg _) _
+  have hz1 : z ≤ 1 := pow_le_one₀ (abs_nonneg _) (hfp t).le
+  have hz : z ≤ |f t| := pow_le_of_le_one (abs_nonneg _) (hfp t).le (by omega)
+  have hden : d ≤ 1-f t^k := by
+    have hh : f t^k ≤ z := le_abs_self (f t^k) |>.trans_eq (abs_pow _ _)
+    dsimp [d]; linarith
+  have hdenpos : 0 < 1-f t^k := lt_of_lt_of_le hd hden
+  have hk0 : (0 : ℝ) ≤ k := Nat.cast_nonneg _
+  have hk1 : (1 : ℝ) ≤ k := by exact_mod_cast hk
+  rw [alternating_log_second f hf hfn hfp k hk t]
+  change |-(k : ℝ) * f t^k * ((k : ℝ)*a^2+b) / (1-f t^k) -
+    ((k : ℝ) * f t^k * a)^2 / (1-f t^k)^2| ≤ _
+  calc
+    _ ≤ |-(k : ℝ) * f t^k * ((k : ℝ)*a^2+b) / (1-f t^k)| +
+        |((k : ℝ) * f t^k * a)^2 / (1-f t^k)^2| := abs_sub _ _
+    _ = (k : ℝ) * z * |(k : ℝ)*a^2+b| / (1-f t^k) +
+        (k : ℝ)^2 * z^2 * a^2 / (1-f t^k)^2 := by
+      simp only [abs_div, abs_mul, abs_neg, abs_pow, abs_of_nonneg hk0,
+        abs_of_pos hdenpos, sq_abs, z, mul_pow]
+    _ ≤ (k : ℝ) * z * ((k : ℝ)*a^2+|b|) / d +
+        (k : ℝ)^2 * z * a^2 / d^2 := by
+      gcongr
+      · calc
+          _ ≤ |(k : ℝ)*a^2| + |b| := abs_add_le _ _
+          _ = _ := by rw [abs_of_nonneg (mul_nonneg hk0 (sq_nonneg _))]
+      · exact sq_le hz0 hz1
+    _ ≤ (k : ℝ)^2 * z * (a^2+|b|) / d +
+        (k : ℝ)^2 * z * a^2 / d^2 := by
+      have hi : (k : ℝ) * a^2 + |b| ≤ (k : ℝ) * (a^2 + |b|) := by
+        nlinarith [mul_nonneg (sub_nonneg.mpr hk1) (abs_nonneg b)]
+      have hfirst : (k : ℝ) * z * ((k : ℝ)*a^2+|b|) / d ≤
+          (k : ℝ)^2 * z * (a^2+|b|) / d := by
+        apply (div_le_div_iff_of_pos_right hd).mpr
+        convert mul_le_mul_of_nonneg_left hi (mul_nonneg hk0 hz0) using 1 <;> ring
+      exact add_le_add hfirst (le_refl _)
+    _ = _ := by dsimp [alternatingBound, a, b, d, z]; ring
+/-- The boundary log splits into its stationary term and a parity-sensitive remainder. -/
+theorem endpoint_log_decomposition (q : ℝ) (hq : 0 < q) (hq1 : q < 1)
+    (π : Stationary (Matrix.of (transition q)))
+    (hI : (Matrix.of (transition q)).IsIrreducible)
+    (m : ℕ) (hm : 1 ≤ m) (l r : Bool) (t : ℝ) :
+    Real.log (pathNormalizer (tiltParameter q t) m l r) =
+      Real.log (endpointStationary (tiltParameter q t) r) + endpointLogRemainder q m l r t := by
+  obtain ⟨hp, hp1, _, _⟩ := global_doob_parameter q hq hq1 π hI t
+  have hS : 0 < endpointStationary (tiltParameter q t) r := by
+    cases r <;> simp only [endpointStationary, ite_true, ite_false] <;> positivity
+  have hk : m ≤ m+2-l.toNat-r.toNat := by cases l <;> cases r <;> simp <;> omega
+  have hpow : |(-tiltParameter q t)^(m+2-l.toNat-r.toNat)| < 1 := by
+    rw [abs_pow, abs_neg, abs_of_pos hp]
+    exact pow_lt_one₀ hp.le hp1 (by omega)
+  have hR : 0 < 1-(-tiltParameter q t)^(m+2-l.toNat-r.toNat) := by
+    linarith [le_abs_self ((-tiltParameter q t)^(m+2-l.toNat-r.toNat))]
+  rw [endpoint_factor _ hp m hm l r, Real.log_mul hS.ne' hR.ne']
+  rfl
+/-- An explicit differentiated alternating remainder bound at every actual real tilt. -/
+theorem endpoint_remainder_second_bound (q : ℝ) (hq : 0 < q) (hq1 : q < 1)
+    (π : Stationary (Matrix.of (transition q)))
+    (hI : (Matrix.of (transition q)).IsIrreducible) (t : ℝ) :
+    let C := alternatingBound (fun s => -tiltParameter q s) t
+    0 ≤ C ∧ ∀ (m : ℕ), 1 ≤ m → ∀ l r : Bool,
+      |deriv (deriv (endpointLogRemainder q m l r)) t| ≤
+        C * (m+2 : ℝ)^2 * (tiltParameter q t)^m := by
+  let f := fun s => -tiltParameter q s
+  have hc : ContDiff ℝ 2 f := (tilt_parameter_contDiff q π hI).neg
+  have hp (s : ℝ) := global_doob_parameter q hq hq1 π hI s
+  have hn (s : ℝ) : f s ≠ 0 := neg_ne_zero.mpr (hp s).1.ne'
+  have hf (s : ℝ) : |f s| < 1 := by simpa [f, abs_of_pos (hp s).1] using (hp s).2.1
+  refine ⟨?_, ?_⟩
+  · dsimp [alternatingBound]
+    have hd : 0 < 1-|f t| := sub_pos.mpr (hf t)
+    have hd0 : 0 ≤ 1-|f t| := hd.le
+    positivity
+  · intro m hm l r
+    have hk : m ≤ m+2-l.toNat-r.toNat := by cases l <;> cases r <;> simp <;> omega
+    have hk2 : m+2-l.toNat-r.toNat ≤ m+2 := by omega
+    have hh := alternating_log_bound f hc hn hf (m+2-l.toNat-r.toNat) (by omega) t
+    change |deriv (deriv (endpointLogRemainder q m l r)) t| ≤ _ at hh
+    calc
+      _ ≤ ((m+2-l.toNat-r.toNat : ℕ) : ℝ)^2 * |f t|^(m+2-l.toNat-r.toNat) *
+          alternatingBound f t := hh
+      _ ≤ (m+2 : ℝ)^2 * |f t|^m * alternatingBound f t := by
+        have hecast : ((m+2-l.toNat-r.toNat : ℕ) : ℝ) ≤ (m+2 : ℝ) := by exact_mod_cast hk2
+        have hsq : ((m+2-l.toNat-r.toNat : ℕ) : ℝ)^2 ≤ (m+2 : ℝ)^2 := by
+          have hnon : (0 : ℝ) ≤ ((m+2-l.toNat-r.toNat : ℕ) : ℝ) := by positivity
+          nlinarith [hecast, hnon]
+        have hpowle : |f t|^(m+2-l.toNat-r.toNat) ≤ |f t|^m :=
+          pow_le_pow_of_le_one (abs_nonneg _) (hf t).le hk
+        have hbase : ((m+2-l.toNat-r.toNat : ℕ) : ℝ)^2 * |f t|^(m+2-l.toNat-r.toNat) ≤
+            (m+2 : ℝ)^2 * |f t|^m := by
+          calc
+            _ ≤ (m+2 : ℝ)^2 * |f t|^(m+2-l.toNat-r.toNat) :=
+              mul_le_mul_of_nonneg_right hsq (pow_nonneg (abs_nonneg _) _)
+            _ ≤ _ := mul_le_mul_of_nonneg_left hpowle (sq_nonneg _)
+        have hC : 0 ≤ alternatingBound f t := by
+          have hd2 : 0 < (1-|f t|)^2 := sq_pos_of_pos (sub_pos.mpr (hf t))
+          have hd1 : 0 ≤ 1-|f t| := (sub_pos.mpr (hf t)).le
+          have hnum : 0 ≤ (deriv f t / f t)^2 +
+              |(deriv (deriv f) t * f t - (deriv f t)^2) / (f t)^2| := by positivity
+          dsimp [alternatingBound]
+          exact add_nonneg (div_nonneg hnum hd1) (div_nonneg (sq_nonneg _) hd2.le)
+        exact mul_le_mul_of_nonneg_right hbase hC
+      _ = _ := by rw [show |f t| = tiltParameter q t by simp [f, abs_of_pos (hp t).1]]; ring
+private theorem endpoint_terms_contDiff (q : ℝ) (hq : 0 < q) (hq1 : q < 1)
+    (π : Stationary (Matrix.of (transition q)))
+    (hI : (Matrix.of (transition q)).IsIrreducible)
+    (m : ℕ) (hm : 1 ≤ m) (l r : Bool) :
+    ContDiff ℝ 2 (fun s => Real.log (endpointStationary (tiltParameter q s) r)) ∧
+    ContDiff ℝ 2 (endpointLogRemainder q m l r) := by
+  have hc := tilt_parameter_contDiff q π hI
+  have hp (s : ℝ) := global_doob_parameter q hq hq1 π hI s
+  have hden (s : ℝ) : 1 + tiltParameter q s ≠ 0 := by linarith [hp s |>.1]
+  have hstat : ContDiff ℝ 2 (fun s => endpointStationary (tiltParameter q s) r) := by
+    cases r
+    · simp only [endpointStationary, Bool.false_eq_true, ite_false]
+      exact contDiff_const.div (contDiff_const.add hc) (fun s => hden s)
+    · simp only [endpointStationary]
+      exact hc.div (contDiff_const.add hc) (fun s => hden s)
+  have hpow : ContDiff ℝ 2 (fun s => (-tiltParameter q s)^(m+2-l.toNat-r.toNat)) := by
+    exact (hc.neg).pow _
+  have hrem : ContDiff ℝ 2 (fun s => 1-(-tiltParameter q s)^(m+2-l.toNat-r.toNat)) :=
+    contDiff_const.sub hpow
+  have hremnz (s : ℝ) : 1-(-tiltParameter q s)^(m+2-l.toNat-r.toNat) ≠ 0 := by
+    have hh := global_doob_parameter q hq hq1 π hI s
+    have hlt : |(-tiltParameter q s)^(m+2-l.toNat-r.toNat)| < 1 := by
+      rw [abs_pow, abs_neg, abs_of_pos hh.1]
+      exact pow_lt_one₀ hh.1.le hh.2.1 (by cases l <;> cases r <;> simp_all <;> omega)
+    linarith [le_abs_self ((-tiltParameter q s)^(m+2-l.toNat-r.toNat))]
+  have hstatnz : ∀ s, endpointStationary (tiltParameter q s) r ≠ 0 := by
+    intro s
+    cases r
+    · simp only [endpointStationary, Bool.false_eq_true, ite_false]
+      exact (div_ne_zero one_ne_zero (hden s))
+    · simp only [endpointStationary]
+      exact div_ne_zero (hp s).1.ne' (hden s)
+  exact ⟨hstat.log hstatnz, hrem.log hremnz⟩
+/-- Exact Fisher decomposition with a stationary endpoint curvature and a decaying remainder. -/
+theorem conditional_fisher_stationary_remainder (q : ℝ) (hq : 0 < q) (hq1 : q < 1)
+    (π : Stationary (Matrix.of (transition q)))
+    (hI : (Matrix.of (transition q)).IsIrreducible)
+    (m : ℕ) (hm : 1 ≤ m) (l r : Bool) (t : ℝ) :
+    conditionalFisher q m l r t =
+      ((m+1 : ℝ) + r.toNat-l.toNat) *
+        deriv (deriv (pressure (Matrix.of (transition q)) arrival)) t +
+      deriv (deriv (fun s => Real.log (endpointStationary (tiltParameter q s) r))) t +
+      deriv (deriv (endpointLogRemainder q m l r)) t := by
+  rw [conditional_fisher_boundary q hq hq1 π hI m hm l r t]
+  have heq : (fun s => Real.log (pathNormalizer (tiltParameter q s) m l r)) =
+      (fun s => Real.log (endpointStationary (tiltParameter q s) r) +
+        endpointLogRemainder q m l r s) := by
+    funext s
+    exact endpoint_log_decomposition q hq hq1 π hI m hm l r s
+  have hc := endpoint_terms_contDiff q hq hq1 π hI m hm l r
+  rw [heq]
+  have hadd := iteratedDeriv_fun_add (n := 2) (x := t) hc.1.contDiffAt hc.2.contDiffAt
+  have hh : deriv (deriv (fun s => Real.log (endpointStationary (tiltParameter q s) r) +
+      endpointLogRemainder q m l r s)) t =
+      deriv (deriv (fun s => Real.log (endpointStationary (tiltParameter q s) r))) t +
+      deriv (deriv (endpointLogRemainder q m l r)) t := by
+    simpa only [iteratedDeriv_succ, iteratedDeriv_zero] using hadd
+  rw [hh]
+  ring
+private theorem endpoint_second_tendsto (q : ℝ) (hq : 0 < q) (hq1 : q < 1)
+    (π : Stationary (Matrix.of (transition q)))
+    (hI : (Matrix.of (transition q)).IsIrreducible) (l r : Bool) (t : ℝ) :
+    Filter.Tendsto (fun m : ℕ => deriv (deriv (endpointLogRemainder q m l r)) t)
+      Filter.atTop (nhds 0) := by
+  let C := alternatingBound (fun s => -tiltParameter q s) t
+  obtain ⟨hC, hb⟩ := endpoint_remainder_second_bound q hq hq1 π hI t
+  have hp := global_doob_parameter q hq hq1 π hI t
+  have hl : Filter.Tendsto (fun m : ℕ => C*9*((m : ℝ)^2*(tiltParameter q t)^m))
+      Filter.atTop (nhds 0) := by
+    simpa using (tendsto_pow_const_mul_const_pow_of_lt_one 2 hp.1.le hp.2.1).const_mul (C*9)
+  refine squeeze_zero_norm' ?_ hl
+  filter_upwards [Filter.eventually_ge_atTop 1] with m hm
+  rw [Real.norm_eq_abs]
+  have hm' : (1 : ℝ) ≤ m := by exact_mod_cast hm
+  have hpoly : (m+2 : ℝ)^2 ≤ 9*(m : ℝ)^2 := by nlinarith
+  calc
+    _ ≤ C*(m+2 : ℝ)^2*(tiltParameter q t)^m := hb m hm l r
+    _ ≤ C*(9*(m : ℝ)^2)*(tiltParameter q t)^m := by
+      exact mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hpoly hC)
+        (pow_nonneg hp.1.le _)
+    _ = _ := by ring
+/-- The limiting log normalizer and its curvature retain the stationary endpoint term. -/
+theorem endpoint_boundary_limit (q : ℝ) (hq : 0 < q) (hq1 : q < 1)
+    (π : Stationary (Matrix.of (transition q)))
+    (hI : (Matrix.of (transition q)).IsIrreducible) (l r : Bool) (t : ℝ) :
+    Filter.Tendsto (fun m : ℕ => Real.log (pathNormalizer (tiltParameter q t) (m+1) l r))
+      Filter.atTop (nhds (Real.log (endpointStationary (tiltParameter q t) r))) ∧
+    Filter.Tendsto (fun m : ℕ => deriv (deriv
+      (fun s => Real.log (pathNormalizer (tiltParameter q s) (m+1) l r))) t)
+      Filter.atTop (nhds (deriv (deriv
+        (fun s => Real.log (endpointStationary (tiltParameter q s) r))) t)) := by
+  have hp := global_doob_parameter q hq hq1 π hI t
+  have hpow : Filter.Tendsto (fun m : ℕ =>
+      (-tiltParameter q t)^((m+1)+2-l.toNat-r.toNat)) Filter.atTop (nhds 0) := by
+    refine squeeze_zero_norm' (Filter.Eventually.of_forall (fun m => ?_))
+      (tendsto_pow_atTop_nhds_zero_of_lt_one hp.1.le hp.2.1)
+    rw [Real.norm_eq_abs, abs_pow, abs_neg, abs_of_pos hp.1]
+    apply pow_le_pow_of_le_one hp.1.le hp.2.1.le
+    cases l <;> cases r <;> simp <;> omega
+  have harg : Filter.Tendsto (fun m : ℕ =>
+      1-(-tiltParameter q t)^((m+1)+2-l.toNat-r.toNat)) Filter.atTop (nhds 1) := by
+    simpa using tendsto_const_nhds.sub hpow
+  have hlog := (Real.continuousAt_log (by norm_num : (1:ℝ) ≠ 0)).tendsto.comp harg
+  have hsecond := (endpoint_second_tendsto q hq hq1 π hI l r t).comp
+    (Filter.tendsto_add_atTop_nat 1)
+  constructor
+  · have hh := hlog.const_add (Real.log (endpointStationary (tiltParameter q t) r))
+    have hlim : Filter.Tendsto (fun m : ℕ =>
+        Real.log (endpointStationary (tiltParameter q t) r) + endpointLogRemainder q (m+1) l r t)
+        Filter.atTop (nhds (Real.log (endpointStationary (tiltParameter q t) r))) := by
+      simpa [Function.comp_def, endpointLogRemainder] using hh
+    apply hlim.congr'
+    exact Filter.Eventually.of_forall fun m =>
+      (endpoint_log_decomposition q hq hq1 π hI (m+1) (by omega) l r t).symm
+  · have hh := hsecond.const_add (deriv (deriv
+      (fun s => Real.log (endpointStationary (tiltParameter q s) r))) t)
+    have he (m : ℕ) := conditional_fisher_stationary_remainder q hq hq1 π hI (m+1) (by omega) l r t
+    have hb (m : ℕ) := conditional_fisher_boundary q hq hq1 π hI (m+1) (by omega) l r t
+    apply (show Filter.Tendsto (fun m : ℕ => deriv (deriv
+      (fun s => Real.log (endpointStationary (tiltParameter q s) r))) t +
+        deriv (deriv (endpointLogRemainder q (m+1) l r)) t) Filter.atTop
+      (nhds (deriv (deriv (fun s => Real.log (endpointStationary (tiltParameter q s) r))) t))
+      by simpa [Function.comp_def] using hh).congr'
+    exact Filter.Eventually.of_forall fun m => by linarith [he m, hb m]
+/-- Conditional Fisher per transition converges to pressure curvature and the actual Poisson rate. -/
+theorem conditional_fisher_rate_tendsto (q : ℝ) (hq : 0 < q) (hq1 : q < 1)
+    (π : Stationary (Matrix.of (transition q)))
+    (hI : (Matrix.of (transition q)).IsIrreducible) (l r : Bool) (t : ℝ) :
+    Filter.Tendsto
+      (fun m : ℕ => conditionalFisher q (m+1) l r t / (m+2 : ℝ))
+      Filter.atTop (nhds (deriv (deriv (pressure (Matrix.of (transition q)) arrival)) t)) ∧
+    deriv (deriv (pressure (Matrix.of (transition q)) arrival)) t =
+      (stationary (π.globalDoob hI arrival t) (π.globalDoob_stochastic hI arrival t).1
+        (π.globalDoob_irreducible hI arrival t)).varianceRate
+          (π.globalDoob_stochastic hI arrival t).1 (π.globalDoob_irreducible hI arrival t) arrival ∧
+    (∀ m : ℕ, 1 ≤ m → conditionalFisher q m l r t / (m : ℝ) =
+      ((m+1 : ℝ) / m) * (conditionalFisher q m l r t / (m+1 : ℝ))) := by
+  refine ⟨?_, π.pressure_second_derivative hI arrival t, fun m hm => ?_⟩
+  rotate_left
+  · have hm0 : (m : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (by omega)
+    have hm1 : (m+1 : ℝ) ≠ 0 := by positivity
+    field_simp
+  let p2 := deriv (deriv (pressure (Matrix.of (transition q)) arrival)) t
+  let s2 := deriv (deriv (fun s => Real.log (endpointStationary (tiltParameter q s) r))) t
+  have hsplit (m : ℕ) (hm : 1 ≤ m) :=
+    conditional_fisher_stationary_remainder q hq hq1 π hI (m+1) (by omega) l r t
+  have hpref : Filter.Tendsto (fun m : ℕ =>
+      (((m+2 : ℝ) + r.toNat-l.toNat) * p2) / (m+2 : ℝ))
+      Filter.atTop (nhds p2) := by
+    let d : ℝ := r.toNat-l.toNat
+    have hconst : Filter.Tendsto (fun m : ℕ => d / (m+2 : ℝ))
+        Filter.atTop (nhds 0) := by
+      simpa [d, Function.comp_def, Nat.cast_add] using
+        (tendsto_const_div_atTop_nhds_zero_nat d).comp (Filter.tendsto_add_atTop_nat 2)
+    have hbase : Filter.Tendsto (fun _ : ℕ => (1 : ℝ))
+        Filter.atTop (nhds 1) := tendsto_const_nhds
+    have hsum := hbase.add hconst
+    have hmul := hsum.mul_const p2
+    convert hmul using 1
+    · funext m
+      dsimp [d]
+      have hn : (m+2 : ℝ) ≠ 0 := by positivity
+      field_simp
+      ring
+    · simp
+  have hsrate : Filter.Tendsto (fun m : ℕ => s2 / (m+2 : ℝ))
+      Filter.atTop (nhds 0) := by
+    simpa [Function.comp_def, Nat.cast_add] using
+      (tendsto_const_div_atTop_nhds_zero_nat s2).comp (Filter.tendsto_add_atTop_nat 2)
+  have hrrate : Filter.Tendsto (fun m : ℕ =>
+      deriv (deriv (endpointLogRemainder q (m+1) l r)) t / (m+2 : ℝ))
+      Filter.atTop (nhds 0) := by
+    have hR := (endpoint_second_tendsto q hq hq1 π hI l r t).comp
+      (Filter.tendsto_add_atTop_nat 1)
+    have hInv : Filter.Tendsto (fun m : ℕ => 1/(m+2 : ℝ)) Filter.atTop (nhds 0) := by
+      simpa [Function.comp_def, Nat.cast_add] using
+        (tendsto_const_div_atTop_nhds_zero_nat (1:ℝ)).comp (Filter.tendsto_add_atTop_nat 2)
+    simpa [Function.comp_def, div_eq_mul_inv] using hR.mul hInv
+  have hsum := (hpref.add hsrate).add hrrate
+  apply (show Filter.Tendsto
+    (fun m : ℕ => (((m+2 : ℝ) + r.toNat-l.toNat) * p2) / (m+2 : ℝ) +
+      s2 / (m+2 : ℝ) + deriv (deriv (endpointLogRemainder q (m+1) l r)) t / (m+2 : ℝ))
+      Filter.atTop (nhds p2) by simpa using hsum).congr'
+  filter_upwards [Filter.eventually_ge_atTop 1] with m hm
+  have hh := hsplit m hm
+  show _ = conditionalFisher q (m+1) l r t / (m+2 : ℝ)
+  symm
+  show conditionalFisher q (m+1) l r t / (m+2 : ℝ) =
+      (((m+2 : ℝ) + r.toNat-l.toNat) * p2) / (m+2 : ℝ) +
+        s2 / (m+2 : ℝ) + deriv (deriv (endpointLogRemainder q (m+1) l r)) t /
+          (m+2 : ℝ)
+  rw [hh]; dsimp [p2, s2]; push_cast; ring
 end D5.S3.Combinatorics.Graph.LegalWords.ConditionalBornFisher
