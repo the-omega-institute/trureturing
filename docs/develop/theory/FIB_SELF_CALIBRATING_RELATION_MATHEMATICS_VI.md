@@ -4831,3 +4831,169 @@ $$
 Both children must be intersections of this same $K$ with their actual response fibers; they may use different retained worlds and different terminal collision pairs. Theorem 5.1 forces the $J$ child to contain at least three worlds. If it has exactly three and contains either prescribed $U_r$, Theorem 30.2 excludes it. Theorem 30.3 only rules out the special four-world support consisting of both prescribed $U$ and two additions. Neither it nor the point-fiber rigidity excludes a support omitting those prescribed worlds, a larger support, an arbitrary parent, or the original root.
 
 ## 追加锚（本行以下为增补区）
+
+## 32. 统一小非零偏离的整个外侧父走廊固定 MM 恢复
+
+**定理 32.1（全部正来源上的外侧走廊恢复）。** 保持定义1.1的整个 $\mathcal W_3$、定义8.1的原时钟及字面父历史 $H=H^-_{\theta,\xi}$。取定理27.3中任一个满足(27.9)的统一常数 $B\ge539$，令
+
+$$
+\varepsilon=\frac1{10^{20}B},\qquad \mathcal D_B=\{(\theta,\xi)\in\mathbb R^2:0<|\xi|<\varepsilon,\
+                 \theta\le11/10\ \text{或}\ \theta\ge181/100\}. \tag{32.1}
+$$
+
+则对每个 $(\theta,\xi)\in\mathcal D_B$，在整个实际父纤维 $\mathcal F(H)$ 上，原时钟六、七实际依次选择 $M,M$ 的响应映射
+
+$$
+W\longmapsto\bigl(r_M^{(6)}(W),r_{MM}^{(7)}(W)\bigr) \tag{32.2}
+$$
+
+对完整世界单射。因此固定接续 $MM$ 在至多两个进一步实际读数内恢复整个父纤维；每个实际第六 $M$ 子纤维的末 $M$ 响应单射，且
+
+$$
+\forall K\subseteq\mathcal F(H),\qquad \neg L_2(K,H). \tag{32.3}
+$$
+
+证明。以下所有来源量沿用(8.1)、(8.5)—(8.6)。对 $\Phi\ne0$ 的来源使用(23.2)的归一化提升和矩阵，记
+
+$$
+x=\frac1\Phi(nu^2,nu,n,h)^{\mathsf T},\quad \mathsf A(k)x=(1,q,\mu,\eta)^{\mathsf T},\quad \mathcal T(y)=y_0y_2-y_1^2,\quad e=(0,1,0,0)^{\mathsf T}. \tag{32.4}
+$$
+
+向量指标从零开始；$\mathcal T$ 只取前三分量。矩阵 $\mathsf A$ 关于 $k$ 仿射，$e$ 的非零分量对应签名中的 $q$。本证明需要两个完整闭区间
+
+$$
+I_-=[1/2,551/500],\qquad I_+=[226/125,3],\qquad \mathcal I=I_-\cup I_+. \tag{32.5}
+$$
+
+先给用于整个 $\mathcal I$ 的有理符号及范数证书。复用(23.5)的 $Q$，置
+
+$$
+\begin{aligned}
+F(k)&=208827k^4-219885k^3-532630k^2+250705k+359123,\\
+N(k)&=\bigl(-5358k^2+2012k+6458,\,
+ -1674k^2-166k+1028,\,
+ -2082k^2+756k+2388,\,
+ -12k^3-546k^2-478k-64\bigr)^{\mathsf T}.
+\end{aligned} \tag{32.6}
+$$
+
+由(23.2)逐项取余子式，有 $\det\mathsf A=40Q$、$\operatorname{adj}(\mathsf A)e=N$，以及多项式恒等式 $N_0N_2-N_1^2=40F$。因而在 $Q\ne0$ 处
+
+$$
+v(k)=\mathsf A(k)^{-1}e=\frac{N(k)}{40Q(k)},\qquad
+\mathcal T(v(k))=\frac{F(k)}{40Q(k)^2}. \tag{32.7}
+$$
+
+为完整指定有限精确证书，对次数至多 $d$ 的多项式 $p$ 及有理区间 $I=[a,b]$，令 $c_j=[t^j]p(a+(b-a)t)$，并定义
+
+$$
+\beta_i^{I,d}(p)=\sum_{j=0}^i c_j\frac{\binom ij}{\binom dj},
+\qquad
+p(a+(b-a)t)=\sum_{i=0}^d\beta_i^{I,d}(p)\binom di t^i(1-t)^{d-i}. \tag{32.8}
+$$
+
+这里系数不足的 $c_j$ 为零。$0\le t\le1$ 时基函数非负且和为一；故下表的系数极值控制整个闭区间。表内多项式均取 $d=4$，系数界均是精确有理数：
+
+$$
+\begin{array}{c|c|c}
+ I&\min_i\beta_i^{I,4}(F)&\text{对 }Q\text{ 的系数界}\\ \hline
+ I_-&142435964065727/62500000000&
+       \max_i\beta_i^{I_-,4}(Q)=-99/4\\
+ I_+&774891446877/244140625&
+       \min_i\beta_i^{I_+,4}(Q)=8176970406/244140625
+\end{array} \tag{32.9}
+$$
+
+因此 $\mathcal I$ 上 $F>2000$、$|Q|>24$。又 $|k|\le3$ 给
+$|Q|\le6\cdot3^4+15\cdot3^3+18\cdot3^2+29\cdot3+8=1148$。
+记 $C_{ij}(k)=(\operatorname{adj}\mathsf A(k))_{ij}$，其次数至多三。用(32.8)取 $d=3$，四个行号依次为 $0,1,2,3$，直接有如下严格整数上界：
+
+$$
+\begin{array}{c|rrrr}
+ I&\sum_j\max_i|\beta_i^{I,3}(C_{0j})|&
+ \sum_j\max_i|\beta_i^{I,3}(C_{1j})|&
+ \sum_j\max_i|\beta_i^{I,3}(C_{2j})|&
+ \sum_j\max_i|\beta_i^{I,3}(C_{3j})|\\ \hline
+ I_-&<32000&<5000&<12000&<6000\\
+ I_+&<385000&<141000&<150000&<57000
+\end{array} \tag{32.10}
+$$
+
+式(23.2)、(32.8)及这些整数比较指定了全部有限有理计算，不使用采样或根近似。以最大绝对行和为矩阵范数，(32.9)—(32.10)遂给 $\mathcal I$ 上
+
+$$
+\|\mathsf A^{-1}\|_\infty<
+ \frac{400000}{40\cdot24}<4000,\qquad
+\|\mathsf A'\|_\infty=648,\qquad
+\mathcal T(v)>\frac{2000}{40\cdot1148^2}>\frac1{30000}. \tag{32.11}
+$$
+
+$\mathsf A'$ 的四个绝对行和为 $16,60,50,648$。这同时证明所有用到的矩阵逆存在。
+
+现在反设(32.2)在某个 $(\theta,\xi)\in\mathcal D_B$ 上有不同完整世界 $W_1,W_2$ 的碰撞。定理23.2给不同来源、$\Phi_i\ne0$、$\mu_1=\mu_2$、$\eta_1=\eta_2$，且
+
+$$
+r=q_1-q_2\ne0,\qquad k_2-k_1=\xi r,\qquad
+\theta=k_i+\xi q_i,\qquad x^{(i)}=x(P_i). \tag{32.12}
+$$
+
+两来源均属于(27.1)的 $\mathscr C$。因此仅对这对来源使用定理27.3，得到
+
+$$
+|q_i|,|\mu_i|,|\eta_i|\le B,\qquad
+|\theta-k_i|\le B|\xi|<10^{-20},\qquad 1/2<k_i<3. \tag{32.13}
+$$
+
+末项是(27.23)的严格正性。不限制任意父世界或其他末动作碰撞对。若 $\theta\le11/10$，两 $k_i$ 都小于 $11/10+10^{-20}<551/500$，故同在 $I_-$；若 $\theta\ge181/100$，两 $k_i$ 都大于 $181/100-10^{-20}>226/125$，故同在 $I_+$。这涵盖全部实 $\theta$，没有另设来源紧性条件。
+
+由 $B\ge539>1$、(32.4)、(32.11)及(32.13)，这对来源满足
+
+$$
+\|x^{(i)}\|_\infty
+ \le\|\mathsf A(k_i)^{-1}\|_\infty
+           \|(1,q_i,\mu_i,\eta_i)\|_\infty<4000B. \tag{32.14}
+$$
+
+由于 $\mathsf A$ 仿射，相减响应方程而不取任何中间参数的逆，精确得到
+
+$$
+\begin{aligned}
+\mathsf A(k_1)(x^{(1)}-x^{(2)})
+ &=r e+(k_2-k_1)\mathsf A'x^{(2)},\\
+\frac{x^{(1)}-x^{(2)}}r&=v(k_1)+z,\qquad
+z=\xi\,\mathsf A(k_1)^{-1}\mathsf A'x^{(2)},\\
+\|z\|_\infty&<4000^2\cdot648\,B|\xi|
+ <\frac{10368000000}{10^{20}}<2\cdot10^{-10}.
+\end{aligned} \tag{32.15}
+$$
+
+这里 $r\ne0$ 的依据正是(32.12)，无需为 $|r|$ 设置下界。由 $\|v\|_\infty<4000$，
+
+$$
+|\mathcal T(v+z)-\mathcal T(v)|
+ \le4\|v\|_\infty\|z\|_\infty+2\|z\|_\infty^2
+ <16000(2\cdot10^{-10})+2(2\cdot10^{-10})^2<\frac1{100000}. \tag{32.16}
+$$
+
+结合(32.11)，$\mathcal T(v+z)>1/30000-1/100000>0$，于是
+$\mathcal T(x^{(1)}-x^{(2)})=r^2\mathcal T(v+z)>0$。
+
+另一方面，定理27.2对同一实际 $MM$ 记录给 $\Phi_1\Phi_2>0$。令 $c_i=n_i/\Phi_i$，则 $n_i>0$、$c_1c_2>0$。提升的前三分量为 $c_i(u_i^2,u_i,1)$，直接相减给
+
+$$
+\mathcal T(x^{(1)}-x^{(2)})=-c_1c_2(u_1-u_2)^2\le0, \tag{32.17}
+$$
+
+矛盾。这个非严格不等式包括相同 $u$；(32.15)允许来源对任意趋近对角。由此排除所有不同完整世界的碰撞，证明(32.2)。
+
+固定父及其实际第六读数 $w$ 后，若末 $M$ 响应相同，就有相同的(32.2)，故完整世界相同。实际响应像上取唯一完整世界的逆即给固定 $MM$ 解码器；空纤维无实际路径，单点纤维可早停。若任意 $K\subseteq\mathcal F(H)$ 有 $L_2$，递归(1.2)的第六 $M$ 条款会给一个实际子纤维的 $L_1$，其末 $M$ 条款再给两个不同世界的碰撞，违反上述单射，故(32.3)成立。没有要求末 $J$ 或另一第六臂使用同一对世界，也没有对它们套用 $B$ 界。
+
+全部推导只除已非零的 $\xi,\Phi,r,Q$ 及(8.2)中原本严格正的迹量；事实上(32.15)不除 $\xi$，(32.12)中签名相等只使用 $\xi\ne0$。未除 $\Delta$、任何采样增益或增益的最高次系数。因此整个非零至多三次实多项式、任意增益符号、降次、采样根、重根、$\Delta=0$ 及任意常漂移均保留。未给来源或漂移增加紧性假设；非紧尾部的控制来自已有全源定理27.3与(32.14)。
+
+接续动作是同一不可复制、不可重置轨迹上原时钟六、七的两个实际 $M$，每步立即读取；连同既有初读共至多八读。这里的逆仅属于精确实响应合同，$B$ 是存在性的统一界，$\varepsilon$ 不是数值稳定半径或有限位算法的运行参数；不主张逆的连续性、可计算性或稳定性。
+
+承重内容是全源差几何的符号不相容、统一扰动控制及其整个外侧父走廊的固定 $MM$ 消费者，属于仓内推导（repo-derived）；四次式展开本身不单列为成果。伴随矩阵恒等式与范数估计是成熟线性代数；Bernstein 非负性、单位分解及系数凸包界沿用第25章的成熟供应，参见 Patrikalakis、Maekawa、Cho，[§1.3.1](https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node9.html)。定理23.2和27.2—27.3分别供应完整实际碰撞的父坐标、同号性与全源重复签名界；本条不重证这些结果，不申领外部文献优先权。这是普通数学纸面证明，非 Lean 核验。
+
+本条仅收缩 $\mathcal P_M\cap\mathcal P_J$ 的可能父域：$0<|\xi|<\varepsilon$ 时，若共同父失败存在，就必须有 $11/10<\theta<181/100$。这个中心带、$|\xi|\ge\varepsilon$ 的非零偏离父族、同父两臂共同实现及更早祖先仍未解决；零偏离只复用定理26.4的策略，不声称该层固定 $MM$ 单射。第28—31章的 $MJMM$ 历史不作本证明供应，亦不与这里的 $MMJMM$ 认同。原根八读／九读判别、九读上界及有限精度稳定性均未由本定理结清。∎
+
+## 追加锚（本行以下为增补区）

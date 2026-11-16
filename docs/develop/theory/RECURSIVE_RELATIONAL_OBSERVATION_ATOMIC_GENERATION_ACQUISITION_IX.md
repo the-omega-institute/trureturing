@@ -842,3 +842,1230 @@ clock, bare four-view recovery or completion of the enduring mutual
 recovery objective is entailed by these finite conditional conclusions.
 
 ## 追加锚（本行以下为增补区）
+
+## 178. A finite source-owned commission and its separate phase premise
+
+**Definition 178.1 (finite resource interface).** Keep the actual source,
+its phase $t$, $u,\lambda,H$, the continuing acquired memory $M$ and
+all native fields of §§170–177. Fix integers $K\ge1$ and $L\ge2$.
+Commission at most $K$ executed port increments along each path of a
+specified finite adaptive tree. An increment includes an executed
+partial pulse; it need not be a completed emission. Acquire a distinct
+resource $B$ with basis $|r\rangle$, $0\le r\le R_B$, where
+
+$$
+R_B=2K+L-1,\qquad N_B=\sum_{r=0}^{R_B}r|r\rangle\langle r|.
+\tag{IX.27}
+$$
+
+Here $B$ is a resource register, not the native boundary $B_0$, a new
+source, an old occurrence qubit or the preparation memory $M$.
+Resource retention, port coupling, resource readout and resource
+preparation are four separately typed permissions on its actual binding.
+Port permission alone does not permit arbitrary operations on $B$.
+Every operation below acts by identity on arbitrary untouched references.
+All spent controls, preparation backing and readable apparatus outputs
+are retained with their actual identities. The full finite dynamics
+will be defined even for dirty $M,Q,B$ and their correlations; only
+particular accuracy and emission formulas need the calibration below.
+
+**Assumption 178.2 (source-owned preparation and protected holds).** In the
+same calibrated frame as VIII159, suppose the original supplier can
+actually prepare, at fixed $t$, the acquired $B$ in
+
+$$
+\begin{aligned}
+\vartheta&=\frac{\pi}{L+1},&
+g_{K+j}&=\sqrt{\frac2{L+1}}\sin((j+1)\vartheta)
+       \quad(0\le j<L),\\
+g_r&=0\quad\text{otherwise},&
+|g_t\rangle&=\sum_{r=0}^{R_B}g_r e^{irt}|r\rangle.
+\end{aligned}
+\tag{IX.28}
+$$
+
+At the entrance to the calibrated comparison, its conditional joint state
+is $|g_t\rangle\langle g_t|_B\otimes\rho_{AR}$, where $A$ includes
+$M$, all dirty port inputs, old banks, source backing and other apparatus,
+and $R$ is an arbitrary untouched reference. The state $\rho_{AR}$ is
+otherwise unrestricted. The uninterrupted fresh-emission calculation
+additionally uses the original $M=|0\rangle$ and genuine independent
+vacuum slots. An imperfect preparation is treated by one complete joint
+initial bound in §182, not by asserting factorization from a resource
+marginal. Conditioning on a common unknown $t$ is mathematical notation;
+the actual experiment retains the common mixture and phase-bearing
+backing, with its original access restrictions.
+
+Supply the finite couplings of §179, controls and their actual partial
+progress, retention and detector readiness. Between port increments the
+protected hold on $B$ is identity in this frame, including any required
+paid compensation. Other backing has the specified input-independent
+joint resource evolution of Assumption 171.1, tensored with identity on
+$B$; all its outputs remain. Thus no undeclared clock, phase drift,
+resource measurement, leakage or source-dependent control label is
+hidden in a hold. Accuracy of a nonideal hold is separately chargeable.
+These are modeled same-source preparation/coupling/hold premises, not
+claims of installed hardware or acquired permission. The finite quantum
+state (IX.28) is not itself a native acquisition procedure.
+
+The phase in (IX.28) supplies a first charge harmonic: lowering its
+level once approximates multiplication by $e^{it}$. This is an extra
+phase interface. The original even-support targets satisfy
+$\rho_n(t+\pi)=\rho_n(t)$, whereas for $L\ge2$ the resource densities
+in (IX.28) at $t$ and $t+\pi$ differ: adjacent occupied levels have a
+nonzero coherence whose sign changes. A fixed channel supplied only
+those identical finite target densities cannot produce both distinct
+resource densities. This elementary obstruction does not apply to an
+additionally accessed original supplier/phase backing; that extra access
+is exactly what the preparation premise must supply. No first-harmonic
+acquisition is inferred from VIII157–169's even-mode target laws.
+
+## 179. A full dirty-input finite port with actual boundary successors
+
+**Definition 179.1 (two rotations on finite charge sectors).** Put
+$\theta_0=\arccos a$ and $\theta_1=\arccos c$, with $a,b,c,d$ as in
+(IX.7). For every $1\le r\le R_B$, let $V(s)$ act on the ordered pairs
+
+$$
+\begin{aligned}
+(&|00\rangle_{MQ}|r\rangle_B,
+  |11\rangle_{MQ}|r-1\rangle_B),\\
+(&|10\rangle_{MQ}|r\rangle_B,
+  |01\rangle_{MQ}|r-1\rangle_B)
+\end{aligned}
+$$
+
+by the matrices
+
+$$
+\begin{pmatrix}\cos(s\theta_j)&-\sin(s\theta_j)\\
+                \sin(s\theta_j)&\cos(s\theta_j)\end{pmatrix},
+\qquad j=0,1,
+\tag{IX.29}
+$$
+
+respectively. It fixes the four unpaired vectors
+$|00,0\rangle$, $|10,0\rangle$, $|11,R_B\rangle$ and
+$|01,R_B\rangle$. These are actual boundary actions, not discarded
+failure branches. The unitary has no classical parameter $t$; the phase
+is in the source-owned resource state. A supplied pulse from progress
+$s$ to $s'$ executes $V(s')V(s)^\dagger=V(s'-s)$, with the same
+$M,Q,B$ and all pending obligations retained. Normally $0\le s\le
+s'\le1$; signed increments $|s'-s|\le1$ may also be commissioned.
+No completed gate is substituted at a pending cut.
+
+**Theorem 179.2 (complete dynamics, conservation and finite guard).** The
+maps (IX.29) are unitaries on the entire $M\otimes Q\otimes B$.
+They form a one-parameter group and commute with
+
+$$
+C_{QB}=N_Q+N_B,\qquad N_Q=|1\rangle\langle1|_Q.
+\tag{IX.30}
+$$
+
+No charge is assigned to the label of $M$ in this conservation statement.
+For an arbitrary dirty-input joint state $\omega_{MQB\mathcal B R}$,
+the executed successor is exactly
+
+$$
+(V(s'-s)\otimes I_{\mathcal B R})\omega
+ (V(s'-s)^\dagger\otimes I_{\mathcal B R}),
+\tag{IX.31}
+$$
+
+with its actual resource/control outputs alongside it. There is no
+trace over $B$ in this definition. Starting with support (IX.28), any
+path of at most $K$ increments, interleaved with operations acting on
+factors other than $B$, has the same action as the shift formulas below;
+none of its nontrivial rotations is truncated by a boundary.
+
+Proof. The displayed pairs and four unpaired vectors partition an
+orthonormal basis. Each pair has the same value $r$ of $N_Q+N_B$;
+its rotation is unitary and additive in $s$. This proves all operator
+claims, including on correlated inputs after tensoring with identity.
+Every port increment moves resource support by at most one level in
+either direction. Before increment $j\le K$, its support is contained
+in $[K-j+1,K+L+j-2]\subseteq[1,R_B-1]$. An operation on other
+factors, including an observed conditional operation, cannot introduce
+new resource support. Hence the input to every such increment avoids
+the four unpaired endpoints. The last output may reach an endpoint;
+it is still retained. Outside this guard or calibration the full
+finite unitary (IX.29), including its fixed endpoints, remains the
+specified successor whenever its control is authorized and backed.
+$\square$
+
+For example, away from the endpoints the full completed action includes
+
+$$
+\begin{aligned}
+|00,r\rangle&\mapsto a|00,r\rangle+b|11,r-1\rangle,\\
+|11,r\rangle&\mapsto-b|00,r+1\rangle+a|11,r\rangle,\\
+|10,r\rangle&\mapsto c|10,r\rangle+d|01,r-1\rangle,\\
+|01,r\rangle&\mapsto-d|10,r+1\rangle+c|01,r\rangle.
+\end{aligned}
+\tag{IX.32}
+$$
+
+These are both IX blocks on their full input, including absorption from
+a dirty occupied $Q$. A fresh-vacuum formula would omit half this
+interface. Resource states and all memory off-diagonal blocks must be
+propagated by (IX.31) on such inputs; a fresh-resource substitution after
+a call is not its successor.
+
+## 180. Exact source-specific resource shifts and both terminal returns
+
+**Definition 180.1 (finite shifts and their overlaps).** Extend $g_r$ by
+zero outside its displayed support. For $0\le k\le K$ define the
+normalized vector on the actual finite resource
+
+$$
+|g_t;k\rangle=\sum_{r=0}^{R_B}g_{r+k}e^{irt}|r\rangle,
+\qquad
+G_m=\sum_{r\in\mathbb Z}g_r g_{r+m},\quad G_{-m}=G_m.
+\tag{IX.33}
+$$
+
+The zero extension is notation, not an infinite physical reservoir.
+These vectors obey $\langle g_t;l|g_t;k\rangle=G_{k-l}$.
+They are the phase-corrected $k$-step lowered resources: the uncorrected
+lowering sends $|g_t\rangle$ to $e^{ikt}|g_t;k\rangle$.
+The sine profile gives
+
+$$
+G_0=1,\qquad G_1=\cos\vartheta,\qquad
+G_2=1-\frac{2L}{L+1}\sin^2\vartheta<1,\qquad
+G_m=0\ \text{for }|m|\ge L.
+\tag{IX.34}
+$$
+
+Indeed the finite-chain recurrence
+$g_{r-1}+g_{r+1}=2\cos\vartheta\,g_r$ on the $L$ occupied
+coordinates gives $G_1$. Squaring that recurrence and summing gives
+$4\cos^2\vartheta=2-4\sin^2\vartheta/(L+1)+2G_2$,
+which proves the stated $G_2$. The other identities follow from
+normalization, reality and support.
+
+**Theorem 180.2 (joint IX emission and complete terminal law).** Under
+Assumption 178.2, start with $M=|0\rangle$ and perform $n\le K$
+uninterrupted completed fresh emissions. On the ordered emitted bank,
+that same $M$ and $B$, the actual normalized vector is
+
+$$
+|\Xi_n(t)\rangle=\lambda^{-n/2}
+ \sum_{j=0}^1\sum_{w\in\{0,1\}^n}
+ \sqrt{H_{jj}}\,\psi_{n,0j}(t)(w)
+ |w\rangle|j\rangle_M|g_t;|w|\rangle_B.
+\tag{IX.35}
+$$
+
+All other backing is retained in its stipulated joint evolution; tensor
+factorization with it is used only where Assumption 178.2 supplies it.
+A common random $t$ is averaged jointly with that backing. The complete
+terminal memory instrument has the two subnormalized vectors
+$|\Xi_{n,j}\rangle=(I\otimes|j\rangle\langle j|_M\otimes I_B)
+|\Xi_n\rangle$ and output
+
+$$
+\sum_{j=0}^1|h_{n,j}\rangle\langle h_{n,j}|
+ \otimes|\Xi_{n,j}\rangle\langle\Xi_{n,j}|.
+\tag{IX.36}
+$$
+
+The flag probabilities are exactly $p_j(n)$ of (IX.14). For $n\ge1$
+both are positive. Conditional on $j$, tracing $B$ gives on the full
+emitted bank the entries
+
+$$
+(\rho^{g}_{n,j}(t))_{w,v}
+ =\frac{\psi_{n,0j}(t)(w)\overline{\psi_{n,0j}(t)(v)}}{Z_{n,j}}
+ G_{|w|-|v|},\qquad
+ Z_{n,0}=a_n,\quad Z_{n,1}=b_n.
+\tag{IX.37}
+$$
+
+In particular terminal zero does not return the exact original pure
+$\rho_n(t)$ for finite $L$: its nonzero $0^n,110^{n-2}$ coherence
+is multiplied by $G_2<1$ when $n\ge2$. The original exact ideal-port
+conclusion of §173 remains valid on its own premises.
+
+Proof. On a vacuum slot, (IX.32) uses precisely $K_0(0)$ for output
+zero and $K_1(0)$ followed by one lowering for output one. Each new
+emission acts on the same $M$. Multiplying its chronological coefficients
+as in (IX.12) gives
+$\lambda^{-n/2}\sqrt{H_{jj}}\psi_{n,0j}(0)(w)$ and $|w|$
+lowerings. Their phase $e^{it|w|}$ gives (IX.35), with the original
+ordered physical roster unchanged. The finite guard justifies every
+lowering. Each lowered vector has norm one, so orthogonality of the
+word/memory basis gives branch squared norm $H_{jj}Z_{n,j}/\lambda^n$,
+exactly (IX.14). Projecting the actual $M$, with both labels retained,
+proves (IX.36). Tracing $B$ uses (IX.33), proving (IX.37).
+No normalization is assigned to the zero flag at $n=0$. $\square$
+
+**Proposition 180.3 (actual resource return and exact joint discrepancy).**
+Define
+
+$$
+T(z)=\begin{pmatrix}1&z\\z&9\end{pmatrix},\qquad
+q_{n,j}(k)=\frac{[z^k](T(z)^n)_{0j}}{Z_{n,j}}
+\tag{IX.38}
+$$
+
+on each positive terminal branch. The $q_{n,j}$ are probability
+mass functions, supported on $k\equiv j\pmod2$. The actual
+conditional resource marginal and its comparison overlap are
+
+$$
+\begin{aligned}
+\eta^{\mathrm{act}}_{n,j}
+ &=\sum_{k=0}^n q_{n,j}(k)|g_t;k\rangle\langle g_t;k|,\\
+A_{n,j}&=\sum_{k=0}^n q_{n,j}(k)G_k.
+\end{aligned}
+\tag{IX.39}
+$$
+
+Compare the entire terminal output with (IX.13) retaining the unchanged
+comparison resource $|g_t\rangle$, the same labels and the same other
+backing. Their exact joint half-trace distance is
+
+$$
+D^{\mathrm{term}}_{n,g}
+ =\sum_{j:p_j(n)>0}p_j(n)\sqrt{1-A_{n,j}^2}.
+\tag{IX.40}
+$$
+
+Thus unchanged flag probabilities do not certify the complete return.
+For the port alone the resource charge loss is the emitted occupation:
+
+$$
+\begin{aligned}
+\langle N_B\rangle_{\mathrm{in}}&=K+(L-1)/2,\\
+\langle N_B\rangle_{\mathrm{out}}
+ &=K+(L-1)/2-\mathbb E|w|,\\
+\mathbb E|w|&=
+ \left.\frac{d}{dz}\left[
+ \lambda^{-n}(1,0)T(z)^n(1,u)^{\mathsf T}\right]\right|_{z=1}.
+\end{aligned}
+\tag{IX.41}
+$$
+
+Proof. For squared amplitudes every zero step contributes $1$ or $9$
+and every flip contributes $z$, yielding (IX.38). Tracing the word in
+(IX.35) proves the first line of (IX.39). The normalized joint branch
+has inner product $A_{n,j}$ with its ideal branch tensored with
+$|g_t\rangle$: each word contributes its own probability times
+$\langle g_t|g_t;k\rangle=G_k$. Both joint branches are pure.
+The pure-state half-trace formula and orthogonal flag blocks therefore
+give (IX.40), not a distance computed just on the resource marginal.
+Each $|g_t;k\rangle$ has charge mean $K+(L-1)/2-k$.
+The generating function in (IX.41) sums both flag weights, equals one
+at $z=1$, and its derivative is the occupation mean. This proves the
+charge assertions independently of any physical Hamiltonian. $\square$
+
+**Proposition 180.4 (successive flagged blocks retain one correlated
+resource).** Consider successive positive block lengths
+$n_1,\ldots,n_m$ with $N=\sum_\ell n_\ell\le K$, complete memory
+reads between them, and no other intervention. Put $a_0=0$ and
+$W=w^{(1)}\cdots w^{(m)}$. For a particular complete flag record
+$a_1,\ldots,a_m$, the unnormalized joint vector is
+
+$$
+\lambda^{-N/2}\sqrt{H_{a_ma_m}}
+ \sum_{w^{(1)},\ldots,w^{(m)}}
+ \left[\prod_{\ell=1}^m
+ \psi_{n_\ell,a_{\ell-1}a_\ell}(t)(w^{(\ell)})\right]
+ |W\rangle|a_m\rangle_M|g_t;|W|\rangle_B.
+\tag{IX.42}
+$$
+
+Its trace is the same product of entries of $\mathsf P_{n_\ell}$
+as in (IX.17). Nevertheless the old and new blocks and $B$ do not
+in general factor conditional on the flags, even at fixed $t$.
+The terminal read separates the one-dimensional current $M$ from the
+rest, but does not separate the rest from $B$. This formula also holds
+along an adaptively chosen block-length path with its actual control
+probability retained.
+
+Proof. At every block, the endpoint factor is
+$\lambda^{-n_\ell/2}\sqrt{H_{a_\ell a_\ell}/
+H_{a_{\ell-1}a_{\ell-1}}}$, as in (IX.16). These factors telescope;
+all resource lowerings add. Word orthogonality makes the norm squared
+the product of the block norms. Cross-word entries instead contain
+$G_{|W|-|W'|}$ after tracing $B$. They depend jointly on all blocks,
+which supplies the claimed correlated successor rather than a new
+independent resource for each flag. $\square$
+
+## 181. A finite-resource effect in the complete VIII159 consumer
+
+**Definition 181.1 (same acquired pair and complete disturbed returns).**
+Take $5\le n\le K$ with actual exterior lengths $p,q\ge1$,
+$p+2+q=n$. After (IX.36), use the existing complete VIII159 instrument
+on precisely factors $p+1,p+2$ and its two separately supplied fresh
+$|+\rangle$ probes, in the same calibrated frame. Both flags remain;
+there are sixteen delivered four-bit outcomes for each flag and each
+chosen setting $\beta=0,1$. For outcome $o=(o_1,o_2)$ let
+$J_{\beta,o}=\Pi_oU_\beta$ be the literal operator of (VIII.115–116).
+On all retained quantum factors the output, before its backed classical
+delivery suffix is discharged, is exactly
+
+$$
+\sum_{j=0}^1\sum_{o_1,o_2\in\{00,01,10,11\}}
+ |h_{j,\beta,o_1,o_2}\rangle\langle h_{j,\beta,o_1,o_2}|
+ \otimes
+ (J_{\beta,o}\otimes I)
+ (|\Xi_{n,j}\rangle\langle\Xi_{n,j}|\otimes
+   |++\rangle\langle++|\otimes\zeta)
+ (J_{\beta,o}^\dagger\otimes I).
+\tag{IX.43}
+$$
+
+Here $I$ includes $M,B$, every exterior factor and every untouched
+reference; $\zeta$ denotes the other backing only where the stated
+conditional independence holds. More generally apply the same operators
+to the full joint state without inserting a tensor factorization.
+Each $h$ includes actual preparations, source/root and acquisition
+bindings, versions, controls, detector outcomes and complete or pending
+output fields. Formula (IX.43) returns all disturbed inputs and probes,
+all resources and their conditional correlations; it restores none.
+
+**Theorem 181.2 (source-specific resource-dependent joint detector law).**
+Put $(x,y)^{\mathsf T}=T^pe_0$ and
+$(v_j,w_j)^{\mathsf T}=T^qe_j$. Define $Q_{2,j}(t)$ by the matrix
+(VIII.109) with $(a,b,c,d)=(x,y,v_j,w_j)$ and denominator $Z_{n,j}$,
+and set
+
+$$
+\kappa_j=\frac{xv_j+9yw_j}{Z_{n,j}},\qquad
+\nu_j=\frac{3(xw_j+yv_j)}{Z_{n,j}}.
+\tag{IX.44}
+$$
+
+Let $d^{(j)}_{ab}$ be its four diagonal entries. The actual conditional
+pair density $Q^g_{2,j}(t)$ has these same diagonal entries and the same
+$01,10$ coherence $\nu_j$; its $00,11$ entry is
+$G_2\kappa_j e^{-2it}$. No other entries are introduced. For all
+sixteen outcomes the unconditioned joint law is
+
+$$
+\Pr_g(j,o_1,o_2\mid\beta)
+ =p_j(n)\operatorname{Tr}\left[
+ Q^g_{2,j}(t)(E_{o_1}^{(\beta)}\otimes E_{o_2}^{(0)})\right],
+\tag{IX.45}
+$$
+
+using exactly (VIII.99)'s four full-qubit effects. With $C=\cos1$,
+$S=\sin1$, and
+
+$$
+D_j=\frac{(1-C)^2d^{(j)}_{00}
+ +S^2(d^{(j)}_{01}+d^{(j)}_{10})
+ +(1+C)^2d^{(j)}_{11}}{16},
+$$
+
+the selected event, as a statistic of the entire retained output, has
+
+$$
+\begin{aligned}
+\Pr_g(j,10,10\mid\beta)
+ &=p_j(n)\left[D_j+\frac{S^2\nu_j}{8}\cos\beta
+       -\frac{S^2\kappa_jG_2}{8}\cos(\beta-2t)\right],\\
+\Pr_g(j,10,10\mid\beta)-\Pr_{\mathrm{id}}(j,10,10\mid\beta)
+ &=\frac{p_j(n)S^2\kappa_j}{8}(1-G_2)\cos(\beta-2t).
+\end{aligned}
+\tag{IX.46}
+$$
+
+In particular at $t=0$, $\beta=0$, the complete-output half-trace
+distance from the ideal source port followed by this same consumer is
+at least
+
+$$
+\frac{p_0(n)S^2\kappa_0}{8}
+ \frac{2L}{L+1}\sin^2\frac{\pi}{L+1}
+ \ \ge\ \frac{5S^2}{416(1+u^2)}
+ \frac{2L}{L+1}\sin^2\frac{\pi}{L+1}>0.
+\tag{IX.47}
+$$
+
+This is an unconditioned bound on a lawful event including its terminal
+flag. It is a resource dependence of this IX source with the supplied
+consumer, despite exactly unchanged terminal flag and occupation laws.
+For this family of calibrated sine resources, achieving complete error
+at most $\epsilon$ at that interface necessarily requires
+
+$$
+L+1\ge
+ \sqrt{\frac{5S^2}{104(1+u^2)\epsilon}}.
+\tag{IX.48}
+$$
+
+There is no universal minimum claim over other resources or couplings.
+
+Proof. In a two-site marginal, the exterior bra and ket words agree.
+Their occupation counts cancel from $|w|-|v|$ in (IX.37); the remaining
+difference is that of the selected pair. The actual exterior sums are
+$T^pe_0$ and $T^qe_j$, so the same original-endpoint contraction used
+in VIII157 gives $Q_{2,j}(t)$. Only its charge-two entries acquire
+$G_2$; the charge-zero entries are unchanged. This proves the pair
+assertions on both terminal branches, with the full exterior still
+present in (IX.43). Contracting the supplied effects proves (IX.45).
+The $10,10$ contraction is VIII159's calculation with the actual
+coherence $G_2\kappa_j$, proving (IX.46), including its sign.
+Unitary $U_\beta$ and the sixteen exhaustive projectors make (IX.43)
+trace preserving after summing both flags.
+
+Here $y/x\ge1$ and $w_j/v_j\ge1$: for $q=1$ the latter ratio is
+$1$ or $9$, and $r\mapsto(1+9r)/(1+r)$ preserves $r\ge1$.
+The polynomial inequality in VIII157 therefore gives
+$\kappa_j\ge5/52$ for both actual endpoint choices. Combine this
+with $p_0(n)\ge1/(1+u^2)$ and (IX.34). Reading the event
+$(j,o_1,o_2)=(0,10,10)$ is a channel from the complete retained
+output, so its probability difference is a lower bound on that
+output distance. This proves (IX.47) without selecting or renormalizing
+a rare branch. Finally $\sin\vartheta\ge2/(L+1)$ and
+$L/(L+1)\ge1/2$ imply $1-G_2\ge4/(L+1)^2$, giving (IX.48).
+$\square$
+
+The finite resource has $G_2<1$ but $G_2>0$ for $L\ge3$.
+In that range the two ideal probability laws of this calibrated finite
+model still identify $t\bmod\pi$ after division by the known $G_2$;
+this is a statement about laws, with reduced signal, not exact inference
+from finitely many samples. At $L=2$, $G_2=0$ and this pair consumer's
+phase signal vanishes. Neither case supplies the extra first-harmonic
+preparation of §178 from an original finite target.
+
+## 182. Complete-output accuracy for a finite adaptive commission
+
+**Definition 182.1 (protected comparison tree and separate errors).** A
+protected tree has at most $K$ executed port increments on any path,
+with increments $r_h=s'_h-s_h$, $|r_h|\le1$. Between them it may use
+all original native services and their pending phases, arbitrary already
+supplied full-domain instruments on the bank, both terminal outcomes,
+dirty-input port calls, paid new inputs, $P/B$ words, occupation reads,
+and adaptive choices depending on their full records. None of these
+non-port primitives acts on $B$. They include the protected resource
+hold and the stipulated joint evolution of other backing. Thus the
+ideal comparison prefix, at fixed $t$, always retains $|g_t\rangle_B$
+independent of its other quantum factors. Arbitrary operations on old
+outputs are allowed; their source disturbances are not undone.
+
+Use V25.1/V29.1's instrument-level occupation service: while its acquired
+input is waiting, hold the entire joint bank; its actual measurement
+transition applies the named projector, records the actual outcome and
+latches that subnormalized successor. Subsequent pending output phases
+hold that successor and the owed delivery. No outcome is used to choose
+a request before it is delivered. A separately declared detector
+coupling with additional intermediate quantum cuts must supply those
+cuts' full maps and their own certificates; the completed projector
+formula is not assigned to an unfinished coupling. Port waiting/paused
+cuts instead retain (IX.31) at the actual executed progress and resume
+by its next increment. Native pending phases use their unchanged
+full-bank holds and genuine fresh extensions.
+
+The finite reference implementation uses (IX.31). Its ideal comparison
+uses $U_t(r_h)=U_t(s'_h)U_t(s_h)^\dagger$ on the same actual $M,Q$,
+with identity on $B$, and the same other primitive maps, raw labels,
+source fields and resource outputs. This unchanged $B$ is a comparison
+state, not an assertion about the actual successor (IX.39).
+
+For a physical implementation, let $e_{\mathrm{init}}$ bound the
+initial complete joint half-trace discrepancy from the calibrated
+entrance, uniformly over the promised $\rho_{AR}$ and untouched
+extensions, with the same finite labels. It includes initial source
+binding, ingress, $M$ and blank preparation where promised, (IX.28),
+all initially provided probes, controls and backing. At each genuinely
+additional approximate primitive $h$, supply a full-interface
+reference-stable error $e_h$. A sufficient certificate is half the
+diamond distance between its actual map and the specified finite
+reference map, including all resource, detector, record and pending
+outputs. The domain includes dirty inputs and the correlated $B$
+that can actually reach it. Later reference preparations/ingress, holds,
+rounding, couplings, native operations, detectors and delivery get their
+own terms at their actual interfaces; none is inferred from a resource
+marginal, population calibration or flag-success frequency. An exact
+primitive has $e_h=0$.
+
+**Theorem 182.2 (finite complete-output certificate).** For every such
+finite adaptive tree, at a leaf set including any selected pending cuts,
+and uniformly over arbitrary dirty system inputs and untouched reference
+extensions allowed at its entrance,
+
+$$
+\begin{aligned}
+d(\mathrm{Out}_{\mathrm{phys}},\mathrm{Out}_{\mathrm{id}})
+ &\le \min\{1,\Delta\},\\
+\Delta&=e_{\mathrm{init}}+
+ \max_{\text{paths }p}\left[
+ \sum_{h\in p}e_h+
+ \delta_L\sum_{h\in p\cap\mathrm{port}}
+          \sin(|r_h|\theta_0)\right],\\
+\delta_L&=\sqrt{2(1-G_1)}
+       =2\sin\frac{\pi}{2(L+1)}.
+\end{aligned}
+\tag{IX.49}
+$$
+
+The complete output includes $B$ and all its correlations, the same
+continuing $M$, every old/dirty/new factor, all flags and detector
+outcomes, all source and preparation backing, immutable records,
+refusals, delivered prefixes and owed suffixes, Print/End/ACK/Return
+fields and actual partial states. In particular the intrinsic resource
+term is at most
+
+$$
+Kb\delta_L\le\frac{\pi bK}{L+1}.
+\tag{IX.50}
+$$
+
+Thus for a reserved resource tolerance $\epsilon_{\mathrm{res}}>0$,
+choosing $L\ge2$ with $L+1\ge\pi bK/\epsilon_{\mathrm{res}}$
+gives an explicit finite resource certificate of dimension $2K+L$,
+in addition to the separately certified initial and physical errors.
+The maximum covers all paths, including zero ideal-mass paths.
+
+Proof. On the initial calibrated resource, one lowering differs from
+multiplication by $e^{it}$ with unchanged resource by norm
+$\sqrt{2(1-G_1)}=\delta_L$; one raising differs from $e^{-it}$
+by the same norm. In (IX.32)'s partial version the diagonal terms agree
+with $U_t(r_h)$ exactly. Its four off-diagonal terms have differences
+of these shifted vectors, with coefficients of magnitudes
+$|\sin(r_h\theta_0)|$ or $|\sin(r_h\theta_1)|$. Each of the
+four input basis vectors sends its difference to a different output
+$MQ$ basis vector. Hence for every unit vector $|\chi\rangle_{MQ\mathcal D R}$,
+including one entangled with an arbitrary remaining bank $\mathcal D$
+and untouched reference $R$,
+
+$$
+\left\|V(r_h)(|\chi\rangle|g_t\rangle)
+ -(U_t(r_h)|\chi\rangle)|g_t\rangle\right\|
+ \le\delta_L\sin(|r_h|\theta_0).
+\tag{IX.51}
+$$
+
+Here $0<\theta_1<\theta_0<\pi/2$ and $|r_h|\le1$.
+Purification, the pure-state trace-distance inequality and partial trace
+give the same bound for joint densities, including all resource output.
+This is a bound on calibrated product resource inputs; it is not a
+half-diamond comparison over arbitrary inputs of $B$.
+
+Expand the difference of the physical and ideal tree maps by placing
+an ideal prefix before the changed slot and the physical suffix after
+it. At that slot insert the finite reference map: its difference from
+the physical map costs $e_h$, and its difference from the ideal map
+costs (IX.51). These costs are added at the same node before taking
+path maxima. Only the ideal prefix needs the calibrated product
+resource; it has it by Definition 182.1. The physical suffix is a
+normalized complete operation on every allowed dirty/correlated input
+and contracts the changed slot's joint trace error. No induction
+hypothesis asserts that the actual $B$ is fresh, independent or equal
+to $|g_t\rangle$ after an earlier call.
+
+At an observed split, the positive child masses sum to the parent mass.
+Backward induction therefore bounds the descendant budget by the
+largest child budget. This is exactly VI67.2's complete-interface
+composition argument, with (IX.51) inserted on the ideal prefixes.
+It gives the maximum path sum and requires no division by a branch
+weight. Adding the initial joint error once proves (IX.49).
+Since $\sin(|r_h|\theta_0)\le\sin\theta_0=b$ and
+$2\sin(\pi/(2(L+1)))\le\pi/(L+1)$, (IX.50) follows.
+The argument is pointwise uniform in fixed $t$ and also bounds the
+full common-phase mixture when the preparation/physical certificates
+hold conditionally in that same kernel. $\square$
+
+For example, if the finite reference's desired two rotation angles at
+one executed increment are $r_h\theta_j$ and their implemented angles
+are $\widetilde\alpha_j$, the operator difference of those block
+rotations is at most $\max_j|\widetilde\alpha_j-r_h\theta_j|$.
+It supplies a full-interface half-diamond term of that size, including
+$B$ and dirty inputs. It does not certify the physical coupler, its
+holds, detectors or unlisted output channels; their certificates remain
+separate. Comparison labels keep the same actual command and catalog
+records, as in VI67.2; a real command difference is not erased.
+
+A subsequent common normalized operation contracts a bound already
+established at a cut. A further ideal-port comparison incurs further
+resource/physical terms and must meet its own domain. For a positive
+record event with actual and ideal weights $p,q$, an unconditioned
+bound $\Delta$ gives only the conservative normalized-state bound
+$\min\{1,2\Delta/\min(p,q)\}$. A zero-weight branch has no normalized
+state. In particular (IX.49) is not a normalized rare-terminal-branch
+bound with the same constant. The exact finite model has the sharper
+branch formulas (IX.37–40); a physical detector or preparation error
+does not inherit their exact flag weights.
+
+## 183. Extra resource access changes the accuracy domain, not reality
+
+**Proposition 183.1 (a granted resource read destroys this calibration).**
+Suppose, in addition to port/hold permission, a resource occupation read
+is separately acquired and authorized before emissions. Its full
+instrument is
+
+$$
+\omega\longmapsto\sum_{r=0}^{R_B}|h_r\rangle\langle h_r|
+ \otimes (|r\rangle\langle r|_B\otimes I)\omega
+         (|r\rangle\langle r|_B\otimes I).
+\tag{IX.52}
+$$
+
+It is a legitimate extra successor, with every result and resource
+retained. On (IX.28) it gives the recorded mixture
+$\sum_r g_r^2|h_r\rangle\langle h_r|\otimes|r\rangle\langle r|$,
+independent of $t$ on these factors. Now execute $n\le K$ fresh
+emissions and both terminal outcomes using the same finite coupler.
+All flag and occupation laws of §180 remain the same, but the bank's
+cross-occupation coefficients after forgetting the resource read record
+and tracing $B$ are zero. In particular the actual VIII159 laws are
+(IX.45–46) with charge-two coefficient zero, rather than $G_2$.
+
+Proof. Each recorded resource eigenstate has initial level $r\ge K$.
+A word of weight $k$ leaves it at the actual level $r-k$, with no
+source phase factor in (IX.32). Different $k$ give orthogonal returned
+resource vectors for that same recorded $r$. Tracing $B$ removes all
+cross-weight entries, even if the resource outcome is still retained;
+summing $r$ changes neither this fact nor any word's diagonal weight.
+This proves the complete readout consequence. $\square$
+
+This additional permission preserves the full dynamics (IX.31), all
+original native futures and the growing-bank boundary of §174 with $B$
+included. It invalidates the protected-prefix premise of §182. The
+small resource term (IX.51) must not be asserted for later calls on
+this post-read input. One may instead compare through the actual
+post-read state, or insert a separately justified mismatch/renewed
+preparation cost at the broken interface. A common read after an already
+certified cut still contracts that cut's bound; replacing later finite
+calls by $U_t$ is the step that needs renewed calibration. No branch
+of (IX.52), occupied resource, old output or owed service is deleted to
+rescue an all-future accuracy claim.
+
+More general separately authorized interventions on $B$, source-phase
+updates and hold drift use their true complete maps on the joint state.
+Their successors exist on their declared domains. They are covered by
+the exact update interface, but have a small ideal-port certificate only
+when the required product/phase premise is reestablished or an explicit
+additional error is proved. Even when no such intervention occurs, a
+fixed finite $B$ is not an unlimited guard: after the commissioned
+increments its boundary actions remain (IX.29), not an infinite shift.
+For fresh vacuum inputs total emitted occupation cannot exceed the
+initial maximum resource level $K+L-1$. The ideal IX word $1^n$ has
+positive weight at every finite $n$, so for $n>K+L-1$ this particular
+finite realization cannot have the ideal word law. This is a statement
+about this conserving finite implementation, not a universal resource
+lower bound or a refusal of an original native request.
+
+## 184. Native mounting, retained obligations and distinct resource costs
+
+**Theorem 184.1 (same-source mounting with full finite resource updates).**
+Under the actual commissioning/preparation/material/progress premises
+of V25–39 and §178, mount $M,B$ and the finite coupler in the apparatus
+namespace of §176 on either authentic entrance of the same actual
+source. Acquire their actual bindings and separate permissions; obtain
+emission slots through the original genuine growth/acquisition route.
+Then all original native legal futures and deterministic supplemented
+recovery remain valid. Each finite declared enlarged tree has the
+complete actual successor obtained from (IX.31), its resource maps and
+its complete instruments, whether protected calibration holds or not.
+Only protected finite commissions with the separate certificates obtain
+(IX.49); uninterrupted protected blank emissions obtain (IX.35–48).
+
+Proof. Use the concrete correspondence of Theorem 176.1, retaining its
+native and acquired identities, rather than constructing a new source
+from the vector (IX.35). At the finite entrance keep its actual
+prehistory/preparation; at the bilateral entrance traverse its real
+headers and retain each selected root's empty or $P_\varepsilon$
+preparation. Ordered $\alpha/\beta$ bracket parsing, genuine addressed
+$P/S/\operatorname{Next}$ and Tag's actual constructor/absence test
+are unchanged. Neither a resource level, terminal flag nor emission
+roster index is a source vertex, journal entry, logical child or native
+Tag. Immutable samples and successful-event history retain their
+original meanings and acquired versions.
+
+At each apparatus call, the actual cursor is at an enabled returned
+Ready cut and the native continuation is saved. Reference acquisition,
+current grants, endpoint versions, locks and permission refusals use
+the same real source/component pair. In particular no density operator
+creates a reference or authority. A dirty-input port call uses the full
+(IX.31), and a partial pulse retains its actual progress, resource state,
+held bank, pending controls and owed suffix. Pending native parser,
+traversal, reservation, edit and tape/output states retain their actual
+fields. Native holds/growth are full-bank identity/vacuum extension
+also on these disturbed states, so their source transition is unchanged.
+
+Every completed reply, resource read, detector result or terminal flag
+has its own backed output, sealing, Print, End, local ACK and same-root
+Return with charged scratch clearing. Partial delivery keeps its actual
+delivered prefix and unprinted suffix. Return restores neither a spent
+probe, $M$, $B$, preparation authority nor detector readiness. Old
+occurrences, physical exteriors, source backing, immutable samples and
+occupied/spent quantum outputs remain held; they are not scratch.
+Missing control/phase/resource authority leaves the protected primitive
+unexecuted with its actual denial or pending obligations. It does not
+alter an original native guard or remove an original request.
+
+The retained boundary is exactly (IX.18) with $B$ included among the
+operators' bank factors. Replace the ideal-port multiplication (IX.22)
+by the $MQB$ operator (IX.31), or its enabled partial increment;
+apply every additional instrument to the factors it really addresses.
+Matrix-unit expansion gives the four memory blocks of the actual
+joint successor, with no resource marginal substituted. All branch
+maps sum to trace preservation, including (IX.43) and (IX.52).
+Induction over the actual finite phase steps therefore proves both the
+unchanged native projection and the stated complete enlarged dynamics.
+AAII96.2/97.2 and IV16 still recover the same actual source/history from
+their supplemented views under full original $Q_g$. Their native inverse
+does not require a terminal zero or a clean resource. The new joint
+quantum boundary remains a growing bank, not a four-number readout or
+a claimed minimal total memory. $\square$
+
+**Definition 184.2 (separate cost and acquisition coordinates).** The
+finite resource dimension is $2K+L$, its initially occupied width is
+$L$, its maximum supported entrance charge is $K+L-1$, and its mean
+is $K+(L-1)/2$. The $K$-level margins support both dirty-input
+absorption and emission throughout the finite commission. These
+capacity/coherence/guard coordinates differ from the mean charge
+transferred in (IX.41), from control complexity, retained-bank size,
+calibration precision and elapsed physical duration. No optimum for
+these coordinates is claimed. Maintaining and later releasing all old
+outputs has its own storage/control/return obligations.
+
+Charge means and the word-dependent charge law are predictions, not
+extra classical logs of coherent energy-transfer paths. A meter that
+resolves a resource level or transfer must be included as an actual
+instrument with its disturbed joint return. Its records cannot be
+added to the unitary model without changing that model's calibration.
+
+The conserved quantity is $N_B+N_Q$, with the memory label assigned
+zero charge. Identifying it with physical bare energy requires the
+additional Hamiltonian hypothesis
+$H_B=\hbar\omega N_B$, $H_Q=\hbar\omega N_Q$ and degenerate
+$H_M$, with the relevant coupling commuting with their sum. A physical
+nondegenerate memory or different gaps requires a different resource
+implementation and its own certificate. Even under that hypothesis,
+control switching, compensation, preparation, detector operation,
+source/native work and storage are additional costs; bare conservation
+does not pay them. Native occupation, edit count and source traversal
+time are not identified with this energy by notation.
+
+The two fresh VIII159 probes and their whole common-frame preparation,
+backing, retention and detector readiness are separate resources from
+$B$. They are supplied for (IX.43), and their disturbed returns remain.
+Using $B$ to prepare those probes would be an additional actual coupling,
+with its own resource successor and error; their free independent
+preparation could not then be assumed. Likewise preparation of
+(IX.28), source-phase acquisition and phase-preserving holds are distinct
+from the later conserving port. Neither finite signed-dyadic $P/B$
+controls nor the original even-mode targets supply them for free.
+
+## 185. Attribution and precise remaining scope of the finite port
+
+The charge-shift lift is `literature-attested`: Åberg,
+[*Catalytic Coherence*, 1304.1060v3, Appendix B.1–B.4,
+(18), (23), Proposition 1; Appendix D.1–D.2,
+(84)–(86)](https://arxiv.org/html/1304.1060v3), constructs the
+charge-sector lift, shift-dependent reduced channels and explicit
+boundary sectors. Chiribella, Yang and Renner,
+[*Fundamental energy requirement of reversible quantum operations*,
+1908.10884v3, (11)–(14) and Appendix D](https://arxiv.org/html/1908.10884v3),
+use finite sine batteries and energy-sector implementations, with their
+stated gate fidelity/error and Hamiltonian assumptions. The sine
+profile and the generic telescoping principle are reused tools here,
+not new mathematical discoveries or an instantiated optimal-energy
+bound for this source.
+
+Vaccaro, Croke and Barnett,
+[*Is coherence catalytic?*, 1804.05154v1, §3 and Appendix B](https://arxiv.org/html/1804.05154v1),
+show why repeated-use whole outputs and correlations must be retained;
+unchanged single-system behavior is insufficient. Lostaglio and Müller,
+[*Coherence and asymmetry cannot be broadcast*, 1812.08214v2,
+Theorems 1–2](https://arxiv.org/html/1812.08214v2), treat finite
+references under covariant operations and connected Lie symmetry groups.
+No theorem here promotes an unchanged resource marginal to catalytic
+return or applies a no-broadcasting claim beyond those symmetry
+premises. Quantum Cut Atlas III18–22 and QUANTUM-REALITY286/373–378
+already supply the repository's full-return, finite-reference and
+pure-fidelity distinctions; AURIC Internal Energy Reference Orbital
+Deflection Resource Handoff V85 §§6–10 separates charge/energy and
+return requirements. VI67.2 supplies complete-output adaptive error
+composition, including pending records; it is applied in (IX.49).
+
+Li and Lipka-Bartosik,
+[*The memory cost of sequential quantum state preparation*,
+2611.14652v1, §III and Theorem 1](https://arxiv.org/html/2611.14652v1),
+establish exact memory costs for pure-state preparation from energy
+eigenstates under energy-preserving operations, allowing memory to
+change, correlate or be consumed. Its exact pure-output energy-support
+count is not instantiated by IX's correlated emitted bank/resource
+return. No optimal sequential-memory count is imported from it here.
+The existing D5 suppliers ComplexReferenceFrameTaxExact,
+AllFutureStatisticsSufficiency and ControlledBehaviorUniversality retain
+their stated finite exchange, all-iterate readout and controlled-quotient
+domains; none supplies a physical source preparation, IX calibration or
+a smaller all-future acquired boundary. No new compilation or extension
+of those formal statements is asserted.
+
+The `repo-derived` contribution is the joint instantiation on the
+specific continuing IX memory: the full two-block finite source port,
+its occupation-count/resource law (IX.35–42), both endpoint-specific
+complete VIII159 laws and finite-resource signal (IX.43–48), and their
+same-source finite adaptive comparison with the actual resource kept
+(IX.49–52). The source endpoints, genuine native mounting and positive
+supplemented recovery are the existing suppliers, not replaced
+preparations. This is a bounded constructive result, with no global
+originality claim.
+
+Actual same-source resource/phase preparation, calibrated couplings,
+protected holds and all additional physical error certificates remain
+premises. The exact finite map exists on all dirty inputs and permitted
+reference extensions; its small ideal-port error has the protected
+finite domain stated in §182. Additional acquired resource access keeps
+its true successor and can leave that domain, as §183 demonstrates.
+No unlimited finite-resource service, bare geometry-to-history inverse,
+unknown phase returned exactly from finite samples, universal total
+memory minimum, recorder-independent logarithmic result or completion
+of the enduring space/time/boundary/memory mutual-recovery goal follows.
+
+## 追加锚（本行以下为增补区）
+
+## 186. Occupation-preserving read interfaces for a serial port compiler
+
+**Definition 186.1 (fixed read rails and retained compilation cuts).**
+Keep §§178–184's actual source, resource, preparations, rights and
+complete futures. Consider a proposed realization of the finite port
+by a finite serial word of V34's literal full-qubit $P$ and $B$ gates.
+The occurrence output $Q$ is its actual acquired qubit $q$. One fixed
+acquired qubit $m$ reads the memory value: on the proposed memory code,
+the occupation projector $n_m$ is the original memory projector
+$|1\rangle\langle1|_M$. All other memory rails, resource encodings,
+work qubits, preparation devices and leakage spaces remain actual
+retained factors. A change of decoder does not change which acquired
+qubit this occupation request addresses.
+
+At every completed elementary gate cut the original port progress is
+some retained $s_k\in[0,1]$, initially zero and finally one. Intermediate
+classical work may hold the bank and append genuine independent vacuum
+through native growth. The raw gate cursor, enabled entries, actual
+bindings, executed progress, output prefix and owed suffix are retained.
+An authorized interruption may read $m$ and $q$ at such a cut and then
+resume the saved raw suffix. The corresponding original continuation
+reads the memory and $Q$ at $s_k$ and owes $V(1-s_k)$ on their actual
+postmeasurement joint state. The decoder may not postpone these reads
+until a completed word, silently complete that word first, discard a
+read result or replace the pending state by an endpoint state.
+
+This is a specified compiler class, including the two-rail encoding
+below. It is not an assertion that every encoding has a one-qubit memory
+read. The theorem permits arbitrary extra acquired wires and arbitrary
+initial states of the other factors, including correlations with
+untouched references; it does not grant those states, wires or rights.
+Between the tested gates the unobserved word has no extra quantum
+primitive besides $P/B$, identity holds and independent vacuum extension.
+A measuring or adaptive compiler is a different complete instrument,
+with its own retained outcomes and correspondence obligation.
+
+**Definition 186.2 (one charge-compatible endpoint encoding).** An
+explicit member of this class uses two acquired memory qubits
+$m_0,m$, the literal occurrence qubit $q$, and $R_B$ resource qubits.
+Its mathematical isometry $E$ is
+
+$$
+\begin{aligned}
+|0\rangle_M&\longmapsto |10\rangle_{m_0m},&
+|1\rangle_M&\longmapsto |01\rangle_{m_0m},\\
+|r\rangle_B&\longmapsto |1^r0^{R_B-r}\rangle,&
+|z\rangle_Q&\longmapsto |z\rangle_q.
+\end{aligned}
+\tag{IX.53}
+$$
+
+Thus physical total occupation compresses to $I+N_Q+N_B$.
+The unused computational vectors are retained leakage directions, not
+removed outcomes. The initial memory excitation, encoded resource,
+same-source first harmonic, preparation/ingress and any helper state
+require their own paid acquisitions and complete preparation backing.
+In particular (IX.53) neither prepares (IX.28) nor transports its
+same-phase promise into this encoding. The obstruction below may be
+tested conditional on that preparation being supplied exactly; it
+therefore does not arise merely from starting all resource qubits in
+vacuum.
+
+## 187. A necessary intermediate mismatch in every finite serial word
+
+**Theorem 187.1 (IX first-emission cut obstruction and quantitative
+gate certificate).** Start a proposed compiler of Definition 186.1 with
+$M=|0\rangle$, the actual fresh $Q=|0\rangle$, and the calibrated
+resource (IX.28), with its separately supplied full preparation. Take
+any purification including every backing factor and untouched reference.
+For an unobserved word of $N\ge1$ elementary gates write $\rho_k$
+for the complete state after gate $k$, and define full-space projectors
+
+$$
+F_{11}=n_m n_q,\qquad
+F_{\ne}=n_m(I-n_q)+(I-n_m)n_q,\qquad
+p_k=\operatorname{Tr}(F_{\ne}\rho_k).
+\tag{IX.54}
+$$
+
+For the $k$th hopping gate let $\alpha_k$ be its actual angle. Let
+$\mathcal I$ consist of those gates whose endpoint pair contains
+exactly one of $m,q$, and put
+
+$$
+A=\sum_{k\in\mathcal I}|\sin\alpha_k|,\qquad
+T=|\mathcal I|.
+\tag{IX.55}
+$$
+
+If the complete endpoint state has half-trace error at most $\eta$
+from the encoded $V(1)$ first-emission target, then
+
+$$
+\begin{aligned}
+\sqrt{(b^2-\eta)_+}
+ &\le\sum_{k\in\mathcal I}|\sin\alpha_k|\sqrt{p_{k-1}},\\
+(b^2-\eta)_+
+ &\le A^2\max_{0\le k<N}p_k
+ \le T^2\max_{0\le k<N}p_k.
+\end{aligned}
+\tag{IX.56}
+$$
+
+Here $b^2=u/\lambda>0$ is the original IX coefficient and
+$x_+=\max\{x,0\}$. An empty word has endpoint $F_{11}$ probability
+zero and cannot have $\eta<b^2$. If at every
+prefix the complete state has half-trace error at most $\epsilon$
+from its assigned original partial state, with endpoint error also
+at most $\epsilon$, necessarily
+
+$$
+\epsilon\ge\frac{b^2}{1+A^2}
+              \ge\frac{b^2}{1+T^2}.
+\tag{IX.57}
+$$
+
+Consequently no finite serial word in this class is an exact
+correspondence at all its exposed cuts. The obstruction already uses
+one lawful clean first-emission input, so a purported exact bridge on
+the full dirty/reference domain fails too. The inequalities do not
+assert a positive error floor uniform over words of unbounded length.
+
+Proof. The guard in Theorem 179.2 makes the one-step lowering $D_-$
+an isometry on the initial resource support. Its exact first partial
+emission, before any intervention, is
+
+$$
+\cos(s\theta_0)|0\rangle_M|0\rangle_Q|g_t\rangle_B
+ +\sin(s\theta_0)|1\rangle_M|1\rangle_QD_-|g_t\rangle_B.
+\tag{IX.58}
+$$
+
+This has $F_{\ne}$ probability zero at every $s\in[0,1]$, and
+$F_{11}$ probability $b^2$ at $s=1$. All other factors and their
+true stipulated evolution remain alongside it. The same statements
+hold in the full common-phase mixture. They require neither a readable
+$t$ nor a resource read.
+
+Purify the actual initial state and retain that purification through
+all unitary gates and vacuum extensions. Write $\psi_k$ for this
+unit vector and $a_k=\|F_{11}\psi_k\|$. The initial $a_0$ is zero.
+A phase gate, a hop disjoint from $\{m,q\}$, or the hop between
+$m$ and $q$ commutes with $F_{11}$ and preserves $a_k$. The last
+case uses the full-qubit fact that $B_{mq}$ fixes $11$; its exchange
+acts only within the mismatching $10,01$ subspace.
+
+For a hop $G=B(\alpha_k)$ touching exactly one of $m,q$, put
+$F_{00}=(I-n_m)(I-n_q)$. The untouched one of these two read rails
+prevents a direct $00$-to-$11$ transition, whereas the literal hopping
+matrix gives
+
+$$
+F_{11}GF_{00}=0,\qquad
+\|F_{11}GF_{\ne}\|\le |\sin\alpha_k|,\qquad
+\|F_{11}GF_{11}\|\le1.
+\tag{IX.59}
+$$
+
+These are identities and bounds on the entire qubit space, including
+all occupations of the other endpoint and all spectators. Resolving
+the identity as $F_{00}+F_{\ne}+F_{11}$ therefore gives
+
+$$
+a_k\le a_{k-1}+|\sin\alpha_k|\sqrt{p_{k-1}}.
+\tag{IX.60}
+$$
+
+Holds and independent vacuum extension commute with these projectors
+and leave the same inequality unchanged. Summing proves the first
+upper bound for $a_N$. The endpoint half-trace bound, tested with the
+effect $F_{11}$, gives $a_N^2\ge b^2-\eta$. This proves (IX.56).
+Every assigned original partial state has mismatch probability zero,
+so the prefix error bounds imply $p_k\le\epsilon$. Also
+$\eta\le\epsilon$. Hence $b^2\le\epsilon+A^2\epsilon$;
+$A\le T$ proves (IX.57). Purification included arbitrary untouched
+references throughout; no helper marginal or clean-helper assumption
+was inserted. $\square$
+
+The restriction is about intermediate states even when the endpoint
+has no algebraic reachability obstruction. For (IX.53), the full-qubit
+unitary
+
+$$
+W_s=EV(s)E^\dagger+I-EE^\dagger
+\tag{IX.61}
+$$
+
+preserves physical total occupation. In each physical occupation sector
+it is a direct sum of the determinant-one rotations (IX.29) and
+identities, so its sector determinant is one. Marvian,
+[*Restrictions on realizable unitary operations imposed by symmetry
+and locality*, 2003.05524v3, Corollary 10](https://arxiv.org/html/2003.05524v3),
+then supplies an endpoint word using arbitrary-pair $XX+YY$ and local
+$Z$ rotations, provided those pairs are actually acquired. The native
+$B$ is $\exp(i\alpha(XX+YY)/2)$, and local $Z$ differs from a native
+$P$ rotation only by a global scalar; the resulting channel on the
+whole bank and every reference has the required endpoint action.
+This application includes dirty $M,Q,B$ within the entire encoded
+domain and the four unpaired resource endpoints. It does not identify
+that endpoint word's prefixes with $W_s$.
+
+For an effectively specified $s$ and positive rational endpoint
+tolerance, this endpoint consequence also permits a finite-command
+search: enumerate finite signed-dyadic $P/B$ words on the acquired
+finite bank and rational global phases, dovetailing these descriptions
+with increasing enclosure precision. Accept only a strict Frobenius
+norm upper bound below the requested tolerance, computed from outward
+enclosures of the word's entries and those of $W_s$. The real-angle
+endpoint word and continuity ensure eventual termination. The Frobenius
+bound dominates operator norm and supplies
+the same reference-stable half-trace endpoint bound, retaining all
+physical outputs. Each tested word and its accepted enclosure are
+finite; execution still needs its paid enabled catalog entries and
+holds. The search supplies no gate-count optimum. In particular this
+effective endpoint certificate leaves (IX.56–57) in force at that
+word's actual elementary cuts.
+
+## 188. A legal interrupted future retaining the complete IX181 consumer
+
+**Theorem 188.1 (a retained mismatch event survives the original
+consumer).** Take a commission with $K\ge6$ and suppose $\eta<b^2$
+in Theorem 187.1. Then $A>0$, and there is a prefix $k_*$ of that
+fixed unobserved word for which the
+following original permitted finite future separates the proposed
+compiler from the finite reference port by complete-output half-trace
+distance at least
+
+$$
+\frac{b^2-\eta}{A^2}.
+\tag{IX.62}
+$$
+
+Pause at that prefix and read the memory and the actual $Q$ occupation
+in succession, with both delivered bits $z_M,z_Q$ retained. Resume the
+actual owed suffix on the disturbed joint state. For any commissioned
+$5\le n\le K-1$ continue with genuine fresh occurrence factors to a
+bank of $n$, make the complete terminal memory read, and apply precisely
+the complete VIII159 instrument used in §181 to factors $p+1,p+2$,
+where $p,q_{\rm ext}\ge1$ and $p+2+q_{\rm ext}=n$. Supply its two
+fresh common-frame probes and all actual detector readiness. Retain both
+terminal flags, all sixteen four-bit outcomes for the chosen setting,
+the early bits, and every disturbed quantum/resource/backing output.
+Either chosen $\beta\in\{0,1\}$ may be used. No branch is discarded.
+
+The finite reference continuation resumes by $V(1-s_{k_*})$, then
+uses its ordinary later increments on the actual post-read state.
+Neither reference nor proposed implementation restarts the first
+emission. The early read generally changes later quantum laws, so the
+uninterrupted formulas (IX.35–48) are not asserted for this continuation.
+Its complete consumer is nevertheless exactly (IX.43)'s full-domain
+instrument on the joint state that actually reaches it, as permitted
+by §§174 and 182.
+
+Proof. Choose a prefix maximizing $p_k$ in (IX.56). Its two successive
+occupation instruments commute and have complete joint projectors
+$F_{ab}$ on the read rails. Thus the actual probability of the recorded
+event $z_M\ne z_Q$ is $p_{k_*}\ge(b^2-\eta)/A^2$. At the
+reference cut (IX.58), the probability of that event is zero for every
+assigned progress. The fine outcomes $00,11$ need not preserve the
+coherence in (IX.58); their projected full joint successors, not its
+unmeasured version, are used on resumption. Zero-probability outcomes
+have no normalized successor.
+
+Every following operation, including the saved raw suffix, native
+holds/growth, later emissions, both terminal branches and all sixteen
+consumer outcomes, is a normalized complete operation. It cannot
+change the probability of an already delivered immutable early event.
+Testing that event in the final full classical record proves (IX.62).
+All resource correlations, memory-code leakage, unused rails, old
+exteriors, spent probes and untouched references remain in the quantum
+output; none must be measured or traced away to obtain the lower bound.
+Counting the interrupted first call as two executed increments gives
+at most $n+1\le K$ reference increments, so the original finite guard
+still applies. $\square$
+
+The finite family of tests, one at each of the word's $N$ prefixes,
+is specified directly by the gate cursors. It requires no request for
+$p_k$ or private $t$. The conclusion says that at least one member
+separates; it supplies no source-dependent oracle choosing the largest
+probability. An all-future correspondence must pass every member.
+
+This consumer uses only the separately supplied memory read and the
+ordinary occurrence occupation read already allowed between port
+increments. It needs no measurement of $B$, no new opaque coupler and
+no simultaneous parity detector. Its two detector results are distinct
+backed answers. Their deliveries keep Print, End, local ACK and
+same-root Return; an unfinished delivery keeps its actual prefix and
+owed suffix before an outcome may select a next request.
+
+Mounting this test uses the same actual root and acquired component
+bindings of Theorem 184.1 at either authentic entrance, including the
+finite prehistory or selected bilateral preparation. Additional qubits
+are apparatus references or genuinely acquired occurrences, never
+substitute source vertices. All original ordered $\alpha/\beta$ syntax,
+addressed $P/S/\operatorname{Next}$, Tag, immutable samples, old
+history, rights, refusals and pending native phases remain. Interposed
+native service holds the full disturbed bank and appends only genuine
+vacuum. The raw suffix and its real controls are still owed after a
+pause. This is a conditional test on acquired controls and detector
+rights, not a new native grant or a claim about an uninspected physical
+device.
+
+## 189. Attribution and the exact compiler boundary
+
+The charge-compatible endpoint application above uses Marvian's
+Corollary 10 with all sector determinants checked, rather than
+inferring it from one-excitation controllability. Theorem 15 of the
+same primary source assumes its equally spaced intrinsic system
+Hamiltonians (167–168), the level-selective conserving couplings
+(169)/(174), and an ancillary qubit initially in $|0\rangle$; (180)
+returns that ancilla for every system input. The zero ancillary
+preparation and those interactions are hypotheses. In particular its
+general $d$-level interactions are not automatically native qubit
+$P/B$ wires. Neither theorem gives the intermediate memory/resource
+state, the returned ancilla at every cut, the fixed read-rail
+correspondence or the owed suffix demanded here.
+
+The `repo-derived` result is the explicit first-emission mismatch
+inequality (IX.56–57) and its separating future (IX.62) in the complete
+IX181 consumer. It remains valid with arbitrarily many retained
+helpers and with endpoint reachability on the full encoded input;
+it is additional to §171's vacuum-conservation observation and
+§183's resource-read disturbance. The proof uses the literal native
+full-qubit matrices and finite norm inequalities, not a claimed new
+general controllability or quantum speed-limit theorem. This attribution
+asserts no literature priority or Lean verification.
+
+For fixed $T$ it gives a necessary quantitative error budget; increasing
+$T$ leaves open arbitrarily accurate process approximation. A different
+encoding whose logical memory read is nonlocal, an adaptive measured
+compiler, or a separately acquired simultaneous interaction is outside
+the serial fixed-read-rail class and needs its own complete proof.
+An exact continuous partial-path implementation is not constructed.
+No finite budget for a uniform joint/reference-stable approximation
+under all original allowed interruptions and later instruments is
+supplied. Such a construction must specify every actual cut's state,
+progress, control labels, decoder/read implementation and owed suffix,
+with errors on that original future domain; matching only (IX.61) is
+insufficient. The source-owned resource/phase preparation, protected
+holds, calibration, actual acquisition and readiness premises remain
+separate. No total-memory or resource optimum follows, and the
+bespoke finite coupler premise has been delimited for this compiler
+class rather than removed.
+
+## 追加锚（本行以下为增补区）

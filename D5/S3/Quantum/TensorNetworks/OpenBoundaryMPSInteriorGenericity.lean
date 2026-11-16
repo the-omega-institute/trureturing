@@ -155,7 +155,7 @@ private lemma positive_steps (A : Fin 2 → Bond) (hu : IsUnit (A 0))
     exact (hX.mul_mul_conjTranspose_same (Matrix.vecMul_injective_of_isUnit hu)).add_posSemidef
       (hX.posSemidef.mul_mul_conjTranspose_same (A 1))
 
-private lemma positive_iterates (x : Coordinates) (hx : 0 < sigma x)
+lemma positive_iterates (x : Coordinates) (hx : 0 < sigma x)
     (h0 : (core (positiveRepresentative x) 0).det ≠ 0)
     (hv : (boundaryMatrix (core (positiveRepresentative x)) ![1, eta x]).det ≠ 0) :
     ∀ k : ℕ, 1 ≤ k →
@@ -238,7 +238,7 @@ private lemma actual_core_injective (m : ℕ) (ψ : Word (3 + m) → ℂ)
 def castState {n n' : ℕ} (h : n = n') (f : Word n' → ℂ) : Word n → ℂ :=
   fun w => f (fun i => w (Fin.cast h.symm i))
 
-private lemma cast_mps {n n' : ℕ} (h : n = n') (A B : Bond) (l r : Fin 2 → ℂ) :
+lemma cast_mps {n n' : ℕ} (h : n = n') (A B : Bond) (l r : Fin 2 → ℂ) :
     castState h (mpsState n' A B l r) = mpsState n A B l r := by
   subst n'
   rfl
@@ -247,7 +247,7 @@ private lemma cast_injective {n n' : ℕ} (h : n = n') : Function.Injective (cas
   subst n'
   exact fun _ _ h => h
 
-private lemma rawInterior_phase (p k q : ℕ) (f : Word ((p + k) + q) → ℂ)
+lemma rawInterior_phase (p k q : ℕ) (f : Word ((p + k) + q) → ℂ)
     (z : ℂ) (hz : ‖z‖ = 1) : rawInterior p k q (z • f) = rawInterior p k q f := by
   have hC : interiorColumns p k q (z • f) = z • interiorColumns p k q f := rfl
   have hn : Complex.normSq z = 1 := by rw [Complex.normSq_eq_norm_sq, hz]; norm_num
@@ -257,7 +257,7 @@ private lemma rawInterior_phase (p k q : ℕ) (f : Word ((p + k) + q) → ℂ)
   rw [Complex.mul_conj, hn, Complex.ofReal_one, one_smul]
   rfl
 
-private lemma actual_phase (n : ℕ) (ψ : openBoundaryMPS n) (z : ℂ) :
+lemma actual_phase (n : ℕ) (ψ : openBoundaryMPS n) (z : ℂ) :
     z • (ψ : Word n → ℂ) ∈ openBoundaryMPS n := by
   obtain ⟨a₀, a₁, l, r, hs⟩ := ψ.property
   refine ⟨a₀, a₁, z • l, r, ?_⟩
@@ -265,7 +265,7 @@ private lemma actual_phase (n : ℕ) (ψ : openBoundaryMPS n) (z : ℂ) :
   funext w
   simp [mpsState]
 
-private lemma locus_phase (m : ℕ) (R : MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ)
+lemma locus_phase (m : ℕ) (R : MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ)
     (ψ : openBoundaryMPS (3 + m)) (z : ℂ) (hz : ‖z‖ = 1) :
     (⟨z • (ψ : Word (3 + m) → ℂ), actual_phase _ ψ z⟩ ∈ actualPrincipalLocus m R ↔
       ψ ∈ actualPrincipalLocus m R) := by
