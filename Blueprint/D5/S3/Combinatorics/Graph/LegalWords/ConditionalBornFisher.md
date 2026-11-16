@@ -16,19 +16,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endp
 
 For every q>0, natural n and exterior bits l,r, P(q)^n(l,r)=pi(q,r)+(-q)^n(1[l=r]-pi(q,r)), where pi(q,0)=1/(1+q) and pi(q,1)=q/(1+q). The identity includes n=0 and follows by induction on the actual two-state transition matrix. For probabilities require q<1 as well. It retains the alternating correction instead of replacing a finite event by its limiting stationary mass.
 
-**Theorem 1.2 (Exact reconstruction of the complete word law).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.uniform_reconstruction`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.uniform_reconstruction` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every occupied legal-count fiber, summing R(k,w) over words is one. Summing nu_t(k) R(k,w) over k=0,...,m restores mu_t(w) for every word, since the count is at most m. Empty fibers have count-law mass zero and are omitted from the reconstruction experiment. This is an exact parameter-independent recovery on the realized count space.
-
-**Theorem 1.3 (Forbidden paths have zero mass).**
+**Theorem 1.2 (Forbidden paths have zero mass).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.illegal_mass_zero`
 
@@ -40,7 +28,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.ille
 
 For every real q, every natural m, both exterior bits l,r, and every Boolean interior word w of length m, failure of Adm(m+2, l::w::r) forces pathMass(q,m,l,w,r)=0. The induction locates a forbidden 11 transition or passes the failure to the remaining padded suffix. No conditional probability is assigned to a forbidden event.
 
-**Theorem 1.4 (The actual endpoint event).**
+**Theorem 1.3 (The actual endpoint event).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.normalizer_eq_power`
 
@@ -52,7 +40,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.norm
 
 For every real q and every natural m, the sum over all interior words equals MarkovBlockWeight.pathNormalizer and the (l,r) entry of P(q)^(m+1), with P(q)=[[1-q,q],[1,0]]. Illegal terms vanish. Splitting the first interior bit proves the matrix-product recurrence, so the length is exactly m+1 transitions.
 
-**Theorem 1.5 (Positive conditioning events).**
+**Theorem 1.4 (Positive conditioning events).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.normalizer_pos`
 
@@ -64,7 +52,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.norm
 
 For 0<q<1 and m>=1, the all-zero interior is admissible for every l,r and has positive path mass. Every path product is nonnegative, so the endpoint normalizer is strictly positive. For m=0 and l=r=1 the event instead has zero mass.
 
-**Theorem 1.6 (The conditional probability law).**
+**Theorem 1.5 (The conditional probability law).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_normalization`
 
@@ -76,7 +64,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.cond
 
 For 0<q<1, m>=1 and arbitrary exterior bits, conditionalLaw=pathMass/pathNormalizer sums to one, is nonnegative on every word, and is strictly positive exactly on the padded legal support. Division is justified by the positive endpoint event.
 
-**Theorem 1.7 (Differentiating finite normalization).**
+**Theorem 1.6 (Differentiating finite normalization).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.tilted_law_deriv`
 
@@ -88,7 +76,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.tilt
 
 Let K(w) count interior ones, z=q/(1-q)^2, a_t(w)=1[legal] z^K exp(t K), Z_t=sum a_t, and mu_t=a_t/Z_t. For 0<q<1, m>=1 and every real t, differentiating this finite sum and quotient gives mu_t prime(w)=mu_t(w)(K(w)-E_t K), including zero-mass words.
 
-**Theorem 1.8 (The score is the centered count).**
+**Theorem 1.7 (The score is the centered count).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.count_score`
 
@@ -100,7 +88,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.coun
 
 On every legal word, mu_t is positive and the derivative of log(mu_t(w)) is K(w)-E_t K. The support is fixed as t varies; logarithmic derivatives are asserted only there.
 
-**Theorem 1.9 (Conditional Fisher information).**
+**Theorem 1.8 (Conditional Fisher information).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.fisher_eq_count_variance`
 
@@ -110,21 +98,9 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.fish
 
 *Commentary.*
 
-For every t, the classical Fisher sum over the finite word law equals countVariance, the expectation of (K-E_t K)^2. Illegal words have zero summands; no differentiation of log(0) is needed to identify a positive-support score.
+For 0<q<1, m>=1, all exterior pairs and every real t, the classical Fisher sum over the finite word law equals countVariance, the expectation of (K-E_t K)^2. Illegal words have zero summands; logarithmic scores are identified only on positive support. The following count experiment is an application of this finite law and its centered score, rather than a separate retained reconstruction theorem. Let N_k be the number of padded legal words with count k, nu_t(k)=sum over K(w)=k of mu_t(w), and z=q/(1-q)^2. Then nu_t(k)=N_k z^k exp(t k)/Z_t for k=0,...,m. It is a probability law, and empty fibers have zero mass. On each occupied count fiber the kernel R(k,w)=1[legal(w) and K(w)=k]/N_k is normalized and independent of q and t. The identities nu_t(k) R(k,w)=1[K(w)=k]mu_t(w) and sum over k=0,...,m of nu_t(k)R(k,w)=mu_t(w) follow by finite-fiber counting and normalization. Thus recording only K and then sampling uniformly inside its legal fiber restores the same conditional word law. Differentiating the count likelihood gives score k-E_t K on every occupied fiber, so summing its squared score against nu_t gives the same Fisher information as the word observation. This is exact statistical sufficiency for this family; it does not assert recovery of the original sampled word, a quantum state, or a phase history.
 
-**Theorem 1.10 (Uniform count fibers recover the word experiment).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.count_recovery`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.count_recovery` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Let N_k be the number of legal words with count k and nu_t(k)=sum of mu_t over that count fiber. Define R(k,w)=1[legal(w) and K(w)=k]/N_k, with zero mass on empty fibers. For every q,m,l,r,t,k,w, nu_t(k) R(k,w)=1[K(w)=k] mu_t(w). The nonempty legal fiber containing w has positive cardinality. This reconstructs the word law independently of q and t, with no false conditioning on an empty fiber.
-
-**Theorem 1.11 (The activity coordinate comes from the actual Perron equation).**
+**Theorem 1.9 (The activity coordinate comes from the actual Perron equation).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.global_doob_parameter`
 
@@ -136,7 +112,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.glob
 
 For 0<q<1, every positive normalized stationary row pi of P(q), irreducibility and every real t, let lambda be the actual positive complex spectral radius of T_t=P(q) exp(t j). Its positive right-eigenvector equations give lambda squared-(1-q)lambda=q exp(t). Consequently q(t)=1-(1-q)/lambda lies in (0,1), the actual globalDoob kernel equals P(q(t)), and z(q(t))=exp(t)z(q). The parameter correspondence is derived from actual Perron data.
 
-**Theorem 1.12 (The actual conditional family at every tilt).**
+**Theorem 1.10 (The actual conditional family at every tilt).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_tilt`
 
@@ -146,9 +122,9 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.cond
 
 *Commentary.*
 
-With the same q, pi, and actual Doob data, for m>=1 the endpoint-conditioned law at source amplitude q(t) equals mu_t word by word, at every real t and including all illegal words. Hence the count score, Fisher and uniform reconstruction describe this same conditioned experiment.
+With the same q, pi, and actual Doob data, for m>=1 the endpoint-conditioned law at source amplitude q(t) equals mu_t word by word, at every real t and including all illegal words. Hence the count score and Fisher, together with the count-observation application described above, describe this same conditioned experiment. The count is taken after this actual endpoint conditioning, with both original exterior bits fixed.
 
-**Theorem 1.13 (Count response is its variance).**
+**Theorem 1.11 (Count response is its variance).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.count_mean_deriv`
 
@@ -160,7 +136,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.coun
 
 For 0<q<1, m>=1 and every real t, differentiating the count mean through the finite normalized law gives exactly countVariance. Normalization reduces the second centered moment to the second moment minus the squared mean.
 
-**Theorem 1.14 (Partition response).**
+**Theorem 1.12 (Partition response).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.log_partition_deriv`
 
@@ -172,7 +148,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.log_
 
 For this positive finite partition, the derivative of log Z_t is E_t K. Together with the mean derivative, its second derivative is the conditional count variance.
 
-**Theorem 1.15 (Postselection of the actual sequential circuit).**
+**Theorem 1.13 (Postselection of the actual sequential circuit).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.actual_conditional_experiment`
 
@@ -184,7 +160,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.actu
 
 For 0<q<1, arbitrary fixed phase history, m>=1, exterior bits l,r and every real tilt t, one sequence of unitary source gates at q(t) has the following properties. The squared coefficient of the actual register sourcePath(m+1,l,w followed by r), summed over all interior w, equals P(q(t))^(m+1)(l,r), has the displayed stationary-plus-alternating closed form, and is strictly positive. Dividing each coefficient mass by this same event mass gives mu_t(w). Every illegal padded word has coefficient mass zero. The normalized observed law sums to one, is nonnegative and is positive exactly on padded legal words. The stochastic and irreducible properties used to construct the source stationary row are derived from q in (0,1).
 
-**Theorem 1.16 (The exact finite boundary correction).**
+**Theorem 1.14 (The exact finite boundary correction).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_fisher_boundary`
 
@@ -196,7 +172,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.cond
 
 For 0<q<1, m>=1, exterior bits and every real t, put L=m+1 and B_t=pathNormalizer(q(t),m,l,r). Then conditionalFisher(t)=(L+r-l) p double-prime(t)+(log B) double-prime(t), where p is the actual pressure log(lambda). The proof takes two derivatives of log B=log Z-(L+r-l)p+t r+log(q^r(1-q)^(L-l-r)). Thus the conditioned Fisher is not identified with L times the stationary variance rate. The alternating remainder below decays after two derivatives; the stationary endpoint curvature remains in the finite correction.
 
-**Theorem 1.17 (Stationary and alternating parts of the endpoint log).**
+**Theorem 1.15 (Stationary and alternating parts of the endpoint log).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_log_decomposition`
 
@@ -208,7 +184,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endp
 
 Put x=q(t), L=m+1, k=m+2-l-r and pi_r(x)=x^r/(1+x). For every m>=1, all four exterior pairs and every real t, B_t=pi_r(x)(1-(-x)^k), so log B_t=log pi_r(x)+R_m(t), with R_m(t)=log(1-(-q(t))^k). The actual endpoint_power_formula is used to derive this factorization. The shift k records both endpoints and retains both parities.
 
-**Theorem 1.18 (Explicit decay of the differentiated alternating remainder).**
+**Theorem 1.16 (Explicit decay of the differentiated alternating remainder).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_remainder_second_bound`
 
@@ -220,7 +196,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endp
 
 At each real tilt put f=-q(t), a=f prime/f and b=(f double-prime f-(f prime)^2)/f^2. The theorem fixes the explicit nonnegative coefficient C=(a^2+abs(b))/(1-abs(f))+a^2/(1-abs(f))^2 and proves abs(R_m double-prime(t)) <= C(m+2)^2 q(t)^m for every m>=1 and every exterior pair. It derives the two derivatives by product, quotient and logarithm rules and bounds the denominators using 0<q(t)<1; no derivative estimate or regularity certificate is assumed. In particular this differentiated remainder tends to zero at every real tilt.
 
-**Theorem 1.19 (Exact finite Fisher correction with stationary endpoint curvature).**
+**Theorem 1.17 (Exact finite Fisher correction with stationary endpoint curvature).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_fisher_stationary_remainder`
 
@@ -232,7 +208,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.cond
 
 For every m>=1 and all exterior bits, F_m(t)=(m+1+r-l)p double-prime(t)+(log pi_r(q(t))) double-prime(t)+R_m double-prime(t). This uses the actual conditional_fisher_boundary and the differentiated endpoint decomposition. The middle term is independent of m and generally does not vanish. Only the alternating remainder has exponential decay.
 
-**Theorem 1.20 (The stationary boundary limit survives differentiation).**
+**Theorem 1.18 (The stationary boundary limit survives differentiation).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_boundary_limit`
 
@@ -244,7 +220,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endp
 
 For fixed original exterior bits and every real tilt, log B_m(t) tends to log pi_r(q(t)) as m tends to infinity through every positive interior length. Its second derivative tends to (log pi_r(q(t))) double-prime(t). Both limits are proved from the exact endpoint formula and the derived differentiated remainder bound, without exchanging an unproved derivative and limit.
 
-**Theorem 1.21 (Conditional information rate equals actual pressure curvature).**
+**Theorem 1.19 (Conditional information rate equals actual pressure curvature).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_fisher_rate_tendsto`
 
@@ -265,7 +241,6 @@ For every real tilt and every fixed exterior pair, F_(n+1)(t)/(n+2) tends to p d
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_normalization`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.conditional_tilt`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.count_mean_deriv`
-- Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.count_recovery`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.count_score`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_boundary_limit`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.endpoint_log_decomposition`
@@ -278,5 +253,4 @@ For every real tilt and every fixed exterior pair, F_(n+1)(t)/(n+2) tends to p d
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.normalizer_eq_power`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.normalizer_pos`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.tilted_law_deriv`
-- Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConditionalBornFisher.uniform_reconstruction`
 - Dependency: [D5/S3/Combinatorics/Graph/Pressure/MarkovAdditiveTrajectory](../Pressure/MarkovAdditiveTrajectory.md)
