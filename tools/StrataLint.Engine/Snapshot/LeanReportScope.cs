@@ -25,7 +25,8 @@ internal sealed class LeanReportScope
 
     internal static LeanReportScope Create(
         RepositorySnapshot sourceSnapshot,
-        IEnumerable<RepoPath> requestedTargets)
+        IEnumerable<RepoPath> requestedTargets,
+        Func<RepoPath, RepositoryFile>? readSource = null)
     {
         ArgumentNullException.ThrowIfNull(sourceSnapshot);
         ArgumentNullException.ThrowIfNull(requestedTargets);
@@ -59,11 +60,15 @@ internal sealed class LeanReportScope
 
         var paths = ImmutableHashSet.CreateBuilder<RepoPath>();
         var visited = new HashSet<RepoPath>();
+        var loadedSources = readSource is null ? null : sourceSnapshot.Files.ToBuilder();
         while (pending.TryPop(out var path))
         {
             if (!visited.Add(path)) continue;
             if (LeanClosureValidator.IsReportLean(path.Value)) paths.Add(path);
-            var source = sourceSnapshot.Files[path];
+            var source = readSource is null ? sourceSnapshot.Files[path] : readSource(path);
+            if (source.Path != path || !source.ContentWasRead)
+                throw new InvalidOperationException("scoped Lean report source bytes are unavailable: " + path.Value);
+            if (loadedSources is not null) loadedSources[path] = source;
             if (RepositoryRules.TryHeader(source.Text, out var header)
                 && UtilitySyntax.TryParse(header.Utility, out var utility, out _)
                 && utility is not null)
@@ -100,7 +105,9 @@ internal sealed class LeanReportScope
             }
         }
 
-        return new LeanReportScope(sourceSnapshot, roots, paths.ToImmutable());
+        var loadedSnapshot = loadedSources is null ? sourceSnapshot
+            : RepositorySnapshot.Create(loadedSources.ToImmutable(), sourceSnapshot.PathInventory);
+        return new LeanReportScope(loadedSnapshot, roots, paths.ToImmutable());
     }
 
     private static bool IsRepositoryModule(string module) =>
