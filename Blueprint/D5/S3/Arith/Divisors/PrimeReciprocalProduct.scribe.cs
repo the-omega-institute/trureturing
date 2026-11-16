@@ -14,7 +14,7 @@ internal sealed class PrimeReciprocalProductDocument : IScribeDocumentDefinition
                 "Write P(m) for the product of 1+1/p over all primes p at most m, "
                 + "and H(m) for the sum of 1/k over integers k from one to m. "
                 + "The bounds below are symbolic and uniform. They use exact rational "
-                + "arithmetic; no floating-point approximation or bounded search is involved.")),
+                + "arithmetic, logarithmic estimates and exact finite product comparisons.")),
             Node("harmonic_lt_twice_prime_product", "Harmonic lower bound for the product",
                 "For every positive natural number m, H(m)<2P(m). Mathlib's "
                 + "exists_sq_mul_squarefree writes k=a^2 b with b squarefree. "
@@ -34,13 +34,15 @@ internal sealed class PrimeReciprocalProductDocument : IScribeDocumentDefinition
                 + "q at least 2r+3 for the induction step. The prime two contributes "
                 + "a factor whose square is 9/4; if two is absent, nonemptiness "
                 + "absorbs the extra additive one in the odd-support estimate."),
-            Paragraph(Text(
-                "These estimates supply analytic ingredients for comparing divisor sums "
-                + "when n divided by its radical is below the least missing prime. "
-                + "They alone do not establish that divisor-sum implication: the formulas "
-                + "for the actual unitary and squarefree divisor sums, the mandatory "
-                + "prime-support reduction, the remaining growth estimate and the "
-                + "finite residual certificate must also be connected in Lean.")))));
+            Node("missing_support_product_ge_two", "Removing the support of a large integer",
+                "For every natural m at least one thousand, the product of 1+1/p over "
+                + "primes p at most m which do not divide m is at least two. If m has "
+                + "at most nine distinct prime divisors, replacing primes by the nine "
+                + "smallest ones bounds the removed product, and an exact product "
+                + "comparison at one thousand finishes. With at least ten prime "
+                + "divisors, their product exceeds 3^(3r-10), where r is the support "
+                + "size. The harmonic lower bound and the support-size upper bound "
+                + "then show that the full product is more than twice the removed one.")))));
 
     private static DocumentBlock Node(string name, string title, string prose) =>
         Describe.Lean(

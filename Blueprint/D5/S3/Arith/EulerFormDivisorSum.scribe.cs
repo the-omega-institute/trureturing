@@ -26,6 +26,25 @@ internal sealed class EulerFormDivisorSumDocument : IScribeDocumentDefinition
                 "The sum ranges over divisors containing no square factor greater than one. "
                 + "Its prime-support product is obtained from Mathlib's powerset identity.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(
+                DescribeId.Create("a388986-unitary-product-upper"),
+                DeclarationHandle.Create(Prefix + "unitarySum_le_product"),
+                H("A prime-power product upper bound"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
+                    "For every nonzero natural N, its unitary divisor sum is at most "
+                    + "the product of p^v_p(N)+1 over its distinct prime divisors. "
+                    + "A unitary divisor selects either the entire prime power or none "
+                    + "for each prime; the powerset expansion bounds its sum."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("a388986-squarefree-product"),
+                DeclarationHandle.Create(Prefix + "squarefreeSum_eq_product"),
+                H("The squarefree divisor product"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
+                    "For every nonzero natural N, its squarefree divisor sum equals "
+                    + "the product of p+1 over its distinct prime divisors. Each subset "
+                    + "of the prime support gives exactly one squarefree divisor."))),
+                DescribeRole.Theorem),
             Node("euler_form_lt", "The Euler-form inclusion", MainFormula(),
                 "After dividing by positive N, the distinguished prime contributes at most "
                 + "six fifths to each product. Every prime from r has exponent at least two. "
