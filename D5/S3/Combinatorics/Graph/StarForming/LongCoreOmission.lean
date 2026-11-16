@@ -7,6 +7,7 @@
    digest: Actual open-core score extraction and symbolic cyclic exceptional-state exclusion. -/
 
 import D5.S3.Combinatorics.Graph.StarForming.ClosedModule
+import D5.S3.Combinatorics.Graph.StarForming.LongCoreWord
 import Mathlib.Logic.Equiv.Fin.Rotate
 
 /-! The structural all-length upper proof in LONG_CORE_SHARP_OMISSION,
