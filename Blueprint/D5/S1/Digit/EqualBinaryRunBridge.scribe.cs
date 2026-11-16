@@ -112,7 +112,10 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
                     + "recurrence guard n>=4 makes each shifted index positive. Every subtraction of "
                     + "sequence values is in the integers. This is a universal theorem, not finite-prefix "
                     + "verification. The source's empirical formula and the known composition relation "
-                    + "are distinguished from the kernel-checked derivation."))), DescribeRole.Theorem))));
+                    + "are distinguished from the kernel-checked derivation."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a386705-equal-binary-run-sum-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string commentary) =>
         Describe.Lean(DescribeId.Create("equal-binary-run-definition-" + name.ToLowerInvariant()),
