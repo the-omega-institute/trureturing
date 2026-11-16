@@ -23,7 +23,7 @@ internal sealed class CommonCoefficientPlaneDocument : IScribeDocumentDefinition
         new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula C3() =>
         new Formula.TypeArrow(Call("Fin", D(3)), V("Complex"));
-    private static Formula Mat(int rows, int cols) =>
+    private static Formula Mat(byte rows, byte cols) =>
         Call("Matrix", Call("Fin", D(rows)), Call("Fin", D(cols)), V("Complex"));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
