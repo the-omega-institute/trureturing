@@ -24,7 +24,6 @@ W: proof_shape=bind-only; consumers=HardinA229531Strip.result
 import Mathlib.Data.Matrix.Block
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233171DiagonalStrip
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Mathlib.Logic.Equiv.Fin.Basic
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229583StripData
 
