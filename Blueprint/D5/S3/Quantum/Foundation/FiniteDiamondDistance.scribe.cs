@@ -37,6 +37,18 @@ internal sealed class FiniteDiamondDistanceDocument : IScribeDocumentDefinition
             "Finite reference amplification and unhalved stabilized distance for canonical quantum channels.",
             H("Finite Reference Channel Distance"),
             Blocks(
+            Describe.Lean(
+                DescribeId.Create("referenceaction-nonneg"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteDiamondDistance.referenceAction_nonneg"),
+                H("Positivity under reference amplification"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Complete positivity of the canonical channel makes its actual reference-amplified action nonnegative on every nonnegative matrix. The reference and input dimensions are arbitrary finite coordinate types."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("referenceaction-trace"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteDiamondDistance.referenceAction_trace"),
+                H("Trace preservation under reference amplification"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Applying a trace-preserving canonical channel to the input coordinate preserves the trace of every complex joint matrix."))), DescribeRole.Theorem),
                 Paragraph(Text(
                     "All coordinate types are finite and have decidable equality. The reference "
                     + "coordinate is the first factor of each product. QuantumChannel and "

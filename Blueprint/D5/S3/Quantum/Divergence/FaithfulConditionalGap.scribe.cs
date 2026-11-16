@@ -14,6 +14,12 @@ internal sealed class FaithfulConditionalGapDocument : IScribeDocumentDefinition
         "Squared trace distance gives a strict complete versus conditional contraction gap.",
         H("A faithful divergence with different complete and conditional coefficients"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("positive-trace-contraction"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/FaithfulConditionalGap.positive_trace_contraction"),
+                H("Positive trace-preserving maps contract Hermitian trace norm"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every complex-linear positive trace-preserving matrix map contracts the trace norm of each Hermitian input, between arbitrary finite source and target coordinate types. The positive and negative parts give the Jordan decomposition argument."))), DescribeRole.Theorem),
             Paragraph(Text(
                 "DensityState(A) is a positive semidefinite complex CStarMatrix of trace one. "
                 + "QuantumChannel(A,B) is the canonical completely positive, trace-preserving "

@@ -1,0 +1,1271 @@
+/- GID: D5/S3/Quantum/Recovery/QubitResidualRounding
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Recovery/QubitResidualRounding
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Physical two-column qubit dilation geometry for residual rounding. -/
+
+import D5.S3.Quantum.Entanglement.FiniteSectorPhysicalConstruction
+import D5.S3.Quantum.Foundation.FiniteDiamondDistance
+import D5.S3.Quantum.Foundation.FiniteDensityPurification
+import D5.S3.Quantum.Divergence.FaithfulConditionalGap
+import D5.S3.Quantum.Information.StrongSubadditivity.MarkovConstructors
+import D5.S3.Quantum.Information.MarginalCalculus
+import D5.S3.Quantum.Information.OrthogonalRecordEntropy
+import D5.S3.Quantum.Information.Pauli.PauliMatrix
+import D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation
+import D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
+import D5.S3.Quantum.Foundation.FiniteHermitianTraceDuality
+import D5.S3.Quantum.Reduction.WeightedWordDefect
+import D5.S3.Quantum.Matrix.UniformVarianceTraceBound
+import D5.S3.Quantum.Classicalization.XuImaiGuhneSimultaneousUnboundedness
+import D5.S3.Quantum.Entanglement.PermutationCriteria.BellBlocks
+import Mathlib.Analysis.InnerProductSpace.PiL2
+
+/-! Two-column geometry of the actual finite physical recovery channel. -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
+
+noncomputable section
+
+namespace D5.S3.Quantum.Recovery.QubitResidualRounding
+
+open _root_.Matrix
+open D5.S3.Quantum.Foundation.FiniteStateChannel
+open D5.S3.Quantum.Foundation.FiniteTraceDistance
+open D5.S3.Quantum.Foundation.FiniteDiamondDistance
+open D5.S3.Quantum.Information.PartialTraceMutualInformation
+open D5.S3.Quantum.Information.StrongSubadditivity
+open D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
+open scoped BigOperators ComplexOrder MatrixOrder InnerProductSpace
+open scoped Matrix Matrix.Norms.L2Operator Kronecker
+
+local notation "traceNorm" => D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm
+
+variable {Q : Type*} [Fintype Q]
+
+/-- An output-label slice of a column of the physical isometry. -/
+def column (W : Matrix (Fin 2 × Q) (Fin 2) ℂ) (j i : Fin 2) :
+    EuclideanSpace ℂ Q := WithLp.toLp 2 (fun q => W (j, q) i)
+
+/-- Discard the environment after applying the same isometry to both sides. -/
+def reduced (W : Matrix (Fin 2 × Q) (Fin 2) ℂ) (M : Matrix (Fin 2) (Fin 2) ℂ) :
+    Matrix (Fin 2) (Fin 2) ℂ := partialTraceRight (W * M * Wᴴ)
+
+private theorem reduced_entry (W : Matrix (Fin 2 × Q) (Fin 2) ℂ)
+    (M : Matrix (Fin 2) (Fin 2) ℂ) (j k : Fin 2) :
+    reduced W M j k =
+      ∑ a : Fin 2, ∑ b : Fin 2,
+        inner ℂ (column W k b) (column W j a) * M a b := by
+  classical
+  change (∑ q : Q, ∑ b : Fin 2,
+    (∑ a : Fin 2, W (j, q) a * M a b) * star (W (k, q) b)) = _
+  calc
+    _ = ∑ q : Q, ∑ a : Fin 2, ∑ b : Fin 2,
+        W (j, q) a * M a b * star (W (k, q) b) := by
+      apply Finset.sum_congr rfl
+      intro q hq
+      simp_rw [Finset.sum_mul]
+      exact Finset.sum_comm
+    _ = ∑ a : Fin 2, ∑ b : Fin 2, ∑ q : Q,
+        W (j, q) a * M a b * star (W (k, q) b) := by
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro a ha
+      rw [Finset.sum_comm]
+    _ = _ := by
+      simp only [column, EuclideanSpace.inner_eq_star_dotProduct, dotProduct]
+      simp_rw [Finset.sum_mul]
+      apply Finset.sum_congr rfl
+      intro a ha
+      apply Finset.sum_congr rfl
+      intro b hb
+      apply Finset.sum_congr rfl
+      intro q hq
+      change W (j, q) a * M a b * star (W (k, q) b) =
+        (W (j, q) a * star (W (k, q) b)) * M a b
+      ring
+
+private theorem column_gram (W : Matrix (Fin 2 × Q) (Fin 2) ℂ)
+    (hW : Wᴴ * W = 1) (i k : Fin 2) :
+    inner ℂ (column W 0 i) (column W 0 k) +
+      inner ℂ (column W 1 i) (column W 1 k) = if i = k then 1 else 0 := by
+  have h := congrFun (congrFun hW i) k
+  simpa [Matrix.mul_apply, Matrix.conjTranspose_apply, Fintype.sum_prod_type,
+    Fin.sum_univ_two, column, EuclideanSpace.inner_eq_star_dotProduct,
+    dotProduct, Matrix.one_apply, mul_comm] using h
+
+private theorem retained_flip_norms (W : Matrix (Fin 2 × Q) (Fin 2) ℂ)
+    (hW : Wᴴ * W = 1) :
+    ‖column W 0 0‖ ^ 2 + ‖column W 1 0‖ ^ 2 = 1 ∧
+    ‖column W 1 1‖ ^ 2 + ‖column W 0 1‖ ^ 2 = 1 := by
+  have h0 := congrArg Complex.re (column_gram W hW 0 0)
+  have h1 := congrArg Complex.re (column_gram W hW 1 1)
+  simp [inner_self_eq_norm_sq_to_K, ← Complex.ofReal_pow] at h0 h1
+  exact ⟨h0, by linarith⟩
+
+private theorem coefficient_cancellation (W : Matrix (Fin 2 × Q) (Fin 2) ℂ)
+    (hW : Wᴴ * W = 1) :
+    inner ℂ (column W 1 0) (column W 0 0) +
+        inner ℂ (column W 1 1) (column W 0 1) =
+      inner ℂ (column W 1 0) (column W 0 0 - column W 1 1) +
+        inner ℂ (column W 1 1 - column W 0 0) (column W 0 1) := by
+  have ho := column_gram W hW 0 1
+  norm_num at ho
+  simp only [inner_sub_left, inner_sub_right]
+  linear_combination ho
+
+private theorem retained_gap (W : Matrix (Fin 2 × Q) (Fin 2) ℂ)
+    (hW : Wᴴ * W = 1) :
+    ‖column W 1 1 - column W 0 0‖ ^ 2 ≤
+      2 * ‖1 - inner ℂ (column W 1 1) (column W 0 0)‖ := by
+  obtain ⟨h0, h1⟩ := retained_flip_norms W hW
+  have hr := Complex.re_le_norm (1 - inner ℂ (column W 1 1) (column W 0 0))
+  simp only [Complex.sub_re, Complex.one_re] at hr
+  rw [norm_sub_sq (𝕜 := ℂ)]
+  change ‖column W 1 1‖ ^ 2 -
+      2 * (inner ℂ (column W 1 1) (column W 0 0)).re +
+      ‖column W 0 0‖ ^ 2 ≤ _
+  nlinarith [sq_nonneg ‖column W 1 0‖, sq_nonneg ‖column W 0 1‖]
+
+/-- The phase-sensitive cancellation estimate follows from orthogonality of
+the actual isometry columns. No unitality assumption is imposed. -/
+theorem isometry_coefficient_geometry (W : Matrix (Fin 2 × Q) (Fin 2) ℂ)
+    (hW : Wᴴ * W = 1) :
+    (∀ M : Matrix (Fin 2) (Fin 2) ℂ,
+      reduced W M 0 1 =
+        inner ℂ (column W 1 1) (column W 0 0) * M 0 1 +
+        inner ℂ (column W 1 0) (column W 0 0) * M 0 0 +
+        inner ℂ (column W 1 1) (column W 0 1) * M 1 1 +
+        inner ℂ (column W 1 0) (column W 0 1) * M 1 0) ∧
+    ‖inner ℂ (column W 1 0) (column W 0 1)‖ ≤
+      (‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2) / 2 ∧
+    ‖inner ℂ (column W 1 0) (column W 0 0) +
+        inner ℂ (column W 1 1) (column W 0 1)‖ ≤
+      2 * Real.sqrt (‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2) *
+        Real.sqrt ‖1 - inner ℂ (column W 1 1) (column W 0 0)‖ := by
+  constructor
+  · intro M
+    rw [reduced_entry]
+    simp only [Fin.sum_univ_two]
+    ring
+  constructor
+  · have h := norm_inner_le_norm (𝕜 := ℂ) (column W 1 0) (column W 0 1)
+    nlinarith [sq_nonneg (‖column W 1 0‖ - ‖column W 0 1‖)]
+  · let s := Real.sqrt (‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2)
+    let g := ‖1 - inner ℂ (column W 1 1) (column W 0 0)‖
+    have hs : s ^ 2 = ‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2 :=
+      Real.sq_sqrt (add_nonneg (sq_nonneg _) (sq_nonneg _))
+    have hsg : (Real.sqrt g) ^ 2 = g := Real.sq_sqrt (norm_nonneg _)
+    have hs0 : 0 ≤ s := Real.sqrt_nonneg _
+    have hg0 : 0 ≤ Real.sqrt g := Real.sqrt_nonneg _
+    have hdiff := retained_gap W hW
+    have hflip : (‖column W 1 0‖ + ‖column W 0 1‖) ^ 2 ≤ 2 * s ^ 2 := by
+      nlinarith [sq_nonneg (‖column W 1 0‖ - ‖column W 0 1‖)]
+    have hprod :
+        ((‖column W 1 0‖ + ‖column W 0 1‖) *
+          ‖column W 1 1 - column W 0 0‖) ^ 2 ≤
+          (2 * s * Real.sqrt g) ^ 2 := by
+      have h := mul_le_mul hflip hdiff (sq_nonneg _)
+        (mul_nonneg (by norm_num) (sq_nonneg s))
+      dsimp [g] at hsg ⊢
+      nlinarith [h]
+    have hbound : (‖column W 1 0‖ + ‖column W 0 1‖) *
+        ‖column W 1 1 - column W 0 0‖ ≤ 2 * s * Real.sqrt g := by
+      nlinarith [mul_nonneg (mul_nonneg (by norm_num : (0 : ℝ) ≤ 2) hs0) hg0]
+    rw [coefficient_cancellation W hW]
+    calc
+      _ ≤ ‖inner ℂ (column W 1 0) (column W 0 0 - column W 1 1)‖ +
+          ‖inner ℂ (column W 1 1 - column W 0 0) (column W 0 1)‖ := norm_add_le _ _
+      _ ≤ ‖column W 1 0‖ * ‖column W 0 0 - column W 1 1‖ +
+          ‖column W 1 1 - column W 0 0‖ * ‖column W 0 1‖ :=
+        add_le_add (norm_inner_le_norm _ _) (norm_inner_le_norm _ _)
+      _ = (‖column W 1 0‖ + ‖column W 0 1‖) *
+          ‖column W 1 1 - column W 0 0‖ := by rw [norm_sub_rev]; ring
+      _ ≤ _ := hbound
+
+private theorem reduced_Z_matrix (W : Matrix (Fin 2 × Q) (Fin 2) ℂ)
+    (hW : Wᴴ * W = 1) :
+    reduced W (Matrix.diagonal ![1, -1]) - Matrix.diagonal ![1, -1] =
+      D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation.qubit
+        (-(‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2))
+        (inner ℂ (column W 1 0) (column W 0 0) -
+          inner ℂ (column W 1 1) (column W 0 1)) := by
+  classical
+  obtain ⟨h0, h1⟩ := retained_flip_norms W hW
+  have hc0 := congrArg (fun t : ℝ => (t : ℂ)) h0
+  have hc1 := congrArg (fun t : ℝ => (t : ℂ)) h1
+  push_cast at hc0 hc1
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [reduced_entry, Fin.sum_univ_two, Matrix.diagonal_apply,
+      inner_self_eq_norm_sq_to_K, Complex.ofReal_pow,
+      D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation.qubit,
+      inner_conj_symm, sub_eq_add_neg]
+  · linear_combination hc0
+  · linear_combination -hc1
+
+private theorem traceless_qubit_entry_bounds
+    (M : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.IsHermitian) (ht : Matrix.trace M = 0) :
+    2 * ‖M 0 0‖ ≤ traceNorm M ∧ 2 * ‖M 0 1‖ ≤ traceNorm M := by
+  have him : (M 0 0).im = 0 := by
+    have hh := congrArg Complex.im (congrFun (congrFun hM.eq 0) 0)
+    simp only [Matrix.conjTranspose_apply, Complex.star_def, Complex.conj_im] at hh
+    linarith
+  have h00 : M 0 0 = ((M 0 0).re : ℂ) := by
+    apply Complex.ext <;> simp [him]
+  have h10 : M 1 0 = star (M 0 1) := by
+    have hh := congrArg star (congrFun (congrFun hM.eq 0) 1)
+    simpa only [Matrix.conjTranspose_apply, star_star] using hh
+  have h11 : M 1 1 = -M 0 0 := by
+    simp only [Matrix.trace, Fin.sum_univ_two, Matrix.diag_apply] at ht
+    linear_combination ht
+  have hm : M =
+      D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation.qubit
+        (M 0 0).re (M 0 1) := by
+    ext i j
+    fin_cases i <;> fin_cases j
+    · exact h00
+    · rfl
+    · exact h10
+    · change M 1 1 = -((M 0 0).re : ℂ)
+      exact h11.trans (congrArg Neg.neg h00)
+  have hn : traceNorm M =
+      2 * Real.sqrt ((M 0 0).re ^ 2 + Complex.normSq (M 0 1)) := by
+    conv_lhs => rw [hm]
+    exact D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation.qubit_norm _ _
+  have hs := Real.sq_sqrt
+    (add_nonneg (sq_nonneg (M 0 0).re) (Complex.normSq_nonneg (M 0 1)))
+  have hp := Real.sqrt_nonneg ((M 0 0).re ^ 2 + Complex.normSq (M 0 1))
+  rw [hn]
+  constructor
+  · have hn0 : ‖M 0 0‖ = |(M 0 0).re| := by
+      conv_lhs => rw [h00]
+      exact Complex.norm_real _
+    rw [hn0]
+    nlinarith [sq_abs (M 0 0).re, abs_nonneg (M 0 0).re,
+      Complex.normSq_nonneg (M 0 1)]
+  · have hns : Complex.normSq (M 0 1) = ‖M 0 1‖ ^ 2 := Complex.normSq_eq_norm_sq _
+    nlinarith [norm_nonneg (M 0 1), sq_nonneg (M 0 0).re]
+
+/-- Approximate preservation of the diagonal qubit direction controls both
+the total flip probability and the difference of the two coherence terms. -/
+theorem diagonal_residual_controls_coefficients (W : Matrix (Fin 2 × Q) (Fin 2) ℂ)
+    (hW : Wᴴ * W = 1) (e : ℝ)
+    (he : traceNorm
+      (reduced W (Matrix.diagonal ![1, -1]) - Matrix.diagonal ![1, -1]) ≤ e) :
+    ‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2 ≤ e / 2 ∧
+    ‖inner ℂ (column W 1 0) (column W 0 0) -
+      inner ℂ (column W 1 1) (column W 0 1)‖ ≤ e / 2 := by
+  let t := ‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2
+  let z := inner ℂ (column W 1 0) (column W 0 0) -
+      inner ℂ (column W 1 1) (column W 0 1)
+  rw [reduced_Z_matrix W hW,
+    D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation.qubit_norm] at he
+  change 2 * Real.sqrt ((-t) ^ 2 + Complex.normSq z) ≤ e at he
+  have ht : 0 ≤ t := add_nonneg (sq_nonneg _) (sq_nonneg _)
+  have hs := Real.sq_sqrt (add_nonneg (sq_nonneg (-t)) (Complex.normSq_nonneg z))
+  have hn : Complex.normSq z = ‖z‖ ^ 2 := Complex.normSq_eq_norm_sq z
+  have hp := Real.sqrt_nonneg ((-t) ^ 2 + Complex.normSq z)
+  constructor <;> change _ ≤ e / 2
+  · nlinarith [Complex.normSq_nonneg z]
+  · nlinarith [norm_nonneg z, sq_nonneg t]
+
+private theorem reduced_hermitian (W : Matrix (Fin 2 × Q) (Fin 2) ℂ)
+    (M : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.IsHermitian) : (reduced W M).IsHermitian := by
+  have hd := Matrix.isHermitian_mul_mul_conjTranspose W hM
+  ext j k
+  change star (∑ q : Q, (W * M * Wᴴ) (k, q) (j, q)) =
+    ∑ q : Q, (W * M * Wᴴ) (j, q) (k, q)
+  rw [star_sum]
+  apply Finset.sum_congr rfl
+  intro q _
+  exact congrFun (congrFun hd.eq (j, q)) (k, q)
+
+private theorem reduced_trace (W : Matrix (Fin 2 × Q) (Fin 2) ℂ)
+    (hW : Wᴴ * W = 1) (M : Matrix (Fin 2) (Fin 2) ℂ) :
+    Matrix.trace (reduced W M) = Matrix.trace M := by
+  rw [reduced, trace_partialTraceRight, Matrix.trace_mul_cycle, hW, Matrix.one_mul]
+
+private theorem qubit_entry_operatorNorm (M : Matrix (Fin 2) (Fin 2) ℂ) (i j : Fin 2) :
+    ‖M i j‖ ≤ ‖M‖ := by
+  let ei := EuclideanSpace.basisFun (Fin 2) ℂ i
+  let ej := EuclideanSpace.basisFun (Fin 2) ℂ j
+  have hi : ‖ei‖ = 1 := (EuclideanSpace.basisFun (Fin 2) ℂ).orthonormal.1 i
+  have hj : ‖ej‖ = 1 := (EuclideanSpace.basisFun (Fin 2) ℂ).orthonormal.1 j
+  have he : inner ℂ ei (Matrix.toEuclideanCLM (𝕜 := ℂ) M ej) = M i j := by
+    simp [ei, ej, EuclideanSpace.basisFun_apply, Matrix.toEuclideanCLM_toLp,
+      EuclideanSpace.inner_eq_star_dotProduct, Matrix.mulVec, dotProduct, Pi.single_apply]
+  rw [← he]
+  exact (norm_inner_le_norm _ _).trans (by
+    simpa [hi, hj, Matrix.l2_opNorm_toEuclideanCLM] using
+      (Matrix.toEuclideanCLM (𝕜 := ℂ) M).le_opNorm ej)
+
+/-- The retained-column phase gap controls the complex coherence of every
+traceless Hermitian input, using its actual reduced-channel residual. -/
+theorem offDiagonal_gap_bound (W : Matrix (Fin 2 × Q) (Fin 2) ℂ)
+    (hW : Wᴴ * W = 1) (M : Matrix (Fin 2) (Fin 2) ℂ)
+    (hM : M.IsHermitian) (ht : Matrix.trace M = 0)
+    (x e f d : ℝ) (hm : ‖M‖ ≤ x)
+    (he : traceNorm (reduced W M - M) ≤ e)
+    (hf : ‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2 ≤ f)
+    (hd : ‖inner ℂ (column W 1 0) (column W 0 0) -
+      inner ℂ (column W 1 1) (column W 0 1)‖ ≤ d) :
+    ‖1 - inner ℂ (column W 1 1) (column W 0 0)‖ * ‖M 0 1‖ ≤
+      e / 2 + d * x + (f / 2) * x := by
+  have h11 : M 1 1 = -M 0 0 := by
+    simp only [Matrix.trace, Fin.sum_univ_two, Matrix.diag_apply] at ht
+    linear_combination ht
+  have hb := (traceless_qubit_entry_bounds (reduced W M - M)
+    ((reduced_hermitian W M hM).sub hM)
+    (by rw [Matrix.trace_sub, reduced_trace W hW, sub_self])).2
+  have hb' : ‖(reduced W M - M) 0 1‖ ≤ e / 2 := by linarith
+  obtain ⟨hentry, hk, _⟩ := isometry_coefficient_geometry W hW
+  have heq : (1 - inner ℂ (column W 1 1) (column W 0 0)) * M 0 1 =
+      -(reduced W M - M) 0 1 +
+        (inner ℂ (column W 1 0) (column W 0 0) -
+          inner ℂ (column W 1 1) (column W 0 1)) * M 0 0 +
+        inner ℂ (column W 1 0) (column W 0 1) * M 1 0 := by
+    have h := hentry M
+    rw [h11] at h
+    simp only [Matrix.sub_apply]
+    linear_combination h
+  rw [← norm_mul, heq]
+  calc
+    _ ≤ ‖-(reduced W M - M) 0 1‖ +
+        ‖(inner ℂ (column W 1 0) (column W 0 0) -
+          inner ℂ (column W 1 1) (column W 0 1)) * M 0 0‖ +
+        ‖inner ℂ (column W 1 0) (column W 0 1) * M 1 0‖ :=
+      (norm_add_le _ _).trans (add_le_add (norm_add_le _ _) le_rfl)
+    _ ≤ e / 2 + d * x + (f / 2) * x := by
+      rw [norm_neg, norm_mul, norm_mul]
+      apply add_le_add
+      · exact add_le_add hb' (mul_le_mul hd ((qubit_entry_operatorNorm M 0 0).trans hm)
+          (norm_nonneg _) (le_trans (norm_nonneg _) hd))
+      · exact mul_le_mul (hk.trans (by linarith))
+          ((qubit_entry_operatorNorm M 1 0).trans hm) (norm_nonneg _)
+          (le_trans (norm_nonneg _) (hk.trans (by linarith)))
+
+private theorem rotated_dilation [DecidableEq Q]
+    (W : Matrix (Fin 2 × Q) (Fin 2) ℂ) (hW : Wᴴ * W = 1)
+    (U : Matrix.unitaryGroup (Fin 2) ℂ) :
+    ∃ V : Matrix (Fin 2 × Q) (Fin 2) ℂ, Vᴴ * V = 1 ∧
+      ∀ M : Matrix (Fin 2) (Fin 2) ℂ,
+        reduced V M = U.valᴴ * reduced W (U.val * M * U.valᴴ) * U.val := by
+  let L := U.valᴴ ⊗ₖ (1 : Matrix Q Q ℂ)
+  let V := L * W * U.val
+  have huU : U.val * U.valᴴ = 1 := Unitary.coe_mul_star_self U
+  have hL : Lᴴ * L = 1 := by
+    dsimp [L]
+    rw [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_conjTranspose,
+      Matrix.conjTranspose_one, ← Matrix.mul_kronecker_mul,
+      huU, Matrix.one_mul, Matrix.one_kronecker_one]
+  refine ⟨V, ?_, ?_⟩
+  · change (L * W * U.val)ᴴ * (L * W * U.val) = 1
+    calc
+      _ = U.valᴴ * Wᴴ * (Lᴴ * L) * W * U.val := by
+        simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
+      _ = U.valᴴ * (Wᴴ * W) * U.val := by rw [hL]; simp [Matrix.mul_assoc]
+      _ = 1 := by rw [hW, Matrix.mul_one]; exact Unitary.coe_star_mul_self U
+  · intro M
+    have he : V * M * Vᴴ = L * (W * (U.val * M * U.valᴴ) * Wᴴ) * Lᴴ := by
+      simp only [V, Matrix.conjTranspose_mul, Matrix.mul_assoc]
+    unfold reduced
+    rw [he]
+    simpa only [L, Matrix.kronecker, Matrix.conjTranspose_conjTranspose] using
+      D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries
+        U.valᴴ (1 : Matrix Q Q ℂ) (by simp)
+        (W * (U.val * M * U.valᴴ) * Wᴴ)
+
+private def outputEquiv (C : Type) :
+    (Fin 2 × (C × ((Fin 2 × C) × Fin 2))) ≃
+      (((Fin 2 × C) × Fin 2) × (Fin 2 × C)) where
+  toFun p := (p.2.2, (p.1, p.2.1))
+  invFun p := (p.2.1, (p.2.2, p.1))
+  left_inv := by rintro ⟨j, c, e⟩; rfl
+  right_inv := by rintro ⟨e, j, c⟩; rfl
+
+private theorem actual_dilation {C : Type} [Fintype C] [DecidableEq C]
+    (T : QuantumChannel (Fin 2) (Fin 2 × C)) :
+    ∃ W : Matrix (Fin 2 × (C × ((Fin 2 × C) × Fin 2))) (Fin 2) ℂ,
+      Wᴴ * W = 1 ∧
+      (∀ (M : Matrix (Fin 2) (Fin 2) ℂ) (j k : Fin 2) (c d : C),
+        (∑ e : (Fin 2 × C) × Fin 2,
+          (W * M * Wᴴ) (j, (c, e)) (k, (d, e))) =
+            CStarMatrix.ofMatrix.symm
+              (T.toCompletelyPositiveMap (CStarMatrix.ofMatrix M)) (j, c) (k, d)) ∧
+      (∀ M : Matrix (Fin 2) (Fin 2) ℂ,
+        reduced W M = partialTraceRight (CStarMatrix.ofMatrix.symm
+          (T.toCompletelyPositiveMap (CStarMatrix.ofMatrix M)))) := by
+  classical
+  obtain ⟨V, hV, hT⟩ :=
+    D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.channel_kraus_stinespring.2 T
+  let e := outputEquiv C
+  let W := V.submatrix e id
+  have hw : Wᴴ * W = 1 := by
+    dsimp [W]
+    rw [Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv Vᴴ V id e id, hV]
+    rfl
+  have hmatrix (M : Matrix (Fin 2) (Fin 2) ℂ) :
+      W * M * Wᴴ = (V * M * Vᴴ).submatrix e e := by
+    ext p q
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, W, Matrix.submatrix_apply]
+    rfl
+  have hout (M : Matrix (Fin 2) (Fin 2) ℂ) (j k : Fin 2) (c d : C) :
+      (∑ t : (Fin 2 × C) × Fin 2,
+        (W * M * Wᴴ) (j, (c, t)) (k, (d, t))) =
+          CStarMatrix.ofMatrix.symm
+            (T.toCompletelyPositiveMap (CStarMatrix.ofMatrix M)) (j, c) (k, d) := by
+    rw [hmatrix]
+    exact congrFun (congrFun (hT M) (j, c)) (k, d)
+  refine ⟨W, hw, hout, ?_⟩
+  intro M
+  ext j k
+  change (∑ q : C × ((Fin 2 × C) × Fin 2),
+    (W * M * Wᴴ) (j, q) (k, q)) = _
+  rw [Fintype.sum_prod_type]
+  change (∑ c : C, ∑ t : (Fin 2 × C) × Fin 2,
+    (W * M * Wᴴ) (j, (c, t)) (k, (c, t))) = _
+  simp_rw [hout]
+  rfl
+
+section Centered
+
+variable {A : Type*} [Fintype A] [DecidableEq A]
+
+/-- The centered matrix uses the two actual marginals of the input state. -/
+def centered (P : DensityState (A × Fin 2)) : Matrix (A × Fin 2) (A × Fin 2) ℂ :=
+  CStarMatrix.ofMatrix.symm P.1 -
+    CStarMatrix.ofMatrix.symm (productState (marginalRight P) (marginalLeft P)).1
+
+/-- A test on A reads every complex B block by its actual trace pairing. -/
+def sliceLinear {B : Type*} (D : Matrix (A × B) (A × B) ℂ) :
+    CStarMatrix A A ℂ →ₗ[ℂ] CStarMatrix B B ℂ where
+  toFun F := CStarMatrix.ofMatrix (fun j k =>
+    Matrix.trace (CStarMatrix.ofMatrix.symm F *
+      D.submatrix (fun a => (a, j)) (fun a => (a, k))))
+  map_add' F G := by
+    apply CStarMatrix.ext
+    intro j k
+    change Matrix.trace ((CStarMatrix.ofMatrix.symm F + CStarMatrix.ofMatrix.symm G) * _) = _
+    rw [Matrix.add_mul, Matrix.trace_add]
+    rfl
+  map_smul' z F := by
+    apply CStarMatrix.ext
+    intro j k
+    change Matrix.trace ((z • CStarMatrix.ofMatrix.symm F) * _) = _
+    rw [Matrix.smul_mul, Matrix.trace_smul]
+    rfl
+
+private theorem attained_centered_test (P : DensityState (A × Fin 2)) :
+    ∃ F : CStarMatrix A A ℂ, IsSelfAdjoint F ∧ ‖F‖ ≤ 1 ∧
+      ∀ G : CStarMatrix A A ℂ, IsSelfAdjoint G → ‖G‖ ≤ 1 →
+        ‖sliceLinear (centered P) G‖ ≤ ‖sliceLinear (centered P) F‖ := by
+  letI : FiniteDimensional ℂ (CStarMatrix A A ℂ) :=
+    Module.Finite.equiv (CStarMatrix.ofMatrixₗ (R := ℂ) (m := A) (n := A))
+  let S : Set (CStarMatrix A A ℂ) := {F | IsSelfAdjoint F ∧ ‖F‖ ≤ 1}
+  have hc : IsCompact S := by
+    have hsa : IsClosed {F : CStarMatrix A A ℂ | IsSelfAdjoint F} :=
+      isClosed_eq continuous_star continuous_id
+    have he : S = {F : CStarMatrix A A ℂ | IsSelfAdjoint F} ∩ Metric.closedBall 0 1 := by
+      ext F
+      simp [S, Metric.mem_closedBall, dist_zero_right]
+    rw [he]
+    exact (isCompact_closedBall (0 : CStarMatrix A A ℂ) 1).inter_left hsa
+  have hne : S.Nonempty := ⟨0, by simp [S]⟩
+  have hcont : Continuous (fun F => ‖sliceLinear (centered P) F‖) :=
+    (sliceLinear (centered P)).continuous_of_finiteDimensional.norm
+  obtain ⟨F, hF, hmax⟩ := hc.exists_isMaxOn hne hcont.continuousOn
+  exact ⟨F, hF.1, hF.2, fun G hG hn => hmax ⟨hG, hn⟩⟩
+
+private theorem centered_marginals_zero (P : DensityState (A × Fin 2)) :
+    partialTraceLeft (centered P) = 0 ∧ partialTraceRight (centered P) = 0 := by
+  constructor
+  · have he := marginalLeft_productState (marginalRight P) (marginalLeft P)
+    have hr := congrArg (fun S : DensityState (Fin 2) => CStarMatrix.ofMatrix.symm S.1) he
+    ext j k
+    change (∑ a, (CStarMatrix.ofMatrix.symm P.1 (a, j) (a, k) -
+      CStarMatrix.ofMatrix.symm (productState (marginalRight P) (marginalLeft P)).1
+        (a, j) (a, k))) = 0
+    rw [Finset.sum_sub_distrib]
+    exact sub_eq_zero.mpr (congrFun (congrFun hr j) k).symm
+  · have he := marginalRight_productState (marginalRight P) (marginalLeft P)
+    have hr := congrArg (fun S : DensityState A => CStarMatrix.ofMatrix.symm S.1) he
+    ext j k
+    change (∑ b, (CStarMatrix.ofMatrix.symm P.1 (j, b) (k, b) -
+      CStarMatrix.ofMatrix.symm (productState (marginalRight P) (marginalLeft P)).1
+        (j, b) (k, b))) = 0
+    rw [Finset.sum_sub_distrib]
+    exact sub_eq_zero.mpr (congrFun (congrFun hr j) k).symm
+
+private def block {B : Type*} (D : Matrix (A × B) (A × B) ℂ) (j k : B) :
+    Matrix A A ℂ := D.submatrix (fun a => (a, j)) (fun a => (a, k))
+
+private def pauliCoefficient (D : Matrix (A × Fin 2) (A × Fin 2) ℂ) :
+    Fin 3 → Matrix A A ℂ := ![
+      block D 0 1 + block D 1 0,
+      Complex.I • (block D 0 1 - block D 1 0),
+      block D 0 0 - block D 1 1]
+
+private def pauli : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
+  fun i => D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix
+    (![D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.X,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Y,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z] i)
+
+private theorem pauli_reconstruction (D : Matrix (A × Fin 2) (A × Fin 2) ℂ)
+    (hz : partialTraceRight D = 0) :
+    D = (1 / 2 : ℝ) • ∑ i : Fin 3, (pauliCoefficient D i) ⊗ₖ pauli i := by
+  ext ⟨a, j⟩ ⟨b, k⟩
+  have hh := congrFun (congrFun hz a) b
+  simp only [partialTraceRight, Fin.sum_univ_two, Matrix.zero_apply] at hh
+  fin_cases j <;> fin_cases k <;>
+    simp [pauliCoefficient, block, pauli,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+      D5.S3.Quantum.FiniteDimensional.qubitX,
+      D5.S3.Quantum.FiniteDimensional.qubitZ,
+      Fin.sum_univ_three, Matrix.mul_apply, Fin.sum_univ_two,
+      Matrix.kronecker_apply, Complex.real_smul] <;>
+    ring_nf <;> (try simp only [Complex.I_sq]) <;>
+    first | ring | linear_combination (1 / 2 : ℂ) * hh
+
+private theorem centered_hermitian (P : DensityState (A × Fin 2)) :
+    (centered P).IsHermitian :=
+  (density_posSemidef P).isHermitian.sub
+    (density_posSemidef (productState (marginalRight P) (marginalLeft P))).isHermitian
+
+private theorem pauliCoefficient_hermitian (D : Matrix (A × Fin 2) (A × Fin 2) ℂ)
+    (hD : D.IsHermitian) (i : Fin 3) : (pauliCoefficient D i).IsHermitian := by
+  have hb (j k : Fin 2) : (block D j k)ᴴ = block D k j := by
+    ext a b
+    exact congrFun (congrFun hD.eq (a, k)) (b, j)
+  fin_cases i
+  · change (block D 0 1 + block D 1 0)ᴴ = block D 0 1 + block D 1 0
+    rw [Matrix.conjTranspose_add, hb, hb, add_comm]
+  · change (Complex.I • (block D 0 1 - block D 1 0))ᴴ =
+      Complex.I • (block D 0 1 - block D 1 0)
+    rw [Matrix.conjTranspose_smul, Matrix.conjTranspose_sub, hb, hb]
+    simp only [Complex.star_def, Complex.conj_I, neg_smul, ← smul_neg, neg_sub]
+  · change (block D 0 0 - block D 1 1)ᴴ = block D 0 0 - block D 1 1
+    rw [Matrix.conjTranspose_sub, hb, hb]
+
+private theorem pauliCoefficient_trace (D : Matrix (A × Fin 2) (A × Fin 2) ℂ)
+    (F : Matrix A A ℂ) (i : Fin 3) :
+    Matrix.trace (F * pauliCoefficient D i) =
+      (![sliceLinear D (CStarMatrix.ofMatrix F) 0 1 + sliceLinear D (CStarMatrix.ofMatrix F) 1 0,
+        Complex.I * (sliceLinear D (CStarMatrix.ofMatrix F) 0 1 - sliceLinear D (CStarMatrix.ofMatrix F) 1 0),
+        sliceLinear D (CStarMatrix.ofMatrix F) 0 0 - sliceLinear D (CStarMatrix.ofMatrix F) 1 1] i) := by
+  fin_cases i <;>
+    simp [pauliCoefficient, sliceLinear, block, Matrix.mul_add, Matrix.mul_sub,
+      Matrix.mul_smul, Matrix.trace_add, Matrix.trace_sub, Matrix.trace_smul]
+
+private theorem pauliCoefficient_traceNorm_le (P : DensityState (A × Fin 2))
+    (x : ℝ)
+    (hx : ∀ F : CStarMatrix A A ℂ, IsSelfAdjoint F → ‖F‖ ≤ 1 →
+      ‖sliceLinear (centered P) F‖ ≤ x) (i : Fin 3) :
+    traceNorm (pauliCoefficient (centered P) i) ≤ 2 * x := by
+  apply D5.S3.Quantum.Foundation.FiniteHermitianTraceDuality.hermitian_traceNorm_le_tests
+    _ (pauliCoefficient_hermitian _ (centered_hermitian P) i)
+  intro F hF hfn
+  have hfc : IsSelfAdjoint (CStarMatrix.ofMatrix F) :=
+    (show IsSelfAdjoint F from hF).map CStarMatrix.ofMatrixStarAlgEquiv
+  have hn : ‖CStarMatrix.ofMatrix F‖ ≤ 1 := by
+    change ‖CStarMatrix.ofMatrixStarAlgEquiv F‖ ≤ 1
+    rw [StarAlgEquiv.norm_map]
+    exact hfn
+  have hk := hx (CStarMatrix.ofMatrix F) hfc hn
+  have he (j k : Fin 2) : ‖sliceLinear (centered P) (CStarMatrix.ofMatrix F) j k‖ ≤ x :=
+    (CStarMatrix.norm_entry_le_norm (M := sliceLinear (centered P)
+      (CStarMatrix.ofMatrix F)) (i := j) (j := k)).trans hk
+  rw [pauliCoefficient_trace]
+  fin_cases i <;> simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one]
+  · exact (Complex.re_le_norm _).trans ((norm_add_le _ _).trans (by linarith [he 0 1, he 1 0]))
+  · change (Complex.I * (sliceLinear (centered P) (CStarMatrix.ofMatrix F) 0 1 -
+        sliceLinear (centered P) (CStarMatrix.ofMatrix F) 1 0)).re ≤ 2 * x
+    apply (Complex.re_le_norm _).trans
+    rw [norm_mul, Complex.norm_I, one_mul]
+    exact (norm_sub_le _ _).trans (by linarith [he 0 1, he 1 0])
+  · exact (Complex.re_le_norm _).trans ((norm_sub_le _ _).trans (by linarith [he 0 0, he 1 1]))
+
+private theorem pauli_traceNorm (i : Fin 3) : traceNorm (pauli i) = 2 := by
+  have hg : (pauli i)ᴴ * pauli i = 1 := by
+    fin_cases i <;>
+      ext a b <;> fin_cases a <;> fin_cases b <;>
+      norm_num [pauli,
+        D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+        D5.S3.Quantum.FiniteDimensional.qubitX,
+        D5.S3.Quantum.FiniteDimensional.qubitZ,
+        Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply]
+  simp [D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm, hg, Matrix.trace]
+
+private theorem traceNorm_tensor {B : Type*} [Fintype B] [DecidableEq B]
+    (X : Matrix A A ℂ) (Y : Matrix B B ℂ) : traceNorm (X ⊗ₖ Y) = traceNorm X * traceNorm Y := by
+  let e := (Fintype.equivFin A).symm
+  let d := (Fintype.equivFin B).symm
+  let f := e.prodCongr d
+  have ht := D5.S3.Quantum.Entanglement.PermutationCriteria.NormInvariance.traceNorm_submatrix_equiv
+    (X ⊗ₖ Y) f f
+  have hx := D5.S3.Quantum.Entanglement.PermutationCriteria.NormInvariance.traceNorm_submatrix_equiv
+    X e e
+  have hy := D5.S3.Quantum.Entanglement.PermutationCriteria.NormInvariance.traceNorm_submatrix_equiv
+    Y d d
+  have he : (X ⊗ₖ Y).submatrix f f = X.submatrix e e ⊗ₖ Y.submatrix d d := rfl
+  rw [he, D5.S3.Quantum.Classicalization.XuImaiGuhneSimultaneousUnboundedness.Toolkit.traceNorm_kronecker,
+    hx, hy] at ht
+  exact ht.symm
+
+/-- The maximum over all Hermitian contractions controls the centered state
+without an A or C coordinate count. -/
+theorem attained_centered_traceNorm_bound (P : DensityState (A × Fin 2)) :
+    ∃ F : CStarMatrix A A ℂ, IsSelfAdjoint F ∧ ‖F‖ ≤ 1 ∧
+      (∀ G : CStarMatrix A A ℂ, IsSelfAdjoint G → ‖G‖ ≤ 1 →
+        ‖sliceLinear (centered P) G‖ ≤ ‖sliceLinear (centered P) F‖) ∧
+      traceNorm (centered P) ≤ 6 * ‖sliceLinear (centered P) F‖ := by
+  obtain ⟨F, hf, hfn, hmax⟩ := attained_centered_test P
+  refine ⟨F, hf, hfn, hmax, ?_⟩
+  let x := ‖sliceLinear (centered P) F‖
+  have hc (i : Fin 3) : traceNorm (pauliCoefficient (centered P) i) ≤ 2 * x :=
+    pauliCoefficient_traceNorm_le P x hmax i
+  have hp (i : Fin 3) :
+      traceNorm ((pauliCoefficient (centered P) i) ⊗ₖ pauli i) ≤ 4 * x := by
+    rw [traceNorm_tensor, pauli_traceNorm]
+    linarith [hc i]
+  change traceNorm (centered P) ≤ 6 * x
+  conv_lhs => rw [pauli_reconstruction _ (centered_marginals_zero P).2]
+  change traceNorm (((1 / 2 : ℝ) : ℂ) •
+    ∑ i : Fin 3, (pauliCoefficient (centered P) i) ⊗ₖ pauli i) ≤ 6 * x
+  rw [D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.traceNorm_smul_nonneg
+    _ (1 / 2 : ℝ) (by norm_num), Fin.sum_univ_three]
+  have h := traceNorm_add_le
+    ((pauliCoefficient (centered P) 0) ⊗ₖ pauli 0)
+    (((pauliCoefficient (centered P) 1) ⊗ₖ pauli 1) +
+      ((pauliCoefficient (centered P) 2) ⊗ₖ pauli 2))
+  have h' := traceNorm_add_le
+    ((pauliCoefficient (centered P) 1) ⊗ₖ pauli 1)
+    ((pauliCoefficient (centered P) 2) ⊗ₖ pauli 2)
+  change (1 / 2 : ℝ) * traceNorm _ ≤ 6 * x
+  rw [add_assoc]
+  linarith [hp 0, hp 1, hp 2]
+
+end Centered
+
+section PhysicalRepair
+
+variable {A B C : Type*} [Fintype A] [DecidableEq A]
+  [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C]
+
+private def referenceRaw (T : QuantumChannel B C) :
+    Matrix (A × B) (A × B) ℂ →ₗ[ℂ] Matrix (A × C) (A × C) ℂ :=
+  CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
+    ((referenceLinear T).comp CStarMatrix.ofMatrixₗ.toLinearMap)
+
+private theorem referenceRaw_contract (T : QuantumChannel B C)
+    (X : Matrix (A × B) (A × B) ℂ) (hX : X.IsHermitian) :
+    traceNorm (referenceRaw T X) ≤ traceNorm X := by
+  apply D5.S3.Quantum.Divergence.FaithfulConditionalGap.positive_trace_contraction
+    (referenceRaw T) _ _ X hX
+  · intro Y hY
+    exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm
+      (referenceAction_nonneg T (CStarMatrix.ofMatrix Y)
+        (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hY))
+  · intro Y
+    exact referenceAction_trace T (CStarMatrix.ofMatrix Y)
+
+private theorem referenceState_contract (T : QuantumChannel B C)
+    (P Q : DensityState (A × B)) :
+    traceDistance (referenceState T P) (referenceState T Q) ≤ traceDistance P Q := by
+  have hc := referenceRaw_contract T
+    (CStarMatrix.ofMatrix.symm P.1 - CStarMatrix.ofMatrix.symm Q.1)
+    ((density_posSemidef P).isHermitian.sub (density_posSemidef Q).isHermitian)
+  have he : referenceRaw T
+      (CStarMatrix.ofMatrix.symm P.1 - CStarMatrix.ofMatrix.symm Q.1) =
+      CStarMatrix.ofMatrix.symm (referenceState T P).1 -
+        CStarMatrix.ofMatrix.symm (referenceState T Q).1 := by
+    rw [map_sub]
+    rfl
+  rw [he] at hc
+  exact div_le_div_of_nonneg_right hc (by norm_num)
+
+private theorem referenceState_product (T : QuantumChannel B C)
+    (a : DensityState A) (b : DensityState B) :
+    referenceState T (productState a b) = productState a (T.mapState b) := by
+  apply Subtype.ext
+  apply CStarMatrix.ext
+  rintro ⟨i, u⟩ ⟨j, v⟩
+  change T.toCompletelyPositiveMap
+    (CStarMatrix.ofMatrix (fun x y => a.1 i j * b.1 x y)) u v =
+      a.1 i j * T.toCompletelyPositiveMap b.1 u v
+  have he : CStarMatrix.ofMatrix (fun x y => a.1 i j * b.1 x y) =
+      a.1 i j • b.1 := rfl
+  rw [he, map_smul]
+  rfl
+
+private theorem cstar_sum_entry {I : Type*} [Fintype I]
+    (f : I → CStarMatrix B B ℂ) (i j : B) :
+    (∑ k, f k) i j = ∑ k, f k i j := by
+  classical
+  suffices h : ∀ s : Finset I, (∑ k ∈ s, f k) i j = ∑ k ∈ s, f k i j by
+    simpa only [Finset.mem_univ, Finset.sum_const_zero, if_true] using h Finset.univ
+  intro s
+  induction s using Finset.induction_on with
+  | empty => simp only [Finset.sum_empty, CStarMatrix.zero_apply]
+  | @insert k s hk ih =>
+    simp only [Finset.sum_insert hk, CStarMatrix.add_apply, ih]
+
+private theorem slice_sub (D E : Matrix (A × B) (A × B) ℂ)
+    (F : CStarMatrix A A ℂ) :
+    sliceLinear (D - E) F = sliceLinear D F - sliceLinear E F := by
+  apply CStarMatrix.ext
+  intro j k
+  change Matrix.trace (CStarMatrix.ofMatrix.symm F *
+    (block D j k - block E j k)) = _
+  rw [Matrix.mul_sub, Matrix.trace_sub]
+  rfl
+
+private theorem slice_expansion (D : Matrix (A × B) (A × B) ℂ)
+    (F : Matrix A A ℂ) : sliceLinear D (CStarMatrix.ofMatrix F) =
+      ∑ a : A, ∑ b : A, F a b •
+        CStarMatrix.ofMatrix (D.submatrix (fun j => (b, j)) (fun k => (a, k))) := by
+  apply CStarMatrix.ext
+  intro j k
+  change (∑ a : A, ∑ b : A, F a b * D (b, j) (a, k)) =
+    (∑ a : A, ∑ b : A, F a b •
+      CStarMatrix.ofMatrix (D.submatrix (fun j => (b, j)) (fun k => (a, k)))) j k
+  simp only [cstar_sum_entry, CStarMatrix.smul_apply,
+    CStarMatrix.ofMatrix_apply, Matrix.submatrix_apply, smul_eq_mul]
+
+private theorem slice_reference (T : QuantumChannel B C)
+    (D : Matrix (A × B) (A × B) ℂ) (F : Matrix A A ℂ) :
+    sliceLinear (referenceRaw T D) (CStarMatrix.ofMatrix F) =
+      T.toCompletelyPositiveMap (sliceLinear D (CStarMatrix.ofMatrix F)) := by
+  rw [slice_expansion D F]
+  simp only [map_sum, map_smul]
+  apply CStarMatrix.ext
+  intro u v
+  change (∑ a : A, ∑ b : A, F a b *
+    T.toCompletelyPositiveMap
+      (CStarMatrix.ofMatrix (D.submatrix (fun j => (b, j)) (fun k => (a, k)))) u v) =
+    (∑ a : A, ∑ b : A, F a b • T.toCompletelyPositiveMap
+      (CStarMatrix.ofMatrix (D.submatrix (fun j => (b, j)) (fun k => (a, k))))) u v
+  simp only [cstar_sum_entry, CStarMatrix.smul_apply, smul_eq_mul]
+
+private def partialTraceRightLinear :
+    Matrix (A × B) (A × B) ℂ →ₗ[ℂ] Matrix A A ℂ where
+  toFun := partialTraceRight
+  map_add' := partialTraceRight_add
+  map_smul' z D := by ext a b; simp [partialTraceRight, Finset.mul_sum]
+
+private theorem partialTraceRight_contract (D : Matrix (A × B) (A × B) ℂ)
+    (hD : D.IsHermitian) : traceNorm (partialTraceRight D) ≤ traceNorm D := by
+  apply D5.S3.Quantum.Divergence.FaithfulConditionalGap.positive_trace_contraction
+    partialTraceRightLinear _ _ D hD
+  · intro X hX
+    exact (partialTraceRight_posSemidef (Matrix.nonneg_iff_posSemidef.mp hX)).nonneg
+  · exact trace_partialTraceRight
+
+private def partialTraceLeftLinear :
+    Matrix (A × B) (A × B) ℂ →ₗ[ℂ] Matrix B B ℂ where
+  toFun := partialTraceLeft
+  map_add' := partialTraceLeft_add
+  map_smul' z D := by ext a b; simp [partialTraceLeft, Finset.mul_sum]
+
+private theorem partialTraceLeft_contract (D : Matrix (A × B) (A × B) ℂ)
+    (hD : D.IsHermitian) : traceNorm (partialTraceLeft D) ≤ traceNorm D := by
+  apply D5.S3.Quantum.Divergence.FaithfulConditionalGap.positive_trace_contraction
+    partialTraceLeftLinear _ _ D hD
+  · intro X hX
+    exact (partialTraceLeft_posSemidef (Matrix.nonneg_iff_posSemidef.mp hX)).nonneg
+  · exact trace_partialTraceLeft
+
+private def tensorLeft : Matrix A A ℂ →⋆ₐ[ℂ] Matrix (A × B) (A × B) ℂ where
+  toFun F := F ⊗ₖ (1 : Matrix B B ℂ)
+  map_one' := Matrix.one_kronecker_one
+  map_mul' F G := by rw [← Matrix.mul_kronecker_mul, Matrix.one_mul]
+  map_zero' := Matrix.zero_kronecker _
+  map_add' F G := Matrix.add_kronecker _ _ _
+  commutes' z := by simp [Algebra.algebraMap_eq_smul_one, Matrix.smul_kronecker]
+  map_star' F := by simp only [star, Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one]
+
+private def tensorRight : Matrix B B ℂ →⋆ₐ[ℂ] Matrix (A × B) (A × B) ℂ where
+  toFun F := (1 : Matrix A A ℂ) ⊗ₖ F
+  map_one' := Matrix.one_kronecker_one
+  map_mul' F G := by rw [← Matrix.mul_kronecker_mul, Matrix.one_mul]
+  map_zero' := Matrix.kronecker_zero _
+  map_add' F G := Matrix.kronecker_add _ _ _
+  commutes' z := by simp [Algebra.algebraMap_eq_smul_one, Matrix.kronecker_smul]
+  map_star' F := by simp only [star, Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one]
+
+private theorem tensor_operatorNorm_le (F : Matrix A A ℂ) (G : Matrix B B ℂ) :
+    ‖F ⊗ₖ G‖ ≤ ‖F‖ * ‖G‖ := by
+  have he : F ⊗ₖ G = tensorLeft (B := B) F * tensorRight (A := A) G := by
+    change F ⊗ₖ G = (F ⊗ₖ 1) * (1 ⊗ₖ G)
+    rw [← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul]
+  rw [he]
+  exact (norm_mul_le _ _).trans
+    (mul_le_mul (NonUnitalStarAlgHom.norm_apply_le tensorLeft F)
+      (NonUnitalStarAlgHom.norm_apply_le tensorRight G) (norm_nonneg _) (norm_nonneg _))
+
+private theorem slice_hermitian (D : Matrix (A × B) (A × B) ℂ)
+    (hD : D.IsHermitian) (F : Matrix A A ℂ) (hF : F.IsHermitian) :
+    (CStarMatrix.ofMatrix.symm (sliceLinear D (CStarMatrix.ofMatrix F))).IsHermitian := by
+  have hb (j k : B) : (block D j k)ᴴ = block D k j := by
+    ext a b
+    exact congrFun (congrFun hD.eq (a, k)) (b, j)
+  ext j k
+  change star (Matrix.trace (F * block D k j)) = Matrix.trace (F * block D j k)
+  rw [← Matrix.trace_conjTranspose, Matrix.conjTranspose_mul, hF.eq, hb,
+    Matrix.trace_mul_comm]
+
+private theorem slice_trace_zero (P : DensityState (A × Fin 2))
+    (F : Matrix A A ℂ) :
+    Matrix.trace (CStarMatrix.ofMatrix.symm (sliceLinear (centered P)
+      (CStarMatrix.ofMatrix F))) = 0 := by
+  have hz := (centered_marginals_zero P).2
+  have he : block (centered P) 0 0 + block (centered P) 1 1 = 0 := by
+    ext a b
+    simpa only [partialTraceRight, Fin.sum_univ_two, block,
+      Matrix.add_apply, Matrix.submatrix_apply, Matrix.zero_apply] using
+      congrFun (congrFun hz a) b
+  rw [Matrix.trace, Fin.sum_univ_two]
+  change Matrix.trace (F * block (centered P) 0 0) +
+    Matrix.trace (F * block (centered P) 1 1) = 0
+  rw [← Matrix.trace_add, ← Matrix.mul_add, he, Matrix.mul_zero, Matrix.trace_zero]
+
+private theorem slice_tensor_pairing (D : Matrix (A × B) (A × B) ℂ)
+    (F : Matrix A A ℂ) (G : Matrix B B ℂ) :
+    Matrix.trace ((F ⊗ₖ G) * D) =
+      Matrix.trace (G * CStarMatrix.ofMatrix.symm (sliceLinear D (CStarMatrix.ofMatrix F))) := by
+  simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Fintype.sum_prod_type,
+    Matrix.kronecker_apply]
+  change (∑ a : A, ∑ j : B, ∑ b : A, ∑ k : B,
+    F a b * G j k * D (b, k) (a, j)) =
+    ∑ j : B, ∑ k : B, G j k *
+      ∑ a : A, ∑ b : A, F a b * D (b, k) (a, j)
+  simp_rw [Finset.mul_sum]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro j hj
+  rw [Finset.sum_comm]
+  calc
+    _ = ∑ b : A, ∑ k : B, ∑ a : A,
+        G j k * (F a b * D (b, k) (a, j)) := by
+      apply Finset.sum_congr rfl
+      intro b hb
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro k hk
+      apply Finset.sum_congr rfl
+      intro a ha
+      ring
+    _ = _ := by rw [Finset.sum_comm]; apply Finset.sum_congr rfl; intro k hk; rw [Finset.sum_comm]
+
+private theorem slice_traceNorm_contract (D : Matrix (A × B) (A × B) ℂ)
+    (hD : D.IsHermitian) (F : Matrix A A ℂ) (hF : F.IsHermitian) (hn : ‖F‖ ≤ 1) :
+    traceNorm (CStarMatrix.ofMatrix.symm (sliceLinear D (CStarMatrix.ofMatrix F))) ≤
+      traceNorm D := by
+  apply D5.S3.Quantum.Foundation.FiniteHermitianTraceDuality.hermitian_traceNorm_le_tests
+    _ (slice_hermitian D hD F hF)
+  intro G hG hgn
+  rw [← slice_tensor_pairing]
+  have hc : ‖F ⊗ₖ G‖ ≤ 1 :=
+    (tensor_operatorNorm_le F G).trans (by nlinarith [norm_nonneg F, norm_nonneg G])
+  exact (D5.S3.Quantum.Matrix.UniformVarianceTraceBound.re_trace_mul_le _ D).trans
+    (mul_le_of_le_one_left (traceNorm_nonneg D) hc)
+
+private def abTrace : Matrix (A × (B × C)) (A × (B × C)) ℂ →ₗ[ℂ]
+    Matrix (A × B) (A × B) ℂ where
+  toFun D := partialTraceRight (D.submatrix (Equiv.prodAssoc A B C) (Equiv.prodAssoc A B C))
+  map_add' D E := by ext a b; simp [partialTraceRight, Finset.sum_add_distrib]
+  map_smul' z D := by ext a b; simp [partialTraceRight, Finset.mul_sum]
+
+private theorem abTrace_contract (D : Matrix (A × (B × C)) (A × (B × C)) ℂ)
+    (hD : D.IsHermitian) : traceNorm (abTrace D) ≤ traceNorm D := by
+  have h := partialTraceRight_contract
+    (D.submatrix (Equiv.prodAssoc A B C) (Equiv.prodAssoc A B C))
+    (hD.submatrix _)
+  rw [D5.S3.Quantum.Entanglement.PermutationCriteria.NormInvariance.traceNorm_submatrix_equiv] at h
+  exact h
+
+private theorem slice_abTrace (D : Matrix (A × (B × C)) (A × (B × C)) ℂ)
+    (F : Matrix A A ℂ) :
+    sliceLinear (abTrace D) (CStarMatrix.ofMatrix F) =
+      CStarMatrix.ofMatrix (partialTraceRight
+        (CStarMatrix.ofMatrix.symm (sliceLinear D (CStarMatrix.ofMatrix F)))) := by
+  apply CStarMatrix.ext
+  intro j k
+  change (∑ a : A, ∑ b : A, F a b * ∑ c : C, D (b, (j, c)) (a, (k, c))) =
+    ∑ c : C, ∑ a : A, ∑ b : A, F a b * D (b, (j, c)) (a, (k, c))
+  simp_rw [Finset.mul_sum]
+  calc
+    _ = ∑ a : A, ∑ c : C, ∑ b : A, F a b * D (b, (j, c)) (a, (k, c)) := by
+      apply Finset.sum_congr rfl
+      intro a ha
+      exact Finset.sum_comm
+    _ = _ := Finset.sum_comm
+
+private def reducedAction (T : QuantumChannel B (B × C)) :
+    CStarMatrix B B ℂ →ₗ[ℂ] CStarMatrix B B ℂ :=
+  CStarMatrix.ofMatrixₗ.toLinearMap.comp
+    (partialTraceRightLinear.comp
+      (CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp T.toCompletelyPositiveMap.toLinearMap))
+
+private def reducedReference (T : QuantumChannel B (B × C)) :
+    Matrix (A × B) (A × B) ℂ →ₗ[ℂ] Matrix (A × B) (A × B) ℂ :=
+  abTrace.comp (referenceRaw T)
+
+private theorem slice_reducedReference (T : QuantumChannel B (B × C))
+    (D : Matrix (A × B) (A × B) ℂ) (F : Matrix A A ℂ) :
+    sliceLinear (reducedReference T D) (CStarMatrix.ofMatrix F) =
+      reducedAction T (sliceLinear D (CStarMatrix.ofMatrix F)) := by
+  change sliceLinear (abTrace (referenceRaw T D)) (CStarMatrix.ofMatrix F) = _
+  rw [slice_abTrace, slice_reference]
+  rfl
+
+private theorem actual_AB_residual (rho : DensityState (A × (B × C)))
+    (T : QuantumChannel B (B × C)) :
+    let P := marginalRight (relabelState (Equiv.prodAssoc A B C) rho)
+    traceNorm (CStarMatrix.ofMatrix.symm P.1 -
+      reducedReference T (CStarMatrix.ofMatrix.symm P.1)) ≤
+      2 * traceDistance rho (referenceState T P) := by
+  dsimp only
+  let P := marginalRight (relabelState (Equiv.prodAssoc A B C) rho)
+  let tau := referenceState T P
+  have hc := abTrace_contract
+    (CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm tau.1)
+    ((density_posSemidef rho).isHermitian.sub (density_posSemidef tau).isHermitian)
+  rw [map_sub] at hc
+  change traceNorm (CStarMatrix.ofMatrix.symm P.1 -
+    reducedReference T (CStarMatrix.ofMatrix.symm P.1)) ≤ _ at hc
+  change traceNorm _ ≤ 2 * (traceNorm _ / 2)
+  linarith
+
+private theorem slice_one (D : Matrix (A × B) (A × B) ℂ) :
+    sliceLinear D 1 = CStarMatrix.ofMatrix (partialTraceLeft D) := by
+  apply CStarMatrix.ext
+  intro j k
+  change (∑ a : A, ∑ b : A, (1 : Matrix A A ℂ) a b * D (b, j) (a, k)) =
+    ∑ a : A, D (a, j) (a, k)
+  simp [Matrix.one_apply]
+
+private theorem reducedReference_left (T : QuantumChannel B (B × C))
+    (D : Matrix (A × B) (A × B) ℂ) :
+    CStarMatrix.ofMatrix (partialTraceLeft (reducedReference T D)) =
+      reducedAction T (CStarMatrix.ofMatrix (partialTraceLeft D)) := by
+  have h := slice_reducedReference T D (1 : Matrix A A ℂ)
+  simpa only [CStarMatrix.ofMatrix_eq_ofMatrixStarAlgEquiv, map_one, slice_one] using h
+
+private theorem actual_B_residual (rho : DensityState (A × (B × C)))
+    (T : QuantumChannel B (B × C)) :
+    let P := marginalRight (relabelState (Equiv.prodAssoc A B C) rho)
+    traceNorm (CStarMatrix.ofMatrix.symm (marginalLeft P).1 -
+      CStarMatrix.ofMatrix.symm (reducedAction T (marginalLeft P).1)) ≤
+      2 * traceDistance rho (referenceState T P) := by
+  dsimp only
+  let P := marginalRight (relabelState (Equiv.prodAssoc A B C) rho)
+  let tau := referenceState T P
+  let Q := marginalRight (relabelState (Equiv.prodAssoc A B C) tau)
+  have hab := actual_AB_residual rho T
+  have hc := partialTraceLeft_contract
+    (CStarMatrix.ofMatrix.symm P.1 - CStarMatrix.ofMatrix.symm Q.1)
+    ((density_posSemidef P).isHermitian.sub (density_posSemidef Q).isHermitian)
+  have he := reducedReference_left T (CStarMatrix.ofMatrix.symm P.1)
+  have hq : CStarMatrix.ofMatrix.symm Q.1 = reducedReference T (CStarMatrix.ofMatrix.symm P.1) := rfl
+  have ht : partialTraceLeft
+      (CStarMatrix.ofMatrix.symm P.1 - CStarMatrix.ofMatrix.symm Q.1) =
+      CStarMatrix.ofMatrix.symm (marginalLeft P).1 -
+        CStarMatrix.ofMatrix.symm (reducedAction T (marginalLeft P).1) := by
+    change partialTraceLeftLinear (_ - _) = _
+    rw [map_sub, hq]
+    have he' := congrArg CStarMatrix.ofMatrix.symm he
+    change partialTraceLeft _ = _ at he'
+    change partialTraceLeft _ - partialTraceLeft _ = _
+    rw [he']
+    rfl
+  rw [ht] at hc
+  exact hc.trans hab
+
+private theorem reducedReference_product (T : QuantumChannel B (B × C))
+    (a : DensityState A) (b : DensityState B) :
+    reducedReference T (CStarMatrix.ofMatrix.symm (productState a b).1) =
+      CStarMatrix.ofMatrix.symm a.1 ⊗ₖ CStarMatrix.ofMatrix.symm (reducedAction T b.1) := by
+  have h := referenceState_product T a b
+  have he := congrArg (fun rho : DensityState (A × (B × C)) =>
+    abTrace (CStarMatrix.ofMatrix.symm rho.1)) h
+  change reducedReference T (CStarMatrix.ofMatrix.symm (productState a b).1) = _ at he
+  rw [he]
+  ext ⟨i, j⟩ ⟨k, l⟩
+  change (∑ c : C, a.1 i k * T.toCompletelyPositiveMap b.1 (j, c) (l, c)) =
+    a.1 i k * ∑ c : C, T.toCompletelyPositiveMap b.1 (j, c) (l, c)
+  exact (Finset.mul_sum _ _ _).symm
+
+/-- Every Hermitian contraction on A inherits approximate fixedness under the
+actual reduced recovery channel, with the half trace-distance convention. -/
+theorem all_centered_tests_residual (rho : DensityState (A × (Fin 2 × C)))
+    (T : QuantumChannel (Fin 2) (Fin 2 × C))
+    (F : Matrix A A ℂ) (hF : F.IsHermitian) (hn : ‖F‖ ≤ 1) :
+    let P := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho)
+    let K := sliceLinear (centered P) (CStarMatrix.ofMatrix F)
+    traceNorm (CStarMatrix.ofMatrix.symm (reducedAction T K - K)) ≤
+      4 * traceDistance rho (referenceState T P) := by
+  dsimp only
+  let P := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho)
+  let Q := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) (referenceState T P))
+  let a := marginalRight P
+  let b := marginalLeft P
+  let D := CStarMatrix.ofMatrix.symm P.1 - CStarMatrix.ofMatrix.symm Q.1
+  let E := CStarMatrix.ofMatrix.symm b.1 - CStarMatrix.ofMatrix.symm (reducedAction T b.1)
+  have hD : D.IsHermitian := (density_posSemidef P).isHermitian.sub
+    (density_posSemidef Q).isHermitian
+  have hE : E.IsHermitian := by
+    have he := reducedReference_left T (CStarMatrix.ofMatrix.symm P.1)
+    have he' := congrArg CStarMatrix.ofMatrix.symm he
+    change CStarMatrix.ofMatrix.symm (marginalLeft Q).1 =
+      CStarMatrix.ofMatrix.symm (reducedAction T b.1) at he'
+    rw [show E = CStarMatrix.ofMatrix.symm b.1 -
+      CStarMatrix.ofMatrix.symm (marginalLeft Q).1 from congrArg
+        (fun X => CStarMatrix.ofMatrix.symm b.1 - X) he'.symm]
+    exact (density_posSemidef b).isHermitian.sub (density_posSemidef (marginalLeft Q)).isHermitian
+  have hd := actual_AB_residual rho T
+  have hb := actual_B_residual rho T
+  have he : centered P - reducedReference T (centered P) =
+      D - (CStarMatrix.ofMatrix.symm a.1 ⊗ₖ E) := by
+    unfold centered
+    rw [map_sub, reducedReference_product]
+    change (_ - _) - (_ - _) = _ - _
+    ext ⟨i, j⟩ ⟨k, l⟩
+    change (P.1 (i, j) (k, l) - a.1 i k * b.1 j l) -
+      (Q.1 (i, j) (k, l) - a.1 i k * reducedAction T b.1 j l) =
+      (P.1 (i, j) (k, l) - Q.1 (i, j) (k, l)) -
+        a.1 i k * (b.1 j l - reducedAction T b.1 j l)
+    ring
+  have hs := slice_traceNorm_contract D hD F hF hn
+  have ht := slice_traceNorm_contract (CStarMatrix.ofMatrix.symm a.1 ⊗ₖ E)
+    (isHermitian_kronecker (density_posSemidef a).isHermitian hE) F hF hn
+  have ha : traceNorm (CStarMatrix.ofMatrix.symm a.1) = 1 := by
+    have h := traceNorm_of_posSemidef (density_posSemidef a)
+    have hr := congrArg Complex.re h
+    change traceNorm (CStarMatrix.ofMatrix.symm a.1) =
+      (Matrix.trace (CStarMatrix.ofMatrix.symm a.1)).re at hr
+    exact hr.trans (congrArg Complex.re a.2.2)
+  rw [traceNorm_tensor, ha, one_mul] at ht
+  have hpair := traceNorm_add_le
+    (CStarMatrix.ofMatrix.symm (sliceLinear D (CStarMatrix.ofMatrix F)))
+    (-CStarMatrix.ofMatrix.symm (sliceLinear (CStarMatrix.ofMatrix.symm a.1 ⊗ₖ E)
+      (CStarMatrix.ofMatrix F)))
+  rw [traceNorm_neg] at hpair
+  have hk : CStarMatrix.ofMatrix.symm
+      (reducedAction T (sliceLinear (centered P) (CStarMatrix.ofMatrix F)) -
+        sliceLinear (centered P) (CStarMatrix.ofMatrix F)) =
+      -(CStarMatrix.ofMatrix.symm (sliceLinear D (CStarMatrix.ofMatrix F)) -
+        CStarMatrix.ofMatrix.symm (sliceLinear (CStarMatrix.ofMatrix.symm a.1 ⊗ₖ E)
+          (CStarMatrix.ofMatrix F))) := by
+    rw [← slice_reducedReference]
+    have hh := congrArg (fun X => sliceLinear X (CStarMatrix.ofMatrix F)) he
+    rw [slice_sub, slice_sub] at hh
+    have hh' := congrArg CStarMatrix.ofMatrix.symm hh
+    have hhentry := fun j k => congrArg (fun M : CStarMatrix (Fin 2) (Fin 2) ℂ => M j k) hh
+    ext j k
+    have h := hhentry j k
+    change sliceLinear (centered P) (CStarMatrix.ofMatrix F) j k -
+      sliceLinear (reducedReference T (centered P)) (CStarMatrix.ofMatrix F) j k =
+      sliceLinear D (CStarMatrix.ofMatrix F) j k -
+        sliceLinear (CStarMatrix.ofMatrix.symm a.1 ⊗ₖ E) (CStarMatrix.ofMatrix F) j k at h
+    change sliceLinear (reducedReference T (centered P)) (CStarMatrix.ofMatrix F) j k -
+      sliceLinear (centered P) (CStarMatrix.ofMatrix F) j k =
+      -(sliceLinear D (CStarMatrix.ofMatrix F) j k -
+        sliceLinear (CStarMatrix.ofMatrix.symm a.1 ⊗ₖ E) (CStarMatrix.ofMatrix F) j k)
+    linear_combination -h
+  rw [hk, traceNorm_neg, sub_eq_add_neg]
+  change traceNorm D ≤ _ at hd
+  change traceNorm E ≤ _ at hb
+  linarith
+
+private theorem traceless_qubit_diagonalization
+    (K : Matrix (Fin 2) (Fin 2) ℂ) (hK : K.IsHermitian) (ht : Matrix.trace K = 0) :
+    ∃ U : Matrix.unitaryGroup (Fin 2) ℂ,
+      U.valᴴ * K * U.val = Matrix.diagonal ![(‖K‖ : ℂ), -(‖K‖ : ℂ)] := by
+  let V := hK.eigenvectorUnitary
+  let d := hK.eigenvalues
+  have hsum : d 0 + d 1 = 0 := by
+    have hh := congrArg RCLike.re hK.trace_eq_sum_eigenvalues
+    rw [ht] at hh
+    simpa only [Fin.sum_univ_two, map_add, RCLike.ofReal_re,
+      map_zero] using hh.symm
+  have hd : d 1 = -d 0 := by linarith
+  have hv : V.valᴴ * K * V.val = Matrix.diagonal (fun i => (d i : ℂ)) := by
+    simpa only [V, d, Function.comp_def, RCLike.ofReal_eq_complex_ofReal,
+      Unitary.conjStarAlgAut_star_apply, Matrix.star_eq_conjTranspose] using
+      hK.conjStarAlgAut_star_eigenvectorUnitary
+  have hnorm : ‖K‖ = |d 0| := by
+    have he : ‖K‖ = ‖fun i => (d i : ℂ)‖ := by
+      conv_lhs => rw [hK.spectral_theorem]
+      simp only [Unitary.conjStarAlgAut_apply, ← Unitary.coe_star,
+        CStarRing.norm_mul_coe_unitary, CStarRing.norm_coe_unitary_mul,
+        Matrix.l2_opNorm_diagonal]
+      rfl
+    rw [he]
+    apply le_antisymm
+    · apply (pi_norm_le_iff_of_nonneg (abs_nonneg (d 0))).mpr
+      intro i
+      fin_cases i <;> simp [hd, Complex.norm_real, Real.norm_eq_abs]
+    · simpa only [Complex.norm_real, Real.norm_eq_abs] using
+        (norm_le_pi_norm (fun i => (d i : ℂ)) (0 : Fin 2))
+  by_cases hp : 0 ≤ d 0
+  · refine ⟨V, hv.trans ?_⟩
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [Matrix.diagonal_apply, hnorm, abs_of_nonneg hp, hd]
+  · have hn : d 0 < 0 := lt_of_not_ge hp
+    let S : Matrix.unitaryGroup (Fin 2) ℂ := ⟨pauli 0, by
+      apply Matrix.mem_unitaryGroup_iff'.mpr
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        norm_num [pauli,
+          D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+          D5.S3.Quantum.FiniteDimensional.qubitX, Matrix.mul_apply, Fin.sum_univ_two,
+          Matrix.conjTranspose_apply]⟩
+    refine ⟨V * S, ?_⟩
+    change (V.val * S.val)ᴴ * K * (V.val * S.val) = _
+    rw [Matrix.conjTranspose_mul]
+    have he : S.valᴴ * V.valᴴ * K * (V.val * S.val) =
+        S.valᴴ * (V.valᴴ * K * V.val) * S.val := by simp only [Matrix.mul_assoc]
+    rw [he, hv]
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [S, pauli,
+        D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+        D5.S3.Quantum.FiniteDimensional.qubitX, Matrix.mul_apply, Fin.sum_univ_two,
+        Matrix.conjTranspose_apply, Matrix.diagonal_apply, hnorm, abs_of_neg hn, hd]
+
+/-- Rotate the same input and output qubit coordinate to the eigenbasis of
+its nonzero test, retaining the full actual physical isometry. -/
+theorem diagonalized_residual_geometry {E : Type*} [Fintype E] [DecidableEq E]
+    (W : Matrix (Fin 2 × E) (Fin 2) ℂ) (hW : Wᴴ * W = 1)
+    (K : Matrix (Fin 2) (Fin 2) ℂ) (hK : K.IsHermitian) (ht : Matrix.trace K = 0)
+    (hx : 0 < ‖K‖) (e : ℝ) (he : traceNorm (reduced W K - K) ≤ e) :
+    ∃ (U : Matrix.unitaryGroup (Fin 2) ℂ)
+      (V : Matrix (Fin 2 × E) (Fin 2) ℂ),
+      Vᴴ * V = 1 ∧
+      U.valᴴ * K * U.val = Matrix.diagonal ![(‖K‖ : ℂ), -(‖K‖ : ℂ)] ∧
+      (∀ M : Matrix (Fin 2) (Fin 2) ℂ,
+        reduced V M = U.valᴴ * reduced W (U.val * M * U.valᴴ) * U.val) ∧
+      ‖column V 1 0‖ ^ 2 + ‖column V 0 1‖ ^ 2 ≤ (e / ‖K‖) / 2 ∧
+      ‖inner ℂ (column V 1 0) (column V 0 0) -
+        inner ℂ (column V 1 1) (column V 0 1)‖ ≤ (e / ‖K‖) / 2 := by
+  obtain ⟨U, hu⟩ := traceless_qubit_diagonalization K hK ht
+  obtain ⟨V, hv, hcov⟩ := rotated_dilation W hW U
+  have huU : U.val * U.valᴴ = 1 := Unitary.coe_mul_star_self U
+  refine ⟨U, V, hv, hu, hcov, ?_⟩
+  let Z : Matrix (Fin 2) (Fin 2) ℂ := Matrix.diagonal ![1, -1]
+  have hku : U.valᴴ * K * U.val = (‖K‖ : ℂ) • Z := by
+    rw [hu]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [Z]
+  have hk : U.val * ((‖K‖ : ℂ) • Z) * U.valᴴ = K := by
+    rw [← hku]
+    calc
+      _ = (U.val * U.valᴴ) * K * (U.val * U.valᴴ) := by simp [Matrix.mul_assoc]
+      _ = K := by rw [huU]; simp
+  have hs : (‖K‖ : ℂ) • (reduced V Z - Z) =
+      U.valᴴ * (reduced W K - K) * U.val := by
+    have hr : reduced V ((‖K‖ : ℂ) • Z) = (‖K‖ : ℂ) • reduced V Z := by
+      ext i j
+      simp [reduced, partialTraceRight, Matrix.mul_smul, Matrix.smul_mul,
+        Finset.mul_sum]
+    rw [smul_sub, ← hr, hcov, hk, Matrix.mul_sub, Matrix.sub_mul, hku]
+  have htN : ‖K‖ * traceNorm (reduced V Z - Z) ≤ e := by
+    rw [← D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.traceNorm_smul_nonneg
+      _ ‖K‖ (norm_nonneg _), hs]
+    have hi :=
+      D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.traceNorm_isometry
+        U.valᴴ (by simpa only [Matrix.conjTranspose_conjTranspose] using huU) (reduced W K - K)
+    simpa only [Matrix.conjTranspose_conjTranspose] using hi.le.trans he
+  apply diagonal_residual_controls_coefficients V hv (e / ‖K‖)
+  exact (le_div_iff₀ hx).mpr (by simpa [mul_comm] using htN)
+
+/-- Hermitian testing of the complex off-diagonal block retains the factor
+of two in complex trace duality. The isometry and all tests refer to the same
+centered matrix. -/
+theorem complex_block_bound_of_diagonal_geometry
+    {E : Type*} [Fintype E]
+    (P : DensityState (A × Fin 2))
+    (W : Matrix (Fin 2 × E) (Fin 2) ℂ) (hW : Wᴴ * W = 1)
+    (x r : ℝ) (hx : 0 < x) (hr : 0 ≤ r)
+    (hmax : ∀ F : CStarMatrix A A ℂ, IsSelfAdjoint F → ‖F‖ ≤ 1 →
+      ‖sliceLinear (centered P) F‖ ≤ x)
+    (hres : ∀ F : Matrix A A ℂ, F.IsHermitian → ‖F‖ ≤ 1 →
+      traceNorm (reduced W (CStarMatrix.ofMatrix.symm
+        (sliceLinear (centered P) (CStarMatrix.ofMatrix F))) -
+        CStarMatrix.ofMatrix.symm (sliceLinear (centered P) (CStarMatrix.ofMatrix F))) ≤ 4 * r)
+    (hflip : ‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2 ≤ 2 * r / x)
+    (hdiff : ‖inner ℂ (column W 1 0) (column W 0 0) -
+      inner ℂ (column W 1 1) (column W 0 1)‖ ≤ 2 * r / x)
+    (hg : 0 < ‖1 - inner ℂ (column W 1 1) (column W 0 0)‖) :
+    traceNorm (block (centered P) 0 1) ≤
+      16 * r / ‖1 - inner ℂ (column W 1 1) (column W 0 0)‖ := by
+  have hdual : traceNorm (block (centered P) 0 1) ≤
+      2 * (8 * r / ‖1 - inner ℂ (column W 1 1) (column W 0 0)‖) := by
+    apply D5.S3.Quantum.Foundation.FiniteHermitianTraceDuality.complex_traceNorm_le_twice_tests
+    intro F hF hFn
+    let K := CStarMatrix.ofMatrix.symm (sliceLinear (centered P) (CStarMatrix.ofMatrix F))
+    have hfc : IsSelfAdjoint (CStarMatrix.ofMatrix F) :=
+      (show IsSelfAdjoint F from hF).map CStarMatrix.ofMatrixStarAlgEquiv
+    have hfn : ‖CStarMatrix.ofMatrix F‖ ≤ 1 := by
+      change ‖CStarMatrix.ofMatrixStarAlgEquiv F‖ ≤ 1
+      rw [StarAlgEquiv.norm_map]
+      exact hFn
+    have hkn : ‖K‖ ≤ x := by
+      have hn : ‖K‖ = ‖sliceLinear (centered P) (CStarMatrix.ofMatrix F)‖ := by
+        change ‖CStarMatrix.ofMatrixStarAlgEquiv.symm _‖ = _
+        exact StarAlgEquiv.norm_map _ _
+      rw [hn]
+      exact hmax _ hfc hfn
+    have hk := offDiagonal_gap_bound W hW K
+      (slice_hermitian _ (centered_hermitian P) F hF) (slice_trace_zero P F)
+      x (4 * r) (2 * r / x) (2 * r / x) hkn (hres F hF hFn) hflip hdiff
+    have hs : ‖1 - inner ℂ (column W 1 1) (column W 0 0)‖ * ‖K 0 1‖ ≤ 8 * r := by
+      have hd : x ≠ 0 := ne_of_gt hx
+      have h1 : (2 * r / x) * x = 2 * r := by field_simp
+      have h2 : ((2 * r / x) / 2) * x = r := by field_simp
+      rw [h1, h2] at hk
+      linarith
+    change ‖K 0 1‖ ≤ _
+    exact (le_div_iff₀ hg).mpr (by simpa [mul_comm] using hs)
+  calc
+    _ ≤ _ := hdual
+    _ = _ := by ring
+
+/-- A small centered correlation gives a product state on the actual system. -/
+theorem product_repair_of_centered_correlation
+    (rho : DensityState (A × (Fin 2 × C)))
+    (T : QuantumChannel (Fin 2) (Fin 2 × C)) :
+    let P := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho)
+    ∃ F : CStarMatrix A A ℂ, IsSelfAdjoint F ∧ ‖F‖ ≤ 1 ∧
+      (∀ G : CStarMatrix A A ℂ, IsSelfAdjoint G → ‖G‖ ≤ 1 →
+        ‖sliceLinear (centered P) G‖ ≤ ‖sliceLinear (centered P) F‖) ∧
+      ∃ sigma : DensityState (A × (Fin 2 × C)),
+        qcmi (D5.S3.Quantum.Foundation.FiniteDensityPurification.toMState sigma) = 0 ∧
+        traceDistance rho sigma ≤ traceDistance rho (referenceState T P) +
+          3 * ‖sliceLinear (centered P) F‖ := by
+  dsimp only
+  let P := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho)
+  obtain ⟨F, hf, hfn, hmax, hbound⟩ := attained_centered_traceNorm_bound P
+  let sigma := productState (marginalRight P) (T.mapState (marginalLeft P))
+  refine ⟨F, hf, hfn, hmax, sigma,
+    D5.S3.Quantum.Information.StrongSubadditivity.MarkovConstructors.qcmi_product_left _ _, ?_⟩
+  have hc := referenceState_contract T P
+    (productState (marginalRight P) (marginalLeft P))
+  rw [referenceState_product] at hc
+  have hp : traceDistance P (productState (marginalRight P) (marginalLeft P)) ≤
+      3 * ‖sliceLinear (centered P) F‖ := by
+    change traceNorm (centered P) / 2 ≤ _
+    linarith
+  exact (traceDistance_triangle rho (referenceState T P) sigma).trans
+    (add_le_add le_rfl (hc.trans hp))
+
+end PhysicalRepair
+
+end D5.S3.Quantum.Recovery.QubitResidualRounding

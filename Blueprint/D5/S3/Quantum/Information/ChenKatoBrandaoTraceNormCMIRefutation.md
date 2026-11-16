@@ -4,7 +4,31 @@
 
 A flagged measurement in two qubit bases strictly contracts local trace distance while preserving the trace-norm conditional mutual information of a tripartite state.
 
-**Definition 1.1 (Local trace-norm contraction ratio).**
+**Definition 1.1 (A traceless Hermitian qubit matrix).**
+
+Lean statement: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.qubit`
+
+*Formalization.* `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.qubit` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The real scalar x and complex scalar y define the two by two matrix with diagonal x and minus x and off-diagonal y and its conjugate.
+
+**Theorem 1.2 (Exact traceless qubit trace norm).**
+
+Lean statement: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.qubit_norm`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.qubit_norm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The trace norm of qubit(x,y) equals twice the square root of x squared plus the complex norm squared of y. Its adjoint product is that nonnegative scalar times the identity.
+
+**Definition 1.3 (Local trace-norm contraction ratio).**
 
 $$\forall n \in \mathbb{N},\; \forall nPrime \in \mathbb{N},\; \forall iota \in \operatorname{Type},\; [\operatorname{Fintype}\left(iota\right)] \forall K \in iota \to \operatorname{Matrix}\left(\operatorname{Fin}\left(nPrime\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right),\; \operatorname{localContraction}\left(K\right) = \operatorname{sSup}\left(\{r:\mathbb{R} \mid \exists rho \in \operatorname{DensityState}\left(\operatorname{Fin}\left(n\right)\right),\; \exists rhoPrime \in \operatorname{DensityState}\left(\operatorname{Fin}\left(n\right)\right),\; (\neg rho = rhoPrime) \land (r = \frac{\operatorname{traceNorm}\left(\operatorname{ofKraus}\left(K, K, \operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rho\right)\right)\right) - \operatorname{ofKraus}\left(K, K, \operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rhoPrime\right)\right)\right)\right)}{\operatorname{traceNorm}\left(\operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rho\right)\right) - \operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rhoPrime\right)\right)\right)})\}\right)$$
 
@@ -16,7 +40,7 @@ $$\forall n \in \mathbb{N},\; \forall nPrime \in \mathbb{N},\; \forall iota \in 
 
 Conjecture III.2, PDF p. 17: the local contraction ratio is the supremum of the trace-norm output difference divided by the trace-norm input difference. The two input DensityState values are distinct. Their underlying matrices are exposed by CStarMatrix.ofMatrix.symm. ofKraus(K,K,X) denotes FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus applied to K, K and X, namely the sum of K_i X K_i adjoint. The definition uses the repository traceNorm and the real supremum sSup.
 
-**Definition 1.2 (Trace-norm conditional mutual information).**
+**Definition 1.4 (Trace-norm conditional mutual information).**
 
 $$\forall dA \in \mathbb{N},\; \forall dB \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall M \in \operatorname{Matrix}\left(((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(n\right)), ((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(n\right)), \mathbb{C}\right),\; \operatorname{let} R:(\operatorname{Fin}\left(dA\right) \times (\operatorname{Fin}\left(dB\right) \times \operatorname{Fin}\left(n\right))) \to ((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(n\right)) := \operatorname{fun} (p:(\operatorname{Fin}\left(dA\right) \times (\operatorname{Fin}\left(dB\right) \times \operatorname{Fin}\left(n\right)))) \mapsto ((\operatorname{Prod.fst}\left(p\right), \operatorname{Prod.fst}\left(\operatorname{Prod.snd}\left(p\right)\right)), \operatorname{Prod.snd}\left(\operatorname{Prod.snd}\left(p\right)\right)), \operatorname{let} S:((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(n\right)) \to (\operatorname{Fin}\left(dA\right) \times (\operatorname{Fin}\left(dB\right) \times \operatorname{Fin}\left(n\right))) := \operatorname{fun} (p:((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(n\right))) \mapsto (\operatorname{Prod.fst}\left(\operatorname{Prod.fst}\left(p\right)\right), (\operatorname{Prod.snd}\left(\operatorname{Prod.fst}\left(p\right)\right), \operatorname{Prod.snd}\left(p\right))), \operatorname{let} AB:\operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right) := \operatorname{partialTraceRight}\left(M\right), \operatorname{let} A:\operatorname{Matrix}\left(\operatorname{Fin}\left(dA\right), \operatorname{Fin}\left(dA\right), \mathbb{C}\right) := \operatorname{partialTraceRight}\left(AB\right), \operatorname{let} B:\operatorname{Matrix}\left(\operatorname{Fin}\left(dB\right), \operatorname{Fin}\left(dB\right), \mathbb{C}\right) := \operatorname{partialTraceLeft}\left(AB\right), \operatorname{let} BC:\operatorname{Matrix}\left((\operatorname{Fin}\left(dB\right) \times \operatorname{Fin}\left(n\right)), (\operatorname{Fin}\left(dB\right) \times \operatorname{Fin}\left(n\right)), \mathbb{C}\right) := \operatorname{partialTraceLeft}\left(\operatorname{Matrix.submatrix}\left(M, R, R\right)\right), \operatorname{I1}\left(M\right) = \operatorname{traceNorm}\left(M - \operatorname{Matrix.submatrix}\left(\operatorname{Matrix.kronecker}\left(A, BC\right), S, S\right)\right) - \operatorname{traceNorm}\left(AB - \operatorname{Matrix.kronecker}\left(A, B\right)\right)$$
 
@@ -28,7 +52,7 @@ $$\forall dA \in \mathbb{N},\; \forall dB \in \mathbb{N},\; \forall n \in \mathb
 
 Definition 2, PDF p. 14, verbatim: I_1(A:C|B) := ||rho_ABC - rho_A tensor rho_BC||_1 - ||rho_AB - rho_A tensor rho_B||_1. The input coordinates are (A times B) times C. partialTraceRight traces the right factor; partialTraceLeft traces the left factor. The maps R and S reassociate the product indices in opposite directions. AB, A, B and BC are the literal reduced matrices. The tensor product A tensor BC is reassociated back to the input coordinates before subtraction. No rank condition is imposed.
 
-**Theorem 1.3 (Trace norm of a real diagonal matrix).**
+**Theorem 1.5 (Trace norm of a real diagonal matrix).**
 
 $$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall d \in n \to \mathbb{R},\; \operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(\operatorname{CFC.sqrt}\left(\operatorname{Matrix.conjTranspose}\left(\operatorname{Matrix.diagonal}\left(\operatorname{fun} (i:n) \mapsto \operatorname{Complex.ofReal}\left(d\left(i\right)\right)\right)\right) \cdot \operatorname{Matrix.diagonal}\left(\operatorname{fun} (i:n) \mapsto \operatorname{Complex.ofReal}\left(d\left(i\right)\right)\right)\right)\right)\right) = \sum_{i:n} (|d\left(i\right)|)$$
 
@@ -40,7 +64,7 @@ $$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\
 
 The trace norm of a complex diagonal matrix with real entries is the sum of their absolute values. The positive square root of its adjoint product is diagonal with entries equal to those absolute values. The index type is any finite type with decidable equality, including the empty type.
 
-**Definition 1.4 (Chen–Kato–Brandão Conjecture III.2).**
+**Definition 1.6 (Chen–Kato–Brandão Conjecture III.2).**
 
 $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall nPrime \in \mathbb{N},\; \forall iota \in \operatorname{Type},\; [\operatorname{Fintype}\left(iota\right)] \forall K \in iota \to \operatorname{Matrix}\left(\operatorname{Fin}\left(nPrime\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right),\; (\sum_{i:iota} (\operatorname{conjTranspose}\left(K\left(i\right)\right) \cdot K\left(i\right)) = 1) \Rightarrow ((\operatorname{localContraction}\left(K\right) < 1) \Rightarrow (\exists eta \in \mathbb{R},\; (eta < 1) \land (\forall dA \in \mathbb{N},\; \forall dB \in \mathbb{N},\; \forall rho \in \operatorname{DensityState}\left(((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(n\right))\right),\; \operatorname{let} L:iota \to \operatorname{Matrix}\left(((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(nPrime\right)), ((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(n\right)), \mathbb{C}\right) := \operatorname{fun} (i:iota) \mapsto \operatorname{Matrix.kronecker}\left((1:\operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right)), K\left(i\right)\right), \operatorname{I1}\left(\operatorname{ofKraus}\left(L, L, \operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rho\right)\right)\right)\right) \le eta \cdot \operatorname{I1}\left(\operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rho\right)\right)\right)))))$$
 
@@ -52,7 +76,7 @@ $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall nPrime \in \mathbb{
 
 Conjecture III.2, PDF p. 17, verbatim: For any channel E: C to CPrime with local contraction ratio eta_1,C < 1, there exists a global constant eta < 1 such that for any tripartite system ABC and any state rho_ABC, I_1(A:CPrime|B)_E(rho) <= eta I_1(A:C|B)_rho. All dimensions range over natural numbers. The finite Kraus family is arbitrary and its completeness equation is the channel hypothesis. L_i is the literal identity on AB kronecker K_i, and the bound applies uniformly to every DensityState on the input product carrier, including singular states.
 
-**Theorem 1.5 (A flagged qubit measurement refutes the conjecture).**
+**Theorem 1.7 (A flagged qubit measurement refutes the conjecture).**
 
 $$\neg claim$$
 
@@ -76,6 +100,8 @@ Take the channel from a qubit to four classical outcomes that measures the compu
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.claim`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.diagonal_norm`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.localContraction`
+- Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.qubit`
+- Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.qubit_norm`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.result`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)

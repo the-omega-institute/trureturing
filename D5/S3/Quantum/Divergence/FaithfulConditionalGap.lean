@@ -39,7 +39,7 @@ structure FiniteDivergence where
     [Fintype b] [DecidableEq b] (N : QuantumChannel a b) (ρ σ : DensityState a),
     value (N.mapState ρ) (N.mapState σ) ≤ value ρ σ
 
-private theorem positive_trace_contraction
+theorem positive_trace_contraction
     {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
     (f : Matrix a a ℂ →ₗ[ℂ] Matrix b b ℂ)
     (hpos : ∀ X, 0 ≤ X → 0 ≤ f X)

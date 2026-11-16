@@ -4,9 +4,21 @@
 
 Squared trace distance gives a strict complete versus conditional contraction gap.
 
+**Theorem 1.1 (Positive trace-preserving maps contract Hermitian trace norm).**
+
+Lean statement: `D5/S3/Quantum/Divergence/FaithfulConditionalGap.positive_trace_contraction`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/FaithfulConditionalGap.positive_trace_contraction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every complex-linear positive trace-preserving matrix map contracts the trace norm of each Hermitian input, between arbitrary finite source and target coordinate types. The positive and negative parts give the Jordan decomposition argument.
+
 DensityState(A) is a positive semidefinite complex CStarMatrix of trace one. QuantumChannel(A,B) is the canonical completely positive, trace-preserving map between these matrix spaces. All index types below lie in Type and carry the displayed finite enumerations and decidable equalities. The reference is the first coordinate. The map marginalRight traces out the second coordinate; referenceState(N,rho) applies the channel to that coordinate and preserves the reference marginal.
 
-**Definition 1.1 (Finite faithful quantum divergences).**
+**Definition 1.2 (Finite faithful quantum divergences).**
 
 $$\operatorname{FiniteDivergence} = \{(D: \forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \operatorname{DensityState}\left(A\right) \to \left(\operatorname{DensityState}\left(A\right) \to \mathbb{R}\right)) \mid (\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (rho: \operatorname{DensityState}\left(A\right)), \forall (sigma: \operatorname{DensityState}\left(A\right)), (0 \le \operatorname{value}\left(D, rho, sigma\right)) \land ((\operatorname{value}\left(D, rho, sigma\right) = 0) \Leftrightarrow (rho = sigma))) \land (\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (B: \operatorname{Type}), [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (N: \operatorname{QuantumChannel}\left(A, B\right)), \forall (rho: \operatorname{DensityState}\left(A\right)), \forall (sigma: \operatorname{DensityState}\left(A\right)), \operatorname{value}\left(D, \operatorname{mapState}\left(N, rho\right), \operatorname{mapState}\left(N, sigma\right)\right) \le \operatorname{value}\left(D, rho, sigma\right))\}$$
 
@@ -18,7 +30,7 @@ $$\operatorname{FiniteDivergence} = \{(D: \forall (A: \operatorname{Type}), [\op
 
 FiniteDivergence stores a real-valued family D on density-state pairs over every finite index type, together with nonnegativity, zero exactly on equal states, and data processing for every canonical CPTP channel between arbitrary finite source and target dimensions. No additivity or direct-sum law is imposed. The family D in the display has precisely these density-state domains.
 
-**Definition 1.2 (Complete ratios).**
+**Definition 1.3 (Complete ratios).**
 
 $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (B: \operatorname{Type}), [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (D: \operatorname{FiniteDivergence}), \forall (N: \operatorname{QuantumChannel}\left(A, B\right)), \operatorname{completeRatios}\left(D, N\right) = \{(x: \mathbb{R}) \mid \exists (R: \operatorname{Type}), [\operatorname{Fintype}\left(R\right)] [\operatorname{DecidableEq}\left(R\right)] \exists (rho: \operatorname{DensityState}\left(R \times A\right)), \exists (sigma: \operatorname{DensityState}\left(R \times A\right)), (\operatorname{marginalRight}\left(rho\right) = \operatorname{marginalRight}\left(sigma\right)) \land ((0 < \operatorname{value}\left(D, rho, sigma\right)) \land (x = \frac{\operatorname{value}\left(D, \operatorname{referenceState}\left(N, rho\right), \operatorname{referenceState}\left(N, sigma\right)\right)}{\operatorname{value}\left(D, rho, sigma\right)}))\}$$
 
@@ -32,7 +44,7 @@ $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\ope
 
 The set includes every finite quantum reference R and every canonical density-state pair satisfying the displayed conditions. Denominators are strictly positive real numbers; all divergence values are finite.
 
-**Definition 1.3 (Conditional ratios).**
+**Definition 1.4 (Conditional ratios).**
 
 $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (B: \operatorname{Type}), [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (D: \operatorname{FiniteDivergence}), \forall (N: \operatorname{QuantumChannel}\left(A, B\right)), \operatorname{conditionalRatios}\left(D, N\right) = \{(x: \mathbb{R}) \mid \exists (R: \operatorname{Type}), [\operatorname{Fintype}\left(R\right)] [\operatorname{DecidableEq}\left(R\right)] \exists (rho: \operatorname{DensityState}\left(R \times A\right)), \exists (sigma: \operatorname{DensityState}\left(R \times A\right)), (0 < \operatorname{value}\left(D, rho, sigma\right) - \operatorname{value}\left(D, \operatorname{marginalRight}\left(rho\right), \operatorname{marginalRight}\left(sigma\right)\right)) \land (x = \frac{\operatorname{value}\left(D, \operatorname{referenceState}\left(N, rho\right), \operatorname{referenceState}\left(N, sigma\right)\right) - \operatorname{value}\left(D, \operatorname{marginalRight}\left(rho\right), \operatorname{marginalRight}\left(sigma\right)\right)}{\operatorname{value}\left(D, rho, sigma\right) - \operatorname{value}\left(D, \operatorname{marginalRight}\left(rho\right), \operatorname{marginalRight}\left(sigma\right)\right)})\}$$
 
@@ -46,7 +58,7 @@ $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\ope
 
 The set includes every finite quantum reference R and every canonical density-state pair satisfying the displayed conditions. Denominators are strictly positive real numbers; all divergence values are finite.
 
-**Definition 1.4 (Complete coefficient).**
+**Definition 1.5 (Complete coefficient).**
 
 $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (B: \operatorname{Type}), [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (D: \operatorname{FiniteDivergence}), \forall (N: \operatorname{QuantumChannel}\left(A, B\right)), \operatorname{completeCoefficient}\left(D, N\right) = \operatorname{sSup}\left(\operatorname{insert}\left(0, \operatorname{completeRatios}\left(D, N\right)\right)\right)$$
 
@@ -60,7 +72,7 @@ $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\ope
 
 Adjoining zero makes an empty admissible ratio set have coefficient zero. The squared trace-distance instance has the boundedness needed for the real supremum.
 
-**Definition 1.5 (Conditional coefficient).**
+**Definition 1.6 (Conditional coefficient).**
 
 $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (B: \operatorname{Type}), [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (D: \operatorname{FiniteDivergence}), \forall (N: \operatorname{QuantumChannel}\left(A, B\right)), \operatorname{conditionalCoefficient}\left(D, N\right) = \operatorname{sSup}\left(\operatorname{insert}\left(0, \operatorname{conditionalRatios}\left(D, N\right)\right)\right)$$
 
@@ -74,7 +86,7 @@ $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\ope
 
 Adjoining zero makes an empty admissible ratio set have coefficient zero. The squared trace-distance instance has the boundedness needed for the real supremum.
 
-**Theorem 1.6 (A strict gap with unrestricted finite quantum references).**
+**Theorem 1.7 (A strict gap with unrestricted finite quantum references).**
 
 $$\exists (D: \operatorname{FiniteDivergence}), \exists (N: \operatorname{QuantumChannel}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right)\right)), (\operatorname{completeCoefficient}\left(D, N\right) \le \frac{1}{4}) \land ((\frac{1}{4} < \frac{5}{12}) \land (\frac{5}{12} \le \operatorname{conditionalCoefficient}\left(D, N\right)))$$
 
@@ -107,6 +119,7 @@ Thus squared trace distance and the binary channel satisfy completeCoefficient <
 - Truth anchor: `D5/S3/Quantum/Divergence/FaithfulConditionalGap.completeRatios`
 - Truth anchor: `D5/S3/Quantum/Divergence/FaithfulConditionalGap.conditionalCoefficient`
 - Truth anchor: `D5/S3/Quantum/Divergence/FaithfulConditionalGap.conditionalRatios`
+- Truth anchor: `D5/S3/Quantum/Divergence/FaithfulConditionalGap.positive_trace_contraction`
 - Truth anchor: `D5/S3/Quantum/Divergence/FaithfulConditionalGap.result`
 - Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](ConditionalHockeyStickOrthogonalReduction.md)
 - Dependency: [D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability](../Entanglement/ConicalDesignConcurrenceComparability.md)

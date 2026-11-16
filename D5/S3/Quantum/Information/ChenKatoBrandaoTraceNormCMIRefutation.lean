@@ -75,10 +75,10 @@ theorem diagonal_norm {n : Type*} [Fintype n] [DecidableEq n] (d : n → ℝ) :
   change (∑ i, Complex.re ((|d i| : ℝ) : ℂ)) = _
   simp only [Complex.ofReal_re]
 
-private def qubit (x : ℝ) (y : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+def qubit (x : ℝ) (y : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   !![(x : ℂ), y; star y, -(x : ℂ)]
 
-private theorem qubit_norm (x : ℝ) (y : ℂ) :
+theorem qubit_norm (x : ℝ) (y : ℂ) :
     traceNorm (qubit x y) = 2 * Real.sqrt (x^2 + Complex.normSq y) := by
   let r := Real.sqrt (x^2 + Complex.normSq y)
   have hr : 0 ≤ r := Real.sqrt_nonneg _

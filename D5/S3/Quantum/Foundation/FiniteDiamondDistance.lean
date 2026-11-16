@@ -64,43 +64,54 @@ def referenceAction {r a b : Type*}
     CStarMatrix (r × b) (r × b) ℂ :=
   referenceLinear channel X
 
+/-- Positivity of the actual channel action with an arbitrary finite reference. -/
+theorem referenceAction_nonneg {r a b : Type*}
+    [Fintype r] [DecidableEq r] [Fintype a] [DecidableEq a]
+    [Fintype b] [DecidableEq b] (channel : QuantumChannel a b)
+    (X : CStarMatrix (r × a) (r × a) ℂ) (hX : 0 ≤ X) :
+    0 ≤ referenceAction channel X := by
+  let Y := (blockEquiv r a).symm X
+  have hY : 0 ≤ Y := map_nonneg (blockEquiv r a).symm hX
+  change 0 ≤ blockEquiv r b (Y.map channel.toCompletelyPositiveMap)
+  exact map_nonneg (blockEquiv r b)
+    (CompletelyPositiveMap.map_cstarMatrix_nonneg channel.toCompletelyPositiveMap Y hY)
+
+/-- The actual reference action preserves the trace of every complex input. -/
+theorem referenceAction_trace {r a b : Type*}
+    [Fintype r] [DecidableEq r] [Fintype a] [DecidableEq a]
+    [Fintype b] [DecidableEq b] (channel : QuantumChannel a b)
+    (X : CStarMatrix (r × a) (r × a) ℂ) :
+    Matrix.trace (referenceAction channel X) = Matrix.trace X := by
+  calc
+    Matrix.trace (referenceAction channel X) =
+        ∑ i : r, Matrix.trace (channel.toCompletelyPositiveMap
+          (CStarMatrix.ofMatrix fun u v => X (i, u) (i, v))) := by
+      change (∑ p : r × b, (referenceAction channel X) p p) =
+        ∑ i : r, ∑ u : b, channel.toCompletelyPositiveMap
+          (CStarMatrix.ofMatrix fun x y => X (i, x) (i, y)) u u
+      rw [Fintype.sum_prod_type]
+      change (∑ i : r, ∑ u : b, channel.toCompletelyPositiveMap
+          (CStarMatrix.ofMatrix fun x y => X (i, x) (i, y)) u u) =
+        ∑ i : r, ∑ u : b, channel.toCompletelyPositiveMap
+          (CStarMatrix.ofMatrix fun x y => X (i, x) (i, y)) u u
+      rfl
+    _ = ∑ i : r, Matrix.trace
+        (CStarMatrix.ofMatrix fun u v => X (i, u) (i, v)) := by
+      simp only [channel.trace_preserving]
+    _ = Matrix.trace X := by
+      change (∑ i : r, ∑ u : a, X (i, u) (i, u)) =
+        ∑ p : r × a, X p p
+      rw [Fintype.sum_prod_type]
+
 /-- Complete positivity and trace preservation make the action on the input
 factor a density-state transformation for every finite reference factor. -/
 def referenceState {r a b : Type*}
     [Fintype r] [DecidableEq r] [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b]
     (channel : QuantumChannel a b)
-    (rho : DensityState (r × a)) : DensityState (r × b) := by
-  let Y := (blockEquiv r a).symm rho.1
-  have hY : 0 ≤ Y := map_nonneg (blockEquiv r a).symm rho.2.1
-  have hPositive : 0 ≤ referenceAction channel rho.1 := by
-    change 0 ≤ blockEquiv r b (Y.map channel.toCompletelyPositiveMap)
-    exact map_nonneg (blockEquiv r b)
-      (CompletelyPositiveMap.map_cstarMatrix_nonneg channel.toCompletelyPositiveMap Y hY)
-  have hTrace (X : CStarMatrix (r × a) (r × a) ℂ) :
-      Matrix.trace (referenceAction channel X) = Matrix.trace X := by
-    calc
-      Matrix.trace (referenceAction channel X) =
-          ∑ i : r, Matrix.trace (channel.toCompletelyPositiveMap
-            (CStarMatrix.ofMatrix fun u v => X (i, u) (i, v))) := by
-        change (∑ p : r × b, (referenceAction channel X) p p) =
-          ∑ i : r, ∑ u : b, channel.toCompletelyPositiveMap
-            (CStarMatrix.ofMatrix fun x y => X (i, x) (i, y)) u u
-        rw [Fintype.sum_prod_type]
-        change (∑ i : r, ∑ u : b, channel.toCompletelyPositiveMap
-            (CStarMatrix.ofMatrix fun x y => X (i, x) (i, y)) u u) =
-          ∑ i : r, ∑ u : b, channel.toCompletelyPositiveMap
-            (CStarMatrix.ofMatrix fun x y => X (i, x) (i, y)) u u
-        rfl
-      _ = ∑ i : r, Matrix.trace
-          (CStarMatrix.ofMatrix fun u v => X (i, u) (i, v)) := by
-        simp only [channel.trace_preserving]
-      _ = Matrix.trace X := by
-        change (∑ i : r, ∑ u : a, X (i, u) (i, u)) =
-          ∑ p : r × a, X p p
-        rw [Fintype.sum_prod_type]
-  exact ⟨referenceAction channel rho.1, hPositive,
-    (hTrace rho.1).trans rho.2.2⟩
+    (rho : DensityState (r × a)) : DensityState (r × b) :=
+  ⟨referenceAction channel rho.1, referenceAction_nonneg channel rho.1 rho.2.1,
+    (referenceAction_trace channel rho.1).trans rho.2.2⟩
 
 /-- The unhalved trace-norm error for one reference system and one joint input
 state. The two channels have the same input and output spaces. -/
