@@ -17,7 +17,7 @@ internal sealed class Source1Document : IScribeDocumentDefinition
         var x = Call("Sources.sources", Call("Fin.mk", Seq(Num("0"), Plus, Call("Fin.val", V("i")))));
         var p = Call("Prod.fst", x);
         var d = Call("Fin.val", Call("Prod.snd", x));
-        return All("i", Call("Fin", Num("0")), Eq(Call("Data.successors", p, d),
+        return All("i", Call("Fin", Num("6")), Eq(Call("Data.successors", p, d),
             Call("Data.classList", Call("Data.cl", p, d))));
     }
     private static Formula V(string s) => F.Id(s);
