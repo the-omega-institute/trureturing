@@ -130,6 +130,8 @@ end D5.S3.Combinatorics.Graph.StarFormingDissociationRefutation
 namespace D5.S3.Combinatorics.Graph.SubQuorum.DoubleStarGrafting
 open D5.S3.Combinatorics.Graph.StarFormingDissociationRefutation
 
+variable {V : Type*} [Fintype V] [DecidableEq V]
+
 /-- Dissociation means that two selected neighbors of a selected vertex coincide.
 This is also the relation-level predicate used by graph-cover arguments. -/
 theorem independent_iff {W : Type*} [Fintype W] [DecidableEq W]

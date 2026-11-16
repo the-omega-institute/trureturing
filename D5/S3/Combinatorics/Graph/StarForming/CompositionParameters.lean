@@ -13,6 +13,8 @@ import Mathlib.Tactic.NormNum
 namespace D5.S3.Combinatorics.Graph.StarForming
 open StarFormingDissociationRefutation
 
+variable {V : Type*} [Fintype V] [DecidableEq V]
+
 noncomputable instance {I : Type*} (R : I → I → Prop) :
     DecidableRel (Amplification.family R).Adj := Classical.decRel _
 
