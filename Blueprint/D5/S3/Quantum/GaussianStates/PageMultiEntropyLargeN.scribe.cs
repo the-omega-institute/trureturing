@@ -26,7 +26,9 @@ internal sealed class PageMultiEntropyLargeNDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The nine-replica Gram matrix has one constant mode and four paired character classes. Its determinant factors into the corresponding positive scalar factors. The source radical satisfies N²(a²−1)=(N−1)(1−r)²/r, which cancels r from the entropy expression. Substitution at the two tripartitions gives the constants 400/27 and 27/2. The inequalities for log(1+h) and log(1−1/N) give the common choice K=(2+30/(a²−1))/12. This estimate is for each fixed a>1 and does not assert uniformity as a approaches one."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("camni2609p"), ResolutionKind.Proved)))));
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Reals => Seq(Mathbb, Grp(X("R")));

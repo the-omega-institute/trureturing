@@ -24,6 +24,10 @@ $$\forall (a: \mathbb{R}), ((1<a) \implies (\exists (K: \mathbb{R}), ((0<K) \lan
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/GaussianStates/PageMultiEntropyLargeN.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/camni2609p` (proved) by `D5/S3/Quantum/GaussianStates/PageMultiEntropyLargeN.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"camni2609p","declaration_gid":"D5/S3/Quantum/GaussianStates/PageMultiEntropyLargeN.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* H. A. Camargo, M. Nishida (2026). *Genuine Multi-Entropy of Fully Symmetric Gaussian States*. DOI: [10.48550/arXiv.2609.30754](https://doi.org/10.48550/arXiv.2609.30754). URL: <https://arxiv.org/abs/2609.30754v2>.
