@@ -4730,3 +4730,167 @@ Schmidt截断及投影型见证是成熟工具。[Q308Witness]式(28)—(29)与(
 [Q308Witness]: https://arxiv.org/abs/0811.2803v3 "Gühne–Tóth，Entanglement detection，式(28)—(29)、(70)—(71)；投影型纠缠见证及跨二分的最大Schmidt重叠界。"
 
 ## 追加锚（本行以下为增补区）
+
+## 309. 只借一张固定球：产品最低门支付坐标压缩与满维种子
+
+**定义 309.1（固定一球的原来源候选）。** 完整保留308.1的强全有限背景 $\mathsf F$：所有有限实张量载体、整个闭尖生成锥、严格正乘积单位、整个归一底与全部原纯点、完整正对偶及proper区间、全部有限单位分解，原产品、正置换及逆、规范重括号、正丢弃，以及每个有限分块对全部相关原输入的min/max。单体采用277.1的 $\mathrm{L2}^{\mathrm{exp}}_1$：任意不同原纯点 $p,q$ 的整个最小实际面 $B(p,q)$ 是非退化仿射闭三球，且存在全原proper效应 $h$，使 $\{x\in K_1:h(x)=1\}=B(p,q)$；整底为球时允许 $h=u_1$。
+
+固定任意不同 $p_*,q_*\in P_1$，置 $B_*=B(p_*,q_*)$，另固定任意原纯旁观者 $b_*\in P_1$。只选原双份纯点
+
+$$
+\Sigma_*=
+\{p\otimes q:p,q\in P_1\}
+\ \cup\ \{a\in P_2:\pi_1a\in B_*,\ \pi_2a\in B_*\}.
+\tag{309.1}
+$$
+
+对每个 $a\in\Sigma_*$，在三份目标 $\{a\otimes b_*\}$ 上使用296.1的原 $\mathsf{Link}$：每个原极端确认上门严格下方的原极端确认者可比图为空或连通，排除上门而保留最低点，路径有限，整个图不必有限。所有确认和序比较仍作用于整个原三份菜单及全部原相关输入。记该固定目标族为 $\mathcal F^*_{b_*}$，完整候选为
+
+$$
+\boxed{\quad \mathsf Q_*(B_*;b_*)
+=\mathrm{L2}^{\mathrm{exp}}_1+\mathsf{Link}(\mathcal F^*_{b_*}).\quad}
+\tag{309.2}
+$$
+
+保留具名M加数值互易的单体Jordan／复类型桥、[XIX274.3]的 $2\times2$ M-only特例、Gurvits—Barnum[GB271]的二体HS预算及302.2—302.3的双HS／迹接口、XIII165.9的全有限传播。XIII166.5的完整角继承只在取得完整二维角时消费一次。此处没有双份接触方向、零读数或边缘比较输入；单体球的原暴露性是明列前件。
+
+**定理 309.2（外部基点的全原least迫使支撑压缩正）。** 设 $D\subseteq\operatorname{Herm}_d$ 是闭尖生成原态锥，迹严格正，$K$ 为整个迹一底，使用完整对偶及proper菜单。某正交单位基的每个投影 $P_i$ 均为原态，且其全原least确认效应就是 $P_i$。取非空基子集的投影和 $h$，置 $K_h=\{Y\in K:\operatorname{Tr}(hY)=1\}$。若对某有限 $c>0$，
+
+$$
+\|hXh\|_2\le c\operatorname{Tr}(hX)\quad(X\in D),
+\qquad Y=hYh\quad(Y\in K_h),
+\tag{309.3}
+$$
+
+则矩阵压缩 $\Pi_h:X\mapsto hXh$ 同时保持 $D,D^*$，并对原态不增迹。
+
+证明。$h$ 与 $I-h$ 是原正效应之和，故 $h$ proper，$K_h$ 非空紧。取非零 $f=hfh\in D^*$，令 $t=\max_K\operatorname{Tr}(fY)>0$。$I-f/t$ 为原proper，且确认 $h$ 外的全部基点。逐只扣去这些基点的全原least $P_i$：先前扣去的投影在下一基点上为零，所以每一步仍确认下一点；leastness保证减后仍原正。最终
+
+$$
+h-f/t\in D^*,\qquad
+ t=\max_{Y\in K_h}\operatorname{Tr}(fY).
+\tag{309.4}
+$$
+
+第二式因任一 $f$ 的最大点满足 $1\le\operatorname{Tr}(hY)\le1$ 而成立；不假设普通PSD序支配。对任意 $g=hgh\in\operatorname{Herm}_d$，取 $\lambda>c\|g\|_2$。式(309.3)及HS Cauchy—Schwarz使 $f=g+\lambda h$ 在整个 $D$ 上正且非零。将其代入(309.4)，用 $K_h$ 上的 $\operatorname{Tr}(hY)=1$ 消去 $\lambda$，得
+
+$$
+\operatorname{Tr}(g\,hXh)
+\le\operatorname{Tr}(hX)\max_{Y\in K_h}\operatorname{Tr}(gY)
+\quad(X\in D).
+\tag{309.5}
+$$
+
+若 $\operatorname{Tr}(hX)=0$，(309.3)给 $hXh=0$；否则，由全部受支撑 $g$ 的分离不等式及 $K_h\subseteq\{Y=hYh\}$，得 $hXh/\operatorname{Tr}(hX)\in K_h$。这证明态侧压缩正。压缩对迹配对自伴，故效应侧也正；$0\le h\le I$ 给不增迹。此结论只在给定原层上成立，不将其自动升级为全旁观正性。$\square$
+
+**定理 309.3（一张固定方角补齐整个双份锥）。** 在309.1的同一完整背景及单体、$2\times2$具名供应下，存在同一个保单位坐标 $\theta:V\to\operatorname{Herm}_n$、$n\ge2$，使
+
+$$
+\theta C_1=\operatorname{PSD}_n,\qquad
+\theta^{\otimes2}C_2=T_2^\varepsilon\operatorname{PSD}_{n^2},
+\qquad \varepsilon\in\{0,1\}.
+\tag{309.6}
+$$
+
+证明。（一）先付单体和产品门。296.2逐个给所选三份目标的全原least。沿 $x\mapsto x\otimes b_*$ 限制，并与全部 $f\otimes u_1$ 比较，给每个所选双份点的least；包含全部双份纯产品，再限制一次即给完整M1。272.2只消费两侧M1及当前产品目标least，故 $e_{p\otimes q}=e_p\otimes e_q$。277.2—277.3在实际暴露三球上排除塌缩并给半球刻度及全单体数值互易；此时才消费具名Jordan／复类型桥，取得 $C_1=\operatorname{PSD}_n,u_1=\operatorname{Tr},e_p=P_p$ 的同一坐标。整底为球时也可直接用306.2的Pauli坐标。以下在此坐标工作。
+
+（二）先证明双份矩形压缩。$C_2,C_2^*$ 均夹于标准Sep与BP之间。取任意单腿支持 $S$、$h=P_S\otimes I$，采用适配的完整产品正交基，其每个产品投影已有全原least。对 $X\in C_2$，$hXh$ 在 $S\otimes\mathbb C^n$ 上块正，Gurvits—Barnum[GB271, §III Theorem1]的未归一二体可分HS半径一给
+
+$$
+\|hXh\|_2\le\operatorname{Tr}(hX).
+\tag{309.7}
+$$
+
+若原 $Y\in K_2$ 满足 $\operatorname{Tr}(hY)=1$，其第一边缘在 $S^\perp$ 的正压缩迹为零，故为零。对第二腿任意向量 $v$ 切片，第一腿条件矩阵为PSD，在 $S^\perp$ 上的对角块为零，PSD消去相连行列；再对 $v$ 极化，得 $Y=hYh$。309.2因而给两侧原正压缩。第二腿同理，复合即得
+
+$$
+\Pi_{S,T}(X)=(P_S\otimes P_T)X(P_S\otimes P_T)
+\tag{309.8}
+$$
+
+保持 $C_2,C_2^*$ 并不增迹。到这里仅取得双份正性，没有借原酉或高阶矩阵过程。
+
+（三）只分类一张 $2\times2$ 角。$B_*=\mathcal D(S_*)$，$\dim S_*=2$。由上步的饱和支撑证明，$\Pi_{S_*,S_*}(C_2)$ 恰为双边缘同落 $B_*$ 的整个原面锥。面纯点是原纯点，故全部已在(309.1)中；内在proper沿(309.8)拉回仍为原proper，因为其正补为 $(u-u\Pi)+(u\Pi-f\Pi)$。所选least限制后遂为完整内在菜单的least。该角具有整载体、迹单位、Sep/BP界及完整M；准确调用[XIX274.3, (274.9)—(274.11)]的 $2\times2$ 特例，得它为PSD或 $T_2\mathrm{PSD}$。角内全部正效应也能零延拓。
+
+固定此方向 $\varepsilon$。任取二维目标支持 $T$，选 $S_*,T$ 的主向量基 $s_i,t_i$，使 $\langle t_i,s_j\rangle=\delta_{ij}c_i$、$c_i\ge0$。$L=\operatorname{span}\{s_1+t_1,s_2+t_2\}$ 满足
+
+$$
+P_TP_LP_{S_*}s_i=(1+c_i)t_i/2.
+\tag{309.9}
+$$
+
+两系数均严格正，所以此有限投影串在源、目标支持间可逆，包括直角情形。两腿分别使用(309.8)，态侧和效应侧都原正；对任意目标向量，先在这两个可逆限制下取源角原像，即能运输其dyad。转置方向在第二腿相应使用共轭映射、共轭目标支持，仍遍及全部目标。故置 $D=T_2^\varepsilon C_2$ 后，所有Schmidt秩至多二的投影均属于 $D\cap D^*$；未使用投影串的正逆。
+
+（四）一次相关压缩补全全部秩。$D$ 中每个产品投影的全原least仍为自身。任取两组局部正交向量 $a_i,b_i$，令 $W=\operatorname{span}\{a_i\otimes b_i\}$、$h=P_W$，将这些向量补为完整产品基。上步的秩二正效应使任意 $X\in D$ 在该基的每个二阶主块均PSD。因此其矩阵元满足
+
+$$
+|X_{ij}|^2\le X_{ii}X_{jj},\quad X_{ii}\ge0,
+\qquad \|hXh\|_2\le\operatorname{Tr}(hX).
+\tag{309.10}
+$$
+
+若 $Y\in K_D$ 在 $h$ 上取一，外部非负对角元之和为零；二阶不等式消去外部每行每列，得 $Y=hYh$。309.2给此相关子空间压缩在 $D,D^*$ 中正。对任意Schmidt向量 $\psi=\sum_i d_i a_i\otimes b_i$，取实际产品向量 $z=(\sum_i d_i a_i)\otimes(\sum_i b_i)$，则 $zz^*\in D\cap D^*$、$hz=\psi$。所以全部 $\psi\psi^*\in D\cap D^*$；谱分解和PSD自对偶给 $D=D^*=\operatorname{PSD}_{n^2}$，即(309.6)。此时才得到完整M2，无需向高Schmidt秩原点预借least。$\square$
+
+**定理 309.4（三份坐标压缩直接产生满维种子）。** 在309.1的同一完整背景和传播供应下，$\varepsilon=0$，且对每个有限 $N\ge0$，
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{309.11}
+$$
+
+证明。（一）低二层之后才用一体全旁观运输。抽取302.2的实际杯帽证明：标准方向使用XIII165.3；镜像方向使用(302.4)—(302.5)的交换杯帽。两者只消费(309.6)及完整原min/max，故支付所有一体合同的全有限相关旁观正性，酉及逆保单位。固定 $b_*$ 的least可由此运输到任意孤立原纯腿，正置换及逆运输分割。
+
+取实计算基使 $S_*=\operatorname{span}\{0,1\}$。七点(302.6)中 $u_1,u_2,u_3$ 的双份块都在这张固定 $S_*\otimes S_*$；$u_4,\ldots,u_7$ 及角外补基点全为产品，故所需固定纤维least全部由(309.1)支付。对这些目标 $X$，原产品proper上界和双HS／迹沿306.6给
+
+$$
+1=\operatorname{Tr}(e_XX)\le\|e_X\|_2\|X\|_2
+=\|e_X\|_2\le\operatorname{Tr}e_X\le\operatorname{Tr}X=1,
+\tag{309.12}
+$$
+
+因而 $e_X=X$。这里双预算在实际标准或转置的 $2|1$ 分割中成立，不把普通三体HS界免费加入。全部三份产品投影也由同一运输取得全原least。
+
+现可逐项复用302.3的局部原序证明，而非调用其带三零的完整候选：从极端单位门扣除这七只跨割正交门及角外基点，镜像方向留下(302.8)的同一原余态；同一原产品proper效应(302.9)读出 $-1/6$，违背max。故 $\varepsilon=0$。标准方向的同一逐只减法留下实际原 $P_w$，$w=(100+010+001)/\sqrt3$；其三秩为 $(2,2,2)$。
+
+（二）只继承一次完整二维层级。由已付的一体合同，$\Pi_{2,N}=\operatorname{Ad}_{P_{S_*}}^{\otimes N}$ 对全部原相关输入正且不增迹。XIII166.5的压缩像、交角、完整对偶及proper零延拓于是给尺寸二的整个全有限模型。低二层为PSD，$w$ 满足XIII165.2，所以在此二维模型中准确调用165.9，取得所有有限角 $\operatorname{PSD}_{2^N}$。独立一体酉及其逆再把三份角送到任意三张局部二维支持；各角全部正效应都能原正零延拓。
+
+（三）全产品least给需要的相关三份压缩。任取完整三腿产品正交基。任意两只基向量 $v_i,v_j$ 的叠加 $\alpha v_i+\beta v_j$ 逐腿支撑至多二维，所以其dyad由上步属于全原 $C_3^*$。于是对每个 $X\in C_3$，该产品基上全部二阶主块PSD。式(309.10)及零行列证明适用于任意非空基子集，309.2遂给对应坐标压缩在 $C_3,C_3^*$ 上正。这个三份结论没有先假定相关压缩的全旁观正性。
+
+现在只取
+
+$$
+\mathcal I=\{(i,i,0):0\le i<n\}\cup\{(0,0,1)\},\qquad
+h=P_{\operatorname{span}\{|ijk\rangle:(i,j,k)\in\mathcal I\}}.
+\tag{309.13}
+$$
+
+令 $s=\sum_{i<n}|i\rangle$、$z=s\otimes s\otimes(|0\rangle+|1\rangle)$。原产品 $zz^*\in C_3$，刚证明的原正压缩给
+
+$$
+hzz^*h=\psi\psi^*\in C_3,\qquad
+\psi=\sum_{i<n}|ii0\rangle+|001\rangle
+=|I_n\rangle\!\rangle|0\rangle+|E_{00}\rangle\!\rangle|1\rangle.
+\tag{309.14}
+$$
+
+$\operatorname{Tr}(\psi\psi^*)=n+1$，可以归一成原准备；不需预认它为原纯点。$I_n,E_{00}$ 独立、像之和为整个 $\mathbb C^n$、共同核为零，三展平秩为 $(n,n,2)$。完整标准低二层、原全有限背景和这只实际dyad准确满足XIII165.1—165.2；165.9直接给(309.11)。没有任何 $k\to k+1$ 升阶，也未向 $q_k,u_k$ 或最终种子借least。$\square$
+
+**定理 309.5（反向、来源收缩及原量子字典）。** 相对于309.1明列的同一背景和供应，$\mathsf Q_*(B_*;b_*)$ 与(309.11)等价；反向对任意固定球和纯旁观者成立。
+
+证明与范围。在完整复PSD层级中，两个不同纯点的最小实际面是复二维支持的完整密度球，其支持投影为全原proper并恰暴露该球。每个所选三份纯目标的支持投影是完整菜单least，296.2反向给Link。这证明完整反向，并使原三零、两零预算及全部 $q_k,u_k$ 的least均成为后果。
+
+若在同一 $\mathrm{L2}^{\mathrm{exp}}_1$ 背景中比较初始来源，$n\ge3$ 时 $\Sigma_*\subsetneq\Sigma_\partial$。例如取 $B_*=\mathcal D(\operatorname{span}\{0,1\})$，原双份纯点 $P_{(|0,1\rangle+|1,2\rangle)/\sqrt2}$ 的第一边缘未满，属旧边界族；它不是产品，第二边缘又不在 $B_*$，故不属新族。任意固定球可在标准模型中取适配基得到同类例子。$n=2$ 时 $B_*=K_1$，准确回退为全 $P_2$。此为同一量子模型中的来源清单严格收缩，不是完整候选模型类严格扩张。
+
+本条以已有的单体暴露几何替代307—308的裸L2及双份接触见证，是明确的条件交换；没有从裸L2、产品least或完整 $\mathsf F$ 推出一般维数的原球暴露性。删除暴露性后，277.6的单体刻度／互易桥仍缺；删除固定方角中非产品来源后，309.3（三）的内在完整M仍缺；只保留角内least而删除外部全产品基点的全原least，则(309.4)的逐只扣门不再有依据。308的三层替身表明小角完整不能代付这一全原比较。完整全有限分块、原菜单、单体Jordan／复类型和传播供应继续保留；一般矩形M-only整锥、每张球的双份见证及逐维来源供应退出本证明。
+
+(309.11)将原归一底、纯域、完整逆对偶proper菜单和配对分别识别为密度矩阵、复射线、$0\preceq E\preceq I$ 及Born迹概率；全部有限单位分解给数学POVM，锐正交分解给PVM。原产品、置换、重括号和丢弃给同一复张量及偏迹。指定分支的全部有限相关旁观正性才给CP／Kraus，全正输入及分支总质量预算才给TNI／TP和数学仪器；设备事件供应、锐事件整个yes支持中性、连续可逆保单位动力学及物理时间／能量标定仍各保留其前件，不从静态锥等式选择Lüders或物理哈密顿量。
+
+Gurvits—Barnum[GB271]§III Theorem1及其对偶HS界、有限维凸分离、主角和正交投影运算是成熟工具。Oi[Q309Projection]式(2)—(4)在已给Hilbert模型中研究有限投影串及子空间变换，不提供未知原锥上的正性；(309.3)—(309.8)在使用投影串前另付此义务。单体暴露球刻度沿277.2—277.3，产品因子化沿272.2，七点及双预算沿302.2—302.3，完整角与传播沿XIII166.5、165.9。新增接合是基点least的支撑最大值原序不等式、其两类可验证压缩接口、固定一球来源到全部双份方向，以及一次产品压缩产生满维三份种子；不申领成熟工具的发明或全球优先性。
+
+白话：先只选一张能由原门筛出的二纯小球，把非产品的最低门集中借在这张球上，其余只借全产品点的最低门。一只门若完全不看外面的产品基点，就从它的补门里把这些外部基点逐个扣掉；最低性保证每次都合法，最后迫使这只门的最大读数落在留下的支撑内。对所有门都成立，就证明“只留下这些坐标”确实保持原准备合法。先在双份搬运这一张小球，恢复任意纠缠方向；再在三份只留所有 $ii0$ 和一个 $001$，一份普通产品准备就长成满维三体种子，不必每升一维再借新门。简洁之处是用同一条外部扣门关系替代反复升阶；仍须明确保留小球可被原门筛出这一条件，不能把它说成已经无条件内生。$\square$
+
+[XIX274.3]: QUANTUM_ORIGIN_QUBIT_COMMON_RULER_AND_PRODUCT_ZERO_FACES_XIX.md "274.3，式(274.9)—(274.11)：M-only二体秩二方向；此处仅消费2×2全秩二特例。"
+[Q309Projection]: https://arxiv.org/abs/1402.1104v3 "Daniel K. L. Oi，Unitary Holonomies by Direct Degenerate Projections，式(2)—(4)：已给Hilbert空间中的投影串；不供应未知原锥正性。"
+
+## 追加锚（本行以下为增补区）
