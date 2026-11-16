@@ -21,12 +21,13 @@ internal sealed class DyadicExtendedStirlingEdgeDocument : IScribeDocumentDefini
                 Call("T", V("n"), Add(Call("wt", V("n")), D(2))),
                 new Formula.Fraction(Call("Rat.cast", Call("a", V("n"))),
                     Call("Rat.cast", Call("Nat.factorial", Add(D(1), Call("wt", V("n")))))))),
-                "This is the all-natural-row conjectured formula T(n,A000120(n)+2)=A341392(n) from A358612, using the A341392 definition A284005(n)/(1+A000120(n))!. The initial row is checked separately. At positive n the upper parent term vanishes by support; the remaining block coefficient is (wt(h(n))+2)^g(n). The source-owner identity a(n)=(wt(h(n))+2)^(g(n)+1)*a(h(n)) and factorial recursion finish the induction. No support assumption, bounded row restriction or integrality hypothesis is added. This statement does not assert integrality or any other A358612 conjecture."))));
+                "This is the all-natural-row conjectured formula T(n,A000120(n)+2)=A341392(n) from A358612, using the A341392 definition A284005(n)/(1+A000120(n))!. The initial row is checked separately. At positive n the upper parent term vanishes by support; the remaining block coefficient is (wt(h(n))+2)^g(n). The source-owner identity a(n)=(wt(h(n))+2)^(g(n)+1)*a(h(n)) and factorial recursion finish the induction. The support statement is proved, not assumed. No bounded row restriction or integrality hypothesis is added. The scalar PARI source is used only on positive columns; the formal zero-column extension never enters the induction. The dyadic block law is a reused live prerequisite, without a separate block-problem settlement in this document. This statement does not assert integrality or any other A358612 conjecture.",
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a358612-row-edge"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose) => Describe.Lean(
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("dyadic-extended-stirling-edge-" + name), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
-        Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+        Blocks(Paragraph(Text(prose))), DescribeRole.Theorem, resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);

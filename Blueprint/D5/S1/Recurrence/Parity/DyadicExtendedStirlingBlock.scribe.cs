@@ -39,6 +39,12 @@ internal sealed class DyadicExtendedStirlingBlockDocument : IScribeDocumentDefin
                 + "In particular h(0)=0. For positive n the quotient by 2^g(n) is exact and odd, and n=2^g(n)*(2*h(n)+1). "
                 + "Thus h(n)=A025480(n-1) on the source domain; no integer-floor expression with a negative numerator is used at zero.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("dyadic_index", "Exact positive-row decomposition",
+                All("n", Imp(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, V("n")),
+                    Eqn(V("n"), Mul(Pow(D(2), Call("g", V("n"))), Add(Mul(D(2), Call("h", V("n"))), D(1))))))),
+                "For every positive natural n, n=2^g(n)*(2*h(n)+1). The proof uses the exact power-of-two valuation and odd quotient. "
+                + "This source-owner helper is consumed by the block theorem and by the row-edge induction; no claim is made at zero.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("dyadic_extended_stirling_block", "The complete dyadic block identity", Result(),
                 "For every n>=1 and k>=2, with no upper bound on either index, this is Kurkov's final FORMULA conjecture in A358612. "
                 + "All powers have natural exponents and rational bases. The base (k:Q)-1 is parenthesized; the index Nat.sub(k,1) is a natural number. "
@@ -47,10 +53,7 @@ internal sealed class DyadicExtendedStirlingBlockDocument : IScribeDocumentDefin
                 + "The valuation decomposition then identifies the row with n. This includes g(n)=0 and h(n)=0. "
                 + "The proof is a derivation in this repository; the assertion and its attribution are Kurkov's. "
                 + "Integrality, row-edge values and the separate transform conjectures are outside this statement.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("oeis-a358612-dyadic-block"),
-                    ResolutionKind.Proved)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
