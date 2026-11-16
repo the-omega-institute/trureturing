@@ -10,7 +10,7 @@ internal sealed class HardinA229531StripDataDocument : IScribeDocumentDefinition
         "Exact width-five HDA transfer.", H("Width-five HDA transfer"), Blocks(
             Describe.Lean(DescribeId.Create("inherited-transitions"),
                 DeclarationHandle.Create(Prefix + "raw_successors"),
-                H("Proper successors from the frozen scanner certificate"), StatementSource.WithoutFormula(),
+                H("Proper successors from the frozen scanner certificate"), StatementSource.FromAuthor(Disp(RawSuccessorsFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("For every proper source row and every Fin 7 target class, thirty-two times the raw proper successor sum equals the corresponding frozen transfer entry. The proof applies the original class_fibres and finite_certificate and pushes saturated Seen fibres with weight 32. Each consumed target-class theorem supplies its own exact bond, budget and class correspondence before integer division."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("row"), DeclarationHandle.Create(Prefix + "Row"),
@@ -110,6 +110,21 @@ internal sealed class HardinA229531StripDataDocument : IScribeDocumentDefinition
             Conditional(And(Eq(d, Num("0")), Or(And(Ne(App(p, Num("0")), App(p, Num("1"))), And(Eq(App(p, Num("0")), App(p, Num("2"))), And(Eq(App(p, Num("0")), App(p, Num("3"))), And(Ne(App(p, Num("0")), App(p, Num("4"))), And(Ne(App(p, Num("1")), App(p, Num("2"))), And(Ne(App(p, Num("1")), App(p, Num("3"))), And(Ne(App(p, Num("1")), App(p, Num("4"))), And(Eq(App(p, Num("2")), App(p, Num("3"))), And(Ne(App(p, Num("2")), App(p, Num("4"))), Ne(App(p, Num("3")), App(p, Num("4")))))))))))), And(Ne(App(p, Num("0")), App(p, Num("1"))), And(Ne(App(p, Num("0")), App(p, Num("2"))), And(Ne(App(p, Num("0")), App(p, Num("3"))), And(Ne(App(p, Num("0")), App(p, Num("4"))), And(Eq(App(p, Num("1")), App(p, Num("2"))), And(Ne(App(p, Num("1")), App(p, Num("3"))), And(Eq(App(p, Num("1")), App(p, Num("4"))), And(Ne(App(p, Num("2")), App(p, Num("3"))), And(Eq(App(p, Num("2")), App(p, Num("4"))), Ne(App(p, Num("3")), App(p, Num("4")))))))))))))), Num("17"),
             Conditional(And(Eq(d, Num("0")), Or(And(Ne(App(p, Num("0")), App(p, Num("1"))), And(Ne(App(p, Num("0")), App(p, Num("2"))), And(Eq(App(p, Num("0")), App(p, Num("3"))), And(Ne(App(p, Num("0")), App(p, Num("4"))), And(Eq(App(p, Num("1")), App(p, Num("2"))), And(Ne(App(p, Num("1")), App(p, Num("3"))), And(Ne(App(p, Num("1")), App(p, Num("4"))), And(Ne(App(p, Num("2")), App(p, Num("3"))), And(Ne(App(p, Num("2")), App(p, Num("4"))), Ne(App(p, Num("3")), App(p, Num("4")))))))))))), And(Ne(App(p, Num("0")), App(p, Num("1"))), And(Ne(App(p, Num("0")), App(p, Num("2"))), And(Ne(App(p, Num("0")), App(p, Num("3"))), And(Ne(App(p, Num("0")), App(p, Num("4"))), And(Ne(App(p, Num("1")), App(p, Num("2"))), And(Ne(App(p, Num("1")), App(p, Num("3"))), And(Eq(App(p, Num("1")), App(p, Num("4"))), And(Eq(App(p, Num("2")), App(p, Num("3"))), And(Ne(App(p, Num("2")), App(p, Num("4"))), Ne(App(p, Num("3")), App(p, Num("4")))))))))))))), Num("18"),
             Num("19")))))))))))))))))))))));
+    }
+
+    private static Formula SumOver(string n, Formula type, Formula body) =>
+        Seq(Sum, Underscore, Grp(V(n), Colon, Sp, type), Sp, Parenthesized(body));
+
+    private static Formula RawSuccessorsFormula()
+    {
+        var p = V("p"); var q = V("q"); var j = V("j");
+        var seen = Pair(Call("true"), Call("true"));
+        Formula Class(Formula row) => Call("HardinA233126SquareStrip.boundaryClass", seen, row);
+        var indicator = Typed(Conditional(And(Call("HardinThinGraphTransport.proper", q),
+            And(Call("HardinThinGraphTransport.compatible", Call("true"), p, q), Eq(Class(q), j))), Num("1"), Num("0")), Call("Int"));
+        return All("p", RowType(), Imp(Call("HardinThinGraphTransport.proper", p), All("j", Fin(7),
+            Eq(Mul(Num("32"), Parenthesized(SumOver("q", RowType(), indicator))),
+                Call("HardinA233171DiagonalStrip.transfer", Class(p), j)))));
     }
 
 }

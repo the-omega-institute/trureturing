@@ -34,7 +34,7 @@ internal sealed class HardinA229529StripDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The Fin 6 cached forward prefix on Fin 5, shared by the two-defect extension and pinned by finite_certificate."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("shared-finite-certificate"), DeclarationHandle.Create(Prefix + "finite_certificate"),
-                H("Shared finite_certificate"), StatementSource.WithoutFormula(),
+                H("Shared finite_certificate"), StatementSource.FromAuthor(Disp(FiniteCertificateFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("Exact terminal values, validity preservation, successor and initial counts, cached forward recurrence and polynomial relation. The two-defect extension reuses its active successor and initial projections."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("a"),
@@ -98,6 +98,39 @@ internal sealed class HardinA229529StripDocument : IScribeDocumentDefinition
             Conditional(And(Eq(d, Num("0")), And(Eq(Call("DefectTransfer.bondDefects", Call("HardinA229581Strip.horizontal"), p, p), Num("0")), Eq(Call("HardinThinGraphTransport.boundaryClass", p), Call("true")))), Num("2"),
             Conditional(And(Eq(d, Num("0")), And(Eq(Call("DefectTransfer.bondDefects", Call("HardinA229581Strip.horizontal"), p, p), Num("0")), Eq(Call("HardinThinGraphTransport.boundaryClass", p), Call("false")))), Num("3"),
             Num("4"))))))));
+    }
+
+    private static Formula SumOver(string n, Formula type, Formula body) =>
+        Seq(Sum, Underscore, Grp(V(n), Colon, Sp, type), Sp, Parenthesized(body));
+
+    private static Formula FiniteCertificateFormula()
+    {
+        var p = V("p"); var d = V("d"); var r = V("r"); var target = V("s");
+        var i = V("i"); var j = V("j"); var dv = Call("Fin.val", d);
+        Formula Own(string name, params Formula[] args) => Call("HardinA229529Strip." + name, args);
+        Formula Horizontal(Formula row) => Call("DefectTransfer.bondDefects", Call("HardinA229581Strip.horizontal"), row, row);
+        var cost = Add(Call("DefectTransfer.bondDefects", Own("between"), p, r), Horizontal(r));
+        var residual = Sub(dv, Parenthesized(cost));
+        Formula UnderValid(Formula body) => All("p", RowType(), All("d", Fin(2), Imp(Own("Valid", p, dv), body)));
+        var terminal = Typed(Vector(Num("0"),Num("0"),Num("1"),Num("1"),Num("1")), Arrow(Fin(5), Call("Int")));
+        var acceptance = UnderValid(Eq(App(terminal, Own("cl", p, dv)),
+            Typed(Conditional(Eq(dv, Num("0")), Num("1"), Num("0")), Call("Int"))));
+        var preservation = UnderValid(All("r", RowType(), Imp(Le(cost, dv), Own("Valid", r, residual))));
+        var successor = UnderValid(All("s", Fin(5), Eq(SumOver("r", RowType(),
+            Typed(Conditional(And(Le(cost, dv), Eq(Own("cl", r, residual), target)), Num("1"), Num("0")), Call("Int"))),
+            Own("T", Own("cl", p, dv), target))));
+        var initialValid = All("r", RowType(), Imp(Le(Horizontal(r), Num("1")),
+            Own("Valid", r, Sub(Num("1"), Horizontal(r)))));
+        var initialCount = All("s", Fin(5), Eq(SumOver("r", RowType(), Typed(Conditional(
+            And(Le(Horizontal(r), Num("1")), Eq(Own("cl", r, Sub(Num("1"), Horizontal(r))), target)),
+            Num("1"), Num("0")), Call("Int"))), Own("initial", target)));
+        var forward = And(Eq(Own("W", Num("0")), Own("initial")), All("i", Fin(5),
+            Eq(Own("W", Call("Fin.succ", i)), Call("Matrix.vecMul", Own("W", Call("Fin.castSucc", i)), Own("T")))));
+        var polynomial = Eq(Own("W", Num("5")), SumOver("j", Fin(4), Call("HSMul.hSMul",
+            Typed(App(Vector(Parenthesized(Seq(Minus, Num("4"))),Num("20"),Parenthesized(Seq(Minus, Num("29"))),Num("10")), j), Call("Int")),
+            Own("W", Typed(Call("Fin.mk", Add(Num("1"), Call("Fin.val", j))), Fin(6))))));
+        return And(acceptance, And(preservation, And(successor, And(initialValid,
+            And(initialCount, And(forward, polynomial))))));
     }
 
 }

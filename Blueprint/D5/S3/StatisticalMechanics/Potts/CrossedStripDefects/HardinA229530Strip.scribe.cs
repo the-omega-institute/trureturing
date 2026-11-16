@@ -34,11 +34,11 @@ internal sealed class HardinA229530StripDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The Fin 7 cached forward prefix on Fin 10, shared by the two-defect extension and pinned by finite_certificate."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("shared-finite-certificate"), DeclarationHandle.Create(Prefix + "finite_certificate"),
-                H("Shared finite_certificate"), StatementSource.WithoutFormula(),
+                H("Shared finite_certificate"), StatementSource.FromAuthor(Disp(FiniteCertificateFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("Exact terminal values, validity preservation, successor and initial counts, cached forward recurrence and polynomial relation. The two-defect extension reuses its active successor and initial projections."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("raw-successors"), DeclarationHandle.Create(Prefix + "raw_successors"),
-                H("Proper successor counts from saturated scanner fibres"), StatementSource.WithoutFormula(),
+                H("Proper successor counts from saturated scanner fibres"), StatementSource.FromAuthor(Disp(RawSuccessorsFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("At saturated Seen flags, sixteen times every actual proper three-colour successor count is the corresponding HardinSourceContinuations.M entry. The theorem applies the frozen four_class_certificate through scanner_fibres and preserves all target classes."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("a"),
@@ -107,6 +107,51 @@ internal sealed class HardinA229530StripDocument : IScribeDocumentDefinition
             Conditional(And(Eq(d, Num("0")), Or(And(Eq(App(p, Num("0")), App(p, Num("1"))), And(Ne(App(p, Num("0")), App(p, Num("2"))), And(Ne(App(p, Num("0")), App(p, Num("3"))), And(Ne(App(p, Num("1")), App(p, Num("2"))), And(Ne(App(p, Num("1")), App(p, Num("3"))), Ne(App(p, Num("2")), App(p, Num("3")))))))), And(Ne(App(p, Num("0")), App(p, Num("1"))), And(Ne(App(p, Num("0")), App(p, Num("2"))), And(Ne(App(p, Num("0")), App(p, Num("3"))), And(Ne(App(p, Num("1")), App(p, Num("2"))), And(Ne(App(p, Num("1")), App(p, Num("3"))), Eq(App(p, Num("2")), App(p, Num("3")))))))))), Num("7"),
             Conditional(And(Eq(d, Num("0")), Or(And(Ne(App(p, Num("0")), App(p, Num("1"))), And(Ne(App(p, Num("0")), App(p, Num("2"))), And(Eq(App(p, Num("0")), App(p, Num("3"))), And(Eq(App(p, Num("1")), App(p, Num("2"))), And(Ne(App(p, Num("1")), App(p, Num("3"))), Ne(App(p, Num("2")), App(p, Num("3")))))))), And(Ne(App(p, Num("0")), App(p, Num("1"))), And(Ne(App(p, Num("0")), App(p, Num("2"))), And(Eq(App(p, Num("0")), App(p, Num("3"))), And(Eq(App(p, Num("1")), App(p, Num("2"))), And(Ne(App(p, Num("1")), App(p, Num("3"))), Ne(App(p, Num("2")), App(p, Num("3")))))))))), Num("8"),
             Num("9")))))))))))));
+    }
+
+    private static Formula SumOver(string n, Formula type, Formula body) =>
+        Seq(Sum, Underscore, Grp(V(n), Colon, Sp, type), Sp, Parenthesized(body));
+
+    private static Formula FiniteCertificateFormula()
+    {
+        var p = V("p"); var d = V("d"); var r = V("r"); var target = V("s");
+        var i = V("i"); var j = V("j"); var dv = Call("Fin.val", d);
+        Formula Own(string name, params Formula[] args) => Call("HardinA229530Strip." + name, args);
+        Formula Horizontal(Formula row) => Call("DefectTransfer.bondDefects", Call("HardinA229582Strip.horizontal"), row, row);
+        var cost = Add(Call("DefectTransfer.bondDefects", Own("between"), p, r), Horizontal(r));
+        var residual = Sub(dv, Parenthesized(cost));
+        Formula UnderValid(Formula body) => All("p", RowType(), All("d", Fin(2), Imp(Own("Valid", p, dv), body)));
+        var terminal = Typed(Vector(Num("0"),Num("0"),Num("0"),Num("1"),Num("1"),Num("1"),Num("1"),Num("1"),Num("1"),Num("1")), Arrow(Fin(10), Call("Int")));
+        var acceptance = UnderValid(Eq(App(terminal, Own("cl", p, dv)),
+            Typed(Conditional(Eq(dv, Num("0")), Num("1"), Num("0")), Call("Int"))));
+        var preservation = UnderValid(All("r", RowType(), Imp(Le(cost, dv), Own("Valid", r, residual))));
+        var successor = UnderValid(All("s", Fin(10), Eq(SumOver("r", RowType(),
+            Typed(Conditional(And(Le(cost, dv), Eq(Own("cl", r, residual), target)), Num("1"), Num("0")), Call("Int"))),
+            Own("T", Own("cl", p, dv), target))));
+        var initialValid = All("r", RowType(), Imp(Le(Horizontal(r), Num("1")),
+            Own("Valid", r, Sub(Num("1"), Horizontal(r)))));
+        var initialCount = All("s", Fin(10), Eq(SumOver("r", RowType(), Typed(Conditional(
+            And(Le(Horizontal(r), Num("1")), Eq(Own("cl", r, Sub(Num("1"), Horizontal(r))), target)),
+            Num("1"), Num("0")), Call("Int"))), Own("initial", target)));
+        var forward = And(Eq(Own("W", Num("0")), Own("initial")), All("i", Fin(6),
+            Eq(Own("W", Call("Fin.succ", i)), Call("Matrix.vecMul", Own("W", Call("Fin.castSucc", i)), Own("T")))));
+        var polynomial = Eq(Own("W", Num("6")), SumOver("j", Fin(4), Call("HSMul.hSMul",
+            Typed(App(Vector(Parenthesized(Seq(Minus, Num("16"))),Num("56"),Parenthesized(Seq(Minus, Num("57"))),Num("14")), j), Call("Int")),
+            Own("W", Typed(Call("Fin.mk", Add(Num("2"), Call("Fin.val", j))), Fin(7))))));
+        return And(acceptance, And(preservation, And(successor, And(initialValid,
+            And(initialCount, And(forward, polynomial))))));
+    }
+
+    private static Formula RawSuccessorsFormula()
+    {
+        var p = V("p"); var q = V("q"); var j = V("j");
+        var seen = Pair(Call("true"), Call("true"));
+        Formula Class(Formula row) => Call("HardinSourceContinuations.sourceClass", seen, row);
+        var indicator = Typed(Conditional(And(Call("HardinThinGraphTransport.proper", q),
+            And(Call("HardinThinGraphTransport.compatible", Call("true"), p, q), Eq(Class(q), j))), Num("1"), Num("0")), Call("Int"));
+        return All("p", RowType(), Imp(Call("HardinThinGraphTransport.proper", p), All("j", Fin(4),
+            Eq(Mul(Num("16"), Parenthesized(SumOver("q", RowType(), indicator))),
+                Call("HardinSourceContinuations.M", Class(p), j)))));
     }
 
 }

@@ -43,10 +43,10 @@ internal sealed class HardinA229536StripDocument : IScribeDocumentDefinition
 
     private static Formula AsInt(Formula value) => Parenthesized(Seq(value, Colon, Sp, Call("Int")));
 
-    private static Formula BetweenBonds() => Seq(Lbrace,
+    private static Formula BetweenBonds() => Seq(OpenBrace,
         Pair(Num("0"), Num("0")), Comma, Sp, Pair(Num("0"), Num("1")), Comma, Sp,
         Pair(Num("1"), Num("0")), Comma, Sp, Pair(Num("1"), Num("1")), Comma, Sp,
         Pair(Num("1"), Num("2")), Comma, Sp, Pair(Num("2"), Num("1")), Comma, Sp,
-        Pair(Num("2"), Num("2")), Rbrace);
+        Pair(Num("2"), Num("2")), CloseBrace);
 
 }
