@@ -3,6 +3,7 @@ import Reg.Support.SingleDependentReadout
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic
 
 noncomputable section
+universe u
 open scoped BigOperators Topology
 open Filter Metric
 open _root_.D5.S3.VertexAlgebra
@@ -94,29 +95,29 @@ private theorem coefficientDependence : ObservationalDependence coefficientSigna
 namespace finiteSewn_differentiableOn
 def arena : Arena where
   signature := diffSignature
-  Law A := ∀ (X : Type) [Fintype X] [DecidableEq X] (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) (e : X → External D) (d : (X ⊕ X) →₀ ℕ) (N : ℕ),
+  Law A := ∀ {X : Type u} [Fintype X] [DecidableEq X] (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) (e : X → External D) (d : (X ⊕ X) →₀ ℕ) (N : ℕ),
     A.readout () () (finiteSewn D a e d N) (ball (0 : ℂ) 1)
-private theorem bad_fails : ¬ arena.Law diffBad := by
+private theorem bad_fails : ¬ arena.{u}.Law diffBad := by
   intro h
-  exact h Unit hyperbolic hyperbolic_unit 0 labels 0 0
-def evidence : Registration arena (type_of% (@finiteSewn_differentiableOn)) where
+  exact @h (ULift.{u} Unit) inferInstance inferInstance hyperbolic hyperbolic_unit 0 (fun _ => labels ()) 0 0
+def evidence : Registration arena.{u} (type_of% (@finiteSewn_differentiableOn.{u})) where
   actual := diffActual
   bridge := Iff.rfl
-  variation := ⟨fun X _ _ D hu a e d N => finiteSewn_differentiableOn D hu a e d N, diffBad, bad_fails⟩
+  variation := ⟨fun {X} _ _ D hu a e d N => finiteSewn_differentiableOn D hu a e d N, diffBad, bad_fails⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law diffActual diffBad bad_fails
+    arena.{u}.Law diffActual diffBad bad_fails
   dependence := diffDependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@finiteSewn_differentiableOn) (Realization diffSignature) Type Unit where
+    (@finiteSewn_differentiableOn.{u}) (Realization diffSignature) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic.finiteSewn_differentiableOn.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic.finiteSewn_differentiableOn.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize diffSignature diffActual.readout diffActual.anchor)
@@ -142,29 +143,29 @@ end finiteSewn_differentiableOn
 namespace sewn_differentiableOn
 def arena : Arena where
   signature := diffSignature
-  Law A := ∀ (X : Type) [Fintype X] [DecidableEq X] (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) (e : X → External D) (d : (X ⊕ X) →₀ ℕ),
+  Law A := ∀ {X : Type u} [Fintype X] [DecidableEq X] (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) (e : X → External D) (d : (X ⊕ X) →₀ ℕ),
     A.readout () () (sewn D a e d) (ball (0 : ℂ) 1)
-private theorem bad_fails : ¬ arena.Law diffBad := by
+private theorem bad_fails : ¬ arena.{u}.Law diffBad := by
   intro h
-  exact h Unit hyperbolic hyperbolic_unit 0 labels 0
-def evidence : Registration arena (type_of% (@sewn_differentiableOn)) where
+  exact @h (ULift.{u} Unit) inferInstance inferInstance hyperbolic hyperbolic_unit 0 (fun _ => labels ()) 0
+def evidence : Registration arena.{u} (type_of% (@sewn_differentiableOn.{u})) where
   actual := diffActual
   bridge := Iff.rfl
-  variation := ⟨fun X _ _ D hu a e d => sewn_differentiableOn D hu a e d, diffBad, bad_fails⟩
+  variation := ⟨fun {X} _ _ D hu a e d => sewn_differentiableOn D hu a e d, diffBad, bad_fails⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law diffActual diffBad bad_fails
+    arena.{u}.Law diffActual diffBad bad_fails
   dependence := diffDependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@sewn_differentiableOn) (Realization diffSignature) Type Unit where
+    (@sewn_differentiableOn.{u}) (Realization diffSignature) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic.sewn_differentiableOn.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic.sewn_differentiableOn.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize diffSignature diffActual.readout diffActual.anchor)
@@ -190,29 +191,29 @@ end sewn_differentiableOn
 namespace finiteSewn_tendstoUniformlyOn
 def arena : Arena where
   signature := uniformSignature
-  Law A := ∀ (X : Type) [Fintype X] [DecidableEq X] (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) (e : X → External D) (d : (X ⊕ X) →₀ ℕ) (ρ : ℝ), 0 ≤ ρ → ρ < 1 →
+  Law A := ∀ {X : Type u} [Fintype X] [DecidableEq X] (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) (e : X → External D) (d : (X ⊕ X) →₀ ℕ) (ρ : ℝ), 0 ≤ ρ → ρ < 1 →
     A.readout () () (finiteSewn D a e d) (sewn D a e d) atTop {z : ℂ | ‖z‖ ≤ ρ}
-private theorem bad_fails : ¬ arena.Law uniformBad := by
+private theorem bad_fails : ¬ arena.{u}.Law uniformBad := by
   intro h
-  exact h Unit hyperbolic hyperbolic_unit 0 labels 0 0 le_rfl (by norm_num)
-def evidence : Registration arena (type_of% (@finiteSewn_tendstoUniformlyOn)) where
+  exact @h (ULift.{u} Unit) inferInstance inferInstance hyperbolic hyperbolic_unit 0 (fun _ => labels ()) 0 0 le_rfl (by norm_num)
+def evidence : Registration arena.{u} (type_of% (@finiteSewn_tendstoUniformlyOn.{u})) where
   actual := uniformActual
   bridge := Iff.rfl
-  variation := ⟨fun X _ _ D hu a e d ρ hρ hρ1 => finiteSewn_tendstoUniformlyOn D hu a e d hρ hρ1, uniformBad, bad_fails⟩
+  variation := ⟨fun {X} _ _ D hu a e d ρ hρ hρ1 => finiteSewn_tendstoUniformlyOn D hu a e d hρ hρ1, uniformBad, bad_fails⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law uniformActual uniformBad bad_fails
+    arena.{u}.Law uniformActual uniformBad bad_fails
   dependence := uniformDependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@finiteSewn_tendstoUniformlyOn) (Realization uniformSignature) Type Unit where
+    (@finiteSewn_tendstoUniformlyOn.{u}) (Realization uniformSignature) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic.finiteSewn_tendstoUniformlyOn.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic.finiteSewn_tendstoUniformlyOn.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize uniformSignature uniformActual.readout uniformActual.anchor)
@@ -238,29 +239,29 @@ end finiteSewn_tendstoUniformlyOn
 namespace finiteSewn_tendstoLocallyUniformlyOn
 def arena : Arena where
   signature := localSignature
-  Law A := ∀ (X : Type) [Fintype X] [DecidableEq X] (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) (e : X → External D) (d : (X ⊕ X) →₀ ℕ),
+  Law A := ∀ {X : Type u} [Fintype X] [DecidableEq X] (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) (e : X → External D) (d : (X ⊕ X) →₀ ℕ),
     A.readout () () (finiteSewn D a e d) (sewn D a e d) atTop (ball (0 : ℂ) 1)
-private theorem bad_fails : ¬ arena.Law localBad := by
+private theorem bad_fails : ¬ arena.{u}.Law localBad := by
   intro h
-  exact h Unit hyperbolic hyperbolic_unit 0 labels 0
-def evidence : Registration arena (type_of% (@finiteSewn_tendstoLocallyUniformlyOn)) where
+  exact @h (ULift.{u} Unit) inferInstance inferInstance hyperbolic hyperbolic_unit 0 (fun _ => labels ()) 0
+def evidence : Registration arena.{u} (type_of% (@finiteSewn_tendstoLocallyUniformlyOn.{u})) where
   actual := localActual
   bridge := Iff.rfl
-  variation := ⟨fun X _ _ D hu a e d => finiteSewn_tendstoLocallyUniformlyOn D hu a e d, localBad, bad_fails⟩
+  variation := ⟨fun {X} _ _ D hu a e d => finiteSewn_tendstoLocallyUniformlyOn D hu a e d, localBad, bad_fails⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law localActual localBad bad_fails
+    arena.{u}.Law localActual localBad bad_fails
   dependence := localDependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@finiteSewn_tendstoLocallyUniformlyOn) (Realization localSignature) Type Unit where
+    (@finiteSewn_tendstoLocallyUniformlyOn.{u}) (Realization localSignature) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic.finiteSewn_tendstoLocallyUniformlyOn.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic.finiteSewn_tendstoLocallyUniformlyOn.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize localSignature localActual.readout localActual.anchor)
@@ -286,30 +287,30 @@ end finiteSewn_tendstoLocallyUniformlyOn
 namespace finiteSewn_coefficient_tendsto
 def arena : Arena where
   signature := coefficientSignature
-  Law A := ∀ (X : Type) [Fintype X] [DecidableEq X] (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) (e : X → External D) (d : (X ⊕ X) →₀ ℕ) (m : ℕ),
+  Law A := ∀ {X : Type u} [Fintype X] [DecidableEq X] (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) (e : X → External D) (d : (X ⊕ X) →₀ ℕ) (m : ℕ),
     A.readout () () (fun N => coefficient m (finiteSewn D a e d N))
       atTop (𝓝 (coefficient m (sewn D a e d)))
-private theorem bad_fails : ¬ arena.Law coefficientBad := by
+private theorem bad_fails : ¬ arena.{u}.Law coefficientBad := by
   intro h
-  exact h Unit hyperbolic hyperbolic_unit 0 labels 0 0
-def evidence : Registration arena (type_of% (@finiteSewn_coefficient_tendsto)) where
+  exact @h (ULift.{u} Unit) inferInstance inferInstance hyperbolic hyperbolic_unit 0 (fun _ => labels ()) 0 0
+def evidence : Registration arena.{u} (type_of% (@finiteSewn_coefficient_tendsto.{u})) where
   actual := coefficientActual
   bridge := Iff.rfl
-  variation := ⟨fun X _ _ D hu a e d m => finiteSewn_coefficient_tendsto D hu a e d m, coefficientBad, bad_fails⟩
+  variation := ⟨fun {X} _ _ D hu a e d m => finiteSewn_coefficient_tendsto D hu a e d m, coefficientBad, bad_fails⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law coefficientActual coefficientBad bad_fails
+    arena.{u}.Law coefficientActual coefficientBad bad_fails
   dependence := coefficientDependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@finiteSewn_coefficient_tendsto) (Realization coefficientSignature) Type Unit where
+    (@finiteSewn_coefficient_tendsto.{u}) (Realization coefficientSignature) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic.finiteSewn_coefficient_tendsto.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic.finiteSewn_coefficient_tendsto.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize coefficientSignature coefficientActual.readout coefficientActual.anchor)

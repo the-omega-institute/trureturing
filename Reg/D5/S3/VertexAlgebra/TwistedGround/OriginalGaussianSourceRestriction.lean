@@ -4,6 +4,7 @@ import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction
 
 set_option maxHeartbeats 1000000
 noncomputable section
+universe u
 open scoped BigOperators Topology Matrix
 open Filter Metric
 open _root_.D5.S3.VertexAlgebra
@@ -47,7 +48,7 @@ private theorem eqDependence : ObservationalDependence eqSignature eqActual := b
 namespace original_right_covariance_restrict
 def arena : Arena where
   signature := eqSignature
-  Law A := ∀ (X : Type) [Fintype X] [DecidableEq X] (D : LatticeData) (N M : ℕ) (h : N ≤ M)
+  Law A := ∀ {X : Type u} [Fintype X] [DecidableEq X] (D : LatticeData) (N M : ℕ) (h : N ≤ M)
     (e : X → External D) (i j : Internal D N ⊕ X),
     A.readout () () (transportCovariance (sourceBlock (J := X) (inverseSubstitution D M))
       (originalRow D M e)
@@ -55,27 +56,27 @@ def arena : Arena where
       ((internalInclusion D N M h).sumMap (Function.Embedding.refl X) j))
       (transportCovariance (sourceBlock (J := X) (inverseSubstitution D N))
       (originalRow D N e) i j)
-private theorem bad_fails : ¬ arena.Law eqBad := by
+private theorem bad_fails : ¬ arena.{u}.Law eqBad := by
   intro h
-  exact h Unit hyperbolic 0 0 le_rfl labels (.inr ()) (.inr ())
-def evidence : Registration arena (type_of% (@original_right_covariance_restrict)) where
+  exact @h (ULift.{u} Unit) inferInstance inferInstance hyperbolic 0 0 le_rfl (fun _ => labels ()) (.inr (ULift.up ())) (.inr (ULift.up ()))
+def evidence : Registration arena.{u} (type_of% (@original_right_covariance_restrict.{u})) where
   actual := eqActual
   bridge := Iff.rfl
-  variation := ⟨fun X _ _ D N M h e i j => original_right_covariance_restrict D N M h e i j, eqBad, bad_fails⟩
+  variation := ⟨fun {X} _ _ D N M h e i j => original_right_covariance_restrict D N M h e i j, eqBad, bad_fails⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law eqActual eqBad bad_fails
+    arena.{u}.Law eqActual eqBad bad_fails
   dependence := eqDependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@original_right_covariance_restrict) (Realization eqSignature) Type Unit where
+    (@original_right_covariance_restrict.{u}) (Realization eqSignature) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction.original_right_covariance_restrict.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction.original_right_covariance_restrict.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize eqSignature eqActual.readout eqActual.anchor)
@@ -101,32 +102,32 @@ end original_right_covariance_restrict
 namespace original_right_mean_restrict
 def arena : Arena where
   signature := eqSignature
-  Law A := ∀ (X : Type) [Fintype X] [DecidableEq X] (D : LatticeData) (a : Charge D)
+  Law A := ∀ {X : Type u} [Fintype X] [DecidableEq X] (D : LatticeData) (a : Charge D)
     (N M : ℕ) (h : N ≤ M) (e : X → External D) (i : Internal D N ⊕ X),
     A.readout () () (originalInverseMean D a M e
       ((internalInclusion D N M h).sumMap (Function.Embedding.refl X) i))
       (originalInverseMean D a N e i)
-private theorem bad_fails : ¬ arena.Law eqBad := by
+private theorem bad_fails : ¬ arena.{u}.Law eqBad := by
   intro h
-  exact h Unit hyperbolic 0 0 0 le_rfl labels (.inr ())
-def evidence : Registration arena (type_of% (@original_right_mean_restrict)) where
+  exact @h (ULift.{u} Unit) inferInstance inferInstance hyperbolic 0 0 0 le_rfl (fun _ => labels ()) (.inr (ULift.up ()))
+def evidence : Registration arena.{u} (type_of% (@original_right_mean_restrict.{u})) where
   actual := eqActual
   bridge := Iff.rfl
-  variation := ⟨fun X _ _ D a N M h e i => original_right_mean_restrict D a N M h e i, eqBad, bad_fails⟩
+  variation := ⟨fun {X} _ _ D a N M h e i => original_right_mean_restrict D a N M h e i, eqBad, bad_fails⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law eqActual eqBad bad_fails
+    arena.{u}.Law eqActual eqBad bad_fails
   dependence := eqDependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@original_right_mean_restrict) (Realization eqSignature) Type Unit where
+    (@original_right_mean_restrict.{u}) (Realization eqSignature) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction.original_right_mean_restrict.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction.original_right_mean_restrict.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize eqSignature eqActual.readout eqActual.anchor)
@@ -148,65 +149,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end original_right_mean_restrict
-
-namespace original_row_coefficients_restrict
-def arena : Arena where
-  signature := eqSignature
-  Law A := ∀ (X : Type) [Fintype X] [DecidableEq X] (D : LatticeData) (a : Charge D)
-    (N M : ℕ) (hNM : N ≤ M) (e : X → External D) (z : ℂ)
-    (d : Internal D N →₀ ℕ) (h : X →₀ ℕ),
-    let f := (internalInclusion D N M hNM).sumMap (Function.Embedding.refl X)
-    A.readout () () (OriginalChargedRowSource.affineCoefficient (leftRow D M e z) (leftMean D a M e z)
-      ((d.sumElim h).embDomain f))
-      (OriginalChargedRowSource.affineCoefficient (leftRow D N e z) (leftMean D a N e z)
-        (d.sumElim h)) ∧
-    A.readout () () (OriginalChargedRowSource.affineCoefficient (rightRow D M e z) (rightMean D a M e z)
-      ((d.sumElim h).embDomain f))
-      (OriginalChargedRowSource.affineCoefficient (rightRow D N e z) (rightMean D a N e z)
-        (d.sumElim h))
-private theorem bad_fails : ¬ arena.Law eqBad := by
-  intro h
-  exact (h Unit hyperbolic 0 0 0 le_rfl labels 0 0 0).1
-def evidence : Registration arena (type_of% (@original_row_coefficients_restrict)) where
-  actual := eqActual
-  bridge := Iff.rfl
-  variation := ⟨fun X _ _ D a N M hNM e z d h => original_row_coefficients_restrict D a N M hNM e z d h, eqBad, bad_fails⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law eqActual eqBad bad_fails
-  dependence := eqDependence
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@original_row_coefficients_restrict) (Realization eqSignature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction.original_row_coefficients_restrict.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction.original_row_coefficients_restrict.evidence
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨evidence⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize eqSignature eqActual.readout eqActual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-end original_row_coefficients_restrict
-
 
 namespace original_fixed_energy_common_box
 def arena : Arena where

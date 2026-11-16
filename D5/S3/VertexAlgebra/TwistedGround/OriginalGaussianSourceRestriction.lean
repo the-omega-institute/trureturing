@@ -151,44 +151,6 @@ private theorem affine_enlarge {I J : Type*} [Fintype I] [DecidableEq I]
     (OriginalCorrectedRowRecompositionSource.affineLaurent_enlarge C m (fun _ => 0) f d)
   simpa [OriginalNormalRowSource.affineLaurent, Finsupp.weight_apply] using he
 
-/-- The full actual native row coefficients stabilize under enlargement of
-the internal frequency box. Both external occupations remain in the full
-row degree; the right equality uses the complete transported covariance and
-opposite-charge mean before coefficient restriction. -/
-theorem original_row_coefficients_restrict (D : LatticeData) (a : Charge D)
-    (N M : ℕ) (hNM : N ≤ M) (e : X → External D) (z : ℂ)
-    (d : Internal D N →₀ ℕ) (h : X →₀ ℕ) :
-    let f := (internalInclusion D N M hNM).sumMap (Function.Embedding.refl X)
-    OriginalChargedRowSource.affineCoefficient (leftRow D M e z) (leftMean D a M e z)
-      ((d.sumElim h).embDomain f) =
-      OriginalChargedRowSource.affineCoefficient (leftRow D N e z) (leftMean D a N e z)
-        (d.sumElim h) ∧
-    OriginalChargedRowSource.affineCoefficient (rightRow D M e z) (rightMean D a M e z)
-      ((d.sumElim h).embDomain f) =
-      OriginalChargedRowSource.affineCoefficient (rightRow D N e z) (rightMean D a N e z)
-        (d.sumElim h) := by
-  let f := (internalInclusion D N M hNM).sumMap (Function.Embedding.refl X)
-  have hdamp (i : Internal D N ⊕ X) : damp D M z (f i) = damp D N z i := by
-    cases i <;> rfl
-  have hleft : (fun i j => leftRow D M e z (f i) (f j)) = leftRow D N e z := by
-    funext i j
-    simp only [leftRow, hdamp, f, raw_entry_restrict]
-  have hright : (fun i j => rightRow D M e z (f i) (f j)) = rightRow D N e z := by
-    funext i j
-    simp only [rightRow, hdamp]
-    rw [original_right_covariance_restrict]
-  have hm : (fun i => leftMean D a M e z (f i)) = leftMean D a N e z := by
-    funext i
-    cases i <;> rfl
-  have hn : (fun i => rightMean D a M e z (f i)) = rightMean D a N e z := by
-    funext i
-    simp only [rightMean_raw]
-    rw [hdamp, original_right_mean_restrict]
-  constructor
-  · exact (affine_enlarge _ _ f (d.sumElim h)).trans (by rw [hleft, hm])
-  · exact (affine_enlarge _ _ f (d.sumElim h)).trans (by rw [hright, hn])
-
-
 private theorem box_omega (D : LatticeData) (M : ℕ) (p : Exponent D)
     (hp : ∀ b ∈ p.support, b.2 < M) :
     Finsupp.weight (fun i => (omega D (boxLabel D M i) : ℤ)) (boxOccupation D M p) =
