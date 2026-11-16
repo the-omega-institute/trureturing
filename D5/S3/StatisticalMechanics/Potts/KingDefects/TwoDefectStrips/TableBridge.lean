@@ -23,19 +23,18 @@ private theorem count_filterMap_sum {α β : Type*} [DecidableEq β]
     (l : List α) (f : α → Option β) (s : β) :
     ((l.filterMap f).count s : ℤ) =
       (l.map fun r => if f r = some s then (1 : ℤ) else 0).sum := by
-  induction l with
-  | nil => simp
-  | cons a l ih =>
-    cases h : f a with
-    | none => simpa [h] using ih
-    | some b =>
-      by_cases hb : b = s
-      · subst b
-        simp only [List.filterMap_cons, h, List.map_cons, List.sum_cons,
-          List.count_cons, beq_self_eq_true, ↓reduceIte, Nat.cast_add, Nat.cast_one,
-          Option.some.injEq, ite_true]
-        rw [ih, add_comm]
-      · simpa [h, hb, Ne.symm hb] using ih
+  rw [List.filterMap_eq_flatMap_toList, List.count_flatMap]
+  push_cast
+  congr 1
+  rw [List.map_map]
+  apply List.map_congr_left
+  intro a _
+  cases h : f a with
+  | none => simp [h]
+  | some b =>
+    by_cases hb : b = s
+    · subst b; simp [h, List.count_cons]
+    · simp [h, List.count_cons, hb, Ne.symm hb]
 
 theorem count_successors {q k M : ℕ} (P : (Fin k → Fin q) → Prop)
     [DecidablePred P] (c : (Fin k → Fin q) → Fin M) (s : Fin M) :
