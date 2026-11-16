@@ -42,15 +42,25 @@ $$\forall n \in \mathbb{N},\; \operatorname{h}\left(n\right) = \operatorname{Nat
 
 The map h:N -> N first takes the natural quotient n/2^g(n), then subtracts one with natural monus, then takes the natural quotient by two. In particular h(0)=0. For positive n the quotient by 2^g(n) is exact and odd, and n=2^g(n)*(2*h(n)+1). Thus h(n)=A025480(n-1) on the source domain; no integer-floor expression with a negative numerator is used at zero.
 
-**Theorem 1.4 (The complete dyadic block identity).**
+**Theorem 1.4 (Exact positive-row decomposition).**
+
+$$\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (n = (2)^{\operatorname{g}\left(n\right)} \cdot \left(2 \cdot \operatorname{h}\left(n\right) + 1\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.dyadic_index` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Mikhail Kurkov (2024). *OEIS A358612: extended Stirling numbers from binary row indices*. URL: <https://oeis.org/A358612>.
+
+*Commentary.*
+
+For every positive natural n, n=2^g(n)*(2*h(n)+1). The proof uses the exact power-of-two valuation and odd quotient. This source-owner helper is consumed by the block theorem and by the row-edge induction; no claim is made at zero.
+
+**Theorem 1.5 (The complete dyadic block identity).**
 
 $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; (1 \le n) \Rightarrow ((2 \le k) \Rightarrow (\operatorname{T}\left(n, k\right) = ((k:\mathbb{Q}) - 1)^{\operatorname{g}\left(n\right)} \cdot \operatorname{T}\left(\operatorname{h}\left(n\right), \operatorname{Nat.sub}\left(k, 1\right)\right) + ((k:\mathbb{Q}))^{\operatorname{g}\left(n\right) + 1} \cdot \operatorname{T}\left(\operatorname{h}\left(n\right), k\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.dyadic_extended_stirling_block` (`✓ std3`). ∎
-
-*Resolves.* `Problems/oeis-a358612-dyadic-block` (proved) by `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.dyadic_extended_stirling_block`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a358612-dyadic-block","declaration_gid":"D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.dyadic_extended_stirling_block","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -64,5 +74,6 @@ For every n>=1 and k>=2, with no upper bound on either index, this is Kurkov's f
 
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.T`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.dyadic_extended_stirling_block`
+- Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.dyadic_index`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.g`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.h`

@@ -92,7 +92,7 @@ open-problem-resolution route, subject to independent source/form review.
 The source-owner product helper is consumed both by its binomial theorem
 and this edge result. The exposed dyadic index is consumed by the block
 law and edge induction. Per-declaration proof shape and escape-registration
-binding remain audit obligations; compilation alone supplies neither.
+binding remain audit obligations; compilation alone supplies neither. The bounded new Edge Reg attempt failed to compile at dependent parameter numeral inference and at the concrete rejected-family calculation. No failed mirror is retained. The original Block Reg source has no newly established current binding evidence. The §3.9 exception is tracked in [#31124](https://github.com/the-omega-institute/trureturing/issues/31124); none of these targets is reported declared_validated.
 
 ## Triage
 

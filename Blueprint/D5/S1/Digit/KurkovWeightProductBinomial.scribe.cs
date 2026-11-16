@@ -49,7 +49,7 @@ internal sealed class KurkovWeightProductBinomialDocument : IScribeDocumentDefin
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, OpenProblemResolutionClaim? claim = null) =>
-        Describe.Lean(DescribeId.Create("a284005-" + name),
+        Describe.Lean(DescribeId.Create("a284005-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role, claim);
 

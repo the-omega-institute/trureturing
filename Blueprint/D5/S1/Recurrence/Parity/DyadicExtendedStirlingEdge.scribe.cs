@@ -19,8 +19,8 @@ internal sealed class DyadicExtendedStirlingEdgeDocument : IScribeDocumentDefini
                 "Strong induction on the row uses its exact dyadic decomposition n=2^g(n)*(2*h(n)+1). The parent is strictly smaller, and wt(n)=wt(h(n))+1. Both parent columns in the block law are outside their support, so they vanish."),
             Node("result", "The complete row-edge identity", All("n", Eqn(
                 Call("T", V("n"), Add(Call("wt", V("n")), D(2))),
-                new Formula.Fraction(Call("Rat.cast", Call("a", V("n"))),
-                    Call("Rat.cast", Call("Nat.factorial", Add(D(1), Call("wt", V("n")))))))),
+                new Formula.Fraction(Call("rat", Call("a", V("n"))),
+                    Call("rat", Call("factorial", Add(D(1), Call("wt", V("n")))))))),
                 "This is the all-natural-row conjectured formula T(n,A000120(n)+2)=A341392(n) from A358612, using the A341392 definition A284005(n)/(1+A000120(n))!. The initial row is checked separately. At positive n the upper parent term vanishes by support; the remaining block coefficient is (wt(h(n))+2)^g(n). The source-owner identity a(n)=(wt(h(n))+2)^(g(n)+1)*a(h(n)) and factorial recursion finish the induction. The support statement is proved, not assumed. No bounded row restriction or integrality hypothesis is added. The scalar PARI source is used only on positive columns; the formal zero-column extension never enters the induction. The dyadic block law is a reused live prerequisite, without a separate block-problem settlement in this document. This statement does not assert integrality or any other A358612 conjecture.",
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a358612-row-edge"), ResolutionKind.Proved)))));
 

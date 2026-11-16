@@ -41,7 +41,7 @@ internal sealed class DyadicExtendedStirlingBlockDocument : IScribeDocumentDefin
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("dyadic_index", "Exact positive-row decomposition",
                 All("n", Imp(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, V("n")),
-                    Eqn(V("n"), Mul(Pow(D(2), Call("g", V("n"))), Add(Mul(D(2), Call("h", V("n"))), D(1))))))),
+                    Eqn(V("n"), Mul(Pow(D(2), Call("g", V("n"))), Add(Mul(D(2), Call("h", V("n"))), D(1)))))),
                 "For every positive natural n, n=2^g(n)*(2*h(n)+1). The proof uses the exact power-of-two valuation and odd quotient. "
                 + "This source-owner helper is consumed by the block theorem and by the row-edge induction; no claim is made at zero.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
