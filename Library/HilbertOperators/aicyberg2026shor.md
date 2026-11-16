@@ -5,9 +5,12 @@ year: 2026
 title: Finite-register phase estimation and spectral Shor order finding
 doi: null
 url: https://github.com/solanaqubits/leanbook/tree/9b742770a2a5dbcf30cf9abc44e711194e957a00
-claim: Actual computational-input modular phase-estimation marginal, normalization and circular nearest-grid pointwise lower bound.
+claim: Actual computational-input modular phase-estimation marginal, circular nearest-grid bound, finite rational convergent correspondence, logarithmic list length and conditional Shor candidate membership.
 strata_touched:
   - D5/S3/Quantum/ShorCountingMarginal
+  - D5/S1/Depth/ContinuedFractions/FiniteRationalConvergents
+  - D5/S1/Depth/ContinuedFractions/FiniteRationalConvergentsLength
+  - D5/S3/Quantum/ShorContinuedFractions
 license: Apache-2.0
 triage: anchor
 ---
@@ -17,15 +20,17 @@ triage: anchor
 The immutable supplier is `solanaqubits/leanbook` at commit
 `9b742770a2a5dbcf30cf9abc44e711194e957a00`. Its sources
 `Verification/QuantumPhaseEstimationGeneral.lean` and
-`Verification/QuantumShorOrderFindingCore.lean` supply the retained live proof
+`Verification/QuantumShorOrderFindingCore.lean`, and
+`Verification/QuantumShorContinuedFractions.lean` supply the retained live proof
 slice. Copyright (c) 2026 aicyberg. All rights reserved. Authors: aicyberg.
 The published source tree has no NOTICE file.
 
 The supplier fixes Lean 4.33.1 and Mathlib revision
 `0df444a360eaa60ab8c11dca51a86af692955474`; the receiving dependency pins
 are the repository's `lean-toolchain` and `lake-manifest.json`. The transplant
-preserves the supplied statements and proofs and adjusts only imports and
-source grouping. Fixed two-qubit interfaces, unused corollaries, and suite
+preserves the supplied statements and proofs, with receiving imports,
+source grouping and helper visibility adapted. The Legendre consumer explicitly
+uses the exact finite-list equivalence. Fixed two-qubit interfaces, unused corollaries, and suite
 packaging are outside this proof slice.
 
 For modulus at least two, coprime base and an independently chosen target
@@ -37,9 +42,25 @@ It sums to one. Each circular nearest-grid point for a selected phase has
 marginal at least one over the period times four over pi squared.
 No divisibility between period and control dimension is assumed.
 
-This source supplies neither an aggregate-event success bound nor continued
-fractions, factoring, gate complexity, hardware claims, arbitrary control
-dimensions or a bound for every conditioned posterior comb.
+The rational continued-fraction slice computes a finite Euclidean list and proves
+that its entries are exactly Mathlib's totalized real convergents. For every
+rational x, including zero, negative and integral inputs, its length is at most
+2 * Nat.log 2 x.den + 1. The retained length proof and its two-step denominator
+sum estimate are the original supplier declarations second_den_sum_le and
+convergents_length_log. Their receiving module imports the existing list owner;
+the original tail_den_lt is public for this use. The bound counts list entries
+or Euclidean stages. The candidate
+list uses only the measured integer y, control dimension Q and modulus N,
+filtering by reduced denominator less than N. For Q equal to two to the control
+width and N squared at most Q, a circular nearest sample for s/r places the
+reduced fraction in that list, with denominator r/gcd(s,r); coprimality places r
+among its denominators. This is conditional membership, with no certified
+observable selector. A modular exponentiation check alone certifies an order
+multiple. The transplanted slice includes neither an aggregate quantum success
+bound, random coprimality rate, factoring reduction, full bit or gate complexity,
+hardware claims, arbitrary control dimensions nor a bound for every conditioned
+posterior comb. Other supplier length declarations, checked-list machinery and
+suite packaging are outside this slice.
 
 Retire each transplanted slice when equivalent declarations occur in the
 Mathlib revision actually pinned by this repository, replacing that slice
@@ -52,7 +73,8 @@ https://github.com/solanaqubits/leanbook/tree/9b742770a2a5dbcf30cf9abc44e711194e
 
 The retained proof slice comes from
 `Verification/QuantumPhaseEstimationGeneral.lean` and
-`Verification/QuantumShorOrderFindingCore.lean` at this revision.
+`Verification/QuantumShorOrderFindingCore.lean`, and
+`Verification/QuantumShorContinuedFractions.lean` at this revision.
 
 ## Complete upstream license
 

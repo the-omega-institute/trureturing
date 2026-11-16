@@ -1,0 +1,12 @@
+**约定 131.4（成熟表示、增量及未付前提）。** 齐次锥的矩阵实现与 (X131.25) 直接取 [Nakashima §2][Q131N] 对 Ishi 实现的明确陈述；正交乘法的成熟构造、两张互为对偶的齐次 PSD 模型及其准确配对取该文 §4、(4.3)—(4.5)、Proposition 4.3。零块模型及其对偶取 Proposition 4.5 证明的 p.11。本章不使用该文基本相对不变量的次数计算来推断 $\delta(C)$，也不将“秩三齐次”本身认作三次整个边界入口。
+
+定理131.2的 $r=1,s=n,R(y)=y$ 特例就是 [VII104.10—104.14][Q131Faces] 的已知 matrix norm cone 障碍，不能重新作为新实例或新数值界。这里的 repo-derived 增量是对一般正交乘法、特别是 $r\ge2,n>r$ 的同锥全效应障碍，以及 (X131.29)—(X131.36) 将一般齐次原锥接到既有整个边界消费者的完整推导。它不要求输出由乘积张满；Nakashima Remark 4.4 的 $(r,s,n)=(3,5,7)$ 也在被排除类内。零块、可约锥和全部严格正原单位均在证明的量词内。
+
+VII103.2的原真面穷尽、VIII125.6的低次数分类及SAME_READBACK131.2的框架等价均为直接复用；Schur 消元、PSD 核与正泛函、双极定理及有限维 EJA 谱定理是其中的成熟工具，不另计为新一般理论。文献归属限于这些明确接口，不主张全球原创或文献穷尽。
+
+一般裸 $\mathrm{EB}_{\ge1}$ 是否供应齐次性并未得到证明；本章不以该命题为前提去结算一般 LP。X129的全域 EB1 平坦重复球模型及其正 LP 保留原结论，不能因矩形族被排除而删去平坦分支。LOCAL_PURE_LIMIT132—133中 SingleLabel、共同正提升、共同方向条件，以及 EB3+PR 等限制域中的未付自动性，仍各按原前件使用；本章没有从一般 EB 供应它们。这里构造和分类的是有限维有序实空间及其整个效应区间，不附带物理来源、仪器、复合或动力学的实现断言。
+
+[Q131N]: https://arxiv.org/pdf/2405.09089v1 "H. Nakashima, An example of homogeneous cones whose basic relative invariant has maximal degree，§2 pp.2—3；§4 (4.3)—(4.5)、Proposition 4.3、Remark 4.4及Proposition 4.5证明p.11。"
+[Q131Faces]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "103.2：仅完整EB的全部真面穷尽；104.10—104.14：r=1的matrix norm cone、实际混积累及全效应失败。"
+[Q131Degree]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md "125.1：整个边界最低次数；125.6：AB≤3加全部正维完整排除球的同原同单位秩三EJA消费者。"
+

@@ -28,7 +28,33 @@ $$\forall x \in \mathbb{R},\; \operatorname{B}\left(x\right) = E_{3}(x) + \opera
 
 Here E₃ is Mertens.E₃ and theta is Chebyshev.theta. Both are the canonical actual arithmetic functions.
 
-**Theorem 1.3 (All-real envelope, arbitrarily late attainment and exact liminf in one result).**
+**Definition 1.3 (The original square-root tail).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.A`
+
+*Formalization.* `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.A` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A(x) is the actual integral over t>x of sqrt(t) times activationDensity(t). The correction is retained exactly, rather than replaced by its leading asymptotic.
+
+**Theorem 1.4 (Unconditional centered root-tail remainder).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.S_sub_A_limit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.S_sub_A_limit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing unconditional EulerLayerRootCorrection.psi_theta_root_limit controls the original S-A integral uniformly on its whole tail. The original integral comparison gives D(x)*(S(x)-A(x))->0. The original S_limit consumes this core and adds the unchanged A_limit; signed_B_limit keeps its original telescope and consumes S_limit. The independent original RH root-rate theorem remains available.
+
+For a nontrivial zero rho with beta=Re(rho)>=1/2, write fpsi=-Jpsi(exp u) and use the exact identity ftheta-fpsi=S(exp u). The factor exp((1/2-beta)*u) is 1 at equality and tends to zero above it, so u*exp((1-beta)*u)*(S(exp u)-A(exp u))->0. The actual psi forcing is meromorphic on Re s>-1 and analytic at real x>-1, with full complex coefficient Lambda=-m/rho at rho-1. Apply the existing fixed-cutoff signed_peaks at log 2 with an intermediate c1 strictly between c and m/(norm(rho)*norm(rho-1)). The absolute centered remainder spends c1-c, for either real sign s with s^2=1. Thus for every 0<=c below that full coefficient and every real T, some u>max(T,log 2) satisfies c<u*exp((1-beta)*u)*s*(ftheta(u)-A(exp u)). This is an application of the actual source and pole results; it assumes neither RH nor a nonresonance or growth premise and does not assert RH.
+
+**Theorem 1.5 (All-real envelope, arbitrarily late attainment and exact liminf in one result).**
 
 $$\operatorname{RiemannHypothesis} \Rightarrow \left(\left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\exists T \in \mathbb{R},\; \forall x \in \mathbb{R},\; T \le x \Rightarrow \left(1 < \operatorname{theta}\left(x\right) \land \left|\operatorname{D}\left(x\right) \cdot \operatorname{B}\left(x\right) + 2\right| < firstLiMass + epsilon\right)\right)\right) \land \left(\left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\forall Y \in \mathbb{R},\; \exists x \in \mathbb{R},\; \operatorname{max}\left(2, Y\right) \le x \land \left(1 < \operatorname{theta}\left(x\right) \land \left|\operatorname{D}\left(x\right) \cdot \operatorname{B}\left(x\right) + 2 + firstLiMass\right| < epsilon\right)\right)\right) \land \operatorname{liminf}_{x\in \mathbb{R}, x\to \infty} \operatorname{D}\left(x\right) \cdot \operatorname{B}\left(x\right) = -2 - firstLiMass\right)\right)$$
 
@@ -46,11 +72,11 @@ Apply WeightedTailTransport.transport_exp to this actual kernel, using R(y)=(y+1
 
 The Schoenfeld estimate gives abs(psi(x)-x)<=(7/8)*sqrt(x)*log(x)^2 for every real x>=5000 under RH. Chebyshev.psi_sub_theta_le_mul_sqrt supplies psi(x)-theta(x)<=C*sqrt(x), with theta<=psi. The theta error therefore bounds abs((theta(x)-x)/x^(3/4)) by (7/8)*log(x)^2/x^(1/4)+C/x^(1/4). The root Mathlib API isLittleO_log_rpow_rpow_atTop, with r=2 and s=1/4, makes this tend to zero. This estimate also controls the nonlinear remainder below. Multiplication by x^(-1/4) gives (theta(x)-x)/x->0, hence theta(x)/x->1 and eventually theta(x)>1.
 
-For the psi-theta root rate, apply the same public Schoenfeld bound at sqrt(x). The actual Costa-Pereira inequalities with exponents 1/2,1/3,1/5 above and 1/2,1/3,1/7 below imply abs(psi(x)-theta(x)-sqrt(x))<=abs(psi(sqrt(x))-sqrt(x))+psi(x^(1/3))+psi(x^(1/5)); the lower estimate uses the nonnegative actual psi terms. With C=log(4)+4, Chebyshev.psi_le_const_mul_self and log(sqrt(x))=log(x)/2 yield the nonnegative majorant abs(log(x)*((psi(x)-theta(x))/sqrt(x)-1))<=(7/32)*log(x)^3/x^(1/4)+C*log(x)/x^(1/6)+C*log(x)/x^(3/10). The root power-log API makes each term tend to zero. Multiply this actual rate by 1/log(x), cancelling only eventually where x>1, to obtain the limit (psi-theta)/sqrt->1 used in the square-root tail estimate. These are consequences of RH, not additional root-rate or error premises.
+For the psi-theta root rate, apply the same public Schoenfeld bound at sqrt(x). The actual Costa-Pereira inequalities with exponents 1/2,1/3,1/5 above and 1/2,1/3,1/7 below imply abs(psi(x)-theta(x)-sqrt(x))<=abs(psi(sqrt(x))-sqrt(x))+psi(x^(1/3))+psi(x^(1/5)); the lower estimate uses the nonnegative actual psi terms. With C=log(4)+4, Chebyshev.psi_le_const_mul_self and log(sqrt(x))=log(x)/2 yield the nonnegative majorant abs(log(x)*((psi(x)-theta(x))/sqrt(x)-1))<=(7/32)*log(x)^3/x^(1/4)+C*log(x)/x^(1/6)+C*log(x)/x^(3/10). The root power-log API makes each term tend to zero. Multiply this actual rate by 1/log(x), cancelling only eventually where x>1, to obtain the RH root rate. The square-root tail estimate uses the existing unconditional root limit. These are consequences of RH, not additional root-rate or error premises.
 
 For the nonlinear term put delta=theta(x)-x, L=log(x), u=delta/x and v=log(1+u)/L. Eventually L>=1 and abs(u)<=1/4. Mathlib Real.abs_log_sub_add_sum_range_le, with x=-u and n=1, gives abs(log(1+u)-u)<=u^2/(1-abs(u))<=2*u^2; hence abs(log(1+u))<=2*abs(u) and abs(v)<=1/2. Apply the same literal lemma to -v. From theta=x*(1+u) and log(theta)=L*(1+v), exact log algebra gives N=[log(1+v)-v]+[log(1+u)-u]/L. Thus abs(N)<=10*u^2/L and abs(D*N)<=10*((theta-x)/x^(3/4))^2->0. Positivity of all log arguments is paid from these bounds; delta=0 and both signs are included.
 
-For the square-root tail put a(t)=sqrt(t)*w(t), H(t)=2/(sqrt(t)*log(t)), q(t)=(log(t)+2)/(t*sqrt(t)*log(t)^2)=-H'(t). For t>=x>1, 0<=a(t)<=q(t)<=(1+1/log(x))*a(t). Apply the nonnegative-derivative improper FTC to g=-H on Ici(x), with derivative q>=0 and limit zero: q is integrable and integral_(t>x)q(t)=H(x). Domination pays integrability of a. If A=integral a, H(x)/(1+1/log(x))<=A(x)<=H(x), and D(x)*H(x)=2, so D*A->2. The local RH-only limit (psi-theta)/sqrt->1 gives, uniformly over the whole tail, abs((psi-theta)*w-a)<=eta*a. Integrability of the actual S kernel follows by subtracting the supplied psi and theta kernels. setIntegral_mono_on then gives abs(S-A)<=eta*A and D*S->2. No derivative of a Chebyshev step function is used.
+For the square-root tail put a(t)=sqrt(t)*w(t), H(t)=2/(sqrt(t)*log(t)), q(t)=(log(t)+2)/(t*sqrt(t)*log(t)^2)=-H'(t). For t>=x>1, 0<=a(t)<=q(t)<=(1+1/log(x))*a(t). Apply the nonnegative-derivative improper FTC to g=-H on Ici(x), with derivative q>=0 and limit zero: q is integrable and integral_(t>x)q(t)=H(x). Domination pays integrability of a. If A=integral a, H(x)/(1+1/log(x))<=A(x)<=H(x), and D(x)*H(x)=2, so D*A->2. The unconditional EulerLayerRootCorrection root limit gives, uniformly over the whole tail, abs((psi-theta)*w-a)<=eta*a. Integrability of the actual S kernel follows by subtracting the supplied psi and theta kernels. setIntegral_mono_on then gives abs(S-A)<=eta*A and D*S->2. No derivative of a Chebyshev step function is used.
 
 ThetaTailRobinWitness.theta_tail_mertens_robin supplies the actual theta-tail integrability and exact equality -(integral(theta-t)*w)=E₂p-(theta-x)/(x*log(x)). Subtracting actual integrable tails gives Jpsi-S=(theta-x)/(x*log(x))-E₂p, hence B=Jpsi-S+(E₃+E₂p)+N. The finite cancellation is E₃+E₂p=sum_(n in Ioc(0,floorNat(x)))M_eq_summand(n)-(Mertens.M-Mertens.γ). The estimate sum_M_eq_summand_le' bounds its absolute value by 4/x; normalized it is bounded by 4*log(x)/sqrt(x)->0.
 
@@ -58,9 +84,12 @@ The resulting signed limit is D(x)*B(x)+2+G(log(x))->0 on ALL real endpoints. Co
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.A`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.B`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.D`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.S_sub_A_limit`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.actual_B_lower_endpoint`
+- Dependency: [D5/S3/Arith/Robin/EulerLayerRootCorrection](../EulerLayerRootCorrection.md)
 - Dependency: [D5/S3/Arith/Robin/ThetaTailRobinWitness](../ThetaTailRobinWitness.md)
 - Dependency: [D5/S3/Weil/Mertens/Cryptids/Schoenfeld](../../../Weil/Mertens/Cryptids/Schoenfeld.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope](../../../Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.md)
