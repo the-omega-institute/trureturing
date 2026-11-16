@@ -11,9 +11,11 @@ open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 set_option maxRecDepth 100000
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip (Boundary)
+
 noncomputable section
 abbrev signature : Signature :=
-  _root_.Reg.Support.UniverseSingleReadout.signature (Fin 3) (fun _ => Row)
+  _root_.Reg.Support.UniverseSingleReadout.signature (Fin 3) (fun _ => Boundary)
     (fun _ => List (Fin 19))
 def actual : Realization signature :=
   realize signature (fun _ d p => successors p d.val) (fun e => nomatch e)
@@ -25,7 +27,7 @@ abbrev arena : Arena where
     R.readout () d p = classList 4
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  let p : Row := ![0, 1, 2, 3]
+  let p : Boundary := ![0, 1, 2, 3]
   have hp : Valid p 2 := by decide +kernel
   have hc : Canonical p := by unfold Canonical; decide +kernel
   have hi : cl p 2 = 4 := by decide +kernel

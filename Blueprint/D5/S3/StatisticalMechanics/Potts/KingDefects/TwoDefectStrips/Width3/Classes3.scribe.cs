@@ -11,7 +11,7 @@ internal sealed class Classes3Document : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("class-successors"),
                 DeclarationHandle.Create(Prefix + "class_successors"), H("The successor multiset for source class 3"),
-                StatementSource.FromAuthor(Disp(All("p", Q("Data.Row"), All("d", Call("Fin", Num("3")), Imp(Call("Data.Valid", V("p"), Call("Fin.val", V("d"))), Imp(Call("Canonical", V("p")), Imp(Eq(Call("Data.cl", V("p"), Call("Fin.val", V("d"))), Num("3")), Eq(Call("Data.successors", V("p"), Call("Fin.val", V("d"))), Call("Data.classList", Num("3")))))))))), AssessedProvenance.FromRepo(Source),
+                StatementSource.FromAuthor(Disp(All("p", Q("HardinA233163KingStrip.Boundary"), All("d", Call("Fin", Num("3")), Imp(Call("Data.Valid", V("p"), Call("Fin.val", V("d"))), Imp(Call("Canonical", V("p")), Imp(Eq(Call("Data.cl", V("p"), Call("Fin.val", V("d"))), Num("3")), Eq(Call("Data.successors", V("p"), Call("Fin.val", V("d"))), Call("Data.classList", Num("3")))))))))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For every canonical row and residual budget in this source class, sorting the admissible next-row classes gives the pinned successor list. Multiplicity records distinct labelled rows."))), DescribeRole.Theorem))));
     private static Formula V(string s) => F.Id(s);
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());

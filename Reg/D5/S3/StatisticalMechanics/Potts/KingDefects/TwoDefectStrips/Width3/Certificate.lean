@@ -11,22 +11,24 @@ open scoped BigOperators
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 set_option maxRecDepth 100000
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip (Boundary)
+
 noncomputable section
 abbrev signature : Signature :=
-  _root_.Reg.Support.UniverseSingleReadout.signature (Row × ℕ) (fun _ => Fin 9) (fun _ => ℤ)
+  _root_.Reg.Support.UniverseSingleReadout.signature (Boundary × ℕ) (fun _ => Fin 9) (fun _ => ℤ)
 def actual : Realization signature :=
   realize signature (fun _ p s => T (cl p.1 p.2) s) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ p s => T (cl p.1 p.2) s + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (p : Row) (d : ℕ), Valid p d → ∀ s : Fin 9,
-    (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d ∧
+  Law R := ∀ (p : Boundary) (d : ℕ), Valid p d → ∀ s : Fin 9,
+    (∑ r : Boundary, if bondDefects between p r + bondDefects horizontal r r ≤ d ∧
       cl r (d - (bondDefects between p r + bondDefects horizontal r r)) = s
       then (1 : ℤ) else 0) = R.readout () (p,d) s
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  let p : Row := ![0,1,0]
+  let p : Boundary := ![0,1,0]
   have hp : Valid p 0 := by decide +kernel
   have hb := h p 0 hp 0
   have ha := transition_counts p 0 hp 0

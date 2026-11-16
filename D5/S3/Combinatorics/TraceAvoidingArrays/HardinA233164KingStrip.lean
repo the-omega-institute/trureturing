@@ -36,10 +36,10 @@ open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
   (Seen beta colour_bond_iff good finish widthNormal widthLegal widthStep widthV
     widthTotal width_counting_bridge)
 
-private abbrev Row := Fin 4 → Fin 8
-private abbrev Boundary := Fin 4 → Fin 4
+abbrev Row := Fin 4 → Fin 8
+abbrev Boundary := Fin 4 → Fin 4
 
-private def rowLegal (c : Row) : Prop :=
+def rowLegal (c : Row) : Prop :=
   ∀ j : Fin 3, c j.castSucc ≠ c j.succ ∧ (c j.castSucc).val + (c j.succ).val ≠ 7
 
 private def bonds (c d : Row) : Prop :=
@@ -48,8 +48,8 @@ private def bonds (c d : Row) : Prop :=
       (c j.castSucc ≠ d j.succ ∧ (c j.castSucc).val + (d j.succ).val ≠ 7) ∧
       (c j.succ ≠ d j.castSucc ∧ (c j.succ).val + (d j.castSucc).val ≠ 7))
 
-private def pairs (c : Row) : Boundary := fun j => beta (c j)
-private def compatible (p : Boundary) (c : Row) : Prop :=
+def pairs (c : Row) : Boundary := fun j => beta (c j)
+def compatible (p : Boundary) (c : Row) : Prop :=
   (∀ j, p j ≠ beta (c j)) ∧
     (∀ j : Fin 3, p j.castSucc ≠ beta (c j.succ) ∧ p j.succ ≠ beta (c j.castSucc))
 
@@ -112,7 +112,7 @@ private theorem normal_iff {n : ℕ} (A : Fin n × Fin 4 → Fin 8) :
 
 private abbrev v := widthV rowLegal pairs compatible
 private abbrev total := widthTotal rowLegal pairs
-private abbrev step := widthStep rowLegal pairs compatible
+abbrev step := widthStep rowLegal pairs compatible
 
 private theorem counting_bridge (n : ℕ) : (a (n+1) : ℤ) = total (v n) := by
   have hc : Finset.univ.filter (fun A : Fin (n+1) × Fin 4 → Fin 8 => Legal A) =
@@ -122,19 +122,19 @@ private theorem counting_bridge (n : ℕ) : (a (n+1) : ℤ) = total (v n) := by
   rw [a, hc]
   exact width_counting_bridge rowLegal pairs compatible bonds bonds_iff n
 
-private def saturated : Seen := (true,true,true)
-private def proper (p : Boundary) : Prop :=
+def saturated : Seen := (true,true,true)
+def proper (p : Boundary) : Prop :=
   (∀ j : Fin 3, p j.castSucc ≠ p j.succ) ∧ p 0 ≠ p 3
 private instance (p : Boundary) : Decidable (proper p) :=
   inferInstanceAs (Decidable (_ ∧ _))
-private def kind (p : Boundary) : Bool := decide (p 0 = p 2 ∧ p 1 = p 3)
-private def rate (b : Bool) : ℤ := if b then 32 else 16
+def kind (p : Boundary) : Bool := decide (p 0 = p 2 ∧ p 1 = p 3)
+def rate (b : Bool) : ℤ := if b then 32 else 16
 private def initial (c : Row) : Prop := c 0 = 0 ∧ rowLegal c ∧ good (false,false,false) c
 private instance (c : Row) : Decidable (initial c) := inferInstanceAs (Decidable (_ ∧ _ ∧ _))
 
 set_option maxRecDepth 1000000 in
 set_option maxHeartbeats 0 in
-private theorem saturated_certificate : ∀ p : Boundary, proper p →
+theorem saturated_certificate : ∀ p : Boundary, proper p →
     (∀ c : Row, rowLegal c ∧ compatible p c ∧ good saturated c →
       finish saturated c = saturated ∧ proper (pairs c) ∧ kind (pairs c) = kind p) ∧
     step (fun _ _ => 1) saturated p = rate (kind p) := by

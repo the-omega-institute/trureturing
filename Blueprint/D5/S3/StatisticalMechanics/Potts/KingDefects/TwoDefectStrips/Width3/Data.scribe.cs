@@ -7,10 +7,6 @@ internal sealed class DataDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The finite data support the literal width-3 king-grid recurrence.", H("Two-defect king transfers"),
         Blocks(
-            Describe.Remark(DescribeId.Create("row"),
-                DeclarationHandle.Create(Prefix + "Row"), H("Row"),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The Lean type is Fin 3 -> Fin 4. Rows carry the four labelled colours on 3 ordered columns.")))),
             Describe.Remark(DescribeId.Create("horizontal"),
                 DeclarationHandle.Create(Prefix + "horizontal"), H("horizontal"),
                 AssessedProvenance.FromRepo(Source),
@@ -22,11 +18,11 @@ internal sealed class DataDocument : IScribeDocumentDefinition
             Describe.Remark(DescribeId.Create("valid"),
                 DeclarationHandle.Create(Prefix + "Valid"), H("Valid"),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The Lean type is Row -> Nat -> Prop. A residual budget d is valid when d <= 2 and the current row has at most 2-d horizontal defects.")))),
+                Blocks(Paragraph(Text("The Lean type is HardinA233163KingStrip.Boundary -> Nat -> Prop. A residual budget d is valid when d <= 2 and the current row has at most 2-d horizontal defects.")))),
             Describe.Remark(DescribeId.Create("cl"),
                 DeclarationHandle.Create(Prefix + "cl"), H("cl"),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The Lean type is Row -> Nat -> Fin 9. The classifier depends only on the row equality pattern and d mod 3, and has 9 values. The class certificates pin every valid canonical source row; colour relabelling extends the result to all rows.")))),
+                Blocks(Paragraph(Text("The Lean type is HardinA233163KingStrip.Boundary -> Nat -> Fin 9. The classifier depends only on the row equality pattern and d mod 3, and has 9 values. The class certificates pin every valid canonical source row; colour relabelling extends the result to all rows.")))),
             Describe.Remark(DescribeId.Create("t"),
                 DeclarationHandle.Create(Prefix + "T"), H("T"),
                 AssessedProvenance.FromRepo(Source),
@@ -50,6 +46,6 @@ internal sealed class DataDocument : IScribeDocumentDefinition
             Describe.Remark(DescribeId.Create("successors"),
                 DeclarationHandle.Create(Prefix + "successors"), H("successors"),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The Lean type is Row -> Nat -> List (Fin 9). Enumerate every labelled next row, retain exactly those within budget, map to its residual-budget class and sort; TableBridge.count_successors identifies each multiplicity with the transfer sum.")))))));
+                Blocks(Paragraph(Text("The Lean type is HardinA233163KingStrip.Boundary -> Nat -> List (Fin 9). Enumerate every labelled next row, retain exactly those within budget, map to its residual-budget class and sort; TableBridge.count_successors identifies each multiplicity with the transfer sum.")))))));
 
 }

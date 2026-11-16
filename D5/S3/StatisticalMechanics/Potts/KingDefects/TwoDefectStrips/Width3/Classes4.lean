@@ -17,8 +17,9 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Classes4
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Data
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip (Boundary)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
-local instance (p : Row) : Decidable (Canonical p) := by
+local instance (p : Boundary) : Decidable (Canonical p) := by
   unfold Canonical
   infer_instance
 set_option maxRecDepth 100000 in

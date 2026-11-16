@@ -12,6 +12,8 @@ open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDe
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip (Boundary)
+
 noncomputable section
 abbrev signature : Signature := _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Fin 19) (fun _ => ℤ)
 def readout : Realization signature := realize signature (fun _ _ s => initial s) (fun e => nomatch e)
@@ -21,7 +23,7 @@ abbrev arena : Arena where
   Law R :=
     (∀ p (d : Fin 3), Valid p d.val →
       terminal (cl p d.val) = (if d.val = 0 then 1 else 0)) ∧
-    (∀ s : Fin 19, (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
+    (∀ s : Fin 19, (∑ r : Boundary, if bondDefects horizontal r r ≤ 2 ∧
       cl r (2 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) =
       (fun s => R.readout () () s) s) ∧
     (W 0 = (fun s => R.readout () () s) ∧ ∀ i : Fin 11,

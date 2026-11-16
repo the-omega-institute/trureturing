@@ -17,13 +17,14 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Forward
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip (Boundary)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
 theorem structural_certificate :
     (∀ p (d : Fin 3), Valid p d.val →
       terminal (cl p d.val) = (if d.val = 0 then 1 else 0)) ∧
-    (∀ s : Fin 19, (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
+    (∀ s : Fin 19, (∑ r : Boundary, if bondDefects horizontal r r ≤ 2 ∧
       cl r (2 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) ∧
     (W 0 = initial ∧ ∀ i : Fin 11, W i.succ = Matrix.vecMul (W i.castSucc) T) ∧
     W 11 = ∑ j : Fin 6, (![-8, 36, -66, 63, -33, 9] j : ℤ) • W ⟨5+j.val, by omega⟩ := by
