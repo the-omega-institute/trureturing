@@ -118,7 +118,7 @@ Preregistration/source records:
 [#31118](https://github.com/the-omega-institute/trureturing/issues/31118),
 [#31124](https://github.com/the-omega-institute/trureturing/issues/31124).
 Publication record:
-[#31138](https://github.com/the-omega-institute/trureturing/pull/31138).
+[#31138](https://github.com/the-omega-institute/trureturing/issues/31138).
 
 ## ASSUMED-UNVERIFIED
 
