@@ -106,7 +106,59 @@ private theorem finite_certificate :
       cl r (1 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) ∧
     (W 0 = initial ∧ ∀ i : Fin 8, W i.succ = Matrix.vecMul (W i.castSucc) T) ∧
     W 8 = ∑ j : Fin 6, (![-4, 16, -4, -28, -1, 6] j : ℤ) • W ⟨2 + j.val, by omega⟩ := by
-  decide +kernel
+  refine ⟨by decide +kernel, by decide +kernel, ?_, by decide +kernel, ?_,
+    by decide +kernel, by decide +kernel⟩
+  · have cut : ∀ (p r : Row) (d : Fin 2) (s : Fin 8),
+        ((d.val = 1 ∧ s.val < 4) ∨ (d.val = 0 ∧ 4 ≤ s.val)) →
+        (bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+          cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s) ↔
+          HardinColumnContinuations.cross p r ∧
+            HardinColumnContinuations.classH r = ⟨s.val % 4, Nat.mod_lt _ (by omega)⟩ := by
+      decide +kernel
+    have table : ∀ p (d : Fin 2) (s : Fin 8),
+        ((d.val = 1 ∧ s.val < 4) ∨ (d.val = 0 ∧ 4 ≤ s.val)) →
+        (HardinColumnContinuations.Hfull (HardinColumnContinuations.classH p)
+          ⟨s.val % 4, Nat.mod_lt _ (by omega)⟩ : ℤ) = T (cl p d.val) s := by
+      decide +kernel
+    have remaining : ∀ p (d : Fin 2), Valid p d.val → ∀ s : Fin 8,
+        ¬ ((d.val = 1 ∧ s.val < 4) ∨ (d.val = 0 ∧ 4 ≤ s.val)) →
+        (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+          cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s
+          then (1 : ℤ) else 0) = T (cl p d.val) s := by
+      decide +kernel
+    intro p d hp s
+    by_cases hz : (d.val = 1 ∧ s.val < 4) ∨ (d.val = 0 ∧ 4 ≤ s.val)
+    · simp_rw [cut p _ d s hz]
+      have h := HardinColumnContinuations.column_certificate.2.1 p
+        ⟨s.val % 4, Nat.mod_lt _ (by omega)⟩
+      have cast : (∑ r : Row, if HardinColumnContinuations.cross p r ∧
+          HardinColumnContinuations.classH r = ⟨s.val % 4, Nat.mod_lt _ (by omega)⟩
+          then (1 : ℤ) else 0) =
+          (HardinColumnContinuations.Hfull (HardinColumnContinuations.classH p)
+            ⟨s.val % 4, Nat.mod_lt _ (by omega)⟩ : ℤ) := by exact_mod_cast h
+      exact cast.trans (table p d s hz)
+    · exact remaining p d hp s hz
+  · have cut : ∀ (r : Row) (s : Fin 4),
+        (bondDefects horizontal r r ≤ 1 ∧
+          cl r (1 - bondDefects horizontal r r) = s.castAdd 4) ↔
+          HardinColumnContinuations.classH r = s := by decide +kernel
+    have table : ∀ s : Fin 4, (![3, 12, 6, 6] s : ℕ) = initial (s.castAdd 4) := by
+      decide +kernel
+    have remaining : ∀ s : Fin 8, 4 ≤ s.val →
+        (∑ r : Row, if bondDefects horizontal r r ≤ 1 ∧
+          cl r (1 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s := by
+      decide +kernel
+    intro s
+    by_cases hs : s.val < 4
+    · let j : Fin 4 := ⟨s.val, hs⟩
+      have he : s = j.castAdd 4 := rfl
+      rw [he]
+      simp_rw [cut _ j]
+      have h := HardinColumnContinuations.column_certificate.2.2.2 j
+      have cast : (∑ r : Row, if HardinColumnContinuations.classH r = j
+          then (1 : ℤ) else 0) = (![3, 12, 6, 6] j : ℕ) := by exact_mod_cast h
+      exact cast.trans (table j)
+    · exact remaining s (by omega)
 
 attribute [local irreducible] a
 
