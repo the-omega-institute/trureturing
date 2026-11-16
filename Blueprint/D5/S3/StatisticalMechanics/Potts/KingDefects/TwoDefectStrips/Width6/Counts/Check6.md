@@ -6,7 +6,7 @@ Exact multiplicities of successor classes.
 
 **Theorem 1.1 (First 84 classes).**
 
-$$\forall (c: \operatorname{Fin}\left(84\right)), (\forall (s: \operatorname{Fin}\left(96\right)), (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{List}.\operatorname{count}\left(\operatorname{Data}.\operatorname{classList}\left(\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(c\right)\right)\right), s\right)\right) = \operatorname{Data}.\operatorname{T}\left(\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(c\right)\right), s\right)))$$
+$$\forall (c: \operatorname{Fin}\left(84\right)), (\forall (s: \operatorname{Fin}\left(96\right)), (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{List}.\operatorname{count}\left(s, \operatorname{Data}.\operatorname{classList}\left(\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(c\right)\right)\right)\right)\right) = \operatorname{Data}.\operatorname{T}\left(\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(c\right)\right), s\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Counts/Check6.counts` (`✓ std3`). ∎
 
