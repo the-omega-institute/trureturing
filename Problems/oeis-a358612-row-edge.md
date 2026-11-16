@@ -87,40 +87,41 @@ or source-to-Lean object correspondence invalidates the proposed settlement.
 
 The kernel-checked result and its support prerequisite are in
 `D5/S1/Recurrence/Parity/DyadicExtendedStirlingEdge`; their canonical Scribe
-states the same all-natural-row event. Admission basis is the external
-open-problem-resolution route, subject to independent source/form review.
+states the same all-natural-row event. The full Lean result is proved and
+canonically frozen. Admission basis is the external open-problem-resolution
+route; independent source/form and mirror reviews are approved.
 The source-owner product helper is consumed both by its binomial theorem
 and this edge result. The exposed dyadic index is consumed by the block
 law and edge induction. Per-declaration proof shape and escape-registration
-binding remain audit obligations; compilation alone supplies neither. The bounded new Edge Reg attempt failed to compile at dependent parameter numeral inference and at the concrete rejected-family calculation. No failed mirror is retained. The original Block Reg source has no newly established current binding evidence. The §3.9 exception is tracked in [#31124](https://github.com/the-omega-institute/trureturing/issues/31124); none of these targets is reported declared_validated.
+binding remain audit obligations; compilation alone supplies neither.
+The §3.9 audit remains unfinished under the linked-issue exception in
+[#31124](https://github.com/the-omega-institute/trureturing/issues/31124#issuecomment-6906238478);
+none of these targets is reported declared_validated.
 
 ## Triage
 
 - Proved, formal statement: the complete rational edge identity and support
   theorem have scoped kernel evidence; no finite-case substitute is used.
-- Unresolved, delivery: independent prefreeze form/fidelity/mirror review,
-  faithful escape audit or linked-issue exception, canonical membership,
-  required checks, merger and containing dev-push verification are pending.
+- Unresolved, delivery: the final review triplet, required CI, MERGED status
+  and containing dev-push verification are pending. The §3.9 audit remains
+  unfinished under the linked-issue exception above.
 - Unresolved, other questions: integrality, the A329369 transform and a
   separate block-problem settlement are outside this result. No downstream
   external-question or KPI credit is claimed.
 
 ## Resolution metadata
 
-Resolution kind: proved for the formal edge statement; delivery incomplete.
-Original preregistration [#31020](https://github.com/the-omega-institute/trureturing/issues/31020)
-retains its 2026-11-15T23:30:00Z cutoff and prediction outcomes.
-[#31118](https://github.com/the-omega-institute/trureturing/issues/31118)
-ended unresolved at its original 2026-11-16T02:40:00Z delivery cutoff.
-[#31124](https://github.com/the-omega-institute/trureturing/issues/31124)
-is the known-proof delivery continuation with cutoff 2026-11-16T04:00:00Z;
-its predictions are empty. Those earlier results are not retroactively
-changed. The original block endpoint campaign remains stopped and is only
-a mathematical prerequisite here.
+Resolution kind: proved and canonically frozen for the formal edge statement;
+delivery incomplete.
+Preregistration/source records:
+[#31020](https://github.com/the-omega-institute/trureturing/issues/31020),
+[#31118](https://github.com/the-omega-institute/trureturing/issues/31118),
+[#31124](https://github.com/the-omega-institute/trureturing/issues/31124).
+Publication record:
+[#31138](https://github.com/the-omega-institute/trureturing/pull/31138).
 
 ## ASSUMED-UNVERIFIED
 
-Independent source/form and mirror review has no completed vote. The
-bounded literature screen does not establish worldwide novelty or priority;
-the access gaps above remain. No canonical freeze or delivered claim is
-made by this dossier.
+The bounded literature screen does not establish worldwide novelty or
+priority; the access gaps above remain. Final delivery remains incomplete
+as specified in Triage.
