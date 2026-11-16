@@ -144,16 +144,107 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResol
 
 For every real r, the literal complex period at r is the complex embedding of the existing real period F r.
 
+**Theorem 1.12 (central_hasDerivAt).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.central_hasDerivAt`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.central_hasDerivAt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural shift and complex x with norm less than one, shiftedCentralSeries has complex derivative shiftedCentralDerivative.
+
+**Theorem 1.13 (period_eq_central).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.period_eq_central`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.period_eq_central` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every complex x, the original period tsum is exactly shiftedCentralSeries at shift zero.
+
+**Theorem 1.14 (radial_positive_column).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.radial_positive_column`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.radial_positive_column` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real 0<r<1 and each natural n, the actual resolvent applied to weightedSource has coordinate sqrt(1-r)(-1)^(n+1) sqrt(r)^(n+1) centralColumnJet(r,n+1)/sqrt(n+1).
+
+**Theorem 1.15 (radial_negative_column).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.radial_negative_column`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.radial_negative_column` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real 0<r<1 and each natural n, the actual oppositeResolvent applied to weightedSource has coordinate sqrt(1-r)(-1)^(n+1) sqrt(r)^(n+1) sqrt(n+1) shiftedCentralSeries(r,n+1).
+
+**Theorem 1.16 (signed_square_factorization).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.signed_square_factorization`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.signed_square_factorization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On the complex unit disk, the actual resolvent equals (1+operator) times squareResolvent, and oppositeResolvent equals (1-operator) times squareResolvent.
+
+**Theorem 1.17 (odd_eq_half_difference).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.odd_eq_half_difference`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.odd_eq_half_difference` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On the complex unit disk, the actual oddResolvent is half the difference of resolvent and oppositeResolvent.
+
+**Theorem 1.18 (opposite_differentiable).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.opposite_differentiable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.opposite_differentiable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual oppositeResolvent is complex differentiable at every point of the unit disk.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.centralColumnJet`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.central_hasDerivAt`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.columnSeries_entry_explicit_complex`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.explicitOddEntry`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.oddResolvent`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.oddResolvent_entry_explicit`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.odd_eq_half_difference`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.opposite_differentiable`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.period_eq_central`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.period_ofReal`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.radial_negative_column`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.radial_positive_column`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.shiftedCentralDerivative`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.shiftedCentralSeries`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.signed_square_factorization`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.squareResolvent`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.squareResolvent_entry_explicit`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.square_eq_one_add`
