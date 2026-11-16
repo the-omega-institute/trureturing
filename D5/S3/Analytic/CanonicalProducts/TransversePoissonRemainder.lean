@@ -359,11 +359,3 @@ theorem integrated_defect_poisson_remainder {I : Type*} (w a gamma : I → ℝ)
     exact hsumupper
 
 end D5.S3.Analytic.CanonicalProducts.TransversePoissonRemainder
-
-run_cmd do
-  let env ← Lean.getEnv
-  for (n, ci) in env.constants.toList do
-    if n.toString.startsWith "_private.D5.S3.Analytic.CanonicalProducts.TransversePoissonRemainder." ||
-        n.toString == "D5.S3.Analytic.CanonicalProducts.TransversePoissonRemainder.integrated_defect_poisson_remainder" then
-      let deps := ci.value!.getUsedConstants.toList.map (fun x => Lean.Json.str x.toString)
-      Lean.logInfo m!"NATIVE_DEPS {Lean.Json.compress (Lean.Json.mkObj [("name", Lean.Json.str n.toString), ("deps", Lean.Json.arr deps.toArray)])}"
