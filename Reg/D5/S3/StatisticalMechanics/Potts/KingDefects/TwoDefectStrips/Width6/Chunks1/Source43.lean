@@ -9,6 +9,8 @@ open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.
 open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Sources
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
+set_option maxRecDepth 100000
+attribute [local irreducible] sources successors cl classList
 noncomputable section
 abbrev signature : Signature :=
   _root_.Reg.Support.UniverseSingleReadout.signature (Fin 3) (fun _ => Row)
@@ -27,8 +29,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have ha := successor_rows 0
   change successors (sources ⟨129, by decide⟩).1 (sources ⟨129, by decide⟩).2.val ++ [0] = _ at hb
   have hh := congrArg List.length (hb.trans ha.symm)
-  simp only [List.length_append, List.length_singleton] at hh
+  simp only [List.length_append, List.length_singleton, Fin.val_zero, Nat.add_zero] at hh
   omega
+set_option maxHeartbeats 0 in
 def family : Registration arena (type_of% @successor_rows) where
   actual := actual
   bridge := Iff.rfl
@@ -39,7 +42,8 @@ def family : Registration arena (type_of% @successor_rows) where
     intro i
     refine ⟨0, (fun _ => 0), ![0,1,0,1,0,1], ?_⟩
     exact _root_.Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data.successors_vary _
-def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+set_option maxHeartbeats 0 in
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@successor_rows) (Realization signature) Type Unit where
   unitName := `D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source43.auditUnit
   realizationName := ``family

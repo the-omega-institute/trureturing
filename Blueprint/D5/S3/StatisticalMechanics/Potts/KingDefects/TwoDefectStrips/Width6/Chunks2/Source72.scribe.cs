@@ -41,7 +41,5 @@ internal sealed class Source72Document : IScribeDocumentDefinition
     private static Formula All(string x, Formula t, Formula b) =>
         Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
-
 
 }
