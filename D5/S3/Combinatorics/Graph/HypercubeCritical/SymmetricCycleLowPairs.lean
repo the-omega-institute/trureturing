@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricCycleLowPairs
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricCycleLowPairs
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSliceExclusion.result; instance=D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSliceExclusion.claim
+   digest: On an actual embedded high eight-cycle, girth excludes low pairs between distinct cycle points and forces two cycle partners of an outside high leaf to be antipodal. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.AsymmetricSliceLabels
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 import Batteries.Tactic.OpenPrivate

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricBBExclusion
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricBBExclusion
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSliceExclusion.result; instance=D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSliceExclusion.claim
+   digest: Extract the actual B/B double-star and high eight-cycle. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricActualHighProfiles
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricCycleLowSaturation
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricTwentyTwoNonEmbedding
@@ -180,28 +188,6 @@ private theorem bb_labels_injective
   have hr : Function.Injective (bbRealize a b e d) :=
     (CycleLowData.low_injective d).sumElim hhval hlowsep
   exact hr.comp bbLabels_injective
-
-/-- No cycle map, low map, leaf map or category injection is assumed here. -/
-private theorem actual_bb_injective_labels
-    (hpart : G.IsBipartiteWith (L : Set V) (R : Set V))
-    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3)
-    (hlow : ∀ {v w}, G.Adj v w → G.degree v = 2 → G.degree w = 2 → False)
-    (hg : (8 : ℕ∞) ≤ G.egirth)
-    (hL : L.card = 11) (hR : R.card = 11)
-    (hL2 : (degreeTwo G L).card = 4) (hR2 : (degreeTwo G R).card = 4)
-    (hLB : highTypeB G (degreeThree G L)) (hRB : highTypeB G (degreeThree G R)) :
-    ∃ a b : High G, ∃ e : cycleGraph 8 ↪g graph G,
-      ∃ d : CycleLowData G (fun i => (e i).val),
-      Function.Injective (fun i : Fin 22 => bbRealize a b e d (bbLabels i)) := by
-  obtain ⟨a, b, e, d, _ha, _hb, ha3, hb3, hab, _hNa, _hNb, he, _hf, hex, hinj, _hrep⟩ :=
-    actual_bb_classification hpart hdeg hlow hg hL hR hL2 hR2 hLB hRB
-  have he2 : ∀ i, (graph G).degree (e i) = 2 := fun i => (he (e i)).mpr ⟨i, rfl⟩
-  have hleaf : ∀ i, (graph G).degree
-      (⟨CycleLowData.partner d i, CycleLowData.partner_degree d i⟩ : High G) = 1 := by
-    intro i
-    exact (hex _).mpr ⟨i, rfl⟩
-  exact ⟨a, b, e, d, bb_labels_injective a b e d ha3 hb3 hab he2 hleaf hinj⟩
-
 
 open private cycle_parity_sides from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricCycleLowSaturation

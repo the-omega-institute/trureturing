@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSaturatedDecomposition
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSaturatedDecomposition
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: none
+   digest: The exact B/B double-star is closed. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricSaturatedCore
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SmallRegularCycle
 import Batteries.Tactic.OpenPrivate

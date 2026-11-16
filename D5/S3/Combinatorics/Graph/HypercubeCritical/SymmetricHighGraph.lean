@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricHighGraph
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricHighGraph
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: none
+   digest: Form the actual graph induced by degree-three vertices, preserving full-graph incidences and deriving its degrees, bipartition and girth. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricTwentyTwoLocal
 import Batteries.Tactic.OpenPrivate
 

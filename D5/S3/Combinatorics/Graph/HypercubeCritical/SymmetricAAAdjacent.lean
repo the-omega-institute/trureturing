@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricAAAdjacent
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricAAAdjacent
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: none
+   digest: In the A/A high-degree profiles, actual low-pair deficits force the unique high leaves on opposite sides to be adjacent. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricLowPairDeficit
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricLowPartners
 import Batteries.Tactic.OpenPrivate

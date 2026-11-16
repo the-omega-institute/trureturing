@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SmallRegularCycle
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SmallRegularCycle
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: none
+   digest: A nonempty finite two-regular graph of girth at least eight and fewer than sixteen vertices consists of one cycle. -/
+
 import D5.S3.Combinatorics.Graph.Brooks.General
 import D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
 import Mathlib.Combinatorics.SimpleGraph.Matching

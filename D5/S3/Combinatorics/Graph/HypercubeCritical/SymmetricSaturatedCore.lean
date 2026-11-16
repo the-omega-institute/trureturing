@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSaturatedCore
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSaturatedCore
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: none
+   digest: Use actual saturated neighbor-degree sums and side counts to extract the high centers, leaves and their exact neighbor sets in the B/B case. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
 
 /-! Actual neighbor structure forced by the saturated high-graph inequalities.

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricHighProfiles
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricHighProfiles
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: none
+   digest: Derive the actual high-neighbor square bound and the two possible side profiles A=(1,6,0) and B=(2,4,1). -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighTypes
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricTwentyTwoLocal
 import Batteries.Tactic.OpenPrivate

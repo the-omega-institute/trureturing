@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricAAExclusion
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricAAExclusion
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSliceExclusion.result; instance=D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSliceExclusion.claim
+   digest: The actual A/A parameters force adjacent high leaves and a closed twelve-cycle in the actual high graph. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricAAAdjacent
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighGraph
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SmallRegularCycle

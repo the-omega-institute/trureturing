@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricLowPartners
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricLowPartners
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: none
+   digest: A full-degree-three vertex with two actual high neighbors has one actual low neighbor, whose other endpoint is a uniquely determined distinct high vertex. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.AsymmetricSliceLabels
 import Batteries.Tactic.OpenPrivate
 

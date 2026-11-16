@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricLowPairDeficit
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricLowPairDeficit
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: none
+   digest: Distinct actual highs sharing a low have disjoint relevant low-neighbor capacities. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighProfiles
 import D5.S3.Combinatorics.Graph.HypercubeCritical.AsymmetricSliceLabels
 import Batteries.Tactic.OpenPrivate

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricCycleLowSaturation
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricCycleLowSaturation
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSliceExclusion.result; instance=D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSliceExclusion.claim
+   digest: Choose the actual unique low neighbors of eight cycle points with full graph degree three and high-graph degree two. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricCycleLowPairs
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricLowPartners
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighGraph
@@ -121,28 +129,6 @@ private theorem low_has_exact_cycle_endpoint {c : Fin 8 → V}
       subst j
       rw [← hil]
       exact d.cycle_adj i
-
-/-- The endpoints of any nontrivial actual lowPair have exactly one cycle
-endpoint. This quantifies over all actual low witnesses, not just chosen ones. -/
-private theorem low_pair_exactly_one_cycle_endpoint {c : Fin 8 → V}
-    (d : CycleLowData G c) {a b : V} (hab : a ≠ b) (hp : lowPair G a b) :
-    ((∃ i, a = c i) ∧ (∀ j, b ≠ c j)) ∨
-      ((∃ i, b = c i) ∧ (∀ j, a ≠ c j)) := by
-  obtain ⟨l, hl, hal, hbl⟩ := hp
-  obtain ⟨i, hil, hN, _huniq, _hout⟩ := low_has_exact_cycle_endpoint d hl
-  have ha : a = c i ∨ a = d.partner i := by
-    have hm := (G.mem_neighborFinset _ _).mpr hal.symm
-    rw [hN] at hm
-    simpa only [Finset.mem_insert, Finset.mem_singleton] using hm
-  have hb : b = c i ∨ b = d.partner i := by
-    have hm := (G.mem_neighborFinset _ _).mpr hbl.symm
-    rw [hN] at hm
-    simpa only [Finset.mem_insert, Finset.mem_singleton] using hm
-  rcases ha with ha | ha <;> rcases hb with hb | hb
-  · exact False.elim (hab (ha.trans hb.symm))
-  · exact Or.inl ⟨⟨i, ha⟩, fun j => by simpa only [hb] using d.partner_outside i j⟩
-  · exact Or.inr ⟨⟨i, hb⟩, fun j => by simpa only [ha] using d.partner_outside i j⟩
-  · exact False.elim (hab (ha.trans hb.symm))
 
 private theorem cycle_parity_sides
     (hpart : G.IsBipartiteWith (L : Set V) (R : Set V))

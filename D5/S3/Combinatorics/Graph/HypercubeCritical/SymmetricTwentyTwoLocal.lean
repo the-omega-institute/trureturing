@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricTwentyTwoLocal
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricTwentyTwoLocal
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: none
+   digest: Derive the local and weighted incidence identities directly from the original symmetric slice parameters and girth. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.AsymmetricSliceRigidity
 import D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
 import Batteries.Tactic.OpenPrivate

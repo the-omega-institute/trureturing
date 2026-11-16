@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricHighTypes
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricHighTypes
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
+   utility: none
+   digest: Classify bounded seven-point natural-valued functions with sum thirteen and square sum at most twenty-seven. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
 
 /-! Internal scalar helper for the remaining symmetric slice analysis.

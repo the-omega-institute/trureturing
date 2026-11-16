@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricTwelveCapacity
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricTwelveCapacity
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSliceExclusion.result; instance=D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricSliceExclusion.claim
+   digest: Bound actual twelve-cycle low incidences and force a capacity contradiction. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricLowPartners
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 import Mathlib.Combinatorics.Enumerative.DoubleCounting

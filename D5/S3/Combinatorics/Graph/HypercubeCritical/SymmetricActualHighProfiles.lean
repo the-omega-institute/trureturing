@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricActualHighProfiles
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SymmetricActualHighProfiles
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: none
+   digest: Transfer the side profiles and saturation inequalities to the graph actually induced by degree-three vertices. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighGraph
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighProfiles
 import Batteries.Tactic.OpenPrivate
@@ -148,21 +156,5 @@ private theorem actual_high_saturation_of_original_typeB
     _ = highDegree G x.val + 2 := hlocal
     _ = (graph G).degree x + 2 :=
       congrArg (fun n : ℕ => n + 2) (graph_degree G x).symm
-
-/-- The same saturation entry point expressed entirely in actual induced-graph
-degree counts, for direct use by the saturated-core extraction. -/
-private theorem actual_high_saturation_of_typeB
-    (hpart : G.IsBipartiteWith (L : Set V) (R : Set V))
-    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3)
-    (hlow : ∀ {v w}, G.Adj v w → G.degree v = 2 → G.degree w = 2 → False)
-    (hg : (8 : ℕ∞) ≤ G.egirth)
-    (hL : L.card = 11) (hR : R.card = 11)
-    (hL2 : (degreeTwo G L).card = 4) (hR2 : (degreeTwo G R).card = 4)
-    (hLB : sideDegreeTuple G L = (2, 4, 1))
-    (hRB : sideDegreeTuple G R = (2, 4, 1)) :
-    ∀ x, (∑ y ∈ (graph G).neighborFinset x, (graph G).degree y) =
-      (graph G).degree x + 2 := by
-  exact actual_high_saturation_of_original_typeB hpart hdeg hlow hg hL hR hL2 hR2
-    ((side_typeB_iff G L).mp hLB) ((side_typeB_iff G R).mp hRB)
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricActualHighProfiles
