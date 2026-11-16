@@ -32,7 +32,8 @@ at the immutable supplier revision above. These map to
 `D5/S3/Quantum/QPECircularTail.lean` in namespace
 `QuantumPhaseEstimationGeneral`; the unused natural-tail wrapper is omitted.
 The shifted finite-tail and floor-split integer-tail proofs retain their source
-construction as private helpers. Principal-error rounding, the injective integer
+construction. The shifted finite-tail declaration is public; the floor-split
+integer-tail declaration is private. Principal-error rounding, the injective integer
 lift and the final finite-event estimate retain their source correspondence.
 The pointwise amplitude estimate uses the receiver's existing
 `qpe_geometric_sum_closed_form`, `amplitude_periodic`, `phase_sub_one_norm`
