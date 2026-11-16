@@ -315,7 +315,7 @@ private theorem matrix_log_resolvent_integral {n : ℕ} (m : Matrix (Fin n) (Fin
 open Matrix
 open scoped Topology ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private theorem inverse_shift_norm_bound {n : ℕ} (m : Matrix (Fin n) (Fin n) ℂ)
+theorem inverse_shift_norm_bound {n : ℕ} (m : Matrix (Fin n) (Fin n) ℂ)
     (c t : ℝ) (hc : 0< c) (ht : 0≤ t) (hm : c•(1 : Matrix (Fin n) (Fin n) ℂ)≤ m) :
     ‖(m+t•1)⁻¹‖≤ (c+t)⁻¹ := by
   have hct : 0< c+t := add_pos_of_pos_of_nonneg hc ht
@@ -342,7 +342,7 @@ open scoped Topology ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 set_option backward.isDefEq.respectTransparency false
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private theorem shifted_inverse_hasDerivAt {n : ℕ} (A X : Matrix (Fin n) (Fin n) ℂ)
+theorem shifted_inverse_hasDerivAt {n : ℕ} (A X : Matrix (Fin n) (Fin n) ℂ)
     (s t : ℝ) (h : IsUnit (A+s•X+t•1)) :
     HasDerivAt (fun a : ℝ => (A+a•X+t•1)⁻¹)
       (-((A+s•X+t•1)⁻¹*X*(A+s•X+t•1)⁻¹)) s := by
@@ -359,7 +359,7 @@ open Matrix MeasureTheory Filter
 open scoped Topology ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private theorem log_hasDerivAt_affine_of_lower_bound {n : ℕ} (A X : Matrix (Fin n) (Fin n) ℂ)
+theorem log_hasDerivAt_affine_of_lower_bound {n : ℕ} (A X : Matrix (Fin n) (Fin n) ℂ)
     (a c : ℝ) (hc : 0<c) (s : Set ℝ) (hs : s ∈ 𝓝 a)
     (hlo : ∀ b ∈  s, c • (1 : Matrix (Fin n) (Fin n) ℂ) ≤  A+b • X) :
     HasDerivAt (fun b : ℝ => CFC.log (A+b • X))
@@ -488,7 +488,7 @@ open scoped Topology ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private theorem mix_lower_bound {n : ℕ} (ρ σ : Matrix (Fin n) (Fin n) ℂ) (c b : ℝ)
+theorem mix_lower_bound {n : ℕ} (ρ σ : Matrix (Fin n) (Fin n) ℂ) (c b : ℝ)
     (hρ : c • (1 : Matrix (Fin n) (Fin n) ℂ)  ≤  ρ)
     (hσ : c • (1 : Matrix (Fin n) (Fin n) ℂ)  ≤  σ) (hb : b ∈ Set.Icc (0:ℝ) 1) :
     c • (1 : Matrix (Fin n) (Fin n) ℂ)  ≤  b • ρ+(1-b) • σ := by

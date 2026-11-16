@@ -397,7 +397,7 @@ lemma polynomial_nonzero_dense {ρ : Type*} [Finite ρ]
     exact ha (hall (Set.mem_univ a))
   exact interior_eq_empty_iff_dense_compl.mp hz
 
-private lemma continuous_realCoordinates {ι : Type*} :
+lemma continuous_realCoordinates {ι : Type*} :
     Continuous (realCoordinates : (ι → ℂ) → (ι ⊕ ι → ℝ)) := by
   apply continuous_pi
   intro i

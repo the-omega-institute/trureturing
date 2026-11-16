@@ -1,0 +1,6 @@
+**定理 182.5（扩张影点恰好暴露一个缺失的一零方向）。** 若 $\widehat B\supsetneq B$，任取 $y=(1,r)\in\widehat B\setminus B$，令 $\rho=\|r\|>1$、$n=-r/\rho$。则 $a=(1,n)$、$b=(1,-n)$ 的局部效应 $\ell_a$ 不属于 $\Gamma_B$，并且该原直径的 AD 失败。反过来，若某条直径的 AD 失败，则对应 $\ell_a\notin\Gamma_B$，存在 $y\in\widehat B\setminus B$ 满足 $\ell_a(y)<0$。
+
+证明。由(182.6)，$\ell_a(y)=(1-\rho)/2<0$，而 $y\in\Gamma_B^*$，故 $\ell_a\notin\Gamma_B$。若 $a\perp b$，共同 $e_a\in\Sigma_B$ 的限制正是 $\ell_a$，矛盾。反向，$\ell_a\in\Gamma_B$ 会由(182.3)给原 proper 一零延拓，故与 AD 失败矛盾。$\Gamma_B$ 闭，锥分离遂给非零 $q\in\Gamma_B^*=Q_B$，使 $\ell_a(q)<0$。除以182.3支付的正数 $u_B(q)$，即得所需影点 $y$；它不能在 $B$ 上，因为 $\ell_a$ 在 $B$ 非负。
+
+这里在 $y$ 上评价的是 $W_B^*$ 中的线性泛函，不把 $T_a(y)$ 写成原 minimum；$y$ 只需属于闭商影体，不需属于原 $K$。这给失败的精确方向和分离证人，不给满足全部原前件而实际扩张的同域反模型。$\square$
+

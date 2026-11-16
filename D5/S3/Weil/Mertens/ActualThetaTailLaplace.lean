@@ -129,7 +129,7 @@ private lemma original_integrable {U : ℝ} (hU : u₀ ≤ U) :
   intro u _
   exact (exp_activation u).symm
 
-private lemma tail_substitution (u : ℝ) : f u = F (Real.exp u) := by
+lemma tail_substitution (u : ℝ) : f u = F (Real.exp u) := by
   unfold f F
   congr 1
   have h := integral_comp_exp_Ioi (fun t : ℝ => (Chebyshev.theta t - t) *

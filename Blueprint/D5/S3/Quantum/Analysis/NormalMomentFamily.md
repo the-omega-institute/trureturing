@@ -76,7 +76,43 @@ Lean statement: `D5/S3/Quantum/Analysis/NormalMomentFamily.linearMap`
 
 For every F in Family rho sigma, linearMap F is a genuine C-linear map from C(Interval,C) to StrongDual C A, obtained by applying WeakDual.toStrongDual in every coordinate. Its linearity follows by extensionality from the all-a compatibility equations. It is positive, maps 1 to rho+sigma and posterior to rho, and hence maps 1-posterior to sigma.
 
-**Definition 1.7 (Scalar finite regular Riesz measure).**
+**Theorem 1.7 (Exact unit moment).**
+
+Lean statement: `D5/S3/Quantum/Analysis/NormalMomentFamily.unit_value`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/NormalMomentFamily.unit_value` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every actual Family rho sigma point F, linearMap F 1=rho+sigma. This is the existing exact compatibility equation, exposed for the consumed affine-cost computation.
+
+**Theorem 1.8 (Exact posterior moment).**
+
+Lean statement: `D5/S3/Quantum/Analysis/NormalMomentFamily.posterior_value`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/NormalMomentFamily.posterior_value` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every actual Family rho sigma point F, linearMap F posterior=rho. Together with the unit equation this gives linearMap F (1-posterior)=sigma, consumed in GeneralConvexReverseTestAttainment.familyCost_eq_affine.
+
+**Theorem 1.9 (Every exact scalar complex integral).**
+
+Lean statement: `D5/S3/Quantum/Analysis/NormalMomentFamily.integral_complex`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/NormalMomentFamily.integral_complex` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every Family rho sigma point F and continuous complex g, linearMap F g 1 equals integral g against scalarMeasure F. The original scalar Riesz proof is reused directly by posteriorFamily_scalarMeasure and the exact affine objective computation, without duplicating its real/imaginary decomposition.
+
+**Definition 1.10 (Scalar finite regular Riesz measure).**
 
 Lean statement: `D5/S3/Quantum/Analysis/NormalMomentFamily.scalarMeasure`
 
@@ -88,7 +124,7 @@ Lean statement: `D5/S3/Quantum/Analysis/NormalMomentFamily.scalarMeasure`
 
 For each F, restrict g maps to linearMap(F)(g)(1) to real continuous functions, and take its real part. On compact Interval this is an actual positive real linear functional on compactly supported continuous functions. scalarMeasure F is RealRMK.rieszMeasure of that functional. Mathlib supplies finiteness and regularity. Positivity makes the imaginary part vanish on every real continuous function, by decomposing that function into its positive and negative parts. RealRMK.integral_rieszMeasure and real/imaginary decomposition therefore prove the exact complex identity linearMap(F)(g)(1)=integral g d(scalarMeasure F) for every complex continuous g. The total mass is ENNReal.ofReal(Re((rho+sigma)(1))). No vector measure, vector density or RNP hypothesis is used.
 
-**Definition 1.8 (The weakly continuous finite-measure map).**
+**Definition 1.11 (The weakly continuous finite-measure map).**
 
 Lean statement: `D5/S3/Quantum/Analysis/NormalMomentFamily.finiteMeasure`
 
@@ -100,7 +136,7 @@ Lean statement: `D5/S3/Quantum/Analysis/NormalMomentFamily.finiteMeasure`
 
 finiteMeasure F packages scalarMeasure F as Mathlib's FiniteMeasure Interval with its genuine topology of weak convergence. FiniteMeasure.continuous_iff_forall_continuousMap_continuous_integral reduces continuity to all real continuous test functions. Their integrals equal real parts of the corresponding weak-star coordinate evaluated at 1, which are continuous in F.
 
-**Theorem 1.9 (Compactness, Riesz measures and whole-L1 realization).**
+**Theorem 1.12 (Compactness, Riesz measures and whole-L1 realization).**
 
 Lean statement: `D5/S3/Quantum/Analysis/NormalMomentFamily.compact_normal_posterior_family`
 
@@ -120,7 +156,7 @@ For every family point F, there exists a continuous complex-linear Gamma from th
 
 The content consists of the constructed full coordinate family, its derived uniform coordinate bound and compactness, actual scalar Riesz measures with exact complex mass identity and weak continuity, and their connected whole-L1 realizations. The argument reuses Mathlib's Banach-Alaoglu, Tychonoff and real Riesz theorems and the existing normal L1 extension, rather than rebuilding them. It claims no global literature novelty, chosen-predual identification, ultraweak equivalence or vector-valued Radon-Nikodym theorem.
 
-The original arbitrary-source reverse-test attainment problem remains open here. Still required are normalization and pushforward comparison for every original sigma-finite source and its entire complex L1 map, cost-set equality, and endpoint-complete extended minimization including the infinite-cost branch. Compactness and posterior realization alone do not assert attainment.
+This module supplies compactness and posterior realization. The consuming GeneralConvexReverseTestAttainment module addresses exact normalization and pushforward comparison for every original sigma-finite source and its entire complex L1 map, fixed-universe cost-set equality and endpoint-complete extended minimization. Those conclusions are not implicit premises of the compact family.
 
 ## References
 
@@ -129,8 +165,11 @@ The original arbitrary-source reverse-test attainment problem remains open here.
 - Truth anchor: `D5/S3/Quantum/Analysis/NormalMomentFamily.Family`
 - Truth anchor: `D5/S3/Quantum/Analysis/NormalMomentFamily.compact_normal_posterior_family`
 - Truth anchor: `D5/S3/Quantum/Analysis/NormalMomentFamily.finiteMeasure`
+- Truth anchor: `D5/S3/Quantum/Analysis/NormalMomentFamily.integral_complex`
 - Truth anchor: `D5/S3/Quantum/Analysis/NormalMomentFamily.linearMap`
 - Truth anchor: `D5/S3/Quantum/Analysis/NormalMomentFamily.ofLinearMap`
 - Truth anchor: `D5/S3/Quantum/Analysis/NormalMomentFamily.posterior`
+- Truth anchor: `D5/S3/Quantum/Analysis/NormalMomentFamily.posterior_value`
 - Truth anchor: `D5/S3/Quantum/Analysis/NormalMomentFamily.scalarMeasure`
+- Truth anchor: `D5/S3/Quantum/Analysis/NormalMomentFamily.unit_value`
 - Dependency: [D5/S3/Quantum/Analysis/VonNeumannNormalL1](VonNeumannNormalL1.md)

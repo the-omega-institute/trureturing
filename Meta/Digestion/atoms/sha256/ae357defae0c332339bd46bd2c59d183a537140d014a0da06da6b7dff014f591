@@ -1,0 +1,19 @@
+**定理 179.8（零影超平面与全部有限量子层级）。** 在定义179.7的精确背景内，下列等价：$\mathsf Q_{\rm hyp}$；178.5的 $\mathsf Q_{\rm zero}$；存在固定整数 $n\ge2$ 及同一个实线性同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$，使全部有限 $N\ge0$ 满足
+
+$$
+\boxed{\quad\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.\quad}
+\tag{179.7}
+$$
+
+证明。177.5a与177.4在每张原实际面上给 L2，参数对应与178.6相同。179.3把同一个三复制原域的 $\mathsf{ZH}$ 送为 NC 与 AD；178.2给 $\mathsf Z_2$。因此得到178.5的完整候选，直接消费178.6，得到(179.7)及同一坐标、所有有限分块、标量层和单位的结论，不重新分类或另选各层坐标。
+
+反向须核对额外的球外量词。在标准 $D\times D$ 复矩阵层，$p=P_v$ 的完整混态零面为 $\mathcal D(v^\perp)$。实际二元球由一个复二维子空间 $S$ 给出。维数公式使
+
+$$
+\dim_{\mathbb C}(S\cap v^\perp)\ge1.
+\tag{179.8}
+$$
+
+若 $S\subset v^\perp$，零影包含整条纯线；否则交是一条复射线，所以只交一个纯点。故无论 $p$ 是否位于该球，都满足(179.2)。其零面凸性、原全菜单和局部三角形由178.6的标准反向给出。由178.6已知 $\mathsf Q_{\rm zero}$ 等价于(179.7)，三项等价完成。$\square$
+

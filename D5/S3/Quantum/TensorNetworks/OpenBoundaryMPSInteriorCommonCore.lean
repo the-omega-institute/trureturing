@@ -4,7 +4,7 @@
    mirror-E: none(waiver:static-algebraic-identifiability)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Kronecker]
    utility: none
-   digest: Raw interior observations force a common core for arbitrary competitors. -/
+   digest: Raw interior observations give conditional phase recovery for arbitrary competitors. -/
 
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityRecovery
 import Mathlib.LinearAlgebra.Matrix.Kronecker
@@ -13,7 +13,8 @@ import D5.S3.Quantum.Schatten.RankOneHadamard
 
 /-! Raw interior windows retain their actual left and right complements. The
 common-core conclusion is conditional on target spanning and positive definite
-environments. It asserts neither phase recovery nor genericity. -/
+environments. Injective target transfer additionally gives full-state phase
+recovery. No genericity is asserted. -/
 
 set_option autoImplicit false
 
@@ -88,7 +89,7 @@ private lemma interior_columns_factor (A : Fin 2 → Bond) (l r : Fin 2 → ℂ)
   intro t _
   ring
 
-private lemma left_boundary_gram (A : Fin 2 → Bond) (l : Fin 2 → ℂ) (p : ℕ) :
+lemma left_boundary_gram (A : Fin 2 → Bond) (l : Fin 2 → ℂ) (p : ℕ) :
     (prefixMap A l p)ᴴ * prefixMap A l p =
       (dualTransfer A)^[p] (vecMulVec (star l) l) := by
   have hs (k : ℕ) : (prefixMap A l k)ᴴ * prefixMap A l k =
@@ -128,7 +129,7 @@ private lemma context_gram (A : Fin 2 → Bond) (l r : Fin 2 → ℂ) (p q : ℕ
   intro a _
   ring
 
-private lemma interior_density_dictionary (A : Fin 2 → Bond) (l r : Fin 2 → ℂ)
+lemma interior_density_dictionary (A : Fin 2 → Bond) (l r : Fin 2 → ℂ)
     (p k q : ℕ) :
     rawInterior p k q (mpsState ((p + k) + q) (A 0) (A 1) l r) =
       feature A k * ((transfer A)^[q] (vecMulVec r (star r)) ⊗ₖ
@@ -364,9 +365,180 @@ theorem common_core_rank_one (A B : Fin 2 → Bond)
     _ = mpsState (2 + (s + 2)) (A 0) (A 1) lA rA :=
         (state_gamma A lA rA (2 + (s + 2))).symm
 
+/-- The existing sandwich cancellation with arbitrary finite column indices. -/
+private lemma sandwich_injective_any {ι κ : Type} [Fintype κ]
+    (F : Matrix ι κ ℂ) (hF : Function.Injective F.mulVec) :
+    Function.Injective (fun X : Matrix κ κ ℂ => F * X * Fᴴ) := by
+  have hleft {η : Type} (X Y : Matrix κ η ℂ) (h : F * X = F * Y) : X = Y := by
+    ext i j
+    exact congrFun (hF (show F *ᵥ X.col j = F *ᵥ Y.col j from
+      congrArg (fun M => M.col j) h)) i
+  intro X Y h
+  have he : X * Fᴴ = Y * Fᴴ := hleft _ _ (by
+    simpa only [Matrix.mul_assoc] using h)
+  have hc : F * Xᴴ = F * Yᴴ := by
+    simpa only [conjTranspose_mul, conjTranspose_conjTranspose] using
+      congrArg conjTranspose he
+  exact conjTranspose_injective (hleft _ _ hc)
+
+private def transferLinear (A : Fin 2 → Bond) : Bond →ₗ[ℂ] Bond where
+  toFun := transfer A
+  map_add' X Y := by simp [transfer, Matrix.mul_add, Matrix.add_mul, Finset.sum_add_distrib]
+  map_smul' c X := by
+    simp [transfer]
+
+private def dualTransferLinear (A : Fin 2 → Bond) : Bond →ₗ[ℂ] Bond where
+  toFun := dualTransfer A
+  map_add' X Y := by
+    simp [dualTransfer, Matrix.mul_add, Matrix.add_mul, Finset.sum_add_distrib]
+  map_smul' c X := by
+    simp [dualTransfer]
+
+private lemma linear_iterate_smul (T : Bond →ₗ[ℂ] Bond) (n : ℕ) (c : ℂ) (X : Bond) :
+    (T : Bond → Bond)^[n] (c • X) = c • (T : Bond → Bond)^[n] X := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp only [Function.iterate_succ_apply', ih, map_smul]
+
+private lemma transfer_trace_pairing (A : Fin 2 → Bond) (Y X : Bond) :
+    trace (Y * transfer A X) = trace (dualTransfer A Y * X) := by
+  simp only [transfer, dualTransfer, Matrix.mul_sum, Matrix.sum_mul, trace_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  simpa only [Matrix.mul_assoc] using
+    (Matrix.trace_mul_cycle Y (A i * X) (A i)ᴴ)
+
+private lemma dualTransfer_injective (A : Fin 2 → Bond)
+    (hE : Function.Injective (transfer A)) : Function.Injective (dualTransfer A) := by
+  have hs : Function.Surjective (transferLinear A) :=
+    LinearMap.injective_iff_surjective.mp hE
+  intro Y Z h
+  apply Matrix.ext_iff_trace_mul_right.mpr
+  intro X
+  obtain ⟨W, rfl⟩ := hs X
+  change trace (Y * transfer A W) = trace (Z * transfer A W)
+  rw [transfer_trace_pairing, transfer_trace_pairing, h]
+
+/-- Dimension-generic, zero-safe form of DensityRecovery.boundary_phase. -/
+private lemma outer_gram_phase {ι : Type} (x y : ι → ℂ)
+    (h : vecMulVec x (star x) = vecMulVec y (star y)) :
+    ∃ z : ℂ, ‖z‖ = 1 ∧ y = z • x := by
+  classical
+  by_cases hx : x = 0
+  · have hy : y = 0 := by
+      funext i
+      have hd := congrFun (congrFun h i) i
+      simp only [hx, vecMulVec_apply, Pi.star_apply, Pi.zero_apply, zero_mul] at hd
+      rcases mul_eq_zero.mp hd.symm with hi | hi
+      · exact hi
+      · exact star_eq_zero.mp hi
+    exact ⟨1, norm_one, by simp [hx, hy]⟩
+  · obtain ⟨i, hi⟩ : ∃ i, x i ≠ 0 := Function.ne_iff.mp hx
+    have hd : x i * star (x i) = y i * star (y i) := congrFun (congrFun h i) i
+    have hy : y i ≠ 0 := by
+      intro hy
+      rw [hy, zero_mul] at hd
+      exact (mul_ne_zero hi (star_ne_zero.mpr hi)) hd
+    have hn : ‖x i‖ = ‖y i‖ := by
+      have he := congrArg norm hd
+      simp only [norm_mul, norm_star] at he
+      nlinarith [norm_nonneg (x i), norm_nonneg (y i)]
+    refine ⟨star (x i) / star (y i), ?_, ?_⟩
+    · rw [norm_div, norm_star, norm_star, hn, div_self (norm_ne_zero_iff.mpr hy)]
+    · funext j
+      have hj : x j * star (x i) = y j * star (y i) := congrFun (congrFun h j) i
+      change y j = star (x i) / star (y i) * x j
+      rw [div_mul_eq_mul_div]
+      exact (eq_div_iff (star_ne_zero.mpr hy)).mpr (by
+        simpa only [mul_comm] using hj.symm)
+
+private lemma same_core_phase (A : Fin 2 → Bond) (l r lhat rhat : Fin 2 → ℂ)
+    (p q : ℕ) (hA : TwoSiteSpanning A) (hE : Function.Injective (transfer A))
+    (hraw : rawInterior p 3 q (mpsState ((p + 3) + q) (A 0) (A 1) lhat rhat) =
+      rawInterior p 3 q (mpsState ((p + 3) + q) (A 0) (A 1) l r)) :
+    ∃ z : ℂ, ‖z‖ = 1 ∧
+      mpsState ((p + 3) + q) (A 0) (A 1) lhat rhat =
+        z • mpsState ((p + 3) + q) (A 0) (A 1) l r := by
+  let L := vecMulVec (star l) l
+  let R := vecMulVec r (star r)
+  let Lhat := vecMulVec (star lhat) lhat
+  let Rhat := vecMulVec rhat (star rhat)
+  let P := (dualTransfer A)^[p] L
+  let Phat := (dualTransfer A)^[p] Lhat
+  let H := (transfer A)^[q] R
+  let Hhat := (transfer A)^[q] Rhat
+  have hW : Hhat ⊗ₖ Phatᵀ = H ⊗ₖ Pᵀ := by
+    apply sandwich_injective_any (feature A 3) (feature_injective A hA)
+    simpa only [interior_density_dictionary] using hraw
+  have hR (t j : Fin 2) : Phat t j • Rhat = P t j • R := by
+    apply hE.iterate q
+    change (transferLinear A : Bond → Bond)^[q] (Phat t j • Rhat) =
+      (transferLinear A : Bond → Bond)^[q] (P t j • R)
+    rw [linear_iterate_smul, linear_iterate_smul]
+    change Phat t j • Hhat = P t j • H
+    ext i k
+    have he := congrFun (congrFun hW (i, j)) (k, t)
+    simpa only [kronecker_apply, transpose_apply, Matrix.smul_apply, smul_eq_mul,
+      mul_comm] using he
+  have hL (i k : Fin 2) : Rhat i k • Lhat = R i k • L := by
+    apply (dualTransfer_injective A hE).iterate p
+    change (dualTransferLinear A : Bond → Bond)^[p] (Rhat i k • Lhat) =
+      (dualTransferLinear A : Bond → Bond)^[p] (R i k • L)
+    rw [linear_iterate_smul, linear_iterate_smul]
+    change Rhat i k • Phat = R i k • P
+    ext t j
+    have he := congrFun (congrFun (hR t j) i) k
+    simpa only [Matrix.smul_apply, smul_eq_mul, mul_comm] using he
+  let x : (Fin 2 × Fin 2) → ℂ := fun ij => r ij.1 * l ij.2
+  let y : (Fin 2 × Fin 2) → ℂ := fun ij => rhat ij.1 * lhat ij.2
+  have hGram : vecMulVec x (star x) = vecMulVec y (star y) := by
+    ext ⟨i, j⟩ ⟨k, t⟩
+    have he := congrFun (congrFun (hL i k) t) j
+    change (rhat i * star (rhat k)) * (star (lhat t) * lhat j) =
+      (r i * star (r k)) * (star (l t) * l j) at he
+    change r i * l j * star (r k * l t) = rhat i * lhat j * star (rhat k * lhat t)
+    rw [star_mul, star_mul]
+    calc
+      _ = (r i * star (r k)) * (star (l t) * l j) := by ring
+      _ = (rhat i * star (rhat k)) * (star (lhat t) * lhat j) := he.symm
+      _ = _ := by ring
+  obtain ⟨z, hz, hxy⟩ := outer_gram_phase x y hGram
+  refine ⟨z, hz, ?_⟩
+  rw [state_gamma, state_gamma]
+  have hcoeff : vecMulVec rhat lhat = z • vecMulVec r l := by
+    ext i j
+    exact congrFun hxy (i, j)
+  rw [hcoeff]
+  funext w
+  change trace ((z • vecMulVec r l) * wordMatrix A w) =
+    z • trace (vecMulVec r l * wordMatrix A w)
+  rw [smul_mul_assoc, trace_smul]
+
+/-- Complete raw interior three-site equality determines every actual competitor
+up to a unit complex scalar, under target-only spanning, injective transfer and
+positive definite actual environments. This is a conditional static theorem. -/
+theorem interior_phase_recovery (A B : Fin 2 → Bond)
+    (l r lprime rprime : Fin 2 → ℂ) (p q : ℕ) (hp : 1 ≤ p) (hq : 1 ≤ q)
+    (hA : TwoSiteSpanning A) (hE : Function.Injective (transfer A))
+    (hP : ((dualTransfer A)^[p] (vecMulVec (star l) l)).PosDef)
+    (hH : ((transfer A)^[q] (vecMulVec r (star r))).PosDef)
+    (hraw : rawInterior p 3 q (mpsState ((p + 3) + q) (B 0) (B 1) lprime rprime) =
+      rawInterior p 3 q (mpsState ((p + 3) + q) (A 0) (A 1) l r)) :
+    ∃ z : ℂ, ‖z‖ = 1 ∧
+      mpsState ((p + 3) + q) (B 0) (B 1) lprime rprime =
+        z • mpsState ((p + 3) + q) (A 0) (A 1) l r := by
+  obtain ⟨X, hX⟩ := interior_common_core A B l r lprime rprime p q hp hq hA hP hH hraw
+  obtain ⟨_, lhat, rhat, _, hstate⟩ :=
+    common_core_rank_one A B lprime rprime ((p + 3) + q) (by omega) hA X hX
+  obtain ⟨z, hz, he⟩ := same_core_phase A l r lhat rhat p q hA hE (by
+    rw [← hstate]
+    exact hraw)
+  exact ⟨z, hz, hstate.trans he⟩
+
 #print axioms all_coefficient_parent_induction
 #print axioms interior_common_core
 #print axioms common_core_rank_one
+#print axioms interior_phase_recovery
 
 end
 end D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorCommonCore

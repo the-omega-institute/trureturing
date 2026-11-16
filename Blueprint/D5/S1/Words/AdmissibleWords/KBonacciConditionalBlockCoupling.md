@@ -56,17 +56,43 @@ $$(\forall (k,n:\mathbb{N}), (((0 < k) \implies ((\forall (s:\operatorname{List}
 
 P(s,F,x,y,h,g) denotes prefixCoupling. At each listed site, the finite next-bit joint law is bound to the recursively refined completion law. Its supported bit pairs have nonempty refined fibers. The marginal weight of a bit times its refined uniform completion mass is the original mass on that bit fiber; summing over Bool proves exact disintegration. If the fixed histories already contain a common screening zero and agree at all farther fixed sites, the recursion instead uses resetCoupling, with legal representatives chosen from the actual nonempty fibers. Uniform prefix transport proves both marginals in this stopped branch.
 
-**Theorem 1.5 (Expected internal Hamming cost for an increasing scan).**
+**Theorem 1.5 (Reset transport has zero free-site Hamming mean).**
 
-$$(\forall (k,n:\mathbb{N}), (((0 < k) \implies ((\forall (s:\operatorname{List}\left(\operatorname{Fin}\left(n\right)\right)), (((((\operatorname{Nodup}\left(s\right)) \land ((\forall (i:\operatorname{Fin}\left(n\right)), ((\forall (j:\operatorname{Fin}\left(n\right)), (((\operatorname{Before}\left(s, i, j\right)) \implies (\operatorname{val}\left(i\right) < \operatorname{val}\left(j\right)))))))))) \implies ((\forall (F:\operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), ((((((\forall (i:\operatorname{Fin}\left(n\right)), (((i \in s) \implies (\neg (i \in F)))))) \land ((\forall (i:\operatorname{Fin}\left(n\right)), (((\neg (i \in F)) \implies (i \in s))))))) \implies ((\forall (x,y:(\operatorname{Fin}\left(n\right) \to \operatorname{Bool})), ((\forall (h:\operatorname{Nonempty}\left(\operatorname{C}\left(k, n, F, x\right)\right)), ((\forall (g:\operatorname{Nonempty}\left(\operatorname{C}\left(k, n, F, y\right)\right)), ((((\forall (i:\operatorname{Fin}\left(n\right)), ((\forall (j:\operatorname{Fin}\left(n\right)), (((((i \in s) \land (j \in F) \land (\operatorname{val}\left(i\right) < \operatorname{val}\left(j\right)))) \implies (\operatorname{at}\left(x, j\right) = \operatorname{at}\left(y, j\right)))))))) \implies (\operatorname{ExpectedHamming}\left(\operatorname{P}\left(s, F, x, y, h, g\right), s\right) \leq 1))))))))))))))))))))$$
+$$(\forall (k,n:\mathbb{N}), ((\forall (s:\operatorname{List}\left(\operatorname{Fin}\left(n\right)\right)), ((\forall (F:\operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), ((\forall (x,y:(\operatorname{Fin}\left(n\right) \to \operatorname{Bool})), ((\forall (h:\operatorname{Nonempty}\left(\operatorname{completions}\left(k, n, F, x\right)\right)), ((\forall (z:\operatorname{Fin}\left(n\right)), ((((\forall (i:\operatorname{Fin}\left(n\right)), (((i \leq z) \implies (i \in F))))) \implies ((((\forall (i:\operatorname{Fin}\left(n\right)), (((i \in s) \implies (\neg (i \in F)))))) \implies (\operatorname{mean}\left(\operatorname{resetCoupling}\left(F, x, y, h, z\right), \operatorname{scanHamming}\left(s\right)\right) = 0))))))))))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.right_scan_hamming` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.reset_mean_zero` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-ExpectedHamming(J,s) is the sum over full-word pairs w of J(w)H(s,w). Before(s,i,j) means that i occurs strictly before j in the list s. H(s,w) denotes scanHamming: the sum of the zero-one disagreement indicators at the listed sites. The list is strictly increasing and lists the entire complement of F without repetitions. The fixed histories agree at every fixed site farther right than any scanned site. A supported common-zero branch has zero remaining cost, by screening and the reset law. In every other branch the current indicator is at most one, and the recursive expected remaining cost is at most one. Those branches have total mass at most one half, derived from conditional_step_coupling. Their weighted cost is therefore at most one. This estimate uses the same full-word joint law as the marginal theorem. The theorem covers short words and arbitrary nonempty completion fibers; it does not assert reflection, the geometric survival tail, or the final two-orientation contiguous-block assembly.
+Every coordinate through z is fixed and every scanned site is free. resetMap copies the sampled word at all scanned sites, so their total disagreement has mean zero. The histories are arbitrary and only the x completion fiber is required to be nonempty.
+
+**Theorem 1.6 (A supported fixed head separates from the remaining mean).**
+
+$$(\forall (n:\mathbb{N}), ((\forall (p:\operatorname{PMF}\left(\operatorname{Pair}\left((\operatorname{Fin}\left(n\right) \to \operatorname{Bool}), (\operatorname{Fin}\left(n\right) \to \operatorname{Bool})\right)\right)), ((\forall (i:\operatorname{Fin}\left(n\right)), ((\forall (t:\operatorname{List}\left(\operatorname{Fin}\left(n\right)\right)), ((\forall (a,b:\operatorname{Bool}), ((((\forall (w:\operatorname{Pair}\left((\operatorname{Fin}\left(n\right) \to \operatorname{Bool}), (\operatorname{Fin}\left(n\right) \to \operatorname{Bool})\right)), (((\operatorname{eval}\left(p, w\right) \neq 0) \implies (((\operatorname{fst}\left(w, i\right) = a) \land (\operatorname{snd}\left(w, i\right) = b))))))) \implies (\operatorname{mean}\left(p, \operatorname{scanHamming}\left(\operatorname{cons}\left(i, t\right)\right)\right) = \operatorname{disagreement}\left(a, b\right) + \operatorname{mean}\left(p, \operatorname{scanHamming}\left(t\right)\right)))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.mean_head` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any full-word-pair probability mass function with supported head bits a and b, the mean scanHamming of i followed by t equals disagreement(a,b), equal to zero when a=b and one otherwise, plus the mean scanHamming of t. No legality, order or distinctness hypothesis is required.
+
+## Paper application: first common zero and the emitted scan event
+
+In the Chinese and English Chapter 39 example ex-ch39-p2e-uniform-parent-gap, fix k>=2, n>=1, two legal full words x,y agreeing off one site u (allow x=y), and a nonempty interval B excluding u. Keep every coordinate of B-complement fixed. For a right block scan increasingly; for a left block reverse the sites and both full words. Put m=card(B), and let (X_j,Y_j) be the emitted bit pair at the j-th scanned site, for 1<=j<=m. The following is the paper shared-threshold construction and its finite probability argument, not an additional kernel-verified theorem.
+
+Given any positive-probability joint sampled history, each marginal next-bit law is the uniform legal completion law with that chain's sampled prefix and entire exterior fixed. Deleting the next true bit is an injection into false completions, so its conditional false mass is at least 1/2. Before a common zero, use a fresh shared uniform threshold at every step, even if the remaining conditional laws already agree. The conditional common-zero probability is the minimum of the two false masses, hence at least 1/2. At the first common zero, every forbidden window joining earlier history to the remaining suffix crosses that zero. The suffix laws, including the fixed far exterior, therefore coincide and can be sampled identically. Each step and this suffix draw preserve the original completion-law marginals. conditional_step_coupling and reset_law_transport supply the corresponding native one-step and screening identities; they do not by themselves identify a multi-step emitted event of prefixCoupling.
+
+Define T on every output as the first common-zero scan position, or T=m+1 if there is none. Let G_j be the information generated by the first j emitted pairs and A_j={T>j}, for 0<=j<=m; A_0 is the whole sample space. All conditional probabilities refer only to histories of positive probability. For 1<=j<=m, the finite tower identity gives Pr(A_j)=E[indicator(A_{j-1}) Pr((X_j,Y_j)!=(false,false) | G_{j-1})]<=Pr(A_{j-1})/2. Induction yields Pr(A_j)<=2^(-j), including j=0 and j=m. The event permits (true,true); it is not the event that all preceding pairs disagree. A_m={T=m+1} means that the whole block contains no common zero.
+
+On the support of this same paper joint law, a common zero at r forces X_q=Y_q for every r<=q<=m, including the zero itself. Thus {X_j!=Y_j} is a subset of A_j, and Pr(X_j!=Y_j)<=Pr(A_j)<=2^(-j). Linearity of the finite disagreement sum gives E[sum_{j=1}^m indicator(X_j!=Y_j)]<=sum_{j=1}^m 2^(-j)=1-2^(-m)<=1, without independence between positions. Reversing the scan gives the identical assertion for a left block; exterior coordinates remain fixed. The empty-block extension has T=1 and zero cost. If the initial block laws already coincide, an alternative synchronous whole-block draw has cost zero without requiring any zero in its output.
+
+The native prefixCoupling tests resetReady before scanning a site and can transport a shared completion before an emitted common zero. Its no-common-false event must therefore also be bounded in this initial reset branch; it cannot be identified with latent survival of the recursion. The native prefix_coupling_emitted_tail in KBonacciEmittedTail supplies this event estimate by a completion-fiber count and recursive emitted-event induction. right_scan_hamming separately proves expected cost at most one. The complete two-orientation event/support assembly remains a separate obligation. The paper derivation and synchronous alternative do not replace that native-law obligation.
+
+The native emitted-event estimate is `D5/S1/Words/AdmissibleWords/KBonacciEmittedTail.prefix_coupling_emitted_tail`.
 
 ## Application: actual legal-state refresh, projection and complex energy
 
@@ -247,10 +273,12 @@ The coupled-generator application in CostCoupling supplies the route from actual
 ## References
 
 - Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.conditional_step_coupling`
+- Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.mean_head`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.prefix_coupling_marginals`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.reset_law_transport`
-- Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.right_scan_hamming`
+- Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.reset_mean_zero`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.zero_screening`
+- Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciEmittedTail.prefix_coupling_emitted_tail`
 - Dependency: [D5/S0/Tower/DBonacci/TerminalSampling](../../../S0/Tower/DBonacci/TerminalSampling.md)
 - Dependency: [D5/S1/Words/AdmissibleWords/KBonacciIntegerInterval](KBonacciIntegerInterval.md)
 - Dependency: [D5/S1/Words/ClosedRunStarts](../ClosedRunStarts.md)

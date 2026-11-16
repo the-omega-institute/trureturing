@@ -1,0 +1,26 @@
+**定理 10.3（Charged fully labelled upper construction and its finite return）。** Let $\Lambda_0=\operatorname{id}_H,\Lambda_n=\Phi^n$ and $r_n=\operatorname{rank}J(\Lambda_n)$. For every finite $N$ there is a pure initial state, one unitary $W$ and one charged environment with
+
+$$
+\dim E=\sum_{n=0}^N r_n
+\tag{10.10}
+$$
+
+that satisfies (9.1). For the balanced source this gives
+
+$$
+\dim E=1,3,4N-2\quad\text{for }N=0,1,N\ge2,
+\tag{10.11}
+$$
+
+using $r_n=\min(n+1,4)$ from Theorem 8.2. For $N\ge2$ the construction has an exact global return at time $N+1$, but that return is the boundary of the finite contract and does not assert $\Phi^{N+1}$.
+
+**证明。** Choose minimal Stinespring isometries $V_n:H\to H\otimes E_n$ for $\Lambda_n$, with $\dim E_n=r_n$, and take $E=\bigoplus_{n=0}^NE_n$. Embed the ranges $M_n=V_nH$ in their mutually orthogonal environment summands. Let $V_{N+1}=V_0$ and define
+
+$$
+W=\sum_{n=0}^NV_{n+1}V_n^*+(I-P),\qquad
+P=\sum_{n=0}^NV_nV_n^* .
+\tag{10.12}
+$$
+
+The first term cyclically permutes the orthogonal copies $M_n$ and the second is the identity on their orthogonal complement. Thus $W$ is unitary, $W^{N+1}=I$ on the whole joint space, and $W^n(x\otimes e_0)=V_nx$ for $0\le n\le N$, where $V_0x=x\otimes e_0$. Partial tracing gives $\Lambda_n$ on all matrices, and tensoring the identities with $I_R$ gives all untouched-reference cases. All time sectors, including the finite clock, are in $E$; no clock readout, reset or external controller is used. The return at $N+1$ gives the identity channel on the prepared boundary state, which generally differs from $\Phi^{N+1}$, so it is not an all-horizon realization. The one-step two-dimensional construction of Theorem 2.1 and the exact N=2 values of Theorem 9.3 remain sharper small-horizon results. $\square$
+
