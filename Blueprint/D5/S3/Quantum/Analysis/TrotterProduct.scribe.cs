@@ -6,6 +6,13 @@ internal sealed class TrotterProductDocument : IScribeDocumentDefinition
         "The Lie-Trotter product converges in every complete real normed algebra with norm-one identity, without a commutation hypothesis.",
         H("The General Banach-Algebra Lie-Trotter Formula"),
         Blocks(Describe.Lean(
+            DescribeId.Create("norm-power-difference"),
+            DeclarationHandle.Create("D5/S3/Quantum/Analysis/TrotterProduct.norm_pow_sub_pow_le_of_norm_le"),
+            H("Power differences in a normed ring"),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/blore2026partialtrace")),
+            Blocks(Paragraph(Text("In any normed ring with norm-one identity, if C is at least one and bounds the norms of S and T, then for every natural n the norm of S to the nth power minus T to the nth power is at most n times C to the nth power times the norm of S minus T. No normed-algebra structure or completeness is needed. At C equal to one this original supplier controls power differences of the continuous endomorphisms used in the original Gaussian uniform trace estimate. The proof and attribution are those of the selected original source."))),
+            DescribeRole.Theorem), Describe.Lean(
             DescribeId.Create("general-trotter-product"),
             DeclarationHandle.Create("D5/S3/Quantum/Analysis/TrotterProduct.trotter_product"),
             H("Noncommuting exponential products converge"),

@@ -36,6 +36,14 @@ internal sealed class DoubleTailShuffleSupportDocument : IScribeDocumentDefiniti
                 + "recovers i and j from the output word. Thus the support is an injective image of the triangular "
                 + "parameter set, whose cardinality is the sum of i+1 for i from zero through m. This is an equality "
                 + "of distinct-word cardinalities for every natural m, including zero."),
+            Node("ones_value", "Value of an all-ones binary word", DescribeRole.Theorem,
+                All("m", NaturalType(), Equal(
+                    Add(Qualified("Nat", "ofDigits", Num(2),
+                        Qualified("List", "replicate", F.Id("m"), Num(1))), Num(1)),
+                    Power(Num(2), F.Id("m")))),
+                "For every natural m, decoding m copies of digit one in base two and adding one "
+                + "gives 2^m. The empty word is included at m=0. This identity is used by the binary "
+                + "root calculation and the literal equal-run integer-sum recurrence."),
             Node("binary_root_original", "Ordinary numeral of a power minus four", DescribeRole.Theorem,
                 All("k", NaturalType(), Seq(AtMost(Num(3), F.Id("k")), Implies, Sp,
                     Equal(Call("binaryWord", Subtract(Power(Num(2), F.Id("k")), Num(4))),

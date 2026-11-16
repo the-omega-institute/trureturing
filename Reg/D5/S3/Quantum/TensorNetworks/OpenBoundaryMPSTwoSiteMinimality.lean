@@ -260,4 +260,79 @@ end OpenCollision
 #print axioms registration
 
 end
+namespace NormalizedRows
+
+open Matrix
+
+abbrev signature : Signature where
+  Params := Parameter
+  State _ := Fin 2
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := (Fin 2 → ℂ) → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ θ i row => left θ ᵥ* core θ i = row) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law obs := ∀ (θ : Parameter) (i : Fin 2), obs.readout () θ i (Pi.single i 1)
+
+private lemma rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (0, 0, 0) 0
+
+private lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(0, 0, 0), 0, 1, ?_⟩
+  intro he
+  have hh : left (0, 0, 0) ᵥ* core (0, 0, 0) 1 = Pi.single 0 1 :=
+    Eq.mp (congrFun he (Pi.single 0 1)) (normalized_rows (0, 0, 0) 0)
+  rw [normalized_rows] at hh
+  have hz := congrFun hh 0
+  norm_num at hz
+
+def source_registration : Registration arena (type_of% @normalized_rows) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@normalized_rows, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@normalized_rows) (Realization signature) (type_of% @core) Unit := {
+  unitName := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSTwoSiteMinimality.normalized_rows.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSTwoSiteMinimality.NormalizedRows.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ θ i row => left θ ᵥ* core θ i = row) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some (@core)
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration
+end NormalizedRows
+
 end Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSTwoSiteMinimality

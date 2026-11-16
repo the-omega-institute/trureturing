@@ -2,6 +2,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.IO.Compression;
 using System.Collections.Concurrent;
+using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using StrataLint.Engine;
 
@@ -122,6 +123,83 @@ public sealed class RawLeanReportArtifactTests
     {
         Assert.Throws<ArgumentException>(() => LeanReportScope.Create(Snapshot(), []));
         Assert.Throws<InvalidOperationException>(() => LeanReportScope.Create(Snapshot(), [RepoPath.CreateKnown("D5/Missing.lean")]));
+    }
+
+    [Theory]
+    [InlineData("D5/Selected.lean", "changed")]
+    [InlineData("D5/Dependency.lean", "changed")]
+    [InlineData("tools/lean-inspector-interface/LocalBridge/Catalog.lean", "changed")]
+    [InlineData("lean-report-inputs.json", "changed")]
+    [InlineData("Golden/Frozen/state/D5/Selected.lean.json", "changed")]
+    [InlineData("D5/Selected.lean", "missing")]
+    [InlineData("D5/Selected.lean", "unread")]
+    [InlineData("D5/Selected.lean", "stable")]
+    public void FullFallbackRequiresConsistentAlreadyReadInputs(string changedPath, string defect)
+    {
+        const string bridgePath = "tools/lean-inspector-interface/LocalBridge/Catalog.lean";
+        var entries = new[]
+        {
+            RawRepositoryEntry.FromText("lean-report-inputs.json",
+                "{\"schema_version\":1,\"dependency_sources\":{\"include\":[{\"pattern\":\"tools/lean-inspector-interface/**/*.lean\",\"optional\":false}],\"exclude\":[]}}"),
+            RawRepositoryEntry.FromText("Golden/Frozen/state/D5/Selected.lean.json", "{}\n"),
+            RawRepositoryEntry.FromText("D5/Selected.lean", "prelude\nimport LocalBridge.Catalog\n"),
+            RawRepositoryEntry.FromText(bridgePath, "prelude\nimport D5.Dependency\n"),
+            RawRepositoryEntry.FromText("D5/Dependency.lean", "prelude\n"),
+            RawRepositoryEntry.FromText("D5/Sibling.lean", "prelude\n"),
+        };
+        var original = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(entries))).Snapshot;
+        var inventory = RepositorySnapshot.Create(original.Files.ToImmutableDictionary(
+            static item => item.Key,
+            static item => item.Key.Value.EndsWith(".lean", StringComparison.Ordinal)
+                ? new RepositoryFile(item.Key, [], isOpaque: false, gitBlobOid: null, contentWasRead: false)
+                : item.Value));
+        var scope = LeanReportScope.Create(inventory, [RepoPath.CreateKnown("D5/Selected.lean")],
+            sourcePath => original.Files[sourcePath]);
+        // Imports remain identical; the full bundle binds the later source bytes.
+        var laterEntries = entries.Select(entry => entry.Path == changedPath && defect == "changed"
+            ? RawRepositoryEntry.FromText(entry.Path, Encoding.UTF8.GetString(entry.Bytes.AsSpan()) + "\n")
+            : entry);
+        var later = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(laterEntries))).Snapshot;
+        using var temporary = new TemporaryDirectory();
+        var reportPath = Path.Combine(temporary.Path, "full.json");
+        RawLeanReportArtifact.WriteFile(reportPath, later, LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>
+            {
+                ["D5/Selected.lean"] = new(["LocalBridge.Catalog"], []),
+                ["D5/Dependency.lean"] = new([], []),
+                ["D5/Sibling.lean"] = new([], []),
+            }));
+        var key = RepoPath.CreateKnown(changedPath);
+        var fullSnapshot = defect switch
+        {
+            "missing" => RepositorySnapshot.Create(later.Files.Remove(key)),
+            "unread" => RepositorySnapshot.Create(later.Files.SetItem(key,
+                new RepositoryFile(key, [], isOpaque: false, gitBlobOid: null, contentWasRead: false))),
+            _ => later,
+        };
+        var acquisitions = 0;
+        LeanAxiomReport Load() => RawLeanReportArtifact.ReadFileForScopeOrFull(reportPath, scope, () =>
+        {
+            acquisitions++;
+            return fullSnapshot;
+        });
+
+        if (defect == "stable")
+        {
+            var report = Load();
+            Assert.True(report.IsScoped);
+            Assert.Equal(2, report.Files.Count);
+            Assert.False(scope.SourceSnapshot.Files[RepoPath.CreateKnown("D5/Sibling.lean")].ContentWasRead);
+        }
+        else
+        {
+            var exception = Assert.Throws<FormatException>(() => Load());
+            Assert.Contains("consistency", exception.Message, StringComparison.Ordinal);
+            Assert.Contains(changedPath, exception.Message, StringComparison.Ordinal);
+        }
+        Assert.Equal(1, acquisitions);
     }
 
     [Fact]

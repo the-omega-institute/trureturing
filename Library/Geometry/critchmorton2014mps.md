@@ -10,9 +10,11 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSMarginalBirationality
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorEndpointSigns
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSSpectralExtraction
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality
@@ -70,7 +72,7 @@ $$
 
 The competitor $B,l',r'$ remains arbitrary. The proof consumes the common-core theorem and its actual rank-one refactorization, then cancels the four-column feature sandwich to obtain $\widehat H\otimes\widehat P^T=H\otimes P^T$. For fixed $t,j$, this is $\widehat P_{tj}\widehat H=P_{tj}H$; linearity and injectivity cancel $E_A^q$. The bilinear trace pairing $\operatorname{tr}(Y E_A(X))=\operatorname{tr}(E_A^*(Y)X)$ and finite-dimensional surjectivity of $E_A$ imply injectivity of $E_A^*$, which cancels the other iterate. Thus the flattened coefficients $x_{ij}=r_i l_j$ and $\widehat x_{ij}=\widehat r_i\widehat l_j$ have identical outer Grams. The dimension-generic, zero-safe form of the original boundary-phase argument gives $\widehat x=zx$, and trace linearity gives the full-state conclusion. The internal same-core argument works for arbitrary natural $p,q$ and uses neither positivity nor lower bounds on them; those assumptions belong to the arbitrary-competitor common-core reduction. This is an algebraic conditional result; transfer inversion is not asserted to be positive or physically implementable.
 
-The conditional interior unit is consumed by the intrinsic genericity theorem below. Interior two-site insufficiency and full Conjecture 9 remain open. This conditional interior unit carries **zero solved-open-problem credit** and adds no normalized-state recovery, physical recovery operation, dynamics, time group, energy, clock or thermodynamic cost. The prefix results and their C8 provenance retain their stated scopes.
+The conditional interior unit is consumed by the intrinsic genericity theorem below. Downstream `InteriorSpectralAmbiguity.observed_interior_ambiguity` proves interior two-site insufficiency for every fixed $N\ge4$: one common nonempty relatively open dense principal locus in the entire actual image serves every individual internal two-site window, with an actual nonzero nonphase competitor that may depend on the window. This raw-state result supplies no joint-marginal theorem; the $N=3$ boundary-only case, right reversal, one-site partial-trace adapters and full window composition remain obligations. Full Conjecture 9 remains open. This conditional interior unit carries **zero solved-open-problem credit** and adds no normalized-state recovery, physical recovery operation, dynamics, time group, energy, clock or thermodynamic cost. The prefix results and their C8 provenance retain their stated scopes.
 
 `OpenBoundaryMPSInteriorGenericity.intrinsic_interior_recovery` proves the all-interior three-site sufficiency portion intrinsically for every fixed $N=3+m\ge5$. There is one nonzero real polynomial $R_m$ in the real and imaginary entries of the complete raw prefix $Q_3$ whose nonvanishing defines a nonempty relatively open dense, unit-phase-saturated subset of the **entire actual** free-boundary uniform bond-two image. At every target in that same locus, every interior split $p,q\ge1$ with $p+q=m$ has the following property: equality of the complete raw three-site interior density with any actual competitor is equivalent to equality of the full states up to a unit complex phase. The competitor has no chart, spanning, transfer, environment, minimality or normalization premise. A polynomial may depend on the length; no common locus across different lengths is claimed.
 
@@ -84,7 +86,7 @@ Each squared modulus is the sum of squares of coefficientwise real and imaginary
 
 The canonical identities $lA_i=e_i$ give $P_1=I$. Writing the actual right boundary as $r=\sqrt\sigma v$, the first right environment is $WW^\dagger$ for the invertible column matrix $W=(A_0r,A_1r)$. An invertible $A_0$ congruence plus the positive semidefinite $A_1$ term propagates strict positivity of both environments through every positive iterate. The factor $\det A_0$ is a sufficient locus restriction only and is not added to interior_phase_recovery. Actual observed_coherent, the original canonical_shape and the positive-representative alignment transport canonical transfer injectivity from the recovery polynomial; no separate transfer determinant is reproved. The accepted conditional phase theorem is then applied at every split, and its phase is composed with the exact actual quotient representative. Raw Gram scaling gives the reverse implication and phase saturation.
 
-This establishes interior three-site sufficiency, retains the C8 Ma--Zhang and Q2 LeanPool attributions, and carries **zero solved-open-problem credit**. Interior two-site insufficiency and full C9 remain open. It supplies no normalized-state theorem, physical recovery operation, dynamics, clock, energy or thermodynamic conclusion.
+This establishes interior three-site sufficiency, retains the C8 Ma--Zhang and Q2 LeanPool attributions, and carries **zero solved-open-problem credit**. Interior two-site insufficiency is supplied by `InteriorSpectralAmbiguity.observed_interior_ambiguity` with the scope stated above for each fixed length, its common locus and competitors that may differ by window. Full C9 remains open. It supplies no normalized-state theorem, physical recovery operation, dynamics, clock, energy or thermodynamic conclusion.
 
 `OpenBoundaryMPSQuotient` supplies a rational observable boundary-Gram inverse. With the same fixed column $t$, write $d=\operatorname{eval}_t(\mathrm{minorPoly})$, $v=\operatorname{eval}_t(\det\mathrm{basisNumerator})$, $b_i=\operatorname{eval}_t(\mathrm{leftNumerator}_i)$, $N_i=\operatorname{eval}_t(\mathrm{matrixNumerator}_i)$ and $M=\mathrm{transferMatrix}(N)$. The original normalized rows $lA_i=e_i$ give the contraction $L_{kw}=l_{w_0}l_{w_1}\mathbf1_{w_2=k}$, with $L\,\mathrm{prefixMap}=I$. Its cleared version is $L_0=d^2L$. For $B=L_0Q_3L_0^\dagger$ and $h(z)=z\bar z$, the exact full-length canonical boundary Gram is
 
@@ -207,7 +209,7 @@ or nonzero boundary winding is assumed.
 
 This is conditional ambiguity, not genericity or a solution of C9, and it
 adds **zero** solved-open-problem credit. The endpoint signs and fixed-witness
-transversality are supplied below. Transversality beyond that witness, finite canonical-chart coverage and
+all-length real transversality are supplied below. Finite canonical-chart coverage and
 dominance, and genericity on the actual state and actual raw-density images
 remain separate obligations. The C8 attribution to Ma and Zhang, CC BY 4.0,
 is unchanged. The topology supplier reuses
@@ -334,3 +336,297 @@ claim or a full C9 solution. Real transversality, finite chart coverage,
 polynomial clearance and actual-density genericity remain separate.
 It earns zero resolved external open problems and supplies no dynamics,
 energy, clock, normalization or physical inverse.
+
+`OpenBoundaryMPSInteriorPolynomial` constructs literal real polynomials
+$F^L_{p,q},F^R_{p,q}$ in two independent trial coordinates and sixteen actual
+coordinates, ordered as the real and imaginary parts of
+$(\lambda,\mu,a,l_0,l_1,r_0,r_1,z_0)$. The native sector and core are the
+ones above; no fixed canonical thirteen-coordinate core is substituted.
+The targets are formed at $z_0$ and held fixed as the trial $z=x+iy$ varies.
+The right target retains the outer $G(z_0)^2$ congruence after the transfer
+iterate, and the inverse trial seed retains both inverse-square factors.
+
+Put $d=|\mu-\lambda|^2$, $a_0=1+|\lambda|^2$,
+$a_1=1+|\mu|^2$, $\kappa=|1+\bar\lambda\mu|^2$,
+$\Gamma=da_0a_1\kappa$ and $t=|z|^2$. The exact evaluation identities are
+
+$$
+F^L_{p,q}(x,y;\theta)=\Gamma^{2p}t^{2p}\operatorname{Re}f(z),\qquad
+F^R_{p,q}(x,y;\theta)=\Gamma^{2q}d^4t^{2q+4}\operatorname{Im}f(z).
+$$
+
+Both factors are strictly positive for a regular sector and $z\ne0$.
+Division-free adjugate and cleared Schur recurrences establish these
+identities for all natural lengths. Paired polynomial variables, actual
+Cartesian conversion and real coefficient extraction give the literal
+polynomials; polynomiality is not an additional premise.
+
+Differentiate only the independent trial coordinates and then substitute
+$(x,y)=(\operatorname{Re}z_0,\operatorname{Im}z_0)$ to define
+
+$$
+b_{p,q}(\theta)=
+\left[\partial_xF^L_{p,q}\partial_yF^R_{p,q}
+-\partial_yF^L_{p,q}\partial_xF^R_{p,q}\right]_{z=z_0}.
+$$
+
+Polynomial induction identifies these formal partials with the ordinary
+real Frechet derivative of each fixed-target slice. At the native common
+root, $b_{p,q}(\theta)=c_L(z_0)c_R(z_0)\det_{\mathbb R}Df(z_0)$.
+The real basis is $(1,i)$ with output rows real and imaginary. The diagonal
+identity with changing targets is never differentiated. Consuming the
+native all-positive-length fixed witness above proves nonzero evaluation
+and $b_{p,q}\ne0$ for every $p,q\ge1$, without an additional transversality
+or witness assumption.
+
+For every real scalar $a$, replacing $r$ by $ar$ multiplies evaluation of
+$b_{p,q}$ by exactly $a^4$. The right target scales by $a^2$ and its cleared
+$2\times2$ determinant and derivative row scale by $a^4$; the left row and
+clearing factors are unchanged. This supplies boundary amplitude transport
+for finite spectral descent. The residual derivative has real rank two;
+spectral coefficient rank four is a different notion.
+
+These results concern the native parameter locus. Finite chart dominance,
+actual full-state and actual raw-density image genericity, and official C9
+scope acceptance remain separate obligations. The external open-problem
+count remains zero.
+
+`nonzero_locus_actual_ambiguity` connects this locus to the exact native
+annular conclusion. For regular sectors and nonzero actual target, the
+polynomial formulas divided by their nonzero factors prove ordinary real
+differentiability. Nonzero evaluation of $b_{p,q}$ makes that derivative
+invertible. The endpoint signs supply enclosing radii, and the native
+annular root realization supplies an actual nonzero finite MPS with equal
+entire raw interior $Q_2$ and no unit-phase relation to the target. Positive
+definiteness of both actual target environments remains an explicit
+hypothesis. This is a parameter-locus theorem, not actual-image genericity.
+
+
+`OpenBoundaryMPSSpectralExtraction` supplies the finite algebraic bridge from
+the existing Ma--Zhang five-complex canonical core to the native sector of
+`OpenBoundaryMPSInteriorRootRealization`. For the canonical coordinates
+$c=(c_0,\ldots,c_4)$ put $h=c_4-c_1$, $D=h^2+4c_2c_3$,
+$t_0=c_1-c_0c_2$, $t_1=1+c_3-c_0c_4$ and
+$U=ht_0t_1-c_2t_1^2+c_3t_0^2$. The exact exclusions are
+$e^2=D$ and $c_2DU(U+D)\ne0$. With
+$\lambda=(h+e)/(2c_2)$, $\mu=(h-e)/(2c_2)$,
+$T=A_0[(1,\lambda)^T,(1,\mu)^T]$ and $K=T^{-1}A_0T$,
+the identities are $\det T=e$, $LT=(1,1)$,
+$(A_1A_0^{-1})T=T\operatorname{diag}(\lambda,\mu)$,
+$\det K=-c_2$, $ut=c_2U/D$ and $vw=c_2(U+D)/D$.
+All four entries $u,v,w,t$ and $\delta=-e/c_2$ are nonzero.
+
+Set $\rho=-c_2/(\delta uv)$, $S=T\operatorname{diag}(1,\rho)$,
+$z=-c_2/(\delta u^2)$, $\alpha=\delta vw/(-c_2)$,
+$a=\lambda-\alpha$. The native sector is $(\lambda,\mu,a)$;
+$\beta=\mu-a=\delta ut/(-c_2)$ and $\beta-\alpha=\delta$.
+The bridge retains the existing native $G,B$ and proves
+$A_iS=uS\,\mathrm{core}_{\mathrm{native},i}$. The Schur cross
+factor $1+\bar\lambda\mu\ne0$ is a separate condition for native
+regularity; distinct eigenvalues alone do not supply it.
+For every natural length $N$ and arbitrary original right boundary $R$,
+the complete raw state is unchanged under
+$l=LS=(1,\rho)$ and $r=u^NS^{-1}R$.
+The actual native normalizer with rows $lG,lBG$ is $S/u$;
+$lK_l^{-1}=uL$, whose second entry recovers $u$. Canonicalization
+at this scalar returns both original cores, $L$ and $R$ exactly.
+
+The same supplier starts from the actual native matrices
+$G=\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$,
+$B=\operatorname{diag}(2,0)$, $l=(1,1)$, $r=(1,i)$.
+Its normalizer is $\left(\begin{smallmatrix}2&0\\2&2\end{smallmatrix}\right)$,
+with inverse $\left(\begin{smallmatrix}1/2&0\\-1/2&1/2\end{smallmatrix}\right)$.
+Thus $lK_l^{-1}=(0,1/2)$ and its second entry recovers the canonical scalar
+$1/2$. This is the numerical application of `canonicalization_inverse` to
+the same witness. The general normalizer proof directly reuses the original
+`OpenBoundaryMPSTwoSiteMinimality.normalized_rows` at $(c,0,0)$.
+Canonicalization gives
+$c_*=(0,0,1/2,0,1)$, $R=2^N(1,1+i)$, $\sigma=4^N$,
+$\eta=1+i$. At $e=1$ extraction returns the same native sector
+$(2,0,1)$, $z=1$, $l=(1,1)$ and $r=(1,i)$.
+Using only the raw boundary $(1,\eta)$ instead gives $2^{-N}(1,i)$.
+Here $D=1$, $U=-1/2$, $U+D=1/2$ and the cross factor equals one.
+The canonical quotient's existing `positiveBoundary` restores exactly the
+same full scalar boundary. The C8 attribution and CC BY 4.0 license are
+unchanged. This is a reusable inverse supplier, with no dimension-fourteen
+assumption, arbitrary polynomial restriction, norm-field argument, genericity
+proof, positive-environment extension or actual-image density claim.
+Full C9 remains open and this unit earns zero solved-open-problem credit.
+
+
+## Lengthwise canonical spectral exclusion with actual ambiguity
+
+For every fixed pair of positive lengths $p,q$, put $N=(p+2)+q$.
+`InteriorSpectralCoordinates.native_coordinates` supplies sixteen literal
+REAL15 numerator/denominator pairs for the actual native sector, left boundary,
+right boundary $u^NS^{-1}(1,\eta)$ and $z$. The first two variables are
+$\operatorname{Re}e,\operatorname{Im}e$; the remaining thirteen retain the
+existing canonical order. Every inverse guard follows from $e^2=D$ and
+$c_2DU(U+D)\ne0$, including in helpers at $N=0$. The existing
+`Q2PolynomialFiber.clear_polynomial`, with arbitrary independent denominators,
+gives real polynomials $H,B$ and the exact physical equality $b=H/B$, with
+$B\ne0$ there. No complex rational-function clearing statement is assumed.
+
+The division-free cross numerator is
+$C_\times=4c_2\bar c_2+(\bar h+f)(h-e)$, where $h=c_4-c_1$,
+$e=X+iY$ and $f=X-iY$. At physical points it equals
+$4\lVert c_2\rVert^2(1+\bar\lambda\mu)$.
+Reduce $H(\operatorname{ReCoeff}C_\times^2+
+\operatorname{ImCoeff}C_\times^2)$, with the squares taken after each
+coefficient projection, by the literal finite MX/MY monomial sum to
+$g_0+g_1X+g_2Y+g_3r$. `g_evaluation` proves the actual REAL15 evaluation
+identity with $r=\operatorname{normSq}(e)$.
+
+For $A=\operatorname{ReCoeff}D$, $B=\operatorname{ImCoeff}D$ and
+$Q=A^2+B^2$, define
+$K_0=g_0^2+Qg_3^2-\tfrac12 A(g_1^2-g_2^2)-Bg_1g_2$,
+$H_0=2g_0g_3-\tfrac12(g_1^2+g_2^2)$ and
+$\mathrm{normg}=K_0^2-QH_0^2$. Polynomial halves are $C(1/2)$.
+The consumed character identity pairs the simultaneous opposite signs:
+$h(E,F)h(-E,-F)=K_0+H_0EF$ and
+$h(-E,F)h(E,-F)=K_0-H_0EF$, with $E^2=A+iB$, $F^2=A-iB$.
+
+`InteriorSpectralWitness.normg_nonzero` uses the free COMPLEX13 map with
+$c_3=-c_2\lambda\mu$, $c_4=c_1+c_2(\lambda+\mu)$ and an independent
+barred copy. Swapping $\lambda,\mu$ and independently swapping the barred
+pair fixes every mapped canonical coordinate and flips the two roots
+independently. The original physical witness proves one free character
+nonzero using actual real clearing and `b_right_scale`. The polynomial-domain
+orbit product proves the norm polynomial nonzero. Neither injectivity of the
+base map nor nonvanishing of the norm at that physical witness is assumed.
+
+Set $J_{\rm den}=\lVert c_2DU(U+D)\rVert^2$ and
+$W=c_2\eta^2+(c_1-c_4)\eta-c_3$. The literal REAL13 certificate is
+$P_{p,q}=\sigma J_{\rm den}\lVert W\rVert^2\mathrm{normg}$.
+At the existing physical witness $J_{\rm den}=1/64$ and $W=-1$;
+the free orbit supplies the independent norm factor.
+`P_nonzero` proves $P_{p,q}\ne0$. `certificate_native` proves that
+$P_{p,q}(x)\ne0$ and $\sigma(x)>0$ supply Admissible, Regular and actual
+native $b\ne0$ for every root branch. The exact quartic scaling law restores
+$\sqrt\sigma$; no first-entry nonzero condition on the native right is used.
+
+`InteriorSpectralEnvironments.native_environment_transport` proves the left
+transport $a^{-p}S^\dagger L_pS$ and the bare right transport
+$(a^N/a^q)S^{-1}R_q(S^{-1})^\dagger$, where $a=\operatorname{normSq}(u)>0$.
+The actual right target is its outside $G^2$ congruence. The original
+`InteriorGenericity.positive_iterates` is exposed with its body unchanged
+and consumed to prove BOTH true native target matrices PosDef.
+`InteriorSpectralAmbiguity.canonical_exclusion_actual_ambiguity` combines the
+nonzero certificate and the genuine public `nonzero_locus_actual_ambiguity`
+consumer. At each such canonical point it produces a nonzero actual MPS with
+the same entire raw two-site interior and no unit-phase relation, retaining
+the complete $u^N$ boundary factor through `raw_amplitude`.
+
+This canonical supplier proves length-dependent parameter exclusion and pointwise
+actual ambiguity. Downstream `InteriorSpectralAmbiguity.observed_interior_ambiguity`
+supplies the observed descent and entire-actual-image density below. Full C9 remains
+open and solved-open-problem KPI is zero.
+The existing C8 attribution and license are unchanged. New and exposed Reg
+attempts require native audit readout; compilation alone does not assert
+`declared_validated`, and unfinished evidence remains under issue #30422.
+
+
+`InteriorSpectralAmbiguity.observed_interior_ambiguity` descends the SAME
+substantive spectral exclusion unit to the literal actual image. Fix $m\ge1$,
+$N=3+m$, and $i\in\operatorname{Fin}(m)$. Put
+$p_i=i+1$, $q_i=m-i$, and clear the nonzero canonical certificate
+$P_{p_i,q_i}$ through the original quotient numerator and denominator families:
+$P_{p_i,q_i}(x(Q))=H_i(y(Q))/B_i(y(Q))$ on $\rho_m(Q)\ne0$.
+Here $y$ consists of the real and imaginary entries of the complete prefix $Q_3$,
+so $\Omega=(\mathrm{Word}_3\times\mathrm{Word}_3)\sqcup
+(\mathrm{Word}_3\times\mathrm{Word}_3)$ and the literal real polynomial is
+$R_m=\rho_m\prod_i H_i\in\mathbb R[\Omega]$.
+
+The nonzero product $\prod_i P_{p_i,q_i}$ has a real evaluation witness by
+polynomial function extensionality. Its dense nonzero locus intersects the
+EXISTING open nonempty `quotientValidityDomain m` at one common $x$.
+The positive representative gives an actual state $\psi_x$ of length $N$;
+quotient retraction recovers $x$, actual denominators and every $B_i$ are
+nonzero, and clearing makes every $H_i(y(Q_3(\psi_x)))$ nonzero. Thus
+$R_m(y(Q_3(\psi_x)))\ne0$, a genuine ACTUAL evaluation witness, before applying
+`actual_principal_genericity` once. The resulting `actualPrincipalLocus m R`
+is nonempty, relatively open, dense in the entire literal
+`openBoundaryMPS (3+m)` subtype, and $U(1)$ saturated. No image-openness or
+Zariski-closure substitute is used. The live `normg_nonzero` proof supplies
+$P_{p_i,q_i}\ne0$ through `P_nonzero`; the finite product is organization of
+that substantive exclusion result, not an independent novelty claim.
+
+For every target $\psi$ in this locus, every $p,q\ge1$ with $p+q=m+1$, and
+every exact length equality $h:((p+2)+q)=3+m$, there is a nonzero $\phi$ in the
+SAME actual image with
+$\mathrm{rawInterior}_{p,2,q}(\mathrm{castState}_h\phi)=
+\mathrm{rawInterior}_{p,2,q}(\mathrm{castState}_h\psi)$ and no unit phase
+$\phi=\eta\psi$. Only the target is restricted to the locus. The competitor
+has no chart, `Regular`, or locus premise and may depend on the window.
+The proof takes the target's positive quotient representative modulo unit
+phase, uses clearing to recover the appropriate $P_{p,q}\ne0$, chooses a
+complex root $e^2=D$ using `IsAlgClosed.exists_pow_nat_eq`, and invokes the
+actual canonical ambiguity supplier. Exact length casts and the SAME unit
+scalar transport its nonzero competitor and its complete raw observation;
+nonzero scalar cancellation proves the nonphase assertion. The native right
+still contains $u^N$ and the physical $\sqrt\sigma$.
+
+This includes $m=1$, $N=4$, with $p=q=1$. It does not assert a common competitor
+for all windows or one in every neighborhood. The $N=3$ boundary-only case,
+right reversal, one-site partial-trace adapters, full window composition and
+normalized readings remain separate obligations. Full C9 is open; the
+solved-open-problem KPI remains zero. Scoped kernel verification does not
+constitute freezing or independent acceptance.
+
+
+## Raw all-window settlement candidate
+
+`OpenBoundaryMPSAllWindowC9.result` composes the existing suppliers into one
+raw actual-image statement for every $N=3+m\ge3$. A single nonzero real
+polynomial in ALL real and imaginary full-state amplitudes defines a nonempty,
+relatively open dense $U(1)$-saturated locus in the ENTIRE literal actual MPS
+image. Every target there is nonzero. Every separate adjacent three-site raw
+marginal determines that target up to unit phase against arbitrary actual
+competitors. Each separate two-site and one-site window has a possibly
+different actual nonzero nonphase competitor preserving its complete raw
+marginal. Every exterior split and every exact length cast is quantified.
+
+Ordinary transpose with swapped original boundaries makes word reversal an
+actual-image homeomorphism. Intersect the prefix recovery and Q2 loci, the
+interior loci only in their valid length ranges, and the two reversed prefix
+loci. One common ACTUAL point of these dense open sets proves nonzero
+evaluation of the literal full-amplitude polynomial, constructed by complete
+Q3 quadratic substitution and reversal of amplitude indices. Boundary Q2
+witnesses are chosen in the open nonzero neighborhood of the nonzero target;
+partial traces retain the same pair witness for each site. No spectral,
+root, norm or genericity supplier is re-proved.
+
+This is a sufficient strengthening of the pre-probe raw $N\ge4$ prefix
+recovery and no-fewer target in issue #30422. $N\ge3$ and the explicit
+real-principal genericity convention are formal strengthening choices, not
+quoted author wording. The candidate's conservative proof shape is bind-only;
+its candidate admission basis is open-problem-resolution. The matching Scribe
+and `Problems/critch-morton-2014-open-boundary-mps-raw-c9.md` describe only that
+raw settlement candidate. The bounded literature check found no exact C9
+settlement in its accessible searched scope; this is no priority or uniqueness
+certificate. Independent caller fidelity review, required checks, freezing and
+publication remain separate. Global C9 status stays OPEN and solved-open-problem
+KPI stays zero until caller verification. No normalized-state, joint-marginal,
+closure-only, dynamics or thermodynamic conclusion is asserted. Original
+supplier attributions and licenses are unchanged; the new whole-source Reg
+attempt has no source-selection certificate and claims no native validation.
+
+`OpenBoundaryMPSNormalizedC9.result` supplies the physical-mass-one consequence of the raw all-window supplier. For every natural $m$, including zero, let $N=3+m$ and
+$$
+M(\psi)=\sum_{w\in\{0,1\}^N}|\psi_w|^2,
+\qquad S_N=\{\psi\in\mathrm{OB}(2,2,N):M(\psi)=1\}.
+$$
+This uses the actual free-boundary image and its induced topology. It does not use the default Pi sup norm. If $P$ is the real polynomial on all real and imaginary amplitude coordinates supplied by `OpenBoundaryMPSAllWindowC9.result`, write $P_d$ for its degree-$d$ homogeneous component and set
+$$
+H=\sum_{d=0}^{\deg P}P_d^2.
+$$
+The theorem retains literal nonzero real polynomials $P,H$. The locus $G_N=\{\psi\in S_N:H(\operatorname{Re}\psi,\operatorname{Im}\psi)\ne0\}$ is nonempty, relatively open, dense and $U(1)$-saturated. For every target in this same locus, every $p,q\in\mathbb N$ with $p+q=m$, and every length equality $(p+3)+q=N$, equality of the individual three-site `rawInterior p 3 q` observation with an arbitrary actual mass-one competitor is equivalent to a unit-phase relation. For each $p+q=m+1$, every individual two-site window admits an actual mass-one competitor with the same observation and no phase relation; the corresponding assertion holds separately for each one-site window with $p+q=m+2$. Each competitor may depend on the window. All equality casts, zero-length exteriors and the case $N=3$ remain in scope.
+
+The new normalization argument uses the finite coefficient polynomial $F_x(T)=\sum_d P_d(x)T^d=P(Tx)$. Homogeneous evaluation, coefficient extraction, the real sum-of-squares criterion and the univariate infinite-root theorem prove
+$$
+H(x)\ne0\quad\Longleftrightarrow\quad
+\exists t>0,\ P(tx)\ne0.
+$$
+This algebraic statement includes $P=0$, constants, empty variable carriers and $x=0$; no homogeneity of $P$ or $H$ is assumed. Taking $t=1$ embeds the old dense locus in the positive-ray saturation. A continuous normalization retraction $\psi\mapsto\psi/\sqrt{M(\psi)}$ on the open positive-mass actual subtype transports density to $S_N$. The old raw phase saturation, together with the ray characterization and commuting scalar actions, gives phase saturation of $G_N$.
+
+For every window and its exact length cast, the proof establishes scalar degree two and $\operatorname{tr}(Q_k(\psi))=M(\psi)$. Equal same-window observations therefore have equal physical mass. For a target in $G_N$, choose $t>0$ reaching the raw $P$ locus. Apply the raw theorem at $t\psi$, scale each ambiguity witness back by $t^{-1}$, and use trace equality to retain that same witness on $S_N$. Recovery scales every arbitrary mass-one competitor by the same $t$ and cancels it. This supplies no joint-window ambiguity witness, neighborhood upgrade, stability, dynamics, time group, energy, physical clock or thermodynamic statement. All upstream attribution, including the Ma–Zhang Conjecture 8 supplier under CC BY 4.0, remains in force. The normalized result completes the same preregistered physical C9 reading with both states normalized under #30422: it is an AdditionalMember of the single existing claim hosted by `OpenBoundaryMPSAllWindowC9.result` in the same Problems dossier. Its conservative proof shape is bind-only and candidate admission basis is open-problem-resolution; no escape witness, independent priority or second problem credit is asserted. Normalization alone establishes no global C9 novelty or official resolution: caller scope verification and publication remain outstanding, C9 is OPEN, and the solved-open-problem KPI increment is zero. The normalized result's full-telescope Reg attempt is `declared_unresolved`, IE-C050 ClosedTruthReadout, rule `source.selection_missing`. The newly public `OpenBoundaryMPSDensityGenericity.continuous_realCoordinates` separately lacks owner-mirror registration evidence under the same #30422 disclosure route. Neither unfinished audit claims `declared_validated`.

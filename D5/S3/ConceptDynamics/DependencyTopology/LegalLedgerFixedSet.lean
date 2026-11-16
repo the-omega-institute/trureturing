@@ -199,7 +199,7 @@ theorem addWithCertificate_admissible (p : P) (C : Certificate k p) :
     exact ⟨fun _ h => h, fun _ _ h => h, fun _ _ _ => rfl⟩
   · simpa only [addWithCertificate, if_neg hp] using appendCertificate_extends L C.val
 
-private theorem frozen_proved (L : LegalLedger k) {p : P} (hp : p ∈ Frozen L) :
+theorem frozen_proved (L : LegalLedger k) {p : P} (hp : p ∈ Frozen L) :
     Proved k p :=
   ⟨L.core.witness ⟨p, hp⟩, L.core.property.1 ⟨p, hp⟩, L.core.property.2.1 ⟨p, hp⟩⟩
 
