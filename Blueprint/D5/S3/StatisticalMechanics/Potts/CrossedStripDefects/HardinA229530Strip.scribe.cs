@@ -76,7 +76,7 @@ internal sealed class HardinA229530StripDocument : IScribeDocumentDefinition
     private static Formula AsInt(Formula value) => Parenthesized(Seq(value, Colon, Sp, Call("Int")));
 
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
-    private static Formula Fin(int n) => Call("Fin", Num(n.ToString()));
+    private static Formula Fin(int n) => Call("Fin", Num(n.ToString(System.Globalization.CultureInfo.InvariantCulture)));
     private static Formula RowType() => Arrow(Fin(4), Fin(3));
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);

@@ -20,7 +20,7 @@ internal sealed class HardinA229531StripClass10Document : IScribeDocumentDefinit
     private static Formula Call(string name, params Formula[] args) => args.Length == 0 ? Q(name) : new Formula.Apply(Q(name), [.. args]);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
-    private static Formula Fin(int size) => Call("Fin", Num(size.ToString()));
+    private static Formula Fin(int size) => Call("Fin", Num(size.ToString(System.Globalization.CultureInfo.InvariantCulture)));
     private static Formula RowType() => new Formula.TypeArrow(Fin(5), Fin(3));
     private static Formula All(string n, Formula type, Formula body) => Seq(Forall, Sp, V(n), Colon, Sp, type, Comma, Sp, Parenthesized(body));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);

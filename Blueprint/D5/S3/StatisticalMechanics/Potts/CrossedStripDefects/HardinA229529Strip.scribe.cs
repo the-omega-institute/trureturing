@@ -72,11 +72,11 @@ internal sealed class HardinA229529StripDocument : IScribeDocumentDefinition
     private static Formula AsInt(Formula value) => Parenthesized(Seq(value, Colon, Sp, Call("Int")));
 
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
-    private static Formula Fin(int n) => Call("Fin", Num(n.ToString()));
+    private static Formula Fin(int n) => Call("Fin", Num(n.ToString(System.Globalization.CultureInfo.InvariantCulture)));
     private static Formula RowType() => Arrow(Fin(3), Fin(3));
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
-    private static Formula Or(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Lor, Sp, Parenthesized(b));
+
+
     private static Formula Conditional(Formula test, Formula yes, Formula no) => Parenthesized(
         Seq(Call("if"), Sp, Parenthesized(test), Sp, Call("then"), Sp, Parenthesized(yes), Sp, Call("else"), Sp, Parenthesized(no)));
     private static Formula Vector(params Formula[] entries) => Seq(new Formula[] { Bang, OpenBracket }
