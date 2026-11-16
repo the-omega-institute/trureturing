@@ -46,6 +46,10 @@ $$\forall (delta: \mathbb{R}), (0 \le delta \Rightarrow (delta < 1 \Rightarrow \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/AbedNikolaevaNovikovItemSix.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ann-item-six` (proved) by `D5/S3/Quantum/Matrix/AbedNikolaevaNovikovItemSix.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ann-item-six","declaration_gid":"D5/S3/Quantum/Matrix/AbedNikolaevaNovikovItemSix.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sami Abdullah Abed; Irina Nikolaeva; Andrej Novikov (2026). *How characterisations of traces and central elements fail: sharp violation constants via Michelson contrast and noncentrality*. DOI: [10.48550/arXiv.2610.34388](https://doi.org/10.48550/arXiv.2610.34388). URL: <https://arxiv.org/abs/2610.34388v1>.
