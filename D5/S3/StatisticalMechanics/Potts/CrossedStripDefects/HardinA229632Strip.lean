@@ -111,8 +111,8 @@ private theorem finite_certificate :
       cl r (2 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) ∧
     (W 0 = initial ∧ ∀ i : Fin 7, W i.succ = Matrix.vecMul (W i.castSucc) T) ∧
     W 7 = ∑ j : Fin 6, (![-8, 60, -162, 185, -81, 15] j : ℤ) • W ⟨1 + j.val, by omega⟩ := by
-  refine ⟨by decide +kernel, by decide +kernel, ?_, by decide +kernel, ?_,
-    by decide +kernel, by decide +kernel⟩
+  refine ⟨by decide +kernel, by decide +kernel, ?_, by decide +kernel, ?_, ?_,
+    by decide +kernel⟩
   · have valid_cut : ∀ p (d : Fin 3), Valid p d.val → 0 < d.val →
         HardinA229529Strip.Valid p (d.val - 1) := by decide +kernel
     have active_cut : ∀ (p r : Row) (d : Fin 3) (j : Fin 5),
@@ -182,6 +182,37 @@ private theorem finite_certificate :
       simp_rw [initial_cut _ j]
       exact (HardinA229529Strip.finite_certificate.2.2.2.2.1 j).trans (initial_table j)
     · exact remaining s (by omega)
+  · have zero_cut : ∀ j : Fin 5,
+        W 0 (j.castAdd 4) = HardinA229529Strip.W 0 j ∧
+        initial (j.castAdd 4) = HardinA229529Strip.initial j := by decide +kernel
+    have zero_remaining : ∀ s : Fin 9, 5 ≤ s.val →
+        W 0 s = initial s := by decide +kernel
+    have step_cut : ∀ (i : Fin 5) (j : Fin 5),
+        W (i.succ.castAdd 2) (j.castAdd 4) = HardinA229529Strip.W i.succ j ∧
+        Matrix.vecMul (W (i.castSucc.castAdd 2)) T (j.castAdd 4) =
+          Matrix.vecMul (HardinA229529Strip.W i.castSucc) HardinA229529Strip.T j := by decide +kernel
+    have step_remaining : ∀ (i : Fin 7) (s : Fin 9),
+        ¬ (i.val < 5 ∧ s.val < 5) →
+        W i.succ s = Matrix.vecMul (W i.castSucc) T s := by decide +kernel
+    constructor
+    · funext s
+      by_cases hs : s.val < 5
+      · let j : Fin 5 := ⟨s.val, hs⟩
+        have he : s = j.castAdd 4 := rfl
+        rw [he, (zero_cut j).1, (zero_cut j).2]
+        exact congrFun HardinA229529Strip.finite_certificate.2.2.2.2.2.1.1 j
+      · exact zero_remaining s (by omega)
+    · intro i
+      funext s
+      by_cases hs : i.val < 5 ∧ s.val < 5
+      · let k : Fin 5 := ⟨i.val, hs.1⟩
+        let j : Fin 5 := ⟨s.val, hs.2⟩
+        have he : s = j.castAdd 4 := rfl
+        have h0 : i.castSucc = k.castSucc.castAdd 2 := rfl
+        have h1 : i.succ = k.succ.castAdd 2 := rfl
+        rw [he, h0, h1, (step_cut k j).1, (step_cut k j).2]
+        exact congrFun (HardinA229529Strip.finite_certificate.2.2.2.2.2.1.2 k) j
+      · exact step_remaining i s hs
 
 attribute [local irreducible] a
 

@@ -15,6 +15,7 @@ transition_counts: proof_shape=bind-only; consumers=HardinA229531Strip.result
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripData
 
 /-! The exact successor count for target class 3. -/
+open D5.S3.Combinatorics.TraceAvoidingArrays
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripClass3
 open HardinA229531StripData
@@ -25,15 +26,26 @@ theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val →
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 3
       then (1 : ℤ) else 0) = T (cl p d.val) 3 := by
+  have cut : ∀ (p r : Row) (d : Fin 2),
+      HardinThinGraphTransport.proper p ∧ d.val = 1 →
+      ((bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+        cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 3) ↔
+        HardinThinGraphTransport.proper r ∧ HardinThinGraphTransport.compatible true p r ∧
+          HardinA233126SquareStrip.boundaryClass (true, true) r = 4) := by decide +kernel
+  have table : ∀ p (d : Fin 2),
+      HardinThinGraphTransport.proper p ∧ d.val = 1 →
+      HardinA233171DiagonalStrip.transfer
+        (HardinA233126SquareStrip.boundaryClass (true, true) p) 4 / 32 =
+          T (cl p d.val) 3 := by decide +kernel
   have remaining : ∀ p (d : Fin 2), Valid p d.val →
-      ¬ (D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport.proper p ∧
-        d.val = 1) →
+      ¬ (HardinThinGraphTransport.proper p ∧ d.val = 1) →
       (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
         cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 3
         then (1 : ℤ) else 0) = T (cl p d.val) 3 := by decide +kernel
   intro p d hp
-  by_cases hz : D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport.proper p ∧
-      d.val = 1
-  · exact inherited_transition_counts p d ⟨3, by omega⟩ ⟨hz.1, by omega⟩
+  by_cases hz : HardinThinGraphTransport.proper p ∧ d.val = 1
+  · simp_rw [cut p _ d hz]
+    have h := raw_successors p hz.1 4
+    exact (Int.eq_ediv_of_mul_eq_right (by decide) h).trans (table p d hz)
   · exact remaining p d hp hz
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripClass3

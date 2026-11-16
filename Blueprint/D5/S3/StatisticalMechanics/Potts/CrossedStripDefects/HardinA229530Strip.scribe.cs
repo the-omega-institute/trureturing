@@ -8,7 +8,7 @@ internal sealed class HardinA229530StripDocument : IScribeDocumentDefinition
     private const string Note = "D5/L/SpinModels/hardin2013a229530";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal HDA colourings and exact defect transfer.", H("Hardin A229530: exact defect recurrence"),
-        Blocks(Paragraph(Text("The literal array has n rows, 4 columns and exactly 1 monochromatic HDA bonds. Rows are swept by an exact-budget transfer with 10 equality-and-budget classes, identifying reflection. Every proper-row diagonal block calls the published zero-temperature owner. Finite certificates check the exact image and every defect entry.")),
+        Blocks(Paragraph(Text("The literal array has n rows, 4 columns and exactly 1 monochromatic HDA bonds. Rows are swept by an exact-budget transfer with 10 equality-and-budget classes, identifying reflection. Every proper-row diagonal block calls the published zero-temperature owner. The frozen four_class_certificate supplies proper transitions through scanner_fibres at saturated Seen flags, an exact budget/class cut and division by sixteen. The remaining defective-source and defect-consuming entries are computed separately.")),
             Describe.Lean(DescribeId.Create("shared-between"), DeclarationHandle.Create(Prefix + "between"),
                 H("Shared between"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note)),

@@ -179,7 +179,8 @@ theorem finite_certificate :
           ⟨s.val % 3 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 3); omega⟩
         then (1 : ℤ) else 0) =
         HardinSourceContinuations.M (HardinSourceContinuations.sourceClass (true, true) p)
-          ⟨s.val % 3 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 3); omega⟩ / 16 := by omega
+          ⟨s.val % 3 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 3); omega⟩ / 16 := by
+      exact Int.eq_ediv_of_mul_eq_right (by decide) h
     exact hd.trans (table p d s hz)
   · exact remaining p d hp s hz
 

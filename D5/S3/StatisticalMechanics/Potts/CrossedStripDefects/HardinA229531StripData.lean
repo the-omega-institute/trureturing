@@ -9,8 +9,7 @@
 /-
 admission_basis: open-problem-resolution (#31121; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229531Strip.result)
-raw_successors: proof_shape=bind-only; consumers=inherited_transition_counts
-inherited_transition_counts: proof_shape=bind-only; consumers=HardinA229531StripClass0.transition_counts through HardinA229531StripClass11.transition_counts
+raw_successors: proof_shape=bind-only; consumers=HardinA229531StripClass0.transition_counts through HardinA229531StripClass11.transition_counts
 Row: proof_shape=bind-only; consumers=HardinA229531Strip.result
 horizontal: proof_shape=bind-only; consumers=HardinA229531Strip.result
 between: proof_shape=bind-only; consumers=HardinA229531Strip.result
@@ -23,6 +22,7 @@ terminal: proof_shape=bind-only; consumers=HardinA229531Strip.result
 W: proof_shape=bind-only; consumers=HardinA229531Strip.result
 -/
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import Mathlib.Data.Matrix.Block
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233171DiagonalStrip
@@ -109,7 +109,8 @@ set_option maxHeartbeats 0
 set_option Elab.async false
 open HardinA233255LiteralBridge (rowWeight rowFinish)
 
-private theorem raw_successors (p : Fin 5 → Fin 3) (hp : HardinThinGraphTransport.proper p) (j : Fin 7) :
+/-- The proper successor counts supplied by the frozen saturated scanner certificate. -/
+theorem raw_successors (p : Fin 5 → Fin 3) (hp : HardinThinGraphTransport.proper p) (j : Fin 7) :
     32 * (∑ q : Fin 5 → Fin 3,
       if HardinThinGraphTransport.proper q ∧ HardinThinGraphTransport.compatible true p q ∧
         HardinA233126SquareStrip.boundaryClass (true, true) q = j then (1 : ℤ) else 0) =
@@ -125,40 +126,5 @@ private theorem raw_successors (p : Fin 5 → Fin 3) (hp : HardinThinGraphTransp
   rw [← Finset.mul_sum] at h
   exact h.symm.trans ht
 
-/-- The inherited proper diagonal sectors, through the exact thirty-two-fold fibre map. -/
-theorem inherited_transition_counts (p : Row) (d : Fin 2) (s : Fin 12)
-    (hz : HardinThinGraphTransport.proper p ∧
-      ((d.val = 1 ∧ s.val < 6) ∨ (d.val = 0 ∧ 6 ≤ s.val))) :
-    (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
-      cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s.castAdd 8
-      then (1 : ℤ) else 0) = T (cl p d.val) (s.castAdd 8) := by
-  have cut : ∀ (p r : Row) (d : Fin 2) (s : Fin 12),
-      HardinThinGraphTransport.proper p ∧
-        ((d.val = 1 ∧ s.val < 6) ∨ (d.val = 0 ∧ 6 ≤ s.val)) →
-      ((bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
-        cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s.castAdd 8) ↔
-        HardinThinGraphTransport.proper r ∧ HardinThinGraphTransport.compatible true p r ∧
-          HardinA233126SquareStrip.boundaryClass (true, true) r =
-            ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩) := by
-    decide +kernel
-  have table : ∀ p (d : Fin 2) (s : Fin 12),
-      HardinThinGraphTransport.proper p ∧
-        ((d.val = 1 ∧ s.val < 6) ∨ (d.val = 0 ∧ 6 ≤ s.val)) →
-      HardinA233171DiagonalStrip.transfer
-        (HardinA233126SquareStrip.boundaryClass (true, true) p)
-        ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩ / 32 =
-          T (cl p d.val) (s.castAdd 8) := by decide +kernel
-  simp_rw [cut p _ d s hz]
-  have h := raw_successors p hz.1
-    ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩
-  have hd : (∑ r : Row, if HardinThinGraphTransport.proper r ∧
-      HardinThinGraphTransport.compatible true p r ∧
-      HardinA233126SquareStrip.boundaryClass (true, true) r =
-        ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩
-      then (1 : ℤ) else 0) =
-      HardinA233171DiagonalStrip.transfer
-        (HardinA233126SquareStrip.boundaryClass (true, true) p)
-        ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩ / 32 := by omega
-  exact hd.trans (table p d s hz)
 
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripData
