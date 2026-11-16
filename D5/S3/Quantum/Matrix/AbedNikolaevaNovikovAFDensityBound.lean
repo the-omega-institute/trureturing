@@ -177,7 +177,7 @@ theorem accretive_le_card_abs (A B : Matrix ι ι ℂ) (hA : A.PosSemidef)
   · exact ((hP.isHermitian.smul (isSelfAdjoint_iff.mpr rfl :
       IsSelfAdjoint (Fintype.card ι : ℝ))).sub hA.isHermitian).im_star_dotProduct_mulVec_self x
 
-private lemma trace_pair_pos (rho P : Matrix ι ι ℂ) (hr : rho.PosDef)
+lemma trace_pair_pos (rho P : Matrix ι ι ℂ) (hr : rho.PosDef)
     (hP : P.PosSemidef) (hne : P ≠ 0) : 0 < (bornProbability rho P).re := by
   have hn := RHLinalg.trace_mul_nonneg_of_posSemidef hr.posSemidef hP
   apply lt_of_le_of_ne hn
