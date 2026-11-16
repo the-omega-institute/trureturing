@@ -106,7 +106,10 @@ private theorem finite_certificate :
       cl r (1 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) ∧
     (W 0 = initial ∧ ∀ i : Fin 8, W i.succ = Matrix.vecMul (W i.castSucc) T) ∧
     W 8 = ∑ j : Fin 6, (![-4, 16, -4, -28, -1, 6] j : ℤ) • W ⟨2 + j.val, by omega⟩ := by
-  refine ⟨by decide +kernel, by decide +kernel, ?_, by decide +kernel, ?_,
+  refine ⟨by decide +kernel, (by
+    intro p d hp r hr
+    dsimp only [Valid] at hp ⊢
+    omega), ?_, by decide +kernel, ?_,
     by decide +kernel, by decide +kernel⟩
   · have cut : ∀ (p r : Row) (d : Fin 2) (s : Fin 8),
         ((d.val = 1 ∧ s.val < 4) ∨ (d.val = 0 ∧ 4 ≤ s.val)) →

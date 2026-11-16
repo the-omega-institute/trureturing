@@ -98,7 +98,10 @@ theorem finite_certificate :
       cl r (1 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) ∧
     (W 0 = initial ∧ ∀ i : Fin 5, W i.succ = Matrix.vecMul (W i.castSucc) T) ∧
     W 5 = ∑ j : Fin 4, (![-4, 20, -29, 10] j : ℤ) • W ⟨1 + j.val, by omega⟩ := by
-  refine ⟨by decide +kernel, by decide +kernel, ?_, by decide +kernel,
+  refine ⟨by decide +kernel, (by
+    intro p d hp r hr
+    dsimp only [Valid] at hp ⊢
+    omega), ?_, by decide +kernel,
     by decide +kernel, by decide +kernel, by decide +kernel⟩
   have cut : ∀ p (d : Fin 2), Valid p d.val → ∀ s : Fin 5,
       (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧

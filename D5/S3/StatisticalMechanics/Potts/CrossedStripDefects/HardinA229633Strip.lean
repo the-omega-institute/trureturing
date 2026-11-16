@@ -129,7 +129,10 @@ private theorem finite_certificate :
       cl r (2 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) ∧
     (W 0 = initial ∧ ∀ i : Fin 10, W i.succ = Matrix.vecMul (W i.castSucc) T) ∧
     W 10 = ∑ j : Fin 6, (![-64, 336, -636, 511, -159, 21] j : ℤ) • W ⟨4 + j.val, by omega⟩ := by
-  refine ⟨by decide +kernel, by decide +kernel, ?_, by decide +kernel, ?_, ?_,
+  refine ⟨by decide +kernel, (by
+    intro p d hp r hr
+    dsimp only [Valid] at hp ⊢
+    omega), ?_, by decide +kernel, ?_, ?_,
     by decide +kernel⟩
   · have valid_cut : ∀ p (d : Fin 3), Valid p d.val → 0 < d.val →
         HardinA229530Strip.Valid p (d.val - 1) := by decide +kernel
@@ -162,7 +165,10 @@ private theorem finite_certificate :
           cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s) ↔
           HardinThinGraphTransport.proper r ∧ HardinThinGraphTransport.compatible true p r ∧
           HardinSourceContinuations.sourceClass (true, true) r =
-            ⟨s.val - 10 + 1, by omega⟩ := by decide +kernel
+            ⟨s.val - 10 + 1, by omega⟩ := by intro p
+      generalize h0 : p 0 = c0
+      generalize h1 : p 1 = c1
+      fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
     have zero_table : ∀ p (d : Fin 3) (s : Fin 19)
         (hz : HardinThinGraphTransport.proper p ∧ d.val = 0 ∧ 10 ≤ s.val ∧ s.val < 13),
         HardinSourceContinuations.M (HardinSourceContinuations.sourceClass (true, true) p)
@@ -172,7 +178,11 @@ private theorem finite_certificate :
         ¬ (HardinThinGraphTransport.proper p ∧ d.val = 0 ∧ 10 ≤ s.val ∧ s.val < 13) →
         (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
           cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s
-          then (1 : ℤ) else 0) = T (cl p d.val) s := by decide +kernel
+          then (1 : ℤ) else 0) = T (cl p d.val) s := by
+      intro p
+      generalize h0 : p 0 = c0
+      generalize h1 : p 1 = c1
+      fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
     intro p d hp s
     by_cases ha : 0 < d.val ∧ s.val < 10
     · let j : Fin 10 := ⟨s.val, ha.2⟩

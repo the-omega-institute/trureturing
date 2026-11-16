@@ -144,7 +144,10 @@ theorem finite_certificate :
       cl r (1 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) ∧
     (W 0 = initial ∧ ∀ i : Fin 6, W i.succ = Matrix.vecMul (W i.castSucc) T) ∧
     W 6 = ∑ j : Fin 4, (![-16, 56, -57, 14] j : ℤ) • W ⟨2 + j.val, by omega⟩ := by
-  refine ⟨by decide +kernel, by decide +kernel, ?_, by decide +kernel,
+  refine ⟨by decide +kernel, (by
+    intro p d hp r hr
+    dsimp only [Valid] at hp ⊢
+    omega), ?_, by decide +kernel,
     by decide +kernel, by decide +kernel, by decide +kernel⟩
   have cut : ∀ (p r : Row) (d : Fin 2) (s : Fin 10),
       HardinThinGraphTransport.proper p ∧
@@ -154,7 +157,10 @@ theorem finite_certificate :
         HardinThinGraphTransport.proper r ∧ HardinThinGraphTransport.compatible true p r ∧
           HardinSourceContinuations.sourceClass (true, true) r =
             ⟨s.val % 3 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 3); omega⟩) := by
-    decide +kernel
+    intro p
+    generalize h0 : p 0 = c0
+    generalize h1 : p 1 = c1
+    fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
   have table : ∀ p (d : Fin 2) (s : Fin 10),
       HardinThinGraphTransport.proper p ∧
         ((d.val = 1 ∧ s.val < 3) ∨ (d.val = 0 ∧ 3 ≤ s.val ∧ s.val < 6)) →
@@ -166,7 +172,11 @@ theorem finite_certificate :
         ((d.val = 1 ∧ s.val < 3) ∨ (d.val = 0 ∧ 3 ≤ s.val ∧ s.val < 6))) →
       (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
         cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s
-        then (1 : ℤ) else 0) = T (cl p d.val) s := by decide +kernel
+        then (1 : ℤ) else 0) = T (cl p d.val) s := by
+    intro p
+    generalize h0 : p 0 = c0
+    generalize h1 : p 1 = c1
+    fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
   intro p d hp s
   by_cases hz : HardinThinGraphTransport.proper p ∧
       ((d.val = 1 ∧ s.val < 3) ∨ (d.val = 0 ∧ 3 ≤ s.val ∧ s.val < 6))

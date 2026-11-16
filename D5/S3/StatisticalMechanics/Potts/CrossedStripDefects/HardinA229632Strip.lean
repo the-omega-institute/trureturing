@@ -111,7 +111,10 @@ private theorem finite_certificate :
       cl r (2 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) ∧
     (W 0 = initial ∧ ∀ i : Fin 7, W i.succ = Matrix.vecMul (W i.castSucc) T) ∧
     W 7 = ∑ j : Fin 6, (![-8, 60, -162, 185, -81, 15] j : ℤ) • W ⟨1 + j.val, by omega⟩ := by
-  refine ⟨by decide +kernel, by decide +kernel, ?_, by decide +kernel, ?_, ?_,
+  refine ⟨by decide +kernel, (by
+    intro p d hp r hr
+    dsimp only [Valid] at hp ⊢
+    omega), ?_, by decide +kernel, ?_, ?_,
     by decide +kernel⟩
   · have valid_cut : ∀ p (d : Fin 3), Valid p d.val → 0 < d.val →
         HardinA229529Strip.Valid p (d.val - 1) := by decide +kernel
@@ -141,7 +144,11 @@ private theorem finite_certificate :
         ¬ (HardinThinGraphTransport.proper p ∧ d.val = 0 ∧ 5 ≤ s.val ∧ s.val < 7) →
         (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
           cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s
-          then (1 : ℤ) else 0) = T (cl p d.val) s := by decide +kernel
+          then (1 : ℤ) else 0) = T (cl p d.val) s := by
+      intro p
+      generalize h0 : p 0 = c0
+      generalize h1 : p 1 = c1
+      fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
     intro p d hp s
     by_cases ha : 0 < d.val ∧ s.val < 5
     · let j : Fin 5 := ⟨s.val, ha.2⟩

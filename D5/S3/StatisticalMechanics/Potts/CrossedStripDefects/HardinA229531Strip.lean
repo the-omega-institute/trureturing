@@ -59,7 +59,10 @@ private theorem finite_certificate :
       cl r (1 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) ∧
     (W 0 = initial ∧ ∀ i : Fin 13, W i.succ = Matrix.vecMul (W i.castSucc) T) ∧
     W 13 = ∑ j : Fin 12, (![-4, 76, -505, 1308, -546, -2846, 3551, 304, -2373, 1290, -286, 28] j : ℤ) • W ⟨1 + j.val, by omega⟩ := by
-  refine ⟨by decide +kernel, by decide +kernel, HardinA229531StripClasses.transition_counts,
+  refine ⟨by decide +kernel, (by
+    intro p d hp r hr
+    dsimp only [Valid] at hp ⊢
+    omega), HardinA229531StripClasses.transition_counts,
     by decide +kernel, by decide +kernel, by decide +kernel, by decide +kernel⟩
 
 attribute [local irreducible] a
