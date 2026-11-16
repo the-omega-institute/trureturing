@@ -62,21 +62,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.even_rotate`
 
 Even cyclic rotation preserves the fixed alternating coefficients.
 
-**Theorem 1.5 (MinusEquations.exchange_rows).**
-
-Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.exchange_rows`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiMinusRows.exchange_rows` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
-
-*Commentary.*
-
-The row exchange used for the symmetric zero-row argument.
-
-**Definition 1.6 (ReturnRows).**
+**Definition 1.5 (ReturnRows).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.ReturnRows`
 
@@ -90,7 +76,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.ReturnRows`
 
 Original integer letters grouped as the two rows (a,b,w) and (d,v,t).
 
-**Definition 1.7 (literalRowBox).**
+**Definition 1.6 (literalRowBox).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.literalRowBox`
 
@@ -104,7 +90,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.literalRowBox`
 
 The literal, independently bounded integer rows.
 
-**Definition 1.8 (minusSolutions).**
+**Definition 1.7 (minusSolutions).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.minusSolutions`
 
@@ -118,7 +104,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.minusSolutions`
 
 Actual minus-identity returns of the existing six-letter word.
 
-**Definition 1.9 (Nminus).**
+**Definition 1.8 (Nminus).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.Nminus`
 
@@ -132,7 +118,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.Nminus`
 
 The original literal-box minus-identity count.
 
-**Definition 1.10 (Uminus).**
+**Definition 1.9 (Uminus).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.Uminus`
 
@@ -146,7 +132,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.Uminus`
 
 The same original solutions, with the middle column consisting of units mod p.
 
-**Definition 1.11 (RowEquations).**
+**Definition 1.10 (RowEquations).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.RowEquations`
 
@@ -160,7 +146,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.RowEquations`
 
 Coordinate-free row equations; all three minors are retained.
 
-**Theorem 1.12 (MinusEquations.rows).**
+**Theorem 1.11 (MinusEquations.rows).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.rows`
 
@@ -174,7 +160,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.rows`
 
 The original four equations supply every minor, also at composite moduli.
 
-**Theorem 1.13 (row_zero_sum).**
+**Theorem 1.12 (row_zero_sum).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.row_zero_sum`
 
@@ -188,7 +174,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.row_zero_sum`
 
 A row divisible by p has exact integer sum zero in the short prime-cube box.
 
-**Definition 1.14 (rowSolutions).**
+**Definition 1.13 (rowSolutions).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.rowSolutions`
 
@@ -202,7 +188,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.rowSolutions`
 
 The actual finite row-equation solution set, before any strata are removed.
 
-**Theorem 1.15 (divisible_row_count).**
+**Theorem 1.14 (divisible_row_count).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.divisible_row_count`
 
@@ -216,7 +202,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.divisible_row_count`
 
 Divisible rows, including the exactly zero row, have a genuine finite bound.
 
-**Theorem 1.16 (divisible_row_count_square).**
+**Theorem 1.15 (divisible_row_count_square).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.divisible_row_count_square`
 
@@ -230,7 +216,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.divisible_row_count_
 
 Every p-divisible first row costs at most four square interval lengths. This bound covers all-six-divisible tuples and every exact zero without removing any stratum.
 
-**Theorem 1.17 (RowEquations.unit_column).**
+**Theorem 1.16 (RowEquations.unit_column).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.unit_column`
 
@@ -244,7 +230,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.unit_column`
 
 Rank at most one modulo p, with a common unit column whenever neither row vanishes.
 
-**Theorem 1.18 (RowEquations.transpose_rows).**
+**Theorem 1.17 (RowEquations.transpose_rows).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.transpose_rows`
 
@@ -258,7 +244,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.transpose_rows`
 
 All row minors and the equations are symmetric under exchanging the two rows.
 
-**Theorem 1.19 (RowEquations.cycle_columns).**
+**Theorem 1.18 (RowEquations.cycle_columns).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.cycle_columns`
 
@@ -272,7 +258,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.cycle_columns`
 
 Simultaneously cyclically permuting columns preserves the original row equations.
 
-**Definition 1.20 (rotateRows).**
+**Definition 1.19 (rotateRows).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.rotateRows`
 
@@ -286,7 +272,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.rotateRows`
 
 Even cyclic rotation on the original literal integer six-tuples.
 
-**Theorem 1.21 (rowSolutions_count_reduction).**
+**Theorem 1.20 (rowSolutions_count_reduction).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.rowSolutions_count_reduction`
 
@@ -300,7 +286,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.rowSolutions_count_r
 
 All strata are paid for by the three cyclic unit-middle charts and eight square interval lengths. The finite set contains the original integer coordinates.
 
-**Theorem 1.22 (minusSolutions_eq_rowSolutions).**
+**Theorem 1.21 (minusSolutions_eq_rowSolutions).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.minusSolutions_eq_rowSolutions`
 
@@ -314,7 +300,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.minusSolutions_eq_ro
 
 Exact identification of the polynomial row set with the original word solutions.
 
-**Theorem 1.23 (Nminus_le_three_Uminus).**
+**Theorem 1.22 (Nminus_le_three_Uminus).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiMinusRows.Nminus_le_three_Uminus`
 
@@ -340,7 +326,6 @@ Original prime-cube nonunit-row reduction, for the literal integer box and the s
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiMinusRows.divisible_row_count`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiMinusRows.divisible_row_count_square`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiMinusRows.even_rotate`
-- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiMinusRows.exchange_rows`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiMinusRows.literalRowBox`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiMinusRows.minusSolutions`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiMinusRows.minusSolutions_eq_rowSolutions`
