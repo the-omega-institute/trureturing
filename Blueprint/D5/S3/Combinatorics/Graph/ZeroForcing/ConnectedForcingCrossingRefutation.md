@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mukherjee-ray-2026-ordered-connected-forcing-crossing` (refuted) by `D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mukherjee-ray-2026-ordered-connected-forcing-crossing","declaration_gid":"D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sanjay Mukherjee; Papi Ray (2026). *On the connected zero forcing polynomial of finite trees*. DOI: [10.48550/arXiv.2611.10985](https://doi.org/10.48550/arXiv.2611.10985). URL: <https://arxiv.org/abs/2611.10985v1>.
