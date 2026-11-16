@@ -25,14 +25,23 @@ internal sealed class ConnectedForcingCrossingRefutationDocument : IScribeDocume
                 H("The singleton obstruction"), StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Take T₁=P₄ with edges 01,12,23 and T₂=K₁,₃ with edges 01,02,03. Mathlib certifies the path is a tree. The star is connected through its center and has three edges on four vertices, so it too is a tree. Every singleton induces a connected graph. Either path endpoint forces successively along the path; an interior singleton has a disjoint fort and cannot force all vertices. Every star singleton also has a disjoint fort: for the center use the three leaves, and for a leaf use the other two leaves. The imported fort invariant excludes every possible forcing derivation, including the leaf-to-center move followed by a stall. Exhausting the actual singleton subsets yields coefficients two and zero. Every permitted cutoff l includes i=1 in its low segment and would imply 2≤0. Section 4 of the source already prints this pair and its polynomials; no new example or coefficient discovery is asserted. Only the singleton coefficients are needed here. Swapping this particular pair admits cutoff two according to the source polynomials, while universal exchange-permitted, either-direction and leaf-ordered versions remain outside this result. The established source theorems and its separate Problem 5.2 are unaffected."))),
-                DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("mukherjee-ray-2026-ordered-connected-forcing-crossing"), ResolutionKind.Refuted))), []));
+                DescribeRole.Theorem)), []));
 
     private static DocumentBlock Def(string id, string name, string title, Formula formula, string text) =>
         Describe.Lean(DescribeId.Create("connected-crossing-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Definition);
-    private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var parts = name.Split('.');
+        var symbols = new System.Collections.Generic.List<Formula>();
+        foreach (var part in parts)
+        {
+            if (symbols.Count > 0) symbols.Add(Dot);
+            symbols.Add(F.Id(part));
+        }
+        return new Formula.Apply(Seq(Operatorname, Grp(Seq([.. symbols]))), [.. args]);
+    }
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Par(Seq(F.Id(name), Sp, Colon, Sp, type)), Comma, Sp, body);
     private static Formula Ex(string name, Formula type, Formula body) => Seq(Exists, Sp, Par(Seq(F.Id(name), Sp, Colon, Sp, type)), Comma, Sp, body);
@@ -51,21 +60,21 @@ internal sealed class ConnectedForcingCrossingRefutationDocument : IScribeDocume
     private static Formula Graph(Formula v) => Call("SimpleGraph", v);
     private static Formula ConnectedFormula() => Disp(All("V", F.Id("Type"), All("G", Graph(V), All("S", Call("Finset", V),
         Logic(Call("connectedForcing", G, S), FormulaLogicOperator.Iff,
-            And(Call("Connected", Call("induce", G, S)), Call("IsZeroForcing", G, S)))))));
+            And(Call("Connected", Call("induce", G, Par(Seq(S, Sp, Colon, Sp, Call("Set", V))))), Call("IsZeroForcing", G, Par(Seq(S, Sp, Colon, Sp, Call("Set", V))))))))));
     private static Formula CoefficientFormula() => Disp(All("V", F.Id("Type"), Inst(Call("Fintype", V), All("G", Graph(V), All("i", N,
         Eq(Call("coefficient", G, F.Id("i")), Call("card", SetOf("S", Call("Finset", V),
             And(Eq(Call("card", S), F.Id("i")), Call("connectedForcing", G, S))))))))));
     private static Formula LeavesFormula() => Disp(All("V", F.Id("Type"), All("G", Graph(V),
-        Eq(Call("leafCount", G), Call("Natcard", SetOf("v", V,
-            Eq(Call("Natcard", SetOf("w", V, Call("Adj", G, F.Id("v"), F.Id("w")))), D(1))))))));
+        Eq(Call("leafCount", G), Call("Nat.card", SetOf("v", V,
+            Eq(Call("Nat.card", SetOf("w", V, Call("Adj", G, F.Id("v"), F.Id("w")))), D(1))))))));
     private static Formula ClaimFormula()
     {
         Formula n = F.Id("n"), p = F.Id("p"), q = F.Id("q"), w = F.Id("W"), h = F.Id("H"), l = F.Id("l"), i = F.Id("i");
         Formula index = Call("toNat", i);
         Formula low = Imp(And(Le(D(1), i), Le(i, l)), Le(Call("coefficient", G, index), Call("coefficient", h, index)));
-        Formula high = Imp(And(Le(new Formula.Binary(l, FormulaBinaryOperator.Add, D(1)), i), Le(i, n)),
+        Formula high = Imp(And(Le(new Formula.Binary(l, FormulaBinaryOperator.Add, D(1)), i), Le(i, Par(Seq(n, Sp, Colon, Sp, Z)))),
             Le(Call("coefficient", h, index), Call("coefficient", G, index)));
-        Formula body = Ex("l", Z, And(Le(D(1), l), And(Le(l, n), All("i", Z, And(low, high)))));
+        Formula body = Ex("l", Z, And(Le(D(1), l), And(Le(l, Par(Seq(n, Sp, Colon, Sp, Z))), All("i", Z, And(low, high)))));
         body = Imp(Eq(Call("leafCount", h), q), body);
         body = Imp(Eq(Call("leafCount", G), p), body);
         body = Imp(Eq(Call("card", w), n), body);

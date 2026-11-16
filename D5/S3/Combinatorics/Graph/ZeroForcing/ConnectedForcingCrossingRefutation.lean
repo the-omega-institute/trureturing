@@ -4,9 +4,8 @@
    mirror-E: none(waiver:open-problem-resolution-has-no-escape-mirror)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Acyclic]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.claim; result=D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.result; claim=D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.claim
-   digest: The ordered connected zero forcing coefficient crossing fails for the four-vertex path followed by the star. -/
+   digest: The four-vertex path followed by the star refutes the ordered connected forcing crossing. -/
 import D5.S3.Combinatorics.GeneralizedPetersen.ZeroForcingThree
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
 
 /-! The mandatory low-index block in Problem 5.3 fails at singleton sets. -/
 
