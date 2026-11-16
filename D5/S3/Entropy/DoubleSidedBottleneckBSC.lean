@@ -120,6 +120,7 @@ import D5.S3.Entropy.MutualInformationProduct
 import D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity
 import D5.S3.Entropy.Submodularity.MarkovDataProcessing
 import D5.S3.Entropy.Submodularity.StrongSubadditivity
+import D5.S3.Observer.ProductMeasures.FinitePmfLikelihood
 
 
 
@@ -188,11 +189,9 @@ private noncomputable def posteriorBias {n : ℕ} (K : (Bool → PMF (Fin n))) (
 
 private theorem kernel_real_sum {n : ℕ} (K : (Bool → PMF (Fin n))) (x : Bool) :
     ∑ u, (K x u).toReal = 1 := by
-  have h := (K x).tsum_coe
-  rw [tsum_fintype] at h
-  have h' := congrArg ENNReal.toReal h
-  rw [ENNReal.toReal_sum (fun i _ => (K x).apply_ne_top i)] at h'
-  simpa using h'
+  simpa only [D5.S3.Observer.ProductMeasures.FinitePmfLikelihood.pmfRealMass] using
+    (D5.S3.Observer.ProductMeasures.FinitePmfLikelihood.pmfRealMass_sum
+      (Output := fun _ => Fin n) (i := 0) (K x))
 
 private theorem output_mass_probability {n : ℕ} (K : (Bool → PMF (Fin n))) :
     (∀ u, 0 ≤ (fun w => ((K false w).toReal + (K true w).toReal) / 2) u) ∧ ∑ u, (fun w => ((K false w).toReal + (K true w).toReal) / 2) u = 1 := by
