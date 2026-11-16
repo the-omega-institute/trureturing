@@ -1,0 +1,29 @@
+**定理 184.6（共同保持先产生最小元与幂等）。** 只在184.5的完整原域，$\mathsf{RJ}(a)$ 已给
+
+$$
+e_a=u-uQ_a=\min\mathcal F_a,\qquad T_a(x)=e_a(x)\quad(x\in K),
+\tag{184.11}
+$$
+
+并且
+
+$$
+Q_a^2=Q_a,\quad e_aQ_a=0,\quad
+Q_a(C)\subseteq\operatorname{cone}D_a,\quad
+Q_a^*(C^*)=\{h\in C^*:h(a)=0\}.
+\tag{184.12}
+$$
+
+特别地，该点的 $\mathsf Z_2(a)$ 成为结论。若已有 L2 和全部 $\mathsf Z_2$，则对每颗经过 $a$ 的球和每个 $x\in K$ 还有
+$T_a(x)=\delta_{B,a}(x)=\tau_a(x)=e_a(x)$，包括非零数值。
+
+证明。令 $q_a=uQ_a\in\mathcal Z_a$，所以 $q_aQ_a=q_a$。于是 $e_a=u-q_a\in\mathcal F_a$ 且 $e_aQ_a=0$。任取 $f\in\mathcal F_a$，有 $u-f\in\mathcal Z_a$，由正性
+
+$$
+u-f=(u-f)Q_a\le uQ_a=q_a,
+$$
+
+即 $e_a\le f$。因此 minimum 是同一线性泛函，零集 $D_a=K\cap\ker e_a$ 为实际面。$e_aQ_a=0$ 给像包含；空零面时其锥为 $\{0\}$。
+
+再对任意 $g\in C^*$，$gQ_a$ 非负且在 $a$ 取零，缩放后的保持式给 $gQ_a^2=gQ_a$。生成锥的对偶张成整个 $V^*$，故 $Q_a^2=Q_a$；同一论证说明对偶正像恰为所示原零锥。最后 $e_a$ 同时属于183.2的两个共同菜单，而已是整个 $\mathcal F_a$ 的最小元，故两边的所有非零读数也相等。这里幂等性不需要 $\mathsf{PL}$ 或对径零关系。$\square$
+

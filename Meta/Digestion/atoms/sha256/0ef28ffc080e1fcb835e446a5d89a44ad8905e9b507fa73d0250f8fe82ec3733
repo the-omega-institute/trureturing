@@ -1,0 +1,17 @@
+### 2.1. Valuation intervals
+The factorial identity $R_{3,1}(n)=(3n)!/[n!(2n+1)!]$ and Legendre's formula give
+$$
+ \nu_p(R_{3,1}(n))=\sum_{h\geq1}f_{p^h}(n\bmod p^h),\qquad
+ f_q(x)=\left\lfloor 3x/q\right\rfloor-\left\lfloor (2x+1)/q\right\rfloor.
+$$
+At $x=0$ the function is zero. For $1\leq x<q$, the two numerators differ
+by $x-1\in[0,q)$, so $f_q(x)\in\{0,1\}$. Solving the inequalities that
+a multiple of $q$ lies above $2x+1$ and at most $3x$ shows that
+$$
+ \{x:f_q(x)=1\}=\bigcup_{j=1}^2
+ [A_j(q),B_j(q)],\quad
+ A_j(q)=\left\lceil jq/3\right\rceil,\quad B_j(q)=\left\lfloor (jq-2)/2\right\rfloor.
+$$
+An interval with $A_j>B_j$ is empty. Thus $R_{3,1}(n)$ is zero modulo $p$
+exactly when at least one scale in the valuation formula in §2.1 is one.
+

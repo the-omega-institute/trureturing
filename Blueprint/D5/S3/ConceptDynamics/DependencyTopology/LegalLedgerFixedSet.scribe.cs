@@ -30,6 +30,20 @@ internal sealed class LegalLedgerFixedSetDocument : IScribeDocumentDefinition
                 + "admissible when it is an extension on every input. Fix consists of propositions "
                 + "whose frozen membership is invariant under every such admissible map.")),
             Describe.Lean(
+                DescribeId.Create("frozen-nodes-have-permitted-proofs"),
+                DeclarationHandle.Create(Prefix + "frozen_proved"),
+                H("Frozen nodes have permitted proofs"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("L"), Colon, Sp, Call("LegalLedger", F.Id("k")), Comma, Sp,
+                    Forall, Sp, F.Id("p"), Colon, Sp, F.Id("P"), Comma, Sp,
+                    F.Id("p"), Sp, InMacro, Sp, Call("Frozen", F.Id("L")), Sp, Implies, Sp,
+                    Call("Proved", F.Id("k"), F.Id("p")), Dot))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The selected core witness is accepted and uses only permitted axioms. "
+                    + "This fact connects retained core membership to kernel consistency."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("certificate-append-is-admissible"),
                 DeclarationHandle.Create(Prefix + "addWithCertificate_admissible"),
                 H("A certificate gives an admissible total transformation"),
