@@ -52,14 +52,6 @@ def endpointQ (e : Endpoint) : ℤ[X] :=
 def pencil (q : Coordinate) (base e : Endpoint) : ℤ[X] :=
   endpointL q base * endpointQ e - endpointL q e * endpointQ base
 
-/-- This is the same polynomial family used by the archived exact factor endpoint. -/
-theorem pencil_eq_familyPolynomial (q : Coordinate) (base : Endpoint)
-    {ι : Type*} (e : ι → Endpoint) (i : ι) :
-    pencil q base (e i) = PrimeCube.familyPolynomial
-      (fun j => coeffL q (j.elim base e)) (fun j => coeffM q (j.elim base e))
-      (fun j => coeffQ (j.elim base e)) (fun j => coeffR (j.elim base e))
-      (fun j => coeffS (j.elim base e)) i := rfl
-
 /-- Exact coefficients of the actual original pencil; the archived expansion is reused. -/
 theorem pencil_expansion (q : Coordinate) (base e : Endpoint) :
     pencil q base e =
