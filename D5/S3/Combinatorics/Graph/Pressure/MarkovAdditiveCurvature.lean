@@ -7,6 +7,9 @@
    digest: Normalized finite irreducible Markov Poisson equations and additive pressure. -/
 import D5.S3.Combinatorics.Graph.Pressure.WeightedWalks
 import Mathlib.LinearAlgebra.Matrix.Stochastic
+import Mathlib.Analysis.Calculus.Deriv.Prod
+import Mathlib.Analysis.Calculus.ContDiff.Deriv
+import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
 import Mathlib.Analysis.Calculus.ImplicitContDiff
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
@@ -267,7 +270,7 @@ private theorem corrector_spec (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.I
       π.prob ⬝ᵥ π.corrector hP hI g = 0 :=
   π.poisson_spec hP hI (π.drift g) (π.drift_centered hP g)
 
-private theorem secondCorrector_spec (hP : P ∈ Matrix.rowStochastic ℝ V)
+theorem secondCorrector_spec (hP : P ∈ Matrix.rowStochastic ℝ V)
     (hI : P.IsIrreducible) (g : V → V → ℝ) :
     π.secondCorrector hP hI g - P *ᵥ π.secondCorrector hP hI g = π.corrector hP hI g ∧
       π.prob ⬝ᵥ π.secondCorrector hP hI g = 0 :=
@@ -283,7 +286,7 @@ def varianceRate (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
     (g : V → V → ℝ) : ℝ :=
   ∑ i, ∑ j, π.prob i * P i j * (π.score hP hI g i j) ^ 2
 
-private theorem score_centered (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
+theorem score_centered (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
     (g : V → V → ℝ) (i : V) : ∑ j, P i j * π.score hP hI g i j = 0 := by
   have hh := congrFun (π.corrector_spec hP hI g).1 i
   change π.corrector hP hI g i - ∑ j, P i j * π.corrector hP hI g j = π.drift g i at hh
@@ -292,6 +295,72 @@ private theorem score_centered (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.I
   simp only [drift, mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul,
     Matrix.sum_row_of_mem_rowStochastic hP, one_mul] at hh
   linarith
+
+/-- The actual stationary edge expectation, retained as a linear map for moment identities. -/
+def edgeAverage : (V → V → ℝ) →ₗ[ℝ] ℝ where
+  toFun f := ∑ i, ∑ j, π.prob i * P i j * f i j
+  map_add' f g := by simp [mul_add, Finset.sum_add_distrib]
+  map_smul' c f := by simp [smul_eq_mul, Finset.mul_sum, mul_left_comm, mul_assoc]
+
+private theorem edgeAverage_source (hP : P ∈ Matrix.rowStochastic ℝ V) (f : V → ℝ) :
+    π.edgeAverage (fun i _ => f i) = π.prob ⬝ᵥ f := by
+  change (∑ i, ∑ j, π.prob i * P i j * f i) = ∑ i, π.prob i * f i
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [← Finset.sum_mul, ← Finset.mul_sum]
+  rw [Matrix.sum_row_of_mem_rowStochastic hP, mul_one]
+
+private theorem edgeAverage_target (f : V → ℝ) :
+    π.edgeAverage (fun _ j => f j) = π.prob ⬝ᵥ f := by
+  change (∑ i, ∑ j, π.prob i * P i j * f j) = ∑ j, π.prob j * f j
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [← Finset.sum_mul]
+  have hj := congrFun π.invariant j
+  change (∑ i, π.prob i * P i j) = π.prob j at hj
+  rw [hj]
+
+private theorem varianceRate_energy (hP : P ∈ Matrix.rowStochastic ℝ V)
+    (hI : P.IsIrreducible) (g : V → V → ℝ) :
+    π.varianceRate hP hI g =
+      π.edgeAverage (fun i j => (g i j - π.meanReward g)^2) +
+        2 * π.edgeAverage (fun i j => (g i j - π.meanReward g) *
+          π.corrector hP hI g j) := by
+  let h := π.corrector hP hI g
+  let c := fun i j => g i j - π.meanReward g
+  let E := π.edgeAverage
+  have hsource : E (fun i _ => h i ^ 2) = π.prob ⬝ᵥ (fun i => h i ^ 2) :=
+    π.edgeAverage_source hP _
+  have htarget : E (fun _ j => h j ^ 2) = π.prob ⬝ᵥ (fun i => h i ^ 2) :=
+    π.edgeAverage_target _
+  have hc : E (fun i j => c i j * h i) =
+      E (fun i _ => h i ^ 2) - E (fun i j => h i * h j) := by
+    change (∑ i, ∑ j, π.prob i * P i j * (c i j * h i)) = _
+    rw [← map_sub]
+    change _ = ∑ i, ∑ j, π.prob i * P i j * (h i ^ 2 - h i * h j)
+    apply Finset.sum_congr rfl
+    intro i _
+    have hp := congrFun (π.corrector_spec hP hI g).1 i
+    change h i - (∑ j, P i j * h j) = ∑ j, P i j * c i j at hp
+    calc
+      _ = π.prob i * h i * (∑ j, P i j * c i j) := by
+        rw [Finset.mul_sum]; apply Finset.sum_congr rfl; intro j _; ring
+      _ = π.prob i * h i * (h i - ∑ j, P i j * h j) := by rw [← hp]
+      _ = ∑ j, π.prob i * P i j * (h i ^ 2 - h i * h j) := by
+        simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul, ← Finset.mul_sum,
+          Matrix.sum_row_of_mem_rowStochastic hP]
+        simp only [Finset.mul_sum, mul_assoc]
+        ring
+  have he : (fun i j => (c i j + h j - h i)^2) =
+      (fun i j => c i j ^ 2) + (2 : ℝ) • (fun i j => c i j * h j) -
+        (2 : ℝ) • (fun i j => c i j * h i) + (fun _ j => h j ^ 2) +
+        (fun i _ => h i ^ 2) - (2 : ℝ) • (fun i j => h i * h j) := by ext i j; simp; ring
+  change E (fun i j => (c i j + h j - h i)^2) = E (fun i j => c i j ^ 2) +
+    2 * E (fun i j => c i j * h j)
+  rw [he]
+  simp only [map_add, map_sub, map_smul, smul_eq_mul, hc, hsource, htarget]
+  ring
 
 theorem varianceRate_eq_zero_iff (hP : P ∈ Matrix.rowStochastic ℝ V)
     (hI : P.IsIrreducible) (g : V → V → ℝ) :
@@ -481,8 +550,8 @@ private theorem eigenbranch_hasDerivAt
   let ψ := π.eigenbranch hP hI g
   have hψ : HasDerivAt ψ (deriv ψ 0) 0 :=
     ((π.eigenbranch_contDiffAt hP hI g).differentiableAt (by norm_num)).hasDerivAt
-  have hF := (π.eigenproblem_hasFDerivAt g).comp_hasDerivAt 0
-    ((hasDerivAt_id (0 : ℝ)).prodMk hψ)
+  have hF := (π.eigenproblem_hasFDerivAt g).comp_hasDerivAt_of_eq (0 : ℝ)
+    ((hasDerivAt_id (0 : ℝ)).prodMk hψ) (by simp [ψ, π.eigenbranch_base hP hI g])
   have hb : π.eigenproblem g (0, ((fun _ => 1), 1)) = 0 := by
     have ht0 : tilt P g 0 = P := by ext i j; simp [tilt]
     simp [eigenproblem, ht0, ← Pi.one_def, Matrix.one_vecMul_of_mem_rowStochastic hP,
@@ -493,18 +562,19 @@ private theorem eigenbranch_hasDerivAt
     · exact sub_eq_zero.mpr ht.1
     · exact sub_eq_zero.mpr ht.2
   have hz : (π.eigenproblemDerivative g) (1, deriv ψ 0) = 0 := by
-    exact (hF.congr_of_eventuallyEq heq).unique (hasDerivAt_const (0 : ℝ) 0)
+    exact (hF.congr_of_eventuallyEq heq.symm).unique (hasDerivAt_const (0 : ℝ) 0)
   have hd : π.normalizedBlock (deriv ψ 0) =
       (- (fun i => ∑ j, P i j * g i j), 0) := by
     apply Prod.ext
     · ext i
       have hi := congrFun (congrArg Prod.fst hz) i
       simp only [eigenproblemDerivative, LinearMap.coe_mk, AddHom.coe_mk, one_mul,
-        Pi.zero_apply] at hi
+        Prod.fst_zero, Pi.zero_apply] at hi
       change (P *ᵥ (deriv ψ 0).1) i - (deriv ψ 0).1 i - (deriv ψ 0).2 =
         -(∑ j, P i j * g i j)
       linarith
-    · exact congrArg Prod.snd hz
+    · change π.prob ⬝ᵥ (deriv ψ 0).1 = 0
+      exact congrArg Prod.snd hz
   have hh : π.normalizedBlock (π.corrector hP hI g, π.meanReward g) =
       (-(fun i => ∑ j, P i j * g i j), 0) := by
     apply Prod.ext
@@ -533,12 +603,249 @@ theorem pressure_hasDerivAt_zero
     (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible) (g : V → V → ℝ) :
     HasDerivAt (pressure P g) (π.meanReward g) 0 := by
   have hψ := π.eigenbranch_hasDerivAt hP hI g
-  have hc := (ContinuousLinearMap.snd ℝ (V → ℝ) ℝ).hasFDerivAt.comp_hasDerivAt 0 hψ
+  have hc := (ContinuousLinearMap.snd ℝ (V → ℝ) ℝ).hasFDerivAt.comp_hasDerivAt (0 : ℝ) hψ
   have hb := π.eigenbranch_base hP hI g
   have hl := hc.log (by simp [hb])
-  simp only [ContinuousLinearMap.snd_apply, hb, div_one] at hl
+  simp only [ContinuousLinearMap.coe_snd', Function.comp_def, hb, div_one] at hl
   exact hl.congr_of_eventuallyEq
-    ((π.eigenbranch_radius_eventually hP hI g).mono fun t ht => congrArg Real.log ht.symm)
+    ((π.eigenbranch_radius_eventually hP hI g).mono fun t ht => congrArg Real.log ht)
+
+private theorem second_mul (f k : ℝ → ℝ) (hf : ContDiffAt ℝ 2 f 0)
+    (hk : ContDiffAt ℝ 2 k 0) :
+    deriv (deriv (fun t => f t * k t)) 0 =
+      deriv (deriv f) 0 * k 0 + 2 * deriv f 0 * deriv k 0 + f 0 * deriv (deriv k) 0 := by
+  have hh := iteratedDeriv_fun_mul hf hk
+  simpa [Finset.sum_range_succ, iteratedDeriv_succ, iteratedDeriv_zero, Nat.choose,
+    mul_assoc, add_comm, add_left_comm, add_assoc] using hh
+
+private theorem second_sum {ι : Type*} [Fintype ι] (f : ι → ℝ → ℝ)
+    (hf : ∀ i, ContDiffAt ℝ 2 (f i) 0) :
+    deriv (deriv (fun t => ∑ i, f i t)) 0 = ∑ i, deriv (deriv (f i)) 0 := by
+  simpa [iteratedDeriv_succ, iteratedDeriv_zero] using
+    iteratedDeriv_fun_sum (n := 2) (I := Finset.univ) (fun i _ => hf i)
+
+private theorem second_const_mul (c : ℝ) (f : ℝ → ℝ) :
+    deriv (deriv (fun t => c * f t)) 0 = c * deriv (deriv f) 0 := by
+  simpa [iteratedDeriv_succ, iteratedDeriv_zero] using
+    iteratedDeriv_const_mul_field (n := 2) c f
+
+private theorem eigenbranch_second_derivative
+    (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible) (g : V → V → ℝ) :
+    deriv (deriv (fun t => (π.eigenbranch hP hI g t).2)) 0 =
+      π.edgeAverage (fun i j => g i j ^ 2 + 2 * g i j * π.corrector hP hI g j) := by
+  let ψ := π.eigenbranch hP hI g
+  let r := fun t => (ψ t).1
+  let l := fun t => (ψ t).2
+  have hc : ContDiffAt ℝ 2 ψ 0 := π.eigenbranch_contDiffAt hP hI g
+  have hr (j : V) : ContDiffAt ℝ 2 (fun t => r t j) 0 := by
+    dsimp [r]; fun_prop
+  have hdr (j : V) : deriv (fun t => r t j) 0 = π.corrector hP hI g j := by
+    have hh := ((ContinuousLinearMap.proj j).comp
+      (ContinuousLinearMap.fst ℝ (V → ℝ) ℝ)).hasFDerivAt.comp_hasDerivAt (0 : ℝ)
+        (π.eigenbranch_hasDerivAt hP hI g)
+    exact hh.deriv
+  have hb : ψ 0 = ((fun _ => 1), 1) := π.eigenbranch_base hP hI g
+  let A := fun t => π.edgeAverage (fun i j => Real.exp (g i j * t) * r t j)
+  let N := fun t => ∑ i, π.prob i * r t i
+  have heq : (fun t => A t - N t) =ᶠ[nhds (0 : ℝ)] (fun t => l t - 1) := by
+    filter_upwards [π.eigenbranch_eventually hP hI g] with t ht
+    have hnorm : N t = 1 := ht.2
+    have ha : A t = l t * N t := by
+      change (∑ i, ∑ j, π.prob i * P i j * (Real.exp (g i j * t) * r t j)) = _
+      calc
+        _ = ∑ i, π.prob i * (tilt P g t *ᵥ r t) i := by
+          simp [tilt, Matrix.mulVec, dotProduct, Finset.mul_sum, mul_comm, mul_left_comm, mul_assoc]
+        _ = l t * N t := by rw [ht.1]; simp [N, Finset.mul_sum, mul_left_comm, mul_assoc, r, l, ψ]
+    rw [ha, hnorm, mul_one]
+  have hA : ContDiffAt ℝ 2 A 0 := by dsimp [A, edgeAverage, r]; fun_prop
+  have hN : ContDiffAt ℝ 2 N 0 := by dsimp [N, r]; fun_prop
+  have hs := heq.iteratedDeriv_eq 2
+  have hd : deriv (deriv (fun t => A t - N t)) 0 =
+      deriv (deriv l) 0 := by
+    simpa [iteratedDeriv_succ, iteratedDeriv_zero, deriv_sub_const] using hs
+  have hsub : deriv (deriv (fun t => A t - N t)) 0 =
+      deriv (deriv A) 0 - deriv (deriv N) 0 := by
+    have hh := iteratedDerivWithin_sub (n := 2) (by simp : (0 : ℝ) ∈ Set.univ)
+      uniqueDiffOn_univ hA.contDiffWithinAt hN.contDiffWithinAt
+    simpa [iteratedDerivWithin_univ, iteratedDeriv_succ, iteratedDeriv_zero, Pi.sub_def] using hh
+  have hAA : deriv (deriv A) 0 = π.edgeAverage
+      (fun i j => g i j ^ 2 + 2 * g i j * π.corrector hP hI g j +
+        deriv (deriv (fun t => r t j)) 0) := by
+    unfold A
+    change deriv (deriv (fun t => ∑ i, ∑ j, π.prob i * P i j *
+      (Real.exp (g i j * t) * r t j))) 0 = _
+    rw [second_sum]
+    · apply Finset.sum_congr rfl
+      intro i _
+      rw [second_sum]
+      · apply Finset.sum_congr rfl
+        intro j _
+        rw [second_const_mul, second_mul _ _ (by fun_prop) (hr j)]
+        have hd1 : deriv (fun t => Real.exp (g i j * t)) 0 = g i j := by
+          simpa using (((hasDerivAt_id (0 : ℝ)).const_mul (g i j)).exp).deriv
+        have hd2 : deriv (deriv (fun t => Real.exp (g i j * t))) 0 = g i j ^ 2 := by
+          simpa [iteratedDeriv_succ, iteratedDeriv_zero] using
+            congrFun (iteratedDeriv_exp_const_mul 2 (g i j)) 0
+        simp [hd1, hd2, hdr, r, hb]
+      · intro j; fun_prop
+    · intro i; fun_prop
+  have hNN : deriv (deriv N) 0 = π.prob ⬝ᵥ
+      (fun i => deriv (deriv (fun t => r t i)) 0) := by
+    rw [show N = (fun t => ∑ i, π.prob i * r t i) from rfl, second_sum]
+    · simp only [second_const_mul]; rfl
+    · intro i; fun_prop
+  rw [hsub, hAA, hNN] at hd
+  have hav := π.edgeAverage_target (fun j => deriv (deriv (fun t => r t j)) 0)
+  have hadd : π.edgeAverage
+      (fun i j => g i j ^ 2 + 2 * g i j * π.corrector hP hI g j +
+        deriv (deriv (fun t => r t j)) 0) =
+      π.edgeAverage (fun i j => g i j ^ 2 + 2 * g i j * π.corrector hP hI g j) +
+        π.prob ⬝ᵥ (fun j => deriv (deriv (fun t => r t j)) 0) := by
+    rw [← hav, ← map_add]; rfl
+  rw [hadd] at hd
+  change deriv (deriv l) 0 = _
+  linarith
+
+private theorem second_log (f : ℝ → ℝ) (hf : ContDiffAt ℝ 2 f 0) (hf0 : f 0 = 1) :
+    deriv (deriv (fun t => Real.log (f t))) 0 = deriv (deriv f) 0 - (deriv f 0)^2 := by
+  have hd : DifferentiableAt ℝ (deriv f) 0 :=
+    (hf.derivWithin (m := 1) (by norm_num)).differentiableAt (by norm_num)
+  have hq := hd.hasDerivAt.div (hf.differentiableAt (by norm_num)).hasDerivAt
+    (by rw [hf0]; norm_num)
+  have hform : deriv (fun t => Real.log (f t)) =ᶠ[nhds (0 : ℝ)]
+      (fun t => deriv f t / f t) := by
+    have hn := hf.continuousAt.eventually (isOpen_ne.mem_nhds (by simp [hf0] : f 0 ≠ 0))
+    filter_upwards [hf.eventually (by norm_num), hn] with t ht hn
+    exact ((ht.differentiableAt (by norm_num)).hasDerivAt.log hn).deriv
+  have hh := (hq.congr_of_eventuallyEq hform).deriv
+  simpa [hf0, pow_two] using hh
+
+private theorem varianceRate_uncentered (hP : P ∈ Matrix.rowStochastic ℝ V)
+    (hI : P.IsIrreducible) (g : V → V → ℝ) :
+    π.varianceRate hP hI g =
+      π.edgeAverage (fun i j => g i j ^ 2 + 2 * g i j * π.corrector hP hI g j) -
+        (π.meanReward g)^2 := by
+  let m := π.meanReward g
+  let h := π.corrector hP hI g
+  let E := π.edgeAverage
+  have hc : E (fun _ _ => 1) = 1 := by
+    rw [π.edgeAverage_source hP]
+    exact π.average_const 1
+  have hh : E (fun _ j => h j) = 0 := by
+    rw [π.edgeAverage_target]
+    exact (π.corrector_spec hP hI g).2
+  have hg : E g = m := rfl
+  rw [π.varianceRate_energy hP hI g]
+  change E (fun i j => (g i j - m)^2) + 2 * E (fun i j => (g i j - m) * h j) = _
+  rw [show 2 * E (fun i j => (g i j - m) * h j) =
+    E ((2 : ℝ) • (fun i j => (g i j - m) * h j)) by rw [map_smul]; rfl,
+    ← map_add]
+  have he : (fun i j => (g i j - m)^2) + (2 : ℝ) • (fun i j => (g i j - m) * h j) =
+      (fun i j => g i j ^ 2 + 2 * g i j * h j) -
+        (2 * m) • g + (m^2 : ℝ) • (fun _ _ => 1) - (2 * m) • (fun _ j => h j) := by
+    ext i j; simp; ring
+  rw [he]
+  simp only [map_sub, map_add, map_smul, smul_eq_mul, hg, hc, hh, mul_zero, mul_one, sub_zero]
+  change E (fun i j => g i j ^ 2 + 2 * g i j * h j) - 2 * m * m + m^2 =
+    E (fun i j => g i j ^ 2 + 2 * g i j * h j) - m^2
+  ring
+
+theorem pressure_second_derivative_zero
+    (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible) (g : V → V → ℝ) :
+    deriv (deriv (pressure P g)) 0 = π.varianceRate hP hI g := by
+  let l := fun t => (π.eigenbranch hP hI g t).2
+  have hc : ContDiffAt ℝ 2 l 0 := (π.eigenbranch_contDiffAt hP hI g).snd
+  have hb : l 0 = 1 := congrArg Prod.snd (π.eigenbranch_base hP hI g)
+  have he : pressure P g =ᶠ[nhds (0 : ℝ)] (fun t => Real.log (l t)) :=
+    (π.eigenbranch_radius_eventually hP hI g).mono fun t ht => congrArg Real.log ht
+  have hh := he.iteratedDeriv_eq 2
+  simp only [iteratedDeriv_succ, iteratedDeriv_zero] at hh
+  rw [hh, second_log l hc hb, π.eigenbranch_second_derivative hP hI g]
+  have hd := (ContinuousLinearMap.snd ℝ (V → ℝ) ℝ).hasFDerivAt.comp_hasDerivAt
+    (0 : ℝ) (π.eigenbranch_hasDerivAt hP hI g)
+  have hl : deriv l 0 = π.meanReward g := hd.deriv
+  rw [hl, π.varianceRate_uncentered hP hI g]
+
+/-- The local eigenbranch is constructed, positive, normalized by the fixed stationary row,
+and identified with the actual complex spectral radius. -/
+theorem local_perron_branch
+    (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible) (g : V → V → ℝ) :
+    ∃ ψ : ℝ → ((V → ℝ) × ℝ),
+      ContDiffAt ℝ 2 ψ 0 ∧ ψ 0 = ((fun _ => 1), 1) ∧
+      HasDerivAt ψ (π.corrector hP hI g, π.meanReward g) 0 ∧
+      ∀ᶠ t in nhds (0 : ℝ),
+        0 < (ψ t).2 ∧ (∀ i, 0 < (ψ t).1 i) ∧
+        π.prob ⬝ᵥ (ψ t).1 = 1 ∧
+        tilt P g t *ᵥ (ψ t).1 = (ψ t).2 • (ψ t).1 ∧
+        spectralRadius ℂ ((tilt P g t).map (algebraMap ℝ ℂ)) = ENNReal.ofReal (ψ t).2 := by
+  refine ⟨π.eigenbranch hP hI g, π.eigenbranch_contDiffAt hP hI g,
+    π.eigenbranch_base hP hI g, π.eigenbranch_hasDerivAt hP hI g, ?_⟩
+  filter_upwards [π.eigenbranch_eventually hP hI g,
+    π.eigenbranch_positive_eventually hP hI g] with t he hp
+  exact ⟨hp.1, hp.2, he.2, he.1,
+    (positive_eigenpair_identifies_radius P hI g t _ _ hp.1 hp.2 he.1).1⟩
+
+/-- Local Doob kernel from the constructed eigenbranch, with the original initial row fixed. -/
+def doob (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
+    (g : V → V → ℝ) (t : ℝ) : Matrix V V ℝ := fun i j =>
+  tilt P g t i j * (π.eigenbranch hP hI g t).1 j /
+    ((π.eigenbranch hP hI g t).2 * (π.eigenbranch hP hI g t).1 i)
+
+theorem doob_base (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
+    (g : V → V → ℝ) : π.doob hP hI g 0 = P := by
+  ext i j
+  simp [doob, tilt, π.eigenbranch_base hP hI g]
+
+theorem doob_hasDerivAt (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
+    (g : V → V → ℝ) (i j : V) :
+    HasDerivAt (fun t => π.doob hP hI g t i j)
+      (P i j * π.score hP hI g i j) 0 := by
+  let ψ := π.eigenbranch hP hI g
+  have hψ := π.eigenbranch_hasDerivAt hP hI g
+  have hr (k : V) : HasDerivAt (fun t => (ψ t).1 k) (π.corrector hP hI g k) 0 := by
+    have ht := ((ContinuousLinearMap.proj k).comp
+      (ContinuousLinearMap.fst ℝ (V → ℝ) ℝ)).hasFDerivAt.comp_hasDerivAt (0 : ℝ) hψ
+    exact ht
+  have hl : HasDerivAt (fun t => (ψ t).2) (π.meanReward g) 0 :=
+    (ContinuousLinearMap.snd ℝ (V → ℝ) ℝ).hasFDerivAt.comp_hasDerivAt (0 : ℝ) hψ
+  have ht : HasDerivAt (fun t => tilt P g t i j) (P i j * g i j) 0 := by
+    simpa [tilt] using (((hasDerivAt_id (0 : ℝ)).mul_const (g i j)).exp.const_mul (P i j))
+  have hb : ψ 0 = ((fun _ => 1), 1) := π.eigenbranch_base hP hI g
+  have hd := ((ht.mul (hr j)).div (hl.mul (hr i)) (by simp [hb]))
+  convert hd using 1
+  · rfl
+  · simp [hb, tilt, score]
+    ring
+
+theorem doob_transition_score (hP : P ∈ Matrix.rowStochastic ℝ V)
+    (hI : P.IsIrreducible) (g : V → V → ℝ) (i j : V) (hij : 0 < P i j) :
+    HasDerivAt (fun t => Real.log (π.doob hP hI g t i j)) (π.score hP hI g i j) 0 := by
+  have hb : π.doob hP hI g 0 i j = P i j := congrFun (congrFun (π.doob_base hP hI g) i) j
+  have hd := (π.doob_hasDerivAt hP hI g i j).log (by rw [hb]; exact hij.ne')
+  simpa [hb, hij.ne'] using hd
+
+theorem doob_stochastic_eventually (hP : P ∈ Matrix.rowStochastic ℝ V)
+    (hI : P.IsIrreducible) (g : V → V → ℝ) :
+    ∀ᶠ t in nhds (0 : ℝ), π.doob hP hI g t ∈ Matrix.rowStochastic ℝ V ∧
+      ∀ i j, 0 < π.doob hP hI g t i j ↔ 0 < P i j := by
+  filter_upwards [π.eigenbranch_eventually hP hI g,
+    π.eigenbranch_positive_eventually hP hI g] with t he hp
+  have hn (i j : V) : 0 ≤ tilt P g t i j :=
+    mul_nonneg (hI.nonneg i j) (Real.exp_pos _).le
+  refine ⟨Matrix.mem_rowStochastic_iff_sum.mpr ⟨?_, ?_⟩, ?_⟩
+  · intro i j
+    exact div_nonneg (mul_nonneg (hn i j) (hp.2 j).le) (mul_pos hp.1 (hp.2 i)).le
+  · intro i
+    change (∑ j, tilt P g t i j * (π.eigenbranch hP hI g t).1 j /
+      ((π.eigenbranch hP hI g t).2 * (π.eigenbranch hP hI g t).1 i)) = 1
+    rw [← Finset.sum_div]
+    have hi := congrFun he.1 i
+    change (∑ j, tilt P g t i j * (π.eigenbranch hP hI g t).1 j) =
+      (π.eigenbranch hP hI g t).2 * (π.eigenbranch hP hI g t).1 i at hi
+    rw [hi, div_self (mul_pos hp.1 (hp.2 i)).ne']
+  · intro i j
+    simp only [doob, tilt, div_pos_iff_of_pos_right (mul_pos hp.1 (hp.2 i)),
+      mul_pos_iff_of_pos_right (hp.2 j), mul_pos_iff_of_pos_right (Real.exp_pos _)]
 
 end Stationary
 end D5.S3.Combinatorics.Graph.Pressure.MarkovAdditive
