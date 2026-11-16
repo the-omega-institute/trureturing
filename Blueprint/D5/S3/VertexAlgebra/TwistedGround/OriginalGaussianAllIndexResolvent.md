@@ -132,6 +132,18 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResol
 
 The squareResolvent_entry_explicit statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
+**Theorem 1.11 (period_ofReal).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.period_ofReal`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.period_ofReal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real r, the literal complex period at r is the complex embedding of the existing real period F r.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.centralColumnJet`
@@ -139,6 +151,7 @@ The squareResolvent_entry_explicit statement is verified on its displayed full d
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.explicitOddEntry`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.oddResolvent`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.oddResolvent_entry_explicit`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.period_ofReal`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.shiftedCentralDerivative`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.shiftedCentralSeries`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.squareResolvent`

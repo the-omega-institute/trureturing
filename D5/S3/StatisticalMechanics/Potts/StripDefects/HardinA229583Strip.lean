@@ -57,7 +57,7 @@ def a (n : ℕ) : ℕ :=
   (Finset.univ.filter fun A : Fin n × Fin 5 → Fin 3 =>
     defects horizontal antidiagonal (List.ofFn fun i j => A (i, j)) = 1 ∧ Normal A).card
 
-private theorem edge (r t : Row) : bondDefects antidiagonal r t = cross (boundary r) t := by
+theorem edge (r t : Row) : bondDefects antidiagonal r t = cross (boundary r) t := by
   unfold cross bondDefects
   apply congrArg Finset.card
   ext e

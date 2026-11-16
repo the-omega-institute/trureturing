@@ -10,7 +10,7 @@ $$\forall N \in \mathbb{N},\; \forall K \in \mathbb{N},\; \operatorname{s}\left(
 
 *Formalization.* `D5/S3/Combinatorics/BinomialBases/MatharA001722.s` (`✓ std3`).
 
-*Citation.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
+*Citation.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829, A001722 and A001724*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{a}\left(n\right) = \sum_{k \in \oper
 
 *Formalization.* `D5/S3/Combinatorics/BinomialBases/MatharA001722.a` (`✓ std3`).
 
-*Citation.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
+*Citation.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829, A001722 and A001724*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{coeff}\left(n, G\right) = (\operator
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829, A001722 and A001724*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ $$claim \Leftrightarrow ((\forall n \in \mathbb{N},\; 3 \le n \Rightarrow (\oper
 
 *Formalization.* `D5/S3/Combinatorics/BinomialBases/MatharA001722.claim` (`✓ std3`).
 
-*Citation.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
+*Citation.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829, A001722 and A001724*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 
@@ -66,7 +66,7 @@ $$(\forall n \in \mathbb{N},\; 3 \le n \Rightarrow (\operatorname{a}\left(n\righ
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829, A001722 and A001724*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 
