@@ -170,8 +170,8 @@ private theorem canonical_successors (p : Row) (d : Fin 3) (hp : Valid p d.val)
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
 private theorem class_counts : ∀ c s : Fin 43, ((classList c).count s : ℤ) = T c s := by
-  classical
-  decide +kernel
+  intro c
+  fin_cases c <;> decide +kernel
 
 theorem transition_counts (p : Row) (d : ℕ) (hp : Valid p d) (s : Fin 43) :
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d ∧
