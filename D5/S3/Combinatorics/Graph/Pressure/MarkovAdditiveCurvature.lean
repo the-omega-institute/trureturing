@@ -67,7 +67,7 @@ def stationary (P : Matrix V V ℝ) (hP : P ∈ Matrix.rowStochastic ℝ V)
     (hI : P.IsIrreducible) : Stationary P :=
   Classical.choice (exists_stationary P hP hI)
 
-private theorem harmonic_constant (P : Matrix V V ℝ)
+theorem harmonic_constant (P : Matrix V V ℝ)
     (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
     (x : V → ℝ) (hx : P *ᵥ x = x) : ∃ c, x = fun _ => c := by
   obtain ⟨i, _, hi⟩ := Finset.exists_max_image Finset.univ x Finset.univ_nonempty
@@ -101,7 +101,7 @@ private theorem harmonic_constant (P : Matrix V V ℝ)
 namespace Stationary
 variable {P : Matrix V V ℝ} (π : Stationary P)
 
-private theorem average_const (c : ℝ) : π.prob ⬝ᵥ (fun _ => c) = c := by
+theorem average_const (c : ℝ) : π.prob ⬝ᵥ (fun _ => c) = c := by
   simp [dotProduct, ← Finset.sum_mul, π.total]
 
 private theorem average_mulVec (x : V → ℝ) : π.prob ⬝ᵥ (P *ᵥ x) = π.prob ⬝ᵥ x := by
@@ -190,7 +190,7 @@ def supportNetwork (P : Matrix V V ℝ) (hI : P.IsIrreducible) : Network V where
     exact hI.connected.isStronglyConnected
   hasEdge := Matrix.Irreducible.exists_pos_entry hI
 
-private theorem tilt_eq_weights (P : Matrix V V ℝ) (hI : P.IsIrreducible)
+theorem tilt_eq_weights (P : Matrix V V ℝ) (hI : P.IsIrreducible)
     (g : V → V → ℝ) (t : ℝ) :
     (supportNetwork P hI).W (fun i j => -Real.log (P i j) - t * g i j) 1 = tilt P g t := by
   ext i j
@@ -207,7 +207,7 @@ def eigenvalue (P : Matrix V V ℝ) (g : V → V → ℝ) (t : ℝ) : ℝ :=
 def pressure (P : Matrix V V ℝ) (g : V → V → ℝ) (t : ℝ) : ℝ :=
   Real.log (eigenvalue P g t)
 
-private theorem positive_eigenpair_identifies_radius
+theorem positive_eigenpair_identifies_radius
     (P : Matrix V V ℝ) (hI : P.IsIrreducible) (g : V → V → ℝ) (t a : ℝ)
     (r : V → ℝ) (ha : 0 < a) (hr : ∀ i, 0 < r i)
     (he : tilt P g t *ᵥ r = a • r) :
@@ -264,7 +264,7 @@ def corrector (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
 def secondCorrector (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
     (g : V → V → ℝ) : V → ℝ := π.poisson hP hI (π.corrector hP hI g)
 
-private theorem corrector_spec (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
+theorem corrector_spec (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
     (g : V → V → ℝ) :
     π.corrector hP hI g - P *ᵥ π.corrector hP hI g = π.drift g ∧
       π.prob ⬝ᵥ π.corrector hP hI g = 0 :=
@@ -302,7 +302,7 @@ def edgeAverage : (V → V → ℝ) →ₗ[ℝ] ℝ where
   map_add' f g := by simp [mul_add, Finset.sum_add_distrib]
   map_smul' c f := by simp [smul_eq_mul, Finset.mul_sum, mul_left_comm, mul_assoc]
 
-private theorem edgeAverage_source (hP : P ∈ Matrix.rowStochastic ℝ V) (f : V → ℝ) :
+theorem edgeAverage_source (hP : P ∈ Matrix.rowStochastic ℝ V) (f : V → ℝ) :
     π.edgeAverage (fun i _ => f i) = π.prob ⬝ᵥ f := by
   change (∑ i, ∑ j, π.prob i * P i j * f i) = ∑ i, π.prob i * f i
   apply Finset.sum_congr rfl
@@ -310,7 +310,7 @@ private theorem edgeAverage_source (hP : P ∈ Matrix.rowStochastic ℝ V) (f : 
   rw [← Finset.sum_mul, ← Finset.mul_sum]
   rw [Matrix.sum_row_of_mem_rowStochastic hP, mul_one]
 
-private theorem edgeAverage_target (f : V → ℝ) :
+theorem edgeAverage_target (f : V → ℝ) :
     π.edgeAverage (fun _ j => f j) = π.prob ⬝ᵥ f := by
   change (∑ i, ∑ j, π.prob i * P i j * f j) = ∑ j, π.prob j * f j
   rw [Finset.sum_comm]
