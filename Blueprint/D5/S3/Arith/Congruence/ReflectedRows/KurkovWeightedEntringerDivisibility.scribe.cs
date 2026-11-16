@@ -35,7 +35,9 @@ internal sealed class KurkovWeightedEntringerDivisibilityDocument : IScribeDocum
                 + "(d.toNat:Z)=d. The second conjunct is the source's a(k)-divisibility consequence "
                 + "over N, consumed directly in this conjunction using positivity of a(k). "
                 + "There is no finite cutoff or primality restriction. k=0, m=0 and d=1 are included. "
-                + "Conjecture 2 and A060818 are separate and are not asserted here."),
+                + "Conjecture 2 and A060818 are separate and are not asserted here.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a386381-divisor-propagation"), ResolutionKind.Proved)),
             Paragraph(Text(
                 "For a rational polynomial f, S_N(f) is anchored at 1 with value zero and has "
                 + "backward difference f(N-X). It is constructed by applying the earlier frozen "
@@ -74,9 +76,10 @@ internal sealed class KurkovWeightedEntringerDivisibilityDocument : IScribeDocum
                 + "ASSUMED-UNVERIFIED.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,
-        AssessedProvenance provenance, string prose) => Describe.Lean(
+        AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("a386381-" + name), DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+        StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string s) => F.Id(s);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
