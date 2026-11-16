@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Divergence/AudenaertBinaryHolevoBound
   - D5/S3/Quantum/Divergence/UmegakiBKMPath
   - D5/S3/Quantum/Divergence/UmegakiRareFlagBKM
+  - D5/S3/Quantum/Divergence/UniversalCommonCenter
 license: citation-only
 triage: anchor
 ---
@@ -40,3 +41,20 @@ which proves the rectangular finite-dimensional rare-flag asymptotic for the
 actual Bochner logarithmic derivative. It is a support result for the
 rare-reference route and does not prove the conditional Umegaki coefficient
 bound, coefficient equality, or a literature-priority claim.
+
+The associated finite semidefinite supplier
+`UniversalCommonCenter.exists_common_center_of_posDef_trace_inf_le` concerns
+arbitrary complex A and Hermitian B on r times a, for finite r and nonempty
+finite a. If every positive-definite weight Z bounds the scalar infimum of
+Re Tr(Z (A-X tensor I)(A-X tensor I) adjoint) by Re Tr(Z B), then one general
+complex center X makes B-(A-X tensor I)(A-X tensor I) adjoint positive
+semidefinite. Empty reference carriers are included; B is not assumed positive.
+The proof establishes the actual quadratic epigraph's convexity and closedness,
+then uses Hermitian-matrix PSD self-duality and strict separation.
+
+This common-center inference is derived from the supplied repository-first
+assessment, not attributed to Audenaert's article. It is step 3 support for the
+same Umegaki complete-versus-conditional contraction problem served by the BKM
+path identity. The weighted quotient-duality bridge, amplified common scalarizer
+and final coefficient comparison remain open. No originality or solution of
+that original problem is asserted.

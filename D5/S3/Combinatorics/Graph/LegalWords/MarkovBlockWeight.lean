@@ -207,7 +207,7 @@ def cutMinor (N : ℕ) (p θ : Fin (N + 1) → ℝ) (l r : Bool) :
   fun i j => conditionalMixture p θ ((2 * N + 1) + (2 * N + 1))
     l r (selectedWord N i j)
 
-private theorem normalizer_factor (p : ℝ) (hp : 0 < p) (hp1 : p < 1)
+theorem normalizer_factor (p : ℝ) (hp : 0 < p) (hp1 : p < 1)
     (m : ℕ) (hm : 1 ≤ m) (l r : Bool) :
     pathNormalizer p m l r =
       (p ^ r.toNat * (1 - p) ^ (m + 1 - l.toNat - r.toNat)) *
@@ -233,7 +233,7 @@ private theorem partition_pos (N : ℕ) (p : ℝ) (hp : 0 < p) (hp1 : p < 1)
     rw [if_pos (selectedWord_legal N 0 0 l r)]
     exact pow_pos (div_pos hp (sq_pos_of_pos (sub_pos.mpr hp1))) _
 
-private theorem normalized_path (p : ℝ) (hp : 0 < p) (hp1 : p < 1)
+theorem normalized_path (p : ℝ) (hp : 0 < p) (hp1 : p < 1)
     (m : ℕ) (hm : 1 ≤ m) (l r : Bool) (w : Fin m → Bool)
     (hw : Adm (m + 2) (Fin.cons l (Fin.snoc w r))) :
     pathMass p m l w r / pathNormalizer p m l r =
