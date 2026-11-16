@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
 
@@ -21,6 +22,41 @@ public sealed class LeanReportScopeDependencyTests
             scope.Paths.Select(path => path.Value).Order(StringComparer.Ordinal));
         Assert.DoesNotContain(RepoPath.CreateKnown(BridgePath), scope.Paths);
         Assert.DoesNotContain(RepoPath.CreateKnown("D5/Sibling.lean"), scope.Paths);
+    }
+
+    [Fact]
+    public void LoadsOnlyTheSourceDerivedClosureAndRetainsItsActualBytes()
+    {
+        var complete = Snapshot();
+        var inventory = RepositorySnapshot.Create(complete.Files.ToImmutableDictionary(
+            static item => item.Key,
+            static item => item.Key.Value == "lean-report-inputs.json" ? item.Value
+                : new RepositoryFile(item.Key, [], isOpaque: false, gitBlobOid: null, contentWasRead: false)));
+        var loaded = new List<RepoPath>();
+        var scope = LeanReportScope.Create(inventory, [RepoPath.CreateKnown("D5/Selected.lean")], path =>
+        {
+            loaded.Add(path);
+            return complete.Files[path];
+        });
+
+        Assert.Equal(["D5/Dependency.lean", "D5/Selected.lean", BridgePath],
+            loaded.Select(path => path.Value).Order(StringComparer.Ordinal));
+        Assert.All(loaded, path => Assert.Same(complete.Files[path], scope.SourceSnapshot.Files[path]));
+        Assert.False(scope.SourceSnapshot.Files[RepoPath.CreateKnown("D5/Sibling.lean")].ContentWasRead);
+        Assert.Equal(complete.Files.Keys.OrderBy(path => path.Value),
+            scope.SourceSnapshot.Files.Keys.OrderBy(path => path.Value));
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void SourceLoaderMustReturnTheRequestedPathAndActualBytes(bool wrongPath)
+    {
+        var snapshot = Snapshot();
+        Assert.Throws<InvalidOperationException>(() => LeanReportScope.Create(snapshot,
+            [RepoPath.CreateKnown("D5/Selected.lean")], path => wrongPath
+                ? snapshot.Files[RepoPath.CreateKnown("D5/Sibling.lean")]
+                : new RepositoryFile(path, [], isOpaque: false, gitBlobOid: null, contentWasRead: false)));
     }
 
     [Fact]
