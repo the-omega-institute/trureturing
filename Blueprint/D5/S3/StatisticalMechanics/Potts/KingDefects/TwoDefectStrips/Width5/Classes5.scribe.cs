@@ -31,15 +31,10 @@ internal sealed class Classes5Document : IScribeDocumentDefinition
     private static Formula App(Formula f, params Formula[] a) => new Formula.Apply(f, [.. a]);
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
     private static Formula Typed(Formula a, Formula t) => Parenthesized(Seq(a, Colon, Sp, t));
-    private static Formula CastInt(Formula a) => Call("Int.ofNat", a);
     private static Formula All(string x, Formula t, Formula b) =>
         Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
-    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
 
-    private static Formula And(Formula a, Formula b) => Seq(Open, a, Sp, Land, Sp, b, Close);
+
 }

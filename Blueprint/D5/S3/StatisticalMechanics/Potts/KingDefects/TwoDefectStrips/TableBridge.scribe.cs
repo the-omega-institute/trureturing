@@ -11,8 +11,9 @@ internal sealed class TableBridgeDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("count-successors"),
                 DeclarationHandle.Create(Prefix + "count_successors"), H("A sorted successor list supplies all multiplicities"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+                StatementSource.FromAuthor(Disp(All("q", Call("Nat"), All("k", Call("Nat"), All("M", Call("Nat"), All("P", Arrow(Call("DefectTransfer.Row", V("q"), V("k")), Call("Prop")), All("h", Call("DecidablePred", V("P")), All("c", Arrow(Call("DefectTransfer.Row", V("q"), V("k")), Call("Fin", V("M"))), All("s", Call("Fin", V("M")), Eq(Call("List.count", V("s"), Call("List.insertionSort", Lam("a", Call("Fin", V("M")), Lam("b", Call("Fin", V("M")), Leq(V("a"), V("b")))), Call("List.filterMap", Lam("r", Call("DefectTransfer.Row", V("q"), V("k")), Conditional(Call("P", V("r")), Call("some", Call("c", V("r"))), Call("none"))), Call("List.ofFn", Lam("i", Call("Fin", Pow(V("q"), V("k"))), Call("Equiv.symm", Call("finFunctionFinEquiv"), V("i"))))))), SumOver("r", Call("DefectTransfer.Row", V("q"), V("k")), Conditional(And(Call("P", V("r")), Eq(Call("c", V("r")), V("s"))), Num("1"), Num("0"))))))))))))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For arbitrary palette q, width k, class size M, decidable admissibility P, classifier c and class s, the count of s in the sorted filtered enumeration equals the sum over rows of the indicator of P(r) and c(r)=s. The enumeration uses Mathlib finFunctionFinEquiv; insertion sorting preserves multiplicity."))), DescribeRole.Theorem))));
+
     private static Formula V(string s) => F.Id(s);
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((part, i) =>
@@ -31,15 +32,14 @@ internal sealed class TableBridgeDocument : IScribeDocumentDefinition
     private static Formula App(Formula f, params Formula[] a) => new Formula.Apply(f, [.. a]);
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
     private static Formula Typed(Formula a, Formula t) => Parenthesized(Seq(a, Colon, Sp, t));
-    private static Formula CastInt(Formula a) => Call("Int.ofNat", a);
-    private static Formula All(string x, Formula t, Formula b) =>
-        Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
+    private static Formula All(string x, Formula t, Formula b) => Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
-    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
-    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
-
     private static Formula And(Formula a, Formula b) => Seq(Open, a, Sp, Land, Sp, b, Close);
+    private static Formula SumOver(string x, Formula t, Formula b) => Seq(Sum, Underscore, Grp(Typed(V(x), t)), Sp, Parenthesized(b));
+    private static Formula Conditional(Formula a, Formula b, Formula c) => Parenthesized(Seq(Q("if"), Sp, a, Sp, Q("then"), Sp, b, Sp, Q("else"), Sp, c));
+    private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, Parenthesized(b));
+    private static Formula Pow(Formula a, Formula b) => Seq(Parenthesized(a), Caret, Grp(b));
+    private static Formula Lam(string x, Formula t, Formula b) => Seq(Q("fun"), Sp, Typed(V(x), t), Sp, Q("=>"), Sp, Parenthesized(b));
+
 }

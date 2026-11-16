@@ -11,12 +11,13 @@ internal sealed class GridBridgeDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("defects-rows"),
                 DeclarationHandle.Create(Prefix + "defects_rows"), H("Row-list costs as two finite sums"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+                StatementSource.FromAuthor(Disp(All("q", Call("Nat"), All("k", Call("Nat"), All("H", Call("Finset", Cross(Call("Fin", V("k")), Call("Fin", V("k")))), All("V", Call("Finset", Cross(Call("Fin", V("k")), Call("Fin", V("k")))), All("n", Call("Nat"), All("f", Arrow(Call("Fin", Add(V("n"), Num("1"))), Call("DefectTransfer.Row", V("q"), V("k"))), Eq(Call("DefectTransfer.defects", V("H"), V("V"), Call("List.ofFn", V("f"))), Add(SumOver("i", Call("Fin", Add(V("n"), Num("1"))), Call("DefectTransfer.bondDefects", V("H"), Call("f", V("i")), Call("f", V("i")))), SumOver("i", Call("Fin", V("n")), Call("DefectTransfer.bondDefects", V("V"), Call("f", Call("Fin.castSucc", V("i"))), Call("f", Call("Fin.succ", V("i"))))))))))))))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For arbitrary palette, width, bond sets H and V and n+1 rows, the list cost equals the sum of all n+1 horizontal row costs plus the sum of the n costs between consecutive rows. Induction on n includes the single-row boundary."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("literal-bridge"),
                 DeclarationHandle.Create(Prefix + "literal_bridge"), H("The row-list count is the literal labelled grid count"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+                StatementSource.FromAuthor(Disp(All("k", Call("Nat"), All("H", Call("Finset", Cross(Call("Fin", V("k")), Call("Fin", V("k")))), All("V", Call("Finset", Cross(Call("Fin", V("k")), Call("Fin", V("k")))), Imp(All("r", Call("DefectTransfer.Row", Num("4"), V("k")), Eq(Call("DefectTransfer.bondDefects", V("H"), V("r"), V("r")), SumOver("j", Call("Fin", Sub(V("k"), Num("1"))), Conditional(Eq(Call("r", Call("KingGrid.lo", V("j"))), Call("r", Call("KingGrid.hi", V("j")))), Num("1"), Num("0"))))), Imp(All("r", Call("DefectTransfer.Row", Num("4"), V("k")), All("t", Call("DefectTransfer.Row", Num("4"), V("k")), Eq(Call("DefectTransfer.bondDefects", V("V"), V("r"), V("t")), Add(Add(SumOver("j", Call("Fin", V("k")), Conditional(Eq(Call("r", V("j")), Call("t", V("j"))), Num("1"), Num("0"))), SumOver("j", Call("Fin", Sub(V("k"), Num("1"))), Conditional(Eq(Call("r", Call("KingGrid.lo", V("j"))), Call("t", Call("KingGrid.hi", V("j")))), Num("1"), Num("0")))), SumOver("j", Call("Fin", Sub(V("k"), Num("1"))), Conditional(Eq(Call("r", Call("KingGrid.hi", V("j"))), Call("t", Call("KingGrid.lo", V("j")))), Num("1"), Num("0"))))))), All("n", Call("Nat"), Eq(Call("DefectTransfer.literalCount", V("H"), V("V"), Num("2"), Add(V("n"), Num("1"))), Call("KingTwoGrid.L", Add(V("n"), Num("1")), V("k"))))))))))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Assume H counts adjacent horizontal bonds and V counts the vertical, diagonal and antidiagonal bonds. At every height n+1, the exact two-defect literalCount equals KingTwoGrid.L. KingGrid.sum_edges identifies the four disjoint edge families; the underlying colourings and cell order are identical."))), DescribeRole.Theorem))));
+
     private static Formula V(string s) => F.Id(s);
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((part, i) =>
@@ -35,15 +36,14 @@ internal sealed class GridBridgeDocument : IScribeDocumentDefinition
     private static Formula App(Formula f, params Formula[] a) => new Formula.Apply(f, [.. a]);
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
     private static Formula Typed(Formula a, Formula t) => Parenthesized(Seq(a, Colon, Sp, t));
-    private static Formula CastInt(Formula a) => Call("Int.ofNat", a);
-    private static Formula All(string x, Formula t, Formula b) =>
-        Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
+    private static Formula All(string x, Formula t, Formula b) => Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula SumOver(string x, Formula t, Formula b) => Seq(Sum, Underscore, Grp(Typed(V(x), t)), Sp, Parenthesized(b));
+    private static Formula Conditional(Formula a, Formula b, Formula c) => Parenthesized(Seq(Q("if"), Sp, a, Sp, Q("then"), Sp, b, Sp, Q("else"), Sp, c));
+    private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, Parenthesized(b));
+    private static Formula Cross(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
 
-    private static Formula And(Formula a, Formula b) => Seq(Open, a, Sp, Land, Sp, b, Close);
 }

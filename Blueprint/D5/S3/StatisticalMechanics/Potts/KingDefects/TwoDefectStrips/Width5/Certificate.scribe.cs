@@ -11,8 +11,9 @@ internal sealed class CertificateDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("transition-counts"),
                 DeclarationHandle.Create(Prefix + "transition_counts"), H("Exact transfer for every labelled boundary"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+                StatementSource.FromAuthor(Disp(All("p", Call("Data.Row"), All("d", Call("Nat"), Imp(Call("Data.Valid", V("p"), V("d")), All("s", Call("Fin", Num("43")), Eq(SumOver("r", Call("Data.Row"), Conditional(And(Leq(Add(Call("DefectTransfer.bondDefects", Call("Data.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("Data.horizontal"), V("r"), V("r"))), V("d")), Eq(Call("Data.cl", V("r"), Sub(V("d"), Add(Call("DefectTransfer.bondDefects", Call("Data.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("Data.horizontal"), V("r"), V("r"))))), V("s"))), Num("1"), Num("0"))), Call("Data.T", Call("Data.cl", V("p"), V("d")), V("s"))))))))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For every row p, every valid residual budget d and every output class s, the transfer entry is the sum over labelled next rows r with between(p,r)+horizontal(r,r) <= d and residual class s. Canonical existence and colour-permutation reindexing transport the source-class list certificates to arbitrary p."))), DescribeRole.Theorem))));
+
     private static Formula V(string s) => F.Id(s);
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((part, i) =>
@@ -31,15 +32,14 @@ internal sealed class CertificateDocument : IScribeDocumentDefinition
     private static Formula App(Formula f, params Formula[] a) => new Formula.Apply(f, [.. a]);
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
     private static Formula Typed(Formula a, Formula t) => Parenthesized(Seq(a, Colon, Sp, t));
-    private static Formula CastInt(Formula a) => Call("Int.ofNat", a);
-    private static Formula All(string x, Formula t, Formula b) =>
-        Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
+    private static Formula All(string x, Formula t, Formula b) => Seq(Forall, Sp, Typed(V(x), t), Comma, Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
-
     private static Formula And(Formula a, Formula b) => Seq(Open, a, Sp, Land, Sp, b, Close);
+    private static Formula SumOver(string x, Formula t, Formula b) => Seq(Sum, Underscore, Grp(Typed(V(x), t)), Sp, Parenthesized(b));
+    private static Formula Conditional(Formula a, Formula b, Formula c) => Parenthesized(Seq(Q("if"), Sp, a, Sp, Q("then"), Sp, b, Sp, Q("else"), Sp, c));
+
 }
