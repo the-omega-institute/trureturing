@@ -277,7 +277,7 @@ def normAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "fn", "arg", "arg"]
+      path := #["body", "body", "fn", "arg", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -309,7 +309,7 @@ def complexIntegrableAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "fn", "fn", "arg", "body"]
+      path := #["body", "body", "body", "fn", "fn", "arg", "body", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -341,7 +341,7 @@ def realIntegrableAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "fn", "fn", "arg", "body"]
+      path := #["body", "body", "body", "fn", "fn", "arg", "body", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -373,7 +373,7 @@ def complexBoundAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "fn", "arg", "arg"]
+      path := #["body", "body", "body", "arg", "fn", "arg", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -405,7 +405,7 @@ def realBoundAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "fn", "arg", "arg"]
+      path := #["body", "body", "body", "arg", "fn", "arg", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -437,7 +437,7 @@ def truncationAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "arg"]
+      path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -469,7 +469,7 @@ def transportAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "fn", "fn", "fn", "arg", "body"]
+      path := #["body", "body", "body", "body", "arg", "fn", "fn", "fn", "arg", "body", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
