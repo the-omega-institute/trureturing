@@ -14,17 +14,17 @@ open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Row (fun _ => Fin 2 × Fin 20) (fun _ => ℤ)
+  _root_.Reg.Support.SingleDependentReadout.signature (Row × Fin 2) (fun _ => Fin 20) (fun _ => ℤ)
 def readout : Realization signature :=
-  realize signature (fun _ p ds => T (cl p ds.1.val) ds.2) (fun e => nomatch e)
+  realize signature (fun _ pd s => T (cl pd.1 pd.2.val) s) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ p ds => T (cl p ds.1.val) ds.2 + 1) (fun e => nomatch e)
+  realize signature (fun _ pd s => T (cl pd.1 pd.2.val) s + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ p (d : Fin 2), Valid p d.val → ∀ s : Fin 20,
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s
-      then (1 : ℤ) else 0) = R.readout () p (d, s)
+      then (1 : ℤ) else 0) = R.readout () (p, d) s
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h (![0, 1, 0, 1, 0] : Row) 1 (by decide +kernel) 0
@@ -40,8 +40,8 @@ def family : Registration arena (type_of% @transition_counts) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨![0, 1, 0, 1, 0], (0, 0), (1, 0), ?_⟩
-    change T (cl ![0, 1, 0, 1, 0] 0) 0 ≠ T (cl ![0, 1, 0, 1, 0] 1) 0
+    refine ⟨(![0, 1, 0, 1, 0], 1), 0, 1, ?_⟩
+    change T (cl ![0, 1, 0, 1, 0] 1) 0 ≠ T (cl ![0, 1, 0, 1, 0] 1) 1
     decide +kernel
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@transition_counts) (Realization signature) Type Unit where
@@ -56,7 +56,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p ds => T (cl p ds.1.val) ds.2) (fun e => nomatch e))
+  readout := some (realize signature (fun _ pd s => T (cl pd.1 pd.2.val) s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -64,12 +64,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripClasses
     definition := none
-    coordinates := #[]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "body", "arg"]
-      stateBinder := 0
+      stateBinder := 3
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

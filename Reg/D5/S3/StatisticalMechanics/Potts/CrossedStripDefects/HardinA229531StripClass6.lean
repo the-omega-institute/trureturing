@@ -64,12 +64,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripClass6
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "arg"]
-      stateBinder := 0
+      stateBinder := 1
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
