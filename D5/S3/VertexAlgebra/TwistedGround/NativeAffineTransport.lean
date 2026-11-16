@@ -69,7 +69,7 @@ private theorem pow_coeff_vanish (p : MvPolynomial I ℂ) (hp : p.coeff 0 = 0)
         simpa only [map_add] using congrArg Finsupp.degree he
       rw [ih a (by omega), zero_mul]
 
-private theorem affineExponent_constant (A : Matrix I I ℂ) (mu : I → ℂ) :
+theorem affineExponent_constant (A : Matrix I I ℂ) (mu : I → ℂ) :
     (affineExponent A mu).coeff 0 = 0 := by
   classical
   simp [affineExponent, quadratic, coeff_mul_X']
@@ -92,7 +92,7 @@ private theorem factorial_ratio (j : ℕ) :
   rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
   field_simp [hj, hs]
 
-private theorem pderiv_expCut (p : MvPolynomial I ℂ) (n : ℕ) (i : I) :
+theorem pderiv_expCut (p : MvPolynomial I ℂ) (n : ℕ) (i : I) :
     pderiv i (expCut p (n+1)) = pderiv i p * expCut p n := by
   classical
   have ht (j : ℕ) :
@@ -225,7 +225,7 @@ def transportCovariance (U : Matrix I J ℂ) (A : Matrix J J ℂ) : Matrix I I �
 def transportMean (U : Matrix I J ℂ) (mu : J → ℂ) : I → ℂ :=
   fun i => ∑ a, U i a * mu a
 
-private theorem transportCovariance_symm (U : Matrix I J ℂ) (A : Matrix J J ℂ)
+theorem transportCovariance_symm (U : Matrix I J ℂ) (A : Matrix J J ℂ)
     (hs : ∀ i j, A i j = A j i) :
     ∀ i j, transportCovariance U A i j = transportCovariance U A j i := by
   intro i j
