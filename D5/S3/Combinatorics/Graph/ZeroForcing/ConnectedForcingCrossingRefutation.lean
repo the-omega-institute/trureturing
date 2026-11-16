@@ -8,6 +8,8 @@
 import D5.S3.Combinatorics.GeneralizedPetersen.ZeroForcingThree
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 
+/-! The mandatory low-index block in Problem 5.3 fails at singleton sets. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -45,13 +47,18 @@ private def star : SimpleGraph (Fin 4) where
   symm.symm _ _ h := ⟨h.1.symm, h.2.symm⟩
   loopless.irrefl _ h := h.1 rfl
 
-private instance : DecidableRel star.Adj := fun _ _ => inferInstanceAs (Decidable (_ ≠ _ ∧ (_ = 0 ∨ _ = 0)))
+private instance : DecidableRel star.Adj := fun _ _ =>
+  inferInstanceAs (Decidable (_ ≠ _ ∧ (_ = 0 ∨ _ = 0)))
 
-private theorem singleton_connected {V : Type*} [DecidableEq V]
+private theorem singleton_connected {V : Type*}
     (G : SimpleGraph V) (a : V) : (G.induce (({a} : Finset V) : Set V)).Connected := by
-  haveI : Nonempty {v : V // v ∈ (({a} : Finset V) : Set V)} := ⟨⟨a, by simp⟩⟩
-  haveI : Subsingleton {v : V // v ∈ (({a} : Finset V) : Set V)} :=
-    ⟨fun x y => Subtype.ext (by simpa using x.property.trans y.property.symm)⟩
+  classical
+  have : Nonempty {v : V // v ∈ (({a} : Finset V) : Set V)} := ⟨⟨a, by simp⟩⟩
+  have : Subsingleton {v : V // v ∈ (({a} : Finset V) : Set V)} :=
+    ⟨fun x y => Subtype.ext (by
+      have hx : x.val = a := by simpa using x.property
+      have hy : y.val = a := by simpa using y.property
+      exact hx.trans hy.symm)⟩
   exact Connected.of_subsingleton
 
 private theorem path_singleton (a : Fin 4) :
@@ -97,6 +104,7 @@ private theorem path_singleton (a : Fin 4) :
         fin_cases x <;> simp_all [pathGraph_adj]
       intro v
       fin_cases v <;> assumption
+
 private theorem star_singleton (a : Fin 4) :
     ¬ IsZeroForcing star (({a} : Finset (Fin 4)) : Set _) := by
   have hc : ∀ a : Fin 4, ∃ (F : Finset (Fin 4)) (v : Fin 4),
@@ -116,7 +124,7 @@ theorem result : ¬ claim := by
     constructor
     · apply Connected.of_isUniversal (v := 0)
       intro v hv
-      exact ⟨hv.symm, Or.inl rfl⟩
+      exact ⟨hv, Or.inl rfl⟩
     · rw [Nat.card_eq_fintype_card, ← edgeFinset_card, Nat.card_eq_fintype_card]
       decide
   have hp : coefficient (pathGraph 4) 1 = 2 := by
@@ -131,7 +139,7 @@ theorem result : ¬ claim := by
         rcases (path_singleton a).mp hz.2 with rfl | rfl <;> simp
       · rintro (rfl | rfl) <;>
           exact ⟨by decide, singleton_connected _ _, (path_singleton _).mpr (by simp)⟩
-    simpa [coefficient, he]
+    simp [coefficient, he]
   have hs : coefficient star 1 = 0 := by
     have he : (Finset.univ.filter fun S : Finset (Fin 4) =>
         S.card = 1 ∧ connectedForcing star S) = ∅ := by
@@ -140,7 +148,7 @@ theorem result : ¬ claim := by
       obtain ⟨hc, hz⟩ := (Finset.mem_filter.mp hm).2
       obtain ⟨a, rfl⟩ := Finset.card_eq_one.mp hc
       exact star_singleton a hz.2
-    simpa [coefficient, he]
+    simp [coefficient, he]
   obtain ⟨l, hl, hln, hi⟩ := h 4 (leafCount (pathGraph 4)) (leafCount star)
     (Fin 4) (Fin 4) (pathGraph 4) star (isTree_pathGraph_add_one 3) ht rfl rfl rfl rfl
   have bad := (hi 1).1 ⟨by decide, hl⟩
