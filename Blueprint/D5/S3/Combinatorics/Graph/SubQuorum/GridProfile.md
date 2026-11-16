@@ -242,4 +242,3 @@ Exact declaration: theorem odd_ladder_rigidity {n : ℕ} (hn : n%2=1) (c : Fin n
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/GridProfile.sign_sum_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/GridProfile.three_free_card`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/GridProfile.upperLevel`
-- Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives](C4FreeRepresentatives.md)
