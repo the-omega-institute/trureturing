@@ -17,7 +17,7 @@ open HardinA233255PairTransfer (a)
 open HardinA233255ShapeSymmetry (K F literal_canonical_bridge)
 open TransferMatrix (tabulatedPowers scalarRelationShift)
 
-def table : Matrix (Fin 16) (Fin 16) ℤ :=
+private def table : Matrix (Fin 16) (Fin 16) ℤ :=
   ![![5, 5, 3, 3, 4, 4, 2, 2, 0, 0, 1, 1, 3, 3, 3, 3],
     ![4, 4, 3, 3, 4, 4, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1],
     ![1, 1, 2, 2, 1, 1, 3, 3, 2, 2, 2, 2, 1, 1, 2, 2],
