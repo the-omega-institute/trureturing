@@ -220,3 +220,268 @@ $$
 [Q311Oi]: https://arxiv.org/abs/1402.1104v3 "Daniel K. L. Oi，Unitary Holonomies by Direct Degenerate Projections，式(3)—(5)：一处辅助Hilbert维度中的有限投影环；不供应未知原锥正性。"
 
 ## 追加锚（本行以下为增补区）
+
+## 312. 三根正交半径，两只共同门
+
+**定义 312.1（全维数的一只相位产品对）。** 保留310.1的整个强全有限背景、完整原菜单、单体暴露三球及全部具名单体、双HS／迹与全有限传播供应，不加 $\dim V>4$。固定二纯球 $B_*$ 与原纯旁观者 $b_*$，保留全部固定旁观产品单点族 $\mathcal S_0$。以该球心为原点，球面半径归一为一，选球面纯点 $p,r,s$ 的三根径向向量两两垂直。再选纯旁观者 $e$，与 $b_*$ 不同且非对径。只增加两个二点目标
+
+$$
+S_{\mathrm c}=\{p\otimes p\otimes b_*,r\otimes s\otimes b_*\},\qquad
+S_\pitchfork=\{p\otimes p\otimes b_*,r\otimes r\otimes e\}.
+\tag{312.1}
+$$
+
+候选 $\mathsf Q_{\mathrm{tripod}}$ 是 $\mathrm{L2}^{\mathrm{exp}}_1$ 加上存在上述点，使 $\mathsf{Link}(\mathcal S_0\cup\{S_{\mathrm c},S_\pitchfork\})$ 成立。Link仍保留296.1—296.2的整个原确认纤维、全部原相关状态序比较、上门排除和最低点保留。正交的是同一仿射三球中的球心半径，不是单体纯射线；重建后相应跃迁概率为 $1/2$。
+
+**定理 312.2（同门双残余与交换腿生成支持内复控制）。** 在312.1背景中，只消费 $\mathcal S_0,S_{\mathrm c}$，便得整个双份PSD或coPSD。该证明适用于每个 $n\ge2$；不需辅助单体维度、第二只角内产品对、预给Bell杯帽或原局部相位操作。
+
+证明。（一）只用 $\mathcal S_0$，沿310.2首两段取得单体 $C_1=\operatorname{PSD}_n$、$n\ge2$，全部双份产品least及态／效应两侧的全部矩形压缩。令 $B_*=\mathcal D(S)$、$\dim_{\mathbb C}S=2$。$D=\Pi_{S,S}(C_2)$ 等于完整实际支撑面锥。任意内在正效应 $f$ 的零延拓原正，因为对原 $X$ 有 $\langle f,X\rangle=\langle f,\Pi_{S,S}X\rangle\ge0$；内在proper的补延拓亦由310.2给出。三份共同least限制到固定旁观者，再限制到角；任意内在共同确认者反向先零延拓再张量单位。因此角内所得 $h$ 是对整个内在菜单的真正共同least。
+
+在被动单体坐标中，可写 $S=\operatorname{span}\{0,1\}$ 及
+
+$$
+p=P_0,\qquad r=P_+,\qquad s=P_{+i},\qquad
+|+\rangle=(|0\rangle+|1\rangle)/\sqrt2,\quad
+|+i\rangle=(|0\rangle+i|1\rangle)/\sqrt2.
+\tag{312.2}
+$$
+
+球的另一手性给 $-i$，全文共轭给相同证明。这个坐标选择不声称主动相位合同已经原正。
+
+（二）一只共同门支付两个同向实际余项。本条明确采用行系数向量化 $|A\rangle\!\rangle=\sum_{ij}A_{ij}|i\rangle\otimes|j\rangle$，令 $R_A=|A\rangle\!\rangle\langle\!\langle A|$。所有二阶矩阵在 $S^\perp$ 上零延拓，记 $j(A)=A\oplus0$；写 $R_A$ 时亦指其实际环境支撑。令
+
+$$
+M=\frac1{\sqrt3}\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+N=\frac1{2\sqrt3}\begin{pmatrix}3&-1\\-1&-1\end{pmatrix},\quad
+U=\operatorname{diag}(1,i),\quad A=MU,\quad B=NU.
+\tag{312.3}
+$$
+
+对 $v=00,w=+\otimes+i$，$\langle v,w\rangle=1/2$；$A,B$ 分别是 $(w-v/2)/\sqrt{3/4}$ 与 $(v-w/2)/\sqrt{3/4}$ 的系数矩阵。固定对的XIX276.2（二）—（四）局部证明给同一 $\delta\in\{0,1\}$，使
+
+$$
+h-P_v=T_1^\delta R_A,\qquad h-P_w=T_1^\delta R_B,
+\qquad T_1^\delta R_A,T_1^\delta R_B\in D\cap D^*.
+\tag{312.4}
+$$
+
+具体地，产品least支付原极端残余减法，稀疏迹二给两个残余迹一；双HS预算取等号分别迫其为实际态。共同门的同一稀疏端点给共同方向；因 $v,w$ 的第一腿均实，$T_1$固定两个产品投影。没有调用全参数连通性，也没有给余项least。由（一）的实际面与零延拓，两个残余均为环境 $C_2$ 中的归一态兼完整正对偶中的proper效应。
+
+（三）四个原正矩阵字母不依赖未知取向。XVI172.3的完整正对偶切片由原min/max及正置换支付任意有限相关输入的杯帽接线。取杯的第一腿为输出、帽的第一腿为输入，行系数向量化的直接指标展开给
+
+$$
+\begin{aligned}
+\Phi(R_A,R_B)&=\operatorname{Ad}_{AB^*},\\
+\Phi(T_1R_A,T_1R_B)&=\operatorname{Ad}_{\bar A B^{\mathsf T}},\\
+\Phi(T_2R_A,T_2R_B)&=\operatorname{Ad}_{AB^*}.
+\end{aligned}
+\tag{312.5}
+$$
+
+例如第二式的输出系数为 $\sum_{ii'kk'}Z_{ii'}A_{a'k}\bar A_{ak'}B_{ik'}\bar B_{i'k}$，等于 $\bar A B^{\mathsf T}Z\bar B A^{\mathsf T}$。旁观指标原样保留，支撑外指标全零。原min支付实际杯，完整max及双极性支付帽切片，所以每个式子在每个原有限相关旁观输入上保正；这里不用高层PSD、Bell资源或预先的高层压缩。
+
+$AB^*=MN$ 且 $\bar A B^{\mathsf T}=MN$，交换杯帽角色给 $NM$。再将两只实际资源各自交换两条腿：普通分支成为 $R_{A^{\mathsf T}},R_{B^{\mathsf T}}$，转置分支成为 $T_2R_{A^{\mathsf T}},T_2R_{B^{\mathsf T}}$。两分支都由(312.5)给 $A^{\mathsf T}\bar B=UMNU^*$；交换角色给 $UNMU^*$。因此
+
+$$
+\operatorname{Ad}_{j(MN)},\quad\operatorname{Ad}_{j(NM)},\quad
+\operatorname{Ad}_{j(UMNU^*)},\quad\operatorname{Ad}_{j(UNMU^*)}
+\tag{312.6}
+$$
+
+均具有全部原有限旁观正性。$U$此时只是四个已经导出的矩阵之间的代数关系，并未作为操作输入。
+
+（四）两个椭圆圆群与其交换腿实形支付全部复控制。正齐次性可把 $MN,NM$ 改写为
+
+$$
+E=3MN=\tfrac12\begin{pmatrix}-1&-1\\2&-2\end{pmatrix},\quad
+E^{\mathsf T}=3NM,\quad
+J=\frac{4E+3I}{\sqrt7}=\frac1{\sqrt7}\begin{pmatrix}1&-2\\4&-1\end{pmatrix}.
+\tag{312.7}
+$$
+
+$J^2=-I$，$E=e^{\theta J}$，其中 $\cos\theta=-3/4$、$\sin\theta=\sqrt7/4$。若 $\theta/\pi$ 有理，则 $e^{i\theta}$为单位根，$2\cos\theta=-3/2$为有理代数整数，矛盾。因此 $E$正幂闭包包含全部 $e^{tJ}$，$E^{\mathsf T}$正幂闭包包含全部 $e^{tJ^{\mathsf T}}$；两个双向圆群及其逆先成为结论。
+
+设 $H=\operatorname{diag}(1,-1)$、$X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$、$Y=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$。则
+
+$$
+J+J^{\mathsf T}=\tfrac2{\sqrt7}(H+X),\qquad
+J-J^{\mathsf T}=\tfrac6{\sqrt7}Y,\qquad
+[H+X,Y]=2(H-X).
+\tag{312.8}
+$$
+
+实线性与括号生成遂给整个 $\mathfrak{sl}_2(\mathbb R)$，进而给全部 $SL_2(\mathbb R)$。这一步只在圆群已付逆后使用Lie群运算；可由乘积公式和交换子极限取得各指数，不把正向半群直接当作群。
+
+同样，后两只原字母给整个 $USL_2(\mathbb R)U^*$。$UE_{01}U^*=-iE_{01}$、$UE_{10}U^*=iE_{10}$；与实形合在一起给 $E_{01},E_{10},H,iE_{01},iE_{10}$，括号再给 $iH$，即整个 $\mathfrak{sl}_2(\mathbb C)$。因此给全部复初等剪切 $I+zE_{01},I+wE_{10}$；高斯消元给全部 $SL_2(\mathbb C)$。任意 $G\in GL_2(\mathbb C)$ 写为 $G=\lambda G_0$、$G_0\in SL_2(\mathbb C)$，正齐次性消去 $|\lambda|^2$，给全部复可逆合同。
+
+这里的矩阵闭包逐层传递：每个有限字由实际资源接线，若 $j(Q_k)\to j(Q)$，对每个固定有限层及每个固定原相关输入，合同像收敛；该层锥闭，故极限仍正。此为XVI172.6的既有证明接口，没有无限层极限交换。全部 $G^*$也在已得族内，迹伴随恒等式遂给双份完整效应锥上的同类正性。
+
+所有 $j(G)$在环境空间一般奇异；其支持逆复合为 $P_S$。因此它们在整个环境锥上保正，只在支持面上互为序同构，不作支撑外恒等延拓。这同时覆盖 $n=2$ 和 $n>2$。
+
+（五）一条双侧射线补齐整个双份。用上述支持内复控制运输(312.4)中同一个满Schmidt秩余项，给同一取向的全部满秩dyad；闭性补齐产品边界。于是 $K=T_1^\delta\operatorname{PSD}_4\subseteq D\cap D^*$；$K$自对偶，故 $D\subseteq K^*=K$，得到 $D=D^*=K$。309.3（三）末尾的支持运输与（四）的相关压缩只需此完整角、全产品least及已付双份矩形压缩，遂给整个 $C_2=T_1^\delta\operatorname{PSD}_{n^2}$。$\square$
+
+**定理 312.3（两只共同门与全部有限量子静态结构等价）。** 相对于312.1的同一背景，$\mathsf Q_{\mathrm{tripod}}$ 等价于存在 $n\ge2$ 和同一保单位实线性序同构 $\theta$，使每个有限 $N\ge0$ 的整个原锥为 $\operatorname{PSD}_{n^N}$、原单位为 $\operatorname{Tr}\circ\theta^{\otimes N}$。
+
+证明。312.2给完整低二层。$p,r$重叠为 $1/\sqrt2$，$b_*,e$不同非对径；310.3只消费同一只 $S_\pitchfork$ 的同余项双NPT边缘证明原样适用，先排残余转置位，再排二体取向，给三个展平秩均二的实际普通dyad。310.4的完整二维层级、坐标压缩生成 $(n,n,2)$ 种子及全有限传播给结论。反向，完整PSD层级的共同支持投影是每个目标集合在整个proper菜单中的least，故296.2给所列Link；同一球中三根正交半径及非对径旁观者均可选。$\square$
+
+**命题 312.4（简洁性、反事实与量子公理对应）。** 本候选在每个 $n\ge2$ 都只需一对固定纤维产品来源和一对离纤维产品来源，两对共享一个产品端点。相比310，固定球内全部点对缩成一对；相比311，一般位置自由选点改为三根正交半径的指定相位对，但去掉 $n\ge3$及辅助空位限制。此为选点与证明接口的交换，不申领整体逻辑严格弱化或独立公理最少。
+
+证明与边界。两对都属于310.1原族，重建又给原族的全部Link；在共同背景中定义同一模型类。单点来源、球暴露性、完整相关比较和未截断的全有限背景仍明列。若只把同一实对的两个余项接线，所得可逆字保持实矩阵射影类，不能据此支付完整复控制；本对的交换腿资源额外给第二实形。少掉任一已用资源或交换腿操作时，本证明相应字母不再有来源，不据此冒称已有全有限独立性反模型。闭包给每个固定有限层的精确数学正性，不给有限成功步数、统一误差或物理极限装置。
+
+重建后的静态字典沿310.5：复射线、密度矩阵、全部效应区间、Born迹、有限POVM／PVM、复张量、置换及偏迹。CP／Kraus仍以给定分支在全部有限相关旁观输入上保正为条件；TNI／TP与仪器保留全输入合计质量预算；Lüders保留指定锐事件及整个yes支持中性；酉动力学保留指定连续可逆保单位群。物理钟、能量、$\hbar$、设备可用性及无限极限不由两对来源自动得到。
+
+局部共同门极端残余沿XIX276.2，完整对偶切片、矩阵字的逐层闭锥传递沿XVI172.3—172.6，角运输与全有限传播沿309—310。单位根的代数整数性质、圆群正幂稠密、实矩阵Lie群运算及高斯消元为成熟中间工具；Hall[Q312Hall] Proposition3.15、Theorem3.16供应实线性与括号闭性，不供应逆或未知原锥正性。新增接合是同门两个实际余项，经原资源交换腿同时产生两个实形，从而由一对全产品端点内生支持内完整复控制；不申领全球优先性或内核核验。
+
+白话：在同一张小球上挑三根互相垂直的半径。第一颗产品准备两条腿都用第一根，第二颗分别用另外两根，只问这一对有没有共同最低门。从同一只门的两边各扣一次，得到两只真实准备兼测试；把它们接起来，再把两只资源的腿都交换，就出现两套不同方向的实控制，合起来补齐复控制，不用在球外借空位。再问原来那一对让旁观腿也改变的产品准备，同一个三份余项的两条真实边共同排掉镜像，留下能接上全部有限层的种子。两只门共用起点；小球可筛出、全产品单点最低门、完整菜单及全有限复合仍承担明确的输入。$\square$
+
+[Q312Hall]: https://arxiv.org/abs/math-ph/0005032v1 "Brian C. Hall，An Elementary Introduction to Groups and Representations，Proposition3.15、Theorem3.16：实矩阵Lie代数的共轭、实线性和括号闭性。"
+
+## 追加锚（本行以下为增补区）
+
+## 313. 一只共同门：整块最低比较自行支付第三份
+
+**定义 313.1（只留一对相位产品点）。** 保留310.1的强全有限背景 $\mathsf F$、完整原基、完整正对偶、proper区间及全部有限单位分解，保留单体 $\mathrm{L2}^{\mathrm{exp}}_1$ 和全部具名单体Jordan／复类型、双HS／迹及全有限传播供应。固定一张实际二纯三球 $B_*$ 和一个原纯旁观者 $b_*$，保留310.1的整个固定旁观产品单点族 $\mathcal S_0$。以该球心为原点，选球面纯点 $p,r,s$，三根归一径向向量两两垂直。只要求一个二点目标
+
+$$
+S_{\mathrm c}=\{p\otimes p\otimes b_*,r\otimes s\otimes b_*\},
+\qquad
+\boxed{\mathsf Q_{\mathrm{one}}
+=\mathrm{L2}^{\mathrm{exp}}_1+
+\exists B_*,b_*,p,r,s:\mathsf{Link}(\mathcal S_0\cup\{S_{\mathrm c}\}).}
+\tag{313.1}
+$$
+
+Link保持296.1—296.2的全原确认纤维、全部原相关输入上的序比较、上门排除及最低点保留。球心与垂直关系来自同一仿射三球的内在欧氏几何，不预给Hilbert坐标或主动相位操作。不选择第二个旁观者，不要求离纤维二点目标，也不向非产品准备索取确认关系。具名传播可准确使用XIII164.11的正则铅笔版本；无需调用完整二维角继承。本节对任意向量 $v$ 记 $P_v=vv^*$；只有 $v$ 为单位向量时才称它为投影，其余dyad不隐含归一化。
+
+**引理 313.2（完整块正性与产品最低门支付受控支撑压缩）。** 设 $D\subseteq\operatorname{Herm}(H_A\otimes H_B\otimes H_C)$ 为有限维闭尖生成锥，迹在非零原态上严格正，使用整个迹一底及完整对偶proper菜单。假定 $D\subseteq\operatorname{BP}(A|(BC))$，即对任意 $a\in H_A,z\in H_B\otimes H_C$ 均有 $\langle a\otimes z|X|a\otimes z\rangle\ge0$。每只单位全产品投影都是实际原态，且其全原least确认效应就是该投影。取 $H_B\otimes H_C$ 的任意一组正交单位产品基 $\{b_j\otimes c_j\}_j$，对非空指标子集 $J$ 令
+
+$$
+q=\sum_{j\in J}P_{b_j\otimes c_j},\qquad
+h=I_A\otimes q.
+\tag{313.2}
+$$
+
+则 $X\mapsto hXh$ 保持 $D,D^*$，并对原态不增迹。产品基只要求整组正交完备，不要求 $b_j,c_j$ 分别来自两张固定局域基；受一条腿控制的另一腿基选择也包含在内。
+
+证明。选 $H_A$ 的任意正交单位基，与所给产品基合成整个三份正交单位基；每只基投影都是已付least，故 $h,I-h$ 都为原正效应。这里只检验XX309.2的两个压缩前件，不先借压缩正性。
+
+令 $L=\operatorname{Ran}q$。对 $X\in D$，普通矩阵 $W=hXh$ 在 $H_A\otimes L$ 上块正；此处尚未宣称 $W\in D$。Gurvits—Barnum[Q313GB]的二体未归一HS半径一可分球用于这一整块空间。若 $W\ne0$，则 $I_{A\otimes L}-W/\|W\|_2$ 可分，与块正 $W$ 配对得
+
+$$
+\|hXh\|_2\le\operatorname{Tr}(hX)\qquad(X\in D).
+\tag{313.3}
+$$
+
+零矩阵情形同样成立。第二块的全部向量都可用于块正测试；不把逐腿产品正性误当这一整块条件。
+
+再设 $Y\in D$、$\operatorname{Tr}Y=\operatorname{Tr}(hY)=1$。块正性给边缘 $\rho_{BC}=\operatorname{Tr}_A Y\succeq0$，故 $\operatorname{Tr}((I-q)\rho_{BC})=0$ 迫其支撑于 $L$。任意单位向量 $a$ 的条件矩阵 $Y_a=\langle a|Y|a\rangle$ 为PSD；把 $a$ 补成正交单位基，则 $\rho_{BC}=Y_a+\sum_{k>1}Y_{a_k}$ 是PSD项之和。因此每个 $Y_a$ 的支撑外正块迹为零；PSD消去与外部相连的行列，得 $Y_a=qY_aq$。对 $a$ 作复极化，得到
+
+$$
+Y=hYh\quad\text{当 }Y\in K_D,\ \operatorname{Tr}(hY)=1.
+\tag{313.4}
+$$
+
+式(313.3)—(313.4)正是309.2的两个前件，常数 $c=1$。外部基点的全原least允许在原序中逐只扣除补门，309.2的分离证明遂给态侧压缩正；压缩对迹配对自伴，又给完整对偶侧正。$h$ proper给不增迹。结论只属于这一实际三份锥，不自动宣布任意旁观者上的压缩正性。$\square$
+
+**定理 313.3（完整低二层加三份产品least迫使全有限标准性）。** 在同一强全有限背景中，假定已有同一实际坐标
+
+$$
+C_1=\operatorname{PSD}_n,\quad
+C_2=T_1^\varepsilon\operatorname{PSD}_{n^2},\quad n\ge2,\quad
+\varepsilon\in\{0,1\},
+\tag{313.5}
+$$
+
+且每只单位全产品三份投影的全原least就是其本身。则 $\varepsilon=0$，且在具名XIII164.11传播供应下，对每个有限 $N\ge0$ 有 $C_N=\operatorname{PSD}_{n^N}$。
+
+证明。（一）先排除co分支。若 $\varepsilon=1$，只定义运输后的三份锥 $D=T_2C_3$；$T_2$不是被宣布可用的原操作。该实线性变换保迹、保单位且对迹配对自伴，故 $D^*=T_2C_3^*$，完整proper菜单与least同步运输。全产品投影在第二腿共轭后仍遍历全部全产品投影。对实际分割 $1|(23)$，$T_2$把整个第二块coPSD变成PSD，故
+
+$$
+\operatorname{Sep}(n|n^2)\subseteq D
+\subseteq\operatorname{BP}(n|n^2).
+\tag{313.6}
+$$
+
+不要求 $D$ 本身组成置换不变的全有限层级；以下只在这个已运输锥上用313.2。
+
+记 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$，在第二、三腿取
+
+$$
+q=P_{0,2}\otimes P_{0,3}+P_{+,2}\otimes P_{1,3},\qquad h=I_1\otimes q.
+\tag{313.7}
+$$
+
+两只选中向量因第三腿正交而正交。第三腿为 $0$ 时用第二腿计算基，第三腿为 $1$ 时用含 $+,-$ 的第二腿基，其余第三腿方向任选第二腿正交基，即把它们扩成完整产品正交基。引理313.2准确适用，给 $\operatorname{Ad}_h(D)\subseteq D$。
+
+令 $\Omega_n=\sum_{i<n}|ii\rangle$，$F_{12}=T_2P_{\Omega_n}$ 是原 $C_2$ 中的交换矩阵资源。原min允许 $F_{12}\otimes P_{|0\rangle+|1\rangle,3}\in C_3$；运输到 $D$ 后变为普通Bell产品输入。式(313.7)的已付压缩因此给
+
+$$
+P_\chi\in D,\qquad
+\chi=|000\rangle+|+\,+\,1\rangle,
+\qquad X=T_2P_\chi\in C_3.
+\tag{313.8}
+$$
+
+这些输入未归一但质量严格正；只用锥的正齐次性。原丢弃第二腿，部分转置在被丢弃腿上消去，所以
+
+$$
+X_{13}=\operatorname{Tr}_2P_\chi
+=P_{00}+P_{+1}
++\frac{|00\rangle\langle+1|+|+1\rangle\langle00|}{\sqrt2}.
+\tag{313.9}
+$$
+
+取普通可逆线性矩阵 $G$，使 $G|0\rangle=|0\rangle$、$G|+\rangle=|1\rangle$，并在其余方向可逆延拓。对第一腿作合同，仅用于检验半正定性：结果为对角项 $P_{00}+P_{11}$、相干项 $(|00\rangle\langle11|+|11\rangle\langle00|)/\sqrt2$。其部分转置在这四维支持上的本征值为 $1,1,1/\sqrt2,-1/\sqrt2$。可逆局部合同保持“部分转置为PSD”的真假，故 $X_{13}\notin T_1\operatorname{PSD}_{n^2}$，违反原正丢弃。因而 $\varepsilon=0$。本步不把 $G$ 当实际装置，也不从 $T_2(h)=h$ 推出 $T_2\operatorname{Ad}_hT_2=\operatorname{Ad}_h$；压缩始终在 $D$ 上，只有所得实际矩阵运输回原锥。
+
+（二）标准分支直接给满维正则种子。现在 $C_2=\operatorname{PSD}_{n^2}$，原 $1|(23)$ 最大界支付313.2。改取
+
+$$
+q_0=I_2\otimes P_{0,3}+P_{0,2}\otimes P_{1,3},\qquad h_0=I_1\otimes q_0.
+\tag{313.10}
+$$
+
+它是完整计算产品基的子集投影。原Bell产品 $P_{\Omega_n,12}\otimes P_{|0\rangle+|1\rangle,3}$ 经已付 $h_0$ 压缩，给
+
+$$
+P_\psi\in C_3,\qquad
+\psi=\sum_{i<n}|ii0\rangle+|001\rangle
+=|I_n\rangle\!\rangle|0\rangle+|P_0\rangle\!\rangle|1\rangle.
+\tag{313.11}
+$$
+
+向量质量为 $n+1$，三个展平秩为 $(n,n,2)$。更直接地，按XIII164.2的参考—输出向量化，$A=I_n$可逆，$B=P_0$非标量，且二者独立；原实际dyad已含二元正则铅笔。因此准确调用164.11，得到全部有限整锥PSD等式。无需先继承二维层级，再由角逐维放大；无需向种子或其非产品切片索取least。$\square$
+
+**定理 313.4（单共同门候选的完整正反向）。** 相对于313.1明确保留的同一背景与具名供应，$\mathsf Q_{\mathrm{one}}$ 等价于存在同一个保单位实线性序坐标 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$、$n\ge2$，使每个有限 $N\ge0$ 都满足
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{313.12}
+$$
+
+证明。312.2的完整证明只消费 $\mathcal S_0,S_{\mathrm c}$，故原样支付单体坐标及(313.5)。其中同门双残余、交换腿的两种实形和闭锥极限已付支持内复控制；随后309的运输及相关压缩已付整个双份，不能把“一个小角标准”直接替换成(313.5)。
+
+完整低二层取得后，XX302.2在两种取向中均给一体酉及其逆的全有限旁观正性。沿第三腿酉把固定 $b_*$ 送到任意原纯旁观者；酉保单位，所以整个proper确认纤维、least与原序都同步运输。由此 $\mathcal S_0$ 给每只全产品三份点的least。在实际 $(12)|3$ 上，低两块已有完整M；XX272.2的单目标因子化把这些least准确识别为普通全产品投影。这只需(313.5)，完全不消费离纤维点对的共同门。313.3现在适用，给(313.12)。
+
+反向，在完整PSD层级中，任意目标集合的共同支持投影都是整个原proper菜单中共同确认者的least；296.2因而给所需全部Link。每个二纯最小面是支持投影暴露的完整三球，可选三根两两垂直的球半径及任意固定纯旁观者，故(313.1)成立。反向不要求额外选择 $e$ 或另一共同门。$\square$
+
+**命题 313.5（几何、反事实与量子公理字典）。** 本候选在312的同一背景下删去 $S_\pitchfork$ 的整个输入要求；这是真正的前件删除，但313.4又表明两个候选在该背景中的模型类相同，不能据此宣称模型类严格扩大或已经找到全球最少公理。离纤维最低门现在是完整重建后的输出。新增承重关系是：后两份已经共同组成一个完整量子块，乘积基点的全域最低比较便把“只留下这些产品窗格”的矩阵投影提升为实际正压缩。完整复子空间格中的join、正交补和支持旗形是这一共同门的更大结构；小球内三根半径及一对产品点是其局部入口，不另输入整个格。
+
+证明与边界。若删去全产品单点来源，313.2在补门中逐只扣除外部基点就失去least依据；只比较选定探针同样不能替代全原序。若只有逐腿产品块正而没有完整 $1|(23)$ 界，则不能对任意 $z\in H_2\otimes H_3$ 检验块正，313.3的半径一预算及饱和条件也未付。若未付相位共同门，312.2的完整双份分类便不再由本证明给出。这些是精确的证明缺口，不冒充相应公理的独立性反模型。一般维数单体球暴露性、完整全有限实张量与全部相关输入的min/max仍为输入；未从裸L2推出暴露性，未把整个背景藏进“内生”一词。三份压缩只在所用层上正，全有限结论仍由具名164.11承担。结果是条件纸面理论，不是Lean核验或经验实现。
+
+| 已有量子结构 | 从新候选得到的关系 | 仍需的操作或物理条件 |
+| --- | --- | --- |
+| 复Hilbert态、纯射线与混合 | 313.12给全部 $\rho\succeq0,\operatorname{Tr}\rho=1$，极点为 $\mathbb{CP}^{n^N-1}$ | 有限维、每个有限张量幂；无限维与极限另论 |
+| Born规则、POVM与PVM | 完整迹对偶给 $\Pr(a|\rho)=\operatorname{Tr}(E_a\rho)$，$0\preceq E_a\preceq I$，$\sum_aE_a=I$；正交投影分解给PVM | 原完整菜单是保留背景，未断言每个数学效应都有物理设备 |
+| 复合与边缘 | 原产品、置换、重括号、丢弃成为同一复张量、腿重排和偏迹 | 原实际张量载体与所有分块兼容为输入；联合正锥为输出 |
+| CP／Kraus及数学仪器 | 对指定线性分支要求任意有限相关旁观输入上正，整锥等式后等价于矩形CP／Kraus | TNI／TP须对整个正输入满足分支／合计质量预算，设备可取得性另论 |
+| 锐更新与连续动力学 | 指定锐事件及整个yes支持中性时复用Lüders桥；指定连续可逆保单位的一参数数学群时复用酉表示 | 更新条件、物理钟、能量、$\hbar$及具体Hamiltonian未从静态确认关系推出 |
+
+Gurvits—Barnum的二体可分球、PSD零支撑、极化、凸分离及部分转置检验均为成熟工具；XX309.2的外部least减法、312.2的单门低二层分类、XX272.2的产品因子化和XIII164.11的全有限传播沿既有归属复用。这里的新增综合是完整双份块使309.2在三份上直接可用，受第三腿控制的产品基同时排co分支，而一次满维压缩直接生成正则铅笔。未申领成熟工具、既有传播或全球文献优先性。
+
+白话：先把能独立拼出的产品准备都放进同一个世界，让每颗产品点有一只对所有准备都最低的确认门。在一张小球里只取三根互相垂直的半径，把第一根配自己、第二根配第三根；这两颗产品点只借同一只最低门。它已经把整个双份世界接成了量子块。现在把后两份合起来看：哪些产品窗格该留下，最低门的全局比较就迫使这种保留真能作用在原态上。若双份世界选了镜像取向，两张错开基底的窗格会留下一个三份态，丢掉中间一份后却在已有双份世界里出现负方向，所以镜像走不通。标准取向中，另一张简单窗片把真实Bell产品直接裁成两腿满维、第三腿只有两个方向的种子，再由既有传播定理覆盖全部有限份数。这样不必额外借一只跨纤维共同门；仍明确保留可筛出的小球、全局最低比较和完整分块背景。$\square$
+
+[Q313GB]: https://arxiv.org/abs/quant-ph/0204159v2 "Gurvits–Barnum，Largest separable balls around the maximally mixed bipartite quantum state，§III Theorem1：任意有限复二体的未归一HS半径一可分球；313.2用于1|(23)整块。"
+[Q313Regular]: QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "164.1—164.2与164.11的同一原全有限背景及正则铅笔传播；不以有限前缀代替全部有限整锥。"
+
+## 追加锚（本行以下为增补区）
