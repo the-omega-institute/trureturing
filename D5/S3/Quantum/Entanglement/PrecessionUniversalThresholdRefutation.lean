@@ -55,6 +55,7 @@ Direct frozen dependencies:
     D5.S3.Resource.CompositeConeProperness.singletMatrix_posSemidef: sha256:e5de16539b2f92231f69ec6414837470e3ec36c028c4a88eb0c77b527c519f53
 Escape-audit registration is paused under CLAUDE.md §3.9.
 -/
+import D5.S3.Quantum.Hiai.SupportPowerLimits
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound
 import D5.S3.Resource.CompositeConeProperness
@@ -64,6 +65,7 @@ noncomputable section
 open Matrix Complex
 open scoped BigOperators Matrix Kronecker ComplexOrder
 namespace D5.S3.Quantum.Entanglement.PrecessionUniversalThresholdRefutation
+open D5.S3.Quantum.Hiai.SupportPowerLimits
 open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound
 open D5.S3.Resource.CompositeConeProperness
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
@@ -146,44 +148,6 @@ def claim : Prop :=
     ∀ (j : Fin N → ℕ), (∀ n, 1 ≤ j n) →
     ∀ (rho : Matrix (∀ n, Fin (j n + 1)) (∀ n, Fin (j n + 1)) ℂ),
     IsDensity rho → conjecturedThreshold K < (trace (rho * ensembleQ j K)).re → SpinGME j rho
-
-private theorem cfc_eigenmatrix {ι κ : Type} [Fintype ι] [DecidableEq ι]
-    [Fintype κ] [DecidableEq κ] {A : Matrix ι ι ℂ}
-    (hA : A.IsHermitian) (V : Matrix ι κ ℂ) (lam : κ → ℝ)
-    (hAV : A * V = V * diagonal (fun i => (lam i : ℂ))) (f : ℝ → ℝ) :
-    hA.cfc f * V = V * diagonal (fun i => (f (lam i) : ℂ)) := by
-  let U : Matrix ι ι ℂ := hA.eigenvectorUnitary
-  have hU : Uᴴ * U = 1 := Unitary.coe_star_mul_self hA.eigenvectorUnitary
-  have hU' : U * Uᴴ = 1 := Unitary.coe_mul_star_self hA.eigenvectorUnitary
-  have hs : A = U * diagonal (fun i => (hA.eigenvalues i : ℂ)) * Uᴴ := by
-    simpa [Unitary.conjStarAlgAut_apply, Function.comp_def, Matrix.star_eq_conjTranspose, U]
-      using hA.spectral_theorem
-  have hR : diagonal (fun i => (hA.eigenvalues i : ℂ)) * (Uᴴ * V) =
-      (Uᴴ * V) * diagonal (fun i => (lam i : ℂ)) := by
-    have h := congrArg (fun M => Uᴴ * M) hAV
-    rw [hs] at h
-    simp only [Matrix.mul_assoc] at h
-    rw [← Matrix.mul_assoc Uᴴ U, hU, Matrix.one_mul] at h
-    simpa only [Matrix.mul_assoc] using h
-  have hfR : diagonal (fun i => (f (hA.eigenvalues i) : ℂ)) * (Uᴴ * V) =
-      (Uᴴ * V) * diagonal (fun i => (f (lam i) : ℂ)) := by
-    ext i j
-    have h := congrArg (fun M : Matrix ι κ ℂ => M i j) hR
-    simp only [diagonal_mul, mul_diagonal] at h ⊢
-    by_cases he : hA.eigenvalues i = lam j
-    · rw [he, mul_comm]
-    · have hn : (hA.eigenvalues i : ℂ) - (lam j : ℂ) ≠ 0 :=
-        sub_ne_zero.mpr (by exact_mod_cast he)
-      have hz : (Uᴴ * V) i j = 0 :=
-        (mul_eq_zero.mp (show ((hA.eigenvalues i : ℂ) - (lam j : ℂ)) * (Uᴴ * V) i j = 0
-          by linear_combination h)).resolve_left hn
-      rw [hz, mul_zero, zero_mul]
-  have h := congrArg (fun M => U * M) hfR
-  simp only [Matrix.mul_assoc] at h
-  rw [← Matrix.mul_assoc U Uᴴ, hU', Matrix.one_mul] at h
-  simpa only [Matrix.IsHermitian.cfc, Unitary.conjStarAlgAut_apply,
-    Function.comp_def, RCLike.ofReal_eq_complex_ofReal, Matrix.star_eq_conjTranspose,
-    U, Matrix.mul_assoc] using h
 
 private theorem cfc_intertwining {ι κ : Type} [Fintype ι] [DecidableEq ι]
     [Fintype κ] [DecidableEq κ] {A : Matrix ι ι ℂ} {B : Matrix κ κ ℂ}
