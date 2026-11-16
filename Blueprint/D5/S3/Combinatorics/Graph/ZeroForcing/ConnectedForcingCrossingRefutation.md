@@ -6,7 +6,7 @@ The four-vertex path followed by the four-vertex star refutes the fixed ordered 
 
 **Definition 1.1 (Initial connectivity and ordinary forcing).**
 
-$$\forall (V : Type), \forall (G : \operatorname{SimpleGraph}\left(V\right)), \forall (S : \operatorname{Finset}\left(V\right)), (\operatorname{connectedForcing}\left(G, S\right)) \Leftrightarrow ((\operatorname{Connected}\left(\operatorname{induce}\left(G, S\right)\right)) \land (\operatorname{IsZeroForcing}\left(G, S\right)))$$
+$$\forall (V : Type), \forall (G : \operatorname{SimpleGraph}\left(V\right)), \forall (S : \operatorname{Finset}\left(V\right)), (\operatorname{connectedForcing}\left(G, S\right)) \Leftrightarrow ((\operatorname{Connected}\left(\operatorname{induce}\left(G, (S : \operatorname{Set}\left(V\right))\right)\right)) \land (\operatorname{IsZeroForcing}\left(G, (S : \operatorname{Set}\left(V\right))\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.connectedForcing` (`✓ std3`).
 
@@ -30,7 +30,7 @@ Enumerate every finite vertex subset once, retain exactly the subsets of size i 
 
 **Definition 1.3 (Degree-one vertices).**
 
-$$\forall (V : Type), \forall (G : \operatorname{SimpleGraph}\left(V\right)), \operatorname{leafCount}\left(G\right) = \operatorname{Natcard}\left(\{v : V \mid \operatorname{Natcard}\left(\{w : V \mid \operatorname{Adj}\left(G, v, w\right)\}\right) = 1\}\right)$$
+$$\forall (V : Type), \forall (G : \operatorname{SimpleGraph}\left(V\right)), \operatorname{leafCount}\left(G\right) = \operatorname{Nat.card}\left(\{v : V \mid \operatorname{Nat.card}\left(\{w : V \mid \operatorname{Adj}\left(G, v, w\right)\}\right) = 1\}\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.leafCount` (`✓ std3`).
 
@@ -42,7 +42,7 @@ Count the vertices whose neighbor subtype has cardinality one. For a finite simp
 
 **Definition 1.4 (Problem 5.3 with fixed order).**
 
-$$(claim) \Leftrightarrow (\forall (n : \mathbb{N}), \forall (p : \mathbb{N}), \forall (q : \mathbb{N}), \forall (V : Type), \forall (W : Type), [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(W\right)], \forall (G : \operatorname{SimpleGraph}\left(V\right)), \forall (H : \operatorname{SimpleGraph}\left(W\right)), (\operatorname{IsTree}\left(G\right)) \Rightarrow ((\operatorname{IsTree}\left(H\right)) \Rightarrow ((\operatorname{card}\left(V\right) = n) \Rightarrow ((\operatorname{card}\left(W\right) = n) \Rightarrow ((\operatorname{leafCount}\left(G\right) = p) \Rightarrow ((\operatorname{leafCount}\left(H\right) = q) \Rightarrow (\exists (l : \mathbb{Z}), (1 \le l) \land ((l \le n) \land (\forall (i : \mathbb{Z}), (((1 \le i) \land (i \le l)) \Rightarrow (\operatorname{coefficient}\left(G, \operatorname{toNat}\left(i\right)\right) \le \operatorname{coefficient}\left(H, \operatorname{toNat}\left(i\right)\right))) \land (((l + 1 \le i) \land (i \le n)) \Rightarrow (\operatorname{coefficient}\left(H, \operatorname{toNat}\left(i\right)\right) \le \operatorname{coefficient}\left(G, \operatorname{toNat}\left(i\right)\right))))))))))))$$
+$$(claim) \Leftrightarrow (\forall (n : \mathbb{N}), \forall (p : \mathbb{N}), \forall (q : \mathbb{N}), \forall (V : Type), \forall (W : Type), [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(W\right)], \forall (G : \operatorname{SimpleGraph}\left(V\right)), \forall (H : \operatorname{SimpleGraph}\left(W\right)), (\operatorname{IsTree}\left(G\right)) \Rightarrow ((\operatorname{IsTree}\left(H\right)) \Rightarrow ((\operatorname{card}\left(V\right) = n) \Rightarrow ((\operatorname{card}\left(W\right) = n) \Rightarrow ((\operatorname{leafCount}\left(G\right) = p) \Rightarrow ((\operatorname{leafCount}\left(H\right) = q) \Rightarrow (\exists (l : \mathbb{Z}), (1 \le l) \land ((l \le (n : \mathbb{Z})) \land (\forall (i : \mathbb{Z}), (((1 \le i) \land (i \le l)) \Rightarrow (\operatorname{coefficient}\left(G, \operatorname{toNat}\left(i\right)\right) \le \operatorname{coefficient}\left(H, \operatorname{toNat}\left(i\right)\right))) \land (((l + 1 \le i) \land (i \le (n : \mathbb{Z}))) \Rightarrow (\operatorname{coefficient}\left(H, \operatorname{toNat}\left(i\right)\right) \le \operatorname{coefficient}\left(G, \operatorname{toNat}\left(i\right)\right))))))))))))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.claim` (`✓ std3`).
 
@@ -57,10 +57,6 @@ Mukherjee and Ray ask: Given two trees T₁∈𝔗ₙ,ₚ₁ and T₂∈𝔗ₙ,
 $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.result` (`✓ std3`). ∎
-
-*Resolves.* `Problems/mukherjee-ray-2026-ordered-connected-forcing-crossing` (refuted) by `D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mukherjee-ray-2026-ordered-connected-forcing-crossing","declaration_gid":"D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
