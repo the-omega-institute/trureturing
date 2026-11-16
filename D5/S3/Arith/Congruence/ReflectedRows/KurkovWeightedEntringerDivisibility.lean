@@ -10,7 +10,20 @@ import D5.S3.VertexAlgebra.Analysis.IntegerNewton
 import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Data.ZMod.Basic
 
-/-! Reflected row extensions, with denominator cancellation before modular reduction. -/
+/-!
+Reflected row extensions, with denominator cancellation before modular reduction.
+
+admission_basis: open-problem-resolution (#31218).
+proof_shape: triangle: content (the source recursion); a: bind-only (consumed by result);
+result: content. The live new inference constructs integral row extensions, identifies
+source interior values, and proves the pointwise all-modulus row transfer E_shift.
+No helper is an independent open-problem result or a separate admission witness.
+The sole direct frozen theorem supplier is
+D5/S3/VertexAlgebra/Analysis/IntegerNewton.int_newton_of_fwdDiff_iter_eq_zero,
+module statement_id sha256:9b6a04e2c8ddf2b06b173b77c64a5f485394d4901052055670b2f498ffd73027.
+It is applied directly in S_difference and factorial_integral. The remaining
+external suppliers are the pinned Mathlib imports. No third-party code is transplanted.
+-/
 
 set_option autoImplicit false
 noncomputable section
@@ -229,8 +242,8 @@ private theorem P_difference (r : ℕ) (x : ℤ) :
   rw [Nat.succ_descFactorial_succ]
   have hn : r + 1 + 1 - (j + 1) = r + 1 - j := by omega
   simp only [hn, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
-  have hN : (r : ℤ) + 1 + 2 - 1 = (r : ℤ) + 2 := by push_cast; ring
-  have hX : ((r : ℤ) + 1 + 2 - x : ℤ) = (r : ℤ) + 3 - x := by push_cast; ring
+  have hN : (r : ℤ) + 1 + 2 - 1 = (r : ℤ) + 2 := by ring
+  have hX : ((r : ℤ) + 1 + 2 - x : ℤ) = (r : ℤ) + 3 - x := by ring
   rw [hN, hX]
   ring
 
