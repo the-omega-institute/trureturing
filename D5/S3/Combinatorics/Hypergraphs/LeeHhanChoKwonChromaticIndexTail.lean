@@ -3,18 +3,18 @@
    mirror-B: D5/B/S3/Combinatorics/Hypergraphs/LeeHhanChoKwonChromaticIndexTail
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Hypergraphs/LeeHhanChoKwonChromaticIndexTail.claim; result=D5/S3/Combinatorics/Hypergraphs/LeeHhanChoKwonChromaticIndexTail.result; claim=D5/S3/Combinatorics/Hypergraphs/LeeHhanChoKwonChromaticIndexTail.claim
+   utility: none
    digest: Fixed-edge prefixes refute the proposed chromatic-index tail bound. -/
 
 /-
 result:
   proof_shape: content (a finite-prefix count and an unbounded dyadic counterexample family).
-  escape_witness: none.
+  escape_witness: fixed_prefix_prob_lower (the fixed-prefix probability estimate).
   admission_basis: open-problem-resolution (#20030; Refuted).
 Direct frozen dependencies: none (all imports are pinned Mathlib).
 
-The public result is the designated refutation result (`basis=refutes`) and is
-exempt from four-slot escape registration (CLAUDE.md §3.9).
+The escape audit for result is unfinished: https://github.com/the-omega-institute/trureturing/issues/31150.
+The symbolic refutation has utility: none; result is a §3.9 audit target.
 The edge space and edge-size expressions from issue #20030 are inlined
 literally; proofs use Finset.powersetCard and Nat.ceil without duplicate aliases.
 
