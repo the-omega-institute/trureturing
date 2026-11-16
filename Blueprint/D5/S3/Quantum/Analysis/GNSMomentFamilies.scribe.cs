@@ -45,12 +45,12 @@ internal sealed class GNSMomentFamiliesDocument : IScribeDocumentDefinition
         )));
 
     private static DocumentBlock Theorem(string name, string heading, string prose) =>
-        Describe.Lean(DescribeId.Create("gns-moments-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("gns-moments-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(heading), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static DocumentBlock Definition(string name, string heading, string prose) =>
-        Describe.Lean(DescribeId.Create("gns-moments-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("gns-moments-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(heading), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 }
