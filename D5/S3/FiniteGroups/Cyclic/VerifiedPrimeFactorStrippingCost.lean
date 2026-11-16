@@ -57,19 +57,6 @@ private theorem stripFactorCost_fst {G : Type*} [Monoid G] [DecidableEq G]
         exact h ⟨hf.1, hf.2.1, hf.2.2.1⟩
       rw [stripFactorCost, dite_eq_right h, stripFactor, dite_eq_right hfull]
 
-private theorem stripFactorCost_fst_le {G : Type*} [Monoid G] [DecidableEq G]
-    (x : G) (p m : ℕ) : (stripFactorCost x p m).1 ≤ m := by
-  induction m using Nat.strong_induction_on with
-  | h m ih =>
-    by_cases h : 1 < p ∧ 0 < m ∧ p ∣ m
-    · by_cases hp : x ^ (m / p) = 1
-      · rw [stripFactorCost, dite_eq_left h, dite_eq_left hp]
-        dsimp
-        exact (ih (m / p) (Nat.div_lt_self h.2.1 h.1)).trans
-          (Nat.le_of_lt (Nat.div_lt_self h.2.1 h.1))
-      · simp [stripFactorCost, h, hp]
-    · simp [stripFactorCost, h]
-
 private theorem stripFactorCost_budget {G : Type*} [Monoid G] [DecidableEq G]
     (x : G) (p m : ℕ) :
     (stripFactorCost x p m).2 + Nat.log 2 (stripFactorCost x p m).1 ≤
@@ -86,8 +73,6 @@ private theorem stripFactorCost_budget {G : Type*} [Monoid G] [DecidableEq G]
         rw [stripFactorCost, dite_eq_left h, dite_eq_left hp]
         dsimp
         have hi := ih (m / p) hlt
-        have hlog : Nat.log 2 (stripFactorCost x p (m / p)).1 ≤ Nat.log 2 (m / p) :=
-          Nat.log_mono_right (stripFactorCost_fst_le x p (m / p))
         calc
           (stripFactorCost x p (m / p)).2 + 1 +
               Nat.log 2 (stripFactorCost x p (m / p)).1 ≤
@@ -134,7 +119,6 @@ private theorem stripFactorsCost_count_fold {G : Type*} [Monoid G] [DecidableEq 
   | cons p P ih =>
     let s := stripFactorCost x p m
     have hs := stripFactorCost_budget x p m
-    have hsl := stripFactorCost_fst_le x p m
     simp only [List.foldl]
     have hi := ih s.1 (c + s.2)
     dsimp [s] at hi ⊢
@@ -157,15 +141,15 @@ Direct frozen dependencies:
   D5/S3/FiniteGroups/Cyclic/VerifiedPrimeFactorStripping
   statement_id=sha256:f7057762ad30365e0185653dd26f24f5955b5c6ae000fe2ed82c658a4c75b632
 private helpers: stripFactorCost_fst (bind-only, consumed by stripFactorsCost_fold);
-  stripFactorCost_fst_le (content, consumed by stripFactorCost_budget);
   stripFactorCost_budget (content, consumed by stripFactorsCost_count_fold);
   stripFactorsCost_fold (bind-only, consumed by stripFactorsCost_spec);
   stripFactorsCost_count_fold (content, consumed by stripFactorsCost_spec).
 -/
 theorem stripFactorsCost_spec {G : Type*} [Monoid G] [DecidableEq G]
     (x : G) (P : List ℕ) (m : ℕ) :
-    (stripFactorsCost x P m).1 = stripFactors x P m ∧
-      (stripFactorsCost x P m).2 ≤ P.length + Nat.log 2 m := by
+    let result := stripFactorsCost x P m
+    result.1 = stripFactors x P m ∧
+      result.2 ≤ P.length + Nat.log 2 m := by
   constructor
   · simpa [stripFactorsCost, stripFactors] using stripFactorsCost_fold x P m 0
   · simpa [stripFactorsCost, Nat.zero_add] using stripFactorsCost_count_fold x P m 0
