@@ -204,22 +204,139 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiati
 
 For every real r strictly between zero and one, the weighted source paired with the actual one-minus resolvent column is absolutely summable and equals 3r/(4(1-r)) minus 2r times the derivative of F divided by F, embedded into the complex numbers.
 
+**Definition 1.17 (radialSourceFamily).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialSourceFamily`
+
+*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialSourceFamily` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original source family evaluated at the complex embedding of the real square root, with the natural frequency weight unchanged.
+
+**Definition 1.18 (radialColumn).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialColumn`
+
+*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialColumn` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual source resolvent column evaluated at the complex embedding of the real square root.
+
+**Theorem 1.19 (hasDerivAt_radial_sourceFamily).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.hasDerivAt_radial_sourceFamily`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.hasDerivAt_radial_sourceFamily` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural j and every real 0<r<1, the jth radial source family has derivative the next weighted source divided by 2r.
+
+**Theorem 1.20 (hasDerivAt_radial_column).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.hasDerivAt_radial_column`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.hasDerivAt_radial_column` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real 0<r<1, the actual radial column has derivative radialColumnDerivative r.
+
+**Definition 1.21 (sourceBilinearFunctional).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceBilinearFunctional`
+
+*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceBilinearFunctional` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original ordinary complex bilinear pairing is innerSL with star on the first vector.
+
+**Theorem 1.22 (sourceBilinearFunctional_apply).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceBilinearFunctional_apply`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceBilinearFunctional_apply` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all square-summable complex vectors w and x, the original bilinear functional equals the sum of their coordinate products.
+
+**Theorem 1.23 (sourceBilinearFunctional_smul_left).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceBilinearFunctional_smul_left`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceBilinearFunctional_smul_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original bilinear functional is complex linear in its first argument.
+
+**Theorem 1.24 (sourceFamily_one_eq_weightedSource).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceFamily_one_eq_weightedSource`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceFamily_one_eq_weightedSource` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real 0<=r<1, the first source family at sqrt(r) is the literal frequency-weighted original source.
+
+**Theorem 1.25 (radial_pair_normalization).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radial_pair_normalization`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radial_pair_normalization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real 0<r<1, one plus the ordinary bilinear pairing of the first radial source family with the radial column is the complex embedding of radialNormalization r.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.bilinear_negative_resolvent_weighted_scalar`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.derivative_shifted_geometric`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.hasDerivAt_columnSeries`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.hasDerivAt_operator`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.hasDerivAt_radial_column`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.hasDerivAt_radial_sourceFamily`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.hasDerivAt_resolvent`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.hasDerivAt_sourceFamily`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.operatorDerivative`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialColumn`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialColumnDerivative`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialNormalization`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialSourceFamily`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radial_column_derivative_scaled`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radial_operator_derivative_rankOne`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radial_pair_normalization`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceBilinearFunctional`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceBilinearFunctional_apply`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceBilinearFunctional_smul_left`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceCoefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceFamilyTerm`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceFamily_apply`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceFamily_one_eq_weightedSource`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceFamily_summable`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.sourceFamily_zero_eq_source`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianResolvent](OriginalGaussianResolvent.md)

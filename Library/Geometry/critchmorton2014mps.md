@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSMarginalBirationality
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorEndpointSigns
@@ -571,3 +572,41 @@ right reversal, one-site partial-trace adapters, full window composition and
 normalized readings remain separate obligations. Full C9 is open; the
 solved-open-problem KPI remains zero. Scoped kernel verification does not
 constitute freezing or independent acceptance.
+
+
+## Raw all-window settlement candidate
+
+`OpenBoundaryMPSAllWindowC9.result` composes the existing suppliers into one
+raw actual-image statement for every $N=3+m\ge3$. A single nonzero real
+polynomial in ALL real and imaginary full-state amplitudes defines a nonempty,
+relatively open dense $U(1)$-saturated locus in the ENTIRE literal actual MPS
+image. Every target there is nonzero. Every separate adjacent three-site raw
+marginal determines that target up to unit phase against arbitrary actual
+competitors. Each separate two-site and one-site window has a possibly
+different actual nonzero nonphase competitor preserving its complete raw
+marginal. Every exterior split and every exact length cast is quantified.
+
+Ordinary transpose with swapped original boundaries makes word reversal an
+actual-image homeomorphism. Intersect the prefix recovery and Q2 loci, the
+interior loci only in their valid length ranges, and the two reversed prefix
+loci. One common ACTUAL point of these dense open sets proves nonzero
+evaluation of the literal full-amplitude polynomial, constructed by complete
+Q3 quadratic substitution and reversal of amplitude indices. Boundary Q2
+witnesses are chosen in the open nonzero neighborhood of the nonzero target;
+partial traces retain the same pair witness for each site. No spectral,
+root, norm or genericity supplier is re-proved.
+
+This is a sufficient strengthening of the pre-probe raw $N\ge4$ prefix
+recovery and no-fewer target in issue #30422. $N\ge3$ and the explicit
+real-principal genericity convention are formal strengthening choices, not
+quoted author wording. The candidate's conservative proof shape is bind-only;
+its candidate admission basis is open-problem-resolution. The matching Scribe
+and `Problems/critch-morton-2014-open-boundary-mps-raw-c9.md` describe only that
+raw settlement candidate. The bounded literature check found no exact C9
+settlement in its accessible searched scope; this is no priority or uniqueness
+certificate. Independent caller fidelity review, required checks, freezing and
+publication remain separate. Global C9 status stays OPEN and solved-open-problem
+KPI stays zero until caller verification. No normalized-state, joint-marginal,
+closure-only, dynamics or thermodynamic conclusion is asserted. Original
+supplier attributions and licenses are unchanged; the new whole-source Reg
+attempt has no source-selection certificate and claims no native validation.
