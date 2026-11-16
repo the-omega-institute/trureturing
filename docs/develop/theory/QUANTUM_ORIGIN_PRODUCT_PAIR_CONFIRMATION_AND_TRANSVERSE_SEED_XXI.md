@@ -738,3 +738,192 @@ $$
 白话：先只管能够同时放进同一把尺子的两颗纯点：要么两份选同一点，要么选能被一刀分开的两点，再挂上同一个旁观者。除此以外，只借一个跨出这把尺子的共同最低门。共同门给一颗真实余项和两只真实测试，先转满一小块复平面；原来的同尺最低门再允许把这小块搬到各处，并把同一把尺子的对角窗格拼成完整杯帽。谱分解和极分解说明这些杯帽已足够转动整个大空间。转动一旦已经成立，最初一颗三份最低门就能搬到所有产品点；三份一致性随后选定唯一标准方向，并长出全部有限量子层级。相异又不可区分的产品点不再逐个借最低门，它们的门从整体结构中得出。
 
 ## 追加锚（本行以下为增补区）
+
+## 316. 二元基础只借一个共同门：差额测试自己成为准备
+
+**定义 316.1（一只等纬非共面共同门）。** 保留314.1的强全有限背景 $\mathsf F$：有限实际实张量载体 $V^{\otimes N}$、闭尖生成锥 $C_N$、严格正乘积单位、整个归一底、完整正对偶及proper区间、全部有限单位分解、所有有限相关分块的min/max、正置换及逆、重括号和正丢弃。基本单体的**整个**归一底为完整非退化仿射三球。仅凭该球的成熟Pauli表示，固定被动坐标 $C_1=\operatorname{PSD}_2,u_1=\operatorname{Tr}$，不预给任何联合PSD或主动矩阵操作。
+
+球给出纯点确认效应 $e_p$ 和归一球心半径 $n_p$。取球面纯点 $p,r,s$ 及原纯旁观者 $b_*$，固定此配置并要求
+
+$$
+e_p(r)=e_p(s)\in(0,1),\qquad
+\det(n_p,n_r,n_s)\ne0.
+\tag{316.1}
+$$
+
+只要求一组二点目标
+
+$$
+\{p\otimes p\otimes b_*,\ r\otimes s\otimes b_*\}
+\tag{316.2}
+$$
+
+在整个原三份proper菜单中存在共同least确认者，记为 $\mathsf Q_{\mathrm{joint},2}$；也可用296.2的对应一条Link表达。**不要求任何单点least。** (316.1)允许原三根正交半径，但不要求它们两两垂直。一个模型只借一个固定配置的共同门，不向全部等纬参数索取门。本章不输入Jordan分类、全产品最低门、Bell、GHZ或XIII164.11传播供应。
+
+**引理 316.2（三产品零点与差额测试的饱和）。** 在316.1中，共同门下降到双份后，存在同一个 $\delta\in\{0,1\}$ 及两只可逆系数矩阵 $D_1,D_2$，使两只差额效应同时成为实际归一态：
+
+$$
+E_j=T_1^\delta R_{D_j}\in K_2\cap[0,I]_{C_2^*},\qquad j=1,2.
+\tag{316.3}
+$$
+
+这里 $R_D=|D\rangle\!\rangle\langle\!\langle D|$，采用314的行系数向量化。本章对一般向量 $v$ 记 $P_v=vv^*$，不隐含归一；$0,1$ 表示一组正交单位向量。
+
+证明。沿 $X\mapsto X\otimes b_*$ 限制原共同门；任意双份proper共同确认者可张量单位上提，故限制 $h$ 仍是整个双份菜单的共同least。被动选取
+
+$$
+p=0,\quad r=(0+x1)/\sqrt q,\quad s=(0+xz1)/\sqrt q,
+\quad x>0,\ q=1+x^2,\ k=q+1,\ |z|=1,\ \operatorname{Im}z\ne0.
+\tag{316.4}
+$$
+
+这由(316.1)准确保证；三半径行列式为 $4x^2\operatorname{Im}z/q^2$。写 $P=P_{00},Q=P_{r\otimes s}$，令
+
+$$
+A=\frac1{\sqrt k}\begin{pmatrix}0&z\\1&xz\end{pmatrix},\quad H_0=P+R_A,
+\quad r^\perp=(-x0+1)/\sqrt q,\quad s^\perp=(-x\bar z0+1)/\sqrt q,
+$$
+
+$$
+u_1=1\otimes s^\perp,\quad u_2=r^\perp\otimes1,\quad U_j=I-P_{u_j},\quad E_j=U_j-h,
+$$
+
+$$
+D_1=\frac1{\sqrt{qk}}\begin{pmatrix}0&q\\-\bar z&-x\end{pmatrix},\qquad
+D_2=\frac1{\sqrt{qk}}\begin{pmatrix}0&-z\\q&-xz\end{pmatrix}.
+\tag{316.5}
+$$
+
+两个 $U_j$ 及其补均可分，是proper共同上门。因此 $E_j\in C_2^*$，$h(u_j)=0$，且 $I-E_j=I-U_j+h\in C_2^*$，所以 $E_j$ proper。直接正交分解给 $U_j-H_0=R_{D_j}$。这些是上门与共同门之间的合法减法，未使用 $h-P\in C_2^*$。
+
+所需块正零点事实可在此证明。若 $W\in\operatorname{BP}(2|2)$ 有三个产品零点、每腿三条射线各异且第一腿可同时取实，则 $W=\alpha P_d+\beta T_1P_d$，$\alpha,\beta\ge0$，$d$ 为三产品向量的共同正交补。用实第一腿及复第二腿可逆矩阵把零点化为 $00,11,++$。产品零点的PSD条件切片先消去相邻行列，矩阵只剩对角 $a,b$ 于 $01,10$，以及 $00\leftrightarrow11$ 的 $c$ 和 $01\leftrightarrow10$ 的 $w$。在 $++$ 的两种切片上取零，得 $a=b,c,w\in\mathbb R,w=-a-c$。于是它为singlet投影与其部分转置的线性组合；分别在 $v\otimes v,v\otimes\bar v$、$v=(0+i1)/\sqrt2$ 上测试，迫两系数非负。拉回时第一腿变换为实，保持同一个部分转置形式。
+
+对 $E_1$，三个零点为 $P,Q,P_{u_1}$，故它是 $R_{D_1},T_1R_{D_1}$ 的非负组合。又 $E_1(u_2)=U_1(u_2)=1-q^{-2}>0$，两端点在该点读数相同，迫系数和一。因为 $U_1$ 在 $T_1$ 下不变，得到同一个 $t\in[0,1]$：
+
+$$
+h=(1-t)H_0+tT_1H_0,\qquad
+E_j=(1-t)R_{D_j}+tT_1R_{D_j},\qquad \operatorname{Tr}E_j=1.
+\tag{316.6}
+$$
+
+再证明差额的最大读数必为一。一般地，若 $U$ 为proper共同确认者、$E=U-h$，并有实际归一态 $v$ 满足 $U(v)=1,E(v)>0$，则 $m=\max_K E=1$。否则可选 $\lambda>1$ 使 $\lambda E$ 仍proper；$I-\lambda E$ 仍共同确认目标，leastness要求
+
+$$
+I-\lambda E-h=I-U+(1-\lambda)E\in C^*,
+$$
+
+却在 $v$ 上读负值，矛盾。本例分别取产品态 $01,10$，有 $U_1(01)=U_2(10)=1$、$E_1(01)=E_2(10)=q/k>0$。
+
+原min/max给 $\operatorname{Sep}\subseteq C_2,C_2^*\subseteq\operatorname{BP}$。沿[GB271, §III Theorem1]的二体HS半径一可分球，对偶得 $\|X\|_2\le\operatorname{Tr}X$。取 $E_j$ 的实际最大态 $\rho_j$，则
+
+$$
+1=\operatorname{Tr}(E_j\rho_j)\le\|E_j\|_2\|\rho_j\|_2\le1.
+$$
+
+取等迫 $E_j=\rho_j$、$\|E_j\|_2=1$。(316.6)两端点不同且各有范数一，严格凸性迫 $t=0$ 或 $1$，给(316.3)。差额帽自己成为杯，不需先从共同门扣掉任一端点。$\square$
+
+**定理 316.3（缩放剪切支付整个复二元控制）。** 在316.1中，(316.3)的两只资源足以支付全部一体 $GL_2(\mathbb C)$ 合同在每个原有限相关旁观层上的正性，并给整个 $C_2=T_1^\delta\operatorname{PSD}_4$。
+
+证明。312.5的原min/max接线给普通杯帽的 $\operatorname{Ad}_{AD^*}$、同向部分转置杯帽的 $\operatorname{Ad}_{\bar A D^{\mathsf T}}$。定义
+
+$$
+B=\begin{pmatrix}1&x\\-x/q&1/q\end{pmatrix},\quad
+F=\begin{pmatrix}q&-x\\-x&1\end{pmatrix},\quad
+G=\begin{pmatrix}1/q&x/q\\x/q&q+x^2/q\end{pmatrix}.
+$$
+
+直接相乘得 $D_1D_1^*=F/k,D_2D_2^*=G/k,D_1D_2^*=-\bar zB/k,D_2D_1^*=-zB^{\mathsf T}/k$。co分支只共轭这些实矩阵的标量相位。因此 $B,B^{\mathsf T},F,G$ 的合同均已支付。$\det B=1$、$1<\operatorname{Tr}B<2$，故 $B$ 实相似于平面旋转；正幂闭包含 $B^{-1}$，有限阶和无限阶均成立。$B^{-\mathsf T}$ 同理。由
+
+$$
+G=B^{\mathsf T}F^{-1}B,\qquad F^{-1}=B^{-\mathsf T}GB^{-1}
+$$
+
+又付 $F^{-1}$。现在
+
+$$
+D=BB^{\mathsf T}=\operatorname{diag}(q,q^{-1}),\qquad
+T=BF=I-\kappa E_{21},\quad \kappa=x(q+1)/q>0.
+\tag{316.7}
+$$
+
+这些矩阵和逆均已付。$D^mT^lD^{-m}=I-l\kappa q^{-2m}E_{21}$；任意实 $a$ 可选整数 $l_m$ 使 $-l_m\kappa q^{-2m}\to a$，故闭锥给全部实下剪切。对 $T^{\mathsf T}=FB^{\mathsf T}$ 同理得到全部实上剪切，初等高斯消元给 $SL_2(\mathbb R)$。
+
+交换每只杯帽自身两腿，令 $U_z=\operatorname{diag}(1,z)$，准确得到
+
+$$
+D_1^{\mathsf T}\bar D_1=U_zGU_z^*/k,\quad
+D_2^{\mathsf T}\bar D_2=U_zFU_z^*/k,
+$$
+
+$$
+D_1^{\mathsf T}\bar D_2=-\bar zU_zB^{\mathsf T}U_z^*/k,\quad
+D_2^{\mathsf T}\bar D_1=-zU_zBU_z^*/k.
+\tag{316.8}
+$$
+
+co时先用 $\operatorname{Swap}(T_1R_D)=T_2R_{D^{\mathsf T}}=T_1R_{\bar D^{\mathsf T}}$，代接线亦得同式。因此支付第二组 $U_zSL_2(\mathbb R)U_z^*$；未预借 $U_z$。两组上、下剪切的参数分别覆盖 $a+b\bar z,a+bz$，由 $\operatorname{Im}z\ne0$ 遍历复数。复高斯消元给 $SL_2(\mathbb C)$，非零标量在合同中仅差正倍数，得全部GL合同。
+
+极限逐个固定有限层、固定原输入在闭锥中传递，未交换无限层极限，也未给统一字长或成功率。所有 $G^*$ 也已取得，故效应侧同正。可逆 $D_1$ 的双侧局部轨道及闭性给 $T_1^\delta\operatorname{PSD}_4\subseteq C_2\cap C_2^*$；左锥自对偶，夹逼为等号。$\square$
+
+**引理 316.4（正交共同最低块支付压缩）。** 在309.2中，可将外部单点least替换为若干两两支撑正交的投影块 $B_j$，只要求 $I-\Pi=\sum_j B_j$，且每个 $B_j$ 是支撑于自身的非空原目标集的整个菜单共同least。记原锥为 $D$、其整个迹一底为 $K$，$K_\Pi=\{Y\in K:\operatorname{Tr}(\Pi Y)=1\}$。若 $\Pi$ proper、$K_\Pi$ 非空，且对某 $c>0$ 有 $\|\Pi X\Pi\|_2\le c\operatorname{Tr}(\Pi X)$（所有 $X\in D$），以及 $Y=\Pi Y\Pi$（所有 $Y\in K_\Pi$），则 $X\mapsto\Pi X\Pi$ 同时保持原锥及完整对偶，并不增迹。
+
+证明。对非零正效应 $f=\Pi f\Pi$，令 $t=\max_Kf>0$。$I-f/t$ 确认全部外部目标。逐块扣掉 $B_j$，共同leastness保证每步原正，补为 $f/t$ 加已扣块而仍正；支撑正交保证未扣目标仍被确认。最终 $\Pi-f/t\in C^*$，且 $f$ 的最大点必在 $\Pi$ 的饱和面。对任意受支撑Hermitian $g$，以 $f=g+\lambda\Pi$、$\lambda>c\|g\|_2$ 代入，再按309.2的分离不等式消去 $\lambda$，得到压缩态的归一化属于该饱和面。零质量由范数预算直接给零；自伴性给对偶侧正性。该证明只改变外部减法的对象，不输入任何单点least。$\square$
+
+**定理 316.5（一个三份共同门等价于全部二元量子层级）。** 相对于316.1的同一背景，$\mathsf Q_{\mathrm{joint},2}$ 等价于同一Pauli坐标中每个有限 $N\ge0$ 的整个 $C_N=\operatorname{PSD}_{2^N}$。
+
+证明。先排co并造三体资源。若316.3的 $\delta=0$，置 $D=C_3$；若 $\delta=1$，置 $D=T_2C_3$。后者仅为保迹、自伴的坐标运输。完整低二块及原 $1|(23)$ 分块给 $\operatorname{Sep}(2|4)\subseteq D,D^*\subseteq\operatorname{BP}(2|4)$。
+
+原三份共同least可经已付局部酉及正置换运输，再按需要运输到 $D$。若其目标为 $\{P_a\otimes P_{w_1},P_a\otimes P_{w_2}\}$，则其共同least恰为 $P_a\otimes P_W$，$W=\operatorname{span}\{w_1,w_2\}$。因为它低于合法proper上门 $P_a\otimes I$，块正条件切片及极化迫其为 $P_a\otimes E$、$0\preceq E\preceq I$。双确认给 $E\succeq P_W$；而 $P_a\otimes P_W$ 本身是相对于 $1|(23)$ 的可分proper共同上门，least比较给反向不等式。此识别不使用单点least。
+
+令 $r_x=(0+x1)/\sqrt q$，$W_x=\operatorname{span}\{00,r_xr_x\}$，则 $W_x^\perp=\operatorname{span}\{1\otimes r_x^\perp,r_x^\perp\otimes1\}$。补空间这两个产品射线每腿的重叠模均为 $1/\sqrt q$，与原指定点对相同，所以它们属于原有序点对的独立局部酉轨道。故 $P_0\otimes P_{W_x^\perp}$、$P_1\otimes P_{W_x^\perp}$ 都是已支付的三份共同least投影块，且彼此支撑正交。它们的和为 $I-\Pi$，$\Pi=I_1\otimes P_{W_x}$。
+
+对任意 $X\in D$，$\Pi X\Pi$ 在完整二体 $\mathbb C^2\otimes W_x$ 上块正，GB给 $\|\Pi X\Pi\|_2\le\operatorname{Tr}(\Pi X)$。若归一 $Y$ 在 $\Pi$ 上取一，PSD边缘 $\operatorname{Tr}_1Y$ 支撑于 $W_x$；各第一腿条件矩阵同为PSD且被此边缘支配，故亦支撑于 $W_x$，极化即给 $Y=\Pi Y\Pi$。饱和面非空由 $1|(23)$ 的min给出。316.4遂支付该三份压缩。
+
+对实际Bell$_{12}\otimes0_3$ 压缩，得
+
+$$
+P_{\psi_x}\in D,\qquad
+\psi_x=000+\frac{101+110+x111}{k}.
+\tag{316.9}
+$$
+
+co情形的原输入准确为 $T_2P_{\Omega_{12}}\otimes P_0$，运输后才是普通Bell产品。若 $\delta=1$，压缩输出运输回原锥、再丢弃被转置的腿2，得到实际13边缘
+
+$$
+\rho_{13}=P_{00+11/k}+k^{-2}P_{10+x11}\in C_2.
+$$
+
+其单腿部分转置在 $01,10$ 上的主块为 $\left(\begin{smallmatrix}0&1/k\\1/k&1/k^2\end{smallmatrix}\right)$，行列式 $-1/k^2<0$，与 $C_2=T_1\operatorname{PSD}_4$ 矛盾。因此低二层标准，(316.9)成为原实际dyad。
+
+全有限尾部可直接展开。恒等式
+
+$$
+k\psi_x=(k0-x^{-1}1)\otimes00+x^{-1}1\otimes(0+x1)\otimes(0+x1)
+$$
+
+的两项在每腿独立。已付局部可逆矩阵
+
+$$
+L_1=\begin{pmatrix}1/k&0\\1/k&x\end{pmatrix},\quad
+L_2=L_3=\begin{pmatrix}1&-1/x\\0&1/x\end{pmatrix}
+$$
+
+将其变为 $000+111$，故归一GHZ态实际存在。两份归一GHZ的各第三腿接归一帽 $P_\chi$、$\chi=(00+01+10-11)/2$，其四条余腿重排后为向量 $\frac14\sum_{ij}(-1)^{ij}|ij\rangle_{\rm ref}|ij\rangle_{\rm out}$ 的dyad，即 $J(\mathrm{CZ})/16$、迹 $1/4$。归一资源为 $J(\mathrm{CZ})/4$；再接两只归一Bell帽，得到 $\operatorname{Ad}_{\mathrm{CZ}}/16$。每次正性均由原全有限分块的min合成与max切片支付，正尺度不影响锥关系；$\mathrm{CZ}^2=I$ 又给逆。
+
+局部酉加CZ给CNOT，用其共轭单腿 $Z$ 旋转、再改局部基，得到每个Pauli string的指数。固定有限 $N$，所有Hermitian矩阵为这些strings的实线性组合，有限维指数乘积公式与闭锥给全部全局酉及逆。产品纯态的全局酉轨道给 $\operatorname{PSD}_{2^N}\subseteq C_N$；产品秩一效应的逆酉运输给每只全局秩一测试，故 $C_N\subseteq\operatorname{PSD}_{2^N}$。正向没有以三层替代全层级，也没有额外借传播种子。
+
+反向，PSD模型中确认两纯态的proper效应在其张成空间上为恒等，该空间的支持投影便是共同least。任取一个满足(316.1)的配置即可，得同域等价。$\square$
+
+**命题 316.6（更小几何、公理字典与反事实）。** 相对于同一整个二元球背景，316删去314的首点singleton条件及具名传播接口，并把两两正交半径弱化为等纬非共面配置；只向一个固定三份产品对索取共同least。其余单点最低门、所有支持join、正交补和完整复子空间格均由重建后给出。未将该二元范围冒称315的任意原基本维数重建。
+
+证明与边界。球内先选同一纬线上的两方向，再由唯一共同门连接两份系统。两只上门差的放大反证和HS取等支付实际资源；复剪切、两个外部最低块和GHZ接线分别支付局部复方向、三份压缩及全层级。这是316.2—316.5的逐项关系。反事实模型 $C_N=\operatorname{Sep}(2,\ldots,2)$ 对所有有限层满足球、完整菜单、全部分块min/max、正置换及丢弃，却有 $C_2\ne\operatorname{PSD}_4$；min/max在全产品生成元上直接成立。因此零只共同门不足，这一指定门在该全有限模型中不存在。不把这个受限计数结论冒称全球最少量子公理。
+
+重建后，迹一底、完整对偶及有限单位分解分别给密度矩阵／复射线、Born配对、POVM／PVM；原张量、置换与丢弃成为通常复合和偏迹。指定分支的全部相关旁观正性给CP／Kraus，TNI／TP仍需整个输入上的质量预算。Lüders仍需指定锐事件的整个yes支持中性；酉一参数动力学仍需指定连续可逆保单位一参数群。任意 $d$ 的支持面完成沿314.5，属于数学完成，不自动提供原物理系统类型。具体时钟、Hamiltonian、$\hbar$、无限维及过程设备供应未由静态最低门选择。
+
+完整菜单若删去，放大后的 $I-\lambda E_j$ 不再保证可比较；只给双份共同门，本证明的三份外部最低块便无来源；$\operatorname{Im}z=0$ 时复剪切接口未付。后两点是证明边界，不是全有限独立性反模型。所有闭锥极限只给精确数学正性，不提供统一字长、成功率或确定性设备。
+
+Pauli／Lorentz、GB预算、初等消元、有限维指数乘积及量子门传送的成熟工具保留归属；接线沿312.5，压缩的分离部分沿XX309.2。本章新增综合为差额饱和替代端点减法、三零点锁定同一取向、缩放剪切替代无理角Lie证书，以及共同最低块替代全产品最低点的压缩桥。它不申领成熟工具或全球文献优先性。全部结论为条件纸面理论，未作Lean核验。$\square$
+
+白话：最小的基本系统是一整颗球，任意多份都生活在同一套可比较、可接线的世界里。球面上选同一纬线的两个方向，使它们与极点不共面；只问那两种三份产品准备有没有共同最低门。把共同门与两只现成上门比较，剩下的测试若还能整体放大，就会造出一只更低的共同门，所以它们必须已经用满自己的能力；球给出的范数关系随即把测试变成真实准备。它们接起来能剪切整个复平面，同一只共同门的两个互补副本又能保留三份空间里所需的一块。镜像方向在丢弃一腿后露出负值，标准方向则产生GHZ和纠缠门，覆盖全部有限份数。第一颗产品点自己的最低门不再先借，它和其他支持门一同从这一个共同关系中长出来。
+
+## 追加锚（本行以下为增补区）
