@@ -724,7 +724,7 @@ private theorem conjugateState_inverse (U : Matrix.unitaryGroup A ℂ)
       simp only [Matrix.mul_assoc]
     _ = _ := by rw [show U.val * U.valᴴ = 1 from Unitary.coe_mul_star_self U]; simp
 
-private theorem tensor_conjugate_block (U : Matrix B B ℂ)
+private theorem tensor_conjugate_block (U : Matrix C B ℂ)
     (X : Matrix (A × B) (A × B) ℂ) (a b : A) :
     (((1 : Matrix A A ℂ) ⊗ₖ U) * X * ((1 : Matrix A A ℂ) ⊗ₖ U)ᴴ).submatrix
         (fun j => (a, j)) (fun k => (b, k)) =
@@ -1567,6 +1567,119 @@ theorem complex_block_bound_of_diagonal_geometry
     _ ≤ _ := hdual
     _ = _ := by ring
 
+/-- The attained centered direction and the diagonal coefficient geometry
+belong to one coherently transported physical state and channel. -/
+theorem actual_diagonal_geometry {C : Type} [Fintype C] [DecidableEq C]
+    (rho : DensityState (A × (Fin 2 × C)))
+    (T : QuantumChannel (Fin 2) (Fin 2 × C))
+    (F : CStarMatrix A A ℂ) (hF : IsSelfAdjoint F) (hFn : ‖F‖ ≤ 1)
+    (hmax : ∀ G : CStarMatrix A A ℂ, IsSelfAdjoint G → ‖G‖ ≤ 1 →
+      ‖sliceLinear (centered
+        (marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho))) G‖ ≤
+      ‖sliceLinear (centered
+        (marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho))) F‖)
+    (hx : 0 < ‖sliceLinear (centered
+      (marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho))) F‖) :
+    let P := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho)
+    let x := ‖sliceLinear (centered P) F‖
+    let r := traceDistance rho (referenceState T P)
+    ∃ (U : Matrix.unitaryGroup (Fin 2) ℂ)
+      (W : Matrix (Fin 2 × (C × ((Fin 2 × C) × Fin 2))) (Fin 2) ℂ),
+      Wᴴ * W = 1 ∧
+      (∀ (M : Matrix (Fin 2) (Fin 2) ℂ) (j k : Fin 2) (c d : C),
+        (∑ e : (Fin 2 × C) × Fin 2,
+          (W * M * Wᴴ) (j, (c, e)) (k, (d, e))) =
+            CStarMatrix.ofMatrix.symm
+              ((localBChannel U T).toCompletelyPositiveMap (CStarMatrix.ofMatrix M))
+                (j, c) (k, d)) ∧
+      let PU := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) (localBState U rho))
+      (∀ G : CStarMatrix A A ℂ, IsSelfAdjoint G → ‖G‖ ≤ 1 →
+        ‖sliceLinear (centered PU) G‖ ≤ x) ∧
+      (∀ G : Matrix A A ℂ, G.IsHermitian → ‖G‖ ≤ 1 →
+        traceNorm (reduced W (CStarMatrix.ofMatrix.symm
+          (sliceLinear (centered PU) (CStarMatrix.ofMatrix G))) -
+          CStarMatrix.ofMatrix.symm (sliceLinear (centered PU) (CStarMatrix.ofMatrix G))) ≤
+            4 * r) ∧
+      ‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2 ≤ 2 * r / x ∧
+      ‖inner ℂ (column W 1 0) (column W 0 0) -
+        inner ℂ (column W 1 1) (column W 0 1)‖ ≤ 2 * r / x ∧
+      (0 < ‖1 - inner ℂ (column W 1 1) (column W 0 0)‖ →
+        traceNorm (block (centered PU) 0 1) ≤
+          16 * r / ‖1 - inner ℂ (column W 1 1) (column W 0 0)‖) := by
+  dsimp only
+  let P := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho)
+  let K := CStarMatrix.ofMatrix.symm (sliceLinear (centered P) F)
+  let x := ‖sliceLinear (centered P) F‖
+  let r := traceDistance rho (referenceState T P)
+  have hFH : (CStarMatrix.ofMatrix.symm F).IsHermitian := by
+    exact hF.map CStarMatrix.ofMatrixStarAlgEquiv.symm
+  have hFN : ‖CStarMatrix.ofMatrix.symm F‖ ≤ 1 := by
+    change ‖CStarMatrix.ofMatrixStarAlgEquiv.symm F‖ ≤ 1
+    rw [StarAlgEquiv.norm_map]
+    exact hFn
+  have hkn : ‖K‖ = x := StarAlgEquiv.norm_map CStarMatrix.ofMatrixStarAlgEquiv.symm _
+  have hkh : K.IsHermitian := slice_hermitian _ (centered_hermitian P)
+    (CStarMatrix.ofMatrix.symm F) hFH
+  have hkt : Matrix.trace K = 0 := slice_trace_zero P (CStarMatrix.ofMatrix.symm F)
+  obtain ⟨W0, hw0, _, hr0⟩ := actual_dilation T
+  have hres0 : traceNorm (reduced W0 K - K) ≤ 4 * r := by
+    rw [hr0]
+    exact all_centered_tests_residual rho T _ hFH hFN
+  obtain ⟨U, _, _, hdiag, _, _, _⟩ := diagonalized_residual_geometry W0 hw0 K hkh hkt
+    (by simpa only [hkn] using hx) (4 * r) hres0
+  obtain ⟨W, hw, hout, hred⟩ := actual_dilation (localBChannel U T)
+  let PU := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) (localBState U rho))
+  have hp : PU = conjugateState (tensorUnitary 1 (star U)) P := localBState_AB U rho
+  have hru : traceDistance (localBState U rho)
+      (referenceState (localBChannel U T) PU) = r := by
+    rw [hp, localBChannel_reference]
+    exact traceDistance_conjugateState _ _ _
+  have hm : ∀ G : CStarMatrix A A ℂ, IsSelfAdjoint G → ‖G‖ ≤ 1 →
+      ‖sliceLinear (centered PU) G‖ ≤ x := by
+    intro G hG hn
+    rw [hp, slice_centered_conjugate, StarAlgEquiv.norm_map]
+    exact hmax G hG hn
+  have hr : ∀ G : Matrix A A ℂ, G.IsHermitian → ‖G‖ ≤ 1 →
+      traceNorm (reduced W (CStarMatrix.ofMatrix.symm
+        (sliceLinear (centered PU) (CStarMatrix.ofMatrix G))) -
+        CStarMatrix.ofMatrix.symm (sliceLinear (centered PU) (CStarMatrix.ofMatrix G))) ≤
+          4 * r := by
+    intro G hG hn
+    rw [hred]
+    exact (all_centered_tests_residual (localBState U rho) (localBChannel U T) G hG hn).trans_eq
+      (by rw [hru])
+  let Z : Matrix (Fin 2) (Fin 2) ℂ := Matrix.diagonal ![1,-1]
+  have hku : CStarMatrix.ofMatrix.symm (sliceLinear (centered PU) F) = (x : ℂ) • Z := by
+    rw [hp, slice_centered_conjugate]
+    simp only [conjugateAlg, StarAlgEquiv.trans_apply, Unitary.conjStarAlgAut_apply,
+      Unitary.coe_star, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_conjTranspose]
+    change U.valᴴ * K * U.val = _
+    rw [hdiag, hkn]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [Z]
+  have hscale : traceNorm (reduced W Z - Z) ≤ 4 * r / x := by
+    have he := hr (CStarMatrix.ofMatrix.symm F) hFH hFN
+    change traceNorm (reduced W (CStarMatrix.ofMatrix.symm (sliceLinear (centered PU) F)) -
+      CStarMatrix.ofMatrix.symm (sliceLinear (centered PU) F)) ≤ _ at he
+    rw [hku] at he
+    have heq : reduced W ((x : ℂ) • Z) - (x : ℂ) • Z = (x : ℂ) • (reduced W Z - Z) := by
+      ext i j
+      simp [reduced, partialTraceRight, Matrix.mul_smul, Matrix.smul_mul,
+        Finset.mul_sum, mul_sub]
+    rw [heq, D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.traceNorm_smul_nonneg
+      _ x (le_of_lt hx)] at he
+    exact (le_div_iff₀ hx).mpr (by simpa only [mul_comm] using he)
+  obtain ⟨hflip, hdiff⟩ := diagonal_residual_controls_coefficients W hw (4 * r / x) hscale
+  have hf' : ‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2 ≤ 2 * r / x := by
+    convert hflip using 1 <;> ring
+  have hd' : ‖inner ℂ (column W 1 0) (column W 0 0) -
+      inner ℂ (column W 1 1) (column W 0 1)‖ ≤ 2 * r / x := by
+    convert hdiff using 1 <;> ring
+  refine ⟨U, W, hw, hout, hm, hr, hf', hd', ?_⟩
+  intro hg
+  exact complex_block_bound_of_diagonal_geometry PU W hw x r hx
+    (traceDistance_nonneg _ _) hm hr hf' hd' hg
+
 /-- A small centered correlation gives a product state on the actual system. -/
 theorem product_repair_of_centered_correlation
     (rho : DensityState (A × (Fin 2 × C)))
@@ -1596,5 +1709,532 @@ theorem product_repair_of_centered_correlation
     (add_le_add le_rfl (hc.trans hp))
 
 end PhysicalRepair
+
+section IsometryComparison
+
+variable {I O R : Type*} [Fintype I] [DecidableEq I]
+  [Fintype O] [DecidableEq O] [Fintype R] [DecidableEq R]
+
+private theorem isometry_operatorNorm_le (V : Matrix O I ℂ) (hV : Vᴴ * V = 1) :
+    ‖V‖ ≤ 1 := by
+  have h := Matrix.l2_opNorm_conjTranspose_mul_self V
+  rw [hV] at h
+  have ho : ‖(1 : Matrix I I ℂ)‖ ≤ 1 := by
+    rcases isEmpty_or_nonempty I with hi | hi
+    · have hz : (1 : Matrix I I ℂ) = 0 := Subsingleton.elim _ _
+      simp [hz]
+    · exact (norm_one : ‖(1 : Matrix I I ℂ)‖ = 1).le
+  nlinarith [norm_nonneg V]
+
+private def isometryState (V : Matrix O I ℂ) (hV : Vᴴ * V = 1)
+    (P : DensityState I) : DensityState O := by
+  refine ⟨CStarMatrix.ofMatrix (V * CStarMatrix.ofMatrix.symm P.1 * Vᴴ), ?_, ?_⟩
+  · exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+      ((density_posSemidef P).mul_mul_conjTranspose_same V).nonneg
+  · change Matrix.trace (V * CStarMatrix.ofMatrix.symm P.1 * Vᴴ) = 1
+    rw [Matrix.trace_mul_cycle, hV, Matrix.one_mul]
+    exact P.2.2
+
+private theorem isometryState_distance (V W : Matrix O I ℂ)
+    (hV : Vᴴ * V = 1) (hW : Wᴴ * W = 1) (P : DensityState I) :
+    traceDistance (isometryState V hV P) (isometryState W hW P) ≤ ‖V - W‖ := by
+  let X := V * CStarMatrix.ofMatrix.symm P.1 * Vᴴ -
+    W * CStarMatrix.ofMatrix.symm P.1 * Wᴴ
+  obtain ⟨U, hU⟩ := (traceNorm_eq_max_re_tr_U X).1
+  let B := Vᴴ * U.val * V - Wᴴ * U.val * W
+  have hb : B = (V-W)ᴴ * U.val * V + Wᴴ * U.val * (V-W) := by
+    simp only [B, Matrix.conjTranspose_sub, Matrix.sub_mul, Matrix.mul_sub]
+    abel
+  have hn : ‖B‖ ≤ 2 * ‖V-W‖ := by
+    rw [hb]
+    have hu : ‖U.val‖ ≤ 1 := isometry_operatorNorm_le U.val (Unitary.coe_star_mul_self U)
+    have hv := isometry_operatorNorm_le V hV
+    have hw := isometry_operatorNorm_le W hW
+    have h1 := (Matrix.l2_opNorm_mul ((V-W)ᴴ * U.val) V).trans
+      (mul_le_mul_of_nonneg_right (Matrix.l2_opNorm_mul (V-W)ᴴ U.val) (norm_nonneg V))
+    have h2 := (Matrix.l2_opNorm_mul (Wᴴ * U.val) (V-W)).trans
+      (mul_le_mul_of_nonneg_right (Matrix.l2_opNorm_mul Wᴴ U.val) (norm_nonneg (V-W)))
+    rw [Matrix.l2_opNorm_conjTranspose] at h1 h2
+    have hp1 : ‖V-W‖ * ‖U.val‖ * ‖V‖ ≤ ‖V-W‖ := by
+      calc
+        _ ≤ ‖V-W‖ * 1 * 1 :=
+          mul_le_mul (mul_le_mul_of_nonneg_left hu (norm_nonneg _)) hv
+            (norm_nonneg _) (by positivity)
+        _ = _ := by ring
+    have hp2 : ‖W‖ * ‖U.val‖ * ‖V-W‖ ≤ ‖V-W‖ := by
+      have hh : ‖W‖ * ‖U.val‖ ≤ 1 :=
+        (mul_le_mul hw hu (norm_nonneg _) (by norm_num)).trans_eq (one_mul 1)
+      nlinarith [norm_nonneg (V-W)]
+    exact (norm_add_le _ _).trans (by linarith)
+  have ht : Matrix.trace (U.val * X) = Matrix.trace (B * CStarMatrix.ofMatrix.symm P.1) := by
+    simp only [X, B, Matrix.mul_sub, Matrix.sub_mul, Matrix.trace_sub]
+    congr 1
+    · simp only [← Matrix.mul_assoc]
+      rw [Matrix.trace_mul_comm _ Vᴴ]
+      simp only [Matrix.mul_assoc]
+    · simp only [← Matrix.mul_assoc]
+      rw [Matrix.trace_mul_comm _ Wᴴ]
+      simp only [Matrix.mul_assoc]
+  have hp : traceNorm (CStarMatrix.ofMatrix.symm P.1) = 1 := by
+    have h := traceNorm_of_posSemidef (density_posSemidef P)
+    exact (congrArg Complex.re h).trans (congrArg Complex.re P.2.2)
+  have he : traceNorm X ≤ 2 * ‖V-W‖ := by
+    rw [← hU, ht]
+    exact (D5.S3.Quantum.Matrix.UniformVarianceTraceBound.re_trace_mul_le _ _).trans
+      (by rw [hp, mul_one]; exact hn)
+  change traceNorm X / 2 ≤ _
+  linarith
+
+private theorem reference_isometry_norm_le (V : Matrix O I ℂ) :
+    ‖(1 : Matrix R R ℂ) ⊗ₖ V‖ ≤ ‖V‖ := by
+  have h := Matrix.l2_opNorm_conjTranspose_mul_self ((1 : Matrix R R ℂ) ⊗ₖ V)
+  rw [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one,
+    ← Matrix.mul_kronecker_mul, Matrix.one_mul] at h
+  have hb : ‖(1 : Matrix R R ℂ) ⊗ₖ (Vᴴ * V)‖ ≤ ‖Vᴴ * V‖ :=
+    NonUnitalStarAlgHom.norm_apply_le tensorRight _
+  rw [h, Matrix.l2_opNorm_conjTranspose_mul_self] at hb
+  nlinarith [norm_nonneg ((1 : Matrix R R ℂ) ⊗ₖ V), norm_nonneg V]
+
+private theorem reference_isometry (V : Matrix O I ℂ) (hV : Vᴴ * V = 1) :
+    (((1 : Matrix R R ℂ) ⊗ₖ V)ᴴ * ((1 : Matrix R R ℂ) ⊗ₖ V)) = 1 := by
+  rw [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one,
+    ← Matrix.mul_kronecker_mul, Matrix.one_mul, hV, Matrix.one_kronecker_one]
+
+private theorem reference_isometryState_distance (V W : Matrix O I ℂ)
+    (hV : Vᴴ * V = 1) (hW : Wᴴ * W = 1) (P : DensityState (R × I)) :
+    traceDistance (isometryState ((1 : Matrix R R ℂ) ⊗ₖ V) (reference_isometry V hV) P)
+      (isometryState ((1 : Matrix R R ℂ) ⊗ₖ W) (reference_isometry W hW) P) ≤ ‖V-W‖ := by
+  exact (isometryState_distance _ _ _ _ P).trans (by
+    have he : (1 : Matrix R R ℂ) ⊗ₖ V - (1 : Matrix R R ℂ) ⊗ₖ W =
+        (1 : Matrix R R ℂ) ⊗ₖ (V-W) := by ext i j; simp [mul_sub]
+    rw [he]
+    exact reference_isometry_norm_le (R := R) (V-W))
+
+end IsometryComparison
+
+section NormalizedColumns
+
+variable [DecidableEq Q]
+
+private theorem qubit_operatorNorm_sq_le_columns
+    (D : Matrix (Fin 2 × Q) (Fin 2) ℂ) :
+    ‖D‖ ^ 2 ≤ ‖column D 0 0‖ ^ 2 + ‖column D 1 0‖ ^ 2 +
+      ‖column D 0 1‖ ^ 2 + ‖column D 1 1‖ ^ 2 := by
+  let H := Dᴴ * D
+  have hH : H.PosSemidef := Matrix.posSemidef_conjTranspose_mul_self D
+  have ht : (Matrix.trace H).re = ‖column D 0 0‖ ^ 2 + ‖column D 1 0‖ ^ 2 +
+      ‖column D 0 1‖ ^ 2 + ‖column D 1 1‖ ^ 2 := by
+    simp [H, Matrix.trace, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Fintype.sum_prod_type, Fin.sum_univ_two, column, EuclideanSpace.norm_sq_eq,
+      Complex.mul_re, Complex.sq_norm, Complex.normSq_apply, ← Finset.sum_add_distrib]
+    <;> ring
+  have hn : ‖H‖ ≤ (Matrix.trace H).re := by
+    have hs : (Matrix.trace H).re = ∑ i, hH.isHermitian.eigenvalues i := by
+      simpa [Fin.sum_univ_two] using
+        congrArg Complex.re hH.isHermitian.trace_eq_sum_eigenvalues
+    have hp : 0 ≤ (Matrix.trace H).re := by
+      rw [hs]
+      exact Finset.sum_nonneg (fun i _ => hH.eigenvalues_nonneg i)
+    have he : ‖H‖ = ‖fun i => (hH.isHermitian.eigenvalues i : ℂ)‖ := by
+      conv_lhs => rw [hH.isHermitian.spectral_theorem]
+      simp only [Unitary.conjStarAlgAut_apply, ← Unitary.coe_star,
+        CStarRing.norm_mul_coe_unitary, CStarRing.norm_coe_unitary_mul,
+        Matrix.l2_opNorm_diagonal]
+      rfl
+    rw [he]
+    apply (pi_norm_le_iff_of_nonneg hp).mpr
+    intro i
+    rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hH.eigenvalues_nonneg i), hs]
+    exact Finset.single_le_sum (fun j _ => hH.eigenvalues_nonneg j) (Finset.mem_univ i)
+  have he : ‖H‖ = ‖D‖ ^ 2 := by
+    dsimp only [H]
+    rw [Matrix.l2_opNorm_conjTranspose_mul_self]
+    ring
+  rw [he, ht] at hn
+  exact hn
+
+private theorem normalize_retained_vector (v : EuclideanSpace ℂ Q) (t : ℝ)
+    (ht : 0 ≤ t) (hvt : ‖v‖ ^ 2 + t ^ 2 = 1) (ht1 : t ^ 2 < 1) :
+    let n := ‖v‖⁻¹ • v
+    ‖n‖ = 1 ∧ ‖v-n‖ ^ 2 ≤ t ^ 2 := by
+  have hv : 0 < ‖v‖ := by nlinarith [norm_nonneg v]
+  have hv1 : ‖v‖ ≤ 1 := by nlinarith [sq_nonneg t, norm_nonneg v]
+  dsimp only
+  constructor
+  · rw [norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr hv), inv_mul_cancel₀ (ne_of_gt hv)]
+  · have he : v - ‖v‖⁻¹ • v = (1 - ‖v‖⁻¹) • v := by
+      rw [sub_smul, one_smul]
+    rw [he, norm_smul, Real.norm_eq_abs, mul_pow, sq_abs]
+    have hid : (1 - ‖v‖⁻¹) * ‖v‖ = ‖v‖-1 := by
+      rw [sub_mul, one_mul, inv_mul_cancel₀ (ne_of_gt hv)]
+    nlinarith [sq_nonneg t]
+
+/-- The normalized retained vectors define a physical pointer isometry. -/
+def pointerIsometry (v : Fin 2 → EuclideanSpace ℂ Q) :
+    Matrix (Fin 2 × Q) (Fin 2) ℂ := fun p i => if p.1 = i then v i p.2 else 0
+
+private theorem pointerIsometry_column (v : Fin 2 → EuclideanSpace ℂ Q) (j i : Fin 2) :
+    column (pointerIsometry v) j i = if j = i then v i else 0 := by
+  ext q
+  by_cases h : j = i <;> simp [column, pointerIsometry, h]
+
+private theorem pointerIsometry_isometry (v : Fin 2 → EuclideanSpace ℂ Q)
+    (hv : ∀ i, ‖v i‖ = 1) : (pointerIsometry v)ᴴ * pointerIsometry v = 1 := by
+  ext i k
+  by_cases hi : i = k
+  · subst k
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply, ite_true]
+    simp only [Fintype.sum_prod_type, pointerIsometry, apply_ite, star_zero,
+      ite_mul, zero_mul, mul_ite, mul_zero, ite_self, Finset.sum_ite_irrel,
+      Finset.sum_const_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    have h : inner ℂ (v i) (v i) = 1 := by
+      rw [inner_self_eq_norm_sq_to_K, hv]
+      norm_num
+    simpa only [EuclideanSpace.inner_eq_star_dotProduct, dotProduct, Pi.star_apply, mul_comm] using h
+  · simp [Matrix.mul_apply, Matrix.conjTranspose_apply, pointerIsometry,
+      Matrix.one_apply, Fintype.sum_prod_type, hi, Ne.symm hi]
+
+/-- When the total flip probability is below one, normalize both retained
+columns and remove the flips, without a rank or spectral-floor premise. -/
+theorem normalized_pointer_isometry
+    (W : Matrix (Fin 2 × Q) (Fin 2) ℂ) (hW : Wᴴ * W = 1)
+    (hs : ‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2 < 1) :
+    ∃ v : Fin 2 → EuclideanSpace ℂ Q,
+      (∀ i, ‖v i‖ = 1) ∧
+      (pointerIsometry v)ᴴ * pointerIsometry v = 1 ∧
+      ‖W-pointerIsometry v‖ ≤
+        2 * Real.sqrt (‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2) := by
+  obtain ⟨h0,h1⟩ := retained_flip_norms W hW
+  let v : Fin 2 → EuclideanSpace ℂ Q :=
+    ![‖column W 0 0‖⁻¹ • column W 0 0, ‖column W 1 1‖⁻¹ • column W 1 1]
+  have he0 := normalize_retained_vector (column W 0 0) ‖column W 1 0‖
+    (norm_nonneg _) h0 (by nlinarith [sq_nonneg ‖column W 0 1‖])
+  have he1 := normalize_retained_vector (column W 1 1) ‖column W 0 1‖
+    (norm_nonneg _) h1 (by nlinarith [sq_nonneg ‖column W 1 0‖])
+  have hv : ∀ i, ‖v i‖ = 1 := by
+    intro i
+    fin_cases i
+    · exact he0.1
+    · exact he1.1
+  refine ⟨v,hv,pointerIsometry_isometry v hv,?_⟩
+  have hd := qubit_operatorNorm_sq_le_columns (W-pointerIsometry v)
+  have hc (j i : Fin 2) : column (W-pointerIsometry v) j i =
+      column W j i - column (pointerIsometry v) j i := by ext q; rfl
+  simp only [hc, pointerIsometry_column] at hd
+  simp only [show (1 : Fin 2) ≠ 0 by decide, show (0 : Fin 2) ≠ 1 by decide,
+    if_false, sub_zero, ite_true] at hd
+  have hs0 : 0 ≤ ‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2 := by positivity
+  have hsq := Real.sq_sqrt hs0
+  have hsum : ‖W-pointerIsometry v‖ ^ 2 ≤
+      2 * (‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2) := by
+    have ha : ‖column W 0 0 - v 0‖ ^ 2 ≤ ‖column W 1 0‖ ^ 2 := he0.2
+    have hb : ‖column W 1 1 - v 1‖ ^ 2 ≤ ‖column W 0 1‖ ^ 2 := he1.2
+    linarith
+  nlinarith [norm_nonneg (W-pointerIsometry v), Real.sqrt_nonneg
+    (‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2)]
+
+end NormalizedColumns
+
+section PhysicalOutput
+
+variable {A B C E : Type*} [Fintype A] [DecidableEq A]
+  [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C]
+  [Fintype E] [DecidableEq E]
+
+private def environmentLast : ((A × (B × C)) × E) ≃ (A × (B × (C × E))) where
+  toFun p := (p.1.1,(p.1.2.1,(p.1.2.2,p.2)))
+  invFun p := ((p.1,(p.2.1,p.2.2.1)),p.2.2.2)
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+private def physicalOutput (W : Matrix (B × (C × E)) B ℂ) (hW : Wᴴ * W = 1)
+    (P : DensityState (A × B)) : DensityState (A × (B × C)) :=
+  D5.S3.Quantum.Information.MarginalCalculus.reduceState environmentLast
+    (isometryState ((1 : Matrix A A ℂ) ⊗ₖ W) (reference_isometry W hW) P)
+
+private theorem physicalOutput_entry (W : Matrix (B × (C × E)) B ℂ)
+    (hW : Wᴴ * W = 1) (P : DensityState (A × B)) (a b : A) (j k : B) (c d : C) :
+    (physicalOutput W hW P).1 (a,(j,c)) (b,(k,d)) =
+      ∑ e : E, (W * (CStarMatrix.ofMatrix.symm P.1).submatrix
+        (fun l => (a,l)) (fun l => (b,l)) * Wᴴ) (j,(c,e)) (k,(d,e)) := by
+  have h := tensor_conjugate_block W (CStarMatrix.ofMatrix.symm P.1) a b
+  change (∑ e : E, (((1 : Matrix A A ℂ) ⊗ₖ W) * CStarMatrix.ofMatrix.symm P.1 *
+    ((1 : Matrix A A ℂ) ⊗ₖ W)ᴴ) (a,(j,(c,e))) (b,(k,(d,e)))) = _
+  apply Finset.sum_congr rfl
+  intro e _
+  exact congrFun (congrFun h (j,(c,e))) (k,(d,e))
+
+private theorem reduceState_distance {N K R : Type*} [Fintype N] [DecidableEq N]
+    [Fintype K] [DecidableEq K] [Fintype R] [DecidableEq R]
+    (e : (K × R) ≃ N) (rho sigma : DensityState N) :
+    traceDistance (D5.S3.Quantum.Information.MarginalCalculus.reduceState e rho)
+      (D5.S3.Quantum.Information.MarginalCalculus.reduceState e sigma) ≤
+        traceDistance rho sigma := by
+  let D := CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1
+  have hh : D.IsHermitian := (density_posSemidef rho).isHermitian.sub
+    (density_posSemidef sigma).isHermitian
+  have h := partialTraceRight_contract (D.submatrix e e) (hh.submatrix e)
+  rw [D5.S3.Quantum.Entanglement.PermutationCriteria.NormInvariance.traceNorm_submatrix_equiv]
+    at h
+  have he : CStarMatrix.ofMatrix.symm
+      (D5.S3.Quantum.Information.MarginalCalculus.reduceState e rho).1 -
+      CStarMatrix.ofMatrix.symm
+      (D5.S3.Quantum.Information.MarginalCalculus.reduceState e sigma).1 =
+        partialTraceRight (D.submatrix e e) := by
+    ext i j
+    simp only [D5.S3.Quantum.Information.MarginalCalculus.reduceState_entry,
+      partialTraceRight, D, Matrix.sub_apply, Matrix.submatrix_apply,
+      Finset.sum_sub_distrib]
+  unfold traceDistance
+  rw [he]
+  exact div_le_div_of_nonneg_right h (by norm_num)
+
+/-- Discarding the common physical environment preserves the comparison of
+the two normalized isometries, with no reference-dimension factor. -/
+theorem physicalOutput_distance
+    (V W : Matrix (B × (C × E)) B ℂ) (hV : Vᴴ * V = 1) (hW : Wᴴ * W = 1)
+    (P : DensityState (A × B)) :
+    traceDistance (physicalOutput V hV P) (physicalOutput W hW P) ≤ ‖V-W‖ :=
+  (reduceState_distance environmentLast _ _).trans
+    (reference_isometryState_distance V W hV hW P)
+
+private theorem physicalOutput_actual (T : QuantumChannel B (B × C))
+    (W : Matrix (B × (C × E)) B ℂ) (hW : Wᴴ * W = 1)
+    (hT : ∀ (M : Matrix B B ℂ) (j k : B) (c d : C),
+      (∑ e : E, (W * M * Wᴴ) (j,(c,e)) (k,(d,e))) =
+        CStarMatrix.ofMatrix.symm (T.toCompletelyPositiveMap (CStarMatrix.ofMatrix M))
+          (j,c) (k,d)) (P : DensityState (A × B)) :
+    physicalOutput W hW P = referenceState T P := by
+  apply Subtype.ext
+  apply CStarMatrix.ext
+  rintro ⟨a,j,c⟩ ⟨b,k,d⟩
+  rw [physicalOutput_entry]
+  exact hT _ j k c d
+
+private def normalizedEnvironment (v : EuclideanSpace ℂ (C × E)) (hv : ‖v‖ = 1) :
+    DensityState C :=
+  marginalRight (pureState v.ofLp (by
+    have h : inner ℂ v v = 1 := by rw [inner_self_eq_norm_sq_to_K,hv]; norm_num
+    rw [dotProduct_comm]
+    simpa only [EuclideanSpace.inner_eq_star_dotProduct] using h))
+
+end PhysicalOutput
+
+section PointerRepair
+
+variable {A B C : Type*} [Fintype A] [DecidableEq A]
+  [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C]
+
+private def blockWeight (P : DensityState (A × B)) (j : B) : ℝ :=
+  (Matrix.trace (block (CStarMatrix.ofMatrix.symm P.1) j j)).re
+
+private theorem diagonalBlock_positive (P : DensityState (A × B)) (j : B) :
+    (block (CStarMatrix.ofMatrix.symm P.1) j j).PosSemidef :=
+  (density_posSemidef P).submatrix _
+
+private theorem blockWeight_nonneg (P : DensityState (A × B)) (j : B) :
+    0 ≤ blockWeight P j :=
+  (Complex.nonneg_iff.mp (diagonalBlock_positive P j).trace_nonneg).1
+
+private theorem blockWeight_trace (P : DensityState (A × B)) (j : B) :
+    Matrix.trace (block (CStarMatrix.ofMatrix.symm P.1) j j) = (blockWeight P j : ℂ) := by
+  have hi := (Complex.nonneg_iff.mp (diagonalBlock_positive P j).trace_nonneg).2
+  apply Complex.ext <;> simp [blockWeight, hi]
+
+private theorem blockWeight_sum (P : DensityState (A × B)) : ∑ j, blockWeight P j = 1 := by
+  have ht := congrArg Complex.re P.2.2
+  change (∑ p : A × B, P.1 p p).re = 1 at ht
+  rw [Fintype.sum_prod_type_right] at ht
+  simpa only [Complex.re_sum, blockWeight, Matrix.trace, Matrix.diag_apply,
+    block, Matrix.submatrix_apply, CStarMatrix.ofMatrix_symm_apply] using ht
+
+private def conditionalBlock (P : DensityState (A × B)) (j : B) : DensityState A := by
+  classical
+  by_cases hp : 0 < blockWeight P j
+  · refine ⟨CStarMatrix.ofMatrix ((blockWeight P j)⁻¹ •
+      block (CStarMatrix.ofMatrix.symm P.1) j j), ?_, ?_⟩
+    · exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+        ((diagonalBlock_positive P j).smul (inv_nonneg.mpr (le_of_lt hp))).nonneg
+    · change Matrix.trace ((blockWeight P j)⁻¹ •
+        block (CStarMatrix.ofMatrix.symm P.1) j j) = 1
+      rw [Matrix.trace_smul, blockWeight_trace]
+      simp [Complex.real_smul, ne_of_gt hp]
+  · exact marginalRight P
+
+private theorem conditionalBlock_weighted (P : DensityState (A × B)) (j : B) :
+    blockWeight P j • CStarMatrix.ofMatrix.symm (conditionalBlock P j).1 =
+      block (CStarMatrix.ofMatrix.symm P.1) j j := by
+  classical
+  by_cases hp : 0 < blockWeight P j
+  · simp only [conditionalBlock, dif_pos hp]
+    change blockWeight P j • ((blockWeight P j)⁻¹ •
+      block (CStarMatrix.ofMatrix.symm P.1) j j) = _
+    rw [smul_smul, mul_inv_cancel₀ (ne_of_gt hp), one_smul]
+  · have hz : blockWeight P j = 0 := le_antisymm (le_of_not_gt hp) (blockWeight_nonneg P j)
+    have hb : block (CStarMatrix.ofMatrix.symm P.1) j j = 0 :=
+      (diagonalBlock_positive P j).trace_eq_zero_iff.mp (by rw [blockWeight_trace,hz]; simp)
+    rw [hz, zero_smul, hb]
+
+private def pointerInput (P : DensityState (A × B)) : DensityState (A × B) :=
+  D5.S3.Quantum.Information.OrthogonalRecordEntropy.mixtureState
+    (blockWeight P) (blockWeight_nonneg P) (blockWeight_sum P)
+    (fun j => productState (conditionalBlock P j)
+      (D5.S3.Quantum.Information.OrthogonalRecordEntropy.pointerState j))
+
+private theorem pointerInput_entry (P : DensityState (A × B)) (a b : A) (j k : B) :
+    (pointerInput P).1 (a,j) (b,k) = if j = k then P.1 (a,j) (b,j) else 0 := by
+  unfold pointerInput D5.S3.Quantum.Information.OrthogonalRecordEntropy.mixtureState
+  simp only [cstar_sum_entry, CStarMatrix.smul_apply]
+  simp only [productState, CStarMatrix.ofMatrix_apply,
+    D5.S3.Quantum.Information.OrthogonalRecordEntropy.pointerState,
+    Matrix.kronecker_apply,Matrix.diagonal_apply]
+  change (∑ l : B, (blockWeight P l : ℂ) *
+    ((conditionalBlock P l).1 a b *
+      (if j = k then if j = l then (1 : ℂ) else 0 else 0))) = _
+  by_cases h : j = k
+  · subst k
+    simp only [ite_true, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
+      Finset.mem_univ, if_true]
+    exact congrFun (congrFun (conditionalBlock_weighted P j) a) b
+  · simp [h]
+
+private theorem qubit_single_traceNorm (j k : Fin 2) :
+    traceNorm (Matrix.single j k (1 : ℂ)) = 1 := by
+  let M : Matrix (Fin 2) (Fin 2) ℂ := Matrix.single j k 1
+  let D : Matrix (Fin 2) (Fin 2) ℂ := Matrix.diagonal (fun i => if i = k then 1 else 0)
+  have hg : Mᴴ * M = D := by
+    ext a b
+    fin_cases j <;> fin_cases k <;> fin_cases a <;> fin_cases b <;>
+      norm_num [M,D,Matrix.single,Matrix.mul_apply,Matrix.conjTranspose_apply,Fin.sum_univ_two]
+  have hp : 0 ≤ D := (Matrix.posSemidef_diagonal_iff.mpr (fun i => by
+    split_ifs <;> norm_num)).nonneg
+  have hs : D * D = D := by
+    dsimp only [D]
+    rw [Matrix.diagonal_mul_diagonal]
+    congr 1
+    ext i
+    split_ifs <;> norm_num
+  have hr : CFC.sqrt D = D := CFC.sqrt_unique hs hp
+  change (CFC.sqrt (Mᴴ * M)).trace.re = 1
+  rw [hg,hr]
+  simp [D,Matrix.trace]
+
+/-- Pinching the actual AB state in the pointer basis costs at most the
+trace norm of its complex off-diagonal block in half trace distance. -/
+theorem pointerInput_distance (P : DensityState (A × Fin 2)) :
+    traceDistance P (pointerInput P) ≤ traceNorm (block (CStarMatrix.ofMatrix.symm P.1) 0 1) := by
+  let X := block (CStarMatrix.ofMatrix.symm P.1) 0 1
+  have hx : Xᴴ = block (CStarMatrix.ofMatrix.symm P.1) 1 0 := by
+    ext a b
+    exact congrFun (congrFun (density_posSemidef P).isHermitian.eq (a,1)) (b,0)
+  have he : CStarMatrix.ofMatrix.symm P.1 - CStarMatrix.ofMatrix.symm (pointerInput P).1 =
+      X ⊗ₖ Matrix.single 0 1 1 + Xᴴ ⊗ₖ Matrix.single 1 0 1 := by
+    ext ⟨a,j⟩ ⟨b,k⟩
+    simp only [Matrix.sub_apply, CStarMatrix.ofMatrix_symm_apply, pointerInput_entry, hx]
+    fin_cases j <;> fin_cases k <;>
+      simp [X,block,Matrix.single,Matrix.kronecker_apply]
+  have h := traceNorm_add_le (X ⊗ₖ Matrix.single (0 : Fin 2) 1 (1 : ℂ))
+    (Xᴴ ⊗ₖ Matrix.single (1 : Fin 2) 0 (1 : ℂ))
+  rw [traceNorm_tensor,traceNorm_tensor,qubit_single_traceNorm,qubit_single_traceNorm,
+    D5.S3.Quantum.Entanglement.PermutationCriteria.NormInvariance.traceNorm_conjTranspose,
+    mul_one] at h
+  unfold traceDistance
+  rw [he]
+  dsimp only [X] at h
+  linarith
+
+private def pointerRepair (P : DensityState (A × B)) (gamma : B → DensityState C) :
+    DensityState (A × (B × C)) :=
+  MarkovConstructors.classicalMarkovState (blockWeight P) (blockWeight_nonneg P)
+    (blockWeight_sum P) (conditionalBlock P) gamma
+
+private theorem pointerRepair_entry (P : DensityState (A × B)) (gamma : B → DensityState C)
+    (a b : A) (j k : B) (c d : C) :
+    (pointerRepair P gamma).1 (a,(j,c)) (b,(k,d)) =
+      if j = k then P.1 (a,j) (b,j) * (gamma j).1 c d else 0 := by
+  unfold pointerRepair MarkovConstructors.classicalMarkovState
+    D5.S3.Quantum.Information.OrthogonalRecordEntropy.mixtureState
+  simp only [cstar_sum_entry, CStarMatrix.smul_apply]
+  simp only [productState, CStarMatrix.ofMatrix_apply,
+    D5.S3.Quantum.Information.OrthogonalRecordEntropy.pointerState,
+    Matrix.kronecker_apply,Matrix.diagonal_apply]
+  change (∑ l : B, (blockWeight P l : ℂ) * ((conditionalBlock P l).1 a b *
+    ((if j = k then if j = l then (1 : ℂ) else 0 else 0) * (gamma l).1 c d))) = _
+  by_cases h : j = k
+  · subst k
+    simp only [ite_true, ite_mul, one_mul, zero_mul, mul_ite, mul_zero,
+      Finset.sum_ite_eq,Finset.mem_univ,if_true]
+    have h := congrFun (congrFun (conditionalBlock_weighted P j) a) b
+    change (blockWeight P j : ℂ) * (conditionalBlock P j).1 a b = P.1 (a,j) (b,j) at h
+    rw [← mul_assoc,h]
+  · simp [h]
+
+private theorem pointerRepair_qcmi (P : DensityState (A × B)) (gamma : B → DensityState C) :
+    qcmi (D5.S3.Quantum.Foundation.FiniteDensityPurification.toMState
+      (pointerRepair P gamma)) = 0 :=
+  MarkovConstructors.qcmi_classicalMarkovState _ _ _ _ _
+
+private theorem physicalOutput_pointer {E : Type*} [Fintype E] [DecidableEq E]
+    (v : Fin 2 → EuclideanSpace ℂ (C × E)) (hv : ∀ j, ‖v j‖ = 1)
+    (P : DensityState (A × Fin 2)) :
+    physicalOutput (pointerIsometry v) (pointerIsometry_isometry v hv) (pointerInput P) =
+      pointerRepair P (fun j => normalizedEnvironment (v j) (hv j)) := by
+  apply Subtype.ext
+  apply CStarMatrix.ext
+  rintro ⟨a,j,c⟩ ⟨b,k,d⟩
+  rw [physicalOutput_entry,pointerRepair_entry]
+  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, pointerIsometry,
+    Matrix.submatrix_apply, CStarMatrix.ofMatrix_symm_apply, pointerInput_entry]
+  by_cases h : j = k
+  · subst k
+    simp only [ite_true,apply_ite,star_zero,mul_ite,mul_zero,
+      Finset.sum_ite_eq,Finset.mem_univ,if_true,ite_mul,zero_mul,ite_self]
+    change (∑ e : E, v j (c,e) * (P.1 (a,j) (b,j)) * star (v j (d,e))) =
+      P.1 (a,j) (b,j) * ∑ e : E, v j (c,e) * star (v j (d,e))
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro e _
+    ring
+  · simp [h, Ne.symm h,apply_ite]
+
+/-- Normalizing the actual retained columns and pinching the actual AB input
+gives a same-system classical Markov repair, including zero block weights. -/
+theorem classical_pointer_repair {E : Type*} [Fintype E] [DecidableEq E]
+    (rho : DensityState (A × (Fin 2 × C)))
+    (T : QuantumChannel (Fin 2) (Fin 2 × C))
+    (W : Matrix (Fin 2 × (C × E)) (Fin 2) ℂ) (hW : Wᴴ * W = 1)
+    (hT : ∀ (M : Matrix (Fin 2) (Fin 2) ℂ) (j k : Fin 2) (c d : C),
+      (∑ e : E, (W * M * Wᴴ) (j,(c,e)) (k,(d,e))) =
+        CStarMatrix.ofMatrix.symm (T.toCompletelyPositiveMap (CStarMatrix.ofMatrix M))
+          (j,c) (k,d))
+    (hs : ‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2 < 1) :
+    let P := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho)
+    ∃ sigma : DensityState (A × (Fin 2 × C)),
+      qcmi (D5.S3.Quantum.Foundation.FiniteDensityPurification.toMState sigma) = 0 ∧
+      traceDistance rho sigma ≤ traceDistance rho (referenceState T P) +
+        traceNorm (block (CStarMatrix.ofMatrix.symm P.1) 0 1) +
+        2 * Real.sqrt (‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2) := by
+  dsimp only
+  let P := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho)
+  obtain ⟨v,hv,hvi,hd⟩ := normalized_pointer_isometry W hW hs
+  let gamma := fun j => normalizedEnvironment (v j) (hv j)
+  let sigma := pointerRepair P gamma
+  refine ⟨sigma,pointerRepair_qcmi P gamma,?_⟩
+  have hpin : traceDistance (referenceState T P) (referenceState T (pointerInput P)) ≤
+      traceNorm (block (CStarMatrix.ofMatrix.symm P.1) 0 1) :=
+    (referenceState_contract T P (pointerInput P)).trans (pointerInput_distance P)
+  have hiso : traceDistance (referenceState T (pointerInput P)) sigma ≤
+      2 * Real.sqrt (‖column W 1 0‖ ^ 2 + ‖column W 0 1‖ ^ 2) := by
+    rw [← physicalOutput_actual T W hW hT]
+    change traceDistance (physicalOutput W hW (pointerInput P))
+      (pointerRepair P (fun j => normalizedEnvironment (v j) (hv j))) ≤ _
+    rw [← physicalOutput_pointer v hv P]
+    exact (physicalOutput_distance W (pointerIsometry v) hW hvi (pointerInput P)).trans hd
+  have ht := traceDistance_triangle rho (referenceState T P) sigma
+  have ht' := traceDistance_triangle (referenceState T P)
+    (referenceState T (pointerInput P)) sigma
+  linarith
+
+end PointerRepair
 
 end D5.S3.Quantum.Recovery.QubitResidualRounding
