@@ -184,6 +184,41 @@ def ModularLinePair (p : ℕ) (q f h : Coordinate) (e : Endpoint) : Prop :=
   (coordinateDet h (e.2 - q) : ZMod p) = 0 ∧
   (coordinateDet (e.1 - q) e.2 : ZMod p) = 0
 
+def fieldDet {K : Type*} [CommRing K] (x y : K × K) : K :=
+  x.1 * y.2 - x.2 * y.1
+
+private theorem regular_dividing_oriented {K : Type*} [Field K]
+    (b q z v : K × K) (c : K) (hc : c ≠ 0)
+    (hpoly : ∀ s t : K,
+      c * (s * z.1 + t * z.2) * (s * v.1 + t * v.2) =
+        (s * (z.1 + v.1 - q.1) + t * (z.2 + v.2 - q.2)) *
+          (s * b.1 + t * b.2)) :
+    fieldDet b z = 0 ∨ fieldDet b v = 0 := by
+  have h := hpoly b.2 (-b.1)
+  have hprod : fieldDet b z * fieldDet b v = 0 := by
+    have h' : c * (fieldDet b z * fieldDet b v) = 0 := by
+      change c * (b.2 * z.1 + -b.1 * z.2) *
+          (b.2 * v.1 + -b.1 * v.2) =
+        (b.2 * (z.1 + v.1 - q.1) + -b.1 * (z.2 + v.2 - q.2)) *
+          (b.2 * b.1 + -b.1 * b.2) at h
+      rw [show b.2 * b.1 + -b.1 * b.2 = 0 by ring, mul_zero] at h
+      unfold fieldDet
+      convert h using 1 <;> ring_nf
+    exact (mul_eq_zero.mp h').resolve_left hc
+  exact mul_eq_zero.mp hprod
+
+/-- A nonconstant regular dividing pencil has one of the two factor
+orientations. The identity is homogeneous in both coordinates, so it includes
+the constant and vertical evaluations. -/
+theorem regular_dividing_homogeneous_lines {K : Type*} [Field K]
+    (b q z v : K × K) (c : K) (hc : c ≠ 0)
+    (hpoly : ∀ s t : K,
+      c * (s * z.1 + t * z.2) * (s * v.1 + t * v.2) =
+        (s * (z.1 + v.1 - q.1) + t * (z.2 + v.2 - q.2)) *
+          (s * b.1 + t * b.2)) :
+    fieldDet b z = 0 ∨ fieldDet b v = 0 := by
+  exact regular_dividing_oriented b q z v c hc hpoly
+
 /-- The small determinant, rather than the divisor product height, lifts to zero.
 No integer collinearity or integer factorization is assumed. -/
 theorem modular_line_pair_integer_lift {p : ℕ} {J₁ J₂ : ℝ}
@@ -329,30 +364,6 @@ theorem modular_line_partner_count {p : ℕ} {J₁ J₂ : ℝ}
   rw [hswap] at hc
   have hb := oriented_modular_line_partner_count E q f h hq hf hh hE hsmall hΔ hAC
   omega
-
-/-- The actual pencil-filtered partner set is controlled once the geometric
-line classification has been supplied.  The hypothesis `hcover` is the
-remaining polynomial-to-lines obligation; this theorem consumes it rather
-than silently treating it as proved. -/
-theorem modular_zero_partner_count_of_line_cover {p : ℕ} [Fact p.Prime]
-    {J₁ J₂ : ℝ}
-    (E : Finset Coordinate) (α β : ZMod p) (q f h : Coordinate)
-    (base : Endpoint) (hq : CoordinateBound J₁ J₂ q)
-    (hf : CoordinateBound J₁ J₂ f)
-    (hh : CoordinateBound (2 * J₁) (2 * J₂) h)
-    (hE : ∀ z ∈ E, CoordinateBound J₁ J₂ z)
-    (hsmall : 8 * J₁ * J₂ < p)
-    (hΔ : coordinateDet f h ≠ 0)
-    (hAC : coordinateDet q h * coordinateDet q f ≠ 0)
-    (hcover : ∀ e ∈ modularZeroPartners E α β q base,
-      ModularLinePair p q f h e ∨ ModularLinePair p q f h e.swap) :
-    (modularZeroPartners E α β q base).card ≤
-      2 * (Int.divisorsAntidiag (coordinateDet q h * coordinateDet q f)).card := by
-  apply le_trans ?_ (modular_line_partner_count E q f h hq hf hh hE hsmall hΔ hAC).1
-  apply Finset.card_le_card
-  intro e he
-  exact Finset.mem_filter.mpr ⟨(Finset.mem_filter.mp he).1, hcover e he⟩
-
 
 end
 end D5.S3.Arith.CharacterSums.Original

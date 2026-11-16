@@ -12,7 +12,7 @@ The map (z,v)↦(det(z−q,h),det(f,v)) lands in Int.divisorsAntidiag(AC). Its i
 
 Nonaligned actual pairs have nonzero evaluations of L and Q and a nonzero quartic Q(Q−LZ), using actual injectivity and κ≠0. Completing the full partner theorem still requires deriving the two modular line orientations and their nondegeneracy from the L-divides-Q branch, proving the absolute bound in the other branch with vertical factors retained, and applying the divisor growth estimate. The finite determinant count is an intermediate component of the B⁵ prime-count prerequisite.
 
-The actual pencil-filtered set is now connected to the determinant count by an explicit cover hypothesis: if every member is assigned to one of the two oriented modular line systems, the existing divisor injection bounds the full filtered set. This bridge consumes the hypothesis and leaves the polynomial-to-lines classification visibly open.
+The regular dividing branch has a homogeneous factor-choice component: evaluating the pencil identity at the direction perpendicular to b kills the b-factor and forces det(b,z)=0 or det(b,v)=0 when c is nonzero. This retains constant and vertical directions. The shifted second and third line equations require additional endpoint hypotheses and are not asserted here.
 
 **Definition 1.1 (coordinateDet).**
 
@@ -154,21 +154,31 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_li
 
 The two endpoint orientations have total cardinality at most twice the signed divisor bound; the same theorem supplies |AC|≤8(J₁J₂)²<p².
 
-**Theorem 1.11 (modular_zero_partner_count_of_line_cover).**
+**Definition 1.11 (fieldDet).**
 
-Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_zero_partner_count_of_line_cover`
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.fieldDet`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_zero_partner_count_of_line_cover` (`✓ std3`). ∎
+*Formalization.* `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.fieldDet` (`✓ std3`).
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Commentary.*
+
+Homogeneous determinant over a commutative coefficient ring.
+
+**Theorem 1.12 (regular_dividing_homogeneous_lines).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_homogeneous_lines`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_homogeneous_lines` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
 
 *Commentary.*
 
-The actual pencil-filtered partner set is bounded by the two-orientation divisor count under the explicit polynomial-to-lines cover hypothesis.
+For a nonzero dividing coefficient c, perpendicular homogeneous evaluation forces one of the two endpoint factors to lie on the b-line. Constant and vertical directions are included.
 
-**Theorem 1.12 (modular_line_divisor_height).**
+**Theorem 1.13 (modular_line_divisor_height).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_divisor_height`
 
@@ -189,11 +199,12 @@ The divisor constant has absolute value at most 8(J₁J₂)², strictly less tha
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.ModularLinePair`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.actualValue`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.coordinateDet`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.fieldDet`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modularZeroPartners`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_divisor_height`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_pair_integer_lift`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_partner_count`
-- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_zero_partner_count_of_line_cover`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.nonaligned_actual_pair_nondegenerate`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_homogeneous_lines`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.oriented_modular_line_partner_count`
 - Dependency: [D5/S3/Arith/CharacterSums/PascadiOriginalCoefficients](PascadiOriginalCoefficients.md)
