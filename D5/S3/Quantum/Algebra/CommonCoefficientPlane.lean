@@ -35,7 +35,7 @@ namespace D5.S3.Quantum.Algebra.CommonCoefficientPlane
 
 open D5.S3.Quantum.TensorNetworks.BridgeGraph.FlatSpectrumObstruction
 
-private def compression {a b : ℕ} (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
+def compression {a b : ℕ} (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (T : Matrix (Fin 3) (Fin 3) ℂ) :=
   (stack X)ᴴ * Matrix.kronecker T (1 : Matrix (Fin a) (Fin a) ℂ) * stack X
 
@@ -43,7 +43,7 @@ private def mix {a b : ℕ} (A : Matrix (Fin 3) (Fin 3) ℂ)
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ) :
     Fin 3 → Matrix (Fin a) (Fin b) ℂ := fun r => ∑ s, A r s • X s
 
-private theorem compression_eq_sum {a b : ℕ}
+theorem compression_eq_sum {a b : ℕ}
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (T : Matrix (Fin 3) (Fin 3) ℂ) :
     compression X T = ∑ r, ∑ s, T r s • ((X r)ᴴ * X s) := by

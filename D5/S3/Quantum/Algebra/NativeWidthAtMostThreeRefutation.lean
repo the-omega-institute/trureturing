@@ -4,12 +4,14 @@
    mirror-E: none
    anchors: []
    utility: kind=certified-instance
-   digest: The native Fin 3 by Fin 5 coefficient event has no width at most three realization. -/
+   digest: Native k3 common-plane consumer refuted by compression rank. -/
 
 import D5.S3.Quantum.Algebra.CommonCoefficientPlane
 import D5.S3.Quantum.Algebra.NativeCoefficientWhitening
 import Mathlib.LinearAlgebra.Matrix.Vec
 import Mathlib.LinearAlgebra.Dimension.Constructions
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.LinearAlgebra.Complex.Module
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -235,5 +237,287 @@ private theorem block_kernel {k : ℕ}
     · rw [hMEntry]
       simp [huv, hlm]
     · simp [huv, hlm]
+
+private theorem stackK_compression_conjTranspose
+    (M : MatM 3) (T : Matrix (Fin 3) (Fin 3) ℂ) :
+    (stackK M)ᴴ * Matrix.kronecker Tᴴ (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M =
+      ((stackK M)ᴴ * Matrix.kronecker T (1 : Matrix (Fin 3) (Fin 3) ℂ) *
+        stackK M)ᴴ := by
+  have hk : (Matrix.kronecker T (1 : Matrix (Fin 3) (Fin 3) ℂ))ᴴ =
+      Matrix.kronecker Tᴴ (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+    simpa only [Matrix.kronecker, Matrix.conjTranspose_one] using
+      Matrix.conjTranspose_kronecker T (1 : Matrix (Fin 3) (Fin 3) ℂ)
+  rw [← hk]
+  rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_mul]
+  simp only [Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
+
+private theorem block_compression
+    (M : MatM 3) (N : MatN 3)
+    (hF : (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
+      (∑ r, Matrix.kronecker (M r) (N r)) = 1)
+    (hMGram : ∑ r, (M r)ᴴ * M r = 1) (l m : Fin 3) :
+    let T : Matrix (Fin 3) (Fin 3) ℂ := fun r s =>
+      ((N r)ᴴ * N s) l m - (if r = s then if l = m then 1 else 0 else 0)
+    (stackK M)ᴴ * Matrix.kronecker T (1 : Matrix (Fin 3) (Fin 3) ℂ) *
+      stackK M = 0 := by
+  let T : Matrix (Fin 3) (Fin 3) ℂ := fun r s =>
+    ((N r)ᴴ * N s) l m - (if r = s then if l = m then 1 else 0 else 0)
+  change (stackK M)ᴴ * Matrix.kronecker T
+      (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0
+  change D5.S3.Quantum.Algebra.CommonCoefficientPlane.compression M T = 0
+  rw [D5.S3.Quantum.Algebra.CommonCoefficientPlane.compression_eq_sum]
+  exact block_kernel M N hF hMGram l m
+
+private theorem stackK_compression_smul_add
+    (M : MatM 3) (a b : ℂ) (T U : Matrix (Fin 3) (Fin 3) ℂ) :
+    (stackK M)ᴴ * Matrix.kronecker (a • T + b • U)
+        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M =
+      a • ((stackK M)ᴴ * Matrix.kronecker T
+        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M) +
+      b • ((stackK M)ᴴ * Matrix.kronecker U
+        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M) := by
+  change D5.S3.Quantum.Algebra.CommonCoefficientPlane.compression M (a • T + b • U) =
+    a • D5.S3.Quantum.Algebra.CommonCoefficientPlane.compression M T +
+    b • D5.S3.Quantum.Algebra.CommonCoefficientPlane.compression M U
+  rw [D5.S3.Quantum.Algebra.CommonCoefficientPlane.compression_eq_sum,
+    D5.S3.Quantum.Algebra.CommonCoefficientPlane.compression_eq_sum,
+    D5.S3.Quantum.Algebra.CommonCoefficientPlane.compression_eq_sum]
+  simp [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul,
+    Finset.sum_add_distrib, Finset.smul_sum, Finset.sum_smul, smul_smul,
+    add_smul, smul_add]
+
+private theorem complex_block_neutral
+    (M : MatM 3) (N : MatN 3)
+    (hF : (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
+      (∑ r, Matrix.kronecker (M r) (N r)) = 1)
+    (hMGram : ∑ r, (M r)ᴴ * M r = 1)
+    (L : Submodule ℂ (Fin 3 → ℂ))
+    (hplane : ∀ T : Matrix (Fin 3) (Fin 3) ℂ, T.IsHermitian →
+      (stackK M)ᴴ * Matrix.kronecker T (1 : Matrix (Fin 3) (Fin 3) ℂ) *
+        stackK M = 0 →
+      ∀ u ∈ L, ∀ v ∈ L, star u ⬝ᵥ (T *ᵥ v) = 0)
+    (l m : Fin 3) :
+    ∀ u ∈ L, ∀ v ∈ L,
+      star u ⬝ᵥ ((fun r s =>
+        ((N r)ᴴ * N s) l m -
+          (if r = s then if l = m then 1 else 0 else 0)) *ᵥ v) = 0 := by
+  let T : Matrix (Fin 3) (Fin 3) ℂ := fun r s =>
+    ((N r)ᴴ * N s) l m - (if r = s then if l = m then 1 else 0 else 0)
+  let Tr : Matrix (Fin 3) (Fin 3) ℂ := (realPart T : Matrix (Fin 3) (Fin 3) ℂ)
+  let Ti : Matrix (Fin 3) (Fin 3) ℂ :=
+    (imaginaryPart T : Matrix (Fin 3) (Fin 3) ℂ)
+  have hc : (stackK M)ᴴ * Matrix.kronecker T
+        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0 := by
+    exact block_compression M N hF hMGram l m
+  have hcstar : (stackK M)ᴴ * Matrix.kronecker Tᴴ
+        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0 := by
+    rw [stackK_compression_conjTranspose, hc, Matrix.conjTranspose_zero]
+  have hc' : (stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y) T
+        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0 := by
+    simpa [Matrix.kronecker] using hc
+  have hcstar' : (stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y) Tᴴ
+        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0 := by
+    simpa [Matrix.kronecker] using hcstar
+  have hTr : Tr.IsHermitian := by
+    exact (realPart T).property.isHermitian
+  have hTi : Ti.IsHermitian := by
+    exact (imaginaryPart T).property.isHermitian
+  have hTr_formula : Tr = ((2 : ℝ)⁻¹ : ℂ) • (T + Tᴴ) := by
+    dsimp [Tr]
+    rw [realPart_apply_coe]
+    ext i j
+    simp [Matrix.star_eq_conjTranspose, Matrix.smul_apply, smul_eq_mul,
+      Complex.real_smul]
+    ring
+  let c : ℂ := -Complex.I * ((2 : ℝ)⁻¹ : ℂ)
+  have hTi_formula : Ti = c • (T - Tᴴ) := by
+    dsimp [Ti]
+    rw [imaginaryPart_apply_coe]
+    ext i j
+    simp [c, Matrix.star_eq_conjTranspose, Matrix.smul_apply, smul_eq_mul,
+      Complex.real_smul, smul_smul]
+    ring
+  have hcTr : (stackK M)ᴴ * Matrix.kronecker Tr
+        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0 := by
+    rw [hTr_formula]
+    calc
+      _ = (stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y)
+          (((2 : ℝ)⁻¹ : ℂ) • T + ((2 : ℝ)⁻¹ : ℂ) • Tᴴ)
+          (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M := by
+              simp [Matrix.kronecker, Matrix.star_eq_conjTranspose, smul_add]
+      _ = ((2 : ℝ)⁻¹ : ℂ) • ((stackK M)ᴴ * Matrix.kroneckerMap
+          (fun x y : ℂ => x * y) T (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M) +
+          ((2 : ℝ)⁻¹ : ℂ) • ((stackK M)ᴴ * Matrix.kroneckerMap
+          (fun x y : ℂ => x * y) Tᴴ (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M) := by
+            simpa [Matrix.kronecker] using
+              stackK_compression_smul_add M ((2 : ℝ)⁻¹ : ℂ) ((2 : ℝ)⁻¹ : ℂ) T Tᴴ
+      _ = 0 := by rw [hc', hcstar']; simp
+  have hcTi : (stackK M)ᴴ * Matrix.kronecker Ti
+        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0 := by
+    rw [hTi_formula]
+    have h := stackK_compression_smul_add M c (-c) T Tᴴ
+    calc
+      _ = (stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y)
+          (c • T + (-c) • Tᴴ) (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M := by
+              simp [Matrix.kronecker, c, Matrix.star_eq_conjTranspose,
+                sub_eq_add_neg, smul_add, smul_sub, smul_neg, smul_smul,
+                smul_eq_mul]
+      _ = c • ((stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y)
+          T (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M) +
+          (-c) • ((stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y)
+          Tᴴ (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M) := by
+            simpa [Matrix.kronecker] using h
+      _ = 0 := by rw [hc', hcstar']; simp
+  intro u hu v hv
+  have hr := hplane Tr hTr hcTr u hu v hv
+  have hi := hplane Ti hTi hcTi u hu v hv
+  have hdecomp : Tr + Complex.I • Ti = T := by
+    exact realPart_add_I_smul_imaginaryPart T
+  change star u ⬝ᵥ (T *ᵥ v) = 0
+  rw [← hdecomp]
+  simp only [Matrix.add_mulVec, Matrix.smul_mulVec, dotProduct_add,
+    dotProduct_smul, smul_eq_mul, hr, hi]
+  simp
+
+private def coefficientColumns (N : MatN 3) :
+    Matrix (Fin 5) (Fin 3 × Fin 3) ℂ := fun j p => N p.1 j p.2
+
+private theorem coefficient_columns_gram (N : MatN 3) (r s l m : Fin 3) :
+    ((coefficientColumns N)ᴴ * coefficientColumns N) (r, l) (s, m) =
+      ((N r)ᴴ * N s) l m := by
+  simp [coefficientColumns, Matrix.mul_apply, Matrix.conjTranspose_apply]
+
+theorem native_three_refutation
+    (M : MatM 3) (N : MatN 3) (hM : LinearIndependent ℂ M)
+    (hN : LinearIndependent ℂ N) :
+    ¬ ((∑ r, Matrix.kronecker (M r) (N r))ᴴ *
+      (∑ r, Matrix.kronecker (M r) (N r)) = 1) := by
+  intro hF
+  obtain ⟨B, hB, hBB, hPres, hMGram, _hNGram, hMprimeLI⟩ :=
+    D5.S3.Quantum.Algebra.NativeCoefficientWhitening.exact_whitening M N hN hF
+  let M' : MatM 3 := D5.S3.Quantum.Algebra.NativeCoefficientWhitening.mix B M
+  let Ccoeff : Matrix (Fin 3) (Fin 3) ℂ := B.transpose⁻¹
+  let N' : MatN 3 := D5.S3.Quantum.Algebra.NativeCoefficientWhitening.mix Ccoeff N
+  have hM'LI : LinearIndependent ℂ M' := by
+    simpa [M'] using hMprimeLI hM
+  have hM'Gram : ∑ r, (M' r)ᴴ * M' r = 1 := by
+    simpa [M'] using hMGram
+  have hF' : (∑ r, Matrix.kronecker (M' r) (N' r))ᴴ *
+      (∑ r, Matrix.kronecker (M' r) (N' r)) = 1 := by
+    have hPres0 : (∑ r, Matrix.kronecker (M' r) (N' r)) =
+        ∑ r, Matrix.kronecker (M r) (N r) := by
+      simpa [M', N', Ccoeff] using hPres
+    calc
+      (∑ r, Matrix.kronecker (M' r) (N' r))ᴴ *
+          (∑ r, Matrix.kronecker (M' r) (N' r)) =
+          (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
+            (∑ r, Matrix.kronecker (M r) (N r)) := by
+              exact congrArg
+                (fun A : Matrix (Fin 3 × Fin 5) (Fin 5 × Fin 3) ℂ => Aᴴ * A) hPres0
+      _ = 1 := hF
+  have hstackGram : (stackK M')ᴴ * stackK M' = 1 := by
+    rw [stackK_gram]
+    exact hM'Gram
+  have hstackInj : Function.Injective (stackK M').mulVecLin :=
+    gram_identity_injective (stackK M') hstackGram
+  obtain ⟨L, hLdim, hL⟩ :=
+    D5.S3.Quantum.Algebra.CommonCoefficientPlane.common_plane M' hM'LI hstackInj
+  have hplane : ∀ T : Matrix (Fin 3) (Fin 3) ℂ, T.IsHermitian →
+      (stackK M')ᴴ * Matrix.kronecker T
+        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M' = 0 →
+      ∀ u ∈ L, ∀ v ∈ L, star u ⬝ᵥ (T *ᵥ v) = 0 := by
+    intro T hT hcomp u hu v hv
+    have hcomp' : (D5.S3.Quantum.TensorNetworks.BridgeGraph.FlatSpectrumObstruction.stack M')ᴴ *
+        Matrix.kronecker T (1 : Matrix (Fin 3) (Fin 3) ℂ) *
+          D5.S3.Quantum.TensorNetworks.BridgeGraph.FlatSpectrumObstruction.stack M' = 0 := by
+      have hs : D5.S3.Quantum.TensorNetworks.BridgeGraph.FlatSpectrumObstruction.stack M' =
+          stackK M' := rfl
+      rw [hs]
+      exact hcomp
+    exact hL T hT hcomp' u hu v hv
+  have hneutral := complex_block_neutral M' N' hF' hM'Gram L hplane
+  let e : (Fin 3 → ℂ) ≃ₗ[ℂ] EuclideanSpace ℂ (Fin 3) :=
+    (WithLp.linearEquiv 2 ℂ (Fin 3 → ℂ)).symm
+  let Le : Submodule ℂ (EuclideanSpace ℂ (Fin 3)) := L.map e.toLinearMap
+  have hLedim : finrank ℂ Le = 2 := by
+    rw [LinearEquiv.finrank_map_eq e, hLdim]
+  let b : OrthonormalBasis (Fin 2) ℂ Le := hLedim ▸ stdOrthonormalBasis ℂ Le
+  let V : Matrix (Fin 3) (Fin 2) ℂ := fun i a =>
+    (WithLp.ofLp ((b a : Le) : EuclideanSpace ℂ (Fin 3))) i
+  have hVgram : Vᴴ * V = 1 := by
+    ext a c
+    have hb := (orthonormal_iff_ite.mp b.orthonormal) a c
+    simpa [V, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      PiLp.inner_apply, dotProduct, Matrix.one_apply, mul_comm] using hb
+  have hVplane : ∀ (l m : Fin 3) (a c : Fin 2),
+      ∑ r, ∑ s, star (V r a) *
+        (((N' r)ᴴ * N' s) l m -
+          (if r = s then if l = m then 1 else 0 else 0)) * V s c = 0 := by
+    intro l m a c
+    obtain ⟨u, hu, hueq⟩ := (b a).property
+    obtain ⟨v, hv, hveq⟩ := (b c).property
+    have hVa (r : Fin 3) : V r a = u r := by
+      have hh := congrArg (fun z : EuclideanSpace ℂ (Fin 3) => WithLp.ofLp z r) hueq
+      simpa [V, e] using hh.symm
+    have hVc (r : Fin 3) : V r c = v r := by
+      have hh := congrArg (fun z : EuclideanSpace ℂ (Fin 3) => WithLp.ofLp z r) hveq
+      simpa [V, e] using hh.symm
+    have hh := hneutral l m u hu v hv
+    simpa [Matrix.mulVec, dotProduct, hVa, hVc, Finset.mul_sum,
+      Finset.sum_mul, mul_assoc] using hh
+  let W : Matrix (Fin 5) (Fin 3 × Fin 3) ℂ := coefficientColumns N'
+  let P : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ := Wᴴ * W
+  let C : Matrix (Fin 3 × Fin 3) (Fin 2 × Fin 3) ℂ :=
+    Matrix.kronecker V (1 : Matrix (Fin 3) (Fin 3) ℂ)
+  have hPentry (r s l m : Fin 3) : P (r, l) (s, m) =
+      ((N' r)ᴴ * N' s) l m := by
+    simpa [P, W] using coefficient_columns_gram N' r s l m
+  have hCPC : Cᴴ * P * C = 1 := by
+    have hCentry (r i : Fin 3) (a : Fin 2) (l : Fin 3) :
+        C (r, i) (a, l) = if i = l then V r a else 0 := by
+      by_cases h : i = l <;> simp [C, Matrix.kronecker,
+        Matrix.kroneckerMap_apply, h]
+    ext ⟨a, l⟩ ⟨c, m⟩
+    simp only [Matrix.mul_apply, Fintype.sum_prod_type,
+      Matrix.conjTranspose_apply]
+    simp_rw [hCentry, hPentry]
+    simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
+      ite_true, Finset.sum_mul, Finset.mul_sum]
+    have hz := hVplane l m a c
+    have hv : ∑ r, ∑ s, star (V r a) *
+        ((if r = s then if l = m then 1 else 0 else 0)) * V s c =
+        (if l = m then (Vᴴ * V) a c else 0) := by
+      by_cases hlm : l = m
+      · subst m
+        simp [Matrix.mul_apply, Matrix.conjTranspose_apply, dotProduct,
+          Finset.sum_mul, Finset.mul_sum]
+      · simp [hlm]
+    have hsum (r s : Fin 3) :
+        ∑ i : Fin 3, star (if i = l then V r a else 0) *
+          ((N' r)ᴴ * N' s) i m * V s c =
+          star (V r a) * ((N' r)ᴴ * N' s) l m * V s c := by
+      classical
+      rw [Finset.sum_eq_single l]
+      · simp
+      · intro b hb hbl
+        simp [hbl]
+      · simp
+    simp_rw [hsum]
+    simp only [mul_sub, sub_mul, Finset.sum_sub_distrib] at hz
+    rw [hv, hVgram] at hz
+    rw [Finset.sum_comm]
+    by_cases hac : a = c <;> by_cases hlm : l = m
+    · simpa [Matrix.one_apply, Prod.mk.injEq, hac, hlm] using sub_eq_zero.mp hz
+    · simpa [Matrix.one_apply, Prod.mk.injEq, hac, hlm] using sub_eq_zero.mp hz
+    · simpa [Matrix.one_apply, Prod.mk.injEq, hac, hlm] using sub_eq_zero.mp hz
+    · simpa [Matrix.one_apply, Prod.mk.injEq, hac, hlm] using sub_eq_zero.mp hz
+  have hRank : (Cᴴ * P * C).rank ≤ 5 := by
+    calc
+      (Cᴴ * P * C).rank ≤ P.rank :=
+        (Matrix.rank_mul_le_left _ _).trans (Matrix.rank_mul_le_right _ _)
+      _ ≤ W.rank := Matrix.rank_mul_le_right _ _
+      _ ≤ 5 := by simpa using W.rank_le_card_height
+  rw [hCPC, Matrix.rank_one] at hRank
+  norm_num at hRank
 
 end D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation
