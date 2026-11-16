@@ -6,7 +6,7 @@
    utility: none
    digest: Exact independent-path neighborhood defects for grid row profiles. -/
 
-import D5.S3.Combinatorics.Graph.SubQuorum.C4FreeRepresentatives
+import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic.Ring
