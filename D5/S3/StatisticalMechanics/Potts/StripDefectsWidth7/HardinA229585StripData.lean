@@ -17,7 +17,7 @@ boundary: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 cross: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 Valid: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 decidableValid: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
-zeroBudgetClass: proof_shape=bind-only; consumers=cl
+zeroBudgetClass: proof_shape=bind-only; consumers=cl,HardinA229585StripOrbit.images
 zeroBudgetTransferRow: proof_shape=bind-only; consumers=transfer_row29,transfer_row30,transfer_row33,transfer_row34,transfer_row37,transfer_row38,transfer_row39,transfer_row41,transfer_row54,transfer_row56,transfer_row57,transfer_row58,transfer_row61,transfer_row62,transfer_row65,transfer_row66
 cl: proof_shape=bind-only; consumers=HardinA229585Strip.finite_certificate
 transfer_row0: proof_shape=bind-only; consumers=T
@@ -122,7 +122,7 @@ def Valid (p : Boundary) (d : ℕ) : Prop :=
   d ≤ 1 ∧ (Finset.univ.filter fun j : Fin 5 => p j.castSucc = p j.succ).card ≤ 1 - d
 private instance decidableValid (p : Boundary) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (_ ∧ _))
-private def zeroBudgetClass : Fin 16 → Fin 72 :=
+def zeroBudgetClass : Fin 16 → Fin 72 :=
   ![29, 30, 33, 34, 37, 38, 39, 41, 54, 56, 57, 58, 61, 62, 65, 66]
 
 def cl (p : Boundary) (d : ℕ) : Fin 72 :=
@@ -444,7 +444,7 @@ def T : Matrix (Fin 72) (Fin 72) ℤ :=
 def initial : Fin 72 → ℤ := ![12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 6, 6, 12, 12, 6, 6, 12, 12, 6, 6, 6, 12, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 6, 12, 6, 6, 6, 12, 12, 6, 6, 12, 12, 6, 6, 12, 12, 12, 12, 12]
 def terminal : Fin 72 → ℤ := ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 def W : Fin 11 → Fin 72 → ℤ :=
-  ![![12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 6, 6, 12, 12, 6, 6, 12, 12, 6, 6, 6, 12, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 6, 12, 6, 6, 6, 12, 12, 6, 6, 12, 12, 6, 6, 12, 12, 12, 12, 12],
+  ![initial,
     ![468, 468, 396, 396, 432, 432, 324, 324, 216, 216, 324, 324, 360, 360, 396, 396, 288, 288, 252, 252, 180, 180, 252, 252, 252, 252, 288, 288, 468, 1422, 1422, 288, 288, 1494, 1494, 396, 432, 1380, 1380, 1518, 324, 1518, 252, 252, 252, 252, 180, 180, 252, 252, 288, 288, 180, 180, 1644, 216, 1644, 1470, 1470, 324, 360, 1428, 1428, 252, 252, 1470, 1470, 396, 252, 252, 180, 180],
     ![15588, 15588, 12708, 12708, 14328, 14328, 10188, 10188, 5868, 5868, 9468, 9468, 11628, 11628, 12348, 12348, 8028, 8028, 6768, 6768, 5328, 5328, 7308, 7308, 7308, 7308, 8568, 8568, 15588, 88158, 88158, 9432, 9432, 84786, 84786, 12708, 14328, 82068, 82068, 76386, 10188, 76386, 8172, 8172, 6624, 6624, 4932, 4932, 7812, 7812, 8064, 8064, 5112, 5112, 67386, 5868, 67386, 73482, 73482, 9468, 11628, 77226, 77226, 7992, 7992, 82722, 82722, 12348, 8028, 8028, 5148, 5148],
     ![502092, 502092, 406404, 406404, 461808, 461808, 325836, 325836, 180684, 180684, 295596, 295596, 372060, 372060, 391284, 391284, 246132, 246132, 205848, 205848, 167400, 167400, 226908, 226908, 230148, 230148, 270432, 270432, 502092, 4165146, 4165146, 302832, 302832, 3811626, 3811626, 406404, 461808, 3857472, 3857472, 3317130, 325836, 3317130, 262548, 262548, 203688, 203688, 151740, 151740, 248508, 248508, 252072, 252072, 158760, 158760, 2613942, 180684, 2613942, 3124530, 3124530, 295596, 372060, 3457494, 3457494, 254448, 254448, 3689838, 3689838, 391284, 257148, 257148, 161460, 161460],

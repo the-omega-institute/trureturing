@@ -15,13 +15,18 @@ internal sealed class HardinA229585StripOrbitDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("Every permitted row contributes its destination class once; disallowed rows contribute the empty multiset."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("images"),
-                DeclarationHandle.Create(Prefix + "images"), H("Explicit successor multisets"),
+                DeclarationHandle.Create(Prefix + "images"), H("Successor multisets"),
                 StatementSource.FromAuthor(Disp(Seq(Call("HardinA229585StripOrbit.images"), Colon, Sp, Arrow(Call("Fin", Num("72")), Call("Multiset", Call("Fin", Num("72"))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The table has 72 multisets in cl index order, each containing destination "
-                    + "indices in Fin 72 with their successor multiplicities. Entries are defined by "
-                    + "the finite lists image0 through image71 in the Lean owner, coerced to "
-                    + "multisets. The OrbitChecks.canonical_next theorems identify images with "
+                    + "indices in Fin 72 with their successor multiplicities. For source classes below "
+                    + "16, the destinations below 16 are generated from HardinA233255Recurrence.table: "
+                    + "each j contributes table i j converted to a natural multiplicity via "
+                    + "Multiset.replicate, using Fin.castAdd 56 for the inclusion. Only destinations "
+                    + "at least 16 are retained as a literal tail. For sources zeroBudgetClass i, "
+                    + "the complete multiset is generated from the same owner row through "
+                    + "HardinA229585StripData.zeroBudgetClass on the destination index. The other "
+                    + "rows retain their finite lists. The OrbitChecks.canonical_next theorems identify images with "
                     + "nextClasses on each valid class interval, and "
                     + "HardinA229585StripOrbitTable.table_counts pins each destination multiplicity to "
                     + "the corresponding entry of T."))), DescribeRole.Definition),
