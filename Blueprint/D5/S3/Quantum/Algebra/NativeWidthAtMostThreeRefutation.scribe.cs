@@ -34,8 +34,8 @@ internal sealed class NativeWidthAtMostThreeRefutationDocument : IScribeDocument
     private static Formula Sum(Formula k) => Seq(new Formula.Subscript(F.Sum,
         Seq(V("r"), Sp, Colon, Sp, Fin(k))), Sp,
         Par(Call("kronecker", App(V("M"), V("r")), App(V("N"), V("r")))));
-    private static Describe Node(string id, string title, Formula formula, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + id), H(title),
+    private static DocumentBlock Node(string id, string title, Formula formula, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create(id.Replace("_", "-")), DeclarationHandle.Create(Prefix + id), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 
