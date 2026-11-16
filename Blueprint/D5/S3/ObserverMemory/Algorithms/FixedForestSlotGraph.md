@@ -177,4 +177,5 @@ A/B are the only merged binary target. All other binary parents represent separa
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/FixedForestSlotGraph.repetition_excess`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/FixedForestSlotGraph.shared_rows_distinct`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/FixedForestSlotGraph.sharing_excess`
+- Dependency: [D5/S1/Words/Complexity/AlloucheReflectionComplexitySupport](../../../S1/Words/Complexity/AlloucheReflectionComplexitySupport.md)
 - Dependency: [D5/S3/ObserverMemory/Algorithms/FixedForestTargetInventory](FixedForestTargetInventory.md)
