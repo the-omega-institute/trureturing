@@ -158,7 +158,7 @@ than supplying them as hypotheses.
 
 ## Triage
 
-**已证（Lean）**：For positive definite inputs, joint logarithmic
+**Proved in Lean:** For positive definite inputs, joint logarithmic
 convexity on $\mathbb R\times(0,\infty)$ and the affine logarithmic
 trace derivative at one; for supported semidefinite inputs, affine-line
 monotonicity on the full positive axis, including the normalized Umegaki
@@ -166,7 +166,7 @@ value at one. The mechanism is compound-matrix three-lines interpolation,
 weak log-majorization, finite Holder interpolation, convex secants and
 common positive regularization.
 
-**纸面推出**：The Bourin-Lee substitution in Route is an algebraic
+**Derived on paper, not formalized:** The Bourin-Lee substitution in Route is an algebraic
 identification of the same power product. For Hermitian matrices, range
 is the orthogonal complement of kernel, so the theorem's kernel inclusion
 is equivalent to support inclusion. The method counterexample
@@ -174,16 +174,16 @@ $F(a,z)=(a-1)^2/z$, $z(a)=a^2$ in Falsifier has normalized secant
 derivative $(2-a)/a^3<0$ for $a>2$. It refutes the general inference
 from joint convexity to convex-curve monotonicity, not a Renyi claim.
 
-**源文献已证、未形式化**：For $\kappa=0$, $z_0>0$, Theorem 3.1(ii)
+**Proved in the source, not formalized:** For $\kappa=0$, $z_0>0$, Theorem 3.1(ii)
 gives fixed-z monotonicity. Without support inclusion, the values at one
 and above one are $+\infty$, and the below-one comparison uses the
 source result. These extended-value cases are not additional Lean claims.
 
-**纸面推出**：For $z_0>0$, the source alpha-zero comparison follows from
+**Derived on paper, not formalized:** For $z_0>0$, the source alpha-zero comparison follows from
 Theorem 3.1 and the right-continuity bridge in Gap; it is not formalized.
 For $z_0=0$, alpha zero lies outside the source domain because $z=0$.
 
-**未决**：An arbitrary convex-curve extension of the Renyi comparison
+**Open:** An arbitrary convex-curve extension of the Renyi comparison
 remains unproved; joint convexity alone does not establish it.
 
 ## ASSUMED-UNVERIFIED
