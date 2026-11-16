@@ -1,0 +1,27 @@
+**定义 273.1（换点的单向弱化与行列式底）。** 沿270.1保留由全部实际二元面、自身体积重心及允许混合反端生成的最小对称面闭关系 $R_m$。把272.1的换点只要求在正交点对上，得到
+
+$$
+\mathsf X_\perp:\quad
+\forall p,q\in P,\quad p\ne q,\ pR_mq
+\ \Longrightarrow\ \exists g\in P:\quad
+\{p,q\}^{\perp}=\{p,g\}^{\perp},\qquad \neg pR_mg.
+\tag{273.1}
+$$
+
+共同正交集始终遍历全部原纯参照。完整 $\mathsf X$ 还要求对非正交的不同点对作反向替换；(273.1)删除的恰是这一半。以下构造只讨论单底，不预给任何联合锥。令
+
+$$
+\begin{aligned}
+E&=\mathbb R\oplus\operatorname{Herm}_3(\mathbb C),\qquad
+f(X)=\det(X)^{1/3}\quad(X\succeq0),\\
+C&=\{(s,X):X\succeq0,\ |s|\le f(X)\},\qquad
+u(s,X)=\operatorname{Tr}X,\qquad K=C\cap\{u=1\},\\
+\Gamma_\pm&=\{(\pm f(X),X):X\succ0,\ \operatorname{Tr}X=1\},\\
+F_U&=\{(0,X)\in K:\operatorname{ran}X\subseteq U\}
+\quad(0\ne U\subsetneq\mathbb C^3).
+\end{aligned}
+\tag{273.2}
+$$
+
+标准单侧实对称root-determinant锥及其双锥见[Q273D, §4.4, (15a–b)]；这里只复用根行列式的成熟凸性工具。复Hermitian双侧构造的面、重心与原关系按下列证明另行确定。
+

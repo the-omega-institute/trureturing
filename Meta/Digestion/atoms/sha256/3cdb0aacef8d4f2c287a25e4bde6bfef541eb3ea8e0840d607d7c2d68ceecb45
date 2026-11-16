@@ -1,0 +1,22 @@
+**定义 278.1（确认零关系上的换点候选）。** 完整保留275.1的非平凡强全有限背景及277.1的真实三份分块、原概率表与全状态效应序。先要求277.2的两门收紧规则 $\mathsf R_B$。它给276.2的产品对least，并经纯旁观面下降为整个双份的 $\mathsf M_2$。因此对每个 $p\in P_2$，下式在原完整菜单中定义唯一 $e_p$：
+
+$$
+e_p(p)=1,\qquad e_p\le f\quad(f\in[0,u_2]_{C_2^*},\ f(p)=1),
+\qquad p\perp_e q\quad\Longleftrightarrow\quad e_p(q)=0.
+\tag{278.1}
+$$
+
+对 $A\subseteq P_2$ 令 $A^{\perp_e}$ 为与其每个点都满足该零关系的原纯点集。在这个已定义关系上要求
+
+$$
+\mathsf X_{e,2}:\quad
+\forall p\ne q\in P_2\ \exists g\in P_2:\quad
+\{p,q\}^{\perp_e}=\{p,g\}^{\perp_e},\qquad
+(p\perp_e q)\mathbin{\mathrm{xor}}(p\perp_e g),
+\qquad
+\boxed{\ \mathsf Q_{\mathrm{cert}}:=\mathsf R_B+\mathsf X_{e,2}.\ }
+\tag{278.2}
+$$
+
+本候选不构造体积重心、径向反端或其最小面闭扩张。两测试收紧与两准备换点都作用于原模型自身的关系；换点仍有一个存在点及遍历全部共同参照的量词，不冒称二变量公式。$\mathsf X_{e,2}$ 只在已经定义了 $e_p$ 的 $\mathsf R_B$ 模型上使用，不把未定义的门当输入。
+
