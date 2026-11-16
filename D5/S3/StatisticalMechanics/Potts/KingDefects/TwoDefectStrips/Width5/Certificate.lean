@@ -169,7 +169,7 @@ private theorem canonical_successors (p : Row) (d : Fin 3) (hp : Valid p d.val)
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
-private theorem class_counts : ∀ c s : Fin 43, (classList c).count s = T c s := by
+private theorem class_counts : ∀ c s : Fin 43, ((classList c).count s : ℤ) = T c s := by
   decide +kernel
 
 theorem transition_counts (p : Row) (d : ℕ) (hp : Valid p d) (s : Fin 43) :
@@ -191,7 +191,11 @@ theorem transition_counts (p : Row) (d : ℕ) (hp : Valid p d) (s : Fin 43) :
       (fun r => cl r (d - (bondDefects between p' r + bondDefects horizontal r r))) s
     change (successors p' d).count s = _ at h
     rw [hlist] at h
-    exact_mod_cast h.symm.trans (class_counts _ _)
+    have hh : (∑ r : Row, if bondDefects between p' r + bondDefects horizontal r r ≤ d ∧
+        cl r (d - (bondDefects between p' r + bondDefects horizontal r r)) = s
+        then (1 : ℤ) else 0) = ((classList (cl p' d)).count s : ℤ) := by
+      exact_mod_cast h.symm
+    exact hh.trans (class_counts _ _)
   rw [he] at hT
   let E : Row ≃ Row := Equiv.piCongrRight fun _ : Fin 5 => e
   rw [← E.sum_comp] at hT
