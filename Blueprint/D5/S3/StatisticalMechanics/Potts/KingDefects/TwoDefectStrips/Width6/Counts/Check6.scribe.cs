@@ -8,7 +8,7 @@ internal sealed class Check6Document : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact multiplicities of successor classes.", H("Width-six class counts"), Blocks(
             Describe.Lean(DescribeId.Create("counts"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Counts/Check6.counts"),
-                H("First 84 classes"), StatementSource.FromAuthor(Disp(All("c", Call("Fin", Num("84")), All("s", Call("Fin", Num("96")), Eq(Call("List.count", Call("Data.classList", Call("Fin.mk", Call("Fin.val", V("c")))), V("s")), Call("Data.T", Call("Fin.mk", Call("Fin.val", V("c"))), V("s"))))))),
+                H("First 84 classes"), StatementSource.FromAuthor(Disp(All("c", Call("Fin", Num("84")), All("s", Call("Fin", Num("96")), Eq(Call("Int.ofNat", Call("List.count", Call("Data.classList", Call("Fin.mk", Call("Fin.val", V("c")))), V("s"))), Call("Data.T", Call("Fin.mk", Call("Fin.val", V("c"))), V("s"))))))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("For each c in Fin 84 and s in Fin 96, the integer cast of the multiplicity of s in classList c equals the matrix entry T(c,s). The source index c is embedded into Fin 96 by its value; Fin.mk omits its bound proof. These cumulative finite checks feed Certificate.transition_counts."))), DescribeRole.Theorem))));
 
     private static Formula V(string s) => F.Id(s);
