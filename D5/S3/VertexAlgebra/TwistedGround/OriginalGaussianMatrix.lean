@@ -453,7 +453,7 @@ private lemma pairScalar_conj (s t : ℕ) : conj (pairScalar s t) = pairScalar s
   simp only [map_div₀, map_mul, map_natCast, Complex.conj_ofReal,
     map_pow, map_neg, map_one, map_add, map_inv₀]
 
-private lemma pairScalar_comm (s t : ℕ) : pairScalar s t = pairScalar t s := by
+lemma pairScalar_comm (s t : ℕ) : pairScalar s t = pairScalar t s := by
   unfold pairScalar
   ring
 

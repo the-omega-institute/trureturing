@@ -81,9 +81,18 @@ The official immutable export labels the assertion a conjecture. The bounded
 source, supplier and library scope is qualified in
 [issue #31036](https://github.com/the-omega-institute/trureturing/issues/31036)
 and its [immutable preregistration](https://github.com/the-omega-institute/trureturing/issues/31036#issuecomment-6902005491).
-No complete supplier was authenticated in that scope. This is not a worldwide
-absence or priority claim; the unread possible suppliers below remain material
-limits on external open-problem admission.
+Roberto Blanco Gómez's *Proofs and corrections of 306 conjectures in the OEIS*,
+[DOI 10.5281/zenodo.23112421](https://doi.org/10.5281/zenodo.23112421),
+Proposition 7.39 (English PDF p. 33), supplies the exact all-index recurrence
+and an EGF operator conditional on Jovovic's logarithmic EGF formula.
+The record is dated 2026-10-02; the PDF calls itself Version 6, dated
+2026-10-03. The shared literature note records the distinct version labels,
+operator and authentication scope. The paper explicitly assumes the EGF
+formula; neither it nor the followed entry proves its coefficient equality
+with the literal signed sum. Its A001724 passages supply no ordinary operator.
+This is conditional prior art, not an authenticated unconditional full supplier.
+The [existing source report](https://github.com/the-omega-institute/trureturing/issues/31036#issuecomment-6904309599)
+and unread possible suppliers below remain material admission limits.
 
 ## Route
 
@@ -128,7 +137,12 @@ forwarding wrappers. This is visibility migration, not new mathematical content.
 
 Tier 1: an external named OEIS conjecture posed in 2026. The source-core result
 uses conditional `admission_basis: open-problem-resolution` under the bounded
-source qualification and unchanged preregistration above. All eight authored
+source qualification and unchanged preregistration above. That admission
+survives the authenticated Proposition 7.39 scope provisionally: its assumed
+literal-sum/EGF bridge is not supplied, so it does not establish a complete
+prior solution of the retained source core or the fixed BOTH event. This is
+not a first-solution, worldwide-novelty, priority or KPI claim; an authenticated
+full literal supplier or prior resolution overrides eligibility. All eight authored
 theorem proofs are `bind-only`; none supplies an escape witness. Helper
 consumption is: `shifted_coeff` and `shifted_step` feed `recurrence_forward`;
 `recurrence_forward` feeds `recurrence_rational` and `result`;
@@ -149,8 +163,12 @@ arithmetic is internal to an unbounded symbolic proof.
   open here; no sharpness claim or generalization is inferred.
 - **Source scope:** the positive transient check also covers the exponential
   reading of D-finiteness. The separately displayed logarithmic EGF identity
-  and the source's other formulas retain independent proof obligations. No
-  dependency of another named conjecture on this assertion is established.
+  and the source's other formulas retain independent proof obligations.
+  The retained proof obtains recurrence and ordinary D-finiteness directly from
+  the literal signed sum; it does not prove the identity assumed in Proposition
+  7.39. Separate ordinary and exponential D-finiteness statements cannot imply
+  equality with Jovovic's formula. No dependency of another named conjecture
+  on this assertion is established.
 
 ## ASSUMED-UNVERIFIED
 
