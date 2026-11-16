@@ -39,6 +39,7 @@ extremizer: proof_shape: bind-only; escape_witness: none; consumers: result.
 
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 import Mathlib.Combinatorics.SimpleGraph.Extremal.Zarankiewicz
+import D5.S3.Combinatorics.Graph.Domination.TrapezohedralMinimalDomination
 
 import Mathlib.Combinatorics.Hall.Finite
 import Mathlib.GroupTheory.Perm.Fin
@@ -216,14 +217,7 @@ private theorem cycle_matrix {n : ℕ} (hn : 3 ≤ n) :
   classical
   let f := finRotate n
   have hperiod : ∀ i : Fin n, f (f i) ≠ i := by
-    intro i hi
-    have hcyc := isCycle_finRotate_of_le (show 2 ≤ n by omega)
-    have hpow : finRotate n ^ 2 = 1 := hcyc.pow_eq_one_iff.mpr
-      ⟨i, rotate_no_fixed hn i, by simpa only [pow_two, Equiv.Perm.mul_apply] using hi⟩
-    have hdvd := orderOf_dvd_of_pow_eq_one hpow
-    rw [hcyc.orderOf, support_finRotate_of_le (by omega), Finset.card_univ,
-      Fintype.card_fin] at hdvd
-    exact (not_le_of_gt hn) (Nat.le_of_dvd (by decide) hdvd)
+    exact fun i => D5.S3.Combinatorics.Graph.Domination.TrapezohedralMinimalDomination.rotate_twice_ne hn i
   let M : Matrix (Fin n) (Fin n) (Fin 2) := fun i j => if j=i ∨ j=f i then 1 else 0
   have hs : ∀ i j, M i j = 1 ↔ j=i ∨ j=f i := by
     intro i j

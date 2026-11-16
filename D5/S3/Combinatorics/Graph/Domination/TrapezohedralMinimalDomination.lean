@@ -402,7 +402,7 @@ private theorem alphaSet_admissible_with_interior_iff {n : ℕ} (hn : 3 ≤ n) (
         | a k => simp [graph, adjacent] at hwt
         | b k => exact congrArg b ht
 
-private theorem rotate_twice_ne {n : ℕ} (hn : 3 ≤ n) (i : Fin n) :
+theorem rotate_twice_ne {n : ℕ} (hn : 3 ≤ n) (i : Fin n) :
     finRotate n (finRotate n i) ≠ i := by
   letI : NeZero n := ⟨by omega⟩
   intro h
