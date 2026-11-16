@@ -42,7 +42,7 @@ internal sealed class PrimeReciprocalProductDocument : IScribeDocumentDefinition
                 + "comparison at one thousand finishes. With at least ten prime "
                 + "divisors, their product exceeds 3^(3r-10), where r is the support "
                 + "size. The harmonic lower bound and the support-size upper bound "
-                + "then show that the full product is more than twice the removed one.")))));
+                + "then show that the full product is more than twice the removed one."))));
 
     private static DocumentBlock Node(string name, string title, string prose) =>
         Describe.Lean(

@@ -46,7 +46,8 @@ internal sealed class UnitaryProductBridgeDocument : IScribeDocumentDefinition
                 + "thousand, the support-only product is at least two. For the "
                 + "remaining positive m, the product retaining repeated-prime "
                 + "contributions plus P/m is at least two by exact rational "
-                + "calculation. These two ranges cover every positive m.")))));
+                + "calculation in ten consumed private kernel certificates covering "
+                + "one through 999. These two ranges cover every positive m."))));
 
     private static DocumentBlock Node(string name, string title, string prose) =>
         Describe.Lean(
