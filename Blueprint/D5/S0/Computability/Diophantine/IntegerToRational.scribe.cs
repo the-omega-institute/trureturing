@@ -58,7 +58,13 @@ internal sealed class DiophantineIntegerToRationalDocument : IScribeDocumentDefi
                         "The compiler takes both dimensions and both raw codes as inputs. Its "
                         + "natural/list operations are proved primitive recursive, every finite "
                         + "MvPolynomial has a code, and the decoded result has the same rational "
-                        + "solvability equivalence as the semantic joint-assignment reduction."))),
+                        + "solvability equivalence as the semantic joint-assignment reduction. "
+                        + "In the formula, K denotes the uncurried map compileCodeNat on the "
+                        + "right-associated tuple (n,m,p,f), returning the output dimension and "
+                        + "raw polynomial code. D(n,k) denotes decodePolynomial n (decodeCode k), "
+                        + "and snd selects the output code. The theorem compileCodeNat_primrec "
+                        + "proves the stronger primitive-recursive property; effective_compiler "
+                        + "combines its computability consequence with completeness and solvability."))),
                 DescribeRole.Theorem))));
 
     private static Formula A(string name, Formula domain, Formula body) =>
@@ -87,17 +93,28 @@ internal sealed class DiophantineIntegerToRationalDocument : IScribeDocumentDefi
 
     private static Formula EffectivePresentation()
     {
-        var q = F.Id("q");
         var n = F.Id("n");
         var m = F.Id("m");
         var p = F.Id("p");
         var f = F.Id("f");
-        var code = Call("NatCodeInput", n, m, p, f);
-        var computable = Call("Computable", Call("compileCodeNat", code));
-        var complete = Forall, Sp;
-        var completeness = Call("decodePolynomial", n, Call("decodeCode", F.Id("k")));
-        var solvable = Call("codeSolvability", n, m, p, f);
-        return F.Disp(A("q", Call("NatCodeInput", F.Id("N"), F.Id("N"), F.Id("N"), F.Id("N")),
-            And(computable, And(Call("codeComplete", q), solvable)));
+        var dimension = Call("mul", n, Call("succ", m));
+        var completeness = A("n", F.Id("N"),
+            A("f", Call("IntegerPolynomial", n), E("k", F.Id("N"),
+                F.Seq(Call("D", n, F.Id("k")), F.Sp, Eq, F.Sp, f))));
+        var lhs = E("x", Call("FinRatVec", dimension),
+            F.Seq(Call("evalRat", Call("D", dimension,
+                    Call("snd", Call("K", n, m, p, f))), F.Id("x")),
+                F.Sp, Eq, F.Sp, D(0)));
+        var rhs = E("z", Call("FinIntVec", n),
+            F.Seq(Call("evalInt", Call("D", n, f), F.Id("z")),
+                F.Sp, Eq, F.Sp, D(0)));
+        var preservation = A("n", F.Id("N"), A("m", F.Id("N"),
+            A("p", F.Id("N"), A("f", F.Id("N"),
+                F.Seq(Call("DefinesIntegers", Call("D", Call("succ", m), p)),
+                    F.Sp, Rightarrow, F.Sp, F.Open, lhs, F.Close,
+                    F.Sp, Iff, F.Sp, F.Open, rhs, F.Close)))));
+        return F.Disp(F.Seq(Call("Computable", F.Id("K")), F.Sp, Land, F.Sp,
+            F.Open, completeness, F.Close, F.Sp, Land, F.Sp,
+            F.Open, preservation, F.Close));
     }
 }
