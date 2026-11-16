@@ -61,5 +61,10 @@ internal sealed class OriginalGaussianAllIndexResolventDocument : IScribeDocumen
                 DescribeId.Create("square-resolvent-entry-explicit"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.squareResolvent_entry_explicit"),
                 H("squareResolvent_entry_explicit"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The squareResolvent_entry_explicit statement is verified on its displayed full domain and consumed by the original Gaussian source calculation."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The squareResolvent_entry_explicit statement is verified on its displayed full domain and consumed by the original Gaussian source calculation."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("period-ofreal"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.period_ofReal"),
+                H("period_ofReal"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real r, the literal complex period at r is the complex embedding of the existing real period F r."))), DescribeRole.Theorem))));
 }
