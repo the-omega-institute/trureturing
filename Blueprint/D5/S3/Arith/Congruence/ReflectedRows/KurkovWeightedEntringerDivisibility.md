@@ -50,7 +50,7 @@ The row polynomial has value a(r+1) at 1 and backward difference r*P(r-1)(r+2-X)
 
 For a positive modulus d, evaluate these integral polynomials in ZMod d. Their integer argument has period d. Induction on r proves P(r+d)(x)=a(d+1)*P(r)(x) pointwise at every integer x. At r=0 the backward differences vanish modulo d; the anchor is a(d+1). At the inductive step, the previous row relation and argument periodicity give both the anchor and the backward differences. Two-sided integer induction propagates equality to all arguments. The diagonal gives a(n+d)=a(d+1)*a(n) in ZMod d for positive n,d, and induction on m gives divisor propagation. If k=0, the hypothesis d|a(0)=1 forces d=1.
 
-The Newton ingredient is classical and reused from the repository and pinned Mathlib. The reflected row construction and full source deduction are repository derived. No external Lean code is transplanted. Bounded literature searches are described in the Library note and issue #31218; global novelty and priority remain ASSUMED-UNVERIFIED. This document carries no frozen problem-resolution marker.
+The Newton ingredient is classical and reused from the repository and pinned Mathlib. The reflected row construction and full source deduction are repository derived. No external Lean code is transplanted. Bounded literature searches are described in the Library note and issue #31218; global novelty and priority remain ASSUMED-UNVERIFIED.
 
 ## References
 
