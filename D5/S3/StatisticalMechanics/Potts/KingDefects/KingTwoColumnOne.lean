@@ -13,7 +13,12 @@ Prefix: proof_shape=bind-only; consumers=prefix_cons, prefix_zero
 prefix_cons: proof_shape=content; consumers=accepted_iff
 prefix_zero: proof_shape=bind-only; consumers=literal_bridge
 cost: proof_shape=bind-only; consumers=Accepted, transfer_counts
+acceptedDecidable: proof_shape=bind-only; consumers=count, count_step
 Accepted: proof_shape=bind-only; consumers=accepted_iff, count_step, count_matrix
+tailCost: proof_shape=bind-only; consumers=tailCost_step, adjacent_tail, accepted_iff
+tailCost_step: proof_shape=bind-only; consumers=accepted_iff, adjacent_tail
+adjacent_tail: proof_shape=content; consumers=grid_defects
+grid_defects: proof_shape=bind-only; consumers=literal_bridge
 accepted_iff: proof_shape=content; consumers=literal_bridge
 count: proof_shape=bind-only; consumers=count_step, count_matrix, literal_bridge
 count_step: proof_shape=bind-only; consumers=count_matrix
@@ -23,11 +28,14 @@ index: proof_shape=bind-only; consumers=transfer_counts, count_matrix
 transfer_counts: proof_shape=bind-only; consumers=count_matrix
 count_matrix: proof_shape=content; consumers=result
 literal_bridge: proof_shape=content; consumers=result
-certificate: proof_shape=bind-only; consumers=result
+backwardTable: proof_shape=bind-only; consumers=certificate, powers_table
+powers_table: proof_shape=bind-only; consumers=result
+certificate: proof_shape=bind-only; consumers=powers_table, result
 result: proof_shape=bind-only; consumers=none (external open-problem-resolution #30655 C1)
 -/
 
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
 /-! Canonical paths retain the number of introduced colours and the exact remaining budget. -/
@@ -137,7 +145,17 @@ private theorem grid_defects (n : ℕ) (f : Cell (n + 1) 1 → Fin 4) :
   change _ = tailCost (f (0, 0)) (Fin.tail (fun i => f (i, 0)))
   rw [adjacent_tail n (fun i => f (i, 0))]
   rw [Finset.card_eq_sum_ones, Finset.sum_filter, KingGrid.sum_edges]
-  simp [cost, mono, KingGrid.end0, KingGrid.end1, KingGrid.lo, KingGrid.hi]
+  simp only [Nat.reduceSub, Nat.sub_self, Fin.sum_univ_zero, Fin.sum_univ_one,
+    Finset.sum_const_zero, zero_add, add_zero]
+  have hsum : (∑ i : Fin (n + 1 - 1),
+      if f (KingGrid.lo i, 0) = f (KingGrid.hi i, 0) then 1 else 0) =
+      ∑ i : Fin n, cost (f (i.castSucc, 0)) (f (i.succ, 0)) := by
+    let E : Fin (n + 1 - 1) ≃ Fin n := finCongr (by omega)
+    rw [← E.sum_comp]
+    apply Finset.sum_congr rfl
+    intro i _
+    rfl
+  exact hsum
 
 private theorem literal_bridge (n : ℕ) :
     (KingTwoGrid.T (n + 1) 1 : ℤ) = count n 1 0 2 := by
@@ -145,23 +163,16 @@ private theorem literal_bridge (n : ℕ) :
   let E : (Cell (n + 1) 1 → Fin 4) ≃ (Fin (n + 1) → Fin 4) := {
     toFun f i := f (i, 0)
     invFun f p := f p.1
-    left_inv f := by funext p; congr 1; exact Prod.ext rfl (Subsingleton.elim _ _)
+    left_inv f := by
+      funext p
+      exact congrArg f (Prod.ext rfl (Subsingleton.elim (0 : Fin 1) p.2))
     right_inv f := rfl }
   have normal (f : Cell (n + 1) 1 → Fin 4) : KingGrid.normal f ↔ Canonical (E f) := by
-    simp only [KingGrid.normal, Canonical]
-    constructor
-    · intro h i b hb
-      obtain ⟨j, hj, he⟩ := h (finProdFinEquiv (i, 0)) b (by simpa [E] using hb)
-      refine ⟨(finProdFinEquiv.symm j).1, ?_, ?_⟩
-      · simpa [Fin.lt_def, finProdFinEquiv, Fin.divNat] using hj
-      · simpa only [show (finProdFinEquiv.symm j).2 = 0 from Subsingleton.elim _ _]
-          using he
-    · intro h i b hb
-      obtain ⟨j, hj, he⟩ := h (finProdFinEquiv.symm i).1 b
-        (by simpa only [show (finProdFinEquiv.symm i).2 = 0 from Subsingleton.elim _ _]
-          using hb)
-      refine ⟨finProdFinEquiv (j, 0), ?_, by simpa [E] using he⟩
-      simpa [Fin.lt_def, finProdFinEquiv, Fin.divNat] using hj
+    have h : (fun p : Cell (n + 1) 1 => E f p.1) = f := by
+      funext p
+      exact congrArg f (Prod.ext rfl (Subsingleton.elim (0 : Fin 1) p.2))
+    rw [← h]
+    exact KingPath.normal_path (E f)
   let F : {f : Cell (n + 1) 1 → Fin 4 // KingTwoGrid.TwoDefect f ∧ KingGrid.normal f} ≃
       {f : Fin (n + 1) → Fin 4 //
         Prefix 0 f ∧ tailCost (f 0) (Fin.tail f) = 2} := E.subtypeEquiv (by
@@ -187,10 +198,11 @@ private theorem literal_bridge (n : ℕ) :
         (by simpa using f.property.1)
       have hz : f.val 0 = 0 := Fin.ext (by omega)
       simpa [hz] using Fin.cons_self_tail f.val
-    right_inv f := Subtype.ext (Fin.tail_cons _ _) }
+    right_inv f := by apply Subtype.ext; funext i; rfl }
   have h := Nat.card_congr (F.trans G)
   rw [KingTwoGrid.T, h, Nat.card_eq_fintype_card, Fintype.card_subtype]
-  simp [count, Finset.natCast_card_filter]
+  rw [Finset.natCast_card_filter]
+  rfl
 
 private theorem count_step (n m : ℕ) (p : Fin 4) (d : ℕ) :
     count (n + 1) m p d = ∑ c : Fin 4,
@@ -239,7 +251,8 @@ private theorem count_matrix (n m : ℕ) (p : Fin 4) (d : ℕ)
       have hlt : 3 * (m - 1) + d < 12 := by omega
       simp only [index, Fin.val_mk, Nat.mod_eq_of_lt hlt]
       omega
-    by_cases hz : d = 0 <;> simp [terminal, he, hz]
+    simp only [terminal, he]
+    exact Fintype.sum_unique _
   | succ n ih =>
     rw [count_step, pow_succ', ← Matrix.mulVec_mulVec]
     rw [← transfer_counts ⟨m, by omega⟩ p ⟨d, by omega⟩ hm.1 hp]
@@ -251,7 +264,16 @@ private theorem count_matrix (n m : ℕ) (p : Fin 4) (d : ℕ)
 
 
 private def backwardTable : Fin 10 → Fin 12 → ℤ :=
-  ![![1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0], ![1, 1, 0, 2, 1, 0, 3, 1, 0, 3, 1, 0], ![2, 2, 1, 5, 4, 1, 9, 6, 1, 9, 6, 1], ![5, 6, 3, 14, 15, 6, 27, 27, 9, 27, 27, 9], ![14, 20, 12, 41, 56, 30, 81, 108, 54, 81, 108, 54], ![41, 70, 50, 122, 205, 140, 243, 405, 270, 243, 405, 270], ![122, 246, 210, 365, 732, 615, 729, 1458, 1215, 729, 1458, 1215], ![365, 854, 861, 1094, 2555, 2562, 2187, 5103, 5103, 2187, 5103, 5103], ![1094, 2920, 3416, 3281, 8752, 10220, 6561, 17496, 20412, 6561, 17496, 20412], ![3281, 9846, 13140, 9842, 29529, 39384, 19683, 59049, 78732, 19683, 59049, 78732]]
+  ![![1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0],
+    ![1, 1, 0, 2, 1, 0, 3, 1, 0, 3, 1, 0],
+    ![2, 2, 1, 5, 4, 1, 9, 6, 1, 9, 6, 1],
+    ![5, 6, 3, 14, 15, 6, 27, 27, 9, 27, 27, 9],
+    ![14, 20, 12, 41, 56, 30, 81, 108, 54, 81, 108, 54],
+    ![41, 70, 50, 122, 205, 140, 243, 405, 270, 243, 405, 270],
+    ![122, 246, 210, 365, 732, 615, 729, 1458, 1215, 729, 1458, 1215],
+    ![365, 854, 861, 1094, 2555, 2562, 2187, 5103, 5103, 2187, 5103, 5103],
+    ![1094, 2920, 3416, 3281, 8752, 10220, 6561, 17496, 20412, 6561, 17496, 20412],
+    ![3281, 9846, 13140, 9842, 29529, 39384, 19683, 59049, 78732, 19683, 59049, 78732]]
 
 private theorem certificate :
     (backwardTable 0 = terminal ∧ ∀ i : Fin 9,
@@ -289,10 +311,10 @@ theorem result (n : ℕ) (hn : 10 ≤ n) :
       dotProduct terminal (((transferᵀ) ^ m).mulVec (Pi.single 2 1)) =
         (KingTwoGrid.T (m + 1) 1 : ℤ) := by
     rw [← Matrix.transpose_pow, Matrix.dotProduct_transpose_mulVec]
-    simp only [dotProduct, Pi.single_apply, Finset.sum_ite_eq', Finset.mem_univ,
-      if_true, one_mul, zero_mul]
-    exact (literal_bridge m).trans
-      (count_matrix m 1 0 2 (by omega) (by decide) (by omega)) |>.symm
+    rw [single_dotProduct]
+    simpa only [one_mul, show index 1 2 = 2 from rfl] using
+      ((literal_bridge m).trans
+        (count_matrix m 1 0 2 (by omega) (by decide) (by omega))).symm
   have h := forward_shift transferᵀ terminal (Pi.single 2 1) 6 3
     ![-27, 108, -171, 136, -57, 12] poly (n - 10)
   simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, Matrix.cons_val_zero,
@@ -305,7 +327,7 @@ theorem result (n : ℕ) (hn : 10 ≤ n) :
   have h3 : n - 10 + 3 + (0 + 1 + 1 + 1) + 1 = n - 3 := by omega
   have h4 : n - 10 + 3 + (0 + 1 + 1 + 1 + 1) + 1 = n - 2 := by omega
   have h5 : n - 10 + 3 + (0 + 1 + 1 + 1 + 1 + 1) + 1 = n - 1 := by omega
-  rw [hi, h0, h1, h2, h3, h4, h5] at h
+  rw [hi, h5, h4, h3, h2, h1, h0] at h
   linarith
 
 end D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoColumnOne

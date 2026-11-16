@@ -12,6 +12,9 @@ internal sealed class KingPathDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite colourings with exactly one monochromatic king bond.", H("One-defect king colourings: KingPath"),
         Blocks(
+            Node("normal_path", "Canonical words and canonical one-column grids", NormalFormula(),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                "The row-major order on a one-column grid agrees with the order of its word positions, so the two restricted-growth conditions are equivalent."),
             Node("width_one_large", "The width-one count for at least three cells", Formula0(),
                 DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
@@ -22,6 +25,13 @@ internal sealed class KingPathDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             provenance, Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula NormalFormula() => All("n", Q("Nat"),
+        All("f", new Formula.TypeArrow(Call("Fin", V("n")), Call("Fin", Num("4"))),
+            new Formula.Logic(Call("KingGrid.normal", Parenthesized(Seq(LambdaLower, Sp,
+                Typed(V("p"), Call("KingGrid.Cell", V("n"), Num("1"))), Sp, Mapsto, Sp,
+                Call("f", Call("Prod.fst", V("p")))))), FormulaLogicOperator.Iff,
+                Call("HardinA233177Canonical.Canonical", V("f")))));
 
     private static Formula Formula0() =>
         All("n", Q("Nat"), Imp(Leq(Num("3"), V("n")),

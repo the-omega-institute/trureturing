@@ -25,7 +25,7 @@ fixedCard: proof_shape=bind-only; consumers=KingPath.permutation_sum,KingPath.wi
 permutation_sum: proof_shape=bind-only; consumers=KingPath.width_one_large
 edge_path: proof_shape=bind-only; consumers=KingPath.oneDefect_path
 oneDefect_path: proof_shape=bind-only; consumers=KingPath.literal_words
-normal_path: proof_shape=bind-only; consumers=KingPath.literal_words
+normal_path: proof_shape=bind-only; consumers=KingPath.literal_words,KingTwoColumnOne.literal_bridge
 literal_words: proof_shape=bind-only; consumers=KingPath.literal_count
 literal_count: proof_shape=bind-only; consumers=KingPath.width_one_large
 width_one_large: proof_shape=content; consumers=HardinA229578.result
@@ -248,7 +248,7 @@ private theorem oneDefect_path {n : ℕ} (f : Fin n → Fin 4) :
     rfl
   rw [h]
 
-private theorem normal_path {n : ℕ} (f : Fin n → Fin 4) :
+theorem normal_path {n : ℕ} (f : Fin n → Fin 4) :
     normal (fun p : Cell n 1 => f p.1) ↔ Canonical f := by
   simp only [normal,Canonical]
   constructor
