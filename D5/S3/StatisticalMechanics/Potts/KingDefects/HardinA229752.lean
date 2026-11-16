@@ -42,10 +42,12 @@ theorem result (n : ℕ) (hn : 12 ≤ n) :
     · intro p d hp r hr
       change d ≤ 2 ∧ _ at hp
       change _ ≤ 2 ∧ _
+      dsimp only [id]
       constructor <;> omega
     · exact Certificate.transition_counts
     · intro r hr
       change 2 - _ ≤ 2 ∧ _
+      dsimp only [id]
       constructor <;> omega
     · exact Forward.structural_certificate.2.1
   have tab (i : Fin 12) : forward Data.T initial i.val = W i := by
@@ -72,11 +74,15 @@ theorem result (n : ℕ) (hn : 12 ≤ n) :
       push_cast
       rfl
     · intro r
-      simp [bondDefects, horizontal, Fin.sum_univ_succ, KingGrid.lo, KingGrid.hi,
+      unfold bondDefects
+      rw [Finset.card_eq_sum_ones, Finset.sum_filter]
+      simp [horizontal, -Finset.sum_boole, -Finset.sum_const, Fin.sum_univ_succ, KingGrid.lo, KingGrid.hi,
         D5.S3.Topology.QuandleMarkovColoring.leftSlot,
         D5.S3.Topology.QuandleMarkovColoring.rightSlot]
     · intro r t
-      simp [bondDefects, between, Fin.sum_univ_succ, KingGrid.lo, KingGrid.hi,
+      unfold bondDefects
+      rw [Finset.card_eq_sum_ones, Finset.sum_filter]
+      simp [between, -Finset.sum_boole, -Finset.sum_const, Fin.sum_univ_succ, KingGrid.lo, KingGrid.hi,
         D5.S3.Topology.QuandleMarkovColoring.leftSlot,
         D5.S3.Topology.QuandleMarkovColoring.rightSlot]
       omega
