@@ -94,7 +94,6 @@ theorem result (n : ℕ) (hn : 12 ≤ n) :
   simp only [Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] at h h5 h6 h7 h8 h9 h10 h11
   rw [h5, h6, h7, h8, h9, h10, h11] at h
   norm_num only [Nat.reduceAdd, zero_add] at h
-  simp only [show ∀ j : Fin 7, 12 + m - j.val = m + (12-j.val) by intro j; omega]
   have e1 : 12+m-1 = m+11 := by omega
   have e2 : 12+m-2 = m+10 := by omega
   have e3 : 12+m-3 = m+9 := by omega

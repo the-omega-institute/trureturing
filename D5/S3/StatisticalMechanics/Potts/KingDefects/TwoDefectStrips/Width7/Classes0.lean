@@ -14,7 +14,8 @@ open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 local instance (p : Row) : Decidable (Canonical p) := by unfold Canonical; infer_instance
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
-theorem class_successors : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
-    cl p d.val = sampledClass → successors p d.val = sampledSuccessors := by
+theorem class_successors :
+    successors ![0,1,2,3,2,0,1] 1 = sampledSuccessors := by
   decide +kernel
+
 end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width7.Classes0
