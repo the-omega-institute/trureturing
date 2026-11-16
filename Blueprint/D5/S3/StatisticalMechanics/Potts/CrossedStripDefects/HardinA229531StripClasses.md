@@ -6,7 +6,7 @@ Exact width-five HDA transfer.
 
 **Theorem 1.1 (All target classes).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripClasses.transition_counts`
+$$\forall p: \operatorname{\mathit{Fin}}\left(5\right) \to \operatorname{\mathit{Fin}}\left(3\right), (\forall d: \operatorname{\mathit{Fin}}\left(2\right), ((\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{Valid}}\left(p, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(d\right)\right)) \implies (\forall s: \operatorname{\mathit{Fin}}\left(20\right), (\sum_{r: \operatorname{\mathit{Fin}}\left(5\right) \to \operatorname{\mathit{Fin}}\left(3\right)} (((\operatorname{\mathit{if}} ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{between}}, p, r\right) + \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{horizontal}}, r, r\right) \le \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(d\right)) \land (\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{cl}}\left(r, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(d\right) - (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{between}}, p, r\right) + \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{horizontal}}, r, r\right))\right) = s)) \operatorname{\mathit{then}} (1) \operatorname{\mathit{else}} (0)): \operatorname{\mathit{Int}})) = \operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{cl}}\left(p, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(d\right)\right), s\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripClasses.transition_counts` (`✓ std3`). ∎
 
@@ -16,7 +16,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229
 
 *Commentary.*
 
-For every actual row p, residual d : Fin 2 and target s : Fin 20, Valid p d implies that the actual permitted successor sum is T (cl p d) s. Each target case directly applies its checked class theorem; the final recurrence consumes the combined identity.
+For every actual row p, residual d : Fin 2 and target s : Fin 20, Valid p (Fin.val d) implies that the actual permitted successor sum is T (cl p (Fin.val d)) s. Each target case directly applies its checked class theorem; the final recurrence consumes the combined identity.
 
 ## References
 

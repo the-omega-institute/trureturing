@@ -26,7 +26,7 @@ internal sealed class HardinA229531StripDataDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The inter-row bond set is the union of HardinA229583StripData.antidiagonal with its coordinate-swapped image, containing both diagonals for each adjacent column pair."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("valid"), DeclarationHandle.Create(Prefix + "Valid"),
-                H("Valid residual states"), StatementSource.FromAuthor(Disp(All("p", RowType(), All("d", Call("Nat"), Eq(Call("HardinA229531StripData.Valid", V("p"), V("d")), And(Le(V("d"), Num("1")), Le(Call("DefectTransfer.bondDefects", Call("HardinA229531StripData.horizontal"), V("p"), V("p")), Sub(Num("1"), V("d"))))))))),
+                H("Valid residual states"), StatementSource.FromAuthor(Disp(All("p", RowType(), All("d", Call("Nat"), Eq(Call("HardinA229531StripData.Valid", V("p"), V("d")), Parenthesized(And(Le(V("d"), Num("1")), Le(Call("DefectTransfer.bondDefects", Call("HardinA229531StripData.horizontal"), V("p"), V("p")), Sub(Num("1"), V("d")))))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("Valid p d means that d is at most one and the internal horizontal defect count of p is at most one minus d."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("decidablevalid"), DeclarationHandle.Create(Prefix + "decidableValid"),

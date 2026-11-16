@@ -76,7 +76,7 @@ The sum ranges over the original individual colour rows with the original scanne
 
 **Theorem 1.6 (Exact scanner pushforward for every target class).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.class_fibres`
+$$\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}), (\forall (p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Boundary}), (\forall (k: \operatorname{Fin}\left(7\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{classCount}\left(s, p, k\right) = \sum_{q: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Boundary}} ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255LiteralBridge}.\operatorname{rowWeight}\left(s, q\right)) \cdot (((\operatorname{if} ((\forall (j: \operatorname{Fin}\left(4\right)), (q\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right) \ne q\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right))) \land ((\forall (j: \operatorname{Fin}\left(4\right)), ((p\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right) \ne q\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right)) \land (p\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right) \ne q\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right)))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{boundaryClass}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255LiteralBridge}.\operatorname{rowFinish}\left(s, q\right), q\right) = k))) \operatorname{then} (1) \operatorname{else} (0)): \operatorname{Int}))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.class_fibres` (`✓ std3`). ∎
 
@@ -86,11 +86,11 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalSt
 
 *Commentary.*
 
-For every Seen state, boundary and Fin 7 target class, classCount equals the sum over actual Fin 3 boundaries weighted by rowWeight, with the exact rowFinish class. At saturated Seen flags the weight is 32 and rowFinish is unchanged.
+For every Seen state, boundary and Fin 7 target class, classCount equals the sum over actual Fin 3 boundaries weighted by rowWeight. Each indicator requires horizontal properness, both diagonal compatibilities with p, and the exact rowFinish target class. At saturated Seen flags the weight is 32 and rowFinish is unchanged.
 
 **Theorem 1.7 (Universal interpretation of the seven-class transfer).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.finite_certificate`
+$$\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}), (\forall (p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Boundary}), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Valid}\left(s, p\right) \implies (\forall (k: \operatorname{Fin}\left(7\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{classCount}\left(s, p, k\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{transfer}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{boundaryClass}\left(s, p\right), k\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.finite_certificate` (`✓ std3`). ∎
 

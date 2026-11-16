@@ -106,7 +106,7 @@ K : Bool to Bool to Nat counts target classes in the order true, false. Its entr
 
 **Theorem 1.8 (Exact successor counts at widths two and three).**
 
-$${\forall d: \operatorname{Bool}\left(\right), {\forall p: \operatorname{Row}\left(1\right), {\operatorname{proper}\left(p\right) \implies {\sum_{q: \operatorname{Row}\left(1\right)} \operatorname{if}\left({\operatorname{proper}\left(q\right)} \land {\operatorname{compatible}\left(d, p, q\right)}, 1, 0\right) = 3}}}} \land {\forall d: \operatorname{Bool}\left(\right), {\forall p: \operatorname{Row}\left(2\right), {\operatorname{proper}\left(p\right) \implies {\forall b: \operatorname{Bool}\left(\right), {\sum_{q: \operatorname{Row}\left(2\right)} \operatorname{if}\left({{\operatorname{proper}\left(q\right)} \land {\operatorname{compatible}\left(d, p, q\right)}} \land {\operatorname{boundaryClass}\left(q\right) = b}, 1, 0\right) = \operatorname{K}\left(\operatorname{boundaryClass}\left(p\right), b\right)}}}}}$$
+$$(\forall d: \operatorname{Bool}\left(\right), (\forall p: \operatorname{Row}\left(1\right), ((\operatorname{proper}\left(p\right)) \implies (\sum_{q: \operatorname{Row}\left(1\right)} \operatorname{if}\left((\operatorname{proper}\left(q\right)) \land (\operatorname{compatible}\left(d, p, q\right)), 1, 0\right) = 3)))) \land (\forall d: \operatorname{Bool}\left(\right), (\forall p: \operatorname{Row}\left(2\right), ((\operatorname{proper}\left(p\right)) \implies (\forall b: \operatorname{Bool}\left(\right), (\sum_{q: \operatorname{Row}\left(2\right)} \operatorname{if}\left(((\operatorname{proper}\left(q\right)) \land (\operatorname{compatible}\left(d, p, q\right))) \land (\operatorname{boundaryClass}\left(q\right) = b), 1, 0\right) = \operatorname{K}\left(\operatorname{boundaryClass}\left(p\right), b\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport.transition_counts` (`✓ std3`). ∎
 
@@ -208,13 +208,11 @@ $$\forall k: \operatorname{Nat}\left(\right), 2 \cdot \operatorname{Nat}.\operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport.path_result` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
+*Citation.* John R. Britnell, Mark Wildon (2017). *Bell numbers, partition moves and the eigenvalues of the random-to-top shuffle in Dynkin Types A, B and D*. DOI: [10.1016/j.jcta.2016.12.003](https://doi.org/10.1016/j.jcta.2016.12.003). URL: <https://arxiv.org/abs/1507.04803>.
 
 *Commentary.*
 
-For every k≥0 the one-row path has k+2 vertices and its literal normalized six-colour count L satisfies 2L=4^k+2^k. The proper Fin 3 path count is 3 times 2^(k+1): after the first of three colours, each next vertex has exactly two choices. Decomposing actual row words into their first colour and remaining proper word proves that statement for arbitrary length. The connected graph formula and literalEquiv then give the displayed equality. In source indices this is T(1,w)=(4^(w-2)+2^(w-2))/2 for w≥2. The singleton convention T(1,1)=1 is separate. The source credits the A007582(w-2) identification to Britnell and Wildon, equation (9) and Proposition 8.1; no sequence is defined by this shift.
+For every k≥0 the one-row path has k+2 vertices and its literal normalized six-colour count L satisfies 2L=4^k+2^k. The proper Fin 3 path count is 3 times 2^(k+1): after the first of three colours, each next vertex has exactly two choices. Decomposing actual row words into their first colour and remaining proper word proves that statement for arbitrary length. The connected graph formula and literalEquiv then give the displayed equality. In source indices this is T(1,w)=(4^(w-2)+2^(w-2))/2 for w≥2. The singleton convention T(1,1)=1 is separate. The one-row paired-colouring identity is attributed to Britnell and Wildon, Bell numbers, partition moves and the eigenvalues of the random-to-top shuffle in Dynkin Types A, B and D, arXiv:1507.04803v1, equation (9) and Proposition 8.1, as recorded in the cited Library note. The two-dimensional strip transport is outside that prior-result attribution; no sequence is defined by this shift.
 
 **Theorem 1.16 (Literal diagonal counts equal the existing square counts).**
 

@@ -47,10 +47,11 @@ internal sealed class HardinThinGraphTransportDocument : IScribeDocumentDefiniti
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+    private static Formula Name(string name) => Seq(name.Split('.').SelectMany((part, k) => k == 0
+        ? new[] { Seq(Operatorname, Grp(F.Id(part))) }
+        : new[] { Dot, Seq(Operatorname, Grp(F.Id(part))) }).ToArray());
     private static Formula Call(string name, params Formula[] args) =>
-        new Formula.Apply(Seq(name.Split('.').SelectMany((part, k) => k == 0
-            ? new[] { Seq(Operatorname, Grp(F.Id(part))) }
-            : new[] { Dot, Seq(Operatorname, Grp(F.Id(part))) }).ToArray()), [.. args]);
+        args.Length == 0 ? Name(name) : new Formula.Apply(Name(name), [.. args]);
     private static Formula PathFormula()
     {
         var k = F.Id("k");

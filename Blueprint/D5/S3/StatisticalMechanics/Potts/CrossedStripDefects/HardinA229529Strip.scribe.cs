@@ -86,7 +86,7 @@ internal sealed class HardinA229529StripDocument : IScribeDocumentDefinition
     {
         var p = V("p"); var d = V("d");
         return All("p", RowType(), All("d", Call("Nat"), Eq(Call("HardinA229529Strip.Valid", p, d),
-            And(Le(d, Num("1")), Le(Call("DefectTransfer.bondDefects", Call("HardinA229581Strip.horizontal"), p, p), Sub(Num("1"), d))))));
+            Parenthesized(And(Le(d, Num("1")), Le(Call("DefectTransfer.bondDefects", Call("HardinA229581Strip.horizontal"), p, p), Sub(Num("1"), d)))))));
     }
 
     private static Formula ClassFormula()

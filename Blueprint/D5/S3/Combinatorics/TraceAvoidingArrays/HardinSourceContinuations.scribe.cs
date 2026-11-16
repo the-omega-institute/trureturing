@@ -36,10 +36,11 @@ internal sealed class HardinSourceContinuationsDocument : IScribeDocumentDefinit
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Definition);
-    private static Formula Call(string name, params Formula[] args) => new Formula.Apply(
-        Seq(name.Split('.').SelectMany((part, k) => k == 0
-            ? new[] { Seq(Operatorname, Grp(F.Id(part))) }
-            : new[] { Dot, Seq(Operatorname, Grp(F.Id(part))) }).ToArray()), [.. args]);
+    private static Formula Name(string name) => Seq(name.Split('.').SelectMany((part, k) => k == 0
+        ? new[] { Seq(Operatorname, Grp(F.Id(part))) }
+        : new[] { Dot, Seq(Operatorname, Grp(F.Id(part))) }).ToArray());
+    private static Formula Call(string name, params Formula[] args) =>
+        args.Length == 0 ? Name(name) : new Formula.Apply(Name(name), [.. args]);
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
     private static Formula ResultFormula()
