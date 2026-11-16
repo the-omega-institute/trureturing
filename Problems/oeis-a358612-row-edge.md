@@ -109,8 +109,6 @@ none of these targets is reported declared_validated.
   separate block-problem settlement are outside this result. No downstream
   external-question or KPI credit is claimed.
 
-## Resolution metadata
-
 Resolution kind: proved and canonically frozen for the formal edge statement;
 delivery incomplete.
 Preregistration/source records:
