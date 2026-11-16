@@ -315,7 +315,9 @@ private theorem Q_le_M (n k : ℕ) : Q n k ≤ (NormedSpace.expSeries ℝ ℝ k 
     have ht := H_le_choose_mul_six_pow n k hkn
     have he : (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ))) * ((k.factorial:ℝ) * n.choose k) = (n.choose k:ℝ) * 6^k := by
       simp only [NormedSpace.expSeries_apply_eq_div]
-      field_simp
+      simpa only [mul_assoc, mul_left_comm, mul_comm] using
+        congrArg (fun x : ℝ => x * (n.choose k:ℝ))
+          (div_mul_cancel₀ ((6:ℝ)^k) (Nat.cast_ne_zero.mpr k.factorial_ne_zero))
     rw [he]
     exact ht
   · simp only [Q, if_neg hkn]
@@ -343,8 +345,9 @@ theorem Q_scaled_bound (n k : ℕ) : |(n:ℝ) * (Q n k - (NormedSpace.expSeries 
     have he : ((k:ℝ) * (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ)))) * ((k.factorial:ℝ) * n.choose k) =
         (k:ℝ) * n.choose k * 6^k := by
       simp only [NormedSpace.expSeries_apply_eq_div]
-      field_simp
-      <;> ring
+      simpa only [mul_assoc, mul_left_comm, mul_comm] using
+        congrArg (fun x : ℝ => (k:ℝ) * x * (n.choose k:ℝ))
+          (div_mul_cancel₀ ((6:ℝ)^k) (Nat.cast_ne_zero.mpr k.factorial_ne_zero))
     rw [he]
     exact ht.2
   · have hnk : n < k := Nat.lt_of_not_ge hkn
@@ -468,8 +471,8 @@ theorem tendsto_of_scaled (r : ℕ → ℝ) (C K : ℝ)
     apply ht.congr'
     filter_upwards [eventually_ge_atTop 1] with n hn
     have hn0 : (n:ℝ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt hn
-    field_simp
-    <;> ring
+    simpa only [mul_assoc, mul_left_comm, mul_comm] using
+      mul_inv_cancel_right₀ hn0 (r n-C)
   simpa using hz.add_const C
 
 noncomputable def P (n k : ℕ) : ℝ :=
@@ -635,14 +638,14 @@ private theorem factorial_of_first_order (C K : ℝ) (hC : C ≠ 0)
   have hb (n : ℕ) : (n.factorial : ℝ) ≠ 0 := by positivity
   have ha (n : ℕ) : (f Nat.factorial n n : ℝ) =
       (n.factorial:ℝ) * ((f Nat.factorial n n : ℝ) / n.factorial) := by
-    field_simp [hb n]
+    exact (mul_div_cancel₀ (f Nat.factorial n n : ℝ) (hb n)).symm
   have hB : Tendsto (fun n : ℕ => ((n+1).factorial:ℝ) / n.factorial / ((n:ℝ)+1))
       atTop (𝓝 (1:ℝ)) := by
     convert (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1:ℝ)) atTop (𝓝 1)) using 1
     ext n
     rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
     have hp : (n:ℝ)+1 ≠ 0 := by exact Nat.cast_add_one_ne_zero n
-    field_simp [hb n, hp]
+    rw [mul_div_cancel_right₀ _ (hb n), div_self hp]
   have ht := ratio_transfer (fun n => (f Nat.factorial n n:ℝ))
     (fun n => (n.factorial:ℝ)) _ C K 1 hb ha hC h0 h1 hB
   unfold claimFactorial

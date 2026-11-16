@@ -60,7 +60,7 @@ private theorem shifted_scaled_limit (A : ℕ → ℝ) (ρ c : ℝ) (k : ℕ)
   filter_upwards [eventually_ge_atTop (k+1)] with n hn
   have hz : ((n-k:ℕ):ℝ) ≠ 0 := by exact_mod_cast (show n-k ≠ 0 by omega)
   dsimp
-  field_simp
+  rw [← mul_assoc, div_mul_cancel₀ _ hz]
 
 private theorem R_scaled_limit (A : ℕ → ℝ) (ρ c : ℝ)
     (h : Tendsto (fun n : ℕ => (n:ℝ) * (A n - ρ)) atTop (𝓝 c)) (k : ℕ) :
@@ -456,8 +456,7 @@ theorem result : claimPower := by
     linarith
   have h0 := tendsto_of_scaled _ _ _ hf
   have ha (n : ℕ) : (f powBorder n n:ℝ) = (powBorder n:ℝ) * ((f powBorder n n:ℝ) / powBorder n) := by
-    have hbR : (powBorder n:ℝ) ≠ 0 := by exact_mod_cast powBorder_ne n
-    field_simp
+    exact (mul_div_cancel₀ (f powBorder n n : ℝ) (by exact_mod_cast powBorder_ne n)).symm
   have hA0 := tendsto_of_scaled (A powBorder) ρ (ρ/2) A_power_scaled_limit
   have hB : Tendsto (fun n : ℕ => (powBorder (n+1):ℝ) / powBorder n / ((n:ℝ)+1)) atTop (𝓝 (ρ⁻¹)) := by
     simpa only [reciprocal_border, Function.comp_apply] using (hA0.comp (tendsto_add_atTop_nat 1)).inv₀ (Real.exp_ne_zero _)
