@@ -10,6 +10,10 @@ $$\neg (\forall (I J H V : \operatorname{Type}) [\operatorname{AddCommGroup} H] 
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/ZverykIdealRigidityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-zveryk2609c48` (refuted) by `D5/S3/VertexAlgebra/Sectors/ZverykIdealRigidityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-zveryk2609c48","declaration_gid":"D5/S3/VertexAlgebra/Sectors/ZverykIdealRigidityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Vladyslav Zveryk (2026). *Virasoro extensions of generalized Kac-Moody algebras*. DOI: [10.48550/arXiv.2609.15729](https://doi.org/10.48550/arXiv.2609.15729). URL: <https://arxiv.org/abs/2609.15729v2>.

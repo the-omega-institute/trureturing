@@ -10,7 +10,7 @@
 Public result: proof_shape: content; escape_witness:
 D5.S1.Words.WeakShuffleNormalization.APath.exponents; admission_basis: open-problem-resolution
 (#15815; Proved).
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16034 (result).
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16034 (result). Published owner audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339 (diagonal).
 Direct frozen dependencies: none (the proof uses pinned Mathlib and same-delivery helpers only).
 The public claim retains the preregistered wsWord/wsMul/norm1/norm2 conventions literally; proofs
 use the local implementation helpers without introducing duplicate public aliases.
