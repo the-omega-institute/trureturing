@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Raw all-window Critch--Morton C9 settlement candidate
+Raw all-window recovery and individual-window ambiguity on the actual MPS image
 
 **Theorem 1.1 (One common full-amplitude principal locus).**
 
@@ -32,9 +32,9 @@ The original prefix recovery supplies the left Q3. Right recovery reverses the t
 
 At m=0 (N=3), only the whole-chain Q3 and the two boundary Q2 windows occur, and T=A=1. At m=1 (N=4), both Q3 windows are boundary windows, T=1 and A handles the one internal pair. At m>=2 both internal suppliers apply. Positivity of both exterior lengths forces these thresholds; no supplier is called out of range. Every equality proof h is retained in the result telescope. Word(0) is summed as a singleton, never dropped as an empty exterior.
 
-Critch and Morton, SIGMA 10 (2014), 095, Conjecture 9, provide the original assertion and raw displayed partial trace; the exact source and preregistration are recorded in issue #30422. This result is a sufficient strengthening of the preregistered raw N>=4 prefix recovery and no-fewer target to every N>=3 and every placement. N>=3 and the specific real-principal genericity convention are the formal strengthening, not quoted author wording. Attribution of all reused suppliers, including the Ma--Zhang C8 contribution and its license, is unchanged. GVHunter.reverse_word_list is reused; its existing unfinished audit is #19685. The bounded literature check found no exact C9 settlement in its accessible searched scope and is not a priority or uniqueness certificate.
+Critch and Morton, SIGMA 10 (2014), 095, Conjecture 9, provide the original assertion and raw displayed partial trace. This result is a sufficient strengthening of the raw N>=4 prefix recovery and no-fewer formulation to every N>=3 and every placement. N>=3 and the specific real-principal genericity convention are the formal strengthening, not quoted author wording. The reused suppliers include the Ma--Zhang C8 contribution with its license. Word reversal uses GVHunter.reverse_word_list. Within the bounded accessible literature examined, no exact C9 settlement was identified; this does not establish priority or uniqueness.
 
-The conservative proof_shape is bind-only and candidate admission_basis is open-problem-resolution under CLAUDE 3.2, preregistered before proof probes in #30422. Every private auxiliary has a live consumer in result. The single claim attached here has this exact raw actual-image result as host and OpenBoundaryMPSNormalizedC9.result as its AdditionalMember. That member supplies the separately proved dense physical-mass-one slice with both states normalized, completing the same preregistered physical C9 reading; it asserts no second problem, independent priority or additional KPI. This raw theorem retains exactly its original scope: unit-phase saturation alone does not justify a dense normalized slice. Independent caller source-fidelity review, required checks, freezing and publication remain separate; global C9 status is OPEN and solved-open-problem KPI remains 0 until caller verification. The Reg source attempt has no source-selection certificate and makes no declared_validated claim; unfinished audit is disclosed under #30422. This result makes no closure-only, exceptional-target, jointly known marginal, stability, dynamics, energy or thermodynamic claim.
+Unit-phase saturation of this raw locus alone does not justify a dense normalized slice. OpenBoundaryMPSNormalizedC9.result supplies a separately proved dense physical-mass-one slice with both target and competitors normalized for the same physical C9 reading. This result makes no closure-only, exceptional-target, jointly known marginal, stability, dynamics, energy or thermodynamic claim.
 
 ## References
 

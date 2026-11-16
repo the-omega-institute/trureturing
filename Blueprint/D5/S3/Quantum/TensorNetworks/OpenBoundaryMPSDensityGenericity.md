@@ -30,7 +30,7 @@ $$\forall (iota: Type), (\operatorname{Continuous}\left(\operatorname{realCoordi
 
 *Commentary.*
 
-The coordinate map from iota-indexed complex amplitudes to the two real coordinate copies is continuous for every index type. This is the original coordinatewise proof, exposed unchanged for the physical-mass-one normalization consumer.
+The coordinate map from iota-indexed complex amplitudes to the two real coordinate copies is continuous for every index type. Continuity is proved coordinatewise and applies in particular to physical-mass-one normalization.
 
 **Definition 1.3 (The four-entry transfer matrix).**
 
@@ -176,7 +176,7 @@ The uniform actual witness uses the original A0=[[1,2],[3,4]], A1=[[5,6],[7,8]],
 
 The real polynomial parameter pullback is nonzero at this actual witness. Multidimensional real analytic uniqueness makes its zero locus have empty interior in the full connected real parameter space. Continuity of the original polynomial MPS map sends every parameter value into the closure of the image of good parameters. The exact pullback identities put that image inside goodStates. This proves density in the actual state image without assuming the MPS map is open, or identifying its Euclidean image with a complex Zariski closure.
 
-The existing observable_chart_phase_recovery supplies the final arbitrary-competitor unit-phase equivalence. The gauge and coherent reconstruction remain attributed to the original Conjecture 8 supplier, including the Ma-Zhang canonical inverse. This is the recovery-genericity portion of the prefix reading of Conjecture 9. Generic-point two-site minimality in the full actual state image remains unproved; the separate canonical-parameter open collision theorem does not supply that descent. No Conjecture 9 resolution, new solved-open-problem count, all-interior-window theorem, normalized-state theorem, physical inverse, stability, dynamics or thermodynamic assertion is made.
+The existing observable_chart_phase_recovery supplies the final arbitrary-competitor unit-phase equivalence. The gauge and coherent reconstruction are due to the original Conjecture 8 supplier, including the Ma-Zhang canonical inverse. This is the recovery-genericity portion of the prefix reading of Conjecture 9. Generic-point two-site minimality in the full actual state image is not established by this recovery theorem; the separate canonical-parameter open collision theorem does not supply that descent. No Conjecture 9 resolution, all-interior-window theorem, normalized-state theorem, physical inverse, stability, dynamics or thermodynamic assertion is made.
 
 ## References
 
