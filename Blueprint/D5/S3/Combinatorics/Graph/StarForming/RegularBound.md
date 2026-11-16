@@ -6,7 +6,19 @@ Deletion witnesses and local degree capacity
 
 The graph relation is arbitrary except for each displayed simplicity or symmetry hypothesis. A high selected vertex has an outside deletion failure; distinct high vertices cannot share one. A failure has at most two selected neighbors, or at most one when nonadjacent to the deleted vertex. The selected-leaf witness lemma here explicitly assumes no selected isolates. The final capacity inequality is a local numerical implication; a complete degree-sum extraction is a separate obligation.
 
-**Definition 1.1 (TwoAt).**
+**Theorem 1.1 (minimal of deletion failures).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.minimal_of_deletion_failures`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/RegularBound.minimal_of_deletion_failures` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem minimal_of_deletion_failures {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) (hforms : Forms adjacency selection) (hfail : ∀ deleted, selection deleted → ∃ outside, ¬ (selection outside ∧ outside ≠ deleted) ∧ ¬ TwoAt adjacency (fun vertex => selection vertex ∧ vertex ≠ deleted) outside) : Minimal adjacency selection.
+
+**Definition 1.2 (TwoAt).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.TwoAt`
 
@@ -18,7 +30,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.TwoAt`
 
 Exact declaration: def TwoAt {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) (outside : Vertex) : Prop.
 
-**Definition 1.2 (Forms).**
+**Definition 1.3 (Forms).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.Forms`
 
@@ -30,7 +42,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.Forms`
 
 Exact declaration: def Forms {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) : Prop.
 
-**Definition 1.3 (Minimal).**
+**Definition 1.4 (Minimal).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.Minimal`
 
@@ -42,7 +54,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.Minimal`
 
 Exact declaration: def Minimal {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) : Prop.
 
-**Definition 1.4 (High).**
+**Definition 1.5 (High).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.High`
 
@@ -54,7 +66,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.High`
 
 Exact declaration: def High {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) (vertex : Vertex) : Prop.
 
-**Definition 1.5 (Failure).**
+**Definition 1.6 (Failure).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.Failure`
 
@@ -66,7 +78,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.Failure`
 
 Exact declaration: def Failure {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) (deleted outside : Vertex) : Prop.
 
-**Theorem 1.6 (covered deletion has failure).**
+**Theorem 1.7 (covered deletion has failure).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.covered_deletion_has_failure`
 
@@ -78,7 +90,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.covered_dele
 
 Exact declaration: theorem covered_deletion_has_failure {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) (hminimal : Minimal adjacency selection) (deleted : Vertex) (hselected : selection deleted) (hnew : TwoAt adjacency (fun vertex => selection vertex ∧ vertex ≠ deleted) deleted) : ∃ outside, Failure adjacency selection deleted outside.
 
-**Theorem 1.7 (high has failure).**
+**Theorem 1.8 (high has failure).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.high_has_failure`
 
@@ -90,7 +102,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.high_has_fai
 
 Exact declaration: theorem high_has_failure {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) (hirreflexive : ∀ vertex, ¬ adjacency vertex vertex) (hminimal : Minimal adjacency selection) (deleted : Vertex) (hhigh : High adjacency selection deleted) : ∃ outside, Failure adjacency selection deleted outside.
 
-**Theorem 1.8 (adjacent high survives).**
+**Theorem 1.9 (adjacent high survives).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.adjacent_high_survives`
 
@@ -102,7 +114,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.adjacent_hig
 
 Exact declaration: theorem adjacent_high_survives {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) (center deleted outside : Vertex) (hhigh : High adjacency selection center) (hdifferent : center ≠ deleted) (hedge : adjacency outside center) : TwoAt adjacency (fun vertex => selection vertex ∧ vertex ≠ deleted) outside.
 
-**Theorem 1.9 (selected leaf has private witness).**
+**Theorem 1.10 (selected leaf has private witness).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.selected_leaf_has_private_witness`
 
@@ -114,7 +126,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.selected_lea
 
 Exact declaration: theorem selected_leaf_has_private_witness {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) (hirreflexive : ∀ vertex, ¬ adjacency vertex vertex) (hsymmetric : ∀ first second, adjacency first second → adjacency second first) (hminimal : Minimal adjacency selection) (hnoisolates : ∀ vertex, selection vertex → ∃ neighbor, selection neighbor ∧ adjacency vertex neighbor) (leaf support : Vertex) (hleaf : selection leaf) (hhigh : High adjacency selection support) (hsupport : adjacency leaf support) (hunique : ∀ neighbor, selection neighbor → adjacency leaf neighbor → neighbor = support) : ∃ outside, Failure adjacency selection leaf outside ∧ adjacency outside leaf ∧ ∀ neighbor, selection neighbor → adjacency outside neighbor → neighbor = leaf.
 
-**Theorem 1.10 (failure witnesses disjoint).**
+**Theorem 1.11 (failure witnesses disjoint).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.failure_witnesses_disjoint`
 
@@ -126,7 +138,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.failure_witn
 
 Exact declaration: theorem failure_witnesses_disjoint {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) (hforms : Forms adjacency selection) (first second outside : Vertex) (hfirst : High adjacency selection first) (hsecond : High adjacency selection second) (hfailureFirst : Failure adjacency selection first outside) (hfailureSecond : Failure adjacency selection second outside) : first = second.
 
-**Theorem 1.11 (witness has no three neighbors).**
+**Theorem 1.12 (witness has no three neighbors).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.witness_has_no_three_neighbors`
 
@@ -138,7 +150,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.witness_has_
 
 Exact declaration: theorem witness_has_no_three_neighbors {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) (deleted outside first second third : Vertex) (hfailure : Failure adjacency selection deleted outside) (hf : selection first) (hs : selection second) (ht : selection third) (hfs : first ≠ second) (hft : first ≠ third) (hst : second ≠ third) (ha : adjacency outside first) (hb : adjacency outside second) (hc : adjacency outside third) : False.
 
-**Theorem 1.12 (nonadjacent witness unique neighbor).**
+**Theorem 1.13 (nonadjacent witness unique neighbor).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.nonadjacent_witness_unique_neighbor`
 
@@ -150,7 +162,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.nonadjacent_
 
 Exact declaration: theorem nonadjacent_witness_unique_neighbor {Vertex : Type} (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop) (deleted outside first second : Vertex) (hfailure : Failure adjacency selection deleted outside) (hnonadjacent : ¬ adjacency outside deleted) (hf : selection first) (hs : selection second) (ha : adjacency outside first) (hb : adjacency outside second) : first = second.
 
-**Theorem 1.13 (witness capacity).**
+**Theorem 1.14 (witness capacity).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.witness_capacity`
 
@@ -173,6 +185,7 @@ Exact declaration: theorem witness_capacity (maximum selectedDegree outsideDegre
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.covered_deletion_has_failure`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.failure_witnesses_disjoint`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.high_has_failure`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.minimal_of_deletion_failures`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.nonadjacent_witness_unique_neighbor`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.selected_leaf_has_private_witness`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/RegularBound.witness_capacity`

@@ -1022,4 +1022,4 @@ Exact declaration: theorem dense_certificate (mask : Fin 16384) (hcard : 9 ≤ s
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CubicDense.selectedCard`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CubicDense.starBool`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CubicDense.starBool_correct`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/CubicCertificate](CubicCertificate.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodParameters](HeawoodParameters.md)

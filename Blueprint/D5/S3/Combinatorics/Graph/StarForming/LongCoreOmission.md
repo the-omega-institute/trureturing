@@ -191,3 +191,4 @@ Exact declaration: theorem cyclic_score (k : ℕ) : (∀ S : Finset (Fin k × Fi
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LongCoreOmission.score_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LongCoreOmission.slice`
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/ClosedModule](ClosedModule.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/LongCoreWord](LongCoreWord.md)

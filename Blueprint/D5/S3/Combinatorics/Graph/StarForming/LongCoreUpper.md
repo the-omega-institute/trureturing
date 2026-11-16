@@ -138,4 +138,3 @@ Exact declaration: theorem two_hub_block (first middle last : Cell) (hfirst : Va
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LongCoreUpper.two_hub_block`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LongCoreUpper.two_hub_tight`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LongCoreUpper.weight`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/LongCoreWord](LongCoreWord.md)

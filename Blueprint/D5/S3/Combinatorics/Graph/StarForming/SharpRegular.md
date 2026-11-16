@@ -191,7 +191,7 @@ Exact declaration: theorem cyclic_parameters (d : ℕ) (hd : 3 ≤ d) : Fintype.
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.selection_minimal`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.sf_graph`
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/PrivateClauses](PrivateClauses.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularBound](RegularBound.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularCompensation](RegularCompensation.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/SquareCapacity](SquareCapacity.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/SubcubicCertificate](SubcubicCertificate.md)
 - Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds](../SubQuorum/C4RepresentativeBounds.md)

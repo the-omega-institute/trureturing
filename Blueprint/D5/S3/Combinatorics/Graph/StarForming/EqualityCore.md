@@ -230,5 +230,5 @@ Exact declaration: theorem exact_parameters (next : Equiv.Perm I) : beta (graph 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.selected`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.selected_card`
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/PrivateClauses](PrivateClauses.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularBound](RegularBound.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularCompensation](RegularCompensation.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/SubcubicCertificate](SubcubicCertificate.md)

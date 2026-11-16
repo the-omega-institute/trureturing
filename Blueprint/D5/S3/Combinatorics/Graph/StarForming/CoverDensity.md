@@ -66,30 +66,6 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/CoverDensity.cubic_certif
 
 Exact declaration: theorem cubic_certificate_gap (p : W → V) (cover : CoverPullback.NeighborhoodCover G.Adj H.Adj p) (k : ℕ) (hk : ∀ v, (Finset.univ.filter (fun w => p w = v)).card = k) (hG : G.Colorable 2) (hr : ∀ v, DegreeCapacity.degree G v = 3) (A : Finset V) (hA : IsKIndependent G 2 A) : (7 * Fintype.card V) * (SF H 2 - beta H 2) ≤ (3 * Fintype.card V - 5 * A.card) * Fintype.card W.
 
-**Theorem 1.6 (scalar cover bound).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/CoverDensity.scalar_cover_bound`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/CoverDensity.scalar_cover_bound` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Exact declaration: theorem scalar_cover_bound {U : Type} [Fintype U] [DecidableEq U] (H : SimpleGraph U) [DecidableRel H.Adj] (p : U → Fin 28) (cover : CoverPullback.NeighborhoodCover HeawoodCertificates.scalarGraph.Adj H.Adj p) (k : ℕ) (hk : ∀ v, (Finset.univ.filter (fun w => p w = v)).card = k) : 4 * Fintype.card U ≤ 7 * beta H 2 ∧ 49 * (SF H 2 - beta H 2) ≤ Fintype.card U.
-
-**Theorem 1.7 (jordan cover bound).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/CoverDensity.jordan_cover_bound`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/CoverDensity.jordan_cover_bound` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Exact declaration: theorem jordan_cover_bound {U : Type} [Fintype U] [DecidableEq U] (H : SimpleGraph U) [DecidableRel H.Adj] (p : U → Fin 28) (cover : CoverPullback.NeighborhoodCover HeawoodCertificates.jordanGraph.Adj H.Adj p) (k : ℕ) (hk : ∀ v, (Finset.univ.filter (fun w => p w = v)).card = k) : 4 * Fintype.card U ≤ 7 * beta H 2 ∧ 49 * (SF H 2 - beta H 2) ≤ Fintype.card U.
-
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CoverDensity.card_cover`
@@ -97,6 +73,4 @@ Exact declaration: theorem jordan_cover_bound {U : Type} [Fintype U] [DecidableE
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CoverDensity.colorable_cover`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CoverDensity.cubic_certificate_gap`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CoverDensity.degree_cover`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CoverDensity.jordan_cover_bound`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CoverDensity.scalar_cover_bound`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates](HeawoodCertificates.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularCompensation](RegularCompensation.md)

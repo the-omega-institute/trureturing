@@ -47,5 +47,5 @@ Exact declaration: theorem cyclic_two_connected (r : ℕ) (hr : 0<r) : (graph (f
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/H0Geometry.cyclic_two_connected`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/H0Geometry.graph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/H0Geometry.two_connected`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/CompositionParameters](CompositionParameters.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/CyclicConnectivity](CyclicConnectivity.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Semantics](Semantics.md)
