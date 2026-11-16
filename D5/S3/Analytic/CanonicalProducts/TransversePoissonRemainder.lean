@@ -7,9 +7,11 @@
    digest: Integrated logarithmic defects admit a signed uniform fourth-order Poisson remainder. -/
 
 import D5.S3.Analytic.CanonicalProducts.IntegratedTransverseMoment
-import Mathlib.Analysis.Normed.Group.InfiniteSum
 
 set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+/-! A signed fourth-order remainder for the integrated logarithmic defect. -/
 
 open MeasureTheory
 open scoped Topology BigOperators
@@ -17,9 +19,6 @@ open scoped Topology BigOperators
 noncomputable section
 namespace D5.S3.Analytic.CanonicalProducts.TransversePoissonRemainder
 open D5.S3.Analytic.CanonicalProducts.IntegratedTransverseMoment
-
--- Source only: not elaborated, compiled, or kernel checked.
--- The canonical import is a separately supplied source dependency, not canonically accepted.
 
 private lemma quadratic_pos {g : ℝ} (hg : 0 < g) (x : ℝ) :
     0 < x^2 + g^2 := by
@@ -51,9 +50,12 @@ private lemma log_ratio_hasDerivAt {g : ℝ} (hg : 0 < g) (T v : ℝ) :
     (g^2)).log (quadratic_pos hg (T + v)).ne'
   have hm := ((((hasDerivAt_const v T).sub (hasDerivAt_id v)).pow 2).add_const
     (g^2)).log (quadratic_pos hg (T - v)).ne'
-  convert hp.sub hm using 1 <;> norm_num <;>
+  convert hp.sub hm using 1
+  · rfl
+  · norm_num
     field_simp [(quadratic_pos hg (T + v)).ne',
-      (quadratic_pos hg (T - v)).ne'] <;> ring
+      (quadratic_pos hg (T - v)).ne']
+    <;> ring
 
 private lemma rational_remainder_bounds {r : ℝ} (hr0 : 0 ≤ r) (hr1 : r ≤ 1 / 4) :
     1 - 3 * r ≤ (1 - r) / (1 + r)^2 ∧
@@ -164,8 +166,7 @@ private lemma log_ratio_remainder_bounds {v g T : ℝ}
       4 * T / A
   have hd (x : ℝ) : HasDerivAt (fun x => f x - (4 * T / A) * x) (d x) x := by
     convert (log_ratio_hasDerivAt hg T x).sub
-      ((hasDerivAt_id x).const_mul (4 * T / A)) using 1 <;>
-        dsimp [f, d, A] <;> ring
+      ((hasDerivAt_id x).const_mul (4 * T / A)) using 1 <;> first | rfl | (dsimp [f, d, A]; ring)
   have hnum : Continuous (fun x : ℝ => 4 * T * (A - x^2)) :=
     continuous_const.mul (continuous_const.sub (continuous_id.pow 2))
   have hden : Continuous (fun x : ℝ =>
@@ -205,7 +206,8 @@ private lemma log_ratio_remainder_bounds {v g T : ℝ}
   norm_num only [Nat.reduceAdd, zero_pow, sub_zero, Nat.cast_ofNat] at hL hU
   constructor
   · convert hL using 1 <;> dsimp [f, A] <;> ring
-  · convert hU using 1 <;> dsimp [f, A] <;> ring
+  · convert hU using 1 <;> dsimp [f, A] <;>
+      field_simp [(quadratic_pos hg T).ne'] <;> ring
 
 -- Second integration: the error has the full T*a⁴/(T²+g²)² scale.
 private lemma endpoint_remainder_bounds {a g T : ℝ}
@@ -253,7 +255,8 @@ private lemma endpoint_remainder_bounds {a g T : ℝ}
   norm_num only [Nat.reduceAdd, zero_pow, sub_zero, Nat.cast_ofNat] at hL hU
   constructor
   · convert hL using 1 <;> dsimp [A] <;> ring
-  · convert hU using 1 <;> dsimp [A] <;> ring
+  · convert hU using 1 <;> dsimp [A] <;>
+      field_simp [(quadratic_pos hg T).ne'] <;> ring
 
 theorem integrated_defect_poisson_remainder {I : Type*} (w a gamma : I → ℝ)
     (hw : ∀ i, 0 ≤ w i) (ha0 : ∀ i, 0 ≤ a i) (ha1 : ∀ i, a i ≤ 1 / 2)
