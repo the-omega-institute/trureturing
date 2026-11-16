@@ -5,9 +5,25 @@
    anchors: []
    utility: none
    digest: Width-five exact-budget transfer measurement. -/
+
+/-
+admission_basis: open-problem-resolution (#30655; Proved)
+escape_witness: none (consumed bind-only helpers on the live path of HardinA229752.result)
+Row: proof_shape=bind-only; consumers=Valid,successors
+horizontal: proof_shape=bind-only; consumers=Valid,Forward.structural_certificate,HardinA229752.result
+between: proof_shape=bind-only; consumers=successors,Certificate.transition_counts,HardinA229752.result
+Valid: proof_shape=bind-only; consumers=Certificate.transition_counts,HardinA229752.result
+cl: proof_shape=bind-only; consumers=successors,Certificate.transition_counts,HardinA229752.result
+T: proof_shape=bind-only; consumers=Certificate.transition_counts,Forward.structural_certificate,HardinA229752.result
+initial: proof_shape=bind-only; consumers=Forward.structural_certificate,HardinA229752.result
+terminal: proof_shape=bind-only; consumers=Forward.structural_certificate,HardinA229752.result
+W: proof_shape=bind-only; consumers=Forward.structural_certificate,HardinA229752.result
+classList: proof_shape=bind-only; consumers=Certificate.canonical_successors,Certificate.class_counts
+successors: proof_shape=bind-only; consumers=Certificate.canonical_successors,Certificate.transition_counts
+-/
+
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 set_option maxRecDepth 100000
-set_option maxHeartbeats 0
 /-! Width-five exact-budget transfer data. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data

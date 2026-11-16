@@ -5,6 +5,13 @@
    anchors: []
    utility: none
    digest: Width-five exact-budget transfer measurement. -/
+
+/-
+admission_basis: open-problem-resolution (#30655; Proved)
+escape_witness: none (consumed bind-only helpers on the live path of HardinA229752.result)
+structural_certificate: proof_shape=bind-only; consumers=HardinA229752.result
+-/
+
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
 /-! Acceptance, initial weights and the forward polynomial relation. -/
 open scoped BigOperators
