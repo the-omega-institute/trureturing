@@ -32,6 +32,56 @@ def a : ℕ → ℕ
   | 0 => 1
   | n + 1 => (1 + wt (n + 1)) * a ((n + 1) / 2)
 
+theorem a_two_pow_mul_odd (m n : ℕ) :
+    a (2 ^ m * (2 * n + 1)) = (wt n + 2) ^ (m + 1) * a n := by
+  have wt_two_pow_mul (k n : ℕ) : wt (2 ^ k * n) = wt n := by
+    by_cases hn : n = 0
+    · simp [hn]
+    · unfold wt
+      rw [Nat.digits_base_pow_mul (b := 2) (by decide) (Nat.pos_of_ne_zero hn)]
+      simp only [List.sum_append, List.sum_replicate, smul_zero, zero_add]
+  induction m with
+  | zero =>
+      have a_odd (n : ℕ) :
+          a (2 * n + 1) = (wt n + 2) * a n := by
+        have wt_odd (n : ℕ) : wt (2 * n + 1) = wt n + 1 := by
+          unfold wt
+          rw [Nat.add_comm (2 * n), Nat.digits_add 2 (by decide) 1 n (by decide) (by simp)]
+          simp [Nat.add_comm]
+        simp only [a]
+        rw [wt_odd]
+        have hdiv : (2 * n + 1) / 2 = n := by omega
+        rw [hdiv]
+        ring
+      simp only [pow_zero, Nat.one_mul, Nat.zero_add]
+      simpa only [pow_one] using (a_odd n)
+  | succ m ih =>
+      have a_even_pos (n : ℕ) (hn : 0 < n) :
+          a (2 * n) = (1 + wt n) * a n := by
+        have wt_even (n : ℕ) : wt (2 * n) = wt n := by
+          have wt_zero : wt 0 = 0 := by simp [wt]
+          by_cases hn : n = 0
+          · simp [hn, wt_zero]
+          · unfold wt
+            rw [Nat.digits_base_mul (b := 2) (by decide) (Nat.pos_of_ne_zero hn)]
+            simp
+        have hrepr : 2 * n = (2 * n - 1) + 1 := by omega
+        rw [hrepr]
+        simp only [a]
+        have harg : (2 * n - 1) + 1 = 2 * n := by omega
+        rw [harg, wt_even]
+        have hdiv : (2 * n) / 2 = n := by omega
+        rw [hdiv]
+      have wt_odd (n : ℕ) : wt (2 * n + 1) = wt n + 1 := by
+        unfold wt
+        rw [Nat.add_comm (2 * n), Nat.digits_add 2 (by decide) 1 n (by decide) (by simp)]
+        simp [Nat.add_comm]
+      have hx : 0 < 2 ^ m * (2 * n + 1) := by positivity
+      rw [pow_succ]
+      have harg : 2 ^ m * 2 * (2 * n + 1) = 2 * (2 ^ m * (2 * n + 1)) := by ring
+      rw [harg, a_even_pos _ hx, wt_two_pow_mul, wt_odd, ih, pow_succ]
+      ring
+
 /-- Kurkov's binomial identity for A284005 at all natural indices. -/
 theorem result (m n : ℕ) :
     a (2 ^ m * (2 * n + 1)) =
@@ -71,55 +121,6 @@ theorem result (m n : ℕ) :
           have harg : 2 ^ k * 2 * n = 2 * (2 ^ k * n) := by ring
           rw [harg, a_even_pos _ hx, wt_two_pow_mul, ih, pow_succ]
           ring
-  have a_two_pow_mul_odd : ∀ (m n : ℕ), a (2 ^ m * (2 * n + 1)) = (wt n + 2) ^ (m + 1) * a n := by
-    intro m n
-    have wt_two_pow_mul (k n : ℕ) : wt (2 ^ k * n) = wt n := by
-      by_cases hn : n = 0
-      · simp [hn]
-      · unfold wt
-        rw [Nat.digits_base_pow_mul (b := 2) (by decide) (Nat.pos_of_ne_zero hn)]
-        simp only [List.sum_append, List.sum_replicate, smul_zero, zero_add]
-    induction m with
-    | zero =>
-        have a_odd (n : ℕ) :
-            a (2 * n + 1) = (wt n + 2) * a n := by
-          have wt_odd (n : ℕ) : wt (2 * n + 1) = wt n + 1 := by
-            unfold wt
-            rw [Nat.add_comm (2 * n), Nat.digits_add 2 (by decide) 1 n (by decide) (by simp)]
-            simp [Nat.add_comm]
-          simp only [a]
-          rw [wt_odd]
-          have hdiv : (2 * n + 1) / 2 = n := by omega
-          rw [hdiv]
-          ring
-        simp only [pow_zero, Nat.one_mul, Nat.zero_add]
-        simpa only [pow_one] using (a_odd n)
-    | succ m ih =>
-        have a_even_pos (n : ℕ) (hn : 0 < n) :
-            a (2 * n) = (1 + wt n) * a n := by
-          have wt_even (n : ℕ) : wt (2 * n) = wt n := by
-            have wt_zero : wt 0 = 0 := by simp [wt]
-            by_cases hn : n = 0
-            · simp [hn, wt_zero]
-            · unfold wt
-              rw [Nat.digits_base_mul (b := 2) (by decide) (Nat.pos_of_ne_zero hn)]
-              simp
-          have hrepr : 2 * n = (2 * n - 1) + 1 := by omega
-          rw [hrepr]
-          simp only [a]
-          have harg : (2 * n - 1) + 1 = 2 * n := by omega
-          rw [harg, wt_even]
-          have hdiv : (2 * n) / 2 = n := by omega
-          rw [hdiv]
-        have wt_odd (n : ℕ) : wt (2 * n + 1) = wt n + 1 := by
-          unfold wt
-          rw [Nat.add_comm (2 * n), Nat.digits_add 2 (by decide) 1 n (by decide) (by simp)]
-          simp [Nat.add_comm]
-        have hx : 0 < 2 ^ m * (2 * n + 1) := by positivity
-        rw [pow_succ]
-        have harg : 2 ^ m * 2 * (2 * n + 1) = 2 * (2 ^ m * (2 * n + 1)) := by ring
-        rw [harg, a_even_pos _ hx, wt_two_pow_mul, wt_odd, ih, pow_succ]
-        ring
   rw [a_two_pow_mul_odd]
   have hbase : wt n + 2 = (1 + wt n) + 1 := by omega
   rw [hbase, add_pow]
