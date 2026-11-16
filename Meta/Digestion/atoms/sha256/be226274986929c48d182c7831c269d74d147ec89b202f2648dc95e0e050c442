@@ -1,0 +1,114 @@
+**定理 57.3（整个极小集的严格内部权重与原完整响应）。**
+在整个 $\mathcal M_0$ 上，令
+
+$$
+\begin{gathered}
+\mu=\frac{\nu}{P_t},\qquad
+\theta=\frac{2t\mu}{c_{\rm cost}},\qquad
+Q=Q_{\rm orig}=2\operatorname{Re}(\overline G E_1),\\
+Z_0=3(4t-1),\qquad v=\operatorname{Re}\tau,\\
+\mathcal S=c_{\rm cost}
+ \left[2\operatorname{Re}(\overline F L_1)+\frac{Wv}{Z_0}\right],\qquad
+\mathcal D=\mathcal S-\mu Q,\\
+e_F=\frac{\mathcal S}{K_0},\qquad
+e_G=e_F-\frac{Q}{2tW},\qquad
+\Phi=\frac{\mathcal D}{K_0}.
+\end{gathered}
+\tag{57.10}
+$$
+
+$L_1,E_1$ 使用 (46.5) 的原定义，$\tau$ 使用 (46.8) 的唯一实际相位；
+$\mathcal S,\mathcal D$ 正是前卷 (43.13)、(43.15) 的直接与完整响应。
+本节 $\theta$ 表示响应权重，不表示 (46.4) 的相位角。
+则每一点均满足
+
+$$
+\begin{gathered}
+B:=\widehat P_x<0,\qquad \mu>0,\qquad \nu>0,\qquad
+U_s>0>V_s,\\
+\theta=\frac{U_s}{U_s-V_s}\in(0,1),\qquad
+\Phi=(1-\theta)e_F+\theta e_G.
+\end{gathered}
+\tag{57.11}
+$$
+
+存在只在该整个极小集上断言的共同内部余量
+
+$$
+\delta=\min_{\mathcal M_0}\min(\theta,1-\theta)>0.
+\tag{57.12}
+$$
+
+因而在同一个 $\mathcal M_0$ 上置
+
+$$
+\begin{gathered}
+l_\delta=\min(e_F,e_G)+\delta|e_F-e_G|,\qquad
+u_\delta=\max(e_F,e_G)-\delta|e_F-e_G|,\\
+l_\delta\le\Phi\le u_\delta,\\
+\min_{\mathcal M_0}l_\delta+\max_{\mathcal M_0}l_\delta
+\le\min_{\mathcal M_0}\Phi+\max_{\mathcal M_0}\Phi
+\le\min_{\mathcal M_0}u_\delta+\max_{\mathcal M_0}u_\delta.
+\end{gathered}
+\tag{57.13}
+$$
+
+这些极值均取到；$Q=0$ 的点有 $e_F=e_G$，允许点值上下界相等。
+
+**证明。** 定理 56.3 给每个全局极小接触 $P_t>0$，从而
+
+$$
+\widehat P_s=P_t\frac{x}{6d}>0.
+\tag{57.14}
+$$
+
+可将局部约束写成 $s=s(x,y)$；局部最小值的一阶必要条件给
+$\nabla U=\mu\nabla\widehat P$。具体地，将沿该图的两个代价导数置零，
+得 $U_x=U_s\widehat P_x/\widehat P_s$、
+$U_y=U_s\widehat P_y/\widehat P_s$，所以乘子为
+
+$$
+\mu=\frac{U_s}{\widehat P_s}
+=\frac{\nu\,x/(6d)}{P_t\,x/(6d)}=\frac\nu{P_t}.
+\tag{57.15}
+$$
+
+这里局部图只使用通常隐函数定理，未要求极小点孤立或二阶充分性。
+在基点固定 $y,s$，(57.3) 给 $U_x<0$；向右稍移即 $U<K_0$，
+前述无零点论证给 $\widehat P<0$。
+基点 $\widehat P=0$，故其右导数 $B\le0$。
+但 $U_x=\mu B<0$ 使 $B\ne0$，所以 $B<0$、$\mu>0$。
+再由 (57.14)–(57.15)，得到 $U_s>0$ 及 $\nu=\mu P_t>0$。
+这些符号属于简单的全局极小点；定理 56.2 的 $\nu<0$ 属于不同的
+奇异驻点系统 $P=P_y=P_t=0$，两者没有共同适用点。
+
+在接触面上，对 (57.1) 微分时 $U-V=0$ 消去因子导数，故
+
+$$
+\nabla\widehat P=\frac{2t}{c_{\rm cost}}(\nabla U-\nabla V),\qquad
+U_s=\theta(U_s-V_s).
+\tag{57.16}
+$$
+
+定理 57.2 给 $V_s<0$，结合 $U_s>0$ 即得 (57.11) 的严格内部权重。
+它在整个非空紧集 $\mathcal M_0$ 上连续，所以 (57.12) 成立；
+这个统一余量不向整个 $\Omega$ 外推。
+
+最后直接消费原完整响应，使用 $K_0=c_{\rm cost}W$，有
+
+$$
+(1-\theta)e_F+\theta e_G
+=\frac{\mathcal S}{K_0}-\frac{\theta Q}{2tW}
+=\frac{\mathcal S-\mu Q}{K_0}
+=\Phi.
+\tag{57.17}
+$$
+
+因此所用 $Q$ 是原固定 $t$ 方程的强制根运动项，没有引入非零 $g$ 的
+新极小极大图，也没有以自由斜率 $\nu$ 代替完整响应。
+对每一点，$\delta\le\theta\le1-\delta$ 和两实数凸组合的初等不等式
+给 (57.13) 的点值界；分别取最小值、最大值再相加便得极值和界。
+$\mathcal S,Q,t,W,\theta$ 连续且分母非零，所以全部极值存在。
+这里保留所有点变权重与归一化因子；正性本身不允许从极值和中约去
+非恒定分母。凸组合代数仅为完整响应的消费者，不另提供符号判定。∎
+

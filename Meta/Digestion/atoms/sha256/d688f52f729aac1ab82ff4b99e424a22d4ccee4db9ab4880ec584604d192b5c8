@@ -1,0 +1,34 @@
+#### 引理 4.2：共轭、交替性与纯方向 Clifford 关系
+
+对全部 $x,y,z\in A$，
+
+$$
+B(xy,z)=B(y,\bar xz),\quad
+B(yx,z)=B(y,z\bar x),
+$$
+
+$$
+L_{\bar x}L_x=L_xL_{\bar x}=q(x)I,\qquad
+R_{\bar x}R_x=R_xR_{\bar x}=q(x)I,
+$$
+
+$$
+x^2-2t(x)x+q(x)1=0,\qquad L_x^2=L_{x^2},\quad R_x^2=R_{x^2}.
+$$
+
+对 $x,y\in W$，
+
+$$
+x^2=-q(x)1,\quad xy+yx=-2B(x,y)1,
+$$
+
+$$
+L_x^2=-q(x)I,\qquad L_xL_y+L_yL_x=-2B(x,y)I.
+$$
+
+**证明。**
+
+单位非零且 $q(1)=q(1)^2$，故 $q(1)=1$。 比较 $q((1+sx)y)=q(1+sx)q(y)$ 关于 $s$ 的一次项，再对 $y$ 极化， 得 $B(xy,z)=B(y,(2t(x)1-x)z)$。右槽同理。 极化 $q(xy)=q(x)q(y)$ 得 $B(xy,xz)=q(x)B(y,z)$。 与配对伴随合用并由正定性消去配对，得 $L_{\bar x}L_x=q(x)I$。 由于 $L_{\bar x}=2t(x)I-L_x$，两个左乘算子交换；右乘同理。 所以 $L_x^2-2t(x)L_x+q(x)I=0$。作用于单位给元素二次式， 将该元素式左乘线性化即得 $L_x^2=L_{x^2}$；右式相同。 纯方向有 $t(x)=0$；分别将其元素平方和左乘平方对 $x+y$ 极化，即得所列反交换关系。 全程伴随均以显式配对给出，没有调用有限维 Riesz 表示。
+
+$\square$
+

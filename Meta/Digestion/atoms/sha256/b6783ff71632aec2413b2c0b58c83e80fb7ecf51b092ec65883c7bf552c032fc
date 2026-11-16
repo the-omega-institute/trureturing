@@ -1,0 +1,13 @@
+**定义 22.3（已付混合投影与准确剩余）。** 全量采用中央续卷147.1–147.4的同一原域、实际三轴、完整原PB/P2及有限Jordan投影。对每个原 $x=c+v$、$c=P_{\rm com}x$、$v=P_{\rm tr}x$，中央续卷150.1、153.1给
+
+$$
+P_{\rm tr}D(h,x)=Tv,\qquad
+D(h,c+v)=Tv+\rho_h(c+v),\qquad
+\rho_h(c+v)=P_{\rm com}D(h,c+v).
+\tag{22.2}
+$$
+
+中央续卷151.1为任何投影违反者给一份有限实际PB及同一读取两张P2的检出，不是一张统一有限资源表；152.1支付每个实常数 $\lambda$ 和原 $v\in V_h$ 的 $D(h,\lambda h+v)=Tv$；153.2在同一原矩阵坐标识别两份非对角输出块。一般 $\rho_h(c+v)=0$、$\rho_h(c+v)=D(h,c)$ 及其与 $v$ 无关性均未由153.3支付。不能先假设整个旧输出横向，再把已付投影当作完整混合行；也不能把实轴偏移与另已付单位偏移未经证明地叠加。一般原首标签、旧全域可加／实双线性、旧P3、原R、同一旧结合乘法及实际来源，继续按中央续卷153.3、155.1的准确范围保留。
+
+[OTF卷13–15](OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md)的已给资源／返回协议及[原生接口卷21](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ORIGINAL_INTERFACE_EXPOSURE_AND_RECOVERY.md)的固定配对码深度障碍，各守其指定来源与条件，不生产本候选的原AURIC来源，也不推出这些来源不存在。22.2仍完整采用唯一原世界及七项消费者的原合同；本处没有新的来源供应、资源界或公理独立性结论。
+

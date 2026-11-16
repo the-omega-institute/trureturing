@@ -1,0 +1,50 @@
+**定理 108.12（满 $M_p$ 迫使原锥旗标分解）。** 仅在 $\mathsf W$ 下，
+若某个 $M_p=V$，则
+
+$$
+C=\mathbb R_+p\oplus\operatorname{cone}D_p,\qquad
+K=\operatorname{conv}(\{p\}\cup D_p),\qquad d_p=n-2.
+\tag{VIII108.25}
+$$
+
+在同一原单位下，这是 $\mathbb R\oplus\operatorname{spin}_{d_p}$ 的正锥和规范迹，
+具体尺度如下。取线性等距 $A:\mathbb R^{d_p}\to L_p$，
+使 $A(B^{d_p})=D_p-c_p$。写标准spin坐标为 $(a,x)$，其正锥
+$a\ge\|x\|$、规范迹为 $2a$。则
+
+$$
+\begin{gathered}
+\Phi:\mathbb R\oplus\operatorname{spin}_{d_p}
+       \overset{\sim}{\longrightarrow}V,\qquad
+\Phi(\alpha,a,x)=\alpha p+2a c_p+2Ax,\\
+\Phi(\mathbb R_+\oplus(\operatorname{spin}_{d_p})_+)=C,
+\qquad u\Phi(\alpha,a,x)=\alpha+2a.
+\end{gathered}
+\tag{VIII108.26}
+$$
+
+证明。满像投影 $Q_p$ 等于恒等算子。
+$R_p,\Pi_p$ 都正，故每个原 $v\in C$ 都有
+$v=R_pv+\Pi_pv$，两项分别落在 $\mathbb R_+p$ 与
+$\operatorname{cone}D_p$。反向包含由原锥对加法封闭成立；
+两线性像零交，得到原锥直和，不只是抽象面格分裂。
+原单位归一给所述整个 $K$。
+
+每个原向量唯一写成
+
+$$
+v=\alpha p+\beta c_p+z,\qquad z\in L_p,\qquad
+u(v)=\alpha+\beta,
+\qquad v\in C\ \Longleftrightarrow\
+\alpha\ge0,\quad\beta\ge\|z\|_p.
+\tag{VIII108.27}
+$$
+
+由(VIII108.1)，球锥恰由 $\beta\ge\|z\|_p$ 给出，
+包括 $\beta=0$ 时必有 $z=0$。
+代入 $\beta=2a,z=2Ax$ 就得到(VIII108.26)。
+这里使用VII103.7的成熟spin记号及规范迹，
+不是把未缩放Lorentz坐标 $\beta$ 的原质量误认成 $2\beta$。
+标准乘法 $(a,x)\circ(b,y)=(ab+x\cdot y,ay+bx)$ 只用于标识所得代数，
+原锥分解本身已由正投影证明。证毕。
+

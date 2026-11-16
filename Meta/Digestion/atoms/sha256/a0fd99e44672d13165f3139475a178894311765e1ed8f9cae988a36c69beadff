@@ -1,0 +1,11 @@
+**定义 91.1（原输入对的坐标）。** 对每个 $Z\in M$，唯一写成
+
+$$
+Z=b+Jd,\qquad b=\frac{Z+Z^*}{2},\qquad
+ d=-\frac J2(Z-Z^*)\in E,
+\quad \mathfrak F(Z)=D(b,d)-K(b,d)\in E.
+\tag{91.1}
+$$
+
+这是同一原标签对的双射重索引，不是 $D$ 的复线性延拓，不赋予 $\mathfrak F$ 连续、齐次或可加性质。
+

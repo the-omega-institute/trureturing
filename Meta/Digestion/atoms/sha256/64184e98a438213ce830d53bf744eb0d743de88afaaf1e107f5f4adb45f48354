@@ -1,0 +1,37 @@
+**定理 487.3（RH 下的 $\log\log x$ 双侧振荡）。** 设 RH、(487.1) 与 (487.2)。则存在常数 $c>0$，使
+
+$$
+\liminf_{x\to\infty}\frac{\mathcal T(x)}{\log\log x}\le-c,\qquad
+\limsup_{x\to\infty}\frac{\mathcal T(x)}{\log\log x}\ge c .
+\tag{487.7}
+$$
+
+等价地，存在 $c>0$，使 $T_\psi(x,x^{4/5})\le-cx^{11/10}\log\log x$ 与 $T_\psi(x,x^{4/5})\ge cx^{11/10}\log\log x$ 各对任意大的 $x$ 成立。
+
+证明。在 $y=\log x$ 上证明 $f(y)=\Omega_\pm(\log y)$。固定 $Q=8$，$c_Q=\cos(\pi/4)>0$，并取 $L=M^5$。证明用到两个经典事实。其一（Dirichlet 同时逼近，抽屉原理）：给定实数 $\lambda_1,\dots,\lambda_d$ 与 $L\ge1$，存在 $y\in[L,LQ^d]$ 使 $\cos(\lambda_jy)\ge c_Q$ 对所有 $j$ 成立。其二：由 $\log(e+u)\le\log(e+y)+\log(1+|u-y|)$、$K_M(v)=MK_1(Mv)$、$\int K_1(v)\log(1+|v|)\,dv<\infty$ 与 $H_{b,U}\le2K_b$，存在 $C_0$ 使 $\int_0^\infty g(y-u)\log(e+u)\,du\le\log(e+y)+C_0$ 对 $g=K_M$（$M\ge1$）与 $g=H_{b,U}$（$b$ 固定）一致成立。
+
+负侧。设 $W_-(M)=\sum_{0<\gamma<M}m_\gamma(1-\gamma/M)$。由 (487.1)，$W_-(M)=\frac1M\int_0^MN(t)\,dt\sim\frac1{4\pi}M\log M$，$N(M)\sim2W_-(M)$。对 $0<\gamma<M$ 的不同纵坐标（个数 $d\le N(M)$）应用 Dirichlet 同时逼近，得 $y\in[M^5,M^5Q^{N(M)}]$ 使 $\cos\gamma y\ge c_Q$，从而 $\log(e+y)\le C_1W_-(M)$。反设 $f(u)\ge-\kappa\log(e+u)$ 对充分大的 $u$ 成立；由局部有界性加一个常数后对所有 $u\ge0$ 成立。取 $g=K_M$（$\widehat g=\phi_M$），由 (487.5)，
+
+$$
+\int_0^\infty f(u)K_M(y-u)\,du\le-c_QW_-(M)+o(1),
+$$
+
+而对数包络的平均给出该积分 $\ge-\kappa(C_1W_-(M)+C_0)-O(1)$。取 $\kappa<c_Q/(2C_1)$ 并令 $M\to\infty$，矛盾。
+
+正侧。先选频带。由 $\zeta(1/2)\ne0$ 与连续性，取 $b>0$ 使 $(0,b]$ 中没有零点纵坐标。令 $n(U)=\sum_{|\gamma-U|<b}m_\gamma$，$W_+(U)=\sum_\gamma m_\gamma(1-|\gamma-U|/b)_+$。由 (487.1) 与有限和积分交换，$\int_T^{2T}n\sim\frac{2b}{2\pi}T\log T$，$A_T:=\int_T^{2T}W_+\sim\frac b{2\pi}T\log T$，端点修正以 $T$ 与 $2T$ 附近定宽邻域的零点质量为界，为 $o(T\log T)$。故充分大时 $\int_T^{2T}n\le3A_T$。在 $\{n>12W_+\}$ 上 $\int W_+\le\frac1{12}\int n\le A_T/4$；在 $\{W_+<A_T/(4T)\}$ 上 $\int W_+\le A_T/4$；两集合之外承载至少 $A_T/2$ 的质量。于是对充分大的 $T$ 存在 $U\in[T,2T]$ 使
+
+$$
+n(U)\le12W_+(U),\qquad W_+(U)\ge c_b\log T,
+\tag{487.8}
+$$
+
+其中 $c_b>0$ 只依赖 $b$。对这样的 $U$ 令 $M=U+b$。由 (487.4)，中央频带 $(0,b]$ 无零点，$\widehat H_{b,U}(\gamma)=-\tfrac12\phi_b(\gamma-U)$ 对 $\gamma>2b$ 成立，故 (487.5) 的主和为 $\tfrac12\sum_{|\gamma-U|<b}m_\gamma\phi_b(\gamma-U)\cos\gamma y$。只对 $|\gamma-U|<b$ 的不同纵坐标同步，得 $y\in[M^5,M^5Q^{n(U)}]$，由 (487.8)，$\log(e+y)\le5\log M+n(U)\log Q+O(1)\le C_2W_+(U)$。反设 $f(u)\le\kappa\log(e+u)$ 最终成立，则
+
+$$
+\tfrac12c_QW_+(U)+o(1)\le\int_0^\infty f(u)H_{b,U}(y-u)\,du\le\kappa(C_2W_+(U)+C_0)+O(1),
+$$
+
+取 $\kappa<c_Q/(4C_2)$，令 $T\to\infty$，矛盾。
+
+两侧所得 $y$ 均可任意大，且两处误差项因 $y\ge M^5$ 而为 $o(1)$。由 $y=\log x$ 得 (487.7)。证毕。
+

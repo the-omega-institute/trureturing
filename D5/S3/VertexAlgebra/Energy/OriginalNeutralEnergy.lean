@@ -173,13 +173,6 @@ private theorem energy_power_grade
     congr 1
     exact mul_comm _ _
 
-private theorem stateEnergies_nonneg (hD : (gramReal D).PosDef)
-    (v : Carrier D) (E : ℤ) (hE : E ∈ stateEnergies D v) : 0 ≤ E := by
-  obtain ⟨a,ha,rfl⟩ := Finset.mem_image.mp hE
-  have hn := chargeEnergy_nonneg D hD a.1
-  dsimp [energy]
-  omega
-
 /-- Orthogonal finite energy recombination for the actual energy operator. -/
 private theorem energy_bound_of_grades (hD : (gramReal D).PosDef)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)

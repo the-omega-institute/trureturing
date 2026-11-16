@@ -1,0 +1,31 @@
+**引理 111.1（不依赖缩放的原域算子）。** 对 $x\ne0$ 定义原线性投影 $P_xy=y-\langle x,y\rangle x/\|x\|^2$，取任意正λ使 $\lambda\|x\|<1$，令
+
+$$
+A_xy=\lambda^{-1}D(\lambda x,P_xy),\qquad A_0=0.
+\tag{111.1}
+$$
+
+定义与λ无关。每个 $A_x:V\to V$ 实线性且斜，$A_xx=0$，并有
+
+$$
+\|A_xy\|^2=\|x\|^2\|y\|^2-\langle x,y\rangle^2,\quad
+A_{tx}=tA_x,\quad
+x\perp y\Longrightarrow A_xy=-A_yx.
+\tag{111.2}
+$$
+
+当 $\|x\|<1$ 且 $y\perp x$ 时，实际旧值 $D(x,y)=A_xy$。
+
+证明。记110.2给出的正交行线性算子为 $T_{\lambda x}$。另取正μ使 $\mu\|x\|<1$。对 $q\perp x$，选正δ使 $\|\delta q\|<1$。两种小首输入行及原反对称给
+
+$$
+\delta T_{\mu x}q
+=D(\mu x,\delta q)
+=-T_{\delta q}(\mu x)
+=\frac{\mu}{\lambda}D(\lambda x,\delta q)
+=\frac{\mu}{\lambda}\delta T_{\lambda x}q.
+\tag{111.3}
+$$
+
+q为零时直接成立，故111.1不依赖缩放。它在 $x^\perp$ 上斜并在x上为零，因而在全V上斜；范数由109.1取得。正t的首槽齐次性由缩放独立性给出，负t还用108.2的每槽奇性，t为零直接成立。对正交x,y把两者都缩小，实际反对称给 $\lambda\delta A_xy=-\lambda\delta A_yx$。最后一项取λ为一。整个定义的每次D输入仍在原E；此时没有对原D一般的相加输入作展开。∎
+

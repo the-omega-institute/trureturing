@@ -1,0 +1,6 @@
+**命题 495.5（联合信息的必要性）。** 存在取值于 $\mathbb R^2$ 的随机向量 $V=(V_1,V_2)$，使 $\mathbb EV_i=0$、$\mathbb EV_i^2=\mathbb EV_i^4=\frac12$（$i=1,2$）、$\mathbb EV_1V_2=0$，而四个开象限的概率都为零。因此两个坐标各自的有界四阶矩与零协方差不足以推出 (495.7) 型的象限结论；推论 495.4 用的是全部联合矩。
+
+证明。令 $V$ 等概率地取值于 $(1,0),(-1,0),(0,1),(0,-1)$。则 $V_1$ 以概率 $\frac14$ 取 $\pm1$、以概率 $\frac12$ 取 $0$，故 $\mathbb EV_1=0$、$\mathbb EV_1^2=\mathbb EV_1^4=\frac12$；$V_2$ 同理。每个取值都有一个坐标为零，故 $V_1V_2=0$，$\mathbb EV_1V_2=0$，且每个取值都落在坐标轴上，四个开象限的概率都为零。证毕。
+
+**范围。** 引理 495.1、定理 495.2–495.3 与推论 495.4 是抽象接口上的结论；对 $E=\psi-\mathrm{id}$，(493.1)、$(\mathrm W_{2,2})$ 与推论 495.4 的全阶接口都未被证明。Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 在其强 Hardy–Littlewood 型相关误差假设下推出单一长度的矩（其更一般的矩渐近为该文猜想 1），不涉及不同指数的移动长度 $sx^{\theta_1},tx^{\theta_2}$ 的混合矩及其与宏观位置的联合；Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 在 RH 与 LI 下处理比例长度的多个不交区间并采用对数取样。本节的新内容是：定理 495.2 由 §491 推出交叉二阶核必须几乎处处为零，以及定理 495.3 给出的显式正相关常数 $\kappa_1\kappa_2Q_1Q_2(c_{2,2}-c_{2,0}c_{0,2})$。矩方法、Cramér–Wold 定理、Isserlis 公式、Chebyshev 积分不等式与 $\pi$-$\lambda$ 定理都是标准工具。
+

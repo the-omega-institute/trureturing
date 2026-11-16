@@ -20,15 +20,13 @@ open private bank terminal word bank_inventory bank_good from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTail.Source
 open private bank_masses from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTail.Masses
-open private size sourceMod base newBase charge chainLength chainStart nextBase nextNewBase
-  oldValue newValue chain_values source_signs negatives source_totals new_base_bounds from
-  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private sourceMod charge nextBase nextNewBase chain_values source_signs source_totals new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
 open private native_masses from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private four_strip from
   D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open private insertAt from
-  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (insertAt)
 open private actual_nat_joint_iff from
   D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 

@@ -1,0 +1,8 @@
+**引理 491.5（共同指数带上的一致协方差界）。** 设 (490.2) 在 $0<\alpha<a<b<\beta<1$ 上成立。则对每个区间 $I\subset[X,2X]$ 与 $s,t\in[0,1]$，
+
+$$
+\Bigl|\int_If_s(x)z_t(x)\,dx\Bigr|\ll Xh\log X\,\bigl(1+\log(k/h)\bigr)^2 .
+$$
+
+证明。记 $U_au=u\circ\phi-u$、$U_bu=u\circ\psi-u$，则 $f_s=U_aE$、$z_t=U_bE$，$E=Z_h+r_h$。(i) $|\langle U_aE,U_br_h\rangle_I|\le\|f_s\|_2\|U_br_h\|_2\ll A_X^2h$。(ii) 令 $v=U_bZ_h$；由 (491.5) 与引理 491.4，$\|v'\|_2\ll A_X/\sqrt h$、$\|v\|_2\le\|z_t\|_2+\|U_br_h\|_2\ll A_X\sqrt k$，且 $\|v\|_\infty\le\sum_j\|U_bB_{2^jh}\|_\infty+k\|Z_K'\|_\infty\ll A_X(N+1)$。由引理 491.4（$u=r_h$，末项取 $L^2$ 形式），$|\langle U_ar_h,v\rangle_I|\ll A_X^2h(N+1)$，因为 $\frac hX\|r_h\|_2\|v\|_2\ll A_X^2h\sqrt{hk}/X\le A_X^2h$。(iii) 余下 $\langle U_aZ_h,U_bZ_h\rangle_I$，按二进分解展开两个因子。第一因子为 $Z_K$ 时，$\|U_aZ_K\|_2\ll h\|Z_K'\|_2\ll A_Xh/\sqrt k$，乘以 $\|U_bZ_h\|_2\ll A_X\sqrt k$ 得 $A_X^2h$。第一因子为 $B_R$、第二因子为 $Z_K$ 时，由引理 491.4（末项取上确界形式）与 $\|U_bZ_K\|_2\ll A_X\sqrt k$、$\|(U_bZ_K)'\|_2\ll A_X/\sqrt k$、$\|U_bZ_K\|_\infty\ll A_X$，得 $O(A_X^2h)$。两个因子为 $B_R,B_S$ 时：若 $S\le R$，$\|U_aB_R\|_2\|U_bB_S\|_2\ll\frac{A_Xh}{\sqrt R}A_X\sqrt S\le A_X^2h$；若 $S>R$，由引理 491.4，界为 $A_X^2h\bigl(\sqrt{R/S}+\sqrt{RS}/X+1\bigr)\ll A_X^2h$。共 $(N+1)^2$ 对，合计 $O\bigl(A_X^2h(N+1)^2\bigr)$。证毕。
+

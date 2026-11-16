@@ -1,0 +1,267 @@
+**定理 18.2（混合完整等距的二值置信度精度界）。** 在定义 18.1 的全部条件下，对每个正有理 $0<e\le1/100$，
+
+$$
+\delta\ge
+\frac{2/3-2e}{1+144e\sqrt{m_e}/\sqrt{1-16e^2}}
+\ge\frac1{512e\sqrt{m_e}}.
+\tag{18.5}
+$$
+
+常数与 $\dim P$、$\dim K$、$\operatorname{rank}\sigma$、$\sigma$ 的非零特征值及 $E$ 无关。以下给出完整有限维证明；混合压缩及其反全纯导数基线复用 OTF004 定理 14.1 的 (14.4)–(14.8)，局部有界符号估计同时利用符号范数和导数范数。
+
+证明。
+
+### 18.1 混合压缩与两个交叉块
+
+固定 $\tau_h=|v_h\rangle\langle v_h|$ 的归一代表，置
+
+$$
+V_h=U(v_h\otimes I_P)=v_h\otimes F_h+B_h,
+\qquad (\langle v_h|\otimes I_K)B_h=0.
+\tag{18.6}
+$$
+
+$V_h$ 是等距，正交分解后的堆叠算子
+$W_h=\binom{F_h}{B_h}:P\to K\oplus(v_h^\perp\otimes K)$ 也是等距。因此
+
+$$
+F_h^\dagger F_h+B_h^\dagger B_h=I_P,
+\qquad \|F_h\|\le1.
+\tag{18.7}
+$$
+
+令 $\Pi_h=\tau_h\otimes I_K$、$q_h=\operatorname{Tr}(B_h\sigma B_h^\dagger)$。对 (18.3) 的两个态测量效果 $I-\Pi_h$，第二个态在该效果上的概率为零，故 $q_h\le\delta$。置
+$T_h=\Omega_h-\tau_h\otimes\omega_h$，则 $\|T_h\|_1\le2\delta$。用自伴酉 $S_h=2\Pi_h-I$ 提取非对角块：
+
+$$
+\operatorname{offdiag}(T_h)=\frac{T_h-S_hT_hS_h}{2},
+\qquad \|\operatorname{offdiag}(T_h)\|_1\le2\delta.
+\tag{18.8}
+$$
+
+两个非零块互为伴随，其中一个为
+$C_h=(v_h\otimes F_h)\sigma B_h^\dagger$。自伴非对角矩阵的迹范数是 $2\|C_h\|_1$，左乘等距保持奇异值，所以
+
+$$
+\|F_h\sigma B_h^\dagger\|_1\le\delta,
+\qquad \|B_h\sigma F_h^\dagger\|_1\le\delta.
+\tag{18.9}
+$$
+
+再用 $W_h$ 的等距性、伴随的迹范数相同以及两个堆叠块的三角不等式，得到
+
+$$
+\begin{aligned}
+\|B_h\sigma\|_1
+&=\|\sigma B_h^\dagger\|_1
+ =\|W_h\sigma B_h^\dagger\|_1\\
+&\le\|F_h\sigma B_h^\dagger\|_1
+     +\|B_h\sigma B_h^\dagger\|_1\\
+&\le\delta+q_h\le2\delta.
+\end{aligned}
+\tag{18.10}
+$$
+
+此处没有使用 $\sigma^{-1}$，所以奇异混合态不需要另行处理。
+
+### 18.2 同一实际边缘与有界符号
+
+对 $R$ 偏迹消去 (18.6) 的两个交叉项，给出
+
+$$
+\omega_h=F_h\sigma F_h^\dagger+Z_h,
+\qquad Z_h=\operatorname{Tr}_R(B_h\sigma B_h^\dagger)\ge0,
+\qquad \operatorname{Tr}Z_h=q_h\le\delta.
+\tag{18.11}
+$$
+
+对任意 $h,g$，展开
+
+$$
+F_h\sigma F_h^\dagger-F_g\sigma F_g^\dagger
+=(F_h-F_g)\sigma F_h^\dagger
+ +F_g\sigma(F_h^\dagger-F_g^\dagger).
+$$
+
+由 (18.7) 及伴随的迹范数相同，两项的迹范数均不超过
+$\|(F_h-F_g)\sigma\|_1$。因此
+
+$$
+\begin{aligned}
+\tfrac12\|F_h\sigma F_h^\dagger-F_g\sigma F_g^\dagger\|_1
+&\le\|(F_h-F_g)\sigma\|_1,\\
+D_{\rm tr}(\omega_h,\omega_g)
+&\le\|(F_h-F_g)\sigma\|_1+\delta.
+\end{aligned}
+\tag{18.12}
+$$
+
+最后一项来自 $(q_h+q_g)/2\le\delta$，未以比较边缘替换任一个实际 $\omega_h$。
+
+### 18.3 维数无关的反全纯导数界
+
+选任一固定正交 qubit 基底，在对应球极投影坐标上写
+
+$$
+\begin{aligned}
+v(z)&=(1+|z|^2)^{-m/2}(|0\rangle+z|1\rangle)^{\otimes m},\\
+F(z)&=(\langle v(z)|\otimes I_K)U(v(z)\otimes I_P),
+\qquad A(z)=F(z)\sigma.
+\end{aligned}
+\tag{18.13}
+$$
+
+由收缩性及 $\|\sigma\|_1=1$，$\|A(z)\|_1\le1$。采用
+$\partial_{\bar z}=(\partial_x+i\partial_y)/2$，令
+$t(z)=(I-\tau_z)\partial_zv(z)$。归一张量幂的微分给
+
+$$
+\partial_{\bar z}v(z)=-\frac{mz}{2(1+|z|^2)}v(z),
+\qquad \|t(z)\|=\frac{\sqrt m}{1+|z|^2}.
+\tag{18.14}
+$$
+
+在 $F$ 的微分中，bra 与 ket 的平行项相消，留下的正交 bra 恰给
+
+$$
+\partial_{\bar z}F(z)=(\langle t(z)|\otimes I_K)B_z.
+$$
+
+于是 (18.10) 给出
+
+$$
+\|\partial_{\bar z}A(z)\|_1
+\le\frac{2\delta\sqrt m}{1+|z|^2}
+\le2\delta\sqrt m.
+\tag{18.15}
+$$
+
+这些是每个有限坐标圆盘上的光滑有限维矩阵值符号。固定基底的选择只改变证明坐标，不是在实现中旋转参考，也不要求 $U$ 协变。
+
+### 18.4 局部有界符号的边界与面积估计
+
+设 $A$ 是闭圆盘 $\{|z|\le r\}$ 上的有限维迹类矩阵值 $C^1$ 函数，且
+$\sup\|A\|_1\le1$、$\sup\|\partial_{\bar z}A\|_1\le L$。对 $a$ 满足 $d_a=|a|<r$，逐矩阵元的 Cauchy–Pompeiu 公式为 $A(z)=H(z)-T(z)$，其中
+
+$$
+\begin{aligned}
+H(z)&=\frac1{2\pi i}\int_{|\zeta|=r}
+            \frac{A(\zeta)}{\zeta-z}\,d\zeta,\\
+T(z)&=\frac1\pi\int_{|\zeta|<r}
+            \frac{\partial_{\bar\zeta}A(\zeta)}{\zeta-z}\,dA(\zeta).
+\end{aligned}
+\tag{18.16}
+$$
+
+边界核的差为 $a/[\zeta(\zeta-a)]$。把迹范数放入积分，利用边界长度 $2\pi r$ 及 $|\zeta-a|\ge r-d_a$，得
+
+$$
+\|H(a)-H(0)\|_1
+\le\frac1{2\pi}(2\pi r)\frac{d_a}{r(r-d_a)}
+=\frac{d_a}{r-d_a}.
+\tag{18.17}
+$$
+
+面积项在原点满足
+
+$$
+\|T(0)\|_1
+\le\frac L\pi\int_{|\zeta|<r}\frac{dA(\zeta)}{|\zeta|}
+=2Lr.
+\tag{18.18}
+$$
+
+原圆盘包含于以 $a$ 为中心、半径 $r+d_a$ 的圆盘；在后者上积分
+$1/|\zeta-a|$ 恰为 $2\pi(r+d_a)$，故
+
+$$
+\|T(a)\|_1\le2L(r+d_a).
+\tag{18.19}
+$$
+
+合并三个估计，得到这个局部关系的全部常数：
+
+$$
+\|A(a)-A(0)\|_1
+\le\frac{d_a}{r-d_a}+2L(2r+d_a).
+\tag{18.20}
+$$
+
+对 (18.13)–(18.15) 取 $r=4d_a>0$、$L=2\delta\sqrt m$，即有
+
+$$
+\|A(a)-A(0)\|_1
+\le\frac13+36\delta\sqrt m\,d_a.
+\tag{18.21}
+$$
+
+边界积分的固定加项 $1/3$ 保留在式中；这里没有断言 (17.4) 的无条件平方旋转估计。
+
+### 18.5 同一个效果在两条置信带端点上的应用
+
+取
+
+$$
+h_-=(\sqrt{1-16e^2},-4e,0),
+\qquad h_+=(\sqrt{1-16e^2},4e,0).
+\tag{18.22}
+$$
+
+由同一个 $E$ 及迹距离的变分表示，
+
+$$
+D_{\rm tr}(\omega_+,\omega_-)
+\ge\operatorname{Tr}[E(\omega_+-\omega_-)]\ge1-2e.
+\tag{18.23}
+$$
+
+两方向的球面夹角是 $\theta=2\arcsin(4e)$。在 (18.13) 中选择一个固定基底，使 $h_-$ 的坐标为 $0$，$h_+$ 的坐标为正实数
+
+$$
+a=d_a=\tan(\theta/2)=\frac{4e}{\sqrt{1-16e^2}}.
+\tag{18.24}
+$$
+
+因为 (18.3) 对全部方向取上确界，(18.15) 在半径 $4d_a$ 的整个圆盘上成立，包括落在两置信带之间的点。(18.12)、(18.21) 及 (18.23) 于是给
+
+$$
+1-2e\le\delta+\frac13+36\delta\sqrt m\,d_a.
+\tag{18.25}
+$$
+
+移项即得
+
+$$
+\delta\ge\frac{2/3-2e}{1+36\sqrt m\,d_a}
+=\frac{2/3-2e}{1+144e\sqrt m/\sqrt{1-16e^2}},
+\tag{18.26}
+$$
+
+这是 (18.5) 的较强中间界。全置信带假设在这里供应两个端点，没有引入新的解码器。
+
+### 18.6 全部有理精度域与显式绝对常数
+
+对每个 $0<e\le1/100$，有 $\sqrt{1-16e^2}\ge4/5$，所以 $d_a\le5e$，并且 $2/3-2e\ge1/2$。令 $x=e\sqrt m$。精确原曲线满足
+$\log(18/e)>1$、$k_e\ge2048e^{-2}$，且 $m=D_e-1\ge9k_e/e-1$，从而
+
+$$
+me^2\ge9k_e e-e^2\ge18432/e-e^2>1,
+\qquad x\ge1.
+\tag{18.27}
+$$
+
+故 (18.26) 的分母至多
+
+$$
+1+36\sqrt m\,d_a\le1+180x\le181x\le256x.
+$$
+
+结合分子至少 $1/2$，得到
+
+$$
+\delta\ge\frac{1/2}{256x}=\frac1{512e\sqrt{m_e}}.
+\tag{18.28}
+$$
+
+推导没有渐近替换 $m_e$，没有缩小精度窗口，也没有区间延拓或辅助谱限制。$\square$
+

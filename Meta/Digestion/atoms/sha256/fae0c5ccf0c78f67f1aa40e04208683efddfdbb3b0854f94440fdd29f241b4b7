@@ -1,0 +1,1 @@
+(b) 对每个实值 $\phi\in C([1,2])$，$\sup_{s\in[0,1]}|\mathbb E_{\mu_X}[\phi(U_X)B_X(s)]|\to0$；

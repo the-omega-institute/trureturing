@@ -1,0 +1,52 @@
+**定理 86.10（同原重叠几何）。** $P_{12},P_{23}$ 是正、保单位、保迹的迹正交投影，范围分别为保单位 Jordan 子代数 $B_{12},B_{23}$。它们在整个原 $E$ 上满足
+
+$$
+P_{12}P_{23}=P_{23}P_{12}=P_2,\qquad
+B_{12}\cap B_{23}=\kappa(A),\qquad
+\kappa^*\kappa=n^2I_A.
+\tag{86.12}
+$$
+
+中间交集的正锥及原迹为
+
+$$
+\kappa(A)\cap E_+=\kappa(A_+),\qquad
+\tau_E\kappa=n^2\tau_A.
+\tag{86.13}
+$$
+
+对任一 $B\in\{B_{12},B_{23},\kappa(A)\}$ 及对应投影 $P$，还有准确的 Jordan 条件期望性质
+
+$$
+P(b\circ x)=b\circ P(x)\qquad(b\in B,\ x\in E).
+\tag{86.14}
+$$
+
+**证明。** 86.8 直接给自伴、幂等、正性与范围；$P_{12}1_E=P_{23}1_E=1_E$，自伴性再给保迹。在完整原 $Q$ 张成上，准确作用为
+
+$$
+\begin{aligned}
+P_{12}Q(a,b,c)&=\frac{\tau_A(c)}nQ(a,b,1_A),\\
+P_{23}Q(a,b,c)&=\frac{\tau_A(a)}nQ(1_A,b,c),\\
+P_{12}P_{23}Q(a,b,c)&=P_{23}P_{12}Q(a,b,c)
+=\frac{\tau_A(a)\tau_A(c)}{n^2}Q(1_A,b,1_A),\\
+\kappa^*Q(a,b,c)&=\tau_A(a)\tau_A(c)b.
+\end{aligned}
+\tag{86.15}
+$$
+
+末式和 (86.9) 给 $\kappa^*\kappa=n^2I_A$，也将两种复合识别为 $P_2$。这些等式经实张成延拓到全部原 $E$，包含纠缠方向。交换正交投影之积投到两范围交集；(86.15) 的像恰为 $\kappa(A)$，得交集式。$\kappa=H\beta$ 为正保单位 Jordan 嵌入，其正左逆 $\kappa^*/n^2$ 给准确继承锥；迹等距给 (86.13)。因此 $P_2$ 也正、保单位、保迹。
+
+对 (86.14)，取 $c\in B$。因 $B$ 为 Jordan 子代数、$P$ 为迹正交投影，迹内积的结合性给
+
+$$
+\langle P(b\circ x),c\rangle_E
+=\langle x,b\circ c\rangle_E
+=\langle Px,b\circ c\rangle_E
+=\langle b\circ Px,c\rangle_E.
+$$
+
+所比较的两元都在 $B$，故相等。证毕。
+
+所有分母只用总秩 $n>0$，不除以 $n-1$；非同型直和、重复中心标签、每个秩一端点和秩一中间块均保留。$n=1$ 时三个载体均为 $\mathbb R$，所有这些投影为恒等。全经典直和也服从相同公式，方向资格为空活跃集。投影交换并不要求两范围的元素逐元交换；单个 qubit 的交集中已有不交换的中腿矩阵。一般迹条件期望与交换方块机制属于成熟理论 [E]；本定理只从原同 $p$ 接口导出其准确 Jordan 版本。
+

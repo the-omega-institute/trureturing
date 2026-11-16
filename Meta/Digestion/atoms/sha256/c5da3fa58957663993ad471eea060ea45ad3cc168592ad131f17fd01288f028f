@@ -1,0 +1,22 @@
+**引理 492.3（单个尖峰的交叉能量）。** 记 $\ell=\ell_{h,k}$、$L=\log(k/h)$，对 $y\ge0$、$q>0$ 令 $B_q(y)=\int_0^1\bigl(\ell(y+sq)-\ell(y)\bigr)\,ds$。当 $k\ge2h$ 时，
+
+$$
+\int_0^kB_h(y)B_k(y)\,dy=\frac h4L^2+O(hL),
+$$
+
+其中隐含常数绝对。
+
+证明。在 $[0,\infty)$ 上 $\ell$ 递增，故 $B_q\ge0$。在 $0\le y<h$ 上，$0\le B_h\le\log2$、$0\le B_k\le L$，贡献为 $O(hL)$。对 $h\le y\le k$，令 $c=y/k$，直接积分得
+
+$$
+B_k(y)=\log\frac ky-1+c\Bigl(1+\log\frac ky\Bigr),\qquad 0\le B_k(y)\le\log\frac ky .
+$$
+
+对 $h\le y\le k-h$，$B_h(y)=\int_0^1\log(1+sh/y)\,ds=\frac h{2y}+O(h^2/y^2)$；误差项的贡献至多 $O\bigl(h^2\int_h^k\log(k/y)\,y^{-2}\,dy\bigr)=O(hL)$。在 $[k-h,k]$ 上两个 $B$ 都是 $O(h/k)$，贡献为 $O(h^3/k^2)$；把近似主项 $\frac h{2y}B_k(y)$ 的积分延伸到这一段，代价同样是 $O(h^3/k^2)$。于是 $\int_0^kB_hB_k=\frac h2\int_h^kB_k(y)\,\frac{dy}y+O(hL)$；令 $v=\log(k/y)$，
+
+$$
+\int_h^k\frac{B_k(y)}y\,dy=\int_0^L\bigl(v-1+e^{-v}(1+v)\bigr)\,dv=\frac{L^2}2-L+2-(L+2)e^{-L}.
+$$
+
+代入即得。证毕。
+

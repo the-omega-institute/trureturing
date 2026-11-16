@@ -1,0 +1,29 @@
+**定义 94.1（原范数球上的缺陷增长）。** 完整采用22.1、32.1、89.1的准确 R-free 背景 $\mathsf H_{\rm orig}$ 和22.3的完整原 $\mathsf{PB}$。具体仍是1.1的同一原 $\Omega,E,C,u,N,\mathcal P,S,D$，以及1.2第1–3项的全部量词：全部原复二表、完整实相加三角及相加零平方、固定点和同一个正有理小窗口。原 R 不在前件中。按2.1–2.2仅完成已识别的 $S=\circ$，得忠实 JB 完成 $X$、$C=E\cap X_+$ 及 $N=\|\cdot\|_X|_E$。原 $E$ 可无限维、不完备，原 $D:E^2\to E$ 仍只是总映射；不输入一般可加性、齐次性、正则性、输出局部性、商下降或完成延拓，也不输入轴、投影或满环境自伴部。全部原来源、零对象、零／不等／次归一质量保持。
+
+记
+
+$$
+\begin{aligned}
+\delta_a(b,c)&=D(a,b+c)-D(a,b)-D(a,c),\\
+A(R)&=\sup_{N(a),N(b),N(c)\le R}N(\delta_a(b,c))\qquad(R\ge0).
+\end{aligned}
+\tag{94.1}
+$$
+
+新条件 $\mathsf{SL}$ 准确为
+
+$$
+(\forall\varepsilon>0)(\exists T_\varepsilon>0)(\forall R\ge T_\varepsilon)
+\quad A(R)\le\varepsilon R.
+\tag{94.2}
+$$
+
+这是同一个球内全部三个原输入的统一条件，不是固定三元组的点态条件。32.1–32.2已给反对称性和 $N(D(a,b))\le N(a)N(b)$，故 $A$ 非减、$A(0)=0$ 且 $0\le A(R)\le4R^2$，每个有限球上的上确界均有限。对 $R>0$ 定义误差包络
+
+$$
+H(R)=\frac34\sum_{n=0}^{\infty}4^{-n}A(2^{n+1}R),\qquad H(0)=0.
+\tag{94.3}
+$$
+
+以下证明同时说明此级数在 $\mathsf{SL}$ 下有定义，以及它怎样作用在真正的原 PB 标签上。本增补保持本卷的纸面数学范围，不主张 Lean/kernel 认证。
+

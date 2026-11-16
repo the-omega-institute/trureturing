@@ -1,0 +1,43 @@
+**引理 7.4（含共同方向相位的平均钻石误差）。** 令
+
+$$
+\widehat Q_y=\lambda^n\oplus\widetilde G_y
+\quad\text{于 }\mathbb C\xi\oplus T,\qquad
+L_y=B\widehat Q_y^\dagger B^\dagger+(I_5-P_R).
+\tag{7.3}
+$$
+
+全空间解码器 $\operatorname{Ad}_{L_y}$ 合法。对每个实际历史，条件于该历史、只平均最终舍入，其编码恢复钻石误差至多 $12/m^2$；因此全部平均的误差也至多 $12/m^2$。
+
+证明。$L_y$ 的两个正交块分别在 $R$ 与 $R^\perp$ 上酉。对实际历史，三能级相对作用恰为
+
+$$
+\widehat Q_y^\dagger Q_h=1\oplus\widetilde G_y^\dagger G_h.
+$$
+
+共同方向上的 $\lambda^n$ 被精确校正，而未将 $T$ 的相位混作整体相位。令 $B_{\mathrm{err}}=\widetilde G_y^\dagger G_h-I_2$，并在 $\xi$ 上补零。固定历史后 $G_h=J^d\Phi(z)$，由 $\Phi$ 的实线性及范数恒等式，
+
+$$
+B_{\mathrm{err}}=(\widetilde G_y-G_h)^\dagger G_h,\qquad
+\|\mathbb EB_{\mathrm{err}}\|_{\mathrm{op}}\le4\delta^2,\qquad
+\mathbb E\|B_{\mathrm{err}}\|_{\mathrm{op}}^2\le4\delta^2.
+$$
+
+在任意有限参考系统上，条件平均相对信道减恒等的精确展开是
+
+$$
+X\longmapsto(\mathbb EB_{\mathrm{err}})X
++X(\mathbb EB_{\mathrm{err}})^\dagger
++\mathbb E[B_{\mathrm{err}}XB_{\mathrm{err}}^\dagger],
+$$
+
+其中隐含对参考的恒等张量。矩阵左右乘法的迹范数界由其算子范数控制，故钻石误差至多
+
+$$
+2\|\mathbb EB_{\mathrm{err}}\|_{\mathrm{op}}
++\mathbb E\|B_{\mathrm{err}}\|_{\mathrm{op}}^2
+\le12\delta^2.
+$$
+
+这是对舍入随机性的条件平均界，不是每条舍入分支的二阶误差界。平均实际历史保留此界。最后用 $B\otimes I$ 的迹范数等距，三能级误差等于编码到 $M_5$ 的误差，且对所有有限参考成立。$\square$
+

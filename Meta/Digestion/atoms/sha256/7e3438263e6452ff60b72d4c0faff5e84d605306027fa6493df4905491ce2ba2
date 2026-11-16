@@ -1,0 +1,47 @@
+**Definition 203.1 (the two scalarized ruling bodies).** Assume $d_u=2$, write
+
+$$
+ s_y=S_u(f_y),
+ \qquad
+ E_u=\operatorname{span}_{\mathbb R}\{r_1,r_2\},
+\tag{203.1}
+$$
+
+and retain the zero-sum space $\mathsf H$ from Definition 201.1. For a nonzero $c\in\mathsf H$ and $z=(z_1,z_2)\in\mathbb R^2$, put
+
+$$
+ h_z=z_1r_1+z_2r_2,
+ \qquad
+ \widetilde u_y^{\,c,z}=s_y+c_yh_z.
+\tag{203.2}
+$$
+
+Define
+
+$$
+ \mathscr Z_c
+ =\left\{z\in\mathbb R^2:
+   \widetilde u_y^{\,c,z}(x)\ge0
+   \text{ for every }y\in\mathcal L,\ x\in G\right\}.
+\tag{203.3}
+$$
+
+For a nonzero $w=(w_1,w_2)\in\mathbb R^2$, put
+
+$$
+ h_w=w_1r_1+w_2r_2,
+ \qquad
+ \widetilde u_y^{\,v,w}=s_y+v_yh_w
+\tag{203.4}
+$$
+
+for $v\in\mathsf H$, and define
+
+$$
+ \mathscr V_w
+ =\left\{v\in\mathsf H:
+   \widetilde u_y^{\,v,w}(x)\ge0
+   \text{ for every }y\in\mathcal L,\ x\in G\right\}.
+\tag{203.5}
+$$
+

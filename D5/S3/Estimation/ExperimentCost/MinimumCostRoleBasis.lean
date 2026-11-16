@@ -153,7 +153,7 @@ noncomputable def greedyRoleScan
     (roleVector : E -> V) (scan : List E) : Finset E :=
   greedyRoleScanFrom (K := K) roleVector ∅ scan.dedup
 
-private theorem exchange_base_over_independent_subset
+theorem exchange_base_over_independent_subset
     {M : Matroid E} {A B : Set E} {e : E}
     (baseB : M.IsBase B) (eNotInBase : e ∉ B)
     (insertIndependent : M.Indep (insert e A)) :

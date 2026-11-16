@@ -145,3 +145,51 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 #print axioms audit
 
 end Reg.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
+
+namespace Reg.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity.PublicExchangeLaws
+open Real Filter Finset
+open scoped Topology BigOperators
+open _root_.D5.S3.Arith.GoldenResourceOptimalInteger
+open _root_.D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
+open _root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+namespace objective_exchange_delta
+abbrev signature : Signature where
+  Params := ℝ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ p x => goldenResourceObjective p x) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V := ∀ (lambda : ℝ) {m : ℕ}
+    (hm : 0 < m) (D U : Finset ℕ)
+    (hD : ∀ p ∈ D, p.Prime) (hU : ∀ q ∈ U, q.Prime)
+    (hDvd : ∀ p ∈ D, p ∣ m) (hDU : Disjoint D U),
+    let d : ℕ := ∏ p ∈ D, p
+    let u : ℕ := ∏ q ∈ U, q
+    let n : ℕ := (m / d) * u
+    (V.readout ()) lambda n - (V.readout ()) lambda m =
+      (∑ q ∈ U,
+          goldenLayerMarginal q (m.factorization q + 1) * Real.log q) -
+        (∑ p ∈ D,
+          goldenLayerMarginal p (m.factorization p) * Real.log p) +
+        lambda * (Real.log d - Real.log u)
+
+private theorem actual_law : arena.Law actual := by
+  exact @_root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity.objective_exchange_delta
+
+private theorem source_bridge :
+    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity.objective_exchange_delta)) ↔ arena.Law actual := Iff.rfl
+
+end objective_exchange_delta
+
+end Reg.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity.PublicExchangeLaws

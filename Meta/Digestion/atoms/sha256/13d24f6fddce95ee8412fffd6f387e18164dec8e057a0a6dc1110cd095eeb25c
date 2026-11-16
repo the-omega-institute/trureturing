@@ -1,0 +1,16 @@
+### 120.11 同一原静态字典与完整物理合同
+
+下表只在主候选 $\mathrm{EB3}+\mathsf{DT}$ 已成立的条件下使用同一个 $\Phi$，消费既有116.17、VIII113.9的结论。
+
+| 对象或旧静态公理 | 同一原模型中的完整对应及量词 |
+| --- | --- |
+| 原空间、锥与单位 | $\dim_{\mathbb R}V=9$，$C=\Phi(\mathrm{PSD}_3)$，$u\Phi=\operatorname{Tr}$ |
+| 复Hilbert射线与全部纯态 | $p_z=\Phi(zz^*/(z^*z))$，对全部 $z\ne0$；$P\cong\mathbb{CP}^2$，总体实维四 |
+| 全部混态和混合 | 整个 $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$，保持每个有限凸组合；$C$ 还保留零和全部非负质量缩放 |
+| 全部效应和Born评价 | 整个 $\mathcal E$ 恰为 $f_A(\Phi\rho)=\operatorname{Tr}(A\rho)$、$0\preceq A\preceq I_3$，包括零、单位和补；不是只匹配纯—纯表 |
+| 最低确认及全部原排除球 | least为秩一投影效应；$T_{p_z}(\Phi\rho)=\operatorname{Tr}(zz^*\rho)/(z^*z)$；完整 $D_{p_z}$ 是 $z^\perp$ 上全部密度矩阵 |
+| 原纯—纯比较及零边 | $T_{p_z}(p_w)=|z^*w|^2/((z^*z)(w^*w))$；零恰为复内积正交 |
+| 原Pair和实际第三点 | 全部不同原纯点的最小面为真；每条原正交边有唯一第三纯点，三个原效应和为 $u$ |
+| 全部有限数学测量 | 对每个有限结果数，原 $f_j\ge0,\sum_jf_j=u$ 恰对应全部 $A_j\succeq0,\sum_jA_j=I_3$ |
+| 正交完备基、状态与可观测量谱 | 三个秩一正交投影和为 $I_3$；每个原混态有三项非负谱分解，全部实可观测量有对应实谱分解，允许重谱、零权 |
+| 派生中心、共同尺及乘法 | $\Phi(I_3/3)$、$B(\Phi X,\Phi Y)=\operatorname{Tr}(XY)$、$\Phi X\circ\Phi Y=\Phi((XY+YX)/2)$；它们是结论，不是辅助欧氏尺的预设 |

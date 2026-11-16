@@ -30,6 +30,14 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
             Node("configurationEquiv", "All configurations as subsets", ConfigurationCoordinates(false), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
             Node("rankConfigurationEquiv", "Fixed-rank configurations as subsets", ConfigurationCoordinates(true), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
             Node("site_entry", "The original site matrix entries", SiteEntries(), DescribeRole.Theorem, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("adjoint_U", "The original complex adjoint", OriginalPrerequisite("adjoint_U"), DescribeRole.Theorem, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("primitive_zero_eq", "Rank-zero primitive space", OriginalPrerequisite("primitive_zero_eq"), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("rank_split", "Adjacent-rank primitive splitting", OriginalPrerequisite("rank_split"), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("primitive_degree", "Arbitrary-size primitive cutoff", OriginalPrerequisite("primitive_degree"), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("primitive_endpoint", "Arbitrary-size string endpoint", OriginalPrerequisite("primitive_endpoint"), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("primitive_recurrence", "Arbitrary-size lowering recurrence", OriginalPrerequisite("primitive_recurrence"), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("primitive_orthogonal", "Different primitive ranks are orthogonal", OriginalPrerequisite("primitive_orthogonal"), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("inner_power_orthogonal", "Orthogonality along primitive strings", OriginalPrerequisite("inner_power_orthogonal"), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
             Node("finitePrimitiveStrings", "The finite strings", Strings(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Feinsilver)),
             Node("result", "Span and exact primitive-string identities", Result(), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
             Node("previousChoose", "Previous binomial coefficient", Previous(), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
@@ -51,7 +59,9 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
             Paragraph(Text("Let C(s,r) = {A : Finset(Fin(s)) | card(A)=r}, and let H(s,r) = EuclideanSpace(ℂ,C(s,r)) carry counting inner product. Write e_r = rankConfigurationEquiv(s,r). For arbitrary complex f in H(s,r), define E_r f(x)=f(e_r(x)) when occupancy(x)=r and zero otherwise. Reindexing the finite counting sum proves ⟪E_r f,E_r g⟫=⟪f,g⟫ and ‖E_r f‖=‖f‖. For an arbitrary Boolean vector v, restriction is R_r v(A)=v(e_r⁻¹(A)), and E_r R_r v is exactly the mask equal to v at occupancy r and zero elsewhere. The mask fixes every vector in rankSpace(s,r). Thus the Hilbert-space identification uses the counting identity and zero extension; the linear rankEquiv alone is not an isometry assertion.")),
             Paragraph(Text("The lowering target is C⁻(s,r) = {T : Finset(Fin(s)) | card(T)+1=r}. Define W_r f(T)=∑_{u∈Fin(s),u∉T} f(insert(u,T)), with every coefficient equal to one. Zero extension E⁻_r from this target uses the condition occupancy(x)+1=r and occupiedSet(x); it also preserves complex counting inner products and norms. The original site_entry formula gives L(s)v(x)=∑_{i∈Fin(s)} if x(i)=1 then v(update(x,i,0)) else 0. Since occupiedSet(update(x,i,0))=insert(i,occupiedSet(x)), this yields the exact correspondence L(s)E_r f=E⁻_r W_r f. At r=0 the target C⁻(s,0) is empty and this lowering is zero; it is not replaced by a second rank-zero layer through truncated subtraction.")),
             Paragraph(Text("For r≤s, the counting cardinality of C(s,r) is choose(s,r)>0. Define P_r f to be the constant function with value choose(s,r)⁻¹∑_{A∈C(s,r)}f(A). The sum of f−P_r f is zero, so P_r is the orthogonal projection onto the complex line of constant functions. With W_r viewed as its actual complex linear map and W_r* its adjoint, put D_r=r(s−r+1)I−W_r*W_r. The adjoint identity and the counting norms give Re⟪f,D_r f⟫=r(s−r+1)‖f‖²−‖W_r f‖². These interface identities apply also at r=0 and r=s, and at s=1.")),
-            Paragraph(Text("The remaining coercivity target is Re⟪f,D_r f⟫≥s‖f−P_r f‖² for s≥1 and r≤s. Its fixed-rank spectral derivation is not supplied by these interfaces. The first missing step is a finite decomposition E_r f=∑_{0≤t≤min(r,s−r)}U(s)^(r−t)v_t with v_t in primitive(s,t), obtained from the original arbitrary-N primitive_strings_span after the rank mask. Completion also requires identifying the t=0 component with the actual average and composing the original recurrence and orthogonality. No Johnson gap, parent-atom coverage, full energy, density or confinement conclusion follows from the interface identities alone.")),
+            Paragraph(Text("For arbitrary site count s and rank r≤s, the original rank_split and primitive_zero_eq assemble a finite decomposition of every rank-r vector into z_t=U(s)^(r−t)v_t, with v_t in primitive(s,t) and 0≤t≤r. At the induction step write f=U(s)w+b with w of rank r−1 and b primitive of rank r, apply the preceding decomposition to w, and append b. Different t components are orthogonal by primitive_orthogonal and inner_power_orthogonal. If t>s−r, primitive_degree and primitive_endpoint give z_t=0, so only 0≤t≤min(r,s−r) remain. This uses the actual s-site carrier and imposes no parity condition.")),
+            Paragraph(Text("On z_t the original primitive_recurrence gives U(s)L(s)z_t=(r−t)(s−r−t+1)z_t. Thus the Boolean rank-r defect r(s−r+1)I−U(s)L(s) has eigenvalue t(s+1−t). Orthogonality reduces its quadratic form to the sum of t(s+1−t)‖z_t‖². Removing z_0 leaves the sum of the positive-t components, whose squared norm is the sum of their squared norms. The identity t(s+1−t)−s=(t−1)(s−t)≥0 gives the bound relative to this rank-zero string component. The vanishing components include all t>0 when r=s; r=0 has only z_0. These algebraic reductions also include s=1.")),
+            Paragraph(Text("NativeJohnsonCoercivity.result proves Re⟪f,D_r f⟫≥s‖f−P_r f‖² for every natural s and r≤s. Its proof identifies z_0 with the zero extension of the actual counting average P_r f, and establishes the coefficient-one lowering correspondence L(s)E_r=E⁻_r W_r with its counting-norm identity. These bridges combine with the primitive decomposition to give the native estimate, including s=0 and both rank endpoints. The graph defect identity, spectator or tensor estimates, energy, density and confinement conclusions require their separate correspondences.")),
             Paragraph(Text("For each rank t≤S, the dimension is derived as choose(2S,t)−previousChoose(2S,t), where previousChoose(N,0)=0 and previousChoose(N,t+1)=choose(N,t). Fixed-occupancy configurations are identified with t-element subsets, and the actual rank space is identified with the complex function space on these subsets. The commutator and adjoint identity prove injectivity of U below the middle rank. Orthogonal splitting of rank t+1 into U(rank t) and its primitive subspace then gives the dimension formula; no rank multiplicity is assumed.")),
             Paragraph(Text("Write d=2S−2t=2(S−t), and let b(t,a) be the selected orthonormal primitive basis. StringIndex(S) consists of (t,(a,k)) with t in Fin(S+1), a in Fin(dim P(2S,t)), and k in Fin(d+1). The normalized vector is U^k b(t,a) divided by its positive real norm, as a complex scalar. Its squared unnormalized norm is k!·descFactorial(d,k), so every position in every selected string is nonzero. Orthogonality and the primitive spanning theorem prove that these normalized vectors form a complete orthonormal basis, rather than assuming a complete family or a unitary.")),
             Paragraph(Text("CopyIndex(S) is the dependent pair (t,a), and NativeIndex(S) is ((t,a),r), with r in Fin(d+1). EuclideanSpace(ℂ,NativeIndex(S)) is the finite Hilbert direct sum, over all primitive copies, of native spin-(S−t) spaces. The native basis vector at ((t,a),r) is the normalized string at (t,(a,Fin.rev(r))). Thus r=d−k=2j−k, including d=0. The coordinate unitary is constructed from this complete basis. nativeMatrix is the dependent block diagonal of the supplied native matrices; nativeU uses PrecessionSpinOneSeparableBound.Jplus, nativeL its conjugate transpose, and nativeZ its Jz. The raising matrix entry is sqrt(r·(d+1−r)) at row r−1, column r; the lowering entry is sqrt((r+1)·(d−r)) at row r+1, column r. Entries outside the range vanish, and Jz has weight d/2−r. Equivalently on ascending normalized strings, U has coefficient sqrt((k+1)·(d−k)), L has coefficient sqrt(k·(d−k+1)), and Z has weight −(S−t)+k. Both endpoints, all multiplicities and spin zero are included.")),
@@ -74,6 +84,14 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
                 "configurationEquiv" => "The original equivalence sends x to its zero-bit subset; its inverse puts zero at members and one elsewhere.",
                 "rankConfigurationEquiv" => "The original equivalence restricts to occupancy-t configurations and cardinality-t finsets, including empty fibers. Its subtype maps are the same configurationEquiv and inverse; it is an equivalence of counting indices, not a claim that an arbitrary linear equivalence preserves the norm.",
                 "site_entry" => "Each site entry is the chosen local matrix entry times the Kronecker equality factors at every other coordinate.",
+                "adjoint_U" => "The original collective raising and lowering maps are adjoints for the full complex counting inner product.",
+                "primitive_zero_eq" => "At rank zero, the original lowering map vanishes, so every rank-zero vector is primitive.",
+                "rank_split" => "Every rank t+1 vector is the sum of a raised rank t vector and a primitive rank t+1 vector, for every site count N.",
+                "primitive_degree" => "A nonzero primitive vector has twice its rank at most the site count; no parity assumption is used.",
+                "primitive_endpoint" => "Raising beyond N−2t annihilates a primitive vector of rank t.",
+                "primitive_recurrence" => "The original coefficient-one lowering acts on every unnormalized primitive string with its exact scalar coefficient.",
+                "primitive_orthogonal" => "Primitive vectors with different ranks are orthogonal in the actual complex counting inner product.",
+                "inner_power_orthogonal" => "Orthogonal primitive vectors remain orthogonal after arbitrary raising powers, even when the two powers differ.",
                 "finitePrimitiveStrings" => "All primitive vacua are included, including the spin-zero sector t=S; q=0 is retained.",
                 "previousChoose" => "Rank zero has previousChoose(N,0)=0; successor ranks use the preceding binomial coefficient.",
                 "primitive_multiplicity" => "The dimension formula is proved for every natural S and t≤S, using actual subspaces and operators.",
@@ -183,6 +201,34 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
         var matrix=Call("Matrix",Call("Fin",D(2)),Call("Fin",D(2)),C());
         return All("N",N(),All("i",Call("Fin",n),All("A",matrix,All("x",Config(n),All("y",Config(n),
             Eq(At(At(Call("site",n,i,a),x),y),Mul(At(At(a,At(x,i)),At(y,i)),factor)))))));
+    }
+    private static Formula OriginalPrerequisite(string name)
+    {
+        var n=F.Id("N");var t=F.Id("t");var u=F.Id("u");
+        var v=F.Id("v");var w=F.Id("w");var q=F.Id("q");var r=F.Id("r");
+        Formula Hv(Formula body) => All("N",N(),All("t",N(),All("v",V(n),Imp(Mem(v,P(n,t)),body))));
+        if (name=="adjoint_U")
+            return All("N",N(),Eq(Call("adjoint",Call("U",n)),Call("L",n)));
+        if (name=="primitive_zero_eq")
+            return All("N",N(),Eq(P(n,D(0)),Call("rankSpace",n,D(0))));
+        if (name=="rank_split")
+            return All("N",N(),All("t",N(),Eq(
+                Call("sup",Call("map",Call("rankSpace",n,t),Call("U",n)),P(n,Add(t,D(1)))),
+                Call("rankSpace",n,Add(t,D(1))))));
+        if (name=="primitive_degree")
+            return Hv(Imp(Ne(v,D(0)),Le(Mul(D(2),t),n)));
+        if (name=="primitive_endpoint")
+            return All("N",N(),All("t",N(),Imp(Le(Mul(D(2),t),n),
+                All("v",V(n),Imp(Mem(v,P(n,t)),Eq(Pow(n,Add(Sub(n,Mul(D(2),t)),D(1)),v),D(0)))))));
+        if (name=="primitive_recurrence")
+            return Hv(All("q",N(),Eq(At(Call("L",n),Pow(n,Add(q,D(1)),v)),
+                Smul(Mul(Add(q,D(1)),Sub(Sub(n,Mul(D(2),t)),q)),Pow(n,q,v)))));
+        var orthogonal=name=="primitive_orthogonal"
+            ? Imp(Ne(t,u),Eq(Inner(v,w),D(0)))
+            : Imp(Eq(Inner(v,w),D(0)),All("q",N(),All("r",N(),
+                Eq(Inner(Pow(n,q,v),Pow(n,r,w)),D(0)))));
+        return All("N",N(),All("t",N(),All("u",N(),All("v",V(n),All("w",V(n),
+            Imp(Mem(v,P(n,t)),Imp(Mem(w,P(n,u)),orthogonal)))))));
     }
     private static Formula Strings()
     {

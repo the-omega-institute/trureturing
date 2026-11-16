@@ -1,0 +1,57 @@
+**Assumption 1.1 (the original endpoint and passive law).** Fix any
+original finite $a,\eta,d>0$. Retain [RRO, Definitions 1.1, 7.1 and
+8.1][RRO]: the group $G=H^1\times\mathbb R$, identity $e$, Haar
+measure $\mu$, unit-source Green field and original $S_{\min}$, with
+the original product
+
+$$
+(x,y,z,w)(x',y',z',w')
+ =(x+x',y+y',z+z',w+w'+xy').
+$$
+
+Retain the entire complex self-adjoint endpoint, including the
+normalization of its maximal-domain coefficients:
+
+$$
+\begin{gathered}
+h=\frac{w_*}{\|w_*\|_{L^2(\mu)}},\qquad
+\rho=\frac{A(h)}{C(h)},\qquad
+D(H_{\rm end})=\{u\in D(S_{\min}^*):A(u)=\rho C(u)\},\\
+H_{\rm end}u=S_{\min}^*u,\qquad
+m=h^2\mu,\quad m(G)=1,\qquad J_hv=hv,\\
+K=J_h^{-1}H_{\rm end}J_h\ge0,\qquad
+\ker K=\mathbb C1,\qquad T_t=e^{-tK},\qquad P=T_d=P^*.
+\end{gathered}
+\tag{1.1}
+$$
+
+The inherited source process starts at $Z_0=e$, is conservative, and
+has positive-time densities
+$\mathbb P_e(Z_t\in dx)=g_t(x)m(dx)$, with
+$g_{t+s}=T_sg_t$, $\int g_t\,dm=1$ and $P1=1$.
+Write $g=g_{2d}=Pg_d$. These are the owning endpoint and density
+supplies, not conclusions about an arbitrary diffusion.
+
+For every permitted repaired bounded Borel representative $b$ of
+$g_d$, use exactly
+
+$$
+\begin{gathered}
+c=\frac1{4(1+\|g_d\|_\infty)},\qquad [b]=g_d,\qquad
+0<b\le1+\|g_d\|_\infty,\\
+\mathcal L=\{0,1,3,B\},\qquad
+f_3=cb,\qquad f_B=\frac14,\qquad
+f_0=f_1=\frac{3/4-f_3}{2},\\
+X_j=Z_{(j+2)d},\qquad
+\mathbb P(Y_j=y\mid (Z_t)_{t\ge0})=f_y(X_j)\quad(j\ge0).
+\end{gathered}
+\tag{1.2}
+$$
+
+The read noise is fresh and conditionally independent given the source
+path, and leaves its evolution unchanged. Thus the lead-in is $2d$,
+every subsequent gap is $d$, and all four original outcomes remain.
+All pairings below are in the real $L^2(m)$ unless stated otherwise;
+function identities are $m$-class identities. The full complex
+endpoint in (1.1) is unchanged by using real pairings.
+

@@ -55,7 +55,7 @@ private theorem family_weight (m : ℕ) : signedWeight (attainingLength m : ℤ)
   have h := signed_weight_nonadjacent (digits m) (hd m).1 (hd m).2.1
   simpa only [(hd m).2.2.1, (hd m).2.2.2] using h
 
-private def tau (w : List Bool) : List Bool :=
+def tau (w : List Bool) : List Bool :=
   w.flatMap (fun b => [b, !b, !b, b])
 
 private theorem tau_append (u v : List Bool) : tau (u ++ v) = tau u ++ tau v := by
@@ -75,7 +75,7 @@ private theorem tau_palindrome {w : List Bool} (h : List.Palindrome w) :
   apply List.Palindrome.of_reverse_eq
   rw [rev, h.reverse_eq]
 
-private theorem tau_pl (w : List Bool) : FridPrefix.PL (tau w) ≤ FridPrefix.PL w := by
+theorem tau_pl (w : List Bool) : FridPrefix.PL (tau w) ≤ FridPrefix.PL w := by
   classical
   obtain ⟨ps, hps, hlen, hp⟩ : FridPrefix.PalFactors w (FridPrefix.PL w) := by
     unfold FridPrefix.PL
@@ -94,11 +94,11 @@ private theorem tau_pl (w : List Bool) : FridPrefix.PL (tau w) ≤ FridPrefix.PL
     | nil => exact ((hp [] hpmem).1 rfl).elim
     | cons b p => simp [tau]
 
-private theorem factor_concat (n start : ℕ) :
+theorem factor_concat (n start : ℕ) :
     factor (n + 1) start = factor n start ++ [thueMorse (start + n)] := by
   simp [factor, List.range_succ, List.map_append]
 
-private theorem tau_prefix (n : ℕ) : tau (factor n 0) = factor (4 * n) 0 := by
+theorem tau_prefix (n : ℕ) : tau (factor n 0) = factor (4 * n) 0 := by
   induction n with
   | zero => rfl
   | succ n ih =>
@@ -121,7 +121,7 @@ private theorem tau_prefix (n : ℕ) : tau (factor n 0) = factor (4 * n) 0 := by
         thueMorse_two_mul_add_one, thueMorse_two_mul_add_one, Bool.not_not]
     simp only [h0, h1, h2, h3, List.append_assoc, List.cons_append, List.nil_append]
 
-private theorem prefix_four_sub_one (n : ℕ) (hn : 0 < n) :
+theorem prefix_four_sub_one (n : ℕ) (hn : 0 < n) :
     FridPrefix.PL (factor (4 * n - 1) 0) ≤ FridPrefix.PL (factor n 0) + 1 := by
   have ht := tau_pl (factor n 0)
   rw [tau_prefix] at ht

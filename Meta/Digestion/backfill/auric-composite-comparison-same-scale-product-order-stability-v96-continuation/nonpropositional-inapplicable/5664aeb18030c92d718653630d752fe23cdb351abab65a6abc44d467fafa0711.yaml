@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5664aeb18030c92d718653630d752fe23cdb351abab65a6abc44d467fafa0711
+  normalized_sha256: sha256:5664aeb18030c92d718653630d752fe23cdb351abab65a6abc44d467fafa0711
+cas_ref: sha256:5664aeb18030c92d718653630d752fe23cdb351abab65a6abc44d467fafa0711
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure pinned-upstream consequence, with no project frozen GID covering the complete original statement. For every original finite real unital commutative Frobenius space, reuse the already supplied arbitrary-space skewness derivation by LinearMap.trace_lie_mul_eq, LinearMap.trace_eq_matrix_trace, LinearMap.IsSymmetric.adjoint_eq, LinearMap.toMatrix_adjoint, Matrix.trace_conjTranspose_mul_self_eq_zero_iff, LinearMap.adjoint_inner_left and inner_self_eq_zero; do not restore its transient named theorem. Expand the actual LinearMap.BilinMap.tensorDistrib_tmul templates, retain both tagged sides and the endogenous common lambda_star and Gamma, apply PiLp.norm_apply_le, TensorProduct.norm_tmul, abs_real_inner_le_norm and Real.sq_sqrt. Polarization, OrthonormalBasis.sum_repr, OrthonormalBasis.sum_sq_inner_right and Finset.sum_mul_sq_le_sq_mul_sq give exactly norm(H_B)_bil <= 4*N*eta/kappa for every complete original ONB. No associativity, Jordan, Lie or D(e)=0 premise is inserted. This is upstream instantiation and normalization, not a new Lean theorem.
+    previous_atom_id: ffb17c90cf8185175980c40cb5323e7d851846d3e541ad577187895797e14b92
+    next_atom_id: 592903d24efaee93c41278e1a862f4ec3fbab6294cca46f1b301068b95a6a00c

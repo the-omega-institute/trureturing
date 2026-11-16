@@ -1,0 +1,44 @@
+**引理 33.1（同一原圆上的奇周期规则）。** 令
+
+$$
+\mathcal R=\left\{\tan\frac{k\pi}{2m}:k,m\text{ 为正奇数},\ 0<k<m\right\},
+\qquad \mathcal R_1=\mathcal R\cap(0,1).
+\tag{33.1}
+$$
+
+固定 $r\in\mathcal R$。若原映射 $J:V_h\to V_h$ 满足 (32.2) 的自身平面公式，且已知 $F_r(b)=rJb$，则
+
+$$
+F_s(x\pm rsu)=sJx
+\qquad(s\in\mathbb R,\ x\in V_h).
+\tag{33.2}
+$$
+
+特别，对每个 $r\in\mathcal R_1$ 可以取 $J=G_r$；这一特例不要求先比较不同 $r$。$\mathcal R$ 在正实轴稠密，$\mathcal R_1$ 在 $(0,1)$ 稠密。
+
+证明。取实际 $b$，置 $t=rs$、$x=b+rJb$、$y=b-rJb$。PB $(rh,b,sh)$ 的位移为 $\nu=rJb-tu,\omega=0$；对 $(rh,b,-sh)$ 再取一次 PB。用原反对称、奇性、比例零行及 $b\circ Jb=0$，准确得到
+
+$$
+F_s(x-tu)-F_s(y+tu)=-2tb,
+\qquad F_s(x+tu)-F_s(y-tu)=-2tb.
+\tag{33.3}
+$$
+
+两份单位偏移始终保留。自身平面公式使 $b\mapsto x$ 满射，其逐点逆为 $b=(x-rJx)/(1+r^2)$。写
+
+$$
+C_rx=\frac{(1-r^2)x-2rJx}{1+r^2}=y,
+\qquad H_\pm(x)=F_s(x\pm tu)-sJx.
+$$
+
+$Jx-J(C_rx)=-2rb$，故 (33.3) 正好给
+
+$$
+H_-(x)=H_+(C_rx),\qquad H_+(x)=H_-(C_rx).
+\tag{33.4}
+$$
+
+原第二槽奇性又给 $H_+(-x)=-H_-(x)$。在每个自身圆上，$C_r$ 是角 $-2\arctan r$ 的旋转；若 $r=\tan(k\pi/(2m))$，则 $C_r^m=-I$。迭代奇数次 (33.4)，得 $H_+(-x)=H_-(x)$，与奇性相夹使 $H_-=0$，再由 (33.4) 得 $H_+=0$。这是有限步消去，不用圆上的连续性。$s=0$ 也直接由零首槽成立。
+
+稠密性只是参数工具：对任意 $q\in(0,1)$，选越来越大的奇数 $m$，取距 $mq$ 最近的奇数 $k$；充分大时 $0<k<m$，且 $k/m\to q$。正切将相应角区间连续严格递增地映到正实轴；限制 $q<1/2$ 得 $(0,1)$ 中的稠密性。没有从稠密参数直接对未知响应取连续延拓。∎
+

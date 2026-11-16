@@ -1,0 +1,34 @@
+## 490. 一般指数与 $L^1$ 观测剖面的移动价格核均方定律
+
+沿用 §481 的 $w,\rho_x$。本节令 $E:[1,\infty)\to\mathbb R$ 为局部有界的 Borel 可测函数；算术应用取 $E=\psi-\mathrm{id}$。固定 $0<\theta<1$ 与实值 $g\in L^1(0,1)$（取 Borel 代表元），令 $H_x=x^\theta$，并记
+
+$$
+D_u(x)=E(x+u)-E(x),\qquad V(Y,h)=\int_1^YD_h(x)^2\,dx,
+$$
+
+$$
+F_{h,g}(x)=\int_0^1g(s)D_{sh}(x)\,ds,\qquad P_{h,g}(x)=\frac1{h^2}\int_0^hg(u/h)D_u(x)\,du=\frac{F_{h,g}(x)}h .
+$$
+
+**移动剖面核**为
+
+$$
+\mathcal T_{\theta,g}(x)=\frac{\sqrt x}{H_x^2}\int_0^{H_x}g(u/H_x)\,D_u(x)\,\rho_x(u)\,du .
+\tag{490.1}
+$$
+
+取 $\theta=4/5$、$g\equiv1$ 时，$\mathcal T_{4/5,1}$ 就是 (481.1) 的 $\mathcal T$，$P_{h,1}$ 就是 §489 的 $P_h$。令
+
+$$
+G_g(r)=\int_r^1g(s)\,ds,\qquad Q(g)=\int_0^1\!\!\int_0^1g(s)g(t)\min(s,t)\,ds\,dt,\qquad S_X=X^{1-\theta}\log X .
+$$
+
+本节唯一的数论型假设是指数带上一致的普通方差渐近：对某对 $0<\alpha<\theta<\beta<1$，
+
+$$
+\sup_{Y^\alpha\le h\le Y^\beta}\left|\frac{V(Y,h)}{Yh\log(Y/h)}-1\right|\longrightarrow0\qquad(Y\to\infty).
+\tag{490.2}
+$$
+
+对 $E=\psi-\mathrm{id}$，在 RH 下 (490.2) 由 Montgomery 强对相关猜想推出。Goldston [Notes on pair correlation of zeros and prime numbers, arXiv:math/0412313] §9 定理 7（p.18）对比例窗参数 $\delta$ 给出 (9.1) 的一致渐近，一致范围为 $\delta\in[Y^{-B_2},Y^{-B_1}]$（$0<B_1\le B_2<1$ 固定）；其后经 Saffari–Vaughan 转移得到加法窗的方差律 (9.3)（p.19），在 $h/Y\in[Y^{-B_2},Y^{-B_1}]$ 上一致。取 $B_1=1-\beta$、$B_2=1-\alpha$ 即得 (490.2)。因此对算术情形，任意 $0<\alpha<\theta<\beta<1$ 都可用；(489.2) 是 $\alpha=3/4$、$\beta=7/8$ 的情形。
+

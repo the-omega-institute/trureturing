@@ -93,7 +93,7 @@ theorem clock_moment {r t : ℝ} (hrt : r ≤ t) {g : ℝ → ℝ}
   rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
   exact (eq_div_iff (by positivity)).mpr (by simpa [mul_comm] using hFTC)
 
-private theorem evaluation_integrable {r H : ℝ} {B : ℝ → E →L[ℂ] E}
+theorem evaluation_integrable {r H : ℝ} {B : ℝ → E →L[ℂ] E}
     (hB : ∀ x : E, AEStronglyMeasurable (fun s => B s x) (volume.restrict (Set.Icc r H)))
     {g : ℝ → ℝ} (hg : IntegrableOn g (Set.Icc r H))
     (hBg : ∀ s ∈ Set.Icc r H, ‖B s‖ ≤ g s)
@@ -428,7 +428,7 @@ theorem measurableEvolution_apply (S : Contraction E) (B : ℝ → E →L[ℂ] E
   exact h.choose_spec x
 
 
-private theorem parametric_primitive_continuous {X : Type*} [TopologicalSpace X]
+theorem parametric_primitive_continuous {X : Type*} [TopologicalSpace X]
     [FirstCountableTopology X] (F : X → ℝ → E) {b : ℝ → ℝ} (hb : Integrable b)
     (hm : ∀ p, AEStronglyMeasurable (F p))
     (hbound : ∀ p s, ‖F p s‖ ≤ b s)

@@ -1,0 +1,44 @@
+**定理 C-29.4（原生方形的相位所迫恢复障碍）。** 在 C-29.1–C-29.2 的共同记录模型中，设 $OL,LJ,JR,RO$ 的四个重叠非零，并令
+
+$$
+B_\square=\Gamma_{OL}\Gamma_{LJ}\Gamma_{JR}\Gamma_{RO},\quad
+\Theta=|\operatorname{Arg}B_\square|\in[0,\pi],\quad
+v=(|\Gamma_{OL}|,|\Gamma_{LJ}|,|\Gamma_{JR}|,|\Gamma_{RO}|).
+$$
+
+恢复 $\mathcal R$ 仅为输出系统上的固定确定 CPTP 映射，无输入副本、环境、错误档案或旁路，定义 $\epsilon(\mathcal R)=\sup_\rho\frac12\|\mathcal R\mathcal N_\Gamma(\rho)-\rho\|_1$。则
+
+$$
+\min_i v_i\le\frac14\sum_i v_i
+\le\eta_4(\Theta)=\frac1{\cos(\Theta/4)+\sin(\Theta/4)},
+\qquad
+\epsilon(\mathcal R)\ge\frac{1-\eta_4(\Theta)}2.
+\tag{29.5}
+$$
+
+因而在 $\Theta=\pi$ 时，每个这种恢复都满足 $\epsilon(\mathcal R)\ge(1-1/\sqrt2)/2$。这是由四条边保证的必要下界，不是五维恢复任务的最优误差公式。
+
+**证明。** 消费 [Pratapsi–Gouveia–Novo–Galvão v3](../../../Library/QuantumBounds/pratapsi2025bargmann.md) 定理 1、定理 5 式 (20)–(27) 的共同记录多边形界。其 $\Delta=\prod_i\langle e_i|e_{i+1}\rangle$ 与本章同向 $B$ 共轭，但绝对主辐角相同。该平均界为
+
+$$
+\frac1m\sum_i v_i\le
+\eta_m(\Theta)=\frac{\cos(\pi/m)}{\cos((\pi-\Theta)/m)},\qquad m\ge3;
+$$
+
+取 $m=4$ 给 (29.5) 的可见度式。具体的相位均分、循环平均正 Gram 及正多边形支持线，是该文已经给出的算术平均构造，不只从乘积界反推平均界。等模记录可达到该平均界；一般多边形的范围、低秩实现和 $m=3,4,5,6$ 的数值见所引注记，均只作为这里的供应步骤。
+
+对任意不同 $s,t$，取正交输入 $|\pm_{st}\rangle=(|s\rangle\pm|t\rangle)/\sqrt2$。输入迹距离为一，Schur 输出差限制在两维块中有特征值 $\pm|\Gamma_{st}|$，距离为 $|\Gamma_{st}|$。复用 [SecondOrder 定理 113.2 的收缩及三角不等式步骤](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#113-无错误档案时的最优恢复误差)，得到
+
+$$
+1\le2\epsilon(\mathcal R)+|\Gamma_{st}|,
+\qquad
+\epsilon(\mathcal R)\ge\frac{1-|\Gamma_{st}|}{2}.
+\tag{29.6}
+$$
+
+取可见度最小的方形边即得结论；没有沿用该二级各向同性模型的可达上界。
+
+方形积与 $\kappa$ 各属不同类型：前者来自共同复记录，后者来自经典占位概率。它也不等于任意指定门 $U,V$ 的动力学回路相位。数学上重标相使 $\Gamma_{st}\mapsto e^{i(\alpha_s-\alpha_t)}\Gamma_{st}$，环积不变；若要改变实际通道，需相应的实际对角校准操作。图 $E$ 有五条边、五个顶点且连通，四个独立顶点相位留下一个环相位，悬挂边 $OT$ 不另成环；这直接应用 C-27.5.2。若某方形边为零，$B_\square$ 的辐角不定义，但 (29.6) 仍给下界 $1/2$。本图不是五环，文献中的五记录多边形需要另供的比较合同。
+
+边数也不能替代远距检查：所引 Pratapsi 注记中 $e_j=(\cos(j\pi/m),\sin(j\pi/m))$ 的偶数 $m$ 实例，邻边模长趋一而 $e_0\perp e_{m/2}$；在那个另供的 $m$ 标签系统应用 (29.6)，恢复误差仍至少 $1/2$。这是变化标签数的对照，非固定五标签中的极限。证毕。
+

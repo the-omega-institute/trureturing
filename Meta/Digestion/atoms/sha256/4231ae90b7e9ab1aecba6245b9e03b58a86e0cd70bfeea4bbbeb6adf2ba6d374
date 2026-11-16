@@ -1,0 +1,68 @@
+**定理 124.1（两个实际锚的跨输入预算）。** 在123.1下，固定任意原 $z\in V_h$，记 $g=Gz$。对123.3的任一实际 $(p,q)$、每个实 $t$ 及同一数学正读取 $\phi$，令
+
+$$
+v_+=p+q-t(z+g),\qquad v_-=p-q+t(z-g).
+$$
+
+则
+
+$$
+\boxed{2|\phi(q+tz)|\le
+\sqrt{B_\phi(n,v_+)}+\sqrt{B_\phi(n,v_-)}.}
+\tag{124.1}
+$$
+
+其中 $v_\pm\in V_h$，所以每份根号内准确为 $2\phi(n)\phi(v_\pm^2)-\phi(v_\pm)^2$。
+
+证明。对每个实 $\alpha,t$，只取实际原三元组
+
+$$
+(a,b,c)=(h,p+\alpha n,tz).
+\tag{124.2}
+$$
+
+由123.2–123.3，内值准确为 $q,tg$，$h\circ b=\alpha n$、$h\circ c=0$。两份PB位移和完整外层输入是
+
+$$
+\begin{aligned}
+\nu&=q,&\omega&=\alpha n+tg,\\
+R_+&=p+q+\alpha n,&S_+&=t(z+g)+\alpha n,\\
+R_-&=p-q+\alpha n,&S_-&=t(z-g)-\alpha n.
+\end{aligned}
+\tag{124.3}
+$$
+
+这些标签全部在原 $E$。由于 $p\circ q=z\circ g=0$ 以及 $n\circ q=q,n\circ z=z$，同一次PB给
+
+$$
+D(R_+,S_+)-D(R_-,S_-)=-2\alpha(q+tz).
+\tag{124.4}
+$$
+
+对这两个实际旧值分别使用同一 $\phi$ 的原P2，再用标量三角不等式，得到
+
+$$
+2|\alpha|\,|\phi(q+tz)|
+\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{124.5}
+$$
+
+这里只需展开已知实双线性型 $\phi(v\circ w)$。一般地，对已知自伴 $a,b,n$ 和 $s\in\{1,-1\}$，
+
+$$
+B_\phi(a+\alpha n,b+s\alpha n)
+=B_\phi(a,b)+2\alpha C_s+\alpha^2 B_\phi(n,b-sa),
+\tag{124.6}
+$$
+
+其中有限实数
+
+$$
+C_s=s\phi(a^2)\phi(n\circ b)+\phi(n\circ a)\phi(b^2)
+-\phi(a\circ b)\{\phi(n\circ b)+s\phi(n\circ a)\}.
+$$
+
+直接相乘时三次、四次项各自抵消。正侧取 $a=p+q,b=t(z+g),s=1$，负侧取 $a=p-q,b=t(z-g),s=-1$；二次系数分别为 $B_\phi(n,v_+)$ 与 $B_\phi(n,v_-)$。把(124.5)除以 $|\alpha|$，在这两个显式标量二次式中令 $|\alpha|\to\infty$，即得(124.1)，包括零二次系数的退化情形。$n^2=2n$ 及 $n\circ v=v$ 给所述简式。
+
+这里未知外层旧值已被逐份P2上界消去，极限只作用于已知标量式。每个有限 $\alpha$ 的实际输入仍在原域；没有假设旧 $D$ 的任何连续性，也没有增添联合复正表。∎
+

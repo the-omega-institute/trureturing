@@ -1,0 +1,8 @@
+**Corollary 201.3 (a direct rank-four feasibility test).** In the rank-three branch, one nonzero feasible coefficient column is sufficient to realize the full radical dimension. In the rank-four branch, a full-rank lift exists if and only if the feasible body escapes both fixed-factor rulings (201.3) and (201.4). In particular, it is enough to find $A,B\in\mathscr P_u$ such that one $2\times2$ minor of
+
+$$
+\frac{A+B}{2}
+\tag{201.6}
+$$
+
+is nonzero; convexity then makes the midpoint itself a rank-four feasible lift. 

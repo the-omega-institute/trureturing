@@ -1,0 +1,251 @@
+**定理 28.2（全部四维窗口的精确结算）。** 对定义 28.1 的每个实际窗口，$F\subseteq E_W\subseteq D_W\subseteq L$，$N\ge4$、$N\mid[L:F]$、$e\mid4$、$e\mid N$，并有
+
+$$
+\boxed{\delta_W=\max\{e,\,8-N\}.}
+\tag{28.2}
+$$
+
+各分支的完整范围为
+
+$$
+(e,N,\delta_W)=
+\begin{cases}
+(4,4,4),&N=4,\\
+(2,2n,2),&n\ge3,\\
+(1,5,3),&N=5,\\
+(1,6,2),&N=6,\\
+(1,N,1),&N\ge7.
+\end{cases}
+\tag{28.3}
+$$
+
+这里的范围列出实际窗口可能具有的次数，不断言一份指定 $L/F$ 具有表中所有中间域。存在原 $p,q\in W\setminus\{0\}$，使 $d_W(p/q)=\delta_W$。当 $\delta_W=e$ 时，还可取到
+
+$$
+W\cap(p/q)W=E_Wp.
+\tag{28.4}
+$$
+
+任取 $w\in W\setminus\{0\}$，都有 $U=w^{-1}W\subseteq D_W$ 及 $F(U)=D_W$。原标签直接满足
+
+$$
+\begin{aligned}
+D_W&=F\bigl(\{r\in L^\times:d_W(r)>0\}\bigr),\\
+E_W&=\{0\}\cup\{r\in L^\times:d_W(r)=4\}.
+\end{aligned}
+\tag{28.5}
+$$
+
+当 $r\notin D_W$ 或 $s\notin D_W$ 时，$J_W(r,s)=0$。特别地，$D_W\subsetneq L$ 的情形包含在结论内。
+
+对每一个四维竞争窗口 $V\le_F L$，有
+
+$$
+\boxed{
+\bigl[\ \forall(r,s)\in(L^\times)^2,\quad J_V(r,s)=J_W(r,s)\ \bigr]
+\quad\Longleftrightarrow\quad
+\exists x\in L^\times,\quad V=xW.}
+\tag{28.6}
+$$
+
+证明。先落实比值域、稳定子及次数，再求最小交叠，最后在同一个原域中处理每个竞争窗口。所用分裂、分拆秩公式及乘法配对均只在本四维应用内部消费。
+
+取任意 $w\in W\setminus\{0\}$，缩写 $D=D_W$、$E=E_W$，并令 $U=w^{-1}W$。整体乘原标量不改变 $J,d,E$。由 $1\in U$ 及原比值的定义，$U\subseteq D$，而所有窗口比值又是两个 $U$ 元素之商，故 $D=F(U)$。因此 $N\ge4$，且域塔给出 $N\mid[L:F]$。非零交叠向量恰可写成 $u=rv$、$u,v\in W\setminus\{0\}$，所以
+
+$$
+d_W(r)>0\quad\Longleftrightarrow\quad
+r=u/v\quad\text{对某些 }u,v\in W\setminus\{0\}.
+\tag{28.7}
+$$
+
+这给出 (28.5) 的第一式。若 $r\notin D$，则 $D\cap rD=\{0\}$，因为非零等式 $a=rb$、$a,b\in D$ 会迫使 $r=a/b\in D$。对 $U,rU,sU$ 使用此事实，便得所有域外原标签的三重读数为零；没有把这些标签从观察中删去。
+
+消费与 §§26–27 相同的有限维稳定子事实：$E$ 包含 $F$，对加、减、乘封闭；$0\ne a\in E$ 时，乘 $a$ 在有限维 $W$ 上单射，故 $aW=W$、$a^{-1}W=W$，于是 $E$ 是子域。又由 $aw\in W$ 得 $E\subseteq D$。$W$ 为 $E$-空间，所以 $e\mid4$；域塔给 $e\mid N$。$d_W(r)=4$ 恰为 $rW=W$，这证明 (28.5) 的第二式。这些成熟事实的原文为 Bachoc–Serra–Zémor，[*Revisiting Kneser's theorem for field extensions*，arXiv:1510.01354v2，§2.3，Lemma 13 后、Corollary 14 前的有限维说明](https://arxiv.org/pdf/1510.01354v2)；不需要将其饱和空间的特殊对偶结论用于任意窗口。
+
+若 $e=4$，则 $W=wE$，因而 $D=E$、$N=4$。反之，$N=4$ 时 $U=D$，稳定子也为 $D$。若 $e=2$，则 $N$ 是偶数且不能为四，故 $N=2n$、$n\ge3$；余下 $e=1$ 时 $N\ge5$。每个 $W\cap rW$ 都是 $E$-线性的；正交叠的标签属于 $D$，在 $D$ 内两四维空间的交维又至少为 $8-N$。于是所有分支统一具有下界
+
+$$
+\delta_W\ge\max\{e,8-N\}.
+\tag{28.8}
+$$
+
+先完成非平凡稳定子分支。$e=4$ 时，取 $p=q=w$ 即得 $W=Ep$。$e=2$ 时，$U$ 为二维 $E$-空间且含 $1$，写作 $U=E+Et$、$t\notin E$。由 $D=F(U)$、$E\subseteq U$ 得 $D=E(t)$，故 $[E(t):E]=n\ge3$。原 $1,t,t^2$ 在 $E$ 上独立，所以
+
+$$
+U\cap tU=Et,\qquad W\cap tW=Ewt.
+\tag{28.9}
+$$
+
+取原 $p=wt,q=w$，便得 $d_W(p/q)=2$ 及 (28.4)。连同 (28.8)，这结算了 $e=2,4$ 的全部次数，无需对环境 $L$ 作半维假设。
+
+以下设 $e=1$。只在此分支应用 §26 已用的分裂与原系数子式接口，将其中的原乘法空间改为 $D/F$、窗口改为 $U$；不要求 $N=8$。为明确所有前件，取 $D/F$ 的有限正规闭包 $K/F$，令
+
+$$
+\Omega=\operatorname{Hom}_F(D,K),\qquad |\Omega|=N,\qquad
+D\otimes_F K\simeq K^\Omega.
+\tag{28.10}
+$$
+
+可分性由特征零给出，右边乘法逐坐标进行。取 $U$ 的 $F$-基 $a_1=1,a_2,a_3,a_4$，令
+
+$$
+B=(\sigma(a_j))_{\sigma\in\Omega,\,1\le j\le4},\qquad
+b_\sigma=(\sigma(a_1),\ldots,\sigma(a_4)),\qquad
+\rho(S)=\dim_K\langle b_\sigma:\sigma\in S\rangle_K.
+\tag{28.11}
+$$
+
+行拟阵的总秩为四。各行首坐标为一，故无零行；两行若成比例就必相等，进而两个嵌入在 $U$ 上一致，由 $D=F(U)$ 得它们在 $D$ 上一致。因此行拟阵简单：非空秩一子集只能是单点。这一前件来自同一个原比值域，不能以任意抽象拟阵替代。
+
+其连通性仍由 §26 的完整稳定子核接口给出。具体地，原 $F$-线性映射
+
+$$
+\Phi:D\longrightarrow\operatorname{Hom}_F(U,D/U),\qquad
+c\longmapsto(u\longmapsto cu+U)
+\tag{28.12}
+$$
+
+的核恰为 $F$。有限矩阵扩底保持核，有限维的 $\operatorname{Hom}$ 与商也同扩底相容，故在 (28.10) 中，$\widetilde U=\operatorname{im}(U\otimes_F K)$ 的整个对角稳定代数为 $K\boldsymbol1$。若存在非空真子集 $S\subsetneq\Omega$ 使 $\rho(S)+\rho(S^c)=4$，则坐标限制
+
+$$
+\widetilde U\longrightarrow\pi_S\widetilde U\oplus\pi_{S^c}\widetilde U
+$$
+
+单射且两边同维，故满射。将 $S^c$ 坐标置零便保持 $\widetilde U$，产生不属于 $K\boldsymbol1$ 的稳定投影，矛盾。因此不存在这样的直和分解，即行拟阵连通。这控制了扩底后的全部稳定方向，而非仅逐个原标量。
+
+$G=\operatorname{Gal}(K/F)$ 在 $\Omega$ 上传递，且 $g(b_\sigma)=b_{g\sigma}$。域自同构保持子式的零与非零，因此 $\rho(gS)=\rho(S)$。下面只将这种传递性用于同一行族的最优分拆，不假设原窗口一般位置。
+
+在 $K^4\oplus K^4$ 中，对每个 $\sigma$ 取
+
+$$
+A_\sigma=K(b_\sigma,0)\oplus K(0,b_\sigma).
+$$
+
+由行的简单性，这些二维子空间彼此不同，且 $\dim_K\sum_{\sigma\in S}A_\sigma=2\rho(S)$。令 $X,Y$ 为相互独立的四元不定元，取泛超平面 $H_{X,Y}=\{(a,b):X\cdot a-Y\cdot b=0\}$。直接消费 Raz–Wigderson，[*Subspace arrangements, graph rigidity and derandomization through submodular optimization*，arXiv:1901.09423v1，Definition 5.1、Theorems 5.2、7.1 与 §2 式 (3)](https://arxiv.org/pdf/1901.09423v1)，得到
+
+$$
+\begin{aligned}
+R&=\dim_{K(X,Y)}\operatorname{span}\{(A_\sigma\otimes_K K(X,Y))\cap H_{X,Y}:\sigma\in\Omega\}\\
+ &=\min_{\mathcal P}\sum_{S\in\mathcal P}(2\rho(S)-1).
+\end{aligned}
+\tag{28.13}
+$$
+
+分拆块均非空。法向量 $(X,-Y)$ 是整个超平面空间的泛点，故满足该原文的一般位置前件；这里切的是每个 $A_\sigma$ 后再共同张成。
+
+本四维应用的分拆代价可统一确定。上述原文 Definition 2.1 和 Corollary 3.2 保证：在达到 (28.13) 最小值的分拆中，块数最少者唯一。记它为 $\mathcal P_*$。每个 $g\in G$ 保持代价和块数，故由唯一性得 $g\mathcal P_*=\mathcal P_*$。地集上传递的作用因而在块上也传递：给定两块，取各自的一个元素，再将前者送到后者即可。因此若 $c=|\mathcal P_*|$，各块具有共同秩 $q$，代价为 $c(2q-1)$。
+
+若 $c=1$，代价为七。若 $q=1$，简单性使所有块为单点，代价为 $N$。其余情形 $c,q\ge2$：当 $c=2$ 时，$q=2$ 会使两块秩之和等于总秩四，违反已经验证的连通性，故 $q\ge3$、代价至少十；当 $c\ge3$ 时，代价至少九。而单块分拆已有代价七，这些情形不可能最优。单块及全单点分拆本来都允许，遂有
+
+$$
+R=\min\{N,7\}.
+\tag{28.14}
+$$
+
+这里使用的是成熟的最少块最优分拆唯一性，四维秩、简单性与原稳定子连通性共同排除了其余最优形状；没有枚举原窗口或假设每个抽象拟阵能在原域实现。
+
+最后将 (28.14) 接回原窗口中的原比值。令 $u(X)=\sum X_ja_j$、$v(Y)=\sum Y_ja_j$。直接解超平面上的两个系数，得到
+
+$$
+(A_\sigma\otimes_K K(X,Y))\cap H_{X,Y}
+=K(X,Y)\bigl((b_\sigma\cdot Y)b_\sigma,(b_\sigma\cdot X)b_\sigma\bigr).
+\tag{28.15}
+$$
+
+故矩阵 $[\operatorname{diag}(BY)B\mid\operatorname{diag}(BX)B]$ 的秩为 $R$。这正是 Antolini–Dewar–Tanigawa，[*Dilworth truncations and Hadamard products of linear spaces*，arXiv:2508.04798v1，§3.2 式 (7)–(9)](https://arxiv.org/pdf/2508.04798v1) 已有的二因子行与超平面接口在此处的代入；任意特征零底域上的秩公式则由上引 Raz–Wigderson 定理承担，不用复数域的结论冒代原域返回。
+
+固定 $D/F$ 的一个基 $\ell_1,\ldots,\ell_N$，以原乘法坐标组成
+
+$$
+\mathcal C(X,Y)=
+[\ v(Y)a_1\ \cdots\ v(Y)a_4\mid u(X)a_1\ \cdots\ u(X)a_4\ ]
+\in\operatorname{Mat}_{N\times8}(F[X,Y]).
+\tag{28.16}
+$$
+
+可逆嵌入矩阵 $(\sigma(\ell_i))_{\sigma,i}$ 将它变为 (28.15) 的行矩阵，所以 $\mathcal C$ 有一个非零 $R$ 阶子式 $f\in F[X,Y]$。因 $F$ 无限，非零多项式 $fX_1Y_1$ 可在某个 $x,y\in F^4$ 取非零值。所用无限域多项式事实及其归纳证明与 §26 相同。置原 $u=u(x),v=v(y)\in U\setminus\{0\}$，便有 $\dim_F(vU+uU)\ge R$。另一方面，两者均在 $N$ 维 $D$ 中，且共同含有非零 $uv$，所以该维数至多 $\min\{N,7\}=R$。于是
+
+$$
+\dim_F\bigl(U\cap(u/v)U\bigr)
+=\dim_F(uU\cap vU)=8-R=\max\{1,8-N\}.
+\tag{28.17}
+$$
+
+取原 $p=wu,q=wv$，其比值仍为 $u/v$；整体乘 $w$ 得到 $d_W(p/q)=8-R$，与 (28.8) 一起证明 $e=1$ 的 (28.2)。当 $N\ge7$ 时该交为一维，且包含 $p$，故等于 $Fp=Ep$。加上 (28.9) 与四次分支，(28.3)–(28.4) 全部成立。非零子式的系数和取值分别在原 $F$ 与 $F^4$，所以不是把正规闭包中的一般点充作原窗口见证。
+
+(28.3) 的次数范围也确可实现，而非只有形式上的整除条件。在所有窗口的范围内，取 $F=\mathbb Q$、$\theta=2^{1/N}>0$、$D=L=\mathbb Q(\theta)$；$X^N-2$ 的 Eisenstein 判据给 $[D:F]=N$。$N=4$ 时取 $W=D$。每个 $N\ge5$ 时取 $W=\langle1,\theta,\theta^2,\theta^3\rangle_F$，其比值域为 $D$，稳定子为 $F$：稳定元素因 $1\in W$ 可写成次数至多三的多项式；若最高非零次数为 $j\ge1$，乘以窗口中的 $\theta^{4-j}$ 就产生非零的四次项，且 $4<N$，不能仍在 $W$。每个偶数 $N=2n\ge6$ 时，取 $E_0=\mathbb Q(\theta^n)$ 及 $W=E_0+E_0\theta$，则 $[E_0:F]=2$、$[D:E_0]=n\ge3$、$\dim_FW=4$、$D_W=D$。其稳定子包含 $E_0$，次数只能为二或四；次数四已被证明会强迫 $N=4$，故恰为二。这些是纸面构造；在任意包含它们的有限原扩域中，域外零交叠仍由 (28.7) 保证。
+
+现在证明 (28.6)，完整处理竞争窗口。原乘法交换，所以 $V=xW$ 时，乘 $x$ 同构每个对应的二重及三重交叠，因而保持每个原标签的 $J$。以下设两份完整 $J$ 相等。取 $s=1$ 得 $d_V=d_W$，由 (28.5) 得
+
+$$
+D_V=D_W=D,\qquad E_V=E_W.
+\tag{28.18}
+$$
+
+因此竞争窗口也能在同一原 $D$ 内归一化；此结论来自观察相等，不是额外输入或对竞争窗口的限制。
+
+若 $\delta_W=e$，直接消费前卷 §25、本卷 §§26–27 的稳定子线支持恢复。任取最小正行 $r_0$ 及 $0\ne z\in W\cap r_0W$，则 $W\cap r_0W=Ez$。对每个原 $s\ne0$，$W$ 的 $E$-线性给出
+
+$$
+J_W(r_0,s)>0
+\quad\Longleftrightarrow\quad Ez\cap sW\ne\{0\}
+\quad\Longleftrightarrow\quad z/s\in W.
+\tag{28.19}
+$$
+
+由观察相等可取 $0\ne y\in V\cap r_0V$。任意 $v'\in V\setminus\{0\}$ 给出原标签 $s=y/v'$，使 $y\in V\cap r_0V\cap sV$。由 (28.19) 得 $v'/y\in z^{-1}W$，故 $y^{-1}V\subseteq z^{-1}W$。两边均为四维，遂相等，$V=(y/z)W$。这已经处理 $N=4$、所有 $e=2$ 及 $e=1,N\ge7$，且最终标量属于原 $L^\times$。
+
+尚余且仅余 $e=1,N=5,6$。取任意原 $w\in W\setminus\{0\}$、$y\in V\setminus\{0\}$，令 $U=w^{-1}W$、$B=y^{-1}V$。由 (28.18)，$U,B\subseteq D$ 都是四维空间，且 $d_U=d_B$。以下只在这同一原域 $D$ 中使用成熟乘法配对。取任意非零 $F$-线性泛函 $\lambda:D\to F$，则
+
+$$
+\langle a,b\rangle=\lambda(ab)
+\tag{28.20}
+$$
+
+非退化：若 $a\ne0$，取 $t\in D$ 满足 $\lambda(t)\ne0$，再令 $b=t/a$ 即可。乘法自伴随性给出 $(cA)^\perp=c^{-1}A^\perp$，有限维性给出 $(A^\perp)^\perp=A$。这正是上述 Bachoc–Serra–Zémor 原文 §2.2 式 (2) 的 Frobenius 配对，亦为前卷 §§20、22–24 和本卷 §27 已消费的同一工具；$\perp$ 指通常正交补，不是原文另定义的饱和对偶 $X^*=(XS)^\perp$。
+
+若 $N=5$，$U,B$ 是 $D$ 的两个 $F$-超平面。与 §27 的超平面原标量传递性相同，取 $U=\ker\mu$、$B=\ker\eta$。非退化乘法配对使
+
+$$
+D\longrightarrow\operatorname{Hom}_F(D,F),\qquad
+c\longmapsto(b\longmapsto\mu(cb))
+$$
+
+成为线性同构。故某个原 $c\in D^\times$ 满足 $\eta(b)=\mu(cb)$，于是 $B=c^{-1}U$、$V=(y/(cw))W$。虽然 $\delta_W=3>e$，该分支仍恢复原标量轨道。
+
+若 $N=6$，置 $A=U^\perp$、$C=B^\perp$，它们在原 $D$ 中均为二维。对每个原 $r\in D^\times$，正交补及维数公式给出
+
+$$
+\begin{aligned}
+d_U(r)
+ &=6-\dim_F(A+r^{-1}A)
+  =2+\dim_F(A\cap r^{-1}A),\\
+d_B(r)
+ &=6-\dim_F(C+r^{-1}C)
+  =2+\dim_F(C\cap r^{-1}C).
+\end{aligned}
+\tag{28.21}
+$$
+
+由 $d_U=d_B$，并让 $r^{-1}$ 遍历原 $D^\times$，得到 $d_A(t)=d_C(t)$ 对每个 $t\in D^\times$ 成立。取 $C$ 的一个 $F$-基 $c_0,c_1$，令 $t=c_1/c_0\notin F$。则 $c_1\in C\cap tC$，所以 $d_C(t)>0$，进而 $d_A(t)>0$。因此存在原 $a_0,a_1\in A\setminus\{0\}$ 满足 $a_1=ta_0$。由于 $t\notin F$，$a_0,a_1$ 独立，正好组成 $A$ 的基；从而
+
+$$
+C=c_0\langle1,t\rangle_F
+ =\kappa A,\qquad \kappa=c_0/a_0\in D^\times.
+\tag{28.22}
+$$
+
+再次取同一配对的正交补得 $B=\kappa^{-1}U$，故 $V=(y/(\kappa w))W$。这没有要求 $F(A)=D$，也没有遗漏 $A$ 的比值域为真子域或其稳定子非平凡的可能；只用了二维基、同一个原比值标签与 (28.21)。因此六次拥挤分支的全部竞争窗口也由原标量连接。所有分支至此穷尽，(28.6) 得证。$\square$
+
+本定理的来源对应与应用差额。Raz–Wigderson 的 Definition 2.1、Corollary 3.2、Definition 5.1、Theorems 5.2、7.1 已分别给出最少块最优分拆的定义及唯一性、一般位置与一刀超平面的分拆秩公式；Antolini–Dewar–Tanigawa 的 §3.2 已给二因子矩阵与超平面的接口。这些结构不作为新基础。可分分裂、完整稳定子核扩底和原系数子式返回已在 §26 使用；乘法配对、正交补、超平面的原标量传递性及稳定子线的支持恢复已在前卷 §§20、22–25 与本卷 §§26–27 使用。《QUANTUM-REALITY》§410 的复记录射线应用也已消费二因子 Dilworth 公式，不承担这里任意特征零原域的返回或窗口轨道结论。
+
+Castello–Polverino–Zullo，[*On one-orbit cyclic subspace codes of $G_q(n,3)$*，arXiv:2405.01652v1，Definition II.1、Lemma III.1、Theorem III.2](https://arxiv.org/pdf/2405.01652v1)，研究有限域的三维结构及允许自同构的等价；其 [*Full weight spectrum one-orbit cyclic subspace codes*，arXiv:2405.19911v1，Definition 2.2、Theorem 5.2](https://arxiv.org/pdf/2405.19911v1) 已给最小容纳域对象，并原样调用 Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Proposition 6.3](https://arxiv.org/pdf/2201.02003v1) 的一般域 critical-pair 分类。本定理不重立这些工具，也不需要按 critical pair 逐类展开四维窗口。
+
+Shi–Özbudak，[*Linear equivalence of full weight spectrum cyclic orbit codes*，arXiv:2611.04947v1，Theorem 1.1、§2](https://arxiv.org/pdf/2611.04947v1)，分类有限域中两族 full weight spectrum 码的线性等价，并处理真子域参数；其等价允许环境线性同构，结论不覆盖任意四维窗口的逐原标签 $J$。Clarke–Dewar–Gallet–Grasegger–Green Tripp–Smith，[*Counting fibres of the Hadamard product using Bergman fans*，arXiv:2511.22646v1，Problem 1.1、Theorem 1.3](https://arxiv.org/pdf/2511.22646v1)，研究复线性空间 Hadamard 映射的一般纤维及自然环面商；一般纤维的点数不等于全部原窗口的标签恢复。上述有限域结果或一般复纤维结果均不被当作 (28.6) 的替代前提。
+
+相对于这些指定原文和仓内既有结论，本条的仓内应用推导（repo-derived）差额是全部四维实际窗口的完整连接：(28.11) 的简单性由原比值域支付，最优分拆的唯一性与 Galois 传递性把四维的代价压到 (28.14)，原系数子式给出每个次数分支的原窗口见证；低容纳域则由五次超平面和六次二维正交补接回每个竞争窗口的原标量轨道。半维结论没有被扩用成非半维前提，三维结论也没有被当作六次拥挤分支的现成恢复定理。这里不据指定来源中的整体未覆盖主张全球首次性。
+
+白话说，四个方向挤进五个或六个域方向时，最小共享部分会被容量分别托到三维或二维；七个及更多方向时，稳定子之外不再必然多留共享方向。证明把嵌入坐标中“哪些块最合算”交给已有分拆定理，再用同一原域的对称性排除不合适的块，而不是逐个窗口试验。共享部分是一条稳定子域直线时，一行三重支持即可读出共同缩放后的窗口。六次拥挤时这条路线失去条件，但窗口的二维正交补仍能用一个共同原比值连接两组基，再通过同一乘法配对返回窗口。因此“最小交叠大于稳定子次数”不构成恢复反例。
+
+本条只断言全部无限、无噪声、原标签精确读数下的集合论轨道识别。$D,E$、正规闭包、泛参数、子式、配对、正交补和见证向量都是证明对象，不是额外观察，也不改变原 $L^\times$ 的标量群。除 (28.19) 的适用分支外，没有主张一行支持统一足够；(28.21) 仅服务六次分支，不声称完整二元观察对所有四维窗口充分。不提供有限查询、有效算法、噪声结论或三重观察最小性，不扩展到任意维数的同式或任意维数的 $J$ 恢复，也不推出量子公理、$\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义或 $H10(\mathbb Q)$。
+

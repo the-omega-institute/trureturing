@@ -1,0 +1,64 @@
+**定理 124.1（全部方向序列的联合聚点约束）。** 对任意 $v_n\to v$，记 $m_n=m(v_n)$、$d_n=d(v_n)$、$a_n=a_{v_n}$、$e_n=e_{a_n}$。沿任意满足
+
+$$
+m_n\to\ell,\qquad d_n\to\delta,\qquad a_n\to a
+\tag{Q124.6}
+$$
+
+的共同子列，都有
+
+$$
+\sigma\le\ell\le m(v),\qquad a\in F_v\setminus\{p\},\qquad
+ g(a)=\ell,\qquad H(a)=\ell z_v.
+\tag{Q124.7}
+$$
+
+原效应沿该子列自动在全域范数收敛，极限是
+
+$$
+E=\delta e_p+
+\frac{\delta+(1-\delta)/\ell}{1+\rho(v)}(g-v\cdot H).
+\tag{Q124.8}
+$$
+
+所有这些极限都在同一条完整原效应线段上：
+
+$$
+\boxed{\quad E\in[e_{a_v},L_v],\qquad
+\delta\in[d(v),1],\qquad
+E=\lambda e_{a_v}+(1-\lambda)L_v,\quad
+\lambda=\frac{1-\delta}{1-d(v)}.\quad}
+\tag{Q124.9}
+$$
+
+若 $\ell<m(v)$，必有 $\delta=1$、$E=L_v$，而且 $a\ne a_v$。若 $\delta<1$，必有 $\ell=m(v)$、$a=a_v$。这些陈述不假设 $a$ 纯。
+
+证明。$e_{q_{v_n}}$ 在全原空间连续，且 $e_{q_{v_n}}(a_n)=0$，故 $e_{q_v}(a)=0$，即 $a\in F_v$。原评价给 $g(a)=\ell\ge\sigma>0$，所以 $a\ne p$，而高度最大值给 $\ell\le m(v)$。由(Q124.4)中整个 $F_v$ 的关系取得 $H(a)=\ell z_v$。这里没有把纯序列的极限预先判为纯。紧 $K$ 和紧区间 $[\sigma,1]\times[0,1]$ 允许每个子列再取这样的共同子列。
+
+(Q124.5)的系数在 $m\ge\sigma$ 上连续，$R_{v_n}\to R_v$，故得到全 $V^*$ 的极限(Q124.8)，亦即全 $K$ 上一致收敛。原效应区间闭，故 $E\in\mathcal E$。在 $F_v$ 上有 $v\cdot H=-\rho(v)g$ 和 $e_p=1-g$，所以
+
+$$
+E|_{F_v}=\delta+(1-\delta)g/\ell.
+\tag{Q124.10}
+$$
+
+特别地 $E(a_v)=\delta+(1-\delta)m(v)/\ell\le1$。若 $\ell<m(v)$，唯一可能是 $\delta=1$；此时(Q124.8)变成 $e_p+R_v=L_v$，而 $g(a)<g(a_v)$ 给 $a\ne a_v$。若 $\delta<1$，反过来只能 $\ell=m(v)$；$g$ 在真实球 $F_v$ 上唯一达到最大值的点是对径端 $a_v$，故 $a=a_v$。
+
+剩下 $\ell=m(v)$ 的情形。此时 $E(a_v)=1$、$E(q_v)=0$。把IX120.12的完整原边区间用于锚点 $q_v\in P_0$ 及其真实邻点 $a_v$，得到
+
+$$
+\{b\in\mathcal E:b(q_v)=0,b(a_v)=1\}=[L_v,e_{a_v}].
+\tag{Q124.11}
+$$
+
+这不是球上的限制区间。两端在 $p$ 的读数分别为 $1,d(v)$，后者严格小于一，故评价于 $p$ 唯一确定凸系数，得到(Q124.9)。$\ell<m(v)$ 时 $E=L_v$ 也满足同一结论。证毕。
+
+因此 $m$ 在整个 $S^2$ 上上半连续，这是122.11的已付结论；新取得的方向是
+
+$$
+d(v)\le\liminf_{n\to\infty}d(v_n),
+\tag{Q124.12}
+$$
+
+即反向确认读数下半连续。确实，沿实现下极限的子列再取(Q124.6)，(Q124.9)即给该不等式。若 $a_n$ 有混态聚点，该聚点必满足 $\ell<m(v)$，因为 $\ell=m(v)$ 的唯一点是纯的 $a_v$。若聚点纯，它属于实际 $P\cap F_v$；仅有纯性仍不能把它等同于 $a_v$。
+

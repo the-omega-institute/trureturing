@@ -1,0 +1,37 @@
+**定理 38.1（全部参照倍数和两个重复接法）。** 同一个 $\widetilde D$ 满足
+
+$$
+\operatorname{PB}_{\widetilde D}(A;sp,tp)
+\qquad(s,t\in\mathbb R),
+\tag{38.1}
+$$
+
+并满足 $\operatorname{PB}_{\widetilde D}(p;A,0)$ 与 $\operatorname{PB}_{\widetilde D}(p;A,A)$。特别，两个演员方向的零第三标签接法与重复第三标签接法都成立。
+
+证明。第零平面给 $\widetilde D(A,sp)=-sd$、$\widetilde D(A,tp)=-td$，包括零系数；这里第二列长度恒为一，不随 $s,t$ 改变。因 $A\circ p=T$，38.1的准确位移为
+
+$$
+v=-sd-tT,\qquad w=sT-td.
+\tag{38.2}
+$$
+
+其正、负两侧外层对分别是
+
+$$
+\begin{pmatrix}s&-t\\t&s\end{pmatrix}\cdot(p-d,T),
+\qquad
+\begin{pmatrix}s&-t\\t&s\end{pmatrix}\cdot(p+d,-T).
+\tag{38.3}
+$$
+
+$s^2+t^2>0$ 时，定义36.1使它们的输出分别为 $(s^2+t^2)h_+$、$(s^2+t^2)h_-$。其差为 $(s^2+t^2)d$；36.4的右侧也为 $2(s^2+t^2)p\circ d=(s^2+t^2)d$。$s=t=0$ 两侧都零，故全部38.1成立。这是对明确赋值的计算，不是未知原 $D$ 的齐次性推断。
+
+交换演员后的零第三标签给两对 $(A+d,T)$、$(A-d,-T)$，直接复用原多项式零响应卷99.3的同一赋值恒等式
+
+$$
+h_{s+}-h_{s-}=-2A\circ d.
+\tag{38.4}
+$$
+
+第三标签再取 $A$ 时，两对外层分别为 $(A+d-T,A+d+T)$、$(A-d+T,A-d-T)$，恰为38.3同一个系数矩阵在 $s=t=1$ 时作用于 $(A+d,T)$、$(A-d,-T)$。两输出的差为 $2(h_{s+}-h_{s-})=-4A\circ d$，与该次PB右侧一致。∎
+

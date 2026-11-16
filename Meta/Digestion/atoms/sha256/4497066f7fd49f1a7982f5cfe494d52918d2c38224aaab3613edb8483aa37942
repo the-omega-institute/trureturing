@@ -1,0 +1,17 @@
+**定义 21.1（固定承重来源）。** 下表所有仓内链接都指向同一固定提交。
+
+| 来源 | 准确用途与边界 |
+| --- | --- |
+| [OP](https://github.com/the-omega-institute/trureturing/blob/39a0505470ea889dd9d4301ad60cd9506a5e8b58/docs/develop/theory/AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md) 1、80–85 | 原条件、满商全部实际二阶角、共同符号、严格 $\|z\|<2$ 秩一小行和准确实际外层。85保留一般原像目标，不由单点同像推出旧值相等。 |
+| 同一OP 89–101、102–108 | 三维共享预算及其局部等号／完整PB失败的区分；秩三 Euclidean／二阶复矩阵纤维的自动取向范围。这里不把Bloch实三维当成 $M_3$ 全分类。 |
+| [SQ](https://github.com/the-omega-institute/trureturing/blob/39a0505470ea889dd9d4301ad60cd9506a5e8b58/docs/develop/theory/AURIC_ZERO_DIMENSIONAL_CENTER_SQUARE_ORBIT_RECONSTRUCTION.md) 31–32、43–44、51–56 | 完整截面、正读取、满点评价、旧角符号拼接、同一全局PB-Cayley运输、旧阈值反例、$hW$有限链及56.1未付接头。14–17保留原W，未偷用截断比较。 |
+| 同一SQ 47–48、64、69 | 七路全文来源合取、已付静态接口及各项原条件消费者；一般三阶及非完整原域接头仍保留。 |
+| [承载卷](https://github.com/the-omega-institute/trureturing/blob/39a0505470ea889dd9d4301ad60cd9506a5e8b58/docs/develop/theory/AURIC_ORIGINAL_ATOMIC_SEPARATION_AND_PB_RECONSTRUCTION_CONTINUATION.md) 1–11 | 原最小投影／原子分离的另一条件分支及符号约定。本增补不以它的原角供应代替完整截面域中的实际代表支付。 |
+| [SM](https://github.com/the-omega-institute/trureturing/blob/39a0505470ea889dd9d4301ad60cd9506a5e8b58/docs/develop/theory/AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md) 32.1–32.2、23.1、6.3、68.1、78.1 | 原范数界、已付双线性后的全有限Gram、P3+PB到R及同一C*接口；七项实际消费者不从静态表示单独取得。 |
+
+紧Hausdorff正规性／Urysohn截断、有限维实逆函数定理、Hermitian二次型极化、有限酉谱定理与SVD是成熟数学工具；投影开片的张成证明已写在14.1。SQ55.1使用的也是这些有限矩阵工具，但其输入是 $hW$；这里14.3–14.11的统一双侧余量和 $G_P$ 终点接法支付保留原W的新接口，不能用旧截断证明省略它。
+
+Alfsen–Shultz，*Orientation in operator algebras*，PNAS 95(12), 6596–6601，DOI [10.1073/pnas.95.12.6596](https://doi.org/10.1073/pnas.95.12.6596)，其动力对应Theorem 1预设到有界斜序导子的线性赋值。此成熟取向背景不能预付本增补未知 $D$ 的线性；这里只在§19前件支付后复用已有静态接口。不主张文献穷尽、历史优先权或外部开放问题解决。
+
+本增补的承重综合归为纸面 $\texttt{repo-derived}$：小连接全部原像 → reducing线附近同一有限坐标及全过渡带支付 → 共同零方向旧值识别 → 三维真实PB外层在 $n\ge4$ 有共同零方向 → 全幅原秩一行 → 至多 $2n$ 步保留原输入的点上正化 → 给定旧D的全部值。没有改变独立原 A1–A3/P2/PB，也没有把候选结论放进假设。
+

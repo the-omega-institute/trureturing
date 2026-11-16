@@ -59,15 +59,19 @@ by the A363347 module. In particular `U`, `cast_U`, `U_prime_constraints`, and
 
 ## Gap
 
-The literature checks recorded in #18626 and #18627 distinguish these questions
-from A363347 Conjectures 1 and 2 and A363102 Conjecture 1, which the OEIS entries
-and Adamczewski, arXiv:2608.11941, Table 1, describe as settled. Those earlier
-results are not on these modules' dependency paths.
-The recorded screen covers the OEIS entries, that article, the Epoch OEIS Open
-list, `google-deepmind/formal-conjectures`, and
-`google-deepmind/alphaproof-nexus-results`. It found no settlement of the two
-multiplicity claims in that scope. Literature completeness is
-`ASSUMED-UNVERIFIED`; this is no priority claim.
+The multiplicity claims have an earlier prose proof in
+[Antonio Gracia Llorente, *Factorial Cancellation in Polynomial Continued Fractions*](../Library/Factorization/gracia2026factorial.md),
+original Zenodo version, published 2026-10-20, DOI
+[10.5281/zenodo.23506866](https://doi.org/10.5281/zenodo.23506866).
+Theorem 5.11, equation (35), pp. 15–16, gives the complete A363347 prime
+multiplicity classification: $5$ occurs once, primes $p\equiv1,9\pmod{10}$
+occur twice, and all other primes are absent. Theorem 5.12, equation (36),
+p. 16, gives the A363102 count and the exact third-occurrence criterion.
+These results are already present in that deposited version, earlier than
+the repository's first addition of both Lean modules in
+[`235becf77fbe7f7697e467acf792ff263a9ab6dc`](https://github.com/the-omega-institute/trureturing/commit/235becf77fbe7f7697e467acf792ff263a9ab6dc)
+(2026-10-29). The Lean records supply formal proofs of their stated count
+claims; no first mathematical proof or exhaustive publication priority is claimed.
 
 ## Route
 
@@ -151,9 +155,10 @@ registration is claimed.
    for $p\le10000$, $3\le n\le20000$ are exactly the finite readings in Evidence.
    The pinned script, its SHA-256, command, exit code, and rational check range
    are given there.
-5. **Open here:** the converse that every prime Pell solution gives a third
-   occurrence and the full Newman–Shanks–Williams equivalence are not
-   formalized by these results. The exported count claims do not require them.
+5. **Not formalized here:** the converse that every prime Pell solution gives a
+   third occurrence and the full Newman–Shanks–Williams equivalence are given
+   in Gracia Llorente, Theorem 5.12, but are not formalized by these results.
+   The exported count claims do not require them.
 6. **Open:** infinitude of primes with a third occurrence.
 7. **Open here:** the additional A363347 gcd pairing identity and general
    negative-tail occurrence classifications. The denominator formula alone
@@ -169,7 +174,8 @@ source's other conjectures or the open infinitude question.
 
 ## ASSUMED-UNVERIFIED
 
-Literature completeness and historical priority are unverified beyond the
-recorded search scope. The experiment certifies only its finite ranges.
+Literature completeness and priority over all other sources remain unverified;
+the earlier deposited reference above is established. The experiment certifies
+only its finite ranges.
 Four-slot escape registrations remain unfinished under issue #21990; kernel
 proof and registration completion are separate assertions.

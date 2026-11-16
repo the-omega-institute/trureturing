@@ -1,0 +1,53 @@
+**定理 85.6（显式最小 GL 无穷小稳定子）。** 对每个整数 $d\ge3$ 及
+
+$$
+0<\varepsilon<\frac1{2(d-2)},\qquad
+\psi_{d,\varepsilon}=Z_{d,\varepsilon}^{-1/2}
+\left(\sum_{i=1}^d|iii\rangle+
+\varepsilon\sum_{i,j,k\text{ 两两不同}}|ijk\rangle\right),\qquad
+Z_{d,\varepsilon}=d+d(d-1)(d-2)\varepsilon^2,
+\tag{85.12}
+$$
+
+有精确复线性核
+
+$$
+\ker\mathbb V_{\psi_{d,\varepsilon},\{1,2,3\}}
+=\mathfrak b_d:=\{(c_1I,c_2I,c_3I):c_1+c_2+c_3=0\}.
+\tag{85.13}
+$$
+
+特别可固定 $\varepsilon=1/[4(d-2)]$。这些探针对所有允许的三腿权重（含端点）都给推论 85.4 的精确 CP 证书。
+
+**证明。** 假设 $\sum_{\ell=1}^3H_\ell^{(\ell)}\psi=0$，先消去非对角矩阵元。对 $j\ne i$，在恰有两个相同标签的坐标上逐项读系数，归一常数消去后得到
+
+$$
+\begin{aligned}
+(H_1)_{ji}+\varepsilon\sum_{k\ne i,j}[(H_2)_{ik}+(H_3)_{ik}]&=0&&(|jii\rangle),\\
+(H_2)_{ji}+\varepsilon\sum_{k\ne i,j}[(H_1)_{ik}+(H_3)_{ik}]&=0&&(|iji\rangle),\\
+(H_3)_{ji}+\varepsilon\sum_{k\ne i,j}[(H_1)_{ik}+(H_2)_{ik}]&=0&&(|iij\rangle).
+\end{aligned}\tag{85.14}
+$$
+
+这里每个求和只含非对角元，没有隐藏的对角项。令 $h$ 是全部三个矩阵的非对角元列向量，(85.14) 是方形系统 $(I+\varepsilon A)h=0$；每行 $A$ 恰有 $2(d-2)$ 个系数一，其余零。若 $M=\max_{\ell,i\ne j}|(H_\ell)_{ji}|$，逐行三角不等式给
+
+$$
+M\le2(d-2)\varepsilon M<M\quad\text{若 }M>0.
+\tag{85.15}
+$$
+
+故 $M=0$。这是严格最大项界，不是小维枚举或数值秩实验。
+
+剩余对角元记作 $a_i,b_i,c_i$。坐标 $iii$ 和所有两两不同的 $ijk$ 分别给
+
+$$
+a_i+b_i+c_i=0,\qquad a_i+b_j+c_k=0\quad(i,j,k\text{ 两两不同}).
+\tag{85.16}
+$$
+
+当 $d\ge4$，任取 $i\ne i'$，可在这两者之外固定不同 $j,k$；比较 $(i,j,k)$ 与 $(i',j,k)$ 即得 $a_i=a_{i'}$。另外两个位置同理，所以三组对角元各为常数，总和零。
+
+当 $d=3$，对任意两个不同 $i,j$，取剩余 $k$，交换前两位置得 $a_i-b_i=a_j-b_j=t$。由同标签式 $c_i=-2b_i-t$；再将任一不同三元组代入第二式，得到 $b_i+b_j-2b_k=0$，即 $3b_k=b_1+b_2+b_3$。三个 $k$ 都适用，故所有 $b_k$ 相等，继而 $a,c$ 各恒定。这补全三维边界，而非借用 $d\ge4$ 的第四个标签。
+
+反向任何 $\mathfrak b_d$ 中三元组都把任意张量乘以零，故确为整个核。$\mathfrak b_d\subseteq\ker\Sigma_{\{1,2,3\}}$；将一个活跃子集的关系在其余腿补零，仍属整个核，因而也满足 (85.7)。推论 85.4 给结论。证毕。
+

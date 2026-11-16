@@ -1,0 +1,46 @@
+### 13.1 同一个固定 P2 输入与已知环境的逆
+
+本节保留 §8 的全部数学输入，只删除已知环境块可逆这一条限制。准确地，令 $m\ge0$ 有限，
+
+$$
+C=\operatorname{diag}(c_1,c_2)>0,\qquad
+c=C\oplus0_m,\qquad
+t=\begin{pmatrix}B&V\\V^*&D\end{pmatrix}=t^*,\qquad
+s=\operatorname{diag}(s_1,s_2)\oplus0_m,
+\tag{13.1}
+$$
+
+其中 $B\in M_2(\mathbb C)$、$D\in M_m(\mathbb C)$ 均 Hermitian，$s_1,s_2\in\mathbb R$，$V$ 任意；$c_1=c_2$ 也允许。这里 $D$ 始终是已知输入 $t$ 的环境矩阵，不是未知总响应。对给定 $\sigma\in\{1,-1\}$，输出仍为 $g_\sigma=\sigma i[c,t]/2+s$。固定 P2 的完整量词是
+
+$$
+\phi(g_\sigma)^2\le
+\phi(c^2)\phi(t^2)-\phi(c\circ t)^2
+\qquad\bigl(\phi\ge0\text{ 遍取 }M_{2+m}(\mathbb C)\text{ 上全部正复线性泛函}\bigr).
+\tag{13.2}
+$$
+
+不归一化、不删零或不等质量，不缩成真角上的泛函。沿 §9.1 的双射重参数化，§2 的既有等价式准确成为
+
+$$
+\mathcal F_\sigma(w)=(t-wc)^*(t-wc)+2\sigma\operatorname{Im}(w)s\ge0
+\qquad(w\in\mathbb C).
+\tag{13.3}
+$$
+
+令 $D^\dagger$ 为这个已知有限 Hermitian 矩阵的 Moore–Penrose 逆：在每个非零谱值上取倒数，在核上为零。令
+
+$$
+N=\ker D,\qquad P_N=I-D^\dagger D,\qquad
+W=V|_N,\qquad N_0=\ker W\subseteq N,\qquad
+N_1=N\ominus N_0,\qquad r=\operatorname{rank}W\in\{0,1,2\},
+$$
+
+$$
+H=B-VD^\dagger V^*.
+\tag{13.4}
+$$
+
+$D^\dagger$、$P_N$ 和 $H$ 只是同一输入的谱分解与矩阵运算；没有对未知响应取逆、作函数演算或要求其与压缩、换基、取极限交换。特别是 $H$ 只消去环境的非零谱部分，不能在 $r>0$ 时把零模连线一起忽略。
+
+环境有实际正交分解 $\operatorname{ran}D\oplus N_1\oplus N_0$，且 $\dim N_1=r$。$c,t,s$ 在 $N_0$ 上都为零；自伴性还保证它是共同约化子空间。因此 (13.3) 正好是 $N_0^\perp$ 上的铅笔直和零，正性当且仅当缩小后的铅笔正。这里沿用原空间的正交限制和范数。通过 (13.2)–(13.3) 的原空间等价性，原来全部正泛函的域完整保留，包括在 $N_0$ 上有质量或与其有非对角密度块的泛函；这不是物理删口或未知响应的下降。
+

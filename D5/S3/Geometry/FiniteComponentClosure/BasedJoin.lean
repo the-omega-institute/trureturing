@@ -21,12 +21,10 @@ open private
   twoPoints_singleton
   twoPoint
   twoPoints_exhaust
-  nativeCylinder
   coordinateLinear_single
   from D5.S3.Geometry.FiniteComponentClosure.Transport
 
 open private
-  vertexComplex
   bouquetVertex_face
   bouquetPath
   glueLeft
@@ -35,7 +33,6 @@ open private
 
 open private
   wedgeSubsingletonHomeomorph
-  finiteConeCover
   join_left_vertex
   join_right_vertex
   join_mono_left
@@ -81,7 +78,7 @@ private def basedSymm {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
   left := E.right
   right := E.left
 
-private def basedTrans {X Y Z : Type*}
+def basedTrans {X Y Z : Type*}
     [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace Z]
     {x : X} {y : Y} {z : Z}
     (E : SingletonRetractionBasedInverse.BasedEquivalence x y)
@@ -96,7 +93,7 @@ private def basedTrans {X Y Z : Type*}
   right := ((relativePrecompose E.right F.backward F.backward_point).compContinuousMap
     F.forward).trans F.right
 
-private def basedHomeomorphism {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+def basedHomeomorphism {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     (e : X ≃ₜ Y) (x : X) (y : Y) (h : e x = y) :
     SingletonRetractionBasedInverse.BasedEquivalence x y where
   forward := ⟨e, e.continuous⟩
@@ -349,7 +346,7 @@ end BasedAuxiliarySplit
 
 section NativeSuspensionPresentation
 
-private def boolTwoPointHomeomorph : Bool ≃ₜ FiniteSimplicialJoin.Space twoPoints := by
+def boolTwoPointHomeomorph : Bool ≃ₜ FiniteSimplicialJoin.Space twoPoints := by
   apply Continuous.homeoOfEquivCompactToT2
     (f := Equiv.ofBijective twoPoint ⟨?_, ?_⟩) continuous_of_discreteTopology
   · intro x y h

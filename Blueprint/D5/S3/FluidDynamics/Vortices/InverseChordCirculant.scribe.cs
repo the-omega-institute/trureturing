@@ -12,6 +12,22 @@ internal sealed class InverseChordCirculantDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Fourier analysis of inverse squared chord weights gives the alternating block-product spectrum.",
         H("Inverse squared chord circulants"), Blocks(
+            Supplier("chordWeight", "The canonical inverse-chord kernel",
+                "The zero cyclic displacement is removed. All other values are the reciprocals of the squared unit-polygon chord lengths.", DescribeRole.Definition),
+            Supplier("half_character", "The half-period character",
+                "The existing character identity identifies the alternating charge with the Fourier character at m.", DescribeRole.Theorem),
+            Supplier("alternating_chord_dft", "Alternating signs shift Fourier modes",
+                "The original proof body supplies the half-period Fourier shift; it is exposed for the actual invariant-space calculation.", DescribeRole.Theorem),
+            Supplier("chordWeight_dft", "All Fourier coefficients of the kernel",
+                "The canonical Fourier inversion proof is reused. Its zero coefficient gives the ordinary row sum, and its half-period coefficient gives the signed row sum.", DescribeRole.Theorem),
+            Supplier("spectrum_weights", "The actual weights are circulant",
+                "The existing proof identifies the Cartesian inverse-chord entries with the finite cyclic kernel.", DescribeRole.Theorem),
+            Supplier("weight_sum_all", "The ordinary row sum",
+                "Translate a row by cyclic differences and evaluate the zero Fourier coefficient of the same canonical kernel.", DescribeRole.Theorem),
+            Supplier("alternating_weight_sum_all", "The signed row sum including small polygons",
+                "The existing Fourier proof works for every m at least one. The earlier m at least three declaration retains its exact statement as a consumer.", DescribeRole.Theorem),
+            Supplier("product_spectrum_all", "The determinant spectrum including small polygons",
+                "The canonical two-circulant determinant proof applies for every m at least one; its earlier m at least three declaration retains its statement and reuses that proof.", DescribeRole.Theorem),
             Node("weights", "weights", "The interaction weights", WeightsFormula(),
                 "Off the diagonal the weight is the reciprocal squared distance between unit vertices of a regular 2m-gon. "
                     + "The diagonal is zero. These weights are constructed from the polygon interactions of Barry–Kevrekidis, "
@@ -49,6 +65,11 @@ internal sealed class InverseChordCirculantDocument : IScribeDocumentDefinition
                     + "Fourier inversion then gives all its Fourier values. Alternating signs shift mode k to k+m. "
                     + "Multiplying the two resulting real factors, separating k.val<m from k.val≥m, gives gamma m (k+m). "
                     + "Finally, translating the product index by m and using injectivity of the real inclusion proves the stated real determinant identity.", DescribeRole.Theorem))));
+
+    private static DocumentBlock Supplier(string name, string title, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("inverse-chord-circulant-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula WeightsFormula()
     {

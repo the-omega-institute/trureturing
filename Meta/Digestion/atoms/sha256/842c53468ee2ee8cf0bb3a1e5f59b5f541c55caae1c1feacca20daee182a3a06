@@ -1,0 +1,83 @@
+**定理 10.1（保留全部原评价的原子化区别）。** 存在满足 [128.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#128-同一二元关系的完整候选与实际角)–[128.4](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#128-同一二元关系的完整候选与实际角) 和 (1.1)–(1.3) 的非交换、不完备原域，使 $\mathcal N\ne0$，且所选原子坐标既不恢复某个原元素的范数，也不反映某个原元素的正性。该模型的同一旧 $D$ 已满足 1.2 的全部原代数结论。
+
+证明。沿用[静态重构卷 82.1](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md) 中多项式唯一性与完成湮灭子的区别机制，在这里把可见理想改成真正由原最小投影生成的原子理想。紧 Hausdorff 空间取
+
+$$
+Y=[0,1]\ \cup\ \{t_n=-1/n:n\ge5\}\subset\mathbb R,
+\qquad X=C(Y,M_2(\mathbb C))_{\rm sa}.
+\tag{10.1}
+$$
+
+各 $t_n$ 为孤立点，唯一聚点 $0$ 已在区间中。令 $\mathcal K_{\rm fin}$ 为支撑在有限多个 $t_n$ 上的全部自伴矩阵函数，令
+
+$$
+E=\{P|_Y+k:P\text{ 是自伴矩阵多项式},\ k\in\mathcal K_{\rm fin}\},
+\quad u=I_2,
+\quad S(a,b)=\tfrac12(ab+ba),
+\quad D(a,b)=\tfrac i2(ab-ba).
+\tag{10.2}
+$$
+
+范数和锥取完整 $Y$ 上的一致范数与逐点正锥，原评价族取 $X$ 的全部有界正实线性泛函在这个同一 $E$ 上的限制。它们分离并准确决定原锥，包含零及任意非负质量倍数，不把评价限制到孤立点。
+
+复矩阵多项式加有限支撑矩阵函数对通常乘法和星闭合，故 (10.2) 的两个原输出确实返回 $E$。Stone–Weierstrass 的成熟多项式逼近定理适用于实紧集 $Y$ 上的坐标函数；逐个矩阵坐标逼近并取自伴部，给 $E$ 在 $X$ 中稠密。$u$、准确序单位范数、Archimedean 性、原相加实三表及其零方向都继承自这个同一函数代数。对 $0\le e\le\theta u$、$0<\theta\le1$，逐点谱演算给 $e^2\le\theta e\le e$，所以原小效果窗口也成立。
+
+对有限原族和复系数，令 $W=\sum_jc_ja_j\in E+iE$。直接使用已知结合乘法的正平方，
+
+$$
+\sum_{j,k}\bar c_jc_k
+\bigl(\alpha S(a_j,a_k)-i\alpha D(a_j,a_k)\bigr)
+=\alpha_{\mathbb C}(W^*W)\ge0.
+\tag{10.3}
+$$
+
+因此完整 P2 和全部原有限 Gram 成立。对原 $h,a,b$，置 $Z=a+ib$；([128.4](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#128-同一二元关系的完整候选与实际角)) 的两份实际原实虚标签正是 $(1\pm ih)Z$ 的实虚部，而
+
+$$
+((1+ih)Z)^*((1+ih)Z)
+=Z^*(1+h^2)Z
+=((1-ih)Z)^*((1-ih)Z).
+\tag{10.4}
+$$
+
+故完整 PB 对全部原三输入和每份原评价成立。这是已有静态平方恒等式的中间应用，不以某个较小菜单或一份评价代替原量词。原 $\star$ 正是通常乘法，原 R 与双线性当然保持；模型是非交换的，例如常数 Pauli 标签有非零响应。
+
+令 $p_n$ 在 $t_n$ 处为 $E_{11}$、其余处为零，并取 $\mathscr P=\{p_n:n\ge5\}$。每个 $p_n\in\mathcal K_{\rm fin}\subset E$，且 $U_{p_n}(E)=\mathbb Rp_n$，因此都是原最小投影。它们按 (1.2) 生成的理想准确为
+
+$$
+\mathcal A=\mathcal K_{\rm fin},\qquad
+J=\overline{\mathcal K_{\rm fin}}
+\cong c_0(\{n\ge5\},H_2(\mathbb C)).
+\tag{10.5}
+$$
+
+为核对第一式，有限次乘法不增加孤立支撑，故 $\mathcal A\subset\mathcal K_{\rm fin}$。反向固定 $n$，用常数自伴矩阵 $H_1=E_{12}+E_{21}$、$H_2=(E_{12}-E_{21})/i$ 作用于 $p_n$；$2L_{H_j}p_n$ 给该点的 $H_j$，而 $2L_{H_1}^2p_n-p_n$ 给该点的 $E_{22}$。连同 $p_n$，它们实张成该点的全部 Hermitian 矩阵，有限求和给反向包含。第二式的一致闭包准确是那些在区间上为零、在 $t_n$ 上趋零的连续函数，因此是所列 $c_0$ 理想。每个闭分量是原 $H_2(\mathbb C)$，其表示 $\rho_n(x)=x(t_n)$ 也由 4.1 的延续和作用式唯一认回；没有另外选择原 $D$ 的商。
+
+若 $x\in E$ 湮灭 $\mathcal A$，用各点的 $E_{11}+E_{22}$ 测试得到 $x(t_n)=0$。写 $x=P+k$，有限支撑外有 $P(t_n)=0$；每个矩阵多项式坐标具有无穷多个不同零点，故 $P=0$。剩余 $k$ 在所有支撑点也为零，所以 $x=0$。这证明 (1.3)。另一方面，
+
+$$
+\mathcal N=\{x\in X:x(t_n)=0\ (n\ge5)\}
+=\{x\in X:x|_{\{0\}\cup\{t_n\}}=0\}\ne0.
+\tag{10.6}
+$$
+
+等价来自连续性；它可在 $(0,1]$ 上非零，例如 $x(t)=\max(t,0)I_2$。该函数不属于 $E$，正与已证 $E\cap\mathcal N=0$ 一致。因此 $E$ 是 $X$ 的稠密真子空间，故在原范数下不完备。这个闭不可见理想没有删去原对象或原评价：区间上的全部原正读取始终保留。
+
+最后取真正原多项式标签
+
+$$
+a(t)=tI_2,\qquad b(t)=(\tfrac14-t)I_2.
+$$
+
+则
+
+$$
+N(a)=1,\qquad
+\sup_{n\ge5}\|\rho_n(a)\|=\tfrac15,
+\qquad \rho_n(b)=(\tfrac14+1/n)I_2\ge0,
+\qquad b(1)=-\tfrac34I_2.
+\tag{10.7}
+$$
+
+故原子坐标收缩了原范数，且原 $b$ 不在原锥中，尽管全部这些坐标为正。(1.4) 蕴涵 (1.3)，本模型证明反向失败，并同时保留原旧代数、原完整范数及所有原评价。它只分开两层几何需求，不反驳同一旧关系的原域恢复，也不将成熟的多项式唯一性／湮灭子机制认作新理论。这里没有构造实际归一化 $\Omega$、原生门、仪器或量子起源的完整来源。∎
+

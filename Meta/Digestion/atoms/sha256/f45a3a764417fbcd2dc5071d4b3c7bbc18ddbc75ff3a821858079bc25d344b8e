@@ -1,0 +1,11 @@
+## 6　同一合读结构的几何完成：方向、复幅度与正读出
+
+本节只使用主定理已得的
+
+$$
+A=\mathcal A/N\cong\mathbb H,\qquad
+B(x,y)=\operatorname{Re}(\bar x y),\qquad q(x)=B(x,x),\qquad W=\mathbf 1^\perp.
+$$
+
+原单位类、原乘法与原二次读数均保持不变。以下定义及定理不是第二个候选公理。 记 $L_ax=ax$、$R_ax=xa$；算子复合从右向左作用，故 $R_aR_b=R_{ba}$。始终用 $H_J$ 表示复幅度空间，用 $W$ 表示实三维方向空间。
+

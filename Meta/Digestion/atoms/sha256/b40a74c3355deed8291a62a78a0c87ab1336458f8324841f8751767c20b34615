@@ -1,0 +1,21 @@
+**定义 50.1（完整原候选与有限商）。** 全文采用45.1、49.1及其上游的同一原 $\Omega/\mathrm{native}$、$E,C,u,N,\mathcal P,S,D$：全部有向Hermitian二表A1、全部相加三表及排列的实部正性和指定相加零向量A2、同一单位及固定有理小效果窗A3；准确锥、全部原正评价及零／不等／次归一质量；全部原P2和完整原PB。七项实际来源逐项合取43.2、49.1及其全部上游合同。仍有
+
+$$
+E\subset X,\quad \overline E=X,\quad C=E\cap X_+,\quad
+S=\circ,\quad N=\|\cdot\|_X|_E,\qquad
+\pi:X\longrightarrow H_n(\mathbb C),\quad n\ge3,
+\tag{50.1}
+$$
+
+其中 $X$ 是自身含单位实JB完成，$\pi$ 是满含单位Jordan同态。原域可无限维且不完备。沿原多项式零响应卷80.2、82.1的同一简单块符号，置 $K(U,V)=\sigma i[U,V]/2$；不先把一般旧响应认成 $K$。不预付 $D$ 的一般齐次、可加、连续、可测、单位平移、商下降、完成延拓，或原投影／框架的实际提升。
+
+任取实际 $r,a\in E$ 及实多项式 $f$，只在数学商内记
+
+$$
+R=\pi r,\qquad A=\pi a,\qquad
+F=f(A),\qquad C_0=R\circ A,\qquad Y_\pm=F\pm C_0.
+\tag{50.2}
+$$
+
+$R$ 半定指 $R\ge0$ 或 $R\le0$；这是商像条件，不要求实际 $r$ 为原正元。所有范数均为有限矩阵算子范数。
+

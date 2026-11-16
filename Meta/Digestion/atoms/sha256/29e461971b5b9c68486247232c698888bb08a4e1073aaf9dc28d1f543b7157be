@@ -1,0 +1,12 @@
+**推论 18.1（任意共同 reducing 线，不限零特征值）。** 在12.2–12.3的原前件下，$n\ge3$，若同一实际 $W$ 在 $x_0$ 有一条 reducing 秩一线，即
+
+$$
+W(x_0)e=\lambda e,\qquad W(x_0)^*e=\bar\lambda e,
+\quad\|e\|=1,\quad\lambda\in\mathbb C,
+\tag{18.1}
+$$
+
+则 $F(W)(x_0)=0$。只给 $We=\lambda e$ 的单侧特征线不在此结论内。
+
+证明。相对 $P=ee^*$，$W(x_0)=\lambda\oplus B$，满足14.1的两份零连接。取 $V=\zeta\oplus V_0\in G_P$，其中 $\zeta\lambda=|\lambda|$，$\lambda=0$ 时取 $\zeta=1$；$V_0B\ge0$ 由有限 SVD 取得。14.1适用于这个完整 $G_P$，给同一原输入的有限链至实际点上正终点。最后按15.1的同一零槽结算即可。这里的证明只扩充可取的终点块相位，没有使用17.3，也没有借该加强解决三阶一般外层。∎
+

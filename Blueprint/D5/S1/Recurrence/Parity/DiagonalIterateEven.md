@@ -62,7 +62,63 @@ $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Z}\right), ((\operatorname{
 
 Strong induction compares coefficients of two solutions. Degrees zero, one and two are prescribed. At every later degree, equality of the lower coefficients and vanishing residuals force equality of the next coefficient.
 
-**Theorem 1.5 (Every diagonal coefficient from index two is even).**
+**Definition 1.5 (The characteristic-two inverse series).**
+
+$$\operatorname{H}\left(\right) = \operatorname{substInvOfIsUnit}\left(X + X^{2}\right)$$
+
+*Formalization.* `D5/S1/Recurrence/Parity/DiagonalIterateEven.H` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2026). *OEIS A395842, diagonal coefficients of the compositional iterates of A177775*. URL: <https://oeis.org/A395842>.
+
+*Commentary.*
+
+Over ZMod(2), quadratic is X+X² and quadratic_unit proves that its linear coefficient is a unit. H is its substInvOfIsUnit compositional inverse. The inverse construction supplies zero constant coefficient.
+
+**Theorem 1.6 (The inverse has zero constant coefficient).**
+
+$$\operatorname{constantCoeff}\left(\operatorname{H}\left(\right)\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/DiagonalIterateEven.H_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2026). *OEIS A395842, diagonal coefficients of the compositional iterates of A177775*. URL: <https://oeis.org/A395842>.
+
+*Commentary.*
+
+The constant coefficient of the characteristic-two inverse series H is zero.
+
+**Theorem 1.7 (The inverse satisfies the quadratic equation).**
+
+$$\operatorname{H}\left(\right) + \operatorname{H}\left(\right)^{2} = X$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/DiagonalIterateEven.H_quadratic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2026). *OEIS A395842, diagonal coefficients of the compositional iterates of A177775*. URL: <https://oeis.org/A395842>.
+
+*Commentary.*
+
+Composing X+X² with H gives X. Substitution distributes over addition and powers, yielding H+H²=X in the power-series ring over ZMod(2).
+
+**Theorem 1.8 (Reduction of the integer series is the inverse).**
+
+$$\operatorname{map}\left(\operatorname{generatingSeries}\left(\right), \operatorname{Int}.\operatorname{castRingHom}\left(\operatorname{ZMod}\left(2\right)\right)\right) = \operatorname{H}\left(\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/DiagonalIterateEven.mod_two_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2026). *OEIS A395842, diagonal coefficients of the compositional iterates of A177775*. URL: <https://oeis.org/A395842>.
+
+*Commentary.*
+
+The coefficientwise map along the integer cast to ZMod(2) takes generatingSeries to H. Both satisfy the normalized adjacent-iterate constraints, and diagonal uniqueness identifies them.
+
+**Theorem 1.9 (Every diagonal coefficient from index two is even).**
 
 $$\forall n: \mathbb{N}, (2 \le n) \implies 2 \mid \operatorname{a}\left(n\right)$$
 
@@ -78,9 +134,13 @@ Over ZMod(2), take H to be the compositional inverse of X+X². It satisfies H+H�
 
 ## References
 
+- Truth anchor: `D5/S1/Recurrence/Parity/DiagonalIterateEven.H`
+- Truth anchor: `D5/S1/Recurrence/Parity/DiagonalIterateEven.H_quadratic`
+- Truth anchor: `D5/S1/Recurrence/Parity/DiagonalIterateEven.H_zero`
 - Truth anchor: `D5/S1/Recurrence/Parity/DiagonalIterateEven.a`
 - Truth anchor: `D5/S1/Recurrence/Parity/DiagonalIterateEven.generatingSeries`
 - Truth anchor: `D5/S1/Recurrence/Parity/DiagonalIterateEven.generating_equation`
 - Truth anchor: `D5/S1/Recurrence/Parity/DiagonalIterateEven.generating_unique`
 - Truth anchor: `D5/S1/Recurrence/Parity/DiagonalIterateEven.hanna_conjecture`
+- Truth anchor: `D5/S1/Recurrence/Parity/DiagonalIterateEven.mod_two_identity`
 - Dependency: [D5/S1/Recurrence/Invariants/CompositionalIterateCongruence](../Invariants/CompositionalIterateCongruence.md)

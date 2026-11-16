@@ -1,0 +1,116 @@
+**Theorem 20.3 (finite-support early nonrecurrence witness).** Suppose an original compatible pair $(\Gamma_B,\Gamma_A)\in\mathfrak C$ has $\mathcal J=0$ for the fixed installed prior, and that prior has at least one supported depth $k\ge3$. Suppose its p marginal has exactly $m\ge1$ distinct positive-mass own-law atoms,
+
+$$
+\nu_p=\sum_{i=1}^{m}\pi_i\delta_{Q_i},\qquad
+\pi_i>0,\qquad \sum_{i=1}^{m}\pi_i=1.
+$$
+
+No finiteness of the original suspended marginal is assumed. Define
+
+$$
+d_n=\int Q(w_{n,1})\,d\nu_p(Q),\qquad
+R_n=d_{n+2}-\frac{104}{225}d_{n+1}+\frac4{75}d_n
+\quad(n\ge0).
+\tag{20.18}
+$$
+
+Then
+
+$$
+\exists n\in\{0,\ldots,m-1\}\quad R_n\ne0.
+\tag{20.19}
+$$
+
+The witness ranges over the first $m$ recurrence residuals $R_0,\ldots,R_{m-1}$. These consume the $m+2$ averaged word masses $d_0,\ldots,d_{m+1}$. Here $m$ denotes a support size, independently of the fixed source control parameter: it counts distinct p own-law atoms, not COMPLETE configurations, parser states, suspended labels or complete-word coordinates.
+
+**Proof.** Zero level supplies (20.13)--(20.15) for the original pair. Let $G\subset\mathcal K_\beta$ be the entire suspended endpoint box in (20.13). It is a closed Borel set, since atom evaluations are TV-continuous and the carrier is countable, and it has full original $\nu_\beta$ measure.
+
+Apply Theorem 13.2 to the entire finite p marginal, this $G$, and the empty list of extra integrals ($q=0$). It supplies a finite regular stationary table with p labels $1,\ldots,m$, row exactly $\pi$, own laws exactly $Q_i$, and finitely many suspended labels with own laws $W_j\in G$. Write its acquired kernels as $B,A$, its suspended row as $\tau$, and its emissions as $u_i=Q_i(\alpha)$, $v_j=1-W_j(\beta)$. It has both unweighted balances $\pi B=\tau$, $\tau A=\pi$ and both full recursions
+
+$$
+Q_i=u_i\delta_\alpha+(1-u_i)\beta\sum_jB_{ij}W_j,\qquad
+W_j=(1-v_j)\delta_\beta+v_j\alpha\sum_iA_{ji}Q_i.
+\tag{20.20}
+$$
+
+This replacement preserves every $d_n$ because it preserves the entire p marginal. Its opposite marginal and its two flow measures may differ from the original ones. In particular, $q=0$ does not claim preservation of the original suspended losses or midpoint mean. The replacement is used here only to obtain a finite matrix representation of the original sequence.
+
+Set
+
+$$
+L=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,\qquad
+g=\operatorname{diag}(1-u)B(1-v).
+\tag{20.21}
+$$
+
+The marker-one word $w_{0,1}=\beta\beta$ has mass vector $g$. Each preceding beta-alpha return contributes $L$ in (20.20). Induction on the number of returns, equivalently (18.3), therefore gives
+
+$$
+Q_i(w_{n,1})=(L^ng)_i,\qquad d_n=\pi L^ng.
+\tag{20.22}
+$$
+
+Regardless of the number of suspended labels, $L$ is $m\times m$. Put
+
+$$
+h=\left(L^2-\frac{104}{225}L+\frac4{75}I\right)g.
+$$
+
+Then $R_n=\pi L^nh$. For the characteristic polynomial $\chi_L(t)=t^m+c_{m-1}t^{m-1}+\cdots+c_0$, Cayley--Hamilton gives
+
+$$
+R_{n+m}+c_{m-1}R_{n+m-1}+\cdots+c_0R_n=0
+\qquad(n\ge0).
+\tag{20.23}
+$$
+
+Consequently $R_0=\cdots=R_{m-1}=0$ would imply $R_n=0$ for every $n\ge0$, by induction using (20.23). This implication concerns the original $d_n$, since (20.22) preserves that entire sequence.
+
+Now apply Theorem 18.2 to the original compatible pair. Its hypotheses are all present: finite p support, both full endpoint boxes, both original full-descriptor residual equations with shared unweighted marginals, and the exact eventual recurrence (18.1), here with $N=0$. That theorem yields some $\theta\in[0,1]$ such that
+
+$$
+\nu_p=(1-\theta)\delta_{P_{p,a}}+\theta\delta_{P_{p,b}},\qquad
+\nu_\beta=(1-\theta)\delta_{P_{\beta,a}}+\theta\delta_{P_{\beta,b}},
+\tag{20.24}
+$$
+
+and the original B and A flows are the correspondingly weighted matching native endpoint pairs. The distinction between original and replacement flows matters: Theorem 18.2 first classifies the finite replacement through Lemma 18.1, whose positive component output and full boxes force endpoint components under exact eventual recurrence. It then recovers the original opposite marginal and flows from (11.8). Conditional on $Q=P_{p,r}$, each coordinate of the original successor $W$ is in its endpoint interval and has barycentre $P_{\beta,r}$, an endpoint of that interval. Nonnegativity forces equality at that coordinate. Countability gives equality of the entire law, and the original A equation similarly forces its matching endpoint. This recovery is not a preservation property of Theorem 13.2.
+
+The original p midpoint equation now forces $\theta=1/2$, since
+
+$$
+P_{p,a}(E_p)=C+\rho_p,\qquad
+P_{p,b}(E_p)=C-\rho_p,\qquad
+C+(1-2\theta)\rho_p=C,
+$$
+
+and $\rho_p>0$. Choose any actually supported nonendpoint $r=r_k\in[3/8,5/13]$. The complete coordinate $w_{3,1}$ has native mass $f(r)=r^3(1-r)^5$, and
+
+$$
+f'(r)=r^2(1-r)^4(3-8r),\qquad
+f(r)\ge f(5/13)=\frac{4096000}{815730721}
+>\frac{1944}{390625}=f(b)>f(a).
+$$
+
+For complete laws $D,P_{p,a},P_{p,b}$ the coordinate triangle identity is
+
+$$
+\operatorname{TV}(D,P_{p,a})+\operatorname{TV}(D,P_{p,b})-2\rho_p
+=\sum_{\omega\in\Omega_p}
+\operatorname{dist}\bigl(D(\omega),
+ [P_{p,a}(\omega)\wedge P_{p,b}(\omega),
+  P_{p,a}(\omega)\vee P_{p,b}(\omega)]\bigr).
+$$
+
+Take $D=P_{p,r}$. The displayed $w_{3,1}$ coordinate makes this sum strictly positive. Thus the exact chord obstruction of Corollary 12.3 gives
+
+$$
+\frac12\operatorname{TV}(P_{p,a},P_{p,r})
++\frac12\operatorname{TV}(P_{p,b},P_{p,r})>\rho_p.
+\tag{20.25}
+$$
+
+The left side is the original p configuration loss of (20.24) with $\theta=1/2$, and contradicts its supported budget (20.15). The all-zero residual sequence is therefore impossible, proving (20.19). $\square$
+
+For a proposed zero-level pair with $m$ distinct p atoms, exact vanishing of all $R_0,\ldots,R_{m-1}$ is consequently a finite necessary-condition falsifier. Finding a nonzero residual merely passes this condition; it does not establish compatibility or zero excess. The statement excludes no arbitrary finite p support and proves no finite-support impossibility. It gives no lower bound on $|R_n|$, no uniform margin, no stability result for approximate recurrence and no extension to nonatomic p marginals. The positive chord comparison is used only after the exact endpoint classification; it is not a risk-only gap for unrestricted candidates.
+

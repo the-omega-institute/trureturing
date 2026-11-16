@@ -78,13 +78,13 @@ private theorem negbinomCoeff (n k : ℕ) (hn : n ≠ 0) :
   have hc := Nat.choose_symm (Nat.le_add_right d k)
   simpa only [Nat.add_sub_cancel_left] using congrArg (fun z : ℕ => (z : ℤ)) hc.symm
 
-private theorem negbinomDiv (n k : ℕ) (hn : n ≠ 0) : n ∣ k*(n+k-1).choose k := by
+theorem negbinomDiv (n k : ℕ) (hn : n ≠ 0) : n ∣ k*(n+k-1).choose k := by
   have h := D5.S1.Recurrence.Algebraic.HannaA181070Integrality.coefficientDivisibility
     (PowerSeries.mk fun _ => (1 : ℤ)) n k
   rw [negbinomCoeff n k hn] at h
   exact_mod_cast h
 
-private theorem negbinomCong (p n k : ℕ) (hp : p.Prime) (hn : n ≠ 0) :
+theorem negbinomCong (p n k : ℕ) (hp : p.Prime) (hn : n ≠ 0) :
     Nat.ModEq (p^(padicValNat p n+1))
       ((p*n+p*k-1).choose (p*k)) ((n+k-1).choose k) := by
   have h := D5.S1.Recurrence.Algebraic.HannaA181070Integrality.coeffLift (PowerSeries.mk fun _ => (1 : ℤ)) p n k hp

@@ -1,0 +1,75 @@
+**Theorem 2.1 (uniform finite native window).** Under Definitions 1.1–1.4, the original probability of the unconditional terminal event $W=w_*$ is $p_n$ for both $\mathsf T(g^n)$ and $\mathsf R(\emptyset,g^n)$. In the latter programme $I=0$ almost surely and the original pure update leaves ready unchanged.
+
+For every integer $S\ge1$, every $0\le\varepsilon<1/2$, every closed comparator (1.4), and every integer $m\ge0$, there is an index
+
+$$
+n\in\{m,\ldots,m+N_{\rm ph}(S,\varepsilon,z)-1\}
+\quad\text{with}\quad |p_n-q_n|>\varepsilon.
+\tag{2.1}
+$$
+
+The same assertion holds with $N_{\rm nat}$ in place of $N_{\rm ph}$. Thus in the first window some original programme with at most $10(N_{\rm nat}-1)$ positive gate calls fails this tolerance; $\mathsf R$ additionally has its one original initial read. In a window starting at $m$, the total gate-call bound is $10(m+N_{\rm nat}-1)$, including the actual $g^m$ prefix. Each index specifies a separately requested original programme with one terminal, not several terminal observations in one run.
+
+For any specified full readable joint laws $\mu_n,\nu_n$ of source and comparator, with the original terminal event among their coordinates,
+
+$$
+\operatorname{TV}(\mu_n,\nu_n)\ge |p_n-q_n|.
+\tag{2.2}
+$$
+
+The failing index may depend on the comparator. The conclusion is $\forall(\alpha,P,b)\,\exists n$ in the stated bounded window, not a common failing index for all comparators and not a finite-sample identification procedure.
+
+**Proof.** First identify the actual source response. On the ordered pair $(e_{q_0},e_{q_1})$, addresses $0,1$ preserve every other bit. Site $2$ is zero, so their projections restrict respectively to $\operatorname{diag}(0,1)$ and $Q_*$. These restrictions have no coupling to the other $87$ configurations. The supplied reflection identity $K_j^5=2\mathcal P_j-I$ gives
+
+$$
+K_0^5=\begin{pmatrix}-1&0\\0&1\end{pmatrix},\qquad
+K_1^5=\begin{pmatrix}d&2c\\2c&-d\end{pmatrix},\qquad
+U=K_g=\begin{pmatrix}-d&2c\\-2c&-d\end{pmatrix}.
+\tag{2.3}
+$$
+
+The relation $x+x^2=1$ gives $d^2+4c^2=1$, with $c>0$. Consequently
+
+$$
+U^ne_{q_0}=\cos(n\theta)e_{q_0}-\sin(n\theta)e_{q_1}.
+\tag{2.4}
+$$
+
+The original terminal distinguishes these two configurations by $b_1$, so its Born pushforward gives (1.3). At the initial read $b_9(q_0)=0$, $M_0e_{q_0}=e_{q_0}$, and the zero-mass $I=1$ branch remains zero without a normalized state. Both addresses also preserve $b_9$. The original unconditional read/terminal formula therefore gives the same $p_n$. This uses the source and update premises, not a change of terminal or postselection.
+
+Next make the phase separation effective. The trace $-2d=4-2\sqrt5$ is the existing reflection-pair trace of V15. For $z=e^{2i\theta}$,
+
+$$
+t=z+z^{-1}=34-16\sqrt5,\qquad
+t'=34+16\sqrt5,\qquad t+t'=68,\quad tt'=-124.
+$$
+
+Since $-2<t<2$, $z$ is nonreal. Moreover $\mathbb Q(t)=\mathbb Q(\sqrt5)$ is real, and $z$ solves $Z^2-tZ+1=0$, so its degree over that field is two. Its minimal polynomial over $\mathbb Q$ is therefore
+
+$$
+F(Z)=(Z^2-tZ+1)(Z^2-t'Z+1)
+ =Z^4-68Z^3-122Z^2-68Z+1.
+\tag{2.5}
+$$
+
+Its conjugates are $z,z^{-1},R,R^{-1}$, where $R>1$ and
+$R+R^{-1}=t'<70$. In particular $R<70$, and $z$ is not a root of unity: a conjugate of a root of unity would again have modulus one. For every integer $r\ge1$, the algebraic integer $1-z^r$ has nonzero integer norm. Hence
+
+$$
+\begin{aligned}
+1&\le |N_{\mathbb Q(z)/\mathbb Q}(1-z^r)|\\
+ &=|1-z^r|^2(R^r-1)(1-R^{-r})
+ <|1-z^r|^2\,70^r.
+\end{aligned}
+$$
+
+This proves the finite, strict separation
+
+$$
+|1-z^r|^2>70^{-r},\qquad
+\delta_M(z)^2>70^{-M}.
+\tag{2.6}
+$$
+
+Here the integer norm is the ordinary product over all four embeddings; the expanding real conjugate bounds the two factors not on the unit circle.
+

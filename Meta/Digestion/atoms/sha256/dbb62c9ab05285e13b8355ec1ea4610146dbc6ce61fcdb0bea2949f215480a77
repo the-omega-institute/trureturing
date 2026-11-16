@@ -1,0 +1,10 @@
+**定义 77.3（行列条带）。** 对每个整数 $q\ge2$，在 $\mathbb R^{q\times q}$ 中令 $r_i$ 是第 $i$ 行的指示阵除以 $q$，$c_j$ 是第 $j$ 列的指示阵除以 $q$。置
+
+$$
+A_q=\operatorname{span}_{\mathbb R}\{r_i,c_j:1\le i,j\le q\},\quad
+C_q=\operatorname{cone}\{r_i,c_j\},\quad u(x)=\sum_{i,j}x_{ij}.
+\tag{77.3}
+$$
+
+此处 $q$ 不必是素数或素数幂。$u(r_i)=u(c_j)=1$，$C_q$ 是有限生成闭锥，因它包含于非负坐标锥而尖，按定义在 $A_q$ 中生成，$u$ 在非零正元上严格正。其整个 $K_q$ 正是这 $2q$ 点的凸包。
+

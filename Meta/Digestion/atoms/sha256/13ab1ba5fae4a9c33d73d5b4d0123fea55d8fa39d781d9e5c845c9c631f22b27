@@ -1,0 +1,56 @@
+**定理 189.1（整个原仿射首槽的交换零行）。** 在188.1下，对任意实 $\alpha,\beta$ 及原 $y\in E$，
+
+$$
+\boxed{[h,y]=0\quad\Longrightarrow\quad D(\alpha u+\beta h,y)=0.}
+\tag{189.1}
+$$
+
+证明。置 $a=\alpha u+\beta h$、$g=D(a,y)$。188.2给 $g$ 为 $h$-偶。对每个 $\epsilon=\pm1$，取实际 $p=(u+\epsilon h)/2$，记
+
+$$
+\kappa(v)=pvp=\mathcal U_pv,\quad
+Y=\mathcal U_pX,\quad E_p=\mathcal U_pE,\quad
+\mu=\alpha+\epsilon\beta,\quad B=\kappa(y),\quad G=\kappa(g).
+\tag{189.2}
+$$
+
+零角直接贡献零。其余 $Y$ 是单位为 $p$ 的JB代数，$E_p\subset E$ 在其中范数稠密。$\kappa$ 在全原锥上正，但只在下面准确范围内保持乘法：若 $v$ 为 $h$-偶，则对任意自伴 $w$，
+
+$$
+\kappa(v^2)=(\kappa v)^2,\qquad
+\kappa(v\circ w)=\kappa v\circ\kappa w.
+\tag{189.3}
+$$
+
+这是174.3的既有块乘法。任意 $Y$ 上正 $\rho$ 的拉回 $\rho\kappa|_E$ 都能读取188.1。因而对两个实际偶输入，其P2准确成为像的P2；若其中一个偶输入角像为零，则该张表的旧输出角像为零。这里不对一般非偶的零角像输入作此断言。
+
+若 $\mu=0$，原 $(a,y)$ 的首平方角像为零，故 $G=0$。以下 $\mu\ne0$。证明复用原多项式卷4.2的标量像排零机制；下面逐项支付其对角压缩的用途，不把 $\kappa$ 当作全域同态。
+
+先固定任意原偶 $v$，记 $B_v=\kappa(v)$、$g_v=D(a,v)$、$G_v=\kappa(g_v)$。188.2使 $g_v$ 仍偶。若 $B_v$ 半定而 $G_v\ne0$，在 $C^*(p,G_v)$ 选择非零谱值 $Z$ 的支撑态，正延拓到角环境并限制为 $Y$ 上态 $\rho$，满足
+
+$$
+\rho(G_v)=Z\ne0,\qquad \rho((G_v-Zp)^2)=0.
+\tag{189.4}
+$$
+
+取实际比例第三标签 $q_0=ta$，$t=Z/(1+\mu^2)$。原比例零行给 $D(a,q_0)=0$。PB $(a,v,q_0)$ 的完整两外层及角像为
+
+$$
+\begin{array}{c|c|c|c}
+R_\pm&S_\pm&\kappa R_\pm&\kappa S_\pm\\\hline
+v\pm g_v\mp ta^2&ta\pm a\circ v&
+B_v\pm G_v\mp t\mu^2p&t\mu p\pm\mu B_v.
+\end{array}
+\tag{189.5}
+$$
+
+四个实际输入均偶，故189.3允许像Gram计算，且
+$\kappa S_+-\mu\kappa R_+=\kappa S_-+\mu\kappa R_-=\mu(Zp-G_v)$。
+189.4使两份预算为零；PB右端角像准确为 $-2B_v\circ G_v$。Schwarz给 $Z\rho(B_v)=0$。由 $B_v$ 半定及 $0\le B_v^2\le\|B_v\|(\pm B_v)$，得 $\rho(B_v^2)=0$；原 $(a,v)$ 的P2却给 $Z^2\le0$，矛盾。因此
+
+$$
+v\text{ 为原偶元},\quad\kappa(v)\text{ 半定}
+\quad\Longrightarrow\quad \kappa D(a,v)=0.
+\tag{189.6}
+$$
+

@@ -1,0 +1,16 @@
+**引理 26.3（消流导数的正交范数）。** 对 $b=1-|w|^2>0$，用 $\mathfrak a^\dagger$ 表示相干序列上的代数产生算子，则
+
+$$
+ \partial_{\bar w}F(w)=\sqrt{q(w)}b^{-2}
+       (\mathfrak a^\dagger-\overline{\alpha(w)})u(\alpha(w)),\qquad
+ \|F(w)\|\,\|\partial_{\bar w}F(w)\|=q(w)/b^2.
+ \tag{26.8}
+$$
+
+证明。相干序列的指数级数逐项求和给
+$\mathfrak a u=\alpha u$、$\langle u,\mathfrak a^\dagger u\rangle=\bar\alpha$，以及
+$\|(\mathfrak a^\dagger-\bar\alpha)u\|=1$；最后一式也由同一序列上的 $[\mathfrak a,\mathfrak a^\dagger]=I$ 得出。所有固定阶矩均有限，故这些运算在相干序列上合法。
+
+直接求导给 $\partial_{\bar w}\alpha=1/b^2$、
+$\partial_{\bar w}\log\sqrt q=-w/(2b^2)$。$\partial_{\bar w}u$ 平行于 $u$ 的分量为 $wu/(2b^2)$，恰与后一项相消；剩余正交分量即 (26.8)。所以 $\|F\|=\sqrt q$、$\|\partial_{\bar w}F\|=\sqrt q/b^2$。边界处由引理 25.3 的平坦零延拓成立。这在既有零标量流之外给出其未控制的正交范数；无限序列只用于推导，实际输出仍是有限截断。$\square$
+

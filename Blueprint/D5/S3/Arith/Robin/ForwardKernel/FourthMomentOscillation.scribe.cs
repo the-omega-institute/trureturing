@@ -32,14 +32,15 @@ internal sealed class FourthMomentOscillationDocument : IScribeDocumentDefinitio
                         + "the probability density on (X,2X] is 1/(x*log(2)). "
                         + "Both c and delta are strictly positive.")),
                     Paragraph(Text(
-                        "Normalize the response by sqrt(S_X). The dyadic mean-square "
-                        + "asymptotic gives a second moment tending to "
+                        "Normalize the response by sqrt(S_X). The second-order increment "
+                        + "interface and its profile moment transfer give a second moment tending to "
                         + "Q(g)*(2^(1-theta)-1)/log(2)>v. The profile fourth moment bound "
                         + "eventually bounds the fourth moment of the normalized response by "
                         + "K=B*C4*profileL1(g)^4. The positive second-moment lower bound "
                         + "and Cauchy-Schwarz force K>=v^2>0. "
-                        + "The normalized first moment tends to zero by choosing the "
-                        + "intermediate exponent (theta+beta)/2. Local boundedness of E "
+                        + "The variance band supplies the first-order increment interface "
+                        + "with zero limit kernel. Moment transfer at order one gives "
+                        + "the vanishing normalized profile mean directly. Local boundedness of E "
                         + "ensures all required moments are integrable. Applying the general "
                         + "two-sided moment inequality and multiplying the strict thresholds "
                         + "by sqrt(S_X)>0 gives the two asserted proportions.")),

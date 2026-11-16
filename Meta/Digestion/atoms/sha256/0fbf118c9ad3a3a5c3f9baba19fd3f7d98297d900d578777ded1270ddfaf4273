@@ -1,0 +1,139 @@
+**定理 19.4（完整逻辑门因子化障碍及抽象锐值；repo-derived）。** 仍取 (19.8)，并记同一字的实际完整输出为
+
+$$
+\Omega_q=W_q(\rho_0\otimes\eta_A)W_q^\dagger,
+\qquad
+\epsilon_D=\sqrt{D^{-1}-\frac1{4D^2}}\le D^{-1/2}.
+\tag{19.12}
+$$
+
+对每个允许的 $\eta_A$ 和每个 $Z$ 上密度算子 $\sigma_Z$，即使 $\sigma_Z$ 专为此输入选择，也有
+
+$$
+D_{\rm tr}(\Omega_q,\rho_0\otimes\sigma_Z)
+\ge\frac1{\sqrt2}-\epsilon_D.
+\tag{19.13}
+$$
+
+这是 $RS$ 与 $Z$ 之间的完整逻辑门因子化界，不是原问题中 $R$ 与 $S,Z$ 之间的自身边缘返回量。
+
+另外，任取单位向量 $u_+\in\operatorname{Ran}\Pi_+$、$u_-\in\operatorname{Ran}\Pi_-$，置 $\psi=(u_++u_-)/\sqrt2$。对每个字及任意混合 $\eta_A$，有精确代数锐值
+
+$$
+\inf_{\sigma_Z\in\mathsf D(Z)}
+D_{\rm tr}\left(
+W_q(|\psi\rangle\langle\psi|\otimes\eta_A)W_q^\dagger,
+|\psi\rangle\langle\psi|\otimes\sigma_Z\right)
+=\frac1{\sqrt2}.
+\tag{19.14}
+$$
+
+这个抽象锐性见证不被宣称为额外允许的原准备。
+
+证明。先给出仅用于迹距离比较的数学历史解码。用 (19.3) 的等距 $T$，令 $P_T=TT^\dagger$；任取 $A\otimes C$ 上密度算子 $\zeta$，定义有限 CPTP 映射
+
+$$
+\mathcal D_T(Y)=T^\dagger YT+
+\operatorname{Tr}[(I-P_T)Y]\zeta.
+\tag{19.15}
+$$
+
+第一项完全正，第二项是正效果后的固定态准备，且两项的迹之和为 $\operatorname{Tr}Y$。该映射在 $T$ 的像上是左逆。在实际输出上应用 $\mathcal D_T$ 后再取 $\operatorname{Tr}_A$，(19.4) 给出 $V_0\rho_0V_0^\dagger$；同一数学映射把 $\rho_0\otimes\sigma_Z$ 变成 $\rho_0\otimes\sigma_C$，其中 $\sigma_C$ 是某个密度算子。这些操作仅为收缩性证明中的诊断映射，不属于已供应的原生控制器。混合 $\eta_A$ 仅在此数学偏迹下消失，没有物理丢弃，也没有使用可访问纯化。
+
+所需 Bell–乘积距离是已知受控复制现象的有限维直接计算，在此作为中间步骤给出。令 $|\Phi\rangle=(|00\rangle+|11\rangle)/\sqrt2$。对任意 qubit 密度算子 $\sigma$，
+
+$$
+D_{\rm tr}(|\Phi\rangle\langle\Phi|,
+|0\rangle\langle0|\otimes\sigma)\ge1/\sqrt2.
+\tag{19.16}
+$$
+
+对两态同时施行 $\operatorname{diag}(1,e^{i\theta})\otimes\operatorname{diag}(1,e^{-i\theta})$ 的平均。Bell 态及第一因子 $|0\rangle\langle0|$ 不变，第二因子被化为 $\sigma=\operatorname{diag}(p,1-p)$，$0\le p\le1$；收缩性使证明下界只需处理此情形。差算子在 $|00\rangle,|11\rangle$ 上的块和其余本征值为
+
+$$
+\begin{pmatrix}\tfrac12-p&\tfrac12\\[1mm]\tfrac12&\tfrac12\end{pmatrix},
+\qquad -(1-p),\quad0.
+\tag{19.17}
+$$
+
+唯一正本征值为
+
+$$
+f(p)=\frac{1-p+\sqrt{1+p^2}}2,\qquad
+f'(p)=\frac{-1+p/\sqrt{1+p^2}}2<0.
+\tag{19.18}
+$$
+
+差算子的迹为零，故半迹范数恰为 $f(p)$；最小值是 $f(1)=1/\sqrt2$，且 $\sigma=|0\rangle\langle0|$ 取等号。对系统作固定基变换，同时对记录作共轭基变换，Bell 态保持相同形式；因此系统中的 $|0\rangle$ 可换成任一指定纯向量，包括 $|x+\rangle$。这些是证明中的坐标变换，不是原生操作。
+
+有限自旋比较直接复用 OTF004 (13.14) 的四个精确系数，不重证自旋公式。写
+
+$$
+u=e_0\otimes|\uparrow\rangle,\qquad
+v=e_0\otimes|\downarrow\rangle,\qquad
+w=|j,j-1\rangle\otimes|\uparrow\rangle.
+\tag{19.19}
+$$
+
+由该组系数，压缩记录记号下
+
+$$
+V_0\psi_0=\frac1{\sqrt2}\left(
+ u\otimes|+\rangle_C+
+ \frac{v+\sqrt m\,w}{D}\otimes|+\rangle_C+
+ \frac{m v-\sqrt m\,w}{D}\otimes|-\rangle_C\right).
+\tag{19.20}
+$$
+
+令
+
+$$
+B_0=\frac{u\otimes|+\rangle_C+v\otimes|-\rangle_C}{\sqrt2}
+=e_0\otimes\operatorname{Bell}_{SC}.
+\tag{19.21}
+$$
+
+两向量均归一，且
+
+$$
+\langle B_0,V_0\psi_0\rangle=1-\frac1{2D},\qquad
+D_{\rm tr}(|V_0\psi_0\rangle\langle V_0\psi_0|,
+|B_0\rangle\langle B_0|)
+=\sqrt{1-\left(1-\frac1{2D}\right)^2}=\epsilon_D.
+\tag{19.22}
+$$
+
+先对 (19.13) 两态施行 (19.15) 及 $\operatorname{Tr}_A$，再用三角不等式，得到
+
+$$
+\begin{aligned}
+D_{\rm tr}(\Omega_q,\rho_0\otimes\sigma_Z)
+&\ge D_{\rm tr}(V_0\rho_0V_0^\dagger,\rho_0\otimes\sigma_C)\\
+&\ge D_{\rm tr}(|B_0\rangle\langle B_0|,
+\rho_0\otimes\sigma_C)-\epsilon_D\\
+&\ge1/\sqrt2-\epsilon_D.
+\end{aligned}
+\tag{19.23}
+$$
+
+最后一步偏迹 $R$，应用 (19.16) 对 $\operatorname{Bell}_{SC}$ 与 $|x+\rangle\langle x+|\otimes\sigma_C$ 的结论。
+
+对 (19.14)，以 $u_+,u_-$ 为系统二维子空间的正交基，(19.3) 的解码实际向量恰为
+
+$$
+\frac{u_+\otimes|+\rangle_C+u_-\otimes|-\rangle_C}{\sqrt2},
+\tag{19.24}
+$$
+
+并张量同一 $\eta_A$。由 (19.16)、解码及偏迹 $A$，对每个 $\sigma_Z$ 得下界 $1/\sqrt2$。反向取
+
+$$
+\begin{aligned}
+|+_C\rangle&=(|+\rangle_C+|-\rangle_C)/\sqrt2,\\
+\sigma_Z&=T(\eta_A\otimes|+_C\rangle\langle+_C|)T^\dagger.
+\end{aligned}
+\tag{19.25}
+$$
+
+在解码空间中，比较变成 (19.24) 的 Bell 纯态与纯乘积 $\psi\otimes|+_C\rangle$，二者均张量同一 $\eta_A$。纯态重叠模为 $1/\sqrt2$，其迹距离也是 $1/\sqrt2$。张量密度算子不改迹范数，等距不改迹距离，故 (19.25) 达到下界。这对每个混合 $\eta_A$ 成立，不需要满秩、正的最小本征值或任何纯化。$\square$
+

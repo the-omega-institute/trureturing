@@ -1,0 +1,57 @@
+**定理 112.6（同维原球的自动重构）。** 在定义112.1的原域中，
+W与 $\mathrm{UniformEB}_{\ge2}$ 等价于存在简单秩三有限维EJA $J$ 及实线性双射
+
+$$
+\Phi:J\overset{\sim}{\longrightarrow}V,\qquad
+\Phi(J_+)=C,\qquad u\Phi=\operatorname{tr}_J.
+\tag{VIII112.25}
+$$
+
+共同球维数满足 $n=3d$；每个原joint的联合盲核均为零，
+存在一组三元二面可辨、全框架三元二面可辨、TRI2、全Pair及完整S均为后果。
+原共同中心G、全纯数值互易、谱性和面滤子保纯也为后果。
+成熟分类只允许
+
+$$
+\begin{array}{c|c|c}
+J&d&n\\ \hline
+H_3(\mathbb R)&2&6\\
+H_3(\mathbb C)&3&9\\
+H_3(\mathbb H)&5&15\\
+H_3(\mathbb O)&9&27
+\end{array}
+\tag{VIII112.26}
+$$
+
+证明。原joint存在，VIII108.7对任一joint给 $3d\le n$。
+112.5给反向界，故 $n=3d$。
+109.2的原维数公式现在对每个框架 $F=(p,q,r)$ 给
+
+$$
+\dim Z_F=n-d_p-d_q-d_r=n-3d=0,\qquad\mathcal I_F=0.
+\tag{VIII112.27}
+$$
+
+111.2立即给全态联合可辨，111.5给同原锥、同原单位的秩三EJA及所列全部比较后果。
+也可直接使用109.10的全框架版本；不重证成熟Jordan桥。
+特别地原 $a_p$ 的全域least由W承担，数值互易此时才补齐；
+并非用正投影存在偷换谱性或滤子保纯。
+在这一接口之后，共同正定配对 $B$ 与共同框架和 $U$ 才成为已得结论：
+
+$$
+a_p(v)=B(p,v),\qquad p+2c_p=U=\Phi(e),\qquad
+u(v)=B(U,v),\qquad U/3\in\operatorname{ri}K.
+\tag{VIII112.28}
+$$
+
+这里 $e$ 是Jordan单位，$U$ 是原向量，二者都不是原泛函 $u$。
+辅助 $\langle\ ,\ \rangle_0$ 不参与这些等式的定义。
+
+按109.11及VII103.7、VII106.17所用的成熟有限EJA分类，
+非简单秩三支路只有 $\mathbb R^3$ 或 $\mathbb R\oplus\operatorname{spin}_k$。
+前者全部排除维数为一；后者在旗标点和两个球纯框架点处的维数为 $k,1,1$，
+故均不能满足共同 $d\ge2$。
+于是只剩(VIII112.26)的简单支路，其维数与完整排除面尺寸正如表中。
+反向在每个简单秩三EJA上，既有同单位字典给W及全部原 $D_p\simeq B^d$，
+因此没有缩减全态、pure或效应集。证毕。
+

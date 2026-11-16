@@ -1,0 +1,80 @@
+**Theorem 5.1 (the original predictive quotient and representation
+separations).** For this fixed original law, identify histories by
+$u\sim u'$ exactly when $R_u=R_{u'}$ on all finite future words.
+The coarsest reached autonomous deterministic predictive boundary is
+
+$$
+\mathcal B_p=\{R_u:u\in\mathcal L^*\},\qquad
+\text{initial state }R_\varepsilon,\qquad
+\operatorname{out}_y(R)=R(y),\qquad
+U_y(R)(v)=\frac{R(yv)}{R(y)}.
+\tag{5.1}
+$$
+
+It has exactly countably infinitely many reached states. Every exact
+autonomous deterministic sufficient statistic maps uniquely on its
+reached image onto this boundary. The normalized filter (2.5) realizes
+it through $\pi_u\mapsto(v\mapsto\langle\pi_u,F_v\rangle_m)$.
+Even with a supplied clock, the number and the linear span dimension
+of reached conditional future profiles are eventually at least $N$
+for every fixed finite $N$.
+
+This excludes exact all-word prediction with any fixed bit bound, but
+does not exclude a one-real nonlinear encoding with unlimited
+precision. For every fixed finite horizon there is a finite exact
+history-table representation of the same law. If an autonomous linear
+model matches all original words through horizon $H\ge2$, its
+dimension is at least $\lfloor H/2\rfloor$.
+
+*Proof.* Positivity and cylinder consistency of the original law give
+$\sum_yR(y)=1$, and direct cancellation gives
+$R_{uy}(v)=R_u(yv)/R_u(y)$. Thus (5.1) is well defined on reached
+profiles. The product of its successive readouts along any word $w$
+telescopes to $p(w)$. The source filter supplies the same profiles
+by Theorem 2.1. The factorization and uniqueness are the existing
+predictive-sufficiency universal property [MIN], with
+$\mathrm{Past}=\mathcal L^*$ and
+$\mathrm{futureLaw}(u)=R_u$; equality of cylinder coordinates is
+equality of the entire future measure on the finite-alphabet sequence
+space. The positive-symbol update is the specialization of [UPDATE].
+These generic quotient properties are reused here.
+
+There are countably many finite words. For each $N$, dividing row
+$i$ in (3.1) by $p(B^i)=4^{-i}$ preserves independence. Hence the
+profiles $R_{B^i}$ are infinitely many distinct reached states, proving
+the cardinality claim. Similarly (4.3) supplies $N$ independent
+normalized profiles at every cut $t\ge\ell_0+N+k$. It supplies
+neither an effective threshold nor their exact growth with $t$.
+The equality $f_0=f_1$ also gives $R_{u0}=R_{u1}$ from (2.5), so
+the quotient already discards genuine redundant history while
+retaining the infinite family just exhibited.
+
+For the nonlinear distinction, assign digits
+$\delta(0)=1$, $\delta(1)=2$, $\delta(3)=3$, $\delta(B)=4$ and
+code each finite history by
+
+$$
+x_\varepsilon=1,\qquad x_{uy}=5x_u+\delta(y).
+\tag{5.2}
+$$
+
+Its base-five representation is a leading sentinel $1$ followed by
+the nonzero history digits, so it is injective. On the countable
+reached subset of $\mathbb R$, use update (5.2) and readout
+$R_{\operatorname{decode}(x)}(y)$. These are Borel maps on that
+subset and reproduce all original words by the same telescoping
+identity. The readout uses the exact source-defined law and an
+unrestricted lookup; no finite description, evaluation algorithm,
+finite precision or bounded storage is asserted. Infinite linear
+rank therefore does not supply a nonlinear real-coordinate lower
+bound beyond excluding a single constant state.
+
+For a horizon $H$, retain the finite prefix tree through depth $H$
+and use $R_u(y)$ for $|u|<H$. It reproduces precisely the required
+cylinders, with exact real probability entries rather than a promised
+finite-precision table, and no assertion about later predictions. Conversely the
+block (3.1) uses only words of length at most $2N$; choose
+$N=\lfloor H/2\rfloor$ to obtain the finite-horizon linear lower
+bound. This is a bound for exact coefficient equality, not for
+estimated coefficients or approximation. $\square$
+

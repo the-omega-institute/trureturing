@@ -15,6 +15,20 @@ internal sealed class FourthMomentMeanDocument : IScribeDocumentDefinition
                 + "asymptotic uniformly in an exponent band 0<alpha<theta<beta<1. "
                 + "Fix theta<nu<beta, put M=X^nu, and let g be a real integrable profile on (0,1).")),
             Describe.Lean(
+                DescribeId.Create("moving-primitive-bound"),
+                DeclarationHandle.Create(Prefix + "moving_primitive_bound"),
+                H("Uniform moving-increment primitives"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let E be locally bounded and measurable. Assume its cumulative variance asymptotic in a band "
+                    + "0<alpha<theta<beta<1 and choose theta<nu<beta. There is C>0 "
+                    + "such that for all sufficiently large X, every s in [0,1] and "
+                    + "every y in [X,2X], the absolute integral from X to y of "
+                    + "E(x+s*x^theta)-E(x) is at most C*sqrt(log X) times "
+                    + "(X^(1+theta-nu/2)+X^((1+theta+nu)/2))."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("profile-response-mean-bound"),
                 DeclarationHandle.Create(Prefix + "profile_response_mean_bound"),
                 H("Quantitative first-moment bound"),

@@ -1,0 +1,188 @@
+**定理 7.1（局部反射的全部混合 Peirce 块）。** 在定义 6.1–6.2 下，对每个实 $R$ 和任意环境自伴输入 $b\in A_{\rm sa}$，存在自伴 $r\in pAp$，使同一实际旧输出满足
+
+$$
+\boxed{D(Rh,b)=K_\sigma(Rh,b)+r,\qquad [h,r]=0.}
+\tag{7.1}
+$$
+
+准确地，写 $b_{st}=p_sbp_t$，其中 $s,t\in\{+,-,q\}$、$p_q=q$，并令 $r_\pm=p_\pm rp_\pm$，则相对于 $p_+\oplus p_-\oplus q$，有
+
+$$
+D(Rh,b)=
+\begin{pmatrix}
+r_+&\jmath R b_{+-}&\jmath R b_{+q}/2\\
+-\jmath R b_{-+}&r_-&-\jmath R b_{-q}/2\\
+-\jmath R b_{q+}/2&\jmath R b_{q-}/2&0
+\end{pmatrix}.
+\tag{7.2}
+$$
+
+此处保留真正非零的环境交叉块 $pbq,qbp$；未假定 $b\in pAp$ 或 $[p,b]=0$。
+
+证明。AH43.1 由 Hermitian 性和原评价分离给反对称性及零槽；准确锥又把同一张原 P2 送给每个数学正读取 $\phi$，从而
+
+$$
+|\phi D(x,y)|\le\sqrt{B_\phi(x,y)},\qquad
+B_\phi(x,y)=\phi(x^2)\phi(y^2)-\phi(x\circ y)^2.
+\tag{7.3}
+$$
+
+这是对原输出的数学读取，不把向量态添加为物理准备。$R=0$ 或 $p=0$ 由零槽成立。以下固定 $R\ne0,p\ne0$、实际 $b$ 及同一个输出
+
+$$
+a=Rh,\quad g=D(a,b),\quad k=a\circ b,\quad
+j=D(h,e)=\jmath he,\quad n=p+h=2p_+.
+\tag{7.4}
+$$
+
+已知乘法直接给 $j^2=p$、$e\circ j=0$、$n\circ j=j$。对任意有限实 $t,\alpha$，使用真正原三元组 $(a;te+\alpha n,b)$。角分类只支付其中的已知内调用：
+
+$$
+D(a,te+\alpha n)=Rt j,\qquad a\circ(te+\alpha n)=R\alpha n.
+\tag{7.5}
+$$
+
+另一实际内值保持为 $g$。因此两份真正外层标签准确为
+
+$$
+\begin{aligned}
+R_+&=t(e+Rj)-k+\alpha n,&S_+&=b+g+R\alpha n,\\
+R_-&=t(e-Rj)+k+\alpha n,&S_-&=b-g-R\alpha n.
+\end{aligned}
+\tag{7.6}
+$$
+
+只展开已知 Jordan 运算，完整 PB 的原右端为
+
+$$
+\begin{aligned}
+D(R_+,S_+)-D(R_-,S_-)
+&=-2(te+\alpha n)\circ(Rt j-k)-2b\circ(R\alpha n+g)\\
+&=2t e\circ k-2b\circ g-2\alpha(Rt j+V),\\
+V&=R\,n\circ b-n\circ k.
+\end{aligned}
+\tag{7.7}
+$$
+
+对两份未知外值分别使用同一 $\phi$ 的 (7.3)，其差的绝对读取至多为 $\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}$。这里没有把任何外值换成比较响应。
+
+为准确提取大 $\alpha$ 系数，令实半内积 $\langle X,Y\rangle_\phi=\phi(X\circ Y)$。对固定自伴 $A,B,n$、实 $\theta$，置 $C_0=B-\theta A$，有纯标量多项式恒等式
+
+$$
+\begin{aligned}
+B_\phi(A+\alpha n,B+\theta\alpha n)
+&=B_\phi(A+\alpha n,C_0)\\
+&=\alpha^2B_\phi(n,C_0)+2\alpha\{\langle A,n\rangle_\phi\langle C_0,C_0\rangle_\phi
+-\langle A,C_0\rangle_\phi\langle n,C_0\rangle_\phi\}
++B_\phi(A,C_0).
+\end{aligned}
+\tag{7.8}
+$$
+
+这由 Gram 行列式展开即得，半内积退化时也成立。将 (7.7) 的预算除以 $|\alpha|$，只取这些标量多项式的首项，包括首项为零的情形。记 $Z=b+Rk$，得
+
+$$
+\begin{aligned}
+2|\phi(Rt j+V)|\le{}&\sqrt{B_\phi(n,Z+g-Rt e-R^2t j)}\\
+&+\sqrt{B_\phi(n,Z-g+Rt e-R^2t j)}.
+\end{aligned}
+\tag{7.9}
+$$
+
+在一份忠实含单位 Hilbert 表示中计算，内积第一槽共轭线性；此表示不延拓未知 $D$。由 $h$ 在三个块上的值 $1,-1,0$ 和 $n$ 的值 $2,0,0$，直接相乘给
+
+$$
+\begin{gathered}
+p_+Vp_-=R p_+bp_-,\qquad p_+Vq=(R/2)p_+bq,\\
+p_+Vp_+=0,\qquad (1-p_+)V(1-p_+)=0,
+\qquad V=V^*.
+\end{gathered}
+\tag{7.10}
+$$
+
+取单位 $\xi\in(p_-+q)H$，先设 $d=\|p_-\xi\|>0$，令
+
+$$
+\eta=j\xi/d\in p_+H,\qquad \|\eta\|=1,\qquad
+j\xi=d\eta,\quad e\xi=-\jmath d\eta.
+\tag{7.11}
+$$
+
+对 $\delta>0$，取向量 $(\xi+\delta\eta)/\sqrt{1+\delta^2}$ 的数学态 $\phi_\delta$，并令实正交投影 $P_\eta^{\mathbb R}z=z-\operatorname{Re}\langle\eta,z\rangle\eta$。任一固定自伴 $W$ 的三个 Gram 条目给出准确等式
+
+$$
+\begin{aligned}
+\phi_\delta(n^2)&=\frac{4\delta^2}{1+\delta^2},\qquad
+\phi_\delta(W^2)=\frac{\|W\xi+\delta W\eta\|^2}{1+\delta^2},\\
+\phi_\delta(n\circ W)&=\frac{2\delta\operatorname{Re}\langle\eta,W\xi+\delta W\eta\rangle}{1+\delta^2},\\
+B_{\phi_\delta}(n,W)&=\frac{4\delta^2}{(1+\delta^2)^2}
+\|P_\eta^{\mathbb R}(W\xi+\delta W\eta)\|^2.
+\end{aligned}
+\tag{7.12}
+$$
+
+又由 (7.10) 及 $j$ 的非对角性，
+
+$$
+\phi_\delta(Rt j+V)=\frac{2\delta}{1+\delta^2}
+\{Rt d+\operatorname{Re}\langle\eta,V\xi\rangle\}.
+\tag{7.13}
+$$
+
+把 (7.12)–(7.13) 代入 (7.9)，约去正因子 $2\delta/(1+\delta^2)$，在固定 $t$ 后令 $\delta\downarrow0$。因 $P_\eta^{\mathbb R}(j\xi)=0$，记
+
+$$
+A_\xi=\operatorname{Re}\langle\eta,V\xi\rangle,\qquad
+z_\pm=P_\eta^{\mathbb R}((Z\pm g)\xi),\qquad u_\xi=e\xi/d=-\jmath\eta,
+$$
+
+便得到同一固定 $g$ 的不等式
+
+$$
+2|Rt d+A_\xi|\le\|z_+-Rt d u_\xi\|+\|z_-+Rt d u_\xi\|.
+\tag{7.14}
+$$
+
+这里 $\|u_\xi\|=1$ 且 $\operatorname{Re}\langle\eta,u_\xi\rangle=0$。对固定单位向量 $u$、固定 $z$ 和非零实 $\lambda$，平方差有理化给
+
+$$
+\|\lambda L u+z\|-|\lambda|L
+=\frac{2\lambda L\operatorname{Re}\langle u,z\rangle+\|z\|^2}
+{\|\lambda L u+z\|+|\lambda|L}
+\longrightarrow\operatorname{sgn}(\lambda)\operatorname{Re}\langle u,z\rangle.
+\tag{7.15}
+$$
+
+令 $\epsilon=\operatorname{sgn}R$、$B_\xi=\operatorname{Re}\langle u_\xi,g\xi\rangle$。在 (7.14) 取 $t=L\to+\infty$，两份右侧范数各减 $|R|dL$ 后的极限分别为 $-\epsilon\operatorname{Re}\langle u_\xi,z_+\rangle$、$\epsilon\operatorname{Re}\langle u_\xi,z_-\rangle$，和为 $-2\epsilon B_\xi$；左侧减 $2|R|dL$ 的极限为 $2\epsilon A_\xi$。取 $t=-L\to-\infty$，两份范数的极限逐项反号，和为 $2\epsilon B_\xi$，左侧极限为 $-2\epsilon A_\xi$。两向一起迫使
+
+$$
+A_\xi=-B_\xi,\qquad
+\operatorname{Im}\langle\eta,g\xi\rangle
+=\sigma\operatorname{Re}\langle\eta,V\xi\rangle.
+\tag{7.16}
+$$
+
+再使用第二份实际伴轴 $e'=j$。由整体角分类，$j'=D(h,j)=-e$，所以 $\eta'=j'\xi/d=\jmath\eta$；同一 $a,b,g,k,V,Z$ 均未更换。设 $G=\langle\eta,g\xi\rangle$、$L_0=\langle\eta,V\xi\rangle$。第一伴轴给 $\operatorname{Im}G=\sigma\operatorname{Re}L_0$；第二伴轴将二者变成 $-\jmath G,-\jmath L_0$，给 $-\sigma\operatorname{Re}G=\operatorname{Im}L_0$。故
+
+$$
+G=\jmath L_0,\qquad
+\langle j p_-\xi,(g-\jmath V)\xi\rangle=0
+\quad(\xi\in(p_-+q)H).
+\tag{7.17}
+$$
+
+二次齐次性把单位向量结论扩到全部向量；$p_-\xi=0$ 时末式自身为零。令 $M=g-\jmath V$。在 (7.17) 取 $\xi=u+z$，$u\in p_-H,z\in qH$，减去 $z=0$ 的等式，得 $\langle ju,Mz\rangle=0$。$j:p_-H\to p_+H$ 为酉映射，故 $p_+Mq=0$。
+
+取 $z=0$，令 $T=p_-jMp_-$。其二次型 $Q_T(u)=\langle u,Tu\rangle$ 恒零；不要求 $T$ 自伴的复极化公式为
+
+$$
+4\langle u,Tv\rangle=Q_T(u+v)-Q_T(u-v)-iQ_T(u+iv)+iQ_T(u-iv)=0.
+\tag{7.18}
+$$
+
+于是 $T=0$，再用 $j$ 的上述酉性得 $p_+Mp_-=0$。结合 (7.10)，已经识别 $p_+gp_-$ 与 $p_+gq$。
+
+接着取 $\widetilde h=-h$、$\widetilde R=-R$、$\widetilde e=e$。角符号仍为同一个 $\sigma$；演员 $\widetilde R\widetilde h=a$ 和实际输出 $D(a,b)=g$ 完全相同，新的 $\widetilde n=p-h$ 只交换两个角块的角色。刚才的证明因此给 $p_-gq=-\jmath R p_-bq/2$。对 $\xi\in qH$，$a\xi=0$，(7.3) 直接给 $\langle\xi,g\xi\rangle=0$，自伴极化给 $qgq=0$。其余反向块由 $g=g^*$ 得到。
+
+最后 $K_\sigma(a,b)$ 的三个对角块本来为零，非对角块准确如 (7.2)。相减只剩 $r=p_+gp_++p_-gp_-$，它属于 $(pAp)_{\rm sa}$ 并与 $h$ 交换。忠实表示将这些等式返回原 $A$，证明 (7.1)–(7.2)。所有极限只作用于固定 $g$ 的显式标量多项式或向量范数；没有让外层 $D(R_\pm,S_\pm)$、任何变化输入或响应穿过极限。∎
+

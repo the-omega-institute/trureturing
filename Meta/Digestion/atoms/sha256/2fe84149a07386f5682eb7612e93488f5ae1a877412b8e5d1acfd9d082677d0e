@@ -1,0 +1,15 @@
+**联合矩接口。** 称 $E$ 满足 $(\mathrm J_{p,q})$，若
+
+(a) 存在 $C$，使对充分大的 $X$，$\sup_{i=1,2}\sup_{0\le s\le1}\mathbb E_{\mu_X}|B_{i,X}(s)|^k\le C$；
+
+(b) 对每个 $\mathbf s\in[0,1]^k$，极限
+
+$$
+M_{p,q}(\mathbf s)=\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[U_X^{\gamma_{p,q}}\prod_{\ell=1}^kB_{i_\ell,X}(s_\ell)\Bigr]
+\tag{495.1}
+$$
+
+存在。
+
+与 §494 相同，$M_{p,q}$ 可测且 $|M_{p,q}|\le2^{\gamma_{p,q}}C$。$q=0$ 时 $(\mathrm J_{p,0})$ 蕴含 $\theta=\theta_1$ 的 $(\mathrm M_p)$，二者的极限核相同（(a) 对两个指数都要求矩界，故 $(\mathrm J_{p,0})$ 更强）。
+

@@ -66,10 +66,49 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.dyadicProbabi
 
 For every positive X, the normalized logarithmic measure mu_X is a probability measure, since its total mass is one.
 
+**Theorem 1.6 (Law of the scaled position).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.dyadic_position_map`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.dyadic_position_map` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For X>0, the image of mu_X under x maps to x/X is mu_1. The substitution x=Xu cancels X in the logarithmic density, so the position law on [1,2] does not depend on X.
+
+**Theorem 1.7 (Exact logarithmic block mass).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.block_mass`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.block_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If 1<=u<=v<=2, the probability of [u,v] under mu_1 is log(v/u)/log(2). Restricting the density to the subinterval reduces the mass to the integral of 1/(x log(2)); its endpoints have zero Lebesgue measure.
+
+**Theorem 1.8 (Endpoint conventions for position blocks).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.position_indicator_Icc_ae_eq_Ioc`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.position_indicator_Icc_ae_eq_Ioc` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For X>0 and any real endpoints u,v, composing the [u,v] and (u,v] indicators of an arbitrary real function with x/X gives equal functions almost everywhere under mu_X. The position law is mu_1, which assigns zero mass to singletons. Thus a fixed-scale hypothesis stated with closed blocks also applies to disjoint left-open blocks.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.block_mass`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.dyadicProbabilityMeasure`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.dyadicProbabilityMeasure_integrable`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.dyadicProbabilityMeasure_integral`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.dyadicProbabilityMeasure_isProbabilityMeasure`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.dyadicProbabilityMeasure_univ`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.dyadic_position_map`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicProbability.position_indicator_Icc_ae_eq_Ioc`

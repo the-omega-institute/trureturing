@@ -1,0 +1,74 @@
+**定理 104.11（整个面分类与厚度）。** (VII104.19)中全部极端射线准确由下列非零向量生成
+
+$$
+ p_X=(1,X,X^{\mathsf T}X)\quad(X\in\mathbb R^{n\times2}),
+ \qquad (0,0,ww^{\mathsf T})\quad(0\ne w\in\mathbb R^2).
+\tag{VII104.23}
+$$
+
+原纯点是它们各自除以 $u_n$ 后的全部点。全部非零、非射线的真锥面的归一基准确为 $B^2$ 或 $B^{n+1}$：前一类来自
+
+$$
+ \mathcal F_0=\{(0,0,S):S\succeq0\},
+\tag{VII104.24}
+$$
+
+后一类来自非零核向量 $(t,v)\in\mathbb R^n\oplus\mathbb R^2$、$v\ne0$ 的面
+
+$$
+ \mathcal F_{t,v}=\{(a,R,S)\in C_n:Rv=-at,\ Sv=-R^{\mathsf T}t\}.
+\tag{VII104.25}
+$$
+
+所以 $h(K_n)=3$；$n=2$ 时非点真面只有厚 $B^2,B^3$，没有线段面。
+
+证明。先说明为何以下分类穷尽所有面，而不只列出候选点。对任意 $M\in C_n$，其整个最小锥面是
+
+$$
+ \operatorname{face}_{C_n}(M)
+ =\{N\in C_n:\ker M\subseteq\ker N\}.
+\tag{VII104.26}
+$$
+
+右侧由PSD非负尺 $N\mapsto\operatorname{tr}(P_{\ker M}N)$ 暴露；零读数等价于每个核向量都被 $N$ 消灭。反向若 $N$ 满足核包含，在 $W=\operatorname{range}M$ 上 $M$ 正定，而 $N$ 支撑在同一个 $W$，故对足够小 $\varepsilon>0$，$M-\varepsilon N\succeq0$。差仍在原线性子空间，因而属于 $C_n$；任何包含 $M$ 的锥面由 $M=(M-\varepsilon N)+\varepsilon N$ 都须包含 $N$。这证明(VII104.26)。任一非零面取其相对内点，其最小面就是原面，故逐个分类 $M$ 的核已分类全部面，包括起初未要求闭的面。
+
+若 $a=0$，PSD的二阶主子式迫 $R=0$。$S$ 秩一时(VII104.26)给对应的射线；$S$ 秩二时给整个 $\mathcal F_0$。其归一切片是实二阶密度矩阵，坐标 $(S_{11}-S_{22},2S_{12})$ 恰给整个 $B^2$。
+
+若 $a>0$，写 $X=R/a$。Schur消元使核为
+
+$$
+ \ker M=\{(-Xv,v):v\in\ker Q_M\}.
+\tag{VII104.27}
+$$
+
+$Q_M=0$ 时，对一个原 $N=(b,Y,Z)$ 施加这全部核关系，依次得到 $Y=bX,Z=bX^{\mathsf T}X$。所以最小面恰为 $\mathbb R_+p_X$，包括任意秩的 $X$，没有只保留环境秩一射线。$Q_M$ 秩二时是整体内点，最小面为整个锥。$Q_M$ 秩一时其核由某个 $(t,v)$、$v\ne0$ 张成，最小面正是(VII104.25)。
+
+把 $v$ 连同 $t$ 同比例缩放，再用底部正交坐标把 $v$ 化为 $e_2$，不会改变单位。面内全部矩阵可且只能写为
+
+$$
+ R=(x,-at),\qquad
+ S=\begin{pmatrix}b&-x\cdot t\\-x\cdot t&a\|t\|^2\end{pmatrix}.
+\tag{VII104.28}
+$$
+
+对向量 $(z,\beta,\gamma)$ 的二次型变为
+$a\|z-\gamma t\|^2+2\beta x\cdot(z-\gamma t)+b\beta^2$。
+因此面锥精确等价于
+
+$$
+ a,b\ge0,\qquad ab\ge\|x\|^2,
+ \qquad u_n=d_ta+b,\quad d_t=1+\|t\|^2.
+\tag{VII104.29}
+$$
+
+在单位切片上，显式仿射坐标
+
+$$
+ z_0=d_ta-b,\qquad z'=2\sqrt{d_t}\,x
+\tag{VII104.30}
+$$
+
+给 $z_0^2+\|z'\|^2\le1$；逆为 $a=(1+z_0)/(2d_t)$、$b=(1-z_0)/2$、$x=z'/(2\sqrt{d_t})$，所以是整个 $B^{n+1}$。任意 $(t,v)$ 都可取此锥的相对内点，故这些面确实出现。
+
+上述各秩情形穷尽所有非零 $M$。归一基 $K_n$ 的非点真面均为严格凸球，球的非空真面只有纯单点，故面链恰有三层。$n=2$ 的球维数分别为二和三，遂得最后断言。对照 $n=1$ 时同一线性空间恰为整个 $\operatorname{Sym}_3$，锥为实三阶PSD；此时 $X$ 只有一行，不能有秩二。增加一行后允许 $X=I_2$，其原极端射线在环境矩阵中秩二；这是下面控制的代数区别，不是新物理结论。证毕。
+

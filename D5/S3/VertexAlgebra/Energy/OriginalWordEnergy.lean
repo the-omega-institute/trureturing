@@ -43,7 +43,7 @@ private def wordWeight (ω : List (Index D)) : ℕ :=
   (ω.map (fun x => x.2+1)).sum
 
 open private word_off_energy charge_energy_add from D5.S3.VertexAlgebra.Energy.LatticeCoefficientEnergy
-open private word_charge chargeSpace from D5.S3.VertexAlgebra.Sectors.LatticeSectorIntertwiner
+open D5.S3.VertexAlgebra.LatticeSectorIntertwiner (word_charge chargeSpace)
 open private wordMap wordCoeff from D5.S3.VertexAlgebra.Sewing.CanonicalOccupationRow
 
 private theorem word_mode_grade (a : Charge D) (ω : List (Index D)) (E n : ℤ)

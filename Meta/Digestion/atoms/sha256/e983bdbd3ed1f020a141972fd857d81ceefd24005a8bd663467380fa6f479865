@@ -1,0 +1,55 @@
+**命题 36.1（完整静态反例与等号）。** 在同一个 $E=M_2(\mathbb C)_{\rm sa}$ 上，取所有正实线性评价、$u=I$、原序单位范数及定义 35.1 的全部 $D_\kappa$。用原标签
+
+$$
+X=\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\sigma_y=\begin{pmatrix}0&-\mathrm i\\\mathrm i&0\end{pmatrix},\quad
+Z=\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}
+\tag{36.1}
+$$
+
+及原评价 $\alpha_y(v)=\operatorname{Tr}((I+Y)v)/2$。则对 $a=b=X,c=Y$，
+
+$$
+Q_{\alpha_y}(r_1,s_1)=5-\kappa^2,
+\qquad Q_{\alpha_y}(r_{-1},s_{-1})=1+3\kappa^2.
+\tag{36.2}
+$$
+
+在 $\kappa=0$ 时，两边为 $5$ 和 $1$，原 R 缺陷为 $R_0(X,X,Y)=Y$，范数为一；但全部原评价、全部原 $a,b$ 的 $c=0$ PB 仍成立。因此即使保留完整 $\mathsf H_{\rm orig}+\mathsf P_3$ 及全有限原 Gram 正性，也不能把完整 PB 换成它的 $c=0$ 子族。同时这个模型达到 (34.2) 实部分量界的等号。
+
+证明。原矩阵乘法给 $[X,Y]=2\mathrm iZ$，所以 $\mathcal C(X,Y)=-Z$，$\mathcal C(X,Z)=Y$；三轴各自平方为 $I$，不同轴的 Jordan 积为零。原 $(I+Y)/2$ 为正且迹为一，故 $\alpha_y$ 为本来原评价族内的正质量一评价，满足 $\alpha_y(I)=\alpha_y(Y)=1$、$\alpha_y(Z)=0$。严格代入未经改变的 (22.3) 得
+
+$$
+r_t=X,\qquad s_t=Y+tI-t\kappa Z.
+$$
+
+对 $t=\pm1$，在同一个原 $E$ 内分别计算
+
+$$
+\begin{aligned}
+S(r_t,r_t)+S(s_t,s_t)
+&=(3+\kappa^2)I+2tY-2\kappa Z,\\
+2D_\kappa(r_t,s_t)&=-2\kappa Z-2t\kappa^2Y.
+\end{aligned}
+\tag{36.3}
+$$
+
+故 $Q_{\alpha_y}(r_t,s_t)=3+\kappa^2+2t(1-\kappa^2)$，即 (36.2)。同一个原 Jordan 积给
+
+$$
+(X\circ X)\circ Y-X\circ(X\circ Y)=Y,
+\qquad R_0^\kappa(X,X,Y)=(1-\kappa^2)Y.
+\tag{36.4}
+$$
+
+$\kappa=0$ 的范数一缺陷于是完全位于原域；定理 35.2 已逐项保证同一个模型的完整静态背景与全部实方向 PB，不是只检查这一个三元组。
+
+再在 $\kappa=0$、固定 $(a,x,y)=(X,X,Y)$ 下，对任意原正评价，(35.2) 给
+
+$$
+\Delta_\alpha^0(X;X,Y)=4\alpha(Y),\qquad
+\Delta_\alpha^0(X;X,-Y)=-4\alpha(Y).
+$$
+
+由 $N(Y)=1$，有 $|\alpha(Y)|\le m_\alpha$，而 $\alpha_y$ 达到等号。因此 $\mathcal E_R(X;X,Y)=4$，$N(R_0(X,X,Y))=1=\mathcal E_R/4$。任何在相同前件、相同原范数及 (34.1) 同一定义下小于 $1/4$ 的实部分量常数都会失败。这个例子的虚部分量恒零，未检验虚界的最优性。∎
+

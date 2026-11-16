@@ -1,0 +1,103 @@
+**定理 183.1（原反射系数的混合余量关系）。** 在182.1的全部条件下，
+同一原 $r=D(h,\lambda h+\nu s+z)-D(h,z)$ 满足
+
+$$
+\boxed{[s,r]=0,\qquad [c,r]=0,\qquad P_s^+z\circ r=0.}
+\tag{183.1}
+$$
+
+不要求 $[s,z]=0$、$[c,z]=0$、$c\circ r=0$、$[r,x]=0$ 或任何支撑湮灭
+关系作为前件。
+
+证明。只新增选择原三元组 $\mathrm{PB}(h,x,k)$。174.1给
+$D(h,k)=0$；173.3的两份位移是 $d-c$ 和 $k$，所以两份实际外层完整为
+
+$$
+(a,b)=(z+d,2k),\qquad
+(a_-,b_-)=(2c+z-d,0).
+\tag{183.2}
+$$
+
+负外层的旧值由原零输入P2为零。使用原 $k^2=c^2$，PB准确给177.3
+已列出的同一旧输出及其反向值
+
+$$
+\begin{aligned}
+K:=D(a,b)&=-2x\circ(d-c)-2k^2=-2x\circ d+2z\circ c,\\
+D(b,a)&=2x\circ d-2z\circ c.
+\end{aligned}
+\tag{183.3}
+$$
+
+177.2–177.3的这两项身份并不使用177.1的额外假设，此处不把其零重叠
+结论借入。特别 $b=2k=2\lambda u+2\nu H$，182.6正好能读这份实际
+$D(b,a)=-K$，没有更换任何一个端点。
+
+置原 $M=z\circ r$，$M_{\rm e}=P_s^+M$。由 $s$ 与 $h,Q$ 交换，
+$t_{\rm e}=iQhz_{\rm e}$、$t_{\rm o}=iQhz_{\rm o}$。只展开已知Jordan
+乘法，并用 $h\circ t=z\circ t=0$，得到
+
+$$
+\begin{aligned}
+c\circ t&=\nu s t_{\rm e},&
+c\circ r&=\lambda hr+\nu s r_{\rm e},&
+z\circ c&=\nu s z_{\rm e},\\
+D(b,a)&=2\nu s(t_{\rm e}-z_{\rm e})
+       +2\lambda hr+2\nu s r_{\rm e}+2M.
+\end{aligned}
+\tag{183.4}
+$$
+
+这里与 $s$ 或 $h$ 交换的乘积本来就是原Jordan乘积；未展开未知
+$D(h,c+z)$。同一 $M$ 为 $h$-奇，因为 $z$ 为 $h$-奇、$r$ 为 $h$-偶。
+又 $U_H=U_hU_s$，故 $z_{\rm e},t_{\rm e},r_{\rm o}$ 为 $H$-奇，
+$z_{\rm o},t_{\rm o},r_{\rm e}$ 为 $H$-偶，并且 $P_H^-M=M_{\rm e}$。
+于是从实际输入和183.4分别得到
+
+$$
+\begin{aligned}
+P_H^-a&=z_{\rm e}+t_{\rm e}+r_{\rm o},\\
+P_H^-D(b,a)&=2\nu s(t_{\rm e}-z_{\rm e})
+                    +2\lambda hr_{\rm o}+2M_{\rm e}.
+\end{aligned}
+\tag{183.5}
+$$
+
+另一方面，对同一个旧输出用182.6，且
+$iQh t_{\rm e}=-z_{\rm e}$，得到
+
+$$
+P_H^-D(b,a)
+=2\nu s(t_{\rm e}-z_{\rm e})+2\nu iQhsr_{\rm o}.
+\tag{183.6}
+$$
+
+两种读取比较后准确是
+
+$$
+\nu iQhsr_{\rm o}=\lambda hr_{\rm o}+M_{\rm e}.
+\tag{183.7}
+$$
+
+两项含 $r_{\rm o}$ 的元素为 $h$-偶，$M_{\rm e}$ 为 $h$-奇。原有限
+$h$-偶奇投影因此分别给
+
+$$
+M_{\rm e}=0,\qquad (\nu iQs-\lambda u)r_{\rm o}=0.
+\tag{183.8}
+$$
+
+后式只在已知环境中左乘 $-\nu iQs-\lambda u$。由于 $Q,s$ 交换且
+$(iQs)^2=-u$，得
+
+$$
+(\nu^2+\lambda^2)r_{\rm o}=0.
+\tag{183.9}
+$$
+
+$\nu\ne0$，所以 $r_{\rm o}=0$，即 $[s,r]=0$。连同 $[h,r]=0$，这给
+$[c,r]=0$。最后 $r$ 为 $s$-偶，故
+$M_{\rm e}=P_s^+(z\circ r)=z_{\rm e}\circ r$，由183.8得到183.1。
+这个消元没有使用谱逆或谱符号；183.7若保留非零 $r_{\rm o}$ 或
+$M_{\rm e}$，便会同时违反同一旧外值的两份投影身份。∎
+

@@ -1,0 +1,14 @@
+**定理 147.6（不用截面相等的秩一嵌入刚性）。** 在完整 EB3+$\mathsf{Conn}$ 原域，若有任意有限阶的正实线性单射 $B:V\to\operatorname{Herm}_N(\mathbb C)$，使每个原纯像秩一，则整个原 $\dim_{\mathbb R}V=9$，并有(XI147.11)。本项不要求 ZC，也不要求 $B(C)=B(V)\cap\operatorname{PSD}_N$。
+
+证明。令 $W$ 为所有 $\operatorname{ran}B(p)$、$p\in P$ 的复线性张成。$K$ 是有限纯凸组合的凸包，$C$ 生成 $V$，故全部 $B(V)$ 支撑于 $W$。若 $\dim_{\mathbb C}W\ge4$，选四个原纯点使 $B(p_i)=v_iv_i^*$ 且 $v_1,v_2,v_3,v_4$ 复线性无关。对 $W_j=\operatorname{span}_{\mathbb C}(v_1,\ldots,v_j)$ 定义实际锥面
+
+$$
+F_j=\{x\in C:\operatorname{ran}B(x)\subseteq W_j\}
+=C\cap\ker\bigl(x\mapsto\operatorname{Tr}(P_{W_j^\perp}B(x))\bigr).
+\tag{XI147.13}
+$$
+
+正性保证等式，并保证这些是暴露面。$p_1,p_2\in F_2$，$p_3\in F_3\setminus F_2$，$p_4\notin F_3$，所以 $F_2\subsetneq F_3\subsetneq C$ 是两个非射线真面严格嵌套，违反原完整面分类。因此 $\dim_{\mathbb C}W\le3$，单射性给整个原 $\dim_{\mathbb R}V\le9$。$\mathsf{Conn}$ 给 Inj，[THREE_COPY VII121.9][Q146TVII]的既有下界使维数恰为九；此时直接消费145.2，不重证四维根芽或整个矩阵填充。新增桥是由这一个正嵌入构造实际禁止面链，自动支付原空间上界；九维后的分类是145.2的应用。证毕。
+
+若取任意非空 $X\subseteq\mathbb{CP}^{N-1}$，以全部单位秩一投影的紧闭子集 $\overline{\{vv^*/\|v\|^2:[v]\in X\}}$ 的凸包为基，则其所有极点仍属该紧秩一家族；这是有限维紧凸包的极点性质。故在它所张成的原空间上，若全部原效应和整个原排除集满足 EB3+$\mathsf{Conn}$，该锥已属于本定理范围。这里没有断言原嵌入 $B$ 本身必为满矩阵代数的合同变换，也没有把一般半正定像、部分纯标签秩一或非单射表示纳入结论。
+

@@ -1,0 +1,31 @@
+### 13.3 非实铅笔的精确消元
+
+以下证明新出现的 $r=1,2$ 分支；$r=0$ 只作上述复用。在 $N_0^\perp$ 的正交坐标 $\mathbb C^2\oplus\operatorname{ran}D\oplus N_1$ 上，写 $V_1=V|_{\operatorname{ran}D}$、$W_1=V|_{N_1}$，则
+
+$$
+X(w)=t-wc=
+\begin{pmatrix}B-wC&V_1&W_1\\V_1^*&D_1&0\\W_1^*&0&0\end{pmatrix}.
+\tag{13.11}
+$$
+
+对非实 $w$，若 $X(w)(u,y,z)^{\mathsf T}=0$，其二次型虚部给
+$-\operatorname{Im}(w)u^*Cu=0$，所以 $u=0$；第二行给 $y=0$，第一行给 $W_1z=0$。$W_1$ 在 $N_1$ 单射，故 $z=0$。有限维性于是给 $X(w)$ 可逆。空的 $\operatorname{ran}D$ 块按空方程处理。
+
+当 $r=1$，用 $q$ 作 $N_1$ 的坐标，$W_1=\gamma C^{1/2}n$。给定右端项 $\eta=(\eta_A,\eta_R,\eta_N)$，令 $\zeta=U^*C^{1/2}u$。第二、三行及第一行的 $e$ 分量依次给
+
+$$
+y=D_1^{-1}(\eta_R-V_1^*u),\qquad
+\zeta_2=\eta_N/\gamma=j\eta,\qquad
+(a-w)\zeta_1+b\zeta_2=L\eta.
+$$
+
+第一行剩余的 $n$ 分量唯一确定 $z$，不再限制 $\eta$。因此逆矩阵的演员部分准确为
+
+$$
+u=C^{-1/2}U T(w)G\eta,\qquad
+T(w)=\operatorname{diag}((a-w)^{-1},1).
+\tag{13.12}
+$$
+
+在原空间中，$L,j$ 正好就是 (13.6)，因为 $D^\dagger=D_1^{-1}\oplus0_N$；不存在把 $N_1$ 的坐标任意缩放成新度量的步骤。
+

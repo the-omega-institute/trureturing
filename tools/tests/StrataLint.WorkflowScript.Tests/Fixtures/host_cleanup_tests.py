@@ -587,7 +587,7 @@ class HostCleanupTests(unittest.TestCase):
         self.assertTrue(remnant.exists())
         self.assertEqual([], list(self.root.glob("main-residue-cleanup-*")))
 
-    def run_rollout_sweep(self, codex, activity, delete=True, registrations=None):
+    def run_rollout_sweep(self, codex, activity, delete=True, registrations=None, expected_exit=0):
         options = cleanup.argparse.Namespace(repository=self.root, base="base", codex_home=codex,
             sshx_home=self.root / "sshx", tmp_root=[], min_age_hours=1,
             delete=delete, verbose=True)
@@ -595,7 +595,7 @@ class HostCleanupTests(unittest.TestCase):
         with patch.object(cleanup, "active_paths", side_effect=activity), \
              patch.object(cleanup, "registered_worktrees", side_effect=registrations, return_value=[]), \
              patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(output):
-            self.assertEqual(0, cleanup.run_clean(options))
+            self.assertEqual(expected_exit, cleanup.run_clean(options))
         return [json.loads(line) for line in output.getvalue().splitlines()]
 
     def test_old_rollout_directory_uses_one_fresh_activity_observation(self):
@@ -726,7 +726,7 @@ class HostCleanupTests(unittest.TestCase):
         warning = io.StringIO()
         with patch.object(cleanup, "remove_rollout_group", side_effect=late_entry), \
              contextlib.redirect_stderr(warning):
-            rows = self.run_rollout_sweep(codex, lambda *args, **kwargs: set())
+            rows = self.run_rollout_sweep(codex, lambda *args, **kwargs: set(), expected_exit=1)
         self.assertTrue(all(not path.exists() for path in rollouts))
         self.assertEqual("retain late bytes", unknown.read_text())
         self.assertEqual("retain nested bytes", nested.read_text())

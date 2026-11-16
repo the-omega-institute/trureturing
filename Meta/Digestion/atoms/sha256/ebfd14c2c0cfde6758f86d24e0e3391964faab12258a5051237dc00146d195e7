@@ -1,0 +1,4 @@
+**Corollary 198.3 (the residual search becomes a fibre-feasibility search).** For a rank-three or rank-four full-zero candidate, the nonlinear residual equations impose no additional conditions after the quotient identity: all remaining freedom is respectively a one- or two-dimensional radical correction subject to (198.4) and the pointwise simplex inequalities. In the rank-two branch, $\mathcal R_u=0$, so the normalized quotient section determines the label family uniquely inside its candidate span.
+
+This is an exact closure statement for a fixed candidate span, not an existence theorem. It does not produce a nonzero radical, guarantee that any correction satisfies the pointwise inequalities, or settle arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+

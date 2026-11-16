@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:b66d0ef387c12aa24a919995a1c1398c17b531272909ff4254fdc4bdd3fae7c9
+  normalized_sha256: sha256:b66d0ef387c12aa24a919995a1c1398c17b531272909ff4254fdc4bdd3fae7c9
+cas_ref: sha256:b66d0ef387c12aa24a919995a1c1398c17b531272909ff4254fdc4bdd3fae7c9
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Geometry/UltrametricCenterSphereEight.distance_values
+    target_statement_id: sha256:52d53ecd0927fa4345db4e3801460cf3540ae5cc309d209ffa8864b5c6e32fe8
+  - gid: D5/S3/Combinatorics/Geometry/UltrametricCenterSphereEight.eight_card
+    target_statement_id: sha256:4a6bc8406fc61a95426821fc0d8bf9dfafdfc1db93ff7821852e13da577aa8c9
+  - gid: D5/S3/Combinatorics/Geometry/UltrametricCenterSphereEight.eight_center
+    target_statement_id: sha256:b3c3a80d7e063fce7431025660531f9b20ef85bfec8a8a98df2e82a7655fda8f
+  - gid: D5/S3/Combinatorics/Geometry/UltrametricCenterSphereEight.sphere_one_card
+    target_statement_id: sha256:db35d387752aa04a7347388720d3f150d91d3221df84b6e64de720e4557103f0
+  - gid: D5/S3/Combinatorics/Geometry/UltrametricCenterSphereEight.sphere_two_card
+    target_statement_id: sha256:f2101d0588fd6ecc24186d81e7ab84867523ec4ffa2580761e68b48306ccb758
+  - gid: D5/S3/Combinatorics/Geometry/UltrametricCenterSphereEight.sphere_zero_card
+    target_statement_id: sha256:1ae2b59c5e7d30f4b7d9541ca5e01a01ba8d183560095c2c6addd2764b0162c4
+  - gid: D5/S3/Combinatorics/Geometry/UltrametricCenterSphereSharpness.eight_exact_distance_values
+    target_statement_id: sha256:c16f8279479d0395659d23c681ad3d297224dc564b8a4fb93f704ceadd7e8cfb
+  - gid: D5/S3/Combinatorics/Geometry/UltrametricCenterSphereSharpness.order_eight_and_two_gap_distances
+    target_statement_id: sha256:fa1992ee722d25c530a56844f519e3160e9814331a53ebdc761ec103113795d2
+receipts:
+  unresolved_subitems: []

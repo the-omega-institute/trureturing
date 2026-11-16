@@ -1,0 +1,65 @@
+**定理 164.1（外层投影的实际消费）。** 对任意实 $\mu,\lambda$ 和原 $v\in V_h$，固定
+
+$$
+\begin{gathered}
+c=\mu u+\lambda h,\quad x=c+v,\quad
+k=hc=\lambda u+\mu h,\\
+g=D(h,x)=Tv+\rho,\qquad
+\rho=P_{\rm com}g\in E,\quad h\rho=\rho h.
+\end{gathered}
+\tag{164.1}
+$$
+
+这里的分解由150.1给出。则同一实际旧输出的残余满足
+
+$$
+\boxed{v\circ\rho=0.}
+\tag{164.2}
+$$
+
+证明。$\mu=0$ 时，前卷18.1对 $h\circ x=\lambda u$ 给 $h\circ g=0$，即152.1的完整旧值 $g=Tv$，故 $\rho=0$。以下取 $\mu\ne0$，只用 $D(h,k)=0$ 的同轴原零值。在完整原PB中取 $(a,b,z)=(h,x,k)$，则
+
+$$
+\begin{aligned}
+\nu&=g-c,&\omega&=k,\\
+(b+\nu,z+\omega)&=(v+g,2k),&
+(b-\nu,z-\omega)&=(2c+v-g,0).
+\end{aligned}
+\tag{164.3}
+$$
+
+负外层第二标签确实为原零标签，其旧值由P2为零。$k^2=c^2$、$x\circ c=c^2+\mu v$，故PB及反对称性准确给
+
+$$
+\begin{aligned}
+D(v+g,2k)&=-2x\circ(g-c)-2k^2
+=-2x\circ g+2\mu v,\\
+\boxed{D(2k,v+g)=2x\circ g-2\mu v.}
+\end{aligned}
+\tag{164.4}
+$$
+
+此时 $v+g$ 尚含 $\rho$，未被当成横向输入。对同一个左侧旧值用163.1，参数一一对应为
+
+$$
+s=2\lambda,\qquad r=2\mu,\qquad y=v+g.
+$$
+
+于是
+
+$$
+P_{\rm tr}D(2k,v+g)
+=2\mu T P_{\rm tr}(v+g)
+=2\mu T(v+Tv)=2\mu(Tv-v).
+\tag{164.5}
+$$
+
+另一方面，展开的只是已知Jordan乘法。由 $h\circ Tv=0$、$v\circ Tv=0$，有
+
+$$
+x\circ g=\mu Tv+c\circ\rho+v\circ\rho.
+\tag{164.6}
+$$
+
+$c\circ\rho$ 与 $h$ 交换，$v\circ\rho$ 与 $h$ 反交换，因而(164.4)右端的横向投影是 $2\mu(Tv-v)+2v\circ\rho$。与(164.5)比较便得(164.2)。这条关系来自两份完整旧外值的PB，随后确由新投影公式消费；没有定义外层候选值来替换它。∎
+

@@ -1,0 +1,36 @@
+**命题 127.4a（同域零压缩、完整球相交与原中点接触）。** 在同一个 $\mathsf{Ent}_\triangle$ 下，对每个 $i$ 和每个原纯点 $p$，有逐点等价
+
+$$
+\begin{aligned}
+\Delta_i(p)=0
+&\Longleftrightarrow D_p\cap D_i\ne\varnothing\\
+&\Longleftrightarrow
+\exists q\in P:\ p\perp q\ \text{且}\ p_i\perp q\\
+&\Longleftrightarrow \frac{p+p_i}{2}\in\partial_{\rm rel}K.
+\end{aligned}
+\tag{Q127.16a}
+$$
+
+更强地，对全部原混态 $x\in K$，仍有
+
+$$
+\begin{aligned}
+\Delta_i(x)=0
+&\Longleftrightarrow
+\exists q\in P\cap D_i:\ x\in D_q\\
+&\Longleftrightarrow x,p_i\text{ 同属某个原真面}\\
+&\Longleftrightarrow \frac{x+p_i}{2}\in\partial_{\rm rel}K.
+\end{aligned}
+\tag{Q127.16b}
+$$
+
+证明。引理127.4已用实际原效应 $e_q=g_qT_i$ 证明(Q127.16b)第一项与第二项等价。每个这样的完整 $D_q$ 也包含 $p_i$，所以第二项给同属真面，继而给中点在原相对边界。
+
+反向取边界中点的非恒定仿射支撑函数，令它在中点取零、在整个 $K$ 非负，再齐次化为非零 $h\in C^*$。因为两端读数都非负，$h(x)=h(p_i)=0$。以 $M=\max_Kh>0$ 归一，$h/M\in\mathcal E$，其一值面有一个原纯点 $q$。于是同一张原效应确认 $q$ 并零于 $x,p_i$，给 $x,p_i\in D_q$。仅对纯端点 $q,p_i$ 使用补效应互易，得 $q\in P\cap D_i$，回到第二项。这里的支撑、归一和最大面取纯点，正是[VII103.2][Q127VII]的原同面接口；没有对混态第一端点擅用纯标签互易。
+
+现在令 $x=p$ 为原纯态。若 $\Delta_i(p)=0$，第二项给实际 $q\in P\cap D_i$ 且 $p\in D_q$，纯端互易给 $q\in D_p\cap D_i$。反之，非空交 $D_p\cap D_i$ 是整个原 $K$ 的非空紧面，取其中一个极点 $q$，它也是原纯点。故 $q\in P\cap D_i$，由互易有 $p\in D_q$，再由(Q127.14)得 $\Delta_i(p)=0$。交点的这种取得覆盖整个闭球，而非仅检查某个选定截面。中间的两条二元边恰是同一个 $q$ 的原零一关系，故(Q127.16a)成立。
+
+若 $p=p_i$，$T_i p=0$，交集是整个 $D_i$，中点就是原纯点 $p_i$；若 $p\ne p_i$，Inj使两球不同，非空交恰为一个原纯点。对混态的零压缩也没有例外：由(Q127.12)，$T_i x=0$、$x\in K$ 恰给 $x=p_i$，它属于所有上述 $D_q$。因此“接触”包含球相等的情形，不额外要求不同球或非零压缩。证毕。
+
+式(Q127.16a)中的 $(p,p_i,q)$ 只供应两条原边；一般没有 $p\perp p_i$，不能把共同邻点直接当作正交三角。以上等价只使用原效应、原面和同域纯端互易，未另造需要假定单射的标签关系。
+

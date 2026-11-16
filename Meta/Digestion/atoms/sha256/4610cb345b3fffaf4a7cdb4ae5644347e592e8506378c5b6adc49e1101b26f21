@@ -1,0 +1,47 @@
+### 17.2 第二步：定量相干向量估计
+
+固定 $w,h$，选任一相干向量 $e_h$，在以 $h$ 为中心的旋转相干坐标 $\xi$ 中作 Taylor 展开：
+
+$$
+f_w(\xi)=f_w(h)+p_w\xi+q_w\overline\xi+R_w(\xi),\qquad
+|q_w|=a_w(h),\quad |p_w|=b_w(h),\quad
+|R_w(\xi)|\le\frac C s|\xi|^2.
+\tag{17.12}
+$$
+
+当 $|\xi|\le1$ 时，余项界来自固定正则坐标中的 Taylor 定理和第一步的二阶导数界；当 $|\xi|\ge1$ 时，由 $f_w$ 的上确界及一阶导数界得到同一全局界。
+
+复用 (17.2) 的相干分解 $(m+1)\int\tau_\xi\,d\mu=I$。在这一坐标的归一 Dicke 基中，角向及径向矩给
+
+$$
+T_m(\xi)e_0=0,\qquad
+T_m(\overline\xi)e_0=\frac1{\sqrt m}e_1,
+\tag{17.13}
+$$
+
+其中 $e_1$ 为第一归一 Dicke 激发。这里对非有界坐标函数只使用所显示的收敛有限矩阵积分。由 $|\langle e_\xi,e_0\rangle|=(1+|\xi|^2)^{-m/2}$ 及三角不等式，
+
+$$
+\begin{aligned}
+\|T_m(R_w)e_0\|
+&\le\frac C s(m+1)\int_0^\infty u(1+u)^{-m/2-2}\,du\\
+&=\frac C s\frac{4(m+1)}{m(m+2)}
+\le\frac{4C}{ms}.
+\end{aligned}
+\tag{17.14}
+$$
+
+因此对每个 $w,h$，
+
+$$
+\begin{aligned}
+r_w(h)&:=\|(A_w-f_w(h)I)e_h\|
+       \le\frac{a_w(h)}{\sqrt m}+\frac C{ms},\\
+r'_w(h)&:=\|(A_w^\dagger-\overline{f_w(h)}I)e_h\|
+       \le\frac{b_w(h)}{\sqrt m}+\frac C{ms}.
+\end{aligned}
+\tag{17.15}
+$$
+
+第二式是对 $\overline{f_w}$ 作同一计算。旋转坐标在此只用于计算矩阵恒等式，不施行物理旋转。
+

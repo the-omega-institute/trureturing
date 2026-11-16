@@ -1,0 +1,42 @@
+**定理 110.1（不预设连续性的局部到全域引理）。** 设W为任意实内积空间，$0<r<1$。若总映射 $F:W\to W$ 满足109.3、$\langle y,Fy\rangle=0$ 和 $\|Fy\|=r\|y\|$，则F为实线性斜算子，且
+
+$$
+\langle Fy,z\rangle=-\langle y,Fz\rangle,\qquad
+F^2=-r^2I.
+\tag{110.1}
+$$
+
+不要求W完备、有限维或F连续。
+
+证明。W为零时直接成立。否则取 $v_0\ne0$，选 $\epsilon>0$ 足够小，使 $U_3=B(v_0,3\epsilon)$ 中任意b,c满足
+
+$$
+\langle b,c\rangle>r^2\|b\|\|c\|.
+$$
+
+这只使用已知内积的连续性及 $r<1$。109.3第一因子至少是 $\langle b,c\rangle-r^2\|b\|\|c\|>0$，故在该开集上有准确斜关系 $\langle b,Fc\rangle=-\langle Fb,c\rangle$。
+
+对 $\|h\|<\epsilon$ 定义 $G(h)=F(v_0+h)-F(v_0)$。对全部 $b\in U=B(v_0,\epsilon)$，
+
+$$
+\langle b,G(h)\rangle=-\langle Fb,h\rangle.
+\tag{110.2}
+$$
+
+开球分离W：若一个向量对整个开球的内积为零，取球内两点之差可知它对全部W为零。因此110.2给局部可加性及局部实齐次性：只要h,k,h+k，或h、th在上述小球内，就有 $G(h+k)=G(h)+G(k)$、$G(th)=tG(h)$。这里t为实际实数，不用有理数逼近未知F。
+
+对任意 $w\in W$，选正整数n使 $\|w/n\|<\epsilon$，定义 $Tw=nG(w/n)$。局部实齐次性使此定义与n无关，局部可加性使T为全W上的实线性映射，且在小球上T等于G。局部界 $\|G(h)\|\le r(2\|v_0\|+\epsilon)$ 也给T有界，但不用于假设F连续。
+
+对任意t为正数，b与 $tv_0$、b与 $v_0$ 都满足同一急角条件；两次斜关系和开球分离给 $F(tv_0)=tF(v_0)$。取充分小的正s使 $h=sv_0$ 落入G的小球，得到 $sTv_0=G(sv_0)=sF(v_0)$，故 $Tv_0=F(v_0)$。于是 $F=T$ 在U上成立。
+
+双线性式 $\langle Tb,c\rangle+\langle b,Tc\rangle$ 在 $U\times U$ 为零，取开球内两点之差两次，得到T在全部W上斜。二次式 $\|Tw\|^2-r^2\|w\|^2$ 在U为零；沿经过U的任意实直线取三个不同的小参数，二次多项式恒等给其二次系数为零。因此 $\|Tw\|=r\|w\|$ 对全部W成立。
+
+只需这一个局部T即可覆盖整行。固定任意 $z\ne0$，对 $b\in U$，109.3变成
+
+$$
+0=\langle b,z-T(Fz)\rangle\,\langle b,Fz-Tz\rangle.
+\tag{110.3}
+$$
+
+第一向量不为零，因为 $\|T(Fz)\|=r^2\|z\|<\|z\|$。它的非零线性泛函在U中有非空开非零区域，第二线性泛函遂在该区域恒零，从而在全部W恒零。故 $Fz=Tz$；零输入由范数条件处理。无需连通性、路径拼接或F的极限。最后极化范数恒等得 $\langle Ty,Tz\rangle=r^2\langle y,z\rangle$，与斜性合用给 $\langle T^2y,z\rangle=-r^2\langle y,z\rangle$；W内分离性给110.1。∎
+

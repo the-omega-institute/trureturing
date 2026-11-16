@@ -1,0 +1,60 @@
+**Proposition 31.1 (censored lifetime and death-mark rate).** For the
+actual construction, when $\delta\le T/2$ put
+
+$$
+C_T=\frac{u-l}{\sqrt{4\pi}(T/2)^{3/2}}.
+\tag{31.1}
+$$
+
+Its death-mark discrepancy and the lifetime metric of Theorem 24.1
+satisfy
+
+$$
+\begin{aligned}
+\mathbb P({\bf1}_{\{\zeta_\eta<\infty\}}
+                \ne{\bf1}_{\{\zeta<\infty\}})
+ &=\mathbb P(T-\delta<\tau\le T)\le C_T\delta,\\
+\mathbb E d_\zeta(\zeta_\eta,\zeta)&\le(1+C_T)\delta.
+\end{aligned}
+\tag{31.2}
+$$
+
+Along every deterministic $\eta_n\to0$, the complete held triples and
+native paths converge uniformly almost surely to the held target;
+$\zeta_{\eta_n}\to\zeta$ almost surely, with eventually equal death
+marks. In particular the joint held-path/lifetime law contract (11.7)
+holds on this actual coupling.
+
+Proof. Formula (26.3) shows that native death is delayed by exactly
+$\delta$ when observed, with no native death if the target survives.
+The two marks differ exactly on $T-\delta<\tau\le T$.
+For a covariance-$2$ Brownian motion the classical one-sided first
+passage time to a level at distance $d>0$ has density
+
+$$
+f_d(t)=\frac{d}{\sqrt{4\pi}\,t^{3/2}}
+               \exp\{-d^2/(4t)\},\qquad t>0.
+\tag{31.3}
+$$
+
+This follows by differentiating the reflection-principle identity
+$\mathbb P(\sup_{s\le t}W^1_s\ge d)=2\mathbb P(W^1_t\ge d)$;
+the variance is $2t$. Exit through a particular face in a time
+interval is contained in the event that the first one-sided passage
+to that face lies in that interval. Sum (31.3) for distances $k-l$
+and $u-k$. On $[T-\delta,T]$ their sum is at most $C_T$, proving
+the first line of (31.2). On equal finite marks the lifetime metric
+is at most $\delta$, on unequal marks it is $1$, and on equal no-death
+marks it is zero. This proves its expectation bound.
+
+If $\tau<T$, then for all sufficiently large $n$,
+$\tau+\delta_n<T$, so the two marks are finite and their times differ
+by $\delta_n\to0$. If $\tau>T$ both marks are always infinite.
+The remaining event $\tau=T$ is null by Proposition 4.5. This proves
+the almost sure lifetime and eventual mark assertion without an
+independence or matching-marginal-law substitution. Equation (26.4)
+proves uniform convergence of the same triples; alternatively the
+phase-lift transfer (13.3) applies to (26.2). Their exact affine
+native images converge uniformly too. Taking these convergences
+jointly proves the law assertion. $\square$
+

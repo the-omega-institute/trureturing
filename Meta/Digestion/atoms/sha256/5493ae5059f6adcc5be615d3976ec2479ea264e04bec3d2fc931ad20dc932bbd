@@ -1,0 +1,24 @@
+**定理 115.5（整球极限二择）。** 对任意 $p_n\to p$，每一个 Hausdorff 子列极限都恰为以下两者之一：
+
+$$
+D_{p_n}\longrightarrow D_p,
+\qquad\text{或}\qquad
+D_{p_n}\longrightarrow\{q\}\quad\text{其中 }q\in P\cap D_p.
+\tag{IX115.10}
+$$
+
+证明。取任意具有 Hausdorff 极限的子列，写
+$D_{p_n}=c_n+A_nB^3$。所有这些球包含在固定紧集 $K$ 内，所以中心 $c_n$ 与线性算子 $A_n$ 有界；再取子列使 $c_n\to c$、$A_n\to A$。由引理115.4，极限
+
+$$
+Q=c+A B^3\subseteq D_p.
+\tag{IX115.11}
+$$
+
+每个 $c_n+A_nv$（$v\in S^2$）属于 $P$。114.4给 $P$ 闭，故
+$c+Av\in P$。若 $A=0$，则 $Q=\{c\}$，且 $c\in P\cap D_p$，得到第二种情形。
+
+设 $A\ne0$。此时 $\operatorname{diam}Q>0$，取 $0<\varepsilon<\operatorname{diam}Q$；对充分大的 $n$，$\operatorname{diam}D_{p_n}\ge\varepsilon$，由(IX115.8)其最小半轴统一下界为 $\gamma(\varepsilon)/(2L)>0$。因此 $A$ 满秩三，$Q$ 是一个三维椭球。其边界由 $c+Av$（$v\in S^2$）组成，全部属于 $P\cap D_p$；而114.2说明 $P\cap D_p=\partial D_p$。于是 $\partial Q\subseteq\partial D_p$，从而两者的仿射包相同：$\partial Q$ 的仿射包是 $\operatorname{aff}Q$，它被包含在 $\operatorname{aff}D_p$ 中，两个空间都为三维。
+
+现在 $Q\subseteq D_p$ 且同处于三维仿射空间。若包含严格，则 $\operatorname{ri}D_p\setminus Q$ 非空；否则 $\operatorname{ri}D_p\subseteq Q$，取闭包会得到 $D_p\subseteq Q$。取 $x\in\operatorname{ri}Q$ 和 $y\in\operatorname{ri}D_p\setminus Q$。线段从 $x$ 向 $y$ 离开 $Q$ 的第一个点属于 $\partial Q$，而整条线段（除端点的无关情形外）位于 $\operatorname{ri}D_p$，这与 $\partial Q\subseteq\partial D_p$ 矛盾。因此 $Q=D_p$，得到第一种情形。证毕。
+

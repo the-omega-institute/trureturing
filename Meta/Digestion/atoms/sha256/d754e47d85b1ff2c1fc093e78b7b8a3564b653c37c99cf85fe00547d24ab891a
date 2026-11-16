@@ -1,0 +1,41 @@
+**引理 108.5（圆弧原尺的全空间恒等式）。** 保持108.4证明中的
+$q,r,z,h$。存在同一原 $V$ 上的有符号线性效应 $b_q$，使对全部实 $t$
+
+$$
+\begin{gathered}
+a_{\gamma_q(t)}
+ =\frac{1+\cos t}{2}a_p+\frac{1-\cos t}{2}a_r+\sin t\,b_q,\\
+b_q(p)=b_q(r)=0,\qquad b_q(z)=\frac1{2h},\qquad b_q|_{M_p}=0.
+\end{gathered}
+\tag{VIII108.8}
+$$
+
+恒等式在整个 $V$ 上成立；不只是在 $D_q$ 上的限制等式。
+
+证明。在 $D_q$ 上取仿射函数
+
+$$
+B_q(c_q+y)=\tfrac12\langle hz,y\rangle_q,
+\qquad b_q=\Lambda_qB_q.
+\tag{VIII108.9}
+$$
+
+球内直径公式给(VIII108.8)第一行的限制等式。
+$\gamma_q(t),p,r$ 均为 $D_q$ 中的原纯点，故相应的三张非负原尺都在
+$Z_q$ 中。限制双射使它们各自等于同一 $\Lambda_q$ 对其限制的延拓；
+应用该映射的线性性就得到整个 $V$ 上的等式。
+$b_q$ 在 $p,r$ 取零，并在 $z$ 上取
+$h\|z\|_q^2/2=1/(2h)$，这些值均可在 $\operatorname{span}D_q$ 中直接计算。
+
+对任意 $x\in D_p$，$a_p(x)=0$，原正性给
+
+$$
+0\le a_{\gamma_q(t)}(x)
+ =\frac{1-\cos t}{2}a_r(x)+\sin t\,b_q(x).
+\tag{VIII108.10}
+$$
+
+令 $t$ 从正、负两侧趋零，一阶项必须为零，故 $b_q(x)=0$。
+结合 $b_q(p)=0$，得到 $b_q|_{M_p}=0$。
+没有声称不同球得到的 $b_q$ 在整个 $N_p$ 上相等。证毕。
+

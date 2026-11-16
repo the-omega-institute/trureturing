@@ -1,0 +1,86 @@
+**Proposition 208.4 (Loewner budgets with an exact hard-product consumer).** All forms in (208.15) are finite. Their exact pair-calibrated budget and residual contraction are
+
+$$
+V_j(a,b)=\frac{Q_{23}(f_j,F_{a\odot b})}{\pi_j},
+\qquad
+M_j(a,b)=\frac1{\pi_j}\sum_{i,k}a_ib_k\Delta(D)_{ijk}.
+\tag{208.16}
+$$
+
+They obey
+
+$$
+2\operatorname{Sym}M_j
+\succeq G_j^++G_j^- -H_{\chi,j}.
+\tag{208.17}
+$$
+
+If $k_j<\infty$, then also
+
+$$
+2\operatorname{Sym}M_j
+\succeq(1+k_j)G_j^++G_j^- -k_jV_j.
+\tag{208.18}
+$$
+
+In particular, full equality of the original sixty-four coordinates forces $M_j=0$ for every $j$ and hence the necessary budgets
+
+$$
+G_j^++G_j^-\preceq H_{\chi,j},\qquad
+(1+k_j)G_j^++G_j^-\preceq k_jV_j
+\quad\text{when }k_j<\infty.
+\tag{208.19}
+$$
+
+*Proof.* For each bounded real $h$, the same conditional covariance calculation as (208.11) gives
+
+$$
+\left(\frac{P(gh)}v-Ph\right)^2
+\le\chi\bigl(P(h^2)-(Ph)^2\bigr).
+\tag{208.20}
+$$
+
+Both conditional means have absolute value at most $\|h\|_\infty$. The unweighted conditional variance is nonnegative and at most $\|h\|_\infty^2$. Thus (208.8) proves finiteness of its $\chi$-weighted integral. Conditional covariance Cauchy–Schwarz also bounds the absolute cross covariance for $h_a,h_b$ by $\|h_a\|_\infty\|h_b\|_\infty$, proving finiteness of every entry of $H_{\chi,j}$. All other forms have bounded integrands.
+
+The hard product and the ordered pair calibration give
+
+$$
+\begin{aligned}
+\pi_jV_j(a,b)
+ &=Q_{23}(u_j,h_{a\odot b})\\
+ &=\sum_i a_ib_iQ_{23}(f_j,f_i)
+ =Q_{23}(f_j,F_{a\odot b}).
+\end{aligned}
+\tag{208.21}
+$$
+
+The baseline function here is $F_{a\odot b}$, not $F_aF_b$. It need not vanish when both $a$ and $b$ are baseline relations. Furthermore
+
+$$
+\begin{aligned}
+\pi_jM_j(a,b)
+ &=\mathcal C(h_a,u_j,h_b),\\
+\mathcal C(F_a,f_j,F_b)&=0.
+\end{aligned}
+\tag{208.22}
+$$
+
+Multilinearity and subtraction prove the residual contraction in (208.16). The pair equations also give $\mathbb E_{\nu_j}s_a=\mathbb E_{\nu_j}t_a=0$ on $K_{\rm rel}$, so $G_j^\pm$ are the actual conditional covariance forms there.
+
+Let $L_j(a,b)=\mathbb E_{\nu_j}[(s_a-t_a)(s_b-t_b)]$. The exact form identity and (208.20) give
+
+$$
+2\operatorname{Sym}M_j=G_j^++G_j^--L_j,
+\qquad L_j\preceq H_{\chi,j},
+\tag{208.23}
+$$
+
+which proves (208.17). If $k_j<\infty$, positivity of the conditional variance gives
+
+$$
+H_{\chi,j}\preceq k_j(V_j-G_j^+).
+\tag{208.24}
+$$
+
+Substitution in (208.17) proves (208.18). If $\Delta(D)=0$, (208.16) forces the whole form $M_j$ to vanish, which proves (208.19). This implication uses all required triple contractions; vanishing of the symmetric part alone would be weaker. $\square$
+

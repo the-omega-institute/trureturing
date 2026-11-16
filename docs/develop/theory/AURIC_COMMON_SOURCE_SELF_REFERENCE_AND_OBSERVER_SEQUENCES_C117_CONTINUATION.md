@@ -1598,3 +1598,192 @@ $$
 公式 (46.14) 尚未给出 $1-\rho$ 或二十二个 $b_\ell$ 的可核验数值下界，因此它完成的是固定十四事件的定性存在性，而不是数值化的父目标。要得到后者，仍需对同一 $A,C$ 提供这些低次数奇异值和高次数谱隙（或等价的固定秩泄漏量）的数值证书；本节没有把该缺口改写成较弱命题。
 
 ## 追加锚 C117续卷46（本行以下为增补区）
+
+## 47. 原空字与地址五混合的准确谱供应及保记录障碍
+
+**定义 47.1（原终端子图与共同中点谱条件）。** 严格沿用原卷 C117 (16.20)–(16.22)、定义 36.1 及本卷定义 44.1 的矩阵／Born 比较族。具体取
+
+$$
+\begin{gathered}
+\mathcal B=\{\beta\in\{0,1\}^5:\beta_i\beta_{i+1}=0\ (1\le i<5)\},\qquad
+H=\operatorname{span}_{\mathbb C}\{e_\beta=|10\beta010\rangle:\beta\in\mathcal B\},\\
+v_0=e_{00100},\quad v_1=e_{00101},\quad
+L=\operatorname{span}_{\mathbb C}\{v_0,v_1\},\quad \iota:L\hookrightarrow H,\\
+x=\frac{\sqrt5-1}{2},\quad y=\sqrt x,\quad
+\zeta=e^{3\pi i/5},\quad x+x^2=1,\qquad
+Q=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix},\\
+U_5=K_5|_L=\zeta[I_L+(\zeta-1)Q].
+\end{gathered}
+\tag{47.1}
+$$
+
+整个 $H$ 有十三维，唯一 ready 仍为 $v_0$；门 $K_j$ 的中心是原站点 $b_j$，$j=0,\ldots,6$。局部制备前缀域为 $\mathsf A=\{4,5\}^{<\infty}$，终端延续域为 $\mathsf W_7=\{0,\ldots,6\}^{<\infty}$，均含空字，且 $K_{af}=K_fK_a$。每次仍读取全部原标签 $\Gamma=\{0,1\}^{10}$，不是只读取十三个可能非零的坐标。对任意 $D\subseteq\Gamma$ 定义
+
+$$
+\begin{aligned}
+\Pi_D&=\sum_{\beta\in\mathcal B:\,10\beta010\in D}
+ |e_\beta\rangle\langle e_\beta|,\qquad
+E_{f,D}=\iota^*K_f^*\Pi_DK_f\iota\in[0,I_L],\\
+\rho_a&=|K_av_0\rangle\langle K_av_0|\quad\text{视为 }L\text{ 上的矩阵},\\
+q(a;f,D)&=\operatorname{Tr}(\rho_aE_{f,D}),\qquad
+\sum_{w\in\Gamma}E_{f,\{w\}}=I_L.
+\end{aligned}
+\tag{47.2}
+$$
+
+不在十三路径中的 $1011$ 个标签的投影为零，仍属于每个完整终端；在 $L$ 的裸终端上恰有 $1022$ 个零效果。事件质量是原始概率之和，没有成功后归一化。这里明确选定 $q_w(\psi)=|\psi_w|^2$，不将它认作原卷定义 17.1 中未知响应的推导。
+
+原卷定义 17.1、18.2 的全部合法请求域 $\mathcal F$ 继续保留原有档案、参考、端口、器件、历史及合法分支未来。(47.2) 只指定其中的有限字后单次完整终端子图，不以 $\mathsf W_7\times\Gamma$ 重新定义整个 $\mathcal F$。所有以下算术排除均对这个子图全称成立；未被表示为 (47.2) 的其他请求或操作须按其自身合同分析。
+
+定义数学完成及其中两条原行的形式混合为
+
+$$
+\begin{gathered}
+\mathcal K_{\rm term}
+=\overline{\operatorname{conv}}\{\rho_a:a\in\mathsf A\}
+=\{R\succeq0:\operatorname{Tr}R=1\}\subset\operatorname{Herm}(L),\qquad
+c=I_L/2,\\
+P_0=|v_0\rangle\langle v_0|,\qquad
+R_5=U_5P_0U_5^*,\qquad
+\rho=\frac{P_0+R_5}{2}.
+\end{gathered}
+\tag{47.3}
+$$
+
+闭包取矩阵范数拓扑；等号复用 (37.5) 的原 B45 射线密度及 44.4 的闭正生成。完整终端行的迹配对在这里是单射：每个原门的逆由 $j^9$ 供应，故仅取 $f\in\mathsf A$ 与裸标签 $w_v=1000100010$，效果 $U_f^*P_0U_f$ 的闭包已含全部局部秩一投影，因而分离 Hermitian 矩阵。故 (47.3) 也表示该终端子图的数学行完成；不表示加入档案或相关记录后的完整输入域。凸组合及极限均不供应实际随机选字器。
+
+称此完成具有**原终端共同中点谱条件** $\mathsf S_{\rm mid}^{\rm term}$，若每个 $R\in\mathcal K_{\rm term}\setminus\{c\}$ 都可写成 $R=tA+(1-t)B$，其中 $0\le t\le1$，$A,B$ 为不同极点，$(A+B)/2=c$，且存在 (47.2) 的原事件使 $\operatorname{Tr}(AE_{f,D})=1$、$\operatorname{Tr}(BE_{f,D})=0$。若还要求 $A,B$ 是实际有限字准备，则称为带准确制备的版本。这个符号只指共同中点谱条件，不指最小效果互易条件。
+
+**命题 47.2（同一混合的谱端点不属于准确有限字供应）。** $\rho$ 的两个谱投影 $P_+,P_-$ 及其特征值满足
+
+$$
+\begin{gathered}
+D_0=P_0+R_5-I_L,\qquad D_0^2=x^2I_L,\qquad
+P_\pm=\frac12\left(I_L\pm\frac{D_0}{x}\right),\\
+\rho=\lambda_+P_++\lambda_-P_-,\qquad
+\lambda_\pm=\frac{1\pm x}{2},\qquad
+(P_\pm)_{00}=\frac{1\pm x}{2}.
+\end{gathered}
+\tag{47.4}
+$$
+
+这两个 $00$ 元均不是代数整数。另一方面，所有原有限字的裸标签概率及所有 (47.2) 的效果矩阵元均为代数整数。因此，从原 ready 经任何 $g\in\mathsf W_7$ 都不能准确制备 $\iota P_\pm\iota^*$；特别地，原局部前缀菜单不能制备它们。也不存在任何 $f\in\mathsf W_7,D\subseteq\Gamma$ 准确完美区分这两个数学端点。
+
+证明。原投影公式是
+
+$$
+K_j=\zeta[I+(\zeta-1)\mathcal P_j],\qquad
+\mathcal P_j=n_{j-1}n_{j+1}+(1-n_{j-1})(1-n_{j+1})Q_j.
+\tag{47.5}
+$$
+
+在 $v_0,v_1$ 上，地址 $5$ 的邻位 $b_4,b_6$ 均零，故中心 $b_5=0,1$ 正好给 (47.1) 的有序二元块；地址 $4$ 则给 $K_4|_L=\zeta[I+(\zeta-1)\operatorname{diag}(0,1)]$。原边界门 $0,6$ 同样由 (47.5) 限制到 $H$，不以内部地址代替边界。
+
+复用 [V15 §8.1、定理 8.2 的振幅部分](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md#sec-8-1) 和[相干重建续卷 II 定理 82.1 的算术论证](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md)，置 $\mathcal O=\mathbb Z[\zeta,y]$。$\zeta$ 是十次单位根，$y^4+y^2-1=0$，所以两者都是代数整数；$\bar\zeta=\zeta^9$、$\bar y=y$，故 $\mathcal O$ 对共轭封闭。七个原门在原路径基中的全部矩阵元属于 $\mathcal O$，矩阵乘法归纳使每个有限字的矩阵元仍在其中。每个 $\Pi_D$ 的矩阵元为零或一，所以 $K_f^*\Pi_DK_f$ 及其原坐标压缩 $E_{f,D}$ 的全部矩阵元也属于 $\mathcal O$。从基态 ready 出发的每个裸标签概率为同环元素的模平方，亦在 $\mathcal O$。这里的“整数性”指代数整数性，不要求这些实概率为普通整数；论证覆盖任意字长及任意原标签事件，包括离开 $L$ 的未来。
+
+记 $U_5v_0=Av_0+bv_1$，其中
+
+$$
+A=\zeta[1+(\zeta-1)x]=\zeta(x^2+x\zeta),\qquad
+b=\zeta(\zeta-1)xy.
+\tag{47.6}
+$$
+
+由 $\zeta+\bar\zeta=-x$ 及 $x+x^2=1$ 得 $|A|^2=x^2$、$|b|^2=x$，从而
+
+$$
+D_0=\begin{pmatrix}x^2&A\bar b\\\bar A b&-x^2\end{pmatrix},\qquad
+D_0^2=(x^4+x^3)I_L=x^2I_L.
+\tag{47.7}
+$$
+
+因 $0<x<1$，(47.4) 给两个不同正特征值及其唯一秩一谱投影；直接取 $00$ 元得到所列数值。令 $x'=(-1-\sqrt5)/2$，则 $x+x'=-1$、$xx'=-1$，因此
+
+$$
+N_{\mathbb Q(\sqrt5)/\mathbb Q}\!\left(\frac{1+x}{2}\right)=-\frac14,
+\qquad
+N_{\mathbb Q(\sqrt5)/\mathbb Q}\!\left(\frac{1-x}{2}\right)=\frac14.
+\tag{47.8}
+$$
+
+代数整数的数域范数为整数，故两数均不是代数整数；扩大数域不改变一个数是否满足首一整数多项式。若某个 $K_gv_0$ 准备了目标端点，则其原裸标签 $w_v=1000100010$ 的概率必为 (47.4) 的相应 $00$ 元，与上述有限字整数性矛盾。这里容许 $g$ 使用全部七地址只是加强不可能性，不扩充定义 47.1 的局部制备菜单。
+
+若某 $E=E_{f,D}$ 满足 $\operatorname{Tr}(EP_+)=1$、$\operatorname{Tr}(EP_-)=0$，由 $E\succeq0$ 及 $I_L-E\succeq0$，零二次值分别给 $EP_-=0$、$(I_L-E)P_+=0$。再用 $P_++P_-=I_L$，必有 $E=P_+$。其 $00$ 元与 $E$ 的代数整数性矛盾。交换两端点同理。全程使用原事件效果，没有将 $f$ 限为保持 $L$ 的字。∎
+
+**推论 47.3（完成、谱条件与准确操作的分离）。** $\mathsf S_{\rm mid}^{\rm term}$ 及其带准确制备的版本均不成立，见证为 (47.3) 的 $\rho$。有限次经典随机选取原终端测试及对其输出作随机后处理，也不能准确完美区分 $P_+,P_-$。这些排除与 44.4–44.5 的数学闭生成及任意精度效果逼近相容。
+
+证明。完成的极点恰为局部秩一投影。若两个不同极点的中点为 $I_L/2$，它们必互补正交；其非中心混合的本征方向就是这两个端点。(47.4) 的两特征值不同，因此通过 $c,\rho$ 的纯态直径唯一，其无序端点只能为 $P_+,P_-$。命题 47.2 排除了所需原事件。数学全效果区间中的二值测试 $(P_+,P_-)$ 则确实区分它们，故缺少的是准确原菜单供应。
+
+对经典随机测试，平均概率准确为一或零，迫使每个正权重测试的相应概率分别为一或零。固定其中一个字 $f$，将其标签随机接受率记为 $r_w\in[0,1]$，端点分布记为 $p_w^\pm$。若 $\sum_wr_wp_w^+=1$、$\sum_wr_wp_w^-=0$，非负性迫使 $p_w^+>0\Rightarrow r_w=1$、$r_w>0\Rightarrow p_w^-=0$。原确定事件 $D=\{w:r_w>0\}$ 便准确区分两端点，与命题 47.2 矛盾。同样，额外允许原准备的有限经典混合也不产生这些纯端点：密度矩阵的凸混合若等于秩一投影，每个正权重分量都必须支撑于同一射线。
+
+最后，对每个精度可由 44.2 逼近数学测试 $(P_+,P_-,0)$，由 (37.5) 逼近这两个射线；上述整数性未给所选实嵌入中的统一正间距。因此没有准确供应不等于存在正的逼近误差下界。∎
+
+**定义 47.4（另供公平选择与保留旗标的条件模型）。** 若同一来源另实际供应公平选字过程及在终端可共同读取的旗标 $C\in\{0,1\}$，使 $C=0$ 调用空字、$C=1$ 调用字 $5$，并在后续 $f\in\mathsf W_7$ 中保持该记录，则其矩阵／Born 比较模型为
+
+$$
+\begin{aligned}
+\tau_{CA}&=\frac12|0\rangle\langle0|\otimes P_0
+          +\frac12|1\rangle\langle1|\otimes R_5,\\
+q_\tau(c;f,w)&=\frac12\operatorname{Tr}(R_cE_{f,\{w\}}),
+\qquad R_0=P_0,\quad R_1=R_5.
+\end{aligned}
+\tag{47.9}
+$$
+
+经典寄存器只是这一额外记录合同的数学表示，不由原七地址推出一个新张量资源。每个旗标下全部 $1024$ 个原标签及零项仍保留，$\sum_{c,w}q_\tau(c;f,w)=1$；若该实际资源未供应，$\tau_{CA}$ 只作为条件模型。它的系统边缘为 $\rho$，但该边缘不替代完整记录输入。
+
+即使数学上授予 (47.4) 的准确谱准备，也只考虑如下替换类：以概率 $\lambda_s$ 准备 $P_s$，$s\in\{+,-\}$；在终端输出产生前仅对谱分支作经典随机重标记 $r(c\mid s)$，保持系统态不变，其中 $r(c\mid s)\ge0$、$\sum_cr(c\mid s)=1$。其联合矩阵为
+
+$$
+\sigma_{CA}=\sum_{c=0}^1\sum_{s\in\{+,-\}}
+ \lambda_s r(c\mid s)|c\rangle\langle c|\otimes P_s.
+\tag{47.10}
+$$
+
+此定义不允许在看见终端标签后倒填旗标，也不把相干参考、分支依赖的系统操作或其他联合耦合解释成经典重标记。
+
+**命题 47.5（保留旗标边际时的原始联合质量间隙）。** 在定义 47.4 的条件模型中，任何 (47.10) 若保留 $\Pr(C=0)=1/2$，则在同一个原裸终端事件上满足
+
+$$
+\begin{aligned}
+q_\tau(C=0;\epsilon,w_v)&=\frac12,\\
+q_\sigma(C=0;\epsilon,w_v)&\le\frac{1+x}{4},\\
+q_\tau(C=0;\epsilon,w_v)-q_\sigma(C=0;\epsilon,w_v)
+&\ge\frac{1-x}{4}=\frac{x^2}{4}>0.
+\end{aligned}
+\tag{47.11}
+$$
+
+尽管两联合模型忽略 $C$ 后对全部 $f\in\mathsf W_7,D\subseteq\Gamma$ 的系统终端概率相同，它们不能由这种替换保持完整联合行。
+
+证明。$\tau$ 的 $C=0$ 未归一块为 $P_0/2$，而原裸效果 $E_{\epsilon,\{w_v\}}=P_0$，故第一式成立。$\sigma$ 的同一块为
+
+$$
+\sigma_0=aP_++bP_-,\qquad
+a=\lambda_+r(0\mid+),\quad b=\lambda_-r(0\mid-),\quad
+0\le a\le\lambda_+,\quad0\le b\le\lambda_-,\quad a+b=\frac12.
+\tag{47.12}
+$$
+
+由 (47.4) 得
+
+$$
+\operatorname{Tr}(\sigma_0P_0)
+=a\lambda_++b\lambda_-
+\le(a+b)\lambda_+=\frac{1+x}{4}.
+\tag{47.13}
+$$
+
+减去原质量并用 $1-x=x^2$ 得 (47.11)。上界在这个替换类内可达：取 $a=1/2,b=0$，即 $r(0\mid+)=1/(2\lambda_+)$、$r(0\mid-)=0$，其余概率由互补给出；$\lambda_+>1/2$ 保证合法。两模型的系统边缘均为 $\rho$，所以对每个原未来及标签事件忽略旗标后的迹配对完全相等。联合等价却已经被空未来中的单个原标签否证，不需要另选有利未来，也没有成功后条件化。∎
+
+**定义 47.6（数学复用及源相对适用范围）。** 命题 47.2–47.5 的 `repo-derived` 内容是原 $\epsilon,5$ 两行的形式混合，配合全部七地址终端事件的整数性，给出唯一纯态直径的准确实现障碍，并在另供公平记录后得到原标签联合质量差 $x^2/4$。代数整数的环闭性与范数判据、二阶谱分解、正效果的零二次值性质及经典随机矩阵均为成熟中间工具，不单列为新数论或分类结果，也不主张全球原创性。
+
+V15 §8 及相干重建续卷 II82.1 已给同一原振幅环与有理概率障碍；原卷 C11736.2 已用 $345,u_0$ 的归一效果 $00$ 元 $x^2/2$ 排除裸种子的 B45 轨道准确有限正生成。这里不重交这些结果：(47.4) 来自另一固定对象——两条原准备行的混合；效果排除覆盖任意七地址未来的任意完整标签事件，不要求未来保持 $L$，也不把其压缩假定为迹一投影。(47.11) 则是同一见证的联合记录后果，即使另授谱端点仍成立。[Cut Atlas 续卷 III §§27–30](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_III.md) 的准备域凸化与保留标签边界在这里按具体原标签和质量消费。
+
+相关 `literature-attested` 前件只作数学引文：Kliuchnikov–Yard，[*A framework for exact synthesis*, arXiv:1504.04350v1](https://arxiv.org/html/1504.04350v1)，讨论包括 Fibonacci 门在内的精确合成数论框架；这里直接复用上述原环归纳，不移用其他门集的可实现性。Barnum–Hilgert，[*Strongly symmetric spectral convex bodies are Jordan algebra state spaces*, arXiv:1904.03753v1](https://arxiv.org/html/1904.03753v1)，§3 定义 3.1–3.3 以全部数学效果定义完美可区分，Theorem 6.1 给强对称谱 bit 的球体结论；其全效果约定不能供应 (47.2) 菜单内的准确测试。Garner–Müller–Dahlsten，[*The complex and quaternionic quantum bit from relativity of simultaneity on an interferometer*, arXiv:1412.7112v4](https://arxiv.org/html/1412.7112v4)，Theorem 1 的相位群选择另含臂操作与制备前件，并采用任意精度可实现的闭群约定；该约定不把本节的准确有限字排除改成矛盾。本节不新增球体或相位群分类。
+
+在此源接口上，将 $\mathsf S_{\rm mid}^{\rm term}$ 读成准确原有限字菜单的性质已被 (47.4)–(47.8) 排除；将它读成数学完成与全效果的性质则仍可成立。若要据此取得实际谱性，须另给超出所排除测试类的准确供应，并保留原卷定义 17.1、18.2 的全部合法请求和记录。若实际混合保留 $C$，仅给相同系统边缘还不足，(47.11) 是完整替换必须通过的一个必要联合检验。真正另供的相干联合操作、不同原请求、条件化或无界协议均不属于本节的不可能性断言；其合法性、原始质量及全部未来相容性须分别证明。
+
+这组条件模型不选择新的共同来源或全局态，不证明原 $\omega$ 纯或唯一，不把局部预测三维认作物理空间三维，也不供应原 $R_\star$、序列更新、共同参考、档案及全部复合未来的接口。本节 $\zeta$ 仅指 (47.1) 的原门参数；没有据此识别 C133 的相位根、实 Bloch 复结构 $J$ 与态泛函 $\omega$，后三者仍是不同类型。
+
+## 追加锚 C117续卷47（本行以下为增补区）

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f4f6a77dc5cb0f235d9cfd1e7a5828134e9c0b3ee275f34ad9d8e070cc664ec0
+  normalized_sha256: sha256:f4f6a77dc5cb0f235d9cfd1e7a5828134e9c0b3ee275f34ad9d8e070cc664ec0
+cas_ref: sha256:f4f6a77dc5cb0f235d9cfd1e7a5828134e9c0b3ee275f34ad9d8e070cc664ec0
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/MacroscopicFreezing.freezing_eventually
+    target_statement_id: sha256:f739bea71a2f360ca85e3a76ed6bf0882055481c9ed6a224de28159ef690410d
+receipts:
+  unresolved_subitems: []

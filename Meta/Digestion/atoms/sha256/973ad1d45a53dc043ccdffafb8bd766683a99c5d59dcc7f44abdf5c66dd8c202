@@ -1,0 +1,102 @@
+**定义 121.2（实际种子及严格偏差方向）。**
+本章另设 EB3、Inj、$\dim V=9$，并给定实际原正交三角 $(p,q,r)$，至少一个顶点属于 $P_0$。
+实际边传播使三个顶点都属于 $P_0$。
+选择完整图
+
+$$
+D_p=c+B\overline{\mathbb B}^{3},\qquad
+q=c+Bv_0,\quad r=c-Bv_0,\quad \|v_0\|=1.
+\tag{X121.4}
+$$
+
+这里 $\overline{\mathbb B}^{3}=\{w\in\mathbb R^3:\|w\|\le1\}$ 是整个闭单位三球。
+
+令 $g=u-e_p$，取原线性读数 $H:V\to\mathbb R^3$，使
+
+$$
+H(c+Bw)=w,\qquad H(p)=0,\qquad H_i\in S_p.
+\tag{X121.5}
+$$
+
+[EXCLUSION IX120.8、120.10—120.13](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+给出 $S_p\simeq\operatorname{Aff}(D_p)$、$\dim S_p=4$、$g\in\operatorname{ri}N_p$，以及原方向函数
+
+$$
+\rho_p(\ell)=\sup_{z\in K\setminus\{p\}}
+\frac{-\ell\cdot H(z)}{g(z)}.
+\tag{X121.6}
+$$
+
+$g$ 在 $K\setminus\{p\}$ 严格正，$\rho_p$ 有限且正齐次。
+对 $h=\alpha g+\ell\cdot H\in S_p$，原全局正性恰为
+$\alpha\ge\rho_p(\ell)$；只有先满足这个条件，才可用原最大值公式
+$\max_Kh=\alpha+\|\ell\|$ 检查上效应界。
+
+固定一个原纯邻点及其原对径
+
+$$
+s=c+Bv\in P\cap D_p,\quad \|v\|=1,\qquad
+b=c-Bv.
+\tag{X121.7}
+$$
+
+这里的 $b$ 是态标签，与 X122 中的达到宽度的效应 $b$ 无关。
+令
+
+$$
+\begin{gathered}
+R_+=\rho_p(v),\quad R_-=\rho_p(-v),\quad \tau=v\cdot v_0,\\
+d_+=\delta_p(s)=\frac{R_+-1}{R_++1}>0,\qquad
+d_-=\frac{R_--1}{R_-+1},\qquad
+c_0=\frac{1+R_-}{1+R_+},\\
+k_+=u-e_p-e_s=\frac{g-v\cdot H}{1+R_+},\qquad
+k_-=u-e_p-e_b=\frac{g+v\cdot H}{1+R_-}.
+\end{gathered}
+\tag{X121.8}
+$$
+
+原相邻确认公式为整个 $V$ 上的恒等式
+
+$$
+e_s=\frac{R_+g+v\cdot H}{1+R_+},\qquad
+e_b=\frac{R_-g-v\cdot H}{1+R_-}.
+\tag{X121.9}
+$$
+
+[校准卷 123.8 的定理 123.11](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+拥有相邻有符号法向交线、原正性／接触／边完成等价及相反方向接触等价。
+因 $d_+>0$，该等价给 $R_+,R_->1$，从而 $0<d_+,d_-<1$。
+种子两方向已有 $\rho_p(v_0)=\rho_p(-v_0)=1$，所以
+$v\ne\pm v_0$，$-1<\tau<1$。
+$k_+,k_-$ 是有符号候选，未被称为原效应。
+
+[校准卷 125.3、125.4、125.7](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+给出整个 $V$ 上的种子恒等式与完整球支撑式
+
+$$
+\begin{gathered}
+e_p+e_q+e_r=u,\qquad
+e_q=\frac{g+v_0\cdot H}{2},\quad
+e_r=\frac{g-v_0\cdot H}{2},\\
+h|_{D_q}=h(p)e_p+h(r)e_r\quad(h\in\mathbb R e_p+S_p),\\
+h|_{D_r}=h(p)e_p+h(q)e_q\quad(h\in\mathbb R e_p+S_p),\\
+e_s|_{D_q}=e_s(r)e_r,\qquad
+e_s|_{D_r}=e_s(q)e_q.
+\end{gathered}
+\tag{X121.10}
+$$
+
+这些不是只在三个取样点成立的式子。
+其中跨球支撑先由校准卷 125.3 的唯一球支撑式对 $N_p$ 成立，
+取 span 延至 $S_p$，再加入 $e_p$ 方向，给所列 $\mathbb R e_p+S_p$ 范围。
+有实际 $P_0$ 种子且 $\dim V=9$ 时，
+[校准卷 125.3—125.5](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+已给 $U_\triangle=V$、$\mathcal S_\triangle=V^*$ 和联合分离 $\mathsf J_\triangle$。
+$\mathsf J_\triangle$ 在本章不是额外未付桥。
+同卷 125.6 将三个规范读回的全锥正性与全部种子方向校准另行联系；
+线性同构及九维数不支付那项正性。
+
+本章不假设 $P_{\rm reg}$、移动球或效应族连续性、数值互易、
+$\mathrm{Pair}_\perp$、正规范读回、$\mathsf E_0$、共同正延拓或原生操作。
+以下五步保留这个九维入口，推导本身不使用环境维数九。
+

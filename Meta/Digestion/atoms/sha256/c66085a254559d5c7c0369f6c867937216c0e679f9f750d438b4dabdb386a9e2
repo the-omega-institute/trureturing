@@ -1,0 +1,15 @@
+**Definition 1.3 (closed finite stochastic comparator).** For an integer $S\ge1$, a comparator has at most $S$ possible complete persistent states. After padding unused states, its response to the repeated block and terminal event has the form
+
+$$
+q_n=\alpha P^n b,\qquad
+\alpha\in\Delta_S,\qquad P\in[0,1]^{S\times S},\quad
+P\mathbf1=\mathbf1,\qquad b\in[0,1]^S.
+\tag{1.4}
+$$
+
+Here $\alpha$ is a probability row and $b$ is a column of terminal-event probabilities. All information affecting future kernels or terminal reports is included in the state: source and controller memory, programme position, counters, clocks, rereadable archives, retained randomness and any retained exact phase. An inaccessible passive record can be omitted only if it does not affect those future kernels or reports. Fresh independent innovations can be integrated into the kernels. Retained correlated randomness must satisfy the same closure condition; its effect cannot be treated as a fresh independent innovation merely by renaming it.
+
+The per-address kernels and report kernel are fixed within each comparator. For a native comparator with kernels $P_0,P_1$, the row convention gives $P=P_0^5P_1^5$; allowing every stochastic $P$ in (1.4) enlarges this class. A read at the start of $\mathsf R(\emptyset,g^n)$ may change the comparator's initial distribution; arbitrary $\alpha$ already includes it. The externally supplied symbols are only the original requests. Neither the integer $n$, the whole future programme nor the elapsed index is an additional free input to a kernel or report rule. A time-dependent rule is permitted only when its controlling information is included in the finite closure.
+
+Arbitrary fixed real entries of $\alpha,P,b$ are allowed, even when their effective or physical implementation has not been supplied. The coefficients may be designed for a chosen horizon, but the same triple is used at every index in that horizon. The theorem is uniform over these designs. A probability distribution on $S$ states can vary continuously; no identification of its possible beliefs with $S$ deterministic predictions is made. This is the persistent-information convention of [PhaseBoundary350.1][PB] specialized to original symbols.
+

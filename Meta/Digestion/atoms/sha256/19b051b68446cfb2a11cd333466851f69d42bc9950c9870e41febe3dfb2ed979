@@ -1,0 +1,4 @@
+# AURIC 全部探针与环境耦合的固定输出延续
+
+本卷只在既有《AURIC FULL PB POLYNOMIAL TRANSPORT AND REAL ROOT RIGIDITY》的固定输出接口上增加一条精确的环境耦合应用。承载来源仍是该卷在提交 `0fd6b8d8b80330b90beecbc012c9b7eb9a57f765` 的原文，正文身份仍为 `AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md`；本卷不改写原卷的任何字节。普通有限维完整 $\mathsf H_A(D)$ 下的分类，包括 $M_3(\mathbb C)$，已经由原卷 §22.1 所复用的 AH42.4 等结果支付。本卷的增量仅是：对一个显式环境耦合族，不携带总映射 $D$ 或任何外层响应值，较弱的固定输出 P2 已足以消去残量；这里不新增完整 H、$M_3$ 或原整行分类，也不提出完整量子候选或完整总响应反模型。
+

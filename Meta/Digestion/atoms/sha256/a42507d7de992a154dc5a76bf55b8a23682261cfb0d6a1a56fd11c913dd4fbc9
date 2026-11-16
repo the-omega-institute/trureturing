@@ -1,0 +1,16 @@
+### 41.5 通常／相反行、成熟工具与局部几何的复用
+
+对定理 41.2 的固定三元组，准确有
+
+$$
+c\circ t-ig=c\circ t-iK_\sigma(c,t)
+=\begin{cases}ct,&\sigma=1,\\tc,&\sigma=-1.\end{cases}
+\tag{41.29}
+$$
+
+若三元组来自原实际模型，$g=D(c,t)$，这就是同一旧响应的通常或相反乘法行。只有固定三元组时，它不供应响应总映射，更不供应全域双线性、结合乘法、全部有限旧复 Gram 或动力学。整个已经分类的 $C$ 的通常／相反 $C^*$-乘法、伴随、准确锥、原单位范数和数学 GNS，直接复用 §36.1、40.2 所消费的 AH64.1、75.1；每份原限制评价的循环向量平方范数仍准确为 $\gamma(P)$，零角质量仍给零向量。
+
+实际 Pauli 块及 R5 的三维几何只按 §40.1 式 (40.2)–(40.4) 的已付入口使用：R5 定义 12.1、定理 12.2 的非零交替双线性、同域闭合及全部 P、N 前件不删，Pauli/Born 消费者直接复用其 §12.8 与本卷 (40.7)，不另立包装定理或重作分类。R5 的 $\circ+iD$ 与本卷 $\circ-iD$ 在同一已识别块上仍互为相反乘法；同一 Jordan 平方和 Born 配对不抹去这个符号约定。R5 的直接身份仍为 `aef46ce7497cf8ee6bef9bb7356a4483f3bfe6f0`，不覆盖任何内层来源身份。
+
+本节的 $\texttt{repo-derived}$ 差额仅为上述较弱接口中的两探针有限充分性，以及尖锐 P2 族的一探针预算消费者。Peirce 块乘法、实 Gram 与 Cauchy–Schwarz、正泛函分离和 $C^*$-恒等式均为成熟工具：沿定义 10.1、归属 32.1、§36.3，Peirce 术语归于 Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，§2.6.2、Lemma 2.6.3；正泛函与表示背景归于其中所引 Gelfand–Naimark、Segal，亦见 Blackadar，[*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)。本节不将自己的两探针推断归给这些成熟来源，不主张历史优先权、独立外部检索覆盖、穷尽检索或外部开放问题解决，也不把标量泛函二表正性升格为算子二正性。
+

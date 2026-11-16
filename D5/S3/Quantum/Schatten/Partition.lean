@@ -159,7 +159,7 @@ Its pth power is Tr(XX*)^(p/2); zero singular values are retained. -/
 def rectangularNorm {c : Type*} [Fintype c] (X : Matrix d c ℂ) (p : ℝ) : ℝ :=
   schattenNorm (CFC.sqrt (X * Xᴴ)) p
 
-private lemma rectangularNorm_rpow {c : Type*} [Fintype c]
+lemma rectangularNorm_rpow {c : Type*} [Fintype c]
     (X : Matrix d c ℂ) {p : ℝ} (hp : 0 < p) :
     rectangularNorm X p ^ p = tracePower (p / 2) (X * Xᴴ) := by
   rw [rectangularNorm, norm_rpow_gram _ hp]

@@ -1,0 +1,22 @@
+**Proposition 205.4 (algebraic failures of the unrestricted rank inference).** The zero-sum column and two-column matrix
+
+$$
+\kappa=(-1,-1,2,0)^{\mathsf T},\qquad
+A_2=\begin{pmatrix}1&0\\1&0\\0&1\\-2&-1\end{pmatrix}
+\tag{205.8}
+$$
+
+satisfy
+
+$$
+\operatorname{rank}\kappa=1,\quad M(\kappa)=0,
+\qquad
+\operatorname{rank}A_2=2,\quad
+M(A_2)=\begin{pmatrix}0&0\\8&4\end{pmatrix}.
+\tag{205.9}
+$$
+
+Thus a feasible occurrence of the first matrix would have actual label rank two, and a feasible occurrence of the second would have actual label rank three. Unrestricted coefficient transversality likewise does not suffice for actual rank four. These examples assert algebraic ranks only; membership in an original FIB feasibility body is an additional hypothesis.
+
+*Proof.* Each displayed column sums to zero, and direct multiplication by $\mathsf B^{\mathsf T}$ gives (205.9). The vector $\kappa$ is nonzero, and the rows $(1,0)$ and $(0,1)$ of $A_2$ prove its rank two. Write its columns as $c=(1,1,0,-2)^{\mathsf T}$ and $e=(0,0,1,-1)^{\mathsf T}$. The rank-one endpoints $c(2,0)$ and $e(0,2)$ are transverse in Definition 202.1 and have midpoint $A_2$, but their restricted column factors $(0,8)^{\mathsf T}$ and $(0,4)^{\mathsf T}$ are dependent. Finally, for $d=1$, a section change with $L(q)=2$ and $L(1)=0$ gives $D_L=\kappa$ because $f_0=f_1=3/8-q/2$, $f_3=q$ and $f_B=1/4$. It changes the coefficient representation $\kappa$ into zero for the same family. This also shows why coefficient correction rank itself is not a section invariant. $\square$
+

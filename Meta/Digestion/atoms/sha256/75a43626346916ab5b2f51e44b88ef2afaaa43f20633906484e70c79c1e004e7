@@ -1,0 +1,7 @@
+**引理 496.2（宏观变长的冻结）。** 固定 $M\ge1$、$L\ge0$。设 $a\in C^1([1,2])$，$0\le a\le M$，$|a'|\le L$，令 $f_{a,X}(x)=D_{h\,a(x/X)}(x)$。对正整数 $n$，令 $u_j=1+j/n$、$I_j=[u_jX,u_{j+1}X]$，在 $I_j$ 上令 $F_{a,n,X}(x)=D_{h\,a(u_j)}(x)$。若 $Mh\le X$、$Lh/X\le\frac12$，且 $R=(1+L)h/n$ 满足 (496.2)，则
+
+$$
+\|f_{a,X}-F_{a,n,X}\|_{X,2}^2\le120(1+L)\Bigl(\frac1n+\frac{Mh}X\Bigr)+640(1+L)\varepsilon_X .
+\tag{496.3}
+$$
+

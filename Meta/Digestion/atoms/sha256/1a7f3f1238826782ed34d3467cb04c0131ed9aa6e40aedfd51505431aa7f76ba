@@ -1,0 +1,63 @@
+**定理 123.13（全方向失败的三种准确有限表达）。** 在EB3+Inj中，对每个 $p\in P_0$，以下等价：
+
+1. $\beta_\omega(p)>0$，即存在同一 $\epsilon>0$ 使(Q123.38)对整个原 $D_p$ 成立；
+2. 存在有限真实方向 $w_1,\ldots,w_m\in S^2$ 和 $\eta>0$，其真实对径端 $a_i=a_{w_i}$、$z_i=H(a_i)/g(a_i)$ 满足
+
+$$
+(1+\eta)\mathbb B^3\subseteq\operatorname{conv}\{z_1,\ldots,z_m\};
+\tag{Q123.39}
+$$
+
+3. 存在同一有限批真实 $a_1,\ldots,a_m$ 及同一 $\varepsilon_0>0$，使
+
+$$
+\forall v\in S^2\ \exists i\in\{1,\ldots,m\}:\quad
+r_v(a_i)\le-\varepsilon_0.
+\tag{Q123.40}
+$$
+
+没有要求某个固定 $i$ 对所有方向都负；要求的是同一有限批覆盖全部候选，并用同一严格负裕量。
+
+证明。THREE_COPY第七卷121.2—121.3及THREE_COPY第七卷122.13已经给
+
+$$
+\beta_\omega(p)>0
+\Longleftrightarrow W(D_p)<1
+\Longleftrightarrow\rho_p(v)>1\ (\forall v\in S^2).
+\tag{Q123.41}
+$$
+
+有限连续 $\rho_p$ 在紧 $S^2$ 上达到最小值，因此1等价于
+
+$$
+\delta_p:=\min_{v\in S^2}(\rho_p(v)-1)>0.
+\tag{Q123.42}
+$$
+
+对每个单位方向 $n$，由真实端点(Q123.8)取 $w=-n$，有 $n\cdot z_w=\rho_p(-n)\ge1+\delta_p$。对这个固定真实 $z_w$，集合
+$\{n'\in S^2:n'\cdot z_w>1+\delta_p/2\}$ 是含 $n$ 的开集。它们覆盖紧球面，取有限子覆盖，得到同一有限批 $z_i$，对每个 $n$ 均有 $\max_i n\cdot z_i>1+\delta_p/2$。令 $\eta=\delta_p/2$，有限凸包的每个方向支撑值都至少为 $1+\eta$，由凸分离恰给(Q123.39)。这没有使用 $w\mapsto a_w$ 连续。
+
+反向，若2成立，有限凸包属于 $Z_p\subseteq S=\overline Z_p$；即便此时 $Z_p$ 未证闭也无碍。每个方向 $n$ 的支撑值至少为 $1+\eta$，故 $\rho_p(-n)\ge1+\eta$，给(Q123.42)及1。这包围的是整个放大的单位球，不只是原点或某几个坐标方向。
+
+证明2到3。令 $m_i=g(a_i)>0$，$m_*=\min_i m_i>0$，$R_p=\max_{v\in S^2}\rho_p(v)<\infty$。对每个 $v$，2给一个 $i$ 使 $v\cdot z_i\ge1+\eta$，而(Q123.32)给准确原读数
+
+$$
+r_v(a_i)=\frac{m_i}{1+\rho_p(v)}(1-v\cdot z_i)
+\le-\frac{m_*\eta}{1+R_p}.
+\tag{Q123.43}
+$$
+
+故取 $\varepsilon_0=m_*\eta/(1+R_p)>0$。在 $P_{\rm reg}$ 上还可用 $m_*\ge\sigma_p$，但该有限批论证本身在全部 $P_0$ 都有效。
+
+反向若3成立，对每个 $v$ 选指定负点，就有
+
+$$
+v\cdot z_i\ge1+\frac{\varepsilon_0(1+\rho_p(v))}{m_i}
+\ge1+2\varepsilon_0,
+\tag{Q123.44}
+$$
+
+因为 $\rho_p(v)\ge1$、$m_i\le1$。于是有限凸包在全部单位方向的支撑值至少为 $1+2\varepsilon_0$，由分离得到2，甚至可取 $\eta=2\varepsilon_0$。这完成所有反向。证毕。
+
+证书中的每个点都来自同一原实现的一颗完整真实球 $D_{q_{w_i}}$，且原负读数在真实原纯点 $a_i$ 上出现；没有引入外来抽象顶点。不过它是证明第三候选全域不正的数学证书，既不是共同制备协议，也不是一台把所有候选同时读出的仪器。$\beta_\omega$ 的正性与证书等价不表示其数值等于 $\delta_p,\eta$ 或 $\varepsilon_0$；原预算始终是(Q123.38)的 $2\epsilon$。
+

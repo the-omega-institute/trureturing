@@ -1,0 +1,25 @@
+**定理 31.2（三份同一窗口的首次严格超额）。** 在定义 31.1 中取三份同一窗口 $W$，记 $m=\dim_F W$、$D=F(W/W)$、$E=E_W$。当 $m\le8$ 时，
+
+$$
+\delta_3(W)=\max\{e,3m-2N\}.
+\tag{31.3}
+$$
+
+当 $m=9$ 时，$\delta_3(W)>\max\{e,27-2N\}$ 当且仅当 $N\ge15$，且在原 $D$ 内存在实际中间域 $F\subseteq A\subseteq D$，使 $[A:F]=5$、$\dim_F AW=10$。在这两条件成立时，$e=1$、$\delta_3(W)=2$；其余九维窗口仍满足 (31.3)。
+
+证明。先把 §§29–30 的中间域极值用到共同见证。对任意有限个窗口，只要 $w\in I(r)\setminus\{0\}$，就有 $Aw\subseteq r_i AW_i$ 对每个 $i$ 成立。考虑同时取商类的 $F$-线性映射
+
+$$
+Aw\longrightarrow \bigoplus_{i=1}^h r_i AW_i/r_iW_i,\qquad
+x\longmapsto(x+r_iW_i)_i.
+$$
+
+其核为 $Aw\cap I(r)$，值域所在空间的维数为 $\sum_i t_i(A)$，而 $\dim_F Aw=a(A)$。因此每个正原标签元组都满足
+
+$$
+d(r)\ge\Lambda_h(A)\qquad(F\subseteq A\subseteq D).
+\tag{31.4}
+$$
+
+同一个 $w$ 同时支撑所有商空间约束；分别取得的二元最小值不能代替它。
+

@@ -1,0 +1,29 @@
+**引理 120.11（有限Lipschitz及正性、上界的分别支付）。** 存在有限 $L_p$，使
+
+$$
+\|H(x)\|\le L_pg(x)\quad(x\in K),\qquad
+\rho_p(v)\ge\|v\|,
+\qquad
+|\rho_p(v)-\rho_p(w)|\le L_p\|v-w\|.
+\tag{IX120.15}
+$$
+
+$\rho_p$ 正齐次、次可加，而且
+
+$$
+R_p(N_p)=\{\alpha+v\cdot w:\alpha\ge\rho_p(v)\}.
+\tag{IX120.16}
+$$
+
+对该式中的原正泛函 $h=\alpha g+v\cdot H$，其全域最大值准确为 $\alpha+\|v\|$。
+
+证明。$g\in\operatorname{ri}N_p$，故存在统一的 $\delta>0$，使 $g\pm\delta H_i\in N_p$，$i=1,2,3$。于整个 $K$ 上有 $|H_i(x)|\le g(x)/\delta$，可取 $L_p=\sqrt3/\delta$。对 $v\ne0$，在球点 $c-Bv/\|v\|$ 代入给 $\rho_p(v)\ge\|v\|$；$v=0$ 同样成立。上确界中的斜率范数均至多 $L_p$，给有限性、Lipschitz性、正齐次与次可加。
+
+任一 $\operatorname{span}N_p$ 元素由限制同构唯一写成 $\alpha g+v\cdot H$。在 $p$ 为零，在其余原态非负恰等价于 $\alpha\ge\rho_p(v)$，这支付正性。只有在正性已支付以后，才用(IX120.4)取得
+
+$$
+\max_K(\alpha g+v\cdot H)=\max_F(\alpha+v\cdot w)=\alpha+\|v\|.
+$$
+
+因此上界是否不超过 $u$ 还须检查该最大值，不能单由 $\rho_p$ 的定义省略。证毕。
+

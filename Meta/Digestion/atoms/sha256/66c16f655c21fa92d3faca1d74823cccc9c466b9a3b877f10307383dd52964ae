@@ -1,0 +1,51 @@
+#### 定理 7.3：样本均值反馈的误差与收敛
+
+令 $(N_n)$ 为预先给定的确定性正整数序列。 每轮使用 $N_n$ 个条件独立样本，令
+
+$$
+\bar Y_n=\frac1{N_n}\sum_{j=1}^{N_n}Y_{n,j},
+ \qquad x_{n+1}=s\bar Y_n,\qquad e_n=x_n-s\alpha .
+$$
+
+从 $x_n\in I$ 起，
+
+$$
+\boxed{\quad
+ \mathbb E e_{n+1}^2
+ \le L^2\mathbb E e_n^2+\frac1{N_n}.\quad}
+$$
+
+若 $N_n\to\infty$，则 $x_n\to s\alpha$ 均方收敛。 若进一步 $\sum_nN_n^{-1}<\infty$，则也几乎必然收敛。 固定 $N_n=N<\infty$ 时，
+
+$$
+\limsup_n\mathbb E e_n^2
+ \le\frac1{N(1-L^2)},
+$$
+
+但不可能均方收敛于 $s\alpha$。
+
+**证明。**
+
+令 $\eta_n=s(\bar Y_n-\cos x_n)$，则 $\mathbb E(\eta_n\mid\mathcal F_n)=0$，且
+
+$$
+\mathbb E(\eta_n^2\mid\mathcal F_n)
+ =\frac{\sin^2 x_n}{N_n}\le\frac1{N_n}.
+$$
+
+因此条件交叉项为零，精确地有
+
+$$
+\mathbb E e_{n+1}^2
+ =\mathbb E|F_s(x_n)-s\alpha|^2
+   +\mathbb E\frac{\sin^2x_n}{N_n},
+$$
+
+再用压缩界得到递推不等式。 其迭代是衰减几何项与序列 $1/N_n$ 的几何卷积； 当后者趋零时，把和分为有限头部与任意小的尾部，即得均方收敛。 固定 $N$ 的上界由几何级数求和得到。
+
+若 $\sum N_n^{-1}<\infty$，Chebyshev 不等式给出 $\sum_n\Pr(|\eta_n|>\varepsilon)<\infty$。 对可数个正有理 $\varepsilon$ 使用 Borel–Cantelli 引理， 得到 $\eta_n\to0$ 几乎必然； 递推 $|e_{n+1}|\le L|e_n|+|\eta_n|$ 随即给出路径上的收敛。 最后，若固定 $N$ 却均方趋近 $s\alpha$， 则连续有界函数 $\sin^2x_n$ 的期望趋于 $\sin^2\alpha>0$。 上面的精确等式反而给出 $\liminf\mathbb E e_{n+1}^2\ge\sin^2\alpha/N>0$，矛盾。
+
+$\square$
+
+固定 $N$ 的显示式是 *上界* ，不能称为精确的噪声底。 有限实际协议需要同时选择步数、每轮样本数、角度网格及内部记录容量。 定理 2.4 和定理 6.6 也说明，固定有限程序空间不能未经近似就容纳全部精确实数设置。
+

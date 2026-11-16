@@ -1,0 +1,41 @@
+**Corollary 10.6 (one common event and the conditional current-row consumer).** Predeclare a countable family of deterministic descriptions $\kappa$. Each description fixes $H_\kappa\ge1$, rational $\chi_\kappa,\epsilon_\kappa,\delta_{{\rm row},\kappa},\delta_{{\rm dyn},\kappa}>0$, rational $c_{-,\kappa},l_\kappa>0$, an integer gate start $S_\kappa$, and the complete execution rule, including the possible completion index. The inherited paid acquisition event $\mathcal A_\tau$, with probability at least $1-\alpha$, includes the genuinely acquired normalized row $\rho_\kappa$ on its finite horizon and its readiness by the actual gate, with
+
+$$
+\operatorname{TV}(\rho_\kappa,Q_\emptyset^{H_\kappa})\le\zeta_\kappa.
+\tag{10.23}
+$$
+
+Choose the allowances with $\sum_\kappa(\delta_{{\rm dyn},\kappa}+\delta_{{\rm row},\kappa})<\infty$. All row packets, records and readiness tests in (10.23) are existing lawful paid operations; their storage, precision and service costs are retained in $\mathcal A_\tau$. On $\mathcal A_\tau$, an eligible description has $c_{-,\kappa}\le c$ and $l_\kappa\le\tau$. Generate the OPPM9 rational guard $\eta^+_\kappa$ and the present guard $b^+_\kappa$, and retain only descriptions satisfying the strict tests
+
+$$
+b^+_\kappa+\eta^+_\kappa
+ <\chi_\kappa\delta_{{\rm row},\kappa},
+\qquad
+2\eta^+_\kappa<\epsilon_\kappa\delta_{{\rm dyn},\kappa}.
+\tag{10.24}
+$$
+
+For every deterministic source-valid description, include its dynamic event and its row event in one intersection. The resulting original-law event has probability at least
+
+$$
+1-\alpha-
+\sum_\kappa\bigl(\delta_{{\rm dyn},\kappa}+\delta_{{\rm row},\kappa}\bigr).
+\tag{10.25}
+$$
+
+On this event, suppose a selected executor actually completes at a finite causal cut $C=T_\kappa+J_\kappa$, has captured, retained and assimilated every original label through $C$, and emits a normalized row $\rho_{\rm out}$ with a genuinely generated additional error certificate $\operatorname{TV}(\rho_{\rm out},\rho_\kappa)\le\xi_{\rm actual}$. Then
+
+$$
+\begin{aligned}
+\operatorname{TV}(Q_{W_{J_\kappa}}^{H_\kappa},\rho_{\rm out})
+ &\le \chi_\kappa+\zeta_\kappa+\xi_{\rm actual},\\
+\operatorname{TV}(R_C^{H_\kappa},\rho_{\rm out})
+ &\le \epsilon_\kappa+\chi_\kappa+\zeta_\kappa+\xi_{\rm actual}.
+\end{aligned}
+\tag{10.26}
+$$
+
+*Proof.* The OPPM9 all-cut event has failure below $\delta_{{\rm dyn},\kappa}$ by the second inequality in (10.24). Theorem 10.5 and the first inequality give the row-event failure below $\delta_{{\rm row},\kappa}$. Countable union over the deterministic descriptions, together with $\mathcal A_\tau$, proves (10.25). The selected description was present before the suffix and therefore is covered by this intersection.
+
+At a finite actual completion, the first inequality in (10.26) is the triangle inequality through (10.23) and the row event. The second is the triangle inequality through the OPPM9 dynamic comparison at the actual index $J_\kappa$. The hypotheses that every label through $C$ was captured, retained and assimilated, and that $\xi_{\rm actual}$ was generated, are conjunctive premises. An unprocessed archive, a retrospective row, or a service that never completes does not satisfy them. $\square$
+

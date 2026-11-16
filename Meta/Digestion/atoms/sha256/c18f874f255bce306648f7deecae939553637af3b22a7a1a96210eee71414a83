@@ -1,0 +1,111 @@
+### Q97.9 完整平方锥的状态和效果估计
+
+为完成 (Q97.4)，在本证明中比较同一 $(J,g,e)$ 上任意两个交换含幺正 Frobenius 乘法 $S,S'$，其中 $\|e\|=1$、$\|S\|_{\rm bil},\|S'\|_{\rm bil}\le L$，记 $\Delta=\|S-S'\|_{\rm bil}$。以下证明不要求 Jordan 恒等式。
+
+仍记 $\tau(x)=g(e,x)$。Frobenius 恒等式和单位给
+
+$$
+\tau(S(a,a))=\|a\|^2.
+$$
+
+所以每个有限平方锥组合 $x$ 满足 $\|x\|\le L\tau(x)$，而归一截面恰为
+
+$$
+\mathcal C_S\cap\{\tau=1\}
+=\operatorname{conv}\{S(a,a):\|a\|=1\}.
+\tag{Q97.36}
+$$
+
+右边是有限维紧集的凸包，故紧致，且全部元素的范数不超过 $L$。为验证闭包不改变此描述，若有限锥组合 $x_m$ 收敛，则其平方组合的总归一系数为 $\tau(x_m)$，有界。若极限的 $\tau$ 为零，范数不等式使极限为零；否则除以 $\tau(x_m)$ 后用右边的紧致性，再乘回极限系数即可。故全锥都满足
+
+$$
+\|x\|\le L\tau(x)\quad(x\in\mathcal C_S).
+\tag{Q97.37}
+$$
+
+并且 $e=S(e,e)\in\mathcal C_S$，$g(e,S(a,a))=\|a\|^2\ge0$，所以 $e\in\mathcal C_S^*$。
+
+对任意 $u$，Frobenius 性给 $g(u,S(a,a))=g(L_ua,a)$，故
+
+$$
+u\in\mathcal C_S^*\quad\Longleftrightarrow\quad L_u\ge0.
+\tag{Q97.38}
+$$
+
+若 $u\in\mathcal C_S^*$ 且 $\tau(u)=0$，则 $g(e,L_ue)=0$。正半定性使 $L_ue=0$，而 $L_ue=u$，故 $u=0$。所以每个非零对偶元素都能按 $\tau$ 归一成 $\Omega_S$ 中的元素。
+
+若 $u\in\Omega_S$、$\|w\|=1$，则全部实 $s$ 上有
+
+$$
+0\le g(u,S(e+sw,e+sw))
+=1+2s\,g(u,w)+s^2g(u,S(w,w)).
+$$
+
+二次式的非负性给 $g(u,w)^2\le g(u,S(w,w))\le L\|u\|$。取 $w=u/\|u\|$ 得 $\|u\|\le L$。$\Omega_S$ 闭且包含 $e$，所以非空紧致。由闭凸锥的双极定理，每个 $\|v\|\le1/L$ 满足
+
+$$
+g(u,e+v)\ge1-L\|v\|\ge0\quad(u\in\Omega_S),
+$$
+
+因而
+
+$$
+\overline B(e,1/L)\subset\mathcal C_S.
+\tag{Q97.39}
+$$
+
+同样的论证适用于 $S'$。
+
+现在取 $u\in\Omega_S$。由 (Q97.38)，$L_u\ge0$，而 $\|L'_u-L_u\|\le\Delta\|u\|\le L\Delta$，所以 $L'_u+L\Delta I\ge0$。由于 $S'$ 的单位同样为 $e$，
+
+$$
+u'=\frac{u+L\Delta e}{1+L\Delta}\in\Omega_{S'},\qquad
+\|u'-u\|\le L(L+1)\Delta.
+$$
+
+交换 $S,S'$ 即控制另一方向，因此
+
+$$
+d_H(\Omega_S,\Omega_{S'})\le L(L+1)\Delta.
+\tag{Q97.40}
+$$
+
+效果需要同时保持 $x$ 和 $e-x$ 的正性。取 $x\in E_S$，则 $\alpha=\tau(x)\in[0,1]$，且由 (Q97.37) 有 $\|x\|\le L$。用 (Q97.36) 将 $x$ 和 $e-x$ 各写成单位向量平方的有限凸组合，分别带总系数 $\alpha$、$1-\alpha$。保持同一向量和系数，只将 $S$ 换为 $S'$，得到 $x_0,y_0\in\mathcal C_{S'}$，满足
+
+$$
+\begin{gathered}
+\tau(x_0)=\alpha,\quad\tau(y_0)=1-\alpha,\\
+\|x_0-x\|\le\alpha\Delta\le\Delta,\qquad
+\|y_0-(e-x)\|\le(1-\alpha)\Delta\le\Delta.
+\end{gathered}
+$$
+
+当总系数为零时取相应元素为零。置
+
+$$
+r=e-x_0-y_0,\qquad \|r\|\le2\Delta,\qquad t=2L\Delta.
+$$
+
+$\Delta>0$ 时，(Q97.39) 给 $r+te\in\mathcal C_{S'}$。于是
+
+$$
+x'=\frac{x_0+te}{1+2t},\qquad
+e-x'=\frac{y_0+r+te}{1+2t}
+$$
+
+都在 $\mathcal C_{S'}$ 中，故 $x'\in E_{S'}$，且
+
+$$
+\|x'-x\|\le\frac{\Delta+t(1+2L)}{1+2t}
+\le[1+2L(1+2L)]\Delta.
+$$
+
+$\Delta=0$ 时直接取 $x'=x$。交换两乘法给另一方向。因此
+
+$$
+d_H(E_S,E_{S'})\le[1+2L(1+2L)]\Delta.
+\tag{Q97.41}
+$$
+
+效果集闭，(Q97.37) 将其范数控制为 $L$，且它包含 $0,e$，所以也非空紧致。这证明了两个完整集合的估计；既未把平方锥换成矩阵正锥，也未只比较有限探针的极性条件。
+

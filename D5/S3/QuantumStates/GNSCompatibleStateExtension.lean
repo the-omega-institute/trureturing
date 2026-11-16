@@ -68,7 +68,7 @@ private theorem state_bound (f : A →ₚ[ℂ] ℂ) (hf : f 1 = 1) (a : A) : ‖
   nlinarith [hcs', hp']
 
 /-- The normalized expectation and cyclic orbit in the actual completed GNS Hilbert space. -/
-private theorem normalized_gns (f : A →ₚ[ℂ] ℂ) (hf : f 1 = 1) :
+theorem normalized_gns (f : A →ₚ[ℂ] ℂ) (hf : f 1 = 1) :
     ‖cyclicVector f‖ = 1 ∧
     (∀ a : A, inner ℂ (cyclicVector f) (f.gnsStarAlgHom a (cyclicVector f)) = f a) ∧
     DenseRange (fun a : A => f.gnsStarAlgHom a (cyclicVector f)) := by

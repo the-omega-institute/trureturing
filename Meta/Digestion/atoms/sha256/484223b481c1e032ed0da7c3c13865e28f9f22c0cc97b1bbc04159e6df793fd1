@@ -1,0 +1,56 @@
+### 10.6 严格有限差额、非零性及两种符号
+
+**证明，完整余项界。** 有理根区间(10.4)给
+
+$$
+|u_1|^2<9,\quad |u_2|^2<1/2,\quad
+|a_{11}|<1/3,\quad |a_{22}|<1/2,\quad
+W_0<1+1/8=9/8<2,\quad
+J>\frac{105}{8}|\lambda|>12|\lambda|.
+\tag{10.31}
+$$
+
+记 $r_0=|\rho|$。复 Cauchy–Schwarz 给 $|V_0|\le\sqrt{UW_0}$，结合 $U\ge1/2$、$W_0<2$ 及 $r_0\le1/4$，
+
+$$
+U+\rho V_0\ge U-r_0\sqrt{UW_0}\ge U/2,\qquad
+Q<0,\qquad |Q|\ge U.
+\tag{10.32}
+$$
+
+由(10.24)–(10.25)的平方差分解，全部有限亏量满足
+
+$$
+\sqrt{B_{\phi_\xi}(R,S)}-|Q|
+=\frac{\Delta}{\sqrt{Q^2+\Delta}+|Q|}
+\le\frac{4r_0^2UW_0}{2U}=2r_0^2W_0<4r_0^2.
+\tag{10.33}
+$$
+
+没有除以零，因为 $U\ge1/2$。另一对面积精确为零，且由(10.30)、$Q<0$ 有 $|\phi_\xi(L_x)|=|Q|+r_0J$。于是
+
+$$
+\begin{aligned}
+&|\phi_\xi(L_x)|-\sqrt{B_{\phi_\xi}(R_+,S_+)}-\sqrt{B_{\phi_\xi}(R_-,S_-)}\\
+&\qquad\ge r_0J-2r_0^2W_0
+>12r_0|\lambda|-4r_0^2
+\ge8|\lambda\rho|>0,
+\end{aligned}
+\tag{10.34}
+$$
+
+最后一步仅用 $r_0\le|\lambda|$。这是一份实际有限探针的估计，没有极限探针或被省略的余项。
+
+还须排除 $x=0$。由 $u^*Xu=m$、$C_2\ge\|u\|^2>0$、$\|a\|<1/2$ 及 $r_0\le|\lambda|$，
+
+$$
+|u^*(X+\rho a)u|
+\ge|\lambda|C_2-r_0\|a\|\|u\|^2
+>\tfrac12|\lambda|C_2>0.
+\tag{10.35}
+$$
+
+故 $x\ne0$，其完整质量仍为 $\|u\|^2+|z|^2>0$。质量未被角质量或单位质量代换。
+
+对 $\sigma=-1$，取上述 $x,\xi$ 的逐项复共轭。$c,t,d$ 都是实矩阵，且 $K_{-1}(c,\bar x)=\overline{K_1(c,x)}$，故 $g,h,r,k,R_\pm,S_\pm,L_x$ 全部逐项复共轭。对自伴标签，$\phi_{\bar\xi}(\bar A_1)=\overline{\phi_\xi(A_1)}=\phi_\xi(A_1)$；平方、Jordan 读数及质量均保持。于是同一严格差额和实际非零性适用于另一符号。定理10.2得证。∎
+

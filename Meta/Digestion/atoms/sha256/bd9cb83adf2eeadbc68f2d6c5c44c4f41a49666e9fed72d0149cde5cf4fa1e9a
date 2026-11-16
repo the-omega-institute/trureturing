@@ -1,0 +1,53 @@
+**引理 25.3（平滑振幅与逐输出零流）。** 在复平面上令 $a=1-|w|^2$，并定义
+
+$$
+\begin{aligned}
+ q(w)&=\begin{cases}\exp(-1/a),&|w|<1,\\0,&|w|\ge1,\end{cases}
+ &\alpha(w)&=\bar w/a\quad(|w|<1),\\
+ u(\alpha)&=\left(e^{-|\alpha|^2/2}\frac{\alpha^k}{\sqrt{k!}}\right)_{k\ge0},
+ &F(w)&=\begin{cases}\sqrt{q(w)}u(\alpha(w)),&|w|<1,\\0,&|w|\ge1.\end{cases}
+\end{aligned}
+\tag{25.6}
+$$
+
+这是紧支撑的平滑 $\ell^2$ 值函数，且
+
+$$
+ \|F(w)\|^2=q(w),\qquad
+ \langle F(w),\partial_{\bar w}F(w)\rangle=0.
+ \tag{25.7}
+$$
+
+以下绝对常数只依赖这个固定函数。实导数取算子范数，置
+
+$$
+\begin{aligned}
+ z_0&=\int_{|w|<1}q(w)\,\frac{dA(w)}\pi>0,\\
+ M_F&=\sup_w\bigl(\|F(w)\|+\|DF(w)\|+\|D^2F(w)\|\bigr)<\infty,\\
+ A=B&=10{,}000(1+M_F)/\sqrt{z_0},\qquad R_0=4(A+B+2),\\
+ C_{\rm fail}&=1+256A^2,\qquad
+ C_{\rm return}=3R_0+257A^2+2,\\
+ H&=512C_{\rm return}+1,\qquad
+ C_{\rm sum}=256C_{\rm fail}+H,\\
+ t_*&=256\max\{100,R_0\}.
+\end{aligned}
+\tag{25.8}
+$$
+
+证明。指数级数给 $\|u(\alpha)\|=1$。对 $u$ 的任一固定阶实导数，其 $\ell^2$ 范数至多按 $|\alpha|$ 多项式增长：逐项求导后，范数平方中的求和是 Poisson 权重下固定阶多项式的矩。复合 $\alpha(w)$ 后，每个固定阶导数至多按 $a^{-1}$ 多项式增长，而 $\sqrt q=e^{-1/(2a)}$ 比每个这样的多项式衰减更快。故 $F$ 的所有阶导数在边界延拓为零，特别地 $M_F$ 有限。
+
+采用第一变量共轭线性的内积和 Wirtinger 导数，归一相干向量满足
+
+$$
+\begin{aligned}
+ \langle u(\alpha),\partial_{\bar w}u(\alpha)\rangle
+ &=\tfrac12\bigl(\bar\alpha\,\partial_{\bar w}\alpha
+             -\alpha\,\partial_{\bar w}\bar\alpha\bigr)
+ =\frac{w}{2a^2},\\
+ \partial_{\bar w}\log\sqrt q&=-\frac{w}{2a^2}.
+\end{aligned}
+\tag{25.9}
+$$
+
+两项精确相消，得 (25.7)。在边界及支撑外仍由平滑延拓成立。这个等式在全纯坐标替换下乘以相应的共轭导数因子，故零流性质不变。后面将对每个实际输出分别求 Kraus 分量和，不能只在不同实际输出之间相消。$\square$
+

@@ -1,0 +1,58 @@
+### 24.3 实际正词补偿与独立零尾巴
+
+在 (24.15) 中，$F_Sp_1=t$、$F_Sp_2=(1+\omega)t$、$F_Sp_3=0$。定义以下全部属于实际 $S$ 的有限正词：
+
+$$
+q_0=e,\qquad q_1=U(p_2\cdot p_2),\qquad
+q_2=(q_1\cdot q_1)\cdot U(q_1).
+\tag{24.16}
+$$
+
+它们的值由可加仿射公式逐项给出：
+
+$$
+\begin{aligned}
+F_Sq_1&=2\omega(1+\omega)t+t=-t,\\
+F_S(Uq_1)&=(1-\omega)t,\\
+F_Sq_2&=-2t+(1-\omega)t=-(1+\omega)t.
+\end{aligned}
+\tag{24.17}
+$$
+
+所以 $F_Sq_j=-F_Sp_j$ 对 $j=0,1,2$ 成立。没有断言 $p_j\cdot q_j=e$；补偿只发生在这个表示的值上。$Z=\ker F_S$ 是实际交换子幺半群，包含 $e,p_3$；对所有 $u,v\in Z$ 有 $d(u,v)=0$。置
+
+$$
+T_ju=(U^ju)\cdot q_j\quad(u\in Z,\ j=0,1,2).
+\tag{24.18}
+$$
+
+由 (24.15)–(24.17)，$F_S(T_ju)=\omega^jF_Su=0$，所以 $T_j(Z)\subseteq Z$，且 $T_0u=u$。不要求 $U(Z)\subseteq Z$，也不要求这些实际映射可逆或保乘法。
+
+固定任意原 $a,b\in M$，在交换幺半群 $Z\times Z$ 上定义
+
+$$
+k(z,w)=d(a\cdot z,b\cdot w).
+$$
+
+对 (24.1) 用背景 $a,b$ 和增量 $z,w$，由 $d(z,w)=0$ 及第零项非负得 $0\le k(z,w)\le3d(a,b)$。再对背景 $a\cdot z,b\cdot w$ 及增量 $u,v\in Z$ 用 (24.1)。每个第 $j$ 项可以由已经证明的共同尾巴不变性同时右乘实际 $q_j$；(24.2) 精确给
+
+$$
+\begin{aligned}
+&d\bigl((a\cdot z)\cdot U^ju,(b\cdot w)\cdot U^jv\bigr)\\
+&\quad=d\bigl(((a\cdot z)\cdot U^ju)\cdot q_j,
+               ((b\cdot w)\cdot U^jv)\cdot q_j\bigr)\\
+&\quad=k(z\cdot T_ju,w\cdot T_jv).
+\end{aligned}
+\tag{24.19}
+$$
+
+于是对每个固定 $u,v\in Z$，
+
+$$
+\sum_{j=0}^2 k(z\cdot T_ju,w\cdot T_jv)=3k(z,w)
+\qquad(z,w\in Z).
+\tag{24.20}
+$$
+
+这是 $Z\times Z$ 上三个交换的普通平移对有界实函数 $k$ 的平均关系；不需要映射 $T_j$ 彼此交换。再次应用 IV 引理 2.1，第零平移给 $k(z\cdot u,w\cdot v)=k(z,w)$。在 $(z,w)=(e,e)$ 取值，得到 (24.3) 第二式。再分别取 $(u,v)=(p_3,e),(e,p_3)$，即 (24.4)。两个独立尾巴始终作用于原 $a,b$，没有将其先投影到 $S$ 或交换有向端点。定理 24.2 证毕。
+

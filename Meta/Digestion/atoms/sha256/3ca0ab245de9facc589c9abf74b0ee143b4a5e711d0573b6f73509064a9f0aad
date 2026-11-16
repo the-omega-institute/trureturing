@@ -1,0 +1,25 @@
+**引理 139.1（两个内层旧值已知时的精确缺陷运输）。** 若原 $t,x,y\in J$ 满足 $F(t,x)=F(t,y)=0$，且 $Z=x+iy$，则
+
+$$
+\mathfrak F((u+it)Z)=\mathfrak F((u-it)Z).
+\tag{139.1}
+$$
+
+证明。原 PB 的两个增量准确为 $v=K(t,x)-t\circ y$、$w=t\circ x+K(t,y)$。对已知矩阵乘法展开得
+
+$$
+\operatorname{Re}((u\pm it)Z)=x\pm v,\qquad
+\operatorname{Im}((u\pm it)Z)=y\pm w.
+$$
+
+标准 $K$ 满足同一 PB，因而
+
+$$
+\begin{aligned}
+D(x+v,y+w)-D(x-v,y-w)&=-2x\circ v-2y\circ w,\\
+K(x+v,y+w)-K(x-v,y-w)&=-2x\circ v-2y\circ w.
+\end{aligned}
+$$
+
+相减即得 (139.1)。展开的只有已知比较映射 $K$；每个外层 $D$ 仍是其实际原值。∎
+

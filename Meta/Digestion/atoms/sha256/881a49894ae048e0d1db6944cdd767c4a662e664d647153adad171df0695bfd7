@@ -1,0 +1,11 @@
+(ii) 沿用引理 496.2 的分块 $u_j=1+j/n$、$I_j=[u_jX,u_{j+1}X]$ 与冻结函数 $F_{a,n,X}=D_{h\,a(u_j)}$（$x\in I_j$）。则对每个固定 $n$，
+
+$$
+\limsup_{X\to\infty}\ \sup_a\ \mathbb E_{\mu_X}\Bigl|\frac{f_{a,X}-F_{a,n,X}}{\sqrt{h\log X}}\Bigr|^4\le\frac{1312\,C_4(1+L)^2}{3\,n^2\log2} .
+\tag{497.4}
+$$
+
+证明。在 $[X,2X]$ 上 $d\mu_X\le dx/(X\log2)$。(i) 取 $p(x)=x$、$q(x)=x+h\,a(x/X)$、$R=Mh$、$m=\frac12$、$J=[X,2X+Mh]$（对充分大的 $X$，$q'\ge\frac12$、$Mh\le X$、$\varepsilon'_X\le1$，且 $R$ 满足 (496.2)），由引理 497.1，$\int_X^{2X}|f_{a,X}|^4\le\frac{1312}3C_4M^2h^2(\log X)^2\cdot3X$，除以 $X\log2\cdot h^2(\log X)^2$ 即得。$c$ 为常数时取 $a\equiv c$。(ii) 在 $I_j$ 上取 $p(x)=x+h\,a(u_j)$、$q(x)=x+h\,a(x/X)$、$R=(1+L)h/n$、$m=\frac12$、$J_j=[u_jX,u_{j+1}X+Mh]$，与引理 496.2 的证明相同，条件对充分大的 $X$ 成立。由引理 497.1，$\int_{I_j}|f-F|^4\le\frac{1312}3C_4R^2(\log X)^2(X/n+Mh+\varepsilon'_XX)$。对 $j$ 求和并除以 $X\log2\cdot h^2(\log X)^2$，得 $\frac{1312C_4(1+L)^2}{3n^2\log2}\bigl(1+nMh/X+n\varepsilon'_X\bigr)$，对固定 $n$ 令 $X\to\infty$。证毕。
+
+冻结误差为 $O(n^{-2})$，因为引理 497.1 保留了区间长度 $|J|$。
+

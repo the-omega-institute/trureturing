@@ -1,0 +1,14 @@
+**命题 122.7（只商去 $\mathbb Rp$ 永远非闭）。** 同一正规锚点有 $C+\mathbb Rp$ 非闭。这与(Q122.15)没有冲突。
+
+证明。在任一实际球 $F_v$ 的球面上取经过 $p$ 的光滑弧 $a(t)$，$a(0)=p$、$d=a'(0)\ne0$。因为 $u(a(t))=1$，$u(d)=0$。每个 $h\in N_p$ 在弧上于零点取局部最小，故 $h(d)=0$；特别地 $g(d)=0$、$d\in L$。对 $t>0$，
+
+$$
+\frac{a(t)-p}{t}\in C+\mathbb Rp,\qquad
+\frac{a(t)-p}{t}\longrightarrow d.
+\tag{Q122.17}
+$$
+
+若 $d=c_0+\lambda p$、$c_0\in C$，$g(d)=0$ 迫 $c_0\in\mathbb R_+p$；再用 $u(d)=0$ 得 $d=0$，矛盾。故极限不在该和中。较大的准确核 $L$ 已消去这个切向量，不能把这条非闭证据搬到 $V/L$。证毕。
+
+$N_p$ 是 $C^*$ 的暴露面。按[Pataki的Definition 1、Remark 1及Theorem 2][Q122P]，$C+(\operatorname{span}N_p)^\perp$ 闭恰是 $C^*$ 在面 $N_p$ 处的facial dual completeness条件；并非 $C$ 在某个原面处的条件。原锥即使projectionally exposed、amenable或nice，也不能由这些词本身推出这个对偶方向的闭像，且它们没有原单位预算的结论。
+

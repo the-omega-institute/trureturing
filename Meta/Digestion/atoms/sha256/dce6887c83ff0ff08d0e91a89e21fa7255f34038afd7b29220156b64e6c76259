@@ -1,0 +1,153 @@
+**定理 112.5（原双盘丛的上界）。** 在W与(VIII112.2)下，必有 $n\le3d$。
+
+证明。令 $m=d-1\ge1$，所有上同调取奇异上同调和系数 $\mathbb F_2$，
+负次数群定义为零。反设
+
+$$
+N>3m+1,\qquad\text{于是 }3m\le N-2.
+\tag{VIII112.14}
+$$
+
+使用112.4的真实空间 $S^N=B_1\cup_{\mathcal A}B_2$。
+底 $P$ 为紧ENR，特别是紧可度量、仿紧空间；112.2—112.3已给真正局部平凡的
+盘丛对 $(B_i,\mathcal A)\to P$，纤维 $(D^{m+1},S^m)$。
+成熟工具在这里的准确用途为：[Hatcher 4D.10][Q112H]给模二Thom类，
+不需要可定向；4D.8及Corollary 4D.9给相对Thom同构。
+4D.10的证明明确先用CW approximation处理非CW底，4D.1的证明也作同样处理。
+因此这些工具适用于当前底，不须另加 $P$ 是CW复形、流形或可定向的公理。
+以下均为对这些工具的具体应用及杯积计算，而非把成熟Thom或LH定理重新列作新成果。
+
+由collar的excision与Thom同构，所有 $k$ 有
+
+$$
+H^k(S^N,B_2)\cong H^k(B_1,\mathcal A)\cong H^{k-d}(P).
+\tag{VIII112.15}
+$$
+
+第一同构也可直接用cofibration商
+$S^N/B_2\cong B_1/\mathcal A$ 理解。
+因为 $d\ge2$，相对群在次数零、一都为零。
+球面对 $(S^N,B_2)$ 的长正合列于是先给
+$H^0(P)=H^0(B_2)=\mathbb F_2$。
+$P$ 已由110.3局部道路连通，故此结论也表明它道路连通。
+在 $1\le j\le N-2$，球面的第 $j,j+1$ 次群均为零，
+同一长正合列的连接同态给向量空间同构
+
+$$
+H^j(P)\cong H^{j+1}(S^N,B_2)
+\cong H^{j+1-d}(P)=H^{j-m}(P).
+\tag{VIII112.16}
+$$
+
+这里没有声称连接同态保杯积。
+迭代到零次，得到 $H^{jm}(P)=\mathbb F_2$，$j=1,2,3$；
+若 $1\le k\le N-2$ 且 $m\nmid k$，则 $H^k(P)=0$。
+这些次数合法，因为(VIII112.14)保证 $m,2m,3m\le N-2$。
+
+同一collar给Mayer–Vietoris，在 $1\le q\le N-2$ 直接得到
+
+$$
+(\pi_1^*,\pi_2^*):H^q(P)\oplus H^q(P)
+\overset{\sim}{\longrightarrow}H^q(\mathcal A).
+\tag{VIII112.17}
+$$
+
+模二没有差号问题；特别地两个pullback分别注入，且像交为零。
+令 $a_j$ 为 $H^{jm}(P)$ 的唯一非零元，置
+
+$$
+x_j=\pi_1^*a_j,\qquad y_j=\pi_2^*a_j,\qquad z_j=\pi_3^*a_j,\qquad j=1,2,3.
+\tag{VIII112.18}
+$$
+
+每一对应次数的 $H^{jm}(\mathcal A)$ 以 $x_j,y_j$ 为基。
+$z_j$ 非零，因为 $\pi_3$ 是 $\pi_1$ 经实际坐标置换所得，
+其pullback同样注入。换前两标签交换 $x_j,y_j$，固定 $z_j$，
+故在 $\mathbb F_2^2$ 中只能有 $z_j=x_j+y_j$。
+换后两标签固定 $x_j$，交换 $y_j,z_j$，从而
+
+$$
+\begin{array}{c|cc}
+ &x_j&y_j\\ \hline
+(12)^*&y_j&x_j\\
+(23)^*&x_j&x_j+y_j
+\end{array}
+\qquad H^{jm}(\mathcal A)^{\mathfrak S_3}=0,\quad j=1,2,3.
+\tag{VIII112.19}
+$$
+
+确实，第一行使不变向量只能为 $\lambda(x_j+y_j)$，第二行把它送到
+$\lambda y_j$，两者相等只能 $\lambda=0$。
+这是三个低次数中的标准二维模二表示；只用 $\mathcal A$ 上的真实重标号，
+没有要求此作用延伸到 $S^N$ 或两半盘丛。
+
+接下来必须在同一真实 $\pi_1$ 球纤维上取得第二个类的生成性，不能直接猜杯积。
+写 $x=x_1,y=y_1$，盘对的连接同态为
+
+$$
+\delta:H^m(\mathcal A)\longrightarrow H^{m+1}(B_1,\mathcal A)
+\cong H^0(P)=\mathbb F_2.
+\tag{VIII112.20}
+$$
+
+其核为 $\operatorname{im}H^m(B_1)=\mathbb F_2x$，
+因为盘丛收缩到底，其边界限制正是 $\pi_1^*$。
+故 $\delta y\ne0$，它就是该盘丛的模二Thom类。
+对每个 $p\in P$，包含纤维对
+$(D^{m+1}_p,S^m_p)\hookrightarrow(B_1,\mathcal A)$ 的自然性给
+
+$$
+\delta_p(i_p^*y)=j_p^*(\delta y)\ne0
+\quad\text{于 }H^{m+1}(D^{m+1}_p,S^m_p).
+\tag{VIII112.21}
+$$
+
+纤维自身的 $\delta_p:H^m(S^m_p)\to H^{m+1}(D^{m+1}_p,S^m_p)$ 是同构，
+所以 $y$ 在每个 $\pi_1$ 球纤维上都是顶次生成元。
+连同单位类 $1$，这核对了Hatcher 4D.1的全部纤维基条件：
+$S^m$ 的上同调在次数零、$m$ 各为一维自由模，其余为零。
+Leray–Hirsch遂给
+
+$$
+H^*(\mathcal A)=\pi_1^*H^*(P)\ \oplus\ \pi_1^*H^*(P)\,y
+\quad\text{作为自由 }H^*(P)\text{ 模，基为 }1,y.
+\tag{VIII112.22}
+$$
+
+这不是环张量积结论，特别地还没有规定 $y^2$。
+自由模性现在给 $xy\ne0$；并且若 $x^2\ne0$，则 $x^2y\ne0$。
+后一项因为 $x^2=\pi_1^*(a_1^2)\ne0$ 使 $a_1^2\ne0$，
+再用自由模的第二个基分量；并未预设 $a_2=a_1^2$。
+
+考虑二次式
+
+$$
+Q=x^2+xy+y^2\in H^{2m}(\mathcal A).
+\tag{VIII112.23}
+$$
+
+它在交换 $x,y$ 下不变；将 $x$ 固定、$y$ 换成 $x+y$ 时也不变，
+因为模二展开得到同一个 $x^2+xy+y^2$。
+(VIII112.19)的 $j=2$ 因而迫 $Q=0$。
+若 $x^2=0$，换前两标签又给 $y^2=0$，于是 $Q=0$ 迫 $xy=0$，
+与自由模性矛盾。所以 $x^2\ne0$。
+
+将 $Q=0$ 乘 $x+y$，得 $x^3+y^3=0$。
+但 $x^3=\pi_1^*(a_1^3)$、$y^3=\pi_2^*(a_1^3)$，
+它们属于(VIII112.17)在次数 $3m$ 的两个不同直和分量。
+故各自为零。再将 $Q=0$ 乘 $x$，得到
+
+$$
+x^3=y^3=0,\qquad t:=x^2y=xy^2\ne0.
+\tag{VIII112.24}
+$$
+
+非零性恰由(VIII112.22)及 $x^2\ne0$ 给出。
+换前两标签把 $t$ 送到 $y^2x=xy^2=t$；换后两标签则给
+$x^2(x+y)=x^3+x^2y=t$。
+所以 $t$ 是 $H^{3m}(\mathcal A)$ 的非零 $\mathfrak S_3$ 不变元，
+与(VIII112.19)的 $j=3$ 矛盾。
+全程所用正次数 $m,2m,3m$ 均不超过 $N-2$，
+因子交换的符号在模二系数下恒为一，故 $m=1$ 也完全包括在内。
+结论是 $N\le3m+1$，即 $n\le3d$。$m=0$ 不在此证明的适用范围。证毕。
+

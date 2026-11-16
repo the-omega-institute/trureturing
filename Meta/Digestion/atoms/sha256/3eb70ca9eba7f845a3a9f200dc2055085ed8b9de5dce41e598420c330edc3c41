@@ -1,0 +1,44 @@
+**引理 148.1（原无限输入的小连接识别）。** 固定单块秩一原投影 $p=ee^*$、$\|e\|=1$，记本块 $q=I-p$、$H(z)=ze^*+ez^*$。对任意原 $a\in E$，写
+
+$$
+a_j=\beta p+H(z)+B,\qquad z=qa_je,\qquad B=qa_jq.
+$$
+
+若 $\|z\|<2$，则全部实 $\mu$ 满足
+
+$$
+D(\mu p,a)_j=\mu H(-iz/2),\qquad
+D(\mu p,a)_l=0\quad(l\ne j).
+\tag{148.1}
+$$
+
+证明。必须先支付无限背景，不能直接调用有限域定理。$\mu=0$ 来自 P2。$\mu\ne0$ 时，置同一旧输出 $d=D(\mu p,a)$。其他块的全部向量读取及本块 $qH_j$ 的全部向量读取，首输入的平方预算都为零。129.1 因而给其他块 $d_l=0$ 及 $qd_jq=0$，这里对固定有界自伴输出作极化。因此仍准确有 $d_j=\delta p+H(w)$，$w\in qH_j$。
+
+原元 $c_0=p\circ a=\beta p+H(z)/2$ 仅支撑于本块。PB 有限差分 (128.6) 中取演员 $a$、第二输入 $\mu p$、第三输入零，准确给
+
+$$
+D(\mu p-d,\mu c_0)-D(\mu p+d,-\mu c_0)
+=2\mu p\circ d.
+\tag{148.2}
+$$
+
+分别以两份外层 P2 估计，并只对已知向量 Gram 行列式除去 $|\mu|$，得到 (138.4)。令 $v$ 是 $w$ 在 $qH_j$ 中垂直于 $\mathbb Cz$ 的分量，$\kappa=\|v\|^2$；$z=0$ 时令 $v=w$。全部测试向量 $\xi_s=e+sv$ 都是原有界算子的合法数学读取。它们只涉及固定有限维空间 $\operatorname{span}_{\mathbb C}\{e,z,w\}$，不论 $B$ 在无限补空间如何作用，仍准确有
+
+$$
+\begin{aligned}
+c_0\xi_s&=\beta e+z/2,\\
+(\mu p+\sigma d)\xi_s&=A_\sigma(s)e+\sigma w,\\
+A_\sigma(s)&=\mu+\sigma\delta+\sigma s\kappa,\qquad
+r=\operatorname{Re}\langle w,z\rangle,\\
+\Delta_{\xi_s}(\mu p+\sigma d,c_0)
+&=\frac{\|z\|^2}{4}A_\sigma(s)^2
+-\sigma\beta r A_\sigma(s)
++\|w\|^2\left(\beta^2+\frac{\|z\|^2}{4}\right)-\frac{r^2}{4}.
+\end{aligned}
+\tag{148.3}
+$$
+
+两份右侧多项式的最高系数均为 $\kappa^2\|z\|^2/4$，而 (138.4) 的左侧为 $2|\delta+s\kappa|$。固定多项式的增长给 $2\kappa\le\kappa\|z\|$，故 $\kappa=0$。这里只对已知数值多项式取增长率，没有对 $D$ 取极限。
+
+于是 $w\in\mathbb Cz$，两个外层输入才确实落入原秩至多二角 $\operatorname{span}\{e,z\}$。该角已经识别的旧公式应用到 (148.2)，给 $\delta=0$、$w=-i\mu z/2$，如 138.1 末段。$z=0$ 时先得 $w=0$，再用原一维角的零公式给 $\delta=0$。任意无限 $B$、其他块输入和 $\mu$ 均保留。∎
+

@@ -35,6 +35,7 @@ internal static class WorktreeCommand
         + "StrataLint worktree publish --branch NAME [--commit REV] | "
         + "StrataLint worktree finalize --branch NAME --writers-joined | "
         + "StrataLint worktree stale [--path DIR] | StrataLint worktree return [--path DIR] | "
+        + "StrataLint worktree pending | "
         + "StrataLint worktree ensure-cache [--path DIR] [--restore-dependencies] | "
         + "StrataLint worktree ensure-cache [--path DIR] [--restore-dependencies] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
@@ -55,8 +56,14 @@ internal static class WorktreeCommand
         ".sshx-*",
     ];
 
-    internal static CommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments) =>
-        Run(repositoryRoot, arguments, new ProductionWorktreeProcessRunner());
+    internal static CommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments)
+    {
+        ArgumentNullException.ThrowIfNull(arguments);
+        using var standardError = arguments.Count > 0 && arguments[0] == "with"
+            ? Console.OpenStandardError() : null;
+        return Run(repositoryRoot, arguments, new ProductionWorktreeProcessRunner(), new ApfsDirectoryCloner(),
+            standardError);
+    }
 
     internal static CommandResult Run(
         string repositoryRoot,
@@ -68,13 +75,15 @@ internal static class WorktreeCommand
         string repositoryRoot,
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
-        IDirectoryCloner cloner)
+        IDirectoryCloner cloner,
+        Stream? standardError = null)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
-        if (arguments.Count > 0 && arguments[0] is "with" or "checkpoint" or "publish" or "finalize" or "return" or "stale")
-            return WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, Timeout.InfiniteTimeSpan);
+        if (arguments.Count > 0 && arguments[0] is "with" or "checkpoint" or "publish" or "finalize" or "return" or "stale" or "pending")
+            return WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, Timeout.InfiniteTimeSpan,
+                standardError: arguments[0] == "with" ? standardError : null);
         if (arguments.Count > 0
             && string.Equals(arguments[0], "remove", StringComparison.Ordinal))
         {
@@ -104,6 +113,40 @@ internal static class WorktreeCommand
             return ValidateBranch(arguments.Skip(1).ToArray());
         }
 
+        // The parent adapter holds only this destination's initialization guard.
+        // It never waits for the maintenance worker's exclusive cleanup lease.
+        if (arguments.Count > 0 && arguments[0] == "--initialization-child")
+            arguments = arguments.Skip(1).ToArray();
+        else if (runner is ProductionWorktreeProcessRunner)
+        {
+            WorktreeOptions? guarded = null;
+            try { guarded = ParseArguments(repositoryRoot, arguments); }
+            catch (InvalidOperationException) { /* Create renders the ordinary usage error. */ }
+            if (guarded is not null)
+            {
+                var forwarded = arguments.ToArray();
+                for (var index = 0; index < forwarded.Length; index++)
+                    if (forwarded[index] == "--path") forwarded[++index] = guarded.Path;
+                    else if (forwarded[index] == "--source") forwarded[++index] = guarded.Source;
+                return WorktreeProtocolCommand.Run(guarded.Source,
+                    new[] { "initialize", "--path", guarded.Path, "--", "dotnet",
+                        typeof(WorktreeCommand).Assembly.Location, "worktree", "--initialization-child" }
+                    .Concat(forwarded).ToArray(), runner, Timeout.InfiniteTimeSpan, reportPending: false);
+            }
+        }
+
+        var result = Create(repositoryRoot, arguments, runner, out var summarySource,
+            out var reportAgentState);
+        return reportAgentState
+            ? WorktreeAgentStateCommand.After(summarySource, runner, () => result)
+            : result;
+    }
+
+    private static CommandResult Create(string repositoryRoot, IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner, out string summarySource, out bool reportAgentState)
+    {
+        summarySource = repositoryRoot;
+        reportAgentState = false;
         WorktreeOptions? options = null;
         string? requestedBase = null;
         string? invokingDirectory = null;
@@ -114,11 +157,14 @@ internal static class WorktreeCommand
         var halfBuiltRecovered = false;
         var stage = "preflight";
         int? failureExitCode = null;
+        var agentWarning = string.Empty;
         try
         {
-            if (runner is ProductionWorktreeProcessRunner production)
-                runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(repositoryRoot));
             options = ParseArguments(repositoryRoot, arguments);
+            reportAgentState = true;
+            summarySource = options.Source;
+            if (runner is ProductionWorktreeProcessRunner production)
+                runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(options.Source));
             requestedBase = options.Base;
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
             var baseRevision = VerifyBase(options, runner);
@@ -135,6 +181,7 @@ internal static class WorktreeCommand
             // Expiry can remove the invoking source. Resolve its base first and
             // anchor every subsequent operation, including fresh fallback, to main.
             options = options with { Source = main, Base = baseReference.Length == 0 ? baseRevision : baseReference };
+            summarySource = main;
             var currentDirectory = Directory.GetCurrentDirectory();
             var physicalDirectory = LeanCacheGuard.PhysicalPath(currentDirectory);
             var comparison = OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
@@ -153,6 +200,8 @@ internal static class WorktreeCommand
                 return prepared;
             }
             using var preparation = JsonDocument.Parse(prepared.Output);
+            var maintenance = preparation.RootElement.TryGetProperty("maintenance", out var notice)
+                ? (JsonElement?)notice.Clone() : null;
             removedWorktrees = preparation.RootElement.GetProperty("removed_worktrees")
                 .EnumerateArray().Select(path => path.GetString()!).ToArray();
             if (preparation.RootElement.GetProperty("status").GetString() != "no_reusable")
@@ -212,6 +261,7 @@ internal static class WorktreeCommand
                 BoundedProcessRunner.HangDetectionBudget,
                 "git worktree add failed");
             worktreeCreated = true;
+            agentWarning = WorktreeAgentStateCommand.Capture(options.Source, options.Path, options.Branch, runner);
             WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
             stage = "checkout";
             WorktreeCreationSafety.CheckoutCreatedWorktree(options, runner);
@@ -240,9 +290,10 @@ internal static class WorktreeCommand
                 donor_cache_pin = donor.CachePin,
                 halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
+                maintenance,
             }) + "\n";
             MaintenanceLogAdapter.Record("worktree-init", "succeeded", "complete", null, null);
-            return new CommandResult(true, summary, RenderDonorWarning(options, donor));
+            return new CommandResult(true, summary, agentWarning + RenderDonorWarning(options, donor));
         }
         catch (Exception exception)
         {
@@ -263,7 +314,7 @@ internal static class WorktreeCommand
                 cleanup = cleanupException.Message;
             }
             return new CommandResult(false, string.Empty,
-                FailureReceipt(exception.Message, cleanup, recoveryResult), failureExitCode);
+                FailureReceipt(exception.Message, cleanup, recoveryResult) + agentWarning, failureExitCode);
         }
         finally
         {
@@ -631,7 +682,7 @@ internal static class WorktreeCommand
         var arguments = new List<string> { "recover-init", "--path", options.Path,
             "--branch", options.Branch, "--base", options.Base };
         if (options.SkipRestore) arguments.Add("--skip-restore");
-        return WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan);
+        return WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan, reportPending: false);
     }
 
     private static void RunRequired(

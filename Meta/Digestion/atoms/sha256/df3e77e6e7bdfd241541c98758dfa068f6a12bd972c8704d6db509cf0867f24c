@@ -1,0 +1,15 @@
+**范围与文献归属。** 经典输入：
+- RH、(487.1)、(487.2)、von Koch 界；
+- Landau 关于非负函数 Laplace 变换的定理；
+- Fejér 核的 Fourier 对；
+- Dirichlet 同时逼近。
+
+带边界极点的正性振荡方法属于 Ingham [Two conjectures in the theory of numbers, Amer. J. Math. 64 (1942)] 的框架。Diamond–Pintz [Oscillation of Mertens' product formula, J. Théor. Nombres Bordeaux 21 (2009)] 的 Lemma 5.1 在单侧对数包络下给出固定截断的同类论证。Kaczorowski–Wiertelak [Ω-estimates for a class of arithmetic error terms, Math. Proc. Cambridge Philos. Soc. 142 (2007)] 给出上半平面调和函数边界值型误差项的一般 Ω 方法；本节不主张该定理对本核的任何应用。Goldston–Yıldırım [Higher correlations of divisor sums related to primes II: variations of the error term in the prime number theorem, Proc. London Math. Soc. 95 (2007)] 的定理 3 在 Dirichlet $L$ 函数的 GRH 下，对 $(\log N)^{14}\ll h\ll N^{1/7-\varepsilon}$ 给出 $\psi(n+h)-\psi(n)-h=\Omega_\pm(\sqrt{h\log N})$；de la Bretèche–Fiorilli [Math. Ann. 381 (2021)] 给出平滑短区间计数的矩下界。二者的对象、区间长度范围或所得符号与本核不同。
+
+本节的 `repo-derived` 内容：
+- 命题 487.1 对原核余项的显式多项式增长；
+- 引理 487.2 对本核的定量边界公式（截断随 $M$ 增长、误差显式）；
+- 定理 487.3 对全实中心函数 $\mathcal T$ 的双侧 $\log\log x$ 振荡。
+
+本节结论只关于全实中心函数，不推出 §481 所述被选整数来源上的下界，也不推出 RH 或每个 $n>5040$ 的严格 Robin 不等式。
+

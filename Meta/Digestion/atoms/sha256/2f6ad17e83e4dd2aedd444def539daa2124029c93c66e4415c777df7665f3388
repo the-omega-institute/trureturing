@@ -1,0 +1,8 @@
+**Theorem 23.3 (All original Type-I occurrences and exact minimum).** Let $w_I(n)$ be the original Type-I factor of the actual source at index $n$. Define $r(n)$, according to $n\bmod6$, by the six values $(\varepsilon,\varepsilon,\varepsilon,c,cc,ccdcc)$. For every $n\ge0$, every suffix $s$ of $r(n)$ and every prefix $t$ of $r(n)$,
+
+$$
+\mathcal T(w_I(n),s,t,M^n b_6).
+$$
+
+*Proof.* The original Type-I source occurrence theorem excludes the origin and supplies both actual neighboring letters in $\{n\bmod6,6\}$. The displayed $r(n)$ is a suffix and prefix of both corresponding tails, so every source occurrence satisfies both filters of Theorem 23.2. Strict increase of $E_j$ then gives the full consecutive-pair equivalence. The cumulative-length identity gives the exact gap for every aligned pair. Apply the attained componentwise source-return minimum $M^n b_6$ and positivity of the literal image weights to obtain the attaining output pair and the bound for every output consecutive gap.
+

@@ -1,0 +1,34 @@
+**定义 70.1（同一原域、种子及准确坐标前件）。** 保留 A22.1、32.1 的完整 $\mathsf H_{\rm orig}$、A22.3 的全部原评价 PB 和 A8.3–8.4、14.2、53、60、68 的全部实际来源合同。同一原 $E$ 稠密包含于其含单位 JB 完成 $X$，$S(a,b)=a\circ b$、$C=E\cap X_+$、$N=\|\cdot\|_X|_E$；全部原评价分离并准确决定 $C$，质量 $m_\alpha=\alpha(u)$ 包括零、不等和次归一质量。同一个旧 $D:E^2\to E$ 不预设可加、齐次、连续、导子性、协变或商下降。
+
+本节明确另取以下充分分支前件 $\mathsf{MS}$。存在非零无单位复 C* 代数 $A$，以及已经给定的忠实、含单位、等距、保锥且反映锥的 Jordan 嵌入
+
+$$
+\begin{gathered}
+\iota:X\hookrightarrow M(A)_{\rm sa},\qquad
+\iota(u)=1,\qquad A_{\rm sa}\subseteq\iota(E),\\
+I:=\iota^{-1}(A_{\rm sa})\subset E,\qquad
+\iota(D(r,s))=\frac{\mathrm i}{2}[\iota(r),\iota(s)]\quad(r,s\in I).
+\tag{70.1}
+\end{gathered}
+$$
+
+$M(A)$ 是这套固定种子乘法的 C* 乘子代数；种子识别指全部 $I^2$ 上的同一个旧输出，而非另选一个正确括号。以下只在证明坐标中省略 $\iota$，写
+
+$$
+\kappa(x,y)=\frac{\mathrm i}{2}(xy-yx),\qquad V=E+\mathrm iE\subset M(A).
+\tag{70.2}
+$$
+
+$\kappa$ 是环境比较记号，不覆盖原 native 或全词 $K$。在认回旧值以前，$\kappa(E,E)\subset E$ 不是前件，$V$ 也未被假定为结合子代数。原 $q$ 不由 $\iota$、理想商或表示替换。
+
+$I$ 是 $X$ 的非零真闭 Jordan 理想：$A$ 在 $M(A)$ 中为闭双侧理想，$A_{\rm sa}$ 完整包含于原像，且 $1\notin A$。它还是本质的，准确含义为
+
+$$
+\operatorname{Ann}_X(I)=\{x:x\circ r=0\ (r\in I)\}=\{0\}.
+\tag{70.3}
+$$
+
+事实上，若 $x$ 与 $A_{\rm sa}$ 全部反对易，取 $A$ 的正收缩近似单位 $e_\lambda$。对任意 $a\in A$，$(xe_\lambda+e_\lambda x)a=0$ 的范数极限为 $2xa=0$。乘子由其在 $A$ 上的作用决定，故 $x=0$。这里只取已知乘法的近似单位极限，没有对旧 $D$ 取极限。
+
+(70.1) 是明确的模型前件，未由一般 $\mathsf H_{\rm orig}+\mathsf{PB}$ 推出。本文不援引“一般 JB 的本质理想自动给出 (70.1)”；从抽象 JB 理想取得相应忠实乘子坐标的普遍桥在这里未证。特别地，不能只因完成或双对偶含有某个理想，就声称其全部元素原来属于 $E$。
+

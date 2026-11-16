@@ -1,0 +1,62 @@
+### 27.12 三种隐藏关系与完整综合
+
+**定义 C-27.12.1（相对供给的三种隐藏）。** 对指定关系报告及其取得合同，区分：
+
+| 情形 | 已供应数据与数学判别 | 仍须保留的义务 |
+| --- | --- | --- |
+| 未知但可补全 | 内部关系给非空的 <span>𝑐</span> 圆盘 | 某个补全存在不等于实际 <span>𝑐</span> 已取得 |
+| 全局相位尚未供应 | 模长或独立局部规范报告不决定非零 <span>Ω<sub>𝑁</sub></span> | 共同标架条目或声明相干比较及其精度／成本 |
+| 没有共同实现 | 完整候选如 <span>𝑟<sub>𝑔</sub>=3/5,Φ<sub>𝐺</sub>=π</span> 有负二次式 | 已指定条目必须拒绝或按声明误差合同修复 |
+
+第三类不是第一类的一项有利选择，第二类也不是已知同标架复条目之外另添自由数。新的角度或读口只有在同来源、同记录族的允许操作中供应可检验关系，才会缩小补全区、确定环不变量或排除候选；选择有利的隐藏补全不能当作恢复实际读数。
+
+**命题 C-27.12.2（局部组合到共同存在的条件性综合）。** 本章的完整关系链为
+
+<div>
+三条相邻关系⟶五种不相邻边选择⟶四记录 Gram 行列式,
+</div>
+
+以及
+
+<div>
+FIB 循环 signed 匹配响应+两个定向环乘积⟶完整闭合行列式 ⟶[适用的 Schur／全谱正性判据] 共同存在及最小记录秩.
+</div>
+
+三个核心式分别承担不同接口：
+
+<div>
+ det 𝐺<sub>4</sub>=1-𝑟<sub>1</sub><sup>2</sup>-𝑟<sub>2</sub><sup>2</sup>-𝑟<sub>3</sub><sup>2</sup>+𝑟<sub>1</sub><sup>2</sup>𝑟<sub>3</sub><sup>2</sup>,
+</div>
+
+<div>
+|𝑐-((𝑟<sub>𝑔</sub><sup>4</sup>)/(1-2𝑟<sub>𝑔</sub><sup>2</sup>))|≤((1-3𝑟<sub>𝑔</sub><sup>2</sup>+𝑟<sub>𝑔</sub><sup>4</sup>)/(1-2𝑟<sub>𝑔</sub><sup>2</sup>)),  0≤𝑟<sub>𝑔</sub>≤φ<sup>-1</sup>,
+</div>
+
+<div>
+ det 𝐺<sub>5</sub>=1-5𝑟<sub>𝑔</sub><sup>2</sup>+5𝑟<sub>𝑔</sub><sup>4</sup>+2𝑟<sub>𝑔</sub><sup>5</sup> cos Φ<sub>𝐺</sub>  (𝑟<sub>𝑔</sub>&gt;0).
+</div>
+
+**证明。** 第一条链是路径置换到匹配的逐项双射，负权重评价保留其全部系数。内部参考的 Schur 剩余关系给第二个核心式，计算未知末边的允许区域；在黄金点它缩为唯一闭合。循环的带切口 trace 只给匹配部分，两个整圈置换给最后的相位项，证明第二条链前半。圆盘／完整谱而非孤立行列式提供其最后存在性箭头，再由共同 Gram 判据得到最小秩。
+
+正负模板说明全部局部主块合法仍可没有共同实现，有限修复预算量化了该矛盾；两个合法秩五／秩四闭合说明在真实可实现论域内，模长也可能遗漏行列式和维数。它们与补全盘、相位区间、临界锥面共同证明上述三种隐藏必须分别处理。<span>□</span>
+
+五模式承担局部选择组合骨架；Gram 行列式将这些选择变为声明的关系体积量；圆盘表示扣除共同内部参考后的余量；整圈乘积检验局部标架怎样闭合；黄金比例是指定五环的共同实现极限。由这些式子可以计算隐藏关系的许可区域、何时被锁定、以及忽略它会造成多大正性矛盾，仍须保留图支撑、共同来源、模型和实际取得合同。
+
+[^GL-F]: 《Auric FIB ATOM 金字塔：关联纤维与原生接续》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/e8472a1600d662931dc225bc31e95d5c00ca48ec/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)，§8.3；五个位置权重与概率／原生数量区分。共同五模式字典使用 A 卷 §1，不重复来源树证明。
+
+[^GL-S]: 《Auric FIB 接缝、循环与算术边界重建》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/e8472a1600d662931dc225bc31e95d5c00ca48ec/docs/develop/theory/AURIC_FIB_SEAMS_CYCLES_ARITHMETIC_BOUNDARY_RECONSTRUCTION.md)，定义 2.1、命题 2.2、定义 4.1、命题 4.2；消费带标号 <span>𝐵(𝑡)</span>、方向、共享接缝及 trace 配置恒等式。原源的非负活动合同不自动延伸为 signed 概率。
+
+[^GL-G]: 《FIB 关系延拓几何》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/e8472a1600d662931dc225bc31e95d5c00ca48ec/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)，定义 3.1–3.3、5.1–5.2、定理 5.3–5.4；消费目标相对纤维、完整菜单的读出／更新下降和有限词归纳，不供应未知复重叠。
+
+[^GL-Q]: 《Auric FIB-ATOM 续篇：二元来源的三维二阶关系完成》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/e8472a1600d662931dc225bc31e95d5c00ca48ec/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)，§68.1、§§107–110，特别是定义 109.1、定理 109.2、命题 109.3；消费共同记录的转置约定、PSD／单位对角与最小纯记录秩、相干比较和环境合同。共同参考圆盘、Schur 同余及三记录循环判据分别归命题 C-9.2、C-9.5、C-9.6；任意有限记录的 PSD／秩判据使用该固定源定理 109.2。共同使用的 Schur 先例为 Boyd–Vandenberghe，*Convex Optimization*，2004，附录 A.5.5，见本卷 [§25 的 C-L1](#25-数学引文及直接使用范围)。
+
+[^GL-H]: 《Auric FIB-ATOM：差异边界、记录几何与时间箭头》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/e8472a1600d662931dc225bc31e95d5c00ca48ec/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)，定义 125.1、定理 125.2–125.3、假设 125.4–125.5；消费有限共同历史的权重、作用、记录分离和实际取得边界。以上仓库来源均为 repo-derived 接口；本章的专门匹配／候选报告结论由正文普通证明承担。
+
+[^GL-D]: NIST *Digital Library of Mathematical Functions*，版本 1.2.8（2026-09-15），[18.5.2](https://dlmf.nist.gov/18.5.E2) 给 <span>𝑈<sub>𝑛</sub></span> 的正弦表达；独立的 [18.5.4_5](https://dlmf.nist.gov/18.5.E4_5) 给 <span>𝑖<sup>𝑛</sup>𝑈<sub>𝑛</sub>(1/(2𝑖))= Fib <sub>𝑛+1</sub></span>。这些 literature-attested 中间结果承担 §27.3 的参数表达，不赋予计数与记录相同的物理语义。
+
+[^GL-R]: Nathan Reff，*Spectral Properties of Complex Unit Gain Graphs*，[arXiv:1110.4554v2](https://arxiv.org/abs/1110.4554v2)，版本日期 2011-11-15；§1 的 switching 与 walk gain、Lemma 1.1、Lemma 2.2、Lemma 3.1，及 Theorem 5.1、式 (5.1)–(5.2)。适用对象为有限简单图、单位模增益、反向共轭；本章先归一化非零边，再将其标准谱用作匹配消费者正性判据的中间步骤。
+
+[^GL-B]: Michał Oszmaniec、Daniel J. Brod、Ernesto F. Galvão，*Measuring relational information between quantum states, and applications*，[arXiv:2109.10006v1](https://arxiv.org/abs/2109.10006v1)，式 (1)、Fig. 1 的 cycle tests；消费 Bargmann 环积与额外供应受控循环比较的标准背景。实际准备、探针、有限精度及成本仍由单独合同承担。
+
+[^GL-K]: Alexander A. Klyachko、M. Ali Can、Sinem Binicioğlu、Alexander S. Shumovsky，*A simple test for hidden variables in spin-1 system*，[arXiv:0706.0126v4](https://arxiv.org/abs/0706.0126v4)，2008-07-15，Fig. 1 后的循环正交五元组及轴态概率 <span>1/√(5)</span>；仅承担 §27.11.7 的标准向量／投影对接先例，不将事件实验与记录验证等同。
+

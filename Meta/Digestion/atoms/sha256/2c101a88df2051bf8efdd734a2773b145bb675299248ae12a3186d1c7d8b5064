@@ -1,0 +1,224 @@
+**定理 44.1（有限角的全部实际代表）。** 设 $\pi:A\to B(H)$ 不可约且 $K(H)\subset\pi(A)$。对每个秩二 $P$，存在唯一 $\sigma(P)=\pm1$，使
+
+$$
+\pi D(a,b)=\frac{\sigma(P)i}{2}[\pi a,\pi b]
+\qquad(a,b\in T_P).
+\tag{44.1}
+$$
+
+秩零、一的共同支撑给零值。若 $\dim H\ge2$，所有秩二角共用同一个输入无关符号 $\sigma_\pi$。
+
+证明分为下列实际调用步骤。它们移植PT241–245、OP59–61及80–82的证明，不把 $a\mapsto P\pi(a)P$ 当作整个 $A$ 上的Jordan商。
+
+**第一步：正读取与相对单位。** 固定秩二 $P$，取Pauli坐标 $\alpha P+x\leftrightarrow(\alpha,x)$，$x\in\mathbb R^3$。已知Jordan乘法、锥及Bloch读取为
+
+$$
+(\alpha,x)\circ(\beta,y)=(\alpha\beta+x\cdot y,\alpha y+\beta x),
+\qquad \beta_n(\alpha,x)=\alpha+n\cdot x\quad(\|n\|\le1).
+\tag{44.2}
+$$
+
+$\beta_n(P\pi(\cdot)P)$ 是原 $A$ 上的数学正读取。对 $a,b\in T_P$，输出也支撑于 $P$，故这些读取分离它。每个实际PB的全部内外层仍在 $T_P$，43.2保证读取Jordan表达式的合法性；任意核尾始终保留。
+
+还需PT241.1的反交换结论：若两输入像的Jordan积为零，对实际PB $(a;b,0)$，两个真实第二外槽的像均为零，43.2消去各自输出像，得到 $(\pi b)\circ\pi D(a,b)=0$。交换实际 $a,b$，同样得到 $(\pi a)\circ\pi D(a,b)=0$。
+
+任选实际 $e$ 使 $\pi e=P$。现说明PT242.1的相对单位证明确实适用。若 $\pi a=\mu P$、$\pi b=tP+y$，两枚读取 $n=\pm y/\|y\|$ 先使输出像成为 $h\perp y$ 的纯向量；令 $r=\|y\|,s=\|h\|$，P2给 $s\le|\mu|r$。若 $s>0$，对真实第三标签 $c=ka$、$k=s/(1+\mu^2)$，比例零值给 $D(a,c)=0$。两外层像满足
+
+$$
+S_+-\mu R_+=S_-+\mu R_-=\mu(sP-h).
+\tag{44.3}
+$$
+
+在 $\beta_{h/s}$ 的半内积中右侧为零，故两份实际外层的P2读数都为零；PB右端的读取为 $-2ts$，所以 $t=0$。对实际PB $(b;a,\mu b)$，正侧实际标签
+
+$$
+a-D(a,b)-\mu b^2,\qquad \mu b+b\circ a
+\tag{44.4}
+$$
+
+像为 $\alpha P-h,2\mu y$，$\alpha=\mu(1-r^2)$；负侧第二槽像零，PB给正侧输出像 $2\mu h$。其P2在 $n=q h/s+\sqrt{1-q^2}y/r$ 上给
+
+$$
+s|q|\le r|\alpha q-s|\qquad(-1\le q\le1).
+\tag{44.5}
+$$
+
+若 $0<s\le|\alpha|$，取 $q=s/\alpha$ 矛盾；若 $s>|\alpha|>0$，取 $q=\operatorname{sgn}\alpha$，在 $r\le1$ 时矛盾，在 $r>1$ 时迫使 $s\ge|\mu|r(r+1)>|\mu|r$。只余 $\alpha=0,r=1$。但此时44.4两像反交换，而其首像与输出的Jordan积为 $-2\mu s^2P\ne0$，违反上一段。故 $h=0$。退化的 $\mu=0$、$y=0$ 已由零预算处理。
+
+因此一槽像为角单位倍数时输出像为零；两向量部分共线时，用43.5的实际旋转消去一个向量部分，也得零。特别
+
+$$
+\pi D(a,te)=0,\qquad
+\pi D(a,\gamma e+\tau(a-\alpha e))=0
+\quad(\pi a=(\alpha,x)).
+\tag{44.6}
+$$
+
+这里只断言像为零，从未把这些实际内输出替换成原零。
+
+**第二步：纯像面积及辅助映射。** 逐项消费PT243–245的已发表内积引理，所需实际调用如下。对纯像 $x\perp y$，上一反交换结论先给 $d=\pi D(a,b)\in\mathbb R^3$、$d\perp x,y$，P2给 $\|d\|=\kappa\|x\|\|y\|$、$0\le\kappa\le1$。取实际
+
+$$
+c=t_0e+\lambda a,\quad t_0=\sqrt{\lambda^2\|x\|^2+\eta^2},
+\quad n=-\lambda x/t_0+\eta y/(t_0\|y\|),\quad \lambda,\eta>0.
+\tag{44.7}
+$$
+
+44.6支付 $\pi D(a,c)=0$。PB的两份真实外层像为
+
+$$
+R_\pm=\mp\lambda\|x\|^2P+y\pm d\mp t_0x,
+\qquad S_\pm=t_0P+\lambda x.
+\tag{44.8}
+$$
+
+分别读取两份真实P2，PT243.5的同一Gram计算给
+
+$$
+(1-\kappa^2)\lambda^2\|x\|^2\|y\|^2
+\le\eta^4+\kappa^2\|y\|^2\eta^2.
+\tag{44.9}
+$$
+
+固定 $\eta$ 并选足够大但有限的 $\lambda$，迫使 $\kappa=1$。任意纯像对以43.5旋转其Gram，故所有实际纯像代表均有准确面积与正交性。
+
+固定 $0<\|x\|=r<1$，$W_x=x^\perp$，任取纯像 $y,z\in W_x$ 的实际代表 $b,c$。记 $f_b=\pi D(a,b),f_c=\pi D(a,c)$。实际PB $(a;b,c)$ 的右端像零，两外层纯像输出相等；刚得准确面积给
+
+$$
+(\langle y,z\rangle+\langle f_b,f_c\rangle)
+(\langle y,f_c\rangle+\langle f_b,z\rangle)=0.
+\tag{44.10}
+$$
+
+对同一 $y$ 的两份实际代表，在开集 $\langle y,z\rangle>r^2\|y\|\|z\|$ 中用同一个实际 $c$。第一因子严格正，第二因子之差和开球分离性使 $f_b$ 与代表无关。这才得到总映射 $F_a:W_x\to W_x$。W110.1的全部前件现已支付：44.10、$\langle y,F_ay\rangle=0$、$\|F_ay\|=r\|y\|$、$0<r<1$。该纯内积引理给实线性、斜性及 $F_a^2=-r^2I$。
+
+第一槽的一致性须另付：若 $\pi a=\pi a'=x$，对给定非零 $y\perp x$ 选 $\delta>0$、$\delta\|y\|<1$。刚得的第二槽一致性用于真实首标签 $\delta b$，反对称性及两条已线性的小行给 $\delta F_a(y)=\delta F_{a'}(y)$。所以可写 $F_x$。继而按照PT245.1及245.2、W111–112定义
+
+$$
+B(x,y)=\lambda^{-1}F_{\lambda x}
+\left(y-\frac{\langle x,y\rangle}{\|x\|^2}x\right),
+\qquad 0<\lambda\|x\|<1,
+\tag{44.11}
+$$
+
+零 $x$ 取零。两个真实缩小首标签和另一个真实 $\delta b$ 的反对称调用使它与 $\lambda$ 无关；这些小行均已取得纤维一致性。W112.1的二平面拼接只展开已线性的第二槽，给 $B$ 实交替双线性、斜，且
+
+$$
+B_x^2=-\|x\|^2I+x\otimes x,
+\qquad \|B(x,y)\|^2=\|x\|^2\|y\|^2-\langle x,y\rangle^2.
+\tag{44.12}
+$$
+
+这两个纯内积拼接引理不要求 $T_P$ 含单位、完备或存在Jordan截面。未知原 $D$ 没有被极化。
+
+OP59–61的大纯像步骤也逐次合法：正交非零 $x,y$ 任意，固定实际 $d=\pi D(a,b)$，取第三实际标签 $c=tb$，使 $t\|y\|\sqrt{1+\|x\|^2}<1$。小行及实际旋转支付 $\pi D(a,c)=tB(x,y)$。两份真实外层像为
+
+$$
+(y\pm d,\ ty\pm tB(x,y)).
+\tag{44.13}
+$$
+
+各自第二像长度小于一，故以实际旋转转入已付小正交行，两个旧输出分别由 $B$ 识别。PB成为
+
+$$
+B(y+d,ty+tB(x,y))=B(y-d,ty-tB(x,y)).
+\tag{44.14}
+$$
+
+此后才展开 $B$，44.12使 $d=B(x,y)$。一般纯像对用43.5对角化Gram，相关对用零预算。三维中斜的交替面积映射必为 $B(x,y)=k x\times y$、$k^2=1$：其三线性型 $\langle B(x,y),z\rangle$ 是三形式，单位正交对的面积确定 $|k|=1$。置 $\sigma(P)=-k$，即符合 $K_\sigma=\sigma i[,]/2$ 的Pauli符号。
+
+**第三步：全部混合像。** 以下是OP81各次局部PB的准确代入；相对单位始终用实际 $e$，原核尾始终保留。先取 $\pi a=(\lambda,x),\pi b=(0,y)$、$x\perp y$，写未知输出 $(\delta,z)$。取真实 $c=t(a-\lambda e)$、$t=\delta/\|x\|^2$。44.6支付内值像零，四个外层像为纯对
+
+$$
+(y\pm H,\ tx\pm\lambda y),\qquad H=z-t\lambda x.
+\tag{44.15}
+$$
+
+已付纯像公式使PB为 $2tB(H,x)=-2(y\cdot z)P$。所以 $y\cdot z=0$；若 $\delta\ne0$，则 $z=\zeta x$。再用第三实际标签 $\zeta e$，两份外层的向量像共线，44.6使输出像零，PB却为 $0=-2\delta y$。故 $\delta=0,y\cdot z=0$，退化向量由零预算和相对单位处理。
+
+若两输入像实张成含严格定号矩阵，OP74.1的两枚零Gram读取在44.2下给
+
+$$
+x\cdot z=\alpha\delta,\quad y\cdot z=\beta\delta
+\quad(\pi a=(\alpha,x),\pi b=(\beta,y)).
+\tag{44.16}
+$$
+
+具体地，实际旋转使标量部分为 $(\lambda,0)$、$\lambda>0$；写 $y=s e_3,x=h e_1+t e_3$。定号条件是 $\lambda>|h|$，行列式为 $s^2[(\lambda n_1+h)^2+\lambda^2n_2^2]$；取 $n=(-h/\lambda,0,\pm\sqrt{1-h^2/\lambda^2})$ 即得44.16。这里全用正读取，没有混合输出纯性前提。
+
+仍在旋转后的坐标，记 $h=x\cdot y,r=\|y\|^2$，取有限 $T>|h|+\lambda\|y\|+\|y\|+1$ 及实际 $c=Te$。两份真实外层像为
+
+$$
+P_\pm=(\pm(\delta-T\lambda),y\pm z\mp Tx),
+\qquad Q_\pm=(T\pm h,\pm\lambda y).
+\tag{44.17}
+$$
+
+两份 $Q_\pm$ 严格正定。PB给输出差 $(0,-2\delta y)$，记两输出为 $(\eta,m\mp\delta y)$。只对这些外层用44.16，给 $\eta=-\lambda\delta r/T$、$y\cdot m=-h\delta r/T$，另两约束相加给 $y\cdot m=-T\delta h$。故 $\delta h(T^2-r)=0$；$h=0$ 用44.15，其余得 $\delta=0$。由44.16，定号张成对的输出纯且垂直两个向量部分。
+
+对任意混合像，再用同一形式的 $Te$；44.17的两份 $Q$ 仍严格正定，刚证结论使两份真实外层输出纯且垂直 $y$。PB的输出差是 $-2(y\cdot z,\delta y)$，标量比较及与 $y$ 作内积给 $\delta=y\cdot z=0$。对交换后的实际 $(b,a)$ 另作这次PB，右端为 $2(\pi a)\circ\pi D(a,b)$，得 $x\cdot z=0$。所以全部实际对已满足输出纯且 $z\perp x,y$。
+
+向量共线及两像纯均已处理。其余按OP76.1作两次实际SO(2)旋转，使 $\alpha,\beta>0$ 及 $N=\beta(1+\alpha^2)+\alpha x\cdot y>0$。这一有限选择的具体参数为：先使标量部分 $(0,\rho)$，令 $M=\|x_0\|^2+\|y_0\|^2$、$s=1/[4(1+M)]$、$c_0=\sqrt{1-s^2}$，再旋转为 $(c_0a_0+s b_0,-s a_0+c_0b_0)$；于是 $N\ge\rho(c_0-sM/2)>0$。
+
+令
+
+$$
+q=\|x\|^2, n=x\times y, L=\|n\|^2,
+\ell=qy-(x\cdot y)x,
+\quad\gamma=-(\alpha\beta+x\cdot y),\quad\tau=N/q,
+\quad c=\gamma e+\tau(a-\alpha e).
+\tag{44.18}
+$$
+
+44.6支付这份实际内值像零。两份真实外层像为
+
+$$
+\begin{aligned}
+P_\pm&=(\beta\mp(\alpha\gamma+\tau q),y\pm z\mp(\gamma+\alpha\tau)x),\\
+Q_\pm&=(\gamma\pm(\alpha\beta+x\cdot y),(\tau\pm\beta)x\pm\alpha y).
+\end{aligned}
+\tag{44.19}
+$$
+
+正侧两像都纯；负侧任意。已付的输出结构及PB给 $Y_\pm=m\pm(\tau\ell-\beta z)$，两份 $Q$ 的正交约束相加得 $x\cdot Y_+=-\alpha L$。正侧纯像公式又给
+
+$$
+x\cdot Y_+=k x\cdot(P_+^0\times Q_+^0)
+=-k\alpha z\cdot n.
+\tag{44.20}
+$$
+
+故 $z\cdot n=kL$，$z\perp x,y$ 使 $z=kn$。撤销实际旋转即得44.1。秩一共同支撑的两像均为相对单位倍数，所有Gram为零；秩零用43.2。
+
+**第四步：三维证书及任意平面。** 在任意正交三框架中，若 $12$、$13$ 角反号，置 $\eta=-\sigma(P_{12})$。选择实际自伴提升，像为
+
+$$
+A=\tfrac12p_1,\quad B=-p_1-\tfrac12p_2+X_{12},
+\quad C=3p_1+\tfrac12p_3+X_{13},
+\quad\xi=(1,2,-2)^T,
+\tag{44.21}
+$$
+
+其中 $X_{ij}=E_{ij}+E_{ji}$、$Y_{ij}=(E_{ij}-E_{ji})/i$。所有这些矩阵由 $K(H)\subset\pi(A)$ 精确提升，实际标签在相应三维支撑原像中。两内值由刚证二阶公式读成 $\eta Y_{12}/4,-\eta Y_{13}/4$。PT130.3–130.5的已知乘法给
+
+$$
+\begin{array}{c|ccc}
+&\|r_\pm\xi\|^2&\|s_\pm\xi\|^2&
+\operatorname{Re}\langle r_\pm\xi,s_\pm\xi\rangle\\\hline
++&3/8&11/8&1/4\\
+-&35/8&11/8&9/4
+\end{array}
+\tag{44.22}
+$$
+
+且同一次实际PB要求 $\langle\xi,\pi(D(r_+,s_+)-D(r_-,s_-))\xi\rangle=2$。分别对这两份未知实际外值使用43.1，得
+
+$$
+2\le(\sqrt{29}+\sqrt{61})/8<2,
+\tag{44.23}
+$$
+
+矛盾；不把任何外值换成交换子。读取在三维单位上的质量为9，统一缩放不改变矛盾。重标共同顶点得三坐标角同号。
+
+三维空间内，对射线 $l$ 令 $f(l)=\sigma(l^\perp)$。正交射线补成正交三框架，给相同值；不同非正交射线有共同正交射线，亦给相同值。因此三维空间中的任意二平面同号。一般 $H$ 中，两二平面相交于射线时其和三维；交零时，各取一条射线张成中间二平面，再作两次三维比较。此论证也适用于不可分无限维 $H$，全程只用有限子空间。∎
+

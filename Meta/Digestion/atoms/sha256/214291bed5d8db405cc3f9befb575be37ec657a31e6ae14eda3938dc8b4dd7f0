@@ -1,0 +1,11 @@
+**约定 143.6（推导归属与白话关系）。** 本章采用仓内综合推导归属，不声明全球新颖性或历史优先权。原面、法向限制同构、峰值公式、双球恒等式及有限投影增益均复用上述原来源；同原不塌缩分类、全满宽分类与量子字典也不重新计为成果。143.4是已有分类的简短应用，不把二元重表述计为新的数学分类。143.2—143.3的仓内综合桥是：若同一条原边的反射缺陷为正，零值互易性使两端缺陷同时为正，真实反射态再将两端的增益乘积锁到至少四；全域二分之一读数界给各端至多二；若逼近等号，原紧球缘和同一极限效应又把反向读数迫到零，排除该等号。由此每端分别严格小于二，迫使每条边的缺陷全零。这不是把有限增益误当单位增益，也没有从两个不同模型的最优值拼出同一预算。
+
+现成分类的迁移仍保留其额外前件：[Barnum—Müller—Ududec，Theorem 16][Q143BMU]要求 projectivity、对称跃迁概率与保纯滤子；本章不在143.2—143.3的原域估计中提前借用该分类，也不把 PR、正投影或谱性放回前件。通用紧性与球上仿射极值只是中间工具；新结论是它们在同一原双球、原单位和有向读数中的联合约束。
+
+白话说：每个纯态背后都是一整颗实心排除三球。球里任取一对对径纯态，用其中一点自己的原零尺去比较另一点，读数之差就是这条直径还剩多少可读区别。主候选只要求每颗球至少有一条这样的真实直径，并且存在一个适用于全部球的正差额；再加上原零边能用有限步连接全部纯态。因为所有合法尺都在同一个有限维完整效应集里，这个统一差额阻止球缩成一点，既有分类便给同一完整复三能级量子态体及 Born 读数，并使全部直径最终都满刻度。无需先指定半刻度、三角种子或直径平均值相等；仍需完整三球、有限边路连通和统一可读差额，不能把逐球有差别冒充统一差额。实际仪器、复合与时间继续另有原合同。
+
+[Q143IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX118.8：完整EB3+Inj+球直径统一不塌缩与同原复三能级分类等价；119.2、119.4：同一原坐标的有限正投影与准确增益；120.8、120.10—120.13：全原法向限制、方向函数与邻点公式；120.4—120.5、116.17—116.18：原满宽分类及静态字典。"
+[Q143TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md "VIII130.2：完整 EB3+有限原零图 Conn 支付 Inj、全部唯一整球零尺、原四维法向和限制同构，不供应 least 或正限制逆。"
+[Q143RH]: ../../../D5/S3/Quantum/Foundation/OriginalRegularHeight.lean "OriginalRegularHeight.two_ball_identity：实际相邻球中的对径 p、aa 与三个原整球零尺，通过 Coordinates.restriction 单射得到的全 V 恒等式；本章 aa=s。"
+[Q143BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory, Theorem 16；不作为裸 EB3+Conn 的免费分类。"
+

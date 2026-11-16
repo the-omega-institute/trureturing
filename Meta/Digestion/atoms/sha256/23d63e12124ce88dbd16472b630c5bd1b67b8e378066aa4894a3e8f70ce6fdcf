@@ -1,0 +1,25 @@
+**命题 13.2（非通勤、不同平面与零支撑都在范围内）。** 在标准数学模型中取 $A=M_4(\mathbb C)$、$E=A_{\rm sa}$、$D(a,b)=[a,b]/(2i)$，以及
+
+$$
+h=\sigma_z\otimes I_2,\qquad
+b=\sigma_x\otimes I_2,\qquad c=\sigma_y\otimes\sigma_z.
+$$
+
+它们满足 (11.4)，但 $bc\ne cb$，且 $c\notin\operatorname{span}_{\mathbb R}\{b,G(b)\}$。同一结论也容许原共同强度有连续谱及零支撑。
+
+证明。Pauli 乘法直接给
+
+$$
+b^2=c^2=u,\quad b\circ c=0,\quad
+G(b)=\sigma_y\otimes I_2,\quad G(c)=-\sigma_x\otimes\sigma_z,
+$$
+
+$$
+D(b,c)=\sigma_z\otimes\sigma_z\ne0,\quad
+b\circ G(c)=-I_2\otimes\sigma_z,\quad
+G(b)\circ c=I_2\otimes\sigma_z.
+\tag{13.4}
+$$
+
+张量因子 $I_2,\sigma_z$ 的实线性独立给所列不同平面关系；$bc=i\sigma_z\otimes\sigma_z=-cb$ 给不通勤。特别，两个混合项相消，并非各自为零。再取 $A=C([0,1],M_4(\mathbb C))$，原 $E$ 为自伴矩阵值实变量多项式，取同一常值 $h$ 及 $b(t)=tb,c(t)=tc$。这是含单位稠密 Jordan 原域，标准交换子仍返回该原域；现在共同强度为原 $R(t)=t^2u$，谱为 $[0,1]$ 且在 $t=0$ 消失。各标签本来就是原多项式，不靠环境开根取得。标准交换子模型的 P2、PB 复用静态卷的既有标准模型；这里的矩阵计算只核对条件窗口，不将这些数学模型认作已具备全部实际来源。∎
+

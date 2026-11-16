@@ -1,0 +1,122 @@
+**命题 57.1（同向、连续、齐次且中央中性的全域三阶边界）。** 存在整个原 $E=H_3(\mathbb C)$ 上的总映射 $D$，满足完整 $\mathsf H_{\rm orig}$，联合连续、分别实齐次及中央平移中性，并在每个共同约化的真矩阵子代数上与同一个通常交换子响应完全一致。所有二级角有同一取向，甚至每颗秩一投影的完整演员行均为标准线性行，因而 (55.3) 成立；但旧 $D$ 不可加，完整 PB 和原 R 均失败。它明确不是完整 PB 的反例。
+
+证明。从一开始固定整个 $E=H_3(\mathbb C)$、标准锥、$u=I$、算子范数和 $S(a,b)=(ab+ba)/2$。原评价族取全部 $\alpha_\rho(a)=\operatorname{Tr}(\rho a)$，$\rho\succeq0$；质量为 $\operatorname{Tr}\rho$，包括零、任意次归一与不等质量。原 $\Omega$ 与 $q$ 等实际接口不由这个静态反模型构造；本命题只否定所列静态蕴涵，不声称已经实现全部来源合同。
+
+对任意原 Hermitian $a,b$ 令 $a_0=a-\operatorname{Tr}(a)I/3$、$b_0=b-\operatorname{Tr}(b)I/3$，定义
+
+$$
+\begin{aligned}
+\mathcal C(a,b)&=\mathrm i[a,b]/2,\\
+T(a,b)&=\frac{|\det[a,b]|^2}
+ {\bigl(\operatorname{Tr}(a_0^2)\operatorname{Tr}(b_0^2)\bigr)^3}
+ &&(a_0\ne0,\ b_0\ne0),\\
+\kappa(a,b)&=(1+T(a,b))^{-1}
+ &&(a_0\ne0,\ b_0\ne0),\\
+\kappa(a,b)&=1 &&(a_0=0\text{ 或 }b_0=0),\\
+D(a,b)&=\kappa(a,b)\mathcal C(a,b).
+\end{aligned}
+\tag{57.1}
+$$
+
+分母在所列域严格为正；处处 $0<\kappa\le1$。$T$ 对交换两槽、任意非零实数分别缩放和分别添加实标量单位均不变；$D$ 因而反对称、分别实齐次且 $D(a+sI,b+tI)=D(a,b)$。非标量两输入处其公式连续；当某个中心化输入趋零时，$\|D(a,b)\|\le\|\mathcal C(a,b)\|\le\|a_0\|\|b_0\|$，而另一输入在给定点附近有界，故 $D$ 在这些点也联合连续。
+
+若 $a,b$ 有共同非平凡约化投影，$[a,b]$ 在 $2+1$ 或更细的块分解中有一个零的一维块，故行列式为零，$D(a,b)=\mathcal C(a,b)$。这对每个固定共同约化真 $*$ 子代数的全部 Hermitian 输入成立，其内的嵌套运算也留在该子代数，故该限制的 PB、R 及全部有限 Gram 均为标准值。特别每个秩二角及其补上的标量分支均有通常取向，没有角间符号冲突。更强地，对任意秩一 $p$ 及任意 $b$，$[p,b]$ 的秩至多二，所以
+
+$$
+D(p/2,b)=\mathcal C(p/2,b)
+\quad(b\in E).
+\tag{57.2}
+$$
+
+这识别了完整秩一演员行，不限于约化的输入对。
+
+逐项核对全域 $\mathsf H_{\rm orig}$。对每个原 $a,b,\alpha$，标准 $\mathcal C$ 的二表是通常乘法的正 Gram 表 $G^+$，$-\mathcal C$ 的二表是其共轭正表 $G^-$。由于 $\kappa(a,b)=\kappa(b,a)$ 且对角旧值为零，同一个实际旧二表恰为
+
+$$
+G^D_\alpha(a,b)
+=\frac{1+\kappa(a,b)}2G^+_\alpha(a,b)
+ +\frac{1-\kappa(a,b)}2G^-_\alpha(a,b)\succeq0.
+\tag{57.3}
+$$
+
+它对所有实缩放、实平移、零、重复标签和两条有向项同时成立；不是为同一多标签表指定一个公共混合系数。相加三表的实部对任意实系数 $r_i$ 的平方是 $\alpha((\sum_i r_i a_i)^2)\ge0$；在标签 $(a+b,a,b)$、向量 $(1,-1,-1)$ 上其值为零，反对称虚部在每个实向量的二次型中相消，所以实际复零平方也为零，所有排列同样成立。$S(I,I)=I$，且 $0\le e\le\theta I\le I$ 时标准谱演算给 $e^2\le e$。这付清 A1.2 第 1–3 项及准确锥、分离族、单位范数；没有声称完整复三表正性。
+
+下面给出全域缺陷的原标签。令
+
+$$
+A=\begin{pmatrix}1&0&0\\0&0&0\\0&0&-1\end{pmatrix},\qquad
+B=\begin{pmatrix}0&1&\mathrm i\\1&0&1\\-\mathrm i&1&0\end{pmatrix},
+\qquad C_0=\mathcal C(A,B).
+\tag{57.4}
+$$
+
+两者迹零，$\operatorname{Tr}A^2=2,\operatorname{Tr}B^2=6$，并且
+
+$$
+[A,B]=\begin{pmatrix}0&1&2\mathrm i\\-1&0&1\\2\mathrm i&-1&0\end{pmatrix},
+\quad\det[A,B]=4\mathrm i,
+\quad T(A,B)=1/108,
+\quad\kappa(A,B)=108/109.
+\tag{57.5}
+$$
+
+把 $B=B_{12}+B_{23}+B_{13}$ 按其三条无向边分开，各 $B_{rs}$ 保留 (57.4) 的相应两条有向矩阵项。$[A,B_{12}+B_{23}]$ 是三阶实反对称矩阵，行列式零；$[A,B_{13}]$ 支撑于二级角，行列式也零。因此原第二槽加法缺陷准确为
+
+$$
+D(A,B)-D(A,B_{12}+B_{23})-D(A,B_{13})=-C_0/109\ne0.
+\tag{57.6}
+$$
+
+取原正质量一评价 $\alpha_\xi(x)=\xi^*x\xi$、$\xi=(e_1+e_3)/\sqrt2$，有 $\alpha_\xi(C_0)=-1$，该缺陷的读数为 $1/109$。
+
+原 R 的缺陷也有准确式。令
+
+$$
+H=(A\circ B)\circ B-A\circ B^2
+=\mathcal C(C_0,B)
+=\begin{pmatrix}
+-3/2&-3\mathrm i/4&0\\
+3\mathrm i/4&0&3\mathrm i/4\\
+0&-3\mathrm i/4&3/2
+\end{pmatrix}.
+\tag{57.7}
+$$
+
+此矩阵行列式零，而 $[C_0,B]=-2\mathrm iH$，故 $\kappa(C_0,B)=1$。已证明的分别实齐次性给 $D(D(A,B),B)=(108/109)H$。因此在原三元组 $(A,B,B)$ 上，R 左边减右边为 $H/109$，原 $e_1$ 评价读得 $-3/(2\cdot109)\ne0$。反对称性及实齐次性没有补回这个缺陷。
+
+最后直接检出完整 PB 的失败，不用“R 失败”代替 PB 核对。取 A22.3 的原演员 $a=2I$，以及 $b=A,c=A+B$。中央输入旧响应为零，故
+
+$$
+r_+=-A-2B,\quad s_+=3A+B,\qquad
+r_-=3A+2B,\quad s_-=-A+B.
+\tag{57.8}
+$$
+
+$\operatorname{Tr}(AB)=0$ 给
+
+$$
+\begin{aligned}
+\operatorname{Tr}r_+^2\operatorname{Tr}s_+^2&=26\cdot24=624,\\
+\operatorname{Tr}r_-^2\operatorname{Tr}s_-^2&=42\cdot8=336,\\
+[r_+,s_+]&=[r_-,s_-]=5[A,B].
+\end{aligned}
+$$
+
+令
+
+$$
+k_+=\frac{624^3}{624^3+250000},\qquad
+k_-=\frac{336^3}{336^3+250000};\qquad k_+>k_-.
+\tag{57.9}
+$$
+
+这是 (57.1) 的准确系数，因为 $|\det(5[A,B])|^2=250000$。两边平方和均为 $5(A^2+(A+B)^2)$，故原元素的 PB 差准确为
+
+$$
+\mathcal Q(r_++\mathrm is_+)-\mathcal Q(r_-+\mathrm is_-)
+=10(k_+-k_-)C_0.
+\tag{57.10}
+$$
+
+同一原 $\alpha_\xi$ 读取 $-10(k_+-k_-)\ne0$。这说明即使全部约化子代数、全部二级角、全部秩一演员行及正则性同时正确，完整 PB 仍是一项真实全域约束。反模型违反 PB，所以不否定完整 $\mathsf H_{\rm orig}+\mathsf{PB}$ 单独推出可加性的可能性。由 A32.2，它的完整 P3 也失败。∎
+

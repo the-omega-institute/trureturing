@@ -1,0 +1,77 @@
+**定义 28.1（完整原关系与实际谱差）。** 本节起保持定义 6.1 与 §27.1 的同一个完整 $\mathsf H_A(D)$，包括其全部递归固定引文。$A$ 是含单位复 $C^*$-代数，原域准确为 $E=A_{\rm sa}$，$S(x,y)=x\circ y=(xy+yx)/2$，原单位为 $1$，原范数为 $\|\cdot\|$，原锥准确为 $A_+$。同一 $\Omega/\mathrm{native}$、全部原输入与评价标签保持；原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定锥。每份原评价及其质量 $m_\gamma=\gamma(1)$ 全部保留，包括零、不等、次归一和原表示意义下的非正常评价。未知量仍是同一个任意总映射 $D:E^2\to E$。
+
+具体地，全部有向 A1/P2 及两种次序仍为
+
+$$
+\begin{pmatrix}
+\gamma(x^2)&\gamma(x\circ y)-i\gamma D(x,y)\\
+\gamma(y\circ x)-i\gamma D(y,x)&\gamma(y^2)
+\end{pmatrix}\succeq0
+\qquad(x,y\in E,\ \gamma\in\mathcal P).
+\tag{28.1}
+$$
+
+A2 保留每份相加三表 $(x+y,x,y)$ 及全部排列 $(x_1,x_2,x_3)$：实矩阵 $(\gamma(x_i\circ x_j))_{i,j=1}^3$ 在全部实系数 $\mathbb R^3$ 上半正定，$(1,-1,-1)$ 及相应排列仍给指定零二次值。A3 保留 $1^2=1$，以及同一个固定有理 $0<\vartheta\le1$ 下的全部 $0\le x\le\vartheta1\Rightarrow x^2\le x$。对每个实际原三元组 $(c;x,y)$，完整 PB 仍是
+
+$$
+\begin{gathered}
+v=D(c,x)-c\circ y,\qquad w=c\circ x+D(c,y),\\
+D(x+v,y+w)-D(x-v,y-w)=-2x\circ v-2y\circ w.
+\end{gathered}
+\tag{28.2}
+$$
+
+每个实际内值、外值、零、重复、有限实幅度、缩放、平移、背景以及它们再形成的全部嵌套调用均在原量词内。不增加未知 $D$ 的可加性、齐次性、连续性、可测性、协变性、单位平移中性、压缩自然性、商下降、双对偶延拓或有限输出子代数闭合。
+
+固定实际投影 $P\in A$，记 $C=PAP$。附加数学前件严格是同一 $D$ 在**整个实际完成角**上的分类
+
+$$
+D(x,y)=K_\sigma(x,y),\qquad
+K_\sigma(x,y)=\frac{\jmath}{2}[x,y],\qquad
+\jmath=\sigma i,\quad\sigma\in\{1,-1\},
+\quad x,y\in C_{\rm sa}.
+\tag{28.3}
+$$
+
+$K_\sigma$ 作为比较映射在全部 $E^2$ 上有定义；(28.3) 只识别角内旧值。W119.2–119.3、W 式 (120.2) 的实际角支撑及完整继承按定义 6.2 直接复用：单位是 $P$，锥和范数准确继承，每个原评价标签限制到角内，质量为 $\gamma(P)$，同值限制不合并、零限制不删除、质量不归一；全部角内实际 PB 的继承不要求输出留在有限矩阵阶段。
+
+取原演员 $c=c^*\in C$，以及实际正交投影 $l,m\le P$、实际 $e=e^*\in C$，满足
+
+$$
+\begin{gathered}
+cl=lc=al,\qquad cm=mc=bm,\qquad a,b\in\mathbb R,\quad a\ne b,\\
+e=(l+m)e(l+m),\qquad e^2=l+m,\qquad el=me.
+\end{gathered}
+\tag{28.4}
+$$
+
+(28.4) 的通道条件正是 $l,m$ 在 $C$ 内的实际投影等价：若实际 $w^*w=m$、$ww^*=l$，则 $w=lwm$、$w^2=0$，取 $e=w+w^*$ 即得该条件；反向取 $w=lem$，由 $e^2=l+m$、$el=me$ 得 $w^*w=m$、$ww^*=l$。
+
+非平凡情形 $l,m$ 均非零；若其中一个为零，实际等价关系迫使另一个也为零，以下行等式平凡。$c$ 在 $P-l-m$ 上任意。置
+
+$$
+\mu=\frac{a+b}{2},\qquad \lambda=\frac{a-b}{2}\ne0,
+\qquad j=\jmath(l-m)e,\qquad n=2l.
+\tag{28.5}
+$$
+
+已知乘法逐项给出
+
+$$
+\begin{gathered}
+j=j^*,\quad j^2=e^2=l+m,\quad e\circ j=0,\quad n\circ j=j,\\
+c\circ e=\mu e,\quad c\circ j=\mu j,\quad c\circ n=an.
+\end{gathered}
+\tag{28.6}
+$$
+
+对每个有限实 $T,\alpha$，整个角分类逐值支付
+
+$$
+D(c,Te+\alpha n)=\lambda Tj,\qquad
+c\circ(Te+\alpha n)=\mu Te+a\alpha n.
+\tag{28.7}
+$$
+
+$a,b$ 可同号或异号，也允许恰有一个为零。这里没有把演员改为 $c-\mu P$，也没有对一般环境行抽取系数或拆分输入。
+

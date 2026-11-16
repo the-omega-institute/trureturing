@@ -1,0 +1,8 @@
+<Project>
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'StrataLint.Scribe'">
+    <Compile Include="$(ForkScopedHostSource)" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'StrataLint.Scribe'">
+    <StartupObject>StrataLint.Scribe.ForkScopedEntry</StartupObject>
+  </PropertyGroup>
+</Project>

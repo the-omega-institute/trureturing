@@ -1,0 +1,65 @@
+### 14.2 同一领先态及获取返回
+
+OTF004 (26.5)、引理 26.5 及本卷 (3.10) 对此固定族给
+
+$$
+\begin{aligned}
+\Xi&=\sum_l|e_0\otimes f_l+e_1\otimes g_l/\sqrt m\rangle
+\langle e_0\otimes f_l+e_1\otimes g_l/\sqrt m|
+\otimes|J_l\rangle\langle J_l|,\\
+\Xi&\ge0,\qquad \operatorname{Tr}\Xi\le2,\qquad
+\|\Phi_{\rm keep}(\tau_h)-\Xi\|_1\le B_*/\lambda.
+\end{aligned}
+\tag{14.5}
+$$
+
+将 (12.1) 作用于同一个 $\Xi$，省略共同的固定 $K_{\rm work}$ 因子。令 $F_\eta,G_\eta,H_\eta$ 分别为按正交 $J_l$ 分块的
+$\mathcal L_{\eta,K_0}(|f_l\rangle\langle f_l|)$、
+$\mathcal L_{\eta,K_0}(|g_l\rangle\langle g_l|)$、$H_l$ 的直和，则
+
+$$
+\begin{aligned}
+\Xi_\eta={}&|e_0\rangle\langle e_0|\otimes F_\eta
++\frac{|e_1\rangle\langle e_1|\otimes G_\eta}{m}
++\frac{|e_0\rangle\langle e_1|\otimes H_\eta+\mathrm{h.c.}}{\sqrt m},\\
+F_\eta,G_\eta&\ge0,\quad\operatorname{Tr}F_\eta\le1,
+\quad\operatorname{Tr}G_\eta\le A^2/s^2,
+\quad\|H_\eta\|_1=T_\eta,\\
+\Xi_\eta&\ge0,\qquad
+\|\Phi_\eta(\tau_h)-\Xi_\eta\|_1\le B_*/\lambda.
+\end{aligned}
+\tag{14.6}
+$$
+
+允许未归一化 Hermitian $X$，仍定义
+$\mathcal R_h(X)=\|X-\tau_h\otimes\operatorname{Tr}_RX\|_1/2$。由三角不等式及偏迹收缩，
+
+$$
+|\mathcal R_h(X)-\mathcal R_h(Y)|\le\|X-Y\|_1.
+\tag{14.7}
+$$
+
+写 $\beta_\eta=T_\eta/\sqrt m$、$p_\eta=\operatorname{Tr}G_\eta/m\le A^2/\lambda$。在 (14.6) 中 $F_\eta$ 的乘积项与自己的边缘比较相消；激发对角项的贡献为 $p_\eta$，交叉项的贡献为 $\beta_\eta$。所以
+$\mathcal R_h(\Xi_\eta)\le\beta_\eta+p_\eta$。由 (13.2)、$\lambda\ge1$、$m\ge1$、(14.4)–(14.7)，实际获取返回至多
+
+$$
+\frac{A\sqrt\eta}{\sqrt\lambda}
++\frac{A^2+B_*+2}{\lambda}+\frac1{8t}.
+\tag{14.8}
+$$
+
+最后一项是 $2\epsilon_e$。将独立场采样的全部输出张量上去，再以保留原数据的等距计算最终解码器，保持领先态的交叉范数、正块迹界和迹范数比较。将这些旧口统记为 $M$，包含 $E_\eta$、混合记忆和全部原生、场及算术输出；记实际旧态为 $\rho_{\rm old}$、相应扩充后的领先态仍为 $\Xi_\eta$，则
+
+$$
+\begin{aligned}
+\delta_{\rm old}:=\mathcal R_h(\rho_{\rm old})
+&\le\frac{A\sqrt\eta}{\sqrt\lambda}
++\frac{A^2+B_*+2}{\lambda}+\frac1{8t},\\
+\|\rho_{\rm old}-\Xi_\eta\otimes\sigma_{e,\eta}\|_1
+&\le d_{\rm err}:=\frac{B_*}{\lambda}+\frac1{8t}.
+\end{aligned}
+\tag{14.9}
+$$
+
+后续省略共同的固定因子，其迹为一。独立场态和等距算术不引入维数损失，也不接触 $R$。
+

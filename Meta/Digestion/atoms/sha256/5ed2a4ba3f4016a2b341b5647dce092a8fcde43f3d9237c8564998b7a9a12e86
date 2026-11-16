@@ -1,0 +1,19 @@
+#### 反例 5.4：持续确定的标签可以包含持续变化
+
+在 $\mathbb C^3$ 中取
+
+$$
+P=|0\rangle\langle 0|+|1\rangle\langle 1|,\qquad
+ H=\hbar\omega(|0\rangle\langle 1|+|1\rangle\langle 0|)
+   +\hbar g(|1\rangle\langle 2|+|2\rangle\langle 1|).
+$$
+
+芝诺极限抑制向 $|2\rangle$ 的泄漏，但从 $|0\rangle$ 出发仍有
+
+$$
+e^{-\mathrm iPHPt/\hbar}|0\rangle
+ =\cos(\omega t)|0\rangle-\mathrm i\sin(\omega t)|1\rangle.
+$$
+
+标签 $P$ 始终确定，子空间内的可区分状态仍在变化。 因此“确定存在”与“所有生成停止”并不等价。
+

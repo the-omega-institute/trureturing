@@ -1,0 +1,69 @@
+**定理 34.3（原非零轴像四维族的全部实残量）。** 对 (34.1) 的每个分别固定的 $\sigma$，全部原 Hermitian 三演员角探针 $x=x^*=PxP$ 和全部原 $M_4(\mathbb C)$ 正复线性泛函满足 (32.3)，当且仅当 $s=0$。任给 $0<\mu<\infty$，将泛函仅限于质量恰为 $\mu$ 仍有同一分类。每个 $s\ne0$ 在原同一环境中都有该指定质量的有限严格见证，并可使两笔预算同时严格正。质量零保留原零等式。
+
+证明。取原平面 $Q=\operatorname{span}(e_2,e_3)$。原 $t,k_t,K_\sigma(c,t)$ 都湮灭它，$c$ 和 $sE_{33}$ 保持它，故引理 34.2 的条件逐项成立：$a=2,b=3,k=5/2,d=1/2,A_0=29/4,\rho=4s/29$。特别这是原完整 $M_4$ 内的实际约化平面，未把原 $\mathcal W=\mathbb C e_1$ 改成零像或另换环境。以下列出这次代入的紧凑完整数据，以明确其原乘积意义。探针仅在 $23$ 平面非零，且
+
+$$
+\begin{gathered}
+X_s=\frac{s}{29}\begin{pmatrix}-25&10\\10&-33\end{pmatrix},\qquad x_s=X_s\oplus0_{Q^\perp},\\
+u_\sigma=\frac{e_2+\iota e_3}{\sqrt2},\qquad
+f_\sigma=\frac{e_2-\iota e_3}{\sqrt2},\\
+h|_Q=\frac{5s}{29}\begin{pmatrix}0&-\iota\\\iota&0\end{pmatrix},\qquad
+hu_\sigma=\frac{5s}{29}u_\sigma,\\
+(r+sE_{33})|_Q=\frac{s}{29}\begin{pmatrix}-50&25\\25&-70\end{pmatrix}.
+\end{gathered}
+\tag{34.9}
+$$
+
+对角项直接为 $2(-25)=-50$、$3(-33)+29=-70$，非对角项为 $(2+3)10/2=25$。$X_su_\sigma=(s/29)[-29u_\sigma+(4+10\iota)f_\sigma]$，所以原完整作用列为
+
+$$
+\begin{aligned}
+R_+u_\sigma&=\frac{s}{29}[-24u_\sigma+(4+10\iota)f_\sigma],\\
+R_-u_\sigma&=\frac{s}{29}[-34u_\sigma+(4+10\iota)f_\sigma],\\
+S_+u_\sigma&=\frac{s}{29}[-60u_\sigma+(10+25\iota)f_\sigma]
+            =\frac52R_+u_\sigma,\\
+S_-u_\sigma&=-\frac{s}{29}[-60u_\sigma+(10+25\iota)f_\sigma],\\
+\phi_{u_\sigma}(L)&=-2\operatorname{Re}((X_su_\sigma)^*hu_\sigma)
+                 =\frac{10s^2}{29}.
+\end{aligned}
+\tag{34.10}
+$$
+
+因为 $tu_\sigma=0$，$t\circ(r+g)$ 的评价确实为零；没有宣称该项在整个 $M_4$ 中为零。由完整作用像而非压缩平方得到
+
+$$
+\begin{gathered}
+B_{\phi_{u_\sigma}}(R_+,S_+)=0,\qquad
+\|R_-u_\sigma\|^2=\frac{1272s^2}{841},\qquad
+\|S_-u_\sigma\|^2=\frac{4325s^2}{841},\\
+(R_-u_\sigma)^*S_-u_\sigma=-\frac{2330s^2}{841}\in\mathbb R,\\
+1272=34^2+4^2+10^2,\qquad 4325=60^2+10^2+25^2,\\
+-2330=(-34)60+(4-10\iota)(-10-25\iota),\\
+B_{\phi_{u_\sigma}}(R_-,S_-)
+=\frac{(1272\cdot4325-2330^2)s^4}{841^2}
+=\frac{72500s^4}{707281}
+=\left(\frac{50s^2}{29\sqrt{29}}\right)^2.
+\end{gathered}
+\tag{34.11}
+$$
+
+因此对 $s\ne0$，单位质量下的严格差额为
+
+$$
+\frac{10s^2}{29}-\frac{50s^2}{29\sqrt{29}}
+=\frac{10s^2}{29}\left(1-\frac5{\sqrt{29}}\right)>0,
+\qquad 29>25.
+\tag{34.12}
+$$
+
+取 $\phi_\mu(T)=\mu u_\sigma^*Tu_\sigma$，则质量准确为 $\mu$，左端和每份预算平方根均乘以 $\mu$，故差额为 (34.12) 的 $\mu$ 倍。对于 $J_{23}=E_{23}+E_{32}$，引理的同泛函扰动 $x_s+\varepsilon J_{23}$ 给每笔预算准确四次系数 $25\mu^2/16>0$；连续严格差额与两个有限零点集共同给任意小的两正预算见证。这不是假设零预算不在 PB 域内；未经扰动的零预算已经合法且严格违反。
+
+若 $s=0$，直接复用父卷 §1 的标准 $K_\sigma$ 恒等式
+
+$$
+L=K_\sigma(R_+,S_+)-K_\sigma(R_-,S_-)
+\tag{34.13}
+$$
+
+及其全正泛函复 Gram／Cauchy–Schwarz 证明，即对所有原探针和所有正复线性泛函（包括混合泛函）得到 (32.3)。这里的充分性没有从单个向量读取外推。质量零时，正泛函的 $\phi(I)=0$ 由 Cauchy–Schwarz 强制 $\phi=0$，所以两边均为零。非零 $s$ 的见证与零 $s$ 的全称充分性共同完成分类，两个 $\sigma$ 分别成立。∎
+

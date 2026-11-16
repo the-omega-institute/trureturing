@@ -1,0 +1,34 @@
+**定理 22.3（总耦合满行秩时的共同零预算穷尽）。** 在定理 22.2 的输入中，若实际 $\operatorname{rank}V=2$，则对每个实际 $x$，
+
+$$
+\begin{aligned}
+\phi_\xi\in\mathcal Z_\sigma(x)
+&\ \Longleftrightarrow\ \xi=(0,y),\quad Vy=0,\\
+\phi\in\mathcal Z_\sigma(x)
+&\ \Longleftrightarrow\ \operatorname{ran}\Theta\subseteq0\oplus\ker V.
+\end{aligned}
+\tag{22.7}
+$$
+
+每个这样的正泛函均满足 $\phi(L)=0$。$\ker V$ 中的环境向量不必在 $\ker D_{\rm env}$ 中。
+
+证明。若向量两笔预算均为零，(22.2) 给 $V^*Cu=0$。$V^*$ 单射且 $C$ 可逆，故 $u=0$。记 $z=Vy$，原作用列此时为
+
+$$
+R_\pm\xi=(\mp Cz/2,0),\qquad
+S_\pm\xi=((I_2\pm\sigma iC/2)z,D_{\rm env}y).
+\tag{22.8}
+$$
+
+复 Cauchy–Schwarz 给任意作用列 $a,b$ 的实 Gram 不小于 $|\operatorname{Im}(a^*b)|^2$。在 (22.8) 中，$z^*Cz$ 为实数，且
+
+$$
+\left|\operatorname{Im}\bigl((R_\pm\xi)^*S_\pm\xi\bigr)\right|
+=\|Cz\|^2/4.
+\tag{22.9}
+$$
+
+零预算遂强制 $z=0$。反向地，$u=0,Vy=0$ 时 $x\xi=h\xi=r\xi=k\xi=g_\sigma\xi=0$，两份 $R$ 均消去 $\xi$，而 $S_\pm\xi=(0,D_{\rm env}y)$。故两预算为零，且原 (17.13) 给 $\phi_\xi(L)=0$。
+
+一般正密度取 (17.14) 的谱分解。若两笔总预算为零，(17.15) 及各项非负性使每个谱向量也有两笔零预算，刚证的向量结论给出支撑包含关系。若支撑包含于 $0\oplus\ker V$，则 $R_\pm$ 消去支撑，故 $\phi(R_\pm^2)=0$，两笔预算为零；向量结论相加还给 $\phi(L)=0$。∎
+

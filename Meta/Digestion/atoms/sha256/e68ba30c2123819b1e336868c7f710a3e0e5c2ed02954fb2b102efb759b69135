@@ -1,0 +1,80 @@
+**定理 22.3（固定完成后的首退出返回见证）。** 取一个共同合法设备 $k=x$，并在允许的固定场上令 $v=n(+d e_x)=z$。只在以下范数证明中考察初始方向 $h_0=z$，置
+
+$$
+\lambda=\frac{\sqrt{D-1}}D,\qquad
+ e=|j,j\rangle,\quad f=|j,j-1\rangle,\qquad
+ q_D=\langle e|\mathcal F_z(|e\rangle\langle f|)|f\rangle.
+\tag{22.6}
+$$
+
+对包括所有截止历史、旧记录和完成输出的真实最终态 $\Omega$，令 $\omega=\operatorname{Tr}_R\Omega$。存在一个仅在 $S_1$ 块上非零、范数至多一的 Hermitian 数学测试 $W$，满足
+
+$$
+\begin{aligned}
+\frac12\left|\operatorname{Tr}W(\Omega-\tau_{h_0}\otimes\omega)\right|
+ &=\frac{|cs|\lambda}{2}|q_D|
+ =\frac{|A_g|}{2\sqrt{D-1}}|q_D|=:d_1,\\
+|q_D-1|&\le40\lambda,\qquad
+\left|d_1-\frac{|cs|\lambda}{2}\right|\le20|cs|\lambda^2,\\
+\Delta_{n,h_0}&\ge d_1
+ \ge\frac{|cs|\lambda}{2}(1-40\lambda)_+.
+\end{aligned}
+\tag{22.7}
+$$
+
+特别地，在非空范围 $D\ge6400$、$0<|g|\le1/4$，
+
+$$
+\Delta_{n,h_0}\ge\frac{|g|}{8\sqrt D}.
+\tag{22.8}
+$$
+
+$W$ 只用于迹范数的变分表述，不是允许控制器直接测量 $R$ 的指令。该下界已包含规定终端；改变较晚 triplet 历史上的重试次数不能改变它。
+
+**证明。** 先估计固定完成对参考交叉算子的作用。令 $W_1=\operatorname{span}\{e,f\}$，证明坐标取 $z$。直接复用 (17.12)：把一次原生接触的 $\Pi_b$ 换成 $I_R\otimes P_{z,b}$，保留相同 $|bb\rangle_{HE}$，所得两个等距 $V,V_0$ 满足
+
+$$
+\|(V-V_0)P_{W_1\otimes S}\|<6\lambda.
+\tag{22.9}
+$$
+
+终端的谱表示仍为 $U=\Pi_++z_\gamma\Pi_-$，其中 $z_\gamma=e^{itD/(D-1)}$。其参考透明比较是
+$U_0=I_R\otimes(P_{z,+}+z_\gamma P_{z,-})$。由 (17.12)，
+
+$$
+\|(U-U_0)P_{W_1\otimes S_t}\|
+ \le4|1-z_\gamma|\lambda\le8\lambda.
+\tag{22.10}
+$$
+
+在这两个比较原生接触及比较终端中，参考都保持原算子不变。所有其它节点只作用于非参考口，故整个比较完成的参考边缘通道是恒等。对任意支撑于 $W_1$ 的算子 $X$，在三个接触处依次作“理想前缀、实际后缀”比较。理想前缀的输入形为 $X\otimes\rho$，其中 $\rho$ 是非参考态，所以其迹范数为 $\|X\|_1$，参考仍支撑于 $W_1$。两等距的差至多为 $\varepsilon$ 时，展开两边乘积给出的输出迹范数差至多 $2\varepsilon\|X\|_1$。实际后缀为 CPTP，收缩任意算子的迹范数：其伴随是保单位 CP 映射，收缩算子范数，再用 Schatten 范数对偶即可。于是
+
+$$
+\|\mathcal F_v(X)-X\|_1
+ \le(12+12+16)\lambda\|X\|_1=40\lambda\|X\|_1.
+\tag{22.11}
+$$
+
+这里的 $W_1$ 只限制比较输入，不限制实际输出的降低数。代入 $X=|e\rangle\langle f|$ 就得到 $|q_D-1|\le40\lambda$。
+
+其次，$\mathcal F_z$ 关于绕 $z$ 的自旋旋转协变：新 singlet、原生投影、负标签交换、(17.1) 的向量通道、替换节点、两枚 $z$ 场令牌和终端逐一保持此关系。原始标签及其副本不承载旋转。故 $\mathcal F_z(\tau_e)$ 和 $\mathcal F_z(\tau_f)$ 没有 $e/f$ 矩阵元，$\mathcal F_z(|f\rangle\langle e|)$ 也不能贡献 $e/f$ 矩阵元；后者具有相反的非零旋转权。由 $J_xe=\sqrt m f/2$，(22.3) 在 $h_0$ 处成为
+
+$$
+\xi_{b,y}(h_0)=\frac12
+ \left(a_bc e+\eta_by\frac{s\lambda}{2}f\right)
+ \left(a_bc\langle e|+\eta_by\frac{s\lambda}{2}\langle f|\right).
+$$
+
+因而完成后的实际 $S_1,b,y$ 块满足精确恒等式
+
+$$
+\langle e|\mathcal F_z(\xi_{b,y}(h_0))|f\rangle
+ =\eta_by\frac{a_bcs\lambda}{4}q_D.
+\tag{22.12}
+$$
+
+在这些保留标签的正交块中，各取相位匹配 (22.12) 的 $e/f$ 非对角 Hermitian 测试，其他空间取零，直和得到 $\|W\|\le1$。比较态 $\tau_e\otimes\omega$ 在这个测试上的期望严格为零，不涉及以理想边缘替换实际 $\omega$。四个未归一化块的绝对交叉系数之和为
+$\sum_{b,y}a_b|cs|\lambda|q_D|/4=|cs|\lambda|q_D|/2$；每块测试的期望为对应系数的两倍。这证明 (22.7) 的第一式及返回下界。真实全态即使另有实际输出，取上述边缘再将测试张量恒等，仍给同一下界；没有任何选支归一化。
+
+由 $||q_D|-1|\le|q_D-1|$ 得其余误差界。若 $D\ge6400$，则 $40\lambda\le1/2$。在 $|g|\le1/4$ 上，$|cs|=|\sin(2g)|/2\ge3|g|/4$，可由 $\sin x\ge x-x^3/6$（$0\le x\le1/2$）得到；且 $\lambda\ge2/(3\sqrt D)$（$D\ge2$）。把这三项代入 (22.7) 即得 (22.8)。较晚历史与 $S_1$ 正交，而后缀在 $S_1$ 上完全固定，所以后来的失败、成功和截止块都不能抵消 (22.12)。$\square$
+

@@ -9,7 +9,8 @@
 import D5.S3.Arith.Robin.ForwardKernel.MomentTransfer
 import D5.S3.Arith.Robin.ForwardKernel.BrownianFourthKernel
 import D5.S3.Arith.Robin.ForwardKernel.FourthMomentInterfaceBridge
-import D5.S3.Arith.Robin.ForwardKernel.DyadicMeanSquareAsymptotic
+import D5.S3.Arith.Robin.ForwardKernel.SecondOrderInterface
+import D5.S3.Arith.Robin.ForwardKernel.ProfileQuadraticForm
 
 /-! Second and fourth profile moments under the fourth-order Brownian interface. -/
 
@@ -32,18 +33,23 @@ theorem dyadicZ_second_moment_tendsto
     (hg : ProfileIntegrable g) :
     Tendsto (fun X : ℝ => ∫ x, dyadicZ E θ g X x ^ 2 ∂dyadicProbabilityMeasure X)
       atTop (𝓝 ((2 ^ kappa θ - 1) * Q g / Real.log 2)) := by
-  have hm := (DyadicMeanSquareAsymptotic.profile_kernel_dyadic_mean_square_asymptotic
-    hE hB hV hg).div_const (Real.log 2)
-  rw [mul_comm (Q g)] at hm
-  change Tendsto _ atTop (𝓝 ((2 ^ kappa θ - 1) * Q g / Real.log 2)) at hm
-  apply hm.congr'
-  filter_upwards [eventually_gt_atTop (1 : ℝ)] with X hX
-  have hs : 0 ≤ meanSquareScale θ X :=
-    (mul_pos (Real.rpow_pos_of_pos (by linarith : 0 < X) _) (Real.log_pos hX)).le
-  rw [dyadicProbabilityMeasure_integral (by linarith) _]
-  simp_rw [dyadicZ, div_pow, Real.sq_sqrt hs,
-    div_right_comm _ (meanSquareScale θ X) _, intervalIntegral.integral_div]
-  ring
+  have hθ0 : 0 < θ := hB.1.trans hB.2.1
+  have hθ1 : θ < 1 := hB.2.2.1.trans hB.2.2.2
+  have hκ : 0 < kappa θ := sub_pos.mpr hθ1
+  have hm := MomentTransfer.moment_transfer hE hθ0 hθ1 (by norm_num : 0 < 2) hg
+    (SecondOrderInterface.second_moment_interface hE hB hV)
+  have hi : (∫ s : Fin 2 → ℝ, (∏ i, g (s i)) *
+        (kappa θ * DyadicMacroMoments.dyadicMacroMoment (kappa θ) * min (s 0) (s 1))
+        ∂cubeMeasure 2) = (2 ^ kappa θ - 1) * Q g / Real.log 2 := by
+    simp_rw [Fin.prod_univ_two, show ∀ s : Fin 2 → ℝ,
+        g (s 0) * g (s 1) *
+          (kappa θ * DyadicMacroMoments.dyadicMacroMoment (kappa θ) * min (s 0) (s 1)) =
+        (kappa θ * DyadicMacroMoments.dyadicMacroMoment (kappa θ)) * pairKernel g s
+        from fun s => by unfold pairKernel; ring]
+    rw [integral_const_mul, integral_pairKernel hg,
+      DyadicMacroMoments.dyadic_macro_moment_eq hκ]
+    field_simp
+  rwa [hi] at hm
 
 /-- The fourth Brownian mixed-moment limit yields explicit second and fourth moments;
 every nonzero profile has a fourth-moment limit strictly above the Gaussian value. -/

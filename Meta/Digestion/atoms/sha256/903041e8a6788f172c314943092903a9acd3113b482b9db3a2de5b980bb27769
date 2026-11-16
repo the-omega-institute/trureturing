@@ -1,0 +1,27 @@
+**推论 56.1（固定中央平方标签的多强度加法）。** 在 53.1 下，若实际 $b,d\in V_a$ 满足
+
+$$
+b^2,d^2,b\circ d\in Z(X),
+\tag{56.1}
+$$
+
+则
+
+$$
+\begin{gathered}
+T_a(b+d)=T_a(b)+T_a(d),\\
+T_a(b)\circ T_a(d)=R\circ(b\circ d),\qquad
+b\circ T_a(d)+T_a(b)\circ d=0.
+\end{gathered}
+\tag{56.2}
+$$
+
+证明。同时取 $R,b^2,d^2,b\circ d$ 的中央商。$\lambda=0$ 时各份实际响应像均为零。$\lambda>0$ 时，固定实际 $a$ 满足 26.1；$B=q_\chi(b)$、$G=q_\chi(d)$ 的三项 Gram 都是标量单位，27.2 的共同正强度可取 $1$。故良定义 $F_a$ 的混合与加法式给
+
+$$
+q_\chi T_a(b+d)=q_\chi T_a(b)+q_\chi T_a(d),\qquad
+q_\chi T_a(b)\circ q_\chi T_a(d)=\lambda(B\circ G),
+$$
+
+以及交叉和为零。联合分离回到原等式。不同原中央强度无需是同一原元的实倍数。若一个实线性窗口 $W\subset V_a$ 的全部交叠在中心，则这给 $T_a|_W$ 的实线性；要把它视为 $W$ 的带权复结构，仍需 $T_a(W)\subset W$。55.1 的两生成元模块已经单独支付自身闭合，不替所有其他窗口支付此条件。∎
+

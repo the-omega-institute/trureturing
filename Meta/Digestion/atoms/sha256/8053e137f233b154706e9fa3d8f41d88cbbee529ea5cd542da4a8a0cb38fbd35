@@ -1,0 +1,6 @@
+**定义与存在命题 74.5。** 取同一个有限完整本原框架族 $\mathfrak B=(\mathsf B_1,\ldots,\mathsf B_s)$，要求 $\operatorname{span}_{\mathbb R}\bigcup_r\mathsf B_r=A$。框架符号 $\mathsf B_r$ 不同于映射 $B_1=pH_{\mathrm s}$。令 $d=\dim_{\mathbb R}A$、$n=\operatorname{rank}A=\tau_A1_A$，这样的族总存在且可取
+$$
+1\le s\le d-n+1. \tag{74.9}
+$$
+**证明。** 先取一套完整本原框架，其 $n$ 个成员线性无关，已张成 $n$ 维。若累计张成仍为真子空间，谱分解所给的本原元张成性保证存在其外的本原元；将它补成完整框架，至少增加一维。至多再补 $d-n$ 套便结束。直和中按全部简单理想补框架；$d=n$ 的经典情形一套即足。此为存在上界，不主张最少、自然选法、物理可制备性或跨无界维数的统一有限表。∎
+

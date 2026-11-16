@@ -1,0 +1,21 @@
+**定义 73.1（仅局部 PB 的契约与总响应）。** 在标准三进 UHF
+
+$$
+A=M_{3^\infty}=\overline{\bigcup_n M_{3^n}(\mathbb C)},
+\qquad a\longmapsto a\otimes1_3,
+\tag{73.1}
+$$
+
+保留66.1的完整原域、锥、评价及全部质量。局部契约要求全部原 A1–A3/P2，另只对三输入同处某 $p\in\mathcal P_{\rm even}$ 的完整角 $pAp$ 要求 PB。固定 $\sigma\in\{\pm1\}$，在整个 $E^2$ 定义
+
+$$
+D_{\rm cut}(a,b)=
+\begin{cases}
+K_\sigma(a,b),&\exists p\in\mathcal P_{\rm even}:a=pap,\ b=pbp,\\
+0,&\text{否则}.
+\end{cases}
+\tag{73.2}
+$$
+
+这是确定的总映射：若有多个见证，右侧始终为同一个 $K_\sigma(a,b)$；支撑条件对两输入对称。每个 $p\in\mathcal P_{\rm even}$ 都是真投影，即 $p\ne1$，因为实际阶段单位的矩阵秩 $3^n$ 为奇数。
+

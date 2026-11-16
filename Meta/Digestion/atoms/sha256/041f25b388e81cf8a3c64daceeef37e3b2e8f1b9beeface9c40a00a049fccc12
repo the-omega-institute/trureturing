@@ -1,0 +1,17 @@
+**证明内构造 67.1（成熟偏迹、忠实迹与标量中心）。** 模型(66.1)本身供应相容归一迹 $\tau$ 和正含单位收缩 $E_n:A\to A_n$，对 $a,b\in A_n$、$x\in A$ 满足
+
+$$
+E_n(axb)=aE_n(x)b,\quad \tau E_n=\tau,\quad
+E_n(x)\longrightarrow x\text{ 于范数},\qquad
+\tau\text{ 忠实},\quad Z(A)=\mathbb C1.
+\tag{67.1}
+$$
+
+证明。有限维表示论给 $k_{m,n}=d_m/d_n\in\mathbb N$，并可将实际包含 $A_n\subset A_m$ 写成 $M_{d_n}\otimes1\subset M_{d_n}\otimes M_{k_{m,n}}$。有限归一迹的限制相容，故在稠密并上给有界正迹，连续延到 $A$。
+
+在 $A_m$ 上取 $\operatorname{id}\otimes\operatorname{tr}_{k_{m,n}}$。这是保持归一迹的 $A_n$ 双模正含单位收缩；不同 $m$ 上的限制相容，因为矩阵归一迹及其迹配对唯一决定该映射。故它们延成 $E_n$，不依赖所选张量坐标。
+
+给定 $x\in A$，取 $y\in A_m$ 逼近它；$n\ge m$ 时 $E_n(y)=y$，所以 $\|E_n(x)-x\|\le2\|x-y\|$。若 $x\ge0$ 且 $\tau(x)=0$，则各正矩阵 $E_n(x)$ 的迹为零，故全为零，范数收敛给 $x=0$。若 $x$ 中央，双模性使 $E_n(x)$ 在 $A_n$ 中中央，保持迹又给 $E_n(x)=\tau(x)1$；极限给所述中心。∎
+
+这里的 $\tau$ 是数学读取，既不取代原评价，也不归一化任何原质量。该证明不使用矩阵大小的偶性。
+

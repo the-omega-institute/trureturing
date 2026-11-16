@@ -1,0 +1,45 @@
+**命题 41.3（任一斜率均排除非零平衡标量余量）。** 取定理 34.1 在 $a=1,b=2,v=1$ 的整个固定系数族，以 $\varrho$ 表示该定理的标量参数 $r$，避免与探针标签 $r=c\circ x$ 混淆：
+
+$$
+c_0=\begin{pmatrix}1&0\\0&2\end{pmatrix},\quad
+\tau_0=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+s_0=\begin{pmatrix}\varrho&0\\0&-2\varrho\end{pmatrix},\quad
+g_0=K_\sigma(c_0,\tau_0)+s_0.
+\tag{41.24}
+$$
+
+已有定理 34.1 准确供应
+
+$$
+\mathsf{P2}(c_0,\tau_0;g_0)
+\quad\Longleftrightarrow\quad
+|\varrho|\le\frac{2\sqrt2}{3}.
+\tag{41.25}
+$$
+
+对该闭区间中的每个 $\varrho\ne0$，仅用 $d=d_+$ 或仅用 $d=d_-$ 的一份 (41.8) 探针，(41.6) 就已失败。这个结论还适用于命题 35.1 的实际 $M_3$ 数据 $c=c_0\oplus0$、$t=\tau_0\oplus\beta$、$s=s_0\oplus0$，其中 $\beta\ne0$、$\varrho=1/2$，背景保持原值。
+
+**证明。** 不重证 (41.25) 的尖锐区间及端点证书。对任一根 $d$，探针准确为
+
+$$
+x_d=\begin{pmatrix}
+\dfrac{\varrho}{d-1}&\dfrac{-\sigma i}{2(d-3/2)}\\[3pt]
+\dfrac{\sigma i}{2(d-3/2)}&\dfrac{-2\varrho}{d-2}
+\end{pmatrix}.
+\tag{41.26}
+$$
+
+由 (41.14)、(41.17) 的已付乘法，得到
+
+$$
+S_+=dR_+,\qquad S_-=-dR_-,\qquad
+L=\frac{\varrho(d^2+1)}{(d-1)(d-2)}\,\tau_0.
+\tag{41.27}
+$$
+
+因此两笔 Gram 预算对每个正泛函都为零。单位向量 $\xi=(1,1)/\sqrt2$ 的正泛函满足 $\phi(\tau_0)=1$；(41.27) 的系数对 $\varrho\ne0$ 非零，故其 (41.6) 左边严格正，右边为零。结论覆盖两种 $\sigma$ 及 (41.25) 的全部非零点，包括端点。
+
+对命题 35.1，使用实际探针 $x_d\oplus0$ 和向量 $(1,1,0)/\sqrt2$。完整标签是 $R_\pm=(R_\pm)_0\oplus0$、$S_+=d(R_+)_0\oplus\beta$、$S_-=-d(R_-)_0\oplus\beta$；完整右端是 (41.27) 的 $L\oplus0$。第三维背景没有从 $t$ 或任一 $S$ 标签中删去，但该支持在前两维的正读取使两笔 Gram 恰为零，仍有相同矛盾。命题 35.1 已支付这份非零背景数据的全部正泛函 P2，不以忽略第三维代替它的正性。∎
+
+命题 35.1 已通过原 $\operatorname{PB}(t;c,0)$ 和整个已分类角的两份已知外值证明非延拓。这里的消费者准确加强为：上述数据连只有 $c,t,g$ 的较弱固定输出预算也不能满足；既不新作 P2 例子，也不将它称作完整 $\mathsf H_A(D)$ 的反模型。一般块余量需要两条独立加权关系；这里的平衡标量约束预先关联了两块，才使任一探针单独足够。
+

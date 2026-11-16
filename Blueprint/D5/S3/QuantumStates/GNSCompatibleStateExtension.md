@@ -24,6 +24,19 @@ For the resulting normalized functional f, use the pinned Mathlib PositiveLinear
 
 A nonzero equal coefficient on every finite word cannot be square summable. The words consisting of n repetitions of one fixed letter form an injective sequence. Summability on all words would give summability of the same positive constant along this sequence, contradicting infinitude. Hence finite normalized equal-weight history vectors cannot be extended by placing an infinite clock directly in ell2. This is a compiled application of Memlp and the constant-summability boundary, not an additional state assumption.
 
+**Theorem 1.2 (The normalized state in its actual completed cyclic representation).**
+
+$$(\forall A: \operatorname{Type}\left(\right), [\operatorname{CstarAlgebra}\left(A\right)] [\operatorname{PartialOrder}\left(A\right)] [\operatorname{StarOrderedRing}\left(A\right)] (\forall f: \operatorname{PositiveLinearFunctional}\left(A\right), ((\operatorname{Apply}\left(f, 1\right) = 1) \implies (((\operatorname{Norm}\left(\operatorname{cyclicVector}\left(f\right)\right) = 1) \land (\forall a: A, (\operatorname{Inner}\left(\operatorname{cyclicVector}\left(f\right), \operatorname{Apply}\left(\operatorname{gnsStarAlgHom}\left(f\right), a, \operatorname{cyclicVector}\left(f\right)\right)\right) = \operatorname{Apply}\left(f, a\right)))) \land \operatorname{DenseOrbit}\left(\operatorname{gnsStarAlgHom}\left(f\right), \operatorname{cyclicVector}\left(f\right)\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumStates/GNSCompatibleStateExtension.normalized_gns` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any positive complex-linear functional f on a unital complex C-star algebra with f(one)=one, the original cyclicVector(f) in the completed GNS space has norm one, its expectation of gnsStarAlgHom(f)(a) is f(a) for every ambient a, and its whole ambient orbit is dense. This same supplier is consumed by PBOriginalReadoutRealization.original_piecewise for a specified-character ambient extension and its B-cyclic closed subspace. Its mathematical statement and proof do not require a dense compatible tower.
+
 ## References
 
 - Truth anchor: `D5/S3/QuantumStates/GNSCompatibleStateExtension.compatible_state_extension`
+- Truth anchor: `D5/S3/QuantumStates/GNSCompatibleStateExtension.normalized_gns`

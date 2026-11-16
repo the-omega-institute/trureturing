@@ -1,0 +1,25 @@
+**定理 149.2（共同原三元恒等式的全域饱和）。** 在完整 EB3 及 $\dim_{\mathbb R}V\le9$ 下，设 $\varnothing\ne Q\subseteq P_{\rm s}$ 满足
+
+$$
+p\in Q\Longrightarrow S_p\subseteq Q.
+\tag{149.3}
+$$
+
+若存在同一个实数 $\kappa<2$，使整个原 $V$ 上有
+
+$$
+e_q+e_{q^\sharp}=\kappa(u-e_p)
+\quad(p\in Q,\ q\in S_p,\ q^\sharp=2c_p-q),
+\tag{149.4}
+$$
+
+则 $Q=P_{\rm s}=P$、$\dim_{\mathbb R}V=9$，并存在实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,
+\qquad \Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{149.5}
+$$
+
+此时 $\kappa=1$。本定理不另输入 $\mathcal A_p$ 唯一性：它由原维数上界和 XII147 对这些实际单标签点支付。证明见149.3—149.8。
+

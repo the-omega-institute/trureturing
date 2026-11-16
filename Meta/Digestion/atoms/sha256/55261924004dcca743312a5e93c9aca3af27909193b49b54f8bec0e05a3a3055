@@ -1,0 +1,38 @@
+**命题 C-24.4（单窗、接缝与高阶关系的三个统一桥）。** 在各自指定任务合同中，以下三式分别连接共享部分与后继、局部循环与联合恢复、关系阶数与目标响应：
+
+
+<table><tbody><tr><td>
+
+```math
+\langle x-Xb/r,y-Yb/r\rangle=\Delta/r
+=m(g-g_*),
+\qquad D=D_*-Zrm^2(g-g_*)^2.
+```
+
+</td></tr></tbody></table>
+
+
+<table><tbody><tr><td>
+
+```math
+p'-p=\sum_{i,j\ne0,(i,j)\in E}(p'_{ij}-p_{ij})D^{ij},\qquad
+\chi_{ij}=\frac{c_{ij}c_{00}}{c_{i0}c_{0j}},\qquad
+ ds^2=\tfrac14dt^{𝖳}ℐ dt+d\Phi^{𝖳}ℐ^{-1}d\Phi.
+```
+
+</td></tr></tbody></table>
+
+
+<table><tbody><tr><td>
+
+```math
+𝔼_\theta f(Q)-𝔼_0f(Q)
+=\frac{\theta(-1)^L}{2^L}\Delta_{w_1}\cdots\Delta_{w_L}f(0),
+\qquad \varrho_j=Q_j\bmod2.
+```
+
+</td></tr></tbody></table>
+
+
+**证明。** 第一式是命题 C-3.2、C-6.2；第二组是命题 C-17.2、C-18.2、C-18.4；第三组是命题 C-22.2、C-23.3。每式保留其正分母、实际支持和供给合同。函数的共同项、概率的隐藏方向、相位的闭路以及任务的充分未来边界可相互桥接，却未合并为同一物理对象；已由参考解释的关系可以消元，恢复需要的接缝权重、来源和费用仍保留。□
+

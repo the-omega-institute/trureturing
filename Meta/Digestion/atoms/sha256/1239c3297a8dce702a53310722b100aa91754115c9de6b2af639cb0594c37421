@@ -1,0 +1,48 @@
+### 123.2 固定原球、真实花瓣球与两个不能混同的对径
+
+以下先固定任意 $p\in P_0$。写
+
+$$
+\begin{gathered}
+\mathcal A_p=\{e_p\},\quad g=g_p=u-e_p,\quad
+D_p=c+B\mathbb B^3,\quad N_p=\{h\in C^*:h(p)=0\},\quad
+S_p=\operatorname{span}N_p,\\
+H=(H_1,H_2,H_3),\quad H(c+Bw)=w,\quad H_i\in S_p,\quad
+\rho(v)=\rho_p(v)=\sup_{x\in K\setminus\{p\}}
+             \frac{-v\cdot H(x)}{g(x)}.
+\end{gathered}
+\tag{Q123.4}
+$$
+
+IX120.8—120.12及THREE_COPY第七卷122.2已经给：限制 $S_p\to\operatorname{Aff}(D_p)$ 是同构；$\dim S_p=4$；$g\in\operatorname{ri}N_p$；$g>0$ 于 $K\setminus\{p\}$；$\|H(x)\|\le M_Hg(x)$；$\rho$ 有限、Lipschitz、正齐次、次可加，且 $\rho(v)\ge\|v\|$。此外
+
+$$
+N_p=\{\alpha g+b\cdot H:\alpha\ge\rho(b)\}.
+\tag{Q123.5}
+$$
+
+对每个 $v\in S^2$，原球上的点、其完整邻球和邻确认分别是
+
+$$
+q_v=c+Bv\in P_0,\qquad F_v=D_{q_v},\qquad
+e_{q_v}=\frac{\rho(v)g+v\cdot H}{1+\rho(v)}.
+\tag{Q123.6}
+$$
+
+$p\in S(F_v)$，而不同 $F_v$ 只交于 $p$。定义 $a_v$ 为 $p$ 在真实整球 $F_v$ 内的对径点，并置
+
+$$
+m(v)=g(a_v)=\max_{F_v}g>0,\qquad
+z_v=\frac{H(a_v)}{g(a_v)}.
+\tag{Q123.7}
+$$
+
+$a_v$ 是原纯点且属于 $P_0$，因为 $q_v\in P_0$ 的所有邻标签仍在 $P_0$。它是在另一颗完整球 $F_v$ 内定义的对径端，不能预先认同为在原 $D_p$ 内与 $q_v$ 对径的 $q_{-v}$；二者相等须由相应接触另证。THREE_COPY第七卷122.4已经给整个 $F_v$ 上的原线性关系
+
+$$
+H|_{F_v}=z_vg|_{F_v},\qquad (-v)\cdot z_v=\rho(v).
+\tag{Q123.8}
+$$
+
+它包括整个邻球的混态，不只两端。
+

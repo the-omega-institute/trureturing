@@ -29,10 +29,10 @@ namespace DiscreteLaw
 
 /-- Bin index function: `binIndex n t = ⌊n·t⌋₊`. For `t ∈ Ioo 0 1` and `n ≥ 1`, this sits in
 `[0, n-1]`, so it represents a bin in `Fin n`. -/
-private def binIndex (n : ℕ) (t : ℝ) : ℕ := ⌊(n : ℝ) * t⌋₊
+def binIndex (n : ℕ) (t : ℝ) : ℕ := ⌊(n : ℝ) * t⌋₊
 
 /-- For `t ∈ Ioo 0 1` and `n ≥ 1`, the bin index is in `Fin n`. -/
-private lemma binIndex_lt {n : ℕ} (hn : 1 ≤ n) {t : ℝ} (ht : t ∈ Ioo (0 : ℝ) 1) :
+lemma binIndex_lt {n : ℕ} (hn : 1 ≤ n) {t : ℝ} (ht : t ∈ Ioo (0 : ℝ) 1) :
     binIndex n t < n := by
   have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
   have h_nt_nn : 0 ≤ (n : ℝ) * t := mul_nonneg hnpos.le ht.1.le
@@ -65,7 +65,7 @@ private lemma binIndex_eq_of_mem_Ico {n : ℕ} (hn : 1 ≤ n) (k : Fin n) {t : �
 /-- The conditional-mean step function: For `t ∈ Ioo 0 1`, it returns
 `φ(condMeanAtom μ n _ (binIndex n t))` when `binIndex n t < n`, and a default `φ(atom_0)`
 otherwise. This is the step-function analog of `stepFun` in the quantile midpoint construction. -/
-private noncomputable def condStepFun (μ : ProbDist ℝ) (φ : ℝ → ℝ) (n : ℕ) (hn : 0 < n)
+noncomputable def condStepFun (μ : ProbDist ℝ) (φ : ℝ → ℝ) (n : ℕ) (hn : 0 < n)
     (t : ℝ) : ℝ :=
   if h : binIndex n t < n then
     φ (DiscreteLaw.condMeanAtom μ n hn ⟨binIndex n t, h⟩)
@@ -85,7 +85,7 @@ private lemma condStepFun_eq_of_mem_Ico {μ : ProbDist ℝ} {φ : ℝ → ℝ} {
   exact Fin.ext h_idx
 
 /-- The step function is bounded by `M` whenever `|φ| ≤ M`. -/
-private lemma abs_condStepFun_le {μ : ProbDist ℝ} {φ : ℝ → ℝ} {M : ℝ} (hM : ∀ x, |φ x| ≤ M)
+lemma abs_condStepFun_le {μ : ProbDist ℝ} {φ : ℝ → ℝ} {M : ℝ} (hM : ∀ x, |φ x| ≤ M)
     {n : ℕ} (hn : 0 < n) (t : ℝ) : |condStepFun μ φ n hn t| ≤ M := by
   unfold condStepFun
   split
@@ -93,7 +93,7 @@ private lemma abs_condStepFun_le {μ : ProbDist ℝ} {φ : ℝ → ℝ} {M : ℝ
   · exact hM _
 
 /-- AE strong measurability of `condStepFun` on `Ioo 0 1`. -/
-private lemma aestronglyMeasurable_condStepFun {μ : ProbDist ℝ} {φ : ℝ → ℝ}
+lemma aestronglyMeasurable_condStepFun {μ : ProbDist ℝ} {φ : ℝ → ℝ}
     (_hφ : Continuous φ) {n : ℕ} (hn : 0 < n) :
     AEStronglyMeasurable (condStepFun μ φ n hn)
       ((MeasureTheory.volume : Measure ℝ).restrict (Ioo (0 : ℝ) 1)) := by
@@ -129,7 +129,7 @@ private lemma aestronglyMeasurable_condStepFun {μ : ProbDist ℝ} {φ : ℝ →
   exact hg_sm.aestronglyMeasurable.congr h_ae_eq.symm
 
 /-- The integral of `condStepFun` on `Ioo 0 1` equals the conditional-mean average. -/
-private lemma integral_condStepFun_Ioo {μ : ProbDist ℝ} {φ : ℝ → ℝ} (_hφ : Continuous φ)
+lemma integral_condStepFun_Ioo {μ : ProbDist ℝ} {φ : ℝ → ℝ} (_hφ : Continuous φ)
     {n : ℕ} (hn : 0 < n) :
     ∫ t in Ioo (0 : ℝ) 1, condStepFun μ φ n hn t
       = (1 / n) * ∑ k : Fin n, φ (DiscreteLaw.condMeanAtom μ n hn k) := by
@@ -179,7 +179,7 @@ private lemma integral_condStepFun_Ioo {μ : ProbDist ℝ} {φ : ℝ → ℝ} (_
 
 /-- Integrating `φ` against the atomization measure equals the conditional-mean step-function
 integral over `Ioo 0 1`. -/
-private lemma integral_toProbDist_condMeanAtomize {μ : ProbDist ℝ} {φ : ℝ → ℝ}
+lemma integral_toProbDist_condMeanAtomize {μ : ProbDist ℝ} {φ : ℝ → ℝ}
     (hφ : Continuous φ) {n : ℕ} (hn : 0 < n) :
     ∫ x, φ x ∂(DiscreteLaw.condMeanAtomize μ n hn).toProbDist.toMeasure
       = (1 / n) * ∑ k : Fin n, φ (DiscreteLaw.condMeanAtom μ n hn k) := by
@@ -208,7 +208,7 @@ private lemma integral_toProbDist_condMeanAtomize {μ : ProbDist ℝ} {φ : ℝ 
 
 /-- For `t ∈ Ioo 0 1` and `n ≥ 1`, the bin containing `t` (namely `Ico (k/n) ((k+1)/n)` where
 `k = binIndex n t`) has endpoints within `1/n` of `t`, both endpoints in `[0, 1]`. -/
-private lemma bin_of_binIndex_bounds {n : ℕ} (hn : 1 ≤ n) {t : ℝ}
+lemma bin_of_binIndex_bounds {n : ℕ} (hn : 1 ≤ n) {t : ℝ}
     (ht : t ∈ Ioo (0 : ℝ) 1) :
     (binIndex n t : ℝ) / n ≤ t ∧ t < ((binIndex n t : ℝ) + 1) / n ∧
     ((binIndex n t : ℝ) + 1) / n - (binIndex n t : ℝ) / n = 1 / n := by

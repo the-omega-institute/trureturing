@@ -52,35 +52,19 @@ $$claim \Leftrightarrow (\forall p \in \mathbb{N},\; \forall q \in \mathbb{N},\;
 
 Page 3, Section 1, Conjecture 1.3: “For every pair of distinct odd primes (p, q), the set D* = {1, p^2, pq, q^2, p^2q^2, pq^3} is the unique maximiser of E(p^2q^3, D) over all nonempty D ⊆ div(p^2q^3) ∖ {p^2q^3}.” The first conjunct states that Dstar is allowed; the second gives the strict comparison with every different nonempty allowed divisor set.
 
-**Theorem 1.5 (Ramanujan sums at prime powers).**
+**Theorem 1.5 (Multiplicities of gcd classes).**
 
-$$\forall p \in \mathbb{N},\; \forall j \in \mathbb{N},\; \forall k \in \mathbb{N},\; (\operatorname{Nat}.\operatorname{Prime}\left(p\right)) \Rightarrow (\operatorname{ramanujanSum}\left((p)^{k + 1}, j\right) = (\operatorname{if} (p)^{k + 1} \mid j \operatorname{then} ((p)^{k + 1}: \mathbb{C}) \operatorname{else} 0) - (\operatorname{if} (p)^{k} \mid j \operatorname{then} ((p)^{k}: \mathbb{C}) \operatorname{else} 0))$$
+Lean statement: `D5/S3/Arith/RoldanCirculantEnergyP2Q3.sum_gcd_multiplicity`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/RoldanCirculantEnergyP2Q3.ramanujan_prime_power` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* D. G. Roldán (2026). *Graph Energy Maximisation for Integral Circulant Graphs of Order n = p^2q^3*. DOI: [10.48550/arXiv.2604.09491](https://doi.org/10.48550/arXiv.2604.09491). URL: <https://arxiv.org/abs/2604.09491v1>.
-
-*Commentary.*
-
-For a prime p, the Ramanujan sum at p to the power k+1 is the difference of two divisibility indicators, weighted by p to the powers k+1 and k. The values lie in the complex numbers.
-
-**Theorem 1.6 (Ramanujan sum at modulus one).**
-
-$$\forall j \in \mathbb{N},\; \operatorname{ramanujanSum}\left(1, j\right) = (1: \mathbb{C})$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/RoldanCirculantEnergyP2Q3.ramanujan_one` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/RoldanCirculantEnergyP2Q3.sum_gcd_multiplicity` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* D. G. Roldán (2026). *Graph Energy Maximisation for Integral Circulant Graphs of Order n = p^2q^3*. DOI: [10.48550/arXiv.2604.09491](https://doi.org/10.48550/arXiv.2604.09491). URL: <https://arxiv.org/abs/2604.09491v1>.
-
 *Commentary.*
 
-At modulus one the Ramanujan sum equals one for every natural argument.
+For every positive natural n and real-valued function F on the natural numbers, the sum of F(gcd(n,j)) over 0 <= j < n equals the sum of phi(n/e) times F(e) over divisors e of n. Each gcd class has exactly phi(n/e) representatives.
 
-**Theorem 1.7 (Fourier transform of gcd classes).**
+**Theorem 1.6 (Fourier transform of gcd classes).**
 
 $$\forall n \in \mathbb{N},\; [\operatorname{NeZero}\left(n\right)], \forall D \in \operatorname{Finset}\left(\mathbb{N}\right),\; (D \subseteq \operatorname{Nat}.\operatorname{divisors}\left(n\right)) \Rightarrow (\forall j \in \operatorname{ZMod}\left(n\right),\; \operatorname{ZMod}.\operatorname{dft}\left((\operatorname{fun} (k: \operatorname{ZMod}\left(n\right)) \mapsto ((\operatorname{fun} (k: \operatorname{ZMod}\left(n\right)) \mapsto \operatorname{if} \operatorname{Nat}.\operatorname{gcd}\left(n, \operatorname{val}\left(k\right)\right) \in D \operatorname{then} (1: \mathbb{R}) \operatorname{else} 0)\left(k\right): \mathbb{C})), j\right) = \sum_{d \in D} \operatorname{ramanujanSum}\left(\operatorname{Nat}.\operatorname{div}\left(n, d\right), \operatorname{val}\left(j\right)\right))$$
 
@@ -94,7 +78,7 @@ $$\forall n \in \mathbb{N},\; [\operatorname{NeZero}\left(n\right)], \forall D \
 
 For a nonzero natural n and a finite subset D of its divisors, the Fourier transform of the gcd-class indicator is the sum of the Ramanujan sums at moduli n divided by d. Nat.div denotes natural-number division. The indicator is real-valued and is cast to the complex numbers before applying ZMod.dft.
 
-**Theorem 1.8 (Unique maximization for all distinct odd primes).**
+**Theorem 1.7 (Unique maximization for all distinct odd primes).**
 
 $$\forall p \in \mathbb{N},\; \forall q \in \mathbb{N},\; (\operatorname{Nat}.\operatorname{Prime}\left(p\right)) \Rightarrow ((\operatorname{Nat}.\operatorname{Prime}\left(q\right)) \Rightarrow ((\neg (p = q)) \Rightarrow ((\operatorname{Odd}\left(p\right)) \Rightarrow ((\operatorname{Odd}\left(q\right)) \Rightarrow ((\operatorname{Dstar}\left(p, q\right) \subseteq \operatorname{Nat}.\operatorname{properDivisors}\left(((p)^{2}) \cdot ((q)^{3})\right)) \land (\forall D \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\operatorname{Finset}.\operatorname{Nonempty}\left(D\right)) \Rightarrow ((D \subseteq \operatorname{Nat}.\operatorname{properDivisors}\left(((p)^{2}) \cdot ((q)^{3})\right)) \Rightarrow ((\neg (D = \operatorname{Dstar}\left(p, q\right))) \Rightarrow (\operatorname{energy}\left(((p)^{2}) \cdot ((q)^{3}), D\right) < \operatorname{energy}\left(((p)^{2}) \cdot ((q)^{3}), \operatorname{Dstar}\left(p, q\right)\right))))))))))$$
 
@@ -119,10 +103,9 @@ Fourier diagonalization expresses the energy as a sum of absolute Ramanujan sums
 - Truth anchor: `D5/S3/Arith/RoldanCirculantEnergyP2Q3.claim`
 - Truth anchor: `D5/S3/Arith/RoldanCirculantEnergyP2Q3.energy`
 - Truth anchor: `D5/S3/Arith/RoldanCirculantEnergyP2Q3.gcdRow_dft_ramanujan`
-- Truth anchor: `D5/S3/Arith/RoldanCirculantEnergyP2Q3.ramanujan_one`
-- Truth anchor: `D5/S3/Arith/RoldanCirculantEnergyP2Q3.ramanujan_prime_power`
 - Truth anchor: `D5/S3/Arith/RoldanCirculantEnergyP2Q3.result`
-- Dependency: [D5/S3/Analytic/Certified/FiniteRamanujanDivisorIdentity](../Analytic/Certified/FiniteRamanujanDivisorIdentity.md)
+- Truth anchor: `D5/S3/Arith/RoldanCirculantEnergyP2Q3.sum_gcd_multiplicity`
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FiniteSieve/RamanujanSums](Robin/ForwardKernel/PrimeMomentTransfer/FiniteSieve/RamanujanSums.md)
 - Dependency: [D5/S3/Arith/RoldanCirculantEnergyP2Q3Certificate](RoldanCirculantEnergyP2Q3Certificate.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration](../ConceptDynamics/Coding/CountedOriginalOrbitGyration.md)
 - Dependency: [D5/S3/Quantum/Matrix/CirculantCharpoly](../Quantum/Matrix/CirculantCharpoly.md)

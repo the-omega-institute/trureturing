@@ -1,0 +1,106 @@
+**定理 18.3（两个缺陷的耦合与单标记条件判据）。**在完整原类及 $\mathrm C_3$ 下，置
+
+$$
+\beta(a)=[e_a],\qquad \alpha_j(a)=[A_j(a)],\qquad
+L=I+T+T^2,\qquad Q=L/3.
+\tag{18.11}
+$$
+
+则 $Q$ 是像为 $\ker(T-I)$ 的幂等算子，满足 $B(Qx,y)=B(x,Qy)$。对每个原标签 $a$，两个单位缺陷满足精确关系
+
+$$
+\begin{aligned}
+L\beta(a)+T^2\alpha_1(a)+T\alpha_2(a)&=0,\\
+\alpha_2(a)&=-T\alpha_1(a)-L\beta(a),\\
+Q\alpha_1(a)+Q\alpha_2(a)&=-3Q\beta(a),\\
+(I-Q)\alpha_2(a)&=-T(I-Q)\alpha_1(a).
+\end{aligned}
+\tag{18.12}
+$$
+
+在定义 1.1 的完整 (R) 类中，有条件等价
+
+$$
+\begin{aligned}
+\mathrm C_3\land\mathrm C_1
+\quad\Longleftrightarrow\quad
+\mathrm C_3\land\mathrm C_2
+\quad\Longleftrightarrow\quad
+\mathrm{UC}
+\quad\Longleftrightarrow\quad
+\text{存在满足 (1.2) 的完整仿射复 Hilbert 表示}.
+\end{aligned}
+\tag{18.13}
+$$
+
+因此额外返回条件只需 (18.3) 中任一端点的一条普遍条件；标定则仍要求同一个 $j$ 的全部原标签、全部探针与两个读数次序。表示中的漂移 $t=F(U1)$ 不受零值限制。
+
+**证明。**引理 18.2 已先支付商算子的合法性。由 $T^3=I$ 及等距性，两个槽分别有
+
+$$
+B(Tx,y)=B(x,T^2y),\qquad B(x,Ty)=B(T^2x,y).
+\tag{18.14}
+$$
+
+故 $L$ 可移至另一槽而不变，且 $L^2=3L$、$TL=LT=L$。于是 $Q^2=Q$；$TQ=Q$，而 $Tx=x$ 时 $Qx=x$，给出其像。分解 $V=\operatorname{im}Q\oplus\ker Q$ 的两个部分在 $B$ 的两个配对次序下均互相正交；这只是双线性意义下的固定部分与非平凡三相部分，不是已经取得的正内积。
+
+直接将 (8.6) 的两条原轴恒等式降到这个合法商。对任意原标签 $u,a$，令 $x=\beta(u),y=\beta(a)$，则
+
+$$
+\begin{aligned}
+B(Lx,y)&=-B(Tx,\alpha_1(a))-B(T^2x,\alpha_2(a)),\\
+B(y,Lx)&=-B(\alpha_1(a),Tx)-B(\alpha_2(a),T^2x).
+\end{aligned}
+\tag{18.15}
+$$
+
+分别用 (18.14) 移动算子，得到
+
+$$
+\begin{aligned}
+B\bigl(x,Ly+T^2\alpha_1(a)+T\alpha_2(a)\bigr)&=0,\\
+B\bigl(Ly+T^2\alpha_1(a)+T\alpha_2(a),x\bigr)&=0.
+\end{aligned}
+\tag{18.16}
+$$
+
+$\beta(M)$ 张成 $V$，所以 (18.10) 给 (18.12) 第一式；作用 $T^2$ 得第二式，再分别作用 $Q$ 与 $I-Q$ 得余下两式。这里 $\alpha_j(a)$ 始终按原标签索引，未把它当成 $\beta(a)$ 上已经良定义的函数或线性算子，也未令 $P_j$ 先行下降。
+
+若给 $\mathrm C_1$，则 $\alpha_1(a)=0$，耦合式给 $\alpha_2(a)=-L\beta(a)$；若给 $\mathrm C_2$，则 $\alpha_2(a)=0$，同式给 $\alpha_1(a)=-T^2L\beta(a)=-L\beta(a)$。两种情形均在原恒等式 (2.3) 取 $u=v=1$：由 $X_k(a,1)=e_a+A_k(a)$ 及 $A_0=0$，有
+
+$$
+\sum_{k=0}^2 B\bigl(\beta(a)+\alpha_k(a),\beta(b)+\alpha_k(b)\bigr)
+=3B(\beta(a),\beta(b)).
+\tag{18.17}
+$$
+
+三个向量由两份 $\beta(a)$ 与一份 $(I-L)\beta(a)$ 组成，只在 $k=1,2$ 的位置上有别。因此由双线性及张成性，对全部 $x,y\in V$ 有
+
+$$
+B((I-L)x,(I-L)y)=B(x,y).
+\tag{18.18}
+$$
+
+但移槽与 $L^2=3L$ 又给
+
+$$
+B((I-L)x,(I-L)y)
+=B(x,y)-2B(Lx,y)+B(L^2x,y)
+=B(x,y)+B(Lx,y).
+\tag{18.19}
+$$
+
+所以 $B(Lx,y)=0$ 对全部 $x,y$ 成立；另一方向也有 $B(y,Lx)=B(Ly,x)=0$。完整双侧非退化性 (18.10) 迫 $Lx=0$ 对全部 $x$ 成立。耦合式随即消去另一标记的全部缺陷，取得原自由空间中完整的 $\mathrm{UC}$。几何上，$I-L=I-3Q$ 在固定部分乘以 $-2$，在 $\ker Q$ 上为恒等；它同时保持 $B$ 迫使固定部分在两个方向都落入根，而非仅有零自配对。
+
+现在直接应用定理 8.2：其 $M,U,c$ 正是本节原对象，根空间也是同一个 $\mathcal N$，全部 $a,z$ 与 $j=1,2$ 的前件已经取得。故得到 (1.2)，连同该定理已有的 $\mathrm{BR}$、对称性、全部有限负型与最小表示唯一性；不另作群化或 Hilbert 分类。反向，$\mathrm{UC}$ 经定理 8.2 给表示，因而两个 $\mathrm C_j$ 都成立，且
+
+$$
+F(p_3)=(1+\omega+\omega^2)t=0,\qquad
+F(P_3a)=Fa,
+\tag{18.20}
+$$
+
+给 $\mathrm C_3$。这证明 (18.13)。
+
+单标记标定保留 $e_{p_j}$：其内容是 $e_{a\cdot p_j}-e_a-e_{p_j}\in\mathcal N$，不是 $e_{a\cdot p_j}-e_a\in\mathcal N$。在表示中它允许 $F(P_1a)=Fa+t$；第一标记完整行列不可见才会要求 $t=0$。例如取加法 magma $M=\mathbb C$，单位记作 $0$，任取 $t\ne0$，置 $Uz=\omega z+t$、$c(z,w)=|z-w|^2$、$Fz=z$。两端共同仿射项相消及 $\sum_k\omega^k=0$ 直接给完整 (R)；$p_3=0$，两个标定族由其表示取得。但 $c(P_1 0,0)=|t|^2>0=c(0,0)$。这是 (1.2) 的非零漂移实例，也与命题 5.4 的原始树实现相容，不另计为新的分类。证毕。
+

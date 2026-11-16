@@ -68,5 +68,42 @@ internal sealed class DyadicProbabilityDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "For every positive X, the normalized logarithmic measure mu_X "
                     + "is a probability measure, since its total mass is one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("dyadic-position-map"),
+                DeclarationHandle.Create(Prefix + "dyadic_position_map"),
+                H("Law of the scaled position"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For X>0, the image of mu_X under x maps to x/X is mu_1. "
+                    + "The substitution x=Xu cancels X in the logarithmic density, "
+                    + "so the position law on [1,2] does not depend on X."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("block-mass"),
+                DeclarationHandle.Create(Prefix + "block_mass"),
+                H("Exact logarithmic block mass"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If 1<=u<=v<=2, the probability of [u,v] under mu_1 is "
+                    + "log(v/u)/log(2). Restricting the density to the subinterval "
+                    + "reduces the mass to the integral of 1/(x log(2)); its "
+                    + "endpoints have zero Lebesgue measure."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("position-indicator-icc-ae-eq-ioc"),
+                DeclarationHandle.Create(Prefix + "position_indicator_Icc_ae_eq_Ioc"),
+                H("Endpoint conventions for position blocks"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For X>0 and any real endpoints u,v, composing the [u,v] "
+                    + "and (u,v] indicators of an arbitrary real function with "
+                    + "x/X gives equal functions almost everywhere under mu_X. "
+                    + "The position law is mu_1, which assigns zero mass to "
+                    + "singletons. Thus a fixed-scale hypothesis stated with "
+                    + "closed blocks also applies to disjoint left-open blocks."))),
                 DescribeRole.Theorem))));
 }

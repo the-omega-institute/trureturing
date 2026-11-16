@@ -1,0 +1,63 @@
+### 33.2 逆斜率参数、全部坐标分支与零向量
+
+从 (33.1) 直接相减，得到与 (32.9) 相同的完整向量恒等式
+
+$$
+\mathsf S_\delta-\iota\mathsf R_\delta
+=(I+\delta\iota C)v.
+\tag{33.3}
+$$
+
+合法性保证 $\zeta_+\ne\iota$。若 $\zeta_-=\iota$，则 $(I-\iota C)v=0$。其三个对角元 $1-\iota c_j$ 全部非零，故 $v=0$，已得 (33.2)。这一分支的全部作用列还满足
+
+$$
+p=-\iota w,\qquad \mathsf R_+=0,\qquad q=-2w.
+\tag{33.4}
+$$
+
+其中 $\mathsf R_+=0$ 来自 $\zeta_+\ne\iota$ 及 (33.3)，再代回 $\mathsf R_+$ 就给最后一式；没有对 $\zeta_--\iota$ 作除法。
+
+其余情形置
+
+$$
+\gamma_\delta=(\zeta_\delta-\iota)^{-1},\qquad
+\gamma=(\gamma_++\gamma_-)/2,\qquad
+\eta=(\gamma_+-\gamma_-)/2,
+\qquad D(d)=1+\iota\gamma-\eta d.
+\tag{33.5}
+$$
+
+每个 $\gamma_\delta$ 有限且非零，故
+$\gamma^2-\eta^2=\gamma_+\gamma_-\ne0$。由
+$\mathsf R_\delta=(\gamma+\delta\eta)(I+\delta\iota C)v$
+的和、差，准确得到
+
+$$
+\boxed{
+\begin{aligned}
+p&=(\gamma I+\iota\eta C)v,\\
+q&=\bigl(2\iota\eta I+(\iota-2\gamma)C\bigr)v,\\
+w&=\bigl((1+\iota\gamma)I-\eta C\bigr)v.
+\end{aligned}}
+\tag{33.6}
+$$
+
+反代亦给两份完整核等式，所以它们是准确参数式。具体地，对任一谱值 $d$，(32.6) 的行列式在这些参数下为
+
+$$
+\Delta_d=-\frac{4\iota D(d)}{\gamma^2-\eta^2}.
+\tag{33.7}
+$$
+
+因此 $D(d)\ne0$ 时 $v_j=w_j/D(d)$ 唯一；$D(d)=0,w_j\ne0$ 时无解；$D(d)=w_j=0$ 时 $v_j$ 可任取，随后由 (33.6) 决定 $p_j,q_j$。后两种分支不使用 $D(d)^{-1}$。这也是 (32.8)–(32.10) 的同一退化分类。
+
+先处理 $w=0$。若 $D$ 在两个不同谱值上同时为零，则 $\eta=0$、$\gamma=\iota$，从而 $\gamma_+=\gamma_-=\iota$、$\zeta_+=\zeta_-=0$，违反严格正的 $\alpha_\pm$。故 $v$ 至多支撑在一格；$v=0$ 时已完成证明。否则 $p=\iota v$，而 $X=X^*$ 给 $u^*p\in\mathbb R$。若唯一非零格为 $j$，则
+
+$$
+0=\operatorname{Im}_\iota(u^*p)
+=\operatorname{Re}(\overline{u_j}v_j).
+\tag{33.8}
+$$
+
+这里 $\operatorname{Im}_\iota(A+\iota B)=B$，$A,B\in\mathbb R$。若 $j=3$，(33.8) 即为所求；若 $j\ne3$，则 $v_3=0$。这包括常数 $D$ 无零点时的 $v=0$ 分支。
+

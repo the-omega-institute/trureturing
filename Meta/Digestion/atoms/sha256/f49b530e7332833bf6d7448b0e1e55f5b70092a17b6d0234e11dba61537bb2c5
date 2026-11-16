@@ -1,0 +1,78 @@
+**Corollary 14.4 (evaluated exclusion near the four-moment endpoint chord).** Suppose $\mu(1),\mu(2)>0$ and the original installed prior supports at least one $k\ge3$. Every compatible pair satisfies
+
+$$
+\mathcal J+\frac{540}{11}S\ge\frac\eta4
+ =\frac{3554869594}{318644812890625},\qquad
+\eta=\frac{14219478376}{318644812890625}.
+\tag{14.11}
+$$
+
+In particular there is no compatible pair with both
+
+$$
+\mathcal J<\frac{1777434797}{318644812890625},\qquad
+S<\frac{19551782767}{172068198960937500}.
+\tag{14.12}
+$$
+
+Write its four coordinates as $\mathbf c=(m_p,m_\beta,q,z)$ and let
+
+$$
+\mathbf c(\theta_0)=\left(
+ a+(b-a)\theta_0,\ a+(b-a)\theta_0,
+ (1-\theta_0)(1-a)^2+\theta_0(1-b)^2,
+ (1-\theta_0)a^2+\theta_0b^2\right).
+$$
+
+The explicitly evaluated simultaneous neighborhood
+
+$$
+\mathcal J<\frac{1777434797}{318644812890625},\qquad
+\|\mathbf c-\mathbf c(\theta_0)\|_\infty
+ <\frac{19551782767}{871812208068750000}
+ \quad\text{for some }\theta_0\in[0,1]
+\tag{14.13}
+$$
+
+contains no compatible pair's excess and coordinates. It is a nonempty neighborhood in the ambient nonnegative-excess and moment space, containing $(0,\mathbf c(\theta_0))$ for every $\theta_0$. The supported-nonendpoint hypothesis is necessary: for a prior supported only on depths $1,2$, the fair endpoint-tag pair has $\mathcal J=S=0$.
+
+**Proof.** Put $E=\mathcal J+C_pS$ and use the common $\theta$ of Theorem 14.2. The original two endpoint risk bounds in (11.9) and (14.3) imply
+
+$$
+\theta\Delta_p=H_{p,\theta}(P_{p,a})\le\rho_p+E,
+\qquad
+(1-\theta)\Delta_p=H_{p,\theta}(P_{p,b})\le\rho_p+E.
+$$
+
+Since $\Delta_p=2\rho_p$, these inequalities give $|\theta-1/2|\Delta_p\le E$. For a supported $k\ge3$, put $r=r_k$. The complete-word gap (12.10) and its coordinate-triangle consequence in Corollary 12.3 give
+
+$$
+H_{p,1/2}(P_{p,r})\ge\rho_p+\frac\eta2.
+$$
+
+The reverse triangle inequality for the two endpoint distances gives
+
+$$
+\left|H_{p,\theta}(P_{p,r})-H_{p,1/2}(P_{p,r})\right|
+ \le|\theta-1/2|\Delta_p\le E.
+$$
+
+On the other hand, the supported target's own bound in (11.9) and (14.3) give $H_{p,\theta}(P_{p,r})\le\rho_p+E$. Combining these three inequalities yields $\eta/2-E\le E$, which is (14.11). The same-history interpretation of supported pure targets retains precisely the paid-history and countable-prior hypotheses recorded in Section 11.4; it does not create a pure-source runtime query.
+
+The two thresholds in (14.12) are exactly $\eta/8$ and $\eta/(8C_p)=11\eta/4320$, so their simultaneous strict inequalities would contradict (14.11). To obtain (14.13), sum the exact identities (12.7):
+
+$$
+S=\frac{22}{15}-\frac8{15}(m_p+m_\beta)-2q-2z.
+$$
+
+This affine expression vanishes at every $\mathbf c(\theta_0)$. Hence if $\|\mathbf c-\mathbf c(\theta_0)\|_\infty<\varepsilon$, its nonnegative value satisfies
+
+$$
+0\le S<\left(\frac{16}{15}+2+2\right)\varepsilon
+       =\frac{76}{15}\varepsilon.
+$$
+
+The coordinate threshold in (14.13) is exactly $11\eta/21888$; multiplying it by $76/15$ gives $11\eta/4320$, the excluded $S$ threshold. All displayed thresholds are strictly positive, proving the asserted ambient nonemptiness and exclusion. For endpoint-only support, the fair pair (12.5) has endpoint losses $\rho_s$, endpoint emissions and no mismatch, so $\mathcal J=S=0$, as in Corollary 12.3.
+
+This argument consumes the complete-loss comparison in the joint feasibility problem of Section 11.8 and quantitatively extends Corollary 12.3's exact-fibre exclusion. Its input tools are the previously supplied residual identities, normalized whole-law stopping contraction, endpoint distances and complete-word gap; it asserts no new general TV or coupling theorem and no literature priority. The necessary relation leaves $S$ free away from the excluded neighborhood and supplies no unrestricted positive risk-only gap, evaluated optimizer, finite attainment, resource optimum or physical-space dimension. $\square$
+

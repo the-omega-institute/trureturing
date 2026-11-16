@@ -1,0 +1,30 @@
+#### 定理 6.11：密度球、效果与二元平方律
+
+全部正读出状态唯一表示为
+
+$$
+\rho_r=\frac{I+\sigma_r}{2},\qquad q(r)\le1,
+\qquad\ell_r(F)=\operatorname{Tr}(\rho_rF).
+$$
+
+效果 $F=\eta I+\sigma_b$ 的准确条件是
+
+$$
+\sqrt{q(b)}\le\min\{\eta,1-\eta\}.
+$$
+
+极点状态恰对应 $q(r)=1$；对单位 $n,m\in W$，
+
+$$
+P_n=\frac{I+\sigma_n}{2},\qquad
+\operatorname{Tr}(P_nP_m)=\frac{1+B(n,m)}2.
+$$
+
+**证明。**
+
+非退化迹配对使每个实线性泛函唯一为 $F\mapsto\operatorname{Tr}(\rho F)$、$`\rho=\rho^*`$。 正锥自对偶使其正性等价于 $\rho\ge0$，单位评价等价于 $\operatorname{Tr}\rho=1$。 自伴形式及其两个本征值立即给 $\rho_r$ 和 $q(r)\le1$。 对 $F$ 与 $I-F$ 同时应用正锥条件，得到效果条件。
+
+若 $\lVert r\rVert<1$，可沿任意小的非零方向作对称扰动 $r\pm v$，仍在球内， 故该态不是极点。若 $\lVert r\rVert=1$ 且 $r=\lambda a+(1-\lambda)b$、 $0<\lambda<1$、$\lVert a\rVert,\lVert b\rVert\le1$，与 $r$ 配对迫使 $B(r,a)=B(r,b)=1$；Cauchy–Schwarz 的等号条件给 $a=b=r$，故为极点。 $P_n^2=P_n$ 由 Pauli 式得出，其迹为一，故秩一。 最后展开两个投影并使用迹配对，得到二元概率式。
+
+$\square$
+

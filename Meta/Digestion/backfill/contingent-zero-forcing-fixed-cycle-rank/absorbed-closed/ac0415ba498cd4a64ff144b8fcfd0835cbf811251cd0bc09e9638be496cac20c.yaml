@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ac0415ba498cd4a64ff144b8fcfd0835cbf811251cd0bc09e9638be496cac20c
+  normalized_sha256: sha256:ac0415ba498cd4a64ff144b8fcfd0835cbf811251cd0bc09e9638be496cac20c
+cas_ref: sha256:ac0415ba498cd4a64ff144b8fcfd0835cbf811251cd0bc09e9638be496cac20c
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/ZeroForcing/ContingentThreshold.contingent_iff_lambda_gt
+    target_statement_id: sha256:f2fc7b66080fd7fb8bdc9d9bfc311c6b6b763d019539e86d0349afe5f19193d8
+receipts:
+  unresolved_subitems: []

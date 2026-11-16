@@ -1,0 +1,15 @@
+**定义 29.1（原标签与中间域张成）。** 设 $F$ 为特征零域，$L/F$ 为有限扩张，$0\ne W\le_F L$，$m=\dim_F W$。沿用 §§26–28 的原乘法、比值域和稳定子，记
+
+$$
+\begin{aligned}
+D&=F\bigl(\{p/q:p\in W,\ q\in W\setminus\{0\}\}\bigr),&
+E&=\{a\in L:aW\subseteq W\},\\
+N&=[D:F],& e&=[E:F],\\
+d_W(r)&=\dim_F(W\cap rW)\qquad(r\in L^\times),&
+\delta&=\min\{d_W(r):r\in L^\times,\ d_W(r)>0\}.
+\end{aligned}
+\tag{29.1}
+$$
+
+对每个实际中间域 $F\subseteq A\subseteq D$，记 $AW=\operatorname{span}_A W\subseteq L$。令 $a(A)=[A:F]$、$t(A)=\dim_F AW-m$。两个端点下界指由 $A=E$ 和 $A=D$ 给出的 $e$ 和 $2m-N$。所有标签均取自原 $L^\times$；由于 $d_W(1)=m>0$，最小值存在。
+

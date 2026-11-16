@@ -1,0 +1,57 @@
+**定理 4.2（维数无关的归一化与二十四阶尾界）。** 上述同一向量表满足
+
+$$
+\begin{gathered}
+\sum_n\|c_n\|_2\le32M_{\rm Fourier}s^{-3/2}\le A_0e^{-3/2},\\
+\sum_{n\notin\mathcal F}\|c_n\|_2\le\frac1{1000t},\qquad
+\sum_{n\in\mathcal F}\|a_n-c_n\|_2\le\frac1{10000t},\\
+\frac12\le\widehat\alpha\le A_0e^{-3/2}.
+\end{gathered}
+\tag{4.5}
+$$
+
+证明。由定理 3.2 及径向链式法则，在归一体积的 $\mathbb T_4^3$ 上
+
+$$
+\|\partial^\gamma b_e\|_{L^2}\le C^4s^{-|\gamma|}
+\quad(|\gamma|\le24),\qquad\|b_e\|_{L^2}\le1.
+\tag{4.6}
+$$
+
+向量 Parseval 等式给
+
+$$
+\left(\sum_n|n|^{2j}\|c_n\|_2^2\right)^{1/2}
+\le M_{\rm Fourier}s^{-j},\qquad j=2,24.
+\tag{4.7}
+$$
+
+常数 $2^{50}$ 已包含多重指标和及频率 $\pi/2$ 的因子。取 $H=\lceil1/s\rceil$。低频格点至多 $27H^3$ 个，Cauchy–Schwarz 给其系数范数和至多 $6H^{3/2}$。其余部分用
+
+$$
+\sum_{|n|_\infty>H}|n|_\infty^{-4}\le52/H
+\tag{4.8}
+$$
+
+及 (4.7) 的 $j=2$ 界，得到 $32M_{\rm Fourier}s^{-3/2}$。这是整个向量族的共同归一化，不逐分量累加维数损失。
+
+格壳计数
+$(2k+1)^3-(2k-1)^3=24k^2+2\le26k^2$，结合 (4.7) 的 $j=24$ 界给
+
+$$
+\sum_{|n|_\infty>R}\|c_n\|_2
+\le M_{\rm Fourier}s^{-24}R^{-45/2}.
+\tag{4.9}
+$$
+
+取 $R=R_F$ 后右端至多 $M_{\rm Fourier}768^{24}e^{39/4}$。原曲线有 $t\le U_0e^{-8}$，而 (2.7) 的窗口使该项至多 $1/(1000t)$。绝对收敛将 Fourier 级数识别为光滑周期延拓，故在球面上恰还原 $f$。
+
+对每个系数，向量被积函数的 Lipschitz 常数至多 $L_{\rm int}$，中点误差至多 $7L_{\rm int}/B_{\rm int}$。分量舍入贡献至多
+
+$$
+\sqrt{2d_f}\,2^{-p_{\rm int}}\le\frac2{10^8tF_{\rm count}}.
+\tag{4.10}
+$$
+
+对有限频率求和给 (4.5) 的表误差。上界仍在 $A_0e^{-3/2}$ 的余量内；下界使用 $\|f(h)\|\ge\sqrt{1-1/\lambda}$、$\lambda\ge2$ 及两个一致逼近误差，得到 $\widehat\alpha\ge1/2$。后续字使用的就是这张有理表。$\square$
+

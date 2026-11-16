@@ -1,0 +1,15 @@
+**Assumption check for Theorem 18.2.** The boxes are essential: with one p and one suspended label, $A=B=(1)$, $u=1/3$ and $v=9/25$, one has
+
+$$
+ L=\frac6{25},\qquad g=\frac{32}{75},\qquad
+ Q(w_{n,1})=\frac{32}{75}\left(\frac6{25}\right)^n.
+$$
+
+This sequence satisfies (18.1), but
+
+$$
+ Q(w_{3,1})-P_{p,b}(w_{3,1})=\frac{72}{78125}>0,
+$$
+
+so the full endpoint box fails. A return rate or an averaged recurrence without all coordinate boxes is therefore insufficient.
+

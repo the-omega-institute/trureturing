@@ -1,0 +1,26 @@
+### 123.14 复用、原域综合与原始来源的适用范围
+
+本章复用的承重前置是VII103.2、104.1的完整原面，IX118.10—118.11的原零效应最大值／唯一一值面接口，IX120.8—120.12的限制同构及全原空间邻确认公式，THREE_COPY第七卷121的残余稳定、中点、带 $1/2$ 余量和其下半连续性，以及THREE_COPY第七卷122的完整实际影像、接触纤维、影壳光滑与准确闭像关系。静态分类只经IX116.17及VIII113.8—113.9；这些既有结果不再计为本章新分类。
+
+原域联合综合是：两个真实完整球图在全 $V$ 上的确认消元及原球序下界；以整个纯标签域的正规稳定排除全部真实远端塌缩；将所有比值影像压到同一正高度紧截面；原单位最省提升费用及其精确费用一层、真实支撑费用和保单位的更大闭凸像；两个法向张成空间的准确交线；以及同一有限批真实球的放大整球包含、统一负第三效应与原归一正余量的双向等价。紧性、分离、投影、凸费用、下半连续、有限覆盖和支撑函数可微性在这些原对象中作为成熟中间工具使用，不改名为一般新理论，不主张文献穷尽或全球原创。
+
+[Pataki][Q123P] Definition 1、Remark 1定义nice为对每个面 $F\unlhd K$，$K^*+F^\perp$ 闭；Theorem 2刻画同一面处的等价条件。这里若对应该记号，必须取 $K=C^*$、$F=N_p$，所以闭的是原 $C+(\operatorname{span}N_p)^\perp$。本章只在 $P_{\rm reg}$ 的这些面证明它，不把锥与对偶交换，也不由一批局部闭像宣称全局niceness。
+
+[Barnum–Müller–Ududec Theorem 16][Q123BMU]的有限维Jordan入口明确需要projectivity、跃迁概率对称和滤子保纯；Proposition 29关于无三阶干涉与滤子保纯的等价另带Postulates 1、2。[Niestegge Theorem 3][Q123N]明确保留Axioms 1、2、proper效应性质 $(*)$、有限信息容量及对称跃迁概率，才给pre-Hilbert结构与自对偶；唯一完整球确认不等于在全部proper确认效应之下的序least。[Barnum–Hilgert Theorem 1.1、Definitions 3.4—3.5][Q123BH]的入口是每态落在一个共同框架的凸包及各长度有序框架的强对称，不能由三个各自真实的边、原法锥的光滑或有界费用代替。这些条件也与[钉版mathsource的完整S／谱桥][Q123S]及[强对称谱性桥][Q123BHS]保持一致；本章不从已见的几何规则中免费取得它们。
+
+[MixedExclusionGeometry][Q123Mixed]的标签、中心、反射和收缩连续性显式带weakPair；[PositiveComplementaryProjections.whole_positive_projections][Q123Proj]也显式带weakPair，即每个原正交纯对生成真最小面。EB3+Inj没有在本章支付这个前件，故不通过这些接口输入正互补投影、保单位正过滤或跨球全域连续性。这里的最省费用与闭凸提升像也不补这项前件。其他Jordan表示定理只可在各自原前件实际成立后消费，不能以球形、名称或某个二维／三维示意替代。
+
+[Q123VII]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "完整排除面第七卷VII103.2、104.1—104.3；非THREE_COPY第七卷的有限层级103—104。"
+[Q123VIII]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "排除球第八卷VIII112.9、113.8—113.11及完整静态与物理合同。"
+[Q123IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "排除球第九卷IX116.17、118.10—118.13、120.8—120.12与120.11节完整物理合同。"
+[Q123121]: https://github.com/the-omega-institute/trureturing/blob/2f08292714e2f1a90efbe77a5c71c33048191fee/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "THREE_COPY第七卷121；原中点、归一余量、整个原纯标签域的残余稳定及切扇。"
+[Q123122]: https://github.com/the-omega-institute/trureturing/blob/129201f3100118257cea7384a73f0b71cfa82818/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "THREE_COPY第七卷122；原三维实际影像、闭影壳、接触纤维、平面塌缩与单位接触。"
+[Q123P]: https://arxiv.org/pdf/1202.4043v4 "Gábor Pataki, On the connection of facially exposed and nice cones；Definition 1、Remark 1、Theorem 2；DOI 10.1016/j.jmaa.2012.10.033。"
+[Q123BMU]: https://arxiv.org/html/1403.4147v4 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory；Theorem 16、Proposition 29。"
+[Q123N]: https://arxiv.org/html/2312.13213v2 "Gerd Niestegge, Quantum transition probability in convex sets and self-dual cones；Axioms 1、2、性质(*)及Theorem 3。"
+[Q123BH]: https://arxiv.org/html/1904.03753v1 "Howard Barnum and Joachim Hilgert, Strongly symmetric spectral convex bodies are Jordan algebra state spaces；Theorem 1.1、Definitions 3.4、3.5。"
+[Q123S]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge "钉版完整S／proper least／谱性接口及其纸面与形式化范围。"
+[Q123BHS]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/Library/QuantumStates/barnumhilgert2019spectral.md "钉版共同框架谱性、全长度强对称及条件Jordan入口。"
+[Q123Mixed]: https://github.com/the-omega-institute/trureturing/blob/817dee4ff1398b8a0cedf20bd54e6836d71708b3/D5/S3/Quantum/Foundation/MixedExclusionGeometry.lean "显式weakPair前件的原混态排除几何；非裸EB3输入。"
+[Q123Proj]: https://github.com/the-omega-institute/trureturing/blob/1ce3f594c6084f2350b480c2850db393549065cc/D5/S3/Quantum/Foundation/PositiveComplementaryProjections.lean "whole_positive_projections显式要求weakPair，不由本章闭商像代付。"
+

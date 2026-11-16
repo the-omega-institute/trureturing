@@ -1,0 +1,29 @@
+**定义 31.1（两族读数条件 S）。**保留定义 1.1 的全部原始对象：有真实双侧单位 $1$ 的任意 magma $M$，任意 $U:M\to M$，以及处处有限、非负、零对角的 $c$。完整 (R) 仍要求
+
+$$
+\forall a,b,u,v\in M:\qquad
+\sum_{k=0}^2c\bigl(a\cdot(U^ku),b\cdot(U^kv)\bigr)=3c(a,b)+3c(u,v).
+$$
+
+置 $p_j=U^j1$、$q(a)=c(a,1)$、$r(a)=c(1,a)$，并对全部 $a,z\in M$、$j\in\{1,2\}$ 定义
+
+$$
+\begin{aligned}
+B(a,z)&=q(a)+r(a)+q(z)+r(z),\\
+\Delta_j(a,z)&=|c(a\cdot p_j,z)-c(a,z)|+|c(z,a\cdot p_j)-c(z,a)|.
+\end{aligned}
+\tag{31.1}
+$$
+
+额外条件为
+
+$$
+\forall\varepsilon>0\ \exists C_\varepsilon\in[0,\infty)\ \forall a,z\in M\ \forall j\in\{1,2\}:\qquad
+\Delta_j(a,z)\le\varepsilon B(a,z)+C_\varepsilon.
+\tag{S}
+$$
+
+同一个有限 $C_\varepsilon$ 必须独立于 $a,z,j$；$B=0$ 也在量词内。只检验将盖一次或两次标记的空输入插在右端这两族比较，不要求任意零费用来源可替换，也不预设对称性、三角、拓扑、固定幂、结合律或 $U1=1$。(S) 是明确增列的一致次线性增长前件，尚未从 (R) 推出；这不声称已证明二者逻辑独立。
+
+白话说，三次成对比较的总账精确配平；再要求两种局部空输入插入造成的双向读数变化，不能随着任意增大的全局比较预算保持正比例增长。它容许标记空输入的有限效应，每个比例容差有一笔共同有限余量，而非要求原模型的插入效应为零。事件完整性、过程接续、联合系统和时间仍分别保留各自的实际前件。
+

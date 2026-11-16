@@ -1,0 +1,41 @@
+**定理 13.2（残余读取的存在、量词与精确范数）。** 在 13.1 下，(13.3) 等价于 $z_{\rm res}=0$，也等价于不存在满足 $\pi(\mathsf T)>0$ 的不可约表示。若 $\mathsf T\ne0$，存在满足
+
+$$
+\pi(\mathsf T)=\|\mathsf T\|I>0
+\tag{13.7}
+$$
+
+的二维不可约商表示。准确的全称结论是：每个实际读取 $t>0$ 的不可约表示为二维，每个读取 $t=0$ 的不可约表示为一维；同一个有非零残余的 $B$ 可以兼有两类表示。对每个不可约表示，
+
+$$
+\begin{gathered}
+\|\pi(\mathsf X)\|=\|\pi(\mathsf Y)\|=\sqrt t,
+\qquad \|\pi(\mathsf A)\|=\sqrt{4r-t},\\
+\|\pi(\mathsf H)\|=2t.
+\end{gathered}
+\tag{13.8}
+$$
+
+全局则有
+
+$$
+\begin{gathered}
+\|\mathsf X\|=\|\mathsf Y\|=\sqrt{\|\mathsf T\|},
+\qquad \|\mathsf A\|=\sqrt{\|4\mathsf R-\mathsf T\|},\\
+\boxed{\|[\mathsf X,\mathsf Y]\|
+=2\|\mathsf T\|=2\|\mathsf X\|^2=2\|\mathsf Y\|^2.}
+\end{gathered}
+\tag{13.9}
+$$
+
+证明。正元支撑为零当且仅当该元为零；13.1 遂给与 $z_{\rm res}=0$ 的等价。若 $\mathsf T=0$，所有表示当然消灭它。反向设 $m=\|\mathsf T\|>0$。在 $C^*(u,\mathsf T)$ 上取正谱最大点 $m$ 的评价态，并将它正延伸到 $B$。因此
+
+$$
+F=\{\phi\in S(B):\phi(\mathsf T)=m\}
+\tag{13.10}
+$$
+
+是非空弱星紧凸集。它还是整个态空间的面：若 $0<\lambda<1$ 且 $\lambda\phi_1+(1-\lambda)\phi_2\in F$，由 $0\le\phi_i(\mathsf T)\le m$，必有两份读数都等于 $m$，即两态均属 $F$。Krein–Milman 定理给 $F$ 的一个极点 $\phi$；面的性质使它也是 $S(B)$ 的极点，故为纯态。
+
+纯态的循环 GNS 表示 $\pi_\phi$ 非零且不可约。中央性和 Schur 引理给 $\pi_\phi(\mathsf T)=tI$，循环单位向量的读数给 $t=\phi(\mathsf T)=m>0$。11.2 遂给二维表示，像为 $M_2(\mathbb C)$，所以也是所述商表示。这完成不存在正残余不可约读取与 $\mathsf T=0$ 的双向证明。11.2 给两类表示的准确量词；(10.5)、(13.6) 与 C* 范数恒等式分别在表示中和 $B$ 中给 (13.8)–(13.9)。不需谱隙、原投影、原纯态准备或全局矩阵分解。∎
+

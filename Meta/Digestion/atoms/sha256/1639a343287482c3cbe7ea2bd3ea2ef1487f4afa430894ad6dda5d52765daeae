@@ -1,0 +1,30 @@
+**容差的整数条件。** Fibonacci 递推与 $`\varphi^2=\varphi+1`$ 给
+$`F_{N+2}\ge\varphi^N`$：初始 𝑁=0 为 1=1、𝑁=1 为 $`2\ge\varphi`$；相邻两界相加即得下一界。因此对 $`\varepsilon\gt 0`$、整数
+
+
+<table><tbody><tr><td>
+
+```math
+N\ge
+\max\left\{2,\
+\left\lceil\frac{\log(2/\varepsilon)}{2\log\varphi}\right\rceil
+\right\},
+```
+
+</td></tr></tbody></table>
+
+
+单位链的上述端点误差不超过 $`\varepsilon`$。更锐利的精确判定为
+$`F_{N+2}^2\ge2/\varepsilon`$；对数界是充分条件，不一定是最短长度。$`\varepsilon=0`$ 时没有有限 𝑁≥2 达到独立。只接完整原生窗时选 𝑁=3𝐿；例如充分条件可写
+
+
+```math
+L\ge\max\left\{1,\
+\left\lceil\frac{\log(2/\varepsilon)}{6\log\varphi}\right\rceil
+\right\},
+```
+
+
+精确条件仍是 $`F_{3L+2}^2\ge2/\varepsilon`$。𝑁=1 另有同位联合
+$`\mathrm{TV}=2w_1/(1+w_1)^2`$，单位活动时为 1/2。
+

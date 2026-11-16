@@ -1,0 +1,45 @@
+**Lemma 34.2 (native connector bounds).** At every prefix of this
+connector,
+
+$$
+|x|\le\max(\rho,|X|),\quad |y|\le\max(\rho,|Y|),\quad
+j\in[\min(0,D),\max(0,D)].
+\tag{34.3}
+$$
+
+It ends at $(X,Y,D)$, stays strictly in $I$ until possibly its final
+height endpoint, and uses only the two original controls. If
+$|X|,|Y|\le A\rho$ and $|D|\le B\rho$, then
+
+$$
+\begin{aligned}
+V^a(g)&\le2B+(2+A)\rho,&
+V^b(g)&\le2B+A\rho,\\
+L(g)&\le4B+(2+2A)\rho,&
+\int_0^1|g'(v)|^2dv&=L(g)^2.
+\end{aligned}
+\tag{34.4}
+$$
+
+In particular for $(A,B)=(1,1)$ these are bounded by $5,3,8,64$;
+for $(A,B)=(3,7)$ they are bounded by $19,17,36,1296$.
+
+Proof. Each rectangle is exactly the native rectangle of Lemma 17.1,
+with $|D/(Md)|\le\rho$. Its relative integral increases from the
+previous value to that value plus $D/M$ on its second leg and is
+constant on the other three legs. All rectangle increments have the
+same sign. The two final legs add zero relative integral. This proves
+(34.3), the endpoint chronology and the translated cross term, by (17.6).
+The inward excursion $h\to h+d$ is strictly interior because
+$\rho\le(u-l)/8$. The last height leg joins $h$ to $h+X$ and is
+interior before its endpoint. These are whole-height checks, independent
+of the number of rectangles.
+
+For $D\ne0$ the exact variations are $2M\rho+|X|$ and
+$2|D|/\rho+|Y|$. Since $M\le|D|/\rho^2+1$, they give
+(34.4), also when $D=0$. All legs are along control axes, so their
+sum is the Euclidean length. Constant arclength speed on the unit
+parameter interval proves the last equality. There are finitely many
+legs for each finite input, with no new instantaneous central operation.
+$\square$
+

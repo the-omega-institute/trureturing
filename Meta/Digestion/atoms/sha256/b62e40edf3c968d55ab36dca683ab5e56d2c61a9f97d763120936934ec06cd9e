@@ -1,0 +1,144 @@
+**命题 21.1（本输入族中仍须支付第二反射行）。** 仅有全部有向 A1/P2、A2/A3、整个 $pAp$ 的标准分类，以及指定对 $(a,b)$ 的 (19.8) 骨架，不能推出 (19.6)。下面的同一个六维总映射在标量总右 Gram、不等右 Gram 的实际输入上展示这一点，并有一份明确的完整 PB 失败。
+
+这只隔离定理 19.2 中第二遍 7.1 的作用。一般的局部契约不足性已由 AH73–74 支付；单对正性留下非标准输出的先例还有 PT134.2，以及运输续卷110.2的固定八阶元组。本例不重立“PB 不可删”的一般独立性结论，不声称满足完整原候选或所有其他局部反射的 7.1 结论。
+
+证明。另取 $B=M_2(\mathbb C)$、$A=M_3(B)=M_6(\mathbb C)$，原评价取全部数学正泛函，仍保留它们的原标签和全部非负质量；这给分离且准确决定锥的评价族。置
+
+$$
+\begin{gathered}
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad Z=\operatorname{diag}(1,-1),\\
+x=\operatorname{diag}(2,1),\quad y=\operatorname{diag}(1,2),\quad
+m=5,\quad \alpha_0=3/5,\quad\beta_0=4/5,\quad\tau=1/4,\\
+a=h,\quad b=b_+(x)+b_-(y),\quad
+K=K_1(a,b),\quad r=\operatorname{diag}(\tau X,-\tau X,0),\quad g=K+r.
+\end{gathered}
+\tag{21.1}
+$$
+
+这里 $x^*x+y^*y=5I_2$，而 $x^*x-y^*y=3Z\ne0$；$r\ne0$，$r\in pAp$ 且 $[h,r]=0$。先证明这一对的全部向量 P2。
+
+实际等距列
+
+$$
+U=\frac1{\sqrt m}\binom{x}{y},\qquad
+V=\frac1{\sqrt m}\binom{y}{-x}
+\tag{21.2}
+$$
+
+满足 $U^*U=V^*V=I_2$、$U^*V=0$，并给 $p\mathbb C^6$ 的正交分解。每个原向量唯一写成 $\xi=(Uz+Vv,w)$，$z,v,w\in\mathbb C^2$。相对于 $U,V,q$ 三块，
+
+$$
+a=\begin{pmatrix}\alpha_0 Z&\beta_0 I_2&0\\
+\beta_0 I_2&-\alpha_0 Z&0\\0&0&0\end{pmatrix},\quad
+b=\sqrt m\begin{pmatrix}0&0&I_2\\0&0&0\\I_2&0&0\end{pmatrix},\quad
+r=\begin{pmatrix}0&\tau X&0\\\tau X&0&0\\0&0&0\end{pmatrix}.
+\tag{21.3}
+$$
+
+内积第一槽共轭线性。记
+
+$$
+\begin{gathered}
+F=\alpha_0 Zz+\beta_0v,\qquad G=\beta_0z-\alpha_0Zv,\qquad
+L=\|z\|^2+\|v\|^2=\|F\|^2+\|G\|^2,\\
+k=\langle\xi,K\xi\rangle=-\sqrt m\operatorname{Im}\langle F,w\rangle,
+\qquad \rho=\langle\xi,r\xi\rangle=2\tau\operatorname{Re}\langle z,Xv\rangle.
+\end{gathered}
+\tag{21.4}
+$$
+
+复 Gram 的非负余量准确为
+
+$$
+\begin{aligned}
+\mathcal C&=\|a\xi\|^2\|b\xi\|^2-|\langle a\xi,b\xi\rangle|^2\\
+&=m\{L\|z\|^2+\|G\|^2\|w\|^2
++\|F\|^2\|w\|^2-|\langle F,w\rangle|^2\}.
+\end{aligned}
+\tag{21.5}
+$$
+
+由 $v=(\beta_0/\alpha_0)Zz-(1/\alpha_0)ZG$ 及 $XZ$ 反自伴，
+
+$$
+|\rho|\le\frac{2|\tau|}{\alpha_0}\|z\|\|G\|.
+\tag{21.6}
+$$
+
+置非负实量
+
+$$
+A_0=\sqrt{mL}\|z\|,\quad
+B_0=\sqrt m\|G\|\|w\|,\quad
+t_0=\frac{2|\tau|}{\alpha_0\sqrt m}=\frac{\sqrt5}{6}.
+\tag{21.7}
+$$
+
+复 Cauchy–Schwarz、$\|F\|,\|G\|\le\sqrt L$ 和 (21.5)–(21.6) 给
+
+$$
+\mathcal C\ge A_0^2+B_0^2,\quad
+2|k\rho|\le2t_0A_0B_0,\quad
+\rho^2\le t_0^2A_0^2.
+\tag{21.8}
+$$
+
+所有式子在 $L=0$ 或任一零向量时仍成立，没有除以这些量。候选输出 $g=K+r$ 的原实 Gram 预算减去输出平方，因而满足
+
+$$
+\begin{aligned}
+&\|a\xi\|^2\|b\xi\|^2-
+\bigl(\operatorname{Re}\langle a\xi,b\xi\rangle\bigr)^2
+-\langle\xi,g\xi\rangle^2\\
+&\quad=\mathcal C-2k\rho-\rho^2\\
+&\quad\ge(B_0-t_0A_0)^2+(1-2t_0^2)A_0^2
+=(B_0-t_0A_0)^2+\frac{13}{18}A_0^2\ge0.
+\end{aligned}
+\tag{21.9}
+$$
+
+两份平方对角非负，反向输出取 $-g$，故这一对的两种有向二表均正。有限维每个正泛函是向量正泛函的有限非负和，二表对泛函线性且正二表之和仍正，于是覆盖全部正泛函和全部质量，包括零质量；不存在仅验证向量态而漏掉其他读取的问题。
+
+现在在整个 $A_{\rm sa}^2$ 定义同一个总映射
+
+$$
+\widetilde D(c,d)=
+\begin{cases}
+g,&(c,d)=(a,b),\\
+-g,&(c,d)=(b,a),\\
+K_1(c,d),&\text{其他实际有序对}.
+\end{cases}
+\tag{21.10}
+$$
+
+$a,b$ 非零、自伴且不同，故两例无冲突。未改动的对由 AH63.1 的载体无关反向 P2 计算给标准复 Gram；两份改动由 (21.9) 支付，故全部有向 A1/P2 成立。A2 的实三表及相加零方向只用已知 Jordan 实部，A3 由 C* 谱序成立。因为 $b\notin pAp$，整个 $pAp$ 的旧表仍等于 $K_1$，而指定对满足 (19.8)。它还满足
+
+$$
+x^*r_1x+y^*r_2y=0,\qquad q_b r q_b=0,
+\tag{21.11}
+$$
+
+其中 $r_1=\tau X,r_2=-\tau X$，$q_b$ 是 $\ker b$ 的正交投影。首式由 $xXx=yXy=2X$ 得到；在 (21.3) 中 $\ker b$ 正是 $V$ 块，而 $r$ 的 $VV$ 块为零，给次式。$q_bKq_b=0$ 也由 $bq_b=q_bb=0$ 得到。
+
+最后检验实际 $\operatorname{PB}(b;a,0)$。其内值为 $-g,0$，置 $k_a=a\circ b$，两份真正外层对为 $(a-g,k_a)$、$(a+g,-k_a)$。这里
+
+$$
+k_a=\tfrac12b_+(x)-\tfrac12b_-(y),\qquad
+\pm k_a\notin\{a,b\}.
+\tag{21.12}
+$$
+
+所以这两份外值均属于 (21.10) 的标准分支。比较响应的已知双线性给
+
+$$
+\begin{aligned}
+\widetilde D(a-g,k_a)-\widetilde D(a+g,-k_a)
+&=2K_1(a,k_a)=2a\circ K,\\
+2a\circ g-2a\circ K
+&=2ar=2\tau\operatorname{diag}(X,X,0)\ne0.
+\end{aligned}
+\tag{21.13}
+$$
+
+完整 PB 的右端要求 $2a\circ g$，故在这份实际三元组上失败。相应原评价族分离该非零差额。本例没有满足完整 PB，也没有满足以 $b$ 为第一反射所应有的 (19.9)；定理 19.2 使用的正是这笔尚未由第一行骨架和原 P2 支付的约束。∎
+

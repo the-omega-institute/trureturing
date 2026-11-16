@@ -1,0 +1,35 @@
+**定义 1.1（只在原对象上检验的几何前件）。** 固定 [128.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#128-同一二元关系的完整候选与实际角)–[128.4](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#128-同一二元关系的完整候选与实际角) 的全部原资料，特别是同一个稠密含单位实 Jordan 子代数 $E\subset X$、原 $S=\circ,D:E^2\to E$、准确锥、单位、范数、原评价及全部质量、P2 和完整 PB。另给一个原幂等元集合 $\mathscr P$，满足
+
+$$
+p\in E,\qquad p^2=p\ne0,\qquad U_p(E)=\mathbb Rp
+\quad(p\in\mathscr P).
+\tag{1.1}
+$$
+
+$U_p=2L_p^2-L_p$。仅用有限次原 Jordan 运算定义代数理想
+
+$$
+\mathcal A=\operatorname{span}_{\mathbb R}
+\{L_{a_1}\cdots L_{a_n}p:
+ n\ge0,\ a_j\in E,\ p\in\mathscr P\}\subset E.
+\tag{1.2}
+$$
+
+每个测试只含有限多个原元素和有限次已知 Jordan 运算；$n=0$ 给 $p$ 本身，线性包只取有限和。这里不使用 $D$ 来生成测试。所加的分离原语准确为
+
+$$
+\boxed{\quad
+x\in E,\quad x\circ r=0\ (r\in\mathcal A)
+\quad\Longrightarrow\quad x=0 .\quad}
+\tag{1.3}
+$$
+
+令 $J=\overline{\operatorname{Id}_X(\mathscr P)}^{\|\cdot\|}$。定理 2.1 将证明 $J=\overline{\mathcal A}$，所以 (1.3) 等价于 $E\cap\operatorname{ann}_X(J)=0$。这只是原对象的分离，不要求完成中的对象满足同一分离。另记明确更强的条件
+
+$$
+\operatorname{ann}_X(J)=0.
+\tag{1.4}
+$$
+
+两个条件都不是信息守恒、共同谱、归一化或一般原 $\Omega$ 已经供应的事实。理想记号 $J$ 不与原全词 $K/J/q$ 中的来源标签作识别。不输入 $D$ 的线性、连续、NN、Jacobi、协变、商下降或完成延拓；不输入全部原有限框架、整个闭理想包含于 $E$、复 Hilbert 空间、特殊性或算子乘法闭合。$X=0$ 时允许空族；反之，空族配合 (1.3) 迫使 $E=0$，稠密性再给 $X=0$。以下空乘积和空直和取零对象。
+

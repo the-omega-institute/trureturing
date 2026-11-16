@@ -1,0 +1,38 @@
+**定理 90.6（零拼合强迫原图块闭合）。** 对定义90.1的任意有限简单图，不要求弦，有严格同载体等价
+
+$$
+\boxed{
+\mathrm{Z0}\ \Longleftrightarrow\ \mathrm{Z0}_{\rm pure}
+\ \Longleftrightarrow\ (\sim_G\text{ 传递})
+\ \Longleftrightarrow\ (G\text{ 的每个连通分量完全})
+\ \Longleftrightarrow\ S.}
+\tag{90.11}
+$$
+
+这些条件成立时，原锥本身就是实PSD块直和；全部纯点、整个紧基及全效应同时取得 $\mathrm B,\mathrm A,\mathrm H,\mathrm{Boundary},\mathrm Q$。对每个纯 $p$，其全锥序最小互反确认及对任意原混态的最小值准确为
+
+$$
+e_p(X)=\operatorname{tr}(pX),\qquad T_p(x)=e_p(x)
+\quad(X\in V_G,\ x\in K_G).
+\tag{90.12}
+$$
+
+证明。$\mathrm{Z0}$ 当然蕴含(90.2)。若某个连通分量不完全，在其中选一对不相邻顶点及一条最短连接路；该路至少两条边，前三点形成诱导 $P_3$，否则有弦可缩短路。90.4在原全效应中给三个纯点满足两个零前件而中点最小值为 $1/4$，违反(90.2)。因此 $\mathrm{Z0}_{\rm pure}$ 强迫每个连通分量完全。原关系 $\sim_G$ 已反身、对称；其传递性恰使每条路的端点相邻或相等，等价于每个连通分量完全。
+
+设分量为 $I_1,\ldots,I_k$，均完全。仅重排原坐标就有准确等式
+
+$$
+V_G=\bigoplus_{j=1}^k\operatorname{Sym}_{|I_j|}(\mathbb R),\qquad
+C_G=\bigoplus_{j=1}^k\operatorname{PSD}_{|I_j|}(\mathbb R),\qquad
+u_G(X)=\sum_j\operatorname{tr}X_j.
+\tag{90.13}
+$$
+
+不是在另一个完成锥中取得这张表示。实谱分解表明全部纯点恰为某一个块中的迹一秩一投影：跨块有两份正质量或块内秩大于一都会给非平凡凸分解；秩一的极端性已在90.4说明。迹配对下每个正泛函由一个块对角PSD矩阵表示，因为测试全部块内秩一投影即可判正；全 proper 区间恰为各块 $0\le A_j\le I_j$。
+
+固定任一纯 $p=vv^T$。对任一原确认者 $f_A$，$v^TA_jv=1$ 迫使 $A_jv=v$，故在该块上 $A_j=p\oplus A_{j,\perp}\ge p$，其余块仍非负。因此 $f_A-e_p\in C_G^*$；而 $e_p$ 自己 proper且确认 $p$。这给整个锥序的least元，而非仅在所选三纯点上最小。所有纯 $p,q$ 上有 $e_p(q)=\operatorname{tr}(pq)=e_q(p)$，故完整 $S$ 成立，(90.12)对整个基成立。
+
+同块不同纯对的整个最小锥面是支撑在两向量张成上的完整PSD二阶锥，归一基为 $B^2$；不同块的整个最小面是两射线的直和，归一基为 $B^1$。故有 $\mathrm B$。任一这种球中纯 $p$ 的对径是同秩二支撑内与它正交的秩一投影，或异块的另一端点；$e_p$ 均将其排除，所以 $\mathrm A$ 和 $\mathrm H$ 成立。89.4直接给原 $\mathrm{Boundary},\mathrm Q$，不重证其商构造。
+
+最后，对任意原载体，$S$ 已使 $D_p=\{x\in K:e_p(x)=0\}$：全锥序最小性迫使任一零见证的零点亦为 $e_p$ 的零点，反向由 $e_p$ 自己见证。这个零集凸，故 $S\Rightarrow\mathrm{Z0}$。这闭合(90.11)所有方向。$n=1$ 时是单射线、单点基，$e_p=u_G$、$D_p=\varnothing$，球和对径条件空真；多个孤立顶点则是整个经典单纯形，保留所有跨块线段。证明从未要求一般非弦图的全部纯点秩一。证毕。
+

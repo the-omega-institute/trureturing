@@ -1,0 +1,32 @@
+**命题 85.5（相容失败时，正、TP、保单位及混合仍不能补救）。** 设 $d\ge2$ 且 (85.7) 失败。则存在酉 $U$ 和 $0<\eta<d-1$，使
+
+$$
+\Phi_{\eta,U}(X)=\frac{d\operatorname{Tr}(X)I_d-(1+\eta)UXU^*}{d^2-1-\eta}
+\tag{85.10}
+$$
+
+严格正化每个非零 PSD 输入、TP、保单位、迭代混合且全部固定效应只有标量，却非 CP，并且 $\mathcal K_{3,\alpha}(\Phi_{\eta,U})(\rho_\psi)\ge0$。因此推论 85.4 的必要性即使只用这一强正非 CP 类反测也成立；这些映射不称为量子通道。
+
+**证明。** 用本探针定义 (85.5) 的 $D_0,L_0$。若 $L_0$ 满射，其右逆仍会给共同解码器，所以相容失败时 $W_0=\operatorname{ran}L_0$ 是 $M_d$ 的真闭复子空间。酉矩阵复线性张满 $M_d$：每个 Hermitian 收缩 $A$ 是 $[U+U^*]/2$，其中 $U=A+i\sqrt{I-A^2}$ 酉；任意矩阵再分成两个 Hermitian 部分。故有酉 $U_0\notin W_0$。
+
+还可保证 $\operatorname{Tr}U\ne0$。若 $\operatorname{Tr}U_0=0$，非退化迹配对及 Hermitian 矩阵的复张成给某个 Hermitian $H$ 满足 $\operatorname{Tr}(HU_0)\ne0$。曲线 $U(t)=e^{itH}U_0$ 对足够小 $t$ 仍在 $W_0$ 外，而 $\operatorname{Tr}U(t)$ 在零点的导数为 $i\operatorname{Tr}(HU_0)\ne0$，故任意小邻域内可选非零迹的 $U$。这不需要枚举酉矩阵。
+
+令 $w=\operatorname{vec}U/\sqrt d$，则 $w\notin W_0$ 且 $\langle I_d,w\rangle\ne0$。如果 (85.3) 中 $A_w$ 的最大特征值为一，共同锚点的 (85.4)—(85.5) 就会使 $w\in W_0$，矛盾。因此 $\lambda_{\max}(A_w)<1$。选 $\eta>0$ 足够小，使
+
+$$
+0<\eta<d-1,\qquad(1+\eta)\lambda_{\max}(A_w)\le1.
+$$
+
+于是 $T(I-(1+\eta)|w\rangle\langle w|)\ge0$。直接按 Choi 约定计算
+
+$$
+J(\Phi_{\eta,U})=\frac d{d^2-1-\eta}
+\bigl(I_{d^2}-(1+\eta)|w\rangle\langle w|\bigr).
+\tag{85.11}
+$$
+
+其 $w$ 特征值严格负，但探针输出 PSD。
+
+记 $c_\eta=d^2-1-\eta$。对 $X\ge0$，$UXU^*\le\operatorname{Tr}(X)I$，故非零输入的分子至少为 $(d-1-\eta)\operatorname{Tr}(X)I>0$。迹及单位计算都给分母 $c_\eta$，所以 TP 且保单位。在迹零空间上它等于 $-q\operatorname{Ad}_U$，$q=(1+\eta)/c_\eta<1$；最后的不等式由 $\eta<d-1$、$d\ge2$ 给出。因此迭代趋向 $X\mapsto\operatorname{Tr}(X)I/d$，伴随在迹零效应上亦严格收缩，固定效应只有标量。$U,\eta$ 依赖给定探针；不提供统一负隙、统一容差或实际非 CP 程序。证毕。
+
+

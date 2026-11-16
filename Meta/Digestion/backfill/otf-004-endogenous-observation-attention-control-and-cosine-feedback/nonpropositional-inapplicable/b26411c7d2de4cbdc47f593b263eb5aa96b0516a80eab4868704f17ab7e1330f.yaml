@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b26411c7d2de4cbdc47f593b263eb5aa96b0516a80eab4868704f17ab7e1330f
+  normalized_sha256: sha256:b26411c7d2de4cbdc47f593b263eb5aa96b0516a80eab4868704f17ab7e1330f
+cas_ref: sha256:b26411c7d2de4cbdc47f593b263eb5aa96b0516a80eab4868704f17ab7e1330f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This paragraph states applicability limits and physical-model premises. It explicitly preserves the reference-marginal term and the original access-class reachability and necessity gaps. It makes no new uniform controller, optimality, stronger scale or physical-realization claim; those mathematical and empirical boundaries remain unresolved.
+    previous_atom_id: 252e803661da0df59d319660d6b6661b34df12f2f1e9cd3b9d4ca8e162f773eb
+    next_atom_id: cfc7821ec40fb3209bed3b1cc58b6e1e730a73d5ef3c1fabcffa4f2039bfe273

@@ -1,0 +1,4 @@
+## 189. Three source-propagation modes exclude a class of out-of-span lifts
+
+Once the source-span witness has reduced a full-zero partition to the common-first slice, the three slots containing two constant labels impose orthogonality to the first three source-propagation modes. The source density lemma makes those modes linearly independent.
+

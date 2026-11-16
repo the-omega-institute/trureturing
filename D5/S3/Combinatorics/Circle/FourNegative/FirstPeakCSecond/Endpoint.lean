@@ -14,9 +14,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private size seed sourceMod base newBase charge chainLength chainStart nextBase nextNewBase
-  oldValue newValue negatives chain_values source_signs source_totals new_base_bounds
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private seed sourceMod charge nextBase nextNewBase chain_values source_signs source_totals new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
 open private label lift_order marked_word
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private four_perm four_strip
@@ -43,7 +42,7 @@ private theorem reserve_cast (a b c d : ℕ) (hd : 2≤d) :
 open private all_nat_joint from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddle
 open private actual_nat_joint_iff from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 
-set_option maxHeartbeats 2400000 in
+set_option maxHeartbeats 4000000 in
 /-- For every a>c>max(b,d), b,d>=2, one physical permutation and one literal
 fresh-label cut satisfy both complete actual OriginalOrder predicates.
 The b<=d branch includes b=d; the strict d<b branch constructs its own exact

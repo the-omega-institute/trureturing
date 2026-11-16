@@ -1,0 +1,56 @@
+**定义 126.1（完整原域、实际塌缩及固定边面）。** 设 $V\ne0$ 为有限维实空间，$C\subset V$ 为闭、尖、生成凸锥，$u\in V^{\ast}$ 在 $C\setminus\{0\}$ 上严格正。保留同一个原载体上的全部对象
+
+$$
+\begin{gathered}
+C^{\ast}=\{h\in V^{\ast}:h|_C\ge0\},\qquad
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^{\ast}},\\
+F_p=\{e\in\mathcal E:e(p)=1\},\qquad
+T_p(x)=\min_{e\in F_p}e(x)\quad(p\in P,\ x\in K),\\
+D_p=\{x\in K:T_p(x)=0\},\qquad
+\mathcal A_p=\{e\in F_p:e|_{D_p}=0\}.
+\end{gathered}
+\tag{X126.1}
+$$
+
+第二变量遍历所有原混态；效应和确认族均不缩减。始终假设
+
+$$
+\mathrm{EB3}:\quad D_p\simeq_{\rm aff}\overline B^3\quad(p\in P),
+\qquad
+\mathrm{PR}:\quad T_p(s)=T_s(p)\quad(p,s\in P).
+\tag{X126.2}
+$$
+
+PR 仅交换两个纯比较端点。固定一个辅助欧氏范数，记其 Hausdorff 距离为 $d_H$，并置 $M=\max_{e\in\mathcal E}\|e\|_{\ast}$。该范数只用于拓扑与估计，不指定共同物理内积。称
+
+$$
+p_i\in P,\qquad p_i\longrightarrow p\in P,\qquad
+D_{p_i}\longrightarrow\{q\}
+\tag{X126.3}
+$$
+
+为一次实际整球塌缩。按 [IX115.4—115.5][Q126IX]，必有 $q\in P\cap D_p$、$q\ne p$。对这条固定原正交边定义
+
+$$
+J(p,q)=\{e\in\mathcal E:e(p)=1,\ e(q)=0\}.
+\tag{X126.4}
+$$
+
+它是原效应区间的非空紧凸面。非空性来自 $q\in D_p$ 及原最小值达到。
+
+以下只复用既有接口。[IX114.1—114.4][Q126IX] 给 $K,P,\mathcal E$ 紧、最小值达到，以及每个原纯点 $s$ 都有仅在 $s$ 取一的原确认效应；后者不要求 Inj。固定 $T_s$ 在整个 $K$ 上为 $M$-Lipschitz。完整面接口给每个 $D_s$ 为暴露极大真面，$\mathcal A_s\ne\varnothing$，且任一完整球 $H$ 的球面恰为 $P\cap H$；不同完整球至多交于一个原纯点。其全效应原合同见 [ExclusionBallFaces.exclusion_ball_faces][Q126Faces]，这里只使用共同暴露与全部真面分类两项，不使用另带全 Pair 前件的末项。
+
+[IX114.5—114.6][Q126IX] 给每个实际完整球 $H$ 唯一的共同系数和原正延拓预算：对任意完整球图 $b_H:\overline B^3\to H$，
+
+$$
+\begin{gathered}
+0<a_H\le\tfrac12,\qquad \beta_H=\frac1{2a_H},\\
+T_{b_H(w)}(b_H(z))=1-a_H+a_Hw\cdot z
+\quad(w\in S^2,\ z\in\overline B^3).
+\end{gathered}
+\tag{X126.5}
+$$
+
+此式包括整个球内部的混态，但不宣称 $T_{b_H(w)}$ 在全 $K$ 仿射。
+

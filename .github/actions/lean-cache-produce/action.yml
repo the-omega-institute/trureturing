@@ -98,7 +98,7 @@ runs:
       run: python3 tools/scripts/worktree/lean_actions.py resume-keys --repository "$GITHUB_WORKSPACE"
     - id: resume_lookup
       name: Find the producer continuation without extracting
-      if: steps.prepared.outputs.adopted != 'true' && env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && steps.release.outputs.restored != 'true'
+      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true'
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -115,7 +115,7 @@ runs:
         key: ${{ steps.resume_lookup.outputs.cache-matched-key }}
         fail-on-cache-miss: true
     - name: Validate the producer continuation
-      if: steps.prepared.outputs.adopted != 'true' && env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && steps.release.outputs.restored != 'true'
+      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true'
       env:
         RESUME_KEY: ${{ steps.resume.outputs.cache-matched-key }}
         RESUME_OUTCOME: ${{ steps.resume.outcome }}
@@ -151,7 +151,7 @@ runs:
         status=0
         python3 tools/scripts/report/runner-diagnostics.py -- \
           bash tools/scripts/report/report-supervisor.sh --role lean-cache-slice -- \
-          env -u PREFLIGHT_DEADLINE_AT make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build REGENERATE_REPORT_ARTIFACTS="$regenerate" || status=$?
+          env -u PREFLIGHT_DEADLINE_AT make lean-report FULL_BUILD=1 LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build REGENERATE_REPORT_ARTIFACTS="$regenerate" || status=$?
         if [[ "$status" == 0 ]]; then
           python3 tools/lean-inspector/publication.py validate .lake/build/stratalint/raw-lean-report.json --repository "$GITHUB_WORKSPACE" || status=$?
         fi

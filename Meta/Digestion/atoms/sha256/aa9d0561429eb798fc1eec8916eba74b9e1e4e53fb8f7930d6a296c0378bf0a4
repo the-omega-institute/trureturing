@@ -1,0 +1,16 @@
+**引理 109.2（固定首输入的准确乘积关系）。** 固定 $0<\|x\|=r<1$，令 $W=V\cap x^\perp$、$F(y)=D(x,y)$。则F取值于W，$\langle y,Fy\rangle=0$、$\|Fy\|=r\|y\|$，且对全部原 $y,z\in W$，
+
+$$
+\bigl(\langle y,z\rangle+\langle Fy,Fz\rangle\bigr)
+\bigl(\langle y,Fz\rangle+\langle Fy,z\rangle\bigr)=0.
+\tag{109.3}
+$$
+
+证明。前三项来自109.1。99.4对 $(x,y,z)$ 的右端为零，故
+
+$$
+D(y+Fy,z+Fz)=D(y-Fy,z-Fz).
+$$
+
+两输入对的各自范数平方均为 $(1+r^2)\|y\|^2$、$(1+r^2)\|z\|^2$；内积为 $C+A$ 和 $C-A$，其中C、A为109.3的两因子。同一实际输出按109.1有同一面积，故 $(C+A)^2=(C-A)^2$，即CA为零。两符号下的范数项没有额外正负交叉项。∎
+

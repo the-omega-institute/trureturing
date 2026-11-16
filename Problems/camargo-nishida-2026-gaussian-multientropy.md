@@ -19,7 +19,7 @@ $\mathrm{GM}^{(3)}_n(A:B:C)$ of the fully symmetric pure Gaussian state of $N$ b
 $\mathrm{GM}^{(3)}_n\sim\frac{2-n}{2n}\log a$ as $a\to\infty$ (Eq. (3.8)), and write "we
 \emph{conjecture} that the asymptotic behavior \eqref{AsymB} is valid for the fully symmetric
 Gaussian states with any $n$ and $N$." The verbatim definitions are in
-[the literature note](../Library/QuantumStates/camargo2026gaussianmultientropy.md).
+[the literature note](../Library/Entropy/camargo2026gaussianmultientropy.md).
 
 Issue [#13990](https://github.com/the-omega-institute/trureturing/issues/13990) reads the
 conjecture for every replica order $n\ge2$ and every tripartition with positive party sizes

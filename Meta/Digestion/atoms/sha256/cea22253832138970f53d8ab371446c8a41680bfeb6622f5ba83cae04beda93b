@@ -1,0 +1,91 @@
+### 10.3 同一个矩阵的三项 Hermitian 配对
+
+**证明，自伴实现。** 写
+
+$$
+A_0=(p+1)^2+1,\quad B_0=(p+2)^2+1,\qquad
+C_1=2A_0+B_0/2,\quad C_2=2A_0+B_0,\quad C_3=2A_0+2B_0.
+\tag{10.7}
+$$
+
+代入多项式得
+
+$$
+2\{C_1-C_3+(p+3)C_2\}=H(p)=0.
+\tag{10.8}
+$$
+
+又有明确的环境配对
+
+$$
+W=w^*u=-\sqrt2/2,\qquad v^*u=-bW,\qquad z\overline W=Z.
+\tag{10.9}
+$$
+
+由定义 $Xu=y$、$Xc_0u=y_c$。矩阵 $[u\ c_0u]$ 可逆，因此成熟的 Hermitian 型合同判别（极化的二阶基坐标形式）在这里准确要求三项
+
+$$
+u^*y\in\mathbb R,\qquad
+u^*y_c=\overline{u^*c_0y},\qquad
+(c_0u)^*y_c\in\mathbb R.
+\tag{10.10}
+$$
+
+中间一项必须互为复共轭。两列构成基，故这三项正好是 $[u\ c_0u]^*X[u\ c_0u]$ 的两个对角实性及非对角共轭对称性，足以证明 $X=X^*$。
+
+先用 $u$ 的两个条目作通分，$c_1=1,c_2=2$，得到
+
+$$
+\sum_{j=1}^2\frac{c_j^2|u_j|^2}{c_j-b}=\frac{2C_1-bC_2}{D_b},\qquad
+\sum_{j=1}^2\frac{c_jv_j\bar u_j}{c_j-b}=\frac{2\sqrt2p}{D_b}.
+\tag{10.11}
+$$
+
+于是 $D_bu^*y=-i\lambda(2C_1-bC_2)-2i\sqrt2pz=mD_b$，即 $u^*y=m\in\mathbb R$，第一项成立。
+
+记 $\tau_j=u^*c_0^j\tau$，$j=0,1$，及 $n=u^*c_0y$。由(10.5)、(10.9)及 $(c_0-b)y=-ic_0\tau$，
+
+$$
+\tau_0=\lambda C_1-\bar bZ,\qquad \tau_1=\lambda C_2+2Z,\qquad
+n=bm-i\tau_1,\qquad
+u^*y_c=(b+2/b)m+(2i/b)\tau_0+i\lambda C_2.
+\tag{10.12}
+$$
+
+这里 $m=-q\lambda C_2$、$q^2=1$ 还给出便于逐项核对的实虚分解
+
+$$
+\operatorname{Re}Z=\frac{\lambda\{2C_1+3(1-p)C_2\}}{4p},\qquad
+\operatorname{Im}Z=\frac{q\lambda(p-3)C_2}{4}.
+\tag{10.13}
+$$
+
+因此 $2\operatorname{Re}(\bar bZ)=\lambda C_1-\lambda pC_2$。对中间配对直接相减，准确得到
+
+$$
+\frac b{2i}(u^*y_c-\bar n)
+=(bq-i)m+\lambda C_1-2\operatorname{Re}(\bar bZ)
+=pqm+\lambda pC_2=0.
+\tag{10.14}
+$$
+
+这证明第二项，而不是把 $u^*y_c$ 与 $n$ 无共轭地认作相等。
+
+最后由(10.12)代入 $y_c$，
+
+$$
+(c_0u)^*y_c=(b^2+2)m-ib\tau_1+i\lambda C_3,\qquad
+\operatorname{Re}(b\tau_1)=\lambda C_1+\lambda(3-p)C_2.
+\tag{10.15}
+$$
+
+第二式也直接由(10.13)求实部得到。第一式的虚部为
+
+$$
+2pqm-\operatorname{Re}(b\tau_1)+\lambda C_3
+=\lambda\{C_3-C_1-(p+3)C_2\}=0
+\tag{10.16}
+$$
+
+其零值由(10.8)给出。这完成全部三项，故 $X=X^*$；$a$ 是实对角矩阵，(10.6)确为实际自伴角探针。
+

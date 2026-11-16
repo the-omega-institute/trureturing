@@ -1,0 +1,21 @@
+**定义 138.1（内部系数有向差）。** 对原 $c,d\in\mathcal B_0$，定义有限原表达式
+
+$$
+\beta(c,d)=-j\circ\bigl((h\circ c)\circ(e\circ d)\bigr).
+\tag{138.1}
+$$
+
+取 $\varepsilon_{123}=1$ 的三指标交替符号。对(137.4)中的原 $a=\sum_{r=0}^3s_rc_r$、$b=\sum_{r=0}^3s_rd_r$，此处仅以 $s_0c_0=c_0$ 作为记号，置
+
+$$
+\begin{aligned}
+\gamma_0(a,b)&=\beta(c_0,d_0)+\sum_{r=1}^3\beta(c_r,d_r),\\
+\gamma_k(a,b)&=\beta(c_0,d_k)+\beta(c_k,d_0)
++\sum_{r,t=1}^3\varepsilon_{rtk}(c_r\circ d_t),\\
+B_\star(a,b)&=\gamma_0(a,b)+\sum_{k=1}^3s_k\circ\gamma_k(a,b).
+\end{aligned}
+\tag{138.2}
+$$
+
+$B_\star$ 是待由下述定理支付闭合与性质的规范候选；该符号不重命名旧 $D$。
+

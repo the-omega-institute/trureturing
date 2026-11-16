@@ -1,0 +1,83 @@
+**定理 17.2（全四变量关系与七项式读数）。**定义 17.1 的 $E$ 对称、零对角，并且对任意 $a,b,u,v\in\mathbb C^2$ 满足完整四变量关系 (R)
+
+$$
+\sum_{k=0}^2E(a+U^ku,b+U^kv)=3E(a,b)+3E(u,v).
+\tag{17.2}
+$$
+
+此外，对任意 $a=(a_1,a_2)$、$z=(z_1,z_2)$ 和 $t\in\mathbb C$，沿用 (8.2) 的七项式有
+
+$$
+H_E(a,p(t);z)=\operatorname{Re}\bigl(t(a_1z_2-a_2z_1)\bigr).
+\tag{17.3}
+$$
+
+特别地，若 $A=(1,0)$、$Z=(0,1)$，则
+
+$$
+H_E(A,p(1);Z)=1,\qquad H_E(A,p(1+\omega);Z)=\frac12.
+\tag{17.4}
+$$
+
+**证明。**由递推直接得到
+
+$$
+U^kx=\omega^kx+\tau_k(1,1),\qquad
+\tau_0=0,\quad\tau_1=1,\quad\tau_2=1+\omega.
+\tag{17.5}
+$$
+
+置
+
+$$
+\begin{aligned}
+X_0&=a_1-b_1,&X_1&=u_1-v_1,\\
+Y_0&=a_2-b_2,&Y_1&=u_2-v_2,\\
+Z_0&=a_1-a_2+b_1-b_2,&Z_1&=u_1-u_2+v_1-v_2.
+\end{aligned}
+$$
+
+公因子 $\tau_k(1,1)$ 在三个差因子中分别消去，故
+
+$$
+\begin{aligned}
+&(a+U^ku)_1-(b+U^kv)_1=X_0+\omega^kX_1,\\
+&(a+U^ku)_2-(b+U^kv)_2=Y_0+\omega^kY_1,\\
+&(a+U^ku)_1-(a+U^ku)_2+(b+U^kv)_1-(b+U^kv)_2
+ =Z_0+\omega^kZ_1.
+\end{aligned}
+$$
+
+因为 $\sum_k\omega^k=\sum_k\omega^{2k}=0$ 且 $\sum_k\omega^{3k}=3$，三次展开给出
+
+$$
+\sum_{k=0}^2(X_0+\omega^kX_1)(Y_0+\omega^kY_1)(Z_0+\omega^kZ_1)
+=3X_0Y_0Z_0+3X_1Y_1Z_1.
+$$
+
+取实部并乘以 $-1/2$ 即得 (17.2)。交换 $x,y$ 时前两个差因子变号而第三个不变，所以 $E(y,x)=E(x,y)$；置 $x=y$ 则三因子乘积为零。
+
+为计算 (17.3)，令
+
+$$
+S=a_1-a_2,\qquad T=z_1-z_2,\qquad P=a_1+a_2,\qquad Q=z_1+z_2.
+$$
+
+将 (8.2) 的七项逐项代入 (17.1)，不把 $t$ 限制为实数，复数多项式部分化为
+
+$$
+\begin{aligned}
+&[t(P-Q)+t^2](S+T)-[t^2-tQ]T-[tP+t^2]S\\
+&\qquad=t(PT-QS).
+\end{aligned}
+$$
+
+而 $PT-QS=-2(a_1z_2-a_2z_1)$，故
+
+$$
+H_E(a,p(t);z)=-\frac12\operatorname{Re}\bigl(t(PT-QS)\bigr)
+=\operatorname{Re}\bigl(t(a_1z_2-a_2z_1)\bigr).
+$$
+
+取 $a=A,z=Z$，有 $a_1z_2-a_2z_1=1$，且 $\operatorname{Re}(1+\omega)=1/2$，得到 (17.4)。证毕。
+

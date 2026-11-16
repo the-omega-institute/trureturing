@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1f889ef5165374b12d99418d6964eef10ecd6617b76943b92369da200d2a098b
+  normalized_sha256: sha256:1f889ef5165374b12d99418d6964eef10ecd6617b76943b92369da200d2a098b
+cas_ref: sha256:1f889ef5165374b12d99418d6964eef10ecd6617b76943b92369da200d2a098b
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/UniqueConfirmationDensity.original_unique_confirmer_density
+    target_statement_id: sha256:435993d85da004d9a761fafc433ede4277e5f4ae374ed845207133fff1680ba6
+receipts:
+  unresolved_subitems: []

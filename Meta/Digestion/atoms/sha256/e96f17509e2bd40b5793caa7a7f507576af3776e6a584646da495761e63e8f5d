@@ -1,0 +1,67 @@
+## 191. 两张固定原表与最后一份非偶输出
+
+证明189.1（续）。准确调用PB $(y,a,\mu y)$，原反对称性和比例零值给 $D(y,a)=-g$、$D(y,\mu y)=0$。两份完整外层为
+
+$$
+\begin{aligned}
+a_0&=a-g-\mu y^2,&b_0&=\mu y+a\circ y,\\
+a_-&=a+g+\mu y^2,&b_-&=\mu y-a\circ y.
+\end{aligned}
+\tag{191.1}
+$$
+
+四输入均偶，$\kappa b_-=0$，故P2给负外值角像零。PB右端角像为 $2\mu G$；同一原域中的两张固定表具有
+
+$$
+\begin{array}{c|c|c}
+\text{第一输入角像}&\text{第二输入角像}&\text{实际旧输出角像}\\\hline
+\mu p&B&G\\
+A_0:=\mu(p-B^2)-G&2\mu B&2\mu G.
+\end{array}
+\tag{191.2}
+$$
+
+不在角上定义新响应。190.6使 $B^2$ 与 $G$ 交换。对 $C^*(p,B^2,G)$ 的字符写 $B^2\mapsto v\ge0,G\mapsto\zeta$。若 $\zeta\ne0$，第一张P2给 $|\zeta|\le|\mu|\sqrt v$，从而 $v>0$；字符态的GNS向量与 $B$ 作用后归一的向量组成同一个二维不变空间。在其中 $B=\sqrt v\,\sigma_x$、$G=\zeta\sigma_z$。第二张表的全部实单位向量读取给
+
+$$
+|\zeta\gamma|\le\sqrt v\,|\mu(1-v)\gamma-\zeta|
+\quad(-1\le\gamma\le1),\qquad |\zeta|\le|\mu|\sqrt v.
+\tag{191.3}
+$$
+
+这是原多项式卷4.17的同一成熟二表计算，参数为角单位 $p$、$\mu,B,G$。若 $v\ne1$，令 $a_*=\mu(1-v)\ne0$：当 $0<|\zeta|\le|a_*|$，取 $\gamma=\zeta/a_*$ 得矛盾；当 $|\zeta|>|a_*|$，取 $\gamma=\operatorname{sgn}(a_*\zeta)$，得 $|\zeta|\le\sqrt v(|\zeta|-|a_*|)$。$v<1$ 时不可能，$v>1$ 时却要求 $|\zeta|\ge|\mu|\sqrt v(\sqrt v+1)$，仍违反第一张表。因此字符分离给
+
+$$
+(B^2-p)G=0.
+\tag{191.4}
+$$
+
+还须排除 $v=1$ 的残余。取真正原标签 $k_0=D(b_0,a_0)$、$g_0=b_0\circ a_0$。191.2与已知乘法给
+
+$$
+\kappa k_0=-2\mu G,\quad
+G_0:=\kappa g_0=2\mu^2(B-B^3),\quad
+G_0G=GG_0=0,\quad A_0\circ G=-G^2.
+\tag{191.5}
+$$
+
+$k_0$ 不必偶；$a_0,b_0,g_0$ 确实偶。实际PB $(b_0,a_0,0)$ 的完整外层是 $(a_0+k_0,g_0)$、$(a_0-k_0,-g_0)$，右端为 $-2a_0\circ k_0$。对任意角正 $\rho$，正读取 $\phi=\rho\mathcal U_G\kappa|_E$ 的两个第二平方对角均为
+
+$$
+\phi(g_0^2)=\rho(\mathcal U_G(G_0^2))=0.
+\tag{191.6}
+$$
+
+P2遂消去两份外值的 $\phi$ 读数，不需压缩第一输入的平方。右端只因 $a_0$ 偶便可用189.3，即使 $k_0$ 非偶仍有
+
+$$
+0=-2\phi(a_0\circ k_0)
+=4\mu\rho(\mathcal U_G(A_0\circ G))
+=-4\mu\rho(G^4).
+\tag{191.7}
+$$
+
+$\mu\ne0$、正泛函分离及C*范数恒等式给 $G=0$。两角分别成立，原 $g$ 又偶，所以两份对角压缩合起来给 $g=0$，完成189.1。零角、$\alpha\pm\beta=0$、负系数和零输入均已包含。∎
+
+证明没有宣称 $\kappa$ 为全域同态，也没有宣称一般两个偶输入的旧输出偶。只有仿射首槽的偶输出由188.2供应；最后不具此性质的 $k_0$ 只出现在已经逐项合法的两个读取中。
+

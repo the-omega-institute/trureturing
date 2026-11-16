@@ -1,0 +1,43 @@
+**推论 111.8（严格小于二分之一的准确含义）。** 在W与G中，对固定原joint $F$，
+
+$$
+\boxed{\quad
+\mathcal I_F=0
+\ \Longleftrightarrow\ \forall x\in P:\delta_F(x)=0
+\ \Longleftrightarrow\ \sup_{x\in P}\delta_F(x)<\frac12.
+\quad}
+\tag{VIII111.30}
+$$
+
+这些条件也等价于该 $F$ 的三元二面可辨；由111.5还等价于全部原joint可辨。
+若它们失败，则可取一个原纯点 $x$、$z=\mathcal I_Fx$、$w=U/3$ 和足够小
+$\epsilon>0$，使同一原模型中的两个不同真实归一态满足
+
+$$
+\begin{gathered}
+w_+=w+\epsilon z\in K,\qquad w_-=w-\epsilon z\in K,\qquad w_+\ne w_-,\\
+\Pi_{p_i}w_+=\Pi_{p_i}w_-\quad(i=1,2,3),\\
+a_x(w_\pm)=\frac13\pm\epsilon\delta_F(x)\in[0,1],\qquad
+ a_x(w_+)-a_x(w_-)=2\epsilon\delta_F(x)\ge\epsilon>0.
+\end{gathered}
+\tag{VIII111.31}
+$$
+
+因而共同盲核非零，当且仅当存在这里这种以原纯点自身确认尺分开的反事实。
+阈值判据要求上确界严格小于 $1/2$；只知道小于等于 $1/2$ 不足以由本界结算。
+
+证明。$\mathcal I_F=0$ 当然使全部亏损为零，故上确界为零。
+若 $\mathcal I_F\ne0$，111.7给一个原纯点使 $\delta_F(x)\ge1/2$，
+同时否定其余两项，得到(VIII111.30)。上确界存在，因为 $P$ 非空且111.6给有界区间。
+取111.7所给的 $x$，则 $a_x(z)\ge1/2$，故 $z\ne0$。
+109.2给 $u(z)=0$ 及三张 $\Pi_{p_i}z=0$；
+VII105.9在W加G下已给 $w\in\operatorname{ri}K$，
+所以足够小的正反微移都仍在整个原 $K$ 中。
+$\operatorname{aff}K=\{u=1\}$ 保证归一没有改变。
+原 $a_x(U)=1$ 给(VIII111.31)的两个实际概率与其差，
+而109.3还保证每张在某 $p_i$ 读零的原效应在 $w_+,w_-$ 上读数相同。
+反向，若三张 $\Pi$ 同读却有 $a_x$ 分开，两态之差便是非零共同核向量，
+109.2使 $\mathcal I_F\ne0$。
+这把109.3的一般分离泛函加强为指定形式的原proper确认尺，
+没有把有符号 $z$ 自己当作概率态。证毕。
+

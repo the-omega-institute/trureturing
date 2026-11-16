@@ -1,0 +1,8 @@
+**Brownian 接口。** 对偶数 $k=2m$，令 $\mathcal P_k$ 为 $\{1,\dots,k\}$ 的全部完美配对（共 $(k-1)!!$ 个），并令
+
+$$
+W_k(\mathbf s)=\sum_{\pi\in\mathcal P_k}\ \prod_{\{i,j\}\in\pi}\min(s_i,s_j),\qquad W_k=0\ (k\ \text{奇}).
+$$
+
+由 Isserlis（Wick）公式，$W_k(\mathbf s)=\mathbb E\prod_jB(s_j)$，$B$ 为标准 Brownian 运动。称 $E$ 满足 Brownian 型 $(\mathrm M_k)$，若 $(\mathrm M_k)$ 成立且 $M_k=c_k\kappa^{k/2}W_k$。
+

@@ -1,0 +1,42 @@
+**定理 119.5（原二元条件的有限 Jordan 几何必要选型）。** 在定义 119.1、P2、原 NN 和完整 J 下，若同一个 JB 完成 $X$ 有限维，则 $E=X$，且作为实含单位 Jordan 代数，必有
+
+$$
+\boxed{\qquad X\cong_J\bigoplus_{j=1}^{k}H_{n_j}(\mathbb C),
+\qquad n_j\ge1,\quad k<\infty.\qquad}
+\tag{119.15}
+$$
+
+$X=0$ 用 $k=0$ 的空直和；$n_j$ 可以互不相等，$n_j=1$ 是经典因子。结论仅选择 Jordan 几何。
+
+证明。有限维空间的实线性子空间闭，稠密性给 $E=X$，故随后使用的每个分类幂等元确在原域。JB 的平方锥尖且 $\|a^2\|=\|a\|^2$，所以 $\sum_i a_i^2=0$ 迫使各 $a_i=0$，即正式实。有限维正式实与 Euclidean Jordan 代数的对应、有限简单理想直和及 Jordan–von Neumann–Wigner 类型列表，直接消费 Barnum–Graydon–Wilce，[*Composites and Categories of Euclidean Jordan Algebras*，arXiv:1606.09331v3，§1 和 §3 Classification、Appendix A](https://arxiv.org/html/1606.09331v3#S3)。用于分类的 Euclidean 内积不是替换原 $N$ 或原评价；没有采用该文 §4 的复合或动力学前件。
+
+写 $X=\bigoplus_j A_j$ 为简单理想直和，其中央单位为 $e_j$，$\sum_j e_j=u$。所有 $e_j\in E$，且全空间中的 $X_2(e_j)=A_j$。先对实际原 $p=e_j$ 应用 119.2–119.3，得到同一 $D|_{A_j^2}:A_j^2\to A_j$，以 $e_j$ 为单位、原限制评价质量为 $\alpha(e_j)$，并继承 NN/J。只有整个 $X$ 本来就是这个因子时，$e_j$ 才等于全局 $u$；不能对非线性 $D$ 先投影后假定这些接口。
+
+若 $A_j$ 为简单自旋因子，直接在它自己的单位角 $e_j$ 上用 119.4。其向量维数只能为 $0,1,3$。维数零是 $\mathbb R$；维数一的 $\mathbb R\oplus\mathbb R$ 非简单，拆成两个经典一维因子；非经典简单支只余维数三，即 $H_2(\mathbb C)$。
+
+对于矩阵类型 $A_j=H_n(\mathbb F)$、$\mathbb F=\mathbb R,\mathbb C,\mathbb H$、$n\ge2$，在该因子内取两颗实际标准对角幂等元 $f_1,f_2$，令 $p=f_1+f_2\le e_j$；通过分类同构拉回后它们全在原 $E$。全空间的 $X_2(p)$ 正是该因子的左上 $H_2(\mathbb F)$。Albert 因子 $H_3(\mathbb O)$ 同取 $p=\operatorname{diag}(1,1,0)$：实对角 $p$ 的左乘在矩阵位置 $(r,s)$ 上乘 $(p_r+p_s)/2$，故特征值一空间准确为左上 $H_2(\mathbb O)$，其第三行列为零。其余因子上 $p$ 作用为零，不增加这个角。
+
+这些实际秩二角的自旋对应可直接核对。对 $\mathbb F=\mathbb R,\mathbb C,\mathbb H,\mathbb O$ 写
+
+$$
+h(r,z)=\begin{pmatrix}r&z\\\bar z&-r\end{pmatrix},\qquad
+h(r,z)^2=(r^2+|z|^2)p,\qquad
+v=(r,z)\in\mathbb R\oplus\mathbb F.
+\tag{119.16}
+$$
+
+极化给 $h(v)\circ h(w)=\langle v,w\rangle p$，其中 $\langle(r,z),(r',z')\rangle=rr'+\operatorname{Re}(z\overline{z'})$。于是 $sp+h(v)$ 的乘法正是 (119.14)。这里只用实双线性、实标量与共轭范数恒等式；八元数情形没有使用三因子结合或八元数矩阵结合性。若 $\rho=\|v\|>0$，$(p\pm h(v)/\rho)/2$ 是角内两颗正交幂等元，给出 $sp+h(v)$ 的谱值 $s\pm\rho$；若 $\rho=0$ 则是标量角元。由所引谱定理及准确角锥／范数，正锥为 $s\ge\rho$，范数为 $|s|+\rho$，没有把 Euclidean 向量范数当作整个 JB 范数。
+
+定理 119.2–119.3 再对每个这样的实际 $p$ 给同一 $D_p$ 的完整接口，推论 119.4 因而适用：
+
+| 简单类型 | 实际使用的角 | 自旋向量维数 | (119.13) 的必要结论 |
+| --- | --- | --- | --- |
+| $\mathbb R$ | $\mathbb Re_j$，单位 $e_j$ | $0$ | 保留，角内 $D=0$ |
+| $H_n(\mathbb R)$，$n\ge2$ | $H_2(\mathbb R)$，单位 $p\le e_j$ | $2$ | 排除 |
+| $H_n(\mathbb C)$，$n\ge2$ | $H_2(\mathbb C)$，单位 $p\le e_j$ | $3$ | 与必要条件相容 |
+| $H_n(\mathbb H)$，$n\ge2$ | $H_2(\mathbb H)$，单位 $p\le e_j$ | $5$ | 排除 |
+| $H_3(\mathbb O)$ | 实际 $H_2(\mathbb O)$，单位 $p\le e_j$ | $9$ | 排除 |
+| 非经典简单自旋因子 | 整个 $A_j$，单位 $e_j$ | 原向量维数 | 只余 $3$ |
+
+矩阵秩二类型与自旋列表的重合不产生新情形。Albert 的排除依据是这个十维角中的九维向量空间与同一 $D$ 的继承，未由其总维数二十七直接作结论，也未预先要求特殊性。成熟类型列表遂只余 (119.15)。各块大小、原评价在各块的质量和中心都未被要求相等。∎
+

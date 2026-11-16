@@ -1,0 +1,18 @@
+**定义 18.1（完整返回与保留单位贡献的标定）。**沿用定义 1.1 的整个原模型类：$M$ 仅有二元运算和真实双侧单位 $1$，$U:M\to M$ 任意，$c:M^2\to[0,\infty)$ 处处有限且零对角，完整 (R) 对全部原标签 $a,b,u,v$ 成立。仍记 $p_j=U^j1$、$P_ja=a\cdot p_j$，以及定义 8.1 的 $A_j(a)$、$H_d$ 和引理 2.1 的 $E,B,\mathcal N$。条件 $\mathrm C_3$ 为
+
+$$
+c(P_3a,b)=c(a,b),\qquad c(a,P_3b)=c(a,b)
+\qquad(a,b\in M).
+\tag{18.1}
+$$
+
+对 $j=1,2$，条件 $\mathrm C_j$ 为一个标记的完整双向标定族
+
+$$
+H_c(a,p_j;z)=H_{c^{\mathsf T}}(a,p_j;z)=0
+\qquad(a,z\in M).
+\tag{18.2}
+$$
+
+由 (8.5)，$\mathrm C_j$ 恰为 $A_j(a)\in\mathcal N$ 对全部 $a$ 成立，因而 $\mathrm{UC}=\mathrm C_1\land\mathrm C_2$。这里 $\mathrm C_3$ 专指 (18.1) 的返回，不指 $j=3$ 的七项式标定。所有量词保留重复标签、两个读数次序和原乘积的括号；$P_3$ 不与 $P_1$ 的三次复合相认。
+

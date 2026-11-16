@@ -337,7 +337,7 @@ namespace D5.S1.Recurrence.Invariants.MatharA000159Recurrence
 open PowerSeries Finset
 open D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators (coeff_subst_sum)
 
-private theorem prefactor_subst_coeff {R : Type*} [CommRing R]
+theorem prefactor_subst_coeff {R : Type*} [CommRing R]
     (f G W : PowerSeries R) (n : ℕ) :
     coeff n (G * f.subst (X * W)) =
       ∑ k ∈ range (n+1), coeff k f * coeff n (G * (X*W)^k) := by

@@ -1,0 +1,24 @@
+### 17.8 第八步：无界比值与精确反驳范围
+
+同一实际 $\delta_J$ 满足 (17.23)，故用 $t_J=m_J/J^2$ 得
+
+$$
+\begin{aligned}
+t_J\delta_J^2+\delta_J
+&\le\frac{C_0^2}{J^6}+\frac{C_0}{J^2\sqrt{m_J}}\\
+&\le\frac{C_0^2+C_0}{J^6}
+\end{aligned}
+\tag{17.38}
+$$
+
+对充分大的 $J$ 成立。(17.24) 使分母严格为正，(17.37)–(17.38) 于是给
+
+$$
+\frac{\displaystyle\int_{S^2}D_{\rm tr}(\omega_{\rho_{32/J}h},\omega_h)^2\,d\mu(h)}
+     {t_J\delta_J^2+\delta_J}
+\ge\frac{c(\log J)^2}{C_0^2+C_0}\longrightarrow\infty.
+\tag{17.39}
+$$
+
+每个 $J$ 都有限，$e_J=2^{-j}$ 属于原正有理精度域，$m_J$ 是精确原维数，$U_J$ 为实际完整有限酉，$\sigma_J$ 为允许的奇异混合态。因此不存在 (17.4) 所要求的统一绝对常数。整个论证不使用跨方向 Gram 恒等式，也未删除混合展开的任一跨方向交叉项。$\square$
+

@@ -1,0 +1,47 @@
+**定义 32.1（同一原环境中的三演员输入）。** 令 $m\ge0$ 任意有限，取
+
+$$
+\begin{gathered}
+A=M_{m+3}(\mathbb C),\qquad \mathcal H=\mathbb C^3\oplus\mathbb C^m,
+\qquad P=I_3\oplus0_m,\\
+C=\operatorname{diag}(c_1,c_2,c_3)=\operatorname{diag}(1,2,3),
+\qquad c=C\oplus0_m,\\
+t=\begin{pmatrix}B&V\\V^*&D_{\rm env}\end{pmatrix}=t^*,
+\qquad S=\operatorname{diag}(s_1,s_2,s_3),\quad s_j\in\mathbb R,
+\qquad s=S\oplus0_m .
+\end{gathered}
+\tag{32.1}
+$$
+
+$B,D_{\rm env}$ 任意 Hermitian，$V$ 任意。每次分别固定 $\sigma\in\{1,-1\}$，置 $\iota=\sigma i$、$K_\sigma(a,b)=\iota[a,b]/2$、$g=K_\sigma(c,t)+s$。对每个原 $x=x^*=PxP$，在完整原代数中定义
+
+$$
+\begin{gathered}
+a\circ b=(ab+ba)/2,\qquad h=K_\sigma(c,x),\quad r=c\circ x,
+\quad k_t=c\circ t,\\
+R_\delta=x+\delta(h-k_t),\qquad S_\delta=t+\delta(r+g),
+\quad \delta\in\{1,-1\},\\
+L=-2x\circ(h-k_t)-2t\circ(r+g),\\
+B_\phi(U,Z)=\phi(U^2)\phi(Z^2)-\phi(U\circ Z)^2 .
+\end{gathered}
+\tag{32.2}
+$$
+
+原 PB 仍是同一个探针、同一个完整原代数正复线性泛函上的
+
+$$
+|\phi(L)|\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{32.3}
+$$
+
+令 $N=\ker D_{\rm env}$、$W=V|_N$、$\mathcal W=\operatorname{ran}W$、$N_1=N\ominus\ker W$，并取原逆 $J=(W|_{N_1})^{-1}:\mathcal W\to N_1$。这是定义 17.1 的同一有限维逆构造，演员维数在这里改为三；不调用该定理的两演员维数界或把其六维截面当作三演员定理。特别 $VJw=w$、$D_{\rm env}Jw=0$，所有环境条目保持原值。
+
+称 $\mathcal W$ **在三格均有支撑**，若
+
+$$
+\exists\omega\in\mathcal W:\qquad \omega_1\omega_2\omega_3\ne0.
+\tag{32.4}
+$$
+
+等价地，$\mathcal W$ 不包含于任何一个坐标二平面。一个方向直接成立；反方向可取 $\mathcal W$ 的任意复基，把三个坐标限制写成三个非零复线性多项式。它们的乘积是非零多项式，在无限域 $\mathbb C$ 上不恒为零，故存在三个坐标均非零的原线性组合。这只在原像内选向量，不增加新的环境像。
+

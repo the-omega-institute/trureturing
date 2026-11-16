@@ -1,0 +1,26 @@
+**定理 145.2（九维原域的根芽与静态表示）。** 在定义145.1的完整原域中，以下三项等价：
+
+1. $\mathrm{EB3}+\mathsf{Conn}+\dim_{\mathbb R}V=9$；
+2. $\mathrm{EB3}+\mathsf{Inj}+\dim_{\mathbb R}V=9$；
+3. 存在同一个实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,
+\qquad \Phi(\operatorname{PSD}_3(\mathbb C))=C,\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XI145.3}
+$$
+
+在第1或第2项下，先于分类就存在一个实际原 $o\in P$ 满足 $\mathsf G(o)$。对这个同一根，随后有整个
+
+$$
+P=Q(o)=\Lambda_o,\qquad
+\Lambda_o=\{a\in P:S_a\subseteq Q(o)\},\qquad
+\bigcup_{x\in Q(o)}D_x=\partial_{\operatorname{aff}K}K,
+\qquad \operatorname{conv}Q(o)=K.
+\tag{XI145.4}
+$$
+
+全部不同纯对有唯一共同原纯零邻点；相同端点也有实际共同邻点。取得表示后每个原根都满足 $Q(r)=P$。第1项到表示直接消费142.2；第2项使用145.8证明的充分接口版，不把一个写有 Conn 的定理无条件扩大适用域。
+
+这里 $\dim_{\mathbb R}V=9$ 是对**整个原空间**另给的输入，故 $\dim_{\rm aff}K=8$。它不来自先要求 $\mathsf G$ 的137、139或141。EB3+Inj 的独立下界 $\dim_{\mathbb R}V\ge9$ 已由 [THREE_COPY VII121.9][Q145TVII]取得，此处直接消费该结论而不重证；本章新增内容不包括该下界，也不包括无维数前件的自动九维上界。
+

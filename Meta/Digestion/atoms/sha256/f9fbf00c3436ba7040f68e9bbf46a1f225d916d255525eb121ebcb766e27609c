@@ -1,0 +1,46 @@
+### 122.2 正规锚点与已支付的原法向图
+
+以下122.2—122.11均另取EB3+Inj，并固定
+
+$$
+p\in P_0:=\{a\in P:\mathcal A_a\text{ 是单点}\},\quad
+\mathcal A_p=\{e_p\},\quad g=u-e_p,\quad
+D_p=c+B\mathbb B^3.
+\tag{Q122.5}
+$$
+
+$B:\mathbb R^3\to\ker u$ 单射。$g(p)=0$，$g>0$ 于整个 $K\setminus\{p\}$，$g|_{D_p}=1$。令
+
+$$
+N_p=\{h\in C^*:h(p)=0\},\qquad
+H=(H_1,H_2,H_3),\quad H(c+Bw)=w,
+\quad H_i\in\operatorname{span}N_p.
+\tag{Q122.6}
+$$
+
+直接复用IX120.8—120.12：限制到 $D_p$ 是 $\operatorname{span}N_p$ 与 $\operatorname{Aff}(D_p)$ 的线性同构，$\dim\operatorname{span}N_p=4$，$g\in\operatorname{ri}N_p$。$H$ 唯一，且存在有限 $M_H$ 使 $\|H(x)\|\le M_Hg(x)$ 于整个 $K$。方向函数及完整邻球为
+
+$$
+\begin{gathered}
+\rho(v)=\rho_p(v)=\sup_{x\in K\setminus\{p\}}
+\frac{-v\cdot H(x)}{g(x)},\quad \rho(v)\ge\|v\|,\\
+q_v=c+Bv\in P_0,\qquad F_v=D_{q_v}\quad(v\in S^2),\\
+e_{q_v}=\frac{\rho(v)g+v\cdot H}{1+\rho(v)},\qquad
+N_p=\{\alpha g+v\cdot H:\alpha\ge\rho(v)\}.
+\end{gathered}
+\tag{Q122.7}
+$$
+
+$\rho$ 有限、正齐次、次可加且Lipschitz；$v\mapsto e_{q_v}$ 在这个固定原球面上Lipschitz。每个 $F_v$ 是整个实际三球，$p\in\partial_{\rm rel}F_v$；$v\ne w$ 给 $F_v\cap F_w=\{p\}$。这里绝不是 $D_p\cap F_v=\{p\}$，因为 $p\notin D_p$。
+
+还复用两个完整原接口：任意 $h\in N_a$ 有
+
+$$
+\max_Kh=\max_{D_a}h,
+\qquad
+\{b\in\mathcal E:b(p)=0,b(q_v)=1\}=[g,e_{q_v}].
+\tag{Q122.8}
+$$
+
+第一式来自IX120.2／118.10，第二式来自IX120.12。它们量化原全效应，不只是球内限制。以上未使用Pair、weakPair、TRI2、正过滤、共同内积或球族全局连续性。
+

@@ -1,0 +1,17 @@
+**推论 85.4（任意纯探针的准确 CP 刻画）。** 对固定 $\psi,\alpha$，以下三项等价：对所有 HP $\Phi:M_d\to M_d$，$\mathcal K_{3,\alpha}(\Phi)(\rho_\psi)\ge0$ 当且仅当 $\Phi$ CP；条件 (85.7)；存在共同 $C_\psi$ 使每个活跃腿 $C_\psi V_{\psi,\ell}=I_{M_d}$。此时对每个 HP $\Phi$ 有
+
+$$
+\boxed{C_\psi\mathcal K_{3,\alpha}(\Phi)(\rho_\psi)C_\psi^*=J(\Phi).}\tag{85.8}
+$$
+
+**证明。** 任一 Hermitian $J$ 都唯一对应一份复线性 HP 映射。按 (82.5) 作带实符号 Kraus 分解，逐项得
+
+$$
+J(\Phi)=\sum_ac_a|\operatorname{vec}H_a\rangle\langle\operatorname{vec}H_a|,\qquad
+\mathcal K_{3,\alpha}(\Phi)(\rho_\psi)
+=\sum_{\ell\in S_\alpha}\alpha_\ell V_{\psi,\ell}J(\Phi)V_{\psi,\ell}^*.
+\tag{85.9}
+$$
+
+右侧把 $M_d$ 与其向量化空间等同，没有预用 CP。Choi 定理给 CP 恰为 $J\ge0$，故所求对全部 HP 的性质正是定理 85.2 的整个 Hermitian 序反射，三个条件及恒等式同时成立。$d=1$ 亦成立。权重为零的位置不进入核条件；至少一个位置活跃。证毕。
+

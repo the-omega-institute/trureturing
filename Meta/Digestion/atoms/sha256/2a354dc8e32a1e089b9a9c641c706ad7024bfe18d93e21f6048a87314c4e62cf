@@ -1,0 +1,62 @@
+现在给出原零探针的向量。置
+
+$$
+u_0=(-2\sqrt2,1)^{\mathsf T},\qquad
+w=4\sqrt2a-3z,\qquad y=(w/\alpha)q,\qquad
+\xi=(Uu_0,y)\in\mathbb C^2\oplus\mathbb C^m.
+\tag{19.9}
+$$
+
+此处的 $u_0$ 是上述列向量；$U$ 保留在原演员坐标中。$\ell^*y=w$、$D_{\rm env}y=0$。直接用原 $k=c\circ t$ 的三个块行，得到
+
+$$
+\begin{aligned}
+U^*(k\xi)_{\rm actor}
+&=\binom{-2\sqrt2a+3z/2+w/2}
+{-3\sqrt2\bar z+2d+\sqrt2w}=\binom00,\\
+(k\xi)_{\rm env}
+&=\tfrac12\ell\,v^*Cu_0=0.
+\end{aligned}
+\tag{19.10}
+$$
+
+第二演员行使用的准确关系是
+$2d+8a-3\sqrt2(z+\bar z)=0$。令 $\nu=\operatorname{Im}z$，则同一向量还满足
+
+$$
+T=\binom{\sqrt2\delta-2i\nu}{2\delta-i\sqrt2\nu},\qquad
+ t\xi=(UT,-\sqrt2\ell).
+\tag{19.11}
+$$
+
+由 $k\xi=0$，有 $tc\xi=-ct\xi$，故对于任意实 $\rho$，
+
+$$
+Z=\operatorname{diag}(1,-1),\qquad
+ g_\sigma\xi=(U(\sigma iCT+\rho CZu_0),0_m),\qquad
+ CZu_0=(-2\sqrt2,-2)^{\mathsf T}.
+\tag{19.12}
+$$
+
+取实际 $x=0$，则 $h=r=0$。两对完整原标签在这一个向量上的作用分别为
+
+$$
+\begin{gathered}
+R_+\xi=-k\xi=0,\qquad R_-\xi=k\xi=0,\\
+S_\pm\xi=
+\bigl(U[T\pm(\sigma iCT+\rho CZu_0)],-\sqrt2\ell\bigr).
+\end{gathered}
+\tag{19.13}
+$$
+
+因此 $B_{\phi_\xi}(R_+,S_+)=B_{\phi_\xi}(R_-,S_-)=0$。这里两个 $S$ 的环境分量仍是原来的 $-\sqrt2\ell$；零预算来自 $R_\pm\xi=0$，不是删除环境平方。另一方面，$T^*CT$ 为实数，且
+
+$$
+\operatorname{Re}(T^*CZu_0)=-8\delta,\qquad
+\phi_\xi(L)=-2\operatorname{Re}((t\xi)^*g_\sigma\xi)
+=16\rho\delta.
+\tag{19.14}
+$$
+
+这对两种 $\sigma$ 分别成立。$\|\xi\|^2=9+|w|^2/\alpha^2>0$，所有条目均有限；故 $\rho\delta\ne0$ 时左端为 $16|\rho\delta|>0$，两笔预算之和为零。任取质量 $\mu>0$，再用 $\sqrt\mu\xi/\|\xi\|$，两笔预算仍为零，左端为 $16\mu|\rho\delta|/\|\xi\|^2$。零泛函本身满足零等式。
+

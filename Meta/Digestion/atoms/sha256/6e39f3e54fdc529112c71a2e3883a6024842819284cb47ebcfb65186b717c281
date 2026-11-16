@@ -1,0 +1,53 @@
+**命题 25.2（受限原项不能生成非标量坐标分支）。**每个定义 25.1 的项 $w$ 有
+
+$$
+F(w(a))=\lambda_wFa+b_w,\qquad
+\lambda_w\in\mathcal O,\qquad b_w=F(w(e)).
+\tag{25.4}
+$$
+
+若 $F(M)\ne\{0\}$，有限项族满足 (25.3)，则恰有一个分支在表示中为 $\lambda I$，其中
+
+$$
+\lambda\in\mu_6=\{\pm1,\pm\zeta,\pm\zeta^2\};
+\tag{25.5}
+$$
+
+其余分支在表示中全为零。特别，在 $\dim_{\mathbb C}H\ge2$ 时不能由这些项得到非零、非全空间的正交坐标投影。即使另准许任意复标量缩放，但仍只准许标量仿射分支，(25.3) 所给的分支效果仍全是 $|\lambda_j|^2 I$，不能成为依赖输入方向的坐标探针。
+
+证明。结构归纳的系数规则为
+
+$$
+\begin{array}{c|c}
+\text{项}&(\lambda,b)\\ \hline
+x&(1,0)\\
+c\text{，固定常元}&(0,Fc)\\
+w\cdot v&(\lambda_w+\lambda_v,b_w+b_v)\\
+Uw&(\zeta\lambda_w,\zeta b_w+t).
+\end{array}
+\tag{25.6}
+$$
+
+故全部有限项，包括重复使用输入的项，均满足 (25.4)。这沿用 §4–5 的 Eisenstein 配方结构；结构归纳只是该受限签名的逐项计算。若还施行实际一元映射的复合，则
+
+$$
+(\lambda_f,b_f)\circ(\lambda_g,b_g)
+=(\lambda_f\lambda_g,\lambda_fb_g+b_f).
+\tag{25.7}
+$$
+
+式 (25.7) 的映射复合与原二元乘法的 (25.6) 是两种运算；原二元乘法始终表示向量加法，没有被替换成矩阵乘法。
+
+在 (25.3) 取 $a=b=e$，得 $\sum_j\|b_j\|^2=0$，所以每个 $b_j=0$。再取 $Fa\ne0$，得
+
+$$
+\sum_j|\lambda_j|^2=1,\qquad
+|m+n\zeta|^2=m^2-mn+n^2\in\mathbb Z_{\ge0}.
+\tag{25.8}
+$$
+
+故恰有一个范数为一，其余为零。由
+$4(m^2-mn+n^2)=(2m-n)^2+3n^2$，范数一只有 $(m,n)=(\pm1,0),(0,\pm1),(1,1),(-1,-1)$，正是 (25.5)。范数非负整数这一步与 [C139 §16，命题 16.3](AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md#16三路算术读口的实际供给与稠密边界)的算术障碍共用成熟的 Eisenstein 范数，不另主张算术分类。
+
+若某项满足 $F(w(a))=PFa$，取 $a=e$ 先给 $b=0$，在 $F(M)$ 的复线性张成上又有 $P=\lambda I$，与投影同时有非零像和非零核矛盾。准许一般标量后，整数论结论可失效，但相同的锚定计算仍杀掉偏置，且每支的 $M_j^\dagger M_j=|\lambda_j|^2I$。所以标量分支的方向障碍不依赖整数范数。证毕。
+

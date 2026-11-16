@@ -393,7 +393,7 @@ private theorem comap_sup_map_of_comap_le {X Y : Type*} (R : Setoid X) (i : Y �
     · exact S.trans (hRS hac) (S.trans hcd (hRS hdb))
   · exact (Setoid.comap_monotone i le_sup_right).trans' Setoid.le_comap_map
 
-private theorem comap_sup_map {X Y : Type*} (R : Setoid X) (i : Y → X) (S : Setoid Y) :
+theorem comap_sup_map {X Y : Type*} (R : Setoid X) (i : Y → X) (S : Setoid Y) :
     Setoid.comap i (R ⊔ S.map i) = Setoid.comap i R ⊔ S := by
   have h₀ : (Setoid.comap i R).map i ≤ R := Setoid.gc_map_comap.l_u_le R
   have h₁ : R ⊔ (Setoid.comap i R ⊔ S).map i = R ⊔ S.map i := by

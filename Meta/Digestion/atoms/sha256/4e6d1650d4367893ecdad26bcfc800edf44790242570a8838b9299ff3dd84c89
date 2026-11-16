@@ -1,0 +1,11 @@
+**定义 116.7（局部归一）。** 固定 $I(D_p)=\{p\}$、球图 $\chi:D_p\to B^{d_p}$、球心 $c_p$，置
+
+$$
+\begin{aligned}
+\mathcal N_p&=\{b\in C^*:b(p)=0,\ b(c_p)=1\},\\
+L_p&=\{v:\exists b\in\mathcal N_p,\ b(\chi^{-1}z)=1+v\cdot z\ (z\in B^{d_p})\},\\
+q&=\chi^{-1}(n),\quad r=\chi^{-1}(-n),\quad\delta_p(q)=T_q(r)\quad(\|n\|=1).
+\end{aligned}
+\tag{IX116.12}
+$$
+

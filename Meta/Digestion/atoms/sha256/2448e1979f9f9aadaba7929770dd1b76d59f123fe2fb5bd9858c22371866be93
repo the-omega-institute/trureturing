@@ -1,0 +1,33 @@
+**定理 99.10（m至多四的完整同数据几何替换）。** 固定VI89.7、VII98.8—98.9的同一个完整原装饰元组 $\mathcal O$、共同来源合同 $\mathfrak S(\mathcal O)$ 和全部非几何前件。对选定的任意 $J\subseteq\{A,D,E\}$，在VII98.8的固定适用域中把分支 $1\le m_X\le3$ 扩为 $1\le m_X\le4$，其他分支按原条件保留。定义 $\mathsf R_{\mathrm{BZ},\le4}(\mathcal O)$：只把 $X\in J$ 的原几何项替换为同一载体上的 $\mathrm B_X+\mathrm{Z0}_X$；其余几何项和全部非几何包不变。则在这个共同适用域内
+
+$$
+\boxed{\begin{aligned}
+\mathsf R_{\mathrm{BZ},\le4}(\mathcal O)
+&\Longleftrightarrow\mathsf R_{\rm polar}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm zero\text{-}ball}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{\rm mid}(\mathcal O)
+\Longleftrightarrow\mathsf R_{86}^{\rm ev}(\mathcal O)
+\Longleftrightarrow[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}(\mathcal O).
+\end{aligned}}
+\tag{VII99.37}
+$$
+
+每个 $\mathrm{Z0}_X$ 仍量化全部原混态；四维类型分类不替换原数据或实际来源。
+
+证明。对新增的 $m_X=4$ 分支，99.8在同一个原 $K_X$、全部纯点、全部效应和原 $u_X$ 上给 $\mathrm A_X$ 与完整 $S_X$。对VII98.8的其余原适用分支，直接复用其证明。准确的桥仍是VII(98.29)的
+
+$$
+\mathrm B+\mathrm{Z0}+\mathrm A
+\Longleftrightarrow\mathrm B+\mathrm H
+\Longleftrightarrow S,
+\tag{VII99.38}
+$$
+
+不是裸 $\mathrm B+\mathrm A\Rightarrow S$。反向由旧完整 $S$ 的least零面取得全混态 $\mathrm{Z0}$。VI89.4再给同一原 $\mathrm{Boundary}$ 与 $\mathrm Q$，然后逐项调用VI89.8的完整同数据等价，得到(VII99.37)。VI89.3中只涉及至多三个原纯标签的关系生成元、内在商及有限仿射基仍按原定义运输；它们不把这里的混态量词改成纯纯三点检验。
+
+非几何部分准确采用VI89.7与VII98.8的整个合同：原概率像自身紧、非空、有限仿射维及全部原中点实现；原测试像自身闭、零、单位、中点、补、有界倍增及同一原测试对全部准备实现；原带质量输出、重复标签、全部非负质量缩放和零／次归一／不等质量；每个过程与参考自身的全部相关联合输入域；同一个原 $L,p,\omega$ 与两次同 $p$、两实张成、全实 $Z$、含秩一分支的完整(83.8)、原迹／伴随／二次表示／单位、全部两尺度等式、C2、整个 $G=1_E$，以及精确PRE后同一原资格态的整个H13。共同 $\mathfrak S$ 中的设备／事件／来源绑定、全部菜单与分支、实际参考与副本、记录／权限／控制／钟／单位、ready／flags、失败／拒绝／停止／销毁／返回、实际混合服务、全部合法未来、旧支撑与每个中间切口均不删减。
+
+每个QM消费者完整消费VII98.9及VI89.9自己的前件：复型与Born仍需原忠实EJA桥及精确两接口66.3；指定二份／三份及读回仍需同一原 $L,p$ 和全部联合条件；指定CP仍需同事件原实线性映射、唯一复HP延拓、全实提升律、腿权／核条件与实际纯探针，或既有完整递归参考路线；Kraus与实际仪器仍需逐块CP及真实完整菜单、接线、粗粒化、重置和两预算；Lüders仍需同一分支的锐效应、确定接受态中性与原输出校准；物理时间仍需原连续齐次可逆群、实际逆、原钟与动态来源。四维球的spin-factor分支不能直接供应复型。
+
+原生来源方面，VII98.9及VI89.10的完整 $89$ 路径、$26+63$ 嵌入、射影群与密度、唯一ready、原十一地址全部有限字及terminal futures、各旧入口自己的有限秩或全未来关系、全部细标签与原粗归组、记录后原七地址条件未来、source-adoption map及全部资源条件仍完整保留。已有同秩入口的联合下降／回返和已取得的Born／联合POVM结论按其原域复用，不列作新的缺口；当前ready或固定future仍不能代付全未来条件。于是这里供应的只是几何入口在新增维数域内的等价替换，各非几何消费者没有被单独生成。证毕。
+

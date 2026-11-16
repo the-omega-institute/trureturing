@@ -1,0 +1,11 @@
+**引理 170.1（实际运输的闭合范围）。** 令 $\mathcal E=E+iE\subset B(H)$。对 $Z\in\mathcal E$，$Z$ 和 $Z^*$ 都保持 $H_0$。若有限秩 $k$ 支撑在某个有限 $L\subset H_0$，即 $k=P_LkP_L$，则
+
+$$
+kZ,Zk\in\mathcal E.
+\tag{170.1}
+$$
+
+特别地，令 $\mathcal U_0$ 为在某个有限 $L\subset H_0$ 的正交补上恒等的全部酉算子，则 $UZ,ZU\in\mathcal E$。对任意单位 $f\in H_0$、$p_f=ff^*$、实 $t$，$(1-itp_f)^{-1}Z$ 和 $Z(1-itp_f)^{-1}$ 也在 $\mathcal E$。
+
+证明。保持性由 169.2 及 $Z^*=a-ib$ 得到。$kZ$ 的像在 $L$，其伴随的像在 $Z^*L\subset H_0$，故其实部、虚部支撑在有限的 $L+Z^*L\subset H_0$；169.1–169.2 使它们都在 $E$。$Zk$ 同理由 $ZL+L$ 处理。$U-1$ 和 $(1-itp_f)^{-1}-1=((1-it)^{-1}-1)p_f$ 都是这样的有限乘子。这里没有预付 $\mathcal E$ 对一般乘法、一般逆元、平方根或极分解的闭合。∎
+

@@ -1,0 +1,27 @@
+**Proposition 12.4 (finite prefix-free witnesses of high cylinder
+mass).** For every fixed original source, $0<t<c$ and $0<\delta<1$,
+there are a finite $N\ge1$ and a finite prefix-free family
+$\mathcal F\subset\bigcup_{j=1}^N\mathcal L^j$ such that
+
+$$
+Q_w^1(3)<t\quad(w\in\mathcal F),\qquad
+\sum_{w\in\mathcal F}q(w)>1-\delta.
+\tag{12.18}
+$$
+
+They may be chosen with strict margins in both inequalities.
+No common $N$ for different sources, effective decay rate, deadline
+or finite expected work is asserted.
+
+*Proof.* Choose $0<t_0<t$. Under $Q$ let
+$\tau_0=\inf\{j\ge1:Q_{W_j}^1(3)<t_0\}$.
+Theorem 12.3 gives $Q(\tau_0<\infty)=1$. The finite words at
+which this rule first hits by $N$ form a prefix-free family
+$\mathcal F_N$, and their disjoint cylinder union is
+$\{\tau_0\le N\}$. Its mass increases to one. Choose a finite
+$N$ with mass greater than $1-\delta/2$. Every row in this finite
+family is strictly below $t_0<t$ and its mass has positive slack
+above $1-\delta$. There is no requirement to test equality or
+non-strict exclusion at the earlier prefixes in the certificate
+construction below. $\square$
+

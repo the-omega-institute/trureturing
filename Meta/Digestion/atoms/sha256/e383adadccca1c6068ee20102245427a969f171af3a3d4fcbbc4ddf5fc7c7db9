@@ -1,0 +1,2 @@
+**记号。** $\Lambda_0=\Lambda-1$。对有限整数集 $\mathcal D$，$\mathfrak S(\mathcal D)=\prod_p\frac{1-\nu_p(\mathcal D)/p}{(1-1/p)^{|\mathcal D|}}$（$\nu_p$ 为 $\mathcal D$ 模 $p$ 的剩余类个数，$\mathfrak S(\varnothing)=1$），$\mathfrak S_0(\mathcal D)=\sum_{\mathcal J\subseteq\mathcal D}(-1)^{|\mathcal D|-|\mathcal J|}\mathfrak S(\mathcal J)$；$\mathfrak S_0(\{d\})=0$。固定 $0<\alpha<\beta<\frac14$。
+

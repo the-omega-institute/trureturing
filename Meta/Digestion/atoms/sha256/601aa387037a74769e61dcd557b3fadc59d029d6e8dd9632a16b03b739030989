@@ -1,0 +1,6 @@
+**Theorem 4.1 (Minimal block count and positive delay bound).** Among
+real zero-diagonal block matrices with spectral radius
+$\lambda\in(0,1)$ and constant strictly positive remote delays,
+three blocks and maximum delay two are simultaneously sufficient and
+minimal for a delayed spectral radius at least one. More precisely:
+

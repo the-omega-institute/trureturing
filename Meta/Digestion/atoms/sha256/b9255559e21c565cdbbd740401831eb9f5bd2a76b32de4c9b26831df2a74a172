@@ -1,0 +1,16 @@
+**Corollary 196.3 (the unsaturated residual boundary).** For a full-zero rank-three or rank-four candidate, the joint weighted probes have exactly three possible outcomes:
+
+$$
+\begin{array}{c|c}
+\operatorname{rank}\mathsf J_u & \dim(\ker\mathsf J_u/\mathcal R_u)\\
+\hline
+2&0\\
+1&1\\
+0&2
+\end{array}
+$$
+
+The first row identifies the radical without requiring $\mathsf L_u$ or $\mathsf K_u$ to be saturated separately. In the other two rows, the weighted equations leave respectively one or two quotient directions beyond the forced radical; those directions must still satisfy the original nonlinear residual equations. Thus individual unsaturation is not itself an escape, while joint rank at most one records the exact remaining finite-dimensional ambiguity.
+
+The joint rank test is a necessary filter for the unsaturated branches. It does not evaluate the rank for an actual arbitrary partition, construct a residual-zero rank-three or rank-four partition, settle $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+

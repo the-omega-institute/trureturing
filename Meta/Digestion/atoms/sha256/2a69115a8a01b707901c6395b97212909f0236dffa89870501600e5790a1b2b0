@@ -1,0 +1,61 @@
+**定理 30.1（有限非标量谱的逐格标量余量）。** 保持定义 28.1 的完整原条件及整个实际 $C=PAP\ne0$ 的同号分类。另设这个角自身具有实际递增含单位满矩阵 UHF 模型
+
+$$
+C=\overline{\bigcup_n C_n}^{\|\cdot\|},\qquad
+C_n\cong M_{d_n}(\mathbb C),\qquad 1_{C_n}=P,
+\qquad d_n\longrightarrow\infty.
+\tag{30.1}
+$$
+
+不要求阶段大小为偶，也不要求 $C$ 是环境 $A$ 的预定有限阶段角。对 (29.1) 的每个有限非标量谱原演员 $c\in C_{\rm sa}$ 和每个任意环境 $t=t^*\in A$，存在唯一的一组实数 $\rho_i=\rho_i(c,t)$，使
+
+$$
+\boxed{D(c,t)=K_\sigma(c,t)+\sum_{a_i\ne0}\rho_i p_i.}
+\tag{30.2}
+$$
+
+特别，余量支撑在 $S=\operatorname{supp}(c)$、与 $c$ 交换，并在每个非零谱格上为实标量。$c$ 无须可逆或具有反对易反射，完整谱格的数学迹无须相等。
+
+证明。先在这个**实际内在载体 $C$、单位 $P$** 中消费 AH67.2 式 (67.3) 的近投影酉构造及有限矩阵秩工具；成熟归属为 Blackadar，*Operator Algebras*，II.2.3.1–5、II.3.3.4–5、II.8.2.2(iv)。为明确每次使用都产生实际匹配，给出其参数。
+
+对任意实际投影 $r\in C$，取某个 $C_n$ 中自伴 $h_r$，使 $\|h_r-r\|<\varepsilon<1/4$。其谱包含于
+$[-\varepsilon,\varepsilon]\cup[1-\varepsilon,1+\varepsilon]$，所以有限矩阵函数演算给
+
+$$
+r_0=1_{(1/2,\infty)}(h_r)\in C_n,\qquad
+\|r_0-h_r\|\le\varepsilon,\qquad\|r_0-r\|<2\varepsilon<1.
+$$
+
+在 $C$ 内置
+
+$$
+x_r=r_0r+(P-r_0)(P-r),\qquad
+\nu_r=x_r(x_r^*x_r)^{-1/2}.
+\tag{30.3}
+$$
+
+准确有 $x_r^*x_r=x_rx_r^*=P-(r-r_0)^2$，故 $x_r$ 可逆，$\nu_r$ 是单位为 $P$ 的实际酉。由 $x_rr=r_0x_r$ 及 $x_r^*x_r$ 与 $r$ 交换，得
+
+$$
+\nu_r r\nu_r^*=r_0.
+\tag{30.4}
+$$
+
+这只是 AH 式 (67.3) 在 $C$ 中的成熟构造，不对未知 $D$ 使用酉协变。
+
+现在取任意两个非零实际投影 $r,v\in C$。分别作 (30.3)–(30.4)，得 $\nu_r,\nu_v$ 及有限阶段的 $r_0,v_0$；把后两者放进一个共同后续 $C_N\cong M_{d_N}$。将 $r_0$ 分成秩一投影 $L_1,\ldots,L_k$，只从 $v_0$ 取**一个**秩一投影 $M_0\le v_0$。有限矩阵正交基给每个 $\alpha$ 的实际部分等距 $V_\alpha\in C_N$，满足
+
+$$
+V_\alpha^*V_\alpha=M_0,\qquad
+V_\alpha V_\alpha^*=L_\alpha.
+$$
+
+定义
+
+$$
+l_\alpha=\nu_r^*L_\alpha\nu_r,\qquad
+m=\nu_v^*M_0\nu_v,\qquad
+w_\alpha=\nu_r^*V_\alpha\nu_v.
+\tag{30.5}
+$$
+

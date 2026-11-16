@@ -1,0 +1,92 @@
+### 10.5 另一对的复 Gram 亏量与准确残差
+
+**证明，有限亏量。** 将另一对记作 $(R,S)$，定义
+
+$$
+\begin{gathered}
+R_0=\begin{cases}R^{(0)}_+\xi,&q=1,\\R^{(0)}_-\xi,&q=-1,\end{cases}
+\qquad e=\binom{au}{0},\qquad
+U=\|R_0\|^2,\quad V_0=\operatorname{Re}(R_0^*e),\quad W_0=\|e\|^2,\\
+J=2|\lambda|(p^2-1)>0.
+\end{gathered}
+\tag{10.21}
+$$
+
+(10.18)给 $(R_0)_3=-qW$，故 $U\ge1/2$。两条完整向量式为
+
+$$
+R\xi=R_0+\rho e,\qquad S\xi=(qp+2i)R_0+qp\rho e.
+\tag{10.22}
+$$
+
+对自伴 $R,S$，$\phi_\xi(K_1(R,S))=-\operatorname{Im}((R\xi)^*S\xi)$。直接代入(10.22)得
+
+$$
+Q:=\phi_\xi(K_1(R,S))=-2(U+\rho V_0).
+\tag{10.23}
+$$
+
+成熟的复 Gram 行列式在此给非负亏量
+
+$$
+\begin{aligned}
+\Delta&=\|R\xi\|^2\|S\xi\|^2-|(R\xi)^*S\xi|^2\\
+&=4\rho^2\{UW_0-|R_0^*e|^2\}\le4\rho^2UW_0.
+\end{aligned}
+\tag{10.24}
+$$
+
+具体地，$S\xi-(qp+2i)R\xi=-2i\rho e$；给第二列减去第一列的复数倍不改 Gram 行列式，而给 $R_0$ 加上 $\rho e$ 也不改它与 $e$ 的行列式。这证明等式，包括复线性相关情形。由实部、虚部的平方分解，
+
+$$
+B_{\phi_\xi}(R,S)=Q^2+\Delta.
+\tag{10.25}
+$$
+
+**证明，原左端的准确一次残差。** $\mathsf F$(39.7)只在已知标准乘法中复用：在 $s=0$，对任意实际 $x$，它给 $K_1(R_+,S_+)-K_1(R_-,S_-)=L_x$。在标签中恢复 $s$，外层两个交换子之差增加 $2K_1(x,s)$，而 $L_x$ 减少 $\{t,s\}$，所以完整矩阵恒等式为
+
+$$
+K_1(R_+,S_+)-K_1(R_-,S_-)-L_x
+=2K_1(x,s)+\{t,s\}.
+\tag{10.26}
+$$
+
+这不为未知外响应指定任何值。本节局部将右侧读取记为标量 $F$，不替换(1.8)的函数。因 $[a,d_0]=0$，它准确线性于 $\rho$：
+
+$$
+F=\phi_\xi(2K_1(x,s)+\{t,s\})
+=\rho\,\phi_\xi(2K_1(x^{(0)},d)+\{t,d\}).
+\tag{10.27}
+$$
+
+令 $j_0=u^*d_0y$、$h_0=u^*d_0c_0^{-1}y$，其中 $c_0^{-1}=\operatorname{diag}(1,1/2)$。由 $(c_0-b)y=-ic_0\tau$ 得 $\tau=iy-ibc_0^{-1}y$，从而
+
+$$
+\begin{aligned}
+\phi_\xi(2K_1(x^{(0)},d))&=2\operatorname{Im}j_0,\\
+\phi_\xi(\{t,d\})&=2\operatorname{Re}(u^*d_0\tau)
+=-2\operatorname{Im}j_0+2\operatorname{Im}(bh_0).
+\end{aligned}
+\tag{10.28}
+$$
+
+$d_0c_0^{-1}=3I_2-2c_0$ 给 $h_0=(3-2b)m+2i\tau_1$。再由(10.15)–(10.16)，
+
+$$
+\begin{aligned}
+\operatorname{Im}(bh_0)
+&=q(3-4p)m+2\operatorname{Re}(b\tau_1)\\
+&=3qm+2\lambda C_3
+=\lambda(2C_3-3C_2)
+=\lambda(B_0-2A_0)=-\lambda(p^2-1).
+\end{aligned}
+\tag{10.29}
+$$
+
+因此 $F=-2\lambda\rho(p^2-1)=q|\rho|J$。零面积对的交换子读取为零，另一对在(10.26)之差中的符号是 $q$，故
+
+$$
+\phi_\xi(L_x)=q(Q-|\rho|J).
+\tag{10.30}
+$$
+

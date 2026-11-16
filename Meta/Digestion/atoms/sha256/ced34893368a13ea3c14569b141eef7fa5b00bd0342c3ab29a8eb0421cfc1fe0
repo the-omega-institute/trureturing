@@ -1,0 +1,22 @@
+ On functions of the $q$-subsets, first take $q\leq s/2$ and let $f_U(S)=\mathbf1_{U\subseteq S}$ for $|U|=t\leq q$. Let $\mathcal U_t$ be their span and $\mathcal U_{-1}=0$. The relation
+
+$$
+\sum_{\substack{U\supset R\\|U|=t}}f_U=(q-t+1)f_R
+\qquad(|R|=t-1)
+$$
+
+shows $\mathcal U_{t-1}\subseteq\mathcal U_t$, and $\mathcal U_q$ is the whole function space. Counting neighbors according to $|U\setminus S|$ gives
+
+$$
+L(J(s,q))f_U
+=t(s+1-t)f_U-(q-t+1)\sum_{u\in U}f_{U\setminus\{u\}}.
+\tag{2.7}
+$$
+
+Indeed, for $U\subseteq S$ the adjacency count is $(q-t)(s-q)$, for $|U\setminus S|=1$ it is $q-t+1$, and for larger differences it is zero. On $\mathcal U_t/\mathcal U_{t-1}$, (2.7) is the scalar $t(s+1-t)$. Self-adjointness makes $\mathcal U_t\cap\mathcal U_{t-1}^{\perp}$ invariant, so it has this same scalar action. These mutually orthogonal spaces exhaust the layer. The $t=0$ space consists of constants, and for $1\leq t\leq q$,
+
+$$
+t(s+1-t)-s=(t-1)(s-t)\geq0.
+$$
+
+For $q>s/2$ use the graph isomorphism $S\mapsto B_i\setminus S$ to the $(s-q)$-layer. 

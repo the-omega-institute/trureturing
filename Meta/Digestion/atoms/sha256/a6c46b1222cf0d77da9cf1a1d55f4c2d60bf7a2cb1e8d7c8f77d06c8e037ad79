@@ -1,0 +1,52 @@
+**Definition 16.1 (sampling information and accuracy range).** Retain
+Definitions 2.1, 11.1–11.3 and 13.1. In particular, fix
+$0<Z<1$, $r=1-Z$, $H=r/2$, a starting ray
+$q_0=(k,\alpha_0,\beta_0)$, $0<l<k<u<H$, $T>0$, and an arbitrary
+fixed $\lambda\in\mathbb R$. The probabilities are
+$(k,H-k,Z,H-k,k)$ in the original mode order. Preparation phases are
+arbitrary and fixed; the negative amplitude convention and both
+$2\pi$ periods are unchanged. The fields are precisely
+
+$$
+P=\partial_k,\qquad
+Q=\tfrac12\partial_\alpha+(\tfrac12-k/r)\partial_\beta.
+\tag{16.1}
+$$
+
+Use one probability space with its original Wiener measure $\mathbb P$,
+carrying the independent covariance-$2$ Brownian coordinates $W^1,W^2$
+and their jointly specified continuous enhancement
+$J^\lambda=\int W^1\,dW^2+\lambda t$. The Brownian motions may be
+continued on $[0,\infty)$ for comparison estimates. Put $S=\tau\wedge T$
+and retain the censored death mark $\zeta$ of (11.6). All expectations
+below are with respect to this same $\mathbb P$.
+
+The information supplied to the command selector is the complete stopped
+enhanced path $(W^1,W^2,J^\lambda)_{\cdot\wedge S}$ on $[0,T]$ and
+$\zeta$. It includes exact real values, area, and lifetime. There is no
+extra randomness, rejection, survival conditioning, or change of measure.
+The selector has offline access to these data, including values later
+than the time at which a selected leg starts. A finite list of real
+commands obtained from this information is not a finite-bit sampling
+algorithm or a causal acquisition rule. Acquisition cost is not defined
+by the control costs (11.4).
+Only the selected absolutely continuous controls are native inputs;
+the Wiener sample is mathematical comparison data, not a physical
+Brownian actuator or a prepared analytic amplitude.
+
+Set
+
+$$
+\begin{aligned}
+d_*&=\min\{k-l,u-k\},&
+K_*&=\max\{k-l,u-k\},\\
+\rho_*&=\min\{r/4,(u-l)/4,d_*/2,\sqrt T\},&
+\eta_*&=4\rho_*.
+\end{aligned}
+\tag{16.2}
+$$
+
+For a prescribed deterministic $0<\eta\le\eta_*$, use the auxiliary
+spatial scale $\rho=\eta/4$. The error variable in the conclusions is
+$\eta$ in the complete native metric (13.1).
+

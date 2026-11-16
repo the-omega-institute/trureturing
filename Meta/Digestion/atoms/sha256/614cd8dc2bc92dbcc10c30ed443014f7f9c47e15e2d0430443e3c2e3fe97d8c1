@@ -1,0 +1,113 @@
+**Lemma 18.1 (boundary recurrence lemma).** Let a finite regular stationary table have positive rows $\pi,\tau$, kernels $B,A$, emissions $u_i,v_j\in[a,b]$, and own complete laws $Q_i,W_j$ satisfying the two full recursions in (11.19). Suppose every $Q_i$ and $W_j$ lies in its corresponding endpoint coordinate box (11.29). Set
+
+$$
+ L=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,
+ \qquad g=\operatorname{diag}(1-u)B(1-v),
+$$
+
+so that
+
+$$
+ Q_i(w_{n,1})=(L^ng)_i,
+ \qquad
+ d_n=\pi L^n g.
+ \tag{18.3}
+$$
+
+If $d_n$ obeys (18.1) eventually, then the positive labels split into two unions of closed communicating classes, indexed by $r\in\{a,b\}$, such that
+
+$$
+ u_i=v_j=r
+$$
+
+on every p or suspended label in the $r$-union, and no positive $B$- or $A$-edge joins the two unions. Consequently
+
+$$
+ Q_i=P_{p,r},\qquad W_j=P_{\beta,r}
+$$
+
+on the corresponding union.
+
+**Proof.** Put $C=BA$. The two unweighted balances give $\pi C=\pi$. A finite stochastic matrix with a strictly positive stationary row has only closed irreducible classes on its support. Indeed, for a terminal communicating class, stationarity makes its total incoming flow from outside zero. Positivity of $\pi$ then forbids every incoming edge. Every vertex of the finite component graph has a path to a terminal class, so there can be no nonterminal class. Thus $C$ is block diagonal after a permutation.
+
+For a p-class $X_0$, let $Y_0$ consist of its positive $B$ successors. If $B_{ij}>0$ with $i\in X_0$, then every $k$ with $A_{jk}>0$ has $C_{ik}>0$, hence belongs to $X_0$. Distinct p-classes cannot share such a $j$, since its stochastic $A$ row would have to be supported in both. Every suspended label has an incoming $B$ edge because $\tau=\pi B$ is positive. Consequently these $(X_0,Y_0)$ partition both phases into closed bipartite components. Positivity of $1-u_i$ and $v_j$ makes the support of $L$ exactly the support of $C$, so its p-blocks are irreducible, with no restriction on their periods.
+
+The marker-one endpoint ratio is
+
+$$
+ \frac{c_bz_b^n}{c_az_a^n}
+ =\frac{81}{100}\left(\frac{27}{25}\right)^n.
+$$
+
+It exceeds one at $n=3$ and increases thereafter. Therefore the full endpoint boxes imply
+
+$$
+ c_a z_a^n\mathbf1\le L^ng\le c_b z_b^n\mathbf1
+ \qquad(n\ge3).
+ \tag{18.4}
+$$
+
+Row stochasticity and $u_i,v_j\in[a,b]$ also give the finite-coordinate bound
+
+$$
+ c_b\le g_i=(1-u_i)\sum_jB_{ij}(1-v_j)\le c_a.
+ \tag{18.5}
+$$
+
+Fix one component and restrict $L,g$ to $X_0$. The finite irreducible Perron--Frobenius theorem supplies a positive left vector $\ell$ with $\ell^TL=\rho\ell^T$, where $\rho>0$ is this block's spectral radius. Put $S=\ell^T\mathbf1>0$ and $H_0=\ell^Tg>0$. Multiplying (18.4) by $\ell^T$ gives
+
+$$
+ c_a z_a^n S\le\rho^n H_0\le c_b z_b^n S
+ \qquad(n\ge3).
+ \tag{18.6}
+$$
+
+Taking scalar $n$th roots shows $z_a\le\rho\le z_b$. At either boundary, (18.5) and one side of (18.6) saturate exactly:
+
+$$
+ \begin{aligned}
+ \rho=z_a&\ \Longrightarrow\ c_aS\le H_0\le c_aS
+                    \ \Longrightarrow\ g=c_a\mathbf1,\\
+ \rho=z_b&\ \Longrightarrow\ c_bS\ge H_0\ge c_bS
+                    \ \Longrightarrow\ g=c_b\mathbf1.
+ \end{aligned}
+ \tag{18.7}
+$$
+
+The final implications use strict positivity of every $\ell_i$. Each factor in the product defining $g_i$ in (18.5) lies in $[1-b,1-a]$. Its maximum $(1-a)^2$ is attained only when $u_i=a$ and the $B_i$-average of $1-v$ equals $1-a$; the latter equality forces $v_j=a$ on every positive $B_{ij}$. Its minimum $(1-b)^2$ similarly forces $u_i=b$ and $v_j=b$ on every such edge. Every $j\in Y_0$ has such an incoming edge. Hence
+
+$$
+ \rho=z_r\ \Longrightarrow\quad
+ u_i=v_j=r\quad(i\in X_0,\ j\in Y_0),
+ \qquad r\in\{a,b\}.
+ \tag{18.8}
+$$
+
+This boundary argument uses neither convergence of normalized matrix powers nor visibility of peripheral eigenmodes.
+
+On a component satisfying (18.8), the constant assignment of the native endpoint pair solves both full recursions (11.19). For any two normalized solution pairs, their maximal complete-law TV distances $x,y$ over the two finite label sets obey
+
+$$
+ x\le(1-r)y,\qquad y\le r x.
+$$
+
+Thus $x=y=0$, since $r(1-r)<1$. Every own law on this component is therefore $P_{p,r}$ or $P_{\beta,r}$, including every early word and the infinite coordinate. The infinite outcomes stay in the carriers; their zero mass also follows from the regular survival bound. Writing $m_{X_0}=\sum_{i\in X_0}\pi_i$, this component contributes exactly $m_{X_0}c_rz_r^n$ to $d_n$ for every $n\ge0$. This also follows directly from $L=z_rC$ and $g=c_r\mathbf1$ on that component.
+
+It remains to prove that every component has a boundary radius. For each component choose a positive right Perron vector $h$ and positive constants $k_-,k_+$ such that $k_-h\le g\le k_+h$. Nonnegativity of $L$ then gives
+
+$$
+ k_-(\pi_{X_0}h)\rho^n
+ \le\pi_{X_0}L^ng
+ \le k_+(\pi_{X_0}h)\rho^n
+ \qquad(n\ge0).
+ \tag{18.9}
+$$
+
+Here $\pi_{X_0}$ is the original positive row restricted to the component, without renormalization. Thus the $n$th-root growth of the positive output of any nonempty collection of components is the largest radius in that collection. This follows by summing the upper bounds and keeping a largest-radius lower bound in (18.9), and holds for periodic blocks as well.
+
+Every scalar sequence satisfying (18.1) is $A_0z_a^n+B_0z_b^n$ for $n\ge N$: solve for the two coefficients at $N,N+1$, then use the recurrence forward. A strictly positive such sequence has positive leading nonzero coefficient, so its $n$th-root growth is either $z_a$ or $z_b$. Applying this to $d_n$ identifies its largest component radius as one of these two values. If the largest radius is $z_a$, (18.6) makes every radius $z_a$, and (18.8) classifies every component.
+
+If the largest radius is $z_b$, first apply (18.8) and the full-law uniqueness argument to all components with that radius. Their total output is $m_bc_bz_b^n$ for every $n$, where $m_b$ is their total p mass. Only now remove these components. Their output itself satisfies (18.1), so the remaining sum still satisfies the eventual recurrence. If this sum is nonempty, it is strictly positive by (18.9), and its largest radius is strictly below $z_b$. Its $n$th-root growth must therefore be $z_a$. Equation (18.6) then makes every remaining radius $z_a$, and (18.8) classifies them. The empty remainder needs no further argument. This accounts for every component without an inference about unobserved eigenmodes or cancellation at smaller poles. Closedness proves the absence of cross-edges between the two endpoint unions. $\square$
+
+The boundary lemma is deliberately finite and exact. It does not claim a stability estimate for approximate recurrences, and it does not extend the conclusion to a nonatomic $\nu_p$.
+

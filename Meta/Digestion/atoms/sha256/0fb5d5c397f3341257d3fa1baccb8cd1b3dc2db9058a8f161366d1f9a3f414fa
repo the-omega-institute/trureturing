@@ -1,0 +1,35 @@
+**Definition 36.1 (numerical suffix rule).** At a knot $s=t_i<S$,
+$i\ge1$, the normal connector is Definition 34.1 with
+
+$$
+\begin{aligned}
+h&=k+W^1_{t_{i-1}},\\
+(X,Y,D)&=(W^1_{t_i}-W^1_{t_{i-1}},
+ W^2_{t_i}-W^2_{t_{i-1}},D_{t_{i-1},t_i}).
+\end{aligned}
+\tag{36.1}
+$$
+
+Its entire geometry $g$ is already known at $s$. Its endpoint heights
+are interior, its prefixes satisfy $|x|,|y|\le\rho$, $|j|\le\rho$,
+and its normalized energy is at most $64$ by Lemma 34.2.
+Use the suffix mechanism of Definition 27.2 with the following different
+central thresholds. Set $r_0=s$, $v_0=0$, and on attempt $j\ge0$ put
+
+$$
+\epsilon_j=(\rho/4)2^{-j},\qquad h_j=c\rho^2 4^{-j},\qquad
+\gamma_j(u)=g\bigl(v_j+(1-v_j)\min(u/h_j,1)\bigr)-g(v_j).
+\tag{36.2}
+$$
+
+At $r_j$ issue this entire numerical profile, with its hold after
+$h_j$. Interrupt if, strictly before completion, one of
+$|W^1_{r_j+u}-W^1_{r_j}|$,
+$|W^2_{r_j+u}-W^2_{r_j}|$, $|D_{r_j,r_j+u}|$
+first reaches $\epsilon_j$. If this delay is $\theta_j<h_j$,
+put $r_{j+1}=r_j+\theta_j$ and
+$v_{j+1}=v_j+(1-v_j)\theta_j/h_j$, then issue the next suffix.
+Equality means completion. The actual rule also stops at target death
+or the horizon; its unrestricted version for estimates uses the same
+Brownian continuation and ignores these two cutoffs.
+

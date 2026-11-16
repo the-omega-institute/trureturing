@@ -1,0 +1,61 @@
+**引理 35.2（单侧第三返回迫出第二标记不可见）。**在上述原始签名和完整 (R) 下，记 $x\approx y$ 为对全部 $z$ 同时有 $c(x,z)=c(y,z)$、$c(z,x)=c(z,y)$。若
+
+$$
+a\cdot p_1\approx a,\qquad c(a\cdot p_3,z)\ge c(a,z)
+\qquad(a,z\in M),
+\tag{35.3}
+$$
+
+则 $a\cdot p_2\approx a$ 对全部 $a$ 成立，进而满足 $\mathrm{UC}$ 并有完整仿射复 Hilbert 表示。
+
+**证明。**置 $T_2a=a\cdot p_2$。(R) 取 $(a,b,1,1)$，第一标记的完整行列相等给
+
+$$
+c(T_2a,T_2b)=c(a,b).
+\tag{35.4}
+$$
+
+取 $a=1$ 得 $p_1\approx1$，所以 $q(p_1)=0$。再取 $R(a,b,p_1,1)$，得到
+
+$$
+\begin{aligned}
+3c(a,b)&=c(a\cdot p_1,b)+c(a\cdot p_2,b\cdot p_1)+c(a\cdot p_3,b\cdot p_2)\\
+&\ge c(a,b)+c(T_2a,b)+c(a,T_2b).
+\end{aligned}
+\tag{35.5}
+$$
+
+末项仅用了 (35.3) 的单侧下界，没有把它替换成第三标记的等式。因此
+
+$$
+c(T_2a,b)+c(a,T_2b)\le2c(a,b).
+\tag{35.6}
+$$
+
+固定任意 $a,b$，令 $g_n=c(T_2^na,b)$、$h_n=c(a,T_2^nb)$，$n\ge0$；两列均处处有限非负，且 $g_0=h_0=c(a,b)$。在 $(T_2^na,b)$ 和 $(a,T_2^nb)$ 分别应用 (35.6)，再用同步等距 (35.4)，得对 $n\ge1$
+
+$$
+g_{n+1}+g_{n-1}\le2g_n,\qquad
+h_{n+1}+h_{n-1}\le2h_n.
+\tag{35.7}
+$$
+
+对这两列中的任一列 $v$，相邻差非增，故 $v_n\le v_0+n(v_1-v_0)$。若 $v_1<v_0$，取足够大的有限整数 $n$，右端为负，与 $v_n\ge0$ 矛盾。因此 $g_1,h_1\ge c(a,b)$；(35.6) 又给 $g_1+h_1\le2c(a,b)$，迫使
+
+$$
+c(T_2a,b)=c(a,b)=c(a,T_2b).
+\tag{35.8}
+$$
+
+$a,b$ 任意，故第二标记有完整行列不可见性。这是经典的非负凹序列论证在 (R) 中的应用；没有使用核的对称性、$T_2$ 满射、三角、结合律或 Hilbert 正性。$T_2^na$ 只是逐次右乘 $p_2$ 的指定有限项，不要求无限可执行历史或新资源。
+
+现在对 $j=1,2$，取 $a=1$ 有 $p_j\approx1$。由[有限正性桥引理 2.3](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md)在自由实差空间及完整双侧根空间 $\mathcal N$ 中得到
+
+$$
+e_{p_j}\in\mathcal N,\qquad e_{a\cdot p_j}-e_a\in\mathcal N,\qquad
+D(a,p_j)=e_{a\cdot p_j}-e_a-e_{p_j}\in\mathcal N.
+\tag{35.9}
+$$
+
+这正是 $\mathrm{UC}$；直接应用同卷定理 8.2 得完整表示。在取得 $\mathrm{UC}$ 前没有另行假定或证明 $U$ 的商稳定性。证毕。
+

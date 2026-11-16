@@ -1,0 +1,62 @@
+**定理 63.1（唯一共同符号与全部原对）。** 对61.1的完整CAR原域及59.1的原评价资料，
+
+$$
+\boxed{\quad
+\mathsf H_A(D)
+\quad\Longleftrightarrow\quad
+\exists!\,\sigma\in\{1,-1\}\ 
+\forall a,b\in A_{\rm sa},\qquad
+D(a,b)=\frac{\sigma i}{2}[a,b].\quad}
+\tag{63.1}
+$$
+
+两种符号各自满足全部原关系及全部原质量，存在唯一性指给定同一 $D$ 的符号唯一。
+
+证明。正向使用61.1的共同符号及62.1的同一 $F$。59.3和已知交换子范数界给每份实际 $Z$ 的逐点预算
+
+$$
+\|F(Z)\|\le2\|X(Z)\|\|Y(Z)\|.
+\tag{63.2}
+$$
+
+固定最初原 $W$。任意 $\varepsilon>0$，取有限阶段 $B\in A_n$，$\|W-B\|<\varepsilon$。配平续卷142.1所用的有限矩阵极分解在奇异情形也给实际酉元 $U\in A_n$，$UB\ge0$：例如 $B=V\Sigma W_0^*$ 的奇异值分解给 $U=W_0V^*$；零奇异值处补成完整正交基，不要求一般无限代数中的极部分可酉补全。置 $Z=UW$，则
+
+$$
+\begin{gathered}
+F(Z)=F(W),\qquad \|X(Z)\|\le\|W\|,\\
+Y(Z)=Y(U(W-B)),\qquad \|Y(Z)\|<\varepsilon.
+\end{gathered}
+\tag{63.3}
+$$
+
+第一式由有限条准确PB运输取得，其余只用已知乘法和取实虚部的范数压缩。于是同一固定原输出满足
+
+$$
+\|F(W)\|=\|F(UW)\|\le2\|W\|\varepsilon
+\qquad\text{对每个 }\varepsilon>0.
+\tag{63.4}
+$$
+
+故 $F(W)=0$；$W=0$ 亦由零槽包括。对任意原 $a,b$ 取 $W=a+\jmath b$，便得63.1右端。Pauli对的交换子非零，故符号唯一。本证明没有把 $D(X(Z),Y(Z))$ 换成 $D(UB,0)$，没有令输入极限穿过 $D$，也没有在双对偶上调用 $D$。
+
+反向固定任一符号并定义 $D=K_\sigma$。对自伴原输入，$S-iD$ 在 $\sigma=1$ 时为 $ab$，在 $\sigma=-1$ 时为 $ba$。任一有向二表的复二次型因此分别为 $\gamma_{\mathbb C}(Z^*Z)$ 或 $\gamma_{\mathbb C}(ZZ^*)$，$Z=z_1a+z_2b$，均非负；Hermitian性及两种次序也同时成立。A2的全部实三表二次值为 $\gamma((\sum_lt_la_l)^2)$，指定相加向量给零平方；全部排列相同。A3由原谱序给出，保留原固定 $\vartheta$。
+
+任取原三元组 $(h;a,b)$，用该同一映射形成59.2的实际 $v,w$。置 $W=a+\jmath b$，已知乘法准确给
+
+$$
+(a\pm v)+\jmath(b\pm w)=(1\pm\jmath h)W,
+$$
+
+从而
+
+$$
+\begin{aligned}
+(a\pm v)^2+(b\pm w)^2+2D(a\pm v,b\pm w)
+&=((1\pm\jmath h)W)^*((1\pm\jmath h)W)\\
+&=W^*(1+h^2)W.
+\end{aligned}
+\tag{63.5}
+$$
+
+两份真正外层的平方相同，完整原PB成立，不只成立于辅助窗网络。每份原评价随后读取这些元素等式，没有质量归一，也未删去零、不等或非正常评价。∎
+

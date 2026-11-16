@@ -1,0 +1,105 @@
+**推论 19.2（全局能量与均匀解码的返回下界；source-derived）。** 在定义 19.1 的精确曲线上，令 $a=1-2e$。每个成功控制器及其完整实际口均满足
+
+$$
+a\le\overline\delta+64e\sqrt{m_e\overline\delta},
+\qquad
+\overline\delta\ge
+ \left(\frac{2a}
+ {\sqrt{4096m_e e^2+4a}+64e\sqrt{m_e}}\right)^2 .
+\tag{19.5}
+$$
+
+特别地，
+
+$$
+R(e)\ge\frac1{16384(D_e-1)e^2}
+       \ge\frac1{16384D_e e^2}.
+\tag{19.6}
+$$
+
+证明。固定半径 $1/3$ 开圆盘上的原始允许场
+$n_*(x,y)=(x,y,\sqrt{1-x^2-y^2})$。前两个坐标保证秩二，原点两轴导数范数为一，完整闭 $r$ 轴段上二阶导数范数为 $(1-t^2)^{-3/2}<2$；其目标为
+$D_h(n_*)=(h_y/2,-h_x/4,0,h_y/2)$。
+对任一上述成功控制器，吸收这个固定场的全部来源、混合辅助、控制和规定终端，得到同一个 $h$ 无关有限 CPTP 通道
+$\Lambda:R\to R\otimes K$，仍保留该控制器自己的完整实际 $K$。记
+$\Omega_h=\Lambda(\tau_h)$、$\omega_h=\operatorname{Tr}_R\Omega_h$，并记 $D_{\rm tr}(\rho,\sigma)=\|\rho-\sigma\|_1/2$。这是必要条件的较大 CPTP 比较类。
+
+直接调用定理 14.3 的 (14.17)–(14.22)。对一个固定有限代数 Kraus 表示，令
+$f(h)=(f_{r,h})_r$，
+$f_{r,h}=(\langle j_e,h|\otimes I_K)A_r|j_e,h\rangle$。
+相位在此抵消，故 $f:S^2\to K\otimes\mathbb C^q$ 是全局光滑函数，且 $\|f(h)\|\le1$。令 $p_h=\operatorname{Tr}[((I_R-\tau_h)\otimes I_K)\Omega_h]$。在 (14.7) 的坐标 $z=x+iy$ 中，该定理给出
+
+$$
+p_h\le\overline\delta,\qquad
+\|\partial_{\bar z}f(z)\|
+ \le\frac{\sqrt{m_e\overline\delta}}{1+|z|^2},\qquad
+\omega_h=Q_h+Z_h,\quad
+Q_h=\sum_r|f_{r,h}\rangle\langle f_{r,h}|,\quad
+Z_h\ge0,\quad\operatorname{Tr}Z_h=p_h .
+\tag{19.7}
+$$
+
+这里 $q$ 只为代数指标数。对任意 $h,h'$，展开堆叠向量的外积之差并对该形式指标取偏迹，范数不超过一给
+$\frac12\|Q_h-Q_{h'}\|_1\le\|f(h)-f(h')\|$；
+正余项的半迹范数至多 $(p_h+p_{h'})/2$。因此
+
+$$
+D_{\rm tr}(\omega_h,\omega_{h'})
+ \le\|f(h)-f(h')\|+\overline\delta .
+\tag{19.8}
+$$
+
+上述代数比较没有给实际口添加环境或接入初始纯化。
+
+令 $\mu$ 为单位球面的归一面积，$\nabla$ 使用其标准圆度量。其球极投影坐标表达为
+$d\mu=dA(z)/[\pi(1+|z|^2)^2]$。全局光滑性及 Stokes 公式逐复分量给
+$\int_{S^2}d(\operatorname{Re}f_\nu\,d\operatorname{Im}f_\nu)=0$，所以复导数平方中的混合积分项为零，从而
+
+$$
+\begin{aligned}
+\mathcal E(f)
+ :=\int_{S^2}\|\nabla f\|^2\,d\mu
+ &=\frac1{4\pi}\int_{\mathbb C}
+       (\|f_x\|^2+\|f_y\|^2)\,dA\\
+ &=\frac1\pi\int_{\mathbb C}\|\partial_{\bar z}f\|^2\,dA
+ \le m_e\overline\delta .
+\end{aligned}
+\tag{19.9}
+$$
+
+末步用 (19.7) 及 $\int_{\mathbb C}(1+|z|^2)^{-2}dA=\pi$。该积分恒等式依赖全局函数 $f$；不要求一个全局连续的相干向量相位，也未作逐点的两种复导数能量等同。
+
+以 $\rho_s$ 表示证明参数绕 $z$ 轴的旋转，其生成向量场
+$X(h)=(-h_y,h_x,0)$ 满足 $|X|\le1$。微积分基本定理、Cauchy–Schwarz 及面积不变性给
+
+$$
+\int_{S^2}\|f(\rho_\alpha h)-f(h)\|^2\,d\mu(h)
+ \le\alpha\int_0^\alpha\int_{S^2}
+       \|Xf(\rho_s h)\|^2\,d\mu(h)\,ds
+ \le\alpha^2m_e\overline\delta .
+\tag{19.10}
+$$
+
+取 $\alpha=32e\le0.32<1/3$ 及球冠 $C=\{h:h_x\ge1/2\}$，有 $\mu(C)=1/4$。对每个 $h\in C$，
+
+$$
+(\rho_\alpha h)_y-h_y
+ \ge\frac12\sin\alpha-(1-\cos\alpha)
+ \ge\frac\alpha2-\frac{\alpha^3}{12}-\frac{\alpha^2}{2}
+ >\frac\alpha4 .
+$$
+
+故第一目标坐标之差大于 $\alpha/8=4e>2e$。固定解码器的两个闭 $e$ 成功球不交；其输出落入 $D_h(n_*)$ 的闭 $e$ 球这一实际效果，在 $h$ 上概率至少 $1-e$，在 $\rho_\alpha h$ 上至多 $e$。于是整个球冠上均有
+$D_{\rm tr}(\omega_h,\omega_{\rho_\alpha h})\ge a$。旋转只作用于证明中的自变量；比较效果可依赖所选的 $h$，控制器和解码器始终是同一对，未假定其协变或实施未知方向的物理旋转。
+
+由 (19.8)–(19.10)，
+
+$$
+\frac14(a-\overline\delta)_+^2
+ \le\int_C\|f(\rho_\alpha h)-f(h)\|^2\,d\mu
+ \le\alpha^2m_e\overline\delta .
+$$
+
+开方即得 (19.5) 第一式；令 $x=\sqrt{\overline\delta}$ 解二次不等式并有理化正根，得到第二式。又 $a\ge49/50$；若 $\overline\delta<1/4$，则 $a-\overline\delta>1/2$，上式给
+$\overline\delta\ge1/(16384m_e e^2)$。若 $\overline\delta\ge1/4$，同一结论由 $m_e e^2\ge1$ 得到；后者在整条曲线上由 $k_e\ge2048e^{-2}$、$D_e\ge9k_e/e$ 保证。最后对非空的成功类取下确界，证明 (19.6)。$\square$
+

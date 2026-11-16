@@ -1,0 +1,132 @@
+**Theorem 11.4 (selected-cut stationary barycentre and complete-future
+transfer).** For every B-mask-adapted rule of Definition 11.3, every
+Borel $A\subseteq G$ and $j\ge1$,
+
+$$
+\mathbb E_{Q_\lambda}[\mathbf1_{\{J=j\}}\nu_{W_j}(A)]
+   =p_jm(A).
+\tag{11.5}
+$$
+
+In particular, summing measures over all finite positive indices gives
+$m\,Q_\lambda(1\le J<\infty)$, without conditioning on completion.
+The complete-future error satisfies
+
+$$
+\begin{aligned}
+\mathbb E_{Q_\lambda}
+ [\mathbf1_{\{J<\infty\}}D_J^\infty(W_J)]
+ &\le\beta_d Q_\lambda(1\le J<\infty)\le\beta_d,\\
+\mathbb E_e
+ [\mathbf1_{\{J<\infty\}}D_J^\infty(W_J)]
+ &\le\beta_d+\mathbb E_e\operatorname{TV}(\pi_{Y_{<T}}m,m).
+\end{aligned}
+\tag{11.6}
+$$
+
+The summand at infinity is defined to be zero; the event $J=\infty$
+and its probability remain in the law. Therefore, under the earned
+guards $\beta_d\le b^+$ and (10.19), for every $\chi>0$,
+
+$$
+\mathbb P_e\{J<\infty,\ D_J^\infty(W_J)>\chi\}
+ \le\min\{1,(b^++\eta^+)/\chi\}.
+\tag{11.7}
+$$
+
+One event controls all finite future horizons by marginalization.
+There is no assertion of a finite packet containing an infinite row.
+
+*Proof.* The source-to-mark binary relation is exactly $f_B(x)=1/4$.
+Together with the original fresh conditional noises, it gives, for
+any finite set of read indices and every mask pattern $b_1,\ldots,b_n$,
+
+$$
+\mathbb P(B_{i_1}=b_1,\ldots,B_{i_n}=b_n
+       \mid\hbox{entire hidden trajectory})
+ =\prod_{h=1}^n(1/4)^{b_h}(3/4)^{1-b_h}.
+\tag{11.8}
+$$
+
+Thus the entire mask is iid Bernoulli$(1/4)$ and independent of the
+entire hidden trajectory, by cylinder uniqueness. This is the same
+source independence already used in Lemma 6.3 and Proposition 6.6,
+not a second independence theorem. For two reads (11.8) is its binary
+product; for three reads it is the exact finite triple lift on the
+same hidden realization. It is a joint conditional identity, not a
+product of separately attainable marginals. At a stopped $u$, fresh
+future noises give that same identity conditional on $u$ and its
+future hidden path. The allowed $V,R$ do not change it. Under the
+stationary comparison, $(R,(B_i)_{i\ge0})$ is consequently independent
+of $(\widetilde X_i)_{i\ge0}$.
+
+For each finite $j$, mask adaptation gives a measurable function
+$a_j:\{0,1\}^j\to[0,1]$, the probability over $\lambda_{u,v}$ of
+$J=j$ for that mask prefix. Independence of $R$ from the whole
+label and hidden sequence gives, for any bounded Borel $h$,
+
+$$
+\begin{aligned}
+\mathbb E_{Q_\lambda}[\mathbf1_{\{J=j\}}\nu_{W_j}(h)]
+ &=\sum_{w\in\mathcal L^j}q(w)a_j(B(w))\nu_w(h)\\
+ &=\mathbb E_Q[a_j(B(W_j))h(\widetilde X_{j-1})]\\
+ &=\mathbb E_{Q_\lambda}
+       [\mathbf1_{\{J=j\}}h(\widetilde X_{j-1})]
+ =p_j\int h\,dm.
+\end{aligned}
+\tag{11.9}
+$$
+
+The second equality is the full-prefix posterior tower identity;
+the last uses (11.8) and stationarity at the deterministic index
+$j-1$. Taking $h=\mathbf1_A$ proves (11.5). In particular the
+posterior was never replaced by a mask-only posterior. Moreover,
+on a finite $J=j$, conditioning additionally on the seed and this
+completion event adds no information about the hidden state or future
+beyond the full $W_j$: the event is already decided by its mask and
+seed, and the independent seed itself adds no source information.
+The same statement under the actual law uses the full prefix $uW_j$.
+
+After the last consumed read there is exactly the original one-gap
+transition. The next-read stationary posterior is $\nu_wP_d$;
+$mP_d=m$. With the full future probability kernel $\mathcal K$ of
+(9.1), the Markov/read contract and cylinder uniqueness give
+
+$$
+Q_w^\infty=(\nu_wP_d)\mathcal K,\qquad Q=m\mathcal K,\qquad
+D_j^\infty(w)\le\operatorname{TV}(\nu_wP_d,m)
+ \le\int r_d\,d\nu_w.
+\tag{11.10}
+$$
+
+Contraction here acts on the whole product sigma algebra. It is not
+an inference from convergence of individual cylinders. Integrate
+(11.10) on $J=j$, use (11.9) with $h=r_d$, and sum nonnegative
+terms over $j\ge1$. Since $\int r_d\,dm=\beta_d$, this proves
+the first line of (11.6). No bounded stopping or uniform mixing
+hypothesis is used, and no mass is divided by $Q_\lambda(J<\infty)$.
+
+Finally fix an actual stopped history $u$ and allowed state $v$.
+The actual next-read law is $\pi_um$, by (2.2)–(2.5); the stopping
+gate is already determined by $u$. Apply the same future kernel and
+independent seed law to $\pi_um$ and $m$. Product extension and TV
+contraction give
+
+$$
+\operatorname{TV}(R_u^\infty\otimes\lambda_{u,v},
+                  Q\otimes\lambda_{u,v})
+ \le\operatorname{TV}(\pi_um,m).
+\tag{11.11}
+$$
+
+On this common label-and-seed space,
+$F=\mathbf1_{\{J<\infty\}}D_J^\infty(W_J)$ is measurable and
+lies in $[0,1]$. Its expectation changes by at most (11.11).
+The stationary estimate applies to each fixed $u,v$ with its own
+seed law and causal rule. Average the resulting inequality over
+actual stopped histories and allowed service states. There are only
+countably many stopped words; regular conditional kernels handle
+$V$. This proves the second line of (11.6). Theorem 9.2 and the
+generated guard (9.19) give (10.19), while Theorem 10.2 gives
+$\beta_d\le b^+$. Markov's inequality proves (11.7). $\square$
+

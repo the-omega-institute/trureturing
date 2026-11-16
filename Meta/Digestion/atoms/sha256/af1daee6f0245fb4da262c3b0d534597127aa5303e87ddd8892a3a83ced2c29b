@@ -1,0 +1,80 @@
+**定理 9.1（仿射分解与等向缺陷）。**在定理 8.2 的前件和 $\mathrm{UC}$ 下，令 $t_k=\beta(p_k)$、$t=t_1$，并置
+
+$$
+T(a,u)=\beta(a\cdot u)-\beta(a)-\beta(u),\qquad
+W=\operatorname{span}_{\mathbb R}\{T(a,u):a,u\in M\}.
+$$
+
+则 $t_0=0$、$t_2=(I+R)t$，且
+
+$$
+\beta(a\cdot U^ku)
+=\beta(a)+R^k\beta(u)+t_k+R^{-k}T(a,u)
+\qquad(k=0,1,2).
+\tag{9.1}
+$$
+
+此外，
+
+$$
+B(W,W)=0,\qquad T(a,Uu)=R^2T(a,u),\qquad RW=W.
+\tag{9.2}
+$$
+
+**证明。**由 $S$ 的定义和合法下降，
+
+$$
+\beta(Ua)=R\beta(a)+t,\qquad
+\beta(U^ka)=R^k\beta(a)+t_k\quad(k=0,1,2).
+\tag{9.3}
+$$
+
+$\mathrm{UC}$ 给 $\beta(a\cdot p_k)=\beta(a)+t_k$，也包括 $k=0$。记
+
+$$
+\xi_k(a,u)=[X_k(a,u)]=\beta(a\cdot U^ku)-t_k.
+$$
+
+于是 $\xi_k(b,1)=\beta(b)$、$\xi_k(1,v)=R^k\beta(v)$。(2.3) 先与输入 $(b,1)$ 配对，再反向配对，两式共同给
+
+$$
+\sum_{k=0}^2\xi_k(a,u)=3\beta(a).
+\tag{9.4}
+$$
+
+这里使用的是商上共同非退化性，并未使用单侧非退化性。再与 $(1,v)$ 按两个次序配对，并用 (8.9) 把 $R^k$ 转到另一变量，得到
+
+$$
+\sum_{k=0}^2R^{-k}\xi_k(a,u)=3\beta(u).
+\tag{9.5}
+$$
+
+这正是《无结合律的双端三相比较：可见代数与复几何共同生成》[第 2 节](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md#2-在非对称非正定空间中保留全部缺陷)式 (2.8)–(2.10) 所用的三字符系统，但此处未知量为中心化的 $\xi_k$，不是未减去仿射偏移的 $\beta(a\cdot U^ku)$。具体地，令
+
+$$
+d_k=\xi_k(a,u)-\beta(a)-R^k\beta(u).
+$$
+
+则 $d_0=T(a,u)$，且 (9.4)–(9.5) 给
+
+$$
+d_0+d_1+d_2=0,\qquad d_0+R^2d_1+Rd_2=0.
+$$
+
+消去 $d_2$ 后，$(R^2-R)d_1=(R-I)d_0$；由 $(R^2-R)^2=-3I$，该算子可逆，而 $d_1=R^2d_0$ 满足此式。因此 $d_2=Rd_0$，即 (9.1)。
+
+把 $\xi_k(a,u)=\beta(a)+R^k\beta(u)+R^{-k}T(a,u)$ 代回 (2.3)。纯背景项为 $3B(\beta(a),\beta(b))$，纯增量项为 $3B(\beta(u),\beta(v))$；所有不同字符的交叉项为零。例如
+
+$$
+\sum_k B(R^k\beta(u),R^{-k}T(b,v))
+=B\left(\beta(u),\sum_kR^{-2k}T(b,v)\right)=0.
+$$
+
+其他交叉项同样由 $I+R+R^2=0$ 消去。剩余式为
+
+$$
+3B(T(a,u),T(b,v))=0\qquad(a,u,b,v\in M).
+$$
+
+所有有序缺陷对均在量词内，故 $B(W,W)=0$。取 (9.1) 的 $k=1$ 并减去 $\beta(a)+\beta(Uu)$，得 $T(a,Uu)=R^2T(a,u)$，所以 $R^2W\subseteq W$。再作用 $R^2$ 得 $RW\subseteq W$；结合 $R^3=I$ 即得 $RW=W$。这个结论只是 $W$ 的等向性，尚不蕴涵 $W$ 为根空间。
+

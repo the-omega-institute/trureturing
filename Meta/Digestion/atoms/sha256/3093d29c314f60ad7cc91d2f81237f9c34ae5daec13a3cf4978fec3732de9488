@@ -1,0 +1,97 @@
+**定理 12.2（非零总响应与全原域无正交对同时成立）。** 定义 12.1 的原数学资料满足本卷 1.1 的全部静态 A1–A3、准确锥与分离正读取、全部 P2 和完整 PB；固定小窗口可取任意原有理 $0<\theta\le1$。它还具有以下性质：$E$ 无限维，在原范数下不完备，且在 $X$ 中稠密；$D$ 有非零值；但
+
+$$
+\boxed{a\circ b=0\quad\Longrightarrow\quad a=0\ \text{或}\ b=0
+\qquad(a,b\in E).}
+\tag{12.4}
+$$
+
+这里禁止的是任意非零原自伴输入的 Jordan 正交，不限于正输入、某个次数窗、一个生成元或某份有限标签表。
+
+证明。先说明这个模型的原词没有隐藏代数关系。对非零形式多项式 $p=\sum_w c_wX_w$，令 $n=\deg p$，以 $P_n$ 表示投影到词长为 $n$ 的 Hilbert 子空间。由 (12.2)，在 $s_{w_1}\cdots s_{w_n}\xi_\varnothing$ 中，只有每次都选择创造算子的项才能到达词长 $n$；任何一次湮灭均使最终长度小于 $n$。低次词也到不了该层。因此
+
+$$
+P_n p(s_1,s_2)\xi_\varnothing
+ =\sum_{|w|=n}c_we_w\ne0.
+\tag{12.5}
+$$
+
+$n=0$ 时是同一结论。故求值 $p\mapsto p(s_1,s_2)$ 单射，$\mathcal A_0$ 确为自由星代数的忠实像。特别，$u,s_1,s_1^2,\ldots$ 实线性无关，$E$ 无限维。$\mathcal A_0$ 含单位且对星号闭合，并有 $\mathcal A_0=E+\mathrm iE$；由 $\mathcal A$ 的定义及自伴化 $p\mapsto(p+p^*)/2$，$E$ 在 $X$ 中范数稠密。$X$ 的 Jordan 乘法、单位、锥和范数正是 (12.3) 的延拓。
+
+接着核对全部读取与静态接口。继承的正锥使 $(E,C,u)$ 成为 Archimedean 序单位空间，其序单位范数准确为 $N$。对任意 $\alpha\in\mathcal P$，序单位界给
+
+$$
+|\alpha(a)|\le m_\alpha N(a),\qquad m_\alpha=\alpha(u)\ge0.
+\tag{12.6}
+$$
+
+所以它唯一连续延拓到 $X$。该延拓仍正：对 $x\in X_+$，选 $a_n\in E$ 与 $\varepsilon_n\downarrow0$，使 $\|a_n-x\|\le\varepsilon_n$，则 $a_n+\varepsilon_nu\in C$，取极限即可。复线性延拓得到 $\mathcal A$ 上的正泛函 $\phi_\alpha$。反过来，$\mathcal A$ 的每个正泛函限制于 $E$ 都属于 $\mathcal P$，故这里没有漏掉任何原正实线性读取。向量正泛函的限制已经分离自伴算子并准确决定正锥，因此整个 $\mathcal P$ 也分离 $E$ 并准确决定 $C$。全部非负质量倍数仍在族内，$m_\alpha=0$ 时 (12.6) 使评价恒零；零、不等和次归一质量均未删去。
+
+现在把静态重构卷 35.1–35.2 的 $\mathcal A,\mathcal A_0,E,\mathcal P,\kappa$ 分别准确取为 (12.3) 的同名对象及 $\kappa=1$。稠密含单位复星子代数、自伴原域、准确锥范数和评价族等前件均已支付，故直接复用其完整标准模型结论。为写清同一总 $D$ 的接口与符号，对任意有限原标签和复系数，置 $v=\sum_jz_ja_j\in\mathcal A_0$，有
+
+$$
+\begin{aligned}
+S(a,b)-\mathrm iD(a,b)&=ab,\\
+\sum_{j,k}\overline z_jz_k
+ \bigl(\alpha(S(a_j,a_k))-\mathrm i\alpha(D(a_j,a_k))\bigr)
+ &=\phi_\alpha(v^*v)\ge0.
+\end{aligned}
+\tag{12.7}
+$$
+
+这给全部有限有向复正表，包含完整 A1／P2 的全部零、重复、实缩放与平移标签。实三表在全部实系数下为正；相加三标签 $(a+b,a,b)$ 在 $(1,-1,-1)$ 处合成为零，全部排列也相同，故完整 A2 成立。$S(u,u)=u$，而 $0\le e\le\theta u$ 给 $e^2\le\theta e\le e$，即 A3。这里只在这个已经指定的标准模型内使用双线性，不给一般未知旧 $D$ 添加正则性。
+
+完整 PB 的所有内层和外层也保持原性。对任意原 $a,b,c$，令 $z=b+\mathrm ic$，沿静态重构卷 (22.2)–(22.3) 的准确记号，有
+
+$$
+\begin{aligned}
+Q_\alpha(b,c)&=\phi_\alpha(z^*z),\\
+r_t+\mathrm i s_t&=(u+\mathrm it a)z,\\
+Q_\alpha(r_1,s_1)
+ &=\phi_\alpha\bigl(z^*(u+a^2)z\bigr)
+ =Q_\alpha(r_{-1},s_{-1}).
+\end{aligned}
+\tag{12.8}
+$$
+
+乘法、伴随和有限和均留在 $\mathcal A_0$，相应实、虚自伴部分均留在 $E$；故 (12.8) 是全部原三元组、全部原评价的完整 PB，未只验 $c=0$、某个零行或有限个标签。这里还已有原 R 和同一结合乘法，但这是该标准模型的性质，不是对一般原候选可加性的预支。
+
+不完备性可以用一条明确的原 Cauchy 列展示。由 $\|s_1\|\le2<3$，有
+
+$$
+q_N=\sum_{k=0}^N3^{-k-1}s_1^k\in E,\qquad
+q_N\longrightarrow q=(3u-s_1)^{-1}\in X,
+\qquad \|q-q_N\|\le(2/3)^{N+1}.
+\tag{12.9}
+$$
+
+若 $q\in E$，则存在非零形式多项式 $p$ 使 $q=p(s_1,s_2)$。求值单射把 $(3u-s_1)q=u$ 拉回
+
+$$
+(3-X_1)p=1.
+\tag{12.10}
+$$
+
+若 $p$ 的最高齐次项为 $p_n\ne0$，左边的最高项为 $-X_1p_n\ne0$，次数 $n+1\ge1$，不可能等于常数 $1$。故 $q\notin E$，(12.9) 没有原域中的极限。逆元只用来证明缺失，没有送入任何原 $D$。
+
+最后证明 (12.4)。在自由词上按长度优先、同长度按 $1<2$ 的字典序排序，并以最大词为首词；这个序在左右连接相同词时保持严格次序。若 $p,q$ 非零，首词分别为 $v,w$，非零首系数分别为 $c,d$，则 $pq$ 的首词是 $vw$、首系数是 $cd$，$qp$ 的首词是 $wv$、首系数是 $dc$。若 $vw\ne wv$，两个首词中较大的一个不能被另一个乘积中的任何词抵消；若 $vw=wv$，该词在 $pq+qp$ 中的系数是 $2cd\ne0$。因此
+
+$$
+pq+qp\ne0\qquad(p,q\ne0).
+\tag{12.11}
+$$
+
+这个初等首词论证只作为本模型结论的中间代数步骤，不另立自由代数的新定理。对任意非零 $a,b\in E$，选其唯一形式代表 $p,q$；求值单射与 (12.11) 给 $ab+ba\ne0$，即 (12.4)。同时
+
+$$
+\begin{aligned}
+D(s_1,s_2)\xi_\varnothing
+ &=\frac{\mathrm i}{2}(e_{12}-e_{21})\ne0,\\
+(s_1\circ s_2)\xi_\varnothing
+ &=\frac12(e_{12}+e_{21})\ne0.
+\end{aligned}
+\tag{12.12}
+$$
+
+所以无正交锚与非零响应在同一总模型中共存，并非由交换模型的 $D=0$ 回避非零响应。∎
+

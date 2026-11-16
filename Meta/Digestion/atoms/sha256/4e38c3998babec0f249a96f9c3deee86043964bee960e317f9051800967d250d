@@ -1,0 +1,8 @@
+**定理 124.4（五个全方向表述的准确等价）。** 在同一个固定 $p\in P_{\rm reg}$，以下五项等价：
+
+1. $\Lambda|_{\partial Z}$ 连续；
+2. $m:S^2\to[\sigma,1]$ 连续；
+3. 真正原端点映射 $v\mapsto a_v\in K$ 连续；
+4. 存在同一 $M_p\in[\sigma,1]$，使 $m(v)=M_p$ 对全部 $v\in S^2$；
+5. 存在同一 $\lambda_p\in[1,1/\sigma]$，使 $\Lambda(z)=\lambda_p$ 对全部 $z\in\partial Z$。
+

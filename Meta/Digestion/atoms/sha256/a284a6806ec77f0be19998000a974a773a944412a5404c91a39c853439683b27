@@ -1,0 +1,40 @@
+**定义 42.1（平衡星形的固定输出接口）。** 在已给乘法、伴随和准确正锥的 $A=M_3(\mathbb C)$ 中，取
+
+$$
+P=\operatorname{diag}(1,1,0),\qquad C=PAP,\qquad c=\operatorname{diag}(1,2,0),\qquad
+t=\begin{pmatrix}0&0&1\\0&0&\sqrt2\\1&\sqrt2&0\end{pmatrix}.
+\tag{42.1}
+$$
+
+固定 $\sigma\in\{1,-1\}$、$\rho\in\mathbb R$，定义
+
+$$
+a\circ b=\frac{ab+ba}{2},\qquad K_\sigma(a,b)=\frac{\sigma i}{2}[a,b],\qquad s=\rho\operatorname{diag}(1,-2,0),\qquad g=K_\sigma(c,t)+s.
+\tag{42.2}
+$$
+
+每份读取 $\phi$ 都是 $A$ 上的数学正复线性泛函；其全部质量 $\phi(1)\ge0$ 均保留，包括零。对每个原实际探针 $x=x^*\in C$，沿用 (41.3) 的完整标签
+
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\quad r=c\circ x,\quad k=c\circ t,\\
+R_+=x+h-k,\quad R_-=x-h+k,\quad S_+=t+r+g,\quad S_-=t-r-g,\\
+L=-2x\circ(h-k)-2t\circ(r+g),\\
+B_\phi(U,V)=\phi(U^2)\phi(V^2)-\phi(U\circ V)^2\ge0\quad(U=U^*,\ V=V^*).
+\end{gathered}
+\tag{42.3}
+$$
+
+这里 $B_\phi\ge0$ 来自实 Gram 的 Cauchy–Schwarz。原固定二表和每份探针预算分别为
+
+$$
+\mathsf{P2}:\quad \phi(g)^2\le B_\phi(c,t),\qquad
+\mathsf{PB}_x:\quad |\phi(L)|\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}
+\quad(\phi\ge0).
+\tag{42.4}
+$$
+
+这个接口只有固定 $c,t,g$ 和已知乘法，不含未知映射 $D$，也不预给两份外响应。它准确使用 §41.1 的同一固定输出预算；若完整原模型的实际角 $C$ 已同号分类，$g=D(c,t)$ 且数据为 (42.1)–(42.2)，则按 §41.1 的原 PB、外层 P2 及 AH43.1 同表读取取得这些预算，不增加物理评价标签或准备。
+
+这里 $PtP=0$ 而 $(1-P)tP\ne0$，两条角外连线均非零。定理 41.2 的无外边前件不成立；不能把它的比例式或返回消费者用于此输入，也没有把环境压缩掉。
+

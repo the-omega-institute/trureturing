@@ -1,0 +1,16 @@
+**定义 135.2（与既有量子公理的条件对应）。** 母卷 122 的有限存在分类已经把 Jordan 底层选为有限个、不必等维的 $H_{n_j}(\mathbb C)$ 直和，包含经典块与空直和。124.1 的原正评价表示为
+
+$$
+\alpha(a)=\sum_j\operatorname{Tr}(\rho_{\alpha,j}a_j),\qquad
+\rho_{\alpha,j}\succeq0,\qquad
+\sum_j\operatorname{Tr}\rho_{\alpha,j}=m_\alpha.
+$$
+
+因此只有原来源实际供应完整效果菜单 $\sum_\ell e_\ell=u$，且 $m_\alpha>0$ 时，才取得该菜单的 Born 读数
+
+$$
+p_\alpha(\ell)=\frac{\sum_j\operatorname{Tr}(\rho_{\alpha,j}e_{\ell,j})}{m_\alpha}.
+$$
+
+质量零不作归一。矩阵识别与数学正读取不供应实际准备的满射性、测量仪器、共同张量或动力时钟。共同角取向把各局部复乘法的方向锁在同一块内，仍须下列旧值桥梁才能得到全域关系与相应动力生成元。
+

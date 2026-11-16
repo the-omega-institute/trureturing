@@ -1,0 +1,167 @@
+**定理 20.6（共同总核支配下的纯相位固定三角归约）。**原普遍断言 $\mathsf{Eff}$ 等价于
+
+$$
+\forall q\in\mathcal B:\qquad
+\sqrt{q(x_1,x_3)}\le
+\sqrt{q(x_1,x_2)}+\sqrt{q(x_2,x_3)}.
+\tag{20.20}
+$$
+
+若 $\mathsf{Eff}$ 不成立，则有一个 $q\in\mathcal B$ 严格违反此有向生成元三角；带索引测试 $d_0=q,d_1=K_0-q$ 在这个固定纯相位总模型上就是总反模型。因此，对所有纯相位总几何证明事件断言足以推出任意漂移的原断言。仅某一个 $q$ 满足 (20.20) 的三角式，不被断言足以给该 $q$ 表示。
+
+**证明。**若原断言失败，由命题 20.2 存在一个原受支配事件 $d$ 没有效果。它不能有完整仿射复 Hilbert 表示，否则该表示给两个返回；$K-d$ 也有返回，再由 W 定理 43.3 和本卷定理 6.2 得到效果。将 [W 定理 14.1](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#14-保留有限核的极限给出完整三点几何桥) 的有向三角分类逆否应用于 $d$ 自身，得到原标签 $a_1,a_2,a_3$，使
+
+$$
+g:=\sqrt{d(a_1,a_3)}-\sqrt{d(a_1,a_2)}
+-\sqrt{d(a_2,a_3)}>0.
+\tag{20.21}
+$$
+
+该应用只用 $d$ 非负、处处有限、零对角及完整 (R)，不添加对称性或返回。
+
+对 $N\ge1$ 及 $\sigma\in\Sigma_N=\{0,1,2\}^N$，取 [W 引理 23.1](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#23-任意有限比较矩阵的零漂移实现) 的同一个实际右梳
+
+$$
+H_0(a;1)=1,\qquad
+H_N^\sigma(a;1)=a\cdot U^{\sigma_1}
+H_{N-1}^{(\sigma_2,\ldots,\sigma_N)}(a;1).
+\tag{20.22}
+$$
+
+记 $s_r=\sigma_1+\cdots+\sigma_r$、$s_0=0$，选唯一 $e_\sigma\in\{0,1,2\}$ 使 $s_N+e_\sigma\equiv0\pmod3$，并置
+
+$$
+\Gamma_Na(\sigma)=U^{e_\sigma}H_N^\sigma(a;1).
+\tag{20.23}
+$$
+
+在实际数组 magma $M^{\Sigma_N}$ 上，乘法和 $U_N$ 逐坐标采用原运算，真实单位为常值数组 $\mathbf1$。定义
+
+$$
+\begin{aligned}
+d_N(X,Y)&=\frac1{N3^N}\sum_{\sigma\in\Sigma_N}d(X_\sigma,Y_\sigma),\\
+H_N^{\rm arr}&=\ell^2(\Sigma_N;H),\\
+F_N(X)&=\left(\frac{F(X_\sigma)}{\sqrt{N3^N}}\right)_\sigma,\qquad
+t_N=\left(\frac{t}{\sqrt{N3^N}}\right)_\sigma.
+\end{aligned}
+\tag{20.24}
+$$
+
+有限平均保持完整 (R)；本卷引理 2.1 的非负递推给 $d(Ua,Ub)=d(a,b)$。W 引理 23.1 的右梳平均恰为 $Nd(a_i,a_j)$，末端同步标记又等距，所以
+
+$$
+d_N(\Gamma_Na_i,\Gamma_Na_j)=d(a_i,a_j)
+\quad(1\le i,j\le3).
+\tag{20.25}
+$$
+
+所有九个有向源费用在同一个模型中精确保留，不需任何返回前件。与此同时，保留的是一个共同总映射，而不是分别复制各事件后再拼接：
+
+$$
+\begin{gathered}
+F_N\mathbf1=0,\qquad F_N(XY)=F_NX+F_NY,\\
+F_N(U_NX)=\omega F_NX+t_N,\qquad
+\|t_N\|=\|t\|/\sqrt N,\\
+0\le d_N(X,Y)\le\|F_NX-F_NY\|^2
+\quad(X,Y\in M^{\Sigma_N}).
+\end{gathered}
+\tag{20.26}
+$$
+
+为识别这个同一总核的源向量，复用 W 式 (41.5)–(41.15) 中右梳、相位校准和共同等距的代数。具体置
+
+$$
+m=\frac{t}{1-\omega},\qquad
+A_N(\sigma)=\sum_{r=0}^{N-1}\omega^{s_r},\qquad
+I_Nv=\left(\frac{\omega^{e_\sigma}A_N(\sigma)v}{\sqrt{N3^N}}\right)_\sigma.
+\tag{20.27}
+$$
+
+按 (20.22) 的实际括号展开，得到
+
+$$
+\begin{aligned}
+F(H_N^\sigma(a;1))
+&=A_N(\sigma)Fa+(1-\omega^{s_N})m,\\
+F(U^{e_\sigma}H_N^\sigma(a;1))
+&=\omega^{e_\sigma}A_N(\sigma)Fa
+ +(1-\omega^{s_N+e_\sigma})m\\
+&=\omega^{e_\sigma}A_N(\sigma)Fa.
+\end{aligned}
+\tag{20.28}
+$$
+
+若 $r>l$，$\mathbb E_\sigma\omega^{s_r-s_l}=0$，因为其中一个独立相位的均值是 $(1+\omega+\omega^2)/3=0$。因此
+
+$$
+\mathbb E_\sigma|A_N(\sigma)|^2=N,\qquad
+\|I_Nv\|^2=\|v\|^2,\qquad
+F_N(\Gamma_Na_i)=I_NFa_i.
+\tag{20.29}
+$$
+
+$I_N$ 是对所有来源共同的复线性等距。上述式子包含 $N=1$：此时 $A_1=1$，平均范数仍为 $1$，末端漂移相消仍逐项成立。这里只使用这些有限代数恒等式，不调用 W 定理 41.1 的残差消失结论，也不将其返回前件转借给 $d$。
+
+将同一个 $T_3$ 求值到每个数组模型，令 $\operatorname{ev}_N(x_i)=\Gamma_Na_i$、$\operatorname{ev}_N(1)=\mathbf1$，两构造子采用实际运算。在 $T_3$ 上递归定义
+
+$$
+\begin{aligned}
+f(1)&=0,& f(x_i)&=Fa_i,& f(sz)&=f(s)+f(z),& f(Us)&=\omega f(s),\\
+\lambda_1&=0,& \lambda_{x_i}&=0,& \lambda_{sz}&=\lambda_s+\lambda_z,&
+\lambda_{Us}&=\omega\lambda_s+1.
+\end{aligned}
+\tag{20.30}
+$$
+
+单位约简保持两递归。由 (20.26)–(20.29) 对项归纳，有
+
+$$
+F_N(\operatorname{ev}_Ns)=I_Nf(s)+\lambda_s t_N
+\qquad(s\in T_3).
+\tag{20.31}
+$$
+
+因此对每个固定有序项对 $(s,z)$，
+
+$$
+\begin{aligned}
+\|F_N(\operatorname{ev}_Ns)-F_N(\operatorname{ev}_Nz)\|^2
+&\longrightarrow\|f(s)-f(z)\|^2,\\
+0\le d_N(\operatorname{ev}_Ns,\operatorname{ev}_Nz)
+&\le\bigl(\|f(s)-f(z)\|
++|\lambda_s-\lambda_z|\,\|t\|\bigr)^2.
+\end{aligned}
+\tag{20.32}
+$$
+
+此处右端是每对坐标各自有限且不依赖 $N\ge1$ 的共同界，不要求一个常数控制全部项。枚举所有有序项对，对事件费用取一条共同的对角子列 $N_\ell\to\infty$，得到整个 $T_3^2$ 上的有限非负总核 $d_\infty$。每条原 (R) 只含有限坐标，求值又保持原构造子，故全部关系在同一极限中成立；(20.26)、(20.32) 还给
+
+$$
+0\le d_\infty(s,z)\le\|f(s)-f(z)\|^2,\qquad
+d_\infty(x_i,x_j)=d(a_i,a_j)\quad(1\le i,j\le3).
+\tag{20.33}
+$$
+
+故 (20.21) 的严格差值 $g$ 精确保留，而不是由一个非严格极限不等式推断其严格性。未添加返回、表示或同纤维行列下降。
+
+最后置
+
+$$
+S_0=\sum_{i=1}^3\|Fa_i\|^2,\qquad
+V_0(z_1,z_2,z_3)=\sum_{i=1}^3z_iFa_i.
+\tag{20.34}
+$$
+
+若 $S_0=0$，三个源像都为零，支配使全部源对费用为零，与 (20.21) 矛盾。因此 $S_0>0$。由自由递归与 Cauchy–Schwarz，
+
+$$
+f=V_0f_0,\qquad \|V_0z\|^2\le S_0\|z\|^2.
+\tag{20.35}
+$$
+
+定义 $q=d_\infty/S_0$ 后，(20.33)–(20.35) 给整个 $T_3$ 上的 $0\le q\le K_0$ 及完整 (R)，而生成元三角的严格超额为 $g/\sqrt{S_0}>0$。总核 $K_0$ 满足完整 (R)，故 $K_0-q$ 也非负且满足完整关系，给出带索引总二元反模型。
+
+反向，若 $\mathsf{Eff}$ 成立，它给任一 $q\in\mathcal B$ 的带索引测试 $(q,K_0-q)$ 一个效果 $E$。于是 $\sqrt{q(s,z)}=\|E^{1/2}(f_0(s)-f_0(z))\|$ 是 Hilbert 半范数距离，满足指定生成元三角，得到 (20.20)。证毕。
+
+零漂移、零或重复源像、奇异 $V_0$ 及原标签 $a_i=1$ 都允许；只在严格三角失败已确保 $S_0>0$ 后才除以它。没有除以准备费用、某个距离或 $\|t\|$。单独应用 W 定理 23.2 分别复制事件核并不给出 (20.26)–(20.33) 的共同支配，本证明保留同一 $F_N$、同一 $I_N$ 与同一条对角子列。
+

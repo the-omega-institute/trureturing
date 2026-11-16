@@ -15,7 +15,8 @@ set_option autoImplicit false
 noncomputable section
 namespace D5.S3.Combinatorics.Permutation.MultisetRookEulerianRealRootednessRefutation
 open Polynomial
-open MultisetRookEulerianInterlacingRefutation (W asc R)
+open MultisetRookEulerianInterlacingRefutation (W R)
+open WordAscents (asc)
 /-- The first clause of Conjecture 28, with positive Ferrers row bounds. -/
 noncomputable def claim : Prop :=
   ∀ (n k : ℕ) (lam : Fin n → ℕ) (α : Fin k → ℕ),

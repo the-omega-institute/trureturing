@@ -1,0 +1,19 @@
+取全部代数独立的不定元 $z=(z_{ij})$，写 $u_i(z)=\sum_j z_{ij}x_{ij}$，并在 $K(z)^M$ 中用法向量 $z$ 的一个超平面 $H_z$。在第 $\sigma$ 处，记 $U_{i,\sigma}=\sum_j z_{ij}\sigma(x_{ij})$；每个 $U_{i,\sigma}$ 非零。切面 $(P_\sigma\otimes_K K(z))\cap H_z$ 的一组基是
+
+$$
+U_{1,\sigma}\widetilde b_{i,\sigma}
+  -U_{i,\sigma}\widetilde b_{1,\sigma},
+\qquad 2\le i\le h.
+\tag{31.6}
+$$
+
+确实，在 $P_\sigma$ 的系数坐标中，唯一方程是 $\sum_i U_{i,\sigma}c_i=0$，且 $U_{1,\sigma}\ne0$，可用后 $h-1$ 个坐标自由表示。这里切面是共同核方程的行空间来源。Raz–Wigderson [arXiv:1901.09423v1，Definition 5.1、Theorems 5.2、7.1](https://arxiv.org/pdf/1901.09423v1) 给出其张成的分拆秩：该子空间族在 $K$ 上定义，法向量取整个参数空间的泛点，特征零下满足该一般位置条件。由 (31.5)，(31.6) 全部行的秩为
+
+$$
+R=\min_{\mathcal P}\sum_{S\in\mathcal P}
+       \left(\sum_i q_i(S)-1\right),
+\tag{31.7}
+$$
+
+其中 $\mathcal P$ 遍历 $\Omega$ 的非空块分拆。两份时，(31.6) 在第一块改符号后正是 §30 的两块行式；这里没有迭代取 Hadamard 积。
+

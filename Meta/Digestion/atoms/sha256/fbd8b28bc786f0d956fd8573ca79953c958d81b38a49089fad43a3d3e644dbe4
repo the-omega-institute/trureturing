@@ -1,0 +1,49 @@
+**Lemma 5.1 (the unique calibrated phase-asymmetric law).** There is a unique regular constant emission pair $(u_*,v_*)$ whose p and suspended event masses are $C,H$. On every acquired circulation it generates the same constant-law pair $(G_*,W_*)$. If a regular table has $f=C\mathbf1$ and $h=H\mathbf1$, all its emissions equal this pair and all its generated phase laws equal $G_*,W_*$.
+
+**Proof.** Let $S(t)=1+t+t^2$ and put
+
+$$
+g(t)=\frac{C}{S(t)},\qquad U(t)=t+g(t),
+\qquad v(t)=\frac{t}{U(t)},\qquad u(t)=1-U(t).
+\tag{5.2}
+$$
+
+Then $U(1-v)=g$, $Uv=t$ and the p event mass is exactly $C$. The suspended event mass is $h(t)=1-v(t)+v(t)g(t)$. At the rational endpoints $t_0=233/1000$, $t_1=117/500$,
+
+$$
+h(t_0)-H=\frac{1703748888347}{4015751307792750}>0,
+\qquad
+h(t_1)-H=-\frac{251260555397}{502971865044750}<0.
+\tag{5.3}
+$$
+
+All the pairs in this interval are regular. To check this without a numerical approximation, $51/100<C<13/25$ and $32/25<S(t)<13/10$ there. Thus
+
+$$
+\frac{51}{130}<g(t)<\frac{13}{32},
+\qquad
+\frac35<\frac{233}{1000}+\frac{51}{130}
+<U(t)<\frac{117}{500}+\frac{13}{32}<\frac23.
+$$
+
+The same bounds give
+
+$$
+\frac13<\frac{233/1000}{117/500+13/32}
+<v(t)<\frac{117/500}{233/1000+51/130}<\frac25.
+$$
+
+Continuity and (5.3) give a root $t_*\in(t_0,t_1)$. Let $u_*,v_*,g_*$ be (5.2) there. Its constant laws are
+
+$$
+G_*(w_{j,0})=u_*t_*^j,
+\qquad G_*(w_{j,1})=g_*t_*^j,
+\qquad
+W_*=(1-v_*)\delta_\beta+v_*\alpha G_*.
+\tag{5.4}
+$$
+
+They normalize because $u_*+g_*+t_*=1$. The phases have different emissions: $C>103/200$ and $S(t)<129/100$ on the chosen interval give $U(t)>631/1000$. Since $U(t)>1/2$, one has $U(t)(1-U(t))<232839/10^6<233/1000\le t$, and thus $v(t)>u(t)$. A constant pair obeys (3.2) on any stochastic $B,A$. Theorem 4.1 gives uniqueness of every regular assignment having these two constant readouts, including any other regular constant pair. This proves all assertions. $\square$
+
+This is a comparison law, not an asserted near-optimal original observer. The algebraic root is not a free exact-real physical sampler.
+

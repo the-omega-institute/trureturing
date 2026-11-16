@@ -1,0 +1,19 @@
+**合同 20.2（① Hilbert、可观测量与实际相干准备）。** §19只给数学表示。另须 SQ47.4全文的原具名可取得标签、native、指定共同跨评价核 $K_{\rm nat}$、原总映射 $\mathsf J_a$、全部原词、parent／ready、控制及实际相干准备。准确保持
+
+$$
+\begin{aligned}
+K_{\rm nat}(\xi_\alpha,\mathsf J_a\xi_\alpha)&=\alpha(a),\\
+K_{\rm nat}(\mathsf J_a z,\mathsf J_b w)
+&=K_{\rm nat}(z,\mathsf J_{a\circ b}w)
+-iK_{\rm nat}(z,\mathsf J_{D(a,b)}w),\\
+V_{\rm nat}&=\operatorname{span}_{\mathbb C}
+\{\mathsf J_{a_1}\cdots\mathsf J_{a_k}\xi_\alpha:k\ge0\},\\
+K_{\rm nat}(\xi_\alpha,\xi_\alpha)&\le m_\alpha,\qquad
+K_{\rm nat}(\mathsf J_a\xi_\alpha,
+ \mathsf J_c(\mathsf J_a\xi_\alpha))\ge0\quad(c\in C).
+\end{aligned}
+\tag{20.1}
+$$
+
+各量词及先按原总映射实际复合、再取任意有限复线性包的次序不变，空词和全部指定跨评价配对包括在内。不预给原 $\mathsf J_a$ 线性、$\mathsf J_0=0$ 或 $\mathsf J_u=I$，不以逐评价 GNS 核替换共同核。不推出全 $B(H)$ 可取得像、任意向量可准备或免费控制。
+

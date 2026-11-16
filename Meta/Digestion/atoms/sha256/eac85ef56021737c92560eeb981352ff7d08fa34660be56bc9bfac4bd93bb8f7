@@ -1,0 +1,41 @@
+**引理 171.1（静态重构卷 63.1 的准确核内应用）。** 对每个单位 $f\in H_0$、实 $t$ 和全部原 $a\in E$，
+
+$$
+D(tp_f,a)=tK_\varepsilon(p_f,a).
+\tag{171.1}
+$$
+
+第二输入任意，连接没有小范数限制。
+
+证明。复用静态重构卷 63.1 的同一次 PB 机制，但必须先支付其实际三阶角。置 $p_f=ff^*$、$d=D(tp_f,a)\in E$。对 $\xi\perp f$，(170.3) 的第一平方预算为零，故固定自伴 $d$ 在 $f^\perp$ 上的压缩为零。因此
+
+$$
+\begin{gathered}
+d=\delta p_f+H_f(w),\quad H_f(w)=wf^*+fw^*,\quad
+w=(1-p_f)df,\quad\delta=\langle f,df\rangle,\\
+z=(1-p_f)af,\quad\beta=\langle f,af\rangle,\quad
+c_0=p_f\circ a=\beta p_f+H_f(z)/2.
+\end{gathered}
+\tag{171.2}
+$$
+
+关键是 $d$ 本来就是原输出，169.2 对 $d$ 和 $a$ 都适用，故 $z,w\in H_0$。因而 $k=P_{\operatorname{span}_{\mathbb C}\{f,z,w\}}\in E$ 是秩至多三的实际原投影，$tp_f,d,c_0$ 都在它的原全角。这正是静态重构卷 63.1 的三阶子论证所需的有限输入供应，不借用全部环境有限秩标签。
+
+在原 (128.6) 中取三输入准确为 $(a,tp_f,0)$。原反对称性与零行给
+
+$$
+D(tp_f-d,tc_0)-D(tp_f+d,-tc_0)=2t\,p_f\circ d.
+\tag{171.3}
+$$
+
+两份外层输入全在 $k$ 角内，170.2 识别其旧值。只对已知 $K_\varepsilon$ 展开，得到
+
+$$
+2t\delta p_f+tH_f(w)
+=2t^2K_\varepsilon(p_f,c_0)
+=t^2H_f(i\varepsilon z/2).
+\tag{171.4}
+$$
+
+$t\ne0$ 时，正交矩阵分量给 $\delta=0$、$w=i\varepsilon tz/2$，即 (171.1)；$t=0$ 来自原零行。整个任意无限背景仍在内层演员 $a$ 中；没有把 $a$ 压成有限矩阵后送给 $D$，也没有展开未知 $D$ 的相加输入。∎
+

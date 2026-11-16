@@ -1,0 +1,35 @@
+**定理 137.2（整个原域的唯一有限四系数）。** 令
+
+$$
+\begin{aligned}
+P_0&=\tfrac14(I+U_h+U_e+U_j),&
+P_1&=\tfrac14(I+U_h-U_e-U_j),\\
+P_2&=\tfrac14(I-U_h+U_e-U_j),&
+P_3&=\tfrac14(I-U_h-U_e+U_j),\\
+\kappa_0(a)&=P_0a,&
+\kappa_r(a)&=s_r\circ P_ra\quad(1\le r\le3).
+\end{aligned}
+\tag{137.3}
+$$
+
+这里 $P_2$ 是有限投影的编号，不指原二表正性。每个原 $a\in E$ 唯一地写成
+
+$$
+\boxed{a=c_0+h c_1+e c_2+j c_3,\qquad c_r=\kappa_r(a)\in\mathcal B_0.}
+\tag{137.4}
+$$
+
+$\mathcal B_0$ 是含单位实Jordan域，$P_r$ 与 $\kappa_r$ 都是保持原 $E$ 的有限实Jordan表达式，范数至多为一。完成层准确为
+
+$$
+Y=P_0X=X_{+++},\qquad
+X=Y\oplus hY\oplus eY\oplus jY.
+\tag{137.5}
+$$
+
+证明。零代数时各式直接成立，以下设 $E\ne0$。134.1给 $U_j=U_hU_e$。三个共轭对合对易，故(137.3)是四个角色投影，和为 $I$、两两乘积为零，像依次为 $E_{+++},E_{+--},E_{-+-},E_{--+}$。$P_0E=\mathcal B_0$；它的Jordan闭合来自三个 $U$ 都是原Jordan自同构。
+
+若 $x\in P_rE$、$r>0$，则 $x$ 与 $s_r$ 交换。原 $c=s_r\circ x=s_rx$ 与三轴均交换：自身轴的符号为正，另两轴各从 $s_r$ 和 $x$ 得到一个负号。因此 $c\in\mathcal B_0$，且 $s_r\circ c=x$。反向，$c\in\mathcal B_0$ 时 $s_r\circ c\in P_rE$。对 $a=\sum_rP_ra$ 逐项使用这两个逆映射，得到(137.4)及唯一性。
+
+每个 $U$ 是环境单位共轭，故为等距算子；$P_r$ 的四项平均给范数界一。$\|L_{s_r}\|\le\|s_r\|=1$，所以 $\|\kappa_r\|\le1$。这些有界投影与逆映射延至 $X$。$P_0E$ 在闭空间 $P_0X$ 中稠密，故 $Y=P_0X$，继而得到(137.5)。所有原输入只用了有限和及原Jordan运算，没有原根、原逆元或无限原分解。∎
+

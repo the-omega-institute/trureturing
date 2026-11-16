@@ -1,0 +1,45 @@
+**命题 10.1（不可达的原独立分块半周）。** 用本卷 (6.8) 的三个 Pauli 矩阵分别记 $\sigma_x,\sigma_y,\sigma_z$。在 $n=4$ 的同一原域中，令
+
+$$
+\begin{aligned}
+a&=t\sigma_x\otimes I_2,& b&=t\sigma_y\otimes I_2,\\
+\widetilde a&=t\sigma_x\otimes\sigma_z,&
+\widetilde b&=t\sigma_y\otimes\sigma_z.
+\end{aligned}
+\tag{10.1}
+$$
+
+四个标签均属于 $E_4$，两对均有平方和 $2t^2I_4$，但
+
+$$
+(\widetilde a,\widetilde b)
+\notin\operatorname{Comp}_{\mathcal G_4}(a,b).
+\tag{10.2}
+$$
+
+证明。种子的常矩阵满足 $A^2+B^2=2I_4>0$，所以定理 9.1 适用。若目标在同一分量，则有 $c^2+s^2=1$ 使
+
+$$
+\sigma_x\otimes\sigma_z=(c\sigma_x-s\sigma_y)\otimes I_2.
+$$
+
+对第二个矩阵因子取部分迹，左端为零，右端为 $2(c\sigma_x-s\sigma_y)$。两个 Pauli 矩阵实线性无关，遂得 $c=s=0$，矛盾。这只是已知常矩阵的比较，不是对未知 $D$ 取部分迹或定义其商响应。
+
+几何上，按旁观者第二因子的 $\sigma_z$ 两个特征方向，目标在一个二维块保持 $(a,b)$，在另一个二维块同时反号，即分别选择转角 $0,\pi$。辅助矩阵
+
+$$
+e_\pm=I_2\otimes\frac{I_2\pm\sigma_z}{2}
+$$
+
+只用于说明这两个环境块；它们在零点非标量，不属于 $E_4$，甚至不属于 $X_4$。证明没有把这些块投影当成原演员。目标标签自身含因子 $t$，完全原有；障碍是原运输路径，不是目标不在原域。
+
+在显式完整模型 $D_*$ 中，普通 Pauli 乘法还给
+
+$$
+D_*(a,b)=D_*(\widetilde a,\widetilde b)
+=-t^2\sigma_z\otimes I_2.
+\tag{10.3}
+$$
+
+因此分量分离没有违反该模型的完整 PB，也没有给出两实际响应不相等的反例。∎
+

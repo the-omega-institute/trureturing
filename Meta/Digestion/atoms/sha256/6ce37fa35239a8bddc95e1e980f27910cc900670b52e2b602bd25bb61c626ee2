@@ -1,0 +1,8 @@
+**定义 107.1（文献与结论范围）。** Hanche-Olsen–Størmer，[*Jordan operator algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，2.6.1–2.6.3、2.6.5给单投影与完整有限正交幂等元Peirce分解及其乘法，3.3.6给JB二次表示的正性；范数支撑与Jordan Cauchy–Schwarz的准确接口见96.1。这里用的是已给JB结构、原有限插值多项式和对固定元素的完整分解，满足这些成熟工具的前件。使用的是完整直和及 $L_{p_k}$ 的0、1/2、1特征值公式。
+
+Ayupov–Arzikulov–Umrzaqov–Nuriddinov，[*Description of 2-local derivations and automorphisms on finite dimensional Jordan algebras*，arXiv:1911.03194v2](https://arxiv.org/abs/1911.03194v2)，定义与定理5.3要求每对输入有同一个真正Jordan导子共同实现。其正定结合双线性型方法在已经具有该共同导子见证时可推出线性。这里尚未为 $\Delta_a(b)=D(a,b)$ 构造这种见证；不能先用完成复化或一个共同迹把该前件消掉。96.1的weak-2-local比较同样保持原条件。
+
+本卷已有98在另一个明确合同中，以指定原自旋背景、实际二表及NN支付全域PY，并在另加旧正交循环后消费既有重构。那里没有从PB推出NN；这里也不输入NN或该条PY。两条路线分别减少各自固定背景中的中间前提，不能把它们未支付的条件拼成一次一般重构。
+
+100–105是 $\texttt{repo-derived}$ 的纸面组合推导：二谱单位行、有限谱单位输出反交换、逐元素有限谱原域的全单位行，以及秩二单侧／主轴条件双侧补角局部化。Peirce分解、正二次表示、谱插值和标量二次方程不是新发明；不宣称文献穷尽或历史原创优先权。全部数学为纸面证明，未作Lean kernel核验。一般原域全单位行、任意单位平移中性与可加性、完整 $M_3$ 分类及一般 $\mathsf H_{\rm orig}+\mathsf{PB}\Rightarrow R$ 仍未证明，也没有满足全合同而R失败的全域反例。
+

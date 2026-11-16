@@ -117,7 +117,7 @@ private theorem restart_measurable (accept : Set A) (fallback : A)
         (show Measurable (shift (n+1)) from by unfold shift; fun_prop)
   exact hf.comp ((first_hit_measurable accept ha).prodMk measurable_id)
 
-private theorem prefix_suffix_independent (μ : Measure A) [IsProbabilityMeasure μ]
+theorem prefix_suffix_independent (μ : Measure A) [IsProbabilityMeasure μ]
     (n : ℕ) (S : Set (Fin n → A)) (hS : MeasurableSet S)
     (T : Set (ℕ → A)) (hT : MeasurableSet T) :
     (Measure.infinitePi (fun _ : ℕ => μ))

@@ -37,10 +37,10 @@ def insertion (D : LatticeData) (i : Fin D.rank) (p : ℕ)
     (F : VertexOperator ℂ (Carrier D)) : VertexOperator ℂ (Carrier D) :=
   (normalMinusOne (dividedDerivative p (neutralField D i)) F).1
 
-private def coefficient (p : ℕ) (k : ℤ) : ℂ :=
+def coefficient (p : ℕ) (k : ℤ) : ℂ :=
   ((Ring.choose (-k-1) p : ℤ) : ℂ)
 
-private theorem derivative_mode (D : LatticeData) (i : Fin D.rank) (p : ℕ) (m : ℤ) :
+theorem derivative_mode (D : LatticeData) (i : Fin D.rank) (p : ℕ) (m : ℤ) :
     ((dividedDerivative p (neutralField D i))[[m]]) =
       coefficient p (m-p) • neutralMode D i (m-p) := by
   apply LinearMap.ext
@@ -52,7 +52,7 @@ private theorem derivative_mode (D : LatticeData) (i : Fin D.rank) (p : ℕ) (m 
   simp only [coefficient, LinearMap.smul_apply, Int.cast_smul_eq_zsmul]
   congr 2; omega
 
-private theorem coefficient_zero_band (p : ℕ) (k : ℤ)
+theorem coefficient_zero_band (p : ℕ) (k : ℤ)
     (hk : -(p : ℤ) ≤ k) (hn : k < 0) : coefficient p k = 0 := by
   have ha : 0 ≤ -k-1 := by omega
   obtain ⟨a, he⟩ := Int.eq_ofNat_of_zero_le ha

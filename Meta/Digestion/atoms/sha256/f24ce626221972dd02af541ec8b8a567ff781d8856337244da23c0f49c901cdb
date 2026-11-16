@@ -1,0 +1,47 @@
+**定义 38.3（同一项对坐标上的有限系统）。**对单位约简后的正规项定义大小
+
+$$
+|1|=|x|=|y|=1,\quad |Us|=1+|s|,\quad
+|s\cdot t|=1+|s|+|t|\quad(s,t\ne1).
+\tag{38.11}
+$$
+
+一般乘积先作单位约简。对整数 $N\ge1$，置
+
+$$
+\begin{aligned}
+T_N&=\{s\in T:|s|\le N\},\\
+E_N&=T_N\ \cup\ \{a\cdot U^ku:a,u\in T_N,\ 0\le k\le2\}
+\ \cup\ \{P_3a:a\in T_N\}.
+\end{aligned}
+\tag{38.12}
+$$
+
+在唯一一组实变量 $z=(z_{s,t})_{(s,t)\in E_N^2}$ 上定义 $\mathcal P_N$。令 $\mathcal E_N$ 为下列等式左端的有限族，全部要求为零：
+
+$$
+\begin{aligned}
+z_{s,t}+z_{t,s}&\qquad(s,t\in E_N),\\
+\sum_{k=0}^2z_{a\cdot U^ku,b\cdot U^kv}-3z_{a,b}-3z_{u,v}
+&\qquad(a,b,u,v\in T_N),\\
+z_{P_3a,b}-z_{a,b}&\qquad(a,b\in T_N),\\
+z_{a,P_3b}-z_{a,b}&\qquad(a,b\in T_N).
+\end{aligned}
+\tag{38.13}
+$$
+
+再对每个有序对 $(s,t)\in E_N^2$ 和每个 $\sigma\in\{1,-1\}$ 保留界
+
+$$
+K_0(s,t)-\sigma z_{s,t}\ge0.
+\tag{38.14}
+$$
+
+特别，$K_0(s,t)=0$ 的项对也保留两条界，此时 $z_{s,t}=0$。没有把同一可见值的不同项合并为一个变量，也没有删去任何一种 $P_3$ 等式。所有行共享这个变量族，而不是分别求解再拼接。记
+
+$$
+m_N=\max_{z\in\mathcal P_N}z_{x,y},\qquad
+\mathcal P_N(q)=\{z\in\mathcal P_N:z_{x,y}\ge q\}.
+\tag{38.15}
+$$
+

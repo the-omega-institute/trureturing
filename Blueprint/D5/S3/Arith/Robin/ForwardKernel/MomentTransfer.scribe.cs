@@ -11,6 +11,29 @@ internal sealed class MomentTransferDocument : IScribeDocumentDefinition
         H("Moment transfer"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("ae-dyadic-mem"),
+                DeclarationHandle.Create(Prefix + "ae_dyadic_mem"),
+                H("Support of the dyadic probability measure"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every real X, almost every x with respect to the dyadic probability measure at scale X lies in [X,2X]."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("product-moment-bound"),
+                DeclarationHandle.Create(Prefix + "product_moment_bound"),
+                H("Unequal finite product moment bounds"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For k positive and k real functions on a measure space, suppose each "
+                    + "absolute kth power and the product of absolute values are integrable. "
+                    + "If the individual kth moments are bounded by nonnegative numbers C_i, "
+                    + "Holder bounds the integral of the product of absolute values by the "
+                    + "product of C_i^(1/k). Almost everywhere strong measurability suffices, "
+                    + "and zero bounds are allowed. Equal bounds give the common bound C."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("joint-moment-transfer"),
                 DeclarationHandle.Create(Prefix + "joint_moment_transfer"),
                 H("Joint moment transfer for a finite family of profiles"),

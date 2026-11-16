@@ -1,0 +1,29 @@
+**定理 94.1（正负锥上的单位行，无完备性前件）。** 这里改回静态卷22.1的任意维、可不完备原背景，只使用已恢复的同一含单位JB完成及P2、PB。若原 $b\in C$ 或 $-b\in C$，则对全部实 $\mu$，同一个旧D满足
+
+$$
+D(\mu u,b)=0.
+\tag{94.1}
+$$
+
+包括不可逆锥边界；不输入D的平移中性、增量连续性或完成延拓。
+
+证明。固定二表及复系数 $z_1,z_2$，其实二次型元素为
+
+$$
+W_z=|z_1|^2a^2+|z_2|^2b^2+2\operatorname{Re}(\bar z_1z_2)(a\circ b)
++2\operatorname{Im}(\bar z_1z_2)D(a,b)\in E.
+$$
+
+全部原评价非负和准确原锥使 $W_z\in C$。所以任意完成上的数学正泛函β也读取同一个P2；88.4由原分离性成为元素等式，也能被β读取。这不增加实际准备或合法来源评价。
+
+若 $d=D(\mu u,b)\ne0$，序单位范数的支撑态给归一正β，使 $\beta(d)=Z,|Z|=N(d)>0$。JB平方和Jordan Cauchy–Schwarz给 $0\le d^2\le N(d)^2u$、$\beta(d^2)\ge\beta(d)^2=N(d)^2$，故 $\beta((d-Zu)^2)=0$，并有 $\beta((d-Zu)\circ x)=0$ 对全部 $x\in X$。这里只让已知Jordan半内积下降。
+
+PB取 $a=\mu u,c=ku,k=\mu Z/(1+\mu^2)$。比例二表给 $D(a,c)=0$。两外层准确为
+
+$$
+r_\pm=b\pm d\mp\mu ku,\quad s_\pm=ku\pm\mu b,\qquad
+s_+-\mu r_+=s_-+\mu r_-=-\mu(d-Zu).
+$$
+
+因此β下两个实Gram行列式均为零，P2给两个外层D的β值为零。88.4右端是 $-2b\circ d$，遂有 $0=\beta(b\circ d)=Z\beta(b)$。故 $\beta(b)=0$。若b为正／负，单生成演算给 $0\le b^2\le N(b)b$／$0\le b^2\le N(b)(-b)$，均有 $\beta(b^2)=0$。原二表 $(\mu u,b)$ 又要求 $Z^2\le\mu^2(\beta(b^2)-\beta(b)^2)=0$，矛盾。全部D的输入和输出仍在原E，没有对D取边界极限。∎
+

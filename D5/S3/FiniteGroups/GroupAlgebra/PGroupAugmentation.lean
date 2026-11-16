@@ -97,7 +97,7 @@ private theorem ideal_pow_mul {A : Type*} [Ring A] (I : Ideal A) [I.IsTwoSided]
   | succ n ih =>
     rw [Nat.mul_succ, Ideal.IsTwoSided.pow_add, ih, Submodule.pow_succ]
 
-private theorem pow_le_comap {A B : Type*} [Ring A] [Ring B] (f : A →+* B)
+theorem pow_le_comap {A B : Type*} [Ring A] [Ring B] (f : A →+* B)
     (I : Ideal A) (J : Ideal B) (h : I ≤ J.comap f) (n : ℕ) :
     I ^ n ≤ (J ^ n).comap f := by
   induction n with

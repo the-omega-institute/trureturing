@@ -1,0 +1,54 @@
+**Proposition 178.1 (preserved-channel contrast bound).** Let $u=(u_0,u_1,u_3,u_B)$ be any bounded nonnegative Borel partition with
+
+$$
+u_0+u_1+u_3+u_B=1,
+\qquad
+u_3+u_B=q+p
+$$
+
+on the original whole $G$. Retain the residual tensor $\Delta(u)$ and set
+
+$$
+\lambda=(-p,-p,1-p,1-p),
+\qquad
+|a|_1=\sum_{y\in\mathcal L}|a_y|,
+\qquad
+H_a=\sum_{y\in\mathcal L}a_yu_y.
+$$
+
+For every real label vector $a$ satisfying $\sum_y a_yf_y=0$, one has
+
+$$
+\sum_{y,z,k\in\mathcal L}a_ya_z\lambda_k\Delta(u)_{yzk}
+=\mathcal C(H_a,H_a,q)
+=q_{003}(H_a),
+\tag{178.1}
+$$
+
+and therefore
+
+$$
+\|\Delta(u)\|_{\max}
+\ge \frac{q_{003}(H_a)}{2|a|_1^2}.
+\tag{178.2}
+$$
+
+The right side is strictly positive whenever $[H_a]\ne0$ as an $m$-class.
+
+*Proof.* The terminal assumptions and the partition identity give
+
+$$
+\sum_{k\in\mathcal L}\lambda_ku_k
+=(1-p)(u_3+u_B)-p(u_0+u_1)
+=u_3+u_B-p=q.
+$$
+
+The same calculation for the baseline labels gives $\sum_k\lambda_kf_k=q$. The condition on $a$ gives $\sum_ya_yf_y=0$. Applying trilinearity to the left side of (178.1) therefore leaves exactly $\mathcal C(H_a,H_a,q)$. Its positivity identity is the existing
+
+$$
+q_{003}(H_a)=c\,\|T_{d/2}(gH_a)\|_2^2,
+$$
+
+so it is strict on every nonzero $m$-class. The absolute sum of the displayed coefficients is
+$|a|_1^2|\lambda|_1=2|a|_1^2$; the triangle inequality gives (178.2). $\square$
+

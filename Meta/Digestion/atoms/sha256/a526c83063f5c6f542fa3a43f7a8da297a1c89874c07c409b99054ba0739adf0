@@ -1,0 +1,23 @@
+**指定 CP 的准确接口及 HP 边界。** 每个已供应原同载体事件 $e$ 及其每个实际分支，仍保留 85.15 的原实线性 $\Phi_e$ 及其唯一复 HP 延拓、同事件原实线性 $P_{E,e}$，在全部实 $a,b,c$ 上的原 (85.30)：
+
+$$
+P_{E,e}Q(a,b,c)=
+\alpha_{e,1}Q(\Phi_ea,b,c)+
+\alpha_{e,2}Q(a,\Phi_eb,c)+
+\alpha_{e,3}Q(a,b,\Phi_ec),\qquad
+\alpha_{e,\ell}\ge0,\quad\sum_\ell\alpha_{e,\ell}=1.
+\tag{87.21}
+$$
+
+同事件的完整记录、ready、参考、副本、控制、钟和未来来源不删。另须实际供应定义 85.11 的探针：每输入块原指定归一纯 $\psi_i$，固定活跃集 $S_e=\{\ell:\alpha_{e,\ell}>0\}$ 上的**完整复线性**相容核
+$\ker[(H_\ell)\mapsto\sum_{\ell\in S_e}H_\ell^{(\ell)}\psi_i]
+\subseteq\ker[(H_\ell)\mapsto\sum_{\ell\in S_e}H_\ell]$，
+以及 $(\Xi_\psi)_{iii}=(n_i/n)|\psi_i\rangle\langle\psi_i|$、其余块零。探针种子的严格正权不加到所有原输入；零腿权、不等维和标量转移均允许。85.12／85.16 才给
+
+$$
+P_{E,e}(\Xi_\psi)\ge0
+\quad\Longleftrightarrow\quad\Phi_e\text{ CP}
+\quad\Longleftrightarrow\quad P_{E,e}\text{ 全锥正}.
+\tag{87.22}
+$$
+

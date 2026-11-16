@@ -18,8 +18,8 @@ open private dyadic_selection
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.Exhaustion
 open private source_certificate rowSeams rowHeads rowBase
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.SourceCertificate
-open private base newBase charge chain_values new_base_bounds
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private charge chain_values new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase)
 
 private theorem physical_selection (a b c d : ℕ)
     (ha : 3≤a) (hac : a<c) (hcd : c+2≤d) (hdb : d<b) :

@@ -20,8 +20,8 @@ noncomputable section
 open scoped BigOperators InnerProductSpace Topology VertexOperator
 namespace D5.S3.VertexAlgebra.Analysis.OriginalSmearing
 open LatticeGeneratingFieldLocality LatticeAllStateField LatticePositiveEnergy SmoothCircleFourier
-open private chargeSpace word_charge from
-  D5.S3.VertexAlgebra.Sectors.LatticeSectorIntertwiner
+open D5.S3.VertexAlgebra.LatticeSectorIntertwiner
+  (chargeSpace word_charge)
 open private embed_injective inclusion_embed inclusion_injective projection_embed
   projection_inclusion truncation_algebraic truncation_tendsto from
   D5.S3.VertexAlgebra.Analysis.OriginalSobolev

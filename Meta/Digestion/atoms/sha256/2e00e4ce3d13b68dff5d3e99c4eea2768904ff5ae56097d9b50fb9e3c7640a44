@@ -1,0 +1,61 @@
+**Corollary 6.3 (necessary states and persistent register bits).** If a comparator in (1.4) agrees within $\varepsilon$ on $H\ge1$ consecutive native indices beginning at any $m\ge0$, then
+
+$$
+Ha_k\le D_{\rm ph}<D_{\rm BW},\qquad
+Ha_k<D_{\rm hyb}\le A_\varepsilon S^{\nu_0}+E_\varepsilon,
+\tag{6.5}
+$$
+
+where
+
+$$
+\nu_0=2K_0+1,\qquad
+A_\varepsilon=64L^{2K_0},\qquad
+E_\varepsilon=4(1+\varepsilon)J^{K_0},\qquad
+C_\varepsilon^{\rm pol}=\frac{A_\varepsilon+E_\varepsilon}{a_k}.
+\tag{6.6}
+$$
+
+Thus
+
+$$
+H<C_\varepsilon^{\rm pol}S^{\nu_0},\qquad
+S>\left(H/C_\varepsilon^{\rm pol}\right)^{1/\nu_0}.
+\tag{6.7}
+$$
+
+More precisely, when $Ha_k>E_\varepsilon$, put
+$X=(Ha_k-E_\varepsilon)/A_\varepsilon>0$. Then
+
+$$
+S>X^{1/\nu_0},\qquad
+S\ge\max\{1,\lfloor X^{1/\nu_0}\rfloor+1\}.
+\tag{6.8}
+$$
+
+If all complete persistent information fits in an integer $B\ge0$ of classical bits, so that $S\le2^B$, one has
+
+$$
+B>\frac{\log_2(H/C_\varepsilon^{\rm pol})}{\nu_0},
+\qquad
+B>\frac{\log_2 X}{\nu_0}\quad(Ha_k>E_\varepsilon).
+\tag{6.9}
+$$
+
+For the latter inequality the integral version is
+$B\ge\max\{0,\lfloor\log_2 X/\nu_0\rfloor+1\}$. These bounds retain the elementary necessary inequalities (3.1)–(3.3) as well; either bound can be stronger at finite parameters.
+
+**Proof.** Use (2.14) with $N=H$ and (6.4). Formula (6.1) gives
+$D_{\rm int}=A_\varepsilon S^{\nu_0}+E_\varepsilon$. Since $S\ge1$, this is at most $(A_\varepsilon+E_\varepsilon)S^{\nu_0}$, proving (6.5)–(6.7). Subtract $E_\varepsilon$ when the stated difference is positive, and use integrality for (6.8). Substituting $S\le2^B$ gives both logarithmic inequalities and their strict integer rounding.
+
+The sharper real-exponent version follows from the first inequality in (6.5): replace $\nu_0,A_\varepsilon,E_\varepsilon$ respectively by
+
+$$
+2\kappa+1,\qquad
+4\pi^2L^{2\kappa},\qquad
+\pi(1+\varepsilon)J^\kappa,
+\tag{6.10}
+$$
+
+and define its corresponding $C$ by the same sum divided by $a_k$. The integer version is a convenient explicit certificate rather than an optimal exponent. If an original gate budget $G\ge10m$ covers every requested index from $m$ to $\lfloor G/10\rfloor$, the same inequalities apply with $H=1+\lfloor G/10\rfloor-m$; the initial read and terminal remain separately counted as above. $\square$
+

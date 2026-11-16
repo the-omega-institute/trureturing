@@ -1,0 +1,105 @@
+**定理 45.2（相对 $E^2$ 像公式与两次对偶传递）。** 在定义 45.1 中若 $V$ 可用，则四个 $W_{ef}$ 都为十五维。对任意 $f$、任意原 $r\in D^\times$，令 $U=V^f$，并在 $U\times U$ 中定义 $E$-线性关系及其像
+
+$$
+\begin{aligned}
+T_r(U)&=\{((a,x),(b,y))\in U\times U:x=ry\},\\
+\rho_r:T_r(U)&\longrightarrow E^2,\qquad
+((a,x),(b,y))\longmapsto(a,b),\\
+R_r(U)&=\operatorname{im}\rho_r,\qquad
+\kappa_r(U)=\dim_E\ker\rho_r.
+\end{aligned}
+\tag{45.4}
+$$
+
+则完整交维由下式给出，而非仅给出其正支持：
+
+$$
+\boxed{\ d_{W_{ef}}(r)=6\kappa_r(U)
+ +\dim_F\bigl(R_r(U)\cap(C^e\times C^e)\bigr).\ }
+\tag{45.5}
+$$
+
+写 $A=C^e$、$R=R_r(U)$，第二项的所有秩层及零坐标边界恰为
+
+$$
+\dim_F(R\cap A^2)=
+\begin{cases}
+0,&R=0,\\
+6,&R=E^2,\\
+3,&R=E(1,0)\ \text{或}\ R=E(0,1),\\
+d_A(u/v),&R=E(u,v),\quad uv\ne0.
+\end{cases}
+\tag{45.6}
+$$
+
+因此在同一个原 $D$ 中，对每个原 $r\in D^\times$ 都有
+
+$$
+\boxed{\ d_{W_{00}}(r)=d_{W_{10}}(r)
+=d_{W_{01}}(r)=d_{W_{11}}(r).\ }
+\tag{45.7}
+$$
+
+此外，限制到实际中间域标签时有
+
+$$
+d_{W_{ef}}(s)=12+d_{C^e}(s)\qquad(s\in E^\times).
+\tag{45.8}
+$$
+
+证明。对 $U=V^f$，$p_E$ 的核为二维 $E$-空间。$p_E^{-1}(C^e)$ 因而为 $12+3=15$ 维 $F$-空间，而 $p_D$ 将它单射到 $W_{ef}$，证明维数断言。
+
+固定 $r\ne0$。映射 $((a,x),(b,y))\mapsto x$ 给出 $F$-线性同构
+
+$$
+\rho_r^{-1}(C^e\times C^e)\ \simeq\ W_{ef}\cap rW_{ef}.
+\tag{45.9}
+$$
+
+确实，交叠元素 $x$ 唯一确定 $y=r^{-1}x$；$p_D$ 的单射性又唯一确定两个提升中的 $a,b$。反向由 (45.3) 立即给出。因此限制后的正合列
+
+$$
+0\longrightarrow\ker\rho_r
+\longrightarrow\rho_r^{-1}(C^e\times C^e)
+\overset{\rho_r}{\longrightarrow}
+R_r(U)\cap(C^e\times C^e)\longrightarrow0
+\tag{45.10}
+$$
+
+给出 (45.5)。像的 $E$-维数只能是零、一、二。零空间、全平面和两条坐标轴分别给 (45.6) 的前三行。剩下的直线以 $t\mapsto(tu,tv)$ 参数化，其所需参数为 $u^{-1}A\cap v^{-1}A$；乘以 $u$ 将它同构到 $A\cap(u/v)A$，得到最后一行。即使这个交叠为零，等式也仍成立。于是 $\kappa=0$、$R=0$、轴线、非轴线零交叠等边界均未被删去。
+
+这里的直线交维是线性集的带点标签权重接口：一般地，对 $A\times A\subset E^2$，点 $E(u,v)$ 的权重就是 $\dim_F((A\times A)\cap E(u,v))$。Zullo，[*Multi-orbit cyclic subspace codes and linear sets*，arXiv:2112.08781v2，§2.2、Theorem 3.5](https://arxiv.org/html/2112.08781v2)，在有限域中以乘积子空间的点权联系商与标量交叠。本证明使用上面的直接同构，不把该有限域定理当作特征零传递定理。
+
+中心对偶直接消费 §34 式 (34.7)、引理 40.2 的半维迹恒等式。具体地，对每个原 $t\in E^\times$，
+
+$$
+\begin{aligned}
+\dim_F(C^\perp\cap t^{-1}C^\perp)
+&=6-\dim_F(C+tC)=d_C(t),\\
+d_{C^\perp}(t^{-1})&=d_{C^\perp}(t).
+\end{aligned}
+\tag{45.11}
+$$
+
+第二个等式由乘以 $t$ 的同构给出，故所得是同一标签 $t$ 下的 $d_C(t)=d_{C^\perp}(t)$。结合配对及其非退化性是既有 Frobenius 工具，见 Bachoc–Serra–Zémor，[*Revisiting Kneser's theorem for field extensions*，arXiv:1510.01354v2，§2.2，式 (2)](https://arxiv.org/html/1510.01354v2)。Csajbók–Marino–Polverino，[*Classes and equivalence of linear sets in PG(1,q^n)*，arXiv:1607.06962v1，Result 2.1](https://arxiv.org/html/1607.06962v1)，已有有限域迹辛对偶逐点保权的先例；这里的对称迹计算由 (45.11) 自身承担。由于 (45.4) 的 $R,\kappa$ 只依赖 $U,r$，(45.6) 给出 $d_{W_{0f}}=d_{W_{1f}}$，包含全部零值。
+
+再对原 $D/F$ 使用迹传递。若 $(a,x)\in V$、$(b,z)\in V^\perp$，则
+
+$$
+\operatorname{Tr}_{D/F}(xz)
+=\operatorname{Tr}_{E/F}\bigl(\operatorname{Tr}_{D/E}(xz)\bigr)
+=-\operatorname{Tr}_{E/F}(ab).
+\tag{45.12}
+$$
+
+当 $a\in C,b\in C^\perp$ 时右边为零。因此 $W_{11}\subseteq W_{00}^\perp$；两边均为十五维，故
+
+$$
+W_{11}=W_{00}^\perp,\qquad W_{01}=W_{10}^\perp,
+\tag{45.13}
+$$
+
+其中正交补使用原 $\operatorname{Tr}_{D/F}(xz)$。引理 40.2 在 $[D:F]=30$、半维十五时给 $d_{W_{00}}=d_{W_{11}}$。与两组中心等式拼接即得 (45.7)，没有对 $r$ 作域自同构或其他重标记。
+
+最后，$U$ 的 $E$-线性性及唯一提升给 $sW(A,U)=W(sA,U)$，并使 $W(A,U)\cap W(sA,U)=W(A\cap sA,U)$。其维数为 $12+\dim_F(A\cap sA)$，证明 (45.8)。所以原 $E^\times$ 上的限制还可由减去十二恢复中心的完整 $d$ 函数；(45.5) 则控制 $E$ 外的全部原标签。标签零单独满足 $W\cap0W=0$，不能将 $r=0$ 代入 (45.9)，因为此时 $x$ 不再决定 $y$；也不能将 $s=0$ 代入 (45.8)。若将函数延至零，四者在零处仍共同为零。$\square$
+

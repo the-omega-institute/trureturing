@@ -1,0 +1,24 @@
+**引理 99.2（数学正读取、支撑零面与有限差分）。** 任意X上数学正泛函β可以读取同一个原二表：
+
+$$
+|\beta D(a,b)|^2\le\beta(a^2)\beta(b^2)-\beta(a\circ b)^2.
+\tag{99.3}
+$$
+
+另有 $D(a,b)=-D(b,a)$、$D(a,ta)=D(a,0)=0$。若记 $v=D(a,b)-a\circ c,w=a\circ b+D(a,c)$，PB准确等价于
+
+$$
+D(b+v,c+w)-D(b-v,c-w)=-2b\circ v-2c\circ w.
+\tag{99.4}
+$$
+
+固定 $h=D(\mu u,b)\ne0$，取归一范数支撑态β，使 $\beta(h)=Z,|Z|=N(h)>0$，则 $\beta(b\circ h)=\beta(b)=0$。
+
+证明。94.1中二次型元素 $W_z\in C$ 的论证支付99.3，并不增加实际准备评价。Hermitian性、原分离性和零行列式给反对称及比例零值。展开已知Jordan平方给99.4，没有展开D的相加输入。支撑态满足 $\beta((h-Zu)^2)=0$，故 $\beta((h-Zu)\circ x)=0$ 对所有x成立。PB取 $a=\mu u,c=ku,k=\mu Z/(1+\mu^2)$；比例零值支付 $D(a,c)=0$。两外层有
+
+$$
+s_+-\mu r_+=s_-+\mu r_-=-\mu(h-Zu).
+$$
+
+在β的实Jordan半内积商中两对均成比例，99.3使两个外层D的β值归零。99.4右端是 $-2b\circ h$，遂有 $0=\beta(b\circ h)=Z\beta(b)$。∎
+

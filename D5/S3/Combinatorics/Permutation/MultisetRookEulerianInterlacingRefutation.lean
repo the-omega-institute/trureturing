@@ -10,10 +10,12 @@
 proof_shape: result: bind-only
 escape_witness: none
 admission_basis: open-problem-resolution (#12894; Refuted)
-Direct frozen dependencies: none; pinned Mathlib permutation, polynomial roots and sorting.
+Direct frozen dependency: WordAscents (strict adjacent-ascent definition);
+pinned Mathlib permutation, polynomial roots and sorting.
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
+import D5.S3.Combinatorics.Permutation.WordAscents
 import Mathlib.Algebra.Polynomial.Splits
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 
@@ -22,16 +24,13 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Permutation.MultisetRookEulerianInterlacingRefutation
 
 open Polynomial
+open D5.S3.Combinatorics.Permutation.WordAscents (asc)
 
 /-- The rearrangements of the content, with every letter in its permitted row. -/
 def W {n k : ℕ} (lam : Fin n → ℕ) (α : Fin k → ℕ) : Finset (List ℕ) :=
   (((List.finRange k).flatMap
     (fun c => List.replicate (α c) (c.val + 1))).permutations'.toFinset).filter
     (fun w => ∀ i : Fin n, 0 < w.getD i.val 0 ∧ w.getD i.val 0 ≤ lam i)
-
-/-- Adjacent strict ascents, with the final position excluded. -/
-def asc (w : List ℕ) : ℕ :=
-  ((Finset.range (w.length - 1)).filter (fun i => w.getD i 0 < w.getD (i + 1) 0)).card
 
 /-- The full multiset rook-Eulerian polynomial, equation (10). -/
 noncomputable def R {n k : ℕ} (lam : Fin n → ℕ) (α : Fin k → ℕ) : ℝ[X] :=

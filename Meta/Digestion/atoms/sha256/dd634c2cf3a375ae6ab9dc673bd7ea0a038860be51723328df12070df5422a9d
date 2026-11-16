@@ -1,0 +1,9 @@
+#### 定理 6.3：密度态与纯准备的绑定
+
+式 (21) 给唯一 $\rho\succeq0$、$\operatorname{Tr}\rho=1$，使
+
+$$
+p(E)=\operatorname{Tr}(\rho E).
+\tag{22}
+$$
+

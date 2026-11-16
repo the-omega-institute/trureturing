@@ -1,0 +1,61 @@
+**定理 26.2（第二槽纤维与全部像圆）。** 在 26.1 下，若 $z,z'\in V_{q,a}$ 且 $\bar z=\bar z'$，则 $qH_a(z)=qH_a(z')$。因此
+
+$$
+F_a:q(E)\cap\{B:\bar a\circ B=0\}\longrightarrow
+q(E)\cap\{B:\bar a\circ B=0\},\qquad
+F_a(\bar z)=qH_a(z)
+\tag{26.3}
+$$
+
+良定义，并满足
+
+$$
+F_a(\cos\theta B+\sin\theta F_aB)
+=-\sin\theta B+\cos\theta F_aB,
+\qquad F_a^2B=-B
+\quad(\theta\in\mathbb R).
+\tag{26.4}
+$$
+
+$F_a$ 的下标仍保留实际 $a$，不宣称它只依赖 $\bar a$。
+
+证明。先不定义像映射。若实际 $y,z\in V_{q,a}$ 有相等像平方 $R$，原 PB $(a,y,z)$ 的右端像为零；两个实际外层的输出像相等，且每一外层的两输入像平方均为 $(1+r^2)R$。25.2 支付它们的准确面积。相减得到 19.2 的同一算子关系，现在每个响应都标着其实际原调用：
+
+$$
+\bigl(\bar y\circ\bar z+r^2qH_a(y)\circ qH_a(z)\bigr)
+\circ\bigl(\bar y\circ qH_a(z)+qH_a(y)\circ\bar z\bigr)=0.
+\tag{26.5}
+$$
+
+原内层中的 $a\circ y,a\circ z$ 只在像中为零，不能从实际外层标签中删除；上述相等只在取 $q$ 后使用。
+
+固定实际 $z$，记 $B=\bar z,J=qH_a(z),R=B^2$。取真正原 $c_\theta=\cos\theta z+\sin\theta H_a(z)$，暂记 $K=qH_a(c_\theta)$。它们的像平方均为 $R$。式 (26.5) 对原 $(z,c_\theta)$ 的两因子为
+
+$$
+P=\cos\theta R+r^2J\circ K,
+\qquad Q=B\circ K+\sin\theta R.
+$$
+
+当 $\cos\theta>r^2$，$(J+K)^2\ge0$ 给 $P\ge(\cos\theta-r^2)R\ge0$。两因子都支撑于 $s(R)$。$P\circ Q=0$ 使 $Q$ 与 $P^2$、再与其正平方根 $P$ 交换，故 $PQ=0$；$\ker P=\ker R$ 与 $Q$ 的支撑使 $Q=0$。对非零小角，再用 $\bar c_\theta\circ K=0$ 得 $J\circ K=\cos\theta R$，于是
+
+$$
+(K+\sin\theta B-\cos\theta J)^2=0,
+\qquad K=-\sin\theta B+\cos\theta J.
+\tag{26.6}
+$$
+
+零角直接取同一原 $z$；$R=0$ 由 (24.1) 零像吸收处理。至此只取得真正原 $c_\theta$ 上的小弧公式，尚未有限拼接同像标签。
+
+现在取任意实际 $z'$ 满足 $\bar z'=B$，令 $J'=qH_a(z')$。选择一个非零小角满足 $\cos\theta>r^2$。对实际 $(z',c_\theta)$ 用 (26.5)，由 (26.6) 得两因子
+
+$$
+P'=\cos\theta R+r^2J'\circ K
+\ge(\cos\theta-r^2)R,
+\qquad Q'=\sin\theta(J'\circ J-R).
+\tag{26.7}
+$$
+
+它们仍支撑于 $s(R)$。同一正支撑消去给 $Q'=0$，$\sin\theta\ne0$ 给 $J'\circ J=R$；因此 $(J'-J)^2=0$，即 $J'=J$。这先支付了 (26.3) 的第二槽纤维。
+
+此后才使用有限拼接。每步在已付像映射上重新锚定，(26.6) 的小圆公式可迭代有限次到任意角；实际原线性组合和旧响应总能提供相应像的原代表，第二槽纤维保证不同代表可互换。由 210.1 的同一有限三角迭代得 (26.4)，取四分之一圆给负平方。没有从范数稠密性、未知响应的极限或未证商下降取得这一步。∎
+

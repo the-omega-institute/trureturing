@@ -104,6 +104,8 @@ FD_PEAK=0
 RSS_PEAK_KB=0
 RESOURCE_SAMPLING_INCOMPLETE=0
 STARTED_MS=0
+POLL_DELAY_FALLBACK=0
+POLL_DELAY_FIFO=""
 
 early_cleanup() {
   if [[ -n "$TMP_ROOT" ]]; then rm -rf -- "$TMP_ROOT"; fi
@@ -650,10 +652,76 @@ wait_for_relay() {
   wait "$pid" >/dev/null 2>&1 || true
 }
 
+poll_delay() {
+  local rc=0 input=""
+  if [[ "$POLL_DELAY_FALLBACK" == "0" ]]; then
+    if sleep 0.1; then
+      return 0
+    else
+      rc=$?
+    fi
+    printf 'report-supervisor: polling delay unavailable (exit=%s); using timed fallback\n' "$rc" >&2
+    POLL_DELAY_FIFO="$TMP_ROOT/poll-delay.fifo"
+    if mkfifo "$POLL_DELAY_FIFO" 2>/dev/null; then
+      :
+    else
+      rc=$?
+      printf 'report-supervisor: polling delay fallback setup failed (mkfifo exit=%s)\n' "$rc" >&2
+      return 125
+    fi
+    if exec 8<>"$POLL_DELAY_FIFO"; then
+      :
+    else
+      rc=$?
+      printf 'report-supervisor: polling delay fallback setup failed (open exit=%s)\n' "$rc" >&2
+      return 125
+    fi
+    POLL_DELAY_FALLBACK=1
+  fi
+  # The private read/write FIFO has no intended writer. Reject a character
+  # even without a newline; this is a timer, not a worker input channel. Bash 3.2 needs an integer timeout and returns 1 on timeout;
+  # newer Bash returns 142. Check the fd separately because bad-fd also
+  # returns 1 on Bash 3.2.
+  if ! { : <&8; } 2>/dev/null; then
+    echo 'report-supervisor: polling delay fallback fd unavailable' >&2
+    return 125
+  fi
+  # Defer cancellation until the timed read returns: synchronous EXIT cleanup
+  # from this context can hang on Bash 3.2.
+  local poll_signal=0
+  trap 'poll_signal=129' HUP
+  trap 'poll_signal=130' INT
+  trap 'poll_signal=143' TERM
+  if IFS= read -r -n 1 -t 1 -u 8 input; then
+    rc=0
+  else
+    rc=$?
+  fi
+  trap 'exit 129' HUP
+  trap 'exit 130' INT
+  trap 'exit 143' TERM
+  if (( poll_signal != 0 )); then exit "$poll_signal"; fi
+  if [[ "$rc" == "0" ]]; then
+    echo 'report-supervisor: polling delay fallback received unexpected input' >&2
+    return 125
+  fi
+  if [[ -n "$input" ]]; then
+    echo 'report-supervisor: polling delay fallback received partial input' >&2
+    return 125
+  fi
+  if [[ "$rc" == "1" || "$rc" == "142" ]]; then
+    return 0
+  fi
+  printf 'report-supervisor: polling delay fallback failed (exit=%s)\n' "$rc" >&2
+  return 125
+}
+
 finish() {
   local rc=$?
   trap - EXIT HUP INT TERM
   set +e
+  # Close only the fallback timer opened by this supervisor.
+  if [[ "$POLL_DELAY_FALLBACK" == "1" ]]; then exec 8>&-; fi
   if [[ -n "$PROCESS_GROUP_ID" ]]; then
     sample_supervised_resources
     terminate_process_group "$PROCESS_GROUP_ID"
@@ -720,7 +788,7 @@ while process_exists "$CHILD_PID"; do
     BUILD_TIMED_OUT=1
     break
   fi
-  sleep 0.1
+  poll_delay
 done
 set +e
 wait "$CHILD_PID"

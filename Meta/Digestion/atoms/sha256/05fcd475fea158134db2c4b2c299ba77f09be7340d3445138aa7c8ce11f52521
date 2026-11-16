@@ -1,0 +1,13 @@
+### 27.6 乘法对应、成熟归属与全局边界
+
+对定理 27.1 的实际输入 $a=Rh,b=v+v^*$，有
+$$
+ S(a,b)-iD(a,b)=\frac{ab+ba}{2}+\frac{\sigma}{2}(ab-ba)
+ =\begin{cases}ab,&\sigma=1,\\ba,&\sigma=-1.\end{cases} \tag{27.14}
+$$
+这只是该输入对的准确静态值。已分类的两个角按 AH64.1、75.1 带有相应的通常或相反 $C^*$-乘法、准确锥、单位、范数、原质量和数学 GNS；角质量分别是 $pAp$ 的 $\gamma(p)$ 与 $PAP$ 的 $\gamma(P)$，零质量仍给零向量。
+
+实际投影的有限谱函数、等价投影、部分等距与矩阵单位可归于 Blackadar, *Operator Algebras*, II.2.3.1–5、II.6.6.8、II.8.2.2(iv)，以及 Bratteli, “Inductive limits of finite dimensional $C^*$-algebras,” *Trans. Amer. Math. Soc.* 171 (1972), 195–234；UHF 归纳极限的成熟背景亦见 Glimm, “On a certain class of operator algebras,” *Trans. Amer. Math. Soc.* 95 (1960), 318–340。AH67.2 式 (67.3)、AH70.1、AH71.2、AH72.1 与 W119.2–119.3、W120.2 只按其既有前件消费；本节不把成熟角构造计作新响应定理。
+
+本节没有把自然支撑角、谱分解或 GNS 变成真实准备、实际 Born 菜单、共同来源或联合张量；也没有产生递归整台仪器的全部输出、每份输出的全部未来、Return、CountRead、正常性、指定前对偶、动力学、物理钟或共同正 $\hbar$。无限谱总 Gram、一般非可逆但非有限谱 Gram、任意背景的整行及全局奇数阶段 UHF 分类仍未由此结清；未支付的全局关系仍是 §§8、22、26 所标出的两份实际外层缺陷相等式 $E_+=E_-$。本节只说明：携带实际通道的支撑角足以完成这一个有限谱族，整个 $B$ 的可逆性是多余的。
+

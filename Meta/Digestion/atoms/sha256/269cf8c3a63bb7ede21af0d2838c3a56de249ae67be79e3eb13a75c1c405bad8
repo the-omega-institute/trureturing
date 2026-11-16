@@ -1,0 +1,47 @@
+**推论 20.2（旧响应的正则性与全部有限复表成为结论）。** 在15.4的前件下，9.1–9.3的静态结论全部对同一旧 $D$ 成立。特别地，对 $\alpha,\beta\in A_{\rm sa}$、中央投影 $c$，有
+
+$$
+\begin{gathered}
+D(\alpha a,\beta b)=\alpha\beta D(a,b),\quad
+D(a+\alpha1,b)=D(a,b),\quad D(ca,cb)=cD(a,b),\\
+\pi_\xi D(a,b)=Q(\xi)\frac i2[\pi_\xi a,\pi_\xi b],\\
+\|D(a,b)-D(a',b')\|
+\le\|a-a'\|\|b\|+\|a'\|\|b-b'\|.
+\end{gathered}
+\tag{20.6}
+$$
+
+同一 $S-iD$ 是20.1的结合乘法。对全部有限 $a_1,\ldots,a_k\in E$、全部复数 $z_1,\ldots,z_k$、每份原 $\gamma$，取 $Y=\sum_jz_ja_j$，则
+
+$$
+\begin{aligned}
+\sum_{j,\ell}\overline z_jz_\ell
+\{\gamma(a_j\circ a_\ell)-i\gamma D(a_j,a_\ell)\}
+&=\gamma_{\mathbb C}(Y^*\star_QY)\\
+&=\gamma(p_+Y^*Y+p_-YY^*)\ge0.
+\end{aligned}
+\tag{20.7}
+$$
+
+原换括号式、Jacobi与 Jordan 导子律成立；对固定 $a\in E$，同一有界数学流为
+
+$$
+L_a(b)=D(a,b)=[iQa/2,b],\qquad
+ e^{tL_a}(b)=e^{iQta/2}b\,e^{-iQta/2}.
+\tag{20.8}
+$$
+
+同一 $\mathcal A_Q=(M,\star_Q,{}^*)$ 还有忠实含单位、保锥等距 Hilbert 表示 $\Pi$，并可为每份原评价取向量 $\xi_\gamma$，使
+
+$$
+\begin{gathered}
+\Pi(D(a,b))=\frac i2[\Pi(a),\Pi(b)],\qquad
+\Pi(S(a,b))=\{\Pi(a)\Pi(b)+\Pi(b)\Pi(a)\}/2,\\
+\gamma(a)=\langle\xi_\gamma,\Pi(a)\xi_\gamma\rangle,
+\qquad\|\xi_\gamma\|^2=m_\gamma.
+\end{gathered}
+\tag{20.9}
+$$
+
+证明。20.6是15.7及已知交换子范数界的直接后果，至此才取得中央与商下降。20.7来自20.1的正平方。结合律实部给原换括号式，交换子恒等式给其余代数律与20.8。表示直接复用9.3的成熟 GNS构造：全部数学态直和保证忠实，加入每份正质量原评价的归一 GNS分量并乘 $\sqrt{m_\gamma}$；零质量取零向量。它保留全部原未归一质量，不要求原态正常，不强迫表示像为全 $B(H)$。以上都只在旧值已识别后使用，表示与数学流也不生产原准备或物理钟。∎
+

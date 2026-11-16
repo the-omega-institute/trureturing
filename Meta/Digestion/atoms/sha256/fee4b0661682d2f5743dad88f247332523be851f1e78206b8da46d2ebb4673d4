@@ -1,0 +1,17 @@
+**Corollary 175.3 (exact compensation, degeneracies and the remaining target).** Inside the unchanged family (158.1), with $[v]\in V\setminus\{0\}$ and $t\ne0$, varying the terminal compensator cannot attain the full law. For fixed $\theta,t,v$ the positive lower bound (175.6) is independent of $w$. For fixed $\theta$, every sequence of such legal tuples with $\|\Delta(u^{(n)})\|_{\max}\to0$ necessarily satisfies
+
+$$
+t_n^2q_{003}(v_n)\longrightarrow0.
+\tag{175.10}
+$$
+
+Exact cancellation of $003$ alone, including Proposition 171.1, remains compatible with this obstruction. The selected-coordinate sign-changing necessities of Proposition 174.1 remain necessary in their stated invariant domain; satisfying them does not give a full-law zero. The variable-direction approximation in Corollary 171.2 remains compatible with (175.6), and the bound is not coercive over varying directions.
+
+*Proof.* The exclusion and (175.10) follow directly from (175.6). If $003$ vanishes, (175.5) still has the strictly positive right side, so its other three residual coordinates cannot all vanish. This leaves the one-coordinate conclusion of Proposition 171.1 intact, independently of the additional parity calculations in Sections 172–174. Corollary 170.2 supplies directions of unit essential-supremum norm with $q_{003}(v_n)\to0$, and Corollary 171.2 supplies legal compensated tuples with full residual tending to zero. Thus these existing approximations do not contradict the pointwise bound.
+
+At $t=0$, (175.2) reduces to $u=f$, so every residual is zero. If $[v]=0$, then $A_\theta(v)=0$ and there is no strict conclusion from (175.6); in particular $w=0$ gives $[u_y]=[f_y]$ and every residual zero whenever the representatives are pointwise legal. A function nonzero only on an $m$-null set is not a nonzero direction in the theorem. The original positive-time slot laws are absolutely continuous with respect to $m$, so their joint coefficients depend only on these classes, while legality is still imposed at every point of $G$. $\square$
+
+The source-specific application is repo-derived: (175.7)–(175.8) use the original affine readout (134.7), the full first-order kernel (134.11)–(134.12), the existing positive source energy (134.13)–(134.16), and the joint-law and residual definitions (155.1) on exactly the family (158.1). Multilinearity and the finite coefficient estimate in (175.9) are standard intermediates; no historical novelty is claimed for them or for heat positivity. The additional conclusion is the all-compensator exclusion and its explicit directional bound for this original source family, rather than a new generic positivity theorem.
+
+The universal partition target (155.3) retains all original $\theta$ and all whole-$G$ pointwise Borel partitions. This theorem excludes only the nonzero family (158.1); it neither excludes arbitrary partitions or other families nor settles $F_{64}$, $H43$ or SRS$\text{-}20$. It supplies no native AURIC realization, physical successor, common reference or joint-operation transport, or correspondence for all legal futures. Complete quantum origin remains unresolved. These are paper deductions conditional on the retained suppliers, with no Lean/kernel certification asserted.
+

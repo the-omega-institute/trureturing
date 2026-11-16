@@ -1,0 +1,41 @@
+**定义 12.1（自由词算子原域与准确读取）。** 令 $\mathcal W=\{1,2\}^*$ 为包含空词 $\varnothing$ 的有限词集，取数学 Hilbert 空间
+
+$$
+\mathcal H=\ell^2(\mathcal W)
+ =\bigoplus_{n\ge0}(\mathbb C^2)^{\otimes n},
+\qquad \xi_\varnothing=e_\varnothing.
+\tag{12.1}
+$$
+
+这里 $e_w$ 是词基；$\xi_\varnothing$ 只是辅助真空向量，不与原物理 $\Omega$ 认同。对 $j,k\in\{1,2\}$ 定义左创造算子及其伴随：
+
+$$
+\ell_j e_w=e_{jw},\qquad
+\ell_j^*e_\varnothing=0,\qquad
+\ell_j^*e_{kw}=\delta_{jk}e_w,\qquad
+s_j=\ell_j+\ell_j^*.
+\tag{12.2}
+$$
+
+$\ell_j$ 是等距算子，故 $s_j=s_j^*$ 且 $\|s_j\|\le2$。这是 Miyagawa，[*A characterization of rationality in free semicircular operators*，arXiv:2109.08841v2](https://arxiv.org/html/2109.08841v2)，§2.1、Definition 2.1 的全 Fock 构造在 $d=2$ 时的原样参数选择；本条只复用该有界算子构造，不使用其有理闭包刻画、自由分式域或无界算子结论。
+
+令 $\mathbb C\langle X_1,X_2\rangle$ 为两个形式自伴生成元上的自由复星代数，星号共轭系数并反转词序。定义
+
+$$
+\begin{aligned}
+\mathcal A_0&=\{p(s_1,s_2):p\in\mathbb C\langle X_1,X_2\rangle\},
+&\mathcal A&=C^*(u,s_1,s_2)\subset B(\mathcal H),\\
+E&=(\mathcal A_0)_{\rm sa},
+&X&=\mathcal A_{\rm sa},\qquad u=I_{\mathcal H},\\
+S(a,b)&=a\circ b=(ab+ba)/2,
+&D(a,b)&=\mathrm i(ab-ba)/2,\\
+C&=E\cap\mathcal A_+,
+&N(a)&=\|a\|_{\rm op},\\
+\mathcal P&=\{\alpha:E\to\mathbb R:
+ \alpha\text{ 实线性且 }\alpha(C)\subset[0,\infty)\}.
+\end{aligned}
+\tag{12.3}
+$$
+
+$\mathcal A_0$ 的每个元素只含有限多个词，但次数没有共同上界。$E$ 取整个自伴部分，允许复系数以伴随条件配对，因而包含 $\mathrm i[s_1,s_2]$；它不是只取实系数词的子集。乘法与伴随在 $\mathcal A_0$ 内闭合，而 $ab+ba$ 与 $\mathrm i(ab-ba)$ 对自伴 $a,b$ 均自伴，故 $S,D$ 全部返回原 $E$。所有原输入均属于这个固定 $E$，$S,D$ 始终是 (12.3) 的同一总映射，不能在不同调用中更换取向、缩放或域。$\mathcal A$ 与 $X$ 只用于环境和完成，未把它们的新元素加入原 $E$。
+

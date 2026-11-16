@@ -1,0 +1,33 @@
+**定义 33.3（合法的层与实际提升）。** 按亲读的Thiel–Vilalta §4.3，置
+
+$$
+I_{\ge k}=\bigcap_{\dim\pi<k}\ker\pi,\qquad
+I_{\ge1}=A,\quad I_{\ge d+1}=0,\qquad
+B_k=I_{\ge k}/I_{\ge k+1}.
+\tag{33.4}
+$$
+
+$B_k$ 是 $k$-齐次C*代数，可能为零；非零时是某局部紧Hausdorff空间 $X_k$ 上局部平凡 $M_k$-丛的 $C_0$ 截面代数。该文明确将结构结果引至Blackadar IV.1.4、IV.1.7。
+
+记 $n(P_\pi)=\dim H_\pi$ 为不可约表示的矩阵阶数。理想的不可约谱对应和这条有限过滤给
+
+$$
+U_k:=\operatorname{Prim}(I_{\ge k})
+=\{P\in\operatorname{Prim}(A):n(P)\ge k\},
+\qquad X_k=U_k\setminus U_{k+1}.
+\tag{33.5}
+$$
+
+确切理由是：对非零理想的不可约限制仍不可约；逐层谱分解将 $U_k$ 分成阶数 $k,k+1,\ldots,d$。另一方面，$A/I_{\ge k}$ 是阶数小于 $k$ 的各齐次层的有限扩张，不可能有更高阶不可约表示。因此 $U_k$ 正是所写开集，$X_k$ 的子空间拓扑正是 $\operatorname{Prim}(B_k)$。
+
+任意实际 $a\in A$ 通过左右乘法作用于 $B_k$，给保单位星同态 $A\to M(B_k)$。故 $a_x=\pi_x(a)$ 在每个 $X_k$ 图中是有界连续矩阵函数，即使 $a\notin I_{\ge k}$。这可在每个点附近乘一份等于单位的紧支撑局部单位截面验证。这里使用的是已知C*乘法的乘子作用，不是未知 $D$ 的商下降。
+
+给定一张图 $O\subset X_k$、实 $g\in C_c(O)$ 和常值自伴矩阵 $T$，图内 $gT$、图外零是一份 $B_k$ 自伴截面。商映射的满性供应一份精确自伴提升
+
+$$
+t\in(I_{\ge k})_{\rm sa},\qquad t_x=g(x)T\quad(x\in X_k).
+\tag{33.6}
+$$
+
+不要求提升为幂等元或乘法截面。在高层它可有任意矩阵像；在低层它必为零。以下会分别支付这些分量。
+

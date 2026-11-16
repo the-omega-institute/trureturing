@@ -1,0 +1,6 @@
+**定义 15.1（成熟工具及源特定增量）。**可逆计算并保留输入、工作资料和输出是成熟方法；直接引用 Bennett，[*Logical Reversibility of Computation*, IBM J. Res. Dev. 17, 525–532](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html)，DOI [10.1147/rd.176.0525](https://doi.org/10.1147/rd.176.0525)，其计算、复制输出和反算的三阶段构造。本卷10.3只用保留旧寄存器的前向可逆计算，不要求反算、擦除、热力学可逆性或最优空间。这部分为 $\texttt{literature-attested}$，不单列为新定理；已有[原回顾切口卷](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md)的相应输入保持方法也不充当此处的原 CountRead 活动接口。
+
+同 POVM 的多只仪器与不扰动的区别直接沿用 Heinosaari–Wolf，[*Non-disturbing quantum measurements*, §§2.3–2.4](https://arxiv.org/html/1005.5659v2)。包括辅助系统的变换区别沿用 Chiribella–D’Ariano–Perinotti，[*Probabilistic theories with purification*, Definitions 8–11](https://arxiv.org/html/0908.1583v5)。这些 $\texttt{literature-attested}$ 边界不供应10.2的来源资源。11.1不是从 POVM、Stinespring 或固定效果恢复整台源，也没有把经典表标签上的保持提升为未知相干表的无扰动。
+
+源特定组合归为 $\texttt{repo-derived}$：在保留活动发生标识的查询模型中实际形成原整数地址区间，从同一固定接受细叶导出非重制的活动返回，接通(12.2)的既有非标量字及其原质量；以(13.1)分离保有活动资源与完整档案，并保留14.1的单态、纯性及维数反边界。不认领可逆计算、独立随机序列、正有序背景、非负概率或标准仪器理论的新颖性，不作全球文献优先权主张。
+

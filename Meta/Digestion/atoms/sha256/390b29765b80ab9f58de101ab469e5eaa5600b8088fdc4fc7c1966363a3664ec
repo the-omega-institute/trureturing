@@ -1,0 +1,62 @@
+**定理 102.3（最小点仍在原资格域内）。** 在定义102.1及全称原 $\mathrm B$ 下，任意固定 $p$ 的有限最小不相容组满足
+
+$$
+2\le k\le\min\{h_p,d_p-1\}.
+\tag{VII102.4}
+$$
+
+证明。由102.2只需排除 $k=d_p$。沿用其 $q_i,f_i,a_i$，记 $L=L_p$，并在整个原 $K$ 上定义仿射函数
+
+$$
+\begin{gathered}
+F=(f_1,\ldots,f_k),\qquad
+\ell(y)=\sum_{i=1}^k\frac{y_i}{a_i},\qquad
+S_0=\sum_{i=1}^k\frac1{a_i}>1,\\
+\eta(x)=\frac{\ell(F(x))-1}{S_0-1}.
+\end{gathered}
+\tag{VII102.5}
+$$
+
+$F(p)=\boldsymbol1$、$F(q_i)=a_ie_i$；后面 $k$ 点张成 $\ell=1$ 的仿射超平面，$\ell(\boldsymbol1)=S_0\ne1$。因为 $p,q_1,\ldots,q_k$ 已是 $k$ 维 $L$ 的仿射基，
+
+$$
+F|_L:L\longrightarrow\mathbb R^k
+\quad\text{是仿射同构}.
+\tag{VII102.6}
+$$
+
+每个 $f_i$ 在原整个 $K$ 上满足 $0\le f_i\le1$，故 $\eta\le1$，且 $\eta(p)=1,\eta(q_i)=0$。若 $\eta\ge0$，它就是共同排除整组的原proper效应，矛盾。因此
+
+$$
+c_0=\min_K\eta<0.
+$$
+
+紧的最小值暴露面有原极点 $r\in P$ 达到 $c_0$。关键不是任取一个负值点后将它投到 $L$，而是使用同一个全局函数的真正最小点。定义
+
+$$
+g(x)=\frac{\eta(x)-c_0}{1-c_0}\quad(x\in K).
+\tag{VII102.7}
+$$
+
+这是原 $K$ 上的仿射函数，满足 $0\le g\le1$、$g(p)=1$、$g(r)=0$；其齐次表达为 $(\eta-c_0u)/(1-c_0)$。于是 $g$ 是原proper确认效应，$r\in E_p\subseteq L$，且 $r\ne p$。这里没有把 $L\cap K$ 换成新状态体，也没有调用 $L$ 上局部效应的延拓。
+
+置 $v=F(r)$、$t_0=\ell(v)<1$。所有 $v_i\ge0$，并且
+
+$$
+\theta=\frac{S_0-1}{S_0-t_0}\in(0,1),\qquad
+z=(1-\theta)p+\theta r,
+\qquad \ell(F(z))=1.
+$$
+
+$F(z)_i=(1-\theta)+\theta v_i>0$，故 $\gamma_i=F(z)_i/a_i$ 满足 $\gamma_i>0$、$\sum_i\gamma_i=1$，以及 $F(z)=\sum_i\gamma_iF(q_i)$。现在 $z,q_i$ 都在 $L$，(VII102.6)的可逆性才给原空间中的真实相交：
+
+$$
+z=\sum_i\gamma_iq_i
+\in(p,r)\cap\operatorname{ri}\operatorname{conv}\{q_1,\ldots,q_k\}.
+\tag{VII102.8}
+$$
+
+原最小面 $H(p,r)$ 含 $z$；面的性质与全部 $\gamma_i>0$ 使它包含所有 $q_i$。由 $\mathrm B$，这个整个原面是仿射欧氏球。$p,q_i$ 是原纯点，因而也是这个面的极点。对每个 $j$ 选 $i\ne j$，原 $f_i$ 限制到这个球仍有 $0\le f_i\le1$、$f_i(p)=1,f_i(q_j)=0$。球上一个proper仿射函数同时达到一和零时，两取等纯点必须为对径；单位球坐标中的条件为 $\|b\|\le a\le1-\|b\|$，同时取等迫使 $a=\|b\|=1/2$。所以所有不同的 $q_j$ 都必须等于 $p$ 在这个球中的唯一对径，与 $k\ge2$ 矛盾。
+
+这里的球是 $H(p,r)$；不需要 $H(p,r)=K$，也不需要 $L=\operatorname{aff}K$。102.3对VII101.5的加强正是(VII102.7)保证最小点仍在原 $E_p$，从而让原真实交点论证在 $L_p$ 上成立。证毕。
+

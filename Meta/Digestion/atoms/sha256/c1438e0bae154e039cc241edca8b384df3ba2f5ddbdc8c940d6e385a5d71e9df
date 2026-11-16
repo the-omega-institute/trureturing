@@ -1,0 +1,24 @@
+**定理 100.1（二次元素的全单位行）。** 若原b满足 $b^2\in\operatorname{span}_{\mathbb R}\{u,b\}$，则对全部实μ有 $D(\mu u,b)=0$。本条不要求原域逐元素有限谱，也不要求未知单位输出有限谱。
+
+证明。标量b由比例零值处理。其余情形用单生成JB演算完成平方，写 $b=tu+rv,v^2=u,r\ne0$；平方标量为零时JB范数使元素本身为零。令 $p=(u+v)/2,q=(u-v)/2$，这是两个原互补投影。已知Jordan二次表示 $U_p=2L_p^2-L_p,L_px=p\circ x$ 保持正锥。固定 $h=D(\mu u,b)$，以所有 $\beta\circ U_p$ 读取原二表：$U_pu=p,U_pb=(t+r)p,U_pb^2=(t+r)^2p$，实Gram行列式为零，所以 $U_ph=0$；同理 $U_qh=0$。准确算子等式
+
+$$
+U_p-U_q=2L_p-I=L_v
+$$
+
+给 $v\circ h=0,b\circ h=th$。若 $t\ne0,h\ne0$，99.2的支撑态给 $0=\beta(b\circ h)=tZ$，矛盾。
+
+只余 $b^2=\rho^2u,\rho>0$。取非标量 $h_0^2=\rho_0^2u$ 及非零τ，在PB取 $(a,b_0,c_0)=(h_0,\tau h_0,\tau h_0)$。两个内层D由比例零值归零，正负外层为 $(A,B)$、$(B,A)$，其中 $A=\tau(h_0-h_0^2),B=\tau(h_0+h_0^2)$。99.4右端为零，反对称使 $D(A,B)=0$。置 $\eta=\sqrt2-1$，
+
+$$
+x=\frac{A+\eta B}{1+\eta^2},\qquad y=\frac{B-\eta A}{1+\eta^2}.
+$$
+
+两者在 $\operatorname{span}\{u,h_0\}$ 中的谱中点分别是 $\tau(\eta-1)\rho_0^2/(1+\eta^2)$、$\tau(1+\eta)\rho_0^2/(1+\eta^2)$，均非零。已证部分故给 $D(\eta u,x)=D(\eta u,y)=0$。PB取 $(\eta u,x,y)$，其正外层为 $(A,B)$，负外层为 $((A+B)/\sqrt2,(B-A)/\sqrt2)$，右端仍为零，因此
+
+$$
+D(\sqrt2\tau h_0,\sqrt2\tau h_0^2)=0.
+$$
+
+给定上述b与 $\mu\ne0$，选 $h_0=\mu b/\rho^2,\tau=\rho^2/(\sqrt2\mu)$，末式就是 $D(b,\mu u)=0$。μ或b为零由P2处理。这里尚未预用全域标签旋转。∎
+

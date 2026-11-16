@@ -1,0 +1,20 @@
+**定义 92.1（有限纯点的关系零度）。** 在89.1的原载体上再设 $P$ 有限，定义满射
+
+$$
+\Phi:\mathbb R^P\longrightarrow V,\qquad
+\Phi((c_z)_{z\in P})=\sum_{z\in P}c_zz,\qquad
+\nu=\dim\ker\Phi=|P|-\dim V.
+\tag{92.1}
+$$
+
+因为全部 $u(z)=1$，核中每个向量的系数和为零，故这是同一归一超平面中的仿射关系空间。$\nu=1$ 时将唯一非零关系归一为
+
+$$
+\sum_{i=1}^r\alpha_i a_i=\sum_{j=1}^s\beta_j b_j,\qquad
+\alpha_i,\beta_j>0,\qquad
+\sum_i\alpha_i=\sum_j\beta_j=1,
+\tag{92.2}
+$$
+
+并写 $P=\{a_i\}_{i=1}^r\sqcup\{b_j\}_{j=1}^s\sqcup\{c_k\}_{k=1}^{\ell}$；$c_k$ 为关系系数为零的原顶点，$\ell$ 可为零。两侧各至少有两个顶点，否则一个原极点会成为其他点的凸组合。77.4及89.6的等权条带对应 $r=s=q$、$\alpha_i=\beta_j=1/q$、$\ell=0$，其原等权结果保持原范围。这是标准单维Gale／Radon关系的线性代数表示，参见 Á. G. Horváth、Z. Lángi，*Maximum volume polytopes inscribed in the unit sphere*，[arXiv:1402.6496v3 §3](https://arxiv.org/html/1402.6496v3#S3) 的核空间与Gale变换定义；下述论证不使用其最大体积、球面或非退化极值假设，也不要求 $\ell=0$。
+

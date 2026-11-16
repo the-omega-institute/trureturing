@@ -4,7 +4,7 @@
 
 Every bounded integral square-weight correction equals p minus one at p to any positive power.
 
-The sequence a has integer values and starts at index one; a(0) is unused. All power series have rational coefficients, and every exponential and substitution is formal. IntegralSeries is the predicate from HannaLogarithmicPowerClosure: every ordinary coefficient is the image of an integer. The displayed casts are the canonical embeddings into the indicated carrier. Division in the exponent is rational field division. PowerSeries.subst takes the substituted series first and the series into which it is substituted second. The function ite selects its second argument when its first argument holds and its third argument otherwise.
+The sequence a has integer values and starts at index one; a(0) is unused. All power series have rational coefficients, and every exponential and substitution is formal. IntegralSeries is the shared predicate in IntegralPowerSeries, with its original qualified name: every ordinary coefficient is the image of an integer. The displayed casts are the canonical embeddings into the indicated carrier. Division in the exponent is rational field division. PowerSeries.subst takes the substituted series first and the series into which it is substituted second. The function ite selects its second argument when its first argument holds and its third argument otherwise.
 
 **Definition 1.1 (The defining integral-series condition).**
 
@@ -53,5 +53,5 @@ An integer Euler ledger gives m^2-a(m) as the sum of d times the ledger entry ov
 - Truth anchor: `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.IsCorrection`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.claim`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.result`
-- Dependency: [D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure](../../../S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.md)
 - Dependency: [D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality](../../../S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.md)
+- Dependency: [D5/S3/Arith/Congruence/BoundedPowerCorrection](BoundedPowerCorrection.md)

@@ -1,0 +1,55 @@
+**定理 41.2（由两份外层共同约束取得的混合预算）。** 任取实际原 $a,c\in E$，写
+
+$$
+\begin{gathered}
+a=\lambda u+xA+O(x^2),\qquad
+c=\tau u+xC+O(x^2),\qquad d=D(a,c),\\
+A^0=\mathbf u\cdot\boldsymbol\sigma.
+\end{gathered}
+\tag{41.1}
+$$
+
+则 $d(0)=0$，其一次系数无迹。写 $[x]d=\mathbf h\cdot\boldsymbol\sigma$；只要 $\tau\ne0$，就有
+
+$$
+\boxed{|\mathbf h|\le |\tau|\,|\mathbf u|.}
+\tag{41.2}
+$$
+
+此界对全部实数 $\lambda$ 成立，包含 $|\lambda|\ge1$、$\lambda=0$、$\mathbf u=0$ 及任意实际第二输入的高次项。证明在本节给出首项正性步骤，在 §42 完成共同约束。
+
+首先，129.1 的准确锥传递使每个数学向量读取 $\phi_{x,\psi}(p)=\langle\psi,p(x)\psi\rangle$ 读取同一 P2，且保留单位质量 $\|\psi\|^2$。在 $x=0$ 两输入都是实标量单位，实 Gram 行列式为零，所以全部读取给 $D(p,q)(0)=0$，对每个实际 $p,q\in E$ 成立。数学读取并不因此成为实际准备。
+
+在证明内部使用下列成熟 Gram 首项事实。任取固定实际原输入
+
+$$
+p=ru+xP+O(x^2),\qquad q=su+xQ+O(x^2),\qquad
+D(p,q)=xF+O(x^2),\qquad T=sP-rQ.
+$$
+
+把复向量空间看成实内积空间，内积为原复内积的实部。两个实际作用向量的外积首项是 $-x\,\psi\wedge T\psi$，所以它们的实 Gram 行列式的 $x^2$ 系数为
+
+$$
+\|\psi\|^2\langle\psi,T^2\psi\rangle
+-\langle\psi,T\psi\rangle^2.
+$$
+
+这也直接说明输入的二次系数在该首项抵消。同一 P2 因而给
+
+$$
+|\langle\psi,F\psi\rangle|^2
+\le\|\psi\|^2\langle\psi,T^2\psi\rangle
+-\langle\psi,T\psi\rangle^2.
+\tag{41.3}
+$$
+
+这里只比较固定多项式不等式的首项；因不等式对所有足够小的正 $x$ 成立，系数比较有效。若 $T^0=\mathbf t\cdot\boldsymbol\sigma\ne0$，在 $T$ 的两个单位本征向量上右端为零，故 $F$ 的两个相应对角值为零。这给 $\operatorname{tr}F=0$ 及 $\mathbf f\cdot\mathbf t=0$，其中 $F=\mathbf f\cdot\boldsymbol\sigma$。若 $\mathbf f\ne0$，再沿 $\mathbf f$ 的单位本征方向读取，得到 $|\mathbf f|\le|\mathbf t|$；$\mathbf f=0$ 时同样成立。$T$ 为标量时全部方差都为零，所有读取直接给 $F=0$。因此总有
+
+$$
+F=\mathbf f\cdot\boldsymbol\sigma,\qquad
+\mathbf f\cdot\mathbf t=0,\qquad |\mathbf f|\le|\mathbf t|.
+\tag{41.4}
+$$
+
+这个中间步骤应用于 $(a,c)$，已支付定理中的无迹表述；它本身只给 $|\mathbf h|\le|\tau\mathbf u-\lambda\mathbf v|$，其中 $C^0=\mathbf v\cdot\boldsymbol\sigma$。还须真正消去这份第二输入的切向预算。
+

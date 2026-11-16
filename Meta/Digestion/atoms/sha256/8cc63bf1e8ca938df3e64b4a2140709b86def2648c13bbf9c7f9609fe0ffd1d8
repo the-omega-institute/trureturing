@@ -1,0 +1,32 @@
+**Definition 2.2 (One stationary consecutive-bit source).** At $q=e^{-s}$, $s>0$, define
+
+$$
+\begin{aligned}
+Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,&
+f_{i,q}(k)&=\frac{F_i(k)q^k}{Z_i(q)}\quad(k\ge1),\\
+S_{i,q}(b)&=\sum_{k\ge\max(1,b)}f_{i,q}(k)\quad(b\ge0),&
+\mu_i(q)&=\sum_{k\ge1}(k+1)f_{i,q}(k),\\
+\beta_i(q)&=\frac{\sum_{k\ge1}k(k+1)f_{i,q}(k)}{2\mu_i(q)}.&
+\end{aligned}
+\tag{2.4}
+$$
+
+All indices in these sums are integers. Under label $i$, first draw $\tau$ with
+
+$$
+\mathsf P_{i,q}(\tau=b)=S_{i,q}(b)/\mu_i(q),\qquad b=0,1,\ldots.
+\tag{2.5}
+$$
+
+Independently of $\tau$, draw iid positive zero counts $K_1,K_2,\ldots$ with law $f_{i,q}$. Put ones at
+
+$$
+\tau_0=\tau,\qquad
+\tau_n=\tau+\sum_{r=1}^n(K_r+1)\quad(n\ge1),
+\tag{2.6}
+$$
+
+and zeros at every other nonnegative integer position. The actual source is this one uninterrupted stationary history.
+
+Nonnegative summation gives $\sum_{b\ge0}S_{i,q}(b)=\mu_i(q)$ and $\mathbb E_i\tau=\beta_i(q)$: each $k$ contributes at $b=0,\ldots,k$, with total first-moment weight $k(k+1)/2$. Thus the first wait is normalized, including $b=0$, and differs from a complete gap. The first tick still costs one read when $\tau=0$.
+

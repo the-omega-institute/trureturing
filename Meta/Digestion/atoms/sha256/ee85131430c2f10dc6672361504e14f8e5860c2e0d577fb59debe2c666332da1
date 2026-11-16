@@ -1,0 +1,193 @@
+**Theorem 13.4 (one-event acquired retrospective packing certificates).**
+Fix rational $0<\alpha<1$. In the original paid retained-record and
+total fixed-reference setting of Definition 7.1 and [SRO, §§21–22],
+there is one predeclared original-law event $\mathcal A$ with
+$\mathbb P_e(\mathcal A)\ge1-\alpha$ on which the following holds
+for every finite request
+
+$$
+K\ge2,\qquad \epsilon,\zeta\in\mathbb Q,
+\qquad 0<\epsilon<1,\quad \zeta>0.
+\tag{13.15}
+$$
+
+A fair finite-packet search attains a finite retrospective certificate
+for some common $t,H$, distinct original histories $u_i$ of length
+$t$, disjoint windows $E_i$ as in (13.3), and genuinely acquired
+normalized rational rows $\widehat R_i$ and rational errors $z_i$.
+It certifies, with strict rational slack,
+
+$$
+\begin{gathered}
+p(u_i)>0,\qquad
+\operatorname{TV}(R_{u_i}^H,\widehat R_i)\le z_i
+ <\min\{\zeta,\epsilon/16\},\\
+\widehat R_i(E_i)-z_i>1-\epsilon/2.
+\end{gathered}
+\tag{13.16}
+$$
+
+Thus the actual rows, not only stationary comparison rows, satisfy
+(13.4) and the stronger bank lower bound
+$1-\epsilon/2-M/K$. A finite certificate need not be ready at its
+target cut $t$ or concern the actual current row when it is ready.
+The attainment is sourcewise, with no uniform deadline or expected
+work bound, under precisely these inherited acquisition interfaces.
+
+*Proof: the exact actual-row supplier.* Reuse the marked identity
+[DPCR, Theorem 8.2, (8.6)–(8.8), and Proposition 8.6, (8.20)].
+With the notation of this volume it says
+
+$$
+q(3u)=c\,p(u),\qquad q(3)=c>0,\qquad
+R_u^H(v)=\frac{q(3uv)}{q(3u)}=Q_{3u}^H(v).
+\tag{13.17}
+$$
+
+Its indexing is essential: the single original $d$-transition after
+the marked emission propagates $[f_3]=cg_d$ to $cPg_d=cg_{2d}$,
+the actual first-read density. This is the supplied cylinder identity,
+not a newly prepared stationary source or an actual reset at a
+naturally observed $3$. The marker in (13.17) is included in the
+acquisition word length and every count.
+
+*Proof: the confidence event before selection.* Give startup allowance
+$\alpha/2$, and let $l_j$, $j\ge1$, enumerate its possible positive
+rational lower-clock outputs. Predeclare packets for every triple
+$(j,N,s)$ of positive integers, using word length $N$, radius
+$e_s=2^{-s}$ and allowance
+
+$$
+\beta_{j,N,s}=\frac\alpha2\,2^{-j-N-s}.
+\tag{13.18}
+$$
+
+For each such deterministic input, generate the finite window count
+$n_{j,N,s}$ and reference enclosures by (7.3)–(7.4); only the packet
+length $N$ matters there. The termination argument of Theorem 8.2
+applies at every fixed $N,s,l_j>0$. Indeed $D_n(l_j)\to1$, its
+total paid reference name supplies refined lower enclosures, and
+both terms of $V_{n,N}^+$ can be made arbitrarily small. All packet
+sizes are determined without consulting their label values.
+
+Let $\mathcal E_{j,N,s}$ be the Lemma 7.2 TV event for this packet,
+viewed as a function of its finite initial original record. Declare
+
+$$
+\mathcal A=\mathcal A_{\rm startup}\cap
+ \bigcap_{j:\,l_j\le\tau}\ \bigcap_{N,s\ge1}
+                 \mathcal E_{j,N,s},
+\qquad \tau=a^2d/\eta.
+\tag{13.19}
+$$
+
+Here $\mathcal A_{\rm startup}$ includes finite startup termination
+and validity of its returned bound. The source is fixed for this
+probability statement; $\tau$ is not an exact input to the procedure.
+The sum of (13.18) is $\alpha/2$, so the union bound gives
+$\mathbb P_e(\mathcal A)\ge1-\alpha$. Only the selected startup
+branch is executed. Invalid deterministic branches are not used in
+the intersection. No independence of packets, startup, overlapping
+windows or data-selected certificates is asserted or needed.
+
+Every finite request (13.15), every finite candidate tuple and every
+rational row-error test below uses these same packet events. Thus
+the event is common to all of them without selecting a confidence
+statement after observing a successful certificate.
+
+*Proof: finite rational tests.* For a candidate $(t,H)$ use
+$N=t+H+1$. Its acquired length-$N$ empirical probability vector
+and prefix marginals $a(x)$ are exactly (7.5), on one retained
+initial record. At radius $e_s$ put
+$\ell_x=\max\{0,a(x)-e_s\}$ and
+$b_x=\min\{1,a(x)+e_s\}$. For each candidate original word
+$u_i\in\mathcal L^t$, require $\ell_{3u_i}>0$ and form
+
+$$
+\begin{gathered}
+\widehat R_i(v)=\frac{a(3u_iv)}{a(3u_i)}\quad(v\in\mathcal L^H),\\
+I_{i,v}=
+ \left[\frac{\ell_{3u_iv}}{b_{3u_i}},
+       \frac{b_{3u_iv}}{\ell_{3u_i}}\right],\\
+z_i=\frac12\sum_{v\in\mathcal L^H}
+ \max\left\{
+ \left|\widehat R_i(v)-\frac{\ell_{3u_iv}}{b_{3u_i}}\right|,
+ \left|\widehat R_i(v)-\frac{b_{3u_iv}}{\ell_{3u_i}}\right|
+ \right\}.
+\end{gathered}
+\tag{13.20}
+$$
+
+These are Proposition 7.3's per-row construction and generated error,
+restricted to the needed prefixes $3u_i$; no new estimator is used.
+Prefix consistency gives $\sum_v a(3u_iv)=a(3u_i)>0$, so each
+$\widehat R_i$ is exactly normalized and nonnegative. On
+$\mathcal A$, the true numerator and denominator lie in their
+respective intervals. Equation (13.17) therefore places every
+$R_{u_i}^H(v)$ in $I_{i,v}$, and summing the endpoint errors proves
+the TV bound in (13.16). The positive denominator guard also gives
+the entirely acquired positive lower bound
+
+$$
+p(u_i)=\frac{q(3u_i)}{q(3)}
+ \ge\frac{\ell_{3u_i}}{b_3}>0.
+\tag{13.21}
+$$
+
+One can require $\ell_3>0$ as a further strict guard; it eventually
+passes. The numerator is a prefix event of the same length-$N$
+packet, so its error bound is simultaneous with all other tests.
+The search verifies distinctness of the $u_i$, integer endpoint
+ordering (13.3), and the two strict rational inequalities in
+(13.16), using (13.20). An accepted certificate hence implies
+the stated actual-row bounds on $\mathcal A$. In particular its
+positive rational slack
+
+$$
+\sigma=\min_i\{
+ \widehat R_i(E_i)-z_i-(1-\epsilon/2)\}>0
+\tag{13.22}
+$$
+
+can be returned along with the rows, enclosures and packet indices.
+This implies the certified strict version of (13.11), or (13.14)
+with the certified mass lower bounds substituted. Bank probabilities
+and convex weights need not be numerically available to certify
+this universal lower bound.
+
+*Proof: attainment with no exact-law oracle.* On the selected valid
+branch, enumerate $(N,s)$ fairly, with $N\ge3$. For each packet,
+there are finitely many decompositions $N=t+H+1$ with $t,H\ge1$,
+finitely many distinct $K$-tuples of length-$t$ words, and finitely
+many ordered integer windows within $H$. Skip a decomposition
+with $K>4^t$. All its tests are finite rational arithmetic. A
+diagonal enumeration that tests all $N,s\le m$ by finite stage
+$m$ is one possible fair order; already computed packets may be
+reused from their paid retained records.
+
+For the termination proof only, invoke Theorem 13.2 with accuracy
+$\epsilon/4$. It supplies a finite candidate tuple with actual
+masses greater than $1-\epsilon/4$ and some finite
+$N_0=t+H+1$. For this fixed tuple, all $q(3u_i)>0$. As the
+packets at $N_0$ refine on $\mathcal A$, their prefix marginals
+converge to $q$, all denominator guards pass, and Proposition 7.3
+gives $z_i\to0$ and $\widehat R_i\to R_{u_i}^H$ in TV.
+Consequently both tests (13.16), including the stronger mass
+threshold $1-\epsilon/2$, pass with positive slack at some finite
+$s$. Fair enumeration reaches that finite pair after finitely many
+finite packets and comparisons. The theoretical tuple and its
+exact probabilities were used to prove termination, never as
+program inputs. Arbitrarily small positive $q(3u_i)$ can force
+arbitrarily fine precision and long records; they do not invalidate
+this fixed finite-tuple argument.
+
+This proves simultaneous sourcewise finite attainment for all
+finite requests on (13.19), in the inherited retained-record and
+paid-reference model. The acquired table describes $K$ possible
+full histories at the same original cut, not $K$ simultaneously
+realized initial histories on one trajectory. It is acquired from
+the one continuing original record through (13.17). No label is
+discarded, no later segment is renamed a fresh $e$-start, and no
+claim identifies its retrospective target with an unbounded
+arriving current suffix. $\square$
+

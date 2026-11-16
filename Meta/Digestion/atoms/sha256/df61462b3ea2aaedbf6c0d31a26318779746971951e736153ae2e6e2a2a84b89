@@ -1,0 +1,32 @@
+**定义 125.1（完整原域、共同读数与球心）。** 保留 [IX114.1][Q125IX] 的同一个非零有限维实空间 $V$、闭尖生成凸锥 $C$ 及在 $C\setminus\{0\}$ 上严格正的 $u\in V^{\ast}$。始终取全部
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^{\ast}},\\
+F_a=\{e\in\mathcal E:e(a)=1\},\qquad
+T_a(x)=\min_{e\in F_a}e(x)\quad(a\in P,\ x\in K),\\
+D_a=\{x\in K:T_a(x)=0\}.
+\end{gathered}
+\tag{X125.1}
+$$
+
+这里的第二变量包括所有混态，确认族使用整个原效应区间。假设 EB3 与 PR：每个完整 $D_a$ 仿射同构于整个闭三球，且 $T_a(b)=T_b(a)$ 对全部原纯点 $a,b$ 成立。PR 只交换纯端点，不是顺序测量交换。固定辅助欧氏范数，令
+
+$$
+M=\max_{e\in\mathcal E}\|e\|_{\ast}<\infty,
+\qquad c_p=\text{完整球 }D_p\text{ 的唯一对称中心}.
+\tag{X125.2}
+$$
+
+此范数只承担距离与拓扑，不是共同物理内积。按 IX114.1、114.4，$K,P,\mathcal E$ 均紧，$F_a$ 非空紧；按 IX114.4，固定第一参数的 $T_a$ 在整个 $K$ 上有共同 Lipschitz 常数 $M$。
+
+对非空、紧、凸、中心对称的 $G\subset K$，中心记为 $c$，定义同一效应的整集最优上读数
+
+$$
+\kappa_G(a)=\min_{e\in F_a}\max_{x\in G}e(x).
+\tag{X125.3}
+$$
+
+紧性与配对连续性保证最小值、最大值均达到。另记 $Z(e)=\{x\in K:e(x)=0\}$。只复用 IX114.2 的准确原面接口：每个完整 $D_a$ 是非单点紧暴露极大真面；其球面恰为 $P\cap D_a$；存在 $h_a\in F_a$ 使 $Z(h_a)=D_a$；所有非空真面均为原纯单点或一张完整排除球。不输入该分类最后一项的全 Pair 前件，也不输入 Inj、least 确认效应或全局球族连续性。
+

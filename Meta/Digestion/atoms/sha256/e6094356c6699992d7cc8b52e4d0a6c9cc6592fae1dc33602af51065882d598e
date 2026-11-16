@@ -1,0 +1,13 @@
+**定义 62.1（原域本身改为完整连续函数域）。** 本节明确选择另一个原域，而非延拓 36.1 的未知多项式响应：
+
+$$
+\begin{aligned}
+E=X&=\{a\in C([0,1],H_2(\mathbb C)):a(0)\in\mathbb RI_2\},\\
+u&=I_2,\qquad S(a,b)=\tfrac12(ab+ba),\\
+E_0&=\{A\in E:\operatorname{tr}A(x)=0\text{ 对所有 }x\in[0,1]\}.
+\end{aligned}
+\tag{62.1}
+$$
+
+准确锥、上确界范数和全部原正读取与质量保持，未知总 $D:E^2\to E$ 仍只满足同一 $\mathsf H_{\rm orig}$ 加全部 PB。没有新增其输入连续性或一般双线性。此域的标量连续函数是原标签，$E_0$ 在零点消失但不是含单位 Jordan 子代数。
+

@@ -1,0 +1,60 @@
+**定理 132.4（有限共同源测试的正锥距离下界或维数上升）。** 在定义132.1的原域中，设 $I(F)=\{p\}$ 并固定 $y\in\operatorname{ri}F$。存在有限多个原纯点 $a_1,\ldots,a_m\in S(F)$、固定原完整零确认 $h_i\in\mathcal A_{a_i}$ 及 $\varepsilon,\delta>0$，使对每个
+
+$$
+r\in P,\quad \|r-y\|<\varepsilon,\qquad
+t\in P\cap D_r
+\tag{Q132.9}
+$$
+
+至少一项成立：
+
+$$
+\dim\operatorname{aff}D_t\ge k+1,
+\qquad\text{或}\qquad
+\max_{1\le i\le m}R_F(t,h_i)\ge\delta.
+\tag{Q132.10}
+$$
+
+这些 $a_i,h_i,\varepsilon,\delta$ 先于所有 $r,t$ 选择。还对每个 $\tau>0$ 存在 $\varepsilon_\tau>0$，使(Q132.9)中的 $\varepsilon$ 换成 $\varepsilon_\tau$ 后，全部 $h_i(t)\le\tau$ 同时成立。因此，若存在趋近 $y$ 的原纯列并沿第二分支选取返回标签，原输入上的全部读数趋零，而任意大小的正延拓在固定原整球上的误差仍有共同正下界；本条不先断言这种纯列存在。
+
+证明。先在 $S(F)$ 选一个有限集，使
+
+$$
+y\in\operatorname{ri}\operatorname{conv}\{a_1,\ldots,a_m\},\qquad
+\operatorname{aff}\{a_1,\ldots,a_m\}=\operatorname{aff}F.
+\tag{Q132.11}
+$$
+
+存在性只用球几何：在固定球图中取以球心指向 $y$ 为第一轴的正交轴及其正负端点；球心时任选第一轴。$y$ 的轴坐标绝对值严格小于一，故在这些端点凸包的相对内部。各 $D_{a_i}$ 单标签，由引理132.3引用的邻点传播取得。选任意 $h_i\in\mathcal A_{a_i}$。其整个原一值面恰为 $\{a_i\}$：任一纯一值点 $v$ 给 $D_{a_i}\subseteq D_v$，极大性给相等，局部单标签性迫 $v=a_i$；紧一值面由其极点凸生成，故也不含其他混态。原零对称给 $p\in D_{a_i}$，所以 $h_i(p)=0$。
+
+反设没有(Q132.10)的统一 $\varepsilon,\delta$。可选同一列 $r_n\to y$、$t_n\in P\cap D_{r_n}$，使
+
+$$
+\dim\operatorname{aff}D_{t_n}\le k,\qquad
+\max_iR_F(t_n,h_i)<1/n.
+\tag{Q132.12}
+$$
+
+对每个 $i,n$ 从下确界选 $b_{i,n}\in N_{t_n}$，使 $\|b_{i,n}-h_i\|_F<2/n$；不要求下确界达到。引理132.3给 $t_n\to p$。命题132.2在同一个 $F$、同一个 $t_n$ 上将全部这些正泛函归一为 $f_{i,n}\in\mathcal E$，并给
+
+$$
+B_{i,n}:=\max_K b_{i,n}\to1,\qquad
+f_{i,n}|_F\longrightarrow h_i|_F.
+\tag{Q132.13}
+$$
+
+对充分大的 $n$，选原纯最大点 $x_{i,n}\in D_{t_n}$，使 $b_{i,n}(x_{i,n})=B_{i,n}$；存在性复用[positive_annihilator_maximum][Q132SN]。上关联使这些点的聚点在 $F$。(Q132.13)、全效应的统一有界性及 $f_{i,n}(x_{i,n})\to1$，使每个这样的聚点满足 $h_i(x)=1$，因而为 $a_i$。所以 $x_{i,n}\to a_i$，所有有限测试共享同一个返回球序列 $D_{t_n}$。
+
+由(Q132.12)取一个子列使 $d:=\dim\operatorname{aff}D_{t_n}$ 恒定，$1\le d\le k$。在辅助欧氏尺中写 $D_{t_n}=c_n+L_n\overline B^d$，其中 $L_n$ 的列为正交半轴向量。紧 $K$ 使这些中心、半轴一致有界；再取同一个子列使 $c_n\to c$、$L_n\to L$。于是
+
+$$
+D_{t_n}\longrightarrow H=c+L\overline B^d\subseteq F.
+\tag{Q132.14}
+$$
+
+包含关系只用纯标签 $t_n\to p$ 的上关联。各 $x_{i,n}\to a_i$ 使 $a_i\in H$，(Q132.11)遂给 $\dim\operatorname{aff}H=k$。因 $\operatorname{rank}L\le d\le k$，必有 $d=k$ 且 $L$ 单射。
+
+原零对称给 $r_n\in P\cap D_{t_n}$，即 $r_n=c_n+L_nv_n$、$\|v_n\|=1$。在该子列再取 $v_n\to v$，得 $\|v\|=1$、$y=c+Lv\in\partial_{\rm rel}H$。另一方面(Q132.11)及 $\operatorname{conv}\{a_i\}\subseteq H\subseteq F$ 给 $y\in\operatorname{ri}H$，矛盾。这里单射性是在维数比较后取得；没有把降秩图的球面极限误作像球的相对球面。
+
+最后，若 $r_n\to y$、$t_n\in P\cap D_{r_n}$，引理132.3给 $t_n\to p$，故有限族的全部 $h_i(t_n)\to0$。若所述 $\varepsilon_\tau$ 不存在，选违反它的 $1/n$ 邻近序列便矛盾。这证明全部量词的统一性。证毕。
+

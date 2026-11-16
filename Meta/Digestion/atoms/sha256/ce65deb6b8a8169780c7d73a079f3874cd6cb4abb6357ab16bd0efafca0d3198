@@ -1,0 +1,29 @@
+### 21.1. Three distinct layers of a returned relation
+
+The latest same-flow analysis in [ACQUIRED-RETURN, Section 14](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md) supplies a concrete control-memory test for the present paired-calibration domain. Fix the complete laws, the two directional joint flows and one reachable returned control/record value $c$ used there. A whole returned relation is a probability law
+
+$$
+\Xi(Q,W,Q')
+$$
+
+on the incoming p descriptor, the suspended descriptor and the outgoing p descriptor. Its scalar motion readout is
+
+$$
+\eta_{\mathrm{motion}}(\Xi)=(V_u(\Xi),V_Q(\Xi)),
+$$
+
+where $V_u$ is the actual integral of $|u(Q)-u(Q')|$ and $V_Q$ is the corresponding complete-law variation. The returned-cut memory cost is $N(\Xi;c)$, the minimum number of COMPLETE configurations at the counted suspended cuts needed to realize that prescribed whole relation, with the complete laws and both directional flows fixed.
+These objects have different semantic types:
+
+$$
+\boxed{
+\text{law marginals and two edge flows}
+\;\longrightarrow\;
+\text{whole triple }\Xi
+\;\longrightarrow\;
+\text{returned control memory}.
+}
+$$
+
+The arrows cannot be reversed from a scalar motion value alone.
+

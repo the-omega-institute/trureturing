@@ -1,0 +1,47 @@
+**定理 100.4（指定局部proper效应的全延拓障碍）。** 在定义VII100.1下，任取有序不同原纯对 $p,q\in P$ 满足 $q\notin D_p$；不要求 $[p,q]$ 是边。令
+
+$$
+F=D_p,\qquad M=\max_{x\in F}h_q(x),\qquad
+\ell_{p,q}=\frac{h_q|_F}{M}.
+\tag{VII100.17}
+$$
+
+这里 $[0,1]_{\operatorname{aff}(F)}$ 指 $F$ 上全部实仿射函数中满足 $0\le\ell(x)\le1$ 对每个 $x\in F$ 成立者；零一界只在 $F$ 上要求。则 $0<M<1$，$\ell_{p,q}\in[0,1]_{\operatorname{aff}(F)}$ 是指定的局部proper效应，而
+
+$$
+\nexists f\in[0,u]:\quad f|_F=\ell_{p,q}.
+\tag{VII100.18}
+$$
+
+更准确地，其全部实线性延拓恰为
+
+$$
+f=\frac{h_q}{M}+\mu h_p,\qquad \mu\in\mathbb R,
+\tag{VII100.19}
+$$
+
+而没有任何一个同时满足原 $f\ge0$ 及 $f\le u$。全局仿射延拓到 $K$ 也同样被排除，因为 $\operatorname{aff}K=\{u=1\}$，其仿射函数唯一齐次线性延伸到 $V$。
+
+证明。固定 $k_0\in K$，有 $V=\mathbb Rk_0\oplus\ker u$。$\operatorname{aff}K$ 上的仿射式 $c+L(x-k_0)$ 唯一对应 $V$ 上的线性式 $f(tk_0+w)=tc+L(w)$，所以全局仿射延拓与线性延拓的上述对应保持同一原单位。
+
+不同的 $p,q$ 对应不同facets，所以 $F\not\subseteq D_q$，$h_q$ 在 $F$ 上不恒零，得到 $M>0$。$h_q$ 在整个 $K$ 只在 $q$ 达到一，且 $q\notin F$；由 $F$ 紧知 $M<1$。非负性与最大值定义给局部零一界，并在某个 $F$ 的顶点达到一。
+
+$F$ 为facet，$\dim\operatorname{span}F=m$，故其消灭子是一维且由 $h_p$ 张成。两个延拓的差消灭 $F$，因此(VII100.19)穷尽全部实线性延拓。不同facets又给一个原顶点 $r\in D_q\setminus D_p$。若这样的 $f$ 在整个原锥非负，则
+
+$$
+f(r)=\mu h_p(r)\ge0,\qquad h_p(r)>0,
+\quad\Longrightarrow\quad\mu\ge0.
+\tag{VII100.20}
+$$
+
+但在同一个原纯点 $q$ 上随即有
+
+$$
+f(q)=\frac1M+\mu T_{pq}>1=u(q),
+\tag{VII100.21}
+$$
+
+矛盾。这排除了全部延拓，不只是自然猜测 $h_q/M$ 的失败。$m=0$ 没有不同纯对，$m=1$ 的两个不同纯点互相接触，所以这两支都没有符合前件的非接触对；$p=q$ 从未在本定理量词内。
+
+这是 $F=D_p$ 上的一张局部facet效应障碍。除非另有对应证明 $F$ 是VI90.8所量化的某个整个二态球，否则不能把(VII100.18)认作该球的延拓反例，更不能由它断言一般 $\mathrm B+\mathrm{Z0}$ 已失败。即使 $[p,q]$ 本身是边，这个 $F=D_p$ 也不是自动等于 $[p,q]$。证毕。
+

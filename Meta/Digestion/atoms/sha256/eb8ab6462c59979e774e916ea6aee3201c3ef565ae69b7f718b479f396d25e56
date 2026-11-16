@@ -1,0 +1,38 @@
+**Theorem 10.5 (independent finite completion transfers the row).** Fix a deterministic gate description $\kappa$, its stopped cut $T_\kappa$, and a finite horizon $H_\kappa$. Let $J_\kappa\in\mathbb N_0\cup\{\infty\}$ be the actual serialization-completion index after that gate. Assume, as an explicit runtime premise, that conditional on $\mathcal F_{T_\kappa}$ and on all pre-gate service randomness or state carrying no source information beyond the stopped label history, $J_\kappa$ is independent of the entire post-gate label sequence. The independence includes the event $J_\kappa=\infty$; ordinary causality, independence of one service component, or conditioning on a successful Return does not imply it. Suppose the earned guard gives $\beta_d\le b^+_\kappa$, and OPPM9's gate estimate gives
+
+$$
+\mathbb E_e\operatorname{TV}(\pi_{Y_{<T_\kappa}}m,m)\le\eta^+_\kappa.
+\tag{10.19}
+$$
+
+Then, for every $\chi_\kappa>0$,
+
+$$
+\mathbb P_e\!\left\{
+J_\kappa<\infty\ \text{and}\ D_{J_\kappa,H_\kappa}(W_{J_\kappa})>\chi_\kappa
+\right\}
+\le\frac{b^+_\kappa+\eta^+_\kappa}{\chi_\kappa}.
+\tag{10.20}
+$$
+
+*Proof.* Condition on a stopped history and the allowed pre-gate service state. By the independence premise, the conditional law of $J_\kappa$ is a fixed probability law on $\mathbb N_0\cup\{\infty\}$, independent of the future labels. Set the summand at $J_\kappa=\infty$ to zero. Under the stationary comparison, Lemma 10.4 bounds the expectation of each finite-index summand by $\beta_d$, hence also their mixture by $b^+_\kappa$.
+
+For the actual future, Definition 9.1 and kernel contraction give, for the same stopped history $u$,
+
+$$
+\operatorname{TV}(R_u^\infty,Q_\emptyset^\infty)
+\le\operatorname{TV}(\pi_um,m).
+\tag{10.21}
+$$
+
+Any measurable function of the future labels bounded by one changes its conditional expectation by at most the right side of (10.21). Apply this to the mixture of the functions $D_{j,H_\kappa}(W_j)$ with the fixed completion law. Average over stopped histories and use (10.19). Thus
+
+$$
+\mathbb E_e\!\left[\mathbf1_{\{J_\kappa<\infty\}}
+ D_{J_\kappa,H_\kappa}(W_{J_\kappa})\right]
+\le b^+_\kappa+\eta^+_\kappa.
+\tag{10.22}
+$$
+
+Markov's inequality proves (10.20). No probability of finite completion is inferred, and no completion index is selected after inspecting the post-gate suffix. $\square$
+

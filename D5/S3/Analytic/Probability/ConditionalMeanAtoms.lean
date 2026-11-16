@@ -54,7 +54,7 @@ namespace Econlib.Probability
 namespace DiscreteLaw
 
 /-- The bin endpoints `k/n, (k+1)/n` sit in `[0, 1]` with `(k+1)/n ≤ 1`. -/
-private lemma bin_endpoints {n : ℕ} (hn : 0 < n) (k : Fin n) :
+lemma bin_endpoints {n : ℕ} (hn : 0 < n) (k : Fin n) :
     0 ≤ ((k : ℝ) / n) ∧ ((k : ℝ) + 1) / n ≤ 1 ∧ ((k : ℝ) / n) < ((k : ℝ) + 1) / n := by
   have hn_pos_R : (0 : ℝ) < n := by exact_mod_cast hn
   refine ⟨?_, ?_, ?_⟩
@@ -69,7 +69,7 @@ private lemma bin_endpoints {n : ℕ} (hn : 0 < n) (k : Fin n) :
     linarith
 
 /-- Volume (as a real) of the `k`-th bin equals `1/n`. -/
-private lemma volume_real_bin {n : ℕ} (hn : 0 < n) (k : Fin n) :
+lemma volume_real_bin {n : ℕ} (hn : 0 < n) (k : Fin n) :
     (MeasureTheory.volume : Measure ℝ).real
       (Set.Ioc ((k : ℝ) / n) (((k : ℝ) + 1) / n)) = 1 / n := by
   obtain ⟨_, _, hlt⟩ := bin_endpoints hn k
@@ -80,7 +80,7 @@ private lemma volume_real_bin {n : ℕ} (hn : 0 < n) (k : Fin n) :
   ring
 
 /-- The `Ioc` bins `Ioc (k/n) ((k+1)/n)` are pairwise disjoint across all indices. -/
-private lemma bins_pairwise_disjoint_Ioc {n : ℕ} (hn : 0 < n) :
+lemma bins_pairwise_disjoint_Ioc {n : ℕ} (hn : 0 < n) :
     (Set.univ : Set (Fin n)).Pairwise
       (Function.onFun Disjoint
         (fun k : Fin n => Set.Ioc ((k : ℝ) / n) (((k : ℝ) + 1) / n))) := by

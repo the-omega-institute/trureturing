@@ -1,0 +1,4 @@
+## 176. First-order leakage required outside the calibrated kernel
+
+Section 175 used the full first-order kernel to turn the preserved terminal channel into a strict quadratic obstruction. Removing that kernel assumption leaves an exact scalar compatibility condition rather than an unrestricted escape.
+

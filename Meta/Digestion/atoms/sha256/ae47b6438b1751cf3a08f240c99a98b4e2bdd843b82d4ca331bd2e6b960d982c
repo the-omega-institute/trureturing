@@ -1,0 +1,176 @@
+**定理 43.2（同一零费用模型的完整双侧标定与零漂移几何）。**在定理 43.1 的同一组前件下，定义原自由实差空间及其完整双侧根空间
+
+$$
+\begin{aligned}
+E&=\operatorname{span}_{\mathbb R}\{e_a=\delta_a-\delta_1:a\in M\},\\
+B(e_a,e_b)&=\frac{q(a)+q(b)-c(a,b)}2,\\
+\mathcal N&=\{n\in E:B(n,E)=B(E,n)=0\}.
+\end{aligned}
+\tag{43.15}
+$$
+
+则对全部原 $a,z\in M$ 和 $j=1,2$，有
+
+$$
+\begin{aligned}
+D(a,p_j)&:=e_{P_ja}-e_a-e_{p_j}\in\mathcal N,\\
+H_c(a,p_j;z)&=H_{c^{\mathsf T}}(a,p_j;z)=0,\\
+c(P_ja,z)&=c(a,z),\qquad c(z,P_ja)=c(z,a).
+\end{aligned}
+\tag{43.16}
+$$
+
+前两项正是同一原核的完整 $\mathrm C_1,\mathrm C_2$ 与 $\mathrm{UC}$，最后一项是此零费用模型中的个别插入不可见。存在完备复 Hilbert 空间 $H$ 和映射 $F:M\to H$，满足
+
+$$
+\begin{aligned}
+F1&=0,\qquad F(a\cdot b)=Fa+Fb,\\
+F(Ua)&=\omega Fa,\qquad
+c(a,b)=\|Fa-Fb\|^2,\qquad
+\omega=-\tfrac12+i\tfrac{\sqrt3}{2}.
+\end{aligned}
+\tag{43.17}
+$$
+
+特别，$\sqrt c$ 在此同一个模型中满足全部三角不等式。
+
+**证明。**先在尚未赋予正性的自由空间中完成从均值到标定的桥，复用第 40 节取得均值之后的代数，不输入该节的 Hilbert 支配前件。$B$ 因 $c$ 对称而对称，但此时不假设半正定。
+
+定理 43.1 证明中的锚比较给 $c(x,p_j)=q(x)$、$q(p_j)=0$，$j=1,2$。由对称性，$p_j$ 与 $1$ 的全部行列都相等。第三标记返回在插入端取单位还给 $p_3\approx1$。有限正性桥引理 2.3 的完整行列刻画于是给
+
+$$
+e_{p_1},e_{p_2},e_{p_3}\in\mathcal N.
+\tag{43.18}
+$$
+
+这一步使用全部探针的锚比较，不是仅由 $c(p_j,1)=0$ 擅取零费用商。
+
+在 $E$ 上定义线性映射 $Ae_a=e_{Ua}-e_{p_1}$。该定义尊重 $e_1=0$；逐次展开给 $A^ke_a=e_{U^ka}-e_{p_k}$。由同步等距和有限正性桥引理 2.1 的四点公式，有
+
+$$
+B(Ax,Ay)=B(x,y)\qquad(x,y\in E).
+\tag{43.19}
+$$
+
+还需先验证根稳定性，才可定义商上的作用。引理 17.1 所用的原始滑动关系在当前核上有完整前件：同步等距使 (R) 在来源 $(U^ju,U^jv)$ 的右端恒定，相邻等式相减给
+
+$$
+c\bigl(a\cdot(U^3u),b\cdot(U^3v)\bigr)
+=c(a\cdot u,b\cdot v).
+\tag{43.20}
+$$
+
+取 $v=1$ 并用第二端点返回，得到 $c(a\cdot(U^3u),b)=c(a\cdot u,b)$；另取 $u=1$ 并用第一端点返回，得到 $c(a,b\cdot(U^3v))=c(a,b\cdot v)$。再分别取背景 $a=1$ 或 $b=1$，即得 $U^3u\approx u$ 的全部原行列。这也正是有限正性桥引理 18.2 的当前对应。故
+
+$$
+(A^3-I)e_a=e_{U^3a}-e_a-e_{p_3}\in\mathcal N,
+\qquad (A^3-I)E\subseteq\mathcal N.
+\tag{43.21}
+$$
+
+现在对 $n\in\mathcal N,y\in E$ 在两个槽分别计算
+
+$$
+\begin{aligned}
+B(An,y)&=B(An,A^3y)=B(n,A^2y)=0,\\
+B(y,An)&=B(A^3y,An)=B(A^2y,n)=0.
+\end{aligned}
+\tag{43.22}
+$$
+
+第一步用 (43.21) 的双侧根性，第二步用自由空间等距 (43.19)。因此 $A\mathcal N\subseteq\mathcal N$，此后才在 $\mathcal V=E/\mathcal N$ 定义诱导算子 $V$，并记 $\beta(a)=[e_a]$。商上的同名双线性型满足
+
+$$
+\begin{aligned}
+V^3&=I,\qquad B(Vx,Vy)=B(x,y),\\
+\bigl[B(w,x)=B(x,w)=0\text{ 对全部 }x\in\mathcal V\bigr]
+&\Longrightarrow w=0.
+\end{aligned}
+\tag{43.23}
+$$
+
+最后一项只用完整根空间的定义。$\beta(M)$ 张成 $\mathcal V$，允许任意维数及零空间；没有借助正定性。
+
+定义 $v_a=e_{P_1a}+e_{P_2a}-2e_a$。已证的 $Sc=Tc=c$ 及它们的单位探针给
+
+$$
+\begin{aligned}
+2B(v_a,e_z)
+&=q(P_1a)+q(P_2a)-2q(a)\\
+&\quad-c(P_1a,z)-c(P_2a,z)+2c(a,z)=0,\\
+2B(e_z,v_a)
+&=q(P_1a)+q(P_2a)-2q(a)\\
+&\quad-c(z,P_1a)-c(z,P_2a)+2c(z,a)=0.
+\end{aligned}
+\tag{43.24}
+$$
+
+所以 $v_a\in\mathcal N$。置
+
+$$
+\alpha_j(a)=[e_{P_ja}-e_a-e_{p_j}],\qquad j=1,2.
+\tag{43.25}
+$$
+
+由 (43.18)、(43.24)，有 $\alpha_2(a)=-\alpha_1(a)$。这些向量仍按实际原标签 $a$ 索引；没有假设 $\alpha_j$ 通过 $\beta$ 因子化，没有把 $P_j$ 当成已下降的商算子。
+
+令 $L=I+V+V^2$、$J=V-V^2$。现在精确消费有限正性桥式 (8.6)，也即本卷式 (40.19)，但其中自由空间标记算子取此处的 $A$。其来源是同一个原 (R) 的极化恒等式：$X_k(1,u)=A^ke_u$，$X_k(a,1)=e_a+D(a,p_k)$。对输入对 $(1,u),(a,1)$ 及其交换次序分别配对，降到合法商后得到
+
+$$
+\begin{aligned}
+B(L\beta(u),\beta(a))
+&=-B(V\beta(u),\alpha_1(a))-B(V^2\beta(u),\alpha_2(a)),\\
+B(\beta(a),L\beta(u))
+&=-B(\alpha_1(a),V\beta(u))-B(\alpha_2(a),V^2\beta(u)).
+\end{aligned}
+\tag{43.26}
+$$
+
+用 $\alpha_2=-\alpha_1$ 并由张成性对第一输入延拓，得对全部 $x\in\mathcal V$ 的两条轴恒等式
+
+$$
+B(Lx,\beta(a))=-B(Jx,\alpha_1(a)),\qquad
+B(\beta(a),Lx)=-B(\alpha_1(a),Jx).
+\tag{43.27}
+$$
+
+算子移槽的符号不可省略。由 $V^3=I$ 和等距性，两个槽分别有
+
+$$
+\begin{aligned}
+B(Vx,y)&=B(x,V^2y),&B(x,Vy)&=B(V^2x,y),\\
+B(Lx,y)&=B(x,Ly),&B(x,Ly)&=B(Lx,y),\\
+B(Jx,y)&=-B(x,Jy),&B(x,Jy)&=-B(Jx,y).
+\end{aligned}
+\tag{43.28}
+$$
+
+所以 (43.27) 恰给 $B(x,L\beta(a)-J\alpha_1(a))=0$ 及反向配对为零。完整双侧非退化性才允许推出
+
+$$
+L\beta(a)=J\alpha_1(a)\qquad(a\in M).
+\tag{43.29}
+$$
+
+直接按 $V^3=I$ 展开，有
+
+$$
+L^2=3L,\qquad LJ=0,\qquad J^2=L-3I.
+\tag{43.30}
+$$
+
+对 (43.29) 作用 $L$，得 $3L\beta(a)=0$。因 $\beta(M)$ 张成商，$L=0$ 于整个 $\mathcal V$。继而 $J\alpha_1(a)=0$，而 $J^2=-3I$，所以 $\alpha_1(a)=0$，再得 $\alpha_2(a)=0$。这恰为每个原标签的两项 $D(a,p_j)\in\mathcal N$；有限正性桥式 (8.5) 使它们等价于 (43.16) 中全部探针、两个次序的七项式消失。
+
+再结合已经支付的 $e_{p_j}\in\mathcal N$，有 $e_{P_ja}-e_a\in\mathcal N$。有限正性桥引理 2.3 因而给 (43.16) 的个别插入不可见。这只说原核的完整行列相等，不说 $P_ja=a$，也不供应任意乘法环境中的同余。
+
+此后才应用有限正性桥定理 8.2。它的 $M,\cdot,1,U,c$ 就取当前原对象；所需的处处有限、非负、零对角和每条 (R) 均在定义 42.1 中，所需根空间恰为 (43.15)，完整 $\mathrm{UC}$ 刚已证明。故在同一个 $M$ 上得到完备复 Hilbert 空间及仿射表示
+
+$$
+F1=0,\quad F(a\cdot b)=Fa+Fb,\quad
+F(Ua)=\omega Fa+t,\quad
+c(a,b)=\|Fa-Fb\|^2,\quad t=F(p_1).
+\tag{43.31}
+$$
+
+当前零费用给 $\|t\|^2=c(p_1,1)=0$，所以 $t=0$，即 (43.17)。Hilbert 正性和范数三角只在取得完整 $\mathrm{UC}$ 后由这个既有分类进入证明，未用于取得 (43.1) 或消去单位缺陷。证毕。
+

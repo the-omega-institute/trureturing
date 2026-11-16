@@ -1,0 +1,6 @@
+**定义 176.1（原典的准确用途）。** Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，§2.6.2、Lemma 2.6.3（印刷页 47–48）给 Peirce 投影与乘法规则；Theorem 3.2.4、Corollary 3.2.5（页 79）给单生成谱演算与保单位同态对其的保持；Proposition 3.3.6（页 83）给二次表示保正；Proposition 3.3.10（页 84）给准确序单位范数；Proposition 3.4.3（页 85）给 JB 同态收缩及单射同态等距，也涵盖非含单位代数。168 对这些成熟工具作中间应用并显式核对乘法、忠实性和指定 $j$ 的延拓，不将一般 JB 直接视为特殊算子代数。有限维闭性、有限 Gram–Schmidt、有限酉谱定理、有界型表示、固定有界自伴算子的极化与正算子不等式也都是成熟工具。
+
+Bunce，[*On compact action in JB-algebras*](https://doi.org/10.1017/S0013091500004429)，Theorem 3 给简单对偶 JB 的类型及对偶／遗传／弱紧性质，Lemma 4 给极小投影闭线性包的理想和最大遗传对偶性质。它们不为一般原 $\Omega$ 构造指定的本质复 $K(H)_{\rm sa}$ 理想或一个属于原 $E$ 的有限投影。本节准确以 (167.1) 为结构前件，不以该文替代原来源。
+
+Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，DOI 10.1073/pnas.95.12.6596，动力对应定义及 Theorem 1 要求到斜顺序导子的线性赋值、自守恒及负交换子式；Baez，[arXiv:2006.14741v5，Theorem 12](https://arxiv.org/html/2006.14741v5#Thmthm12) 前的定义也明确保留这份线性前件。二者提供条件重构，不支付当前任意旧 $D$ 的原线性；这里的线性由 173 的同旧值识别取得。
+

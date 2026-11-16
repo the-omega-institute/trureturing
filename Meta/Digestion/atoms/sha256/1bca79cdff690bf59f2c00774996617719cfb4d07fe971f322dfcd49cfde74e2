@@ -1,0 +1,14 @@
+**定义 43.1（固定原域、四平面与迹对偶）。** 固定特征零域 $F$ 及同一个实际域扩张 $D/F$，$[D:F]=8$。本节的窗口与竞争窗口始终都是四维 $F$-子空间 $W,Y\le_F D$，并定义
+
+$$
+\begin{aligned}
+Q_W&=\{u/v:u,v\in W,\ v\ne0\},\\
+d_W(r)&=\dim_F(W\cap rW)\qquad(r\in D^\times),\\
+E_W&=\{c\in D:cW\subseteq W\},\\
+W^\perp&=\{z\in D:\operatorname{Tr}_{D/F}(zw)=0\text{ 对每个 }w\in W\}.
+\end{aligned}
+\tag{43.1}
+$$
+
+$Q_W$ 包含零，$d_W$ 仅在非零原标签上使用。乘除、标签与整体标量均属于这个原 $D$；不允许域自同构重标标签。可分性使迹配对非退化，故 $W^\perp$ 也是四平面。
+

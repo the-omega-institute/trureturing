@@ -1,0 +1,31 @@
+#### 定理 7.3：同一投影张量内的长度与面积
+
+对 $n\in S^2$、$v,w\in T_nS^2$，令
+
+$$
+\mathcal Q_n(v,w)=\operatorname{Tr}\bigl(P_n\,dP_n(v)\,dP_n(w)\bigr).
+$$
+
+则
+
+$$
+\boxed{\mathcal Q_n(v,w)=\frac14\bigl(v\cdot w+i\,n\cdot(v\times w)\bigr).}
+$$
+
+其实部为 Fubini–Study 度量，约定 $d_{\rm FS}=\arccos|h(\psi,\phi)|$； 虚部给有向面积的四分之一。 采用联络 $\mathcal A=i\langle\psi,d\psi\rangle$ 时，曲率为 $\mathcal F=-2\operatorname{Im}\mathcal Q$，闭路几何相位为 $-\Omega/2$ 模 $2\pi$。
+
+**证明。**
+
+$dP_n(v)=\sigma_v/2$。代入 Pauli 乘法和迹公式即得张量等式。 单位幅度的水平微分满足 $ds_{\rm FS}^2=\langle d\psi,d\psi\rangle-|\langle\psi,d\psi\rangle|^2$， 以 $P=|\psi\rangle\langle\psi|$ 展开，恰等于 $\operatorname{Re}\mathcal Q$。 在球面局部坐标选 $\psi=(\cos(\vartheta/2),e^{i\varphi}\sin(\vartheta/2))^{\mathsf T}$， 直接计算
+
+$$
+\mathcal A=-\tfrac12(1-\cos\vartheta)d\varphi,\qquad
+d\mathcal A=-\tfrac12\sin\vartheta\,d\vartheta\wedge d\varphi.
+$$
+
+后者等于所列 $-2\operatorname{Im}\mathcal Q$。 在可选局部截面的曲面片上用 Stokes 定理；换片只改变相位的 $2\pi$ 整数倍，得闭路式。
+
+$\square$
+
+这是几何量子力学与投影算子几何的标准结构。[\[12\]](#ref-ashtekar), [\[13\]](#ref-projector), [\[14\]](#ref-berry) 同一 $\mathcal Q$ 包含长度和面积，并不赋予它们相同的物理量纲。
+

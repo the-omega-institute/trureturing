@@ -1,0 +1,22 @@
+**定义 C-50.1（完整边缘的整数合同）。** 沿用 C-16.1 的高到低接缝，按印刷位序 $(x,z,y)$ 记五模式
+
+$$
+\Sigma=(O,L,T,R,J)=(000,100,010,001,101),\qquad xz=yz=0.
+$$
+
+这里 $x$ 为低位，$y$ 为高位，$z$ 为中位。先读高窗模式 $i$，后读低窗模式 $j$，合法条件仍为 $x(i)y(j)=0$。因此
+
+$$
+E=\Sigma^2\setminus\{(L,R),(L,J),(J,R),(J,J)\},\qquad |E|=21.
+$$
+
+给定 $a,b\in\mathbb Z_{\ge0}^{\Sigma}$ 和 $N\in\mathbb Z_{\ge0}$，要求 $\sum_i a_i=\sum_jb_j=N$。定义
+
+$$
+\mathcal F_{\mathbb Z}(a,b)=\left\{W\in\mathbb Z_{\ge0}^{E}:\sum_jW_{ij}=a_i,\ \sum_iW_{ij}=b_j\right\},
+\qquad
+\mathcal F_{\mathbb R}(a,b)=\left\{W\in\mathbb R_{\ge0}^{E}:\sum_jW_{ij}=a_i,\ \sum_iW_{ij}=b_j\right\}.
+$$
+
+非法格补零。$W$ 是同一批 $N$ 个双窗记录的联合计数；固定的是两份完整五模式边缘，而不只是占位均值。比较其他可行表及表间候选步仅构成数学证明搜索；它没有赋予改写原实际记录的操作权限。
+

@@ -1,0 +1,26 @@
+## 494. 固定二倍区间归一化下的矩传递与正超额峰度
+
+沿用 §490 的 $E,D_u,\rho_x,\mathcal T_{\theta,g},Q(g),S_X$ 与 §493 的概率测度 $d\mu_X=dx/(x\log2)$（$[X,2X]$ 上）及 $Z_X=\mathcal T_{\theta,g}/\sqrt{S_X}$。固定 $0<\theta<1$，令
+
+$$
+\kappa=1-\theta,\qquad r=\frac\kappa2,\qquad U_X(x)=\frac xX,\qquad
+B_X(s,x)=\frac{D_{sx^\theta}(x)}{\sqrt{x^\theta\log x}}\quad(0\le s\le1,\ X\le x\le2X).
+$$
+
+由 $E$ 的 Borel 可测性，$(s,x)\mapsto B_X(s,x)$ 联合 Borel 可测。对整数 $k\ge1$，记 $c_k=\int_1^2u^{kr}\frac{du}{u\log2}=\dfrac{2^{kr}-1}{kr\log2}$。
+
+**$k$ 阶矩接口。** 称 $E$ 满足 $(\mathrm M_k)$，若
+
+(a) 存在 $C_k$，使对充分大的 $X$，$\sup_{0\le s\le1}\mathbb E_{\mu_X}|B_X(s)|^k\le C_k$；
+
+(b) 对每个 $\mathbf s=(s_1,\dots,s_k)\in[0,1]^k$，极限
+
+$$
+M_k(\mathbf s)=\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[U_X^{kr}\prod_{j=1}^kB_X(s_j)\Bigr]
+\tag{494.1}
+$$
+
+存在。
+
+$M_k$ 作为可测函数的逐点极限是可测的；由 (a) 与 Hölder 不等式，$\bigl|\mathbb E_{\mu_X}[U_X^{kr}\prod_jB_X(s_j)]\bigr|\le2^{kr}\prod_j(\mathbb E|B_X(s_j)|^k)^{1/k}\le2^{kr}C_k$，故 $|M_k|\le2^{kr}C_k$。
+

@@ -1,0 +1,50 @@
+### 8.1　本区域的输入与输出
+
+$$
+\mathsf D_0:\quad H_J\cong\mathbb C^2,\quad M_2=\operatorname{End}_{\mathbb C}(H_J),
+$$
+
+$$
+\mathsf D_1:\quad \mathsf{QFin}:=
+\langle M_2,\mathbb C\rangle_{\otimes_{\mathbb C},\ \oplus,\ P\mathcal M P\ (P\ne0)},
+\qquad\mathcal M_+:=\{X=X^*: \langle v,Xv\rangle\ge0\ \forall v\},
+$$
+
+$$
+\mathsf D_2:\quad \operatorname{State}(\mathcal M)=
+\{\omega\in\mathcal M^*:\omega(\mathcal M_+)\ge0,\ \omega(I)=1\},
+\quad\operatorname{Eff}(\mathcal M)=[0,I],
+$$
+
+$$
+\Phi\in\operatorname{Hom}_{\mathbb C}(M_d,M_e),\qquad \mathsf P_{\rm ref}(\Phi):\quad
+\forall n\ge0,\quad(\Phi\otimes\operatorname{id}_{2^n})((M_d\otimes M_{2^n})_+)\subseteq
+(M_e\otimes M_{2^n})_+,
+$$
+
+$$
+\begin{gathered}
+T:\mathbb R\longrightarrow\operatorname{End}_{\mathbb C}(M_d),\qquad \mathsf P_{\rm time}(T):\\
+T_{s+t}=T_sT_t\ (s,t\in\mathbb R),\quad T_0=\operatorname{id},\quad t\mapsto T_t\text{ 连续},\\
+T_t\text{ 满足 }\mathsf P_{\rm ref}\text{ 且保迹}\qquad(t\in\mathbb R).
+\end{gathered}
+$$
+
+$$
+\mathsf{QFin}=\left\{\bigoplus_{j=1}^rM_{d_j}(\mathbb C):r,d_j\in\mathbb N_{\ge1}\right\},
+\quad\omega(X)=\sum_j\operatorname{Tr}(\rho_jX_j),
+\quad\Phi(X)=\sum_\mu K_\mu XK_\mu^*,
+$$
+
+$$
+T_t(\rho)=e^{-itH/\hbar}\rho e^{itH/\hbar}\qquad(H=H^*,\ \hbar>0).
+$$
+
+上面 $\mathsf D_i$ 是数学完成与对象类型的定义， $\mathsf P_{\rm ref},\mathsf P_{\rm time}$ 是作用在待识别原过程上的条件。 不能把定义某类良好过程，改写成所有原过程已自动属于该类。 若原资料要识别为标准有限量子力学，至少应逐项绑定以下四组接口：
+
+| 接口 | 数学关系 | 原来源须说明的对象 |
+|:---|:---|:---|
+| 原事件绑定 | $p_h(k)=\omega_h(E_k)$，$E_k\ge0$，$\sum_kE_k=I$ | 实际准备、全部结果、失败与归一化，及其是否经所选相位不变表示下降。 |
+| 联合绑定 | $\mathcal M_{AB}\cong\mathcal M_A\otimes_\mathbb C\mathcal M_B$，使用完整正锥 | 同一复中心、真实相关准备、原系统分解与观察者记录。 |
+| 完整过程绑定 | 原箭头复线性下降，全部迭代参考满足 $\mathsf P_{\rm ref}$ | 每次旁接的都是整个箭头，保留环境、记录、失败与仍合法未来。 |
+| 时间与更新绑定 | 可逆钟流满足 $\mathsf P_{\rm time}$；理想投影分支有指定无扰动条件 | 实际时钟、时间单位、具体生成元及测量装置性质。 |

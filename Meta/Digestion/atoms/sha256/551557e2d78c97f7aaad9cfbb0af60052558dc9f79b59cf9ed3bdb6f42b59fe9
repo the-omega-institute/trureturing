@@ -1,0 +1,63 @@
+### 21.7. Certificate search is a third resource
+
+The latest [ARITHMETIC_HOLOGRAPHIC_RT.md §48](ARITHMETIC_HOLOGRAPHIC_RT.md)
+analysis gives a separate
+finite-search analogue of this distinction. It fixes one finite target role
+set, one Fourier basis and coefficient family, and one finite explicitly
+enumerated menu $\mathscr L$ of allowed layers. An already selected stack
+prefix is an immutable sequence $\mathcal Q=(K_1,\ldots,K_\ell)$; repeated
+layers are deduplicated for coverage but remain present in the physical
+prefix length. Let $T$ be the fixed finite target-role set and, in RT §48 notation, let
+
+$$
+\overline C_K:=\{\eta\in\widehat A\setminus\{1\}:\eta\notin K^\perp\},
+\qquad C_K(X):=X\cap\overline C_K.
+$$
+
+If a layer $K$ resolves exactly the roles in $C_K(T)$,
+then a selected stack resolves the declared certificate precisely when its
+coverage sets have union $T$. With
+
+$$
+V_{\mathcal Q}=\bigcup_{K\in\underline{\mathcal Q}}\overline C_K,
+\qquad
+\Delta_{\mathcal Q}(X)=X\setminus V_{\mathcal Q},
+$$
+
+the fixed-prefix extension cost is
+
+$$
+\tau_{\rm ext}(\mathcal Q;X,\mathscr L)=
+\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L,
+\ \Delta_{\mathcal Q}(X)\subseteq
+\bigcup_{K\in\mathcal R}\overline C_K\right\},
+$$
+
+with value $0$ when the residual is empty, value $\infty$ when the
+nonempty residual is not coverable by the fixed menu, and the displayed
+minimum otherwise. For an enlarged finite threshold set $X^-=X^+\setminus\delta$,
+the residual is maintained by
+
+$$
+\Delta_{\mathcal Q}(X^+)
+=\Delta_{\mathcal Q}(X^-)
+ \cup(\delta\setminus V_{\mathcal Q}).
+\tag{21.23}
+$$
+
+In the nonempty coverable branch write $m=|\Delta_{\mathcal Q}(X^+)|$ and
+$d=\max_{K\in\mathscr L}|\overline C_K\cap\Delta_{\mathcal Q}(X^+)|>0$;
+the maximum-gain greedy extension has $s$ layers with
+
+$$
+\left\lceil\frac md\right\rceil
+\le\tau_{\rm ext}
+\le s
+\le H_d\,\tau_{\rm ext}
+\le H_m\,\tau_{\rm ext}
+\le(1+\log m)\tau_{\rm ext}.
+\tag{21.24}
+$$
+
+The bound is relative to the fixed-prefix optimum; it is not a global
+shortest-stack comparison. The following complexity expressions are

@@ -1,0 +1,10 @@
+**定义 74.6（$\mathrm{FJ},\mathrm{FH}$）。** 对上述实际 $J,H_{\mathrm s},F$ 和同一个族要求
+$$
+\mathrm{FJ}:\quad\langle Je,Jf\rangle_D=0\quad(e\ne f\in\mathsf B_r;\ 1\le r\le s), \tag{74.10}
+$$
+$$
+\mathrm{FH}:\quad\langle H_{\mathrm s}F(e,f),H_{\mathrm s}F(e',f')\rangle_E=0
+\quad\substack{e,e'\in\mathsf B_r,\ f,f'\in\mathsf B_t,\ (e,f)\ne(e',f');\\1\le r,t\le s}. \tag{74.11}
+$$
+只比较每个框架内部，不要求不同框架之间交叉正交，也不预设 $F(e,f)$ 本原。$F$ 已由命题 74.4 定义，未借用 $D_H$ 或 C13。
+

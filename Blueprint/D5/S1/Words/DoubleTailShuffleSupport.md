@@ -30,7 +30,19 @@ $$\forall (m: \mathbb{N}), \operatorname{card}\left(\operatorname{toFinset}\left
 
 Every output is a ones, zero, b ones, zero, c ones, zero, zero, where a+b+c=2m and a is at least m. To see necessity, first shuffle a single zero against a unary prefix with two terminal zeros, then two zeros against that word, and finally two unary prefixes by induction on their total length. In each recursive branch the next digit comes from one operand, and all terminal zeros remain accounted for. Conversely put i=b+c and j=b. For every pair 0<=j<=i<=m, read all m ones from the first copy, m-i ones from the second, the first zero from the first copy, j ones from the second, the second zero from the first copy, and finally the remaining i-j ones and two zeros from the second. This produces precisely the three runs of lengths m+(m-i), j and i-j. The unary-gap uniqueness theorem recovers i and j from the output word. Thus the support is an injective image of the triangular parameter set, whose cardinality is the sum of i+1 for i from zero through m. This is an equality of distinct-word cardinalities for every natural m, including zero.
 
-**Theorem 1.3 (Ordinary numeral of a power minus four).**
+**Theorem 1.3 (Value of an all-ones binary word).**
+
+$$\forall (m: \mathbb{N}), \operatorname{Nat.ofDigits}\left(2, \operatorname{List.replicate}\left(m, 1\right)\right) + 1 = 2^{m}$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/DoubleTailShuffleSupport.ones_value` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural m, decoding m copies of digit one in base two and adding one gives 2^m. The empty word is included at m=0. This identity is used by the binary root calculation and the literal equal-run integer-sum recurrence.
+
+**Theorem 1.4 (Ordinary numeral of a power minus four).**
 
 $$\forall (k: \mathbb{N}), 3 \le k\implies \operatorname{binaryWord}\left(2^{k} - 4\right) = \operatorname{root}\left(k - 2\right)$$
 
@@ -42,7 +54,7 @@ $$\forall (k: \mathbb{N}), 3 \le k\implies \operatorname{binaryWord}\left(2^{k} 
 
 For k at least three, the positive natural number 2^k-4 equals four times the quantity (2^(k-2)-1). The latter factor has k-2 binary ones; multiplication by four appends two zeros. The existing binaryWord definition reverses the least-significant-first base-two digits and maps digit one to true. This is the ordinary numeral without leading zeros.
 
-**Theorem 1.4 (The full eventual minus-four identity).**
+**Theorem 1.5 (The full eventual minus-four identity).**
 
 $$\exists (K: \mathbb{N}), (3 \le K\land \forall (k: \mathbb{N}), K \le k\implies \operatorname{distinctSelfShuffleCount}\left(2^{k} - 4\right) = \operatorname{Nat.div}\left(k \cdot (k - 1), 2\right))$$
 
@@ -63,6 +75,7 @@ The published sequence counts distinct complete self-shuffle output words of an 
 ## References
 
 - Truth anchor: `D5/S1/Words/DoubleTailShuffleSupport.binary_root_original`
+- Truth anchor: `D5/S1/Words/DoubleTailShuffleSupport.ones_value`
 - Truth anchor: `D5/S1/Words/DoubleTailShuffleSupport.result`
 - Truth anchor: `D5/S1/Words/DoubleTailShuffleSupport.root`
 - Truth anchor: `D5/S1/Words/DoubleTailShuffleSupport.self_shuffle_card`

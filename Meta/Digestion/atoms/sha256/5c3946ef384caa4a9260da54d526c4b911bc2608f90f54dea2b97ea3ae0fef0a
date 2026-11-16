@@ -1,0 +1,80 @@
+**定理 9.1（原双线性、结合星乘法、原 R 与原范数正表）。** 在 (1.3) 下，定理 1.2 的全部原代数结论成立；不要求 $\mathcal N=0$。特别地，$N(D(a,b))\le N(a)N(b)$。对每个 $z\in E\cap Z(X)$，$D(z,a)=0$，且原中央平移中性。不同非经典分量的符号不必一致。
+
+证明。8.1 已在每个分量认回全部原输入的旧值。以第二槽的加法缺陷为例，
+
+$$
+\delta=D(a,b+c)-D(a,b)-D(a,c)\in E,
+\qquad \rho_\lambda(\delta)=0\quad(\lambda\in\Lambda).
+\tag{9.1}
+$$
+
+右式只展开已经知道的算子交换子，不先展开原 $D$。4.3 与 (1.3) 给 $\delta\in E\cap\mathcal N=0$。对 $D(a,tb)-tD(a,b)$ 及第一槽的两个缺陷作同一判断，所有这些缺陷仍在原 $E$ 中，得到原 $D$ 的实双线性。这一步只用原域单射性。
+
+原范数界直接复用[静态重构卷 (32.1)–(32.2)](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)，其背景正是 [128.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#128-同一二元关系的完整候选与实际角) 的准确原序单位空间与 P2。具体地，对每个原正评价有
+
+$$
+|\alpha D(a,b)|
+\le\sqrt{\alpha(a^2)\alpha(b^2)}
+\le m_\alpha N(a)N(b),\qquad
+N(D(a,b))\le N(a)N(b).
+\tag{9.2}
+$$
+
+最后一步用原评价决定的序单位范数，不用 $\sup_\lambda\|\rho_\lambda(\cdot)\|$。这个逐点界在双线性之前也成立，但只有现在才给有界双线性映射的唯一完成延拓 $\bar D:X^2\to X$；它不是任何先前原调用的替身。
+
+令 $\mathcal E=E\oplus iE$ 为原形式复化。映射 $\rho_{\mathbb C}(a+ib)=(\rho_\lambda a+i\rho_\lambda b)_\lambda$ 在 $\mathcal E$ 上单射：若每个坐标为零，取其已知算子实虚部，原 $a,b$ 分别落入 $E\cap\mathcal N$。定义原 $\star$ 为 $a\star b=a\circ b-iD(a,b)$ 的复双线性延拓，共轭为星。由原值域闭合，$\star:\mathcal E^2\to\mathcal E$。对自伴原 $a,b$，
+
+$$
+\rho_{\lambda,\mathbb C}(a\star b)=
+\begin{cases}
+\rho_\lambda(a)\rho_\lambda(b),&\varepsilon_\lambda=-1,\\
+\rho_\lambda(b)\rho_\lambda(a),&\varepsilon_\lambda=+1.
+\end{cases}
+\tag{9.3}
+$$
+
+经典分量取通常乘法。复双线性使同一式适用于全部 $\mathcal E$。每个坐标的通常／相反乘法都结合且符合星律；原结合子仍在 $\mathcal E$ 中，故原单射性给原 $\star$ 的结合律。$S$ 对称、$D$ 反对称也直接给 $(Z\star W)^*=W^*\star Z^*$。又 (1.7) 使原 $D(u,a)$ 的全部坐标为零，原单射性给 $D(u,a)=0$，所以 $u$ 是同一 $\star$ 的单位。结合律在原自伴三输入上的实部准确为
+
+$$
+(a\circ b)\circ c-D(D(a,b),c)
+=a\circ(b\circ c)-D(a,D(b,c)).
+\tag{9.4}
+$$
+
+每个内层旧输出本来就在 $E$，两个外层仍调用同一个原 $D$。异号分量不被转置掉；[162.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#162-混合中央方向为何不能抹掉) 的混合取向与通常乘法闭合的区别继续适用。所构造乘法由指定 $S,D$ 唯一决定，不主张原 Jordan 结构自己排除相反取向。
+
+全部有限原正表准确消费静态重构卷 32.2 中“双线性加 P2”的方向，不用原子坐标反映正性。为明确参数和符号，给定原 $a_1,\ldots,a_m$ 和 $c_r=s_r+it_r$，置
+
+$$
+x=\sum_rs_ra_r\in E,\qquad y=\sum_rt_ra_r\in E,
+\qquad T_0=x+iy.
+$$
+
+已付的双线性、对称性和反对称性给该既有二表合并公式
+
+$$
+\begin{aligned}
+\sum_{r,s}\bar c_rc_s
+\bigl(\alpha(a_r\circ a_s)-i\alpha D(a_r,a_s)\bigr)
+&=\alpha\bigl(x^2+y^2+2D(x,y)\bigr)\\
+&=\alpha_{\mathbb C}(T_0^*\star T_0)\ge0.
+\end{aligned}
+\tag{9.5}
+$$
+
+不等式正是原 P2 在原对 $(x,y)$、系数 $(1,i)$ 上的值。它对每个未改变的原 $\alpha$ 成立；准确锥还给 $T_0^*\star T_0\in C$。不能改用“全部原子坐标非负”作此推断。一般 $\rho_\lambda(T_0^*\star T_0)$ 确实分别是 $T_\lambda^*T_\lambda$ 或 $T_\lambda T_\lambda^*$，但 (1.3) 没有给这些坐标的锥反射。
+
+因此已有静态重构卷 23.1、6.3 的整个原入口也已逐项支付：其 $E,C,u,N,\mathcal P,S,D$ 是 [128.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#128-同一二元关系的完整候选与实际角) 的同一资料，前三组原关系原样给定，第四组 R 由 (9.4) 得到；或者用已得全部 Gram 给其 $\mathsf P_3$，配合未改变的完整 PB。直接消费其 6.3，得到同一 $X\oplus iX$ 的相容 C* 完成、原锥和原实范数保持，以及原 $\mathcal E$ 的稠密含单位星子代数接口。准确复范数为该卷 (6.5)：
+
+$$
+\|x+iy\|_{\star}^2
+=\|x^2+y^2+2\bar D(x,y)\|_X\qquad(x,y\in X).
+\tag{9.6}
+$$
+
+这是已有重构定理在所有前件支付后的应用，不由可能有核的所选原子坐标定义这个范数，也不另行重证动力对应。特别地，同一原范数可以完整保留，而这些原子坐标仍不恢复它。数学完成后的额外忠实表示与 (1.6) 的固定原子表示是不同要求，10.1 中前者存在而后者在完成上有核。
+
+每个原评价仍作用于整个原 $E$，并沿此原范数延续为上述 C* 完成的正泛函，范数为原质量 $m_\alpha$；这是静态重构卷 6.3、7 的既有评价接口。奇异评价不被替换为原子块上的正常态求和。若 $m_\alpha=0$，$|\alpha(a)|\le m_\alpha N(a)$ 直接给恒零；不做除法。零、不等及次归一质量全部保留。
+
+最后，若 $z\in E\cap Z(X)$，对 $I_\lambda$ 的每颗最小投影 $e$，$[L_z,L_e]e=0$ 给 $L_e^2z=L_ez$，故 $U_ez=e\circ z$。置 $A=\rho_\lambda(z)$、$P=j_\lambda(e)$，表示中即 $PAP=(PA+AP)/2$；所以 $A$ 与每个秩一 $P$ 交换，必为该块标量。经典块本来就是标量。由 (1.7)，原 $D(z,a)$ 的全部坐标为零，原单射性给 $D(z,a)=0$；已付双线性再给中央平移中性。在只给 (1.3) 时，不从一般 $z\in X$ 的原子坐标为标量推断它属于 $Z(X)$。若另给 (1.4)，则反向也成立：全部坐标为标量使 $[L_z,L_x]y$ 对任意 $x,y\in X$ 的每个坐标为零，完成单射性给 $[L_z,L_x]y=0$，即 $z\in Z(X)$。不同理想之间没有非零 Peirce 连接，[143.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#143-有限原-jb-完成的完整旧关系分类) 的相交角取向比较只在一个分量内施行；已有 [122.2](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#122-有限jordan模型的复数域成为准入结论)、[162.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#162-混合中央方向为何不能抹掉) 的异号实例继续适用。$X=0$ 的全部等式在零对象中成立，无需正质量态。∎
+

@@ -1,0 +1,59 @@
+## 74. 一个大单位标签使定号张成对的输出全纯
+
+先在本证明内部复用 52.2 的点上 P2 计算：若两个实际输入点像的实张成包含严格正定或严格负定矩阵，则
+
+$$
+D(a,b)(\xi)=(\delta,z)
+\quad\Longrightarrow\quad
+v\cdot z=\alpha\delta,\qquad w\cdot z=\beta\delta,
+\tag{74.1}
+$$
+
+其中 $a(\xi)=(\alpha,v),b(\xi)=(\beta,w)$。不使用 52 后面的多项式延拓。其点上对应可直接核对：实际 SO$(2)$ 将标量部分调成 $(\lambda,0)$、$\lambda>0$，再选 $w=s e_3,v=h e_1+t e_3$。定号张成等价于 $\lambda>|h|$；原 P2 行列式是 $s^2[(\lambda n_1+h)^2+\lambda^2n_2^2]$。两枚单位读取 $n=(-h/\lambda,0,\pm\sqrt{1-h^2/\lambda^2})$ 使它归零，给 $z_3=0,\lambda\delta=hz_1$，即 (74.1)。$w=0$ 由零像预算处理，撤销实际旋转即可。
+
+现在仍设这对输入的点张成含定号矩阵；作实际常数 SO$(2)$ 旋转，记为 $a(\xi)=(\lambda,v),b(\xi)=(0,w)$、$\lambda>0$。令
+
+$$
+d=(\delta,z),\qquad h=v\cdot w,\qquad r=\|w\|^2.
+$$
+
+(74.1) 已给 $w\cdot z=0,v\cdot z=\lambda\delta$。若 $h=0$，73.5 立即给 $\delta=0$，结论已得。以下设 $h\ne0$，取一个有限正实数和实际第三标签
+
+$$
+T>|h|+\lambda\|w\|+\|w\|+1,\qquad c=Tu.
+\tag{74.2}
+$$
+
+全单位行使两对实际外层的点像准确为
+
+$$
+\begin{aligned}
+P_\pm&=(\pm(\delta-T\lambda),\ w\pm z\mp Tv),\\
+Q_\pm&=(T\pm h,\ \pm\lambda w).
+\end{aligned}
+\tag{74.3}
+$$
+
+两份 $Q_\pm$ 均严格正定。只对这些外层使用已知 P2 约束 (74.1)，不预付它们的输出纯性。PB 中标量第三标签的两项抵消，给 $Y_+-Y_-=-2b(\xi)\circ d=(0,-2\delta w)$。因此可写两份实际旧输出为
+
+$$
+Y_\pm=(\eta,m\mp\delta w).
+\tag{74.4}
+$$
+
+对 $Q_\pm,Y_\pm$ 的两份 (74.1) 分别是
+
+$$
+\lambda(w\cdot m-\delta r)=(T+h)\eta,\qquad
+-\lambda(w\cdot m+\delta r)=(T-h)\eta.
+$$
+
+相加、相减给 $\eta=-\lambda\delta r/T$、$w\cdot m=-h\delta r/T$。对 $P_\pm,Y_\pm$ 的两份 (74.1) 相加，使用 $w\cdot z=0$，又给 $w\cdot m=-T\delta h$。所以
+
+$$
+\delta h(T^2-r)=0.
+\tag{74.5}
+$$
+
+$h\ne0$ 且 $T^2>r$，故 $\delta=0$。再用 (74.1)，撤销实际旋转，已得：任何点张成含定号矩阵的实际原对，其旧输出纯且垂直两输入的向量部分。外层只用 P2；没有以该结论自身作为前件。
+

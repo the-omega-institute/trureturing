@@ -1,0 +1,65 @@
+**定理 22.2（全部实际探针的环境面积底界）。** 对定义 22.1 的每份输入、每个实际 $x$ 和全部原正泛函，有
+
+$$
+\boxed{\mathcal A_+(x,\phi)+\mathcal A_-(x,\phi)
+\ \ge\ \tfrac12\phi\bigl(ct(1-P)tc\bigr).}
+\tag{22.2}
+$$
+
+不要求 P2，亦不要求 $s=\rho\operatorname{diag}(1,-2)\oplus0_m$；定义 17.1 的任意实对角残量均允许。
+
+证明。先取同一个原向量 $\xi=(u,y)$，置
+
+$$
+w=V^*Cu,\qquad d=V^*u+D_{\rm env}y.
+\tag{22.3}
+$$
+
+由原块矩阵 (17.11)–(17.12)，两对作用向量的环境部分准确为
+
+$$
+(R_\pm\xi)_{\rm env}=\mp w/2,\qquad
+(S_\pm\xi)_{\rm env}=d\mp\sigma i w/2.
+\tag{22.4}
+$$
+
+$w=0$ 时 (22.2) 的向量版本只是 Gram 非负性。设 $w\ne0$，在原复 Hilbert 空间的实化中取正交单位向量
+
+$$
+e=(0,w)/\|w\|,\qquad f=(0,iw)/\|w\|,
+\qquad (a,b)_{\mathbb R}=\operatorname{Re}(a^*b).
+$$
+
+任意两向量的实 Gram 面积不小于其在 $\operatorname{span}_{\mathbb R}\{e,f\}$ 上的有向面积绝对值。具体地，第一向量 $a\ne0$ 时，把第二向量写成 $b=\lambda a+b_\perp$，$\lambda\in\mathbb R$、$b_\perp\perp_{\mathbb R}a$。投影行列式中的 $\lambda a$ 消去，二维 Cauchy–Schwarz 将其绝对值控制为 $\|a\|\|b_\perp\|$，正好是原实 Gram 面积；$a=0$ 时两者均为零。这一步只投影作用向量以取得下界，没有替换原算子的平方。
+
+用 (22.4) 计算这个有向面积，得到
+
+$$
+\begin{aligned}
+\mathcal A_+(x,\phi_\xi)
+&\ge\frac12\left|\operatorname{Im}(w^*d)-\frac{\sigma}{2}\|w\|^2\right|,\\
+\mathcal A_-(x,\phi_\xi)
+&\ge\frac12\left|\operatorname{Im}(w^*d)+\frac{\sigma}{2}\|w\|^2\right|.
+\end{aligned}
+\tag{22.5}
+$$
+
+两式中的 $d,w$ 来自同一个 $\xi$。实数三角不等式给两右端之和至少为 $\|w\|^2/2$，而
+
+$$
+\phi_\xi\bigl(ct(1-P)tc\bigr)=\|(1-P)tc\xi\|^2=\|V^*Cu\|^2.
+\tag{22.6}
+$$
+
+这证明全部原向量的断言。
+
+对任意 $\phi=\sum_j\phi_{\xi_j}$，直接使用 (17.15)，分别在两笔原预算中对同一谱分解求和：
+
+$$
+\mathcal A_+(x,\phi)+\mathcal A_-(x,\phi)
+\ge\sum_j\bigl(\mathcal A_+(x,\phi_{\xi_j})+\mathcal A_-(x,\phi_{\xi_j})\bigr)
+\ge\tfrac12\sum_j\phi_{\xi_j}\bigl(ct(1-P)tc\bigr).
+$$
+
+最后一和是 (22.2) 的右端。空谱分解处理零泛函，未除以任何质量。∎
+

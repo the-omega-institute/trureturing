@@ -1,0 +1,53 @@
+**定理 111.6（三项非负亏损及统一上界）。** 现在只假设W与G，
+即存在同一原 $U$ 使 $p+2c_p=U$ 对全部原纯点成立。
+本节及111.7—111.8不假设任何框架满足 $\mathcal I_F=0$。
+固定任意原joint $F$，此时 $U_F=U$；仍只在 $V_F$ 上使用111.3的 $h_F$。
+对每个原纯点 $x$ 定义
+
+$$
+X_F(x)=\pi_Fx,\qquad Y_F(x)=Y_{a_x},\qquad
+\delta_F(x)=a_x(\mathcal I_Fx).
+\tag{VIII111.21}
+$$
+
+简记 $X=X_F(x)$、$Y=Y_F(x)$、$\|\cdot\|=\|\cdot\|_{h_F}$，则
+
+$$
+\begin{gathered}
+\|X\|\le1,\qquad\|Y\|\le1,\qquad
+ h_F(U,X)=h_F(U,Y)=1,\\
+\delta_F(x)=1-h_F(Y,X)\\
+\hphantom{\delta_F(x)}
+ =\frac12\left[(1-\|X\|^2)+(1-\|Y\|^2)+\|X-Y\|^2\right],\\
+1-\|X\|^2\ge0,\qquad1-\|Y\|^2\ge0,\qquad\|X-Y\|^2\ge0,\\
+0\le\delta_F(x)\le\frac43.
+\end{gathered}
+\tag{VIII111.22}
+$$
+
+三个亏损依次量原态可见向量的长度缺口、原确认尺可见Riesz向量的长度缺口、
+以及两者的错位。$\mathcal I_Fx$ 是有符号剩余，不是另一张原归一态；
+$\delta_F(x)$ 是该剩余经原proper尺读出的差值，不是单独正态上的probability。
+
+证明。W与G给 $a_x(U)=a_x(x+2c_x)=1$，而
+$u\mathcal I_F=0$、$u(x)=1$，故 $u(X)=1$。
+111.3的两个界分别给 $\|X\|,\|Y\|\le1$；
+$h_F(U,\cdot)=u$ 在 $V_F$ 上及Riesz定义给两个配对均为一。
+原 $a_x(x)=1$，且 $a_x(\pi_Fx)=h_F(Y,X)$，所以展开平方即得三项恒等式。
+此处没有把 $a_x$ 在 $Z_F$ 上的值写成一个未定义的全空间 $h_F$ 配对。
+
+令 $a=\sqrt{2/3}$，中心化得
+
+$$
+\widehat X=X-U/3,\qquad\widehat Y=Y-U/3,\qquad
+h_F(U,\widehat X)=h_F(U,\widehat Y)=0,\qquad
+\|\widehat X\|,\|\widehat Y\|\le a.
+\tag{VIII111.23}
+$$
+
+因为 $\|U/3\|^2=1/3$，有
+$h_F(Y,X)=1/3+h_F(\widehat Y,\widehat X)\ge1/3-2/3=-1/3$，
+从而 $\delta_F(x)\le4/3$。
+下界由三个亏损非负给出。证明仅用W、G和固定框架的两侧正性，
+没有输入全纯非零读数互易。证毕。
+

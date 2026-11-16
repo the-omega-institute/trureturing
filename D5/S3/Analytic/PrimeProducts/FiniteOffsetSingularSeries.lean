@@ -32,7 +32,7 @@ noncomputable def offsetLocalFactor (H : Finset Int) (p : Nat.Primes) : Real :=
 noncomputable def offsetSingularSeries (H : Finset Int) : Real :=
   ∏' p : Nat.Primes, offsetLocalFactor H p
 
-private theorem binomial_remainder_le (x : Real) (hx : 0 <= x) (hx1 : x <= 1)
+theorem binomial_remainder_le (x : Real) (hx : 0 <= x) (hx1 : x <= 1)
     (n : Nat) : (1 - x) ^ n - (1 - n * x) <= (n : Real) ^ 2 * x ^ 2 := by
   induction n with
   | zero => simp
@@ -50,22 +50,30 @@ private theorem binomial_remainder_le (x : Real) (hx : 0 <= x) (hx1 : x <= 1)
     push_cast
     nlinarith [sq_nonneg x, mul_nonneg hn (sq_nonneg x)]
 
+/-- Integer offsets remain distinct modulo any modulus larger than their diameter. -/
+theorem local_residue_count_eq_card_of_diameter_lt (H : Finset Int) (diameter p : Nat)
+    (hdiam : ∀ a ∈ H, ∀ b ∈ H, (b - a).natAbs ≤ diameter) (hp : diameter < p) :
+    localResidueCount H p = H.card := by
+  classical
+  apply Finset.card_image_of_injOn
+  intro a ha b hb hab
+  have habcast : (a : ZMod p) = (b : ZMod p) := neg_injective hab
+  have hdvd : (p : Int) ∣ b - a :=
+    (ZMod.intCast_eq_intCast_iff_dvd_sub a b p).mp habcast
+  have hbound : (b - a).natAbs < (p : Int).natAbs := by
+    simpa only [Int.natAbs_natCast] using (hdiam a ha b hb).trans_lt hp
+  exact (sub_eq_zero.mp (Int.eq_zero_of_dvd_of_natAbs_lt_natAbs hdvd hbound)).symm
+
 private theorem offset_factor_deviation_summable (H : Finset Int) :
     Summable (fun p : Nat.Primes => |offsetLocalFactor H p - 1|) := by
   classical
   let diameter := (H.product H).sup (fun ab => (ab.2 - ab.1).natAbs)
   have residue_stabilizes (p : Nat.Primes) (hp : diameter < p.val) :
       localResidueCount H p.val = H.card := by
-    apply Finset.card_image_of_injOn
-    intro a ha b hb hab
-    have habcast : (a : ZMod p.val) = (b : ZMod p.val) := neg_injective hab
-    have hdvd : (p.val : Int) ∣ b - a :=
-      (ZMod.intCast_eq_intCast_iff_dvd_sub a b p.val).mp habcast
-    have hbound : (b - a).natAbs < (p.val : Int).natAbs := by
-      simpa only [Int.natAbs_natCast] using
-        (Finset.le_sup (f := fun ab : Int × Int => (ab.2 - ab.1).natAbs)
-          (show (a, b) ∈ H.product H from Finset.mem_product.mpr ⟨ha, hb⟩)).trans_lt hp
-    exact (sub_eq_zero.mp (Int.eq_zero_of_dvd_of_natAbs_lt_natAbs hdvd hbound)).symm
+    exact local_residue_count_eq_card_of_diameter_lt H diameter p.val (by
+      intro a ha b hb
+      exact Finset.le_sup (f := fun ab : Int × Int => (ab.2 - ab.1).natAbs)
+        (show (a, b) ∈ H.product H from Finset.mem_product.mpr ⟨ha, hb⟩)) hp
   have denominator_pos (p : Nat.Primes) :
       0 < (1 - 1 / (p.val : Real)) ^ H.card := by
     have hp : (1 : Real) < p.val := by exact_mod_cast p.property.one_lt

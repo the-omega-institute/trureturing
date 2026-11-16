@@ -20,7 +20,7 @@ open VarianceTransfer (increment_product_comp_integrableOn)
 
 noncomputable section
 
-private lemma length_div_tendsto_zero {θ : ℝ} (hθ : θ < 1) (c : ℝ) :
+lemma length_div_tendsto_zero {θ : ℝ} (hθ : θ < 1) (c : ℝ) :
     Tendsto (fun X => fixedLength θ c X / X) atTop (𝓝 0) := by
   have h := (tendsto_rpow_neg_atTop (sub_pos.mpr hθ)).const_mul c
   simp only [mul_zero] at h

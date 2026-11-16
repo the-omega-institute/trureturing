@@ -1,0 +1,25 @@
+**推论 119.4（原角的指定自旋消费者）。** 另有原 NN 和完整 J。若某实际原 $p\ne0$ 的角完成确有保单位 Jordan 识别 $X_p=\mathbb Rp\oplus H_p$ 为实 Hilbert 自旋代数，则可对同一个 $D_p$ 直接消费推论 98.4，得到
+
+$$
+\dim H_p\in\{0,1,3\},\qquad E_p=X_p,
+\qquad D_p\text{ 满足该角全部原 }R.
+\tag{119.13}
+$$
+
+零、一维向量支的 $D_p=0$；三维向量支在固定一次正交取向后为同一个全局符号的叉积。这里没有假定所有角都是自旋代数。
+
+证明。令 $V_p=E_p\cap H_p$。因 $p\in E_p$，减去原标量倍 $p$ 给 $E_p=\mathbb Rp\oplus V_p$；对稠密 $E_p$ 用连续向量坐标投影，得 $V_p$ 在 $H_p$ 稠密。保单位 Jordan 识别及其逆都保持平方锥；定理 119.3 的准确角锥和序单位范数遂给
+
+$$
+\begin{aligned}
+(sp+x)\circ(tp+y)&=(st+\langle x,y\rangle)p+sy+tx,\\
+C_p&=\{sp+x\in E_p:s\ge\|x\|\},\qquad
+N_p(sp+x)=|s|+\|x\|.
+\end{aligned}
+\tag{119.14}
+$$
+
+推论 98.4 的准确代入为：原域 $E\mapsto E_p$，完成 $X\mapsto X_p$，单位 $u\mapsto p$，向量域 $V\mapsto V_p$，评价 $\alpha\mapsto\alpha_p$（仍以原 $\alpha$ 索引），$S,D\mapsto S_p,D_p$，$K_a\mapsto K_a^p$。其 (98.1) 是 (119.14)，实际有向 (98.2) 和 NN (98.3) 由 119.3 逐值继承。纯实入口的实平方、相加核、单位与同一小窗口也已由 119.3 支付。完整 J 对 $x\in V_p\setminus\{0\}$、$y,z\in V_p\cap x^\perp$ 正是 (98.15)，内外层都在原角中。
+
+因此定理 98.2 先支付全角 PY，再由推论 98.4 所引用的 §§32–34 取得 (119.13)、原域饱和及局部取向；不重证那里的标量／根论证或分类。这里调用的是其静态代数推论，没有把数学角宣布为独立实际来源系统，也不把其物理消费者的来源前件从角内代数中制造出来。∎
+

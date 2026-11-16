@@ -1,0 +1,27 @@
+**定义 4.1（同态只读取已知结构）。** 保持定义 1.1 的同一原 $E,C,u,N,\mathcal P,S,D$、原 A1–A3、准确锥、全部原 P2 与完整 PB。取含单位实 JB 代数 $Y$ 及连续含单位 Jordan 同态
+
+$$
+q:X\longrightarrow Y,\qquad \overline{q(X)}^{\|\cdot\|}=Y.
+\tag{4.1}
+$$
+
+于是 $q(E)$ 在 $Y$ 中范数稠密。$q$ 只保持已知实线性、单位及 Jordan 乘法；不在 $q(E)$ 上定义响应，不将同像原代表视为可互换。Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，Proposition 3.4.3（印刷页 85）还给 $q(X)$ 闭，故这里 $q$ 实际满射；$q(E)$ 则不要求满射。任意同态的闭含单位 JB 像均可作为这里的 $Y$。零目标单独按零映射处理。
+
+若 $\beta$ 是 $Y$ 上数学正实线性泛函，则 $\beta\circ q|_E$ 在原准确锥上正，故配平主卷引理 129.1 使其读取每张实际原 P2；PB 的原元素等式亦可由它读取。准确预算是
+
+$$
+|\beta(qD(v,w))|^2
+\le \beta((qv)^2)\beta((qw)^2)-\beta(qv\circ qw)^2
+\qquad(v,w\in E).
+\tag{4.2}
+$$
+
+这种拉回是数学读取，不增加实际准备或改变其质量。尤其 $qv=0$ 使第一对角为零，所有正 $\beta$ 都读到 $qD(v,w)=0$；正泛函分离 $Y$ 给
+
+$$
+qv=0\quad\Longrightarrow\quad qD(v,w)=0.
+\tag{4.3}
+$$
+
+反对称性处理第二槽。这个零像吸收是配平主卷 241.1 的零对角机制在任意 JB 像中的直接应用，不包含 $qD(v+k,w)=qD(v,w)$ 的一般纤维断言。
+

@@ -1,0 +1,11 @@
+**定义 123.9（边界原单位接触）。** 对 $p\in P_{\rm reg}$ 定义
+
+$$
+\theta_p=\min_{z\in\partial Z_p}\Lambda_p(z),\qquad
+\mathsf{UC}_{\rm reg}:\quad
+\overline{\{p\in P_{\rm reg}:\theta_p=1\}}^{\,P}=P.
+\tag{Q123.29}
+$$
+
+边界相对于 $\mathbb R^3$，因为整颗 $\mathbb B^3\subset Z_p$。紧非空 $\partial Z_p$ 与下半连续性给最小值达到；$1\le\theta_p\le1/\sigma_p$。这里最小值是一，不是只要求费用有限或有界。
+

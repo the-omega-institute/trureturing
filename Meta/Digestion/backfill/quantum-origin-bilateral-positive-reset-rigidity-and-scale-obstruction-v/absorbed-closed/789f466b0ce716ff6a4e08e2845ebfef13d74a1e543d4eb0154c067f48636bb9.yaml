@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:789f466b0ce716ff6a4e08e2845ebfef13d74a1e543d4eb0154c067f48636bb9
+  normalized_sha256: sha256:789f466b0ce716ff6a4e08e2845ebfef13d74a1e543d4eb0154c067f48636bb9
+cas_ref: sha256:789f466b0ce716ff6a4e08e2845ebfef13d74a1e543d4eb0154c067f48636bb9
+coverage_gids:
+  - gid: D5/S3/Topology/EJADefiniteDomain.domain_jordan_closed
+    target_statement_id: sha256:e2e7170ab90f1d3856803651d0ddd06dcdf5ac0ec44b6ac56ab2e78e09d5e1a1
+  - gid: D5/S3/Topology/EJADefiniteDomain.mixedDomain
+    target_statement_id: sha256:c94dab1849e148688be0e685f539de5f292ee6bc8349dc91d049afd86234a3d9
+  - gid: D5/S3/Topology/EJADefiniteDomain.mixed_of_zero_defect
+    target_statement_id: sha256:4eca5111f9c0e27667030de116619c860cc1681c9337ab03340da71c6e5b376d
+  - gid: D5/S3/Topology/EJADefiniteDomain.square_defect
+    target_statement_id: sha256:67bf2673128c18c1ddbf0e60b7b5d0e94491dfd2e39c517c59a824feead0a4a3
+  - gid: D5/S3/Topology/EJAFiniteSpectral.finite_spectral_resolution
+    target_statement_id: sha256:78314eecdf092b39bffaff543c4bdd4b7c091b616e6ccecdd64a4533cad83ffc
+  - gid: D5/S3/Topology/EJASpectralNorm.jb_data
+    target_statement_id: sha256:180f69824db65f4fd314345c7650fedaa66cd325f93e5c90cd4de2bf2f7ff2a1
+  - gid: D5/S3/Topology/JBComplexification.quadratic_preserves_squares
+    target_statement_id: sha256:871dbb7574e4f7a1c9aa55df4f616b7a5dcadd3c0392edcd168fedde1415a0f2
+  - gid: D5/S3/Topology/JBFiniteSpectral.finite_spectral_resolutions
+    target_statement_id: sha256:d3c02815e12d321a80301a83eb74cc2c78d12c671011e885fbbc9c7391ade294
+  - gid: D5/S3/Topology/JBSquareDefect.square_defect_identity
+    target_statement_id: sha256:8430031963be9c293e5e26c3c5fb344bfb3575e2661bb0bf7bf72f140cac3905
+receipts:
+  unresolved_subitems: []

@@ -10,6 +10,7 @@
    it adds a polynomial correction to the square-variable logarithm and
    derives a lower bound for the reflected gap. It makes no PSD or RH claim. -/
 
+import D5.S3.Analytic.Convexity.StrictConcaveSymmetricSum
 import D5.S3.Weil.ZetaGamma.ThetaReflectedKernelComparison
 import D5.S3.Analytic.Fourier.ThetaQuantitativeCurvature
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -19,10 +20,11 @@ noncomputable section
 namespace D5.S3.Weil.ZetaGamma.ThetaReflectedKernelComparison
 
 open Real Set MeasureTheory Filter
+open D5.S3.Analytic.Convexity.StrictConcaveSymmetricSum
 open D5.S3.Analytic.Fourier.ThetaDifferentialKernel
 open D5.S3.Analytic.Fourier.ThetaRadialCurvature
 open private p d radialStart spread spread_geometry radialProduct radialIntegrand offsetProduct pd_geometry
-  strictConcave_symmetric_sum log_square_pair phi_pos
+  log_square_pair phi_pos
   from D5.S3.Weil.ZetaGamma.ThetaReflectedKernelComparison
 
 private theorem strong_symmetric_log_gap {h : ℝ → ℝ}

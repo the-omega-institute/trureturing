@@ -8,6 +8,7 @@ url: https://arxiv.org/html/1603.07272v2
 claim: Main Theorem 1 identifies surjectivity with finite-difference preinjectivity for cellular automata with finite alphabet and finite neighbourhood on right amenable left homogeneous spaces with finite stabilisers; Lemma 12 gives collar-controlled replacement and Theorem 6 gives strict image entropy loss from nonpreinjectivity.
 strata_touched:
   - D5/S1/Dynamics/Symbolic/GardenOfEden
+  - D5/S1/Dynamics/Symbolic/LatticeGardenOfEden
 license: citation-only
 triage: anchor
 ---

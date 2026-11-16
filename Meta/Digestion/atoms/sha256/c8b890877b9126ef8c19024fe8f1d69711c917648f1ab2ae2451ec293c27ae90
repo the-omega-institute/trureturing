@@ -1,0 +1,11 @@
+**定义 35.1（参考族，不是任意原 D 的免费前件）。** 取任意含单位复 $C^*$ 代数 $\mathcal A$ 和其中稠密含单位复星子代数 $\mathcal A_0$，令 $E=(\mathcal A_0)_{\rm sa}$，锥、单位及范数继承自 $\mathcal A$。取任意固定的正实线性、分离且决定该原锥的评价族 $\mathcal P$，每个评价保留自己的原质量。对一个固定实数 $-1\le\kappa\le1$，定义
+
+$$
+a\circ b=S(a,b)=\frac{ab+ba}{2},
+\qquad \mathcal C(a,b)=\frac{\mathrm i}{2}[a,b],
+\qquad D_\kappa(a,b)=\kappa\mathcal C(a,b).
+\tag{35.1}
+$$
+
+右边乘法是给定参考代数的乘法，$S,D_\kappa$ 全部返回原 $E$。在这个显式模型族中原 $D_\kappa$ 本来双线性；这不把该性质输入 (32.3) 的未知总映射问题。变动 $\kappa$ 时，原域、锥、单位、范数、评价、质量及标签均固定。
+

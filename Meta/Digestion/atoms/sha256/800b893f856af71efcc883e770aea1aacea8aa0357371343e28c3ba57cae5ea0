@@ -1,0 +1,57 @@
+**定义 26.2（有限球冠堆叠、极分解与实际工作口）。** 在内部球冠精度 $a$、同一个原始 $m=m_e$ 上复用引理 25.4 的有限构造。此时 $a/16<s=a/12<a/8$，且不要求命题 25.11 的可选非零高阶系数条件。取同一有限截断 $0\le k\le K_0$ 和一次正 Haar 求积 $(g_l,w_l)_{l=1}^J$，$\sum_lw_l=1$，令
+
+$$
+\begin{aligned}
+ Z_s&=s^2\int_{|w|<1}\frac{q(w)}{(1+s^2|w|^2)^2}\frac{dA(w)}\pi,\\
+ f_{lk}(h)&=\frac{\sqrt{w_l}F_k(z_{g_l}(h)/s)}
+ {\sqrt{Z_s}\sqrt{1+1/(100\lambda)}},\qquad c_l=g_l e_z,\\
+ A_{lk}&=T_m(f_{lk}),\qquad
+ T_m(b)=D_e\int_{S^2}b(u)\tau_u\,d\mu(u),\\
+ A_{\rm stack}\psi&=\sum_{l,k}A_{lk}\psi\otimes|l\rangle_L\otimes|k\rangle_{K_{\rm work}},\\
+ S_{\rm op}&=A_{\rm stack}^\dagger A_{\rm stack},\qquad
+ W=A_{\rm stack}S_{\rm op}^{-1/2}.
+\end{aligned}
+\tag{26.4}
+$$
+
+有限选择还须满足引理 26.4 的范数乘积条件；其与既有条件的同时可选性由该引理证明。既有供应关系 (25.10)、(25.19)、(25.23)、(25.26) 在这里分别为
+
+$$
+\begin{gathered}
+ 1-1/\lambda\le\sum_{lk}|f_{lk}(h)|^2\le1,\qquad
+ \|Df\|\le A/s,\quad\|D^2f\|\le B/s^2,\\
+ \sum_l\left|\sum_k\overline{f_{lk}(h)}\partial_{\bar z}f_{lk}(h)\right|
+ \le1/\lambda,\qquad \operatorname{supp}f_{lk}\subset\{\theta(\,\cdot\,,c_l)<2s\},\\
+ 0\le I-S_{\rm op}\le(C_{\rm fail}/\lambda)I,\\
+ A_{lk}e_h=f_{lk}(h)e_0+
+       \frac{\partial_{\bar z}f_{lk}(h)}{\sqrt m}e_1+r_{lk,h},\qquad
+ \left(\sum_{lk}\|r_{lk,h}\|^2\right)^{1/2}\le R_0/\lambda.
+\end{gathered}
+\tag{26.5}
+$$
+
+最后一式只在证明中以 $h$ 为图中心，$e_0=e_h$、$e_1$ 为第一降低向量；它不是未知方向依赖的控制。每个球冠的导数界仍对既有旋转图一致。带实际 $l=0$ 失败支的约化仪器
+
+$$
+ \Psi_{\rm loc}(X)=\sum_{lk}A_{lk}XA_{lk}^\dagger\otimes|l\rangle\langle l|
+ +\sqrt{I-S_{\rm op}}X\sqrt{I-S_{\rm op}}\otimes|0\rangle\langle0|
+ \tag{26.6}
+$$
+
+仍有完整自身边缘返回至多 $C_{\rm return}/\lambda$，失败概率至多 $C_{\rm fail}/\lambda$。式 (26.5)–(26.6) 的估计是引理 25.4、命题 25.5 及定理 25.6 在内部尺度 $a$、原始 $m$ 上的对应。
+
+由 (26.3)、(26.5)，$S_{\rm op}$ 可逆，$W$ 是等距。所定义的另一目标先在数学上施行 $W$，再对 $L$ 作 Lüders 读出，保留测后 $L$、原始结果及所有选定副本，并附加旧两坐标解码器和三坐标方向解码器。精确写作
+
+$$
+\begin{aligned}
+ V_l\psi&=\sum_k A_{lk}S_{\rm op}^{-1/2}\psi\otimes|k\rangle_{K_{\rm work}},\\
+ \Phi_{\rm keep}(X)&=\sum_lV_lXV_l^\dagger\otimes|J_l\rangle\langle J_l|,
+ \qquad\sum_lV_l^\dagger V_l=I.
+\end{aligned}
+\tag{26.7}
+$$
+
+$|J_l\rangle$ 是互相正交的有限码，包含测后 $L$、原始 $l$、实际副本、旧解码器、引理 26.8 的有理 $\widehat h(l)$ 和固定程序及工作因子。可另声明概率为零的 $l=0$；所有未用或无效经典码的估计固定为零。无分支后选择。若一个实际实现出现失败、停止或截止，该分支仍在无条件态及其误差预算内。
+
+这里 $K_{\rm work}=\operatorname{span}\{|k\rangle:0\le k\le K_0\}$ 是特意生成并保留的相干实际输出，未被测量，也没有原始经典 $k$ 记录或 $k$ 副本。它不把 (26.6) 的代数 Kraus 指标冒充实际口。(26.7) 的实际 CP 读出口恰如所列，没有另行生成的环境；另一实现的额外实际环境必须另行保留。每个公共 $e$ 所用振幅、矩阵、字母表和解码器均有限，选择不依赖实际 $n,h$。这是有限目标的定义，不是原生 $R$ 门、原生程序或其调用数证书。
+

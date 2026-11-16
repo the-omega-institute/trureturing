@@ -1,0 +1,57 @@
+**命题 25.7（同一全局参考、定常目标边缘与不同历史相关）。**在命题 25.5 的投影接续与定义 25.6 的资源下，两种程序 $Z$–$I$–$Z$ 和 $Z$–$X$–$Z$ 共用 (25.23) 的同一个 $\omega$。其第一次、第二次结果的联合表分别为
+
+$$
+\bigl(p_I(i,j)\bigr)_{i,j=0}^1
+=\begin{pmatrix}1/2&0\\0&1/2\end{pmatrix},\qquad
+\bigl(p_X(i,j)\bigr)_{i,j=0}^1
+=\begin{pmatrix}0&1/2\\1/2&0\end{pmatrix}.
+\tag{25.27}
+$$
+
+两次读数的边缘均匀，忽略记录的目标态始终为 $I/2$；完整全局态及记录则不要求在程序作用下不变。若额外坚持同一个全局泛函对这些 ready 记录操作也不变，便与本例的非平凡记录概率矛盾。
+
+证明。令 $C_k$ 为实际给定的 $\mathrm{CNOT}_{S\to R_k}$，其余系统上作用单位，并令
+
+$$
+T_U=C_2U_SC_1,\qquad U\in\{I,X\},\qquad
+\Pi_i^{R_k}=|i\rangle\langle i|_{R_k}.
+$$
+
+记录在 ready 输入上的作用就是 (25.19) 的本例提升，故同一个参考上的联合评价为
+
+$$
+\begin{aligned}
+p_U(i,j)
+&=\omega\bigl(T_U^\dagger\Pi_i^{R_1}\Pi_j^{R_2}T_U\bigr)\\
+&=\omega_S(P_iU^\dagger P_jUP_i)
+=\omega_S(K_{ji}^\dagger K_{ji}),\qquad K_{ji}=P_jUP_i.
+\end{aligned}
+\tag{25.28}
+$$
+
+$P_jIP_i=\delta_{ji}P_i$，而 $XP_i=P_{1-i}X$；$\omega_S(P_i)=1/2$，即得 (25.27)。每个显示的正历史权重为 $1/2$。等价地，按 $S,E,R_1,R_2$ 的次序写出记录部分，两个全局输出向量分别是
+
+$$
+\begin{aligned}
+T_I|\Psi_0\rangle
+ &=|+\rangle_C\otimes
+   \bigl(|0,0,0,0\rangle+|1,1,1,1\rangle\bigr)/\sqrt2,\\
+T_X|\Psi_0\rangle
+ &=|+\rangle_C\otimes
+   \bigl(|1,0,0,1\rangle+|0,1,1,0\rangle\bigr)/\sqrt2.
+\end{aligned}
+\tag{25.29}
+$$
+
+迹掉 $E,R_1,R_2$ 得 $I/2$。在每一中间阶段也有
+
+$$
+\sum_iP_i(I/2)P_i=I/2,\qquad U(I/2)U^\dagger=I/2,
+\tag{25.30}
+$$
+
+所以目标非选择态定常，不妨碍记录相关改变。另一方面，ready 初态有 $\omega(\Pi_1^{R_1})=0$，记录后有
+$\omega(T_U^\dagger\Pi_1^{R_1}T_U)=1/2$，排除了对这一全局操作的不变性。固定参考泛函与对所有复合操作不变是不同条件。
+
+静态效果不决定后继的数学先例已见预测波 §7 及[同效果而二步联合律不同的命题](../../../D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.lean)；本命题使用其有限分支计算，将同一忠实目标参考、纯全局参考和 ready 记录同时放入 (25.9) 的有条件扩充。$X$ 与记录操作已明列为新增资源，没有把两张不同程序表说成相同完整原操作数据的两种实现。证毕。
+

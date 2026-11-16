@@ -1,0 +1,71 @@
+**定理 148.4（原比较的内部无纯局部极小与端点逼近）。** 在定义148.1的完整 EB3、纯 PR 域，
+对每个事先固定的原 $o$，$h=T_o$ 在 $P$ 上没有读数处于 $(0,1)$ 的局部极小点。
+对任意 $0<\varepsilon<1$，每个满足 $h(p)=\varepsilon$ 的原纯点都有实际原纯点列
+
+$$
+p_n\longrightarrow p,\qquad 0<h(p_n)<\varepsilon,\qquad
+h(p_n)\longrightarrow\varepsilon.
+\tag{XII148.8}
+$$
+
+因此，在原纯集的相对拓扑中，
+
+$$
+\begin{gathered}
+\{p\in P:0<h(p)\le\varepsilon\}
+\subseteq\overline{\{p\in P:0<h(p)<\varepsilon\}}^{\,P},\\
+\overline{\{p\in P:h(p)<\varepsilon\}}^{\,P}
+=\{p\in P:h(p)\le\varepsilon\}.
+\end{gathered}
+\tag{XII148.9}
+$$
+
+证明。定义148.1逐项供应引理148.2的紧纯集、全部真暴露面连通纯缘及维数前件。
+选辅助范数，紧 $\mathcal E$ 给 $L=\max_{f\in\mathcal E}\|f\|_\ast<\infty$。
+每张原效应满足 $|f(x)-f(y)|\le L\|x-y\|$；分别取整个 $\mathcal F_o$ 的 minimum 得
+
+$$
+|h(x)-h(y)|\le L\|x-y\|\qquad(x,y\in K).
+\tag{XII148.10}
+$$
+
+这是固定根、第二变量的连续性，不涉及移动确认族的选择。
+
+反设 $p\in P$ 是 $h|_P$ 的局部极小点，$\mu=h(p)\in(0,1)$。
+原 minimum 达到，故取同一完整菜单中的 $f\in\mathcal F_o$，使 $f(p)=\mu$。
+在同一纯邻域内，
+
+$$
+f(x)\ge h(x)\ge\mu=f(p).
+\tag{XII148.11}
+$$
+
+因此这张真实原仿射效应 $f$ 在 $P$ 上也于 $p$ 局部极小。
+$f(o)=1>\mu$ 使其非恒定；引理148.2给 $f\ge\mu$ 于整个 $K$。
+现在才定义真实原线性泛函
+
+$$
+f'=\frac{f-\mu u}{1-\mu}.
+\tag{XII148.12}
+$$
+
+分母正。在整个 $K$ 上，$0\le f'\le1$，且 $f'(o)=1$、$f'(p)=0$。
+对任意非零原 $c\in C$，严格正性给 $u(c)>0$，且 $k=c/u(c)\in K$，于是
+
+$$
+0\le f'(c)=u(c)f'(k)\le u(c).
+\tag{XII148.13}
+$$
+
+在 $c=0$ 也成立，所以 $f'\in[0,u]_{C^\ast}=\mathcal E$，进而 $f'\in\mathcal F_o$。
+这与 $0<\mu=h(p)\le f'(p)=0$ 矛盾。
+归一化在全部原锥上合法，未使用面效应延拓、least 或新的确认菜单。
+
+若 $h(p)=\varepsilon\in(0,1)$，不存在局部极小意味着每个纯邻域都含 $h<\varepsilon$ 的点。
+将该邻域同时限制在 $\{h>\varepsilon/2\}$ 及半径 $1/n$ 的环境球内，选原纯 $p_n$，
+就得到 (XII148.8)；连续性给读数收敛。
+严格带内的点本身已在其闭包中，故有 (XII148.9) 第一项。
+第二项的 $h=0$ 点本就在 $\{h<\varepsilon\}$ 中，$h=\varepsilon$ 点由刚构造的列逼近；
+反包含由连续性和 $\{h\le\varepsilon\}$ 的相对闭性成立。
+这并不由逼近本身供应零层 $S$ 在任意指定载体中的成员资格。证毕。
+

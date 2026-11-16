@@ -1,0 +1,16 @@
+**推论 82.12（未经校准的正合同只给精确等价）。** 若先只用 PRE+NB 得同时普通方向，复用第四卷 (66.15)—(66.16)、(69.2)：
+$$
+\begin{gathered}
+M=C_Dm,\quad Q=C_Eq,\qquad m(a,b)=a\otimes b,\quad q(a,b,c)=a\otimes b\otimes c,\\
+(C_DX)_{ij}=S_{ij}X_{ij}S_{ij},\quad S_{ij}=I_i\otimes\sqrt{u_{ij}},\\
+(C_EZ)_{ijk}=T_{ijk}Z_{ijk}T_{ijk},\quad
+T_{ijk}=I_i\otimes\sqrt{u_{ij}}\otimes\sqrt{g_{ijk}},\quad u_{ij},g_{ijk}>0.
+\end{gathered}
+$$
+满足同一全实平均律的提升唯一为 $C_D\mathcal K_2C_D^{-1}$、$C_E\mathcal K_3C_E^{-1}$。$C_D,C_E$ 是可逆 CP 合同，其逆也 CP 且全锥正；逆逐块分别夹乘 $S_{ij}^{-1}$、$T_{ijk}^{-1}$，由正定性确实存在。因此整个二份正性判据仍有效，三份则可测试
+$$
+\Xi_{\rm raw}=C_E\Xi/Z,\qquad Z=u_E(C_E\Xi)>0.
+$$
+其输出为 $Z^{-1}C_E\mathcal K_3(\Phi)(\Xi)$，故输出 PSD 仍等价于 CP。证明只需把全实平均律分别左乘 $C_D^{-1},C_E^{-1}$，用乘积实张成给唯一性；可逆正合同保持且反映 PSD，给全部等价。此处没有把 $\Xi_{\rm raw}$ 当成已供应物理准备或把滤波当成实际操作。
+若原输出只满足 $P_E(\Xi_{\rm raw})\ge-\epsilon I$，退滤波只能先给 $\mathcal K_3(\Phi)(\Xi)\ge-Z\epsilon C_E^{-1}(I)$。不控制 $Z$ 与逆滤波范数就不能移植 (82.9) 的归一常数。本章的定量界限于其明确普通总迹规范。证毕。
+

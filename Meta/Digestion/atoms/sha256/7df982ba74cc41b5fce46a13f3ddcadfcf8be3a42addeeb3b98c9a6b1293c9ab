@@ -1,0 +1,36 @@
+**约定 C-11.1（额外 Pauli 来源表示）。** 使用 [A 卷 §21](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#21-谱及-fourier-表示与真正相干来源的边界) 定义A-21.5的共同 $`ℂ^2`$、$`a=-i\sigma_x,b=-i\sigma_y`$、右因子先作用的树表示及 $`L(\bar c)=b^va^u`$，𝑢,𝑣 取模二类的 0,1 整数代表。原拥有者为 [C-R4] §§101–108。另将空模式贡献声明为 𝐼 时，这只是该表示取值；原生空窗仍推进 $`C\mapsto SC`$，自由原树文法没有空树。
+
+**命题 C-11.2（完整余循环与实面积的不同读口）。**
+
+
+<table><tbody><tr><td>
+
+```math
+L(\bar c)L(\bar c')=(-1)^{\varepsilon(\bar c,\bar c')}L(\bar c+\bar c'),
+\quad\varepsilon=uu'+vv'+uv'\pmod2.
+```
+
+</td></tr></tbody></table>
+
+
+交换符号为 $`(-1)^{\det(\bar c,\bar c')}`$，$`\varepsilon`$ 满足二余循环恒等式且 $`\varepsilon(M\bar c,M\bar c')=\varepsilon(\bar c,\bar c')`$。实组成行列式经 𝑀 反号，奇偶不变。
+
+**证明。** [A 卷 §21](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#21-谱及-fourier-表示与真正相干来源的边界) 命题A-21.6证明完整平方进位项 $`uu'+vv'`$、交换项 $`uv'`$ 和 𝑀 不变性。交换两个次序的指数和为 $`uv'+u'v=\det(\bar c,\bar c')`$ 模二；双线性给
+
+
+```math
+\varepsilon(x,y)+\varepsilon(x+y,z)=\varepsilon(y,z)+\varepsilon(x,y+z).
+```
+
+
+实行列式 $`\mathfrak{\text{𝔞}}(c,c')=\det(c,c')`$ 的双线性也给
+
+
+```math
+\mathfrak{\text{𝔞}}(c,c')+\mathfrak{\text{𝔞}}(c+c',c'')
+=\mathfrak{\text{𝔞}}(c',c'')+\mathfrak{\text{𝔞}}(c,c'+c'').
+```
+
+
+这条无模二接缝式与余循环式分别保留各自的取值域。$`\det M=-1`$ 给实反号，模二下负号等于正号。全树表示保留一个中心位 $`s_t`$：$`U_t=(-1)^{s_t}L(c(t)\bmod2)`$。整数规范幂 $`b^Ba^A`$ 另有平方符号 $`(-1)^{\lfloor A/2\rfloor+\lfloor B/2\rfloor}`$；实际叶序再加每一 𝛼 位于 𝛽 前的交换对数。故 (2,0) 的 $`a^2=-I`$ 不能约化后删除中心位而当作 𝐿(0,0)=𝐼。两叶替换 $`a\mapsto b,b\mapsto ba`$ 与模二 𝑀 一致且中心位零，结构归纳和余循环不变给全树同步 𝜌 保持中心位。连续实面积的奇偶未定义，本式只对整数／二值组成，亦不供应量子测量。□
+

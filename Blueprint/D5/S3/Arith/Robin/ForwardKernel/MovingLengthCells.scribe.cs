@@ -11,6 +11,24 @@ internal sealed class MovingLengthCellsDocument : IScribeDocumentDefinition
         H("Equal-cell limits determine the moving-length constant"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("cell-step-eval"),
+                DeclarationHandle.Create(Prefix + "cell_step_eval"),
+                H("Evaluation on an equal cell"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If j<n and u lies in (1+j/n,1+(j+1)/n], then the sum over l<n of the indicator of (1+l/n,1+(l+1)/n] times v_l equals v_j. The cells are disjoint, so exactly the j-th summand contributes."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("fixed-normalizer-ratio"),
+                DeclarationHandle.Create(Prefix + "fixed_normalizer_ratio"),
+                H("The fixed-length normalization ratio"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For c>0 and any real theta, the ratio of (X/(c*X^theta))*log(X/(c*X^theta)) to X^(1-theta)*log(X) tends to (1-theta)/c as X tends to infinity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cell-point-mem"),
                 DeclarationHandle.Create(Prefix + "cellPoint_mem"),
                 H("Cell endpoints lie in the dyadic interval"),

@@ -1,0 +1,130 @@
+## 18. 接缝循环的相干商、耦合几何与支撑纠缠
+
+**假设 C-18.1（合法二部纯态）。** 另供 $`ℂ^5\otimesℂ^5`$ 中 $`|\Psi\rangle=\sum_{(i,j)\in E}c_{ij}|i,j\rangle`$，$`|c_{ij}|^2=p_{ij}`$。全合法振幅先取非零，局部模式标架 $`c_{ij}\mapsto e^{i\alpha_i+i\beta_j}c_{ij}`$。源和探针共同运输；此群不同于单窗的位置群。
+
+**命题 C-18.2（十二个完整环面坐标）。**
+
+
+<table><tbody><tr><td>
+
+```math
+\chi_{ij}=\frac{c_{ij}c_{00}}{c_{i0}c_{0j}},\quad
+|\chi_{ij}|^2=\frac{p_{ij}p_{00}}{p_{i0}p_{0j}},\quad
+\Phi_{ij}=\arg\chi_{ij}.
+```
+
+</td></tr></tbody></table>
+
+
+固定全概率后相位商为 $`(ℝ/2\piℤ)^{12}`$，上述坐标完整，沒有隐含有限类。实际零支撑图则改用其独立循环数。
+
+**证明。** 四相位逐项抵消。取 $`\alpha_0=-\theta_{00},\beta_0=0,\alpha_i=-\theta_{i0},\beta_j=\theta_{00}-\theta_{0j}`$，将零行零列九个锚相位归零，内部余相位恰为 $`\Phi_{ij}`$。十个局部相位参数有整体一项冗余，作用秩九；九边生成树的单位系数消元在整数环面上成立，给精确 2𝜋 周期和十二商圆。零振幅改用实际图生成森林，每分量一个相位冗余，商循环数 |𝐸(𝑝)|-|𝑉(𝑝)|+𝑘(𝑝)；不定义 $`\arg0`$ 或零锚分母。□
+
+**命题 C-18.3（两份平衡循环比较的完整合同）。** 另供两份相同、相位相容的 $`|\Psi\rangle`$ 产品制备及共同局部模式参照，选择有序
+
+
+```math
+|L_{ij}\rangle=|(i,j),(0,0)\rangle,\qquad
+|R_{ij}\rangle=|(i,0),(0,j)\rangle.
+```
+
+
+两分支具有相同每侧模式多重集。采用与 §15 一致的比较相位约定，
+
+
+```math
+s_{ij}=p_{ij}p_{00}+p_{i0}p_{0j},\qquad
+W_{ij}=c_{ij}c_{00}\overline{c_{i0}c_{0j}},
+```
+
+
+<table><tbody><tr><td>
+
+```math
+P_\pm(\theta)=s_{ij}/2\pm\mathrm{Re}(e^{-i\theta}W_{ij}),
+\quad P_{\rm fail}=1-s_{ij}.
+```
+
+</td></tr></tbody></table>
+
+
+**证明。** 局部标相因相同多重集给共同因子，故所供联合投影不变。两个投影振幅直接 Born 展开得到式；$`|W_{ij}|^2=p_{ij}p_{00}p_{i0}p_{0j}`$ 保证非负，$`s_{ij}\le1`$ 是两个正交分支的总质量。零成功支不条件化；缺任角时交叉项零。𝜃=𝜋/2 取正虚部的差，此符号固定。记录若另供，必须来自本同一制备：$`\Gamma=\langle e_{i0}\otimes e_{0j},e_{ij}\otimes e_{00}\rangle`$ 将交叉项乘 $`\Gamma`$；不得拼来自独立不相容源的记录。准备、联合投影、失败和各批消耗同 §15 的阶段合同，未知参数不由一次点击取得。□
+
+**命题 C-18.4（共享锚使 Fisher 与相位几何耦合）。** 全正合法 $`p=p^*+Dt`$，完整配对结果实验的信息矩阵
+
+
+```math
+ℐ=D^{𝖳}\mathrm{diag}(1/p)D\gt 0,
+```
+
+
+<table><tbody><tr><td>
+
+```math
+ℐ_{(ij),(kl)}=\frac1{p_{00}}
++\frac{𝟏_{i=k}}{p_{i0}}
++\frac{𝟏_{j=l}}{p_{0j}}
++\frac{𝟏_{i=k,j=l}}{p_{ij}}.
+```
+
+</td></tr></tbody></table>
+
+
+按本卷 FS 约定，对局部模式标架水平最小化得
+
+
+<table><tbody><tr><td>
+
+```math
+ds^2=\tfrac14dt^{𝖳}ℐ\,dt+
+ d\Phi^{𝖳}ℐ^{-1}d\Phi.
+```
+
+</td></tr></tbody></table>
+
+
+**证明。** 得分列为 $`D_e/p_e`$，平方期望给信息式；𝐷 列独立且所有 $`p_e\gt 0`$ 给正定。两循环的共享 00,𝑖0,0𝑗 内积给四项条目。概率 FS 为四分之一 $`\sum dp_e^2/p_e`$。相位速度满足 $`D^{𝖳}v=d\Phi`$，加权最小范数解
+
+
+```math
+v=\mathrm{diag}(1/p)Dℐ^{-1}d\Phi.
+```
+
+
+因为 𝒜 𝐷=0，对每个行列局部势 $`g=𝒜^{𝖳}\gamma`$，$`g^{𝖳}\mathrm{diag}(p)v=\gamma^{𝖳}𝒜 Dℐ^{-1}d\Phi=0`$，包括常量平均相位零。任一其他解与此正交相差局部势，勾股给最小值 $`d\Phi^{𝖳}ℐ^{-1}d\Phi`$。边界须在实际正支撑的独立循环上重算，不能延伸十二维逆矩阵；此度量不使循环成为独立物理旋钮或空间轴。□
+
+**命题 C-18.5（全部合法四角比一仍有支撑纠缠）。** 真实另供正平方根纯态 $`|\Psi_*\rangle=\sum\sqrt{p^*_{ij}}|i,j\rangle`$。对正质量组，取
+
+
+```math
+|R_k\rangle=\sum_{i\in R_k}\sqrt{\mu_i/\mu(R_k)}|i\rangle,
+\quad |C_k\rangle=\sum_{j\in C_k}\sqrt{\nu_j/\nu(C_k)}|j\rangle.
+```
+
+
+删除零组后有
+
+
+```math
+|\Psi_*\rangle=\sqrt c|R_0C_0\rangle+\sqrt b|R_0C_1\rangle+
+\sqrt a|R_1C_0\rangle,
+\quad A_* =\begin{pmatrix}\sqrt c&\sqrt b\\\sqrt a&0\end{pmatrix},
+```
+
+
+其 Schmidt 概率（零项删除）为
+
+
+<table><tbody><tr><td>
+
+```math
+\lambda_\pm=(1\pm\sqrt{1-4ab})/2.
+```
+
+</td></tr></tbody></table>
+
+
+秩二恰 $`ab\gt 0`$；完整边缘全正且 $`a+b\lt 1`$ 时，所有合法 $`\chi_{ij}=1`$。均匀边缘谱 4/5,1/5。
+
+**证明。** 各组正交，三合法块内平方根振幅分别因子化，逐格对回 §16 的 $`p^*`$，质量 𝑐,𝑏,𝑎。$`\mathrm{tr}A_*A_*^\dagger=1`$，$`\det A_*A_*^\dagger=ab`$，解特征方程给式；𝑎𝑏≤1/4 由 𝑎+𝑏≤1。𝑎=0 或 𝑏=0 删除零组后秩一；𝑎=1,𝑏=0 和对称端点也是秩一。饱和 $`c=0,a,b\gt 0`$ 仍秩二，但 00 锚为零，不能继续声称十二个 𝜒 都定义。内部概率四角比一、振幅全正给 𝜒=1，禁止块本身阻止乘積；四角只描述合法支撑内额外偏好。经典对角混合 $`\sum p^*_{ij}|i\rangle\langle i|\otimes|j\rangle\langle j|`$ 显然可分。纯态需要真实联合相干制备，不从原生禁止格自动获得物理纠缠。□
+

@@ -1,0 +1,28 @@
+**定义 C-59.4（五律、均值与条件表）。** 对中心 $i$ 按上述模式顺序记
+
+$$
+p^{(i)}=(p_0,p_1,p_2,p_3,p_{13}),\quad
+X=p_1+p_{13},\quad Y=p_3+p_{13},\quad Z=p_2,
+\quad r=1-Z,\quad\kappa=p_{13}.
+$$
+
+省略的上标始终属于同一个中心；不同窗口可有不同的 $X,Y,Z$。配分总权写作 $\mathcal Z$，中位均值写作 $Z$。置
+
+$$
+\Delta_i=p_0p_{13}-p_1p_3=r\kappa-XY,
+\qquad
+Q_i=\mathcal L(B_{i-1},B_{i+1}\mid B_i=0)
+=\frac1r\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix}.
+\tag{C59.2}
+$$
+
+行索引为左端，列索引为右端，各按 $0,1$ 排列。C-3.2 及《行列式、条件拼接与原生守卫接续》[推导 4.2–4.3](AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md#四用一个行列式读取这项对角关系) 给出
+
+$$
+\det Q_i=\operatorname{Cov}(B_{i-1},B_{i+1}\mid B_i=0)
+=\frac{\Delta_i}{r^2}.
+\tag{C59.3}
+$$
+
+参数对应是该供应的 $(p_0,p_2,p_3,p_5,p_{25})=(p_0,p_1,p_2,p_3,p_{13})$，不能把它的旧模式下标直接当成本节下标。无条件端点协方差为 $\kappa-XY=\Delta_i+Z\kappa$，一般不等于式 (C59.3)。没有平移不变、左右均值相等或均匀活动假设。
+

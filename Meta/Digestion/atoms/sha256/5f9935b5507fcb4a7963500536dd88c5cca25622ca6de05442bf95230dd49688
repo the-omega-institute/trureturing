@@ -1,0 +1,4 @@
+## 170. A rotation-odd exact common kernel for the full successor stack
+
+Section 169 rules out finite-dimensional closure of the concrete representer plane, but it does not by itself produce a nonzero bounded class satisfying every successor readout. The original half-turn symmetry supplies such a class family. It acts on the actual source, measure and heat operator, so the construction remains inside the retained model.
+

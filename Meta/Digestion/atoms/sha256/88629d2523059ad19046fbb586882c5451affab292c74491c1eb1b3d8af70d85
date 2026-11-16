@@ -1,0 +1,39 @@
+**定理 113.5（厚分量唯一，薄双覆盖分裂）。** 若至少有一张厚球，
+令 $\kappa=\#\pi_0(P)$、$\alpha=\#\pi_0(\mathcal A)$。
+则
+
+$$
+\alpha=2\kappa-1,
+\tag{VIII113.15}
+$$
+
+$P$ 恰有一个厚球分量 $P_h$；其余各分量全为薄球，
+且 $\pi_1$ 在每个薄分量上是分裂的二点覆盖，两张层各同胚于该底分量。
+
+证明。厚球给 $N\ge2$，故 $H_1(S^N;\mathbb F_2)=0$。
+113.4的实际开加厚给零次Mayer–Vietoris正合列
+
+$$
+0\longrightarrow H_0(\mathcal A;\mathbb F_2)
+ \overset{(\pi_{1*},\pi_{2*})}{\longrightarrow}
+ H_0(P;\mathbb F_2)\oplus H_0(P;\mathbb F_2)
+ \longrightarrow H_0(S^N;\mathbb F_2)\longrightarrow0.
+\tag{VIII113.16}
+$$
+
+底分量道路连通，厚分量上的球纤维 $S^{d_\alpha-1}$ 道路连通；
+真实局部平凡化与道路提升使其总空间道路连通。
+薄分量上的二点覆盖则有一或两个道路分量；有两个时各为一张度一的层。
+所以这些分量有限，维数计数给(VIII113.15)。
+若厚分量有 $t\ge1$ 个、薄分量有 $s$ 个，$\kappa=t+s$，
+而薄分量贡献 $a_j\in\{1,2\}$，则
+
+$$
+2\kappa-1=\alpha=t+\sum_{j=1}^{s}a_j
+ \le t+2s=2\kappa-t.
+\tag{VIII113.17}
+$$
+
+故 $t=1$，并且每个 $a_j=2$，恰为所述分裂。
+度一层到道路连通底的覆盖同胚给最后的断言。证毕。
+

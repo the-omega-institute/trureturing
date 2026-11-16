@@ -28,7 +28,7 @@ except ImportError:
 
 from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
 from lean_cache_topology import checkout_topology, git_absolute_path, warm_dev_remediation
-from lean_cache_release_io import (remaining, ArchiveOutput, ArchiveInput, archive_sha,
+from lean_cache_release_io import (OperationBudget, remaining, MultipartArchiveOutput, ArchiveInput, archive_sha,
                                    copy_chunks, extract_members)
 
 # Use the report entry's declared format and execution capture, never program hashes.
@@ -41,14 +41,19 @@ REPO = os.environ.get("STRATALINT_CACHE_REPO", "the-omega-institute/trureturing"
 # Issue #6194, run 34119746844: Release assets must be strictly below 2 GiB.
 # Keep dev's 1.5 GiB headroom and two-digit, at-most-100-part inventory.
 CHUNK_BYTES = 1610612736
-# Optional transport policy (#5985): a thirty-minute default operation ceiling,
-# with an explicitly selected finite extension for large multipart Release fetches
-# of the 4 GB seed on a developer host (5m08s, #2634; 7m09s for one fetch, and
-# over ten minutes when two fetches share the link). This is a policy choice,
-# not a throughput derivation or a copy of the C# ArchiveBudget.
+# Optional operation policy (#5985): a thirty-minute default budget for metadata,
+# local validation and installation, with an explicitly selected finite extension
+# for large multipart Release work. The asset stream itself is outside this
+# budget; its integrity is checked before any cache bytes are installed. This is
+# a policy choice, not a throughput derivation.
 # Fetch includes all snapshot attempts; publish starts only after the current report succeeds.
 RELEASE_OPERATION_TIMEOUT_SECONDS = 1800
 RELEASE_OPERATION_TIMEOUT_MAX_SECONDS = 21600
+# Asset downloads have no total-duration deadline. User cancellation still
+# unwinds the owned child, staging and cache guard.
+# prune() retains the five newest complete snapshots per partition.  Keep the
+# same finite recovery window even when older releases remain on GitHub.
+RELEASE_FETCH_MAX_ATTEMPTS = 5
 
 LOG = None
 LOG_LAST = {}
@@ -71,7 +76,7 @@ def operation_deadline():
             raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}") from None
         if not 0 < seconds <= RELEASE_OPERATION_TIMEOUT_MAX_SECONDS:
             raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}")
-    return time.monotonic() + seconds
+    return OperationBudget(time.monotonic() + seconds)
 
 
 @contextlib.contextmanager
@@ -125,7 +130,7 @@ def interrupt_release(signum, _frame):
 def checked_run(command, deadline):
     try:
         return subprocess.run(command, check=True, capture_output=True, text=True,
-                              timeout=remaining(deadline))
+                              timeout=None if deadline is None else remaining(deadline))
     except subprocess.CalledProcessError as error:
         raise GitHubCommandError(error.returncode, error.cmd,
                                  output=error.output, stderr=error.stderr) from error
@@ -357,31 +362,6 @@ def valid_publication_id(value):
         r"ci-[1-9][0-9]*-[1-9][0-9]*|local-[0-9a-f]{12}-[0-9]{8}T[0-9]{12}Z", value) is not None
 
 
-def archive_parts(stage, deadline):
-    archive = stage / ASSET
-    size = archive.stat().st_size
-    count = (size + CHUNK_BYTES - 1) // CHUNK_BYTES
-    if not 1 <= count <= 100:
-        raise ValueError("archive must fit in 1 to 100 parts")
-    paths = [archive]
-    if count > 1:
-        paths = []
-        with archive.open("rb") as source:
-            for index in range(count):
-                path = stage / f"{ASSET}.part-{index:02d}"
-                bytes_left = min(CHUNK_BYTES, size - index * CHUNK_BYTES)
-                with path.open("wb") as target:
-                    while bytes_left:
-                        remaining(deadline)
-                        block = source.read(min(bytes_left, 1024 * 1024))
-                        if not block:
-                            raise ValueError("archive ended before its declared size")
-                        target.write(block)
-                        bytes_left -= len(block)
-                paths.append(path)
-    return [{"name": path.name, "sha256": archive_sha(path, deadline), "bytes": path.stat().st_size} for path in paths]
-
-
 def declared_parts(manifest, maximum_bytes=CHUNK_BYTES):
     parts = manifest.get("parts")
     if not isinstance(parts, list) or not 1 <= len(parts) <= 100:
@@ -500,7 +480,7 @@ def staging_snapshot(path, cutoff):
 def clean_staging(lake, cutoff=None, delete=True, inspect=None, guard_owned=False, *, now):
     """Check twice and remove extraction residue under the physical lake's exclusive guard."""
     lake = pathlib.Path(lake)
-    cutoff = min(now - 24 * 3600, cutoff) if cutoff is not None else now - 24 * 3600
+    cutoff = cutoff if cutoff is not None else now - 24 * 3600
     results = []
     try:
         candidates = list(staging_candidates(lake))
@@ -535,6 +515,8 @@ def clean_staging(lake, cutoff=None, delete=True, inspect=None, guard_owned=Fals
                 for directory, _, _ in os.walk(path):
                     os.chmod(directory, stat.S_IMODE(os.lstat(directory).st_mode) | stat.S_IRWXU)
                 shutil.rmtree(path)
+                if os.path.lexists(path):
+                    raise OSError("deletion returned with staging residue: " + str(path))
                 result["action"] = "removed"
         except BlockingIOError:
             result["reason"] = "cache_busy"
@@ -542,6 +524,8 @@ def clean_staging(lake, cutoff=None, delete=True, inspect=None, guard_owned=Fals
             result.update(action="failed" if removal_started else "kept", reason="vanished", detail=str(error))
         except (OSError, ValueError) as error:
             result.update(action="failed" if removal_started else "kept", reason="unreadable", detail=str(error))
+        if result["action"] == "failed":
+            result.update(retained_path=str(path), residue_exists=os.path.lexists(path))
     return results
 
 
@@ -550,14 +534,20 @@ def fetch_staging_cleanup(root, *, now):
     results = clean_staging(root / ".lake", now=now, guard_owned=True)
     if results:
         receipt("fetch", "staging-cleanup", items=results)
+    failed = [row for row in results if row["action"] == "failed"]
+    if failed:
+        raise OSError("staging_cleanup_failed: " + json.dumps(failed, sort_keys=True))
     return results
 
 
 def publish(root, partition, verification=None, *, build_report=True):
-    # Build/content failures remain failures. Production transport is optional;
+    # Build/content and local archive failures remain failures. Remote transport is optional;
     # explicit verification succeeds only after the uploaded bytes restore.
     # A caller's LEAN_REPORT override must not move publication outside buildDir.
     if build_report:
+        if os.environ.get("FULL_BUILD") != "1":
+            print("cache production requires explicit FULL_BUILD=1", file=sys.stderr)
+            return 2
         build = subprocess.run(["make", "lean-report",
             "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build",
             "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root)
@@ -567,6 +557,7 @@ def publish(root, partition, verification=None, *, build_report=True):
             return build.returncode
     report = root / ".lake/build/stratalint/raw-lean-report.json"
     content_validated = False
+    preparing = False
     try:
         deadline = operation_deadline()
         with contextlib.ExitStack() as lifetime, tempfile.TemporaryDirectory(prefix="lean-release-") as temporary:
@@ -596,15 +587,18 @@ def publish(root, partition, verification=None, *, build_report=True):
                     receipt("publish", "exists", tag=tag, release_target=existing.get("target_commitish"), **identity)
                     return 0
                 # Level 1 keeps the gzip protocol within the transport window.
-                with (stage / ASSET).open("wb") as output:
+                preparing = True
+                with MultipartArchiveOutput(stage, ASSET, CHUNK_BYTES, deadline) as output:
                     with tarfile.open(stage / ASSET, "w:gz", compresslevel=1,
-                                      fileobj=ArchiveOutput(output, deadline)) as archive:
-                        archive.add(root / ".lake/build", arcname="build")
+                                      fileobj=output) as archive:
+                        archive.add(root / ".lake/build", arcname="build",
+                                    filter=lambda member: None if member.isfile()
+                                    and member.name.endswith(".setup.json") else member)
             metadata = {"schema": "lean-release-seed-v4", "partition": partition, "cache_key": cache_key,
-                **identity,
-                "archive_sha256": archive_sha(stage / ASSET, deadline), "archive_bytes": (stage / ASSET).stat().st_size,
-                "parts": archive_parts(stage, deadline)}
+                **identity, **output.metadata()}
             (stage / MANIFEST).write_text(json.dumps(metadata, sort_keys=True) + "\n")
+            remaining(deadline)
+            preparing = False
             # Never clobber an existing snapshot. Failed/racing publishers leave
             # at most a draft, which fetch never considers an applicable seed.
             # The server's default branch anchors only the storage container.
@@ -636,7 +630,7 @@ def publish(root, partition, verification=None, *, build_report=True):
                         if not restore_snapshot(target, partition, tag, downloaded, deadline, metadata,
                                                 cache_key=cache_key):
                             raise ValueError("native verification did not install the remote build")
-                        remaining(deadline)
+                        # Restore has completed under its fresh post-transfer budget.
                         (target / ".lake/build").rename(build)
                 else:
                     # Local candidate publication also verifies, but owns no
@@ -659,7 +653,7 @@ def publish(root, partition, verification=None, *, build_report=True):
         return 1 if verification is not None else 0
     except report_reuse.INVALID_SEED + (EOFError, subprocess.SubprocessError, tarfile.TarError) as error:
         receipt("publish", "failed", _error=error, reason=str(error))
-        return 1 if verification is not None else (0 if content_validated else 2)
+        return 1 if verification is not None else (0 if content_validated and not preparing else 2)
     return 0
 
 
@@ -756,10 +750,21 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
     commit = manifest["producer_commit_sha"]
     with observed_phase("transfer", expected_bytes=manifest["archive_bytes"]):
         if local_assets is None:
-            gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
-               *(argument for part in parts for argument in ("--pattern", part["name"])))
+            # A multi-gigabyte Release asset is a streaming transport. Its
+            # duration depends on the link and must not consume the bounded
+            # metadata/install operation budget. Integrity and attribution are
+            # checked after the transfer before any cache bytes are installed.
+            # Restore the metadata budget even when this download fails, so a
+            # fallback candidate retains the unspent computation time.
+            with deadline.pause():
+                gh(None, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
+                   *(argument for part in parts for argument in ("--pattern", part["name"])))
         else:
-            clone_local_parts(local_assets, stage, parts, deadline)
+            clone_local_parts(local_assets, stage, parts, None)
+    # Start a fresh bounded local budget after the unbounded network transfer.
+    # This keeps hashing, reassembly, tar validation and installation fail-closed
+    # without making a slow link look like a corrupt snapshot.
+    deadline = operation_deadline()
     with observed_phase("part_validation", validated_bytes=manifest["archive_bytes"]):
         for part in parts:
             path = stage / part["name"]
@@ -1020,7 +1025,11 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
             candidates = [(source, approved_tag)]
         else:
             candidates = snapshot_candidates(root, partition, deadline, cache_key)
+        attempts = 0
         for source, tag in candidates:
+            if attempts >= RELEASE_FETCH_MAX_ATTEMPTS:
+                break
+            attempts += 1
             remaining(deadline)
             try:
                 temporary = tempfile.TemporaryDirectory(prefix="lean-fetch-")

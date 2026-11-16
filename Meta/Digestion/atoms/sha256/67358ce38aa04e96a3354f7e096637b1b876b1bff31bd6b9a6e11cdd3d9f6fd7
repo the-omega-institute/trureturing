@@ -1,0 +1,91 @@
+**定理 163.1（任意原第二输入的横向块）。** 在161.1下，对全部实 $s,r$ 及任意原 $x\in E$，同一个旧响应满足
+
+$$
+\boxed{P_{\rm tr}D(su+rh,x)=rT P_{\rm tr}x.}
+\tag{163.1}
+$$
+
+$r=0$ 包含原单位行，不要求旧输出横向。
+
+证明。$r=0$ 时直接用(161.5)，两边为零。设 $r\ne0$，保持162.1的同一固定 $x,g,v,Z$。在忠实含单位Hilbert表示中取内积第一槽共轭线性。对任一 $\sigma\in\{1,-1\}$，取任意单位向量 $Q\xi=\sigma\xi,h\xi=-\xi$，置 $\eta=q\xi$。149.1–149.5给
+
+$$
+\|\eta\|=1,\quad h\eta=\eta,\quad
+p\xi=-i\sigma\eta,\quad
+\mathfrak p_\eta z=z-\operatorname{Re}\langle\eta,z\rangle\eta.
+\tag{163.2}
+$$
+
+用向量 $(\xi+\delta\eta)/\sqrt{1+\delta^2}$ 的态 $\phi_\delta$。准确复用149.3对任意固定自伴 $W$ 的恒等式
+
+$$
+B_{\phi_\delta}(n,W)
+=\frac{4\delta^2}{(1+\delta^2)^2}
+\|\mathfrak p_\eta(W\xi+\delta W\eta)\|^2.
+\tag{163.3}
+$$
+
+另一方面，$tq+v$ 横向，故其读取为 $2\delta\{t+\operatorname{Re}\langle\eta,v\xi\rangle\}/(1+\delta^2)$。将它和(163.3)代入(162.2)，约去共同正因子，再只对固定向量范数令 $\delta\downarrow0$。由于 $\mathfrak p_\eta(q\xi)=0$、$\mathfrak p_\eta(p\xi)=p\xi$，得到
+
+$$
+\begin{aligned}
+2|r|\left|t+\operatorname{Re}\langle\eta,v\xi\rangle\right|
+\le{}&\|\mathfrak p_\eta((Z+g)\xi)-rtp\xi\|\\
+&+\|\mathfrak p_\eta((Z-g)\xi)+rtp\xi\|.
+\end{aligned}
+\tag{163.4}
+$$
+
+这里一般没有 $Z\xi=v\xi$，也不需要它；共同 $Z$ 只在下一步两份一次项中相消。
+
+记 $w=p\xi$、$z_\pm=\mathfrak p_\eta((Z\pm g)\xi)$，以及实数
+
+$$
+A_\xi=\operatorname{Re}\langle\eta,v\xi\rangle,\quad
+B_\xi=\operatorname{Re}\langle w,g\xi\rangle,\quad
+\epsilon=\operatorname{sgn}(r).
+\tag{163.5}
+$$
+
+$w$ 为单位向量，且 $\operatorname{Re}\langle\eta,w\rangle=0$。150.3的范数一次项给：在(163.4)取 $t=L\to+\infty$，右侧减 $2|r|L$ 的极限是
+
+$$
+-\epsilon\operatorname{Re}\langle w,z_+\rangle
++\epsilon\operatorname{Re}\langle w,z_-\rangle=-2\epsilon B_\xi,
+$$
+
+左侧相应极限是 $2|r|A_\xi$。取 $t=-L\to-\infty$，两侧相应极限分别为 $2\epsilon B_\xi$ 与 $-2|r|A_\xi$。共同 $Z$ 在这两个差式里准确相消。两端一起给
+
+$$
+|r|A_\xi=-\epsilon B_\xi,\qquad
+r\operatorname{Re}\langle\eta,v\xi\rangle
+=-\operatorname{Re}\langle p\xi,g\xi\rangle.
+\tag{163.6}
+$$
+
+这一步明确包括 $r<0$。由(163.2)，等价于
+
+$$
+\operatorname{Im}\langle\eta,g\xi\rangle
+=r\sigma\operatorname{Re}\langle\eta,v\xi\rangle.
+\tag{163.7}
+$$
+
+先取 $(p,q)=(e,j)$，令 $A=\langle j\xi,v\xi\rangle,B=\langle j\xi,g\xi\rangle$。再取 $(p,q)=(j,-e)$，此时 $\eta'=-e\xi=i\sigma j\xi$，相应二次读取是 $A'=-i\sigma A,B'=-i\sigma B$。两份(163.7)分别给 $\operatorname{Im}B=r\sigma\operatorname{Re}A$ 和 $-\sigma\operatorname{Re}B=r\operatorname{Im}A$，故
+
+$$
+B=ir\sigma A,\qquad
+\langle j\xi,(g-ir\sigma v)\xi\rangle=0.
+\tag{163.8}
+$$
+
+令 $F_\sigma=(I+\sigma Q)/2$、$P_\pm=(I\pm h)/2$，只用于数学表示。对固定算子 $F_\sigma P_-j(g-ir\sigma v)P_-F_\sigma$ 使用150.8的普通复极化，由(163.8)对全部向量成立，遂得该算子为零。$j$ 将 $F_\sigma P_-H$ 酉地送到 $F_\sigma P_+H$，于是
+
+$$
+F_\sigma P_+gP_-F_\sigma
+=ir\sigma F_\sigma P_+vP_-F_\sigma.
+\tag{163.9}
+$$
+
+反向块由自伴性为其伴随，准确带相反的 $i$ 号。$Q$ 中央排除跨 $\sigma$ 块；因此两份谱空间共同给 $P_{\rm tr}g=irQhv=rTv$。空谱块无须选择向量，某份负空间为空时 $j$ 的酉对应也使其正空间为空。忠实性返回原元素，得到(163.1)。所有极限都只作用于固定旧值的显式标量或向量式。∎
+

@@ -48,9 +48,13 @@ a reciprocal and its positive reduced denominator.
 The formal results prove the stated occurrence counts. The shared denominator
 identity applies to every negative integer terminal value. For A363102, an index
 at least the occurring prime satisfies n squared = 2p squared + 2. The converse,
-the full Newman–Shanks–Williams characterization, and infinitude of primes with
-three occurrences remain open here.
+and the full Newman–Shanks–Williams characterization, are not formalized here.
+Infinitude of primes with three occurrences remains open.
 
-The literature screen in issues #18626 and #18627 covers the OEIS entries,
-Adamczewski's arXiv:2608.11941 and the named formal-conjecture collections.
-Completeness is ASSUMED-UNVERIFIED.
+An earlier prose proof is
+[Gracia Llorente, *Factorial Cancellation in Polynomial Continued Fractions*](gracia2026factorial.md),
+original deposited version (2026-10-20), Theorem 5.11, pp. 15–16, for A363347
+and Theorem 5.12, p. 16, for A363102. The latter also gives the converse
+Pell criterion and the Newman–Shanks–Williams characterization. These results
+precede the repository's corresponding Lean records. Literature completeness
+and priority over all other sources remain ASSUMED-UNVERIFIED.

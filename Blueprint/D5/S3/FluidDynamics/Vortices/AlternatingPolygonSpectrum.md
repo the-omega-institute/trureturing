@@ -52,7 +52,133 @@ $$\forall (N: \mathbb{N}), (\forall (p: \operatorname{Sum}\left(\operatorname{Fi
 
 The entry in row p and column q is the derivative at zero of the pth field coordinate along the affine line through the polygon in direction Pi.single q 1. It is the Cartesian Jacobian of the source's model; the source examines its linearization in polar coordinates (TeX lines 543–550).
 
-**Definition 1.5 (The distinct-real-pair conjecture).**
+**Theorem 1.5 (The actual polygon distances).**
+
+Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.chord_sq`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.chord_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Anna M. Barry, Panayotis G. Kevrekidis (2013). *Few-particle vortex cluster equilibria in Bose–Einstein condensates: existence and stability*. DOI: [10.1088/1751-8113/46/44/445001](https://doi.org/10.1088/1751-8113/46/44/445001). URL: <https://arxiv.org/abs/1306.1545v2>.
+
+*Commentary.*
+
+The canonical chord identity is exposed for collision-free parameter transport; its proof is reused unchanged.
+
+**Theorem 1.6 (Collision-free polygon vertices).**
+
+Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.chord_sq_ne_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.chord_sq_ne_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Anna M. Barry, Panayotis G. Kevrekidis (2013). *Few-particle vortex cluster equilibria in Bose–Einstein condensates: existence and stability*. DOI: [10.1088/1751-8113/46/44/445001](https://doi.org/10.1088/1751-8113/46/44/445001). URL: <https://arxiv.org/abs/1306.1545v2>.
+
+*Commentary.*
+
+Every pair of distinct labels has nonzero squared distance. This is the domain certificate used by the differentiated Cartesian field.
+
+**Theorem 1.7 (Equilibrium including the small polygons).**
+
+Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.equilibrium_all`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.equilibrium_all` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Anna M. Barry, Panayotis G. Kevrekidis (2013). *Few-particle vortex cluster equilibria in Bose–Einstein condensates: existence and stability*. DOI: [10.1088/1751-8113/46/44/445001](https://doi.org/10.1088/1751-8113/46/44/445001). URL: <https://arxiv.org/abs/1306.1545v2>.
+
+*Commentary.*
+
+The existing Cartesian reflection proof applies for every m at least one. The earlier m at least three supplier remains a consumer of this proof body.
+
+**Definition 1.8 (Radial and tangential coordinates).**
+
+Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.rotation`
+
+*Formalization.* `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.rotation` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Anna M. Barry, Panayotis G. Kevrekidis (2013). *Few-particle vortex cluster equilibria in Bose–Einstein condensates: existence and stability*. DOI: [10.1088/1751-8113/46/44/445001](https://doi.org/10.1088/1751-8113/46/44/445001). URL: <https://arxiv.org/abs/1306.1545v2>.
+
+*Commentary.*
+
+The columns at vertex j are (xj,yj) and (-yj,xj). The source note uses a uniformly rotated polygon, so this explicit Cartesian rotation fixes the correspondence.
+
+**Theorem 1.9 (The coordinate rotation is orthogonal).**
+
+Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.rotation_mul_transpose`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.rotation_mul_transpose` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Anna M. Barry, Panayotis G. Kevrekidis (2013). *Few-particle vortex cluster equilibria in Bose–Einstein condensates: existence and stability*. DOI: [10.1088/1751-8113/46/44/445001](https://doi.org/10.1088/1751-8113/46/44/445001). URL: <https://arxiv.org/abs/1306.1545v2>.
+
+*Commentary.*
+
+The canonical proof uses xj squared plus yj squared equal to one. No presumed spectral decomposition is involved.
+
+**Theorem 1.10 (Actual block derivative for every even polygon).**
+
+Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.rotated_jacobian_all`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.rotated_jacobian_all` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Anna M. Barry, Panayotis G. Kevrekidis (2013). *Few-particle vortex cluster equilibria in Bose–Einstein condensates: existence and stability*. DOI: [10.1088/1751-8113/46/44/445001](https://doi.org/10.1088/1751-8113/46/44/445001). URL: <https://arxiv.org/abs/1306.1545v2>.
+
+*Commentary.*
+
+The existing derivative and rotation proof gives the off-diagonal blocks B and C for every m at least one, including the dipole and square.
+
+**Theorem 1.11 (Schur determinant equality).**
+
+Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.nonzero_characteristic_value`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.nonzero_characteristic_value` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Anna M. Barry, Panayotis G. Kevrekidis (2013). *Few-particle vortex cluster equilibria in Bose–Einstein condensates: existence and stability*. DOI: [10.1088/1751-8113/46/44/445001](https://doi.org/10.1088/1751-8113/46/44/445001). URL: <https://arxiv.org/abs/1306.1545v2>.
+
+*Commentary.*
+
+The canonical Schur proof yields an equality of evaluations for each nonzero real argument, strengthening its earlier root-test consumer without repeating the determinant foundation.
+
+**Theorem 1.12 (Complete characteristic polynomial).**
+
+Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.charpoly_mode_product`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.charpoly_mode_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Anna M. Barry, Panayotis G. Kevrekidis (2013). *Few-particle vortex cluster equilibria in Bose–Einstein condensates: existence and stability*. DOI: [10.1088/1751-8113/46/44/445001](https://doi.org/10.1088/1751-8113/46/44/445001). URL: <https://arxiv.org/abs/1306.1545v2>.
+
+*Commentary.*
+
+A polynomial equality follows because the Schur equality and canonical block-product spectrum agree at infinitely many nonzero real arguments. The identity therefore also includes zero.
+
+**Theorem 1.13 (The actual complexified characteristic polynomial).**
+
+Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.complex_charpoly_mode_product`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.complex_charpoly_mode_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Anna M. Barry, Panayotis G. Kevrekidis (2013). *Few-particle vortex cluster equilibria in Bose–Einstein condensates: existence and stability*. DOI: [10.1088/1751-8113/46/44/445001](https://doi.org/10.1088/1751-8113/46/44/445001). URL: <https://arxiv.org/abs/1306.1545v2>.
+
+*Commentary.*
+
+Map the polynomial identity through the real inclusion into the complex numbers. This concerns the characteristic polynomial of the actual Cartesian Jacobian, and includes every complex root; it does not by itself prove geometric multiplicities or Jordan structure.
+
+**Definition 1.14 (The distinct-real-pair conjecture).**
 
 $$\operatorname{D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum.claim} = (\forall (m: \mathbb{N}), ((3 \le m) \Rightarrow ((\forall (x: \mathbb{R}), ((\operatorname{Polynomial.IsRoot}\left(\operatorname{Matrix.charpoly}\left(\operatorname{D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum.jacobian}\left((2) \cdot (m)\right)\right), x\right)) \Rightarrow (\operatorname{Polynomial.IsRoot}\left(\operatorname{Matrix.charpoly}\left(\operatorname{D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum.jacobian}\left((2) \cdot (m)\right)\right), -(x)\right)))) \land (\operatorname{Set.ncard}\left(\{(x: \mathbb{R}) \mid (x \ne (0: \mathbb{R})) \land (\operatorname{Polynomial.IsRoot}\left(\operatorname{Matrix.charpoly}\left(\operatorname{D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum.jacobian}\left((2) \cdot (m)\right)\right), x\right))\}\right) = (2) \cdot (((m) - (2): \mathbb{N}))))))$$
 
@@ -66,7 +192,7 @@ $$\operatorname{D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum.claim} =
 
 Conjecture 4.4 asks for N/2−2 distinct pairs of real eigenvalues of the alternating N-gon (TeX lines 627–633). For N=2m and m≥3, this proposition asserts sign symmetry of every real characteristic root and cardinality 2(m−2) for the set of nonzero real roots. Zero and algebraic multiplicities are excluded from the count. The source proposes this assertion as a conjecture.
 
-**Theorem 1.6 (Exactly m minus two real pairs).**
+**Theorem 1.15 (Exactly m minus two real pairs).**
 
 $$\forall (m: \mathbb{N}), ((3 \le m) \Rightarrow ((\forall (x: \mathbb{R}), ((\operatorname{Polynomial.IsRoot}\left(\operatorname{Matrix.charpoly}\left(\operatorname{D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum.jacobian}\left((2) \cdot (m)\right)\right), x\right)) \Rightarrow (\operatorname{Polynomial.IsRoot}\left(\operatorname{Matrix.charpoly}\left(\operatorname{D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum.jacobian}\left((2) \cdot (m)\right)\right), -(x)\right)))) \land (\operatorname{Set.ncard}\left(\{(x: \mathbb{R}) \mid (x \ne (0: \mathbb{R})) \land (\operatorname{Polynomial.IsRoot}\left(\operatorname{Matrix.charpoly}\left(\operatorname{D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum.jacobian}\left((2) \cdot (m)\right)\right), x\right))\}\right) = (2) \cdot (((m) - (2): \mathbb{N})))))$$
 
@@ -101,10 +227,19 @@ This concerns the point-vortex field with b=2, Ω=1/2 and unit radius. It assert
 ## References
 
 - Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.charge`
+- Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.charpoly_mode_product`
+- Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.chord_sq`
+- Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.chord_sq_ne_zero`
 - Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.claim`
+- Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.complex_charpoly_mode_product`
+- Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.equilibrium_all`
 - Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.field`
 - Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.jacobian`
+- Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.nonzero_characteristic_value`
 - Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.polygon`
 - Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.result`
+- Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.rotated_jacobian_all`
+- Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.rotation`
+- Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.rotation_mul_transpose`
 - Dependency: [D5/S3/ConceptDynamics/ObservationTopology/CircleGraphCharts](../../ConceptDynamics/ObservationTopology/CircleGraphCharts.md)
 - Dependency: [D5/S3/FluidDynamics/Vortices/InverseChordCirculant](InverseChordCirculant.md)

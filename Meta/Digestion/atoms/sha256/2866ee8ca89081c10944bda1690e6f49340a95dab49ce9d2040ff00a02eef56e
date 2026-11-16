@@ -1,0 +1,128 @@
+**定理 10.2（同一运行的全部成功和最终返回界）。** 在 $\Gamma_e$、定义 10.1 和下述恰为 OTF004 定义 17.1 的固定后缀的同一运行中，定理 1.2 的全部成功、最终自身边缘返回及资源断言成立。
+
+证明。未测量 $K_{\rm work}$ 的替换不改变 $L$ 的分布。由 OTF004 引理 26.8，约化极目标的坏方向概率至多
+
+$$
+\Pr[\|\widehat h-h\|_\infty>e/16]
+\le\frac{3C_{\rm fail}}\lambda
++4\exp[-(m+2)e^2/16384].
+\tag{10.3}
+$$
+
+实际完整获取与目标的概率差至多 $1/t$，故以同一 $K_{\rm risk}$ 及原窗口，
+
+$$
+\Pr_{\rm actual}[\|\widehat h-h\|_\infty>e/16]
+\le\frac{K_{\rm risk}}t+4e^{-t/16384}
+\le e/6+e/6=e/3.
+\tag{10.4}
+$$
+
+全场估计各坐标误差至多 $eu_e/16$ 的好事件，坏概率满足
+
+$$
+30\exp[-\ell_e e^2u_e^2/512]\le e/3.
+\tag{10.5}
+$$
+
+这是对每个原始允许场的同一固定标架采样，不对场作额外限制。
+
+写 $n_0=n(0)$、$n_a=\partial_a n(0)$。原始轴向 $C^2$ 承诺给
+
+$$
+\left\|\frac{n(u_e e_a)-n(-u_e e_a)}{2u_e}-n_a\right\|_2
+\le\frac1{2u_e}\int_{-u_e}^{u_e}2|v|\,dv=u_e.
+\tag{10.6}
+$$
+
+场估计对差分再贡献至多 $\sqrt3e/16$。在两个好事件上，
+
+$$
+\begin{gathered}
+\|\widehat h-h\|_2\le e/8,\qquad
+\|\widehat n_0-n_0\|_2\le e^2/64,\qquad
+\|\widehat v_a-n_a\|_2\le e/4,\\
+\|\widehat h\|_2,\|\widehat n_0\|_2,\|\widehat v_a\|_2\le2,
+\qquad\|n_0\|_2=1,\quad\|n_a\|_2\le1.
+\end{gathered}
+\tag{10.7}
+$$
+
+逐项比较 (10.2) 和 (1.3)。叉积项在除以二或四之前的误差至多
+
+$$
+\begin{aligned}
+&\left|\widehat h\cdot[\widehat n_0\times\widehat v_a]
+-h\cdot[n_0\times n_a]\right|\\
+&\le\|\widehat h-h\|_2\|n_0\|_2\|n_a\|_2
++\|\widehat h\|_2\bigl(\|\widehat n_0-n_0\|_2\|\widehat v_a\|_2
++\|n_0\|_2\|\widehat v_a-n_a\|_2\bigr)\\
+&\le e/8+2(2e^2/64+e/4)\le11e/16.
+\end{aligned}
+\tag{10.8}
+$$
+
+四坐标误差分别至多 $11e/32,11e/64,0,5e/16$，均小于 $e$。两个好事件无需独立，坏事件并集至多 $2e/3$。因而这是全部原始 $n,h$ 上的同一个成功解码器。
+
+**规定后缀。** 计算并保留 (10.2) 后，忽略全部旧获取、场及算术输出，恰接 OTF004 定义 17.1。为指定同一通道，记 $t_{\rm term}=d\tau_0=1/64$、$r_t=1-\cos t_{\rm term}$、$s_t=\sin t_{\rm term}$，在非参考 $B,A,F$ 上取该定义的固定矩阵
+
+$$
+\begin{aligned}
+O_i={}&-r_t\left[\sigma_{F,i}
++\frac{\sigma_{B,i}(\sigma_A\cdot\sigma_F)
++\sigma_{A,i}(\sigma_B\cdot\sigma_F)}2\right]
++\frac{s_t}2[(\sigma_B-\sigma_A)\times\sigma_F]_i,\\
+\Phi(X)&=\frac{\operatorname{Tr}(X)I_2+\sum_i\operatorname{Tr}(O_iX)\sigma_i}2,
+\qquad\widehat\Phi(X)=\frac{I_B}2\otimes\Phi(X)_A\otimes\frac{I_F}2,\\
+\mathcal E(X)&=\operatorname{Tr}(X)I_2/2.
+\end{aligned}
+\tag{10.9}
+$$
+
+其 CP、TP 性直接使用 OTF004 引理 17.2。准备固定 singlet
+$|\psi^-\rangle_{BA}=(|\uparrow\downarrow\rangle-|\downarrow\uparrow\rangle)/\sqrt2$。将 $B$ 送入第一个新 forward $V$；对 $H$ 在原始标签基退相干，保留 $H,E$、原始符号及实际副本，仅在负标签上交换 $B,A$。在 $+d e_x$ 独立重置 $F$，对 $BAF$ 施行恰为 (10.9) 的 $\widehat\Phi$。将其输出 $A$ 送入第二个新 forward $V$，作同样的原始标签退相干并保留两组原生记录及实际副本。随后对 $B,A,F$ 各施行声明的 $\mathcal E$ 并保留这些同名量子输出。
+
+最后，在 $+d e_x$ 另独立重置新鲜、此前未经改动的 $S_t$，恰一次施行
+
+$$
+U_{\rm term}=\exp[-idJ\cdot\sigma/m]
+\tag{10.10}
+$$
+
+并对同一 $S_t$ 施行声明的 $\mathcal E$，仍保留它。不调用其它终端或其逆。原始及实际复制符号、$B,A,F,S_t$、两个新 $H,E$、全部程序、路由及固定工作口均在最终 $K$ 中；(10.9) 不被换成另一个带不同实际输出的扩张。所有分支都执行该后缀。
+
+**实际最终边缘。** 场采样及算术只作用于非参考系统，不能增加自身边缘返回。令 $\omega^{\rm old}_{n,h}$ 为它们完成后的实际 $RM$ 态，$M$ 包含全部旧获取、访问、编译、场和解码口。由 (9.1)，
+
+$$
+D_{\rm tr}\bigl(\omega^{\rm old}_{n,h},
+\tau_h\otimes\operatorname{Tr}_R\omega^{\rm old}_{n,h}\bigr)
+\le\delta_{\rm acq}.
+\tag{10.11}
+$$
+
+对两边施行同一后缀。它不读取 $M$，公共通道收缩此差至多 $\delta_{\rm acq}$。在乘积输入上，OTF004 定理 17.3 对所有 $h$ 和
+$v=n(+d e_x)$ 给全部后缀口的自身边缘返回小于 $80/D$。将比较边缘换成实际最终 $K$ 边缘，由偏迹收缩性再付一次 $\delta_{\rm acq}$，所以
+
+$$
+\begin{aligned}
+\mathcal R_h(\Omega_{n,h})
+&\le2\delta_{\rm acq}+80/D\\
+&\le\frac{2\cdot768^2(C_{\rm return}+3C_{\rm fail})+5}{t}
+=\frac{C_{\rm final}}t,
+\end{aligned}
+\tag{10.12}
+$$
+
+其中 $80t/D\le80e^2<1$。两次 $\delta_{\rm acq}$ 都属于同一实际旧态的比较，最终使用的是自己的完整实际边缘，未换用单独可达的最优边缘。
+
+**同一最坏资源。** 获取使用至多 $\nu_eq_e$ 次 $V$，无场重置和终端；场部分使用零次 $V$、$15\ell_e$ 次重置；规定后缀再使用两次 $V$、两次独立 $+d e_x$ 重置及一个终端。因此
+
+$$
+T_V\le\nu_eq_e+2\le L_e,\quad
+T_{\rm reset}=15\ell_e+2\le18N_e+1=Q_e,\quad
+T_R\le\nu_eq_e+3.
+\tag{10.13}
+$$
+
+重置界使用 $18N_e\ge15\ell_e+1$。后缀为 TP 且不改已计算的解码记录，故成功边缘保持。没有额外添加旧 $3k_e$ 参考获取阶段，也没有用固定 $n_*$ 的解码器代替原全场消费者。所有重试和截止已按最坏分支支付。$\square$
+

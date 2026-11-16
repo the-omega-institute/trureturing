@@ -1,0 +1,102 @@
+### 17.6. Citations and mathematical correspondence
+
+- **FULL:** Chapter 16, especially (16.17)--(16.22), supplies the exact
+  full-residual coefficient spaces, all six nonnegative risk weights,
+  the 155-entry norm and both universal inequalities. Sections 16.1--16.4
+  supply the joint mismatch necessity with its original-source hypotheses.
+- **PAIRED:** Sections 2--4 and Chapters 11--15 of this volume supply the
+  complete-law domain, native recursions, endpoint geometry, joint
+  regeneration, one-sided realization limits and event counterobject.
+  Their conclusions retain their stated scopes.
+- **CLIP:** [Risk-controlled emission moment feasibility](RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md),
+  Sections 1--6. Proposition 17.2 uses its endpoint-box TV identity;
+  (17.9) is the elementary complete-tail bound of (12.13), evaluated at
+  the laws (17.4).
+- **PAID:** [Effective paid-history certificates](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md),
+  Definitions 1.1--2.1, Lemmas 2.1.1, 2.2, 14.1 and Corollary 2.3.
+- **RETURN:** [Acquired-return p-emission variation](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md),
+  Theorems 9.2--9.3. Their necessity is reused through Chapter 16;
+  it is not a risk-only lower bound.
+- **Endpoint-tag coefficient test:** The complete native laws (2.1),
+  their compatible endpoint flows (12.5), and the coordinate triangle
+  identity (5.7) give (17.19) by the full projected sign argument in
+  Corollary 17.5. Conditional finite-feature tests, elimination of
+  redundant terms and polynomial validation provide no evaluated
+  separator or projected null without their own full hypotheses.
+
+The complete-law formulation in [PAID, Chapters 16--17](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md)
+uses the same normalized compact law spaces and two separately normalized
+unweighted flows. Its second flow is written in the reversed coordinate
+order: $\gamma=\Gamma_B$ and $\zeta=\mathrm{swap}_*\Gamma_A$,
+where $\mathrm{swap}(W,Q)=(Q,W)$. Its raw residual equations
+are equivalent to (16.2): multiply input tests by $U$ or $v$ in one
+direction, and by $1/U$ or $1/v$ in the other. All these multipliers are
+bounded continuous because $U\ge3/5$ and $v\ge1/3$. The complete
+atom equations include infinity and extend to complete events as in
+Section 16.1. The supremum over the closure of the supported parameters
+has the same value as the supported-depth supremum: the complete-target
+TV estimates of [CLIP, Proposition 5.3] give continuity in the parameter,
+uniformly in the descriptor. No maximizing supported depth is required.
+Thus PAID's compactness, finite regeneration, endpoint boxes and zero-value
+alternatives are covered by Chapters 11--13 with these exact conventions.
+They are reused mathematical supplies, not further compactness results.
+Finite abstract realization still requires the represented exact-sampler
+conditions of Theorem 11.8 for an effective observer.
+
+[PAID, Theorems 18.1--18.2](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md)
+supply conditional existence of finite strict whole-product certificates
+and rational finite-coordinate verification when the compact value is
+positive. Their tests, polynomial degrees, partitions and supported target
+menus are not fixed to Section 16.5. Their exact projection polytopes also
+differ from its endpoint-box outer domains, and their loss weights have a
+joint sum-one normalization rather than this full 155-coefficient norm.
+Consequently they supply neither coefficients for (16.24) nor a null for
+that fixed system. Proposition 16.4 reuses cancellation of common marginal
+potentials and annihilation of conditional residuals; (17.10)--(17.19)
+retain the specific sparse full-vector evaluation and coefficient ceiling.
+A pointwise falsifier of one tuple is not a universal certificate.
+
+[Suspended-emission heterogeneity, Section 8](RECURSIVE_RELATIONAL_OBSERVATION_SUSPENDED_EMISSION_HETEROGENEITY.md)
+supplies a joint necessary modulus for original excess and suspended
+emission oscillation on the reachable held-record fibre, conditional on
+its common-row, clipping, endpoint and full-record suppliers. It uses one
+dependent acquired path and a convex tangent comparison; it assumes no
+independence of path coordinates or private-kernel mixing. That oscillation
+remains free and is distinct from both residual mismatch energies here.
+Its necessity evaluates neither (16.24) nor the unrestricted infimum and
+is not applied as an observer theorem to the incompatible laws (17.4).
+
+Positive realization by invariant pointed polyhedral cones concerns a
+specified quasi-realization and compatible word maps [Monras--Winter,
+Definition 5 and Theorem 6, arXiv:1412.3634v1]. Conditional convex-order
+coupling concerns integrable finite-dimensional vectors or kernels
+[Leskela--Vihola, Theorems 1.2--1.3, arXiv:1404.0999v3]. Neither theorem
+provides the missing two full-descriptor equations (17.20) for these laws.
+Approximate policy refinement for general Markov decision processes
+[Haesaert--Soudjani--Abate, arXiv:1605.09557] and optimal transition
+couplings of prescribed stationary finite Markov chains
+[O'Connor--McGoff--Nobel, arXiv:2006.07998] address different constraints
+and losses; no complete stopped-law or initialization correspondence is
+asserted. Legal adaptive tests of suspension automata
+[van den Bos--Vaandrager, Definitions 7--11, arXiv:1907.11034v2] grant no
+extra source observation here. Pointwise martingale-duality failures
+[Beiglbock--Nutz--Touzi, Section 8, arXiv:1507.00671v3] preclude borrowing
+unqualified dual attainment. Strict polynomial positivity under an
+Archimedean quadratic module [Helton--Putinar, Theorem 3.9,
+arXiv:math/0612103v1] supplies no separator coefficients or fixed order.
+None of these external results is a premise of Propositions 17.1--17.3 or
+Theorem 17.4; Corollary 17.5 uses only the displayed native-law comparison.
+
+The native actual-prefix marking and rigidity statements require their
+prescribed literal source, complete nominal carrier, exact traces and
+truthful cache. The k-bonacci donor, internal-zero and own-path statements
+require their literal executor, actual calendar and phase-label
+hypotheses. Their variables and costs have not been identified with the
+two stochastic complete-law flows. The Robin signed-band decomposition
+likewise concerns arithmetic zeros and its fixed exponent, not these
+probability residuals. These are qualified contextual analogies only.
+The assertions here are ordinary mathematical statements. Universal
+formal applications, worldwide novelty, exact common attainment, the
+unrestricted zero-versus-positive alternative and fixed-resource optima
+remain unestablished.
+

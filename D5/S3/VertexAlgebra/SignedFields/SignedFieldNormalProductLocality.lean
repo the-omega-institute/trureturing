@@ -126,7 +126,7 @@ noncomputable def signedNormalMinusOne (sign : ℂ) (left right : VertexOperator
   rw [show -(-index - 1) - 1 = index by omega]
   rfl
 
-private theorem forward_finite (A B : VertexOperator ℂ V) (start finish : ℤ) (v : V) :
+theorem forward_finite (A B : VertexOperator ℂ V) (start finish : ℤ) (v : V) :
     Function.HasFiniteSupport (fun i : ℕ => (A [[start - i]]) ((B [[finish + i]]) v)) := by
   refine BddAbove.finite (bddAbove_def.mpr ?_)
   refine ⟨(-((HahnModule.of ℂ).symm (B v)).order - finish).toNat, ?_⟩
@@ -137,7 +137,7 @@ private theorem forward_finite (A B : VertexOperator ℂ V) (start finish : ℤ)
     omega
   simp [hz]
 
-private theorem reverse_finite (A B : VertexOperator ℂ V) (start : ℤ) (v : V) :
+theorem reverse_finite (A B : VertexOperator ℂ V) (start : ℤ) (v : V) :
     Function.HasFiniteSupport (fun i : ℕ => (A [[start - i]]) ((B [[i]]) v)) := by
   refine BddAbove.finite (bddAbove_def.mpr ?_)
   refine ⟨(-((HahnModule.of ℂ).symm (B v)).order - 1).toNat, ?_⟩

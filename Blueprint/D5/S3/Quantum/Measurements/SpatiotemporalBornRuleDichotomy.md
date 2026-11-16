@@ -58,7 +58,7 @@ $$\operatorname{D5.S3.Quantum.Measurements.SpatiotemporalBornRuleDichotomy.claim
 
 *Commentary.*
 
-Assume a representing operator w exists. Complex linear combinations of self-adjoint projections span the full square matrix space: the spectral theorem writes each self-adjoint matrix as a real linear combination of unitary conjugates of coordinate projections, and self-adjoint matrices span the complex algebra. Consequently a matrix whose trace pairing with every projection is zero is itself zero.
+Assume a representing operator w exists. Complex linear combinations of self-adjoint projections span the full square matrix space: the spectral theorem writes each self-adjoint matrix as a real linear combination of unitary conjugates of coordinate projections, and self-adjoint matrices span the complex algebra. The coordinate-projection fact is supplied directly by proj_single in the intrinsic projection-matching module. Consequently a matrix whose trace pairing with every projection is zero is itself zero.
 
 Fix an input projection p and an output projection q. The decomposition 1 = p + (1 − p) makes the trace pairing with w additive in the first projection. Substituting the sequential probabilities for p, 1 − p and 1 shows that tr(ε(ρ − pρp − (1 − p)ρ(1 − p))q) = 0. Trace separation and expansion of the two products give ε(pρ + ρp) = 2ε(pρp) for every projection p.
 
@@ -82,6 +82,7 @@ Conversely, if ρ = (1/(d : ℂ))1, take w = (1/(d : ℂ)) times the sum over i,
 - Truth anchor: `D5/S3/Quantum/Measurements/SpatiotemporalBornRuleDichotomy.DiscardPrepare`
 - Truth anchor: `D5/S3/Quantum/Measurements/SpatiotemporalBornRuleDichotomy.claim`
 - Truth anchor: `D5/S3/Quantum/Measurements/SpatiotemporalBornRuleDichotomy.result`
+- Dependency: [D5/S3/Quantum/Algebra/UHFOneSidedProjectionMatching](../Algebra/UHFOneSidedProjectionMatching.md)
 - Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](../Information/SLDSpectralEnergy.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ChannelAssemblageLOSRRefutation](../QuantumChannels/ChannelAssemblageLOSRRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ElementaryChannelDivisibility](../QuantumChannels/ElementaryChannelDivisibility.md)

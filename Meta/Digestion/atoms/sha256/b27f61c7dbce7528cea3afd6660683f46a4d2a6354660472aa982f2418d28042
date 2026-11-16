@@ -1,0 +1,82 @@
+写标准Pauli矩阵为 $X,Y,Z$，置 $U=Y$、$V=(Y-X)/\sqrt2$、$C=Z\otimes Z$。则
+
+$$
+\begin{gathered}
+UV=(I+iZ)/\sqrt2,\qquad VU=(I-iZ)/\sqrt2,\qquad U^2=V^2=I,\\
+h=Z\otimes I,\quad c=C,\quad k=I\otimes Z,\\
+z=X\otimes I+(X+Y)\otimes X/\sqrt2,\qquad
+t=-U\otimes I-V\otimes X,\quad r=\rho C,
+\end{gathered}
+\tag{24.4}
+$$
+
+最终取 $\rho=1/16$。先置 $A=hx=k-it$；准确乘法给
+
+$$
+\begin{aligned}
+A^*A=x^2&=3I+\sqrt2\,I\otimes X-2V\otimes Y,\\
+A^2&=-I-\sqrt2\,I\otimes X+2iU\otimes Z.
+\end{aligned}
+\tag{24.5}
+$$
+
+$x^2$ 的两个非标量项反交换，平方之和为 $6I$，所以 $x^2\ge(3-\sqrt6)I>0$。$A^2+I$ 的平方为 $-2I$，且 $\operatorname{Tr}A=\operatorname{Tr}A^3=0$、$\operatorname{Tr}A^2=\operatorname{Tr}A^4=-4$。Newton恒等式遂给
+
+$$
+f(\zeta):=\det(A-\zeta I)=\zeta^4+2\zeta^2+3.
+\tag{24.6}
+$$
+
+任取实 $p,q$，记 $s=p^2+q^2$、$d=s+3$ 及
+
+$$
+\begin{gathered}
+H=(A-(p-iq)I)^*(A-(p-iq)I)=dI+N,\\
+N=\sqrt2 F-2G-2pK_0+2qL+2qM,\\
+F=I\otimes X,\quad G=V\otimes Y,\quad K_0=I\otimes Z,\quad
+L=U\otimes I,\quad M=V\otimes X,\\
+P_\rho(p,q)=H-2q\rho C
+=x^2+(p^2+q^2)I-2pk-2qg.
+\end{gathered}
+\tag{24.7}
+$$
+
+下面的行列式等式包含全部参数和全部交叉项：
+
+$$
+\begin{aligned}
+\det P_\rho(p,q)
+={}&|f(p-iq)|^2+64\rho q^2\\
+&-8\rho^2q^2\bigl[(s+3)^2+4p^2+2\bigr]+16\rho^4q^4.
+\end{aligned}
+\tag{24.8}
+$$
+
+为逐项核对该等式，$C$ 共轭 $F,G,K_0,L,M$ 的符号依次为 $(-,+,+,-,+)$。Pauli迹正交性给
+
+$$
+\operatorname{Tr}(CH)=0,\quad
+\operatorname{Tr}((CH)^2)=4(d^2+4p^2+2),\quad
+\operatorname{Tr}(CN^2)=0.
+\tag{24.9}
+$$
+
+$\operatorname{Tr}(CN^3)$ 中只有 $F,G,L$ 的六个排列有贡献。它们的未带系数乘积之和为 $i(UV-VU)\otimes Z=-\sqrt2 C$，乘共同系数 $\sqrt2(-2)(2q)$ 后为 $8qC$。故
+
+$$
+\operatorname{Tr}(CH^2)=0,\quad
+\operatorname{Tr}(CH^3)=32q,\quad
+\operatorname{Tr}(C\operatorname{adj}H)=-32q.
+\tag{24.10}
+$$
+
+最后一式用四阶伴随矩阵的特征多项式表达，其他含 $C$ 的低次迹均为零。由 $C^2=I,\det C=1$，四次行列式的常数、一次、二次、三次及四次系数分别确定为
+
+$$
+\det(H-\delta C)
+=\det H+32q\delta-2(d^2+4p^2+2)\delta^2+\delta^4.
+\tag{24.11}
+$$
+
+其中二次系数是 $\bigl[(\operatorname{Tr}CH)^2-\operatorname{Tr}((CH)^2)\bigr]/2$，三次系数为 $-\operatorname{Tr}(CH)=0$。代入 $\delta=2q\rho$ 及 $\det H=|f(p-iq)|^2$，得到24.8。
+

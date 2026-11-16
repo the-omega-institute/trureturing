@@ -1,0 +1,17 @@
+**推论 98.3（同一原行的准确像）。** 在定义 98.1 下，固定原 $a=su+x$、$F_a(b)=D(a,b)$。若 $x\ne0$，则
+
+$$
+\begin{aligned}
+F_a(E)=K_a(E)&=\{0\}\oplus(V\cap x^\perp),\\
+\ker(K_a|_E)&=\mathbb Ru\oplus\mathbb Rx,\\
+\overline{F_a(E)}^{\,X}
+=\overline{K_a(E)}^{\,X}&=\{0\}\oplus(H\cap x^\perp),\\
+\ker K_a\cap\overline{K_a(E)}^{\,X}&=\{0\}.
+\end{aligned}
+\tag{98.14}
+$$
+
+这里最后一行的核在 $X$ 上取。$x=0$ 时 $F_a(E)=K_a(E)=\{0\}$、$\ker K_a=X$，相同交为零。$K_a(E)$ 在原 $E$ 中相对闭；不宣称它在 $X$ 中闭。
+
+证明。(98.8) 使 $K_a(E)$ 恰为所示原正交补：对其中任意 $w$，原输入 $-w/\|x\|^2$ 的 $K_a$ 像就是 $w$。定理 98.2 给 $F_a(E)\subseteq K_a(E)$，NN 又给 $K_a(E)=F_a(F_a(E))\subseteq F_a(E)$，故准确相等。核由 (98.8) 直接读出。已知投影 $P_x$ 把稠密原 $V$ 映到 $V\cap x^\perp$，其像在 $H\cap x^\perp$ 稠密，给闭包及交零；相对闭性由原标量坐标与内积泛函的连续性给出。$x=0$ 用 (98.7)。此处不重复一般 A 的下降理论：本分支的准确原像已直接支付定义 81.1 的 A，而 A 在任意 JB 上是否由原数据支付仍未解决。原像等式也给旧 32.2 所消费的原正交补满射，不把它另当前提。∎
+

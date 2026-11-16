@@ -1,0 +1,10 @@
+#### 命题 3.3：被动转动与实际操作
+
+同时变换 $\rho\mapsto U\rho U^\dagger$、 $G\mapsto UGU^\dagger$ 不改变概率。 实际仪器则须另给状态更新。
+
+**证明。**
+
+循环迹给出 $\operatorname{tr}(U\rho U^\dagger UGU^\dagger)=\operatorname{tr}(\rho G)$。 该式没有包含一个新的相互作用。
+
+$\square$
+

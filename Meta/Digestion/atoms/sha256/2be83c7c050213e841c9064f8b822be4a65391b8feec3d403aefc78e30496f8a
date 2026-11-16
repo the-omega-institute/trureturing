@@ -1,0 +1,71 @@
+**定理 13.1（原混合误差的精确闭理想与交换化）。** 在 10.1 的同一原资料、同一原 $h,y,z,J$ 下，简记 $B=\mathfrak B_{y,z}$，以 $\operatorname{Id}_B(a)$ 表示包含 $a$ 的最小范数闭双边星理想。令
+
+$$
+\mathcal K=\overline{\operatorname{span}}
+\{b[c,d]e:b,c,d,e\in B\},\qquad
+\mathsf H=[\mathsf X,\mathsf Y].
+\tag{13.1}
+$$
+
+则同一原响应的两份误差满足
+
+$$
+\begin{gathered}
+\mathsf H=2\mathsf X\mathsf Y,\qquad
+\mathsf H^*\mathsf H=4\mathsf T^2,\qquad
+|\mathsf H|=2\mathsf T,\\
+\boxed{\mathcal K
+=\operatorname{Id}_B(\mathsf H)
+=\operatorname{Id}_B(\mathsf T)
+=\operatorname{Id}_B(\mathsf X)
+=\operatorname{Id}_B(\mathsf Y)
+=\overline{\mathsf T B}.}
+\end{gathered}
+\tag{13.2}
+$$
+
+特别地，下列条件等价：$B$ 交换、$\mathcal K=0$、$\mathsf H=0$、$\mathsf T=0$、两份原混合式
+
+$$
+Jy\circ Jz=y\circ z,\qquad
+y\circ Jz+Jy\circ z=0
+\tag{13.3}
+$$
+
+同时成立。商 $B/\mathcal K$ 是此诊断代数的最大交换 C* 商，允许为零；任意到 C* 代数的 *-同态 $\rho$ 均满足
+
+$$
+\rho(B)\text{ 交换}
+\iff\rho(\mathsf T)=0
+\iff\rho(\mathsf X)=\rho(\mathsf Y)=0.
+\tag{13.4}
+$$
+
+在 12.1 的 $M=B^{**}$ 中，还有精确支撑关系
+
+$$
+\overline{\mathcal K}^{\,w^*}=z_{\rm res}M.
+\tag{13.5}
+$$
+
+所有闭包和商均只在固定的诊断 C* 代数中使用，不给原 $D$ 新增商论域、连续性或可加性前件。
+
+证明。10.2 的反交换给 $\mathsf H=2\mathsf X\mathsf Y$；自伴性和 $\mathsf X^2=\mathsf Y^2=\mathsf T$ 给
+
+$$
+\mathsf H^*\mathsf H
+=4\mathsf Y\mathsf X^2\mathsf Y
+=4\mathsf T\mathsf Y^2=4\mathsf T^2.
+\tag{13.6}
+$$
+
+$\mathsf T\ge0$，所以唯一正平方根是 $|\mathsf H|=2\mathsf T$。令 $I=\operatorname{Id}_B(\mathsf T)$。在 C* 商 $B/I$ 中，$\mathsf X$ 和 $\mathsf Y$ 的自伴像平方均为零，故两像为零。商由单位像和一个自伴元 $\mathsf A+I$ 生成，因而交换，包含零商情形。因此全部交换子在 $I$ 中，$\mathcal K\subset I$。
+
+另一方面 $\mathsf H\in\mathcal K$，而包含 $\mathsf H$ 的闭星理想包含 $\mathsf H^*\mathsf H$ 及其连续函数演算的正平方根。故 $\mathsf T=|\mathsf H|/2\in\operatorname{Id}_B(\mathsf H)\subset\mathcal K$，从而 $I\subset\operatorname{Id}_B(\mathsf H)\subset\mathcal K\subset I$。其中平方根函数在零处为零，故可在该理想内作演算，不需理想有单位。
+
+$\mathsf T=\mathsf X^2$ 给 $I\subset\operatorname{Id}_B(\mathsf X)$；上段的商平方零又给 $\mathsf X\in I$，故两理想相等。$\mathsf Y$ 同理。$\mathsf T$ 中央，$\mathsf TB$ 本身是双边星理想，故其范数闭包就是 $I$。这证明 (13.2)。单位存在时 $[c,d]=u[c,d]u\in\mathcal K$；交换子换序取伴随仍在所定义的闭线性包内，所以 $\mathcal K$ 确是全部交换子生成的闭星理想。
+
+由 (13.2)，$\mathcal K=0\iff\mathsf T=0\iff\mathsf H=0$；自伴平方零给 $\mathsf T=0\iff\mathsf X=\mathsf Y=0$，后者按 (10.2)–(10.3) 正是 (13.3)。全部交换子为零等价于 $B$ 交换。任一交换像的 *-同态都消灭全部交换子及 $\mathcal K$，反向消灭 $\mathcal K$ 的同态经交换商因子化。这既证明最大交换商的泛性质，也给 (13.4)，包括零同态。
+
+最后令 $e_n=\mathsf T(\mathsf T+n^{-1}u)^{-1}\in\mathsf TB$。这是固定环境正元的连续函数演算；有界递增序列 $e_n$ 在 $M$ 中强收敛、亦弱星收敛到 $z_{\rm res}$。故 $\overline{\mathcal K}^{w^*}$ 包含 $z_{\rm res}$。范数闭双边理想的弱星闭包是 $M$ 的双边理想：先固定一个 $B$ 元取弱星极限，再用 $B$ 在 $M$ 的弱星稠密性和乘法分别弱星连续性，便允许两侧乘任意 $M$ 元。因此它包含 $z_{\rm res}M$；反向由 $(u-z_{\rm res})\mathsf T=0$ 及 $\mathcal K=\overline{\mathsf TB}$ 得到。式 (13.5) 成立。这里只逆 $\mathsf T+n^{-1}u$，从未逆 $\mathsf T$，故零谱及向零积聚的连续谱均在证明内。∎
+

@@ -1,0 +1,51 @@
+**定理 83.6（乘积域比较）。** 只为证明和误差界，令下列函数均限制在 83.3 证明中的完整无标签投影轨道上：
+$$
+V=\{\Pi\mapsto\operatorname{Tr}(R\Pi):R=R^*\in\operatorname{End}_{\mathbb R}(A)\},\quad
+k=\dim V,\quad \mathcal D_{\rm pair}=\max_{B,C}h_z(B,C).
+\tag{83.9}
+$$
+则 $1\le k\le d(d+1)/2$，$d=\dim_{\mathbb R}A$，并有
+$$
+\boxed{\begin{gathered}
+0\le\mathcal Q_\times\le\mathcal D_{\rm pair},\\
+\mathcal D_{\rm old}\le\mathcal D_{\rm pair}
+\le\min\{2\mathcal D_{\rm old},\kappa\mathcal Q_\times\},\qquad
+\kappa:=\min\{k^2,2k\}.
+\end{gathered}}\tag{83.10}
+$$
+以下比较无需假定 $\mathcal Q_\times\le\mathcal D_{\rm old}$；这里也未证明或反驳这条额外不等式。全部原正交正元满足
+$$
+0\le\langle Ja,Jb\rangle_D\le\frac{\kappa\mathcal Q_\times}{2}\|a\|_\infty\|b\|_\infty.
+\tag{83.11}
+$$
+
+**证明。** 83.4 的同一正表步骤 (83.6a)—(83.6b) 已在完整原域上给出 $h_z\ge0$、$0\le a,b\le g_z\le a+b$ 及 $h_z(B,C)\le h_z(B,B)+h_z(C,C)$；此处仍用同一原 $F$、同一个 $p$ 两次及全部纠缠正输入，不另选映射或缩小第二层量词。取平均给 $\mathcal Q_\times\le\mathcal D_{\rm pair}$，取对角给 $\mathcal D_{\rm old}\le\mathcal D_{\rm pair}$，对最后一个逐点上界取最大值得 $\mathcal D_{\rm pair}\le2\mathcal D_{\rm old}$。
+
+为完整给出当前评价核的依据，由 $\operatorname{Tr}\Pi=n>0$，取 $R=I_A/n$ 可知常数一属于 $V$，而自伴算子空间的维数给 $1\le k\le d(d+1)/2$。原 Jordan 自同构的正交共轭保持投影轨道及 $V$，不变概率使其在 $V$ 上的作用保持 $L^2(\nu_A)$ 内积。全支撑保证该内积正定：连续函数若有某个非零值，便在一个正质量开集上平方严格正，故可取 $L^2$ 正交归一基 $f_1,\ldots,f_k$。评价核 $K(B,C)=\sum_{j=1}^k f_j(B)f_j(C)$ 的对角由群作用的传递性恒定，而其对角积分为 $\sum_j\int f_j^2=k$，所以 $K(B,B)=k$。乘积空间 $V\otimes V$ 的评价核为两个单变量核的乘积，对角为 $k^2$；由 (83.5) 的迹表达及常数属于 $V$，有 $h_z\in V\otimes V$，Cauchy–Schwarz 遂给
+$$
+\mathcal D_{\rm pair}^2\le k^2\iint h_z(B,C)^2
+\le k^2\mathcal D_{\rm pair}\mathcal Q_\times.
+$$
+$\mathcal D_{\rm pair}=0$ 时结论直接成立，否则约去一个 $\mathcal D_{\rm pair}$ 得到原 $k^2$ 界 $\mathcal D_{\rm pair}\le k^2\mathcal Q_\times$。
+
+还可得到同一比较定理内的行列强化。83.4 定义的 $q_J,a,b$ 都属于 $V$ 且逐点非负：它们分别是常数减去 $J^*J$、$(a\mapsto H_{\rm s}F(a,1_A))^*(a\mapsto H_{\rm s}F(a,1_A))$、$(a\mapsto H_{\rm s}F(1_A,a))^*(a\mapsto H_{\rm s}F(1_A,a))$ 在相应 $\Pi$ 上的评价。对任意逐点非负 $f\in V$，上述单变量评价核给
+$$
+\|f\|_\infty^2\le k\int f^2\le k\|f\|_\infty\int f,
+$$
+所以 $\|f\|_\infty\le k\int f$（零函数情形显然）。由 (83.6a)，
+$$
+\begin{aligned}
+\mathcal D_{\rm pair}
+&\le\|q_J+a\|_\infty+\|b\|_\infty\\
+&\le k\left(\int q_J+\int a+\int b\right)\\
+&\le k\left(\int q_J+2\iint g_z\right)
+\le2k\mathcal Q_\times.
+\end{aligned}
+$$
+其中 $\int a,\int b\le\iint g_z$，且 $\mathcal Q_\times=\int q_J+\iint g_z$；所用积分均为 $\nu_A$ 或其乘积。两条上界合并即 $\kappa$ 界。由于
+$$
+\kappa\le\kappa_d:=
+\min\left\{\left[\frac{d(d+1)}2\right]^2,d(d+1)\right\},
+$$
+也可统一用纯 $d$ 常数 $\kappa_d$ 代替 $\kappa$。这是同一完整模型类内的常数选择；本章的两个显式范数不保证误差常数也更优，不主张它与第 81 章常数有普遍严格比较。最后由 (80.4) 将 $\mathcal D_{\rm pair}$ 的界代入，得到 (83.11)。群的乘积只用于函数空间，不是给原实际联合增加独立性。证毕。
+

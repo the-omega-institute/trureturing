@@ -7,9 +7,65 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.IntegratedExplicit;
 internal sealed class ActualLinearPeakDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Failure of RH forces a linear excursion of the complete actual arithmetic kernel.",
-        H("A Linear Excursion of the Actual Arithmetic Kernel"),
+        "An affine upper bound on any positive tail of the complete actual arithmetic kernel forces RH.",
+        H("Affine Tails of the Actual Arithmetic Kernel"),
         Blocks(Describe.Lean(
+            DescribeId.Create("actual-kernel-affine-tail-implies-rh"),
+            DeclarationHandle.Create(
+                "D5/S3/Weil/Mertens/IntegratedExplicit/ActualLinearPeak.actual_kernel_affine_tail_implies_rh"),
+            H("An affine upper bound on an arbitrary positive tail forces RH"),
+            StatementSource.FromAuthor(AffineTailClaim()),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text(
+                    "Let tau>0 and let a,b be arbitrary real numbers. Suppose K(t)<=a*t+b "
+                    + "for every real t>=tau, where K is the full literal "
+                    + "ActualKernelLocalPositivity.K, with every Mangoldt ramp and "
+                    + "trivial-zero correction retained. Then Mathlib RiemannHypothesis "
+                    + "holds. This conditional criterion does not establish its arithmetic "
+                    + "hypothesis or the original Robin converse.")),
+                Paragraph(Text(
+                    "The existing private engine is parameterized in place. For t>0 the "
+                    + "actual integrated explicit formula identifies K(t) with "
+                    + "k(t)=exp(-t/2)*Re(actualH(t)). On [tau,infinity), the denial "
+                    + "makes a*t+b-k(t) nonnegative. Its ENNReal density against restricted "
+                    + "volume defines mu; the closed and open cutoff restrictions agree "
+                    + "because a singleton is Lebesgue-null. For r<0, "
+                    + "|(a*t+b)*exp(r*t)| is bounded by "
+                    + "(|a|*|t|+|b|)*exp(r*t). The zeroth and first exponential moments "
+                    + "pay this bound for signed a,b. The actual exponential bound for k "
+                    + "then proves mu's moments for r<-1/2, without finite total mass.")),
+                Paragraph(Text(
+                    "For P(z)=complexMGF(id,mu)(-z), the actual Laplace identity gives "
+                    + "P=A-N/(z^2-1/4) initially in Re(z)>1/2. Keep the original "
+                    + "normalization N=M*z-X'/X, X(z)=xiReading(z+1/2), M=firstLiMass. "
+                    + "Here A=B+C, B=exp(-z*tau)*((a*tau+b)/z+a/z^2), and "
+                    + "C=integral_(0,tau] exp(-z*t)*k(t) dt. Differentiating the "
+                    + "restricted-volume transform pays B. Dominated parameter "
+                    + "differentiation proves C entire, retaining the full finite prefix "
+                    + "at the new cutoff without differentiating k.")),
+                Paragraph(Text(
+                    "First continue (z^2-1/4)*X*P=((z^2-1/4)*A-M*z)*X+X' "
+                    + "on the actual open convex convergence domain of P inside Re(z)>0. "
+                    + "Only local nonvanishing near positive real points is needed: "
+                    + "the actual height theorem excludes real zeros of X. Endpoint "
+                    + "normalization gives N(1/2)=0. The extension "
+                    + "Q(z)=dslope(N,1/2,z)/(z+1/2) is holomorphic on this local "
+                    + "nonzero domain. Analytic punctured uniqueness yields P=A-Q "
+                    + "as a neighborhood germ at every interior convergence point there, "
+                    + "including z=1/2; totalized division is not used as an extension.")),
+                Paragraph(Text(
+                    "Reflect z to -z and apply "
+                    + "NonnegativeBoundary.integrable_exp_on_real_ray at target 0. "
+                    + "The paid germs supply every real interior convergence point, "
+                    + "so all negative exponential moments converge. The crossed identity "
+                    + "now yields X'=G*X on the whole half-plane Re(z)>0, with "
+                    + "G=(z^2-1/4)*(P-A)+M*z analytic even at the half-point and "
+                    + "putative zeros of X. Using X(1/2)=1/2, the existing analytic "
+                    + "linear ODE theorem excludes all such zeros; the existing "
+                    + "right-half-strip reduction proves RH."))),
+            DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("actual-linear-peak-of-not-rh"),
             DeclarationHandle.Create(
                 "D5/S3/Weil/Mertens/IntegratedExplicit/ActualLinearPeak.actual_linear_peak_of_not_rh"),
@@ -23,35 +79,11 @@ internal sealed class ActualLinearPeakDocument : IScribeDocumentDefinition
                     + "has no zero-simplicity, prime-number-theorem or additional transform "
                     + "hypothesis. It provides no quantitative upper bound for the first excursion.")),
                 Paragraph(Text(
-                    "Set T=log(10000) and k(t)=exp(-t/2)*Re(actualH(t)). The actual complete "
-                    + "zero package supplies continuity and reality. Denying the excursion "
-                    + "makes 4t+9-k(t) nonnegative on t>T. Use this as an ENNReal density "
-                    + "against restricted volume; the resulting measure may have infinite "
-                    + "total mass. The actual exponential bound proves its negative moments "
-                    + "with parameter less than -1/2.")),
-                Paragraph(Text(
-                    "For P(z)=complexMGF(id,mu)(-z), the actual Laplace identity gives "
-                    + "P=A-N/(z^2-1/4) initially in Re(z)>1/2. Here N=M*z-X'/X, "
-                    + "X(z)=xiReading(z+1/2), M=firstLiMass and A=B+C. The polynomial tail "
-                    + "B=exp(-z*T)*((4T+9)/z+4/z^2) is obtained by differentiating the "
-                    + "restricted-volume transform. The compact correction C is entire by "
-                    + "dominated parameter differentiation without differentiating k.")),
-                Paragraph(Text(
-                    "Continue the cross identity (z^2-1/4)*X*P=((z^2-1/4)*A-M*z)*X+X' "
-                    + "on the actual open convex convergence domain. Every positive real "
-                    + "belongs to the zero-free domain of X, by the original actual height "
-                    + "theorem. Endpoint normalization gives N(1/2)=0, so the holomorphic "
-                    + "quotient is dslope(N,1/2,z)/(z+1/2). Analytic punctured uniqueness "
-                    + "supplies neighborhood equality also at 1/2.")),
-                Paragraph(Text(
-                    "NonnegativeBoundary.integrable_exp_on_real_ray applies at every real "
-                    + "interior convergence point and forces all negative moments. The same "
-                    + "cross identity now yields X'=G*X throughout Re(z)>0. The existing "
-                    + "analytic_linear_ode_zero_free compares finite positive analytic "
-                    + "orders at a hypothetical zero, handling all multiplicities. The "
-                    + "right-half-strip reduction proves RH under denial. Finally the "
-                    + "actual integrated explicit formula, used only at y>=T>0, restores "
-                    + "the literal arithmetic conclusion."))),
+                    "Deny the excursion and apply actual_kernel_affine_tail_implies_rh "
+                    + "with tau=log(10000), a=4, b=9. This positive cutoff permits the "
+                    + "exact arithmetic identity for K at every point of that closed "
+                    + "tail. The parameterized engine above includes the entire finite "
+                    + "prefix at tau; no upper bound is extended to an earlier tail."))),
             DescribeRole.Theorem),
             Describe.Lean(
             DescribeId.Create("actual-kernel-subexponential-implies-rh"),
@@ -104,6 +136,27 @@ internal sealed class ActualLinearPeakDocument : IScribeDocumentDefinition
                     + "This conditional criterion does not prove that the arithmetic "
                     + "K satisfies its subexponential hypothesis."))),
             DescribeRole.Theorem))));
+
+    private static Formula AffineTailClaim()
+    {
+        var real = Seq(Mathbb, Grp(F.Id("R")));
+        var tau = F.Id("tau");
+        var a = F.Id("a");
+        var b = F.Id("b");
+        var t = F.Id("t");
+        var positiveTau = new Formula.Relation(D(0), FormulaRelationOperator.LessThan, tau);
+        var cutoff = new Formula.Relation(tau, FormulaRelationOperator.LessThanOrEqual, t);
+        var bound = new Formula.Relation(Call("K", t), FormulaRelationOperator.LessThanOrEqual,
+            Add(Multiply(a, t), b));
+        var denial = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("t"), real,
+            new Formula.Logic(cutoff, FormulaLogicOperator.Implies, bound));
+        Formula claim = new Formula.Logic(positiveTau, FormulaLogicOperator.Implies,
+            new Formula.Logic(denial, FormulaLogicOperator.Implies,
+                Seq(Operatorname, Grp(F.Id("RiemannHypothesis")))));
+        foreach (var name in new[] { "b", "a", "tau" })
+            claim = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), real, claim);
+        return Disp(claim);
+    }
 
     private static Formula Claim()
     {

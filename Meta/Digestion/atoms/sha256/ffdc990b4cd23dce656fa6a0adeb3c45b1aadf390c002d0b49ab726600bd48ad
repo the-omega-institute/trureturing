@@ -1,0 +1,29 @@
+**定理 132.1（保留射线的演员对该射线响应为零）。** 在 $H_n(\mathbb C)$ 中，设 $p=ee^*$、$\|e\|=1$ 是秩一投影，$a=a^*$ 为任意阶数的原输入，且 $[a,p]=0$。则
+
+$$
+D(a,\mu p)=0\quad(\mu\in\mathbb R).
+\tag{132.1}
+$$
+
+本结论不依赖 131.1 的全块取向一致性。
+
+证明。$\mu=0$ 由 P2 的零对角预算给出。设 $\mu\ne0$，令 $d=D(a,\mu p)$、$q=1-p$，则 $ap=pa=\lambda p$，$\lambda\in\mathbb R$。对全部 $\zeta\in q\mathbb C^n$，第二输入的平方读数为零，129.1 给 $\zeta^*d\zeta=0$。对这个固定 Hermitian 矩阵作普通极化，得 $qdq=0$。对 $e$，两输入分别作用为 $\lambda e$、$\mu e$，实 Gram 行列式也是零，故 $pdp=0$。于是存在 $z\perp e$，使
+
+$$
+d=ze^*+ez^*,\qquad p\circ d=d/2.
+\tag{132.2}
+$$
+
+若 $z=0$ 即得结论。若非零，$p,d$ 共同支撑于真实二级子空间 $K=\operatorname{span}_{\mathbb C}\{e,z\}$。在原 PB 中准确取 $(a,b,c)=(a,\mu p,0)$，则 $v=d$、$w=\mu\lambda p$。两个外层旧值均在同一个 $K$ 角中，由完整角公式它们同等于
+
+$$
+\begin{aligned}
+D(\mu p+d,\mu\lambda p)
+&=\varepsilon_K\frac{\mu\lambda[d,p]}{2i},\\
+D(\mu p-d,-\mu\lambda p)
+&=\varepsilon_K\frac{\mu\lambda[d,p]}{2i}.
+\end{aligned}
+$$
+
+但 (128.6) 强迫其差为 $-2\mu p\circ d=-\mu d$，所以 $d=0$。没有从各个谱投影的零值展开一般输入和。∎
+

@@ -1,0 +1,44 @@
+**定义 26.1（同一完整候选与两枚目标标签）。** 完整采用本卷 15.1、20.1 及[配平主卷 128.1–128.2](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)的同一原资料、全部来源量词和总映射 $S,D:E^2\to E$。为与下文原元素 $C$ 区分，将原正锥记作 $C_E$。仍有
+
+$$
+E\subset X\subset A_{\rm sa},\qquad A=C^*(X),\qquad
+C_E=E\cap X_+=E\cap A_+,\qquad N=\|\cdot\|_X|_E.
+\tag{26.1}
+$$
+
+$E$ 是自身含单位实 JB 完成 $X$ 中的含单位、范数稠密实 Jordan 子代数；$X\subset A_{\rm sa}$ 为忠实、含单位、等距、保锥并反映锥的 JC 包含。只要求在 $X$ 中稠密，不要求 $X=A_{\rm sa}$ 或 $E$ 在整个 $A_{\rm sa}$ 中稠密。环境乘法用于有限代数读取，不预先识别为原 $\circ-\mathrm iD$，不要求原复化对它闭合。
+
+原 A1 的全部有向 Hermitian 二表正性、原 A2 的相加三表 $(a+b,a,b)$ 及其排列的实部半正定和指定向量 $(1,-1,-1)$ 的零二次值、原 A3 的 $S(u,u)=u$ 与同一固定有理 $0<\theta\le1$ 的小效果窗 $0\le e\le\theta u\Rightarrow S(e,e)\le e$ 全部保留。$S(a,b)=a\circ b$ 是已取得的同一原 Jordan 乘法。原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定 $C_E$；质量 $m_\alpha=\alpha(u)$ 允许零、不等和次归一值。完整 P2 仍是配平主卷 (128.3) 的每个原 $a,b,\alpha$ 的 Hermitian 二表，其行列式界准确为
+
+$$
+|\alpha(D(a,b))|^2
+\le\alpha(a^2)\alpha(b^2)-\alpha(a\circ b)^2.
+\tag{26.2}
+$$
+
+左端不是 $\alpha(D(a,b)^2)$。全部原三元组和全部原评价的完整 PB 仍准确取 (15.3)：$\nu=D(a,b)-a\circ c$、$\omega=a\circ b+D(a,c)$，两份实际外层旧值之差为 $-2b\circ\nu-2c\circ\omega$。不加未知 $D$ 的线性、齐次、连续、可测、协变、一般单位平移、NN、Jacobi、原 R、商下降或完成延拓，不加任何小代数、有限窗口或内部系数的输出闭合。
+
+固定真正原 $h\in E$、$h^2=u$，以及真正原 $v\in V_h=\{z\in E:h\circ z=0\}$。记 $Jz=D(h,z)$、$j=Jv$、$r=v^2=j^2$。只复用[中央响应平方卷 19–20、35.1 及 (46.3)](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md)已识别的同一旧行：
+
+$$
+\begin{gathered}
+j\in V_h,\qquad Jj=-v,\qquad j^2=v^2,\qquad v\circ j=0,\\
+J(\alpha v+\beta j)=\alpha j-\beta v,
+\qquad D(th,z)=tJz\quad(z\in V_h),
+\qquad \alpha,\beta,t\in\mathbb R.
+\end{gathered}
+\tag{26.3}
+$$
+
+前一条线性只在 $v$ 与自身旧响应的实平面上使用。另复用配平主卷 183.2、185.1 的全部原单位行、零行和 SO$(2)$ 参数槽旋转，以及本卷 3.1 的同一原生成元多项式零值。定义两枚目标原标签
+
+$$
+\begin{aligned}
+x_+&=h+v,&x_-&=h-v,&C&=u-r,\\
+B&=2C,&Y&=rh+(r-2u)v+2j.
+\end{aligned}
+\tag{26.4}
+$$
+
+式中乘积只取已知交换的原元素的 Jordan 乘积，其原性在下述证明中给出；它们不为未知 $D$ 规定内部系数规则。既有 20.2 仍完整有效，但不是下述联合零值的前置。
+

@@ -1,0 +1,51 @@
+### 14.4 分离乘积、激发和交叉项的后缀下界
+
+仅作为下界检验，在最终态中偏迹新后缀口，保留所有旧口 $M$。令 $\mathcal F_v=\operatorname{Tr}_{\rm new}\mathcal S_v$、$\gamma=\sqrt m/D$。OTF004 (26.20) 给
+
+$$
+\| (\mathcal F_v\otimes\operatorname{id}_M)(Y)-Y\|_1
+\le40\gamma\|Y\|_1,
+\quad\operatorname{supp}Y\subset\operatorname{span}\{e_0,e_1\}\otimes M.
+\tag{14.12}
+$$
+
+其来源是 (17.12)、(22.9)–(22.11) 的等距望远镜比较：两次原生接触与终端的差分别至多 $6\gamma,6\gamma,8\gamma$，故迹范数常数为 $12+12+16=40$。算子范数界张量任意旧记忆不变；此条件只限制比较输入的支撑，不限制真实输出的降低数，也不要求纯化。
+
+令 $P_h=|e_0\rangle\langle e_0|\otimes I_M$，将 (14.6) 写为 $Y_0+Y_1+Y_c$，依次是乘积对角项、激发对角项和 Hermitian 交叉项。三个估计分别为：由 (14.10) 的尖锐乘积界和 $\operatorname{Tr}F_\eta\le1$，$Y_0$ 经 $\mathcal F_v$ 后的 $P_h/(I-P_h)$ 交叉块范数小于 $80/D$；$Y_1\ge0$ 且迹为 $p_\eta\le A^2/\lambda$，其输出交叉块范数至多该迹；$\|Y_c\|_1=2\beta_\eta$，只对它应用 (14.12)，相对其原交叉块至多付 $80\gamma\beta_\eta$。实际约化输出相对这些项的额外迹范数误差至多 $d_{\rm err}$。所以
+
+$$
+\|P_h\operatorname{Tr}_{\rm new}(\Omega_{\eta,n,h})(I-P_h)\|_1
+\ge(1-80\gamma)\beta_\eta
+-\frac{A^2+B_*}{\lambda}-\frac{80}{D}-\frac1{8t}.
+\tag{14.13}
+$$
+
+这里没有对整个领先态收取一个与 $\eta$ 无关的 $O(m^{-1/2})$ 误差：尖锐补偿只付给乘积项，近恒等误差只乘以衰减后的交叉质量。
+
+原元组给
+$m\ge8{,}000{,}000N_*^2-1>25600$，所以
+$\gamma\le1/\sqrt m$、$1-80\gamma\ge1/2$。又 $\beta_\eta\ge0$，由 (13.2)，
+
+$$
+\begin{aligned}
+\|P_h\operatorname{Tr}_{\rm new}(\Omega_{\eta,n,h})(I-P_h)\|_1
+&\ge\frac{\sqrt\eta}{4\sqrt\lambda}
+-\frac{A^2+B_*+1/2}{\lambda}-\frac{80}{D}-\frac1{8t}\\
+&\ge192\sqrt{\eta/t}
+-\frac{768^2(A^2+B_*+1/2)+9/8}{t}.
+\end{aligned}
+\tag{14.14}
+$$
+
+第一行也使用 $1/(2\sqrt m\lambda)\le1/(2\lambda)$。当 (13.2) 的下界为负时，先使用 $\beta_\eta\ge0$ 和 $1-80\gamma\ge1/2$，再代入该下界，故方向仍正确。
+
+对任一归一化 $RM$ 态 $\rho$，其交叉块 $C=P_h\rho(I-P_h)$ 的极分解给一个 Hermitian、算子范数至多一的纯非对角检验，满足其在 $\rho$ 上的期望为 $2\|C\|_1$，在
+$\tau_h\otimes\rho_M$ 上的期望为零。因此
+
+$$
+\mathcal R_h(\rho)\ge\|P_h\rho(I-P_h)\|_1.
+\tag{14.15}
+$$
+
+偏迹新后缀口将完整乘积比较态送到该约化态自己的乘积比较态。由迹距离收缩，(14.14)–(14.15) 因而是完整 $\Delta_\eta(n,h)$ 的下界；偏迹只用于数学检验，不是控制器操作。$C_{\rm part}$ 大于 (14.14) 的余项常数，且 $\Delta_\eta\ge0$，得到 (14.2) 的下界。
+
