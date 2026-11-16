@@ -8,12 +8,12 @@
 
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed bind-only helpers on the live path of HardinA229751.result)
+escape_witness: none (consumed helpers on the live path of HardinA229751.result)
 class_relabel: proof_shape=bind-only; consumers=transition_counts
 bond_relabel: proof_shape=bind-only; consumers=transition_counts
-canonical_successors: proof_shape=bind-only; consumers=transition_counts
+canonical_successors: proof_shape=content; consumers=transition_counts
 class_counts: proof_shape=bind-only; consumers=transition_counts
-transition_counts: proof_shape=bind-only; consumers=HardinA229751.result
+transition_counts: proof_shape=content; consumers=HardinA229751.result
 -/
 
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data

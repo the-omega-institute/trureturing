@@ -8,7 +8,7 @@ internal sealed class Classes4Document : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229750");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The finite data support the literal width-3 king-grid recurrence.", H("Two-defect king transfers"),
-        Blocks(
+        Blocks(Paragraph(Text("The finite certificate establishes the domain successor multiset and its labelled-row multiplicities. These transition facts supply content for the later transfer proof.")),
             Describe.Lean(DescribeId.Create("class-successors"),
                 DeclarationHandle.Create(Prefix + "class_successors"), H("The successor multiset for source class 4"),
                 StatementSource.FromAuthor(Disp(All("p", Q("HardinA233163KingStrip.Boundary"), All("d", Call("Fin", Num("3")), Imp(Call("Data.Valid", V("p"), Call("Fin.val", V("d"))), Imp(Call("Canonical", V("p")), Imp(Eq(Call("Data.cl", V("p"), Call("Fin.val", V("d"))), Num("4")), Eq(Call("Data.successors", V("p"), Call("Fin.val", V("d"))), Call("Data.classList", Num("4")))))))))), AssessedProvenance.FromRepo(Source),

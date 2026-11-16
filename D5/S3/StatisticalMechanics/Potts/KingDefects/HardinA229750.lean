@@ -9,13 +9,13 @@
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (external open-problem-resolution)
-labelled: proof_shape=bind-only; consumers=bridge
-bridge: proof_shape=bind-only; consumers=result, closed_form
-result: proof_shape=bind-only; consumers=closed_form (external open-problem-resolution #30655)
+labelled: proof_shape=content; consumers=bridge
+bridge: proof_shape=content; consumers=result, closed_form
+result: proof_shape=content; consumers=closed_form (external open-problem-resolution #30655)
 closed: proof_shape=bind-only; consumers=closed_step, initial_closed, closed_form
 closed_step: proof_shape=bind-only; consumers=closed_form
 initial_closed: proof_shape=bind-only; consumers=closed_form
-closed_form: proof_shape=bind-only; consumers=none (external open-problem-resolution #30655)
+closed_form: proof_shape=content; consumers=none (external open-problem-resolution #30655)
 -/
 
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Certificate
@@ -63,9 +63,15 @@ private theorem bridge (m : ℕ) (hm : 1 ≤ m) :
   · intro r
     unfold bondDefects
     rw [Finset.card_eq_sum_ones, Finset.sum_filter]
-    simp [horizontal, -Finset.sum_boole, -Finset.sum_const, Fin.sum_univ_succ, KingGrid.lo, KingGrid.hi,
-      D5.S3.Topology.QuandleMarkovColoring.leftSlot,
-      D5.S3.Topology.QuandleMarkovColoring.rightSlot]
+    change (∑ a ∈ Finset.univ.image (fun j : Fin 2 => (j.castSucc, j.succ)),
+      if r a.1 = r a.2 then 1 else 0) = _
+    rw [Finset.sum_image]
+    · simp [horizontal, -Finset.sum_boole, -Finset.sum_const, Fin.sum_univ_succ, KingGrid.lo, KingGrid.hi,
+        D5.S3.Topology.QuandleMarkovColoring.leftSlot,
+        D5.S3.Topology.QuandleMarkovColoring.rightSlot]
+    · intro a ha b hb hab
+      apply Fin.ext
+      exact congrArg (fun x => x.1.val) hab
   · intro r t
     unfold bondDefects
     rw [Finset.card_eq_sum_ones, Finset.sum_filter]

@@ -8,7 +8,7 @@ internal sealed class CertificateDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229751");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The finite data support the literal width-4 king-grid recurrence.", H("Two-defect king transfers"),
-        Blocks(
+        Blocks(Paragraph(Text("The source-class certificates supply new domain transition facts. The canonical reconstruction and permutation transport use those facts to obtain the transfer identity for every labelled source.")),
             Describe.Lean(DescribeId.Create("transition-counts"),
                 DeclarationHandle.Create(Prefix + "transition_counts"), H("Exact transfer for every labelled boundary"),
                 StatementSource.FromAuthor(Disp(All("p", Call("HardinA233164KingStrip.Boundary"), All("d", Call("Nat"), Imp(Call("Data.Valid", V("p"), V("d")), All("s", Call("Fin", Num("19")), Eq(SumOver("r", Call("HardinA233164KingStrip.Boundary"), Conditional(And(Leq(Add(Call("DefectTransfer.bondDefects", Call("Data.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("Data.horizontal"), V("r"), V("r"))), V("d")), Eq(Call("Data.cl", V("r"), Sub(V("d"), Add(Call("DefectTransfer.bondDefects", Call("Data.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("Data.horizontal"), V("r"), V("r"))))), V("s"))), Num("1"), Num("0"))), Call("Data.T", Call("Data.cl", V("p"), V("d")), V("s"))))))))), AssessedProvenance.FromRepo(Source),

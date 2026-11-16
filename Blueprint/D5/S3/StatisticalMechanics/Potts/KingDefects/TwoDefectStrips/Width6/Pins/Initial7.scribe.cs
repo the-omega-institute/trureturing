@@ -6,7 +6,7 @@ internal sealed class Initial7Document : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229753");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Coordinate identities for width-six king transfers.", H("Width-six transfer identities"), Blocks(
+        "Coordinate identities for width-six king transfers.", H("Width-six transfer identities"), Blocks(Paragraph(Text("This is a domain enumeration of admissible initial rows by class and exact defect budget. Its sum counts labelled rows, and supplies the initial part of the structural transfer certificate.")),
             Describe.Lean(DescribeId.Create("certificate"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Pins/Initial7.certificate"),
                 H("Initial7"), StatementSource.FromAuthor(Disp(All("s", Call("Fin", Num("84")), Eq(SumOver("r", Call("Data.Row"), Conditional(And(Leq(Call("DefectTransfer.bondDefects", Call("Data.horizontal"), V("r"), V("r")), Num("2")), Eq(Call("Data.cl", V("r"), Sub(Num("2"), Call("DefectTransfer.bondDefects", Call("Data.horizontal"), V("r"), V("r")))), Call("Fin.mk", Add(Num("12"), Call("Fin.val", V("s")))))), Num("1"), Num("0"))), Call("Data.initial", Call("Fin.mk", Add(Num("12"), Call("Fin.val", V("s"))))))))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The accumulated suffix coordinates of the initial class weights equal the exact labelled first-row sums with at most two horizontal defects."))), DescribeRole.Theorem))));

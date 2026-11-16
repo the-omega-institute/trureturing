@@ -8,7 +8,7 @@ internal sealed class GridBridgeDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229752");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The finite data support the literal width-five king-grid recurrence.", H("Two-defect king transfers"),
-        Blocks(
+        Blocks(Paragraph(Text("The list-length induction establishes the decomposition of the defect count into row and interface sums. The literal bridge uses that decomposition on its live counting path.")),
             Describe.Lean(DescribeId.Create("defects-rows"),
                 DeclarationHandle.Create(Prefix + "defects_rows"), H("Row-list costs as two finite sums"),
                 StatementSource.FromAuthor(Disp(All("q", Call("Nat"), All("k", Call("Nat"), All("H", Call("Finset", Cross(Call("Fin", V("k")), Call("Fin", V("k")))), All("V", Call("Finset", Cross(Call("Fin", V("k")), Call("Fin", V("k")))), All("n", Call("Nat"), All("f", Arrow(Call("Fin", Add(V("n"), Num("1"))), Call("DefectTransfer.Row", V("q"), V("k"))), Eq(Call("DefectTransfer.defects", V("H"), V("V"), Call("List.ofFn", V("f"))), Add(SumOver("i", Call("Fin", Add(V("n"), Num("1"))), Call("DefectTransfer.bondDefects", V("H"), Call("f", V("i")), Call("f", V("i")))), SumOver("i", Call("Fin", V("n")), Call("DefectTransfer.bondDefects", V("V"), Call("f", Call("Fin.castSucc", V("i"))), Call("f", Call("Fin.succ", V("i"))))))))))))))), AssessedProvenance.FromRepo(Source),

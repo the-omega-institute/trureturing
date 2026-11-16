@@ -8,8 +8,8 @@
 
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed bind-only helpers on the live path of HardinA229751.result)
-class_successors: proof_shape=bind-only; consumers=Certificate.canonical_successors
+escape_witness: none (consumed helpers on the live path of HardinA229751.result)
+class_successors: proof_shape=content; consumers=Certificate.canonical_successors
 -/
 
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data

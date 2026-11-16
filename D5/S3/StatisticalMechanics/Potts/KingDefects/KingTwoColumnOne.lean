@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed bind-only helpers of the settlement on the live path of result)
+escape_witness: none (consumed helpers of the settlement on the live path of result)
 Prefix: proof_shape=bind-only; consumers=prefix_cons, prefix_zero
 prefix_cons: proof_shape=content; consumers=accepted_iff
 prefix_zero: proof_shape=bind-only; consumers=literal_bridge
@@ -18,20 +18,20 @@ Accepted: proof_shape=bind-only; consumers=accepted_iff, count_step, count_matri
 tailCost: proof_shape=bind-only; consumers=tailCost_step, adjacent_tail, accepted_iff
 tailCost_step: proof_shape=bind-only; consumers=accepted_iff, adjacent_tail
 adjacent_tail: proof_shape=content; consumers=grid_defects
-grid_defects: proof_shape=bind-only; consumers=literal_bridge
+grid_defects: proof_shape=content; consumers=literal_bridge
 accepted_iff: proof_shape=content; consumers=literal_bridge
 count: proof_shape=bind-only; consumers=count_step, count_matrix, literal_bridge
-count_step: proof_shape=bind-only; consumers=count_matrix
+count_step: proof_shape=content; consumers=count_matrix
 transfer: proof_shape=bind-only; consumers=certificate, count_matrix, result
 terminal: proof_shape=bind-only; consumers=certificate, count_matrix, result
 index: proof_shape=bind-only; consumers=transfer_counts, count_matrix
-transfer_counts: proof_shape=bind-only; consumers=count_matrix
+transfer_counts: proof_shape=content; consumers=count_matrix
 count_matrix: proof_shape=content; consumers=result
 literal_bridge: proof_shape=content; consumers=result
 backwardTable: proof_shape=bind-only; consumers=certificate, powers_table
 powers_table: proof_shape=bind-only; consumers=result
 certificate: proof_shape=bind-only; consumers=powers_table, result
-result: proof_shape=bind-only; consumers=none (external open-problem-resolution #30655 C1)
+result: proof_shape=content; consumers=none (external open-problem-resolution #30655 C1)
 -/
 
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
