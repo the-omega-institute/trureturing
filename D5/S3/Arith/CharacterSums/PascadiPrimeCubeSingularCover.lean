@@ -297,14 +297,6 @@ private theorem chartResidual_dvd_fifth (A a b C D E F G K p : ℤ)
   simp only [chartResidual]
   ring
 
-private theorem pair_translate {R : Type*} [CommRing R] (l m q r s : Fin 3 → R)
-    (b : R) (i : Fin 3) :
-    pair (fun j => l j + b * m j) m (fun j => q j + b * r j + b ^ 2 * s j)
-      (fun j => r j + 2 * b * s j) s i = (pair l m q r s i).taylor b := by
-  simp [pair, linear, quadratic, Polynomial.taylor_apply, add_comp, sub_comp, mul_comp,
-    pow_comp, C_add, C_mul, C_pow, map_ofNat]
-  ring
-
 /-- The chart transfer uses only powers of L(β), never a division by Δ. -/
 theorem actual_residual_dvd_fifth (l m q r s : Fin 3 → ℤ) (p : ℕ)
     [Fact p.Prime] (b : ℤ)

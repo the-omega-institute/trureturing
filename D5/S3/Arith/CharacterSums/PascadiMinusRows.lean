@@ -101,13 +101,6 @@ theorem MinusEquations.even_rotate {R : Type*} [CommRing R]
   · simpa [mul_comm] using e₅
   · linear_combination -e₃
 
-/-- The row exchange used for the symmetric zero-row argument. -/
-theorem MinusEquations.exchange_rows {R : Type*} [CommRing R]
-    {g a t b d w v : R} (h : MinusEquations g a t b d w v) :
-    MinusEquations g d w v a t b := by
-  rcases h with ⟨e₁,e₂,e₃,e₄⟩
-  exact ⟨by linear_combination e₂, by linear_combination e₁, e₃.symm,e₄.symm⟩
-
 /-- Original integer letters grouped as the two rows (a,b,w) and (d,v,t). -/
 abbrev ReturnRows := (Fin 3 → ℤ) × (Fin 3 → ℤ)
 
