@@ -39,7 +39,7 @@ internal sealed class TableBridgeDocument : IScribeDocumentDefinition
     private static Formula SumOver(string x, Formula t, Formula b) => Seq(Sum, Underscore, Grp(Typed(V(x), t)), Sp, Parenthesized(b));
     private static Formula Conditional(Formula a, Formula b, Formula c) => Parenthesized(Seq(Q("if"), Sp, a, Sp, Q("then"), Sp, b, Sp, Q("else"), Sp, c));
     private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, Parenthesized(b));
-    private static Formula Pow(Formula a, Formula b) => Seq(Parenthesized(a), Caret, Grp(b));
-    private static Formula Lam(string x, Formula t, Formula b) => Seq(Q("fun"), Sp, Typed(V(x), t), Sp, Q("=>"), Sp, Parenthesized(b));
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
+    private static Formula Lam(string x, Formula t, Formula b) => Seq(LambdaLower, Sp, Typed(V(x), t), Sp, Mapsto, Sp, Parenthesized(b));
 
 }

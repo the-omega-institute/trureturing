@@ -108,9 +108,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     (by intro r t; simp [bondDefects]) 0
   have ha := literal_bridge (k := 0) ∅ ∅ (by intro r; simp [bondDefects])
     (by intro r t; simp [bondDefects]) 0
-  change literalCount (q := 4) ∅ ∅ 2 1 + 1 = _ at hb
-  dsimp only at hb
-  omega
+  change literalCount (q := 4) (k := 0) ∅ ∅ 2 1 + 1 =
+    _root_.D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid.L 1 0 at hb
+  change literalCount (q := 4) (k := 0) ∅ ∅ 2 1 =
+    _root_.D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid.L 1 0 at ha
+  rw [← ha] at hb
+  exact Nat.succ_ne_self _ hb
 def family : Registration arena (type_of% @literal_bridge) where
   actual := actual
   bridge := by
