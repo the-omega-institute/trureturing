@@ -48,6 +48,10 @@ $$(\forall n \in \mathbb{N},\; 5 \le n \Rightarrow (\operatorname{a}\left(n\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/MatharA001724.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-a001724-recurrence-dfinite` (proved) by `D5/S3/Combinatorics/BinomialBases/MatharA001724.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-a001724-recurrence-dfinite","declaration_gid":"D5/S3/Combinatorics/BinomialBases/MatharA001724.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829, A001722 and A001724*. URL: <https://oeis.org/A386829>.
