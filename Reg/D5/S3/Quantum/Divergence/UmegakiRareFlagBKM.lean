@@ -42,6 +42,24 @@ abbrev arena : Arena where
             (2 * Real.log (1 / delta)))
       ((Matrix.trace (Vᴴ * Z⁻¹ * V)).re)
 
+theorem source_equivalence :
+    (∀ {iota : Type u} {kappa : Type v} [Fintype iota] [DecidableEq iota]
+      [Fintype kappa] [DecidableEq kappa]
+      (Z : Matrix iota iota ℂ) (C : Matrix kappa kappa ℂ) (V : Matrix iota kappa ℂ)
+      (hZ : Z.PosDef) (hC : C.PosDef),
+      Filter.Tendsto
+        (fun delta : ℝ =>
+          (Matrix.trace
+            ((Matrix.fromBlocks (0 : Matrix iota iota ℂ) V Vᴴ
+                (0 : Matrix kappa kappa ℂ)).conjTranspose *
+              D5.S3.Divergence.LogDerivTrace.logDeriv
+                (Matrix.fromBlocks Z 0 0 (delta • C))
+                (Matrix.fromBlocks (0 : Matrix iota iota ℂ) V Vᴴ
+                  (0 : Matrix kappa kappa ℂ)))).re /
+            (2 * Real.log (1 / delta)))
+        (𝓝[>] (0 : ℝ))
+        (𝓝 ((Matrix.trace (Vᴴ * Z⁻¹ * V)).re))) ↔ arena.{u, v}.Law actual := Iff.rfl
+
 private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
   have hh := h (iota := ULift.{u} Unit) (kappa := ULift.{v} Unit)
@@ -69,7 +87,7 @@ private theorem dependence : ObservationalDependence signature actual := by
 
 def family : Registration arena.{u, v} (type_of% @rare_flag_logDeriv_limit) where
   actual := actual
-  bridge := Iff.rfl
+  bridge := source_equivalence
   variation := ⟨@rare_flag_logDeriv_limit, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.{u, v}.Law actual rejected rejected_law
@@ -110,6 +128,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 #print axioms rare_flag_logDeriv_limit
+#print axioms source_equivalence
 #print axioms audit
 
 end Reg.D5.S3.Quantum.Divergence.UmegakiRareFlagBKM

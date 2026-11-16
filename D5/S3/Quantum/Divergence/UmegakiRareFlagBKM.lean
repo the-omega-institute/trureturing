@@ -61,7 +61,7 @@ private lemma pair_kernel_eval (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
         have hbt : b + t ≠ 0 := (add_pos hb ht).ne'
         field_simp [hat, hbt, sub_ne_zero.mpr (Ne.symm hab)]
         ring
-        
+
       have hscale : (fun t : ℝ => (1 / (a + t) - 1 / (b + t)) / (b - a)) =
           (fun t : ℝ => (b - a)⁻¹ * (1 / (a + t) - 1 / (b + t))) := by
         funext t
