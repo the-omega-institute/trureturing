@@ -1,3 +1,4 @@
+import Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Pins.Initial2
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Pins.Initial3
 import Reg.Support.UniverseSingleReadout
 import LeanInformationAuditInterface.Contract.Registration
@@ -17,7 +18,7 @@ def actual : Realization signature := realize signature (fun _ p s => initial s)
 def rejected : Realization signature := realize signature (fun _ p s => initial s + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ s : Fin 4,
+  Law R := ∀ s : Fin 36,
       (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
         cl r (2-bondDefects horizontal r r) = (⟨12+s.val, by omega⟩ : Fin 96) then (1 : ℤ) else 0) = R.readout () () (⟨12+s.val, by omega⟩ : Fin 96)
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -51,7 +52,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ p s => initial s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

@@ -57,7 +57,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ p s => T (cl p.1 p.2) s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

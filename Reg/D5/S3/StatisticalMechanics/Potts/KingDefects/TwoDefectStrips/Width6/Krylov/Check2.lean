@@ -1,3 +1,4 @@
+import Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Krylov.Check1
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Krylov.Check2
 import Reg.Support.UniverseSingleReadout
 import LeanInformationAuditInterface.Contract.Registration
@@ -17,16 +18,16 @@ def actual : Realization signature := realize signature (fun _ p s => W p.succ s
 def rejected : Realization signature := realize signature (fun _ p s => W p.succ s + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := (∀ (i : Fin 11) (s : Fin 4), R.readout () i (⟨8+s.val, by omega⟩ : Fin 96) = Matrix.vecMul (W i.castSucc) T (⟨8+s.val, by omega⟩ : Fin 96)) ∧
-    (∀ s : Fin 4, W 11 (⟨8+s.val, by omega⟩ : Fin 96) =
-      (∑ j : Fin 6, (![-8,36,-66,63,-33,9] j : ℤ) • W ⟨5+j.val, by omega⟩) (⟨8+s.val, by omega⟩ : Fin 96))
+  Law R := (∀ (i : Fin 11) (s : Fin 36), R.readout () i (⟨0+s.val, by omega⟩ : Fin 96) = Matrix.vecMul (W i.castSucc) T (⟨0+s.val, by omega⟩ : Fin 96)) ∧
+    (∀ s : Fin 36, W 11 (⟨0+s.val, by omega⟩ : Fin 96) =
+      (∑ j : Fin 6, (![-8,36,-66,63,-33,9] j : ℤ) • W ⟨5+j.val, by omega⟩) (⟨0+s.val, by omega⟩ : Fin 96))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   dsimp only [arena, rejected, realize] at h
   have hb := h.1 0 0
   have ha := certificate.1 0 0
-  change W 1 (⟨8, by decide⟩ : Fin 96) = Matrix.vecMul (W 0) T (⟨8, by decide⟩ : Fin 96) at ha
-  change W 1 (⟨8, by decide⟩ : Fin 96) + 1 = Matrix.vecMul (W 0) T (⟨8, by decide⟩ : Fin 96) at hb
+  change W 1 (⟨0, by decide⟩ : Fin 96) = Matrix.vecMul (W 0) T (⟨0, by decide⟩ : Fin 96) at ha
+  change W 1 (⟨0, by decide⟩ : Fin 96) + 1 = Matrix.vecMul (W 0) T (⟨0, by decide⟩ : Fin 96) at hb
   simp only [Fin.val_zero, Nat.add_zero] at ha hb
   linarith only [hb,ha]
 def family : Registration arena (type_of% @certificate) where
@@ -52,7 +53,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ p s => W p.succ s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

@@ -9,19 +9,35 @@
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (consumed bind-only helpers on the live path of HardinA229753.result)
-successor_rows: proof_shape=bind-only; consumers=Width6.Certificate.source_successors
+own_rows: proof_shape=bind-only; consumers=successor_rows
+successor_rows: proof_shape=bind-only; consumers=Width6.Chunks1.Source37.successor_rows
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Sources
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source35
 /-! Successor multisets at explicit canonical source states. -/
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source36
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Sources
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
-theorem successor_rows : ∀ i : Fin 9,
+private theorem own_rows : ∀ i : Fin 9,
     successors (sources ⟨246+i.val, by omega⟩).1 (sources ⟨246+i.val, by omega⟩).2.val =
       classList (cl (sources ⟨246+i.val, by omega⟩).1
         (sources ⟨246+i.val, by omega⟩).2.val) := by
-  decide +kernel
+  intro i
+  fin_cases i <;> decide +kernel
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 0 in
+theorem successor_rows : ∀ i : Fin 255,
+    successors (sources ⟨0+i.val, by omega⟩).1 (sources ⟨0+i.val, by omega⟩).2.val =
+      classList (cl (sources ⟨0+i.val, by omega⟩).1
+        (sources ⟨0+i.val, by omega⟩).2.val) := by
+  intro i
+  by_cases hi : i.val < 246
+  · exact Chunks1.Source35.successor_rows ⟨i.val, hi⟩
+  · have h := own_rows ⟨i.val - 246, by omega⟩
+    have he : 246 + (i.val - 246) = 0 + i.val := by omega
+    simpa only [he] using h
+
 end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source36

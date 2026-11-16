@@ -17,8 +17,8 @@ def actual : Realization signature := realize signature (fun _ p s => W p.succ s
 def rejected : Realization signature := realize signature (fun _ p s => W p.succ s + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := (∀ (i : Fin 11) (s : Fin 4), R.readout () i (⟨0+s.val, by omega⟩ : Fin 96) = Matrix.vecMul (W i.castSucc) T (⟨0+s.val, by omega⟩ : Fin 96)) ∧
-    (∀ s : Fin 4, W 11 (⟨0+s.val, by omega⟩ : Fin 96) =
+  Law R := (∀ (i : Fin 11) (s : Fin 12), R.readout () i (⟨0+s.val, by omega⟩ : Fin 96) = Matrix.vecMul (W i.castSucc) T (⟨0+s.val, by omega⟩ : Fin 96)) ∧
+    (∀ s : Fin 12, W 11 (⟨0+s.val, by omega⟩ : Fin 96) =
       (∑ j : Fin 6, (![-8,36,-66,63,-33,9] j : ℤ) • W ⟨5+j.val, by omega⟩) (⟨0+s.val, by omega⟩ : Fin 96))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -52,7 +52,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ p s => W p.succ s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

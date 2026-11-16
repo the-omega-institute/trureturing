@@ -1,3 +1,4 @@
+import Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source17
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source18
 import Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import Reg.Support.UniverseSingleReadout
@@ -13,21 +14,21 @@ set_option maxRecDepth 100000
 attribute [local irreducible] sources successors cl classList
 noncomputable section
 abbrev signature : Signature :=
-  _root_.Reg.Support.UniverseSingleReadout.signature (Fin 9) (fun _ => Row)
+  _root_.Reg.Support.UniverseSingleReadout.signature (Fin 93) (fun _ => Row)
     (fun _ => List (Fin 96))
 def actual : Realization signature :=
-  realize signature (fun _ i p => successors p (sources ⟨84+i.val, by omega⟩).2.val) (fun e => nomatch e)
+  realize signature (fun _ i p => successors p (sources ⟨0+i.val, by omega⟩).2.val) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ i p => successors p (sources ⟨84+i.val, by omega⟩).2.val ++ [0]) (fun e => nomatch e)
+  realize signature (fun _ i p => successors p (sources ⟨0+i.val, by omega⟩).2.val ++ [0]) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ i : Fin 9, R.readout () i (sources ⟨84+i.val, by omega⟩).1 =
-    classList (cl (sources ⟨84+i.val, by omega⟩).1 (sources ⟨84+i.val, by omega⟩).2.val)
+  Law R := ∀ i : Fin 93, R.readout () i (sources ⟨0+i.val, by omega⟩).1 =
+    classList (cl (sources ⟨0+i.val, by omega⟩).1 (sources ⟨0+i.val, by omega⟩).2.val)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0
   have ha := successor_rows 0
-  change successors (sources ⟨84, by decide⟩).1 (sources ⟨84, by decide⟩).2.val ++ [0] = _ at hb
+  change successors (sources ⟨0, by decide⟩).1 (sources ⟨0, by decide⟩).2.val ++ [0] = _ at hb
   have hh := congrArg List.length (hb.trans ha.symm)
   simp only [List.length_append, List.length_singleton, Fin.val_zero, Nat.add_zero] at hh
   omega
@@ -56,7 +57,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ i p => successors p (sources ⟨0+i.val, by omega⟩).2.val) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

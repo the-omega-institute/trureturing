@@ -8,9 +8,11 @@
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (consumed bind-only helpers on the live path of HardinA229753.result)
-certificate: proof_shape=bind-only; consumers=Width6.Forward.structural_certificate
+own_certificate: proof_shape=bind-only; consumers=certificate
+certificate: proof_shape=bind-only; consumers=Width6.Pins.Initial5.certificate
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Pins.Initial3
 /-! Finite coordinate identities for exact-budget transfer. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Pins.Initial4
@@ -18,9 +20,19 @@ open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
-theorem certificate : ∀ s : Fin 4,
+private theorem own_certificate : ∀ s : Fin 12,
     (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
-      cl r (2 - bondDefects horizontal r r) = (⟨16+s.val, by omega⟩ : Fin 96) then (1 : ℤ) else 0) = initial (⟨16+s.val, by omega⟩ : Fin 96) := by
+      cl r (2 - bondDefects horizontal r r) = (⟨48+s.val, by omega⟩ : Fin 96) then (1 : ℤ) else 0) = initial (⟨48+s.val, by omega⟩ : Fin 96) := by
   decide +kernel
+
+theorem certificate : ∀ s : Fin 48,
+    (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
+      cl r (2 - bondDefects horizontal r r) = (⟨12+s.val, by omega⟩ : Fin 96) then (1 : ℤ) else 0) = initial (⟨12+s.val, by omega⟩ : Fin 96) := by
+  intro s
+  by_cases hs : s.val < 36
+  · exact Pins.Initial3.certificate ⟨s.val, hs⟩
+  · have h := own_certificate ⟨s.val - 36, by omega⟩
+    have he : 48 + (s.val - 36) = 12 + s.val := by omega
+    simpa only [he] using h
 
 end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Pins.Initial4

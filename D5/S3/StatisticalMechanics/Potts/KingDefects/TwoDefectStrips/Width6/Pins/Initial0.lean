@@ -18,7 +18,7 @@ open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
-theorem certificate : ∀ s : Fin 4,
+theorem certificate : ∀ s : Fin 12,
     (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
       cl r (2 - bondDefects horizontal r r) = (⟨0+s.val, by omega⟩ : Fin 96) then (1 : ℤ) else 0) = initial (⟨0+s.val, by omega⟩ : Fin 96) := by
   decide +kernel
