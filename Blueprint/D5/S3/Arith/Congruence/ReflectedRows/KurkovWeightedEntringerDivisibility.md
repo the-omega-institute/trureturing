@@ -34,6 +34,10 @@ $$(\forall k: \mathbb{N}, \forall m: \mathbb{N}, \forall d: \mathbb{Z}, (0 < d \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/ReflectedRows/KurkovWeightedEntringerDivisibility.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a386381-divisor-propagation` (proved) by `D5/S3/Arith/Congruence/ReflectedRows/KurkovWeightedEntringerDivisibility.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a386381-divisor-propagation","declaration_gid":"D5/S3/Arith/Congruence/ReflectedRows/KurkovWeightedEntringerDivisibility.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mikhail Kurkov (2025). *OEIS A386381 Conjecture 1: divisors of the modified Entringer diagonal*. URL: <https://oeis.org/A386381/internal>.
