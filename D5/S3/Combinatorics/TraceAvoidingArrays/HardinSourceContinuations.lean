@@ -7,7 +7,7 @@
    digest: Exact source boundary classes and universal literal continuations. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233170DiagonalStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 
 /-! The literal scanner supplies the source four-class continuation recursion. -/
 
