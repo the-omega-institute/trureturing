@@ -18,6 +18,12 @@ internal sealed class HardinThinGraphTransportDocument : IScribeDocumentDefiniti
             Def("compatible", "compatible", "The actual inter-row bonds", "In the diagonal case, p j.castSucc differs from q j.succ and p j.succ differs from q j.castSucc for every j in Fin k. In the square case, p j differs from q j at every column."),
             Def("decidable-proper", "instDecidableProper", "Finite row decision", "The decision procedure is the finite universal inequality test defining proper."),
             Def("decidable-compatible", "instDecidableCompatible", "Finite bond decision", "The decision procedure unfolds compatible and decides its finite conjunctions and universal inequalities."),
+            Def("boundary-class", "boundaryClass", "Endpoint equality of a three-cell row", "For p : Row 2, boundaryClass p is true exactly when p 0 equals p 2. Among proper rows, true is the aba class and false is the abc class."),
+            Def("transition-table", "K", "The common two-class transfer", "K : Bool to Bool to Nat counts target classes in the order true, false. Its entries are 3 at (true,true) and 2 at each other pair. The transition_counts theorem identifies this table with actual proper-row successor counts for either bond choice."),
+            Describe.Lean(DescribeId.Create("transition-counts"), DeclarationHandle.Create(Prefix + "transition_counts"),
+                H("Exact successor counts at widths two and three"), StatementSource.FromAuthor(Disp(TransitionFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For each d : Bool and each proper p : Row 1, exactly three proper rows q satisfy compatible d p q. For each d : Bool, proper p : Row 2 and b : Bool, the number of proper compatible q with boundaryClass q=b is K (boundaryClass p) b. Both clauses quantify over every actual row over Fin 3; d=true selects both diagonals and d=false selects vertical bonds. Finite enumeration proves the two clauses, which determine the continuation recursions."))), DescribeRole.Theorem),
             Def("graph", "stripGraph", "Separate square and diagonal graphs", "Vertices are Fin (n+1) times Fin (k+1). Adjacency is an oriented horizontal bond, or an oriented vertical or diagonal bond as selected by d, or the reversal of such a bond. Distinct coordinate values prove looplessness."),
             Def("colouring-equiv", "colouringEquiv", "Actual colourings as complete row sequences", "The forward map reads the actual colour of every cell. The inverse reconstructs the graph colouring from horizontal properness and every adjacent-row compatibility condition. Both inverse identities hold at all heights and widths."),
             Def("row-major", "rowMajor", "The actual row-major index", "The index of cell (i,j) is j+(k+1)i. The codomain has n(k+1)+k+1 vertices, exactly (n+1)(k+1). The index order is precisely the lexicographic row-then-column order."),
@@ -54,6 +60,23 @@ internal sealed class HardinThinGraphTransportDocument : IScribeDocumentDefiniti
         var rhs = new Formula.Binary(new Formula.Power(D(4), k), FormulaBinaryOperator.Add,
             new Formula.Power(D(2), k));
         return Seq(Forall, Sp, k, Colon, Sp, Call("Nat"), Comma, Sp, lhs, Sp, F.Eq, Sp, rhs);
+    }
+    private static Formula TransitionFormula()
+    {
+        var d = F.Id("d"); var p = F.Id("p"); var q = F.Id("q"); var b = F.Id("b");
+        Formula All(Formula x, Formula t, Formula body) => Seq(Forall, Sp, x, Colon, Sp, t, Comma, Sp, Grp(body));
+        Formula Equal(Formula x, Formula y) => Seq(x, Sp, F.Eq, Sp, y);
+        Formula And(Formula x, Formula y) => Seq(Grp(x), Sp, Land, Sp, Grp(y));
+        Formula Guard(Formula x, Formula y) => Seq(x, Sp, Implies, Sp, Grp(y));
+        Formula Count(byte k, Formula condition) => Seq(Sum, Underscore, Grp(q, Colon, Sp, Call("Row", D(k))), Sp,
+            Call("if", condition, D(1), D(0)));
+        Formula Bonds() => And(Call("proper", q), Call("compatible", d, p, q));
+        var two = All(d, Call("Bool"), All(p, Call("Row", D(1)),
+            Guard(Call("proper", p), Equal(Count(1, Bonds()), D(3)))));
+        var three = All(d, Call("Bool"), All(p, Call("Row", D(2)), Guard(Call("proper", p),
+            All(b, Call("Bool"), Equal(Count(2, And(Bonds(), Equal(Call("boundaryClass", q), b))),
+                Call("K", Call("boundaryClass", p), b))))));
+        return And(two, three);
     }
     private static Formula NormalizedFormula()
     {
