@@ -328,6 +328,28 @@ theorem perronVector_unique (hI : P.IsIrreducible) (g : V → V → ℝ) (t : �
     exact hx
   simpa [hc1, r] using hxc
 
+/-- The globally chosen actual Perron data agree with the implicit local Doob family. -/
+theorem globalDoob_eq_doob_eventually (hP : P ∈ Matrix.rowStochastic ℝ V)
+    (hI : P.IsIrreducible) (g : V → V → ℝ) :
+    π.globalDoob hI g =ᶠ[nhds (0 : ℝ)] π.doob hP hI g := by
+  filter_upwards [π.eigenbranch_eventually hP hI g,
+    π.eigenbranch_radius_eventually hP hI g] with t he hl
+  have hr : (π.eigenbranch hP hI g t).1 = π.perronVector hI g t := by
+    apply π.perronVector_unique hI g t _ _ he.2
+    rw [hl]
+    exact he.1
+  ext i j
+  simp only [globalDoob, doob, hl, hr]
+
+theorem pressure_zero (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible)
+    (g : V → V → ℝ) : pressure P g 0 = 0 := by
+  have he : tilt P g 0 *ᵥ (fun _ => 1) = (1 : ℝ) • (fun _ => 1) := by
+    ext i
+    simpa [tilt, Matrix.mulVec, dotProduct] using Matrix.sum_row_of_mem_rowStochastic hP i
+  have hl := (positive_eigenpair_identifies_radius P hI g 0 1 (fun _ => 1)
+    zero_lt_one (fun _ => zero_lt_one) he).2
+  simp [pressure, hl]
+
 private theorem coboundary_tilt_entry (hI : P.IsIrreducible) (g : V → V → ℝ)
     (c : ℝ) (f : V → ℝ) (hg : ∀ i j, 0 < P i j → g i j = c + f i - f j)
     (t : ℝ) (i j : V) :

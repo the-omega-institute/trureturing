@@ -83,7 +83,7 @@ private theorem terminal_expectation (P : Matrix V V ℝ)
     simp_rw [ih]
     rfl
 
-private theorem pathWeight_nonneg (P : Matrix V V ℝ)
+theorem pathWeight_nonneg (P : Matrix V V ℝ)
     (hP : P ∈ Matrix.rowStochastic ℝ V) (n : ℕ) (i : V) (w : Fin n → V) :
     0 ≤ pathWeight P n i w := by
   induction n generalizing i with

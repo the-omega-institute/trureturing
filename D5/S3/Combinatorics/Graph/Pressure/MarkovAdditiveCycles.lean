@@ -93,13 +93,14 @@ variable {P : Matrix V V ℝ} (π : Stationary P)
 strictly positive curvature everywhere; the exact obstruction is common cycle mean. -/
 theorem pressure_cycle_dichotomy (hP : P ∈ Matrix.rowStochastic ℝ V)
     (hI : P.IsIrreducible) (g : V → V → ℝ) :
-    ContDiff ℝ 2 (pressure P g) ∧
+    pressure P g 0 = 0 ∧ ContDiff ℝ 2 (pressure P g) ∧
       (π.varianceRate hP hI g = 0 ↔ CommonClosedWalkMean P hI g) ∧
       ((CommonClosedWalkMean P hI g → ∀ t,
           pressure P g t = t * π.meanReward g ∧ π.globalDoob hI g t = P) ∧
         (¬ CommonClosedWalkMean P hI g → ∀ t, 0 < deriv (deriv (pressure P g)) t)) := by
   have he := coboundary_iff_closedWalkMean P hI g
-  refine ⟨π.pressure_contDiff hI g, (π.varianceRate_eq_zero_iff_coboundary hP hI g).trans he,
+  refine ⟨pressure_zero hP hI g, π.pressure_contDiff hI g,
+    (π.varianceRate_eq_zero_iff_coboundary hP hI g).trans he,
     ?_, ?_⟩
   · intro hc t
     obtain ⟨c, f, hf⟩ := he.mpr hc

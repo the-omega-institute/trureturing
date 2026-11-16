@@ -501,7 +501,7 @@ private theorem eigenbranch_contDiffAt
     (π.eigenproblem_partial_invertible hP hI g)
 
 open Filter in
-private theorem eigenbranch_eventually
+theorem eigenbranch_eventually
     (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible) (g : V → V → ℝ) :
     ∀ᶠ t in 𝓝 (0 : ℝ),
       tilt P g t *ᵥ (π.eigenbranch hP hI g t).1 =
@@ -536,7 +536,7 @@ private theorem eigenbranch_positive_eventually
   exact hs.and hv
 
 open Filter in
-private theorem eigenbranch_radius_eventually
+theorem eigenbranch_radius_eventually
     (hP : P ∈ Matrix.rowStochastic ℝ V) (hI : P.IsIrreducible) (g : V → V → ℝ) :
     ∀ᶠ t in 𝓝 (0 : ℝ), eigenvalue P g t = (π.eigenbranch hP hI g t).2 := by
   filter_upwards [π.eigenbranch_eventually hP hI g,
