@@ -112,6 +112,6 @@ Exact declaration: theorem parameters (s : Signing) : SF (graph s) 2=16 ∧ (bet
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.parameters`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.sf_all`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.sixIso`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity](Families/HeawoodCoverDensity.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodActions](HeawoodActions.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverDensity](HeawoodCoverDensity.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodParameters](HeawoodParameters.md)

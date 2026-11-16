@@ -8,9 +8,9 @@ For every finite index type I and arbitrary directed port relation R, including 
 
 **Theorem 1.1 (sf family).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/CompositionParameters.sf_family`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/CompositionParameters.sf_family`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/CompositionParameters.sf_family` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/CompositionParameters.sf_family` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ Exact declaration: theorem sf_family {I : Type*} [Fintype I] [DecidableEq I] (R 
 
 **Theorem 1.2 (beta family).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/CompositionParameters.beta_family`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/CompositionParameters.beta_family`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/CompositionParameters.beta_family` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/CompositionParameters.beta_family` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ Exact declaration: theorem beta_family {I : Type*} [Fintype I] [DecidableEq I] (
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CompositionParameters.beta_family`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CompositionParameters.sf_family`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/ExactCard](ExactCard.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Semantics](Semantics.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/CompositionParameters.beta_family`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/CompositionParameters.sf_family`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/ExactCard](../ExactCard.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Semantics](../Semantics.md)

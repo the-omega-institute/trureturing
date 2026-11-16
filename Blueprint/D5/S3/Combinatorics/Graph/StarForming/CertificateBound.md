@@ -151,4 +151,4 @@ For every finite simple graph with decidable equality and adjacency, SF G 2 is a
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CertificateBound.minimal_card_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CertificateBound.minimal_card_le_floor`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/CertificateBound.sf_le_floor`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Invariants](Invariants.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants](Foundations/Invariants.md)

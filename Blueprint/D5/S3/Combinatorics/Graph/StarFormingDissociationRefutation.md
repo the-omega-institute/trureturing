@@ -51,4 +51,4 @@ Use vertices 0 through 9, with sides 0 through 4 and 5 through 9. The neighbourh
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.claim`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.h0_properties`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.result`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Invariants](StarForming/Invariants.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants](StarForming/Foundations/Invariants.md)

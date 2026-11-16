@@ -8,9 +8,9 @@ The local witness predicate describes a non-induced two-leaf star containing eac
 
 **Definition 1.1 (TwoAt).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.TwoAt`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.TwoAt`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.TwoAt` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.TwoAt` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ Exact declaration: def TwoAt {V : Type*} (G : SimpleGraph V) (S : Set V) (x : V)
 
 **Definition 1.2 (Forms).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.Forms`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.Forms`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.Forms` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.Forms` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ Exact declaration: def Forms {V : Type*} (G : SimpleGraph V) (S : Set V) : Prop.
 
 **Definition 1.3 (Minimal).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.Minimal`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.Minimal`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.Minimal` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.Minimal` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ Exact declaration: def Minimal {V : Type*} (G : SimpleGraph V) (S : Set V) : Pro
 
 **Definition 1.4 (LiteralAt).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.LiteralAt`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.LiteralAt`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.LiteralAt` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.LiteralAt` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -56,9 +56,9 @@ Exact declaration: def LiteralAt {V : Type*} (G : SimpleGraph V) (S : Set V) (x 
 
 **Theorem 1.5 (literal iff local).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.literal_iff_local`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.literal_iff_local`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.literal_iff_local` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.literal_iff_local` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ Exact declaration: theorem literal_iff_local {V : Type*} (G : SimpleGraph V) (S 
 
 **Theorem 1.6 (twoAt mono).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.twoAt_mono`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.twoAt_mono`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.twoAt_mono` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.twoAt_mono` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -80,9 +80,9 @@ Exact declaration: theorem twoAt_mono {V : Type*} (G : SimpleGraph V) {S T : Set
 
 **Theorem 1.7 (minimal of deletion failures).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.minimal_of_deletion_failures`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.minimal_of_deletion_failures`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.minimal_of_deletion_failures` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.minimal_of_deletion_failures` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -92,11 +92,11 @@ Exact declaration: theorem minimal_of_deletion_failures {V : Type*} (G : SimpleG
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.Forms`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.LiteralAt`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.Minimal`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.TwoAt`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.literal_iff_local`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.minimal_of_deletion_failures`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/LocalFormation.twoAt_mono`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Invariants](Invariants.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.Forms`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.LiteralAt`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.Minimal`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.TwoAt`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.literal_iff_local`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.minimal_of_deletion_failures`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.twoAt_mono`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants](Invariants.md)

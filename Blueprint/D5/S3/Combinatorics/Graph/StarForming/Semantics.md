@@ -34,5 +34,5 @@ Exact declaration: theorem minimal_iff (G : SimpleGraph V) [DecidableRel G.Adj] 
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Semantics.forms_iff`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Semantics.minimal_iff`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Invariants](Invariants.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/LocalFormation](LocalFormation.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants](Foundations/Invariants.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation](Foundations/LocalFormation.md)

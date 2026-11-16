@@ -138,4 +138,4 @@ Exact declaration: theorem sf_sum (G : SimpleGraph V) (H : SimpleGraph W) (k : â
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/DisjointUnion.starForming_sum_iff`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/DisjointUnion.starForming_sum_left`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/DisjointUnion.starForming_sum_right`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Invariants](Invariants.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants](Foundations/Invariants.md)

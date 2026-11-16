@@ -10,7 +10,7 @@ These definitions and local characterizations apply to arbitrary finite simple g
 
 $$\operatorname{IsKIndependent}\left(G, k, I\right) \Leftrightarrow \left(\forall v \in V,\; \operatorname{Member}\left(v, I\right) \Rightarrow \operatorname{d}\left(G, I, v\right) < k\right)$$
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Invariants.IsKIndependent` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.IsKIndependent` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ Each selected vertex has fewer than k selected neighbours. For k equal to two, t
 
 $$\operatorname{beta}\left(G, k\right) = \operatorname{supCard}\left(\{I \in \operatorname{powerset}\left(\operatorname{univ}\left(V\right)\right) \mid \operatorname{IsKIndependent}\left(G, k, I\right)\}\right)$$
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Invariants.beta` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.beta` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -34,7 +34,7 @@ Take the maximum cardinality over the k-independent subsets of V. The finite sup
 
 $$\operatorname{IsStarForming}\left(G, k, S\right) \Leftrightarrow \left(\forall v \in V,\; \left(\neg \operatorname{Member}\left(v, S\right)\right) \Rightarrow \left(\exists c \in V,\; \exists L \in \operatorname{Finset}\left(V\right),\; \operatorname{card}\left(L\right) = k \land \left(\left(\neg \operatorname{Member}\left(c, L\right)\right) \land \left(\operatorname{Subset}\left(\operatorname{insert}\left(c, L\right), \operatorname{insert}\left(v, S\right)\right) \land \left(\left(\forall ell \in V,\; \operatorname{Member}\left(ell, L\right) \Rightarrow \operatorname{Adj}\left(G, c, ell\right)\right) \land \operatorname{Member}\left(v, \operatorname{insert}\left(c, L\right)\right)\right)\right)\right)\right)\right)$$
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Invariants.IsStarForming` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.IsStarForming` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -46,7 +46,7 @@ For every vertex outside S, the graph on S together with that vertex contains a 
 
 $$\operatorname{IsMinimalStarForming}\left(G, k, S\right) \Leftrightarrow \left(\operatorname{IsStarForming}\left(G, k, S\right) \land \left(\forall T \in \operatorname{Finset}\left(V\right),\; \operatorname{ProperSubset}\left(T, S\right) \Rightarrow \left(\neg \operatorname{IsStarForming}\left(G, k, T\right)\right)\right)\right)$$
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Invariants.IsMinimalStarForming` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.IsMinimalStarForming` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -58,7 +58,7 @@ The set is star-forming and no proper subset is star-forming. This is inclusion-
 
 $$\operatorname{SF}\left(G, k\right) = \operatorname{supCard}\left(\{S \in \operatorname{powerset}\left(\operatorname{univ}\left(V\right)\right) \mid \operatorname{IsMinimalStarForming}\left(G, k, S\right)\}\right)$$
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Invariants.SF` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.SF` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -70,7 +70,7 @@ Take the maximum cardinality among all inclusion-minimal k-star-forming sets. Th
 
 $$\operatorname{LocalTwo}\left(G, S\right) \Leftrightarrow \left(\forall v \in V,\; \left(\neg \operatorname{Member}\left(v, S\right)\right) \Rightarrow \left(2 \le \operatorname{d}\left(G, S, v\right) \lor \left(\exists u \in V,\; \operatorname{Member}\left(u, S\right) \land \left(\operatorname{Adj}\left(G, v, u\right) \land 1 \le \operatorname{d}\left(G, S, u\right)\right)\right)\right)\right)$$
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Invariants.LocalTwo` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.LocalTwo` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -82,7 +82,7 @@ Every outside vertex either has two neighbours in S, or has a neighbour in S tha
 
 $$\forall V \in Type,\; \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \forall S \in \operatorname{Finset}\left(V\right),\; \operatorname{IsStarForming}\left(G, 2, S\right) \Leftrightarrow \operatorname{LocalTwo}\left(G, S\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Invariants.starForming_two_iff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.starForming_two_iff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -92,9 +92,9 @@ In a two-leaf star, the outside vertex is either the centre, giving two neighbou
 
 **Theorem 1.8 (The exact selected-neighbor condition).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Invariants.independent_iff`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.independent_iff`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Invariants.independent_iff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.independent_iff` (`✓ std3`). ∎
 
 *Citation.* Wenlin Zhang (2026). *From hypercubes to grids: sub-quorum colorings and structural bounds*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/8e42baefc9f4ea674c44023fee6385502839fb17/manuscript/paper.tex>.
 
@@ -104,11 +104,11 @@ For every finite simple graph with decidable equality and adjacency, a finite se
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Invariants.IsKIndependent`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Invariants.IsMinimalStarForming`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Invariants.IsStarForming`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Invariants.LocalTwo`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Invariants.SF`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Invariants.beta`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Invariants.independent_iff`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Invariants.starForming_two_iff`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.IsKIndependent`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.IsMinimalStarForming`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.IsStarForming`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.LocalTwo`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.SF`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.beta`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.independent_iff`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.starForming_two_iff`

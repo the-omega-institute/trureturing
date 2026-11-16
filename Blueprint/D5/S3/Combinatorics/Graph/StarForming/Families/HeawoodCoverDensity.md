@@ -8,9 +8,9 @@ The actual sixteen-vertex S and J dissociation selections are used by the generi
 
 **Theorem 1.1 (scalar cover bound).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverDensity.scalar_cover_bound`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity.scalar_cover_bound`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverDensity.scalar_cover_bound` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity.scalar_cover_bound` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ Exact declaration: theorem scalar_cover_bound {U : Type} [Fintype U] [DecidableE
 
 **Theorem 1.2 (jordan cover bound).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverDensity.jordan_cover_bound`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity.jordan_cover_bound`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverDensity.jordan_cover_bound` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity.jordan_cover_bound` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ Exact declaration: theorem jordan_cover_bound {U : Type} [Fintype U] [DecidableE
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverDensity.jordan_cover_bound`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverDensity.scalar_cover_bound`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/CoverDensity](CoverDensity.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates](HeawoodCertificates.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity.jordan_cover_bound`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity.scalar_cover_bound`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/CoverDensity](../CoverDensity.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates](../HeawoodCertificates.md)

@@ -242,5 +242,5 @@ Exact declaration: theorem cycle_minimal_card (copies : ℕ) : Minimal (cycleGra
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Amplification.family_forms`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Amplification.family_minimal`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Amplification.selected`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/LocalFormation](LocalFormation.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation](Foundations/LocalFormation.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation](../StarFormingDissociationRefutation.md)
