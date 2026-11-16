@@ -31,7 +31,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Certificate
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Data
-open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip (Boundary)
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip (Boundary proper)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 
@@ -45,7 +45,7 @@ private theorem bond_relabel (E : Finset (Fin 3 × Fin 3))
   simp only [bondDefects, Function.comp_apply, e.injective.eq_iff]
 
 private theorem canonical_successors (p : Boundary) (d : Fin 3) (hp : Valid p d.val)
-    (hc : Canonical p) (hd0 : d.val ≠ 0 ∨ ¬ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip.proper p) : successors p d.val = classList (cl p d.val) := by
+    (hc : Canonical p) (hd0 : d.val ≠ 0 ∨ ¬ proper p) : successors p d.val = classList (cl p d.val) := by
   by_cases h0 : cl p d.val = 0
   · rw [h0]; exact Classes0.class_successors p d hp hc h0
   by_cases h1 : cl p d.val = 1
@@ -59,7 +59,7 @@ private theorem canonical_successors (p : Boundary) (d : Fin 3) (hp : Valid p d.
   by_cases h6 : cl p d.val = 6
   · rw [h6]; exact Classes6.class_successors p d hp hc h6
   have hz : cl p d.val ≠ 5 ∧ cl p d.val ≠ 7 := by
-    have hh : ∀ p (d : Fin 3), (d.val ≠ 0 ∨ ¬ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip.proper p) →
+    have hh : ∀ p (d : Fin 3), (d.val ≠ 0 ∨ ¬ proper p) →
         cl p d.val ≠ 5 ∧ cl p d.val ≠ 7 := by decide +kernel
     exact hh p d hd0
   have hh : cl p d.val = 8 := by apply Fin.ext; omega
@@ -67,6 +67,7 @@ private theorem canonical_successors (p : Boundary) (d : Fin 3) (hp : Valid p d.
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
+-- The finite matrix comparison is reduced by the kernel.
 private theorem class_counts : ∀ c s : Fin 9, c ≠ 5 → c ≠ 7 → ((classList c).count s : ℤ) = T c s := by
   intro c
   fin_cases c <;> decide +kernel
@@ -75,21 +76,21 @@ theorem transition_counts (p : Boundary) (d : ℕ) (hp : Valid p d) (s : Fin 9) 
     (∑ r : Boundary, if bondDefects between p r + bondDefects horizontal r r ≤ d ∧
       cl r (d - (bondDefects between p r + bondDefects horizontal r r)) = s
       then (1 : ℤ) else 0) = T (cl p d) s := by
-  by_cases hz : d = 0 ∧ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip.proper p
+  by_cases hz : d = 0 ∧ proper p
   · rcases hz with ⟨rfl, hp0⟩
     exact ZeroTemperature.transition_counts p hp0 s
-  have hd0 : d ≠ 0 ∨ ¬ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip.proper p := by tauto
+  have hd0 : d ≠ 0 ∨ ¬ proper p := by tauto
   obtain ⟨p', ⟨hnormal, e, he⟩, _⟩ := canonical_exists_unique p
   have hv : Valid p' d := by
     rw [he]
     simpa only [Valid, bond_relabel] using hp
   have hd : d < 3 := by change d ≤ 2 ∧ _ at hp; omega
-  have hd0' : d ≠ 0 ∨ ¬ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip.proper p' := by
+  have hd0' : d ≠ 0 ∨ ¬ proper p' := by
     rcases hd0 with h | h
     · exact Or.inl h
     · right
       rw [he]
-      simpa only [D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip.proper, Function.comp_apply,
+      simpa only [proper, Function.comp_apply,
         ne_eq, e.injective.eq_iff] using h
   have hlist := canonical_successors p' ⟨d, hd⟩ hv hnormal hd0'
   have hT :
@@ -106,7 +107,7 @@ theorem transition_counts (p : Boundary) (d : ℕ) (hp : Valid p d) (s : Fin 9) 
         then (1 : ℤ) else 0) = ((classList (cl p' d)).count s : ℤ) := by
       exact_mod_cast h.symm
     have hne : cl p' d ≠ 5 ∧ cl p' d ≠ 7 := by
-      have h : ∀ p (d : Fin 3), (d.val ≠ 0 ∨ ¬ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip.proper p) →
+      have h : ∀ p (d : Fin 3), (d.val ≠ 0 ∨ ¬ proper p) →
           cl p d.val ≠ 5 ∧ cl p d.val ≠ 7 := by decide +kernel
       exact h p' ⟨d, hd⟩ hd0'
     exact hh.trans (class_counts _ _ hne.1 hne.2)

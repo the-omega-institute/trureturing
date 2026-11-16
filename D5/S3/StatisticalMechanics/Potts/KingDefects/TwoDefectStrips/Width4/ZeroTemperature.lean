@@ -84,6 +84,7 @@ private theorem proper_transition_counts (p : Boundary) (hp : proper p) (s : Fin
   have hsum : (∑ r : Boundary, w r) = T (cl p 0) s := by linarith
   simpa only [w, Nat.le_zero, Nat.zero_sub] using hsum
 
+set_option maxRecDepth 100000 in
 theorem transition_counts (p : Boundary) (hp : proper p ∨ cl p 0 = 14) (s : Fin 19) :
     (∑ r : Boundary, if bondDefects between p r + bondDefects horizontal r r ≤ 0 ∧
       cl r (0 - (bondDefects between p r + bondDefects horizontal r r)) = s
