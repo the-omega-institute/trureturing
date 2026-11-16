@@ -13,6 +13,7 @@ import D5.S3.Quantum.Divergence.FaithfulConditionalGap
 import D5.S3.Quantum.Information.StrongSubadditivity.MarkovConstructors
 import D5.S3.Quantum.Information.MarginalCalculus
 import D5.S3.Quantum.Information.OrthogonalRecordEntropy
+import D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity
 import D5.S3.Quantum.Information.Pauli.PauliMatrix
 import D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation
 import D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
@@ -652,6 +653,258 @@ theorem attained_centered_traceNorm_bound (P : DensityState (A × Fin 2)) :
 
 end Centered
 
+section UnitaryTransport
+
+variable {A B C : Type*} [Fintype A] [DecidableEq A]
+  [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C]
+
+private def tensorUnitary (U : Matrix.unitaryGroup A ℂ)
+    (V : Matrix.unitaryGroup B ℂ) : Matrix.unitaryGroup (A × B) ℂ :=
+  ⟨U.val ⊗ₖ V.val, Matrix.mem_unitaryGroup_iff'.mpr (by
+    rw [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_kronecker,
+      ← Matrix.mul_kronecker_mul,
+      (show U.valᴴ * U.val = 1 from Unitary.coe_star_mul_self U),
+      (show V.valᴴ * V.val = 1 from Unitary.coe_star_mul_self V),
+      Matrix.one_kronecker_one])⟩
+
+private def conjugateState (U : Matrix.unitaryGroup A ℂ) (rho : DensityState A) :
+    DensityState A :=
+  D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.unitaryConjugateState
+    U.val U.property rho
+
+private theorem conjugateState_value (U : Matrix.unitaryGroup A ℂ) (rho : DensityState A) :
+    CStarMatrix.ofMatrix.symm (conjugateState U rho).1 =
+      U.val * CStarMatrix.ofMatrix.symm rho.1 * U.valᴴ := rfl
+
+private theorem conjugateState_one (rho : DensityState A) : conjugateState 1 rho = rho := by
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  rw [conjugateState_value]
+  simp
+
+private theorem entropy_conjugateState (U : Matrix.unitaryGroup A ℂ) (rho : DensityState A) :
+    vonNeumannEntropy (conjugateState U rho) = vonNeumannEntropy rho :=
+  D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.von_neumann_entropy_unitary
+    U.val U.property rho
+
+private def conjugateAlg (U : Matrix.unitaryGroup A ℂ) :
+    CStarMatrix A A ℂ ≃⋆ₐ[ℂ] CStarMatrix A A ℂ :=
+  CStarMatrix.ofMatrixStarAlgEquiv.symm.trans
+    ((Unitary.conjStarAlgAut ℂ (Matrix A A ℂ) U).trans CStarMatrix.ofMatrixStarAlgEquiv)
+
+private def conjugateChannel (U : Matrix.unitaryGroup A ℂ) : QuantumChannel A A where
+  toCompletelyPositiveMap :=
+    CompletelyPositiveMapClass.toCompletelyPositiveLinearMap (conjugateAlg U)
+  trace_preserving X := by
+    change Matrix.trace (U.val * CStarMatrix.ofMatrix.symm X * U.valᴴ) = Matrix.trace _
+    rw [Matrix.trace_mul_cycle, (show U.valᴴ * U.val = 1 from Unitary.coe_star_mul_self U),
+      Matrix.one_mul]
+    rfl
+
+private theorem conjugateChannel_apply (U : Matrix.unitaryGroup A ℂ)
+    (X : CStarMatrix A A ℂ) :
+    CStarMatrix.ofMatrix.symm ((conjugateChannel U).toCompletelyPositiveMap X) =
+      U.val * CStarMatrix.ofMatrix.symm X * U.valᴴ := rfl
+
+private theorem conjugateChannel_mapState (U : Matrix.unitaryGroup A ℂ)
+    (rho : DensityState A) : (conjugateChannel U).mapState rho = conjugateState U rho := by
+  apply Subtype.ext
+  rfl
+
+private theorem conjugateState_inverse (U : Matrix.unitaryGroup A ℂ)
+    (rho : DensityState A) : conjugateState U (conjugateState (star U) rho) = rho := by
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  rw [conjugateState_value, conjugateState_value]
+  simp only [Unitary.coe_star, Matrix.star_eq_conjTranspose,
+    Matrix.conjTranspose_conjTranspose]
+  change U.val * (U.valᴴ * CStarMatrix.ofMatrix.symm rho.1 * U.val) * U.valᴴ = _
+  calc
+    _ = (U.val * U.valᴴ) * CStarMatrix.ofMatrix.symm rho.1 * (U.val * U.valᴴ) := by
+      simp only [Matrix.mul_assoc]
+    _ = _ := by rw [show U.val * U.valᴴ = 1 from Unitary.coe_mul_star_self U]; simp
+
+private theorem tensor_conjugate_block (U : Matrix B B ℂ)
+    (X : Matrix (A × B) (A × B) ℂ) (a b : A) :
+    (((1 : Matrix A A ℂ) ⊗ₖ U) * X * ((1 : Matrix A A ℂ) ⊗ₖ U)ᴴ).submatrix
+        (fun j => (a, j)) (fun k => (b, k)) =
+      U * X.submatrix (fun j => (a, j)) (fun k => (b, k)) * Uᴴ := by
+  ext j k
+  simp [Matrix.mul_apply, Fintype.sum_prod_type, Matrix.conjTranspose_apply,
+    Matrix.one_apply, apply_ite]
+
+private theorem referenceState_conjugate (U : Matrix.unitaryGroup B ℂ)
+    (P : DensityState (A × B)) :
+    referenceState (conjugateChannel U) P = conjugateState (tensorUnitary 1 U) P := by
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  ext ⟨a,j⟩ ⟨b,k⟩
+  have h := congrFun (congrFun (tensor_conjugate_block U.val
+    (CStarMatrix.ofMatrix.symm P.1) a b) j) k
+  exact h.symm
+
+private theorem referenceState_comp (T : QuantumChannel B C)
+    (S : QuantumChannel A B) {R : Type*} [Fintype R] [DecidableEq R]
+    (P : DensityState (R × A)) :
+    referenceState (T.comp S) P = referenceState T (referenceState S P) := by
+  apply Subtype.ext
+  apply CStarMatrix.ext
+  rintro ⟨a,j⟩ ⟨b,k⟩
+  rfl
+
+/-- Rotate the input and the same output B coordinate of the physical channel. -/
+def localBChannel (U : Matrix.unitaryGroup B ℂ) (T : QuantumChannel B (B × C)) :
+    QuantumChannel B (B × C) :=
+  (conjugateChannel (tensorUnitary (star U) 1)).comp (T.comp (conjugateChannel U))
+
+private theorem localBChannel_reference (U : Matrix.unitaryGroup B ℂ)
+    (T : QuantumChannel B (B × C)) (P : DensityState (A × B)) :
+    referenceState (localBChannel U T) (conjugateState (tensorUnitary 1 (star U)) P) =
+      conjugateState (tensorUnitary 1 (tensorUnitary (star U) 1)) (referenceState T P) := by
+  rw [localBChannel, referenceState_comp, referenceState_comp,
+    referenceState_conjugate, referenceState_conjugate]
+  have ht : tensorUnitary (1 : Matrix.unitaryGroup A ℂ) (star U) =
+      star (tensorUnitary (1 : Matrix.unitaryGroup A ℂ) U) := by
+    apply Subtype.ext
+    simp [tensorUnitary, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_kronecker]
+  rw [ht, conjugateState_inverse]
+
+private theorem traceDistance_conjugateState (U : Matrix.unitaryGroup A ℂ)
+    (rho sigma : DensityState A) :
+    traceDistance (conjugateState U rho) (conjugateState U sigma) =
+      traceDistance rho sigma := by
+  unfold traceDistance
+  rw [conjugateState_value, conjugateState_value]
+  rw [← Matrix.sub_mul, ← Matrix.mul_sub]
+  rw [D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.traceNorm_isometry
+    U.val (Unitary.coe_star_mul_self U)]
+
+private theorem partialTraceLeft_isometries
+    (U : Matrix.unitaryGroup A ℂ) (V : Matrix B B ℂ)
+    (D : Matrix (A × B) (A × B) ℂ) :
+    partialTraceLeft ((U.val ⊗ₖ V) * D * (U.val ⊗ₖ V)ᴴ) =
+      V * partialTraceLeft D * Vᴴ := by
+  let e := Equiv.prodComm B A
+  have hs (M : Matrix (A × B) (A × B) ℂ) :
+      partialTraceLeft M = partialTraceRight (M.submatrix e e) := rfl
+  rw [hs]
+  have ht : ((U.val ⊗ₖ V) * D * (U.val ⊗ₖ V)ᴴ).submatrix e e =
+      (V ⊗ₖ U.val) * D.submatrix e e * (V ⊗ₖ U.val)ᴴ := by
+    rw [← Matrix.submatrix_mul_equiv _ _ e e e,
+      ← Matrix.submatrix_mul_equiv _ _ e e e]
+    have hk : (U.val ⊗ₖ V).submatrix e e = V ⊗ₖ U.val := by
+      ext i j
+      simp [e, mul_comm]
+    rw [hk, ← Matrix.conjTranspose_submatrix, hk]
+  rw [ht]
+  exact D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries
+    V U.val (Unitary.coe_star_mul_self U) (D.submatrix e e)
+
+private theorem marginalRight_conjugate (U : Matrix.unitaryGroup A ℂ)
+    (V : Matrix.unitaryGroup B ℂ) (P : DensityState (A × B)) :
+    marginalRight (conjugateState (tensorUnitary U V) P) =
+      conjugateState U (marginalRight P) := by
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  change partialTraceRight (CStarMatrix.ofMatrix.symm
+    (conjugateState (tensorUnitary U V) P).1) = _
+  rw [conjugateState_value, conjugateState_value]
+  exact D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries
+    U.val V.val (Unitary.coe_star_mul_self V) (CStarMatrix.ofMatrix.symm P.1)
+
+private theorem marginalLeft_conjugate (U : Matrix.unitaryGroup A ℂ)
+    (V : Matrix.unitaryGroup B ℂ) (P : DensityState (A × B)) :
+    marginalLeft (conjugateState (tensorUnitary U V) P) =
+      conjugateState V (marginalLeft P) := by
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  change partialTraceLeft (CStarMatrix.ofMatrix.symm
+    (conjugateState (tensorUnitary U V) P).1) = _
+  rw [conjugateState_value, conjugateState_value]
+  exact partialTraceLeft_isometries U V.val (CStarMatrix.ofMatrix.symm P.1)
+
+private theorem productState_conjugate (U : Matrix.unitaryGroup A ℂ)
+    (V : Matrix.unitaryGroup B ℂ) (a : DensityState A) (b : DensityState B) :
+    productState (conjugateState U a) (conjugateState V b) =
+      conjugateState (tensorUnitary U V) (productState a b) := by
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  change CStarMatrix.ofMatrix.symm (conjugateState U a).1 ⊗ₖ
+    CStarMatrix.ofMatrix.symm (conjugateState V b).1 = _
+  rw [conjugateState_value, conjugateState_value, conjugateState_value]
+  change (U.val * CStarMatrix.ofMatrix.symm a.1 * U.valᴴ) ⊗ₖ
+      (V.val * CStarMatrix.ofMatrix.symm b.1 * V.valᴴ) =
+    (U.val ⊗ₖ V.val) * (CStarMatrix.ofMatrix.symm a.1 ⊗ₖ
+      CStarMatrix.ofMatrix.symm b.1) * (U.val ⊗ₖ V.val)ᴴ
+  rw [Matrix.conjTranspose_kronecker,
+    ← Matrix.mul_kronecker_mul, ← Matrix.mul_kronecker_mul]
+
+/-- Change the B coordinate of the same physical ABC density state. -/
+def localBState (U : Matrix.unitaryGroup B ℂ) (rho : DensityState (A × (B × C))) :
+    DensityState (A × (B × C)) :=
+  conjugateState (tensorUnitary 1 (tensorUnitary (star U) 1)) rho
+
+private theorem localBState_assoc (U : Matrix.unitaryGroup B ℂ)
+    (rho : DensityState (A × (B × C))) :
+    relabelState (Equiv.prodAssoc A B C) (localBState U rho) =
+      conjugateState (tensorUnitary (tensorUnitary 1 (star U)) 1)
+        (relabelState (Equiv.prodAssoc A B C) rho) := by
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  change (CStarMatrix.ofMatrix.symm (localBState U rho).1).submatrix
+    (Equiv.prodAssoc A B C) (Equiv.prodAssoc A B C) = _
+  rw [localBState, conjugateState_value, conjugateState_value]
+  rw [← Matrix.submatrix_mul_equiv _ _ _ (Equiv.prodAssoc A B C) _,
+    ← Matrix.submatrix_mul_equiv _ _ _ (Equiv.prodAssoc A B C) _]
+  have hl : (tensorUnitary 1 (tensorUnitary (star U) (1 : Matrix.unitaryGroup C ℂ))).val.submatrix
+      (Equiv.prodAssoc A B C) (Equiv.prodAssoc A B C) =
+      (tensorUnitary (tensorUnitary (1 : Matrix.unitaryGroup A ℂ) (star U))
+        (1 : Matrix.unitaryGroup C ℂ)).val := by
+    ext i j
+    simp [tensorUnitary, mul_assoc]
+  rw [hl, ← Matrix.conjTranspose_submatrix, hl]
+  rfl
+
+private theorem localBState_AB (U : Matrix.unitaryGroup B ℂ)
+    (rho : DensityState (A × (B × C))) :
+    marginalRight (relabelState (Equiv.prodAssoc A B C) (localBState U rho)) =
+      conjugateState (tensorUnitary 1 (star U))
+        (marginalRight (relabelState (Equiv.prodAssoc A B C) rho)) := by
+  rw [localBState_assoc, marginalRight_conjugate]
+
+private theorem localBState_BC (U : Matrix.unitaryGroup B ℂ)
+    (rho : DensityState (A × (B × C))) :
+    marginalLeft (localBState U rho) =
+      conjugateState (tensorUnitary (star U) 1) (marginalLeft rho) := by
+  exact marginalLeft_conjugate 1 (tensorUnitary (star U) 1) rho
+
+private theorem localBState_B (U : Matrix.unitaryGroup B ℂ)
+    (rho : DensityState (A × (B × C))) :
+    marginalRight (marginalLeft (localBState U rho)) =
+      conjugateState (star U) (marginalRight (marginalLeft rho)) := by
+  rw [localBState_BC, marginalRight_conjugate]
+
+private theorem localBState_inverse (U : Matrix.unitaryGroup B ℂ)
+    (rho : DensityState (A × (B × C))) : localBState (star U) (localBState U rho) = rho := by
+  unfold localBState
+  have ht : tensorUnitary (1 : Matrix.unitaryGroup A ℂ)
+      (tensorUnitary (star U) (1 : Matrix.unitaryGroup C ℂ)) =
+      star (tensorUnitary (1 : Matrix.unitaryGroup A ℂ)
+        (tensorUnitary (star (star U)) (1 : Matrix.unitaryGroup C ℂ))) := by
+    apply Subtype.ext
+    simp [tensorUnitary, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_kronecker]
+  rw [ht, conjugateState_inverse]
+
+private theorem qcmi_localBState (U : Matrix.unitaryGroup B ℂ)
+    (rho : DensityState (A × (B × C))) :
+    qcmi (D5.S3.Quantum.Foundation.FiniteDensityPurification.toMState (localBState U rho)) =
+      qcmi (D5.S3.Quantum.Foundation.FiniteDensityPurification.toMState rho) := by
+  rw [MarkovConstructors.qcmi_eq_four_marginals, MarkovConstructors.qcmi_eq_four_marginals,
+    localBState_AB, localBState_B, localBState_BC]
+  simp only [localBState, entropy_conjugateState]
+
+end UnitaryTransport
+
 section PhysicalRepair
 
 variable {A B C : Type*} [Fintype A] [DecidableEq A]
@@ -751,6 +1004,82 @@ private theorem slice_reference (T : QuantumChannel B C)
     (∑ a : A, ∑ b : A, F a b • T.toCompletelyPositiveMap
       (CStarMatrix.ofMatrix (D.submatrix (fun j => (b, j)) (fun k => (a, k))))) u v
   simp only [cstar_sum_entry, CStarMatrix.smul_apply, smul_eq_mul]
+
+private theorem referenceRaw_conjugate (U : Matrix.unitaryGroup B ℂ)
+    (D : Matrix (A × B) (A × B) ℂ) :
+    referenceRaw (conjugateChannel U) D =
+      ((1 : Matrix A A ℂ) ⊗ₖ U.val) * D * ((1 : Matrix A A ℂ) ⊗ₖ U.val)ᴴ := by
+  ext ⟨a,j⟩ ⟨b,k⟩
+  exact (congrFun (congrFun (tensor_conjugate_block U.val D a b) j) k).symm
+
+private theorem centered_conjugate (U : Matrix.unitaryGroup (Fin 2) ℂ)
+    (P : DensityState (A × Fin 2)) :
+    centered (conjugateState (tensorUnitary 1 (star U)) P) =
+      ((1 : Matrix A A ℂ) ⊗ₖ U.valᴴ) * centered P *
+        ((1 : Matrix A A ℂ) ⊗ₖ U.valᴴ)ᴴ := by
+  unfold centered
+  rw [marginalRight_conjugate, marginalLeft_conjugate,
+    productState_conjugate, conjugateState_value, conjugateState_value]
+  change ((1 : Matrix A A ℂ) ⊗ₖ U.valᴴ) * CStarMatrix.ofMatrix.symm P.1 *
+      ((1 : Matrix A A ℂ) ⊗ₖ U.valᴴ)ᴴ -
+    ((1 : Matrix A A ℂ) ⊗ₖ U.valᴴ) *
+      CStarMatrix.ofMatrix.symm (productState (marginalRight P) (marginalLeft P)).1 *
+        ((1 : Matrix A A ℂ) ⊗ₖ U.valᴴ)ᴴ = _
+  rw [Matrix.mul_sub, Matrix.sub_mul]
+
+private theorem slice_centered_conjugate (U : Matrix.unitaryGroup (Fin 2) ℂ)
+    (P : DensityState (A × Fin 2)) (F : CStarMatrix A A ℂ) :
+    sliceLinear (centered (conjugateState (tensorUnitary 1 (star U)) P)) F =
+      conjugateAlg (star U) (sliceLinear (centered P) F) := by
+  rw [centered_conjugate]
+  have hr := referenceRaw_conjugate (A := A) (star U) (centered P)
+  simp only [Unitary.coe_star, Matrix.star_eq_conjTranspose] at hr
+  rw [← hr]
+  exact slice_reference (conjugateChannel (star U)) (centered P) (CStarMatrix.ofMatrix.symm F)
+
+/-- The state, its actual marginals, the channel and its actual recovered state
+are transported together. The half trace distance, every centered slice norm,
+and the ordinary four-entropy conditional mutual information are preserved. -/
+theorem actual_B_unitary_transport (U : Matrix.unitaryGroup (Fin 2) ℂ)
+    (rho : DensityState (A × (Fin 2 × C)))
+    (T : QuantumChannel (Fin 2) (Fin 2 × C)) :
+    let P := marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rho)
+    let PU := conjugateState (tensorUnitary 1 (star U)) P
+    let rhoU := localBState U rho
+    let TU := localBChannel U T
+    marginalRight (relabelState (Equiv.prodAssoc A (Fin 2) C) rhoU) = PU ∧
+    referenceState TU PU = localBState U (referenceState T P) ∧
+    marginalLeft PU = conjugateState (star U) (marginalLeft P) ∧
+    (∀ F : CStarMatrix A A ℂ,
+      sliceLinear (centered PU) F = conjugateAlg (star U) (sliceLinear (centered P) F) ∧
+      ‖sliceLinear (centered PU) F‖ = ‖sliceLinear (centered P) F‖) ∧
+    traceDistance rhoU (referenceState TU PU) = traceDistance rho (referenceState T P) ∧
+    qcmi (D5.S3.Quantum.Foundation.FiniteDensityPurification.toMState rhoU) =
+      qcmi (D5.S3.Quantum.Foundation.FiniteDensityPurification.toMState rho) ∧
+    (∀ sigma : DensityState (A × (Fin 2 × C)),
+      traceDistance rho (localBState (star U) sigma) = traceDistance rhoU sigma ∧
+      qcmi (D5.S3.Quantum.Foundation.FiniteDensityPurification.toMState
+        (localBState (star U) sigma)) =
+        qcmi (D5.S3.Quantum.Foundation.FiniteDensityPurification.toMState sigma)) := by
+  dsimp only
+  refine ⟨localBState_AB U rho, localBChannel_reference U T _,
+    marginalLeft_conjugate 1 (star U) _, ?_, ?_, qcmi_localBState U rho, ?_⟩
+  · intro F
+    refine ⟨slice_centered_conjugate U _ F, ?_⟩
+    rw [slice_centered_conjugate, StarAlgEquiv.norm_map]
+  · rw [localBChannel_reference]
+    exact traceDistance_conjugateState _ _ _
+  · intro sigma
+    refine ⟨?_, qcmi_localBState (star U) sigma⟩
+    have h := traceDistance_conjugateState
+      (tensorUnitary (1 : Matrix.unitaryGroup A ℂ)
+        (tensorUnitary (star U) (1 : Matrix.unitaryGroup C ℂ)))
+      rho (localBState (star U) sigma)
+    change traceDistance (localBState U rho)
+      (localBState U (localBState (star U) sigma)) = _ at h
+    rw [show localBState U (localBState (star U) sigma) = sigma from
+      by simpa only [star_star] using localBState_inverse (star U) sigma] at h
+    exact h.symm
 
 private def partialTraceRightLinear :
     Matrix (A × B) (A × B) ℂ →ₗ[ℂ] Matrix A A ℂ where
