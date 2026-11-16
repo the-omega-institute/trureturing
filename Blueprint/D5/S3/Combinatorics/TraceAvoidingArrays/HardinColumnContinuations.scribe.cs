@@ -15,10 +15,7 @@ internal sealed class HardinColumnContinuationsDocument : IScribeDocumentDefinit
             Def("column", "Column", "Actual three-label columns", "Column h is Fin(h+1) to Fin 3, without an internal vertical restriction."),
             Def("cross", "cross", "All bonds between consecutive columns", "For each row the two horizontal labels differ. For each pair of adjacent rows the two diagonal label pairs differ. These are exactly the original horizontal and both diagonal edges, with no vertical or wraparound edge."),
             Describe.Lean(DescribeId.Create("decidable-cross"), DeclarationHandle.Create(Prefix + "instDecidableCross"),
-                H("Decision for all column cross-bonds"), StatementSource.FromAuthor(Disp(All("h", Call("Nat"),
-                    All("p", Call("HardinColumnContinuations.Column", V("h")), All("q", Call("HardinColumnContinuations.Column", V("h")),
-                        Typed(Call("HardinColumnContinuations.instDecidableCross", V("h"), V("p"), V("q")),
-                            Call("Decidable", Call("HardinColumnContinuations.cross", V("p"), V("q")))))))),
+                H("Decision for all column cross-bonds"), StatementSource.FromAuthor(Disp(DecidableCrossFormula())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For h : Nat and actual columns p,q : Fin (h+1) to Fin 3, inferInstanceAs decides the conjunction of all horizontal inequalities and both diagonal inequalities at every adjacent row."))), DescribeRole.Definition),
             Def("continuation", "columnV", "Complete column continuations", "The zero-column tail has one filling. At each successor length, sum over all actual next columns satisfying cross. There is no restriction to a representative subset of the graph domain."),
@@ -71,7 +68,6 @@ internal sealed class HardinColumnContinuationsDocument : IScribeDocumentDefinit
     private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
-    private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
     private static Formula Conditional(Formula test, Formula yes, Formula no) => Parenthesized(
         Seq(Call("if"), Sp, Parenthesized(test), Sp, Call("then"), Sp, Parenthesized(yes), Sp, Call("else"), Sp, Parenthesized(no)));
     private static Formula SumOver(string n, Formula type, Formula body) =>
@@ -95,5 +91,10 @@ internal sealed class HardinColumnContinuationsDocument : IScribeDocumentDefinit
             And(Initial(1, 2, "classB", Vector(D(3), D(6))),
                 Initial(2, 4, "classH", Vector(D(3), D(1,2), D(6), D(6))))));
     }
+
+    private static Formula DecidableCrossFormula() => All("h", Call("Nat"), All("p", Call("HardinColumnContinuations.Column", V("h")),
+            All("q", Call("HardinColumnContinuations.Column", V("h")), Typed(
+                Call("HardinColumnContinuations.instDecidableCross", V("h"), V("p"), V("q")),
+                Call("Decidable", Call("HardinColumnContinuations.cross", V("p"), V("q")))))));
 
 }

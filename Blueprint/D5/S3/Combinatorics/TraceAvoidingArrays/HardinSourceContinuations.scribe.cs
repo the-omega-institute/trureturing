@@ -15,9 +15,7 @@ internal sealed class HardinSourceContinuationsDocument : IScribeDocumentDefinit
             Paragraph(Text("The boundary p is a proper four-letter word on Fin 3. The scanner state s records whether colours 1 and 2 have appeared. A completed admissible row has seen 1; if 2 is unseen, every boundary label differs from 2. The same literal good and finish scanner as the existing strip definitions determines which actual next rows are allowed.")),
             Def("admissible", "admissible", "Actual admissible boundaries", "The predicate is s.first=true, horizontal properness of p, and exclusion of pair two when s.second=false. It includes all such boundaries, with no height bound."),
             Describe.Lean(DescribeId.Create("decidable-admissible"), DeclarationHandle.Create(Prefix + "instDecidableAdmissible"),
-                H("Decision for all admissible boundaries"), StatementSource.FromAuthor(Disp(All("s", Seen(), All("p", Boundary(),
-                    Typed(Call("HardinSourceContinuations.instDecidableAdmissible", V("s"), V("p")),
-                        Call("Decidable", Call("HardinSourceContinuations.admissible", V("s"), V("p"))))))),
+                H("Decision for all admissible boundaries"), StatementSource.FromAuthor(Disp(DecidableAdmissibleFormula())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The instance uses inferInstanceAs to decide the conjunction s.first=true, proper p, and the implication from s.second=false to exclusion of pair two at every Fin 4 position."))), DescribeRole.Definition),
             Def("class", "sourceClass", "The four source classes", "Classes 0,1,2,3 are U,A,B,C. U means colour 2 is unseen. Otherwise A has p0=p2 and p1=p3, B has p0=p3, and C contains the remaining two proper equality patterns. In three labels these are exactly abab, abca, and abac or abcb."),
@@ -96,5 +94,9 @@ internal sealed class HardinSourceContinuationsDocument : IScribeDocumentDefinit
         var initial = All("j", Fin(4), Eq(SumOver("c", Row(), Indicator(And(firstGuard, Eq(NextClass(unseen), j)))), Own("r", j)));
         return And(nextValid, And(firstValid, And(transitions, initial)));
     }
+
+    private static Formula DecidableAdmissibleFormula() => All("s", Seen(), All("p", Boundary(), Typed(
+            Call("HardinSourceContinuations.instDecidableAdmissible", V("s"), V("p")),
+            Call("Decidable", Call("HardinSourceContinuations.admissible", V("s"), V("p"))))));
 
 }
