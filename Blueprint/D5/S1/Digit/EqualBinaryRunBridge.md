@@ -144,6 +144,10 @@ $$a\left(1\right) = 2 \land \left(a\left(2\right) = 22 \land \left(a\left(3\righ
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/EqualBinaryRunBridge.full_claim` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a386705-equal-binary-run-sum-recurrence` (proved) by `D5/S1/Digit/EqualBinaryRunBridge.full_claim`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a386705-equal-binary-run-sum-recurrence","declaration_gid":"D5/S1/Digit/EqualBinaryRunBridge.full_claim","resolution_kind":"proved"} -->
+
 *Citation.* Paolo Xausa (2025). *OEIS A386705: sums of even integers with equally paired maximal binary runs*. URL: <https://oeis.org/A386705>.
 
 *Commentary.*
