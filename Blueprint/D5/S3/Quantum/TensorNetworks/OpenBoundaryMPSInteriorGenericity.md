@@ -32,7 +32,19 @@ At every target psi in L, set Q=rawPrefix 3 m psi, ptheta=quotientCoordinates m 
 
 For every p,q satisfying p≥1, q≥1 and p+q=m, every length equality h:((p+3)+q)=3+m, and EVERY actual competitor phi of length 3+m, complete rawInterior p 3 q equality between the cast states is equivalent to phi being a unit complex phase multiple of psi. No competitor chart, rank, minimality, positivity, spanning, transfer or normalization assumption is present. The same polynomial R serves all these splits. R may vary with m.
 
-**Theorem 1.3 (Generic sufficiency for every interior three-site window).**
+**Theorem 1.3 (Original canonical positive iterate supplier).**
+
+Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.positive_iterates`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.positive_iterates` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every canonical real x with positive sigma, nonzero determinant of canonical A0 and nonzero determinant of the boundary matrix with columns Ai(1,eta), BOTH actual canonical left and right environments are positive definite at every natural iterate k at least one. The left seed is star(left) tensor left; the right seed is right tensor star(right), with the full square-root sigma right representative. This is the original helper and original complete proof, exposed for the spectral certificate's consumed environment transport.
+
+**Theorem 1.4 (Generic sufficiency for every interior three-site window).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.intrinsic_interior_recovery`
 
@@ -50,14 +62,67 @@ Use the existing clear_polynomial once on K, with the exact quotientRealNumerato
 
 Transfer injectivity is reused from recoveryPolynomial_ne_zero for canonicalCore of the fixed observed column. Actualness supplies observed_coherent in the three-site state image. The existing canonical_shape and positive-representative alignment identify this core with core theta. This is the consumed bridge that permits omission of a separate transfer-determinant factor. The existing actual_quotient_representative supplies positive sigma and the full-state phase. Finally the accepted interior_phase_recovery is applied at every split to each unrestricted actual competitor, and the phases are composed. The reverse implication and phase saturation are exact raw-Gram scalar identities.
 
-The canonical reconstruction and phase rigidity retain Haobo Ma and Wenlin Zhang's CC BY 4.0 C8 attribution. The Q2 supplier retains BochaoKong's Apache-2.0 LeanPool C1 attribution, commit 2b1ec889365345f19a45fa94b6457a4d92c96295; the C1 fiber theorem is not reproved here. This delivers only interior THREE-site sufficiency. Interior two-site insufficiency and full Critch-Morton C9 remain open, with solved-open-problem KPI zero. No normalized reading, physical recovery operation, dynamics, time group, energy, physical clock, stability or thermodynamic cost follows.
+The canonical reconstruction and phase rigidity retain Haobo Ma and Wenlin Zhang's CC BY 4.0 C8 attribution. The Q2 supplier retains BochaoKong's Apache-2.0 LeanPool C1 attribution, commit 2b1ec889365345f19a45fa94b6457a4d92c96295; the C1 fiber theorem is not reproved here. This delivers only interior THREE-site sufficiency. Interior two-site insufficiency is supplied by InteriorSpectralAmbiguity.observed_interior_ambiguity in the same spectral exclusion unit; full Critch-Morton C9 remains open, with solved-open-problem KPI zero. No normalized reading, physical recovery operation, dynamics, time group, energy, physical clock, stability or thermodynamic cost follows.
+
+**Lemma 1.5 (Exact state-length transport).**
+
+Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.cast_mps`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.cast_mps` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original castState transports the MPS formula along n=nprime with the matrices and both boundary vectors unchanged. It is consumed by the observed interior two-site ambiguity theorem to move the actual competitor into length 3+m and back to the exact window length (p+2)+q.
+
+**Lemma 1.6 (Complete interior raw observation is phase invariant).**
+
+Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.rawInterior_phase`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.rawInterior_phase` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Multiplying an amplitude by a unit complex scalar leaves the entire rawInterior matrix unchanged. The observed interior ambiguity theorem uses this original proof for the target and its window-specific actual competitor.
+
+**Lemma 1.7 (Scalar closure of the literal actual image).**
+
+Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.actual_phase`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.actual_phase` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every complex scalar multiple of an actual MPS is actual, by scaling its original left boundary. This original proof supplies actualness of the transported competitor and U(1) saturation of the principal locus.
+
+**Lemma 1.8 (Observed principal loci are U(1) saturated).**
+
+Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.locus_phase`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.locus_phase` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The prefix-Q3 scalar identity implies exact membership equivalence under a unit complex scalar for every real observed polynomial. The original helper is consumed by observed_interior_ambiguity.
 
 The full-source four-slot registration remains declared_unresolved: IE-C050 ClosedTruthReadout, unclassified_form, source.selection_size. Its complete source-equivalence, variation, sensitivity and observational-dependence proofs compile, but accepted source/readout binding remains missing. This unfinished audit requires caller disclosure under https://github.com/the-omega-institute/trureturing/issues/30422. A compiled registration alone is not declared_validated.
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.actual_phase`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.castState`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.cast_mps`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.intrinsicInteriorRecovery`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.intrinsic_interior_recovery`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.locus_phase`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.positive_iterates`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity.rawInterior_phase`
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore](OpenBoundaryMPSInteriorCommonCore.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSIntrinsicQ2Fiber](OpenBoundaryMPSIntrinsicQ2Fiber.md)
