@@ -114,19 +114,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestric
 
 Both full affine row coefficients are preserved by the internal frequency inclusion and the identity on external coordinates. The right equality consumes the full transported covariance and mean restriction results; external degrees remain literal.
 
-**Theorem 1.10 (Finite source energy stabilization).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestriction.original_row_energy_layer_stabilizes`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestriction.original_row_energy_layer_stabilizes` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every occupation at energy n has positive frequencies at most n. The colour-preserving inclusion is therefore a bijection on energy layers once the cutoff is at least n. Native row restriction and invariance of the single internal factorial preserve the energy sum, including its zero-energy layer.
-
-**Theorem 1.11 (External box reindexing).**
+**Theorem 1.10 (External box reindexing).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestriction.original_external_box_coefficients`
 
@@ -138,7 +126,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestric
 
 An arbitrary embedded finite external family identifies both original common-box row coefficients with their actual full native source rows. Complete colour sums are taken before frequency restriction.
 
-**Theorem 1.12 (Four-support common-box rows).**
+**Theorem 1.11 (Four-support common-box rows).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestriction.original_compact_box_coefficients`
 
@@ -150,7 +138,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestric
 
 The compact input and output supports embed into any common frequency box containing the support. The two native coefficients equal the corrected common-box occupations, including the full opposite-charge right transport.
 
-**Theorem 1.13 (Original fixed energy in compact external coordinates).**
+**Theorem 1.12 (Original fixed energy in compact external coordinates).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestriction.original_fixed_energy_compact`
 
@@ -162,7 +150,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestric
 
 The original Wick energy finsum equals its compact full native row layer in every sufficiently large common box. Both charge scalars, four external factorials, one internal factorial and both literal Laurent selectors remain unchanged.
 
-**Theorem 1.14 (Original Wick contraction in one common box).**
+**Theorem 1.13 (Original Wick contraction in one common box).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestriction.original_fixed_energy_common_box`
 
@@ -189,5 +177,4 @@ For every common box strictly larger than n and containing all four external sup
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestriction.original_right_covariance_restrict`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestriction.original_right_mean_restrict`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestriction.original_row_coefficients_restrict`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceRestriction.original_row_energy_layer_stabilizes`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSourceGerm](OriginalGaussianSourceGerm.md)

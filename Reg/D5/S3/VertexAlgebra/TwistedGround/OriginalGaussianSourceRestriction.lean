@@ -208,58 +208,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end original_row_coefficients_restrict
 
 
-namespace original_row_energy_layer_stabilizes
-def arena : Arena where
-  signature := eqSignature
-  Law A := ∀ (X : Type) [Fintype X] [DecidableEq X] (D : LatticeData) (a : Charge D)
-    (N M n : ℕ) (hNM : N ≤ M) (hn : n ≤ N) (e : X → External D)
-    (z : ℂ) (h k : X →₀ ℕ),
-    A.readout () () ((∑ᶠ d : {d : Internal D N →₀ ℕ // internalEnergy D N d = n},
-      (FactorialFockMetric.weight d.val : ℂ) *
-        OriginalChargedRowSource.affineCoefficient
-          (leftRow D N e z) (leftMean D a N e z) (d.val.sumElim h) *
-        OriginalChargedRowSource.affineCoefficient
-          (rightRow D N e z) (rightMean D a N e z) (d.val.sumElim k))) (∑ᶠ d : {d : Internal D M →₀ ℕ // internalEnergy D M d = n},
-      (FactorialFockMetric.weight d.val : ℂ) *
-        OriginalChargedRowSource.affineCoefficient
-          (leftRow D M e z) (leftMean D a M e z) (d.val.sumElim h) *
-        OriginalChargedRowSource.affineCoefficient
-          (rightRow D M e z) (rightMean D a M e z) (d.val.sumElim k))
-private theorem bad_fails : ¬ arena.Law eqBad := by
-  intro h
-  exact h Unit hyperbolic 0 0 0 0 le_rfl le_rfl labels 0 0 0
-def evidence : Registration arena (type_of% (@original_row_energy_layer_stabilizes)) where
-  actual := eqActual
-  bridge := Iff.rfl
-  variation := ⟨fun X _ _ D a N M n hNM hn e z h k => original_row_energy_layer_stabilizes D a N M n hNM hn e z h k, eqBad, bad_fails⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law eqActual eqBad bad_fails
-  dependence := eqDependence
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@original_row_energy_layer_stabilizes) (Realization eqSignature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction.original_row_energy_layer_stabilizes.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceRestriction.original_row_energy_layer_stabilizes.evidence
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨evidence⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize eqSignature eqActual.readout eqActual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-end original_row_energy_layer_stabilizes
-
-
 namespace original_fixed_energy_common_box
 def arena : Arena where
   signature := eqSignature

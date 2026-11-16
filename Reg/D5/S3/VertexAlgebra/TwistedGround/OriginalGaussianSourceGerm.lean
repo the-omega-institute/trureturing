@@ -67,7 +67,7 @@ namespace left_entry_differentiable
 def arena : Arena where
   signature := diffSignature
   Law A := ∀ (X : Type) [Fintype X] [DecidableEq X] (D : LatticeData) (N : ℕ) (e : X → External D) (i j : Internal D N ⊕ X),
-    A.readout () () (fun z => leftRow D N e z i j) 
+    A.readout () () (fun z => leftRow D N e z i j)
 private theorem bad_fails : ¬ arena.Law diffBad := by
   intro h
   exact h Unit hyperbolic 0 labels (.inr ()) (.inr ())
@@ -115,7 +115,7 @@ namespace right_entry_differentiable
 def arena : Arena where
   signature := diffSignature
   Law A := ∀ (X : Type) [Fintype X] [DecidableEq X] (D : LatticeData) (N : ℕ) (e : X → External D) (i j : Internal D N ⊕ X),
-    A.readout () () (fun z => rightRow D N e z i j) 
+    A.readout () () (fun z => rightRow D N e z i j)
 private theorem bad_fails : ¬ arena.Law diffBad := by
   intro h
   exact h Unit hyperbolic 0 labels (.inr ()) (.inr ())
