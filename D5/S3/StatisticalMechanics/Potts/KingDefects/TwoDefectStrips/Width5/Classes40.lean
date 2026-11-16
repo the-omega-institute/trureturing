@@ -28,5 +28,13 @@ set_option maxHeartbeats 0 in
 theorem class_successors : ∀ p (d : Fin 3), Valid p d.val →
     D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical p →
     cl p d.val = (40 : Fin 43) → successors p d.val = classList 40 := by
-  decide +kernel
+  have h : ∀ i : Fin (4^5), ∀ d : Fin 3,
+      Valid (finFunctionFinEquiv.symm i) d.val →
+      D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
+        (finFunctionFinEquiv.symm i) →
+      cl (finFunctionFinEquiv.symm i) d.val = (40 : Fin 43) →
+      successors (finFunctionFinEquiv.symm i) d.val = classList 40 := by
+    decide +kernel
+  intro p
+  simpa only [Equiv.symm_apply_apply] using h (finFunctionFinEquiv p)
 end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Classes40

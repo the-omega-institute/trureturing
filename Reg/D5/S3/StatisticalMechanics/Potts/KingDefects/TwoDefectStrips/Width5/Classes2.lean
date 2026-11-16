@@ -1,4 +1,5 @@
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Classes2
+import Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
 import Reg.Support.UniverseSingleReadout
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -43,8 +44,7 @@ def family : Registration arena (type_of% @class_successors) where
   dependence := by
     intro i
     refine ⟨⟨0, by decide⟩, (fun _ => 0), ![0,1,0,1,0], ?_⟩
-    change successors (fun _ => 0) 0 ≠ successors ![0,1,0,1,0] 0
-    decide +kernel
+    exact _root_.Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data.successors_vary
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@class_successors) (Realization signature) Type Unit where
   unitName := `D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Classes2.auditUnit
