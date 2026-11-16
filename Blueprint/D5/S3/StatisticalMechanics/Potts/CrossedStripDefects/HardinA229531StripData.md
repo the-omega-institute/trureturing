@@ -4,7 +4,21 @@
 
 Exact width-five HDA transfer.
 
-**Definition 1.1 (Actual rows).**
+**Theorem 1.1 (Proper successors from the frozen scanner certificate).**
+
+Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.raw_successors`
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.raw_successors` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229531: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229531>.
+
+*Commentary.*
+
+For every proper source row and every Fin 7 target class, thirty-two times the raw proper successor sum equals the corresponding frozen transfer entry. The proof applies the original class_fibres and finite_certificate and pushes saturated Seen fibres with weight 32. Each consumed target-class theorem supplies its own exact bond, budget and class correspondence before integer division.
+
+**Definition 1.2 (Actual rows).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.Row`
 
@@ -18,7 +32,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229
 
 Row is the function type Fin 5 to Fin 3. Its 243 values are the actual labelled rows.
 
-**Definition 1.2 (Horizontal bonds).**
+**Definition 1.3 (Horizontal bonds).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.horizontal`
 
@@ -32,7 +46,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229
 
 The horizontal bond set is HardinA229583StripData.horizontal, containing the four adjacent pairs in Fin 5.
 
-**Definition 1.3 (Crossed bonds).**
+**Definition 1.4 (Crossed bonds).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.between`
 
@@ -46,7 +60,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229
 
 The inter-row bond set is the union of HardinA229583StripData.antidiagonal with its coordinate-swapped image, containing both diagonals for each adjacent column pair.
 
-**Definition 1.4 (Valid residual states).**
+**Definition 1.5 (Valid residual states).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.Valid`
 
@@ -60,7 +74,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229
 
 Valid p d means that d is at most one and the internal horizontal defect count of p is at most one minus d.
 
-**Definition 1.5 (Finite state decision).**
+**Definition 1.6 (Finite state decision).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.decidableValid`
 
@@ -74,7 +88,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229
 
 The instance decides the conjunction defining Valid on an actual row and natural residual budget.
 
-**Definition 1.6 (The class map).**
+**Definition 1.7 (The class map).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.cl`
 
@@ -88,7 +102,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229
 
 The map Row times Nat to Fin 20 identifies global colour permutations and reflection. Proper rows use HardinA233126SquareStrip.boundaryClass at Seen=(true,true); defective rows use their full equality pattern. The transition_counts theorems pin the class transfer for every valid state.
 
-**Definition 1.7 (The transfer matrix).**
+**Definition 1.8 (The transfer matrix).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.T`
 
@@ -102,7 +116,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229
 
 T is an integer matrix indexed by Fin 20 on both axes. Its proper-row diagonal subblocks call HardinA233171DiagonalStrip.transfer at indices one through six and divide by 32. The division removes the two lifts per colour in each of five cells after Seen is saturated. Every entry is pinned to the actual three-colour successor sum by HardinA229531StripClasses.transition_counts.
 
-**Definition 1.8 (Initial distribution).**
+**Definition 1.9 (Initial distribution).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.initial`
 
@@ -116,7 +130,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229
 
 The vector Fin 20 to Int counts first rows by their exact residual budget and class. HardinA229531Strip.finite_certificate verifies these weights.
 
-**Definition 1.9 (Terminal acceptance).**
+**Definition 1.10 (Terminal acceptance).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.terminal`
 
@@ -130,7 +144,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229
 
 The vector Fin 20 to Int is one exactly at zero-residual classes and zero otherwise; HardinA229531Strip.finite_certificate checks this for all valid rows.
 
-**Definition 1.10 (Forward weights).**
+**Definition 1.11 (Forward weights).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.W`
 
@@ -155,7 +169,10 @@ W has type Fin 14 to Fin 20 to Int. Its fourteen rows are the initial vector fol
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.decidableValid`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.horizontal`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.initial`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.raw_successors`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData.terminal`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip](../../../Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge](../../../Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport](../../../Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229583StripData](../StripDefects/HardinA229583StripData.md)

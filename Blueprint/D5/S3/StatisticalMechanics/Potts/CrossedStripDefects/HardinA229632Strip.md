@@ -4,7 +4,7 @@
 
 Literal HDA colourings and exact defect transfer.
 
-The literal array has n rows, 3 columns and exactly 2 monochromatic HDA bonds. Rows are swept by an exact-budget transfer with 9 equality-and-budget classes, identifying reflection. Every proper-row diagonal block calls the published zero-temperature owner. Finite certificates check the exact image and every defect entry.
+The literal array has n rows, 3 columns and exactly 2 monochromatic HDA bonds. Rows are swept by an exact-budget transfer with 9 equality-and-budget classes, identifying reflection. Every proper-row diagonal block calls the published zero-temperature owner. The active leading sector, initial vector and cached prefix are a block extension of HardinA229529Strip. Its original certificate supplies the inherited active successor and initial projections. Only the appended sectors and rows are stored here.
 
 **Definition 1.1 (The literal canonical array count).**
 
@@ -36,5 +36,6 @@ The recurrence holds at every index at least 8. DefectTransfer.lumped_count and 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229632Strip.result`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport](../../../Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229529Strip](HardinA229529Strip.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229581Strip](../StripDefects/HardinA229581Strip.md)

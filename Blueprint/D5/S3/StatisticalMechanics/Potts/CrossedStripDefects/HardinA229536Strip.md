@@ -4,7 +4,7 @@
 
 Literal HDA colourings and exact defect transfer.
 
-Exactly 1 monochromatic HDA bonds are allowed. A transfer letter has 3 cells, swept by columns. Its bond sets are the internal horizontal edges and both diagonals between rows; for the column sweep all horizontal and diagonal edges join successive columns. The 8-state matrix is indexed by remaining budget and equality pattern modulo reflection. Every proper-row diagonal block uses HardinColumnContinuations.Hfull. The finite certificate fixes each entry, initialization, terminal vector and forward polynomial identity.
+Exactly 1 monochromatic HDA bonds are allowed. The proper transitions and initial class sizes apply HardinColumnContinuations.column_certificate after the exact bond, budget and class cut and natural-to-integer cast. A transfer letter has 3 cells, swept by columns. Its bond sets are the internal horizontal edges and both diagonals between rows; for the column sweep all horizontal and diagonal edges join successive columns. The 8-state matrix is indexed by remaining budget and equality pattern modulo reflection. Every proper-row diagonal block uses HardinColumnContinuations.Hfull. The finite certificate fixes each entry, initialization, terminal vector and forward polynomial identity.
 
 **Definition 1.1 (The literal canonical array count).**
 
