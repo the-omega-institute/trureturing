@@ -38,8 +38,9 @@ def original {n m : ℕ} (i : Fin n) : Fin (n * (m + 1)) := coordinate i 0
 /-- One polynomial over integers, evaluated at one joint assignment. -/
 noncomputable def compile {n m : ℕ} (P : MvPolynomial (Fin (m + 1)) ℤ)
     (f : MvPolynomial (Fin n) ℤ) : MvPolynomial (Fin (n * (m + 1))) ℤ :=
-  ∑ k : Fin (n + 1),
-    (Fin.cons (rename original f) (fun i => rename (coordinate i) P) k) ^ 2
+  let rows : Fin (n + 1) → MvPolynomial (Fin (n * (m + 1))) ℤ :=
+    Fin.cons (rename original f) (fun i => rename (coordinate i) P)
+  ∑ k : Fin (n + 1), (rows k) ^ 2
 
 private theorem compile_zero_iff {n m : ℕ} (P : MvPolynomial (Fin (m + 1)) ℤ)
     (f : MvPolynomial (Fin n) ℤ) (x : Fin (n * (m + 1)) → ℚ) :
@@ -81,18 +82,28 @@ theorem solvability {n m : ℕ} (P : MvPolynomial (Fin (m + 1)) ℤ)
       exact Fin.cases rfl (fun _ => rfl) j
     choose z hz using hz
     refine ⟨z, Rat.intCast_injective ?_⟩
-    rw [Int.cast_zero, eval₂_comp]
-    convert hf using 1
-    congr 1
-    funext i
-    exact hz i
+    have heq : (fun i => (z i : ℚ)) = x ∘ original := by
+      funext i
+      exact hz i
+    have hzc : eval₂ (Int.castRingHom ℚ) (fun i => (z i : ℚ)) f = 0 := by
+      rw [heq]
+      exact hf
+    have hc := MvPolynomial.eval₂_comp (Int.castRingHom ℚ) z f
+    change (Int.castRingHom ℚ) (eval z f) = 0
+    calc
+      (Int.castRingHom ℚ) (eval z f) =
+          eval₂ (Int.castRingHom ℚ) (⇑(Int.castRingHom ℚ) ∘ z) f := hc
+      _ = eval₂ (Int.castRingHom ℚ) (fun i => (z i : ℚ)) f := by
+        rfl
+      _ = 0 := hzc
   · rintro ⟨z, hz⟩
     have hw : ∀ i : Fin n, ∃ w : Fin m → ℚ,
         eval₂ (Int.castRingHom ℚ) (Fin.cons (z i : ℚ) w) P = 0 := by
       intro i
       exact (hP (z i)).mpr ⟨z i, rfl⟩
     choose w hw using hw
-    let y : Fin n × Fin (m + 1) → ℚ := fun ij => Fin.cons (z ij.1 : ℚ) (w ij.1) ij.2
+    let y : Fin n × Fin (m + 1) → ℚ := fun ij =>
+      (Fin.cons (z ij.1 : ℚ) (w ij.1) : Fin (m + 1) → ℚ) ij.2
     let x : Fin (n * (m + 1)) → ℚ := y ∘ finProdFinEquiv.symm
     refine ⟨x, (compile_zero_iff P f x).mpr ⟨?_, ?_⟩⟩
     · have hcast := congrArg (Int.castRingHom ℚ) hz
