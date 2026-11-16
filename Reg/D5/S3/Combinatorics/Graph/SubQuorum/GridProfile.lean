@@ -6,7 +6,6 @@ noncomputable section
 open Classical LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Combinatorics.Graph.SubQuorum.GridProfile
-open _root_.D5.S3.Combinatorics.Graph.StarFormingDissociationRefutation
 
 namespace Reg.D5.S3.Combinatorics.Graph.SubQuorum.GridProfile
 
