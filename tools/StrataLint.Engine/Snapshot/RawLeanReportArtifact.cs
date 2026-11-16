@@ -67,7 +67,10 @@ internal static partial class RawLeanReportArtifact
             scope);
     }
 
-    internal static LeanAxiomReport ReadFileForScopeOrFull(string path, LeanReportScope scope)
+    internal static LeanAxiomReport ReadFileForScopeOrFull(
+        string path,
+        LeanReportScope scope,
+        Func<RepositorySnapshot>? fullSource = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         ArgumentNullException.ThrowIfNull(scope);
@@ -84,7 +87,8 @@ internal static partial class RawLeanReportArtifact
             throw new FormatException("Raw Lean report is not valid JSON.", exception);
         }
         if (!isFull) return Read(bytes, scope.SourceSnapshot, MaterialsPath(fullPath), validateMaterials: true, scope);
-        var full = Read(bytes, scope.SourceSnapshot, MaterialsPath(fullPath), validateMaterials: true, scope: null);
+        var full = Read(bytes, fullSource?.Invoke() ?? scope.SourceSnapshot,
+            MaterialsPath(fullPath), validateMaterials: true, scope: null);
         var selected = full.Files.Where(item => scope.Paths.Contains(item.Key))
             .ToDictionary(static item => item.Key.Value, static item => item.Value, StringComparer.Ordinal);
         foreach (var (sourcePath, report) in selected)
