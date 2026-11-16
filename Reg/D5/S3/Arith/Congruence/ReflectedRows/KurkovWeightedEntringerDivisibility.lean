@@ -66,7 +66,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["fn", "arg", "body", "body", "body", "body", "type", "arg", "arg"]
+      path := #["fn", "arg", "body", "body", "body", "body", "domain", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none

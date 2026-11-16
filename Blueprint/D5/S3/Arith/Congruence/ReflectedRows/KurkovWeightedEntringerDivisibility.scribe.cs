@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Congruence.ReflectedRows;
 
@@ -13,7 +15,7 @@ internal sealed class KurkovWeightedEntringerDivisibilityDocument : IScribeDocum
         "Every positive divisor of a term of the modified Entringer diagonal divides all terms at the corresponding arithmetic progression of indices.",
         H("Kurkov's all-divisor conjecture for A386381"),
         Blocks(
-            Node("triangle", "The literal A386363 triangle", DescribeRole.Definition,
+            Node("triangle", "The literal A386363 triangle", TriangleFormula(), DescribeRole.Definition,
                 AssessedProvenance.FromLiterature(Source),
                 "The natural array has T(0,0)=1 and T(n,0)=0 for positive n. "
                 + "For positive n its first value is T(n,1)=T(n-1,n-1). "
@@ -21,12 +23,12 @@ internal sealed class KurkovWeightedEntringerDivisibilityDocument : IScribeDocum
                 + "Natural subtraction in the coefficient agrees with integer subtraction in this range. "
                 + "The total Lean definition also assigns auxiliary values outside the row; "
                 + "the theorem uses the published triangular region. The n=0 clause has priority."),
-            Node("a", "The diagonal sequence", DescribeRole.Definition,
+            Node("a", "The diagonal sequence", All("n", N(), EqF(Call("a", V("n")), Call("triangle", V("n"), V("n")))), DescribeRole.Definition,
                 AssessedProvenance.FromLiterature(Source),
                 "The sequence is exactly a(n)=T(n,n), indexed from zero. "
                 + "In particular a(0)=a(1)=a(2)=1. The last update for n>=2 adds a multiple "
                 + "of T(n-1,0)=0, so a(n)=T(n,n-1). Every a(n) is positive."),
-            Node("result", "The complete first source conjecture", DescribeRole.Theorem,
+            Node("result", "The complete first source conjecture", ResultFormula(), DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
                 "The first conjunct quantifies over k,m in N and positive d in Z, and uses integer "
                 + "divisibility. Int.toNat occurs only in the index k+m*d.toNat; positivity gives "
@@ -69,10 +71,48 @@ internal sealed class KurkovWeightedEntringerDivisibilityDocument : IScribeDocum
                 + "The reflected row construction and full source deduction are repository derived. "
                 + "No external Lean code is transplanted. Bounded literature searches are described "
                 + "in the Library note and issue #31218; global novelty and priority remain "
-                + "ASSUMED-UNVERIFIED. This document carries no frozen problem-resolution marker.")))));
+                + "ASSUMED-UNVERIFIED.")))));
 
-    private static DocumentBlock Node(string name, string title, DescribeRole role,
+    private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,
         AssessedProvenance provenance, string prose) => Describe.Lean(
         DescribeId.Create("a386381-" + name), DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromLean(), provenance, Blocks(Paragraph(Text(prose))), role);
+        StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula V(string s) => F.Id(s);
+    private static Formula N() => Seq(Mathbb, Grp(V("N")));
+    private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
+    private static Formula All(string s, Formula type, Formula body) =>
+        Seq(Forall, Sp, V(s), Colon, Sp, type, Comma, Sp, body);
+    private static Formula Call(string s, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. args]);
+    private static Formula EqF(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Divides(Formula a, Formula b) => Seq(a, Sp, Mid, Sp, b);
+    private static Formula AndF(Formula a, Formula b) => Seq(Open, a, Sp, Land, Sp, b, Close);
+    private static Formula Implies(Formula a, Formula b) => Seq(Open, a, Sp, Rightarrow, Sp, b, Close);
+
+    private static Formula TriangleFormula()
+    {
+        var n = V("n"); var k = V("k");
+        Formula T(Formula i, Formula j) => Call("triangle", i, j);
+        var step = All("k", N(), Implies(Seq(D(2), Sp, Le, Sp, k, Sp, Le, Sp, n),
+            EqF(T(n, k), Add(T(n, Sub(k, D(1))),
+                Mul(Sub(n, D(2)), T(Sub(n, D(1)), Sub(n, k)))))));
+        return AndF(EqF(T(D(0), D(0)), D(1)), All("n", N(),
+            Implies(Seq(D(0), Sp, Lt, Sp, n), AndF(EqF(T(n, D(0)), D(0)),
+                AndF(EqF(T(n, D(1)), T(Sub(n, D(1)), Sub(n, D(1)))), step)))));
+    }
+
+    private static Formula ResultFormula()
+    {
+        var k = V("k"); var m = V("m"); var d = V("d");
+        var general = All("k", N(), All("m", N(), All("d", Z(),
+            Implies(Seq(D(0), Sp, Lt, Sp, d), Implies(Divides(d, Call("a", k)),
+                Divides(d, Call("a", Add(k, Mul(m, Call("toNat", d))))))))));
+        var particular = All("k", N(), All("m", N(), Divides(Call("a", k),
+            Call("a", Add(k, Mul(m, Call("a", k)))))));
+        return AndF(general, particular);
+    }
 }
