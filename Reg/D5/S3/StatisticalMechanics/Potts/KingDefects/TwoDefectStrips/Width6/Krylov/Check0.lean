@@ -27,7 +27,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have ha := certificate.1 0 0
   change W 1 (⟨0, by decide⟩ : Fin 96) = Matrix.vecMul (W 0) T (⟨0, by decide⟩ : Fin 96) at ha
   change W 1 (⟨0, by decide⟩ : Fin 96) + 1 = Matrix.vecMul (W 0) T (⟨0, by decide⟩ : Fin 96) at hb
-  simp only [Fin.val_zero, Nat.add_zero] at ha hb
   linarith only [hb,ha]
 def family : Registration arena (type_of% @certificate) where
   actual := actual
