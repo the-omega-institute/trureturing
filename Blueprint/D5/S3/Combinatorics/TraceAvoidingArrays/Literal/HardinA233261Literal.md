@@ -10,7 +10,7 @@ An array is a function from Fin 6 times Fin n to Fin 6. A bond joins (r,j) to (s
 
 $$\forall (n: \operatorname{Nat}), (\forall (A: (\operatorname{Fin}\left(6\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(6\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{normal}\left(A\right) = (\forall (p: (\operatorname{Fin}\left(6\right)) \times (\operatorname{Fin}\left(n\right))), ((((A\left(p\right) = (2: \operatorname{Fin}\left(6\right))) \lor ((A\left(p\right) = (3: \operatorname{Fin}\left(6\right))) \lor (A\left(p\right) = (4: \operatorname{Fin}\left(6\right))))) \Rightarrow (\exists (q: (\operatorname{Fin}\left(6\right)) \times (\operatorname{Fin}\left(n\right))), ((((\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(q\right)\right)) \cdot (n)) + (\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(q\right)\right)) < ((\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right)\right)) \cdot (n)) + (\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(p\right)\right))) \land (A\left(q\right) = (1: \operatorname{Fin}\left(6\right)))))) \land ((A\left(p\right) = (3: \operatorname{Fin}\left(6\right))) \Rightarrow (\exists (q: (\operatorname{Fin}\left(6\right)) \times (\operatorname{Fin}\left(n\right))), ((((\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(q\right)\right)) \cdot (n)) + (\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(q\right)\right)) < ((\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right)\right)) \cdot (n)) + (\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(p\right)\right))) \land (A\left(q\right) = (2: \operatorname{Fin}\left(6\right))))))))))$$
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.normal` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.normal` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ Number of 6Xn 0..5 arrays with no element x(i,j) adjacent to itself or value 5-x
 
 $$\forall (n: \operatorname{Nat}), (\forall (A: (\operatorname{Fin}\left(6\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(6\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{Legal}\left(A\right) = ((\exists (j: \operatorname{Fin}\left(n\right)), ((\operatorname{Fin}.\operatorname{val}\left(j\right) = 0) \land (A\left(((0: \operatorname{Fin}\left(6\right)), j)\right) = (0: \operatorname{Fin}\left(6\right))))) \land ((\forall (j: \operatorname{Fin}\left(n\right)), (\forall (h: (\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1) < n), (\forall (r: \operatorname{Fin}\left(6\right)), (\forall (s: \operatorname{Fin}\left(6\right)), (((r = s) \lor (\operatorname{Fin}.\operatorname{val}\left(r\right) = (\operatorname{Fin}.\operatorname{val}\left(s\right)) + (1))) \Rightarrow ((A\left((r, j)\right) \ne A\left((s, (\operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right): \operatorname{Fin}\left(n\right)))\right)) \land ((\operatorname{Fin}.\operatorname{val}\left(A\left((r, j)\right)\right)) + (\operatorname{Fin}.\operatorname{val}\left(A\left((s, (\operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right): \operatorname{Fin}\left(n\right)))\right)\right)) \ne 5))))))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{normal}\left(A\right))))))$$
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.Legal` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.Legal` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -34,7 +34,7 @@ Number of 6Xn 0..5 arrays with no element x(i,j) adjacent to itself or value 5-x
 
 $$\forall (n: \operatorname{Nat}), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(n\right) = \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((\lambda (A: (\operatorname{Fin}\left(6\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(6\right)) \mapsto \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{Legal}\left(A\right)), \operatorname{Finset}.\operatorname{univ}\right)\right))$$
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.a` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.a` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -46,7 +46,7 @@ Number of 6Xn 0..5 arrays with no element x(i,j) adjacent to itself or value 5-x
 
 $$\forall (n: \operatorname{Nat}), (\forall (P: (\operatorname{Fin}\left(6\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(3\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{Proper}\left(P\right) = (\forall (j: \operatorname{Fin}\left(n\right)), (\forall (h: (\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1) < n), (\forall (r: \operatorname{Fin}\left(6\right)), (\forall (s: \operatorname{Fin}\left(6\right)), (((r = s) \lor (\operatorname{Fin}.\operatorname{val}\left(r\right) = (\operatorname{Fin}.\operatorname{val}\left(s\right)) + (1))) \Rightarrow (P\left((r, j)\right) \ne P\left((s, (\operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right): \operatorname{Fin}\left(n\right)))\right)))))))))$$
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.Proper` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.Proper` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -58,7 +58,7 @@ Proper pair-label pattern.
 
 $$\forall (n: \operatorname{Nat}), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{L}\left(n\right) = \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((\lambda (P: (\operatorname{Fin}\left(6\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(3\right)) \mapsto \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{Proper}\left(P\right)), \operatorname{Finset}.\operatorname{univ}\right)\right))$$
 
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.L` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.L` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -70,7 +70,7 @@ Labelled three-colour count.
 
 $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow ((48) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(n\right): \operatorname{Int})) = ((64: \operatorname{Int})^{n}) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{L}\left(n\right): \operatorname{Int})) + (6))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.counting_bridge` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.counting_bridge` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -84,11 +84,11 @@ The pair labels identify {0,5}, {1,4}, and {2,3}. Canonical first occurrences fi
 
 $$\forall (n: \operatorname{Int}), ((16 < n) \Rightarrow ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left(n\right)\right): \operatorname{Int}) = ((((((((((1984) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (1)\right)\right): \operatorname{Int}))) - ((1282048) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (2)\right)\right): \operatorname{Int})))) + ((346292224) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (3)\right)\right): \operatorname{Int})))) - ((27028094976) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (4)\right)\right): \operatorname{Int})))) - ((6584184864768) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (5)\right)\right): \operatorname{Int})))) + ((1907721393668096) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (6)\right)\right): \operatorname{Int})))) - ((214149680718675968) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (7)\right)\right): \operatorname{Int})))) + ((12624715655426342912) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (8)\right)\right): \operatorname{Int})))) - ((384499321786383466496) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (9)\right)\right): \operatorname{Int})))) + ((4759259971017064316928) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233261Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (10)\right)\right): \operatorname{Int})))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/hardin233261` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.result`.
+*Resolves.* `Problems/hardin233261` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233261","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.result","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233261","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -110,13 +110,13 @@ Source: R. H. Hardin, OEIS A233261, revision 8, https://oeis.org/A233261. Source
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.L`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.Legal`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.Proper`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.a`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.counting_bridge`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.normal`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.result`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](HardinA233177Canonical.md)
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.L`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.Legal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.Proper`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.a`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.counting_bridge`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.normal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Literal/HardinA233261Literal.result`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../HardinA233177Canonical.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](../HardinA233251TriangleStrip.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](../TransferMatrix.md)
