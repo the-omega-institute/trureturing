@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.GaussianStates;
 internal sealed class PageMultiEntropyLargeNDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/GaussianStates/PageMultiEntropyLargeN.";
-    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/Entropy/camargonishida2026page");
+    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/Entropy/camargo2026gaussianmultientropy");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "At replica order three, the Page and equal-tripartition configurations have logarithmic large-mode formulas with explicit errors for each fixed squeezing parameter.",

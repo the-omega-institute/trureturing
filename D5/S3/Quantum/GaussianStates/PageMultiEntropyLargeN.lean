@@ -226,7 +226,7 @@ theorem result : claim := by
   have hd : 0<d := by dsimp [d]; nlinarith
   refine ⟨(2+30/d)/12,by positivity,?_⟩
   intro k hk
-  have hkR : (1:ℝ)≤k := by exact_mod_cast (show 1≤k by omega)
+  have hkR : (1:ℝ)≤k := by exact Nat.one_le_cast.mpr hk
   have hp := page_error (4*(k : ℝ)) d (by linarith) hd
   have hm := me_error (3*(k : ℝ)) d (by linarith) hd
   have hgp : GM3 3 (2*k) k k a =

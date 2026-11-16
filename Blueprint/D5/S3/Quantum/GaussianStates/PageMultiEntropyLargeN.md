@@ -12,7 +12,7 @@ $$claim= (\forall (a: \mathbb{R}), ((1<a) \implies (\exists (K: \mathbb{R}), ((0
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Hugo A. Camargo, Mitsuhiro Nishida (2026). *Genuine Multi-Entropy of Fully Symmetric Gaussian States*. URL: <https://arxiv.org/abs/2609.30754v2>.
+*Acknowledgement.* H. A. Camargo, M. Nishida (2026). *Genuine Multi-Entropy of Fully Symmetric Gaussian States*. DOI: [10.48550/arXiv.2609.30754](https://doi.org/10.48550/arXiv.2609.30754). URL: <https://arxiv.org/abs/2609.30754v2>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ $$\forall (a: \mathbb{R}), ((1<a) \implies (\exists (K: \mathbb{R}), ((0<K) \lan
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Hugo A. Camargo, Mitsuhiro Nishida (2026). *Genuine Multi-Entropy of Fully Symmetric Gaussian States*. URL: <https://arxiv.org/abs/2609.30754v2>.
+*Acknowledgement.* H. A. Camargo, M. Nishida (2026). *Genuine Multi-Entropy of Fully Symmetric Gaussian States*. DOI: [10.48550/arXiv.2609.30754](https://doi.org/10.48550/arXiv.2609.30754). URL: <https://arxiv.org/abs/2609.30754v2>.
 
 *Commentary.*
 
