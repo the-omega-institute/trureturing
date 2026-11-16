@@ -1,10 +1,16 @@
 /- GID: D5/S3/Weil/ZetaRvm/HorizontalLogTail
    generality: G
-   mirror-B: D5/S3/Weil/ZetaRvm/HorizontalLogTail
+   mirror-B: D5/B/S3/Weil/ZetaRvm/HorizontalLogTail
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Actual principal-log zeta tail decay, truncation and oriented height transport. -/
+
+import D5.S3.Weil.Mertens.Cryptids.VonMangoldtCount.Integral
+import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
+import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+import Mathlib.Analysis.Complex.CauchyIntegral
 
 /-!
 # The principal-log zeta tail in the right half-plane
@@ -14,12 +20,6 @@ The shifted Dirichlet series gives a uniform exponential bound with
 actual improper tail. Cauchy's rectangle identity and the same bound
 remove the right edge and give transport for every pair of real heights.
 -/
-import D5.S3.Weil.Mertens.Cryptids.VonMangoldtCount.Integral
-import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
-import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import Mathlib.Analysis.Complex.CauchyIntegral
-
 noncomputable section
 
 open Complex Set Filter MeasureTheory
@@ -42,7 +42,7 @@ private lemma norm_shifted_cpow_decay {s : ℂ} (hs : 2 ≤ s.re) (n : ℕ) :
       rw [Real.rpow_neg hn.le, one_div]
     _ = (n + 2 : ℝ) ^ (-2 : ℝ) * (n + 2 : ℝ) ^ (2 - s.re) := by
       rw [← Real.rpow_add hn]
-      congr 1 <;> ring
+      congr 1; ring
     _ ≤ (n + 2 : ℝ) ^ (-2 : ℝ) * (2 : ℝ) ^ (2 - s.re) := by
       exact mul_le_mul_of_nonneg_left
         (Real.rpow_le_rpow_of_nonpos (by norm_num) hn2 (by linarith))
@@ -132,6 +132,7 @@ private lemma continuousOn_horizontal_principal_log {R : ℝ} (hR : 2 ≤ R) (t 
   intro σ hσ
   have hs : 2 ≤ ((σ : ℂ) + (t : ℂ) * I).re := by simpa using hR.trans hσ
   exact ((differentiableAt_principal_log_zeta hs).continuousAt.comp
+    (f := fun x : ℝ ↦ (x : ℂ) + (t : ℂ) * I)
     (show ContinuousAt (fun x : ℝ ↦ (x : ℂ) + (t : ℂ) * I) σ by fun_prop)).continuousWithinAt
 
 private lemma continuous_vertical_principal_log {R : ℝ} (hR : 2 ≤ R) :
@@ -140,6 +141,7 @@ private lemma continuous_vertical_principal_log {R : ℝ} (hR : 2 ≤ R) :
   intro t
   have hs : 2 ≤ ((R : ℂ) + (t : ℂ) * I).re := by simpa using hR
   exact (differentiableAt_principal_log_zeta hs).continuousAt.comp
+    (f := fun y : ℝ ↦ (R : ℂ) + (y : ℂ) * I)
     (show ContinuousAt (fun y : ℝ ↦ (R : ℂ) + (y : ℂ) * I) t by fun_prop)
 
 private lemma log_two_pos : 0 < Real.log 2 := Real.log_pos (by norm_num)
@@ -147,13 +149,13 @@ private lemma log_two_pos : 0 < Real.log 2 := Real.log_pos (by norm_num)
 private lemma two_rpow_decay_eq (σ : ℝ) :
     (2 : ℝ) ^ (2 - σ) = Real.exp (2 * Real.log 2) * Real.exp ((-Real.log 2) * σ) := by
   rw [Real.rpow_def_of_pos (by norm_num), ← Real.exp_add]
-  congr 1 <;> ring
+  congr 1; ring
 
 private lemma integrableOn_tail_majorant (R : ℝ) :
     IntegrableOn (fun σ : ℝ ↦ Ctail * (2 : ℝ) ^ (2 - σ)) (Ioi R) := by
   have h := (integrableOn_exp_mul_Ioi (by linarith [log_two_pos] : -Real.log 2 < 0) R).const_mul
     (Ctail * Real.exp (2 * Real.log 2))
-  simpa only [two_rpow_decay_eq, mul_assoc] using h
+  simpa only [IntegrableOn, two_rpow_decay_eq, mul_assoc] using h
 
 private lemma integral_tail_majorant (R : ℝ) :
     (∫ σ : ℝ in Ioi R, Ctail * (2 : ℝ) ^ (2 - σ)) =
@@ -185,7 +187,8 @@ theorem integrableOn_principal_log_riemannZeta_Ioi {R : ℝ} (hR : 2 ≤ R) (t :
 theorem integrableOn_log_norm_riemannZeta_Ioi {R : ℝ} (hR : 2 ≤ R) (t : ℝ) :
     IntegrableOn
       (fun σ : ℝ ↦ Real.log ‖riemannZeta ((σ : ℂ) + (t : ℂ) * I)‖) (Ioi R) := by
-  simpa only [Complex.log_re] using (integrableOn_principal_log_riemannZeta_Ioi hR t).re
+  simpa only [RCLike.re_to_complex, Complex.log_re] using
+    (integrableOn_principal_log_riemannZeta_Ioi hR t).re
 
 /-- Uniform, explicit absolute principal-log tail estimate for every real height. -/
 theorem integral_norm_principal_log_riemannZeta_Ioi_le {R : ℝ} (hR : 2 ≤ R) (t : ℝ) :
@@ -265,12 +268,13 @@ private lemma finite_horizontal_log_transport {R X : ℝ} (hR : 2 ≤ R) (hRX : 
   have hcauchy := Complex.integral_boundary_rect_eq_zero_of_differentiableOn L
     ((R : ℂ) + (u : ℂ) * I) ((X : ℂ) + (v : ℂ) * I) hd
   simp only [add_re, add_im, ofReal_re, ofReal_im, mul_re, mul_im, I_re, I_im,
-    mul_zero, zero_mul, sub_zero, zero_add, add_zero, mul_one, smul_eq_mul] at hcauchy
+    mul_zero, sub_zero, zero_add, add_zero, mul_one, smul_eq_mul] at hcauchy
   have hr := congrArg Complex.re hcauchy
   simp only [add_re, sub_re, mul_re, I_re, I_im, zero_mul, one_mul, zero_sub,
     zero_re] at hr
-  have hXu := (continuous_vertical_principal_log (hR.trans hRX)).intervalIntegrable u v
-  have hRu := (continuous_vertical_principal_log hR).intervalIntegrable u v
+  have hXu := (continuous_vertical_principal_log (hR.trans hRX)).intervalIntegrable
+    (μ := volume) u v
+  have hRu := (continuous_vertical_principal_log hR).intervalIntegrable (μ := volume) u v
   have hXim := (RCLike.imCLM : ℂ →L[ℝ] ℝ).intervalIntegral_comp_comm hXu
   have hRim := (RCLike.imCLM : ℂ →L[ℝ] ℝ).intervalIntegral_comp_comm hRu
   have hure := (RCLike.reCLM : ℂ →L[ℝ] ℝ).intervalIntegral_comp_comm
@@ -287,16 +291,23 @@ private lemma finite_horizontal_log_transport {R X : ℝ} (hR : 2 ≤ R) (hRX : 
     (∫ t : ℝ in u..v, L ((R : ℂ) + (t : ℂ) * I)).im at hRim
   rw [← hure, ← hvre, ← hXim, ← hRim] at hr
   simp only [L, Complex.log_re] at hr
-  rw [intervalIntegral.integral_sub
-    ((continuous_vertical_principal_log hR).im.intervalIntegrable u v)
-    ((continuous_vertical_principal_log (hR.trans hRX)).im.intervalIntegrable u v)]
+  have hRi : IntervalIntegrable
+      (fun t : ℝ ↦ (Complex.log (riemannZeta ((R : ℂ) + (t : ℂ) * I))).im)
+      volume u v :=
+    (Complex.continuous_im.comp (continuous_vertical_principal_log hR)).intervalIntegrable u v
+  have hXi : IntervalIntegrable
+      (fun t : ℝ ↦ (Complex.log (riemannZeta ((X : ℂ) + (t : ℂ) * I))).im)
+      volume u v :=
+    (Complex.continuous_im.comp
+      (continuous_vertical_principal_log (hR.trans hRX))).intervalIntegrable u v
+  rw [intervalIntegral.integral_sub hRi hXi]
   linarith
 
 private lemma tendsto_two_rpow_decay :
     Tendsto (fun X : ℝ ↦ (2 : ℝ) ^ (2 - X)) atTop (𝓝 0) := by
   have he : Tendsto (fun X : ℝ ↦ Real.exp ((-Real.log 2) * X)) atTop (𝓝 0) :=
     Real.tendsto_exp_atBot.comp
-      ((tendsto_const_nhds : Tendsto (fun _ : ℝ ↦ -Real.log 2) atTop (𝓝 (-Real.log 2))).neg_mul_atTop
+      (tendsto_const_nhds.neg_mul_atTop
         (by linarith [log_two_pos] : -Real.log 2 < 0) tendsto_id)
   simpa only [two_rpow_decay_eq, mul_zero] using he.const_mul (Real.exp (2 * Real.log 2))
 
@@ -341,8 +352,9 @@ theorem zetaHorizontalLogTail_sub_eq_intervalIntegral {R : ℝ} (hR : 2 ≤ R) (
     apply ht.congr'
     filter_upwards [eventually_ge_atTop (2 : ℝ)] with X hX
     exact (intervalIntegral.integral_sub
-      ((continuous_vertical_principal_log hR).im.intervalIntegrable u v)
-      ((continuous_vertical_principal_log hX).im.intervalIntegrable u v)).symm
+      ((Complex.continuous_im.comp (continuous_vertical_principal_log hR)).intervalIntegrable u v)
+      ((Complex.continuous_im.comp (continuous_vertical_principal_log hX)).intervalIntegrable
+        u v)).symm
   have heq :
       (fun X : ℝ ↦
         (∫ σ : ℝ in R..X, Real.log ‖riemannZeta ((σ : ℂ) + (v : ℂ) * I)‖) -
