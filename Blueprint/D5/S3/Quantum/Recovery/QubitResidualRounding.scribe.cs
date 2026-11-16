@@ -5,9 +5,27 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
 internal sealed class QubitResidualRoundingDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Let rho be a canonical density state on A times (B times C), with B the two-dimensional coordinate type, and let T be an arbitrary canonical channel from B to B times C. Write P for the actual AB marginal and r for half the trace norm of rho minus the actual recovered reference state. Centering P at the product of its two marginals and testing all Hermitian contractions gives quantitative control that is independent of the dimensions of A and C. These statements describe correlation and dilation bounds; the universal fifth-root repair estimate requires additional estimates.",
+        "Let rho be a canonical density state on A times (B times C), with B the two-dimensional coordinate type, and let T be an arbitrary canonical channel from B to B times C. Write P for the actual AB marginal and r for half the trace norm of rho minus the actual recovered reference state. Centering P at the product of its two marginals and testing all Hermitian contractions gives quantitative control that is independent of the dimensions of A and C. Every such state and channel admit a density state sigma on the same ABC system with ordinary conditional mutual information zero and half trace distance from rho at most the minimum of one and six times the fifth root of r. No rank, spectral-floor, channel-closeness or repaired-marginal premise is imposed.",
         H("Physical qubit residual geometry"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("qubit-residual-fifth-root-repair"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.qubit_residual_fifth_root_repair"),
+                H("A dimension-independent fifth-root physical repair"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary finite A and C, a canonical state rho on A times (Fin 2 times C), and every canonical channel T from Fin 2 to Fin 2 times C, form its actual AB marginal P and the recovered reference state. If r is their half trace distance, there exists sigma on the same ABC carrier with ordinary qcmi zero and distance at most min(1, 6 r^(1/5)). Every rank and zero eigenvalue are allowed. The four true marginal entropies agree exactly with ordinary qcmi.")), Paragraph(Text("The maximum centered Hermitian slice is attained. A small maximum yields an A-BC product directly. Otherwise diagonalizing the attained slice transports rho, its actual marginal and T coherently, and controls the total flip probability. A small retained-column gap gives an AB-C product; small B coherence gives a classical pointer repair. For large B coherence the actual marginal equation forces a product comparison. With delta the fifth root of r, the nontrivial scale delta below one sixth gives flip probability at most 2 delta to the fourth power and all comparison bounds at most 6 delta. The distance cap handles the other scales. At r zero, the same geometry gives exactly zero flips and either a common environment vector or zero coherence in the classical repair. Undoing the local B unitary returns sigma to the original system."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("common-environment-product-repair"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.common_environment_product_repair"),
+                H("A common environment gives an AB-C product"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let g be the modulus of one minus the inner product of the two retained Stinespring vectors. If the total flip probability s squared is below one, normalize the first retained vector and use it for both pointer columns. This is a physical product across AB and C, with ordinary qcmi zero and half trace distance from rho at most r plus 2s plus the square root of 2g. The comparison retains every rank and the same ABC system."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("marginal-coherence-gap-bound"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.marginal_coherence_gap_bound"),
+                H("The actual marginal constrains the phase gap"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For an actual B density state b with reduced-channel residual at most 2r, the phase gap times the modulus of b's off-diagonal entry is bounded by r plus s times the square root of g plus half the coefficient-difference bound and half the flip bound. The trace-one equation separates the sum and difference of the two diagonal-to-coherence coefficients, and isometry orthogonality bounds their sum."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("classical-pointer-repair"),
                 DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.classical_pointer_repair"),
@@ -37,7 +55,7 @@ internal sealed class QubitResidualRoundingDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.actual_diagonal_geometry"),
                 H("Actual residual geometry in the attained basis"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For a positive attained centered slice norm x, diagonalization and coherent transport give an actual dilation of the transported channel. Every Hermitian contraction has residual at most 4r. The flip sum and coefficient difference are at most 2r divided by x; a positive phase-sensitive gap g bounds the complex off-diagonal centered block by 16r divided by g. This intermediate dilation supplier uses an ordinary Type coordinate for C; arbitrary-universe transport of that supplier remains separate from the still unfinished whole estimate."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For a positive attained centered slice norm x, diagonalization and coherent transport give an actual dilation of the transported channel. Every Hermitian contraction has residual at most 4r. The flip sum and coefficient difference are at most 2r divided by x; a positive phase-sensitive gap g bounds the complex off-diagonal centered block by 16r divided by g. The physical dilation is obtained by finite reindexing of the output coordinate, so arbitrary finite coordinate universes remain in scope."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("localbstate"),
                 DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.localBState"),
