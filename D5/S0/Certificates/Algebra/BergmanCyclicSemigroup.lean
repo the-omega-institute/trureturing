@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/Algebra/BergmanCyclicSemigroup
    mirror-E: none(waiver:noncomputational)
-   anchors: [D5/S0/Certificates/Algebra/BergmanQuestion23Refutation]
+   anchors: [mathlib/module/Mathlib.Algebra.Group.Subsemigroup.Basic, mathlib/module/Mathlib.GroupTheory.Congruence.Defs]
    utility: none
    digest: Cyclic terminal monomials and their xyz-zero quotient have complete normal forms. -/
 

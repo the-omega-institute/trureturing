@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/Algebra/BergmanCyclicCoefficients
    mirror-E: none(waiver:noncomputational)
-   anchors: [D5/S0/Certificates/Algebra/BergmanCyclicSemigroup, D5/S0/Certificates/Algebra/BergmanContractedAlgebra]
+   anchors: [mathlib/module/Mathlib.Algebra.Algebra.Unitization, mathlib/module/Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots, mathlib/module/Mathlib.LinearAlgebra.Finsupp.LinearCombination]
    utility: none
    digest: Exact terminal coefficients and span cancellation on cyclic contracted algebras. -/
 

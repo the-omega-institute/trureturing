@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/Algebra/BergmanCyclicGrading
    mirror-E: none(waiver:noncomputational)
-   anchors: [D5/S0/Certificates/Algebra/BergmanCyclicCoefficients]
+   anchors: [mathlib/module/Mathlib.Data.Sym.Card, mathlib/module/Mathlib.Data.Finsupp.Multiset, mathlib/module/Mathlib.LinearAlgebra.Dimension.Constructions]
    utility: none
    digest: Actual cyclic semigroup products have exact graded sizes and nilpotency. -/
 

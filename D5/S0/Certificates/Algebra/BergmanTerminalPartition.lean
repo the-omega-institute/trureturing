@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/Algebra/BergmanTerminalPartition
    mirror-E: none(waiver:noncomputational)
-   anchors: [D5/S0/Certificates/Algebra/BergmanCyclicGrading]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Sum]
    utility: none
    digest: Two terminal classes realize signed binomial partitions as actual semigroups. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/Algebra/BergmanNoncommutativeSemigroup
    mirror-E: none(waiver:noncomputational)
-   anchors: [D5/S0/Certificates/Algebra/BergmanCyclicGrading]
+   anchors: [mathlib/module/Mathlib.Algebra.Algebra.NonUnitalHom, mathlib/module/Mathlib.LinearAlgebra.Finsupp.LSum]
    utility: none
    digest: Noncommutative products and right-zero truncations preserve contracted cancellation. -/
 

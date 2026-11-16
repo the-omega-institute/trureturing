@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/Algebra/BergmanContractedAlgebra
    mirror-E: none(waiver:noncomputational)
-   anchors: [D5/S0/Certificates/Algebra/BergmanQuestion15Refutation]
+   anchors: [mathlib/module/Mathlib.Algebra.Algebra.NonUnitalHom]
    utility: none
    digest: Contracted semigroup multiplication is associative and functorial without commutativity. -/
 
