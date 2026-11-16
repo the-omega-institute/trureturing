@@ -30,7 +30,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Wi
 
 *Commentary.*
 
-The Lean type is Finset (Fin 6 x Fin 6). The five ordered bonds join consecutive columns.
+The Lean type is Finset (Fin 6 x Fin 6). The five ordered bonds join consecutive columns. This consumed alias delegates to StripDefects.HardinA229584StripData.horizontal. It is bind-only.
 
 **Remark 1.3 (between).**
 
@@ -172,3 +172,4 @@ The Lean type is Row -> Nat -> List (Fin 96). Enumerate every labelled next row,
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Data.successors`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Data.terminal`
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../../../StripDefects/DefectTransfer.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229584StripData](../../../StripDefects/HardinA229584StripData.md)

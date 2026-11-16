@@ -22,13 +22,15 @@ successors: proof_shape=bind-only; consumers=Chunks0-2.Source0-43.successor_rows
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 set_option maxRecDepth 100000
 /-! Width-six transfer data. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 abbrev Row := Fin 6 → Fin 4
-def horizontal : Finset (Fin 6 × Fin 6) := {(0, 1), (1, 2), (2, 3), (3, 4), (4, 5)}
+abbrev horizontal : Finset (Fin 6 × Fin 6) :=
+  D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData.horizontal
 def between : Finset (Fin 6 × Fin 6) := {(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (1, 0), (2, 1), (3, 2), (4, 3), (5, 4)}
 def Valid (p : Row) (d : ℕ) : Prop := d ≤ 2 ∧ bondDefects horizontal p p ≤ 2-d
 instance (p : Row) (d : ℕ) : Decidable (Valid p d) := inferInstanceAs (Decidable (_ ∧ _))

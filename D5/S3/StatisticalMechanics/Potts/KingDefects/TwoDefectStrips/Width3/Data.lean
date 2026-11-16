@@ -12,13 +12,15 @@ escape_witness: none (consumed bind-only helpers on the live path of HardinA2297
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229581Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip
 set_option maxRecDepth 100000
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Data
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip (Boundary)
-def horizontal : Finset (Fin 3 × Fin 3) := {(0, 1), (1, 2)}
+abbrev horizontal : Finset (Fin 3 × Fin 3) :=
+  D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229581Strip.horizontal
 def between : Finset (Fin 3 × Fin 3) := {(0, 0), (1, 1), (2, 2), (0, 1), (1, 2), (1, 0), (2, 1)}
 def Valid (p : Boundary) (d : ℕ) : Prop := d ≤ 2 ∧ bondDefects horizontal p p ≤ 2-d
 instance (p : Boundary) (d : ℕ) : Decidable (Valid p d) := inferInstanceAs (Decidable (_ ∧ _))
