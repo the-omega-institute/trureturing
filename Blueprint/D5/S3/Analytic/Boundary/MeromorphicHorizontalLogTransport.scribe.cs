@@ -42,5 +42,5 @@ internal sealed class MeromorphicHorizontalLogTransportDocument : IScribeDocumen
                 "The conclusion concerns finite signed interval integrals of real functions. "
                     + "It does not assert integrability of the complex logarithmic derivative "
                     + "on a singular slice. Global continuation, zeta identification and the "
-                    + "Riemann hypothesis require separate results."))));
+                    + "Riemann hypothesis require separate results.")))));
 }
