@@ -8,6 +8,7 @@
 
 import D5.S1.Words.Patterns.Separable.RecordNewtonPositivity
 import D5.S1.Words.Patterns.Separable.RecordFirstDecline
+import Mathlib.RingTheory.PowerSeries.WellKnown
 
 namespace D5.S1.Words.Patterns.Separable.RecordAllIndex
 open D5.S1.Words.Patterns.Separable.RecordPeak
@@ -465,4 +466,307 @@ theorem actual_weighted_quadratic :
     linear_combination J_product
   exact J_quadratic
 
+noncomputable section
+
+
+def a : PowerSeries ℚ := PowerSeries.X * (3 + 2*PowerSeries.X)
+def b : PowerSeries ℚ := PowerSeries.X * (1 + PowerSeries.X)^3
+def h : PowerSeries ℚ := 1 + PowerSeries.X
+def L : PowerSeries (PowerSeries ℚ) :=
+  PowerSeries.invOfUnit (1-PowerSeries.C a*PowerSeries.X) 1
+def w : PowerSeries (PowerSeries ℚ) := PowerSeries.C b*PowerSeries.X^2*L^2
+def Cc : PowerSeries (PowerSeries ℚ) :=
+  PowerSeries.catalanSeries.map (Nat.castRingHom (PowerSeries ℚ))
+def M : PowerSeries (PowerSeries ℚ) :=
+  L*PowerSeries.subst w Cc
+def t (r : ℕ) : PowerSeries ℚ := PowerSeries.coeff r M
+
+theorem M_eq : M = 1 + PowerSeries.C a*PowerSeries.X*M+
+      PowerSeries.C b*PowerSeries.X^2*M^2 := by
+  have L_inv : (1-PowerSeries.C a*PowerSeries.X)*L = 1 := by
+    exact PowerSeries.mul_invOfUnit _ 1 (by simp [L])
+  have w0 : PowerSeries.constantCoeff w = 0 := by simp [w]
+  have hw : PowerSeries.HasSubst w := PowerSeries.HasSubst.of_constantCoeff_zero' w0
+  have C_eq : Cc^2*PowerSeries.X+1 = Cc := by
+    have h0 := congrArg (PowerSeries.map (Nat.castRingHom (PowerSeries ℚ)))
+      PowerSeries.catalanSeries_sq_mul_X_add_one
+    simpa only [Cc, map_add,map_mul,map_pow,map_one,PowerSeries.map_X] using h0
+  have swC : (PowerSeries.subst w Cc)^2*w+1 = PowerSeries.subst w Cc := by
+    have h0 := congrArg (PowerSeries.subst w) C_eq
+    simpa only [PowerSeries.subst_add hw,PowerSeries.subst_mul hw,
+      PowerSeries.subst_pow hw,PowerSeries.subst_X hw,
+      show PowerSeries.subst w (1 : PowerSeries (PowerSeries ℚ)) = 1 by
+        simpa only [map_one] using (PowerSeries.subst_C (1 : PowerSeries ℚ) (a := w))] using h0
+  have H : (1-PowerSeries.C a*PowerSeries.X)*M =
+      1+w*(PowerSeries.subst w Cc)^2 := by
+    dsimp [M]
+    calc
+      (1-PowerSeries.C a*PowerSeries.X) * (L*PowerSeries.subst w Cc) =
+          PowerSeries.subst w Cc := by rw [← mul_assoc,L_inv,one_mul]
+      _ = 1+w*(PowerSeries.subst w Cc)^2 := by linear_combination -swC
+  dsimp [M,w] at H ⊢
+  linear_combination H
+
+def V : PowerSeries (PowerSeries ℚ) := PowerSeries.mk 1
+def wb : PowerSeries (PowerSeries ℚ) := PowerSeries.X * V
+def B : PowerSeries (PowerSeries ℚ) := V * PowerSeries.subst wb M
+
+lemma coeff_V (n : ℕ) : PowerSeries.coeff n V = (1 : PowerSeries ℚ) := by
+  simp [V]
+
+lemma coeff_Vpow (d n : ℕ) :
+    PowerSeries.coeff n (V^d) =
+      if d = 0 then (if n = 0 then 1 else 0) else
+        (Nat.choose (d + n - 1) (d - 1) : PowerSeries ℚ) := by
+  cases d with
+  | zero => simp [V]
+  | succ d =>
+      have h := PowerSeries.mk_one_pow_eq_mk_choose_add (PowerSeries ℚ) d
+      have hn := congrArg (PowerSeries.coeff n) h
+      simpa [V, Nat.succ_eq_add_one, Nat.add_sub_cancel] using hn
+
+lemma coeff_wbpow (d n : ℕ) :
+    PowerSeries.coeff n (wb^d) =
+      if d = 0 then (if n = 0 then 1 else 0) else
+        if d ≤ n then (Nat.choose (n - 1) (d - 1) : PowerSeries ℚ) else 0 := by
+  cases d with
+  | zero => simp [wb]
+  | succ d =>
+      rw [show wb^(d+1) = PowerSeries.X^(d+1) * V^(d+1) by
+        simp [wb, mul_pow]]
+      rw [PowerSeries.coeff_X_pow_mul']
+      simp only [show d + 1 ≠ 0 by omega, if_false]
+      by_cases h : d + 1 ≤ n
+      · rw [coeff_Vpow]
+        simp only [show d + 1 ≠ 0 by omega, if_false, if_pos h]
+        rw [show d+1+(n-(d+1))-1=n-1 by omega, show d+1-1=d by omega]
+      · rw [if_neg h, if_neg h]
+
+theorem coeff_B (n : ℕ) : PowerSeries.coeff n B =
+    ∑ d ∈ Finset.range (n+1), (n.choose d : PowerSeries ℚ) * t d := by
+  classical
+  have hwb : PowerSeries.HasSubst wb :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' (by simp [wb])
+  have first : PowerSeries.coeff n B = ∑ᶠ d,
+      t d * PowerSeries.coeff n (V * wb^d) := by
+    rw [B, PowerSeries.coeff_mul]
+    simp_rw [PowerSeries.coeff_subst' hwb, smul_eq_mul, mul_finsum]
+    rw [sum_finsum_comm]
+    · apply finsum_congr
+      intro d
+      rw [PowerSeries.coeff_mul, Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro p hp
+      dsimp [t]
+      ring
+    · intro p hp
+      have hs := PowerSeries.coeff_subst_finite' hwb M p.2
+      simp only [smul_eq_mul] at hs
+      exact Function.HasFiniteSupport.mul_right (fun _ => PowerSeries.coeff p.1 V) hs
+  rw [first]
+  have coeffterm (d : ℕ) : PowerSeries.coeff n (V * wb^d) =
+      if d ≤ n then (n.choose d : PowerSeries ℚ) else 0 := by
+    rw [show V * wb^d = PowerSeries.X^d * V^(d+1) by
+      simp only [wb, mul_pow, pow_succ]; ring]
+    rw [PowerSeries.coeff_X_pow_mul']
+    by_cases hd : d ≤ n
+    · rw [if_pos hd, coeff_Vpow]
+      simp only [show d+1 ≠ 0 by omega, if_false]
+      rw [show d+1+(n-d)-1=n by omega, show d+1-1=d by omega]
+      rw [if_pos hd]
+    · rw [if_neg hd, if_neg hd]
+  simp_rw [coeffterm]
+  rw [finsum_eq_sum_of_support_subset _ (s := Finset.range (n+1)) (by
+    intro d hd
+    by_contra hout
+    have hd' : ¬d ≤ n := by simpa only [Finset.mem_coe, Finset.mem_range, Nat.lt_succ_iff] using hout
+    simp only [Function.mem_support, if_neg hd', mul_zero, ne_eq, not_true_eq_false] at hd)]
+  apply Finset.sum_congr rfl
+  intro d hd
+  rw [if_pos (by have := Finset.mem_range.mp hd; omega), mul_comm]
+
+theorem B_eq : B = 1 + (1 + PowerSeries.C a) * PowerSeries.X * B +
+      PowerSeries.C b * PowerSeries.X^2 * B^2 := by
+  have V_inv : (1 - PowerSeries.X) * V = 1 := by
+    rw [mul_comm]
+    simpa [V] using PowerSeries.mk_one_mul_one_sub_eq_one (PowerSeries ℚ)
+  have wb0 : PowerSeries.constantCoeff wb = 0 := by simp [wb, V]
+  have hwb : PowerSeries.HasSubst wb := PowerSeries.HasSubst.of_constantCoeff_zero' wb0
+  have subM := congrArg (PowerSeries.subst wb) M_eq
+  simp only [PowerSeries.subst_add hwb,PowerSeries.subst_mul hwb,
+    PowerSeries.subst_pow hwb,PowerSeries.subst_C,PowerSeries.subst_X hwb] at subM
+  have HB : (1-PowerSeries.X)*B = PowerSeries.subst wb M := by
+    dsimp [B]
+    rw [← mul_assoc,V_inv,one_mul]
+  rw [← HB] at subM
+  dsimp [wb] at subM
+  have V_right : V * (1 - PowerSeries.X) = 1 := by
+    rw [mul_comm, V_inv]
+  have xV : PowerSeries.X * V * (1 - PowerSeries.X) = PowerSeries.X := by
+    calc
+      PowerSeries.X * V * (1 - PowerSeries.X) =
+          PowerSeries.X * (V * (1 - PowerSeries.X)) := by ring
+      _ = PowerSeries.X := by rw [V_right, mul_one]
+  have xV2 : (PowerSeries.X * V)^2 * (1 - PowerSeries.X)^2 = PowerSeries.X^2 := by
+    calc
+      (PowerSeries.X * V)^2 * (1 - PowerSeries.X)^2 =
+          (PowerSeries.X * V * (1 - PowerSeries.X))^2 := by ring
+      _ = PowerSeries.X^2 := by rw [xV]
+  have sub_one : PowerSeries.subst (PowerSeries.X * V)
+      (1 : PowerSeries (PowerSeries ℚ)) = 1 := by
+    change PowerSeries.subst (PowerSeries.X * V)
+      (PowerSeries.C (1 : PowerSeries ℚ)) = 1
+    rw [PowerSeries.subst_C]
+    rfl
+  rw [sub_one] at subM
+  change (1 - PowerSeries.X) * B =
+      1 + PowerSeries.C a * (PowerSeries.X * V) * ((1 - PowerSeries.X) * B) +
+        PowerSeries.C b * (PowerSeries.X * V)^2 * ((1 - PowerSeries.X) * B)^2 at subM
+  have term1 : PowerSeries.C a * (PowerSeries.X * V) *
+      ((1 - PowerSeries.X) * B) = PowerSeries.C a * PowerSeries.X * B := by
+    calc
+      _ = PowerSeries.C a * (PowerSeries.X * V * (1 - PowerSeries.X)) * B := by ring
+      _ = _ := by rw [xV]
+  have term2 : PowerSeries.C b * (PowerSeries.X * V)^2 *
+      ((1 - PowerSeries.X) * B)^2 = PowerSeries.C b * PowerSeries.X^2 * B^2 := by
+    calc
+      _ = PowerSeries.C b * ((PowerSeries.X * V)^2 * (1 - PowerSeries.X)^2) * B^2 := by ring
+      _ = _ := by rw [xV2]
+  have hmain : (1-PowerSeries.X)*B =
+      1 + PowerSeries.C a*PowerSeries.X*B + PowerSeries.C b*PowerSeries.X^2*B^2 := by
+    rw [term1, term2] at subM
+    exact subM
+  linear_combination hmain
+
+theorem F_eq :
+    let F : PowerSeries (PowerSeries ℚ) := PowerSeries.X +
+      PowerSeries.X^2 * PowerSeries.C (h^2) * B
+    F = PowerSeries.X + PowerSeries.C h * PowerSeries.X * F +
+      PowerSeries.C (PowerSeries.X*h) * F^2 := by
+  change (PowerSeries.X + PowerSeries.X^2 * PowerSeries.C (h^2) * B) =
+    PowerSeries.X + PowerSeries.C h * PowerSeries.X *
+      (PowerSeries.X + PowerSeries.X^2 * PowerSeries.C (h^2) * B) +
+      PowerSeries.C (PowerSeries.X*h) *
+        (PowerSeries.X + PowerSeries.X^2 * PowerSeries.C (h^2) * B)^2
+  have hb := B_eq
+  have Ch : PowerSeries.C h = 1 + PowerSeries.C PowerSeries.X := by simp [h]
+  have Ch2 : PowerSeries.C (h^2) = (1 + PowerSeries.C PowerSeries.X)^2 := by simp [h]
+  have Cuh : PowerSeries.C (PowerSeries.X*h) =
+      PowerSeries.C PowerSeries.X * PowerSeries.C h := by simp [map_mul]
+  have Ca : PowerSeries.C a = PowerSeries.C PowerSeries.X *
+      (3 + 2 * PowerSeries.C PowerSeries.X) := by
+    dsimp [a]
+    simp only [map_mul, map_add, map_ofNat]
+  have Cb : PowerSeries.C b = PowerSeries.C PowerSeries.X *
+      (1 + PowerSeries.C PowerSeries.X)^3 := by
+    simp [b, map_mul, map_add, map_ofNat]
+  rw [Ch, Ch2, Cuh, Ch]
+  rw [Ca, Cb] at hb
+  -- expected universal identity, specialized coefficient ring
+  linear_combination PowerSeries.X^2 * (1 + PowerSeries.C PowerSeries.X)^2 * hb
+
+def F : PowerSeries (PowerSeries ℚ) := PowerSeries.X +
+  PowerSeries.X^2 * PowerSeries.C (h^2) * B
+
+def substQ : PowerSeries ℚ →ₐ[ℚ] PowerSeries ℚ :=
+  PowerSeries.substAlgHom (PowerSeries.HasSubst.of_constantCoeff_zero'
+    (show PowerSeries.constantCoeff q = 0 by simp [q]))
+
+lemma substQ_X : substQ PowerSeries.X = q := by
+  exact PowerSeries.substAlgHom_X _
+
+def actualF : PowerSeries (PowerSeries ℚ) :=
+  PowerSeries.rescale (PowerSeries.X : PowerSeries ℚ)
+    (PowerSeries.map substQ.toRingHom F)
+
+set_option maxHeartbeats 2000000 in
+lemma actualF_eq : actualF = z + z * (1+PowerSeries.C q) * actualF +
+    PowerSeries.C q * (1+PowerSeries.C q) * actualF^2 := by
+  have hF := F_eq
+  change F = PowerSeries.X + PowerSeries.C h * PowerSeries.X * F +
+    PowerSeries.C (PowerSeries.X*h) * F^2 at hF
+  have hs := congrArg (PowerSeries.map substQ.toRingHom) hF
+  simp only [map_add,map_mul,map_pow,PowerSeries.map_C,PowerSeries.map_X] at hs
+  have sx : substQ.toRingHom PowerSeries.X = q := by
+    change substQ PowerSeries.X = q
+    exact substQ_X
+  have sh : substQ.toRingHom h = 1 + q := by
+    change substQ h = 1 + q
+    simp [h, substQ_X]
+  rw [sx, sh] at hs
+  have hr := congrArg (PowerSeries.rescale (PowerSeries.X : PowerSeries ℚ)) hs
+  have rc (c : PowerSeries ℚ) : PowerSeries.rescale (PowerSeries.X : PowerSeries ℚ)
+      (PowerSeries.C c) = PowerSeries.C c := by
+    apply PowerSeries.ext
+    intro n
+    simp only [PowerSeries.coeff_rescale,PowerSeries.coeff_C]
+    split_ifs with hn
+    · simp [hn]
+    · simp
+  simp only [map_add,map_mul,map_pow,PowerSeries.rescale_X,rc] at hr
+  have C1 : PowerSeries.C (1 : PowerSeries ℚ) =
+      (1 : PowerSeries (PowerSeries ℚ)) := rfl
+  rw [C1] at hr
+  have hr' : actualF = PowerSeries.C (PowerSeries.X : PowerSeries ℚ)*PowerSeries.X +
+      (1+PowerSeries.C q) * (PowerSeries.C (PowerSeries.X : PowerSeries ℚ)*PowerSeries.X) * actualF +
+      PowerSeries.C q * (1+PowerSeries.C q) * actualF^2 := by
+    simpa [actualF] using hr
+  dsimp [z]
+  linear_combination hr'
+
+lemma J0 : PowerSeries.constantCoeff J = 0 := by
+  rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply]
+  change PowerSeries.coeff 0
+      (PowerSeries.mk (fun k => PowerSeries.mk (fun n =>
+        if n = 0 then 0 else
+          (signedCount false n k : ℚ)))) = 0
+  apply PowerSeries.ext
+  intro n
+  rcases n with _ | n
+  · simp
+  · simp only [PowerSeries.coeff_mk, Nat.succ_ne_zero, if_false]
+    change (signedCount false (n+1) 0 : ℚ) = 0
+    have hz := (D5.S1.Words.Patterns.Separable.RecordTransport.actual_four_record_transports_and_rising.2.1
+      (n+1) (by omega)).1
+    simp only [D5.S1.Words.Patterns.Separable.RecordTransport.irreducibleCount,
+      if_neg (by omega : n+1 ≠ 0)] at hz
+    exact_mod_cast hz
+
+theorem J_eq_actualF : J = actualF := by
+  have jf := D5.S1.Words.Patterns.Separable.RecordAllIndex.actual_weighted_quadratic
+  have ff := actualF_eq
+  have F0 : PowerSeries.constantCoeff actualF = 0 := by
+    rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply]
+    simp only [actualF, PowerSeries.coeff_rescale,pow_zero,one_mul,PowerSeries.coeff_map]
+    simp [F,PowerSeries.coeff_zero_eq_constantCoeff_apply]
+  have prod : (1-z*(1+PowerSeries.C q)-PowerSeries.C q*(1+PowerSeries.C q)*(J+actualF)) *
+      (J-actualF) = 0 := by
+    linear_combination jf-ff
+  have nz : (1-z*(1+PowerSeries.C q)-PowerSeries.C q*(1+PowerSeries.C q)*(J+actualF)) ≠ 0 := by
+    intro he
+    have hz := congrArg PowerSeries.constantCoeff he
+    simp [z,J0,F0] at hz
+  exact sub_eq_zero.mp ((mul_eq_zero.mp prod).resolve_left nz)
+
+theorem J_coeff (n : ℕ) : PowerSeries.coeff (n+2) J =
+    (PowerSeries.X : PowerSeries ℚ)^(n+2) * (1+q)^2 *
+      ∑ r ∈ Finset.range (n+1), (n.choose r : PowerSeries ℚ)*substQ (t r) := by
+  rw [J_eq_actualF]
+  simp only [actualF,PowerSeries.coeff_rescale,PowerSeries.coeff_map]
+  have hcoeff : PowerSeries.coeff (n+2) F = h^2 * PowerSeries.coeff n B := by
+    rw [F,map_add,PowerSeries.coeff_X,
+      if_neg (show n+2 ≠ 1 by omega),zero_add]
+    rw [mul_assoc,PowerSeries.coeff_X_pow_mul', if_pos (by omega : 2 ≤ n+2),
+      show n+2-2=n by omega,PowerSeries.coeff_C_mul]
+  rw [hcoeff,coeff_B]
+  have sx : substQ.toRingHom PowerSeries.X = q := by
+    change substQ PowerSeries.X = q
+    exact substQ_X
+  have sx' : substQ PowerSeries.X = q := substQ_X
+  have map_t (f : PowerSeries ℚ) : substQ.toRingHom f = substQ f := rfl
+  simp only [map_mul,map_pow,map_add,map_one, h,map_sum,map_natCast,sx,sx',map_t]
+  ring
+
+
+end
 end D5.S1.Words.Patterns.Separable.RecordAllIndex
