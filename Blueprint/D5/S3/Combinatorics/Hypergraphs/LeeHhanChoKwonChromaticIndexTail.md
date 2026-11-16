@@ -84,6 +84,10 @@ $$\neg (\forall c \in \operatorname{Real},\; \forall beta \in \operatorname{Real
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hypergraphs/LeeHhanChoKwonChromaticIndexTail.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lee-hhan-cho-kwon-2025-chromatic-index-tail` (refuted) by `D5/S3/Combinatorics/Hypergraphs/LeeHhanChoKwonChromaticIndexTail.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lee-hhan-cho-kwon-2025-chromatic-index-tail","declaration_gid":"D5/S3/Combinatorics/Hypergraphs/LeeHhanChoKwonChromaticIndexTail.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* W. Lee; M. Hhan; G. Y. Cho; H. Kwon (2025). *Shallow quantum circuit for generating extremely low-entangled approximate state designs*. DOI: [10.48550/arXiv.2507.17871](https://doi.org/10.48550/arXiv.2507.17871). URL: <https://arxiv.org/abs/2507.17871v3>.

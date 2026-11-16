@@ -34,7 +34,10 @@ internal sealed class LeeHhanChoKwonChromaticIndexTailDocument : IScribeDocument
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Refutation by a fixed-edge prefix", new Formula.Not(Parenthesized(ClaimBody())),
                 "Take c = 1 and beta = 3. A prefix of r copies of one nonempty m-edge needs at least r colours. Counting all possible suffixes gives the lower bound 1/k^(m*r) for the tail whenever the threshold is below r. For any proposed C and T, choose L = max(1,Nat.ceil C), s = max(64,max(T,32*(L+1))), q = 2^s, t = 2^q and r = L*t*q+1. Then k = 3*t²+6*q, m = q and alpha = 3*t³. The inequalities r ≤ alpha, C*t*log₂(t) < r, k ≤ 2^(2*q+3) and (2*q+3)*q*r < t² give tailProb > 2^(−t²) = eps(1,t). The exact binomial bound (m/k)^r and a variant requiring pairwise distinct edges are outside this proof. The weaker probability 1 − O(1/log t) in Eq. (87) is not refuted.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lee-hhan-cho-kwon-2025-chromatic-index-tail"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
