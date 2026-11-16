@@ -49,7 +49,7 @@ internal sealed class QubitResidualRoundingDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.actual_B_unitary_transport"),
                 H("Coherent transport of the physical recovery data"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("A local B unitary transports the same canonical ABC state, its actual AB, BC and B marginals, the canonical CPTP channel, and its recovered reference state. Every centered contraction slice transforms by the same conjugation. Half trace distance and ordinary conditional mutual information are unchanged, including singular states. Inverse transport returns every repaired state to the original physical carrier."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For the input unitary U, localBState conjugates rho by its inverse on B. The public conjunction identifies the actual AB marginal, its B marginal, the transported canonical channel and recovered reference state, and conjugation of every centered slice. The proof of ordinary qcmi invariance uses the actual AB, BC and B marginal entropy identities. Half trace distance is unchanged. Applying localBState with star U returns a repair and its qcmi and distance bounds to the original ABC carrier, including singular states."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-diagonal-geometry"),
                 DeclarationHandle.Create("D5/S3/Quantum/Recovery/QubitResidualRounding.actual_diagonal_geometry"),

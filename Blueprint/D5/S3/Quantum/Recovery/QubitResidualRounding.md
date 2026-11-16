@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Quantum/Recovery/QubitResidualRounding.qubit_residual_fif
 
 *Commentary.*
 
-For arbitrary finite A and C, a canonical state rho on A times (Fin 2 times C), and every canonical channel T from Fin 2 to Fin 2 times C, form its actual AB marginal P and the recovered reference state. If r is their half trace distance, there exists sigma on the same ABC carrier with ordinary qcmi zero and distance at most min(1, 6 r^(1/5)). Every rank and zero eigenvalue are allowed. The four true marginal entropies agree exactly with ordinary qcmi.
+For arbitrary finite A and C in independent universes, a canonical state rho on A times (Fin 2 times C), and every canonical channel T from Fin 2 to Fin 2 times C, let P be the actual AB marginal of rho. Set r to the half trace distance between rho and referenceState T P. There exists sigma on the same ABC carrier with ordinary qcmi zero and distance from rho at most min(1, 6 r^(1/5)). All ranks, zero eigenvalues, singleton outer dimensions and zero conditional weights are allowed; the density-state input supplies nonemptiness. Ordinary qcmi is S(AB) plus S(BC) minus S(B) minus S(ABC), using the actual marginals of sigma. This residual theorem supplies no bound in terms of the conditional mutual information of rho without a separate recovery theorem, and makes no sharpness or novelty claim.
 
 The maximum centered Hermitian slice is attained. A small maximum yields an A-BC product directly. Otherwise diagonalizing the attained slice transports rho, its actual marginal and T coherently, and controls the total flip probability. A small retained-column gap gives an AB-C product; small B coherence gives a classical pointer repair. For large B coherence the actual marginal equation forces a product comparison. With delta the fifth root of r, the nontrivial scale delta below one sixth gives flip probability at most 2 delta to the fourth power and all comparison bounds at most 6 delta. The distance cap handles the other scales. At r zero, the same geometry gives exactly zero flips and either a common environment vector or zero coherence in the classical repair. Undoing the local B unitary returns sigma to the original system.
 
@@ -88,7 +88,7 @@ Lean statement: `D5/S3/Quantum/Recovery/QubitResidualRounding.actual_B_unitary_t
 
 *Commentary.*
 
-A local B unitary transports the same canonical ABC state, its actual AB, BC and B marginals, the canonical CPTP channel, and its recovered reference state. Every centered contraction slice transforms by the same conjugation. Half trace distance and ordinary conditional mutual information are unchanged, including singular states. Inverse transport returns every repaired state to the original physical carrier.
+For the input unitary U, localBState conjugates rho by its inverse on B. The public conjunction identifies the actual AB marginal, its B marginal, the transported canonical channel and recovered reference state, and conjugation of every centered slice. The proof of ordinary qcmi invariance uses the actual AB, BC and B marginal entropy identities. Half trace distance is unchanged. Applying localBState with star U returns a repair and its qcmi and distance bounds to the original ABC carrier, including singular states.
 
 **Theorem 1.8 (Actual residual geometry in the attained basis).**
 
