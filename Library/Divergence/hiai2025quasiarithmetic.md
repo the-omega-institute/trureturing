@@ -5,9 +5,10 @@ year: 2025
 title: Various inequalities between quasi-arithmetic mean and quasi-geometric type means for matrices
 doi: null
 url: https://arxiv.org/abs/2508.20309
-claim: Section 2.1 defines the quasi-arithmetic and quasi-harmonic means; Section 5 (4) asks whether their universal order comparison forces both positive exponents to be at least one.
+claim: Section 4.3 asks for the sharp weighted sandwich versus arithmetic-power comparison; Section 5 (4) asks for necessity in the harmonic versus arithmetic comparison.
 strata_touched:
   - D5/S3/Quantum/Matrix/HiaiHarmonicArithmetic
+  - D5/S3/Quantum/Matrix/SharpWeightedLin/Settlement
 license: citation-only
 triage: anchor
 ---
@@ -106,3 +107,33 @@ definite complex $2\times2$ matrices. Direct sums extend its counterexamples
 to every dimension at least two on paper; positive definite inputs already
 belong to the positive semidefinite domain. Completeness of later
 literature and worldwide priority are not asserted.
+
+## Section 4.3: weighted quasi-geometric comparison
+
+For $0<\alpha<1$, $p>0$ and $q>0$, the source writes
+
+$$
+R_{\alpha,p}(A,B)=\left(A^{(1-\alpha)p/2}B^{\alpha p}
+A^{(1-\alpha)p/2}\right)^{1/p}
+$$
+
+and
+
+$$
+\mathcal A_{\alpha,q}(A,B)=\left((1-\alpha)A^q+\alpha B^q\right)^{1/q}.
+$$
+
+The comparison in Section 4.3 is between the descending eigenvalues of these
+means for positive definite matrices. Problem 4.15 states:
+
+> There is a gap between the sufficient condition and the necessary condition for Rα,p ≤λ Aα,q , Rα,p ≺w Aα,q and Rα,p ≤Tr Aα,q . It is also unknown whether Rα,p ≤λ Aα,q is strictly stronger than Rα,p ≺w Aα,q , or they are equivalent.
+
+Proposition 4.9 states that $p/2\le q$ implies
+$R_{\alpha,p}\le_\lambda\mathcal A_{\alpha,q}$. Theorem 4.10 states that
+if $R_{\alpha,p}\le_\lambda\mathcal A_{\alpha,q}$ holds for every positive
+definite $2\times2$ matrix pair, then $\alpha(1-\alpha)p\le q$. Proposition 4.11 gives
+$\min\{1,p/2\}\le q$ as a sufficient condition for the trace comparison.
+Theorem 4.12 states that a universal trace comparison implies
+$\min\{1,\alpha(1-\alpha)p\}\le q$. Example 4.13 records, for
+$\alpha=1/2$ and $p=1$, the equivalence of the trace comparison with
+$q\ge1/4$.
