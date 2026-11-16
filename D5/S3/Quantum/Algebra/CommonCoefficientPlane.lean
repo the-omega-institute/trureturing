@@ -6,7 +6,6 @@
    utility: none
    digest: An independent complex 3-by-5 matrix triple with injective stack has a common neutral coefficient plane. -/
 
-import D5.S3.Quantum.Algebra.SemidefiniteCoefficientKernelCheck
 import D5.S3.Quantum.Algebra.GramUnitaryExtension
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.FlatSpectrumObstruction
 import Mathlib.Analysis.Matrix.PosDef
@@ -85,11 +84,58 @@ private theorem coefficient_rank_le_two
     Fintype.card_fin] at hleft hright
   omega
 
+private theorem semidefinite_coefficient_kernel {a b k : ℕ}
+    (X : Fin k → Matrix (Fin a) (Fin b) ℂ)
+    (hX : LinearIndependent ℂ X)
+    (T : Matrix (Fin k) (Fin k) ℂ) (hT : T.PosSemidef)
+    (hPhi : (∑ r, ∑ s, T r s • ((X r)ᴴ * X s)) = 0) : T = 0 := by
+  classical
+  have hquad (j : Fin b) :
+      ∑ i : Fin a, star (fun r => X r i j) ⬝ᵥ
+        (T *ᵥ (fun r => X r i j)) = 0 := by
+    have hd := congrArg (fun A : Matrix (Fin b) (Fin b) ℂ => A j j) hPhi
+    simp only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+      Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.zero_apply] at hd
+    simp only [dotProduct, Matrix.mulVec, Pi.star_apply, Finset.mul_sum]
+    calc
+      _ = ∑ r : Fin k, ∑ i : Fin a, ∑ s : Fin k,
+          star (X r i j) * (T r s * X s i j) := by
+        rw [Finset.sum_comm]
+      _ = ∑ r : Fin k, ∑ s : Fin k, ∑ i : Fin a,
+          star (X r i j) * (T r s * X s i j) := by
+        apply Finset.sum_congr rfl
+        intro r hr
+        rw [Finset.sum_comm]
+      _ = ∑ r : Fin k, ∑ s : Fin k, T r s * ∑ i : Fin a,
+          (star (X r i j) * X s i j) := by
+        apply Finset.sum_congr rfl
+        intro r hr
+        apply Finset.sum_congr rfl
+        intro s hs
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro i hi
+        ring
+      _ = 0 := by simpa only [mul_assoc, mul_left_comm, mul_comm] using hd
+  have hker (i : Fin a) (j : Fin b) : T *ᵥ (fun r => X r i j) = 0 := by
+    apply hT.dotProduct_mulVec_zero_iff.mp
+    exact (Finset.sum_eq_zero_iff_of_nonneg
+      (fun i (_ : i ∈ (Finset.univ : Finset (Fin a))) =>
+        hT.dotProduct_mulVec_nonneg (fun r => X r i j))).mp (hquad j) i
+          (Finset.mem_univ i)
+  ext r s
+  apply Fintype.linearIndependent_iff.mp hX (fun s => T r s) ?_ s
+  ext i j
+  simpa only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+    Matrix.zero_apply, Matrix.mulVec, dotProduct, Pi.zero_apply] using
+      congrFun (hker i j) r
+
+
 private theorem semidefinite_eq_zero {a b : ℕ}
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (hX : LinearIndependent ℂ X)
     (T : Matrix (Fin 3) (Fin 3) ℂ) (hT : T.PosSemidef)
     (hPhi : compression X T = 0) : T = 0 := by
-  apply SemidefiniteCoefficientKernelCheck.exact_check X hX T hT
+  apply semidefinite_coefficient_kernel X hX T hT
   simpa only [compression_eq_sum] using hPhi
 
 private theorem stack_mix {a b : ℕ} (A : Matrix (Fin 3) (Fin 3) ℂ)

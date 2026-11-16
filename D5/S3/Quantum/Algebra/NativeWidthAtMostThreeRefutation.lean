@@ -3,11 +3,16 @@
    mirror-B: none
    mirror-E: none
    anchors: []
-   utility: kind=certified-instance
-   digest: Native k3 common-plane consumer refuted by compression rank. -/
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Algebra/NativeWidthAtMostThreeRefutation.claim; result=D5/S3/Quantum/Algebra/NativeWidthAtMostThreeRefutation.result; claim=D5/S3/Quantum/Algebra/NativeWidthAtMostThreeRefutation.claim
+   digest: The original universal positive-scalar inner-cone event is false on native width three. -/
 
 import D5.S3.Quantum.Algebra.CommonCoefficientPlane
-import D5.S3.Quantum.Algebra.NativeCoefficientWhitening
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
+import Mathlib.Analysis.Matrix.Order
+import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
+import Mathlib.LinearAlgebra.Matrix.Nondegenerate
+import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
 import Mathlib.LinearAlgebra.Matrix.Vec
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -23,16 +28,202 @@ noncomputable section
 open Matrix Module
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker
 
+namespace D5.S3.Quantum.Algebra.NativeCoefficientWhitening
+
+open scoped BigOperators Matrix ComplexOrder MatrixOrder Kronecker
+open Matrix
+open D5.S3.Quantum.Information.PartialTraceMutualInformation
+
+noncomputable def mix {k m n : ℕ} (B : Matrix (Fin k) (Fin k) ℂ)
+    (X : Fin k → Matrix (Fin m) (Fin n) ℂ) (r : Fin k) : Matrix (Fin m) (Fin n) ℂ :=
+  ∑ s, B r s • X s
+
+private theorem mix_apply {k m n : ℕ} (B : Matrix (Fin k) (Fin k) ℂ)
+    (X : Fin k → Matrix (Fin m) (Fin n) ℂ) (r : Fin k) (i : Fin m) (j : Fin n) :
+    mix B X r i j = ∑ s, B r s * X s i j := by
+  simp [mix, Matrix.sum_apply]
+
+def flat {k m n : ℕ} (X : Fin k → Matrix (Fin m) (Fin n) ℂ) :
+    Matrix (Fin m × Fin n) (Fin k) ℂ := fun p r => X r p.1 p.2
+
+private theorem flat_mix {k m n : ℕ} (B : Matrix (Fin k) (Fin k) ℂ)
+    (X : Fin k → Matrix (Fin m) (Fin n) ℂ) :
+    flat (mix B X) = flat X * B.transpose := by
+  ext p r
+  simp [flat, mix, Matrix.mul_apply, Matrix.sum_apply, mul_comm]
+
+private theorem flat_gram {k m n : ℕ} (X : Fin k → Matrix (Fin m) (Fin n) ℂ) :
+    (fun r s => trace ((X r)ᴴ * X s)) = (flat X)ᴴ * flat X := by
+  ext r s
+  simp only [trace, diag_apply, Matrix.mul_apply, conjTranspose_apply, flat,
+    Fintype.sum_prod_type]
+  exact Finset.sum_comm
+
+private theorem flat_injective {k m n : ℕ} (X : Fin k → Matrix (Fin m) (Fin n) ℂ)
+    (hX : LinearIndependent ℂ X) : Function.Injective (flat X).mulVec := by
+  intro x y hxy
+  apply hX.fintypeLinearCombination_injective
+  ext i j
+  have h := congrFun hxy (i, j)
+  simpa [Fintype.linearCombination_apply, flat, Matrix.mulVec, dotProduct,
+    Matrix.sum_apply, mul_comm] using h
+
+private theorem weighted_gram {k : ℕ}
+    (M : Fin k → Matrix (Fin 3) (Fin 5) ℂ)
+    (N : Fin k → Matrix (Fin 5) (Fin 3) ℂ)
+    (hF : (∑ r, kronecker (M r) (N r))ᴴ * (∑ r, kronecker (M r) (N r)) = 1) :
+    (∑ s, ∑ t, ((1 / 3 : ℂ) * trace ((N s)ᴴ * N t)) • ((M s)ᴴ * M t)) = 1 := by
+  classical
+  let T : Matrix (Fin 5 × Fin 3) (Fin 5 × Fin 3) ℂ →ₗ[ℂ]
+      Matrix (Fin 5) (Fin 5) ℂ :=
+    { toFun := partialTraceRight
+      map_add' := partialTraceRight_add
+      map_smul' := by
+        intro c A
+        ext i j
+        simp [partialTraceRight, Finset.mul_sum] }
+  have hExp : (∑ r, kronecker (M r) (N r))ᴴ * (∑ r, kronecker (M r) (N r)) =
+      ∑ s, ∑ t, kronecker ((M s)ᴴ * M t) ((N s)ᴴ * N t) := by
+    simp only [Matrix.kronecker, Matrix.conjTranspose_sum, Matrix.sum_mul, Matrix.mul_sum,
+      Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul]
+    exact Finset.sum_comm
+  have hT := congrArg T (hExp.symm.trans hF)
+  have hT1 : T 1 = (3 : ℂ) • (1 : Matrix (Fin 5) (Fin 5) ℂ) := by
+    ext i j
+    simp [T, partialTraceRight, Matrix.one_apply]
+  simp only [map_sum] at hT
+  change (∑ s, ∑ t, partialTraceRight (kronecker ((M s)ᴴ * M t) ((N s)ᴴ * N t))) = T 1 at hT
+  simp only [partialTraceRight_kronecker] at hT
+  rw [hT1] at hT
+  have h := congrArg (fun A => (1 / 3 : ℂ) • A) hT
+  simpa [Finset.smul_sum, smul_smul] using h
+
+private theorem mixed_energy {k : ℕ} (B : Matrix (Fin k) (Fin k) ℂ)
+    (M : Fin k → Matrix (Fin 3) (Fin 5) ℂ) :
+    (∑ r, (mix B M r)ᴴ * mix B M r) =
+      ∑ s, ∑ t, (Bᴴ * B) s t • ((M s)ᴴ * M t) := by
+  classical
+  simp only [mix, Matrix.conjTranspose_sum, Matrix.sum_mul, Matrix.mul_sum,
+    Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul, Finset.smul_sum, smul_smul,
+    Matrix.mul_apply, Matrix.conjTranspose_apply, Finset.sum_smul]
+  conv_lhs =>
+    arg 2
+    ext r
+    rw [Finset.sum_comm]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro s _
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro t _
+  apply Finset.sum_congr rfl
+  intro r _
+  rw [mul_comm]
+
+private theorem tensor_mix {k : ℕ} (B C : Matrix (Fin k) (Fin k) ℂ)
+    (hBC : B.transpose * C = 1)
+    (M : Fin k → Matrix (Fin 3) (Fin 5) ℂ)
+    (N : Fin k → Matrix (Fin 5) (Fin 3) ℂ) :
+    (∑ r, kronecker (mix B M r) (mix C N r)) = ∑ r, kronecker (M r) (N r) := by
+  classical
+  apply Matrix.ext
+  intro p q
+  rcases p with ⟨i, j⟩
+  rcases q with ⟨a, b⟩
+  have hcoeff (s t : Fin k) : (∑ r, B r s * C r t) = if s = t then 1 else 0 := by
+    simpa [Matrix.mul_apply, Matrix.one_apply] using congrFun (congrFun hBC s) t
+  have hterm (r s t : Fin k) : B r s * M s i a * (C r t * N t j b) =
+      (B r s * C r t) * (M s i a * N t j b) := by ring
+  simp only [Matrix.sum_apply, Matrix.kronecker, Matrix.kroneckerMap_apply, mix_apply,
+    Finset.sum_mul, Finset.mul_sum]
+  simp_rw [hterm]
+  rw [Finset.sum_comm]
+  conv_lhs =>
+    arg 2
+    ext t
+    rw [Finset.sum_comm]
+  simp_rw [← Finset.sum_mul, hcoeff]
+  simp
+
+private theorem exact_whitening {k : ℕ}
+    (M : Fin k → Matrix (Fin 3) (Fin 5) ℂ)
+    (N : Fin k → Matrix (Fin 5) (Fin 3) ℂ)
+    (hN : LinearIndependent ℂ N)
+    (hF : (∑ r, kronecker (M r) (N r))ᴴ * (∑ r, kronecker (M r) (N r)) = 1) :
+    ∃ B : Matrix (Fin k) (Fin k) ℂ, IsUnit B ∧
+      (fun r s => (1 / 3 : ℂ) * trace ((N r)ᴴ * N s)) = Bᴴ * B ∧
+      (let C := B.transpose⁻¹
+       let Mprime := mix B M
+       let Nprime := mix C N
+       (∑ r, kronecker (Mprime r) (Nprime r)) = (∑ r, kronecker (M r) (N r)) ∧
+       (∑ r, (Mprime r)ᴴ * Mprime r) = 1 ∧
+       (fun r s => (1 / 3 : ℂ) * trace ((Nprime r)ᴴ * Nprime s)) =
+         (1 : Matrix (Fin k) (Fin k) ℂ) ∧
+       (LinearIndependent ℂ M → LinearIndependent ℂ Mprime)) := by
+  classical
+  let H : Matrix (Fin k) (Fin k) ℂ :=
+    fun r s => (1 / 3 : ℂ) * trace ((N r)ᴴ * N s)
+  have hH : H = (1 / 3 : ℝ) • ((flat N)ᴴ * flat N) := by
+    rw [← flat_gram]
+    ext r s
+    simp [H, Complex.real_smul, Matrix.smul_apply, Pi.smul_apply]
+  have hpos : H.PosDef := by
+    rw [hH]
+    exact ((Matrix.PosDef.conjTranspose_mul_self (flat N) (flat_injective N hN)).smul
+      (by norm_num : (0 : ℝ) < 1 / 3))
+  obtain ⟨B, hB, hBB⟩ :=
+    CStarAlgebra.isStrictlyPositive_iff_eq_star_mul_self.mp hpos.isStrictlyPositive
+  change H = Bᴴ * B at hBB
+  have hdet : IsUnit B.det := (Matrix.isUnit_iff_isUnit_det B).mp hB
+  have hdetT : IsUnit B.transpose.det := by simpa using hdet
+  let C := B.transpose⁻¹
+  have hBC : B.transpose * C = 1 := Matrix.mul_nonsing_inv _ hdetT
+  have hCT : C.transpose = B⁻¹ := by simp [C, ← Matrix.transpose_nonsing_inv]
+  refine ⟨B, hB, hBB, tensor_mix B C hBC M N, ?_, ?_, ?_⟩
+  · rw [mixed_energy, ← hBB]
+    exact weighted_gram M N hF
+  · change (fun r s => (1 / 3 : ℂ) * trace ((mix C N r)ᴴ * mix C N s)) =
+      (1 : Matrix (Fin k) (Fin k) ℂ)
+    have hscale (X : Fin k → Matrix (Fin 5) (Fin 3) ℂ) :
+        (fun r s => (1 / 3 : ℂ) * trace ((X r)ᴴ * X s)) =
+          (1 / 3 : ℂ) • ((flat X)ᴴ * flat X) := by
+      rw [← flat_gram]
+      rfl
+    rw [hscale, flat_mix, Matrix.conjTranspose_mul, Matrix.mul_assoc,
+      ← Matrix.mul_assoc (flat N)ᴴ, ← Matrix.mul_smul,
+      ← Matrix.smul_mul]
+    have hH' : (1 / 3 : ℂ) • ((flat N)ᴴ * flat N) = H := by
+      rw [← hscale]
+    rw [hH', hBB, hCT]
+    simp only [Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hdet, Matrix.mul_one]
+    rw [← Matrix.conjTranspose_mul,
+      Matrix.mul_nonsing_inv _ hdet, Matrix.conjTranspose_one]
+  · intro hM
+    exact hM.sum_smul_of_nondegenerate (Matrix.nondegenerate_of_det_ne_zero hdet.ne_zero)
+
+end D5.S3.Quantum.Algebra.NativeCoefficientWhitening
+
 namespace D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation
 
 abbrev MatM (k : ℕ) := Fin k → Matrix (Fin 3) (Fin 5) ℂ
 abbrev MatN (k : ℕ) := Fin k → Matrix (Fin 5) (Fin 3) ℂ
 
-def event : Prop :=
-  ∃ k : ℕ, k ≤ 3 ∧ ∃ M : MatM k, ∃ N : MatN k,
-    LinearIndependent ℂ M ∧ LinearIndependent ℂ N ∧
-      (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
-          (∑ r, Matrix.kronecker (M r) (N r)) = 1
+/-- The original universal inner-cone flat-spectrum event. -/
+def claim : Prop :=
+  ∀ a b c d : ℕ, 0 < a → a ≤ b → 0 < c → c ≤ d →
+    a * a + b * b ≤ 3 * a * b → c * c + d * d ≤ 3 * c * d →
+    b ≤ 2 * a → d ≤ 2 * c →
+    ∃ M : Fin 3 → Matrix (Fin a) (Fin b) ℂ,
+    ∃ N : Fin 3 → Matrix (Fin d) (Fin c) ℂ,
+    ∃ lambda : ℝ, 0 < lambda ∧
+      (b * c ≤ a * d →
+        (D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.flow M N)ᴴ *
+          D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.flow M N =
+            (lambda : ℂ) • (1 : Matrix (Fin b × Fin c) (Fin b × Fin c) ℂ)) ∧
+      (a * d ≤ b * c →
+        D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.flow M N *
+          (D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.flow M N)ᴴ =
+            (lambda : ℂ) • (1 : Matrix (Fin a × Fin d) (Fin a × Fin d) ℂ))
 
 private theorem matrix_not_injective_of_dimensions
     {m n : ℕ} (h : n < m) (A : Matrix (Fin n) (Fin m) ℂ) :
@@ -519,5 +710,387 @@ theorem native_three_refutation
       _ ≤ 5 := by simpa using W.rank_le_card_height
   rw [hCPC, Matrix.rank_one] at hRank
   norm_num at hRank
+
+private def concatK {k d c : ℕ} (N : Fin k → Matrix (Fin d) (Fin c) ℂ) :
+    Matrix (Fin d) (Fin k × Fin c) ℂ := fun i p => N p.1 i p.2
+
+private theorem concatK_gram {k d c : ℕ}
+    (N : Fin k → Matrix (Fin d) (Fin c) ℂ)
+    (H : Matrix (Fin k) (Fin k) ℂ)
+    (hN : ∀ r s, (N r)ᴴ * N s = H r s • 1) :
+    (concatK N)ᴴ * concatK N = Matrix.kronecker H (1 : Matrix (Fin c) (Fin c) ℂ) := by
+  ext ⟨r, i⟩ ⟨s, j⟩
+  have h := congrArg (fun A : Matrix (Fin c) (Fin c) ℂ => A i j) (hN r s)
+  simpa [concatK, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.kronecker,
+    Matrix.kroneckerMap_apply, Matrix.smul_apply, smul_eq_mul] using h
+
+private theorem exact_k2_native_refutation
+    (M : Fin 2 → Matrix (Fin 3) (Fin 5) ℂ)
+    (N : Fin 2 → Matrix (Fin 5) (Fin 3) ℂ)
+    (hM : LinearIndependent ℂ M)
+    (hN : LinearIndependent ℂ N) :
+    (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
+        (∑ r, Matrix.kronecker (M r) (N r)) ≠
+      (1 : Matrix (Fin 5 × Fin 3) (Fin 5 × Fin 3) ℂ) := by
+  intro hF
+  obtain ⟨B, hB, hBB, hPres, hMGram, _hNGram, _hMprimeLI⟩ :=
+    D5.S3.Quantum.Algebra.NativeCoefficientWhitening.exact_whitening M N hN hF
+  let M' : Fin 2 → Matrix (Fin 3) (Fin 5) ℂ :=
+    D5.S3.Quantum.Algebra.NativeCoefficientWhitening.mix B M
+  let C : Matrix (Fin 2) (Fin 2) ℂ := B.transpose⁻¹
+  let N' : Fin 2 → Matrix (Fin 5) (Fin 3) ℂ :=
+    D5.S3.Quantum.Algebra.NativeCoefficientWhitening.mix C N
+  have hF' :
+      (∑ r, Matrix.kronecker (M' r) (N' r))ᴴ *
+          (∑ r, Matrix.kronecker (M' r) (N' r)) =
+        (1 : Matrix (Fin 5 × Fin 3) (Fin 5 × Fin 3) ℂ) := by
+    have hF0 := hF
+    rw [← hPres] at hF0
+    simpa [M', C, N'] using hF0
+  have hMGram' : ∑ r, (M' r)ᴴ * M' r = 1 := by
+    simpa [M'] using hMGram
+  let S : Matrix (Fin 2 × Fin 3) (Fin 5) ℂ := stackK M'
+  have hSGram : Sᴴ * S = (1 : Matrix (Fin 5) (Fin 5) ℂ) := by
+    rw [show Sᴴ * S = ∑ r, (M' r)ᴴ * M' r by
+      simpa [S] using stackK_gram M']
+    exact hMGram'
+  have hSinj : Function.Injective S.mulVecLin :=
+    gram_identity_injective S hSGram
+  let T : Fin 3 → Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
+    fun l m r s =>
+      ((N' r)ᴴ * N' s) l m -
+        (if r = s then if l = m then 1 else 0 else 0)
+  have hTzero (l m : Fin 3) : T l m = 0 := by
+    apply two_compression_zero S hSinj (T l m)
+    have hbk := block_kernel M' N' hF' hMGram' l m
+    have hcomp :
+        Sᴴ * Matrix.kronecker (T l m)
+            (1 : Matrix (Fin 3) (Fin 3) ℂ) * S =
+          ∑ r, ∑ s, (T l m r s) • ((M' r)ᴴ * M' s) := by
+      ext u v
+      simp only [S, stackK, Matrix.mul_apply, Matrix.conjTranspose_apply,
+        Matrix.kronecker, Matrix.kroneckerMap_apply, Matrix.sum_apply,
+        Matrix.smul_apply, smul_eq_mul, Matrix.one_apply,
+        Fintype.sum_prod_type]
+      simp_rw [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq']
+      simp only [Finset.mem_univ, ite_true]
+      simp only [Finset.sum_mul, Finset.mul_sum]
+      conv_lhs =>
+        arg 2
+        ext s
+        rw [Finset.sum_comm]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro r _
+      apply Finset.sum_congr rfl
+      intro s _
+      apply Finset.sum_congr rfl
+      intro q _
+      ring
+    rw [hcomp]
+    exact hbk
+  have hNcross (r s : Fin 2) :
+      (N' r)ᴴ * N' s =
+        (if r = s then (1 : ℂ) else 0) •
+          (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+    ext l m
+    have ht := congrArg (fun X => X r s) (hTzero l m)
+    have ht' :
+        ((N' r)ᴴ * N' s) l m -
+            (if r = s then if l = m then 1 else 0 else 0) = 0 := by
+      simpa [T] using ht
+    have he := sub_eq_zero.mp ht'
+    by_cases hrs : r = s <;> by_cases hlm : l = m <;>
+      simpa [hrs, hlm, Matrix.one_apply] using he
+  have hconcat :
+      (concatK N')ᴴ * concatK N' =
+        Matrix.kronecker (1 : Matrix (Fin 2) (Fin 2) ℂ)
+          (1 : Matrix (Fin 3) (Fin 3) ℂ) :=
+    concatK_gram N' 1 hNcross
+  have hkronecker :
+      Matrix.kronecker (1 : Matrix (Fin 2) (Fin 2) ℂ)
+          (1 : Matrix (Fin 3) (Fin 3) ℂ) =
+        (1 : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ) := by
+    ext ⟨r, l⟩ ⟨s, m⟩
+    by_cases hrs : r = s <;> by_cases hlm : l = m <;>
+      simp [Matrix.kronecker, Matrix.kroneckerMap_apply, Matrix.one_apply, hrs, hlm]
+  have hrank6 : 6 ≤ (concatK N').rank := by
+    have hEq :
+        ((concatK N')ᴴ * concatK N').rank = 6 := by
+      rw [hconcat, hkronecker, Matrix.rank_one]
+      simp
+    calc
+      6 = ((concatK N')ᴴ * concatK N').rank := hEq.symm
+      _ ≤ (concatK N').rank := Matrix.rank_mul_le_right _ _
+  have hrank5 : (concatK N').rank ≤ 5 := by
+    simpa using (concatK N').rank_le_card_height
+  omega
+
+
+private abbrev Left := Matrix (Fin 3) (Fin 5) ℂ
+private abbrev Right := Matrix (Fin 5) (Fin 3) ℂ
+private abbrev Native := Matrix (Fin 3 × Fin 5) (Fin 5 × Fin 3) ℂ
+
+private theorem kronecker_sub_left {a b c d : ℕ}
+    (x y : Matrix (Fin a) (Fin b) ℂ) (z : Matrix (Fin c) (Fin d) ℂ) :
+    Matrix.kronecker (x - y) z = Matrix.kronecker x z - Matrix.kronecker y z := by
+  ext i j
+  simp [Matrix.kronecker, Matrix.kroneckerMap_apply, sub_mul]
+
+private theorem kronecker_sub_right {a b c d : ℕ}
+    (x : Matrix (Fin a) (Fin b) ℂ) (y z : Matrix (Fin c) (Fin d) ℂ) :
+    Matrix.kronecker x (y - z) = Matrix.kronecker x y - Matrix.kronecker x z := by
+  ext i j
+  simp [Matrix.kronecker, Matrix.kroneckerMap_apply]
+  ring
+
+private theorem kronecker_smul_left {a b c d : ℕ}
+    (r : ℂ) (x : Matrix (Fin a) (Fin b) ℂ) (y : Matrix (Fin c) (Fin d) ℂ) :
+    Matrix.kronecker (r • x) y = r • Matrix.kronecker x y := by
+  ext i j
+  simp [Matrix.kronecker, Matrix.kroneckerMap_apply, mul_assoc]
+
+private theorem kronecker_smul_right {a b c d : ℕ}
+    (r : ℂ) (x : Matrix (Fin a) (Fin b) ℂ) (y : Matrix (Fin c) (Fin d) ℂ) :
+    Matrix.kronecker x (r • y) = r • Matrix.kronecker x y := by
+  ext i j
+  simp [Matrix.kronecker, Matrix.kroneckerMap_apply]
+  ring
+
+private theorem kronecker_sum_left {a b c d : ℕ} {ι : Type*} [Fintype ι]
+    (x : ι → Matrix (Fin a) (Fin b) ℂ) (y : Matrix (Fin c) (Fin d) ℂ) :
+    Matrix.kronecker (∑ i, x i) y = ∑ i, Matrix.kronecker (x i) y := by
+  ext i j
+  simp only [Matrix.sum_apply, Matrix.kronecker, Matrix.kroneckerMap_apply]
+  rw [Finset.sum_mul]
+
+private theorem kronecker_sum_right {a b c d : ℕ} {ι : Type*} [Fintype ι]
+    (x : Matrix (Fin a) (Fin b) ℂ) (y : ι → Matrix (Fin c) (Fin d) ℂ) :
+    Matrix.kronecker x (∑ i, y i) = ∑ i, Matrix.kronecker x (y i) := by
+  ext i j
+  simp only [Matrix.sum_apply, Matrix.kronecker, Matrix.kroneckerMap_apply]
+  rw [Finset.mul_sum]
+
+private theorem reduce_left {n : ℕ}
+    (A : Fin (n + 1) → Left) (D : Fin (n + 1) → Right)
+    (g : Fin (n + 1) → ℂ) (i : Fin (n + 1))
+    (hg : g i ≠ 0) (hrel : (∑ j, g j • A j) = 0) :
+    ∃ A' : Fin n → Left, ∃ D' : Fin n → Right,
+      (∑ j, Matrix.kronecker (A' j) (D' j)) =
+        (∑ j, Matrix.kronecker (A j) (D j)) := by
+  classical
+  let A' : Fin n → Left := fun j => A (i.succAbove j)
+  let D' : Fin n → Right := fun j =>
+    D (i.succAbove j) - (g (i.succAbove j) / g i) • D i
+  have hsplit : (∑ j : Fin (n + 1), g j • A j) =
+      g i • A i + ∑ j : Fin n, g (i.succAbove j) • A (i.succAbove j) := by
+    rw [Fin.univ_succAbove n i]
+    simp [Finset.sum_map]
+  have hai : A i = ∑ j : Fin n, (-(g (i.succAbove j) / g i)) • A (i.succAbove j) := by
+    have h := hsplit.symm.trans hrel
+    rw [add_eq_zero_iff_eq_neg] at h
+    have hi : A i = (g i)⁻¹ • (-(∑ j : Fin n, g (i.succAbove j) • A (i.succAbove j))) :=
+      (eq_inv_smul_iff₀ hg).mpr h
+    rw [hi, smul_neg, Finset.smul_sum]
+    rw [← (Finset.univ : Finset (Fin n)).sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro j hj
+    congr 1
+    simp [div_eq_mul_inv, smul_smul, mul_comm, mul_left_comm, mul_assoc]
+  have hsum : (∑ j : Fin (n + 1), Matrix.kronecker (A j) (D j)) =
+      Matrix.kronecker (A i) (D i) +
+        ∑ j : Fin n, Matrix.kronecker (A (i.succAbove j)) (D (i.succAbove j)) := by
+    rw [Fin.univ_succAbove n i]
+    simpa only [Finset.sum_cons, Finset.sum_map, Fin.coe_succAboveEmb]
+  refine ⟨A', D', ?_⟩
+  rw [hsum, hai]
+  simp only [A', D']
+  rw [kronecker_sum_left]
+  simp_rw [kronecker_sub_right, kronecker_smul_right, kronecker_smul_left]
+  rw [← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro j hj
+  have hs (r : ℂ) (X : Native) :
+      -(r • X) = (-r) • X := by
+    simp [smul_smul]
+  simp only [sub_eq_add_neg]
+  rw [hs]
+  abel
+
+private theorem reduce_right {n : ℕ}
+    (A : Fin (n + 1) → Left) (D : Fin (n + 1) → Right)
+    (g : Fin (n + 1) → ℂ) (i : Fin (n + 1))
+    (hg : g i ≠ 0) (hrel : (∑ j, g j • D j) = 0) :
+    ∃ A' : Fin n → Left, ∃ D' : Fin n → Right,
+      (∑ j, Matrix.kronecker (A' j) (D' j)) =
+        (∑ j, Matrix.kronecker (A j) (D j)) := by
+  classical
+  let A' : Fin n → Left := fun j =>
+    A (i.succAbove j) - (g (i.succAbove j) / g i) • A i
+  let D' : Fin n → Right := fun j => D (i.succAbove j)
+  have hsplit : (∑ j : Fin (n + 1), g j • D j) =
+      g i • D i + ∑ j : Fin n, g (i.succAbove j) • D (i.succAbove j) := by
+    rw [Fin.univ_succAbove n i]
+    simp [Finset.sum_map]
+  have hdi : D i = ∑ j : Fin n, (-(g (i.succAbove j) / g i)) • D (i.succAbove j) := by
+    have h := hsplit.symm.trans hrel
+    rw [add_eq_zero_iff_eq_neg] at h
+    have hi : D i = (g i)⁻¹ • (-(∑ j : Fin n, g (i.succAbove j) • D (i.succAbove j))) :=
+      (eq_inv_smul_iff₀ hg).mpr h
+    rw [hi, smul_neg, Finset.smul_sum]
+    rw [← (Finset.univ : Finset (Fin n)).sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro j hj
+    congr 1
+    simp [div_eq_mul_inv, smul_smul, mul_comm, mul_left_comm, mul_assoc]
+  have hsum : (∑ j : Fin (n + 1), Matrix.kronecker (A j) (D j)) =
+      Matrix.kronecker (A i) (D i) +
+        ∑ j : Fin n, Matrix.kronecker (A (i.succAbove j)) (D (i.succAbove j)) := by
+    rw [Fin.univ_succAbove n i]
+    simpa only [Finset.sum_cons, Finset.sum_map, Fin.coe_succAboveEmb]
+  refine ⟨A', D', ?_⟩
+  rw [hsum, hdi]
+  simp only [A', D']
+  rw [kronecker_sum_right]
+  simp_rw [kronecker_sub_left, kronecker_smul_right, kronecker_smul_left]
+  rw [← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro j hj
+  have hs (r : ℂ) (X : Native) :
+      -(r • X) = (-r) • X := by
+    simp [smul_smul]
+  simp only [sub_eq_add_neg]
+  rw [hs]
+  abel
+
+private theorem minimal_decomposition (M : Fin 3 → Left) (N : Fin 3 → Right) :
+    ∃ k : ℕ, k ≤ 3 ∧ ∃ A : Fin k → Left, ∃ D : Fin k → Right,
+      LinearIndependent ℂ A ∧ LinearIndependent ℂ D ∧
+        (∑ j, Matrix.kronecker (A j) (D j)) =
+          (∑ r, Matrix.kronecker (M r) (N r)) := by
+  classical
+  let p : ℕ → Prop := fun k => ∃ A : Fin k → Left, ∃ D : Fin k → Right,
+      (∑ j, Matrix.kronecker (A j) (D j)) =
+        (∑ r, Matrix.kronecker (M r) (N r))
+  have h3 : p 3 := by
+    refine ⟨M, N, ?_⟩
+    rfl
+  have hp : ∃ k, p k := ⟨3, h3⟩
+  have hmin : ∀ n < Nat.find hp, ¬p n := by
+    intro n hn hpn
+    have hle : Nat.find hp ≤ n := Nat.find_min' hp hpn
+    omega
+  have hfind_le : Nat.find hp ≤ 3 := by
+    by_contra h
+    have hlt3 : 3 < Nat.find hp := by omega
+    exact (hmin 3 hlt3) h3
+  rcases Nat.eq_zero_or_pos (Nat.find hp) with hzero | hpos
+  · have hk : p 0 := by simpa [hzero] using (Nat.find_spec hp)
+    obtain ⟨A, D, hsum⟩ := hk
+    refine ⟨0, by omega, A, D, ?_, ?_, hsum⟩
+    · rw [Fintype.linearIndependent_iff]
+      intro g hg i
+      exact Fin.elim0 i
+    · rw [Fintype.linearIndependent_iff]
+      intro g hg i
+      exact Fin.elim0 i
+  · obtain ⟨n, hn⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hpos)
+    have hk : p (n + 1) := by simpa [hn] using (Nat.find_spec hp)
+    obtain ⟨A, D, hsum⟩ := hk
+    have hA : LinearIndependent ℂ A := by
+      by_contra hA
+      rcases (Fintype.not_linearIndependent_iff.mp hA) with ⟨g, hg, i, hi⟩
+      rcases reduce_left A D g i hi hg with ⟨A', D', hred⟩
+      exact (hmin n (by omega)) ⟨A', D', hred.trans hsum⟩
+    have hD : LinearIndependent ℂ D := by
+      by_contra hD
+      rcases (Fintype.not_linearIndependent_iff.mp hD) with ⟨g, hg, i, hi⟩
+      rcases reduce_right A D g i hi hg with ⟨A', D', hred⟩
+      exact (hmin n (by omega)) ⟨A', D', hred.trans hsum⟩
+    refine ⟨n + 1, by omega, A, D, hA, hD, hsum⟩
+
+private theorem normalized_minimal_decomposition
+    (M : Fin 3 → Left) (N : Fin 3 → Right) (lambda : ℝ) (hlambda : 0 < lambda)
+    (hF : (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
+        (∑ r, Matrix.kronecker (M r) (N r)) =
+      (lambda : ℂ) • (1 : Matrix (Fin 5 × Fin 3) (Fin 5 × Fin 3) ℂ)) :
+    ∃ k : ℕ, k ≤ 3 ∧ ∃ A : Fin k → Left, ∃ D : Fin k → Right,
+      LinearIndependent ℂ A ∧ LinearIndependent ℂ D ∧
+        (∑ j, Matrix.kronecker (A j) (D j)) =
+          (((Real.sqrt lambda)⁻¹ : ℝ) : ℂ) •
+            (∑ r, Matrix.kronecker (M r) (N r)) ∧
+        (∑ j, Matrix.kronecker (A j) (D j))ᴴ *
+            (∑ j, Matrix.kronecker (A j) (D j)) =
+          (1 : Matrix (Fin 5 × Fin 3) (Fin 5 × Fin 3) ℂ) := by
+  classical
+  obtain ⟨k, hk, A, D, hA, hD, hsum⟩ := minimal_decomposition M N
+  let c : ℂ := (((Real.sqrt lambda)⁻¹ : ℝ) : ℂ)
+  have hsqrt : (Real.sqrt lambda) ^ 2 = lambda := by
+    simpa [pow_two] using (Real.sq_sqrt (le_of_lt hlambda))
+  have hsqrt_ne : Real.sqrt lambda ≠ 0 := ne_of_gt (Real.sqrt_pos.2 hlambda)
+  have hc : c ≠ 0 := by
+    dsimp [c]
+    exact_mod_cast (inv_ne_zero hsqrt_ne)
+  let A' : Fin k → Left := fun j => c • A j
+  have hA' : LinearIndependent ℂ A' := by
+    rw [Fintype.linearIndependent_iff] at hA ⊢
+    intro g hg i
+    have hc_sum : c • (∑ j, g j • A j) = 0 := by
+      simpa [A', Finset.smul_sum, smul_smul, mul_comm] using hg
+    have hsumg : (∑ j, g j • A j) = 0 :=
+      (smul_eq_zero.mp hc_sum).resolve_left hc
+    have hcg : ∀ j, c * g j = 0 := by
+      apply hA (fun j => c * g j)
+      simp_rw [mul_smul]
+      rw [← Finset.smul_sum, hsumg, smul_zero]
+    exact (mul_eq_zero.mp (hcg i)).resolve_left hc
+  have hsum' : (∑ j, Matrix.kronecker (A' j) (D j)) = c •
+      (∑ r, Matrix.kronecker (M r) (N r)) := by
+    simp only [A', kronecker_smul_left, Finset.smul_sum]
+    simpa only [Finset.smul_sum] using congrArg (fun X : Native => c • X) hsum
+  have hcc : (star c) * c * (lambda : ℂ) = 1 := by
+    have hreal : (Real.sqrt lambda)⁻¹ * (Real.sqrt lambda)⁻¹ * lambda = 1 := by
+      field_simp [hsqrt_ne]
+      nlinarith [hsqrt]
+    dsimp [c]
+    simpa [Complex.star_def] using congrArg (fun x : ℝ => (x : ℂ)) hreal
+  have hgram : (∑ j, Matrix.kronecker (A' j) (D j))ᴴ *
+      (∑ j, Matrix.kronecker (A' j) (D j)) =
+      (1 : Matrix (Fin 5 × Fin 3) (Fin 5 × Fin 3) ℂ) := by
+    rw [hsum']
+    simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
+      smul_smul, hF]
+    have hscalar : c * (star c * (lambda : ℂ)) = 1 := by
+      calc
+        c * (star c * (lambda : ℂ)) = star c * c * (lambda : ℂ) := by ring
+        _ = 1 := hcc
+    rw [hscalar]
+    simp
+  exact ⟨k, hk, A', D, hA', hD, hsum', hgram⟩
+
+
+/-- Arbitrary native triples cannot have any positive scalar column Gram. -/
+theorem positive_scalar_obstruction (M : MatM 3) (N : MatN 3)
+    (lambda : ℝ) (hlambda : 0 < lambda) :
+    ¬ ((∑ r, Matrix.kronecker (M r) (N r))ᴴ *
+        (∑ r, Matrix.kronecker (M r) (N r)) =
+      (lambda : ℂ) • (1 : Matrix (Fin 5 × Fin 3) (Fin 5 × Fin 3) ℂ)) := by
+  intro hF
+  obtain ⟨k, hk, A, D, hA, hD, _hsum, hgram⟩ :=
+    normalized_minimal_decomposition M N lambda hlambda hF
+  interval_cases k
+  · exact k_zero_false A D hgram
+  · exact k_one_false A D hgram
+  · exact exact_k2_native_refutation A D hA hD hgram
+  · exact native_three_refutation A D hA hD hgram
+
+/-- Literal negation of the complete original universal event. -/
+theorem result : ¬ claim := by
+  intro h
+  obtain ⟨M, N, lambda, hlambda, hcol, _hrow⟩ :=
+    h 3 5 3 5 (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+      (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  apply positive_scalar_obstruction M N lambda hlambda
+  exact hcol (by norm_num)
 
 end D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation
