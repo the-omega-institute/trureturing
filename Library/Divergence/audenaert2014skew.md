@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/1304.5935v2
 claim: "Theorem 14 bounds Holevo information by mixing entropy times the largest pairwise trace distance; the equiprobable binary case gives J₂(ρ,σ) ≤ ‖ρ−σ‖tr/2."
 strata_touched:
   - D5/S3/Divergence/AudenaertBinaryHolevoBound
+  - D5/S3/Quantum/Divergence/UmegakiBKMPath
 license: citation-only
 triage: anchor
 ---
