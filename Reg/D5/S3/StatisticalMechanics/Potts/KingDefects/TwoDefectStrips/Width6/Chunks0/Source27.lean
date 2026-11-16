@@ -13,21 +13,21 @@ set_option maxRecDepth 100000
 attribute [local irreducible] sources successors cl classList
 noncomputable section
 abbrev signature : Signature :=
-  _root_.Reg.Support.UniverseSingleReadout.signature (Fin 3) (fun _ => Row)
+  _root_.Reg.Support.UniverseSingleReadout.signature (Fin 9) (fun _ => Row)
     (fun _ => List (Fin 96))
 def actual : Realization signature :=
-  realize signature (fun _ i p => successors p (sources ⟨81+i.val, by omega⟩).2.val) (fun e => nomatch e)
+  realize signature (fun _ i p => successors p (sources ⟨165+i.val, by omega⟩).2.val) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ i p => successors p (sources ⟨81+i.val, by omega⟩).2.val ++ [0]) (fun e => nomatch e)
+  realize signature (fun _ i p => successors p (sources ⟨165+i.val, by omega⟩).2.val ++ [0]) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ i : Fin 3, R.readout () i (sources ⟨81+i.val, by omega⟩).1 =
-    classList (cl (sources ⟨81+i.val, by omega⟩).1 (sources ⟨81+i.val, by omega⟩).2.val)
+  Law R := ∀ i : Fin 9, R.readout () i (sources ⟨165+i.val, by omega⟩).1 =
+    classList (cl (sources ⟨165+i.val, by omega⟩).1 (sources ⟨165+i.val, by omega⟩).2.val)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0
   have ha := successor_rows 0
-  change successors (sources ⟨81, by decide⟩).1 (sources ⟨81, by decide⟩).2.val ++ [0] = _ at hb
+  change successors (sources ⟨165, by decide⟩).1 (sources ⟨165, by decide⟩).2.val ++ [0] = _ at hb
   have hh := congrArg List.length (hb.trans ha.symm)
   simp only [List.length_append, List.length_singleton, Fin.val_zero, Nat.add_zero] at hh
   omega

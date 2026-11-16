@@ -66,67 +66,6 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunk
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source41
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source42
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source43
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source44
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source45
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source46
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source47
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source48
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source49
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source50
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source51
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source52
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source53
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source54
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source55
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source56
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source57
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source58
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source59
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source60
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source61
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source62
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source63
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source64
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source65
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source66
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source67
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source68
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source69
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source70
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source71
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source72
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source73
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source74
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source75
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source76
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source77
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source78
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source79
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source80
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source81
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source82
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source83
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source84
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source85
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source86
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source87
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source88
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source89
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source90
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source91
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source92
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source93
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source94
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source95
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source96
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source97
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source98
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source99
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source100
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source101
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source102
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source103
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks2.Source104
 /-! Every admissible boundary has the certified successor multiset. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Certificate
@@ -190,277 +129,277 @@ private theorem source_successors (i : Fin 313) :
   · exact Chunks0.Source13.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source13.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source13.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source13.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source13.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source13.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source13.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source13.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source13.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source14.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source14.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source14.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source14.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source14.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source14.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source14.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source14.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source14.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source15.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source15.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source15.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source15.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source15.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source15.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source15.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source15.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source15.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source16.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source16.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source16.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source16.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source16.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source16.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source16.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source16.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source16.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source17.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source17.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source17.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source17.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source17.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source17.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source17.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source17.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source17.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source18.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source18.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source18.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source18.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source18.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source18.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source18.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source18.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source18.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source19.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source19.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source19.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source19.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source19.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source19.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source19.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source19.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source19.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source20.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source20.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source20.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source20.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source20.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source20.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source20.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source20.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source20.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source21.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source21.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source21.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source21.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source21.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source21.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source21.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source21.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source21.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source22.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source22.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source22.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source22.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source22.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source22.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source22.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source22.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source22.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source23.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source23.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source23.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source23.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source23.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source23.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source23.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source23.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source23.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source24.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source24.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source24.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source24.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source24.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source24.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source24.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source24.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source24.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source25.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source25.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source25.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source25.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source25.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source25.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source25.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source25.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source25.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source26.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source26.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source26.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source26.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source26.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source26.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source26.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source26.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source26.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source27.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source27.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source27.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source27.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source27.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source27.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source27.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source27.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source27.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source28.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source28.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source28.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source28.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source28.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source28.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source28.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source28.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source28.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source29.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source29.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source29.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source29.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source29.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source29.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source29.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source29.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source29.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source30.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source30.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source30.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source30.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source30.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source30.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source30.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source30.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source30.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source31.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source31.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source31.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source31.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source31.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source31.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source31.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source31.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source31.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source32.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source32.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source32.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source32.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source32.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source32.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source32.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source32.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source32.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source33.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source33.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source33.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source33.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source33.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source33.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source33.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source33.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source33.successor_rows ⟨8, by decide⟩
   · exact Chunks0.Source34.successor_rows ⟨0, by decide⟩
   · exact Chunks0.Source34.successor_rows ⟨1, by decide⟩
   · exact Chunks0.Source34.successor_rows ⟨2, by decide⟩
+  · exact Chunks0.Source34.successor_rows ⟨3, by decide⟩
+  · exact Chunks0.Source34.successor_rows ⟨4, by decide⟩
+  · exact Chunks0.Source34.successor_rows ⟨5, by decide⟩
+  · exact Chunks0.Source34.successor_rows ⟨6, by decide⟩
+  · exact Chunks0.Source34.successor_rows ⟨7, by decide⟩
+  · exact Chunks0.Source34.successor_rows ⟨8, by decide⟩
   · exact Chunks1.Source35.successor_rows ⟨0, by decide⟩
   · exact Chunks1.Source35.successor_rows ⟨1, by decide⟩
   · exact Chunks1.Source35.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source35.successor_rows ⟨3, by decide⟩
+  · exact Chunks1.Source35.successor_rows ⟨4, by decide⟩
+  · exact Chunks1.Source35.successor_rows ⟨5, by decide⟩
+  · exact Chunks1.Source35.successor_rows ⟨6, by decide⟩
+  · exact Chunks1.Source35.successor_rows ⟨7, by decide⟩
+  · exact Chunks1.Source35.successor_rows ⟨8, by decide⟩
   · exact Chunks1.Source36.successor_rows ⟨0, by decide⟩
   · exact Chunks1.Source36.successor_rows ⟨1, by decide⟩
   · exact Chunks1.Source36.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source36.successor_rows ⟨3, by decide⟩
+  · exact Chunks1.Source36.successor_rows ⟨4, by decide⟩
+  · exact Chunks1.Source36.successor_rows ⟨5, by decide⟩
+  · exact Chunks1.Source36.successor_rows ⟨6, by decide⟩
+  · exact Chunks1.Source36.successor_rows ⟨7, by decide⟩
+  · exact Chunks1.Source36.successor_rows ⟨8, by decide⟩
   · exact Chunks1.Source37.successor_rows ⟨0, by decide⟩
   · exact Chunks1.Source37.successor_rows ⟨1, by decide⟩
   · exact Chunks1.Source37.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source37.successor_rows ⟨3, by decide⟩
+  · exact Chunks1.Source37.successor_rows ⟨4, by decide⟩
+  · exact Chunks1.Source37.successor_rows ⟨5, by decide⟩
+  · exact Chunks1.Source37.successor_rows ⟨6, by decide⟩
+  · exact Chunks1.Source37.successor_rows ⟨7, by decide⟩
+  · exact Chunks1.Source37.successor_rows ⟨8, by decide⟩
   · exact Chunks1.Source38.successor_rows ⟨0, by decide⟩
   · exact Chunks1.Source38.successor_rows ⟨1, by decide⟩
   · exact Chunks1.Source38.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source38.successor_rows ⟨3, by decide⟩
+  · exact Chunks1.Source38.successor_rows ⟨4, by decide⟩
+  · exact Chunks1.Source38.successor_rows ⟨5, by decide⟩
+  · exact Chunks1.Source38.successor_rows ⟨6, by decide⟩
+  · exact Chunks1.Source38.successor_rows ⟨7, by decide⟩
+  · exact Chunks1.Source38.successor_rows ⟨8, by decide⟩
   · exact Chunks1.Source39.successor_rows ⟨0, by decide⟩
   · exact Chunks1.Source39.successor_rows ⟨1, by decide⟩
   · exact Chunks1.Source39.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source39.successor_rows ⟨3, by decide⟩
+  · exact Chunks1.Source39.successor_rows ⟨4, by decide⟩
+  · exact Chunks1.Source39.successor_rows ⟨5, by decide⟩
+  · exact Chunks1.Source39.successor_rows ⟨6, by decide⟩
+  · exact Chunks1.Source39.successor_rows ⟨7, by decide⟩
+  · exact Chunks1.Source39.successor_rows ⟨8, by decide⟩
   · exact Chunks1.Source40.successor_rows ⟨0, by decide⟩
   · exact Chunks1.Source40.successor_rows ⟨1, by decide⟩
   · exact Chunks1.Source40.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source40.successor_rows ⟨3, by decide⟩
+  · exact Chunks1.Source40.successor_rows ⟨4, by decide⟩
+  · exact Chunks1.Source40.successor_rows ⟨5, by decide⟩
+  · exact Chunks1.Source40.successor_rows ⟨6, by decide⟩
+  · exact Chunks1.Source40.successor_rows ⟨7, by decide⟩
+  · exact Chunks1.Source40.successor_rows ⟨8, by decide⟩
   · exact Chunks1.Source41.successor_rows ⟨0, by decide⟩
   · exact Chunks1.Source41.successor_rows ⟨1, by decide⟩
   · exact Chunks1.Source41.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source41.successor_rows ⟨3, by decide⟩
+  · exact Chunks1.Source41.successor_rows ⟨4, by decide⟩
+  · exact Chunks1.Source41.successor_rows ⟨5, by decide⟩
+  · exact Chunks1.Source41.successor_rows ⟨6, by decide⟩
+  · exact Chunks1.Source41.successor_rows ⟨7, by decide⟩
+  · exact Chunks1.Source41.successor_rows ⟨8, by decide⟩
   · exact Chunks1.Source42.successor_rows ⟨0, by decide⟩
   · exact Chunks1.Source42.successor_rows ⟨1, by decide⟩
   · exact Chunks1.Source42.successor_rows ⟨2, by decide⟩
+  · exact Chunks1.Source42.successor_rows ⟨3, by decide⟩
+  · exact Chunks1.Source42.successor_rows ⟨4, by decide⟩
+  · exact Chunks1.Source42.successor_rows ⟨5, by decide⟩
+  · exact Chunks1.Source42.successor_rows ⟨6, by decide⟩
+  · exact Chunks1.Source42.successor_rows ⟨7, by decide⟩
+  · exact Chunks1.Source42.successor_rows ⟨8, by decide⟩
   · exact Chunks1.Source43.successor_rows ⟨0, by decide⟩
   · exact Chunks1.Source43.successor_rows ⟨1, by decide⟩
   · exact Chunks1.Source43.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source44.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source44.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source44.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source45.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source45.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source45.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source46.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source46.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source46.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source47.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source47.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source47.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source48.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source48.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source48.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source49.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source49.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source49.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source50.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source50.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source50.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source51.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source51.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source51.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source52.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source52.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source52.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source53.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source53.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source53.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source54.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source54.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source54.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source55.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source55.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source55.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source56.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source56.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source56.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source57.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source57.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source57.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source58.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source58.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source58.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source59.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source59.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source59.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source60.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source60.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source60.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source61.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source61.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source61.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source62.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source62.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source62.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source63.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source63.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source63.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source64.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source64.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source64.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source65.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source65.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source65.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source66.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source66.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source66.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source67.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source67.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source67.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source68.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source68.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source68.successor_rows ⟨2, by decide⟩
-  · exact Chunks1.Source69.successor_rows ⟨0, by decide⟩
-  · exact Chunks1.Source69.successor_rows ⟨1, by decide⟩
-  · exact Chunks1.Source69.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source70.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source70.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source70.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source71.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source71.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source71.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source72.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source72.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source72.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source73.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source73.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source73.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source74.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source74.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source74.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source75.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source75.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source75.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source76.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source76.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source76.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source77.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source77.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source77.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source78.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source78.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source78.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source79.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source79.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source79.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source80.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source80.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source80.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source81.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source81.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source81.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source82.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source82.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source82.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source83.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source83.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source83.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source84.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source84.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source84.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source85.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source85.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source85.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source86.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source86.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source86.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source87.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source87.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source87.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source88.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source88.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source88.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source89.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source89.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source89.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source90.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source90.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source90.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source91.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source91.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source91.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source92.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source92.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source92.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source93.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source93.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source93.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source94.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source94.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source94.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source95.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source95.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source95.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source96.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source96.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source96.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source97.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source97.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source97.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source98.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source98.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source98.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source99.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source99.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source99.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source100.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source100.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source100.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source101.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source101.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source101.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source102.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source102.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source102.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source103.successor_rows ⟨0, by decide⟩
-  · exact Chunks2.Source103.successor_rows ⟨1, by decide⟩
-  · exact Chunks2.Source103.successor_rows ⟨2, by decide⟩
-  · exact Chunks2.Source104.successor_rows ⟨0, by decide⟩
+  · exact Chunks1.Source43.successor_rows ⟨3, by decide⟩
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in

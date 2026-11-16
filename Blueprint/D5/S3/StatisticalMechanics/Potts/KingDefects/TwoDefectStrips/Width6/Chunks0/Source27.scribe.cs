@@ -9,15 +9,15 @@ internal sealed class Source27Document : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact successor multisets at canonical boundary states.", H("Width-six source transitions"), Blocks(
             Describe.Lean(DescribeId.Create("successor-rows"), DeclarationHandle.Create(Prefix + "successor_rows"),
-                H("Source states 81 through 83"), StatementSource.FromAuthor(Disp(Formula())),
+                H("Source states 165 through 173"), StatementSource.FromAuthor(Disp(Formula())),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "The source table supplies a canonical row and residual budget. Every admissible labelled next row contributes its new class, including multiplicity; sorting gives the class list. These identities determine the quotient transfer."))), DescribeRole.Theorem))));
     private static Formula Formula()
     {
-        var x = Call("Sources.sources", Call("Fin.mk", Seq(Num("81"), Plus, Call("Fin.val", V("i")))));
+        var x = Call("Sources.sources", Call("Fin.mk", Seq(Num("165"), Plus, Call("Fin.val", V("i")))));
         var p = Call("Prod.fst", x);
         var d = Call("Fin.val", Call("Prod.snd", x));
-        return All("i", Call("Fin", Num("3")), Eq(Call("Data.successors", p, d),
+        return All("i", Call("Fin", Num("9")), Eq(Call("Data.successors", p, d),
             Call("Data.classList", Call("Data.cl", p, d))));
     }
     private static Formula V(string s) => F.Id(s);

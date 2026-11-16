@@ -13,7 +13,7 @@ set_option maxRecDepth 100000
 attribute [local irreducible] sources successors cl classList
 noncomputable section
 abbrev signature : Signature :=
-  _root_.Reg.Support.UniverseSingleReadout.signature (Fin 3) (fun _ => Row)
+  _root_.Reg.Support.UniverseSingleReadout.signature (Fin 9) (fun _ => Row)
     (fun _ => List (Fin 96))
 def actual : Realization signature :=
   realize signature (fun _ i p => successors p (sources ⟨39+i.val, by omega⟩).2.val) (fun e => nomatch e)
@@ -21,7 +21,7 @@ def rejected : Realization signature :=
   realize signature (fun _ i p => successors p (sources ⟨39+i.val, by omega⟩).2.val ++ [0]) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ i : Fin 3, R.readout () i (sources ⟨39+i.val, by omega⟩).1 =
+  Law R := ∀ i : Fin 9, R.readout () i (sources ⟨39+i.val, by omega⟩).1 =
     classList (cl (sources ⟨39+i.val, by omega⟩).1 (sources ⟨39+i.val, by omega⟩).2.val)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

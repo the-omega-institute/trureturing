@@ -9,7 +9,7 @@
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (consumed bind-only helpers on the live path of HardinA229753.result)
-sources: proof_shape=bind-only; consumers=Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors
+sources: proof_shape=bind-only; consumers=Chunks0-2.Source0-43.successor_rows,Certificate.canonical_successors
 sourceIndex: proof_shape=bind-only; consumers=Certificate.canonical_successors
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data

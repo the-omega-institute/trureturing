@@ -25,6 +25,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   dsimp only [arena, rejected, realize] at h
   have hb := h.1 0 0
   have ha := certificate.1 0 0
+  change W 1 (⟨16, by decide⟩ : Fin 96) = Matrix.vecMul (W 0) T (⟨16, by decide⟩ : Fin 96) at ha
   change W 1 (⟨16, by decide⟩ : Fin 96) + 1 = Matrix.vecMul (W 0) T (⟨16, by decide⟩ : Fin 96) at hb
   simp only [Fin.val_zero, Nat.add_zero] at ha hb
   linarith only [hb,ha]

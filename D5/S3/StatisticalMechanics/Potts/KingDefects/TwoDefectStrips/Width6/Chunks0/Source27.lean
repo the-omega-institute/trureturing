@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Width-six source states 81 through 83. -/
+   digest: Width-six source states 165 through 173. -/
 
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
@@ -19,9 +19,9 @@ open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Sources
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
-theorem successor_rows : ∀ i : Fin 3,
-    successors (sources ⟨81+i.val, by omega⟩).1 (sources ⟨81+i.val, by omega⟩).2.val =
-      classList (cl (sources ⟨81+i.val, by omega⟩).1
-        (sources ⟨81+i.val, by omega⟩).2.val) := by
+theorem successor_rows : ∀ i : Fin 9,
+    successors (sources ⟨165+i.val, by omega⟩).1 (sources ⟨165+i.val, by omega⟩).2.val =
+      classList (cl (sources ⟨165+i.val, by omega⟩).1
+        (sources ⟨165+i.val, by omega⟩).2.val) := by
   decide +kernel
 end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source27

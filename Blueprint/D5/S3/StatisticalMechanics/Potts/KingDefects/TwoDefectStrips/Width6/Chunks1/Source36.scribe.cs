@@ -1,7 +1,7 @@
 using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1;
+namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0;
 internal sealed class Source36Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Chunks1/Source36.";
@@ -9,15 +9,15 @@ internal sealed class Source36Document : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact successor multisets at canonical boundary states.", H("Width-six source transitions"), Blocks(
             Describe.Lean(DescribeId.Create("successor-rows"), DeclarationHandle.Create(Prefix + "successor_rows"),
-                H("Source states 108 through 110"), StatementSource.FromAuthor(Disp(Formula())),
+                H("Source states 246 through 254"), StatementSource.FromAuthor(Disp(Formula())),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "The source table supplies a canonical row and residual budget. Every admissible labelled next row contributes its new class, including multiplicity; sorting gives the class list. These identities determine the quotient transfer."))), DescribeRole.Theorem))));
     private static Formula Formula()
     {
-        var x = Call("Sources.sources", Call("Fin.mk", Seq(Num("108"), Plus, Call("Fin.val", V("i")))));
+        var x = Call("Sources.sources", Call("Fin.mk", Seq(Num("246"), Plus, Call("Fin.val", V("i")))));
         var p = Call("Prod.fst", x);
         var d = Call("Fin.val", Call("Prod.snd", x));
-        return All("i", Call("Fin", Num("3")), Eq(Call("Data.successors", p, d),
+        return All("i", Call("Fin", Num("9")), Eq(Call("Data.successors", p, d),
             Call("Data.classList", Call("Data.cl", p, d))));
     }
     private static Formula V(string s) => F.Id(s);
