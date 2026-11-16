@@ -9,6 +9,7 @@ claim: "Theorem 14 bounds Holevo information by mixing entropy times the largest
 strata_touched:
   - D5/S3/Divergence/AudenaertBinaryHolevoBound
   - D5/S3/Quantum/Divergence/UmegakiBKMPath
+  - D5/S3/Quantum/Divergence/UmegakiRareFlagBKM
   - D5/S3/Quantum/Divergence/UniversalCommonCenter
 license: citation-only
 triage: anchor
@@ -34,6 +35,12 @@ dimension, including singular states. Its analytic route uses the resolvent
 representation of the matrix logarithm, the differential estimate underlying
 Theorem 8, integration to the skew-divergence estimate of Theorem 9, and a
 trace-preserving regularization with continuity of x log x at zero.
+
+The repository also contains `D5/S3/Quantum/Divergence/UmegakiRareFlagBKM`,
+which proves the rectangular finite-dimensional rare-flag asymptotic for the
+actual Bochner logarithmic derivative. It is a support result for the
+rare-reference route and does not prove the conditional Umegaki coefficient
+bound, coefficient equality, or a literature-priority claim.
 
 The associated finite semidefinite supplier
 `UniversalCommonCenter.exists_common_center_of_posDef_trace_inf_le` concerns
