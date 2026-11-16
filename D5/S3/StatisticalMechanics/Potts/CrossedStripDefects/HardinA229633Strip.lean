@@ -24,6 +24,7 @@ a: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=none (external open-problem-resolution #31121)
 -/
 
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229530Strip
 import Mathlib.Data.Matrix.Block
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinSourceContinuations
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
@@ -44,22 +45,13 @@ set_option Elab.async false
 private abbrev Row := Fin 4 → Fin 3
 private def horizontal : Finset (Fin 4 × Fin 4) := HardinA229582Strip.horizontal
 private def between : Finset (Fin 4 × Fin 4) :=
-  HardinA229582Strip.antidiagonal ∪ HardinA229582Strip.antidiagonal.image Prod.swap
+  HardinA229530Strip.between
 private def Valid (p : Row) (d : ℕ) : Prop :=
   d ≤ 2 ∧ bondDefects horizontal p p ≤ 2 - d
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (_ ∧ _))
 private def cl (p : Row) (d : ℕ) : Fin 19 :=
-  if d = 2 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 1 then 0 else
-  if d = 2 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 2 then 1 else
-  if d = 2 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 3 then 2 else
-  if d = 1 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 1 then 3 else
-  if d = 1 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 2 then 4 else
-  if d = 1 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 3 then 5 else
-  if d = 1 ∧ ((p 0 = p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 ≠ p 2 ∧ p 1 = p 3 ∧ p 2 ≠ p 3) ∨ (p 0 ≠ p 1 ∧ p 0 = p 2 ∧ p 0 = p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 = p 3)) then 6 else
-  if d = 1 ∧ ((p 0 = p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3) ∨ (p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 = p 3)) then 7 else
-  if d = 1 ∧ ((p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3) ∨ (p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3)) then 8 else
-  if d = 1 ∧ ((p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3) ∨ (p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3)) then 9 else
+  if 0 < d then (HardinA229530Strip.cl p (d - 1)).castAdd 9 else
   if d = 0 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 1 then 10 else
   if d = 0 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 2 then 11 else
   if d = 0 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 3 then 12 else
@@ -70,39 +62,45 @@ private def cl (p : Row) (d : ℕ) : Fin 19 :=
   if d = 0 ∧ ((p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3) ∨ (p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3)) then 17 else
   18
 private def T : Matrix (Fin 19) (Fin 19) ℤ :=
-  ![![(HardinSourceContinuations.M 1 1 / 16), (HardinSourceContinuations.M 1 2 / 16), (HardinSourceContinuations.M 1 3 / 16), 0, 2, 2, 2, 2, 0, 1, 0, 0, 2, 2, 4, 0, 2, 2, 0],
-    ![(HardinSourceContinuations.M 2 1 / 16), (HardinSourceContinuations.M 2 2 / 16), (HardinSourceContinuations.M 2 3 / 16), 2, 0, 2, 0, 0, 0, 0, 0, 3, 4, 0, 4, 0, 4, 2, 2],
-    ![(HardinSourceContinuations.M 3 1 / 16), (HardinSourceContinuations.M 3 2 / 16), (HardinSourceContinuations.M 3 3 / 16), 1, 1, 3, 1, 1, 0, 0, 1, 2, 1, 0, 5, 0, 4, 1, 2],
-    ![0, 0, 0, (HardinSourceContinuations.M 1 1 / 16), (HardinSourceContinuations.M 1 2 / 16), (HardinSourceContinuations.M 1 3 / 16), 0, 0, 0, 0, 0, 2, 2, 0, 2, 0, 2, 0, 1],
-    ![0, 0, 0, (HardinSourceContinuations.M 2 1 / 16), (HardinSourceContinuations.M 2 2 / 16), (HardinSourceContinuations.M 2 3 / 16), 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0],
-    ![0, 0, 0, (HardinSourceContinuations.M 3 1 / 16), (HardinSourceContinuations.M 3 2 / 16), (HardinSourceContinuations.M 3 3 / 16), 0, 0, 0, 0, 1, 1, 3, 0, 1, 0, 1, 0, 0],
-    ![0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 2, 2, 5, 0, 1, 0, 1, 0, 1],
-    ![0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 2, 4, 0, 1, 0, 1, 0, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 1, 0],
-    ![0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 4, 0, 2, 0, 0, 0, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (HardinSourceContinuations.M 1 1 / 16), (HardinSourceContinuations.M 1 2 / 16), (HardinSourceContinuations.M 1 3 / 16), 0, 0, 0, 0, 0, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (HardinSourceContinuations.M 2 1 / 16), (HardinSourceContinuations.M 2 2 / 16), (HardinSourceContinuations.M 2 3 / 16), 0, 0, 0, 0, 0, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (HardinSourceContinuations.M 3 1 / 16), (HardinSourceContinuations.M 3 2 / 16), (HardinSourceContinuations.M 3 3 / 16), 0, 0, 0, 0, 0, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]]
-private def initial : Fin 19 → ℤ := ![6, 6, 12, 0, 0, 0, 12, 12, 6, 6, 0, 0, 0, 12, 0, 6, 0, 0, 0]
+  Matrix.reindex (finSumFinEquiv : Fin 10 ⊕ Fin 9 ≃ Fin 19)
+    (finSumFinEquiv : Fin 10 ⊕ Fin 9 ≃ Fin 19)
+    (Matrix.fromBlocks HardinA229530Strip.T
+      (![![0, 0, 2, 2, 4, 0, 2, 2, 0],
+        ![0, 3, 4, 0, 4, 0, 4, 2, 2],
+        ![1, 2, 1, 0, 5, 0, 4, 1, 2],
+        ![0, 2, 2, 0, 2, 0, 2, 0, 1],
+        ![2, 0, 2, 0, 0, 0, 0, 0, 0],
+        ![1, 1, 3, 0, 1, 0, 1, 0, 0],
+        ![2, 2, 5, 0, 1, 0, 1, 0, 1],
+        ![1, 2, 4, 0, 1, 0, 1, 0, 0],
+        ![2, 2, 2, 0, 0, 0, 0, 1, 0],
+        ![0, 2, 4, 0, 2, 0, 0, 0, 0]])
+      (0)
+      (![![(HardinSourceContinuations.M 1 1 / 16), (HardinSourceContinuations.M 1 2 / 16), (HardinSourceContinuations.M 1 3 / 16), 0, 0, 0, 0, 0, 0],
+        ![(HardinSourceContinuations.M 2 1 / 16), (HardinSourceContinuations.M 2 2 / 16), (HardinSourceContinuations.M 2 3 / 16), 0, 0, 0, 0, 0, 0],
+        ![(HardinSourceContinuations.M 3 1 / 16), (HardinSourceContinuations.M 3 2 / 16), (HardinSourceContinuations.M 3 3 / 16), 0, 0, 0, 0, 0, 0],
+        ![1, 0, 0, 0, 0, 0, 0, 0, 0],
+        ![1, 0, 1, 0, 0, 0, 0, 0, 0],
+        ![0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ![1, 0, 1, 0, 0, 0, 0, 0, 0],
+        ![0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ![1, 0, 0, 0, 0, 0, 0, 0, 0]]))
+private def initial : Fin 19 → ℤ :=
+  Fin.append HardinA229530Strip.initial (![0, 0, 0, 12, 0, 6, 0, 0, 0])
 private def terminal : Fin 19 → ℤ := ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 private def W : Fin 11 → Fin 19 → ℤ :=
-  ![![6, 6, 12, 0, 0, 0, 12, 12, 6, 6, 0, 0, 0, 12, 0, 6, 0, 0, 0],
-    ![48, 24, 72, 54, 24, 84, 24, 24, 0, 6, 72, 114, 192, 12, 144, 0, 108, 42, 48],
-    ![312, 144, 456, 528, 330, 924, 168, 168, 0, 48, 1302, 894, 2256, 96, 900, 0, 720, 216, 270],
-    ![1992, 912, 2904, 4890, 2862, 8160, 1080, 1080, 0, 312, 13842, 8544, 23232, 624, 6516, 0, 5340, 1368, 1896],
-    ![12696, 5808, 18504, 41052, 22800, 66444, 6888, 6888, 0, 1992, 130938, 77046, 215496, 3984, 46860, 0, 39348, 8712, 13602],
-    ![80904, 37008, 117912, 324732, 174192, 515436, 43896, 43896, 0, 12696, 1155858, 657996, 1874664, 25392, 332844, 0, 284964, 55512, 96564],
-    ![515544, 235824, 751368, 2471676, 1294080, 3870972, 279720, 279720, 0, 80904, 9728082, 5401242, 15598980, 161808, 2339292, 0, 2034180, 353736, 678468],
-    ![3285192, 1502736, 4787928, 18314412, 9419184, 28404060, 1782456, 1782456, 0, 515544, 79046856, 43033524, 125596500, 1031088, 16297884, 0, 14353620, 2254104, 4725780],
-    ![20934168, 9575856, 30510024, 133044396, 67495968, 204812748, 11358312, 11358312, 0, 3285192, 625153188, 334954740, 985848384, 6570384, 112720236, 0, 100330836, 14363784, 32678196],
-    ![133398408, 61020048, 194418456, 951918204, 477731472, 1456874508, 72378360, 72378360, 0, 20934168, 4838800368, 2558609100, 7582684788, 41868336, 774778764, 0, 695830020, 91530072, 224574468],
-    ![850052184, 388836912, 1238889096, 6729384540, 3347739456, 10250608284, 461215272, 461215272, 0, 133398408, 36801322356, 19244084004, 57361443072, 266796816, 5297102076, 0, 4794018468, 583255368, 1535173572]]
+  Fin.append (fun i => Fin.append (HardinA229530Strip.W i)
+      ((![![0, 0, 0, 12, 0, 6, 0, 0, 0],
+        ![72, 114, 192, 12, 144, 0, 108, 42, 48],
+        ![1302, 894, 2256, 96, 900, 0, 720, 216, 270],
+        ![13842, 8544, 23232, 624, 6516, 0, 5340, 1368, 1896],
+        ![130938, 77046, 215496, 3984, 46860, 0, 39348, 8712, 13602],
+        ![1155858, 657996, 1874664, 25392, 332844, 0, 284964, 55512, 96564],
+        ![9728082, 5401242, 15598980, 161808, 2339292, 0, 2034180, 353736, 678468]]) i))
+    (![![3285192, 1502736, 4787928, 18314412, 9419184, 28404060, 1782456, 1782456, 0, 515544, 79046856, 43033524, 125596500, 1031088, 16297884, 0, 14353620, 2254104, 4725780],
+        ![20934168, 9575856, 30510024, 133044396, 67495968, 204812748, 11358312, 11358312, 0, 3285192, 625153188, 334954740, 985848384, 6570384, 112720236, 0, 100330836, 14363784, 32678196],
+        ![133398408, 61020048, 194418456, 951918204, 477731472, 1456874508, 72378360, 72378360, 0, 20934168, 4838800368, 2558609100, 7582684788, 41868336, 774778764, 0, 695830020, 91530072, 224574468],
+        ![850052184, 388836912, 1238889096, 6729384540, 3347739456, 10250608284, 461215272, 461215272, 0, 133398408, 36801322356, 19244084004, 57361443072, 266796816, 5297102076, 0, 4794018468, 583255368, 1535173572]])
 
 /-- The literal row-major canonical filtered array count. -/
 def a (n : ℕ) : ℕ :=
@@ -131,7 +129,78 @@ private theorem finite_certificate :
       cl r (2 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) ∧
     (W 0 = initial ∧ ∀ i : Fin 10, W i.succ = Matrix.vecMul (W i.castSucc) T) ∧
     W 10 = ∑ j : Fin 6, (![-64, 336, -636, 511, -159, 21] j : ℤ) • W ⟨4 + j.val, by omega⟩ := by
-  decide +kernel
+  refine ⟨by decide +kernel, by decide +kernel, ?_, by decide +kernel, ?_,
+    by decide +kernel, by decide +kernel⟩
+  · have valid_cut : ∀ p (d : Fin 3), Valid p d.val → 0 < d.val →
+        HardinA229530Strip.Valid p (d.val - 1) := by decide +kernel
+    have active_cut : ∀ (p r : Row) (d : Fin 3) (j : Fin 10),
+        Valid p d.val → 0 < d.val →
+        ((bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+          cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = j.castAdd 9) ↔
+          bondDefects HardinA229530Strip.between p r + bondDefects horizontal r r ≤ d.val - 1 ∧
+            HardinA229530Strip.cl r (d.val - 1 - (bondDefects HardinA229530Strip.between p r + bondDefects horizontal r r)) = j) := by
+      decide +kernel
+    have active_table : ∀ p (d : Fin 3) (j : Fin 10),
+        Valid p d.val → 0 < d.val →
+        HardinA229530Strip.T (HardinA229530Strip.cl p (d.val - 1)) j =
+          T (cl p d.val) (j.castAdd 9) := by decide +kernel
+    have zero_cut : ∀ (p r : Row) (d : Fin 3) (s : Fin 19)
+        (hz : HardinThinGraphTransport.proper p ∧ d.val = 0 ∧ 10 ≤ s.val ∧ s.val < 13),
+        (bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+          cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s) ↔
+          HardinThinGraphTransport.proper r ∧ HardinThinGraphTransport.compatible true p r ∧
+          HardinSourceContinuations.sourceClass (true, true) r =
+            ⟨s.val - 10 + 1, by omega⟩ := by decide +kernel
+    have zero_table : ∀ p (d : Fin 3) (s : Fin 19)
+        (hz : HardinThinGraphTransport.proper p ∧ d.val = 0 ∧ 10 ≤ s.val ∧ s.val < 13),
+        HardinSourceContinuations.M (HardinSourceContinuations.sourceClass (true, true) p)
+          ⟨s.val - 10 + 1, by omega⟩ / 16 = T (cl p d.val) s := by decide +kernel
+    have remaining : ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 19,
+        ¬ (0 < d.val ∧ s.val < 10) →
+        ¬ (HardinThinGraphTransport.proper p ∧ d.val = 0 ∧ 10 ≤ s.val ∧ s.val < 13) →
+        (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+          cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s
+          then (1 : ℤ) else 0) = T (cl p d.val) s := by decide +kernel
+    intro p d hp s
+    by_cases ha : 0 < d.val ∧ s.val < 10
+    · let j : Fin 10 := ⟨s.val, ha.2⟩
+      have he : s = j.castAdd 9 := rfl
+      rw [he]
+      simp_rw [active_cut p _ d j hp ha.1]
+      exact (HardinA229530Strip.finite_certificate.2.2.1 p
+        ⟨d.val - 1, by omega⟩ (valid_cut p d hp ha.1) j).trans
+          (active_table p d j hp ha.1)
+    · by_cases hz : HardinThinGraphTransport.proper p ∧ d.val = 0 ∧ 10 ≤ s.val ∧ s.val < 13
+      · simp_rw [zero_cut p _ d s hz]
+        have h := HardinA229530Strip.raw_successors p hz.1 ⟨s.val - 10 + 1, by omega⟩
+        have hd : (∑ r : Row, if HardinThinGraphTransport.proper r ∧
+            HardinThinGraphTransport.compatible true p r ∧
+            HardinSourceContinuations.sourceClass (true, true) r =
+              ⟨s.val - 10 + 1, by omega⟩ then (1 : ℤ) else 0) =
+            HardinSourceContinuations.M
+              (HardinSourceContinuations.sourceClass (true, true) p)
+              ⟨s.val - 10 + 1, by omega⟩ / 16 := by omega
+        exact hd.trans (zero_table p d s hz)
+      · exact remaining p d hp s ha hz
+  · have initial_cut : ∀ (r : Row) (j : Fin 10),
+        (bondDefects horizontal r r ≤ 2 ∧
+          cl r (2 - bondDefects horizontal r r) = j.castAdd 9) ↔
+          bondDefects horizontal r r ≤ 1 ∧
+            HardinA229530Strip.cl r (1 - bondDefects horizontal r r) = j := by decide +kernel
+    have initial_table : ∀ j : Fin 10,
+        HardinA229530Strip.initial j = initial (j.castAdd 9) := by decide +kernel
+    have remaining : ∀ s : Fin 19, 10 ≤ s.val →
+        (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
+          cl r (2 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s := by
+      decide +kernel
+    intro s
+    by_cases hs : s.val < 10
+    · let j : Fin 10 := ⟨s.val, hs⟩
+      have he : s = j.castAdd 9 := rfl
+      rw [he]
+      simp_rw [initial_cut _ j]
+      exact (HardinA229530Strip.finite_certificate.2.2.2.2.1 j).trans (initial_table j)
+    · exact remaining s (by omega)
 
 attribute [local irreducible] a
 

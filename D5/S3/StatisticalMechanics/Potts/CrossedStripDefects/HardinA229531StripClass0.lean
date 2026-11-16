@@ -25,5 +25,15 @@ theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val →
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 0
       then (1 : ℤ) else 0) = T (cl p d.val) 0 := by
-  decide +kernel
+  have remaining : ∀ p (d : Fin 2), Valid p d.val →
+      ¬ (D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport.proper p ∧
+        d.val = 1) →
+      (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+        cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 0
+        then (1 : ℤ) else 0) = T (cl p d.val) 0 := by decide +kernel
+  intro p d hp
+  by_cases hz : D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport.proper p ∧
+      d.val = 1
+  · exact inherited_transition_counts p d ⟨0, by omega⟩ ⟨hz.1, by omega⟩
+  · exact remaining p d hp hz
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripClass0

@@ -11,19 +11,21 @@ admission_basis: open-problem-resolution (#31121; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229530Strip.result)
 Row: proof_shape=bind-only; consumers=result
 horizontal: proof_shape=bind-only; consumers=result
-between: proof_shape=bind-only; consumers=result
-Valid: proof_shape=bind-only; consumers=result
-decidableValid: proof_shape=bind-only; consumers=result
-cl: proof_shape=bind-only; consumers=result
-T: proof_shape=bind-only; consumers=result
-initial: proof_shape=bind-only; consumers=result
+between: proof_shape=bind-only; consumers=result, HardinA229633Strip.finite_certificate
+Valid: proof_shape=bind-only; consumers=result, HardinA229633Strip.finite_certificate
+decidableValid: proof_shape=bind-only; consumers=result, HardinA229633Strip.finite_certificate
+cl: proof_shape=bind-only; consumers=result, HardinA229633Strip.finite_certificate
+T: proof_shape=bind-only; consumers=result, HardinA229633Strip.finite_certificate
+initial: proof_shape=bind-only; consumers=result, HardinA229633Strip.finite_certificate
 terminal: proof_shape=bind-only; consumers=result
-W: proof_shape=bind-only; consumers=result
-finite_certificate: proof_shape=bind-only; consumers=result
+W: proof_shape=bind-only; consumers=result, HardinA229633Strip.finite_certificate
+raw_successors: proof_shape=bind-only; consumers=finite_certificate, HardinA229633Strip.finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=result, HardinA229633Strip.finite_certificate
 a: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=none (external open-problem-resolution #31121)
 -/
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import Mathlib.Data.Matrix.Block
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinSourceContinuations
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
@@ -43,13 +45,13 @@ set_option Elab.async false
 
 private abbrev Row := Fin 4 → Fin 3
 private def horizontal : Finset (Fin 4 × Fin 4) := HardinA229582Strip.horizontal
-private def between : Finset (Fin 4 × Fin 4) :=
+def between : Finset (Fin 4 × Fin 4) :=
   HardinA229582Strip.antidiagonal ∪ HardinA229582Strip.antidiagonal.image Prod.swap
-private def Valid (p : Row) (d : ℕ) : Prop :=
+def Valid (p : Row) (d : ℕ) : Prop :=
   d ≤ 1 ∧ bondDefects horizontal p p ≤ 1 - d
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (_ ∧ _))
-private def cl (p : Row) (d : ℕ) : Fin 10 :=
+def cl (p : Row) (d : ℕ) : Fin 10 :=
   if d = 1 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 1 then 0 else
   if d = 1 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 2 then 1 else
   if d = 1 ∧ bondDefects horizontal p p = 0 ∧ HardinSourceContinuations.sourceClass (true, true) p = 3 then 2 else
@@ -60,7 +62,7 @@ private def cl (p : Row) (d : ℕ) : Fin 10 :=
   if d = 0 ∧ ((p 0 = p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3) ∨ (p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 ≠ p 3 ∧ p 1 ≠ p 2 ∧ p 1 ≠ p 3 ∧ p 2 = p 3)) then 7 else
   if d = 0 ∧ ((p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3) ∨ (p 0 ≠ p 1 ∧ p 0 ≠ p 2 ∧ p 0 = p 3 ∧ p 1 = p 2 ∧ p 1 ≠ p 3 ∧ p 2 ≠ p 3)) then 8 else
   9
-private def T : Matrix (Fin 10) (Fin 10) ℤ :=
+def T : Matrix (Fin 10) (Fin 10) ℤ :=
   ![![(HardinSourceContinuations.M 1 1 / 16), (HardinSourceContinuations.M 1 2 / 16), (HardinSourceContinuations.M 1 3 / 16), 0, 2, 2, 2, 2, 0, 1],
     ![(HardinSourceContinuations.M 2 1 / 16), (HardinSourceContinuations.M 2 2 / 16), (HardinSourceContinuations.M 2 3 / 16), 2, 0, 2, 0, 0, 0, 0],
     ![(HardinSourceContinuations.M 3 1 / 16), (HardinSourceContinuations.M 3 2 / 16), (HardinSourceContinuations.M 3 3 / 16), 1, 1, 3, 1, 1, 0, 0],
@@ -71,9 +73,9 @@ private def T : Matrix (Fin 10) (Fin 10) ℤ :=
     ![0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
     ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ![0, 0, 0, 1, 0, 0, 0, 0, 0, 0]]
-private def initial : Fin 10 → ℤ := ![6, 6, 12, 0, 0, 0, 12, 12, 6, 6]
+def initial : Fin 10 → ℤ := ![6, 6, 12, 0, 0, 0, 12, 12, 6, 6]
 private def terminal : Fin 10 → ℤ := ![0, 0, 0, 1, 1, 1, 1, 1, 1, 1]
-private def W : Fin 7 → Fin 10 → ℤ :=
+def W : Fin 7 → Fin 10 → ℤ :=
   ![![6, 6, 12, 0, 0, 0, 12, 12, 6, 6],
     ![48, 24, 72, 54, 24, 84, 24, 24, 0, 6],
     ![312, 144, 456, 528, 330, 924, 168, 168, 0, 48],
@@ -93,7 +95,40 @@ def a (n : ℕ) : ℕ :=
     (@Canonical (Fin n × Fin 4)
       (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 A)).card
 
-private theorem finite_certificate :
+open HardinA233255LiteralBridge (rowWeight rowFinish scanner_fibres)
+open HardinA233175PairStrip (good finish)
+open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
+
+theorem raw_successors (p : Fin 4 → Fin 3) (hp : HardinThinGraphTransport.proper p) (j : Fin 4) :
+    16 * (∑ q : Fin 4 → Fin 3,
+      if HardinThinGraphTransport.proper q ∧ HardinThinGraphTransport.compatible true p q ∧
+        HardinSourceContinuations.sourceClass (true, true) q = j then (1 : ℤ) else 0) =
+      HardinSourceContinuations.M (HardinSourceContinuations.sourceClass (true, true) p) j := by
+  have ha : HardinSourceContinuations.admissible (true, true) p := ⟨rfl, hp, by simp⟩
+  have h := HardinSourceContinuations.four_class_certificate.2.2.1 (true, true) p ha j
+  let H := fun s (q : Fin 4 → Fin 3) =>
+    if HardinThinGraphTransport.proper q ∧ HardinThinGraphTransport.compatible true p q ∧
+      HardinSourceContinuations.sourceClass s q = j then (1 : ℤ) else 0
+  have hs : ∀ q : Fin 4 → Fin 3,
+      rowWeight (true, true) q = 16 ∧ rowFinish (true, true) q = (true, true) := by
+    decide +kernel
+  change (∑ c : Fin 4 → Fin 6, if HardinThinGraphTransport.proper (fun i => beta (c i)) ∧
+    HardinThinGraphTransport.compatible true p (fun i => beta (c i)) ∧ good (true, true) c ∧
+      HardinSourceContinuations.sourceClass (finish (true, true) c) (fun i => beta (c i)) = j
+    then (1 : ℤ) else 0) = _ at h
+  have he : (∑ c : Fin 4 → Fin 6, if good (true, true) c then
+      H (finish (true, true) c) (fun i => beta (c i)) else 0) =
+      HardinSourceContinuations.M (HardinSourceContinuations.sourceClass (true, true) p) j := by
+    convert h using 1
+    apply Finset.sum_congr rfl
+    intro c _
+    dsimp [H]
+    by_cases hc : good (true, true) c <;> simp [hc]
+  rw [scanner_fibres] at he
+  simp_rw [(hs _).1, (hs _).2] at he
+  simpa only [← Finset.mul_sum] using he
+
+theorem finite_certificate :
     (∀ p (d : Fin 2), Valid p d.val →
       terminal (cl p d.val) = (if d.val = 0 then 1 else 0)) ∧
     (∀ p (d : Fin 2), Valid p d.val → ∀ r : Row,
@@ -109,7 +144,44 @@ private theorem finite_certificate :
       cl r (1 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) ∧
     (W 0 = initial ∧ ∀ i : Fin 6, W i.succ = Matrix.vecMul (W i.castSucc) T) ∧
     W 6 = ∑ j : Fin 4, (![-16, 56, -57, 14] j : ℤ) • W ⟨2 + j.val, by omega⟩ := by
-  decide +kernel
+  refine ⟨by decide +kernel, by decide +kernel, ?_, by decide +kernel,
+    by decide +kernel, by decide +kernel, by decide +kernel⟩
+  have cut : ∀ (p r : Row) (d : Fin 2) (s : Fin 10),
+      HardinThinGraphTransport.proper p ∧
+        ((d.val = 1 ∧ s.val < 3) ∨ (d.val = 0 ∧ 3 ≤ s.val ∧ s.val < 6)) →
+      ((bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+        cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s) ↔
+        HardinThinGraphTransport.proper r ∧ HardinThinGraphTransport.compatible true p r ∧
+          HardinSourceContinuations.sourceClass (true, true) r =
+            ⟨s.val % 3 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 3); omega⟩) := by
+    decide +kernel
+  have table : ∀ p (d : Fin 2) (s : Fin 10),
+      HardinThinGraphTransport.proper p ∧
+        ((d.val = 1 ∧ s.val < 3) ∨ (d.val = 0 ∧ 3 ≤ s.val ∧ s.val < 6)) →
+      HardinSourceContinuations.M (HardinSourceContinuations.sourceClass (true, true) p)
+        ⟨s.val % 3 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 3); omega⟩ / 16 =
+          T (cl p d.val) s := by decide +kernel
+  have remaining : ∀ p (d : Fin 2), Valid p d.val → ∀ s : Fin 10,
+      ¬ (HardinThinGraphTransport.proper p ∧
+        ((d.val = 1 ∧ s.val < 3) ∨ (d.val = 0 ∧ 3 ≤ s.val ∧ s.val < 6))) →
+      (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+        cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s
+        then (1 : ℤ) else 0) = T (cl p d.val) s := by decide +kernel
+  intro p d hp s
+  by_cases hz : HardinThinGraphTransport.proper p ∧
+      ((d.val = 1 ∧ s.val < 3) ∨ (d.val = 0 ∧ 3 ≤ s.val ∧ s.val < 6))
+  · simp_rw [cut p _ d s hz]
+    have h := raw_successors p hz.1
+      ⟨s.val % 3 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 3); omega⟩
+    have hd : (∑ r : Row, if HardinThinGraphTransport.proper r ∧
+        HardinThinGraphTransport.compatible true p r ∧
+        HardinSourceContinuations.sourceClass (true, true) r =
+          ⟨s.val % 3 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 3); omega⟩
+        then (1 : ℤ) else 0) =
+        HardinSourceContinuations.M (HardinSourceContinuations.sourceClass (true, true) p)
+          ⟨s.val % 3 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 3); omega⟩ / 16 := by omega
+    exact hd.trans (table p d s hz)
+  · exact remaining p d hp s hz
 
 attribute [local irreducible] a
 

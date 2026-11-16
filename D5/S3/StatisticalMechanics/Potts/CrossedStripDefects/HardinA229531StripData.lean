@@ -9,6 +9,8 @@
 /-
 admission_basis: open-problem-resolution (#31121; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229531Strip.result)
+raw_successors: proof_shape=bind-only; consumers=inherited_transition_counts
+inherited_transition_counts: proof_shape=bind-only; consumers=HardinA229531StripClass0.transition_counts through HardinA229531StripClass11.transition_counts
 Row: proof_shape=bind-only; consumers=HardinA229531Strip.result
 horizontal: proof_shape=bind-only; consumers=HardinA229531Strip.result
 between: proof_shape=bind-only; consumers=HardinA229531Strip.result
@@ -21,6 +23,7 @@ terminal: proof_shape=bind-only; consumers=HardinA229531Strip.result
 W: proof_shape=bind-only; consumers=HardinA229531Strip.result
 -/
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import Mathlib.Data.Matrix.Block
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233171DiagonalStrip
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
@@ -100,5 +103,62 @@ def W : Fin 14 → Fin 20 → ℤ :=
     ![448649203938, 713365188636, 266661283176, 306284042988, 67861831578, 312225722724, 3734520551016, 5901939472380, 2543909715696, 3099146030724, 804197776632, 2528534642904, 183933219240, 88913743188, 170560379832, 227038523364, 0, 170560379832, 0, 170560379832],
     ![4236736043874, 6736567070532, 2518132037430, 2892277911996, 640807157742, 2948480230596, 38329501122612, 60604183122876, 25843946610108, 31357954013976, 8057917119564, 26009202551280, 1736905017216, 839606609340, 1610663596512, 2143986162864, 0, 1610663596512, 0, 1610663596512],
     ![40008844720734, 63615675366864, 23779388302878, 27312473372616, 6051217107168, 27843566690004, 390884463217968, 618297819662604, 261246780486720, 315872690778540, 80469856901928, 265742857567248, 16402014074604, 7928541986856, 15210039158280, 20246303233140, 0, 15210039158280, 0, 15210039158280]]
+
+set_option maxRecDepth 100000
+set_option maxHeartbeats 0
+set_option Elab.async false
+open HardinA233255LiteralBridge (rowWeight rowFinish)
+
+private theorem raw_successors (p : Fin 5 → Fin 3) (hp : HardinThinGraphTransport.proper p) (j : Fin 7) :
+    32 * (∑ q : Fin 5 → Fin 3,
+      if HardinThinGraphTransport.proper q ∧ HardinThinGraphTransport.compatible true p q ∧
+        HardinA233126SquareStrip.boundaryClass (true, true) q = j then (1 : ℤ) else 0) =
+      HardinA233171DiagonalStrip.transfer
+        (HardinA233126SquareStrip.boundaryClass (true, true) p) j := by
+  have ha : HardinA233254TriangleStrip.Valid (true, true) p := ⟨rfl, hp, by simp⟩
+  have ht := HardinA233171DiagonalStrip.finite_certificate (true, true) p ha j
+  have h := HardinA233171DiagonalStrip.class_fibres (true, true) p j
+  have hs : ∀ q : Fin 5 → Fin 3,
+      rowWeight (true, true) q = 32 ∧ rowFinish (true, true) q = (true, true) := by
+    decide +kernel
+  simp_rw [(hs _).1, (hs _).2] at h
+  rw [← Finset.mul_sum] at h
+  exact h.symm.trans ht
+
+/-- The inherited proper diagonal sectors, through the exact thirty-two-fold fibre map. -/
+theorem inherited_transition_counts (p : Row) (d : Fin 2) (s : Fin 12)
+    (hz : HardinThinGraphTransport.proper p ∧
+      ((d.val = 1 ∧ s.val < 6) ∨ (d.val = 0 ∧ 6 ≤ s.val))) :
+    (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+      cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s.castAdd 8
+      then (1 : ℤ) else 0) = T (cl p d.val) (s.castAdd 8) := by
+  have cut : ∀ (p r : Row) (d : Fin 2) (s : Fin 12),
+      HardinThinGraphTransport.proper p ∧
+        ((d.val = 1 ∧ s.val < 6) ∨ (d.val = 0 ∧ 6 ≤ s.val)) →
+      ((bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+        cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s.castAdd 8) ↔
+        HardinThinGraphTransport.proper r ∧ HardinThinGraphTransport.compatible true p r ∧
+          HardinA233126SquareStrip.boundaryClass (true, true) r =
+            ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩) := by
+    decide +kernel
+  have table : ∀ p (d : Fin 2) (s : Fin 12),
+      HardinThinGraphTransport.proper p ∧
+        ((d.val = 1 ∧ s.val < 6) ∨ (d.val = 0 ∧ 6 ≤ s.val)) →
+      HardinA233171DiagonalStrip.transfer
+        (HardinA233126SquareStrip.boundaryClass (true, true) p)
+        ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩ / 32 =
+          T (cl p d.val) (s.castAdd 8) := by decide +kernel
+  simp_rw [cut p _ d s hz]
+  have h := raw_successors p hz.1
+    ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩
+  have hd : (∑ r : Row, if HardinThinGraphTransport.proper r ∧
+      HardinThinGraphTransport.compatible true p r ∧
+      HardinA233126SquareStrip.boundaryClass (true, true) r =
+        ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩
+      then (1 : ℤ) else 0) =
+      HardinA233171DiagonalStrip.transfer
+        (HardinA233126SquareStrip.boundaryClass (true, true) p)
+        ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩ / 32 := by omega
+  exact hd.trans (table p d s hz)
 
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripData

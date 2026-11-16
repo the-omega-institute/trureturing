@@ -110,10 +110,10 @@ private theorem finite_certificate :
     by decide +kernel, by decide +kernel⟩
   · have cut : ∀ (p r : Row) (d : Fin 2) (s : Fin 8),
         ((d.val = 1 ∧ s.val < 4) ∨ (d.val = 0 ∧ 4 ≤ s.val)) →
-        (bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+        ((bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
           cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s) ↔
           HardinColumnContinuations.cross p r ∧
-            HardinColumnContinuations.classH r = ⟨s.val % 4, Nat.mod_lt _ (by omega)⟩ := by
+            HardinColumnContinuations.classH r = ⟨s.val % 4, Nat.mod_lt _ (by omega)⟩) := by
       decide +kernel
     have table : ∀ p (d : Fin 2) (s : Fin 8),
         ((d.val = 1 ∧ s.val < 4) ∨ (d.val = 0 ∧ 4 ≤ s.val)) →

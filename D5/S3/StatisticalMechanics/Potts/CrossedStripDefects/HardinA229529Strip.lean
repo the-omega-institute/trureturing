@@ -11,15 +11,15 @@ admission_basis: open-problem-resolution (#31121; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229529Strip.result)
 Row: proof_shape=bind-only; consumers=result
 horizontal: proof_shape=bind-only; consumers=result
-between: proof_shape=bind-only; consumers=result
-Valid: proof_shape=bind-only; consumers=result
-decidableValid: proof_shape=bind-only; consumers=result
-cl: proof_shape=bind-only; consumers=result
-T: proof_shape=bind-only; consumers=result
-initial: proof_shape=bind-only; consumers=result
+between: proof_shape=bind-only; consumers=result, HardinA229632Strip.finite_certificate
+Valid: proof_shape=bind-only; consumers=result, HardinA229632Strip.finite_certificate
+decidableValid: proof_shape=bind-only; consumers=result, HardinA229632Strip.finite_certificate
+cl: proof_shape=bind-only; consumers=result, HardinA229632Strip.finite_certificate
+T: proof_shape=bind-only; consumers=result, HardinA229632Strip.finite_certificate
+initial: proof_shape=bind-only; consumers=result, HardinA229632Strip.finite_certificate
 terminal: proof_shape=bind-only; consumers=result
-W: proof_shape=bind-only; consumers=result
-finite_certificate: proof_shape=bind-only; consumers=result
+W: proof_shape=bind-only; consumers=result, HardinA229632Strip.finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=result, HardinA229632Strip.finite_certificate
 a: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=none (external open-problem-resolution #31121)
 -/
@@ -43,27 +43,27 @@ set_option Elab.async false
 
 private abbrev Row := Fin 3 → Fin 3
 private def horizontal : Finset (Fin 3 × Fin 3) := HardinA229581Strip.horizontal
-private def between : Finset (Fin 3 × Fin 3) :=
+def between : Finset (Fin 3 × Fin 3) :=
   HardinA229581Strip.antidiagonal ∪ HardinA229581Strip.antidiagonal.image Prod.swap
-private def Valid (p : Row) (d : ℕ) : Prop :=
+def Valid (p : Row) (d : ℕ) : Prop :=
   d ≤ 1 ∧ bondDefects horizontal p p ≤ 1 - d
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (_ ∧ _))
-private def cl (p : Row) (d : ℕ) : Fin 5 :=
+def cl (p : Row) (d : ℕ) : Fin 5 :=
   if d = 1 ∧ bondDefects horizontal p p = 0 ∧ HardinThinGraphTransport.boundaryClass p = true then 0 else
   if d = 1 ∧ bondDefects horizontal p p = 0 ∧ HardinThinGraphTransport.boundaryClass p = false then 1 else
   if d = 0 ∧ bondDefects horizontal p p = 0 ∧ HardinThinGraphTransport.boundaryClass p = true then 2 else
   if d = 0 ∧ bondDefects horizontal p p = 0 ∧ HardinThinGraphTransport.boundaryClass p = false then 3 else
   4
-private def T : Matrix (Fin 5) (Fin 5) ℤ :=
+def T : Matrix (Fin 5) (Fin 5) ℤ :=
   ![![(HardinThinGraphTransport.K true true : ℤ), (HardinThinGraphTransport.K true false : ℤ), 0, 2, 2],
     ![(HardinThinGraphTransport.K false true : ℤ), (HardinThinGraphTransport.K false false : ℤ), 2, 0, 0],
     ![0, 0, (HardinThinGraphTransport.K true true : ℤ), (HardinThinGraphTransport.K true false : ℤ), 0],
     ![0, 0, (HardinThinGraphTransport.K false true : ℤ), (HardinThinGraphTransport.K false false : ℤ), 0],
     ![0, 0, 1, 0, 0]]
-private def initial : Fin 5 → ℤ := ![6, 6, 0, 0, 12]
+def initial : Fin 5 → ℤ := ![6, 6, 0, 0, 12]
 private def terminal : Fin 5 → ℤ := ![0, 0, 1, 1, 1]
-private def W : Fin 6 → Fin 5 → ℤ :=
+def W : Fin 6 → Fin 5 → ℤ :=
   ![![6, 6, 0, 0, 12],
     ![30, 24, 24, 12, 12],
     ![138, 108, 156, 132, 60],
@@ -82,7 +82,7 @@ def a (n : ℕ) : ℕ :=
     (@Canonical (Fin n × Fin 3)
       (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 A)).card
 
-private theorem finite_certificate :
+theorem finite_certificate :
     (∀ p (d : Fin 2), Valid p d.val →
       terminal (cl p d.val) = (if d.val = 0 then 1 else 0)) ∧
     (∀ p (d : Fin 2), Valid p d.val → ∀ r : Row,

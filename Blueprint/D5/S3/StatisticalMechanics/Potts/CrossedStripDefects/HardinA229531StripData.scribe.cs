@@ -8,6 +8,11 @@ internal sealed class HardinA229531StripDataDocument : IScribeDocumentDefinition
     private const string Note = "D5/L/SpinModels/hardin2013a229531";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact width-five HDA transfer.", H("Width-five HDA transfer"), Blocks(
+            Describe.Lean(DescribeId.Create("inherited-transitions"),
+                DeclarationHandle.Create(Prefix + "inherited_transition_counts"),
+                H("The inherited proper diagonal sectors"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("For every proper source row and target in the matching residual-budget proper sector, the exact successor sum equals T. The proof applies the original class_fibres and finite_certificate, pushes saturated Seen fibres with weight 32, and uses the exact bond, budget and class correspondence before integer division."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("row"), DeclarationHandle.Create(Prefix + "Row"),
                 H("Actual rows"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
