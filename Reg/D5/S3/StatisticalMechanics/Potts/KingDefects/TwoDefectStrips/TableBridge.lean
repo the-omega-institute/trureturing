@@ -70,12 +70,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5]
+    coordinates := #[0, 1, 2, 3, 5]
     readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
                     stateBinder := 6
                     functionOperand := false
                     booleanPredicate := false
-                    stateOperand := some #["arg"] }] }
+                    stateOperand := none }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

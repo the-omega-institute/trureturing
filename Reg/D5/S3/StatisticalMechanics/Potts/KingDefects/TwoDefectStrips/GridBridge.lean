@@ -72,7 +72,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
                     stateBinder := 5
                     functionOperand := false
                     booleanPredicate := false
-                    stateOperand := some #["arg"] }] }
+                    stateOperand := none }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -151,7 +151,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
                     stateBinder := 5
                     functionOperand := false
                     booleanPredicate := false
-                    stateOperand := some #["arg", "arg"] }] }
+                    stateOperand := none }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

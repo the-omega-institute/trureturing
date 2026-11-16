@@ -66,7 +66,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Classes21
     definition := none
-    coordinates := #[]
+    coordinates := #[1]
     readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg"]
                     stateBinder := 0
                     functionOperand := false
