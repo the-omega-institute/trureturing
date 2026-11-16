@@ -6,7 +6,7 @@
    utility: none
    digest: Double-star grafting with actual induced sets and partial colorings. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.Invariants
+import D5.S3.Combinatorics.Graph.StarForming.Foundations.Invariants
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Finset.Prod

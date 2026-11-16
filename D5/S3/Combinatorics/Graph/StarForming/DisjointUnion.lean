@@ -6,7 +6,7 @@
    utility: none
    digest: Componentwise star minimality and additivity of finite graph maxima. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.Invariants
+import D5.S3.Combinatorics.Graph.StarForming.Foundations.Invariants
 import Mathlib.Combinatorics.SimpleGraph.Sum
 import Mathlib.Data.Finset.Sum
 

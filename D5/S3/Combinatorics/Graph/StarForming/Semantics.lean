@@ -6,8 +6,8 @@
    utility: none
    digest: Equivalence of local set witnesses and canonical finite star predicates. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.LocalFormation
-import D5.S3.Combinatorics.Graph.StarForming.Invariants
+import D5.S3.Combinatorics.Graph.StarForming.Foundations.LocalFormation
+import D5.S3.Combinatorics.Graph.StarForming.Foundations.Invariants
 
 /-!
 The set-valued local predicate and canonical non-induced-star predicate

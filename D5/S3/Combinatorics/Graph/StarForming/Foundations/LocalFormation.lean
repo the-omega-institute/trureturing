@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/Graph/StarForming/LocalFormation
+/- GID: D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/LocalFormation
+   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Local star witnesses and deletion minimality for arbitrary simple graphs. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.Invariants
+import D5.S3.Combinatorics.Graph.StarForming.Foundations.Invariants
 
 /-! Local proof bodies from subquorum-colorings revision
 48728b42d39ab3de5de251c61da5a404ec418a69, formal/StarForming/Amplification.lean.

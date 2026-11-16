@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverDensity
+/- GID: D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodCoverDensity
+   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none

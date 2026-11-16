@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/StarForming/CompositionParameters
+/- GID: D5/S3/Combinatorics/Graph/StarForming/Families/CompositionParameters
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/CompositionParameters
+   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/Families/CompositionParameters
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none

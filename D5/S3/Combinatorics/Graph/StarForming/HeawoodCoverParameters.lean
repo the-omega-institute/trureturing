@@ -8,7 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.StarForming.HeawoodActions
 import D5.S3.Combinatorics.Graph.StarForming.HeawoodParameters
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodCoverDensity
+import D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodCoverDensity
 
 /-! The whole two-sheet theorem of HEAWOOD_DOUBLE_COVER_GAIN, at
 subquorum-colorings 48728b42d39ab3de5de251c61da5a404ec418a69,

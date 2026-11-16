@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming.Families;
 
 internal sealed class HeawoodCoverDensityDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverDensity.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity.";
     private static DocumentBlock Node(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

@@ -6,7 +6,7 @@
    utility: none
    digest: Disjoint high-degree certificates bound minimal two-star-forming sets in every finite simple graph. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.Invariants
+import D5.S3.Combinatorics.Graph.StarForming.Foundations.Invariants
 import Mathlib.Tactic.Push
 
 /-!

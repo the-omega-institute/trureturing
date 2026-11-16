@@ -6,7 +6,7 @@
    utility: none
    digest: Actual local paths and all-size cyclic two-connectivity. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.CompositionParameters
+import D5.S3.Combinatorics.Graph.StarForming.Families.CompositionParameters
 import D5.S3.Combinatorics.Graph.StarForming.CyclicConnectivity
 import Mathlib.Logic.Equiv.Fin.Rotate
 

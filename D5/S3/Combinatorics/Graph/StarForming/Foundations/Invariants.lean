@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/StarForming/Invariants
+/- GID: D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/Invariants
+   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/Foundations/Invariants
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none

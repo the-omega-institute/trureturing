@@ -2,12 +2,12 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming.Foundations;
 
 internal sealed class InvariantsDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Combinatorics/Graph/StarForming/Invariants.";
+        "D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite graph independence and upper star formation", H("Finite graph invariants"),

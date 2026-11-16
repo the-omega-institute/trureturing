@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.claim; result=D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.result; claim=D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.claim
    digest: A ten-vertex bipartite graph refutes equality of 2-independence and upper 2-star formation. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.Invariants
+import D5.S3.Combinatorics.Graph.StarForming.Foundations.Invariants
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Finset.Max
 import Mathlib.Tactic.FinCases

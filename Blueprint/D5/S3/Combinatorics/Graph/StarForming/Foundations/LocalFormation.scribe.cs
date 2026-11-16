@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming.Foundations;
 
 internal sealed class LocalFormationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/StarForming/LocalFormation.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/StarForming/Foundations/LocalFormation.";
     private static DocumentBlock Node(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

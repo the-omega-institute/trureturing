@@ -7,7 +7,7 @@
    digest: Exact H0 port composition with original local deletion proofs. -/
 
 import D5.S3.Combinatorics.Graph.StarFormingDissociationRefutation
-import D5.S3.Combinatorics.Graph.StarForming.LocalFormation
+import D5.S3.Combinatorics.Graph.StarForming.Foundations.LocalFormation
 import Mathlib.Data.Finset.Prod
 import Mathlib.Tactic.FinCases
 
