@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Patterns.Separable;
 internal sealed class RecordAllIndexDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The actual separable right-maximum series satisfies the source weighted quadratic.",
-        H("Actual-Carrier Weighted Quadratic for Separable Records"),
+        "The actual separable right-maximum series satisfies the source weighted quadratic and the complete CKZ peak-three law.",
+        H("Actual-Carrier CKZ Conjecture 2 for Separable Records"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("actual-weighted-quadratic"),
@@ -41,9 +41,97 @@ internal sealed class RecordAllIndexDocument : IScribeDocumentDefinition
                         + "U=(1+C(q))J, yielding the displayed quadratic.")),
                     Paragraph(Text(
                         "The result is the source-faithful actual-carrier bridge needed before "
-                        + "coefficient extraction. It does not by itself prove the arbitrary-index "
-                        + "binomial T_r identity, the all-index declining comparisons, the three "
-                        + "peak or the complete four-distribution CKZ conclusion. Registration "
-                        + "remains paused and no external-problem resolution is claimed here."))),
+                        + "coefficient extraction. The same module proves the exact binomial "
+                        + "coefficient normalization, identifies the Section 8 Newton kernels "
+                        + "on the actual carrier, and extracts every length coefficient. "
+                        + "Coefficientwise nonnegativity of the frozen kernels gives the "
+                        + "arbitrary-index decline from record three. Exact reversal and "
+                        + "complement transports then give all four literal distributions, "
+                        + "including the zero tail and the singleton convention."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-ckz-conjecture-two"),
+                DeclarationHandle.Create(
+                    "D5/S1/Words/Patterns/Separable/RecordAllIndex.actual_ckz_conjecture_two"),
+                H("The complete source-faithful peak-three conclusion"),
+                StatementSource.FromAuthor(Disp(CKZFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For n at least five, the carrier is the literal set of permutations "
+                        + "of Fin n avoiding 2413 and 3142. The four counts are the actual "
+                        + "positive irreducible and proper-cut fibers for strict right maxima, "
+                        + "strict left minima, strict left maxima and strict right minima. "
+                        + "The index is unshifted: k records means exactly k record positions.")),
+                    Paragraph(Text(
+                        "The first conjunct is the weak rise for k below three. The second is "
+                        + "the weak decline for every k at least three. The final conjunct states "
+                        + "the resulting global maximum at record count three for each of the "
+                        + "four distributions and every natural index, including indices beyond "
+                        + "the length through the explicit zero-tail branch.")),
+                    Paragraph(Text(
+                        "The proof starts from the actual direct-cut weighted quadratic. Its "
+                        + "coefficient extraction is over the rationals, so signed differences "
+                        + "retain equality rather than using natural-cardinality subtraction. "
+                        + "The scalar Schröder equation supplies q=t+tq+q^2 and hence the exact "
+                        + "time relation. The frozen RecordNewtonPositivity theorem applies to "
+                        + "the definitionally identical actual M and t series. The resulting "
+                        + "finite binomial sums have nonnegative coefficients. RecordTransport "
+                        + "supplies the other three statistics, with its singleton correction "
+                        + "zero in the n at least five range.")),
+                    Paragraph(Text(
+                        "This is the complete Stage A mathematical target. Registration is "
+                        + "USER-PAUSED by the owner of issue 12664; this delivery does not freeze, "
+                        + "deposit or publish the result."))),
                 DescribeRole.Theorem))));
+
+    private static Formula CKZFormula()
+    {
+        var n = F.Id("n");
+        var k = F.Id("k");
+        Formula Count(string name, string stat, Formula index) =>
+            new Formula.FunctionCall(FormulaIdentifier.Create(name),
+                [n, F.Id(stat), index]);
+        Formula R(string stat, Formula index) => Count("irreducibleCount", stat, index);
+        Formula CountD(string stat, Formula index) => Count("reducibleCount", stat, index);
+        Formula rise = And(
+            Le(R("rmax", k), R("rmax", Add(k, D(1)))),
+            Le(R("lmin", k), R("lmin", Add(k, D(1)))),
+            Le(CountD("lmax", k), CountD("lmax", Add(k, D(1)))),
+            Le(CountD("rmin", k), CountD("rmin", Add(k, D(1)))));
+        Formula decline = And(
+            Le(R("rmax", Add(k, D(1))), R("rmax", k)),
+            Le(R("lmin", Add(k, D(1))), R("lmin", k)),
+            Le(CountD("lmax", Add(k, D(1))), CountD("lmax", k)),
+            Le(CountD("rmin", Add(k, D(1))), CountD("rmin", k)));
+        Formula peak = And(
+            Le(R("rmax", k), R("rmax", D(3))),
+            Le(R("lmin", k), R("lmin", D(3))),
+            Le(CountD("lmax", k), CountD("lmax", D(3))),
+            Le(CountD("rmin", k), CountD("rmin", D(3))));
+        return All("n", Nat(), Imp(Le(D(5), n), And(
+            All("k", Nat(), Imp(Lt(k, D(3)), rise)),
+            All("k", Nat(), Imp(Le(D(3), k), decline)),
+            All("k", Nat(), peak))));
+    }
+
+    private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Imp(Formula left, Formula right) =>
+        new Formula.Logic(P(left), FormulaLogicOperator.Implies, P(right));
+    private static Formula And(params Formula[] values)
+    {
+        Formula result = P(values[^1]);
+        for (int i = values.Length - 2; i >= 0; i--)
+            result = new Formula.Logic(P(values[i]), FormulaLogicOperator.And, result);
+        return result;
+    }
+    private static Formula Le(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+    private static Formula Lt(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+    private static Formula Add(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Add, right);
+    private static Formula P(Formula value) => Seq(Open, value, Close);
 }

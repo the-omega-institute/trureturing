@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [D5/S1/Words/Patterns/Separable/RecordNewtonPositivity, D5/S1/Words/Patterns/Separable/RecordTransport]
    utility: none
-   digest: Actual-carrier CKZ weighted record quadratic reconstructed from direct-cut enumeration; all-index coefficient normalization remains open. -/
+   digest: Actual-carrier CKZ weighted quadratic, exact binomial coefficients, arbitrary-index decline and peak-three conclusion. -/
 
 import D5.S1.Words.Patterns.Separable.RecordNewtonPositivity
 import D5.S1.Words.Patterns.Separable.RecordFirstDecline
@@ -667,10 +667,13 @@ theorem F_eq :
 
 def F : PowerSeries (PowerSeries ℚ) := PowerSeries.X +
   PowerSeries.X^2 * PowerSeries.C (h^2) * B
+def q0 : PowerSeries.constantCoeff q = 0 := by simp [q]
+def hq : PowerSeries.HasSubst q := PowerSeries.HasSubst.of_constantCoeff_zero' q0
 
 def substQ : PowerSeries ℚ →ₐ[ℚ] PowerSeries ℚ :=
-  PowerSeries.substAlgHom (PowerSeries.HasSubst.of_constantCoeff_zero'
-    (show PowerSeries.constantCoeff q = 0 by simp [q]))
+  PowerSeries.substAlgHom hq
+lemma substQ_apply (f : PowerSeries ℚ) : substQ f = PowerSeries.subst q f := by
+  exact congrFun (PowerSeries.coe_substAlgHom (R := ℚ) hq) f
 
 lemma substQ_X : substQ PowerSeries.X = q := by
   exact PowerSeries.substAlgHom_X _
@@ -766,7 +769,232 @@ theorem J_coeff (n : ℕ) : PowerSeries.coeff (n+2) J =
   have map_t (f : PowerSeries ℚ) : substQ.toRingHom f = substQ f := rfl
   simp only [map_mul,map_pow,map_add,map_one, h,map_sum,map_natCast,sx,sx',map_t]
   ring
+private lemma binomial_shift_one (v : ℕ → PowerSeries ℚ) (m : ℕ) :
+    ∑ r ∈ Finset.range (m+2), (Nat.choose (m+1) r : PowerSeries ℚ) * v r =
+      ∑ r ∈ Finset.range (m+1), (Nat.choose m r : PowerSeries ℚ) *
+        (v r + v (r+1)) := by
+  have shifted :
+      (∑ r ∈ Finset.range (m+1), (Nat.choose m (r+1) : PowerSeries ℚ) * v (r+1)) + v 0 =
+      ∑ r ∈ Finset.range (m+1), (Nat.choose m r : PowerSeries ℚ) * v r := by
+    calc
+      _ = (∑ r ∈ Finset.range m, (Nat.choose m (r+1) : PowerSeries ℚ) * v (r+1)) + v 0 := by
+        rw [Finset.sum_range_succ]
+        simp
+      _ = _ := by
+        rw [Finset.sum_range_succ']
+        simp
+  rw [Finset.sum_range_succ' (fun r =>
+    (Nat.choose (m+1) r : PowerSeries ℚ) * v r) (m+1)]
+  simp only [Nat.choose_zero_right, Nat.cast_one, one_mul,
+    Nat.choose_succ_succ', Nat.cast_add, add_mul, mul_add, Finset.sum_add_distrib]
+  linear_combination shifted
 
+private lemma binomial_shift_two (v : ℕ → PowerSeries ℚ) (m : ℕ) :
+    ∑ r ∈ Finset.range (m+3), (Nat.choose (m+2) r : PowerSeries ℚ) * v r =
+      ∑ r ∈ Finset.range (m+1), (Nat.choose m r : PowerSeries ℚ) *
+        (v r + 2*v (r+1) + v (r+2)) := by
+  rw [show m+3=(m+1)+2 by omega, show m+2=(m+1)+1 by omega,
+    binomial_shift_one v (m+1), binomial_shift_one (fun r => v r+v (r+1)) m]
+  apply Finset.sum_congr rfl
+  intro r hr
+  ring
+
+lemma q_quadratic : q = PowerSeries.X + PowerSeries.X*q + q^2 := by
+  obtain ⟨_, scalarCounts, _, _, _, _, _, _, _, _⟩ :=
+    D5.S1.Words.Patterns.Separable.ActualCardinality.actual_schroder_cardinality
+  have qIdentify : q = PowerSeries.X *
+      (PowerSeries.largeSchroderSeries.map (Nat.castRingHom ℚ)) := by
+    apply PowerSeries.ext
+    intro n
+    rcases n with _ | n
+    · simp [q, PowerSeries.coeff_zero_eq_constantCoeff]
+    · simp only [q, PowerSeries.coeff_mk, Nat.succ_ne_zero, if_false,
+        PowerSeries.coeff_succ_X_mul, PowerSeries.coeff_map,
+        PowerSeries.coeff_largeSchroderSeries, Nat.coe_castRingHom]
+      have hc := scalarCounts (n+1) (by omega)
+      simpa only [Nat.add_sub_cancel] using congrArg (fun z : ℕ => (z : ℚ)) hc
+  have h := congrArg (PowerSeries.map (Nat.castRingHom ℚ))
+    PowerSeries.largeSchroderSeries_eq_one_add_X_mul_largeSchroderSeries_add_X_mul_largeSchroderSeries_sq
+  simp only [map_add,map_one,map_mul,PowerSeries.map_X,map_pow] at h
+  rw [qIdentify]
+  linear_combination (PowerSeries.X : PowerSeries ℚ) * h
+
+lemma time_relation : PowerSeries.X * (1+q) = q*(1-q) := by
+  linear_combination -q_quadratic
+
+def G (r : ℕ) : PowerSeries ℚ :=
+    (1+PowerSeries.X)^2 * (t r + t (r+1)) -
+      PowerSeries.X*(1-PowerSeries.X)*(1+PowerSeries.X) *
+        (t r + 2*t (r+1) + t (r+2))
+
+lemma G_nonnegative (r n : ℕ) : 0 ≤ PowerSeries.coeff n (substQ (G r)) := by
+  have h :=
+    D5.S1.Words.Patterns.Separable.RecordNewtonPositivity.actual_q_record_newton_nonnegative r n
+  simpa [G, t, M, L, w, Cc, a, b, substQ_apply] using h
+
+lemma actual_adjacent_difference (m : ℕ) :
+    PowerSeries.coeff (m+3) J - PowerSeries.coeff (m+4) J =
+      (PowerSeries.X : PowerSeries ℚ)^(m+3) *
+        ∑ r ∈ Finset.range (m+1), (Nat.choose m r : PowerSeries ℚ) * substQ (G r) := by
+  rw [J_coeff (m+1), J_coeff (m+2),
+    binomial_shift_one (fun r => substQ (t r)) m,
+    binomial_shift_two (fun r => substQ (t r)) m]
+  have hG (r : ℕ) : substQ (G r) =
+      (1+q)^2 * (substQ (t r) + substQ (t (r+1))) -
+        q*(1-q)*(1+q) *
+          (substQ (t r) + 2*substQ (t (r+1)) + substQ (t (r+2))) := by
+    simp only [G, map_sub, map_mul, map_pow, map_add, map_one, map_ofNat, substQ_X]
+  simp_rw [hG]
+  rw [show (PowerSeries.X : PowerSeries ℚ)^(m+4) =
+      PowerSeries.X^(m+3) * PowerSeries.X by ring]
+  have ht : q*(1-q)*(1+q) = PowerSeries.X*(1+q)^2 := by
+    rw [← time_relation]
+    ring
+  rw [ht]
+  simp only [mul_sub, Finset.sum_sub_distrib]
+  simp_rw [show ∀ (c v : PowerSeries ℚ), c*((1+q)^2*v) =
+    (1+q)^2*(c*v) by intros; ring,
+    show ∀ (c v : PowerSeries ℚ), c*(PowerSeries.X*(1+q)^2*v) =
+    PowerSeries.X*(1+q)^2*(c*v) by intros; ring]
+  rw [← Finset.mul_sum, ← Finset.mul_sum]
+  ring
+
+theorem actual_rmax_decline (n k : ℕ) (hk : 3 ≤ k) :
+    irreducibleCount n rmax (k+1) ≤ irreducibleCount n rmax k := by
+  by_cases hn : n = 0
+  · simp [irreducibleCount, hn]
+  have h := congrArg (PowerSeries.coeff n) (actual_adjacent_difference (k-3))
+  rw [map_sub, PowerSeries.coeff_X_pow_mul'] at h
+  rw [show k-3+3=k by omega, show k-3+4=k+1 by omega,
+    show k-3+1=k-2 by omega] at h
+  have hsum (d : ℕ) :
+      0 ≤ PowerSeries.coeff d
+        (∑ r ∈ Finset.range (k-2),
+          (Nat.choose (k-3) r : PowerSeries ℚ) * substQ (G r)) := by
+    simp only [map_sum]
+    exact Finset.sum_nonneg (fun r hr => by
+      have hg := G_nonnegative r d
+      change 0 ≤ PowerSeries.coeff d
+        (PowerSeries.C ((Nat.choose (k-3) r : ℕ) : ℚ) * substQ (G r))
+      rw [PowerSeries.coeff_C_mul]
+      exact mul_nonneg (Nat.cast_nonneg _) hg)
+  have nonnegative : 0 ≤ (if k ≤ n then
+      PowerSeries.coeff (n-k)
+        (∑ r ∈ Finset.range (k-2),
+          (Nat.choose (k-3) r : PowerSeries ℚ) * substQ (G r)) else 0) := by
+    split_ifs with hkn
+    · exact hsum _
+    · rfl
+  have coeff_J (j : ℕ) :
+      PowerSeries.coeff n (PowerSeries.coeff j J) =
+        if n = 0 then 0 else (signedCount false n j : ℚ) := by
+    change PowerSeries.coeff n
+      (PowerSeries.coeff j
+        (PowerSeries.mk (fun k => PowerSeries.mk (fun d =>
+          if d = 0 then 0 else (signedCount false d k : ℚ))))) = _
+    simp
+  rw [coeff_J k, coeff_J (k+1), if_neg hn, if_neg hn] at h
+  simp only [irreducibleCount, if_neg hn]
+  exact_mod_cast (show (signedCount false n (k+1) : ℚ) ≤
+      signedCount false n k by linarith)
+
+theorem actual_ckz_conjecture_two :
+    ∀ n, 5 ≤ n →
+      (∀ k, k < 3 →
+        irreducibleCount n rmax k ≤ irreducibleCount n rmax (k+1) ∧
+        irreducibleCount n lmin k ≤ irreducibleCount n lmin (k+1) ∧
+        reducibleCount n lmax k ≤ reducibleCount n lmax (k+1) ∧
+        reducibleCount n rmin k ≤ reducibleCount n rmin (k+1)) ∧
+      (∀ k, 3 ≤ k →
+        irreducibleCount n rmax (k+1) ≤ irreducibleCount n rmax k ∧
+        irreducibleCount n lmin (k+1) ≤ irreducibleCount n lmin k ∧
+        reducibleCount n lmax (k+1) ≤ reducibleCount n lmax k ∧
+        reducibleCount n rmin (k+1) ≤ reducibleCount n rmin k) ∧
+      (∀ k,
+        irreducibleCount n rmax k ≤ irreducibleCount n rmax 3 ∧
+        irreducibleCount n lmin k ≤ irreducibleCount n lmin 3 ∧
+        reducibleCount n lmax k ≤ reducibleCount n lmax 3 ∧
+        reducibleCount n rmin k ≤ reducibleCount n rmin 3) := by
+  intro n hn
+  obtain ⟨transports, _, _, rising⟩ :=
+    actual_four_record_transports_and_rising
+  have eqs (k : ℕ) :
+      irreducibleCount n lmin k = irreducibleCount n rmax k ∧
+      reducibleCount n lmax k = irreducibleCount n rmax k ∧
+      reducibleCount n rmin k = irreducibleCount n rmax k := by
+    have h := transports n k
+    simpa [show ¬(n = 1 ∧ k = 1) by omega] using h
+  have rmax_to_three : ∀ k, 3 ≤ k →
+      irreducibleCount n rmax k ≤ irreducibleCount n rmax 3 := by
+    intro k hk
+    induction k using Nat.strong_induction_on with
+    | h k ih =>
+      by_cases h3 : k = 3
+      · subst k
+        exact le_rfl
+      · have hprev : 3 ≤ k - 1 := by omega
+        have hs := (actual_rmax_decline n (k-1) hprev).trans
+          (ih (k-1) (by omega) hprev)
+        simpa only [show k-1+1=k by omega] using hs
+  have rise_part : ∀ k, k < 3 →
+      irreducibleCount n rmax k ≤ irreducibleCount n rmax (k+1) ∧
+      irreducibleCount n lmin k ≤ irreducibleCount n lmin (k+1) ∧
+      reducibleCount n lmax k ≤ reducibleCount n lmax (k+1) ∧
+      reducibleCount n rmin k ≤ reducibleCount n rmin (k+1) := by
+    intro k hk
+    exact rising n (by omega) k hk
+  have decline_part : ∀ k, 3 ≤ k →
+      irreducibleCount n rmax (k+1) ≤ irreducibleCount n rmax k ∧
+      irreducibleCount n lmin (k+1) ≤ irreducibleCount n lmin k ∧
+      reducibleCount n lmax (k+1) ≤ reducibleCount n lmax k ∧
+      reducibleCount n rmin (k+1) ≤ reducibleCount n rmin k := by
+    intro k hk
+    have hr := actual_rmax_decline n k hk
+    have ek := eqs k
+    have ek1 := eqs (k+1)
+    rw [ek.1, ek.2.1, ek.2.2, ek1.1, ek1.2.1, ek1.2.2]
+    exact ⟨hr, hr, hr, hr⟩
+  have peak_part : ∀ k,
+      irreducibleCount n rmax k ≤ irreducibleCount n rmax 3 ∧
+      irreducibleCount n lmin k ≤ irreducibleCount n lmin 3 ∧
+      reducibleCount n lmax k ≤ reducibleCount n lmax 3 ∧
+      reducibleCount n rmin k ≤ reducibleCount n rmin 3 := by
+    intro k
+    by_cases hk : k < 3
+    · interval_cases k
+      · have h0 := rise_part 0 (by omega)
+        have h1 := rise_part 1 (by omega)
+        have h2 := rise_part 2 (by omega)
+        exact ⟨h0.1.trans (h1.1.trans h2.1),
+          h0.2.1.trans (h1.2.1.trans h2.2.1),
+          h0.2.2.1.trans (h1.2.2.1.trans h2.2.2.1),
+          h0.2.2.2.trans (h1.2.2.2.trans h2.2.2.2)⟩
+      · have h1 := rise_part 1 (by omega)
+        have h2 := rise_part 2 (by omega)
+        exact ⟨h1.1.trans h2.1,
+          h1.2.1.trans h2.2.1,
+          h1.2.2.1.trans h2.2.2.1,
+          h1.2.2.2.trans h2.2.2.2⟩
+      · have h2 := rise_part 2 (by omega)
+        exact ⟨h2.1, h2.2.1, h2.2.2.1, h2.2.2.2⟩
+    · have hk3 : 3 ≤ k := by omega
+      have hr := rmax_to_three k hk3
+      have ek := eqs k
+      have e3 := eqs 3
+      exact ⟨hr,
+        (calc
+          irreducibleCount n lmin k = irreducibleCount n rmax k := ek.1
+          _ ≤ irreducibleCount n rmax 3 := hr
+          _ = irreducibleCount n lmin 3 := e3.1.symm),
+        (calc
+          reducibleCount n lmax k = irreducibleCount n rmax k := ek.2.1
+          _ ≤ irreducibleCount n rmax 3 := hr
+          _ = reducibleCount n lmax 3 := e3.2.1.symm),
+        (calc
+          reducibleCount n rmin k = irreducibleCount n rmax k := ek.2.2
+          _ ≤ irreducibleCount n rmax 3 := hr
+          _ = reducibleCount n rmin 3 := e3.2.2.symm)⟩
+  exact ⟨rise_part, decline_part, peak_part⟩
 
 end
 end D5.S1.Words.Patterns.Separable.RecordAllIndex
