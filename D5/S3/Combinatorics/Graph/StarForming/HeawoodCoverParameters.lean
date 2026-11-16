@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
@@ -8,7 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.StarForming.HeawoodActions
 import D5.S3.Combinatorics.Graph.StarForming.HeawoodParameters
-import D5.S3.Combinatorics.Graph.StarForming.CoverDensity
+import D5.S3.Combinatorics.Graph.StarForming.HeawoodCoverDensity
 
 /-! The whole two-sheet theorem of HEAWOOD_DOUBLE_COVER_GAIN, at
 subquorum-colorings 48728b42d39ab3de5de251c61da5a404ec418a69,

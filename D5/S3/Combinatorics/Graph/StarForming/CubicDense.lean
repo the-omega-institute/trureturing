@@ -6,7 +6,7 @@
    utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/StarForming/CubicExact.ambient_heawood_cap; instance=D5/S3/Combinatorics/Graph/StarForming/CubicDense.all_dense_chunks
    digest: Exact finite local certificates and ambient graph deletion proofs. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.CubicCertificate
+import D5.S3.Combinatorics.Graph.StarForming.HeawoodParameters
 
 /-!
 Proof bodies received from the-omega-institute/subquorum-colorings,

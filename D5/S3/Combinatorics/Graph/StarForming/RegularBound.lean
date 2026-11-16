@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/StarForming/RegularBound
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/RegularBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -232,3 +232,31 @@ theorem witness_capacity (maximum selectedDegree outsideDegree : Nat) (adjacent 
     omega
 
 end D5.S3.Combinatorics.Graph.StarForming.Regular
+
+namespace D5.S3.Combinatorics.Graph.StarForming.Subcubic
+open Regular
+
+theorem minimal_of_deletion_failures {Vertex : Type}
+    (adjacency : Vertex → Vertex → Prop) (selection : Vertex → Prop)
+    (hforms : Forms adjacency selection)
+    (hfail : ∀ deleted, selection deleted → ∃ outside,
+      ¬ (selection outside ∧ outside ≠ deleted) ∧
+      ¬ TwoAt adjacency (fun vertex => selection vertex ∧ vertex ≠ deleted) outside) :
+    Minimal adjacency selection := by
+  refine ⟨hforms, ?_⟩
+  intro smaller hsubset hexists hsmaller
+  obtain ⟨deleted, hselected, hmissing⟩ := hexists
+  obtain ⟨outside, houtside, hfailure⟩ := hfail deleted hselected
+  have hkeep : ∀ vertex, smaller vertex → selection vertex ∧ vertex ≠ deleted := by
+    intro vertex hvertex
+    refine ⟨hsubset vertex hvertex, ?_⟩
+    intro heq
+    exact hmissing (heq ▸ hvertex)
+  have hnot : ¬ smaller outside := fun hvertex => houtside (hkeep outside hvertex)
+  apply hfailure
+  rcases hsmaller outside hnot with ⟨first, second, hf, hs, hne, ha, hb⟩ |
+    ⟨center, leaf, hc, hl, ha, hb⟩
+  · exact Or.inl ⟨first, second, hkeep first hf, hkeep second hs, hne, ha, hb⟩
+  · exact Or.inr ⟨center, leaf, hkeep center hc, hkeep leaf hl, ha, hb⟩
+
+end D5.S3.Combinatorics.Graph.StarForming.Subcubic

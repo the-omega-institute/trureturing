@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodCertificates
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
-   utility: kind=certified-instance; basis=consumer=D5/S3/Combinatorics/Graph/StarForming/CoverDensity.scalar_cover_bound; instance=D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_parameters
+   utility: kind=certified-instance; basis=consumer=D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverDensity.scalar_cover_bound; instance=D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_parameters
    digest: Original S and J two-lift certificates attain exact canonical maxima. -/
 
 import D5.S3.Combinatorics.Graph.StarForming.FiniteMasks

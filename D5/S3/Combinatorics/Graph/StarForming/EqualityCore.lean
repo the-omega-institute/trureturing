@@ -8,7 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.StarForming.RegularCompensation
 import D5.S3.Combinatorics.Graph.StarForming.PrivateClauses
-import D5.S3.Combinatorics.Graph.StarForming.SubcubicCertificate
+import D5.S3.Combinatorics.Graph.StarForming.RegularBound
 
 /-! The C_k core in CUBIC_STABILITY_PORTS, subquorum-colorings
 48728b42d39ab3de5de251c61da5a404ec418a69, Apache-2.0. Each twenty-vertex

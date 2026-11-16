@@ -14,13 +14,6 @@ internal sealed class AmplificationDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Local star witnesses and arbitrary H0 interfaces", H("Local star witnesses and arbitrary H0 interfaces"),
         Blocks(Paragraph(Text("The same ten-vertex H0 data is reused from the canonical refutation. Interfaces are arbitrary directed relations on the block indices; no symmetry, connectivity, nonemptiness or distinct-block premise is imposed. Only ports 0 and 5 can acquire external edges. The chosen set is minimal for every interface, has six vertices per block, and admits a proper two-coloring. Cyclic attainment is separate from cyclic connectivity and edge counts.")),
-            Node("TwoAt", "TwoAt", "Exact declaration: def TwoAt {V : Type*} (G : SimpleGraph V) (S : Set V) (x : V) : Prop.", DescribeRole.Definition),
-            Node("Forms", "Forms", "Exact declaration: def Forms {V : Type*} (G : SimpleGraph V) (S : Set V) : Prop.", DescribeRole.Definition),
-            Node("Minimal", "Minimal", "Exact declaration: def Minimal {V : Type*} (G : SimpleGraph V) (S : Set V) : Prop.", DescribeRole.Definition),
-            Node("LiteralAt", "LiteralAt", "Exact declaration: def LiteralAt {V : Type*} (G : SimpleGraph V) (S : Set V) (x : V) : Prop.", DescribeRole.Definition),
-            Node("literal_iff_local", "literal iff local", "Exact declaration: theorem literal_iff_local {V : Type*} (G : SimpleGraph V) (S : Set V) (x : V) (hx : x ∉ S) : LiteralAt G S x ↔ TwoAt G S x.", DescribeRole.Theorem),
-            Node("twoAt_mono", "twoAt mono", "Exact declaration: theorem twoAt_mono {V : Type*} (G : SimpleGraph V) {S T : Set V} (hST : S ⊆ T) {x : V} : TwoAt G S x → TwoAt G T x.", DescribeRole.Theorem),
-            Node("minimal_of_deletion_failures", "minimal of deletion failures", "Exact declaration: theorem minimal_of_deletion_failures {V : Type*} (G : SimpleGraph V) (S : Set V) (hforms : Forms G S) (hfail : ∀ selected ∈ S, ∃ x, x ∉ S \\ {selected} ∧ ¬ TwoAt G (S \\ {selected}) x) : Minimal G S.", DescribeRole.Theorem),
             Node("baseEdges", "baseEdges", "Exact declaration: abbrev baseEdges.", DescribeRole.Definition),
             Node("base", "base", "Exact declaration: abbrev base.", DescribeRole.Definition),
             Node("selected", "selected", "Exact declaration: abbrev selected.", DescribeRole.Definition),

@@ -6,7 +6,7 @@
    utility: none
    digest: Actual finite fibers and dissociation witnesses give higher-cover density and gap bounds. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodCertificates
+import D5.S3.Combinatorics.Graph.StarForming.RegularCompensation
 
 namespace D5.S3.Combinatorics.Graph.StarForming.CoverDensity
 open StarFormingDissociationRefutation
@@ -86,40 +86,5 @@ theorem cubic_certificate_gap (p : W → V)
   have hgap := Nat.sub_add_cancel (beta_le_sf H)
   have hscaled := Nat.mul_le_mul_left (Fintype.card V) hc
   nlinarith
-
-/-- Every uniform cover above either original S or J two-lift has the stronger
-four-sevenths density and one-forty-ninth gap bounds. No deck-group or switching
-classification is assumed or claimed. -/
-theorem scalar_cover_bound {U : Type} [Fintype U] [DecidableEq U]
-    (H : SimpleGraph U) [DecidableRel H.Adj] (p : U → Fin 28)
-    (cover : CoverPullback.NeighborhoodCover
-      HeawoodCertificates.scalarGraph.Adj H.Adj p) (k : ℕ)
-    (hk : ∀ v, (Finset.univ.filter (fun w => p w = v)).card = k) :
-    4 * Fintype.card U ≤ 7 * beta H 2 ∧
-      49 * (SF H 2 - beta H 2) ≤ Fintype.card U := by
-  have hd := certificate_density HeawoodCertificates.scalarGraph H p cover k hk
-    HeawoodCertificates.scalarSet HeawoodCertificates.scalar_selection.1
-  have hg := cubic_certificate_gap HeawoodCertificates.scalarGraph H p cover k hk
-    HeawoodCertificates.scalar_class.1 HeawoodCertificates.scalar_class.2
-    HeawoodCertificates.scalarSet HeawoodCertificates.scalar_selection.1
-  rw [HeawoodCertificates.scalar_selection.2] at hd hg
-  norm_num at hd hg
-  constructor <;> omega
-
-theorem jordan_cover_bound {U : Type} [Fintype U] [DecidableEq U]
-    (H : SimpleGraph U) [DecidableRel H.Adj] (p : U → Fin 28)
-    (cover : CoverPullback.NeighborhoodCover
-      HeawoodCertificates.jordanGraph.Adj H.Adj p) (k : ℕ)
-    (hk : ∀ v, (Finset.univ.filter (fun w => p w = v)).card = k) :
-    4 * Fintype.card U ≤ 7 * beta H 2 ∧
-      49 * (SF H 2 - beta H 2) ≤ Fintype.card U := by
-  have hd := certificate_density HeawoodCertificates.jordanGraph H p cover k hk
-    HeawoodCertificates.jordanSet HeawoodCertificates.jordan_selection.1
-  have hg := cubic_certificate_gap HeawoodCertificates.jordanGraph H p cover k hk
-    HeawoodCertificates.jordan_class.1 HeawoodCertificates.jordan_class.2
-    HeawoodCertificates.jordanSet HeawoodCertificates.jordan_selection.1
-  rw [HeawoodCertificates.jordan_selection.2] at hd hg
-  norm_num at hd hg
-  constructor <;> omega
 
 end D5.S3.Combinatorics.Graph.StarForming.CoverDensity

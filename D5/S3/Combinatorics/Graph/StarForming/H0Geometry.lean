@@ -1,12 +1,12 @@
 /- GID: D5/S3/Combinatorics/Graph/StarForming/H0Geometry
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/H0Geometry
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Actual local paths and all-size cyclic two-connectivity. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.Semantics
+import D5.S3.Combinatorics.Graph.StarForming.CompositionParameters
 import D5.S3.Combinatorics.Graph.StarForming.CyclicConnectivity
 import Mathlib.Logic.Equiv.Fin.Rotate
 

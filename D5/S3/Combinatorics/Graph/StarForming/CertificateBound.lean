@@ -1,12 +1,12 @@
 /- GID: D5/S3/Combinatorics/Graph/StarForming/CertificateBound
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/CertificateBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Disjoint high-degree certificates bound minimal two-star-forming sets in every finite simple graph. -/
 
-import D5.S3.Combinatorics.Graph.StarFormingDissociationRefutation
+import D5.S3.Combinatorics.Graph.StarForming.Invariants
 import Mathlib.Tactic.Push
 
 /-!

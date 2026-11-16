@@ -19,51 +19,6 @@ internal sealed class StarFormingDissociationRefutationDocument : IScribeDocumen
                 + "are finite vertex sets. The definitions are those of Rafik Sahbi, "
                 + "Upper k-Star-Forming Sets, k-Independence, and Upper Domination, "
                 + "arXiv:2610.03785v2, Definition 2.1 and Conjecture 4.2.")),
-            Node("IsKIndependent", "Selected induced degree is less than k",
-                Disp(Iff(Call("IsKIndependent", G, K, I),
-                    All("v", V, Imp(Member(v, I), Lt(Degree(I, v), K))))),
-                "Each selected vertex has fewer than k selected neighbours. For k equal "
-                    + "to two, the induced graph is a disjoint union of edges and isolated vertices.",
-                DescribeRole.Definition),
-            Node("beta", "Maximum k-independent cardinality",
-                Disp(Eq(Call("beta", G, K), Maximum("I", Independent(I)))),
-                "Take the maximum cardinality over the k-independent subsets of V. "
-                    + "The finite supremum has value zero if the family is empty.",
-                DescribeRole.Definition),
-            Node("IsStarForming", "A star containing each outside vertex",
-                StarFormula(),
-                "For every vertex outside S, the graph on S together with that vertex "
-                    + "contains a star with k leaves containing the vertex. The centre is "
-                    + "distinct from all leaves. Extra edges between leaves are allowed: "
-                    + "the star is a subgraph, with no induced-subgraph requirement.",
-                DescribeRole.Definition),
-            Node("IsMinimalStarForming", "Inclusion-minimal star formation",
-                Disp(Iff(Call("IsMinimalStarForming", G, K, S), And(Star(S),
-                    All("T", Sets, Imp(Call("ProperSubset", T, S), new Formula.Not(Star(T))))))),
-                "The set is star-forming and no proper subset is star-forming. "
-                    + "This is inclusion-minimality rather than minimum cardinality.",
-                DescribeRole.Definition),
-            Node("SF", "Upper k-star-forming number",
-                Disp(Eq(Call("SF", G, K), Maximum("S", Call("IsMinimalStarForming", G, K, S)))),
-                "Take the maximum cardinality among all inclusion-minimal k-star-forming "
-                    + "sets. The finite supremum has value zero if the family is empty.",
-                DescribeRole.Definition),
-            Node("LocalTwo", "Two local alternatives",
-                Disp(Iff(Call("LocalTwo", G, S), LocalFormula())),
-                "Every outside vertex either has two neighbours in S, or has a neighbour "
-                    + "in S that itself has a neighbour in S. In the second alternative "
-                    + "this further neighbour cannot be the outside vertex.",
-                DescribeRole.Definition),
-            Node("starForming_two_iff", "The local criterion equals the star definition",
-                Disp(All("V", F.Id("Type"), All("G", Call("SimpleGraph", V),
-                    All("S", Sets, Iff(Call("IsStarForming", G, D(2), S), Call("LocalTwo", G, S)))))),
-                "In a two-leaf star, the outside vertex is either the centre, giving "
-                    + "two neighbours in S, or a leaf, giving a centre and another leaf "
-                    + "in S. Conversely, two selected neighbours give a star centred at "
-                    + "the outside vertex; a selected neighbour with its own selected "
-                    + "neighbour gives a star centred at that selected neighbour. The "
-                    + "argument works on any vertex type with decidable equality and adjacency.",
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("h0-reusable-properties"),
                 DeclarationHandle.Create(Prefix + "h0_properties"), H("The original H0 certificate"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
