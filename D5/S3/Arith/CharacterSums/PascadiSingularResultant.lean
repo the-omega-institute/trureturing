@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/CharacterSums/PascadiSingularResultant
    generality: G
    mirror-B: D5/B/S3/Arith/CharacterSums/PascadiSingularResultant
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: A common singular root modulo a square forces fourth-power resultant divisibility. -/

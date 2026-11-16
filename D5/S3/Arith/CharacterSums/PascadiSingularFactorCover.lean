@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/CharacterSums/PascadiSingularFactorCover
    generality: G
    mirror-B: D5/B/S3/Arith/CharacterSums/PascadiSingularFactorCover
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Weighted resultant bounds and a finite rational common-factor cover. -/

@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover
    generality: G
    mirror-B: D5/B/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Prime-cube localization and degree-sensitive singular resultants. -/

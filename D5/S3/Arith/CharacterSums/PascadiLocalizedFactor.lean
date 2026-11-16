@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/CharacterSums/PascadiLocalizedFactor
    generality: G
    mirror-B: D5/B/S3/Arith/CharacterSums/PascadiLocalizedFactor
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Primitive local factors retain the actual residue root and weighted height. -/
