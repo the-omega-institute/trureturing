@@ -12,11 +12,10 @@ escape_witness: none (consumed bind-only helpers on the live path of HardinA2297
 class_relabel: proof_shape=bind-only; consumers=transition_counts
 bond_relabel: proof_shape=bind-only; consumers=transition_counts
 canonical_successors: proof_shape=bind-only; consumers=transition_counts
-class_counts: proof_shape=bind-only; consumers=transition_counts
 transition_counts: proof_shape=bind-only; consumers=HardinA229753.result
 -/
 
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Counts.Check7
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Rows
@@ -38,7 +37,6 @@ private theorem bond_relabel (E : Finset (Fin 6 × Fin 6))
     bondDefects E (e ∘ p) (e ∘ r) = bondDefects E p r := by
   simp only [bondDefects, Function.comp_apply, e.injective.eq_iff]
 
-set_option maxHeartbeats 0 in
 private theorem canonical_successors (p : Row) (d : Fin 3) (hp : Valid p d.val)
     (hc : Canonical p) : successors p d.val = classList (cl p d.val) := by
   have h : ∀ (i : Fin 187) (d : Fin 3), Valid (Rows.rows i) d.val →
@@ -52,12 +50,6 @@ private theorem canonical_successors (p : Row) (d : Fin 3) (hp : Valid p d.val)
   simp only [Nat.zero_add] at hh
   rw [hs] at hh
   exact hh
-
--- Exact multiplicities require normalization of all 96 finite matrix rows.
-set_option maxHeartbeats 0 in
-private theorem class_counts : ∀ c s : Fin 96, ((classList c).count s : ℤ) = T c s := by
-  intro c
-  fin_cases c <;> decide +kernel
 
 theorem transition_counts (p : Row) (d : ℕ) (hp : Valid p d) (s : Fin 96) :
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d ∧
@@ -82,7 +74,7 @@ theorem transition_counts (p : Row) (d : ℕ) (hp : Valid p d) (s : Fin 96) :
         cl r (d - (bondDefects between p' r + bondDefects horizontal r r)) = s
         then (1 : ℤ) else 0) = ((classList (cl p' d)).count s : ℤ) := by
       exact_mod_cast h.symm
-    exact hh.trans (class_counts _ _)
+    exact hh.trans (Counts.Check7.counts _ _)
   rw [he] at hT
   let E : Row ≃ Row := Equiv.piCongrRight fun _ : Fin 6 => e
   rw [← E.sum_comp] at hT
