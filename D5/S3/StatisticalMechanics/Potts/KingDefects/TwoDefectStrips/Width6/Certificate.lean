@@ -53,6 +53,8 @@ private theorem canonical_successors (p : Row) (d : Fin 3) (hp : Valid p d.val)
   rw [hs] at hh
   exact hh
 
+-- Exact multiplicities require normalization of all 96 finite matrix rows.
+set_option maxHeartbeats 0 in
 private theorem class_counts : ∀ c s : Fin 96, ((classList c).count s : ℤ) = T c s := by
   intro c
   fin_cases c <;> decide +kernel
