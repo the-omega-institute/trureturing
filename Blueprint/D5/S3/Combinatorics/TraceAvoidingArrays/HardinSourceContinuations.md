@@ -128,5 +128,5 @@ The first equality holds for every continuation length m, scanner state s and ad
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.r`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.sourceClass`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinSourceContinuations.sourceV`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233170DiagonalStrip](HardinA233170DiagonalStrip.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinThinGraphTransport](HardinThinGraphTransport.md)
