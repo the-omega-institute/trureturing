@@ -22,7 +22,8 @@ internal static class DagLedgerAlignWriter
             }
             var selected = options.Selectors.Concat(options.Adds).Distinct().OrderBy(static path => path.Value, StringComparer.Ordinal).ToArray();
             var truth = selected.Length > 0
-                ? DagLedgerCommandPreparation.BuildTruthScoped(repository, source, selected)
+                ? DagLedgerCommandPreparation.BuildTruthScoped(repository, source, selected,
+                    requireAllSources: !options.Retirements.IsEmpty)
                 : DagLedgerCommandPreparation.BuildTruth(repository, source);
             var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
             var planned = new List<(RepoPath Path, FrozenStateRecord Record, bool Added)>();
