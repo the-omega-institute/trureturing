@@ -25,8 +25,8 @@ internal sealed class KingTwoColumnOneDocument : IScribeDocumentDefinition
 
     private static Formula Formula0()
     {
-        Formula Term(int c, int j) => Mul(Num(c.ToString()), CastInt(Call("KingTwoGrid.T",
-            Call("Nat.sub", V("n"), Num(j.ToString())), Num("1"))));
+        Formula Term(int c, int j) => Mul(Num(c.ToString(System.Globalization.CultureInfo.InvariantCulture)), CastInt(Call("KingTwoGrid.T",
+            Call("Nat.sub", V("n"), Num(j.ToString(System.Globalization.CultureInfo.InvariantCulture))), Num("1"))));
         var rhs = Sub(Add(Sub(Add(Sub(Term(12, 1), Term(57, 2)), Term(136, 3)),
             Term(171, 4)), Term(108, 5)), Term(27, 6));
         return All("n", Q("Nat"), Imp(Leq(Num("10"), V("n")),
@@ -59,7 +59,6 @@ internal sealed class KingTwoColumnOneDocument : IScribeDocumentDefinition
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
-    private static Formula Power(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
 
 }

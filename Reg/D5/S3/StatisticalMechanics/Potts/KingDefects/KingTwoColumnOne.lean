@@ -74,7 +74,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoColumnOne
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "fn", "arg", "arg"]
+    readouts := #[{ path := #["body", "body", "fn", "arg"]
                     stateBinder := 0
                     functionOperand := false
                     booleanPredicate := false
