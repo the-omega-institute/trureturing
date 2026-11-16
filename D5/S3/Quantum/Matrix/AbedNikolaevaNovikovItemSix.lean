@@ -187,7 +187,7 @@ private lemma wgm_inverse {A B : Matrix (Fin 2) (Fin 2) ℂ} (hA : A.PosDef) :
     wgm A⁻¹ B (1/2) = gmInv A B := by
   unfold wgm
   rw [mpow_inv hA,mpow_inv hA]
-  norm_num only [neg_div,neg_neg] 
+  norm_num only [neg_div,neg_neg]
   rfl
 
 private theorem spectral_param {A B : Matrix (Fin 2) (Fin 2) ℂ} (hA : A.PosDef) (hB : B.PosDef) :
