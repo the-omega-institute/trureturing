@@ -13,6 +13,7 @@ transition_counts: proof_shape=bind-only; consumers=HardinA229531Strip.result
 -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripData
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripCut
 
 /-! The exact successor count for target class 8. -/
 open D5.S3.Combinatorics.TraceAvoidingArrays
@@ -31,7 +32,12 @@ theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val →
       ((bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
         cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 8) ↔
         HardinThinGraphTransport.proper r ∧ HardinThinGraphTransport.compatible true p r ∧
-          HardinA233126SquareStrip.boundaryClass (true, true) r = 3) := by decide +kernel
+          HardinA233126SquareStrip.boundaryClass (true, true) r = 3) := by
+    intro p r d hz
+    exact HardinA229531StripCut.class_cut p r d 8 (by
+      rcases hz with ⟨_, hd⟩
+      simp only [hd]
+      decide)
   have table : ∀ p (d : Fin 2),
       HardinThinGraphTransport.proper p ∧ d.val = 0 →
       HardinA233171DiagonalStrip.transfer
@@ -41,7 +47,11 @@ theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val →
       ¬ (HardinThinGraphTransport.proper p ∧ d.val = 0) →
       (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
         cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 8
-        then (1 : ℤ) else 0) = T (cl p d.val) 8 := by decide +kernel
+        then (1 : ℤ) else 0) = T (cl p d.val) 8 := by
+    intro p
+    generalize h0 : p 0 = c0
+    generalize h1 : p 1 = c1
+    fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
   intro p d hp
   by_cases hz : HardinThinGraphTransport.proper p ∧ d.val = 0
   · simp_rw [cut p _ d hz]
