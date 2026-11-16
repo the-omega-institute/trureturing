@@ -23,7 +23,8 @@ internal sealed class HardinA229691StripDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "result"), H("The registered integer recurrence"),
                 StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(CastInt(Call("HardinA229691Strip.a", Add(V("n"), Num("8")))), Sub(Add(Sub(Add(Sub(Mul(Num("45"), CastInt(Call("HardinA229691Strip.a", Add(V("n"), Num("7"))))), Mul(Num("729"), CastInt(Call("HardinA229691Strip.a", Add(V("n"), Num("6")))))), Mul(Num("4995"), CastInt(Call("HardinA229691Strip.a", Add(V("n"), Num("5")))))), Mul(Num("13122"), CastInt(Call("HardinA229691Strip.a", Add(V("n"), Num("4")))))), Mul(Num("14580"), CastInt(Call("HardinA229691Strip.a", Add(V("n"), Num("3")))))), Mul(Num("5832"), CastInt(Call("HardinA229691Strip.a", Add(V("n"), Num("2")))))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The row transfer counts labelled arrays. the original row-major canonical representatives have six labelled realizations. Multiplication propagates the certified vector relation to every further length."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The row transfer counts labelled arrays. the original row-major canonical representatives have six labelled realizations. Multiplication propagates the certified vector relation to every further length."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin229691"), ResolutionKind.Proved)))));
 
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));

@@ -63,7 +63,8 @@ internal sealed class HardinA229638StripDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "result"), H("The registered integer recurrence"),
                 StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(CastInt(Call("HardinA229638Strip.a", Add(V("n"), Num("7")))), Add(Add(Add(Sub(Sub(Mul(Num("6"), CastInt(Call("HardinA229638Strip.a", Add(V("n"), Num("6"))))), Mul(Num("6"), CastInt(Call("HardinA229638Strip.a", Add(V("n"), Num("5")))))), Mul(Num("16"), CastInt(Call("HardinA229638Strip.a", Add(V("n"), Num("4")))))), Mul(Num("12"), CastInt(Call("HardinA229638Strip.a", Add(V("n"), Num("3")))))), Mul(Num("24"), CastInt(Call("HardinA229638Strip.a", Add(V("n"), Num("2")))))), Mul(Num("8"), CastInt(Call("HardinA229638Strip.a", Add(V("n"), Num("1")))))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The column transfer counts labelled arrays. Coordinate exchange is an equivalence of labelled arrays; the original row-major canonical representatives have six labelled realizations. Multiplication propagates the certified vector relation to every further length."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The column transfer counts labelled arrays. Coordinate exchange is an equivalence of labelled arrays; the original row-major canonical representatives have six labelled realizations. Multiplication propagates the certified vector relation to every further length."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin229638"), ResolutionKind.Proved)))));
 
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
