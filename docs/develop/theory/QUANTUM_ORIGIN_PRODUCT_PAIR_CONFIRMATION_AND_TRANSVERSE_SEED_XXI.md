@@ -2651,7 +2651,9 @@ $$
 
 ## 330. 中点商的标量缺口与有限精确二项关系
 
-**定义 330.1（标准球的整数关系与权重菜单）。** 标准qubit纯点写为 $P_x=(I+x\cdot\sigma)/2$、$x\in S^2$。令 $F_{\mathbb Z}=\mathbb Z^{(S^2)}$，$A_{\mathbb Z}$ 为全部 $x+y=z+w$ 对应的 $\delta_x+\delta_y-\delta_z-\delta_w$ 的整数生成子群；令 $F_0=\mathbb R^{(S^2)}$、$A_{\rm loc}=\operatorname{span}_{\mathbb R}A_{\mathbb Z}$，此处不取闭包。对任意 $W\subset(0,1)$，在任意有限标准复维数 $n\ge2$ 定义
+**定义 330.1（标准球的整数关系与权重菜单）。** 标准qubit纯点写为 $P_x=(I+x\cdot\sigma)/2$、$x\in S^2$。令 $F_{\mathbb Z}=\mathbb Z^{(S^2)}$，$A_{\mathbb Z}$ 为全部 $x+y=z+w$ 对应的 $\delta_x+\delta_y-\delta_z-\delta_w$ 的整数生成子群；令 $F_0=\mathbb R^{(S^2)}$、$A_{\rm loc}=\operatorname{span}_{\mathbb R}A_{\mathbb Z}$，此处不取闭包。
+
+对任意有限标准复维数 $n\ge2$，另记其全部纯投影为 $P_n$、$F_{0,n}=\mathbb R^{(P_n)}$、$\beta_n(\delta_P)=P$，并令 $A_{{\rm loc},n}$ 为遍历全部实际二纯球的中点关系实线性张成。一般维数结论中省略下标 $n$；$n=2$ 时与上述qubit记号一致。对任意 $W\subset(0,1)$ 定义
 
 $$
 \begin{aligned}
