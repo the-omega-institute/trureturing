@@ -47,6 +47,41 @@ internal sealed class OmegaTailUpperDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The rate F(lambda,s) is s*(1-lambda-log(a(s))). It arises from I(s,c)-log(c)-s*lambda, where I(s,c)=pi*c^(1/s)/sin(pi/s), upon setting c=a(s)^s."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("reuse-scale-pos"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.scale_pos"),
+                H("Positive scale"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("If x>exp(1), then scale(x)>0. This positivity is used to transfer normalized inequalities back to counting and logarithmic product costs."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("reuse-scale-tendsto"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.scale_tendsto"),
+                H("Growing scale"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The logarithmic counting scale tends to positive infinity as x tends to positive infinity. It is reused for exact bin cardinalities and entropy asymptotics."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("reuse-a-pos"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.a_pos"),
+                H("Positive optimizing root"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every s>1, a(s)>0. The density normalization and the minimum-rate argument use this same optimizing root."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("reuse-power-kernel-integral"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.power_kernel_integral"),
+                H("Power kernel integral"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For s>1 and c>0, the function s*c/(u^s+c) is integrable on u>0 and its integral is pi*c^(1/s)/sin(pi/s). This evaluates the mass of the lower-bound density."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("reuse-log-weight"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.logWeight"),
+                H("Logarithmic weight"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The logarithmic weight at s,z,t is log(1+z/t^s)."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("reuse-abel-kernel"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.abelKernel"),
+                H("Abel kernel"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The Abel kernel at s,z,t is s*z/(t*(t^s+z))."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("reuse-log-weight-deriv"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.logWeight_deriv"),
+                H("Logarithmic weight derivative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For z>0 and t>0, the logarithmic weight has derivative minus the Abel kernel. The entropy integral uses this derivative with its endpoint limits."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("upper-bound"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.upper_bound"),
                 H("Rankin upper bound"),
@@ -61,6 +96,6 @@ internal sealed class OmegaTailUpperDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.result"),
                 H("Vanishing exponent at the endpoint"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("At lambda=1, log(1+N(1,x))/y(x) tends to zero. The quotient is eventually nonnegative. For fixed s at least pi, the cubic sine bound and an elementary logarithm inequality give 0<=F(1,s)<=pi^2/(3*s). First apply the upper bound with this fixed s, then choose s sufficiently large. The additive log(2)/y(x) tends to zero. This is an unconditional counting statement and does not decide any pointwise Robin inequality. This stage supplies only an upper bound; two-sided asymptotics and a matching lower bound for C_0 remain unproved."))),
+                Blocks(Paragraph(Text("At lambda=1, log(1+N(1,x))/y(x) tends to zero. The quotient is eventually nonnegative. For fixed s at least pi, the cubic sine bound and an elementary logarithm inequality give 0<=F(1,s)<=pi^2/(3*s). First apply the upper bound with this fixed s, then choose s sufficiently large. The additive log(2)/y(x) tends to zero. This is an unconditional counting statement and does not decide any pointwise Robin inequality. The matching lower bound at lambda=0 is proved separately in OmegaTail.Asymptotic."))),
                 DescribeRole.Theorem))));
 }
