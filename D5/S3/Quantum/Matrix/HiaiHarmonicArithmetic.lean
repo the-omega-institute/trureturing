@@ -480,7 +480,7 @@ private theorem inv_rpow {A : Matrix n n ℂ} (hA : A.PosDef) (t : ℝ) :
   · rw [Matrix.nonsing_inv_eq_ringInverse]
     exact CFC.inverse_rpow A t ht hA.isStrictlyPositive
 
-private theorem rpow_inv {A : Matrix n n ℂ} (hA : A.PosDef) (t : ℝ) :
+theorem rpow_inv {A : Matrix n n ℂ} (hA : A.PosDef) (t : ℝ) :
     A⁻¹ ^ t = A ^ (-t) := by
   rw [inv_eq_rpow hA, CFC.rpow_rpow A (-1) t (by norm_num) hA.isStrictlyPositive]
   congr 1
