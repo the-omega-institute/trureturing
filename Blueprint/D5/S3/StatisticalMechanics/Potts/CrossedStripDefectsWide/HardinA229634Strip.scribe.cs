@@ -24,7 +24,7 @@ internal sealed class HardinA229634StripDocument : IScribeDocumentDefinition
     {
         int[] coefficients = [42, -723, 6569, -33687, 94839, -116010, -55215, 305043,
             -230994, -118011, 243513, -84933, -40719, 42804, -14887, 2598, -228, 8];
-        Formula Term(int i) => Mul(Num(Math.Abs(coefficients[i]).ToString(System.Globalization.CultureInfo.InvariantCulture)),
+        Formula Term(int i) => Mul(Num((coefficients[i] < 0 ? -coefficients[i] : coefficients[i]).ToString(System.Globalization.CultureInfo.InvariantCulture)),
             AsInt(Call("HardinA229634Strip.a", Add(V("n"), Num((20-i).ToString(System.Globalization.CultureInfo.InvariantCulture))))));
         Formula rhs = Term(0);
         for (int i = 1; i < coefficients.Length; i++) rhs = coefficients[i] < 0 ? Sub(rhs, Term(i)) : Add(rhs, Term(i));
