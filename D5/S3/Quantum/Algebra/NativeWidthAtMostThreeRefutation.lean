@@ -225,7 +225,7 @@ def claim : Prop :=
           (D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.flow M N)ᴴ =
             (lambda : ℂ) • (1 : Matrix (Fin a × Fin d) (Fin a × Fin d) ℂ))
 
-private theorem matrix_not_injective_of_dimensions
+theorem matrix_not_injective_of_dimensions
     {m n : ℕ} (h : n < m) (A : Matrix (Fin n) (Fin m) ℂ) :
     ¬ Function.Injective A.mulVecLin := by
   intro hA
