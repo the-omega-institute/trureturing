@@ -33,7 +33,7 @@ internal sealed class RecordAllIndexDocument : IScribeDocumentDefinition
                         + "of Fin n avoiding 2413 and 3142. z is the singleton term, and C is "
                         + "the constant-series embedding into the outer PowerSeries.")),
                     Paragraph(Text(
-                        "The proof uses the frozen minimum-cut enumeration on the actual carrier. "
+                        "The proof uses the minimum-cut enumeration on the actual carrier. "
                         + "It restricts the block record laws to exact record fibers, combines the "
                         + "opposite-sign transport with the actual Schröder cardinalities, and "
                         + "derives I0(1+q)=q from the scalar Schröder equation. The proper-cut "
@@ -44,7 +44,7 @@ internal sealed class RecordAllIndexDocument : IScribeDocumentDefinition
                         + "coefficient extraction. The same module proves the exact binomial "
                         + "coefficient normalization, identifies the Section 8 Newton kernels "
                         + "on the actual carrier, and extracts every length coefficient. "
-                        + "Coefficientwise nonnegativity of the frozen kernels gives the "
+                        + "Coefficientwise nonnegativity of the kernels gives the "
                         + "arbitrary-index decline from record three. Exact reversal and "
                         + "complement transports then give all four literal distributions, "
                         + "including the zero tail and the singleton convention."))),
@@ -74,15 +74,18 @@ internal sealed class RecordAllIndexDocument : IScribeDocumentDefinition
                         + "coefficient extraction is over the rationals, so signed differences "
                         + "retain equality rather than using natural-cardinality subtraction. "
                         + "The scalar Schröder equation supplies q=t+tq+q^2 and hence the exact "
-                        + "time relation. The frozen RecordNewtonPositivity theorem applies to "
+                        + "time relation. The RecordNewtonPositivity theorem applies to "
                         + "the definitionally identical actual M and t series. The resulting "
                         + "finite binomial sums have nonnegative coefficients. RecordTransport "
                         + "supplies the other three statistics, with its singleton correction "
                         + "zero in the n at least five range.")),
                     Paragraph(Text(
-                        "This is the complete Stage A mathematical target. Registration is "
-                        + "USER-PAUSED by the owner of issue 12664; this delivery does not freeze, "
-                        + "deposit or publish the result."))),
+                        "The statement is the weak peak formulation of Chen, Kitaev and Zhang, "
+                        + "arXiv:2404.18517v1, Section 3, Conjecture 2; the journal reference is "
+                        + "DOI 10.1016/j.dam.2024.05.004. It asserts neither uniqueness nor a "
+                        + "finite length cutoff. The journal version of record body and "
+                        + "exhaustive literature novelty remain unverified; the theorem "
+                        + "establishes the stated mathematical inequalities."))),
                 DescribeRole.Theorem))));
 
     private static Formula CKZFormula()

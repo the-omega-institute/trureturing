@@ -37,7 +37,7 @@ theorem actual_weighted_quadratic :
   let U := positive allCount
   let J := positive (signedCount false)
   let R := positive (properCount false)
-  
+
   have blockRecords {m k : ℕ} (α : Equiv.Perm (Fin m))
       (β : Equiv.Perm (Fin k)) :
       rmax (blockSum false α β) = (if k = 0 then rmax α else rmax β) ∧
