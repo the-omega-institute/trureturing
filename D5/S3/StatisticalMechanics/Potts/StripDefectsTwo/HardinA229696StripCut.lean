@@ -87,10 +87,16 @@ theorem leading_counts (p : Row) (d : Fin 3) (j : Fin 10) :
       simp only [Nat.zero_sub, cl, Nat.lt_irrefl, ↓reduceIte, Fin.val_natAdd,
         Fin.val_castAdd] at hcl
       omega
-    simp_rw [empty, if_false, Finset.sum_const_zero]
     have zero : ∀ (p : Row) (j : Fin 10), T (cl p 0) (j.castAdd 5) = 0 := by
       decide +kernel
-    exact (zero p j).symm
+    have zsum : (∑ r : Row,
+        if bondDefects between p r + bondDefects horizontal r r ≤ 0 ∧
+          cl r (0 - (bondDefects between p r + bondDefects horizontal r r)) = j.castAdd 5
+        then (1 : ℤ) else 0) = 0 := by
+      apply Finset.sum_eq_zero
+      intro r hr
+      exact if_neg (empty r _)
+    exact zsum.trans (zero p j).symm
 
 /-- Exhausted and one-unit budgets reuse the frozen final sector. -/
 theorem tail_counts (p : Row) (d : Fin 2) (j : Fin 5) :
