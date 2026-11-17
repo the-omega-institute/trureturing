@@ -58,8 +58,7 @@ theorem transition_counts (p : Row) (d : ℕ) (hp : Valid p d) (s : Fin 96) :
       then (1 : ℤ) else 0) = T (cl p d) s := by
   by_cases hzero : d = 0 ∧ bondDefects horizontal p p = 0
   · rcases hzero with ⟨rfl, hproper⟩
-    simpa only [Nat.zero_sub, cl] using
-      ZeroTemperature.transition_counts p hproper s
+    exact ZeroTemperature.transition_counts p hproper s
   ·
     obtain ⟨p', ⟨hnormal, e, he⟩, _⟩ := canonical_exists_unique p
     have hv : Valid p' d := by
