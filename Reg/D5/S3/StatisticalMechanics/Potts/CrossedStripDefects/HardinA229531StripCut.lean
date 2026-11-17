@@ -14,7 +14,7 @@ open LeanInformationAudit
 noncomputable section
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (Σ _ : Row, Fin 2 × Fin 12) (fun _ => Row) (fun _ => Fin 7)
+    Unit (fun _ => Row) (fun _ => Fin 7)
 def readout : Realization signature :=
   realize signature (fun _ _ r => HardinA233126SquareStrip.boundaryClass (true, true) r)
     (fun e => nomatch e)
@@ -27,7 +27,7 @@ abbrev arena : Arena where
     ((bondDefects (q := 3) between p r + bondDefects (q := 3) horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects (q := 3) between p r + bondDefects (q := 3) horizontal r r)) = s.castAdd 8) ↔
       HardinThinGraphTransport.proper r ∧ HardinThinGraphTransport.compatible true p r ∧
-        R.readout () ⟨p, d, s⟩ r =
+        R.readout () () r =
           ⟨s.val % 6 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 6); omega⟩)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -47,7 +47,7 @@ def family : Registration arena (type_of% @class_cut) where
     arena.Law readout rejected rejected_law
   dependence := by
     intro i
-    refine ⟨⟨![0, 1, 0, 1, 0], 1, 0⟩, ![0, 1, 0, 1, 2], ![0, 1, 0, 1, 0], ?_⟩
+    refine ⟨(), ![0, 1, 0, 1, 2], ![0, 1, 0, 1, 0], ?_⟩
     change HardinA233126SquareStrip.boundaryClass (true, true) ![0, 1, 0, 1, 2] ≠
       HardinA233126SquareStrip.boundaryClass (true, true) ![0, 1, 0, 1, 0]
     decide +kernel
@@ -73,7 +73,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripCut
     definition := none
-    coordinates := #[0, 2, 3]
+    coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg"]
       stateBinder := 1
