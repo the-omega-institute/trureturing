@@ -14,6 +14,58 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
         H("Partial Trace and Quantum Mutual Information"),
         Blocks(
             Paragraph(Text(
+                "Application: the literal ordered-site Slater prefix marginal. "
+                + "Fix natural numbers N, k and ell with k at most N and ell at most N. "
+                + "Let V be a complex N by k matrix satisfying V adjoint V = I. "
+                + "A Boolean word x on Fin N determines its occupied subset S(x), "
+                + "the sites where x is true. Define psi(V,x) to be det(V restricted "
+                + "to S(x) in increasing natural row order) when S(x) has size k, "
+                + "and zero otherwise; the column order is unchanged. The Boolean "
+                + "words are in bijection with all subsets of Fin N. Applying the "
+                + "rectangular cauchyBinet formula as in CompoundMatrices and summing "
+                + "the zero amplitudes gives sum over all x of conjugate(psi(V,x)) "
+                + "times psi(V,x) = 1. Normalization is derived from V, rather than "
+                + "assumed for a separately chosen state.")),
+            Paragraph(Text(
+                "Use Fin.appendEquiv ell (N - ell), followed by the equality "
+                + "ell + (N - ell) = N, to concatenate a prefix word a on Fin ell "
+                + "and a tail word b on Fin (N - ell) in the original site order. "
+                + "Put psiSplit(a,b) = psi(V,ab) "
+                + "and M((a,b),(a',b')) = psiSplit(a,b) conjugate(psiSplit(a',b')). "
+                + "The literal matrix R(a,a') = sum over all tail words b of "
+                + "psiSplit(a,b) conjugate(psiSplit(a',b)) is exactly "
+                + "partialTraceRight(M). Matrix.posSemidef_vecMulVec_self_star "
+                + "makes M positive semidefinite, and partialTraceRight_posSemidef "
+                + "therefore makes R positive semidefinite. The diagonal sum, "
+                + "reindexed by the same concatenation bijection, gives trace(R) = 1. "
+                + "This constructs a density matrix on every Boolean prefix word, "
+                + "including zero amplitudes, without any spectrum or correlation "
+                + "assumption. The argument includes N = 0, k = 0, k = N and "
+                + "ell = 0 or N.")),
+            Paragraph(Text(
+                "The unresolved spectrum statement concerns this R. Write V_I for "
+                + "the first ell rows of V and P_I = V_I V_I adjoint. It requires "
+                + "a unitary on all Boolean prefix words which conjugates R to a "
+                + "diagonal matrix whose entry at a is the product, over every "
+                + "i in Fin ell, of nu(i) if a(i) is true and 1 - nu(i) otherwise. "
+                + "Here nu must be the complete ell-indexed eigenvalue list of "
+                + "P_I, with its interval bounds derived from V. All repetitions "
+                + "and zero or one modes must remain. The k by k matrix V_I adjoint "
+                + "V_I cannot substitute its index carrier for these ell spatial "
+                + "modes. Proving this conjugacy from the determinant amplitudes, "
+                + "including the ordered prefix tensor correspondence, is still "
+                + "required before applying complete spectral-permutation and "
+                + "entropy results. The product-state entropy theorem below does "
+                + "not provide that correspondence.")),
+            Paragraph(Text(
+                "The normalization and marginal construction above reuse existing "
+                + "results and introduce no new mathematical declaration. They "
+                + "establish neither the Slater two-point formula nor its full "
+                + "prefix spectrum and entropy. Noncontiguous site subsystems "
+                + "require their own fermionic-order correspondence. Physical "
+                + "ground-state selection, filling, many-body gaps and spatial "
+                + "entropy scaling also require separate hypotheses and results.")),
+            Paragraph(Text(
                 "Application: commuting terminal menus on a common two-qubit source. "
                 + "Let A = M = C squared, let rho be any positive semidefinite trace-one "
                 + "matrix on A tensor M, and let E(c,b) be a finite calibrated menu. "
