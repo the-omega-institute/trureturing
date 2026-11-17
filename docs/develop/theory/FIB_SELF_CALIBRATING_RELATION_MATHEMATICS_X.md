@@ -1789,3 +1789,240 @@ $I_{MJ,4}$ 的上端严格小于 $I_{MJ,2}$ 的下端，故两个区间不相交
 本条是仓内推导的精确实数定理；新增内容是扩大的统一响应带及 (9.4)--(9.7) 的全根、来源和响应证书，不是 Lean 声明，也不把区间算术称为有限精度算法。结论仍只覆盖这个固定父及该实际第六 $M$ 响应带；其他第六响应子纤维、完整父交集 $\mathcal P_M\cap\mathcal P_J$、原根八读／九读问题和九读上界仍未解决。
 
 ## 追加锚（本行以下为增补区）
+
+## 10. 固定共同父的 MM 碰撞有限支撑与全响应消费者
+
+**定义 10.1（固定父的完整三元投影）。** 固定
+
+$$
+\theta_*={3\over7},\qquad \xi_*=-{35\over29},
+\qquad H^-_*=H^-_{\theta_*,\xi_*},
+$$
+
+其字面 $MMJMM$ 六读为 $(0,0,0,6,72/7,2700/203)$。对 $x=(u,n,a)$ 置
+
+$$
+\begin{aligned}
+h&=u(u+1),&\ell&=u^2+3u-4,\\
+\Phi(x)&=(3h-10)a+(8u^2+18u-30)n-23h,\\
+\Delta(x)&=nh+an\ell-4ah,\\
+Q(x)&=a^2-an-2(u+1)a-n^2+2(2u+1)n-u^2+u+1,\\
+T(x)&=\left({3\over7}n-a\right)\Phi(x)+{175\over29}\Delta(x),\\
+\Psi _6(x)&=(n+2a)(10u^2+19u-36)-10a\ell-29h,\\
+\Psi _7(x)&=4(2n+3a)(20u^2+34u-70)-105a\ell-381h.
+\end{aligned}
+\tag{10.1}
+$$
+
+令 $\mathscr D$ 为满足 $u,n,a>0$、
+
+$$
+P(x)=\begin{pmatrix}
+n+a-3u-1&n+2a-4u-3\\
+1+2u-a&2+3u-n-a
+\end{pmatrix}>0,
+\qquad \Phi(x)\ne0,
+\qquad Q(x)=T(x)=0
+$$
+
+的实三元组集合。对 $b,e\in\mathbb R$，定义
+
+$$
+\begin{aligned}
+\mathcal C_{MM}=\{b:\;&\exists x_1,x_2\in\mathscr D,\ e\in\mathbb R,\\
+&\Psi _6(x_i)=b\Phi(x_i),\quad \Psi _7(x_i)=e\Phi(x_i)\ (i=1,2),\\
+&\|x_1-x_2\|_2^2>0\},
+\end{aligned}
+\tag{10.2}
+$$
+
+并令 $X(u)=20u^2+34u-70$，
+
+$$
+\begin{aligned}
+J_{\rm den}(x)&=n\Phi(x),\\
+J_{\rm num}(x)&=120h\xi_*n+(4n-u+1)\bigl[210\Phi(x)+120\xi_*(nX(u)-35h)\bigr].
+\end{aligned}
+$$
+
+定义 $\mathcal C_{MJ}$ 为那些存在 $x_3,x_4\in\mathscr D$ 的 $b$，其中
+
+$$
+\Psi _6(x_i)=b\Phi(x_i)\ (i=3,4),\qquad
+\|x_3-x_4\|_2^2>0,qquad
+J_{\rm num}(x_3)J_{\rm den}(x_4)-J_{\rm num}(x_4)J_{\rm den}(x_3)=0.
+\tag{10.3}
+$$
+
+VI 定理 24.5 的完整回代说明，(10.2) 恰等价于同一实际第六 $M$ 子纤维
+
+$$
+K_M(b)=\mathcal F\!\left(H^-_*,M,120(1+2\theta_*)+120\xi_*b\right)
+$$
+
+中存在一对不同世界的末 $MM$ 碰撞；(10.3) 使用同一个 $K_M(b)$，但允许其 $MJ$
+碰撞对独立选择。因 $n>0$ 且 $\Phi\ne0$，$J_{\rm den}\ne0$，故 (10.3) 是实际
+$MJ$ 响应相等的清分母式。于是原失败量词在这个父上的投影正是
+$\mathcal C_{MM}\cap\mathcal C_{MJ}$；不要求两对跨臂或跨末动作共享世界。
+
+**定义 10.2（无除数有限证书）。** 在 VI 定义 24.1--24.5 的矩阵和记号下，固定
+$(\theta,\xi)=(\theta_*,\xi_*)$，并把
+
+$$
+A=(10-3b)u^2+(8-3b)u+10b-32,\quad
+B=(10-8b)u^2+(19-18b)u+30b-36,\quad
+C=(23b-29)h
+$$
+
+作为直线 $Aa+Bn+C=0$ 的系数。令 $Q_A=q_2n^2+q_1n+q_0$、
+$T_A=t_2n^2+t_1n+t_0$ 是把
+$x_A(n)=(-Bn-C,An,A)^{\mathsf T}$ 代入 VI (24.3)--(24.4) 后的两个二次式，置
+
+$$
+\widehat N=-{203(t_2q_0-q_2t_0)\over A},\qquad
+\widehat D=-{203(q_2t_1-t_2q_1)\over A}.
+\tag{10.4}
+$$
+
+这两个商在 $\mathbb Q[u,b]$ 中恰为多项式，次数分别为
+$(\deg_u,\deg_b)=(10,3)$ 和 $(9,3)$；这里的整除不是对参数取值的假设。
+
+为使证书定义不依赖隐含的矩阵约定，令 $\alpha=3h-10$、
+$\beta=8u^2+18u-30$，并置
+
+$$
+\mathsf Q=
+\begin{pmatrix}
+1&-1/2&-u-1\\
+-1/2&-1&2u+1\\
+-u-1&2u+1&-u^2+u+1
+\end{pmatrix},
+$$
+
+$$
+\mathsf T=
+\begin{pmatrix}
+-\alpha&(\theta_*\alpha-\beta-5\xi_*\ell)/2&(23+20\xi_*)h/2\\
+(\theta_*\alpha-\beta-5\xi_*\ell)/2&\theta_*\beta&-(23\theta_*+5\xi_*)h/2\\
+(23+20\xi_*)h/2&-(23\theta_*+5\xi_*)h/2&0
+\end{pmatrix}.
+$$
+
+对 $v=(A,B,C)^{\mathsf T}$，定义
+
+$$
+\rho=v^{\mathsf T}\operatorname{adj}(\mathsf Q)v,\quad
+\sigma=v^{\mathsf T}\operatorname{adj}(\mathsf T)v,\quad
+\tau=v^{\mathsf T}\bigl(\operatorname{adj}(\mathsf Q+\mathsf T)-\operatorname{adj}(\mathsf Q)-\operatorname{adj}(\mathsf T)\bigr)v,
+\qquad R=\tau^2-4\rho\sigma.
+\tag{10.4a}
+$$
+
+在 $A\widehat D\ne0$ 的图上，唯一回代是
+
+$$
+n={\widehat N\over\widehat D},\qquad
+a=-{B\widehat N+C\widehat D\over A\widehat D}.
+\tag{10.5}
+$$
+
+令 $\Phi^\sharp=-3\widehat D\,\Phi(u,n,a)$、
+$\Psi _7^\sharp=-3\widehat D\,\Psi _7(u,n,a)$ 取 (10.5) 的多项式回代值，
+并令 $E(u,b,e)=e\Phi^\sharp-\Psi _7^\sharp$。直接有理恒等式把
+$\operatorname{Res}_u(R,E)$ 写成 $c(b)H(b,e)$，其中 $c$ 是与 $e$ 无关的内容，
+$H$ 是唯一含 $e$ 的不可约因子。定义
+
+$$
+S(b)=\operatorname{monic\,sqfree}\!\left(
+\operatorname{lc}_u(R)\,c(b)\,
+\operatorname{Res}_u(R,A)\,
+\operatorname{Res}_u(R,\widehat D)\,
+\operatorname{Res}_u(R,\Phi^\sharp)\,
+\operatorname{Res}_e(H,\partial_eH)
+\right).
+\tag{10.6}
+$$
+
+精确系数读数为 $\deg_{u,b}R=(16,4)$（85 项）、
+$\deg_{u,b,e}E=(12,3,1)$、$\deg_{b,e}H=(16,16)$（153 项），且
+$\operatorname{Res}_u(R,E)$ 的 $(b,e)$ 次数为 $(96,16)$，其 $b$ 内容次数为 $80$。
+$H$ 的 $e$ 首项系数为
+$4056724031542677933477076950962364655200000000$；
+$\operatorname{Res}_u(R,A)$、$\operatorname{Res}_u(R,\widehat D)$、
+$\operatorname{Res}_u(R,\Phi^\sharp)$ 的 $b$ 次数分别为 $24,84,80$，均非零。
+
+这里 $R$ 正是 VI (24.5) 的
+$\tau^2-4\rho\sigma$，其伴随矩阵只用二阶子式定义；因此 $R$ 同时包含
+$A=0$、$B=0$、二次首项退化和 $\Delta=0$ 分支。式 (10.6) 还把 $u$ 首项
+降次、$A=0$ 图、$\widehat D=0$ 图、回代 $\Phi=0$ 图及 $e$ 判别式退化全部纳入；
+没有把这些值当作不可能值删除。
+
+**定理 10.3（固定父的全局 MM 碰撞有限支撑）。** 多项式 $S$ 非零、平方自由且
+$\deg S=202$。每个实际 MM 碰撞响应都满足
+
+$$
+\mathcal C_{MM}\subseteq\{b\in\mathbb R:S(b)=0\}.
+\tag{10.7}
+$$
+
+其不可约因子次数为
+
+$$
+1,2,2,2,4,24,32,44,91,
+$$
+
+对应的不同实根数为
+
+$$
+1,2,2,2,4,20,24,8,49,
+$$
+
+总数为 $112$。`support_isolations.json` 给出每个根的有理隔离区间，宽度均不超过
+$10^{-12}$；这些是候选响应，不是 $112$ 个实际碰撞的断言。
+
+**证明。** 任取 $b\in\mathcal C_{MM}$。VI 定理 24.5 的双向回代把两个完整世界
+变成 $x_1,x_2\in\mathscr D$，故两者都满足 (10.1)--(10.2)，并给出
+$R(u_i,b)=0$。若 $b$ 不使 (10.6) 中的任一因子为零，则 $A\widehat D\Phi^\sharp$
+在每个 $R$ 根上均非零，且 $\operatorname{lc}_u(R)\ne0$、$c(b)\ne0$，所以
+当前图上的回代 (10.5) 对两个世界都适用，并得到 $E(u_i,b,e)=0$。
+因此每个 $u$ 根至多恢复一个 $(n,a)$。两个不同世界若有同一末 $MM$ 响应，
+则它们的 $u$ 必不同；它们却给同一 $e$ 的两个不同根。由于 $E$ 对 $e$ 为一次且
+$\Phi^\sharp\ne0$，$\operatorname{Res}_u(R,E)$ 在该 $e$ 处含平方因子；去掉非零
+内容后，$H(b,e)$ 有重根，违反 $\operatorname{Res}_e(H,\partial_eH)\ne0$。
+所以碰撞只能落在 $S=0$ 上。因 $S$ 的全部异常因子均被显式乘入，证明没有使用
+genericity，也没有丢掉首项、$\Delta$、采样增益或回代图外的分支。
+
+证书的系数文件为私有实验仓库
+`/Users/auricstudio/trureturing-experiments/fib_shared_response_176/global_preflight` 下的
+`R.json`、`E.json`、`H_factor_1.json`、`collision_support.json` 和
+`support_isolations.json`；其中 `collision_support.json` 的 SHA-256 为
+`ce0e91ac8fcf7b8637f0520f368938a9f165d305cc76c156c949cce5bbb727f1`，
+`R.json`、`E.json`、`H_factor_1.json` 和 `support_isolations.json` 的 SHA-256
+分别为 `a7b5c02552dea6e43bbd4919bb0f0db88e92e838fca26b1bbc976603437d568e`、
+`de87cab361a10a0f7a84a15a3738b5e8cad7702331698b6fcf2f3b1e530aff36`、
+`a4c611369cd5eedc73c7314581a507da880b7db30f5d2fc6fd01eb9866d5229e` 和
+`9f0cd27bde73dcbedac70eca973ee9942ee7d8bc46998232ec168e471ab62cd7`。
+`verify_certificate.py` 的精确有理恒等式检查退出码为 0，`support.py` 与
+`isolate_support.py` 的 Sturm 和隔离检查也均退出码为 0。该检查是同一工作者的可执行
+证书，不是 Lean 验证或独立三席审查。
+$\square$
+
+**推论 10.4（原 all-response 目标的有限待决层）。** 对任意真实的第六 $M$ 响应
+$b$，若 $S(b)\ne0$，则 $MM$ 在完整 $K_M(b)$ 上单射；因此“$MM$ 或 $MJ$
+至少一个单射”只需在 $S$ 的 $112$ 个实代数候选上继续判定。原目标在这个父上的
+失败集合仍精确为 $\mathcal C_{MM}\cap\mathcal C_{MJ}$，其余任务是对每个候选
+$b$ 用原始 $Q=T=\Psi _6-b\Phi=0$、逐项正性和 $\Phi\ne0$ 完整回代，并以独立的
+两对比较 (10.2)--(10.3) 结算；不能把候选根、复根或候选计数当作实际碰撞。
+VI 定理 24.5 给出每个候选子纤维至多 $32$ 个完整世界，故有序 MM 碰撞对的粗上界
+$112\cdot32\cdot31=111104$；这是上界而非实际数量。X 定理 8.3 已供应一个物理
+MM 锚，所以候选支撑的实际投影非空，但本推论不宣称所有候选都可重建，也不结清
+$\mathcal C_{MM}\cap\mathcal C_{MJ}$ 的空性。
+
+本节只使用 VI 定义 24.1--定理 24.6 与 X 定义 8.1--推论 8.5；X 第 9 节的
+$B'$ 声称不是本节前提。完整世界仍包括任意常漂移、任意符号及降次的非零至多三次
+增益、采样根和重根、原时钟立即读数以及单条不可复制轨迹；唯一排除的分母
+$\Phi=0$ 是由非零 $\xi_*$ 的父恒等式证明不可能的情形。原根八读／九读目标、
+共同父的全部混合碰撞和九读上界仍未结清。
+
+
+## 追加锚（本行以下为增补区）
