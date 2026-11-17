@@ -187,6 +187,136 @@ theorem actual_linear_factor_fiber_count {p : ℕ} (hp : p.Prime) {t w : ℤ}
   · simp only [Finset.not_nonempty_iff_eq_empty.mp hs, Finset.card_empty, Nat.cast_zero]
     positivity
 
+private theorem integer_eq_of_box_residue {c : ℕ} {X : ℝ} {u v : ℤ}
+    (hu : |(u : ℝ)| ≤ X) (hv : |(v : ℝ)| ≤ X)
+    (hsmall : 2 * X < c) (hmod : (u : ZMod c) = v) : u = v := by
+  have hm : ((u - v : ℤ) : ZMod c) = 0 := by
+    simpa only [Int.cast_sub] using sub_eq_zero.mpr hmod
+  have hdvd : (c : ℤ) ∣ u - v :=
+    (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp hm
+  have hbound : |((u - v : ℤ) : ℝ)| < c := by
+    push_cast
+    exact (abs_sub (u : ℝ) (v : ℝ)).trans_lt (by linarith)
+  apply sub_eq_zero.mp
+  by_contra hne
+  have hle := Int.le_abs_of_dvd hne hdvd
+  have hleR : (c : ℝ) ≤ |((u - v : ℤ) : ℝ)| := by exact_mod_cast hle
+  exact (not_le_of_gt hbound) hleR
+
+private theorem middle_box_first_projection_unique {c : ℕ} {t w : ℤ}
+    {X Y : ℝ} (hYsmall : 2 * Y < c) (hw : IsUnit (w : ZMod c))
+    {z z' : Coordinate} (hz : z ∈ middleLattice c t w)
+    (hz' : z' ∈ middleLattice c t w)
+    (hb : z ∈ literalBox X Y) (hb' : z' ∈ literalBox X Y)
+    (hfirst : z.1 = z'.1) : z = z' := by
+  have hm : (w : ZMod c) * (z.2 : ZMod c) =
+      (w : ZMod c) * (z'.2 : ZMod c) := by
+    have h := (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mpr hz
+    have h' := (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mpr hz'
+    push_cast at h h'
+    rw [hfirst] at h
+    linear_combination h - h'
+  exact Prod.ext hfirst
+    (integer_eq_of_box_residue hb.2 hb'.2 hYsmall (hw.mul_left_cancel hm))
+
+private theorem unit_right_side_second_residue {A : Type*} [CommRing A]
+    {g a t b d w v b' d' v' : A}
+    (h : MinusEquations g a t b d w v)
+    (h' : MinusEquations g a t b' d' w v')
+    (hk : IsUnit (1 + g * t * w)) : b = b' := by
+  have hproduct : (1 - g * t * a) * (1 - g * t * b) = 1 + g * t * w := by
+    linear_combination -g * t * h.1
+  have hfactor : IsUnit (1 - g * t * a) := by
+    exact (IsUnit.mul_iff.mp (hproduct.symm ▸ hk)).1
+  apply hfactor.mul_left_cancel
+  linear_combination h.1 - h'.1
+
+/-- In the retained original unit chart, fixing the first actual point fixes
+the second. Residue uniqueness comes from the original word equation and its
+unit right side; the two small physical widths lift it to an actual point. -/
+theorem actual_first_endpoint_determines_second {c : ℕ} [NeZero c] {t w : ℤ}
+    {X Y : ℝ} (hXsmall : 2 * X < c) (hYsmall : 2 * Y < c)
+    (a₁ a₂ : ZMod c) (ha₁ : IsUnit a₁) (ha₂ : IsUnit a₂)
+    (B : MiddleBasis c t w) (q : Coordinate)
+    (hq : physical B.R B.V q = (-w, -t))
+    (ht : IsUnit (t : ZMod c)) (hw : IsUnit (w : ZMod c))
+    (hk : IsUnit (1 - a₁ * a₂ * (ht.unit : ZMod c) *
+      ((physical B.R B.V q).1 : ZMod c)))
+    (x y y' : Coordinate)
+    (he : WordSolution c a₁ a₂ B.R B.V q (x, y))
+    (he' : WordSolution c a₁ a₂ B.R B.V q (x, y'))
+    (hy : physical B.R B.V y ∈ literalBox X Y)
+    (hy' : physical B.R B.V y' ∈ literalBox X Y) : y = y' := by
+  have hword : MinusEquations (a₁ * a₂)
+      ((physical B.R B.V x).1 : ZMod c) (t : ZMod c)
+      ((physical B.R B.V y).1 : ZMod c) ((physical B.R B.V x).2 : ZMod c)
+      (w : ZMod c) ((physical B.R B.V y).2 : ZMod c) := by
+    have h := (sixReturnWord_minus_iff _ _ _ _ _ _ _ _ ha₁ ha₂).mp he
+    simpa [originalRows, hq] using h
+  have hword' : MinusEquations (a₁ * a₂)
+      ((physical B.R B.V x).1 : ZMod c) (t : ZMod c)
+      ((physical B.R B.V y').1 : ZMod c) ((physical B.R B.V x).2 : ZMod c)
+      (w : ZMod c) ((physical B.R B.V y').2 : ZMod c) := by
+    have h := (sixReturnWord_minus_iff _ _ _ _ _ _ _ _ ha₁ ha₂).mp he'
+    simpa [originalRows, hq] using h
+  have hku : IsUnit (1 + (a₁ * a₂) * (t : ZMod c) * (w : ZMod c)) := by
+    simpa only [ht.unit_spec, hq, Prod.fst, Int.cast_neg, mul_neg,
+      sub_neg_eq_add] using hk
+  have hmod : ((physical B.R B.V y).1 : ZMod c) =
+      ((physical B.R B.V y').1 : ZMod c) :=
+    unit_right_side_second_residue hword hword' hku
+  have hfirst : (physical B.R B.V y).1 = (physical B.R B.V y').1 :=
+    integer_eq_of_box_residue hy.1 hy'.1 hXsmall hmod
+  apply B.coordinates_unique (Nat.pos_of_ne_zero (NeZero.ne c))
+  exact middle_box_first_projection_unique hYsmall hw
+    (B.physical_mem y) (B.physical_mem y') hy hy' hfirst
+
+/-- A fixed first linear value costs its physical fiber weight only once in
+the actual ordered partner count. The second endpoint is recovered from the
+original word, rather than counted through an independent linear fiber. -/
+theorem actual_linear_factor_partner_count {p : ℕ} (hp : p.Prime) {t w : ℤ}
+    {X Y : ℝ} (hX : 0 < X) (hY : 0 < Y)
+    (hXsmall : 2 * X < (p^3 : ℕ)) (hYsmall : 2 * Y < (p^3 : ℕ))
+    (B : MiddleBasis (p^3) t w) (B₂ : ReducedMiddleBasis (p^2) t w X Y)
+    (H : ℝ) (hH : 0 < H) (hHsq : H^2 = X*Y)
+    (a b value : ℤ) (hab : Int.gcd a b = 1)
+    (a₁ a₂ : ZMod (p^3)) (ha₁ : IsUnit a₁) (ha₂ : IsUnit a₂)
+    (q : Coordinate) (hq : physical B.R B.V q = (-w, -t))
+    (ht : IsUnit (t : ZMod (p^3))) (hw : IsUnit (w : ZMod (p^3)))
+    (hk : IsUnit (1 - a₁ * a₂ * (ht.unit : ZMod (p^3)) *
+      ((physical B.R B.V q).1 : ZMod (p^3))))
+    (hroot : ((a * B.V.1 + b * B.R.1 : ℤ) : ZMod p) = 0)
+    (s : Finset Endpoint)
+    (hword : ∀ e ∈ s, WordSolution (p^3) a₁ a₂ B.R B.V q e)
+    (hbox : ∀ e ∈ s, physical B.R B.V e.1 ∈ literalBox X Y ∧
+      physical B.R B.V e.2 ∈ literalBox X Y)
+    (hvalue : ∀ e ∈ s, a * e.1.1 - b * e.1.2 = value) :
+    (s.card : ℝ) ≤ 1 + 6 * H /
+      ((p : ℝ) * Real.sqrt (weightedSq X Y B₂.R)) := by
+  classical
+  letI : NeZero (p^3) := ⟨pow_ne_zero _ hp.ne_zero⟩
+  have hinj : Set.InjOn (Prod.fst : Endpoint → Coordinate) (s : Set Endpoint) := by
+    intro e he e' he' hfirst
+    apply Prod.ext hfirst
+    apply actual_first_endpoint_determines_second hXsmall hYsmall
+      a₁ a₂ ha₁ ha₂ B q hq ht hw hk e.1 e.2 e'.2 (hword e he)
+    · simpa only [hfirst] using hword e' he'
+    · exact (hbox e he).2
+    · exact (hbox e' he').2
+  let reduction : ZMod (p^3) →+* ZMod p :=
+    ZMod.castHom (dvd_pow_self p (by decide : 3 ≠ 0)) (ZMod p)
+  have hwp : IsUnit (w : ZMod p) := by
+    simpa only [map_intCast] using hw.map reduction
+  have hcount := actual_linear_factor_fiber_count hp hX hY B B₂ H hH hHsq
+    a b value hab hwp hroot (s.image Prod.fst) (by
+      intro z hz
+      obtain ⟨e, he, rfl⟩ := Finset.mem_image.mp hz
+      exact (hbox e he).1) (by
+      intro z hz
+      obtain ⟨e, he, rfl⟩ := Finset.mem_image.mp hz
+      exact hvalue e he)
+  simpa only [Finset.card_image_of_injOn hinj] using hcount
+
 end
 
 end D5.S3.Arith.CharacterSums.Original
