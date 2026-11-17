@@ -35,6 +35,13 @@ theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val → Canonical p →
       cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 20
       then (1 : ℤ) else 0) = T (cl p d.val) 20 := by
   unfold Canonical
-  intro p d
-  fin_cases d <;> revert p <;> decide +kernel
+  rw [Fin.forall_fin_succ_pi]
+  intro c0
+  rw [Fin.forall_fin_succ_pi]
+  intro c1
+  rw [Fin.forall_fin_succ_pi]
+  intro c2
+  rw [Fin.forall_fin_succ_pi]
+  intro c3
+  fin_cases c0 <;> fin_cases c1 <;> fin_cases c2 <;> fin_cases c3 <;> decide +kernel
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClass20
