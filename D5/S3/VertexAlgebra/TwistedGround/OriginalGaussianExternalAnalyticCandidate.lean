@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalCandidateCore
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianPeriodIdentity
+import Mathlib.Analysis.Calculus.FDeriv.Analytic
 
 /-! The square-root branch is the existing literal sourceMode, never a new root.
 The rational formulas and certificates are due to the supplied Pro construction;
@@ -281,6 +282,50 @@ theorem candidateT_differential {u v r : ℂ}
       sourceMode true u r * sourceMode true v r * (rationalT u v r - correction r) *
         hD v
 
+private lemma W_square {u r : ℂ} (hu : ‖u‖ + ‖r‖ < 1) :
+    W u r ^ 2 * b u = a u r := by
+  have hbu : b u ≠ 0 := (mode_factors_ne_zero hu).1
+  have hau : a u r ≠ 0 := (mode_factors_ne_zero hu).2.1
+  unfold W
+  rw [mul_pow, (sourceMode_square hu).1]
+  change a u r ^ 2 * (1 / (b u * a u r)) * b u = a u r
+  field_simp [hbu, hau]
+
+private lemma W_zero {u : ℂ} (hu : ‖u‖ < 1) : W u 0 = 1 := by
+  have hs := (sourceAmplitude_generators (u := u) (x := 0) (by simpa using hu)).1.tsum_eq
+  change sourceMode true u 0 = _ at hs
+  have hbu : 1 - u ≠ 0 := (mode_factors_ne_zero (x := 0) (by simpa using hu)).1
+  unfold W a
+  rw [hs]
+  simp only [sub_zero, zero_mul, zero_div, add_zero, Complex.one_cpow, mul_one, one_mul]
+  exact mul_one_div_cancel hbu
+
+private lemma W_sum_ne_zero {u v r : ℂ}
+    (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1) :
+    W u r + W v r ≠ 0 := by
+  by_cases hr : r = 0
+  · subst r
+    rw [W_zero (by simpa using hu), W_zero (by simpa using hv)]
+    norm_num
+  intro hs
+  have hsq : W u r ^ 2 = W v r ^ 2 := by
+    rw [eq_neg_of_add_eq_zero_left hs]
+    ring
+  have hU := W_square hu
+  have hV := W_square hv
+  have hprod : r * (u - v) = 0 := by
+    calc
+      r * (u - v) = b v * a u r - b u * a v r := by unfold a b; ring
+      _ = 0 := by rw [← hU, ← hV, hsq]; ring
+  have huv : u = v := sub_eq_zero.mp ((mul_eq_zero.mp hprod).resolve_left hr)
+  subst v
+  have hwu : W u r ≠ 0 := by
+    intro hz
+    simp only [hz, zero_pow (by decide : 2 ≠ 0), zero_mul] at hU
+    exact (mode_factors_ne_zero hu).2.1 hU.symm
+  apply hwu
+  linear_combination (1 / 2 : ℂ) * hs
+
 private lemma candidateJ_chart {u v r : ℂ}
     (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1)
     (hs : W u r + W v r ≠ 0) (hd : u - v ≠ 0) :
@@ -290,16 +335,8 @@ private lemma candidateJ_chart {u v r : ℂ}
   have hbv : b v ≠ 0 := (mode_factors_ne_zero hv).1
   have hau : a u r ≠ 0 := (mode_factors_ne_zero hu).2.1
   have hav : a v r ≠ 0 := (mode_factors_ne_zero hv).2.1
-  have hU : W u r ^ 2 * b u = a u r := by
-    unfold W
-    rw [mul_pow, (sourceMode_square hu).1]
-    change a u r ^ 2 * (1 / (b u * a u r)) * b u = a u r
-    field_simp [hbu, hau]
-  have hV : W v r ^ 2 * b v = a v r := by
-    unfold W
-    rw [mul_pow, (sourceMode_square hv).1]
-    change a v r ^ 2 * (1 / (b v * a v r)) * b v = a v r
-    field_simp [hbv, hav]
+  have hU := W_square hu
+  have hV := W_square hv
   have hwu : W u r ≠ 0 := by intro hz; simp [hz] at hU; exact hau hU.symm
   have hwv : W v r ≠ 0 := by intro hz; simp [hz] at hV; exact hav hV.symm
   have hNu : sourceMode true u r * b u * W u r = 1 := by
@@ -348,13 +385,13 @@ private lemma W_continuous {u r : ℂ} (hu : ‖u‖ + ‖r‖ < 1) :
 /-- The regular candidate is holomorphic in either external coordinate even on the diagonal.
 Its off-diagonal value is the Cauchy-subtracted source expression. -/
 theorem candidateJ_regular {u v r : ℂ}
-    (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1)
-    (hs : W u r + W v r ≠ 0) :
+    (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1) :
     DifferentiableAt ℂ (fun w => candidateJ w v r) u ∧
     DifferentiableAt ℂ (fun w => candidateJ u w r) v ∧
     (u - v ≠ 0 → candidateJ u v r =
       sourceMode true u r * sourceMode true v r * (rationalJ u v r - correction r) -
         cauchy u v) := by
+  have hs := W_sum_ne_zero hu hv
   have hbu : b u ≠ 0 := (mode_factors_ne_zero hu).1
   have hbv : b v ≠ 0 := (mode_factors_ne_zero hv).1
   have hWu : DifferentiableAt ℂ (fun w => W w r) u :=
@@ -494,7 +531,7 @@ private lemma candidateJ_v {u v r : ℂ}
   ring
 
 /-- The regular J candidate satisfies the original positive spatial equation off the diagonal. -/
-theorem candidateJ_differential {u v r : ℂ}
+private theorem candidateJ_off_diagonal {u v r : ℂ}
     (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1)
     (hs : W u r + W v r ≠ 0) (hd : u - v ≠ 0) :
     let lam := OriginalGaussianAllIndexResolvent.shiftedCentralDerivative r 0 / period r
@@ -529,5 +566,194 @@ theorem candidateJ_differential {u v r : ℂ}
       source_frequency hbu hau +
     sourceMode true u r * sourceMode true v r * (rationalJ u v r - correction r) *
       source_frequency hbv hav
+
+private lemma source_analytic {u r : ℂ} (hu : ‖u‖ + ‖r‖ < 1) :
+    AnalyticAt ℂ (fun w => sourceMode true w r) u := by
+  have hon : DifferentiableOn ℂ (fun w => sourceMode true w r)
+      (Metric.ball 0 (1 - ‖r‖)) := by
+    intro w hw
+    exact (source_u (show ‖w‖ + ‖r‖ < 1 by
+      have hh : ‖w‖ < 1 - ‖r‖ := by simpa using hw
+      linarith)).differentiableAt.differentiableWithinAt
+  exact hon.analyticOnNhd Metric.isOpen_ball u (by
+    change dist u 0 < 1 - ‖r‖
+    simpa only [dist_zero_right] using (show ‖u‖ < 1 - ‖r‖ by linarith))
+
+private lemma candidateJ_joint_analytic {u v r : ℂ}
+    (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1)
+    (hs : W u r + W v r ≠ 0) :
+    AnalyticAt ℂ (fun p : ℂ × ℂ => candidateJ p.1 p.2 r) (u, v) := by
+  have hMu : AnalyticAt ℂ (fun p : ℂ × ℂ => sourceMode true p.1 r) (u, v) :=
+    AnalyticAt.comp (f := fun p : ℂ × ℂ => p.1) (x := (u, v))
+      (source_analytic hu) analyticAt_fst
+  have hMv : AnalyticAt ℂ (fun p : ℂ × ℂ => sourceMode true p.2 r) (u, v) :=
+    AnalyticAt.comp (f := fun p : ℂ × ℂ => p.2) (x := (u, v))
+      (source_analytic hv) analyticAt_snd
+  have hWu : AnalyticAt ℂ (fun p : ℂ × ℂ => W p.1 r) (u, v) :=
+    (analyticAt_const.sub (analyticAt_const.mul analyticAt_fst)).mul hMu
+  have hWv : AnalyticAt ℂ (fun p : ℂ × ℂ => W p.2 r) (u, v) :=
+    (analyticAt_const.sub (analyticAt_const.mul analyticAt_snd)).mul hMv
+  have hbu : b u ≠ 0 := (mode_factors_ne_zero hu).1
+  have hbv : b v ≠ 0 := (mode_factors_ne_zero hv).1
+  unfold candidateJ
+  apply (hMu.mul hMv).mul
+  apply analyticAt_const.add
+  apply AnalyticAt.div
+  · exact analyticAt_const.mul (analyticAt_fst.add analyticAt_snd)
+  · exact ((analyticAt_const.mul (analyticAt_const.sub analyticAt_fst)).mul
+      (analyticAt_const.sub analyticAt_snd)).mul
+        ((hWu.add hWv).pow 2)
+  · exact mul_ne_zero (mul_ne_zero (mul_ne_zero (by norm_num) hbu) hbv)
+      (pow_ne_zero _ hs)
+
+private lemma candidateJ_partials {u v r : ℂ}
+    (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1)
+    (hs : W u r + W v r ≠ 0) :
+    deriv (fun w => candidateJ w v r) u =
+        fderiv ℂ (fun p : ℂ × ℂ => candidateJ p.1 p.2 r) (u, v) (1, 0) ∧
+    deriv (fun w => candidateJ u w r) v =
+        fderiv ℂ (fun p : ℂ × ℂ => candidateJ p.1 p.2 r) (u, v) (0, 1) := by
+  have hf := (candidateJ_joint_analytic hu hv hs).differentiableAt.hasFDerivAt
+  constructor
+  · exact (hf.comp_hasDerivAt u ((hasDerivAt_id u).prodMk (hasDerivAt_const u v))).deriv
+  · exact (hf.comp_hasDerivAt v ((hasDerivAt_const v u).prodMk (hasDerivAt_id v))).deriv
+
+/-- The original positive spatial equation also holds on the removable diagonal. -/
+theorem candidateJ_differential {u v r : ℂ}
+    (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1) :
+    let lam := OriginalGaussianAllIndexResolvent.shiftedCentralDerivative r 0 / period r
+    L (fun w => candidateJ w v r) u + L (fun w => candidateJ u w r) v =
+      (1 - r) * sourceMode true u r * sourceMode true v r *
+        (modeA true u r * modeH true v r lam + modeH true u r lam * modeA true v r) / 2 +
+          1 / 4 := by
+  have hs := W_sum_ne_zero hu hv
+  by_cases hd : u - v ≠ 0
+  · exact candidateJ_off_diagonal hu hv hs hd
+  have huv : v = u := (sub_eq_zero.mp (not_ne_iff.mp hd)).symm
+  subst v
+  let F : ℂ × ℂ → ℂ := fun p => candidateJ p.1 p.2 r
+  let lam := OriginalGaussianAllIndexResolvent.shiftedCentralDerivative r 0 / period r
+  let R : ℂ → ℂ := fun w =>
+    w * b w * fderiv ℂ F (w, u) (1, 0) + (1 - 3 * w) / 2 * F (w, u) +
+    (u * b u * fderiv ℂ F (w, u) (0, 1) + (1 - 3 * u) / 2 * F (w, u)) -
+    ((1 - r) * sourceMode true w r * sourceMode true u r *
+      (modeA true w r * modeH true u r lam + modeH true w r lam * modeA true u r) / 2 + 1 / 4)
+  have hf : AnalyticAt ℂ F (u, u) := candidateJ_joint_analytic hu hu hs
+  have hp : ContinuousAt (fun w : ℂ => (w, u)) u := continuousAt_id.prodMk continuousAt_const
+  have hcD : ContinuousAt (fun w => fderiv ℂ F (w, u)) u :=
+    ContinuousAt.comp (g := fderiv ℂ F) (f := fun w : ℂ => (w, u))
+      hf.fderiv.continuousAt hp
+  have hD₁ : ContinuousAt (fun w => fderiv ℂ F (w, u) (1, 0)) u :=
+    hcD.clm_apply continuousAt_const
+  have hD₂ : ContinuousAt (fun w => fderiv ℂ F (w, u) (0, 1)) u :=
+    hcD.clm_apply continuousAt_const
+  have hF : ContinuousAt (fun w => F (w, u)) u :=
+    ContinuousAt.comp (g := F) (f := fun w : ℂ => (w, u)) hf.continuousAt hp
+  have hM := (source_u hu).continuousAt
+  have ha : 1 - (1 - r) * u ≠ 0 := (mode_factors_ne_zero hu).2.1
+  have hA : ContinuousAt (fun w => modeA true w r) u := by
+    simp only [modeA, ite_true]
+    apply ContinuousAt.div
+    · fun_prop
+    · fun_prop
+    · exact mul_ne_zero (by norm_num) ha
+  have hH : ContinuousAt (fun w => modeH true w r lam) u := by
+    simp only [modeH, modeScale, ite_true]
+    have hn : ContinuousAt (fun w : ℂ => -r * w) u :=
+      continuousAt_const.mul continuousAt_id
+    have hd : ContinuousAt (fun w : ℂ => 1 - (1 - r) * w) u :=
+      continuousAt_const.sub (continuousAt_const.mul continuousAt_id)
+    exact ((hn.div hd ha).sub hA).sub continuousAt_const
+  have hR : ContinuousAt R u := by
+    dsimp only [R]
+    have hb : Continuous b := by unfold b; fun_prop
+    fun_prop
+  have heq : R =ᶠ[nhdsWithin u {u}ᶜ] (fun _ => 0) := by
+    have hn : ∀ᶠ w : ℂ in nhds u, ‖w‖ + ‖r‖ < 1 :=
+      (continuous_norm.continuousAt.add continuousAt_const).eventually (gt_mem_nhds hu)
+    have hsn := ((W_continuous hu).add continuousAt_const).eventually_ne hs
+    filter_upwards [hn.filter_mono nhdsWithin_le_nhds,
+      hsn.filter_mono nhdsWithin_le_nhds, self_mem_nhdsWithin] with w hw hsw hdw
+    have hder := candidateJ_partials hw hu hsw
+    have he := candidateJ_off_diagonal hw hu hsw (sub_ne_zero.mpr hdw)
+    dsimp only at he
+    unfold L at he
+    dsimp only at he
+    rw [hder.1, hder.2] at he
+    exact sub_eq_zero.mpr he
+  have hz : R u = 0 := tendsto_nhds_unique
+    (hR.tendsto.mono_left nhdsWithin_le_nhds)
+    (tendsto_const_nhds.congr' heq.symm)
+  have hder := candidateJ_partials hu hu hs
+  dsimp only [R, F, lam] at hz
+  dsimp only
+  unfold L
+  dsimp only
+  rw [hder.1, hder.2]
+  exact sub_eq_zero.mp hz
+
+private lemma E_ne_zero {u v r : ℂ}
+    (hu : ‖u‖ + Real.sqrt ‖r‖ < 1) (hv : ‖v‖ + Real.sqrt ‖r‖ < 1) :
+    E u v r ≠ 0 := by
+  have ht : 0 ≤ Real.sqrt ‖r‖ := Real.sqrt_nonneg _
+  have hsq : (Real.sqrt ‖r‖) ^ 2 = ‖r‖ := Real.sq_sqrt (norm_nonneg r)
+  have hbound (w : ℂ) (hw : ‖w‖ + Real.sqrt ‖r‖ < 1) :
+      Real.sqrt ‖r‖ * ‖w‖ < ‖b w‖ := by
+    have hw1 : ‖w‖ ≤ 1 := by linarith
+    have hm := mul_le_of_le_one_right ht hw1
+    have hn : 1 - ‖w‖ ≤ ‖b w‖ := by
+      simpa only [norm_one, b] using norm_sub_norm_le (1 : ℂ) w
+    linarith
+  have hu' := hbound u hu
+  have hv' := hbound v hv
+  have hp : ‖r * u * v‖ < ‖b u * b v‖ := by
+    rw [norm_mul, norm_mul, norm_mul]
+    calc
+      ‖r‖ * ‖u‖ * ‖v‖ =
+          (Real.sqrt ‖r‖) ^ 2 * ‖u‖ * ‖v‖ := by rw [hsq]
+      _ = (Real.sqrt ‖r‖ * ‖u‖) * (Real.sqrt ‖r‖ * ‖v‖) := by ring
+      _ ≤ ‖b u‖ * (Real.sqrt ‖r‖ * ‖v‖) :=
+        mul_le_mul_of_nonneg_right hu'.le (mul_nonneg ht (norm_nonneg v))
+      _ < ‖b u‖ * ‖b v‖ := mul_lt_mul_of_pos_left hv'
+        (lt_of_le_of_lt (mul_nonneg ht (norm_nonneg u)) hu')
+  intro he
+  have heq : b u * b v = r * u * v := by
+    unfold E at he
+    unfold b
+    linear_combination he
+  exact (ne_of_lt hp) (congrArg norm heq).symm
+
+/-- The original convergence bidiscs suffice for both candidate T equations;
+no chart denominator, nonzero coordinate or off-diagonal premise is needed. -/
+theorem candidateT_original_differential {u v : ℂ} {r : ℝ}
+    (hr : 0 ≤ r) (hr1 : r < 1)
+    (hu : ‖u‖ + Real.sqrt r < 1) (hv : ‖v‖ + Real.sqrt r < 1) :
+    let x : ℂ := r
+    let lam := OriginalGaussianAllIndexResolvent.shiftedCentralDerivative x 0 / period x
+    (L (fun w => candidateT w v x) u - L (fun w => candidateT u w x) v =
+      (1 - x) * sourceMode true u x * sourceMode true v x *
+        (modeA true u x * modeH true v x lam - modeH true u x lam * modeA true v x) / 2) ∧
+    (2 * x * deriv (fun t : ℝ => candidateT u v (t : ℂ)) r -
+        L (fun w => candidateT w v x) u - L (fun w => candidateT u w x) v =
+      (1 - x) * sourceMode true u x * sourceMode true v x *
+        (modeH true u x lam * modeH true v x lam - modeA true u x * modeA true v x) / 2) := by
+  have hnr : ‖(r : ℂ)‖ = r := by
+    rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hr]
+  have hrs : r ≤ Real.sqrt r := by
+    have hsq := Real.sq_sqrt hr
+    have hn := Real.sqrt_nonneg r
+    have hl : Real.sqrt r ≤ 1 := (Real.sqrt_le_one).mpr hr1.le
+    nlinarith
+  have hu' : ‖u‖ + ‖(r : ℂ)‖ < 1 := by rw [hnr]; linarith
+  have hv' : ‖v‖ + ‖(r : ℂ)‖ < 1 := by rw [hnr]; linarith
+  have he : E u v (r : ℂ) ≠ 0 :=
+    E_ne_zero (by simpa only [hnr] using hu) (by simpa only [hnr] using hv)
+  have hd := candidateT_r hu' hv' he
+  have hreal : deriv (fun t : ℝ => candidateT u v (t : ℂ)) r =
+      deriv (fun w : ℂ => candidateT u v w) (r : ℂ) :=
+    hd.comp_ofReal.deriv.trans hd.deriv.symm
+  dsimp only
+  rw [hreal]
+  exact candidateT_differential hu' hv' he
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate

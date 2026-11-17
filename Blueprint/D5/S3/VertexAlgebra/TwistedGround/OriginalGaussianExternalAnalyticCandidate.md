@@ -6,7 +6,7 @@ Normalized Positive Gaussian Kernel Candidates
 
 The explicit positive-sector formulas and finite rational identities come from the supplied Pro candidate construction, with independent exact algebra verification. Lean proofs differentiate the existing normalized source functions, use their actual squares to cancel the diagonal pole, and reuse the existing half-binomial Picard-Fuchs theorem. The algebra verification is advisory input; the declarations below carry the formal conclusions.
 
-The source functions retain the original Gaussian normalization. These results concern the positive/positive candidate sector. Deriving denominator nonvanishing throughout the original convergence domain, extending the J PDE to the diagonal, extracting coefficient recurrences from the analytic PDEs, proving literal candidate equality and continuation, and identifying all four signed sectors remain mathematical obligations. The conditional parity uniqueness theorem is not used as an unconditional identification. These Gaussian results do not complete VOA, CFT, string theory or AdS/CFT.
+The source functions retain the original Gaussian normalization. These results concern the positive/positive candidate sector. Extracting coefficient recurrences from the analytic PDEs, proving literal candidate equality and continuation, and identifying all four signed sectors remain mathematical obligations. The conditional parity uniqueness theorem is not used as an unconditional identification. These Gaussian results do not complete VOA, CFT, string theory or AdS/CFT.
 
 **Definition 1.1 (a).**
 
@@ -174,7 +174,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnaly
 
 *Commentary.*
 
-Under the same two source-disk inequalities and W(u,r)+W(v,r) nonzero, the regular J expression is complex differentiable in either external coordinate, including u=v and zero coordinates. Off the diagonal it equals M(u)M(v)(rationalJ-correction)-cauchy. The cancellation follows from the actual sourceMode squares, not a new choice of algebraic branch.
+Under the two source-disk inequalities alone, the regular J expression is complex differentiable in either external coordinate, including u=v and zero coordinates. Off the diagonal it equals M(u)M(v)(rationalJ-correction)-cauchy. The cancellation follows from the actual sourceMode squares. Those squares also imply that a vanishing W sum at nonzero r would force u=v and then W=0, which contradicts its nonzero square. At r=0 the literal normalization gives W=1. Thus no W-sum hypothesis or independent root choice is needed.
 
 **Theorem 1.15 (candidateJ_differential).**
 
@@ -186,7 +186,19 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnaly
 
 *Commentary.*
 
-With those same source-disk and W-sum conditions and u-v nonzero, the regular J candidate satisfies the positive frequency-sum PDE with the original modeA/modeH source and constant 1/4. The proof transports derivatives through the removable expression, consumes the rational J certificate and the Cauchy derivative identity, and uses the actual period derivative ratio. This theorem does not yet assert the PDE at u=v.
+Under the two source-disk inequalities alone, the regular J candidate satisfies the positive frequency-sum PDE with the original modeA/modeH source and constant 1/4, including u=v and zero coordinates. Off the diagonal the proof consumes the rational J certificate and the Cauchy derivative identity. Joint analyticity makes both partial derivatives continuous, so their equation extends to the removable diagonal. The logarithmic derivative is the actual shiftedCentralDerivative/period ratio.
+
+**Theorem 1.16 (candidateT_original_differential).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.candidateT_original_differential`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.candidateT_original_differential` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real 0<=r<1 and the original convergence inequalities norm(u)+sqrt(r)<1 and norm(v)+sqrt(r)<1, both T differential equations hold with the exact actual source factors and period ratio. No denominator condition, nonzero coordinate or diagonal exclusion is assumed. The proof establishes norm(r*u*v)<norm((1-u)(1-v)) from the two convergence inequalities, excluding E=0, and then consumes the general complex T verification. The radial term uses the real derivative of the candidate restricted to real r, matching the derivative type in the original radial_differential equation; HasDerivAt.comp_ofReal supplies this bridge. Equality with the original literal T is a separate open obligation.
 
 ## References
 
@@ -200,6 +212,7 @@ With those same source-disk and W-sum conditions and u-v nonzero, the regular J 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.candidateJ_regular`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.candidateT`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.candidateT_differential`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.candidateT_original_differential`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.cauchy`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.correction`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.ell`
