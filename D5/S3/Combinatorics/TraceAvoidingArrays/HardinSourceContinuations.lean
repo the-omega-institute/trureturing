@@ -7,7 +7,7 @@
    digest: Exact source boundary classes and universal literal continuations. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233170DiagonalStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 
 /-! The literal scanner supplies the source four-class continuation recursion. -/
 
@@ -47,7 +47,7 @@ def sourceV : ℕ → Fin 4 → ℤ
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
-private theorem four_class_certificate :
+theorem four_class_certificate :
     (∀ s p, admissible s p → ∀ c : Row,
       rowOK c ∧ nextOK p c ∧ good s c → admissible (finish s c) (pairs c)) ∧
     (∀ c : Row, c 0 = 0 ∧ rowOK c ∧ good (false,false) c →
