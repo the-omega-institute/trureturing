@@ -11,7 +11,7 @@ internal sealed class HardinA229634StripClassesDocument : IScribeDocumentDefinit
             Describe.Lean(DescribeId.Create("transition-counts"), DeclarationHandle.Create(Prefix + "transition_counts"),
                 H("All target classes"), StatementSource.FromAuthor(Disp(TransitionFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("For every actual row p, residual d : Fin 3 and target s : Fin 30, Valid p (Fin.val d) implies that the actual permitted successor sum is T (cl p (Fin.val d)) s. The proof transports a canonical representative back by a colour permutation; every new target case applies its checked canonical-row theorem; the final recurrence consumes the combined identity."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For every actual row p, residual d : Fin 3 and target s : Fin 33, Valid p (Fin.val d) implies that the actual permitted successor sum is T (cl p (Fin.val d)) s. The proof transports a canonical representative back by a colour permutation; every new target case applies its checked canonical-row theorem; the final recurrence consumes the combined identity."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
     private static Formula Num(string value) => D(value.Select(c => (byte)(c - '0')).ToArray());
     private static Formula Q(string name) => Seq(name.Split('.').SelectMany((part,i) => i == 0

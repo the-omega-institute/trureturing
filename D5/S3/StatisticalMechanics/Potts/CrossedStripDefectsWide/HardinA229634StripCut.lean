@@ -40,7 +40,7 @@ private theorem active_class (r : Row) (d : ℕ) (j : Fin 20) :
     simp only [hd, true_and]
     constructor
     · intro h
-      exact Fin.ext (congrArg Fin.val h)
+      exact Fin.ext (congrArg (fun x : Fin 33 => x.val) h)
     · rintro rfl
       rfl
   · have dz : d = 0 := by omega
