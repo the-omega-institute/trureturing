@@ -13,6 +13,7 @@ zero_lower: proof_shape=bind-only; consumers=active_class, inherited_counts
 active_class: proof_shape=bind-only; consumers=active_cut, inherited_counts
 active_cut: proof_shape=bind-only; consumers=inherited_counts
 inherited_counts: proof_shape=bind-only; consumers=HardinA229634Strip.finite_certificate
+old_counts: proof_shape=bind-only; consumers=HardinA229634StripClass0.transition_counts through HardinA229634StripClass12.transition_counts
 zero_cut: proof_shape=bind-only; consumers=HardinA229634StripClass0.transition_counts through HardinA229634StripClass5.transition_counts
 -/
 
@@ -128,5 +129,58 @@ theorem zero_cut (p r : Row) (j : Fin 6) :
       (cl r 0 = ⟨20 + j.val, by omega⟩ ↔
         HardinA229531StripData.cl r 0 = ⟨6 + j.val, by omega⟩) := by decide +kernel
   simp only [Nat.zero_sub, h]
+
+theorem old_counts (p : Row) (d : Fin 2)
+    (hp : HardinA229531StripData.Valid p d.val) (j : Fin 13) :
+    (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+      cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = j.natAdd 20
+      then (1 : ℤ) else 0) = T (cl p d.val) (j.natAdd 20) := by
+  have rowImage : ∀ (r : Row) (b : Fin 2), HardinA229531StripData.Valid r b.val →
+      cl r b.val = oldClassImage (HardinA229531StripData.cl r b.val) := by
+    decide +kernel
+  have table : ∀ (i : Fin 20) (s : Fin 33),
+      T (oldClassImage i) s =
+        ∑ k : Fin 20, if oldClassImage k = s then HardinA229531StripData.T i k else 0 := by
+    decide +kernel
+  rw [rowImage p d hp, table]
+  calc
+    _ = ∑ r : Row, ∑ k : Fin 20,
+        if oldClassImage k = j.natAdd 20 then
+          (if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+            HardinA229531StripData.cl r
+              (d.val - (bondDefects between p r + bondDefects horizontal r r)) = k
+            then (1 : ℤ) else 0) else 0 := by
+      apply Finset.sum_congr rfl
+      intro r _
+      by_cases hc : bondDefects between p r + bondDefects horizontal r r ≤ d.val
+      · have hv : HardinA229531StripData.Valid r
+            (d.val - (bondDefects between p r + bondDefects horizontal r r)) := by
+          dsimp only [HardinA229531StripData.Valid]
+          have hd := d.isLt
+          omega
+        have hi := rowImage r
+          ⟨d.val - (bondDefects between p r + bondDefects horizontal r r), by omega⟩ hv
+        simp only [hc, true_and, hi]
+        symm
+        rw [Finset.sum_eq_single (HardinA229531StripData.cl r
+          (d.val - (bondDefects between p r + bondDefects horizontal r r)))]
+        · simp only [ite_true]
+        · intro k _ hk
+          simp only [Ne.symm hk, ite_false, ite_self]
+        · simp
+      · simp only [hc, false_and, ite_false, ite_self, Finset.sum_const_zero]
+    _ = ∑ k : Fin 20, ∑ r : Row,
+        if oldClassImage k = j.natAdd 20 then
+          (if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+            HardinA229531StripData.cl r
+              (d.val - (bondDefects between p r + bondDefects horizontal r r)) = k
+            then (1 : ℤ) else 0) else 0 := Finset.sum_comm
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro k _
+      by_cases hk : oldClassImage k = j.natAdd 20
+      · simp only [hk, ite_true]
+        exact HardinA229531StripClasses.transition_counts p d hp k
+      · simp only [hk, ite_false, Finset.sum_const_zero]
 
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripCut

@@ -41,7 +41,7 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
       HardinA229531StripData.T (HardinA229531StripData.cl p 0) 7 = T (cl p 0) 21 := by
     decide +kernel
   have remaining : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
-      ¬ (d.val = 0 ∧ HardinA229531StripData.Valid p 0) →
+      ¬ (d.val ≤ 1 ∧ HardinA229531StripData.Valid p d.val) →
       (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
         cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 21
         then (1 : ℤ) else 0) = T (cl p d.val) 21 := by
@@ -58,5 +58,7 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
     apply Finset.sum_congr rfl
     intro r _
     exact ite_congr (propext (HardinA229634StripCut.zero_cut p r 1)) (fun _ => rfl) (fun _ => rfl)
-  · exact remaining p d hp hn hz
+  · by_cases ho : d.val ≤ 1 ∧ HardinA229531StripData.Valid p d.val
+    · exact HardinA229634StripCut.old_counts p ⟨d.val, by omega⟩ ho.2 1
+    · exact remaining p d hp hn ho
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripClass1

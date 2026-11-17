@@ -12,6 +12,7 @@ escape_witness: none (consumed bind-only helpers of the settlement on the live p
 transition_counts: proof_shape=bind-only; consumers=HardinA229634Strip.finite_certificate
 -/
 
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripCut
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripData
@@ -35,7 +36,16 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 31
       then (1 : ℤ) else 0) = T (cl p d.val) 31 := by
-  unfold Canonical
-  intro p d
-  fin_cases d <;> revert p <;> decide +kernel
+  have remaining : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
+      ¬ (d.val ≤ 1 ∧ HardinA229531StripData.Valid p d.val) →
+      (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+        cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 31
+        then (1 : ℤ) else 0) = T (cl p d.val) 31 := by
+    unfold Canonical
+    intro p d
+    fin_cases d <;> revert p <;> decide +kernel
+  intro p d hp hn
+  by_cases ho : d.val ≤ 1 ∧ HardinA229531StripData.Valid p d.val
+  · exact HardinA229634StripCut.old_counts p ⟨d.val, by omega⟩ ho.2 11
+  · exact remaining p d hp hn ho
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripClass11

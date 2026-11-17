@@ -16,6 +16,10 @@ internal sealed class HardinA229634StripCutDocument : IScribeDocumentDefinition
                 H("Inherited successor counts"), StatementSource.FromAuthor(Disp(Counts())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("Every inherited column applies HardinA229531StripClasses.transition_counts through active_cut. At zero residual its sum and matrix block are both zero."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("old-counts"), DeclarationHandle.Create(Prefix + "old_counts"),
+                H("One-defect image successor counts"), StatementSource.FromAuthor(Disp(OldCounts())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("On the old-valid sector, successor classes are the finite image oldClassImage of the owner classifier. Regrouping its fibres and applying HardinA229531StripClasses.transition_counts proves every appended target column. The classifier and matrix image identities are single-row finite checks; the proof does not enumerate transitions."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("zero-cut"), DeclarationHandle.Create(Prefix + "zero_cut"),
                 H("Proper terminal-sector cut"), StatementSource.FromAuthor(Disp(Zero())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -50,5 +54,7 @@ internal sealed class HardinA229634StripCutDocument : IScribeDocumentDefinition
     private static Formula Pred(Formula d, Formula target, string owner) => And(Le(Cost(), d), Eq(Call(owner + ".cl", V("r"), Sub(d, Parenthesized(Cost()))), target));
     private static Formula Active() => All("p", RowType(), All("r", RowType(), All("d", Fin(3), All("j", Fin(20), Imp(Lt(Num("0"), Dv()), Iff(Pred(Dv(), Target(), "HardinA229634StripData"), Pred(Sub(Dv(), Num("1")), V("j"), "HardinA229531StripData")))))));
     private static Formula Counts() => All("p", RowType(), All("d", Fin(3), Imp(Call("HardinA229634StripData.Valid", V("p"), Dv()), All("j", Fin(20), Eq(SumOver("r", RowType(), Typed(Conditional(Pred(Dv(), Target(), "HardinA229634StripData"), Num("1"), Num("0")), Call("Int"))), Call("HardinA229634StripData.T", Call("HardinA229634StripData.cl", V("p"), Dv()), Target()))))));
+    private static Formula OldCounts() => All("p", RowType(), All("d", Fin(2), Imp(Call("HardinA229531StripData.Valid", V("p"), Dv()), All("j", Fin(13), Eq(SumOver("r", RowType(), Typed(Conditional(Pred(Dv(), OldTarget(), "HardinA229634StripData"), Num("1"), Num("0")), Call("Int"))), Call("HardinA229634StripData.T", Call("HardinA229634StripData.cl", V("p"), Dv()), OldTarget()))))));
+    private static Formula OldTarget() => Typed(Call("Fin.natAdd", Num("20"), V("j")), Fin(33));
     private static Formula Zero() => All("p", RowType(), All("r", RowType(), All("j", Fin(6), Iff(Pred(Num("0"), Typed(Call("Fin.mk", Add(Num("20"), Call("Fin.val", V("j")))), Fin(33)), "HardinA229634StripData"), Pred(Num("0"), Typed(Call("Fin.mk", Add(Num("6"), Call("Fin.val", V("j")))), Fin(20)), "HardinA229531StripData")))));
 }
