@@ -2305,3 +2305,168 @@ $$
 [Q327S]: ../../../Library/QuantumStates/mullerududec2012selfduality.md "Reciprocal least confirmation and the spectrality bridge；Face geometry and the projective interface；Least confirmation forces face-filter purity。完整proper最小确认与互易的成熟方法及项目接口，未整体形式化。"
 
 ## 追加锚（本行以下为增补区）
+
+## 328. 只按小球内的等同取商：原准备空间不再额外折叠
+
+**定义 328.1（全部实际球的关系商）。** 原单体仍为327.1的有限维闭尖生成锥、严格正单位、整个紧底 $K$、全部 $P=\operatorname{ext}K$、$|P|\ge2$ 及完整proper菜单。保留实际L2，不要求球预暴露。另取[XVIII240.1][Q328TF]的全称 $\mathsf{TF9}$：任意三个原纯标签生成的整个实际面的实齐次张成维数至多九；不是三个标记向量的张成维数上界。
+
+在同一有限支撑空间 $\mathcal F_0=\mathbb R^{(P)}$ 内，仍用 $\|c\|_1=\sum_p|c_p|$ 与 $\beta_0c=\sum_pc_pp$。定义
+
+$$
+\begin{aligned}
+\mathcal A_{\rm loc}
+ &=\operatorname{span}_{\mathbb R}\{\delta_p+\delta_q-\delta_r-\delta_s:
+ p,q,r,s\in P\cap H,\ p+q=r+s,\ H\text{ 为实际二纯球}\},\\
+J_{\rm loc}&=\operatorname{cl}_{\mathcal F_0,\|\cdot\|_1}\mathcal A_{\rm loc},
+\qquad \mathcal U=\mathcal F_0/J_{\rm loc},\qquad q:\mathcal F_0\to\mathcal U,\\
+\|q(c)\|_{\mathcal U}&=\inf_{d\in J_{\rm loc}}\|c+d\|_1,
+\qquad \mathcal U_+=q(\mathcal F_{0,+}),\qquad \widehat u(qc)=\sum_pc_p.
+\end{aligned}
+\tag{328.1}
+$$
+
+所有四端点及中点等式都在同一原实际球中。原准备映射连续，故 $J_{\rm loc}\subseteq\ker\beta_0$，$\widehat u$ 良定义。闭子空间的商范数是范数；此时尚未宣称 $\mathcal F_0$ 或 $\mathcal U$ 完备。候选的单体关系约束为
+
+$$
+\mathsf R_{\rm loc}:\qquad J_{\rm loc}=\ker\beta_0.
+\tag{328.2}
+$$
+
+它比较原准备等同与实际球内等同生成的闭关系，不指定有限锚、不读取 $\tau$ 行，也不假设成功参照稠密。
+
+**引理 328.2（有界局部提升的普遍性与排核）。** 设 $W$ 是任意实赋范空间，$\iota:P\to W$ 有界，且其线性延拓 $\widetilde\beta(c)=\sum_pc_p\iota(p)$ 消灭 $\mathcal A_{\rm loc}$。则存在唯一有界线性 $L:\mathcal U\to W$ 满足 $Lq(\delta_p)=\iota(p)$。若另有线性 $\pi:W\to V$ 满足 $\pi\iota(p)=p$，$W=\operatorname{span}\iota(P)$，且 $\mathsf R_{\rm loc}$ 成立，则 $\pi$ 单射。
+
+证明。若 $M=\sup_p\|\iota(p)\|<\infty$，则 $\|\widetilde\beta(c)\|\le M\|c\|_1$。连续性使其消灭 $J_{\rm loc}$，因此下降到商且 $\|L\|\le M$；$q(\delta_p)$ 张成商，给唯一性。对 $w\in\ker\pi$，取有限 $c$ 使 $w=\widetilde\beta(c)$，则 $\beta_0c=\pi w=0$。关系约束给 $c\in J_{\rm loc}$，所以 $w=0$。证明不使用 $W$ 完备、内积或 $\pi$ 的正逆。$\square$
+
+**定理 328.3（L2 与三点预算已决定普遍提升）。** 只在328.1的原域假设 L2 与 $\mathsf{TF9}$，尚不要求 $\mathsf R_{\rm loc}$。存在有限 $n\ge2$ 及满射
+
+$$
+\Psi:\operatorname{Herm}_n(\mathbb C)\to V,\qquad
+\Psi(\operatorname{PSD}_n)=C,\qquad u\Psi=\operatorname{Tr},
+\tag{328.3}
+$$
+
+每个原纯点有唯一迹一秩一提升 $\iota(p)$，每颗实际二纯球在同一二维复支持上忠实仿射提升。并且同一个提升给出保单位等距序同构
+
+$$
+\widehat\beta:\mathcal U\overset\sim\longrightarrow
+\bigl(\operatorname{Herm}_n(\mathbb C),\|\cdot\|_{\rm tr}\bigr),\qquad
+\widehat\beta(\mathcal U_+)=\operatorname{PSD}_n,\qquad
+\widehat u=\operatorname{Tr}\circ\widehat\beta.
+\tag{328.4}
+$$
+
+这里 $\|H\|_{\rm tr}=\operatorname{Tr}|H|$。因此这个由原标签与局部等同定义的商已经有限维、完备，未再完成或添加新纯标签。
+
+证明。准确复用[XVIII240.2—240.3][Q328TF]的支撑锥与维数证明：外三角中四维横向空间和至少四维切方向空间不相交；实际面的八维仿射上界迫全部切方向落在两个端点的四维直和中，即TC。再复用[XIII160.3—160.4][Q328HVC]：L2经XII159.5支付不同球的准确张成交H2，TC支付准确射影切四空间H3，实际最小面支付H1。Schillewaert–Van Maldeghem的Hermitian Veronesean cap一般域分类先给商，原单位正定合同归一化给(328.3)、纯射线双射与全部实际小面接口。整球端点直接用Pauli表示。这里不再输入H1—H3、原NC、共同内积、谱性或Jordan分类；一般商尚未被排除。
+
+每个 $\iota(p)$ 的迹范数与Hilbert–Schmidt范数都为一，故 $\widetilde\beta$ 对原 $\ell^1$ 范数有界。实际球上的忠实仿射逆使所有局部中点关系提升为零，得到
+
+$$
+J_{\rm loc}\subseteq\ker\widetilde\beta.
+\tag{328.5}
+$$
+
+反向，取提升空间的一组复基射线，其原标签构成有限 $B$。在纯标签双射下，经过 $B$ 的原固定锚关系恰对应标准复密度体相同球束中的关系：每颗实际球及其全部纯壳都由同一二维支持保真。现在只在**提升后的标准准备映射**上应用325.3，得到
+
+$$
+\ker\widetilde\beta=J_B^{(1)}\subseteq J_{\rm loc}.
+\tag{328.6}
+$$
+
+这没有把325.3直接套在尚可折叠的 $\beta_0$ 上。两式给等核；秩一投影实张成Hermitian空间，遂得线性双射 $\widehat\beta$。
+
+对 $H=\widetilde\beta c$，迹范数三角不等式给 $\|H\|_{\rm tr}\le\sum_p|c_p|$。另一方面，Hermitian谱分解 $H=\sum_i\lambda_iP_i$ 在同一标签集中给有限配方 $c_H$，且
+
+$$
+\widetilde\beta c_H=H,\qquad
+\|c_H\|_1=\sum_i|\lambda_i|=\|H\|_{\rm tr}.
+\tag{328.7}
+$$
+
+任何两个提升为 $H$ 的配方差均在 $J_{\rm loc}$，所以商范数恰等于迹范数，且下确界由谱配方达到。非负有限配方的提升恰为全部PSD，质量为迹，给(328.4)。有限维完备性现在是结论。整个证明只复用325.3的标准有界刚性，不把任意球函数预先假设连续或当作原可用效应。$\square$
+
+**定理 328.4（原关系完备恰好禁止额外混合折叠）。** 在328.3的同一原域，下列三项等价：$\mathsf R_{\rm loc}$；存在非空有限原 $B$ 满足 $J_B^{(1)}=\ker\beta_0$；原单体存在保单位实线性序同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$、$\theta C=\operatorname{PSD}_n$。等价成立时，同一个 $\theta=\Psi^{-1}$ 满足
+
+$$
+\theta p=\iota(p),\qquad
+\tau(p,q)=\operatorname{Tr}(\theta p\,\theta q),\qquad
+e_p(x)=\operatorname{Tr}(\theta p\,\theta x).
+\tag{328.8}
+$$
+
+$e_p$ 是原完整proper确认纤维的least；原正定自对偶、全部面暴露、共同球尺及纯域紧性都是输出。
+
+证明。原映射下降为满射 $\overline\beta:\mathcal U\to V$，且 $\beta_0=\overline\beta q=\Psi\widetilde\beta$。由328.3，$\mathsf R_{\rm loc}$ 恰是 $\ker\overline\beta=0$，也恰是 $\ker\Psi=0$；这也可直接用328.2排核。正锥与单位的等式使其逆成为保单位序同构。标准反向用325.3的复基锚给有限 $B$；若已有这样的有限 $B$，则
+
+$$
+\ker\beta_0=J_B^{(1)}\subseteq J_{\rm loc}\subseteq\ker\beta_0,
+\tag{328.9}
+$$
+
+给第一项。因此有限锚证书不必预选，存在性已成为关系商重建后的结论。
+
+球内仿射同构保中心和归一化半球刻度，标准Bloch公式给(328.8)的 $\tau$；这一局部公式在328.3的商分支中本已成立，但不保证各行能下降到原混合等同。排核后全部Hermitian迹行均为原线性泛函。完整proper菜单恰为 $0\preceq E\preceq I$；确认纯投影 $P$ 的效应恰为 $P+B$、$B=(I-P)B(I-P)$、$0\preceq B\preceq I-P$，所以 $P$ 为least。其余静态几何为完整PSD的标准性质，不再调用proper谱性桥来取得矩阵空间。$\square$
+
+**命题 328.5（局部球不能替整体多认一条关系）。** 若328.3的商有 $0\ne H\in\ker\Psi$，则原准备核含一个局部闭关系不能生成的有限元；其有界分离见证可显式取为
+
+$$
+h_H(p)=\operatorname{Tr}(H\iota(p)).
+\tag{328.10}
+$$
+
+证明。$u\Psi=\operatorname{Tr}$ 给 $\operatorname{Tr}H=0$。对 $H$ 作有符号谱分解并取原纯标签，得到有限 $c$ 满足
+
+$$
+\beta_0c=0,\qquad \widetilde\beta c=H,\qquad
+\langle h_H,c\rangle=\operatorname{Tr}(H^2)>0.
+\tag{328.11}
+$$
+
+$|h_H(p)|\le\|H\|_{\rm op}$，且它消灭所有实际球内关系及其范数闭包，故 $c\notin J_{\rm loc}$。正负谱质量相等且为正，除以该共同质量还给两份原等态概率配方，其提升仍不同。这是辅助关系见证，不把 $h_H$ 冒充原可用效应。
+
+具体模型直接复用[XVIII240.10及其XIV165来源][Q328TF]的 $m=4$ 全有限平衡商：$H=\operatorname{diag}(I_4,-I_4)$、$V=\operatorname{Herm}_8(\mathbb C)/\mathbb RH$。该既有模型在每个有限非标量层保留L2、TF9、全部原纯标签及实际小面。单体取 $c=\sum_{i=1}^4\delta_{\pi P_{e_i}}-\sum_{j=1}^4\delta_{\pi P_{f_j}}$，则(328.11)的读数为八。因此全有限实际三点几何及强复合背景本身也不支付 $\mathsf R_{\rm loc}$。这是既有反模型对本关系条件的应用，不申领新的商构造；未据此声称有限least尾部的每项独立性。$\square$
+
+**定义 328.6（整个三份系统上的局部关系候选）。** 完整保留[XVIII240.8][Q328TF]的强全有限背景：同一有限实 $V$、$\dim V>1$，每个有限 $N\ge0$ 的整个 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正乘积单位 $u_N$、整个归一底 $K_N$、全部 $P_N=\operatorname{ext}K_N$、完整proper菜单及全部有限单位分解；标量层标准。保留分离联合空间的原乘积配对、规范重括号、全部正置换及其正逆、正的单位丢弃，以及任意有限分块 $a|b$ 的全称min/max界，最大锥使用两块全部正泛函，包含全部相关及纠缠输入。只在整个原 $K_3$ 上定义328.1的关系商并要求
+
+$$
+\mathsf Q_{\rm local\ quotient}^{(3)}:\qquad
+\mathrm{L2}_3+\mathsf{TF9}_3+\mathsf R_{{\rm loc},3}.
+\tag{328.12}
+$$
+
+下标 $3$ 指三份系统；TF9仍指该系统内任意三个原纯标签，包括纠缠纯态，而非只检查三个产品标签。这里不再输入两框架产品singleton least、相位joint least或GB控制供应，改由整个三份系统的完整表示接通既有共同坐标与全有限传播。指定过程仍分别保留原全部旁观正性、全输入及合计质量预算、yes支持中性与连续可逆保单位群条件。
+
+**定理 328.7（同一原全有限量子理论与准确简化）。** 在328.6完整保留的强全有限背景下，该候选当且仅当存在同一个 $n\ge2,\theta$ 使每个有限 $N\ge0$ 都有
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{328.13}
+$$
+
+证明。先在整个 $(W_3,C_3,u_3)$ 应用328.4，取得完整迹归一化PSD表示。此时原least与零邻面均为完整PSD的标准对象，特别给原 $\mathsf{NC}_3$。于是已经满足XVIII240.9的准确入口 $\mathrm{L2}_3+\mathsf{TF9}_3+\mathsf{NC}_3$，其强背景也正是328.6。直接复用该定理及XIII161.1—161.4：原纯旁观面先恢复完整低层，正态／正效应产品、重括号和交换选择同一个局部方向，再以任意有限分块min/max和置换传播到所有有限 $N$。因此得到的是同一 $\theta^{\otimes N}$，没有逐层另选坐标，也没有消费旧两框架或相位来源。
+
+反向，标准三份PSD的每对纯点生成Bloch球，每三个纯点的支持复维数至多三，所以实际面齐次维数至多九。325.3在维数 $n^3$ 的整个三份系统中给有限复基锚证书，(328.9)即付 $\mathsf R_{{\rm loc},3}$；强背景标准成立。$\dim V>1$ 排除标量单体，$N=0$ 取标准恒等坐标。
+
+| 原关系、菜单与保留的供应 | 同一坐标中的量子公理 |
+| --- | --- |
+| 整个三份系统的L2、实际TF9、局部关系满核 | 完整三份PSD；共同坐标桥恢复单体，有限锚证书为输出 |
+| 整个原紧底、完整proper菜单与评价 | 迹一密度矩阵、$0\preceq E\preceq I$ 与Born概率 $\operatorname{Tr}(E\rho)$ |
+| 全部有限原单位分解 | 全部数学POVM；正交投影分解给PVM |
+| 完整三份表示、强全有限产品及共同坐标传播 | 通常复张量、全部纠缠PSD锥、置换与偏迹 |
+| 指定线性分支对全部有限相关旁观输入保正 | CP及有限Kraus表示 |
+| 每个正输入的分支预算与合计预算 | TNI／TP及数学仪器；零概率支不定义归一条件态 |
+| 指定锐事件及整个yes支持逐点中性 | Lüders分支 $X\mapsto PXP$ |
+| 指定连续可逆保单位、全旁观保正的一参数群 | 连续酉共轭及群的生成元；钟、能量与 $\hbar$ 标定另给 |
+
+简化的是入口对象：用一张由原标签和球内等同定义的普遍商，替代有限锚选择、稠密成功集及另给的实际行相容；把同一入口放在整个三份系统后，两框架、相位及其有限least也改为输出，不再作独立来源。几何上，$\mathcal U$ 只识别局部闭关系并保留完整复密度体，原世界只能再把它取商；$\mathsf R_{\rm loc}$ 恰好禁止这第二次折叠。代价是L2与TF9作用于整个原 $K_3$，覆盖全部纠缠纯态；这不是把327的单体前件原样弱化。TF9是明确承担的三元几何输入，不是由裸关系满核或327.6的球生成证明所得；没有证明独立公理总数严格减少。也未证明一般裸 $\mathsf D_A\Rightarrow\mathsf{DG}_A$、裸L2或球生成推出TF9／TC。闭包没有给有限非负改写链、统一深度、逼近速度、实际设备或操作成本；无限极限仍另有前件。
+
+本章新增综合为：由既有实际几何商与标准有界关系刚性，识别原局部关系商的准确核、迹范数、正锥及普遍性，再把完整重建锁成“原准备不额外认同”的定义间约束，并在整个三份系统接入既有全有限传播。HVC分类、实际H2／TC接口、TF9的维数接合、标准325.3刚性及XIII161／XVIII240.9的全有限尾部均保留既有归属；谱分解、商范数、线性下降和有界分离为成熟工具。XVIII201—202的自重合入口、221—223及232的读数提升不被另计新公理；本章不以预给二元读数构造提升。此为条件纸面理论，不申领全球原创或Lean核验。$\square$
+
+白话：把整个三份系统里的每颗纯准备当作一颗珠子，纠缠准备也全部算在内；每两颗珠子真正撑起一颗实心小三球。先只允许在同一小球里把两对中点相同的珠子配方认成相同，再把这些等同能逼近的关系一起收齐；由此得到一个不先指定参照、不先放进读数的整体。三颗珠子撑起的实际面不能超过九个齐次方向，这笔预算让所有小球属于同一套复射影几何；已有分类和局部关系刚性随后把刚才的整体认成完整复量子密度体。原世界仍可能把其中两份不同的大混合额外压成同一点：小球和三点面都完好，这个差别却被藏起来。新关系约束只说，原世界认作相同的配方，必须已经由小球里的等同生成，不能再偷偷多认一次。这样额外折叠被排掉，Born读数与最低确认门都回到原空间；整个三份结构再经原产品和丢弃锁定同一份局部坐标，传到全部有限层，无须另外先交两张框架和相位最低门。测量怎样更新、哪个群代表时间运动，仍由各自明确的过程条件决定。
+
+[Q328TF]: QUANTUM_ORIGIN_HALF_TURN_PREPARATION_AND_GLOBAL_EFFECTS_XVIII.md "240.1—240.5：实际TF9给TC与qutrit小面；240.10：复用XIV165的m≥4全有限商，L2与TF9仍可同时保留。"
+[Q328HVC]: QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "160.3—160.4：实际H1—H3、Schillewaert–Van Maldeghem一般域Hermitian Veronesean cap商分类、原单位归一化及忠实实际二纯球；H2复用XII159.5。"
+
+## 追加锚（本行以下为增补区）
