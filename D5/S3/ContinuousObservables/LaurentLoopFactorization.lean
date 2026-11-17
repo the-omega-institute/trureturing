@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ContinuousObservables/LaurentLoopFactorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Exact ordered rank-one factorization of special-unitary Laurent loops. -/
 
 import Mathlib.Algebra.Polynomial.Laurent

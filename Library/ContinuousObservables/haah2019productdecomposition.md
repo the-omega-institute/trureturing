@@ -12,6 +12,10 @@ license: citation-only
 triage: anchor
 ---
 
+## Verified locator
+
+DOI: `10.22331/q-2019-10-07-190`; source: <https://arxiv.org/abs/1806.10236v4>; primitive equation (2), printed page 3, and Definition 1/Theorem 2, printed pages 4–5.
+
 # Exact ordered factorization of special-unitary Laurent loops
 
 The primary version is [arXiv:1806.10236v4](https://arxiv.org/abs/1806.10236v4).
