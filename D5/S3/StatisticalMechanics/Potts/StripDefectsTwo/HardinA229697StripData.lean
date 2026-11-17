@@ -32,7 +32,7 @@ set_option maxHeartbeats 0
 set_option Elab.async false
 
 def Valid (_ : Row) (d : ℕ) : Prop := d ≤ 2
-instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
+private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (d ≤ 2))
 def cl (p : Row) (d : ℕ) : Fin 42 :=
   if 0 < d then (HardinA229589StripData.cl p (d - 1)).castAdd 14
