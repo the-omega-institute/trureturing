@@ -18,9 +18,23 @@ $$\forall p: \operatorname{\mathit{Fin}}\left(5\right) \to \operatorname{\mathit
 
 The row and natural residual budget satisfy d at most two and horizontal defects at most two minus d; subtraction is truncated natural subtraction.
 
-**Definition 1.2 (Class map).**
+**Definition 1.2 (One-defect class image).**
 
-$$\forall p: \operatorname{\mathit{Fin}}\left(5\right) \to \operatorname{\mathit{Fin}}\left(3\right), (\forall d: \operatorname{\mathit{Nat}}, ((\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{cl}}\left(p, d\right): \operatorname{\mathit{Fin}}\left(33\right)) = (\operatorname{\mathit{if}} (0<d) \operatorname{\mathit{then}} (\operatorname{\mathit{Fin}}.\operatorname{\mathit{castAdd}}\left(13, \operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{cl}}\left(p, d - 1\right)\right)) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{horizontal}}, p, p\right) = 0) \operatorname{\mathit{then}} (20 + \operatorname{\mathit{Nat}}.\operatorname{\mathit{mod}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{cl}}\left(p, 0\right)\right), 6\right)) \operatorname{\mathit{else}} (\operatorname{\mathit{let}} (code: \operatorname{\mathit{Nat}}) = (\operatorname{\mathit{if}} (\operatorname{p}\left(0\right) = \operatorname{p}\left(1\right)) \operatorname{\mathit{then}} (1) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(0\right) = \operatorname{p}\left(2\right)) \operatorname{\mathit{then}} (2) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(0\right) = \operatorname{p}\left(3\right)) \operatorname{\mathit{then}} (4) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(0\right) = \operatorname{p}\left(4\right)) \operatorname{\mathit{then}} (8) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(1\right) = \operatorname{p}\left(2\right)) \operatorname{\mathit{then}} (16) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(1\right) = \operatorname{p}\left(3\right)) \operatorname{\mathit{then}} (32) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(1\right) = \operatorname{p}\left(4\right)) \operatorname{\mathit{then}} (64) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(2\right) = \operatorname{p}\left(3\right)) \operatorname{\mathit{then}} (128) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(2\right) = \operatorname{p}\left(4\right)) \operatorname{\mathit{then}} (256) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(3\right) = \operatorname{p}\left(4\right)) \operatorname{\mathit{then}} (512) \operatorname{\mathit{else}} (0)) \operatorname{\mathit{in}} (\operatorname{\mathit{if}} (code \in \{201, 129, 198, 540, 340, 20, 176, 528, 192\}) \operatorname{\mathit{then}} (26) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (code \in \{513\}) \operatorname{\mathit{then}} (27) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (code \in \{37, 608\}) \operatorname{\mathit{then}} (28) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (code \in \{621, 184\}) \operatorname{\mathit{then}} (29) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (code \in \{293, 610\}) \operatorname{\mathit{then}} (30) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (code \in \{347, 19, 73, 910, 134, 24, 336, 524, 136, 896\}) \operatorname{\mathit{then}} (31) \operatorname{\mathit{else}} (32))))))))))))))))))$$
+$$(\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{oldClassImage}}: \operatorname{\mathit{Fin}}\left(20\right) \to \operatorname{\mathit{Fin}}\left(33\right)) = \begin{pmatrix}6&7&8&9&10&11&20&21&22&23&24&25&30&28&31&32&26&31&26&31\end{pmatrix}$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData.oldClassImage` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229634: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229634>.
+
+*Commentary.*
+
+The twenty owner classes map to seventeen reachable classes of the two-defect transfer. The vector is indexed from zero.
+
+**Definition 1.3 (Class map).**
+
+$$\forall p: \operatorname{\mathit{Fin}}\left(5\right) \to \operatorname{\mathit{Fin}}\left(3\right), (\forall d: \operatorname{\mathit{Nat}}, ((\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{cl}}\left(p, d\right): \operatorname{\mathit{Fin}}\left(33\right)) = (\operatorname{\mathit{if}} (0<d) \operatorname{\mathit{then}} (\operatorname{\mathit{Fin}}.\operatorname{\mathit{castAdd}}\left(13, \operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{cl}}\left(p, d - 1\right)\right)) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{Valid}}\left(p, d\right)) \operatorname{\mathit{then}} (\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{oldClassImage}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{cl}}\left(p, d\right)\right)) \operatorname{\mathit{else}} (\operatorname{\mathit{let}} (code: \operatorname{\mathit{Nat}}) = (\operatorname{\mathit{if}} (\operatorname{p}\left(0\right) = \operatorname{p}\left(1\right)) \operatorname{\mathit{then}} (1) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(0\right) = \operatorname{p}\left(2\right)) \operatorname{\mathit{then}} (2) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(0\right) = \operatorname{p}\left(3\right)) \operatorname{\mathit{then}} (4) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(0\right) = \operatorname{p}\left(4\right)) \operatorname{\mathit{then}} (8) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(1\right) = \operatorname{p}\left(2\right)) \operatorname{\mathit{then}} (16) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(1\right) = \operatorname{p}\left(3\right)) \operatorname{\mathit{then}} (32) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(1\right) = \operatorname{p}\left(4\right)) \operatorname{\mathit{then}} (64) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(2\right) = \operatorname{p}\left(3\right)) \operatorname{\mathit{then}} (128) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(2\right) = \operatorname{p}\left(4\right)) \operatorname{\mathit{then}} (256) \operatorname{\mathit{else}} (0)) + (\operatorname{\mathit{if}} (\operatorname{p}\left(3\right) = \operatorname{p}\left(4\right)) \operatorname{\mathit{then}} (512) \operatorname{\mathit{else}} (0)) \operatorname{\mathit{in}} (\operatorname{\mathit{if}} (code \in \{201, 129, 198, 540, 340, 20, 176, 528, 192\}) \operatorname{\mathit{then}} (26) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (code \in \{513\}) \operatorname{\mathit{then}} (27) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (code \in \{37, 608\}) \operatorname{\mathit{then}} (28) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (code \in \{621, 184\}) \operatorname{\mathit{then}} (29) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (code \in \{293, 610\}) \operatorname{\mathit{then}} (30) \operatorname{\mathit{else}} ((\operatorname{\mathit{if}} (code \in \{347, 19, 73, 910, 134, 24, 336, 524, 136, 896\}) \operatorname{\mathit{then}} (31) \operatorname{\mathit{else}} (32))))))))))))))))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData.cl` (`✓ std3`).
 
@@ -30,11 +44,25 @@ $$\forall p: \operatorname{\mathit{Fin}}\left(5\right) \to \operatorname{\mathit
 
 *Commentary.*
 
-The function retains HardinA229531StripData.cl at positive residual budget, subtracts one from the budget and embeds Fin 20 into Fin 33. At zero residual it appends thirteen classes: six proper classes followed by seven classes of identical zero-cost successor counts. The equality code sums powers of two for the ten equal-position predicates. Membership in each finite code set selects a class. Nat.mod denotes the nonnegative remainder modulo six. HardinA229634StripClasses.transition_counts pins every class against actual rows.
+The function retains HardinA229531StripData.cl at positive residual budget, subtracts one from the budget and embeds Fin 20 into Fin 33. At zero residual, the guarded old-valid sector applies oldClassImage to the owner classifier. Rows outside that sector use the equality code for the remaining classes. The equality code sums powers of two for the ten equal-position predicates. Membership in each finite code set selects a class. HardinA229634StripClasses.transition_counts pins every class against actual rows.
 
-**Definition 1.3 (Block extension).**
+**Definition 1.4 (One-defect destination image).**
 
-$$(\operatorname{\mathit{HardinA229634StripData}}.\operatorname{T}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(33\right), \operatorname{\mathit{Fin}}\left(33\right), \operatorname{\mathit{Int}}\right)) = \operatorname{\mathit{Matrix}}.\operatorname{\mathit{reindex}}\left((\operatorname{\mathit{finSumFinEquiv}}: \operatorname{\mathit{Fin}}\left(20\right) \operatorname{\mathit{Sum}} \operatorname{\mathit{Fin}}\left(13\right) \equiv \operatorname{\mathit{Fin}}\left(33\right)), (\operatorname{\mathit{finSumFinEquiv}}: \operatorname{\mathit{Fin}}\left(20\right) \operatorname{\mathit{Sum}} \operatorname{\mathit{Fin}}\left(13\right) \equiv \operatorname{\mathit{Fin}}\left(33\right)), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{fromBlocks}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{0}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{1}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{2}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{3}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{4}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{5}, B_{6}\right)\right)\right)\right)\right)\right), (0: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Fin}}\left(20\right), \operatorname{\mathit{Int}}\right)), \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{7}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{8}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{9}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{10}, B_{11}\right)\right)\right)\right)\right)\right)$$
+$$\forall i: \operatorname{\mathit{Fin}}\left(20\right), ((\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{oldTail}}\left(i\right): \operatorname{\mathit{Fin}}\left(13\right) \to \operatorname{\mathit{Int}}) = \begin{pmatrix}\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 6\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 7\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 8\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 9\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 10\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 11\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 16\right) + \operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 18\right)&0&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 13\right)&0&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 12\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 14\right) + \operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 17\right) + \operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 19\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(i, 15\right)\end{pmatrix})$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData.oldTail` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229634: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229634>.
+
+*Commentary.*
+
+The thirteen destination columns are the finite image of the frozen one-defect transfer. Merged destination classes are added; empty fibres give zero. HardinA229634StripClasses.transition_counts pins this image on actual rows.
+
+**Definition 1.5 (Block extension).**
+
+$$(\operatorname{\mathit{HardinA229634StripData}}.\operatorname{T}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(33\right), \operatorname{\mathit{Fin}}\left(33\right), \operatorname{\mathit{Int}}\right)) = \operatorname{\mathit{Matrix}}.\operatorname{\mathit{reindex}}\left((\operatorname{\mathit{finSumFinEquiv}}: \operatorname{\mathit{Fin}}\left(20\right) \operatorname{\mathit{Sum}} \operatorname{\mathit{Fin}}\left(13\right) \equiv \operatorname{\mathit{Fin}}\left(33\right)), (\operatorname{\mathit{finSumFinEquiv}}: \operatorname{\mathit{Fin}}\left(20\right) \operatorname{\mathit{Sum}} \operatorname{\mathit{Fin}}\left(13\right) \equiv \operatorname{\mathit{Fin}}\left(33\right)), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{fromBlocks}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{0}, B_{1}\right), \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{Matrix}}.\operatorname{\mathit{submatrix}}\left(\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{oldTail}}, (\Lambda (i: \operatorname{\mathit{Fin}}\left(6\right)) \mapsto ((\operatorname{\mathit{Fin}}.\operatorname{\mathit{mk}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right) + 0\right): \operatorname{\mathit{Fin}}\left(20\right)))), \operatorname{\mathit{id}}\right), \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{2}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{3}, B_{4}\right)\right)\right)\right), 0, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{Matrix}}.\operatorname{\mathit{submatrix}}\left(\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{oldTail}}, (\Lambda (i: \operatorname{\mathit{Fin}}\left(6\right)) \mapsto ((\operatorname{\mathit{Fin}}.\operatorname{\mathit{mk}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right) + 6\right): \operatorname{\mathit{Fin}}\left(20\right)))), \operatorname{\mathit{id}}\right), \begin{pmatrix}\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{oldTail}}\left(16\right)&\begin{pmatrix}0&0&1&0&0&0&0&0&0&0&0&0&0\end{pmatrix}&\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{oldTail}}\left(13\right)&\begin{pmatrix}1&0&0&0&0&0&0&0&0&0&0&0&0\end{pmatrix}&\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{oldTail}}\left(12\right)&\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{oldTail}}\left(14\right)&\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{oldTail}}\left(15\right)\end{pmatrix}\right)\right)\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData.T` (`✓ std3`).
 
@@ -44,7 +72,7 @@ $$(\operatorname{\mathit{HardinA229634StripData}}.\operatorname{T}: \operatornam
 
 *Commentary.*
 
-The 33 by 33 integer matrix is reindexed from a 20 plus 13 block matrix. Its upper left block is exactly HardinA229531StripData.T and its lower left block is zero. The six proper rows of the new lower right block use the frozen terminal proper block at indices six through eleven. All appended entries are pinned by HardinA229634StripClasses.transition_counts.
+The 33 by 33 integer matrix is reindexed from a 20 plus 13 block matrix. Its upper left block is exactly HardinA229531StripData.T and its lower left block is zero. The oldTail submatrices and indexed rows reuse the frozen one-defect transfer on its entire image; only the remaining sectors have literal rows. All appended entries are pinned by HardinA229634StripClasses.transition_counts.
 
 Each displayed B subscript names only a row block of this presentation, with zero-based row and column indices. The Fin.append expressions concatenate these blocks in order along their first index. Every block is displayed in full below.
 
@@ -57,46 +85,18 @@ $$
 $$
 
 $$
-(B_{2}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(3\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}0&2&0&2&2&0&0&0&0&0&2&6&2\\1&0&2&3&1&0&0&0&0&0&0&3&1\\0&4&0&2&0&4&0&0&2&0&2&0&2\end{pmatrix}
+(B_{2}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(3\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}2&6&2&3&1&2&0&0&0&0&2&3&1\\3&4&1&2&1&2&0&0&0&0&0&3&1\\0&2&2&2&1&2&0&0&1&0&1&0&0\end{pmatrix}
 $$
 
 $$
-(B_{3}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(3\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}1&3&1&0&0&2&0&0&1&0&1&0&0\\2&2&0&0&0&0&0&0&0&0&0&0&0\\0&0&4&4&0&0&0&0&0&0&0&0&0\end{pmatrix}
+(B_{3}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(3\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}1&3&1&4&1&2&0&0&1&0&1&0&2\\1&3&1&3&2&0&2&0&0&0&0&0&0\\0&2&1&3&1&2&0&0&1&0&1&1&0\end{pmatrix}
 $$
 
 $$
-(B_{4}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(3\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}2&6&2&3&1&2&0&0&0&0&2&3&1\\3&4&1&2&1&2&0&0&0&0&0&3&1\\0&2&2&2&1&2&0&0&1&0&1&0&0\end{pmatrix}
+(B_{4}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(2\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}1&1&1&3&2&0&2&0&0&0&0&0&0\\0&2&2&2&1&2&0&0&1&0&1&0&0\end{pmatrix}
 $$
 
-$$
-(B_{5}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(3\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}1&3&1&4&1&2&0&0&1&0&1&0&2\\1&3&1&3&2&0&2&0&0&0&0&0&0\\0&2&1&3&1&2&0&0&1&0&1&1&0\end{pmatrix}
-$$
-
-$$
-(B_{6}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(2\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}1&1&1&3&2&0&2&0&0&0&0&0&0\\0&2&2&2&1&2&0&0&1&0&1&0&0\end{pmatrix}
-$$
-
-$$
-(B_{7}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(3\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(6, 6\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(6, 7\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(6, 8\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(6, 9\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(6, 10\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(6, 11\right)&0&0&0&0&0&0&0\\\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(7, 6\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(7, 7\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(7, 8\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(7, 9\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(7, 10\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(7, 11\right)&0&0&0&0&0&0&0\\\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(8, 6\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(8, 7\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(8, 8\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(8, 9\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(8, 10\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(8, 11\right)&0&0&0&0&0&0&0\end{pmatrix}
-$$
-
-$$
-(B_{8}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(3\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(9, 6\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(9, 7\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(9, 8\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(9, 9\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(9, 10\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(9, 11\right)&0&0&0&0&0&0&0\\\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(10, 6\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(10, 7\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(10, 8\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(10, 9\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(10, 10\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(10, 11\right)&0&0&0&0&0&0&0\\\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(11, 6\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(11, 7\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(11, 8\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(11, 9\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(11, 10\right)&\operatorname{\mathit{HardinA229531StripData}}.\operatorname{T}\left(11, 11\right)&0&0&0&0&0&0&0\end{pmatrix}
-$$
-
-$$
-(B_{9}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(3\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}0&0&0&0&0&0&0&0&0&0&0&0&0\\0&0&1&0&0&0&0&0&0&0&0&0&0\\0&0&1&1&0&0&0&0&0&0&0&0&0\end{pmatrix}
-$$
-
-$$
-(B_{10}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(3\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}1&0&0&0&0&0&0&0&0&0&0&0&0\\1&0&1&1&0&0&0&0&0&0&0&0&0\\1&1&0&0&0&0&0&0&0&0&0&0&0\end{pmatrix}
-$$
-
-$$
-(B_{11}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(1\right), \operatorname{\mathit{Fin}}\left(13\right), \operatorname{\mathit{Int}}\right)) = \begin{pmatrix}1&1&1&0&0&0&0&0&0&0&0&0&0\end{pmatrix}
-$$
-
-**Definition 1.4 (Initial distribution).**
+**Definition 1.6 (Initial distribution).**
 
 $$(\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{initial}}: \operatorname{\mathit{Fin}}\left(33\right) \to \operatorname{\mathit{Int}}) = \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{\mathit{initial}}, \begin{pmatrix}0&0&0&0&0&0&30&6&0&12&0&24&0\end{pmatrix}\right)$$
 
@@ -110,7 +110,7 @@ $$(\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{initial}
 
 Fin.append retains HardinA229531StripData.initial and appends thirteen weights counting initial rows with two horizontal defects. The literal initial-row sum is checked in HardinA229634Strip.finite_certificate.
 
-**Definition 1.5 (Terminal indicator).**
+**Definition 1.7 (Terminal indicator).**
 
 $$(\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{terminal}}: \operatorname{\mathit{Fin}}\left(33\right) \to \operatorname{\mathit{Int}}) = \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left((0: \operatorname{\mathit{Fin}}\left(20\right) \to \operatorname{\mathit{Int}}), (1: \operatorname{\mathit{Fin}}\left(13\right) \to \operatorname{\mathit{Int}})\right)$$
 
@@ -124,7 +124,7 @@ $$(\operatorname{\mathit{HardinA229634StripData}}.\operatorname{\mathit{terminal
 
 The first twenty entries are zero and the appended thirteen entries are one. The finite certificate identifies this with zero residual budget for every valid row.
 
-**Definition 1.6 (Forward vectors).**
+**Definition 1.8 (Forward vectors).**
 
 $$(\operatorname{\mathit{HardinA229634StripData}}.\operatorname{W}: \operatorname{\mathit{Fin}}\left(21\right) \to \left(\operatorname{\mathit{Fin}}\left(33\right) \to \operatorname{\mathit{Int}}\right)) = \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left((\Lambda (i: \operatorname{\mathit{Fin}}\left(14\right)) \mapsto (\operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{HardinA229531StripData}}.\operatorname{W}\left(i\right), \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{0}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{1}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{2}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{3}, B_{4}\right)\right)\right)\right)\left(i\right)\right))), \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{5}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(B_{6}, B_{7}\right)\right)\right)$$
 
@@ -179,6 +179,8 @@ $$
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData.W`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData.cl`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData.initial`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData.oldClassImage`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData.oldTail`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData.terminal`
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData](../CrossedStripDefects/HardinA229531StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)
