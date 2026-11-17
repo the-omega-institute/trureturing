@@ -25,7 +25,7 @@ The proposed monotonicity would control how the signed-versus-underlying spectra
 
 ## Gap
 
-The source question and the cited Hameed–Biju–Stanić paper define the beta quantity, but do not settle the full universal deletion claim. The bounded literature screen covered the source, its cited paper, and the directly relevant follow-up records arXiv:2606.11108 and arXiv:2609.11736; no complete supplier of this exact claim was found in that scope.
+The source question and the cited Hameed–Biju–Stanić paper define the beta quantity, but do not settle the full universal deletion claim. The preregistration is [issue #31231](https://github.com/the-omega-institute/trureturing/issues/31231). The bounded literature screen covered the source, its cited paper, and the directly relevant follow-up records arXiv:2606.11108 and arXiv:2609.11736; no complete supplier of this exact claim was found in that scope.
 
 ## Route
 
