@@ -238,7 +238,7 @@ private theorem projector_trace (n : ℕ) : (fiveRowProjector n).trace = 2*(n : 
   simp [Fin.sum_univ_succ]
   <;> ring
 
-private theorem idempotent_trace_rank {I : Type} [Fintype I] [DecidableEq I]
+theorem idempotent_trace_rank {I : Type} [Fintype I] [DecidableEq I]
     (P : Matrix I I ℂ) (hP : P*P=P) : P.trace = (P.rank : ℂ) := by
   have hlin : IsIdempotentElem P.mulVecLin := by
     rw [← Matrix.toLin'_apply']

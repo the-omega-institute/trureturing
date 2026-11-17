@@ -17,6 +17,7 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Module
+import D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
 
 /-! Laurent coordinates retain all exponents and their exact matrix coefficients. -/
 
@@ -131,7 +132,8 @@ private theorem eval_sharp (p : LaurentPolynomial ℂ) (z : Circle) :
       rw [← map_zpow]
       rfl
     rw [hn, hn]
-    rw [zpow_neg, Circle.coe_inv_eq_conj]
+    rw [_root_.zpow_neg, Circle.coe_inv_eq_conj]
+    exact mul_comm _ _
 
 private theorem evaluate_adjoint (F : Loop) (z : Circle) :
     evaluate (adjoint F) (Circle.toUnits z) = (evaluate F (Circle.toUnits z))ᴴ := by
@@ -177,7 +179,7 @@ private theorem coefficient_mul_top (F G : Loop) (a b : ℤ)
     coefficient (F * G) (a + b) = coefficient F a * coefficient G b := by
   ext i k
   simp only [coefficient, Matrix.mul_apply, AddMonoidAlgebra.coeff_sum,
-    Finsupp.finset_sum_apply]
+    Finsupp.finsetSum_apply]
   apply Finset.sum_congr rfl
   intro t _
   apply scalar_top
@@ -233,10 +235,12 @@ private theorem endpoints {n : ℕ} {F : Loop} (hn : 0 < n) (h : InClass n F) :
   have hnm2 : -(n : ℤ) + -(n : ℤ) ≠ 0 := by omega
   have hdtop : (coefficient F n).det = 0 := by
     rw [← det_top h, hdet]
-    simp [← LaurentPolynomial.C_1, hn2]
+    change (T 0 : LaurentPolynomial ℂ).coeff ((n : ℤ) + n) = 0
+    simp [Ne.symm hn2]
   have hdbot : (coefficient F (-(n : ℤ))).det = 0 := by
     rw [← det_bottom h, hdet]
-    simp [← LaurentPolynomial.C_1, hnm2]
+    change (T 0 : LaurentPolynomial ℂ).coeff (-(n : ℤ) + -(n : ℤ)) = 0
+    simp [Ne.symm hnm2]
   have hl := congrArg (fun A => coefficient A ((n : ℤ) + n)) hleft
   have hr := congrArg (fun A => coefficient A ((n : ℤ) + n)) hright
   rw [coefficient_mul_top _ _ _ _ (adjoint_upper_bound h) (upper_bound h),
@@ -245,7 +249,123 @@ private theorem endpoints {n : ℕ} {F : Loop} (hn : 0 < n) (h : InClass n F) :
     coefficient_adjoint] at hr
   have hz : coefficient (1 : Loop) ((n : ℤ) + n) = 0 := by
     ext a b
-    simp [coefficient, Matrix.one_apply, hn2, ← LaurentPolynomial.C_1]
+    by_cases hab : a = b
+    · subst b
+      change (T 0 : LaurentPolynomial ℂ).coeff ((n : ℤ) + n) = 0
+      simp [Ne.symm hn2]
+    · simp [coefficient, Matrix.one_apply, hab]
   exact ⟨hdtop, hdbot, hl.trans hz, hr.trans hz⟩
+
+private theorem projector_trace {P : M₂} (hP : RankOneProjector P) : P.trace = 1 := by
+  rw [D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.idempotent_trace_rank P hP.2.1,
+    hP.2.2, Nat.cast_one]
+
+private theorem projector_of_trace {P : M₂} (hstar : Pᴴ = P) (hsq : P * P = P)
+    (htrace : P.trace = 1) : RankOneProjector P := by
+  refine ⟨hstar, hsq, ?_⟩
+  have ht :=
+    D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.idempotent_trace_rank P hsq
+  rw [htrace] at ht
+  exact_mod_cast ht.symm
+
+private theorem projector_complement {P : M₂} (hP : RankOneProjector P) :
+    RankOneProjector (1 - P) := by
+  have hproj : IsStarProjection P := ⟨hP.2.1, hP.1⟩
+  refine projector_of_trace hproj.one_sub.isSelfAdjoint.star_eq
+    hproj.one_sub.isIdempotentElem.eq ?_
+  rw [Matrix.trace_sub, projector_trace hP]
+  norm_num [Matrix.trace, Fin.sum_univ_two]
+
+private def rowProjection (A : M₂) : M₂ := (Aᴴ * A).trace⁻¹ • (Aᴴ * A)
+
+private theorem gram_top {A : M₂} (hA : A.det = 0) :
+    A * (Aᴴ * A) = (Aᴴ * A).trace • A := by
+  have hd : A 0 0 * A 1 1 - A 0 1 * A 1 0 = 0 := by
+    simpa only [Matrix.det_fin_two] using hA
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.trace,
+      Fin.sum_univ_two, Matrix.smul_apply, smul_eq_mul]
+  · linear_combination -(star (A 1 1)) * hd
+  · linear_combination (star (A 1 0)) * hd
+  · linear_combination (star (A 0 1)) * hd
+  · linear_combination -(star (A 0 0)) * hd
+
+private theorem rowProjection_laws {A : M₂} (hne : A ≠ 0) (hd : A.det = 0) :
+    RankOneProjector (rowProjection A) ∧ A * rowProjection A = A := by
+  let B := Aᴴ * A
+  have hs : B.trace ≠ 0 := by
+    exact fun h => hne (Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp h)
+  have hB : Bᴴ = B := Matrix.isHermitian_conjTranspose_mul_self A
+  have htrstar : star B.trace = B.trace := by
+    rw [← Matrix.trace_conjTranspose, hB]
+  have hAB : A * B = B.trace • A := gram_top hd
+  have hBB : B * B = B.trace • B := by
+    calc
+      B * B = Aᴴ * (A * B) := by simp [B, Matrix.mul_assoc]
+      _ = B.trace • B := by rw [hAB, Matrix.mul_smul]; rfl
+  have hPstar : (rowProjection A)ᴴ = rowProjection A := by
+    change (B.trace⁻¹ • B)ᴴ = B.trace⁻¹ • B
+    rw [Matrix.conjTranspose_smul, star_inv₀, htrstar, hB]
+  have hPsq : rowProjection A * rowProjection A = rowProjection A := by
+    change (B.trace⁻¹ • B) * (B.trace⁻¹ • B) = B.trace⁻¹ • B
+    rw [Matrix.smul_mul, Matrix.mul_smul, hBB, smul_smul, smul_smul]
+    congr 1
+    field_simp
+  have hPtr : (rowProjection A).trace = 1 := by
+    change (B.trace⁻¹ • B).trace = 1
+    rw [Matrix.trace_smul, smul_eq_mul, inv_mul_cancel₀ hs]
+  refine ⟨projector_of_trace hPstar hPsq hPtr, ?_⟩
+  change A * (B.trace⁻¹ • B) = A
+  rw [Matrix.mul_smul, hAB, smul_smul, inv_mul_cancel₀ hs, one_smul]
+
+private theorem projector_unique {P Q : M₂} (hP : RankOneProjector P)
+    (hQ : RankOneProjector Q) (hpq : P * Q = P) : P = Q := by
+  have hqp : Q * P = P := by
+    simpa [Matrix.conjTranspose_mul, hP.1, hQ.1] using congrArg Matrix.conjTranspose hpq
+  have hdiff : (Q - P)ᴴ * (Q - P) = Q - P := by
+    rw [Matrix.conjTranspose_sub, hQ.1, hP.1, sub_mul, mul_sub, mul_sub,
+      hP.2.1, hQ.2.1, hpq, hqp]
+    abel
+  have ht : ((Q - P)ᴴ * (Q - P)).trace = 0 := by
+    rw [hdiff, Matrix.trace_sub, projector_trace hP, projector_trace hQ, sub_self]
+  exact (sub_eq_zero.mp (Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp ht)).symm
+
+private theorem rowProjection_unique {A Q : M₂} (hne : A ≠ 0) (hd : A.det = 0)
+    (hQ : RankOneProjector Q) (haq : A * Q = A) : Q = rowProjection A := by
+  apply (projector_unique (rowProjection_laws hne hd).1 hQ ?_).symm
+  unfold rowProjection
+  rw [Matrix.smul_mul, Matrix.mul_assoc, haq]
+
+private theorem terminal_cancellation {n : ℕ} {F : Loop} (hn : 0 < n)
+    (hF : InClass n F) (hdeg : ActualDegree n F) :
+    ∃! P : M₂, RankOneProjector P ∧
+      coefficient F n * (1 - P) = 0 ∧ coefficient F (-(n : ℤ)) * P = 0 := by
+  obtain ⟨hdetA, hdetD, _, horth⟩ := endpoints hn hF
+  by_cases hA : coefficient F n = 0
+  · have hD : coefficient F (-(n : ℤ)) ≠ 0 := hdeg.resolve_left (not_not.mpr hA)
+    let Q := rowProjection (coefficient F (-(n : ℤ)))
+    have hQ := rowProjection_laws hD hdetD
+    refine ⟨1 - Q, ⟨projector_complement hQ.1, by rw [hA, zero_mul], ?_⟩, ?_⟩
+    · rw [mul_sub, mul_one, hQ.2, sub_self]
+    · intro P hP
+      have he : 1 - P = Q := rowProjection_unique hD hdetD (projector_complement hP.1) (by
+        rw [mul_sub, mul_one, hP.2.2, sub_zero])
+      dsimp [Q] at he ⊢
+      linear_combination -he
+  · let P := rowProjection (coefficient F n)
+    have hP := rowProjection_laws hA hdetA
+    have hDP : coefficient F (-(n : ℤ)) * P = 0 := by
+      have ho : coefficient F (-(n : ℤ)) * (coefficient F n)ᴴ = 0 := by
+        simpa [Matrix.conjTranspose_mul] using congrArg Matrix.conjTranspose horth
+      dsimp [P, rowProjection]
+      rw [Matrix.mul_smul, ← Matrix.mul_assoc, ho, zero_mul, smul_zero]
+    refine ⟨P, ⟨hP.1, ?_, hDP⟩, ?_⟩
+    · rw [mul_sub, mul_one, hP.2, sub_self]
+    · intro Q hQ
+      exact rowProjection_unique hA hdetA hQ.1 (by
+        have := hQ.2.1
+        rw [mul_sub, mul_one, sub_eq_zero] at this
+        exact this.symm)
 
 end D5.S3.ContinuousObservables.LaurentLoopFactorization
