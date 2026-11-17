@@ -33,6 +33,7 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 29
       then (1 : ℤ) else 0) = T (cl p d.val) 29 := by
+  unfold Canonical
   intro p d
   fin_cases d <;> revert p <;> decide +kernel
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripClass9

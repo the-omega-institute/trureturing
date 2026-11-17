@@ -41,14 +41,18 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
       (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
         cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 25
         then (1 : ℤ) else 0) = T (cl p d.val) 25 := by
+    unfold Canonical
     intro p
     generalize h0 : p 0 = c0
     generalize h1 : p 1 = c1
     fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
   intro p d hp hn
   by_cases hz : d.val = 0 ∧ HardinA229531StripData.Valid p 0
-  · simp only [hz.1]
-    simp_rw [HardinA229634StripCut.zero_cut p _ 5]
-    exact (HardinA229531StripClasses.transition_counts p 0 hz.2 11).trans (table p hz.2)
+  · have dz : d = 0 := Fin.ext hz.1
+    subst d
+    refine Eq.trans ?_ ((HardinA229531StripClasses.transition_counts p 0 hz.2 11).trans (table p hz.2))
+    apply Finset.sum_congr rfl
+    intro r _
+    exact ite_congr (propext (HardinA229634StripCut.zero_cut p r 5)) (fun _ => rfl) (fun _ => rfl)
   · exact remaining p d hp hn hz
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripClass5
