@@ -1,1 +1,0 @@
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.ZeroTemperature
