@@ -52,7 +52,7 @@ open D5.S3.StatisticalMechanics.Potts.CrossedStripDefects
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripData (Row horizontal between)
 private theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
-  simp only [cl, HardinA229531StripData.cl, HardinA233126SquareStrip.boundaryClass,
+  simp only [cl, HardinA229531StripData.Valid, HardinA229531StripData.cl, HardinA233126SquareStrip.boundaryClass,
     bondDefects, Function.comp_apply, ne_eq, e.injective.eq_iff]
 
 private theorem bond_relabel (e : Equiv.Perm (Fin 3))
