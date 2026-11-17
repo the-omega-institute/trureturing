@@ -142,21 +142,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_li
 
 The two endpoint orientations have total cardinality at most twice the signed divisor bound; the same theorem supplies |AC|≤8(J₁J₂)²<p².
 
-**Definition 1.10 (fieldDet).**
-
-Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.fieldDet`
-
-*Formalization.* `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.fieldDet` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
-
-*Commentary.*
-
-Homogeneous determinant over a commutative coefficient ring.
-
-**Theorem 1.11 (regular_dividing_homogeneous_lines).**
+**Theorem 1.10 (regular_dividing_homogeneous_lines).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_homogeneous_lines`
 
@@ -170,7 +156,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_di
 
 The regular homogeneous pencil identity forces all three determinant lines in one of the two endpoint orientations.
 
-**Theorem 1.12 (regular_dividing_actual_line_cover).**
+**Theorem 1.11 (regular_dividing_actual_line_cover).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_actual_line_cover`
 
@@ -184,7 +170,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_di
 
 The actual mapped pencil supplies the regular homogeneous identity and both modular line orientations.
 
-**Theorem 1.13 (regular_dividing_modular_zero_partner_count).**
+**Theorem 1.12 (regular_dividing_modular_zero_partner_count).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_modular_zero_partner_count`
 
@@ -198,7 +184,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_di
 
 The actual regular dividing partner set satisfies the two-orientation signed divisor bound.
 
-**Theorem 1.14 (signed_divisors_antidiag_subpower).**
+**Theorem 1.13 (signed_divisors_antidiag_subpower).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.signed_divisors_antidiag_subpower`
 
@@ -212,7 +198,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.signed_div
 
 The signed divisor antidiagonal inherits a uniform subpower bound from the classical natural divisor estimate.
 
-**Theorem 1.15 (regular_dividing_modular_zero_partner_subpower).**
+**Theorem 1.14 (regular_dividing_modular_zero_partner_subpower).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_modular_zero_partner_subpower`
 
@@ -226,21 +212,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_di
 
 For every positive epsilon, a constant independent of p bounds regular dividing actual partners by C times p to epsilon.
 
-**Theorem 1.16 (nondividing_field_partner_cover).**
-
-Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.nondividing_field_partner_cover`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.nondividing_field_partner_cover` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
-
-*Commentary.*
-
-A formal cubic pencil identity with two nonzero direction determinants restricts the ordered field-coordinate partners to six explicit pairs.
-
-**Theorem 1.17 (nondividing_modular_zero_partner_count).**
+**Theorem 1.15 (nondividing_modular_zero_partner_count).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.nondividing_modular_zero_partner_count`
 
@@ -254,7 +226,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.nondividin
 
 The bounded integer endpoints reduce injectively modulo p, transferring the six field-coordinate candidates to an absolute count of at most six actual partners.
 
-**Theorem 1.18 (modular_line_divisor_height).**
+**Theorem 1.16 (modular_line_divisor_height).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_divisor_height`
 
@@ -275,12 +247,10 @@ The divisor constant has absolute value at most 8(J₁J₂)², strictly less tha
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.ModularLinePair`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.actualValue`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.coordinateDet`
-- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.fieldDet`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modularZeroPartners`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_divisor_height`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_pair_integer_lift`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_partner_count`
-- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.nondividing_field_partner_cover`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.nondividing_modular_zero_partner_count`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.oriented_modular_line_partner_count`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_actual_line_cover`
@@ -288,5 +258,6 @@ The divisor constant has absolute value at most 8(J₁J₂)², strictly less tha
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_modular_zero_partner_count`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_modular_zero_partner_subpower`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.signed_divisors_antidiag_subpower`
+- Dependency: [D5/S3/Arith/CharacterSums/PascadiModularZeroFieldPartners](PascadiModularZeroFieldPartners.md)
 - Dependency: [D5/S3/Arith/CharacterSums/PascadiOriginalCoefficients](PascadiOriginalCoefficients.md)
 - Dependency: [D5/S3/Arith/Divisors/DivisorSubpower](../Divisors/DivisorSubpower.md)
