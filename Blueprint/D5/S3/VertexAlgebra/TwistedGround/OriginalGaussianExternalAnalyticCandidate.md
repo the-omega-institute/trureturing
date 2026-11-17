@@ -218,4 +218,5 @@ For real 0<=r<1 and the original convergence inequalities norm(u)+sqrt(r)<1 and 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.ell`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.rationalJ`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.rationalT`
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalCandidateCore](OriginalGaussianExternalCandidateCore.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianPeriodIdentity](OriginalGaussianPeriodIdentity.md)
