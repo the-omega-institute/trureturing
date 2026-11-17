@@ -70,9 +70,6 @@ def ActualDegree (n : ℕ) (F : Loop) : Prop :=
 def adjoint (F : Loop) : Loop := fun a b =>
   LaurentPolynomial.invert (AddMonoidAlgebra.mapRingHom ℤ (starRingEnd ℂ) (F b a))
 
-private theorem coefficient_ofCoefficients (C : ℤ →₀ M₂) (j : ℤ) :
-    coefficient (ofCoefficients C) j = C j := rfl
-
 private theorem coefficient_ext {F G : Loop} (h : ∀ j, coefficient F j = coefficient G j) :
     F = G := by
   ext a b j
@@ -716,9 +713,8 @@ private theorem factorization_unique (n : ℕ) (F : Loop) (hF : InClass n F)
       rw [heS, ← hPQ, mul_assoc, primitive_inverse hP, mul_one]
     have hprefix := ih _ hU.2.1 hU.2.2.1 (r.1, R) (s.1, S)
       ⟨hr.1, hRlen, hRall, hFredR⟩ ⟨hs.1, hSlen, hSall, hFredS⟩
-    have hfst : r.1 = s.1 := congrArg (fun x : M₂ × List M₂ => x.1) hprefix
-    have htail : R = S := congrArg (fun x : M₂ × List M₂ => x.2) hprefix
-    exact Prod.ext hfst (by rw [hrlist, hslist, htail, hPQ])
+    have hpair := Prod.mk.inj hprefix
+    exact Prod.ext hpair.1 (by rw [hrlist, hslist, hpair.2, hPQ])
 
 /-- Haah's exact-degree ordered factorization, with the forward class assertion. -/
 theorem haah_factorization :
