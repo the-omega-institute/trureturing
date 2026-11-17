@@ -15,6 +15,7 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiSingularFactorCover
   - D5/S3/Arith/CharacterSums/PascadiLocalizedFactor
   - D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover
+  - D5/S3/Arith/CharacterSums/PascadiPrimeCubeCount
 license: source-reference
 triage: anchor
 ---
@@ -71,8 +72,22 @@ at $X=Y=p^{9/5}$ the extra factor is $1+p^{3/5}$.
 The 17 November 2026 bounded literature screen covered both arXiv versions,
 the journal text, the conjecture's cited results and identifiable citing papers;
 no theorem covering this whole prime-cube range was found in that scope.
-This does not establish exhaustive novelty or priority, and the repository's
-partial formal results do not yet prove that original-tuple estimate.
+This does not establish exhaustive novelty or priority. The later repository
+prime-cube continuation below proves that precise original-tuple estimate;
+the final Shkredov/Chang primary-text comparison remains incomplete.
+
+The continuation also checked the current primary texts arXiv:2605.02518v2
+(Zhang) and arXiv:2603.14116v2 (Shkredov). Zhang's Theorem 2.4 requires
+trace-hyperplane nonconcentration; the natural two-letter unipotent product
+here has a fixed lower-right matrix entry, so that theorem does not directly
+apply. Its Theorem 3.6 concerns a specified Mobius incidence configuration.
+Shkredov's class Z includes sufficiently large prime cubes, but Lemma 14
+averages a common shift and Lemma 15 counts a small-N Mobius incidence; neither
+is the fixed-coefficient six-return estimate above. These checked distinctions
+do not exhaust the citation graph. The final 2021 Journal of Number Theory
+text cited by Pascadi was not obtained; Pascadi's published attribution to its
+Lemma 15 is explicitly in the prime-modulus case. No exhaustive priority
+claim follows from this bounded comparison.
 
 ## Repository prime-cube continuation (16 November 2026)
 
@@ -120,11 +135,18 @@ For `1<=X<=Y`, `Y<p^3`, `A=XY<2p^4`, `H^2=A` and `p<=H`, its bound is
 These are explicit sufficient conditions; applying them to the target range
 still requires checking that range's hypotheses.
 
-The full original prime-cube count remains open. The uniform derivative-zero
-bound, exceptional and removed unit-chart pieces, good-record second-moment
-summation, all-scalar-center comparison and final cutoff must still be connected
-to the original literal six-tuples. The supplied paper proof is not a substitute
-for this formal endpoint. Source-bound four-slot escape audits remain unfinished
+`PascadiPrimeCubeCount.prime_cube_scalar_return_count` now proves the original
+prime-cube slice: for every epsilon>0 and C0>=1, one K>0 bounds the total literal
+six-letter count, summed over every scalar gamma with gamma^2=1, by
+`K*Y^2*p^epsilon`, for every prime p, fixed alternating units modulo p^3,
+`p^(3/2)<=X<=Y`, `XY<=C0*p^(18/5)` and `6Y<p^2`. The proof connects the
+derivative and exceptional partners, actual record moments, all removed
+charts, nonunit rows, all scalar centers and the bounded-prime range without
+supplied lattice or counting hypotheses. The exact-root Lean build and scoped
+report passed; canonical publication and required CI are separate checks.
+The unrestricted arbitrary-modulus conjecture remains open. The supplied
+paper proof is an input with the separate provenance below. Source-bound
+four-slot escape audits remain unfinished
 under [issue #31176](https://github.com/the-omega-institute/trureturing/issues/31176);
 no completed registration is claimed for these new modules.
 
