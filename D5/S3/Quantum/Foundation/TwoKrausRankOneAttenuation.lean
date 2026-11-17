@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Foundation/TwoKrausRankOneAttenuation
    generality: G
    mirror-B: D5/B/S3/Quantum/Foundation/TwoKrausRankOneAttenuation
-   mirror-E: none(waiver:registration-template-not-established)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Operator norm loss for nilpotent CAR two-Kraus maps on pure states. -/
