@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration

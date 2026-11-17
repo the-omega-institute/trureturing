@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingClosedForm
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import Reg.Support.UniverseSingleReadout
@@ -6,11 +7,10 @@ import LeanInformationAuditInterface.Contract.Registration
 /-! Source-equivalent readout laws for king-graph defect counts. -/
 namespace Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 
-open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects
 open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open KingGrid
+open Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 
 noncomputable section
 
