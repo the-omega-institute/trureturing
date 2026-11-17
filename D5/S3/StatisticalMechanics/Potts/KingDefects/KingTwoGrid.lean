@@ -10,7 +10,7 @@ admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: two_colour_obstruction (the universal two-colour 2 by 3 obstruction,
   consumed by the unbounded normalization theorem through an injective graph embedding)
 TwoDefect: proof_shape=bind-only; consumers=L,T,twoDefect_usesThree_wide,
-  twoDefect_transpose,twoDefect_usesThree,labelled_eq_twentyFour,KingTwoFields.labelled_equiv
+  twoDefect_usesThree,labelled_eq_twentyFour,KingTwoFields.labelled_equiv
 L: proof_shape=bind-only; consumers=labelled_eq_twentyFour,KingTwoFields.fields_eq_six_canonical
 T: proof_shape=bind-only; consumers=labelled_eq_twentyFour,KingTwoFields.fields_eq_six_canonical
 embedCell: proof_shape=bind-only; consumers=mono_embed,twoDefect_usesThree_wide
@@ -21,7 +21,6 @@ mono_embed: proof_shape=bind-only; consumers=twoDefect_usesThree_wide
 two_colour_factor: proof_shape=bind-only; consumers=twoDefect_usesThree_wide
 two_colour_obstruction: proof_shape=content; consumers=twoDefect_usesThree_wide
 twoDefect_usesThree_wide: proof_shape=content; consumers=twoDefect_usesThree
-twoDefect_transpose: proof_shape=bind-only; consumers=twoDefect_usesThree
 twoDefect_usesThree: proof_shape=content; consumers=labelled_eq_twentyFour
 labelled_eq_twentyFour: proof_shape=content; consumers=KingTwoFields.fields_eq_six_canonical
 The global slot-count and settlement consumers remain separate obligations.
@@ -113,23 +112,19 @@ private theorem twoDefect_usesThree_wide {n k : ℕ} (hn : 2 ≤ n) (hk : 3 ≤ 
   unfold TwoDefect at hf
   omega
 
-private theorem twoDefect_transpose {n k : ℕ} (f : Cell n k → Fin 4) :
-    TwoDefect (transpose f) ↔ TwoDefect f := by
-  classical
-  have hc := Nat.card_congr (transposeEdge.subtypeEquiv
-    (p := fun e => mono f e) (q := fun e => mono (transpose f) e)
-    (fun e => (transpose_mono f e).symm))
-  simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at hc
-  unfold TwoDefect
-  rw [← hc]
-
 private theorem twoDefect_usesThree {n k : ℕ} (hn : 2 ≤ n) (hk : 2 ≤ k)
     (hne : n ≠ 2 ∨ k ≠ 2) (f : Cell n k → Fin 4) (hf : TwoDefect f) : UsesThree f := by
   by_cases hk3 : 3 ≤ k
   · exact twoDefect_usesThree_wide hn hk3 f hf
   have hn3 : 3 ≤ n := by omega
   obtain ⟨a, b, c, hab, hac, hbc⟩ := twoDefect_usesThree_wide hk hn3 (transpose f)
-    ((twoDefect_transpose f).mpr hf)
+    (by
+      classical
+      have hc := Nat.card_congr (transposeEdge.subtypeEquiv
+        (p := fun e => mono f e) (q := fun e => mono (transpose f) e)
+        (fun e => (transpose_mono f e).symm))
+      simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at hc
+      simpa only [TwoDefect, ← hc] using hf)
   exact ⟨a.swap, b.swap, c.swap, hab, hac, hbc⟩
 
 /-- Three occurring colours make the colour-permutation action free. -/
