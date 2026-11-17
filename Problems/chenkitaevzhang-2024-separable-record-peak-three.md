@@ -5,7 +5,7 @@ doi: 10.1016/j.dam.2024.05.004
 url: https://arxiv.org/abs/2404.18517v1
 triage: theorem
 motivation_gids:
-  - D5/S1/Words/Patterns/Separable/RecordPeak.actual_record_rising
+  - D5/S1/Words/Patterns/Separable/RecordAllIndex.actual_ckz_conjecture_two
 ---
 
 # CKZ Conjecture 2: the four actual record distributions
@@ -81,8 +81,12 @@ inside the actual weighted inference.
 
 ## Gap
 
-The actual irreducible right-maximum declining comparisons for arbitrary
-$k\ge4$ and the global maximum remain open.
+[`RecordAllIndex.actual_ckz_conjecture_two`](../Blueprint/D5/S1/Words/Patterns/Separable/RecordAllIndex.md)
+proves the complete displayed target on literal `Equiv.Perm (Fin n)`
+avoiders, with the stated positive irreducible and proper-direct-cut
+classes and strict, unshifted statistics. It has no assumed
+generating-function bridge, finite length cutoff or uniqueness claim.
+
 `RecordNewtonPositivity.actual_q_record_newton_nonnegative` proves the
 unbounded coefficient sign law $[t^n]G_r(q(t))\ge0$ for every natural $r,n$.
 Its proof constructs the Motzkin series from Mathlib's Catalan supplier,
@@ -90,23 +94,30 @@ derives its differential recurrence at every index, and propagates two
 pairs of consecutive positive-composition certificates to the universal
 tail. This removes the universal kernel-sign obligation.
 
-The exact remaining bridge is the normalized actual $J_k$ coefficient
-formula and its Newton transform. They must identify each actual decline
-with a nonnegative combination of the defined kernels; the sign theorem
-has no actual-record-fiber correspondence in its conclusion. No new
-actual declining range, full open-problem resolution or KPI increment is
-attributed to this partial unit.
+`RecordAllIndex.actual_weighted_quadratic` derives the actual weighted
+equation from exact least-cut record fibers. Its coefficient formula
+`J_coeff` and Newton transform `actual_adjacent_difference` identify, for
+every $k\ge3$,
+
+$$
+J_k-J_{k+1}=t^k\sum_{r=0}^{k-3}\binom{k-3}{r}G_r(q(t)).
+$$
+
+These are rational-series differences. Taking every length coefficient
+and applying the sign law proves `actual_rmax_decline` for all natural
+lengths and every $k\ge3$, including zero tails. Exact record transports,
+the rising side and induction yield all four distributions and their
+global weak maximum at three for every $n\ge5$.
 
 ## Route
 
-Use the actual record quadratic and scalar series from the right-maximum
-proof to derive the normalized Motzkin formula and Newton transform inside
-the full declining proof. Apply the proved all-index kernel sign law and
-extract the actual record coefficients. The exact transports
-give the remaining three declining laws at $n\ge5$. Combine rising and
-declining inequalities to obtain the global maximum. A conditional
-generating-function theorem or finite row computation does not discharge
-this route.
+The source linkage is the existing
+[`SEPARABLE_SIGNED_RECORD_WEIGHTS`](../docs/develop/theory/SEPARABLE_SIGNED_RECORD_WEIGHTS.md)
+theory, especially its actual weighted quadratic and Section 8 coefficient
+and kernel identities. The Lean proof constructs the actual quadratic,
+normalizes it using the Catalan/Motzkin series, proves the exact binomial
+coefficient identities, substitutes the actual scalar $q$, and extracts
+coefficients before applying the actual record transports.
 
 ## Falsifier
 
@@ -130,14 +141,25 @@ Conjecture 15 are separate open problems.
 
 ## Triage
 
-Theorem: a Tier 2 published universal mathematical conjecture with exact
-source classes and record definitions. The partial actual-carrier
-theorems leave the complete conjecture open. None is a full external
-settlement or carries an `OpenProblemResolutionClaim`.
+Theorem: the literal weak-peak formulation of the published conjecture is
+proved in Lean. This mathematical conclusion does not establish worldwide
+priority or a newly solved-problem KPI. The Scribe's typed resolution
+links the theorem to this source-v1 target; it supplies no literature
+priority evidence or completed registration audit.
+
+Proved: the controlling structure is the exact binomial expansion of
+each adjacent difference into nonnegative Newton kernels. The
+right-maximum decline holds at every natural length; the full peak
+theorem uses $n\ge5$. Open in the digestion ledger: separate coverage of
+the stronger all-length four-statistic decline and the multi-clause
+coefficient exposition. No neighbouring descent or Conjecture 15 claim
+is settled by this result.
 
 ## ASSUMED-UNVERIFIED
 
 The journal version of record body, exhaustive citation coverage and global
-novelty are unverified. Uncompiled algebraic research does not establish
-the missing normalized actual coefficient formula or Newton transform. Reg enrollment
-is user-paused; no completed registration audit is claimed.
+novelty are unverified. Reg/enrollment remains owner-paused under
+[issue 12664](https://github.com/the-omega-institute/trureturing/issues/12664).
+The public theorem audit is unfinished under the linked-issue exception;
+no `declared_validated` status is claimed. Final independent review and
+normal integration remain separate from the mathematical result.
