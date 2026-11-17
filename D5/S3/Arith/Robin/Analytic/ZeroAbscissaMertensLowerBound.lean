@@ -8,6 +8,7 @@
 
 import D5.S3.Weil.Mertens.ZeroAbscissaPower
 import D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
+import D5.S3.Arith.Robin.Analytic.ZeroFreeStripMertensEnvelope
 import D5.S3.Arith.Robin.EulerLayerRootCorrection
 import D5.S3.Arith.Robin.LogarithmBounds
 import D5.S3.Weil.Mertens.Third
@@ -123,39 +124,6 @@ private lemma B_decomposition {x : ℝ} (hx : 2 ≤ x) :
     (D5.S3.Arith.Robin.ThetaTailRobinWitness.theta_tail_mertens_robin x hx).2.1
   dsimp only [B, N]
   linarith only [ht]
-
-private lemma theta_power_bound {β C X : ℝ} (hβ : (1 / 2 : ℝ) < β)
-    (hpsi : ∀ x : ℝ, X ≤ x → |Chebyshev.psi x - x| ≤ C * x ^ β) :
-    ∃ K R : ℝ, 0 ≤ K ∧ 2 ≤ R ∧
-      ∀ x : ℝ, R ≤ x → |Chebyshev.theta x - x| ≤ K * x ^ β := by
-  obtain ⟨H, hH⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
-  refine ⟨|C| + |H|, max 2 X, by positivity, le_max_left _ _, ?_⟩
-  intro x hx
-  have hx2 : 2 ≤ x := (le_max_left _ _).trans hx
-  have hx0 : 0 < x := by linarith
-  have hx1 : 1 ≤ x := by linarith
-  have hp : 0 ≤ x ^ β := Real.rpow_nonneg hx0.le _
-  have hs : Real.sqrt x ≤ x ^ β := by
-    rw [Real.sqrt_eq_rpow]
-    exact Real.rpow_le_rpow_of_exponent_le hx1 hβ.le
-  have hgap : |Chebyshev.psi x - Chebyshev.theta x| ≤ |H| * x ^ β := by
-    rw [abs_of_nonneg (sub_nonneg.mpr (Chebyshev.theta_le_psi x))]
-    calc
-      _ ≤ H * Real.sqrt x := hH x
-      _ ≤ |H| * Real.sqrt x :=
-        mul_le_mul_of_nonneg_right (le_abs_self H) (Real.sqrt_nonneg _)
-      _ ≤ |H| * x ^ β := mul_le_mul_of_nonneg_left hs (abs_nonneg _)
-  calc
-    |Chebyshev.theta x - x| =
-        |(Chebyshev.psi x - x) - (Chebyshev.psi x - Chebyshev.theta x)| := by
-      congr 1
-      ring
-    _ ≤ |Chebyshev.psi x - x| + |Chebyshev.psi x - Chebyshev.theta x| := abs_sub _ _
-    _ ≤ C * x ^ β + |H| * x ^ β :=
-      add_le_add (hpsi x ((le_max_right _ _).trans hx)) hgap
-    _ ≤ |C| * x ^ β + |H| * x ^ β := by
-      nlinarith [mul_le_mul_of_nonneg_right (le_abs_self C) hp]
-    _ = (|C| + |H|) * x ^ β := by ring
 
 private lemma density_bounds {t : ℝ} (ht : Real.exp 1 ≤ t) :
     0 ≤ w t ∧ w t ≤ 2 / t ^ 2 := by
@@ -312,7 +280,8 @@ private theorem lower_power_of_psi {β C X : ℝ} (hβhalf : (1 / 2 : ℝ) < β)
     (hpsi : ∀ t : ℝ, X ≤ t → |Chebyshev.psi t - t| ≤ C * t ^ β) :
     ∃ A T : ℝ, 0 ≤ A ∧ 2 ≤ T ∧
       ∀ x : ℝ, T ≤ x → -A * x ^ (β - 1) ≤ B x := by
-  obtain ⟨K, R, hK, hR, htheta⟩ := theta_power_bound hβhalf hpsi
+  obtain ⟨K, R, hK, hR, htheta⟩ :=
+    D5.S3.Arith.Robin.Analytic.ZeroFreeStripMertensEnvelope.theta_power_bound hβhalf hpsi
   obtain ⟨W, hW⟩ := eventually_atTop.mp theta_window
   have hβgap : 0 < 1 - β := by linarith
   let A : ℝ := 2 * K / (1 - β) + 5 * K + 4

@@ -36,8 +36,9 @@ internal sealed class ZeroAbscissaMertensLowerBoundDocument : IScribeDocumentDef
                         "Otherwise set beta=Theta+epsilon/2. The RH/right-strip dichotomy and the "
                         + "existence of a nontrivial zero give Theta>=1/2, so 1/2<beta<1. "
                         + "ZeroAbscissaPower.actual_zero_abscissa_power_bound supplies the unconditional "
-                        + "actual psi estimate at exponent beta. The public Chebyshev bound "
-                        + "psi(x)-theta(x)<=H*sqrt(x) transfers it to abs(theta(x)-x)<=K*x^beta "
+                        + "actual psi estimate at exponent beta. ZeroFreeStripMertensEnvelope.theta_power_bound "
+                        + "uses the public Chebyshev bound "
+                        + "psi(x)-theta(x)<=H*sqrt(x) to transfer it to abs(theta(x)-x)<=K*x^beta "
                         + "on a sufficiently large real tail, with K>=0.")),
                     Paragraph(Text(
                         "Put w(t)=(log(t)+1)/(t^2*log(t)^2), Jtheta(x)=integral_(t>x)(theta(t)-t)*w(t), "

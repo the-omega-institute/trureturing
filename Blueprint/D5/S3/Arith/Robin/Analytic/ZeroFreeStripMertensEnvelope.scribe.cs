@@ -93,6 +93,19 @@ internal sealed class ZeroFreeStripMertensEnvelopeDocument : IScribeDocumentDefi
                         + "No literature-priority claim is made."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("theta-power-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.theta_power_bound"),
+                H("Transfer a power estimate from psi to theta"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For all real beta,C,X with beta>1/2, suppose that abs(psi(x)-x)<=C*x^beta "
+                    + "for every real x>=X. There are real K,R with K>=0 and R>=2 such that "
+                    + "abs(theta(x)-x)<=K*x^beta for every real x>=R. The unconditional estimate "
+                    + "0<=psi(x)-theta(x)<=H*sqrt(x) supplies the transfer with K=abs(C)+abs(H) "
+                    + "and R=max(2,X). This result also supplies the theta power estimate for "
+                    + "the unconditional actual-zero-abscissa lower envelope."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("nonlinear-quadratic"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.nonlinear_quadratic"),
                 H("The actual quadratic log-log remainder"),
