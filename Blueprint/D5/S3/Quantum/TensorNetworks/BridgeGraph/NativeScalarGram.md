@@ -22,7 +22,7 @@ The left family is the canonical NativeSaturation.leftSlices supplier. For the r
 
 The arithmetic hypotheses give 2(b-a) ≤ a and c+(c-c/2) ≤ d. Thus every route is well typed. The three branches are disjoint and recover both input coordinates, so the route is injective. Entrywise expansion identifies the tensor sum with SequentialRegisterCircuit.coordinateMatrix, whose column Gram is the identity. Multiplying the left family by the positive scalar sqrt(lambda) changes that identity Gram to lambda times the identity.
 
-No premise a<b, parity premise on c, exact minimal d, factor independence, or universal necessity theorem is used. The statement is a sufficiency result for the two displayed dimension inequalities and does not assemble the later two-block or three-block necessity regimes.
+No premise a<b, parity premise on c, exact minimal d, factor independence, or universal necessity theorem is used. The statement is a sufficiency result for the two displayed dimension inequalities and does not assert a full all-dimension existence classification.
 
 ## References
 

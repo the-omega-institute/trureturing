@@ -45,8 +45,8 @@ internal sealed class NativeScalarGramDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "No premise a<b, parity premise on c, exact minimal d, factor independence, " +
                         "or universal necessity theorem is used. The statement is a sufficiency result " +
-                        "for the two displayed dimension inequalities and does not assemble the later " +
-                        "two-block or three-block necessity regimes."))),
+                        "for the two displayed dimension inequalities and does not assert a full " +
+                        "all-dimension existence classification."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
