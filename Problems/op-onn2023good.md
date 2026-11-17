@@ -3,7 +3,7 @@ slug: op-onn2023good
 bibkey: onn2023supmodular
 doi: 10.48550/arXiv.2309.07700
 url: https://arxiv.org/abs/2309.07700v1
-triage: open-problem-resolution
+triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/Permutation/OnnGoodPermutationCount.result
 ---
