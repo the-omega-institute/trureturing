@@ -42,7 +42,7 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripClasses
 open DefectTransfer (bondDefects)
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open HardinA233177Canonical (Canonical canonical_exists_unique)
+open HardinA233177Canonical (canonical_exists_unique)
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false

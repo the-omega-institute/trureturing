@@ -9,8 +9,8 @@
 /-
 admission_basis: open-problem-resolution (#31328; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229532Strip.result)
-class_relabel: proof_shape=bind-only; consumers=HardinA229532Strip.result
-bond_relabel: proof_shape=bind-only; consumers=HardinA229532Strip.result
+class_relabel: proof_shape=bind-only; consumers=transition_counts
+bond_relabel: proof_shape=bind-only; consumers=transition_counts
 transition_counts: proof_shape=bind-only; consumers=HardinA229532Strip.result
 -/
 
@@ -54,7 +54,7 @@ set_option maxHeartbeats 0
 set_option Elab.async false
 set_option synthInstance.maxSize 100000
 open HardinA229532StripData
-open HardinA233177Canonical (Canonical canonical_exists_unique)
+open HardinA233177Canonical (canonical_exists_unique)
 private theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
   simp only [cl, HardinA233172DiagonalStrip.boundaryClass,
