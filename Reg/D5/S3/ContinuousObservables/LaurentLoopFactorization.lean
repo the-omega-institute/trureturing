@@ -47,8 +47,13 @@ theorem rejectedLaw : ¬ arena.Law rejected := by
 
 theorem actualDependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), [], [1], ?_⟩
-  simp [actual, realize]
+  refine ⟨(), [!![1, 0; 0, 0]], [!![0, 0; 0, 1]], ?_⟩
+  intro h
+  change [primitive !![1, 0; 0, 0]] = [primitive !![0, 0; 0, 1]] at h
+  have hm := (List.cons.inj h).1
+  have he := congrArg (fun F : Loop => (F 0 0).coeff 1) hm
+  norm_num [primitive, constant, Matrix.smul_apply, smul_eq_mul,
+    LaurentPolynomial.T_apply] at he
 
 def family : Registration arena (type_of% haah_factorization) where
   actual := actual

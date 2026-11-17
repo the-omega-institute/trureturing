@@ -46,11 +46,11 @@ internal sealed class LaurentLoopFactorizationDocument : IScribeDocumentDefiniti
     {
         var forward = All("Ps", Call("List", V("M")), Seq(
             Call("projectors", V("Ps")), Sp, Rightarrow, Sp,
-            Call("InClass", Call("length", V("Ps")), Call("prod", Call("map", V("E"), V("Ps")))));
+            Call("InClass", Call("length", V("Ps")), Call("prod", Call("map", V("E"), V("Ps"))))));
         var hypotheses = And(Call("InClass", V("n"), Call("ofCoefficients", V("C"))),
             Call("ActualDegree", V("n"), Call("ofCoefficients", V("C"))));
         var converse = All("n", Seq(Mathbb, Grp(V("N"))), All("C", Call("Finsupp", V("Z"), V("M")),
-            Seq(hypotheses, Sp, Rightarrow, Sp, Exists, V("!"), Sp,
+            Seq(hypotheses, Sp, Rightarrow, Sp, Exists, Bang, Sp,
                 Par(Seq(V("r"), Colon, Sp, V("M"), Times, Call("List", V("M")))), Comma, Sp,
                 Call("Factorization", V("n"), Call("ofCoefficients", V("C")), V("r")))));
         return And(forward, converse);
