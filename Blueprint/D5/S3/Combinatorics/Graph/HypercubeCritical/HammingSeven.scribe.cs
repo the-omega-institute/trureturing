@@ -66,16 +66,6 @@ internal sealed class HammingSevenDocument : IScribeDocumentDefinition
                     + "Clifford expansion; no Clifford-algebra theorem is declared here. "
                     + "The grade-four and grade-five reductions, purity, arbitrary 54-vertex "
                     + "classification, f2(Q9), and the 258-vertex obstruction remain open.")),
-            Paragraph(Text(
-                "The four-slot information-escape audit remains unfinished under "
-                    + "https://github.com/the-omega-institute/trureturing/issues/31190 . "
-                    + "The dependent-family comparison readout must retain C, its original "
-                    + "regularity, balance and cardinality premises, both selected vertices "
-                    + "and their membership proofs. Missing evidence is the compiled "
-                    + "original-telescope realization and source selection, whole-family "
-                    + "variation and sensitivity, actual observational dependence, lawful "
-                    + "enrolled readout and current binding validation. This disclosure "
-                    + "does not assert a declared_validated registration.")),
             Describe.Lean(
                 DescribeId.Create("balanced-cubic-hamming-seven"),
                 DeclarationHandle.Create(

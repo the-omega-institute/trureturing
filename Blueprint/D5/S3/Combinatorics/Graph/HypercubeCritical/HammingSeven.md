@@ -16,8 +16,6 @@ The Moore neighborhood counting method is classical graph theory; see Noga Alon,
 
 The geometric conclusion excludes actual support pairs of Hamming distances eight and nine. It therefore supplies the absence of such pairs required by the grade-eight and grade-nine terms of the paper's Clifford expansion; no Clifford-algebra theorem is declared here. The grade-four and grade-five reductions, purity, arbitrary 54-vertex classification, f2(Q9), and the 258-vertex obstruction remain open.
 
-The four-slot information-escape audit remains unfinished under https://github.com/the-omega-institute/trureturing/issues/31190 . The dependent-family comparison readout must retain C, its original regularity, balance and cardinality premises, both selected vertices and their membership proofs. Missing evidence is the compiled original-telescope realization and source selection, whole-family variation and sensitivity, actual observational dependence, lawful enrolled readout and current binding validation. This disclosure does not assert a declared_validated registration.
-
 **Theorem 1.1 (The actual support has pairwise Hamming distance at most seven).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/HammingSeven.hamming_distance_le_seven`
