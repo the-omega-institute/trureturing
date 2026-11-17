@@ -65,7 +65,7 @@ frequency estimate.
 
 `prime_word_first_letter` proves the exact recurrence
 
-$$W_C(v)=C\sum_{p\mid v,\ p	ext{ prime}}W_C(v/p)\qquad(v>1).$$
+$$W_C(v)=C\sum_{p\mid v,\ p\text{ prime}}W_C(v/p)\qquad(v>1).$$
 
 Using the convergent square reciprocal series and geometric decay,
 `prime_word_polynomial_bound` chooses one $r>1$ from $A$ alone with
@@ -89,12 +89,12 @@ $$W_A(v)^s v^{-\sigma}\le
   m^{-(\sigma-1/2)}W_{2A}(n)n^{-\sigma}.$$
 
 The finite-prime Euler-product supplier bounds the smooth factor using only
-local prime-power convergence at $	au=\sigma-1/2>0$. The decomposition is
+local prime-power convergence at $\tau=\sigma-1/2>0$. The decomposition is
 injective because multiplication recovers $v$. Enlarging to the finite product
 of the smooth and rough prefixes proves `prime_word_finite_moment`:
 
-$$orall\sigma>1\ \exists H_\sigma>0\ orall F\subseteq\mathbb N_{>0}
-	ext{ finite},\qquad
+$$\forall\sigma>1\ \exists H_\sigma>0\ \forall F\subseteq\mathbb N_{>0}
+\text{ finite},\qquad
 \sum_{v\in F}W_A(v)^s v^{-\sigma}\le H_\sigma.$$
 
 Thus the same fixed $s$ works for every $\sigma$, with each tail set and
@@ -121,12 +121,12 @@ type.
 
 ## Admission boundary
 
-The exact
-source representation and the infinite-three implication use new finite-tuple,
+The exact source representation and the infinite-three implication use new finite-tuple,
 cardinality and threshold arguments. The missing-residue result uses the
 earliest seed divisor and one finite LCM. The sublinear-count contradiction
 uses the actual recurrence, the injectivity of consecutive pairs, and the
-existing uniform divisor supplier. No novelty or priority assertion is made. The compiled unconditional theorem
+existing uniform divisor supplier. No novelty or priority assertion is made.
+The compiled unconditional theorem
 requires distinct source-fidelity and per-declaration proof-shape review before
 freezing or publication; the implementation worker supplies no self-approval.
 
@@ -136,10 +136,9 @@ original public theorems. Its four `Contract.Registration` attempts have no
 `sourceSelection`. The missing evidence is the complete original-source
 reconstruction and its readout path and coordinate bindings. The thirteen
 additional contributor, prime-word, analytic and unconditional theorems have no
-completed registration; their
-complete source-family realization, selected readouts, coordinate bindings
+completed registration; their complete source-family realization, selected readouts, coordinate bindings
 and family-wide evidence remain required. The concrete linked exception is
-[issue 31349](https://github.com/the-omega-institute/trureturing/issues/31349#issuecomment-6957024804).
+[issue 31349](https://github.com/the-omega-institute/trureturing/issues/31349#issuecomment-6957913334).
 No public theorem is claimed to have a completed `declared_validated`
 registration. Independent source-fidelity and per-declaration proof-shape
 approval of the complete intended unit remains required before freezing.
