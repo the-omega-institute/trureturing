@@ -1,5 +1,7 @@
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229536Strip
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
