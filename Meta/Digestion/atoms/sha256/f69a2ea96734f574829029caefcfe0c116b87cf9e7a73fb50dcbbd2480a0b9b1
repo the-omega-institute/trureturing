@@ -1,0 +1,34 @@
+**定理 21.5（原好阶段的满测充分条件及未证估计的准确位置）。** 若存在 $\delta>0$ 及无界的 $\mathcal H\subseteq\mathcal H_-$，使 $\sigma_H\ge\delta$ 对所有 $H\in\mathcal H$ 成立，则 $\nu(R)=1$。等价地，可用 (21.12) 中任一统一界作为这一所选阶段族的假设。这里的非退化假设准确等于
+
+$$
+K_H\ge\delta,\qquad
+K_H^2\|q_Hk\cdot\alpha\|_{\mathbb T}^2+r_H^2\|k\|_2^2\ge\delta^2
+\quad\text{对每个 }k\in\mathbb Z^2\setminus\{0\},\ H\in\mathcal H.
+\tag{21.14}
+$$
+
+因 $K_H\to\infty$，尾部只需检查非零 $\|k\|_2<\delta/r_H$ 的频率。条件 (21.14) 对原实际 CM 数据在无穷多个这些好阶段上是否成立，仍是未证估计；(21.7) 的实际能量比统一上界亦未证。
+
+若沿某个无界阶段子族有更强的 $\mathcal E_H^{\ne0}=o(m_H^2)$，则 $\nu(B_H)\to1$。反之，若沿某子族 $\sigma_H\to0$，则 $\nu(B_H)\to0$ 且 $\mathcal E_H/m_H^2\to\infty$。这里没有证明实际非塌缩子族或实际共振子族的存在；(21.12) 只刻画所选阶段族的统一界，不把它作为 $\nu(R)=1$ 的必要条件，也不把阶段覆盖趋零作为 limsup 零测的充分条件。
+
+**证明（只需正测子集包含于原 $R$）。** 由定理 21.4，每个 $H\in\mathcal H$ 都有 $\nu(B_H)\ge b:=1/C(\delta)>0$。对每个整数 $K$，无界性保证尾并集 $\bigcup_{H\in\mathcal H,H\ge K}B_H$ 含至少一个这样的事件，故其测度至少为 $b$。这些尾并集递减，由概率测度的上连续性，
+
+$$
+\nu\!\left(\limsup_{\substack{H\to\infty\\H\in\mathcal H}}B_H\right)\ge b.
+$$
+
+若目标属于该 limsup，则它在无穷多个 $X_H\to\infty$ 的块中各有原成功整数；这些整数无界，因 $F_{n,H}\subseteq E_n$，所以
+
+$$
+\limsup_{\substack{H\to\infty\\H\in\mathcal H}}B_H\subseteq R.
+\tag{21.15}
+$$
+
+于是 $\nu(R)>0$，只对原 $R$ 使用定理 20.2 的零一律，得到 $\nu(R)=1$。这不要求 $B_H$ 的 limsup 本身平移不变，不使用跨阶段独立或跨阶段二阶矩。
+
+若非零能量为 $o(m_H^2)$，由 (21.8) 及 $K_H\to\infty$ 得 $\mathcal E_H/m_H^2\to1$，再由 (21.11) 得覆盖趋于 $1$。若 $\sigma_H\to0$，同式给出覆盖趋零和能量比发散。这些单阶段极限本身不估计尾并集的上界，因而此处不从中推出任一 limsup 零测结论。
+
+相邻文献 Beresnevich–Datta–Ghosh–Ward，*Rectangular shrinking targets for $\mathbb Z^m$ actions on tori: well and badly approximable systems*，[DOI:10.4064/aa231108-27-8](https://doi.org/10.4064/aa231108-27-8)，[accepted 原文](https://eprints.whiterose.ac.uk/id/eprint/216540/1/RECTANGULAR_SHRINKING_TARGETS.pdf)，Theorem 1.3（印刷页 2–3）与 Theorem 2.4（印刷页 4）均以相应加权非奇异性为前提；§2 的 $S$ 是一个固定有限地方集。本题要求随 $H$ 增加全部 $p\le H$，其共同整数周期也随阶段改变，通向该文固定 $S$ 定理的适用桥并未建立。这里不直接套用该文结论，也不假定原实际 $\alpha$ badly approximable。
+
+用白话说，临界时原钥匙能打开的目标总量确实发散，并在一列原实际阶段中具有很大的平均命中数。但同一批钥匙可能在某个联合方向上重复覆盖窄带；准确能量、正比例覆盖与三维对偶不出现短向量，恰好是这批钥匙上的三个定量接口。只要无穷多这样的原好阶段覆盖固定正比例，已有零一律便将原无限命中集合提升到满测；仍缺的是实际数据在这些阶段上的统一估计。上述结论不主张临界满测、全序列移动质量发散、最优性、完整 $\mathbb Z/\mathbb Q$ 定义或物理起源。$\square$
+

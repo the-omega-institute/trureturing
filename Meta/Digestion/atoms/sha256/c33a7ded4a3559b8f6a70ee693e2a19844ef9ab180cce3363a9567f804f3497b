@@ -1,0 +1,62 @@
+**Definition 8.1 (Actual fibers and independent variables).** For every
+$n,k\in\mathbb N$, let $a_{X,s}(n,k)$ count the literal permutations in
+$\operatorname{Av}_n(2413,3142)$ in class $X$ with exactly $k$ records of
+type $s$, where
+
+$$
+(X,s)\in\{(\mathrm{irreducible},\mathrm{rmax}),
+(\mathrm{irreducible},\mathrm{lmin}),
+(\mathrm{reducible},\mathrm{lmax}),
+(\mathrm{reducible},\mathrm{rmin})\}.
+$$
+
+The classes and strict, unshifted records are Definitions 1.1, 5.1 and
+6.1. In particular, irreducibility requires positive length and no proper
+direct cut; reducibility requires a proper direct cut. Both classes exclude
+the empty permutation, and only the irreducible class contains the
+singleton. Write $i(n,k)=a_{\mathrm{irreducible},\mathrm{rmax}}(n,k)$ and
+retain the actual series
+
+$$
+q(t)=\sum_{n\ge1}|\operatorname{Av}_n(2413,3142)|t^n,\qquad
+J(t,y)=\sum_{n\ge1,k\ge0}i(n,k)t^ny^k,\qquad J_k(t)=[y^k]J(t,y).
+$$
+
+Use independent variables $u,x,z$. In $\mathbb Q[u][[z]]$ take exactly the
+kernels of Definition 7.1, with $H=1+u$, $a=u(3+2u)$ and $b=uH^3$:
+
+$$
+M(z,u)=\frac{1}{1-az}C\!\left(\frac{bz^2}{(1-az)^2}\right),\quad
+T_r(u)=[z^r]M(z,u),\quad
+G_r=H^2(T_r+T_{r+1})-u(1-u)H(T_r+2T_{r+1}+T_{r+2}).
+$$
+
+Here $C(w)=\sum_{j\ge0}C_jw^j$ is the Catalan series, $C(0)=1$ and
+$C=1+wC^2$. All inverses in $z$ have constant term one, and every $T_r$
+is a polynomial in $u$. Substitution of $u=q(t)$ into a polynomial is
+therefore defined; substitution into a series in $u$ is also defined
+because $q(0)=0$.
+
+The source parameters are those of Chen, Kitaev and Zhang,
+[*Distributions of statistics on separable permutations*,
+arXiv:2404.18517v1](https://arxiv.org/pdf/2404.18517v1), Sections 1, 1.2
+and 2.2. The same definitions and equations (20)--(22) occur in their
+[author manuscript](https://zhangbiaomath.github.io/papers/2024-dam-separable-perms.pdf).
+The correspondence is
+
+| Source notation or convention | Notation here |
+| --- | --- |
+| A permutation $\pi_1\cdots\pi_n$ of $[n]$ | The permutation $p(i)=\pi_{i+1}-1$ of $\{0,\ldots,n-1\}$ |
+| A reducibility split at source index $j$, $2\le j\le n$ | A proper direct cut $c=j-1$, $0<c<n$ |
+| $S(t)$, excluding the empty permutation | $q(t)$ |
+| $I(t)$, the unmarked irreducible series | $I_0(t)$ of Definition 3.1 |
+| $S(t,y)$, with only rmax marked | $U(t,y)$ of Definition 3.1 |
+| $I(t,y)$, with only rmax marked | $J(t,y)$ |
+| Source $y$ and the source record index $k$ | The same $y$ and $k$, without an index shift |
+
+The independent $u$ in $M$ is specialized to the unmarked series $q(t)$;
+it is unrelated to the source's lmin marker. Likewise, $q(t)$ here is
+unrelated to the source's descent marker. Reindexing positions and values
+by the displayed order-preserving bijections preserves every strict record
+comparison and every cut condition.
+

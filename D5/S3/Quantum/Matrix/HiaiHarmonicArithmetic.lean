@@ -26,7 +26,7 @@ open scoped MatrixOrder Matrix.Norms.L2Operator ComplexOrder
 
 private abbrev MatTwo := Matrix (Fin 2) (Fin 2) ℂ
 
-private def symmetricTwo (a b c : ℝ) : MatTwo := !![(a : ℂ), (b : ℂ); (b : ℂ), (c : ℂ)]
+def symmetricTwo (a b c : ℝ) : MatTwo := !![(a : ℂ), (b : ℂ); (b : ℂ), (c : ℂ)]
 private def familyCore (d g z : ℝ) : MatTwo :=
   symmetricTwo (1-g*z) (g*Real.sqrt (z*(1-z))) (d+g*z)
 private def gapRoot (d g z : ℝ) : ℝ :=
@@ -40,13 +40,13 @@ private def upperEntry (d g v z : ℝ) : ℝ :=
 private def lowerEntry (d g v z : ℝ) : ℝ :=
   (upperEigen d g z)^v + dividedPower d g v z * (d+g*z-upperEigen d g z)
 
-private lemma symmetricTwo_selfAdjoint (a b c : ℝ) :
+lemma symmetricTwo_selfAdjoint (a b c : ℝ) :
     IsSelfAdjoint (symmetricTwo a b c) := by
   change (symmetricTwo a b c)ᴴ = symmetricTwo a b c
   ext i j
   fin_cases i <;> fin_cases j <;> simp [symmetricTwo, Matrix.conjTranspose_apply]
 
-private lemma symmetricTwo_involution {a b c e : ℝ} (he : e ≠ 0)
+lemma symmetricTwo_involution {a b c e : ℝ} (he : e ≠ 0)
     (hs : e^2 = (a-c)^2+4*b^2) :
     let H := symmetricTwo ((a-c)/e) (2*b/e) ((c-a)/e)
     IsSelfAdjoint H ∧ H*H = 1 := by
@@ -60,7 +60,7 @@ private lemma symmetricTwo_involution {a b c e : ℝ} (he : e ≠ 0)
   all_goals field_simp
   all_goals nlinarith [hs]
 
-private lemma symmetricTwo_cfc (f : ℝ → ℝ) {a b c e : ℝ} (he : e ≠ 0)
+lemma symmetricTwo_cfc (f : ℝ → ℝ) {a b c e : ℝ} (he : e ≠ 0)
     (hs : e^2 = (a-c)^2+4*b^2) :
     cfc f (symmetricTwo a b c) =
       ((f ((a+c+e)/2)+f ((a+c-e)/2))/2) • (1 : MatTwo) +
@@ -480,7 +480,7 @@ private theorem inv_rpow {A : Matrix n n ℂ} (hA : A.PosDef) (t : ℝ) :
   · rw [Matrix.nonsing_inv_eq_ringInverse]
     exact CFC.inverse_rpow A t ht hA.isStrictlyPositive
 
-private theorem rpow_inv {A : Matrix n n ℂ} (hA : A.PosDef) (t : ℝ) :
+theorem rpow_inv {A : Matrix n n ℂ} (hA : A.PosDef) (t : ℝ) :
     A⁻¹ ^ t = A ^ (-t) := by
   rw [inv_eq_rpow hA, CFC.rpow_rpow A (-1) t (by norm_num) hA.isStrictlyPositive]
   congr 1

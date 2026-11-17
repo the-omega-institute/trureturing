@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:090e1cf1f08a761287ef729037b5b3b8a9d0a36c5a2888aeb6bd20280a6e06a1
+  normalized_sha256: sha256:090e1cf1f08a761287ef729037b5b3b8a9d0a36c5a2888aeb6bd20280a6e06a1
+cas_ref: sha256:090e1cf1f08a761287ef729037b5b3b8a9d0a36c5a2888aeb6bd20280a6e06a1
+coverage_gids:
+  - gid: D5/S1/Words/Patterns/Separable/RecordAllIndex.actual_ckz_conjecture_two
+    target_statement_id: sha256:c56fca1975a7423726e47f87b8e6e3c93fcb7fadb035ea95b33dbbfc10bdd23d
+receipts:
+  unresolved_subitems: []
