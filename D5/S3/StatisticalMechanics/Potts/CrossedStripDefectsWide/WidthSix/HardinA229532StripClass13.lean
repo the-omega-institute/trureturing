@@ -97,7 +97,7 @@ theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val → Canonical p →
           cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 13) ↔
           HardinThinGraphTransport.proper r ∧
             HardinThinGraphTransport.compatible true p r ∧
-            HardinA233172DiagonalStrip.boundaryClass (true, true) r = 1) := by
+            HardinA233172DiagonalStrip.boundaryClass (true, true) r = 4) := by
       exact HardinA229532StripCut.class_cut p r d 13 (by
         right; exact ⟨hz.2, by decide⟩)
     simp_rw [cut]
