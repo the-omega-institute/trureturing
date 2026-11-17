@@ -49,12 +49,22 @@ internal sealed class HardinA233171DiagonalStripDocument : IScribeDocumentDefini
                 + "label-permutation and reversal shapes. Their sizes are 6,12,6,12,6,6."),
             Entry("classcount", "classCount", "Exact continuation counts", ClassCount(),
                 "The sum ranges over the original individual colour rows with the original scanner."),
+            Describe.Lean(DescribeId.Create("class-fibres"),
+                DeclarationHandle.Create(Gid + "class_fibres"),
+                H("Exact scanner pushforward for every target class"),
+                StatementSource.FromAuthor(Disp(ClassFibresFormula())), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every Seen state, boundary and Fin 7 target class, classCount equals the sum over actual Fin 3 boundaries weighted by rowWeight. Each indicator requires horizontal properness, both diagonal compatibilities with p, and the exact rowFinish target class. At saturated Seen flags the weight is 32 and rowFinish is unchanged."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-certificate"),
+                DeclarationHandle.Create(Gid + "finite_certificate"),
+                H("Universal interpretation of the seven-class transfer"),
+                StatementSource.FromAuthor(Disp(FiniteCertificateFormula())), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every valid Seen state and boundary, each actual classCount equals the corresponding transfer entry. Combining this certificate with class_fibres supplies the proper diagonal sectors of HardinA229531Strip through an exact budget and class adapter and division by 32."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Gid + "result"),
                 H("Hardin's recurrence for every height at least eight"),
                 StatementSource.FromAuthor(Disp(Result())), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The width-independent literal counting bridge and exact "
                     + "scanner fibres give the displayed class transfer. The owner's "
-                    + "compatibility-free row_valid supplies boundary validity. The private "
+                    + "compatibility-free row_valid supplies boundary validity. The "
                     + "finite_certificate proves the diagonal graph's class transfer and is "
                     + "used in the induction identifying all continuations with powers of this "
                     + "transfer. The reused first-row distribution is "
@@ -187,4 +197,24 @@ internal sealed class HardinA233171DiagonalStripDocument : IScribeDocumentDefini
         Seq(Forall, Sp, Typed(V(n), type), Comma, Sp, Parenthesized(body));
     private static Formula Fn(string n, Formula type, Formula body) =>
         Parenthesized(Seq(Typed(V(n), type), Sp, Mapsto, Sp, Parenthesized(body)));
+    private static Formula ClassFibresFormula()
+    {
+        var s = V("s"); var p = V("p"); var k = V("k"); var q = V("q"); var j = V("j");
+        var left = Call("Fin.castSucc", j); var right = Call("Fin.succ", j);
+        var proper = All("j", Fin(4), Ne(At(q, left), At(q, right)));
+        var diagonal = All("j", Fin(4), And(Ne(At(p, left), At(q, right)), Ne(At(p, right), At(q, left))));
+        var target = Eq(Call(ClassOwner + "boundaryClass",
+            Call("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowFinish", s, q), q), k);
+        var weight = Call("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowWeight", s, q);
+        return All("s", Seen(), All("p", PairRow(), All("k", Fin(7), Eq(Call(Root + "classCount", s, p, k),
+            SumOver("q", PairRow(), Mul(weight, Typed(Conditional(And(proper, And(diagonal, target)), D(1), D(0)), Name("Int"))))))));
+    }
+    private static Formula FiniteCertificateFormula()
+    {
+        var s = V("s"); var p = V("p"); var k = V("k");
+        return All("s", Seen(), All("p", PairRow(), Parenthesized(Seq(Call(BoundaryOwner + "Valid", s, p), Sp, Implies, Sp,
+            Parenthesized(All("k", Fin(7), Eq(Call(Root + "classCount", s, p, k),
+                Call(Root + "transfer", Call(ClassOwner + "boundaryClass", s, p), k))))))));
+    }
+
 }

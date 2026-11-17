@@ -13,6 +13,9 @@ and square proper-colouring counts agree at every positive height.
 escape_witness: continuation transport by induction on the number of rows,
 consumed by the actual graph-colouring count, without identifying the graphs.
 Finite transition counts alone are not an all-height statement.
+boundaryClass: proof_shape=bind-only; consumers=transition_counts, continuation_three
+K: proof_shape=bind-only; consumers=transition_counts, continuation_three
+transition_counts: proof_shape=bind-only; consumers=continuation_two, continuation_three
 colouringEquiv: proof_shape=content; consumers=graph_count and the actual Reg family observations
 rowMajor, orderedGraph, literalStrip: actual definitions consumed by literalEquiv
 normal_rowMajor, legal_rowMajor, literalEquiv: proof_shape=content; consumers=normalized_transport, path_result
@@ -90,11 +93,11 @@ private theorem tail_count {k : ℕ} (d : Bool) (n : ℕ) (p : Row k) :
     · have hn : ¬ proper q ∨ ¬ compatible d p q := not_and_or.mp h
       rcases hn with h | h <;> simp [tailGood, h]
 
-private def boundaryClass (p : Row 2) : Bool := decide (p 0 = p 2)
+def boundaryClass (p : Row 2) : Bool := decide (p 0 = p 2)
 
-private def K (a b : Bool) : ℕ := if a then (if b then 3 else 2) else 2
+def K (a b : Bool) : ℕ := if a then (if b then 3 else 2) else 2
 
-private theorem transition_counts :
+theorem transition_counts :
     (∀ (d : Bool) (p : Row 1), proper p →
       (∑ q : Row 1, if proper q ∧ compatible d p q then 1 else 0) = 3) ∧
     (∀ (d : Bool) (p : Row 2), proper p → ∀ b : Bool,
