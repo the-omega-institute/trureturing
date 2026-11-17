@@ -12,7 +12,7 @@ internal sealed class PascadiOriginalLatticeDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text("For unit w modulo c, the physical endpoint lattice consists of (u,z) with w z - t u divisible by c. The anchor (-w,-t) belongs to this lattice and to the same literal box as the endpoints. The chosen metric has squared norm (Y/X)u^2+(X/Y)z^2 and determinant one; no fixed input unit is absorbed into an interval.")),
             Paragraph(Text("The proof takes a minimum in the finite weighted ball containing (c,0). The shortest vector is primitive in the explicit congruence basis, so Bezout completes it to an oriented determinant-c basis. An integer shift centers the second vector. The determinant identity gives 3 Q(R)^2 <= 4 c^2 and Q(R)Q(V) <= 2 c^2. Determinant bounds then place every literal endpoint and the anchor within the stated CoordinateBound rectangle.")),
-            Paragraph(Text("For a long chart, a dyadic s0 satisfies s0^2 <= Q(R) < 4 s0^2. With H^2=XY, J1=8H/s0 and J2=4Hs0/c satisfy J2<=J1, J2>2, J1 J2=32XY/c and J1<16XY/c. These scales realize the original endpoint coefficient constant 3 and pencil height 18. The theorem does not infer that the shortest vector has unit coordinates; that is a separate chart condition required by later residue formulas.")),
+            Paragraph(Text("For a long chart, a dyadic s0 satisfies s0^2 <= Q(R) < 4 s0^2. With H^2=XY, J1=8H/s0 and J2=4Hs0/c satisfy J2<=J1, J2>2, J1 J2=32XY/c, J1<16XY/c and J2<5 sqrt(XY/c). These scales realize the original endpoint coefficient constant 3 and pencil height 18. The theorem does not infer that the shortest vector has unit coordinates; that is a separate chart condition required by later residue formulas.")),
             Describe.Lean(DescribeId.Create("pascadi-original-lattice-middle-lattice"),
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiOriginalLattice.middleLattice"),
                 H("Physical congruence lattice"), StatementSource.WithoutFormula(),
@@ -48,7 +48,7 @@ internal sealed class PascadiOriginalLatticeDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("pascadi-original-lattice-long-scales"),
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiOriginalLattice.long_scale_bounds"),
                 H("Long-chart scale relations"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The long condition and dyadic reduced length imply J2<=J1, J2>2, J1 J2=32XY/c and J1<16XY/c."))), DescribeRole.Theorem),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The long condition and dyadic reduced length imply J2<=J1, J2>2, J1 J2=32XY/c, J1<16XY/c and J2<5 sqrt(XY/c)."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("pascadi-original-lattice-dyadic"),
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiOriginalLattice.exists_dyadic_middle_scale"),
                 H("Dyadic reduced-length scale"), StatementSource.WithoutFormula(),

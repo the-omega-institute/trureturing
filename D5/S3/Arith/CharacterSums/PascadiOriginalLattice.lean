@@ -386,11 +386,11 @@ theorem ReducedMiddleBasis.long_scale_bounds {c : ℕ} {t w : ℤ} {X Y : ℝ}
     (hs₀ : 0 < s₀)
     (hs₀lower : s₀ ^ 2 ≤ weightedSq X Y B.R)
     (hs₀upper : weightedSq X Y B.R < 4 * s₀ ^ 2)
-    (hlong : (c : ℝ)^2 < H^2 * weightedSq X Y B.R) :
+    (hlong : (c : ℝ) ^ 2 < H ^ 2 * weightedSq X Y B.R) :
     let J₁ := 8 * H / s₀
     let J₂ := 4 * H * s₀ / c
     J₂ ≤ J₁ ∧ 2 < J₂ ∧ J₁ * J₂ = 32 * (X * Y / c) ∧
-      J₁ < 16 * (X * Y / c) := by
+      J₁ < 16 * (X * Y / c) ∧ J₂ < 5 * Real.sqrt (X * Y / c) := by
   dsimp
   have hcR : 0 < (c : ℝ) := by exact_mod_cast hc
   have hA := (B.reduction_bounds hc hX hY).2.1
@@ -415,7 +415,37 @@ theorem ReducedMiddleBasis.long_scale_bounds {c : ℕ} {t w : ℤ} {X Y : ℝ}
       have hmul := mul_lt_mul_of_pos_left hcs (by positivity : 0 < 8 * H)
       nlinarith [hHsq]
     convert hJ₁' using 1 <;> ring
-  exact ⟨horder, hJ₂, hprod, hJ₁⟩
+  have hA₃ := (B.reduction_bounds hc hX hY).1
+  have hAupper : weightedSq X Y B.R < 3 * (c : ℝ) / 2 := by
+    by_contra h
+    have hge : 3 * (c : ℝ) / 2 ≤ weightedSq X Y B.R := le_of_not_gt h
+    have hpos := mul_nonneg (sub_nonneg.mpr hge)
+      (by linarith [weightedSq_nonneg hX hY B.R] :
+        0 ≤ weightedSq X Y B.R + 3 * (c : ℝ) / 2)
+    nlinarith [sq_pos_of_pos hcR]
+  have hs₀upper' : s₀ ^ 2 < 3 * (c : ℝ) / 2 :=
+    hs₀lower.trans_lt hAupper
+  have hJ₂sq : (4 * H * s₀ / c) ^ 2 < 24 * (X * Y / c) := by
+    calc
+      _ = (16 * H ^ 2 / (c : ℝ) ^ 2) * s₀ ^ 2 := by ring
+      _ < (16 * H ^ 2 / (c : ℝ) ^ 2) * (3 * (c : ℝ) / 2) :=
+        mul_lt_mul_of_pos_left hs₀upper' (by positivity)
+      _ = 24 * (X * Y / c) := by
+        rw [← hHsq]
+        field_simp [ne_of_gt hcR]
+        ring
+  have hBpos : 0 < X * Y / (c : ℝ) := div_pos (mul_pos hX hY) hcR
+  have hJ₂sq' : (4 * H * s₀ / c) ^ 2 <
+      (5 * Real.sqrt (X * Y / c)) ^ 2 := by
+    calc
+      _ < 24 * (X * Y / c) := hJ₂sq
+      _ < 25 * (X * Y / c) := by nlinarith
+      _ = (5 * Real.sqrt (X * Y / c)) ^ 2 := by
+        rw [mul_pow, Real.sq_sqrt hBpos.le]
+        ring
+  have hJ₂upper : 4 * H * s₀ / c < 5 * Real.sqrt (X * Y / c) :=
+    (sq_lt_sq₀ (by positivity) (by positivity)).mp hJ₂sq'
+  exact ⟨horder, hJ₂, hprod, hJ₁, hJ₂upper⟩
 
 private theorem finite_short_ball (c : ℕ) (X Y : ℝ)
     (hc : 0 < c) (hX : 0 < X) (hY : 0 < Y) :
