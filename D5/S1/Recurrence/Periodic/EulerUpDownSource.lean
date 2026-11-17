@@ -6,6 +6,7 @@
    utility: none
    digest: The ordinary A000111 carrier with its exact source recurrence and differential equation. -/
 
+import D5.S1.Recurrence.Residue.QuarticEGFFixedPoint
 import D5.S1.Recurrence.Periodic.SecantNumberPurePeriodRefutation
 import Mathlib.Algebra.Ring.GeomSum
 import Mathlib.Basic.Complex.Basic
