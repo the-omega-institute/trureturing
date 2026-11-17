@@ -6,6 +6,28 @@
    utility: none
    digest: Ordinary A000111 divisor propagation with Euler totient shifts. -/
 
+/-
+proof_shape: corrected_sum and signed_zero_transfer are bind-only auxiliary declarations,
+consumed by signed_zero_transfer and odd_prime_power respectively. odd_prime_power,
+divisor_propagation and particular are content after same-delivery inlining of the signed
+correspondence and two-primary inductions. particular's direct step specializes
+divisor_propagation with the explicit source boundaries and the sole k=3 exception.
+escape_witness: odd_prime_power, consumed by divisor_propagation; corrected_sum and
+signed_zero_transfer are its live frequency-transfer chain, while two_primary is the live
+two-adic witness.
+admission_basis: open-problem-resolution (#31280; Proved) for divisor_propagation and
+particular, counting the two source assertions once; supporting declarations use
+escape-witness. The two assertions are one resolution unit; its typed claim requires the
+host to be a member of frozen state.
+Direct frozen dependencies: none beyond pinned Mathlib; EulerTwoPrimary and EulerSecantBridge
+are same-delivery dependencies.
+Private theorem consumers: frequency_eq -> deleted_sum; deleted_index -> deleted_sum;
+deleted_sum -> corrected_sum; correction_unit -> signed_zero_transfer;
+zero_even/zero_odd -> odd_prime_power; exponential_lower -> two_primary;
+two_primary -> divisor_propagation.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31291.
+-/
+
 import D5.S1.Recurrence.Periodic.EulerTwoPrimary
 import D5.S1.Recurrence.Periodic.EulerSecantBridge
 import Mathlib.Data.Nat.Factorization.Basic

@@ -6,6 +6,20 @@
    utility: none
    digest: Tangent divisibility and secant parity for the ordinary Euler carrier. -/
 
+/-
+proof_shape: tangent_power and secant_odd are content proofs. tangent_power supplies the
+two-primary tangent valuation and secant_odd supplies the even-index parity needed to force
+an odd source index.
+escape_witness: tangent_power and secant_odd, both consumed by EulerDivisorPropagation.two_primary.
+admission_basis: escape-witness. The external resolution basis of #31280 belongs only to
+the final source assertions; this supporting module carries no resolution claim.
+Direct frozen dependencies: D5.S1.Recurrence.Residue.ParametricExponentialSquareCongruence
+(linear_ode_unique); EulerUpDownSource is a same-delivery dependency.
+Private theorem consumers: parity_decomposition/N_riccati/U_mul_N/branch_derivatives/
+tangent_recurrence/choose_even_odd/secant_recurrence -> tangent_power/secant_odd.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31291.
+-/
+
 import D5.S1.Recurrence.Periodic.EulerUpDownSource
 import D5.S1.Recurrence.Residue.ParametricExponentialSquareCongruence
 import Mathlib.Data.Nat.Choose.Lucas

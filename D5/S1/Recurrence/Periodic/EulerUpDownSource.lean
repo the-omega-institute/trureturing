@@ -6,8 +6,32 @@
    utility: none
    digest: The ordinary A000111 carrier with its exact source recurrence and differential equation. -/
 
+/-
+proof_shape: signed_even and signed_odd are content after same-delivery inlining of
+riccati_unique's coefficient induction. A, F, E and ordinarySeries are definitions.
+The remaining public theorems are bind-only auxiliary declarations, with consumers:
+generating_identity -> finite_identity, branch_equations and EulerSecantBridge.H_product;
+finite_identity -> scaled_identity; branch_equations -> complex_correspondence;
+scaled_moment -> EulerOddPrimePower.corrected_sum; source_equation -> ordinary_riccati;
+monotone_E -> EulerSecantBridge.boundary_values; ordinary_riccati -> complex_correspondence
+and EulerTwoPrimary.N_riccati.
+escape_witness: signed_even and signed_odd, consumed by EulerSecantBridge.secant_bridge
+and EulerDivisorPropagation.zero_even/zero_odd on the live proof paths.
+admission_basis: escape-witness. The external resolution basis is reserved for the two
+final source assertions of #31280; this supporting module has no resolution claim.
+Direct frozen dependencies: D5.S1.Recurrence.Residue.QuarticEGFFixedPoint
+(encode, eCoeff_encode, eCoeff_ext); all other imports are pinned Mathlib.
+Private theorem consumers: eCoeff_F/eCoeff_add/eCoeff_C_mul/eCoeff_exp_pow -> generating_identity;
+odd_geometric -> finite_identity; denominator_ne_zero -> branch_equations;
+scaled_identity/eCoeff_scaled_F -> integer_moment -> scaled_moment;
+E_step -> source_equation; eCoeff_ordinary -> source_equation and ordinary_coefficient_complex;
+E_succ_le -> monotone_E; derivative_map_complex/derivative_rescale_complex -> liftI_derivative;
+riccati_unique -> complex_correspondence; liftI_derivative/complex_correspondence/
+liftI_coefficient/ordinary_coefficient_complex/complex_coefficient -> signed_even/signed_odd.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31291.
+-/
+
 import D5.S1.Recurrence.Residue.QuarticEGFFixedPoint
-import D5.S1.Recurrence.Periodic.SecantNumberPurePeriodRefutation
 import Mathlib.Algebra.Ring.GeomSum
 import Mathlib.Basic.Complex.Basic
 import Mathlib.Data.Nat.Totient

@@ -181,5 +181,4 @@ Equality is in the integers. The sign retains the ordinary positive tangent coef
 - Truth anchor: `D5/S1/Recurrence/Periodic/EulerUpDownSource.signed_even`
 - Truth anchor: `D5/S1/Recurrence/Periodic/EulerUpDownSource.signed_odd`
 - Truth anchor: `D5/S1/Recurrence/Periodic/EulerUpDownSource.source_equation`
-- Dependency: [D5/S1/Recurrence/Periodic/SecantNumberPurePeriodRefutation](SecantNumberPurePeriodRefutation.md)
 - Dependency: [D5/S1/Recurrence/Residue/QuarticEGFFixedPoint](../Residue/QuarticEGFFixedPoint.md)

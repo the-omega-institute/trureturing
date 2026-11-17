@@ -35,3 +35,4 @@ The source recurrence gives the initial values, and its zeroth summand proves mo
 - Truth anchor: `D5/S1/Recurrence/Periodic/EulerSecantBridge.boundary_values`
 - Truth anchor: `D5/S1/Recurrence/Periodic/EulerSecantBridge.secant_bridge`
 - Dependency: [D5/S1/Recurrence/Periodic/EulerUpDownSource](EulerUpDownSource.md)
+- Dependency: [D5/S1/Recurrence/Periodic/SecantNumberPurePeriodRefutation](SecantNumberPurePeriodRefutation.md)
