@@ -16,7 +16,7 @@ internal sealed class MartinezLargestOrderPrimeCommutingRefutationDocument : ISc
         Blocks(
             Node("pi-elements", "piElements", "Elements with prime support in pi", PiElementsFormula(),
                 AssessedProvenance.FromLiterature(Martinez),
-                "The source uses Gπ for the pi-elements of a finite group (Introduction, pages 1–2). "
+                "Introduction, printed pages 1–2: “where G_π is the set of all π-elements in G.” "
                 + "An element belongs to this set when every prime divisor of its order belongs to pi. "
                 + "The identity is included because its order is one. Type* allows an arbitrary carrier universe."),
             Node("pi-subgroup", "isPiSubgroup", "Subgroups with prime support in pi", PiSubgroupFormula(),

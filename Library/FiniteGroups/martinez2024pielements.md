@@ -33,6 +33,10 @@ The fixed-element interpretation, §2, printed page 4, says:
 
 > It is important to remark that given $x$, a $\pi$-element of $G$, the proportion $$\frac{|C_G(x)_{\pi}|}{|G_{\pi}|}$$ is exactly the fixed point ratio of $x$, where we consider the action of $G$ on $G_{\pi}$ by conjugation.
 
+The Introduction, printed pages 1–2, introduces the notation:
+
+> where $G_{\pi}$ is the set of all $\pi$-elements in $G$.
+
 The source uses the standard notions of pi-elements and the normal pi-core.
 The Lean expression for pi-elements requires every prime divisor of the element
 order to belong to pi, including the identity. A pi-subgroup has the analogous
