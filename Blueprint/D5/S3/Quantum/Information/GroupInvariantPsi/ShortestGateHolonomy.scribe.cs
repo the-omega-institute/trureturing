@@ -34,7 +34,7 @@ internal sealed class ShortestGateHolonomyDocument : IScribeDocumentDefinition
                 H("The rotor gate between two Bloch directions"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/Quantum/doran2003geometric")),
+                    LibraryNoteRef.Create("D5/L/HilbertOperators/doran2003geometric")),
                 Blocks(
                     Paragraph(Text(
                         "Let a and b be unit vectors with b ≠ −a and R = rotor a b. The theorem states "
@@ -75,9 +75,9 @@ internal sealed class ShortestGateHolonomyDocument : IScribeDocumentDefinition
                 H("Return phase of the gates around a Bloch triangle"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/Quantum/pancharatnam1956interference"),
-                    LibraryNoteRef.Create("D5/L/Quantum/samuel1988berry"),
-                    LibraryNoteRef.Create("D5/L/Quantum/vanoosterom1983solid")),
+                    LibraryNoteRef.Create("D5/L/HilbertOperators/pancharatnam1956interference"),
+                    LibraryNoteRef.Create("D5/L/HilbertOperators/samuel1988berry"),
+                    LibraryNoteRef.Create("D5/L/HilbertOperators/vanoosterom1983solid")),
                 Blocks(
                     Paragraph(Text(
                         "Let a, b, c be unit vectors, pairwise non-antipodal (b ≠ −a, c ≠ −b, a ≠ −c), and "
