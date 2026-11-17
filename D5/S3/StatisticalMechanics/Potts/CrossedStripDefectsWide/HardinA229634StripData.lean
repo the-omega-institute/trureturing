@@ -12,6 +12,7 @@ escape_witness: none (consumed bind-only helpers of the settlement on the live p
 Valid: proof_shape=bind-only; consumers=HardinA229634Strip.result
 decidableValid: proof_shape=bind-only; consumers=HardinA229634Strip.result
 cl: proof_shape=bind-only; consumers=HardinA229634Strip.result
+oldTail: proof_shape=bind-only; consumers=T
 T: proof_shape=bind-only; consumers=HardinA229634Strip.result
 initial: proof_shape=bind-only; consumers=HardinA229634Strip.result
 terminal: proof_shape=bind-only; consumers=HardinA229634Strip.result
@@ -48,44 +49,31 @@ def cl (p : Row) (d : ℕ) : Fin 33 :=
   if code ∈ ({293, 610} : Finset ℕ) then 30 else
   if code ∈ ({347, 19, 73, 910, 134, 24, 336, 524, 136, 896} : Finset ℕ) then 31 else
   32
+def oldTail (i : Fin 20) : Fin 13 → ℤ :=
+  ![HardinA229531StripData.T i 6, HardinA229531StripData.T i 7, HardinA229531StripData.T i 8, HardinA229531StripData.T i 9, HardinA229531StripData.T i 10, HardinA229531StripData.T i 11, HardinA229531StripData.T i 16 + HardinA229531StripData.T i 18, 0, HardinA229531StripData.T i 13, 0, HardinA229531StripData.T i 12, HardinA229531StripData.T i 14 + HardinA229531StripData.T i 17 + HardinA229531StripData.T i 19, HardinA229531StripData.T i 15]
 def T : Matrix (Fin 33) (Fin 33) ℤ :=
   Matrix.reindex (finSumFinEquiv : Fin 20 ⊕ Fin 13 ≃ Fin 33)
     (finSumFinEquiv : Fin 20 ⊕ Fin 13 ≃ Fin 33)
     (Matrix.fromBlocks HardinA229531StripData.T
-      (![![0, 0, 2, 2, 0, 2, 4, 0, 6, 2, 4, 4, 2],
-    ![0, 2, 1, 3, 2, 0, 4, 0, 4, 0, 6, 8, 3],
-    ![2, 2, 0, 0, 1, 0, 4, 1, 2, 0, 4, 10, 2],
-    ![1, 3, 0, 4, 1, 2, 6, 0, 2, 0, 3, 7, 4],
-    ![0, 4, 1, 2, 2, 4, 8, 0, 2, 0, 2, 6, 2],
-    ![2, 0, 0, 4, 4, 0, 0, 0, 4, 0, 4, 12, 4],
-    ![0, 2, 0, 2, 2, 0, 0, 0, 0, 0, 2, 6, 2],
-    ![1, 0, 2, 3, 1, 0, 0, 0, 0, 0, 0, 3, 1],
-    ![0, 4, 0, 2, 0, 4, 0, 0, 2, 0, 2, 0, 2],
-    ![1, 3, 1, 0, 0, 2, 0, 0, 1, 0, 1, 0, 0],
-    ![2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ![0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ![2, 6, 2, 3, 1, 2, 0, 0, 0, 0, 2, 3, 1],
-    ![3, 4, 1, 2, 1, 2, 0, 0, 0, 0, 0, 3, 1],
-    ![0, 2, 2, 2, 1, 2, 0, 0, 1, 0, 1, 0, 0],
-    ![1, 3, 1, 4, 1, 2, 0, 0, 1, 0, 1, 0, 2],
-    ![1, 3, 1, 3, 2, 0, 2, 0, 0, 0, 0, 0, 0],
-    ![0, 2, 1, 3, 1, 2, 0, 0, 1, 0, 1, 1, 0],
-    ![1, 1, 1, 3, 2, 0, 2, 0, 0, 0, 0, 0, 0],
-    ![0, 2, 2, 2, 1, 2, 0, 0, 1, 0, 1, 0, 0]])
+      (Fin.append (![![0, 0, 2, 2, 0, 2, 4, 0, 6, 2, 4, 4, 2],
+      ![0, 2, 1, 3, 2, 0, 4, 0, 4, 0, 6, 8, 3],
+      ![2, 2, 0, 0, 1, 0, 4, 1, 2, 0, 4, 10, 2],
+      ![1, 3, 0, 4, 1, 2, 6, 0, 2, 0, 3, 7, 4],
+      ![0, 4, 1, 2, 2, 4, 8, 0, 2, 0, 2, 6, 2],
+      ![2, 0, 0, 4, 4, 0, 0, 0, 4, 0, 4, 12, 4]])
+      (Fin.append (Matrix.submatrix oldTail (fun i : Fin 6 => ⟨i.val + 0, by omega⟩) id)
+      (![![2, 6, 2, 3, 1, 2, 0, 0, 0, 0, 2, 3, 1],
+      ![3, 4, 1, 2, 1, 2, 0, 0, 0, 0, 0, 3, 1],
+      ![0, 2, 2, 2, 1, 2, 0, 0, 1, 0, 1, 0, 0],
+      ![1, 3, 1, 4, 1, 2, 0, 0, 1, 0, 1, 0, 2],
+      ![1, 3, 1, 3, 2, 0, 2, 0, 0, 0, 0, 0, 0],
+      ![0, 2, 1, 3, 1, 2, 0, 0, 1, 0, 1, 1, 0],
+      ![1, 1, 1, 3, 2, 0, 2, 0, 0, 0, 0, 0, 0],
+      ![0, 2, 2, 2, 1, 2, 0, 0, 1, 0, 1, 0, 0]])))
       0
-      (![![HardinA229531StripData.T 6 6, HardinA229531StripData.T 6 7, HardinA229531StripData.T 6 8, HardinA229531StripData.T 6 9, HardinA229531StripData.T 6 10, HardinA229531StripData.T 6 11, 0, 0, 0, 0, 0, 0, 0],
-    ![HardinA229531StripData.T 7 6, HardinA229531StripData.T 7 7, HardinA229531StripData.T 7 8, HardinA229531StripData.T 7 9, HardinA229531StripData.T 7 10, HardinA229531StripData.T 7 11, 0, 0, 0, 0, 0, 0, 0],
-    ![HardinA229531StripData.T 8 6, HardinA229531StripData.T 8 7, HardinA229531StripData.T 8 8, HardinA229531StripData.T 8 9, HardinA229531StripData.T 8 10, HardinA229531StripData.T 8 11, 0, 0, 0, 0, 0, 0, 0],
-    ![HardinA229531StripData.T 9 6, HardinA229531StripData.T 9 7, HardinA229531StripData.T 9 8, HardinA229531StripData.T 9 9, HardinA229531StripData.T 9 10, HardinA229531StripData.T 9 11, 0, 0, 0, 0, 0, 0, 0],
-    ![HardinA229531StripData.T 10 6, HardinA229531StripData.T 10 7, HardinA229531StripData.T 10 8, HardinA229531StripData.T 10 9, HardinA229531StripData.T 10 10, HardinA229531StripData.T 10 11, 0, 0, 0, 0, 0, 0, 0],
-    ![HardinA229531StripData.T 11 6, HardinA229531StripData.T 11 7, HardinA229531StripData.T 11 8, HardinA229531StripData.T 11 9, HardinA229531StripData.T 11 10, HardinA229531StripData.T 11 11, 0, 0, 0, 0, 0, 0, 0],
-    ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ![0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ![0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ![1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ![1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ![1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ![1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]))
+      (Fin.append (Matrix.submatrix oldTail (fun i : Fin 6 => ⟨i.val + 6, by omega⟩) id)
+      (![oldTail 16, ![0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], oldTail 13,
+        ![1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], oldTail 12, oldTail 14, oldTail 15])))
 def initial : Fin 33 → ℤ :=
   Fin.append HardinA229531StripData.initial (![0, 0, 0, 0, 0, 0, 30, 6, 0, 12, 0, 24, 0])
 def terminal : Fin 33 → ℤ :=
