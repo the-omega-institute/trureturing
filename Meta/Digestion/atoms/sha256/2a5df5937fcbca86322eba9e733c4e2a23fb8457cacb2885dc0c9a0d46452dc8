@@ -1,0 +1,44 @@
+**定义 22.1（只改变实方向的比较族）。** 固定定义 21.1 的临界参数与原实际数据，保留 $M,a_0,A,Y,\nu$、全部有限地方的原过滤及其目标 $\eta(u)$，并保留原来的 $\mathcal H_-,X_H,q_H,J_H,K_H,r_H,m_H$。以下均在 §21 的充分大阶段尾部取 $H\in\mathcal H_-$。仅以参数 $\omega\in\mathbb T^2$ 替换实端方向 $\alpha$。具体地，沿用原 $q_n=q(h(n),h(n);M)$，定义
+
+$$
+\begin{aligned}
+\mathcal B_r(w)&=\{z\in\mathbb T^2:\|w_j-z_j\|_{\mathbb T}<r\ (j=1,2)\},\\
+E_n(\omega)&=
+\begin{cases}
+(n+q_n\widehat{\mathbb Z})\times\mathcal B_{\rho_n}(n\omega),&n\in A,\\
+\varnothing,&n\notin A,
+\end{cases}\\
+F_{n,H}(\omega)&=
+\begin{cases}
+(n+q_H\widehat{\mathbb Z})\times\mathcal B_{r_H}(n\omega),&n\in A,\\
+\varnothing,&n\notin A,
+\end{cases}
+\quad(X_H<n\le2X_H),\\
+V_H(u,z;\omega)&=\sum_{X_H<n\le2X_H}\mathbf1_{F_{n,H}(\omega)}(u,z),
+\qquad R(\omega)=\limsup_{n\to\infty}E_n(\omega).
+\end{aligned}
+$$
+
+阶段计数的有限端仍准确要求同一个整数 $n\in A$ 且 $u\equiv n\pmod{q_H}$。再置
+
+$$
+\begin{gathered}
+\Lambda_H(\omega)=\left\{\left(\frac\ell{K_H},
+ \frac{\ell q_H\omega-b}{r_H}\right):\ell\in\mathbb Z,\ b\in\mathbb Z^2\right\},\\
+\sigma_H(\omega)=\min\left\{K_H,
+ \min_{k\in\mathbb Z^2\setminus\{0\}}
+ \sqrt{K_H^2\|q_Hk\cdot\omega\|_{\mathbb T}^2+r_H^2\|k\|_2^2}\right\}.
+\end{gathered}
+\tag{22.1}
+$$
+
+任取实提升得到同一格；其对偶为 (21.10) 中将 $\alpha$ 换成 $\omega$ 的格，故 $\sigma_H(\omega)=\lambda_1(\Lambda_H(\omega)^*)>0$。归一化方向 Haar 概率记为 $m_{\mathrm{dir}}$，与目标概率 $\nu$ 区分。对每个方向，仍有
+
+$$
+\int_Y V_H(\cdot;\omega)\,d\nu=m_H=4K_Hr_H^2,\qquad
+K_Hr_H^2\ge c e^{2H}H^{-4\gamma},\qquad K_H\to\infty,\quad r_H\to0
+\tag{22.2}
+$$
+
+其中 $c>0$ 只依赖固定数据，后面可统一缩小它。第一式由每个实窗的面积得到，后三项直接复用定理 21.2。这是确定性有限端上的数学参数比较；$\omega=\alpha$ 才是原实端，其他方向不被解释成原曲线点、实际制备权限或随机物理假设。
+

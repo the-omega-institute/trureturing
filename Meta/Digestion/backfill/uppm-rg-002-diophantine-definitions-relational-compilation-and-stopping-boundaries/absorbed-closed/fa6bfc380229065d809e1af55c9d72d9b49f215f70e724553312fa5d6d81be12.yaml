@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fa6bfc380229065d809e1af55c9d72d9b49f215f70e724553312fa5d6d81be12
+  normalized_sha256: sha256:fa6bfc380229065d809e1af55c9d72d9b49f215f70e724553312fa5d6d81be12
+cas_ref: sha256:fa6bfc380229065d809e1af55c9d72d9b49f215f70e724553312fa5d6d81be12
+coverage_gids:
+  - gid: D5/S0/Computability/Diophantine/IntegerToRational.effective_compiler
+    target_statement_id: sha256:3b07f2dc8a233fcf5598473189e3e8a487d84037f4275d7d2ab2dee2b0de7d91
+receipts:
+  unresolved_subitems: []
