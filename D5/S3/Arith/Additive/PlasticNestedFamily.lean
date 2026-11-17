@@ -73,7 +73,7 @@ private theorem golden_sorted (s : ℝ) (hs : 1 < s) (hsq : s ^ 2 = s+1)
     (by omega) (by omega) (by omega) hn
   omega
 
-private theorem golden_sum_lower (s : ℝ) (hs : 1 < s) (hsq : s ^ 2 = s+1)
+theorem golden_sum_lower (s : ℝ) (hs : 1 < s) (hsq : s ^ 2 = s+1)
     (n : ℕ) (hn : 7 ≤ n) :
     n*(n+1)/2 ≤
       (((Finset.Icc (0:ℤ) ((n:ℤ)-1)).image (fun e => s ^ e)) +

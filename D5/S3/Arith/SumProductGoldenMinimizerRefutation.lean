@@ -39,7 +39,7 @@ private def D : Finset V :=
    (1, 2, 2), (2, 3, 2), (2, 4, 3)}
 private def C : Finset V := D + D
 
-private theorem plastic_root : ∃ r : ℝ, 1 < r ∧ r < 2 ∧ r ^ 3 = r + 1 := by
+theorem plastic_root : ∃ r : ℝ, 1 < r ∧ r < 2 ∧ r ^ 3 = r + 1 := by
   let f : ℝ → ℝ := fun x => x ^ 3 - x - 1
   have hcont : Continuous f := by fun_prop
   have hz : (0 : ℝ) ∈ Set.Icc (f 1) (f 2) := by norm_num [f]
