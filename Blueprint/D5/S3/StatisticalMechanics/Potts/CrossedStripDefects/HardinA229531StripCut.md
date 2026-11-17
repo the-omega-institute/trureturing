@@ -16,7 +16,7 @@ $$\forall p: \operatorname{\mathit{Fin}}\left(5\right) \to \operatorname{\mathit
 
 *Commentary.*
 
-For every pair of actual rows, residual budget d : Fin 2 and target s : Fin 12 in the matching proper block, the defect predicate is equivalent to properness, crossed compatibility and the published boundary class. A sum of nonnegative bond counts vanishes precisely when every bond has distinct endpoints. Only the single-row class correspondence is checked by finite kernel evaluation. All twelve proper target-column proofs consume this common equivalence and the original scanner successor counts.
+For every pair of actual rows, residual budget d : Fin 2 and target s : Fin 12 in the matching proper block, the defect predicate is equivalent to properness, crossed compatibility and the published boundary class. A sum of nonnegative bond counts vanishes precisely when every bond has distinct endpoints. Only the single-row class correspondence is checked by finite kernel evaluation. All twelve proper target-column proofs consume this common equivalence and the original scanner successor counts. Nat.mod is natural-number modulo, the nonnegative remainder.
 
 ## References
 
