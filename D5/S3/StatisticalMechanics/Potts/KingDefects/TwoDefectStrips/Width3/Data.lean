@@ -11,6 +11,7 @@ admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (consumed bind-only helpers on the live path of HardinA229750.result)
 -/
 
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229536Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229581Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip
@@ -21,7 +22,8 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip (Boundary)
 abbrev horizontal : Finset (Fin 3 × Fin 3) :=
   D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229581Strip.horizontal
-def between : Finset (Fin 3 × Fin 3) := {(0, 0), (1, 1), (2, 2), (0, 1), (1, 2), (1, 0), (2, 1)}
+abbrev between : Finset (Fin 3 × Fin 3) :=
+  D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229536Strip.between
 def Valid (p : Boundary) (d : ℕ) : Prop := d ≤ 2 ∧ bondDefects horizontal p p ≤ 2-d
 instance (p : Boundary) (d : ℕ) : Decidable (Valid p d) := inferInstanceAs (Decidable (_ ∧ _))
 def cl (p : Boundary) (d : ℕ) : Fin 9 :=

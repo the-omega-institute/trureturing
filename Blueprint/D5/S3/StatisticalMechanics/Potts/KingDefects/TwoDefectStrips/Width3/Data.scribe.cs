@@ -23,7 +23,7 @@ internal sealed class DataDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "between"), H("between"),
                 StatementSource.FromAuthor(Disp(Eq(Call("between"), SetOf(Pair(Num("0"), Num("0")), Pair(Num("1"), Num("1")), Pair(Num("2"), Num("2")), Pair(Num("0"), Num("1")), Pair(Num("1"), Num("2")), Pair(Num("1"), Num("0")), Pair(Num("2"), Num("1")))))),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The Lean type is Finset (Fin 3 x Fin 3). The 7 ordered bonds comprise 3 vertical, 2 diagonal and 2 antidiagonal bonds."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("The Lean type is Finset (Fin 3 x Fin 3). The 7 ordered bonds comprise 3 vertical, 2 diagonal and 2 antidiagonal bonds. This consumed alias delegates to CrossedStripDefects.HardinA229536Strip.between."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("valid"),
                 DeclarationHandle.Create(Prefix + "Valid"), H("Valid"),
                 StatementSource.FromAuthor(Disp(All("p", Arrow(Call("Fin", Num("3")), Call("Fin", Num("4"))), All("d", Call("Nat"), Iff(Call("Valid", V("p"), V("d")), And(Leq(V("d"), Num("2")), Leq(Call("DefectTransfer.bondDefects", Call("horizontal"), V("p"), V("p")), Sub(Num("2"), V("d"))))))))),
