@@ -20,6 +20,7 @@ closed_form: proof_shape=content; consumers=none (external open-problem-resoluti
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229536Strip
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229632Strip
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.GridBridge
