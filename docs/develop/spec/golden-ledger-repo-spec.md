@@ -513,7 +513,7 @@ Actions Cache (visible ref) --restore--> job-local workspace <--eligible adoptio
   schedule --> own Release job: optional Actions restore -> report -> publish
 ```
 
-**本地显式冷构建。** `STRATALINT_ACCEPT_COLD_BUILD=1 make lean LEAN_TARGETS="<非空模块列表>"` 允许 linked worktree 在项目层 cold 时独立获取钉版 mathlib 缓存，再由原生 Lake 从源码编译选定目标，不要求主检出预热，不复制 donor 项目层，也不下载项目 Release 归档。匹配的依赖 stamp 可原地复用；依赖获取失败保留已取得的材料并如实报告，由 Lake 补齐依赖或返回真实失败。精确授权、私有 writer guard、pin、探针失败拒绝及计算预算保留。未授权调用、报告种子准入和 required checks 仍按各自入口策略执行。
+**本地显式冷构建。** `STRATALINT_ACCEPT_COLD_BUILD=1 make lean LEAN_TARGETS="<非空模块列表>"` 允许 linked worktree 在项目层 cold 时独立获取钉版 mathlib 缓存，再由原生 Lake 从源码编译选定目标，不要求主检出预热，不复制 donor 项目层，也不下载项目 Release 归档。匹配的依赖 stamp 可原地复用；依赖获取失败保留已取得的材料并如实报告，由 Lake 补齐依赖或返回真实失败。精确授权、私有 writer guard、pin、探针失败拒绝及计算预算保留。未授权调用、报告种子准入和 required checks 仍按各自入口策略执行。 该入口跨平台可用,不意味着 Linux 支持 `clonefile(2)`；独立 `make lean-cache-ensure` 仍走默认 donor 路径。donor 播种失败或项目层冷的诊断应同时指出上述显式局部入口,保留原失败原因,不自动启用授权。提示中的模块占位符须替换,不得省略目标或持久 export 冷构建授权；全量构建仍需 `FULL_BUILD=1`。
 
 **短 CI 计时边界。** `current` 的准备与计算交错，`ci_compute.py` 在 source 与 continuation 各自 job 的 `RUNNER_TEMP` 中独占保存剩余秒数。source 初次初始化，continuation 仅从上文已校验的 job-output 余额恢复，不重置或另给 120 分钟；文件本身不跨 job 运输。各串行计算调用使用同一累计余额、单调时钟和 GNU `timeout`，累计计算阶段挂钟而非 CPU 核秒，不是每步各给 120 分钟；超时返回 124，TERM 后最多 5 秒清理宽限，必要时 KILL（退出 137）。余额文件缺失、损坏或并发占用直接失败；启动前先清零，异常中断不留下未扣费余额。普通命令失败保留原非零退出码与输出。此文件不是缓存、receipt、调度器或持久账本。
 
