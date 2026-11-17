@@ -94,4 +94,3 @@ internal sealed class DirectedForestPathOrderDocument : IScribeDocumentDefinitio
                     + "no literature priority is claimed. Counts and probability laws are separate conclusions."))),
             DescribeRole.Theorem)), []));
 }
-

@@ -169,4 +169,3 @@ theorem component_path_order [Finite V] (E : V → V → Prop)
   exact path_index_unique (fun x y : ComponentFiber E A => E x.1 y.1) e f he hf
 
 end D5.S3.Combinatorics.Graph.LinearForests.DirectedForestPathOrder
-
