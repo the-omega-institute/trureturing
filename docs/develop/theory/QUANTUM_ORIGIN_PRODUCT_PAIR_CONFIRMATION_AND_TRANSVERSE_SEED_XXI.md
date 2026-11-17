@@ -4467,7 +4467,7 @@ $$
 $$
 F_{K_3}(\mathcal B_x\setminus J_x)\ne K_3
 \quad\Longleftrightarrow\quad
-\exists D\ne0:\ D\succeq0,\
+\exists D\ne0:\ D\succeq0,
 \operatorname{ran}D\subseteq T,\ D\perp\ker\Psi.
 \tag{341.10}
 $$
