@@ -79,7 +79,8 @@ theorem boundary_values : E 0 = 1 ∧ E 1 = 1 ∧ E 2 = 1 ∧ E 3 = 2 ∧
     rw [E_four] at h
     omega
 
-private theorem ordinary_riccati :
+/-- The ordinary secant-plus-tangent series satisfies its Riccati equation. -/
+theorem ordinary_riccati :
     2 * PowerSeries.derivative ordinarySeries = ordinarySeries ^ 2 + 1 := by
   have hd2 : PowerSeries.derivative (2 : PowerSeries ℚ) = 0 := by
     change PowerSeries.derivative (C (2 : ℚ)) = 0
@@ -177,7 +178,7 @@ private theorem liftI_coefficient (b n : ℕ) :
       Complex.I ^ n * (EulerSignedFrequency.A b n : ℂ) := by
   have h := congrArg (algebraMap ℚ ℂ)
     (eCoeff_encode (fun j => (EulerSignedFrequency.A b j : ℚ)) n)
-  simp only [map_mul, map_natCast, map_intCast] at h
+  simp only [eCoeff, map_mul, map_natCast, map_intCast] at h
   simp only [liftI, coeff_rescale, coeff_map, EulerSignedFrequency.F]
   rw [mul_left_comm]
   exact congrArg (Complex.I ^ n * ·) h
@@ -222,10 +223,14 @@ theorem signed_odd (s : ℕ) :
   have he : (-1 : ℂ) ^ s = (((-1 : ℤ) ^ s : ℤ) : ℂ) := by norm_cast
   rw [he] at h
   have hr := congrArg Complex.re h
-  simp only [Complex.natCast_re, Complex.mul_re, Complex.add_re, Complex.intCast_re,
+  simp only [Complex.natCast_re, Complex.mul_re, Complex.add_re, Complex.add_im, Complex.intCast_re,
     Complex.intCast_im, Complex.mul_im, Complex.I_re, Complex.I_im, zero_mul,
     one_mul, mul_zero, sub_zero, zero_add, add_zero, zero_sub] at hr
+  simp only [mul_one] at hr
+  have hz : (E (2 * s + 1) : ℤ) =
+      -((-1 : ℤ) ^ s * EulerSignedFrequency.A 0 (2 * s + 1)) := by
+    exact_mod_cast hr
   rw [pow_succ]
-  exact_mod_cast hr
+  linear_combination hz
 
 end D5.S1.Recurrence.Periodic.EulerUpDownSource
