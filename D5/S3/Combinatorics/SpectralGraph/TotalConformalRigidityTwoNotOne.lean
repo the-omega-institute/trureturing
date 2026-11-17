@@ -80,7 +80,11 @@
      D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta
      declaration statement_id: sha256:ed748bba225d96d8d6a4d64d6562868c6ad6d2e9cb7644dc4461078f8ad2837f
    diagonalized_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, perturbed_eigenvalues, uniform_eigenvalues.
-   Direct frozen dependencies: none.
+   Direct frozen dependencies:
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum
+     declaration statement_id: sha256:12dad8aa32bfca36ccce2305d99cfdd7f2db18813143d1396346f8c8f0e12712
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly
+     declaration statement_id: sha256:1432e8d88c5446f92eb737aabe9d8591628d94dc82ed93077dd0f8db3534ed39
    P: proof_shape: bind-only; escape_witness: none; consumers: PR_identity, X_diagonalized, X_eigenvalues, orbit_diagonalized, perturbed_eigenvalues, uniform_eigenvalues.
    Direct frozen dependencies: none.
    R: proof_shape: bind-only; escape_witness: none; consumers: PR_identity, X_eigenvalues, perturbed_eigenvalues, uniform_eigenvalues.
@@ -94,7 +98,11 @@
    X_diagonalized: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues.
    Direct frozen dependencies: none.
    X_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: trace_certificate_bound.
-   Direct frozen dependencies: none.
+   Direct frozen dependencies:
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum
+     declaration statement_id: sha256:12dad8aa32bfca36ccce2305d99cfdd7f2db18813143d1396346f8c8f0e12712
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly
+     declaration statement_id: sha256:1432e8d88c5446f92eb737aabe9d8591628d94dc82ed93077dd0f8db3534ed39
    lap_matrix: proof_shape: bind-only; escape_witness: none; consumers: lap_X_trace, lap_trace, orbit_lap.
    Direct frozen dependencies: none.
    lap_trace: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
@@ -115,6 +123,10 @@
      declaration statement_id: sha256:c711529df7d29888d4192467be5fae7d8697b641c151f0ad3b4a10f4caa731b0
      D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_hermitian
      declaration statement_id: sha256:1c53436d510902e28b0a3f4ecc4ee3b824fffa44e0f140a3bad172f9f72b5dd0
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum
+     declaration statement_id: sha256:12dad8aa32bfca36ccce2305d99cfdd7f2db18813143d1396346f8c8f0e12712
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly
+     declaration statement_id: sha256:1432e8d88c5446f92eb737aabe9d8591628d94dc82ed93077dd0f8db3534ed39
    perturbed_valid: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid.
    Direct frozen dependencies: none.
    perturbed_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid.
@@ -123,12 +135,20 @@
      declaration statement_id: sha256:c711529df7d29888d4192467be5fae7d8697b641c151f0ad3b4a10f4caa731b0
      D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_hermitian
      declaration statement_id: sha256:1c53436d510902e28b0a3f4ecc4ee3b824fffa44e0f140a3bad172f9f72b5dd0
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum
+     declaration statement_id: sha256:12dad8aa32bfca36ccce2305d99cfdd7f2db18813143d1396346f8c8f0e12712
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly
+     declaration statement_id: sha256:1432e8d88c5446f92eb737aabe9d8591628d94dc82ed93077dd0f8db3534ed39
    trace_five: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
    Direct frozen dependencies:
      D5/S3/Weil/ZetaLinear/PosIndex.sum_eigenvalues_reindex
      declaration statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478
    trace_certificate_bound: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
    Direct frozen dependencies:
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum
+     declaration statement_id: sha256:12dad8aa32bfca36ccce2305d99cfdd7f2db18813143d1396346f8c8f0e12712
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly
+     declaration statement_id: sha256:1432e8d88c5446f92eb737aabe9d8591628d94dc82ed93077dd0f8db3534ed39
      D5/S3/Weil/ZetaLinear/VonNeumann.vonNeumann_trace_ineq
      declaration statement_id: sha256:e4d2e8d594a181e2ae6b690deb46229692ff71b3739f9527b63dfac987faa7d7
    all_weights_bounds: proof_shape: bind-only; escape_witness: none; consumers: graph_two_rigid.
@@ -139,6 +159,10 @@
      declaration statement_id: sha256:ed748bba225d96d8d6a4d64d6562868c6ad6d2e9cb7644dc4461078f8ad2837f
      D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_hermitian
      declaration statement_id: sha256:1c53436d510902e28b0a3f4ecc4ee3b824fffa44e0f140a3bad172f9f72b5dd0
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum
+     declaration statement_id: sha256:12dad8aa32bfca36ccce2305d99cfdd7f2db18813143d1396346f8c8f0e12712
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly
+     declaration statement_id: sha256:1432e8d88c5446f92eb737aabe9d8591628d94dc82ed93077dd0f8db3534ed39
      D5/S3/Weil/ZetaLinear/PosIndex.eigEquiv
      declaration statement_id: sha256:654ba75dc9fc8ba7043bc07f2e652d247648fdb01580c0e2815eda462b33ec96
      D5/S3/Weil/ZetaLinear/PosIndex.eigenvalues_eigEquiv
@@ -155,6 +179,10 @@
      declaration statement_id: sha256:ed748bba225d96d8d6a4d64d6562868c6ad6d2e9cb7644dc4461078f8ad2837f
      D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_hermitian
      declaration statement_id: sha256:1c53436d510902e28b0a3f4ecc4ee3b824fffa44e0f140a3bad172f9f72b5dd0
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum
+     declaration statement_id: sha256:12dad8aa32bfca36ccce2305d99cfdd7f2db18813143d1396346f8c8f0e12712
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly
+     declaration statement_id: sha256:1432e8d88c5446f92eb737aabe9d8591628d94dc82ed93077dd0f8db3534ed39
      D5/S3/Weil/ZetaLinear/PosIndex.eigEquiv
      declaration statement_id: sha256:654ba75dc9fc8ba7043bc07f2e652d247648fdb01580c0e2815eda462b33ec96
      D5/S3/Weil/ZetaLinear/PosIndex.eigenvalues_eigEquiv
@@ -169,6 +197,10 @@
      declaration statement_id: sha256:c711529df7d29888d4192467be5fae7d8697b641c151f0ad3b4a10f4caa731b0
      D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_hermitian
      declaration statement_id: sha256:1c53436d510902e28b0a3f4ecc4ee3b824fffa44e0f140a3bad172f9f72b5dd0
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum
+     declaration statement_id: sha256:12dad8aa32bfca36ccce2305d99cfdd7f2db18813143d1396346f8c8f0e12712
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly
+     declaration statement_id: sha256:1432e8d88c5446f92eb737aabe9d8591628d94dc82ed93077dd0f8db3534ed39
    result: proof_shape: bind-only; escape_witness: none; consumers: settling result.
    Direct frozen dependencies:
      D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.wLap
@@ -177,6 +209,10 @@
      declaration statement_id: sha256:ed748bba225d96d8d6a4d64d6562868c6ad6d2e9cb7644dc4461078f8ad2837f
      D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_hermitian
      declaration statement_id: sha256:1c53436d510902e28b0a3f4ecc4ee3b824fffa44e0f140a3bad172f9f72b5dd0
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum
+     declaration statement_id: sha256:12dad8aa32bfca36ccce2305d99cfdd7f2db18813143d1396346f8c8f0e12712
+     D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly
+     declaration statement_id: sha256:1432e8d88c5446f92eb737aabe9d8591628d94dc82ed93077dd0f8db3534ed39
      D5/S3/Weil/ZetaLinear/PosIndex.eigEquiv
      declaration statement_id: sha256:654ba75dc9fc8ba7043bc07f2e652d247648fdb01580c0e2815eda462b33ec96
      D5/S3/Weil/ZetaLinear/PosIndex.eigenvalues_eigEquiv

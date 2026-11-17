@@ -42,7 +42,21 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.in
 
 For a Hermitian matrix of any finite dimension over an RCLike field, reverse the library descending real eigenvalue enumeration. Multiplicities remain; strict monotonicity is a separate hypothesis.
 
-**Definition 1.2 (lagrangeProjector).**
+**Theorem 1.2 (Increasing spectrum from the characteristic polynomial).**
+
+$$\forall K \in \mathrm{Type},\; [\operatorname{RCLike}\left(K\right)] \forall n \in \mathrm{Nat},\; \forall H \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right),\; \forall hH \in \operatorname{Matrix}.\operatorname{IsHermitian}\left(H\right),\; \forall e \in \operatorname{Fin}\left(n\right) \to \mathrm{Real},\; (\operatorname{Monotone}\left(e\right)) \Rightarrow ((H.\operatorname{charpoly} = \prod_{i : \operatorname{Fin}\left(n\right)} (\operatorname{Polynomial}.\operatorname{X} - \operatorname{Polynomial}.\operatorname{C}\left((\operatorname{RCLike}.\operatorname{ofReal}\left(e\left(i\right)\right) : K)\right))) \Rightarrow (\operatorname{BoseSelectionFixedOrthogonalBaths}.\operatorname{increasingSpectrum}\left(hH\right) = e))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Schnell, Alexander; Ketzmerick, Roland; Eckardt, André (2018). *On the number of Bose-selected modes in driven-dissipative ideal Bose gases*. DOI: [10.1103/PhysRevE.97.032136](https://doi.org/10.1103/PhysRevE.97.032136). URL: <https://arxiv.org/abs/1802.04088v2>.
+
+*Commentary.*
+
+For a Hermitian matrix over an RCLike field, a monotone real vector whose linear factors multiply to the characteristic polynomial is exactly the increasing spectrum, including multiplicities.
+
+**Definition 1.3 (lagrangeProjector).**
 
 Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector`
 
@@ -55,20 +69,6 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.la
 *Commentary.*
 
 For a matrix H, real vector e and index i, multiply the Lagrange factors (H-e(j)I)/(e(i)-e(j)) for j different from i, in the fixed list order. It is a spectral projection when H has that simple spectrum; no such interpretation is claimed for repeated energies.
-
-**Theorem 1.3 (lagrangeProjector_spectralMatrix).**
-
-Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector_spectralMatrix`
-
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector_spectralMatrix` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Schnell, Alexander; Ketzmerick, Roland; Eckardt, André (2018). *On the number of Bose-selected modes in driven-dissipative ideal Bose gases*. DOI: [10.1103/PhysRevE.97.032136](https://doi.org/10.1103/PhysRevE.97.032136). URL: <https://arxiv.org/abs/1802.04088v2>.
-
-*Commentary.*
-
-For every dimension, RCLike field, unitary U and injective real energy vector e, the i-th polynomial Lagrange projector of U diag(e) U* equals U times the i-th coordinate projector times U*. This supplies the intrinsic spectral/physical rate bridge without choosing eigenvector phases.
 
 **Definition 1.4 (HermitianSpace).**
 
@@ -190,10 +190,13 @@ For every dimension n at least five, RCLike field and fixed Hermitian H whose cu
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.exists_open_fixedBathHamiltonians`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.fixedBath_local_exponent`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum`
+- Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector`
-- Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector_spectralMatrix`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.matrixRates`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.matrixRates_eq`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.matrixWeight`
+- Dependency: [D5/S3/Analytic/SeriesInequalities/StampachWaclawekExpansionRefutation](../Analytic/SeriesInequalities/StampachWaclawekExpansionRefutation.md)
+- Dependency: [D5/S3/Geometry/FiniteCoordinateTruncation](../Geometry/FiniteCoordinateTruncation.md)
 - Dependency: [D5/S3/SpectralTopology/HermitianEigenvaluePerturbation](../SpectralTopology/HermitianEigenvaluePerturbation.md)
+- Dependency: [D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation](BoseSelectionCubicTwoBathRefutation.md)
 - Dependency: [D5/S3/StatisticalMechanics/BoseSelectionFixedBathConstruction](BoseSelectionFixedBathConstruction.md)
