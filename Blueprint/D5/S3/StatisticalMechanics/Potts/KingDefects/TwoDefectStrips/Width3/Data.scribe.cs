@@ -44,7 +44,7 @@ internal sealed class DataDocument : IScribeDocumentDefinition
             Describe.Remark(DescribeId.Create("terminal"),
                 DeclarationHandle.Create(Prefix + "terminal"), H("terminal"),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The Lean type is Fin 9 -> Int. Forward.structural_certificate pins the terminal value as the indicator that the residual budget is zero.")))),
+                Blocks(Paragraph(Text("The Lean type is Fin 9 -> Int. Forward.structural_certificate pins the terminal value as the indicator that the residual budget is zero. This consumed alias delegates to CrossedStripDefects.HardinA229632Strip.terminal.")))),
             Describe.Remark(DescribeId.Create("w"),
                 DeclarationHandle.Create(Prefix + "W"), H("W"),
                 AssessedProvenance.FromRepo(Source),
