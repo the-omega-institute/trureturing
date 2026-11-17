@@ -8,6 +8,7 @@
 -/
 
 import Mathlib
+import D5.S3.Quantum.Algebra.CommonCoefficientPlane
 
 /-!
 # Normalized singular Hermitian kernel identities
@@ -339,6 +340,70 @@ theorem universal_common_graph_orientation
     have h := hE ⟨H, hH⟩
     rw [hc] at h
     exact h.symm
+
+/-- The complex-linear orientation gives one of the first two geometric
+alternatives, without a lower bound on the graph image dimension. -/
+theorem linear_graph_common_kernel_or_neutral_plane
+    (K : Submodule ℝ M)
+    (hD : D ∈ K)
+    (hHerm : ∀ H : M, H ∈ K → H.IsHermitian)
+    (hSing : ∀ H : M, H ∈ K → H.det = 0)
+    (c : ℂ) (hc : ‖c‖ = 1)
+    (hgraph : ∀ H ∈ K, H 1 2 = c * H 0 2) :
+    (∃ v : Fin 3 → ℂ, v ≠ 0 ∧ ∀ H ∈ K, H *ᵥ v = 0) ∨
+    (∃ W : Submodule ℂ (Fin 3 → ℂ), Module.finrank ℂ W = 2 ∧
+      ∀ H ∈ K, ∀ w ∈ W, ∀ w' ∈ W,
+        star w ⬝ᵥ (H *ᵥ w') = 0) := by
+  classical
+  by_cases hzero : ∀ H ∈ K, H 0 2 = 0
+  · left
+    apply zero_graph_common_kernel K
+    intro H hH
+    exact ⟨hzero H hH, by rw [hgraph H hH, hzero H hH, mul_zero],
+      (universal_coefficient_constraints K hD hHerm hSing H hH).1⟩
+  · right
+    push_neg at hzero
+    obtain ⟨H₀, hH₀, hu₀⟩ := hzero
+    have hcprod : conj c * c = 1 := by
+      rw [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, hc]
+      norm_num
+    have hcprod' : c * conj c = 1 := by simpa [mul_comm] using hcprod
+    have hpoint (H : M) (hH : H ∈ K) (hu : H 0 2 ≠ 0) :
+        H 0 0 + H 1 1 - H 0 1 * c - conj (H 0 1) * conj c = 0 := by
+      obtain ⟨a, b, z, u, v, hcoord, _, he⟩ :=
+        universal_faithful_coordinate_representation K hD hHerm hSing H hH
+      have hv : v = c * u := by simpa [hcoord, hermitianMatrix] using hgraph H hH
+      have hune : u ≠ 0 := by simpa [hcoord, hermitianMatrix] using hu
+      have hnorm : conj u * u ≠ 0 := mul_ne_zero (by simpa using hune) hune
+      have he' : ((a : ℂ) + (b : ℂ) - z * c - conj z * conj c) *
+          (conj u * u) = 0 := by
+        rw [hv, map_mul, Complex.ofReal_add] at he
+        linear_combination he
+      have hsum := (mul_eq_zero.mp he').resolve_right hnorm
+      simpa [hcoord, hermitianMatrix] using hsum
+    have htrace (H : M) (hH : H ∈ K) :
+        H 0 0 + H 1 1 - H 0 1 * c - conj (H 0 1) * conj c = 0 := by
+      by_cases hu : H 0 2 = 0
+      · have hp := hpoint H₀ hH₀ hu₀
+        have hsum : (H + H₀) 0 2 ≠ 0 := by
+          simpa only [Matrix.add_apply, hu, zero_add] using hu₀
+        have he := hpoint (H + H₀) (K.add_mem hH hH₀) hsum
+        simp only [Matrix.add_apply, map_add] at he
+        linear_combination he - hp
+      · exact hpoint H hH hu
+    apply CommonCoefficientPlane.phase_plane (K : Set M) (-c)
+    intro H hH
+    have hHerm' := Matrix.IsHermitian.ext_iff.mp (hHerm H hH)
+    have h10 : H 1 0 = conj (H 0 1) := (hHerm' 1 0).symm
+    have h20 : H 2 0 = conj (H 0 2) := (hHerm' 2 0).symm
+    have h21 : H 2 1 = conj (H 1 2) := (hHerm' 2 1).symm
+    refine ⟨hHerm H hH,
+      (universal_coefficient_constraints K hD hHerm hSing H hH).1, ?_, ?_⟩
+    · rw [h20, h21, hgraph H hH, map_mul]
+      linear_combination -(conj (H 0 2)) * hcprod'
+    · rw [CommonCoefficientPlane.phaseVector_quad, h10]
+      simp only [map_neg, Complex.star_def]
+      linear_combination htrace H hH + H 1 1 * hcprod
 
 def normalizedGraphTrichotomy : Prop :=
   ∀ (K : Submodule ℝ M), D ∈ K →
