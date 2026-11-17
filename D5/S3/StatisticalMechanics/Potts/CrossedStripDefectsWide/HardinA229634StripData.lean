@@ -23,7 +23,6 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import Mathlib.Data.Matrix.Block
 import Mathlib.Logic.Equiv.Fin.Basic
 
-open scoped BigOperators
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripData
 open DefectTransfer (bondDefects)
@@ -32,7 +31,7 @@ set_option maxHeartbeats 0
 set_option Elab.async false
 set_option synthInstance.maxSize 100000
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefects
-open HardinA229531StripData (Row horizontal between)
+open HardinA229531StripData (Row horizontal)
 def Valid (p : Row) (d : ℕ) : Prop :=
   d ≤ 2 ∧ bondDefects horizontal p p ≤ 2 - d
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
