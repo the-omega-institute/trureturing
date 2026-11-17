@@ -121,3 +121,5 @@ internal sealed class EulerSignedFrequencyDocument : IScribeDocumentDefinition
     private static Formula MinusOne() => P(Seq(Minus, D(1)));
 
 }
+
+}

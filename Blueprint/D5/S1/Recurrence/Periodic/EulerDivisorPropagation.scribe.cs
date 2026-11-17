@@ -99,3 +99,5 @@ internal sealed class EulerOddPrimePowerDocument : IScribeDocumentDefinition
         Sp, P(Mul(Pow(R(Qmod(),MinusOne()),V("h")),Pow(R(Qmod(),Add(Mul(D(2),V("h")),V("b"))),V("j")))));
 
 }
+
+}
