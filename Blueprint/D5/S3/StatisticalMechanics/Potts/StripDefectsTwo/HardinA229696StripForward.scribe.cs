@@ -8,8 +8,10 @@ internal sealed class HardinA229696StripForwardDocument : IScribeDocumentDefinit
     private const string Note="D5/L/SpinModels/hardin2013a229696";
     private const string DataName="HardinA229696StripData";
     private const string OldName="HardinA229588Strip";
-    private const string ResultName="HardinA229696Strip";
-    private const int Rows=3, States=15, Last=10, Start=4;
+    private const int Rows=3;
+    private const int States=15;
+    private const int Last=10;
+    private const int Start=4;
     private static readonly int[] Coefficients=[-8,60,-162,185,-81,15];
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact two-defect sheared square-lattice strip counts.",H("Two-defect HA strips"),Blocks(
@@ -26,18 +28,13 @@ internal sealed class HardinA229696StripForwardDocument : IScribeDocumentDefinit
     private static Formula Row() => new Formula.TypeArrow(Fin(Rows),Fin(3));
     private static Formula Val(Formula a) => Call("Fin.val",a);
     private static Formula All(string n, Formula t, Formula b) => Seq(Forall,Sp,V(n),Colon,Sp,t,Comma,Sp,Parenthesized(b));
-    private static Formula Ex(string n, Formula t, Formula b) => Seq(Exists,Sp,V(n),Colon,Sp,t,Comma,Sp,Parenthesized(b));
-    private static Formula Fn(string n, Formula t, Formula b) => Seq(LambdaLower,Sp,V(n),Colon,Sp,t,Sp,Mapsto,Sp,Parenthesized(b));
     private static Formula Sum(string n, Formula t, Formula b) => Seq(F.Sum,Underscore,Grp(V(n),Colon,Sp,t),Sp,Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.Equal,b);
     private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
-    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a),Sp,Land,Sp,Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a),Sp,Implies,Sp,Parenthesized(b));
-    private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a),Sp,F.Iff,Sp,Parenthesized(b));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a,FormulaBinaryOperator.Add,b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a,FormulaBinaryOperator.Subtract,b);
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a,FormulaBinaryOperator.Multiply,b);
     private static Formula If(Formula c, Formula y, Formula n) => Parenthesized(Seq(Q("if"),Sp,Parenthesized(c),Sp,Q("then"),Sp,y,Sp,Q("else"),Sp,n));
     private static Formula Data(string n, params Formula[] a) => Call(DataName+"."+n,a);
     private static Formula Old(string n, params Formula[] a) => Call(OldName+"."+n,a);
@@ -61,20 +58,4 @@ internal sealed class HardinA229696StripForwardDocument : IScribeDocumentDefinit
     }
     private static Formula Join(params Formula[] a) => a.Length==1 ? a[0] : And(a[0],Join(a.Skip(1).ToArray()));
     private static Formula Vector(params Formula[] a) => Seq(new Formula[] {Bang,OpenBracket}.Concat(a.SelectMany((f,i)=>i==0?new[]{f}:new[]{Comma,Sp,f})).Append(CloseBracket).ToArray());
-    private static Formula Recurrence()
-    {
-        Formula Count(int k) => Typed(Call(ResultName+".a",Add(V("n"),Num(k))),V("Int"));
-        Formula rhs=Mul(Num(Coefficients[^1]),Count(Last));
-        for(int i=1;i<Coefficients.Length;i++) {var c=Coefficients[^(i+1)];var term=Mul(Num(Math.Abs(c)),Count(Last-i));rhs=c<0?Sub(rhs,term):Add(rhs,term);}
-        return All("n",V("Nat"),Eq(Count(Last+1),rhs));
-    }
-    private static Formula CountDefinition()
-    {
-        var a=V("A");var n=V("n");
-        var grid=new Formula.TypeProduct([Fin(Rows),Call("Fin",n)]);
-        Formula Index(Formula p) => Add(Mul(Val(Call("Prod.fst",p)),n),Val(Call("Prod.snd",p)));
-        var canon=All("p",grid,All("c",Fin(3),Imp(Lt(V("c"),App(a,V("p"))),Ex("q",grid,And(Lt(Index(V("q")),Index(V("p"))),Eq(App(a,V("q")),V("c")))))));
-        var columns=Call("List.ofFn",Fn("j",Call("Fin",n),Fn("i",Fin(Rows),App(a,Parenthesized(Seq(V("i"),Comma,Sp,V("j")))))));
-        return All("n",V("Nat"),Eq(Call(ResultName+".a",n),Call("Finset.card",Call("Finset.filter",Fn("A",new Formula.TypeArrow(grid,Fin(3)),And(Eq(Call("DefectTransfer.defects",Old("horizontal"),Old("between"),columns),Num(2)),canon)),Call("Finset.univ")))));
-    }
 }
