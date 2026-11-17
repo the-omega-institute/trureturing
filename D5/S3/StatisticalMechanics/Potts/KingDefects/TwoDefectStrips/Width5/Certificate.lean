@@ -62,6 +62,7 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Class
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Classes40
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Classes41
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Classes42
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.ZeroTemperature
 /-! Every admissible boundary has the certified successor multiset. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Certificate
@@ -177,34 +178,38 @@ theorem transition_counts (p : Row) (d : ℕ) (hp : Valid p d) (s : Fin 43) :
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d ∧
       cl r (d - (bondDefects between p r + bondDefects horizontal r r)) = s
       then (1 : ℤ) else 0) = T (cl p d) s := by
-  obtain ⟨p', ⟨hnormal, e, he⟩, _⟩ := canonical_exists_unique p
-  have hv : Valid p' d := by
-    rw [he]
-    simpa only [Valid, bond_relabel] using hp
-  have hd : d < 3 := by change d ≤ 2 ∧ _ at hp; omega
-  have hlist := canonical_successors p' ⟨d, hd⟩ hv hnormal
-  have hT :
-      (∑ r : Row, if bondDefects between p' r + bondDefects horizontal r r ≤ d ∧
-        cl r (d - (bondDefects between p' r + bondDefects horizontal r r)) = s
-        then (1 : ℤ) else 0) = T (cl p' d) s := by
-    have h := TableBridge.count_successors
-      (fun r : Row => bondDefects between p' r + bondDefects horizontal r r ≤ d)
-      (fun r => cl r (d - (bondDefects between p' r + bondDefects horizontal r r))) s
-    change (successors p' d).count s = _ at h
-    rw [hlist] at h
-    have hh : (∑ r : Row, if bondDefects between p' r + bondDefects horizontal r r ≤ d ∧
-        cl r (d - (bondDefects between p' r + bondDefects horizontal r r)) = s
-        then (1 : ℤ) else 0) = ((classList (cl p' d)).count s : ℤ) := by
-      exact_mod_cast h.symm
-    exact hh.trans (class_counts _ _)
-  rw [he] at hT
-  let E : Row ≃ Row := Equiv.piCongrRight fun _ : Fin 5 => e
-  rw [← E.sum_comp] at hT
-  change (∑ r : Row, if bondDefects between (e ∘ p) (e ∘ r) +
-    bondDefects horizontal (e ∘ r) (e ∘ r) ≤ d ∧
-    cl (e ∘ r) (d - (bondDefects between (e ∘ p) (e ∘ r) +
-      bondDefects horizontal (e ∘ r) (e ∘ r))) = s then (1 : ℤ) else 0) =
-      T (cl (e ∘ p) d) s at hT
-  simpa only [bond_relabel, class_relabel] using hT
+  by_cases hzero : d = 0 ∧ bondDefects horizontal p p = 0
+  · subst d
+    simpa only [Nat.zero_sub] using ZeroTemperature.transition_counts p hzero.2 s
+  ·
+    obtain ⟨p', ⟨hnormal, e, he⟩, _⟩ := canonical_exists_unique p
+    have hv : Valid p' d := by
+      rw [he]
+      simpa only [Valid, bond_relabel] using hp
+    have hd : d < 3 := by change d ≤ 2 ∧ _ at hp; omega
+    have hlist := canonical_successors p' ⟨d, hd⟩ hv hnormal
+    have hT :
+        (∑ r : Row, if bondDefects between p' r + bondDefects horizontal r r ≤ d ∧
+          cl r (d - (bondDefects between p' r + bondDefects horizontal r r)) = s
+          then (1 : ℤ) else 0) = T (cl p' d) s := by
+      have h := TableBridge.count_successors
+        (fun r : Row => bondDefects between p' r + bondDefects horizontal r r ≤ d)
+        (fun r => cl r (d - (bondDefects between p' r + bondDefects horizontal r r))) s
+      change (successors p' d).count s = _ at h
+      rw [hlist] at h
+      have hh : (∑ r : Row, if bondDefects between p' r + bondDefects horizontal r r ≤ d ∧
+          cl r (d - (bondDefects between p' r + bondDefects horizontal r r)) = s
+          then (1 : ℤ) else 0) = ((classList (cl p' d)).count s : ℤ) := by
+        exact_mod_cast h.symm
+      exact hh.trans (class_counts _ _)
+    rw [he] at hT
+    let E : Row ≃ Row := Equiv.piCongrRight fun _ : Fin 5 => e
+    rw [← E.sum_comp] at hT
+    change (∑ r : Row, if bondDefects between (e ∘ p) (e ∘ r) +
+      bondDefects horizontal (e ∘ r) (e ∘ r) ≤ d ∧
+      cl (e ∘ r) (d - (bondDefects between (e ∘ p) (e ∘ r) +
+        bondDefects horizontal (e ∘ r) (e ∘ r))) = s then (1 : ℤ) else 0) =
+        T (cl (e ∘ p) d) s at hT
+    simpa only [bond_relabel, class_relabel] using hT
 
 end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Certificate

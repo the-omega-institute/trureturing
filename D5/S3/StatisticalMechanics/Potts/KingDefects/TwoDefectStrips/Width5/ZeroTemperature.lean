@@ -1,0 +1,129 @@
+/- GID: D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature
+   generality: G
+   mirror-B: D5/B/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: none
+   digest: The reflected-column restriction of the frozen width-six proper successor image. -/
+
+/-
+admission_basis: open-problem-resolution (#30655; Proved)
+escape_witness: none (consumed owner adapters on the live path of HardinA229752.result)
+extend: proof_shape=bind-only; consumers=proper_extend,raw_extend,raw_iff_owner
+raw5: proof_shape=bind-only; consumers=raw_extend,raw_iff_owner,weighted
+proper_extend: proof_shape=bind-only; consumers=raw_iff_owner,transition_counts
+raw_extend: proof_shape=bind-only; consumers=raw_iff_owner
+raw_iff_owner: proof_shape=bind-only; consumers=weighted
+weighted: proof_shape=bind-only; consumers=transition_counts
+owner_matrix: proof_shape=bind-only; consumers=transition_counts
+transition_counts: proof_shape=bind-only; consumers=Width5.Certificate.transition_counts
+-/
+
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.ZeroTemperature
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
+
+open scoped BigOperators
+namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.ZeroTemperature
+open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips
+open Width5.Data
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
+
+set_option maxRecDepth 100000
+
+def extend (p : Row) : Width6.Data.Row := ![p 0, p 1, p 2, p 3, p 4, p 3]
+
+def raw5 (p r : Row) : Prop :=
+  bondDefects between p r + bondDefects horizontal r r = 0
+
+local instance (p r : Row) : Decidable (raw5 p r) :=
+  inferInstanceAs (Decidable (_ = 0))
+
+theorem proper_extend (p : Row) :
+    bondDefects Width6.Data.horizontal (extend p) (extend p) = 0 ↔
+      bondDefects Width5.Data.horizontal p p = 0 := by
+  simp only [bondDefects, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
+  simp [Width5.Data.horizontal, Width6.Data.horizontal, extend, ne_comm] <;> tauto
+
+theorem raw_extend (p r : Row) :
+    Width6.ZeroTemperature.raw (extend p) (extend r) ↔ raw5 p r := by
+  simp only [Width6.ZeroTemperature.raw, raw5, Nat.add_eq_zero_iff,
+    bondDefects, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
+  simp [Width5.Data.between, Width6.Data.between,
+    Width5.Data.horizontal, Width6.Data.horizontal, extend, ne_comm] <;> tauto
+
+theorem raw_iff_owner (p r : Row)
+    (hp : bondDefects Width5.Data.horizontal p p = 0) :
+    raw5 p r ↔ ∃ v ∈ offsetChoices (Width6.ZeroTemperature.offsets (extend p)),
+      r = fun j => v ^^^ p j := by
+  rw [← raw_extend, Width6.ZeroTemperature.raw_iff_shift _ _
+    ((proper_extend p).mpr hp)]
+  constructor
+  · rintro ⟨v, hv, he⟩
+    refine ⟨v, hv, ?_⟩
+    funext j
+    have h := congrFun he j.castSucc
+    fin_cases j <;> simpa [extend] using h
+  · rintro ⟨v, hv, rfl⟩
+    refine ⟨v, hv, ?_⟩
+    funext j
+    fin_cases j <;> rfl
+
+private theorem weighted (p : Row) (hp : bondDefects horizontal p p = 0)
+    (w : Row → ℤ) :
+    (∑ r : Row, if raw5 p r then w r else 0) =
+      ∑ v ∈ offsetChoices (Width6.ZeroTemperature.offsets (extend p)),
+        w (fun j => v ^^^ p j) := by
+  classical
+  have hi : Function.Injective (fun v : Fin 4 => fun j : Fin 5 => v ^^^ p j) := by
+    intro a b hab
+    have h := congrFun hab 0
+    change a ^^^ p 0 = b ^^^ p 0 at h
+    rw [Fin.xor_comm a (p 0), Fin.xor_comm b (p 0)] at h
+    exact xor_cancel (p 0) a b |>.mp h
+  have hs : Finset.univ.filter (raw5 p) =
+      (offsetChoices (Width6.ZeroTemperature.offsets (extend p))).image
+        (fun v => fun j => v ^^^ p j) := by
+    ext r
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_image]
+    simpa only [eq_comm] using raw_iff_owner p r hp
+  rw [← Finset.sum_filter, hs, Finset.sum_image]
+  exact fun _ _ _ _ h => hi h
+
+private theorem owner_matrix (p : Row) (hp : bondDefects horizontal p p = 0)
+    (s : Fin 43) :
+    (∑ v ∈ offsetChoices (Width6.ZeroTemperature.offsets (extend p)),
+      if cl (fun j => v ^^^ p j) 0 = s then (1 : ℤ) else 0) = T (cl p 0) s := by
+  have h : ∀ p : Row, bondDefects horizontal p p = 0 → ∀ s : Fin 43,
+      (∑ v ∈ offsetChoices (Width6.ZeroTemperature.offsets (extend p)),
+        if cl (fun j => v ^^^ p j) 0 = s then (1 : ℤ) else 0) = T (cl p 0) s := by
+    decide +kernel
+  exact h p hp s
+
+theorem transition_counts (p : Row) (hp : bondDefects horizontal p p = 0)
+    (s : Fin 43) :
+    (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ 0 ∧
+      cl r (0 - (bondDefects between p r + bondDefects horizontal r r)) = s
+      then (1 : ℤ) else 0) = T (cl p 0) s := by
+  have hw := weighted p hp (fun r => if cl r 0 = s then (1 : ℤ) else 0)
+  have ho := owner_matrix p hp s
+  calc
+    (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ 0 ∧
+        cl r (0 - (bondDefects between p r + bondDefects horizontal r r)) = s
+        then (1 : ℤ) else 0) =
+        ∑ r : Row, if raw5 p r then (if cl r 0 = s then (1 : ℤ) else 0) else 0 := by
+      apply Finset.sum_congr rfl
+      intro r _
+      by_cases h : raw5 p r
+      · have hz : bondDefects between p r + bondDefects horizontal r r = 0 := h
+        simp [hz, h]
+      · have hn : ¬ bondDefects between p r + bondDefects horizontal r r ≤ 0 := by
+          change ¬ _ = 0 at h
+          omega
+        simp [hn, h]
+    _ = ∑ v ∈ offsetChoices (Width6.ZeroTemperature.offsets (extend p)),
+        if cl (fun j => v ^^^ p j) 0 = s then (1 : ℤ) else 0 := hw
+    _ = T (cl p 0) s := ho
+
+end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.ZeroTemperature

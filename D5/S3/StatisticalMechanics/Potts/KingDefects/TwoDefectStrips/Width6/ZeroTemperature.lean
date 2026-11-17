@@ -30,7 +30,6 @@ open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 
 set_option maxRecDepth 100000
-set_option maxHeartbeats 2000000
 
 
 def twoRows (p r : Row) : Fin 2 × Fin 6 → Fin 4 :=
@@ -42,6 +41,7 @@ def raw (p r : Row) : Prop :=
 local instance (p r : Row) : Decidable (raw p r) :=
   inferInstanceAs (Decidable (_ = 0))
 
+set_option maxHeartbeats 2000000 in
 private theorem raw_pair (p r : Row) :
     Proper (twoRows p r) ↔ bondDefects horizontal p p = 0 ∧ raw p r := by
   simp only [Proper, twoRows, Prod.forall, Fin.forall_fin_succ, Fin.isValue,
@@ -85,7 +85,7 @@ private theorem exact_image (p r : Row) (hp : bondDefects horizontal p p = 0) :
     rw [hfun] at hc
     exact ((raw_pair p r).mp hc).2
 
-private def offsets (p : Row) : Row := fun j => p 0 ^^^ p j
+def offsets (p : Row) : Row := fun j => p 0 ^^^ p j
 
 theorem raw_iff_shift (p r : Row) (hp : bondDefects horizontal p p = 0) :
     raw p r ↔ ∃ v ∈ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip.offsetChoices (offsets p),
@@ -107,7 +107,9 @@ theorem raw_iff_shift (p r : Row) (hp : bondDefects horizontal p p = 0) :
       rw [xor_shift]
       apply (xor_nonzero _ _).mpr
       have hmem : (j.castSucc, j.succ) ∈ horizontal := by
-        fin_cases j <;> simp [horizontal]
+        change (j.castSucc, j.succ) ∈
+          Finset.univ.image (fun k : Fin 5 => (k.castSucc, k.succ))
+        exact Finset.mem_image.mpr ⟨j, Finset.mem_univ _, rfl⟩
       exact (Finset.filter_eq_empty_iff.mp (Finset.card_eq_zero.mp hp)) hmem
     let u : Fin 2 → Fin 4 := ![p 0, v ^^^ p 0]
     have hz : (u, offsets p) ∈ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip.zones 2 := by
@@ -115,7 +117,9 @@ theorem raw_iff_shift (p r : Row) (hp : bondDefects horizontal p p = 0) :
       refine ⟨hoff, ?_⟩
       intro i
       fin_cases i
-      simpa [u, xor_right_cancel] using hv
+      change p 0 ^^^ (v ^^^ p 0) ∈ offsetChoices (offsets p)
+      rw [Fin.xor_comm v (p 0), xor_right_cancel]
+      exact hv
     apply (exact_image p _ hp).mpr
     refine ⟨u, hz, fun j => ?_⟩
     constructor
@@ -142,18 +146,42 @@ private theorem weighted (p : Row) (hp : bondDefects horizontal p p = 0) (w : Ro
 
 set_option maxHeartbeats 0 in
 private theorem owner_matrix (p : Row) (hp : bondDefects horizontal p p = 0) (s : Fin 96) :
-    (∑ v ∈ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip.offsetChoices
-      (offsets p),
+    (∑ v ∈ offsetChoices (offsets p),
       if cl (fun j => v ^^^ p j) 0 = s then (1 : ℤ) else 0) = T (cl p 0) s := by
-  have h : ∀ i : Fin (4^6), bondDefects horizontal
-      (finFunctionFinEquiv.symm i) (finFunctionFinEquiv.symm i) = 0 →
-      ∀ s : Fin 96,
-      (∑ v ∈ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip.offsetChoices
-        (offsets (finFunctionFinEquiv.symm i)),
-        if cl (fun j => v ^^^ (finFunctionFinEquiv.symm i) j) 0 = s
-        then (1 : ℤ) else 0) = T (cl (finFunctionFinEquiv.symm i) 0) s := by
-    decide +kernel
-  simpa only [Equiv.symm_apply_apply] using h (finFunctionFinEquiv p) hp s
+  have hc (v : Fin 4) : cl (fun j => v ^^^ p j) 0 = cl p 0 := by
+    simp only [cl, xor_cancel]
+  simp_rw [hc]
+  have table :
+      (∀ s : Fin 96, T 71 s = if 71 = s then 1 else 0) ∧
+      (∀ s : Fin 96, T 75 s = if 75 = s then 2 else 0) ∧
+      (∀ s : Fin 96, T 90 s = 0) := by decide +kernel
+  have h : ∀ a b c d e : Fin 4,
+      let q : Row := ![0, a, b, c, d, e]
+      bondDefects horizontal q q = 0 →
+      (cl q 0 = 71 ∧ (offsetChoices q).card = 1) ∨
+      (cl q 0 = 75 ∧ (offsetChoices q).card = 2) ∨
+      (cl q 0 = 90 ∧ (offsetChoices q).card = 0) := by
+    intro a
+    fin_cases a <;> decide +kernel
+  let q := offsets p
+  have heq : q = ![0, q 1, q 2, q 3, q 4, q 5] := by
+    funext j
+    fin_cases j <;> simp [q, offsets]
+  have hpq : bondDefects horizontal q q = 0 := by
+    simpa only [bondDefects, q, offsets, xor_cancel] using hp
+  have hcl : cl q 0 = cl p 0 := by simp only [q, offsets, cl, xor_cancel]
+  have hh := h (q 1) (q 2) (q 3) (q 4) (q 5)
+  rw [← heq] at hh
+  rcases hh hpq with ⟨hc, hn⟩ | ⟨hc, hn⟩ | ⟨hc, hn⟩
+  · rw [hcl] at hc
+    rw [hc, table.1]
+    simp [← hn, q]
+  · rw [hcl] at hc
+    rw [hc, table.2.1]
+    simp [← hn, q]
+  · rw [hcl] at hc
+    rw [hc, table.2.2]
+    simp [← hn, q]
 
 theorem transition_counts (p : Row) (hp : bondDefects horizontal p p = 0) (s : Fin 96) :
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ 0 ∧

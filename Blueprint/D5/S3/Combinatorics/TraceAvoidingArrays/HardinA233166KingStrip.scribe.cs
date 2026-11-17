@@ -14,6 +14,20 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         H("Literal normalization, zone counting and the formal generating series"),
         Blocks(
             Paragraph(Text("OEIS A233166, revision 8, NAME: Number of n X 6 0..7 arrays with no element x(i,j) adjacent to itself or value 7-x(i,j) horizontally, diagonally, antidiagonally or vertically, top left element zero, and 1 appearing before 2 3 4 5 and 6, 2 appearing before 3 4 and 5, and 3 appearing before 4 in row major order (unlabelled 8-colorings with no clashing color pairs).")),
+            Node("xor-cancel", "Cancellation of a common xor", "xor_cancel",
+                "For colours in Fin 4, xor with a fixed left colour is cancellable.", DescribeRole.Theorem),
+            Node("xor-nonzero", "Nonzero xor detects unequal colours", "xor_nonzero",
+                "Two Fin 4 colours have nonzero xor exactly when they differ.", DescribeRole.Theorem),
+            Node("xor-shift", "Translation of xor differences", "xor_shift",
+                "The xor of two translated differences is the original difference.", DescribeRole.Theorem),
+            Node("xor-right-cancel", "Cancellation of a common right xor", "xor_right_cancel",
+                "For Fin 4 colours, a common right xor can be cancelled.", DescribeRole.Theorem),
+            Node("offset-ok", "Admissible six-column offsets", "offsetOK",
+                "An offset word starts at zero and has no zero adjacent xor increment.", DescribeRole.Definition),
+            Node("offset-choices", "Allowed vertical shifts", "offsetChoices",
+                "The allowed shifts are the nonzero colours absent from all adjacent offset increments.", DescribeRole.Definition),
+            Node("zones-iff", "Zone data through offset choices", "zones_iff",
+                "A zone is equivalent to an admissible offset word whose adjacent first-column increments lie in its allowed shift set.", DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("legal"), DeclarationHandle.Create(Prefix + "Legal"),
                 H("Literal functions with free boundaries"), StatementSource.FromAuthor(Disp(LegalFormula())),
                 AssessedProvenance.FromLiterature(Source),
@@ -60,6 +74,12 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("hardin233166"), ResolutionKind.Proved)))));
+
+    private static DocumentBlock Node(string id, string title, string declaration, string prose,
+        DescribeRole role) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), role);
 
     private static Formula LegalFormula()
     {
