@@ -41,7 +41,7 @@ private lemma log_power_small (k : ℕ) :
   simpa only [rpow_natCast, rpow_one] using
     (isLittleO_log_rpow_rpow_atTop k (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
 
-private lemma pi_normalized :
+lemma pi_normalized :
     Tendsto (fun x : ℝ => log x * primeCount x / x) atTop (𝓝 1) := by
   have hi := tendsto_log_atTop.const_div_atTop 1
   have hc1 : Tendsto (fun _ : ℝ => (1 : ℝ)) atTop (𝓝 1) := tendsto_const_nhds
