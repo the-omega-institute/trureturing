@@ -2957,3 +2957,486 @@ $e$、$j_\lambda$ 在证明中只是候选世界的响应函数，策略每次�
 全参数平面、另一第六臂、更早祖先、原根八读／九读及最优性均不由此推出。
 
 ## 追加锚（本行以下为增补区）
+
+## 14. 等首源迹 MM 碰撞的二十次父参数必要约束
+
+**定义 14.1（完整世界、原时钟与字面父历史）。** 使用本卷定义1.1及
+[VI，定义1.1、8.1和定理8.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VI.md)
+的整个原模型。具体地，完整世界为 $W=(P,g,d)$，其中 $P$ 是逐项严格正、
+秩一、迹一的实 $2\times2$ 矩阵，$0\ne g\in\mathbb R[t]$ 且
+$\deg g\le3$，$d\in\mathbb R$ 为任意常漂移。令
+
+$$
+\begin{gathered}
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\\
+A_0=I,\qquad A_i=E_iA_{i-1},\quad E_i\in\{M,J\},\qquad
+z_i(W)=g(i)\operatorname{tr}(A_iP)+d.
+\end{gathered}
+\tag{14.1}
+$$
+
+初始读数计入总读数；每个原子动作之后立即读取，原时钟不重编号。
+只有一条不可重置、不可复制的轨迹，不增加跳读、未读复合动作、空动作读数
+或其他观测端口。动作、停止及返回完整目标可以是整个实际历史的任意确定性
+函数，包括早停，不附加连续、可测、可计算或有限描述条件。增益的任意符号、
+实际次数下降、采样根和重根均保留。对实参数 $\theta,\xi$，本节始终使用
+同一个六读字面父历史
+
+$$
+H^-_{\theta,\xi}
+=(0,M,0,M,0,J,6,M,24\theta,M,60(1+\theta+\xi)).
+\tag{14.2}
+$$
+
+$\mathcal F(H)$ 表示保留每个动作及读数的完整实际纤维。本文中的 MM
+指从此父在原时钟六、七依次实际执行 $M,M$；MJ 指依次实际执行 $M,J$。
+比较两个互择末动作的响应函数不等于同时取得两个末读数。
+
+**定义 14.2（源坐标与等首迹碰撞对）。** 全部物理来源唯一写成
+
+$$
+P(s,t)=\frac1{1+st}
+\begin{pmatrix}1&t\\s&st\end{pmatrix},\qquad s,t>0.
+\tag{14.3}
+$$
+
+沿用 VI (8.1)、(8.5)--(8.6) 的源函数，写 $u=\nu_0$，即
+
+$$
+\begin{gathered}
+u=\operatorname{tr}(MP),\qquad
+n=\operatorname{tr}(JM^2P),\qquad
+a=\operatorname{tr}(MJM^2P),\\
+h=u(u+1),\qquad \ell=u^2+3u-4,\qquad
+\alpha=3h-10,\qquad \beta=8u^2+18u-30,\\
+\Delta=nh+an\ell-4ah,\qquad \Phi=\alpha a+\beta n-23h,\\
+V_6=10u^2+19u-36,\qquad X_7=20u^2+34u-70,\\
+\Psi_6=(n+2a)V_6-10a\ell-29h,\\
+\Psi_7=4(2n+3a)X_7-105a\ell-381h,\\
+k=\frac an,\qquad q=\frac{5\Delta}{n\Phi},\qquad
+\mu=\frac{\Psi_6}{\Phi},\qquad \eta=\frac{\Psi_7}{\Phi}.
+\end{gathered}
+\tag{14.4}
+$$
+
+后四个比值在 $\Phi\ne0$ 的来源域使用；正性给 $u,n,a,h>0$。
+源逆及秩一方程为 VI (10.2)--(10.3)、(20.11) 的同一公式
+
+$$
+\begin{gathered}
+P(u,n,a)=
+\begin{pmatrix}
+n+a-3u-1&n+2a-4u-3\\
+1+2u-a&2+3u-n-a
+\end{pmatrix},\\
+\mathcal Q(u,n,a)
+=a^2-an-2(u+1)a-n^2+2(2u+1)n-u^2+u+1=0.
+\end{gathered}
+\tag{14.5}
+$$
+
+取 $\xi\ne0$。所谓一个实际等首迹 MM 碰撞对，是指
+$W_1\ne W_2\in\mathcal F(H^-_{\theta,\xi})$ 满足
+
+$$
+u_1=u_2,\qquad
+r_M^{(6)}(W_1)=r_M^{(6)}(W_2),\qquad
+r_{MM}^{(7)}(W_1)=r_{MM}^{(7)}(W_2).
+\tag{14.6}
+$$
+
+VI 定理23.1--23.2、定理24.5及推论24.6供应完整源与世界接口：
+这样的来源不同，且
+
+$$
+\begin{gathered}
+\Phi_1\Phi_2\ne0,\qquad \mu_1=\mu_2,\qquad \eta_1=\eta_2,\\
+D_k:=k_2-k_1\ne0,\qquad D_q:=q_1-q_2\ne0,\\
+\xi=\frac{D_k}{D_q},\qquad
+\theta=k_1+\xi q_1,\qquad
+d_i=\frac{120h_i\xi}{\Phi_i}.
+\end{gathered}
+\tag{14.7}
+$$
+
+反向任取满足这些源条件的两个物理来源，用(14.7)重建父与漂移，
+再以原时钟 $0,1,2,3$ 上的值
+
+$$
+-d_i,\qquad -\frac{d_i}{u_i},\qquad
+-\frac{d_i}{1+u_i},\qquad \frac{6-d_i}{n_i}
+\tag{14.8}
+$$
+
+作唯一至多三次插值，就得到该同父实际 MM 碰撞对的整个世界。
+增益不恒零，因为同一历史的时钟零与三读数分别为零与六。
+这些接口均按 [VI 的固定正文](https://github.com/the-omega-institute/trureturing/blob/daec012452c47287e1a48afc68988b73e8ba9642/docs/develop/theory/FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VI.md)
+的原前件使用；没有把必要源条件改成额外的观测或来源先验。
+
+**定义 14.3（两层结式与本原父多项式）。** 在整数多项式环
+$\mathbb Z[u,b,\theta,\xi]$ 中，沿用 VI 定义24.1，置
+
+$$
+\begin{aligned}
+A&=(10-3b)u^2+(8-3b)u+10b-32,\\
+B&=(10-8b)u^2+(19-18b)u+30b-36,\\
+C&=(23b-29)h,\qquad
+\mathcal L=Aa+Bn+C=\Psi_6-b\Phi,\\
+\mathcal T&=(\theta n-a)\Phi-5\xi\Delta.
+\end{aligned}
+\tag{14.9}
+$$
+
+$b$ 是实际第六 $M$ 读数的归一化坐标 $\mu$，不是新增端口。
+将 $a=-(Bn+C)/A$ 代入 $\mathcal Q,\mathcal T$ 并清去 $A^2$，
+得到作为多项式恒等式定义的
+
+$$
+Q_A=q_2n^2+q_1n+q_0,\qquad
+T_A=t_2n^2+t_1n+t_0,
+\tag{14.10}
+$$
+
+其中
+
+$$
+\begin{aligned}
+q_2&=B^2+AB-A^2,\\
+q_1&=2BC+AC+2(u+1)AB+2(2u+1)A^2,\\
+q_0&=C^2+2(u+1)AC+(-u^2+u+1)A^2,\\
+t_2&=-\alpha B^2-(\theta\alpha-\beta-5\xi\ell)AB
+       +\theta\beta A^2,\\
+t_1&=-2\alpha BC-(\theta\alpha-\beta-5\xi\ell)AC
+       -(23+20\xi)hAB-(23\theta+5\xi)hA^2,\\
+t_0&=-\alpha C^2-(23+20\xi)hAC.
+\end{aligned}
+\tag{14.11}
+$$
+
+带下标 $q_i$ 仅指此处的二次式系数，与(14.4)中的源不变量 $q$ 不同。
+定义下列整除商与 Sylvester 结式：
+
+$$
+\begin{gathered}
+K(u)=205u^4+313u^3-1211u^2-894u+1940,\\
+N=\frac{q_2t_0-t_2q_0}{A},\qquad
+D=\frac{t_2q_1-q_2t_1}{A},\\
+S(u,\theta,\xi)=\operatorname{Res}_b(N,D),\qquad
+Z(\theta,\xi)=\operatorname{Res}_u(K,S).
+\end{gathered}
+\tag{14.12}
+$$
+
+这里两个除法均在多项式环中余数为零；并不要求某个特化点的 $A\ne0$。
+令 $F(\theta,\xi)$ 为 $Z/\xi^4$ 去掉整数内容后，按变量顺序
+$(\theta,\xi)$ 取字典序首项系数为正的本原整数多项式。定理14.6保证
+此定义有意义且 $F\ne0$。它与本卷第1节的源函数 $F_\theta$ 不同。
+
+**定理 14.4（等首源迹 MM 碰撞的二十次父约束）。** 对所有
+$\theta\in\mathbb R$、$\xi\in\mathbb R\setminus\{0\}$，定义14.2的
+每个实际等首迹 MM 碰撞对均满足
+
+$$
+F(\theta,\xi)=0.
+\tag{14.13}
+$$
+
+$F$ 有 $231$ 个非零项，总次数为 $20$，关于 $\theta$ 和 $\xi$ 的
+次数各为 $20$；在 $\mathbb Q[\theta,\xi]$ 上的三个不可约因子的总次数为
+$4,8,8$，重数均为一。定理包括 $A=0$ 的来源，不要求任何采样增益、
+增益最高次系数或 $\Delta$ 非零，也不对独立选择的 MJ 碰撞对施加条件。
+
+证明由定理14.5--14.8给出：先把共同 $u$ 限制在 $K=0$，
+再证明 $A\ne0$ 图上的结式约束，最后用同一源对的物理连续接续覆盖
+$A=0$ 图。以下各步均保留定义14.1的整个世界域与原量词。
+
+**定理 14.5（共同首迹的四次必要条件）。** 定义14.2的每个实际
+等首迹 MM 碰撞对，其共同首迹 $u$ 满足 $K(u)=0$。
+
+证明。在固定 $u$ 上，三个源多项式给关于 $(a,n,1)$ 的线性映射
+
+$$
+\begin{pmatrix}\Phi\\\Psi_6\\\Psi_7\end{pmatrix}
+=\mathsf M(u)\begin{pmatrix}a\\n\\1\end{pmatrix},
+\qquad
+\mathsf M(u)=
+\begin{pmatrix}
+\alpha&\beta&-23h\\
+10u^2+8u-32&10u^2+19u-36&-29h\\
+135u^2+93u-420&160u^2+272u-560&-381h
+\end{pmatrix}.
+\tag{14.14}
+$$
+
+直接展开行列式得到精确恒等式
+
+$$
+\det\mathsf M(u)=-20u(u+1)K(u)=-20hK(u).
+\tag{14.15}
+$$
+
+若 $K(u)\ne0$，则 $h>0$ 保证 $\mathsf M(u)$ 可逆。由(14.7)，
+两个来源有共同 $\mu,\eta$ 且 $\Phi_i\ne0$，所以
+
+$$
+\mathsf M(u)\frac{(a_i,n_i,1)^{\mathsf T}}{\Phi_i}
+=(1,\mu,\eta)^{\mathsf T}.
+\tag{14.16}
+$$
+
+施加同一个逆矩阵，两个归一化向量相等。最后一个坐标先给
+$\Phi_1=\Phi_2$，继而 $a_1=a_2,n_1=n_2$；共同 $u$ 与(14.5)恢复
+同一个来源，再由(14.7)--(14.8)恢复同一个漂移与整个增益。
+这与两个完整世界不同矛盾。因此 $K(u)=0$。此步只除以已有非零的
+$\Phi_i$ 和可逆行列式。$\square$
+
+**定理 14.6（普遍结式的精确内容与非零见证）。** 定义14.3中的
+$N,D$ 均为整数多项式，且有非零整数 $c$ 使
+
+$$
+Z=c\,\xi^4F.
+\tag{14.17}
+$$
+
+按变量顺序 $(u,b,\theta,\xi)$，各式的单变量次数、总次数及非零项数为
+
+$$
+\begin{array}{c|c|r|r}
+\text{多项式}&\text{单变量次数}&\text{总次数}&\text{非零项数}\\ \hline
+N&(10,3,1,1)&14&110\\
+D&(9,3,1,1)&13&100\\
+S&(55,0,5,6)&60&1122\\
+Z&(0,0,20,24)&24&231
+\end{array}
+\tag{14.18}
+$$
+
+此外
+
+$$
+Z(0,1)\equiv87\pmod{103},\qquad
+\operatorname{Res}_u(K,\alpha)=1274500\ne0.
+\tag{14.19}
+$$
+
+证明。将(14.11)代入(14.12)，分别对 $A$ 作多项式除法，
+两个余数均恒为零。以这两个商作关于 $b$ 的六阶 Sylvester 行列式，
+再以 $K$ 和所得 $S$ 作关于 $u$ 的五十九阶 Sylvester 行列式，
+即精确给出(14.18)。展开第二个行列式，$\xi^4$ 整除所得整数多项式；
+商的本原部分正是定义14.3的 $F$。三个有理不可约因子的次数和为
+$4+8+8=20$，其本原乘积给同一个 $F$；由此得(14.17)及定理14.4的
+次数与项数。
+
+完整系数由私有实验仓库中的
+[same_trace_parent_F.json](https://github.com/the-omega-institute/trureturing-experiments/blob/466208540eaff00557ada1513c80f7c52d58a2b1/fib_equal_trace_parent_180/same_trace_parent_F.json) 给定，
+变量顺序为 $(\theta,\xi)$，每项保存指数对及整数系数；
+此系数文件的 SHA-256 为
+0fae329c1795f14dc7ce1374d5c67c4313a35229af9de7f2fc7ea0afcf7c4c51。
+同一版本的 [same_trace_elimination.json](https://github.com/the-omega-institute/trureturing-experiments/blob/466208540eaff00557ada1513c80f7c52d58a2b1/fib_equal_trace_parent_180/same_trace_elimination.json) 给出(14.12)的完整 $S,Z$ 及因子，
+[universal_0_input.json](https://github.com/the-omega-institute/trureturing-experiments/blob/466208540eaff00557ada1513c80f7c52d58a2b1/fib_equal_trace_parent_180/universal_0_input.json) 给出原始整除商。它们指定上述有限整数恒等式的
+系数，数学定义仍为(14.9)--(14.12)。
+
+为独立给出非零性，在 $\mathbb F_{103}$ 中取 $(\theta,\xi)=(0,1)$，
+直接用(14.11)--(14.12)的两个商构造 Sylvester 行列式。此时
+$N,D$ 关于 $b$ 的次数仍各为 $3$，第一个结式关于 $u$ 的次数仍为
+$55$；$K$ 仍为四次。因此两次特化都保留所用 Sylvester 矩阵的
+次数，所得值确实是普遍 $Z$ 在该点的模 $103$ 特化，结果为 $87$。
+这证明 $Z\ne0$，从而 $c\ne0$ 且 $F\ne0$。最后直接计算
+$K,\alpha$ 的结式给(14.19)的第二式，故
+$\gcd(K,\alpha)=1$。
+
+这里使用的是普遍结式的一个非零值，不是由某个特化仿射纤维为空，
+反推一般纤维为空。Sylvester 行列式、结式的共同根性质与保次数特化是
+成熟代数工具，见
+[Sylvester Matrix](https://mathworld.wolfram.com/SylvesterMatrix.html)
+及 Cox、Little、O'Shea，*Ideals, Varieties, and Algorithms*，第4版，
+第3章的消元理论。$\square$
+
+**定理 14.7（非零主元图上的必要父约束）。** 若定义14.2中的实际
+等首迹 MM 碰撞对在共同 $u$、$b=\mu_1=\mu_2$ 上有 $A\ne0$，
+则满足(14.13)。
+
+证明。由 $\mathcal L=0$，两个来源均有 $a_i=-(Bn_i+C)/A$。
+若 $n_1=n_2$，便也有 $a_1=a_2$，由(14.5)及完整世界接口产生矛盾；
+故 $n_1\ne n_2$。它们均是(14.10)中 $Q_A$ 与 $T_A$ 的根。
+
+VI 引理24.4的正 $u$ 直线分量排除保证 $\mathcal Q$ 在
+$\mathcal L=0$ 上不恒零。因此 $Q_A$ 不是零多项式。
+一个次数至多二的非零多项式有这两个不同根，必为二次，即 $q_2\ne0$。
+$T_A$ 次数至多二且在这两个根上为零，故
+$T_A=(t_2/q_2)Q_A$，也包括 $T_A=0$ 的情况。这给
+
+$$
+q_2t_0-t_2q_0=0,\qquad
+t_2q_1-q_2t_1=0,
+\tag{14.20}
+$$
+
+从而在此 $A\ne0$ 图上 $N=D=0$。
+共同实数 $b$ 因而令第一个 Sylvester 行列式为零，得到
+$S(u,\theta,\xi)=0$。定理14.5又给 $K(u)=0$，所以第二个
+Sylvester 行列式也为零，即 $Z(\theta,\xi)=0$。
+由(14.17)和 $\xi\ne0$ 得 $F(\theta,\xi)=0$。
+结式的这个必要方向容许系数降次或特化后恒零，不需要额外的首项非零条件。
+全程未假设完整源消元式的根为单根。$\square$
+
+**定理 14.8（零主元图的同首迹物理接续）。** 定义14.2的实际等首迹
+MM 碰撞对即使满足 $A=0$，也满足(14.13)。
+
+证明。固定原来的一对来源、其共同 $u>0$ 以及
+$b_0=\mu_1=\mu_2$。VI 引理24.4排除正 $u$ 上 $A=B=C=0$；
+由于此直线上存在两个来源，$A=0$ 时不能有 $B=0$，所以
+
+$$
+B(u,b_0)\ne0,\qquad n_1=n_2=-C(u,b_0)/B(u,b_0).
+\tag{14.21}
+$$
+
+来源不同而 $u,n$ 相同，故 $a_1\ne a_2$。固定此 $u,n$ 后，
+$\mathcal Q$ 是关于 $a$ 的首一二次多项式；两个不同根都是单根，
+即在每个来源处 $\mathcal Q_a\ne0$。关于变量 $(n,a)$ 的 Jacobian 为
+
+$$
+\frac{\partial(\mathcal L,\mathcal Q)}{\partial(n,a)}
+=
+\begin{pmatrix}B&A\\\mathcal Q_n&\mathcal Q_a\end{pmatrix},
+\qquad
+\det\frac{\partial(\mathcal L,\mathcal Q)}{\partial(n,a)}
+=B\mathcal Q_a\ne0
+\quad\text{在 }b=b_0.
+\tag{14.22}
+$$
+
+实解析隐函数定理遂给出同一固定 $u$ 上、以 $b$ 为参数的两个实解析分支
+$(n_i(b),a_i(b))$，满足 $\mathcal Q=\mathcal L=0$ 并回到原来源。
+将邻域缩小，两个分支不同，(14.5)恢复的四个矩阵元素仍严格正，
+且 $\Phi_i(b)\ne0$。秩一和迹一由原源方程及源逆保持。
+这里的实解析隐函数定理是成熟中间工具，见 Krantz、Parks，
+*The Implicit Function Theorem: History, Theory, and Applications*
+中的解析隐函数定理；以下逐项验证本问题的接续条件。
+
+首先，这两条同 $\mu=b$ 分支仍有相同的 $\eta$。
+矩阵 $\mathsf M(u)$ 的第一行非零，因为其末项为 $-23h\ne0$。
+若前两行相关，就存在 $b_*$ 使 $\Psi_6-b_*\Phi$ 是关于 $(a,n)$
+的恒零线性多项式，即 $A(u,b_*)=B(u,b_*)=C(u,b_*)=0$，
+与同一引理24.4矛盾。故前两行线性无关。原对由定理14.5给 $K(u)=0$，
+于是(14.15)使 $\mathsf M(u)$ 秩恰为二。其第三行是前两行的某个
+固定线性组合，故存在仅依赖此 $u$ 的实数 $\rho,\sigma$，使
+
+$$
+\Psi_7=\rho\Phi+\sigma\Psi_6,\qquad
+\eta_i(b)=\rho+\sigma b.
+\tag{14.23}
+$$
+
+因此每个近旁 $b$ 上两个来源都有共同 $\mu=b,\eta=\rho+\sigma b$。
+
+其次，接续确实进入非零主元图。(14.19)给 $K$ 与 $\alpha$ 互素，
+所以此 $K(u)=0$ 上有 $\alpha(u)\ne0$，而
+
+$$
+\frac{\partial A(u,b)}{\partial b}
+=10-3u(u+1)=-\alpha(u)\ne0.
+\tag{14.24}
+$$
+
+固定 $u$ 后 $A$ 关于 $b$ 为一次式，在 $b_0$ 为零，故近旁每个
+$b\ne b_0$ 都有 $A(u,b)\ne0$。
+
+最后，原来的 $D_k,D_q$ 由(14.7)非零。它们是这两个物理源分支上的
+连续函数，因为 $n_i,\Phi_i$ 均不为零；缩小邻域后仍非零。直接对
+这同一对分支应用 VI 定理23.2 的原重构，置
+
+$$
+\begin{gathered}
+\xi(b)=\frac{k_2(b)-k_1(b)}{q_1(b)-q_2(b)}\ne0,\qquad
+\theta(b)=k_1(b)+\xi(b)q_1(b),\\
+d_i(b)=\frac{120h\,\xi(b)}{\Phi_i(b)}.
+\end{gathered}
+\tag{14.25}
+$$
+
+再用(14.8)的同四个原时钟节点恢复整个增益。
+所得两世界在每个近旁 $b$ 上都是同一个重建父
+$H^-_{\theta(b),\xi(b)}$ 的实际 MM 碰撞对，且首迹仍等于这个固定 $u$。
+来源、漂移和增益系数均连续；重建父趋于原父，是因为(14.7)在原对上
+唯一恢复给定的 $(\theta,\xi)$。这一步没有要求接续时父参数保持固定，
+也没有丢弃任何不等式或原物理过滤。
+
+近旁 $b\ne b_0$ 时定理14.7适用，因此
+$F(\theta(b),\xi(b))=0$。多项式连续，令 $b\to b_0$，得到原父的
+$F(\theta,\xi)=0$。连续性只使用有限次加法、乘法与已有非零分母的商，
+以及多项式的连续性，见 Rudin，*Principles of Mathematical Analysis*，
+第3版，第4章。这里通过真实来源及其父重构取极限，没有在 $A=0$ 处
+求值任何含 $1/A$ 的图公式。两张图至此穷尽，定理14.4得证。$\square$
+
+**定义 14.9（共同实际子纤维的剩余关系与结论范围）。** 令
+$\mathfrak B_M$ 为所有 $\xi\ne0$ 的父参数中，存在同一个实际第六
+$M$ 响应 $w$，使完整
+$K_{\theta,\xi,w}=\mathcal F(H^-_{\theta,\xi},M,w)$ 内同时存在一对
+MM 碰撞和一对 MJ 碰撞的参数集。两对分别量化，只共享这个实际子历史；
+不要求它们是同一对，也不要求四个完整世界互异。令
+$\mathfrak B_M^{=u}$ 为其中可以选到等首源迹 MM 见证对的部分。
+
+**定理 14.10（共同实际子纤维中等首迹见证的必要支撑）。** 有
+
+$$
+\mathfrak B_M^{=u}
+\subseteq\{(\theta,\xi)\in\mathbb R^2:\xi\ne0,\ F(\theta,\xi)=0\}.
+\tag{14.26}
+$$
+
+右侧是适当代数平面集。因此在 $F\ne0$ 上，任何
+共同实际子纤维失败中的 MM 见证都必须有 $u_1\ne u_2$。
+这只是必要条件；没有证明 $F=0$ 上每个参数都存在实际碰撞。
+
+证明。对定义14.9中选出的等首迹 MM 见证应用定理14.4，即得包含关系；
+由定理14.6的 $F\ne0$ 得适当性。MJ 见证没有进入此推导，
+其独立存在量词保持不变。$\square$
+
+剩余不等首迹关系仍须控制所有组成部分。其 MM 对保持 $D_kD_q\ne0$；
+独立 MJ 对的非对角条件必须保留源坐标的全部三张图
+$u_3\ne u_4$、$n_3\ne n_4$ 或 $a_3\ne a_4$，不能只选其中一张，
+也不能强制其为 MM 对。四个来源均须保留原严格正性与全部非零分母条件，
+共同父与共同第六响应须在同一实际实现内成立。
+
+有理固定父 $(\theta,\xi)=(3/7,-35/29)$ 的像式比较仅供应候选支撑：
+以 $b$ 为共同第六响应坐标，两个像曲线 $H_M(b,e)$、
+$H_J(b,j)$ 的双次数分别为 $(16,16)$ 与 $(18,16)$。分别对
+$H(b,y)$ 取
+
+$$
+G_H(b)=\operatorname{sqfree}
+\gcd\!\left(
+\operatorname{Res}_y(H,H_y),
+\operatorname{Res}_y(H,H_b)
+\right),
+\tag{14.27}
+$$
+
+所得两个支撑的公因子恰为 $23b-29$，差一个非零常数。
+完整有理系数位于同一实验版本的
+[fixed_0_E.json](https://github.com/the-omega-institute/trureturing-experiments/blob/466208540eaff00557ada1513c80f7c52d58a2b1/fib_equal_trace_parent_180/fixed_0_E.json)、
+[fixed_0_J.json](https://github.com/the-omega-institute/trureturing-experiments/blob/466208540eaff00557ada1513c80f7c52d58a2b1/fib_equal_trace_parent_180/fixed_0_J.json) 及
+[fixed_0_singular.json](https://github.com/the-omega-institute/trureturing-experiments/blob/466208540eaff00557ada1513c80f7c52d58a2b1/fib_equal_trace_parent_180/fixed_0_singular.json)。
+此支撑容许无穷远根和非物理来源；它不参与定理14.4的证明，也不提供
+全参数的非支配性结论。
+
+在日后证明一般非支配性时，可以将 $F=0$ 包含在候选异常集中，
+但仍须实际控制剩余不等首迹关系；没有由此得到特征零一般单位理想、
+全部组成部分的维数界或正源实现证书。VI 定理12.3及推论12.4已供应
+实际失败点及变化父的实失败曲线，本节不将其重复计作新反例。
+[Stacks，Theorem 29.22.3](https://stacks.math.columbia.edu/tag/054K)
+的 Chevalley 定理可用于有限型复关联及其投影的可构造性，并不给出所缺的
+非支配性；[Stacks，Lemma 10.119.7](https://stacks.math.columbia.edu/tag/00PD)
+关于一维正则局部环与离散赋值环的刻画，也不自行验证将本卷定理12.2
+推广到整个参数族所需的双有理性和来源覆盖前件。
+
+本节承重内容为指定原始 FIB 方程中的等首迹父参数约束及零主元物理接续，
+属于仓内推导（repo-derived）；结式、隐函数定理及连续性只作上述成熟
+中间工具，不申领外部优先权。结论未决定整个共同 MM/MJ 失败集、
+全参数平面恢复、另一第六动作臂、两臂的共同父交集、更早祖先、
+原根八读／九读恢复或最优性，亦不提供有限精度或噪声结论。
+
+## 追加锚（本行以下为增补区）

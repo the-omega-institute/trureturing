@@ -1,0 +1,30 @@
+#### 定理 4.2：显式 Clifford–Pauli 对应
+
+取
+
+$$
+\sigma_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+ \sigma_2=\begin{pmatrix}0&-\mathrm i\\\mathrm i&0\end{pmatrix},\quad
+ \sigma_3=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+
+映射 $e_j\mapsto\sigma_j$ 给出实 $`*`$-代数同构
+
+$$
+\operatorname{Cl}_{3,0}\cong M_2(\mathbb C),\qquad
+ I\mapsto\mathrm i1_2,\qquad
+ \widetilde{X}\mapsto X^\dagger.
+$$
+
+C2 所生成的非零代数也与此同构。
+
+**证明。**
+
+这些矩阵满足同样的反对易关系，因此给出代数同态。 任意 Clifford 字可重排到八个基字 $1,e_1,e_2,e_3,e_2e_3,e_3e_1,e_1e_2,I$。 其像为 $1_2,\sigma_1,\sigma_2,\sigma_3,\mathrm i\sigma_1,\mathrm i\sigma_2,\mathrm i\sigma_3,\mathrm i1_2$， 在实数上独立并张成全部 $M_2(\mathbb C)$，故同构。 矩阵共轭转置固定 $\sigma_j$ 并反转乘积，因而对应逆序。
+
+由定理 4.1，C2 的生成代数是该代数的含单位商。 $M_2(\mathbb C)$ 作为实代数也是简单的： 任意非零双边理想经左右乘矩阵单位取得非零单项， 再乘其复系数的逆即可取得全部矩阵单位和单位元。 所以非零含单位商的核只能为零。
+
+$\square$
+
+取 $p=(1+e_3)/2$，左理想 $\operatorname{Cl}_{3,0}p$ 的矩阵像恰为 第二列为零的复矩阵。以 $p,e_1p$ 为复基，可把它识别为 $\mathbb C^2$。 因此复二维旋量可由所建代数的最小左理想实现； 该构造仍依赖 C1–C2，而非仅凭“存在”一词。
+
