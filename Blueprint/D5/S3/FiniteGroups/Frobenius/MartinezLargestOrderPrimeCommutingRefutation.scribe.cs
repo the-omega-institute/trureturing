@@ -61,7 +61,9 @@ internal sealed class MartinezLargestOrderPrimeCommutingRefutationDocument : ISc
                     + "The first-coordinate reflection keeps x outside the pi-core while its second coordinate contributes "
                     + "q to its order. The fraction remains one quarter. The source's smallest-prime bound in Theorem A "
                     + "is not refuted; the separate smallest-prime-dividing-order question and the restricted Theorem B "
-                    + "are not proved here."))), DescribeRole.Theorem))));
+                    + "are not proved here."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-martinez2307"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string name, string title, Formula formula,
         AssessedProvenance provenance, string prose) => Describe.Lean(

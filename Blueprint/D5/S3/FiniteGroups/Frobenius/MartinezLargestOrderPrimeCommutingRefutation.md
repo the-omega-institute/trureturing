@@ -70,6 +70,10 @@ $$\neg (\forall G \in Type,\; [Group\left(G\right)] [Finite\left(G\right)], \for
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Frobenius/MartinezLargestOrderPrimeCommutingRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-martinez2307` (refuted) by `D5/S3/FiniteGroups/Frobenius/MartinezLargestOrderPrimeCommutingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-martinez2307","declaration_gid":"D5/S3/FiniteGroups/Frobenius/MartinezLargestOrderPrimeCommutingRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Juan Martínez (2024). *On the commuting probability of π-elements in finite groups*. DOI: [10.1002/mana.202300338](https://doi.org/10.1002/mana.202300338). URL: <https://arxiv.org/abs/2307.09868v3>.
