@@ -11,6 +11,7 @@ admission_basis: open-problem-resolution (#31328; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229634Strip.result)
 Valid: proof_shape=bind-only; consumers=HardinA229634Strip.result
 decidableValid: proof_shape=bind-only; consumers=HardinA229634Strip.result
+oldClassImage: proof_shape=bind-only; consumers=cl, HardinA229634StripCut.old_counts
 cl: proof_shape=bind-only; consumers=HardinA229634Strip.result
 oldTail: proof_shape=bind-only; consumers=T
 T: proof_shape=bind-only; consumers=HardinA229634Strip.result
@@ -37,10 +38,12 @@ def Valid (p : Row) (d : ℕ) : Prop :=
   d ≤ 2 ∧ bondDefects horizontal p p ≤ 2 - d
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (_ ∧ _))
+def oldClassImage : Fin 20 → Fin 33 :=
+  ![6, 7, 8, 9, 10, 11, 20, 21, 22, 23, 24, 25, 30, 28, 31, 32, 26, 31, 26, 31]
 def cl (p : Row) (d : ℕ) : Fin 33 :=
   if 0 < d then (HardinA229531StripData.cl p (d - 1)).castAdd 13 else
-  if bondDefects horizontal p p = 0 then
-    ⟨20 + (HardinA229531StripData.cl p 0).val % 6, by have := Nat.mod_lt (HardinA229531StripData.cl p 0).val (by omega : 0 < 6); omega⟩ else
+  if HardinA229531StripData.Valid p d then
+    oldClassImage (HardinA229531StripData.cl p d) else
   let code : ℕ := (if p 0 = p 1 then 1 else 0) + (if p 0 = p 2 then 2 else 0) + (if p 0 = p 3 then 4 else 0) + (if p 0 = p 4 then 8 else 0) + (if p 1 = p 2 then 16 else 0) + (if p 1 = p 3 then 32 else 0) + (if p 1 = p 4 then 64 else 0) + (if p 2 = p 3 then 128 else 0) + (if p 2 = p 4 then 256 else 0) + (if p 3 = p 4 then 512 else 0)
   if code ∈ ({201, 129, 198, 540, 340, 20, 176, 528, 192} : Finset ℕ) then 26 else
   if code ∈ ({513} : Finset ℕ) then 27 else
