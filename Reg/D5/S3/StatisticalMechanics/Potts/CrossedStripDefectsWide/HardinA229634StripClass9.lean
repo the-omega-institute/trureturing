@@ -28,8 +28,8 @@ abbrev arena : Arena where
       then (1 : ℤ) else 0) = R.readout () p d
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h (![0, 1, 0, 1, 0] : Row) 2 (by decide +kernel) (by decide +kernel)
-  have ha := transition_counts (![0, 1, 0, 1, 0] : Row) 2 (by decide +kernel) (by decide +kernel)
+  have hb := h (![0, 1, 0, 1, 0] : Row) 2 (by decide +kernel) (by unfold _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical; decide +kernel)
+  have ha := transition_counts (![0, 1, 0, 1, 0] : Row) 2 (by decide +kernel) (by unfold _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical; decide +kernel)
   change _ = T (cl ![0, 1, 0, 1, 0] 2) 29 + 1 at hb
   change _ = T (cl ![0, 1, 0, 1, 0] 2) 29 at ha
   linarith
