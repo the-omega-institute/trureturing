@@ -19,6 +19,7 @@ closed_form: proof_shape=content; consumers=none (external open-problem-resoluti
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229536Strip
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.GridBridge
@@ -79,7 +80,8 @@ private theorem bridge (m : ℕ) (hm : 1 ≤ m) :
   · intro r t
     unfold bondDefects
     rw [Finset.card_eq_sum_ones, Finset.sum_filter]
-    simp [between, -Finset.sum_boole, -Finset.sum_const, Fin.sum_univ_succ, KingGrid.lo, KingGrid.hi,
+    simp [between, D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229536Strip.between,
+      -Finset.sum_boole, -Finset.sum_const, Fin.sum_univ_succ, KingGrid.lo, KingGrid.hi,
       D5.S3.Topology.QuandleMarkovColoring.leftSlot,
       D5.S3.Topology.QuandleMarkovColoring.rightSlot]
     omega
