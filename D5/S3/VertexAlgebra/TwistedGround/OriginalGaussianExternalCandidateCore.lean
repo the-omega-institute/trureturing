@@ -18,6 +18,41 @@ def nPoly (x t s : ℂ) : ℂ :=
 
 def qPoly (x t s : ℂ) : ℂ := nPoly x t s / (2 * (t - s) ^ 2)
 
+/-! The numerator is the cubic-curve numerator from the source reconstruction.
+
+For `lambda = 1 - x`, the source expression
+`p*r*(p+r) - 2*(1+lambda)*p*r + lambda*(p+r)`
+is exactly `nPoly x p r`.  The diagonal identities below expose its principal
+part without silently cancelling any denominator. -/
+
+theorem nPoly_comm (x t s : ℂ) :
+    nPoly x t s = nPoly x s t := by
+  unfold nPoly
+  ring
+
+theorem nPoly_diagonal (x t : ℂ) :
+    nPoly x t t = 2 * t * (t - 1) * (t - (1 - x)) := by
+  unfold nPoly
+  ring
+
+theorem nPoly_sub_diagonal_factor (x t s : ℂ) :
+    nPoly x t s - nPoly x s s =
+      (t - s) * (s * t + 2 * s ^ 2 - 2 * (2 - x) * s + (1 - x)) := by
+  unfold nPoly
+  ring
+
+theorem nPoly_first_diagonal (x s : ℂ) :
+    s * s + 2 * s ^ 2 - 2 * (2 - x) * s + (1 - x) =
+      3 * s ^ 2 - 2 * (2 - x) * s + (1 - x) := by
+  ring
+
+theorem nPoly_source_curve (x t s : ℂ) :
+    nPoly x t s =
+      t * s * (t + s) - 2 * (1 + (1 - x)) * t * s +
+        (1 - x) * (t + s) := by
+  unfold nPoly
+  ring
+
 /-! The two rational charts used by the finite candidate certificate. -/
 
 def rightChart (out : Bool) (u : ℂ) : ℂ := if out then 1 / u else u
