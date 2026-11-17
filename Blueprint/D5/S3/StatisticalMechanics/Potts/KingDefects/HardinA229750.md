@@ -40,7 +40,14 @@ The nine-row forward table satisfies W(8)=-8W(2)+36W(3)-66W(4)+63W(5)-33W(6)+9W(
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.closed_form`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.result`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233163KingStrip](../../../Combinatorics/TraceAvoidingArrays/HardinA233163KingStrip.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229536Strip](../CrossedStripDefects/HardinA229536Strip.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229632Strip](../CrossedStripDefects/HardinA229632Strip.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid](KingGrid.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingTwoGrid](KingTwoGrid.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/GridBridge](TwoDefectStrips/GridBridge.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Certificate](TwoDefectStrips/Width3/Certificate.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Data](TwoDefectStrips/Width3/Data.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Forward](TwoDefectStrips/Width3/Forward.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)
+- Dependency: [D5/S3/Topology/QuandleMarkovColoring](../../../Topology/QuandleMarkovColoring.md)

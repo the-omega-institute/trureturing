@@ -24,3 +24,4 @@ Twelve coordinates of the initial class weights equal the exact labelled first-r
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Pins/Initial0.certificate`
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Data](../Data.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../../../../StripDefects/DefectTransfer.md)

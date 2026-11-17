@@ -25,6 +25,9 @@ The integer transfer has twelve states indexed by 3(m-1)+d. Its terminal vector 
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingTwoColumnOne.result`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip](../../../Combinatorics/TraceAvoidingArrays/HardinA233196Strip.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid](KingGrid.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingPath](KingPath.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingTwoGrid](KingTwoGrid.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)
