@@ -19,6 +19,7 @@ W: proof_shape=bind-only; consumers=HardinA229634Strip.result
 -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripData
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import Mathlib.Data.Matrix.Block
 import Mathlib.Logic.Equiv.Fin.Basic
 

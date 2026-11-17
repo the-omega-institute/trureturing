@@ -15,6 +15,8 @@ result: proof_shape=bind-only; consumers=none (external open-problem-resolution 
 -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripClasses
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripData
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Mathlib.Logic.Equiv.Fin.Basic

@@ -13,6 +13,11 @@ transition_counts: proof_shape=bind-only; consumers=HardinA229532StripClasses.tr
 -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripCut
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233172DiagonalStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 
 /-! Exact width-six HDA residual-budget transfer. -/
@@ -21,7 +26,7 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects
 open D5.S3.Combinatorics.TraceAvoidingArrays
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClass19
 open DefectTransfer (bondDefects)
-open HardinA229584StripData (Row horizontal antidiagonal)
+open HardinA229584StripData (Row horizontal)
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
