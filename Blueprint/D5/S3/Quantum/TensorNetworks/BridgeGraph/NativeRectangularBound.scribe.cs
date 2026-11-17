@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.TensorNetworks.BridgeGraph;
 
@@ -11,7 +13,7 @@ internal sealed class NativeRectangularBoundDocument : IScribeDocumentDefinition
             DescribeId.Create("native-rectangular-bound"),
             DeclarationHandle.Create("D5/S3/Quantum/TensorNetworks/BridgeGraph/NativeRectangularBound.bound"),
             H("Arbitrary tensor factors and positive scalar column Gram"),
-            StatementSource.FromLean(),
+            StatementSource.FromAuthor(Disp(Statement())),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
@@ -28,7 +30,7 @@ internal sealed class NativeRectangularBoundDocument : IScribeDocumentDefinition
                     "both factor families are independent. Scaling one family by the reciprocal " +
                     "square root of lambda gives an identity column Gram without changing k.")),
                 Paragraph(Text(
-                    "For c>0, the normalized Hilbert-Schmidt Gram H(r,s)=trace(N(r)*N(s))/c " +
+                    "For c>0, the normalized Hilbert-Schmidt Gram H(r,s)=trace(N(r)^* N(s))/c " +
                     "is positive definite. Factor H=B*B and mix the M family by B, the N family " +
                     "by the inverse transpose of B. This preserves the native tensor sum. Taking " +
                     "a partial trace of its column Gram shows that the new M stack is an isometry. " +
@@ -49,4 +51,42 @@ internal sealed class NativeRectangularBoundDocument : IScribeDocumentDefinition
                     "uses the tensor Gram blocks throughout; the ambient inequality bc<=ad " +
                     "alone does not yield the conclusion."))),
             DescribeRole.Theorem))));
+
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
+    private static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Imp(Formula a, Formula b) =>
+        new Formula.Logic(Seq(Open, a, Close), FormulaLogicOperator.Implies, Seq(Open, b, Close));
+    private static Formula Equal(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Less(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Mul(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Fin(string n) => Call("Fin", V(n));
+    private static Formula Matrices(string rows, string cols) =>
+        new Formula.TypeArrow(Call("Fin", D(3)),
+            Call("Matrix", Fin(rows), Fin(cols), V("Complex")));
+
+    private static Formula Statement()
+    {
+        Formula a = V("a"), b = V("b"), c = V("c"), d = V("d"), lambda = V("lambda");
+        Formula r = V("r");
+        Formula Fsum = Seq(new Formula.Subscript(Sum,
+                Seq(r, Colon, Call("Fin", D(3)))), Sp,
+            Call("kronecker", Apply(V("M"), r), Apply(V("N"), r)));
+        Formula gram = Equal(Mul(Call("conjTranspose", Fsum), Fsum),
+            Call("smul", Call("ofReal", lambda), Seq(Open, D(1), Colon,
+                Call("Matrix", Call("Prod", Fin("b"), Fin("c")),
+                    Call("Prod", Fin("b"), Fin("c")), V("Complex")), Close)));
+        Formula body = All("M", Matrices("a", "b"), All("N", Matrices("d", "c"),
+            All("lambda", V("Real"), Imp(Less(D(0), lambda),
+                Imp(Less(Mul(D(3), a), Mul(D(2), b)), Imp(gram, Le(Mul(D(2), c), d)))))));
+        return All("a", V("Nat"), All("b", V("Nat"), All("c", V("Nat"), All("d", V("Nat"), body))));
+    }
 }

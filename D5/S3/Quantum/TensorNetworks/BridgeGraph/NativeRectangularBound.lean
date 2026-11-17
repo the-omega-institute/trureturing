@@ -4,7 +4,8 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Every native width-three rectangular positive scalar column Gram above the three-halves threshold forces twice the opposite input dimension. -/
+   digest: A native rectangular width-three positive scalar column Gram above the
+     three-halves threshold forces twice the opposite input dimension. -/
 
 import D5.S3.Quantum.Algebra.GenericCommonCoefficientPlane
 import D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation
@@ -132,15 +133,14 @@ private theorem exact_whitening {a b c d k : ℕ}
   have hdetT : IsUnit B.transpose.det := by simpa using hdet
   let C := B.transpose⁻¹
   have hBC : B.transpose * C = 1 := Matrix.mul_nonsing_inv _ hdetT
-  have hCT : C.transpose = B⁻¹ := by simp [C, ← Matrix.transpose_nonsing_inv]
   refine ⟨B, hB, hBB, tensor_mix B C hBC M N, ?_, ?_⟩
   · rw [mixed_energy, ← hBB]
     exact weighted_gram M N hc hF
   · intro hM
     exact hM.sum_smul_of_nondegenerate (Matrix.nondegenerate_of_det_ne_zero hdet.ne_zero)
 
-
-private def stackK {a b k : ℕ} (M : Fin k → Matrix (Fin a) (Fin b) ℂ) : Matrix (Fin k × Fin a) (Fin b) ℂ :=
+private def stackK {a b k : ℕ} (M : Fin k → Matrix (Fin a) (Fin b) ℂ) :
+    Matrix (Fin k × Fin a) (Fin b) ℂ :=
   fun p j => M p.1 p.2 j
 
 private theorem stackK_gram {a b k : ℕ} (M : Fin k → Matrix (Fin a) (Fin b) ℂ) :
@@ -318,14 +318,6 @@ private theorem complex_block_neutral {a b c d : ℕ}
     dotProduct_smul, smul_eq_mul, hr, hi]
   simp
 
-private def coefficientColumns {c d : ℕ} (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ) :
-    Matrix (Fin d) (Fin 3 × Fin c) ℂ := fun j p => N p.1 j p.2
-
-private theorem coefficient_columns_gram {c d : ℕ}
-    (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ) (r s : Fin 3) (l m : Fin c) :
-    ((coefficientColumns N)ᴴ * coefficientColumns N) (r,l) (s,m) = ((N r)ᴴ * N s) l m := by
-  rfl
-
 private theorem native_three_bound {a0 b0 c0 d0 : ℕ} (hab : 3 * a0 < 2 * b0)
     (M : Fin 3 → Matrix (Fin a0) (Fin b0) ℂ)
     (N : Fin 3 → Matrix (Fin d0) (Fin c0) ℂ) (hM : LinearIndependent ℂ M)
@@ -382,13 +374,13 @@ private theorem native_three_bound {a0 b0 c0 d0 : ℕ} (hab : 3 * a0 < 2 * b0)
     have hh := hneutral l m u hu v hv
     simpa [Matrix.mulVec, dotProduct, hVa, hVc, Finset.mul_sum,
       Finset.sum_mul, mul_assoc] using hh
-  let W : Matrix (Fin d0) (Fin 3 × Fin c0) ℂ := coefficientColumns N
+  let W : Matrix (Fin d0) (Fin 3 × Fin c0) ℂ := concatK N
   let P : Matrix (Fin 3 × Fin c0) (Fin 3 × Fin c0) ℂ := Wᴴ * W
   let C : Matrix (Fin 3 × Fin c0) (Fin 2 × Fin c0) ℂ :=
     Matrix.kronecker V (1 : Matrix (Fin c0) (Fin c0) ℂ)
   have hPentry (r s : Fin 3) (l m : Fin c0) : P (r, l) (s, m) =
       ((N r)ᴴ * N s) l m := by
-    simpa [P, W] using coefficient_columns_gram N r s l m
+    rfl
   have hCPC : Cᴴ * P * C = 1 := by
     have hCentry (r : Fin 3) (i : Fin c0) (a : Fin 2) (l : Fin c0) :
         C (r, i) (a, l) = if i = l then V r a else 0 := by
@@ -517,7 +509,8 @@ private theorem native_two_bound {a b c d : ℕ} (hab : 3 * a < 2 * b)
     ext ⟨r,l⟩ ⟨s,m⟩
     by_cases hrs : r = s <;> by_cases hlm : l = m <;>
       simp [Matrix.kronecker, Matrix.kroneckerMap_apply, Matrix.one_apply, hrs, hlm]
-  have hr := (Matrix.rank_mul_le_right (concatK N)ᴴ (concatK N)).trans (concatK N).rank_le_card_height
+  have hr := (Matrix.rank_mul_le_right (concatK N)ᴴ (concatK N)).trans
+    (concatK N).rank_le_card_height
   rw [hconcat, hI, Matrix.rank_one] at hr
   simpa only [Fintype.card_prod, Fintype.card_fin] using hr
 
@@ -613,13 +606,15 @@ private theorem reduce_right {a b c d n : ℕ}
   simp [Algebra.coe_lmul_eq_mul]
   ring
 
-private theorem minimal_decomposition {a b c d : ℕ} (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ) :
+private theorem minimal_decomposition {a b c d : ℕ}
+    (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ) :
     ∃ k : ℕ, k ≤ 3 ∧ ∃ A : Fin k → Matrix (Fin a) (Fin b) ℂ, ∃ D : Fin k → Matrix (Fin d) (Fin c) ℂ,
       LinearIndependent ℂ A ∧ LinearIndependent ℂ D ∧
         (∑ j, Matrix.kronecker (A j) (D j)) =
           (∑ r, Matrix.kronecker (M r) (N r)) := by
   classical
-  let p : ℕ → Prop := fun k => ∃ A : Fin k → Matrix (Fin a) (Fin b) ℂ, ∃ D : Fin k → Matrix (Fin d) (Fin c) ℂ,
+  let p : ℕ → Prop := fun k => ∃ A : Fin k → Matrix (Fin a) (Fin b) ℂ,
+    ∃ D : Fin k → Matrix (Fin d) (Fin c) ℂ,
       (∑ j, Matrix.kronecker (A j) (D j)) =
         (∑ r, Matrix.kronecker (M r) (N r))
   have h3 : p 3 := ⟨M, N, rfl⟩
@@ -652,7 +647,8 @@ private theorem minimal_decomposition {a b c d : ℕ} (M : Fin 3 → Matrix (Fin
     refine ⟨n + 1, by omega, A, D, hA, hD, hsum⟩
 
 private theorem normalized_minimal_decomposition {a b c d : ℕ}
-    (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ) (lambda : ℝ) (hlambda : 0 < lambda)
+    (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ)
+    (lambda : ℝ) (hlambda : 0 < lambda)
     (hF : (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
         (∑ r, Matrix.kronecker (M r) (N r)) =
       (lambda : ℂ) • (1 : Matrix (Fin b × Fin c) (Fin b × Fin c) ℂ)) :
@@ -699,7 +695,6 @@ private theorem normalized_minimal_decomposition {a b c d : ℕ}
     simp
   exact ⟨k, hk, A', D, hA', hD, hsum', hgram⟩
 
-
 /-- The native tensor event, with arbitrary factors and all natural dimensions. -/
 theorem bound {a b c d : ℕ}
     (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
@@ -715,7 +710,8 @@ theorem bound {a b c d : ℕ}
   by_cases hstrong : 2 * a < b
   · have hthree := RestrictedFlatSpectrum.obstruction M N hc hstrong lambda hlambda hF
     omega
-  obtain ⟨k, hk, A, D, hA, hD, hsum, hgram⟩ := normalized_minimal_decomposition M N lambda hlambda hF
+  obtain ⟨k, hk, A, D, hA, hD, hsum, hgram⟩ :=
+    normalized_minimal_decomposition M N lambda hlambda hF
   obtain ⟨B, hB, hBB, hPres, hMGram, hMLI⟩ := exact_whitening A D hD hc hgram
   let M' := mix B A
   let N' := mix B.transpose⁻¹ D

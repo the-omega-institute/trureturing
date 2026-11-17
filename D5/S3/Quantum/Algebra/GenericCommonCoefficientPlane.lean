@@ -4,7 +4,8 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A common neutral complex coefficient plane for every injective independent triple above the three-halves threshold. -/
+   digest: An injective independent rectangular triple above the three-halves threshold
+     has a common neutral complex coefficient plane. -/
 
 import D5.S3.Quantum.Algebra.CommonCoefficientPlane
 import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
@@ -165,7 +166,8 @@ private theorem cross_coefficient_pairing {a b : ℕ}
     h22, star_zero, zero_dotProduct, zero_mul, mul_zero, zero_add, add_zero] at he
   simpa only [dotProduct_add, dotProduct_smul, smul_eq_mul] using he.symm
 
-private def coefficientOperator {a : ℕ} (U : Matrix (Fin a) (Fin a) ℂ) (T : Matrix (Fin 3) (Fin 3) ℂ) : Matrix (Fin a) (Fin a) ℂ :=
+private def coefficientOperator {a : ℕ} (U : Matrix (Fin a) (Fin a) ℂ)
+    (T : Matrix (Fin 3) (Fin 3) ℂ) : Matrix (Fin a) (Fin a) ℂ :=
   (T 0 0 + T 1 1) • 1 + T 0 1 • U + T 1 0 • Uᴴ
 
 private theorem coefficientOperator_isHermitian {a : ℕ}
@@ -180,7 +182,6 @@ private theorem coefficientOperator_isHermitian {a : ℕ}
     Matrix.conjTranspose_one, Matrix.conjTranspose_conjTranspose, star_add,
     h00, h11, h01, h10]
   abel
-
 
 private theorem coefficientOperator_compression {a b : ℕ}
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
@@ -199,8 +200,6 @@ private theorem coefficientOperator_compression {a b : ℕ}
   simp only [Matrix.mul_assoc, ← Matrix.mul_assoc (U : Matrix (Fin a) (Fin a) ℂ)ᴴ
     (U : Matrix (Fin a) (Fin a) ℂ), hleft, Matrix.one_mul]
   module
-
-
 
 private def hermitianKernel {a b : ℕ} (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ) :
     Submodule ℝ (Matrix (Fin 3) (Fin 3) ℂ) where
@@ -267,8 +266,8 @@ private theorem simultaneous_phase {a b : ℕ}
     rw [show Vᴴ * (U : Matrix (Fin a) (Fin a) ℂ) * V = Matrix.diagonal d from hdiag]
     ext i j
     by_cases hij : i = j
-    · subst j; simp [z, Matrix.diagonal_apply, Matrix.one_apply]
-    · simp [Matrix.diagonal_apply, Matrix.one_apply, hij]
+    · subst j; simp [z]
+    · simp [hij]
   have hreal (T : hermitianKernel X) (j : Fin a) : star (z T.val j) = z T.val j := by
     have hh := Matrix.isHermitian_conjTranspose_mul_mul V
       (coefficientOperator_isHermitian U T.val T.property.1)
@@ -284,11 +283,15 @@ private theorem simultaneous_phase {a b : ℕ}
     have hdunit : IsUnit (Matrix.diagonal (z T.val)) :=
       Matrix.isUnit_diagonal.mpr (Pi.isUnit_iff.mpr (fun j => isUnit_iff_ne_zero.mpr (hz j)))
     have hQunit : IsUnit (coefficientOperator (U : Matrix (Fin a) (Fin a) ℂ) T.val) := by
-      have he : V * (Vᴴ * coefficientOperator (U : Matrix (Fin a) (Fin a) ℂ) T.val * V) * Vᴴ = coefficientOperator (U : Matrix (Fin a) (Fin a) ℂ) T.val := by
+      have he : V * (Vᴴ * coefficientOperator (U : Matrix (Fin a) (Fin a) ℂ) T.val * V) *
+          Vᴴ = coefficientOperator (U : Matrix (Fin a) (Fin a) ℂ) T.val := by
         simp only [← Matrix.mul_assoc, hVW, Matrix.one_mul]
         rw [Matrix.mul_assoc, hVW, Matrix.mul_one]
       rw [← he, hQdiag]
-      exact (show IsUnit V from Unitary.isUnit_coe (U := W)).mul hdunit |>.mul (show IsUnit Vᴴ from by simpa only [Unitary.coe_star, Matrix.star_eq_conjTranspose] using (Unitary.isUnit_coe (U := star W)))
+      exact (show IsUnit V from Unitary.isUnit_coe (U := W)).mul hdunit |>.mul
+        (show IsUnit Vᴴ from by
+          simpa only [Unitary.coe_star, Matrix.star_eq_conjTranspose] using
+            (Unitary.isUnit_coe (U := star W)))
     have hr := Matrix.rank_of_isUnit _ hQunit
     have h20 := (hcross T.val T.property).1
     have h21 := (hcross T.val T.property).2
@@ -302,7 +305,8 @@ private theorem simultaneous_phase {a b : ℕ}
     have h22 := hlast T.val T.property
     have hzero := (hc h22).trans T.property.2
     have h1 := Matrix.rank_mul_ge (X 0)ᴴ (coefficientOperator (U : Matrix (Fin a) (Fin a) ℂ) T.val)
-    have h2 := Matrix.rank_mul_ge ((X 0)ᴴ * coefficientOperator (U : Matrix (Fin a) (Fin a) ℂ) T.val) (X 0)
+    have h2 := Matrix.rank_mul_ge
+      ((X 0)ᴴ * coefficientOperator (U : Matrix (Fin a) (Fin a) ℂ) T.val) (X 0)
     rw [hzero, Matrix.rank_zero] at h2
     simp only [Matrix.rank_conjTranspose, Fintype.card_fin] at h1 h2 hr
     omega
@@ -314,15 +318,16 @@ private theorem simultaneous_phase {a b : ℕ}
   let v := V *ᵥ Pi.single j 1
   have hv : v ≠ 0 := by
     intro he
-    have hi := Matrix.mulVec_injective_iff_isUnit.mpr (show IsUnit V from Unitary.isUnit_coe (U := W))
+    have hi := Matrix.mulVec_injective_iff_isUnit.mpr
+      (show IsUnit V from Unitary.isUnit_coe (U := W))
     have he' : V *ᵥ Pi.single j 1 = V *ᵥ 0 := by simpa [v] using he
     have heq := hi he'
     have hejj := congrFun heq j
-    simpa using hejj
+    simp at hejj
   have heig : (U : Matrix (Fin a) (Fin a) ℂ) *ᵥ v = d j • v := by
     dsimp [v]
     rw [Matrix.mulVec_mulVec, hUV, ← Matrix.mulVec_mulVec]
-    simp [Matrix.mulVec_smul, Matrix.diagonal_mulVec_single]
+    simp
   have hw := eigenvector_phase U (d j) v hv heig
   refine ⟨d j, hw, ?_⟩
   intro T hT
@@ -432,7 +437,6 @@ private theorem phase_quad_of_image {a b : ℕ}
     linear_combination -he - (star v ⬝ᵥ (X 2 *ᵥ x)) * hreverse -
       (star (X 2 *ᵥ x) ⬝ᵥ v) * hcross)).resolve_right
   exact fun hn => hv (dotProduct_star_self_eq_zero.mp hn)
-
 
 private theorem normalized_common_plane {a b : ℕ} (hab : 3 * a < 2 * b)
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)

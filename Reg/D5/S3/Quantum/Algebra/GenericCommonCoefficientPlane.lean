@@ -21,7 +21,7 @@ abbrev rejected := _root_.Reg.D5.S3.Quantum.Algebra.CommonCoefficientPlane.rejec
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (a b : ℕ) (_hab : 3 * a < 2 * b) (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
+  Law R := ∀ {a b : ℕ} (_hab : 3 * a < 2 * b) (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (_hX : LinearIndependent ℂ X)
     (_hinj : Function.Injective (stack X).mulVecLin),
     ∃ L : Submodule ℂ (Fin 3 → ℂ), finrank ℂ L = 2 ∧
@@ -32,7 +32,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   apply _root_.Reg.D5.S3.Quantum.Algebra.CommonCoefficientPlane.rejected_law
-  exact h 3 5 (by norm_num)
+  exact h (a := 3) (b := 5) (by norm_num)
 
 def family : Registration arena (type_of% (@common_plane)) where
   actual := actual

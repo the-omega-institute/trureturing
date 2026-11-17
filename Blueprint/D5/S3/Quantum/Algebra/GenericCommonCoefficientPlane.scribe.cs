@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra;
 
@@ -11,7 +13,7 @@ internal sealed class GenericCommonCoefficientPlaneDocument : IScribeDocumentDef
             DescribeId.Create("generic-common-neutral-plane"),
             DeclarationHandle.Create("D5/S3/Quantum/Algebra/GenericCommonCoefficientPlane.common_plane"),
             H("The entire Hermitian coefficient kernel"),
-            StatementSource.FromLean(),
+            StatementSource.FromAuthor(Disp(Statement())),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
@@ -34,7 +36,8 @@ internal sealed class GenericCommonCoefficientPlaneDocument : IScribeDocumentDef
                     "ker X(0) gives T(2,2)=0 and the cross relation (T(2,0)I+T(2,1)U)D orthogonal " +
                     "to R. For a nonzero cross pair, rank-nullity and the intersection dimension " +
                     "formula provide a nonzero v in D intersect R killed by this cross operator. " +
-                    "Its second coefficient is nonzero, so v is a U-eigenvector. Pairing this same " +
+                    "The second member T(2,1) of that cross pair is nonzero, so v is a U-eigenvector. " +
+                    "Pairing this same " +
                     "v against every kernel form gives one phase w with T(2,0)+w T(2,1)=0. " +
                     "A preimage of v under X(0) supplies the remaining neutral quadratic relation.")),
                 Paragraph(Text(
@@ -47,4 +50,46 @@ internal sealed class GenericCommonCoefficientPlaneDocument : IScribeDocumentDef
                     "span{(0,0,1),(1,w,0)} is a common neutral complex plane. Invertible coefficient " +
                     "transport preserves its dimension and full pairing in the original coordinates."))),
             DescribeRole.Theorem))));
+
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Ex(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(Seq(Open, a, Close), FormulaLogicOperator.And, Seq(Open, b, Close));
+    private static Formula Imp(Formula a, Formula b) =>
+        new Formula.Logic(Seq(Open, a, Close), FormulaLogicOperator.Implies, Seq(Open, b, Close));
+    private static Formula Equal(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Less(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Mul(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula C3() =>
+        new Formula.TypeArrow(Call("Fin", D(3)), V("Complex"));
+    private static Formula Mat(Formula rows, Formula cols) =>
+        Call("Matrix", Call("Fin", rows), Call("Fin", cols), V("Complex"));
+
+    private static Formula Statement()
+    {
+        Formula a = V("a"), b = V("b"), X = V("X"), T = V("T"), L = V("L");
+        Formula u = V("u"), v = V("v"), S = Call("stack", X);
+        Formula compression = Mul(Mul(Call("conjTranspose", S),
+            Call("kronecker", T, Call("identity", a))), S);
+        Formula pairing = Call("dotProduct", Call("star", u), Call("mulVec", T, v));
+        Formula neutral = All("T", Mat(D(3), D(3)),
+            Imp(And(Call("IsHermitian", T), Equal(compression, D(0))),
+                All("u", C3(), Imp(Call("mem", u, L),
+                    All("v", C3(), Imp(Call("mem", v, L), Equal(pairing, D(0))))))));
+        Formula conclusion = Ex("L", Call("Submodule", V("Complex"), C3()),
+            And(Equal(Call("finrank", V("Complex"), L), D(2)), neutral));
+        Formula triple = All("X", new Formula.TypeArrow(Call("Fin", D(3)), Mat(a, b)),
+            Imp(And(Call("LinearIndependent", V("Complex"), X),
+                Call("Injective", Call("mulVecLin", S))), conclusion));
+        return All("a", V("Nat"), All("b", V("Nat"),
+            Imp(Less(Mul(D(3), a), Mul(D(2), b)), triple)));
+    }
 }
