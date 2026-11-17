@@ -1,11 +1,10 @@
-/-
-  Unfrozen normalized singular-Hermitian coefficient-kernel component.
-
-  This file records the normalized matrix identities used by the width-three
-  rank-two kernel classification.  The geometric graph trichotomy is kept as
-  the explicit remaining WIP proposition below; the determinant, shear, final
-  unitary, and congruence transport identities are kernel checked here.
--/
+/- GID: D5/S3/Quantum/Algebra/NormalizedSingularHermitianKernel
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Algebra/NormalizedSingularHermitianKernel
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Normalized singular Hermitian coefficient kernels admit a common vector, neutral plane, or primitive congruence form. -/
 
 import Mathlib
 import D5.S3.Quantum.Algebra.CommonCoefficientPlane
@@ -13,10 +12,10 @@ import D5.S3.Quantum.Algebra.CommonCoefficientPlane
 /-!
 # Normalized singular Hermitian kernel identities
 
-The declaration `normalizedGraphTrichotomy` is the faithful normalized
-classification target.  The finite-dimensional graph extraction that proves
-it is intentionally left open in this WIP; all displayed algebraic transports
-and the primitive zero-graph consumer below are compiled.
+The normalized graph alternatives are established here, including zero,
+proper, and surjective coefficient images.  The native width-three compression
+geometry combines these alternatives to prove `normalizedGraphTrichotomy`.
+The determinant, shear, and final-unitary congruences give its coordinate route.
 -/
 
 noncomputable section
@@ -55,13 +54,6 @@ def e3 : Fin 3 → ℂ := ![0, 0, 1]
 
 def neutralGenerator (c : ℂ) : Fin 3 → ℂ := ![1, -c, 0]
 
-theorem hermitianMatrix_isHermitian (a b : ℝ) (z u v : ℂ) :
-    (hermitianMatrix a b z u v).IsHermitian := by
-  apply Matrix.IsHermitian.ext
-  intro i j
-  fin_cases i <;> fin_cases j <;>
-    simp [hermitianMatrix, Matrix.conjTranspose_apply]
-
 theorem hermitian_coordinates {H : M} (hH : H.IsHermitian) :
     ∃ a b c : ℝ, ∃ z u v : ℂ,
       H = !![(a : ℂ), z, u; conj z, (b : ℂ), v;
@@ -85,20 +77,6 @@ theorem hermitian_coordinates {H : M} (hH : H.IsHermitian) :
   · simpa using (hH' 2 0).symm
   · simpa using (hH' 2 1).symm
   · simpa using h22
-
-theorem determinant_pencil (a b : ℝ) (z u v : ℂ) (t : ℝ) :
-    (D + (t : ℂ) • hermitianMatrix a b z u v).det =
-      -(t : ℂ) * 0 +
-        (t : ℂ) ^ 2 *
-          ((0 : ℂ) * ((b : ℂ) - (a : ℂ)) + conj u * u - conj v * v) +
-        (t : ℂ) ^ 3 *
-          ((a : ℂ) * (b : ℂ) * 0 - (a : ℂ) * (conj v * v) -
-            (b : ℂ) * (conj u * u) + z * v * conj u +
-            conj z * conj v * u - (0 : ℂ) * (z * conj z)) := by
-  rw [Matrix.det_fin_three]
-  simp [D, hermitianMatrix, Matrix.add_apply, Matrix.smul_apply,
-    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two]
-  ring
 
 theorem determinant_pencil_general (a b c : ℝ) (z u v : ℂ) (t : ℝ) :
     (D + (t : ℂ) •
@@ -169,12 +147,6 @@ theorem finalUnitary_isUnit : IsUnit (finalUnitary : M) := by
   simp [finalUnitary, Matrix.det_fin_three, div_eq_mul_inv, hr0]
   field_simp [hr0]
   norm_num
-
-theorem congruence_pairing_transport (C H : M) (w w' : Fin 3 → ℂ) :
-    star (C *ᵥ w) ⬝ᵥ (H *ᵥ (C *ᵥ w')) =
-      star w ⬝ᵥ ((Cᴴ * H * C) *ᵥ w') := by
-  rw [Matrix.star_mulVec, ← Matrix.dotProduct_mulVec]
-  rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec]
 
 theorem zero_graph_common_kernel
     (K : Submodule ℝ M)

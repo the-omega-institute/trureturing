@@ -1,11 +1,10 @@
-/-
-  Unfrozen machinery for the positive-native width-three primitive branch.
-
-  The main result is the finite common-kernel slice for a family of rectangular
-  complex matrices whose cross-Gram products are adjoint-symmetric.  This file
-  is intentionally a WIP content module: it has no Scribe, Reg mirror, or
-  freeze metadata.
--/
+/- GID: D5/S3/Quantum/Algebra/CommonKernelSlice
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Algebra/CommonKernelSlice
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: A real coefficient combination realizes the common kernel of an adjoint-symmetric finite matrix family. -/
 
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -16,10 +15,11 @@ import Mathlib.Tactic
 /-!
 # Common-kernel slice machinery
 
-This is an unfrozen WIP module for the positive-native width-three primitive
-branch.  Its public theorems give the exact real-coefficient slice and the
-injective dimension consequence; the full native inequality remains a later
-consumer.
+For every finite family whose cross-Gram products are adjoint-symmetric, a
+real coefficient combination has exactly the common kernel.  When that common
+kernel is zero, the combination is injective and the input dimension is at
+most the output dimension.  The width-three tensor theorem consumes these two
+consequences in its kernel alternatives.
 -/
 
 set_option autoImplicit false
@@ -225,10 +225,7 @@ theorem common_kernel_slice {k a b : ℕ}
   simp only [LinearMap.mem_ker, Matrix.mulVecLin_apply, Submodule.mem_iInf]
   exact ht x
 
-/-!
-The primitive branch uses this consequence when its common kernel is zero.
-The future native-width consumer supplies that zero-common-kernel hypothesis.
--/
+/-! The primitive branch uses this consequence when its common kernel is zero. -/
 theorem common_kernel_slice_injective_of_common_kernel_bot {k a b : ℕ}
     (X : Fin k → Matrix (Fin a) (Fin b) ℂ)
     (hcomm : ∀ i j, (X i)ᴴ * X j = (X j)ᴴ * (X i))
