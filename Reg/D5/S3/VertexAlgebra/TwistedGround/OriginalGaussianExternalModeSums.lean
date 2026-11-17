@@ -156,4 +156,183 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end sourceMoment_generators_explicit
 
+
+namespace mode_derivative
+abbrev arena : Arena where
+  signature := seriesSignature
+  Law R := ∀ (out : Bool) {u x : ℂ} (_hsmall : ‖u‖ + ‖x‖ < 1),
+    sumObserve R (fun p : ℕ => (p : ℂ) * sourceAmplitude out p x * u ^ (p-1))
+      (deriv (fun w => sourceMode out w x) u) ∧
+    DifferentiableAt ℂ (fun w => sourceMode out w x) u
+private theorem rejected_fails : ¬ arena.Law seriesRejected := by
+  intro h
+  exact (h true (u := 0) (x := 0) (by norm_num)).1
+def family : Registration arena (type_of% (@mode_derivative)) where
+  actual := seriesActual
+  bridge := Iff.rfl
+  variation := ⟨@mode_derivative, seriesRejected, rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨seriesRejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      cases e
+  dependence := seriesDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@mode_derivative) (Realization seriesSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalModeSums.mode_derivative.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalModeSums.mode_derivative.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize seriesSignature seriesActual.readout seriesActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalModeSums
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end mode_derivative
+
+
+namespace mode_derivative_explicit
+abbrev arena : Arena where
+  signature := eqSignature
+  Law R := ∀ (out : Bool) {u x : ℂ} (_hsmall : ‖u‖ + ‖x‖ < 1),
+    let a : ℂ := if out then 1 else 1-x
+    let b : ℂ := if out then 1-x else 1
+    R.readout () _ (deriv (fun w => sourceMode out w x) u)
+      (sourceMode out u x * (1/(2*(1-u))+b/(2*(a-b*u))))
+private theorem rejected_fails : ¬ arena.Law eqRejected := by
+  intro h
+  exact h true (u := 0) (x := 0) (by norm_num)
+def family : Registration arena (type_of% (@mode_derivative_explicit)) where
+  actual := eqActual
+  bridge := Iff.rfl
+  variation := ⟨@mode_derivative_explicit, eqRejected, rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨eqRejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      cases e
+  dependence := eqDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@mode_derivative_explicit) (Realization eqSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalModeSums.mode_derivative_explicit.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalModeSums.mode_derivative_explicit.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize eqSignature eqActual.readout eqActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalModeSums
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end mode_derivative_explicit
+
+
+def neqActual : Realization eqSignature := realize _ (fun _ _ x y => x ≠ y) (fun e => nomatch e)
+private theorem neqDependence : ObservationalDependence eqSignature neqActual := by
+  intro i
+  refine ⟨ℂ, 0, 1, ?_⟩
+  intro h
+  have he : (0 : ℂ) ≠ 0 := Eq.mpr (congrFun h 0) one_ne_zero
+  exact he rfl
+
+
+namespace mode_factors_ne_zero
+abbrev arena : Arena where
+  signature := eqSignature
+  Law R := ∀ {u x : ℂ} (_hsmall : ‖u‖ + ‖x‖ < 1),
+    R.readout () _ (1-u) 0 ∧ 1-(1-x)*u ≠ 0 ∧ 1-x-u ≠ 0
+private theorem rejected_fails : ¬ arena.Law eqRejected := by
+  intro h
+  exact (h (u := 0) (x := 0) (by norm_num)).1
+def family : Registration arena (type_of% (@mode_factors_ne_zero)) where
+  actual := neqActual
+  bridge := Iff.rfl
+  variation := ⟨@mode_factors_ne_zero, eqRejected, rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨eqRejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      cases e
+  dependence := neqDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@mode_factors_ne_zero) (Realization eqSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalModeSums.mode_factors_ne_zero.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalModeSums.mode_factors_ne_zero.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize eqSignature neqActual.readout neqActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalModeSums
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end mode_factors_ne_zero
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalModeSums

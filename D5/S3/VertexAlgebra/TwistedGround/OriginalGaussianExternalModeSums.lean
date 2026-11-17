@@ -18,7 +18,7 @@ open OriginalGaussianSourceEvaluation OriginalGaussianExternalFrequency
 open OriginalGaussianExternalDisplacement OriginalGaussianExternalMoments
 open OriginalGaussianExternalGenerators
 
-private lemma mode_derivative (out : Bool) {u x : ℂ} (hsmall : ‖u‖ + ‖x‖ < 1) :
+lemma mode_derivative (out : Bool) {u x : ℂ} (hsmall : ‖u‖ + ‖x‖ < 1) :
     HasSum (fun p : ℕ => (p : ℂ) * sourceAmplitude out p x * u ^ (p - 1))
       (deriv (fun w => sourceMode out w x) u) ∧
     DifferentiableAt ℂ (fun w => sourceMode out w x) u := by
@@ -112,7 +112,7 @@ theorem sourceMoment_generators {u x : ℂ} (hsmall : ‖u‖ + ‖x‖ < 1) :
       ring
     · ring
 
-private lemma mode_factors_ne_zero {u x : ℂ} (hsmall : ‖u‖ + ‖x‖ < 1) :
+lemma mode_factors_ne_zero {u x : ℂ} (hsmall : ‖u‖ + ‖x‖ < 1) :
     1 - u ≠ 0 ∧ 1 - (1 - x) * u ≠ 0 ∧ 1 - x - u ≠ 0 := by
   have hu : ‖u‖ < 1 := by linarith [norm_nonneg x]
   have hne {w : ℂ} (hw : ‖w‖ < 1) : 1 - w ≠ 0 := by
@@ -131,7 +131,7 @@ private lemma mode_factors_ne_zero {u x : ℂ} (hsmall : ‖u‖ + ‖x‖ < 1) 
   · have hh : ‖x + u‖ < 1 := lt_of_le_of_lt (norm_add_le x u) (by linarith)
     simpa only [sub_sub] using hne hh
 
-private lemma mode_derivative_explicit (out : Bool) {u x : ℂ}
+lemma mode_derivative_explicit (out : Bool) {u x : ℂ}
     (hsmall : ‖u‖ + ‖x‖ < 1) :
     let a : ℂ := if out then 1 else 1 - x
     let b : ℂ := if out then 1 - x else 1
