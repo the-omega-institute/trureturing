@@ -1,6 +1,6 @@
 import Reg.Support.FactorialFockMetric
 import Reg.Support.SingleDependentReadout
-import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes
+import D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes
 
 /-! Faithful equality observations for selected exact source theorems.
 Other source declarations have no completed registration in this checkpoint. -/
@@ -9,12 +9,13 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open _root_.D5.S3.VertexAlgebra.TwistedGround
+open _root_.D5.S3.VertexAlgebra.TwistedGround.FiniteMode
 open OriginalGaussianFiniteCandidateModes
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric
 open LeanInformationAudit
 
-namespace Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes
+namespace Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes
 
 namespace a_euler_mode_step
 abbrev arena : Arena where
@@ -37,8 +38,8 @@ def family : Registration arena (type_of% (@a_euler_mode_step)) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@a_euler_mode_step) (Realization complexSignature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes.a_euler_mode_step.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes.a_euler_mode_step.family
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes.a_euler_mode_step.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes.a_euler_mode_step.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -54,7 +55,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -90,8 +91,8 @@ def family : Registration arena (type_of% (@externalT_negative_zero_positive_fin
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@externalT_negative_zero_positive_finite) (Realization complexSignature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite.family
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -107,7 +108,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -121,4 +122,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end externalT_negative_zero_positive_finite
 
-end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes
+end Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes

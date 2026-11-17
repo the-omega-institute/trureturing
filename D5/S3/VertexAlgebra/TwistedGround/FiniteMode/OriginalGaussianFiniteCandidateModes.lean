@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes
+/- GID: D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -27,7 +27,7 @@ set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open scoped BigOperators Topology
 
-namespace D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes
+namespace D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes
 
 open OriginalGaussianMatrix OriginalGaussianAllIndexResolvent
 open OriginalGaussianSourceEvaluation
@@ -409,4 +409,4 @@ all signed source and J candidates; original/candidate germ and global equality.
 The true negative-zero row is identified above from the literal original boundary.
 -/
 
-end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes
+end D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes

@@ -1,6 +1,6 @@
 import Reg.Support.FactorialFockMetric
 import Reg.Support.SingleDependentReadout
-import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGermCoefficientBridge
+import D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianExternalGermCoefficientBridge
 
 /-! Faithful equality observations for selected exact source theorems.
 Other source declarations have no completed registration in this checkpoint. -/
@@ -9,12 +9,13 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open _root_.D5.S3.VertexAlgebra.TwistedGround
+open _root_.D5.S3.VertexAlgebra.TwistedGround.FiniteMode
 open OriginalGaussianExternalGermCoefficientBridge
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric
 open LeanInformationAudit
 
-namespace Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGermCoefficientBridge
+namespace Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianExternalGermCoefficientBridge
 
 namespace two_mul_radial_deriv_eq_euler
 abbrev arena : Arena where
@@ -39,8 +40,8 @@ def family : Registration arena (type_of% (@two_mul_radial_deriv_eq_euler)) wher
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@two_mul_radial_deriv_eq_euler) (Realization complexSignature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGermCoefficientBridge.two_mul_radial_deriv_eq_euler.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGermCoefficientBridge.two_mul_radial_deriv_eq_euler.family
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianExternalGermCoefficientBridge.two_mul_radial_deriv_eq_euler.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianExternalGermCoefficientBridge.two_mul_radial_deriv_eq_euler.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -56,7 +57,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGermCoefficientBridge
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianExternalGermCoefficientBridge
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -70,4 +71,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end two_mul_radial_deriv_eq_euler
 
-end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGermCoefficientBridge
+end Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianExternalGermCoefficientBridge

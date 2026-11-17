@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge
+/- GID: D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -42,7 +42,7 @@ noncomputable section
 open scoped Topology
 open Filter
 
-namespace D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGermCoefficientBridge
+namespace D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianExternalGermCoefficientBridge
 
 open OriginalGaussianExternalResolvent OriginalGaussianExternalParityUniqueness
 
@@ -268,4 +268,4 @@ theorem externalT_positive_germ_unique_of_pos_real_differential
         convert hr r hr0 hre using 1 <;> ring)
     convert hc k using 1 <;> ring
 
-end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGermCoefficientBridge
+end D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianExternalGermCoefficientBridge
