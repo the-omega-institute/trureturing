@@ -12,9 +12,9 @@ escape_witness: none (consumed helpers on the live path of HardinA229751.result)
 class_successors: proof_shape=content; consumers=Certificate.canonical_successors
 -/
 
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
-open scoped BigOperators
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Classes6
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip (Boundary)

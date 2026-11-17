@@ -15,8 +15,12 @@ proper_transition_counts: proof_shape=bind-only; consumers=transition_counts
 transition_counts: proof_shape=bind-only; consumers=Certificate.transition_counts
 -/
 
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.SignedFibres
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229582Strip
 
 /-! The proper zero-defect block is the signed saturated block divided by 16. -/
 open scoped BigOperators
@@ -25,8 +29,7 @@ open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip
   (Boundary rowLegal pairs compatible saturated proper kind rate step saturated_certificate)
-open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
-  (beta good allowed advance finish widthStep colour_bond_iff)
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip (good allowed advance widthStep colour_bond_iff)
 
 private theorem legal_iff (p : Boundary) (c : Fin 4 → Fin 8) :
     (rowLegal c ∧ compatible p c ∧ good saturated c) ↔

@@ -17,12 +17,15 @@ exact_image: proof_shape=bind-only; consumers=class_successors
 class_successors: proof_shape=bind-only; consumers=Certificate.canonical_successors
 -/
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.ZeroTemperature
-open scoped BigOperators
-open D5.S3.StatisticalMechanics.Potts
-open KingDefects.TwoDefectStrips
-open StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229582Strip
+open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Classes2
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
