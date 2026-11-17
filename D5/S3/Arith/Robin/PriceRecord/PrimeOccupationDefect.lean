@@ -261,7 +261,7 @@ private theorem normalized_tail_limit {c : ℝ} (hc : 0 < c) :
   simpa only [Real.dist_eq, squareSum, primeInterval] using
     htail (c * Real.sqrt z) z hYc hKc
 
-private theorem scaled_tail_limit {c : ℝ} (hc : 0 < c) :
+theorem scaled_tail_limit {c : ℝ} (hc : 0 < c) :
     Tendsto (fun z : ℝ => scale z * squareSum (c * Real.sqrt z) z)
       atTop (𝓝 (2 / c)) := by
   have hratio := (tendsto_const_nhds (x := (1 : ℝ))).div

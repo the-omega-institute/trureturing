@@ -31,6 +31,10 @@ internal sealed class OpenBoundaryMPSInteriorRootRealizationDocument : IScribeDo
             Definition("trialLeft", "Trial left boundary Gram", "X_p(zeta)=(inverseDualTransfer_zeta)^p(P), with P fixed."),
             Definition("trialRight", "Trial right boundary Gram", "Y_q(zeta)=(inverseTransfer_zeta)^q(G(zeta) inverse-square H G(zeta) inverse-adjoint-square), with H fixed."),
             Definition("residual", "The explicit real residual", "f(zeta)=Re(det X_p(zeta))+I Re(det Y_q(zeta)). The map is real rather than holomorphic. Target P,H are fixed in all trial derivatives."),
+            Theorem("iterate_smul", "Homogeneous iteration", IterateSmul(),
+                "Every complex-homogeneous map on Bond remains complex-homogeneous under every natural iterate, including zero. The original root-realization factorization and InteriorPolynomial's live right-boundary and Jacobian-scaling proofs directly consume this original helper."),
+            Theorem("transfer_smul", "Homogeneous transfer", TransferSmul(),
+                "For every binary pair of Bond matrices, every complex scalar and every Bond matrix, transfer commutes with scalar multiplication. The original root proof and InteriorPolynomial's actual right-target scaling use this declaration directly through iterate_smul; no positivity or nonzero-scalar hypothesis is added."),
             Theorem("distinct_residual_root_actual_ambiguity", "Every distinct common root is actual", Endpoint(false),
                 "For every p,q at least one, every regular sector, nonzero original z0, arbitrary complex l,r and positive definite actual P,H, any nonzero zeta distinct from z0 with both trial determinants zero gives a nonzero actual finite uniform bond-two competitor. It has identical complete unnormalized rawInterior p 2 q, at length (p+2)+q, and is not any unit complex scalar times the original full state. No canonical-chart or regularity hypothesis is imposed on the constructed boundaries."),
             Theorem("annular_regular_root_actual_ambiguity", "Conditional annular actual ambiguity", Endpoint(true),
@@ -52,6 +56,22 @@ internal sealed class OpenBoundaryMPSInteriorRootRealizationDocument : IScribeDo
             StatementSource.FromAuthor(Disp(f)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
+    private static Formula IterateSmul()
+    {
+        var f = Id("F"); var t = Id("t"); var x = Id("X"); var n = Id("n");
+        var homogeneous = Bind([("t", Id("Complex")), ("X", Id("Bond"))],
+            Eq(new Formula.Apply(f, [Call("smul", t, x)]), Call("smul", t, new Formula.Apply(f, [x]))));
+        return All("F", Arrow(Id("Bond"), Id("Bond")), Imp(homogeneous,
+            Bind([("n", Id("Nat")), ("t", Id("Complex")), ("X", Id("Bond"))],
+                Eq(Call("iterate", f, n, Call("smul", t, x)), Call("smul", t, Call("iterate", f, n, x))))));
+    }
+    private static Formula TransferSmul()
+    {
+        var a = Id("A"); var t = Id("t"); var x = Id("X");
+        return Bind([("A", Arrow(Call("Fin", D(2)), Id("Bond"))),
+            ("t", Id("Complex")), ("X", Id("Bond"))],
+            Eq(Call("transfer", a, Call("smul", t, x)), Call("smul", t, Call("transfer", a, x))));
+    }
     private static Formula Endpoint(bool annular)
     {
         var p = Id("p"); var q = Id("q"); var s = Id("s"); var z = Id("z");

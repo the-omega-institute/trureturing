@@ -3,6 +3,8 @@ import D5.S3.QuadraticForms.RankBoundedChordalPsdCompletion
 import D5.S3.Combinatorics.Graph.Chordal.Characterization
 import Reg.Support.DependentFamily
 
+/-! Source-family registrations for chordal completion and its reusable Gram factor. -/
+
 open _root_.D5.S3.QuadraticForms.RankBoundedChordalPsdCompletion
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -118,3 +120,81 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end
 end Reg.D5.S3.QuadraticForms.RankBoundedChordalPsdCompletion
+
+namespace Reg.D5.S3.QuadraticForms.RankBoundedChordalPsdCompletion.GramFactor
+universe u
+noncomputable section
+attribute [local instance] Fintype.ofFinite
+
+abbrev arena : Arena where
+  signature := RankBoundedChordalPsdCompletion.signature.{u}
+  Law Z := ∀ {V : Type u} [Finite V] (d : ℕ) (A : Matrix V V ℝ)
+    (_hA : A.PosSemidef) (_hr : A.rank ≤ d),
+    ∃ p : V → EuclideanSpace ℝ (Fin d),
+      ∀ i j, inner ℝ (p i) (p j) = Z.readout () ⟨V, A⟩ i j
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  let V := ULift.{u} (Fin 1)
+  obtain ⟨p, hp⟩ := h (V := V) 0 0 Matrix.PosSemidef.zero (by simp)
+  have he := hp (⟨0⟩ : V) (⟨0⟩ : V)
+  change inner ℝ (p ⟨0⟩) (p ⟨0⟩) = -1 at he
+  have hn := real_inner_self_nonneg (x := p (⟨0⟩ : V))
+  linarith
+
+def evidence : Registration arena.{u} (type_of% @gram_factor_rank.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@gram_factor_rank.{u}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    let V := ULift.{u} (Fin 2)
+    let A : Matrix V V ℝ := 1
+    refine ⟨⟨V, A⟩, ⟨0⟩, ⟨1⟩, ?_⟩
+    intro he
+    have hh := congrFun he (⟨0⟩ : V)
+    norm_num [actual, realize, A] at hh
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@gram_factor_rank.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName :=
+    `D5.S3.QuadraticForms.RankBoundedChordalPsdCompletion.gram_factor_rank.__information_unit
+  realizationName := `Reg.D5.S3.QuadraticForms.RankBoundedChordalPsdCompletion.GramFactor.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u}
+    (fun _ p x => p.2 x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.QuadraticForms.RankBoundedChordalPsdCompletion
+    definition := none
+    coordinates := #[0, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body",
+        "body", "body", "arg", "fn"]
+      stateBinder := 7
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end
+end Reg.D5.S3.QuadraticForms.RankBoundedChordalPsdCompletion.GramFactor

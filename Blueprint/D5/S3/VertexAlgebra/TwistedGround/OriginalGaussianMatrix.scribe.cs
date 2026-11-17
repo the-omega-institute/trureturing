@@ -19,5 +19,10 @@ internal sealed class OriginalGaussianMatrixDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every N and every complex z with norm(z)<1, the actual native finite-section matrix has Euclidean operator norm at most norm(z)^2."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("pairscalar-comm"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianMatrix.pairScalar_comm"),
+                H("pairScalar_comm"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For all natural frequencies, the original pairScalar coefficient is symmetric under exchanging its arguments."))), DescribeRole.Theorem))));
 }

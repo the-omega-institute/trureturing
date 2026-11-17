@@ -117,4 +117,289 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 #print axioms registration
 end IntrinsicInterior
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+namespace positive_iterates
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Prop
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature (fun _ _ p => p) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => False) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law obs := obs.readout () () (type_of% @positive_iterates)
+private lemma rejected_law : ¬ arena.Law rejected := by
+  intro h; exact h
+private lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(),False,True,?_⟩
+  intro h
+  exact (Eq.mp h.symm True.intro)
+def source_registration : Registration arena (type_of% @positive_iterates) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@positive_iterates,rejected,rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected,fun j hj => (hj (Subsingleton.elim j i)).elim,rfl,rejected_law⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@positive_iterates) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorGenericity.positive_iterates.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorGenericity.positive_iterates.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ p => p) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end positive_iterates
+namespace cast_mps
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Prop
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature (fun _ _ p => p) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => False) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law obs := obs.readout () () (type_of% @cast_mps)
+private lemma rejected_law : ¬ arena.Law rejected := by
+  intro h; exact h
+private lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(),False,True,?_⟩
+  intro h
+  exact (Eq.mp h.symm True.intro)
+def source_registration : Registration arena (type_of% @cast_mps) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@cast_mps,rejected,rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected,fun j hj => (hj (Subsingleton.elim j i)).elim,rfl,rejected_law⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@cast_mps) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorGenericity.cast_mps.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorGenericity.cast_mps.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ p => p) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end cast_mps
+
+namespace rawInterior_phase
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Prop
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature (fun _ _ p => p) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => False) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law obs := obs.readout () () (type_of% @rawInterior_phase)
+private lemma rejected_law : ¬ arena.Law rejected := by
+  intro h; exact h
+private lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(),False,True,?_⟩
+  intro h
+  exact (Eq.mp h.symm True.intro)
+def source_registration : Registration arena (type_of% @rawInterior_phase) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@rawInterior_phase,rejected,rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected,fun j hj => (hj (Subsingleton.elim j i)).elim,rfl,rejected_law⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@rawInterior_phase) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorGenericity.rawInterior_phase.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorGenericity.rawInterior_phase.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ p => p) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end rawInterior_phase
+
+namespace actual_phase
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Prop
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature (fun _ _ p => p) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => False) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law obs := obs.readout () () (type_of% @actual_phase)
+private lemma rejected_law : ¬ arena.Law rejected := by
+  intro h; exact h
+private lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(),False,True,?_⟩
+  intro h
+  exact (Eq.mp h.symm True.intro)
+def source_registration : Registration arena (type_of% @actual_phase) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@actual_phase,rejected,rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected,fun j hj => (hj (Subsingleton.elim j i)).elim,rfl,rejected_law⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@actual_phase) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorGenericity.actual_phase.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorGenericity.actual_phase.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ p => p) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end actual_phase
+
+namespace locus_phase
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Prop
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature (fun _ _ p => p) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => False) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law obs := obs.readout () () (type_of% @locus_phase)
+private lemma rejected_law : ¬ arena.Law rejected := by
+  intro h; exact h
+private lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(),False,True,?_⟩
+  intro h
+  exact (Eq.mp h.symm True.intro)
+def source_registration : Registration arena (type_of% @locus_phase) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@locus_phase,rejected,rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected,fun j hj => (hj (Subsingleton.elim j i)).elim,rfl,rejected_law⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@locus_phase) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorGenericity.locus_phase.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorGenericity.locus_phase.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ p => p) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end locus_phase
+
 end Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorGenericity
