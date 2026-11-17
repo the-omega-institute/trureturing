@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Divergence/AudenaertBinaryHolevoBound
   - D5/S3/Quantum/Divergence/UmegakiBKMPath
   - D5/S3/Quantum/Divergence/UmegakiRareFlagBKM
+  - D5/S3/Quantum/Divergence/UmegakiArithmeticBKM
   - D5/S3/Quantum/Divergence/UniversalCommonCenter
   - D5/S3/Quantum/Divergence/UniversalPositiveScalarizer
 license: citation-only
@@ -42,6 +43,25 @@ which proves the rectangular finite-dimensional rare-flag asymptotic for the
 actual Bochner logarithmic derivative. It is a support result for the
 rare-reference route and does not prove the conditional Umegaki coefficient
 bound, coefficient equality, or a literature-priority claim.
+
+`UmegakiArithmeticBKM.arithmetic_inverse_pairing_eq_logDeriv` identifies
+Re Tr(H adjoint logDeriv(Z,H)) with the integral over u in [0,1] of the native
+Hilbert-Schmidt pairing of H with the inverse of
+M_Z(u)=(1-u)L_Z+u R_Z. Its scope is every finite index type, including empty
+types, positive definite complex Z, and arbitrary complex H. A coordinatewise
+reciprocal candidate in Z's eigenbasis proves actual invertibility, including
+both endpoints and repeated eigenvalues. The original rare-flag scalar kernel
+evaluation and spectral trace expansion are reused; Bochner integrability and
+finite-sum interchange connect the two representations. This formal assembly
+is repository-derived support, not an originality claim attributed to the paper.
+
+For arbitrary correlated bipartite quantum references, the downstream route
+uses the ordinary `relativeEntropy_eq_integral_bkm` independently on the joint
+and actual partial-trace marginal matrices, cancels their trace corrections
+using `trace_partialTraceRight`, and consumes the actual HS partial-trace
+residual. The conditional finite block-family path identity alone does not cover
+that quantum reference. The original all-finite Umegaki coefficient equality
+remains unproved; the open-problem KPI remains zero.
 
 The associated finite semidefinite supplier
 `UniversalCommonCenter.exists_common_center_of_posDef_trace_inf_le` concerns
