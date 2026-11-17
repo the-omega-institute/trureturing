@@ -107,6 +107,58 @@ theorem a_euler_mode_step (p : ℕ) (r : ℂ) :
     linear_combination (centralWeight (n + 1) : ℂ) * (-1 : ℂ) ^ (n + 1) *
       r ^ (n + 1) * hc
 
+private lemma aPrime_shifted (p : ℕ) (r : ℂ) :
+    aPrime p r = ∑ n ∈ Finset.range (p + 1),
+      (centralWeight (n + 1) : ℂ) * (-1 : ℂ) ^ (n + 1) *
+        (p.choose (n + 1) : ℂ) * (n + 1 : ℂ) * r ^ n := by
+  unfold aPrime
+  rw [Finset.sum_range_succ', Finset.sum_range_succ]
+  simp only [Nat.cast_zero, zero_mul, mul_zero, add_zero, Nat.choose_succ_self,
+    Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one]
+  apply Finset.sum_congr rfl
+  intro n hn
+  ring
+
+/-- The second exact source recurrence, obtained from the actual central-binomial
+ratio. It is polynomial and is valid even at r=0. -/
+theorem a_derivative_mode_step (p : ℕ) (r : ℂ) :
+    2 * (aPrime (p + 1) r - (1 - r) * aPrime p r) = -a p r := by
+  have hdiff : aPrime (p + 1) r - aPrime p r =
+      ∑ n ∈ Finset.range (p + 1),
+        (centralWeight (n + 1) : ℂ) * (-1 : ℂ) ^ (n + 1) *
+          (p.choose n : ℂ) * (n + 1 : ℂ) * r ^ n := by
+    rw [aPrime_shifted (p + 1), Finset.sum_range_succ, aPrime_shifted p]
+    simp only [Nat.choose_succ_self, Nat.cast_zero, mul_zero, zero_mul, add_zero]
+    rw [← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro n hn
+    simp only [Nat.choose_succ_succ, Nat.cast_add]
+    ring
+  have heuler : r * aPrime p r = ∑ n ∈ Finset.range (p + 1),
+      (centralWeight n : ℂ) * (-1 : ℂ) ^ n * (p.choose n : ℂ) *
+        (n : ℂ) * r ^ n := by
+    unfold aPrime
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro n hn
+    cases n with
+    | zero => simp
+    | succ n => simp only [Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one, pow_succ]; ring
+  have hzero : 2 * (aPrime (p + 1) r - aPrime p r) +
+      2 * (r * aPrime p r) + a p r = 0 := by
+    rw [hdiff, heuler]
+    unfold a
+    rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib,
+      ← Finset.sum_add_distrib]
+    apply Finset.sum_eq_zero
+    intro n hn
+    have hc : 2 * (n + 1 : ℂ) * (centralWeight (n + 1) : ℂ) =
+        (2 * n + 1 : ℂ) * (centralWeight n : ℂ) := by
+      exact_mod_cast centralWeight_step n
+    simp only [pow_succ]
+    linear_combination -(p.choose n : ℂ) * (-1 : ℂ) ^ n * r ^ n * hc
+  linear_combination hzero
+
 theorem analyticAt_a (p : ℕ) (r : ℂ) : AnalyticAt ℂ (a p) r := by
   unfold a
   apply Finset.analyticAt_fun_sum
@@ -162,6 +214,96 @@ theorem analyticAt_h2 (p q : ℕ) (r : ℂ) : AnalyticAt ℂ (h2 p q) r := by
   apply Finset.analyticAt_fun_sum
   intro j hj
   fun_prop
+
+private lemma h_sum_pad (p q N : ℕ) (r : ℂ) (hN : min p q < N) :
+    h p q r = ∑ j ∈ Finset.range N,
+      (p.choose j : ℂ) * (q.choose j : ℂ) * r ^ j := by
+  unfold h
+  apply Finset.sum_subset (Finset.range_mono (by omega))
+  intro j hj hj'
+  have hjm : min p q < j := by
+    have := Finset.mem_range.not.mp hj'
+    omega
+  have hcases : p < j ∨ q < j := by omega
+  rcases hcases with hp | hq
+  · simp [Nat.choose_eq_zero_of_lt hp]
+  · simp [Nat.choose_eq_zero_of_lt hq]
+
+private lemma hPrime_sum_pad (p q N : ℕ) (r : ℂ) (hN : min p q < N) :
+    hPrime p q r = ∑ j ∈ Finset.range N,
+      ((p.choose j : ℂ) * (q.choose j : ℂ)) * ((j : ℂ) * r ^ (j - 1)) := by
+  unfold hPrime
+  apply Finset.sum_subset (Finset.range_mono (by omega))
+  intro j hj hj'
+  have hjm : min p q < j := by
+    have := Finset.mem_range.not.mp hj'
+    omega
+  have hcases : p < j ∨ q < j := by omega
+  rcases hcases with hp | hq
+  · simp [Nat.choose_eq_zero_of_lt hp]
+  · simp [Nat.choose_eq_zero_of_lt hq]
+
+private lemma h_zero_left (q : ℕ) (r : ℂ) : h 0 q r = 1 := by
+  simp [h]
+
+private lemma h_zero_right (p : ℕ) (r : ℂ) : h p 0 r = 1 := by
+  simp [h]
+
+/-- The two Pascal differences of the literal denominator coefficients.
+The axes are handled separately by the guarded version below. -/
+theorem h_pascal (p q : ℕ) (r : ℂ) :
+    h (p + 1) (q + 1) r - h p (q + 1) r - h (p + 1) q r + h p q r =
+      r * h p q r := by
+  let N := p + q + 2
+  conv_rhs => rw [h_sum_pad p q N r (by dsimp [N]; omega)]
+  rw [h_sum_pad (p + 1) (q + 1) (N + 1) r (by dsimp [N]; omega),
+    h_sum_pad p (q + 1) (N + 1) r (by dsimp [N]; omega),
+    h_sum_pad (p + 1) q (N + 1) r (by dsimp [N]; omega),
+    h_sum_pad p q (N + 1) r (by dsimp [N]; omega)]
+  rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib,
+    Finset.sum_range_succ']
+  simp only [Nat.choose_zero_right, Nat.cast_one, pow_zero, mul_one, sub_self,
+    zero_sub, neg_add_cancel, add_zero]
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro j hj
+  simp only [Nat.choose_succ_succ, Nat.cast_add, pow_succ]
+  ring
+
+/-- The finite Euler identity, with no division by the parameter. -/
+theorem h_euler_mode_step (p q : ℕ) (r : ℂ) :
+    r * hPrime (p + 1) q r = (p + 1 : ℂ) * (h (p + 1) q r - h p q r) := by
+  rw [hPrime_sum_pad (p + 1) q (p + 2) r (by omega),
+    h_sum_pad (p + 1) q (p + 2) r (by omega),
+    h_sum_pad p q (p + 2) r (by omega)]
+  rw [Finset.mul_sum, ← Finset.sum_sub_distrib, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro j hj
+  cases j with
+  | zero => simp
+  | succ j =>
+    have hc : (j + 1 : ℂ) * ((p + 1).choose (j + 1) : ℂ) =
+        (p + 1 : ℂ) * (((p + 1).choose (j + 1) : ℂ) - (p.choose (j + 1) : ℂ)) := by
+      have hh : (p + 1 : ℂ) * (p.choose j : ℂ) =
+          ((p + 1).choose (j + 1) : ℂ) * (j + 1 : ℂ) := by
+        exact_mod_cast Nat.add_one_mul_choose_eq p j
+      simp only [Nat.choose_succ_succ, Nat.cast_add] at hh ⊢
+      linear_combination -hh
+    simp only [Nat.cast_add, Nat.cast_one, Nat.add_sub_cancel]
+    linear_combination (q.choose (j + 1) : ℂ) * r ^ (j + 1) * hc
+
+/-- Differentiating the actual finite coefficient sum shifts both indices.
+The zero row and column of the derivative are not omitted. -/
+theorem hPrime_succ_succ (p q : ℕ) (r : ℂ) :
+    hPrime (p + 1) (q + 1) r = h2 p q r := by
+  unfold hPrime h2
+  rw [show min (p + 1) (q + 1) + 1 = (min p q + 1) + 1 by omega,
+    Finset.sum_range_succ']
+  simp only [Nat.cast_zero, zero_mul, mul_zero, add_zero, Nat.add_sub_cancel,
+    Nat.cast_add, Nat.cast_one]
+  apply Finset.sum_congr rfl
+  intro j hj
+  ring
 
 /-- Finite source convolution with one of the two denominator tables. -/
 def L (H : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) : ℂ :=
@@ -226,6 +368,207 @@ def shift11 (F : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) : ℂ :=
 @[simp] theorem shift11_succ_succ (F : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) :
     shift11 F (p + 1) (q + 1) r = F p q r := by simp [shift11]
 
+/-- One backward Taylor shift, guarded before natural subtraction.
+This is not the signed-frequency predecessor of the original external mode. -/
+def shiftX (F : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) : ℂ :=
+  if p = 0 then 0 else F (p - 1) q r
+
+def shiftY (F : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) : ℂ :=
+  if q = 0 then 0 else F p (q - 1) r
+
+/-- Multiplication by the literal inverse-denominator stencil. -/
+def denominatorStencil (F : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) : ℂ :=
+  F p q r - shiftX F p q r - shiftY F p q r + (1 - r) * shift11 F p q r
+
+/-- The finite h table is the inverse of 1-X-Y+(1-r)XY, including both axes. -/
+theorem h_inverse_stencil (p q : ℕ) (r : ℂ) :
+    denominatorStencil h p q r = if p = 0 ∧ q = 0 then 1 else 0 := by
+  cases p with
+  | zero =>
+    cases q with
+    | zero => simp [denominatorStencil, shiftX, shiftY, h_zero_left]
+    | succ q => simp [denominatorStencil, shiftX, shiftY, h_zero_left]
+  | succ p =>
+    cases q with
+    | zero => simp [denominatorStencil, shiftX, shiftY, h_zero_right]
+    | succ q =>
+      simp only [denominatorStencil, shiftX, shiftY, Nat.succ_ne_zero, ite_false,
+        Nat.add_sub_cancel, shift11_succ_succ, false_and]
+      linear_combination h_pascal p q r
+
+/-- The finite derivative is the guarded XY shift of the actual h2 table. -/
+theorem hPrime_eq_shift11 (p q : ℕ) (r : ℂ) :
+    hPrime p q r = shift11 h2 p q r := by
+  cases p with
+  | zero => simp [hPrime]
+  | succ p =>
+    cases q with
+    | zero => simp [hPrime]
+    | succ q => simpa only [shift11_succ_succ] using hPrime_succ_succ p q r
+
+/-- The literal finite square-denominator coefficients satisfy E h2=h.
+Differentiation is only of finite polynomials. -/
+theorem h2_inverse_stencil (p q : ℕ) (r : ℂ) :
+    denominatorStencil h2 p q r = h p q r := by
+  cases p with
+  | zero =>
+    cases q with
+    | zero => simp [denominatorStencil, shiftX, shiftY, h2, h]
+    | succ q =>
+      simp [denominatorStencil, shiftX, shiftY, h2, h]
+  | succ p =>
+    cases q with
+    | zero =>
+      simp [denominatorStencil, shiftX, shiftY, h2, h]
+    | succ q =>
+      have hd := (((hasDerivAt_h (p + 2) (q + 2) r).sub
+        (hasDerivAt_h (p + 1) (q + 2) r)).sub
+        (hasDerivAt_h (p + 2) (q + 1) r)).add
+        (hasDerivAt_h (p + 1) (q + 1) r)
+      have heq : (fun u : ℂ => h (p + 2) (q + 2) u - h (p + 1) (q + 2) u -
+          h (p + 2) (q + 1) u + h (p + 1) (q + 1) u) =
+          (fun u : ℂ => u * h (p + 1) (q + 1) u) :=
+        funext (h_pascal (p + 1) (q + 1))
+      change HasDerivAt (fun u : ℂ => h (p + 2) (q + 2) u - h (p + 1) (q + 2) u -
+        h (p + 2) (q + 1) u + h (p + 1) (q + 1) u) _ r at hd
+      rw [heq] at hd
+      have hh := hd.unique ((hasDerivAt_id r).mul
+        (hasDerivAt_h (p + 1) (q + 1) r))
+      simp only [show p + 2 = (p + 1) + 1 by omega,
+        show q + 2 = (q + 1) + 1 by omega, hPrime_succ_succ, id_eq] at hh
+      simp only [denominatorStencil, shiftX, shiftY, Nat.succ_ne_zero, ite_false,
+        Nat.add_sub_cancel, shift11_succ_succ]
+      linear_combination hh
+
+private lemma L_shiftX (H : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) :
+    L (shiftX H) p q r = shiftX (L H) p q r := by
+  cases p with
+  | zero => simp [L, shiftX]
+  | succ p =>
+    simp only [shiftX, Nat.succ_ne_zero, ite_false, Nat.add_sub_cancel]
+    unfold L
+    rw [Finset.sum_range_succ]
+    simp only [Nat.sub_self, shiftX, ite_true, mul_zero, Finset.sum_const_zero, add_zero]
+    apply Finset.sum_congr rfl
+    intro i hi
+    apply Finset.sum_congr rfl
+    intro j hj
+    have hi' := Finset.mem_range.mp hi
+    simp only [ite_eq_right (show p + 1 - i ≠ 0 by omega)]
+    rw [show p + 1 - i - 1 = p - i by omega]
+
+private lemma L_shiftY (H : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) :
+    L (shiftY H) p q r = shiftY (L H) p q r := by
+  cases q with
+  | zero => simp [L, shiftY]
+  | succ q =>
+    simp only [shiftY, Nat.succ_ne_zero, ite_false, Nat.add_sub_cancel]
+    unfold L
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [Finset.sum_range_succ]
+    simp only [Nat.sub_self, shiftY, ite_true, mul_zero, add_zero]
+    apply Finset.sum_congr rfl
+    intro j hj
+    have hj' := Finset.mem_range.mp hj
+    simp only [ite_eq_right (show q + 1 - j ≠ 0 by omega)]
+    rw [show q + 1 - j - 1 = q - j by omega]
+
+private lemma shiftX_shiftY (H : ℕ → ℕ → ℂ → ℂ) : shiftX (shiftY H) = shift11 H := by
+  funext p q r
+  cases p <;> cases q <;> simp [shiftX, shiftY, shift11]
+
+private lemma L_shift11 (H : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) :
+    L (shift11 H) p q r = shift11 (L H) p q r := by
+  rw [← shiftX_shiftY, L_shiftX]
+  cases p with
+  | zero => simp [shiftX]
+  | succ p =>
+    simp only [shiftX, Nat.succ_ne_zero, ite_false, Nat.add_sub_cancel]
+    rw [L_shiftY]
+    cases q <;> simp [shiftY, shift11]
+
+private lemma L_denominatorStencil (H : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) :
+    denominatorStencil (L H) p q r = L (denominatorStencil H) p q r := by
+  unfold denominatorStencil
+  rw [← L_shiftX, ← L_shiftY, ← L_shift11]
+  unfold L
+  rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib, Finset.mul_sum,
+    ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib, Finset.mul_sum,
+    ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro j hj
+  ring
+
+/-- The actual finite source convolution obeys E G=A at every index. -/
+theorem L_h_inverse_stencil (p q : ℕ) (r : ℂ) :
+    denominatorStencil L_h p q r = a p r * a q r := by
+  rw [L_h, L_denominatorStencil]
+  unfold L
+  simp only [h_inverse_stencil]
+  rw [Finset.sum_eq_single p]
+  · rw [Finset.sum_eq_single q]
+    · simp
+    · intro j hj hjq
+      have hj' := Finset.mem_range.mp hj
+      simp [show q - j ≠ 0 by omega]
+    · simp
+  · intro i hi hip
+    have hi' := Finset.mem_range.mp hi
+    apply Finset.sum_eq_zero
+    intro j hj
+    simp [show p - i ≠ 0 by omega]
+  · simp
+
+/-- The square-denominator finite convolution obeys E J=G on both axes too. -/
+theorem L_h2_inverse_stencil (p q : ℕ) (r : ℂ) :
+    denominatorStencil L_h2 p q r = L_h p q r := by
+  rw [L_h2, L_denominatorStencil]
+  have heq : denominatorStencil h2 = h := funext fun p => funext fun q =>
+    funext fun r => h2_inverse_stencil p q r
+  rw [heq]
+  rfl
+
+/-- The square-denominator Euler recurrence is derived from the finite h
+recurrence. It uses no formal interchange with an infinite mode sum. -/
+theorem h2_euler_mode_step (p q : ℕ) (r : ℂ) :
+    r * h2Prime (p + 1) q r =
+      (p + 1 : ℂ) * h2 (p + 1) q r - (p + 2 : ℂ) * h2 p q r := by
+  have heq : (fun u : ℂ => u * h2 (p + 1) q u) =
+      (fun u : ℂ => (p + 2 : ℂ) * (h (p + 2) (q + 1) u - h (p + 1) (q + 1) u)) := by
+    funext u
+    have hh := h_euler_mode_step (p + 1) (q + 1) u
+    rw [hPrime_eq_shift11] at hh
+    simp only [show p + 2 = (p + 1) + 1 by omega, shift11_succ_succ] at hh
+    convert hh using 1 <;> push_cast <;> ring
+  have hd := (hasDerivAt_id r).mul (hasDerivAt_h2 (p + 1) q r)
+  change HasDerivAt (fun u : ℂ => u * h2 (p + 1) q u) _ r at hd
+  rw [heq] at hd
+  have hh := hd.unique (((hasDerivAt_h (p + 2) (q + 1) r).sub
+    (hasDerivAt_h (p + 1) (q + 1) r)).const_mul (p + 2 : ℂ))
+  simp only [show p + 2 = (p + 1) + 1 by omega, hPrime_succ_succ, id_eq] at hh
+  push_cast at hh ⊢
+  linear_combination hh
+
+private lemma denominatorStencil_linear (F G : ℕ → ℕ → ℂ → ℂ) (b c : ℂ → ℂ)
+    (p q : ℕ) (r : ℂ) :
+    denominatorStencil (fun i j u => b u * F i j u + c u * G i j u) p q r =
+      b r * denominatorStencil F p q r + c r * denominatorStencil G p q r := by
+  cases p <;> cases q <;> simp [denominatorStencil, shiftX, shiftY, shift11] <;> ring
+
+private lemma denominatorStencil_shift11 (F : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) :
+    denominatorStencil (shift11 F) p q r = shift11 (denominatorStencil F) p q r := by
+  cases p with
+  | zero => simp [denominatorStencil, shiftX, shiftY, shift11]
+  | succ p =>
+    cases q with
+    | zero => simp [denominatorStencil, shiftX, shiftY, shift11]
+    | succ q =>
+      cases p <;> cases q <;> simp [denominatorStencil, shiftX, shiftY, shift11]
+
 theorem hasDerivAt_shift11 (F FPrime : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ)
     (hF : ∀ i j, HasDerivAt (F i j) (FPrime i j r) r) :
     HasDerivAt (shift11 F p q) (shift11 FPrime p q r) r := by
@@ -253,6 +596,25 @@ def PPrime (p q : ℕ) (r : ℂ) : ℂ :=
     r / 2 * (L_hPrime p q r - shift11 L_h p q r +
       (1 - r) * shift11 L_hPrime p q r) +
     2 * r * shift11 L_h2 p q r + r ^ 2 * shift11 L_h2Prime p q r
+
+/-- The complete polynomial candidate satisfies its finite denominator equation.
+The direct inverse-square term contributes r squared times XY G. -/
+theorem P_inverse_stencil (p q : ℕ) (r : ℂ) :
+    denominatorStencil P p q r =
+      r / 2 * (a p r * a q r + (1 - r) *
+        shift11 (fun i j u => a i u * a j u) p q r) + r ^ 2 * shift11 L_h p q r := by
+  unfold P
+  rw [denominatorStencil_linear]
+  have hlin := denominatorStencil_linear L_h (shift11 L_h) (fun _ => 1)
+    (fun u => 1 - u) p q r
+  simp only [one_mul] at hlin
+  rw [hlin,
+    L_h_inverse_stencil, denominatorStencil_shift11, denominatorStencil_shift11]
+  have hg : denominatorStencil L_h = fun i j u => a i u * a j u :=
+    funext fun i => funext fun j => funext fun u => L_h_inverse_stencil i j u
+  have hj : denominatorStencil L_h2 = L_h :=
+    funext fun i => funext fun j => funext fun u => L_h2_inverse_stencil i j u
+  rw [hg, hj]
 
 theorem hasDerivAt_P (p q : ℕ) (r : ℂ) : HasDerivAt (P p q) (PPrime p q r) r := by
   have hs := hasDerivAt_shift11 L_h L_hPrime p q r (fun i j => hasDerivAt_L_h i j r)
