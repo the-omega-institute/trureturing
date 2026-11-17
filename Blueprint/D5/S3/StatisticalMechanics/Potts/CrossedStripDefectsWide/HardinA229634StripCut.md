@@ -52,4 +52,6 @@ For zero residual and one of the six proper targets, the new predicate is the or
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripCut.inherited_counts`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripCut.zero_cut`
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripClasses](../CrossedStripDefects/HardinA229531StripClasses.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData](../CrossedStripDefects/HardinA229531StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData](HardinA229634StripData.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)

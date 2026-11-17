@@ -21,7 +21,11 @@ For every actual row p, residual d : Fin 3 and target s : Fin 33, Valid p (Fin.v
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripClasses.transition_counts`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip](../../../Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip](../../../Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233254TriangleStrip](../../../Combinatorics/TraceAvoidingArrays/HardinA233254TriangleStrip.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData](../CrossedStripDefects/HardinA229531StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripClass0](HardinA229634StripClass0.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripClass1](HardinA229634StripClass1.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripClass10](HardinA229634StripClass10.md)
@@ -36,3 +40,5 @@ For every actual row p, residual d : Fin 3 and target s : Fin 33, Valid p (Fin.v
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripClass8](HardinA229634StripClass8.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripClass9](HardinA229634StripClass9.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripCut](HardinA229634StripCut.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData](HardinA229634StripData.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)
