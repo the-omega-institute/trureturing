@@ -61,7 +61,8 @@ earliest seed divisor and one finite LCM. The sublinear-count contradiction
 uses the actual recurrence, the injectivity of consecutive pairs, and the
 existing uniform divisor supplier. No novelty or priority assertion is made.
 
-The public escape registrations require source reconstruction and faithful
-whole-family variation evidence. An unavailable registration is not
-`declared_validated`; the assigned caller owns any linked-issue disclosure and
-independent pre-freeze review. No module has been frozen or covered.
+The matching Reg source provides dependent-family realization, equivalence,
+variation, sensitivity and observational-dependence evidence for each public
+theorem. The `Contract.Registration` source-selection bindings and current
+binding evidence are absent. No public theorem is claimed to have a completed
+`declared_validated` registration.
