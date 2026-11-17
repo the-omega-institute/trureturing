@@ -8,7 +8,7 @@ The actual positive source amplitude has finite support for every complex parame
 
 The ++ candidate is t(p,q,r)=P(p,q,r)-k(r)*a(p,r)*a(q,r), composed with r=z squared. P contains both the r/2 convolution term and the direct r squared inverse-square contribution. The logarithmic period factor k=r*(1-r)*Fprime/F uses the literal original period and its existing Picard-Fuchs equation.
 
-These are concrete finite mode functions with derivatives and analyticity on the unit disk. The literal finite tables now satisfy E*h=delta00, E*h2=h and their finite derivative and Euler recurrences. Their actual finite convolutions satisfy E*G=A and E*J=G. The complete P denominator equation and asymmetric polynomial Euler stencil are proved for all natural indices and complex parameters; candidate signed-frequency differential equations, signed source extension, all J modes, and full identification with original externalT remain separate obligations. The actual negative-zero row against any positive mode is identified with an explicit finite source formula; this does not yet verify its equality to the independently defined all-sign rational candidate. The guarded shift11 is only a Taylor monomial shift; it never replaces the signed predecessor true,0 by zero.
+These are concrete finite mode functions with derivatives and analyticity on the unit disk. The literal finite tables now satisfy E*h=delta00, E*h2=h and their finite derivative and Euler recurrences. Their actual finite convolutions satisfy E*G=A and E*J=G. The complete P denominator equation and asymmetric polynomial Euler stencil hold for all natural indices and complex parameters. Restoring the actual period and genuine signed negative-zero predecessor gives both original positive source equations on 0<r<1. The literal original positive T modes equal the complete finite candidate on a complex neighborhood of zero for each mode pair. Signed source extension, all J modes, and global all-sector identification remain separate obligations. The actual negative-zero row against any positive mode is identified with an explicit finite source formula; this does not yet verify its equality to the independently defined all-sign rational candidate. The guarded shift11 is only a Taylor monomial shift; it never replaces the genuine signed negative-zero predecessor by zero.
 
 **Theorem 1.1 (sourceDerivativeConvolution_step).**
 
@@ -142,7 +142,31 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 The square-denominator coefficients satisfy r*h2Prime(p+1,q)=(p+1)*h2(p+1,q)-(p+2)*h2(p,q), obtained by differentiating the finite h Euler recurrence.
 
-**Theorem 1.12 (P_euler_stencil).**
+**Theorem 1.12 (positive_t_mode_equations).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.positive_t_mode_equations`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.positive_t_mode_equations` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural p,q and real 0<r<1, the complete t=P-k*a(p)*a(q) satisfies L-R=(1-r)*(U(p)*V(q)-V(p)*U(q))/2 and 2*r*tPrime-L-R=(1-r)*(V(p)*V(q)-U(p)*U(q))/2. U and V are exactly the original signed source-frequency and source-jet expressions. L and R use negativeZeroT on their zero-index predecessors. The proof restores the actual Picard-Fuchs period term to P_euler_stencil and uses the genuine sqrt(1-r) source normalization. Symmetry supplies the second direction; no zero-boundary substitution is made.
+
+**Theorem 1.13 (externalT_positive_finite_germ).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.externalT_positive_finite_germ`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.externalT_positive_finite_germ` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each natural p,q, the literal full externalT(true,p,true,q,z) equals candidateT(p,q,z) for all complex z in some neighborhood of zero. The candidate is the actual finite P minus the actual logarithmic period term, composed with z squared. Literal differentiability supplies actual analytic scalar expansions. The concrete original and candidate equations have identical signed crossing boundaries; only after their subtraction do the guarded positive differences have zero predecessors. The existing coefficient nonresonance theorem then proves this unconditional germ equality. No common mode radius, disk-wide equality, negative sign sector, or J identification is claimed.
+
+**Theorem 1.14 (P_euler_stencil).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.P_euler_stencil`
 
@@ -154,7 +178,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 For all natural p,q and complex r, r*PPrime-(p+1/2)*(P-XP)=r*a(p)*a(q)/4-(1-r)*(a(p)-Xa(p))*(r*aPrime(q))/2. The proof applies E twice to the actual residual, retaining the derivative of 1-r, and reduces the resulting finite shift polynomial to 2*(Q-(1-r)*YQ)+r*YA=0. Triangular injectivity of E includes both zero axes. No division by r or 1-r occurs. P retains its direct r squared XY L_h2 term. The guarded predecessor here is an auxiliary polynomial shift; the genuine signed boundary and literal original/candidate identification are separate obligations.
 
-**Theorem 1.13 (P_inverse_stencil).**
+**Theorem 1.15 (P_inverse_stencil).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.P_inverse_stencil`
 
@@ -166,7 +190,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 The complete polynomial part satisfies E*P=r/2*(A+(1-r)*XY*A)+r squared*XY*G. The r squared term is retained. This denominator equation is consumed by the asymmetric Euler stencil; literal original/candidate germ equality is a separate obligation.
 
-**Theorem 1.14 (a_euler_mode_step).**
+**Theorem 1.16 (a_euler_mode_step).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.a_euler_mode_step`
 
@@ -178,7 +202,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 The literal finite source polynomials satisfy r*aPrime(p+1,r)=(p+1)*(a(p+1,r)-a(p,r)), for every natural p and complex r. Pascal and weighted binomial identities are combined after extending the lower polynomial by its zero top coefficient. This polynomial label factor differs from the signed half-frequency.
 
-**Theorem 1.15 (externalT_negative_zero_positive_finite).**
+**Theorem 1.17 (externalT_negative_zero_positive_finite).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite`
 
@@ -190,7 +214,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 For real 0<r<1 and every positive mode p, the actual full externalT(false,0,true,p,sqrt r) equals negativeZeroT(p,r). At p=0 this is -sqrt(1-r)*r*ell(r), and at successor p+1 it is sqrt(1-r)*((p+1)*(a(p+1,r)-a(p,r))-r*ell(r)*a(p+1,r)). The proof uses the actual original moment/jet boundary, finite source differentiation, the mode recurrence and the original period. It never sets this signed predecessor to zero.
 
-**Theorem 1.16 (sourceAmplitude_true_finite).**
+**Theorem 1.18 (sourceAmplitude_true_finite).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.sourceAmplitude_true_finite`
 
@@ -202,7 +226,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 Exact support reduction of the actual positive source to a finite polynomial.
 
-**Theorem 1.17 (hasDerivAt_L).**
+**Theorem 1.19 (hasDerivAt_L).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_L`
 
@@ -214,7 +238,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 The finite double convolution satisfies the full product rule for any scalar differentiable denominator table.
 
-**Theorem 1.18 (ell_picard_fuchs).**
+**Theorem 1.20 (ell_picard_fuchs).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.ell_picard_fuchs`
 
@@ -226,7 +250,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 The existing period equation yields the exact logarithmic equation without dividing by r or 1-r.
 
-**Theorem 1.19 (hasDerivAt_k).**
+**Theorem 1.21 (hasDerivAt_k).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_k`
 
@@ -238,7 +262,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 The period factor has derivative 1/4-r*(1-r)*ell squared throughout the unit disk, including zero.
 
-**Theorem 1.20 (hasDerivAt_t).**
+**Theorem 1.22 (hasDerivAt_t).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_t`
 
@@ -250,7 +274,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 The complete finite candidate has the stated derivative, retaining its full polynomial contribution.
 
-**Theorem 1.21 (candidateT_analyticOnNhd).**
+**Theorem 1.23 (candidateT_analyticOnNhd).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.candidateT_analyticOnNhd`
 
@@ -262,7 +286,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 Each fixed positive mode candidate is analytic on the open unit disk in z.
 
-**Theorem 1.22 (hasDerivAt_candidateT).**
+**Theorem 1.24 (hasDerivAt_candidateT).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_candidateT`
 
@@ -274,7 +298,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandida
 
 The z derivative is the finite r derivative times 2z.
 
-**Theorem 1.23 (candidateT_even).**
+**Theorem 1.25 (candidateT_even).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.candidateT_even`
 
@@ -298,6 +322,7 @@ The explicit z-squared composition is even.
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.candidateT_even`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.ell_picard_fuchs`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.externalT_positive_finite_germ`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.h2_euler_mode_step`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.h2_inverse_stencil`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hPrime_eq_shift11`
@@ -309,6 +334,9 @@ The explicit z-squared composition is even.
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_candidateT`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_k`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_t`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.positive_t_mode_equations`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.sourceAmplitude_true_finite`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.sourceDerivativeConvolution_step`
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGeneratedSource](OriginalGaussianExternalGeneratedSource.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge](OriginalGaussianExternalGermCoefficientBridge.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalSourceJet](OriginalGaussianExternalSourceJet.md)

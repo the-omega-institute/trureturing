@@ -1,3 +1,5 @@
+import Reg.Support.FactorialFockMetric
+import Reg.Support.SingleDependentReadout
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEquations
 import Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalFrequencyRows
 /-! Faithful actual frequency and displacement readouts. -/
@@ -225,4 +227,57 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end displacement_differential
+namespace literal_symmetry
+abbrev arena : Arena where
+  signature := _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric.complexSignature
+  Law R := ∀ (square out out' : Bool) (p q : ℕ) {z : ℂ} (_hz : ‖z‖<1),
+    R.readout () ()
+      (if square then externalT out p out' q z else externalJ out p out' q z)
+      (if square then externalT out' q out p z else externalJ out' q out p z)
+
+private theorem rejected_fails : ¬ arena.Law _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric.complexFalse := by
+  intro h
+  exact h true true true 0 0 (z := 0) (by simp)
+
+def family : Registration arena (type_of% (@literal_symmetry)) where
+  actual := _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric.complexEqual
+  bridge := Iff.rfl
+  variation := ⟨@literal_symmetry, _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric.complexFalse, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric.complexEqual _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric.complexFalse rejected_fails
+  dependence := _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric.complexEqualDependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@literal_symmetry) (Realization _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric.complexSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEquations.literal_symmetry.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEquations.literal_symmetry.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric.complexSignature _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric.complexEqual.readout _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric.complexEqual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEquations
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end literal_symmetry
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEquations
