@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-prime-cube-quadratic-stratum)
    anchors: []
    utility: none
-   digest: Actual quadratic pencils need a seventh-power height gap, including zero leading baselines. -/
+   digest: Actual quadratic pencils need a seventh-power height gap. -/
 
 import D5.S3.Arith.CharacterSums.PascadiQuadraticPrimitiveDirection
 import D5.S3.Arith.CharacterSums.PascadiQuadraticDirection
@@ -56,12 +56,16 @@ theorem actual_quadratic_pair_resultant_zero (l m q r s : Fin 3 → ℤ)
       have hcoeff (j : Fin 3) :
           (pair l m q r s j).coeff 3 = m 0*s j-m j*s 0 := by
         rw [pair_coefficients]
-        simp
+        simp only [coeff_add, coeff_C_mul, coeff_C, coeff_X, coeff_X_pow]
+        norm_num
       fin_cases i
-      · ring
-      · rw [← hcoeff 1]
+      · change m 0*s 0-m 0*s 0 = 0
+        ring
+      · change m 0*s 1-m 1*s 0 = 0
+        rw [← hcoeff 1]
         exact coeff_eq_zero_of_natDegree_lt (by omega)
-      · rw [← hcoeff 2]
+      · change m 0*s 2-m 2*s 0 = 0
+        rw [← hcoeff 2]
         exact coeff_eq_zero_of_natDegree_lt (by omega)
     obtain ⟨d,n,k,D,_,hmd,hns,hD,hk,hd,hn,hDu⟩ :=
       quadratic_coefficient_primitive_direction m s J hJ hn hc hm hs
@@ -71,8 +75,9 @@ theorem actual_quadratic_pair_resultant_zero (l m q r s : Fin 3 → ℤ)
       calc
         _ ≤ 6804*I^7*J^4 := mul_le_mul_of_nonneg_right
           (mul_le_mul_of_nonneg_left hI67 (by norm_num)) (by positivity)
-        _ ≤ 14256*I^7*J^4 := by nlinarith [mul_nonneg (pow_nonneg hI0 7)
-          (pow_nonneg hJ0 4)]
+        _ ≤ 14256*I^7*J^4 := by
+          have hpos : 0 ≤ I^7*J^4 := mul_nonneg (pow_nonneg hI0 7) (pow_nonneg hJ0 4)
+          nlinarith only [hpos]
         _ < _ := hgconst
     rw [hmeq,hseq] at h₁ h₂ hv₁ hv₂ hd₁ hd₂ hlead ⊢
     have hL' : IsUnit ((l 0+b*(d*k 0) : ℤ) : ZMod p) := by
