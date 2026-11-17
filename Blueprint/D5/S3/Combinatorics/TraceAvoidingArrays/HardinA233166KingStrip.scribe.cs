@@ -26,6 +26,8 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
                 "An offset word starts at zero and has no zero adjacent xor increment.", DescribeRole.Definition),
             Node("offset-choices", "Allowed vertical shifts", "offsetChoices",
                 "The allowed shifts are the nonzero colours absent from all adjacent offset increments.", DescribeRole.Definition),
+            Node("offset-decidable", "Decidability of offset admissibility", "instDecidableOffsetOK",
+                "For each six-column offset word, the zero initial offset and all five nonzero adjacent increments are decidable.", DescribeRole.Definition),
             Node("zones-iff", "Zone data through offset choices", "zones_iff",
                 "A zone is equivalent to an admissible offset word whose adjacent first-column increments lie in its allowed shift set.", DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("legal"), DeclarationHandle.Create(Prefix + "Legal"),
