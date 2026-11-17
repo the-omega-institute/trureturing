@@ -7,6 +7,7 @@
    digest: Prescribed history fibers determine the exact directed slot statistics. -/
 
 import D5.S3.ObserverMemory.Algorithms.FixedForestTargetInventory
+import D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -352,13 +353,7 @@ private theorem fiber_surplus {X Y : Type*} [DecidableEq Y]
     (a : Finset X) (f : X → Y) :
     (∑ y ∈ a.image f, ((a.filter (fun x => f x = y)).card - 1)) =
       a.card - (a.image f).card := by
-  classical
-  rw [Finset.sum_tsub_distrib]
-  · rw [← Finset.card_eq_sum_card_image f a]
-    simp
-  · intro y hy
-    obtain ⟨x, hx, he⟩ := Finset.mem_image.mp hy
-    exact Finset.card_pos.mpr ⟨x, Finset.mem_filter.mpr ⟨hx, he⟩⟩
+  exact D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport.fiberSurplus a f
 
 section RawGraph
 variable {S : Type*} [DecidableEq S]

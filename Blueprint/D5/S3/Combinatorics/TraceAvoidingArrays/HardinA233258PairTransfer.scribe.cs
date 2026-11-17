@@ -38,6 +38,9 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
                 + "from the displayed initial counts.")),
             Node("Proper", "Proper pair patterns", ProperFormula(), false),
             Node("L", "Literal pair-pattern count", CountFormula(), false),
+            Node("Col", "Three-label columns", Eq(Own("Col"),
+                Product(Fin(D(3)), Product(Fin(D(3)), Fin(D(3))))), false),
+            Node("cls", "The five equality classes", ClassFormula(), false),
             Node("Q", "The five-orbit successor matrix", Eq(Own("Q"),
                 Vector(Vector(2,2,2,2,0), Vector(1,1,0,1,1), Vector(1,1,0,0,0),
                     Vector(1,1,1,1,0), Vector(0,0,0,1,1))), false),
@@ -51,6 +54,18 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
             Node("powers_table", "Certified continuation vectors", PowersFormula(), true),
             Node("initial_values", "Six initial transfer counts", InitialFormula(), true),
             Node("recurrence", "The constant-adjusted cubic relation", RecurrenceFormula(), true))));
+
+    private static Formula ClassFormula()
+    {
+        var c = V("c"); var a = Call("Prod.fst", c);
+        var b = Call("Prod.fst", Call("Prod.snd", c));
+        var d = Call("Prod.snd", Call("Prod.snd", c));
+        Formula If(Formula condition, Formula yes, Formula no) => Parenthesized(
+            Seq(Q("if"), Sp, condition, Sp, Q("then"), Sp, yes, Sp, Q("else"), Sp, no));
+        return All("c", Own("Col"), Eq(Own("cls", c), Typed(
+            If(Eq(a, b), If(Eq(a, d), D(0), D(1)),
+                If(Eq(a, d), D(2), If(Eq(b, d), D(3), D(4)))), Fin(D(5)))));
+    }
 
     private static Formula ProperFormula()
     {

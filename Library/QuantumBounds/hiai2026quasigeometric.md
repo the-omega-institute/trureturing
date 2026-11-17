@@ -5,14 +5,14 @@ year: 2026
 title: Log-majorizations between quasi-geometric type means for matrices
 doi: null
 url: https://arxiv.org/abs/2510.04691v3
-claim: The tilde spectral trace uses a base-first weighted geometric mean; Problem 5.20 asks for its joint concavity parameter range.
+claim: Theorem 3.4(1) supplies the spectral geometric to Renyi comparison for alpha greater than one and p at most alpha q; Problem 3.5 asks about the remaining parameters, while Problem 5.20 concerns tilde spectral trace concavity.
 strata_touched:
   - D5/S3/Quantum/Hiai
 license: citation-only
 triage: anchor
 ---
 
-# Tilde spectral trace and its concavity classification
+# Quasi-geometric matrix means and their parameter comparisons
 
 Hiai's equations (2.1), (2.5), and (2.6), printed page 4, define
 
@@ -45,6 +45,47 @@ The all-dimension quantifier lies inside the left side of this single
 equivalence. The necessary direction uses dimension two; the equivalence is
 not asserted separately in the degenerate zero and one dimensions. The Lean
 functional uses `CFC.rpow` for every matrix power.
+
+## Spectral geometric and Renyi comparison
+
+For positive definite complex matrices, Section 2 defines
+
+$$
+F_\alpha(A,B)=(A^{-1}\#B)^\alpha A(A^{-1}\#B)^\alpha,
+\qquad SG_{\alpha,p}(A,B)=F_\alpha(A^p,B^p)^{1/p},
+$$
+$$
+R_{\alpha,q}(A,B)=
+\left(A^{(1-\alpha)q/2}B^{\alpha q}A^{(1-\alpha)q/2}\right)^{1/q},
+\qquad p,q>0,
+$$
+
+where $\#=\#_{1/2}$ and every matrix power is the spectral real power.
+For $\alpha>1$, Theorem 3.4(1) states that
+
+$$
+p\le\alpha q\quad\Longrightarrow\quad
+SG_{\alpha,p}(A,B)\prec_{\log}R_{\alpha,q}(A,B)
+$$
+
+for every positive definite pair in every finite dimension. Here
+$X\prec_{\log}Y$ means that the product of the $k$ largest eigenvalues
+of $X$ is at most the corresponding product for $Y$, for each
+$1\le k<n$, with equal determinants.
+
+Problem 3.5 states, verbatim:
+
+> When α>1, no necessary condition on p,q>0 for SG_{α,p} ≺log R_{α,q} to hold is known.
+
+> This suggests us that SG_{α,p} ≺log R_{α,q} might hold for any p,q>0.
+
+The universal assertion includes positive definite complex two by two
+matrices and their largest eigenvalue inequality. Its negation therefore
+already follows from a strict largest eigenvalue violation in that dimension.
+The complementary range $0<\alpha<1$ is treated by the source's
+Theorem 3.3; it is a separate result from the $\alpha>1$ question.
+The source sufficient comparison in Theorem 3.4(1) is not a Lean theorem
+of the spectral geometric Renyi refutation module.
 
 ## Off-midpoint construction
 
@@ -141,6 +182,8 @@ its specialization is the UNTILDE $p=1$ family and cannot be substituted for
 TILDE without an additional identity.
 
 ## Verified locator
+
+DOI: null.
 
 https://arxiv.org/abs/2510.04691v3
 
