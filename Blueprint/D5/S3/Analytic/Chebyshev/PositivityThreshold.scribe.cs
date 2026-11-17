@@ -18,22 +18,27 @@ internal sealed class PositivityThresholdDocument : IScribeDocumentDefinition
                 + "three-term recurrence. The question treated here is for which s every term of "
                 + "this sequence is positive.")),
             Describe.Lean(DescribeId.Create("chebyshev-first-sign-change"),
-                DeclarationHandle.Create(Module + "cos_floor_succ_mul_neg_and_cos_nonneg_before"),
-                H("The first index with a negative cosine"),
+                DeclarationHandle.Create(Module + "eval_T_cos_floor_succ_neg_and_nonneg_before"),
+                H("The first index with a negative value at cos α"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let 0 < α < π and n₀ = ⌊π/(2α)⌋ + 1, where ⌊·⌋ is the floor of a "
-                        + "nonnegative real number. Then cos(n₀α) < 0, and cos(nα) ≥ 0 for every "
-                        + "natural number n < n₀. So n₀ is the first natural index at which the "
-                        + "sequence cos(nα) becomes negative.")),
+                        + "nonnegative real number. Then T_n₀(cos α) < 0, and T_n(cos α) ≥ 0 for "
+                        + "every natural number n < n₀. So n₀ is the least natural index n with "
+                        + "T_n(cos α) < 0; since T_0 = 1, it is also the least such index n ≥ 1.")),
                     Paragraph(Text(
-                        "Proof: put x = π/(2α) > 0. The floor satisfies ⌊x⌋ ≤ x < ⌊x⌋ + 1, and "
-                        + "xα = π/2. Hence n₀α > π/2, while n₀α ≤ (x + 1)α = π/2 + α < 3π/2, and "
-                        + "cosine is negative on the open interval (π/2, 3π/2). For n < n₀ one has "
-                        + "n ≤ ⌊x⌋ ≤ x, so 0 ≤ nα ≤ π/2, where cosine is nonnegative. The value "
-                        + "n = 0 is included, with cos 0 = 1."))),
+                        "Proof: by the identity T_n(cos α) = cos(nα) it suffices to locate the "
+                        + "angles nα. Put x = π/(2α) > 0. The floor satisfies ⌊x⌋ ≤ x < ⌊x⌋ + 1, "
+                        + "and xα = π/2. Hence n₀α > π/2, while n₀α ≤ (x + 1)α = π/2 + α < 3π/2, "
+                        + "and cosine is negative on the open interval (π/2, 3π/2). For n < n₀ one "
+                        + "has n ≤ ⌊x⌋ ≤ x, so 0 ≤ nα ≤ π/2, where cosine is nonnegative.")),
+                    Paragraph(Text(
+                        "The statement is about the point cos α. For a real s with −1 < s < 1, "
+                        + "taking α = arccos s gives s = cos α with 0 < α < π, so the least n with "
+                        + "T_n(s) < 0 is ⌊π/(2 arccos s)⌋ + 1. This substitution is made by the "
+                        + "reader; it is not a separate Lean statement."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("chebyshev-positivity-threshold"),
                 DeclarationHandle.Create(Module + "forall_pos_eval_T_iff_one_le"),
@@ -50,15 +55,15 @@ internal sealed class PositivityThresholdDocument : IScribeDocumentDefinition
                         + "for every n. Conversely, suppose s < 1. If s ≤ −1, already T_1(s) = s "
                         + "is negative. If −1 < s < 1, put α = arccos s, so that 0 < α < π and "
                         + "s = cos α. The identity T_n(cos α) = cos(nα) and the previous theorem "
-                        + "give an index n₀ ≥ 1 with T_n₀(s) = cos(n₀α) < 0. In that case n₀ is "
-                        + "also the first index n ≥ 1 with T_n(s) < 0, and the terms before it are "
-                        + "nonnegative.")),
+                        + "give the index n₀ = ⌊π/(2α)⌋ + 1 ≥ 1 with T_n₀(s) < 0.")),
                     Paragraph(Text(
                         "The two evaluation identities T_n(cosh t) = cosh(nt) and "
                         + "T_n(cos α) = cos(nα), and the bound T_n(s) ≥ 1 for s ≥ 1, are classical "
                         + "properties of Chebyshev polynomials and are used here as stated in "
                         + "Mathlib. The criterion is a statement about real polynomials only; "
                         + "it asserts nothing about any physical system or interpretation of "
-                        + "the sequence."))),
+                        + "the sequence. No novelty is claimed: both theorems are elementary "
+                        + "consequences of these classical identities, used as stated in "
+                        + "Mathlib."))),
                 DescribeRole.Theorem))));
 }

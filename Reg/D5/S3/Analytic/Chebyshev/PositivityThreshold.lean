@@ -4,8 +4,8 @@ import D5.S3.Analytic.Chebyshev.PositivityThreshold
 
 /-! Source-bound registrations for the positivity threshold of Chebyshev values. The
 criterion record selects the value `T_n(s)`, read out as a function of the index `n` at a
-fixed point `s`. The first-sign-change record selects `cos (n α)`, read out as a function of
-`n` at a fixed angle `α`. Every other clause is kept verbatim. -/
+fixed point `s`. The first-sign-change record selects `T_n(cos α)` in its second conjunct,
+read out as a function of `n` at a fixed angle `α`. Every other clause is kept verbatim. -/
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Analytic.Chebyshev.PositivityThreshold
@@ -92,7 +92,8 @@ end Criterion
 namespace FirstSignChange
 
 def actual : Realization signature :=
-  realize signature (fun _ α n => Real.cos ((n : ℝ) * α)) (fun e => nomatch e)
+  realize signature (fun _ α n => (Polynomial.Chebyshev.T ℝ (n : ℤ)).eval (Real.cos α))
+    (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => -1) (fun e => nomatch e)
@@ -100,7 +101,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {α : ℝ} (_ : 0 < α) (_ : α < π),
-    Real.cos (((⌊π / (2 * α)⌋₊ + 1 : ℕ) : ℝ) * α) < 0 ∧
+    (Polynomial.Chebyshev.T ℝ (((⌊π / (2 * α)⌋₊ + 1 : ℕ) : ℤ))).eval (Real.cos α) < 0 ∧
       ∀ n : ℕ, n < ⌊π / (2 * α)⌋₊ + 1 → 0 ≤ R.readout () α n
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -112,19 +113,19 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨π, 0, 1, ?_⟩
-  norm_num [actual, realize]
+  norm_num [actual, realize, Polynomial.Chebyshev.T_one, Real.cos_pi]
 
 def source : Registration arena
-    (type_of% @cos_floor_succ_mul_neg_and_cos_nonneg_before) where
+    (type_of% @eval_T_cos_floor_succ_neg_and_nonneg_before) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@cos_floor_succ_mul_neg_and_cos_nonneg_before, rejected, rejected_law⟩
+  variation := ⟨@eval_T_cos_floor_succ_neg_and_nonneg_before, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law
     actual rejected rejected_law
   dependence := dependence
 
 def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@cos_floor_succ_mul_neg_and_cos_nonneg_before) (Realization signature) Unit Unit := {
+    (@eval_T_cos_floor_succ_neg_and_nonneg_before) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Analytic.Chebyshev.PositivityThreshold.FirstSignChange.unit
   realizationName :=
     `Reg.D5.S3.Analytic.Chebyshev.PositivityThreshold.FirstSignChange.source
@@ -137,7 +138,8 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   realization := .source arena ⟨source⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ α n => Real.cos ((n : ℝ) * α))
+  readout := some (realize signature
+    (fun _ α n => (Polynomial.Chebyshev.T ℝ (n : ℤ)).eval (Real.cos α))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
