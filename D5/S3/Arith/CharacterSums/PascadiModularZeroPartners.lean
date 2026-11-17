@@ -15,7 +15,7 @@ import Mathlib.NumberTheory.Divisors
 The finite partner set uses the original endpoint pencil. The determinant count
 below supplies the integer lift and divisor injection for an oriented pair of
 modular lines. The regular dividing branch supplies both orientations from
-the actual pencil; the nondividing absolute bound remains separate.
+the actual pencil; the nondividing branch has at most six actual partners.
 -/
 
 open Polynomial
@@ -49,90 +49,6 @@ def modularZeroPartners {p : ℕ} (E : Finset Coordinate) (α β : ZMod p)
 /-- Alignment refers to exact integer collinearity with the anchor. -/
 def Aligned (q : Coordinate) (e : Endpoint) : Prop :=
   coordinateDet q e.1 = 0 ∧ coordinateDet q e.2 = 0
-
-private theorem actual_pair_anchor_of_linear_eval_zero {p : ℕ} [Fact p.Prime]
-    (E : Finset Coordinate) (α β : ZMod p) (q : Coordinate) (e : Endpoint)
-    (h0 : (0 : Coordinate) ∈ E) (hq : q ∈ E)
-    (hinj : Set.InjOn (actualValue α β) (E : Set Coordinate))
-    (he : ActualPair E α β q e)
-    (hL : (endpointL q e).eval₂ (Int.castRingHom (ZMod p)) β = 0) :
-    e = (0, q) ∨ e = (q, 0) := by
-  have heval (n : ℤ) : (n : ℤ[X]).eval₂ (Int.castRingHom (ZMod p)) β =
-      (n : ZMod p) := map_intCast
-        (Polynomial.eval₂RingHom (Int.castRingHom (ZMod p)) β) n
-  have hsum : (e.1.1 : ZMod p) + β * e.1.2 +
-      ((e.2.1 : ZMod p) + β * e.2.2) = (q.1 : ZMod p) + β * q.2 := by
-    simp [endpointL, PrimeCube.linear, coeffL, coeffM, heval] at hL
-    linear_combination hL
-  have hprod : ((e.1.1 : ZMod p) + β * e.1.2) *
-      ((e.2.1 : ZMod p) + β * e.2.2) = 0 := by
-    have h := he.2.2
-    dsimp [actualValue] at h
-    linear_combination h - α * hsum
-  have hval (z w : Coordinate)
-      (hz : (z.1 : ZMod p) + β * z.2 = (w.1 : ZMod p) + β * w.2) :
-      actualValue α β z = actualValue α β w := by
-    dsimp [actualValue]
-    linear_combination hz
-  rcases mul_eq_zero.mp hprod with hx | hy
-  · have hx0 : e.1 = 0 := hinj he.1 h0 (hval _ _ (by simpa using hx))
-    have hyq : e.2 = q := hinj he.2.1 hq (hval _ _ (by simpa [hx] using hsum))
-    exact Or.inl (Prod.ext hx0 hyq)
-  · have hy0 : e.2 = 0 := hinj he.2.1 h0 (hval _ _ (by simpa using hy))
-    have hxq : e.1 = q := hinj he.1 hq (hval _ _ (by simpa [hy] using hsum))
-    exact Or.inr (Prod.ext hxq hy0)
-
-private theorem actual_pair_polynomial_eval {p : ℕ} (E : Finset Coordinate)
-    (α β : ZMod p) (q : Coordinate) (e : Endpoint) (he : ActualPair E α β q e) :
-    α * (endpointL q e).eval₂ (Int.castRingHom (ZMod p)) β +
-      (endpointQ e).eval₂ (Int.castRingHom (ZMod p)) β = 0 := by
-  have heval (n : ℤ) : (n : ℤ[X]).eval₂ (Int.castRingHom (ZMod p)) β =
-      (n : ZMod p) := map_intCast (eval₂RingHom (Int.castRingHom (ZMod p)) β) n
-  have h := he.2.2
-  dsimp [actualValue] at h
-  simp [endpointL, endpointQ, PrimeCube.linear, PrimeCube.quadratic,
-    coeffL, coeffM, coeffQ, coeffR, coeffS, heval]
-  linear_combination h
-
-/-- Injectivity excludes both anchor orientations and all repeated-endpoint
-exceptions to the nonzero L,Q observation for a nonaligned actual pair. -/
-theorem nonaligned_actual_pair_nondegenerate {p : ℕ} [Fact p.Prime]
-    (E : Finset Coordinate) (α β : ZMod p) (q : Coordinate) (e : Endpoint)
-    (h0 : (0 : Coordinate) ∈ E) (hq : q ∈ E)
-    (hinj : Set.InjOn (actualValue α β) (E : Set Coordinate))
-    (he : ActualPair E α β q e) (hnonaligned : ¬ Aligned q e) (hα : α ≠ 0)
-    (hκ : α * (α + (q.1 : ZMod p) + β * q.2) ≠ 0) :
-    (endpointL q e).eval₂ (Int.castRingHom (ZMod p)) β ≠ 0 ∧
-    (endpointQ e).eval₂ (Int.castRingHom (ZMod p)) β ≠ 0 ∧
-    ((endpointQ e).map (Int.castRingHom (ZMod p)) *
-      ((endpointQ e).map (Int.castRingHom (ZMod p)) -
-        (endpointL q e).map (Int.castRingHom (ZMod p)) *
-          PrimeCube.linear (q.1 : ZMod p) (q.2 : ZMod p))) ≠ 0 := by
-  have hL : (endpointL q e).eval₂ (Int.castRingHom (ZMod p)) β ≠ 0 := by
-    intro hz
-    rcases actual_pair_anchor_of_linear_eval_zero E α β q e h0 hq hinj he hz with h | h
-    · subst e
-      exact hnonaligned (by simp [Aligned, coordinateDet, mul_comm])
-    · subst e
-      exact hnonaligned (by simp [Aligned, coordinateDet, mul_comm])
-  have hid := actual_pair_polynomial_eval E α β q e he
-  have hQ : (endpointQ e).eval₂ (Int.castRingHom (ZMod p)) β ≠ 0 := by
-    intro hz
-    rw [hz, add_zero] at hid
-    exact (mul_ne_zero hα hL) hid
-  refine ⟨hL, hQ, ?_⟩
-  intro hzero
-  have hz := congrArg (eval β) hzero
-  simp only [eval_mul, eval_sub, eval_map, eval_zero, PrimeCube.linear,
-    eval_add, eval_C, eval_X] at hz
-  have hQval : (endpointQ e).eval₂ (Int.castRingHom (ZMod p)) β =
-      -α * (endpointL q e).eval₂ (Int.castRingHom (ZMod p)) β := by
-    linear_combination hid
-  rw [hQval] at hz
-  have hκL : (α * (α + (q.1 : ZMod p) + β * q.2)) *
-      ((endpointL q e).eval₂ (Int.castRingHom (ZMod p)) β)^2 = 0 := by
-    linear_combination hz
-  exact (mul_ne_zero hκ (pow_ne_zero 2 hL)) hκL
 
 private theorem det_bound {a b : Coordinate} {A₁ A₂ B₁ B₂ : ℝ}
     (ha : CoordinateBound A₁ A₂ a) (hb : CoordinateBound B₁ B₂ b) :
@@ -813,6 +729,99 @@ theorem nondividing_field_partner_cover {K : Type*} [Field K]
       h | h
     · exact Or.inr (Or.inr (Or.inr (Or.inl (congrArg Prod.swap h))))
     · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (congrArg Prod.swap h)))))
+
+private theorem fieldCoordinate_injOn_box {p : ℕ} {J₁ J₂ : ℝ}
+    (E : Finset Coordinate)
+    (hJ₁ : 1 ≤ J₁) (hJ₂ : 1 ≤ J₂)
+    (hE : ∀ z ∈ E, CoordinateBound J₁ J₂ z)
+    (hsmall : 8 * J₁ * J₂ < p) :
+    Set.InjOn (fieldCoordinate p) (E : Set Coordinate) := by
+  have hmul1 : 0 ≤ J₁ * (J₂ - 1) :=
+    mul_nonneg (by linarith) (by linarith)
+  have hmul2 : 0 ≤ J₂ * (J₁ - 1) :=
+    mul_nonneg (by linarith) (by linarith)
+  have hp1 : 2 * J₁ < (p : ℝ) := by nlinarith
+  have hp2 : 2 * J₂ < (p : ℝ) := by nlinarith
+  intro z hz w hw heq
+  have hbound := sub_bound (hE z hz) (hE w hw)
+  have hmod1 : ((z.1 - w.1 : ℤ) : ZMod p) = 0 := by
+    have h := congrArg Prod.fst heq
+    dsimp [fieldCoordinate] at h
+    simpa only [Int.cast_sub] using (sub_eq_zero.mpr (by simpa using h))
+  have hmod2 : ((z.2 - w.2 : ℤ) : ZMod p) = 0 := by
+    have h := congrArg Prod.snd heq
+    dsimp [fieldCoordinate] at h
+    simpa only [Int.cast_sub] using (sub_eq_zero.mpr (by simpa using h))
+  have hx : z.1 - w.1 = 0 :=
+    int_eq_zero_of_modular_small hmod1 (lt_of_le_of_lt hbound.1 hp1)
+  have hy : z.2 - w.2 = 0 :=
+    int_eq_zero_of_modular_small hmod2 (lt_of_le_of_lt hbound.2 hp2)
+  exact Prod.ext (sub_eq_zero.mp hx) (sub_eq_zero.mp hy)
+
+/-- In the nondividing branch, the bounded actual integer endpoint pairs have
+at most six possibilities. Coordinate reduction is injective on the box. -/
+theorem nondividing_modular_zero_partner_count {p : ℕ} [Fact p.Prime]
+    {J₁ J₂ : ℝ} (E : Finset Coordinate) (α β : ZMod p)
+    (q a b : Coordinate)
+    (hJ₁ : 1 ≤ J₁) (hJ₂ : 1 ≤ J₂)
+    (hE : ∀ z ∈ E, CoordinateBound J₁ J₂ z)
+    (hsmall : 8 * J₁ * J₂ < p)
+    (hα : (coordinateDet a (a + b - q) : ZMod p) ≠ 0)
+    (hβ : (coordinateDet (a + b - q) b : ZMod p) ≠ 0) :
+    (modularZeroPartners E α β q (a, b)).card ≤ 6 := by
+  classical
+  let A := fieldCoordinate p a
+  let B := fieldCoordinate p b
+  let Q := fieldCoordinate p q
+  let D : ZMod p × ZMod p :=
+    ((a.1 : ZMod p) + b.1 - q.1, (a.2 : ZMod p) + b.2 - q.2)
+  let F : Finset ((ZMod p × ZMod p) × (ZMod p × ZMod p)) := {
+    (0, Q), (Q, 0), (A, B), (B, A),
+    ((nondividingLambda A B D * A.1, nondividingLambda A B D * A.2),
+      (nondividingMu A B D * B.1, nondividingMu A B D * B.2)),
+    ((nondividingMu A B D * B.1, nondividingMu A B D * B.2),
+      (nondividingLambda A B D * A.1, nondividingLambda A B D * A.2))}
+  have hcardF : F.card ≤ 6 := Finset.card_le_six
+  have hα' : fieldDet A D ≠ 0 := by
+    simpa [A, D, fieldDet, fieldCoordinate, coordinateDet,
+      Int.cast_add, Int.cast_sub] using hα
+  have hβ' : fieldDet D B ≠ 0 := by
+    simpa [B, D, fieldDet, fieldCoordinate, coordinateDet,
+      Int.cast_add, Int.cast_sub] using hβ
+  have hq : Q.1 = A.1 + B.1 - D.1 ∧
+      Q.2 = A.2 + B.2 - D.2 := by
+    dsimp [Q, A, B, D, fieldCoordinate]
+    constructor <;> ring
+  have hinj := fieldCoordinate_injOn_box E hJ₁ hJ₂ hE hsmall
+  let S := modularZeroPartners E α β q (a, b)
+  have hmem (e : Endpoint) (he : e ∈ S) :
+      (fieldCoordinate p e.1, fieldCoordinate p e.2) ∈ F := by
+    obtain ⟨_, _, hp⟩ := Finset.mem_filter.mp he
+    have hformal := mapped_pencil_formal q (a, b) e hp
+    have hpoly : PrimeCube.linear D.1 D.2 *
+        PrimeCube.linear (fieldCoordinate p e.1).1 (fieldCoordinate p e.1).2 *
+          PrimeCube.linear (fieldCoordinate p e.2).1 (fieldCoordinate p e.2).2 =
+      (PrimeCube.linear (fieldCoordinate p e.1).1 (fieldCoordinate p e.1).2 +
+          PrimeCube.linear (fieldCoordinate p e.2).1 (fieldCoordinate p e.2).2 -
+          PrimeCube.linear Q.1 Q.2) *
+            PrimeCube.linear A.1 A.2 * PrimeCube.linear B.1 B.2 := by
+      simpa [A, B, D, Q, fieldCoordinate] using hformal
+    have hc := nondividing_field_partner_cover A B D Q
+      (fieldCoordinate p e.1) (fieldCoordinate p e.2) hq hα' hβ' hpoly
+    rcases hc with h | h | h | h | h | h <;> simp [F, h]
+  have hinjpair : ∀ e ∈ S, ∀ e' ∈ S,
+      (fieldCoordinate p e.1, fieldCoordinate p e.2) =
+        (fieldCoordinate p e'.1, fieldCoordinate p e'.2) → e = e' := by
+    intro e he e' he' heq
+    obtain ⟨hem, _⟩ := Finset.mem_filter.mp he
+    obtain ⟨hem', _⟩ := Finset.mem_filter.mp he'
+    obtain ⟨he1, he2⟩ := Finset.mem_product.mp hem
+    obtain ⟨he1', he2'⟩ := Finset.mem_product.mp hem'
+    exact Prod.ext (hinj he1 he1' (congrArg Prod.fst heq))
+      (hinj he2 he2' (congrArg Prod.snd heq))
+  exact (Finset.card_le_card_of_injOn
+    (fun e : Endpoint => (fieldCoordinate p e.1, fieldCoordinate p e.2))
+    hmem hinjpair).trans hcardF
 
 private theorem mapped_pencil_homogeneous {p : ℕ} [Fact p.Prime]
     (q : Coordinate) (base e : Endpoint) (c : ZMod p)
