@@ -10,9 +10,7 @@ $$\forall n: \mathit{Nat}, (\operatorname{\mathit{HardinA229697Strip}}.\operator
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229697Strip.a` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229697: two-defect canonical HA arrays*. URL: <https://oeis.org/A229697>.
+*Citation.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229697: two-defect canonical HA arrays*. URL: <https://oeis.org/A229697>.
 
 *Commentary.*
 
