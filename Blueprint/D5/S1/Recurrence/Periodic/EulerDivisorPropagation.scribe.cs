@@ -9,6 +9,12 @@ internal sealed class EulerDivisorPropagationDocument : IScribeDocumentDefinitio
     private const string Prefix = "D5/S1/Recurrence/Periodic/EulerDivisorPropagation.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Ordinary A000111 satisfies both complete A386381 Conjecture 2 assertions.", H("A386381 Conjecture 2 for ordinary Euler numbers"), Blocks(
+            Paragraph(Text("Corrected Euler coefficients propagate zeros at every positive odd-prime-power index.")),
+            Paragraph(Text("Write q=p raised to r+1, and epsilon=(-1) raised to b times floor(p/2). All parameters are natural; b is zero or one. Residue arithmetic is in ZMod q. The deleted frequencies form an exact finite bijection. The correction factor is a unit at every positive index, including indices smaller than r+1. This reconstructs a consequence of Young's prior Kummer congruence, without a p-adic premise.")),
+            Node("corrected_sum", "The prime-deleted frequency identity", Q("p r b j",Imp(Call("Prime",V("p")),Imp(Call("Odd",V("p")),Imp(LeN(V("b"),D(1)),Eqn(Mul(Sub(D(1),Mul(Pow(R(Qmod(),MinusOne()),Mul(V("b"),Call("div",V("p"),D(2)))),Pow(R(Qmod(),V("p")),V("j")))),R(Qmod(),A(V("b"),V("j")))),FilteredSum()))))),
+                "Subtract the p-scaled shorter odd-length sum from the full sum. The divisible frequencies have h=p*v+b*floor(p/2).", DescribeRole.Theorem),
+            Node("signed_zero_transfer", "Every positive signed zero transfers", Q("p r b k m",Imp(Call("Prime",V("p")),Imp(Call("Odd",V("p")),Imp(LeN(V("b"),D(1)),Imp(LtN(D(0),V("k")),Imp(Eqn(R(Qmod(),A(V("b"),V("k"))),D(0)),Eqn(R(Qmod(),A(V("b"),Shift(V("k"),V("m"),Qmod()))),D(0)))))))),
+                "Every retained frequency is a unit. Euler periodicity equates their powers, and nilpotence of p proves the correction factor invertible.", DescribeRole.Theorem),
             Paragraph(Text("E denotes the source-normalized ordinary A000111 carrier with E(0)=1. Every parameter below is natural, and phi is Nat.totient. The result is an unfrozen Stage A candidate pending independent pre-freeze review; neither source exposition nor generated prose establishes publication or a resolution KPI. Odd prime powers use corrected zero transfer; the two-primary component uses the tangent bound; prime-power divisibility assembles them in the same E value.")),
             Node("odd_prime_power", "The ordinary all-positive-index local theorem", Q("p r k m",Imp(Call("Prime",V("p")),Imp(Call("Odd",V("p")),Imp(LtN(D(0),V("k")),Imp(Dvd(Qmod(),E(V("k"))),Dvd(Qmod(),E(Shift(V("k"),V("m"),Qmod())))))))),
                 "The totient is even, so both indices use the same signed branch. Each sign is a unit and therefore preserves zero divisibility.", DescribeRole.Theorem),
@@ -25,6 +31,7 @@ internal sealed class EulerDivisorPropagationDocument : IScribeDocumentDefinitio
     private static Formula V(string n) => F.Id(n);
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
     private static Formula P(Formula x) => Seq(Open, x, Close);
+    private static Formula Eqn(Formula x, Formula y) => Seq(x, Sp, Eq, Sp, y);
     private static Formula Imp(Formula x, Formula y) => Seq(P(x), Sp, Implies, Sp, P(y));
     private static Formula Dvd(Formula x, Formula y) => Seq(x, Sp, Mid, Sp, y);
     private static Formula LtN(Formula x, Formula y) => Seq(x, Sp, Lt, Sp, y);
@@ -46,5 +53,16 @@ internal sealed class EulerDivisorPropagationDocument : IScribeDocumentDefinitio
 
 
     private static Formula Qmod() => Pow(V("p"),Add(V("r"),D(1)));
+
+    private static Formula LeN(Formula x, Formula y) => Seq(x, Sp, Le, Sp, y);
+    private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
+    private static Formula A(Formula b, Formula n) => Call("A",b,n);
+    private static Formula R(Formula q, Formula x) => Call("residue",q,x);
+    private static Formula MinusOne() => P(Seq(Minus, D(1)));
+    private static Formula FilteredSum() => Seq(
+        new Formula.Subscript(F.Sum, Seq(V("h"), Sp, InMacro, Sp,
+            Call("filter",Call("range",Qmod()),
+                Seq(V("h"), Sp, Mapsto, Sp, Neg, Sp, P(Dvd(V("p"),Add(Mul(D(2),V("h")),V("b")))))))),
+        Sp, P(Mul(Pow(R(Qmod(),MinusOne()),V("h")),Pow(R(Qmod(),Add(Mul(D(2),V("h")),V("b"))),V("j")))));
 
 }

@@ -9,6 +9,20 @@ internal sealed class EulerUpDownSourceDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S1/Recurrence/Periodic/EulerUpDownSource.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The source recurrence defines ordinary A000111 and proves both exact sign bridges.", H("The ordinary Euler source carrier"), Blocks(
+            Paragraph(Text("Integral Euler derivatives admit finite odd-length frequency formulas.")),
+            Paragraph(Text("All indices and exponents are natural numbers. A is integer-valued; F and exp are rational formal power series. C embeds constants. The residue function casts an integer or natural value to ZMod of its first argument. All arithmetic inside a residue identity is in that ring. Young supplies the prior ordinary congruence component; the finite derivation here proves the integral identities directly.")),
+            Node("A", "Integral derivatives", Q("b", And(Eqn(A(V("b"),D(0)),D(1)), Q("n", Eqn(A(V("b"),Add(V("n"),D(1))),Sub(Pow(V("b"),Add(V("n"),D(1))),Sum("i",Add(V("n"),D(1)),Mul(Mul(Call("choose",Add(V("n"),D(1)),V("i")),Pow(D(2),Sub(V("n"),V("i")))),A(V("b"),V("i"))))))))),
+                "The integer recurrence constructs every derivative before modular reduction. Natural binomial coefficients and b are cast to the integers.", DescribeRole.Definition),
+            Node("F", "The signed exponential series", Q("b", Eqn(B(V("b")),InfiniteSum("n",Div(Mul(A(V("b"),V("n")),Pow(V("X"),V("n"))),Call("factorial",V("n")))))),
+                "X is the distinguished formal indeterminate. The integer coefficients A are embedded in the rationals; no factorial is inverted in a residue ring.", DescribeRole.Definition),
+            Node("generating_identity", "The exact exponential identity", Q("b",Eqn(Mul(Add(D(1),Pow(Exp(),D(2))),B(V("b"))),Mul(C(D(2)),Pow(Exp(),V("b"))))),
+                "Factorial-normalized coefficient comparison reduces the identity to the integral recurrence.", DescribeRole.Theorem),
+            Node("finite_identity", "The finite odd-length identity", Q("b L",Imp(Call("Odd",V("L")),Eqn(Mul(Add(D(1),Pow(Exp(),Mul(D(2),V("L")))),B(V("b"))),Mul(C(D(2)),Sum("h",V("L"),Mul(C(Pow(MinusOne(),V("h"))),Pow(Exp(),Add(Mul(D(2),V("h")),V("b"))))))))),
+                "The alternating geometric sum has numerator one plus the Lth power exactly when L is odd.", DescribeRole.Theorem),
+            Node("branch_equations", "The signed branch equations", And(Eqn(Der(B(D(0))),Mul(B(D(0)),Sub(B(D(0)),D(2)))),And(Eqn(Der(B(D(1))),Mul(B(D(1)),Sub(B(D(0)),D(1)))),Eqn(Pow(B(D(1)),D(2)),Mul(B(D(0)),Sub(D(2),B(D(0))))))),
+                "Differentiation and cancellation of the nonzero exponential denominator prove both differential equations and the quadratic relation.", DescribeRole.Theorem),
+            Node("scaled_moment", "Integral finite moments modulo an odd modulus", Q("b L u q j",Imp(Call("Odd",V("L")),Imp(Call("Odd",V("q")),Imp(Dvd(V("q"),Mul(V("u"),V("L"))),Eqn(Mul(Pow(R(V("q"),V("u")),V("j")),R(V("q"),A(V("b"),V("j")))),Sum("h",V("L"),Mul(Pow(R(V("q"),MinusOne()),V("h")),Pow(R(V("q"),Mul(V("u"),Add(Mul(D(2),V("h")),V("b")))),V("j"))))))))),
+                "Positive-order exponential derivatives contain the modulus. The remaining factor two is cancelled using oddness of q. This includes j=0.", DescribeRole.Theorem),
             Paragraph(Text("E is ordinary A000111, defined in the naturals by the source recurrence A second derivative equals A times A first derivative. It differs from the weighted Entringer diagonal. U denotes ordinarySeries, a rational formal power series; derivatives and constants below are formal. The exact signed bridges are proved using complex rescaling and Riccati uniqueness, with no assumed EGF or congruence bridge.")),
             Node("E", "The offset-zero ordinary recurrence", And(Eqn(E(D(0)),D(1)),And(Eqn(E(D(1)),D(1)),Q("n",Eqn(E(Add(V("n"),D(2))),Sum("i",Add(V("n"),D(1)),Mul(Mul(Call("choose",V("n"),V("i")),E(V("i"))),E(Sub(Add(V("n"),D(1)),V("i"))))))))),
                 "All subtraction in indices is natural subtraction; each term uses strictly earlier values.", DescribeRole.Definition),
@@ -61,5 +75,12 @@ internal sealed class EulerUpDownSourceDocument : IScribeDocumentDefinition
     private static Formula Der(Formula f) => Call("derivative",f);
     private static Formula Co(Formula f) => Call("constantCoeff",f);
     private static Formula MinusOne() => P(Seq(Minus, D(1)));
+
+    private static Formula Rat() => Seq(Mathbb, Grp(V("Q")));
+    private static Formula Dvd(Formula x, Formula y) => Seq(x, Sp, Mid, Sp, y);
+    private static Formula B(Formula b) => Call("F",b);
+    private static Formula Exp() => Call("exp",Rat());
+    private static Formula C(Formula x) => Call("C",x);
+    private static Formula R(Formula q, Formula x) => Call("residue",q,x);
 
 }
