@@ -9,9 +9,9 @@
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (consumed helpers on the live path of HardinA229753.result)
-rows: proof_shape=bind-only; consumers=reconstruction,Width6.Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors
-rowIndex: proof_shape=bind-only; consumers=reconstruction,Width6.Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors
-reconstruction: proof_shape=content; consumers=Width6.Chunks0-2.Source0-104.successor_rows,Certificate.canonical_successors
+rows: proof_shape=bind-only; consumers=reconstruction,Certificate.canonical_successors
+rowIndex: proof_shape=bind-only; consumers=reconstruction,Certificate.canonical_successors
+reconstruction: proof_shape=content; consumers=Certificate.canonical_successors
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
@@ -27,10 +27,19 @@ local instance (p : Row) : Decidable (Canonical p) := by unfold Canonical; infer
 
 set_option maxHeartbeats 0 in
 theorem reconstruction (p : Row) (hp : Canonical p) : rows (rowIndex p) = p := by
-  have h : ∀ i : Fin (4^6), Canonical (finFunctionFinEquiv.symm i) →
-      rows (rowIndex (finFunctionFinEquiv.symm i)) = finFunctionFinEquiv.symm i := by
-    decide +kernel
-  have hh : Canonical p → rows (rowIndex p) = p := by
-    simpa only [Equiv.symm_apply_apply] using h (finFunctionFinEquiv p)
-  exact hh hp
+  have h : ∀ a b c e f : Fin 4,
+      Canonical (![0, a, b, c, e, f] : Row) →
+      rows (rowIndex (![0, a, b, c, e, f] : Row)) = ![0, a, b, c, e, f] := by
+    intro a b
+    fin_cases a <;> fin_cases b <;> decide +kernel
+  have hz : p 0 = 0 := by
+    by_cases h0 : p 0 = 0
+    · exact h0
+    · obtain ⟨j, hj, _⟩ := hp 0 0 (Fin.pos_iff_ne_zero.mpr h0)
+      exact ((Fin.not_lt_zero j) hj).elim
+  have he : p = ![0, p 1, p 2, p 3, p 4, p 5] := by
+    funext i
+    fin_cases i <;> simp [hz]
+  rw [he] at hp ⊢
+  exact h (p 1) (p 2) (p 3) (p 4) (p 5) hp
 end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Rows

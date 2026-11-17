@@ -11,7 +11,7 @@ internal sealed class Source0Document : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("successor-rows"), DeclarationHandle.Create(Prefix + "successor_rows"),
                 H("Source states 0 through 2"), StatementSource.FromAuthor(Disp(Formula())),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
-                    "The source table supplies a canonical row and residual budget. Every admissible labelled next row contributes its new class, including multiplicity; sorting gives the class list. These identities determine the quotient transfer."))), DescribeRole.Theorem))));
+                    "The source table supplies a canonical row and residual budget. Every admissible labelled next row contributes its new class, including multiplicity; sorting gives the class list. The three source identities are checked separately and assembled by cases on the source index. These identities determine the quotient transfer."))), DescribeRole.Theorem))));
     private static Formula Formula()
     {
         var x = Call("Sources.sources", Call("Fin.mk", Seq(Num("0"), Plus, Call("Fin.val", V("i")))));

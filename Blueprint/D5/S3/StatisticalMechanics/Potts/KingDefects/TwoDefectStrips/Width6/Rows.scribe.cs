@@ -19,7 +19,7 @@ internal sealed class RowsDocument : IScribeDocumentDefinition
                     All("p", Q("Data.Row"), Imp(Call("Canonical", V("p")),
                         Eq(Call("rows", Call("rowIndex", V("p"))), V("p")))))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
-                    "Every canonical row is the entry selected by its equality-pattern index. Thus successor identities can be checked on the canonical table before colour-permutation transport."))), DescribeRole.Theorem))));
+                    "Canonicality forces the first coordinate to be zero. The remaining five coordinates determine the row, and finite checks partitioned by the next two coordinates identify its equality-pattern representative. This reconstructs every canonical boundary before colour-permutation transport."))), DescribeRole.Theorem))));
     private static Formula V(string s) => F.Id(s);
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((part, i) =>

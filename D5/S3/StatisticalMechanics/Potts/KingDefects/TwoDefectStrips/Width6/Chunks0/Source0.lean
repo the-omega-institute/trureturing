@@ -23,5 +23,6 @@ theorem successor_rows : ∀ i : Fin 3,
     successors (sources ⟨0+i.val, by omega⟩).1 (sources ⟨0+i.val, by omega⟩).2.val =
       classList (cl (sources ⟨0+i.val, by omega⟩).1
         (sources ⟨0+i.val, by omega⟩).2.val) := by
-  decide +kernel
+  intro i
+  fin_cases i <;> decide +kernel
 end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source0
