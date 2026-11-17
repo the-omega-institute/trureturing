@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Algebra/CommonCoefficientPlane
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Algebra/CommonCoefficientPlane
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -22,6 +22,10 @@ For an independent triple of complex maps from dimension five to dimension three
 with injective vertical stack, the Hermitian coefficient kernel has one common
 two-dimensional totally isotropic complex subspace. Coefficient changes act on
 the forms by adjoint congruence, and the plane is transported by the inverse change.
+
+Scope warning (I): the main conclusion fixes coefficient width three, matrix
+dimensions 3 by 5, and plane dimension two. Its rank and kernel arguments use
+these dimensions, which remain part of its hypotheses when the result is reused.
 -/
 
 set_option backward.isDefEq.respectTransparency false

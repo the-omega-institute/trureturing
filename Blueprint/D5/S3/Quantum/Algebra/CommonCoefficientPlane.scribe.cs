@@ -45,7 +45,9 @@ internal sealed class CommonCoefficientPlaneDocument : IScribeDocumentDefinition
                     "and all u,v in L, star(u) dot (T v) = 0. Here star on matrices is conjugate " +
                     "transpose, star on vectors is coordinatewise complex conjugation, and dot is the " +
                     "bilinear coordinate dot product. The conclusion is the full complex pairing. " +
-                    "It includes a zero Hermitian coefficient kernel.")),
+                    "It includes a zero Hermitian coefficient kernel. The coefficient width three, " +
+                    "matrix dimensions 3 by 5 and plane dimension two are fixed; these dimensions " +
+                    "enter the rank and kernel arguments.")),
                 Paragraph(Text(
                     "The stack compression equals the double sum of T(r,s) times X(r)* X(s). " +
                     "Positive semidefinite kernel elements vanish by the independent-family " +

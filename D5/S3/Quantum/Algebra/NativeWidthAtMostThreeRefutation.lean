@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Algebra/NativeWidthAtMostThreeRefutation
    generality: E
-   mirror-B: none
-   mirror-E: none
+   mirror-B: D5/B/S3/Quantum/Algebra/NativeWidthAtMostThreeRefutation
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Algebra/NativeWidthAtMostThreeRefutation.claim; result=D5/S3/Quantum/Algebra/NativeWidthAtMostThreeRefutation.result; claim=D5/S3/Quantum/Algebra/NativeWidthAtMostThreeRefutation.claim
    digest: The original universal positive-scalar inner-cone event is false on native width three. -/
