@@ -21,6 +21,8 @@ raw_successors: proof_shape=bind-only; consumers=HardinA229532Strip.result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233172DiagonalStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
