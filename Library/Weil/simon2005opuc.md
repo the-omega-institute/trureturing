@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Quantum/Walks/CMV/SzegoRecurrence
   - D5/S3/Quantum/Walks/CMV/Geronimus
   - D5/S3/Quantum/Walks/CMV/Representation
+  - D5/S3/Weil/TestFunctions/FinitePowerSumToeplitzCircleCriterion
 license: citation-only
 triage: anchor
 ---
