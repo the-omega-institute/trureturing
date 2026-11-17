@@ -1,3 +1,4 @@
+import Reg.Support.FactorialFockMetric
 import Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianBilinearTranspose
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate
 noncomputable section
@@ -266,5 +267,60 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end candidateT_original_differential
+
+namespace positiveJ_eq_candidateJ
+open _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric
+abbrev arena : Arena where
+  signature := complexSignature
+  Law R := ∀ {u v : ℂ} {r : ℝ} (_hr : 0 < r) (_hr1 : r < 1)
+    (_hu : ‖u‖ + Real.sqrt r < 1) (_hv : ‖v‖ + Real.sqrt r < 1),
+    R.readout () () (kernelMode false true true u v (Real.sqrt r : ℂ))
+      (candidateJ u v (r : ℂ))
+private theorem rejected_fails : ¬ arena.Law complexFalse := by
+  intro h
+  have hs : Real.sqrt (1/4 : ℝ) < 1 := by
+    nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 1/4 by norm_num),
+      Real.sqrt_nonneg (1/4 : ℝ)]
+  exact @h 0 0 (1/4) (by norm_num) (by norm_num)
+    (by simpa using hs) (by simpa using hs)
+def family : Registration arena (type_of% (@positiveJ_eq_candidateJ)) where
+  actual := complexEqual
+  bridge := Iff.rfl
+  variation := ⟨@positiveJ_eq_candidateJ, complexFalse, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law complexEqual complexFalse rejected_fails
+  dependence := complexEqualDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@positiveJ_eq_candidateJ) (Realization complexSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate.positiveJ_eq_candidateJ.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate.positiveJ_eq_candidateJ.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize complexSignature complexEqual.readout complexEqual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end positiveJ_eq_candidateJ
 
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate
