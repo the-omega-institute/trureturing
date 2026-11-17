@@ -8,15 +8,15 @@
 
 /-
 proof_shape: secant_bridge and boundary_values are content after same-delivery inlining.
-secant_bridge is the
-ordinary-to-A000364 recurrence identification; boundary_values supplies the exact small
+secant_bridge is the ordinary-to-A000364 recurrence identification; boundary_values supplies the exact small
 indices and the strict lower bound used by the final family.
-escape_witness: secant_bridge, consumed by boundary_values and the divisor-propagation
-two-primary argument on the live proof path.
+escape_witness: secant_bridge, consumed by boundary_values, which is used by the
+divisor-propagation two-primary argument on the live proof path.
 admission_basis: escape-witness. The external resolution basis of #31280 belongs only to
 the final source assertions; this supporting bridge carries no resolution claim.
-Direct frozen dependencies: D5.S1.Recurrence.Periodic.SecantNumberPurePeriodRefutation
-(a_unique, initial_values); EulerUpDownSource is a same-delivery dependency.
+Frozen suppliers: D5.S1.Recurrence.Periodic.SecantNumberPurePeriodRefutation
+(a, a_unique, initial_values), IntegralEGFComposition's coefficient interface and
+QuarticEGFFixedPoint's encoding interface. EulerUpDownSource is a same-delivery dependency.
 Private theorem consumers: sum_even -> signed_convolution; H_product -> signed_convolution;
 signed_convolution -> even_recurrence -> secant_bridge.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31291.

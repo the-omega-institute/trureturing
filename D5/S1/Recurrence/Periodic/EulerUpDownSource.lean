@@ -15,12 +15,13 @@ finite_identity -> scaled_identity; branch_equations -> complex_correspondence;
 scaled_moment -> EulerOddPrimePower.corrected_sum; source_equation -> ordinary_riccati;
 monotone_E -> EulerSecantBridge.boundary_values; ordinary_riccati -> complex_correspondence
 and EulerTwoPrimary.N_riccati.
-escape_witness: signed_even and signed_odd, consumed by EulerSecantBridge.secant_bridge
+escape_witness: signed_even and signed_odd, consumed by EulerSecantBridge.even_recurrence
 and EulerDivisorPropagation.zero_even/zero_odd on the live proof paths.
 admission_basis: escape-witness. The external resolution basis is reserved for the two
 final source assertions of #31280; this supporting module has no resolution claim.
-Direct frozen dependencies: D5.S1.Recurrence.Residue.QuarticEGFFixedPoint
-(encode, eCoeff_encode, eCoeff_ext); all other imports are pinned Mathlib.
+Frozen suppliers: D5.S1.Recurrence.Residue.QuarticEGFFixedPoint (encode, eCoeff_encode,
+eCoeff_ext, constantCoeff_encode) and its IntegralEGFComposition coefficient interface
+(eCoeff, eCoeff_zero, eCoeff_derivative, eCoeff_mul). Other imports are pinned Mathlib.
 Private theorem consumers: eCoeff_F/eCoeff_add/eCoeff_C_mul/eCoeff_exp_pow -> generating_identity;
 odd_geometric -> finite_identity; denominator_ne_zero -> branch_equations;
 scaled_identity/eCoeff_scaled_F -> integer_moment -> scaled_moment;
