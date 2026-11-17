@@ -39,7 +39,7 @@ namespace D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
 open KingGrid
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 
-private def errors {C : Type*} [DecidableEq C] : {n : ℕ} → C → (Fin n → C) → ℕ
+def errors {C : Type*} [DecidableEq C] : {n : ℕ} → C → (Fin n → C) → ℕ
   | 0, _, _ => 0
   | _+1, p, f => (if p = f 0 then 1 else 0) + errors (f 0) (Fin.tail f)
 
@@ -93,10 +93,10 @@ private theorem tail_counts {C : Type*} [Fintype C] [DecidableEq C]
       | zero => simp
       | succ n => simp only [Nat.add_sub_cancel, pow_succ]; ring
 
-private def bad {C : Type*} [DecidableEq C] {n : ℕ} (f : Fin n → C) : ℕ :=
+def bad {C : Type*} [DecidableEq C] {n : ℕ} (f : Fin n → C) : ℕ :=
   ∑ i : Fin (n-1), if f (lo i) = f (hi i) then 1 else 0
 
-private theorem errors_eq {C : Type*} [DecidableEq C] (n : ℕ)
+theorem errors_eq {C : Type*} [DecidableEq C] (n : ℕ)
     (f : Fin (n + 1) → C) : bad f = errors (f 0) (Fin.tail f) := by
   induction n with
   | zero => simp [bad, errors]

@@ -9,23 +9,29 @@
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
 escape_witness: none (consumed helpers of the settlement on the live path of result)
+flags: proof_shape=bind-only; consumers=normal_iff, good_bound, finish_flags, prefix_cons
+lift: proof_shape=bind-only; consumers=row, normal_iff, prefix_cons
+row: proof_shape=bind-only; consumers=good_bound, finish_flags, prefix_cons
+normal_iff: proof_shape=bind-only; consumers=prefix_cons
+good_bound: proof_shape=bind-only; consumers=prefix_cons
+finish_flags: proof_shape=bind-only; consumers=prefix_cons
 Prefix: proof_shape=bind-only; consumers=prefix_cons, prefix_zero
-prefix_cons: proof_shape=content; consumers=accepted_iff
+prefix_cons: proof_shape=bind-only; consumers=accepted_iff, literal_bridge
 prefix_zero: proof_shape=bind-only; consumers=literal_bridge
 cost: proof_shape=bind-only; consumers=Accepted, transfer_counts
 acceptedDecidable: proof_shape=bind-only; consumers=count, count_step
 Accepted: proof_shape=bind-only; consumers=accepted_iff, count_step, count_matrix
-tailCost: proof_shape=bind-only; consumers=tailCost_step, adjacent_tail, accepted_iff
-tailCost_step: proof_shape=bind-only; consumers=accepted_iff, adjacent_tail
-adjacent_tail: proof_shape=content; consumers=grid_defects
-grid_defects: proof_shape=content; consumers=literal_bridge
+tailCost: proof_shape=bind-only; consumers=tailCost_step, adjacent_tail, accepted_iff, grid_defects, literal_bridge
+tailCost_step: proof_shape=bind-only; consumers=accepted_iff
+adjacent_tail: proof_shape=bind-only; consumers=grid_defects
+grid_defects: proof_shape=bind-only; consumers=literal_bridge
 accepted_iff: proof_shape=content; consumers=literal_bridge
 count: proof_shape=bind-only; consumers=count_step, count_matrix, literal_bridge
-count_step: proof_shape=content; consumers=count_matrix
+count_step: proof_shape=bind-only; consumers=count_matrix
 transfer: proof_shape=bind-only; consumers=certificate, count_matrix, result
 terminal: proof_shape=bind-only; consumers=certificate, count_matrix, result
 index: proof_shape=bind-only; consumers=transfer_counts, count_matrix
-transfer_counts: proof_shape=content; consumers=count_matrix
+transfer_counts: proof_shape=bind-only; consumers=count_matrix
 count_matrix: proof_shape=content; consumers=result
 literal_bridge: proof_shape=content; consumers=result
 backwardTable: proof_shape=bind-only; consumers=certificate, powers_table
@@ -37,6 +43,7 @@ result: proof_shape=content; consumers=none (external open-problem-resolution #3
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
 
 /-! Canonical paths retain the number of introduced colours and the exact remaining budget. -/
 open scoped BigOperators Matrix
@@ -52,38 +59,54 @@ private theorem prefix_zero {n : ℕ} (f : Fin n → Fin 4) :
     Prefix 0 f ↔ Canonical f := by
   simp [Prefix, Canonical]
 
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
+
+private def flags (m : ℕ) : Seen := (decide (0 < m), decide (1 < m), decide (2 < m))
+private def lift (c : Fin 4) : Fin 8 := ⟨c.val+1, by omega⟩
+private def row (c : Fin 4) : WidthRow 1 := fun _ => lift c
+
+
+private theorem normal_iff {n : ℕ} (m : ℕ) (f : Fin n → Fin 4) :
+    widthNormal (flags m) (fun i (_ : Fin 1) => lift (f i)) ↔ Prefix m f := by
+  unfold widthNormal Prefix
+  simp only [Fin.forall_fin_one]
+  apply forall_congr'
+  intro i
+  generalize h : f i = c
+  fin_cases c <;>
+    simp only [flags, prior, lift, Fin.forall_fin_succ, Fin.exists_fin_one,
+      Fin.ext_iff]
+    <;> simp
+
+private theorem good_bound (m : ℕ) (c : Fin 4) : good (flags m) (row c) ↔ c.val ≤ m := by
+  fin_cases c <;> simp [good, row, lift, allowed, flags] <;> omega
+
+private theorem finish_flags (m : ℕ) (c : Fin 4) (hc : c.val ≤ m) :
+    finish (flags m) (row c) = flags (max m (c.val+1)) := by
+  by_cases hm : m < 4
+  · interval_cases m <;> fin_cases c <;>
+      simp_all [flags, row, lift, finish, advance]
+  · have h0 : 0 < m := by omega
+    have h1 : 1 < m := by omega
+    have h2 : 2 < m := by omega
+    have hx0 : 0 < max m (c.val+1) := by omega
+    have hx1 : 1 < max m (c.val+1) := by omega
+    have hx2 : 2 < max m (c.val+1) := by omega
+    simp [flags, row, finish, advance, h0,h1,h2,hx0,hx1,hx2]
+
 private theorem prefix_cons {n : ℕ} (m : ℕ) (c : Fin 4) (f : Fin n → Fin 4) :
-    Prefix m (Fin.cons c f) ↔ c.val ≤ m ∧ Prefix (max m (c.val + 1)) f := by
-  constructor
-  · intro h
-    have hc : c.val ≤ m := by
-      by_contra hm
-      have hm4 : m < 4 := by omega
-      rcases h 0 ⟨m, hm4⟩ (show m < c.val from by omega) with hb | ⟨j, hj, _⟩
-      · exact (Nat.lt_irrefl m) hb
-      · exact (Fin.not_lt_zero j) hj
-    refine ⟨hc, fun i b hb => ?_⟩
-    rcases h i.succ b hb with hh | ⟨j, hj, he⟩
-    · exact Or.inl (by omega)
-    · cases j using Fin.cases with
-      | zero =>
-        simp only [Fin.cons_zero] at he
-        exact Or.inl (by omega)
-      | succ j => exact Or.inr ⟨j, Fin.succ_lt_succ_iff.mp hj, he⟩
-  · rintro ⟨hc, h⟩ i
-    cases i using Fin.cases with
-    | zero =>
-      intro b hb
-      exact Or.inl (lt_of_lt_of_le (show b.val < c.val from hb) hc)
-    | succ i =>
-      intro b hb
-      rcases h i b hb with hh | ⟨j, hj, he⟩
-      · by_cases hm : b.val < m
-        · exact Or.inl hm
-        · right
-          have he : c = b := Fin.ext (by omega)
-          exact ⟨0, by simp, he⟩
-      · exact Or.inr ⟨j.succ, Fin.succ_lt_succ_iff.mpr hj, he⟩
+    Prefix m (Fin.cons c f) ↔ c.val ≤ m ∧ Prefix (max m (c.val+1)) f := by
+  have h := normal_cons (flags m) (row c) (fun i (_ : Fin 1) => lift (f i))
+  have he : (Fin.cons (row c) (fun (i : Fin n) (_ : Fin 1) => lift (f i)) :
+      Fin (n+1) → WidthRow 1) =
+      (fun (i : Fin (n+1)) (_ : Fin 1) => lift ((Fin.cons (α := fun _ : Fin (n+1) => Fin 4) c f) i)) := by
+    funext i j
+    cases i using Fin.cases <;> rfl
+  rw [he, normal_iff, good_bound] at h
+  by_cases hc : c.val ≤ m
+  · rw [finish_flags m c hc, normal_iff] at h
+    exact h
+  · simpa only [hc, false_and] using h
 
 private def cost (p c : Fin 4) : ℕ := if p = c then 1 else 0
 
@@ -105,19 +128,17 @@ private instance acceptedDecidable {n : ℕ} (m : ℕ) (p : Fin 4) (d : ℕ)
 private def count (n m : ℕ) (p : Fin 4) (d : ℕ) : ℤ :=
   ∑ f : Fin n → Fin 4, if Accepted m p d f then 1 else 0
 
-private def tailCost {n : ℕ} (p : Fin 4) (f : Fin n → Fin 4) : ℕ :=
-  tailDefects (q := 4) (k := 1) ∅ {(0, 0)} (fun _ => p)
-    (List.ofFn fun i _ => f i)
+private abbrev tailCost {n : ℕ} (p : Fin 4) (f : Fin n → Fin 4) : ℕ :=
+  KingPath.errors p f
 
 private theorem tailCost_step {n : ℕ} (p c : Fin 4) (f : Fin n → Fin 4) :
     tailCost p (Fin.cons c f) = cost p c + tailCost c f := by
-  by_cases h : p = c <;>
-    simp [tailCost, List.ofFn_succ, tailDefects, bondDefects, cost, h]
+  rfl
 
 private theorem accepted_iff {n : ℕ} (m : ℕ) (p : Fin 4) (d : ℕ)
     (f : Fin n → Fin 4) : Accepted m p d f ↔ Prefix m f ∧ tailCost p f = d := by
   induction n generalizing m p d with
-  | zero => simp [Accepted, Prefix, tailCost, tailDefects, eq_comm]
+  | zero => simp [Accepted, Prefix, tailCost, KingPath.errors, eq_comm]
   | succ n ih =>
     rw [← Fin.cons_self_tail f]
     rw [prefix_cons, tailCost_step]
@@ -133,11 +154,13 @@ private theorem accepted_iff {n : ℕ} (m : ℕ) (p : Fin 4) (d : ℕ)
 private theorem adjacent_tail (n : ℕ) (f : Fin (n + 1) → Fin 4) :
     tailCost (f 0) (Fin.tail f) =
       ∑ i : Fin n, cost (f i.castSucc) (f i.succ) := by
-  induction n with
-  | zero => simp [tailCost, tailDefects]
-  | succ n ih =>
-    rw [← Fin.cons_self_tail (Fin.tail f), tailCost_step, Fin.sum_univ_succ]
-    exact congrArg (fun x => cost (f 0) (f (Fin.succ 0)) + x) (ih (Fin.tail f))
+  refine (KingPath.errors_eq n f).symm.trans ?_
+  unfold KingPath.bad
+  let E : Fin (n + 1 - 1) ≃ Fin n := finCongr (by omega)
+  rw [← E.sum_comp]
+  apply Finset.sum_congr rfl
+  intro i _
+  rfl
 
 private theorem grid_defects (n : ℕ) (f : Cell (n + 1) 1 → Fin 4) :
     (Finset.univ.filter (fun e : Edge (n + 1) 1 => mono f e)).card =
@@ -145,7 +168,7 @@ private theorem grid_defects (n : ℕ) (f : Cell (n + 1) 1 → Fin 4) :
   change _ = tailCost (f (0, 0)) (Fin.tail (fun i => f (i, 0)))
   rw [adjacent_tail n (fun i => f (i, 0))]
   rw [Finset.card_eq_sum_ones, Finset.sum_filter, KingGrid.sum_edges]
-  simp only [Nat.reduceSub, Nat.sub_self, Fin.sum_univ_zero, Fin.sum_univ_one,
+  simp only [Nat.reduceSub, Fin.sum_univ_zero, Fin.sum_univ_one,
     Finset.sum_const_zero, zero_add, add_zero]
   have hsum : (∑ i : Fin (n + 1 - 1),
       if f (KingGrid.lo i, 0) = f (KingGrid.hi i, 0) then 1 else 0) =
