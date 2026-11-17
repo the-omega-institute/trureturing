@@ -10,6 +10,10 @@ $$(\operatorname{a}\left(1\right) = 1) \land ((\operatorname{a}\left(2\right) = 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Riordan/LabeledComplementCount.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mwafise-a401496-labeled-riordan-complements` (proved) by `D5/S3/Combinatorics/Riordan/LabeledComplementCount.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mwafise-a401496-labeled-riordan-complements","declaration_gid":"D5/S3/Combinatorics/Riordan/LabeledComplementCount.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Arnauld Mesinga Mwafise (2026). *OEIS A401496: labeled Riordan graphs with labeled Riordan complements*. URL: <https://oeis.org/A401496>.
