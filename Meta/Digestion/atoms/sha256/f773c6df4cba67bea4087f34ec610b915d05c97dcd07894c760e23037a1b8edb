@@ -1,0 +1,6 @@
+**引理 278.2（零互易、单点闭与唯一确认）。** 在整个双份M下，$\perp_e$ 对称且无自环。再给 $\mathsf X_{e,2}$，则 $\{p\}^{\perp_e\perp_e}=\{p\}$，且 $e_p(q)=1$ 当且仅当 $q=p$。此处没有输入非零读数的数值互易。
+
+证明。若 $e_p(q)=0$，$u_2-e_p$ 确认 $q$，故 $e_q\le u_2-e_p$，在 $p$ 上评价给 $e_q(p)=0$；反向交换两端。$e_p(p)=1$ 排自环。单点双极闭是[Paseka—Vetterlein, Lemma4.4][Q278P]的纯关系接口：若 $q\ne p$ 且 $p^{\perp_e}\subseteq q^{\perp_e}$，则 $p\not\perp_e q$，否则 $q\in p^{\perp_e}$ 会迫 $q\perp_e q$。换点遂给 $g\perp_e p$，且 $p^{\perp_e}\cap g^{\perp_e}=p^{\perp_e}$；因此 $g\in p^{\perp_e}\subseteq g^{\perp_e}$，仍矛盾。
+
+若 $e_p(q)=1$，leastness给 $e_q\le e_p$，所以 $p^{\perp_e}\subseteq q^{\perp_e}$，单点闭迫 $q=p$。任意归一混态有有限纯点分解；若 $e_p$ 在它上面取一，则每个正权纯分量都取一，故整个饱和面也仅为 $\{p\}$。$\square$
+

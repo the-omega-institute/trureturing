@@ -115,6 +115,8 @@ class AgentStateTests(unittest.TestCase):
         tree = self.root / "shared"
         with agent("codex:creator"):
             self.create("shared", tree)
+            run(tree, "add", ".gitignore")
+            run(tree, "commit", "-m", "review scaffold")
         with agent("claude:claimant"):
             self.create("shared", tree)
             self.assertEqual(self.saved(tree)["creator"], "codex:creator")
@@ -135,10 +137,10 @@ class AgentStateTests(unittest.TestCase):
         with agent("claude:replacement"):
             result = self.create("replacement", tree)
             self.assertEqual(json.loads(result.stdout)["status"], "claimed")
-            self.assertEqual(self.saved(tree)["creator"], "claude:replacement")
+            self.assertEqual(self.saved(tree)["creator"], "codex:creator")
             self.assertEqual(self.saved(tree)["allocation"]["branch"], "refs/heads/lane/governance/replacement")
         with agent("codex:creator"):
-            self.assertEqual(self.view()["pending"], [])
+            self.assertEqual(self.view()["pending"][0]["matched_by"], ["creator"])
 
     def test_branch_switch_does_not_transfer_release_and_scan_failure_is_incomplete(self):
         tree = self.root / "switched"
@@ -190,10 +192,18 @@ class AgentStateTests(unittest.TestCase):
             if args[:1] == ("reset",):
                 raise protocol.GitFailure("injected-pool-checkout")
             return original(root, *args, **kwargs)
-        with agent("codex:pool"), patch.object(pool, "git", side_effect=fail_reset):
-            with self.assertRaisesRegex(protocol.GitFailure, "injected-pool-checkout"):
-                pool.claim(self.options("lane/governance/pool", tree))
-        self.assertEqual(self.saved(tree)["creator"], "codex:pool")
+        options = self.options("lane/governance/pool", tree)
+        options.skip_restore = False
+        original_run = pool.subprocess.run
+        def fail_restore(command, *args, **kwargs):
+            if command[:2] == ["dotnet", "restore"]:
+                return subprocess.CompletedProcess(command, 42, b"", b"injected-pool-restore")
+            return original_run(command, *args, **kwargs)
+        with agent("codex:pool"), patch.object(pool.subprocess, "run", side_effect=fail_restore):
+            with self.assertRaisesRegex(protocol.GitFailure, "injected-pool-restore"):
+                pool.claim(options)
+        self.assertIsNone(self.saved(tree)["creator"])
+        self.assertEqual(self.saved(tree)["allocation"]["agent"], "codex:pool")
         mirror = self.root / "mirror"
         remote = self.root / "remote.git"
         run(self.main, "remote", "add", "origin", remote)

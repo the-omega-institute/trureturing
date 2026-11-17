@@ -355,3 +355,52 @@ The state-machine consequence is precise: gates act on amplitudes and coherences
 - [D03] D. D'Alessandro, *On Quantum State Observability and Measurement*, Journal of Physics A 36 (2003), 9721, [arXiv:quant-ph/0307127](https://arxiv.org/abs/quant-ph/0307127), [DOI:10.1088/0305-4470/36/37/310](https://doi.org/10.1088/0305-4470/36/37/310). Sections 1-2 distinguish controlled evolution, state-equivalence classes and the observation space. The present full-space identification follows directly from Theorem 11.2 and the projector argument above.
 - [B95] A. Barenco et al., *Elementary gates for quantum computation*, Physical Review A 52 (1995), 3457. [arXiv:quant-ph/9503016](https://arxiv.org/abs/quant-ph/9503016), [DOI:10.1103/PhysRevA.52.3457](https://doi.org/10.1103/PhysRevA.52.3457). Established one-qubit/CNOT universality and finite circuit decomposition. Generic dimension-counting barriers retain their standard ownership.
 - [J00] D. Jaksch et al., *Fast Quantum Gates for Neutral Atoms*, Physical Review Letters 85 (2000), 2208-2211. [arXiv:quant-ph/0004038](https://arxiv.org/abs/quant-ph/0004038), [DOI:10.1103/PhysRevLett.85.2208](https://doi.org/10.1103/PhysRevLett.85.2208). Historical context for blockade-mediated conditional phases; its physical level scheme and error analysis are not asserted to be implemented by the ideal occupancy compiler.
+## 16. Conditional continued-fraction membership for actual modular phase estimation
+
+For a rational number $x$, write $f=\lfloor x\rfloor$ and $t=x-f$. Define the finite rational list $C(x)$ by
+
+$$
+C(x)=\begin{cases}[f],&t=0,\\
+[f]\mathbin{+\!+}[f+z^{-1}:z\in C(t^{-1})],&t\ne0.
+\end{cases}
+$$
+
+Here the bracketed expression in the second branch is a list map, $+\!+$ concatenates lists, and rational inversion is totalized by $0^{-1}=0$. The positive reduced denominator decreases at every recursive call. The list accepts zero, integers and negative rationals. For natural observable inputs $y,Q,N$, define
+
+$$
+A(y,Q,N)=[z\in C(y/Q):\operatorname{den}(z)<N],
+$$
+
+where $\operatorname{den}$ is the positive denominator in lowest terms. The list has no order or spectral-numerator input. In the modular model, choose $N\ge2$, a natural base $a$ with $\gcd(a,N)=1$, and an independent natural target width $w$ with $N\le2^w$. Multiplication by $a$ acts on the residue states and fixes the padding states; the target input is the residue state $1$. Write $r=\operatorname{ord}_N(a)$. This model has $0<r<N$.
+
+**Theorem 16.1 (Reduced-phase candidate membership).** For every such modular model, every natural counting width $n$ with $N^2\le Q=2^n$, and all natural $s<r$ and $y<Q$, assume the circular nearest condition
+
+$$
+\exists k\in\mathbb Z,\qquad
+\left|\frac{s}{r}-\frac{y}{Q}-k\right|\le\frac1{2Q}.
+$$
+
+Then the rational number $s/r$ in lowest terms belongs to $A(y,Q,N)$, and its reduced denominator divides $r$.
+
+Proof. Since $s<r$, $y<Q$ and $r<N$, the resolution condition excludes every nonzero integer $k$ in the nearest witness. Thus $|y/Q-s/r|\le1/(2Q)$. The reduced denominator $d$ satisfies $d\le r<N$, hence $d^2<Q$ and $|y/Q-s/r|<1/(2d^2)$. Legendre's theorem supplies a real continued-fraction convergent equal to $s/r$. The rational Euclidean list correspondence places that convergent in $C(y/Q)$, and $d<N$ passes the filter. Finally $d=r/\gcd(s,r)$ divides $r$.
+
+**Theorem 16.2 (Coprime true-order membership).** For every modular model with natural $N\ge2$, natural base $a$ coprime to $N$, and independent target width $w$ satisfying $N\le2^w$, set $r=\operatorname{ord}_N(a)$. For every natural $n$ with $N^2\le Q=2^n$, every natural $s<r$ and $y<Q$ satisfying
+
+$$
+\exists k\in\mathbb Z,\qquad
+\left|\frac{s}{r}-\frac{y}{Q}-k\right|\le\frac1{2Q},
+$$
+
+if $\gcd(s,r)=1$, then $r$ belongs to the list $[\operatorname{den}(z):z\in A(y,Q,N)]$.
+
+Proof. Theorem 16.1 places the reduced fraction $s/r$ in the candidate list. Its denominator is $r/\gcd(s,r)=r$, which supplies the required member of the denominator list.
+
+## 17. Sources and scope of conditional membership
+
+The finite rational recurrence, its correspondence with real convergents, and the conditional modular recovery slice are adapted from aicyberg, [Verification/QuantumShorContinuedFractions.lean](https://github.com/solanaqubits/leanbook/blob/9b742770a2a5dbcf30cf9abc44e711194e957a00/Verification/QuantumShorContinuedFractions.lean), at that immutable revision. Copyright (c) 2026 aicyberg; Apache-2.0. The full license and supplier attribution are retained in [the corresponding library note](../../../Library/HilbertOperators/aicyberg2026shor.md). Legendre approximation and the real convergent recurrence are established continued-fraction results; the conditional statements assert no mathematical priority.
+
+The nearest condition uses the inverse final Fourier convention of the actual modular phase-estimation model. For the positive final Fourier convention, negate the observed label modulo $Q$ before applying it. The statements allow $r=1$, $s=0$, either non-strict rounding tie, and grids for which $r$ does not divide $Q$. The resolution condition excludes $n=0$ here; the underlying marginal model still admits that width.
+
+These conclusions establish membership of the distinguished reduced fraction and, under coprimality, of the true order among candidate denominators. They do not certify an observable selector or assert that every candidate denominator divides the order. Passing a modular exponentiation check certifies an order multiple without by itself certifying the exact order. The broader supplied-$R$ clock recovery claim, repeated-sample independence, the ideal product law, aggregate success probability, random coprimality, factoring, bit or gate complexity, and empirical performance remain outside these conditional conclusions.
+
+## 追加锚（本行以下为增补区）

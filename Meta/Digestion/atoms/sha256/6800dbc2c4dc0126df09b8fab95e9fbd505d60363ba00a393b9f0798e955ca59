@@ -1,0 +1,49 @@
+## 参考资料与核验范围
+
+<a id="ref-v13"></a>
+
+\[1\] *$\mathbb Z$ is Diophantine in $\mathbb Q$*, Version 13, 2026-11-07. 固定提交下的稿件；本轮阅读摘要、组合接口、六接触高度声明、精确值桥、条件后果和V13编译定理等相关段落。 <https://github.com/elliotglazer/diophantine-z-q/blob/9c0b3aba60d90fdcac82115f0582a6f52f1054f7/manuscripts/quartic_v13.tex>.
+
+<a id="ref-guide"></a>
+
+\[2\] V13 construction guide. 总变量、见证、残差、系数表和检查范围。 <https://github.com/elliotglazer/diophantine-z-q/blob/9c0b3aba60d90fdcac82115f0582a6f52f1054f7/docs/manuscript-revisions/version13/GUIDE.md>.
+
+<a id="ref-leanstatus"></a>
+
+\[3\] Accepted Lean helper snapshot. 本轮读取其形式化覆盖与未关闭义务说明。 <https://github.com/elliotglazer/diophantine-z-q/blob/9c0b3aba60d90fdcac82115f0582a6f52f1054f7/lean/README.md>.
+
+<a id="ref-repair"></a>
+
+\[4\] Version 11: Kato application and review protocol；Issue 2及11月8日作者回复。 <https://github.com/elliotglazer/diophantine-z-q/issues/2>; <https://github.com/elliotglazer/diophantine-z-q/blob/9c0b3aba60d90fdcac82115f0582a6f52f1054f7/docs/manuscript-revisions/version11/README.md>.
+
+<a id="ref-koenigsmann"></a>
+
+\[5\] J. Koenigsmann, Defining $\mathbb Z$ in $\mathbb Q$.  *Annals of Mathematics*  183 (2016), 73–93. 重点核对Theorem 1、Corollary 2和存在定义的历史定位。 <https://annals.math.princeton.edu/wp-content/uploads/annals-v183-n1-p02-p.pdf>.
+
+<a id="ref-openaiintro"></a>
+
+\[6\] OpenAI, Hilbert’s tenth problem over the rational numbers, 2026-09-24. 本轮读取导论的定理、有限检验接口与依赖；未独立核验深层算术证明。 <https://github.com/openai/math/blob/main/preprints/Hilberts-tenth-problem-over-the-rational-numbers-September-24-2026/build/sections/01-introduction.tex>.
+
+<a id="ref-openaioct"></a>
+
+\[7\] OpenAI, 同题10月6日版本说明：更新到修订稿引用。 <https://github.com/openai/math/blob/main/preprints/Hilberts-tenth-problem-over-the-rational-numbers-October-6-2026/README.md>.
+
+<a id="ref-sun"></a>
+
+\[8\] Zhi-Wei Sun, 86 unknowns for Hilbert’s tenth problem over the rationals. arXiv:2610.20691v2, 2026-10-19. 本轮核对陈述、变量数范围与上游依赖。 <https://arxiv.org/abs/2610.20691v2>.
+
+<a id="ref-matiyasevich"></a>
+
+\[9\] Yu. V. Matiyasevich, Diophantine representation of enumerable predicates.  *Mathematics of the USSR-Izvestiya*  5 (1971), 1–28. 基本定理；第6页四次化；第8页起偶数指标Fibonacci关系。 <https://www.mathnet.ru/php/getFT.phtml?jrnid=im&option_lang=eng&paperid=1910&what=fullteng>.
+
+<a id="ref-cook"></a>
+
+\[10\] S. Cook, The P versus NP Problem. Clay Mathematics Institute. <https://www.claymath.org/wp-content/uploads/2022/06/pvsnp.pdf>.
+
+<a id="ref-project"></a>
+
+\[11\] The Omega Institute, trureturing, `docs/VISION.md`. 固定提交下的恢复、局部整体、证据与成本说明。 <https://github.com/the-omega-institute/trureturing/blob/69a777d001b184cfce81bed62bad140fb93706d2/docs/VISION.md>.
+
+<a id="ref-auric"></a>
+
+\[12\] The Omega Institute, AURIC $\Omega$ 静态相融纤维理论。固定提交下第4–5节的响应商、约束赋值和可实现边界；本轮未审查全篇及全部形式化依赖。 <https://github.com/the-omega-institute/trureturing/blob/69a777d001b184cfce81bed62bad140fb93706d2/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md>.

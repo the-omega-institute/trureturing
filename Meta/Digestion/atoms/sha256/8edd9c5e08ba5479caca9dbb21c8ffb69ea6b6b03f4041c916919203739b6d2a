@@ -1,0 +1,36 @@
+**定义 133.1（原返回、源方向与漏出量）。** 沿用定义132.1的全部原域及 $\mathrm{EB}_{\ge1}$，固定任意 $F=D_p$、$k=\dim\operatorname{aff}F\ge1$ 和 $y\in\operatorname{ri}F$。在 $V$ 上固定辅助欧氏内积，所有距离、算子范数和奇异值均相对于它及参数空间的标准欧氏内积。固定一个单射球图
+
+$$
+F=c_F+T_F\overline B^k,\qquad
+y=c_F+T_F\xi,\qquad \|\xi\|<1.
+\tag{Q133.1}
+$$
+
+选单位向量 $v_0,\ldots,v_k\in\mathbb R^k$，使 $a_i=c_F+T_Fv_i$ 仿射无关且 $y$ 在其单纯形的相对内部。这样的选择总存在：取球心在零的正则单纯形；当 $\xi\ne0$ 时将一个顶点旋转至 $\xi/\|\xi\|$，则 $\xi$ 在从零至该顶点的开线段中；$\xi=0$ 时不需旋转。$k=1$ 时使用两个端点。这些 $a_i$ 是固定源球的接触点，不要求它们同属一个原可区别框架。
+
+对每个 $b\in C^*\setminus\{0\}$，记
+
+$$
+M(b)=\max_K b>0,\qquad
+b(c_F+T_Fz)=b(c_F)+\langle g_b,z\rangle
+\quad(z\in\mathbb R^k).
+\tag{Q133.2}
+$$
+
+仅在 $g_b\ne0$ 时定义 $w_b=g_b/\|g_b\|$。对一个实际原返回
+
+$$
+r\in P,\qquad t\in P\cap D_r,
+\qquad E_t=D_t,
+\tag{Q133.3}
+$$
+
+置
+
+$$
+\alpha_F(t)=\max_{x\in E_t}\operatorname{dist}(x,F).
+\tag{Q133.4}
+$$
+
+全部候选 $b\in N_t$ 均在同一个整个原锥 $C$ 上非负，且精确满足 $b(t)=0$。特别地，$b$ 并非仅在 $F$ 上非负的仿射函数。$M(b)$ 不预先有单位上界；$\|g_b\|/M(b)$ 是不依赖正倍数的源对比度。以下只使用原零对称、完整零确认、极大真面及球面纯性这些[既有原面接口][Q133BF]，不假设标签单点、Inj、闭 $P$、Pair或共同球维数。
+

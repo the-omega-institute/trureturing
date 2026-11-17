@@ -17,6 +17,7 @@ sys.path.insert(0, str(ROOT / "tools/scripts/worktree"))
 import worktree_protocol as protocol
 import worktree_pool as pool
 import worktree_preservation as preservation
+import worktree_maintenance as maintenance
 
 
 def run(cwd, *args, env=None, check=True):
@@ -229,55 +230,39 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual("personal bytes", (arbitrary / "keep").read_text())
         self.assertEqual("dev", run(self.main, "branch", "--show-current").stdout.strip())
 
-    def test_automatic_allocation_payload_failure_identifies_selected_path(self):
+    def test_automatic_allocation_preserves_registration_and_ignored_cache(self):
         tree = self.root / "selected five-hour tree"
         head = self.commit_branch("lane/governance/selected", tree, 5 * 3600)
-        failure = subprocess.CalledProcessError(1, ["/bin/rm", "-rf", "--", "./payload"],
-                                              stderr=b"rm: ./payload: deletion denied\n")
-        with patch.object(preservation, "_remove_payload", side_effect=failure):
-            with self.assertRaises(protocol.GitFailure) as failed:
-                pool.claim(self.options("lane/governance/new-auto"))
-        reason = str(failed.exception)
-        self.assertIn("removal_payload_failed:CalledProcessError", reason)
-        self.assertIn("deletion denied", reason)
-        self.assertIn("root=True, pointer=True, registered=True", reason)
-        self.assertIn(str(tree), reason)
-        self.assertEqual(head, run(tree, "rev-parse", "HEAD").stdout.strip())
+        metadata = protocol.identity(self.main, tree)[1]
+        (protocol.common(self.main) / "info/exclude").write_text(".lake/\n")
+        (tree / ".lake").mkdir()
+        (tree / ".lake/cache").write_text("retained cache")
+        pointer = (tree / ".git").read_bytes()
+        with patch.object(preservation, "_remove_payload", side_effect=AssertionError("creation deleted payload")):
+            result = pool.claim(self.options("lane/governance/new-auto"))
+        self.assertEqual("claimed", result["status"])
+        self.assertEqual([], result["removed_worktrees"])
+        self.assertEqual(pointer, (tree / ".git").read_bytes())
+        self.assertEqual("retained cache", (tree / ".lake/cache").read_text())
+        self.assertEqual(head, run(self.main, "rev-parse", "lane/governance/selected").stdout.strip())
 
     @unittest.skipUnless(hasattr(os, "chflags"), "requires native immutable flags")
-    def test_actual_default_allocation_failure_reports_selected_not_nominal_path(self):
+    def test_actual_default_allocation_leaves_dirty_candidate_for_maintenance(self):
         import stat
         self.prepare_make()
-        for entrance in ("default-make", "cli-with-nominal"):
-            with self.subTest(entrance=entrance):
-                tree = self.root / ("selected-" + entrance)
-                branch = "lane/governance/selected-" + entrance
-                head = self.commit_branch(branch, tree, 5 * 3600)
-                blocked = tree / "blocked"
-                blocked.write_text("retained on failure")
-                name = "diagnostic-allocation-" + entrance
-                nominal = self.root / ("trureturing-" + name)
-                self.assertNotEqual(tree, nominal)
-                os.chflags(blocked, stat.UF_IMMUTABLE)
-                try:
-                    if entrance == "default-make":
-                        failed = self.make("worktree", "KIND=governance", "NAME=" + name,
-                                           "BASE=" + self.base, check=False)
-                    else:
-                        failed = self.create(name, nominal, reuse_any=True, check=False)
-                    output = failed.stdout + failed.stderr
-                    self.assertNotEqual(0, failed.returncode, output)
-                    self.assertIn("removal_payload_failed:CalledProcessError", output)
-                    self.assertIn("Operation not permitted", output)
-                    self.assertIn("root=True, pointer=True, registered=True", output)
-                    self.assertIn(str(tree), output)
-                    self.assertTrue(blocked.exists())
-                    self.assertFalse(nominal.exists())
-                finally:
-                    os.chflags(blocked, 0)
-                    self.make("worktree-remove", "NAMES=" + tree.name, "FORCE=1")
-                self.assertEqual(head, run(self.main, "rev-parse", branch).stdout.strip())
-        self.assertEqual("dev", run(self.main, "branch", "--show-current").stdout.strip())
+        tree = self.root / "dirty candidate"
+        branch = "lane/governance/dirty-candidate"
+        head = self.commit_branch(branch, tree, 5 * 3600)
+        blocked = tree / "blocked"
+        blocked.write_text("retained on allocation")
+        os.chflags(blocked, stat.UF_IMMUTABLE)
+        try:
+            result = self.make("worktree", "KIND=governance", "NAME=fresh-dirty", "BASE=" + self.base)
+            self.assertEqual("succeeded", json.loads(result.stdout.splitlines()[-1])["status"])
+            self.assertTrue(blocked.exists())
+            self.assertEqual(head, run(tree, "rev-parse", "HEAD").stdout.strip())
+        finally:
+            os.chflags(blocked, 0)
 
     def test_missing_pointer_locked_registration_supported_cleanup_entrances(self):
         self.prepare_make()
@@ -369,7 +354,7 @@ raise SystemExit(cleanup.main(arguments[1:]))
         self.assertEqual(head, run(self.main, "rev-parse", "lane/governance/missing").stdout.strip())
 
     def test_removal_deadline_matches_force_and_allocation_contract_without_waiting(self):
-        for mode in ("normal", "force", "allocation", "sweep"):
+        for mode in ("normal", "force", "sweep"):
             with self.subTest(mode=mode):
                 tree = self.root / ("deadline-" + mode)
                 self.commit_branch("lane/governance/old-" + mode, tree, 7 * 3600)
@@ -384,9 +369,7 @@ raise SystemExit(cleanup.main(arguments[1:]))
                             raise subprocess.TimeoutExpired(command, timeout)
                     return native(command, *args, **kwargs)
                 with patch.object(preservation.subprocess, "run", side_effect=elapsed):
-                    if mode == "allocation":
-                        result = pool.claim(self.options("lane/governance/new-deadline", tree))
-                    elif mode == "sweep":
+                    if mode == "sweep":
                         result = pool.sweep(self.main, self.base, force=True)
                     else:
                         result = preservation.remove(SimpleNamespace(source=self.main, names="", path=[tree],
@@ -398,44 +381,33 @@ raise SystemExit(cleanup.main(arguments[1:]))
                 else:
                     self.assertEqual([None] * len(observed), observed)
 
-    def test_partial_payload_failure_preserves_identity_and_claim_retry(self):
+    def test_partial_payload_failure_retains_notification_for_maintenance_retry(self):
         for fault in ("error", "timeout", "interrupt"):
             with self.subTest(fault=fault):
                 tree = self.root / ("expired " + fault)
                 branch = "lane/governance/old-" + fault
                 head = self.commit_branch(branch, tree, 7 * 3600)
-                destination = self.root / ("new " + fault)
-                requested = "lane/governance/new-" + fault
+                maintenance.notify(self.main)
                 original = subprocess.run
-
                 def partial(command, *args, **kwargs):
                     if command[0] != "/bin/rm":
                         return original(command, *args, **kwargs)
-                    original(["/bin/rm", "-f", "--", "./payload"],
-                             cwd=tree, check=True)
-                    self.assertFalse((tree / "payload").exists())
+                    original(["/bin/rm", "-f", "--", "./payload"], cwd=tree, check=True)
                     if fault == "interrupt":
                         raise KeyboardInterrupt()
                     if fault == "timeout":
-                        raise subprocess.TimeoutExpired(command, kwargs["timeout"],
-                                                        stderr=b"partial timeout diagnostic")
+                        raise subprocess.TimeoutExpired(command, kwargs["timeout"], stderr=b"partial timeout diagnostic")
                     raise subprocess.CalledProcessError(1, command, stderr=b"partial payload diagnostic")
-
                 with patch.object(preservation.subprocess, "run", side_effect=partial):
-                    with self.assertRaisesRegex(protocol.GitFailure, "removal_payload_failed:") as failed:
-                        pool.claim(self.options(requested, destination))
-                if fault != "interrupt":
-                    self.assertIn("diagnostic", str(failed.exception))
-                self.assertIn("pointer=True, registered=True", str(failed.exception))
-                self.assertFalse(destination.exists())
-                self.assertNotEqual(run(self.main, "show-ref", "--verify", "refs/heads/" + requested,
-                                        check=False).returncode, 0)
+                    result = maintenance.run(self.main)
+                self.assertEqual("failed", result["status"])
+                self.assertIn("removal_payload_failed:", str(result))
+                self.assertTrue(list((maintenance.directory(self.main) / "requests").iterdir()))
                 protocol.identity(self.main, tree)
-                self.assertEqual(run(tree, "rev-parse", "HEAD").stdout.strip(), head)
-                result = pool.claim(self.options(requested, destination))
-                self.assertIn(str(tree), result["removed_worktrees"])
+                result = maintenance.run(self.main)
+                self.assertEqual("succeeded", result["status"])
                 self.assertFalse(tree.exists())
-                self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
+                self.assertEqual(head, run(self.main, "rev-parse", branch).stdout.strip())
 
     @unittest.skipUnless(hasattr(os, "chflags"), "requires native immutable flags")
     def test_actual_payload_error_and_retry(self):
@@ -586,7 +558,7 @@ raise SystemExit(cleanup.main(arguments[1:]))
         metadata = Path(run(candidate, "rev-parse", "--git-dir").stdout.strip())
         (metadata / "locked").write_text("legacy marker\n")
         holder = subprocess.Popen(
-            [sys.executable, "-c", "import os,time; os.chdir(os.environ['TREE']); open(os.path.join(os.environ['TREE'],'held'),'wb').close(); time.sleep(30)"],
+            [sys.executable, "-c", "import os,time; os.chdir(os.environ['TREE']); open(os.path.join(os.environ['TREE'],'payload'),'ab').close(); time.sleep(30)"],
             env={**os.environ, "TREE": str(candidate)})
         try:
             result = self.create("reused", candidate)
@@ -674,43 +646,32 @@ raise SystemExit(cleanup.main(arguments[1:]))
                                  "lane/governance/new-" + reason)
                 self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
 
-    def test_cli_expires_inventory_before_selection_or_continuation(self):
-        for continuation, reuse_any, expired_first in (
-                (continuation, reuse_any, expired_first)
-                for continuation in (False, True) for reuse_any in (False, True)
-                for expired_first in (False, True)):
-            with self.subTest(continuation=continuation, reuse_any=reuse_any, expired_first=expired_first):
-                name = f"task-{continuation}-{reuse_any}-{expired_first}"
-                eligible = self.root / (("z" if expired_first else "a") + "-eligible-" + name)
-                expired = self.root / (("a" if expired_first else "z") + "-expired-" + name)
+    def test_cli_notifies_without_expiring_inventory_before_selection_or_continuation(self):
+        for continuation, reuse_any in ((a, b) for a in (False, True) for b in (False, True)):
+            with self.subTest(continuation=continuation, reuse_any=reuse_any):
+                name = f"task-{continuation}-{reuse_any}"
+                eligible = self.root / ("eligible-" + name)
+                expired = self.root / ("expired-" + name)
                 branch = "lane/governance/" + (name if continuation else "old-" + name)
                 self.commit_branch(branch, eligible, 60 if continuation else 5 * 3600)
-                (eligible / "payload").write_text("ordinary tracked bytes")
-                (eligible / "untracked").write_text("ordinary untracked bytes")
+                if continuation:
+                    (eligible / "payload").write_text("ordinary tracked bytes")
+                    (eligible / "untracked").write_text("ordinary untracked bytes")
                 old_branch = "lane/governance/expired-" + name
                 head = self.commit_branch(old_branch, expired, 7 * 3600)
                 (expired / "payload").write_text("dirty")
-                (expired / "untracked").write_text("discard")
                 result = self.create(name, eligible, reuse_any=reuse_any)
                 receipt = json.loads(result.stdout)
-                selected = Path(receipt["path"])
-                self.assertIn(str(expired), receipt["removed_worktrees"])
-                self.assertEqual(run(self.main, "rev-parse", old_branch).stdout.strip(), head)
-                if expired.exists():
-                    # Default selection may recreate the expired pathname.
-                    self.assertNotEqual(run(expired, "rev-parse", "HEAD").stdout.strip(), head)
-                    self.assertFalse((expired / "untracked").exists())
-                if not reuse_any or continuation:
-                    self.assertEqual(selected, eligible)
-                self.assertEqual(run(selected, "branch", "--show-current").stdout.strip(),
-                                 "lane/governance/" + name)
+                self.assertEqual([], receipt["removed_worktrees"])
+                self.assertEqual("queued", receipt["maintenance"]["status"])
+                self.assertTrue(expired.exists())
+                self.assertEqual("dirty", (expired / "payload").read_text())
+                self.assertEqual(head, run(self.main, "rev-parse", old_branch).stdout.strip())
                 if continuation:
-                    self.assertEqual((eligible / "payload").read_text(), "ordinary tracked bytes")
-                    self.assertEqual((eligible / "untracked").read_text(), "ordinary untracked bytes")
-                # Keep the next subcase's inventory independent without a cleanup entrance.
+                    self.assertEqual("ordinary tracked bytes", (eligible / "payload").read_text())
+                    self.assertEqual("ordinary untracked bytes", (eligible / "untracked").read_text())
                 run(self.main, "worktree", "remove", "--force", eligible)
-                if selected != eligible:
-                    run(self.main, "worktree", "remove", "--force", selected)
+                run(self.main, "worktree", "remove", "--force", expired)
 
     def test_make_and_cli_expire_inventory_before_fresh_explicit_destination(self):
         self.prepare_make()
@@ -733,8 +694,8 @@ raise SystemExit(cleanup.main(arguments[1:]))
                                     "DEST=" + str(destination), "BASE=" + self.base, "ALLOW_LOW_DISK=1"))
                 self.assertIn('"status":"succeeded"', result.stdout)
                 for path, branch, head in expired:
-                    self.assertFalse(path.exists(), result.stdout)
-                    self.assertIn(str(path), result.stdout)
+                    self.assertTrue(path.exists(), result.stdout)
+                    self.assertEqual("queued", json.loads(result.stdout.splitlines()[-1])["maintenance"]["status"])
                     self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
                 self.assertEqual(run(destination, "rev-parse", "HEAD").stdout.strip(), self.base)
                 self.assertEqual(run(eligible, "rev-parse", "HEAD").stdout.strip(), eligible_head)
@@ -756,8 +717,7 @@ raise SystemExit(cleanup.main(arguments[1:]))
                           self.make("worktree", "KIND=math", "NAME=" + name, "DEST=" + str(destination),
                                     "BASE=HEAD", "ALLOW_LOW_DISK=1", cwd=invoking))
                 self.assertIn('"status":"succeeded"', result.stdout)
-                self.assertIn(str(invoking), result.stdout)
-                self.assertFalse(invoking.exists())
+                self.assertTrue(invoking.exists())
                 self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
                 self.assertEqual(run(destination, "rev-parse", "HEAD").stdout.strip(), head)
                 self.assertEqual(run(self.main, "branch", "--show-current").stdout.strip(), "dev")
@@ -794,6 +754,7 @@ raise SystemExit(cleanup.main(arguments[1:]))
                 destination = self.root / ("refused " + reason)
                 env = None if reason == "branch" else {
                     "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
+                    "FRONTDOOR_DOTNET": self.env["FRONTDOOR_DOTNET"],
                     "EXPIRY_TEST_PYTHON": shutil.which("python3"), "WORKTREE_REQUIRE_DISK_CHECK": "1"}
                 failed = self.cli("worktree", "--kind", "governance", "--name", name,
                                   "--path", destination, "--base", self.base, "--skip-restore",
@@ -802,56 +763,41 @@ raise SystemExit(cleanup.main(arguments[1:]))
                                  failed.stdout + failed.stderr)
                 self.assertIn("injected disk refusal" if reason == "disk" else "branch already exists",
                               failed.stderr)
-                self.assertIn('"removed_worktrees":["' + str(expired), failed.stderr)
-                self.assertFalse(expired.exists())
+                self.assertTrue(expired.exists())
                 self.assertFalse(destination.exists())
                 self.assertEqual(run(self.main, "rev-parse", old_branch).stdout.strip(), head)
 
-    def test_make_fresh_creation_stops_on_expiry_failure_with_partial_effects(self):
+    def test_make_fresh_creation_survives_background_expiry_failure(self):
         self.prepare_make()
-        good, blocked = self.root / "a-expired", self.root / "z-expired"
-        retained = {}
-        for name, path in (("good", good), ("blocked", blocked)):
-            branch = "lane/governance/" + name
-            retained[branch] = self.commit_branch(branch, path, 7 * 3600)
-        launcher = self.bin / "git"
-        launcher.write_text('#!/bin/bash\n'
-            'if [[ "$*" == *"worktree remove"* && "${!#}" == "$EXPIRY_TEST_BLOCKED" ]]; then\n'
-            '  echo "injected native removal failure" >&2\n  exit 1\nfi\n'
-            'exec "$EXPIRY_TEST_GIT" "$@"\n')
-        launcher.chmod(0o755)
-        self.env.update(EXPIRY_TEST_GIT=shutil.which("git"), EXPIRY_TEST_BLOCKED=str(blocked))
-        destination = self.root / "fresh refused"
-        result = self.make("worktree", "KIND=governance", "NAME=refused", "DEST=" + str(destination),
-                           "BASE=" + self.base, "ALLOW_LOW_DISK=1", check=False)
-        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
-        self.assertIn("expired_cleanup_failed:", result.stderr)
-        self.assertIn("injected native removal failure", result.stderr)
-        self.assertIn("expired_worktrees_removed=", result.stderr)
-        self.assertIn(str(good), result.stderr)
-        self.assertFalse(good.exists())
-        self.assertTrue(blocked.exists())
-        self.assertFalse(destination.exists())
-        self.assertNotEqual(run(self.main, "show-ref", "--verify", "refs/heads/lane/governance/refused",
-                                check=False).returncode, 0)
-        for branch, head in retained.items():
-            self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
-        self.assertEqual(run(self.main, "branch", "--show-current").stdout.strip(), "dev")
+        tree = self.root / "expired blocked"
+        branch = "lane/governance/blocked"
+        head = self.commit_branch(branch, tree, 7 * 3600)
+        with patch.object(pool, "_remove_registered", side_effect=protocol.GitFailure("native removal failed")):
+            maintenance.notify(self.main)
+            result = maintenance.run(self.main)
+        self.assertEqual("failed", result["status"])
+        destination = self.root / "fresh allowed"
+        result = self.make("worktree", "KIND=governance", "NAME=allowed", "DEST=" + str(destination),
+                           "BASE=" + self.base, "ALLOW_LOW_DISK=1")
+        self.assertTrue(destination.exists())
+        self.assertTrue(tree.exists())
+        self.assertEqual(head, run(self.main, "rev-parse", branch).stdout.strip())
+        self.assertEqual("dev", run(self.main, "branch", "--show-current").stdout.strip())
 
-    def test_cli_expired_same_task_is_removed_and_reports_retained_branch_failure(self):
+    def test_cli_expired_same_task_is_retained_until_background_maintenance(self):
         tree = self.root / "expired same task"
         branch = "lane/governance/expired-task"
         head = self.commit_branch(branch, tree, 7 * 3600)
         (tree / "payload").write_text("ordinary tracked edit")
         (tree / "untracked").write_text("ordinary untracked bytes")
-        failed = self.create("expired-task", tree, reuse_any=True, check=False, cwd=tree)
-        self.assertNotEqual(failed.returncode, 0)
-        self.assertIn("branch_already_exists", failed.stderr)
-        self.assertIn("expired_worktrees_removed=", failed.stderr)
-        self.assertIn(str(tree), failed.stderr)
-        self.assertNotIn("WORKTREE_RETAINED", failed.stderr)
+        for reuse_any in (False, True):
+            failed = self.create("expired-task", tree, reuse_any=reuse_any, check=False, cwd=tree)
+            self.assertNotEqual(0, failed.returncode)
+            self.assertIn("expired_maintenance_pending", failed.stderr)
+        self.assertTrue(tree.exists())
+        self.assertEqual(head, run(self.main, "rev-parse", branch).stdout.strip())
+        self.assertEqual("succeeded", maintenance.run(self.main)["status"])
         self.assertFalse(tree.exists())
-        self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
 
     def test_cli_same_task_still_checks_base_and_pins(self):
         tree = self.root / "same task"
@@ -920,8 +866,7 @@ raise SystemExit(cleanup.main(arguments[1:]))
         self.assertIn("main_worktree", failed.stderr)
         self.assertEqual(run(self.main, "branch", "--show-current").stdout.strip(), "dev")
 
-    def test_expiry_native_failure_reports_partial_effects_before_selection(self):
-        from worktree_protocol import GitFailure
+    def test_background_expiry_failure_reports_partial_effects_independently(self):
         good = self.root / "a-expired"
         blocked = self.root / "z-expired"
         for name, path in (("good", good), ("blocked", blocked)):
@@ -929,14 +874,16 @@ raise SystemExit(cleanup.main(arguments[1:]))
         remove = pool._remove_registered
         def native_failure(source, path):
             if path.resolve() == blocked.resolve():
-                raise GitFailure("native removal error")
+                raise protocol.GitFailure("native removal error")
             return remove(source, path)
+        maintenance.notify(self.main)
         with patch.object(pool, "_remove_registered", side_effect=native_failure):
-            with self.assertRaisesRegex(protocol.GitFailure, "expired_cleanup_failed:.*native removal error.*expired_worktrees_removed="):
-                pool.claim(self.options("lane/governance/new"))
+            result = maintenance.run(self.main)
+        self.assertEqual("failed", result["status"])
+        self.assertIn("native removal error", str(result))
         self.assertFalse(good.exists())
         self.assertTrue(blocked.exists())
-        self.assertNotEqual(run(self.main, "show-ref", "--verify", "refs/heads/lane/governance/new", check=False).returncode, 0)
+        self.assertEqual(0, result["requests_consumed"])
 
     def test_pool_exact_six_hour_boundary_and_future_stale(self):
         tree = self.root / "boundary"
@@ -953,6 +900,235 @@ raise SystemExit(cleanup.main(arguments[1:]))
         self.assertFalse(protocol.reusable(future, self.main)[0])
         protocol.mark_stale(self.main, future)
         self.assertTrue(protocol.reusable(future, self.main)[0])
+
+
+    def test_notifications_during_sweep_and_failed_sweeps_are_not_lost(self):
+        maintenance.notify(self.main)
+        original = pool.sweep
+        def arriving(*args, **kwargs):
+            result = original(*args, **kwargs)
+            maintenance.notify(self.main)
+            return result
+        with patch.object(pool, "sweep", side_effect=arriving):
+            result = maintenance.run(self.main)
+        self.assertEqual("succeeded", result["status"])
+        requests = maintenance.directory(self.main) / "requests"
+        self.assertEqual(1, len(list(requests.iterdir())))
+        maintenance.run(self.main)
+        self.assertEqual([], list(requests.iterdir()))
+
+    def test_exclusive_worker_does_not_block_fresh_allocation_or_consume_events(self):
+        maintenance.notify(self.main)
+        script = ("import sys; sys.path.insert(0,sys.argv[1]); "
+                  "from worktree_maintenance import lease; "
+                  "ctx=lease(sys.argv[2]); ctx.__enter__(); "
+                  "print('ready',flush=True); sys.stdin.read(); ctx.__exit__(None,None,None)")
+        holder = subprocess.Popen([sys.executable, "-B", "-c", script,
+            str(ROOT / "tools/scripts/worktree"), str(self.main)],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+        try:
+            self.assertEqual("ready", holder.stdout.readline().strip())
+            self.assertEqual("busy", maintenance.run(self.main)["status"])
+            destination = self.root / "fresh during maintenance"
+            result = self.create("while-busy", destination)
+            self.assertEqual("succeeded", json.loads(result.stdout)["status"])
+            self.assertTrue(destination.is_dir())
+            self.assertTrue(list((maintenance.directory(self.main) / "requests").iterdir()))
+        finally:
+            holder.communicate(timeout=10)
+        self.assertEqual(0, holder.returncode)
+        self.assertEqual("succeeded", maintenance.run(self.main)["status"])
+
+    def test_claim_notification_cannot_preempt_same_task_reuse(self):
+        tree = self.root / "attached"
+        branch = "lane/governance/attached"
+        self.commit_branch(branch, tree, 0)
+        native_notify = maintenance.notify
+        holders = []
+        script = ("import sys; sys.path.insert(0,sys.argv[1]); "
+                  "from worktree_maintenance import lease; "
+                  "ctx=lease(sys.argv[2],blocking=False); ctx.__enter__(); "
+                  "print('ready',flush=True); sys.stdin.read(); ctx.__exit__(None,None,None)")
+        def notify_and_start_worker(source):
+            notice = native_notify(source)
+            holder = subprocess.Popen([sys.executable, "-B", "-c", script,
+                str(ROOT / "tools/scripts/worktree"), str(source)],
+                stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+            holders.append(holder)
+            self.assertEqual("ready", holder.stdout.readline().strip())
+            return notice
+        try:
+            with patch.object(maintenance, "notify", side_effect=notify_and_start_worker):
+                result = pool.claim(self.options(branch, tree))
+            self.assertEqual("reused", result["status"])
+            self.assertEqual("queued", result["maintenance"]["status"])
+        finally:
+            for holder in holders:
+                holder.communicate(timeout=10)
+                self.assertEqual(0, holder.returncode)
+
+    def test_make_notifies_after_existing_destination_allocation(self):
+        self.prepare_make()
+        tree = self.root / "attached"
+        self.commit_branch("lane/governance/attached", tree, 0)
+        # Emulate a host worker that starts on any event queued before CLI entry.
+        worker = self.root / "notified-worker.py"
+        worker.write_text("import os, subprocess, sys\n"
+            "sys.path.insert(0, " + repr(str(ROOT / "tools/scripts/worktree")) + ")\n"
+            "from worktree_maintenance import directory, lease\n"
+            "source = os.environ['NOTIFICATION_SOURCE']\n"
+            "command = [os.environ['FRONTDOOR_DOTNET'], os.environ['FRONTDOOR_CLI'], *sys.argv[1:]]\n"
+            "if list((directory(source) / 'requests').glob('*')):\n"
+            "    with lease(source):\n"
+            "        result = subprocess.run(command)\n"
+            "else:\n"
+            "    result = subprocess.run(command)\n"
+            "raise SystemExit(result.returncode)\n")
+        launcher = self.bin / "dotnet"
+        launcher.write_text('#!/bin/bash\nif [[ "$1" == run ]]; then\n'
+            '  while [[ $# -gt 0 && "$1" != -- ]]; do shift; done\n'
+            '  [[ $# -gt 0 ]] || exit 64\n  shift\n'
+            '  exec "$NOTIFICATION_PYTHON" -B "$NOTIFICATION_WORKER" "$@"\nfi\n'
+            'exec "$FRONTDOOR_DOTNET" "$@"\n')
+        self.env.update(NOTIFICATION_PYTHON=sys.executable,
+                        NOTIFICATION_WORKER=str(worker), NOTIFICATION_SOURCE=str(self.main))
+        result = self.make("worktree", "KIND=governance", "NAME=attached",
+                           "DEST=" + str(tree), "BASE=" + self.base)
+        self.assertEqual("reused", json.loads(result.stdout.splitlines()[-1])["status"])
+        self.assertTrue(list((maintenance.directory(self.main) / "requests").iterdir()))
+
+    def test_service_projection_and_host_units_use_common_directory_with_spaces(self):
+        import plistlib
+        home = self.root / "user home with spaces"
+        native_run = subprocess.run
+        def host_only(command, *args, **kwargs):
+            if command[0] in ("launchctl", "systemctl"):
+                return subprocess.CompletedProcess(command, 0)
+            return native_run(command, *args, **kwargs)
+        for platform in ("darwin", "linux"):
+            with self.subTest(platform=platform), patch.object(maintenance.sys, "platform", platform), \
+                    patch.object(maintenance.Path, "home", return_value=home), \
+                    patch.object(maintenance.subprocess, "run", side_effect=host_only) as host:
+                result = maintenance.install(self.main)
+                self.assertEqual("installed", result["status"])
+                self.assertTrue(host.called)
+                root = maintenance.directory(self.main)
+                runtime = root / "runtime/worktree_maintenance.py"
+                self.assertTrue(runtime.is_file())
+                if platform == "darwin":
+                    config = plistlib.loads(Path(result["files"][0]).read_bytes())
+                    self.assertEqual(str(runtime), config["ProgramArguments"][2])
+                    self.assertEqual([str(root / "requests")], config["WatchPaths"])
+                else:
+                    self.assertIn("Type=oneshot", Path(result["files"][0]).read_text())
+                    self.assertIn("PathChanged=" + str(root / "requests") + "\n",
+                                  Path(result["files"][1]).read_text())
+                    self.assertIn("OnUnitActiveSec=900", Path(result["files"][2]).read_text())
+        result = subprocess.run([sys.executable, "-I", "-B", str(runtime),
+            "--source", str(self.main), "status"], cwd=self.root, capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertIsNotNone(json.loads(result.stdout)["service"])
+        result = subprocess.run([sys.executable, "-I", "-B", str(runtime),
+            "--source", str(self.main), "run"], cwd=self.root, capture_output=True, text=True, timeout=10)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual("succeeded", json.loads(result.stdout)["status"])
+
+    def test_unwritable_maintenance_storage_does_not_block_new_destination(self):
+        root = maintenance.directory(self.main)
+        root.chmod(0o500)
+        try:
+            destination = self.root / "without maintenance storage"
+            result = self.create("storage-failure", destination)
+            self.assertEqual("succeeded", json.loads(result.stdout)["status"])
+            self.assertEqual("unavailable", json.loads(result.stdout)["maintenance"]["status"])
+            self.assertTrue((destination / "lean-toolchain").is_file())
+        finally:
+            root.chmod(0o700)
+
+    def test_default_selection_reuses_its_guarded_nominal_destination(self):
+        tree = self.root / "nominal destination"
+        self.commit_branch("lane/governance/previous-task", tree, 5 * 3600)
+        result = self.create("next-task", tree, reuse_any=True)
+        self.assertEqual("claimed", json.loads(result.stdout)["status"])
+        result = self.create("next-task", tree, reuse_any=True)
+        self.assertEqual("reused", json.loads(result.stdout)["status"])
+
+    def test_concurrent_claims_cannot_reassign_one_selected_tree(self):
+        tree = self.root / "shared candidate"
+        self.commit_branch("lane/governance/candidate", tree, 5 * 3600)
+        ready = self.root / "ready"
+        script = '''import sys
+from pathlib import Path
+sys.path.insert(0, sys.argv[1])
+import worktree_pool as pool
+from types import SimpleNamespace
+original = pool._allocate
+def paused(*args):
+    Path(sys.argv[4]).touch()
+    sys.stdin.read()
+    return original(*args)
+pool._allocate = paused
+options = SimpleNamespace(source=Path(sys.argv[2]), path=None, branch='lane/governance/first',
+                          base=sys.argv[3], skip_restore=True, exclude_path=[])
+assert pool.claim(options)['status'] == 'claimed'
+'''
+        holder = subprocess.Popen([sys.executable, "-B", "-c", script,
+            str(ROOT / "tools/scripts/worktree"), str(self.main), self.base, str(ready)],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            deadline = time.monotonic() + 10
+            while not ready.exists() and time.monotonic() < deadline:
+                time.sleep(0.02)
+            self.assertTrue(ready.exists())
+            second = pool.claim(self.options("lane/governance/second"))
+            self.assertEqual("no_reusable", second["status"])
+        finally:
+            output, error = holder.communicate(timeout=20)
+        self.assertEqual(0, holder.returncode, output + error)
+        self.assertEqual("lane/governance/first", run(tree, "branch", "--show-current").stdout.strip())
+
+    def test_worker_skips_fresh_registration_until_initialization_exits(self):
+        import shlex
+        old = self.root / "old base"
+        self.base = self.commit_branch("lane/governance/old-base", old, 7 * 3600)
+        destination = self.root / "initializing old base"
+        bin_dir = self.root / "pause-bin"
+        bin_dir.mkdir()
+        ready = self.root / "checkout ready"
+        resume = self.root / "resume checkout"
+        launcher = bin_dir / "git"
+        launcher.write_text('#!/bin/bash\nif [[ "$1" == reset ]]; then\n'
+            '  touch ' + shlex.quote(str(ready)) + '\n'
+            '  while [[ ! -f ' + shlex.quote(str(resume)) + ' ]]; do sleep 0.02; done\nfi\n'
+            'exec ' + shlex.quote(shutil.which("git")) + ' "$@"\n')
+        launcher.chmod(0o755)
+        caller = self.main / "caller"
+        caller.mkdir()
+        child = subprocess.Popen([shutil.which("dotnet"), str(ROOT /
+            "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"), "worktree", "--kind", "governance",
+            "--name", "initializing", "--path", os.path.relpath(destination, caller),
+            "--source", "..", "--base", self.base, "--skip-restore"],
+            cwd=caller, env=protocol.git_environment({"PATH": str(bin_dir) + os.pathsep + os.environ["PATH"]}),
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            deadline = time.monotonic() + 60
+            while not ready.exists() and child.poll() is None and time.monotonic() < deadline:
+                time.sleep(0.02)
+            if not ready.exists():
+                resume.touch()
+                output, error = child.communicate(timeout=20)
+                self.fail("checkout was not reached: " + output + error)
+            result = maintenance.run(self.main)
+            row = next(item for item in result["items"] if item["path"] == str(destination))
+            self.assertEqual("initialization_in_progress", row["reason"])
+            self.assertTrue((destination / ".git").is_file())
+        finally:
+            resume.touch()
+            output, error = child.communicate(timeout=20)
+        self.assertEqual(0, child.returncode, output + error)
+        self.assertTrue((destination / "lean-toolchain").is_file())
+        self.assertEqual("succeeded", maintenance.run(self.main)["status"])
+        self.assertFalse(destination.exists())
 
 
 if __name__ == "__main__":

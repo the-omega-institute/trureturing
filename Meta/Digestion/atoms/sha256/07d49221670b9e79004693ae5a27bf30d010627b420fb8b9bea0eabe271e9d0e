@@ -1,0 +1,13 @@
+**推论 198.9（低维标签的自动支付与受限分类）。** 在 L2+全标签 Hit 下，只有 $w_a\ge5$ 的标签还需要额外输入 Flat 或 SP。并且
+
+$$
+\mathrm{L2}+\forall a\in P\,[\mathrm{Hit}(a),\ w_a\le4]
+\quad\Longleftrightarrow\quad
+\text{完整保单位复 }\operatorname{PSD}_n,\quad 1\le n\le3.
+\tag{198.14}
+$$
+
+证明。198.8逐标签给 NC，直接消费 XIII162.10 的 L2+AD+NC 分类；AD 由197.6的球内命中论证供应。标准 $\operatorname{PSD}_n$ 的 $W_{P_v}=\operatorname{Herm}(v^\perp)$，故 $w_a=(n-1)^2$，给 $n\le3$ 与反向。
+
+这个受限维数条件不能放进整个非平凡三复制底充当普适量子候选：197.7的强实背景使其空间维数为整数立方 $(\dim V)^3$，而(198.14)只容许维数 $1,4,9$。非平凡整数立方不在其中。这是受限分类的边界，不是否定完整候选。单标签达到 $w_a=4$ 在198.8中只用于该标签结论，本条没有由此声称整个原锥已被识别。$\square$
+

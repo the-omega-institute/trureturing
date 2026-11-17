@@ -1,0 +1,5 @@
+**证明。**
+- $\kappa>3/2$：由 Fan–Kobayashi–Molnar 定理 1.5，$E_\kappa\iff\mathrm{RH}$。
+- $1<\kappa<3/2$：由本卷定理 1.5，$E_\kappa$ 为假。
+- $\kappa=3/2$：由定理 2.3，$E_\kappa$ 为假。
+

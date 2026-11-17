@@ -38,7 +38,7 @@ private theorem kernel_padding (A : E →L[ℝ] V) {k : E} (hk : k ≠ 0)
 
 /-- If an affine sphere lies entirely in the extreme locus, a noninjective
 linear part must vanish: a flattened sphere cannot bound a nontrivial disk. -/
-private theorem sphere_extreme_injective_or_zero (K : Set V) (c : V)
+theorem sphere_extreme_injective_or_zero (K : Set V) (c : V)
     (A : E →L[ℝ] V)
     (hsphere : ∀ x : E, ‖x‖ = 1 → c + A x ∈ K.extremePoints ℝ) :
     Function.Injective A ∨ A = 0 := by

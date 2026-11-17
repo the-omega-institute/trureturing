@@ -1,0 +1,5 @@
+**定理 3.6（整数参数：条件结论、三重碰撞与有限性）。** 设整数 $k\ge2$。
+- (i) 若 Alaoglu–Erdős 猜想成立（对不同素数 $p,q$，$p^t,q^t\in\mathbb Q$ 蕴含 $t\in\mathbb Z$），则对一切不同素数 $p,q$ 有 $E_p^{[k]}\cap E_q^{[k]}=\varnothing$。四指数猜想蕴含该猜想。
+- (ii) 无条件地，不存在三个不同素数 $p,q,r$ 使 $E_p^{[k]}\cap E_q^{[k]}\cap E_r^{[k]}\ne\varnothing$。
+- (iii) 无条件地，对固定的不同素数 $p,q$，满足 $F_k(p,i)=F_k(q,j)$ 的 $(i,j)$ 只有有限多对。
+

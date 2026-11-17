@@ -1,0 +1,39 @@
+**定理 138.4（反射纯球的面或内部截面二分）。** 设 $I(F)=\{a\}$。定义
+
+$$
+\sigma_F(q)=2c_q-a\quad(q\in S(F)),\qquad
+A_F=2G_F(F)-a,\qquad b_F=2o_F-a.
+\tag{XI138.4}
+$$
+
+则 $A_F\subset K$ 为非退化仿射三球，$b_F$ 是其中心，整个相对球面满足
+
+$$
+\partial_{\rm rel}A_F=\sigma_F(S(F))\subset P.
+\tag{XI138.5}
+$$
+
+恰有以下两种情形：若 $b_F\in\partial K$，则 $A_F$ 本身是一张完整原排除球；若 $b_F\in\operatorname{ri}K$，则
+
+$$
+A_F=K\cap\operatorname{aff}A_F,
+\tag{XI138.6}
+$$
+
+且 $A_F$ 不是真面。此外，
+
+$$
+A_F=F
+\quad\Longleftrightarrow\quad
+c_q=\frac{a+2c_F-q}{2}\quad(q\in S(F)).
+\tag{XI138.7}
+$$
+
+证明。对每个 $q\in S(F)$，$q\in D_a$，零对称给 $a\in D_q$。$a$ 是 $D_q$ 的球缘点，故其中心反射 $2c_q-a$ 也是该球的球缘点，因而属于原 $P$。138.2使 $2G_F-a$ 单射，故它将 $F$ 映为非退化三球，球面恰为上述纯点；球缘凸生成和 $K$ 凸给 $A_F\subset K$。
+
+若 $b_F\in\partial K$，取非负非恒定支撑 $h$ 在 $b_F$ 为零。$A_F$ 关于 $b_F$ 中心对称，故 $h$ 在整个 $A_F$ 为零，$A_F$ 包含于支撑真面 $H$。该面非点，原面分类使它为三球。两球同维，故仿射包相等，且 $b_F\in\operatorname{ri}H$。若 $H$ 中某点在 $A_F$ 外，从 $b_F$ 向该点的开线段跨过 $A_F$ 的球面；交点属于 $\operatorname{ri}H$，却由(XI138.5)为原纯点，矛盾。故 $A_F=H\in\mathscr B$。
+
+若 $b_F\in\operatorname{ri}K$，(XI138.5)使球面在 $\partial K$，138.3的射线论证原样给(XI138.6)。包含 $K$ 内点的非空面只能为整个 $K$；138.3给 $\dim\operatorname{aff}K\ge6$，而 $A_F$ 仅三维，所以它不是真面。
+
+最后假设 $A_F=F$。对 $q\in S(F)$，上述反射点 $\sigma_F(q)$ 与 $q$ 均在 $F$，又满足 $q\perp\sigma_F(q)$。取实现这一原零一读数的同一原效应，其在球 $F$ 的限制非恒定，最大、最小点只能是一对唯一球内对径。因此 $\sigma_F(q)=2c_F-q$，重排即得(XI138.7)右侧。反之，该公式使 $\sigma_F$ 将球缘映为同一球缘的对径，取凸包即得 $A_F=F$。证毕。
+

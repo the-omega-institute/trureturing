@@ -66,7 +66,7 @@ private theorem power_two_quadratic : powerTwoSeries = X + powerTwoSeries ^ 2 :=
     rw [dyadic_halve n hn]
     by_cases hd : 2 ∣ n <;> simp [hd]
 
-private theorem quadratic_unique {u v : PowerSeries (ZMod 2)}
+theorem quadratic_unique {u v : PowerSeries (ZMod 2)}
     (hu : constantCoeff u = 0) (hv : constantCoeff v = 0)
     (h : u + u ^ 2 = v + v ^ 2) : u = v := by
   have hz : (u - v) * (1 + u + v) = 0 := by linear_combination h

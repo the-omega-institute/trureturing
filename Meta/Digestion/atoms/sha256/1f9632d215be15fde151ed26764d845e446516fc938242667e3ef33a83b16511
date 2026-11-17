@@ -1,0 +1,75 @@
+**定理 129.3（全部标签、全部效应及全部混态的 EB1）。** 对每个 $n\in\mathbb Z$，完整原排除集合恰为
+
+$$
+\begin{aligned}
+D_{\iota(v_n)}&=\iota(B_n),&
+D_{\iota(w_n)}&=\iota(A_{n+1}),\\
+D_{\iota(R_+)}=D_{\iota(R_-)}&=\iota(G),&
+D_{\iota(L_+)}=D_{\iota(L_-)}&=\iota(F).
+\end{aligned}
+\tag{X129.15}
+$$
+
+每张集合都是整个非退化仿射闭一球，故 (X129.3) 满足全局 EB1，尤其属于原 $\mathrm{EB}_{\ge1}$ 域。
+
+证明。先将成熟的完整仿射效应归一化用于本实例，保留任意原效应而非选定测试。对 $d\in\mathbb R^2$ 记
+
+$$
+m(d)=\min_{z\in L}d\cdot z,\qquad
+M(d)=\max_{z\in L}d\cdot z,\qquad W(d)=M(d)-m(d).
+\tag{X129.16}
+$$
+
+任一实线性泛函唯一写为 $e(t,z)=a t+d\cdot z$。整个效应区间的精确条件是
+
+$$
+e\in\mathcal E\quad\Longleftrightarrow\quad
+-m(d)\le a\le1-M(d).
+\tag{X129.17}
+$$
+
+确实，在 $\lambda\iota(z)$ 上的读数为 $\lambda(a+d\cdot z)$，所以全 $L$ 上的零一界等价于全 $C$ 上的 $0\le e\le u$；$\lambda=0$ 时两边读数都为零。$d=0$ 恰给 $e=a u,\ 0\le a\le1$。$L$ 含单位圆盘，还使 (X129.17) 给 $0\le a\le1$、$2\|d\|\le1$，所以 $\mathcal E$ 闭且有界，原确认纤维紧，定义中的存在零值也等价于原最小值为零。
+
+对任意 $e\in\mathcal E$，若 $a+m(d)>0$，则整个原零面为空；若 $d\ne0$ 且 $a+m(d)=0$，则整个零面恰为 $\iota(\operatorname{argmin}_L d\cdot z)$，由定理129.2的表穷尽。常数效应中，$e=0$ 的零面为整个 $K$，$e=a u,\ a>0$ 的零面为空。零效应不能确认任何原纯点，所以其全 $K$ 零面不会加入某个 $D_p$。
+
+若 $d\ne0$，则 $W(d)>0$。这样的 $e$ 确认 $\iota(p)$ 时，必有 $p\in\operatorname{argmax}_L d\cdot z$ 且 $a=1-M(d)$。它的全 $K$ 最小值为 $1-W(d)\ge0$；零面非空当且仅当 $W(d)=1$，此时整个零面恰为 $\iota(\operatorname{argmin}_L d\cdot z)$。最小值严格正的确认不添加任何排除点，常数确认 $u$ 也不添加。
+
+反向，对任何非零支撑方向 $d$，不论原始宽度是多少，
+
+$$
+e_d(t,z)=\frac{d\cdot z-m(d)t}{W(d)}
+\tag{X129.18}
+$$
+
+都是同一原效应区间中的实际效应。它确认该方向的每个最大点，并零于整个最小面，包括面内的全部混态。故精确地
+
+$$
+D_{\iota(p)}
+=\bigcup_{\substack{d\ne0\\p\in\operatorname{argmax}_L d\cdot z}}
+  \iota(\operatorname{argmin}_L d\cdot z).
+\tag{X129.19}
+$$
+
+这一步只是完整效应域的归一化与支撑面演算，不是另加的操作或正提升假设。
+
+由定理129.2，$v_n$ 的非零支撑方向角恰为 $[\theta_n,\theta_{n+1}]$。利用更精确的交错
+
+$$
+\phi_{n-1}<\theta_n<\phi_n<\theta_{n+1}<\phi_{n+1},
+\tag{X129.20}
+$$
+
+这些方向的反向支撑面依次是 $\{w_{n-1}\},B_n,\{w_n\}$：恰在反向角 $\pi+\phi_n$ 处取得整条 $B_n$，两旁各为一个端点。因此它们的并恰为整条 $B_n$。特别地，$d=\mu_n$ 的 (X129.18) 就给同时零于全部 $B_n$ 的同一原确认。
+
+$w_n$ 的支撑方向角恰为 $[\pi+\phi_n,\pi+\phi_{n+1}]$；反向落在 $[\phi_n,\phi_{n+1}]$，其中恰有一个上侧边法向 $\theta_{n+1}$。其最小面依次为 $\{v_n\},A_{n+1},\{v_{n+1}\}$，并恰为 $A_{n+1}$；可取 $d=-\nu_{n+1}$ 取得整条零边。四个角点只有定理129.2求出的水平支撑方向，遂分别给 $G,F$，实际确认可取 $(u+X)/2,(u-X)/2$。这证明 (X129.15) 对所有原效应与所有原混态精确成立。
+
+每条 $A_n,B_n$ 的两端点不同，$F,G$ 的两端点也不同。任一这样的边 $[a,b]$ 有单射仿射图
+
+$$
+s\longmapsto\iota\left(\frac{a+b}{2}
+                         +s\frac{a-b}{2}\right),\qquad s\in\mathbb R,
+\tag{X129.21}
+$$
+
+将整个闭单位一球 $[-1,1]$ 映到整条边。故没有退化球，也没有删去边内混态。证毕。
+

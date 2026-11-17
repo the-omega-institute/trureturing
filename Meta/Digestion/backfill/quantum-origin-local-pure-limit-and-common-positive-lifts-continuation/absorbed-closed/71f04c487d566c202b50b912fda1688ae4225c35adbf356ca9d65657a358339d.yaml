@@ -5,5 +5,7 @@ cas_ref: sha256:71f04c487d566c202b50b912fda1688ae4225c35adbf356ca9d65657a358339d
 coverage_gids:
   - gid: D5/S3/Quantum/Foundation/CommonSourceLiftObstruction.finite_common_source_obstruction
     target_statement_id: sha256:3c66dd9e69c3f2d069eb777fb38b262ceb34379b67464d27dc00dd0e59753d0b
+  - gid: D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.common_positive_source_obstruction
+    target_statement_id: sha256:56815213f7594683dfeecfbf534d5ae47a0a882a9c26a3ce8686d37d674cfcb6
 receipts:
   unresolved_subitems: []

@@ -21,6 +21,7 @@ internal interface ICliEnvironment
 
     CommandResult SearchAtoms(IReadOnlyList<string> arguments);
     CommandResult SourceDispatch(IReadOnlyList<string> arguments);
+    CommandResult RetireSources(IReadOnlyList<string> arguments);
 
     CommandResult ShowAtom(IReadOnlyList<string> arguments);
     CommandResult AtomContext(IReadOnlyList<string> arguments);
@@ -137,6 +138,8 @@ internal static class CliApplication
                 RenderExplicit(environment.LeanUtilityInput(tail), console),
             ["migrate-atom-context"] = static (environment, tail, console) =>
                 RenderCommand(environment.MigrateAtomContext(tail), console),
+            ["retire-sources"] = static (environment, tail, console) =>
+                RenderCommand(environment.RetireSources(tail), console),
             ["source-dispatch"] = static (environment, tail, console) =>
                 RenderCommand(environment.SourceDispatch(tail), console),
             ["search-atoms"] = static (environment, tail, console) =>
