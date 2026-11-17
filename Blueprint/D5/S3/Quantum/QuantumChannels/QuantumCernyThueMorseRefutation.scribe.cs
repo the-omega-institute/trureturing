@@ -41,12 +41,6 @@ internal sealed class QuantumCernyThueMorseRefutationDocument : IScribeDocumentD
             Node("comp", "The linear map of a word", CompFormula(),
                 "For two linear maps f(0), f(1) of a vector space V (an additive commutative group with a K-module structure) over a field K, the empty word gives the identity and the word a :: u gives the map of u after f(a).",
                 "wordComp", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
-            Node("repeated", "Repeated 01 words", RepeatedFormula(),
-                "The family word starts with 01, contains a second 01 after an arbitrary intervening word, has an arbitrary tail, and ends with 1.",
-                "repeated01", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
-            Node("family-lemma", "A dimension lemma for repeated 01 words", RepeatedLemmaFormula(),
-                "In dimension at most three, a vanishing repeated 01 word forces one of the prefix through the second 01, the word beginning with 01 and its tail, the word with its first letter removed, or the word with its final 1 removed to vanish.",
-                "mortal_repeated01", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("lemma", "A dimension lemma for the Thue-Morse prefix", LemmaFormula(),
                 "Let P, Q and T be the maps of 01101, 01 and 001, so that the map of 01101001 is T after P, and suppose that this map vanishes while the maps of 01101, 01001, 1101001 and 0110100 are all nonzero. The image of P lies in the image of Q. If the two images had equal dimension they would coincide; then for each x there is y with Q x = P y, so T Q x = T P y = 0 and the map of 01001, which is T after Q, would vanish. Hence the image of Q has larger dimension than the image of P, which is at least 1 because P is nonzero. The map f(0) is not surjective, since otherwise the map of 1101001 would vanish: the map of 01101001 is the map of 1101001 after f(0). So the image of Q, the image of the image of f(0) under f(1), has dimension at most 2, hence exactly 2. The image of Q lies in the image of f(1); if they coincided, then for each x there would be y with f(1) x = Q y, and the map of 1101001, which is the map of 101001 after f(1), would send x to the map of 01101001 applied to y, which is 0. So f(1) has rank 3, it is injective, and the map of 0110100 vanishes because f(1) after it is the map of 01101001.",
                 "mortal_thueMorse", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
@@ -201,35 +195,6 @@ internal sealed class QuantumCernyThueMorseRefutationDocument : IScribeDocumentD
         Formula structure = And(And(Call("Field", k), Call("AddCommGroup", v)), Call("Module", k, v));
         return Disp(All(Vars(k, v), Call("Type"), Imp(structure, All(f, maps,
             And(empty, All(x, Fin(D(2)), All(u, Words(), step)))))));
-    }
-
-    private static Formula Append(Formula left, Formula right) =>
-        Of(Seq(Operatorname, Grp(F.Id("List")), Dot, Operatorname, Grp(F.Id("append"))), left, right);
-
-    private static Formula RepeatedFormula()
-    {
-        Formula u = F.Id("u"), z = F.Id("z");
-        Formula word = Append(Append(Append(Append(WordList(0, 1), u), WordList(0, 1)), z), WordList(1));
-        return Disp(All(u, Words(), All(z, Words(), EqTo(Call("repeated01", u, z), word))));
-    }
-
-    private static Formula RepeatedLemmaFormula()
-    {
-        Formula k = F.Id("K"), v = F.Id("V"), f = F.Id("f"), u = F.Id("u"), z = F.Id("z");
-        Formula maps = Arrow(Fin(D(2)), Call("End", k, v));
-        Formula zero(Formula word) => EqTo(Call("wordComp", f, word), D(0));
-        Formula initial = WordList(0, 1), middle = WordList(0, 1), last = WordList(1);
-        Formula family = Call("repeated01", u, z);
-        Formula prefix = Append(Append(initial, u), middle);
-        Formula tail = Append(Append(initial, z), last);
-        Formula dropFirst = Append(Append(Append(Append(WordList(1), u), middle), z), last);
-        Formula dropLast = Append(Append(Append(initial, u), middle), z);
-        Formula concl = Or(Or(zero(prefix), zero(tail)), Or(zero(dropFirst), zero(dropLast)));
-        Formula hyp = Imp(LeTo(Call("finrank", k, v), D(3)), zero(family));
-        Formula structure = And(And(And(Call("Field", k), Call("AddCommGroup", v)), Call("Module", k, v)),
-            Call("FiniteDimensional", k, v));
-        return Disp(All(Vars(k, v), Call("Type"), Imp(structure,
-            All(f, maps, All(u, Words(), All(z, Words(), Imp(hyp, concl)))))));
     }
 
     private static Formula LemmaFormula()
