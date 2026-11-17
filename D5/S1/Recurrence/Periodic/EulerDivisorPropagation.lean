@@ -208,14 +208,8 @@ theorem odd_prime_power (p r k m : ℕ) (hp : p.Prime) (ho : Odd p)
     exact (zero_odd q t).mpr ha
 
 private theorem exponential_lower (a : ℕ) : 2 * a ≤ 2 ^ a + 1 := by
-  induction a with
-  | zero => norm_num
-  | succ a ih =>
-    by_cases ha : a = 0
-    · subst a; norm_num
-    have hp : 2 ≤ 2 ^ a := Nat.le_self_pow (by omega) 2
-    rw [pow_succ]
-    nlinarith
+  have h := Nat.mul_le_pow (a := 2) (by decide) a
+  omega
 
 private theorem two_primary (a k m d : ℕ) (hd : 2 < d) (hm : 0 < m)
     (had : 2 ^ (a + 1) ∣ d) (hdiv : d ∣ E k) :
