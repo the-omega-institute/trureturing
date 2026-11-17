@@ -102,22 +102,204 @@ private theorem realization_mono {M N : PreAbstractSimplicialComplex V} (h : M �
   rintro x ⟨s, hs, hx⟩
   exact ⟨s, h hs, hx⟩
 
+/-- An ambient finite realization together with a nonempty subcomplex. -/
+structure SubcomplexPair (V : Type*) [Fintype V] [DecidableEq V] where
+  ambient : PreAbstractSimplicialComplex V
+  subcomplex : PreAbstractSimplicialComplex V
+  inclusion : subcomplex ≤ ambient
+  nonempty_subcomplex : (subcomplex : Set (Finset V)).Nonempty
+
+namespace SubcomplexPair
+
+variable (P : SubcomplexPair V)
+
+abbrev Space := ↥(realization P.ambient)
+
+/-- The actual realized subcomplex inside the ambient realization. -/
+def subcomplexSet : Set P.Space := {x | x.val ∈ realization P.subcomplex}
+
+theorem simplex_data (x : P.Space) :
+    (∀ v, 0 ≤ x.val v) ∧ (∑ v, x.val v) = 1 := by
+  obtain ⟨s, _, hx⟩ := (realization_mem_iff P.ambient x.val).1 x.property
+  exact ⟨hx.1, hx.2.1⟩
+
+theorem coord_continuous (v : V) : Continuous (fun x : P.Space => x.val v) :=
+  (continuous_apply v).comp continuous_subtype_val
+
+def faces : Finset (Finset V) := by
+  classical
+  exact univ.filter (fun s => s ∈ P.subcomplex)
+
+theorem mem_faces (s : Finset V) : s ∈ P.faces ↔ s ∈ P.subcomplex := by
+  simp [faces]
+
+theorem faces_nonempty : P.faces.Nonempty := by
+  rcases P.nonempty_subcomplex with ⟨s, hs⟩
+  exact ⟨s, (P.mem_faces s).2 hs⟩
+
+def outsideMass (s : Finset V) (x : P.Space) : ℝ := ∑ v ∈ univ \ s, x.val v
+
+theorem outsideMass_nonneg (s : Finset V) (x : P.Space) : 0 ≤ P.outsideMass s x :=
+  sum_nonneg (fun v _ => (P.simplex_data x).1 v)
+
+theorem continuous_outsideMass (s : Finset V) : Continuous (P.outsideMass s) := by
+  exact continuous_finset_sum _ (fun v _ => P.coord_continuous v)
+
+def delta (x : P.Space) : ℝ :=
+  P.faces.inf' P.faces_nonempty (fun s => P.outsideMass s x)
+
+theorem delta_nonneg (x : P.Space) : 0 ≤ P.delta x :=
+  le_inf' _ _ (fun s _ => P.outsideMass_nonneg s x)
+
+theorem continuous_delta : Continuous P.delta :=
+  Continuous.finset_inf'_apply _ (fun s _ => P.continuous_outsideMass s)
+
+theorem delta_witness (x : P.Space) :
+    ∃ s ∈ P.subcomplex, P.delta x = P.outsideMass s x := by
+  obtain ⟨s, hs, heq⟩ := exists_mem_eq_inf' P.faces_nonempty (fun s => P.outsideMass s x)
+  exact ⟨s, (P.mem_faces s).1 hs, heq⟩
+
+theorem outside_coord_le {s : Finset V} (x : P.Space) {v : V} (hv : v ∉ s) :
+    x.val v ≤ P.outsideMass s x :=
+  single_le_sum (fun w _ => (P.simplex_data x).1 w) (by simp [hv])
+
+theorem delta_eq_zero_iff (x : P.Space) : P.delta x = 0 ↔ x ∈ P.subcomplexSet := by
+  constructor
+  · intro hd
+    obtain ⟨s, hs, heq⟩ := P.delta_witness x
+    apply (realization_mem_iff P.subcomplex x.val).2
+    refine ⟨s, hs, (P.simplex_data x).1, (P.simplex_data x).2, ?_⟩
+    intro v hv
+    exact le_antisymm (by simpa [← heq, hd] using P.outside_coord_le x hv)
+      ((P.simplex_data x).1 v)
+  · intro hx
+    obtain ⟨s, hs, hx⟩ := (realization_mem_iff P.subcomplex x.val).1 hx
+    apply le_antisymm _ (P.delta_nonneg x)
+    have hmass : P.outsideMass s x = 0 := by
+      apply sum_eq_zero
+      intro v hv
+      exact hx.2.2 v (mem_sdiff.mp hv).2
+    exact (inf'_le _ ((P.mem_faces s).2 hs)).trans hmass.le
+
+def epsilon (_P : SubcomplexPair V) : ℝ := 1 / (2 * ((Fintype.card V : ℝ) + 1))
+
+theorem epsilon_pos : 0 < P.epsilon := by unfold epsilon; positivity
+
+theorem card_mul_epsilon : (Fintype.card V : ℝ) * P.epsilon ≤ 1 / 2 := by
+  unfold epsilon
+  rw [← mul_div_assoc, mul_one]
+  apply (div_le_iff₀ (by positivity : 0 < 2 * ((Fintype.card V : ℝ) + 1))).2
+  nlinarith [Nat.cast_nonneg (α := ℝ) (Fintype.card V)]
+
+def theta (x : P.Space) : ℝ := min (P.delta x) P.epsilon
+
+theorem theta_nonneg (x : P.Space) : 0 ≤ P.theta x :=
+  le_min (P.delta_nonneg x) P.epsilon_pos.le
+
+def truncated (s : I) (x : P.Space) (v : V) : ℝ :=
+  max (x.val v - (s : ℝ) * P.theta x) 0
+
+def denominator (s : I) (x : P.Space) : ℝ := ∑ v, P.truncated s x v
+
+theorem denominator_bound (s : I) (x : P.Space) : 1 / 2 ≤ P.denominator s x := by
+  have ht : (s : ℝ) * P.theta x ≤ P.epsilon :=
+    (mul_le_mul_of_nonneg_right s.property.2 (P.theta_nonneg x)).trans
+      (by simpa [theta] using (min_le_right (P.delta x) P.epsilon))
+  calc
+    (1 / 2 : ℝ) ≤ 1 - (Fintype.card V : ℝ) * P.epsilon := by
+      linarith [P.card_mul_epsilon]
+    _ = ∑ v, (x.val v - P.epsilon) := by
+      rw [sum_sub_distrib, (P.simplex_data x).2]
+      simp
+    _ ≤ P.denominator s x := by
+      apply sum_le_sum
+      intro v _
+      exact (sub_le_sub_left ht _).trans (le_max_left _ _)
+
+theorem denominator_pos (s : I) (x : P.Space) : 0 < P.denominator s x :=
+  lt_of_lt_of_le (by norm_num) (P.denominator_bound s x)
+
+def deformCoords (s : I) (x : P.Space) (v : V) : ℝ :=
+  P.truncated s x v / P.denominator s x
+
+theorem deform_mem_face (s : I) (x : P.Space) {f : Finset V}
+    (hx : x.val ∈ faceSimplex f) : P.deformCoords s x ∈ faceSimplex f := by
+  refine ⟨fun v => div_nonneg (le_max_right _ _) (P.denominator_pos s x).le, ?_, ?_⟩
+  · simp only [deformCoords, ← sum_div]
+    change P.denominator s x / P.denominator s x = 1
+    exact div_self (P.denominator_pos s x).ne'
+  · intro v hv
+    simp only [deformCoords, truncated, hx.2.2 v hv, zero_sub]
+    rw [max_eq_right (neg_nonpos.mpr (mul_nonneg s.property.1 (P.theta_nonneg x)))]
+    exact zero_div _
+
+def deform (s : I) (x : P.Space) : P.Space :=
+  ⟨P.deformCoords s x, by
+    obtain ⟨f, hf, hx⟩ := (realization_mem_iff P.ambient x.val).1 x.property
+    apply (realization_mem_iff _ _).2
+    exact ⟨f, hf, P.deform_mem_face s x hx⟩⟩
+
+theorem continuous_deform : Continuous (fun z : I × P.Space => P.deform z.1 z.2) := by
+  apply Continuous.subtype_mk
+  apply continuous_pi
+  intro v
+  have ht : Continuous (fun x : P.Space => P.theta x) := P.continuous_delta.min continuous_const
+  have hn (v : V) : Continuous (fun z : I × P.Space => P.truncated z.1 z.2 v) :=
+    ((P.coord_continuous v |>.comp continuous_snd).sub
+      (continuous_subtype_val.comp continuous_fst |>.mul (ht.comp continuous_snd))).max
+      continuous_const
+  exact (hn v).div (continuous_finset_sum _ (fun w _ => hn w))
+    (fun z => (P.denominator_pos z.1 z.2).ne')
+
+theorem deform_zero (x : P.Space) : P.deform 0 x = x := by
+  have ht (v) : P.truncated 0 x v = x.val v := by
+    simp [truncated, max_eq_left ((P.simplex_data x).1 v)]
+  apply Subtype.ext
+  funext v
+  change P.truncated 0 x v / (∑ w, P.truncated 0 x w) = x.val v
+  simp only [ht, (P.simplex_data x).2, div_one]
+
+theorem deform_fixed (s : I) (x : P.Space) (hx : x ∈ P.subcomplexSet) :
+    P.deform s x = x := by
+  have htheta : P.theta x = 0 := by
+    simp [theta, (P.delta_eq_zero_iff x).2 hx, P.epsilon_pos.le]
+  have ht (v) : P.truncated s x v = x.val v := by
+    simp [truncated, htheta, max_eq_left ((P.simplex_data x).1 v)]
+  apply Subtype.ext
+  funext v
+  change P.truncated s x v / (∑ w, P.truncated s x w) = x.val v
+  simp only [ht, (P.simplex_data x).2, div_one]
+
+theorem deform_one_mem_subcomplex (x : P.Space) (hx : P.delta x ≤ P.epsilon) :
+    P.deform 1 x ∈ P.subcomplexSet := by
+  obtain ⟨f, hf, heq⟩ := P.delta_witness x
+  apply (realization_mem_iff P.subcomplex _).2
+  refine ⟨f, hf, (P.simplex_data (P.deform 1 x)).1,
+    (P.simplex_data (P.deform 1 x)).2, ?_⟩
+  intro v hv
+  have hcoord : x.val v ≤ P.delta x := by
+    rw [heq]
+    exact P.outside_coord_le x hv
+  change max (x.val v - (1 : I).val * P.theta x) 0 / _ = 0
+  rw [show (1 : I).val = (1 : ℝ) from rfl, one_mul, theta, min_eq_left hx,
+    max_eq_right (sub_nonpos.mpr hcoord), zero_div]
+
+end SubcomplexPair
+
 namespace ConePair
 
 variable (P : ConePair V)
 
 abbrev Space := ↥(realization P.ambient)
 
+private def subcomplexPair : SubcomplexPair V where
+  ambient := P.ambient
+  subcomplex := P.cone
+  inclusion := P.inclusion
+  nonempty_subcomplex := ⟨{P.apex}, P.apex_face⟩
+
 /-- The actual realized cone inside the ambient realization. -/
-def coneSet : Set P.Space := {x | x.val ∈ realization P.cone}
-
-private theorem simplex_data (x : P.Space) :
-    (∀ v, 0 ≤ x.val v) ∧ (∑ v, x.val v) = 1 := by
-  obtain ⟨s, _, hx⟩ := (realization_mem_iff P.ambient x.val).1 x.property
-  exact ⟨hx.1, hx.2.1⟩
-
-private theorem coord_continuous (v : V) : Continuous (fun x : P.Space => x.val v) :=
-  (continuous_apply v).comp continuous_subtype_val
+def coneSet : Set P.Space := P.subcomplexPair.subcomplexSet
 
 private theorem apex_faceSimplex : Pi.single P.apex (1 : ℝ) ∈ faceSimplex {P.apex} := by
   refine ⟨?_, by simp, ?_⟩
@@ -136,162 +318,37 @@ def apexPoint : P.Space :=
 private theorem apexPoint_mem : P.apexPoint ∈ P.coneSet := by
   exact (realization_mem_iff _ _).2 ⟨{P.apex}, P.apex_face, P.apex_faceSimplex⟩
 
-private def faces : Finset (Finset V) := by
-  classical
-  exact univ.filter (fun s => s ∈ P.cone)
+private theorem coord_continuous (v : V) : Continuous (fun x : P.Space => x.val v) :=
+  P.subcomplexPair.coord_continuous v
 
-private theorem mem_faces (s : Finset V) : s ∈ P.faces ↔ s ∈ P.cone := by
-  simp [faces]
+private theorem delta_nonneg (x : P.Space) : 0 ≤ P.subcomplexPair.delta x :=
+  P.subcomplexPair.delta_nonneg x
 
-private theorem faces_nonempty : P.faces.Nonempty :=
-  ⟨{P.apex}, (P.mem_faces _).2 P.apex_face⟩
+private theorem continuous_delta : Continuous P.subcomplexPair.delta :=
+  P.subcomplexPair.continuous_delta
 
-private def outsideMass (s : Finset V) (x : P.Space) : ℝ := ∑ v ∈ univ \ s, x.val v
+private theorem delta_eq_zero_iff (x : P.Space) : P.subcomplexPair.delta x = 0 ↔ x ∈ P.coneSet :=
+  P.subcomplexPair.delta_eq_zero_iff x
 
-private theorem outsideMass_nonneg (s : Finset V) (x : P.Space) : 0 ≤ P.outsideMass s x :=
-  sum_nonneg (fun v _ => (P.simplex_data x).1 v)
+abbrev delta : P.Space → ℝ := P.subcomplexPair.delta
+abbrev epsilon : ℝ := P.subcomplexPair.epsilon
+abbrev deform : I → P.Space → P.Space := P.subcomplexPair.deform
 
-private theorem continuous_outsideMass (s : Finset V) : Continuous (P.outsideMass s) := by
-  exact continuous_finset_sum _ (fun v _ => P.coord_continuous v)
+private theorem epsilon_pos : 0 < P.epsilon := P.subcomplexPair.epsilon_pos
 
-private def delta (x : P.Space) : ℝ :=
-  P.faces.inf' P.faces_nonempty (fun s => P.outsideMass s x)
+private theorem continuous_deform : Continuous (fun z : I × P.Space => P.deform z.1 z.2) :=
+  P.subcomplexPair.continuous_deform
 
-private theorem delta_nonneg (x : P.Space) : 0 ≤ P.delta x :=
-  le_inf' _ _ (fun s _ => P.outsideMass_nonneg s x)
-
-private theorem continuous_delta : Continuous P.delta :=
-  Continuous.finset_inf'_apply _ (fun s _ => P.continuous_outsideMass s)
-
-private theorem delta_witness (x : P.Space) :
-    ∃ s ∈ P.cone, P.delta x = P.outsideMass s x := by
-  obtain ⟨s, hs, heq⟩ := exists_mem_eq_inf' P.faces_nonempty (fun s => P.outsideMass s x)
-  exact ⟨s, (P.mem_faces s).1 hs, heq⟩
-
-private theorem outside_coord_le {s : Finset V} (x : P.Space) {v : V} (hv : v ∉ s) :
-    x.val v ≤ P.outsideMass s x :=
-  single_le_sum (fun w _ => (P.simplex_data x).1 w) (by simp [hv])
-
-private theorem delta_eq_zero_iff (x : P.Space) : P.delta x = 0 ↔ x ∈ P.coneSet := by
-  constructor
-  · intro hd
-    obtain ⟨s, hs, heq⟩ := P.delta_witness x
-    apply (realization_mem_iff P.cone x.val).2
-    refine ⟨s, hs, (P.simplex_data x).1, (P.simplex_data x).2, ?_⟩
-    intro v hv
-    exact le_antisymm (by simpa [← heq, hd] using P.outside_coord_le x hv)
-      ((P.simplex_data x).1 v)
-  · intro hx
-    obtain ⟨s, hs, hx⟩ := (realization_mem_iff P.cone x.val).1 hx
-    apply le_antisymm _ (P.delta_nonneg x)
-    have hmass : P.outsideMass s x = 0 := by
-      apply sum_eq_zero
-      intro v hv
-      exact hx.2.2 v (mem_sdiff.mp hv).2
-    exact (inf'_le _ ((P.mem_faces s).2 hs)).trans hmass.le
-
-private def epsilon (_P : ConePair V) : ℝ := 1 / (2 * ((Fintype.card V : ℝ) + 1))
-
-private theorem epsilon_pos : 0 < P.epsilon := by unfold epsilon; positivity
-
-private theorem card_mul_epsilon : (Fintype.card V : ℝ) * P.epsilon ≤ 1 / 2 := by
-  unfold epsilon
-  rw [← mul_div_assoc, mul_one]
-  apply (div_le_iff₀ (by positivity : 0 < 2 * ((Fintype.card V : ℝ) + 1))).2
-  nlinarith [Nat.cast_nonneg (α := ℝ) (Fintype.card V)]
-
-private def theta (x : P.Space) : ℝ := min (P.delta x) P.epsilon
-
-private theorem theta_nonneg (x : P.Space) : 0 ≤ P.theta x :=
-  le_min (P.delta_nonneg x) P.epsilon_pos.le
-
-private def truncated (s : I) (x : P.Space) (v : V) : ℝ :=
-  max (x.val v - (s : ℝ) * P.theta x) 0
-
-private def denominator (s : I) (x : P.Space) : ℝ := ∑ v, P.truncated s x v
-
-private theorem denominator_bound (s : I) (x : P.Space) : 1 / 2 ≤ P.denominator s x := by
-  have ht : (s : ℝ) * P.theta x ≤ P.epsilon :=
-    (mul_le_mul_of_nonneg_right s.property.2 (P.theta_nonneg x)).trans
-      (by simpa [theta] using (min_le_right (P.delta x) P.epsilon))
-  calc
-    (1 / 2 : ℝ) ≤ 1 - (Fintype.card V : ℝ) * P.epsilon := by
-      linarith [P.card_mul_epsilon]
-    _ = ∑ v, (x.val v - P.epsilon) := by
-      rw [sum_sub_distrib, (P.simplex_data x).2]
-      simp
-    _ ≤ P.denominator s x := by
-      apply sum_le_sum
-      intro v _
-      exact (sub_le_sub_left ht _).trans (le_max_left _ _)
-
-private theorem denominator_pos (s : I) (x : P.Space) : 0 < P.denominator s x :=
-  lt_of_lt_of_le (by norm_num) (P.denominator_bound s x)
-
-private def deformCoords (s : I) (x : P.Space) (v : V) : ℝ :=
-  P.truncated s x v / P.denominator s x
-
-private theorem deform_mem_face (s : I) (x : P.Space) {f : Finset V}
-    (hx : x.val ∈ faceSimplex f) : P.deformCoords s x ∈ faceSimplex f := by
-  refine ⟨fun v => div_nonneg (le_max_right _ _) (P.denominator_pos s x).le, ?_, ?_⟩
-  · simp only [deformCoords, ← sum_div]
-    change P.denominator s x / P.denominator s x = 1
-    exact div_self (P.denominator_pos s x).ne'
-  · intro v hv
-    simp only [deformCoords, truncated, hx.2.2 v hv, zero_sub]
-    rw [max_eq_right (neg_nonpos.mpr (mul_nonneg s.property.1 (P.theta_nonneg x)))]
-    exact zero_div _
-
-private def deform (s : I) (x : P.Space) : P.Space :=
-  ⟨P.deformCoords s x, by
-    obtain ⟨f, hf, hx⟩ := (realization_mem_iff P.ambient x.val).1 x.property
-    apply (realization_mem_iff _ _).2
-    exact ⟨f, hf, P.deform_mem_face s x hx⟩⟩
-
-private theorem continuous_deform : Continuous (fun z : I × P.Space => P.deform z.1 z.2) := by
-  apply Continuous.subtype_mk
-  apply continuous_pi
-  intro v
-  have ht : Continuous (fun x : P.Space => P.theta x) := P.continuous_delta.min continuous_const
-  have hn (v : V) : Continuous (fun z : I × P.Space => P.truncated z.1 z.2 v) :=
-    ((P.coord_continuous v |>.comp continuous_snd).sub
-      (continuous_subtype_val.comp continuous_fst |>.mul (ht.comp continuous_snd))).max
-      continuous_const
-  exact (hn v).div (continuous_finset_sum _ (fun w _ => hn w))
-    (fun z => (P.denominator_pos z.1 z.2).ne')
-
-private theorem deform_zero (x : P.Space) : P.deform 0 x = x := by
-  have ht (v) : P.truncated 0 x v = x.val v := by
-    simp [truncated, max_eq_left ((P.simplex_data x).1 v)]
-  apply Subtype.ext
-  funext v
-  change P.truncated 0 x v / (∑ w, P.truncated 0 x w) = x.val v
-  simp only [ht, (P.simplex_data x).2, div_one]
+private theorem deform_zero (x : P.Space) : P.deform 0 x = x :=
+  P.subcomplexPair.deform_zero x
 
 private theorem deform_fixed (s : I) (x : P.Space) (hx : x ∈ P.coneSet) :
-    P.deform s x = x := by
-  have htheta : P.theta x = 0 := by
-    simp [theta, (P.delta_eq_zero_iff x).2 hx, P.epsilon_pos.le]
-  have ht (v) : P.truncated s x v = x.val v := by
-    simp [truncated, htheta, max_eq_left ((P.simplex_data x).1 v)]
-  apply Subtype.ext
-  funext v
-  change P.truncated s x v / (∑ w, P.truncated s x w) = x.val v
-  simp only [ht, (P.simplex_data x).2, div_one]
+    P.deform s x = x :=
+  P.subcomplexPair.deform_fixed s x hx
 
 private theorem deform_one_mem_cone (x : P.Space) (hx : P.delta x ≤ P.epsilon) :
-    P.deform 1 x ∈ P.coneSet := by
-  obtain ⟨f, hf, heq⟩ := P.delta_witness x
-  apply (realization_mem_iff P.cone _).2
-  refine ⟨f, hf, (P.simplex_data (P.deform 1 x)).1,
-    (P.simplex_data (P.deform 1 x)).2, ?_⟩
-  intro v hv
-  have hcoord : x.val v ≤ P.delta x := by
-    rw [heq]
-    exact P.outside_coord_le x hv
-  change max (x.val v - (1 : I).val * P.theta x) 0 / _ = 0
-  rw [show (1 : I).val = (1 : ℝ) from rfl, one_mul, theta, min_eq_left hx,
-    max_eq_right (sub_nonpos.mpr hcoord), zero_div]
+    P.deform 1 x ∈ P.coneSet :=
+  P.subcomplexPair.deform_one_mem_subcomplex x hx
 
 private def earlyTime (t : I) : I :=
   ⟨min (2 * (t : ℝ)) 1,

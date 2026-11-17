@@ -1,0 +1,18 @@
+**Theorem 9.1 (a sufficient native selection contract).** For a fixed
+starting ray and every finite horizon under consideration, the following
+additional data suffice to select N's reference killed law:
+
+1. A probability law on finite prescribed original commands, with the
+   full native guard, the specified preparation and the actual clock.
+2. Joint uniform-path convergence of comparison triples to
+   $(W^1,W^2,\int_0^\cdot W^1dW^2)$, where the first two coordinates
+   are independent variance-$2t$ Brownian motions in their joint
+   filtration; or, equivalently for this purpose, convergence of the
+   corresponding held triples and their lifetimes to that stopped law.
+3. The height-only first-exit convention for $I$ and lifetime convergence
+   jointly with the held path, with no death-time atom at the observation
+   horizon. For comparison
+   extensions the Brownian crossing condition verifies this item.
+4. The stated sampling weights, with no unaccounted conditioning,
+   survival renormalization or path-dependent change of measure.
+

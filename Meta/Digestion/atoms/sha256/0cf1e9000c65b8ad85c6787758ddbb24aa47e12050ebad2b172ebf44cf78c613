@@ -1,0 +1,43 @@
+**推论 112.8（只由完整三球选择复三能级）。** 同一原全态、全效应域中的候选包
+
+$$
+\boxed{\quad\mathsf W\ +\ \forall p\in\operatorname{ext}K:\
+\{x\in K:\min_{f\in[0,u],\ f(p)=1}f(x)=0\}\simeq_{\rm aff}B^3\quad}
+\tag{VIII112.29}
+$$
+
+等价于存在同原锥、同原单位的 $H_3(\mathbb C)$ 表示。
+它不另输入G、$\mathrm{TFD}_{3,\exists}$、TFD3、TRI2或九维。
+同一个实线性双射 $\Phi:H_3(\mathbb C)\to V$ 给
+
+$$
+\begin{gathered}
+\dim_{\mathbb R}V=9,\qquad
+\Phi(\operatorname{Herm}_+(\mathbb C^3))=C,\qquad
+u(\Phi X)=\operatorname{tr}X,\\
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{tr}\rho=1\},\qquad
+P=\{\Phi(vv^*):v^*v=1\},\\
+\mathcal E=\{f_E:f_E(\Phi X)=\operatorname{tr}(EX),\quad0\preceq E\preceq I_3\},\\
+a_{\Phi(vv^*)}(\Phi\rho)=\operatorname{tr}(vv^*\rho),\qquad
+T_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2,\quad w^*w=1,\\
+B(\Phi X,\Phi Y)=\operatorname{tr}(XY),\qquad
+U=\Phi(I_3),\qquad U/3=\Phi(I_3/3).
+\end{gathered}
+\tag{VIII112.30}
+$$
+
+全部有限数学测量恰为 $E_j\succeq0$、$\sum_jE_j=I_3$。
+
+证明。112.6先把可辨性、整体维数及原EJA全部变为后果，分类中 $d=3$ 只剩复型。
+之后直接复用109.12及111.9的完整Born字典；这里补足其几何前件，未重新证明字典。
+具体的旧公理对应为：
+
+| 旧静态量子对象或规则 | 同一个原域中的后果 |
+| --- | --- |
+| 三维复Hilbert表示与纯态射线 | $P\cong\mathbb{CP}^2$，单位向量只相差相位时给同一 $vv^*$ |
+| 全部混态与凸混合 | 全部迹一PSD矩阵及原线性凸组合，未挑选态子集 |
+| 全部零一效应与Born概率 | 全部 $0\preceq E\preceq I_3$，概率 $\operatorname{tr}(E\rho)$ |
+| 纯确认与纯态跃迁模方 | 原least $a_p$ 对应秩一投影，纯—纯读数为 $|v^*w|^2$ |
+| 完备数学测量 | 原非负效应和为 $u$，准确对应任意有限POVM和为 $I_3$ |
+| 正交完备基与谱分解 | 原joint对应三个正交秩一投影；混态谱分解由所得Jordan／矩阵谱定理供应 |
+| 共同尺、中心与原单位 | 迹配对、$I_3/3$ 及迹泛函分别回接原 $B,U/3,u$ |

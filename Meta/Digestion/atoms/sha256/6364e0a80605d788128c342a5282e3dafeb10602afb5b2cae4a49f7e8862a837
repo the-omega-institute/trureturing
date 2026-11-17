@@ -1,0 +1,4 @@
+**Theorem 7.3 (Exact configuration exponent, attained).** For Definition 2.5, $\gamma_c=1$ and $1\in\Gamma$.
+
+Proof. Proposition 7.2 proves $1\in\Gamma$ using a single family satisfying the two mean bounds simultaneously. If $0\le\gamma<1$ belonged to $\Gamma$, Theorem 7.1 applied to that family's fixed $C_T$ and either fixed target would give $M(s)\ge c_T/s$ for some $c_T>0$ eventually. Together with $M(s)\le C_Ms^{-\gamma}$ this would imply $c_T\le C_Ms^{1-\gamma}\to0$, a contradiction. Thus every member of $\Gamma$ is at least one, and its attained infimum is one. No individually optimized designs are multiplied or assumed jointly realizable. $\square$
+

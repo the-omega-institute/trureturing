@@ -123,3 +123,26 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 
 #print axioms registration
 end Reg.D5.S3.Geometry.FiniteConeCollapse
+
+/- Complete source telescopes for the selected public statements. -/
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.card_mul_epsilon
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.continuous_deform
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.continuous_delta
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.continuous_outsideMass
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.coord_continuous
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.deform_fixed
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.deform_mem_face
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.deform_one_mem_subcomplex
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.deform_zero
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.delta_eq_zero_iff
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.delta_nonneg
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.delta_witness
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.denominator_bound
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.denominator_pos
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.epsilon_pos
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.faces_nonempty
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.mem_faces
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.outsideMass_nonneg
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.outside_coord_le
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.simplex_data
+#check @D5.S3.Geometry.FiniteConeCollapse.SubcomplexPair.theta_nonneg

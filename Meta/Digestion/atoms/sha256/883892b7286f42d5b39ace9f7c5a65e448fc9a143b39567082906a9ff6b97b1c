@@ -1,0 +1,43 @@
+**定义 94.1（复秩一生成表示与固定补态检验）。** 保留89.1的非零有限维实载体 $(V,C,u)$、整个紧基 $K$、全部纯点 $P$ 和整个 $[0,u]_{C^*}$。要求有实线性同构
+
+$$
+\iota:V\longrightarrow L_0\subseteq\operatorname{Herm}_m(\mathbb C),\qquad
+\iota(C)=L_0\cap\operatorname{Herm}_{m,+}(\mathbb C),\qquad
+L_0=\operatorname{span}_{\mathbb R}\iota(C),
+\tag{94.1}
+$$
+
+且每个 $\iota(C)$ 中的矩阵都是属于这个同一锥的有限个**复矩阵秩一**PSD矩阵之和。$\operatorname{Herm}_m(\mathbb C)$ 只是实线性载体；不将复秩一实化成实矩阵秩一。原 $u$ 在 $C\setminus\{0\}$ 上任意严格正，不预付迹、自对偶、Jordan乘积或谱性。表示覆盖整个原锥，并非在更大模型中选取的子锥。
+
+令 $W=\sum_{X\in\iota(C)}\operatorname{ran}X$，$n=\dim_{\mathbb C}W\ge1$。取酉坐标将限制到共同支撑 $W$ 的映射记为 $R$，令 $C_W=R\iota(C)$、$L_W=R\iota(V)$，并运输原单位为 $u_W$。在 $C_W\cap\{u_W=n\}$ 上取行列式最大点 $M$，定义
+
+$$
+\begin{gathered}
+\Psi(X)=M^{-1/2}(R\iota X)M^{-1/2},\qquad
+L=\Psi(V),\qquad h=(R\iota)^{-1}M,\\
+C'=L\cap\operatorname{Herm}_{n,+}(\mathbb C),\qquad
+\Psi(h)=I_n,\qquad \operatorname{tr}\Psi(X)=u(X).
+\end{gathered}
+\tag{94.2}
+$$
+
+以下定理证明这项整体运输总存在，且 $M$ 唯一。固定一次(94.2)后，若 $n>1$，对每个原纯点 $p$ 固定
+
+$$
+a_p^{\rm orig}=\frac{h-p}{n-1}\in K,\qquad
+a_{\Psi p}=\Psi(a_p^{\rm orig})=\frac{I_n-\Psi p}{n-1}.
+\tag{94.3}
+$$
+
+$p\perp x$、$F_p$、$T_p(x)$ 仍准确取(93.2)的全部原效应定义。固定补态候选是
+
+$$
+\mathrm{FC}:\quad
+\forall p,q\in P,\qquad
+p\perp q\ \Longrightarrow\
+p\perp\frac{q+a_p^{\rm orig}}2.
+\tag{94.4}
+$$
+
+$n=1$ 时定义 $\mathrm{FC}$ 为真，不定义分母为零的补态。完整 $\mathrm{Z0}$ 仍是(93.3)对任意原混态 $x,y$ 的条件。完整 $S$ 仍要求全锥序least确认及全部纯点间的数值互反。$\mathrm{FC}$ 只量化两个纯点，并为第一个纯点使用一份预先固定的原补态；没有把补态称为纯点。
+

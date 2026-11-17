@@ -1,0 +1,76 @@
+**定理 109.7（真实球丛与切覆盖）。** 在109.6的其余分支，固定所得厚点 $p$，
+将 $L_p$ 用 $g_p$ 识别为 $\mathbb R^{m+1}$。
+对 $x\in S^m$ 置
+
+$$
+r(x)=c_p+x,\qquad q(x)=c_p-x,\qquad
+P_x=P_{q(x)},\qquad A_x=2P_x-I_{N_p}.
+\tag{VIII109.20}
+$$
+
+$P_x$ 投影到 $T(q(x)\mid p)$，即含直径 $p,r(x)$ 的原球在 $p$ 处的切空间。
+则 $A_x$ 对称，并且
+
+$$
+\begin{gathered}
+A_xA_y+A_yA_x=2(x\cdot y)I,
+\qquad A_x=\sum_{i=1}^{m+1}x_iA_{e_i},\\
+\mathscr E=\{(x,z)\in S^m\times N_p:P_xz=z\}
+\text{ 是光滑秩 }m\text{ 实向量子丛},\\
+N_p\setminus\{0\}=\coprod_{x\in S^m}
+ \bigl(\operatorname{im}P_x\setminus\{0\}\bigr).
+\end{gathered}
+\tag{VIII109.21}
+$$
+
+每个非零 $z$ 因而有唯一标签 $x(z)$，并满足
+
+$$
+\|P_yz\|_G^2=\frac{1+y\cdot x(z)}2\|z\|_G^2
+\quad(y\in S^m).
+\tag{VIII109.22}
+$$
+
+证明。109.5的等倾系数在此重标号下仍为 $(1+x\cdot y)/2$，
+且 $P_{-x}=I-P_x$。相对于 $\operatorname{im}P_x\oplus\ker P_x$，
+令 $t=x\cdot y$。等倾式分别给 $A_y$ 的两个对角块为 $tI,-tI$，
+而 $A_x=\operatorname{diag}(I,-I)$。
+直接块乘得到反对易式，不需要预先对 $x\mapsto P_x$ 作连续性假设。
+
+令 $H_x=\sum_i x_iA_{e_i}$。正交基上的反对易式给 $H_x^2=I$，
+而全部 $x,e_i$ 的反对易式给 $A_xH_x+H_xA_x=2I$。
+所以对称算子 $D=A_x-H_x$ 满足 $D^2=0$。
+对所有 $z$ 有 $\|Dz\|_G^2=G(z,D^2z)=0$，故 $D=0$。
+因此 $A_x$ 是一个线性算子值映射的球面限制，$P_x=(I+A_x)/2$ 光滑。
+这里的Clifford关系用于线性化，没有调用Clifford模分类、Hurwitz或Adams定理。
+
+还须证明子丛的局部平凡化。固定 $x_*$，选 $N_p$ 中 $m$ 个固定向量 $v_j$，
+使 $P_{x_*}v_j$ 线性独立。某个坐标 $m\times m$ minor非零；
+连续性使它在邻域 $U$ 内仍非零。
+于是 $P_xv_1,\ldots,P_xv_m$ 是 $\operatorname{im}P_x$ 的光滑局部标架。
+映射 $(x,t)\mapsto(x,\sum_jt_jP_xv_j)$ 给 $U\times\mathbb R^m$ 的平凡化；
+逆系数由同一个可逆minor求出，故光滑。
+再对该标架作 $G$ 的Gram—Schmidt，得到光滑正交归一标架。
+因此单位球丛
+
+$$
+\mathscr U=\{(x,z):x\in S^m,\ P_xz=z,\ \|z\|_G=1\}
+\tag{VIII109.23}
+$$
+
+局部为 $U\times S^{m-1}$，是无边界的 $(2m-1)$ 维流形。
+$m=1$ 时纤维为零维流形 $S^0$，同一结论仍成立。
+$\mathscr U$ 是紧空间 $S^m\times S(N_p)$ 的闭子集，故紧且Hausdorff。
+
+评价映射 $e:\mathscr U\to S(N_p)$、$(x,z)\mapsto z$ 连续。
+若 $e(x,z)=e(y,w)$，则 $z=w\ne0$；VIII108.6的切空间零交迫 $x=y$，
+所以它注入。紧域到Hausdorff空间的连续单射是嵌入。
+目标 $S(N_p)\simeq S^{2m-1}$ 是连通的同维流形，因为 $m\ge1$。
+现在准确应用[Hatcher][Q109H] Theorem 2B.3及Corollary 2B.4（印刷p172）：
+紧 $n$ 维流形嵌入连通 $n$ 维流形，像既开又闭，因而满射。
+该推论不要求域先连通；这里的维数来自已经构造的局部平凡化，不是形式减维。
+于是每个单位剩余向量被某张切空间接住；齐次缩放和零交给(VIII109.21)。
+最后用 $P_{x(z)}z=z$ 及
+$P_{x(z)}P_yP_{x(z)}=((1+y\cdot x(z))/2)P_{x(z)}$，
+在 $z$ 上取 $G$ 二次型，即得(VIII109.22)。证毕。
+

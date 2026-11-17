@@ -1,0 +1,94 @@
+**定理 149.2（单根球心互易给全方向正高度与闭影像）。** 固定任意原根 $p$，只对这个根假设
+
+$$
+e_p(c_q)=e_q(c_p)\qquad(q\in S_p).
+\tag{XI149.4}
+$$
+
+在其任一完整球图中写
+
+$$
+\begin{gathered}
+D_p=c_p+B\overline B^3,\quad q_v=c_p+Bv,\quad v\in S^2,\quad
+g=g_p,\quad H(c_p+Bw)=w,\quad H_i\in L_p,\\
+\rho(v)=\sup_{x\in K\setminus\{p\}}
+\frac{-v\cdot H(x)}{g(x)},\quad
+a_v=2c_{q_v}-p,\quad m(v)=g(a_v),\\
+Z=\{H(x)/g(x):x\in K\setminus\{p\}\},\qquad
+z_v=H(a_v)/m(v).
+\end{gathered}
+\tag{XI149.5}
+$$
+
+则 $\rho$ 有限且 Lipschitz，并有
+
+$$
+\boxed{\quad
+m(v)=\frac{2}{1+\rho(v)},\qquad
+0<\sigma_p:=\frac{2}{1+\max_{S^2}\rho}\le m(v)\le1,\qquad
+Z=\overline Z .
+\quad}
+\tag{XI149.6}
+$$
+
+此外每个非零方向的完整支撑面只有一个点，
+
+$$
+\rho\in C^1(\mathbb R^3\setminus\{0\}),\qquad
+\nabla\rho(v)=-z_v\quad(v\in S^2).
+\tag{XI149.7}
+$$
+
+这些结论不需要 ZC、全纯域紧性或跨球连续性。
+
+证明。[THREE_COPY VII §122.2—§122.3及定理122.4][Q149TC]及[SAME_READBACK §123.2，式(Q123.4)—(Q123.8)][Q149SR]所需的 $p\in P_0$、邻标签仍在 $P_0$、Inj及限制同构，均由(XI149.2)支付。它们给 $\rho(v)\ge\|v\|$、有界凸影像 $Z$，以及整个原 $V$ 上的
+
+$$
+e_{q_v}=\frac{\rho(v)g+v\cdot H}{1+\rho(v)},\qquad
+h_{\overline Z}(-v)=\rho(v),\qquad
+Z\cap\operatorname*{argmax}_{z\in\overline Z}(-v)\cdot z=\{z_v\}.
+\tag{XI149.8}
+$$
+
+真实邻球 $D_{q_v}$ 包含球缘点 $p$，其对径点正是 $a_v$。$g$ 在这颗完整球上唯一零于 $p$，故在 $a_v$ 达到唯一最大值 $m(v)\in(0,1]$。在 $c_p$ 评价第一式，再用单根互易及 $2c_{q_v}=p+a_v$，得到
+
+$$
+1-\frac{m(v)}2=e_p(c_{q_v})
+=e_{q_v}(c_p)=\frac{\rho(v)}{1+\rho(v)}.
+\tag{XI149.9}
+$$
+
+这直接给出(XI149.6)的高度式及统一正下界，尚未用任何球心连续性。
+
+令
+
+$$
+A_{\sigma_p}=\{H(x)/g(x):x\in K,\ g(x)\ge\sigma_p\}.
+\tag{XI149.10}
+$$
+
+它是紧集，也是凸集。具体地，若 $z_i=H(x_i)/g(x_i)$、$g(x_i)\ge\sigma_p$，则任给 $0\le t\le1$，实际原混态
+
+$$
+x=
+\frac{t x_1/g(x_1)+(1-t)x_2/g(x_2)}
+{t/g(x_1)+(1-t)/g(x_2)}
+\tag{XI149.11}
+$$
+
+满足 $H(x)/g(x)=tz_1+(1-t)z_2$ 及
+$g(x)=(t/g(x_1)+(1-t)/g(x_2))^{-1}\ge\sigma_p$。
+每个真实接触值 $z_v$ 已由 $a_v$ 在此紧凸集中实现。因此
+$A_{\sigma_p}\subseteq Z\subseteq\overline Z$，且三者在每个方向的支撑值相同；有限维分离给
+$A_{\sigma_p}=Z=\overline Z$。现在才可由(XI149.8)把完整支撑面也判成单点，而不是把“唯一实际接触”提前等同于“闭包只有一个接触”。
+
+最后使用紧凸体支撑函数的一阶性质，作为本推导的中间步骤。若 $z(n)$ 是非零方向 $n$ 的唯一支撑点，紧性与唯一性先给 $z(n)$ 连续，支撑不等式给
+
+$$
+0\le h_Z(n+k)-h_Z(n)-k\cdot z(n)
+\le k\cdot\bigl(z(n+k)-z(n)\bigr)=o(\|k\|).
+\tag{XI149.12}
+$$
+
+故 $h_Z$ 在非零方向 $C^1$；用 $\rho(v)=h_Z(-v)$ 得(XI149.7)。这里也复用了123.5的同一支撑微分论证，但其正高度入口由(XI149.9)另行支付，不假设 $p\in P_{\rm reg}$。证毕。
+

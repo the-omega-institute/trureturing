@@ -1,0 +1,55 @@
+**定义 130.1（原数学框架和状态谱性）。** 取非零有限维实空间 $V$、闭尖生成锥 $C\subset V$、在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^*$，始终使用整个
+
+$$
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*}.
+\tag{Q130.1}
+$$
+
+归一仿射超平面为 $\operatorname{aff}K=\{u=1\}$；下文内部、边界都相对于该超平面。$K$ 紧且线性张成 $V$，$\mathcal E$ 紧。原 $\mathcal F_p,\mathcal T_p,D_p,\mathcal A_p$ 采用127.1；$p\perp q$ 仍由同一原效应分别读一、零定义，不先给内积。为比较假设强度，先允许球维数变化，写
+
+$$
+\begin{aligned}
+\mathrm{EB}_{\ge1}:&\quad \forall p\in P,\quad D_p\simeq_{\rm aff}B^{d_p},\quad d_p\ge1,\\
+\mathrm{Inj}:&\quad D_p=D_q\Longrightarrow p=q,\\
+\mathsf W:&=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp},\\
+\mathrm{Pair}_{\perp}:&\quad p\perp q\Longrightarrow H(p,q)\ne K.
+\end{aligned}
+\tag{Q130.2}
+$$
+
+$H(p,q)$ 是包含两点的整个原最小面。球总是完整原排除集合，不是截面或有限抽样。一个原数学 $k$ 框架是不同纯点 $q_1,\ldots,q_k$ 和同一原域的效应 $b_i\ge0$，满足
+
+$$
+\sum_{i=1}^k b_i=u,\qquad b_i(q_j)=\delta_{ij}.
+\tag{Q130.3}
+$$
+
+称原态 $x$ 有状态谱分解，指存在这样的有限框架及 $\lambda_i\ge0$、$\sum_i\lambda_i=1$，使 $x=\sum_i\lambda_iq_i$。这是[Barnum—Hilgert][Q130BH] Definition 3.4的状态谱性，参数 $\Omega=K$、全部仿射效应对应原 $\mathcal E$；不把它称作谱系数唯一、Alfsen—Shultz强谱性或物理仪器。零系数允许存在；讨论正权支撑时，删去零系数，并可把被删效应并入一个保留结果，保持同一原单位和完美区别。
+
+直接复用[VII103.2][Q130VII]：仅EB已给每个 $D_p$ 非点、紧、暴露、极大真面；全部非空真面只有纯单点或整个 $D_p$，而 $P\cap D_p=\partial_{\rm rel}D_p$。这包含未先假定闭的原面。纯端点零关系对称。VII104.2—104.4在W下已经给球内全部对径的实际原零关系、点球单射，以及每条原正交边的唯一第三点。特别地，任意选定 $a_p\in\mathcal A_p,a_q\in\mathcal A_q$，都能由
+
+$$
+a_r=u-a_p-a_q\in\mathcal A_r
+\tag{Q130.4}
+$$
+
+在整个原空间共同完成三结果。这个全域非负性已经支付，不再另设“联合预算”条件。VII105.2—105.3还在W下给 $\mathcal A_p=\{a_p\}$、全域least及效应谱；VII106.2给效应谱多重集和分组效应和的唯一性。IX116.9已给球内原可区别对必为内在对径，以及全关联上的实际三轮闭合恰等于 $\mathrm{Pair}_{\perp}$。这些全部复用，不计为本章新增。
+
+直接复用[VIII113.7][Q130VIII]的完整结果：在这里同一原域，W已经等价于同锥同单位的有限维秩三EJA表示，G、全Pair、全纯数值互易、状态谱性和面滤子保纯均是它的既有后果。VIII113.9进一步在全部完整球为三球时给复三能级。因此VII105.10中以G取得的状态谱存在、有符号谱及谱唯一性，在W下已有此更强来源。本章不重证这项分类，也不将“无需另加G的W状态谱性”计为新增成果。
+
+本章回到固定种子时，$\mathsf E_0$ 逐字取127.1和128.1：完整EB3、Inj、一组含 $P_0$ 顶点的实际原正交三角 $\triangle=(p_1,p_2,p_3)$、同一三角的全原零效应联合分离 $\mathsf J_\triangle$，以及三个规范线性 $T_i$ 的全原锥正性。其中
+
+$$
+\begin{gathered}
+P_0=\{p:\mathcal A_p\text{ 为单点}\},\\
+\forall x,y\in K:\quad
+[\forall i\ \forall b\in\mathcal E,\ b(p_i)=0\Rightarrow b(x)=b(y)]\Rightarrow x=y,\\
+T_i:V\to M_i=\operatorname{span}D_{p_i},\quad
+h(T_ix)=h(x)\quad(h\in\operatorname{span}N_{p_i},\ x\in V),\quad T_i(C)\subseteq C.
+\end{gathered}
+\tag{Q130.5}
+$$
+
+上述各项相对裸EB3仍各有入口；尤其E0不含全域 $\mathrm{Pair}_{\perp}$。共同种子 $w=p_1+p_2+p_3$、正定型 $B$、三个 $\Delta_i$ 及九维直和完全沿用127.2。129.2—129.7的同一固定内球、准确点态接触等价、严格联合预算，以及IX120.9的 $P_0$ 稠密、THREE_COPY VII121.6的稠密 $G_\delta$ 与非塌缩层闭图、原宽度紧层均直接复用，不重证。本章不以这些结论偷偷加入原纯点紧性或球族连续性。
+

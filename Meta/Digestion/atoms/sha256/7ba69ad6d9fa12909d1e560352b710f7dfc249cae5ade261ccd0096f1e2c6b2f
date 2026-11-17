@@ -1,0 +1,38 @@
+**Lemma 5.1 (Common channel and finite paths).** Use any one machine's actual $\eta,A,C$ from Proposition 3.1, at one selected $q$. For $i=0,1$ put
+
+$$
+V_i=\sum_{k\ge1}g_i(k)A^kC.
+\tag{5.1}
+$$
+
+Every $V_i$ is stochastic and fixes both labels. Its entries are $G_L$-comparable to those of $U_{1-i}$. For every row,
+
+$$
+D(U_i(x,\cdot)\Vert V_i(x,\cdot))\le d_L,
+\tag{5.2}
+$$
+
+and the divergence is zero on either label row.
+
+Start a $U_i$ chain and a $V_i$ chain from the same actual initial row $\nu_i$. Let $\mathcal P_i^{(n)},\mathcal V_i^{(n)}$ be their path laws through $n$ transitions, including the initial state. Then, under the actual target,
+
+$$
+D(\mathcal P_i^{(n)}\Vert\mathcal V_i^{(n)})
+\le d_L\,\mathbb E_i\min(N,n)
+\quad(n\ge0).
+\tag{5.3}
+$$
+
+Proof. Each matrix $A^kC$ is a common channel from the gap index to a successor state. Nonnegative averaging of (4.3) gives the entrywise comparison with the opponent. Positivity of all $f_i(k),g_i(k)$ implies common row supports, including simultaneous zero entries. For the entropy contraction, joint masses $f_i(k)(A^kC)(x,y)$ and $g_i(k)(A^kC)(x,y)$ have joint divergence $D(f_i\Vert g_i)$. Summing out $k$ cannot increase it by the log-sum inequality, giving (5.2). One can apply that inequality to the conditional distributions of $k$ at each positive successor mass; countable nonnegative relative entropies give the same result by truncation. Equivalently the joint divergence equals the marginal divergence plus a sum of nonnegative conditional divergences. All involved gap likelihood ratios are bounded for fixed $q,L$, so this calculation is finite. Labels have the identical point-mass rows.
+
+On a positive finite path, the initial-row factors cancel in its likelihood ratio. The log ratio is the sum of the $n$ transition log ratios. Finite summation and conditioning under $U_i$ give exactly
+
+$$
+D(\mathcal P_i^{(n)}\Vert\mathcal V_i^{(n)})
+=\sum_{r=0}^{n-1}\mathbb E_i
+D(U_i(Y_r,\cdot)\Vert V_i(Y_r,\cdot)).
+\tag{5.4}
+$$
+
+If an initial entry is zero, both path laws assign it zero; it contributes nothing. At an actual label all subsequent divergences are zero. Before $N$ use (5.2). Since $\sum_{r=0}^{n-1}\mathsf P_i(N>r)=\mathbb E_i\min(N,n)$, (5.3) follows. No lower bound on a positive transition, and no infinite-horizon likelihood identity, is used. $\square$
+

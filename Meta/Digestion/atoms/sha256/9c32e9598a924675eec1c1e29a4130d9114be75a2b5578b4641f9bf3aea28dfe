@@ -1,0 +1,23 @@
+**命题 35.2（三个演员非对角对及原环境均参与的见证）。** 固定定理 35.1 的任意 $s\ne0$、$\mu>0$ 和取向，保持原 $c,t,g$ 不变。对实 $\varepsilon$ 取
+
+$$
+\begin{gathered}
+x_\varepsilon=x+\varepsilon(E_{12}+E_{21}+E_{13}+E_{31}),\\
+u_\varepsilon=u+\varepsilon(e_1+e_4),\qquad
+\|u_\varepsilon\|^2=2+2\varepsilon^2,\\
+\phi_{\mu,\varepsilon}(a)=
+ \frac{\mu\,u_\varepsilon^*a u_\varepsilon}{2+2\varepsilon^2},
+\qquad \phi_{\mu,\varepsilon}(I_4)=\mu .
+\end{gathered}
+\tag{35.7}
+$$
+
+存在 $\eta>0$，使每个 $0<|\varepsilon|<\eta$ 都在同一个泛函上严格违反原 PB 且两笔预算同时严格正。此时 $x_\varepsilon$ 的 $12,13,23$ 三个非对角对均非零，$u_\varepsilon$ 的三个演员分量与原环境分量均非零，并且
+
+$$
+t u_\varepsilon=\varepsilon(e_1+e_4)\ne0 .
+\tag{35.8}
+$$
+
+证明。$x_\varepsilon$ 始终是原 Hermitian 角探针；$12,13$ 条目为 $\varepsilon$，$23$ 条目保持 $s(4+\iota)/2\ne0$。所有原作用列关于 $\varepsilon$ 连续，泛函分母恒正，故两笔完整预算和 PB 的绝对值差额连续；预算非负性来自正泛函的实 Gram。零处预算分别为 (35.4) 后列出的两个正数，差额为 $d_0\mu s^2>0$。对这三个连续函数各取一个零邻域，使其值大于各自零处值的一半，再取三个邻域的交，即得所需 $\eta$。这对该邻域内每个非零实 $\varepsilon$ 成立，不是只避开一个未知零点集。直接以原 $t$ 作用给 (35.8)，环境既没有更换也没有删去。若要两种取向共用同一 $\eta$，取各自正半径的较小者即可；探针仍按各自 $\iota$ 解释。这里的参与是原矩阵及向量的数学参与，不生成实际准备或装置。∎
+

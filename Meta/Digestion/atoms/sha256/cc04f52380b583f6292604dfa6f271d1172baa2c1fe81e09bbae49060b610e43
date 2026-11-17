@@ -1,0 +1,131 @@
+**定理 45.3（每个固定 $6\times5$ 域塔中的四个实际轨道）。** 对满足 (45.1) 的每一个固定域塔，都存在实际参数 $C\le_F E$、$V\le_E E\oplus D$，使 $V$ 可用，且 (45.3) 的四个十五维窗口两两不属于同一原 $D^\times$ 轨道，并满足 (45.7)。更强地，取 $D/F$ 的有限正规分裂域 $K$，以原嵌入集合 $\Omega=\operatorname{Hom}_F(D,K)$ 标记 $D\otimes_F K\simeq K^\Omega$；对 $K$ 的任意扩域 $K'$，四个 $W_{ef}\otimes_F K'$ 在保持这些标签的整个对角群 $(K'^\times)^\Omega$ 下仍两两不等价。
+
+证明。先建立同时容许对偶的非空好开集，再返回原域参数，最后从窗口恢复旗标以排除等价。
+
+将 $E$ 的六个嵌入记为 $\sigma_i$，并置 $B_i=\{\tau\in\Omega:\tau|_E=\sigma_i\}$，每个 $B_i$ 有五个元素。分裂后有
+
+$$
+E\otimes_F K=K^6,\qquad
+D\otimes_F K=\bigoplus_{i=1}^6K^{B_i}.
+\tag{45.14}
+$$
+
+中心 $C_K$ 是 $K^6$ 中的三平面；相对窗口 $V$ 分裂为六个叶平面 $L_i\le_K K\oplus K^{B_i}$，各有维数三。叶平面的第一个坐标称为接合坐标，其余五个为外部坐标。迹是各嵌入值之和，故 (45.2) 在中心及每一叶上都成为普通点积，$V^\perp$ 的叶平面恰为 $L_i^\perp$。
+
+对任意三平面 $L\le K^6$，选择六行三列的帧 $H$，行向量为 $h_j$。先要求每个三阶行子式非零，并要求线性映射
+
+$$
+\Phi_L:K^6\longrightarrow\operatorname{Sym}_3(K),\qquad
+z\longmapsto H^{\mathsf T}\operatorname{diag}(z)H
+=\sum_{j=1}^6z_jh_j^{\mathsf T}h_j
+\tag{45.15}
+$$
+
+可逆。这两条是开条件；更换列基只使右边作可逆合同变换，故不依赖帧。若某可逆对角矩阵 $\delta$ 满足 $\delta L=L^\perp$，则 $H^{\mathsf T}\delta H=0$，与 (45.15) 的单射性矛盾。因此该开条件排除叶或中心的带标签对角自对偶，而非只排除原域的某些乘数。
+
+这个开集 $\mathcal U\subset\operatorname{Gr}(3,6)$ 非空的手工见证为
+
+$$
+H=\begin{pmatrix}I_3\\ A\end{pmatrix},\qquad
+A=\begin{pmatrix}1&1&1\\1&2&3\\1&4&9\end{pmatrix}.
+\tag{45.16}
+$$
+
+$A$ 的列由 $x=1,2,3$ 的 $(1,x,x^2)^{\mathsf T}$ 给出。其条目非零；任意二阶子式为 $y-x$、$y^2-x^2$ 或 $xy(y-x)$，其中 $x,y$ 是不同的上述正整数；$\det A=(2-1)(3-1)(3-2)=2$。所以 $A$ 的所有方形子式非零，这恰使 $[I_3;A]$ 的全部三阶行子式非零。前三个行平方张成对角对称矩阵，后三个行平方模去它们后，以三个非对角条目表示为
+
+$$
+\begin{pmatrix}1&1&1\\2&3&6\\4&9&36\end{pmatrix},
+\qquad
+\det= (3-2)(6-2)(6-3)=12\ne0.
+\tag{45.17}
+$$
+
+因此 (45.15) 可逆。这些非零整数在每个特征零域中都非零。
+
+为使好条件也在取对偶后保持，令 $\iota(L)=L^\perp$，取
+
+$$
+\mathcal G=\mathcal U\cap\iota(\mathcal U).
+\tag{45.18}
+$$
+
+Grassmannian 几何不可约，$\iota$ 为代数自同构，所以两个非空开集的交仍非空。$\mathcal G$ 在对偶、坐标置换和可逆对角变换下不变：后两者分别置换行平方或将它们乘以非零平方，而 $(\delta L)^\perp=\delta^{-1}L^\perp$。在 $\mathcal G$ 内，$L,L^\perp$ 都统一，即全部三阶行子式非零，并且二者不能由任何带标签对角矩阵相连。
+
+本处使用 Grassmannian 的标准仿射图及其不可约性，不将其另立为新几何定理；图的构造见 Stacks Project，[§27.22，Tag 089R，Lemma 27.22.1 的证明](https://stacks.math.columbia.edu/tag/089R)。对整个参数空间使用限制标量的标准构造，见同书 [§97.11，Tag 05Y8](https://stacks.math.columbia.edu/tag/05Y8)：
+
+$$
+\mathcal X=\operatorname{Gr}_F(3,E)\times
+\operatorname{Res}_{E/F}\operatorname{Gr}_E(3,E\oplus D),
+\qquad
+\mathcal X_K\simeq\operatorname{Gr}_K(3,6)^7.
+\tag{45.19}
+$$
+
+要求中心及六个叶均属于 $\mathcal G$，得到几何非空开集 $\mathcal O_K=\mathcal G^7$。Galois 作用只置换六个中心坐标、六个叶及各 $B_i$ 内的坐标，故 $\mathcal O_K$ 不变。它也在各因子的带标签对角作用及对偶下不变。叶及其对偶的统一性保证：投影到五个外部坐标单射，因为其中任意三行已满秩；接合投影满射，因为该行非零。投影的秩在扩域前后相同，故这些条件对实际参数也给出原 $V,V^\perp$ 的可用性。
+
+下面取得实际的 $F$-参数，而不将任意七个分裂矩阵误称为下降的窗口。选取 $E$ 的一个 $F$-基，以及 $E\oplus D$ 的一个 $E$-基，(45.19) 有定义在 $F$ 上的稠密大胞
+
+$$
+\mathcal B\simeq\mathbb A_F^9\times
+\operatorname{Res}_{E/F}\mathbb A_E^9
+\simeq\mathbb A_F^{63}.
+\tag{45.20}
+$$
+
+由于 $\mathcal X_K$ 几何不可约，$\mathcal O_K\cap\mathcal B_K$ 非空。在 $\mathcal B_K=\mathbb A_K^{63}$ 中取非零多项式 $h\in K[t_1,\ldots,t_{63}]$，使其主开集 $D(h)$ 包含于这个交；这是仿射空间中开集含主开集的标准性质，也可由各子式和 (45.15) 的行列式非消失条件取得。作系数范数
+
+$$
+P(t)=\prod_{g\in\operatorname{Gal}(K/F)}g(h)(t)
+\in F[t_1,\ldots,t_{63}]\setminus\{0\}.
+\tag{45.21}
+$$
+
+整环性使此积非零，Galois 不变性使其系数属于 $F$。无限域 $F$ 上的非零多项式不能处处为零：按变量数归纳，先使一个非零系数非零，再避开最后一个变量的有限个根。因此存在 $t\in F^{63}$ 满足 $P(t)\ne0$，尤其 $h(t)\ne0$。此 $t$ 对应实际的 $C\le_F E,V\le_E E\oplus D$，且全部七个分裂因子在 $\mathcal G$ 内。(45.16) 只证明几何开集非空，(45.20)–(45.21) 才给出原域中的存在性。
+
+固定如此取得的实际参数，以下论证在 $K$ 的任意扩域 $K'$ 中均成立，暂仍写 $K$。记 $L_i^0=L_i,L_i^1=L_i^\perp$。外部投影的单射性使每个叶可唯一写成图形
+
+$$
+L_i^f=\{(\lambda_i^f(x),x):x\in E_i^f\},\qquad
+E_i^f=\operatorname{pr}_{B_i}L_i^f,\qquad
+N_i^f=\ker\lambda_i^f,
+\tag{45.22}
+$$
+
+其中 $\dim E_i^f=3$、$\dim N_i^f=2$，$\lambda_i^f:E_i^f\to K$ 满射。域扩张保持线性核与像，故 (45.3) 分裂后恰为
+
+$$
+W_{ef,K}=\{(x_i)_i:x_i\in E_i^f,\
+(\lambda_i^f(x_i))_{i=1}^6\in C_K^e\}.
+\tag{45.23}
+$$
+
+中心及其对偶统一，故 $C_K^e\cap Ke_i=0$ 且 $\operatorname{pr}_iC_K^e=K$。前者因为其余五行包含一个满秩三行集，后者因为第 $i$ 行非零。由此可从窗口本身恢复每一已标记块内的旗标：
+
+$$
+W_{ef,K}\cap K^{B_i}=N_i^f,
+\qquad
+\operatorname{pr}_{B_i}W_{ef,K}=E_i^f.
+\tag{45.24}
+$$
+
+第一式由中心没有单坐标支撑的向量得到；反向任取 $x_i\in N_i^f$，其余块置零即可。对第二式，任取 $x_i\in E_i^f$，先选中心向量的第 $i$ 坐标为 $\lambda_i^f(x_i)$，再利用其余 $\lambda_j^f$ 的满射性逐块提升，便得到所需的窗口向量。这证明恢复的是二维核包含于三维投影的整个旗标。
+
+若外部可逆对角矩阵 $\Delta=\bigoplus_i\Delta_i$ 满足 $\Delta W_{ef,K}=W_{e'f',K}$，则 (45.24) 强制 $\Delta_iN_i^f=N_i^{f'}$、$\Delta_iE_i^f=E_i^{f'}$。两个非零泛函的核相同，故存在 $s_i\in K^\times$ 使
+
+$$
+\lambda_i^{f'}\Delta_i=s_i\lambda_i^f,
+\qquad
+\operatorname{diag}(s_i,\Delta_i)L_i^f=L_i^{f'},
+\qquad
+\operatorname{diag}(s_1,\ldots,s_6)C_K^e=C_K^{e'}.
+\tag{45.25}
+$$
+
+最后一式还使用 (45.23) 的接合像恰为整个 $C_K^e$，因为所有叶泛函均满射。若 $f\ne f'$，中间一式立即违反叶的对角非自对偶性，故必有 $f=f'$。
+
+此时中间一式是统一三平面的对角稳定式。Plücker 子式坐标是标准工具，见 Devriendt–Mulas，[*Uniform density in matroids, matrices and graphs*，arXiv:2306.15267v3，§4.3](https://arxiv.org/html/2306.15267v3)；这里只用子式定义及其对角作用，不调用该文的实域密度结论。设对角条目为 $z_1,\ldots,z_6$。全部三阶 Plücker 坐标非零，故每个三元集 $I$ 的 $\prod_{j\in I}z_j$ 都等于同一个数。对任意不同的 $a,b$，选另外两个坐标组成 $J$，比较 $J\cup\{a\}$ 与 $J\cup\{b\}$，得 $z_a=z_b$。所以稳定子只有公共标量，(45.25) 给出 $\Delta_i=s_iI_5$。若 $e\ne e'$，最后一式又违反中心的对角非自对偶性，故 $e=e'$。这证明四个窗口在整个带标签分裂对角群下两两不等价；上述子式及线性独立性在扩域后保持，故结论也对 $K'$ 成立。
+
+原 $\gamma\in D^\times$ 的乘法在 (45.14) 中是 $\operatorname{diag}(\tau(\gamma))_{\tau\in\Omega}$，其条目全部非零。因此原标量等价是刚被排除的对角等价的特例；这里不需要将任意分裂对角矩阵下降为原乘数。定理 45.2 最后给出四者的完整原标签交维相等。
+
+白话说，每个原比例的两份窗口交叠，都先压到同一个 $E^2$ 像；中心取对偶不改直线上的交维，整个窗口取迹对偶也不改交维，所以四份完整表相同。但整体形状仍记着六个块里的二维核和三维投影：任何整体等价必须先保留这些旗标，再变成七个局部三平面的对角等价，而好条件逐一排除了改变中心或叶的可能。几何坐标负责显露这些形状，原域大胞负责保证它们确实存在于最初固定的域塔。$\square$
+

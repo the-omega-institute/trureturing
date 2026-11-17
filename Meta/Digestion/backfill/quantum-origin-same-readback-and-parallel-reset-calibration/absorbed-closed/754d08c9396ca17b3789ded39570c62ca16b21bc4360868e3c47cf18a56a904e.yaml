@@ -1,0 +1,34 @@
+fingerprints:
+  raw_sha256: sha256:754d08c9396ca17b3789ded39570c62ca16b21bc4360868e3c47cf18a56a904e
+  normalized_sha256: sha256:754d08c9396ca17b3789ded39570c62ca16b21bc4360868e3c47cf18a56a904e
+cas_ref: sha256:754d08c9396ca17b3789ded39570c62ca16b21bc4360868e3c47cf18a56a904e
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_compact
+    target_statement_id: sha256:3ad04d9bde2af3ce792ad47826c9e5a7e8c75e093f0b2eb10e47fe4a4f488531
+  - gid: D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_convex
+    target_statement_id: sha256:7cc29ee7e7117945545cf612693a3fc3c220217a7f4a3f812334949ed3e405f6
+  - gid: D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.cone_bound
+    target_statement_id: sha256:dd9d87886b8d42e5036ac86cb11842b8cbdc1e6a2b89cb60abef34d2b11fd14a
+  - gid: D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_mem
+    target_statement_id: sha256:f9db299e3232880cbe793c599be69e271b980bcd821f31b3e069c656c2e7b40d
+  - gid: D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_span
+    target_statement_id: sha256:60d5837d923dd2c4fe8d5fe08e3bcc5d2b97dd47d55c2571cd50eee63c9f732f
+  - gid: D5/S3/Quantum/Foundation/ExclusionBallFaces.chart_face_eq
+    target_statement_id: sha256:de97c05d69a1bb528794fde6d7f2e27d47f55047bd34f86306bad5ffbc59ced7
+  - gid: D5/S3/Quantum/Foundation/ExclusionBallFaces.exclusion_ball_faces
+    target_statement_id: sha256:1a6635bb24315801945ddd55215bbb5b6fd4f9cc0983a1c20eccd3077ec66be2
+  - gid: D5/S3/Quantum/Foundation/ExclusionWidthCompactness.comparison_zero_iff
+    target_statement_id: sha256:3e6455c35f781813fdf0a68b8a8d6f7502842e592149a1c30cf1ec1676327bab
+  - gid: D5/S3/Quantum/Foundation/FixedZeroObstruction.full_zero_faces
+    target_statement_id: sha256:291c0996a1c57dd7b9e1e877f3153b4f2b28554c1702e1c8816be7024da6818a
+  - gid: D5/S3/Quantum/Foundation/MixedExclusionGeometry.frontier_covered
+    target_statement_id: sha256:25ecc3a2462b6bdfa25e7acd241924d4b10444044b4aad205e979fbe4a726791
+  - gid: D5/S3/Quantum/Foundation/OriginalFacePolarity.chart_boundary
+    target_statement_id: sha256:e674c21245bdd878fc7aae554ecaca6685d6428a6507fae65b457c5ec96fabfe
+  - gid: D5/S3/Quantum/Foundation/OriginalStateCover.original_state_cover
+    target_statement_id: sha256:dc9644ca2fc3d3d277c416194d156468a1ee29bbbfb3804439b5adcbe8036c05
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 056d21b3ad4a27e7041966152695b34f96232651ca3c6adb44f03bcb69e43ace
+    - 843038e683638c0bfd9bb6e1315afc34eb210bff6381941b55b5cbbb7e68bbe4

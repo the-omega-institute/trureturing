@@ -15,13 +15,13 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private size sourceMod base newBase charge oldValue newValue chainLength chainStart
+open PacketNormalForm (size base newBase oldValue newValue chainLength chainStart blocksWord)
+open private sourceMod charge
   source_totals chain_values nextBase nextNewBase
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private mask full terminal full_split chain_inventory mask_mass mask_positive complement_mass
   terminal_double terminal_nonpositive source_odd native_balance four_checks freshAfter
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddleCore
-open private blocksWord from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private packetChecks from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 open private A B L H K SU SV SW heads_positive dictionary pow_split pow_lower full_cap
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Source

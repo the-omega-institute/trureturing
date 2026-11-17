@@ -1,0 +1,15 @@
+**引理 115.4（原零关系的闭图）。** 若 $p_n\to p$、$x_n\to x$ 且 $x_n\in D_{p_n}$，则 $x\in D_p$。亦即
+
+$$
+\operatorname{Graph}(\mathcal D)=\{(p,x)\in P\times K:x\in D_p\}
+\quad\text{是闭集},
+\tag{IX115.9}
+$$
+
+并且 $\mathcal D$ 对 Hausdorff 拓扑上半连续，$d$ 上半连续。
+
+证明。由 $x_n\in D_{p_n}$ 及最小值达到，取 $f_n\in\mathcal E$ 使
+$f_n(p_n)=1$、$f_n(x_n)=0$。$\mathcal E$ 紧，取子列 $f_n\to f\in\mathcal E$。线性泛函在有限维空间上联合连续，故 $f(p)=1$、$f(x)=0$；于是 $T_p(x)=0$，即 $x\in D_p$，证明(IX115.9)。
+
+若 $p_n\to p$，任一 Hausdorff 收敛子列 $D_{p_n}\to Q$ 的每个 $x\in Q$ 都可由 $x_n\in D_{p_n}$ 逼近，故由闭图 $Q\subseteq D_p$。这正是紧值映射的上半连续性；再由紧集上的 Hausdorff 收敛，$\limsup d(p_n)\le d(p)$，所以 $d$ 上半连续。证毕。
+

@@ -77,6 +77,8 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
                 "The scanner starts with both flags false and the first colour fixed to zero."),
             Def("firstmoment", "firstMoment", "First-row weighted count", FirstMomentFormula(),
                 "Only fully seen first rows contribute the chosen boundary moment."),
+            Thm("sumrows", "sum_rows", "Summing six-cell functions", SumRowsFormula(),
+                "The sum over functions equals the six iterated sums of their coordinates."),
             Thm("certificate", "finite_certificate", "One-row transfer counts",
                 CertificateFormula(),
                 "Write r, t, u for moments one, two and three. A fully seen boundary has "
@@ -120,6 +122,17 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
             new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233254"),
                 ResolutionKind.Proved));
+
+    private static Formula SumRowsFormula()
+    {
+        var m = V("m"); var f = V("f");
+        var fm = Call("Fin", m);
+        Formula rhs = App(f, Vector(V("a"), V("b"), V("c"), V("d"), V("e"), V("g")));
+        foreach (var n in new[] { "g", "e", "d", "c", "b", "a" })
+            rhs = SumOver(n, fm, rhs);
+        return All("m", Q("Nat"), All("f", Arrow(Arrow(Fin(6), fm), Q("Int")),
+            Eq(SumOver("c", Arrow(Fin(6), fm), App(f, V("c"))), rhs)));
+    }
 
     private static Formula RowFormula()
     {

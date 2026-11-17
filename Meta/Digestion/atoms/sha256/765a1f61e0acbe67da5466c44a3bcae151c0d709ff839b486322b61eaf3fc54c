@@ -1,0 +1,70 @@
+**引理 39.4（同一三次子域的两标签支持刚性）。** 设 $F\subsetneq K\subseteq D$，$[K:F]=3$，并令
+
+$$
+ U=K\oplus Fa,qquad V=K\oplus Fb,qquad a,b\notin K.
+\tag{39.9}
+$$
+固定 $\kappa_0\in K\setminus F$。若
+
+$$
+ a\in Q(V),\qquad a+\kappa_0\in Q(V),
+\tag{39.10}
+$$
+则存在 $\lambda\in K^\times$ 使 $V=\lambda U$。特别地，$Q(U)\subseteq Q(V)$ 足以推出这一结论。
+
+**证明。** 由 $a\in Q(V)$，可写成
+
+$$
+ a=\frac{u+sb}{v+tb},qquad u,v\in K,\quad s,t\in F,\quad v+tb\ne0.
+\tag{39.11}
+$$
+若 $t=0$，则 $s\ne0$，否则 $a\in K$。于是
+
+$$
+ b=\frac vs a-\frac us,qquad
+ V=\frac vs(K+Fa)=\frac vs\,U.
+\tag{39.12}
+$$
+
+若 $t\ne0$，置 $c=s/t\in F$、$A=a-c$。则 $A\notin K$，并且由 (39.11)
+
+$$
+ b=h+\frac gA,qquad h=-\frac vt\in K,\quad g=\frac{u-cv}{t}\in K^\times.
+\tag{39.13}
+$$
+
+故
+
+$$
+ U=K+FA,qquad g^{-1}V=K+FA^{-1}.
+\tag{39.14}
+$$
+
+第二个原标签仍然是 $a+\kappa_0=A+\kappa$，其中 $\kappa=\kappa_0+c\in K\setminus F$。由其属于 $Q(V)=Q(g^{-1}V)$，存在 $p,q\in K$、$e,f\in F$ 使
+
+$$
+ A+\kappa=\frac{p+eA^{-1}}{q+fA^{-1}}=\frac{pA+e}{qA+f},qquad qA+f\ne0.
+\tag{39.15}
+$$
+
+交叉相乘得到
+
+$$
+ qA^2+(q\kappa+f-p)A+(f\kappa-e)=0.
+\tag{39.16}
+$$
+
+若 $1,A,A^2$ 在 $K$ 上独立，则 $q=0$、$p=f$、$f\kappa=e$。分母条件给 $f\ne0$，遂有 $\kappa=e/f\in F$，矛盾。因此 $A$ 在 $K$ 上的次数为二；写成
+
+$$
+ A^2+\rho A+\sigma=0,qquad \rho,\sigma\in K,\quad \sigma\ne0.
+\tag{39.17}
+$$
+于是 $A^{-1}=-\sigma^{-1}A-\rho/\sigma$，从 (39.14) 得
+
+$$
+ V=g(K+FA^{-1})=-\frac g\sigma(K+FA)=-\frac g\sigma U.
+\tag{39.18}
+$$
+证毕。
+

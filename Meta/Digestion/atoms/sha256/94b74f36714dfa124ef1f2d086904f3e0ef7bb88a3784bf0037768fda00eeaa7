@@ -1,0 +1,30 @@
+**Proposition 15.4 (random lifetime and the absence of a hard samplewise
+budget).** For any fixed $T>0$, one has $\mathbb P(S<T)>0$ and
+$\mathbb P(S=T)>0$, and $S$ has no deterministic positive lower bound.
+Moreover, at any fixed control tube radius $e>0$, no finite deterministic
+bound on phase variation, length or identity energy can accommodate
+all realizations satisfying the full held control tube around this
+Brownian target almost surely.
+
+Proof. A Brownian height can leave $I$ in any positive time with
+positive probability, since a sufficiently large Gaussian increment
+forces exit by continuity. Survival to $T$ has positive probability
+by the argument in Theorem 7.2. These facts prove the assertions about
+$S$. On the event $S=T$, a full tube implies
+$|b_n(T)-W^2_T|\le e$, and therefore
+
+$$
+V_n^b\ge(|W^2_T|-e)_+,\qquad L_n\ge V_n^b,
+\qquad E_n\ge(V_n^b)^2/T.
+\tag{15.2}
+$$
+
+The survival event depends only on $W^1$, and $W^2_T$ is an independent
+Gaussian with unbounded support. Every proposed finite deterministic
+budget is exceeded with positive probability. For the native metric
+radius $e<\pi$, replace $e$ by $2e$ in (15.2), by Theorem 13.2.
+This argument also rules out a time-independent hard budget, since it
+already rules one out on the specified fixed horizon. It does not
+assert that any finite-radius full-lift tracking class is nonempty.
+$\square$
+

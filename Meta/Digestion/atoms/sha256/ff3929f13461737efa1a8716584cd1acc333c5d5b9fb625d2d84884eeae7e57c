@@ -1,0 +1,37 @@
+**定理 126.2（零关系平方）。**
+
+$$
+ (x,y)\in\mathscr B_S
+ \Longleftrightarrow
+ x,y\text{ 同处一个原真面},
+ \qquad
+ \mathscr Z\circ\mathscr Z=\mathscr B_S.
+ \tag{Q126.8}
+$$
+
+特别地，若 $x\in\operatorname{ri}H$，则
+
+$$
+ (\mathscr B_S)_x=H,
+ \tag{Q126.9}
+$$
+
+若 $F$ 重复且 $x\in F$，则
+
+$$
+ (\mathscr B_S)_x=F.
+ \tag{Q126.10}
+$$
+
+证明。中点在 $S$ 当且仅当存在 $K$ 的支撑仿射函数在该中点取极值；仿射性迫使它在
+$x,y$ 上都取同一极值。因此二点同处一个真面。反向由真面的凸性显然。由于
+$\mathscr B_S$ 是连续中点映射的闭集，$\mathscr B_S$ 紧。
+
+若 $x\mathrel{\mathcal Z}z\mathrel{\mathcal Z}y$，则
+$x,y\in\mathcal Z(z)$。引理126.1说明 $\mathcal Z(z)$ 总是一个纯单点或完整球，因而是凸真面，故
+$(x,y)\in\mathscr B_S$。反过来，若 $x,y$ 同处一个真面，按 VII103.2 它要么是纯单点，要么包含于某个完整球
+$H$。取一个纯点 $p$ 使 $H=D_p$。零对称给
+$x\mathrel{\mathcal Z}p\mathrel{\mathcal Z}y$；纯单点的情形也可先把该点放进某个包含它的完整球再作同一选择。于是
+$\mathscr Z\circ\mathscr Z=\mathscr B_S$。式(Q126.9)来自球相对内点所在的唯一完整面；式(Q126.10)对重复球由
+IX116.2 的第三球孤立性和引理126.1给出。证毕。
+

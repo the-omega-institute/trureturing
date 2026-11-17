@@ -1,0 +1,21 @@
+**推论 24.6（特定 QSVT 访问前提及投影边界）。** 在定理 24.2 的相干接口和完整端口下，现有 QSVT 所需的特定逻辑酉、逆和受控酉可以分别取 $Q_D,Q_D,C Q_D$。不受控访问直接由同一实现把 $c$ 固定为 $1$ 取得，$c$ 及其固定输出仍保留；不另假设可调用 $V^\dagger$。取已知逻辑探针 $|+y\rangle_S$ 和
+
+$$
+P=I_R\otimes|+y\rangle\langle+y|_S.
+$$
+
+其压缩精确为
+
+$$
+(\langle+y|_S\otimes I_R)Q_D(|+y\rangle_S\otimes I_R)
+ =\frac{I+2J_y}{D}
+ =\frac{I}{D}+\frac{D-1}{D}\frac{J_y}{j}
+ =:A_D.
+\tag{24.20}
+$$
+
+$P$ 的相位门 $e^{i\phi(2P-I)}$、$P$ 控制的 NOT 及其所需额外控制只作用于 $S$ 和非参考辅助系统；探针的已知准备和基变换也只作用于非 $R$。因此它们不是 $R$ 门或未知 $h$ 依赖的控制。$A_D$ 是原始 $J_y/j$ 的已知仿射压缩，不能省去其中的 $I/D$ 偏移或 $(D-1)/D$ 尺度。
+
+证明。$Q_D$ 的自伴及逆已由互补投影证明，固定 $c=1$ 的限制在 (24.3) 中直接给 $Q_D$，且保持同样的完整输出误差。$|+y\rangle$ 的三个 Pauli 均值为 $(0,1,0)$，给 (24.20)。其余控制只含上述已知投影及已供应的受控 $Q_D$。
+
+具体采用 Gilyén–Su–Low–Wiebe, [*Quantum singular value transformation and beyond*, arXiv:1806.01838](https://arxiv.org/abs/1806.01838)，定义 15、定理 17、推论 18、引理 19：代入 $U=Q_D$、$\Pi=\widetilde\Pi=P$。定义 15 中的 $U^\dagger$ 在此仍是 $Q_D$；引理 19 的 projector-controlled NOT 只需上述非 $R$ 控制，受控序列的奇数情形所需的一次 controlled-$U$ 由 (24.7) 支付。

@@ -1,0 +1,46 @@
+**定理 105.4（正锥限制双射）。** 在 $\mathsf W$ 下，记
+
+$$
+Z_p:=\{f\in C^*:f(p)=0\},\qquad
+\operatorname{Aff}(D_p)_+:=\{h\in\operatorname{Aff}(D_p):h\ge0\}.
+$$
+
+记 $\operatorname{res}_pf=f|_{D_p}$ 为整个 $V^*$ 到 $\operatorname{Aff}(D_p)$ 的线性限制。
+其在正锥上的限制 $\operatorname{res}_p:Z_p\to\operatorname{Aff}(D_p)_+$ 是双射。
+其逆唯一延伸为正线性映射
+
+$$
+\Lambda_p:\operatorname{Aff}(D_p)\longrightarrow V^*,\qquad
+\operatorname{res}_p\Lambda_p=\mathrm{id},\quad
+(\Lambda_ph)(p)=0,\quad \Lambda_p1=u-a_p.
+\tag{VII105.10}
+$$
+
+所以 $0\le h\le1$ 时 $0\le\Lambda_ph\le u-a_p$；这是一张共同正线性延拓，
+不再只是逐个局部效应存在延拓的量词。
+
+证明。对 $f\in Z_p$ 使用105.3的正对偶展开。每个正系数项 $a_q$ 都满足 $a_q(p)=0$，
+故由零对称 $q\in D_p$。不能有三个正系数，否则三把框架尺都在 $p$ 读零而总和读一。
+若有两个正系数，其两纯点在 $D_p$ 内原正交；104.4的直径公式使二者为球内对径。
+若仅有一项，以该点在 $D_p$ 内的对径补零系数。因此
+
+$$
+f=\lambda a_q+\mu a_r,\qquad \lambda,\mu\ge0,
+\quad q,r\text{ 为 }D_p\text{ 的对径}.
+\tag{VII105.11}
+$$
+
+限制到球图是 $(\lambda+\mu)/2+(\lambda-\mu)n\cdot z/2$。
+非恒定时，最大、最小值及最大端点唯一确定两项，交换两端不改原函数。
+恒定时 $\lambda=\mu$，原函数为 $\lambda(a_q+a_r)=\lambda(u-a_p)$，也与直径无关。
+所以限制在整个正锥 $Z_p$ 上单射。
+
+反向，任意 $h(z)=\gamma+b\cdot z\ge0$ 都满足 $\gamma\ge\|b\|$。
+沿 $b$ 的直径取 $\lambda=\gamma+\|b\|,\mu=\gamma-\|b\|$，
+用(VII105.11)构造正延拓；$b=0$ 时取 $\gamma(u-a_p)$。
+故限制满射。唯一性使正函数的逆保持加法和非负标量倍。
+非负仿射锥生成整个 $\operatorname{Aff}(D_p)$，将一般函数写成两正函数之差，
+所得线性延伸与分解无关：两种分解相加后的正延拓由单射性相等。
+限制和在 $p$ 的零值随之保持。常数一的唯一延拓是 $u-a_p$，
+正性再应用于 $h$ 与 $1-h$ 即给所述预算。证毕。
+

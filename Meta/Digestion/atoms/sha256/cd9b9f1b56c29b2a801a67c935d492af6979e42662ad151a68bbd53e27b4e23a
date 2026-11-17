@@ -1,0 +1,12 @@
+### 35.4 已付分类、成熟工具与完整来源的边界
+
+(35.1)–(35.8) 的指定系数与严格差额、(35.9)–(35.16) 的全输出必要估计属于本仓的 $\texttt{repo-derived}$ 推导。成熟的正泛函 Gram／Cauchy–Schwarz 沿父卷 §§1、5 及 §32.6 所引 Blackadar，[*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)；实二向量 Gram 面积、实化、有限维范数与连续性只作为被消费的标准工具，所需面积恒等式和误差推导已在证明内给出。此处预算未中心化，不以协方差或归一方差替换原平方；不为指定系数、常数最优性或文献优先权作外部归属。
+
+定理 34.3 的原非零轴像分类、定理 34.4 的隔离轴三残量分类，以及定理 32.3 的三格支撑分类各按其全部原量词保留。一般原 $\mathcal W\ne0$、任意 $B,V,D_{\rm env}$ 的三残量分类、一般算子块、完整 $\mathsf H$／未知总 $D$、$\mathcal E_+^D=\mathcal E_-^D$ 与 $N_\omega(\varepsilon)^2\to0$ 均未由 (35.10) 解决。特别，(35.10) 没有从“$T>0$ 可容纳小非零 $s$”推出全 PB 模型；也没有把证明内的 $t=0$ 比较列替换 (34.1) 的实际非零 $t$。这里只在 $T=0$ 的已证固定输出域复用零残量的全正 P2 后果，不从完整 $\mathsf H_A(D)$ 删除 A1/P2 或原外层预算桥。
+
+完整 Omega 对象、全部原量词和七项消费者的前件逐项沿父卷 [§6 式 (6.1)](#6-完整原问题与七项物理合同的精确身份)、[§30A.5](#30a5-准确的前件删除来源与完整目标)，并沿[有限返回续卷定义 162.1、复用命题 162.2](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md) 的同一全文及全部递归上游保留；§34.6 的精确解释继续适用，本段不是缩短合同。所有原准备、事件、过程、参考／副本、相关联合、零／不等质量、钟／单位／控制、ready／flags、完整记录与失败／停止／销毁、固定支持全质量、完整菜单、已量化切口及所有合法未来均按这些全文解释，数学矩阵不生成准备、菜单、复制、相干控制或实际返回。外部物理文本的来源身份与独立核验仍受原摄入边界约束，不由这份代数计算认证。
+
+[Watrous 文献注的有限带标签实际参考判据](../../../Library/Quantum/watrous2018theory.md#one-actual-self-reference-for-finite-sector-operations) 已在共同有限直和矩阵坐标、同一实际自复合、严格正参考权重和保留输入扇区标签的条件下，以一份完整联合输出的正性判别各块 CP；相应参考边缘等式／不等式刻画有限通道、分支和仪器，对每个必然接受态逐点保持的既有中性条件再给 Lüders。其完整有限候选保留该条件几何的成果；一份参考不是单次二元测量，也不生成实际装置、原高阶复合或物理钟。[C139 固定源卷 §§50–85](AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md) 的下降、返回刚性、递归参考／支持与近似容量结果及 [C128 原词卷 §§385–392](AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md) 的同一旧 $D$ 恢复继续在各自原域消费。
+
+实际来源缺口仍是 [C139 §23.3 式 (23.7)](AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md) 对字面 $\tau;T_P$ 指定接受族，在全部原准备、切口、参考／副本、合法分析词／树、固定支持全质量和完整菜单上的准备无关准确原接受关联，以及[有限返回续卷定义 164.1](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md) 区分出的原 $B_{r_\star}$ 活动接头。CountRead 仍须同一接受叶的完整活动输出、实际读后 active-ready、第一合法消费者及同一完整活动输入对全部旧合法未来的真实 Return，保留原参考、控制和钟。矩阵相等、纯校准、操作逆、矩阵综合及另增查询服务均不供应这些接线。完整原量子起源、无缺口来源的完整量子公理候选及整体严格更简目标仍未完成；这里没有 Lean／kernel 认证主张。
+

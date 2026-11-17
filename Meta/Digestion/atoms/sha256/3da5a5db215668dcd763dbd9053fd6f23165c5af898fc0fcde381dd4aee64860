@@ -1,0 +1,7 @@
+Indeed the sum before division by $N$ is
+
+$$
+z^{jm}\alpha P^m[I-(z^jP)^N](I-z^jP)^{-1}b.
+$$
+
+The probability row $\alpha P^m$ has norm one as a functional on the maximum norm, $\|b\|_\infty\le1$, and the square bracket has norm at most two. Negative $j$ have the same gap by complex conjugation. 

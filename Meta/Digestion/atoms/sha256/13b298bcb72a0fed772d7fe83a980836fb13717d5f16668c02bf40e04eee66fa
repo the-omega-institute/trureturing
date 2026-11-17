@@ -1,0 +1,11 @@
+**Theorem 23.2 (Literal decorated occurrence decoder).** For every $w\in\{0,\ldots,6\}^*$, all marker-free $s,t\in\{a,b,c,d\}^*$ and every $A\ge0$,
+
+$$
+\operatorname{Occ}_x(s\eta(w)at,A)
+\ \Longleftrightarrow\
+\exists!j\ge0:\ A+|s|=E_j\ \land\ \operatorname{Occ}_u(w,j)
+\ \land\ L(s,j)\ \land\ R(t,w,j).
+$$
+
+*Proof.* The highlighted first marker is a unique actual block boundary. Lemma 23.1 reconstructs the core. A marker-free left decoration fits precisely in the preceding tail, unless it is empty; a marker-free right decoration fits precisely in the next tail. These conditions also construct the converse occurrence. In particular $A=0$, $j=0$, empty decorations, the empty core and arbitrary overlaps retain their stated conditions.
+

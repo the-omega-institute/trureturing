@@ -4,7 +4,55 @@
 
 The same original total response satisfies the affine first-label budget of source 162.2. Its two P2 estimates use one functional and the complete actual PB outer labels.
 
-**Definition 1.1 (The shared-readout Gram determinant).**
+**Theorem 1.1 (Leading scalar budgets).**
+
+$$\forall c \in \mathbb{R},\; \forall d \in \mathbb{R},\; \forall pzero \in \mathbb{R},\; \forall pone \in \mathbb{R},\; \forall ptwo \in \mathbb{R},\; \forall qzero \in \mathbb{R},\; \forall qone \in \mathbb{R},\; \forall qtwo \in \mathbb{R},\; \left(\forall a \in \mathbb{R},\; \operatorname{abs}\left(c - a \cdot d\right) \le \operatorname{sqrt}\left(pzero + 2 \cdot a \cdot pone + \operatorname{pow}\left(a, 2\right) \cdot ptwo\right) + \operatorname{sqrt}\left(qzero + 2 \cdot a \cdot qone + \operatorname{pow}\left(a, 2\right) \cdot qtwo\right)\right) \Rightarrow \operatorname{abs}\left(d\right) \le \operatorname{sqrt}\left(ptwo\right) + \operatorname{sqrt}\left(qtwo\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBAffineFirstBudget.leading_budget` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary real coefficients, the affine absolute-value bound implies the leading square-root bound. Reciprocal positive scaling and continuity include zero leading coefficients.
+
+**Theorem 1.2 (The shared-direction Gram expansion).**
+
+$$\forall E \in Type,\; [\operatorname{AddCommGroup}\left(E\right)][\operatorname{Module}\left(\mathbb{R}, E\right)]\forall J \in \operatorname{Bilinear}\left(\mathbb{R}, E, E, E\right),\; \forall phi \in \operatorname{LinearMap}\left(\mathbb{R}, E, \mathbb{R}\right),\; \forall A \in E,\; \forall B \in E,\; \forall n \in E,\; \forall theta \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \left(\forall x \in E,\; \forall y \in E,\; \operatorname{apply}\left(J, x, y\right) = \operatorname{apply}\left(J, y, x\right)\right) \Rightarrow \operatorname{gram}\left(J, phi, A + \operatorname{smul}\left(alpha, n\right), B + \operatorname{smul}\left(theta \cdot alpha, n\right)\right) = \operatorname{gram}\left(J, phi, A, B\right) + 2 \cdot alpha \cdot \left(theta \cdot \operatorname{apply}\left(phi, \operatorname{apply}\left(J, A, A\right)\right) \cdot \operatorname{apply}\left(phi, \operatorname{apply}\left(J, n, B\right)\right) + \operatorname{apply}\left(phi, \operatorname{apply}\left(J, n, A\right)\right) \cdot \operatorname{apply}\left(phi, \operatorname{apply}\left(J, B, B\right)\right) - \operatorname{apply}\left(phi, \operatorname{apply}\left(J, A, B\right)\right) \cdot \left(\operatorname{apply}\left(phi, \operatorname{apply}\left(J, n, B\right)\right) + theta \cdot \operatorname{apply}\left(phi, \operatorname{apply}\left(J, n, A\right)\right)\right)\right) + \operatorname{pow}\left(alpha, 2\right) \cdot \operatorname{gram}\left(J, phi, n, B - \operatorname{smul}\left(theta, A\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBAffineFirstBudget.gram_shift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Symmetric bilinearity expands the affine determinant into its constant, linear and quadratic terms; the cubic and quartic terms cancel.
+
+**Definition 1.3 (Projection off one real line).**
+
+$$\forall H \in Type,\; [\operatorname{NormedAddCommGroup}\left(H\right)][\operatorname{InnerProductSpace}\left(\mathbb{R}, H\right)]\forall eta \in H,\; \forall z \in H,\; \operatorname{realPerp}\left(eta, z\right) = z - \operatorname{smul}\left(\operatorname{inner}\left(eta, z\right), eta\right)$$
+
+*Formalization.* `D5/S3/Quantum/Algebra/PBAffineFirstBudget.realPerp` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a unit eta this real-linear map removes its real inner-product component. In a complex representation the removed line is real, not complex.
+
+**Theorem 1.4 (Both ends of a norm budget).**
+
+$$\forall H \in Type,\; [\operatorname{NormedAddCommGroup}\left(H\right)][\operatorname{InnerProductSpace}\left(\mathbb{R}, H\right)]\forall r \in \mathbb{R},\; \forall A \in \mathbb{R},\; \forall w \in H,\; \forall zp \in H,\; \forall zm \in H,\; \left(\left(\left(r = 0 \Rightarrow False\right) \land \operatorname{norm}\left(w\right) = 1\right) \land \left(\forall t \in \mathbb{R},\; 2 \cdot \operatorname{abs}\left(r\right) \cdot \operatorname{abs}\left(t + A\right) \le \operatorname{norm}\left(zp - \operatorname{smul}\left(r \cdot t, w\right)\right) + \operatorname{norm}\left(zm + \operatorname{smul}\left(r \cdot t, w\right)\right)\right)\right) \Rightarrow 2 \cdot r \cdot A = \operatorname{inner}\left(w, zm\right) - \operatorname{inner}\left(w, zp\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBAffineFirstBudget.two_ended_budget` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A unit leading direction and the budget for every real t force equality of the two first-order norm corrections. Reciprocal scaling makes zero a differentiable minimum.
+
+**Definition 1.5 (The shared-readout Gram determinant).**
 
 $$\forall E \in Type,\; [\operatorname{AddCommGroup}\left(E\right)][\operatorname{Module}\left(\mathbb{R}, E\right)]\forall J \in \operatorname{Bilinear}\left(\mathbb{R}, E, E, E\right),\; \forall phi \in \operatorname{LinearMap}\left(\mathbb{R}, E, \mathbb{R}\right),\; \forall a \in E,\; \forall b \in E,\; \operatorname{gram}\left(J, phi, a, b\right) = \operatorname{apply}\left(phi, \operatorname{apply}\left(J, a, a\right)\right) \cdot \operatorname{apply}\left(phi, \operatorname{apply}\left(J, b, b\right)\right) - \operatorname{pow}\left(\operatorname{apply}\left(phi, \operatorname{apply}\left(J, a, b\right)\right), 2\right)$$
 
@@ -16,7 +64,7 @@ $$\forall E \in Type,\; [\operatorname{AddCommGroup}\left(E\right)][\operatornam
 
 J is the original real bilinear Jordan product; phi is a real-linear reading of the original labels. No normalization, nonzero mass or strict Gram positivity is required.
 
-**Theorem 1.2 (The actual first affine budget, source 162.2).**
+**Theorem 1.6 (The actual first affine budget, source 162.2).**
 
 $$\forall E \in Type,\; [\operatorname{AddCommGroup}\left(E\right)][\operatorname{Module}\left(\mathbb{R}, E\right)]\forall J \in \operatorname{Bilinear}\left(\mathbb{R}, E, E, E\right),\; \forall u \in E,\; \forall h \in E,\; \forall p \in E,\; \forall q \in E,\; \forall D \in \operatorname{Function}\left(E, E, E\right),\; \forall phi \in \operatorname{LinearMap}\left(\mathbb{R}, E, \mathbb{R}\right),\; \forall s \in \mathbb{R},\; \forall r \in \mathbb{R},\; \forall x \in E,\; \forall t \in \mathbb{R},\; \left(\left(\left(\left(\left(\left(\left(\left(\left(\forall a \in E,\; \forall b \in E,\; \operatorname{apply}\left(J, a, b\right) = \operatorname{apply}\left(J, b, a\right)\right) \land \left(\forall a \in E,\; \operatorname{apply}\left(J, u, a\right) = a\right)\right) \land \operatorname{apply}\left(J, h, h\right) = u\right) \land \operatorname{apply}\left(J, h, p\right) = 0\right) \land \operatorname{apply}\left(J, h, q\right) = 0\right) \land \operatorname{apply}\left(J, p, q\right) = 0\right) \land \operatorname{PB}\left(J, D\right)\right) \land \left(\forall a \in E,\; \forall b \in E,\; \operatorname{pow}\left(\operatorname{apply}\left(phi, \operatorname{apply}\left(D, a, b\right)\right), 2\right) \le \operatorname{gram}\left(J, phi, a, b\right)\right)\right) \land \left(\forall tau \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \operatorname{apply}\left(D, \operatorname{smul}\left(s, u\right) + \operatorname{smul}\left(r, h\right), \operatorname{smul}\left(tau, p\right) + \operatorname{smul}\left(alpha, u + h\right)\right) = \operatorname{smul}\left(r \cdot tau, q\right)\right)\right) \Rightarrow 2 \cdot \operatorname{abs}\left(r\right) \cdot \operatorname{abs}\left(\operatorname{apply}\left(phi, \operatorname{smul}\left(t, q\right) + x - \operatorname{apply}\left(J, h, \operatorname{apply}\left(J, h, x\right)\right)\right)\right) \le \operatorname{sqrt}\left(\operatorname{gram}\left(J, phi, u + h, \operatorname{smul}\left(1 + s \cdot \left(s + r\right), x\right) + \operatorname{smul}\left(r \cdot \left(s + r\right), \operatorname{apply}\left(J, h, x\right)\right) + \operatorname{apply}\left(D, \operatorname{smul}\left(s, u\right) + \operatorname{smul}\left(r, h\right), x\right) - \operatorname{smul}\left(r \cdot t, p\right) - \operatorname{smul}\left(r \cdot \left(s + r\right) \cdot t, q\right)\right)\right) + \operatorname{sqrt}\left(\operatorname{gram}\left(J, phi, u + h, \operatorname{smul}\left(1 + s \cdot \left(s + r\right), x\right) + \operatorname{smul}\left(r \cdot \left(s + r\right), \operatorname{apply}\left(J, h, x\right)\right) - \operatorname{apply}\left(D, \operatorname{smul}\left(s, u\right) + \operatorname{smul}\left(r, h\right), x\right) + \operatorname{smul}\left(r \cdot t, p\right) - \operatorname{smul}\left(r \cdot \left(s + r\right) \cdot t, q\right)\right)\right)$$
 
@@ -36,7 +84,7 @@ The determinant expansion has constant term Bphi(A,B), linear term twice alpha t
 
 For every real alpha, a bound of abs(c-alpha d) by sqrt(p0+2alpha p1+alpha squared p2)+sqrt(q0+2alpha q1+alpha squared q2) therefore implies abs(d) at most sqrt(p2)+sqrt(q2). Substituting the two expanded Gram determinants gives the displayed actual original-D budget. Applying it to the vector readings in the next theorem gives source 163.4. This result does not assert source 163.1, the actual second frame, the complete affine commuting-zero row or the full 192.2 conclusion.
 
-**Theorem 1.3 (The actual fixed-vector budget, source 163.4).**
+**Theorem 1.7 (The actual fixed-vector budget, source 163.4).**
 
 $$\forall E \in Type,\; [\operatorname{AddCommGroup}\left(E\right)][\operatorname{Module}\left(\mathbb{R}, E\right)]\forall H \in Type,\; [\operatorname{NormedAddCommGroup}\left(H\right)][\operatorname{InnerProductSpace}\left(\mathbb{R}, H\right)]\forall J \in \operatorname{Bilinear}\left(\mathbb{R}, E, E, E\right),\; \forall u \in E,\; \forall h \in E,\; \forall p \in E,\; \forall q \in E,\; \forall D \in \operatorname{Function}\left(E, E, E\right),\; \forall R \in \operatorname{Readout}\left(H, J, u, D, \operatorname{top}\left(\operatorname{Submodule}\left(\mathbb{R}, E\right)\right)\right),\; \forall s \in \mathbb{R},\; \forall r \in \mathbb{R},\; \forall xi \in H,\; \forall eta \in H,\; \forall x \in E,\; \forall t \in \mathbb{R},\; \left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\forall a \in E,\; \forall b \in E,\; \operatorname{apply}\left(J, a, b\right) = \operatorname{apply}\left(J, b, a\right)\right) \land \left(\forall a \in E,\; \operatorname{apply}\left(J, u, a\right) = a\right)\right) \land \operatorname{apply}\left(J, h, h\right) = u\right) \land \operatorname{apply}\left(J, h, p\right) = 0\right) \land \operatorname{apply}\left(J, h, q\right) = 0\right) \land \operatorname{apply}\left(J, p, q\right) = 0\right) \land \operatorname{PB}\left(J, D\right)\right) \land \left(\forall tau \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \operatorname{apply}\left(D, \operatorname{smul}\left(s, u\right) + \operatorname{smul}\left(r, h\right), \operatorname{smul}\left(tau, p\right) + \operatorname{smul}\left(alpha, u + h\right)\right) = \operatorname{smul}\left(r \cdot tau, q\right)\right)\right) \land \operatorname{norm}\left(eta\right) = 1\right) \land \operatorname{op}\left(R, h, xi\right) = \operatorname{smul}\left(-1, xi\right)\right) \land \operatorname{op}\left(R, h, eta\right) = eta\right) \land \operatorname{op}\left(R, q, xi\right) = eta\right) \land \operatorname{inner}\left(eta, \operatorname{op}\left(R, p, xi\right)\right) = 0\right) \Rightarrow 2 \cdot \operatorname{abs}\left(r\right) \cdot \operatorname{abs}\left(t + \operatorname{inner}\left(eta, \operatorname{op}\left(R, x - \operatorname{apply}\left(J, h, \operatorname{apply}\left(J, h, x\right)\right), xi\right)\right)\right) \le \operatorname{norm}\left(\operatorname{op}\left(R, \operatorname{smul}\left(1 + s \cdot \left(s + r\right), x\right) + \operatorname{smul}\left(r \cdot \left(s + r\right), \operatorname{apply}\left(J, h, x\right)\right) + \operatorname{apply}\left(D, \operatorname{smul}\left(s, u\right) + \operatorname{smul}\left(r, h\right), x\right), xi\right) - \operatorname{smul}\left(\operatorname{inner}\left(eta, \operatorname{op}\left(R, \operatorname{smul}\left(1 + s \cdot \left(s + r\right), x\right) + \operatorname{smul}\left(r \cdot \left(s + r\right), \operatorname{apply}\left(J, h, x\right)\right) + \operatorname{apply}\left(D, \operatorname{smul}\left(s, u\right) + \operatorname{smul}\left(r, h\right), x\right), xi\right)\right), eta\right) - \operatorname{smul}\left(r \cdot t, \operatorname{op}\left(R, p, xi\right)\right)\right) + \operatorname{norm}\left(\operatorname{op}\left(R, \operatorname{smul}\left(1 + s \cdot \left(s + r\right), x\right) + \operatorname{smul}\left(r \cdot \left(s + r\right), \operatorname{apply}\left(J, h, x\right)\right) - \operatorname{apply}\left(D, \operatorname{smul}\left(s, u\right) + \operatorname{smul}\left(r, h\right), x\right), xi\right) - \operatorname{smul}\left(\operatorname{inner}\left(eta, \operatorname{op}\left(R, \operatorname{smul}\left(1 + s \cdot \left(s + r\right), x\right) + \operatorname{smul}\left(r \cdot \left(s + r\right), \operatorname{apply}\left(J, h, x\right)\right) - \operatorname{apply}\left(D, \operatorname{smul}\left(s, u\right) + \operatorname{smul}\left(r, h\right), x\right), xi\right)\right), eta\right) + \operatorname{smul}\left(r \cdot t, \operatorname{op}\left(R, p, xi\right)\right)\right)$$
 
@@ -52,7 +100,7 @@ Here Peta(z)=z-inner(eta,z)eta is the real perpendicular projection. The unnorma
 
 The actual_affine_first_budget theorem is used on the live path for every positive delta. The next theorem consumes both ends of this actual budget to obtain source 163.6 for either nonzero sign of r. The remaining steps toward 163.1 are binding both actual anchors in a complex representation, ordinary complex polarization without a selfadjointness restriction, reconstruction of both corners and faithful return to E. None is silently assumed or reported complete. Full 192.2 also retains the actual second-frame and affine commuting-zero-row obligations.
 
-**Theorem 1.4 (The original fixed-output single-anchor identity, source 163.6).**
+**Theorem 1.8 (The original fixed-output single-anchor identity, source 163.6).**
 
 $$\forall E \in Type,\; [\operatorname{AddCommGroup}\left(E\right)][\operatorname{Module}\left(\mathbb{R}, E\right)]\forall H \in Type,\; [\operatorname{NormedAddCommGroup}\left(H\right)][\operatorname{InnerProductSpace}\left(\mathbb{R}, H\right)]\forall J \in \operatorname{Bilinear}\left(\mathbb{R}, E, E, E\right),\; \forall u \in E,\; \forall h \in E,\; \forall p \in E,\; \forall q \in E,\; \forall D \in \operatorname{Function}\left(E, E, E\right),\; \forall R \in \operatorname{Readout}\left(H, J, u, D, \operatorname{top}\left(\operatorname{Submodule}\left(\mathbb{R}, E\right)\right)\right),\; \forall s \in \mathbb{R},\; \forall r \in \mathbb{R},\; \forall xi \in H,\; \forall eta \in H,\; \forall x \in E,\; \left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\forall a \in E,\; \forall b \in E,\; \operatorname{apply}\left(J, a, b\right) = \operatorname{apply}\left(J, b, a\right)\right) \land \left(\forall a \in E,\; \operatorname{apply}\left(J, u, a\right) = a\right)\right) \land \operatorname{apply}\left(J, h, h\right) = u\right) \land \operatorname{apply}\left(J, h, p\right) = 0\right) \land \operatorname{apply}\left(J, h, q\right) = 0\right) \land \operatorname{apply}\left(J, p, q\right) = 0\right) \land \operatorname{PB}\left(J, D\right)\right) \land \left(\forall tau \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \operatorname{apply}\left(D, \operatorname{smul}\left(s, u\right) + \operatorname{smul}\left(r, h\right), \operatorname{smul}\left(tau, p\right) + \operatorname{smul}\left(alpha, u + h\right)\right) = \operatorname{smul}\left(r \cdot tau, q\right)\right)\right) \land \left(r = 0 \Rightarrow False\right)\right) \land \operatorname{norm}\left(eta\right) = 1\right) \land \operatorname{norm}\left(\operatorname{op}\left(R, p, xi\right)\right) = 1\right) \land \operatorname{op}\left(R, h, xi\right) = \operatorname{smul}\left(-1, xi\right)\right) \land \operatorname{op}\left(R, h, eta\right) = eta\right) \land \operatorname{op}\left(R, q, xi\right) = eta\right) \land \operatorname{inner}\left(eta, \operatorname{op}\left(R, p, xi\right)\right) = 0\right) \Rightarrow r \cdot \operatorname{inner}\left(eta, \operatorname{op}\left(R, x - \operatorname{apply}\left(J, h, \operatorname{apply}\left(J, h, x\right)\right), xi\right)\right) = -1 \cdot \operatorname{inner}\left(\operatorname{op}\left(R, p, xi\right), \operatorname{op}\left(R, \operatorname{apply}\left(D, \operatorname{smul}\left(s, u\right) + \operatorname{smul}\left(r, h\right), x\right), xi\right)\right)$$
 
@@ -74,4 +122,8 @@ This is the single-anchor real identity, not a complex operator identity or sour
 - Truth anchor: `D5/S3/Quantum/Algebra/PBAffineFirstBudget.actual_affine_first_budget`
 - Truth anchor: `D5/S3/Quantum/Algebra/PBAffineFirstBudget.actual_affine_vector_budget`
 - Truth anchor: `D5/S3/Quantum/Algebra/PBAffineFirstBudget.gram`
+- Truth anchor: `D5/S3/Quantum/Algebra/PBAffineFirstBudget.gram_shift`
+- Truth anchor: `D5/S3/Quantum/Algebra/PBAffineFirstBudget.leading_budget`
+- Truth anchor: `D5/S3/Quantum/Algebra/PBAffineFirstBudget.realPerp`
+- Truth anchor: `D5/S3/Quantum/Algebra/PBAffineFirstBudget.two_ended_budget`
 - Dependency: [D5/S3/Quantum/Algebra/PBActualOuterBudget](PBActualOuterBudget.md)

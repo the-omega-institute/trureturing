@@ -1,0 +1,5 @@
+source_id = "auric-full-pb-three-actor-kernel-lift-and-axis-blindness"
+path = "docs/develop/theory/AURIC_FULL_PB_THREE_ACTOR_KERNEL_LIFT_AND_AXIS_BLINDNESS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

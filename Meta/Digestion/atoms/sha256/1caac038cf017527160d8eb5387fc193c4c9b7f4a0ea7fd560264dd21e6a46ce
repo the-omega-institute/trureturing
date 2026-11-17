@@ -1,0 +1,11 @@
+**定理 5.3（任意时域的条件 Shannon 熵下界）。** 对所有整数 $n\ge0$ 和 $0<\varepsilon<1/4$，在假设 3.2 下有
+
+$$
+E_n(\varepsilon)\ge L_n(\varepsilon):=
+\max\left\{0,\;\frac1{\ln2}\sup_{\beta>0}
+[-2\beta\varepsilon-\ln B_n(\beta)]\right\}.
+\tag{5.4}
+$$
+
+这是下界，不是有限 $n$ 的精确公式。
+

@@ -1,0 +1,33 @@
+**Definition 32.1 (supplier correspondence).** N, O and G retain exactly
+the immutable convention 1.1. N, Definitions 3.1, 8.1 and 9.1,
+Theorems 9.2–9.3 and Definition 10.1 supply lawful original histories,
+full extrema domains, chronological composition and the stated costs.
+O, Definitions 1.1–1.3 and Theorem 2.1 at $\varepsilon=1$, and
+G, Definition 4.1, fix the two actual circles, fields, covariance and
+height killing. The normal and terminal rectangles reuse §17, rather
+than a general steering claim. The mesh and its stopped start-event
+expectation reuse §§16 and 18. The necessary powers reuse §§12–13.
+The finite-issuance information and own-death definitions reuse §20;
+its exact-lifetime obstruction and the distinct lifetime-only results
+in §§21–25 do not supply the full tracking result of Theorem 26.2.
+
+Lifshits–Setterqvist, *Energy of Taut Strings Accompanying Wiener
+Process*, [arXiv:1405.1651v1](https://arxiv.org/html/1405.1651v1),
+§4.2 supply classical scalar free-knot interpolation and its
+inverse-duration energy method. Their §5 studies continuously
+observation-dependent Markovian pursuit, a different issuance class.
+Friz–Victoir, *Approximations of the Brownian rough path with
+applications to stochastic analysis*,
+[Ann. IHP 41 (2005), 703–724, §5.1](https://www.numdam.org/item/AIHPB_2005__41_4_703_0.pdf),
+supply enhanced Brownian approximation; the literal adapted display
+in Corollary 28 has the qualification in §25. Friz–Oberhauser,
+*Non-standard approximations of the Itô-map*,
+[arXiv:0808.0337v1, §1.2 and §2.1](https://arxiv.org/html/0808.0337v1),
+distinguish enhanced path observations from finitely many first-level
+values and supply the classical central-perturbation setting.
+Brownian strong Markov, reflection and the exponential-martingale
+inequality are used with the precise conditional normalization in
+(27.8)–(27.9); the first two suppliers are specified in §§20 and 23.
+These existing results are intermediate suppliers. None is being
+restated as a new generic approximation theorem.
+

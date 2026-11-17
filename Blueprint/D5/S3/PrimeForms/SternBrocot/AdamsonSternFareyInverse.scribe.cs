@@ -13,6 +13,7 @@ internal sealed class AdamsonSternFareyInverseDocument : IScribeDocumentDefiniti
         "Stern's diatomic values invert the next Farey-tree numerator modulo its denominator.",
         H("Adamson's Stern-Farey Inverse Relation"),
         Blocks(
+            Paragraph(Text("The newly public declarations in this source owner have unfinished information-escape audits: complete mirrored realization, variation, sensitivity, observational dependence and current source-binding evidence are missing. The exact per-target records and missing evidence are listed in https://github.com/the-omega-institute/trureturing/issues/28691 under CLAUDE section 3.9. This audit exception supplies no mathematical proof or independent final acceptance.")),
             Paragraph(Text(
                 "All indices n, m, j and r are natural numbers; a and b are pairs of natural "
                     + "numerator and denominator coordinates, with subscripts 1 and 2 denoting "
@@ -41,6 +42,30 @@ internal sealed class AdamsonSternFareyInverseDocument : IScribeDocumentDefiniti
                         + "is copied from half the index; at an odd index the two "
                         + "neighboring values at half the index are added."))),
                 DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("a002487-stern-zero"),
+                DeclarationHandle.Create(Prefix + "stern_zero"), H("stern_zero"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("stern 0 = 0. These recursion facts were already proved locally in the original Farey arguments; exposing them here preserves those consumers and permits direct reuse by the halving deficit proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("a002487-stern-one"),
+                DeclarationHandle.Create(Prefix + "stern_one"), H("stern_one"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("stern 1 = 1. These recursion facts were already proved locally in the original Farey arguments; exposing them here preserves those consumers and permits direct reuse by the halving deficit proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("a002487-stern-even"),
+                DeclarationHandle.Create(Prefix + "stern_even"), H("stern_even"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("∀ n : ℕ, stern (2*n) = stern n. These recursion facts were already proved locally in the original Farey arguments; exposing them here preserves those consumers and permits direct reuse by the halving deficit proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("a002487-stern-odd"),
+                DeclarationHandle.Create(Prefix + "stern_odd"), H("stern_odd"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("∀ n : ℕ, stern (2*n+1) = stern n + stern (n+1). These recursion facts were already proved locally in the original Farey arguments; exposing them here preserves those consumers and permits direct reuse by the halving deficit proof."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("a002487-mediant"),
                 DeclarationHandle.Create(Prefix + "mediant"),

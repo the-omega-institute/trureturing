@@ -1,0 +1,53 @@
+**定理 127.11（固定已付入口内的单接触条件等价）。** 在 $\mathsf{Ent}_\triangle$ 下，下列九项等价：
+
+1. PC1。
+2. 对每个原纯点 $p$，至少一个 $i$ 满足实际完整闭球 $D_p\cap D_i\ne\varnothing$。
+3. 对每个原纯点 $p$，至少一个 $i$ 满足原中点 $(p+p_i)/2\in\partial_{\rm rel}K$。
+4. PC2。
+5. PC3，即每个原纯点的三个实际种子压缩均为极射线向量或零，满足(Q127.22)。
+6. 每个原纯点位于共同 $B$ 单位球面，即 $B(p,p)=1$。
+7. 每个完整原 $D_p$ 是 $B$ 圆球，其三维方向空间 $H_p$ 满足 $B(c_p,H_p)=0$，球心为 $(w-p)/2$、共同平方半径为 $1/2$。
+8. 对全部原纯标签 $p$，$W(D_p)=1$。
+9. 存在同原全锥、同原单位的实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,
+\qquad \Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{Q127.32}
+$$
+
+证明。$1\Longleftrightarrow2\Longleftrightarrow3$ 逐点使用命题127.4a；$1\Longrightarrow4\Longrightarrow5$ 是定理127.8，$5\Longrightarrow1$ 直接成立。$5\Longleftrightarrow6$ 是引理127.9；$5\Longrightarrow7$ 及 $5\Longrightarrow8$ 是定理127.10。也可直接检查 $7\Rightarrow6$：对 $q\in P\cap D_p$，令 $b_p=B(p,p)$。第7项的正交球心和半径给
+
+$$
+b_q=\frac{3+b_p}{4}.
+$$
+
+因为 $p\in D_q$，反向同理 $b_p=(3+b_q)/4$。联立得到 $b_p=b_q=1$；每张非退化原球都有这样的 $q$，故对全部 $p$ 成立。
+
+$8\Longleftrightarrow9$ 直接消费125.9的(Q125.33)、IX120.5及其所引IX116.17、VIII113.8—113.9；这是既有的全域宽度重构，不另做相位分类。
+
+还须证明第9项对本章同一个种子的反向。由同原态效应字典，$\Phi^{-1}p_i$ 是三个两两正交的秩一投影；作一次共同酉共轭，可令它们为 $E_{ii}$。其完整确认效应唯一，故
+
+$$
+e_i(\Phi X)=\operatorname{Tr}(E_{ii}X),\qquad
+\Phi^{-1}M_i=(I-E_{ii})\operatorname{Herm}_3(\mathbb C)(I-E_{ii}).
+$$
+
+在这个矩阵模型，$N_{p_i}$ 恰是由支撑于 $p_i^\perp$ 的全部PSD效应构成的锥，其实张成为该支撑上的全部Hermitian矩阵。因此，保留这些全部原零法向读数且取值于 $M_i$ 的唯一线性映射，正是矩阵角压缩：
+
+$$
+\Phi^{-1}T_i\Phi(X)=Q_iXQ_i,\qquad Q_i=I-E_{ii}.
+\tag{Q127.33}
+$$
+
+这使用125.6定义的唯一性，故对应的是原 $T_i$。秩一PSD矩阵的每个角压缩秩为一或零，第9项因而推出第5项及PC1、PC2。所有蕴含闭合。证毕。
+
+同一反向还固定共同度量，而不要求任意预选横向定向已拼好相位：种子直和在矩阵模型中成为三个对角射线和三个非对角实二平面；实际种子球的单位度量满足 $\operatorname{Tr}((\Phi^{-1}\ell)^2)=g_i(\ell,\ell)/2$。块间的迹配对正交和(Q127.5)于是给
+
+$$
+B(\Phi X,\Phi Y)=\operatorname{Tr}(XY),\qquad \Phi(I_3)=w.
+\tag{Q127.34}
+$$
+
+$\Phi$ 是既有分类给出的共同表示，不声称它逐项等于任意选择的 $\Psi_{\rm coord}$；本章的反向不需要额外全局坐标相位定理。
+

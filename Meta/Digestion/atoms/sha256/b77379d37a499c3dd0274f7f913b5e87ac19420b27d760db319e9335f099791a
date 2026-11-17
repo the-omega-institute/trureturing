@@ -1,0 +1,95 @@
+**定理 129.4（外球饱和、完整球触内球与原确认预算）。** 对每个原 $p\in P$，定义达到的最小范数
+
+$$
+s_p=\min_{x\in D_p}\|x\|_B.
+$$
+
+以下各项逐点等价，不要求其他标签满足PC1：
+
+$$
+\begin{aligned}
+&\|p\|_B^2=1
+\quad\Longleftrightarrow\quad \|p-c\|_B^2=2/3\\
+&\Longleftrightarrow\quad \Delta_1(p)=\Delta_2(p)=\Delta_3(p)=0\\
+&\Longleftrightarrow\quad D_p\cap I\ne\varnothing
+\quad\Longleftrightarrow\quad s_p^2=1/2\\
+&\Longleftrightarrow\quad \exists f\in\mathcal A_p:\ f(w)=1.
+\end{aligned}
+\tag{Q129.11}
+$$
+
+这些条件成立时，
+
+$$
+\mathcal A_p=\{B(p,\cdot)\},\qquad
+x_p=\frac{w-p}{2}\in D_p,\qquad
+D_p\cap I=\{x_p\},
+\tag{Q129.12}
+$$
+
+且 $x_p$ 是 $D_p$ 的唯一最小范数点。
+
+证明。前两行的等价直接使用(Q129.3)、(Q129.9)及三个非负 $\Delta_i(p)$。现只在这一个 $p$ 假设三个 $\Delta_i(p)$ 全零，写 $a_i=e_i(p)\ge0$、$\sum_i a_i=1$。对 $a_i<1$，正的实际压缩质量为 $1-a_i>0$，故
+
+$$
+r_i=\frac{T_i p}{1-a_i}\in P\cap D_i,\qquad
+q_i=p_j+p_k-r_i\in P\cap D_i
+\quad(\{i,j,k\}=\{1,2,3\})
+\tag{Q129.13}
+$$
+
+是实际种子对径。原效应 $e_{q_i}=B(q_i,\cdot)$ 满足
+$e_{q_i}(p)=B(q_i,T_i p)=0$。因此 $p\in D_{q_i}$，纯端互易给 $q_i\in P\cap D_p$。若 $a_i=1$，原 $e_i$ 的一值面单点性给 $p=p_i$，且 $T_i p=0$；该项权重为零，直接删去，绝不定义 $r_i$。
+
+复用127.10中的同一直和求和身份，但不使用该定理的全纯取等前件或逐球圆性：
+
+$$
+\begin{gathered}
+\sum_iT_i p=p+\sum_i a_ip_i,\qquad
+\sum_{i:a_i<1}(1-a_i)=2,\\
+\sum_{i:a_i<1}(1-a_i)q_i
+=\sum_i(1-a_i)(w-p_i)-\sum_iT_i p=w-p.
+\end{gathered}
+\tag{Q129.14}
+$$
+
+零权项在右侧贡献零，故该计算也覆盖种子顶点、某些 $a_i=0$ 及全部 $a_i>0$。非负权 $(1-a_i)/2$ 的和为一，因而 $x_p=(w-p)/2\in D_p$。由 $\|p\|_B^2=1$，
+
+$$
+\|x_p\|_B^2=\frac{3-2+1}{4}=\frac12.
+$$
+
+任取 $f\in\mathcal A_p$，在这个实际 $x_p$ 取零给 $f(w)=f(p)=1$。引理129.2与Cauchy—Schwarz给
+
+$$
+1=f(p)=B(\widehat f,p)\le\|\widehat f\|_B\|p\|_B\le1.
+$$
+
+等号迫 $\widehat f=p$，所以全部 $\mathcal A_p$ 恰为(Q129.12)中的单点。这同时证明从三次零压缩到原预算一、内球接触及 $s_p^2=1/2$ 的方向；下界用的是 $D_p\subset\partial_{\rm rel}K$ 与(Q129.8)。
+
+反向，设 $x\in D_p\cap I$。边界环带使 $\|x-c\|_B^2=1/6$、$\|x\|_B^2=1/2$。取任意 $f\in\mathcal A_p$，$t=f(w)>0$。因为 $f(x)=0$，(Q129.10)中的两次不等式必须同时取等，故
+
+$$
+\left\|\widehat f-\frac t3w\right\|_B^2=\frac23t^2,
+\qquad \|\widehat f\|_B^2=t^2,
+\qquad \Delta_i(\widehat f)=0\quad(i=1,2,3).
+\tag{Q129.15}
+$$
+
+引理129.2给每张实际 $D_i$ 中的原纯零点 $q_i$。$f$ 的准确零面是整个 $D_p$，所以 $q_i\in D_p\cap D_i$。逐个应用已付的原接触等价(Q129.4)，得到三个 $\Delta_i(p)=0$。这一论证没有从对偶向量的名称假定其原正性，也没有遗漏 $T_i\widehat f=0$ 的情形。$s_p^2=1/2$ 因紧性有达到点，再由(Q129.9)就是同一内球接触，反向也成立。
+
+若仅给某张 $f\in\mathcal A_p$ 的 $f(w)=1$，则
+$1=f(p)\le\|\widehat f\|_B\|p\|_B\le\|p\|_B\le1$，仍迫 $\|p\|_B=1$。这补齐最后一个方向。
+
+最后，取已得 $f=B(p,\cdot)$。对任意 $y\in D_p$，$u(y-x_p)=0$、$B(p,y-x_p)=0$，故
+
+$$
+B(x_p,y-x_p)=0,\qquad
+\|y\|_B^2=\frac12+\|y-x_p\|_B^2.
+\tag{Q129.16}
+$$
+
+这证明唯一最小点及唯一内球交点。证毕。
+
+本定理只是该标签的点态PC3，不是点态PC1。点态PC1只要求至少一个 $\Delta_i(p)=0$，恰为 $D_p$ 与至少一颗种子球相交；它本身没有支付本定理所需的三个零值。127.8的升级对全部原纯标签使用完整实际球面上的有限二次零集覆盖，不能缩成孤立标签的一步推论。同样，一个唯一最小范数点不决定整颗未知椭球的形状或仿射中心；本定理没有把所有 $D_p$ 提前画成 $B$ 圆球。
+

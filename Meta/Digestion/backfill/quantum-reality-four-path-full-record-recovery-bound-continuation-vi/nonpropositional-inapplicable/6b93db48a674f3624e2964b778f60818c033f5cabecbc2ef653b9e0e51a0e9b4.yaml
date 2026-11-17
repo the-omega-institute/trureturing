@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6b93db48a674f3624e2964b778f60818c033f5cabecbc2ef653b9e0e51a0e9b4
+  normalized_sha256: sha256:6b93db48a674f3624e2964b778f60818c033f5cabecbc2ef653b9e0e51a0e9b4
+cas_ref: sha256:6b93db48a674f3624e2964b778f60818c033f5cabecbc2ef653b9e0e51a0e9b4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof prose is not an independent proposition; the universal theorem remains residual-open because its continuous optimization and source bridge are not kernel-formalized.
+    previous_atom_id: 5e80eb27f247f3f09a117a2dd0261302715131db6cd34a7ac7a97413f871856a
+    next_atom_id: c806850ec02d4a88909e477e9e7b636104dc03693786f7333f014cc25ba508b9

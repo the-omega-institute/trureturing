@@ -1,0 +1,197 @@
+**定理 38.2（任意 $T$ 的非零残量严格见证）。** 对任意实 $d,e$、任意
+$z\in\mathbb C$、任意 $s\ne0$ 和任意固定取向 $\sigma$，存在一个 Hermitian
+$X$ 与一个两个坐标均非零的有限向量 $u$，使
+
+$$
+|\psi_u(L)|>\mathcal A_+(X,u)+\mathcal A_-(X,u).
+\tag{38.14}
+$$
+
+下面先给出实 $z=b\ge0$ 的全部分支，再用 (38.9)–(38.13) 回到任意复 $z$ 和
+实际给定的符号 $s$。
+
+**情形 A：$e\ne0$ 且 $b>0$。** 先由 (38.12) 取 $se>0$。置
+
+$$
+M=-\frac{7e}{2}-s,\qquad
+X=\begin{pmatrix}
+2d+\dfrac{5b^2}{M}&\iota b\\
+-\iota b&-\dfrac e2-s
+\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\\dfrac{(2+\iota)b}{M}\end{pmatrix}.
+\tag{38.15}
+$$
+
+因为 $se>0$，$M$ 不为零；$b>0$ 还保证 $u_2u_3\ne0$。直接计算
+
+$$
+R_+=\begin{pmatrix}
+\dfrac{5b^2}{M}&(-2+\iota)b\\
+(-2-\iota)b&M
+\end{pmatrix},\qquad
+R_+u=0,
+\tag{38.16}
+$$
+
+确切地，第一行乘以 $u$ 是
+$5b^2/M+(-2+\iota)(2+\iota)b^2/M=0$，第二行乘以 $u$ 是
+$(-2-\iota)b+(2+\iota)b=0$。
+
+其中 $( -2+\iota)(2+\iota)=-5$，而第二行满足
+$(-2-\iota)+(2+\iota)=0$。逐项形成的另一列是
+
+$$
+S_-=\begin{pmatrix}
+-3d-\dfrac{10b^2}{M}&(1-2\iota)b\\
+(1+2\iota)b&\dfrac{5e}{2}+2s
+\end{pmatrix}
+=-\frac32X-\frac12R_+ .
+\tag{38.17}
+$$
+
+第一行、第二行的等式分别由
+$-3d-10b^2/M=-3X_{11}/2-5b^2/(2M)$、
+$5e/2+2s=-3X_{22}/2-M/2$ 以及对应的非对角条目直接给出，故
+$S_-u=-3Xu/2$。
+
+系数 $-3/2$、$-1/2$ 都是真实数，所以 (38.5) 可用。令
+
+$$
+ n=|u_3|^2=\frac{5b^2}{M^2},\qquad
+w=\operatorname{Re}(u^*TP_3u)=\frac{2b^2}{M}+en,\qquad
+v=\operatorname{Im}_{\iota}(u^*XP_3u)=\frac{2b^2}{M}.
+\tag{38.18}
+$$
+
+第一项来自 $b u_3$ 的实部，第二项来自
+$\iota b u_3=(-1+2\iota)b^2/M$；$X_{22}$ 项为实数。故
+$w-v=en$，由 (38.6)
+
+$$
+\psi_u(L)=-2sen=-\frac{10seb^2}{M^2}\ne0,\qquad
+\mathcal A_+=\mathcal A_-=0 .
+\tag{38.19}
+$$
+
+所有分母均已在 $M\ne0$ 处核对，$d$ 没有任何限制。
+
+**情形 B：$e\ne0$ 且 $b=0$。** 取 $X=0$、$u=(\rho,1)^{\mathsf T}$。此时
+
+$$
+R_\delta u=(-2\delta d\rho,-3\delta e)^{\mathsf T},\qquad
+S_\delta u=(d\rho,e+\delta s)^{\mathsf T},\qquad
+\psi_u(L)=-2se .
+\tag{38.20}
+$$
+
+两列为实列，故二维实面积就是行列式的绝对值：
+
+$$
+\mathcal A_\delta=|d\rho|\,|\delta e-2s|,\qquad
+H_0=|e-2s|+|e+2s|>0 .
+\tag{38.21}
+$$
+
+若 $d\ne0$，取
+$\rho=|se|/(|d|H_0)>0$；则两笔面积之和是 $|se|$，而
+$|\psi_u(L)|=2|se|$。若 $d=0$，取 $\rho=1$，两笔面积都为零而左端为
+$2|se|$。所以两种情况下都有有限严格差额，且两个坐标均非零。
+
+**情形 C：$e=0$、$d\ne0$ 且 $b\ge0$。** 先由 (38.12) 取 $ds>0$。置
+
+$$
+H=\sqrt{b^2+\frac{8ds}{5}},\qquad q=b+H,\qquad
+\theta=\frac{b}{2H},
+\tag{38.22}
+$$
+
+以及
+
+$$
+X=\begin{pmatrix}
+-\dfrac{5q^2}{4s}&(2+\iota)b+\dfrac{(6+8\iota)H}{5}\\
+(2-\iota)b+\dfrac{(6-8\iota)H}{5}&-\dfrac{2Hs}{q}
+\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\\dfrac{q(1-\iota/2)}{s}\end{pmatrix}.
+\tag{38.23}
+$$
+
+由于 $ds>0$，$H>b\ge0$、$q>0$、$H,s,q$ 均非零；故根式为实数，矩阵和向量
+的每个条目有限，且两个坐标均非零。利用
+$H^2-b^2=8ds/5$，逐项得到
+
+$$
+R_+=\begin{pmatrix}
+-\dfrac{5Hq}{2s}&(2+\iota)H\\
+(2-\iota)H&-\dfrac{2Hs}{q}
+\end{pmatrix},\qquad R_+u=0,
+\tag{38.24}
+$$
+
+并得到另一个完整的算子恒等式。其逐项矩阵为
+
+$$
+S_-=\begin{pmatrix}
+ d+\dfrac{5q^2}{2s}&(-4-2\iota)b-(3+4\iota)H\\
+ (-4+2\iota)b-(3-4\iota)H&\dfrac{6Hs}{q}-s
+\end{pmatrix}
+=-\frac52X+\theta R_+ .
+\tag{38.25}
+$$
+
+第一行乘以 $u$ 时，
+$-5Hq/(2s)+(2+\iota)Hq(1-\iota/2)/s=0$；第二行乘以 $u$ 时，
+$(2-\iota)H-2H(1-\iota/2)=0$。因此 $R_+u=0$，且
+$S_-u=-5Xu/2$；$-5/2$ 与 $\theta=b/(2H)$ 都是真实数。
+
+计算接触项时，
+
+$$
+ w=\operatorname{Re}(u^*TP_3u)=\frac{bq}{s},\qquad
+ v=\operatorname{Im}_{\iota}(u^*XP_3u)=\frac{Hq}{s},
+\tag{38.26}
+$$
+
+因为
+$ (1-\iota/2)X_{12}=5b/2+(2+\iota)H$，而 $X_{22}|u_3|^2$
+是实数。因此 $w-v=(b-H)q/s=(b^2-H^2)/s=-8d/5$，由 (38.6)
+
+$$
+\psi_u(L)=\frac{16ds}{5}>0,\qquad
+\mathcal A_+=\mathcal A_-=0 .
+\tag{38.27}
+$$
+
+这也覆盖 $b=0$、$d\ne0$，没有小耦合或小对角项的假设。
+
+**情形 D：两条已付分支。** 当 $d=e=0$、$b>0$ 时，直接消费 §36.3 的纯混合见证
+
+$$
+X=b\begin{pmatrix}0&2+\iota\\2-\iota&0\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\(2-\iota)/8\end{pmatrix},\qquad
+\psi_u(L)=-\frac{sb}{2},\quad
+\mathcal A_+=0,\quad
+\mathcal A_- =\frac{5\sqrt5}{32}|sb|,
+\tag{38.28}
+$$
+
+其严格差额是 $(16-5\sqrt5)|sb|/32>0$；这里不重写已付的列乘法。当
+$d=e=b=0$ 时直接消费 §35.1 的零矩阵见证
+
+$$
+X=\frac{s}{2}\begin{pmatrix}-5&4+\iota\\4-\iota&-4\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\1\end{pmatrix},\qquad
+\psi_u(L)=\frac{9s^2}{4},\quad
+\mathcal A_+=\frac{5s^2}{8},\quad
+\mathcal A_- =\frac{5\sqrt5\,s^2}{8},
+\tag{38.29}
+$$
+
+其严格差额是 $(13-5\sqrt5)s^2/8>0$，且两笔面积已经严格正。
+
+这四种情形穷尽所有 $d,e\in\mathbb R$ 与 $b\ge0$：先按 $e$ 是否为零、再按 $b$ 是否为零，
+当 $e=0$ 时按 $d$ 是否为零分开。A、C 的根式和分母已逐项核对，B 的
+$H_0$ 非零；D 的两个向量均有两个非零坐标。对一般复 $z$ 用 (38.9)–(38.11)
+拉回，对实际符号用 (38.12)–(38.13) 拉回；同一固定取向下，严格差额和有限性均保持。
+因此 (38.14) 对所有 $T$、所有 $s\ne0$ 成立。
+

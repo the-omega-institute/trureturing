@@ -1,0 +1,41 @@
+Any two reverse linear extensions are connected by adjacent swaps of
+incomparable points: move the first point of the desired extension to the
+front of the other extension, crossing only incomparable points, and proceed
+inductively on the remaining poset. Hence all $R_e$ agree; write their common
+value as $R$. Each toggle is an involution, since a permitted flip is undone
+by the next application and a forbidden flip is the identity. Consequently
+$R$ is a permutation of the whole finite set $\mathcal C_n$.
+
+For $C=\operatorname{Min}(\uparrow S\setminus S)$, Theorem 1.1 and its proof
+in the same paper identify this literal permutation as
+
+$$
+R(S)=(\operatorname{Inc}(C)\setminus S)
+\cup\bigl(\downarrow C\setminus
+\downarrow(\operatorname{Min}(S)\cap\downarrow C)\bigr), \tag{2.3}
+$$
+
+where $\operatorname{Inc}(C)$ contains the points incomparable with every
+member of $C$. Here
+
+$$
+\operatorname{Min}(S)=\{(i,A_i):i\in M\},\qquad
+C=\{(i,B_i+1):i\in K\}. \tag{2.4}
+$$
+
+Indeed, the upward closure in row $i$ is $[A_i,n]$, so its difference
+from $S$ is $[B_i+1,n]$. The first point of this difference is globally
+minimal exactly when $B_i<n$ and the preceding row has no hole at that
+column, namely when $i=1$ or $B_i<B_{i-1}$. The description of
+$\operatorname{Min}(S)$ follows in the same way from the left endpoints.
+
+The rows of $\downarrow C$ are $[1,d_r]$. A minimum $(i,A_i)$ belongs
+to this downset exactly when $i\in Q$, and the rows of its generated
+downset are $[1,h_r]$. Finally $(r,j)$ is incomparable with every ceiling
+point exactly when $d_r<j<c_r$: ceiling points in rows at least $r$
+require $j>d_r$, and those in rows at most $r$ require $j<c_r$.
+Substitution in (2.3) proves (2.2), including the conventions for empty
+index sets. If the endpoints are strict and $B_1<n$, then
+$M=K=Q=\{1,2,3\}$, $d_r=c_r=B_r+1$, and $h_r=A_r$.
+This gives the final assertion. $\square$
+

@@ -34,7 +34,7 @@ private theorem convergence_upper (hXm : AEMeasurable X μ)
     rw [Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)]
     exact Real.exp_le_exp.mpr (mul_le_mul_of_nonneg_right (neg_le_neg hst) hω)
 
-private theorem analytic_laplace {c : ℝ} (h : Ioi c ⊆ convergenceSet X μ) :
+theorem analytic_laplace {c : ℝ} (h : Ioi c ⊆ convergenceSet X μ) :
     AnalyticOnNhd ℂ (fun z => complexMGF X μ (-z)) {z | c < z.re} := by
   have hreflect : Iio (-c) ⊆ integrableExpSet X μ := by
     intro u hu
@@ -73,14 +73,13 @@ private theorem laplace_zero_limit [IsFiniteMeasure μ]
   exact tendsto_integral_filter_of_dominated_convergence (fun _ : Ω => (1 : ℝ))
     hm hb (integrable_const 1) hl
 
-/-- Actual exponential integrability on the entire forcing half-plane follows
-from the Euler equation on the positive half-plane, with no continuation or
-moment-growth hypothesis. -/
-theorem integrable_and_analytic_of_euler [IsFiniteMeasure μ]
+/-- Only the possible nonpositive convergence-cut corridor needs real regularity.
+The zero-cut case uses the actual finite-measure boundary limit below. -/
+theorem integrable_and_analytic_of_euler_corridor [IsFiniteMeasure μ]
     (hXm : AEMeasurable X μ) (hX : ∀ᵐ ω ∂μ, 0 ≤ X ω)
     {a : ℝ} (ha : a < 0) {R : ℂ → ℂ}
     (hRm : MeromorphicOn R {z | a < z.re})
-    (hRa : ∀ x : ℝ, a < x → AnalyticAt ℂ R (x : ℂ))
+    (hRa : ∀ x : ℝ, a < x → x ≤ 0 → AnalyticAt ℂ R (x : ℂ))
     (hode : ∀ z : ℂ, 0 < z.re →
       z * deriv (deriv (fun w => complexMGF X μ (-w))) z +
         2 * deriv (fun w => complexMGF X μ (-w)) z = R z) :
@@ -126,7 +125,7 @@ theorem integrable_and_analytic_of_euler [IsFiniteMeasure μ]
       intro z hz
       exact hDm.meromorphicOrderAt_eq_top_of_isPreconnected hUc
         (show (1 : ℂ) ∈ U by change σ < (1 : ℂ).re; simp only [one_re]; linarith) hz hD1
-    obtain ⟨r, hr, hrR⟩ := Metric.mem_nhds_iff.mp (hRa σ haσ).eventually_analyticAt
+    obtain ⟨r, hr, hrR⟩ := Metric.mem_nhds_iff.mp (hRa σ haσ hσ0).eventually_analyticAt
     have hRball : DifferentiableOn ℂ R (Metric.ball (σ : ℂ) r) :=
       fun z hz => (hrR hz).differentiableAt.differentiableWithinAt
     have hGd : DifferentiableOn ℂ G U := hGa.differentiableOn
@@ -160,5 +159,21 @@ theorem integrable_and_analytic_of_euler [IsFiniteMeasure μ]
     exact no_holomorphic_extension_at_abscissa hXm hX hne hbdd hδ
       ⟨hH, fun z hz hzr => heq ⟨hz, hzr⟩⟩
   exact ⟨hconv, analytic_laplace (fun _ hx => hconv _ hx)⟩
+
+/-- Actual exponential integrability on the entire forcing half-plane follows
+from the Euler equation on the positive half-plane, with no continuation or
+moment-growth hypothesis. -/
+theorem integrable_and_analytic_of_euler [IsFiniteMeasure μ]
+    (hXm : AEMeasurable X μ) (hX : ∀ᵐ ω ∂μ, 0 ≤ X ω)
+    {a : ℝ} (ha : a < 0) {R : ℂ → ℂ}
+    (hRm : MeromorphicOn R {z | a < z.re})
+    (hRa : ∀ x : ℝ, a < x → AnalyticAt ℂ R (x : ℂ))
+    (hode : ∀ z : ℂ, 0 < z.re →
+      z * deriv (deriv (fun w => complexMGF X μ (-w))) z +
+        2 * deriv (fun w => complexMGF X μ (-w)) z = R z) :
+    (∀ x : ℝ, a < x → Integrable (fun ω => Real.exp (-x * X ω)) μ) ∧
+      AnalyticOnNhd ℂ (fun z => complexMGF X μ (-z)) {z | a < z.re} := by
+  exact integrable_and_analytic_of_euler_corridor hXm hX ha hRm
+    (fun x hx _ => hRa x hx) hode
 
 end D5.S3.Analytic.Laplace.PositiveEulerContinuation

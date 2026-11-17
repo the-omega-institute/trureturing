@@ -1,0 +1,39 @@
+**引理 96.3（纯正交与完整混态桥）。** 在(96.1)的任意 $c$ 下，以下条件等价：
+完整 $\mathrm{Z0}$；$\mathrm{FC}$；每个原可排除纯对满足
+
+$$
+p=vv^*\perp q=ww^*\quad\Longrightarrow\quad v^*w=0;
+\tag{96.8}
+$$
+
+以及对每个 $p\in P$，全部非空 $\mathcal M_{pq}$ 的任意有限子族有共同点。
+这些条件一旦成立，全部原混态的零集准确是
+
+$$
+D_p=\{x\in K:p\perp x\}=\{x\in K:\operatorname{tr}(px)=0\}.
+\tag{96.9}
+$$
+
+证明。$n=1$ 时 $P=K=\{I_1\}$、$F_p=\{u\}$、$D_p=\varnothing$，各条件成立。
+设 $n>1$。$a_p=(I_n-p)/(n-1)$ 是原态，投影限制效应
+$h_p(X)=\operatorname{tr}(pX)$ 在整个原锥 proper，确认 $p$ 且排除 $a_p$。
+故 $\mathrm{Z0}\Rightarrow\mathrm{FC}$。
+若 $p\perp q$ 而 $v^*w\ne0$，则 $\ker a_p=\mathbb Fv$ 与 $\ker q$ 的交为零，
+所以 $(q+a_p)/2\succ0$，是原 $C$ 的相对内点。
+一个原正泛函若在这里为零，沿每个 $Y\in L$ 作小的双向扰动，就在全部 $L$ 为零，不能确认 $p$。
+因此 $\mathrm{FC}$ 蕴含(96.8)。
+
+反之，设(96.8)。若 $p\perp x$，取一把实现此零的原 $f\in F_p$，并作同一原锥的有限ROG分解
+$x=\sum_j\lambda_jq_j$，其中 $\lambda_j>0$、$\sum_j\lambda_j=1$、$q_j\in P$。
+$0=f(x)=\sum_j\lambda_jf(q_j)$ 及各项非负给 $f(q_j)=0$，所以每个 $q_j$ 与 $p$ 矩阵正交。
+于是 $\operatorname{tr}(px)=0$。反向由同一个 $h_p$ 见证，得到(96.9)，其右侧凸，故有完整 $\mathrm{Z0}$。
+这一步使用一把原效应的全部纯分解项，不是把 $\mathrm G_2$ 迭代到混态。
+
+(96.8)还使 $I_n$ 同时属于所有非空 $\mathcal M_{pq}$。
+反之，若这些集合的任意有限子族相交，对一个可排除 $q$ 和(96.5)的全部补框架点取共同 $M$。
+每个 $r_j$ 本就由 $h_p$ 排除，故这些集合均非空。
+$v^*Mz_j=0$ 及 $v^*Mv=1$、Hermitian性给 $Mv=v$，再由 $v^*Mw=0$ 得 $v^*w=0$。
+这证明有限零集合条件与(96.8)等价；紧性还给所有非空集合的共同点。
+完整 $S$、正负谱部分闭合、Jordan闭合及完整块的等价，实域直接复用93.2，复域直接复用94.2；
+本引理只明确其中从纯点到所有原混态的共同实现。证毕。
+

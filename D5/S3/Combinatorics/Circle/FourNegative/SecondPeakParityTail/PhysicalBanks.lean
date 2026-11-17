@@ -27,11 +27,9 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail
 open scoped BigOperators
 open private physicalDomain physical_coordinates selected_arithmetic
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.PhysicalSelection
-open private mask_complement
-  from D5.S3.Combinatorics.Circle.ThreeBitSource
-open private size base newBase oldValue newValue chainLength chainStart
-  chainOf chain_index chain_values negatives source_totals
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.ThreeBitSource (mask_complement)
+open private chain_index chain_values source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase oldValue newValue chainLength chainStart chainOf negatives)
 
 private def lowWeight (a b d S : ℕ) : ℕ :=
   (2^(d-a)-S)*2^(b-d-1)
@@ -388,7 +386,7 @@ private theorem physical_mem (a b c d alpha S i : ℕ) (bank : Fin 4) :
   simp [physicalBank,Finset.mem_biUnion,Finset.mem_image]
 
 -- The existing physical chain classifier supplies uniqueness of the offset.
-private theorem local_chain (a b c d : ℕ) (chain : Fin 4) (e : ℕ)
+theorem local_chain (a b c d : ℕ) (chain : Fin 4) (e : ℕ)
     (he : e < chainLength a b c d chain-1) :
     chainOf b c d (chainStart b c d chain+e) = chain := by
   fin_cases chain

@@ -1,0 +1,5 @@
+source_id = "fib-native-guarded-lift-limits-and-diffusion-selection"
+path = "docs/develop/theory/FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,41 @@
+**定义 35.1（原商支持与辅助射影边界）。** 设 $F$ 为特征零域，$D/F$ 为同一个实际有限域扩张，$N=[D:F]$。对三维 $F$-子空间 $W\le_F D$，要求 $F(W/W)=D$，并记
+
+$$
+Q_W=\{x/y:x,y\in W,\ y\ne0\}\subseteq D,\qquad
+r_W(A)=\dim_A AW,\qquad t_W(A)=3r_W(A)-3,
+\tag{35.1}
+$$
+
+其中 $A$ 始终是已经存在的实际中间域，$[A:F]=3$，$AW=\operatorname{span}_A W\subseteq D$。$Q_W$ 包含零；比较两个支持时逐个固定原 $D$ 元素，不允许重标记。
+
+取包含原 $D$ 的有限正规闭包 $K/F$，固定代数闭包 $k\supseteq K$，令 $\Omega=\operatorname{Hom}_F(D,K)$。选原 $w_0\in W\setminus\{0\}$，置 $U=w_0^{-1}W$，取 $U$ 的 $F$-基 $u_1=1,u_2,u_3$。定义
+
+$$
+B_W=(\sigma(u_j))_{\sigma\in\Omega,\,1\le j\le3},\qquad
+h_\sigma=(\sigma(u_1),\sigma(u_2),\sigma(u_3)),\qquad
+H_W=B_WK^3,\qquad
+\rho_W(S)=\dim_K\langle h_\sigma:\sigma\in S\rangle_K.
+\tag{35.2}
+$$
+
+记 $\overline H_W=B_Wk^3$，在固定嵌入坐标的 $\mathbb P(k^\Omega)$ 中定义
+
+$$
+\begin{aligned}
+Y_W&=\overline{\left\{\left[(u_\sigma/v_\sigma)_{\sigma\in\Omega}\right]:
+0\ne u\in\overline H_W,\quad v\in\overline H_W\cap(k^\times)^\Omega\right\}}^{\mathrm{Zar}},\\
+T_S&=\{[q]\in\mathbb P(k^\Omega):q_\sigma=0\ \Longleftrightarrow\ \sigma\in S\}
+\qquad(\varnothing\ne S\subsetneq\Omega).
+\end{aligned}
+\tag{35.3}
+$$
+
+$Y_W$ 是扩底后的射影商像闭包，区别于实际集合 $Q_W$。对每个 $\tau\in\operatorname{Hom}_F(A,K)$，固定坐标块
+
+$$
+S_\tau=\{\sigma\in\Omega:\sigma|_A=\tau\}.
+\tag{35.4}
+$$
+
+这些块只由同一实际包含关系 $F\subseteq A\subseteq D\subseteq K$ 决定。
+

@@ -1,0 +1,52 @@
+**定理 111.2（存在式关系的原算子、维数与三球张成表述）。** 固定任意原joint
+$F=(p_1,p_2,p_3)$。对互异 $i,j,k\in\{1,2,3\}$ 置
+
+$$
+\begin{gathered}
+R_i(v)=a_{p_i}(v)p_i,\qquad
+E_{ij}=\Pi_{p_k}-R_i-R_j,\qquad V_{ij}=\operatorname{im}E_{ij},\\
+\mathcal I_F=I-\Pi_{p_1}-\Pi_{p_2}-\Pi_{p_3}+R_1+R_2+R_3,\qquad
+\pi_F=I-\mathcal I_F,\qquad V_F=\operatorname{im}\pi_F,\qquad
+Z_F=\operatorname{im}\mathcal I_F.
+\end{gathered}
+\tag{VIII111.2}
+$$
+
+该框架满足(VIII111.1)中 $\exists F$ 之后的分离条件，当且仅当下列任一条件成立：
+
+$$
+\begin{gathered}
+\mathcal I_F=0;\qquad Z_F=0;\qquad V_F=V;\qquad
+n=d_{p_1}+d_{p_2}+d_{p_3};\\
+\operatorname{span}(D_{p_1}\cup D_{p_2}\cup D_{p_3})=V;\qquad
+v\longmapsto(\Pi_{p_1}v,\Pi_{p_2}v,\Pi_{p_3}v)
+\text{ 在 }V\text{ 上注入};\\
+x\longmapsto(\Pi_{p_1}x,\Pi_{p_2}x,\Pi_{p_3}x)
+\text{ 在整个 }K\text{ 上注入}.
+\end{gathered}
+\tag{VIII111.3}
+$$
+
+因此 $\mathrm{TFD}_{3,\exists}$ 等价于这些条件对至少一个原joint成立。
+这里的 $\operatorname{span}$ 是三张完整原仿射球作为 $V$ 的子集所生成的线性空间。
+
+证明。直接消费109.2—109.3的七投影代数、共同核、维数及全态分离等价。
+它们在裸W域对任意固定框架成立，无须输入G。
+为核对这里增加的张成写法，由109.2有
+
+$$
+\begin{gathered}
+V_F=\bigoplus_{i=1}^3\mathbb Rp_i\ \oplus\!\bigoplus_{i<j}V_{ij},
+\qquad V=V_F\oplus Z_F,\\
+V_F=\operatorname{span}(D_{p_1}\cup D_{p_2}\cup D_{p_3}).
+\end{gathered}
+\tag{VIII111.4}
+$$
+
+后一等式的正向包含由六个块逐项给出：$p_i\in D_{p_j}$ 对 $i\ne j$，
+而 $V_{ij}\subseteq\operatorname{span}D_{p_k}$。
+反向包含用 $\mathcal I_F\Pi_{p_i}=0$ 及
+$\operatorname{im}\Pi_{p_i}=\operatorname{span}D_{p_i}$。
+其余等价与非零有符号核产生两个真实归一态的处理，均正是109.3，
+不再重证。证毕。
+

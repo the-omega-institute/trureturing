@@ -1,0 +1,67 @@
+**定理 103.6（同载体的精确双向）。** 在定义103.1的有限维全效应域内，以下三项等价：
+
+$$
+\boxed{\begin{aligned}
+&\mathrm{Pair}+\mathrm{EB}_{\ge1}\\
+\Longleftrightarrow\quad &S\ \text{且}\ h(K)=3\\
+\Longleftrightarrow\quad &\exists\text{ rank-three有限EJA }J\text{ 及满足(VII103.11)的 }\Phi.
+\end{aligned}}
+\tag{VII103.20}
+$$
+
+这一等价保留原 $C,u,K,P,[0,u]$；不将原 $u$ 默认为某个事先选好的矩阵迹。
+
+证明。第一项到其余两项由103.4。第二项由既有完整 $S$ 桥得到有限 EJA；原面高与成熟幂等元面格对应给秩三，故到第三项。
+
+反向从任意秩三有限 EJA $J$ 出发。记其单位为 $e$，规范迹为 $\tau$，迹配对为 $\langle a,x\rangle=\tau(a\circ x)$，平方锥为 $J_+$。成熟自对偶及谱字典给
+
+$$
+K_J=\{x\in J_+:\tau x=1\},\qquad
+P_J=\{p:p\text{ 为本原幂等元}\},\qquad
+\mathcal E_J=\{x\mapsto\tau(a\circ x):0\le a\le e\}.
+\tag{VII103.21}
+$$
+
+全部原效应恰为此区间；没有缩成一组投影测试。V88.4的逆向及Library完整桥的反向已证明：若 $0\le a\le e$ 在纯 $p$ 取一，则 $a\ge p$。其参数正是这里的规范迹及本原 $p$，所以直接复用，得到
+
+$$
+e_p(x)=\tau(p\circ x),\qquad
+D_p=K_J\cap J_0(p),\qquad
+J_0(p)=\{x:p\circ x=0\}.
+\tag{VII103.22}
+$$
+
+$J_0(p)$ 是单位 $e-p$、秩二的 Peirce-zero EJA，$D_p$ 是它的全部迹一态空间。成熟秩二字典给一个非退化欧氏球：简单秩二因子是 spin factor，非简单秩二为 $\mathbb R\oplus\mathbb R$，其态空间是线段。故 $\mathrm{EB}_{\ge1}$ 成立。两个不同本原幂等元的支撑并 $p\vee q$ 秩二；其整个最小面是该秩二支撑面，真于秩三整个 $J$。所以 $\mathrm{Pair}$ 成立。此处用的是成熟 Jordan 面格／秩二面结果，亦即V88.4及Library二态球部分的同一结论，并未重新证明一般重构。
+
+再明确任意原归一泛函的回接。若先只有一个锥线性同构 $T:J\to V$，则原严格正 $u$ 在迹配对下唯一写为
+
+$$
+u(Tx)=\tau(b\circ x),\qquad b\in\operatorname{int}J_+.
+$$
+
+严格正与自对偶使 $b$ 正可逆，包括每个直和扇区。采用成熟 Jordan 二次表示
+
+$$
+\mathsf P_a=2L_a^2-L_{a^2},\qquad L_a(x)=a\circ x,
+\qquad \Phi=T\mathsf P_{b^{-1/2}}.
+\tag{VII103.23}
+$$
+
+其保正、自伴随及正逆 $\mathsf P_{b^{1/2}}$ 直接复用V75.1及其所引文献；$b$ 的谱函数彼此算子交换，给 $\mathsf P_{b^{-1/2}}b=e$。因此
+
+$$
+u(\Phi x)=\tau\bigl(b\circ\mathsf P_{b^{-1/2}}x\bigr)
+=\tau\bigl((\mathsf P_{b^{-1/2}}b)\circ x\bigr)=\tau x.
+\tag{VII103.24}
+$$
+
+于是 $\Phi$ 满足(VII103.11)，把上述完整字典搬回同一个原单位切片。原纯点写为 $p=\Phi c$，其中 $c$ 本原，而原 least 及所有原效应精确为
+
+$$
+e_p(v)=\tau(c\circ\Phi^{-1}v),\qquad
+f_a(v)=\tau(a\circ\Phi^{-1}v),\quad0\le a\le e.
+\tag{VII103.25}
+$$
+
+面、球、零关系、least 的全锥序及互易随这个同一同构保持。它不改变原 $u$，也没有把未归一的 $Tc$ 误作原纯归一态。最后，秩三面格给 $h(K)=3$，反向全部完成。证毕。
+

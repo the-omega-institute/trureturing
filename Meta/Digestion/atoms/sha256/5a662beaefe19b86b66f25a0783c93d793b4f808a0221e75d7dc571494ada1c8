@@ -1,0 +1,24 @@
+证明。先设 $\mathrm B+\mathrm H$ 且 $P$ 不止一点。对每个 $p$ 取 $\mathrm H$ 的同一个 $g_p$，置 $e_p=g_p/g_p(p)$。固定任意不同纯 $p,q$ 的球图 $\chi:H(p,q)\to B^d$，记 $n_p=\chi(p)$，$\|n_p\|=1$。写 $g_p(\chi^{-1}s)=a+v\cdot s$；全域非负性给 $a\ge\|v\|$，而对径零值给
+
+$$
+a=v\cdot n_p\le\|v\|\le a,\qquad v=a n_p,\qquad a=g_p(p)/2>0.
+\tag{88.11}
+$$
+
+故这里并未使用尚未证明的 $g_p\le u$，只由非负性与 Cauchy–Schwarz 等号条件即得
+
+$$
+e_p(\chi^{-1}s)=\frac{1+n_p\cdot s}{2}\in[0,1]\qquad(\|s\|\le1).
+\tag{88.12}
+$$
+
+遍及全部纯 $q\ne p$，并加上 $e_p(p)=1$，得 $0\le e_p(q)\le1$ 对所有纯点成立。现在才由有限维紧凸基的 $K=\operatorname{conv}P$ 及 $C=\operatorname{cone}P$ 推出 $0\le e_p\le u$，故 $e_p\in F_p$ 是全局 proper 效应。
+
+任意 $h\in F_p$ 都已是全局 proper 效应，故其球上限制满足已有 (88.5)：$h(\chi^{-1}s)=1-\beta+\beta n_p\cdot s$，$0\le\beta\le1/2$。结合 (88.12)，$h(\chi^{-1}s)-e_p(\chi^{-1}s)=(1/2-\beta)(1-n_p\cdot s)\ge0$。遍及全部纯点并用 $C=\operatorname{cone}P$，才得到全锥序最小性 $e_p\le h$。
+
+交换同一球的两端，对 $e_q$ 同用 (88.12)，得 $e_p(q)=(1+n_p\cdot n_q)/2=e_q(p)$；同点亦成立。因此有完整 $S$，其线性再给 (88.4)。最小性和自身见证给 $D_p=\{x\in K:e_p(x)=0\}$，故 $D_p$ 凸并给 $\mathrm{Z0}$。
+
+为覆盖 $\mathrm A$ 的全部量词，任取某个 $H(p,q)$ 内的纯点 $a$ 及其球对径 $r$；两者均全局纯，且 $(a+r)/2$ 是该面的相对内点球心，故 $H(a,r)=H(p,q)$。$\mathrm H$ 应用于这对纯点便给 $e_a(r)=0$，因此 $a\perp r$，得到完整 $\mathrm A$。
+
+若 $P=\{p\}$，则 $K=\{p\}$、$V=\mathbb Rp$，取 $g_p=e_p=u$；$F_p=\{u\}$、$D_p=\varnothing$，$S,\mathrm{Z0}$ 直接成立，球与对径条件为空，以上无须选球。
+

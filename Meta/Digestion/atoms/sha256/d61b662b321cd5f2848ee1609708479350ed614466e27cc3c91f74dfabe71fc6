@@ -1,0 +1,55 @@
+**定义及定理119.4（原单位预算）。** 固定定理119.2的 $g,e,H$，定义
+
+$$
+\kappa_*=\sup_{\substack{x\in K\\e(x)>0}}
+\frac{\|H(x)\|-g(x)}{e(x)}.
+\tag{IX119.13}
+$$
+
+则 $0\le\kappa_*\le\kappa_0<\infty$，且对每个实数 $\kappa$，
+
+$$
+P_\kappa\text{ 为正映射}\quad\Longleftrightarrow\quad\kappa\ge\kappa_*.
+\tag{IX119.14}
+$$
+
+若 $\kappa_*<2$，任取 $\kappa\in[\kappa_*,2)$，有统一球边邻接下界
+
+$$
+\inf_{q\in S(F)}W(D_q)\ge1-\frac{\kappa}{2}>0,
+\quad
+W(A):=\max_{f\in\mathcal E}\operatorname{osc}_A f.
+\tag{IX119.15}
+$$
+
+若 $\kappa_*\le1$，则 $P_1$ 保持原单位，$F$ 上的全部球效应都原单位延拓，
+特别地每条球内直径都能在原 $\mathcal E$ 中读成一、零，$W(F)=1$。
+
+证明。$e(p)=1,H(p)=g(p)=0$ 给比值零。
+定理119.2的正性给所有比值不超过 $\kappa_0$。
+$e=0$ 的归一态恰为 $F$，在这里已经有 $g=1,\|H\|\le1$；
+其余归一态的Lorentz不等式(IX119.10)恰为 $\kappa$ 不小于相应比值。
+齐次化穷尽 $C$，证明包括端点 $\kappa=\kappa_*$ 的(IX119.14)，不要求上确界达到。
+
+对 $q=c+Bv,\|v\|=1$，令
+$G_v=L_\kappa(1-v\cdot w)$。它正，且
+$G_v(q)=0,G_v(p)=\kappa,\max_FG_v=2$。
+设 $\gamma_v=\max_KG_v\ge2$。
+$G_v\in N_q$，所以 $\max_{D_q}G_v=\gamma_v$；
+$p\in D_q$，故原效应 $G_v/\gamma_v$ 在 $D_q$ 上的振幅至少为
+
+$$
+1-\frac{\kappa}{\gamma_v}\ge1-\frac{\kappa}{2}.
+$$
+
+这里 $\kappa\ge\kappa_*\ge0$，故不等式方向正确。
+最后，$\kappa_*\le1$ 给 $P_1$ 正且 $uP_1=u$；
+对球效应及其补同时应用 $L_1$，即可保持原效应上界。证毕。
+
+若对全部原 $p$ 都能取得上述单位阈值，则得到全部原球的W1，
+可以接IX116.17的完整静态重构；固定一张球的阈值不代替这个全称要求。
+
+$\kappa_*$ 属于固定的 $g,e,H$ 构造，不是对一切可能回缩取最优的内在常数。
+当前定理无条件给出的是有限性；$\kappa_*<2$ 和 $\kappa_*\le1$ 是尚未由
+EB3+Inj推出的阈值。即使逐个球分别取得有限 $\kappa_0$，也没有取得跨全部标签的统一预算。
+

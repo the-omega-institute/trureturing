@@ -1,0 +1,42 @@
+**反例 39.6（纯支持包含的最小环境边界）。** 仅知道一端具有三次子域加一条方向的形状，并把 $Q(X)\subseteq Q(Z)$ 作为唯一比较，不能推出标量等价。取
+
+$$
+ F=\mathbb Q,qquad D=\mathbb Q(\alpha),\quad \alpha^6=2,qquad K=\mathbb Q(\alpha^2),
+$$
+
+由 $T^6-2$ 及 $T^3-2$ 的 Eisenstein 判别法，$[D:F]=6$、$[K:F]=3$。令
+
+$$
+ X=K+\mathbb Q\alpha=\langle1,\alpha,\alpha^2,\alpha^4\rangle_{\mathbb Q},qquad
+ Z=\langle1,\alpha,\alpha^2,\alpha^3\rangle_{\mathbb Q}.
+\tag{39.21}
+$$
+
+对每个 $r\in D^\times$，维数公式给出
+$\dim_F(X\cap rX),\dim_F(Z\cap rZ)\ge4+4-6=2$，所以
+
+$$
+ Q(X)=Q(Z)=D^\times.
+\tag{39.22}
+$$
+
+但由 $1,\alpha,\ldots,\alpha^5$ 的 $F$-独立性和 $\alpha^6=2$，有
+
+$$
+\begin{array}{c|cc}
+ r&d_X(r)&d_Z(r)\\
+\hline
+ \alpha&2&3\\
+ \alpha^2&3&2
+\end{array}
+\tag{39.23}
+$$
+
+具体地，$X\cap\alpha X=\operatorname{span}_F\{\alpha,\alpha^2\}$、$Z\cap\alpha Z=\operatorname{span}_F\{\alpha,\alpha^2,\alpha^3\}$，而 $X\cap\alpha^2X=\operatorname{span}_F\{1,\alpha^2,\alpha^4\}$、$Z\cap\alpha^2Z=\operatorname{span}_F\{\alpha^2,\alpha^3\}$。次数小于四时不存在四维窗口；环境次数四、五已由边界 39.5 排除，故次数六是这种纯支持失败的最小环境次数。
+
+Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Proposition 6.3](https://arxiv.org/html/2201.02003v1)，给出一般域版本的临界对分类：若 $T=\langle1,\mu\rangle_F$、$\mu\in L\setminus F$ 在 $F$ 上代数、$k=\dim_F S$、$k+2\le [L:F]$ 且 $\dim_F\langle ST\rangle_F=k+1$，令 $K=F(\mu)$、$t=[K:F]$，则 $t>k$ 时 $S$ 是 $\mu$ 的 $k$ 项幂链标量倍；$t\le k-1$ 时写 $k=t\ell+m$、$0<m<t$，有 $S=\bar S\oplus b\langle1,\mu,\ldots,\mu^{m-1}\rangle_F$，其中 $\bar S$ 是 $K$-空间且与 $bK$ 直和。本节的引理 39.3 直接证明所需四维特例，并与该命题的两种形状相合；本卷的分式支持引理及逐原标签拼接是该引用之外的应用推导。该引用不承担本定理的全球优先权，也不把特征零环境改成有限域或自动产生可计算恢复算法。
+
+白话说，四维窗口如果被同一个原数平移后仍重合三维，窗口的形状已经很窄：要么是四项连续幂，要么是一个完整三次子域再加一条底域方向。前一种形状两个窗口只有整体缩放的差别。后一种形状里，第一个窗口的两条原商标签被第二个窗口支持，就把第二个附加方向写成一个分式；如果分母真的含有附加方向，那么第二条标签会迫使这个分式中的新量满足二次关系，倒数重新变成同一条仿射方向，仍然只剩整体缩放。若只看“有没有某个商”，而不看每个标签的交维大小，六次扩张中的两个四维窗口可以拥有完全相同的支持，却在 $\alpha$ 与 $\alpha^2$ 处给出相反的交维大小；所以支持是入口，逐标签交维才是刚性所需的关系。
+
+本定理的结论范围是同一有限扩张内的四维 $F$-窗口和原标签逐点支配。它不声称一般维数、非有限环境、有限查询算法、噪声稳定性、量子起源或 $\mathbb Z/\mathbb Q$、$H10(\mathbb Q)$ 的推论；反例只说明删去交维大小后会丢失刚性。
+

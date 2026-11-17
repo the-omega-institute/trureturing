@@ -1,0 +1,132 @@
+### 32.5 回到同一完整环境的有限严格违反
+
+下面直接沿原作用列运输，不需要假定两演员系数矩阵在三维自动成立。取 §32.4 的一个 $F=F_{ab,T}(S)\ne0$ 的核对，令 $y=Jw$。对实数 $q$ 定义同一环境中的
+
+$$
+x_q=qX\oplus0_m,\qquad \xi_q=(u,qy),\qquad
+\ell_S(q)=\phi_{\xi_q}(L(x_q)),\qquad
+\phi_\xi(a)=\xi^*a\xi.
+\tag{32.20}
+$$
+
+在本小节，原 $S_\delta$ 的下标再加 $0$ 表示仅把残量置零，其余原输入保持不变。由 $Vy=w$、$D_{\rm env}y=0$，完整原矩阵乘法给
+
+$$
+\begin{aligned}
+R_\delta(x_q)\xi_q
+ &=q(\mathsf R_\delta,0)
+   +\bigl(-\delta(C\circ B)u,-\delta V^*Cu/2\bigr),\\
+S_{\delta,0}(x_q)\xi_q
+ &=q(\mathsf S_\delta,0)
+   +\bigl((B+\delta\iota[C,B]/2)u,
+           V^*(I-\delta\iota C/2)u\bigr),\\
+S_{\delta,S}(x_q)\xi_q
+ &=S_{\delta,0}(x_q)\xi_q+\delta(Su,0),\\
+t\xi_q&=(Bu+qw,V^*u),\\
+\ell_S(q)&=\ell_0(q)-2\operatorname{Re}\bigl((t\xi_q)^*(Su,0)\bigr).
+\end{aligned}
+\tag{32.21}
+$$
+
+这里保留了 $B,V^*u,V^*Cu$ 和全部原环境输出。$D_{\rm env}y=0$ 仅是这次选定向量的性质，不是环境可逆性、环境替换或压缩平方假设。
+
+取本核对的有限 $\alpha_\delta,\beta_\delta$，定义有限实二次式
+
+$$
+\begin{aligned}
+Q_S(q)=\sum_{\delta=\pm1}\bigl[
+ &\alpha_\delta\|R_\delta(x_q)\xi_q\|^2\\
+ &+\alpha_\delta^{-1}
+   \|S_{\delta,S}(x_q)\xi_q-\beta_\delta R_\delta(x_q)\xi_q\|^2\bigr]
+ -2\ell_S(q).
+\end{aligned}
+\tag{32.22}
+$$
+
+§1 的标准零残量换位恒等式对任意自伴 $c,x,t$ 都成立，不要求演员为两维。它与 §§27–28 的同一复 Gram 配方给出
+
+$$
+Q_0(q)=\sum_{\delta=\pm1}\alpha_\delta^{-1}
+ \|S_{\delta,0}(x_q)\xi_q-\zeta_\delta R_\delta(x_q)\xi_q\|^2.
+\tag{32.23}
+$$
+
+更具体地，零残量时
+$\ell_0(q)=-\sigma\sum_\delta\delta\operatorname{Im}
+ ((R_\delta\xi_q)^*S_{\delta,0}\xi_q)$；展开右侧平方的交叉项正好是 $-2\ell_0(q)$。由完整 (32.5)，每个平方内的 $q$ 项为零，所以 $Q_0(q)=Q_0(0)$。这一步使用完整三行比例，不使用两演员判据的外推。
+
+记 $v_S=(Su,0)$，$M_\delta(q)=S_{\delta,0}(x_q)\xi_q-\beta_\delta R_\delta(x_q)\xi_q$。由 (32.21)–(32.22)，
+
+$$
+\begin{aligned}
+Q_S(q)-Q_0(q)
+={}&2\sum_\delta\delta\alpha_\delta^{-1}
+       \operatorname{Re}(M_\delta(q)^*v_S)
+ +(\alpha_+^{-1}+\alpha_-^{-1})\|v_S\|^2\\
+ &+4\operatorname{Re}((t\xi_q)^*v_S).
+\end{aligned}
+$$
+
+核等式使 $M_\delta(q)$ 的 $q$ 系数为
+$-\delta\iota\alpha_\delta(\mathsf R_\delta,0)$，而
+$\mathsf R_++\mathsf R_-=2Xu$。故全部线性项准确相加为
+
+$$
+Q_S(q)=4q\operatorname{Re}((w-\iota Xu)^*Su)+\Gamma_S
+       =4qF+\Gamma_S,\qquad \Gamma_S=Q_S(0)\in\mathbb R.
+\tag{32.24}
+$$
+
+$\Gamma_S$ 有限，按原向量 $(u,0)$ 和原算子计算；没有漏掉任何环境常数项。它不含 $J$ 的范数，该范数仍保留在下面的实际质量中。这也给出 (30A.5) 在本三维实际类型下的原配对及边框线性式，而非把两维实坐标硬当作三维坐标。
+
+取一个实际有限实数
+
+$$
+\Lambda=-\frac{\Gamma_S+1}{4F},\qquad x=x_\Lambda,\qquad
+\xi=\xi_\Lambda=(u,\Lambda Jw),\qquad Q_S(\Lambda)=-1 .
+\tag{32.25}
+$$
+
+§27.2 的成熟实 Gram／算术几何平均下界逐笔用于同一个 $x,\xi$，即得
+
+$$
+\phi_\xi(L)
+=\tfrac12+\tfrac12\sum_\delta
+ \bigl[\alpha_\delta\|R_\delta\xi\|^2
+ +\alpha_\delta^{-1}\|S_\delta\xi-\beta_\delta R_\delta\xi\|^2\bigr]
+\ge\tfrac12+\sum_\delta\sqrt{B_{\phi_\xi}(R_\delta,S_\delta)}.
+\tag{32.26}
+$$
+
+这里不要求某个零 Gram 变分下确界取到。两个预算与左端确实使用同一个原向量泛函，所有范数都是原全空间作用像，因而所有平方仍是原 $M_{m+3}(\mathbb C)$ 中的平方。
+
+给定 $0<\mu<\infty$，有 $\|\xi\|^2=1+\Lambda^2\|Jw\|^2\ge1$，故
+
+$$
+\xi_\mu=\sqrt\mu\,\xi/\|\xi\|,\qquad
+\phi_{\xi_\mu}(I_{m+3})=\mu.
+\tag{32.27}
+$$
+
+(32.26) 的严格差额至少为 $\mu/(2\|\xi\|^2)>0$。
+
+还须在三演员原类型中支付两笔同时正预算，而不能直接套用定理 27.3 的固定两维常数。令 $J_{ab}=e_{ab}+e_{ba}\in M_3(\mathbb C)$，保持 $\phi=\phi_{\xi_\mu}$ 不变，只作 $x'=x+\lambda(J_{ab}\oplus0_m)$。每份 $B_\phi(R_\delta(x'),S_\delta(x'))$ 都是非负实多项式，次数至多四。演员读取分量为 $z=\sqrt\mu\,u/\|\xi\|$，仍支撑在 $a,b$。最高次作用列分别为
+
+$$
+((J_{ab}+\delta H_\sigma(J_{ab}))z,0),\qquad
+(\delta(A_0+B_0)J_{ab}z/2,0).
+$$
+
+在这个平面上，$\|J_{ab}z\|^2=\|z\|^2$、
+$\|H_\sigma(J_{ab})z\|^2=(B_0-A_0)^2\|z\|^2/4$，且这两列的实内积为零。于是每份多项式的四次系数准确为
+
+$$
+\frac{(B_0^2-A_0^2)^2}{16}\|z\|^4
+=\frac{(B_0^2-A_0^2)^2\mu^2}{16\|\xi\|^4}>0.
+\tag{32.28}
+$$
+
+故每笔预算的实零点集有限。原 PB 严格差额关于 $\lambda$ 连续，在零严格为正；在这个正开邻域内避开两个有限零点集和零，取一个有限实 $\lambda$，就使两笔预算同时严格正而违反仍在。没有另选泛函、质量或环境。
+
+这证明任意非零 $S$ 的全部所述违反。若 $S=0$，直接复用 §1 在任意自伴 $c,x,t$ 上的标准 $K_\sigma$ 恒等式及全部正泛函的复 Gram／Cauchy–Schwarz，得到全部原 (32.3)，包括混合正泛函。必要性已有原向量泛函见证，所以不需要借两演员读取截面作三维全正泛函提升。质量零的正泛函只有零泛函，仍给零等式。所有等式只使用 $\iota^2=-1$、$\overline\iota=-\iota$ 与原复线性数据，因而两个 $\sigma$ 分别成立；$J,B,V,D_{\rm env}$ 始终是原来一份，不作共轭替换。定理 32.3 得证。∎
+

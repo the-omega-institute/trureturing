@@ -1,0 +1,36 @@
+**定理 81.3（同零集与最坏缺陷控制）。** 完整原基底中 $\mathcal Q\ge0$，在固定原 EJA 三元组上连续，并在全部原数据共同按保原迹 Jordan 同构运输时不变。令 $\mathcal D$ 为 (80.2)，则
+$$
+\mathcal Q=0\quad\Longleftrightarrow\quad\mathcal D=0
+\quad\Longleftrightarrow\quad D_J+D_H.
+\tag{81.4}
+$$
+令 $h=d(d+1)/2$，$V$ 为 $\mathscr P_A$ 上所有关于自伴算子坐标的二次齐次多项式限制，$N=\dim V$；则 $1\le N\le\binom{h+1}{2}$ 且
+$$
+\boxed{\mathcal Q\le\mathcal D\le N\mathcal Q.}
+\tag{81.5}
+$$
+所有原正交正元均满足
+$$
+0\le\langle Ja,Jb\rangle_D
+\le\frac{N\mathcal Q}{2}\|a\|_\infty\|b\|_\infty
+\qquad(a,b\in A_+,\ a\circ b=0).
+\tag{81.6}
+$$
+
+**证明。** 固定原映射，定义
+$$
+q_z(\Pi)=\|U\|_2^2+\|G\|_2^2
+-\operatorname{Tr}(J^*J\Pi)
+-\operatorname{Tr}(\mathcal T^*\mathcal T(\Pi\otimes\Pi)).
+\tag{81.7}
+$$
+Hilbert–Schmidt 展开使 $q_z(\Pi_B)$ 恰为 (80.2) 的 $q_J(B)+q_H(B)$。每套 $Je$ 是 $U$ 的正分解，每套 $H_{\rm s}F(e,f)$ 是 $G$ 的正分解；平方展开为全部交叉内积的两倍，故逐点非负，无须先假 $F(e,f)$ 幂等。式 (81.3) 正是 $\int q_z\,d\nu_A$。若一点严格正，连续性在某开邻域给正下界，全支撑使积分严格正，证明零平均恰为处处零。随后按 80.3 的原顺序先恢复 $D_J$，才用 65.3 的第一接口满等距及 75.4／76.3 的一般 EJA 闭包恢复全 $D_H$；不新增 JG3 或复型前提。
+固定几何上 $U>0$ 保持 $F$ 连续，紧轨道使局部映射参数变化给 $q_z$ 一致连续，故积分连续。同构共同运输 $L,p,\omega$ 及原迹、二次表示与投影轨道，唯一不变概率亦对应，给不变性。
+因 $\operatorname{Tr}\Pi=n$，常数及一次函数可分别乘 $(\operatorname{Tr}\Pi/n)^2$ 及 $\operatorname{Tr}\Pi/n$ 写成二次齐次函数，故 $q_z\in V$；共轭作用线性，$V$ 不变。全支撑使 $L^2(\nu_A)$ 在有限维 $V$ 上正定。取实正交基 $\varphi_1,\ldots,\varphi_N$，核 $K(\Pi,\Pi')=\sum_j\varphi_j(\Pi)\varphi_j(\Pi')$ 的对角由不变性与传递性恒定，积分为 $N$，故恒等于 $N$。在最大点应用评价的 Cauchy–Schwarz，并用 $0\le q_z\le\mathcal D$，得
+$$
+\mathcal D^2\le N\|q_z\|_{L^2}^2\le N\mathcal D\mathcal Q.
+$$
+$\mathcal D=0$ 单独处理，其余相除；概率积分给另一侧。式 (81.6) 由 (80.4) 与 (81.5)。上界是符号维数界，不是已计算 $N$ 的读数。证毕。
+
+非负性、全支撑和不变有限维空间各承担不同义务：二点均匀平均的有符号函数 $(1,-1)$ 可以积分零而非处处零；$[0,1]$ 上 $\delta_0$ 与 $q(x)=x^2$ 表明无全支撑会漏方向；圆周上不变测度与非不变空间 $V=\operatorname{span}\{1+\cos\theta\}$ 则有 $N=1$、平均一、最大二。上述环节不是把一般平均命名为“内在”便自动取得。
+

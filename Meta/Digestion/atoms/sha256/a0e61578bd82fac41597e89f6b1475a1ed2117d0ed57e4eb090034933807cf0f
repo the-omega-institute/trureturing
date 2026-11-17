@@ -1,0 +1,20 @@
+## 10. Classical scope, native contribution and remaining boundaries
+
+**Literature status 10.1 (attested tools and the exact scope used).**
+
+| Source | Status, correspondence and limitation |
+| --- | --- |
+| N, §§9.1–9.3 and 10.1 | `repo-derived` supplier, reused as ordinary-proof evidence: the exact chronological action, integral order, extrema domain and original/declared costs. Equations (2.3)–(2.7) reuse these results. They do not by themselves specify a random law. |
+| N, Definition 10.6 and Theorem 10.7; O, Theorem 2.1 at $\varepsilon=1$ | `repo-derived` suppliers, reused as ordinary-proof evidence: the reference Friedrichs process and its height-killed two-dimensional factor. Equation (7.1) uses exactly covariance $2I_2dt$, density one and the two $2\pi$ circles. Their identification is reused, not deduced from weak convergence of kernels. |
+| P. Friz and N. Victoir, *Approximations of the Brownian rough path with applications to stochastic analysis*, Ann. IHP Probab. Statist. 41 (2005), 703–724, [primary text](https://www.numdam.org/item/AIHPB_2005__41_4_703_0.pdf), §5.1, Proposition 26 and Corollary 27 | `literature-attested`: dyadic polygonal Brownian approximations converge jointly with their canonical enhancement. Their Corollary 27 assumes $\varphi\in\Xi_p$ and $\sqrt{-x\log x}/\varphi(x)\to0$. Taking $2<p<3$ and $\varphi(x)=x^{1/p}$ meets these conditions because $\varphi^p=x$ is strictly increasing and convex and $1/2-1/p>0$. The Brownian input here is two-dimensional; time $T$ and amplitude $\sqrt2$ are the deterministic scaling from their unit standard Brownian convention. This attests the classical polygonal supplier. Theorem 6.1 proves directly the narrower uniform joint-coordinate convergence actually needed here, including our added rectangles. |
+| P. Friz and H. Oberhauser, *Non-standard approximations of the Itô-map*, [arXiv:0808.0337v1](https://arxiv.org/html/0808.0337v1), §2.1 Theorem 1, §2.2.1 and §4.1 | `literature-attested`: small inserted loops can leave a central correction and hence a bracket drift while preserving the first-level limit. The abstract criterion requires enhanced polygonal convergence, uniform regularity bounds, central mesh discrepancies and their convergence; first-level covariance alone is not its hypothesis. Here the degree-two discrepancy is explicitly $\lambda(t_j-t_i)$ in the $ab$ coordinate, its group size is of order $|t_j-t_i|^{1/2}$, and the within-cell speed is bounded by $2|\Delta_i|/\delta+8\max(1,|\lambda|)\delta^{-1/2}$. The proof used here is (6.3)–(6.7) and the exact native formula, not an invocation of its general RDE theorem or a copied example coefficient. |
+| Itô isometry, Doob's $L^2$ maximal inequality, Borel–Cantelli, Brownian strong Markov and reflection principles, continuous mapping theorem | `literature-attested` classical probability tools. Their actual integrability, filtration, covariance, summability and path-continuity hypotheses are stated and checked in (6.5)–(6.7), Proposition 4.5 and Theorem 4.2. No homogenization theorem with an unproved iterated-limit premise is substituted for these checks. |
+| The guarded correspondence, lifetime counterexample, executed family and costs, and original-output separation in this volume | `repo-derived`: Sections 3–9 combine the cited classical tools with the pinned native source, with ordinary proofs given here. This classification makes no literature-wide novelty claim. |
+
+The repository search scope is the owning transport source, the native
+observation/Green sources and their native-limit terminology; the primary
+literature comparison is the two approximation papers above. No claim of
+exhaustive literature search or originality is made. Neither an
+Ornstein–Uhlenbeck worked coefficient nor an external theorem merely
+assuming joint iterated convergence is needed for these proofs.
+

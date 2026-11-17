@@ -1,0 +1,108 @@
+**命题 114.11（矩阵加厚的整个排除集是两个三球之并）。** 固定 $0<t<1$，令
+
+$$
+\begin{gathered}
+V_t=\operatorname{Herm}_3(\mathbb C),\qquad
+K_t=\{X\in V_t:0\preceq X\preceq I,\ \operatorname{tr}X=1+t\},\\
+C_t=\operatorname{cone}K_t,\qquad
+u_t(X)=\frac{\operatorname{tr}X}{1+t},\qquad
+p=\operatorname{diag}(1,t,0).
+\end{gathered}
+\tag{IX114.36}
+$$
+
+这个载体满足定义114.1的有限维锥基条件。以它的全部原效应定义比较，
+$p$ 是原纯点，其完整确认族在 $K_t$ 上恰为
+
+$$
+f(X)=1-A(1-X_{11})-BX_{33},\qquad
+A,B\ge0,\quad A+B\le1.
+\tag{IX114.37}
+$$
+
+因此对所有原归一 $X\in K_t$，
+
+$$
+T_p(X)=\min\{X_{11},\,1-X_{33}\},\qquad
+D_p=F_1\cup F_2,
+\tag{IX114.38}
+$$
+
+其中
+
+$$
+F_1=\{X\in K_t:X_{11}=0\},\qquad
+F_2=\{X\in K_t:X_{33}=1\}.
+\tag{IX114.39}
+$$
+
+每个 $F_i$ 都是完整仿射三球，但整个 $D_p$ 非凸，所以此载体失败EB3。
+
+证明。$K_t$ 紧，且在迹超平面有内部点 $(1+t)I/3$。
+故其锥生成 $V_t$；归一基紧且远离零，锥闭；
+非零锥元素有严格正迹，故锥尖且 $u_t$ 严格正，归一基准确为 $K_t$。
+
+先证 $p$ 纯。若 $p=\lambda X+(1-\lambda)Y$，$X,Y\in K_t$、$0<\lambda<1$，
+则 $X_{11}=Y_{11}=1$、$X_{33}=Y_{33}=0$。
+半正定矩阵的零对角元使对应行列为零：
+对 $X,Y$ 的第三行列如此，对 $I-X,I-Y$ 的第一行列亦如此。
+所以所有非对角项均为零，迹约束又使第二对角元为 $t$；
+于是 $X=Y=p$。
+
+原确认效应 $f$ 在 $p$ 达到全局最大值一。写其仿射限制为
+$f(X)=\operatorname{tr}(HX)+b$，其中 $H$ Hermitian，常数可用迹约束吸收入线性泛函。
+在完整酉轨道 $UpU^{\ast}\subseteq K_t$ 上的一阶极值条件给 $[H,p]=0$。
+$1,t,0$ 两两不同，故 $H$ 在这些坐标中对角化。
+再分别交换第一、第二特征方向以及第二、第三特征方向，
+最大性给 $(h_1-h_2)(1-t)\ge0$、$(h_2-h_3)t\ge0$。
+因此 $h_1\ge h_2\ge h_3$。
+
+令 $A=h_1-h_2\ge0$、$B=h_2-h_3\ge0$。
+代入迹约束及 $f(p)=1$，恰得(IX114.37)的表达式。
+在反序原态 $\operatorname{diag}(0,t,1)$ 上的非负性迫 $A+B\le1$。
+反之，若这三个系数条件成立，整个 $K_t$ 上都有
+$0\le1-X_{11}\le1$、$0\le X_{33}\le1$，
+所以 $1-A-B\le f(X)\le1$，确为原确认效应。
+这证明整个确认族的必要性与充分性。
+
+对系数三角形的三个顶点 $(0,0),(1,0),(0,1)$ 最小化，得
+$\min\{1,X_{11},1-X_{33}\}$；因后两项已在 $[0,1]$，得到(IX114.38)。
+非负性同时给整个零集的并集描述，包括全部混态。
+
+令 $\mathcal D_2=\{\rho\in\operatorname{Herm}_2(\mathbb C):\rho\succeq0,\operatorname{tr}\rho=1\}$
+为完整二阶密度矩阵体。$X_{11}=0$ 迫第一行列为零，余下块的迹为 $1+t$，
+且在 $[0,I_2]$ 内；其最小特征值至少为 $t$，故
+
+$$
+F_1=\{\,0\oplus[tI_2+(1-t)\rho]:\rho\in\mathcal D_2\,\}.
+\tag{IX114.40}
+$$
+
+$X_{33}=1$ 则迫第三方向与其余块解耦，剩余块非负且迹为 $t$，所以
+
+$$
+F_2=\{\,t\rho\oplus1:\rho\in\mathcal D_2\,\}.
+\tag{IX114.41}
+$$
+
+$0<t<1$ 保证两个映射都非退化。
+用完整Pauli坐标 $\rho=(I_2+z\cdot\sigma)/2$，$\rho\succeq0$ 等价于 $\|z\|\le1$，
+故两者确为完整三球。
+但取实际原态
+
+$$
+X=\operatorname{diag}(0,1,t)\in F_1,\qquad
+Y=\operatorname{diag}(t,0,1)\in F_2,
+$$
+
+其原中点满足
+
+$$
+T_p\!\left(\frac{X+Y}{2}\right)
+=\min\left\{\frac t2,\frac{1-t}{2}\right\}>0.
+\tag{IX114.42}
+$$
+
+所以整个 $D_p$ 不凸，不能为一个完整三球。
+这排除了该矩阵加厚路线；它不是EB3加PR的反模型。证毕。
+

@@ -1,0 +1,15 @@
+**引理 5.1（所有逆温度的实际先验 Laplace 界）。** 置
+
+$$
+B_n(\beta)=\min\{1,\;6\sqrt\pi\,\beta^{-3/2}+b_n+e^{-\beta/4}\},
+\qquad\beta>0.
+\tag{5.1}
+$$
+
+在假设 3.2 下，对每个单位 $t,c\in T$，
+
+$$
+L_{n,t,c}(\beta):=\sum_h2^{-n}e^{-\beta\|F_ht-c\|^2}\le B_n(\beta).
+\tag{5.2}
+$$
+

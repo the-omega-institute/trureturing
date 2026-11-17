@@ -1,0 +1,22 @@
+**定义 116.22（尚未支付的入口）。** 在116.1的全部原量词下，保留以下问题：
+
+$$
+\begin{gathered}
+\mathrm{EB}_{\ge2}\ \stackrel{?}{\Longrightarrow}\ \mathrm{Pair}_{\perp},\qquad
+\mathrm{EB3}\ \stackrel{?}{\Longrightarrow}\ \forall p\ W(D_p)=1,\\
+\mathrm{EB3}+\mathrm{PR}\ \stackrel{?}{\Longrightarrow}\ \forall p\ \beta_{D_p}=1,\\
+\mathrm{EB}_{\ge2}+\bigl(\forall p\ W(D_p)=1\bigr)
+\ \stackrel{?}{\Longrightarrow}\ \mathrm{Pair}_{\perp}
+\quad\text{（球维数允许变化）}.
+\end{gathered}
+\tag{IX116.67}
+$$
+
+116.17不删除这些问号，也不声称存在违反它们的完整原凸体。
+其中在固定EB3前件下，116.17已经证明W1与全部方向饱和、全Pair和复三能级静态表示等价；
+未支付的是由球形本身取得W1，或另找无需这一入口的证明。
+116.6的全局存在只给至少一张单标签球，116.8的正内半径也只给 $\rho_p>0$；
+均不等于所有局部斜率体长满单位球。
+全厚加一张三球的116.18继续使用全域三轮闭合，不能用固定全三球的116.17
+擅自把可变维数的存在方向条件提升为该完整候选。
+

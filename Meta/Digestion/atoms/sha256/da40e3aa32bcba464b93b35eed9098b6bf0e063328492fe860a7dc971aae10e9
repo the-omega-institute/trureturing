@@ -1,0 +1,2 @@
+**Proposition 3.1 (Same-budget normal form and stationary initial row).** A compliant machine has a common initialization row $\eta$ and row-stochastic matrices $A,C$ on $\mathcal S$, $|\mathcal S|\le M$. Distinct states $d_0,d_1$ are absorbing under both matrices. Every other state is ready for another paid read. $A$ consumes a zero and $C$ consumes a one. This representation preserves $(T,D)$ and uses the same $\eta,A,C$ under both labels.
+

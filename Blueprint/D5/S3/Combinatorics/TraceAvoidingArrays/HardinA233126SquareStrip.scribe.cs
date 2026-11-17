@@ -65,6 +65,13 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The function-space sum expands into five independent label sums."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("rowvalid"),
+                DeclarationHandle.Create(Gid + "row_valid"), H("Compatibility-free row validity"),
+                StatementSource.FromAuthor(Disp(RowValid())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Horizontal legality and the scanner preserve validity "
+                    + "once colour one has occurred, independently of inter-row bonds."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("initialvalid"),
                 DeclarationHandle.Create(Gid + "initial_valid"), H("First-row validity"),
                 StatementSource.FromAuthor(Disp(InitialValid())),
@@ -118,6 +125,16 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
             rhs = SumOver(name, Fin(3), rhs);
         return All("g", Arrow(PairRow(), Name("Int")),
             Eq(SumOver("q", PairRow(), At(g, V("q"))), rhs));
+    }
+
+    private static Formula RowValid()
+    {
+        var s = V("s"); var c = V("c");
+        return All("s", Seen(), All("c", Name(RowOwner + "Row"),
+            Imp(Eq(Proj(s, true), Name("Bool.true")),
+                Imp(Call(RowOwner + "rowLegal", c), Imp(Call(Scanner + "good", s, c),
+                    Call(BoundaryOwner + "Valid", Call(Scanner + "finish", s, c),
+                        Call(Root + "labels", c)))))));
     }
 
     private static Formula InitialValid()

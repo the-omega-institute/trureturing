@@ -1,0 +1,49 @@
+**命题 90.4（原全效应上的四分之一缺口）。** 若 $G$ 含诱导三点链 $a-b-c$，即有边 $ab,bc$ 而无边 $ac$，则下列三个原纯点给
+
+$$
+\begin{gathered}
+v=(e_a+e_b)/\sqrt2,\qquad w_\pm=(e_b\pm e_c)/\sqrt2,\\
+p=vv^T,\qquad q_\pm=w_\pm w_\pm^T,\qquad
+m=(q_++q_-)/2=(e_be_b^T+e_ce_c^T)/2,\\
+T_p(q_+)=T_p(q_-)=0,\qquad T_p(m)=\tfrac14.
+\end{gathered}
+\tag{90.6}
+$$
+
+这些量词和最小值均在整个原 $[0,u_G]_{C_G^*}$ 中，不只在三顶点子模型中。任意额外顶点、允许边及非弦结构均不破坏见证。
+
+证明。三个矩阵均稀疏可容许、PSD且迹一。任一秩一PSD射线在环境PSD锥中极端，故在其任一含该射线的子锥中亦极端，因此 $p,q_\pm\in P_G$；未用一般纯点秩一的断言。
+
+在整个 $V_G$ 上定义
+
+$$
+f_\pm(X)=\tfrac12(X_{aa}+X_{bb}+X_{cc})+X_{ab}\mp X_{bc}.
+\tag{90.7}
+$$
+
+由于原来就有 $X_{ac}=0$，对全部 $X\in C_G$，
+
+$$
+\begin{aligned}
+f_\pm(X)&=\tfrac12(e_a+e_b\mp e_c)^TX(e_a+e_b\mp e_c)\ge0,\\
+(u_G-f_\pm)(X)&=\tfrac12(e_a-e_b\mp e_c)^TX(e_a-e_b\mp e_c)
++\sum_{i\notin\{a,b,c\}}X_{ii}\ge0.
+\end{aligned}
+\tag{90.8}
+$$
+
+所以同一个 $f_\pm$ 与自己的补在整个原锥上共同为正，$f_\pm\in[0,u_G]$。直接代入给 $f_\pm(p)=1$、$f_\pm(q_\pm)=0$，故两个零最小值确由原效应达到。二次型中的向量只支撑这三个坐标，余项是原非负对角元，额外边不进入证明。
+
+现在约束所有原确认者。任取 $f\in F_p$，将它限制到支撑在 $\{a,b\}$ 的完整PSD二阶子锥。这一限制由唯一 $2\times2$ 矩阵 $A$ 表示，原正性和补正性使 $0\le A\le I_2$。$v^TAv=1$ 迫使 $(I_2-A)v=0$；在 $v$ 及其单位正交向量构成的基中，$A=vv^T+\beta v_\perp v_\perp^T$，$0\le\beta\le1$。所以
+
+$$
+f(e_be_b^T)=A_{bb}=(1+\beta)/2\ge\tfrac12,
+\qquad f(e_ce_c^T)\ge0,
+\qquad f(m)\ge\tfrac14.
+\tag{90.9}
+$$
+
+这是对全部 $f\in F_p$ 的下界，不是仅检查(90.7)。另一方面，$g(X)=\operatorname{tr}(pX)$ 是环境秩一投影效应的限制，故在原锥上 proper，且 $g(p)=1,g(m)=1/4$。下界精确可达，得到(90.6)。
+
+(90.7)还说明为何不能缩成环境效应。若某个环境 $0\le E\le I_n$ 在原空间上代表 $f_\pm$，确认和排除将迫使 $Ev=v$、$Ew_\pm=0$，从对称性得到 $v^Tw_\pm=0$；但这里 $v^Tw_\pm=1/2$。因此这两个原 proper 效应都没有这样的环境代表。(90.8)对效应与补分别使用PSD二次型，并没有把两个不同的缺边条目补成同一个环境零一有界矩阵。证毕。
+

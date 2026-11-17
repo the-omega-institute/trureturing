@@ -1,0 +1,31 @@
+**定理 7.2（联合参数源的实际终止密度）。** 对任意等待策略 $\pi$，$T<\infty$ 几乎处处，不要求有限均值。$G_\pi$ 是从整个 $\mathcal U\times\{0,1\}\times\mathbb N_0$ 到策略相容的合法有限终止档案空间 $\mathcal A_\pi$ 的可测双射，逆为
+
+$$
+F_\pi(H)=(U,x(H),R(H)).
+\tag{CPI.38}
+$$
+
+写 $\theta=(q_L,q_R)$，并定义严格正的有限似然
+
+$$
+\begin{aligned}
+g_{(r_L,r_R,m)}(\theta)&=q_L^{r_L}q_R^{r_R}(1-q_m),\\
+f_r^\pi(u,x;\theta)
+&=\left(\prod_{k=1}^r q_{A_k^\pi(u,x)}\right)
+       (1-q_{A_{r+1}^\pi(u,x)})
+=g_{I(G_\pi(u,x,r))}(\theta).
+\end{aligned}
+\tag{CPI.39}
+$$
+
+则对任意种子事件 $E$、Borel 参数集 $C\subseteq(0,1)^2$、根 $x$ 及 $r\ge0$，
+
+$$
+\Pr_\Lambda(U\in E,X_0=x,R=r,\theta\in C)
+=p_x\int_E\int_C f_r^\pi(u,x;\theta)\,\Lambda(d\theta)\lambda(du).
+\tag{CPI.40}
+$$
+
+特别地，相对于 $\lambda\otimes(p_0\delta_0+p_1\delta_1)\otimes\mathrm{Count}_{\mathbb N_0}$，正规形档案律的密度是 $\bar f_r^\pi(u,x)=\int f_r^\pi(u,x;\theta)\Lambda(d\theta)$，在所有 $u,x,r$ 上严格正。$(U,T)$ 也可测恢复完整档案；单独的 $I$ 一般不能。
+
+证明。任意臂上的确定 $1\to0$，除根一时该臂的首次下降外，都由该臂此前的一次成功 $0\to1$ 配对。在前 $r$ 次成功之后，下一个机会以前至多已有 $r+2$ 次确定下降。

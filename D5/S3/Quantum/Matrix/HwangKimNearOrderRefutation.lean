@@ -710,12 +710,13 @@ open Matrix
 open scoped MatrixOrder ComplexOrder
 namespace D5.S3.Quantum.Matrix.HwangKimNearOrderRefutation
 
-private theorem trace_obstruction {L W C : (Matrix (Fin 2) (Fin 2) ℂ)} {d : ℝ}
+private theorem transport_trace_identities {L W C : (Matrix (Fin 2) (Fin 2) ℂ)} {d : ℝ}
     (hL : L.PosDef) (hC : C.PosDef)
     (hd : 0 < d) (hdetL : L.det=1) (hdetW : W.det=(d^2:ℝ))
     (hCL : C*L*C=W)
-    (hT : 0 < (W.trace.re+d*L.trace.re)^2-
-      (1+d)^2*((L*W).trace.re+2*d)) : ¬ (1:(Matrix (Fin 2) (Fin 2) ℂ)) ≤ C := by
+    : C.det = (d : ℂ) ∧
+      W.trace.re + d * L.trace.re = (L*C).trace.re * C.trace.re ∧
+      (L*W).trace.re + 2*d = (L*C).trace.re^2 := by
   have hci : C.det.im=0 := (Complex.nonneg_iff.mp hC.posSemidef.det_nonneg).2.symm
   have hcr : 0 ≤ C.det.re := (Complex.nonneg_iff.mp hC.posSemidef.det_nonneg).1
   have htrci : C.trace.im=0 := (Complex.nonneg_iff.mp hC.posSemidef.trace_nonneg).2.symm
@@ -754,6 +755,17 @@ private theorem trace_obstruction {L W C : (Matrix (Fin 2) (Fin 2) ℂ)} {d : �
       Complex.ofReal_im,Complex.re_ofNat,Complex.im_ofNat,mul_zero,zero_mul,
       sub_zero] at hre
     nlinarith only [hre]
+  exact ⟨hdetC, htrace, htrace2⟩
+
+private theorem trace_obstruction {L W C : (Matrix (Fin 2) (Fin 2) ℂ)} {d : ℝ}
+    (hL : L.PosDef) (hC : C.PosDef)
+    (hd : 0 < d) (hdetL : L.det=1) (hdetW : W.det=(d^2:ℝ))
+    (hCL : C*L*C=W)
+    (hT : 0 < (W.trace.re+d*L.trace.re)^2-
+      (1+d)^2*((L*W).trace.re+2*d)) : ¬ (1:(Matrix (Fin 2) (Fin 2) ℂ)) ≤ C := by
+  obtain ⟨hdetC, htrace, htrace2⟩ :=
+    transport_trace_identities hL hC hd hdetL hdetW hCL
+  have htrcr : 0 ≤ C.trace.re := (Complex.nonneg_iff.mp hC.posSemidef.trace_nonneg).1
   intro hnear
   have hp : (C-1).PosSemidef := Matrix.nonneg_iff_posSemidef.mp (sub_nonneg.mpr hnear)
   have hdif : (C-1).det=C.det-C.trace+1 := by

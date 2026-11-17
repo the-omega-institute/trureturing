@@ -1,0 +1,50 @@
+**推论 87.12（仅替换完整入口，复用全部消费者）。** 在 (87.16) 及以下逐消费者原合同上，直接用 86.17／85.17。
+
+**Born 与复态几何。** 完整固定半比较经 $S$ 与一般 EJA 忠实桥，再由同一原精确两接口 66.3 选择有限复 Hermitian 直和。忠实坐标中
+
+$$
+A=\bigoplus_i\operatorname{Herm}_{n_i}(\mathbb C),\qquad
+\rho_i\ge0,\quad\sum_i\operatorname{Tr}\rho_i=1,\quad
+0\le f_i\le I_i,\qquad
+\Pr(f\mid\rho)=\sum_i\operatorname{Tr}(f_i\rho_i).
+\tag{87.19}
+$$
+
+同块纯比较为内积模方，异中心块为零；不是从探针预写的矩阵假设 Born。所有零／不等中心质量和原效应可得前件仍在。
+
+**给定二份／三份及读回。** 原两张成、全实 $Z$、(83.8)、C2、整个 $G=1_E$ 与精确 PRE 后原 H13 给共同普通且标准归一坐标，直接复用
+
+$$
+M(a,b)_{ij}=a_i\otimes b_j,\quad
+L(d,c)_{ijk}=d_{ij}\otimes c_k,\quad
+(pz)_{jk}=\sum_i\operatorname{Tr}_iz_{ijk},\quad
+(p_{13}z)_{ik}=\sum_j\operatorname{Tr}_jz_{ijk},\quad
+p_{13}=(I^{\rm raw})^*.
+\tag{87.20}
+$$
+
+它们作用在整个原载体及全部相关／纠缠方向，保标量和异型扇区。另一括号、四份以上共同来源或无限维一致性不是本推论。
+
+**指定 CP 的准确接口及 HP 边界。** 每个已供应原同载体事件 $e$ 及其每个实际分支，仍保留 85.15 的原实线性 $\Phi_e$ 及其唯一复 HP 延拓、同事件原实线性 $P_{E,e}$，在全部实 $a,b,c$ 上的原 (85.30)：
+
+$$
+P_{E,e}Q(a,b,c)=
+\alpha_{e,1}Q(\Phi_ea,b,c)+
+\alpha_{e,2}Q(a,\Phi_eb,c)+
+\alpha_{e,3}Q(a,b,\Phi_ec),\qquad
+\alpha_{e,\ell}\ge0,\quad\sum_\ell\alpha_{e,\ell}=1.
+\tag{87.21}
+$$
+
+同事件的完整记录、ready、参考、副本、控制、钟和未来来源不删。另须实际供应定义 85.11 的探针：每输入块原指定归一纯 $\psi_i$，固定活跃集 $S_e=\{\ell:\alpha_{e,\ell}>0\}$ 上的**完整复线性**相容核
+$\ker[(H_\ell)\mapsto\sum_{\ell\in S_e}H_\ell^{(\ell)}\psi_i]
+\subseteq\ker[(H_\ell)\mapsto\sum_{\ell\in S_e}H_\ell]$，
+以及 $(\Xi_\psi)_{iii}=(n_i/n)|\psi_i\rangle\langle\psi_i|$、其余块零。探针种子的严格正权不加到所有原输入；零腿权、不等维和标量转移均允许。85.12／85.16 才给
+
+$$
+P_{E,e}(\Xi_\psi)\ge0
+\quad\Longleftrightarrow\quad\Phi_e\text{ CP}
+\quad\Longleftrightarrow\quad P_{E,e}\text{ 全锥正}.
+\tag{87.22}
+$$
+

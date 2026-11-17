@@ -1,0 +1,32 @@
+#### 定理 6.2：轴面生成元的正交分解
+
+每个 $B\in\Lambda^2V$ 唯一分解为
+
+$$
+\boxed{\quad B=\lambda\,\star n+n\wedge u,\qquad
+ u\perp n,\quad \lambda\in\mathbb R.\quad}
+$$
+
+而且
+
+$$
+\pi_n(B)=u,\qquad
+ \ker\pi_n=\mathbb R(\star n),\qquad
+ \left\|B\right\|^2=\lambda^2+\left\|u\right\|^2.
+$$
+
+因此
+
+$$
+0\longrightarrow\mathbb R(\star n)\longrightarrow\Lambda^2V
+ \xrightarrow{\ \pi_n\ }T_nS^2\longrightarrow0
+$$
+
+是一个正合序列。
+
+**证明。**
+
+在定向正交架 $(n,u_1,u_2)$ 中， $\Lambda^2V$ 的正交基为 $u_1\wedge u_2,n\wedge u_1,n\wedge u_2$。 第一项即 $\star n$，它与 $n$ 对易。 对 $u\perp n$， $(nu)n=-u$、$n(nu)=u$，故 $-\tfrac12[nu,n]=u$。 分解、核、满射性及范数等式随即成立。
+
+$\square$
+

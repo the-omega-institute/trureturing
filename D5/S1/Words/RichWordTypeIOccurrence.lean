@@ -60,7 +60,7 @@ private theorem iterate_prefix {k t : ℕ} (h : k ≤ t) : image phi k 0 <+: ima
   | zero => simp
   | succ s ih => exact (ih (by omega)).trans (iterate_prefix_succ (k+s))
 
-private theorem iterate_growth (k : ℕ) : k+1 ≤ (image phi k 0).length := by
+theorem iterate_growth (k : ℕ) : k+1 ≤ (image phi k 0).length := by
   induction k with
   | zero => simp
   | succ k ih =>

@@ -1,0 +1,40 @@
+**Theorem 7.1 (Necessary linear configuration growth).** Suppose that for every sufficiently small $s>0$ a selected observer $\mathcal A_s\in\mathfrak A_{M(s)}(e^{-s},\alpha)$ satisfies, for one fixed target $i_\star$ and one finite positive constant $C_T$ independent of $s$,
+
+$$
+\mathbb E_{i_\star,e^{-s}}^{\mathcal A_s}T\le C_Ts^{-3}.
+\tag{7.1}
+$$
+
+Set
+
+$$
+A_T=\left(\frac{9!b^{10}}{4B\delta^2C_T}\right)^{1/8}>0.
+\tag{7.2}
+$$
+
+Throughout a sufficiently small neighborhood,
+
+$$
+M(s)\ge2+\frac{A_Ts^{-1}-b}{2\delta}.
+\tag{7.3}
+$$
+
+Consequently $M(s)=\Omega_{H_c,\alpha,C_T}(s^{-1})$. Both selected risks, both almost-sure stops and both finite pointwise means remain required, even though (7.1) is imposed under only one fixed label.
+
+Proof. Apply Theorem 6.2 to this actual observer at this actual $s$ and to the target $i_\star$. Comparing with (7.1) gives
+
+$$
+\bigl(b+2\delta(M(s)-2)\bigr)^8
+\ge\frac{9!b^{10}}{4B\delta^2C_T}s^{-8}.
+\tag{7.4}
+$$
+
+All factors divided are positive. The increasing eighth root on nonnegative numbers proves (7.3). Once $s\le A_T/(2b)$, it also gives
+
+$$
+M(s)\ge2+\frac{A_T}{4\delta}s^{-1}.
+\tag{7.5}
+$$
+
+The neighborhood in this last step may depend on $C_T$; the neighborhood of Theorem 6.2 does not. There is no interchange of a fixed-budget limit with a growing budget. $\square$
+

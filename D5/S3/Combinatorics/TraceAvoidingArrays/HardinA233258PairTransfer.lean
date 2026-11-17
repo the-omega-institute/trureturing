@@ -36,13 +36,13 @@ gridEquiv: proof_shape=bind-only; consumers=column_grid, grid_good, count_transf
 column_grid: proof_shape=bind-only; consumers=grid_good
 grid_good: proof_shape=bind-only; consumers=count_transfer
 count_transfer: proof_shape=bind-only; consumers=initial_values, recurrence_core
-W: proof_shape=bind-only; consumers=table_zero, table_steps, powers_table, power_polynomial, initial_values
+W: proof_shape=bind-only; consumers=table_zero, table_steps, powers_table, power_polynomial, initial_values, HardinA233156Row.result
 coefficients: proof_shape=bind-only; consumers=power_polynomial, recurrence_core
 table_zero: proof_shape=bind-only; consumers=powers_table
 table_steps: proof_shape=bind-only; consumers=powers_table
-powers_table: proof_shape=bind-only; consumers=power_polynomial, initial_values
+powers_table: proof_shape=bind-only; consumers=power_polynomial, initial_values, HardinA233156Row.result
 power_polynomial: proof_shape=bind-only; consumers=recurrence_core
-initial_values: proof_shape=bind-only; consumers=recurrence, HardinA233258Strip.finite_certificate, HardinA233258Strip.initial
+initial_values: proof_shape=bind-only; consumers=recurrence, HardinA233258Strip.finite_certificate, HardinA233258Strip.initial, HardinA233156Row.result
 recurrence_core: proof_shape=bind-only; consumers=recurrence
 recurrence: proof_shape=bind-only; consumers=HardinA233258Strip.recurrence
 -/
@@ -63,18 +63,18 @@ private instance instDecidableProper {n : ℕ} (P : Fin 3 × Fin n → Fin 3) :
 def L (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun P : Fin 3 × Fin n → Fin 3 => Proper P)).card
 
-private abbrev Col := Fin 3 × Fin 3 × Fin 3
+abbrev Col := Fin 3 × Fin 3 × Fin 3
 private def column (c : Col) : Fin 3 → Fin 3 := ![c.1, c.2.1, c.2.2]
 private def compatible (a b : Col) : Prop :=
   ∀ r s : Fin 3, (r = s ∨ r.val = s.val + 1) → column a r ≠ column b s
 private instance instDecidableCompatible (a b : Col) : Decidable (compatible a b) :=
   inferInstanceAs (Decidable (∀ _ _, _ → _))
-private def cls (c : Col) : Fin 5 :=
+def cls (c : Col) : Fin 5 :=
   if c.1 = c.2.1 then (if c.1 = c.2.2 then 0 else 1)
   else if c.1 = c.2.2 then 2 else if c.2.1 = c.2.2 then 3 else 4
-private def Q : Matrix (Fin 5) (Fin 5) ℤ :=
+def Q : Matrix (Fin 5) (Fin 5) ℤ :=
   ![![2,2,2,2,0], ![1,1,0,1,1], ![1,1,0,0,0], ![1,1,1,1,0], ![0,0,0,1,1]]
-private def weights : Fin 5 → ℤ := ![24,24,12,24,12]
+def weights : Fin 5 → ℤ := ![24,24,12,24,12]
 private def representatives : Fin 5 → Col :=
   ![(0,0,0), (0,0,1), (0,1,0), (0,1,1), (0,1,2)]
 private def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
@@ -151,7 +151,7 @@ private theorem grid_good (n : ℕ) (P : Fin 3 × Fin n → Fin 3) :
 
 section CountBridge
 attribute [local irreducible] compatible cls Q weights
-private theorem count_transfer (n : ℕ) :
+theorem count_transfer (n : ℕ) :
     (L (n+2) : ℤ) = dotProduct weights ((Q^n).mulVec (1 : Fin 5 → ℤ)) := by
   classical
   let he : {P : Fin 3 × Fin (n+2) → Fin 3 // Proper P} ≃
@@ -180,7 +180,7 @@ private theorem count_transfer (n : ℕ) :
 end CountBridge
 
 attribute [local irreducible] L
-private def W : Fin 6 → Fin 5 → ℤ :=
+def W : Fin 6 → Fin 5 → ℤ :=
   ![![1,1,1,1,1], ![8,4,2,4,2], ![36,18,12,18,6],
     ![168,78,54,84,24], ![768,354,246,384,108], ![3504,1614,1122,1752,492]]
 private def coefficients : Fin 3 → ℤ := ![2,-7,6]
@@ -188,7 +188,7 @@ private theorem table_zero : W 0 = (1 : Fin 5 → ℤ) := by decide +kernel
 set_option maxRecDepth 100000 in
 private theorem table_steps : ∀ k : Fin 5, W k.succ = Q.mulVec (W k.castSucc) := by
   decide +kernel
-private theorem powers_table (k : Fin 6) : (Q^k.val).mulVec (1 : Fin 5 → ℤ) = W k :=
+theorem powers_table (k : Fin 6) : (Q^k.val).mulVec (1 : Fin 5 → ℤ) = W k :=
   TransferMatrix.tabulatedPowers Q 5 W table_zero table_steps k
 private theorem power_polynomial :
     (Q^(2+3)).mulVec (1 : Fin 5 → ℤ) =

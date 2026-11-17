@@ -1,0 +1,11 @@
+#### 定义 9.1：内部观察者模型
+
+声明一个有限协议整体
+
+$$
+\mathcal H_{\rm all}=
+ \mathcal H_S\otimes\mathcal H_C\otimes\mathcal H_R\otimes\mathcal H_M\otimes\mathcal H_E.
+$$
+
+其中 $S$ 是当前目标，$C$ 是控制程序， $R$ 是方向与相位参考，$M$ 是记录，$E$ 是未访问自由度。 这些名称是功能划分；整体态记为 $\varrho$。 注意力设置 $a$ 是 $C,R,M$ 中的物理编码，选择一个仪器 $\{\mathcal I_{y|a}\}_y$、访问菜单及后续更新。 它不能仅由目标的一条方向替代。
+

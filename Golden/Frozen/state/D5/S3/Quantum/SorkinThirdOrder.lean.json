@@ -1,0 +1,1 @@
+{"statement_id":"sha256:c94f4874e555b783efb4ad198b4982a94d87d7982fd171732c71c1d3234a293e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),16:SorkinThirdOrder),15:amplitudeWeight)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),16:SorkinThirdOrder),31:sorkin_third_order_cancellation)","kind":"theorem"}]}

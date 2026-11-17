@@ -54,7 +54,19 @@ $$\forall K: Type*, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero
 
 For every characteristic-zero field K and sequence a, multiplying the derivative of exponentialSum a by X gives HannaDiagonalDerivativeParity.step a 0 times exponentialSum a. The entry a(0) contributes no constant term.
 
-**Definition 1.5 (The integer divisor-sum ghost).**
+**Theorem 1.5 (Fermat congruence at every prime power).**
+
+$$\forall p: \mathbb{N}, \forall s: \mathbb{N}, (\operatorname{Nat}.\operatorname{Prime}\left(p\right)) \Rightarrow (\forall z: \mathbb{Z}, (p: \mathbb{Z})^{s + 1} \mid z^{p^{s + 1}} - z^{p^{s}})$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.fermat_lift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prime p, natural s and integer z, p^(s+1) divides z^(p^(s+1))-z^(p^s). The original SModEq lifting proof is consumed by diagonal_congruence and the all-parameter A181316 base congruence.
+
+**Definition 1.6 (The integer divisor-sum ghost).**
 
 $$\forall b: \mathbb{N} \to \mathbb{Z}, \forall n: \mathbb{N}, \operatorname{divisorGhost}\left(b, n\right) = \operatorname{Finset}.\operatorname{sum}\left(\operatorname{Nat}.\operatorname{divisors}\left(n\right), (fun d: \mathbb{N} \mapsto (d: \mathbb{Z}) \cdot b\left(d\right))\right)$$
 
@@ -68,7 +80,7 @@ $$\forall b: \mathbb{N} \to \mathbb{Z}, \forall n: \mathbb{N}, \operatorname{div
 
 For an integer sequence b, the nth ghost is the sum of d*b(d) over the positive divisors of n. The empty divisor set at zero gives zero.
 
-**Definition 1.6 (Prime-power divisibility of successive ghosts).**
+**Definition 1.7 (Prime-power divisibility of successive ghosts).**
 
 $$\forall a: \mathbb{N} \to \mathbb{Z}, \operatorname{GaussCondition}\left(a\right) = (\forall p: \mathbb{N}, (\operatorname{Nat}.\operatorname{Prime}\left(p\right)) \Rightarrow (\forall s: \mathbb{N}, \forall m: \mathbb{N}, (0 < m) \Rightarrow ((p: \mathbb{Z})^{s + 1} \mid a\left(m \cdot p^{s + 1}\right) - a\left(m \cdot p^{s}\right))))$$
 
@@ -82,7 +94,7 @@ $$\forall a: \mathbb{N} \to \mathbb{Z}, \operatorname{GaussCondition}\left(a\rig
 
 For every prime p, natural s and positive m, the ghost difference at m*p^(s+1) and m*p^s is divisible by p^(s+1) in the integers.
 
-**Theorem 1.7 (Integer divisor sums satisfy the Gauss condition).**
+**Theorem 1.8 (Integer divisor sums satisfy the Gauss condition).**
 
 $$\forall b: \mathbb{N} \to \mathbb{Z}, \operatorname{GaussCondition}\left(\operatorname{divisorGhost}\left(b\right)\right)$$
 
@@ -96,7 +108,7 @@ $$\forall b: \mathbb{N} \to \mathbb{Z}, \operatorname{GaussCondition}\left(\oper
 
 Nested divisor sets show that every new divisor carries the required prime power. Thus the divisor-sum ghost of any integer ledger satisfies the Gauss condition. This divisibility is used for diagonal ghost powers and bounded square-weight corrections.
 
-**Theorem 1.8 (Formal integrality gives an integer ledger).**
+**Theorem 1.9 (Formal integrality gives an integer ledger).**
 
 $$\forall K: Type*, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)], \forall a: \mathbb{N} \to K, (\operatorname{HannaLogarithmicPowerClosure}.\operatorname{IntegralSeries}\left(\operatorname{exponentialSum}\left(a\right)\right)) \Rightarrow (\exists b: \mathbb{N} \to \mathbb{Z}, \forall n: \mathbb{N}, (0 < n) \Rightarrow (a\left(n\right) = (\operatorname{divisorGhost}\left(b, n\right): K)))$$
 
@@ -110,7 +122,7 @@ $$\forall K: Type*, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero
 
 Over any characteristic-zero field K, an integral formal exponential has an integer Euler ledger. Every positive input ghost a(n) is the canonical field image of the ledger's integer divisor sum. The diagonal-power theorem and the bounded square-weight correction theorem use this necessary integrality condition.
 
-**Definition 1.9 (The coefficientwise stabilized integer Euler series).**
+**Definition 1.10 (The coefficientwise stabilized integer Euler series).**
 
 Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.eulerSeries`
 
@@ -122,7 +134,7 @@ Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.eulerS
 
 This is the existing integer Euler object built from finite prefixes of the primitive ledger, with b(i) attached to part size i+1. It is now public for actual coefficient consumers.
 
-**Theorem 1.10 (Finite prefixes represent the integer series).**
+**Theorem 1.11 (Finite prefixes represent the integer series).**
 
 Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.euler_series_represents`
 
@@ -134,7 +146,7 @@ Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.euler_
 
 Every prefix through part size N agrees with the integer series through degree N. This is the original owner proof, publicly reused by the infinite product bridge.
 
-**Theorem 1.11 (An actual infinite Euler product).**
+**Theorem 1.12 (An actual infinite Euler product).**
 
 Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.hasProd_eulerSeries`
 
@@ -146,7 +158,7 @@ Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.hasPro
 
 The orders of eulerFactor(i+1,b(i))-1 tend to infinity. Coefficientwise stabilization then identifies the topological infinite product with the existing integer Euler series. The coefficient ring has its standard discrete topology.
 
-**Theorem 1.12 (Euler series equal the literal formal exponential).**
+**Theorem 1.13 (Euler series equal the literal formal exponential).**
 
 Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.euler_series_exponential`
 
@@ -158,7 +170,7 @@ Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.euler_
 
 For any characteristic-zero field, agreement of all positive-index divisor ghosts identifies the mapped integer Euler series with the literal exponential. The bridge uses the existing Euler differential equation and coefficientwise differential uniqueness. Both the original Gauss-integrality proof and the corrected power family consume it.
 
-**Theorem 1.13 (Gauss congruences yield actual integrality).**
+**Theorem 1.14 (Gauss congruences yield actual integrality).**
 
 Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.gauss_exponential_integral`
 
@@ -170,7 +182,7 @@ Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.gauss_
 
 The original Mobius divisibility and Euler-ledger construction produce integer coefficients of the actual formal exponential. The proof now consumes the shared Euler-exponential bridge. No correction existence is assumed.
 
-**Definition 1.14 (Hanna's second-comment conjecture).**
+**Definition 1.15 (Hanna's second-comment conjecture).**
 
 $$claim = (\forall K: Type, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)], \forall C: \mathbb{N} \to K, \operatorname{HannaLogarithmicPowerClosure}.\operatorname{IntegralSeries}\left(\operatorname{exponentialSum}\left(C\right)\right) \Rightarrow \operatorname{HannaLogarithmicPowerClosure}.\operatorname{IntegralSeries}\left(\operatorname{exponentialSum}\left((fun n: \mathbb{N} \mapsto C\left(n\right)^{n})\right)\right))$$
 
@@ -182,7 +194,7 @@ $$claim = (\forall K: Type, [\operatorname{Field}\left(K\right)] [\operatorname{
 
 OEIS A156216, internal revision #3, second comment (unpaginated): "More generally, if exp( Sum_{n>=1} C(n) * x^n/n ) equals a power series in x with integer coefficients, then exp( Sum_{n>=1} C(n)^n * x^n/n ) also equals a power series in x with integer coefficients (conjecture)." The sequence C ranges over all natural indices, its entry at zero is unused, and C(n)^n raises the nth entry to its own natural index. IntegralSeries is the existing predicate asserting that every ordinary coefficient is an embedded integer. All fields and both field instances are quantified.
 
-**Theorem 1.15 (Diagonal self-powers preserve integrality).**
+**Theorem 1.16 (Diagonal self-powers preserve integrality).**
 
 $$\forall K: Type, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)], \forall C: \mathbb{N} \to K, \operatorname{HannaLogarithmicPowerClosure}.\operatorname{IntegralSeries}\left(\operatorname{exponentialSum}\left(C\right)\right) \Rightarrow \operatorname{HannaLogarithmicPowerClosure}.\operatorname{IntegralSeries}\left(\operatorname{exponentialSum}\left((fun n: \mathbb{N} \mapsto C\left(n\right)^{n})\right)\right)$$
 
@@ -212,6 +224,7 @@ The integral input series has an integer Euler ledger b. Its formal logarithmic 
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponentialSum`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponential_sum_constant`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponential_sum_equation`
+- Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.fermat_lift`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.gauss_exponential_integral`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.hasProd_eulerSeries`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.integral_input_ledger`

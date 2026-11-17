@@ -1,0 +1,7 @@
+**定义 78.3（字深度和系数界）。** 对有限 EJA $X$ 中若干正单位分解 $\sum_i g_{ri}=1_X$，以 $1_X$ 及全部 $g_{ri}$ 为叶子，用带括号 Jordan 乘积组成有限字典 $W=(w_j)_{j=1}^q$。叶子深度为零，乘积深度为 $1+\max$ 两子字深度。每个字的谱范数至多一。字典具有参数 $(\ell,K)$，指深度至多 $\ell$，且每个 $x\in X$ 可写
+$$
+x=\sum_j c_jw_j,\qquad \sum_j|c_j|\le K\|x\|_\infty. \tag{78.4}
+$$
+这既要求生成，也量化拼出单位方向所需的系数。若合成算子 $W:\mathbb R^q\to X$ 的最小行奇异值为 $\sigma>0$，可取 $K=\sqrt{q\operatorname{rank}X}/\sigma$。字典取自原 Jordan 几何，不供应新的独立相位或操作。
+**证明中的有限性。** 从叶子实张成 $V_0$ 递归取 $V_{j+1}=V_j+\operatorname{span}(V_j\circ V_j)$。一旦不再增长即为含叶子的 Jordan 子代数。因此在 $d=\dim_{\mathbb R}X$ 维空间，生成族必有深度至多 $d-1$ 的有限张成字典；但这不提供统一的 $K$。奇异值界由最小二范数逆解、$\|c\|_1\le\sqrt q\|c\|_2$ 及 $\|x\|_2\le\sqrt{\operatorname{rank}X}\|x\|_\infty$ 得到。这些有限线性代数工具只用于下述定理的定量前件。
+

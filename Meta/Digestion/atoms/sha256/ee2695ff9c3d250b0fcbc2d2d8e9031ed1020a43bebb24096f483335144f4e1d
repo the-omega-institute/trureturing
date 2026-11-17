@@ -1,0 +1,33 @@
+**Proposition 5.1 (Two exact system correspondences).** Under (1.2),
+let $H=I_3+M$ and $A=I_3-M$. The positive off-diagonal convention
+printed in the cited v1 Experimental Results,
+$H_{ii}^{-1}H_{ij}$ for $i\ne j$ with zero diagonal blocks,
+produces exactly the iteration matrix $M$ from $H$. The ordinary
+Jacobi error iteration for the system $Ax=b$ also has iteration
+matrix $M$. Both $H$ and $A$ are diagonalizable over $\mathbb R$,
+with the real positive eigenvalues
+
+$$
+\{1,1-\lambda,1+\lambda\}.
+\tag{5.1}
+$$
+
+Neither is symmetric; in particular, neither is a symmetric positive
+definite matrix.
+
+**Proof.** Every diagonal entry of $M$ is zero, so $H_{ii}=A_{ii}=1$.
+For $i\ne j$, $H_{ii}^{-1}H_{ij}=M_{ij}$, verifying the source's
+printed positive convention with all blocks scalar. For ordinary
+Jacobi, write $D=\operatorname{diag}(A)=I_3$. Subtracting the exact
+solution from $Dx(t+1)=(D-A)x(t)+b$ gives the error matrix
+$I_3-D^{-1}A=M$. This uses $A=I_3-M$, rather than silently applying
+the positive convention to the ordinary error iteration.
+For any eigenvector of $M$ with eigenvalue $s$, $I_3\pm M$ has that
+same eigenvector with eigenvalue $1\pm s$. The real eigenbasis from
+Theorem 2.1 proves (5.1) and diagonalizability. The inequalities
+$0<\lambda<1$ make all three values positive. Nevertheless,
+$H_{13}=1$ and $H_{31}=-d\le0$, so $H$ is not symmetric;
+$A_{13}=-1$ and $A_{31}=d\ge0$ give the same conclusion for $A$.
+Positive real eigenvalues therefore supply no symmetry or symmetric
+positive definiteness in this family. $\square$
+

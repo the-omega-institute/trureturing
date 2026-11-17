@@ -33,7 +33,7 @@ internal sealed class CentredCorrelationSummationDocument : IScribeDocumentDefin
                     Paragraph(Text(
                         "For M>=1, epsilon>0 and a real polynomial p there are C>=0 and a threshold "
                         + "such that every subsequent real N satisfies N>=2 and the following bound. "
-                        + "Choose any natural k<=min(4,q) and natural 1<=K<=M N^beta, any subfamily T of "
+                        + "Choose any natural k<=q and natural 1<=K<=M N^beta, any subfamily T of "
                         + "the full box of k-tuples with entries in [1,K], and any assignment Q(d,J) "
                         + "of coefficient polynomials to a tuple d and a subset J of its distinct values. "
                         + "Aggregate the centred products over all d in T and J contained in image(d) "
@@ -41,7 +41,7 @@ internal sealed class CentredCorrelationSummationDocument : IScribeDocumentDefin
                         + "w(n/N) p(log n), minus the corresponding sum of centred singular series "
                         + "times the integral of w(x/N) p(log x), has absolute value at most "
                         + "C B N^(1/2+epsilon) K^k (1+log N)^natDegree(p). "
-                        + "The bound holds for every supported BV weight w with BVBound(w,B), "
+                        + "The constant may depend on q, SS, beta, M, epsilon and p. The bound holds for every supported BV weight w with BVBound(w,B), "
                         + "uniformly in k, K, T, Q, B and w.")),
                     Paragraph(Text(
                         "The tuple and subset sums are taken before BV partial summation, so no "

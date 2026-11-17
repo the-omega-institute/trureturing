@@ -1,0 +1,11 @@
+There is no sample rejection or reweighting. Put
+$x_i=\sum_{j<i}\Delta_j^1$, $y_i=\sum_{j<i}\Delta_j^2$.
+The following piecewise linear comparison extension
+$(a_n^\lambda,b_n^\lambda)$ is prescribed on each cell:
+
+1. In time $\delta/2$, follow the straight chord from $(x_i,y_i)$ to
+   $(x_{i+1},y_{i+1})$ at constant velocity.
+2. In the remaining time, traverse the rectangle with relative vertices
+   $(0,0),(s_n,0),(s_n,q_n),(0,q_n),(0,0)$ based at
+   $(x_{i+1},y_{i+1})$, giving each of its four legs time $\delta/8$, where
+

@@ -1,0 +1,17 @@
+**定理 141.2（由实际原对偶开区域确定整个 $V$ 的维数）。** 在定义141.1的完整原域及所列条件接口下，存在
+
+$$
+h_o=\frac{g_o}{g_o(z)}\in\partial_{H_z}K^*,\qquad
+h_o\in O\subseteq\partial_{H_z}K^*\text{ 相对开},
+\tag{XI141.4}
+$$
+
+使每个 $h\in O$ 的整个原零面恰为一个 $p\in U_0\cap P\subseteq Q$。唯一零点映射 $\pi:O\to Q$ 连续，且每条纤维包含于一个三维仿射平面。在 $O$ 中有维数 $n-2$ 的紧坐标闭球，其到自身像的限制为闭映射。由 Hurewicz 的紧闭映射维数定理及凸函数高阶奇异集的原始图覆盖定理，得到
+
+$$
+\boxed{\dim_{\mathbb R}V=9.}
+\tag{XI141.5}
+$$
+
+证明分成以下六步，始终不更换原 $V,C,u,K,P,\mathcal E$。
+

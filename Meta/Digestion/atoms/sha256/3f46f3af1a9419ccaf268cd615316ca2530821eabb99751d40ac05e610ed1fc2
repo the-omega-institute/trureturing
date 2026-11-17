@@ -1,0 +1,165 @@
+**Theorem 18.1 (offline full-native upper envelope).** Fix exactly the
+data of Definition 16.1. For every deterministic $0<\eta\le\eta_*$,
+Definition 17.2 is a measurable, almost surely finite original command
+with the full held native tube $D_{\max}\le\eta$, exact censored
+lifetime and death, and complete chronological control (17.9).
+It has finite expected costs, on the original clock and under the
+original target law, satisfying
+
+$$
+\begin{aligned}
+\mathbb E V_\eta^a&\le\frac4{\mu_\lambda}
+                   \left(\frac{\mathbb ES}{\rho}+\rho\right),\\
+\mathbb E V_\eta^b&\le\frac8{\mu_\lambda}
+                   \left(\frac{\mathbb ES}{\rho}+\rho\right),\\
+\mathbb E L_\eta&\le\frac{12}{\mu_\lambda}
+                   \left(\frac{\mathbb ES}{\rho}+\rho\right),\\
+\mathbb E E_\eta&\le\frac{168\nu_\lambda}{\mu_\lambda}
+                   \left(\frac{\mathbb ES}{\rho^2}+1\right),
+\qquad \rho=\eta/4.
+\end{aligned}
+\tag{18.1}
+$$
+
+Here $\mu_\lambda,\nu_\lambda$ are finite positive constants defined
+from a covariance-$2$ Brownian pair $U$ by
+
+$$
+\begin{aligned}
+\sigma_\lambda
+ &=\min\left\{1,\inf\left\{v>0:
+ |U^1_v|\ge1\ \text{or}\ |U^2_v|\ge1\ \text{or}\
+ \left|\int_0^v U^1_w\,dU^2_w+\lambda v\right|\ge1
+ \right\}\right\},\\
+\mu_\lambda&=\mathbb E\sigma_\lambda\in(0,1],\qquad
+\nu_\lambda=\mathbb E\sigma_\lambda^{-1}<\infty.
+\end{aligned}
+\tag{18.2}
+$$
+
+The $U$ notation specifies the law of a normalized cell; it is not an
+additional random input to the command. For fixed starting state,
+interval, horizon and $\lambda$, (18.1) proves expected variation and
+length $O(\eta^{-1})$ and expected identity energy $O(\eta^{-2})$.
+No deterministic bound on every realization's costs is asserted.
+
+Proof. The geometric and chronological conclusions are Proposition 17.3.
+It remains to prove the integrability and actual execution bounds; a
+finite pathwise energy alone would not establish (18.1).
+
+First, $0<\sigma_\lambda\le1$ almost surely by continuity at zero.
+For $0<v\le v_\lambda=1/(2(1+|\lambda|))$, stop the martingale
+$\int U^1\,dU^2$ when either first-level coordinate first reaches
+absolute value $1$. Its quadratic variation up to time $v$ is at
+most $2v$. If the area threshold is reached by time $v$ before those
+coordinate exits, the stopped martingale has reached absolute value
+at least $1/2$, since $|\lambda|v\le1/2$. The reflection principle
+for the two Brownian coordinates and the exponential martingale
+maximal inequality therefore give
+
+$$
+\mathbb P(\sigma_\lambda\le v)
+ \le8\exp\{-1/(4v)\}+2\exp\{-1/(16v)\}.
+\tag{18.3}
+$$
+
+For completeness the martingale inequality used here is
+$\mathbb P(\sup_{s\le v}|M_s|\ge a)\le
+2\exp(-a^2/(2b))$ when $[M]_v\le b$: stop at the first one-sided
+crossing and apply the exponential supermartingale
+$\exp(\theta M-\theta^2[M]/2)$, choosing $\theta=a/b$; then sum
+the two signs. Here $a=1/2$ and $b=2v$. The coordinate bound follows
+from reflection and the variance-$2v$ Gaussian tail. These are
+classical Brownian and martingale estimates, with their normalizations
+shown to fix the covariance factor.
+
+For any $p>0$ the identity
+
+$$
+\mathbb E\sigma_\lambda^{-p}
+ =1+p\int_0^1 v^{-p-1}\mathbb P(\sigma_\lambda<v)\,dv
+ <\infty
+\tag{18.4}
+$$
+
+follows from (18.3) near zero and the trivial probability bound elsewhere.
+In particular (18.2) has the claimed finite constants.
+
+The strong Markov property at $t_i$ and Brownian scaling imply that
+$\Delta_i/\rho^2$ has law $\sigma_\lambda$, independently of
+$\mathcal F_{t_i}$. Indeed the pair
+$\rho^{-1}(W_{t_i+\rho^2v}-W_{t_i})$ has covariance $2I_2dv$,
+and (16.3), divided by $\rho^2$, is its own chronological integral
+plus $\lambda v$. Thus the normalized drift stays $\lambda$, with
+no alteration of the target clock. Define the nonnegative comparison
+reward $R_i=\rho^2/\Delta_i$. Then
+
+$$
+\mathbb E(\Delta_i\mid\mathcal F_{t_i})=\rho^2\mu_\lambda,
+\qquad
+\mathbb E(R_i\mid\mathcal F_{t_i})=\nu_\lambda.
+\tag{18.5}
+$$
+
+The event $\{t_i<S\}$ is in $\mathcal F_{t_i}$ because $S$ is a
+stopping time. Consequently Tonelli and (18.5), initially permitting
+infinite expectations, yield
+
+$$
+\begin{aligned}
+\rho^2\mu_\lambda\,\mathbb EN
+ &=\mathbb E\sum_{i\ge0}{\bf1}_{\{t_i<S\}}\Delta_i
+   =\mathbb E t_N\le\mathbb ES+\rho^2,\\
+\mathbb E\sum_{i\ge0}{\bf1}_{\{t_i<S\}}R_i
+ &=\nu_\lambda\,\mathbb EN
+ \le\frac{\nu_\lambda}{\mu_\lambda}
+              \left(\frac{\mathbb ES}{\rho^2}+1\right).
+\end{aligned}
+\tag{18.6}
+$$
+
+The first upper bound is pathwise: the last elementary interval starts
+strictly before $S$ and lasts at most $\rho^2$. It also proves the
+needed finiteness before the second line is used. This argument does
+not assert independence of terminal or surviving selected intervals.
+For example the event that an interval ends before death depends on
+its own increment and need not be independent of its reward. Only the
+start event in (18.6) is used for conditional factorization.
+
+On each actual partition interval, (17.5) bounds the variations and
+length by $4\rho,8\rho,12\rho$. There are at most $N$ such intervals.
+The injective assignment (16.8) bounds their total energy by
+
+$$
+E_\eta\le168\sum_{i\ge0}{\bf1}_{\{t_i<S\}}
+                              \frac{\rho^2}{\Delta_i}.
+\tag{18.7}
+$$
+
+This is where the terminal construction is essential. On a merged
+last interval its actual duration is
+$\Delta_{N-2}+(S-t_{N-1})$, so its energy is bounded by
+$168\rho^2/\Delta_{N-2}$. No reciprocal moment for the selected
+remainder $S-t_{N-1}$ has been presumed. The first-cell argument in
+Proposition 16.3 eliminates an unpaired short remainder. Taking
+expectations in these inequalities and using (18.6) proves (18.1).
+
+All quantities on the left of (18.1) and (18.7) are literal executed
+costs from (11.4). A leg of duration $d$ and increment $(A,B)$ has
+velocity $(A,B)/d$; a prefix executing fraction $\theta$ costs
+$\theta|A|$, $\theta|B|$, $\theta\sqrt{A^2+B^2}$ and
+$\theta(A^2+B^2)/d$, respectively. This formula applies at every
+intermediate observation. In this family its own death is the endpoint
+of its last height leg. The leg is run at its prescribed velocity up
+to that endpoint; all later velocities are zero. There is no shortened
+time completion of an interrupted leg, and neither the hold nor the
+cemetery jump adds a cost.
+
+The right side of (18.7) is only a dominating random variable. It can
+include the full analytic mesh interval crossing $S$; that interval
+is not thereby executed or billed. If a Brownian continuation beyond
+$T$ is used to define its end, it serves only (18.5)–(18.6).
+Marginalizing that continuation leaves both the command law and its
+expected executed costs unchanged. This completes the original-law
+and original-clock upper bound. $\square$
+

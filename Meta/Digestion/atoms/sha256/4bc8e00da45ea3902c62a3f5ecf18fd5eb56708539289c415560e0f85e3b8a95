@@ -1,0 +1,25 @@
+**推论 82.14（候选的准确替换范围）。** 定义 82.13 在其同一供应数据和全量词上恢复原静态结论与被覆盖同载体事件的 CP；保留其余原操作前件时，恢复相应量子消费者。它只替换所指定 CP 入口，不推出更多份、另一括号、任意有类型过程来源或完整 $\Omega$。
+
+**证明与消费者。** 80.14 或 79.15 首先给同一原 PRE、校准和 C13，故复用第四卷 66.3、66.8—66.10 及本卷 (79.17)、(79.27)：
+$$
+\begin{gathered}
+A=\bigoplus_iH_{n_i},\quad D=\bigoplus_{i,j}H_{n_in_j},\quad
+E=\bigoplus_{i,j,k}H_{n_in_jn_k},\\
+\rho_i\ge0,\quad\sum_i\operatorname{Tr}\rho_i=1,\quad0\le f_i\le I_i,\qquad
+\Pr(f\mid\rho)=\sum_i\operatorname{Tr}(f_i\rho_i),\\
+M(a,b)_{ij}=a_i\otimes b_j,\quad L(d,c)_{ijk}=d_{ij}\otimes c_k,\quad
+(pz)_{jk}=\sum_i\operatorname{Tr}_iz_{ijk},\quad
+(p_{13}z)_{ik}=\sum_j\operatorname{Tr}_jz_{ijk}.
+\end{gathered}
+$$
+单块纯态为复射影空间、模方 Born、不同中心块比较为零，均是已有结论。82.11 才在同事件全实提升上把固定三份 PSD 换成其 CP，没有借旧 Born／CP／QC 反推源。
+逐输入输出块 CP 给矩形 Kraus，但接到实际仪器仍须原有类型分支、同事件参考或 intertwining、真实记录及预算。对第 69 章固定旁观者族，未校准时完整保留局部／原联合两预算
+$$
+\sum_{a,j}F^a_{ji}\le I_i,\qquad
+\sum_{a,j}F^a_{ji}\otimes u_{jk}\le I_i\otimes u_{ik},\qquad
+F^a_{ji}=\sum_\ell K_{a,ji,\ell}^*K_{a,ji,\ell};
+$$
+完整菜单两边总 TP 时取等号；本候选已校准 $u=I$ 时相合为每个输入 $i$ 的 $\sum_{a,j,\ell}K_{a,ji,\ell}^*K_{a,ji,\ell}=I_i$。实际顺序复合、真粗粒化、共同重置补全各按 69.1—69.11、73.9 原域，不能从某个平均全正供应单独加项的可调用性。
+结果概率仍为原未归一输出质量；只有严格正质量才可除以它作条件态。零质量分支及记录、标签和未来权限照旧保留。Lüders 另需同一 CP 分支有锐投影效应且对每个确定接受态逐点不变；效应、CP、重复性或完备性本身不唯一指定更新。
+Hamiltonian 另需原物理时钟参数上的连续、时间齐次、可逆 $*$ 自同构群。连续性固定离散中心后，有限矩阵块才得到 $\dot\rho_i=-i[H_i,\rho_i]/\hbar$，$H_i$ 仍有加标量自由度；时间／能量单位及 $\hbar$ 的物理对应由原动力学源承担。82.7 的三腿是给定三份系统的证书，不识别独立另一括号，不供应四份以上相容性或时间动力学。证毕。
+

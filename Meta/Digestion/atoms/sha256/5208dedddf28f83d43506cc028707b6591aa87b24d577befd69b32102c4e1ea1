@@ -1,0 +1,119 @@
+**定义 123.1（完整原域上的横向数据）。**
+本章沿用 X121 的同一原实现和全部前件：EB3、全局 Inj、实际含 $P_0$ 顶点的种子三角、
+$\dim V=9$，以及原纯单位方向邻点 $s=c+Bv$、$\|v\|=1$、$d_+>0$。
+使用同一实际 $p,q,r,s,b,x,y$ 和它们的整个排除球；
+不是分别实现各颗球后拼接边缘数据。
+保留 X121 的全部参数
+
+$$
+\begin{gathered}
+R_+,R_->1,\quad 0<d_+,d_-,a,t,\lambda<1,\quad
+\frac1{1+R_-}<\gamma<\frac12,\\
+0<M_A<1,\quad \lambda<B_0\le D<1,\qquad
+g_x=u-e_x,\quad G_0=1-2\gamma>0.
+\end{gathered}
+\tag{X123.1}
+$$
+
+$G_0$ 是标量，与 X122 的完整球 $G=D_s$ 无关。
+在 X121 的实际 $D_x$ 图中，$b$ 位于 $n_x$，$y$ 位于 $-n_x$，
+保留 $R_b=\rho_x(n_x)$、$R_y=\rho_x(-n_x)$。
+从 (X121.32) 有
+
+$$
+D=e_b(y)=\frac{R_b-1}{R_b+1}>0.
+\tag{X123.2}
+$$
+
+故 $R_b>1$；旧相反接触等价再给 $R_y>1$。
+置
+
+$$
+\Delta=e_y(b)=\frac{R_y-1}{R_y+1},\qquad 0<\Delta<1.
+\tag{X123.3}
+$$
+
+两个已有原确认式消去同一轴读数，给整个 $V$ 上的系数库存
+
+$$
+\begin{gathered}
+e_y=A_0g_x-B_1e_b,\qquad
+A_0=\frac{R_b+R_y}{1+R_y}>0,\qquad
+B_1=\frac{1+R_b}{1+R_y}>0,\\
+e_y(p)=A_0(1-a)>0.
+\end{gathered}
+\tag{X123.4}
+$$
+
+这只是 (X121.32) 的同一轴恒等式，不另立法向定理。
+记 $\sigma_y=e_y(s)$。
+原纯零关系对称及 (X121.27) 给
+
+$$
+\begin{aligned}
+\sigma_y>0&\Longleftrightarrow D>B_0,\\
+\sigma_y=0&\Longleftrightarrow D=B_0
+\Longleftrightarrow s\in D_y.
+\end{aligned}
+\tag{X123.5}
+$$
+
+定义完整原球的线性张成与消去空间
+
+$$
+\begin{gathered}
+M_p=\operatorname{span}D_p,\qquad M_y=\operatorname{span}D_y,\\
+\operatorname{ann}(M)=\{h\in V^*:h|_M=0\},\\
+T_y=\{h\in S_x:h|_{D_y}=0\},\qquad
+Z_y=\{h\in T_y:h(y)=0\},\\
+A_{\rm ax}=\operatorname{span}\{g_x,e_y\}
+=S_x\cap L_{\rm ax}.
+\end{gathered}
+\tag{X123.6}
+$$
+
+最后一个等号由 X121 的二维原轴截面及 (X123.4) 给出。
+设
+
+$$
+\begin{gathered}
+U_4=D_p\cup D_q\cup D_r\cup D_x,\qquad
+U_6=U_4\cup D_b\cup D_y,\\
+Q_j=\{h\in S_x:h(z)\ge0\text{ 对每个 }z\in U_j\},\quad j=4,6,\\
+\|h\|_K=\max_{\xi\in K}|h(\xi)|,\qquad
+h_z=e_y+z\quad(z\in Z_y).
+\end{gathered}
+\tag{X123.7}
+$$
+
+$K$ 张成 $V$，故 $\|\cdot\|_K$ 是线性泛函空间上的范数。
+$Q_4,Q_6$ 是辅助测试锥；原全局正性仍为
+
+$$
+N_x=C^*\cap S_x\subseteq Q_6\subseteq Q_4.
+\tag{X123.8}
+$$
+
+每个 $D$ 都是整个原闭球，包括所有混合点。
+在完整 $D_p=c+B\overline{\mathbb B}^{3}$ 上，把 $z\in Z_y$ 的有符号限制写成
+$z(c+Bw)=\alpha_z+\beta_z\cdot w$，定义
+
+$$
+\Theta:Z_y\longrightarrow v^\perp,\qquad
+\Theta(z)=\operatorname{proj}_{v^\perp}\beta_z.
+\tag{X123.9}
+$$
+
+目标是 Dp 图中的二维欧氏平面；这只是有符号限制映射。
+定义原评价映射
+
+$$
+\pi_x:V\longrightarrow S_x^*,\qquad
+\pi_x(\xi)(h)=h(\xi).
+\tag{X123.10}
+$$
+
+本章使用 $\dim S_x=4$ 和 X121 的实际轴截面。
+环境九维与已支付的 $\mathsf J_\triangle$ 不被用于推定 $\operatorname{rank}\Theta=2$，
+也没有正种子读回、E0、PC1、Pair、正则锚、球族连续性或原生仪器前件。
+

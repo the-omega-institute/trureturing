@@ -49,7 +49,7 @@ def claim : Prop := ∀ n : ℕ, 3 ≤ n →
     65536 * (n - 2) * (2 * n - 5) * a308815 (n - 3) = 0
 
 
-private theorem cat_ode :
+theorem cat_ode :
     X*(1-4*X)*derivative (R := ℚ) (PowerSeries.catalanSeries.map (Nat.castRingHom ℚ)) +
       (1-2*X)*(PowerSeries.catalanSeries.map (Nat.castRingHom ℚ)) = 1 := by
   have cat_quad : X*(PowerSeries.catalanSeries.map (Nat.castRingHom ℚ))^2 -

@@ -1,0 +1,82 @@
+**定理 41.4（零探针、任意实环境幅度的充要关系）。** 保持 (41.1)、(41.4)，令
+
+$$
+\begin{gathered}
+u=(2/\overline{q_1},-1/\overline{q_2},0)^{\mathsf T},\quad
+\xi_w=(u,w),\quad \phi_w(A)=\xi_w^*A\xi_w,\quad x=0,\quad w\in\mathbb R,\\
+m=|q_1|^2>0,\quad n=|q_2|^2>0,\quad b=m+4n,\quad a=m+2n,\\
+d=2s_1-s_2+s_0,\quad k=2(s_1-s_2),\\
+F=b(1+4s_1^2/m+s_2^2/n)-k^2,\\
+G=b(m+n+b/4+s_0^2)-a^2,\qquad H=bd-ak.
+\end{gathered}
+\tag{41.15}
+$$
+
+这里的 $a$ 只是标量简写，不是 (41.12) 的分级参数。对这个固定 $x,u$、全部实 $w$ 的家族，原 PB 成立当且仅当
+
+$$
+\boxed{\quad 4(2s_1-s_2+s_0)^2\le
+m+4n+\left(4\sqrt{n/m}\,s_1+\sqrt{m/n}\,s_2\right)^2=F.\quad}
+\tag{41.16}
+$$
+
+因而 (41.16) 对全称原 PB 必要，但本定理只在上述家族内断言充分性，不涉及 $s_3$ 的完整分类。
+
+证明。原相位没有消失在未经允许的旋转中，而是通过 $q^*u=1,q^*Cu=0$ 的准确收缩参与。完整四维列为
+
+$$
+\begin{aligned}
+R_\delta\xi_w&=(-\delta wCq/2,0),\\
+S_\delta\xi_w&=(\delta Du+wq+\delta\iota wCq/2,\ 1+\delta s_0w).
+\end{aligned}
+\tag{41.17}
+$$
+
+第四分量 $1+\delta s_0w$ 不能删去。另有 $(Cq)^*Du=k$、$q^*Cq=a$、$\|Cq\|^2=b$，这些标量均为实。由此逐项给
+
+$$
+\begin{aligned}
+\phi_w(L)&=-2wd,\\
+\|R_\delta\xi_w\|^2&=bw^2/4,\\
+\|S_\delta\xi_w\|^2
+ &=1+4s_1^2/m+s_2^2/n+2\delta dw
+       +(m+n+b/4+s_0^2)w^2,\\
+\operatorname{Re}\langle R_\delta\xi_w,S_\delta\xi_w\rangle
+ &=-w(k+\delta aw)/2,\\
+B_{\phi_w}(R_\delta,S_\delta)
+ &=\frac{w^2}{4}\bigl(F+2\delta Hw+Gw^2\bigr).
+\end{aligned}
+\tag{41.18}
+$$
+
+例如前两笔复交叉项中涉及 $\iota(Cq)^*Du$ 或 $\iota q^*Cq$ 的部分纯虚，故无实贡献；不是把完整内积改为复 Gram。左端由 $L=-2t\circ g$ 得到，标准换位部分在该向量上的读数为零。展开常数还得
+
+$$
+F=b+\left(4\sqrt{n/m}\,s_1+\sqrt{m/n}\,s_2\right)^2\ge b>0,
+\qquad
+G=m^2/4+3mn+4n^2+bs_0^2>0.
+\tag{41.19}
+$$
+
+两份二次式 $F\pm2Hw+Gw^2$ 对所有实 $w$ 非负：在 $w\ne0$ 处它们是 (41.18) 的实际非负 Gram 预算除以正数，零处为 $F>0$。在各自顶点读值，得 $H^2\le FG$。因此
+
+$$
+f(w):=\sqrt{F+2Hw+Gw^2}+\sqrt{F-2Hw+Gw^2}
+=\left\|\left(\sqrt G w+\frac H{\sqrt G},\sqrt{F-H^2/G}\right)\right\|
+ +\left\|\left(\sqrt G w-\frac H{\sqrt G},\sqrt{F-H^2/G}\right)\right\|
+\tag{41.20}
+$$
+
+是实直线上的偶凸函数。凸性来自仿射列的欧氏范数，偶性来自两项互换，故 $f(w)\ge f(0)=2\sqrt F$，包括 $H^2=FG$ 的退化情形。$w\ne0$ 时原 PB 准确等于 $4|d|\le f(w)$。若 (41.16) 成立，则 $4|d|\le2\sqrt F\le f(w)$；反向若对全部非零 $w$ 成立，令 $w\to0$ 即 $4|d|\le2\sqrt F$。$w=0$ 处原 PB 两端本来都是零，不用除以 $w$。这证明准确充要性。∎
+
+若 $4d^2>F$，置 $T=2|H|+G>0$，则每个满足
+
+$$
+0<|w|<\min\left\{1,\frac F{2T},\frac{4d^2-F}{2T}\right\}
+\tag{41.21}
+$$
+
+的有限实数都给严格违反，且两笔预算同时严格正。确实，$|w|<1$ 时每份二次式与 $F$ 的距离小于 $T|w|$；所列阈值使它们都大于 $F/2>0$ 且小于 $4d^2$，故两根之和小于 $4|d|$。这把极限必要性接成有限正预算见证。取 $\mu\phi_w/(\|u\|^2+w^2)$ 即得任意指定正质量，严格性及两笔正预算均由齐次性保持。
+
+即使沿分级直线 $s_1=s_2=s_3=a_0,s_0=-a_0$，此家族也有 $d=k=H=0$，但 $F=b+(16n/m+8+m/n)a_0^2$、$G=m^2/4+3mn+4n^2+ba_0^2$。因此分级残量虽给零缺陷 $W$，预算仍随它改变。这是不能用分级平移消去环境残量的一个完整列例证。
+

@@ -1,0 +1,21 @@
+**定理 99.7（任意有限实 $n,c$ 的完整桥）。** 在定义99.1的同一完整原实ROG载体上，不限制 $n$ 或 $c$。先作93.2的同载体归一化；在该坐标中 $I_n\in L$、$u=\operatorname{tr}|_L$，并有
+
+$$
+\boxed{
+\mathrm G_2\Longleftrightarrow\mathrm{Z0}\Longleftrightarrow S
+\Longleftrightarrow
+L=\bigoplus_i\operatorname{Sym}(U_i),
+}
+\tag{99.9}
+$$
+
+其中 $\mathbb R^n=\bigoplus_i^{\perp}U_i$。未归一化坐标中的结论由93.2的同一个对偶运输返回原 $u$，不把任意原单位同时写成迹和单位矩阵。当上述等价条件成立时，归一化坐标中整个原 proper 效应、全部原混态与所有确认值满足
+
+$$
+[0,u]=\{f_J:J\in L,\ 0\preceq J\preceq I_E\},\qquad
+T_p(x)=\operatorname{tr}(px).
+\tag{99.10}
+$$
+
+其中 $f_J(X)=\operatorname{tr}(JX)$。证明。97.3把 $\mathrm G_2$ 传给全实最小次数分支。最小次数分类的非线性分支只有二次超曲面、非线性有理正规曲线、scroll 和 Veronese 锥及其线性锥；二次超曲面由局部余维一的96.8桥排除，曲线由97.4排除，scroll 由99.4排除，Veronese 及任意顶点由99.5排除，实形式的下降由99.6保证没有未覆盖的非分裂形式。因此在 $\mathrm G_2$ 下每个分支均为线性空间。97.5的全效应四分之一障碍排除所有非零交叠，且原归一化的 $I_E\in L$ 与秩一生成给出这些线性空间的彼此正交完整直和及(99.10)。93.2给出完整 $\mathrm{Z0}$、$S$、least 性及反向蕴含 $\mathrm{Z0}\Rightarrow\mathrm G_2$。所有断言沿原锥与对偶的同构返回原 $(V,C,u)$。证毕。
+

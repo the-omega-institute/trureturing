@@ -1,0 +1,23 @@
+**定义 91.1（实复团生成载体）。** 取 $\mathbb F\in\{\mathbb R,\mathbb C\}$、顶点集为 $\{1,\ldots,n\}$ 的任意有限简单图 $G$，$n\ge1$。$\operatorname{Herm}_n(\mathbb F)$ 始终视为实向量空间，实域时即对称矩阵空间，$\dagger$ 表示相应伴随。定义
+
+$$
+\begin{gathered}
+V_{G,\mathbb F}=\{X\in\operatorname{Herm}_n(\mathbb F):
+X_{ij}=0\text{ 若 }i\ne j,\ \{i,j\}\notin E(G)\},\\
+C^{\rm cl}_{G,\mathbb F}
+=\operatorname{cone}\{vv^\dagger:v\in\mathbb F^n\setminus\{0\},\quad
+\operatorname{supp}v\text{ 为 }G\text{ 的团}\},\qquad
+u(X)=\operatorname{tr}X,\\
+K^{\rm cl}_{G,\mathbb F}=C^{\rm cl}_{G,\mathbb F}\cap\{u=1\},\qquad
+P^{\rm cl}_{G,\mathbb F}=\operatorname{ext}K^{\rm cl}_{G,\mathbb F},\\
+C^{\cap}_{G,\mathbb F}
+=V_{G,\mathbb F}\cap\operatorname{PSD}_n(\mathbb F),\qquad
+C^{\rm cl}_{G,\mathbb F}\subseteq C^{\cap}_{G,\mathbb F}.
+\end{gathered}
+\tag{91.1}
+$$
+
+团包括单顶点，$\operatorname{cone}$ 只用有限非负组合。本章的原状态锥是 $C^{\rm cl}$；第90章的原锥是实域的 $C^\cap$。等价地，$C^{\rm cl}$ 是各团所支撑的完整PSD锥之和，因为每个团内PSD矩阵可在该团内谱分解。实域的两锥在弦图上相等，非弦图上不相等：稀疏秩一矩阵的向量支撑必为团，故两锥相等恰为90.3所引用的实ROG弦图判据。下述两域证明均直接使用 $C^{\rm cl}$，不在非弦图上用 $C^\cap$ 替代它，也不预设复域的截面分解。
+
+所有 $F_p,T_p,D_p,\perp$、$\mathrm B,\mathrm A,S$ 均取这个同一原载体的整个基、全部纯点与整个 proper 区间；$\mathrm{Z0}$ 对全部原混态量化，$\mathrm{Z0}_{\rm pure}$ 准确取(90.2)的三个原纯点条件。图关系 $\sim_G$ 沿用(90.1)，含反身关系。
+

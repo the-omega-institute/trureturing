@@ -1,0 +1,20 @@
+**（五）至多三套的逆向存在构造。** 从旧 PRE 出发，先由 66.3 [R] 得 $A=\bigoplus_iH_{n_i}(\mathbb C)$；此分类不使用 C13。对每个 $N\ge3$ 因子，取对角框架 $e_j=E_{jj}$ 及下述 Hermitian $B$ 的任意完整本原谱框架：
+$$
+B_{12}=B_{23}=1,\quad B_{13}=i,\quad B_{k,k+1}=1\ (3\le k<N),\quad
+B_{ji}=\overline{B_{ij}},\qquad\text{其余项为零}. \tag{75.18}
+$$
+生成代数含 $B$ 及全部 $e_j$。重谱时在每个谱空间任取正交秩一细化即可，因为 $B$ 仍为该框架的实加权和，不要求细化投影都是 $B$ 的多项式。记 $R_{jk}=E_{jk}+E_{kj}$、$I_{jk}=iE_{jk}-iE_{kj}$（$j<k$）。$4e_j\circ(e_k\circ B)$ 提取 $jk$ 边，故已有 $R_{12},R_{23},I_{13}$ 及实尾边。矩阵单位乘法给
+$$
+2R_{12}\circ R_{23}=R_{13},\quad
+2R_{12}\circ I_{13}=I_{23},\quad
+2R_{23}\circ I_{13}=I_{12}. \tag{75.19}
+$$
+连同前三个对角元即得整个 $H_3$ 角。若已有 $H_k$ 角，令 $\ell=k+1$，对任意 $j<k$，
+$$
+2R_{jk}\circ R_{k\ell}=R_{j\ell},\quad
+2I_{jk}\circ R_{k\ell}=I_{j\ell},\quad
+2R_{jk}\circ I_{j\ell}=I_{k\ell}. \tag{75.20}
+$$
+因此得到全部新实、虚边及 $e_\ell$，归纳得到 $H_N$ 的整个实基。这两套完整框架 Jordan 生成该因子。
+对 $H_2$，写 $H_2=\mathbb RI\oplus\{u\cdot\sigma:u\in\mathbb R^3\}$，$(u\cdot\sigma)\circ(v\cdot\sigma)=(u\cdot v)I$。任意两套完整框架的 Bloch 轴为 $u,v$，其生成代数包含于闭乘积空间 $\operatorname{span}_{\mathbb R}\{I,u\cdot\sigma,v\cdot\sigma\}$，维数至多三而 $\dim H_2=4$；三个 Pauli 轴的谱框架则线性张成整个 $H_2$。标量因子只需一套。
+各因子的列表以重复补到三槽，逐槽把各因子的嵌入原子并成全直和的一套框架。每个中心单位是该因子原子之和，各局部生成运算都留在对应嵌入角内，故三槽生成整个直和；同构因子也不会被锁成对角副本。于是旧 PRE 给 $\mathsf{JG}_3$，原 $D_J,D_H$ 给两表。结合（四），也证明删去 H13、C13 的同数据等价。

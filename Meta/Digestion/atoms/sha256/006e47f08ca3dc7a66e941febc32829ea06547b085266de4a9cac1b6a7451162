@@ -1,0 +1,10 @@
+**准确未决域。** 原问题仍要求每个 $\mathcal W\ne0$，而 (32.4) 失败准确是 $\mathcal W$ 包含于某个坐标二平面。例如 $\mathbb C(1,1,0)^\mathsf T$、$\mathbb C e_1$、$\mathbb C e_3$ 都不在定理 32.3 的域中。对这些像，(32.12) 在缺失坐标上不能定义所需的 $u_0$；引理 32.2 只在已有双非零坐标 $u$ 的前提下提升，不把一个轴读取自动变成横向读取。它还准确指出 $\Delta_d=0,w_j\ne0$ 时这条提升确实不可能。需另构造分离缺失坐标的合法共同核读取，或直接判定剩余原 Schur 不等式；只证明所有核配对为零仍不够。这里未给任何非零 $S$ 的全 PB 模型，也未证明这些例子是反模型。原三演员全非零像问题和完整 Omega 成功标准均保持未解。两演员定理 30A.2、原 $W=0$ 三矩结果 §30 及全部既有域均保持各自类型，不能因二演员结论而省去这份缺失坐标义务。
+
+成熟归属沿 §§1、5、17、27–30A：复 Gram／Cauchy–Schwarz 与正泛函背景见已引 Blackadar 的 [*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)；Hermitian 矩阵、行列式和有限维插值使用 Horn–Johnson，*Matrix Analysis* 的标准线性代数。核与像的广义 Schur 背景沿 Higham 的 [Generalized Schur Complement，Theorem 1](https://nhigham.com/2023/06/01/what-is-the-schur-complement-of-a-matrix/) 和 Penrose 的 [*A generalized inverse for matrices*](https://doi.org/10.1017/S0305004100030401)。本节实际承重等式均已列出；这些成熟来源不被归为本节特定三维核族的作者。这里标为仓内综合推导，不主张历史原创、文献穷尽、物理来源已构造或 Lean／kernel 核验。
+
+完整来源逐字沿 [§6](#6-完整原问题与七项物理合同的精确身份)、[§30A.5](#30a5-准确的前件删除来源与完整目标) 的同一递归钉版全文与七项消费者；这些链接是完整合同的保留，不以本段摘要替代。原全部准备、事件、过程、参考／副本、真正相关联合、零／不等／次归一质量、物理钟、单位、控制、parent／ready／flags、完整记录、失败、拒绝、停止、销毁、泄漏、真遗忘、两侧与逆向 Return、固定支持全质量、完整菜单、全部已量化中间切口及每份完整输出的所有合法未来都保留。数学 $u,\xi,x$ 不生产准备、菜单、复制或相干控制；不借旧 Born／CP／QC、密度或历史身份倒推来源。
+
+[C139 固定源卷 §§50–73](AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md) 已得的合法前接、唯一正回溯、下降、固定返回刚性、条件过程比较和整台递归参考及累计支持继续按原域使用；[C128 原词卷 §§385–392](AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md) 的同一旧 $D$ 恢复及其消费者继续保留。[有限返回续卷 §162](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md) 的完整原根候选和七项合同，以及 [§164](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md) 对候选查询返回与原活动接头的区别，各守已付域；没有把它们倒称缺失，也没有把另增服务的候选当作原 $B_{r_\star}$ 的活动返回。
+
+原分析器仍须为字面旧程序 $\tau;T_P$ 的指定接受族，在全部原准备、中间切口、参考／副本、合法分析词和树、原坐标、固定支持全质量和完整菜单上，供应到同一原实际完整菜单及接受端的准备无关准确关联，保持原支持与未归一标尺；C139 §23.3 式 (23.7) 的实际证书不由本节矩阵产生。CountRead 仍须同一接受叶完整活动输出、实际读后活动 ready、第一合法消费者，以及读后同一完整活动输入对全部合法未来的真实 Return；有限返回卷 §164.1 的原活动接头、全参考／控制／钟与旧未来对应仍须由来源构造。复 Hilbert／相干、Born／全菜单、实际张量联合、typed CP／Kraus、完整仪器／TP／更新／Lüders、全部历史／Return、Hamiltonian／物理钟／共同正作用量七项均仅在原完整合同成立时消费。本节没有支付这些来源，完整量子起源仍未完成。
+

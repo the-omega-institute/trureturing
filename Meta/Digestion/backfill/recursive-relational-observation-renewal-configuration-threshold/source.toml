@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-renewal-configuration-threshold"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RENEWAL_CONFIGURATION_THRESHOLD.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

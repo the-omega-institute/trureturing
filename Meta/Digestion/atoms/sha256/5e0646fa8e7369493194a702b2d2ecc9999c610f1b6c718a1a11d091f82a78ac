@@ -1,0 +1,46 @@
+**定义 114.1（同一个原全态与全效应域）。** 沿用107.1、109.1及112.1的非零有限维实空间 $V$、
+闭尖生成凸锥 $C$ 和在 $C\setminus\{0\}$ 上严格正的泛函 $u$。始终取
+
+$$
+\begin{gathered}
+C^{\ast}=\{f\in V^{\ast}:f(c)\ge0\ (c\in C)\},\qquad
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\\
+\mathcal E=[0,u]_{C^{\ast}}
+=\{f\in V^{\ast}:0\le_C f\le_C u\},\\
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+\tag{IX114.1}
+$$
+
+第一个参数 $p$ 是原纯点；第二个参数 $x$ 遍历整个原 $K$，包括全部混态。
+$K$ 是整个归一基，$P$ 是全部极点，最小化使用整个原确认族 $F_p$。
+$H(p,q)$ 表示原 $K$ 中包含 $p,q$ 的最小面。所比较的条件为
+
+$$
+\begin{aligned}
+\mathrm{PR}:&\quad \forall p,q\in P:\ T_p(q)=T_q(p),\\
+\mathrm{EB}_m:&\quad \forall p\in P:\ D_p\simeq_{\mathrm{aff}}B^m
+\quad(m\ge1\text{ 为固定整数}),\\
+\mathrm{Pair}_{\perp}:&\quad
+\forall p,q\in P:\ T_p(q)=0\ \Longrightarrow\ H(p,q)\ne K,
+\end{aligned}
+\tag{IX114.2}
+$$
+
+其中 $B^m$ 是整个闭欧氏单位球，$\mathrm{EB3}$ 指 $\mathrm{EB}_3$。
+只找到若干三球零面、直径或纯点子集，不满足这个完整纤维条件。
+$p\perp q$ 简记 $T_p(q)=0$。
+
+严格正性使 $K$ 紧：在 $C$ 与辅助单位球面的交上，$u$ 有严格正的最小值，
+从而 $K$ 有界；闭性给紧性。$C$ 生成 $V$，所以 $K$ 线性张成 $V$，
+且 $\operatorname{aff}K=\{u=1\}$。每个 $K$ 上的仿射泛函唯一齐次化为 $V^{\ast}$ 中的线性泛函。
+取 $K$ 中的一组线性基，效应在这些基向量上的值都在 $[0,1]$，故 $\mathcal E$ 有界；
+它又是闭集，因此紧。$F_p$ 非空且紧，全部最小值均达到。
+
+此核对应[Landsman §1.3，式(1.4)—(1.9)][Q114L]的完整仿射效应最小确认构造，
+两端记号作相应交换。PR只交换两个纯端点的数值比较，不是先后测量的交换律。
+每张固定原效应都仿射；分别优化不同确认任务所得的比较函数，并不因此在整个 $K$ 上仿射。
+本章不把W、least确认效应、共同内积、Jordan结构或面效应延拓作为前件。
+

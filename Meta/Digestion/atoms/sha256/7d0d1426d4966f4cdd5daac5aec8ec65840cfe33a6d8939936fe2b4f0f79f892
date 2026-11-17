@@ -1,0 +1,59 @@
+**推论 102.12（全效应、全部高阶 $S$ 与射影分层）。** 在定理102.11的任一等价条件下，
+对全部 $N$，原归一态、全部 proper 效应及有限测量分别为
+
+$$
+\begin{aligned}
+K_N&=\{(\rho_s):\rho_s\succeq0,\ \sum_s\operatorname{Tr}\rho_s=1\},\\
+\mathcal E_N&=\{(E_s):0\preceq E_s\preceq I_{D_s}\},\\
+(E_a)_a\text{ 为测量}&\quad\Longleftrightarrow\quad
+ E_{a,s}\succeq0,\quad\sum_aE_{a,s}=I_{D_s}\quad(\text{每个 }s).
+\end{aligned}
+\tag{102.35}
+$$
+
+相应概率为原 Born 配对
+
+$$
+\Pr(a\mid\rho)=\sum_s\operatorname{Tr}(E_{a,s}\rho_s).
+\tag{102.36}
+$$
+
+原纯态与比较为
+
+$$
+P_N=\coprod_{s\in I^N}\mathbb{CP}^{D_s-1},\qquad
+T_p^{(N)}(x)=\operatorname{Tr}(p x_s)
+\quad\bigl(p\text{ 在 }s\text{ 块}\bigr).
+\tag{102.37}
+$$
+
+因此所有高阶 $S_N$ 都成立。不同扇区纯态比较为零；同扇区的单位向量代表满足
+$T_{|\psi\rangle\langle\psi|}(|\varphi\rangle\langle\varphi|)
+=|\langle\psi,\varphi\rangle|^2$。
+
+**证明。** 定理102.11给整个原正锥等于标准直和 PSD，非退化迹配对把整个原对偶锥
+识别为同一个 PSD 直和。上下单位界逐块就是(102.35)。
+测量是正效应的有限单位分解，故概率和为一，且(102.36)就是原配对。
+
+单扇区单位秩一投影是归一基极点。若一个态在两个扇区具有正质量，
+按扇区质量分解即不是极点；若只在一个扇区而矩阵秩大于一，谱分解也不是极点。
+反之，秩一 PSD 的任何正分解都支撑在同一射线上，归一化使分解平凡。
+得到(102.37)的纯态描述。
+
+取块 $s$ 的 $p=|\psi\rangle\langle\psi|$。若 $0\le E\le\mathbf1$ 且
+$\operatorname{Tr}(E_s p)=1$，则
+$\langle\psi|(I-E_s)|\psi\rangle=0$。
+正矩阵平方根给 $(I-E_s)\psi=0$，所以 $E_s\psi=\psi$；
+Hermitian 性消去 $\mathbb C\psi$ 与其正交补之间的交叉项。
+$E_s-p$ 在正交补上等于 $E_s$，故为正；其他块的 $E_t$ 也正。
+因此整个 $E\ge p$，而 $p$ 本身确认 $p$ 并 proper，说明 $p$ 是 least 确认效应。
+这给任意原正 $x$ 的下确界式。线性与 $\operatorname{Tr}(pq)=\operatorname{Tr}(qp)$
+直接给全部(102.5)。
+
+归一混态可写成扇区质量 $w_s=\operatorname{Tr}\rho_s$ 与块内态：
+$w_s>0$ 时 $\rho_s=w_s\widehat\rho_s$，$\operatorname{Tr}\widehat\rho_s=1$；
+$w_s=0$ 时 $\rho_s=0$，无需指定条件块态。
+这给经典概率单纯形上的量子块分层；$D_s=1$ 的射影空间是一个点。
+在 $D_s=2$ 的简单块才出现 Bloch 三球，其他维数的射影几何仍保留。
+全部结论来自同一原基与原效应区间，没有替换成选定的正子模型。∎
+

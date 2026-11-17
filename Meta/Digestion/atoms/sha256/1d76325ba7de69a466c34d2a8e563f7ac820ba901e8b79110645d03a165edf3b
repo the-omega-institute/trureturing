@@ -1,0 +1,14 @@
+**定义 75.2（$\mathsf{JG}_3$ 与有限关系）。** 完整本原框架是两两正交、和为单位的本原幂等元族。有限框架族 $\mathfrak B=(B_r)_{r=1}^s$ **Jordan 生成** $A$，指含其全部成员、闭实线性组合与 Jordan 乘积的最小子代数为 $A$；不要求并集线性张成。$\mathsf{JG}_3$ 指存在这样的族且 $1\le s\le3$，允许重复框架。下述候选对该族使用存在量词，成员取自原比较几何，并非独立供应另一套制备或读回；是否可自然或物理选取不由存在量词保证。
+在定义有限表之前，$\mathrm{PRE}_0$ 已保证 $U>0,G>0$：对任意正 $a\le r1_A,b\le t1_A$，正双线性性给 $0\le M(a,b)\le rtU$。若 $z\ge0$ 与 $U$ 零配对，它消去全部正乘积，锥生成性及第一实张成遂使它消去整个 $D$，故 $z=0$；自对偶性给 $U$ 内点。同理，$0\le L(d,a)\le rtG$ 与第二实张成给 $G$ 内点。这一论证未用 $D_J,D_H$ 或任何有限零表。
+故可先定义 $C_D=P_{\sqrt U}$ 及 $F=C_D^{-1}M=P_{U^{-1/2}}M$。对同一个生成族要求
+$$
+\mathsf J_{\mathfrak B}:\quad \langle Je,Je'\rangle_D=0
+\quad(e\ne e'\in B_r;\ 1\le r\le s), \tag{75.5}
+$$
+$$
+\mathsf H_{\mathfrak B}:\quad
+\langle H_{\mathrm s}F(e,f),H_{\mathrm s}F(e',f')\rangle_E=0
+\quad((e,f)\ne(e',f')\in B_r\times B_t;\ 1\le r,t\le s). \tag{75.6}
+$$
+第二表取全部有序框架对；只比较各套列表内部不同成员，不要求跨框架的非正交原子也零配对。此时公式已有意义，产品列表的完整本原框架性质须在证明中建立。
+

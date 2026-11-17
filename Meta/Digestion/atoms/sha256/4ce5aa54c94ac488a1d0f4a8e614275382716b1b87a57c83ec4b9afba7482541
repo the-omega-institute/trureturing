@@ -1,0 +1,29 @@
+**命题 3.3（由顶端隙到实际前向游走）。** 置
+
+$$
+\mu=\tfrac12(\delta_A+\delta_{AJ}),\qquad
+\nu=\check{\mu^{*3}}*\mu^{*3},\qquad
+\rho=\sqrt{1-\gamma/16}\in(0,1).
+$$
+
+在假设 3.2 下，
+
+$$
+\nu\ge\sigma/16,\qquad
+\|T_\mu^L\|_{L^2_0(\mathcal G)}\le\rho^{\lfloor L/3\rfloor}
+\quad(L\ge0).
+\tag{3.2}
+$$
+
+证明。三个恰有一次标签 $1$ 的实际长度三历史给出 $A^3J_k$，$k=0,1,2$。将 $k=0$ 字分别与 $k=1,2$ 字取有序差并反向，得到 $R_1,R_1^{-1},R_2,R_2^{-1}$；每个有序对的概率为 $1/64$。因此 $\nu\ge\sigma/16$，所比较者确为实际前向历史之差。
+
+将 $L^2(\mathcal G)$ 分为常数、行列式特征 $\det$，以及每个行列式陪集上均值为零的子空间 $\mathcal H_c$。这些空间在有关卷积下不变。在每个陪集上，左 $SU(2)$ 作用与其正则作用同构，所以 $\sigma$ 在 $\mathcal H_c$ 上具有同一顶端隙 $\gamma$。每个实际字母的行列式是公平正负号，故 $T_\mu^3\det=0$，也有 $T_\nu\det=0$。正测度 $\nu-\sigma/16$ 的质量为 $15/16$，而酉平移平均的 Dirichlet 型实部非负。因此
+
+$$
+\langle f,(I-T_\nu)f\rangle
+\ge\tfrac1{16}\langle f,(I-T_\sigma)f\rangle
+\ge\tfrac\gamma{16}\|f\|_2^2\qquad(f\in\mathcal H_c).
+$$
+
+关键在于 $T_\nu=(T_\mu^3)^*T_\mu^3$ 为正算子，故其在 $\mathcal H_c$ 上的范数不超过 $1-\gamma/16$，在剩余非常数行列式模态上为零。取平方根得 $\|T_\mu^3\|_{L^2_0}\le\rho$，余下少于三步的范数至多一，得 (3.2)。自伴收缩 $T_\sigma$ 还有 $\gamma\le2$，故上述 $\rho$ 确实严格介于零与一。$\square$
+

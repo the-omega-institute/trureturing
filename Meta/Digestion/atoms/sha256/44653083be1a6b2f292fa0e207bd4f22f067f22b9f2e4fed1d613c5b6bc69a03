@@ -1,0 +1,23 @@
+**定理 83.3（乘积平均的显式范数式）。** 对定义 83.1 的全部原模型，令
+$$
+\boxed{\mathcal Q_\times(z)=\|U\|_2^2+\|G\|_2^2
+-\|J\mathsf D_A\|_{\rm HS}^2
+-\|\mathcal T(\mathsf D_A\otimes\mathsf D_A)\|_{\rm HS}^2,\qquad z=(L,p).}
+\tag{83.4}
+$$
+它非负，在固定原 EJA 三元组上连续，并在全部原数据共同按保原迹 Jordan 同构运输时不变。其证明中的积分表征如下：对完整无标签本原框架 $B,C$，置 $\Pi_B=\sum_{e\in B}|e\rangle\langle e|$，则
+$$
+\begin{aligned}
+h_z(B,C)&=\|U\|_2^2-\sum_{e\in B}\|Je\|_2^2
++\|G\|_2^2-\sum_{e\in B,f\in C}\|H_{\rm s}F(e,f)\|_2^2,\\
+\mathsf C_A&=\int\Pi_B\,d\nu_A(B),\qquad
+\mathcal Q_\times(z)=\iint h_z(B,C)\,d\nu_A(B)d\nu_A(C).
+\end{aligned}\tag{83.5}
+$$
+这里 $\nu_A$ 严格指投影轨道上的唯一不变全支撑概率；框架记号仅用于写其求和。乘积测度只作用于这两个数学变量，没有给原系统、制备、事件或 $L,p,\omega$ 增加物理独立性。
+
+**证明。** 81.2 的完整无标签投影轨道非空紧，$\operatorname{Aut}_J(A)$ 为紧正交群且在该轨道上传递。其准确一般直和理由是：每个本原幂等元位于一个简单理想，每套完整框架在该理想内恰有 $r_i$ 项；逐因子用简单 EJA 的完整框架传递性即可，不需要跨异型因子的有序框架或纯态传递性。Haar 推前的唯一性及全支撑沿 81.2，乘积概率同样全支撑。
+为核实 (83.3) 的范围，逐因子应用 81.4 的论证：平均投影固定 $1_i$、自伴且与自同构交换。简单因子的迹零表示不可约，因为非零不变子空间内的非零谱系数，经同一框架的所有排列，其差张满迹零对角空间；再运输谱框架便得到全部迹零元。这里所需的有序框架传递性只在简单因子使用。自伴平均算子的特征空间因而迫使迹零部分为标量；$\operatorname{Tr}\Pi_B=r_i$ 给 $1+c(d_i-1)=r_i$。每个 $\Pi_B$ 已按原理想块对角，故无跨理想项；同型因子置换也不改变结果。这是 (81.9) 的复用，不增加不可约性假设。Albert 的 $r=3,d=27$ 给迹零权 $1/13$，不使用八元数的结合矩阵表示。
+对每个 $B,C$，$(Je)_{e\in B}$ 是 $U$ 的正分解，$(H_{\rm s}F(e,f))_{B\times C}$ 是 $G$ 的正分解，因为双重和为 $H_{\rm s}F(1,1)=G$。每个缺陷均为不同部分之全部交叉内积的两倍，由自对偶性非负；此时不要求 $F(e,f)$ 幂等。
+框架原子在原迹内积下正交归一，故两平方和分别为 $\operatorname{Tr}(J^*J\Pi_B)$、$\operatorname{Tr}(\mathcal T^*\mathcal T(\Pi_B\otimes\Pi_C))$。有限维 Fubini 给 $\iint\Pi_B\otimes\Pi_C=\mathsf C_A\otimes\mathsf C_A$，再用 $\|XS\|_{\rm HS}^2=\operatorname{Tr}(X^*XS^2)$ 得 (83.4)。这里 $\operatorname{Tr}$ 为实 Hilbert 空间的算子迹，与 Jordan 迹 $\tau_X$ 区分。连续性来自 $U>0$ 上二次表示与逆平方根的连续性；共同同构保持全部原迹、派生映射和 (83.3)，给不变性。证毕。
+

@@ -1,0 +1,12 @@
+**推论 81.6（原修复类的运输）。** 固定原 EJA 三元组与 (80.9) 的有界不塌缩原映射类 $\mathscr K$，其精确零集仍为 $\mathscr Z=\mathscr K\cap\mathrm{PRE}$。若 $\mathscr K$ 空则无对象；非空而零集空，则 $\min_{\mathscr K}\mathcal Q\ge(\min_{\mathscr K}\mathcal D)/N>0$。零集非空时，每个原 $(L,p)$ 有同类精确原对 $(L_0,p_0)$，且
+$$
+\operatorname{dist}_{\rm pair}((L,p),\mathscr Z)
+\le\eta_{\mathscr K}(N\mathcal Q),\qquad
+r_J\le N\mathcal Q/2,\quad
+r_H\le2R_0nm\,\eta_{\mathscr K}(N\mathcal Q),
+\tag{81.12}
+$$
+其中 $\eta_{\mathscr K}$ 为 (80.13)、$m=\operatorname{rank}D$，距离为 (80.11) 的原映射对 Hilbert–Schmidt 距离。最近原对仍以同一个 $p_0$ 连续两次和同一原 $\omega$ 定义全部派生映射。整个原 C13 子类的修复、维数不等时的正间隙及其精确范围仍按 80.6；不由此产生有噪单混态 H13 桥、显式幂率或修复算法。
+
+**证明。** (81.4) 保留同一零集，(81.5) 及 $\eta_{\mathscr K}$ 单调性使 80.5—80.6 直接适用；空零集情形按点态比较取最小值。它修复同一对原准备、读回，不是分别修补两个派生边缘。证毕。
+

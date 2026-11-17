@@ -88,7 +88,7 @@ private structure RamseyState (c : Finset ℕ → κ) (r : ℕ) where
 `N ⊆ M` all of whose `r`-subsets receive one colour.
 
 Proof by induction on `r`; see the module docstring for the fan argument driving the step. -/
-private theorem infinite_ramsey [Finite κ] (r : ℕ) (c : Finset ℕ → κ)
+theorem infinite_ramsey [Finite κ] (r : ℕ) (c : Finset ℕ → κ)
     {M : Set ℕ} (hM : M.Infinite) :
     ∃ N ⊆ M, N.Infinite ∧ ∃ col : κ,
       ∀ t : Finset ℕ, ↑t ⊆ N → t.card = r → c t = col := by

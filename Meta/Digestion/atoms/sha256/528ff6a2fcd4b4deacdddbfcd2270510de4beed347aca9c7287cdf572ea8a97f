@@ -1,0 +1,17 @@
+**定义 106.2（参考次序与滤波量词）。** 对复矩阵映射
+$\Phi:M_m(\mathbb C)\to M_n(\mathbb C)$，取输入参考在前、输出在后的约定
+
+$$
+J(\Phi)=\sum_{i,j=0}^{m-1}E_{ij}\otimes\Phi(E_{ij}),\qquad
+|K\rangle\!\rangle=\sum_i e_i\otimes Ke_i,\qquad
+\operatorname{Ad}_K(X)=KXK^*.
+\tag{106.4}
+$$
+
+故 $J(\operatorname{Ad}_K)=|K\rangle\!\rangle\langle\!\langle K|$。
+下文单说 CP，指这些通常复矩阵空间上的完全正性，不要求保迹或不增迹；
+原操作的质量约束另沿假设106.1保留。
+矩阵阈值命题允许任意实数 $0<p\le1$、$r=-1/(8p)$；
+原资源网络只用(106.2)的 $p\in[5/8,1]$。
+这两个参数域不可互换。
+

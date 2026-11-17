@@ -1,0 +1,106 @@
+**Theorem 6.1 (established joint limit of the sampled extensions).**
+Couple (5.1) by setting $\Delta_i^j=W^j_{t_{i+1}}-W^j_{t_i}$ for
+two independent Brownian motions $W^1,W^2$, each with variance $2t$.
+Let
+
+$$
+J^0_t=\int_0^t W^1_s\,dW^2_s,\qquad J^\lambda_t=J^0_t+\lambda t.
+\tag{6.1}
+$$
+
+The integral is the Itô integral in the joint Brownian filtration.
+Along the dyadic stages of Definition 5.1, almost surely
+
+$$
+(a_n,b_n^\lambda,J_n^\lambda)
+\longrightarrow(W^1,W^2,J^0+\lambda\,\cdot)
+\quad\hbox{uniformly on }[0,T].
+\tag{6.2}
+$$
+
+In particular this is joint process convergence, not an assumption of
+an iterated invariance principle or an inference from a characteristic
+function. Arbitrary integer stages give convergence in probability by
+the same estimates.
+
+Proof. Uniform continuity of each Brownian path controls the straight
+chords, including their half-cell timing. The extra coordinate excursions
+are at most $\sqrt\delta$ and $|\lambda|\sqrt\delta$. Thus the
+first two coordinates converge uniformly almost surely.
+
+On a straight chord its contribution to $\int a\,db$ is
+$x_i\Delta_i^2+\tfrac12\Delta_i^1\Delta_i^2$. On a rectangle it is
+exactly
+
+$$
+(x_{i+1}+s_n)q_n-x_{i+1}q_n=s_nq_n=\lambda\delta.
+\tag{6.3}
+$$
+
+The latter sign is the ordered rectangle sign of N, Theorem 9.3.
+Consequently, at every mesh point,
+
+$$
+J_n^\lambda(t_j)
+=\sum_{i<j}W^1_{t_i}\Delta_i^2
+ +\frac12\sum_{i<j}\Delta_i^1\Delta_i^2
+ +\lambda t_j.
+\tag{6.4}
+$$
+
+Here are the complete probabilistic estimates needed to pass to the
+joint limit. Put $\eta_n(s)=t_i$ on $[t_i,t_{i+1})$, and define the
+continuous martingale
+$M_n(t)=\int_0^tW^1_{\eta_n(s)}\,dW^2_s$.
+The integrands are predictable and square integrable: on a finite
+horizon $\mathbb E(W^1_s)^2=2s$. Independence of the coordinates and
+the Itô isometry with $d[W^2]_s=2ds$, followed by Doob's $L^2$
+maximal inequality, give
+
+$$
+\begin{aligned}
+\mathbb E\sup_{t\le T}|M_n(t)-J^0_t|^2
+&\le 8\int_0^T
+ \mathbb E|W^1_{\eta_n(s)}-W^1_s|^2ds\\
+&=8T\delta.
+\end{aligned}
+\tag{6.5}
+$$
+
+The second sum in (6.4), denoted $R_{n,j}$, is a discrete martingale
+for the filtration of the successive pairs of mesh increments. Each
+increment is centered, independent of the past, and has variance
+$\tfrac14(2\delta)(2\delta)=\delta^2$. Hence
+
+$$
+\mathbb E\max_{j\le n}|R_{n,j}|^2\le4n\delta^2=4T\delta.
+\tag{6.6}
+$$
+
+At mesh points $M_n$ is exactly the first sum. Equations (6.5)–(6.6)
+prove uniform mesh convergence in probability. For $n=2^m$, the bounds
+are summable in $m$. Markov's inequality and Borel–Cantelli, applied
+to each positive rational error threshold, give almost sure uniform
+mesh convergence. These estimates use the actual independence and
+normalization in (5.1); a covariance table without these hypotheses
+would not justify them.
+
+To control the intervals between mesh points, set
+$U=\sup_{t\le T}|W^1_t|$ and
+$d_n^j=\max_i|\Delta_i^j|$. The absolute change of $J_n^\lambda$
+inside one cell, measured from its initial value, is bounded by
+
+$$
+U d_n^2+\tfrac12d_n^1d_n^2
+ +2(U+\sqrt\delta)|\lambda|\sqrt\delta.
+\tag{6.7}
+$$
+
+The chord gives the first two terms. During the two vertical rectangle
+legs, its partial integral is bounded by the sum of their absolute
+integrals, which gives the last term. The other legs contribute zero.
+The bound tends to zero almost surely. The continuous martingale $J^0$
+is uniformly continuous on this horizon, and the drift changes by at
+most $|\lambda|\delta$ in a cell. This upgrades the mesh convergence
+to (6.2), proving every claimed joint assertion. $\square$
+

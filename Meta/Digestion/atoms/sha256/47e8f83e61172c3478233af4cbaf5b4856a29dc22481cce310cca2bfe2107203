@@ -1,0 +1,50 @@
+**定理 96.8（同一低余维域的完整等价）。** 在两域各自的(96.1)且 $c\le2$ 时，以下条件等价：
+
+$$
+\mathrm G_2\ \Longleftrightarrow\ \mathrm{FC}\ \Longleftrightarrow\
+\text{完整 }\mathrm{Z0}\ \Longleftrightarrow\ S\
+\Longleftrightarrow\ [L\text{ 在 }A\circ B=(AB+BA)/2\text{ 下闭合}].
+\tag{96.33}
+$$
+
+它们还等价于所有 $Z\in L$ 的正负谱部分留在 $L$，以及下述准确完整块形式：
+实域在正交换基后为完整实对称块直和，复域在酉换基后为完整实对称块与复Hermitian块直和，
+全部块大小之和为 $n$。此时整个原效应及其least确认准确为
+
+$$
+[0,u]=\{f_E:E\in L,\ 0\preceq E\preceq I_n\},\qquad
+e_p(X)=T_p(X)=\operatorname{tr}(pX)\quad(X\in K),
+\tag{96.34}
+$$
+
+并有原 $\mathrm A,\mathrm H,\mathrm{Boundary},\mathrm Q$；原 $\mathrm B$ 在这些ROG域中本已自动成立。
+此外，全部实ROG的 $n\le3$ 都满足 $\mathrm G_2\Longleftrightarrow\mathrm{Z0}$，不另限 $c$；
+两域的 $n\le2$ 则自动具有完整块结构。
+
+证明。复域的新增方向由96.6给出。实域 $c\le1$ 由96.4给出；$c=2$ 由96.7知
+$\mathrm G_2$ 只能在 $n=3$ 的完整块分支成立，故也给 $\mathrm{Z0}$。
+反向由96.3，完整 $\mathrm{Z0}$ 给全部 $\mathrm G_k$。
+其余等价、(96.34)和几何结论准确复用93.2、94.2的同归一化分类及89.4；
+特别是从(96.8)到谱闭合所用的是同一个原最优基范数分解及其共同饱和效应，
+不是另加谱性或Jordan假设。
+
+对低支撑边界，先用(96.5)换到包含全部对角矩阵的坐标。$n=1$ 只有一个标量块。
+$n=2$ 时 $L$ 的非对角系数空间是 $\mathbb F$ 的实子空间。
+实域只有零或整个 $\mathbb R$，给两个标量块或完整实二阶块；
+复域还允许一条实线，经对角酉相位换基成为完整实二阶块，或允许整个 $\mathbb C$ 而成为完整复二阶块。
+故实域 $c\le1$、复域 $c\le2$，且这些情形全部已有完整块。
+
+实域 $n=3$ 时框架保证 $\dim L\ge3$，所以 $0\le c\le3$。
+$c\le2$ 已证；$c=3$ 时 $\dim L=3$，故 $L$ 就是该框架的全部对角空间，亦为完整标量块。
+分类的准确后果为
+
+| 实域共同支撑 $n=3$ 的余维 | 原空间或限制 | $\mathrm G_2$ 与完整 $\mathrm{Z0}$ |
+| --- | --- | --- |
+| $c=0$ | 完整 $\operatorname{Sym}_3(\mathbb R)$ | 都成立 |
+| $c=1$ | 一个非零迹零法向 | 都不成立 |
+| $c=2$ | 正交换基后的 $\mathbb R\oplus\operatorname{Sym}_2(\mathbb R)$ | 都成立 |
+| $c=3$ | 正交换基后的全部对角空间 | 都成立 |
+
+第二行的排除只需维数：完整实块分割 $3$ 的实余维为 $0,2,3$，没有 $1$；
+由已证等价即同时排除两条件。证毕。
+

@@ -1,0 +1,69 @@
+**定理 101.7（完整确认区间的下包络）。** 在构造101.6中，任取一个原非负顶点分解
+
+$$
+x=\sum_{k=1}^N\lambda_k a_k+\sum_{\ell=1}^N\mu_\ell b_\ell,
+\qquad\lambda_k,\mu_\ell\ge0,\qquad
+\sum_k\lambda_k+\sum_\ell\mu_\ell=1.
+\tag{VII101.18}
+$$
+
+则在全部原确认效应上精确有
+
+$$
+\boxed{\begin{aligned}
+T_{a_i}(x)&=\min_{1\le j\le N}(\lambda_i+\mu_j),\\
+T_{b_j}(x)&=\min_{1\le i\le N}(\lambda_i+\mu_j).
+\end{aligned}}
+\tag{VII101.19}
+$$
+
+这些值与分解的选择无关。原排除集为原暴露facet的并集，具体为
+
+$$
+\begin{gathered}
+Q_{ij}=\operatorname{conv}\bigl(\{a_k:k\ne i\}\cup\{b_\ell:\ell\ne j\}\bigr)
+       =K_N\cap\{e_{ij}=0\},\\
+D_{a_i}=\bigcup_jQ_{ij},\qquad D_{b_j}=\bigcup_iQ_{ij}.
+\end{gathered}
+\tag{VII101.20}
+$$
+
+每个纯点均无全锥序least确认，但原纯转移数值仍互反。
+
+证明。先固定 $p=a_i$。任意 $f\in F_{a_i}$ 的顶点值满足 $\alpha_i=1$，故
+
+$$
+s:=\sum_k\alpha_k=\sum_\ell\beta_\ell\ge1.
+$$
+
+取 $w_j=\beta_j/s$，则 $w_j\ge0$、$\sum_jw_j=1$ 且 $w_j\le\beta_j$。原确认效应 $e_w=\sum_jw_je_{ij}$ 在 $a_i$ 取一、其余 $A$ 顶点取零、在 $b_j$ 取 $w_j$。所以 $f-e_w$ 在每个原顶点非负，从而在整个 $K_N$ 及其齐次锥上非负。对每个原混态 $x$，
+
+$$
+f(x)\ge e_w(x)=\sum_jw_je_{ij}(x)
+             \ge\min_j e_{ij}(x).
+\tag{VII101.21}
+$$
+
+每张 $e_{ij}$ 自己又属于 $F_{a_i}$，故下界可由其中某张达到。由(VII101.18)，$e_{ij}(x)=\lambda_i+\mu_j$，得到第一式；交换两侧得到第二式。这是对每一张原确认效应的支配论证，没有用受限字典的最小值冒充全效应最小值。
+
+良定义性也可直接看出。若另一归一顶点系数 $\lambda',\mu'$ 表示同一个 $x$，互补方向及各单纯形的唯一线性关系给
+
+$$
+\lambda'_k-\lambda_k=t\quad(\forall k),\qquad
+\mu'_\ell-\mu_\ell=-t\quad(\forall\ell).
+\tag{VII101.22}
+$$
+
+后一个常数为 $-t$ 来自总权重仍为一。因此每个 $\lambda_i+\mu_j$ 都不变，不只是它们的最小值不变。此结论适用于任意原非负分解，包括零权与重复顶点合并后的分解。
+
+$e_{ij}\ge0$，其顶点零集恰为(VII101.20)列出的 $2N-2$ 个点，故整个零面就是它们的凸包。全部顶点唯一的仿射依赖由 $\sum a_i=\sum b_j$ 给出，并有全支撑；删掉任何顶点后剩余配置仿射独立。因此 $Q_{ij}$ 中的这些点仿射独立，其维数为 $2N-3=m-1$，确为原暴露facet。有限个非负数的最小值为零，当且仅当其中一个为零，给出两条并集公式。
+
+每个不同原纯对的转移值为零，同点为一，所以
+
+$$
+T_p(q)=T_q(p)=\begin{cases}1,&p=q,\\0,&p\ne q.\end{cases}
+\tag{VII101.23}
+$$
+
+这只有纯数值互反，尚不使 $T_p$ 成为仿射函数。若 $a_i$ 有least确认 $e$，对每个其他纯点 $q$，取一张排除 $q$ 的确认效应 $f_q$。$0\le e(q)\le f_q(q)=0$ 迫使 $e$ 在除 $a_i$ 外的全部顶点为零，却在 $a_i$ 为一，违反(VII101.16)。因此least不存在；另一侧同理。具体地，同一确认面中的 $e_{ij},e_{i\ell}$ 在 $b_j,b_\ell$ 的值相反，$j\ne\ell$ 时互不可比。后面的重心读数还将直接见证(VII101.20)的并集不是凸集。证毕。
+

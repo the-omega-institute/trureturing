@@ -1,0 +1,30 @@
+**定理 108.2（原球投影和共同零方向）。** 仅在 $\mathsf W$ 下，
+
+$$
+\begin{gathered}
+R_p\Pi_p=\Pi_pR_p=0,\qquad Q_p^2=Q_p,\qquad
+\operatorname{im}Q_p=M_p,\qquad V=M_p\oplus N_p,\\
+\dim M_p=d_p+2,\qquad k_p:=\dim N_p=n-d_p-2\ge0,\\
+N_p=\{z\in V:a_p(z)=0,\quad
+             a_s(z)=0\text{ 对全部 }s\in P\cap D_p\}.
+\end{gathered}
+\tag{VIII108.3}
+$$
+
+证明。VII105.5给 $\Pi_pp=0$ 及 $\Pi_p^*a_p=0$，所以两个交叉复合为零。
+$R_p,\Pi_p$ 各自幂等，故 $Q_p$ 幂等。
+原 $C$ 生成 $V$，正像 $\Pi_p(C)=\operatorname{cone}D_p$，
+因而 $\operatorname{im}\Pi_p=\operatorname{span}D_p$。
+$R_p$ 的像为 $\mathbb Rp$，它与前一像零交，因为 $a_p(p)=1$ 而
+$a_p|_{\operatorname{span}D_p}=0$。这给像、直和及维数公式；
+$\dim\operatorname{span}D_p=d_p+1$ 使用的是整个 $D_p$ 位于 $u=1$。
+
+对每个 $s\in P\cap D_p$，零对称使 $a_s(p)=0$，故 $a_s\in Z_p$。
+限制双射于是给 $\Pi_p^*a_s=a_s$。
+这些限制恰为全部球直径效应，线性张成 $\operatorname{Aff}(D_p)$：
+相反方向的两个直径效应之和是常数一，差则给全部线性方向。
+所以 $a_s$ 张成 $\operatorname{im}\Pi_p^*$。
+因此 $\Pi_pz=0$ 当且仅当所有这样的 $a_s(z)=0$。
+再用两个投影像的直和，$Q_pz=0$ 当且仅当
+$R_pz=0$ 且 $\Pi_pz=0$，即得最后一式。证毕。
+

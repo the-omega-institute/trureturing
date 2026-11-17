@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: BV weighted arithmetic moments transfer to their quadratic formal values. -/
+   digest: BV weighted arithmetic moments of every positive fixed order transfer to their quadratic formal values. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.CentredCorrelationSummation
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.CollisionErrorBounds
@@ -12,7 +12,7 @@ import Mathlib.Algebra.Group.Pointwise.Finset.Basic
 import Mathlib.Algebra.Group.Pointwise.Set.BigOperators
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
-/-! Uniform arithmetic transfer for weighted cubic and fourth interval moments. -/
+/-! Uniform arithmetic transfer for weighted interval moments of every fixed positive order. -/
 
 open scoped BigOperators Topology Pointwise
 open Set Filter MeasureTheory
@@ -28,10 +28,10 @@ private lemma red_eval (r : ℕ) (s : ℝ) :
     (red r s).1 = (redA r).eval s ∧ (red r s).2 = (redB r).eval s :=
   (reduction_polynomial r).choose_spec.choose_spec.2.2 s
 
-private def coefficientPool : Finset (Polynomial ℝ) :=
-  insert 1 (((Finset.range 5).image redA) ∪ ((Finset.range 5).image redB))
+private def coefficientPool (q : ℕ) : Finset (Polynomial ℝ) :=
+  insert 1 (((Finset.range (q + 1)).image redA) ∪ ((Finset.range (q + 1)).image redB))
 
-private def coefficientFamily : Finset (Polynomial ℝ) := coefficientPool ^ 4
+private def coefficientFamily (q : ℕ) : Finset (Polynomial ℝ) := coefficientPool q ^ q
 
 private def tuplePolynomial {k : ℕ} (d : Fin k → ℕ) (J : Finset ℕ) : Polynomial ℝ :=
   ∏ e ∈ Finset.univ.image d, if e ∈ J then redA (mult d e) else redB (mult d e)
@@ -49,22 +49,22 @@ private lemma tuplePolynomial_eval {k : ℕ} (d : Fin k → ℕ) (J : Finset ℕ
   · congr 1; ext e; simp only [Finset.mem_filter]; exact ⟨And.right, fun he => ⟨hJ he, he⟩⟩
   · congr 1; ext e; simp
 
-private lemma tuplePolynomial_mem {k : ℕ} (hk : k ≤ 4) (d : Fin k → ℕ)
-    (J : Finset ℕ) : tuplePolynomial d J ∈ coefficientFamily := by
+private lemma tuplePolynomial_mem {q k : ℕ} (hk : k ≤ q) (d : Fin k → ℕ)
+    (J : Finset ℕ) : tuplePolynomial d J ∈ coefficientFamily q := by
   classical
   let D := Finset.univ.image d
-  have hm (e : ℕ) : mult d e < 5 := by
+  have hm (e : ℕ) : mult d e < q + 1 := by
     have := Finset.card_filter_le (s := (Finset.univ : Finset (Fin k))) (fun i => d i = e)
     simp only [Finset.card_univ, Fintype.card_fin] at this
     dsimp [mult]; omega
   have hf (e : ℕ) (_he : e ∈ D) :
-      (if e ∈ J then redA (mult d e) else redB (mult d e)) ∈ coefficientPool := by
+      (if e ∈ J then redA (mult d e) else redB (mult d e)) ∈ coefficientPool q := by
     split_ifs <;> simp only [coefficientPool, Finset.mem_insert, Finset.mem_union]
     · exact Or.inr (Or.inl (Finset.mem_image.mpr ⟨_, Finset.mem_range.mpr (hm e), rfl⟩))
     · exact Or.inr (Or.inr (Finset.mem_image.mpr ⟨_, Finset.mem_range.mpr (hm e), rfl⟩))
-  have hp : tuplePolynomial d J ∈ coefficientPool ^ D.card := by
+  have hp : tuplePolynomial d J ∈ coefficientPool q ^ D.card := by
     have hh := Set.finsetProd_mem_finsetProd D
-      (fun _ => (coefficientPool : Set (Polynomial ℝ)))
+      (fun _ => (coefficientPool q : Set (Polynomial ℝ)))
       (fun e => if e ∈ J then redA (mult d e) else redB (mult d e)) hf
     simpa only [Finset.prod_const, ← Finset.coe_pow, Finset.mem_coe, tuplePolynomial, D] using hh
   exact Finset.pow_subset_pow_right (by simp [coefficientPool])
@@ -74,7 +74,7 @@ private lemma finite_polynomial_correlation {q : ℕ} (SS : Finset ℕ → ℝ) 
     (hSS : SS ∅ = 1) (hMS : MeanSquareHL q SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε)
     (P : Finset (Polynomial ℝ)) :
     ∃ C : ℝ, 0 ≤ C ∧ ∃ m : ℕ, ∀ᶠ N : ℝ in atTop,
-      2 ≤ N ∧ ∀ p ∈ P, ∀ k : ℕ, k ≤ min 4 q → ∀ K : ℕ,
+      2 ≤ N ∧ ∀ p ∈ P, ∀ k : ℕ, k ≤ q → ∀ K : ℕ,
         1 ≤ K → (K : ℝ) ≤ M * N ^ β →
         ∀ T : Finset (Fin k → ℕ),
         T ⊆ Fintype.piFinset (fun _ => Finset.Ioc 0 K) →
@@ -143,7 +143,7 @@ private lemma reduced_correlation_transfer {q : ℕ} (SS : Finset ℕ → ℝ) (
     ∃ C : ℝ, 0 ≤ C ∧ ∃ m : ℕ, ∀ᶠ N : ℝ in atTop,
       2 ≤ N ∧ ∀ H : ℝ, 1 ≤ H → H ≤ N ^ β →
         ∀ B : ℝ, ∀ w : ℝ → ℝ, BVBound w B →
-        ∀ k : ℕ, k ≤ min 4 q → ∀ a b : Fin k → ℝ, admissible M a b →
+        ∀ k : ℕ, k ≤ q → ∀ a b : Fin k → ℝ, admissible M a b →
           |(∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, w ((n : ℝ) / N) *
               ∑ d ∈ Fintype.piFinset (fun i => points H (a i) (b i)),
                 reducedAt (Real.log n) n d) -
@@ -151,14 +151,13 @@ private lemma reduced_correlation_transfer {q : ℕ} (SS : Finset ℕ → ℝ) (
               C * B * N ^ (1 / 2 + ε) * H ^ k * (1 + Real.log N) ^ m := by
   classical
   obtain ⟨C, hC, m, hbound⟩ :=
-    finite_polynomial_correlation SS β hSS hMS M ε hM hε coefficientFamily
-  refine ⟨(coefficientFamily.card : ℝ) * C * M ^ 4, by positivity, m, ?_⟩
+    finite_polynomial_correlation SS β hSS hMS M ε hM hε (coefficientFamily q)
+  refine ⟨((coefficientFamily q).card : ℝ) * C * M ^ q, by positivity, m, ?_⟩
   filter_upwards [hbound] with N hN
   have hN0 : 0 ≤ N := by linarith [hN.1]
   have hL : 0 ≤ Real.log N := Real.log_nonneg (by linarith [hN.1])
   refine ⟨hN.1, ?_⟩
   intro H hH hHN B w hw k hk a b hab
-  have hk4 : k ≤ 4 := (Nat.le_min.mp hk).1
   have hB : 0 ≤ B := hw.2.2.1
   let T := Fintype.piFinset (fun i => points H (a i) (b i))
   let K := ⌊M * H⌋₊
@@ -182,7 +181,7 @@ private lemma reduced_correlation_transfer {q : ℕ} (SS : Finset ℕ → ℝ) (
     ∑ d ∈ T, ∑ J ∈ (Finset.univ.image d).powerset,
       if tuplePolynomial d J = p then center SS J else 0
   have hred (n : ℕ) : w ((n : ℝ) / N) * ∑ d ∈ T, reducedAt (Real.log n) n d =
-      ∑ p ∈ coefficientFamily, (w ((n : ℝ) / N) * p.eval (Real.log n)) * f p n := by
+      ∑ p ∈ coefficientFamily q, (w ((n : ℝ) / N) * p.eval (Real.log n)) * f p n := by
     dsimp [f]
     simp_rw [Finset.mul_sum]
     rw [Finset.sum_comm]
@@ -198,9 +197,9 @@ private lemma reduced_correlation_transfer {q : ℕ} (SS : Finset ℕ → ℝ) (
     · intro p _ hp
       simp [Ne.symm hp]
     · intro hnot
-      exact (hnot (tuplePolynomial_mem hk4 d J)).elim
+      exact (hnot (tuplePolynomial_mem hk d J)).elim
   have hphi (x : ℝ) : w (x / N) * Phi SS H (Real.log x) a b =
-      ∑ p ∈ coefficientFamily, c p * (w (x / N) * p.eval (Real.log x)) := by
+      ∑ p ∈ coefficientFamily q, c p * (w (x / N) * p.eval (Real.log x)) := by
     dsimp [c]
     simp_rw [Finset.sum_mul]
     rw [Finset.sum_comm]
@@ -217,7 +216,7 @@ private lemma reduced_correlation_transfer {q : ℕ} (SS : Finset ℕ → ℝ) (
     · intro p _ hp
       simp [Ne.symm hp]
     · intro hnot
-      exact (hnot (tuplePolynomial_mem hk4 d J)).elim
+      exact (hnot (tuplePolynomial_mem hk d J)).elim
   change |(∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, w ((n : ℝ) / N) *
       ∑ d ∈ T, reducedAt (Real.log n) n d) -
     (∫ x in N..2 * N, w (x / N) * Phi SS H (Real.log x) a b)| ≤ _
@@ -227,14 +226,14 @@ private lemma reduced_correlation_transfer {q : ℕ} (SS : Finset ℕ → ℝ) (
     ← Finset.sum_sub_distrib]
   simp only [intervalIntegral.integral_const_mul]
   calc
-    _ ≤ ∑ _p ∈ coefficientFamily,
+    _ ≤ ∑ _p ∈ coefficientFamily q,
         C * B * N ^ (1 / 2 + ε) * (K : ℝ) ^ k * (1 + Real.log N) ^ m :=
       (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum (fun p hp =>
         hN.2 p hp k hk K hK hKN T hT tuplePolynomial B w hw))
-    _ = (coefficientFamily.card : ℝ) *
+    _ = ((coefficientFamily q).card : ℝ) *
         (C * B * N ^ (1 / 2 + ε) * (K : ℝ) ^ k * (1 + Real.log N) ^ m) := by simp
-    _ ≤ (coefficientFamily.card : ℝ) *
-        (C * B * N ^ (1 / 2 + ε) * (M ^ 4 * H ^ k) * (1 + Real.log N) ^ m) := by
+    _ ≤ ((coefficientFamily q).card : ℝ) *
+        (C * B * N ^ (1 / 2 + ε) * (M ^ q * H ^ k) * (1 + Real.log N) ^ m) := by
       gcongr
       calc
         (K : ℝ) ^ k ≤ (M * H) ^ k :=
@@ -247,7 +246,7 @@ private lemma reduced_transfer_power_error {q : ℕ} (SS : Finset ℕ → ℝ) (
     ∃ C : ℝ, 0 ≤ C ∧ ∀ᶠ N : ℝ in atTop,
       2 ≤ N ∧ ∀ H : ℝ, 1 ≤ H → H ≤ N ^ β →
         ∀ B : ℝ, ∀ w : ℝ → ℝ, BVBound w B →
-        ∀ k : ℕ, k ≤ min 4 q → ∀ a b : Fin k → ℝ, admissible M a b →
+        ∀ k : ℕ, k ≤ q → ∀ a b : Fin k → ℝ, admissible M a b →
           |(∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, w ((n : ℝ) / N) *
               ∑ d ∈ Fintype.piFinset (fun i => points H (a i) (b i)),
                 reducedAt (Real.log n) n d) -
@@ -285,9 +284,9 @@ private lemma reduced_transfer_power_error {q : ℕ} (SS : Finset ℕ → ℝ) (
           rw [← Real.rpow_add hN0,
             show (1 / 2 + ε / 2) + ε / 2 = (1 / 2 + ε : ℝ) by ring]
 
-/-- Under the mean-square correlation hypothesis through order q, the BV weighted arithmetic second, cubic
-and fourth moments differ from their quadratic formal integrals by the uniform square-root
-error, for every integer length in the prescribed power band. -/
+/-- Under the mean-square correlation hypothesis through order q, every positive-order
+BV weighted arithmetic moment of order at most q differs from its quadratic formal integral
+by the uniform square-root error in the prescribed power band. -/
 theorem arithmetic_transfer {q : ℕ} (SS : Finset ℕ → ℝ) (α β : ℝ)
     (hα : 0 < α) (_hαβ : α < β) (hβ : β < 1)
     (hSS : SS ∅ = 1) (_hSS1 : ∀ d, SS {d} = 1) (hMS : MeanSquareHL q SS β)
@@ -295,31 +294,30 @@ theorem arithmetic_transfer {q : ℕ} (SS : Finset ℕ → ℝ) (α β : ℝ)
     ∃ C : ℝ, 0 ≤ C ∧ ∀ᶠ N : ℝ in atTop,
       ∀ H : ℕ, N ^ α ≤ (H : ℝ) → (H : ℝ) ≤ N ^ β →
       ∀ B : ℝ, ∀ w : ℝ → ℝ, BVBound w B →
-      ∀ k : ℕ, (k = 2 ∨ k = 3 ∨ k = 4) ∧ k ≤ q →
+      ∀ k : ℕ, 1 ≤ k ∧ k ≤ q →
       ∀ a b : Fin k → ℝ, admissible M a b →
         |discreteRaw N H a b w -
           (∫ x in N..2 * N, w (x / N) * Phi SS H (Real.log x) a b)| ≤
           C * B * N ^ (1 / 2 + ε) * (H : ℝ) ^ k := by
   obtain ⟨A, hA, hred⟩ := reduced_transfer_power_error SS β hSS hMS M ε hM hε
-  obtain ⟨D, hD, hcollision⟩ := collision_error_bound M hM
-  have hlog := (isLittleO_log_rpow_rpow_atTop (5 : ℝ) hε).bound (by norm_num : (0 : ℝ) < 1)
+  obtain ⟨D, hD, hcollision⟩ := collision_error_bound q M hM
+  have hlog := (isLittleO_log_rpow_rpow_atTop ((q + 1 : ℕ) : ℝ) hε).bound (by norm_num : (0 : ℝ) < 1)
   have hscale := (tendsto_rpow_atTop (show 0 < 1 - β by linarith)).eventually_ge_atTop M
   refine ⟨A + 2 * D, by positivity, ?_⟩
   filter_upwards [hred, hlog, hscale, Real.tendsto_log_atTop.eventually_ge_atTop 1]
     with N hred hlog hscale hL
   have hN0 : 0 < N := by linarith [hred.1]
   have hN1 : 1 ≤ N := by linarith [hred.1]
-  have hlog5 : (Real.log N) ^ 5 ≤ N ^ ε := by
+  have hlogq : (Real.log N) ^ (q + 1) ≤ N ^ ε := by
     simpa only [Real.norm_eq_abs, abs_of_nonneg (Real.rpow_nonneg (by linarith : 0 ≤ Real.log N) _),
       abs_of_nonneg (Real.rpow_nonneg hN0.le _), one_mul, Real.rpow_natCast, Real.rpow_ofNat,
-      abs_of_nonneg (pow_nonneg (by linarith : 0 ≤ Real.log N) 5)] using hlog
+      abs_of_nonneg (pow_nonneg (by linarith : 0 ≤ Real.log N) (q + 1))] using hlog
   have hsqrt : 1 ≤ Real.sqrt N := Real.one_le_sqrt.mpr hN1
   have hpow : Real.sqrt N * N ^ ε = N ^ (1 / 2 + ε) := by
     rw [Real.sqrt_eq_rpow, ← Real.rpow_add hN0]
   intro H hlo hhi B w hw k hk a b hab
   have hH1 : (1 : ℝ) ≤ H := (Real.one_le_rpow hN1 hα.le).trans hlo
   have hH : 1 ≤ H := by exact_mod_cast hH1
-  have hk4 : k ≤ 4 := by rcases hk.1 with rfl | rfl | rfl <;> omega
   have hMH : M * (H : ℝ) ≤ N := by
     calc
       _ ≤ M * N ^ β := mul_le_mul_of_nonneg_left hhi (by linarith)
@@ -332,18 +330,18 @@ theorem arithmetic_transfer {q : ℕ} (SS : Finset ℕ → ℝ) (α β : ℝ)
       _ ≤ Real.sqrt N * (H : ℝ) ^ k * N ^ ε := by
         gcongr
         · exact Nat.sub_le k 1
-        · exact (pow_le_pow_right₀ hL (by omega : k + 1 ≤ 5)).trans hlog5
+        · exact (pow_le_pow_right₀ hL (by omega : k + 1 ≤ q + 1)).trans hlogq
       _ = _ := by rw [← hpow]; ring
   have hsecond : (H : ℝ) ^ k * (Real.log N) ^ (k - 1) ≤
       N ^ (1 / 2 + ε) * (H : ℝ) ^ k := by
     calc
       _ ≤ (H : ℝ) ^ k * N ^ ε := by
         gcongr
-        exact (pow_le_pow_right₀ hL (by omega : k - 1 ≤ 5)).trans hlog5
+        exact (pow_le_pow_right₀ hL (by omega : k - 1 ≤ q + 1)).trans hlogq
       _ ≤ Real.sqrt N * ((H : ℝ) ^ k * N ^ ε) := le_mul_of_one_le_left (by positivity) hsqrt
       _ = _ := by rw [← hpow]; ring
-  have hc := hcollision N hred.1 H hH hMH B w hw k hk.1 a b hab
-  have hr := hred.2 H hH1 hhi B w hw k (Nat.le_min.mpr ⟨hk4, hk.2⟩) a b hab
+  have hc := hcollision N hred.1 H hH hMH B w hw k hk.1 hk.2 a b hab
+  have hr := hred.2 H hH1 hhi B w hw k hk.2 a b hab
   calc
     _ ≤ |discreteRaw N H a b w -
         (∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, w ((n : ℝ) / N) *

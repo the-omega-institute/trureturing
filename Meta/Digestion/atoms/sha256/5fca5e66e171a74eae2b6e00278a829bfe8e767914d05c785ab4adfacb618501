@@ -1,0 +1,24 @@
+### 121.13 复用、原始文献与未证迁移
+
+接触等价121.2仅应用[VII103.2及VII104.1][Q121VII]的完整原面分类；它把全W1画成二元凸关系，不是新增分类。主候选的静态等价明确消费[116.17][Q121IX]及[120.4—120.5][Q121120]；120.9的 $P_0$ 稠密性、120.8的限制同构和四维法向、120.12的邻标签及完整原边公式也直接复用。[原完整S桥][Q121S]中“全部二纯中点在边界”的图像另有完整S与容量三前件；这里MC只量化 $x\in D_p$ 中的存在接触，不能借那个更强域的面滤子结论来支付裸EB3。
+
+本章的综合结论是：不预付纯点闭性的 $P$ 与 $P_0$ 的 $G_\delta$ 结构；原完整零效应集合的残余Hausdorff连续性；同一个稠密 $G_\delta$ 原锚点集上全部真实切平面的两两零交及九维下界；例外共享切线造成指定原法效应的正距离损失；以及正确 $1/(1+\rho)$ 权重下的二阶收缩和有限半范数。统一余量和其局部版本由紧性、原闭图与双对偶分离直接证明。Baire振幅和距离函数升级均在正文完整给出，不以一个未核对的多值连续性定理名替代证明。
+
+既有VIII108.6的全部锚点切空间零交在 $\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$ 下进行，并使用least及共同正延拓；VIII109.5及后续共同内积、Clifford和覆盖桥还明确使用TRI2。本章没有取得这些前件，只在EB3+Inj域得到残余结论与局部半范数。IX115的Baire整球正则区另在EB3+PR域，不能当作本章原零效应连续性已经成立。
+
+[MixedExclusionGeometry源码][Q121Mixed]的主定理及标签、中心、反射和收缩连续性明确带 $hW:\mathrm{weakPair}\ C\ u$；其[原定义][Q121Weak]要求每个实际原正交纯对生成真最小面。即使本章另有Inj，仍未支付这个弱Pair前件，不能搬用该模块的跨球连续性。
+
+成熟静态分类只通过上述既有完整接口使用。[Barnum–Müller–Ududec Theorem 16][Q121BMU]明确要求有限维、projectivity、跃迁概率对称和滤子保纯；其Proposition 29关于无三阶干涉与滤子保纯的等价还带Postulates 1、2。本章的残余法效应稳定性与投影收缩不供应这些全域前件。[Niestegge Theorem 3][Q121N]明确要求Axioms 1、2、proper性质 $(*)$、有限信息容量与对称跃迁概率，再推出pre-Hilbert结构和自对偶；其中 $(*)$ 是确认原原子效应的任意proper效应都在序上支配它。唯一完整球确认效应不自动等于该全锥序least性质，局部二次范数也不支付其全域对称性。
+
+本章只在指定既有主题卷、上述原面／确认接口和这些原始文献所覆盖的范围比较，不声称文献穷尽或全球新意。没有调用一般Hopf分类、闭投影或niceness定理来填补原域缺口；若要走这些路线，所需连续性、覆盖、闭像、共同二次结构及原单位预算都必须另证。裸EB3自动接触、裸EB3标签单射、维数上界和跨球全域相容性仍明确保留。
+
+[Q121VII]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2、VII104.1—104.3：完整原面及取得Pair_perp后的joint接口。"
+[Q121VIII]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII108—109的前件边界；VIII113.8—113.11及其所引VIII112.9的完整静态与物理合同。"
+[Q121IX]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.1—116.17；定理116.17位于116.13节。"
+[Q121120]: https://github.com/the-omega-institute/trureturing/blob/9af20146d9022f37caf52ed3a1c50adb7cce472e/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX120：条件静态等价、唯一确认稠密性、原限制同构、完整边区间与实际行走边界。"
+[Q121Mixed]: https://github.com/the-omega-institute/trureturing/blob/817dee4ff1398b8a0cedf20bd54e6836d71708b3/D5/S3/Quantum/Foundation/MixedExclusionGeometry.lean "MixedExclusionGeometry：显式weakPair前件及其活用范围。"
+[Q121Weak]: https://github.com/the-omega-institute/trureturing/blob/817dee4ff1398b8a0cedf20bd54e6836d71708b3/D5/S3/Quantum/Foundation/OrthogonalJointCompletion.lean "weakPair的原正交纯对真面定义。"
+[Q121S]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge "完整S与容量三域中的二纯中点图像及面滤子前件。"
+[Q121BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory；Theorem 16及Proposition 29。"
+[Q121N]: https://arxiv.org/html/2312.13213v2 "Gerd Niestegge, Quantum transition probability；Axioms 1、2、性质(*)及Theorem 3。"
+

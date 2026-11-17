@@ -42,7 +42,21 @@ $$\operatorname{claim} = (\forall n: \mathbb{N}, 9 \le n \implies \begin{aligned
 
 The unpaginated OEIS A000159 first FORMULA field states: "Conjecture: 2*(-252307*n + 1041077)*a(n) + (504614*n^2 - 3362985*n + 5118150)*a(n-1) + (1280831*n^2 - 7397886*n + 6461565)*a(n-2) + (746598*n^2 - 2913543*n - 1336090)*a(n-3) + (-405481*n^2 + 6175011*n - 15469320)*a(n-4) + (-375862*n^2 + 4098537*n - 8846430)*a(n-5) + 2*(-187931*n + 560630)*a(n-6) = 0." — R. J. Mathar, Nov 02 2015. The quantifier ranges over every natural n at least nine, the first index whose six backward shifts all belong to the sequence's domain.
 
-**Theorem 1.4 (The recurrence holds at every source-domain index).**
+**Theorem 1.4 (Finite coefficient extraction with a prefactor).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \forall f: \operatorname{PowerSeries}\left(R\right), \forall G: \operatorname{PowerSeries}\left(R\right), \forall W: \operatorname{PowerSeries}\left(R\right), \forall n: \mathbb{N}, \operatorname{coeff}\left(n, G \cdot \operatorname{subst}\left(f, X \cdot W\right)\right) = \sum_{k \in \operatorname{range}\left(n + 1\right)} \operatorname{coeff}\left(k, f\right) \cdot \operatorname{coeff}\left(n, G \cdot (X \cdot W)^{k}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/MatharA000159Recurrence.prefactor_subst_coeff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. J. Mathar (2015). *OEIS A000159: six-step recurrence for three-hit ménage numbers*. URL: <https://oeis.org/A000159>.
+
+*Commentary.*
+
+For every commutative ring R, formal series f, G and W over R, and natural n, the degree-n coefficient of G times f evaluated at XW is a finite sum over k from zero through n. Its k-th term is the degree-k coefficient of f times the degree-n coefficient of G times (XW)^k. The notation subst(f,XW) means f.subst(XW). The factor X makes the inner constant coefficient zero, so terms of degree greater than n contribute zero. No invertibility or convergence hypothesis is required.
+
+**Theorem 1.5 (The recurrence holds at every source-domain index).**
 
 $$\forall n: \mathbb{N}, 9 \le n \implies \begin{aligned}(2 \cdot (-252307 \cdot (n: \mathbb{Q}) + 1041077)) \cdot \operatorname{a}\left(n\right)\\+(504614 \cdot ((n: \mathbb{Q}))^{2} - 3362985 \cdot (n: \mathbb{Q}) + 5118150) \cdot \operatorname{a}\left(n - 1\right)\\+(1280831 \cdot ((n: \mathbb{Q}))^{2} - 7397886 \cdot (n: \mathbb{Q}) + 6461565) \cdot \operatorname{a}\left(n - 2\right)\\+(746598 \cdot ((n: \mathbb{Q}))^{2} - 2913543 \cdot (n: \mathbb{Q}) - 1336090) \cdot \operatorname{a}\left(n - 3\right)\\+(-405481 \cdot ((n: \mathbb{Q}))^{2} + 6175011 \cdot (n: \mathbb{Q}) - 15469320) \cdot \operatorname{a}\left(n - 4\right)\\+(-375862 \cdot ((n: \mathbb{Q}))^{2} + 4098537 \cdot (n: \mathbb{Q}) - 8846430) \cdot \operatorname{a}\left(n - 5\right)\\+(2 \cdot (-187931 \cdot (n: \mathbb{Q}) + 560630)) \cdot \operatorname{a}\left(n - 6\right)\\= 0\end{aligned}$$
 
@@ -65,5 +79,6 @@ Coefficient extraction converts the rook sum into a rational affine expression i
 - Truth anchor: `D5/S1/Recurrence/Invariants/MatharA000159Recurrence.U`
 - Truth anchor: `D5/S1/Recurrence/Invariants/MatharA000159Recurrence.a`
 - Truth anchor: `D5/S1/Recurrence/Invariants/MatharA000159Recurrence.claim`
+- Truth anchor: `D5/S1/Recurrence/Invariants/MatharA000159Recurrence.prefactor_subst_coeff`
 - Truth anchor: `D5/S1/Recurrence/Invariants/MatharA000159Recurrence.result`
 - Dependency: [D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators](../Residue/CompositionalSquareDyadicDenominators.md)

@@ -1,0 +1,7 @@
+**引理 79.3（幂有界与正权张量和）。** 在有限维非零 proper-cone 系统 $(A,C_A,u_A)$ 上，设 $\Phi$ 满足 (79.3)。则 $\Phi$ 的复谱位于闭单位圆盘，每个外围特征值半单，特征值一的代数重数为一。对任意有限 $r\ge1$ 及 $\alpha_\ell>0$、$\sum_\ell\alpha_\ell=1$，在纯代数实张量空间上定义
+$$
+\mathcal K_r=\sum_{\ell=1}^r\alpha_\ell\Phi_\ell,\qquad
+\Phi_\ell=\operatorname{id}^{\otimes(\ell-1)}\otimes\Phi\otimes
+\operatorname{id}^{\otimes(r-\ell)}.
+$$
+则特征值一在 $\mathcal K_r$ 上仍代数单纯，且

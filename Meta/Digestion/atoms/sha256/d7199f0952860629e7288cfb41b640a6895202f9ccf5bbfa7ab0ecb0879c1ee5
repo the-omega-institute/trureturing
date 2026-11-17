@@ -1,0 +1,56 @@
+另在同一个原边界中置
+
+$$
+X=S\setminus\partial_{\rm rel}D_p,\qquad
+Y=S\setminus D_p,\qquad Z=P\setminus\partial_{\rm rel}D_p.
+\tag{VIII113.8}
+$$
+
+$Z=P\cap X$ 在 $X$ 中闭。$Y$ 在 $X$ 中开，且
+$P\cap D_p=\partial_{\rm rel}D_p$ 使 $Z\subset Y=\operatorname{int}_X Y$。
+所以 $\overline Z^{X}\subset\operatorname{int}_X Y$。
+Hatcher [Theorem 2.20，印刷p.119][Q113H]的普通奇异切除定理准确适用，给
+
+$$
+H_j(M,M\setminus L;\mathbb Z)
+ \cong H_j(X,Y;\mathbb Z),
+\quad
+X\setminus Z=M,\quad Y\setminus Z=M\setminus L.
+\tag{VIII113.9}
+$$
+
+这里没有要求 $L$ 在 $M$ 中开或闭，也没有要求球边在 $S$ 中局部平坦。
+
+$D_p$ 和 $\partial_{\rm rel}D_p$ 分别同胚于一张紧 $d_p$ 盘和
+$S^{d_p-1}$，均局部可缩、非空；两者都是 $S$ 的真子集，因为 $p\notin D_p$。
+仅对这两个具体紧集应用Hatcher [Corollary 3.45，印刷pp.255—256][Q113H]。
+盘可缩使 $Y$ 的所有约化整数同调为零。
+$Y$ 含原纯点 $p$，故非空；约化 $H_0(Y)=0$ 给道路连通。
+球边的唯一非零约化上同调次数为 $d_p-1$，包括 $d_p=1$ 时
+$S^0$ 的约化零次群。因此
+
+$$
+\widetilde H_j(X;\mathbb Z)
+ \cong
+\begin{cases}
+\mathbb Z,&j=N-d_p,\\
+0,&j\ne N-d_p.
+\end{cases}
+\tag{VIII113.10}
+$$
+
+$Y\subset X$ 的约化长正合列给所有 $j\ge1$ 的所需相对群。
+零次不能省略：若 $d_p<N$，$X$ 道路连通，
+$H_0(Y)\to H_0(X)$ 为同构，故 $H_0(X,Y)=0$。
+若 $d_p=N$，则 $X$ 有恰两个道路分量，$Y$ 非空道路连通且落于其中一个，
+所以 $H_0(X,Y)=\mathbb Z^2/\mathbb Z\cong\mathbb Z$。
+$d_p=N=1$ 也正是这个端点；$d_p=1<N$ 则唯一非零次数为 $N-1$。
+故没有遗漏低维线段或满维盘的相对零次群。
+结合(VIII113.7)—(VIII113.10)即得(VIII113.5)。
+
+这些整数群均自由，系数通用公式遂给模二群仅在 $N-d_p$ 次为 $\mathbb F_2$。
+113.2的ENR局部比较使同一群也是Smith同调层在 $c_p$ 的茎，
+它仅在 $r_\alpha$ 次为 $\mathbb F_2$；非零次数只能相同，即(VIII113.6)。
+维数在同一分量跳变会使同一固定集分量的这个唯一非零次数同时取两个不同值，矛盾。
+此处取得的是原球维数的传播，不是预先设定球族为fibration。证毕。
+

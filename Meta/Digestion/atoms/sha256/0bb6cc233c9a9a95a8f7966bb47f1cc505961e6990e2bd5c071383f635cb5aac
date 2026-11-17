@@ -1,0 +1,46 @@
+**定理 8.1（近似终端记录熵与匹配字母表）。** 在假设 3.2 下，置
+
+$$
+s_\rho=-\ln\rho>0,\qquad
+n_0(\varepsilon,\rho)=3\left\lceil
+\frac{\ln10+\frac32\ln(1/\varepsilon)}{s_\rho}
+\right\rceil,\qquad
+C_{\mathrm{upper}}=\log_2(3500\pi^2).
+\tag{8.1}
+$$
+
+对全部 $0<\varepsilon<1/4$ 与整数 $n\ge n_0(\varepsilon,\rho)$，
+
+$$
+\frac32\log_2\frac1\varepsilon-C_{\mathrm{lower}}
+\le E_n(\varepsilon)\le
+\frac32\log_2\frac1\varepsilon+C_{\mathrm{upper}},
+\tag{8.2}
+$$
+
+$$
+\frac{e^{-2}}K\,\varepsilon^{-3/2}
+\le M_n(\varepsilon)\le3500\pi^2\varepsilon^{-3/2}.
+\tag{8.3}
+$$
+
+所以 $E_n(\varepsilon)=\frac32\log_2(1/\varepsilon)+O(1)$，$M_n(\varepsilon)=\Theta(\varepsilon^{-3/2})$，均在所述双参数范围一致成立。所显示的加法与乘法常数不依赖 $n,\varepsilon$；阈值依赖固定但未计算的 $\rho$。
+
+证明。写 $x=[\ln10+(3/2)\ln(1/\varepsilon)]/s_\rho$。$n\ge3\lceil x\rceil$ 保证 $\lfloor n/3\rfloor\ge\lceil x\rceil\ge x$，故
+
+$$
+b_n=10e^{-s_\rho\lfloor n/3\rfloor}\le\varepsilon^{3/2}.
+$$
+
+在 (5.4) 中直接取 $\beta=1/\varepsilon$；利用 (6.2)，
+
+$$
+B_n(1/\varepsilon)\le K\varepsilon^{3/2},\qquad
+E_n(\varepsilon)\ge\frac{-2-\ln(K\varepsilon^{3/2})}{\ln2}
+=\frac32\log_2(1/\varepsilon)-C_{\mathrm{lower}}.
+$$
+
+若 $K\varepsilon^{3/2}>1$，所用上界仍真，结论只可能比非负性弱，不影响一致估计。长时域直接选择此 $\beta$，因而不需要把交叉下界中的 $t_n\le2\varepsilon$ 再付成另一个常数。
+
+另一方面，$\lceil4/\sqrt\varepsilon\rceil\le4/\sqrt\varepsilon+1\le5/\sqrt\varepsilon$，定理 7.5 给出 $M_n\le3500\pi^2\varepsilon^{-3/2}$ 及 (8.2) 的上侧。若某成功方案的本质终端字母表至多 $M$，则对几乎每个种子 $H(Y\mid S=s)\le\log_2M$，从而 $H(Y\mid S)\le\log_2M$。将已经证明的真实熵下界用于每个此类方案，得 $\log_2M\ge(3/2)\log_2(1/\varepsilon)-C_{\mathrm{lower}}$。取最小可行整数 $M$ 即得 (8.3) 的下侧。这一步由熵推出字母表，而非反向用支持大小代替熵证明。$\square$
+

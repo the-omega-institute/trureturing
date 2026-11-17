@@ -1,0 +1,4 @@
+## 77. 纯制备元数的精确障碍、回路平衡与混合余项二元入口
+
+本章的第 65—72 章引用均指[第四卷](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)，第 73—74 章引用指本卷。完整比较律到一般有限 EJA 的纸面桥已经由 [Library 的完整条件候选](../../../Library/QuantumStates/mullerududec2012selfduality.md#complete-conditional-candidate-and-its-scope)供应，包括正对偶剥离、共同框架、带符号谱性、自对偶、正面投影及最大杂质论证的滤波纯性，再明确调用 Barnum–Müller–Ududec 的 Theorem 16。本章直接复用这条链及其逆向，不重证、不把它列成未付桥，也不将它计作本章增量。要解决的是比较入口究竟约束哪些已有制备关系：只检验少量纯项，和允许二元式的一端带任意混合余项，逻辑内容不同。
+

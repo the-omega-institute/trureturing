@@ -1,0 +1,55 @@
+**定理 126.4（重复部分的 Hausdorff 商）。** 关系 $\sim_R$ 是 $R^2$ 中的闭等价关系；商映射
+
+$$
+ q_R:R\longrightarrow Y_R=R/{\sim_R}
+ \tag{Q126.13}
+$$
+
+是闭映射，纤维是紧三球，且 $Y_R$ 是 Hausdorff 空间。对任意由完整重复球组成的并
+$X\subset R$，限制 $q_R|_X:X\to q_R(X)$ 对子空间拓扑仍是闭商映射，且纤维不变。
+这里既不要求 $R$ 在 $S$ 中闭，也不要求 $X$ 闭或紧。
+
+证明。若 $x_n\sim_R y_n$、$x_n\to x\in R$、$y_n\to y\in R$，则
+$(x_n,y_n)\in\mathscr B_S$，故 $(x,y)\in\mathscr B_S$。由(Q126.10)，$y$ 与 $x$ 属于同一重复球，所以
+$x\sim_Ry$。这证明关系闭。对 $B\subset R$ 相对闭，取其饱和集
+$\operatorname{Sat}(B)$。若 $z_n\in\operatorname{Sat}(B)$ 收敛于 $z\in R$，在同一重复球中取
+$b_n\in B$。由 $K$ 紧性先取子列 $b_n\to b\in K$。因
+$(z_n,b_n)\in\mathscr B_S$，紧共面关系 $\mathscr B_S$ 的闭性给
+$(z,b)\in\mathscr B_S$。设 $F$ 为包含 $z$ 的重复球；式(Q126.10)先给
+$b\in F\subset R$。现在才能使用 $B$ 在 $R$ 中的相对闭性，得到
+$b\in B$，从而 $z\in\operatorname{Sat}(B)$。所以饱和集在 $R$ 中闭，
+而 $q_R^{-1}(q_R(B))=\operatorname{Sat}(B)$，由商拓扑定义得 $q_R$ 闭。
+
+每条纤维正是一个紧重复三球。为证明商的 Hausdorff 性，取不同商点
+$\eta,\zeta\in Y_R$，其纤维 $F_\eta,F_\zeta$ 是 $R$ 中不交的紧闭集。
+$R$ 是度量空间，因而正规，故可取不交开集 $U_\eta,U_\zeta\subset R$，分别包含这两个纤维。
+闭映射性质说明
+
+$$
+ O_\eta=Y_R\setminus q_R(R\setminus U_\eta),\qquad
+ O_\zeta=Y_R\setminus q_R(R\setminus U_\zeta)
+$$
+
+是分别含 $\eta,\zeta$ 的开集，且 $q_R^{-1}(O_\eta)\subset U_\eta$、
+$q_R^{-1}(O_\zeta)\subset U_\zeta$。由满射性二者不交，证明 $Y_R$ Hausdorff。
+
+最后，设 $X$ 是完整纤维的并，$B\subset X$ 相对闭。取 $R$ 中闭集 $D$ 使
+$B=D\cap X$。饱和性给
+
+$$
+ q_R(B)=q_R(D)\cap q_R(X).
+$$
+
+右侧在 $q_R(X)$ 中相对闭，所以限制是连续、闭的满射，因而为闭商映射。
+其目标是 Hausdorff 空间 $Y_R$ 的子空间，纤维仍是原来的完整紧球。证毕。
+
+把同一压缩关系尝试延伸到整个边界：
+
+$$
+ Q=\Delta_S\ \cup\!
+ \bigcup_{F\in\mathfrak B_{\mathrm r}}F\times F.
+ \tag{Q126.14}
+$$
+
+不能由现有前件断言 $Q$ 闭。其失闭形式却被完全约束。
+

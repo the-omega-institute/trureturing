@@ -1,0 +1,5 @@
+**引理 2.2（局部因子与 Euler 尾项）。** 记 $\kappa=3/2$，$r=1/p$。
+- 对素数 $p$ 与整数 $a\ge1$，$\dfrac{\sigma^{[\kappa]}(p^a)}{p^{\kappa a}}\ge(1-r)^{-\kappa}(1-r^\kappa)\Bigl(1-\dfrac{\kappa}{1-r^\kappa}r^{a+1}\Bigr)$。
+- $x\to\infty$ 时，$\sum_{p>x}-\log(1-p^{-3/2})=\dfrac{2+o(1)}{\sqrt x\log x}$。
+- $y\to\infty$ 时，$\sum_{p>y}p^{-2}=\dfrac{1+o(1)}{y\log y}$。
+

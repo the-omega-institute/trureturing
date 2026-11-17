@@ -1,0 +1,31 @@
+fingerprints:
+  raw_sha256: sha256:9ec6ba1a936e4ee0ff294410418a64d4ef034fc94f5e44f2748a1ea7b05b1e68
+  normalized_sha256: sha256:9ec6ba1a936e4ee0ff294410418a64d4ef034fc94f5e44f2748a1ea7b05b1e68
+cas_ref: sha256:9ec6ba1a936e4ee0ff294410418a64d4ef034fc94f5e44f2748a1ea7b05b1e68
+coverage_gids:
+  - gid: D5/S3/Analytic/Entire/ExponentialBlockIndependence.block_evaluation_injective
+    target_statement_id: sha256:7e1ef3077b6dd9330e93adf6d19ec101736da9d93fb8309abf951065f17e0a2c
+  - gid: D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_isometry
+    target_statement_id: sha256:4788fda704d1194f8a5bde2ab1145d8e251a3dab3778b671874f5829488f6faa
+  - gid: D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.pure_trace
+    target_statement_id: sha256:10a7dafe6e7a6b1cf2bcce71b142fca1562280cfd40a3330284db5fc95180878
+  - gid: D5/S3/Quantum/Fibers/FiniteRectangleTransport.LawfulLeg
+    target_statement_id: sha256:299897b575c25d9ddd14ee92678f5467e8ffa5ceb67a961ae2748c5f2f2f724d
+  - gid: D5/S3/Quantum/Fibers/FiniteRectangleTransport.phaseWeight
+    target_statement_id: sha256:8de95faa4cae1817c27f554570899bb222c6fa87adb7cad0e132d11680f2662d
+  - gid: D5/S3/Quantum/Fibers/FiniteRectangleTransport.polygon_admissible
+    target_statement_id: sha256:1d11ff3bf78d01887458a6488609c313b985cc6559a76848663d23d29b908204
+  - gid: D5/S3/Quantum/Fibers/OriginalControlMarkedJump.p_explicit
+    target_statement_id: sha256:b2babd0f2352fa0305f9a31ca4a60a95c4087af7af9900ef4c07d22cd0049b5e
+  - gid: D5/S3/Quantum/Foundation/FiniteDiamondDistance.pureState
+    target_statement_id: sha256:3237a5a6ccf8258da0e2f20363a3121f14afd969522657655a219fa198eef027
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance
+    target_statement_id: sha256:a951383b42658bc45458c21e07d0f1306eb2d0af3f5709cef4338a96b4a21c20
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm
+    target_statement_id: sha256:12ad034b5758446e6d628c75121b3ad5f0c80bb305937e8c9ff87e82076bc059
+  - gid: D5/S3/Quantum/PureState/PureStateHandshake.pure_state_handshake
+    target_statement_id: sha256:3f3685dfb0637d23f5f799f8ec2e875fbc8fee9823e2940f31ba7983a7b83b1e
+  - gid: D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity
+    target_statement_id: sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3
+receipts:
+  unresolved_subitems: []

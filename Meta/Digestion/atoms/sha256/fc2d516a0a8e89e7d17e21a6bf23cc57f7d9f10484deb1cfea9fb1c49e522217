@@ -1,0 +1,15 @@
+**定义 84.17（指定映射与 E2）。** 给定同一个原 $A$ 上实线性 $\Phi$，资格完整取为
+$$
+\Phi(A_+)\subseteq A_+,\qquad \tau_A\Phi=\tau_A,\qquad
+\{f\in A^*:f\Phi=f\}=\mathbb R\tau_A.
+\tag{84.18}
+$$
+此处 $\Phi^*$ 表示代数对偶作用时，最后一式也写成 $\operatorname{Fix}(\Phi^*)=\mathbb R\tau_A$；经迹配对识别为 $A$ 中的向量时则是 $\mathbb R1_A$。条件遍及全部实泛函，不只是选定效应。既不预设 CP，也不供应物理操作、忠实稳态或迭代混合。
+
+对每个固定 $0<t<1$，令 E2 保留全部原正 $a,b$：
+$$
+\mathsf E_2(\Phi,t):\quad
+m_2(a,b)=t\,m_2(\Phi a,b)+(1-t)m_2(a,\Phi b).
+\tag{84.19}
+$$
+

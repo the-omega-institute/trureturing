@@ -1,0 +1,9 @@
+**定理 83.11（显式二阶权的完整候选）。** 在同一实际原模型类中，
+$$
+\boxed{\mathrm{PRE}_0^{1/2}+(83.8)+\mathsf E_2+\mathsf E_3+\mathrm A_0+\mathrm H13
+\quad\Longleftrightarrow\quad\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}.}\tag{83.21}
+$$
+这里 $C_{\rm joint}$ 严格取原双迹条件 $\delta+\gamma\le2n^3$，$\delta=u_EL(1_D,1_A)$、$\gamma=u_D(p1_E)$。删去质量、锚及 $C_{\rm joint}$，得到同样成立的未校准版本。
+**证明。** 在各原载体上，(83.1) 先由 [FH] 恢复全部实混合权重及完整 $S$，其余原对象与谓词不变，故与原 $\mathrm{PRE}_0^{\rm mix}$ 同类；(83.8) 与 83.4 再恢复同一 PRE。$R_A$ 正保原质量，且全部实泛函满足 $fR_A=f\Longleftrightarrow f=f(1_A/n)u_A$，故固定泛函恰为 $\mathbb Ru_A$。(83.19) 正是 79.2 的 $t=1/2,s=2/3$，因为三槽权重 $st,s(1-t),1-s$ 均为 $1/3$。79.5—79.7 与同一原锚先于 H13 给 $C_{\rm joint}$；72.7—72.8 再由非空 $\mathcal H(F)$ 及同一原输出给 C13。
+反向，原 PRE 的完整比较律由 [FH] 给同一 (83.1)，且 PRE+$C_{\rm joint}$ 由 79.6—79.7 给 $m_2=u_A^{\otimes2}$、$m_3=u_A^{\otimes3}$ 及原锚，所以这个固定 $R_A$ 满足两条等权关系；83.4 给 (83.8)，原 C13 与 72.7 给 H13。所有关系在同一个原 $L,p,\omega$ 上成立。此处仅应用既有质量定理，不把固定数学见证重计为新质量定理。证毕。
+

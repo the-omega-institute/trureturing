@@ -1,0 +1,12 @@
+**定理 75.4。** 在定义 75.1 的同一实际数据上，对任意固定的有限 Jordan 生成完整框架族，
+$$
+\mathsf J_{\mathfrak B}+\mathsf H_{\mathfrak B}\quad\Longleftrightarrow\quad D_J+D_H. \tag{75.10}
+$$
+而且，存在同一见证族使
+$$
+\boxed{\mathrm{PRE}_0+\mathsf{JG}_3+\mathsf J_{\mathfrak B}+\mathsf H_{\mathfrak B}+\mathrm H13}
+\quad\Longleftrightarrow\quad \mathrm{PRE}+\mathrm{C13}. \tag{75.11}
+$$
+这里比较的是遗忘框架见证后的实际 $(A,D,E,C_X,u_X,L,p)$ 模型类。删去两边的 H13、C13，仍有相同的 PRE 等价。对 $\operatorname{rank}A=n$，两张表分别至多 $3\binom n2$、$9\binom{n^2}2$ 条零比较。
+
+**证明。** 以下平方缺陷域、交换子、谱和矩阵单位计算仅是本定理的内部步骤；其一般结构归属见 [D]、[C]、[F]。

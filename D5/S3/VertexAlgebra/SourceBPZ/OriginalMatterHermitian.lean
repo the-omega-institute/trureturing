@@ -28,7 +28,8 @@ open D5.S3.VertexAlgebra.LatticeSugawaraCurrents
 open D5.S3.VertexAlgebra.SourceBPZ.OriginalSourcePairing
 open D5.S3.VertexAlgebra.SourceBPZ.SourcePairingLaws
 open MvPolynomial
-open private wick_constant_left wick_constant_right from
+open D5.S3.VertexAlgebra.SignedOscillatorWick (wick_constant_left)
+open private wick_constant_right from
   D5.S3.VertexAlgebra.TwistedGround.SignedOscillatorWick
 
 variable {D : LatticeData}

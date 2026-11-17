@@ -1,0 +1,21 @@
+### 4.3　同一条延伸式可以被使用无限次
+
+对已知有限 Gram 矩阵 $G\succeq0$，新方向的交叉列为 $b$、自读为 $d$。 其正延伸的完整条件仍是
+
+$$
+\begin{pmatrix}G&b\\b^{\mathsf T}&d\end{pmatrix}\succeq0
+ \quad\Longleftrightarrow\quad
+ b\in\operatorname{Ran}G,\qquad \Delta=d-b^{\mathsf T}G^+b\ge0.
+ \tag{4.2}
+$$
+
+这里 $G^+$ 是 Moore–Penrose 逆。先在 $\operatorname{ker}G$ 上检验二次型，强制 $b\perp\operatorname{ker}G$； 再令 $y=G^+b$，配方
+
+$$
+(x+ty)^{\mathsf T}G(x+ty)+t^2\Delta
+$$
+
+给出充分性与必要性。新方向的表示就是旧投影加 $\sqrt\Delta$ 倍单位法向。 当 $\Delta>0$ 时秩增加一，$\Delta=0$ 时不增。
+
+在互素正交读口中，新素数 $p$ 有 $b=0$，所以 $\Delta=w_p$。 重复发现素数只需反复使用 (4.2)，不必反复添加新的规则类型。 即使 $w_{p_j}=4^{-j}$，总新增平方量可和，非零方向数仍然无限。 可和的预算、有限维数与有限信息不是同一性质。
+

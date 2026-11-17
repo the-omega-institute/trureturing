@@ -1,0 +1,63 @@
+**定理 124.6（常值分支中的接触值与完整静态候选）。** 对某固定 $p\in P_{\rm reg}$，若定理124.4的等价条件成立，记其共同高度为 $M_p$，则
+
+$$
+\mathsf F(p)
+\Longleftrightarrow W(D_p)=1
+\Longleftrightarrow \theta_p=1
+\Longleftrightarrow M_p=1
+\Longleftrightarrow Z_p=\mathbb B^3.
+\tag{Q124.25}
+$$
+
+这里 $\theta_p=\min_{\partial Z_p}\Lambda_p$，而123.14的有限实际相容性完整保留为
+
+$$
+\mathsf F(p):\quad
+\forall k\ge1\ \forall w_1,\ldots,w_k\in S^2\quad
+\exists v\in S^2\ \forall i\le k:\quad
+v\cdot H_p(a_{w_i})\le g_p(a_{w_i}).
+\tag{Q124.26}
+$$
+
+不要求额外稳定性的完整原静态候选仍是以下相同模型类：
+
+$$
+\begin{array}{c}
+\mathrm{EB3}+\mathrm{Inj}+\overline{\{p\in P_{\rm reg}:\mathsf F(p)\}}^{\,P}=P\\
+\Updownarrow\\
+\mathrm{EB3}+\mathsf{DC}
+\quad\Longleftrightarrow\quad\mathrm{EB3}+\mathsf{MC}
+\quad\Longleftrightarrow\quad\mathrm{EB3}+\forall b\in P:\ W(D_b)=1\\
+\Updownarrow\\
+\exists\,\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V
+\text{ 实线性},\quad\Phi(\mathrm{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\end{array}
+\tag{Q124.27}
+$$
+
+准确地，令 $W(F)=\max_{f\in\mathcal E}(\max_Ff-\min_Ff)$，令
+
+$$
+\mathcal T_{\rm mid}=\{b\in P:\exists x\in D_b,\ (b+x)/2\in\partial_{\rm rel}K\}.
+$$
+
+$\mathsf{DC}$ 表示 $\overline{\mathcal T_{\rm mid}}^{\,P}=P$，$\mathsf{MC}$ 表示 $\mathcal T_{\rm mid}=P$，准确沿121.1、122.1—122.2的定义。等价式是123.10、123.15及122.2的复用，不计为新的静态分类。
+
+证明。在常值分支，定理124.4给 $\theta_p=1/M_p$；123.15和(Q123.31)已给F、满宽、$\theta_p=1$等价，故前四项等价。若 $M_p=1$，全部 $a_v$ 都在 $D_p$，亦在 $F_v$；123.11使每个 $\rho_p(v)=1$。全方向支撑函数于是与单位球相同，故 $Z_p=\mathbb B^3$。反向若 $Z_p=\mathbb B^3$，123.7的准确单位费用层给全部边界费用一，从而 $M_p=1$。
+
+对(Q124.27)的正向，正规F标签稠密给原接触标签稠密；122.2以原宽度的上半连续把稠密接触升级成全部原标签满宽，然后才由IX116.17及VII104、VIII113的完整前件取得同原 $\Phi$、全Pair和全域数学三元补全。没有在Pair之前输入共同仪器或正互补投影。
+
+反向量化整个矩阵原模型：任意纯 $p=zz^*/(z^*z)$ 的全部确认矩阵恰为 $p\oplus A$，$0\preceq A\preceq I_{z^\perp}$；对任意密度矩阵 $\rho$，$T_p(\rho)=\operatorname{Tr}(p\rho)$，完整 $D_p$ 是 $z^\perp$ 上全部密度矩阵，故EB3和Inj成立且 $e_p=f_p$。对任意纯 $p_n\to p$、任意完整零效应矩阵 $0\preceq A\preceq I$、$\operatorname{Tr}(Ap)=0$，正性给 $Ap=0$。令 $Q_n=I-p_n$，则 $Q_nAQ_n$ 为零于 $p_n$ 的合法全域效应，且
+
+$$
+\|Q_nAQ_n-A\|_{\rm op}\le2\|p_n-p\|_{\rm op},
+$$
+
+统一量化整个零效应集合；上包含由紧性与评价给出。因此全部 $P=P_{\rm reg}$。每个 $v$ 有 $a_v=q_{-v}$、$m(v)=1$、$d(v)=0$、$Z_p=\mathbb B^3$、$\Lambda_p|_{Z_p}\equiv1$，所以全部正规标签满足F，给回整个稠密性条件。矩阵模型也满足124.5中全部稳定条件：$d=0$，而 $G_v$ 含原 $p,q_v$，紧 $D_p$ 不含 $p$，故在任一固定原状态范数下有共同正直径。所有计算通过同一个 $\Phi$ 运输；这些条件在此是反向模型计算，不是推导F的免费前件。证毕。
+
+**准确未决桥。** 新关系支付的是：高度真跳跃必伴随互补确认和第二层整球塌缩；反向确认读数的下半连续性；真实远端之间的合法确认上界给支撑余差控制；费用边界若全连续，其高度必常值。它们没有把常数 $M_p$ 证明成一。若额外假设反向缺口或第二层非塌缩，其后果仍须按124.5称为条件结论，不能当作EB3+Inj已推出这些稳定性。
+
+剩下的联合步骤仍是：由同一原实现中的全部球、效应与同一个原单位，排除123.13的某个有限真实端点批包住严格放大单位球，或直接证明(Q124.26)对每个有限批存在一个共同单位方向；再使这样的正规锚点在整个 $P$ 中稠密。即使已处于常值稳定分支，这一步仍须把 $M_p<1$ 排除。仅仅排除跳跃、取得连续性或常值性，没有检验所有方向的单位预算。没有证明该稳定分支允许 $M_p<1$ 的完整EB3反模型，也没有证明它必为一。全域(O)、WZ或全体原标签的统一球直径下界一旦成立会接回IX118的已有分类，但固定 $p$ 的局部球族条件不能未经证明替代这些全域量词。
+
+裸EB3自动给Inj与F仍为更大的未决目标。本章不宣称独立公理数减少、物理公理最少、全球原创，亦不把已有条件换名计作新增数学。
+

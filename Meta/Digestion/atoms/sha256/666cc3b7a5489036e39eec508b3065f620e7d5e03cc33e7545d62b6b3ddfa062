@@ -1,0 +1,38 @@
+**推论 96.11（完整原量子包的同域等价）。** 在定义96.10下，
+
+$$
+\begin{aligned}
+\mathsf R_{\mathrm G_2,\le2}(\mathcal O)
+&\Longleftrightarrow
+\mathcal D_{\le2}^{\mathbb C}(\mathcal O)\land
+\mathsf R_{\rm FC}^{\mathbb C\text{-}\rm ROG}(\mathcal O)\\
+&\Longleftrightarrow
+\mathcal D_{\le2}^{\mathbb C}(\mathcal O)\land\mathsf R_{\rm polar}(\mathcal O)\\
+&\Longleftrightarrow
+\mathcal D_{\le2}^{\mathbb C}(\mathcal O)\land
+[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}(\mathcal O),
+\end{aligned}
+\tag{96.39}
+$$
+
+并与89.8其余完整包在同一域内等价。每个量子消费者仍使用94.6的全部各自原前件。
+
+证明。逐个同一原 $X$ 用96.8将 $\mathrm G_2$ 换为 $\mathrm{FC}$，再完整应用94.6和89.8。
+所有非几何条件完全相同，对偶运输的仍是整个原效应区间，故量词没有缩成局部效应。
+由96.9，若某个 $n_X\ge3$，满足候选还迫使该表示的 $c_X=0$；低支撑处则保留96.8的完整实复块分支。
+完整复矩阵块任意大小均有 $c_X=0$，故这一几何域容纳非经典复模型，但矩阵形式不供应原实际资源。
+
+具体消费范围准确取94.6：一般EJA忠实桥与原精确两接口66.3承担复型和Born；
+同一原 $L,p,\omega$、全实关系、两张成、完整尺度及同资格态整个H13承担指定二份／三份、张量和读回；
+逐同事件HP提升、准确参考输出或充分递归参考及独立预算承担CP、Kraus与仪器；
+锐投影、逐点中性和原输出校准承担既有事件的Lüders唯一性；
+原连续齐次可逆时间群、实际逆、钟与单位承担Hamiltonian解释。
+这些均按94.6的完整量词复用，不由 $\mathrm G_2$ 单独得到。
+其所引Library二元附录的全有限控制、END或三角形选择、一次同事件Choi及有限实现，
+以及VII22、24—28各自已证的Born、完成PSD、联合菜单和下降／回返，仍在94.6列明的全部原前件下成立，
+不重新列作未解，也不把各自完成载体等同于这里的原 $A,D,E$。
+
+第95章是另一静态入口：一对全域 $T_p+T_q=u$ 与紧纯传递给整个球，再按95.5—95.7支付全有限寄存器资源。
+本推论既不从 $\mathrm G_2$ 推出那一对穷尽关系或其控制，也不以第95章替代89.7的指定原接口。
+若要连接两套完整数据，仍须给出同载体、同来源、同操作的接口对应；(96.39)不作这种无前件合并。证毕。
+

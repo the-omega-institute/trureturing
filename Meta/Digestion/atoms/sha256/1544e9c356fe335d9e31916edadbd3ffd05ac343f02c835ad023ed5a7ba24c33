@@ -1,0 +1,170 @@
+**引理 96.5（一个原纯零条件唯一决定提升）。** 设 $\mathbb F=\mathbb C$、
+$L^\perp=\operatorname{span}_{\mathbb R}\{A,B\}$，其中 $A,B$ 独立且迹为零。
+固定 $p=vv^*\in P$，若 $a=Av$、$b=Bv$ 实线性独立，则存在原纯 $q=ww^*\in P$，
+满足 $p\perp q$，且 $\mathcal M_{pq}$ 恰为单点。
+可以要求实线性映射 $(s,t)\mapsto v^*(sA+tB)w$ 的秩为二；
+因此单点性来自一个复零方程的两个独立实分量，不依赖PSD边界的切触。
+
+证明。先给所需的复PSD事实。由至多两个实线性齐次等式截出的任意复PSD锥均为复ROG。
+若其极射线生成元 $X$ 的秩为 $r\ge2$，在 $\operatorname{ran}X$ 上的Hermitian空间实维数为 $r^2$；
+至多两个约束留下维数至少 $r^2-2\ge2$ 的可行线性空间。
+除 $X$ 外可取独立可行 $Y$，并将它延伸为支撑外零。$X$ 在其支撑上正定，故
+$X\pm\varepsilon Y$ 对充分小 $\varepsilon>0$ 均可行，违反极射线性。
+迹一基紧，有限维极点分解遂将每个可行PSD矩阵分解为有限个可行复秩一项。
+这也适用于约束相关或锥为零的情况。
+这是 Hildebrand [§9][H96] 所述低余维事实的秩维数证明，不是实域余维二自动ROG的断言。
+
+另记一个直接推论。若两个Hermitian约束 $C_1,C_2$ 的公共PSD零锥含正定矩阵 $R$，
+而Hermitian矩阵 $J$ 在每个公共零向量 $x$ 上满足 $x^*Jx=0$，则
+
+$$
+J\in\operatorname{span}_{\mathbb R}\{C_1,C_2\}.
+\tag{96.12}
+$$
+
+确实，复ROG先使 $J$ 正交于整个公共PSD零锥；对任意满足两个线性约束的Hermitian $Y$，
+$R\pm\varepsilon Y$ 仍在该锥，故 $J$ 正交于整个公共线性核。
+取正交补即得(96.12)，不要求两个约束独立。
+
+现令 $W=v^\perp$，$A_0,B_0$ 为在 $W$ 上的压缩，将
+
+$$
+H=\frac{ab^*-ba^*}{2i}\in\operatorname{Herm}(W)
+\tag{96.13}
+$$
+
+在 $\mathbb Cv$ 上延伸为零。因 $p\in L$，$v^*Av=v^*Bv=0$，故 $a,b\in W$，
+且 $\operatorname{tr}A_0=\operatorname{tr}B_0=0$。
+对任意向量 $w$，
+
+$$
+w^*Hw=\operatorname{Im}\bigl(\overline{a^*w}\,b^*w\bigr).
+\tag{96.14}
+$$
+
+它非零恰表示上述实线性映射的秩为二。
+若 $w\ne0$ 满足 $w^*Aw=w^*Bw=0$，且对某个 $M\in\mathcal M$ 有 $v^*Mw=0$ 和 $w^*Hw\ne0$，
+则归一化 $w$ 得原纯 $q$；(96.4)给 $p\perp q$，而秩二使零方程唯一确定实参数 $s,t$，
+故 $\mathcal M_{pq}$ 单点。以下反设不存在这样的 $(w,M)$。
+
+先取 $M=I_n$。于是 $H$ 在 $W$ 内两个压缩二次型的公共零集上消失。
+$I_W$ 正定且满足这两个迹零约束，(96.12)给
+
+$$
+H\in\operatorname{span}_{\mathbb R}\{A_0,B_0\},\qquad \operatorname{tr}H=0.
+\tag{96.15}
+$$
+
+实独立的 $a,b$ 保证 $H\ne0$：若 $ab^*=ba^*$，则 $b$ 为 $a$ 的实倍数。
+它们还必须复线性独立；否则 $b=\lambda a$，实独立使 $\operatorname{Im}\lambda\ne0$，
+而 $H=-\operatorname{Im}\lambda\,aa^*$ 是非零定号秩一矩阵，与迹零矛盾。
+因此 $\dim_{\mathbb C}W\ge2$；若 $W$ 维数为零或一，反设已在此被排除。
+复独立还保证下列每组三个Hermitian矩阵实线性独立：
+
+$$
+aa^*,\ S:=ab^*+ba^*,\ H;
+\qquad bb^*,\ S,\ H.
+\tag{96.16}
+$$
+
+例如满列秩映射 $U=(a\ b)$ 使 $D\mapsto UDU^*$ 在 $\operatorname{Herm}_2$ 上单射，
+两组分别对应一个对角矩阵单位与两个独立的非对角Hermitian矩阵单位。
+
+对充分小的实 $s,t$，取同一个原提升空间中的
+
+$$
+\begin{gathered}
+M=I_n+sA+tB\succ0,\qquad h=sa+tb,\qquad Mv=v+h,\\
+T_h:W\longrightarrow(Mv)^\perp,\qquad T_hx=x-vh^*x.
+\end{gathered}
+\tag{96.17}
+$$
+
+$T_h$ 是线性双射：其 $W$ 分量是 $x$，且 $(v+h)^*T_hx=0$。
+原纯点约束在这个超平面上准确成为
+
+$$
+A_h=T_h^*AT_h=A_0-ah^*-ha^*,\qquad
+B_h=T_h^*BT_h=B_0-bh^*-hb^*.
+\tag{96.18}
+$$
+
+因为 $Hv=0$，检测式保持为 $T_h^*HT_h=H$。
+所以反设使 $H$ 在 $A_h,B_h$ 的全部公共零向量上消失；这些向量经 $T_h$ 返回同一个原模型，
+并对(96.17)的这个 $M$ 满足 $v^*Mw=0$。只要压缩零锥含正定矩阵，(96.12)便给
+
+$$
+H\in\operatorname{span}_{\mathbb R}\{A_h,B_h\}.
+\tag{96.19}
+$$
+
+所需严格可行性可以连续、精确地修正。若连续约束 $C_1(\epsilon),C_2(\epsilon)$
+在零处独立且迹零，令
+
+$$
+G_{ij}(\epsilon)=\operatorname{tr}(C_i(\epsilon)C_j(\epsilon)),\quad
+\alpha(\epsilon)=G(\epsilon)^{-1}
+\begin{pmatrix}\operatorname{tr}C_1(\epsilon)\\\operatorname{tr}C_2(\epsilon)\end{pmatrix},\quad
+R(\epsilon)=I_W-\sum_i\alpha_i(\epsilon)C_i(\epsilon).
+\tag{96.20}
+$$
+
+小参数下Gram矩阵仍可逆，$\alpha(\epsilon)\to0$，$R(\epsilon)\to I_W$，故 $R(\epsilon)\succ0$，
+且 $\operatorname{tr}(C_i(\epsilon)R(\epsilon))=0$。
+这只构造压缩约束的数学可行点，不变更原 $L$ 或原效应域。
+
+最后穷尽 $\dim_{\mathbb R}\operatorname{span}\{A_0,B_0\}$ 的三个分支。
+法向作可逆实换基 $(A',B')=(r_{11}A+r_{12}B,r_{21}A+r_{22}B)$ 时，
+对应的 $a',b'$ 仍复独立，且
+
+$$
+H'=(\det R)H.
+\tag{96.21}
+$$
+
+因此换基保持原 $L,\mathcal M,P$ 及秩二判据；下面的 $H$ 始终按新法向重算，比例常数同时吸收这个非零行列式。
+
+压缩维数为二时，由(96.15)可取法向基使 $A_0=\kappa H$、$B_0=D$，
+其中 $\kappa\ne0$、$D,H$ 独立。取 $t=0$、$h=sa$，则
+
+$$
+A_h=\kappa H-2saa^*,\qquad B_h=D-sS.
+\tag{96.22}
+$$
+
+零处两个约束独立且迹零，(96.20)保证所有充分小 $s$ 的严格可行性。
+故对每个充分小的 $s\ne0$，(96.19)给实数 $\alpha_s,\beta_s$ 使
+$H=\alpha_s(\kappa H-2saa^*)+\beta_s(D-sS)$。
+必有 $\beta_s\ne0$：否则 $H$ 与 $aa^*$ 的独立性及 $s\ne0$ 先迫 $\alpha_s=0$，再迫 $H=0$。
+在 $\operatorname{Herm}(W)/\mathbb RH$ 中取像，因而有
+
+$$
+\overline D-s\overline S\in\mathbb R\,\overline{aa^*}.
+\tag{96.23}
+$$
+
+取两个不同的充分小非零 $s$ 并相减，得 $\overline S\in\mathbb R\,\overline{aa^*}$，
+这与(96.16)矛盾。
+
+压缩维数为一时，可取 $A_0=0$、$B_0=\kappa H$，$\kappa\ne0$。
+$\operatorname{tr}H=0$ 说明 $a^*b$ 为实数。
+再将法向 $B$ 换为 $B-rA$，其中 $r=(a^*b)/\|a\|^2\in\mathbb R$，亦即将 $b$ 换为 $b-ra$。
+这一行列式为一的换基保持 $A_0=0$、$B_0=\kappa H$、$H$，并使 $a^*b=0$。
+取 $s=0$、$h=tb$，$t\ne0$，则
+
+$$
+A_h=-tS,\qquad B_h=\kappa H-2tbb^*.
+\tag{96.24}
+$$
+
+两个零约束等价于 $S$ 与 $\kappa H-2tbb^*$ 的零约束。
+这两个矩阵在 $t=0$ 独立且迹零，因为 $\operatorname{tr}S=2\operatorname{Re}(a^*b)=0$。
+故(96.20)在充分小非零 $t$ 给严格可行性，(96.19)迫
+$H=\alpha S+\beta(\kappa H-2tbb^*)$。
+由(96.16)，比较 $bb^*$ 系数先得 $\beta=0$，再得 $H\in\mathbb RS$，矛盾。
+压缩维数为零时，(96.15)直接给 $H=0$，亦矛盾。
+
+反设在所有分支均不成立，故存在所需 $w,M$；将 $w$ 归一化不改变原二次零约束或秩二性，
+引理开头的提升论证遂给所述单点 $\mathcal M_{pq}$。
+退化的实相关列由96.4另行处理，压缩相关性、复相关性和小支撑边界均已包含在上述分支中。证毕。
+

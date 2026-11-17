@@ -242,7 +242,21 @@ $$\forall (n: \operatorname{Nat}), (\forall (hn: 2 \le n), (\forall (P: (\operat
 
 Classification when one label is omitted.
 
-**Theorem 1.18 (The canonical-form counting bridge).**
+**Theorem 1.18 (The canonical two-label pattern is zero-one alternation).**
+
+$$\forall (n: \operatorname{Nat}), (\forall (hn: 2 \le n), (\forall (P: (\operatorname{Fin}\left(4\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(3\right)), (\forall (hp: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177PairTransfer}.\operatorname{Proper}\left(P\right)), (\forall (hc: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{Canon}\left(P\right)), (\forall (hu: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{used}\left(P\right) = 2), (P = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{alternating}\left(n, (0: \operatorname{Fin}\left(3\right)), (1: \operatorname{Fin}\left(3\right))\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.canon_two_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233177: complementary-pair exclusion on a four-row ladder*. URL: <https://oeis.org/A233177>.
+
+*Commentary.*
+
+The canonical two-label pattern is zero-one alternation.
+
+**Theorem 1.19 (The canonical-form counting bridge).**
 
 $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow ((48) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left(n\right): \operatorname{Int})) = ((16: \operatorname{Int})^{n}) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177PairTransfer}.\operatorname{L}\left(n\right): \operatorname{Int})) + (6))))$$
 
@@ -258,7 +272,7 @@ The canonical-form counting bridge.
 
 The beta-label identifies the pairs {0,5}, {1,4}, {2,3}; the side is an independent Boolean choice. Normalization introduces pair labels in first-appearance order and fixes the first side of each used pair to the smaller colour. A canonical pattern using k labels therefore has 2^(4*n-k) lifts. At width at least two a proper pattern uses two or three labels, and every relabelling orbit has six members. If one label is omitted, adjacent entries of a column must agree: a common neighbour in another column excludes both differing labels. Each column is then constant and the two labels alternate. The six such patterns have exactly one canonical member. If C is the number of canonical proper patterns, L=6*C and a=2^(4*n-3)*(C+1). This gives the displayed bridge for every width at least two.
 
-**Theorem 1.19 (The first permitted recurrence instance).**
+**Theorem 1.20 (The first permitted recurrence instance).**
 
 $$(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left(9\right): \operatorname{Int}) = (((((((64) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left(8\right): \operatorname{Int}))) + ((3328) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left(7\right): \operatorname{Int})))) - ((77824) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left(6\right): \operatorname{Int})))) - ((1441792) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left(5\right): \operatorname{Int})))) + ((28311552) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left(4\right): \operatorname{Int})))) + ((33554432) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left(3\right): \operatorname{Int})))) - ((1073741824) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left(2\right): \operatorname{Int})))$$
 
@@ -272,7 +286,7 @@ $$(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatornam
 
 The first permitted recurrence instance.
 
-**Theorem 1.20 (Hardin's shifted integer recurrence).**
+**Theorem 1.21 (Hardin's shifted integer recurrence).**
 
 $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left((n) + (9)\right): \operatorname{Int}) = (((((((64) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left((n) + (8)\right): \operatorname{Int}))) + ((3328) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left((n) + (7)\right): \operatorname{Int})))) - ((77824) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left((n) + (6)\right): \operatorname{Int})))) - ((1441792) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left((n) + (5)\right): \operatorname{Int})))) + ((28311552) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left((n) + (4)\right): \operatorname{Int})))) + ((33554432) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left((n) + (3)\right): \operatorname{Int})))) - ((1073741824) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Ladder}.\operatorname{a}\left((n) + (2)\right): \operatorname{Int}))))$$
 
@@ -302,6 +316,7 @@ The pair-pattern transfer has fourteen column classes. Its sextic tail polynomia
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.alternating_canon`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.alternating_proper`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.alternating_used`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.canon_two_eq`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.cellOrder`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.counting_bridge`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.finite_certificate`

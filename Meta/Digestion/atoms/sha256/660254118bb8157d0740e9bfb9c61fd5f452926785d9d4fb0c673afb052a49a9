@@ -1,0 +1,90 @@
+**定理 128.6（完整确认效应的严格种子边际与总读数夹逼）。** 设 $p\in P$ 对同一个种子满足
+
+$$
+\Delta_1(p)>0,\qquad\Delta_2(p)>0,\qquad\Delta_3(p)>0.
+\tag{Q128.14}
+$$
+
+不论 $\nu_p=0$ 还是 $1$，令
+
+$$
+r_p=\|p\|_B,\qquad s_p=\min_{x\in D_p}\|x\|_B.
+$$
+
+则 $0<r_p<1$、$0<s_p<1$，而每张原完整确认效应 $f\in\mathcal A_p$ 均满足
+
+$$
+\boxed{\quad
+\frac1{r_p}<f(w)<3-\frac1{s_p}.
+\quad}
+\tag{Q128.15}
+$$
+
+所以，必要地，
+
+$$
+1<f(w)<2,\qquad \frac1{r_p}+\frac1{s_p}<3.
+\tag{Q128.16}
+$$
+
+这里的可观测总量是同一张原效应的三个种子读数之和 $f(w)=\sum_i f(p_i)$。此外，对每个固定的 $p$ 存在 $\varepsilon_p>0$，统一于全部 $f\in\mathcal A_p$ 与三颗完整种子球，满足
+
+$$
+\varepsilon_p\le f(x)\le1-\varepsilon_p
+\quad\bigl(f\in\mathcal A_p,\ x\in D_1\cup D_2\cup D_3\bigr).
+\tag{Q128.17}
+$$
+
+证明。由127.4a的逐点等价，$D_p$ 与每张 $D_i$ 不相交。又 $p\notin D_i$：否则它是实际种子球的球面点，故其种子压缩有零指标，与(Q128.14)矛盾。对每个 $f\in\mathcal A_p$，准确零面 $D_p$ 和准确一值面 $\{p\}$ 因而给 $0<f(x)<1$ 于三张完整 $D_i$ 上。$\mathcal A_p\times(D_1\cup D_2\cup D_3)$ 是紧集，连续函数 $f(x)$ 与 $1-f(x)$ 的共同最小值严格正，得到(Q128.17)。该紧积只针对一个固定 $p$，不量化未经证明紧致的全部纯标签族。
+
+用 $B$ 仅作线性对偶识别，唯一写成
+
+$$
+f(x)=B(\widehat f,x),\qquad
+(u-f)(x)=B(w-\widehat f,x).
+\tag{Q128.18}
+$$
+
+$\widehat f$ 不必是原正态或归一态，$u(\widehat f)$ 也不先设为一。因为 $T_i$ 是 $B$ 正交投影且固定 $M_i$，$f$ 在 $D_i$ 上的严格正性等价于 $T_i\widehat f$ 对实际 $C_i\setminus\{0\}$ 严格正；在局部自对偶的Lorentz图中，这恰使 $T_i\widehat f\in\operatorname{int}_{M_i}C_i$。直接地，球图中的配对是 $(ts+g_i(v,h))/2$，在整个归一球严格正当且仅当 $t>\|v\|_{g_i}$。对 $u-f$ 同样成立。因此
+
+$$
+\Delta_i(\widehat f)>0,\qquad
+\Delta_i(w-\widehat f)>0\quad(i=1,2,3).
+\tag{Q128.19}
+$$
+
+令 $\tau=f(w)=B(\widehat f,w)=u(\widehat f)$。每个种子顶点都在另外的种子球中，所以(Q128.17)给 $0<f(p_i)<1$；从而 $0<\tau<3$，且 $u(w-\widehat f)=3-\tau>0$。将适用于整个 $V$ 的(Q128.3)分别用于这两个对偶向量，得到
+
+$$
+\|\widehat f\|_B<\tau,\qquad
+\|w-\widehat f\|_B<3-\tau.
+\tag{Q128.20}
+$$
+
+这里的平方恒等式加上正迹才允许开平方，未从 $\widehat f$ 的名称假定其原正性。
+
+由 $f(p)=1$ 与Cauchy—Schwarz，
+
+$$
+1=B(\widehat f,p)\le\|\widehat f\|_B r_p<\tau r_p.
+$$
+
+取紧集 $D_p$ 上达到最小范数的 $x_0$，$f(x_0)=0$、$u(x_0)=1$ 给
+
+$$
+1=B(w-\widehat f,x_0)\le\|w-\widehat f\|_B s_p
+<(3-\tau)s_p.
+$$
+
+这就是(Q128.15)。$r_p>0$ 来自 $u(p)=1$，$r_p<1$ 来自(Q128.3)及三个严格正值。$D_p$ 紧且不含零，故 $s_p>0$。它是非退化球，任选不同的 $x,y\in D_p$；整个 $K$ 的范数至多一，而
+
+$$
+\left\|\frac{x+y}{2}\right\|_B^2
+=\frac{\|x\|_B^2+\|y\|_B^2}{2}
+-\frac{\|x-y\|_B^2}{4}<1.
+$$
+
+所以 $s_p<1$。代回(Q128.15)即得(Q128.16)。证毕。
+
+这些是同一原标签、其整个原排除球与全部原完整确认效应的联合必要条件。它们不矛盾于已付入口：原单位和归一态的要求没有规定任意未知标签的完整确认效应都满足 $f(w)=1$。种子标签的这项等式不能推广到全部 $\mathcal A_p$。本定理也没有给出满足所有原条件的反模型。
+

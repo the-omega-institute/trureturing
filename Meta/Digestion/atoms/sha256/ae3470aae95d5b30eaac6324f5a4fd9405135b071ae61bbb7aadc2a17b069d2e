@@ -1,0 +1,4 @@
+### 1.4　同一原来源的有限共同实现，仍有准确余量
+
+第三项变更是 [FIB 边界几何附录 III 新 §153](https://github.com/the-omega-institute/trureturing/blob/0b9f2dda45b880862865f2c34ba94bf8ff1063ee/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md)。 在定义 153.1 完整继承的原 $H^1\times\mathbb R$ 来源、完整算子和分析供应下， 定理 153.2 构造*同一个*整个原空间上的 Borel 四分割， 同时达到全部原边缘、全部有序两时标签概率，以及 $013,103,031$ 三个有序三元系数。 其三元余量属于 $H_0^{\otimes3}$，27 个环境坐标中只消去了指定三个，另外 24 个尚未指定； 这不宣称它们非线性独立或可共同达到。原完整 64 个联合方程仍保留全部量词。 本次核读了该新增证明，没有重新认证所有继承分析供应。
+

@@ -1,0 +1,17 @@
+### 4.1　乘法群给出无限生成元，不指定唯一度量
+
+取正有理数的乘法群 $G_{\mathrm{arith}}=\mathbb Q_{>0}^{\times}$。 唯一分解给群同构
+
+$$
+\nu:G_{\mathrm{arith}}\longrightarrow\bigoplus_{p\in\mathcal P}\mathbb Z,
+ \qquad \nu(r)=(v_p(r))_{p\in\mathcal P},\qquad \nu(rs)=\nu(r)+\nu(s).
+$$
+
+每个向量只有有限支撑；负指数表示分母，未引入无限素数乘积。 本轮候选在这一实际算术例子中写成
+
+$$
+q(rs)+q(r/s)=2q(r)+2q(s).
+$$
+
+素数是乘法群的一组生成元，故它们不是同一维数下不断增加的新公理。 欧几里得的一个固定证明步骤已经保证生成元不能由任何有限素数表穷尽[\[9\]](#ref-euclid)。
+

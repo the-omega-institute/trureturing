@@ -2,6 +2,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.IO.Compression;
 using System.Collections.Concurrent;
+using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using StrataLint.Engine;
 
@@ -122,6 +123,83 @@ public sealed class RawLeanReportArtifactTests
     {
         Assert.Throws<ArgumentException>(() => LeanReportScope.Create(Snapshot(), []));
         Assert.Throws<InvalidOperationException>(() => LeanReportScope.Create(Snapshot(), [RepoPath.CreateKnown("D5/Missing.lean")]));
+    }
+
+    [Theory]
+    [InlineData("D5/Selected.lean", "changed")]
+    [InlineData("D5/Dependency.lean", "changed")]
+    [InlineData("tools/lean-inspector-interface/LocalBridge/Catalog.lean", "changed")]
+    [InlineData("lean-report-inputs.json", "changed")]
+    [InlineData("Golden/Frozen/state/D5/Selected.lean.json", "changed")]
+    [InlineData("D5/Selected.lean", "missing")]
+    [InlineData("D5/Selected.lean", "unread")]
+    [InlineData("D5/Selected.lean", "stable")]
+    public void FullFallbackRequiresConsistentAlreadyReadInputs(string changedPath, string defect)
+    {
+        const string bridgePath = "tools/lean-inspector-interface/LocalBridge/Catalog.lean";
+        var entries = new[]
+        {
+            RawRepositoryEntry.FromText("lean-report-inputs.json",
+                "{\"schema_version\":1,\"dependency_sources\":{\"include\":[{\"pattern\":\"tools/lean-inspector-interface/**/*.lean\",\"optional\":false}],\"exclude\":[]}}"),
+            RawRepositoryEntry.FromText("Golden/Frozen/state/D5/Selected.lean.json", "{}\n"),
+            RawRepositoryEntry.FromText("D5/Selected.lean", "prelude\nimport LocalBridge.Catalog\n"),
+            RawRepositoryEntry.FromText(bridgePath, "prelude\nimport D5.Dependency\n"),
+            RawRepositoryEntry.FromText("D5/Dependency.lean", "prelude\n"),
+            RawRepositoryEntry.FromText("D5/Sibling.lean", "prelude\n"),
+        };
+        var original = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(entries))).Snapshot;
+        var inventory = RepositorySnapshot.Create(original.Files.ToImmutableDictionary(
+            static item => item.Key,
+            static item => item.Key.Value.EndsWith(".lean", StringComparison.Ordinal)
+                ? new RepositoryFile(item.Key, [], isOpaque: false, gitBlobOid: null, contentWasRead: false)
+                : item.Value));
+        var scope = LeanReportScope.Create(inventory, [RepoPath.CreateKnown("D5/Selected.lean")],
+            sourcePath => original.Files[sourcePath]);
+        // Imports remain identical; the full bundle binds the later source bytes.
+        var laterEntries = entries.Select(entry => entry.Path == changedPath && defect == "changed"
+            ? RawRepositoryEntry.FromText(entry.Path, Encoding.UTF8.GetString(entry.Bytes.AsSpan()) + "\n")
+            : entry);
+        var later = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(laterEntries))).Snapshot;
+        using var temporary = new TemporaryDirectory();
+        var reportPath = Path.Combine(temporary.Path, "full.json");
+        RawLeanReportArtifact.WriteFile(reportPath, later, LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>
+            {
+                ["D5/Selected.lean"] = new(["LocalBridge.Catalog"], []),
+                ["D5/Dependency.lean"] = new([], []),
+                ["D5/Sibling.lean"] = new([], []),
+            }));
+        var key = RepoPath.CreateKnown(changedPath);
+        var fullSnapshot = defect switch
+        {
+            "missing" => RepositorySnapshot.Create(later.Files.Remove(key)),
+            "unread" => RepositorySnapshot.Create(later.Files.SetItem(key,
+                new RepositoryFile(key, [], isOpaque: false, gitBlobOid: null, contentWasRead: false))),
+            _ => later,
+        };
+        var acquisitions = 0;
+        LeanAxiomReport Load() => RawLeanReportArtifact.ReadFileForScopeOrFull(reportPath, scope, () =>
+        {
+            acquisitions++;
+            return fullSnapshot;
+        });
+
+        if (defect == "stable")
+        {
+            var report = Load();
+            Assert.True(report.IsScoped);
+            Assert.Equal(2, report.Files.Count);
+            Assert.False(scope.SourceSnapshot.Files[RepoPath.CreateKnown("D5/Sibling.lean")].ContentWasRead);
+        }
+        else
+        {
+            var exception = Assert.Throws<FormatException>(() => Load());
+            Assert.Contains("consistency", exception.Message, StringComparison.Ordinal);
+            Assert.Contains(changedPath, exception.Message, StringComparison.Ordinal);
+        }
+        Assert.Equal(1, acquisitions);
     }
 
     [Fact]
@@ -260,7 +338,11 @@ public sealed class RawLeanReportArtifactTests
             fromDisk.Files.Single().Value.Declarations.Single().LoadTypeRepresentation());
 
         var materialArchive = RawLeanReportArtifact.MaterialsPath(path);
-        using (var archive = ZipFile.Open(materialArchive, ZipArchiveMode.Update))
+        var replacementArchive = materialArchive + ".replacement";
+        // Keep loaded archives immutable; publish corrupt fixtures by replacement
+        // just as report producers replace a completed material archive.
+        File.Copy(materialArchive, replacementArchive);
+        using (var archive = ZipFile.Open(replacementArchive, ZipArchiveMode.Update))
         {
             var entry = Assert.Single(archive.Entries);
             var name = entry.FullName;
@@ -270,22 +352,27 @@ public sealed class RawLeanReportArtifactTests
                 replacement.Open(), new UTF8Encoding(false), leaveOpen: false);
             writer.Write("statement-v1(tampered)");
         }
+        File.Move(replacementArchive, materialArchive, overwrite: true);
         var tampered = RawLeanReportArtifact.ReadFile(path, snapshot);
         Assert.Contains(
             "hash",
             Assert.Throws<InvalidDataException>(() =>
                 _ = tampered.Files.Single().Value.Declarations.Single().LoadTypeRepresentation()).Message,
             StringComparison.OrdinalIgnoreCase);
-        using (var archive = ZipFile.Open(materialArchive, ZipArchiveMode.Update))
+        File.Copy(materialArchive, replacementArchive);
+        using (var archive = ZipFile.Open(replacementArchive, ZipArchiveMode.Update))
         {
             Assert.Single(archive.Entries).Delete();
         }
+        File.Move(replacementArchive, materialArchive, overwrite: true);
         var missingReport = RawLeanReportArtifact.ReadFile(path, snapshot);
         var missingMaterial = missingReport.Files.Single().Value.Declarations.Single();
         Assert.Contains(
             "missing",
             Assert.Throws<InvalidDataException>(() => missingMaterial.LoadTypeRepresentation()).Message,
             StringComparison.OrdinalIgnoreCase);
+        Assert.Equal("statement-v1(test)",
+            fromDisk.Files.Single().Value.Declarations.Single().LoadTypeRepresentation());
     }
 
     [Fact]
@@ -469,6 +556,77 @@ public sealed class RawLeanReportArtifactTests
         var declaration = Assert.Single(Assert.Single(report.Files).Value.Declarations);
         Assert.Equal(material, declaration.LoadTypeRepresentation());
         Assert.Same(declaration.LoadTypeRepresentation(), declaration.LoadTypeRepresentation());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MaterialReaderAcceptsAnArchiveLargerThanTheManagedArrayLimit(bool validateMaterials)
+    {
+        const string material = "statement-v1(∀ α, Ω𝒪😀)";
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        var address = WriteMaterialFixture(path, material);
+        var materials = RawLeanReportArtifact.MaterialsPath(path);
+        using (var output = File.Create(materials))
+        {
+            // A sparse prefix exercises both the 2 GiB array boundary and
+            // ZIP64 offsets without writing gigabytes of fixture content.
+            output.Position = (long)uint.MaxValue + 1;
+            using var archive = new ZipArchive(output, ZipArchiveMode.Create);
+            var entry = archive.CreateEntry("sha256/" + address[7..]);
+            using var destination = entry.Open();
+            destination.Write(Encoding.UTF8.GetBytes(material));
+        }
+        Assert.True(new FileInfo(materials).Length > uint.MaxValue);
+
+        var report = RawLeanReportArtifact.ReadFile(path, Snapshot(), validateMaterials);
+        var declaration = Assert.Single(Assert.Single(report.Files).Value.Declarations);
+        Assert.Equal(material, declaration.LoadTypeRepresentation());
+        Assert.Same(declaration.LoadTypeRepresentation(), declaration.LoadTypeRepresentation());
+    }
+
+    [Fact]
+    public void MaterialReaderKeepsTheOpenedArchiveAfterItsPathIsReplaced()
+    {
+        const string first = "statement-v1(first)";
+        const string second = "statement-v1(second Ω)";
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        var firstAddress = WriteMaterialFixture(path, first);
+        var secondAddress = WriteMaterialFixture(Path.Combine(temporary.Path, "second.json"), second);
+        var materials = RawLeanReportArtifact.MaterialsPath(path);
+        using (var archive = ZipFile.Open(materials, ZipArchiveMode.Update))
+        {
+            var entry = archive.CreateEntry("sha256/" + secondAddress[7..]);
+            using var destination = entry.Open();
+            destination.Write(Encoding.UTF8.GetBytes(second));
+        }
+        var read = RawLeanReportArtifact.OpenStatementMaterialSource(path, [firstAddress, secondAddress]);
+        Assert.Equal(first, read(firstAddress));
+
+        File.Move(materials, materials + ".previous");
+        File.WriteAllBytes(materials, [0xff]);
+
+        Assert.Equal(second, read(secondAddress));
+        Assert.Equal(first, read(firstAddress));
+    }
+
+    [Fact]
+    public void InvalidMaterialArchiveReleasesItsFileHandle()
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        var address = WriteMaterialFixture(path, "statement-v1(test)");
+        var materials = RawLeanReportArtifact.MaterialsPath(path);
+        using (var archive = ZipFile.Open(materials, ZipArchiveMode.Update))
+            archive.CreateEntry("sha256/" + address[7..]);
+
+        Assert.Throws<InvalidDataException>(() =>
+            RawLeanReportArtifact.ReadFile(path, Snapshot(), validateMaterials: true));
+
+        using var exclusive = new FileStream(materials, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+        Assert.True(exclusive.CanRead);
     }
 
     [Theory]

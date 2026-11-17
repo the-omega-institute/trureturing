@@ -76,7 +76,7 @@ private theorem rectangle_mono {U U' : Submodule K E} {V V' : Submodule K F}
     (hU : U ≤ U') (hV : V ≤ V') : rectangle U V ≤ rectangle U' V' := by
   exact Submodule.map₂_le_map₂ hU hV
 
-private theorem rectangle_finrank [FiniteDimensional K E] [FiniteDimensional K F]
+theorem rectangle_finrank [FiniteDimensional K E] [FiniteDimensional K F]
     (U : Submodule K E) (V : Submodule K F) :
     finrank K ↥(rectangle U V) = finrank K U * finrank K V := by
   rw [rectangle_range, LinearMap.finrank_range_of_inj]
@@ -615,7 +615,7 @@ namespace D5.S3.Combinatorics.SubspaceCodes.MRDDensityColumnTensor.MRDDensityTen
 variable {K E D : Type*} [Field K]
   [AddCommGroup E] [Module K E] [FiniteDimensional K E]
   [AddCommGroup D] [Module K D] [FiniteDimensional K D]
-private theorem finrank_sup_le_sum {ι : Type*} [DecidableEq ι]
+theorem finrank_sup_le_sum {ι : Type*} [DecidableEq ι]
     (V : ι → Submodule K E) (s : Finset ι) :
     finrank K ↥(s.sup V) ≤ ∑ i ∈ s, finrank K ↥(V i) := by
   induction s using Finset.induction_on with

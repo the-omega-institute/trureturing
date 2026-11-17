@@ -1,0 +1,17 @@
+**定义 99.1（全效应的四维域）。** 使用VI89.1的同一个非零有限维实空间 $V$、闭尖生成锥 $C$、严格正原单位 $u$、整个紧基 $K=C\cap\{u=1\}$、全部原纯点 $P=\operatorname{ext}K$ 和全部原 proper 效应。记
+
+$$
+\begin{gathered}
+E=\operatorname{lin}(K-K),\qquad m=\dim E,\qquad
+F_p=\{f\in[0,u]_{C^*}:f(p)=1\},\\
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+p\perp x\ \Longleftrightarrow\ T_p(x)=0,\qquad
+D_p=\{x\in K:p\perp x\}.
+\end{gathered}
+\tag{VII99.1}
+$$
+
+$\mathrm B,\mathrm{Z0},\mathrm A,\mathrm H,S$ 准确取V88.1—88.4、VI89.1—89.4的原定义。特别是，$\mathrm B$ 管每个不同原纯对的整个最小面 $H(p,q)$；$\mathrm{Z0}$ 管每个原纯 $p$ 和全部原混态 $x,y$ 的零排除中点，不只管纯端点。除99.2的通维引理外，本章分类取 $m=4$；此 $m$ 不是ROG矩阵环境的余维 $c$。不对 $P$ 加有限、闭、可数或光滑前件，不给 $C$ 预付矩阵表示、ROG、谱性、自对偶或内积。
+
+$\mathbb B^d$ 表示闭欧氏单位球的仿射类型，$\Delta_j$ 表示 $j$ 维单纯形，$*$ 表示仿射联结：两因子置于仿射独立的位置，其凸包为联结，维数为两因子维数之和再加一。二维球形真面称为圆盘面，包含其整个内部；其圆周才是纯点集。球坐标中的长度只在对应的球面方向空间使用，不成为原 $V$ 上的额外结构。
+

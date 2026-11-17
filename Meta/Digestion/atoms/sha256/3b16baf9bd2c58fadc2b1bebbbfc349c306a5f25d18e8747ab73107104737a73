@@ -1,0 +1,95 @@
+**Theorem 14.1 (executed costs escape every bounded budget in law).**
+Suppose either qualitative contract in Assumption 11.3 holds for a
+sequence of Definition 11.1. Then, for every finite $M$,
+
+$$
+\mathbb P(V_n^a\le M)\to0,\qquad
+\mathbb P(\mathsf V_{\chi,n}\le M)\to0,\qquad
+\mathbb P(L_n\le M)\to0,\qquad
+\mathbb P(E_n\le M)\to0.
+\tag{14.1}
+$$
+
+Thus each cost diverges in probability and its laws are not tight on
+$[0,\infty)$. In the extended sense each expected cost tends to
+$+\infty$. This statement requires neither a tube radius nor any
+specified stage rate. It makes no almost-sure claim on an unspecified
+original coupling.
+
+Proof. First consider the held-law contract. Continuous lifting of a
+circle path with its fixed initial representative is continuous for
+uniform convergence: once two paths are uniformly closer than $\pi$,
+the connected-interval argument in Theorem 13.2 applies. Hence the
+inverse (2.6) is a continuous map on the held path space with fixed
+initial point. In particular
+
+$$
+a_n\Rightarrow W^1_{\cdot\wedge S},\qquad
+b_n\Rightarrow W^2_{\cdot\wedge S}
+\quad\hbox{in the uniform topology}.
+\tag{14.2}
+$$
+
+On a common probability-one Brownian event, each coordinate has infinite
+total variation on every rational interval $[0,t]$ with $t>0$.
+For example its dyadic squared-increment sums converge to $2t$ almost
+surely, while the largest increment tends to zero; finite total
+variation would force those squared sums to tend to zero. Countably
+many rational $t$ suffice. Since $S>0$, choose such a $t<S$.
+Both stopped coordinates therefore have infinite variation almost
+surely, even though they are constant after $S$.
+
+Total variation on continuous real paths is the supremum of continuous
+finite-partition sums. Its finite sublevel sets are closed. Portmanteau
+applied to (14.2) gives the first two limits in (14.1). No compactness
+of those sublevel sets is needed. Equation (11.5) gives the length
+and energy limits, since $L_n\ge V_n^b$ and
+$E_n\ge(V_n^b)^2/T$.
+
+For the cemetery-law contract use the Skorokhod representation theorem
+on the Polish space $D([0,T],E)$ to realize copies converging almost
+surely in $J_1$. This representation is only a proof of statements
+about the given marginal laws. Fix a limiting realization with $S>0$
+and infinite Brownian variation on all positive rational intervals.
+For a rational $0<t<S$, the limit is alive and continuous on a
+slightly longer interval. $J_1$ convergence, isolation of $\dagger$
+and uniform continuity there imply that the copied finite paths are
+eventually alive on $[0,t]$ and converge uniformly on this interval.
+Their real phase lifts from the common initial value therefore
+converge uniformly too. Finite-partition sums then show
+
+$$
+\liminf_n\operatorname{TV}_{[0,t]}(a_n)=+\infty,
+\qquad
+\liminf_n\operatorname{TV}_{[0,t]}(b_n)=+\infty
+\tag{14.3}
+$$
+
+for the copied controls recovered from these paths. These are lower
+bounds for the costs of the actual executed prefixes.
+More explicitly, for an actual killed path the phase cost is twice
+the supremum of
+$\sum_j d_{\mathbb T}(\alpha(t_j),\alpha(t_{j-1}))$ over rational
+pre-death partitions starting at zero. On each compact alive interval,
+continuity permits refinement until every real lifted increment has
+absolute value less than $\pi$; the circle distances then equal those
+absolute increments. This proves equality with $\operatorname{TV}(b)$,
+including windings. The height variation has the analogous partition
+formula with absolute height differences. These are measurable
+functions of the killed path. Continuity supplies the terminal value
+at a finite death by the left limit, and at $T$ by a limit from below
+when there is no death, so their suprema are the actual held variations.
+Each such functional has the
+same law for the copies as for the original commands. Thus (14.3)
+implies the first two limits of (14.1) in the original laws; (11.5)
+again handles length and energy. Nothing assigns variation or energy
+to the jump into $\dagger$. In particular one has not lifted a circle
+path through that jump or used a post-death comparison extension.
+
+For any nonnegative cost $C_n$ in (14.1),
+$\mathbb EC_n\ge M\mathbb P(C_n>M)$. Taking the lower limit and
+then $M\to\infty$ gives divergence of expectations. A uniformly
+bounded expected budget would also contradict (14.1) directly by
+Markov's inequality. No uniform integrability premise is needed for
+this lower-bound consequence. $\square$
+

@@ -112,7 +112,7 @@ private theorem proper_two_labels {n : ℕ} (hn : 2 ≤ n)
   exact ⟨(0, ⟨0, by omega⟩), (0, ⟨1, by omega⟩),
     hp ⟨0, by omega⟩ (by change 0 + 1 < n; omega) 0 0 (by decide)⟩
 
-private theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
+theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 5 × Fin n → Fin 3) (hp : Proper P)
     (d : Fin 3) (hd : ∀ i, P i ≠ d) : ∀ j r, P (r, j) = P (0, j) := by
   have finite_fact : ∀ a b c d : Fin 3,
@@ -592,7 +592,7 @@ private theorem power_polynomial : (Q^(4+7)).mulVec (1 : Fin 41 → ℤ) =
   exact List.ofFn_inj.mp rfl
 
 
-private theorem pair_tail (n : ℕ) : (L (n+13) : ℤ) + 6 =
+theorem pair_tail (n : ℕ) : (L (n+13) : ℤ) + 6 =
     16 * ((L (n+12) : ℤ)+6) - 64 * ((L (n+11) : ℤ)+6) +
     76 * ((L (n+10) : ℤ)+6) + 17 * ((L (n+9) : ℤ)+6) -
     84 * ((L (n+8) : ℤ)+6) + 48 * ((L (n+7) : ℤ)+6) -
@@ -633,7 +633,7 @@ private theorem scale_recurrence (m : ℕ) (hm : 2 ≤ m)
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
-private theorem pair_base : (L 12 : ℤ)+6 =
+theorem pair_base : (L 12 : ℤ)+6 =
     16*((L 11 : ℤ)+6) - 64*((L 10 : ℤ)+6) + 76*((L 9 : ℤ)+6) +
     17*((L 8 : ℤ)+6) - 84*((L 7 : ℤ)+6) + 48*((L 6 : ℤ)+6) - 8*((L 5 : ℤ)+6) := by
   have ht (k : ℕ) (hk : k < 12) :

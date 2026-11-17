@@ -1,0 +1,57 @@
+**定义 1.2（固定局部重置及其实际并行延拓）。** 事先固定一个扇区 $j_0$ 和其中任意 $\sigma\ge0$、$\operatorname{Tr}\sigma=1$。令 $\rho_0\in A$ 仅在 $j_0$ 块等于 $\sigma$，并置
+
+$$
+R(a)=\operatorname{Tr}_A(a)\rho_0,\qquad
+q_2=M(\rho_0,\rho_0),\qquad q_3=Q(\rho_0,\rho_0,\rho_0).
+$$
+
+允许 $\sigma$ 具有任意秩。指定实际二份、三份重置的乘积关系为
+
+$$
+\begin{aligned}
+R_2M(a,b)&=M(Ra,Rb),\\
+R_3Q(a,b,c)&=Q(Ra,Rb,Rc)\qquad(a,b,c\in A).
+\end{aligned}
+\tag{1.3}
+$$
+
+Part IV 命题 66.2 的可逆实线性化给出存在性：
+
+$$
+R_2=\widetilde M(R\otimes R)\widetilde M^{-1},\qquad
+R_3=\widetilde Q(R\otimes R\otimes R)\widetilde Q^{-1}.
+\tag{1.4}
+$$
+
+两条实张成又使 $Q(A,A,A)$ 实张满 $E$，因此 (1.3) 唯一确定整个 $D,E$ 上的映射，包括纠缠输入。实张成不表示正元皆可分离。
+
+这两个实际映射的全空间公式为
+
+$$
+\begin{gathered}
+R_m(X)=\operatorname{Tr}(V_mX)q_m\quad(m=2,3),\\
+(V_2)_{ij}=I_i\otimes u_{ij}^{-1},\qquad
+(V_3)_{ijk}=I_i\otimes u_{ij}^{-1}\otimes g_{ijk}^{-1}.
+\end{gathered}
+\tag{1.5}
+$$
+
+证明逆迹公式时，在自然 Hermitian 张量坐标中，将实际线性化写成 $\operatorname{Ad}_{S_m}P_m$。这里 $P_2$ 的块为 $\mathrm{id}_i\otimes T_j^{\varepsilon_{ij}}$，$P_3$ 的块为 $\mathrm{id}_i\otimes T_j^{\varepsilon_{ij}}\otimes T_k^{\delta_{ijk}}$；$S_2,S_3$ 分别是 Part IV (66.15) 的 $A_{ij},C_{ijk}$。其逆的顺序是 $P_m\operatorname{Ad}_{S_m^{-1}}$，而 $\operatorname{Tr}(P_mY)=\operatorname{Tr}Y$，故
+
+$$
+\operatorname{Tr}(\widetilde M^{-1}X)=\operatorname{Tr}(S_2^{-2}X),\qquad
+\operatorname{Tr}(\widetilde Q^{-1}X)=\operatorname{Tr}(S_3^{-2}X).
+$$
+
+将局部张量重置 $Y\mapsto\operatorname{Tr}(Y)\rho_0^{\otimes m}$ 代入 (1.4)，即得 (1.5)。逆映射先撤合同、再转置，最后的总迹消去该转置；$V_2,V_3$ 不再额外转置，也没有交换同一腿上的非交换矩阵。
+
+由 (1.2)，$q_m$ 是非零正元；此结论包括纯态、中间秩和满秩 $\sigma$，不使用 $\sigma^{-1}$。$V_m>0$。直接复用 Part IV (69.14) 的正泛函乘正输出接口及 [Watrous 定理 2.22、2.26](../../../Library/Quantum/watrous2018theory.md#complete-channel-representations)，(1.5) 的复线性延拓是 CP，且令 $a_m=\operatorname{Tr}q_m>0$，有
+
+$$
+R_m\text{ 在全部实际态上 TP}
+\quad\Longleftrightarrow\quad a_mV_m=1_{D\text{ 或 }E}.
+\tag{1.6}
+$$
+
+这是一条完整算子等式，只检查重置自身的某个输出态不能代替它。CP 在此是矩阵映射性质，不证明重置的物理可用性，也不要求 $\widetilde M^{-1},\widetilde Q^{-1}$ 为正。
+

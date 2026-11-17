@@ -1,0 +1,56 @@
+**约定 127.1（原域、原二元关系与条件范围）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^*$。始终使用
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+\mathcal T_p(x)=\min_{f\in\mathcal F_p}f(x),\\
+D_p=\{x\in K:\mathcal T_p(x)=0\},\qquad
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\},\\
+N_p=\{h\in C^*:h(p)=0\},\qquad
+N_{D_p}=\{h\in C^*:h|_{D_p}=0\},\\
+p\perp q\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0.
+\end{gathered}
+\tag{Q127.1}
+$$
+
+这里 $\mathcal T_p$ 是前文的标量最低确认函数 $T_p$，与下文的线性种子压缩 $T_i$ 不同型。$D_p$ 是整个原零对一排除集合；$K,P,\mathcal E$ 均不缩小。补效应给原正交对称性，且 $q\in D_p\Longleftrightarrow p\in D_q$ 对纯端点成立。
+
+本章的固定入口记为 $\mathsf{Ent}_\triangle$，逐项包含：
+
+1. EB3：每个原纯标签 $p$ 的完整 $D_p$ 均仿射同构于整个闭三球；Inj：$D_p=D_q\Rightarrow p=q$。
+2. 一组实际原正交三角 $\triangle=(p_1,p_2,p_3)$，且至少一个顶点属于 $P_0=\{p:\mathcal A_p\text{ 是单点}\}$。
+3. 125.5的同一个联合分离条件 $\mathsf J_\triangle$：对全部 $x,y\in K$，若在任一种子顶点读零的每张原效应均对 $x,y$ 同读，则 $x=y$。
+4. 125.6由限制配对唯一确定的三个线性 $T_i$，全部满足 $T_i(C)\subseteq C$。
+
+其中第3项和第4项使用的准确公式分别为
+
+$$
+\begin{gathered}
+\forall x,y\in K:\quad
+\bigl[\forall i\ \forall b\in\mathcal E,\ b(p_i)=0\Rightarrow b(x)=b(y)\bigr]
+\Rightarrow x=y,\\
+T_i:V\to M_i:=\operatorname{span}D_{p_i},\qquad
+h(T_i x)=h(x)\quad(h\in\operatorname{span}N_{p_i},\ x\in V).
+\end{gathered}
+$$
+
+第二行定义规范线性映射；其全锥正性是第4项另加的序条件。
+
+后面再加的PC1也不是入口定义的隐含部分。真实三角、含 $P_0$ 的三角、联合分离、三个全锥正压缩和PC1分别写明；不把任何尚未推出的条件归给裸EB3。一个实际 $P_0$ 标签存在且确认歧义沿原边不变，已经由[IX119.10][Q127IX]证明；这不保证该标签进入实际三角。目标仍是同一原实现的完整内生量子重构；本章的条件定理只支付完整静态复三能级几何，操作、全部有限复合及时间的其余前件在127.10逐项保留。
+
+直接复用VII103.2、104.1及IX119.1、120.2的完整原面接口：$\mathcal A_p\ne\varnothing$；每个 $D_p$ 是暴露极大真面；全部非空真面只有纯单点或完整排除球；不同完整球相交时只能交于一个原纯点；$P\cap D_p=\partial_{\rm rel}D_p$。任意 $e\in\mathcal A_p$ 的零面恰为 $D_p$，一值面恰为 $\{p\}$，包含对全部原混态的一值面判断。
+
+法向维数只使用既有定理IX119.10的准确公式。若 $a(p)=\dim_{\rm aff}\mathcal A_p$，则
+
+$$
+\dim\operatorname{span}N_p=a(p)+4,\qquad
+N_{D_p}=\operatorname{cone}\mathcal A_p,\qquad
+\dim\operatorname{span}N_{D_p}=a(p)+1.
+\tag{Q127.2}
+$$
+
+其沿每条原正交边的常数冗余与至少一个原 $P_0$ 标签也按该定理复用。下文只使用这些接口，不另证维数公式。
+

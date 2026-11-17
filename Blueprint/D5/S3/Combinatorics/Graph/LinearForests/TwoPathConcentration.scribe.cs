@@ -11,6 +11,25 @@ internal sealed class TwoPathConcentrationDocument : IScribeDocumentDefinition
         "Two actual B-ended paths concentrate on the complete original labelled bipartition with an exact six-vertex residual and a signed-Catalan shift.",
         H("Concentrating two paths on the original bipartition"),
         Blocks(
+            Describe.Lean(DescribeId.Create("actual-disjoint-sum-configurations"),
+                DeclarationHandle.Create(Prefix + "configurations_sum"),
+                H("Configurations of disjoint graph sums"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For arbitrary graphs G and H and finite domains V and W, every independent "
+                    + "subset of their tagged disjoint sum is uniquely the disjoint union of an "
+                    + "independent subset of V and an independent subset of W. This is equality "
+                    + "of actual configuration families, with both empty subsets included."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-disjoint-sum-partition"),
+                DeclarationHandle.Create(Prefix + "partition_sum"),
+                H("Weighted partitions multiply"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For weights in any commutative semiring, the native partition of a disjoint "
+                    + "graph sum is the product of the native partitions on the two original domains. "
+                    + "Each weight is restricted along the corresponding tagged vertex inclusion."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-concentration"),
                 DeclarationHandle.Create(Prefix + "actual_two_path_concentration"),
                 H("The actual graph move and its exact Catalan difference"),

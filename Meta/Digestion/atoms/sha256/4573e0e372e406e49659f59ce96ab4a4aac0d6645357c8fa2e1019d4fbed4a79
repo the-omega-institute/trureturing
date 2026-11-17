@@ -1,0 +1,15 @@
+**定义 118.9（每边一张定性稳定零见证）。** 条件(WZ)为
+
+$$
+\begin{split}
+&\forall s,r\in P\ (r\in D_s)\quad\exists h\in\mathcal A_s:\\
+&\quad\forall(t_n)\subset P\ (t_n\to r)\quad
+\exists(g_n)\subset\mathcal E:\quad
+ g_n(t_n)=0\ (\forall n),\quad\|g_n-h\|_K\to0.
+\end{split}
+\tag{IX118.16}
+$$
+
+$h$ 在全部趋近序列之前选定。固定 $h$ 后，此条件等价于 $\operatorname{dist}_K(h,Z_t)\to0$ 当 $t\in P,t\to r$，也等价于通常的逐 $\varepsilon$ 邻域条件。
+不要求所有 $h\in\mathcal A_s$ 或所有 $h\in Z_r$ 稳定，不要求按边连续选 $h$，不要求修复映射连续，也不要求Hölder指数、任何修复率、统一常数或统一邻域。
+

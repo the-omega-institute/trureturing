@@ -1,0 +1,17 @@
+**定义 120.10（原法向的方向函数）。** 固定 $p\in P_0$、$F=D_p=c+B\mathbb B^3$。由120.8，有唯一的三个线性泛函 $H_i\in\operatorname{span}N_p$，满足
+
+$$
+H(c+Bw)=w,\qquad H(p)=0,
+\quad H=(H_1,H_2,H_3).
+$$
+
+记 $g=g_p$，对 $v\in\mathbb R^3$ 定义
+
+$$
+\rho_p(v)=\sup_{x\in K\setminus\{p\}}
+\frac{-v\cdot H(x)}{g(x)}.
+\tag{IX120.14}
+$$
+
+$g(x)>0$ 已由原一值面证明，分母不是另加正则性假设。
+

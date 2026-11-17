@@ -1,0 +1,57 @@
+**定理 85.2（共同锚点序反射的充要条件）。** 在定义 85.1 下，以下四项等价：
+
+1. $T$ 在整个 $\operatorname{Herm}(\mathsf E)$ 上反射 PSD。
+2. 对每个单位 $x\in\mathsf E$ 及每个 $\eta>0$，$T(I-(1+\eta)|x\rangle\langle x|)$ 不是 PSD。
+3. 存在共同解码器 $C$。
+4. $\ker\mathbb V\subseteq\ker\Sigma$。
+
+共同解码器还给出整个 Hermitian 空间上的精确恒等式
+
+$$
+\boxed{CT(X)C^*=X.}\tag{85.2}
+$$
+
+所以序反射是否成立只依赖活跃作用的相容关系，不依赖这些严格正权的具体大小。
+
+**证明。** 第 1 项蕴含第 2 项，因为被测试的输入在 $x$ 方向特征值为 $-\eta$。证明第 2 项蕴含第 3 项是关键。若 $v=0$，置 $x=e/\|e\|$，则每个 $V_\ell x=0$，所以 $T(I-(1+\eta)|x\rangle\langle x|)=T(I)\ge0$，与第 2 项矛盾。故可设 $v\ne0$。
+
+令 $R=\sum_\ell\operatorname{ran}V_\ell\subseteq\mathsf F$，并仅在 $R$ 上取 $S_0=T(I)|_R$。若 $z\in R$ 且 $\langle z,S_0z\rangle=0$，严格正权给每个 $V_\ell^*z=0$，于是 $z$ 既在 $R$ 又与 $R$ 正交，故 $z=0$。因此 $S_0>0$。对任一单位 $x$ 置
+
+$$
+P_x=|x\rangle\langle x|,\qquad
+A_x=S_0^{-1/2}T(P_x)|_R S_0^{-1/2},\qquad 0\le A_x\le I_R.
+\tag{85.3}
+$$
+
+若 $\lambda_{\max}(A_x)<1$，可取足够小 $\eta>0$ 使 $(1+\eta)\lambda_{\max}(A_x)\le1$。则 $T(I)-(1+\eta)T(P_x)$ 在 $R$ 上 PSD，在 $R^\perp$ 为零，违反第 2 项。因此每个 $A_x$ 都有单位特征向量 $y$，满足 $A_xy=y$。置 $z=S_0^{-1/2}y\in R$。此时
+
+$$
+0=\langle z,T(I-P_x)z\rangle
+=\sum_\ell p_\ell\|(I-P_x)V_\ell^*z\|^2.
+$$
+
+每项为零，故 $V_\ell^*z=c_\ell x$。共同锚点给
+
+$$
+\langle e,V_\ell^*z\rangle=\langle v,z\rangle.
+\tag{85.4}
+$$
+
+当 $\langle e,x\rangle\ne0$ 时，所有 $c_\ell$ 必相等；共同值 $c$ 非零，因为 $\sum p_\ell|c_\ell|^2=\langle z,T(P_x)z\rangle=\langle y,A_xy\rangle=1$。定义复线性子空间和映射
+
+$$
+D_0=\{z\in\mathsf F:V_\ell^*z\text{ 对所有 }\ell\text{ 相同}\},\qquad
+L_0:D_0\to\mathsf E,\quad L_0z=V_{\ell_0}^*z
+\tag{85.5}
+$$
+
+（任取一个 $\ell_0\in S$）。上式证明 $\operatorname{ran}L_0$ 包含每个与 $e$ 不正交的单位方向。这些方向在单位球面稠密，而有限维线性像是闭子空间，所以 $L_0$ 满射。选一个线性右逆 $R_0:\mathsf E\to D_0$，则每个 $V_\ell^*R_0=I$；取 $C=R_0^*$ 即得共同解码器。共同锚点正是在 (85.4) 中把各位置本可不同的倍数锁成同一个倍数。
+
+若有共同解码器，将其逐项代入 $T$ 就得到 (85.2)，故第 3 项蕴含第 1 项。最后，第 3 项给 $C\mathbb V=\Sigma$，自然蕴含核包含。反向若核包含，则
+
+$$
+C_R(\mathbb V((x_\ell)))=\Sigma((x_\ell))
+$$
+
+在 $R=\operatorname{ran}\mathbb V$ 上良定义且线性；将其在 $R^\perp$ 上延为零，得到 $CV_\ell=I$。这不是只给某个输入一个数值重构，而是全部局部矩阵共用的线性商。证毕。
+

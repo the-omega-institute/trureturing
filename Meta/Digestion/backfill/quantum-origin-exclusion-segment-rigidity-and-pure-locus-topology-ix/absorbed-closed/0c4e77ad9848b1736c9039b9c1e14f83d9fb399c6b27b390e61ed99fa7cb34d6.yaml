@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0c4e77ad9848b1736c9039b9c1e14f83d9fb399c6b27b390e61ed99fa7cb34d6
+  normalized_sha256: sha256:0c4e77ad9848b1736c9039b9c1e14f83d9fb399c6b27b390e61ed99fa7cb34d6
+cas_ref: sha256:0c4e77ad9848b1736c9039b9c1e14f83d9fb399c6b27b390e61ed99fa7cb34d6
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/ExclusionIncidence.affine_ball_boundary_limit
+    target_statement_id: sha256:c5f99d22c766d57677d24fcea040982865d3c67757aaccc5f0cdcf04b203a080
+receipts:
+  unresolved_subitems: []

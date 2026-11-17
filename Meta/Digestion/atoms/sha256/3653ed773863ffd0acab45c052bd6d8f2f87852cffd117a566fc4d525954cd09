@@ -1,0 +1,48 @@
+**定义 144.1（原菜单、单尺和中点预算）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$、在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^*$。全程保留整个原域
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad \mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(z)=\min_{f\in\mathcal F_p}f(z),\qquad
+D_p=\{z\in K:T_p(z)=0\},\qquad S_p=P\cap D_p.
+\end{gathered}
+\tag{XI144.1}
+$$
+
+$z$ 遍历每个原混态；完整效应区间和确认菜单紧，minimum 达到。EB3 要求每个完整 $D_p$ 是非退化仿射实心三球，中心为 $c_p$。$p\perp q$ 指 $q\in S_p$，补效应使它对称。$\mathsf{Conn}$ 要求任意两个原纯点之间有有限原零边路，长度可随端点改变。
+
+以下保留 EB3+$\mathsf{Conn}$。直接复用[THREE_COPY VIII130.2][Q144TC]和[IX120.2、120.8、120.12][Q144IX]：全部标签单射，全部非空原真面只有纯单点或完整球，不同球至多交于一个原纯点，且
+
+$$
+\begin{gathered}
+\mathcal A_p:=\{e\in\mathcal F_p:e|_{D_p}=0\}=\{e_p\},\qquad g_p=u-e_p,\\
+\{e_p=0\}\cap K=D_p,\qquad \{e_p=1\}\cap K=\{p\},\\
+N_p=\{h\in C^*:h(p)=0\},\qquad L_p=\operatorname{span}_{\mathbb R}N_p,\\
+\dim L_p=4,\qquad R_p:L_p\longrightarrow\operatorname{Aff}(D_p)
+\text{ 是限制线性同构}.
+\end{gathered}
+\tag{XI144.2}
+$$
+
+每张固定 $S_a$ 上 $x\mapsto e_x$ 连续。这里的 $e_p$ 是唯一整球零确认，并非预先把整个 $\mathcal F_p$ 缩成单点；不预设 least、$T_p=e_p$、$R_p^{-1}$ 正、全纯域紧或跨球连续。
+
+保留140.1的单尺中点相容 $\mathsf{ZC}$：对每个 $a\in P$ 有一个实数 $\kappa_a$，使
+
+$$
+e_a(c_x)+e_a(c_{\bar x^{\,a}})=\kappa_a
+\quad(x\in S_a),\qquad \bar x^{\,a}=2c_a-x.
+\tag{XI144.3}
+$$
+
+本章的完整同值候选则把这些局部常数接成同一个数：
+
+$$
+\mathsf{UC}:\quad
+\exists\kappa\in\mathbb R\ \forall a\in P\ \forall x\in S_a:\quad
+ e_a(c_x)+e_a(c_{\bar x^{\,a}})=\kappa.
+\tag{XI144.4}
+$$
+
+它是由原定义生成的态、球心和效应之间的约束，不额外输入 Hilbert 空间、数值阈值或真实零三角。它加强了 $\mathsf{ZC}$ 的跨标签量词；不宣称该加强已由纯比较互易、Conn 或 EB3 导出。
+

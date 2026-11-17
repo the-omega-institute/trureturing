@@ -1,0 +1,14 @@
+**引理 7.3（壳的有限字母表）。** 壳中径向归一化后不同点的数目至多 $14\pi^2m^3$，加上行列式分支后终端字母表至多 $28\pi^2m^3$。
+
+证明。在每个归一化前的壳格点周围置边长 $\delta$ 的四维立方体。它们内部不交，外接半径为 $\delta$，所以全在半径 $1-3\delta$ 与 $1+3\delta$ 之间。四维球体积为 $\pi^2r^4/2$，故格点数 $N_{\mathrm{lat}}$ 满足
+
+$$
+\begin{aligned}
+N_{\mathrm{lat}}\delta^4
+&\le\frac{\pi^2}{2}[(1+3\delta)^4-(1-3\delta)^4]\\
+&=12\pi^2\delta(1+9\delta^2)\le14\pi^2\delta,
+\end{aligned}
+$$
+
+最后一步用 $\delta\le1/8$。因此 $N_{\mathrm{lat}}\le14\pi^2m^3$。径向重合可以合并，只会减少数目；行列式标签至多再乘二。$\square$
+

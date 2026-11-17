@@ -144,7 +144,7 @@ constitute a Lean proof of a uniform analytic family.
 | Near order forces $\operatorname{tr}C\leq1+\det C$, contradicted by the positive $T$ certificate. | **Proved, kernel-checked:** `trace_obstruction` and `witness_trace_test`, used by `result`. | Positive $2\times2$ matrices with the stated determinant and Riccati hypotheses; Cayley–Hamilton trace identities and PSD determinant nonnegativity. |
 | $3/2500<T<121/100000$ and the rotation-family jet identities. | **Computed:** the exact external checker in Evidence, exit 0 and the recorded SHA-256. | The two-sided bound is for this explicit witness. The family calculation verifies symbolic second-order identities and the stated finite coefficient cross-checks, not a universal analytic Lean theorem. |
 | Lean formalization of the all-$r$ small-rotation family, common scaling, unitary and direct-sum extensions, and the commuting-case reduction. | **Open:** no such theorem is delivered. | These are follow-up formalization targets, independent of the already refuted universal claim. |
-| The separate entrywise-eigenvalue question. | **Open:** `result` states no entrywise-eigenvalue comparison. | Weak log-majorization is not refuted; the source's comparison survives. |
+| The separate entrywise-eigenvalue question. | **Refuted by the revision2 companion:** `HwangKimWeightedSpectralRefutation.result`; the original `result` alone states no entrywise comparison. | The specified strictly positive weighted witness has an exact strict minimum-eigenvalue separator. Weak log-majorization survives. |
 
 The obstruction concerns positivity of a relative geometric mean minus the
 identity; the eigenvalue-product comparison does not impose that positivity.
@@ -159,6 +159,50 @@ Simultaneous diagonalization applies this coordinatewise. This explanation
 is not an additional Lean theorem; the formalization remains open as listed.
 The refutation invalidates the proposed strengthening, not any proved theorem
 in the source; no source theorem is asserted here to depend on the open question.
+
+### Revision2 companion scope
+
+The complete Ma–Zhang revision2 note and approved eight-group scope are
+retained at [#29594](https://github.com/the-omega-institute/trureturing/issues/29594).
+The canonical exposition in the original Blueprint Scribe preserves both
+witnesses, the exact trace criterion, commuting equality, all-dimension and
+all-input-count quantifiers, reverse consequences and scientific boundaries.
+Haobo Ma is affiliated with ChronoAI Pte Ltd, Singapore only; Wenlin Zhang
+with NUS and ChronoAI Pte Ltd, Singapore. The source is CC BY 4.0.
+These are returns of existing written research, without a new discovery or
+publication claim.
+
+| Group | Formal return and remaining boundary |
+| --- | --- |
+| 1 | `HwangKimStrictSpectralConverseRefutation.result` reuses the original actual witness and proves strict comparison of both decreasingly ordered eigenvalues, refuting the strict-spectral converse. The original `result` remains reusable. |
+| 2 | `BuresWassersteinTransport.finite_barycenter_of_dual` proves the global minimum over every positive definite competitor, uniqueness and actual epsilon selection from strictly positive normalized finite transport data. The characterization is attributed to Bhatia–Jain–Lim, arXiv:1712.01504v1, Theorem 8 and (62)–(63). |
+| 3 | `HwangKimTwoDimensionalCriterion.near_order_iff` proves both directions with positive definite L,W, det L=1, d=√det W, and exactly d≥1 and E≤0. |
+| 4 | `HwangKimWeightedSpectralRefutation.result` uses exactly weights (3/4,1/4), A*=diag(256,1), B*=[[13,3√3],[3√3,7]]/4. The actual mean identities and λmin(W*)<107/100<λmin(L*) are proved on its live path. The theorem refutes the full universal entrywise claim. A separate kernel-checked exact application proves near-order failure for this same actual pair, using C²≥I and det(W−(107/100)I)<0; no bind-only theorem is retained. |
+| 5 | **Open formal obligation:** arbitrary finite commuting positive definite inputs, actual common-basis log-Euclidean and argmin formulas, Loewner/near comparison and equality iff all inputs coincide, retaining every strictly positive weight. BJL (18),(22) supplies the published commuting formulas; scalar AM–GM alone does not identify the actual matrix barycenter. A compiled exact application verifies the actual formulas, Loewner comparison and equality for arbitrary finite positive diagonal data; the full commuting-family and near-order obligations remain open. |
+| 6 | **Open formal obligation:** both counterexample types for every m,n≥2, with suitable chosen strictly positive normalized weights. Actual direct-sum means and repeated-input/split-weight correspondence are required. Identity padding changes the full-size minimum eigenvalues; for the second witness the second largest sorted index / count above 107/100 supplies the separator. No assertion is made for every prescribed weight vector. |
+| 7 | The first strict-spectral converse is formally refuted. The other reverse and Qhalf consequences are retained as attributed written deductions from the second witness and BJL Theorem 1/(19),(54), without adding those published comparisons as axioms. Their exact formal consumers, including the near-to-entrywise bridge, remain separate obligations. |
+| 8 | The source, credits, exact finite-check scope, attribution and open boundaries are preserved. The complete eight-group formal return is **incomplete**. The two general theorems have faithful compiled Reg attempts whose inspector status remains `declared_unresolved`; the mirrored Reg sources identify the precise linked unfinished scope. Independent review, applicable final-head CI and merge are not certified here. |
+
+For the second witness the proof uses the established finite transport
+criterion with M*=(3I+K*)/4 and K*=[[9,2√3],[2√3,90]]/(4√399), so
+Ω=M*A*M*. The logarithmic sum is log(2)H with
+H=[[51,√3],[√3,1]]/8. Positivity of H−I/10 and (107/100)^10<2
+prove the lower spectral bound by CFC. The source's sharper explicit
+λmin(L*)=2^((13−√157)/4) is preserved as written context, without claiming
+that exact expression as a separately delivered Lean endpoint.
+
+BJL weak log-majorization remains valid. Its actual Conjecture 1/(25)
+concerns weak majorization, equivalently all unitarily invariant norms;
+it is **not refuted**. Qhalf=(ΣwⱼAⱼ¹/²)² differs from Ω. The unposed
+stronger entrywise Qhalf≤λΩ reading is the one obstructed by the written
+second-witness deduction. Hiai arXiv:2508.20309v2, Propositions 4.6–4.7,
+compares LE with a quasi-arithmetic mean (Qhalf at q=1/2), not Ω.
+Gan–Huang's near-to-entrywise implication and spectral-geometric comparison
+are distinct. Near and Loewner order agree for commuting X,Y in a common
+basis; diag(2,1) and diag(1,2) show that identical sorted spectra do not
+suffice. The all-r analytic rotation family and complete reverse-implication
+classification remain open, and the original priority/access limitations
+below remain in force.
 
 ### Literature status
 

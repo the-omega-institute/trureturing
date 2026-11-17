@@ -76,3 +76,27 @@ weights. It disproves the universal near-order comparison. It does not
 refute weak log-majorization or settle the separate entrywise-eigenvalue
 question. Completeness of the literature screen and priority beyond the
 sources read on issue #21282 are ASSUMED-UNVERIFIED.
+
+## Revision2 companion source and credits
+
+The complete scientific follow-up is Ma–Zhang, *Counterexamples beyond
+Bhatia–Jain–Lim (2018): Hwang–Kim's near-order question and its entrywise
+companion*, revision2, dated 9 November 2026, CC BY 4.0. Haobo Ma is
+affiliated with ChronoAI, Singapore; Wenlin Zhang with the National
+University of Singapore and ChronoAI, Singapore. No Omega affiliation is
+claimed. [Whole-source intake and approved outcome plan](https://github.com/the-omega-institute/trureturing/issues/29594)
+retain all eight scientific groups and the verified primary-source supplement.
+The selected `note.tex` SHA-256 is
+`d028aeda7d86580083b2e522cc52c7075d9b42cb79d2dc847987ed5fa686c839`.
+The manuscript handoff release is custody of existing research, not evidence
+of a new scientific publication or priority.
+
+The source includes both explicit witnesses, a finite positive-weight
+transport minimizer lemma, the exact 2D iff, commuting comparison and
+equality, suitable-chosen-positive-weight extensions to all matrix sizes
+and input counts at least two, and the stated reverse consequences.
+These must not be conflated with the scope of the original `result`.
+The original all-$r$ analytic rotation family and full classification of
+reverse implications remain open. Finite exact checker output is not a
+kernel proof of those families. Literature and priority limitations from
+the original record remain in force.

@@ -1,0 +1,17 @@
+**推论 104.5（带原补预算的逐效应延拓）。** 固定任意 $a_p\in\mathcal A_p$。对 $D_p$ 的每个 proper 仿射效应 $h$，存在原线性 $\widehat h$ 满足
+
+$$
+ 0\le\widehat h\le u-a_p,\qquad
+ \widehat h|_{D_p}=h,\qquad\widehat h(p)=0.
+\tag{VII104.10}
+$$
+
+证明。采用(VII104.3)。$s>0$ 时取球纯点 $q=\chi^{-1}(v/s)$，任取 $a_q\in\mathcal A_q$。104.3给 $a_q\le u-a_p$，104.4给 $a_q|_{D_p}=(1+(v/s)\cdot z)/2$。故可取
+
+$$
+ \widehat h=(\alpha-s)(u-a_p)+2s a_q.
+\tag{VII104.11}
+$$
+
+两个系数非负，系数和 $\alpha+s\le1$；限制和在 $p$ 的读数均如所需。$s=0$ 时取 $\alpha(u-a_p)$。这仍是 $\forall h\ \exists\widehat h$，未提供一个对所有 $h$ 共同线性、正且保单位的选择，更未提供互补正投影及其对偶核像条件，故不能改称 projectivity。证毕。
+

@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.ModularForms;
 
@@ -31,6 +33,18 @@ internal sealed class CubicThetaLatticeDocument : IScribeDocumentDefinition
             Node("positive-normalization", "Coefficient positivity and normalization", "theta_nonnegative_and_normalized", "Both lattice series have nonnegative coefficients and constant coefficient one.", DescribeRole.Theorem),
             Node("counted-fibres", "Finite-fibre series", "hasSum_counted_fibers", "For every nonnegative integer weight on the integer-pair lattice with finite fibres, the fibre-cardinality series is the full coefficientwise monomial sum.", DescribeRole.Theorem),
             Node("lattice-sums", "The full lattice sums", "hasSum_lattice_theta", "For every topology on the rational coefficient field, both fibre series are the coefficientwise sums of all lattice monomials at their nonnegative integral exponents.", DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("cubic-theta-lattice-norm-tripling"),
+                DeclarationHandle.Create("D5/S3/Arith/ModularForms/CubicThetaLattice.normTripling"),
+                H("Norm-tripling map"), StatementSource.FromAuthor(NormTriplingFormula()),
+                AssessedProvenance.FromRepo(Source, Original),
+                Blocks(Paragraph(Text("The integer map sends (x,y) to (x-y,x+2y)."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("cubic-theta-lattice-norm-third"),
+                DeclarationHandle.Create("D5/S3/Arith/ModularForms/CubicThetaLattice.normThird"),
+                H("Integer inverse-coordinate map"), StatementSource.FromAuthor(NormThirdFormula()),
+                AssessedProvenance.FromRepo(Source, Original),
+                Blocks(Paragraph(Text("The integer coordinate map sends (u,v) to ((2u+v)/3,(v-u)/3), with integer division in both coordinates."))),
+                DescribeRole.Definition),
             Node("triple-equiv", "Norm-tripling equivalence", "normTripleEquiv", "The map (x,y) to (x-y,x+2y) identifies norm-n and norm-3n fibres. The inverse uses the exact integer divisions (2u+v)/3 and (v-u)/3.", DescribeRole.Definition),
             Node("core-equiv", "Six rotated core fibres", "normCoreEquiv", "All norm-(3n+1) points are uniquely obtained by one of six rotations of (3x-1,3y), with e(x,y)=n. Coordinate residues make the six images disjoint and exhaustive.", DescribeRole.Definition),
             Node("residue-counts", "All-index residue counts", "norm_fiber_residue_counts", "The norm-fibre counts at 3n, 3n+1 and 3n+2 are respectively the norm-n count, six times the shifted-n count, and zero. The variable n is unrestricted.", DescribeRole.Theorem),
@@ -39,6 +53,34 @@ internal sealed class CubicThetaLatticeDocument : IScribeDocumentDefinition
             Node("extra-1", "Cubic phases of the six cosets", "normCoreEquiv_coordinate_residue", "The six complete rotated core cosets have alternating nontrivial cubic phases.", DescribeRole.Theorem),
             Paragraph(Text("This module supplies complete lattice counts. CubicThetaCoreProduct identifies the actual Euler quotient, CubicThetaIdentities proves the two other classical relations, and EtaSignK6 proves the full normalized sign theorem. This classical lattice mathematics carries no literature priority, unique, independent acceptance or KPI claim."))
         ), []));
+
+    private static Formula NormTriplingFormula()
+    {
+        var p = F.Id("p");
+        var z = Seq(Mathbb, Grp(F.Id("Z")));
+        var first = Seq(p, Dot, D(1));
+        var second = Seq(p, Dot, D(2));
+        return Disp(Seq(Forall, Sp, p, Sp, Colon, Sp, z, Sp, Times, Sp, z, Comma, Sp,
+            Operatorname, Grp(F.Id("normTripling")), Sp, p, Sp, F.Eq, Sp,
+            Parenthesized(Seq(first, Sp, Minus, Sp, second, Comma, Sp,
+                first, Sp, Plus, Sp, D(2), Sp, Cdot, Sp, second))));
+    }
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula NormThirdFormula()
+    {
+        var p = F.Id("p");
+        var z = Seq(Mathbb, Grp(F.Id("Z")));
+        var first = Seq(p, Dot, D(1));
+        var second = Seq(p, Dot, D(2));
+        return Disp(Seq(Forall, Sp, p, Sp, Colon, Sp, z, Sp, Times, Sp, z, Comma, Sp,
+            Operatorname, Grp(F.Id("normThird")), Sp, p, Sp, F.Eq, Sp,
+            Parenthesized(Seq(Operatorname, Grp(F.Id("Int")), Dot, Operatorname, Grp(F.Id("ediv")), Sp,
+                Parenthesized(Seq(D(2), Sp, Cdot, Sp, first, Sp, Plus, Sp, second)), Sp, D(3), Comma, Sp,
+                Operatorname, Grp(F.Id("Int")), Dot, Operatorname, Grp(F.Id("ediv")), Sp,
+                Parenthesized(Seq(second, Sp, Minus, Sp, first)), Sp, D(3)))));
+    }
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
         DescribeRole role) => Describe.Lean(

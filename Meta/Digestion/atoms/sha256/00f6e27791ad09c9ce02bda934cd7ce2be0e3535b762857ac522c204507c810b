@@ -1,0 +1,7 @@
+**定理 85.2（共同锚点序反射的充要条件）。** 在定义 85.1 下，以下四项等价：
+
+1. $T$ 在整个 $\operatorname{Herm}(\mathsf E)$ 上反射 PSD。
+2. 对每个单位 $x\in\mathsf E$ 及每个 $\eta>0$，$T(I-(1+\eta)|x\rangle\langle x|)$ 不是 PSD。
+3. 存在共同解码器 $C$。
+4. $\ker\mathbb V\subseteq\ker\Sigma$。
+

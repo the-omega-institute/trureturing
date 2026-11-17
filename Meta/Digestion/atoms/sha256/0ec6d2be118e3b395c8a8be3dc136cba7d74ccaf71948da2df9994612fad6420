@@ -1,0 +1,97 @@
+**定理 133.3（越过全部扇区界的返回必须在消失轴上带质量）。** 保留定理133.2所选的固定方向及常数。设
+
+$$
+r_n\in P,\quad r_n\to y,\qquad
+t_n\in P\cap D_{r_n},\qquad
+E_n=D_{t_n},\quad \alpha_n=\alpha_F(t_n).
+\tag{Q133.13}
+$$
+
+另假设对充分大的每个 $n$ 和每个 $0\le i\le k$，存在 $b_{i,n}\in N_{t_n}\setminus\{0\}$，满足
+
+$$
+g_{b_{i,n}}\ne0,\qquad
+\|w_{b_{i,n}}-v_i\|<\theta,\qquad
+\|g_{b_{i,n}}\|>H M(b_{i,n})\alpha_n.
+\tag{Q133.14}
+$$
+
+所有 $i$ 共享同一个实际返回标签 $t_n$。不要求这些正泛函趋于预先给定的非恒定源函数；其归一化源对比度允许趋零。
+
+写任一单射球图为
+
+$$
+E_n=c_n+L_n\overline B^{d_n},\qquad
+r_n=c_n+L_nz_n,\quad \|z_n\|=1,
+\tag{Q133.15}
+$$
+
+其中单位球面参数的存在由原零对称及 $S(E_n)=P\cap E_n$ 给出。将奇异值按降序排列。则 $\alpha_n\to0$，且最终 $d_n\ge k+1$；存在只依赖固定源数据和 $K$ 的 $s_*>0$、$\eta>0$，使
+
+$$
+\liminf_n\sigma_k(L_n)\ge s_* ,\qquad
+\sigma_{k+1}(L_n)\le\alpha_n
+\quad\text{于充分大的 }n.
+\tag{Q133.16}
+$$
+
+令 $W_n\subset\mathbb R^{d_n}$ 为后 $d_n-k$ 个右奇异方向张成的空间，则还有
+
+$$
+\liminf_n\|\operatorname{proj}_{W_n}z_n\|^2\ge\eta.
+\tag{Q133.17}
+$$
+
+证明。(Q133.7)给 $\alpha_n\to0$，定理133.2排除充分大 $n$ 的 $d_n\le k$。(Q133.9)—(Q133.14)给同一个 $E_n$ 内的接触点 $x_{i,n}$，满足 $\|x_{i,n}-a_i\|<3\delta/4$。
+
+设 $R=\operatorname{diam}K/2>0$。每个中心 $c_n\in K$，且 $\|L_n\|\le R$，因为任一对径端点 $c_n\pm L_nv$ 都在 $K$。实际正整数 $d_n\le\dim\ker u$，故从任何子列都可再取 $d_n=d$ 恒定的子列；再由有界性取
+
+$$
+c_n\to c,\quad L_n\to L,\quad z_n\to z,\qquad
+E_n\longrightarrow H_0=c+L\overline B^d.
+\tag{Q133.18}
+$$
+
+这里 $\|z\|=1$、$Lz=y-c$，而 $\alpha_n\to0$ 给 $H_0\subseteq F$。同时取有限族 $x_{i,n}\to x_i\in H_0$，由(Q133.10)有
+
+$$
+\overline B_{\operatorname{aff}F}(y,\beta)\subseteq H_0\subseteq F.
+\tag{Q133.19}
+$$
+
+所以 $\operatorname{rank}L=k$。还可取 $\sigma_k(L)\ge\beta$：在 $\operatorname{aff}F$ 的每个单位方向上，(Q133.19)给 $H_0$ 的宽度至少 $2\beta$；该椭球在方向 $v$ 上的宽度等于 $2\|L^*v\|$。奇异值连续性及“任意子列再取子列”遂给 $\liminf\sigma_k(L_n)\ge\beta$，可取 $s_*=\beta$。这个论证保留变维，只在有限维环境允许的子列上固定实际维数。
+
+记 $Q$ 为到 $\operatorname{span}(F-F)^\perp$ 的正交投影。对每个单位参数 $v$，两个端点距 $\operatorname{aff}F$ 均不超过 $\alpha_n$，即
+
+$$
+\|Q(c_n-c_F\pm L_nv)\|\le\alpha_n.
+$$
+
+相减得 $\|QL_n\|\le\alpha_n$，而 $(I-Q)L_n$ 的秩至多 $k$。取 $L_n$ 的前 $k+1$ 个右奇异方向所张成的空间，该空间中有单位 $v$ 满足 $(I-Q)L_nv=0$；于是
+
+$$
+\sigma_{k+1}(L_n)\le\|L_nv\|=\|QL_nv\|\le\alpha_n.
+\tag{Q133.20}
+$$
+
+这只是标准[SVD][Q133BV]的维数论应用，作为实际返回的估计步骤使用。
+
+最后收小 $\beta$ 使 $0<\beta<R$，此时(Q133.19)仍成立。对(Q133.18)的任一共同极限，令 $w\in(\ker L)^\perp$ 是 $Lw=y-c$ 的最小范数解。由 $y\in H_0$ 有 $a:=\|w\|\le1$。若 $a>0$，则 $c+L(w/a)$ 在 $H_0$ 的相对边界，且
+
+$$
+\beta\le\|c+L(w/a)-y\|
+=(1-a)\|L(w/a)\|\le R(1-a).
+\tag{Q133.21}
+$$
+
+故 $\|w\|\le1-\beta/R$；$a=0$ 时同一上界成立。又 $z-w\in\ker L$ 且 $w\perp\ker L$，所以
+
+$$
+\|\operatorname{proj}_{\ker L}z\|^2
+=1-\|w\|^2
+\ge1-(1-\beta/R)^2=:\eta>0.
+\tag{Q133.22}
+$$
+
+为把这个极限结论传回 $W_n$，在当前定维子列上为 $L_n^*L_n$ 选正交特征标架并再取收敛子列。前 $k$ 个特征值有统一正下界，后 $d-k$ 个趋零；极限的后 $d-k$ 个特征向量因而恰张成 $\ker L$，对应正交投影收敛。(Q133.22)遂给该子列上(Q133.17)的下界。若原列的下极限更小，取违反下界的子列再作上述提取便矛盾。证毕。
+

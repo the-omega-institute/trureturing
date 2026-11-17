@@ -1,0 +1,47 @@
+**定理 115.3（纯端点间隙、三球厚度与预算的定量控制）。** 对任意 $p,p',q,q'\in P$，有
+
+$$
+|T_p(q)-T_{p'}(q')|
+\le L\bigl(\|p-p'\|+\|q-q'\|\bigr).
+\tag{IX115.6}
+$$
+
+对 $0<\varepsilon\le\operatorname{diam}P$，定义
+
+$$
+\gamma(\varepsilon)=
+\min_{\substack{r,s\in P\\\|r-s\|\ge\varepsilon}}
+\bigl(1-T_r(s)\bigr).
+\tag{IX115.7}
+$$
+
+则 $\gamma(\varepsilon)>0$。若 $F=D_p=c+A B^3$，其最大和最小半轴分别为 $s_{\max}(F)$ 与 $s_{\min}(F)$，则
+
+$$
+\operatorname{diam}F\ge\varepsilon
+\quad\Longrightarrow\quad
+\beta_F\le\frac1{\gamma(\varepsilon)},
+\qquad
+s_{\min}(F)\ge\frac{\gamma(\varepsilon)}{2L}.
+\tag{IX115.8}
+$$
+
+证明。由PR，$T_p(q)=T_q(p)$。因此
+
+$$
+\begin{aligned}
+|T_p(q)-T_{p'}(q')|
+&=|T_q(p)-T_{q'}(p')|\\
+&\le |T_q(p)-T_q(p')|+|T_q(p')-T_{q'}(p')|\\
+&=|T_q(p)-T_q(p')|+|T_{p'}(q)-T_{p'}(q')|,
+\end{aligned}
+$$
+
+再用(IX115.5)即得(IX115.6)。114.3给出对每个 $r$ 仅在 $r$ 取一的原确认效应 $e_r$；若 $r\ne s$，则 $e_r(s)<1$，从而
+$T_r(s)\le e_r(s)<1$。集合
+$\{(r,s)\in P\times P:\|r-s\|\ge\varepsilon\}$ 是紧集，(IX115.6)使 $1-T_r(s)$ 连续，所以(IX115.7)的最小值严格为正。
+
+写 $F=c+A B^3$ 的奇异值为 $s_1\ge s_2\ge s_3>0$。取最大轴的对径端点 $x_+=c+Av$、$x_-=c-Av$，则 $\|x_+-x_-\|=2s_1=\operatorname{diam}F$。由(IX115.2)和(IX115.7)，当 $\operatorname{diam}F\ge\varepsilon$ 时
+$2a_F=1-T_{x_+}(x_-)\ge\gamma(\varepsilon)$。再取最小轴的对径端点 $y_+=c+Aw$、$y_-=c-Aw$，由(IX115.5)和 $T_{y_+}(y_+)=1$，
+$2a_F=1-T_{y_+}(y_-)\le L\|y_+-y_-\|=2Ls_3$。由于 $\beta_F=1/(2a_F)$，得到(IX115.8)。证毕。
+

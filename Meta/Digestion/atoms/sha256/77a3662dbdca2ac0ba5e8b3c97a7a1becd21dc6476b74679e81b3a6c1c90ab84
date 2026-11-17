@@ -1,0 +1,15 @@
+**定理 89.8（完整原数据的等价替换）。** 在定义89.7的同一原来源域内，
+
+$$
+\boxed{\mathsf R_{\rm polar}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm zero\text{-}ball}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm mid}(\mathcal O)
+\Longleftrightarrow\mathsf R_{86}^{\rm ev}(\mathcal O)
+\Longleftrightarrow[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}(\mathcal O).}
+\tag{89.14}
+$$
+
+证明。87.2、87.7在同一个原像上给定义89.1的完整载体及全效应，87.4—87.5和原缩放给同一个 $L,p$ 及所供应完整域的正性。逐 $X$ 应用89.4，把 $\mathrm B+\mathrm{Boundary}$ 经等价的 $\mathrm B+\mathrm Q$ 换成 $\mathrm B+\mathrm H$，即得第一个等价；四个既有包之间的等价严格复用88.7及87.10。所余原条件逐项相同，故不需重新分类、校准或选择方向。
+
+反向从原评价模型使用87.17—87.18的保锥、保单位线性同构 $\iota_X$；整个最小面及其球几何被运输，对径和赤道也被运输。于是 $R'_{\iota_X\xi}=\iota_XR_\xi$，凸包与 $\operatorname{ri}K_X$ 随同一仿射同构运输，故 $\mathrm{Boundary}_\xi$ 保持。亦有 $N'_{\iota_X\xi}=\iota_XN_\xi$，所以 $\xi\notin N_\xi$ 当且仅当 $\iota_X\xi\notin N'_{\iota_X\xi}$。单点分支随同构仍为单点。两次原 $p$、同一参考、全部原乘积／迹／伴随／中心因子／资格及整个输出仍按88.7的同数据运输；共同来源合同没有被统计商替换。证毕。
+

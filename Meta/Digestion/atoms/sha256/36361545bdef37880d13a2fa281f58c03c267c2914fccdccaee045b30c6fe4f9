@@ -1,0 +1,25 @@
+### 118.1 完整原域与只作用于原二元关系的候选
+
+保留[116.1的完整原域][Q118IX]：非零有限维实空间 $V$、闭尖生成凸锥 $C$、在 $C\setminus\{0\}$ 上严格正的 $u$，以及整个
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad \mathcal E=[0,u]_{C^*},\\
+F_p=\{f\in\mathcal E:f(p)=1\},\quad
+T_p(x)=\min_{f\in F_p}f(x),\quad
+D_p=\{x\in K:T_p(x)=0\},\quad
+\mathcal A_p=\{h\in F_p:h|_{D_p}=0\}.
+\end{gathered}
+\tag{IX118.1}
+$$
+
+$\mathrm{EB}_{\ge1}$ 表示每个完整 $D_p$ 是正维仿射欧氏闭球；EB3表示全部都是三球。
+所谓仿射球允许在任一辅助环境欧氏尺下呈椭球形，不预付各球共有一把物理内积。
+$P$ 始终带从实际 $K$ 继承的拓扑，不先假定闭。
+$p\perp q$ 表示存在同一原效应在纯点 $p,q$ 取一、零；补效应使此关系对称。
+$H(p,q)$ 表示两点在原 $K$ 中生成的最小面；全Pair指每对不同纯点均有 $H(p,q)\ne K$，$\mathrm{Pair}_{\perp}$ 只量化原正交纯对。
+
+直接复用[VII103.2][Q118VII]、IX116.1的原面接口：$K,\mathcal E$ 紧，每个 $D_p$ 是暴露极大真面，$\mathcal A_p\ne\varnothing$；全部非空真面只有纯单点和这些完整球。
+不同完整球至多交于一个原纯点，而每个完整球 $F$ 满足 $S(F):=P\cap F=\partial_{\rm rel}F$、$F=\operatorname{conv}S(F)$。
+这些事实只用 $\mathrm{EB}_{\ge1}$，不消费Pair。
+
