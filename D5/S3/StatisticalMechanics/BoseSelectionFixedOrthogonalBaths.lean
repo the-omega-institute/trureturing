@@ -6,6 +6,9 @@
    utility: none
    digest: Fixed orthogonal coordinate baths select five modes on open real and complex Hamiltonian sets in every dimension at least five. -/
 
+import D5.S3.Geometry.FiniteCoordinateTruncation
+import D5.S3.Analytic.SeriesInequalities.StampachWaclawekExpansionRefutation
+import D5.S3.StatisticalMechanics.BoseSelectionCubicTwoBathRefutation
 import D5.S3.StatisticalMechanics.BoseSelectionFixedBathConstruction
 import D5.S3.SpectralTopology.HermitianEigenvaluePerturbation
 
@@ -108,7 +111,7 @@ def lagrangeProjector (H : Matrix (Fin n) (Fin n) 𝕜) (e : Fin n → ℝ) (i :
     Matrix (Fin n) (Fin n) 𝕜 :=
   (List.ofFn (lagrangeFactor H e i)).prod
 
-theorem lagrangeProjector_spectralMatrix (U : Matrix.unitaryGroup (Fin n) 𝕜)
+private theorem lagrangeProjector_spectralMatrix (U : Matrix.unitaryGroup (Fin n) 𝕜)
     (e : Fin n → ℝ) (he : Function.Injective e) (i : Fin n) :
     lagrangeProjector (spectralMatrix U e) e i =
       (U : Matrix (Fin n) (Fin n) 𝕜) * coordinateProjector i *

@@ -36,11 +36,6 @@ internal sealed class BoseSelectionFixedOrthogonalBathsDocument : IScribeDocumen
                 H("lagrangeProjector"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For a matrix H, real vector e and index i, multiply the Lagrange factors (H-e(j)I)/(e(i)-e(j)) for j different from i, in the fixed list order. It is a spectral projection when H has that simple spectrum; no such interpretation is claimed for repeated energies."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("lagrangeprojector-spectralmatrix"),
-                DeclarationHandle.Create("D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector_spectralMatrix"),
-                H("lagrangeProjector_spectralMatrix"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("For every dimension, RCLike field, unitary U and injective real energy vector e, the i-th polynomial Lagrange projector of U diag(e) U* equals U times the i-th coordinate projector times U*. This supplies the intrinsic spectral/physical rate bridge without choosing eigenvector phases."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("hermitianspace"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.HermitianSpace"),
                 H("HermitianSpace"), StatementSource.WithoutFormula(),
@@ -99,11 +94,12 @@ internal sealed class BoseSelectionFixedOrthogonalBathsDocument : IScribeDocumen
             QCall("Polynomial", "C", Parenthesized(Seq(QCall("RCLike", "ofReal", App(V("e"), V("i"))), Sp, Colon, Sp, V("K")))));
         Formula product = Seq(new Formula.Subscript(Prod, Seq(V("i"), Sp, Colon, Sp, index)), Sp, Parenthesized(factor));
         Formula conclusion = Eqn(QCall("BoseSelectionFixedOrthogonalBaths", "increasingSpectrum", V("hH")), V("e"));
-        return All("K", Type, Seq(OpenBracket, Call("RCLike", V("K")), CloseBracket, Sp,
-            All("n", new Formula.NamedConstant(FormulaIdentifier.Create("Nat")),
-                All("H", Call("Matrix", index, index, V("K")),
-                    All("hH", QCall("Matrix", "IsHermitian", V("H")), All("e", vector,
-                        Imp(Call("Monotone", V("e")), Imp(Eqn(Seq(V("H"), Dot, Op("charpoly")), product), conclusion)))))));
+        Formula body = Imp(Call("Monotone", V("e")), Imp(Eqn(Seq(V("H"), Dot, Op("charpoly")), product), conclusion));
+        body = All("e", vector, body);
+        body = All("hH", QCall("Matrix", "IsHermitian", V("H")), body);
+        body = All("H", Call("Matrix", index, index, V("K")), body);
+        body = All("n", new Formula.NamedConstant(FormulaIdentifier.Create("Nat")), body);
+        return All("K", new Formula.NamedConstant(FormulaIdentifier.Create("Type")), Seq(OpenBracket, Call("RCLike", V("K")), CloseBracket, Sp, body));
     }
 
 }
