@@ -45,7 +45,7 @@ def prodCongr {ρ : Representation K G A} {σ : Representation K G B}
     exact Prod.ext (LinearMap.congr_fun (e.toIntertwiningMap.isIntertwining' c) x.1)
       (LinearMap.congr_fun (f.toIntertwiningMap.isIntertwining' c) x.2)
 
-private def prodAssoc (ρ : Representation K G A) (σ : Representation K G B)
+def prodAssoc (ρ : Representation K G A) (σ : Representation K G B)
     (τ : Representation K G C) : ((ρ.prod σ).prod τ).Equiv (ρ.prod (σ.prod τ)) :=
   Representation.Equiv.mk (LinearEquiv.prodAssoc K A B C) fun _ => by
     apply LinearMap.ext
@@ -394,7 +394,7 @@ private def directSumConsEquiv (k : ℕ) (d : Fin (k + 1) → ℕ) :
       intro ell
       rfl
 
-private def directSumCongr {α : Type*} [DecidableEq α]
+def directSumCongr {α : Type*} [DecidableEq α]
     (d e : α → ℕ) (h : d = e) :
     (Representation.directSum (fun a => dualAction K (d a))).Equiv
       (Representation.directSum (fun a => dualAction K (e a))) := by

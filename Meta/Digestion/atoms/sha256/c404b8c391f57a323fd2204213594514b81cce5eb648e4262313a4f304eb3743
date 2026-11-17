@@ -1,0 +1,15 @@
+**定理 198.6（整个实际球及其内禀度量连续）。** 在 L2 与全标签 Hit 下，非对角原纯对的映射
+
+$$
+(p,q)\longmapsto B(p,q)
+\tag{198.8}
+$$
+
+按 Hausdorff 距离连续。球心、三维方向空间及确定该椭球的内禀正定二次型连续；原 $\#$ 闭，$a\mapsto N_a$ 是非空紧集族的 Hausdorff 连续映射。后两项限于 $K$ 非单点时。
+
+证明。设不同纯对 $(p_j,q_j)\to(p,q)$，$p\ne q$，照(198.3)抽取极限椭球 $Q=c+A\overline{\mathbb B}^{,3}$。198.2中的中点论证给 $Q\subset B(p,q)$。每个 $s\in S^2$ 满足 $c_j+A_js\in P$；198.5给 $c+As\in P$。若 $\operatorname{rank}A<3$，则 $A(S^2)=A(\overline{\mathbb B}^{,3})$，所以整个 $Q$ 都纯，与 $p,q\in Q$ 不同矛盾。故 $\operatorname{rank}A=3$，且 $\partial Q\subset P\cap B(p,q)=\partial B(p,q)$。
+
+这个嵌入 $S^2\hookrightarrow S^2$ 由不变域及紧性满射，故 $Q=B(p,q)$。每个聚限相同，给整球连续。球的中心、方向和椭球二次型由该球唯一决定；亦可由 $A_jA_j^{\mathsf T}$ 及其在三维像上的逆看出连续性。不变域在这里按 [Hatcher, AT, 2B.3–4][Q198AT] 使用。
+
+若 $a_j\#b_j$ 且纯对趋于 $(a,b)$，原见证效应的紧性给 $a\#b$，故闭图。各 $N_a$ 非空且紧。上半连续由闭图与 $P$ 紧给出；对任意 $b\in N_a$ 及 $a_j\to a$，最终 $a_j\ne b$，而 $\beta_{a_j}(b)$ 是 $B(a_j,b)$ 的对径点，由球心连续而趋于 $b$，给下半连续。$\square$
+

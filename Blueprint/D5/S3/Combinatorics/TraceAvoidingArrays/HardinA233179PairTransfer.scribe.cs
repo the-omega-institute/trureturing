@@ -21,6 +21,16 @@ internal sealed class HardinA233179PairTransferDocument : IScribeDocumentDefinit
                 + "rows at distance at most one across consecutive columns.")),
             Node("Proper", "Proper pair-label patterns", ProperFormula(), false),
             Node("L", "The literal pair-label count", CountFormula(), false),
+            Node("Col", "Six-label columns", Eq(Own("Col"), PaletteTuple(6)), false),
+            Node("column", "Column coordinates", ColumnFormula(), false),
+            Node("orbit", "Equality-pattern index", OrbitFormula(), false),
+            Paragraph(Text("The displayed formula is the equality-pattern property computed by the "
+                + "122-leaf case split that defines orbit. The property is confirmed by evaluating "
+                + "that case split on all 729 columns and is not proved as a separate theorem here; "
+                + "its forward direction is the content of class_rep.")),
+            Node("representatives", "The 122 equality-pattern representatives", RepresentativesFormula(), false),
+            Node("relabel", "Coordinatewise label permutations", RelabelFormula(), false),
+            Node("class_rep", "Every column has its indexed representative", ClassRepFormula(), true),
             Node("initial_values", "Initial pair-label counts", InitialFormula(), true),
             Node("recurrence", "The shifted relation for L plus six", RecurrenceFormula(), true),
             Paragraph(Text("Finite column enumeration supplies every transition and initial "
@@ -60,6 +70,174 @@ internal sealed class HardinA233179PairTransferDocument : IScribeDocumentDefinit
                 Typed(Q("Finset.univ"), Call("Finset", arrays))))));
     }
 
+    private static Formula PaletteTuple(int k) => k == 1 ? Fin(D(3)) : Product(Fin(D(3)), PaletteTuple(k-1));
+    private static Formula Vector(params Formula[] xs) => Seq(Bang, OpenBracket,
+        Seq(xs.SelectMany((x,i) => i == 0 ? new[] { x } : new[] { Comma, Sp, x }).ToArray()), CloseBracket);
+    private static Formula ColumnFormula() => All("c", PaletteTuple(6), Eq(Own("column", V("c")),
+        Vector(Call("Prod.fst", V("c")), Call("Prod.fst", Call("Prod.snd", V("c"))),
+            Call("Prod.fst", Call("Prod.snd", Call("Prod.snd", V("c")))),
+            Call("Prod.fst", Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", V("c"))))),
+            Call("Prod.fst", Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", V("c")))))),
+            Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", V("c")))))))));
+    private static Formula RelabelFormula()
+    {
+        var e = V("e");
+        return All("e", Call("Equiv.Perm", Fin(D(3))), Eq(Own("relabel", e),
+            Call("Equiv.prodCongr", e, Call("Equiv.prodCongr", e, Call("Equiv.prodCongr", e,
+                Call("Equiv.prodCongr", e, Call("Equiv.prodCongr", e, e)))))));
+    }
+    private static Formula ClassRepFormula()
+    {
+        var c = V("c"); var e = V("e");
+        Formula Coordinate(int i)
+        {
+            Formula x = c;
+            for (int j = 0; j < i; ++j) x = Call("Prod.snd", x);
+            return i < 5 ? Call("Prod.fst", x) : x;
+        }
+        Formula Relabelled(int i) => i == 5 ? App(e, Coordinate(i)) :
+            Pair(App(e, Coordinate(i)), Relabelled(i + 1));
+        return All("c", PaletteTuple(6), new Formula.Bind(FormulaQuantifier.Exists,
+            FormulaIdentifier.Create("e"), Call("Equiv.Perm", Fin(D(3))),
+            Eq(Relabelled(0), Own("representatives", Own("orbit", c)))));
+    }
+    private static Formula OrbitFormula()
+    {
+        var c = V("c"); var i = V("i"); var r = V("r"); var s = V("s");
+        var representative = Own("representatives", i);
+        var samePattern = All("r", Fin(D(6)), All("s", Fin(D(6)),
+            new Formula.Logic(
+                Parenthesized(Eq(Own("column", c, r), Own("column", c, s))),
+                FormulaLogicOperator.Iff,
+                Parenthesized(Eq(Own("column", representative, r),
+                    Own("column", representative, s))))));
+        return All("c", PaletteTuple(6), All("i", Fin(D(1,2,2)),
+            new Formula.Logic(Parenthesized(Eq(Own("orbit", c), i)),
+                FormulaLogicOperator.Iff, Parenthesized(samePattern))));
+    }
+    private static Formula RepresentativesFormula() => Eq(Own("representatives"), Vector(
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(0), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(1), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(0), Pair(Num(2), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(0), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(1), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(1), Pair(Num(2), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(0), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(1), Pair(Num(2), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Pair(Num(0), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Pair(Num(0), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Pair(Num(0), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Pair(Num(1), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Pair(Num(1), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Pair(Num(1), Num(2)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Pair(Num(2), Num(0)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Pair(Num(2), Num(1)))))),
+        Pair(Num(0), Pair(Num(1), Pair(Num(2), Pair(Num(2), Pair(Num(2), Num(2))))))));
     private static Formula InitialFormula()
     {
         var k = V("k");

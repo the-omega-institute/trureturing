@@ -18,15 +18,22 @@ internal sealed class SupportFamilyNotIntersectionClosedDocument : IScribeDocume
                 + "permitted axioms, negation and model semantics. SourceLaws requires soundness "
                 + "in every permitted-axiom model, a finite closed acyclic certificate for every "
                 + "proved proposition, and consistency between a proposition and its negation.")),
-            Node("supportFamily", "The support family",
+            Describe.Lean(
+                DescribeId.Create("support-supportfamily"),
+                DeclarationHandle.Create(
+                    "D5/S3/ConceptDynamics/DependencyTopology/LegalLedgerFixedSet.supportFamily"),
+                H("The support family"),
+                StatementSource.FromAuthor(
                 Disp(Seq(Call("supportFamily", F.Id("k")), Sp, Eq, Sp,
                     OpenBrace, F.Id("S"), Sp, Mid, Sp, Exists, Sp,
                     F.Id("C"), Colon, Sp, Call("CertifiedNodes", F.Id("k")), Comma, Sp,
-                    F.Id("S"), Sp, Eq, Sp, Call("nodes", F.Id("C")), CloseBrace)),
+                    F.Id("S"), Sp, Eq, Sp, Call("nodes", F.Id("C")), CloseBrace))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
                 "The family consists of the finite node sets of all certified cores. "
                 + "A core selects one accepted proof per node, uses only permitted axioms, "
                 + "contains every selected proof's references, and has an acyclic reference graph. "
-                + "Different members of the support family may select different proofs of the same proposition.",
+                + "Different members of the support family may select different proofs of the same proposition."))),
                 DescribeRole.Definition),
             Node("IntersectionClosed", "Binary intersection closure",
                 Disp(Seq(Call("IntersectionClosed", F.Id("A")), Sp, Iff, Sp,

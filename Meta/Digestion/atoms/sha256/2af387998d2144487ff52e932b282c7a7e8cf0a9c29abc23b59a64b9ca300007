@@ -1,0 +1,110 @@
+**定理 2.1（A joint two-dimensional construction on the full domain）。** For every $(p,q,r)\in\mathcal D$,
+
+$$
+d_{\mathrm{un}}=2.
+\tag{2.1}
+$$
+
+There is a minimizing realization $V_2$ whose reduced channel is a mixture of two unitaries on the entire $H$.
+
+Choose a single orthonormal basis $f_0,f_1$ of $E_2=\mathbb C^2$. Assign $f_1$ to all eight non-loop directed square edges; assign $f_0$ to the four loops at $0,1,2,3$ and both leaf edges. Assign the remaining loop the vector
+
+$$
+e_{44}=\frac{-\sqrt A\,f_0+\sqrt t\,f_1}{\sqrt C}.
+\tag{2.2}
+$$
+
+All fifteen vectors belong to this one $E_2$, and (2.2) has norm one because $C=A+t$. The minus sign is part of the record vector; the stipulated $U_{44}=I_K$ is unchanged.
+
+**证明。** The lower bound is the source's already established unique-common-successor obstruction (§129, (129.2), using Lemma 126.3). Sources $1$ and $4$ have the unique common successor $0$, with positive probabilities $q,r$. Equation (1.5) therefore forces $e_{01}\perp e_{04}$. Two normalized orthogonal vectors require $\dim E\ge2$. This argument uses $q,r>0$ and applies at every equality stratum in $\mathcal D$; it does not assume edge readability.
+
+For the upper bound, let
+
+$$
+Q=\sum_{i=0}^3|i\rangle\langle i|\otimes I_K,
+\qquad F=|4\rangle\langle4|\otimes I_K.
+$$
+
+Let $S$ agree with the source's transported square cycle on $QH$ and be zero on $FH$:
+
+$$
+S=|1\rangle\langle0|\otimes a
++|2\rangle\langle1|\otimes c
++|3\rangle\langle2|\otimes a^\dagger
++|0\rangle\langle3|\otimes c^\dagger.
+\tag{2.3}
+$$
+
+The source's square identity (128.1) gives
+
+$$
+S^\dagger S=SS^\dagger=Q,\qquad S^4=-Q,
+\qquad S^2+(S^\dagger)^2=0.
+\tag{2.4}
+$$
+
+For completeness, the first equalities follow because the square cycle permutes four orthogonal configuration summands by unitaries. At root $0$ the four-step product is $c^\dagger a^\dagger ca=-I_K$, by $ac=-ca$; at each other root it is a conjugate of this product. On $QH$, $S^{-2}=-S^2$, proving the last equality; on $FH$ both sides vanish. Only these operator identities are borrowed from §128. That section's independent four-state probabilities $p_4+q_4=1$ are not substituted for the full five-state parameters.
+
+Expanding the common vector family in $f_0,f_1$ yields
+
+$$
+V_2x=L_0x\otimes f_0+L_1x\otimes f_1,
+\tag{2.5}
+$$
+
+where
+
+$$
+\begin{aligned}
+L_0={}&\operatorname{diag}(\sqrt A,\sqrt B,\sqrt B,
+\sqrt B,-\sqrt A)\otimes I_K\\
+&+\sqrt r\bigl(|4\rangle\langle0|\otimes b
++|0\rangle\langle4|\otimes b^\dagger\bigr),\\
+L_1={}&\sqrt p\,S+\sqrt q\,S^\dagger+\sqrt t\,F.
+\end{aligned}
+\tag{2.6}
+$$
+
+For example, the input $4$ contributes $\sqrt r\,|0\rangle b^\dagger\psi\otimes f_0$ and
+$|4\rangle\psi\otimes(-\sqrt A f_0+\sqrt t f_1)$, exactly $\sqrt C e_{44}$ on its loop. The other four sources have their prescribed loop and forward/reverse square coefficients. Thus (2.6) implements the exact (1.2)–(1.4).
+
+On the ordered summands $0,4$, $L_0$ is the Hermitian block
+
+$$
+\begin{pmatrix}
+\sqrt A I_K&\sqrt r\,b^\dagger\\
+\sqrt r\,b&-\sqrt A I_K
+\end{pmatrix}.
+$$
+
+Its square is $(A+r)I=B I$: the diagonal blocks use $b^\dagger b=bb^\dagger=I_K$ and the off-diagonal blocks cancel. On each of $1,2,3$, the square is $B I_K$. Therefore $L_0^\dagger L_0=B I_H$. Since $SF=FS=0$, (2.4) gives
+
+$$
+\begin{aligned}
+L_1^\dagger L_1
+&=(p+q)Q+\sqrt{pq}\bigl(S^2+(S^\dagger)^2\bigr)+tF\\
+&=tI_H.
+\end{aligned}
+\tag{2.7}
+$$
+
+Consequently $V_2^\dagger V_2=(B+t)I_H=I_H$. This is an operator identity on the whole $H$, including cross-input blocks. Tensoring with $I_R$ gives the same identity for any untouched reference, and hence for arbitrary entangled input. The fifteen vectors have been supplied jointly; no separate-row Gram assumption is used.
+
+Set
+
+$$
+T_0=B^{-1/2}L_0,\qquad T_1=t^{-1/2}L_1.
+\tag{2.8}
+$$
+
+Each square operator is an isometry on the finite-dimensional $H$ and hence a unitary. Tracing $E_2$ gives
+
+$$
+\Phi_2(\rho)=B T_0\rho T_0^\dagger+tT_1\rho T_1^\dagger.
+\tag{2.9}
+$$
+
+This channel is trace preserving and unital. Its two Kraus operators are linearly independent: the $1,1$ configuration block of $L_0$ is $\sqrt B I_K$, whereas that of $L_1$ is zero, and $L_1$ is nonzero. Its Choi rank is therefore two by the standard Kraus vectorization formula. That fixed-channel fact is additional to, and does not replace, the variable-family lower bound. $\square$
+
+The Gram factorization principle and the Kraus/Choi identities used inside this proof are existing suppliers, not new general theorems: [AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION, revision 6bfd5342e47ba7eb50a5022e301d228f17daa8d2, §109](https://github.com/the-omega-institute/trureturing/blob/6bfd5342e47ba7eb50a5022e301d228f17daa8d2/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md), and Watrous, 2018, Theorem 2.22 and Corollary 2.27. The new bridge in Theorem 2.1 is the joint family (2.2)–(2.6), extending the transported square cancellation to the stipulated leaf and positive loops throughout $\mathcal D$.
+

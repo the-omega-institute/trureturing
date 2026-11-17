@@ -1,0 +1,54 @@
+**定理 4.1（Successor-assisted exact edge read costs four dimensions）。** In the exact source family,
+
+$$
+d_{\mathrm{succ}}=4.
+\tag{4.1}
+$$
+
+A common four-dimensional family attains the bound on the whole coherent input and permits the published edge instrument when the successor and record are actually read.
+
+**证明。** A normalized pure-state family is exactly deterministically distinguishable by a POVM only if its vectors are pairwise orthogonal. Indeed, if outcome effect $M_i$ identifies unit vector $v_i$ with probability one and $v_k$ with probability zero, positivity gives $M_iv_i=v_i$ and $M_iv_k=0$. To see these implications, use $\langle v_i,(I-M_i)v_i\rangle=0$ and $\langle v_k,M_iv_k\rangle=0$, and take positive square roots. Hence
+$\langle v_i,v_k\rangle=\langle M_iv_i,v_k\rangle=\langle v_i,M_iv_k\rangle=0$.
+Conversely orthogonal vectors have the distinguishing projection measurement, completed on the unused subspace. This standard discrimination fact is used here as an intermediate step, with no additional known internal label.
+
+The positive incoming sets are
+
+$$
+I_0=\{0,1,3,4\},\quad I_1=\{0,1,2\},\quad
+I_2=\{1,2,3\},\quad I_3=\{0,2,3\},\quad I_4=\{0,4\}.
+\tag{4.2}
+$$
+
+Successor $0$ therefore demands four orthogonal record vectors, so $\dim E\ge4$ throughout $\mathcal D$.
+
+For attainment take one orthonormal basis $g_0,g_1,g_2,g_3$ of $E_4=\mathbb C^4$ and the source color
+
+$$
+\kappa(0)=0,\quad\kappa(1)=1,\quad\kappa(2)=2,
+\quad\kappa(3)=3,\quad\kappa(4)=2.
+\tag{4.3}
+$$
+
+Set $e_{ji}=g_{\kappa(i)}$ on every positive edge, and call (1.4) with these records $V_4$. The color is injective on each set $I_j$ in (4.2). Thus whenever $i\ne k$ have a common successor, their incoming records there are orthogonal. Every summand of the off-diagonal equation (1.5) vanishes separately. For $i=k$, row normalization gives $I_K$. Consequently $V_4$ is a full-input isometry, also with any untouched reference. This color is the actual outgoing record in $E_4$; a copied-source side register is not appended.
+
+Given actual successor $j$, measurement in the $g$ basis identifies the unique $i\in I_j$ with the returned color. Equivalently, the positive-edge projections on the joint output are
+
+$$
+Q_{ji}=|j\rangle\langle j|\otimes I_K
+\otimes|g_{\kappa(i)}\rangle\langle g_{\kappa(i)}|,
+\qquad (j,i)\in\mathcal A.
+\tag{4.4}
+$$
+
+They are mutually orthogonal. Complete them with the projection onto the unused output subspace. The latter outcome has probability zero for every input because
+
+$$
+Q_{ji}V_4=K_{ji}\otimes g_{\kappa(i)}.
+\tag{4.5}
+$$
+
+After the actual joint read and tracing the record, the unnormalized system branch is exactly
+$K_{ji}\rho K_{ji}^\dagger$, including coherent input and reference extensions. Hence this is the source's edge instrument on the whole input domain, with a different pre-readout dilation. $\square$
+
+The orthogonality/Gram language in this proof follows the unit-vector convention of Leslie Hogben, Kevin F. Palmowski, David E. Roberson and Simone Severini, [Orthogonal Representations, Projective Rank, and Fractional Minimum Positive Semidefinite Rank: Connections and New Directions, arXiv:1502.00016v2, §1.3](https://arxiv.org/abs/1502.00016v2): a required edge means a required zero inner product; no “if and only if” nonzero-pattern requirement is imposed here. The construction is also a source-specific block-unitary lift of incoming-row grouping: Kamil Korzekwa, Stanisław Czachórski, Zbigniew Puchała and Karol Życzkowski, [Coherifying quantum channels, arXiv:1710.04228v2, §III.B.2](https://arxiv.org/abs/1710.04228v2), give the scalar row-grouping supplier. Their successor-row convention is $T_{ji}=P_{ij}$, namely $T=P^{\mathsf T}$. Their scalar theorem does not itself impose the transports (1.3); (4.2)–(4.5) verify the necessary block correspondence and attain four rather than a generic five-dimensional bound.
+

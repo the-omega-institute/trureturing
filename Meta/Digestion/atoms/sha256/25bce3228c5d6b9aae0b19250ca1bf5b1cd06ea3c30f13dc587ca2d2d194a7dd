@@ -1,0 +1,19 @@
+**定理 198.3（额外纯零点与负弧等价）。** 在 L2 与 Hit$(a)$ 下，
+
+$$
+\boxed{\quad
+\mathrm{Flat}(a)\quad\Longleftrightarrow\quad
+\mathrm{SP}(a)\quad\Longleftrightarrow\quad
+\mathrm{NC}(a).
+\quad}
+\tag{198.4}
+$$
+
+前一个等价实际上只使用 Hit 在过 $a$ 的实际二点球上的部分；后一个等价消费197.4的全线命中。
+
+证明。若 $a\in W_a$，则 $a\notin N_a$ 使 Flat 失败；$a=(-1)a+2a$ 使 SP 失败。下设 $a\notin W_a$，令 $\alpha_a(ta+w)=t$ 是 $S_a=\mathbb Ra\oplus W_a$ 上的唯一系数函数。
+
+若 SP 失败，取 $p\in P\cap S_a$ 满足 $\alpha_a(p)<0$，再取 $b=\beta_a(p)\in N_a$。三个球面点 $a,b,p$ 不共线，且 $a,b$ 对径；其仿射平面截出一张经过球心的完整椭圆盘 $D\subset B(a,p)\cap S_a$。圆周全部是原纯点。$\alpha_a$ 在 $a,b,p$ 读 $1,0,<0$，所以零直线穿过圆盘内部，除 $b$ 外还与圆周相交于第二点 $d$。于是 $d\in P\cap W_a$；但球中能与 $a$ 原确定区分的纯点只有其对径 $b$，故 $d\notin N_a$，Flat 失败。
+
+反向，若 $d\in(P\cap W_a)\setminus N_a$，令 $b=\beta_a(d)$。$a,b,d$ 的中心圆盘仍包含于 $S_a$。$\alpha_a$ 在不同圆周点 $b,d$ 为零、在 $a$ 为一；弦 $bd$ 另一侧的非空开圆弧上必为负。任取该弧上的原纯点就违反 SP。最后直接应用197.4。$\square$
+

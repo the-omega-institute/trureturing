@@ -24,10 +24,10 @@ variable (Q : Type*) [Rack Q]
 /-- Boundary colorings of an ordered family of strands. -/
 abbrev Colors (n : ℕ) := Fin n → Q
 
-private def leftSlot {n : ℕ} (i : Fin (n - 1)) : Fin n := ⟨i.val, by omega⟩
-private def rightSlot {n : ℕ} (i : Fin (n - 1)) : Fin n := ⟨i.val + 1, by omega⟩
+def leftSlot {n : ℕ} (i : Fin (n - 1)) : Fin n := ⟨i.val, by omega⟩
+def rightSlot {n : ℕ} (i : Fin (n - 1)) : Fin n := ⟨i.val + 1, by omega⟩
 
-private theorem slots_ne {n : ℕ} (i : Fin (n - 1)) : leftSlot i ≠ rightSlot i := by
+theorem slots_ne {n : ℕ} (i : Fin (n - 1)) : leftSlot i ≠ rightSlot i := by
   intro h
   have := congrArg Fin.val h
   simp only [leftSlot, rightSlot] at this

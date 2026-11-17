@@ -1,0 +1,26 @@
+**定义 195.1（完整原域与 LIN）。** 设 $V$ 是非零有限维实向量空间，$C\subset V$ 是闭、尖、生成的凸锥，$u\in V^*$ 在 $C\setminus\{0\}$ 严格正。保留紧底 $K=C\cap\{u=1\}$、全部原纯点 $P=\operatorname{ext}K$ 和全部原效应 $\mathcal E=[0,u]_{C^*}$。$F_K(A)$ 始终是包含 $A$ 的实际最小面，含空面与整个 $K$。定义
+
+$$
+\begin{gathered}
+a\mathrel\# b\quad\Longleftrightarrow\quad
+\exists e\in\mathcal E:\ e(a)=1,\ e(b)=0,\qquad a,b\in P,\\
+N_a=\{b\in P:a\mathrel\# b\},\quad
+W_a=\operatorname{span}_{\mathbb R}N_a,\\
+\mathrm{LIN}(a):\quad a\notin W_a,\qquad
+\mathrm{LIN}:\quad\forall a\in P,\ \mathrm{LIN}(a).
+\end{gathered}
+\tag{195.1}
+$$
+
+取补效应表明 $\#$ 对称。这里的张成允许任意实系数，并不是凸包，也不预给邻点共同为零的效应。NC 仍指 $a\notin F_K(N_a)$ 对所有 $a$ 成立。
+
+L2 仍要求每个不同纯对的整个实际面 $B(a,b)=F_K(a,b)$ 仿射同构于闭 Euclidean 三球。对 $p\ne y$，$\tau_p(y)$ 是这个球的纯边界在 $p$ 处的二维实仿射切方向；它由球内仿射结构唯一决定，不用原空间的预给内积。TC 是同一层内的三点相容关系
+
+$$
+\tau_p(y)\subseteq\tau_p(a)+\tau_p(b)
+\quad\bigl(a\ne b,\ p\notin B(a,b),\ y\in P\cap B(a,b)\bigr).
+\tag{195.2}
+$$
+
+定义160.2已给这个切方向的坐标无关性。本章的单锥候选为 $\mathrm{L2+TC+LIN}$；不在此前件中放入 AD、正删除、最小确认者或复矩阵坐标。
+

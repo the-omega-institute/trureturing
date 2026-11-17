@@ -12,6 +12,16 @@ internal sealed class ElmerKadrTensorReflectionDocument : IScribeDocumentDefinit
             Paragraph(Text("An M-relatively projective P is an actual equivariant retract of X tensor M with X arbitrary. RelativeFactors M f allows factorization through any such P. Write A~_M B for the original RelativeStableIso M A B: two actual equivariant maps have composites differing from the respective identities by maps in RelativeFactors M. The modules P and X are unrestricted and need not be finite-dimensional. The tensor action is diagonal and the polynomial dual uses the inverse translation, including its negative sign.")),
             Paragraph(Text("The mathematical source is Jonathan Elmer and Kazal Kadr, Some formulae relating modular representations of elementary abelian p-groups, DOI 10.1007/s13366-026-00855-9, arXiv:2510.07939v1, formulas (11)--(12), Section 2.2 and Lemma 2.1(iii). The recurrence route follows their Proof of Corollary 1.3. The repository proves the finite-field specialization of the reflection proposed in Conjecture 3.7(b), with no claim of literature priority.")),
             Describe.Lean(
+                DescribeId.Create("elmer-kadr-relative-projective-product"),
+                DeclarationHandle.Create("D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.projective_prod"),
+                H("Products preserve original relative projectivity"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For any field K, group G and representation M, if A and B are M-relatively projective, then their actual product A times B is M-relatively projective. The projective and tensor witnesses are unrestricted; neither a finite field nor finite-dimensional witnesses are required.")),
+                    Paragraph(Text("Given retractions through X tensor M and Y tensor M, the actual tensor-product distribution equivalence gives a retraction through (X times Y) tensor M. This existing helper is consumed by the reflection factor calculus and by the literal triple tensor criterion."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("elmer-kadr-single-factor-reflection"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.single_factor_reflection"),
                 H("One copy of W reflects a positive low digit"),

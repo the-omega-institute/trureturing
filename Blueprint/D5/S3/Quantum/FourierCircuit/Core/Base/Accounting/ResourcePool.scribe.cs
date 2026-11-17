@@ -1,0 +1,60 @@
+using StrataLint.Scribe;
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.FourierCircuit.Core.Base.Accounting;
+
+internal sealed class ResourcePoolDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Addressed quantum circuit: Core Base Accounting ResourcePool", H("Core Base Accounting ResourcePool"), Blocks(
+            Describe.Lean(DescribeId.Create("declaration0"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Accounting/ResourcePool.ResourcePool"),
+                H("ResourcePool"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("A finite event ledger whose coordinates are fixed by the selected execution model."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration1"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Accounting/ResourcePool.singleton"),
+                H("singleton"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("A pool containing multiplicity copies of one event coordinate."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration2"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Accounting/ResourcePool.count"),
+                H("count"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("The exact multiplicity of one event coordinate."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration3"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Accounting/ResourcePool.ofList"),
+                H("ofList"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Convert an actual event list into its literal multiplicity ledger."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration4"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Accounting/ResourcePool.count_zero"),
+                H("count zero"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("lemma count_zero {model : ExecutionModel} (event : Resource.Event model) : count event (0 : ResourcePool model) = 0."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration5"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Accounting/ResourcePool.count_singleton"),
+                H("count singleton"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Count one native coordinate in an arbitrary singleton ledger."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration6"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Accounting/ResourcePool.count_add"),
+                H("count add"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("lemma count_add {model : ExecutionModel} (event : Resource.Event model) (left right : ResourcePool model) : count event (left + right) = count event left + count event right."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration7"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Accounting/ResourcePool.count_ofList"),
+                H("count ofList"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("public lemma count_ofList {model : ExecutionModel} (event : Resource.Event model) (events : List (Resource.Event model)) : count event (ofList events) = List.count event events."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration8"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Accounting/ResourcePool.ofList_cons"),
+                H("ofList cons"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("lemma ofList_cons {model : ExecutionModel} (event : Resource.Event model) (events : List (Resource.Event model)) : ofList (event :: events) = singleton event + ofList events."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration9"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Core/Base/Accounting/ResourcePool.ofList_append"),
+                H("ofList append"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("lemma ofList_append {model : ExecutionModel} (first second : List (Resource.Event model)) : ofList (first ++ second) = ofList first + ofList second."))), DescribeRole.Lemma))));
+}

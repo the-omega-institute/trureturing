@@ -17,6 +17,20 @@ internal sealed class TribonacciPrefixRefutationDocument : IScribeDocumentDefini
                 All("x", Call("Fin", D(3)), Eq(Call("tau", F.Id("x")),
                     Call("image", F.Id("sigma"), D(4), F.Id("x")))),
                 "Write tau=sigma^4, so tau^n(x)=image sigma (4n) x. The literal images are tau(A)=ABACABAABACAB, tau(B)=ABACABAABAC and tau(C)=ABACABA. Their lengths are 13, 11 and 7. In particular tau(A)=tau(C) followed by A and BACAB."),
+            Node("tau_A", "fourth-image-a", "Fourth image of A", DescribeRole.Theorem,
+                Eq(Call("tau", D(0)), Call("list", D(0), D(1), D(0), D(2), D(0), D(1), D(0), D(0), D(1), D(0), D(2), D(0), D(1))),
+                "The exact fourth image of A is ABACABAABACAB."),
+            Node("tau_B", "fourth-image-b", "Fourth image of B", DescribeRole.Theorem,
+                Eq(Call("tau", D(1)), Call("list", D(0), D(1), D(0), D(2), D(0), D(1), D(0), D(0), D(1), D(0), D(2))),
+                "The exact fourth image of B is ABACABAABAC."),
+            Node("tau_C", "fourth-image-c", "Fourth image of C", DescribeRole.Theorem,
+                Eq(Call("tau", D(2)), Call("list", D(0), D(1), D(0), D(2), D(0), D(1), D(0))),
+                "The exact fourth image of C is ABACABA."),
+            Node("abc_closed", "complete-block-charges", "All complete block charges", DescribeRole.Theorem,
+                All("n", Nat(), Conj(Eq(Call("a", F.Id("n")), D(2)),
+                    Eq(Call("b", F.Id("n")), Sub(D(2), Sign())),
+                    Eq(Call("c", F.Id("n")), Sub(D(2), Mul(Add(Mul(D(2), Call("integer", F.Id("n"))), D(2)), Sign()))))),
+                "The three complete block charges satisfy these identities at every natural level, including zero. The sign is (-1)^n and the coercion of n in c(n) is to the integers."),
             Node("weight", "letter-weights", "Integer letter weights", DescribeRole.Definition,
                 Conj(Eq(Call("weight", D(0)), D(2)), Eq(Call("weight", D(1)), D(1)),
                     Eq(Call("weight", D(2)), D(0))),
@@ -65,6 +79,8 @@ internal sealed class TribonacciPrefixRefutationDocument : IScribeDocumentDefini
             Conj(Lt(D(0), k), All("s", Nat(), All("m", Nat(), bound))));
     }
 
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    private static Formula Sign() => new Formula.Power(Sub(D(0), D(1)), F.Id("n"));
     private static Formula Nat() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
     private static Formula Real() => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(F.Id(name), [.. args]);

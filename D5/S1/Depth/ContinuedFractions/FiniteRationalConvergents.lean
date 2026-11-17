@@ -12,6 +12,7 @@ Released under Apache 2.0 license; the complete license is retained in
 Library/HilbertOperators/aicyberg2026shor.md. Authors: aicyberg.
 Source: solanaqubits/leanbook, commit 9b742770a2a5dbcf30cf9abc44e711194e957a00,
 Verification/QuantumShorContinuedFractions.lean.
+The receiving module grouping and tail_den_lt visibility are adapted.
 Retire this slice when equivalent declarations exist in the receiving pinned
 Mathlib, replacing the slice with direct imports at that repository pin.
 -/
@@ -21,7 +22,7 @@ import Mathlib.Data.Rat.Floor
 
 namespace QuantumShorContinuedFractions
 
-private theorem tail_den_lt (x : ℚ) (h : Int.fract x ≠ 0) :
+theorem tail_den_lt (x : ℚ) (h : Int.fract x ≠ 0) :
     ((Int.fract x)⁻¹).den < x.den := by
   rw [Rat.den_inv_of_ne_zero h, ← Rat.den_intFract x]
   have hn : 0 ≤ (Int.fract x).num := Rat.num_nonneg.mpr (Int.fract_nonneg x)

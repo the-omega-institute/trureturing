@@ -1,0 +1,48 @@
+**定理 14.3（Sharp uniform horizon and full-input pure terminal minimum）。** For the actual strict-unbalanced source on the whole $H=\mathbb C^5\otimes\mathbb C^2$, under Definition 12.1's independently fresh pure environments, unread output and terminal trace, the exact-length configuration spans satisfy
+
+$$
+\boxed{\mathcal S_N=M_5(\mathbb C)\quad\text{and}\quad
+\operatorname{rank}J(\Phi_{\ne}^N)=25\qquad(N\ge8).}
+\tag{14.14}
+$$
+
+The least uniform cutoff is exactly
+
+$$
+\boxed{N_*=8.}
+\tag{14.15}
+$$
+
+For every such source and every selected $N\ge8$, the minimum dimension of an initially pure terminal environment is $25$, attained by a full-input dilation. The same dimension suffices and is necessary with any untouched finite reference, including coherent and entangled inputs. For a mixed terminal environment of dimension $d$ and initial state $\sigma_E$, the conclusion is only
+
+$$
+25\le d\,\operatorname{rank}\sigma_E\le d^2.
+\tag{14.16}
+$$
+
+**证明。** The $25$ columns in Lemma 14.2 are independent exact-length-eight words, so $\mathcal S_8=M_5(\mathbb C)$. Reuse the homogeneous propagation step of Theorem 12.2: $U$ is invertible and $U\mathcal S_N\subseteq\mathcal S_{N+1}$, hence full span at one exact length implies full span at its successor. This gives (14.14)'s span assertion for all exact $N\ge8$, without replacing exact length by a cumulative span.
+
+Reuse the exact interior obstruction of Proposition 13.2 with its original certificate (13.2)–(13.4). At $(p,q,r)=(9/50,8/25,8/25)$, (14.1) gives $t=B=1/2$, $A=9/50$, and $(\alpha,\beta,\eta,\zeta)=(3/5,4/5,3/5,4/5)$, equivalently $x=y=1/2$. Its exact length-seven span has dimension $24$. Thus no cutoff at most seven works for every source and every subsequent exact length. Together with the all-parameter upper bound eight, this proves (14.15). This sharpness argument reuses the published witness; it is not a new rank computation or a claim that every source first saturates at eight.
+
+For the channel consequence, the established Sanz–Choi supplier has the precise correspondence
+
+$$
+\mathcal E_{\mathcal A}(Z)=B UZU^*+tVZV^*,\qquad
+\mathcal A=(\sqrt B\,U,\sqrt t\,V),\qquad D_{\mathrm{Sanz}}=5,
+\quad d_{\mathrm{Sanz}}=2.
+$$
+
+Sanz, Pérez-García, Wolf and Cirac, *A quantum version of Wielandt's inequality*, arXiv:0909.5347v2, §II following equation (1), identifies $\operatorname{rank}J(\mathcal E_{\mathcal A}^N)$ with the span of products of exactly $N$ Kraus operators. Since $B,t>0$, these spans are precisely $\mathcal S_N$. Its generic Proposition 3 and Theorem 1(2) concern this configuration channel; the source-specific identity (14.5) supplies the sharper horizon here. No primitivity conclusion for a ten-dimensional channel is being inferred.
+
+In the actual source coordinates, every chronological Kraus word satisfies
+
+$$
+L_{w_N}\cdots L_{w_1}
+=B^{n_0/2}t^{n_1/2}
+D^*\bigl((\mathsf G_{w_N}\cdots \mathsf G_{w_1})\otimes I_K\bigr)D,
+\qquad n_0+n_1=N.
+\tag{14.17}
+$$
+
+All scalar weights are nonzero and $Z\mapsto D^*(Z\otimes I_K)D$ is injective. Therefore the full-input Kraus span has exactly the same dimension $25$. The positive Choi sum (12.12) and the pure-environment minimality/attainment argument of Theorem 12.2 apply unchanged at these earlier lengths. These are the existing Kraus/Choi/Stinespring suppliers of Watrous, *The Theory of Quantum Information*, Theorem 2.22 and Corollary 2.27, not new generic results. Tensoring the actual Kraus operators with $I_R$ preserves linear independence and realizes the channel on every untouched reference. The same spectral Kraus expansion as (12.13) gives (14.16), with no mixed-environment optimum or attainment at dimension five inferred. $\square$
+
