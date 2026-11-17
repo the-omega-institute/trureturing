@@ -45,12 +45,11 @@ internal sealed class HardinA229634StripDataDocument : IScribeDocumentDefinition
 
     private static Formula EqualSign { get; } = new Formula.LatexSymbol(FormulaLatexSymbol.Equal);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
-    private static Formula Div(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Divide, b);
     private static Formula Vec(params Formula[] cells) => Mat(cells);
-    private static Formula Mat(params Formula[][] rows) => Seq(Begin, Grp(Id("pmatrix")),
+    private static Formula Mat(params Formula[][] rows) => Seq(Begin, Grp(F.Id("pmatrix")),
         Seq(rows.SelectMany((row, i) => (i == 0 ? Array.Empty<Formula>() : new[] { RowBreak })
             .Concat(row.SelectMany((cell, j) => j == 0 ? new[] { cell } : new[] { Amp, cell }))).ToArray()),
-        End, Grp(Id("pmatrix")));
+        End, Grp(F.Id("pmatrix")));
     private static Formula Set(params Formula[] cells) => Seq(OpenBrace,
         Seq(cells.SelectMany((cell, i) => i == 0 ? new[] { cell } : new[] { Comma, Sp, cell }).ToArray()), CloseBrace);
     private static Formula Cond(Formula test, Formula yes, Formula no) => Parenthesized(Seq(
