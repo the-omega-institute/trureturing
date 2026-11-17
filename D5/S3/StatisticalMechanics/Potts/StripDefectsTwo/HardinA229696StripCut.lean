@@ -20,6 +20,7 @@ tail_counts: proof_shape=bind-only; consumers=HardinA229696Strip.finite_certific
 -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696StripData
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
 open scoped BigOperators

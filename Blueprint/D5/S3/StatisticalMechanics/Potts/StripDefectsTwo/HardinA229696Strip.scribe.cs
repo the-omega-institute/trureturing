@@ -69,7 +69,7 @@ internal sealed class HardinA229696StripDocument : IScribeDocumentDefinition
     {
         Formula Count(int k) => Typed(Call(ResultName+".a",Add(V("n"),Num(k))),V("Int"));
         Formula rhs=Mul(Num(Coefficients[^1]),Count(Last));
-        for(int i=1;i<Coefficients.Length;i++) {var c=Coefficients[^(i+1)];var term=Mul(Num(System.Math.Abs(c)),Count(Last-i));rhs=c<0?Sub(rhs,term):Add(rhs,term);}
+        for(int i=1;i<Coefficients.Length;i++) {var c=Coefficients[^(i+1)];var term=Mul(Num((c < 0 ? -c : c)),Count(Last-i));rhs=c<0?Sub(rhs,term):Add(rhs,term);}
         return All("n",V("Nat"),Eq(Count(Last+1),rhs));
     }
     private static Formula CountDefinition()

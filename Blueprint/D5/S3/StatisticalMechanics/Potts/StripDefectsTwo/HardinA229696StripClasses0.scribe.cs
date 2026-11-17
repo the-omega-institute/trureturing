@@ -36,7 +36,6 @@ internal sealed class HardinA229696StripClasses0Document : IScribeDocumentDefini
     private static Formula Data(string n, params Formula[] a) => Call(DataName+"."+n,a);
     private static Formula Old(string n, params Formula[] a) => Call(OldName+"."+n,a);
     private static Formula Cost(Formula p, Formula r) => Add(Call("DefectTransfer.bondDefects",Old("between"),p,r),Call("DefectTransfer.bondDefects",Old("horizontal"),r,r));
-    private static Formula Valid(Formula p, Formula d) => Data("Valid",p,d);
     private static Formula Cl(Formula p, Formula d) => Data("cl",p,d);
     private static Formula Transition(Formula p, Formula d, Formula s) => Eq(Sum("r",Row(),If(And(Leq(Cost(p,V("r")),d),Eq(Cl(V("r"),Sub(d,Parenthesized(Cost(p,V("r"))))),s)),Typed(Num(1),V("Int")),Typed(Num(0),V("Int")))),Data("T",Cl(p,d),s));
     private static Formula Join(params Formula[] a) => a.Length==1 ? a[0] : And(a[0],Join(a.Skip(1).ToArray()));
