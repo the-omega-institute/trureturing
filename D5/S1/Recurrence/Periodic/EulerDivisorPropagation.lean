@@ -7,29 +7,22 @@
    digest: Ordinary A000111 divisor propagation with Euler totient shifts. -/
 
 /-
-proof_shape: corrected_sum and signed_zero_transfer are bind-only auxiliary declarations,
-consumed by signed_zero_transfer and odd_prime_power respectively. odd_prime_power,
-divisor_propagation and particular are content after same-delivery inlining of the signed
-correspondence and two-primary inductions. particular's direct step specializes
-divisor_propagation with the explicit source boundaries and the sole k=3 exception.
-escape_witness: odd_prime_power, consumed by divisor_propagation; corrected_sum and
-signed_zero_transfer are its live frequency-transfer chain, while two_primary is the live
-two-adic witness.
-admission_basis: open-problem-resolution (#31280; Proved) for divisor_propagation and
-particular, counting the two source assertions once; supporting declarations use
-escape-witness. The two assertions are one resolution unit; its typed claim requires the
-host to be a member of frozen state.
-Direct frozen dependencies: none beyond pinned Mathlib; EulerTwoPrimary and EulerSecantBridge
-are same-delivery dependencies.
-Private theorem consumers: frequency_eq -> deleted_sum; deleted_index -> deleted_sum;
-deleted_sum -> corrected_sum; correction_unit -> signed_zero_transfer;
-zero_even/zero_odd -> odd_prime_power; exponential_lower -> two_primary;
-two_primary -> divisor_propagation.
+proof_shape: 10 consumed bind-only theorems and 3 content theorems.
+zero_even, zero_odd and odd_prime_power are bind-only; so are the finite-frequency
+helpers. two_primary, divisor_propagation and particular retain the genuine
+same-delivery tangent valuation and secant parity inductions.
+escape_witness: EulerTwoPrimary.tangent_power and EulerTwoPrimary.secant_odd are
+consumed by two_primary, then divisor_propagation, then particular.
+admission_basis: open-problem-resolution (#31280; Proved) for divisor_propagation
+and particular jointly. two_primary is consumed content with escape-witness basis;
+bind-only helpers have no independent admission basis. The two source assertions
+form one resolution unit whose typed claim requires frozen-state membership.
+EulerTwoPrimary is the same-delivery content dependency; other imports are pinned
+Mathlib. Helper consumer arrows below run prerequisite -> consumer.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31291.
 -/
 
 import D5.S1.Recurrence.Periodic.EulerTwoPrimary
-import D5.S1.Recurrence.Periodic.EulerSecantBridge
 import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.RingTheory.Nilpotent.Basic
 
@@ -44,11 +37,13 @@ open D5.S1.Recurrence.Periodic.EulerSignedFrequency
 
 namespace D5.S1.Recurrence.Periodic.EulerOddPrimePower
 
+/- proof_shape: bind-only; consumers: D5.S1.Recurrence.Periodic.EulerOddPrimePower.deleted_sum. -/
 private theorem frequency_eq (p b v : ℕ) (hp : Odd p) :
     2 * (p * v + b * (p / 2)) + b = p * (2 * v + b) := by
   have h : 2 * (p / 2) + 1 = p := by have := Nat.odd_iff.mp hp; omega
   nlinarith
 
+/- proof_shape: bind-only; consumers: D5.S1.Recurrence.Periodic.EulerOddPrimePower.deleted_sum. -/
 private theorem deleted_index (p R b h : ℕ) (hp : p.Prime) (hodd : Odd p)
     (hb : b ≤ 1) (hh : h < p * R) (hdiv : p ∣ 2 * h + b) :
     ∃ v < R, h = p * v + b * (p / 2) := by
@@ -75,6 +70,7 @@ private theorem deleted_index (p R b h : ℕ) (hp : p.Prime) (hodd : Odd p)
     refine ⟨v, ?_, by simpa using he⟩
     nlinarith
 
+/- proof_shape: bind-only; consumers: D5.S1.Recurrence.Periodic.EulerOddPrimePower.corrected_sum. -/
 private theorem deleted_sum (p R b q j : ℕ) (hp : p.Prime) (hodd : Odd p)
     (hb : b ≤ 1) :
     (∑ h ∈ (range (p * R)).filter (fun h => p ∣ 2 * h + b),
@@ -108,6 +104,7 @@ private theorem deleted_sum (p R b q j : ℕ) (hp : p.Prime) (hodd : Odd p)
     ring
 
 /-- The prime-deleted finite frequency sum is the corrected integral coefficient. -/
+/- proof_shape: bind-only; consumers: D5.S1.Recurrence.Periodic.EulerOddPrimePower.signed_zero_transfer. -/
 theorem corrected_sum (p r b j : ℕ) (hp : p.Prime) (hodd : Odd p)
     (hb : b ≤ 1) :
     (1 - (-1 : ZMod (p ^ (r + 1))) ^ (b * (p / 2)) *
@@ -129,6 +126,7 @@ theorem corrected_sum (p r b j : ℕ) (hp : p.Prime) (hodd : Odd p)
   change _ = _ at hfull hdel
   linear_combination hfull + hdel - hsplit
 
+/- proof_shape: bind-only; consumers: D5.S1.Recurrence.Periodic.EulerOddPrimePower.signed_zero_transfer. -/
 private theorem correction_unit (p r b j : ℕ) (hj : 0 < j) :
     IsUnit (1 - (-1 : ZMod (p ^ (r + 1))) ^ (b * (p / 2)) *
       (p : ZMod (p ^ (r + 1))) ^ j) := by
@@ -142,6 +140,7 @@ private theorem correction_unit (p r b j : ℕ) (hj : 0 < j) :
   rw [mul_pow, hnil, mul_zero]
 
 /-- Young's zero-transfer consequence, with no lower bound by the prime-power exponent. -/
+/- proof_shape: bind-only; consumers: D5.S1.Recurrence.Periodic.EulerDivisorPropagation.odd_prime_power. -/
 theorem signed_zero_transfer (p r b k m : ℕ) (hp : p.Prime) (hodd : Odd p)
     (hb : b ≤ 1) (hk : 0 < k) (hzero : (A b k : ZMod (p ^ (r + 1))) = 0) :
     (A b (k + m * Nat.totient (p ^ (r + 1))) : ZMod (p ^ (r + 1))) = 0 := by
@@ -171,6 +170,7 @@ end D5.S1.Recurrence.Periodic.EulerOddPrimePower
 
 namespace D5.S1.Recurrence.Periodic.EulerDivisorPropagation
 
+/- proof_shape: bind-only; consumers: D5.S1.Recurrence.Periodic.EulerDivisorPropagation.odd_prime_power. -/
 private theorem zero_even (q s : ℕ) :
     (E (2 * s) : ZMod q) = 0 ↔
       (EulerSignedFrequency.A 1 (2 * s) : ZMod q) = 0 := by
@@ -180,6 +180,7 @@ private theorem zero_even (q s : ℕ) :
   rw [he]
   exact ((isUnit_one : IsUnit (1 : ZMod q)).neg.pow s).mul_right_eq_zero
 
+/- proof_shape: bind-only; consumers: D5.S1.Recurrence.Periodic.EulerDivisorPropagation.odd_prime_power. -/
 private theorem zero_odd (q s : ℕ) :
     (E (2 * s + 1) : ZMod q) = 0 ↔
       (EulerSignedFrequency.A 0 (2 * s + 1) : ZMod q) = 0 := by
@@ -190,6 +191,7 @@ private theorem zero_odd (q s : ℕ) :
   exact ((isUnit_one : IsUnit (1 : ZMod q)).neg.pow (s + 1)).mul_right_eq_zero
 
 /-- Ordinary Euler zeros propagate at every positive index for odd prime powers. -/
+/- proof_shape: bind-only; consumers: D5.S1.Recurrence.Periodic.EulerDivisorPropagation.divisor_propagation. -/
 theorem odd_prime_power (p r k m : ℕ) (hp : p.Prime) (ho : Odd p)
     (hk : 0 < k) (hdiv : p ^ (r + 1) ∣ E k) :
     p ^ (r + 1) ∣ E (k + m * Nat.totient (p ^ (r + 1))) := by
@@ -229,10 +231,12 @@ theorem odd_prime_power (p r k m : ℕ) (hp : p.Prime) (ho : Odd p)
     rw [hnform] at ha ⊢
     exact (zero_odd q t).mpr ha
 
+/- proof_shape: bind-only; consumers: D5.S1.Recurrence.Periodic.EulerDivisorPropagation.two_primary. -/
 private theorem exponential_lower (a : ℕ) : 2 * a ≤ 2 ^ a + 1 := by
   have h := Nat.mul_le_pow (a := 2) (by decide) a
   omega
 
+/- proof_shape: content; consumers: D5.S1.Recurrence.Periodic.EulerDivisorPropagation.divisor_propagation. -/
 private theorem two_primary (a k m d : ℕ) (hd : 2 < d) (hm : 0 < m)
     (had : 2 ^ (a + 1) ∣ d) (hdiv : d ∣ E k) :
     2 ^ (a + 1) ∣ E (k + m * Nat.totient d) := by
@@ -267,6 +271,7 @@ private theorem two_primary (a k m d : ℕ) (hd : 2 < d) (hm : 0 < m)
   exact (pow_dvd_pow 2 ha).trans (EulerTwoPrimary.tangent_power s)
 
 /-- The complete main A386381 Conjecture 2 assertion for ordinary A000111. -/
+/- proof_shape: content; consumers: D5.S1.Recurrence.Periodic.EulerDivisorPropagation.particular, Reg.D5.S1.Recurrence.Periodic.EulerDivisorPropagation.divisor_propagation.family, Reg.D5.S1.Recurrence.Periodic.EulerDivisorPropagation.divisor_propagation.registration. -/
 theorem divisor_propagation (k m d : ℕ) (hd : 2 < d) (hdiv : d ∣ E k) :
     d ∣ E (k + m * Nat.totient d) := by
   by_cases hm : m = 0
@@ -291,6 +296,7 @@ theorem divisor_propagation (k m d : ℕ) (hd : 2 < d) (hdiv : d ∣ E k) :
       simpa only [ht, Nat.mul_assoc, Nat.mul_left_comm, Nat.mul_comm] using hh
 
 /-- The particular family excludes exactly the source's index three. -/
+/- proof_shape: content; consumers: Reg.D5.S1.Recurrence.Periodic.EulerDivisorPropagation.particular.family, Reg.D5.S1.Recurrence.Periodic.EulerDivisorPropagation.particular.registration. -/
 theorem particular (k m : ℕ) (hk : k ≠ 3) :
     E k ∣ E (k + m * Nat.totient (E k)) := by
   by_cases hsmall : k < 4

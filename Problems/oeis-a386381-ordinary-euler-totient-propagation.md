@@ -39,7 +39,9 @@ No worldwide novelty or priority claim follows.
 
 ## Gap
 
-The retained Lean source proves both assertions for the ordinary carrier.
+The retained `D5/S1/Recurrence/Periodic/EulerDivisorPropagation.lean` proves
+both assertions for the ordinary carrier supplied by
+`D5/S1/Recurrence/Periodic/EulerTwoPrimary.lean`.
 The intermediate theorem audits remain incomplete under the existing
 [linked exception](https://github.com/the-omega-institute/trureturing/issues/31291).
 Independent pre-freeze form and source-fidelity review, canonical freeze

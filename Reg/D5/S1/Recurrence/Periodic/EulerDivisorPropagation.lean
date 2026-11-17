@@ -1,4 +1,5 @@
 import D5.S1.Recurrence.Periodic.EulerDivisorPropagation
+import D5.S1.Recurrence.Periodic.EulerTwoPrimary
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 
