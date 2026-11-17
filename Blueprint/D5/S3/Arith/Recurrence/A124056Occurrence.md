@@ -54,12 +54,77 @@ Lean statement: `D5/S3/Arith/Recurrence/A124056Occurrence.missing_residue_of_fin
 
 If the set of internal indices at which the value is three is finite, there is a natural q at least two such that every sequence value greater than one has remainder different from one modulo q. A seed is an internal index i at least two with no earlier divisor value at an index from two to i-1. Such a seed is equivalent to its successor having value three, so there are finitely many seeds. Their values have a finite LCM q, divisible by two. The earliest divisor index from two through any index n is a seed, providing a common divisor at least two of q and term(n). Such a value cannot have remainder one modulo q.
 
-The unconditional assertion that every positive integer occurs remains open in this module. The missing implication is the uniform multiplicity estimate for prefixes avoiding a residue class. The ordinary route uses the divisor-list rank bound, ordered prime-word convolution, a fixed fractional exponent with finite Dirichlet moments for every exponent greater than one, and distinct predecessor values. None of these unproved estimates is installed as an axiom or used as an unconditional theorem.
+**Theorem 1.5 (Residue avoidance bounds contributor ranks).**
+
+Lean statement: `D5/S3/Arith/Recurrence/A124056Occurrence.contributor_rank_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Recurrence/A124056Occurrence.contributor_rank_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Write D(t,v) for the number of internal indices i less than t whose values divide v. Suppose q is at least two and every term through internal index N greater than one has remainder different from one modulo q. For every t at most N and v at least two, D(t,v) is at most q times the sum of count(t,d) over the proper divisors d of v. A proper-divisor contributor increases the available bound by q. An equal-value contributor cannot cross that bound, since the crossing successor would be one modulo q. The first rank is a proper-divisor contribution from the initial one; t=0 has no contributors. The successor of every counted index remains within the avoided prefix.
+
+**Theorem 1.6 (Splitting distinct ordered prime words).**
+
+Lean statement: `D5/S3/Arith/Recurrence/A124056Occurrence.prime_word_split`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Recurrence/A124056Occurrence.prime_word_split` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a positive v, primeWords(v) is the finite set of distinct permutations of its prime-factor list. Its cardinality b(v) counts ordered prime words and omega(v) is their common length, counting prime factors with multiplicity. For every j from zero through omega(v), the sum of b(d)b(v/d) over divisors d of v with omega(d)=j equals b(v). Concatenation is a bijection: take and drop at position j recover the two words, and unique prime factorization recovers d from the first product. The empty word gives b(1)=1, so both endpoint splits are included.
+
+**Theorem 1.7 (The proper-divisor weight sum is absorbed).**
+
+Lean statement: `D5/S3/Arith/Recurrence/A124056Occurrence.prime_word_weight_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Recurrence/A124056Occurrence.prime_word_weight_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For natural A and positive v define W(A,v)=A to the power omega(v), times b(v). For every natural q, q times the sum of W(q+1,d) over proper divisors d of v is at most W(q+1,v). At each factor-count layer, the split identity and b(v/d) at least one bound the sum of b(d) by b(v). A proper divisor has strictly fewer prime factors with multiplicity. The geometric identity q times the sum of (q+1) to the powers below k, plus one, equals (q+1) to the power k completes the estimate.
+
+**Theorem 1.8 (Prime-word majorant for actual divisor counts).**
+
+Lean statement: `D5/S3/Arith/Recurrence/A124056Occurrence.divisor_card_le_prime_word_weight`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Recurrence/A124056Occurrence.divisor_card_le_prime_word_weight` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the same prefix residue avoidance with q at least two, every t at most N and every positive v satisfy D(t,v) at most 2W(q+1,v). Strong induction on v combines the contributor-rank bound, count(t,d) at most D(t,d), and the proper-divisor weight estimate. For v=1 the only possible contributors are the two initial ones, and W(q+1,1)=1. This is a pointwise bound under finite-prefix avoidance, without a uniform sublinear frequency conclusion.
+
+**Theorem 1.9 (Occurrences and distinct predecessor values).**
+
+Lean statement: `D5/S3/Arith/Recurrence/A124056Occurrence.count_le_prime_word_bounds`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Recurrence/A124056Occurrence.count_le_prime_word_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the same avoidance hypothesis, for every t at most N and d at least two, count(t,d) is bounded both by 2W(q+1,d) and by the cardinality of the positive v at most prefixMax(N) with d at most 2W(q+1,v). Each occurrence index i of d is positive and maps to the actual predecessor term(i-1). Equal predecessor values have strictly increasing successors, so this map is injective on occurrences of d. The exact recurrence and the pointwise majorant place every image in the displayed finite level set. The restriction d at least two excludes the initial term, which has no predecessor.
+
+The unconditional assertion that every positive integer occurs remains open in this module. The remaining analytic step chooses r greater than one using q alone so that 2A times the prime sum of p to the power minus r is at most one, where A=q+1, and proves W(2A,v) at most v to the power r. With the same fixed s=1/(2r), one must prove that the Dirichlet series with terms W(A,v) to the power s divided by v to the power sigma converges for every sigma greater than one. The smooth and rough prime-factor split must justify its nonnegative rearrangements; W is not assumed multiplicative. The finite predecessor level set then requires a Markov estimate, followed by the threshold d at most prefixMax(N) to the power s, delta=s squared divided by two, and sigma=1+delta. These estimates must give constants independent of N and d, include d=1, and combine with the missing-residue and maximum contradiction results to prove infinitely many threes. None of these remaining estimates is installed as an axiom or assumed as a complete analytic bound.
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Recurrence/A124056Occurrence.contributor_rank_bound`
+- Truth anchor: `D5/S3/Arith/Recurrence/A124056Occurrence.count_le_prime_word_bounds`
+- Truth anchor: `D5/S3/Arith/Recurrence/A124056Occurrence.divisor_card_le_prime_word_weight`
 - Truth anchor: `D5/S3/Arith/Recurrence/A124056Occurrence.full_occurrence_of_infinite_three`
 - Truth anchor: `D5/S3/Arith/Recurrence/A124056Occurrence.missing_residue_of_finite_three`
 - Truth anchor: `D5/S3/Arith/Recurrence/A124056Occurrence.no_uniform_sublinear_count_bound`
+- Truth anchor: `D5/S3/Arith/Recurrence/A124056Occurrence.prime_word_split`
+- Truth anchor: `D5/S3/Arith/Recurrence/A124056Occurrence.prime_word_weight_bound`
 - Truth anchor: `D5/S3/Arith/Recurrence/A124056Occurrence.source_specification`
 - Dependency: [D5/S3/Arith/Divisors/DivisorSubpower](../Divisors/DivisorSubpower.md)
