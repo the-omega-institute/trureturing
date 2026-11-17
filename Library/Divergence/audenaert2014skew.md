@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/UmegakiBKMPath
   - D5/S3/Quantum/Divergence/UmegakiRareFlagBKM
   - D5/S3/Quantum/Divergence/UniversalCommonCenter
+  - D5/S3/Quantum/Divergence/UniversalPositiveScalarizer
 license: citation-only
 triage: anchor
 ---
@@ -58,3 +59,23 @@ same Umegaki complete-versus-conditional contraction problem served by the BKM
 path identity. The weighted quotient-duality bridge, amplified common scalarizer
 and final coefficient comparison remain open. No originality or solution of
 that original problem is asserted.
+
+The actual selected-column inference is formalized in
+`UniversalPositiveScalarizer.selected_column_joint_gram`. For finite nonempty
+input and output carriers and an actual quantum channel, its universal
+positive-definite trace-inf premise supplies one scalar family for the whole
+matrix-unit basis. With the canonical Kraus isometry J, pi(A)=A tensor I_Env
+and e=I-J J adjoint, vertically stack C_i=J adjoint pi(E_i)e and
+D_i=Phi*(E_i)-x_i I. The conclusion is positivity of k C C adjoint-D D adjoint,
+including k=0. The packed actual defect is proved equal to C C adjoint.
+For a full matrix center X, the selected residual column is D, while the
+other columns form R. The proof uses P P adjoint=D D adjoint+R R adjoint
+and positivity of the latter remainder; it imposes no sparsity on X.
+
+This inference is a repository construction using the finite common-center
+supplier, not a result attributed to Audenaert's paper. It establishes joint
+Gram control, not yet a scalar functional or a state-valued scalarizer.
+Heterogeneous Douglas factorization, the unital functional and trace density,
+contractive polar correction for possibly singular density, the supported
+Gram flip and the same-center quantum-reference bounds remain unproved here.
+The original all-finite Umegaki coefficient equality remains open.
