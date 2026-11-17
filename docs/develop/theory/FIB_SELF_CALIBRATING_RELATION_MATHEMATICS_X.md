@@ -1992,8 +1992,9 @@ $\Phi^\sharp\ne0$，$\operatorname{Res}_u(R,E)$ 在该 $e$ 处含平方因子；
 所以碰撞只能落在 $S=0$ 上。因 $S$ 的全部异常因子均被显式乘入，证明没有使用
 genericity，也没有丢掉首项、$\Delta$、采样增益或回代图外的分支。
 
-证书的系数文件为私有实验仓库
-`/Users/auricstudio/trureturing-experiments/fib_shared_response_176/global_preflight` 下的
+证书的系数文件位于私有实验仓库
+[`the-omega-institute/trureturing-experiments`](https://github.com/the-omega-institute/trureturing-experiments)
+的仓库相对目录 `fib_shared_response_176/global_preflight` 下，包括
 `R.json`、`E.json`、`H_factor_1.json`、`collision_support.json` 和
 `support_isolations.json`；其中 `collision_support.json` 的 SHA-256 为
 `ce0e91ac8fcf7b8637f0520f368938a9f165d305cc76c156c949cce5bbb727f1`，
@@ -2002,9 +2003,8 @@ genericity，也没有丢掉首项、$\Delta$、采样增益或回代图外的�
 `de87cab361a10a0f7a84a15a3738b5e8cad7702331698b6fcf2f3b1e530aff36`、
 `a4c611369cd5eedc73c7314581a507da880b7db30f5d2fc6fd01eb9866d5229e` 和
 `9f0cd27bde73dcbedac70eca973ee9942ee7d8bc46998232ec168e471ab62cd7`。
-`verify_certificate.py` 的精确有理恒等式检查退出码为 0，`support.py` 与
-`isolate_support.py` 的 Sturm 和隔离检查也均退出码为 0。该检查是同一工作者的可执行
-证书，不是 Lean 验证或独立三席审查。
+精确有理恒等式、Sturm 计数与根隔离的复现入口分别为 `verify_certificate.py`、
+`support.py` 和 `isolate_support.py`。本节为普通数学结果，未作 Lean 形式化。
 $\square$
 
 **推论 10.4（原 all-response 目标的有限待决层）。** 对任意真实的第六 $M$ 响应
@@ -2018,8 +2018,8 @@ $112\cdot32\cdot31=111104$；这是上界而非实际数量。X 定理 8.3 已�
 MM 锚，所以候选支撑的实际投影非空，但本推论不宣称所有候选都可重建，也不结清
 $\mathcal C_{MM}\cap\mathcal C_{MJ}$ 的空性。
 
-本节只使用 VI 定义 24.1--定理 24.6 与 X 定义 8.1--推论 8.5；X 第 9 节的
-$B'$ 声称不是本节前提。完整世界仍包括任意常漂移、任意符号及降次的非零至多三次
+本节的数学依赖为 VI 定义 24.1--定理 24.6 与 X 定义 8.1--推论 8.5；结论不依赖
+X 第 9 节的响应带 $B'$。完整世界仍包括任意常漂移、任意符号及降次的非零至多三次
 增益、采样根和重根、原时钟立即读数以及单条不可复制轨迹；唯一排除的分母
 $\Phi=0$ 是由非零 $\xi_*$ 的父恒等式证明不可能的情形。原根八读／九读目标、
 共同父的全部混合碰撞和九读上界仍未结清。
