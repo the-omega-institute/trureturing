@@ -70,6 +70,10 @@ $$\forall d \in \mathbb{N},\; (2 \le d) \Rightarrow (\forall Lambda \in \operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/WallmanFlammiaTwoContractivity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wf1404` (proved) by `D5/S3/QuantumChannels/WallmanFlammiaTwoContractivity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wf1404","declaration_gid":"D5/S3/QuantumChannels/WallmanFlammiaTwoContractivity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Joel J. Wallman; Steven T. Flammia (2014). *Randomized Benchmarking with Confidence*. DOI: [10.1088/1367-2630/16/10/103032](https://doi.org/10.1088/1367-2630/16/10/103032). URL: <https://arxiv.org/abs/1404.6025v4>.
