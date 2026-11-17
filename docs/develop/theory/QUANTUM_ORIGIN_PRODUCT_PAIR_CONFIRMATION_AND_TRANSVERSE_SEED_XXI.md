@@ -3704,3 +3704,156 @@ $$
 [Q336F]: https://arxiv.org/pdf/1504.03661 "Tobias Fritz，Resource convertibility and ordered commutative monoids，§4：共同加项的催化消去化及到有序Abel群的群完成；此处用于可逆配方同余，不预设张量辅助或物理操作实现。"
 
 ## 追加锚（本行以下为增补区）
+
+## 337. 三点实际面把中点借还比较从七份缩到四份
+
+**定义 337.1（由完整三点面削减比较份数）。** 保留336.3的全部强全有限原背景、整个 $K_3$ 的实际L2和TF9、原极大反足框的大小 $d$、两组参考球相触族以及336.1—336.2的原样归还关系。实际球仍是完整几何最小面球族，辅助库存仍来自全部原纯标签。置
+
+$$
+m(d)=\max\{1,d-4\}.
+\tag{337.1}
+$$
+
+以如下定义间约束替代336.7的 $d-1$ 份条件：
+
+$$
+\boxed{\quad
+\mathsf R_{{\rm ret},3}^{m(d)}:\qquad
+|X|=|Y|=m(d),\quad \beta_{0,3}X=\beta_{0,3}Y
+\ \Longrightarrow\ X\sim_{{\rm ret},3}Y.
+\quad}
+\tag{337.2}
+$$
+
+重复标签允许，路径的每一步仍是允许球内未加权同中点的两换两，辅助配方须以完全相同的标签与重数归还。本条只降低端点比较份数，没有给辅助库存或路径长度增加统一上界。
+
+**定理 337.2（完整原候选的低份数排核）。** 在337.1的背景中，(337.2)仍刻画336.3的完整有限维复量子模型类。单份qubit的整个三份层 $d=8$，两边各四份纯准备即足够；不再需要336.3的七份比较，也不增加非中点校准。
+
+证明。先准确复用328.3取得同一纯标签双射、逐实际球忠实仿射提升和实线性满射
+
+$$
+\Psi:\operatorname{Herm}_d(\mathbb C)\twoheadrightarrow V_3,
+\quad \Psi(\operatorname{PSD}_d)=C_3,
+\quad u_3\Psi=\operatorname{Tr},
+\quad \beta_{0,3}=\Psi\widetilde\beta_3.
+\tag{337.3}
+$$
+
+尚不要求全局单射。此时已有的三点实际面信息不能丢掉：XVIII240.5及其证明[Q337T]在同一 $\Psi$ 上给出，对于每个复支持 $S$、$1\le\dim_{\mathbb C}S\le3$，
+
+$$
+F_S=\Psi\mathcal D(S)\text{ 是原实际面},\qquad
+\iota(P_3\cap F_S)=\mathcal P(S),\qquad
+\Psi|_{\operatorname{Herm}(S)}\text{ 为保单位序同构到该面之张成}.
+\tag{337.4}
+$$
+
+其中 $P_3$ 是整个 $K_3$ 的原纯标签集。维数一为纯面，维数二为L2球；维数三取 $S$ 的三个正交纯点，它们的原像不共实际二点球，240.5的纯扇证明准确识别 $S_0=S$，再给 $F_S=\Psi\mathcal D(S)$、九维张成和全部纯标签。这里复用的是该证明中的共同提升接口，不只复用一个抽象qutrit仿射同构。
+
+小面立即给核的惯性限制。若 $0\ne H\in\ker\Psi$，则 $\operatorname{Tr}H=0$；写 $H=H_+-H_-$，并记 $t=\operatorname{Tr}H_+=\operatorname{Tr}H_->0$。若正惯性 $r=n_+(H)\le3$，令 $S=\operatorname{supp}H_+$。原点 $x=\Psi(H_+/t)$ 属于实际面 $F_S$。负谱分解又把 $x$ 写成原纯点 $\Psi P_{f_j}$ 的严格凸组合；面性迫这些点全部属于 $F_S$，(337.4)与纯标签双射迫 $f_j\in S$。但负谱方向与 $S$ 正交，矛盾。对 $-H$ 同理。因此
+
+$$
+0\ne H\in\ker\Psi
+\quad\Longrightarrow\quad
+n_+(H)\ge4,\quad n_-(H)\ge4,
+\quad \max\{n_+(H),n_-(H)\}\le d-4.
+\tag{337.5}
+$$
+
+这是XII159.8的小面—核惯性机制在完整实际三点面上的直接使用；一般机制不另申领新意。特别是 $d<8$ 时核已经为零；若有非零核，(337.1)中的 $m(d)=d-4\ge4$。
+
+还须把惯性界转成恰好这么多份的无权重证书，不能直接把任意实谱权重当作整数份数。下面在证明内部给出所需的成熟谱与等范框构造。任取非零迹零 $H$，记 $r=n_+(H)$、$s=n_-(H)$，取正整数 $m\ge\max\{r,s\}$。选 $\varepsilon>0$ 使 $\tau=\varepsilon\operatorname{Tr}H_+<m$，从正、负谱各取一个单位方向 $e,f$，对应特征值为 $\lambda,-\mu$、$\lambda,\mu>0$。令
+
+$$
+\begin{gathered}
+a=\sqrt{\varepsilon\lambda}\,e,\qquad b=\sqrt{\varepsilon\mu}\,f,\qquad a\perp b,\\
+\gamma=\frac{m-\tau}{\|a\|^2+\|b\|^2},\qquad
+c=\sqrt{1+\gamma},\quad q=\sqrt\gamma,\qquad
+\widetilde a=ca+qb,\quad \widetilde b=qa+cb.
+\end{gathered}
+\tag{337.6}
+$$
+
+因为 $c^2-q^2=1$，交叉项相消，直接有
+
+$$
+\widetilde a\widetilde a^*-\widetilde b\widetilde b^*
+=aa^*-bb^*,\qquad
+\|\widetilde a\|^2-\|a\|^2
+=\|\widetilde b\|^2-\|b\|^2=m-\tau.
+\tag{337.7}
+$$
+
+置 $A=\varepsilon H_+-aa^*+\widetilde a\widetilde a^*$、$B=\varepsilon H_--bb^*+\widetilde b\widetilde b^*$。它们分别是 $r,s$ 个正秩一项之和，故
+
+$$
+A,B\succeq0,\quad \operatorname{rank}A\le r\le m,\quad
+\operatorname{rank}B\le s\le m,\quad
+\operatorname{Tr}A=\operatorname{Tr}B=m,\quad A-B=\varepsilon H.
+\tag{337.8}
+$$
+
+现在使用有限维等范框的标准构造。若 $A=\sum_{j=0}^{r'-1}\nu_jP_{g_j}$，其中 $g_j$ 正交、$\nu_j>0$、$r'\le m$、$\sum_j\nu_j=m$，令 $\omega=\exp(2\pi i/m)$，取
+
+$$
+w_k=\frac1{\sqrt m}\sum_{j=0}^{r'-1}\sqrt{\nu_j}\,\omega^{jk}g_j,
+\qquad k=0,\ldots,m-1.
+\tag{337.9}
+$$
+
+正交性给每个 $\|w_k\|=1$；有限Fourier恒等式 $\sum_{k=0}^{m-1}\omega^{(j-\ell)k}=m\delta_{j\ell}$ 给 $A=\sum_kP_{w_k}$。对 $B$ 同样处理，得到
+
+$$
+\varepsilon H=\sum_{k=1}^{m}P_{u_k}-\sum_{k=1}^{m}P_{v_k}.
+\tag{337.10}
+$$
+
+正矩阵在整数迹不小于秩时可拆成相应数目的单位秩一投影，是Fillmore有限秩投影和判据的成熟情形[Q337F]；(337.9)明确给出本接合需要的等份实现，不将这项一般事实另立为新增定理。二维双曲配平也只承担谱证书构造，不指定任何原物理过程。
+
+对 $H\in\ker\Psi\setminus\{0\}$，取 $m=m(d)$，由(337.5)满足构造条件。通过纯标签双射将(337.10)传回原 $X,Y$，各恰有 $m(d)$ 份且 $\beta_{0,3}X=\beta_{0,3}Y$。新约束(337.2)给有限相触中点借还路径；逐球忠实提升保持每步矩阵和，端点原样归还的辅助库存相消，迫 $\varepsilon H=0$。故 $\Psi$ 单射。$d<8$ 的分支已直接排核，不需要虚构负数或零份的比较。
+
+排核后准确复用336.3：同一 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$ 对全部有限 $N$ 满足
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N},\qquad d=n^3.
+\tag{337.11}
+$$
+
+反向标准模型由336.2对任意等长配方的整数核与借还等价，直接满足(337.2)。因此正反两向闭合，全部过程结论保留337.4所列的独立前件。$\square$
+
+**命题 337.3（三份以内的比较已自动通过，但不能普遍排除折叠）。** 在337.1去掉(337.2)的背景中，每个 $k\le3$ 的固定份数借还条件已经成立；这些条件合起来仍不能保证完整量子重建。这里的不足是跨全部允许维数的结论，不是 $d=8$ 强复合模型中的最小性结论。
+
+证明。若 $|X|=|Y|=k\le3$ 且原准备和相同，则 $H=\widetilde\beta_3X-\widetilde\beta_3Y\in\ker\Psi$。在正配方向量张成空间的正交补上，$H$ 的二次型非正，所以
+
+$$
+n_+(H)\le\operatorname{rank}(\widetilde\beta_3X)\le k\le3.
+\tag{337.12}
+$$
+
+(337.5)使 $H=0$。336.2在提升标准空间给相触借还路径，逐球接口传回原域，故全部这些比较自动通过。
+
+不足的反例直接复用XVIII240.10及XIV165.2—165.7的完整平衡商。取一次 $\ell\ge4$，令 $H_0=\operatorname{diag}(I_\ell,-I_\ell)$、$\pi:\operatorname{Herm}_{2\ell}\to\operatorname{Herm}_{2\ell}/\mathbb RH_0$，各层锥为 $\pi^{\otimes N}(\operatorname{PSD}_{(2\ell)^N})$。该族已有所需强全有限背景、完整纯标签、实际L2和TF9，并有非零全局混合核；全部小于四份的比较仍由上一段成立。其三份提升维数为 $(2\ell)^3$，没有把它当作 $d=8$ 的反例。本章不申领 $m(d)$ 的普遍最小性；四份在qubit三份层只被证明充分。$\square$
+
+**命题 337.4（完整量子字典与几何图景）。** 337.1的完整候选具有下列对应，并严格保留各过程前件：
+
+| 新关系候选中承担结论的结构 | 得到的量子表述 |
+| --- | --- |
+| 整个三份域L2、TF9与 $m(d)$ 份相触中点借还 | 同一复射线几何、密度矩阵及全部有限层PSD锥 |
+| 全体原proper效应、线性评价、全部有限单位分解 | 矩阵效应区间、Born迹配对与数学POVM／PVM |
+| 原强全有限产品、相关 min/max 约束、正置换与丢弃 | 共同坐标中的复张量、纠缠态与偏迹 |
+| 指定线性分支在全部有限相关旁观输入上保正 | 完全正性与Kraus分解 |
+| 分支和合计对全部正输入的质量约束 | TNI／TP及数学仪器的预算 |
+| 指定锐事件且整个yes支持逐点不受扰动 | 对应Lüders分支 |
+| 指定连续可逆保单位且全旁观保正的一参数群 | 连续酉共轭和生成元 |
+
+证明。337.2排核后，336.3—336.4的每个静态与过程接口均在同一原对象、同一共同坐标和相同量词下适用。各行过程条件用于刻画所指定的分支或群；并不额外保证所有数学CP映射都有物理装置实现。时钟、能量、$\hbar$、指定Hamiltonian及无限极限也不由有限准备的借还产生。
+
+本章减少的是固定端点的纯准备份数。两组参考球仍有 $r(d)$ 颗；相触球及纯点、中点参数仍是连续族，辅助库存与路径只逐实例有限；整个原实凸载体、L2、TF9和全有限复合均保留。qubit三份层仍以12颗参考球定义相触族，端点改成四份对四份；非中点标定继续无需输入。小面—核惯性与正矩阵的等范分解为既有输入及成熟工具；新增repo-derived综合是消费完整实际三点面，将惯性限制与恰定份数证书接合到原域借还排核，并明确三份以内的自动通过边界。不申领全球首次性或Lean核验。$\square$
+
+白话：三张纯准备撑起的整个小面，已经是一张完整、不会折叠的三维量子切片。因此真正藏在整体里的折叠，两边都至少要占四个独立方向。在八维的qubit三份世界里，如果还有这种差别，正负两边就只能各占四个方向。先把同一差别两侧的总量配平，再用一圈有限相位把每侧排成四张单位卡，就把它写成四张对四张。新约束只要求：这两叠若在原世界合起来相同，就能借来有限卡片，靠允许小球里的中点两换两接通，最后原样归还。三点面挡住前三阶折叠，四份借还堵住剩下的可能；量子状态、测量和复合再由同一套保留条件接出，额外标定尺仍不用加回来。
+
+[Q337T]: QUANTUM_ORIGIN_HALF_TURN_PREPARATION_AND_GLOBAL_EFFECTS_XVIII.md "240.5及其证明：L2与TF9在全局Ψ单射以前给同一三维支持的完整实际qutrit面、全部纯标签及九维限制；240.10复用XIV165的平衡全有限商。"
+[Q337F]: https://arxiv.org/pdf/1007.4679v1 "Halpern–Kaftal–Ng–Zhang，Finite sums of projections in von Neumann algebras，§1 Theorem1.1明确引用Fillmore的有限秩整数迹—秩判据；原文On sums of projections，JFA4，146–152，DOI10.1016/0022-1236(69)90027-5。本章只在新接合内部使用有限维等范框情形。"
+
+## 追加锚（本行以下为增补区）
