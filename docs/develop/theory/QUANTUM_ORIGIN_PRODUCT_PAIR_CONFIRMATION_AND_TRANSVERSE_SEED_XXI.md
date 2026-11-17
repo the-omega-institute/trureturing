@@ -4051,7 +4051,7 @@ $$
 
 $$
 h_S(P_x)=\sum_{\varepsilon\in\Gamma}\chi_S(\varepsilon)f(P_{\varepsilon x}),
-\qquad Nf=\sum_{|S|\ {m even}}h_S.
+\qquad Nf=\sum_{|S|\ \mathrm{even}}h_S.
 \tag{339.4}
 $$
 
