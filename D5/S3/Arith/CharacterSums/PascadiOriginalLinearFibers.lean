@@ -187,7 +187,7 @@ theorem actual_linear_factor_fiber_count {p : ℕ} (hp : p.Prime) {t w : ℤ}
   · simp only [Finset.not_nonempty_iff_eq_empty.mp hs, Finset.card_empty, Nat.cast_zero]
     positivity
 
-private theorem integer_eq_of_box_residue {c : ℕ} {X : ℝ} {u v : ℤ}
+theorem integer_eq_of_box_residue {c : ℕ} {X : ℝ} {u v : ℤ}
     (hu : |(u : ℝ)| ≤ X) (hv : |(v : ℝ)| ≤ X)
     (hsmall : 2 * X < c) (hmod : (u : ZMod c) = v) : u = v := by
   have hm : ((u - v : ℤ) : ZMod c) = 0 := by
@@ -203,7 +203,7 @@ private theorem integer_eq_of_box_residue {c : ℕ} {X : ℝ} {u v : ℤ}
   have hleR : (c : ℝ) ≤ |((u - v : ℤ) : ℝ)| := by exact_mod_cast hle
   exact (not_le_of_gt hbound) hleR
 
-private theorem middle_box_first_projection_unique {c : ℕ} {t w : ℤ}
+theorem middle_box_first_projection_unique {c : ℕ} {t w : ℤ}
     {X Y : ℝ} (hYsmall : 2 * Y < c) (hw : IsUnit (w : ZMod c))
     {z z' : Coordinate} (hz : z ∈ middleLattice c t w)
     (hz' : z' ∈ middleLattice c t w)
