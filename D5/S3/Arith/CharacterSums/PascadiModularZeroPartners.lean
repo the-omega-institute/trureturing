@@ -7,6 +7,7 @@
    digest: Integer determinant lifts and signed divisor counts for actual modular partners. -/
 
 import D5.S3.Arith.CharacterSums.PascadiOriginalCoefficients
+import D5.S3.Arith.Divisors.DivisorSubpower
 import Mathlib.NumberTheory.Divisors
 
 /-! # Modular-zero partners in the original integer chart
@@ -377,6 +378,28 @@ private theorem mapped_endpoint_quadratic {p : ℕ} (e : Endpoint) :
     coeffQ, coeffR, coeffS]
   ring
 
+private theorem mapped_pencil_formal {p : ℕ} (q : Coordinate)
+    (base e : Endpoint)
+    (hzero : (pencil q base e).map (Int.castRingHom (ZMod p)) = 0) :
+    PrimeCube.linear ((base.1.1 : ZMod p) + base.2.1 - q.1)
+        ((base.1.2 : ZMod p) + base.2.2 - q.2) *
+      PrimeCube.linear (e.1.1 : ZMod p) e.1.2 *
+        PrimeCube.linear (e.2.1 : ZMod p) e.2.2 =
+      (PrimeCube.linear (e.1.1 : ZMod p) e.1.2 +
+          PrimeCube.linear (e.2.1 : ZMod p) e.2.2 -
+          PrimeCube.linear (q.1 : ZMod p) q.2) *
+        PrimeCube.linear (base.1.1 : ZMod p) base.1.2 *
+          PrimeCube.linear (base.2.1 : ZMod p) base.2.2 := by
+  have hLb := mapped_endpoint_linear (p := p) q base
+  have hLe := mapped_endpoint_linear (p := p) q e
+  have hQb := mapped_endpoint_quadratic (p := p) base
+  have hQe := mapped_endpoint_quadratic (p := p) e
+  simp only [pencil, Polynomial.map_sub, Polynomial.map_mul] at hzero
+  rw [hLb, hLe, hQb, hQe] at hzero
+  apply sub_eq_zero.mp at hzero
+  convert hzero using 1 <;>
+    simp [PrimeCube.linear, Polynomial.C_add, Polynomial.C_sub] <;> ring
+
 private theorem mapped_pencil_homogeneous {p : ℕ} [Fact p.Prime]
     (q : Coordinate) (base e : Endpoint) (c : ZMod p)
     (hq : (q.1 : ZMod p) = (base.2.1 : ZMod p) + (1 - c) * base.1.1 ∧
@@ -634,6 +657,87 @@ theorem regular_dividing_modular_zero_partner_count {p : ℕ} [Fact p.Prime]
   obtain ⟨hm, _, hp⟩ := Finset.mem_filter.mp he
   exact Finset.mem_filter.mpr ⟨hm,
     regular_dividing_actual_line_cover q a b e c hc hD hq hp⟩
+
+/-- The signed divisor count used above inherits the classical subpower
+bound from the natural divisor count. -/
+theorem signed_divisors_antidiag_subpower (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ k : ℤ, k ≠ 0 →
+      ((Int.divisorsAntidiag k).card : ℝ) ≤ C * (k.natAbs : ℝ)^ε := by
+  obtain ⟨C, hC, hbound⟩ :=
+    D5.S3.Arith.Divisors.DivisorSubpower.card_divisors_subpower ε hε
+  refine ⟨2 * C, mul_pos (by norm_num) hC, ?_⟩
+  intro k hk
+  have hcard : (Int.divisorsAntidiag k).card ≤ k.divisors.card := by
+    apply Finset.card_le_card_of_injOn Prod.fst
+    · intro xy hxy
+      rw [← Int.image_fst_divisorsAntidiag]
+      exact Finset.mem_image.mpr ⟨xy, hxy, rfl⟩
+    · intro x hx y hy hxy
+      apply Prod.ext hxy
+      have hxmul := (Int.mem_divisorsAntidiag.mp hx).1
+      have hymul := (Int.mem_divisorsAntidiag.mp hy).1
+      have hx0 : x.1 ≠ 0 := by
+        intro hz
+        apply hk
+        simpa [hz] using hxmul.symm
+      apply mul_left_cancel₀ hx0
+      simpa [hxy] using hxmul.trans hymul.symm
+  have hcount : k.divisors.card = 2 * k.natAbs.divisors.card := by
+    unfold Int.divisors
+    rw [Finset.card_disjUnion, Finset.card_map, Finset.card_map]
+    omega
+  have hn : k.natAbs ≠ 0 := by simpa using hk
+  have hpow := hbound k.natAbs hn
+  have hcardR : ((Int.divisorsAntidiag k).card : ℝ) ≤
+      (k.divisors.card : ℝ) := by exact_mod_cast hcard
+  rw [hcount, Nat.cast_mul, Nat.cast_ofNat] at hcardR
+  exact hcardR.trans (by
+    convert mul_le_mul_of_nonneg_left hpow (by norm_num : (0 : ℝ) ≤ 2) using 1 <;> ring)
+
+/-- In the regular dividing branch, the divisor estimate and determinant
+height give a uniform subpower bound in the prime. -/
+theorem regular_dividing_modular_zero_partner_subpower (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (J₁ J₂ : ℝ)
+      (E : Finset Coordinate) (α β : ZMod p) (q a b : Coordinate) (c : ZMod p),
+      CoordinateBound J₁ J₂ q →
+      CoordinateBound J₁ J₂ b →
+      CoordinateBound (2 * J₁) (2 * J₂) (a - q) →
+      (∀ z ∈ E, CoordinateBound J₁ J₂ z) →
+      8 * J₁ * J₂ < p →
+      c ≠ 0 →
+      (coordinateDet b q : ZMod p) ≠ 0 →
+      ((q.1 : ZMod p) = (b.1 : ZMod p) + (1 - c) * a.1 ∧
+        (q.2 : ZMod p) = (b.2 : ZMod p) + (1 - c) * a.2) →
+      coordinateDet b (a - q) ≠ 0 →
+      coordinateDet q (a - q) * coordinateDet q b ≠ 0 →
+      ((modularZeroPartners E α β q (a, b)).card : ℝ) ≤ C * (p : ℝ)^ε := by
+  obtain ⟨C, hC, hbound⟩ := signed_divisors_antidiag_subpower (ε / 2) (by positivity)
+  refine ⟨4 * C, mul_pos (by norm_num) hC, ?_⟩
+  intro p hp J₁ J₂ E α β q a b c hqBound hbBound hhBound hE hsmall
+    hc hD hq hΔ hAC
+  letI : Fact p.Prime := ⟨hp⟩
+  let k := coordinateDet q (a - q) * coordinateDet q b
+  have hk : k ≠ 0 := hAC
+  have hcard := regular_dividing_modular_zero_partner_count E α β q a b c
+    hqBound hbBound hhBound hE hsmall hc hD hq hΔ hAC
+  have hheight := (modular_line_divisor_height q b (a - q)
+    hqBound hbBound hhBound hsmall).2
+  have hnat : (k.natAbs : ℝ) < (p : ℝ)^2 := by
+    simpa [k, Nat.cast_natAbs] using hheight
+  have hpow : (k.natAbs : ℝ)^(ε / 2) ≤ (p : ℝ)^ε := by
+    have hh := (Real.rpow_lt_rpow (Nat.cast_nonneg _) hnat (by positivity : 0 < ε / 2)).le
+    have hpnonneg : (0 : ℝ) ≤ p := Nat.cast_nonneg _
+    rw [← Real.rpow_natCast_mul hpnonneg 2 (ε / 2)] at hh
+    simpa [show (2 : ℝ) * (ε / 2) = ε by ring] using hh
+  have hd := hbound k hk
+  have hcardR : ((modularZeroPartners E α β q (a, b)).card : ℝ) ≤
+      2 * ((Int.divisorsAntidiag k).card : ℝ) := by exact_mod_cast hcard
+  calc
+    _ ≤ 2 * ((Int.divisorsAntidiag k).card : ℝ) := hcardR
+    _ ≤ 2 * (C * (k.natAbs : ℝ)^(ε / 2)) := by gcongr
+    _ ≤ 4 * C * (p : ℝ)^ε := by
+      have hh := mul_le_mul_of_nonneg_left hpow (le_of_lt hC)
+      nlinarith
 
 end
 end D5.S3.Arith.CharacterSums.Original

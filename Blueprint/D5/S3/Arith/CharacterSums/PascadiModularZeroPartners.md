@@ -10,7 +10,7 @@ For integer directions f,h with det(f,h)≠0 and AC=det(q,h)det(q,f)≠0, an ori
 
 The map (z,v)↦(det(z−q,h),det(f,v)) lands in Int.divisorsAntidiag(AC). Its injectivity follows from det(f,h)≠0 and the two line equations, without choosing primitive integer generators. Consequently the oriented count is at most the cardinality of that signed divisor antidiagonal, and allowing both endpoint orientations gives twice that cardinality. The constant satisfies |AC|≤8(J₁J₂)²<p².
 
-Nonaligned actual pairs have nonzero evaluations of L and Q and a nonzero quartic Q(Q−LZ), using actual injectivity and κ≠0. The regular dividing branch now supplies both modular line orientations and a divisor count for the actual pencil, under explicit nondegeneracy assumptions on the selected directions. Completing the full partner theorem still requires the nondividing absolute bound, deriving the direction nondegeneracy from the paper hypotheses, and applying divisor growth. The finite determinant count is an intermediate component of the B⁵ prime-count prerequisite.
+Nonaligned actual pairs have nonzero evaluations of L and Q and a nonzero quartic Q(Q−LZ), using actual injectivity and κ≠0. The regular dividing branch now supplies both modular line orientations, a divisor count for the actual pencil, and a uniform prime subpower bound, under explicit nondegeneracy assumptions on the selected directions. Completing the full partner theorem still requires the nondividing absolute bound and deriving the direction nondegeneracy from the paper hypotheses. The finite determinant count is an intermediate component of the B⁵ prime-count prerequisite.
 
 In the regular dividing branch, q=b+(1−c)a and det(b,q)≠0. Perpendicular evaluation of the homogeneous pencil identity assigns z or v to the b-line. Writing that endpoint as k b and comparing all three quadratic coefficients gives (ck−1)v=kb−q. Since det(b,q)≠0, ck−1 is nonzero. The relation then yields det(a−q,v−q)=0 and det(z−q,v)=0, or their swapped counterparts. The original mapped pencil supplies the homogeneous identity after cancelling its nonzero base linear factor, including constant and vertical directions. Consequently actual modular-zero partners in this branch satisfy the two-orientation divisor count.
 
@@ -210,7 +210,35 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_di
 
 The actual regular dividing partner set satisfies the two-orientation signed divisor bound.
 
-**Theorem 1.15 (modular_line_divisor_height).**
+**Theorem 1.15 (signed_divisors_antidiag_subpower).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.signed_divisors_antidiag_subpower`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.signed_divisors_antidiag_subpower` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+The signed divisor antidiagonal inherits a uniform subpower bound from the classical natural divisor estimate.
+
+**Theorem 1.16 (regular_dividing_modular_zero_partner_subpower).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_modular_zero_partner_subpower`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_modular_zero_partner_subpower` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+For every positive epsilon, a constant independent of p bounds regular dividing actual partners by C times p to epsilon.
+
+**Theorem 1.17 (modular_line_divisor_height).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_divisor_height`
 
@@ -241,4 +269,7 @@ The divisor constant has absolute value at most 8(J₁J₂)², strictly less tha
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_actual_line_cover`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_homogeneous_lines`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_modular_zero_partner_count`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_modular_zero_partner_subpower`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.signed_divisors_antidiag_subpower`
 - Dependency: [D5/S3/Arith/CharacterSums/PascadiOriginalCoefficients](PascadiOriginalCoefficients.md)
+- Dependency: [D5/S3/Arith/Divisors/DivisorSubpower](../Divisors/DivisorSubpower.md)
