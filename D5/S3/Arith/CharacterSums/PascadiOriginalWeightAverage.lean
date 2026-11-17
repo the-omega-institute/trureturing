@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/CharacterSums/PascadiOriginalWeightAverage
    generality: G
-   mirror-B: none(waiver:actual-physical-weight-average)
+   mirror-B: D5/B/S3/Arith/CharacterSums/PascadiOriginalWeightAverage
    mirror-E: none(waiver:actual-physical-weight-average)
    anchors: []
    utility: none
@@ -197,7 +197,7 @@ private theorem weightedSq_mul_area {X Y : ℝ} (hX : 0 < X) (hY : 0 < Y)
   unfold weightedSq
   field_simp
 
-private theorem two_abs_product_le_weightedSq {X Y : ℝ}
+theorem two_abs_product_le_weightedSq {X Y : ℝ}
     (hX : 0 < X) (hY : 0 < Y) (U : Coordinate) :
     2 * |(U.1 : ℝ)| * |(U.2 : ℝ)| ≤ weightedSq X Y U := by
   have harea : 0 < X * Y := mul_pos hX hY
@@ -208,14 +208,14 @@ private theorem two_abs_product_le_weightedSq {X Y : ℝ}
     nlinarith [sq_abs (U.1 : ℝ), sq_abs (U.2 : ℝ)]
   exact (mul_le_mul_iff_left₀ harea).mp hineq
 
-private theorem integer_unit_cancel_dvd {c : ℕ} {a b : ℤ}
+theorem integer_unit_cancel_dvd {c : ℕ} {a b : ℤ}
     (ha : IsUnit (a : ZMod c)) (h : (c : ℤ) ∣ a * b) : (c : ℤ) ∣ b := by
   have hz := (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mpr h
   have heq : (a : ZMod c) * (b : ZMod c) = a * 0 := by
     simpa only [Int.cast_mul, mul_zero] using hz
   exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp (ha.mul_left_cancel heq)
 
-private theorem primeSquare_int_unit {p : ℕ} (hp : p.Prime) {z : ℤ}
+theorem primeSquare_int_unit {p : ℕ} (hp : p.Prime) {z : ℤ}
     (hz : ¬ (p : ℤ) ∣ z) : IsUnit (z : ZMod (p ^ 2)) := by
   have hn : ¬ p ∣ z.natAbs := by
     simpa only [← Int.natCast_dvd] using hz

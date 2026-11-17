@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/Divisors/NumberFieldDivisorSubpower
    generality: G
-   mirror-B: none(waiver:uniform-number-field-estimate)
+   mirror-B: D5/B/S3/Arith/Divisors/NumberFieldDivisorSubpower
    mirror-E: none(waiver:uniform-number-field-estimate)
    anchors: []
    utility: none

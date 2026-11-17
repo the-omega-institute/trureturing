@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/CharacterSums/PascadiOriginalLinearFibers
    generality: G
-   mirror-B: none(waiver:original-physical-linear-fibers)
+   mirror-B: D5/B/S3/Arith/CharacterSums/PascadiOriginalLinearFibers
    mirror-E: none(waiver:original-physical-linear-fibers)
    anchors: []
    utility: none
@@ -28,7 +28,7 @@ private theorem primitive_linear_parameter (a b : ℤ) (hab : Int.gcd a b = 1)
   · change z.2 - z₀.2 = _ * a
     linear_combination -(z.2 - z₀.2) * hg - Int.gcdB a b * h
 
-private theorem weightedSq_zsmul (X Y : ℝ) (n : ℤ) (z : Coordinate) :
+theorem weightedSq_zsmul (X Y : ℝ) (n : ℤ) (z : Coordinate) :
     weightedSq X Y (n • z) = (n : ℝ)^2 * weightedSq X Y z := by
   simp only [weightedSq, Prod.smul_fst, Prod.smul_snd, smul_eq_mul,
     Int.cast_mul]
@@ -219,7 +219,7 @@ theorem middle_box_first_projection_unique {c : ℕ} {t w : ℤ}
   exact Prod.ext hfirst
     (integer_eq_of_box_residue hb.2 hb'.2 hYsmall (hw.mul_left_cancel hm))
 
-private theorem unit_right_side_second_residue {A : Type*} [CommRing A]
+theorem unit_right_side_second_residue {A : Type*} [CommRing A]
     {g a t b d w v b' d' v' : A}
     (h : MinusEquations g a t b d w v)
     (h' : MinusEquations g a t b' d' w v')
