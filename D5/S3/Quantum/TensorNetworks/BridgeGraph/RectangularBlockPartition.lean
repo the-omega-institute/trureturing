@@ -205,7 +205,9 @@ private theorem identity_minor
   ext s t
   simp only [Matrix.submatrix_apply, realign, operator, Matrix.sum_apply,
     Matrix.kronecker_apply, Matrix.conjTranspose_apply]
-  dsimp only
+  change (∑ u, block I J φ u (samplePair I J φ s).1 (samplePair I J φ s).2 *
+    star (block I J φ u (samplePair I J φ t).1 (samplePair I J φ t).2)) =
+      if s = t then 1 else 0
   simp_rw [block_sample I J φ h]
   rw [Finset.sum_eq_single s.val]
   · simp [Matrix.one_apply, Subtype.val_injective.eq_iff]
@@ -241,9 +243,9 @@ theorem unitary_exact_width
     simp only [Equiv.symm_apply_eq]
     by_cases hh : e p = q
     · have hq : q = e p := hh.symm
-      simp [hh, hq]
+      rw [if_pos hh, if_pos hq, star_one]
     · have hq : q ≠ e p := Ne.symm hh
-      simp [hh, hq]
+      rw [if_neg hh, if_neg hq, star_zero]
   have hcol : (operator I J φ)ᴴ * operator I J φ = 1 := by
     rw [hc]
     exact D5.S3.Quantum.Entanglement.SequentialRegisterCircuit.coordinate_gram _
