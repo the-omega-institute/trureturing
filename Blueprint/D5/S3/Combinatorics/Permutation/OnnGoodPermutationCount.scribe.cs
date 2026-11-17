@@ -27,13 +27,17 @@ internal sealed class OnnGoodPermutationCountDocument : IScribeDocumentDefinitio
             Node("result", "The count and characterization in all dimensions", ClaimBody(),
                 "A unique sign transition splits a good two-row array into two disjoint chains. Their label sets run through all even subsets of Fin (2*n), giving 2^(2*n−1). "
                 + "The two three-by-three types have center label 5 and two independent interleavings of two ordered pairs, hence 36 each. "
-                + "One-dimensional arrays contribute every permutation; overlapping three-by-three blocks exclude the remaining dimensions."))));
+                + "One-dimensional arrays contribute every permutation; overlapping three-by-three blocks exclude the remaining dimensions.",
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-onn2023good"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        bool definition = false, bool literature = false) => Describe.Lean(
+        bool definition = false, bool literature = false,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("onn-count-" + name.ToLowerInvariant()), DeclarationHandle.Create(Root + name), H(title),
         StatementSource.FromAuthor(Disp(formula)), literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-        Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
+        Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem,
+        openProblemResolutionClaim: resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
