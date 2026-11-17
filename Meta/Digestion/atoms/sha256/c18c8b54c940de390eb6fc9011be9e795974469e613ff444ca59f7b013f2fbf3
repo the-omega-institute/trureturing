@@ -1,0 +1,150 @@
+**定理 13.3（自身阶段的定量缩靶与每个二倍区间的多重命中）。** 对定义 13.1 的任意固定 $M\ge1$、$0<\gamma<1/4$，共同周期是次多对数的：
+
+$$
+\lim_{n\to\infty}\frac{\log q_n}{\log\log n}=0,
+\qquad
+\text{即对每个 }\eta>0,\quad q_n\le(\log n)^\eta
+\ \text{最终成立}.
+\tag{13.13}
+$$
+
+存在依赖于这些固定数据的整数 $X_0$，使每个整数 $X\ge X_0$ 都满足
+
+$$
+\#\bigl(\mathcal S_{M,\gamma}\cap(X,2X]\bigr)
+\ge \frac{X\,\rho(2X)^2}{4q_{2X}}.
+\tag{13.14}
+$$
+
+进一步，对每个固定 $\varepsilon>0$，存在整数 $X_\varepsilon$，使所有整数 $X\ge X_\varepsilon$ 都有
+
+$$
+\#\bigl(\mathcal S_{M,\gamma}\cap(X,2X]\bigr)
+\ge\frac{X}{(\log X)^{2\gamma+\varepsilon}}.
+\tag{13.15}
+$$
+
+一个明确但未数值求值的充分起点判据如下。置
+
+$$
+H=h(2X),\qquad R=\rho(2X),\qquad
+Q_X=MA_2\exp(4H^2+c_0H).
+$$
+
+若整数 $X$ 满足
+
+$$
+0<R\le\tfrac12,\qquad
+X\ge4Q_X,\qquad
+\log\frac{X}{2Q_X}\ge2^{16}Q_X^2R^{-4},
+\tag{13.16}
+$$
+
+则式 (13.14) 成立。若此外满足
+
+$$
+X\ge3,\qquad
+Q_X\le(\log X)^{\varepsilon/2},\qquad
+(\log X)^{\varepsilon/2}\ge4\cdot2^{2\gamma},
+\tag{13.17}
+$$
+
+则式 (13.15) 也成立。所有这些不等式对充分大的 $X$ 均成立。
+
+**证明。** 函数 $h$ 不减且趋于无穷，$\rho$ 递减且趋于零。由式 (13.7) 和 $h(n)=O((\log\log n)^{1/3})$，
+
+$$
+0\le\log q_n
+\le\log(MA_2)+4h(n)^2+c_0h(n)
+=O_{M,A_2}((\log\log n)^{2/3})
+=o(\log\log n),
+$$
+
+得到式 (13.13)。同时 $q_n\mid q_{n'}$ 当 $n\le n'$。
+
+固定满足式 (13.16) 的 $X$，记 $q=q_{2X}$，于是 $q\le Q_X$。区间 $(X,2X]$ 中全部 $q$ 的倍数恰为
+
+$$
+n_k=q\left(\left\lfloor\frac Xq\right\rfloor+1+k\right),
+\quad 0\le k<N,\qquad
+N=\left\lfloor\frac{2X}q\right\rfloor-\left\lfloor\frac Xq\right\rfloor.
+\tag{13.18}
+$$
+
+由 $X\ge4Q_X\ge2q$，
+
+$$
+N\ge\frac Xq-1\ge\frac{X}{2q},\qquad
+\log N\ge\log\frac X{2q}\ge\log\frac X{2Q_X}
+\ge2^{16}Q_X^2R^{-4}\ge256q^2.
+\tag{13.19}
+$$
+
+现在只对这个固定的有限块调用定理 12.2，取其整数步长 $L=q$、项数 $N$ 及起点
+
+$$
+\beta=q\left(\left\lfloor\frac Xq\right\rfloor+1\right)\alpha
+\quad\text{于 }\mathbb T^2.
+$$
+
+式 (13.19) 保证该定理的前件 $N\ge\exp(256L^2)$，并且其一致于 $\beta$ 的差异度界给出
+
+$$
+\mathcal D_N(\beta,q)
+<\frac{128q}{\sqrt{\log N}}
+\le\frac{R^2}{2}.
+\tag{13.20}
+$$
+
+在定义 12.1 的 $[0,1)^2$ 代表坐标中使用半开盒 $[0,R)\times[0,R)$，其面积是 $R^2$。因为 $R\le1/2$，该盒中的每个圆坐标均具有严格小于 $R$ 的圆距离；零端点也满足严格不等式，右端点被排除。由式 (13.20)，满足两个实端条件的 $n_k$ 数量严格大于
+
+$$
+N(R^2-R^2/2)=\frac{NR^2}{2}
+\ge\frac{XR^2}{4q}.
+\tag{13.21}
+$$
+
+这里使用原坐标中的单个盒子，故没有跨切口分割或端点误差。虽然整个对称圆邻域的面积更大，这个内盒已经给出所需下界。
+
+每个被计入的同一个整数 $n=n_k$ 还满足 $q_{2X}\mid n$。由式 (13.8)，它同时满足 $M\mid n$ 以及全部 $p\le H$、$v\mid p$、$j=1,2$ 的 $[n]P_j\in U_v(H)$。又因 $n\le2X$，
+
+$$
+h(n)\le H,\qquad
+U_v(H)\subseteq U_v(h(n)),\qquad
+\|\theta([n]P_j)\|_{\mathbb T}<R\le\rho(n).
+\tag{13.22}
+$$
+
+所以每个被计入的整数均属于其自身阶段的 $\mathcal S_{M,\gamma}$，包括可能跨过 $h$ 跳跃点的区间。式 (13.21) 于是推出式 (13.14)。没有把不同地方的返回整数拼在一起，也没有把随 $n$ 移动的条件直接代入固定盒的计数定义。
+
+还须验证充分起点确实存在。写 $t=\log X$。由 $H=O((\log t)^{1/3})$，
+
+$$
+\log Q_X=O_{M,A_2}((\log t)^{2/3})=o(\log t),
+\qquad Q_X=t^{o(1)}.
+$$
+
+于是 $X\ge4Q_X$ 最终成立，且
+
+$$
+\log\frac X{2Q_X}\sim t,\qquad
+2^{16}Q_X^2R^{-4}
+=2^{16}Q_X^2(\log(2X+2))^{4\gamma}
+=t^{4\gamma+o(1)}=o(t).
+\tag{13.23}
+$$
+
+最后一步准确使用 $4\gamma<1$。又有 $0<R\le1/2$ 最终成立，故式 (13.16) 的全部条件最终成立；这证明了每个充分大二倍区间的结论，而不只是某个区间子序列。
+
+对固定 $\varepsilon>0$，式 (13.13) 的同一包络给出式 (13.17) 最终成立。$X\ge3$ 时 $\log(2X+2)\le2\log X$，所以在该判据下
+
+$$
+\begin{aligned}
+4q_{2X}(\log(2X+2))^{2\gamma}
+&\le4Q_X(2\log X)^{2\gamma}\\
+&\le(\log X)^{2\gamma+\varepsilon}.
+\end{aligned}
+$$
+
+代入式 (13.14) 即得式 (13.15)。$\square$
+
