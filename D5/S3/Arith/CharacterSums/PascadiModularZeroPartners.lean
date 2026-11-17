@@ -187,7 +187,27 @@ def ModularLinePair (p : ℕ) (q f h : Coordinate) (e : Endpoint) : Prop :=
 def fieldDet {K : Type*} [CommRing K] (x y : K × K) : K :=
   x.1 * y.2 - x.2 * y.1
 
-private theorem regular_dividing_oriented {K : Type*} [Field K]
+private theorem fieldDet_zero_scalar {K : Type*} [Field K]
+    (b z : K × K) (hb : b.1 ≠ 0 ∨ b.2 ≠ 0)
+    (hd : fieldDet b z = 0) :
+    ∃ k : K, z.1 = k * b.1 ∧ z.2 = k * b.2 := by
+  rcases hb with hb | hb
+  · refine ⟨z.1 / b.1, ?_, ?_⟩
+    · field_simp
+    · have h : b.1 * z.2 = b.2 * z.1 := by
+        dsimp [fieldDet] at hd
+        linear_combination hd
+      field_simp
+      linear_combination h
+  · refine ⟨z.2 / b.2, ?_, ?_⟩
+    · have h : b.1 * z.2 = b.2 * z.1 := by
+        dsimp [fieldDet] at hd
+        linear_combination hd
+      field_simp
+      linear_combination -h
+    · field_simp
+
+private theorem regular_dividing_factor_choice {K : Type*} [Field K]
     (b q z v : K × K) (c : K) (hc : c ≠ 0)
     (hpoly : ∀ s t : K,
       c * (s * z.1 + t * z.2) * (s * v.1 + t * v.2) =
@@ -207,17 +227,113 @@ private theorem regular_dividing_oriented {K : Type*} [Field K]
     exact (mul_eq_zero.mp h').resolve_left hc
   exact mul_eq_zero.mp hprod
 
-/-- A nonconstant regular dividing pencil has one of the two factor
-orientations. The identity is homogeneous in both coordinates, so it includes
-the constant and vertical evaluations. -/
+private theorem regular_dividing_oriented {K : Type*} [Field K]
+    (a b q z v : K × K) (c : K)
+    (hc : c ≠ 0) (hD : fieldDet b q ≠ 0)
+    (hq : q.1 = b.1 + (1 - c) * a.1 ∧
+      q.2 = b.2 + (1 - c) * a.2)
+    (hpoly : ∀ s t : K,
+      c * (s * z.1 + t * z.2) * (s * v.1 + t * v.2) =
+        (s * (z.1 + v.1 - q.1) + t * (z.2 + v.2 - q.2)) *
+          (s * b.1 + t * b.2))
+    (hz : fieldDet b z = 0) :
+    fieldDet (a.1 - q.1, a.2 - q.2) (v.1 - q.1, v.2 - q.2) = 0 ∧
+      fieldDet (z.1 - q.1, z.2 - q.2) v = 0 := by
+  have hb : b.1 ≠ 0 ∨ b.2 ≠ 0 := by
+    by_contra hn
+    push_neg at hn
+    apply hD
+    simp [fieldDet, hn.1, hn.2]
+  obtain ⟨k, hz1, hz2⟩ := fieldDet_zero_scalar b z hb hz
+  let D := c * k - 1
+  let L1 := D * v.1 - (k * b.1 - q.1)
+  let L2 := D * v.2 - (k * b.2 - q.2)
+  have h11 : b.1 * L1 = 0 := by
+    have h := hpoly 1 0
+    simp only [one_mul, zero_mul, add_zero, zero_add] at h
+    rw [hz1] at h
+    dsimp [L1, D]
+    linear_combination h
+  have h22 : b.2 * L2 = 0 := by
+    have h := hpoly 0 1
+    simp only [one_mul, zero_mul, add_zero, zero_add] at h
+    rw [hz2] at h
+    dsimp [L2, D]
+    linear_combination h
+  have h12 : b.1 * L2 + b.2 * L1 = 0 := by
+    have h := hpoly 1 1
+    have h1 := hpoly 1 0
+    have h2 := hpoly 0 1
+    simp only [one_mul, zero_mul, add_zero, zero_add] at h h1 h2
+    rw [hz1, hz2] at h
+    rw [hz1] at h1
+    rw [hz2] at h2
+    dsimp [L1, L2, D]
+    linear_combination h - h1 - h2
+  have hL1 : L1 = 0 := by
+    rcases hb with hb1 | hb2
+    · exact (mul_eq_zero.mp h11).resolve_left hb1
+    · have hL2 : L2 = 0 := (mul_eq_zero.mp h22).resolve_left hb2
+      rw [hL2, mul_zero, zero_add] at h12
+      exact (mul_eq_zero.mp h12).resolve_left hb2
+  have hL2 : L2 = 0 := by
+    rcases hb with hb1 | hb2
+    · rw [hL1, mul_zero, add_zero] at h12
+      exact (mul_eq_zero.mp h12).resolve_left hb1
+    · exact (mul_eq_zero.mp h22).resolve_left hb2
+  have hD0 : D ≠ 0 := by
+    intro hd
+    dsimp [L1, L2] at hL1 hL2
+    rw [hd] at hL1 hL2
+    have hbq : fieldDet b q = 0 := by
+      dsimp [fieldDet]
+      linear_combination b.1 * hL2 - b.2 * hL1
+    exact hD hbq
+  constructor
+  · have hrel1 : D * (v.1 - q.1) = k * (c - 1) * (a.1 - q.1) := by
+      dsimp [L1, D] at hL1
+      linear_combination hL1 - k * hq.1
+    have hrel2 : D * (v.2 - q.2) = k * (c - 1) * (a.2 - q.2) := by
+      dsimp [L2, D] at hL2
+      linear_combination hL2 - k * hq.2
+    have hzero : D * fieldDet (a.1 - q.1, a.2 - q.2)
+        (v.1 - q.1, v.2 - q.2) = 0 := by
+      dsimp [fieldDet]
+      linear_combination (a.1 - q.1) * hrel2 - (a.2 - q.2) * hrel1
+    exact (mul_eq_zero.mp hzero).resolve_left hD0
+  · have hzero : D * fieldDet (z.1 - q.1, z.2 - q.2) v = 0 := by
+      rw [hz1, hz2]
+      dsimp [fieldDet, L1, L2, D] at *
+      linear_combination (k * b.1 - q.1) * hL2 -
+        (k * b.2 - q.2) * hL1
+    exact (mul_eq_zero.mp hzero).resolve_left hD0
+
+/-- A regular dividing pencil gives both orientations of the three modular
+lines. The homogeneous identity retains constant and vertical factors. -/
 theorem regular_dividing_homogeneous_lines {K : Type*} [Field K]
-    (b q z v : K × K) (c : K) (hc : c ≠ 0)
+    (a b q z v : K × K) (c : K) (hc : c ≠ 0)
+    (hD : fieldDet b q ≠ 0)
+    (hq : q.1 = b.1 + (1 - c) * a.1 ∧
+      q.2 = b.2 + (1 - c) * a.2)
     (hpoly : ∀ s t : K,
       c * (s * z.1 + t * z.2) * (s * v.1 + t * v.2) =
         (s * (z.1 + v.1 - q.1) + t * (z.2 + v.2 - q.2)) *
           (s * b.1 + t * b.2)) :
-    fieldDet b z = 0 ∨ fieldDet b v = 0 := by
-  exact regular_dividing_oriented b q z v c hc hpoly
+    (fieldDet b z = 0 ∧
+      fieldDet (a.1 - q.1, a.2 - q.2) (v.1 - q.1, v.2 - q.2) = 0 ∧
+      fieldDet (z.1 - q.1, z.2 - q.2) v = 0) ∨
+    (fieldDet b v = 0 ∧
+      fieldDet (a.1 - q.1, a.2 - q.2) (z.1 - q.1, z.2 - q.2) = 0 ∧
+      fieldDet (v.1 - q.1, v.2 - q.2) z = 0) := by
+  rcases regular_dividing_factor_choice b q z v c hc hpoly with hz | hv
+  · exact Or.inl ⟨hz, regular_dividing_oriented a b q z v c hc hD hq hpoly hz⟩
+  · have hs : ∀ s t : K,
+        c * (s * v.1 + t * v.2) * (s * z.1 + t * z.2) =
+          (s * (v.1 + z.1 - q.1) + t * (v.2 + z.2 - q.2)) *
+            (s * b.1 + t * b.2) := by
+      intro s t
+      convert hpoly s t using 1 <;> ring
+    exact Or.inr ⟨hv, regular_dividing_oriented a b q v z c hc hD hq hs hv⟩
 
 /-- The small determinant, rather than the divisor product height, lifts to zero.
 No integer collinearity or integer factorization is assumed. -/
