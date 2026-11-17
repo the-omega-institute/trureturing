@@ -21,4 +21,3 @@ For arbitrary palette q, width k, class size M, decidable admissibility P, class
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/TableBridge.count_successors`
-- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../../StripDefects/DefectTransfer.md)

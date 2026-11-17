@@ -44,7 +44,7 @@ $$\operatorname{between} = \{(0, 0), (1, 1), (2, 2), (0, 1), (1, 2), (1, 0), (2,
 
 *Commentary.*
 
-The Lean type is Finset (Fin 3 x Fin 3). The 7 ordered bonds comprise 3 vertical, 2 diagonal and 2 antidiagonal bonds.
+The Lean type is Finset (Fin 3 x Fin 3). The 7 ordered bonds comprise 3 vertical, 2 diagonal and 2 antidiagonal bonds. This consumed alias delegates to CrossedStripDefects.HardinA229536Strip.between.
 
 **Definition 1.4 (Valid).**
 
@@ -114,7 +114,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Wi
 
 *Commentary.*
 
-The Lean type is Fin 9 -> Int. Forward.structural_certificate pins the terminal value as the indicator that the residual budget is zero.
+The Lean type is Fin 9 -> Int. Forward.structural_certificate pins the terminal value as the indicator that the residual budget is zero. This consumed alias delegates to CrossedStripDefects.HardinA229632Strip.terminal.
 
 **Remark 1.9 (W).**
 
@@ -172,5 +172,7 @@ The Lean type is HardinA233163KingStrip.Boundary -> Nat -> List (Fin 9). Enumera
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Data.successors`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Data.terminal`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233163KingStrip](../../../../../Combinatorics/TraceAvoidingArrays/HardinA233163KingStrip.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229536Strip](../../../CrossedStripDefects/HardinA229536Strip.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229632Strip](../../../CrossedStripDefects/HardinA229632Strip.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../../../StripDefects/DefectTransfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229581Strip](../../../StripDefects/HardinA229581Strip.md)

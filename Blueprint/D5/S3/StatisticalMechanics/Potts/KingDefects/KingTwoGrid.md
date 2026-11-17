@@ -62,4 +62,5 @@ Both dimensions are at least two and the single 2 by 2 block is excluded. Every 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingTwoGrid.T`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingTwoGrid.TwoDefect`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingTwoGrid.labelled_eq_twentyFour`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid](KingGrid.md)

@@ -38,5 +38,6 @@ Assume H counts adjacent horizontal bonds and V counts the vertical, diagonal an
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/GridBridge.defects_rows`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/GridBridge.literal_bridge`
+- Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid](../KingGrid.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/KingDefects/KingTwoGrid](../KingTwoGrid.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../../StripDefects/DefectTransfer.md)
