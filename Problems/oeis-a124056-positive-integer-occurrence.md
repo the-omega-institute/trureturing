@@ -63,6 +63,7 @@ existing uniform divisor supplier. No novelty or priority assertion is made.
 
 The matching Reg source provides dependent-family realization, equivalence,
 variation, sensitivity and observational-dependence evidence for each public
-theorem. The `Contract.Registration` source-selection bindings and current
-binding evidence are absent. No public theorem is claimed to have a completed
-`declared_validated` registration.
+theorem. Its four `Contract.Registration` attempts have no `sourceSelection`.
+The missing evidence is the complete original-source reconstruction and its
+readout path and coordinate bindings. No public theorem is claimed to have a
+completed `declared_validated` registration.
