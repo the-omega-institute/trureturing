@@ -23,6 +23,6 @@ The theorem retains all four natural dimensions, both arbitrary width-three matr
 ## References
 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/BridgeGraph/NativeThreeRectangularBound.native_three_rectangular_bound`
-- Dependency: [D5/S3/Quantum/Algebra/NativeThreeKernelGeometry](../../Algebra/NativeThreeKernelGeometry.md)
-- Dependency: [D5/S3/Quantum/Algebra/NativeTwoKernelBound](../../Algebra/NativeTwoKernelBound.md)
+- Dependency: [D5/S3/Quantum/Algebra/CompressionKernel/NativeThreeKernelGeometry](../../Algebra/CompressionKernel/NativeThreeKernelGeometry.md)
+- Dependency: [D5/S3/Quantum/Algebra/CompressionKernel/NativeTwoKernelBound](../../Algebra/CompressionKernel/NativeTwoKernelBound.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/BridgeGraph/NativeCommonKernelBound](NativeCommonKernelBound.md)

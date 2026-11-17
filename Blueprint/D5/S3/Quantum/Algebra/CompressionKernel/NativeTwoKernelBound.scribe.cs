@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra.CompressionKernel;
 
 internal sealed class NativeTwoKernelBoundDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Algebra/NativeTwoKernelBound.";
+    private const string Prefix = "D5/S3/Quantum/Algebra/CompressionKernel/NativeTwoKernelBound.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A strict native width-two scalar Gram forces twice the right input dimension to fit in the output dimension.", H("The width-two residual Gram bound"), Blocks(
             Paragraph(Text("For a,b,c,d : ℕ with a < b, let M : Fin 2 → Matrix (Fin a) (Fin b) ℂ and N : Fin 2 → Matrix (Fin d) (Fin c) ℂ. If M is complex-linearly independent, (∑ r, kronecker (M r) (N r))ᴴ * (∑ r, kronecker (M r) (N r)) = 1, and ∑ r, (M r)ᴴ * M r = 1, then 2*c ≤ d. All zero-dimensional factors remain in scope.")),

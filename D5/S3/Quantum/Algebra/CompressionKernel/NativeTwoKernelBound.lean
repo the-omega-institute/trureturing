@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Algebra/NativeTwoKernelBound
+/- GID: D5/S3/Quantum/Algebra/CompressionKernel/NativeTwoKernelBound
    generality: I
-   mirror-B: D5/B/S3/Quantum/Algebra/NativeTwoKernelBound
+   mirror-B: D5/B/S3/Quantum/Algebra/CompressionKernel/NativeTwoKernelBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra.CompressionKernel;
 
 internal sealed class CommonKernelSliceDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Algebra/CommonKernelSlice.";
+    private const string Prefix = "D5/S3/Quantum/Algebra/CompressionKernel/CommonKernelSlice.";
     private static DocumentBlock Node(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-')), DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 

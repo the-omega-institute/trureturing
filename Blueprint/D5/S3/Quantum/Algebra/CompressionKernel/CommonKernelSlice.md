@@ -8,9 +8,9 @@ For every k, a, and b in ℕ, let X : Fin k → Matrix (Fin a) (Fin b) ℂ. If (
 
 **Theorem 1.1 (A real combination realizes the common kernel).**
 
-Lean statement: `D5/S3/Quantum/Algebra/CommonKernelSlice.common_kernel_slice`
+Lean statement: `D5/S3/Quantum/Algebra/CompressionKernel/CommonKernelSlice.common_kernel_slice`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/CommonKernelSlice.common_kernel_slice` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/CompressionKernel/CommonKernelSlice.common_kernel_slice` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ For all k a b : ℕ, every X : Fin k → Matrix (Fin a) (Fin b) ℂ, and hcomm :
 
 **Theorem 1.2 (The zero-common-kernel consequence).**
 
-Lean statement: `D5/S3/Quantum/Algebra/CommonKernelSlice.common_kernel_slice_injective_of_common_kernel_bot`
+Lean statement: `D5/S3/Quantum/Algebra/CompressionKernel/CommonKernelSlice.common_kernel_slice_injective_of_common_kernel_bot`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/CommonKernelSlice.common_kernel_slice_injective_of_common_kernel_bot` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/CompressionKernel/CommonKernelSlice.common_kernel_slice_injective_of_common_kernel_bot` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,6 +32,6 @@ For all k a b : ℕ, every X and hcomm as above, and hcommon : (⨅ i, ker ((X i
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Algebra/CommonKernelSlice.common_kernel_slice`
-- Truth anchor: `D5/S3/Quantum/Algebra/CommonKernelSlice.common_kernel_slice_injective_of_common_kernel_bot`
-- Dependency: [D5/S3/Quantum/Algebra/CommonCoefficientPlane](CommonCoefficientPlane.md)
+- Truth anchor: `D5/S3/Quantum/Algebra/CompressionKernel/CommonKernelSlice.common_kernel_slice`
+- Truth anchor: `D5/S3/Quantum/Algebra/CompressionKernel/CommonKernelSlice.common_kernel_slice_injective_of_common_kernel_bot`
+- Dependency: [D5/S3/Quantum/Algebra/CommonCoefficientPlane](../CommonCoefficientPlane.md)

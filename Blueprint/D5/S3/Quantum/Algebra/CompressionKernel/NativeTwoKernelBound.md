@@ -8,9 +8,9 @@ For a,b,c,d : ℕ with a < b, let M : Fin 2 → Matrix (Fin a) (Fin b) ℂ and N
 
 **Theorem 1.1 (The width-two right dimension bound).**
 
-Lean statement: `D5/S3/Quantum/Algebra/NativeTwoKernelBound.right_dimension_bound`
+Lean statement: `D5/S3/Quantum/Algebra/CompressionKernel/NativeTwoKernelBound.right_dimension_bound`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/NativeTwoKernelBound.right_dimension_bound` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/CompressionKernel/NativeTwoKernelBound.right_dimension_bound` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,5 +20,5 @@ The exact binders are {a b c d : ℕ}, hab : a < b, M : Fin 2 → Matrix (Fin a)
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Algebra/NativeTwoKernelBound.right_dimension_bound`
-- Dependency: [D5/S3/Quantum/TensorNetworks/BridgeGraph/NativeRectangularBound](../TensorNetworks/BridgeGraph/NativeRectangularBound.md)
+- Truth anchor: `D5/S3/Quantum/Algebra/CompressionKernel/NativeTwoKernelBound.right_dimension_bound`
+- Dependency: [D5/S3/Quantum/TensorNetworks/BridgeGraph/NativeRectangularBound](../../TensorNetworks/BridgeGraph/NativeRectangularBound.md)

@@ -6,8 +6,8 @@
    utility: none
    digest: The original width-three scalar-Gram theorem at the native threshold. -/
 
-import D5.S3.Quantum.Algebra.NativeThreeKernelGeometry
-import D5.S3.Quantum.Algebra.NativeTwoKernelBound
+import D5.S3.Quantum.Algebra.CompressionKernel.NativeThreeKernelGeometry
+import D5.S3.Quantum.Algebra.CompressionKernel.NativeTwoKernelBound
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeCommonKernelBound
 
 set_option autoImplicit false

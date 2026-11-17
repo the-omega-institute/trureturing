@@ -8,9 +8,9 @@ Let a,b : ℕ with a < b. For X : Fin 3 → Matrix (Fin a) (Fin b) ℂ, assume L
 
 **Theorem 1.1 (The three eigenvalue signs).**
 
-Lean statement: `D5/S3/Quantum/Algebra/NativeThreeInertiaBridge.spectral_signs`
+Lean statement: `D5/S3/Quantum/Algebra/CompressionKernel/NativeThreeInertiaBridge.spectral_signs`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/NativeThreeInertiaBridge.spectral_signs` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/CompressionKernel/NativeThreeInertiaBridge.spectral_signs` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,5 +20,5 @@ The exact conclusion is ∃ e : Fin 3 ≃ Fin 3, 0 < hT.eigenvalues (e 0) ∧ hT
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Algebra/NativeThreeInertiaBridge.spectral_signs`
-- Dependency: [D5/S3/Quantum/Algebra/CommonCoefficientPlane](CommonCoefficientPlane.md)
+- Truth anchor: `D5/S3/Quantum/Algebra/CompressionKernel/NativeThreeInertiaBridge.spectral_signs`
+- Dependency: [D5/S3/Quantum/Algebra/CommonCoefficientPlane](../CommonCoefficientPlane.md)

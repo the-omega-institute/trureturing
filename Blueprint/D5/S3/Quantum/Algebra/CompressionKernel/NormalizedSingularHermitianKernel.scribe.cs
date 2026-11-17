@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra.CompressionKernel;
 
 internal sealed class NormalizedSingularHermitianKernelDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Algebra/NormalizedSingularHermitianKernel.";
+    private const string Prefix = "D5/S3/Quantum/Algebra/CompressionKernel/NormalizedSingularHermitianKernel.";
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 

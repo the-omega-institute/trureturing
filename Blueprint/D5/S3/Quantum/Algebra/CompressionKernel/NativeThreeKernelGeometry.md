@@ -8,9 +8,9 @@ For all a,b : ℕ with a < b, every complex-linearly independent X : Fin 3 → M
 
 **Theorem 1.1 (The common vector or neutral plane alternative).**
 
-Lean statement: `D5/S3/Quantum/Algebra/NativeThreeKernelGeometry.native_three_compression_kernel_geometry`
+Lean statement: `D5/S3/Quantum/Algebra/CompressionKernel/NativeThreeKernelGeometry.native_three_compression_kernel_geometry`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/NativeThreeKernelGeometry.native_three_compression_kernel_geometry` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/CompressionKernel/NativeThreeKernelGeometry.native_three_compression_kernel_geometry` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,7 +20,7 @@ The quantified conclusion is (∃ v : Fin 3 → ℂ, v ≠ 0 ∧ ∀ T : Matrix 
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Algebra/NativeThreeKernelGeometry.native_three_compression_kernel_geometry`
-- Dependency: [D5/S3/Quantum/Algebra/CommonKernelSlice](CommonKernelSlice.md)
-- Dependency: [D5/S3/Quantum/Algebra/NativeThreeInertiaBridge](NativeThreeInertiaBridge.md)
-- Dependency: [D5/S3/Quantum/Algebra/NormalizedSingularHermitianKernel](NormalizedSingularHermitianKernel.md)
+- Truth anchor: `D5/S3/Quantum/Algebra/CompressionKernel/NativeThreeKernelGeometry.native_three_compression_kernel_geometry`
+- Dependency: [D5/S3/Quantum/Algebra/CompressionKernel/CommonKernelSlice](CommonKernelSlice.md)
+- Dependency: [D5/S3/Quantum/Algebra/CompressionKernel/NativeThreeInertiaBridge](NativeThreeInertiaBridge.md)
+- Dependency: [D5/S3/Quantum/Algebra/CompressionKernel/NormalizedSingularHermitianKernel](NormalizedSingularHermitianKernel.md)

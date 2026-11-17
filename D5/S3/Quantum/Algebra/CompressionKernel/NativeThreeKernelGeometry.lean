@@ -1,14 +1,14 @@
-/- GID: D5/S3/Quantum/Algebra/NativeThreeKernelGeometry
+/- GID: D5/S3/Quantum/Algebra/CompressionKernel/NativeThreeKernelGeometry
    generality: I
-   mirror-B: D5/B/S3/Quantum/Algebra/NativeThreeKernelGeometry
+   mirror-B: D5/B/S3/Quantum/Algebra/CompressionKernel/NativeThreeKernelGeometry
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Native width-three Hermitian compression kernels share a kernel vector or neutral plane. -/
 
-import D5.S3.Quantum.Algebra.CommonKernelSlice
-import D5.S3.Quantum.Algebra.NativeThreeInertiaBridge
-import D5.S3.Quantum.Algebra.NormalizedSingularHermitianKernel
+import D5.S3.Quantum.Algebra.CompressionKernel.CommonKernelSlice
+import D5.S3.Quantum.Algebra.CompressionKernel.NativeThreeInertiaBridge
+import D5.S3.Quantum.Algebra.CompressionKernel.NormalizedSingularHermitianKernel
 
 /-! The full real Hermitian compression kernel at coefficient width three. -/
 

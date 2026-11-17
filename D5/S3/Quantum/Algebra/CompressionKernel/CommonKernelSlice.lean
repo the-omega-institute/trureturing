@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Algebra/CommonKernelSlice
+/- GID: D5/S3/Quantum/Algebra/CompressionKernel/CommonKernelSlice
    generality: I
-   mirror-B: D5/B/S3/Quantum/Algebra/CommonKernelSlice
+   mirror-B: D5/B/S3/Quantum/Algebra/CompressionKernel/CommonKernelSlice
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
