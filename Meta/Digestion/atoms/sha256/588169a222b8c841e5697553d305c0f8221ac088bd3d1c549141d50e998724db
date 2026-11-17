@@ -1,0 +1,46 @@
+**定义 20.1（原命中的目标空间事件）。** 保持定义 17.1、18.1 的实际 $F,E_0,P_1,P_2$、正实根、指定实嵌入、圆坐标 $\theta$、$\alpha$、全部有限地方的原过滤 $U_v$ 以及目标同胚 $\eta$。固定整数 $M\ge1,a_0\in\mathbb Z$，令
+
+$$
+\begin{gathered}
+A=\{n\ge1:n\equiv a_0\pmod M\},\qquad
+C_M=a_0+M\widehat{\mathbb Z},\qquad Y=C_M\times\mathbb T^2,\\
+\nu=\lambda_{C_M}\otimes m_{\mathbb T^2},\\
+h(n)=\max\left(2,\left\lfloor c_0\sqrt{\log(n+2)}\right\rfloor\right),\qquad
+\rho_n=\rho(n)=(n+2)^{-\beta}(\log(n+2))^{-\gamma},\\
+q_H=q(H,H;M),\qquad q_n=q_{h(n)}.
+\end{gathered}
+\tag{20.1}
+$$
+
+$\lambda_{C_M}$ 是该余类上的归一化 Haar 概率，$m_{\mathbb T^2}$ 是两圆的归一化面积；本节 $\nu$ 表示目标空间概率。$h,\rho$ 始终是 (18.1)：$c_0>0,\beta,\gamma\ge0,\beta+\gamma>0$，不改变其取整或初段。$M\mid q_H$，且 $H\le K$ 时 $q_H\mid q_K$：原过滤的嵌套使每个旧有限商中的阶整除加深后的阶，而增添地方只向最小公倍数增添因子。因此 $m\le n$ 时 $q_m\mid q_n$，同时 $\rho_m\ge\rho_n>0$。
+
+对 $k\ge1,j=1,2$，令 $I_{j,k}=\{z_j\in\mathbb T:\|k\alpha_j-z_j\|_{\mathbb T}<\rho_k\}$。在 $Y$ 中定义
+
+$$
+\begin{aligned}
+E_n&=
+\begin{cases}
+(n+q_n\widehat{\mathbb Z})\times I_{1,n}\times I_{2,n},&n\in A,\\
+\varnothing,&n\notin A,
+\end{cases}\\
+R&=\limsup_{n\to\infty}E_n
+=\bigcap_{K\ge0}\ \bigcup_{n>K}E_n,\qquad
+S_X(u,z)=\sum_{X<n\le2X}\mathbf1_{E_n}(u,z).
+\end{aligned}
+\tag{20.2}
+$$
+
+这里 $S_X$ 恰为 (18.2) 的原计数。事实上，对 $u\in C_M$，式 (17.25) 在 $H=h(n)$ 给出
+
+$$
+\begin{split}
+(u,z)\in E_n\quad\Longleftrightarrow\quad
+&n\in A,\quad \|\theta([n]P_j)-z_j\|_{\mathbb T}<\rho_n\quad(j=1,2),\\
+&[n]P_j-\eta_{v,j}(u)\in U_v(h(n))\\
+&\hspace{12mm}(p\le h(n),\ v\mid p,\ j=1,2).
+\end{split}
+\tag{20.3}
+$$
+
+故 $R$ 是原全部相容目标中有无限多个成功整数的集合。每次事件中的全部条件仍由同一个 $n$ 承担；$E_n$ 没有以独立模型替换任何地方条件。定理 14.2 已证明 $\eta$ 单射且为到原完整有限目标空间的同胚，因而这里的目标空间和拓扑也保留了全部有限端信息。
+
