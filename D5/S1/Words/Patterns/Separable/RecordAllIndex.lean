@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Words/Patterns/Separable/RecordAllIndex
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [D5/S1/Words/Patterns/Separable/RecordNewtonPositivity, D5/S1/Words/Patterns/Separable/RecordTransport]
+   anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.WellKnown]
    utility: none
    digest: Actual-carrier CKZ weighted quadratic, exact binomial coefficients, arbitrary-index decline and peak-three conclusion. -/
 
