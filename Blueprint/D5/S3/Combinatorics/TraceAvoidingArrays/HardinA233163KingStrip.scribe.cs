@@ -91,7 +91,7 @@ internal sealed class HardinA233163KingStripDocument : IScribeDocumentDefinition
             _ => All("p",boundary,Imp(Call("proper",p),And(All("c",row,Imp(pred,
                 And(Eq(Call("HardinA233196Strip.finish",Call("saturated"),c),Call("saturated")),
                     And(Call("proper",Call("pairs",c)),Eq(Call("kind",Call("pairs",c)),Call("kind",p)))))),
-                Eq(Call("step",Parenthesized(Seq(LambdaLower,Sp,V("u"),Colon,Sp,seen,Comma,Sp,V("q"),Colon,Sp,boundary,Sp,Mapsto,Sp,Typed(D(1),V("Int")))),Call("saturated"),p),Call("rate",Call("kind",p))))))
+                Eq(Call("step",Call("Function.const",seen,Call("Function.const",boundary,Typed(D(1),V("Int")))),Call("saturated"),p),Call("rate",Call("kind",p))))))
         };
     }
 

@@ -137,13 +137,13 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
     {
         var x=V("X"); var n=V("n");
         Formula A(Formula k) => Call("a",k);
-        var series=Call("PowerSeries.mk",Seq(LambdaLower,Sp,n,Colon,Sp,V("Nat"),Sp,Mapsto,Sp,Par(Seq(A(n),Colon,Sp,V("Rat")))));
+        var series=Call("PowerSeries.mk",Seq(LambdaLower,Sp,n,Colon,Sp,V("Nat"),Sp,Mapsto,Sp,Parenthesized(Seq(A(n),Colon,Sp,V("Rat")))));
         var numerator=Mul(Mul(D(4),x),Add(Sub(D(5,9),Mul(D(1,0,3,0,4),x)),Mul(D(3,5,6,3,5,2),Pow(x,D(2)))));
         var denominator=Mul(Sub(D(1),Mul(D(6,4),x)),Sub(D(1),Mul(D(1,2,8),x)));
         var gf=Seq(Eq(series,Mul(numerator,Pow(denominator,new Formula.Negate(Num(1))))),Sp,Name("in"),Sp,Call("PowerSeries",V("Rat")));
         var closed=All("n",V("Nat"),Imp(Le(D(2),n),Eq(A(n),Mul(Pow(D(6,4),Sub(n,D(1))),Add(Pow(D(2),n),D(6,0))))));
-        var recurrence=All("n",V("Nat"),Imp(Le(D(4),n),Eq(Par(Seq(A(n),Colon,Sp,V("Int"))),
-            Sub(Mul(D(1,9,2),Par(Seq(A(Sub(n,D(1))),Colon,Sp,V("Int")))),Mul(D(8,1,9,2),Par(Seq(A(Sub(n,D(2))),Colon,Sp,V("Int"))))))));
+        var recurrence=All("n",V("Nat"),Imp(Le(D(4),n),Eq(Parenthesized(Seq(A(n),Colon,Sp,V("Int"))),
+            Sub(Mul(D(1,9,2),Parenthesized(Seq(A(Sub(n,D(1))),Colon,Sp,V("Int")))),Mul(D(8,1,9,2),Parenthesized(Seq(A(Sub(n,D(2))),Colon,Sp,V("Int"))))))));
         return And(Eq(A(D(1)),D(2,3,6)),And(gf,And(closed,recurrence)));
     }
 
@@ -160,7 +160,7 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         var seen=All("d",Fin(3),Ex("p",Product(Call("Fin",n),Fin(6)),And(Le(Val(Call("Prod.fst",p)),D(1)),Eq(Val(App(f,p)),Add(Val(V("d")),D(1))))));
         var w=V("w");
         var available=Call("Finset.card",Call("Finset.filter",Seq(LambdaLower,Sp,w,Colon,Sp,Fin(4),Sp,Mapsto,Sp,
-            Par(And(Ne(w,D(0)),All("j",Fin(5),Ne(H(j),w))))),Call("Finset.univ")));
+            Parenthesized(And(Ne(w,D(0)),All("j",Fin(5),Ne(H(j),w))))),Call("Finset.univ")));
         var rate=Eq(available,Call("ite",All("j",Fin(5),Eq(H(j),H(D(0)))),D(2),D(1)));
         return All("n",V("Nat"),Imp(Le(D(2),n),All("f",Arrow(Product(Call("Fin",n),Fin(6)),Fin(8)),
             Imp(Call("Legal",f),And(reconstruction,And(horizontal,And(vertical,And(exhaustive,And(seen,rate)))))))));
@@ -207,7 +207,7 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
 
     private static Formula Member(Formula a, Formula b) => Seq(a,Sp,InMacro,Sp,b);
 
-    private static Formula Iff(Formula a, Formula b) => Seq(Par(a),Sp,Leftrightarrow,Sp,Par(b));
+    private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a),Sp,Leftrightarrow,Sp,Parenthesized(b));
     private static Formula Le(Formula a, Formula b) => Seq(a,Sp,Leq,Sp,b);
     private static Formula V(string name) => F.Id(name);
     private static Formula Name(string name) => Seq(name.Split('.').SelectMany((part, i) =>
@@ -216,24 +216,24 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Call(string name, params Formula[] args) => App(Name(name), args);
     private static Formula Fin(byte n) => Call("Fin", D(n));
-    private static Formula Par(Formula f) => Seq(Open, f, Close);
-    private static Formula Product(Formula a, Formula b) => Seq(Par(a), Sp, Times, Sp, Par(b));
-    private static Formula Arrow(Formula a, Formula b) => Seq(Par(a), Sp, To, Sp, b);
-    private static Formula Pair(Formula a, Formula b) => Par(Seq(a, Comma, Sp, b));
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
+    private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, b);
+    private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Val(Formula a) => Call("Fin.val", a);
     private static Formula Rank(Formula p) => Add(Mul(D(6), Val(Call("Prod.fst", p))), Val(Call("Prod.snd", p)));
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula Ne(Formula a, Formula b) => Seq(a, Sp, Neq, Sp, b);
     private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
-    private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
-    private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
-    private static Formula Or(Formula a, Formula b) => Seq(Par(a), Sp, Lor, Sp, Par(b));
+    private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
+    private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
+    private static Formula Or(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Lor, Sp, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Pow(Formula a, Formula b) => new Formula.Power(Par(a), b);
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula All(string name, Formula type, Formula body) =>
-        Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
+        Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
     private static Formula Ex(string name, Formula type, Formula body) =>
-        Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
+        Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
 }
