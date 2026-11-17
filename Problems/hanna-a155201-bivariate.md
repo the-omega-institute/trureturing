@@ -57,6 +57,20 @@ All helpers are consumed; the proof is classified bind-only relative to the
 existing suppliers. The intended admission basis is external
 open-problem-resolution under #31340, pending independent approval.
 
+The current scoped Lean build and report include the full result and its
+standard axiom closure: Classical.choice, Quot.sound and propext.
+The original supplier has a visibility-only canonical ledger repin.
+The new result has no frozen-state registration.
+
+The Reg mirrors contain compiled full-telescope realization, equivalence,
+variation, sensitivity and observational-dependence proofs for the result,
+polynomial congruence, support, extraction and exposed Dwork supplier.
+The full result has an attempted source selection; its exact nested
+coefficient operand reconstruction is not validated. The other four
+registrations have no sourceSelection evidence. These named binding gaps
+belong with the unfinished audit in #31340; external issue updates are not
+part of this source delivery. No declared_validated status is asserted.
+
 Independent pre-freeze approval, canonical first freezing, and publication
 are outstanding. Reg binding and required CI are separate obligations;
 no declared_validated, merged delivery, worldwide priority or published

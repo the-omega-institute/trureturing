@@ -9,6 +9,26 @@
 /-
 admission_basis: open-problem-resolution (#31340; pending independent approval).
 escape_witness: none.
+ghost_base: proof_shape: bind-only; consumers: ghost_prime_power.
+ghost_prime_power: proof_shape: bind-only; consumers: weightedGhost_divisibility.
+cone_one: proof_shape: bind-only; consumers: cone_pow.
+cone_mul: proof_shape: bind-only; consumers: cone_pow.
+cone_pow: proof_shape: bind-only; consumers: exponential_coefficient_support.
+cone_logarithmicInput: proof_shape: bind-only; consumers: exponential_coefficient_support.
+exponential_coeff: proof_shape: bind-only; consumers: exponential_coefficient_support.
+exponential_coefficient_support: proof_shape: bind-only; consumers: kronecker_extract, result.
+kronecker_extract: proof_shape: bind-only; consumers: result.
+diagonal_apply: proof_shape: bind-only; consumers: diagonal_continuous, diagonal_coeff.
+diagonal_continuous: proof_shape: bind-only; consumers: diagonal_subst.
+diagonal_coeff: proof_shape: bind-only; consumers: diagonal_kronecker, diagonal_logarithm, diagonal_logarithm_zero.
+diagonal_kronecker: proof_shape: bind-only; consumers: result.
+diagonal_subst: proof_shape: bind-only; consumers: diagonal_exponential.
+weightedGhost_map: proof_shape: bind-only; consumers: diagonal_logarithm.
+diagonal_logarithm: proof_shape: bind-only; consumers: diagonal_exponential.
+diagonal_logarithm_zero: proof_shape: bind-only; consumers: diagonal_exponential.
+diagonal_exponential: proof_shape: bind-only; consumers: result.
+weightedGhost_divisibility: proof_shape: bind-only; consumers: result.
+result: proof_shape: bind-only; consumers: external open-problem resolution (#31340).
 Every theorem is classified bind-only relative to the reused degree, formal
 substitution, polynomial congruence lifting and series-valued Dwork suppliers.
 The full result is an external open-problem application, not a new abstract
