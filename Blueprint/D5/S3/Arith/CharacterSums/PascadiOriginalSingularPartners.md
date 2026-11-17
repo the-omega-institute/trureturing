@@ -50,7 +50,49 @@ Suppose p is prime, F is primitive and irreducible over the rationals, F(b)=0 mo
 
 The leading coefficient and L_b(theta) are nonzero. Cancel them from the equality of the actual scaled values. Evaluation at theta then kills the coordinate-polynomial difference. The AdjoinRoot kernel and primitive integer divisibility transfer this vanishing back to divisibility in the original integer polynomial ring.
 
-**Theorem 1.4 (At most three relevant factors with uniformly few actual value pairs).**
+**Theorem 1.4 (The original pencil satisfies the weighted cubic envelope).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.actual_pencil_weighted_coeff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.actual_pencil_weighted_coeff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If J1,J2>=1 and the actual anchor, both baseline endpoints and both partner endpoints satisfy the separate coordinate bounds, every coefficient of the actual pencil up to its degree is at most 18*J1^(3-j)*J2^j in absolute value.
+
+Apply actual_pencil_coefficient_bounds and split the four possible coefficient degrees. This existing helper is now public so both the original and strengthened singular-cover proofs consume the same source.
+
+**Theorem 1.5 (Factors inherit a polynomial coefficient envelope).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.integer_cubic_factor_coeff_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.integer_cubic_factor_coeff_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a real T>=8, a nonzero integer polynomial P of degree at most three with all coefficients at most T squared in absolute value has every integer factor F bounded coefficientwise by T cubed.
+
+The complex polynomial sup-norm product inequality bounds the factor sup-norm by eight times that of P. The complementary nonzero integer factor has sup-norm at least one. Since T>=8, eight T squared is at most T cubed. This estimate is independent of any modular prime.
+
+**Theorem 1.6 (Separate the modular prime from the real height envelope).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.fixed_factor_value_pairs_envelope`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.fixed_factor_value_pairs_envelope` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive epsilon one constant C works for every prime p, every real T>=16 and every relevant primitive factor F irreducible over the rationals of degree at most three. Assume coefficients of F are bounded by T cubed, the five actual baseline coefficients by T squared, and the actual endpoint coordinates by T. Retain F(b)=0 modulo p and the two baseline product units there. Then the actual algebraic value-pair image has cardinality at most C*T^epsilon.
+
+The actual number field, integral scaled values and nonzero product are the same as above. Their conjugates are bounded by T to the eighteenth power and the product norm by T to the 108th power. The existing field-uniform fixed-product divisor theorem uses T, while modular relevance and the unit tests still use p. No relationship between T and p is assumed. The original prime-height theorem below remains the specialization T=p.
+
+**Theorem 1.7 (At most three relevant factors with uniformly few actual value pairs).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.actual_singular_value_pairs_subpower`
 
@@ -70,7 +112,10 @@ This module counts actual algebraic value pairs. The following PascadiOriginalSi
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.actual_pencil_weighted_coeff`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.actual_singular_value_pairs_subpower`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.fixed_factor_value_pairs_envelope`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.integer_cubic_factor_coeff_bound`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.original_singular_unit_observations`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.reduce_eval_at_lift`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalSingularPartners.singular_value_coordinate_divisibility`
