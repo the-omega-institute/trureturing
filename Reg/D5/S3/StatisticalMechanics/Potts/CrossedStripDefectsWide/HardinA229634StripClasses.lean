@@ -15,14 +15,14 @@ open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : Row, Fin 3) (fun _ => Fin 30) (fun _ => ℤ)
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : Row, Fin 3) (fun _ => Fin 33) (fun _ => ℤ)
 def readout : Realization signature :=
   realize signature (fun _ pd s => T (cl pd.1 pd.2.val) s) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ pd s => T (cl pd.1 pd.2.val) s + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 30,
+  Law R := ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 33,
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = s
       then (1 : ℤ) else 0) = R.readout () ⟨p, d⟩ s

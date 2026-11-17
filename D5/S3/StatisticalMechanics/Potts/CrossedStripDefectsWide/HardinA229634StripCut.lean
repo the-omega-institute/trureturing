@@ -9,7 +9,8 @@
 /-
 admission_basis: open-problem-resolution (#31328; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229634Strip.result)
-numeric_cut: proof_shape=bind-only; consumers=active_cut
+zero_lower: proof_shape=bind-only; consumers=active_class, inherited_counts
+active_class: proof_shape=bind-only; consumers=active_cut, inherited_counts
 active_cut: proof_shape=bind-only; consumers=inherited_counts
 inherited_counts: proof_shape=bind-only; consumers=HardinA229634Strip.finite_certificate
 zero_cut: proof_shape=bind-only; consumers=HardinA229634StripClass0.transition_counts through HardinA229634StripClass5.transition_counts
@@ -29,13 +30,29 @@ set_option synthInstance.maxSize 100000
 open HardinA229634StripData
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefects
 open HardinA229531StripData (Row horizontal between)
-private theorem numeric_cut : ∀ (r : Row) (c d : Fin 3) (j : Fin 20),
-    ((c.val ≤ d.val ∧ cl r (d.val - c.val) = j.castAdd 13) ↔
-      c.val < d.val ∧ HardinA229531StripData.cl r (d.val - 1 - c.val) = j) := by
-  intro r
-  generalize h0 : r 0 = c0
-  generalize h1 : r 1 = c1
-  fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
+private theorem zero_lower : ∀ r : Row, 20 ≤ (cl r 0).val := by decide +kernel
+
+private theorem active_class (r : Row) (d : ℕ) (j : Fin 20) :
+    (cl r d = j.castAdd 13) ↔
+      0 < d ∧ HardinA229531StripData.cl r (d - 1) = j := by
+  by_cases hd : 0 < d
+  · rw [cl, if_pos hd]
+    simp only [hd, true_and]
+    constructor
+    · intro h
+      exact Fin.ext (congrArg Fin.val h)
+    · rintro rfl
+      rfl
+  · have dz : d = 0 := by omega
+    subst d
+    have hn : cl r 0 ≠ j.castAdd 13 := by
+      intro h
+      have hv := congrArg Fin.val h
+      have hl := zero_lower r
+      have hj := j.isLt
+      simp only [Fin.val_castAdd] at hv
+      omega
+    simp only [hn, hd, false_and]
 
 theorem active_cut (p r : Row) (d : Fin 3) (j : Fin 20) (hd : 0 < d.val) :
     ((bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
@@ -43,14 +60,15 @@ theorem active_cut (p r : Row) (d : Fin 3) (j : Fin 20) (hd : 0 < d.val) :
       bondDefects between p r + bondDefects horizontal r r ≤ d.val - 1 ∧
       HardinA229531StripData.cl r
         (d.val - 1 - (bondDefects between p r + bondDefects horizontal r r)) = j) := by
-  by_cases hc : bondDefects between p r + bondDefects horizontal r r < 3
-  · rw [numeric_cut r ⟨_, hc⟩ d j]
-    have hn : (bondDefects between p r + bondDefects horizontal r r < d.val) ↔
-        bondDefects between p r + bondDefects horizontal r r ≤ d.val - 1 := by omega
-    rw [hn]
-  · have hn : ¬ (bondDefects between p r + bondDefects horizontal r r ≤ d.val) := by omega
-    have hm : ¬ (bondDefects between p r + bondDefects horizontal r r ≤ d.val - 1) := by omega
-    simp only [hn, hm, false_and]
+  rw [active_class]
+  have he : d.val - (bondDefects between p r + bondDefects horizontal r r) - 1 =
+      d.val - 1 - (bondDefects between p r + bondDefects horizontal r r) := by omega
+  rw [he]
+  constructor
+  · rintro ⟨hc, hpos, hj⟩
+    exact ⟨by omega, hj⟩
+  · rintro ⟨hc, hj⟩
+    exact ⟨by omega, by omega, hj⟩
 
 theorem inherited_counts (p : Row) (d : Fin 3) (hp : Valid p d.val) (j : Fin 20) :
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
@@ -65,19 +83,36 @@ theorem inherited_counts (p : Row) (d : Fin 3) (hp : Valid p d.val) (j : Fin 20)
     have ht := HardinA229531StripClasses.transition_counts p ⟨d.val - 1, by omega⟩ hv j
     have table : ∀ p (d : Fin 3) (j : Fin 20), 0 < d.val →
         HardinA229531StripData.T (HardinA229531StripData.cl p (d.val - 1)) j =
-          T (cl p d.val) (j.castAdd 13) := by decide +kernel
+          T (cl p d.val) (j.castAdd 13) := by
+      intro p d j hd
+      rw [cl, if_pos hd]
+      simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
+        Matrix.fromBlocks_apply₁₁]
+      rfl
     exact ht.trans (table p d j hd)
   · have hzero : ∀ (r : Row) (c : ℕ) (j : Fin 20),
         ¬ (c ≤ 0 ∧ cl r (0 - c) = j.castAdd 13) := by
       intro r c j h
-      have hn := numeric_cut r 0 0 j
-      have hh : cl r 0 = j.castAdd 13 := by simpa using h.2
-      have := hn.mp ⟨by omega, hh⟩
+      have hh : cl r 0 = j.castAdd 13 := by simpa only [Nat.zero_sub] using h.2
+      have hn := (active_class r 0 j).mp hh
       omega
     have dz : d.val = 0 := by omega
     simp_rw [dz, if_neg (hzero _ _ j)]
-    have table : ∀ p (j : Fin 20), T (cl p 0) (j.castAdd 13) = 0 := by decide +kernel
+    have table : ∀ p (j : Fin 20), T (cl p 0) (j.castAdd 13) = 0 := by
+      intro p j
+      have hl := zero_lower p
+      have hu := (cl p 0).isLt
+      let k : Fin 13 := ⟨(cl p 0).val - 20, by omega⟩
+      have he : cl p 0 = k.natAdd 20 := by
+        apply Fin.ext
+        dsimp [k]
+        omega
+      rw [he]
+      simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_natAdd,
+        finSumFinEquiv_symm_apply_castAdd, Matrix.fromBlocks_apply₂₁, Matrix.zero_apply]
+      rfl
     simpa using (table p j).symm
+
 
 theorem zero_cut (p r : Row) (j : Fin 6) :
     ((bondDefects between p r + bondDefects horizontal r r ≤ 0 ∧

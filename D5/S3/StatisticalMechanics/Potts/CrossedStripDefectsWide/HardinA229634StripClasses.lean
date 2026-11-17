@@ -42,6 +42,7 @@ set_option maxHeartbeats 0
 set_option Elab.async false
 set_option synthInstance.maxSize 100000
 open HardinA229634StripData
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefects
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripData (Row horizontal between)
 private theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
