@@ -163,4 +163,3 @@ Fix n,j with j<=n and put M=n+1. The continuous evaluation ring homomorphism X=T
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA155201BivariateIntegrality.result`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA155201BivariateIntegrality.weightedGhost`
 - Dependency: [D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegrality](HannaSelfSubstitutionIntegrality.md)
-- Dependency: [D5/S3/Combinatorics/PowerSeries/LaurentSpecialization](../../../S3/Combinatorics/PowerSeries/LaurentSpecialization.md)

@@ -216,7 +216,7 @@ private local instance : DiscreteUniformity (Polynomial ℚ) := ⟨rfl⟩
 private noncomputable def diagonal (a : ℕ) :
     PowerSeries (Polynomial ℚ) →ₐ[ℚ] PowerSeries ℚ :=
   (PowerSeries.eval₂Hom
-    (φ := Polynomial.eval₂RingHom C (X ^ 1))
+    (φ := Polynomial.eval₂RingHom C X)
     continuous_of_discreteTopology
     (show PowerSeries.HasEval ((X : PowerSeries ℚ) ^ (a + 1)) from by
       rw [pow_succ]
@@ -224,8 +224,7 @@ private noncomputable def diagonal (a : ℕ) :
 
 private theorem diagonal_apply (a : ℕ) (f : PowerSeries (Polynomial ℚ)) :
     diagonal a f = PowerSeries.eval₂ (Polynomial.eval₂RingHom C X) (X^(a+1)) f := by
-  simp only [diagonal, RingHom.toRatAlgHom_apply,
-    PowerSeries.coe_eval₂Hom, pow_one]
+  rfl
 
 private theorem diagonal_continuous (a : ℕ) : Continuous (diagonal a) := by
   change Continuous (fun f => diagonal a f)
