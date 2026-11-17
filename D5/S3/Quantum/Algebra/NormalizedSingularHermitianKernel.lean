@@ -405,6 +405,67 @@ theorem linear_graph_common_kernel_or_neutral_plane
       simp only [map_neg, Complex.star_def]
       linear_combination htrace H hH + H 1 1 * hcprod
 
+/-- A conjugate orientation with proper real coordinate image reduces to a
+complex-linear orientation, including the zero image. -/
+theorem conjugate_graph_proper_image_common_kernel_or_neutral_plane
+    (K : Submodule ℝ M)
+    (hD : D ∈ K)
+    (hHerm : ∀ H : M, H ∈ K → H.IsHermitian)
+    (hSing : ∀ H : M, H ∈ K → H.det = 0)
+    (c : ℂ) (hc : ‖c‖ = 1)
+    (hgraph : ∀ H ∈ K, H 1 2 = c * conj (H 0 2))
+    (hnotonto : ¬ ∀ u : ℂ, ∃ H ∈ K, H 0 2 = u) :
+    (∃ v : Fin 3 → ℂ, v ≠ 0 ∧ ∀ H ∈ K, H *ᵥ v = 0) ∨
+    (∃ W : Submodule ℂ (Fin 3 → ℂ), Module.finrank ℂ W = 2 ∧
+      ∀ H ∈ K, ∀ w ∈ W, ∀ w' ∈ W,
+        star w ⬝ᵥ (H *ᵥ w') = 0) := by
+  classical
+  by_cases hzero : ∀ H ∈ K, H 0 2 = 0
+  · apply linear_graph_common_kernel_or_neutral_plane K hD hHerm hSing c hc
+    intro H hH
+    simp only [hgraph H hH, hzero H hH, map_zero, mul_zero]
+  · push Not at hzero
+    obtain ⟨H₀, hH₀, hu₀⟩ := hzero
+    let u : K →ₗ[ℝ] ℂ :=
+      { toFun := fun H => (H : M) 0 2
+        map_add' := fun _ _ => rfl
+        map_smul' := fun _ _ => rfl }
+    have hproper : LinearMap.range u ≠ ⊤ := by
+      intro htop
+      apply hnotonto
+      intro z
+      have hz : z ∈ LinearMap.range u := by rw [htop]; exact Submodule.mem_top
+      obtain ⟨H, hH⟩ := hz
+      exact ⟨H, H.property, hH⟩
+    have hnonzero : LinearMap.range u ≠ ⊥ := by
+      intro hbot
+      have hmem := LinearMap.mem_range_self u ⟨H₀, hH₀⟩
+      rw [hbot, Submodule.mem_bot] at hmem
+      exact hu₀ hmem
+    have hdim : Module.finrank ℝ (LinearMap.range u) = 1 := by
+      have hlt := Submodule.finrank_lt hproper
+      rw [Complex.finrank_real_complex] at hlt
+      have hpos := Submodule.one_le_finrank_iff.mpr hnonzero
+      omega
+    have hspan := eq_span_singleton_of_mem_of_finrank_eq_one hdim
+      (LinearMap.mem_range_self u ⟨H₀, hH₀⟩) hu₀
+    have hline (H : M) (hH : H ∈ K) :
+        ∃ t : ℝ, (t : ℂ) * H₀ 0 2 = H 0 2 := by
+      have hmem := LinearMap.mem_range_self u ⟨H, hH⟩
+      rw [hspan] at hmem
+      exact Submodule.mem_span_singleton.mp hmem
+    let d : ℂ := c * conj (H₀ 0 2) / H₀ 0 2
+    have hd : ‖d‖ = 1 := by
+      dsimp [d]
+      rw [norm_div, norm_mul, hc, Complex.norm_conj, one_mul,
+        div_self (norm_ne_zero_iff.mpr hu₀)]
+    apply linear_graph_common_kernel_or_neutral_plane K hD hHerm hSing d hd
+    intro H hH
+    obtain ⟨t, ht⟩ := hline H hH
+    rw [hgraph H hH, ← ht, map_mul, Complex.conj_ofReal]
+    dsimp [d]
+    field_simp [hu₀]
+
 def normalizedGraphTrichotomy : Prop :=
   ∀ (K : Submodule ℝ M), D ∈ K →
     (∀ H : M, H ∈ K → H.IsHermitian) →
