@@ -70,6 +70,10 @@ $$\neg (\forall (H: \operatorname{Type}), ([\operatorname{NormedAddCommGroup}\le
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/MatrixAnalysis/MPartialIsometryCommonMetricInverseRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-abg2606q6` (refuted) by `D5/S3/Quantum/MatrixAnalysis/MPartialIsometryCommonMetricInverseRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-abg2606q6","declaration_gid":"D5/S3/Quantum/MatrixAnalysis/MPartialIsometryCommonMetricInverseRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mohamed Amine Aouichaoui, Michał Buchała and Stephan Ramon Garcia (2026). *On m-partial isometries: spectra, weighted shifts, and similarity*. DOI: [10.48550/arXiv.2606.12865](https://doi.org/10.48550/arXiv.2606.12865). URL: <https://arxiv.org/abs/2606.12865v1>.

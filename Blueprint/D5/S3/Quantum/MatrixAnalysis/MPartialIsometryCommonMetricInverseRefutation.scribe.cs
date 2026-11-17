@@ -40,7 +40,9 @@ internal sealed class MPartialIsometryCommonMetricInverseRefutationDocument : IS
         Describe.Lean(DescribeId.Create("abg-" + (name == "IsMPartialIsometry" ? "partial" :
                 name == "candidateInverse" ? "inverse" : name == "penroseIn" ? "penrose" : name)), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("op-abg2606q6"), ResolutionKind.Refuted) : null);
 
     private static Formula BetaFormula()
     {
