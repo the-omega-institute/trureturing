@@ -24,9 +24,3 @@ For every finite linearly ordered A with 2<=Fintype.card A and every r with 1<=r
 
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/PositivePairBallGrowth.actual_positiveWordBall_weightedLyndon_lower_bound`
 - Dependency: [D5/S1/Words/Complexity/ExactDecks/Growth/PositiveWordBall](PositiveWordBall.md)
-- Dependency: [D5/S1/Words/Complexity/PositivePairs/Coefficients/CutoffCoefficientAlgebra](../../PositivePairs/Coefficients/CutoffCoefficientAlgebra.md)
-- Dependency: [D5/S1/Words/Complexity/PositivePairs/Coefficients/MagnusWordCoefficients](../../PositivePairs/Coefficients/MagnusWordCoefficients.md)
-- Dependency: [D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration](../../PositivePairs/Coefficients/PositivePairFiltration.md)
-- Dependency: [D5/S1/Words/Complexity/PositivePairs/Digits/ActualLyndonDirections](../../PositivePairs/Digits/ActualLyndonDirections.md)
-- Dependency: [D5/S1/Words/Complexity/PositivePairs/Digits/CentralDigitWords](../../PositivePairs/Digits/CentralDigitWords.md)
-- Dependency: [D5/S1/Words/Complexity/VivionBinomialConverseFails](../../VivionBinomialConverseFails.md)

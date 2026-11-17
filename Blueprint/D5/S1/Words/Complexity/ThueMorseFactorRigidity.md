@@ -96,6 +96,10 @@ $$\forall (\operatorname{ell} : \operatorname{Nat}), 2 \leq \operatorname{ell} \
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ThueMorseFactorRigidity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rigo-stipulanti-whiteland-question-c` (proved) by `D5/S1/Words/Complexity/ThueMorseFactorRigidity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rigo-stipulanti-whiteland-question-c","declaration_gid":"D5/S1/Words/Complexity/ThueMorseFactorRigidity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.

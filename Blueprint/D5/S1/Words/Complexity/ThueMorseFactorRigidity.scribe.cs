@@ -40,7 +40,10 @@ internal sealed class ThueMorseFactorRigidityDocument : IScribeDocumentDefinitio
                 "For every integer ell at least two, a coding of a morphic word on a finite alphabet has unbounded abelian complexity and a strict hierarchy terminating at factor complexity.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "result",
                 Disp(Seq(Forall, Sp, Parenthesized(Seq(Seq(Operatorname, Grp(F.Id("ell"))), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("Nat"))))), Comma, Sp, D(2), Sp, Leq, Sp, Seq(Operatorname, Grp(F.Id("ell"))), Sp, To, Sp, Exists, Sp, Parenthesized(Seq(Seq(Operatorname, Grp(F.Id("word"))), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("Nat"))), Sp, To, Sp, Seq(Operatorname, Grp(F.Id("Fin"))), Sp, D(4))), Comma, Sp, Seq(Operatorname, Grp(F.Id("Hierarchy"))), Sp, Seq(Operatorname, Grp(F.Id("word"))), Sp, Seq(Operatorname, Grp(F.Id("ell"))))),
-                "For every integer ell at least two, a coding of a morphic word on a finite alphabet has unbounded abelian complexity and a strict hierarchy terminating at factor complexity.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "For every integer ell at least two, a coding of a morphic word on a finite alphabet has unbounded abelian complexity and a strict hierarchy terminating at factor complexity.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rigo-stipulanti-whiteland-question-c"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
