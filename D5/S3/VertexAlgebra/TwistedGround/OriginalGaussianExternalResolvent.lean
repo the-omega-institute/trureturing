@@ -34,7 +34,7 @@ private lemma choose_recurrence (a : ℂ) (n : ℕ) :
   simpa only [Nat.choose_succ_self_right, nsmul_eq_mul, Nat.add_sub_cancel_left,
     Ring.choose_one_right, Nat.cast_add, Nat.cast_one] using h
 
-private lemma choose_bound (p : ℕ) {a : ℂ} (ha : ‖a‖ ≤ (p + 1 : ℝ)) (s : ℕ) :
+lemma choose_bound (p : ℕ) {a : ℂ} (ha : ‖a‖ ≤ (p + 1 : ℝ)) (s : ℕ) :
     ‖Ring.choose a s‖ ≤ (Nat.choose (p + s) s : ℝ) := by
   induction s with
   | zero => simp
@@ -80,7 +80,7 @@ private lemma binomial_polynomial_bound (out : Bool) (p s : ℕ) (hs : 1 ≤ s) 
       nlinarith
     _ = _ := mul_pow _ _ _
 
-private lemma externalColumn_bound (out : Bool) (p : ℕ) {ρ : ℝ} (hρ : 0 ≤ ρ)
+lemma externalColumn_bound (out : Bool) (p : ℕ) {ρ : ℝ} (hρ : 0 ≤ ρ)
     {z : ℂ} (hz : ‖z‖ ≤ ρ) (n : ℕ) :
     ‖externalColumn out p z n‖ ≤
       (p + 1 : ℝ) ^ p * (n + 1 : ℝ) ^ (p + 1) * ρ ^ (n + 1) := by
@@ -149,7 +149,7 @@ private lemma map_entry_bound (A : H →L[ℂ] H) (n m : ℕ) :
     _ ≤ ‖A‖ * ‖basis m‖ := A.le_opNorm _
     _ = _ := by simp [basis, lp.norm_single (by norm_num : (0 : ℝ≥0∞) < 2)]
 
-private lemma external_double_summable (out : Bool) (p : ℕ) (out' : Bool) (q : ℕ)
+lemma external_double_summable (out : Bool) (p : ℕ) (out' : Bool) (q : ℕ)
     {z : ℂ} (hz : ‖z‖ < 1) (A : H →L[ℂ] H) :
     Summable (fun st : ℕ × ℕ => ‖externalColumn out p z st.1 *
       A (basis st.2) st.1 * externalColumn out' q z st.2‖) := by
@@ -164,7 +164,7 @@ private lemma external_double_summable (out : Bool) (p : ℕ) (out' : Bool) (q :
       exact map_entry_bound A st.1 st.2
     _ = _ := by ring
 
-private lemma external_bilinear_expansion (out : Bool) (p : ℕ) (out' : Bool) (q : ℕ)
+lemma external_bilinear_expansion (out : Bool) (p : ℕ) (out' : Bool) (q : ℕ)
     {z : ℂ} (hz : ‖z‖ < 1) (A : H →L[ℂ] H) :
     innerSL ℂ (star (externalVector out p z)) (A (externalVector out' q z)) =
       ∑' st : ℕ × ℕ, externalColumn out p z st.1 *
