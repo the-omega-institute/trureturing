@@ -82,6 +82,10 @@ $$\neg (\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall k \in \m
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SimplicialComplexes/BenedettiMenaraNormalityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-bm2611q91` (refuted) by `D5/S3/Combinatorics/SimplicialComplexes/BenedettiMenaraNormalityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-bm2611q91","declaration_gid":"D5/S3/Combinatorics/SimplicialComplexes/BenedettiMenaraNormalityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bruno Benedetti and Giuliamaria Menara (2026). *Diameter bounds for complexes that are close to flag or close to normal*. DOI: [10.48550/arXiv.2611.08071](https://doi.org/10.48550/arXiv.2611.08071). URL: <https://arxiv.org/abs/2611.08071v1>.

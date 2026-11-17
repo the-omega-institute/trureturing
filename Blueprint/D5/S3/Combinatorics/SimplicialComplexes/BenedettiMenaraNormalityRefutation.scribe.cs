@@ -39,7 +39,8 @@ internal sealed class BenedettiMenaraNormalityRefutationDocument : IScribeDocume
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Take n = 10, d = 4 and k = 2, with a = 6, z = 7, w = 8 and b = 9. The original facets, in order, are zw01, zw12, zw23, zw34, zw45, zw50, az01, az12, az23, az34, wb01, wb50, wb45, wb34 and ab01. Each has four vertices and every vertex occurs. For any two facets at distinct positions, their intersection is contained in an earlier facet meeting the later one in three vertices. Strong induction on the sum of the positions constructs a path between every two facets containing a given face, including the empty face. Thus the original complex is normal. The completion has precisely these facets and ab34, and remains pure of rank four. Its ab-star consists of ab01 and ab34, whose intersection has two vertices; its induced dual graph has two vertices and no edges. Consequently the completion is not normal.")),
                     Paragraph(Text("The gap condition here is vacuous, as the source allows at k = d - 2. Proposition 3.5 for k <= 1 and Main Theorem A, which assumes completion normality, retain their stated hypotheses. This example leaves preservation under nonvacuous G_k with 2 <= k < d - 2 and the uniform arbitrary-N family as separate questions."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-bm2611q91"), ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
