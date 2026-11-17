@@ -26,6 +26,10 @@ $$\forall n : \mathbb{N} , 9 \leq n \to \forall p : (Fin n \to Fin 2 \to Project
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/FlatlandImageEquations.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-adk2606ex46` (proved) by `D5/S3/Geometry/FlatlandImageEquations.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-adk2606ex46","declaration_gid":"D5/S3/Geometry/FlatlandImageEquations.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Colin Alstad, Timothy Duff, Mordechai Katzman (2026). *Segre-Determinantal Loci and the Image Variety for Three Flatland Cameras*. DOI: [10.48550/arXiv.2606.31965](https://doi.org/10.48550/arXiv.2606.31965). URL: <https://arxiv.org/abs/2606.31965v1>.

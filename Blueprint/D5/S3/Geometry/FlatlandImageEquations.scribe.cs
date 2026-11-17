@@ -20,12 +20,14 @@ internal sealed class FlatlandImageEquationsDocument : IScribeDocumentDefinition
             Node("result", "result",
                 Seq(Forall, Sp, F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, Comma, Sp, D(9), Sp, Leq, Sp, F.Id("n"), Sp, To, Sp, Forall, Sp, F.Id("p"), Sp, Colon, Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"), Sp, To, Sp, F.Id("Fin"), Sp, D(2), Sp, To, Sp, F.Id("Projectivization"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, D(3), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("C"))))))), Sp, Comma, Sp, F.Id("p"), Sp, InMacro, Sp, F.Id("imageClosure"), Sp, F.Id("n"), Sp, Iff, Sp, F.Id("equations"), Sp, F.Id("p")),
                 AssessedProvenance.FromRepo(Source),
-                "The nine-row Segre minors and the eight-point constraints cut out exactly the variable-camera closed image for every natural number at least nine.", DescribeRole.Theorem))));
+                "The nine-row Segre minors and the eight-point constraints cut out exactly the variable-camera closed image for every natural number at least nine.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("op-adk2606ex46"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string declaration, Formula formula,
-        AssessedProvenance provenance, string prose, DescribeRole role) => Describe.Lean(
+        AssessedProvenance provenance, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(declaration),
-        StatementSource.FromAuthor(formula), provenance, Content(declaration, prose), role);
+        StatementSource.FromAuthor(formula), provenance, Content(declaration, prose), role, resolution);
 
     private static BlockSequence Content(string declaration, string prose)
     {
