@@ -1073,3 +1073,330 @@ $$
 本节结论处于精确实数读数合同内：它校准漂移的符号，并不恢复漂移幅度、完整来源或增益多项式，也不提供任意实参数的有限位表示、有效取根、稳定性或误差界，不声称有限精度保证。所有非零实次数至多三的增益、任意符号、降次、采样根和重根，以及任意常漂移都仍在范围内。历史始终是字面 $MMJMM$；同父 $\mathcal P_M\cap\mathcal P_J$ 的剩余判定、两个实际第六臂的共同父实现、更早实际祖先的接合及原根八读／九读义务均保持原有范围和未决边界，原九读上界不由本节改变。本节不以 $MJMM$、$Q_M$、一般位置假设（genericity）、有限来源截断（sourcecutoff）或同一碰撞对（same-pair）替换原合同，也不把四个终端碰撞对合并为一个共同见证。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 7. 全正源的 J 签名单射与共同父锚定关系
+
+**定义 7.1（源签名与父坐标）。** 令 $\mathscr S$ 为全部严格逐项正、秩一、迹一的实 $2\times2$ 来源，并令 $\mathscr S^\times=\{P\in\mathscr S:\Phi(P)\ne0\}$。来源唯一写成 VI 定义8.1的 $P(s,t)$，$s,t>0$。以下 $u=\nu_0$，$n,a,h,\ell,\Delta,\Phi$ 取 VI (8.1)，并沿用 VI (8.5)、(13.1)的源函数
+
+$$
+\begin{gathered}
+k=\frac an,\qquad q=\frac{5\Delta}{n\Phi},\qquad b=\frac{120h}{\Phi},
+\qquad \beta=\frac{120}{n},\\
+V=10u^2+19u-36,\qquad X=20u^2+34u-70,\\
+\gamma=b\left[1+(1+2n)\left(\frac Vh-\frac{20}{n}\right)\right],\\
+\zeta=\frac{b[1+(n+a)(X/h-35/n)]-210q}{30}.
+\end{gathered}
+\tag{7.1}
+$$
+
+对有序源对 $\mathbf P=(P_1,P_2)\in(\mathscr S^\times)^2$，当 $D_q(\mathbf P)=q_1-q_2\ne0$ 时，置
+
+$$
+\begin{gathered}
+D_k(\mathbf P)=k_2-k_1,\qquad
+\Xi(\mathbf P)=\frac{D_k(\mathbf P)}{D_q(\mathbf P)},\\
+\Theta(\mathbf P)=k_1+\Xi(\mathbf P)q_1,\qquad
+\pi(\mathbf P)=(\Theta(\mathbf P),\Xi(\mathbf P)).
+\end{gathered}
+\tag{7.2}
+$$
+
+这些量是源函数；它们不表示在一条轨迹上同时取得互择动作的响应。
+
+**定理 7.2（全正源三元 J 签名单射）。** 映射
+
+$$
+P\longmapsto\bigl(k(P),q(P),\zeta(P)\bigr)
+\quad\text{在整个 }\mathscr S^\times\text{ 上单射}.
+\tag{7.3}
+$$
+
+不另加极层符号条件，也不截断正来源。
+
+证明。先从既有正性得到符号，再用源提升和全区间单调性分离来源。定理6.1的正多项式 $Q(s,t)$ 给出源恒等式
+
+$$
+5\zeta-53=\frac{Q(s,t)}{n(1+st)^4\Phi},\qquad Q(s,t)>0.
+\tag{7.4}
+$$
+
+这可直接由(7.1)展开得到；也可在定理6.1中取 $\xi=1$、$\theta=k+q$、$d=120h/\Phi$，由 VI 定理8.2构成合法父世界，再消去共同非零因子。因此 $\zeta\ne53/5$，且 $\operatorname{sgn}(\zeta-53/5)=\operatorname{sgn}\Phi$。等 $\zeta$ 自动给同一极层符号。
+
+固定两个具有相同 $(k,q,\zeta)$ 的来源。因 $a,n>0$，共同 $k>0$。仿照 VI 定理23.1的源提升，置
+
+$$
+x=\frac1\Phi(nu^2,nu,n,h)^{\mathsf T},\qquad
+\mathsf C(k)=
+\begin{pmatrix}
+3k+8&3k+18&-10k-30&-23\\
+5k&15k&-20k&5-20k\\
+80+45k&136+31k&-280-140k&-171
+\end{pmatrix}.
+\tag{7.5}
+$$
+
+由 $a=kn$ 和(7.1)，
+
+$$
+\mathsf C(k)x=(1,q,\zeta)^{\mathsf T}.
+\tag{7.6}
+$$
+
+前三列的行列式是 $160k(k+1)^2\ne0$，且
+
+$$
+\begin{gathered}
+v(k)=(55k^2-120,\ 15k^2+4k-20,\ 21k^2-44,\ 4k(k+1))^{\mathsf T},\\
+\mathsf C(k)v(k)=0.
+\end{gathered}
+\tag{7.7}
+$$
+
+所以两个提升之差为 $x^{(1)}-x^{(2)}=\lambda v(k)$。若 $\lambda=0$，由
+
+$$
+u=x_1/x_2,\qquad \Phi=u(u+1)/x_3,\qquad
+n=\Phi x_2,\qquad a=kn
+\tag{7.8}
+$$
+
+及 VI (20.11)唯一恢复同一个来源。这里分量从 $0$ 编号，$x_2=n/\Phi$、$x_3=h/\Phi$ 都非零。只须排除 $\lambda\ne0$。
+
+写 $c_i=n_i/\Phi_i$；(7.4)给 $c_1c_2>0$。比较提升前三分量形成的二阶行列式，得到
+
+$$
+\begin{gathered}
+2\lambda^2T(k)=-c_1c_2(u_1-u_2)^2\le0,\\
+T(k)=465k^4-60k^3-2178k^2+80k+2440,\qquad
+v_0v_2-v_1^2=2T(k).
+\end{gathered}
+\tag{7.9}
+$$
+
+对 $y\ge0$ 有以下有理系数恒等式：
+
+$$
+\begin{aligned}
+(1+y)^4T\left(\frac{4y}{3(1+y)}\right)
+ &=2440+\frac{29600}{3}y+11088y^2
+   +\frac{19744}{9}y^3+\frac{56}{27}y^4,\\
+T\left(\frac95+y\right)
+ &=\frac{7343}{125}+\frac{62588}{25}y
+   +\frac{32688}{5}y^2+3288y^3+465y^4.
+\end{aligned}
+\tag{7.10}
+$$
+
+各系数严格正；第一式的最高次系数还给 $T(4/3)=56/27>0$。故(7.9)迫使 $4/3<k<9/5$，包括两个外侧端点的排除。
+
+在 $4/3\le k\le9/5$，原等式 $a=kn$ 等价于
+
+$$
+\begin{gathered}
+t=\frac{(k-1)+(2k-1)s}{2-k+(3-k)s},\qquad s>0,\\
+B=(2k-1)s^2+2s+2-k,\qquad
+U=(k+2)s^2+2ks+k-1,\qquad N=5s^2+5s+1,\\
+u=U/B,\qquad n=N/B.
+\end{gathered}
+\tag{7.11}
+$$
+
+显示的 $t$ 分母、分子以及 $B$ 都严格正；每个 $s>0$ 给唯一正来源，全部固定 $k$ 的正来源都在此图内。$U/B$ 是三个数
+
+$$
+\frac{k+2}{2k-1},\qquad k,\qquad \frac{k-1}{2-k}
+\tag{7.12}
+$$
+
+以正权 $(2k-1)s^2,2s,2-k$ 作的加权平均。于是 $4/3\le k\le3/2$ 时 $1/2\le u\le2$；$3/2\le k\le5/3$ 时 $1\le u\le2$。
+
+向量 $(1,-u_1-u_2,u_1u_2)$ 消去两个 $c_i(u_i^2,u_i,1)$，故 $\lambda\ne0$ 还迫使
+
+$$
+C_k(u_1,u_2)=0,\qquad
+C_k(r,z)=v_0(k)-(r+z)v_1(k)+rzv_2(k).
+\tag{7.13}
+$$
+
+这个条件包括 $u_1=u_2$。$C_k$ 对 $r,z$ 双仿射。以下给相应矩形的全部不同角值：
+
+$$
+\begin{array}{c|c|c|c}
+k\text{ 区间}&(r,z)&C_k(r,z)&\text{右端点值}\\ \hline
+[4/3,3/2]&(1/2,1/2)&181k^2/4-4k-111&-243/16\\
+ &(1/2,2),(2,1/2)&77k^2/2-10k-114&-339/8\\
+ &(2,2)&79k^2-16k-216&-249/4\\ \hline
+[3/2,5/3]&(1,1)&46k^2-8k-124&-86/9\\
+ &(1,2),(2,1)&52k^2-12k-148&-212/9\\
+ &(2,2)&79k^2-16k-216&-209/9
+\end{array}
+\tag{7.14}
+$$
+
+各行多项式在对应闭区间的导数严格正，故角值均严格负。双仿射插值的非负权之和为一，给整个相应闭矩形上 $C_k<0$，与(7.13)矛盾。这排除了 $4/3\le k\le5/3$。
+
+余下闭段 $5/3\le k\le9/5$ 使用另一种分离，以覆盖源函数的极点。沿(7.11)置
+
+$$
+\begin{aligned}
+H&=U(U+B),\\
+F&=N\big[(3k+8)U^2+(3k+18)UB-(10k+30)B^2\big]-23HB,\\
+Z&=N\big[(80+45k)U^2+(136+31k)UB-(280+140k)B^2\big]-171HB,\\
+W&=5Z-53F,\qquad
+\Pi=\frac{Z_sF-ZF_s}{2}.
+\end{aligned}
+\tag{7.15}
+$$
+
+下标 $s$ 表示固定 $k$ 的导数。代入源定义给
+
+$$
+\Phi=F/B^3,\qquad h=H/B^2,\qquad \zeta=Z/F\quad(F\ne0).
+\tag{7.16}
+$$
+
+为给出整个闭段的有理正性，定义系数 $A_{ij},B_{ij}$ 如下：
+
+$$
+\begin{aligned}
+(1+y)^6\Pi\left(\frac{5/3+(9/5)y}{1+y},s\right)
+ &=\sum_{i=0}^{10}\sum_{j=0}^6 A_{ij}s^iy^j,\\
+(1+y)^3W\left(\frac{5/3+(9/5)y}{1+y},s\right)
+ &=\sum_{i=0}^{6}\sum_{j=0}^3 B_{ij}s^iy^j.
+\end{aligned}
+\tag{7.17}
+$$
+
+多项式的变量顺序在此为 $(k,s)$。由(7.15)展开，$\deg_s\Pi=10,\deg_k\Pi=6$，$\deg_sW=6,\deg_kW=3$。全部77个 $A_{ij}$ 和28个 $B_{ij}$ 严格正；各列的精确最小值为
+
+$$
+\begin{array}{c|c|c}
+j&\min_{0\le i\le10}A_{ij}&\min_{0\le i\le6}B_{ij}\\ \hline
+0&41884/729&1252/27\\
+1&606356/1215&2404/15\\
+2&3301816/2025&13756/75\\
+3&9013976/3375&1732/25\\
+4&4418036/1875&\text{无此列}\\
+5&2009476/1875&\text{无此列}\\
+6&3083216/15625&\text{无此列}
+\end{array}
+\tag{7.18}
+$$
+
+这些有理数由显示的多项式定义唯一决定。具体地，若 $p_{ir}=[s^ik^r]\Pi$，则
+
+$$
+A_{ij}=\sum_{r=0}^{6}p_{ir}\sum_{e=0}^{r}
+ {r\choose e}\left(\frac53\right)^{r-e}
+ \left(\frac95\right)^e {6-r\choose j-e};
+\tag{7.19}
+$$
+
+其中超出 $0\le j-e\le6-r$ 的二项式为零。将 $p_{ir},6$ 换成 $[s^ik^r]W,3$ 即给 $B_{ij}$；逐项有理乘加给(7.18)。对 $5/3\le k<9/5$ 取 $y=(k-5/3)/(9/5-k)\ge0$，(7.17)—(7.18)给 $\Pi>0,W>0$。在 $k=9/5$，分别取(7.17)的 $y^6$ 和 $y^3$ 系数，仍得两个具有严格正系数的 $s$ 多项式；$k=5/3$ 则取常数列。故两个端点也有相同严格正性。
+
+于是函数
+
+$$
+\mathcal R_k(s)=\frac{F(k,s)}{W(k,s)},\qquad
+\frac{d\mathcal R_k}{ds}=-\frac{10\Pi(k,s)}{W(k,s)^2}<0
+\quad(s>0)
+\tag{7.20}
+$$
+
+在固定 $k$ 的整个正半轴上有定义且严格递减。此式允许 $F=0$，在每个 $\Phi=0$ 穿越点仍然光滑；在那里 $W=5Z>0$，没有把极点两侧分割成互不比较的区间。在 $F\ne0$ 的原域内，
+
+$$
+\mathcal R_k(s)=\frac1{5\zeta-53}.
+\tag{7.21}
+$$
+
+所以等 $k,\zeta$ 已在该闭段迫使等 $s$，(7.11)再给等 $t$，即同一个来源。
+
+(7.10)、(7.14)与(7.20)覆盖全部 $k>0$。来源非紧方向保留在整个 $s>0$ 的单调区间内，无需增加边界来源或有限截断；极点只用于延拓比较函数，不扩大(7.3)的 $\Phi\ne0$ 定义域。因此(7.3)在整个指定源域成立。∎
+
+**定理 7.3（非零偏离的全部等 JJ 对及实际子纤维限制）。** 保持定义1.1的全部世界、原时钟、立即读数、单轨迹和含早停的策略，并令 $\xi\ne0$。若两个不同完整世界 $W_i=(P_i,g_i,d_i)\in\mathcal F(H^-_{\theta,\xi})$ 有相等的实际时钟七 $JJ$ 响应，则
+
+$$
+\begin{gathered}
+P_1\ne P_2,\qquad \Phi_1\Phi_2>0,\qquad \zeta_1=\zeta_2,\\
+q_1\ne q_2,\qquad k_1\ne k_2,\qquad
+(\theta,\xi)=\pi(P_1,P_2),\qquad
+d_i=\frac{120h_i\xi}{\Phi_i}.
+\end{gathered}
+\tag{7.22}
+$$
+
+反向，任意满足 $\zeta_1=\zeta_2$、$D_qD_k\ne0$ 的有序源对 $\mathbf P\in(\mathscr S^\times)^2$，由(7.2)、(7.22)及 VI (8.2)的整个四节点插值唯一构成两个不同完整世界。它们属于同一个非零偏离父 $H^-_{\Theta,\Xi}$，并有相等的时钟七 $JJ$ 响应。它们进一步属于同一个实际第六 $J$ 子纤维，当且仅当
+
+$$
+(\beta_1-\beta_2)D_q+(\gamma_1-\gamma_2)D_k=0.
+\tag{7.23}
+$$
+
+证明。无除数父方程给 $d_i\Phi_i=120h_i\xi\ne0$，因此来源在 $\mathscr S^\times$ 内，且
+
+$$
+\begin{gathered}
+\theta=k_i+\xi q_i,\qquad d_i=120h_i\xi/\Phi_i,\\
+r_{JJ}^{(7)}(W_i)=210(1+\theta)+30\xi\zeta_i,\\
+r_J^{(6)}(W_i)=240+\beta_i+\xi\gamma_i.
+\end{gathered}
+\tag{7.24}
+$$
+
+这里复用 VI 定理8.2、13.2。若来源相同，漂移相同，原四节点插值也相同，完整世界便相同；故 $P_1\ne P_2$。共同的末读数与 $\xi\ne0$ 给 $\zeta_1=\zeta_2$，(7.4)再给 $\Phi_1\Phi_2>0$。若 $q_1=q_2$，共同父方程给 $k_1=k_2$，定理7.2遂给同一个来源，矛盾。于是 $D_q\ne0$；两父方程相减还给 $D_k=\xi D_q\ne0$，唯一解正是(7.2)。这穷尽并排除了零 $q$ 差分支，而不是预设它不存在。
+
+反向，$D_qD_k\ne0$ 给 $\Xi\ne0$ 和不同来源。按显示公式有 $\Theta=k_i+\Xi q_i$，从而
+
+$$
+d_i\Phi_i=120h_i\Xi,\qquad
+d_i\Delta_i=24h_i(\Theta n_i-a_i).
+\tag{7.25}
+$$
+
+VI 定理8.2使全部父读数成立，等 $\zeta$ 使(7.24)的末读数相同。时钟零与三读数分别是零与六，故四节点增益不能恒零。正向与反向构造互逆，且在预先固定的父上只须再要求 $\pi(\mathbf P)=(\theta,\xi)$。
+
+实际第六 $J$ 读数相等还要求 $\beta_1-\beta_2+\Xi(\gamma_1-\gamma_2)=0$，乘以已经证明非零的 $D_q$ 恰得(7.23)。这里没有除 $\gamma_1-\gamma_2$：它为零时，条件恰为 $\beta_1=\beta_2$；它非零时保留原等式。末 $JJ$ 相等本身不供应(7.23)。因此整个实际 $JJ$ 碰撞对对应于这个附加条件成立的源对，而非所有等末读数对。
+
+全证明只除正的 $h,n$、已证明非零的 $\Phi,\xi,D_q$；$\Delta=0$、某个 $q_i=0$、任意常漂移符号、全部非零且次数至多三的实增益、降次、采样根及重根都保留。源定理不要求读取额外端口；它不把 $(k,q,\zeta)$ 当作三个已实测读数。∎
+
+**命题 7.4（独立 MM 与 JJ 锚的共同父关系）。** 令 $\mathfrak A_M$ 为 VI 定理23.2中的有序源对域，即 $\mu_1=\mu_2,\eta_1=\eta_2,D_qD_k\ne0$ 的 $(\mathscr S^\times)^2$ 中的源对。令
+
+$$
+\mathfrak A_J=\{\mathbf P\in(\mathscr S^\times)^2:
+\zeta_1=\zeta_2,\ D_qD_k\ne0,\ \text{(7.23)成立}\}.
+\tag{7.26}
+$$
+
+以 VI (14.16)、(24.30)的原失败关联 $\mathcal P_M,\mathcal P_J$ 为准，则
+
+$$
+(\mathcal P_M\cap\mathcal P_J)\cap\{\xi\ne0\}
+\ \subseteq\ \pi(\mathfrak A_M)\cap\pi(\mathfrak A_J).
+\tag{7.27}
+$$
+
+具体地，给定相互独立的 $\mathbf A\in\mathfrak A_M$ 与 $\mathbf B\in\mathfrak A_J$，它们的锚定世界对属于同一个父，当且仅当
+
+$$
+\begin{aligned}
+D_k(\mathbf A)D_q(\mathbf B)-D_k(\mathbf B)D_q(\mathbf A)&=0,\\
+(k_{A,1}-k_{B,1})D_q(\mathbf A)
+ +D_k(\mathbf A)(q_{A,1}-q_{B,1})&=0.
+\end{aligned}
+\tag{7.28}
+$$
+
+这些只是两个必要锚的共同父判据；它们不判定原交集非空。
+
+证明。VI 定理23.2给 $\mathfrak A_M$ 与所有非零偏离的实际 $MM$ 碰撞对的对应；定理7.3加上(7.23)给 $\mathfrak A_J$ 与所有非零偏离的实际 $JJ$ 碰撞对的对应。两对应各自唯一恢复父参数，故两锚共享父等价于 $\pi(\mathbf A)=\pi(\mathbf B)$。第一条(7.28)恰为 $\Xi(\mathbf A)=\Xi(\mathbf B)$；在此条件下，第二条恰为 $\Theta(\mathbf A)=\Theta(\mathbf B)$。各 $D_q$ 均非零，故没有乘出额外分支。
+
+若原 $L_2(K,H^-_{\theta,\xi})$ 成立，定理6.1(6.9)供应四个独立碰撞对：$MM,MJ$ 对都在同一个实际第六 $M$ 子纤维 $K_M$，共享该臂自己的 $w_M$；$JM,JJ$ 对都在同一个实际第六 $J$ 子纤维 $K_J$，共享该臂自己的 $w_J$。取其中的 $MM$ 对得 $\mathbf A$，取其中的 $JJ$ 对得 $\mathbf B$，于是二者都重建给定的 $(\theta,\xi)$，得到(7.27)—(7.28)。两臂不必有相等的第六读数，四对之间可重合也可不同；没有把 $\mathbf A$ 的源约束施加于 $JM$ 对，或把 $\mathbf B$ 的源约束施加于 $MJ$ 对。
+
+反向，只有(7.28)的两个锚，仍缺共享同一 $w_M$ 的末 $J$ 碰撞对和共享同一 $w_J$ 的末 $M$ 碰撞对。即使两个锚在同父实现，也不能省略这两项独立存在量词。VI 第12、14章的单臂存在、VI 定理25.3的既有父矩形排除、本卷定理4.1的小偏离恢复带和定理5.2的子纤维有限性，均按原范围保留；它们不由(7.27)升级为两个锚像全局不交或完整交集非空的结论。
+
+全正源三元签名单射及其实际碰撞对应属于本仓推导（repo-derived），其中源提升复用 VI 定理23.1，实际响应复用 VI 定理8.2、13.2，符号正性复用本卷定理6.1。行列式、双仿射插值、正系数多项式和严格单调函数的单射性是成熟中间工具；此处不申领外部优先权。
+
+结论处于精确实数合同内，不供应任意实参数的有限位表示、有效相等判定、稳定反解或误差界。源映射的单射性不意味着单条轨迹能取得整个签名。字面历史始终为 $MMJMM$；完整 $\mathcal P_M\cap\mathcal P_J$ 的空性或非空性、两个混合末动作对的补全、与更早共同祖先的接合、原根八读／九读义务和原九读上界仍未由这些必要关系解决。∎
+
+## 追加锚（本行以下为增补区）
