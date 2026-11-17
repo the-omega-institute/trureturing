@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Periodic;
 
 internal sealed class EulerOddPrimePowerDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S1/Recurrence/Periodic/EulerOddPrimePower.";
+    private const string Prefix = "D5/S1/Recurrence/Periodic/EulerDivisorPropagation.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Corrected Euler coefficients propagate zeros at every positive odd-prime-power index.", H("Odd-prime-power zero transfer"), Blocks(
             Paragraph(Text("Write q=p raised to r+1, and epsilon=(-1) raised to b times floor(p/2). All parameters are natural; b is zero or one. Residue arithmetic is in ZMod q. The deleted frequencies form an exact finite bijection. The correction factor is a unit at every positive index, including indices smaller than r+1. This reconstructs a consequence of Young's prior Kummer congruence, without a p-adic premise.")),

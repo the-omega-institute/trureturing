@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Periodic;
 
 internal sealed class EulerSignedFrequencyDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S1/Recurrence/Periodic/EulerSignedFrequency.";
+    private const string Prefix = "D5/S1/Recurrence/Periodic/EulerUpDownSource.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Integral Euler derivatives admit finite odd-length frequency formulas.", H("Integral Euler frequency identities"), Blocks(
             Paragraph(Text("All indices and exponents are natural numbers. A is integer-valued; F and exp are rational formal power series. C embeds constants. The residue function casts an integer or natural value to ZMod of its first argument. All arithmetic inside a residue identity is in that ring. Young supplies the prior ordinary congruence component; the finite derivation here proves the integral identities directly.")),
