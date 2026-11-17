@@ -26,17 +26,6 @@ def middleLattice (c : ℕ) (t w : ℤ) : Set Coordinate :=
 def literalBox (X Y : ℝ) : Set Coordinate :=
   {z | |(z.1 : ℝ)| ≤ X ∧ |(z.2 : ℝ)| ≤ Y}
 
-private theorem middleLattice_add {c : ℕ} {t w : ℤ} {z z' : Coordinate}
-    (hz : z ∈ middleLattice c t w) (hz' : z' ∈ middleLattice c t w) :
-    z + z' ∈ middleLattice c t w := by
-  change (c : ℤ) ∣ w * (z.2 + z'.2) - t * (z.1 + z'.1)
-  convert dvd_add hz hz' using 1 <;> ring
-
-private theorem middleLattice_smul {c : ℕ} {t w n : ℤ} {z : Coordinate}
-    (hz : z ∈ middleLattice c t w) : n • z ∈ middleLattice c t w := by
-  change (c : ℤ) ∣ w * (n * z.2) - t * (n * z.1)
-  convert dvd_mul_of_dvd_right hz n using 1 <;> ring
-
 /-- The anchor always belongs to the same literal box section as the endpoints. -/
 theorem anchor_mem_middleLattice (c : ℕ) (t w : ℤ) :
     (-w, -t) ∈ middleLattice c t w := by

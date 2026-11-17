@@ -7,7 +7,7 @@ internal sealed class PascadiOriginalLatticeDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/pascadi2025nonabelianamplification");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The literal middle letters define an index-c congruence lattice. A shortest vector extends by Bezout to an oriented basis; centering the second vector gives bounded integer coordinates for every point in the original endpoint box. Dyadic scales supply the J1,J2 scale relations and the actual endpoint coefficient and pencil-height bounds. This is the long-chart lattice bridge, not the original six-tuple count.",
+        "The literal middle letters define an index-c congruence lattice. A shortest vector extends by Bezout to an oriented basis; centering the second vector gives bounded integer coordinates for every point of this lattice lying in the original endpoint box. Dyadic scales supply the J1,J2 scale relations and the actual endpoint coefficient and pencil-height bounds. This is the long-chart lattice bridge, not the original six-tuple count.",
         H("Original prime-cube lattice"),
         Blocks(
             Paragraph(Text("For unit w modulo c, the physical endpoint lattice consists of (u,z) with w z - t u divisible by c. The anchor (-w,-t) belongs to this lattice and to the same literal box as the endpoints. The metric and reduction estimates assume c>0, X>0 and Y>0. The chosen metric has squared norm (Y/X)u^2+(X/Y)z^2 and determinant one; no fixed input unit is absorbed into an interval.")),
@@ -44,7 +44,7 @@ internal sealed class PascadiOriginalLatticeDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("pascadi-original-lattice-coordinate-bound"),
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiOriginalLattice.coordinate_bound"),
                 H("Literal endpoint coordinate bound"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("Each point in the original X by Y box has integral reduced coordinates bounded by J1 and J2."))), DescribeRole.Theorem),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("Each point of middleLattice c t w lying in the original X by Y box admits integral reduced coordinates bounded by J1 and J2 under the stated positive and dyadic hypotheses."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("pascadi-original-lattice-long-scales"),
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiOriginalLattice.long_scale_bounds"),
                 H("Long-chart scale relations"), StatementSource.WithoutFormula(),
