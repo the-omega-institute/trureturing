@@ -30,7 +30,7 @@ prime-power modulus greater than two. The second excludes only k=3.
 
 This is the complete Conjecture 2 in A386381 revision 27. The source and
 literature boundaries are in
-[the Library note](../Library/RecurrenceComposition/kurkov2025a386381c2.md).
+[the Library note](../Library/RecurrenceAlgebraic/kurkov2025a386381c2.md).
 The preregistration is
 [#31280](https://github.com/the-omega-institute/trureturing/issues/31280).
 The intended resolution basis is the preregistered external open question;
