@@ -3057,3 +3057,219 @@ $$
 白话：不用再给每颗小球都装三把标定尺。先钉有限颗独立珠子，只给经过这些珠子的小球装尺；整个世界仍保留“中点相同，合起来的读数就相同”。这些球束先在一张射影坐标片上织出一把正常的尺。别的小球只要擦过这张片，就有一小片读数不能乱跳；中点规则于是把整颗小球的刻度锁直，连坐标片漏掉的边界也接回来。在标准复 $d$ 维世界，$d-1$ 颗独立锚已经足够，但还没证明这是最少。把这套有限锚规则放在完整三份世界，再保留三点面预算、全有限复合和过程条件，就接回同一套态、Born概率、测量、张量与量子演化；省下的是其余球上的非中点标定，不是把全域相容性藏掉。
 
 ## 追加锚（本行以下为增补区）
+
+## 333. 有限方向接通全域中点商，标定只留有限颗球
+
+**定义 333.1（标准纯投影的整数中点群）。** 令 $d\ge2$，$H=\operatorname{Herm}_d(\mathbb C)$、$H_0=\ker\operatorname{Tr}$、$D=d^2$，$\mathcal P_d$ 为全部迹一秩一正交投影。取Hilbert–Schmidt内积 $\langle X,Y\rangle=\operatorname{Tr}(XY)$，并定义
+
+$$
+F_{\mathbb Z}=\mathbb Z^{(\mathcal P_d)},\quad
+\beta_{\mathbb Z}(\delta_P)=P,\quad
+A_{\mathbb Z}=\operatorname{span}_{\mathbb Z}
+\{\delta_P+\delta_Q-\delta_R-\delta_S:P+Q=R+S\}.
+\tag{333.1}
+$$
+
+所有张成均为有限代数张成。等和四纯投影都支撑于共同和的至多二维支持；秩一退化关系平凡，其余正是同一实际三球中的未加权中点关系。本章不对消灭子或未知读数输入有界性、可测性或连续性。
+
+**引理 333.2（有限辅助点给全域Gram无穷小刚性）。** 存在固定有限 $\mathcal A\subset\mathcal P_d$，$|\mathcal A|\le D(D+1)/2$，使每个包含 $\mathcal A$ 的有序纯投影组 $Z=(P_1,\ldots,P_M)$ 满足
+
+$$
+\ker dG_Z
+=\{(i[B,P_1],\ldots,i[B,P_M]):B\in H\},\qquad
+G(Z)=(\operatorname{Tr}(P_iP_j))_{i<j}.
+\tag{333.2}
+$$
+
+证明。令 $\mathscr Q$ 为齐次二次实多项式在 $\mathcal P_d$ 上的限制空间，维数至多 $D(D+1)/2$。因 $\operatorname{Tr}P=1$，次数至多二的多项式限制也都在其中。点评价张成 $\mathscr Q^*$；否则存在非零限制函数在所有纯点为零，矛盾。从中选评价基，得到 $\mathcal A$：次数至多二的多项式只要在这些点为零，就在全部纯点为零。一次函数也被决定，故 $\mathcal A$ 实张成 $H$。
+
+取 $Y=(Y_i)\in\ker dG_Z$。纯投影的切向条件及Gram条件给
+
+$$
+P_iY_i+Y_iP_i=Y_i,\qquad
+\langle Y_i,P_j\rangle+\langle P_i,Y_j\rangle=0\quad(\text{全部 }i,j).
+\tag{333.3}
+$$
+
+对角情形由切向条件的 $\langle P_i,Y_i\rangle=0$ 支付。从辅助点中取 $H$ 的一组实基，在基上规定 $L(P_i)=Y_i$。基间的(333.3)使 $L$ 斜伴随；任意指标与基指标的(333.3)再给 $Y_i=L(P_i)$。矩阵值多项式 $PL(P)+L(P)P-L(P)$ 次数至多二，在全部辅助点为零，因而在全部纯投影为零。所以线性向量场 $L$ 处处切于紧流形 $\mathcal P_d$，其完整流 $e^{tL}$ 对正负时间都保持该流形。斜伴随性又使其保持全部转移概率。
+
+准确使用Geher的Wigner定理[Q333W]：在复空间全部纯射线上保持所有转移概率的映射由线性或反线性等距实现；有限维及双射使其为酉或反酉。纯投影实张成 $H$，故此处的实线性流是这些实现的共同共轭作用。该作用群的恒等连通分支为 $\operatorname{Ad}U(d)$：酉分支紧且连通，反酉分支为它与转置的陪集，两者不交；不交可由二维支持上Pauli三轴的转置反向检出。因此从恒等出发的流留在酉分支，其Lie代数给 $L(X)=i[B,X]$。这里没有选取全局连续相位的酉实现，也没有预设任何原物理过程。反向包含直接由共同共轭保持Gram读数得到。$\square$
+
+**定理 333.3（同加同减有限辅助点后的有限二元改写）。** 若 $\sum_{i=1}^mP_i=\sum_{i=1}^mQ_i$，则追加同一组333.2的辅助点后，两组有序纯投影可经有限次球内同中点改写相连，且端点处辅助点逐项恢复。因而
+
+$$
+\boxed{\ \ker\beta_{\mathbb Z}=A_{\mathbb Z},\qquad
+\operatorname{im}\beta_{\mathbb Z}=\{X\in H:\operatorname{Tr}X\in\mathbb Z\}.\ }
+\tag{333.4}
+$$
+
+证明。在乘积纯投影流形 $\mathcal P_d^M$ 上取标准秩一轨道辛形式，约定 $P\mapsto\operatorname{Tr}(BP)$ 的Hamilton向量场为 $i[B,P]$。共同酉共轭的动量映射为 $\mu(Z)=\sum_iP_i$，像位于迹为 $M$ 的超平面。这些是成熟的轨道公式，准确出处为Flaschka–Millson的§§2.1—2.2[Q333F]。对 $g_{ij}=\operatorname{Tr}(P_iP_j)$，直接计算得两个非零分量及完整流
+
+$$
+\begin{aligned}
+(X_{ij})_i&=i[P_j,P_i],& (X_{ij})_j&=i[P_i,P_j],\\
+P_i(t)&=e^{itS_{ij}}P_ie^{-itS_{ij}},&
+P_j(t)&=e^{itS_{ij}}P_je^{-itS_{ij}},\qquad S_{ij}=P_i+P_j.
+\end{aligned}
+\tag{333.5}
+$$
+
+其余项不动；两项总和与二维支持恒定，所以每个有限时间步都是一条允许的二元中点改写。辛线性代数、333.2及动量映射恒等式依次给
+
+$$
+\operatorname{span}\{X_{ij}(Z)\}
+=(\ker dG_Z)^\omega
+=\bigl(T_Z(U(d)\cdot Z)\bigr)^\omega
+=\ker d\mu_Z.
+\tag{333.6}
+$$
+
+若 $Z$ 包含 $\mathcal A$，共同对易子只有标量，因为 $\mathcal A$ 张成 $H$。$d\mu_Z$ 的余核由这些对易子模标量给出，故它满射到 $H_0$。固定总和纤维在 $Z$ 附近是光滑流形。从(333.6)选一组切向量基，按顺序复合对应的短时间二元流，其参数映射在零点导数可逆。逆函数定理给固定和纤维中的一个相对开邻域，其中每点都由有限次二元流到达。
+
+现记共同总和为 $S$，并令 $C_0=\{(R_1,\ldots,R_m)\in\mathcal P_d^m:\sum_iR_i=S\}$。各项都支撑于 $\operatorname{supp}S$；在该支持上 $S$ 正定。Needham–Shonkwiler的Main Theorem[Q333N]说，给定任意复frame operator及任意可实现的列平方范数，完整frame空间路径连通。应用于 $S$ 和全部列范数一，再以 $v_i\mapsto P_{v_i}$ 连续满射，得到 $C_0$ 连通；秩一支持的退化情形也直接成立。
+
+在扩大的固定和纤维中，以“有限次(333.5)可达”定义等价关系，考察 $C=C_0\times\{\mathcal A\}$。$C$ 的每一点均含同一辅助组，所以上述局部结论使每个可达类与 $C$ 的交相对开。这些交将连通的 $C$ 分为不交开集，只能有一个非空类。故两端点有限可达，辅助点在终点恢复。连通性只用来证明有限可达类唯一，没有对未知函数取极限，也没有把关系空间换成闭包。
+
+对任意整数零关系，取迹使正负系数总数相等，展开重复项后应用上述结论；辅助项在形式群中相消，得到(333.4)的核等式。像的包含方向由迹立即给出。反向，对正交单位向量 $e,f$ 和任意 $a\in\mathbb R$，取正整数 $q\ge|a|$，置 $s=a/q$ 及
+
+$$
+u=\sqrt{\frac{1+s}{2}}e+\sqrt{\frac{1-s}{2}}f,\qquad
+v=\sqrt{\frac{1-s}{2}}e+\sqrt{\frac{1+s}{2}}f.
+\tag{333.7}
+$$
+
+直接展开得 $a(P_e-P_f)=q(P_u-P_v)$。谱分解将每个迹零Hermitian矩阵写成有限个这种项，故纯投影差整生成 $H_0$；再加任一固定纯投影的整数倍即得所述像。$\square$
+
+**推论 333.4（全部有限复维数的准确中点商）。** 对标准模型的 $F_0=\mathbb R^{(\mathcal P_d)}$ 及全域中点关系空间 $\mathcal A_{\rm loc}$，有
+
+$$
+\boxed{\quad
+F_{\mathbb Z}/A_{\mathbb Z}\cong\mathbb Z\oplus(H_0,+),\qquad
+F_0/\mathcal A_{\rm loc}\cong
+\mathbb R\oplus(\mathbb R\otimes_{\mathbb Q}H_0),\qquad
+[\delta_P]\longmapsto(1,1\otimes(P-I/d)).
+\quad}
+\tag{333.8}
+$$
+
+证明。(333.4)的像以 $X\mapsto(\operatorname{Tr}X,X-\operatorname{Tr}(X)I/d)$ 分裂。对整数商作 $\mathbb R$ 标量扩张；$H_0$ 是 $\mathbb Q$ 向量空间，故 $\mathbb R\otimes_{\mathbb Z}H_0=\mathbb R\otimes_{\mathbb Q}H_0$，得到第二式。原准备映射在此商上为 $(c,z)\mapsto cI/d+\mu_0(z)$，其中 $\mu_0(a\otimes X)=aX$。这支付330—332所保留的一般高维中点兼容缺口，而非仅将逐qubit分类并排放置。$\square$
+
+**定理 333.5（有限直径标定与准确方向下界）。** 选有限条标准qubit直径 $D_j=P_j^+-P_j^-$。在各自实际球中取与半径 $d_j=D_j/2$ 正交等长的 $e_j$，中心为 $c_j=(P_j^++P_j^-)/2$，只用 $t\in W_*=(1/3,2/3)$，置
+
+$$
+Q_{j,t}^{\pm}=c_j+(2t-1)d_j\pm2\sqrt{t(1-t)}e_j,\qquad
+R_{j,t}=\delta_{Q_{j,t}^+}+\delta_{Q_{j,t}^-}
+ -2t\delta_{P_j^+}-2(1-t)\delta_{P_j^-}.
+\tag{333.9}
+$$
+
+这些点均在原球壳上；令 $U=\operatorname{span}_{\mathbb R}\{D_j\}$。则
+
+$$
+\mathcal A_{\rm loc}+\operatorname{span}_{\mathbb R}\{R_{j,t}:t\in W_*\}
+=\ker\beta_0
+\quad\Longleftrightarrow\quad U=H_0.
+\tag{333.10}
+$$
+
+因此在“固定直径、每径一个中央开区间的对称弦族”模板内，最少方向数恰为 $d^2-1$。
+
+证明。记 $k(a,X)=1\otimes aX-a\otimes X$。(333.8)中直接计算给 $[R_{j,t}]=2k(t,D_j)$。任取 $a\in\mathbb R$ 及正整数 $N>3|a|$，$t=1/2+a/(2N)\in W_*$，有
+
+$$
+k(a,D_j)=N[R_{j,t}],\qquad
+k(a,\textstyle\sum_j r_jD_j)
+=\sum_j\bigl(k(ar_j,D_j)-a\,k(r_j,D_j)\bigr).
+\tag{333.11}
+$$
+
+$\ker\mu_0$ 由全部 $k(a,X)$ 实张成：若 $\sum_i a_iX_i=0$，则 $\sum_i a_i\otimes X_i=-\sum_i k(a_i,X_i)$。故 $U=H_0$ 时生成整个核。
+
+反向若 $U\ne H_0$，取非零 $A\in H_0\cap U^\perp$，缩放使其某两特征值之差为一。取 $t_0=\sqrt2/3\in W_*$ 及 $\mathbb Q$ 线性 $\phi:\mathbb R\to\mathbb R$，满足 $\phi(1)=0,\phi(t_0)=1$。$h(P)=\phi(\operatorname{Tr}(AP))$ 消灭全部中点关系。已选直径两端的 $A$ 期望相等，加法性使 $h(R_{j,t})=0$。但在上述特征向量所张球的直径上，$h(R_{D,t_0})=2$。所以仍有原准备核内的关系不能生成。此为代数分离读数，不是proper效应。
+
+若所选方向恰为实基，一条 $m$ 支持零关系 $r=\sum_{i=1}^m a_i\delta_{P_i}$ 有显式计数：固定 $P_m$，展开 $P_i-P_m=\sum_jx_{ij}D_j$；取迹及基坐标得 $\sum_i a_i=0$、$\sum_{i<m}a_ix_{ij}=0$，因而
+
+$$
+[r]=\sum_{i<m,j}a_i k(x_{ij},D_j).
+\tag{333.12}
+$$
+
+逐项用(333.11)，至多 $(m-1)(d^2-1)$ 条非中点实例已足够，余项是有限中点组合。未给中点总步数的统一上界。$\square$
+
+**定义与命题 333.6（原域中的有限反足框与树形标定）。** 在328.1的实际L2原域中，称有限纯框 $p_1,\ldots,p_d$ 合格，是指每对都在其实际最小三球中反足，且在全部原纯点中不能再添一个同时反足的点。每个球的仿射椭球体确定自身中心及半径内积，故反足与正交均可内禀定义，不输入原效应或全域内积。对每对 $i<j$ 的实际球 $B_{ij}$，选两根相互正交且垂直于 $p_i-p_j$ 的赤道直径；再从框完全图取一棵生成树 $T$。所选标定方向为全部赤道两轴及全部树边的框点直径。用(333.9)的原球坐标写其校准族，并定义
+
+$$
+\mathcal E_{\mathfrak S}
+=\mathcal A_{\rm loc}
+ +\operatorname{span}_{\mathbb R}\{R_{j,t}:j\text{ 为所选方向},\ t\in W_*\}.
+\tag{333.13}
+$$
+
+有限的是 $\binom d2$ 颗球与 $d^2-1$ 个方向族；中点仍遍历全部原纯点与全部实际球，每族参数仍不可数。在L2与TF9下合格框存在，且对328.3的同一纯提升及准备映射有
+
+$$
+\boxed{\quad
+\mathcal E_{\mathfrak S}=\ker\widetilde\beta,\qquad
+\beta_0=\Psi\widetilde\beta,
+\qquad
+\ker\beta_0=\mathcal E_{\mathfrak S}\ \Longleftrightarrow\ \Psi\text{ 单射}.
+\quad}
+\tag{333.14}
+$$
+
+证明。先用328.3取得纯标签双射和各球忠实仿射提升，不要求 $\Psi$ 单射。反足框提升为正交纯框；若未满基，正交补的纯射线经双射返回原域可扩张它，违背极大性。反向从完整正交基取原像，给合格框存在。故此处 $d$ 确为该提升的整个复维数。
+
+提升后，每对赤道轴构成 $\operatorname{span}_{\mathbb R}\{E_{ij}+E_{ji},iE_{ij}-iE_{ji}\}$ 的基，不同对的空间直和；树边差构成对角迹零空间的一组基，可逐叶消去检验。因此所选 $2\binom d2+(d-1)=d^2-1$ 个方向组成 $H_0$ 实基。333.5识别提升准备核，得到(333.14)。从纯投影实张成 $H$ 与分解式推出最后等价；没有在提升前偷用原方向线性独立。
+
+自由选取的纯点为 $d$ 个框点及每对赤道两正端，共 $d^2$ 个；派生反足也计入时共 $2d^2-d$ 个固定点。横向半径可用同球已选轴，不需额外纯锚。改换弦的横向方向时，两条关系之差为同中点关系；更换树或赤道基时，提升后仍为 $H_0$ 实基，故生成相同原关系空间，不输入跨球相位同步。
+
+另外，若完整标定 $b$ 颗标准球，每球迹零方向空间仅三维，333.5给
+
+$$
+\left\lceil\frac{d^2-1}{3}\right\rceil\le b(d)\le\binom d2.
+\tag{333.15}
+$$
+
+故 $b(2)=1$、$b(3)=3$；$d\ge4$ 的准确值本章未定。全标定球可用331.2的三轴取代，所以下界同样作用于该球模板。不是任意重建公理的通用球数下界。
+
+作为332.2的进一步充分性结果，标准模型中任意单颗纯锚 $a$ 已有 $\mathcal D_{\{a\}}=\ker\beta_0$：对任意纯 $P\ne P_a$，$P-P_a$ 属于经过 $a$ 的二维支持球的迹零方向空间，而全部这些差实张成 $H_0$。沿各球的局部核施加标量平衡，333.8即给满核。这不把无限球束称为有限颗球；有限颗球由上述框与树另行支付。$\square$
+
+**定义与定理 333.7（有限球标定的完整量子候选）。** 完整保留331.5的强全有限原背景：同一有限实 $V$、各个有限 $N\ge0$ 的整个 $V^{\otimes N}$、闭尖生成原锥、严格正乘积单位、整个紧归一底、全部纯点、完整proper菜单及全部有限单位分解，分离联合空间的原乘积配对、规范重括号、正置换及其正逆、正单位丢弃，以及对任意有限分块、双方全部正泛函及全部相关输入的min/max界。只在整个 $K_3$ 要求实际L2、实际TF9，并将关系条件写成：存在333.6的有限合格结构 $\mathfrak S$，使
+
+$$
+\mathsf R_{\rm finite,3}:\qquad
+\ker\beta_{0,3}=\mathcal E_{\mathfrak S,3}.
+\tag{333.16}
+$$
+
+全部中点仍包括整个三份层的纠缠纯点；有限标定球也在整个原域选择。指定过程保留331.5的各自独立前件。该候选当且仅当存在同一个 $n\ge2$ 及 $\theta$，使每个有限 $N\ge0$ 都有
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{333.17}
+$$
+
+证明。先只用 $K_3$ 的L2与TF9取得328.3的提升，333.14使(333.16)恰好排除原混合空间的额外折叠。328.4给完整三份PSD，328.7给同一局部坐标的全部有限层传播。反向标准模型应用333.5—333.6；在整个三份层 $d=n^3$，故可用 $\binom{n^3}{2}$ 颗球、$n^6-1$ 个方向族。此处不得将 $d$ 换成单份的 $n$。
+
+| 新候选内的关系或明确保留的前件 | 推得的现有量子结构 |
+| --- | --- |
+| 整个 $K_3$ 的L2、TF9、全域中点及有限球标定满核 | 复射线、迹一密度矩阵、全部有限纠缠PSD锥 |
+| 完整proper菜单、线性评价与有限单位分解 | Born概率 $\operatorname{Tr}(E\rho)$、数学POVM及PVM |
+| 同一强全有限产品、重括号、置换与单位丢弃 | 通常复张量、因子交换与偏迹 |
+| 指定线性分支对全部有限相关旁观输入保正 | CP与有限Kraus表示 |
+| 分支及合计的全输入质量预算 | TNI／TP与数学仪器 |
+| 指定锐事件与整个yes支持逐点中性 | Lüders分支 $X\mapsto PXP$ |
+| 指定连续可逆保单位且全旁观保正的一参数群 | 连续酉共轭与生成元 |
+
+本章减少的是需要非中点标定的实际球及方向族：由有限锚的无限球束收缩到有限框的球网；同时给出一般高维未加权商与模板内准确方向数。全域中点、TF9、强复合背景及各项过程前件仍各自承重。333.3的等权整数配方确有同加同减辅助点后的非负有限改写；一般实系数关系只取得有符号线性证书，不据此声称设备可执行、一般非负路径或统一总长度界。TF9能否从更弱原关系推出、$d\ge4$ 的最少球数、钟与能量及 $\hbar$ 标定、指定Hamiltonian及无限极限保留为具体未决边界。
+
+文献归属：复frame固定算子及列范数空间的路径连通性[Q333N]、Wigner分类[Q333W]及秩一轨道动量公式[Q333F]为成熟输入；有限二次决定、逆函数定理、矩阵单位与树边基、标量扩张及Hamel分离均为成熟工具。repo-derived接合是有限辅助点的Gram刚性、二元流局部可达与frame连通性合成有限整群关系，再用准确商支付原有限球标定候选。330／331的局部分类与328的HVC及全有限传播保留既有归属。这里给条件纸面理论，不申领全球原创或Lean核验。$\square$
+
+白话：先保留整个世界的一条共同规矩：两对珠子的中点相同，就允许把这一对换成另一对。现在证明，两份等权珠串只要总和相同，临时借来同一小包辅助珠子，就能靠有限次两珠换位互相变成，最后把借来的珠子原样还回；不同小球之间不再藏着另一层加法接缝。剩下的只是“缩放箭头”和“把比例写在配方上”是否用同一把尺。为此摆一框两两反足的珠子，每对之间的小球放两根横尺，再沿一棵连接全框的树放纵尺；总共有限颗球、恰好 $d^2-1$ 个方向族，就把这两种比例写法锁成同一件事。把这张球网放在完整三份世界，保留三点预算与复合、过程条件，就接回态、Born概率、测量、张量和量子演化。球网有限，中点相容性仍遍及整个世界。
+
+[Q333N]: https://arxiv.org/pdf/1804.05899v2 "Tom Needham、Clayton Shonkwiler，Symplectic geometry and connectivity of spaces of frames，Main Theorem与§4.3：复frame固定算子及可实现列平方范数的完整空间路径连通。"
+[Q333W]: https://arxiv.org/pdf/1407.0527v1 "György Pál Geher，An elementary proof for the non-bijective version of Wigner's theorem，p.2 Wigner's theorem及式(1)：全部纯射线转移概率保持的线性或反线性等距实现。"
+[Q333F]: https://arxiv.org/pdf/math/0108191v2 "Hermann Flaschka、John Millson，Bending flows for sums of rank one matrices，§§2.1—2.2：秩一轨道辛形式、Hamilton方程及乘积共同共轭动量映射。"
+
+## 追加锚（本行以下为增补区）
