@@ -188,6 +188,7 @@
 -/
 
 
+import D5.S3.StatisticalMechanics.BoseSelectionFixedOrthogonalBaths
 import D5.S3.Weil.ZetaLinear.VonNeumann
 import D5.S3.Weil.ZetaLinear.PosIndex
 import D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceInvariantWeightsRefutation
@@ -369,20 +370,19 @@ private theorem diagonalized_eigenvalues {n : ℕ} (A P R : Matrix (Fin n) (Fin 
   have hchar : A.charpoly = ∏ i, (Polynomial.X - Polynomial.C (d i)) := by
     rw [Matrix.charpoly_eq_of_mul_eq_mul (Matrix.det_ne_zero_of_right_inverse hPR) hAP,
       Matrix.charpoly_diagonal]
-  have hroots : A.charpoly.roots = Multiset.map d Finset.univ.val := by
-    rw [hchar, Polynomial.roots_prod _ _ (by
-      simp [Finset.prod_ne_zero_iff, Polynomial.X_sub_C_ne_zero])]
-    simp
-  have hlist : List.ofFn hA.eigenvalues₀ = List.ofFn d := by
-    rw [← hA.sort_roots_charpoly_eq_eigenvalues₀]
-    simp_rw [hroots, Fin.univ_val_map, Multiset.map_coe, List.map_ofFn,
-      Function.comp_def, RCLike.re_to_real, Multiset.coe_sort]
-    convert! List.mergeSort_of_pairwise ?_
-    simp_rw [decide_eq_true_eq, ← List.sortedGE_iff_pairwise]
-    exact hd.sortedGE_ofFn
+  let e : Fin n → ℝ := fun i => d i.rev
+  have he : Monotone e := fun i j hij => hd (Fin.rev_le_rev.mpr hij)
+  have hc : A.charpoly = ∏ i, (Polynomial.X - Polynomial.C (RCLike.ofReal (e i) : ℝ)) := by
+    rw [hchar]
+    simpa only [e, RCLike.ofReal_real_eq_id, id_eq, Fin.revPerm_apply] using
+      (Equiv.prod_comp Fin.revPerm (fun i => Polynomial.X - Polynomial.C (d i))).symm
+  have hvals : D5.S3.StatisticalMechanics.BoseSelectionFixedOrthogonalBaths.increasingSpectrum hA = e :=
+    D5.S3.StatisticalMechanics.BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly
+      hA e he hc
   intro i
-  have hi := congrArg (fun l => l[i.val]?) hlist
-  simpa [i.isLt] using hi
+  have hi := congrFun hvals i.rev
+  simpa only [D5.S3.StatisticalMechanics.BoseSelectionFixedOrthogonalBaths.increasingSpectrum,
+    e, Fin.rev_rev] using hi
 
 
 @[reducible] private def P : Matrix (Fin 5) (Fin 5) ℝ :=

@@ -10,7 +10,8 @@ import D5.S3.StatisticalMechanics.BoseSelectionFixedBathConstruction
 import D5.S3.SpectralTopology.HermitianEigenvaluePerturbation
 
 /- The open sets concern the particular two-coordinate-bath cubic five-mode
-construction. Exponent persistence is local at its strict cubic certificates. -/
+construction. Exponent persistence is local at its strict cubic certificates.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30083 -/
 
 namespace D5.S3.StatisticalMechanics.BoseSelectionFixedOrthogonalBaths
 
@@ -28,7 +29,7 @@ variable {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
 def increasingSpectrum {H : Matrix (Fin n) (Fin n) 𝕜} (hH : H.IsHermitian) (i : Fin n) : ℝ :=
   hH.eigenvalues₀ (Fin.cast (Fintype.card_fin n).symm i.rev)
 
-private theorem increasingSpectrum_of_charpoly {H : Matrix (Fin n) (Fin n) 𝕜}
+theorem increasingSpectrum_of_charpoly {H : Matrix (Fin n) (Fin n) 𝕜}
     (hH : H.IsHermitian) (e : Fin n → ℝ) (he : Monotone e)
     (hc : H.charpoly = ∏ i, (Polynomial.X - Polynomial.C (RCLike.ofReal (e i) : 𝕜))) :
     increasingSpectrum hH = e := by
