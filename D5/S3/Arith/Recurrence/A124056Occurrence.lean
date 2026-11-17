@@ -13,6 +13,8 @@ import Mathlib.Data.Fintype.Pigeonhole
 import Mathlib.Data.List.Permutation
 import Mathlib.Data.Nat.Factors
 import Mathlib.Algebra.GCDMonoid.Finset
+import Mathlib.NumberTheory.SumPrimeReciprocals
+import Mathlib.NumberTheory.EulerProduct.Basic
 import Mathlib.Tactic
 
 /-!
@@ -817,7 +819,312 @@ theorem count_le_prime_word_bounds (q N t d : ℕ) (hq : 2 ≤ q)
     have := pair_injective hp
     omega
 
-/- The fractional Dirichlet moment and the uniform missing-residue multiplicity
-estimate are not established here. -/
+private theorem omega_mul {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0) :
+    omega (m * n) = omega m + omega n := by
+  exact (Nat.perm_primeFactorsList_mul hm hn).length_eq.trans (List.length_append ..)
+
+private theorem omega_eq_one_iff_prime {n : ℕ} (hn : n ≠ 0) :
+    omega n = 1 ↔ Nat.Prime n := by
+  constructor
+  · intro h
+    obtain ⟨p, hp⟩ := List.length_eq_one_iff.mp h
+    have hprod := Nat.prod_primeFactorsList hn
+    rw [hp] at hprod
+    simp only [List.prod_cons, List.prod_nil, mul_one] at hprod
+    have hprime : Nat.Prime p := Nat.prime_of_mem_primeFactorsList (n := n) (by rw [hp]; simp)
+    exact hprod ▸ hprime
+  · intro h
+    simp [omega, Nat.primeFactorsList_prime h]
+
+/-- Removing the first prime gives the exact weighted first-letter recurrence. -/
+theorem prime_word_first_letter (A v : ℕ) (hv : 1 < v) :
+    primeWordWeight A v =
+      A * ∑ p ∈ v.primeFactors, primeWordWeight A (v / p) := by
+  classical
+  have hv0 : v ≠ 0 := by omega
+  have hk : 1 ≤ omega v := by
+    have := (Nat.primeFactorsList_ne_nil v).mpr hv
+    exact List.length_pos_iff.mpr this
+  have hset : v.divisors.filter (fun d => omega d = 1) = v.primeFactors := by
+    ext p
+    simp only [Finset.mem_filter, Nat.mem_divisors, Nat.mem_primeFactors]
+    constructor
+    · rintro ⟨⟨hd, _⟩, hl⟩
+      exact ⟨(omega_eq_one_iff_prime (ne_zero_of_dvd_ne_zero hv0 hd)).mp hl, hd, hv0⟩
+    · rintro ⟨hp, hd, _⟩
+      exact ⟨⟨hd, hv0⟩, (omega_eq_one_iff_prime hp.ne_zero).mpr hp⟩
+  have hsplit := prime_word_split v 1 (by omega) hk
+  rw [hset] at hsplit
+  have hcount : primeWordCount v = ∑ p ∈ v.primeFactors, primeWordCount (v / p) := by
+    rw [← hsplit]
+    apply Finset.sum_congr rfl
+    intro p hp
+    have hprime := Nat.prime_of_mem_primeFactors hp
+    simp [primeWordCount, primeWords, Nat.primeFactorsList_prime hprime, List.permutations]
+  unfold primeWordWeight
+  rw [hcount, Finset.mul_sum, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro p hp
+  have hprime := Nat.prime_of_mem_primeFactors hp
+  have hd := Nat.dvd_of_mem_primeFactors hp
+  have hquot : v / p ≠ 0 := (Nat.div_pos (Nat.le_of_dvd (by omega) hd) hprime.pos).ne'
+  have heq : omega v = omega (v / p) + 1 := by
+    have h := omega_mul hprime.ne_zero hquot
+    rw [Nat.mul_div_cancel' hd] at h
+    simpa [omega, Nat.primeFactorsList_prime hprime, Nat.add_comm] using h
+  rw [heq, pow_succ]
+  ring
+
+/-- A finite prime-sum hypothesis controls every actual prime-word weight. -/
+theorem prime_word_pointwise (C : ℕ) (r : ℝ)
+    (hprime : ∀ T : Finset ℕ, (∀ p ∈ T, Nat.Prime p) →
+      (C : ℝ) * ∑ p ∈ T, (p : ℝ) ^ (-r) ≤ 1) :
+    ∀ v : ℕ, 0 < v → (primeWordWeight C v : ℝ) ≤ (v : ℝ) ^ r := by
+  intro v
+  induction v using Nat.strong_induction_on with
+  | h v ih =>
+    intro hv
+    by_cases hv1 : v = 1
+    · subst v
+      simp [primeWordWeight, primeWordCount, primeWords, omega]
+    have hv2 : 1 < v := by omega
+    rw [prime_word_first_letter C v hv2, Nat.cast_mul, Nat.cast_sum]
+    calc
+      _ ≤ (C : ℝ) * ∑ p ∈ v.primeFactors, ((v / p : ℕ) : ℝ) ^ r := by
+        apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg C)
+        apply Finset.sum_le_sum
+        intro p hp
+        have hprime := Nat.prime_of_mem_primeFactors hp
+        have hd := Nat.dvd_of_mem_primeFactors hp
+        exact ih _ (Nat.div_lt_self hv hprime.one_lt)
+          (Nat.div_pos (Nat.le_of_dvd hv hd) hprime.pos)
+      _ = (v : ℝ) ^ r * ((C : ℝ) * ∑ p ∈ v.primeFactors, (p : ℝ) ^ (-r)) := by
+        simp only [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro p hp
+        have hprime := Nat.prime_of_mem_primeFactors hp
+        have hd := Nat.dvd_of_mem_primeFactors hp
+        rw [Nat.cast_div hd (by exact_mod_cast hprime.ne_zero : (p : ℝ) ≠ 0), Real.div_rpow (Nat.cast_nonneg _) (Nat.cast_nonneg _),
+          Real.rpow_neg (Nat.cast_nonneg _)]
+        ring
+      _ ≤ _ := by
+        simpa using mul_le_mul_of_nonneg_left
+          (hprime v.primeFactors (fun p hp => Nat.prime_of_mem_primeFactors hp))
+          (Real.rpow_nonneg (Nat.cast_nonneg v) r)
+
+private theorem prime_sum_parameter (C : ℕ) :
+    ∃ r : ℝ, 1 < r ∧ ∀ T : Finset ℕ, (∀ p ∈ T, Nat.Prime p) →
+      (C : ℝ) * ∑ p ∈ T, (p : ℝ) ^ (-r) ≤ 1 := by
+  classical
+  let Z : ℝ := ∑' n : ℕ, (n : ℝ) ^ (-2 : ℝ)
+  have hZ : 0 ≤ Z := tsum_nonneg (fun n => Real.rpow_nonneg (Nat.cast_nonneg _) _)
+  have hs : Summable (fun n : ℕ => (n : ℝ) ^ (-2 : ℝ)) :=
+    Real.summable_nat_rpow.mpr (by norm_num)
+  obtain ⟨k, hk⟩ := exists_pow_lt_of_lt_one
+    (by positivity : 0 < 1 / ((C : ℝ) * Z + 1)) (by norm_num : (1 / 2 : ℝ) < 1)
+  refine ⟨(k : ℝ) + 2, by have := Nat.cast_nonneg (α := ℝ) k; linarith, ?_⟩
+  intro T hT
+  have hp (p : ℕ) (hp : p ∈ T) :
+      (p : ℝ) ^ (-((k : ℝ) + 2)) ≤ (1 / 2 : ℝ) ^ k * (p : ℝ) ^ (-2 : ℝ) := by
+    have hpp : (2 : ℝ) ≤ p := by exact_mod_cast (hT p hp).two_le
+    have hp0 : (0 : ℝ) < p := by positivity
+    rw [show -((k : ℝ) + 2) = -(k : ℝ) + (-2) by ring, Real.rpow_add hp0,
+      Real.rpow_neg hp0.le, Real.rpow_natCast, ← inv_pow]
+    exact mul_le_mul_of_nonneg_right
+      (pow_le_pow_left₀ (by positivity) (by simpa using (one_div_le_one_div_of_le (by norm_num) hpp)) k)
+      (Real.rpow_nonneg hp0.le _)
+  have hsum : ∑ p ∈ T, (p : ℝ) ^ (-((k : ℝ) + 2)) ≤ (1 / 2 : ℝ) ^ k * Z := by
+    calc
+      _ ≤ ∑ p ∈ T, (1 / 2 : ℝ) ^ k * (p : ℝ) ^ (-2 : ℝ) := Finset.sum_le_sum hp
+      _ = (1 / 2 : ℝ) ^ k * ∑ p ∈ T, (p : ℝ) ^ (-2 : ℝ) := (Finset.mul_sum ..).symm
+      _ ≤ _ := mul_le_mul_of_nonneg_left (hs.sum_le_tsum T (fun n _ => by positivity)) (by positivity)
+  have hk' : (1 / 2 : ℝ) ^ k * ((C : ℝ) * Z + 1) < 1 :=
+    (lt_div_iff₀ (by positivity)).mp hk
+  have hk0 : 0 ≤ (1 / 2 : ℝ) ^ k := by positivity
+  have hC : (C : ℝ) * (∑ p ∈ T, (p : ℝ) ^ (-((k : ℝ) + 2))) ≤
+      (C : ℝ) * ((1 / 2 : ℝ) ^ k * Z) := mul_le_mul_of_nonneg_left hsum (Nat.cast_nonneg C)
+  nlinarith
+
+/-- The exponent is chosen using only the weight parameter, uniformly in v. -/
+theorem prime_word_polynomial_bound (A : ℕ) :
+    ∃ r : ℝ, 1 < r ∧ ∀ v : ℕ, 0 < v →
+      (primeWordWeight (2 * A) v : ℝ) ≤ (v : ℝ) ^ r := by
+  obtain ⟨r, hr, hp⟩ := prime_sum_parameter (2 * A)
+  exact ⟨r, hr, prime_word_pointwise (2 * A) r hp⟩
+
+def roughPrefix (S : Finset ℕ) (X : ℕ) : Finset ℕ :=
+  (Finset.range (X + 1)).filter (fun n => 0 < n ∧ ∀ p ∈ n.primeFactors, p ∉ S)
+
+/-- The weighted rough first moment is bounded by absorption of a finite
+first-letter sum; no infinite rearrangement is used. -/
+theorem rough_prime_word_sum (C : ℕ) (σ : ℝ) (S : Finset ℕ)
+    (htail : ∀ T : Finset ℕ, (∀ p ∈ T, Nat.Prime p) → Disjoint T S →
+      (C : ℝ) * ∑ p ∈ T, (p : ℝ) ^ (-σ) ≤ 1 / 2) (X : ℕ) :
+    (∑ n ∈ roughPrefix S X, (primeWordWeight C n : ℝ) * (n : ℝ) ^ (-σ)) ≤ 2 := by
+  classical
+  let G := roughPrefix S X
+  let T := (Finset.range (X + 1)).filter (fun p => Nat.Prime p ∧ p ∉ S)
+  let f : ℕ → ℝ := fun n => (primeWordWeight C n : ℝ) * (n : ℝ) ^ (-σ)
+  let R : ℝ := ∑ n ∈ G, f n
+  have hf (n : ℕ) : 0 ≤ f n := by dsimp [f]; positivity
+  have hG {n : ℕ} (hn : n ∈ G) :
+      n ≤ X ∧ 0 < n ∧ ∀ p ∈ n.primeFactors, p ∉ S := by
+    have h := Finset.mem_filter.mp hn
+    exact ⟨by have := Finset.mem_range.mp h.1; omega, h.2⟩
+  have hpG {n p : ℕ} (hn : n ∈ G) (hp : p ∈ n.primeFactors) : p ∈ T ∧ n / p ∈ G := by
+    have hd := Nat.dvd_of_mem_primeFactors hp
+    have hprime := Nat.prime_of_mem_primeFactors hp
+    have hn' := hG hn
+    have hquot : 0 < n / p := Nat.div_pos (Nat.le_of_dvd hn'.2.1 hd) hprime.pos
+    constructor
+    · exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr
+        (by have := Nat.le_of_dvd hn'.2.1 hd; omega), hprime, hn'.2.2 p hp⟩
+    · apply Finset.mem_filter.mpr
+      refine ⟨Finset.mem_range.mpr (by have := Nat.div_le_self n p; omega), hquot, ?_⟩
+      intro l hl
+      apply hn'.2.2 l
+      exact Nat.mem_primeFactors.mpr ⟨Nat.prime_of_mem_primeFactors hl,
+        dvd_trans (Nat.dvd_of_mem_primeFactors hl) (Nat.div_dvd_of_dvd hd), hn'.2.1.ne'⟩
+  have hrec (n : ℕ) (hn : n ∈ G.erase 1) :
+      f n = ∑ p ∈ n.primeFactors, (C : ℝ) * (p : ℝ) ^ (-σ) * f (n / p) := by
+    have hn' := Finset.mem_erase.mp hn
+    have hnpos := (hG hn'.2).2.1
+    dsimp [f]
+    rw [prime_word_first_letter C n (by omega), Nat.cast_mul, Nat.cast_sum,
+      Finset.mul_sum, Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro p hp
+    have hd := Nat.dvd_of_mem_primeFactors hp
+    have hprime := Nat.prime_of_mem_primeFactors hp
+    have heq : (n : ℝ) = (p : ℝ) * ((n / p : ℕ) : ℝ) := by
+      exact_mod_cast (Nat.mul_div_cancel' hd).symm
+    rw [heq, Real.mul_rpow (Nat.cast_nonneg _) (Nat.cast_nonneg _)]
+    ring
+  let pairs := (G.erase 1).sigma (fun n => n.primeFactors)
+  have hpair : (∑ n ∈ G.erase 1, f n) ≤
+      ∑ z ∈ T ×ˢ G, (C : ℝ) * (z.1 : ℝ) ^ (-σ) * f z.2 := by
+    calc
+      _ = ∑ n ∈ G.erase 1, ∑ p ∈ n.primeFactors,
+          (C : ℝ) * (p : ℝ) ^ (-σ) * f (n / p) :=
+        Finset.sum_congr rfl hrec
+      _ ≤ _ := by
+        rw [Finset.sum_sigma']
+        apply Finset.sum_le_sum_of_injOn (fun x : Sigma (fun _ : ℕ => ℕ) => (x.2, x.1 / x.2))
+        · intro x hx y hy heq
+          have hxp := (Finset.mem_sigma.mp hx).2
+          have hyp := (Finset.mem_sigma.mp hy).2
+          have hp : x.2 = y.2 := congrArg Prod.fst heq
+          have hq : x.1 / x.2 = y.1 / y.2 := congrArg Prod.snd heq
+          have hn : x.1 = y.1 := by
+            calc
+              x.1 = x.2 * (x.1 / x.2) := (Nat.mul_div_cancel' (Nat.dvd_of_mem_primeFactors hxp)).symm
+              _ = y.2 * (y.1 / y.2) := by rw [hq, hp]
+              _ = y.1 := Nat.mul_div_cancel' (Nat.dvd_of_mem_primeFactors hyp)
+          exact Sigma.ext hn (by simpa using hp)
+        · intro z hz
+          obtain ⟨x, hx, rfl⟩ := Finset.mem_image.mp hz
+          have h := Finset.mem_sigma.mp hx
+          exact Finset.mem_product.mpr (hpG (Finset.mem_erase.mp h.1).2 h.2)
+        · intro x hx
+          rfl
+        · intro z hz _
+          exact mul_nonneg (mul_nonneg (Nat.cast_nonneg _) (Real.rpow_nonneg (Nat.cast_nonneg _) _)) (hf _)
+  have hproduct : (∑ z ∈ T ×ˢ G, (C : ℝ) * (z.1 : ℝ) ^ (-σ) * f z.2) =
+      ((C : ℝ) * ∑ p ∈ T, (p : ℝ) ^ (-σ)) * R := by
+    rw [Finset.sum_product]
+    simp_rw [← Finset.mul_sum]
+    rw [← Finset.sum_mul, ← Finset.mul_sum]
+  have ht : (C : ℝ) * ∑ p ∈ T, (p : ℝ) ^ (-σ) ≤ 1 / 2 := by
+    apply htail T
+    · intro p hp
+      exact (Finset.mem_filter.mp hp).2.1
+    · apply Finset.disjoint_left.mpr
+      intro p hp hs
+      exact (Finset.mem_filter.mp hp).2.2 hs
+  have hsplit : R ≤ 1 + ∑ n ∈ G.erase 1, f n := by
+    by_cases h1 : 1 ∈ G
+    · have h := Finset.sum_erase_add G f h1
+      have hf1 : f 1 = 1 := by simp [f, primeWordWeight, primeWordCount, primeWords, omega]
+      dsimp [R]
+      rw [← h, hf1]
+      linarith
+    · simp [R, Finset.erase_eq_of_notMem h1]
+  have hR : 0 ≤ R := Finset.sum_nonneg (fun n _ => hf n)
+  rw [hproduct] at hpair
+  have := mul_le_mul_of_nonneg_right ht hR
+  change R ≤ 2
+  linarith
+
+private theorem prime_word_weight_mono (A B v : ℕ) (hAB : A ≤ B) :
+    primeWordWeight A v ≤ primeWordWeight B v := by
+  exact Nat.mul_le_mul_right _ (Nat.pow_le_pow_left hAB)
+
+/-- The doubled weight controls splitting a product into any two positive
+factors, without a multiplicativity assumption. -/
+theorem prime_word_product_bound (A m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
+    primeWordWeight A (m * n) ≤
+      primeWordWeight (2 * A) m * primeWordWeight (2 * A) n := by
+  classical
+  have main : ∀ k m n : ℕ, m + n = k → 0 < m → 0 < n →
+      primeWordWeight A (m * n) ≤
+        primeWordWeight (2 * A) m * primeWordWeight (2 * A) n := by
+    intro k
+    induction k using Nat.strong_induction_on with
+    | h k ih =>
+      intro m n hsum hm hn
+      by_cases hm1 : m = 1
+      · subst m
+        simpa [primeWordWeight, primeWordCount, primeWords, omega] using
+          prime_word_weight_mono A (2 * A) n (by omega)
+      by_cases hn1 : n = 1
+      · subst n
+        simpa [primeWordWeight, primeWordCount, primeWords, omega] using
+          prime_word_weight_mono A (2 * A) m (by omega)
+      have hm2 : 1 < m := by omega
+      have hn2 : 1 < n := by omega
+      let f : ℕ → ℕ := fun p => primeWordWeight A (m * n / p)
+      have hunion : (∑ p ∈ m.primeFactors ∪ n.primeFactors, f p) ≤
+          (∑ p ∈ m.primeFactors, f p) + ∑ p ∈ n.primeFactors, f p := by
+        have := Finset.sum_union_inter m.primeFactors n.primeFactors f
+        omega
+      have hleft : (∑ p ∈ m.primeFactors, f p) ≤
+          ∑ p ∈ m.primeFactors, primeWordWeight (2 * A) (m / p) * primeWordWeight (2 * A) n := by
+        apply Finset.sum_le_sum
+        intro p hp
+        have hd := Nat.dvd_of_mem_primeFactors hp
+        have hprime := Nat.prime_of_mem_primeFactors hp
+        have hquot : 0 < m / p := Nat.div_pos (Nat.le_of_dvd hm hd) hprime.pos
+        have hlt := Nat.div_lt_self hm hprime.one_lt
+        dsimp [f]
+        rw [show m * n / p = (m / p) * n by
+          simpa [mul_comm] using Nat.mul_div_assoc n hd]
+        exact ih (m / p + n) (by omega) (m / p) n rfl hquot hn
+      have hright : (∑ p ∈ n.primeFactors, f p) ≤
+          ∑ p ∈ n.primeFactors, primeWordWeight (2 * A) m * primeWordWeight (2 * A) (n / p) := by
+        apply Finset.sum_le_sum
+        intro p hp
+        have hd := Nat.dvd_of_mem_primeFactors hp
+        have hprime := Nat.prime_of_mem_primeFactors hp
+        have hquot : 0 < n / p := Nat.div_pos (Nat.le_of_dvd hn hd) hprime.pos
+        have hlt := Nat.div_lt_self hn hprime.one_lt
+        dsimp [f]
+        rw [Nat.mul_div_assoc m hd]
+        exact ih (m + n / p) (by omega) m (n / p) rfl hm hquot
+      calc
+        _ = A * ∑ p ∈ m.primeFactors ∪ n.primeFactors, f p := by
+          rw [prime_word_first_letter A (m * n) (by nlinarith), Nat.primeFactors_mul hm.ne' hn.ne']
+        _ ≤ A * ((∑ p ∈ m.primeFactors, f p) + ∑ p ∈ n.primeFactors, f p) :=
+          Nat.mul_le_mul_left A hunion
+        _ ≤ A * ((∑ p ∈ m.primeFactors, primeWordWeight (2 * A) (m / p) *
+            primeWordWeight (2 * A) n) + ∑ p ∈ n.primeFactors,
+            primeWordWeight (2 * A) m * primeWordWeight (2 * A) (n / p)) :=
+          Nat.mul_le_mul_left A (Nat.add_le_add hleft hright)
+        _ = _ := by
+          rw [← Finset.sum_mul, ← Finset.mul_sum]
+          rw [prime_word_first_letter (2 * A) m hm2, prime_word_first_letter (2 * A) n hn2]
+          ring
+  exact main (m + n) m n rfl hm hn
+
+/- The fixed fractional moment and uniform multiplicity estimate remain open. -/
 
 end D5.S3.Arith.Recurrence.A124056Occurrence
