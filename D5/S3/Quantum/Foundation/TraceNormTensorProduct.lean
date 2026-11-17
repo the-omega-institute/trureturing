@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 
+/-! Trace-norm multiplicativity for rectangular Kronecker products. -/
+
 set_option autoImplicit false
 
 noncomputable section

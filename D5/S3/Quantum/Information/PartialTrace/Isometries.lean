@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Information/PartialTraceIsometries
+/- GID: D5/S3/Quantum/Information/PartialTrace/Isometries
    generality: G
-   mirror-B: D5/B/S3/Quantum/Information/PartialTraceIsometries
+   mirror-B: D5/B/S3/Quantum/Information/PartialTrace/Isometries
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -8,16 +8,19 @@
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 
+/-! Partial trace covariance for product embeddings. -/
+
 set_option autoImplicit false
 
 noncomputable section
 
 /- The declaration namespace preserves the AnticoherenceSpinCovariance API.
    proof_shape: bind-only; escape_witness: none; consumers: rotated_dilation,
-   partialTraceRight_conjugate, partialTraceLeft_conjugate,
+   marginalRight_conjugate, partialTraceLeft_isometries,
    AnticoherenceTraceDistanceRefutation.dicke_split_partialTrace. -/
 namespace D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
 
+open Matrix
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
 open scoped BigOperators
 

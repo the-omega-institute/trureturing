@@ -10,7 +10,7 @@ import D5.S3.Quantum.Dynamics.SpinCoupledEvenHypercubeGroverFixedPoint
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.QuantumChannels.ChannelTimeReversalNoGo
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
-import D5.S3.Quantum.Information.PartialTraceIsometries
+import D5.S3.Quantum.Information.PartialTrace.Isometries
 
 /-! The real orthogonal Pauli action used by the spin-four witness channel. -/
 

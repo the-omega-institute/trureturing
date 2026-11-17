@@ -1,15 +1,15 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Information;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Information.PartialTrace;
 
-internal sealed class PartialTraceIsometriesDocument : IScribeDocumentDefinition
+internal sealed class IsometriesDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Partial trace through product isometries.",
         H("Partial trace through product isometries"),
         Blocks(Describe.Lean(
             DescribeId.Create("partialtraceisometries"),
-            DeclarationHandle.Create("D5/S3/Quantum/Information/PartialTraceIsometries.partialTrace_isometries"),
+            DeclarationHandle.Create("D5/S3/Quantum/Information/PartialTrace/Isometries.partialTrace_isometries"),
             H("Partial trace through product isometries"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

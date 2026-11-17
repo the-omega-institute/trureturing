@@ -15,7 +15,7 @@ import D5.S3.Quantum.Information.OrthogonalRecordEntropy
 import D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity
 import D5.S3.Quantum.Information.Pauli.PauliMatrix
 import D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation
-import D5.S3.Quantum.Information.PartialTraceIsometries
+import D5.S3.Quantum.Information.PartialTrace.Isometries
 import D5.S3.Quantum.Foundation.FiniteHermitianTraceDuality
 import D5.S3.Quantum.Reduction.WeightedWordDefect
 import D5.S3.Quantum.Matrix.UniformVarianceTraceBound
