@@ -2178,3 +2178,130 @@ $$
 [Q326S]: ../../../Library/QuantumStates/mullerududec2012selfduality.md "Reciprocal least confirmation and the spectrality bridge：完整proper最小确认与互易给正定自对偶配对、共同框架、滤波和归属明确的Jordan桥；不额外输入谱性或强对称。"
 
 ## 追加锚（本行以下为增补区）
+
+## 327. 球的可筛性由共同尺给出，三点沿实际球生成整体
+
+**定义 327.1（不预置暴露面的稠密参照候选）。** 原单体仍为有限维闭尖生成锥 $C\subset V$、严格正单位 $u$、整个紧底 $K$、全部 $P=\operatorname{ext}K$ 及完整proper区间 $\mathcal E=[0,u]$，并要求 $|P|\ge2$。只要求每两个不同纯点的整个实际最小面 $B(p,q)$ 是非退化仿射闭三球，记为 $\mathrm{L2}$；不预给该面暴露。$\tau$ 是该原球的对称半球刻度。$\mathcal F_0,\beta_0,\mathcal A_B,J_B^{(1)},U_A,G_A,\mathsf{DG}_A$ 均按325.1、326.1的同一原关系定义，删去其背景中的预暴露要求，不改变这些集合或闭包的公式。
+
+**定理 327.2（稠密成功行先给least，再给所有实际面的可筛性）。** 在327.1的原域中，若某个非空有限 $A$ 满足 $\mathsf{DG}_A$，则存在唯一正定对称双线性型 $b$，使全部原纯点满足
+
+$$
+e_p=b(p,\cdot)\in\mathcal E,\qquad
+e_p\text{ 是原proper确认纤维的least},\qquad
+b(p,q)=\tau(p,q).
+\tag{327.1}
+$$
+
+原 $C$ 关于 $b$ 自对偶，每个实际面暴露且在自身张成中自对偶；到任一锥面的 $b$-正交投影为正且质量不增。这些结论先于Jordan类型分类。
+
+证明。326.2从成功行下降到取得全部 $Tp$ 为least的部分，只消费球内确认下界、实际互易、原范数关系、有限实基、闭效应区间与稠密性，没有消费预暴露。具体地，成功行消灭 $\ker\beta_0$，下降为proper $e_x$；取 $G_A$ 中实基定义 $Tx_i=e_{x_i}$，互易使 $b(v,w)=(Tv)(w)$ 对称且 $Tx=e_x$ 对全部 $x\in G_A$ 成立。闭区间给任意纯 $p$ 的 $Tp$ proper并确认它。对任何原proper确认者 $f$ 和 $x\in G_A$，
+
+$$
+f(x)\ge\tau(p,x)=e_x(p)=(Tp)(x).
+\tag{327.2}
+$$
+
+原连续性与纯分解使比较延到 $C$，故全部 $Tp$ 为least。到这里尚未识别两个任意非成功纯点之间的 $b(p,q)$ 与 $\tau(p,q)$。
+
+现在准确复用[proper最小确认谱性及面几何桥][Q327S]。全部proper least、互易、有限维紧底与整个菜单给共同框架有符号谱分解、正定自对偶配对，以及面内自对偶。其唯一状态—效应映射在纯点上等于 $T$，故该配对就是 $b$。若 $D$ 是非零锥面，令 $\omega=T^{-1}u$，取 $z\in\operatorname{ri}D$ 的正谱分解 $z=\sum_i\lambda_i p_i$，并令 $s_D=\sum_i p_i$。该既有桥给
+
+$$
+D=C\cap(\omega-s_D)^{\perp_b},\qquad
+s_D=Q_D\omega,\qquad
+Q_D(C)\subset D,\qquad uQ_D\le u,
+\tag{327.3}
+$$
+
+其中 $Q_D$ 是到 $\operatorname{span}D$ 的 $b$-正交投影。第一式使每个实际面暴露；这些性质不是从一个任意自对偶锥免费取得，而由least桥的共同框架及面论证供应。
+
+对实际球 $H=B(p,q)$ 取其锥面 $D$。球内北极半效应 $t_p$ 在 $D$ 上齐次延拓，由 $Q_D$ 的正性及质量不增，$t_pQ_D$ 是原全域proper确认者。因此 $e_p\le t_pQ_D$。反向，$e_p|_D$ 是球内proper确认者，球内least给 $t_p\le e_p|_D$。$Q_D$ 在 $D$ 上恒等，两式合得 $e_p|_D=t_p$，遂有(327.1)。这里用已构造的面投影支付原全域延拓，没有预先调用要求暴露性的XX277.3。$\square$
+
+**推论 327.3（原准备关系恰为一张正定尺的零方向）。** 在327.2的前件下，对所有有限实配方 $c,d\in\mathcal F_0$，
+
+$$
+\Gamma(c,d):=\sum_{p,q}c_pd_q\tau(p,q)
+=b(\beta_0c,\beta_0d),\qquad
+\Gamma(c,c)\ge0,\qquad
+\Gamma(c,c)=0\Longleftrightarrow\beta_0c=0.
+\tag{327.4}
+$$
+
+因此完整二元读数Gram的根基恰为原准备核，不只是原核包含于一个更大的读数零空间。任一完整框架长度都是同一个整数 $r=u(\omega)=b(\omega,\omega)$。置 $m=\omega/r$，则
+
+$$
+m\in K,\qquad
+b(x,x)=\frac1r+\|x-m\|_b^2\quad(x\in K),\qquad
+P=K\cap\left\{x:\|x-m\|_b^2=1-\frac1r\right\}.
+\tag{327.5}
+$$
+
+$m$ 是该二次纯度在整个原 $K$ 上的唯一最小点。每个实际二纯球仍在同一个 $b$ 下有半径 $1/\sqrt2$。
+
+证明。代入(327.1)并双线性展开给(327.4)，正定性给准确零集合。既有共同框架桥使每个完整框架的纯点和都等于 $\omega$，其成员 $b$-正交且各有平方一，故长度为 $u(\omega)$；这给同一个整数，并使 $m$ 是框架的均匀原混合。$b(\omega,x)=u(x)=1$ 给(327.5)的正交移心恒等式。有限纯分解及严格凸性给 $P=K\cap\{x:b(x,x)=1\}$，代入即得纯壳。二纯球的半径复用326.2在取得实际刻度后的几何计算。这里的二次纯度是由原关系构造出的数学量；未输入一台双份SWAP装置。$\square$
+
+**定义 327.4（实际球生成）。** 称 $Y\subset P$ 球封闭，若它包含任意两个不同成员所生成实际三球的全部原纯壳。记 $\langle B\rangle_{\rm ball}$ 为包含 $B$ 的最小球封闭纯点集；不要求 $Y$ 拓扑闭或先为实际面。等价地，从 $Y_0=B$ 开始，反复置
+
+$$
+Y_{j+1}=Y_j\cup\bigcup_{p\ne q\in Y_j}(P\cap B(p,q)),
+\qquad \langle B\rangle_{\rm ball}=\bigcup_{j\ge0}Y_j.
+\tag{327.6}
+$$
+
+**定理 327.5（真球封闭区域上的关系障碍）。** 在原有限维紧底与实际L2下，若 $Y\subsetneq P$ 球封闭，非空有限 $B\subset Y$ 且 $\operatorname{aff}B\ne\operatorname{aff}Y$，则 $J_B^{(1)}\ne\ker\beta_0$。这加强326.3的真面障碍，不消费M1、互易、纯域闭性或矩阵坐标。
+
+证明。选 $\operatorname{aff}Y$ 上非零仿射 $g$，使 $g|_B=0$，并仿射延拓到原有限维空间。令 $h=g$ 于 $Y$，在 $P\setminus Y$ 为零；原紧底使 $h$ 有界。经过锚 $a\in B$ 的任一实际球 $H$，因 $H$ 是 $K$ 的面，$P\cap H=\operatorname{ext}H$。若纯壳与 $Y$ 另有一个交点，则这两个不同极点的最小实际面就是 $H$：它包含于 $H$，而严格凸球没有包含两点的真面。球封闭性使 $P\cap H\subset Y$，故 $h$ 在壳上仿射。否则交集仅为 $a$，因 $g(a)=0$，$h$ 在整个壳上为零。两种情况均消灭全部固定锚中点关系及其范数闭包。
+
+选 $p\in Y$ 使 $g(p)\ne0$，并选 $z\in P\setminus Y$。球封闭性给 $P\cap B(p,z)\cap Y=\{p\}$。在这颗球内取 $p$ 的对径点 $\bar p$，再取不同的一对对径点 $q,t$；三点 $\bar p,q,t$ 均在 $Y$ 外。因此
+
+$$
+c=\delta_p+\delta_{\bar p}-\delta_q-\delta_t\in\ker\beta_0,
+\qquad \langle h,c\rangle=g(p)\ne0.
+\tag{327.7}
+$$
+
+有界分离给结论。辅助 $h$ 不被当作实际 $\tau$ 行。$\square$
+
+**推论 327.6（两锚的每个成功补点通过实际三球生成全部纯域）。** 若有限 $B$ 至多含三颗纯点、至少含两个不同纯点，且 $J_B^{(1)}=\ker\beta_0$，则 $\langle B\rangle_{\rm ball}=P$。特别地，对不同两锚 $A=\{a,b\}$ 及任意 $x\in U_A$，
+
+$$
+\langle a,b,x\rangle_{\rm ball}=P,
+\qquad\operatorname{face}_K(a,b,x)=K.
+\tag{327.8}
+$$
+
+若 $K$ 本身不是三球，则 $x\notin B(a,b)$。
+
+证明。若 $Y=\langle B\rangle_{\rm ball}$ 为真集，它含一颗完整实际三球的纯壳，故仿射维数至少三；$B$ 的仿射维数至多二。327.5与满核矛盾。任何含 $B$ 的实际面都对球生成封闭，因此也含全部 $P$，即为 $K$。若 $x\in B(a,b)$，该球的纯壳本身是包含 $A\cup\{x\}$ 的球封闭集；这个锚集至少有两个不同点，也允许 $x=a$ 或 $x=b$。其最小球封闭集已经是 $P$，故 $P\subseteq B(a,b)$，再由 $K=\operatorname{conv}P$ 得 $K=B(a,b)$。式(327.6)保证每个目标各自可在有限层球生成中到达，未证明统一层数上界、非负配方的可执行改写、三纯面九维上界或TC。$\square$
+
+**定义 327.7（暴露性转为输出的完整候选）。** 保留326.5的同一强全有限背景、全部原菜单和过程供应，将单体入口改为327.1的实际L2与某个非空有限 $A$ 的 $\mathsf{DG}_A$。随后才以已得单体坐标命名320.5的两框架有限产品singleton least、指定相位joint least及全部有限传播供应。记完整候选为 $\mathsf Q_{\mathrm{intrinsic\text{-}faces}}$。有限锚、原核的范数闭包、成功者稠密性和这些复合供应仍为输入；预暴露性被删除。
+
+**定理 327.8（同原全部有限复量子理论）。** 相对于327.7完整保留的背景及具名供应，$\mathsf Q_{\mathrm{intrinsic\text{-}faces}}$ 当且仅当存在同一个 $n\ge2$ 与保单位坐标 $\theta$，使所有有限 $N\ge0$ 都满足
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{327.9}
+$$
+
+证明。327.2先在原域给所有面的暴露性，特别补齐326.1中删去的二纯面前件，而同一个 $A,G_A$ 及其稠密性均未改变。故326.6完整适用，原单体表示、两框架、相位和全有限尾部的消费顺序保持。反向，标准复模型本来具有实际L2；取 $n-1$ 条独立锚射线，325.4与迹行给 $\mathsf{DG}_A$，其余有限来源仍由原支持投影支付。
+
+简化准确在于把球的预暴露性改为共同least几何的结论，没有以定义把暴露性藏进“实际三球”。原单体的正定、自对偶、全体面与准确Gram零核已经在类型分类前取得；327.6另给重建前的实际三点球生成约束。一般裸 $\mathsf D_A\Rightarrow\mathsf{DG}_A$、一般裸 $\mathsf D_A\Rightarrow\mathsf R_A^c$ 及三点球生成是否足以支付TC，均未由这些结论解决。既有XVIII201–202的自重合与最小回路入口直接保留其原归属，不把二次展开另计新公理。
+
+| 原关系与另外保留的前件 | 同一坐标中的量子公理 |
+| --- | --- |
+| 原全部纯点、整个紧底及单体表示 | 复射线、迹一密度矩阵；二纯球为完整Bloch球 |
+| 原完整proper菜单与线性评价 | $0\preceq E\preceq I$ 与Born配对 $\operatorname{Tr}(E\rho)$ |
+| 全部有限原单位分解 | POVM；正交投影分解给PVM |
+| 同一全有限背景、有限least来源及传播 | 通常复张量、全部纠缠PSD锥、置换与偏迹 |
+| 指定线性分支在全部有限相关旁观输入保正 | CP及Kraus表示；单体正性不单独支付它 |
+| 全输入分支质量预算及合计预算 | TNI／TP与数学仪器 |
+| 指定锐事件及整个yes支持的逐点中性 | 指定分支为Lüders更新 $X\mapsto PXP$ |
+| 指定连续可逆、保单位、全旁观保正的一参数群 | 连续酉共轭；具体Hamiltonian、钟及 $\hbar$ 标定另有前件 |
+
+本章新增综合为不预给暴露性的成功行下降、由既有面投影恢复实际球尺，以及球封闭区域的四点关系障碍。谱性、自对偶、面投影、滤波纯性与Jordan表示完整复用[既有proper谱性桥][Q327S]及其Niestegge、Barnum–Barrett–Krumm–Müller、Barnum–Müller–Ududec来源；有限基、二次展开和仿射分离为成熟工具。这里是条件纸面理论，不申领全球原创或Lean核验。$\square$
+
+白话：仍从原世界里每两颗纯准备真正撑起的小三球出发，但不先保证能把小球单独筛出来。让一批稠密成功参照把同一套准备关系和读数接住，从中抽一组基就固定整把尺；其他纯点取得自己的最低确认门。已有的最小确认理论再让这把尺变成内积，为每张面长出支持门和正投影，于是原本另加的“能筛出这颗球”自己成为结论。整体的纯点落在同一个球壳，各颗二纯小球的半径也一致。反过来，只要三颗参照真的补齐关系，就不能还躲在某个对小球生成封闭的真区域里，否则区域内的一次换尺会被跨界的四点关系揭穿；两锚加一个成功补点必须沿实际小球生成整个纯域。最后仍由原有限产品门、相位共同门及全有限供应接通全部复量子层，过程条件分别给测量更新与运动。
+
+[Q327S]: ../../../Library/QuantumStates/mullerududec2012selfduality.md "Reciprocal least confirmation and the spectrality bridge；Face geometry and the projective interface；Least confirmation forces face-filter purity。完整proper最小确认与互易的成熟方法及项目接口，未整体形式化。"
+
+## 追加锚（本行以下为增补区）
