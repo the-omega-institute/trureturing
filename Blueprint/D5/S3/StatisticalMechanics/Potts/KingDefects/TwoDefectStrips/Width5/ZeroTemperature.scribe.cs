@@ -12,7 +12,7 @@ internal sealed class ZeroTemperatureDocument : IScribeDocumentDefinition
         H("Width-five proper successors by restriction"),
         Blocks(
             Node("extend", "The reflected-column extension", "extend",
-                "A width-five row is extended by reflecting its penultimate column into the sixth column.", DescribeRole.Definition),
+                "A width-five row is extended by reflecting its penultimate column into the sixth column. The new adjacent square reflects the preceding square, so it adds no new inequality.", DescribeRole.Definition),
             Node("raw5", "The width-five zero-defect relation", "raw5",
                 "The raw successor relation records zero between-row and horizontal defects for width five.", DescribeRole.Definition),
             Node("proper-extend", "Properness is preserved by extension", "proper_extend",
@@ -20,7 +20,7 @@ internal sealed class ZeroTemperatureDocument : IScribeDocumentDefinition
             Node("raw-extend", "Raw successors are preserved by extension", "raw_extend",
                 "The width-six owner relation on reflected extensions is equivalent to the width-five raw relation.", DescribeRole.Theorem),
             Node("raw-iff-owner", "The restricted owner image", "raw_iff_owner",
-                "Every width-five zero-defect successor is the restriction of an owner allowed shift, and every such restriction is a successor.", DescribeRole.Theorem),
+                "Every width-five zero-defect successor is the restriction of an owner allowed shift, and every such restriction is a successor. The shift is recovered uniquely as r(0) xor p(0), giving fibre multiplicity one.", DescribeRole.Theorem),
             Node("transition-counts", "The zero-temperature transfer row", "transition_counts",
                 "For every horizontally proper width-five source and every class column, the zero-budget successor sum equals the width-five transfer row.", DescribeRole.Theorem)),
         []));

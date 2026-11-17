@@ -21,7 +21,7 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
             Node("xor-shift", "Translation of xor differences", "xor_shift",
                 "The xor of two translated differences is the original difference.", DescribeRole.Theorem),
             Node("xor-right-cancel", "Cancellation of a common right xor", "xor_right_cancel",
-                "For Fin 4 colours, a common right xor can be cancelled.", DescribeRole.Theorem),
+                "For Fin 4 colours, applying xor with the same colour twice returns the original colour.", DescribeRole.Theorem),
             Node("offset-ok", "Admissible six-column offsets", "offsetOK",
                 "An offset word starts at zero and has no zero adjacent xor increment.", DescribeRole.Definition),
             Node("offset-choices", "Allowed vertical shifts", "offsetChoices",

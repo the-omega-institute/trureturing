@@ -50,7 +50,7 @@ internal sealed class DataDocument : IScribeDocumentDefinition
             Describe.Remark(DescribeId.Create("classlist"),
                 DeclarationHandle.Create(Prefix + "classList"), H("classList"),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The Lean type is Fin 96 -> List (Fin 96). Certificate.class_counts pins the multiplicity of each class as the corresponding matrix entry. These finite lists describe all successor multiplicities without transcribing the matrix.")))),
+                Blocks(Paragraph(Text("The Lean type is Fin 96 -> List (Fin 96). Counts.Check7.counts pins the multiplicity of each class as the corresponding matrix entry. These finite lists describe all successor multiplicities without transcribing the matrix.")))),
             Describe.Remark(DescribeId.Create("successors"),
                 DeclarationHandle.Create(Prefix + "successors"), H("successors"),
                 AssessedProvenance.FromRepo(Source),

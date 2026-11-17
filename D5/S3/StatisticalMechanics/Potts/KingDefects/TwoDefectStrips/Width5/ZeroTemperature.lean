@@ -23,6 +23,7 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.ZeroTemperature
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 
+/-! Proper successor rows are exact images of the original zone relation. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.ZeroTemperature
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
@@ -103,11 +104,47 @@ private theorem owner_matrix (p : Row) (hp : bondDefects horizontal p p = 0)
     (s : Fin 43) :
     (∑ v ∈ offsetChoices (Width6.ZeroTemperature.offsets (extend p)),
       if cl (fun j => v ^^^ p j) 0 = s then (1 : ℤ) else 0) = T (cl p 0) s := by
-  have h : ∀ p : Row, bondDefects horizontal p p = 0 → ∀ s : Fin 43,
-      (∑ v ∈ offsetChoices (Width6.ZeroTemperature.offsets (extend p)),
-        if cl (fun j => v ^^^ p j) 0 = s then (1 : ℤ) else 0) = T (cl p 0) s := by
-    decide +kernel
-  exact h p hp s
+  have hc (v : Fin 4) : cl (fun j => v ^^^ p j) 0 = cl p 0 := by
+    simp only [cl, xor_cancel]
+  simp_rw [hc]
+  have table :
+      (∀ s : Fin 43, T 15 s = if 15 = s then 1 else 0) ∧
+      (∀ s : Fin 43, T 17 s = if 17 = s then 2 else 0) ∧
+      (∀ s : Fin 43, T 30 s = 0) := by decide +kernel
+  have h : ∀ a b c d : Fin 4,
+      let q : Row := ![0, a, b, c, d]
+      bondDefects horizontal q q = 0 →
+      (cl q 0 = 15 ∧ (offsetChoices (Width6.ZeroTemperature.offsets (extend q))).card = 1) ∨
+      (cl q 0 = 17 ∧ (offsetChoices (Width6.ZeroTemperature.offsets (extend q))).card = 2) ∨
+      (cl q 0 = 30 ∧ (offsetChoices (Width6.ZeroTemperature.offsets (extend q))).card = 0) := by
+    intro a b
+    fin_cases a <;> fin_cases b <;> decide +kernel
+  let q : Row := fun j => p 0 ^^^ p j
+  have heq : q = ![0, q 1, q 2, q 3, q 4] := by
+    funext j
+    fin_cases j <;> simp [q]
+  have hpq : bondDefects horizontal q q = 0 := by
+    simpa only [bondDefects, q, xor_cancel] using hp
+  have hcl : cl q 0 = cl p 0 := by simp only [q, cl, xor_cancel]
+  have hoff : Width6.ZeroTemperature.offsets (extend q) =
+      Width6.ZeroTemperature.offsets (extend p) := by
+    funext j
+    fin_cases j <;> simp [Width6.ZeroTemperature.offsets, extend, q]
+  have hh := h (q 1) (q 2) (q 3) (q 4)
+  rw [← heq] at hh
+  rcases hh hpq with ⟨hc, hn⟩ | ⟨hc, hn⟩ | ⟨hc, hn⟩
+  · rw [hcl] at hc
+    rw [hoff] at hn
+    rw [hc, table.1]
+    simp [hn]
+  · rw [hcl] at hc
+    rw [hoff] at hn
+    rw [hc, table.2.1]
+    simp [hn]
+  · rw [hcl] at hc
+    rw [hoff] at hn
+    rw [hc, table.2.2]
+    simp [hn, ← Finset.card_eq_zero]
 
 theorem transition_counts (p : Row) (hp : bondDefects horizontal p p = 0)
     (s : Fin 43) :

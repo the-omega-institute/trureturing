@@ -11,12 +11,16 @@ internal sealed class ZeroTemperatureDocument : IScribeDocumentDefinition
         "The frozen six-column proper-colouring owner supplies the zero-temperature block.",
         H("Width-six proper successors from the zone owner"),
         Blocks(
+            Node("two-rows", "The two-row rectangle", "twoRows",
+                "Two six-column rows form a height-two rectangle, with the source first and the successor second.", DescribeRole.Definition),
+            Node("raw", "The zero-defect successor relation", "raw",
+                "The between-row and target horizontal defect counts both vanish.", DescribeRole.Definition),
             Node("offsets", "The translated row offsets", "offsets",
                 "Offsets translate a proper row by its first entry, producing the owner zone word.", DescribeRole.Definition),
             Node("raw-iff-shift", "The exact allowed-shift image", "raw_iff_shift",
-                "For a horizontally proper source row, the zero-defect successor rows are exactly the owner offset choices translated across that source.", DescribeRole.Theorem),
+                "For a horizontally proper source row, the zero-defect successor rows are exactly the owner offset choices translated across that source. The map sends v to the row j -> v xor p(j); its inverse sends r to r(0) xor p(0). Cancellation gives one successor per allowed shift.", DescribeRole.Theorem),
             Node("transition-counts", "The zero-temperature transfer row", "transition_counts",
-                "For every horizontally proper source and every class column, the zero-budget successor sum equals the frozen width-six transfer row.", DescribeRole.Theorem)),
+                "For every horizontally proper source and every class column, the zero-budget successor sum equals the width-six transfer row computed from the allowed shifts. The horizontal properness assumption is essential; rows whose source already has defects use the defect certificates.", DescribeRole.Theorem)),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
