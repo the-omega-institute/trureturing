@@ -10,9 +10,9 @@ For integer directions f,h with det(f,h)≠0 and AC=det(q,h)det(q,f)≠0, an ori
 
 The map (z,v)↦(det(z−q,h),det(f,v)) lands in Int.divisorsAntidiag(AC). Its injectivity follows from det(f,h)≠0 and the two line equations, without choosing primitive integer generators. Consequently the oriented count is at most the cardinality of that signed divisor antidiagonal, and allowing both endpoint orientations gives twice that cardinality. The constant satisfies |AC|≤8(J₁J₂)²<p².
 
-Nonaligned actual pairs have nonzero evaluations of L and Q and a nonzero quartic Q(Q−LZ), using actual injectivity and κ≠0. Completing the full partner theorem still requires deriving the two modular line orientations and their nondegeneracy from the L-divides-Q branch, proving the absolute bound in the other branch with vertical factors retained, and applying the divisor growth estimate. The finite determinant count is an intermediate component of the B⁵ prime-count prerequisite.
+Nonaligned actual pairs have nonzero evaluations of L and Q and a nonzero quartic Q(Q−LZ), using actual injectivity and κ≠0. The regular dividing branch now supplies both modular line orientations and a divisor count for the actual pencil, under explicit nondegeneracy assumptions on the selected directions. Completing the full partner theorem still requires the nondividing absolute bound, deriving the direction nondegeneracy from the paper hypotheses, and applying divisor growth. The finite determinant count is an intermediate component of the B⁵ prime-count prerequisite.
 
-The regular dividing branch has a homogeneous factor-choice component: evaluating the pencil identity at the direction perpendicular to b kills the b-factor and forces det(b,z)=0 or det(b,v)=0 when c is nonzero. This retains constant and vertical directions. The shifted second and third line equations require additional endpoint hypotheses and are not asserted here.
+In the regular dividing branch, q=b+(1−c)a and det(b,q)≠0. Perpendicular evaluation of the homogeneous pencil identity assigns z or v to the b-line. Writing that endpoint as k b and comparing all three quadratic coefficients gives (ck−1)v=kb−q. Since det(b,q)≠0, ck−1 is nonzero. The relation then yields det(a−q,v−q)=0 and det(z−q,v)=0, or their swapped counterparts. The original mapped pencil supplies the homogeneous identity after cancelling its nonzero base linear factor, including constant and vertical directions. Consequently actual modular-zero partners in this branch satisfy the two-orientation divisor count.
 
 **Definition 1.1 (coordinateDet).**
 
@@ -162,6 +162,8 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.fieldDet`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+
 *Commentary.*
 
 Homogeneous determinant over a commutative coefficient ring.
@@ -174,11 +176,41 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_di
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+
 *Commentary.*
 
-For a nonzero dividing coefficient c, perpendicular homogeneous evaluation forces one of the two endpoint factors to lie on the b-line. Constant and vertical directions are included.
+The regular homogeneous pencil identity forces all three determinant lines in one of the two endpoint orientations.
 
-**Theorem 1.13 (modular_line_divisor_height).**
+**Theorem 1.13 (regular_dividing_actual_line_cover).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_actual_line_cover`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_actual_line_cover` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+The actual mapped pencil supplies the regular homogeneous identity and both modular line orientations.
+
+**Theorem 1.14 (regular_dividing_modular_zero_partner_count).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_modular_zero_partner_count`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_modular_zero_partner_count` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+The actual regular dividing partner set satisfies the two-orientation signed divisor bound.
+
+**Theorem 1.15 (modular_line_divisor_height).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_divisor_height`
 
@@ -205,6 +237,8 @@ The divisor constant has absolute value at most 8(J₁J₂)², strictly less tha
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_pair_integer_lift`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.modular_line_partner_count`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.nonaligned_actual_pair_nondegenerate`
-- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_homogeneous_lines`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.oriented_modular_line_partner_count`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_actual_line_cover`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_homogeneous_lines`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiModularZeroPartners.regular_dividing_modular_zero_partner_count`
 - Dependency: [D5/S3/Arith/CharacterSums/PascadiOriginalCoefficients](PascadiOriginalCoefficients.md)

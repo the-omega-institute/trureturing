@@ -13,8 +13,8 @@ import Mathlib.NumberTheory.Divisors
 
 The finite partner set uses the original endpoint pencil. The determinant count
 below supplies the integer lift and divisor injection for an oriented pair of
-modular lines. Deriving the two orientations from polynomial degeneracy, and
-the nondividing absolute bound, remain separate obligations.
+modular lines. The regular dividing branch supplies both orientations from
+the actual pencil; the nondividing absolute bound remains separate.
 -/
 
 open Polynomial
@@ -229,7 +229,7 @@ private theorem regular_dividing_factor_choice {K : Type*} [Field K]
 
 private theorem regular_dividing_oriented {K : Type*} [Field K]
     (a b q z v : K × K) (c : K)
-    (hc : c ≠ 0) (hD : fieldDet b q ≠ 0)
+    (hD : fieldDet b q ≠ 0)
     (hq : q.1 = b.1 + (1 - c) * a.1 ∧
       q.2 = b.2 + (1 - c) * a.2)
     (hpoly : ∀ s t : K,
@@ -241,7 +241,7 @@ private theorem regular_dividing_oriented {K : Type*} [Field K]
       fieldDet (z.1 - q.1, z.2 - q.2) v = 0 := by
   have hb : b.1 ≠ 0 ∨ b.2 ≠ 0 := by
     by_contra hn
-    push_neg at hn
+    push Not at hn
     apply hD
     simp [fieldDet, hn.1, hn.2]
   obtain ⟨k, hz1, hz2⟩ := fieldDet_zero_scalar b z hb hz
@@ -250,13 +250,13 @@ private theorem regular_dividing_oriented {K : Type*} [Field K]
   let L2 := D * v.2 - (k * b.2 - q.2)
   have h11 : b.1 * L1 = 0 := by
     have h := hpoly 1 0
-    simp only [one_mul, zero_mul, add_zero, zero_add] at h
+    simp only [one_mul, zero_mul, add_zero] at h
     rw [hz1] at h
     dsimp [L1, D]
     linear_combination h
   have h22 : b.2 * L2 = 0 := by
     have h := hpoly 0 1
-    simp only [one_mul, zero_mul, add_zero, zero_add] at h
+    simp only [one_mul, zero_mul, zero_add] at h
     rw [hz2] at h
     dsimp [L2, D]
     linear_combination h
@@ -326,14 +326,140 @@ theorem regular_dividing_homogeneous_lines {K : Type*} [Field K]
       fieldDet (a.1 - q.1, a.2 - q.2) (z.1 - q.1, z.2 - q.2) = 0 ∧
       fieldDet (v.1 - q.1, v.2 - q.2) z = 0) := by
   rcases regular_dividing_factor_choice b q z v c hc hpoly with hz | hv
-  · exact Or.inl ⟨hz, regular_dividing_oriented a b q z v c hc hD hq hpoly hz⟩
+  · exact Or.inl ⟨hz, regular_dividing_oriented a b q z v c hD hq hpoly hz⟩
   · have hs : ∀ s t : K,
         c * (s * v.1 + t * v.2) * (s * z.1 + t * z.2) =
           (s * (v.1 + z.1 - q.1) + t * (v.2 + z.2 - q.2)) *
             (s * b.1 + t * b.2) := by
       intro s t
       convert hpoly s t using 1 <;> ring
-    exact Or.inr ⟨hv, regular_dividing_oriented a b q v z c hc hD hq hs hv⟩
+    exact Or.inr ⟨hv, regular_dividing_oriented a b q v z c hD hq hs hv⟩
+
+private theorem homogeneous_of_linear_polynomial_identity {K : Type*} [Field K]
+    (b q z v : K × K) (c : K)
+    (h : C c * PrimeCube.linear z.1 z.2 * PrimeCube.linear v.1 v.2 =
+      (PrimeCube.linear z.1 z.2 + PrimeCube.linear v.1 v.2 -
+        PrimeCube.linear q.1 q.2) * PrimeCube.linear b.1 b.2) :
+    ∀ s t : K,
+      c * (s * z.1 + t * z.2) * (s * v.1 + t * v.2) =
+        (s * (z.1 + v.1 - q.1) + t * (z.2 + v.2 - q.2)) *
+          (s * b.1 + t * b.2) := by
+  have hn : C (c * z.1 * v.1) + C (c * (z.1 * v.2 + z.2 * v.1)) * X +
+        C (c * z.2 * v.2) * X^2 =
+      C ((z.1 + v.1 - q.1) * b.1) +
+        C ((z.1 + v.1 - q.1) * b.2 + (z.2 + v.2 - q.2) * b.1) * X +
+        C ((z.2 + v.2 - q.2) * b.2) * X^2 := by
+    convert h using 1 <;>
+      simp only [PrimeCube.linear, Polynomial.C_mul,
+        Polynomial.C_add, Polynomial.C_sub] <;> ring
+  have h0 := congrArg (fun P : K[X] => P.coeff 0) hn
+  have h1 := congrArg (fun P : K[X] => P.coeff 1) hn
+  have h2 := congrArg (fun P : K[X] => P.coeff 2) hn
+  simp only [coeff_add, coeff_C_mul_X_pow, coeff_C_mul_X, coeff_C] at h0 h1 h2
+  norm_num at h0 h1 h2
+  intro s t
+  linear_combination s^2 * h0 + s*t * h1 + t^2 * h2
+
+private def fieldCoordinate (p : ℕ) (z : Coordinate) : ZMod p × ZMod p :=
+  ((z.1 : ZMod p), (z.2 : ZMod p))
+
+private theorem mapped_endpoint_linear {p : ℕ} (q : Coordinate) (e : Endpoint) :
+    (endpointL q e).map (Int.castRingHom (ZMod p)) =
+      PrimeCube.linear ((e.1.1 : ZMod p) + e.2.1 - q.1)
+        ((e.1.2 : ZMod p) + e.2.2 - q.2) := by
+  simp [endpointL, PrimeCube.linear, coeffL, coeffM]
+
+private theorem mapped_endpoint_quadratic {p : ℕ} (e : Endpoint) :
+    (endpointQ e).map (Int.castRingHom (ZMod p)) =
+      PrimeCube.linear (e.1.1 : ZMod p) e.1.2 *
+        PrimeCube.linear (e.2.1 : ZMod p) e.2.2 := by
+  simp [endpointQ, PrimeCube.quadratic, PrimeCube.linear,
+    coeffQ, coeffR, coeffS]
+  ring
+
+private theorem mapped_pencil_homogeneous {p : ℕ} [Fact p.Prime]
+    (q : Coordinate) (base e : Endpoint) (c : ZMod p)
+    (hq : (q.1 : ZMod p) = (base.2.1 : ZMod p) + (1 - c) * base.1.1 ∧
+      (q.2 : ZMod p) = (base.2.2 : ZMod p) + (1 - c) * base.1.2)
+    (ha : (base.1.1 : ZMod p) ≠ 0 ∨ (base.1.2 : ZMod p) ≠ 0)
+    (hzero : (pencil q base e).map (Int.castRingHom (ZMod p)) = 0) :
+    ∀ s t : ZMod p,
+      c * (s * (e.1.1 : ZMod p) + t * e.1.2) *
+          (s * (e.2.1 : ZMod p) + t * e.2.2) =
+        (s * ((e.1.1 : ZMod p) + e.2.1 - q.1) +
+          t * ((e.1.2 : ZMod p) + e.2.2 - q.2)) *
+            (s * (base.2.1 : ZMod p) + t * base.2.2) := by
+  let A := PrimeCube.linear (base.1.1 : ZMod p) base.1.2
+  let B := PrimeCube.linear (base.2.1 : ZMod p) base.2.2
+  let Z := PrimeCube.linear (e.1.1 : ZMod p) e.1.2
+  let V := PrimeCube.linear (e.2.1 : ZMod p) e.2.2
+  let Q := PrimeCube.linear (q.1 : ZMod p) q.2
+  have hA : A ≠ 0 := by
+    intro hz
+    rcases ha with ha1 | ha2
+    · have h := congrArg (fun P : (ZMod p)[X] => P.coeff 0) hz
+      simp [A, PrimeCube.linear] at h
+      exact ha1 h
+    · have h := congrArg (fun P : (ZMod p)[X] => P.coeff 1) hz
+      simp only [A, PrimeCube.linear, coeff_add, coeff_C_mul_X, coeff_C] at h
+      norm_num at h
+      exact ha2 h
+  have hLb : (endpointL q base).map (Int.castRingHom (ZMod p)) = C c * A := by
+    rw [mapped_endpoint_linear]
+    dsimp [A]
+    simp only [hq.1, hq.2]
+    simp [PrimeCube.linear, Polynomial.C_mul, Polynomial.C_add, Polynomial.C_sub]
+    ring
+  have hLe : (endpointL q e).map (Int.castRingHom (ZMod p)) = Z + V - Q := by
+    rw [mapped_endpoint_linear]
+    dsimp [Z, V, Q]
+    simp [PrimeCube.linear, Polynomial.C_add, Polynomial.C_sub]
+    ring
+  have hQb : (endpointQ base).map (Int.castRingHom (ZMod p)) = A * B := by
+    rw [mapped_endpoint_quadratic]
+  have hQe : (endpointQ e).map (Int.castRingHom (ZMod p)) = Z * V := by
+    rw [mapped_endpoint_quadratic]
+  simp only [pencil, Polynomial.map_sub, Polynomial.map_mul] at hzero
+  rw [hLb, hLe, hQb, hQe] at hzero
+  have hfac : A * (C c * Z * V - (Z + V - Q) * B) = 0 := by
+    linear_combination hzero
+  have hquad : C c * Z * V = (Z + V - Q) * B := by
+    exact sub_eq_zero.mp ((mul_eq_zero.mp hfac).resolve_left hA)
+  exact homogeneous_of_linear_polynomial_identity
+    (fieldCoordinate p base.2) (fieldCoordinate p q)
+    (fieldCoordinate p e.1) (fieldCoordinate p e.2) c hquad
+
+/-- The actual mapped pencil in the regular dividing branch produces both
+orientations of the three determinant lines, including vertical factors. -/
+theorem regular_dividing_actual_line_cover {p : ℕ} [Fact p.Prime]
+    (q a b : Coordinate) (e : Endpoint) (c : ZMod p)
+    (hc : c ≠ 0)
+    (hD : (coordinateDet b q : ZMod p) ≠ 0)
+    (hq : (q.1 : ZMod p) = (b.1 : ZMod p) + (1 - c) * a.1 ∧
+      (q.2 : ZMod p) = (b.2 : ZMod p) + (1 - c) * a.2)
+    (hzero : (pencil q (a, b) e).map (Int.castRingHom (ZMod p)) = 0) :
+    ModularLinePair p q b (a - q) e ∨
+      ModularLinePair p q b (a - q) e.swap := by
+  have hD' : fieldDet (fieldCoordinate p b) (fieldCoordinate p q) ≠ 0 := by
+    simpa [fieldDet, fieldCoordinate, coordinateDet] using hD
+  have ha : (a.1 : ZMod p) ≠ 0 ∨ (a.2 : ZMod p) ≠ 0 := by
+    by_contra hn
+    push Not at hn
+    apply hD'
+    dsimp [fieldDet, fieldCoordinate]
+    rw [hq.1, hq.2, hn.1, hn.2]
+    ring
+  have hp := mapped_pencil_homogeneous q (a, b) e c hq ha hzero
+  have hl := regular_dividing_homogeneous_lines
+    (fieldCoordinate p a) (fieldCoordinate p b) (fieldCoordinate p q)
+    (fieldCoordinate p e.1) (fieldCoordinate p e.2) c hc hD' hq hp
+  rcases hl with hl | hl
+  · left
+    simpa [ModularLinePair, fieldDet, fieldCoordinate, coordinateDet,
+      Int.cast_sub, Int.cast_mul] using hl
+  · right
+    simpa [ModularLinePair, fieldDet, fieldCoordinate, coordinateDet,
+      Int.cast_sub, Int.cast_mul] using hl
 
 /-- The small determinant, rather than the divisor product height, lifts to zero.
 No integer collinearity or integer factorization is assumed. -/
@@ -480,6 +606,34 @@ theorem modular_line_partner_count {p : ℕ} {J₁ J₂ : ℝ}
   rw [hswap] at hc
   have hb := oriented_modular_line_partner_count E q f h hq hf hh hE hsmall hΔ hAC
   omega
+
+/-- The actual regular dividing branch is bounded by the signed divisor
+count, with the line cover supplied by its mapped pencil. -/
+theorem regular_dividing_modular_zero_partner_count {p : ℕ} [Fact p.Prime]
+    {J₁ J₂ : ℝ} (E : Finset Coordinate) (α β : ZMod p)
+    (q a b : Coordinate) (c : ZMod p)
+    (hqBound : CoordinateBound J₁ J₂ q)
+    (hbBound : CoordinateBound J₁ J₂ b)
+    (hhBound : CoordinateBound (2 * J₁) (2 * J₂) (a - q))
+    (hE : ∀ z ∈ E, CoordinateBound J₁ J₂ z)
+    (hsmall : 8 * J₁ * J₂ < p)
+    (hc : c ≠ 0)
+    (hD : (coordinateDet b q : ZMod p) ≠ 0)
+    (hq : (q.1 : ZMod p) = (b.1 : ZMod p) + (1 - c) * a.1 ∧
+      (q.2 : ZMod p) = (b.2 : ZMod p) + (1 - c) * a.2)
+    (hΔ : coordinateDet b (a - q) ≠ 0)
+    (hAC : coordinateDet q (a - q) * coordinateDet q b ≠ 0) :
+    (modularZeroPartners E α β q (a, b)).card ≤
+      2 * (Int.divisorsAntidiag
+        (coordinateDet q (a - q) * coordinateDet q b)).card := by
+  apply le_trans ?_
+    (modular_line_partner_count E q b (a - q) hqBound hbBound hhBound hE
+      hsmall hΔ hAC).1
+  apply Finset.card_le_card
+  intro e he
+  obtain ⟨hm, _, hp⟩ := Finset.mem_filter.mp he
+  exact Finset.mem_filter.mpr ⟨hm,
+    regular_dividing_actual_line_cover q a b e c hc hD hq hp⟩
 
 end
 end D5.S3.Arith.CharacterSums.Original
