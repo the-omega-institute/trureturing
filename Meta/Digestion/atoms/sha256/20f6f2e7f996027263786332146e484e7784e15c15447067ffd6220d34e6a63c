@@ -1,0 +1,2 @@
+* [IX120.11—120.12][Q145IX]给固定**整张**原球面上的 Lipschitz 效应及准确原边区间。具体地，写 $D_p=c_p+B_p\overline{\mathbb B}^3$、$s(t)=c_p+B_pt$，其中 $B_p$ 单射；取 $H_i\in L_p$ 满足 $H(c_p+B_pw)=w$。则有限 Lipschitz 方向函数及原泛函公式为
+

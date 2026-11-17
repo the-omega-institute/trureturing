@@ -98,7 +98,21 @@ $$\forall n: Nat, ((2 \leq n) \implies (\forall f: ((\operatorname{Fin}\left(n\r
 
 Write c(i,j)=beta(f(i,j)), where beta identifies the complementary pairs {0,7}, {1,6}, {2,5}, {3,4}. The binary operation xor is bitwise exclusive-or on Fin 4. Every adjacent square has four distinct pair colours. The xor of its upper edge equals that of its lower edge, and likewise for its left and right edges. Induction along rows and columns gives the displayed reconstruction. Horizontal and vertical increments are nonzero, and every horizontal increment differs from every vertical increment because the antidiagonal cells are adjacent. The first square also contains all four pair colours. Strict precedence then forces the literal colours one, two and three to have appeared within the first two rows. There are two allowed nonzero vertical increments when all five horizontal increments agree, and one otherwise. This is a count of pair increments, not yet a count of signed colour-row continuations. The zone correspondence is the algebraic rectangular form of Eppstein's published kinggraph construction. This statement concerns the original literal functions and does not replace their count with a labelled count.
 
-**Theorem 1.8 (The complete literal count and formal series).**
+**Theorem 1.8 (Twenty-four labelings per canonical pattern).**
+
+$$\forall C: \operatorname{Type}, ([\operatorname{Fintype}\left(C\right)], [\operatorname{LinearOrder}\left(C\right)], \forall S: ((C) \to \operatorname{Fin}\left(4\right)) \to \operatorname{Prop}, ((\forall e: \operatorname{Equiv}.\operatorname{Perm}\left(\operatorname{Fin}\left(4\right)\right), (\forall P: (C) \to \operatorname{Fin}\left(4\right), ((S\left(\operatorname{Function}.\operatorname{comp}\left(e, P\right)\right)) \Leftrightarrow (S\left(P\right))))) \implies ((\forall P: (C) \to \operatorname{Fin}\left(4\right), ((S\left(P\right)) \implies (\operatorname{Function}.\operatorname{Surjective}\left(P\right)))) \implies (\operatorname{Nat}.\operatorname{card}\left(\{P: (C) \to \operatorname{Fin}\left(4\right) \Vert S\left(P\right)\}\right) = 24 \cdot \operatorname{Nat}.\operatorname{card}\left(\{P: (C) \to \operatorname{Fin}\left(4\right) \Vert (S\left(P\right)) \land (\operatorname{Canonical}\left(P\right))\}\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.canonical_pattern_card4` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233166: normalized eight-colour six-column king strips*. URL: <https://oeis.org/A233166>.
+
+*Commentary.*
+
+The cell type C is arbitrary, finite and linearly ordered. The predicate S is invariant under every permutation of Fin 4, and every pattern satisfying S uses all four labels. Canonical retains the original first-occurrence normalization. Each canonical pattern therefore has exactly twenty-four distinct labelings. The surjectivity hypothesis is essential to the permutation factor; the theorem imposes no rectangle or adjacency hypothesis.
+
+**Theorem 1.9 (The complete literal count and formal series).**
 
 $$(\operatorname{a}\left(1\right) = 236) \land ((\operatorname{PowerSeries}.\operatorname{mk}\left(\lambda n: Nat \mapsto (\operatorname{a}\left(n\right): Rat)\right) = 4 \cdot X \cdot \left(59 - 10304 \cdot X + 356352 \cdot (X)^{2}\right) \cdot (\left(1 - 64 \cdot X\right) \cdot \left(1 - 128 \cdot X\right))^{-1} \operatorname{in} \operatorname{PowerSeries}\left(Rat\right)) \land ((\forall n: Nat, ((2 \leq n) \implies (\operatorname{a}\left(n\right) = (64)^{n - 1} \cdot \left((2)^{n} + 60\right)))) \land (\forall n: Nat, ((4 \leq n) \implies ((\operatorname{a}\left(n\right): Int) = 192 \cdot (\operatorname{a}\left(n - 1\right): Int) - 8192 \cdot (\operatorname{a}\left(n - 2\right): Int))))))$$
 
@@ -125,6 +139,7 @@ The height-one certificate uses canonical proper pair words and the weight 2^(6-
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.Legal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.Proper`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.a`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.canonical_pattern_card4`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.claim`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.pair_rectangle`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.result`

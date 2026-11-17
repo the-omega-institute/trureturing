@@ -1,0 +1,9 @@
+## 7. Fibonacci/Lucas arithmetic supplies a separate fast-power target
+
+Fix N>=2 and units Q_0 modulo N. Write
+
+$$A_{P,Q_0}=\begin{pmatrix}P&-Q_0\\1&0\end{pmatrix},\qquad
+T_{P,Q_0}(x,y)=(Px-Q_0y,x)\pmod N.$$
+
+Its determinant Q_0 is a unit, so this is a permutation of (Z/NZ)^2 and hence defines a permutation unitary on the corresponding register. The companion convention agrees with `LucasCompanion.lean`. Only finite-ring instances are used here; an arbitrary real companion matrix is not directly declared unitary.
+

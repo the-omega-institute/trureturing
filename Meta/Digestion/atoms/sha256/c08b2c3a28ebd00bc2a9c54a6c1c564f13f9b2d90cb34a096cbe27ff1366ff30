@@ -1,0 +1,54 @@
+**定义146.2（粗投影目标、总返回协议与距离）。** 取有限维复 Hilbert 未知码的正交分解，$Q_i=Q_i^\dagger$ 为到 $H_i$ 的正交投影，$n\ge1$：
+
+$$
+H=\bigoplus_{i=1}^{n}H_i,\qquad Q_iQ_j=\delta_{ij}Q_i,
+\qquad \sum_iQ_i=I_H,\qquad k_i=\dim H_i\ge1,\quad d=\sum_i k_i.
+\tag{XII146.1}
+$$
+
+由实际相干端口把它嵌入 $d$ 个已取得模式的单激发子空间，记为 $E$。未知族包含每个 $\rho_{HR}$ 及任意未触参考 $R$。共同初始经典源、制备标签、归档、样本、权限、版本、命令来源、控制 backing 和随机 law 均输入无关，初态为 $C\otimes(E\otimes I_R)\rho(E^\dagger\otimes I_R)$，并附上全部规定真空。输入相关的实际制备标签违反此条件，不能删掉标签来援引定理。一个已知向量的准备、Tag 或来源增长均不供应这个全族。
+
+目标是保留粗标签的 Lüders 仪器
+
+$$
+\mathcal L_Q(X)=\sum_i |i\rangle\langle i|_A\otimes Q_iXQ_i.
+\tag{XII146.2}
+$$
+
+协议返回 $A$，保留全部实际 bank、已取得系统、来源后继、初始 backing 和实际控制／测量／输出记录。允许每个已返回分支只用有限深度与有限资源，而所有分支的深度、资源及历史长度没有共同有限上界。**总返回**指对每个允许输入，有限已返回历史的概率总和／积分为一。形式零概率分支可以不返回；不为它指定归一条件态。不承诺有限期望代价，也不承诺统一最坏代价。
+
+这里准确区分源的两种有限性措辞。RRO V §29.1写明 “A finite adaptive program is a finite tree”，定理29.2的有限并集证明适用于该有限树范围。定义32.2则写明 “It is total on all positive branches and has finite depth and finite resources on every branch”，并且 “No bound on future lawful source size is imposed”；它随后另写 “put all branches in their finite union of bank coordinates”。若沿用 §29.1 的有限树约定，后一有限并集合法，本章包含全部这样的协议。若允许一个协议有无界长度的有限返回历史族，后一并集不必有限，本章以下述实际记录空间替代该比较空间的有限性要求，证明同一下界。若把“正分支”仅解释成单条路径点概率为正，则“每条无限路径点概率零”不推出总返回；合计非返回概率正的过程没有这里要求的归一返回通道，须另定非返回输出和目标，不能以本章距离代表它。这个限制涉及返回通道的类型，不是额外容量界。
+
+令 $\mathsf H_\Pi$ 为真实有限终端记录的可测空间，含实际初始 backing、所有被保留字段、粗标签及实际来源／版本后继。每个 $h$ 只携带其实际有限 bank $B_h$；共有的原码与原 source-bank 因子按取得身份识别，其他实际已取得因素记为 extras。离散记录使用正交直和；连续共同 backing 或实参数记录使用经典—量子直积分的预对偶：
+
+$$
+\Omega(X)=\bigoplus_h\Omega_h(X),\qquad
+\|\Omega\|_1=\sum_h\|\Omega_h\|_1;
+\qquad
+\|\Omega\|_1=\int_{\mathsf H_\Pi}\|\omega(h)\|_1\,d\nu(h)
+\quad\hbox{（可测情形）}.
+\tag{XII146.2a}
+$$
+
+此处直积分是记录可观测代数上的经典—量子态，不把非原子经典 law 写成不可数个 Hilbert 空间迹类正交本征向量。使用通常的标准 Borel 历史空间、可测控制核和可测有限维 bank 纤维；更一般情形需同样存在这些态及条件算子密度。数字有限原生历史满足此条件。每个有限返回历史的算子链给出 CP 分支，按记录直和／积分的正极限仍为 CP；总返回使其迹对每个输入为一，因而得到归一完整输出通道。直和／直积分不预分配任何未发生历史的量子位，不创建无限记录器，不识别不同真实来源后继。有限树时可等价地把未用坐标数学补真空。对无界历史族，仅在每个实际纤维内识别共同因子，无需物理或数学上的有限全局 bank。
+
+全理想 lift 是同一输出接口上的线性归一 CP 通道；其 $A$、原码／原 source-bank 与 $R$ 的**物理张量因子边缘**，对每个输入和参考都精确为嵌入后的 $(\mathcal L_Q\otimes\operatorname{id}_R)(\rho)$，其他原真空按合同保留。不是先投影到码再归一。来源合同规定的其他边缘亦须满足。额外量子因素、端口、真实历史及其他输出全进入比较；本章的上界保持原经典源不变。记允许的 lift 集合为 $\mathfrak L_Q(\Pi)$，定义
+
+$$
+\begin{split}
+\Delta(\Pi,\widehat{\mathcal L}_Q)
+ &=\sup_{R,\rho_{HR}}\frac12
+ \|\Omega_\Pi(\rho)-\Omega_{\widehat{\mathcal L}_Q}(\rho)\|_1,\\
+\delta(\mathfrak C,Q)
+ &=\inf_{\Pi\in\mathfrak C}\ \inf_{\widehat{\mathcal L}_Q\in\mathfrak L_Q(\Pi)}
+       \Delta(\Pi,\widehat{\mathcal L}_Q).
+\end{split}
+\tag{XII146.3}
+$$
+
+选择的是服务整个未知族的一个协议与一个线性 lift，然后取全部输入／参考的 supremum；不是逐输入重新选择 lift。内层空集的 infimum 取 $+\infty$。lift 的记录概率可与实际概率不同；只要满足原接口，它可任意重新分配理想记录质量。
+
+记满足定义146.1—146.2的总返回目录为 $\mathfrak C_{\rm res}^{\rm ret}$，其中包括任意已解析数守恒酉的下界放宽；其有限树子目录为 $\mathfrak C_{\rm res}^{\rm fin}$。实角参考目录 $\mathfrak C_{\rm ref}^{\rm fin}$ 另准许所需有限实角门列表及指定有限分布的共同经典选择；每个参考门有固定标识和指定矩阵，解析记录保留实际选择。任意实数的精确矩阵是数学参考权限，不声称已有其有限位物理参数发生器。$\mathfrak C_{\rm dy}^{\rm fin}$ 只执行有限 signed-dyadic $P/B$，并须另供有效目标框架角括号、有限公平经典位及完整保留记录。上标 ret 允许相同权限下的全部总返回历史族。以上目录都承担146.7的同一原来源与实际资源合同。
+
+为准确陈述精度闭包，记 $\mathcal E_{\rm dy}(Q)=\{\Delta(\Pi,\widehat{\mathcal L}_Q):\Pi\in\mathfrak C_{\rm dy}^{\rm fin},\ \widehat{\mathcal L}_Q\in\mathfrak L_Q(\Pi)\}\subseteq[0,1]$，并在实数空间取其闭包 $\overline{\mathcal E_{\rm dy}(Q)}$。这保留每次比较中的所有真实命令和记录；不同精度的命令标签不被识别或删除。误差值可趋于同一极限，不意味着携带不同精度字符串的全输出通道在一个固定接口上范数收敛。
+

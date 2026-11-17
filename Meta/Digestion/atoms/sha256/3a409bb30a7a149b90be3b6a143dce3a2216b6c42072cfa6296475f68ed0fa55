@@ -1,0 +1,56 @@
+**一、复用全点紧投影覆盖，限制每个紧纯子集的维数。** 全部原标签的 Inj 和四维法向已由上述 THREE_COPY VIII130.2、IX119.10及137.2支付，直接记为
+
+$$
+D_p=D_q\Longrightarrow p=q,\qquad \dim L_p=4\quad(p\in P).
+\tag{XI142.5}
+$$
+
+这里不重证沿有限原零边的冗余传播，也不将完整确认菜单缩为完整暴露族。原法向与 $A$ 中外法向的准确对应直接复用 [BILATERAL VIII121.6证明中的式(121.17)][Q142BVIII]，亦见 [SAME_READBACK128.3][Q142SR]：
+
+$$
+N_p\overset\sim\longrightarrow\widehat N_K(p),\qquad h\longmapsto-h|_{H_0},\qquad
+\dim\operatorname{span}\widehat N_K(p)=4\quad(p\in P).
+\tag{XI142.6}
+$$
+
+同一个原 $K$ 是八维仿射空间 $A$ 中有非空内部的紧凸体。对这个 $K$ 直接应用 [SAME_READBACK引理128.2及其证明的紧投影结论][Q142SR]，取该引理的环境维数 $n=8$、锥张成维数索引 $k=4$。得到
+
+$$
+P\subseteq\Sigma_4(K)\subseteq\bigcup_{j\ge1}X_j,\qquad
+\Sigma_4(K)=\{z\in M:\dim\operatorname{span}\widehat N_K(z)\ge4\},\qquad X_j\subset M\text{ 紧}.
+\tag{XI142.7}
+$$
+
+该源证明给每个 $X_j$ 一个到四维线性空间 $F_j$ 的正交投影 $\pi_j$，满足
+
+$$
+\dim F_j=8-4=4,\qquad
+\|z-w\|\le\frac2{\sqrt3}\|\pi_jz-\pi_jw\|\quad(z,w\in X_j).
+\tag{XI142.8}
+$$
+
+故投影在 $X_j$ 上单射。这一全点、紧层及同一投影的接口也被 BILATERAL VIII121.6明确复用；它由原凸法向单调性与有理有限见证取得，不是几乎处处的可求长覆盖。其一般凸体证明不要求 $P$ 紧、关联开放或额外种子。本章不重新构造该覆盖。
+
+给任意紧 $T\subset P$，置
+
+$$
+T_j=T\cap X_j,\qquad T=\bigcup_{j\ge1}T_j.
+\tag{XI142.9}
+$$
+
+各 $T_j$ 是 $T$ 中的紧闭子集。投影将它同胚到 $F_j\cong\mathbb R^4$ 的一个紧子集，所以
+
+$$
+\dim_{\rm cov}T_j=\dim_{\rm cov}\pi_j(T_j)\le4.
+\tag{XI142.10}
+$$
+
+这里使用覆盖维数对闭子集的单调性及 $\dim\mathbb R^4=4$，准确见 [Engelking，Theorems 3.1.4、1.8.2][Q142En]。同书 **Theorem 3.1.8，印刷页212** 的闭子空间可数和定理要求：正规空间为一列闭子空间的并，且各闭子空间的覆盖维数至多同一个整数 $n$；结论为全空间覆盖维数至多 $n$。其 Lemma 3.1.6—Proposition 3.1.7 的证明在页210—212。此处 $T$ 紧度量，因而正规；$T_j$ 闭、可数且覆盖 $T$。因此
+
+$$
+\boxed{\text{每个紧 }T\subset P\text{ 都满足 }\dim_{\rm cov}T\le4.}
+\tag{XI142.11}
+$$
+
+未假设整个 $P$ 紧或闭，也未把四维 $Q$ 当作 $P$ 的维数界。
+

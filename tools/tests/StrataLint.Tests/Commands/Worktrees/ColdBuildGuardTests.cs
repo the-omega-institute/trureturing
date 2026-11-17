@@ -6,6 +6,69 @@ namespace StrataLint.Tests;
 public sealed partial class WorktreeCommandTests
 {
     [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    public void ConsentedLinkedColdBuildFetchesOnlyDependenciesWithoutDonorOrArchive(
+        bool matchingStamp, bool cacheGetFails)
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        var target = AddColdGuardWorktree(repository.Path, "independent-cold-lane");
+        if (matchingStamp) StampCache(target);
+        var retained = Path.Combine(target, ".lake", "packages", "retained-source");
+        Directory.CreateDirectory(Path.GetDirectoryName(retained)!);
+        File.WriteAllText(retained, "preserved");
+        var runner = new RecordingWorktreeProcessRunner { FailLake = cacheGetFails };
+        var cloner = new RecordingDirectoryCloner();
+
+        var result = LeanCacheEnsureCommand.RunWithWriter(target,
+            ["--", "lake", "build", "D5.Target"], runner, cloner,
+            FileSystemLeanCacheStateProbe.Instance, _ => "1");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Empty(cloner.Invocations);
+        Assert.Equal(0, runner.ArchiveInvocations);
+        Assert.Equal("preserved", File.ReadAllText(retained));
+        Assert.False(Directory.Exists(Path.Combine(repository.Path, ".lake")));
+        Assert.Single(runner.Invocations, static call =>
+            call.FileName == "lake" && call.Arguments.SequenceEqual(["build", "D5.Target"]));
+        Assert.Equal(matchingStamp ? 0 : 1, runner.Invocations.Count(static call =>
+            call.FileName == "lake" && call.Arguments.SequenceEqual(["exe", "cache", "get"])));
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("donor").ValueKind);
+        Assert.Equal("cold", receipt.RootElement.GetProperty("project_olean_state").GetString());
+        Assert.True(receipt.RootElement.GetProperty("cold_build_consent").GetBoolean());
+        Assert.Equal(cacheGetFails ? "degraded" : matchingStamp ? "present" : "fetched",
+            receipt.RootElement.GetProperty("status").GetString());
+        using var released = LeanCacheWriterGuard.TryAcquire(Path.Combine(target, ".lake"));
+        Assert.NotNull(released);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("true")]
+    [InlineData("1 ")]
+    public void LinkedColdBuildWithoutExactConsentDoesNotFetchOrRun(string? consent)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var target = AddColdGuardWorktree(repository.Path, "unauthorized-cold-lane");
+        var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner();
+
+        var result = LeanCacheEnsureCommand.RunWithWriter(target,
+            ["--", "lake", "build"], runner, cloner,
+            FileSystemLeanCacheStateProbe.Instance, _ => consent);
+
+        Assert.False(result.Success);
+        Assert.Empty(cloner.Invocations);
+        Assert.Equal(0, runner.ArchiveInvocations);
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "lake");
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void ProjectColdWithoutConsentRejectsWrappedBuildWithExecutableCacheCommand(bool mathlibWarm)

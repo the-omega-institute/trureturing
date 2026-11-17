@@ -71,7 +71,9 @@ internal static partial class LeanCacheEnsureCommand
             removePartial: null,
             continueOnCacheGetFailure: true,
             stateProbe,
-            out var cacheState, donorRepository, refreshWarmArchive: false);
+            out var cacheState, donorRepository, refreshWarmArchive: false,
+            readColdBuildConsent: () => string.Equals(
+                readEnvironment(ColdBuildConsentVariable), "1", StringComparison.Ordinal));
         if (!ensured.Success) return ensured;
 
         var receipt = ensured.Output;

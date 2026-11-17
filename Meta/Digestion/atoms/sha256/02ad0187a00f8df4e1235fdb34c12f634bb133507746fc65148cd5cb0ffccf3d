@@ -1,0 +1,41 @@
+**定理 279.3（无法共用一只门的差额恰为有限混合缺口）。** 对279.3的任意 $S$，记 $d=\dim_{\mathbb R}V\ge1$，并定义
+
+$$
+\begin{aligned}
+\delta_S&=\min_{h\in\mathcal E(S)}\max_{x\in K}\bigl(h(x)-t_S(x)\bigr),\\
+J_S(\lambda;x_1,\ldots,x_k)
+&=t_S\!\left(\sum_{i=1}^k\lambda_i x_i\right)
+-\sum_{i=1}^k\lambda_i t_S(x_i),\qquad
+\lambda_i\ge0,\quad\sum_i\lambda_i=1.
+\end{aligned}
+\tag{279.4}
+$$
+
+所有差额非负，且有达到的精确等式
+
+$$
+\boxed{\quad
+\delta_S=\max_{1\le k\le d}\ \max_{\lambda\in\Delta_k,\ x_i\in K}
+ J_S(\lambda;x_1,\ldots,x_k).
+\quad}
+\tag{279.5}
+$$
+
+因此，least不存在当且仅当 $\delta_S>0$，也当且仅当某两个原输入有严格正中点缺口。最多 $d$ 个原输入足以达到最大缺口；不要求这些输入纯，也不把有限见证界称为一份可取得或高效搜索的算法。
+
+证明。置 $H=\operatorname{conv}\{(x,t_S(x)):x\in K\}\subset V\times\mathbb R$。图紧且有限维，故 $H$ 紧凸。对紧凸的 $H$ 与 $\mathcal E(S)$，连续双仿射函数 $L((x,a),h)=h(x)-a$ 满足[Sion, Theorem3.4][Q279S]的全部条件。于是
+
+$$
+\delta_S
+=\min_h\max_{(x,a)\in H}(h(x)-a)
+=\max_{(x,a)\in H}\min_h(h(x)-a)
+=\max_{(x,a)\in H}(t_S(x)-a).
+\tag{279.6}
+$$
+
+右侧把同一实际混合的平均读数与混后最低读数比较，没有把分别可达的最优值宣称同时可达。最小化一侧的单个 $h$ 恰承担同时性。两边达到，由有限维紧性及连续性保证。
+
+固定最后一式的最大点并在其原重心 $x$ 下最小化 $a$。图位于实维至多 $d$ 的仿射空间；Carathéodory先给至多 $d+1$ 个图点。若正权点数超过 $d$，其原输入有非零仿射关系 $\sum_i\alpha_i x_i=0$、$\sum_i\alpha_i=0$。沿 $\lambda_i+s\alpha_i$ 移动，选择不增加 $\sum_i\lambda_it_S(x_i)$ 的方向，直到一个正权消失；原重心及非负权保持。因原 $a$ 已最小，值必不变。至多 $d$ 个图点遂达到同一最大值，得到(279.5)。权单纯形与 $K^d$ 紧，也直接给该有限最大值达到。
+
+$\delta_S=0$ 时，达到的 $h$ 在全部 $K$ 上等于 $t_S$，所以是least；反向立即成立。若所有中点缺口都零，279.2给least；若没有least，其逆否命题便给某个严格正中点缺口。$\square$
+

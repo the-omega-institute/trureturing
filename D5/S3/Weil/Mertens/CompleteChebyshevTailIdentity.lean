@@ -73,7 +73,7 @@ private lemma damped_integral_tendsto (h : IntegrableOn K (Ioi 1)) :
     simpa only [sub_self, Real.rpow_zero, mul_one] using
       hc.tendsto.mono_left nhdsWithin_le_nhds
 
-private lemma mangoldt_prefix_bigO :
+lemma mangoldt_prefix_bigO :
     (fun n : ℕ => ∑ k ∈ Finset.Icc 1 n, ArithmeticFunction.vonMangoldt k)
       =O[atTop] (fun n : ℕ => (n : ℝ) ^ (1 : ℝ)) := by
   refine IsBigO.of_bound (Real.log 4 + 4) (Eventually.of_forall fun n => ?_)

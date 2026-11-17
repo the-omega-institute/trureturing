@@ -37,6 +37,8 @@ internal sealed class HardinA233260LiteralDocument : IScribeDocumentDefinition
                 + "remaining labels alternate with column parity. Exactly one such "
                 + "pattern is canonical. Summing the two possible lift weights gives "
                 + "the displayed identity.")),
+            Node("pair_base", "The first pair-label recurrence", PairFormula(false), true, false),
+            Node("pair_tail", "The pair-label recurrence at every larger width", PairFormula(true), true, false),
             Node("result", "The seven-lag integer recurrence", RecurrenceFormula(), true, true),
             Paragraph(Text("Column states record five independent pair labels. Relabelling "
                 + "reduces their transitions to forty-one classes. The transfer polynomial is "
@@ -93,6 +95,15 @@ internal sealed class HardinA233260LiteralDocument : IScribeDocumentDefinition
         var n=V("n"); var p=V("P"); var arrays=Arrow(Product(Fin(D(5)),Fin(n)),Fin(D(3)));
         return All("n",Q("Nat"),Eq(Own("L",n),Call("Finset.card",
             Call("Finset.filter",Fn("P",arrays,Own("Proper",p)),Q("Finset.univ")))));
+    }
+    private static Formula PairFormula(bool tail)
+    {
+        Formula B(int k) => Add(Typed(Own("L", tail ? Add(V("n"), Num(k)) : Num(k)), Q("Int")), D(6));
+        int d = tail ? 1 : 0;
+        var formula = Eq(B(12+d), Sub(Add(Sub(Add(Add(Sub(Mul(Num(16), B(11+d)),
+            Mul(Num(64), B(10+d))), Mul(Num(76), B(9+d))), Mul(Num(17), B(8+d))),
+            Mul(Num(84), B(7+d))), Mul(Num(48), B(6+d))), Mul(Num(8), B(5+d))));
+        return tail ? All("n", Q("Nat"), formula) : formula;
     }
     private static Formula RecurrenceFormula()
     {
