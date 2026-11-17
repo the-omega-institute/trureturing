@@ -1,0 +1,4 @@
+## 9　把问题重新放回 $P/NP$ 的适用范围
+
+$P$ 与 $NP$ 讨论有限字符串上的可判定问题。通用 $\operatorname{HTP}(\mathbb Q)$ 在 $\mathsf H_{\mathbb Z/\mathbb Q}$ 下不可判定，因此它既不在 $P$ 也不在 $NP$；这不回答两类之间是否相等。
+

@@ -8,7 +8,7 @@ internal sealed class HannaLagrangeParityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PowerSeries/HannaLagrangeParity.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2023a365574");
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/hanna2023a365574");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Triangular inversion determines Hanna's integral series and dyadic odd support.",
