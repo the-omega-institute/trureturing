@@ -1,0 +1,74 @@
+**定义 25.15（原来源方程与两种约化尺度）。** 采用
+[X，定义14.1–14.3及式(14.4)–(14.12)](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_X.md)
+和 [VI，定义24.1、定理24.5](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VI.md)
+的原模型与源坐标。对实数 $u,n,a,\theta,\xi,b$，记
+
+$$
+\begin{gathered}
+h=u(u+1),\qquad \ell=u^2+3u-4,\qquad
+\alpha=3h-10,\qquad \beta=8u^2+18u-30,\\
+P(u,n,a)=
+\begin{pmatrix}
+n+a-3u-1&n+2a-4u-3\\
+1+2u-a&2+3u-n-a
+\end{pmatrix},\\
+\mathcal Q=a^2-an-n^2-2(u+1)a+2(2u+1)n-u^2+u+1,\\
+\Phi=\alpha a+\beta n-23h,\qquad
+\Delta=nh+an\ell-4ah,\\
+\mathcal T=(\theta n-a)\Phi-5\xi\Delta,\\
+\Psi_6=(n+2a)(10u^2+19u-36)-10a\ell-29h,\qquad
+\mathcal L=\Psi_6-b\Phi.
+\end{gathered}
+\tag{25.37.1}
+$$
+
+这里 $P$ 是 X (14.5) 的同一个源逆，$\mathcal Q=\det P$。
+固定 $b_0=29/23$，置
+
+$$
+\bar A=143u^2+97u-446,\qquad
+\bar B=-2u^2-85u+42.
+\tag{25.37.2}
+$$
+
+X (14.9) 在此给 $A=\bar A/23$、$B=\bar B/23$、$C=0$，
+从而 $\mathcal L=(\bar Aa+\bar Bn)/23$。在这个来源直线尺度下定义
+
+$$
+\begin{aligned}
+D_b&=-\alpha\bar B^2
+-(\theta\alpha-\beta-5\xi\ell)\bar A\bar B
++\theta\beta\bar A^2,\\
+N_b&=h\bigl((23+20\xi)\bar A\bar B
+                 +(23\theta+5\xi)\bar A^2\bigr),\\
+\bar q_2&=\bar B^2+\bar A\bar B-\bar A^2,\\
+\bar q_1&=2(u+1)\bar A\bar B+2(2u+1)\bar A^2,\\
+\bar q_0&=(-u^2+u+1)\bar A^2.
+\end{aligned}
+\tag{25.37.3}
+$$
+
+下标 $b$ 标明这一固定 $b_0$ 分支的线性约化；它不指 X (14.12)
+的子式。后者在本节专记为
+
+$$
+N_X=\frac{q_2t_0-t_2q_0}{A},\qquad
+D_X=\frac{t_2q_1-q_2t_1}{A},
+\tag{25.37.4}
+$$
+
+其中 $q_i,t_i$ 始终取 X (14.11) 的原尺度。在 $b=b_0$ 时，
+
+$$
+q_i=\frac{\bar q_i}{23^2},\qquad
+t_2=\frac{D_b}{23^2},\qquad
+t_1=-\frac{N_b}{23^2},\qquad t_0=0.
+\tag{25.37.5}
+$$
+
+若把来源直线的三个系数整体乘 $23$，再用 X (14.11)–(14.12)
+的同一构造，则二次式系数整体乘 $23^2$，两个子式整体乘 $23^3$。
+以此整系数来源线构造的子式记为
+$N_X^{\mathrm{int}}=23^3N_X$、$D_X^{\mathrm{int}}=23^3D_X$；
+它们与 $N_b,D_b$ 仍是不同的约化。
+

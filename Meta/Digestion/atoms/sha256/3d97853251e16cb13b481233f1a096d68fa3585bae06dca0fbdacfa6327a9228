@@ -1,0 +1,80 @@
+### 25.30.2 RRO 的完整回复点与完成历史目标
+
+现在固定 [Sparse Literal History Transport §50](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md#50-有限字面历史的规范下界与语义上树) 的
+有限地址集 $\Sigma^*$（$\Sigma=\{L,R\}$）和四值回复集
+
+$$
+\mathcal A=\{\mathsf{absent},\alpha,\beta,\mathsf{branch}\}.
+$$
+
+令 $r_u(p)\in\mathcal A$ 是该卷的有限树回复。取
+
+$$
+t=\langle\beta,\alpha\rangle=P_2,
+$$
+
+并使用 [Sparse Native Entry Acquisition §§2,11](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_NATIVE_ENTRY_ACQUISITION.md#2-coordinates-that-can-be-earned-without-the-entry) 的已完成 OLD-frontier 操作 $F$。对每个 $r\ge0$，令
+
+$$
+u_r=F^r(t)=\rho^r t=P_{r+2},
+\qquad
+c_r:\Sigma^*\to\mathcal A,
+\qquad
+c_r(p)=r_{u_r}(p).
+$$
+
+$c_r$ 是整个有限地址上的**完整回复点**，不包含调用次数、epoch、provenance
+或控制历史，因而不是有限 transcript。由同一来源、每次均在其已达到且
+有限资源承诺域内完成的递推
+
+$$
+P_0=\alpha,\quad P_1=\beta,\quad
+P_{q+2}=\langle P_{q+1},P_q\rangle
+$$
+
+可归纳得到其最小叶深度为 $\lfloor q/2\rfloor$。因此，对任意
+有限地址深度 $D$，只要 $r\ge2D+2$，便有
+
+$$
+\forall p\in\Sigma^*,\ |p|\le D\Longrightarrow
+c_r(p)=\mathsf{branch}.
+$$
+
+令 $\Omega:\Sigma^*\to\mathcal A$ 为恒取
+$\mathsf{branch}$ 的语义上树（SLH §50 的 $\Omega$）。它只是完成空间中的
+累积点，从不属于有限原来源。并在已达到的
+完整回复点族上定义完成历史目标
+
+$$
+T:\{c_r:r\ge0\}\to\{0,1\},
+\qquad T(c_r)=r\bmod2.
+$$
+
+$c_r$ 彼此不同（例如 $P_{r+2}$ 的叶数随递推增加），所以 $T$ 定义良好。
+这里的奇偶读取的是已经完成的 $F$ 次数；它不是由有限树地址回复的
+某个未声明标签代替的静态属性。
+
+为明确“趋近”所指的观察完成，定义
+
+$$
+\mathcal Y=\mathcal A^{\Sigma^*}
+$$
+
+为离散四值集上的乘积空间；基本柱集由有限 $M\subseteq\Sigma^*$ 和
+指定 $\xi:M\to\mathcal A$ 给出：
+
+$$
+U(M,\xi)=\{c\in\mathcal Y:\forall p\in M,\ c(p)=\xi(p)\}.
+$$
+
+这是本节明确定义的地址观察完成，不是对实际来源空间紧致性、来源像
+或物理实现的额外假设。若 $D(M)=\max_{p\in M}|p|$（空菜单取
+$D(\varnothing)=0$），上述有限深度结论给出
+
+$$
+c_r\longrightarrow\Omega
+\quad(r\to\infty)
+$$
+
+在这个柱拓扑中的逐柱意义。
+

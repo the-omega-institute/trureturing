@@ -1,0 +1,22 @@
+**定理 25.24（完成图像充分性判据）。** 在上述实际完成图像上，观察 $v$ 对完整未来任务足够，当且仅当
+
+$$
+\ker(v)\subseteq\ker(T),
+\qquad\text{等价地存在唯一 }\bar T:v(\mathcal I)\to\mathcal Y
+\text{ 使 }T=\bar T\circ v.
+$$
+
+若把同一观察沿固定 completion 前移，定义 $A=v\circ\operatorname{ret}:\mathcal K\to\mathcal A$，这等价于条件
+
+$$
+A(c)=A(c')
+\Longrightarrow
+t(c)=t(c')\ \land\ \Theta_{t(c)}(c)=\Theta_{t(c')}(c')
+$$
+
+对所有实际切口 $c,c'$ 成立。
+
+**证明。** 这是目标在观察纤维上因子化的充要条件。充分性由 $T$ 在每个 $v$-纤维上的常值性给出；必要性若失败，则同一观察值对应两个不同的完整未来档案，不能定义单值解码器。对 RRO 的 $T=Q_g$，其 §§15–16 的准则把差异具体化为 $(t,\Theta_t)$，并给出合法的 `FetchGrowth` 或 `Next` 见证。∎
+
+这里的“足够”只针对完成后的 Ready 未来任务。它不恢复某个未完成切口的原始尾指针、程序计数器、调用阶段或返回相位；RRO §§17–18 及其 Busy/Ready 合同明确把这些物理切口区分开来。`FetchGrowth`/`Next` 的见证也只发生在 $\mathcal I=\operatorname{ret}(\mathcal K)$ 的合法返回切口上。
+

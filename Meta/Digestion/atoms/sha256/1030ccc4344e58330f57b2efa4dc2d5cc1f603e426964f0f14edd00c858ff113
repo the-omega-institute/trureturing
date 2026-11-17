@@ -1,0 +1,43 @@
+### 25.28.3 隐藏联合关联给出同当前、异后继的具体反例
+
+在同一个两量子比特整体内取
+
+$$
+A=X\otimes I,
+\qquad B=Y\otimes Z,
+\qquad C=Z\otimes Z,
+$$
+
+以及关系态族
+
+$$
+\rho(x,c,z)=\frac14(I+xA+cB+zC),
+\qquad x^2+c^2+z^2\le1.
+$$
+
+令 $H=gC/2$。则
+
+$$
+\dot x=-gc,
+\qquad
+\dot c=gx,
+\qquad
+\dot z=0,
+$$
+
+并保持 $x^2+c^2+z^2$。特别地，
+
+$$
+\rho_\pm=\frac14(I\pm B)
+$$
+
+具有相同的局部边缘 $\rho_S=\rho_E=I/2$，也就是相同的当前局部读数 $x=0$；但 $c=\pm1$，故在 $g\ne0$ 时
+
+$$
+\dot x(\rho_+)=-g,
+\qquad
+\dot x(\rho_-)=+g.
+$$
+
+这是一对真正的“同当前读数、异后继”来源。补入 $c=\langle Y\otimes Z\rangle$ 后，$(x,c,z)$ 在这个指定 Hamiltonian 下闭合并沿关系球旋转。该例中的联合关联可以由可分态实现，因此它证明的是后继信息缺失与关联耦合，不是纠缠或量子性的充分起源。
+

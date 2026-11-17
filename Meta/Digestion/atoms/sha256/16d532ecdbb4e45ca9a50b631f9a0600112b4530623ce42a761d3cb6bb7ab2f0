@@ -1,0 +1,43 @@
+### 25.27.2 正性是从原种子沿实际有限字继承的
+
+记 $\mathcal M(H)=(\operatorname{Tr}(HP_i))_i$，并令
+
+$$
+\mathcal Y_+=\{\mathcal M(\Sigma):\Sigma\succeq0\}.
+$$
+
+有限探针非负并不充分保证属于 $\mathcal Y_+$；分离性只给 Hermitian 表示的唯一性。若原菜单已经独立取得 $y_c=\mathcal M(\Sigma_c)$、$\Sigma_c\succeq0$、$\operatorname{Tr}\Sigma_c=w_c$，则矩阵回拉与实际平衡共同给
+
+$$
+\begin{aligned}
+y_d(i)
+&=\sum_j A_{\gamma ij}\operatorname{Tr}(\Sigma_cP_j)
+ =\operatorname{Tr}(\Sigma_ck_\gamma^*P_i k_\gamma)\\
+&=\operatorname{Tr}(\Sigma_dP_i),
+\qquad \Sigma_d=k_\gamma\Sigma_ck_\gamma^*\succeq0.
+\end{aligned}
+$$
+
+因此 $A_\gamma\mathcal Y_+\subseteq\mathcal Y_+$ 是正种子的矩阵运输性质；某个实际输出确实取得此向量，还依赖 §25.27.1 的来源关系。对从 $c$ 出发、每条边均已实际供应的任意有限字 $v=(\gamma_1,\ldots,\gamma_m)$，按执行顺序置
+
+$$
+\begin{gathered}
+A_v=A_{\gamma_m}\cdots A_{\gamma_1},\qquad
+K_v=k_{\gamma_m}\cdots k_{\gamma_1},\\
+y_{c_v}=A_vy_c=\mathcal M(K_v\Sigma_cK_v^*),
+\qquad w_{c_v}=w_c.
+\end{gathered}
+$$
+
+证明是从空字开始反复应用上一等式。若 $w_c=0$，正种子迹零即 $\Sigma_c=0$，沿途矩阵与探针质量全零，不定义零质量条件概率。不同路径只有抵达同一实际端口、同一组事件与同一参考闭合时，才可用分离性识别当前矩阵；不同端口同矩阵不识别完整历史。原固定 $S$ 全质量条件若适用于某个输出，仍须满足 C139 式 (9.16) 的补角零质量条件，不能改端口名称逃避。
+
+这项保持器是 source-specific、promise-conditional 的实际有限字结论。它只替代新增中间菜单的供给，不产生未授权的边、无限步极限、实际时钟、完整历史恢复或物理实现。若要消费全部原目标，还须逐个原 $(\xi,g,s)$ 供应真实的逆字 $g^*$、随后逆相位字 $d_s^*$、最后同一个共同根，保留原事件及全部分支、参考与记录对应。只有这项完整覆盖也成立时，C139 定理 9.13 才给
+
+$$
+a^{\rm old}_{\xi,g,s}
+=\operatorname{Tr}(\Sigma_\xi gE_sg^*),
+\qquad E_s=d_sE_0d_s^*.
+$$
+
+同矩阵的不同原程序仍各需覆盖；只覆盖子域不能结算全原目标。两只原不等权彩票、两份各自空程序及其记录不由新增平衡彩票替换。
+

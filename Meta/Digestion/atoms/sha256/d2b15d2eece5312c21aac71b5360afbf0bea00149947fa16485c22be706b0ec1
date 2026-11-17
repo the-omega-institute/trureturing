@@ -1,0 +1,18 @@
+### 25.33.3 任意前缀的 post-read-only cap
+
+对每一个原始有限 $\mathsf R(a,f)$，先保留原始 prefix、实际 report/read、
+pure update、已经发生的 configuration 和 archive，然后只从该实际 read cut
+对 $f$ 使用 capped continuation。这个 law 对所有前缀 $a$ 存在，不要求
+$\mathsf{Adm}(a)$；其来源式 (4.11) 为
+
+$$
+\operatorname{TV}\!\left(\mu^{\mathsf R(a,f)},
+\mu_{L,\mathrm{post}}^{a,f}\right)
+\le \min\left\{1,\sum_{i,\ell}C_L(w_{i,\ell},h_\ell)\right\}
+\le \min\{1,2|f|\vartheta_L\}.
+$$
+
+误差只支付后缀 $|f|$；原始前缀、read 和其取得成本完整保留。这个结论不
+声称对每个隐藏过去条件化后仍有同一 bound，也不把 post-read-only law 当作
+读前 capped law。[来源 Theorem 4.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md#4-native-excess-current-bound-and-full-history-composition)
+

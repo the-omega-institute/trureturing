@@ -1,0 +1,40 @@
+### 25.27.4 FIB：固定有限 reservoir 的非塌缩与补偿代价
+
+代价层另复用 `FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md` §160（来源提交 `7f2c87ca26d`），保留其定义 155.1 的完整前件、定义 159.1 的两标签族和命题 134.2 的正系数。这里 $P$ 是原热传播算子，与前面的有限投影 $P_i$ 不同。对固定单射实线性映射 $B:\mathbb R^k\to\ker\Lambda_{134}$、$k\ge1$，定义
+
+$$
+q_B(z)=c\langle gBz,P(gBz)\rangle_m
+=c\|T_{d/2}(gBz)\|_2^2,
+\qquad c>0.
+$$
+
+原热型对非零核方向严格为正，$B$ 单射使 $z\ne0$ 时 $q_B(z)>0$；有限维连续性与单位球面的紧性给
+
+$$
+\alpha_B=\min_{\|z\|_2=1}q_B(z)>0,
+\qquad q_B(z)\ge\alpha_B\|z\|_2^2,
+\qquad K_B=\max_{\|z\|_2=1}\|Bz\|_\infty<\infty.
+$$
+
+因此在同一个固定 reservoir 内旋转单位参数，不能把这项能量压到零。更具体地，令 $h_n\ne0$、$h_n\to0$、$\|z_n\|_2=1$，在标签顺序 $(0,1,3,B)$ 上取
+
+$$
+u_y^{(n)}=f_y+h_n\sigma_yBz_n+h_n^2\tau_yw_n,
+\qquad \sigma=(1,-1,0,0),\quad \tau=(0,0,1,-1).
+$$
+
+若这些元组点态合法、原完整残差为零，且 $\sup_n\|w_n\|_\infty<\infty$，则来源命题 159.3、160.3 给
+
+$$
+\|w_n\|_\infty\ge
+\frac{\alpha_B}{\|\psi_0\|_1+2FK_B|h_n|+K_B^2h_n^2},
+\qquad
+\liminf_n\|w_n\|_\infty\ge\frac{\alpha_B}{\|\psi_0\|_1}>0,
+$$
+
+其中 $F=\max_y\|f_y\|_\infty$、$\psi_0=P(f_0P(gf_0))$，且原前件保证 $0<\|\psi_0\|_1<\infty$。估计使用该元组自己的真实末端 $Pu_3^{(n)}$，不替换成 $Pf_3$；它限制二阶 terminal compensator $w_n$ 的系数大小，并不禁止实际修正量 $h_n^2w_n$ 随幅度趋零，也不保证支付该下界后就有完整解。
+
+这只是一固定有限 reservoir 的 non-collapse／必要代价结论，不是全空间 spectral gap，不给 changing reservoir 的统一常数，也不认证物理取得或有限样本。单射性去掉时，非零 $z\in\ker B$ 已使 $q_B(z)=0$；有限维性去掉时，抽象例 $q(x)=\sum_{j\ge1}2^{-j}|x_j|^2$ 在 $\ell^2$ 上对每个非零 $x$ 为正，却沿单位向量 $e_j$ 趋零。这些例子只标出紧性论证的边界，不构造原 FIB 问题的逃逸解；一般 SRS-20 与 $F_{64}$ 仍未由此解决。
+
+本节是上述仓内结果的 `repo-derived` 综合：新增的是它们对本卷“实际更新保持正表示”与“固定校准方向仍有补偿代价”的具体接口，不把有符号框架、有限维紧性或来源原结论冒称新增原始数学。全部推导仍是纸笔条件数学，未新增或验证 Lean/kernel 声明；实际平衡、全目标覆盖、共同实现及完整物理来源的未决义务保持未决。
+

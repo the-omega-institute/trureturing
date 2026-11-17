@@ -1,0 +1,8 @@
+**推论 25.35.7（与已知 $H$ 的预测工作界相容）。** 已知 $H$ 的 $O(\log H)$ 预测工作空间结果与定理 25.35.6 量词不同：前者可为每个给定有限视界选择一个随 $H$ 变化的预测器，并讨论该视界内的工作空间；这里要求一个 horizon-free 的单一因果 sampler，在每个精确层 $Ln$ 同时面对所有长度的合法前缀，并由同一个源特定 $L$ 给出逐层状态容量下界。因此两者不互相替代或矛盾。
+
+本节保留原 89 载体及其零坐标，只使用原正地址调用、原接缝、原 terminal/failure 坐标和原 stop。没有自由时间索引、已知视界输入、额外读数、reset、postselection、未计费档案或分数物理调用。十调用周期的数学参数不授权在内部时刻观测；节点只由原生持有比的零值处理。source-only 的 $L$ 只是自由词存在性给出的存在常数；本节既不提供 $L$ 的显式数值，也不提供计算它的程序，并不作不可计算性主张。
+
+定理 25.35.6 的新桥是原生矩阵的稠密射影控制、精确等长正前缀射线计数、地址 $1$ 任意入口的节点安全周期核，以及一个不依赖标签的共同未来接缝解码器；闭子群、Tits alternative、自由群中心化、周期协方差、Chebyshev、TV 收缩和有限消息计数均只作为已成熟工具使用。它没有把 seam-output law sampler 描述成一次物理获取独立隐藏配置，也没有给出尾词长度的定量上界或有限视界匹配的下界。
+
+本节的来源对应为：原源与完整联合合同见 [Native Recurrent Quantized Memory，Definitions 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURRENT_QUANTIZED_MEMORY.md)；实际二配置矩阵和非单位根相位见 [Native Finite Horizon Memory Bounds，(2.3)–(2.6)](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_HORIZON_MEMORY_BOUNDS.md)；任意入口的原生最小电流持有比见 [Native Finite Precision Continuation Kernels，(2.11)–(2.12)](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_PRECISION_CONTINUATION_KERNELS.md)；十次原生调用周期核见 [Continuation V，§8.3，(8.3)–(8.9)](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_V.md)；有限状态猜测桥见 [Original Control Event Memory，Theorem 4.3，(EM.13)](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md)。这些引用只承担各自声明的成熟中间工具和源合同，不把不同载体的 ready/read 合同移植到原生 89 源。
+

@@ -3665,3 +3665,262 @@ $$
 于是 $H_{n(H)}\le H$，(25.36.11) 在这个单一指定切口 $m(H)$ 成立。这给出随 $H$ 对数增长、带所示对数修正项的容量界，切口本身亦为 $\log H$ 的量级。对更小 $H$ 不由 (25.36.12) 断言界；适用于所有预算的精确表述仍是逐个 $n$ 的条件 $H\ge H_n$ 与 (25.36.11)。这只是同一个原生定量共同尾桥的标签—状态计数后果，不另计一个独立增益。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 25.37 有理回代图之外的严格正来源与完整世界
+
+**定义 25.15（原来源方程与两种约化尺度）。** 采用
+[X，定义14.1–14.3及式(14.4)–(14.12)](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_X.md)
+和 [VI，定义24.1、定理24.5](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VI.md)
+的原模型与源坐标。对实数 $u,n,a,\theta,\xi,b$，记
+
+$$
+\begin{gathered}
+h=u(u+1),\qquad \ell=u^2+3u-4,\qquad
+\alpha=3h-10,\qquad \beta=8u^2+18u-30,\\
+P(u,n,a)=
+\begin{pmatrix}
+n+a-3u-1&n+2a-4u-3\\
+1+2u-a&2+3u-n-a
+\end{pmatrix},\\
+\mathcal Q=a^2-an-n^2-2(u+1)a+2(2u+1)n-u^2+u+1,\\
+\Phi=\alpha a+\beta n-23h,\qquad
+\Delta=nh+an\ell-4ah,\\
+\mathcal T=(\theta n-a)\Phi-5\xi\Delta,\\
+\Psi_6=(n+2a)(10u^2+19u-36)-10a\ell-29h,\qquad
+\mathcal L=\Psi_6-b\Phi.
+\end{gathered}
+\tag{25.37.1}
+$$
+
+这里 $P$ 是 X (14.5) 的同一个源逆，$\mathcal Q=\det P$。
+固定 $b_0=29/23$，置
+
+$$
+\bar A=143u^2+97u-446,\qquad
+\bar B=-2u^2-85u+42.
+\tag{25.37.2}
+$$
+
+X (14.9) 在此给 $A=\bar A/23$、$B=\bar B/23$、$C=0$，
+从而 $\mathcal L=(\bar Aa+\bar Bn)/23$。在这个来源直线尺度下定义
+
+$$
+\begin{aligned}
+D_b&=-\alpha\bar B^2
+-(\theta\alpha-\beta-5\xi\ell)\bar A\bar B
++\theta\beta\bar A^2,\\
+N_b&=h\bigl((23+20\xi)\bar A\bar B
+                 +(23\theta+5\xi)\bar A^2\bigr),\\
+\bar q_2&=\bar B^2+\bar A\bar B-\bar A^2,\\
+\bar q_1&=2(u+1)\bar A\bar B+2(2u+1)\bar A^2,\\
+\bar q_0&=(-u^2+u+1)\bar A^2.
+\end{aligned}
+\tag{25.37.3}
+$$
+
+下标 $b$ 标明这一固定 $b_0$ 分支的线性约化；它不指 X (14.12)
+的子式。后者在本节专记为
+
+$$
+N_X=\frac{q_2t_0-t_2q_0}{A},\qquad
+D_X=\frac{t_2q_1-q_2t_1}{A},
+\tag{25.37.4}
+$$
+
+其中 $q_i,t_i$ 始终取 X (14.11) 的原尺度。在 $b=b_0$ 时，
+
+$$
+q_i=\frac{\bar q_i}{23^2},\qquad
+t_2=\frac{D_b}{23^2},\qquad
+t_1=-\frac{N_b}{23^2},\qquad t_0=0.
+\tag{25.37.5}
+$$
+
+若把来源直线的三个系数整体乘 $23$，再用 X (14.11)–(14.12)
+的同一构造，则二次式系数整体乘 $23^2$，两个子式整体乘 $23^3$。
+以此整系数来源线构造的子式记为
+$N_X^{\mathrm{int}}=23^3N_X$、$D_X^{\mathrm{int}}=23^3D_X$；
+它们与 $N_b,D_b$ 仍是不同的约化。
+
+**命题 25.16（例外层上的严格正完整世界，repo-derived）。**
+令 $\xi_0=-35/29$，并定义
+
+$$
+\begin{aligned}
+G(u)={}&1759u^6+5563u^5-12509u^4-34373u^3\\
+       &+41706u^2+55584u-60432,\\
+I_u={}&(1.56724068541049,\ 1.56724068541051),\\
+I_n={}&(2.1421247,\ 2.1421249),\\
+\theta(u)={}&-\frac{(23+20\xi_0)\bar B(u)+5\xi_0\bar A(u)}
+                         {23\bar A(u)},\qquad
+k(u)=-\frac{\bar B(u)}{\bar A(u)}.
+\end{aligned}
+\tag{25.37.6}
+$$
+
+所有有限小数均表示精确有理数。$G$ 在 $I_u$ 内恰有一个实根 $u_*$；
+方程 $\mathcal Q(u_*,n,k(u_*)n)=0$ 在 $I_n$ 内恰有一个实根 $n_*$。
+取 $a_*=k(u_*)n_*$、$\theta_*=\theta(u_*)$，则在
+$(u_*,n_*,a_*,\theta_*,\xi_0,b_0)$ 上，
+
+$$
+\begin{gathered}
+\mathcal Q=\mathcal T=\mathcal L=0,\qquad \bar A>0,\qquad
+N_b=D_b=N_X=D_X=0,\\
+P_{00}>0.0362729619,\qquad P_{01}>0.0649025947,\\
+P_{10}>0.5386107168,\qquad P_{11}>0.9637265022,\\
+-46.8361104<\Phi<-46.8361061.
+\end{gathered}
+\tag{25.37.7}
+$$
+
+特别地，$P_*=P(u_*,n_*,a_*)$ 是逐项严格正、秩一、迹一来源。
+它对应原模型的一个完整世界
+$W_*=(P_*,g_*,d_*)$，其中 $g_*\ne0$、$\deg g_*\le3$，
+且属于同一个原时钟下的实际纤维
+
+$$
+\begin{gathered}
+H^-_{\theta_*,\xi_0}
+=(0,M,0,M,0,J,6,M,24\theta_*,M,60(1+\theta_*+\xi_0)),\\
+W_*\in\mathcal F(H^-_{\theta_*,\xi_0},M,w_*),\qquad
+w_*=120(1+2\theta_*)+120\xi_0b_0.
+\end{gathered}
+\tag{25.37.8}
+$$
+
+因此 $\bar A D_b\ne0$ 上的有理图 $n=N_b/D_b$ 不能覆盖
+全部严格正实际来源；X 的子式比值 $N_X/D_X$ 在这个来源上也无定义。
+
+证明。先给根与正性的有理界。令 $l_u,r_u,l_n,r_n$ 分别为
+$I_u,I_n$ 的左右端点。对 $u\in[l_u,r_u]$，把来源二次式写成
+
+$$
+\begin{aligned}
+f_u(n)&=\mathcal Q(u,n,k(u)n)=c_2(u)n^2+c_1(u)n+c_0(u),\\
+c_2&=k^2-k-1,\qquad
+c_1=2(2u+1)-2(u+1)k,\qquad c_0=-u^2+u+1.
+\end{aligned}
+\tag{25.37.9}
+$$
+
+以下界由有理区间运算给出：多项式按降幂 Horner 递推，
+乘法取四个端点乘积的最小值与最大值，除法仅用于不含零的区间；
+$k$ 使用 (25.37.2) 的原有理式，
+$f_u$ 使用 (25.37.9)。每一行从原端点计算，表中上下界向外取整，
+不把其他行已取整的界代回。
+
+| 表达式与范围 | 有理下界 | 有理上界 |
+| --- | ---: | ---: |
+| $G(l_u)$ | $-4.823\cdot10^{-11}$ | $-4.822\cdot10^{-11}$ |
+| $G(r_u)$ | $1.1205\cdot10^{-10}$ | $1.1206\cdot10^{-10}$ |
+| $G'(u)$，$u\in[l_u,r_u]$ | $8014.02814218$ | $8014.02814220$ |
+| $\bar A(u)$，$u\in[l_u,r_u]$ | $57.2651478236$ | $57.2651478238$ |
+| $\bar B(u)$，$u\in[l_u,r_u]$ | $-96.1279449920$ | $-96.1279449918$ |
+| $f_u(l_n)$，$u\in[l_u,r_u]$ | $-2.0689\cdot10^{-8}$ | $-2.0677\cdot10^{-8}$ |
+| $f_u(r_n)$，$u\in[l_u,r_u]$ | $2.8587\cdot10^{-8}$ | $2.8600\cdot10^{-8}$ |
+| $2c_2(u)n+c_1(u)$，$(u,n)\in[l_u,r_u]\times[l_n,r_n]$ | $0.2463839515$ | $0.2463840073$ |
+
+介值定理与 $G'>0$ 给 $u_*$ 的存在唯一性；$\bar A>0$
+保证整个区间上 $k$ 有定义。两端异号与
+$\partial f_u/\partial n=2c_2n+c_1>0$ 给 $n_*$ 的存在唯一性。
+将同一有理区间代入
+
+$$
+\begin{gathered}
+P_{00}=(1+k)n-3u-1,\qquad P_{01}=(1+2k)n-4u-3,\\
+P_{10}=1+2u-kn,\qquad P_{11}=2+3u-(1+k)n,\\
+\Phi=(\alpha k+\beta)n-23u(u+1)
+\end{gathered}
+\tag{25.37.10}
+$$
+
+即得 (25.37.7) 的四个严格正下界与 $\Phi$ 的非零区间。
+X (14.5) 的源逆恒等式给 $\operatorname{tr}P_*=1$、
+$\det P_*=\mathcal Q=0$，故其秩恰为一；同时其原迹坐标就是
+$u_*,n_*,a_*$。
+
+再证两个例外约化均来自原方程。在 $\bar A\ne0$ 且
+$a=-\bar Bn/\bar A$ 上直接展开 (25.37.1)，得到
+
+$$
+\begin{aligned}
+\bar A^2\mathcal Q&=\bar q_2n^2+\bar q_1n+\bar q_0,\\
+\bar A^2\mathcal T&=n(D_bn-N_b),\qquad
+\mathcal L=(\bar Aa+\bar Bn)/23=0.
+\end{aligned}
+\tag{25.37.11}
+$$
+
+将 $\xi=\xi_0$、$\theta=\theta(u)$ 代入 (25.37.3)，有精确恒等式
+
+$$
+N_b=0,\qquad D_b=-20\xi_0G(u)=\frac{700}{29}G(u).
+\tag{25.37.12}
+$$
+
+于是 $u=u_*$ 时 $N_b=D_b=0$，且原方程本身给出
+
+$$
+\mathcal T(u,n,-\bar Bn/\bar A)
+=\frac{700n^2G(u)}{29\bar A(u)^2}=0
+\quad (u=u_*).
+\tag{25.37.13}
+$$
+
+这里 $N_b$ 沿所选 $\theta(u)$ 恒零，并不表示 $N_X$ 恒零。
+由 (25.37.4)–(25.37.5)，
+
+$$
+N_X=-\frac{D_b\bar q_0}{23^3\bar A},\qquad
+D_X=\frac{D_b\bar q_1+\bar q_2N_b}{23^3\bar A}.
+\tag{25.37.14}
+$$
+
+因 $\bar q_1=4\bar A(u+2)(142u^2-159u-101)$，在同一
+$\theta(u),\xi_0,b_0$ 上，这给
+
+$$
+\begin{aligned}
+N_X&=\frac{700(u^2-u-1)\bar A(u)G(u)}{29\cdot23^3},\\
+D_X&=\frac{2800(u+2)(142u^2-159u-101)G(u)}{29\cdot23^3}.
+\end{aligned}
+\tag{25.37.15}
+$$
+
+$N_X$ 是非零多项式，而两个子式都在 $u_*$ 消失。
+整系数来源线尺度的 $N_X^{\mathrm{int}},D_X^{\mathrm{int}}$
+分别是 (25.37.15) 的 $23^3$ 倍，即分母只剩 $29$。
+这些等式只在声明的参数代入下使用。
+
+最后回到完整原世界。因 $\xi_0\ne0$、$\Phi_*\ne0$、
+$u_*,n_*>0$，可定义
+
+$$
+d_*=\frac{120u_*(u_*+1)\xi_0}{\Phi_*},
+\tag{25.37.16}
+$$
+
+并令 $g_*$ 为原时钟 $0,1,2,3$ 上分别取值
+
+$$
+-d_*,\qquad -\frac{d_*}{u_*},\qquad
+-\frac{d_*}{1+u_*},\qquad \frac{6-d_*}{n_*}
+\tag{25.37.17}
+$$
+
+的唯一次数至多三插值多项式。若 $g_*$ 恒零，首值迫使
+$d_*=0$，第四值又迫使 $d_*=6$，矛盾。
+上述严格正来源与 $\mathcal Q=\mathcal T=\mathcal L=0$
+满足 VI (24.24) 的全部过滤；VI 引理24.2给其消元方程，
+定理24.5的逆向重构遂保证 (25.37.8) 的每个实际读数。
+这里 $M,J$ 及响应律均为 X (14.1) 的原矩阵、原时钟与
+$z_i=g_*(i)\operatorname{tr}(A_iP_*)+d_*$，没有增加读出端口。
+
+此世界满足 $\bar A\ne0$ 却有 $N_b=D_b=0$，所以
+$n_*=N_b/D_b$ 无定义；仅排除零主元 $\bar A=0$ 不能修补遗漏。
+这给出一个完整世界，不给出两个不同世界的碰撞对。
+全域 MM/MJ 碰撞关系的判定仍须处理同一实际纤维上的不同世界，
+不能由这个单世界的存在代替。证毕。
+
+## 追加锚（本行以下为增补区）

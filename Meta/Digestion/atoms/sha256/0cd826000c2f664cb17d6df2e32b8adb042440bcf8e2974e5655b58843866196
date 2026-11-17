@@ -1,0 +1,16 @@
+**定理 25.29.1（先取得不确定度窗口，再列出完整候选纤维）。** 在上述承诺域中，深度阶段和 born-tail 阶段实际取得当前深度 $H$，并取得至多 $n_0+2$ 个可能的 $K=|W|_F$，记该集合为 $J$。对每个 $K\in J$，已知 lag 的 literal decoder 在每个虚拟节点（即每次 decoded-reply probe）至多两个支持查询，并以 $2n_0$ 个虚拟节点为上限解析 entry-right 候选；生成阶段总计至多
+
+$$
+4n_0(n_0+2)
+$$
+
+次附加原始调用。得到的候选表不是一个任意压缩列表，而是恰好
+
+$$
+\left\{(u,V):u\in\mathcal D_+,\ n(u)=n_0,
+ r_{\operatorname{Run}(V,u)}(p)=c
+ \text{ 对取得 transcript 中每一实际行 }(p,c)\right\}.
+$$
+
+因此它同时保留真实 $(t,W)$，并精确记录当前有限 transcript 尚未排除的全部 promised pairs。这个等式是候选生成的新内容；Rooted 的完整历史单射性和 known-lag decoder 是前件，不被重新命名为本定理。
+

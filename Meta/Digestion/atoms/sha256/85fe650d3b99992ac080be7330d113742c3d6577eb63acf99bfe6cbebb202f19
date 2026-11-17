@@ -1,0 +1,36 @@
+**定义 25.31.1（来源域与四读数）。** 采用
+[单向循环四阶累积量界 Definitions 1.1–1.3、Theorem 2.1](UNIDIRECTIONAL_CYCLE_FOURTH_CUMULANT_BOUND.md)
+的来源：有限整数 $M\ge2$ 个相位组成单向循环，正速率 $k_i>0$，
+每次停留时间独立且服从 $\operatorname{Exp}(k_i)$。只计一个标记循环边的
+穿越次数 $W(t)$，不用全部跳数或端点位移替代。令
+
+$$
+\chi(z)=\lim_{t\to\infty}t^{-1}\log\mathbb E[e^{zW(t)}],
+\qquad C_j=\chi^{(j)}(0),
+\qquad a_i=k_i^{-1},\quad R_j=\sum_{i=1}^M a_i^j.
+$$
+
+固定同一个 $R=R_1>0$，写
+
+$$
+\Delta_M^\circ=\{x\in(0,\infty)^M:\textstyle\sum_i x_i=1\},
+\qquad x_i=a_i/R,\qquad p_j(x)=\sum_i x_i^j.
+$$
+
+反向取 $k_i=(Rx_i)^{-1}$，得到相同来源模型内的正速率循环。
+来源定理及其证明式 (2.9) 给出
+
+$$
+Q_R(M,x)=(C_1,C_2,C_3,C_4)
+=\frac1R\bigl(1,\ p_2,\ 3p_2^2-2p_3,
+ 15p_2^3-20p_2p_3+6p_4\bigr).
+$$
+
+这里 $Q_R$ 的域是 $\bigsqcup_{M\ge2}\{M\}\times\Delta_M^\circ$。
+四个坐标是精确的长时累积量率；它们不包含相位标签、状态数、完整等待时间律
+或额外的来源访问。固定 $R$ 后，相同的 $p_1,p_2,p_3,p_4$ 必给出相同
+$Q_R$。反过来，相同的四读数依次确定相同的 $R,p_2,p_3,p_4$，因为
+$C_1=1/R$，其余三式对待恢复的下一幂和是非零系数的三角关系。
+这些累积量与归一化公式归属于上述来源及其所引 Ptaszyński 的绕行模型，
+不作为本节新增定理。
+

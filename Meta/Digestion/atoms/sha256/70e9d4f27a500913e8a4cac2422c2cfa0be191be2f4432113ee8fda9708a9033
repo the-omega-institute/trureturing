@@ -1,0 +1,31 @@
+### 25.30.1 一个正的奇偶校准供应
+
+`origin/dev@820a9e83b51` 的
+[`CubicThetaOddParity`](../../../D5/S3/Arith/ModularForms/CubicThetaOddParity.lean)
+提供一条独立的正向奇偶校准。对
+
+$$
+\operatorname{CoreFiber}(n)=\{p\in\mathbb Z^2:\operatorname{coreExponent}(p)=n\},
+$$
+
+`coreOddEquiv n` 是
+
+$$
+\operatorname{CoreFiber}(n)\simeq
+\operatorname{CoreFiber}(4n+1),
+$$
+
+而 $\operatorname{CoreFiber}(4n+3)$ 是空的。消费到整数幂级数
+`integralT` 后，现有定理
+`integralT_coeff_mod_four` 精确给出
+
+$$
+[q^{4n+1}]\,\mathsf{integralT}=[q^n]\,\mathsf{integralT},
+\qquad
+[q^{4n+3}]\,\mathsf{integralT}=0.
+$$
+
+这是一个由纤维双射和空纤维得到的正性读出：$4n+1$ 保留核心计数，
+$4n+3$ 没有核心。它只校准该模四算术对象的支持与递推，不与下述
+RRO 的来源、操作或历史目标建立共同实现。
+

@@ -1,0 +1,16 @@
+**定理 25.29.2（同源主动分离使有限候选收敛）。** 把每个候选写成有限 ground acyclic term DAG，并为不同的候选构造一个 literal separating address。将该地址提交给同一个 live source，按真实四值回复删去不相容候选。每次仍有两个候选时至少删去所选二者之一，故至多再需
+
+$$
+n_0+1
+$$
+
+次同源查询，最终得到唯一的 $(t,W)$ 以及当前源的精确 compact description
+
+$$
+\mathsf C=(t,W),
+\qquad
+\operatorname{value}(\mathsf C)=\operatorname{Run}(W,t).
+$$
+
+这里“主动”是指新地址确实由旧候选纤维构造并在同一来源上取得；分离完成后交付必须是 pre-Stop transfer，不得在取得与交接之间执行 absorbing Stop。它不是把不同反事实分支的响应拼成一条历史，也不是用候选的数值相等替代物理来源认证。
+

@@ -1,0 +1,31 @@
+**推论 25.32.3（有界状态数下的正矩完整性）。** 这是仓库已有的
+[Newton 幂和特征多项式结论](../../../Blueprint/D5/S0/Observation/NewtonPowerSumCharacteristicPolynomial.md)
+在零填充后的直接应用。设 $B\ge1$，$x\in\Delta_M^\circ$、
+$y\in\Delta_L^\circ$，其中 $1\le M,L\le B$。若
+
+$$
+p_j(x)=p_j(y)
+qquad(1\le j\le B),
+$$
+
+则 $M=L$，且 $x$ 与 $y$ 的坐标多重集相同；若坐标带有顺序，二者至多相差
+一个排列。
+
+**证明。** 在每个向量末尾补零，得到两个长度为 $B$ 的实向量
+$\widetilde x,\widetilde y$。假设给出它们的前 $B$ 个正幂和相等。把这两个
+向量看作对角矩阵的分裂谱，调用上述固定维 Newton 结论，或逐阶使用同一
+Newton 恒等式，得到
+
+$$
+\prod_{i=1}^{B}(T-\widetilde x_i)
+=\prod_{i=1}^{B}(T-\widetilde y_i).
+$$
+
+因此零根的重数相同，正根的带重数多重集也相同。零根重数分别为 $B-M$ 和
+$B-L$，故 $M=L$；去掉零根后即得到 $x,y$ 的坐标多重集相同。证毕。
+
+这里的 $B$ 是一个统一的充分阶数，不主张它在每个受限来源域上都是最小阶数。
+若不使用零填充和固定维 Newton 结果，而只对两边不同坐标的并集作移位
+Vandermonde 方程，较松的 $2B$ 阶界也可直接得到；本节保留较强的零填充推论。
+这一步是已有固定维结果的应用，不新增 Lean 声明。
+

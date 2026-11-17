@@ -1,0 +1,31 @@
+### 25.33.2 admitted 前缀的有限 $N$ 总变差账
+
+令 $P=\mathsf T(a)$ 时 $n=|a|$；令 $P=\mathsf R(a,f)$ 时要求
+$\mathsf{Adm}(a)$ 并取 $n=|a|+|f|$。设
+
+$$
+\vartheta_L=\frac{(2\alpha c)^2}{L^2+(2\alpha c)^2}.
+$$
+
+对每个这样的有限 $P$，来源 Theorem 4.2 的 complete-history 比较为
+
+$$
+\operatorname{TV}(\mu^P,\mu_L^P)
+\le \min\{1,\mathcal E_L(P)\}
+\le \min\{1,2n\vartheta_L\}
+\le \min\{1,8\alpha^2c^2n/L^2\}.
+$$
+
+因此对任意固定 $N\ge1$，在上述 admitted programme 族中统一取 $n\le N$
+时有 $\operatorname{TV}\le\min\{1,2N\vartheta_L\}$；给定
+$0<\varepsilon<1$，取
+
+$$
+L\ge2\alpha c\sqrt{2N/\varepsilon}
+$$
+
+即可得到 complete-history TV 不超过 $\varepsilon$（来源 Theorem 6.1）。
+这里的 $L$ 是比较过程的 cap，proposal count 对一个 $n$-call programme
+服从均值 $nL$ 的 Poisson 分布，因而只是数学比较资源；Poisson 计数虽几乎
+处处有限却无有界支撑，也没有由此得到有限位计算、硬超时或物理实现定理。
+

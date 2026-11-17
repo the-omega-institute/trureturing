@@ -1,0 +1,32 @@
+**定义 25.36.1（原生定量共同尾事件的对象）。** 固定定义 25.35.1 的 native89 minimal-current no-read source，采用 [Native Recurrent Quantized Memory，Definitions 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURRENT_QUANTIZED_MEMORY.md) 的完整载体、ready、正单位脉冲、原 innovations、chronological seams 和终止合同。所有执行都在原来的 $89$ 维载体上进行；地址仅为原地址 $0,1$，按实际到达的时间顺序执行，不增加负脉冲、分数调用、读口、重置或控制。完整输出仍是定义 25.35.1 的 $\mathbf C(w)$，包括初始配置、全部原 chronological seam、literal terminal $W$、所有原终端标签以及原 zero/failure/refusal/stop/alarm 坐标和原请求、顺序、schedule metadata。发送原 stop 不改变此前已经发出的接缝坐标。
+
+写
+
+$$
+\begin{gathered}
+q_0=\{3,7\},\qquad q_1=\{1,3,7\},\qquad
+V=\operatorname{span}(e_{q_0},e_{q_1}),\\
+\alpha=3\pi/5,\quad x=\varphi^{-1},\quad y=\sqrt{x},\quad
+\zeta=e^{3\pi i/5},\quad c=x\sqrt{x},\quad d=x-x^2,\\
+z=(0,0,1),\qquad b=(2c,0,d),\qquad
+|b|=1,\quad z\cdot b=d,\quad s_0=\sqrt{1-d^2}=2c>0.
+\end{gathered}
+$$
+
+有序基始终是 $(e_{q_0},e_{q_1})$。对单位向量 $f\in V$，Bloch 向量 $v_f$ 的约定为 $`ff^*=(I+v_f\cdot\sigma)/2`$，所以其 $q_1$ Born 质量为 $(1-z\cdot v_f)/2$。引理 25.35.3 的原地址保持 $V$；从原 ready 执行这些词时，另 $87$ 个配置的无条件质量始终为零，但不从源或输出空间删去。
+
+本节的系数范数是固定基底上的实际 $\ell^1$ 系数范数。具体地，取
+
+$$
+F=\mathbb Q(y,\zeta),\qquad \mathcal O=\mathbb Z[y,\zeta],\qquad
+\mathcal B=\{y^k\zeta^e:0\le k<4,\ 0\le e<2\},
+$$
+
+若 $a=\sum_{k=0}^3\sum_{e=0}^1 a_{ke}y^k\zeta^e\in\mathcal O$ 是其唯一约化表示，则
+
+$$
+\|a\|_c=\sum_{k=0}^3\sum_{e=0}^1|a_{ke}|,\qquad a_{ke}\in\mathbb Z.
+$$
+
+这里不是最大系数范数，也不是嵌入绝对值范数。[Native Finite Precision Continuation Kernels，§2.1，(2.8)–(2.10)](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_PRECISION_CONTINUATION_KERNELS.md) 供应 $[F:\mathbb Q]=8$、该 integral order 及基底、$\|ab\|_c\le8\|a\|_c\|b\|_c$、原 endpoint entries 和每次原调用的 raw-coordinate 高度界；这些算术性质是固定源的前提工具。
+

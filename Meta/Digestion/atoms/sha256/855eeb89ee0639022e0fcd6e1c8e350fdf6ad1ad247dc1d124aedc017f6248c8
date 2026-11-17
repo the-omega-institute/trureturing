@@ -1,0 +1,49 @@
+**定理 25.32.1（保留任意有限幂和的局部正增尾）。** 设整数
+$r\ge1$，$N\ge r$，并取 $x\in\Delta_N^\circ$。假设 $x$ 的坐标中有
+$r$ 个两两不同的值。对每个有限整数 $m\ge1$ 和每个正拆分
+$w=(w_1,\ldots,w_m)$，$w_a>0$ 且 $\sum_a w_a=1$，存在
+$\varepsilon_0>0$ 以及随 $\varepsilon$ 光滑的 $r$ 个正枢轴修正，使得对每个
+$0<\varepsilon<\varepsilon_0$，可构造 $y\in\Delta_{N+m}^\circ$，满足
+
+$$
+p_j(y)=p_j(x)
+\qquad(1\le j\le r).
+$$
+
+枢轴修正的局部唯一性只针对固定的其余坐标、固定的尾部和原枢轴邻域。
+这里不声称存在对 $x,m,w$ 统一的 $\varepsilon_0$，也不要求新增坐标与旧坐标
+彼此不同。
+
+**证明。** 取 $r$ 个互异枢轴坐标 $b_1^0,\ldots,b_r^0$，并定义
+
+$$
+F_r(b_1,\ldots,b_r)
+=\left(\sum_{\ell=1}^r b_\ell^j\right)_{j=1}^r.
+$$
+
+其 Jacobian 的第 $j$ 行第 $\ell$ 列为 $j(b_\ell^0)^{j-1}$。因此
+
+$$
+\det DF_r(b^0)
+=r!
+\prod_{1\le a<b\le r}(b_b^0-b_a^0)\ne0.
+$$
+
+由逆函数定理，$F_r$ 在 $b^0$ 的某个正邻域上具有光滑局部逆。对固定的
+正拆分 $w$，新增尾部对第 $j$ 个幂和的贡献为
+
+$$
+t_j(\varepsilon)=\varepsilon^j\sum_{a=1}^m w_a^j
+\qquad(1\le j\le r).
+$$
+
+因 $t(\varepsilon)\to0$，当 $\varepsilon$ 足够小时，
+$F_r(b^0)-t(\varepsilon)$ 仍在该局部逆的像内。用局部逆得到新的枢轴值，
+其第 $j$ 个幂和恰减少 $t_j(\varepsilon)$；把尾部
+$\varepsilon w_1,\ldots,\varepsilon w_m$ 加入后，前 $r$ 个幂和全部恢复。
+$j=1$ 同时保证总和仍为 $1$，其余坐标和新增尾部在正 $\varepsilon$ 时均为正。
+局部唯一性来自局部逆的单射性。证毕。
+
+这个定理把 25.31.2 的四阶构造推广到任意预先固定的有限阶 $r$。它只使用
+归一化幂和，不把不存在于当前来源合同中的高阶累积量公式偷偷加入模型。
+

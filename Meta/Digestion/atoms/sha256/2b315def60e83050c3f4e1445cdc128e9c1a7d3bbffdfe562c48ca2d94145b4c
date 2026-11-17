@@ -1,0 +1,36 @@
+### 25.33.5 有限 $N$ 与无界长度的次序
+
+对 finite no-read words 定义
+
+$$
+B_N(L)=\sup_{|a|\le N}\operatorname{TV}(\mu^{\mathsf T(a)},
+\mu_L^{\mathsf T(a)}).
+$$
+
+当 $N\ge10$ 且 $L\ge L_{\rm f}$，来源 Theorem 5.1 给出
+
+$$
+1-(1-F_L)^{3\lfloor N/10\rfloor}
+\le B_N(L)\le\min\{1,2N\vartheta_L\},
+$$
+
+其中
+
+$$
+L_{\rm f}=\frac{A\alpha}{2d},\qquad
+r_L=\frac{A\alpha^2}{L^2+\alpha^2},\qquad
+F_L=r_L\exp\!\left[-\frac{2L}{\alpha}\arctan(\alpha/L)\right].
+$$
+
+当 $N\ge10$ 且 $L\ge\max\{L_{\rm f},\alpha\}$ 时，上下界具有只依赖该
+native source 的常数下的 $\min\{1,N/L^2\}$ 阶。可是对每个固定有限
+$L>0$，所有有限 no-read words 的 complete-history TV 上确界为 $1$；在
+$\mathsf T(1^{10m})$ 上，terminal TV 可对 $m$ 保持 $O(L^{-2})$，而
+complete-history TV 随 $m\to\infty$ 趋于 $1$。所以固定有限 $N$ 的 cap
+选择不能外推成对无界 word length 的统一小误差。[来源 Theorem 5.1]
+
+这里的有限长度结论只涉及同一 native source 中已声明的 finite words、exact
+history 与指定 terminal projection。它没有把有限 $N$ bound 变成所有长度的
+uniform bound，也没有把 almost-sure finite Poisson proposal count 变成确定的
+finite budget；这些边界与 source 的 Definition 6.2 一致。
+

@@ -1,0 +1,62 @@
+**推论 25.36.3（固定有限预算与指定早期切口）。** 取定理 25.36.2 的同一 $L,K$。令 $H$ 为总调用预算；对每个给定的 $H$，允许单独选择一个依赖 $H$ 的固定因果服务 $A_H$。假设它只接收实际已经到达的原请求，以 fresh independent randomness 随机化，并对预算 $H$ 内每个合法执行的**整个原 chronological joint law** 满足 TV 误差至多 $1/10$。原完整输出和 stop 仍按定义 25.36.1 保留。所有可影响未来核的持久资源均计入 charged state：保留的随机性、controller/program position、counter、clock、可重读输入输出及 archives；不供给未到达标签、完整未来输入词或免费的外部 time-index service。这里的 $H$ 是服务可依赖的固定参数，不能充当未计费的可变未来控制资源。
+
+以一个原 stop request 的保守槽位计，定义
+
+$$
+H_n=Ln+\left\lceil2^{Kn+K}\right\rceil+1.
+\tag{25.36.10}
+$$
+
+若预算只计单位脉冲，额外的一个槽位可闲置。对每个 $n\ge1$、每个 $H\ge H_n$ 和每个满足上述合同的 $A_H$，取唯一指定切口 $m=Ln$，即第 $m$ 个 seam 已输出、下一请求尚未到达之时。所有测试前缀在同一原 schedule、同一 $H$ 下到达这一切口。令 $S_H(m)$ 是该切口完整可达持久状态集合，并令
+
+$$
+B_H(m)=\left\lceil\log_2|S_H(m)|\right\rceil,
+$$
+
+状态集无限时取 $+\infty$。则
+
+$$
+B_H(Ln)\ge n-\log_2(4n+1)+\log_2(17/20).
+\tag{25.36.11}
+$$
+
+这是逐个 $H$、逐个 $A_H$ 的断言，不要求一个 sampler 同时处理无界 horizon。它约束同一个指定早期切口的持久容量，不是历史各层状态集合的总和；后处理器仅读未来输出，不能通过解码器免费补入持久过去信息。
+
+证明。每个 $a_it_n$ 再接原 stop 都在 $H_n$ 内，故在给定的 $H\ge H_n$ 内合法。把服务的整个联合律投影到未来 seam coordinates，再施加同一个固定 $\mathscr D_n$；成熟的 TV 收缩与 (25.36.9) 给每个成员的服务解码成功率至少
+
+$$
+\frac{19}{20}-\frac1{10}=\frac{17}{20}.
+$$
+
+因果性使前缀 $a_i$ 后的切口分布 $\alpha_i(s)$ 独立于尚未到达的共同尾部。固定 $s,H$、共同未来请求及 schedule 后，把新独立随机性和固定解码器合成核 $d_s(i)$。每个影响未来的保留资源均已计入 $s$，所以相同 $s$ 对应相同未来核；解码器恰返回一个标签，故 $\sum_i d_s(i)=1$，用较弱的 $\le1$ 也足够。
+
+若 $S=|S_H(Ln)|$ 有限，对测试标签赋数学上的均匀先验。这只是原各执行律的计数混合，不是源的新增输入或随机制备。将 [Original Control Event Memory，Theorem 4.3，(EM.13)](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md) 的成熟有限消息计数对应为“成员 $i$—同预算同切口状态 $s$—共同未来核 $d_s$”，由 $\alpha_i(s)\le1$ 得
+
+$$
+\begin{aligned}
+\frac1N\sum_i
+ \Pr_{A_H}\{\mathscr D_n=i\mid\text{input }a_it_n\}
+ &=\frac1N\sum_s\sum_i\alpha_i(s)d_s(i)\\
+ &\le\frac1N\sum_s\sum_i d_s(i)
+ \le\frac SN.
+\end{aligned}
+$$
+
+故 $S\ge(17/20)N$，结合 $N\ge2^n/(4n+1)$ 即得 (25.36.11)。状态集无限时结论立即成立。完整联合律前提保障了未来相关坐标的误差控制；只比较 terminal marginal 不供应这一推导。
+
+还有一个明确的预算到切口选择。令
+
+$$
+C_H=L+2^K+2.
+$$
+
+由于 $K\ge1$ 且 $n\le2^{Kn}$，(25.36.10) 给 $H_n\le C_H2^{Kn}$。因此对每个 $H\ge C_H2^K$，取
+
+$$
+n(H)=\left\lfloor\frac{\log_2(H/C_H)}K\right\rfloor\ge1,
+\qquad m(H)=Ln(H).
+\tag{25.36.12}
+$$
+
+于是 $H_{n(H)}\le H$，(25.36.11) 在这个单一指定切口 $m(H)$ 成立。这给出随 $H$ 对数增长、带所示对数修正项的容量界，切口本身亦为 $\log H$ 的量级。对更小 $H$ 不由 (25.36.12) 断言界；适用于所有预算的精确表述仍是逐个 $n$ 的条件 $H\ge H_n$ 与 (25.36.11)。这只是同一个原生定量共同尾桥的标签—状态计数后果，不另计一个独立增益。证毕。
+

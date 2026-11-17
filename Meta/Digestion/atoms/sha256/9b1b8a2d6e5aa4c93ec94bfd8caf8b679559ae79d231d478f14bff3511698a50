@@ -1,0 +1,52 @@
+### 25.27.1 从两份实际非负彩票取得有符号更新
+
+以下把 C139 的根适配探针 $\widetilde P_i$ 简记为 $P_i$。它们是 $\operatorname{Herm}_{27}(\mathbb C)$ 的有限实分离基，索引集 $\mathcal I$ 有 $729$ 项。二十七个坐标投影属于其中，令 $t_i$ 在这些坐标标签上为一、其余为零，故 $\sum_i t_iP_i=I_{27}$。在带类型的实际端口 $c$，记
+
+$$
+y_c=\bigl(\mu_c(P_i)\bigr)_{i\in\mathcal I}\ge0,
+\qquad 0\le w_c=t^{\mathsf T}y_c<\infty.
+$$
+
+这里 $\mu_c(P_i)$ 是已供应的实际探针接受事件的未归一质量，不预先把它定义成迹函数。坐标事件须共同构成一只实际完整测试的全部原子，才能由有限可加性取得 $w_c=t^{\mathsf T}y_c$；二十七只分立二结果测试的接受质量不能直接相加作总质量。共同根 $E_0$ 是其中同一个具名原子事件，记其质量为 $r(c)$。
+
+取原逆封闭有限具名门表 $\Gamma$，每项有 $k_\gamma\in U_{27}(D)$。其有限 signed 系数表 $A_\gamma$ 满足
+
+$$
+k_\gamma^*P_i k_\gamma
+=\sum_j A_{\gamma ij}P_j,
+\qquad A_{\gamma ij}\in\mathbb Z[1/6],
+\qquad \sum_j A_{\gamma ij}=1,
+\qquad t^{\mathsf T}A_\gamma=t^{\mathsf T}.
+$$
+
+这些是矩阵关系，尚不把不同端口的实际响应绑定起来。对原权限确实允许、输入输出类型可接的边 $c\xrightarrow{\gamma}d$，另供应 C139 的两份完整彩票。所有使用都在同一实际来源、同一原条件和共同参考闭合下进行；输出探针以未归一顺序合成的质量 $y_d(i)$ 接回输入实验，选择器准备无关、独立且对实际配方仿射。共同根、适配器、就绪、backing、补结果以及全部失败、停止、销毁、返回、记录与合法未来均按原类型保留，不在新增选择器的不同结果上分别后选。
+
+具体地，选公共整数 $q=2^a3^b>0$，令 $n_j=qA_{\gamma ij}\in\mathbb Z$、$n_j^\pm=\max(\pm n_j,0)$。行和给
+
+$$
+M_{\gamma i}=\sum_j n_j^+=q+\sum_jn_j^-.
+$$
+
+有限表允许固定 $N$ 使 $3^N\ge\max_{\gamma,i}M_{\gamma i}$。左彩票放 $q$ 份“执行 $\gamma$ 后读输出探针”和各 $n_j^-$ 份输入探针；右彩票放各 $n_j^+$ 份输入探针；两边各用 $3^N-M_{\gamma i}$ 份同一个输入根程序填充。每份叶程序保留自身结果与记录，所有选择权重均为非负的 $3^{-N}$。两份当前接受质量为
+
+$$
+\begin{aligned}
+L_{c,\gamma,i}
+&=3^{-N}\!\left[q\,y_d(i)+\sum_jn_j^-y_c(j)
+ +(3^N-M_{\gamma i})r(c)\right],\\
+R_{c,\gamma,i}
+&=3^{-N}\!\left[\sum_jn_j^+y_c(j)
+ +(3^N-M_{\gamma i})r(c)\right].
+\end{aligned}
+$$
+
+**实际平衡条件是另行供应的 $L_{c,\gamma,i}=R_{c,\gamma,i}$。** 它不由矩阵恒等式、选择器独立性或仿射性自动推出，也不宣告两彩票的整个仪器与历史相同。相等两边消去同一输入根填充、乘 $3^N$ 并除以 $q$，才得到
+
+$$
+y_d=A_\gamma y_c,
+\qquad
+w_d=t^{\mathsf T}y_d=t^{\mathsf T}A_\gamma y_c=w_c.
+$$
+
+负系数只通过把正复制次数移到等式另一边出现，没有负概率程序，也不要求 $1/q$ 是可用抽签权重。若该继续端口与其余不交的失败／停止分支构成同一完整前置测试，且这些分支的总质量为 $\varepsilon$，则 $w_c=w_d+\varepsilon$ 与上述守恒迫使 $\varepsilon=0$。实际测得 $\varepsilon>0$ 就与该边所需的完整平衡合同不相容，不能隐藏损失后归一；即使质量为零，其程序和记录也不删除。
+

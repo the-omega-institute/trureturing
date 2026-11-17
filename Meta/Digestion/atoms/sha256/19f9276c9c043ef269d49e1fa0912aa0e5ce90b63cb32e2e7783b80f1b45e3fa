@@ -1,0 +1,8 @@
+## 25.33 原生有限速率的偏交换边界
+
+本节只综合 [Recursive Relational Observation: Native Finite-Rate Continuation](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md)
+的来源特定结果。这里的“偏交换”只指有限调用串中 cap 与读切的两种有条件
+排列：读前 cap 只能在精确承认域内接上原读与纯更新；若先执行原始前缀、原始
+读和原始更新，再从该实际切点对未来后缀加 cap，则对任意原始前缀都成立。它
+不把两种排列推广成无条件的 cap/读交换，也不引入另一来源的接口。
+

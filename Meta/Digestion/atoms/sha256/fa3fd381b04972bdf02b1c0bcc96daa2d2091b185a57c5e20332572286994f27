@@ -1,0 +1,4 @@
+## 25.29 有限 transcript-fibre 的主动取得校准
+
+当前 [RRO sparse acquisition](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_NATIVE_ENTRY_ACQUISITION.md) 的 §§1–6 把“返回切口上的未来充分性”推进成一条实际的、源盲的有限取得流程。它的前件是 Definition 1.1：平稳的 authentic root/source/epoch、精确的整数 $n_0>1$、已完成 checkpoint、可调用且尚未 Stop 的 controller、完整的 literal four-reply interface、有限 backing，以及不随取得过程改变的绑定。输入不包含未知 entry $t$、宏词 $W$、展开后的当前源、额外历史计数、当前深度、$m$、旧语法或其他 source-dependent advice。
+

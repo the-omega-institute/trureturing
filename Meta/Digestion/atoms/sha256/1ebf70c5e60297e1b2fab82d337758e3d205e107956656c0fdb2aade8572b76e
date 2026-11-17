@@ -1,0 +1,26 @@
+### 25.24.1 完成图像上的未来充分性
+
+设 $\mathcal K$ 是实际执行的切口集合，令
+
+$$
+\operatorname{ret}(c)
+$$
+
+表示沿原协议完成该切口已经接受但尚未完成的请求后得到的返回切口；这里固定原协议给出的确定 continuation，若给定前件不能唯一完成，则必须先把 continuation 作为来源合同的一部分固定。它包括原有的写入、提交、输出、确认和返回，不是一个只更新数学摘要的抽象跳步。设 $t(c)$ 是当前来源，$\Theta_t(c)$ 是返回后仍影响完整未来任务的 retained routing tapes/records，以及固定 installation/context 中影响 guards、rights、references、finite backing 和 epoch 的剩余数据，而不是由 $t$ 自动推断出的数据。以下把 $Q_g$ 记作完整 future-task behavior function，而不是单个请求标签。RRO 的精确未来准则是：在已经完成的图像上，
+
+$$
+Q_g(\operatorname{ret}(c))=Q_g(\operatorname{ret}(c'))
+\quad\Longleftrightarrow\quad
+t(c)=t(c')\ \land\ \Theta_{t(c)}(c)=\Theta_{t(c')}(c').
+$$
+
+这里的实际完成图像
+
+$$
+\mathcal I=\operatorname{ret}(\mathcal K)
+$$
+
+只包含原协议真正到达的返回切口。它保留来源身份、完整成功/失败/拒绝/停止后继、实际档案、权限、引用、更新、终止和资源账；不能用环境闭包、反事实未来或只保留成功边的子图替代。令 $T:\mathcal I\to\mathcal Y$ 收集完整的未来请求、更新、失败和档案行为（只量化返回后的 Ready cuts），令 $v:\mathcal I\to\mathcal V$ 是在同一实际联合和同一可读历史合同下取得的观察摘要。
+
+因此得到一个适用于自校准的抽象版本。
+

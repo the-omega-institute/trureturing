@@ -1,0 +1,20 @@
+### 25.24.2 语义充分不等于当前可取得
+
+把协议的可执行性也纳入目标。令
+
+$$
+\operatorname{ready}_Q(c)
+$$
+
+表示在切口 $c$ 是否已经满足请求 $Q$ 的原协议门槛。对“既要回答未来任务、又要判断此刻能否发出请求”的联合目标，摘要必须满足更强条件：
+
+$$
+A(c)=A(c')
+\Longrightarrow
+\bigl(t(c),\Theta_t(c),\operatorname{ready}_Q(c)\bigr)
+=
+\bigl(t(c'),\Theta_t(c'),\operatorname{ready}_Q(c')\bigr).
+$$
+
+RRO 的实际延拓给出失败见证：在非根追加中，所有 multiplicity deficit 可以已经归零，但祖先尾指针、pending cursor、arithmetic commit、完整输出、ACK 或 Return 仍未完成；在这些切口，`Q_g` 的未来内容已经可以由完成记录推断，`FetchGrowth`/`Next` 却仍未被原协议启用。因而任何只恢复 $(t,\Theta)$ 的摘要，都不能自动恢复 `ready`。
+

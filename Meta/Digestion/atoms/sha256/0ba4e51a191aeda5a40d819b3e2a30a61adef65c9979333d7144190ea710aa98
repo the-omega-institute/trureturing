@@ -1,0 +1,28 @@
+### 25.33.1 支持递推与 cap 无关的承认域
+
+对有限前缀 $a=(j_1,\ldots,j_p)$，令 $S_0=\{\{3,7\}\}$，并按来源式
+(2.2) 递推
+
+$$
+S_k=S_{k-1}\cup\{q:\exists r\in S_{k-1},\ \{q,r\}\text{ 对 }j_k
+\text{ 为 active pair},\ \exists s\in(0,1):J_k(q,r;s)>0\}.
+$$
+
+则对每个有限 $L>0$，$S_p$ 恰为 capped pre-read endpoint configuration
+distribution 的 support。若 $E_i=\{q:b_9(q)=i\}$ 且
+$\tau_i(a)=\lVert M_iK_ae_{\rm r}\rVert^2$，原读可接上的精确条件为
+
+$$
+\mathsf{Adm}(a):\qquad
+S_p\cap E_i\ne\varnothing\ \Longrightarrow\ \tau_i(a)>0
+\qquad(i=0,1).
+$$
+
+这个条件对所有有限正 cap 都相同；它是原始有限前缀的有限精确识别条件，
+不是新增 reader。于是，若 $\mathsf{Adm}(a)$ 成立，任意有限原始后缀 $f$
+都可在保持规定读、保留 $Q$ 和原 pure update 的条件下接续；若不成立，
+则某个正质量报告要求 $0/0$ 的 successor，所需 capped $\mathsf R(a,f)$
+不在该合同的定义域内。[来源 Theorem 2.2–2.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md#2-bounded-node-extension-and-exact-read-admission)
+还给出 $a=\epsilon$ 与 $a=(9)$ admitted，以及省略地址 $9$ 的每个前缀
+仍 admitted；这些例子不改变上述量词。
+

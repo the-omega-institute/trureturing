@@ -1,0 +1,4 @@
+## 25.26 角色反思、有限删域与返回切口的自校准边界
+
+最新的 [R5-006 关系角色与对角化](AURIC_R5_006_RELATIONAL_ROLES_REFLECTION_AND_DIAGONALIZATION.md)、[C128 半重叠续卷](AURIC_C128_FRAME_CORNER_RELATIONS_CONTINUATION.md) 和 [RRO 稀疏原生入口](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_NATIVE_ENTRY_ACQUISITION.md) 把前节的闭环再分成三项可以分别核查的关系：表示是否保留旧语义，删去的测试是否由同一原背景中的有限关系重新补回，以及摘要是否只在真正返回后足以回答指定的未来任务。三者都属于自校准，但它们处理的是不同盲区，不能合并成一个无条件的“升级”。
+

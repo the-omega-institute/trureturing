@@ -1,0 +1,41 @@
+**定义 25.35.1（原生逐层任务）。** 令
+
+$$
+E=\{q\subseteq\{1,\ldots,9\}:q\text{ 无相邻占位}\},\qquad |E|=89,
+$$
+
+并保留原生 ready 配置 $q_0=\{3,7\}$、$q_1=\{1,3,7\}$ 及完整载体 $\mathcal K=\mathbb C^E$。一次合法物理调用只是原合同允许的一个正地址 $0$ 或 $1$ 的单位脉冲；字词按时间顺序到达，不能使用负脉冲、分数调用、重置或额外读数。每个完整测试词在其尾部仍发送原 stop request，并保留原字面终端 $W$、全部原终端标签、失败、拒绝、停止和报警坐标；理想零失败坐标虽为零，也仍属于联合输出元组。这里沿用 owning source [Native Recurrent Quantized Memory，Definitions 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURRENT_QUANTIZED_MEMORY.md) 的原生 minimal-current、no-read source；本节不改动该源本身。
+
+整个任务由一个且同一个经典因果 sampler $A$ 处理：它只在地址实际到达时接收该地址，尾部 stop request 也只在到达时接收并在其到达后终止；随机化只使用 fresh independent fair bits（新的独立公平比特）。没有预先供给的最终 horizon、可自由使用的调用/时间索引、时钟、reset、额外 read/control 或任何尚未到达的未来输入；外部输入与 schedules 固定并在各比较中相同。
+
+对每个有限 $0/1$ 词 $w$，完整要求元组为
+
+$$
+\mathbf C(w)=\bigl(Q_0,Q_1,\ldots,Q_{|w|},W,
+\text{all original failure/refusal/stop/alarm coordinates}\bigr),
+$$
+
+其中 $Q_0$ 是初始配置，$Q_j$ 是第 $j$ 个 chronological seam 的配置输出，$W$ 是 literal terminal；所有原始 failure/refusal/stop/alarm 坐标（包括理想值为零的坐标）以及原合同中的请求、顺序和 schedule metadata 都逐项保留。sampler law 必须逼近这个**完整**元组的 source law，即
+
+$$
+\operatorname{TV}\bigl(\mathcal L_A(\mathbf C(w)),\mathcal L_{\mathrm{src}}(\mathbf C(w))\bigr)\le\frac1{10}
+\qquad\text{for every finite }w\in\{0,1\}^*.
+$$
+
+固定上述同一个因果 sampler $A$。在第 $m$ 个 seam output 已完成之后、下一请求到达之前的切口，$S_A(m)$ 是所有 $m$-letter $0/1$ 前缀和所有 positive-probability finite random runs 可达到的完整持久状态集合；切口严格位于第 $m$ 个 seam output 之后、下一请求之前。状态包括影响未来转移核、控制或解码的保留随机性、计数器、控制位置、可重读输入输出和档案；这些已列出的持久信息全部继续计入 charged persistent state。令
+
+$$
+B_A(m)=\left\lceil\log _2|S_A(m)|\right\rceil,
+$$
+
+当 $S_A(m)$ 无限时约定 $B_A(m)=+\infty$。这是精确层的持久状态容量；它不等于所有历史层合并后的全局二进制串长度，也不把一个没有在该层同时可达的历史集合计入当前层。
+
+对概率律采用
+
+$$
+\operatorname{TV}(\mu,\nu)=\sup_F|\mu(F)-\nu(F)|
+ =\frac12\sum_z|\mu(z)-\nu(z)|
+$$
+
+（连续坐标时用相应的测度积分）。完整联合总变差合同是对上述整个原生输出元组的概率律作比较；只比较终端边缘不满足本节任务。一个只读取未来接缝坐标并作标签判定的函数，是对该完整元组的投影和后处理，不是物理地取得一个独立运行的隐藏配置。
+

@@ -1,0 +1,39 @@
+**定理 25.29.3（同时资源账与不可压缩边界）。** 令
+
+$$
+N=H+n_0+2,
+\qquad A=\lceil\log_2(N+1)\rceil.
+$$
+
+按 RRO Definition 1.2，令 $Q$ 为全部实际 literal 调用数（含重复与 absent），$D$ 为提交地址的最大长度，$L$ 为所有提交地址字母数之和。该流程满足
+
+$$
+\begin{aligned}
+Q&\le 2H+4n_0(n_0+2)+n_0(A+5)+8,\\
+D&\le H+3n_0+4,\\
+L&\le QD,
+\end{aligned}
+$$
+
+并输出大小为 $O(n_0+|W|)$ 的 compact packet；若固定 live-interface metadata 大小为 $b$，新增 controller work/backing 可用 $O((b+1)N^{10})$ 的保守上界表示。binding、service、transport、journal 与 installation 的物理账另按实际供应的价格计入，不能由该数值参数界替代。对固定多叶 entry、无 history-dependent advice 的确定性流程，长度为 $m$ 的全部 $F/G$ 历史给出至少 $\lceil m/2\rceil$ 的最坏原始查询深度；因此固定 $n_0$ 时，该取得流程的查询阶为 $\Theta(m)$，而完整展开的 $F^m$ 源仍可有指数大小。
+
+这条结果把自校准从“摘要在完成后足够”推进为五步可核查接口：
+
+$$
+\boxed{
+\text{取得 }H,J
+\to
+\text{生成完整 transcript fibre}
+\to
+\text{付费同源分离}
+\to
+\text{交付 compact packet}
+\to
+\text{在真实返回边界继续运行}.
+}
+$$
+
+它仍然是 source-specific、promise-conditional 的取得校准。该算法不识别 off-promise 来源，不检测 authenticity、occurrence identity 或 native provenance，不恢复 Busy/阶段/控制器私有历史，不执行物理逆操作，也不把 numeric-parameter polynomial bound 说成 bit-length 或整个 installation 的物理时间界。Theorem 6.1 的 handoff 还要求保存同一来源绑定、continuation、当前权限、既有 executor 和有限 backing；在 Busy 期间，packet 只表示最后一个 completed checkpoint。
+
+因此，本节的新增不是把已有行为商换一个名字，而是把“当前 transcript 尚有多少候选”变成有限可枚举对象，并用实际同源查询把它压到单例。它与 25.26 的返回任务摘要、25.28 的后继闭合互补：前者说明何时摘要足够回答未来任务，后者说明摘要何时能定义后继，本节说明在给定取得合同下怎样实际获得并消除剩余纤维。全部结论仍为普通理论综合；本节没有新增 Lean/kernel 声明，也不把 sparse acquisition 的条件性来源协议提升为项目范围的自我认证。
+

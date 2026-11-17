@@ -1,0 +1,77 @@
+**定理 25.31.2（保留前四幂和的局部正增尾）。** 设整数 $N\ge4$，
+$x\in\Delta_N^\circ$，且存在四个不同指标 $i_1,i_2,i_3,i_4$，使
+$x_{i_1},x_{i_2},x_{i_3},x_{i_4}$ 两两不同。对每个有限整数 $m\ge1$，
+每个固定的正拆分 $w=(w_1,\ldots,w_m)$，$w_r>0$ 且 $\sum_r w_r=1$，
+存在 $\varepsilon_0>0$ 和四个
+随 $\varepsilon$ 光滑变化的正枢轴值 $b_\ell(\varepsilon)$，满足
+
+$$
+b_\ell(0)=x_{i_\ell},\qquad
+b_\ell(\varepsilon)\longrightarrow x_{i_\ell}
+\quad(\varepsilon\to0),
+$$
+
+使对每个 $0<\varepsilon<\varepsilon_0$，向量
+
+$$
+\begin{aligned}
+y_{i_\ell}(\varepsilon)&=b_\ell(\varepsilon)
+ &&(1\le\ell\le4),\\
+y_i(\varepsilon)&=x_i
+ &&(1\le i\le N,\ i\notin\{i_1,i_2,i_3,i_4\}),\\
+y_{N+r}(\varepsilon)&=\varepsilon w_r
+ &&(1\le r\le m)
+\end{aligned}
+$$
+
+属于 $\Delta_{N+m}^\circ$，并且精确满足
+
+$$
+\boxed{\quad p_j(y(\varepsilon))=p_j(x)
+\qquad(1\le j\le4).\quad}
+$$
+
+可在原枢轴附近选定一个邻域，使其中的枢轴修正唯一。量词次序是先固定
+$x$、枢轴、$m,w$，再选 $\varepsilon_0$；这里不提出跨这些数据的统一半径。
+
+**证明。** 对四个实变量定义
+
+$$
+F(b_1,b_2,b_3,b_4)=\left(\sum_{\ell=1}^4 b_\ell^j\right)_{j=1}^4,
+\qquad b^0=(x_{i_1},x_{i_2},x_{i_3},x_{i_4}).
+$$
+
+其 Jacobian 的第 $j$ 行第 $\ell$ 列为 $j(b_\ell^0)^{j-1}$。
+经典 Vandermonde 行列式恒等式给出
+
+$$
+\det DF(b^0)
+=(1\cdot2\cdot3\cdot4)
+\prod_{1\le r<s\le4}(b_s^0-b_r^0)\ne0.
+$$
+
+由经典逆函数定理，存在 $b^0$ 的开邻域 $U\subset(0,\infty)^4$ 和
+$F(b^0)$ 的开邻域 $V$，使 $F:U\to V$ 有光滑逆。缩小 $U$ 还可使
+四个枢轴始终两两不同，并相应缩小 $V$。固定 $m,w$ 后，新增尾部的幂和为
+
+$$
+t_j(\varepsilon)=\varepsilon^j\sum_{r=1}^m w_r^j
+\qquad(1\le j\le4).
+$$
+
+向量 $t(\varepsilon)$ 在零处为零且连续，故存在 $\varepsilon_0>0$，使
+$F(b^0)-t(\varepsilon)\in V$ 对 $|\varepsilon|<\varepsilon_0$ 成立。
+定义
+
+$$
+b(\varepsilon)=(F|_U)^{-1}\bigl(F(b^0)-t(\varepsilon)\bigr).
+$$
+
+它光滑、落在正邻域 $U$，且在零处等于 $b^0$。未动坐标的幂和不变，
+四个枢轴的第 $j$ 幂和恰减少 $t_j(\varepsilon)$，新增尾部恰补回同一项，
+所以四个等式全部成立。其中 $j=1$ 给出 $\sum_i y_i=1$；所有旧坐标和
+$\varepsilon w_r$ 在正 $\varepsilon$ 时均严格为正。因此得到的每个有限
+向量都在原正速率来源域内。唯一性只针对固定尾部、固定其余坐标及邻域
+$U$ 中的四枢轴修正，来自 $F|_U$ 的单射性。零参数只用于定义局部延拓，
+不把含零尾坐标的边界点算作一个 $N+m$ 状态来源。证毕。
+
