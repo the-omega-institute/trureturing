@@ -15,13 +15,15 @@ canonical_successors: proof_shape=content; consumers=transition_counts
 transition_counts: proof_shape=content; consumers=HardinA229753.result
 -/
 
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Counts.Check7
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source43
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Counts.Check7
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Rows
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Sources
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1.Source43
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.ZeroTemperature
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 /-! Every admissible boundary has the certified successor multiset. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Certificate

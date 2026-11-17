@@ -19,16 +19,18 @@ owner_matrix: proof_shape=bind-only; consumers=transition_counts
 transition_counts: proof_shape=bind-only; consumers=Width5.Certificate.transition_counts
 -/
 
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.ZeroTemperature
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.ZeroTemperature
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229583StripData
 
 /-! Proper successor rows are exact images of the original zone relation. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.ZeroTemperature
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips
-open Width5.Data
+open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 
 set_option maxRecDepth 100000

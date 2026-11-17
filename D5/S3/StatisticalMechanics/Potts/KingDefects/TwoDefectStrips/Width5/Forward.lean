@@ -13,6 +13,7 @@ structural_certificate: proof_shape=content; consumers=HardinA229752.result
 -/
 
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 /-! Acceptance, initial weights and the forward polynomial relation. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Forward
