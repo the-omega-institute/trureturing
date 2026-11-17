@@ -1361,7 +1361,9 @@ theorem externalT_positive_finite_eq (p q : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
     (show (0 : ℂ) ∈ Metric.ball (0 : ℂ) 1 by simp)
     (externalT_positive_finite_germ p q) (by simpa using hz)
 
-/- Remaining obligations: rational T generator reconstruction, J identification,
-and the other sign sectors. -/
+/- The positive J generated-source identification is proved in positiveJ_eq_candidateJ
+on its real-r source bidisk. Rational positive T generator reconstruction is proved
+in PositiveT.GeneratorIdentification.positiveT_eq_candidateT on the same bidisk;
+remaining signed J/T sectors are still open. -/
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes
