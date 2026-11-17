@@ -1876,7 +1876,7 @@ $$
 
 $$
 \Psi _6(x_i)=b\Phi(x_i)\ (i=3,4),\qquad
-\|x_3-x_4\|_2^2>0,qquad
+\|x_3-x_4\|_2^2>0,\qquad
 J_{\rm num}(x_3)J_{\rm den}(x_4)-J_{\rm num}(x_4)J_{\rm den}(x_3)=0.
 \tag{10.3}
 $$
@@ -2020,7 +2020,7 @@ $\Phi^\sharp\ne0$，$\operatorname{Res}_u(R,E)$ 在该 $e$ 处含平方因子；
 genericity，也没有丢掉首项、$\Delta$、采样增益或回代图外的分支。
 
 证书的系数文件位于私有实验仓库
-[`the-omega-institute/trureturing-experiments`](https://github.com/the-omega-institute/trureturing-experiments)
+[`the-omega-institute/trureturing-experiments`](https://github.com/the-omega-institute/trureturing-experiments/tree/5b7db515b83c32d822c7fd1aa171644341f8c991/fib_shared_response_176/global_preflight)
 的仓库相对目录 `fib_shared_response_176/global_preflight` 下，包括
 `R.json`、`E.json`、`H_factor_1.json`、`collision_support.json` 和
 `support_isolations.json`；其中 `collision_support.json` 的 SHA-256 为
