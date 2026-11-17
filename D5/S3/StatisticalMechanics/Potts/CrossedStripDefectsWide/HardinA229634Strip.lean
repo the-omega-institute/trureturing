@@ -105,7 +105,7 @@ theorem result (n : ℕ) :
       defects horizontal between (List.ofFn fun i j => A (i, j)) = 2
     have invariant : ∀ e : Equiv.Perm (Fin 3), ∀ A, S (e ∘ A) ↔ S A := by
       intro e A
-      change defects horizontal between _ = 1 ↔ _
+      change defects horizontal between _ = 2 ↔ _
       rw [show (List.ofFn fun i j => (e ∘ A) (i, j)) =
         (List.ofFn fun i j => A (i, j)).map (fun r => e ∘ r) by rw [List.map_ofFn]; rfl,
         DefectTransfer.relabel_defects]
@@ -135,7 +135,7 @@ theorem result (n : ℕ) :
     rw [← labelled, scale m hm]
     push_cast
     rfl
-  have h := forward_shift T initial terminal 22 1 ![8, -228, 2598, -14887, 42804, -40719, -84933, 243513, -118011, -230994, 305043, -55215, -116010, 94839, -33687, 6569, -723, 42] poly n
+  have h := forward_shift T initial terminal 18 2 ![8, -228, 2598, -14887, 42804, -40719, -84933, 243513, -118011, -230994, 305043, -55215, -116010, 94839, -33687, 6569, -723, 42] poly n
   simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_succ,
     Matrix.cons_val_zero, Matrix.cons_val_succ, Fin.val_one] at h
   have h0 := bridge (n + 2) (by omega)

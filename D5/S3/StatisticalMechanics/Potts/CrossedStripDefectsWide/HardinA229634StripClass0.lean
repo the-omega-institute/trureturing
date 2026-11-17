@@ -14,10 +14,13 @@ transition_counts: proof_shape=bind-only; consumers=HardinA229634Strip.finite_ce
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripCut
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+
 open scoped BigOperators
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripClass0
 open DefectTransfer (bondDefects)
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical)
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
@@ -26,14 +29,14 @@ open HardinA229634StripData
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefects
 open HardinA229531StripData (Row horizontal between)
 
-theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val →
+theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 20
       then (1 : ℤ) else 0) = T (cl p d.val) 20 := by
   have table : ∀ p, HardinA229531StripData.Valid p 0 →
       HardinA229531StripData.T (HardinA229531StripData.cl p 0) 6 = T (cl p 0) 20 := by
     decide +kernel
-  have remaining : ∀ p (d : Fin 3), Valid p d.val →
+  have remaining : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
       ¬ (d.val = 0 ∧ HardinA229531StripData.Valid p 0) →
       (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
         cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 20
@@ -42,10 +45,10 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val →
     generalize h0 : p 0 = c0
     generalize h1 : p 1 = c1
     fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
-  intro p d hp
+  intro p d hp hn
   by_cases hz : d.val = 0 ∧ HardinA229531StripData.Valid p 0
   · simp only [hz.1]
     simp_rw [HardinA229634StripCut.zero_cut p _ 0]
     exact (HardinA229531StripClasses.transition_counts p 0 hz.2 6).trans (table p hz.2)
-  · exact remaining p d hp hz
+  · exact remaining p d hp hn hz
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripClass0
