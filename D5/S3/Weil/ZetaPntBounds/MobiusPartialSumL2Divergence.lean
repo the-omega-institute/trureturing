@@ -667,4 +667,3 @@ theorem mobiusPartialSum_not_memLp :
     exact zero_ne_one h01
 
 end D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence
-
