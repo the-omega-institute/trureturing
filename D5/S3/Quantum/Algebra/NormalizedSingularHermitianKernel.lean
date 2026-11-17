@@ -61,6 +61,30 @@ theorem hermitianMatrix_isHermitian (a b : ℝ) (z u v : ℂ) :
   fin_cases i <;> fin_cases j <;>
     simp [hermitianMatrix, Matrix.conjTranspose_apply]
 
+theorem hermitian_coordinates {H : M} (hH : H.IsHermitian) :
+    ∃ a b c : ℝ, ∃ z u v : ℂ,
+      H = !![(a : ℂ), z, u; conj z, (b : ℂ), v;
+        conj u, conj v, (c : ℂ)] := by
+  have hH' := Matrix.IsHermitian.ext_iff.mp hH
+  have h00 : H 0 0 = ((H 0 0).re : ℂ) :=
+    (Complex.conj_eq_iff_re.mp (hH' 0 0)).symm
+  have h11 : H 1 1 = ((H 1 1).re : ℂ) :=
+    (Complex.conj_eq_iff_re.mp (hH' 1 1)).symm
+  have h22 : H 2 2 = ((H 2 2).re : ℂ) :=
+    (Complex.conj_eq_iff_re.mp (hH' 2 2)).symm
+  refine ⟨(H 0 0).re, (H 1 1).re, (H 2 2).re, H 0 1, H 0 2, H 1 2, ?_⟩
+  ext i j
+  fin_cases i <;> fin_cases j
+  · simpa using h00
+  · rfl
+  · rfl
+  · simpa using (hH' 1 0).symm
+  · simpa using h11
+  · rfl
+  · simpa using (hH' 2 0).symm
+  · simpa using (hH' 2 1).symm
+  · simpa using h22
+
 theorem determinant_pencil (a b : ℝ) (z u v : ℂ) (t : ℝ) :
     (D + (t : ℂ) • hermitianMatrix a b z u v).det =
       -(t : ℂ) * 0 +
@@ -73,6 +97,33 @@ theorem determinant_pencil (a b : ℝ) (z u v : ℂ) (t : ℝ) :
   rw [Matrix.det_fin_three]
   simp [D, hermitianMatrix, Matrix.add_apply, Matrix.smul_apply,
     Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two]
+  ring
+
+theorem determinant_pencil_general (a b c : ℝ) (z u v : ℂ) (t : ℝ) :
+    (D + (t : ℂ) •
+        !![(a : ℂ), z, u; conj z, (b : ℂ), v;
+          conj u, conj v, (c : ℂ)]).det =
+      -(t : ℂ) * (c : ℂ) +
+        (t : ℂ) ^ 2 *
+          ((b : ℂ) * (c : ℂ) - (a : ℂ) * (c : ℂ) +
+            conj u * u - conj v * v) +
+        (t : ℂ) ^ 3 *
+          ((a : ℂ) * (b : ℂ) * (c : ℂ) -
+            (a : ℂ) * (conj v * v) -
+            (b : ℂ) * (conj u * u) + z * v * conj u +
+            conj z * conj v * u - (c : ℂ) * (z * conj z)) := by
+  rw [Matrix.det_fin_three]
+  simp [D, Matrix.add_apply, Matrix.smul_apply,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two]
+  ring
+
+theorem hermitianMatrix_det (a b : ℝ) (z u v : ℂ) :
+    (hermitianMatrix a b z u v).det =
+      -(a : ℂ) * (conj v * v) - (b : ℂ) * (conj u * u) +
+        z * v * conj u + conj z * conj v * u := by
+  rw [Matrix.det_fin_three]
+  simp [hermitianMatrix, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two]
   ring
 
 theorem shear_identity (a b : ℝ) (p u : ℂ)
@@ -146,6 +197,89 @@ theorem zero_graph_common_kernel
     · convert (hzero H hH).2.2 using 1 <;>
         simp [Matrix.mulVec, e3, Fin.sum_univ_three, Matrix.vecHead,
           Matrix.vecTail]
+
+theorem universal_coefficient_constraints
+    (K : Submodule ℝ M)
+    (hD : D ∈ K)
+    (hHerm : ∀ H : M, H ∈ K → H.IsHermitian)
+    (hSing : ∀ H : M, H ∈ K → H.det = 0) :
+    ∀ H ∈ K, H 2 2 = 0 ∧ conj (H 0 2) * H 0 2 = conj (H 1 2) * H 1 2 := by
+  intro H hH
+  obtain ⟨a, b, c, z, u, v, rfl⟩ := hermitian_coordinates (hHerm H hH)
+  let q : ℂ := (b : ℂ) * (c : ℂ) - (a : ℂ) * (c : ℂ) +
+    conj u * u - conj v * v
+  let r : ℂ := (a : ℂ) * (b : ℂ) * (c : ℂ) -
+    (a : ℂ) * (conj v * v) - (b : ℂ) * (conj u * u) +
+      z * v * conj u + conj z * conj v * u - (c : ℂ) * (z * conj z)
+  have hdet (t : ℝ) :
+      (D + t •
+          (!![(a : ℂ), z, u; conj z, (b : ℂ), v;
+            conj u, conj v, (c : ℂ)] : M)).det = 0 := by
+    apply hSing
+    exact K.add_mem hD (K.smul_mem t hH)
+  have hp (t : ℝ) :
+      -(t : ℂ) * (c : ℂ) + (t : ℂ) ^ 2 * q + (t : ℂ) ^ 3 * r = 0 := by
+    have ht := hdet t
+    have hsmul :
+        (t : ℝ) •
+            (!![(a : ℂ), z, u; conj z, (b : ℂ), v;
+              conj u, conj v, (c : ℂ)] : M) =
+          (t : ℂ) •
+            (!![(a : ℂ), z, u; conj z, (b : ℂ), v;
+              conj u, conj v, (c : ℂ)] : M) := by
+      ext i j
+      simp [Matrix.smul_apply, smul_eq_mul]
+    rw [hsmul, determinant_pencil_general] at ht
+    exact ht
+  have h1 := hp 1
+  have hm1 := hp (-1)
+  have h2 := hp 2
+  have hm2 := hp (-2)
+  norm_num at h1 hm1 h2 hm2
+  have hq : q = 0 := by
+    linear_combination (h1 + hm1) / 2
+  have hcr : (c : ℂ) - r = 0 := by
+    linear_combination (hm1 - h1) / 2
+  have hcC : (c : ℂ) = 0 := by
+    have h6 : (6 : ℂ) * (c : ℂ) = 0 := by
+      linear_combination h2 - 4 * hq + 8 * hcr
+    exact (mul_eq_zero.mp h6).resolve_left (by norm_num)
+  have hc : c = 0 := by exact_mod_cast hcC
+  have huv : conj u * u = conj v * v := by
+    have hq' := hq
+    simp [q, hc] at hq'
+    exact sub_eq_zero.mp hq'
+  exact ⟨by simp [hc], huv⟩
+
+theorem universal_faithful_coordinate_representation
+    (K : Submodule ℝ M)
+    (hD : D ∈ K)
+    (hHerm : ∀ H : M, H ∈ K → H.IsHermitian)
+    (hSing : ∀ H : M, H ∈ K → H.det = 0) :
+    ∀ H ∈ K, ∃ a b : ℝ, ∃ z u v : ℂ,
+      H = hermitianMatrix a b z u v ∧
+        conj u * u = conj v * v ∧
+        ((a + b : ℝ) : ℂ) * (conj u * u) =
+          z * v * conj u + conj z * conj v * u := by
+  intro H hH
+  obtain ⟨a, b, c, z, u, v, hcoord⟩ := hermitian_coordinates (hHerm H hH)
+  have hconstraints := universal_coefficient_constraints K hD hHerm hSing H hH
+  have hc : c = 0 := by
+    have hcC := congrArg Complex.re hconstraints.1
+    simpa [hcoord] using hcC
+  have hcoord0 : H = hermitianMatrix a b z u v := by
+    rw [hcoord]
+    simp [hermitianMatrix, hc]
+  have huv : conj u * u = conj v * v := by
+    simpa [hcoord] using hconstraints.2
+  have hdetH : (hermitianMatrix a b z u v).det = 0 := by
+    rw [← hcoord0]
+    exact hSing H hH
+  rw [hermitianMatrix_det] at hdetH
+  rw [← huv] at hdetH
+  refine ⟨a, b, z, u, v, hcoord0, huv, ?_⟩
+  rw [Complex.ofReal_add]
+  linear_combination -hdetH
 
 def normalizedGraphTrichotomy : Prop :=
   ∀ (K : Submodule ℝ M), D ∈ K →
