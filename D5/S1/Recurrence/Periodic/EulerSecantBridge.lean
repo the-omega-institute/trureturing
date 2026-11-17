@@ -54,7 +54,7 @@ private theorem H_product : H * F 1 = 1 := by
         rw [mul_left_comm]
         change (-1 : ℚ) ^ n * eCoeff (exp ℚ) n = _
         rw [eCoeff_exp, mul_one]
-      simp only [eCoeff, map_add, mul_add] at hr ⊢
+      simp only [eCoeff, map_add, mul_add] at ⊢
       change eCoeff (exp ℚ) n + eCoeff (rescale (-1 : ℚ) (exp ℚ)) n = _
       rw [eCoeff_exp, hr]
     rw [hL, hR]
@@ -118,7 +118,7 @@ private theorem even_recurrence (n : ℕ) :
       -∑ j ∈ range (n + 1), ((2 * (n + 1)).choose (2 * (j + 1)) : ℤ) *
         A 1 (2 * (n - j)) := by
     have hsum : (∑ j ∈ range (n + 1),
-        ((2 * (n + 1)).choose (2 * (j + 1)) : ℤ) * A 1 (2 * (n + 1 - (j + 1))))) =
+        ((2 * (n + 1)).choose (2 * (j + 1)) : ℤ) * A 1 (2 * (n + 1 - (j + 1)))) =
         ∑ j ∈ range (n + 1), ((2 * (n + 1)).choose (2 * (j + 1)) : ℤ) *
           A 1 (2 * (n - j)) := by
       apply sum_congr rfl
@@ -147,5 +147,20 @@ theorem secant_bridge (s : ℕ) :
   have hh := SecantNumberPurePeriodRefutation.a_unique
     (fun s => (E (2 * s) : ℤ)) (by simp [E]) even_recurrence
   exact congrFun hh s
+
+/-- The exact source boundary values and the strict bound needed for the particular family. -/
+theorem boundary_values : E 0 = 1 ∧ E 1 = 1 ∧ E 2 = 1 ∧ E 3 = 2 ∧
+    ∀ k : ℕ, 4 ≤ k → 2 < E k := by
+  refine ⟨by simp [E], by simp [E], ?_, ?_, ?_⟩
+  · norm_num [E, Fin.sum_univ_succ]
+  · norm_num [E, Fin.sum_univ_succ]
+  · intro k hk
+    have he4 : E 4 = 5 := by
+      have he := secant_bridge 2
+      rw [SecantNumberPurePeriodRefutation.initial_values.2.2.1] at he
+      exact_mod_cast he
+    have hh := monotone_E hk
+    rw [he4] at hh
+    omega
 
 end D5.S1.Recurrence.Periodic.EulerSecantBridge

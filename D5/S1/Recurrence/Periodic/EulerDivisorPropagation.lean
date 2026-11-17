@@ -8,9 +8,13 @@
 
 import D5.S1.Recurrence.Periodic.EulerOddPrimePower
 import D5.S1.Recurrence.Periodic.EulerTwoPrimary
+import D5.S1.Recurrence.Periodic.EulerSecantBridge
 import Mathlib.Data.Nat.Factorization.Basic
 
+/-! All-parameter prime-power assembly for the literal ordinary source assertion. -/
+
 open D5.S1.Recurrence.Periodic.EulerUpDownSource
+open D5.S1.Recurrence.Periodic.EulerSecantBridge
 
 namespace D5.S1.Recurrence.Periodic.EulerDivisorPropagation
 
@@ -21,7 +25,7 @@ private theorem zero_even (q s : ℕ) :
   simp only [Int.coe_castRingHom, Int.cast_natCast, Int.cast_mul, Int.cast_pow,
     Int.cast_neg, Int.cast_one] at he
   rw [he]
-  exact (isUnit_neg.mpr isUnit_one).pow s |>.mul_left_eq_zero
+  exact ((isUnit_one : IsUnit (1 : ZMod q)).neg.pow s).mul_right_eq_zero
 
 private theorem zero_odd (q s : ℕ) :
     (E (2 * s + 1) : ZMod q) = 0 ↔
@@ -30,7 +34,7 @@ private theorem zero_odd (q s : ℕ) :
   simp only [Int.coe_castRingHom, Int.cast_natCast, Int.cast_mul, Int.cast_pow,
     Int.cast_neg, Int.cast_one] at he
   rw [he]
-  exact (isUnit_neg.mpr isUnit_one).pow (s + 1) |>.mul_left_eq_zero
+  exact ((isUnit_one : IsUnit (1 : ZMod q)).neg.pow (s + 1)).mul_right_eq_zero
 
 /-- Ordinary Euler zeros propagate at every positive index for odd prime powers. -/
 theorem odd_prime_power (p r k m : ℕ) (hp : p.Prime) (ho : Odd p)
@@ -50,23 +54,25 @@ theorem odd_prime_power (p r k m : ℕ) (hp : p.Prime) (ho : Odd p)
   by_cases he : Even k
   · obtain ⟨s, hs⟩ := he
     have hkform : k = 2 * s := by omega
-    have hn : Even (k + m * Nat.totient q) := he.add (hperiod.mul_left m)
+    have hn : Even (k + m * Nat.totient q) :=
+      (show Even k from ⟨s, hs⟩).add (hperiod.mul_left m)
     obtain ⟨t, ht⟩ := hn
     have hnform : k + m * Nat.totient q = 2 * t := by omega
     rw [hkform] at hzero
     have ha := EulerOddPrimePower.signed_zero_transfer p r 1 k m hp ho (by decide)
-      hk ((zero_even q s).mp hzero)
+      hk (by rw [hkform]; exact (zero_even q s).mp hzero)
     rw [hnform] at ha ⊢
     exact (zero_even q t).mpr ha
   · have ho' := Nat.not_even_iff_odd.mp he
     obtain ⟨s, hs⟩ := ho'
     have hkform : k = 2 * s + 1 := by omega
-    have hn : Odd (k + m * Nat.totient q) := ho'.add_even (hperiod.mul_left m)
+    have hn : Odd (k + m * Nat.totient q) :=
+      (show Odd k from ⟨s, hs⟩).add_even (hperiod.mul_left m)
     obtain ⟨t, ht⟩ := hn
     have hnform : k + m * Nat.totient q = 2 * t + 1 := by omega
     rw [hkform] at hzero
     have ha := EulerOddPrimePower.signed_zero_transfer p r 0 k m hp ho (by decide)
-      hk ((zero_odd q s).mp hzero)
+      hk (by rw [hkform]; exact (zero_odd q s).mp hzero)
     rw [hnform] at ha ⊢
     exact (zero_odd q t).mpr ha
 
@@ -74,7 +80,9 @@ private theorem exponential_lower (a : ℕ) : 2 * a ≤ 2 ^ a + 1 := by
   induction a with
   | zero => norm_num
   | succ a ih =>
-    have hp : 1 ≤ 2 ^ a := Nat.one_le_pow a 2 (by decide)
+    by_cases ha : a = 0
+    · subst a; norm_num
+    have hp : 2 ≤ 2 ^ a := Nat.le_self_pow (by omega) 2
     rw [pow_succ]
     nlinarith
 
@@ -133,7 +141,7 @@ theorem divisor_propagation (k m d : ℕ) (hd : 2 < d) (hdiv : d ∣ E k) :
     · have ho := hp.odd_of_ne_two hp2
       obtain ⟨t, ht⟩ := Nat.totient_dvd_of_dvd hpa
       have hh := odd_prime_power p a k (m * t) hp ho hk (hpa.trans hdiv)
-      simpa only [ht, Nat.mul_assoc] using hh
+      simpa only [ht, Nat.mul_assoc, Nat.mul_left_comm, Nat.mul_comm] using hh
 
 /-- The particular family excludes exactly the source's index three. -/
 theorem particular (k m : ℕ) (hk : k ≠ 3) :

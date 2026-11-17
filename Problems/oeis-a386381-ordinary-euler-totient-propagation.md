@@ -43,8 +43,9 @@ The ordinary proof has an independently approved complete route. The
 retained Lean source is an unfrozen implementation candidate. Its formal
 acceptance requires all source bridges, scoped kernel and axiom checks,
 faithful registration or the linked exception, and fresh independent
-pre-freeze form and source-fidelity review. This document is not a
-freeze certificate, CI result or publication claim.
+pre-freeze form and source-fidelity review. The intermediate theorem audits remain incomplete under the existing
+[linked exception](https://github.com/the-omega-institute/trureturing/issues/31291).
+This document is not a freeze certificate, CI result or publication claim.
 
 ## Route
 

@@ -2,11 +2,14 @@ import D5.S1.Recurrence.Periodic.EulerDivisorPropagation
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound dependent-family audits of the two complete source assertions. -/
+
 set_option autoImplicit false
 noncomputable section
 
 namespace Reg.D5.S1.Recurrence.Periodic.EulerDivisorPropagation
 open _root_.D5.S1.Recurrence.Periodic.EulerUpDownSource
+open _root_.D5.S1.Recurrence.Periodic.EulerSecantBridge
 open _root_.D5.S1.Recurrence.Periodic.EulerDivisorPropagation
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -59,7 +62,8 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
     owner := `D5.S1.Recurrence.Periodic.EulerDivisorPropagation
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "domain", "arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "domain", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
@@ -109,7 +113,8 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
     owner := `D5.S1.Recurrence.Periodic.EulerDivisorPropagation
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none

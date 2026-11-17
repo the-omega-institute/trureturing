@@ -63,21 +63,8 @@ private theorem E_succ_le (n : ℕ) : E n ≤ E (n + 1) := by
       (show 0 ∈ range (n + 1) by simp)
     simpa [E] using h
 
-private theorem E_mono : Monotone E := monotone_nat_of_le_succ E_succ_le
-
-private theorem E_four : E 4 = 5 := by
-  norm_num [E, Fin.sum_univ_succ]
-
-/-- The only values at most two occur among the first four indices. -/
-theorem boundary_values : E 0 = 1 ∧ E 1 = 1 ∧ E 2 = 1 ∧ E 3 = 2 ∧
-    ∀ k : ℕ, 4 ≤ k → 2 < E k := by
-  refine ⟨by simp [E], by simp [E], ?_, ?_, ?_⟩
-  · norm_num [E, Fin.sum_univ_succ]
-  · norm_num [E, Fin.sum_univ_succ]
-  · intro k hk
-    have h := E_mono hk
-    rw [E_four] at h
-    omega
+/-- The source recurrence makes the ordinary Euler carrier nondecreasing. -/
+theorem monotone_E : Monotone E := monotone_nat_of_le_succ E_succ_le
 
 /-- The ordinary secant-plus-tangent series satisfies its Riccati equation. -/
 theorem ordinary_riccati :
