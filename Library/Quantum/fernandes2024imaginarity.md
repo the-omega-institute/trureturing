@@ -5,8 +5,7 @@ authors: Carlos Fernandes, Rafael Wagner, Leonardo Novo, Ernesto F. Galvão
 year: 2024
 url: https://arxiv.org/abs/2403.15066v1
 claim: Non-real Bargmann invariants witness set imaginarity; three-state and four-state overlap data have different real-realizability constraints.
-strata_touched:
-  - D5/S3/Quantum/PureState/BargmannRealRephasing
+strata_touched: []
 license: citation-only
 triage: anchor
 doi: null
@@ -43,15 +42,3 @@ underlying Bargmann and real-Gram principles are prior results.
 
 This note paraphrases the cited statements and scope. No article PDF,
 figure or extended excerpt is redistributed.
-
-## Verified locator
-
-arXiv: https://arxiv.org/abs/2403.15066v1
-
-The abstract page lists the journal reference Phys. Rev. Lett. 133, 190201
-(2024) with DOI 10.1103/PhysRevLett.133.190201; the published version was not
-compared with v1. In v1, the paragraph before equation (1) introduces the
-gauge freedom of a tuple of states, and the section on quantum realizability
-states that a non-real Bargmann invariant implies set imaginarity. No converse
-statement, that real invariants of all orders or of order three imply a common
-real structure, was found in v1.
