@@ -38,6 +38,10 @@ $$\neg (\forall (M : WithTop \mathbb{R}) (Nlo Nhi : \mathbb{R}) (V w : \mathbb{R
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/SpectralGap/WeightedConvexPotentialRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-ahrami2605gap` (refuted) by `D5/S3/Analytic/SpectralGap/WeightedConvexPotentialRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-ahrami2605gap","declaration_gid":"D5/S3/Analytic/SpectralGap/WeightedConvexPotentialRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mohammed Ahrami (2026). *On the fundamental spectral gap of weighted Schrodinger operators*. DOI: [10.48550/arXiv.2605.24560](https://doi.org/10.48550/arXiv.2605.24560). URL: <https://arxiv.org/abs/2605.24560v1>.
