@@ -491,8 +491,7 @@ private theorem divisor_card_succ (t v : ℕ) :
       if term t ∣ v then 1 else 0 := by
   classical
   by_cases h : term t ∣ v <;>
-    simp [divisorIndices, Finset.range_add_one, Finset.filter_insert, h,
-      show t ∉ divisorIndices t v by simp [divisorIndices]]
+    simp [divisorIndices, Finset.range_add_one, Finset.filter_insert, h]
 
 /-- The ranks congruent to one must be proper-divisor contributors.  The
 induction retains their spacing without constructing a sorted contributor list. -/
@@ -507,13 +506,13 @@ theorem contributor_rank_bound (q N t v : ℕ) (hq : 2 ≤ q)
     have hi := ih htN
     rw [divisor_card_succ]
     by_cases hd : term t ∣ v
-    · rw [if_pos hd]
+    · rw [ite_eq_left hd]
       by_cases he : term t = v
       · have hproper : ∑ d ∈ v.properDivisors, count (t + 1) d =
             ∑ d ∈ v.properDivisors, count t d := by
           apply Finset.sum_congr rfl
           intro d hmem
-          rw [count_succ, if_neg]
+          rw [count_succ, ite_eq_right]
           · omega
           · have := (Nat.mem_properDivisors.mp hmem).2
             omega
@@ -531,7 +530,7 @@ theorem contributor_rank_bound (q N t v : ℕ) (hq : 2 ≤ q)
           apply Finset.card_pos.mpr
           exact ⟨0, by simp [divisorIndices, htpos, term_zero]⟩
         have hs : term (t + 1) = (divisorIndices t v).card + 1 := by
-          rw [recurrence, he, divisor_card_succ, he, if_pos (dvd_refl v)]
+          rw [recurrence, he, divisor_card_succ, he, ite_eq_left (dvd_refl v)]
         have hmod := havoid (t + 1) ht (by omega)
         rw [hs, hrank] at hmod
         have : (q * ∑ d ∈ v.properDivisors, count t d + 1) % q = 1 := by
@@ -546,9 +545,277 @@ theorem contributor_rank_bound (q N t v : ℕ) (hq : 2 ≤ q)
           simp [hp]
         rw [← hsum, Nat.mul_add, Nat.mul_one]
         omega
-    · rw [if_neg hd, Nat.add_zero]
+    · rw [ite_eq_right hd, Nat.add_zero]
       exact hi.trans (Nat.mul_le_mul_left q (Finset.sum_le_sum
         (fun d _ => count_mono (Nat.le_succ t) d)))
+
+/-- Distinct prime words, including the empty word for one. -/
+def primeWords (v : ℕ) : Finset (List ℕ) := v.primeFactorsList.permutations.toFinset
+
+abbrev omega (v : ℕ) : ℕ := v.primeFactorsList.length
+
+def primeWordCount (v : ℕ) : ℕ := (primeWords v).card
+
+def primeWordWeight (A v : ℕ) : ℕ := A ^ omega v * primeWordCount v
+
+private theorem mem_primeWords {v : ℕ} (hv : v ≠ 0) (w : List ℕ) :
+    w ∈ primeWords v ↔ w.prod = v ∧ ∀ p ∈ w, Nat.Prime p := by
+  simp only [primeWords, List.mem_toFinset, List.mem_permutations]
+  constructor
+  · intro h
+    exact ⟨h.prod_eq.trans (Nat.prod_primeFactorsList hv),
+      fun p hp => Nat.prime_of_mem_primeFactorsList (h.mem_iff.mp hp)⟩
+  · rintro ⟨hp, hprime⟩
+    exact Nat.primeFactorsList_unique hp hprime
+
+private theorem primeWord_length {v : ℕ} {w : List ℕ} (hw : w ∈ primeWords v) :
+    w.length = omega v := by
+  exact (List.mem_permutations.mp (List.mem_toFinset.mp hw)).length_eq
+
+private theorem primeWordCount_pos (v : ℕ) : 0 < primeWordCount v := by
+  apply Finset.card_pos.mpr
+  exact ⟨v.primeFactorsList, by simp [primeWords]⟩
+
+/-- Splitting a prime word at a fixed position is a bijection with a pair of
+words whose first product is a divisor of that factor-count rank. -/
+theorem prime_word_split (v j : ℕ) (hv : 0 < v) (hj : j ≤ omega v) :
+    (∑ d ∈ v.divisors.filter (fun d => omega d = j),
+      primeWordCount d * primeWordCount (v / d)) = primeWordCount v := by
+  classical
+  let S := (v.divisors.filter (fun d => omega d = j)).sigma
+    (fun d => (primeWords d) ×ˢ (primeWords (v / d)))
+  have hcard : S.card = ∑ d ∈ v.divisors.filter (fun d => omega d = j),
+      primeWordCount d * primeWordCount (v / d) := by
+    simp [S, primeWordCount]
+  rw [← hcard]
+  apply Finset.card_bij (fun x _ => x.2.1 ++ x.2.2)
+  · intro x hx
+    rcases Finset.mem_sigma.mp hx with ⟨hd, hw⟩
+    have hdv := Nat.dvd_of_mem_divisors (Finset.mem_filter.mp hd).1
+    have hd0 := ne_zero_of_dvd_ne_zero hv.ne' hdv
+    have hquot : v / x.1 ≠ 0 := by
+      exact (Nat.div_pos (Nat.le_of_dvd hv hdv) (Nat.pos_of_ne_zero hd0)).ne'
+    have h1 := (mem_primeWords hd0 x.2.1).mp (Finset.mem_product.mp hw).1
+    have h2 := (mem_primeWords hquot x.2.2).mp (Finset.mem_product.mp hw).2
+    apply (mem_primeWords hv.ne' _).mpr
+    refine ⟨by rw [List.prod_append, h1.1, h2.1, Nat.mul_div_cancel' hdv], ?_⟩
+    intro p hp
+    rcases List.mem_append.mp hp with hp | hp
+    · exact h1.2 p hp
+    · exact h2.2 p hp
+  · intro x hx y hy heq
+    rcases Finset.mem_sigma.mp hx with ⟨hxd, hxw⟩
+    rcases Finset.mem_sigma.mp hy with ⟨hyd, hyw⟩
+    have hxl : x.2.1.length = j :=
+      (primeWord_length (Finset.mem_product.mp hxw).1).trans (Finset.mem_filter.mp hxd).2
+    have hyl : y.2.1.length = j :=
+      (primeWord_length (Finset.mem_product.mp hyw).1).trans (Finset.mem_filter.mp hyd).2
+    have hu : x.2.1 = y.2.1 := by
+      have := congrArg (List.take j) heq
+      simpa [hxl, hyl] using this
+    have hw : x.2.2 = y.2.2 := by
+      have := congrArg (List.drop j) heq
+      simpa [hxl, hyl] using this
+    have hxd0 := ne_zero_of_dvd_ne_zero hv.ne'
+      (Nat.dvd_of_mem_divisors (Finset.mem_filter.mp hxd).1)
+    have hyd0 := ne_zero_of_dvd_ne_zero hv.ne'
+      (Nat.dvd_of_mem_divisors (Finset.mem_filter.mp hyd).1)
+    have hd : x.1 = y.1 :=
+      ((mem_primeWords hxd0 _).mp (Finset.mem_product.mp hxw).1).1.symm.trans
+        ((congrArg List.prod hu).trans
+          ((mem_primeWords hyd0 _).mp (Finset.mem_product.mp hyw).1).1)
+    cases x with | mk xd xw =>
+      cases y with | mk yd yw =>
+        dsimp at hd hu hw
+        subst yd
+        exact congrArg (Sigma.mk xd) (Prod.ext hu hw)
+  · intro w hw
+    have hwp := (mem_primeWords hv.ne' w).mp hw
+    let u := w.take j
+    let z := w.drop j
+    let d := u.prod
+    have hdv : d ∣ v := ⟨z.prod, by
+      simpa [d, u, z] using ((List.prod_take_mul_prod_drop w j).trans hwp.1).symm⟩
+    have hd0 := ne_zero_of_dvd_ne_zero hv.ne' hdv
+    have huprime : ∀ p ∈ u, Nat.Prime p :=
+      fun p hp => hwp.2 p (List.mem_of_mem_take hp)
+    have hzprime : ∀ p ∈ z, Nat.Prime p :=
+      fun p hp => hwp.2 p (List.mem_of_mem_drop hp)
+    have hu : u ∈ primeWords d := (mem_primeWords hd0 _).mpr ⟨rfl, huprime⟩
+    have hul : omega d = j := by
+      have hh := primeWord_length hu
+      dsimp [u] at hh
+      rw [List.length_take, primeWord_length hw, Nat.min_eq_left hj] at hh
+      exact hh.symm
+    have hzprod : z.prod = v / d := by
+      apply (Nat.eq_div_iff_mul_eq_left hd0 hdv).mpr
+      simpa [mul_comm, d, u, z] using
+        ((List.prod_take_mul_prod_drop w j).trans hwp.1).symm
+    have hz0 : v / d ≠ 0 := by
+      exact (Nat.div_pos (Nat.le_of_dvd hv hdv) (Nat.pos_of_ne_zero hd0)).ne'
+    refine ⟨⟨d, u, z⟩, ?_, ?_⟩
+    · apply Finset.mem_sigma.mpr
+      refine ⟨Finset.mem_filter.mpr ⟨Nat.mem_divisors.mpr ⟨hdv, hv.ne'⟩, hul⟩, ?_⟩
+      exact Finset.mem_product.mpr ⟨hu, (mem_primeWords hz0 _).mpr ⟨hzprod, hzprime⟩⟩
+    · exact List.take_append_drop j w
+
+private theorem omega_lt_of_proper {v d : ℕ} (hv : v ≠ 0)
+    (hd : d ∈ v.properDivisors) : omega d < omega v := by
+  have hsub := Nat.primeFactorsList_sublist_of_dvd (Nat.mem_properDivisors.mp hd).1 hv
+  apply lt_of_le_of_ne hsub.length_le
+  intro heq
+  have hlist := hsub.eq_of_length heq
+  have hd0 := ne_zero_of_dvd_ne_zero hv (Nat.mem_properDivisors.mp hd).1
+  have hdv : d = v := by
+    rw [← Nat.prod_primeFactorsList hd0, hlist, Nat.prod_primeFactorsList hv]
+  exact (Nat.mem_properDivisors.mp hd).2.ne hdv
+
+private theorem prime_word_layer_bound (v j : ℕ) (hv : 0 < v) (hj : j < omega v) :
+    (∑ d ∈ v.properDivisors.filter (fun d => omega d = j), primeWordCount d) ≤
+      primeWordCount v := by
+  calc
+    _ ≤ ∑ d ∈ v.divisors.filter (fun d => omega d = j),
+        primeWordCount d * primeWordCount (v / d) := by
+      apply le_trans (Finset.sum_le_sum (fun d _ =>
+        Nat.le_mul_of_pos_right _ (primeWordCount_pos (v / d))))
+      apply Finset.sum_le_sum_of_subset_of_nonneg
+      · intro d hd
+        have h := Finset.mem_filter.mp hd
+        exact Finset.mem_filter.mpr ⟨Nat.mem_divisors.mpr
+          ⟨(Nat.mem_properDivisors.mp h.1).1, hv.ne'⟩, h.2⟩
+      · intros; exact Nat.zero_le _
+    _ = _ := prime_word_split v j hv hj.le
+
+/-- The geometric layer sum absorbs every proper divisor with `A=q+1`. -/
+theorem prime_word_weight_bound (q v : ℕ) (hv : 0 < v) :
+    q * (∑ d ∈ v.properDivisors, primeWordWeight (q + 1) d) ≤
+      primeWordWeight (q + 1) v := by
+  classical
+  have hlayers : (∑ d ∈ v.properDivisors, primeWordWeight (q + 1) d) =
+      ∑ j ∈ Finset.range (omega v),
+        (q + 1) ^ j *
+          ∑ d ∈ v.properDivisors.filter (fun d => omega d = j), primeWordCount d := by
+    simp_rw [Finset.mul_sum, Finset.sum_filter]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro d hd
+    simp [omega_lt_of_proper hv.ne' hd, primeWordWeight]
+  rw [hlayers]
+  have hsum : (∑ j ∈ Finset.range (omega v),
+      (q + 1) ^ j * ∑ d ∈ v.properDivisors.filter (fun d => omega d = j),
+        primeWordCount d) ≤
+      (∑ j ∈ Finset.range (omega v), (q + 1) ^ j) * primeWordCount v := by
+    rw [Finset.sum_mul]
+    apply Finset.sum_le_sum
+    intro j hj
+    exact Nat.mul_le_mul_left _ (prime_word_layer_bound v j hv (Finset.mem_range.mp hj))
+  have hgeom (k : ℕ) : q * (∑ j ∈ Finset.range k, (q + 1) ^ j) + 1 = (q + 1) ^ k := by
+    induction k with
+    | zero => simp
+    | succ k ih => rw [Finset.sum_range_succ, Nat.mul_add, pow_succ]; nlinarith
+  calc
+    _ ≤ q * ((∑ j ∈ Finset.range (omega v), (q + 1) ^ j) * primeWordCount v) :=
+      Nat.mul_le_mul_left q hsum
+    _ = (q * ∑ j ∈ Finset.range (omega v), (q + 1) ^ j) * primeWordCount v := by ring
+    _ ≤ (q + 1) ^ omega v * primeWordCount v :=
+      Nat.mul_le_mul_right _ (by have := hgeom (omega v); omega)
+    _ = _ := rfl
+
+private theorem count_le_divisor_card (t d : ℕ) : count t d ≤ (divisorIndices t d).card := by
+  apply Finset.card_le_card
+  intro i hi
+  simp only [Finset.mem_filter, Finset.mem_range] at hi
+  simp [divisorIndices, hi.1, hi.2]
+
+private theorem divisor_card_one (t : ℕ) : (divisorIndices t 1).card ≤ 2 := by
+  apply le_trans (Finset.card_le_card (s := divisorIndices t 1) (t := {0, 1}) ?_)
+  · simp
+  · intro i hi
+    have hd := (Finset.mem_filter.mp hi).2
+    have he : term i = 1 := Nat.dvd_one.mp hd
+    simpa using (term_eq_one_iff i).mp he
+
+/-- A pointwise majorant for the actual recurrence under finite-prefix residue
+avoidance.  The time range includes exactly the available successors. -/
+theorem divisor_card_le_prime_word_weight (q N t v : ℕ) (hq : 2 ≤ q)
+    (havoid : AvoidsResidue q N) (ht : t ≤ N) (hv : 0 < v) :
+    (divisorIndices t v).card ≤ 2 * primeWordWeight (q + 1) v := by
+  induction v using Nat.strong_induction_on with
+  | h v ih =>
+    by_cases hv1 : v = 1
+    · subst v
+      have hw : primeWordWeight (q + 1) 1 = 1 := by
+        simp [primeWordWeight, primeWordCount, primeWords, omega]
+      rw [hw]
+      simpa using divisor_card_one t
+    have hv2 : 2 ≤ v := by omega
+    calc
+      _ ≤ q * ∑ d ∈ v.properDivisors, count t d :=
+        contributor_rank_bound q N t v hq havoid ht hv2
+      _ ≤ q * ∑ d ∈ v.properDivisors, 2 * primeWordWeight (q + 1) d := by
+        apply Nat.mul_le_mul_left
+        apply Finset.sum_le_sum
+        intro d hd
+        exact (count_le_divisor_card t d).trans
+          (ih d (Nat.mem_properDivisors.mp hd).2
+            (Nat.pos_of_ne_zero (ne_zero_of_dvd_ne_zero hv.ne'
+              (Nat.mem_properDivisors.mp hd).1)))
+      _ = 2 * (q * ∑ d ∈ v.properDivisors, primeWordWeight (q + 1) d) := by
+        rw [← Finset.mul_sum]; ring
+      _ ≤ _ := Nat.mul_le_mul_left 2 (prime_word_weight_bound q v hv)
+
+/-- Actual occurrences inject into distinct predecessor values in the indicated
+prime-word level set.  Together with the pointwise count bound this is the
+finite input to the subsequent moment and threshold estimates. -/
+theorem count_le_prime_word_bounds (q N t d : ℕ) (hq : 2 ≤ q)
+    (havoid : AvoidsResidue q N) (ht : t ≤ N) (hd : 2 ≤ d) :
+    count t d ≤ 2 * primeWordWeight (q + 1) d ∧
+    count t d ≤ ((Finset.range (prefixMax N + 1)).filter
+      (fun v => 0 < v ∧ d ≤ 2 * primeWordWeight (q + 1) v)).card := by
+  classical
+  refine ⟨(count_le_divisor_card t d).trans
+    (divisor_card_le_prime_word_weight q N t d hq havoid ht (by omega)), ?_⟩
+  apply Finset.card_le_card_of_injOn (fun i => term (i - 1))
+  · intro i hi
+    have hi' := Finset.mem_filter.mp hi
+    have hit : i < t := Finset.mem_range.mp hi'.1
+    have hi0 : i ≠ 0 := by
+      intro hz
+      subst i
+      rw [term_zero] at hi'
+      omega
+    have hieq : i - 1 + 1 = i := by omega
+    have hrec : d = (divisorIndices i (term (i - 1))).card := by
+      have hh := recurrence (i - 1)
+      rw [hieq, hi'.2] at hh
+      exact hh
+    have hb : term (i - 1) ≤ prefixMax N :=
+      Finset.le_sup (Finset.mem_range.mpr (by omega))
+    apply Finset.mem_filter.mpr
+    refine ⟨Finset.mem_range.mpr (Nat.lt_succ_of_le hb), term_pos _, ?_⟩
+    rw [hrec]
+    exact divisor_card_le_prime_word_weight q N i (term (i - 1))
+      hq havoid (by omega) (term_pos _)
+  · intro i hi j hj hij
+    have hi' := Finset.mem_filter.mp hi
+    have hj' := Finset.mem_filter.mp hj
+    have hi0 : i ≠ 0 := by
+      intro hz
+      subst i
+      rw [term_zero] at hi'
+      omega
+    have hj0 : j ≠ 0 := by
+      intro hz
+      subst j
+      rw [term_zero] at hj'
+      omega
+    have hp : (term (i - 1), term (i - 1 + 1)) =
+        (term (j - 1), term (j - 1 + 1)) := by
+      apply Prod.ext hij
+      rw [Nat.sub_add_cancel (by omega : 1 ≤ i),
+        Nat.sub_add_cancel (by omega : 1 ≤ j), hi'.2, hj'.2]
+    have := pair_injective hp
+    omega
 
 /- The fractional Dirichlet moment and the uniform missing-residue multiplicity
 estimate are not established here. -/
