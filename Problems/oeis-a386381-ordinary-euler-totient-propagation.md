@@ -39,13 +39,11 @@ No worldwide novelty or priority claim follows.
 
 ## Gap
 
-The ordinary proof has an independently approved complete route. The
-retained Lean source is an unfrozen implementation candidate. Its formal
-acceptance requires all source bridges, scoped kernel and axiom checks,
-faithful registration or the linked exception, and fresh independent
-pre-freeze form and source-fidelity review. The intermediate theorem audits remain incomplete under the existing
+The retained Lean source proves both assertions for the ordinary carrier.
+The intermediate theorem audits remain incomplete under the existing
 [linked exception](https://github.com/the-omega-institute/trureturing/issues/31291).
-This document is not a freeze certificate, CI result or publication claim.
+Independent pre-freeze form and source-fidelity review, canonical freeze
+and publication remain outstanding.
 
 ## Route
 
@@ -80,8 +78,7 @@ The mathematical source declarations are `divisor_propagation` and
 `particular` in `EulerDivisorPropagation`. Their Blueprint describes the
 literal quantifiers and boundaries. Current compiled checks and axiom
 closures are produced by the scoped canonical report; this dossier does
-not duplicate machine status. The candidate remains unfrozen pending
-independent review, with no PR, merge or resolution KPI claimed.
+not duplicate machine status.
 
 ## Triage
 
@@ -92,6 +89,5 @@ independent review, with no PR, merge or resolution KPI claimed.
 ## ASSUMED-UNVERIFIED
 
 Global priority, exhaustive present openness and uninspected equivalent
-literature remain ASSUMED-UNVERIFIED. The main cutoff is not moved by the
-subsequent implementation phase. Conjecture 1 and the A060818 assertion
-are separate targets.
+literature remain ASSUMED-UNVERIFIED. Conjecture 1 and the A060818
+assertion are separate targets.

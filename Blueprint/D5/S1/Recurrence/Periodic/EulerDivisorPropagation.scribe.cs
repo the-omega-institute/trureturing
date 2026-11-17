@@ -15,7 +15,7 @@ internal sealed class EulerDivisorPropagationDocument : IScribeDocumentDefinitio
                 "Subtract the p-scaled shorter odd-length sum from the full sum. The divisible frequencies have h=p*v+b*floor(p/2).", DescribeRole.Theorem),
             Node("signed_zero_transfer", "Every positive signed zero transfers", Q("p r b k m",Imp(Call("Prime",V("p")),Imp(Call("Odd",V("p")),Imp(LeN(V("b"),D(1)),Imp(LtN(D(0),V("k")),Imp(Eqn(R(Qmod(),A(V("b"),V("k"))),D(0)),Eqn(R(Qmod(),A(V("b"),Shift(V("k"),V("m"),Qmod()))),D(0)))))))),
                 "Every retained frequency is a unit. Euler periodicity equates their powers, and nilpotence of p proves the correction factor invertible.", DescribeRole.Theorem),
-            Paragraph(Text("E denotes the source-normalized ordinary A000111 carrier with E(0)=1. Every parameter below is natural, and phi is Nat.totient. The result is an unfrozen Stage A candidate pending independent pre-freeze review; neither source exposition nor generated prose establishes publication or a resolution KPI. Odd prime powers use corrected zero transfer; the two-primary component uses the tangent bound; prime-power divisibility assembles them in the same E value.")),
+            Paragraph(Text("E denotes the source-normalized ordinary A000111 carrier with E(0)=1. Every parameter below is natural, and phi is Nat.totient. Odd prime powers use corrected zero transfer; the two-primary component uses the tangent bound; prime-power divisibility assembles them in the same E value.")),
             Node("odd_prime_power", "The ordinary all-positive-index local theorem", Q("p r k m",Imp(Call("Prime",V("p")),Imp(Call("Odd",V("p")),Imp(LtN(D(0),V("k")),Imp(Dvd(Qmod(),E(V("k"))),Dvd(Qmod(),E(Shift(V("k"),V("m"),Qmod())))))))),
                 "The totient is even, so both indices use the same signed branch. Each sign is a unit and therefore preserves zero divisibility.", DescribeRole.Theorem),
             Node("divisor_propagation", "The complete main assertion", Q("k m d",Imp(LtN(D(2),V("d")),Imp(Dvd(V("d"),E(V("k"))),Dvd(V("d"),E(Shift(V("k"),V("m"),V("d"))))))),
@@ -26,7 +26,13 @@ internal sealed class EulerDivisorPropagationDocument : IScribeDocumentDefinitio
         DescribeRole role) => Describe.Lean(
         DescribeId.Create("eulerdivisorpropagation-" + name.Replace('_','-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(f)),
-        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role,
+        openProblemResolutionClaim: name == "divisor_propagation"
+            ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("oeis-a386381-ordinary-euler-totient-propagation"),
+                ResolutionKind.Proved,
+                [DeclarationHandle.Create(Prefix + "particular")])
+            : null);
 
     private static Formula V(string n) => F.Id(n);
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));

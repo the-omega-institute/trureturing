@@ -32,7 +32,7 @@ $$\forall p: \mathbb{N}, (\forall r: \mathbb{N}, (\forall b: \mathbb{N}, (\foral
 
 Every retained frequency is a unit. Euler periodicity equates their powers, and nilpotence of p proves the correction factor invertible.
 
-E denotes the source-normalized ordinary A000111 carrier with E(0)=1. Every parameter below is natural, and phi is Nat.totient. The result is an unfrozen Stage A candidate pending independent pre-freeze review; neither source exposition nor generated prose establishes publication or a resolution KPI. Odd prime powers use corrected zero transfer; the two-primary component uses the tangent bound; prime-power divisibility assembles them in the same E value.
+E denotes the source-normalized ordinary A000111 carrier with E(0)=1. Every parameter below is natural, and phi is Nat.totient. Odd prime powers use corrected zero transfer; the two-primary component uses the tangent bound; prime-power divisibility assembles them in the same E value.
 
 **Theorem 1.3 (The ordinary all-positive-index local theorem).**
 
@@ -51,6 +51,12 @@ The totient is even, so both indices use the same signed branch. Each sign is a 
 $$\forall k: \mathbb{N}, (\forall m: \mathbb{N}, (\forall d: \mathbb{N}, ((2 < d) \implies ((d \mid \operatorname{E}\left(k\right)) \implies (d \mid \operatorname{E}\left(k + m \cdot \operatorname{totient}\left(d\right)\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerDivisorPropagation.divisor_propagation` (`✓ std3`). ∎
+
+*Resolves.* `Problems/oeis-a386381-ordinary-euler-totient-propagation` (proved) by `D5/S1/Recurrence/Periodic/EulerDivisorPropagation.divisor_propagation` and `D5/S1/Recurrence/Periodic/EulerDivisorPropagation.particular`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a386381-ordinary-euler-totient-propagation","declaration_gid":"D5/S1/Recurrence/Periodic/EulerDivisorPropagation.divisor_propagation","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a386381-ordinary-euler-totient-propagation","declaration_gid":"D5/S1/Recurrence/Periodic/EulerDivisorPropagation.particular","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
