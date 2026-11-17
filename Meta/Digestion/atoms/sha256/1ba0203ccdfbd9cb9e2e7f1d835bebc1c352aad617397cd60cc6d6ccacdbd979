@@ -1,0 +1,102 @@
+**定理 274.3（M-only共同确认包与统一秩二供应）。** 设 $m,n\ge2$，整个原实载体为 $H_m\otimes_{\mathbb R}H_n$，单位为普通迹，闭尖生成锥满足
+
+$$
+\operatorname{Sep}(m|n)\subseteq C\subseteq\operatorname{BP}(m|n).
+\tag{274.9}
+$$
+
+使用整个紧底、全部原纯点及完整 proper 菜单，只要求 $\mathsf M$。则有一个共同 $\delta\in\{0,1\}$，使
+
+$$
+T_A^\delta\mathcal S_2(m|n)\subseteq C\cap C^*,\qquad
+\mathcal S_2(m|n)=\operatorname{cone}\{P_\psi:\operatorname{SR}(\psi)\le2\}.
+\tag{274.10}
+$$
+
+若 $\min(m,n)=2$，则在原矩阵坐标中
+
+$$
+\boxed{\quad C=C^*=\operatorname{PSD}_{mn}
+\quad\text{或}\quad C=C^*=T_A\operatorname{PSD}_{mn}.\quad}
+\tag{274.11}
+$$
+
+不要求实际L2、NR、数值互易或一般面滤波。一般 $m,n>2$ 的(274.10)不分类更高Schmidt秩方向。
+
+证明。复用[XX271.5—271.12][Q274M]的M-only剥离、完整frame补全、原暴露面的least最大测试，以及[Gurvits—Barnum, Theorem1][Q274GB]供应的
+
+$$
+\|W\|_2\le\operatorname{Tr}W\quad(W\in\operatorname{BP}(m|n)).
+\tag{274.12}
+$$
+
+这些步骤适用于 $C,C^*$，不需要实际L2；特别每个单位产品投影 $P$ 是原纯态兼least确认效应。每个非空原暴露面 $E$ 有一个极端proper效应 $h_E$，满足 $\{h_E=1\}=E$，且低于每个在 $E$ 上取一的proper效应；对每个纯 $P\in E$，$h_E-e_P$ 仍是整个原proper区间的极点。
+
+关键是选择共同确认包，而不先识别二元实际面。对任意原纯 $P,Q$，令
+
+$$
+E(P,Q)=\bigcap_{\substack{f\in[0,I]_{C^*}\\f(P)=f(Q)=1}}\{x\in K:f(x)=1\}.
+\tag{274.13}
+$$
+
+这个交能由有限子族取得：从 $K$ 开始，若当前有限交 $D$ 还不等于全交，取 $x\in D\setminus E(P,Q)$，再选一个排除 $x$ 的饱和面。新交是 $D$ 的严格真面，仿射维数严格下降，故有限步终止。所选proper效应的平均在一点取一当且仅当每项都取一，所以 $E(P,Q)$ 本身暴露。因而 $h=h_{E(P,Q)}$ 存在，并满足
+
+$$
+h\le f\quad\text{对每个共同确认 }P,Q\text{ 的原proper效应 }f.
+\tag{274.14}
+$$
+
+这不是将最小实际面自动当作暴露面，也不需要预证 $E(P,Q)=F_K(P,Q)$。
+
+取一般位置产品 $P=P_{a\otimes b}$、$Q=P_{c\otimes d}$，局部重叠 $0<\alpha=|\langle a,c\rangle|<1$、$0<\beta=|\langle b,d\rangle|<1$。置 $S=\operatorname{span}\{a,c\}$、$T=\operatorname{span}\{b,d\}$，并取
+
+$$
+\begin{aligned}
+Q_A&=(I-P_S)\otimes I,&Q_B&=I\otimes(I-P_T),\\
+R_1&=P_{a_S^\perp}\otimes P_{d_T^\perp},&
+R_2&=P_{c_S^\perp}\otimes P_{b_T^\perp}.
+\end{aligned}
+\tag{274.15}
+$$
+
+所有这些矩阵和其补均可分，所以是原proper效应。它们的补共同确认 $P,Q$，(274.14)直接给
+
+$$
+h\ge_{C^*}P,Q,\qquad
+h\le_{C^*}I-Q_A,I-Q_B,I-R_1,I-R_2.
+\tag{274.16}
+$$
+
+评估 $Q_A,Q_B,R_1,R_2$，得 $\operatorname{Tr}(Q_Ah)=\operatorname{Tr}(Q_Bh)=0$ 及 $h(R_i)=0$。XX271.16的块正零边缘论证在两腿分别使用，把 $h$ 真正限制到 $S\otimes T$，包括消去所有交叉块；此处只用 $h\in C^*\subseteq\operatorname{BP}$。在可逆图 $D=[a\ c]\otimes[b\ d]$ 中，两个产品零条件给XX271.18的六实维稀疏形。它们并不需要先把共同零面判成二态球。
+
+准确消费XX271.22—271.28的四维支持计算：输入是(274.16)、$h(P)=h(Q)=1$、这两个零条件，以及原产品向量的Gram矩阵。令 $g=\alpha\beta$，稀疏系数为 $A,D_0,z,w$，得到
+
+$$
+A=D_0=\frac1{1-g^2},\qquad
+z,w\le0,\qquad z+w=-\frac g{1-g^2},\qquad
+\operatorname{Tr}h=A+D_0+2g\operatorname{Re}(z+w)=2.
+\tag{274.17}
+$$
+
+最后一项是原矩阵迹，不是变换后稀疏矩阵的迹。于是 $d=h-P$ 是迹一的非零极端proper效应。若其最大读数 $s<1$，则 $d=s(d/s)+(1-s)0$ 是非平凡proper分解，矛盾。因此它在某颗原纯 $x$ 上取一，$e_x\le d$。(274.12)与XX271.10—271.11给
+
+$$
+1\le\operatorname{Tr}e_x\le\operatorname{Tr}d=1,
+\qquad d=e_x=x\in C\cap C^*,\qquad\|x\|_2=1.
+\tag{274.18}
+$$
+
+稀疏线段的两个端点仍准确为
+
+$$
+H_0=P_{\operatorname{span}\{a\otimes b,c\otimes d\}},\qquad
+H_1=T_AP_{\operatorname{span}\{\bar a\otimes b,\bar c\otimes d\}}.
+\tag{274.19}
+$$
+
+XX271.30—271.33的HS严格凸性将(274.17)限制为 $h=H_0$ 或 $h=H_1$：两个残余 $H_i-P$ 的HS范数均为一，而非平凡中间凸混合的范数严格小于一，与(274.18)冲突。
+
+共同方向也由同一个共同确认包支付。一般位置产品对由连通域 $U(m)\times U(n)\times(0,1)^2$ 连续覆盖；令 $A_i$ 为 $H_i$ 属于原proper区间的参数集。两个闭集覆盖该域。若两者同时proper，它们都确认 $P,Q$，所以(274.14)给 $h\le H_0,H_1$。三者原迹均为二，(274.12)使正差为零，迫 $H_0=H_1$，与一般位置的两个相干通道不同矛盾。故两闭集不交，连通性选出一个全域共同方向。这里不能将“确认 $P,Q$”直接改写成“确认任意另选的大零面”；(274.13)正是需要的共同对象。
+
+最后准确复用XX271.36—271.39的显式产品残余构造。在任意选定的局域复二维Schmidt支持中，每个非最大纠缠的秩二 $P_\psi$ 都是某一般位置 $H_0-P$；另一方向给 $T_AP_\psi$。由(274.18)同时属于 $C,C^*$。最大纠缠点由两闭锥的极限补上，产品点已有，故得(274.10)。当某因子维数二，全部向量Schmidt秩至多二；谱分解及对偶夹逼给(274.11)。全部原纯点及完整proper效应因此被穷尽。$\square$
+

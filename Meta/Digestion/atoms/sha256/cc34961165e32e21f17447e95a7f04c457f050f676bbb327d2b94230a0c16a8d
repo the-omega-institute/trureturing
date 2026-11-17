@@ -1,0 +1,91 @@
+**定理 21.2（临界一阶义务与准确有限纤维分配）。** 存在只依赖固定数据的 $C_0>0$，使所有充分大的 $H\in\mathcal H_-$ 满足
+
+$$
+\begin{gathered}
+h(n)=H\quad(X_H<n\le2X_H),\qquad F_{n,H}\subseteq E_n,\\
+\frac{X_Hr_H^2}{q_H}\ge C_0e^{2H}H^{-4\gamma}\longrightarrow\infty,\\
+L_{X_H}\ge\frac{4X_Hr_H^2}{q_H},\qquad
+m_H=4r_H^2K_H\ge\frac{2X_Hr_H^2}{q_H}\longrightarrow\infty.
+\end{gathered}
+\tag{21.4}
+$$
+
+特别地，原临界问题无条件满足
+
+$$
+\sum_{n\ge1}\nu(E_n)=\infty,\qquad
+\limsup_{X\to\infty}L_X=\infty.
+\tag{21.5}
+$$
+
+对固定 $u\in C_M$，记块内满足有限条件的准确项数为
+
+$$
+N_H(u)=\#\{X_H<n\le2X_H:n\in A,\ u\equiv n\pmod{q_H}\}.
+$$
+
+它在 $u$ 的归一化 Haar 分布下满足
+
+$$
+\lambda_{C_M}(N_H=a_H)=1-\tau_H,\qquad
+\lambda_{C_M}(N_H=a_H+1)=\tau_H.
+\tag{21.6}
+$$
+
+当 $\tau_H=0$ 时第二种情况的概率为零。结论 (21.5) 不加强为全序列 $L_X\to\infty$，也不裁定 $\nu(R)$。
+
+**证明（负振荡与原取整）。** 经典输入是 Littlewood 的
+$\psi(x)-x=\Omega_-(\sqrt{x}\log\log\log x)$：存在 $c>0$ 及 $x_j\to\infty$，使 $\psi(x_j)\le x_j-c\sqrt{x_j}\log\log\log x_j$。此版本见 Platt–Trudgian，*On the first sign change of $\theta(x)-x$*，[arXiv:1407.1914v1 原文](https://arxiv.org/pdf/1407.1914v1)，第 1 页式 (2)；第 2 页首段亦明确指出 $\theta(x)-x$ 无限变号。这是 literature-attested 的输入，不在这里重证振荡定理。
+
+取 $H_j=\lfloor x_j\rfloor$。负振荡的绝对幅度最终大于 $1$，而每个 $p\le H_j$ 也在 $\psi(x_j)$ 中出现，故
+
+$$
+\vartheta(H_j)\le\psi(x_j)<x_j-1\le H_j.
+$$
+
+因此 $\mathcal H_-$ 无界。这里不估计 $\psi-\vartheta$，也不用素数定理把其误差降至线性以下的某个指定尺度。
+
+固定充分大的 $H$。对 $X_H<n\le2X_H$ 有
+
+$$
+e^{T_H}<n+2\le2X_H+2\le3e^{T_H},\qquad
+(H+1/2)^2\le c_0^2\log(n+2)
+ \le(H+1/2)^2+c_0^2\log3<(H+1)^2.
+$$
+
+故原取整给出整块 $h(n)=H$。由 $\rho$ 单调，$r_H\le\rho_n$，于是 $F_{n,H}\subseteq E_n$；同时 $r_H\to0$。
+
+由 $X_H\ge e^{T_H}/2$、$2X_H+2\le3e^{T_H}$、$\log(2X_H+2)\ll H^2$ 及 (21.1)，有某个 $C_1>0$ 使
+
+$$
+X_Hr_H^2\ge C_1e^{(1-2\beta)T_H}H^{-4\gamma}
+ =C_1e^{(H+1/2)^2}H^{-4\gamma}.
+$$
+
+原整除上界 (16.26) 保留 $(H-1)$，准确给出
+
+$$
+q_H\le5M\exp((H-1)\vartheta(H))
+ \le5M\exp(H(H-1))\qquad(H\in\mathcal H_-).
+$$
+
+两式相除，指数差为 $(H+1/2)^2-H(H-1)=2H+1/4$，得 (21.4) 的指数下界。这里只需原实际周期的上界，没有把消去数作为实际周期的下界。
+
+**证明（$M$ 与两个相邻的整数长度）。** 写 $u=a_0+Mv$，则 $v$ 在 $\widehat{\mathbb Z}$ 中 Haar 均匀。块内所有 $n\in A$ 可准确写成 $a_0+Mt$，其中 $t$ 遍历连续的 $J_H$ 个整数；条件 $u\equiv n\pmod{q_H}$ 等价于 $v\equiv t\pmod{d_H}$。对 $J_H=a_Hd_H+s_H$ 作欧几里得分解，$0\le s_H<d_H$，这段连续整数在 $s_H$ 个模 $d_H$ 的类中各有 $a_H+1$ 项，在其余类中各有 $a_H$ 项。各类的目标概率均为 $1/d_H$，且 $s_H/d_H=\tau_H$，故得 (21.6)。
+
+每个有限端合格的整数在实端占面积 $4r_H^2$，因此 $m_H=4r_H^2K_H$。准确端点计数亦给出
+
+$$
+J_H=\left\lfloor\frac{2X_H-a_0}{M}\right\rfloor-
+     \left\lfloor\frac{X_H-a_0}{M}\right\rfloor,\qquad
+|MJ_H-X_H|<M.
+$$
+
+当 $X_H\ge2M$ 时，$MJ_H\ge X_H/2$，得 $m_H$ 的下界。原 $L_{X_H}$ 对块内全部 $X_H$ 个整数求和，每项的模数恰为 $q_H$、半径至少为 $r_H$，得其下界。又
+
+$$
+\sum_{X_H<n\le2X_H}\nu(E_n)\ge m_H\longrightarrow\infty,
+$$
+
+故非负的一阶级数发散，并有 (21.5)。最后 $4r_H^2\le1$ 最终成立，故 $K_H=m_H/(4r_H^2)\to\infty$，特别地可统一删去有限个阶段以保证 $K_H\ge1$。$\square$
+

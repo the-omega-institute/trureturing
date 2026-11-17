@@ -1,0 +1,32 @@
+### 147.1 原对象、供应与主结论
+
+取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。始终取整个
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\qquad D_p=\{x\in K:T_p(x)=0\},\\
+S_p=P\cap D_p,\qquad
+\mathcal A_p=\{e\in\mathcal E:e(p)=1,\ e|_{D_p}=0\},\\
+N_p=\{h\in C^*:h(p)=0\},\qquad L_p=\operatorname{span}_{\mathbb R}N_p,\\
+N_F=\{h\in C^*:h|_F=0\},\qquad
+a(p)=\dim_{\rm aff}\mathcal A_p,\\
+\mathscr B=\{D_p:p\in P\},\qquad
+I(F)=\{p\in P:D_p=F\},\qquad
+P_{\rm s}=\{p\in P:I(D_p)=\{p\}\}.
+\end{gathered}
+\tag{XII147.1}
+$$
+
+EB3 指对每个 $p\in P$，**整个** $D_p$ 都仿射同构于非退化闭三球。纯关系 $p\perp q\Longleftrightarrow q\in D_p$ 表示某张原效应在两端读一、零；补效应给对称，且 $p\not\perp p$。$K,\mathcal E,F_p$ 紧，全部 minimum 达到；$K$ 张成 $V$，$\operatorname{aff}K=\{u=1\}$。辅助欧氏结构仅用于紧性和参数化。$\operatorname{Aff}(D_p)$ 表示整个原球上的实仿射函数空间。
+
+本章精确使用以下既有供应；跨卷条目以定理、引理或节区分，带 XII 前缀的编号均指本章公式。
+
+* FINITE_PURE VII 的定理103.2：每个 $D_p$ 是紧暴露极大真面，$\mathcal A_p\ne\varnothing$；每个非空真面是纯单点或整个 $D_p$，不预先要求面闭。$S_p$ 是整张球面的全部原纯点；不同球的交为空或一个原纯点。
+* EXCLUSION IX 的定理116.2、116.6：每个球或者单标签，或者与唯一不交球 $G$ 配对，$I(F)=S(G), I(G)=S(F)$，其中 $S(F)=P\cap F$；两球均不交第三张不同球。$P_{\rm s}\ne\varnothing$，且 $p\in P_{\rm s},q\perp p\Rightarrow q\in P_{\rm s}$。因此本章所有从单标签点出发的有限零边路都留在 $P_{\rm s}$；这不是 $P_{\rm s}=P$。SAME_READBACK 第126.5节的 $P_{\mathrm s}=P\setminus R$ 与此定义相同，因重复块的球缘及标签恰互为配对球缘。
+* SAME_READBACK 引理128.2及其证明：对任意有非空内部的 $m$ 维紧凸体及每个 $1\le k\le m$，法向锥张成维数至少 $k$ 的全部边界点有可数紧覆盖；每层向某个 $m-k$ 维线性空间的正交投影单射，逆满足 $2/\sqrt3$ 的 Lipschitz 界。本章在第147.6节取 $m=8,k=5$，在第147.8节取 $m=8,k=4$，在第147.12节取一般 $m$ 和 $k=4$。它是全点覆盖，不是删去零测例外的可求长性断言。
+
+EXCLUSION IX 的引理119.1、定理119.10及 BILATERAL VIII 的引理121.2—121.4、定理121.5—121.6原来使用全局 Inj。下面展开其在本域所需的局部替换，尤其不直接搬用 VIII 引理121.3的极限纯性。LOCAL_PURE_LIMIT_CONTINUATION 引理132.3、THREE_COPY VIII 引理131.2已供应单标签球混内部极限的反向整球塌缩；第147.3节给出与本有限见证直接相接的端面形式。它不另计为一般凸分析原理。
+

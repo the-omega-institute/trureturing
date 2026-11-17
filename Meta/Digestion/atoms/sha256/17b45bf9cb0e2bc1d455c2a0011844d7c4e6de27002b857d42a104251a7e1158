@@ -1,0 +1,41 @@
+**推论 125.3（确认纤维极限必遇旧球完整零确认面）。** 在同一完整 EB3+PR 域中，沿用 IX120.1 的完整零确认族
+
+$$
+\mathcal A_p=\{e\in F_p:e|_{D_p}=0\}.
+\tag{X125.12}
+$$
+
+它是 $F_p$ 的非空紧暴露真面，并且
+
+$$
+\mathcal A_p=\{e\in F_p:e(c_p)=0\},
+\qquad \forall e\in\mathcal A_p:\quad Z(e)=D_p.
+\tag{X125.13}
+$$
+
+若 $a_i\to p$ 且非空紧集 $F_{a_i}$ 在 $\mathcal E$ 中 Hausdorff 收敛于 $A$，则
+
+$$
+A\subseteq F_p,
+\qquad A\cap\mathcal A_p\ne\varnothing.
+\tag{X125.14}
+$$
+
+即使没有预先选定这样的极限，也有
+
+$$
+\min_{e\in F_{a_i}}\operatorname{dist}_{\ast}(e,\mathcal A_p)
+\longrightarrow0.
+\tag{X125.15}
+$$
+
+证明。IX114.2 给 $\mathcal A_p$ 非空；紧性由闭条件给出。原效应在 $D_p$ 上非负，(X125.9) 给 $e(c_p)=0$ 当且仅当在整个 $D_p$ 上为零。评价 $e\mapsto e(c_p)$ 在凸集 $F_p$ 上的最小值为零，最小面便是 $\mathcal A_p$；$u\in F_p$ 而 $u(c_p)=1$，所以它是暴露真面。对 $e\in\mathcal A_p$，$e(p)=1$ 保证 $e\ne0$，$Z(e)$ 是包含 $D_p$ 的原真面。IX114.2 的极大真面性质因而给 $Z(e)=D_p$。这里非零性、全域正性与完整球极大性均不可省略。
+
+对任意 $f\in A$，Hausdorff 收敛提供 $f_i\in F_{a_i}$ 使 $f_i\to f$。由 $f_i(a_i)=1$ 得 $f(p)=1$，故 $A\subseteq F_p$。再取 $e_i\in F_{a_i}$ 达到 $\kappa_{D_p}(a_i)$。紧 $\mathcal E$ 中任一收敛子列 $e_i\to e$，均由定理125.2 得
+
+$$
+e(p)=1,\qquad e|_{D_p}=0.
+$$
+
+所以 $e\in\mathcal A_p$；若存在指定的 Hausdorff 极限 $A$，同一子列还给 $e\in A$，证明交非空。所有这样的聚点都在紧集 $\mathcal A_p$，故这些 $e_i$ 到它的距离趋零，得到 (X125.15)。这不声称 $A=F_p$、$A\subseteq\mathcal A_p$，也不提供趋于预先指定效应的选择或连续选择。证毕。
+

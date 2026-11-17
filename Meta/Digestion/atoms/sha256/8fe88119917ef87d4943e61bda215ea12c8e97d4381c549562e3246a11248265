@@ -1,0 +1,19 @@
+**定理 195.4（L2、TC 与线性不回卷的完整单锥重建）。** 在195.1的全部原域上，以下两项等价：
+
+1. L2、TC、全标签 LIN 成立。
+2. 存在有限 $n\ge1$ 和同一个实线性同构 $\Phi:\operatorname{Herm}_n(\mathbb C)\to V$，使 $\Phi(\operatorname{PSD}_n)=C$、$u\Phi=\operatorname{Tr}$。
+
+此时 AD、NC、完整混输入 Born 最低值及原菜单中的 least 确认者均为结论。
+
+证明。命题160.4只用 L2+TC，已供应195.2所需的归一化共同商和全部实际小面；195.2—195.3从 LIN 排除它的全部核，取 $\Phi=\Psi$。这一步复用成熟 cap 分类的原接口，不把共同矩阵商当作新增前提。反向矩阵锥的 L2 与 TC 由160.5的反向供应；若 $a=P_v$，其每个原邻点 $P_w$ 都有 $w\perp v$，迹配对 $X\mapsto\operatorname{Tr}(P_vX)$ 在邻点张成上为零、在 $a$ 上为一，故 LIN。原单位与整个菜单均由同一个同构保持。
+
+核为零后，原效应恰为 $0\preceq E\preceq I$；$P_v$ 是确认 $p_v$ 的 least 效应，因此对任意 $X\succeq0$，包括零与任意非负质量，
+
+$$
+\min_{\substack{0\preceq E\preceq I\\Ev=v}}\operatorname{Tr}(EX)
+=\operatorname{Tr}(P_vX)=v^*Xv.
+\tag{195.12}
+$$
+
+正交对由这个原效应直接区分，给 AD；邻点实际面是 $\Phi\mathcal D(v^\perp)$，给 NC。它们属于结论，未用于取得(195.4)。$\square$
+

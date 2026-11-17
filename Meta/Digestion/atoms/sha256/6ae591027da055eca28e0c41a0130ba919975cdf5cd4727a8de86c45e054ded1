@@ -1,0 +1,8 @@
+**Theorem 8.3 (The four distributions have a weak maximum at three).**
+For each pair $(X,s)$ in Definition 8.1, every $n\in\mathbb N$ and every
+$k\ge3$ satisfy
+
+$$
+a_{X,s}(n,k+1)\le a_{X,s}(n,k).
+$$
+

@@ -1,0 +1,27 @@
+### 137.4 只在实际纯定义域上使用共同邻点
+
+先复用 X130式(X130.8)、X133.3及 THREE_COPY VIII131.3 的完整紧投影。紧集
+
+$$
+\{(s,x,f)\in S\times K\times\mathcal E:f(s)=1,\ f(x)=0\}
+\tag{XI137.11}
+$$
+
+在 $K$ 上的投影恰为 $B$，包括全部混态，故 $B$ 紧。这不使 $B\cap P$ 自动紧。
+
+若 $s,t\in S$ 不同，则 Inj 及(XI137.5)给
+
+$$
+D_s\cap D_t=\{o\}.
+\tag{XI137.12}
+$$
+
+因此只在 $Q\setminus\{o\}$ 上定义唯一共同邻点
+
+$$
+\pi:Q\setminus\{o\}\longrightarrow S,\qquad x\in D_{\pi(x)}.
+\tag{XI137.13}
+$$
+
+其定义域不扩大为全部 $P\setminus\{o\}$。若 $x_n\to x\in Q\setminus\{o\}$，对任一子列，可用紧 $S$ 与完整紧 $\mathcal E$ 再取 $\pi(x_n)\to s$ 和真实见证 $f_n\to f$，使 $f(s)=1,f(x)=0$。故 $x\in D_s$，唯一性给 $s=\pi(x)$。所有聚点相同，证明 $\pi$ 连续。这是 [X133.5及 THREE_COPY VIII131.6][Q137X][Q137TC] 的实际域闭图方法，不要求 $Q$ 先紧。
+

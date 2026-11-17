@@ -1,0 +1,20 @@
+**引理 149.7（所有闭包标签的整球连续）。** 对每个 $p\in M$，有 $S_p\subseteq M$，且 $p\mapsto D_p$ 在整个 $M$ 上按原环境 Hausdorff 距离连续；所有这些球的最小半轴仍至少 $b$。
+
+证明。先令 $p_i\in Q\to p\in M\subset P$。任意子列可再取有界球参数和效应的共同极限
+
+$$
+D_{p_i}=c_i+B_i\overline B^3\longrightarrow E=c+B\overline B^3,
+\qquad e_{p_i}\longrightarrow e\in\mathcal E.
+\tag{149.17}
+$$
+
+参数上界来自 $K$ 紧，引理149.5给最小奇异值下界，故 $B$ 秩三。原评价给 $e(p)=1,e|_E=0$，所以按完整 minimum 的原定义有 $E\subseteq D_p$。每个 $c_i+B_it$、$\|t\|=1$ 都在 $Q$，故 $c+Bt\in M\subset P$。因此
+$\partial_{\rm rel}E\subseteq P\cap D_p=\partial_{\rm rel}D_p$。
+
+两个球有同一仿射三平面。若 $E\ne D_p$，从 $\operatorname{ri}E$ 中一点走向 $\operatorname{ri}D_p\setminus E$ 中一点，第一次离开 $E$ 的点属于 $\partial E\cap\operatorname{ri}D_p$，与上述纯性矛盾。因此 $E=D_p$。任意子列的再极限相同，给整列收敛、$S_p\subset M$，并将半轴下界传给 $D_p$。
+
+现令任意 $p_i\in M\to p\in M$。任选 $e_i\in\mathcal A_{p_i}$，存在性来自 VII103.2，不要求这些闭包标签单标签。重复同一有界参数极限：刚付的半轴界保留秩三，$e_i$ 的原极限给 $E\subseteq D_p$，而全部移动球缘已经在紧纯 $M$ 中。相同论证给 $E=D_p$。这证明整个 $M$ 上的连续性，且 $S_p\subseteq M$ 正是实际零邻封闭。证毕。
+
+连续整球唯一确定连续中心和形状算子 $A_p\ge0$，满足
+$D_p=c_p+A_p^{1/2}\overline B_{\ker u}$、$\operatorname{rank}A_p=3$。例如支撑函数的奇偶部分给中心，剩余支撑函数的平方经极化给 $A_p$；常秩下局部正交标架及伪逆连续。这是 XII147.5、XI145.6所用的同一有限维参数工具，此处其入口已由引理149.7支付。
+

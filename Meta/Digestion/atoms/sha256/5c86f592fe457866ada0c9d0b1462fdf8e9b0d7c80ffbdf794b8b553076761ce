@@ -1,0 +1,22 @@
+**命题 133.8（秩三、根处 L1 与全域 L1/L2 的先后）。** 在主定理的固定根前件下，原零图的 orthogonality rank 恰为三。引理133.4已在分类之前给以 $o$ 为第一端点的 L1；全域 L1 与 L2 可在完整静态重构之后写出。它们不承担本章的根传播前件。
+
+这里 L1、L2 准确采用原文 Definition 4：对每个不同的 $e,f\in P$，L1 要求在 $e\not\perp f$ 时存在 $g\perp e$，使 $\{e,f\}^{\perp}=\{e,g\}^{\perp}$；L2 要求在 $e\perp f$ 时存在 $g\not\perp e$，使同一等式成立。两种情形的 $g$ 均不同于 $e,f$；全域 L1 与全域 L2 合起来才是该文的 linearity。
+
+证明。X130.2的实际根三角给秩至少三。若有四个两两正交的不同纯点 $a,b,c,d$，则 $b\in D_a$ 而 $b\notin D_b$，故 $D_a\ne D_b$；但 $c,d$ 同在二者交中，违反 (X133.5)。所以秩至多三。这个秩是两两正交标签集的最大基数，不是 $\dim_{\mathbb R}V$，也不是球维数；$P$ 含整个 $S^2$，并非有限顶点图。
+
+令 $A^\perp=\{x\in P:\forall a\in A,\ x\perp a\}$。若 $q\ne o$ 且 $q\not\perp o$，引理133.4给 $\{o,q\}^\perp=\{r\}$，$r=\pi_o(q)\in S$。取 $g=\pi_o(r)\in S$。对径公式给 $g\perp r$；$o\perp g$，且不同球 $D_o,D_g$ 的交含 $r$，故
+
+$$ \{o,g\}^{\perp}=\{r\}=\{o,q\}^{\perp}. \tag{X133.25} $$
+
+这只是第一端点固定为 $o$ 的 L1，尚不能调用量化全部第一端点的图论结论。
+
+取得 $\Phi$ 之后，任取不同纯射线的单位代表 $v,w$。若 $v^\ast w\ne0$，取
+
+$$ a=w-v(v^\ast w)\ne0,\qquad g=\Phi\!\left(\frac{aa^\ast}{a^\ast a}\right). \tag{X133.26} $$
+
+则 $g\perp p_v$，且 $\operatorname{span}_{\mathbb C}\{v,a\}=\operatorname{span}_{\mathbb C}\{v,w\}$；两对标签的整个共同正交集相同，得到全域 L1。若 $v^\ast w=0$，取 $a=(v+w)/\sqrt2$；$g=\Phi(aa^\ast)$ 不正交于 $p_v$，两对仍张成同一二维复空间，得到全域 L2。所有标签均在同一 $\Phi$ 下覆盖全部原 $P$。证毕。
+
+[Emir—Kruml—Paseka—Vetterlein，arXiv:2103.13764v1][Q133L1] 第2页 Definition 4给上述全域 L1、L2。第6页 Proposition 32的前件是秩至少三加全域 L1，结论为连通且直径至多二；证明用这些全域前件取得正交对的共同邻点。只有一个根的覆盖，或只有以该根为第一端点的 L1，都没有支付其前件。不能在根的指定邻边尚待完成时，反过来用该命题替它完成。
+
+同页 Theorem 34 本身是双向陈述。左栏末的正向为：有限维 $n$ 的 Hermitian 空间 $H$ 的射影正交空间 $(P(H),\perp)$ 是秩 $n$ 的线性正交空间。其右栏首的续文明确为：反之，每个有限秩 $n\ge4$ 的线性正交空间，都同构于某个 $\star$-斜域 $\mathbb K$ 上 $n$ 维 Hermitian 空间的射影正交空间。这个逆向属于 Theorem 34 的正文，不能限定成只有摘要或导言才提到的路线；Definition 33同时明确其 Hermitian 空间使用各向异性的相应形式。逆向的秩至少四前件排除了本题秩三应用，且它本身并不选择复数域。本章也未从根处 L1预先取得全域 L1/L2。因此 Theorem 34的两个方向均不能替代133.3—133.6的原域传播；全域 L1/L2在本章是完整静态重构后的关系后果。
+

@@ -17,7 +17,7 @@ open HardinA233255PairTransfer (a)
 open HardinA233255ShapeSymmetry (K F literal_canonical_bridge)
 open TransferMatrix (tabulatedPowers scalarRelationShift)
 
-private def table : Matrix (Fin 16) (Fin 16) ℤ :=
+def table : Matrix (Fin 16) (Fin 16) ℤ :=
   ![![5, 5, 3, 3, 4, 4, 2, 2, 0, 0, 1, 1, 3, 3, 3, 3],
     ![4, 4, 3, 3, 4, 4, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1],
     ![1, 1, 2, 2, 1, 1, 3, 3, 2, 2, 2, 2, 1, 1, 2, 2],
@@ -37,7 +37,7 @@ private def table : Matrix (Fin 16) (Fin 16) ℤ :=
 
 set_option maxHeartbeats 10000000 in
 set_option maxRecDepth 100000 in
-private theorem table_matches : K = table := by
+theorem table_matches : K = table := by
   have h : List.ofFn (fun i : Fin 16 => List.ofFn (fun j : Fin 16 => K i j)) =
       List.ofFn (fun i : Fin 16 => List.ofFn (fun j : Fin 16 => table i j)) := by
     decide +kernel

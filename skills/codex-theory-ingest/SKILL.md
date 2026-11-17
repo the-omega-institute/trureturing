@@ -284,16 +284,15 @@ the successful Step 3 writer. Prepare a pull-request body that records:
 - every verification command and exit code;
 - the selected `show-atom` identity and text check.
 
-Commit the theory volume and writer-produced digestion data, then run:
+Commit the theory volume and writer-produced digestion data. Inspect `make gate-plan` with the same base before local checks; run only the applicable scoped checks by default. If a concrete integration obligation requires a full build, explain it and explicitly invoke `make gate BASE="<resolved-base>" FULL_BUILD=1`; do not start a full build merely for theory or skill edits. Make full-build entries and their direct scripts reject calls without `FULL_BUILD=1`. Required CI retains its own scope. Then publish:
 
 ```sh
-make gate BASE="$(git rev-parse origin/dev^{commit})"
 git push -u origin <branch>
 make pr-open HEAD=<branch> MESSAGE=<message-file> AUTO_MERGE=1
 # The message file's first line is the PR title; the rest is the PR body.
 ```
 
-Require local validation and both publication commands to exit 0. Do not push further
+Require the selected local validation and both publication commands to exit 0. Do not push further
 changes after `make pr-open`; a follow-up requires a new branch. Apply the bounded
 pull-request observation protocol. Report completion only for its REST-confirmed
 `MERGED` verdict. Every other successor is evidence-complete `open` using the

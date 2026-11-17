@@ -1,0 +1,17 @@
+**Definition 1.2 (one original positive word and its phase).** Set
+
+$$
+q_1=\{1,3,7\},\quad w_*=W(q_1)=1010100010,\quad
+g=0^5 1^5,\quad c=xy=x\sqrt x,\quad d=x-x^2,
+$$
+
+and define
+
+$$
+\theta=\arccos(-d)\in(0,\pi),\qquad z=e^{2i\theta},\qquad
+p_n=\frac{1-\operatorname{Re}z^n}{2}=\sin^2(n\theta),\quad n\ge0.
+\tag{1.3}
+$$
+
+The word $g$ consists of five original positive calls at address $0$ followed by five at address $1$; $g^n$ costs exactly $10n$ such calls. Its fifth-power identities are the endpoint reflections already supplied by [V15, §§3.1 and 4.1–4.3][V15]. They abbreviate those five actual calls and do not authorize negative or fractional physical calls. The two-dimensional subspace used below is an invariant subspace of the full source, not a replacement configuration space or a new preparation.
+

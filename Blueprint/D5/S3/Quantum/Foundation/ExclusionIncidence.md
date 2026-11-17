@@ -6,6 +6,10 @@ Upper association of the entire original exclusion fibers at pure limiting label
 
 V is an arbitrary finite dimensional real normed vector space. C is the original pointed cone, closed and generating, and the original real linear unit u is strictly positive on nonzero cone vectors. K is the entire base C intersect {u=1}, P is all of ext(K) with its actual subspace topology, proper effects are all real linear f with 0<=f<=u on C, and D_p is the entire original exclusion set. The hypotheses do not supply a physical inner product, compactness or closedness of P, label injectivity, Pair, least effects, spectrality or a Jordan representation.
 
+The complete original-domain application X126.2-X126.4 is developed in CommonOldExclusionConfirmation. Its input is an actual pure p_i tending to pure p with the entire original D_(p_i) tending to {q}, under the same closed pointed generating cone, strictly positive original unit, EB3 and pure-endpoint PR. ReciprocalExclusionLimits.exclusion_limit_dichotomy gives q in P intersect D_p; CommonOldExclusionConfirmation supplies the full fixed-comparison Lipschitz bound and its existing same-optimizer zero result. No Inj, Pair, weakPair, mixed PR or collapse-existence assumption is added.
+
+The upper-limit theorem below retains moving confirmation and moving zero evaluations. To obtain the entire fixed pure row, the complete application selects actual optimizers, uses minimizer_has_zero on those same effects, and retains their prescribed comparison value on one compact subsequence. It includes s=p separately and permits arbitrary initial p_i=s. The resulting one-effect-per-entire-ball conclusion, reverse triples, whole-K singleton zero set and whole-moving-face slope bounds are stated and derived together in that owning exposition.
+
 **Theorem 1.1 (Limits of actual original exclusions).**
 
 Lean statement: `D5/S3/Quantum/Foundation/ExclusionIncidence.exclusion_upper_limit`

@@ -47,7 +47,7 @@ private theorem family_card (m : Nat) : (family m).card = (m+2)*(m+1)/2 := by
   rw [hs, Finset.sum_range_id]
   simp
 
-private theorem ones_value (m : Nat) : Nat.ofDigits 2 (List.replicate m 1) + 1 = 2^m := by
+theorem ones_value (m : Nat) : Nat.ofDigits 2 (List.replicate m 1) + 1 = 2^m := by
   induction m with
   | zero => simp
   | succ m ih =>

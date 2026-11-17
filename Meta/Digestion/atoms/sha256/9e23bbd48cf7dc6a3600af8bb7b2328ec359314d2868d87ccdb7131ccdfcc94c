@@ -1,0 +1,54 @@
+**Theorem 9 (One copy: independent triples).**
+For $m=1$ and every $q\ge1$, the actual zero subsets are exactly the
+unions of the disjoint triples
+
+$$
+R_t=\{t,t+q,t+2q\},\qquad0\le t<q.
+\tag{19}
+$$
+
+Consequently
+
+$$
+U\cong\mathbb Z^{2q},\qquad
+G\cong\operatorname{Sym}(3)^q\rtimes\operatorname{Sym}(q),\qquad
+|G|=6^q q!.
+\tag{20}
+$$
+
+The top group acts on its $q$ blocks, so this is the imprimitive wreath
+product $\operatorname{Sym}(3)\wr\operatorname{Sym}(q)$.
+
+*Proof.* Put $B=2^q$. For a subset $S\subseteq\{0,\ldots,3q-1\}$, its
+unsigned binary integer $N=\sum_{j\in S}2^j$ lies between $0$ and
+$B^3-1=(B-1)M$. Thus it is zero modulo $M$ exactly when $N=kM$ for
+some $0\le k\le B-1$. Write the unique $q$-bit expansion
+$k=\sum_{t=0}^{q-1}\epsilon_t2^t$. Then
+
+$$
+kM=\sum_{t=0}^{q-1}\epsilon_t
+(2^t+2^{t+q}+2^{t+2q}).
+$$
+
+All displayed bit positions are different, so there are no carries.
+Uniqueness of binary expansion forces $S$ to be exactly the union in
+(19) indexed by the nonzero $\epsilon_t$. Conversely each triple has
+weight $2^tM$, so every such union is zero. This proves both directions
+of the zero-set description.
+
+Their rows give $L=\bigoplus_t\mathbb Zr_{R_t}$. On each triple the
+map $\mathbb Z^3\to\mathbb Z^2$,
+$(h_0,h_1,h_2)\mapsto(h_0-h_2,h_1-h_2)$, is onto and has kernel
+$\mathbb Z(1,1,1)$. It gives the claimed quotient, with coordinate
+classes $a_t,b_t,-a_t-b_t$ in its $t$-th direct summand. These $3q$
+vectors are all distinct: their coordinate pairs are $(1,0),(0,1),(-1,-1)$,
+and vectors from different direct summands cannot coincide. The minimal
+nonempty edges are exactly the
+$R_t$, so any hypergraph automorphism permutes those triples and
+permutes their three elements. Conversely all such permutations preserve
+every union of triples. This proves (20), including its order. By Theorem
+3 the fiber kernel is trivial, so this is also the entire support
+automorphism group of $U$. The internal $\operatorname{Sym}(3)$
+factors permute three distinct quotient vectors; they do not come from
+equal original arithmetic weights, which are distinct by (16). $\square$
+
